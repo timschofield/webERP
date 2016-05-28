@@ -1,22 +1,22 @@
-# webERP - Portuguese Brazil Translation File.
+# webERP - Portuguese Portugal Translation File.
 # Copyright (C) 2014 WebERP Contrib
 # This file is distributed under the same license as the webERP package.
 # gsavix <gsavix@gmail.com> 2014
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: webERP 4.12.3\n"
+"Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-05-16 21:31+1200\n"
-"PO-Revision-Date: 2015-11-16 01:13-0300\n"
+"PO-Revision-Date: 2014-01-28 14:48-0300\n"
 "Last-Translator: gilberto dos santos alves <gsavix@gmail.com>\n"
-"Language-Team: pt-br <gsavix@gmail.com>\n"
-"Language: pt_BR\n"
+"Language-Team: pt-PT <gsavix@gmail.com>\n"
+"Language: pt_PT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: normal;\n"
-"X-Generator: gsavix editor 2015.11\n"
+"X-Generator: Poedit 1.6.1\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #: AccountGroups.php:6 includes/MainMenuLinksArray.php:399
@@ -969,11 +969,11 @@ msgstr "Sítio eletr."
 
 #: AgedControlledInventory.php:8
 msgid "Aged Controlled Inventory"
-msgstr "Inventário Controlado Histórico"
+msgstr ""
 
 #: AgedControlledInventory.php:8
 msgid "as-of"
-msgstr "pos. de"
+msgstr ""
 
 #: AgedControlledInventory.php:12 InventoryQuantities.php:155
 #: InventoryValuation.php:217 Locations.php:12 MRPCalendar.php:21
@@ -990,7 +990,7 @@ msgstr "Estoque"
 
 #: AgedControlledInventory.php:32
 msgid "The stock held could not be retrieved because"
-msgstr "Estoque alocado não pode ser recuperado porque"
+msgstr ""
 
 #: AgedControlledInventory.php:42 MRPReschedules.php:126 MRPShortages.php:261
 #: StockClone.php:53 Stocks.php:63
@@ -1060,15 +1060,15 @@ msgstr "Lote"
 
 #: AgedControlledInventory.php:45
 msgid "Quantity Remaining"
-msgstr "Quantidade Restante"
+msgstr ""
 
 #: AgedControlledInventory.php:46
 msgid "Inventory Value"
-msgstr "Valor Inventário"
+msgstr ""
 
 #: AgedControlledInventory.php:48
 msgid "Days Old"
-msgstr "Dias Decorridos"
+msgstr ""
 
 #: AgedControlledInventory.php:91 ConfirmDispatch_Invoice.php:309
 #: ConfirmDispatch_Invoice.php:313 CounterReturns.php:676
@@ -1432,7 +1432,7 @@ msgstr "Nenhum"
 #: AnalysisHorizontalIncome.php:146 AnalysisHorizontalIncome.php:147
 #: includes/MainMenuLinksArray.php:378
 msgid "Horizontal Analysis of Statement of Comprehensive Income"
-msgstr "Análise Horizontal Abrangente de Receitas"
+msgstr ""
 
 #: AnalysisHorizontalIncome.php:22 GLProfit_Loss.php:14
 #: GLTagProfit_Loss.php:14 Z_UpdateChartDetailsBFwd.php:14
@@ -1446,7 +1446,7 @@ msgstr "Selec. novamente o período relat."
 
 #: AnalysisHorizontalIncome.php:30
 msgid "Print Horizontal Analysis of Statement of Comprehensive Income"
-msgstr "Imprimir Análise Horizontal Abrang. de Receitas"
+msgstr ""
 
 #: AnalysisHorizontalIncome.php:34 AnalysisHorizontalPosition.php:31
 msgid ""
@@ -1455,9 +1455,6 @@ msgid ""
 "financial statement items over a period of time. It is a useful tool to "
 "evaluate trend situations."
 msgstr ""
-"Análise horizontal (também conhecida como trend analysis) é uma técnica "
-"análise que exibe modificações nos valores dentro de um período "
-"correspondente. Útil para analisar situações contábeis."
 
 #: AnalysisHorizontalIncome.php:35 AnalysisHorizontalPosition.php:32
 msgid ""
@@ -1466,10 +1463,6 @@ msgid ""
 "compared with items on the statement of the base period. The changes are "
 "shown both in currency (actual change) and percentage (relative change)."
 msgstr ""
-"A abrangência de dois períodos é usada para análise horizontal. O período "
-"mais antigo é usado como base. Os itens mais recentes são comparados com os "
-"itens do período base. Diferenças são exibidas em ambas moedas (atual e "
-"relativa)."
 
 #: AnalysisHorizontalIncome.php:36 AnalysisHorizontalPosition.php:33
 #: GLBalanceSheet.php:29 GLProfit_Loss.php:33
@@ -1485,15 +1478,15 @@ msgstr ""
 
 #: AnalysisHorizontalIncome.php:43
 msgid "Select period from"
-msgstr "Selec. período inicial"
+msgstr ""
 
 #: AnalysisHorizontalIncome.php:79
 msgid "Select period to"
-msgstr "Selecione perído final"
+msgstr ""
 
 #: AnalysisHorizontalIncome.php:105 AnalysisHorizontalPosition.php:63
 msgid "Detail or summary"
-msgstr "Detalhe ou Resumo"
+msgstr ""
 
 #: AnalysisHorizontalIncome.php:106 AnalysisHorizontalPosition.php:64
 #: GLBalanceSheet.php:60
@@ -1515,7 +1508,7 @@ msgstr "Todas Contas"
 
 #: AnalysisHorizontalIncome.php:112 AnalysisHorizontalPosition.php:70
 msgid "Show all accounts including zero balances"
-msgstr "Exibir todas contas incluindo saldos zero"
+msgstr ""
 
 #: AnalysisHorizontalIncome.php:113 AnalysisHorizontalPosition.php:71
 #: GLBalanceSheet.php:67 GLProfit_Loss.php:116
@@ -1535,7 +1528,7 @@ msgstr "Exibir na Tela (HTML)"
 #: DailyBankTransactions.php:255 GLAccountUsers.php:253 GLBalanceSheet.php:720
 #: GLProfit_Loss.php:1317 GLTrialBalance.php:740 UserGLAccounts.php:259
 msgid "Return"
-msgstr "Retornar"
+msgstr ""
 
 #: AnalysisHorizontalIncome.php:131 GLProfit_Loss.php:147
 #: GLProfit_Loss.php:577 GLTagProfit_Loss.php:155 GLTagProfit_Loss.php:480
@@ -1617,11 +1610,11 @@ msgstr ""
 
 #: AnalysisHorizontalIncome.php:162 AnalysisHorizontalPosition.php:116
 msgid "Actual change"
-msgstr "Taxa Real"
+msgstr ""
 
 #: AnalysisHorizontalIncome.php:163 AnalysisHorizontalPosition.php:117
 msgid "Relative change"
-msgstr "Taxa Relativa"
+msgstr ""
 
 #: AnalysisHorizontalIncome.php:170
 msgid ""
@@ -1629,8 +1622,6 @@ msgid ""
 "the net profit; a negative number indicates a variation that decreases the "
 "net profit."
 msgstr ""
-"Taxa real sinaliza: se positivo indica variação positiva no lucro líquido; "
-"se negativa indica queda no lucro líquido."
 
 #: AnalysisHorizontalIncome.php:171 AnalysisHorizontalPosition.php:125
 msgid ""
@@ -1638,8 +1629,6 @@ msgid ""
 "of that account; a negative number indicates a decrease in the amount of "
 "that account."
 msgstr ""
-"Sinais Relativos Modificação: número positivo indica um incremento na conta "
-"contábil; número negativo indica queda na quantia da conta."
 
 #: AnalysisHorizontalIncome.php:200 AnalysisHorizontalPosition.php:166
 #: GLBalanceSheet.php:154 GLBalanceSheet.php:392 GLCodesInquiry.php:18
@@ -1673,18 +1662,18 @@ msgstr "Lucro Bruto"
 
 #: AnalysisHorizontalIncome.php:323
 msgid "Earnings after"
-msgstr "Lucros após"
+msgstr ""
 
 #: AnalysisHorizontalIncome.php:501
 msgid "Net Profit"
-msgstr "Lucro Líquido"
+msgstr ""
 
 #: AnalysisHorizontalIncome.php:518 AnalysisHorizontalPosition.php:358
 #: BOMs.php:909 CustWhereAlloc.php:196 DailyBankTransactions.php:249
 #: GLAccountUsers.php:248 GLBalanceSheet.php:716 GLProfit_Loss.php:1313
 #: GLTrialBalance.php:736 SuppWhereAlloc.php:194 UserGLAccounts.php:254
 msgid "Print This"
-msgstr "Imprimir"
+msgstr ""
 
 #: AnalysisHorizontalIncome.php:519 AnalysisHorizontalIncome.php:520
 #: AnalysisHorizontalPosition.php:359 AnalysisHorizontalPosition.php:360
@@ -1699,11 +1688,11 @@ msgstr "Selecione outro Período"
 #: AnalysisHorizontalPosition.php:100 AnalysisHorizontalPosition.php:101
 #: includes/MainMenuLinksArray.php:379
 msgid "Horizontal Analysis of Statement of Financial Position"
-msgstr "Análise Horizontal de Posição Financeira"
+msgstr ""
 
 #: AnalysisHorizontalPosition.php:27
 msgid "Print Horizontal Analysis of Statement of Financial Position"
-msgstr "Imprimir Análise Horizontal de Posição Financeira"
+msgstr ""
 
 #: AnalysisHorizontalPosition.php:40 GLBalanceSheet.php:36
 msgid "Select the balance date"
@@ -1720,8 +1709,6 @@ msgid ""
 "Actual change signs: a positive number indicates a source of funds; a "
 "negative number indicates an application of funds."
 msgstr ""
-"Sinais modificação real: número positivo indica fonte em fundos; número "
-"negativo indica aplicação em fundos."
 
 #: AnalysisHorizontalPosition.php:139 GLBalanceSheet.php:114
 #: GLBalanceSheet.php:365
@@ -1962,11 +1949,11 @@ msgstr "Valor"
 
 #: AutomaticTranslationDescriptions.php:5 includes/MainMenuLinksArray.php:573
 msgid "Translate Item Descriptions"
-msgstr "Traduzir Descrição Itens"
+msgstr ""
 
 #: AutomaticTranslationDescriptions.php:31
 msgid "Description Automatic Translation for empty translations"
-msgstr "Descrição automática para traduções vazias"
+msgstr ""
 
 #: AutomaticTranslationDescriptions.php:35 MaterialsNotUsed.php:33
 #: TopItems.php:168
@@ -2012,12 +1999,12 @@ msgstr "Para"
 
 #: AutomaticTranslationDescriptions.php:39
 msgid "Translated"
-msgstr "Traduzido"
+msgstr ""
 
 #: AutomaticTranslationDescriptions.php:116
 #: AutomaticTranslationDescriptions.php:117
 msgid "No item description was automatically translated"
-msgstr "Nenhuma tradução de descrição de item foi feita automaticamente"
+msgstr ""
 
 #: BackupDatabase.php:7 BackupTest.php:6
 msgid "Backup webERP Database"
@@ -2200,7 +2187,7 @@ msgstr "Endereço Banco"
 
 #: BankAccounts.php:203
 msgid "Import Format"
-msgstr "Importar Formato"
+msgstr ""
 
 #: BankAccounts.php:204 Currencies.php:461 CustItem.php:299 CustItem.php:415
 #: CustomerAllocations.php:351 CustomerReceipt.php:844
@@ -2250,19 +2237,19 @@ msgstr "Cód. Contábil Conta Banc."
 
 #: BankAccounts.php:367
 msgid "Transaction Import File Format"
-msgstr "Form. Arq. de Transação para Importar"
+msgstr ""
 
 #: BankAccounts.php:370
 msgid "MT940 - Siam Comercial Bank Thailand"
-msgstr "MT940 - Banco Comercial  Siam Tailândia"
+msgstr ""
 
 #: BankAccounts.php:371
 msgid "MT940 - ING Bank Netherlands"
-msgstr "MT940 - ING Banco Holanda"
+msgstr ""
 
 #: BankAccounts.php:372
 msgid "GIFTS - Bank of New Zealand"
-msgstr "GIFTS - Banco Nova Zelandia"
+msgstr ""
 
 #: BankAccounts.php:377
 msgid "Currency Of Account"
@@ -2270,7 +2257,7 @@ msgstr "Moeda da Conta"
 
 #: BankAccountUsers.php:6 UserBankAccounts.php:6
 msgid "Bank Account Users"
-msgstr "Usuários Conta Bancária"
+msgstr ""
 
 #: BankAccountUsers.php:13
 msgid "Bank Account Authorised Users"
@@ -3774,7 +3761,7 @@ msgstr "SQL usado para recuperar a lista de potenciais componentes foi "
 
 #: BOMs.php:787 BOMs_SingleLevel.php:693
 msgid "Sequence in BOM"
-msgstr "Sequência BOM"
+msgstr ""
 
 #: BOMs.php:788
 msgid "Number with decimal places is acceptable"
@@ -3955,7 +3942,7 @@ msgstr "Custo Neces."
 #: CollectiveWorkOrderCost.php:49 PDFFGLabel.php:202 PDFWOPrint.php:258
 #: PDFWOPrint.php:499 includes/DatabaseTranslations.php:49
 msgid "Work Order"
-msgstr "Ordem Produção"
+msgstr ""
 
 #: CollectiveWorkOrderCost.php:76
 msgid "There are no data available"
@@ -4142,7 +4129,7 @@ msgstr "Custeio"
 
 #: CollectiveWorkOrderCost.php:443 PDFWOPrint.php:639 SelectWorkOrder.php:332
 msgid "Paperwork"
-msgstr "Ordem Produção"
+msgstr ""
 
 #: CollectiveWorkOrderCost.php:445 ContractOtherReqts.php:159
 #: InternalStockRequestAuthorisation.php:105 InternalStockRequest.php:273
@@ -4174,7 +4161,7 @@ msgstr "Data requerida"
 #: CollectiveWorkOrderCost.php:480 SelectWorkOrder.php:368
 #, php-format
 msgid "Print W/O"
-msgstr "Imprimir OP"
+msgstr ""
 
 #: CollectiveWorkOrderCost.php:509 HistoricalTestResults.php:82
 #: InternalStockRequest.php:301 MailingGroupMaintenance.php:145
@@ -4635,15 +4622,15 @@ msgstr ""
 
 #: ConfirmDispatch_Invoice.php:252
 msgid "Dispathed Quantity should not be more than order balanced quantity"
-msgstr "Quantidade Despachada não pode ser maior que quantidade do pedido"
+msgstr ""
 
 #: ConfirmDispatch_Invoice.php:252
 msgid "To dispatch quantity is"
-msgstr "Quantidade para despachar é"
+msgstr ""
 
 #: ConfirmDispatch_Invoice.php:252
 msgid "And the order balance is "
-msgstr "Saldo do Pedido é"
+msgstr ""
 
 #: ConfirmDispatch_Invoice.php:279
 msgid "Confirm Invoice"
@@ -7863,12 +7850,10 @@ msgid ""
 "invoiced and that it is possible that the credit note may not already have "
 "been done"
 msgstr ""
-"Falha na recuperação detalhes pedido ao comparar se o pedido já foi enviado "
-"e a nota de crédito não foi feita"
 
 #: Credit_Invoice.php:501
 msgid "The credit quantity for the line for"
-msgstr "Quantidade Credora dessa linha para"
+msgstr ""
 
 #: Credit_Invoice.php:512 SelectCreditItems.php:950
 msgid ""
@@ -8169,7 +8154,7 @@ msgstr "Manutenção Moedas"
 
 #: Currencies.php:33
 msgid "Currencies"
-msgstr "Moeda"
+msgstr ""
 
 #: Currencies.php:56
 msgid "The currency already exists in the database"
@@ -8268,11 +8253,10 @@ msgid ""
 "Cannot delete this currency because there are bank accounts that use this "
 "currency"
 msgstr ""
-"Não pode remover essa moeda pois existem contas bancárias utilizando a mesma"
 
 #: Currencies.php:273
 msgid "bank accounts that refer to this currency"
-msgstr "contas bancárias que usam essa moeda"
+msgstr ""
 
 #: Currencies.php:278
 msgid "The currency definition record has been deleted"
@@ -8306,7 +8290,7 @@ msgstr "Posições Decimais"
 
 #: Currencies.php:310 Currencies.php:516
 msgid "Show in webSHOP"
-msgstr "Exibir no webSHOP"
+msgstr ""
 
 #: Currencies.php:312
 msgid "1 / Ex Rate"
@@ -8464,7 +8448,7 @@ msgstr "Atualizar Config. EDI"
 
 #: CustItem.php:6
 msgid "Customer Item Data"
-msgstr "Dados Item do Cliente"
+msgstr ""
 
 #: CustItem.php:36 Prices.php:14 PurchData.php:51 RelatedItemsUpdate.php:26
 #: StockClone.php:50 StockCostUpdate.php:18 StockReorderLevel.php:17
@@ -8502,12 +8486,12 @@ msgstr "Ex."
 
 #: CustItem.php:56
 msgid "The customer sells an item by the tonne and we hold stock by the kg"
-msgstr "Unidad de vendas para o cliente TON e nosso estoque em KG"
+msgstr ""
 
 #: CustItem.php:56
 msgid ""
 "The debtorsmaster.price must be divided by 1000 to get to our cost per kg"
-msgstr "O preço de débito deve ser dividido por 100 para nosso custo por kg"
+msgstr ""
 
 #: CustItem.php:56 PurchData.php:84
 msgid "The conversion factor to enter is 1000"
@@ -8519,27 +8503,27 @@ msgstr "Não foi atualizado o DB"
 
 #: CustItem.php:72
 msgid "The customer Item details could not be added to the database because"
-msgstr "Detalhes do item do cliente não pode ser adicionado ao DB porque"
+msgstr ""
 
 #: CustItem.php:75
 msgid "This customer data has been added to the database"
-msgstr "Dados desse cliente adicionado ao DB"
+msgstr ""
 
 #: CustItem.php:85
 msgid "The customer details could not be updated because"
-msgstr "Detalhes do cliente não podem ser atualizados porque"
+msgstr ""
 
 #: CustItem.php:88
 msgid "customer data has been updated"
-msgstr "dados do cliente atualizados"
+msgstr ""
 
 #: CustItem.php:109
 msgid "The customer details could not be deleted because"
-msgstr "Detalhes do cliente não podem ser movidos porque"
+msgstr ""
 
 #: CustItem.php:111
 msgid "This customer data record has been successfully deleted"
-msgstr "Dados desse cliente foram removidos com sucesso"
+msgstr ""
 
 #: CustItem.php:120 CustItem.php:210 CustItem.php:238 PurchData.php:241
 #: PurchData.php:373 PurchData.php:401 SupplierPriceList.php:395
@@ -8550,15 +8534,14 @@ msgstr "Para Código Estoque"
 msgid ""
 "The customer details for the selected part could not be retrieved because"
 msgstr ""
-"Detalhes do cliente para o item selecionado não podem ser recuperados porque"
 
 #: CustItem.php:138
 msgid "There is no customer data set up for the part selected"
-msgstr "Não há dados do cliente para o item selecionado"
+msgstr ""
 
 #: CustItem.php:145
 msgid "Customer Unit"
-msgstr "Unidade do cliente"
+msgstr ""
 
 #: CustItem.php:146 PurchData.php:274 SupplierPriceList.php:536
 msgid "Conversion Factor"
@@ -8566,23 +8549,21 @@ msgstr "Fator de Conversão"
 
 #: CustItem.php:147 SelectOrderItems.php:1642
 msgid "Customer Item"
-msgstr "Item Cliente"
+msgstr ""
 
 #: CustItem.php:148
 msgid "Customer Description"
-msgstr "Descrição Cliente"
+msgstr ""
 
 #: CustItem.php:167
 #, php-format
 msgid "Are you sure you wish to delete this customer data?"
-msgstr "Confirma remoção dos dados desse cliente?"
+msgstr ""
 
 #: CustItem.php:196
 msgid ""
 "The customer details for the selected customer could not be retrieved because"
 msgstr ""
-"Detalhes do cliente para o cliente selecionado não podem ser recuperados "
-"porque"
 
 #: CustItem.php:205 Z_ChangeCustomerCode.php:20
 msgid "The customer code"
@@ -8590,19 +8571,17 @@ msgstr "Código Cliente"
 
 #: CustItem.php:205
 msgid "is not an existing customer in the database"
-msgstr "cliente não existente no DB"
+msgstr ""
 
 #: CustItem.php:205
 msgid ""
 "You must enter an alternative customer code or select a customer using the "
 "search facility below"
 msgstr ""
-"Favor informar um código cliente  alternativo ou selecionar um cliente "
-"usando a função pesquisar"
 
 #: CustItem.php:218
 msgid "Text in the customer"
-msgstr "Texto no nome do Cliente"
+msgstr ""
 
 #: CustItem.php:218 PurchData.php:381 SellThroughSupport.php:200
 #: SupplierPriceList.php:404
@@ -8611,7 +8590,7 @@ msgstr "NOME"
 
 #: CustItem.php:221
 msgid "Text in customer"
-msgstr "Texto no Nome do Cliente"
+msgstr ""
 
 #: CustItem.php:221 PurchData.php:384 SellThroughSupport.php:203
 #: SupplierPriceList.php:407
@@ -8620,24 +8599,22 @@ msgstr "CÓDIGO"
 
 #: CustItem.php:227
 msgid "Find Customers Now"
-msgstr "Pesquisar Clientes agora"
+msgstr ""
 
 #: CustItem.php:243
 msgid ""
 "Customer Name keywords have been used in preference to the customer Code "
 "extract entered"
 msgstr ""
-"Palavras chave Nome de Cliente usada em detrimento do código do Cliente "
-"informado"
 
 #: CustItem.php:273
 msgid ""
 "The cuswtomer matching the criteria entered could not be retrieved because"
-msgstr "Critério de localizar cliente informado não pode ser recuperado porque"
+msgstr ""
 
 #: CustItem.php:274
 msgid "The SQL to retrieve customer details that failed was"
-msgstr "Detalhes, do SQL que falhou, foi"
+msgstr ""
 
 #: CustItem.php:287 OffersReceived.php:107 PurchData.php:459 Stocks.php:594
 #: includes/PDFPeriodStockTransListingPageHeader.inc:47
@@ -8671,8 +8648,6 @@ msgid ""
 "The customer purchasing details for the selected customer and item could not "
 "be retrieved because"
 msgstr ""
-"Detalhes de compra do cliente para o cliente selecionado não podem ser "
-"recuperados porque"
 
 #: CustItem.php:394 PurchData.php:583
 msgid "A search facility is available below if necessary"
@@ -8684,7 +8659,7 @@ msgstr "Nossa Unidade de Medida"
 
 #: CustItem.php:425
 msgid "Customer Unit of Measure"
-msgstr "Unidade de medida do cliente"
+msgstr ""
 
 #: CustItem.php:434 PurchData.php:639
 msgid "Conversion Factor (to our UOM)"
@@ -8692,11 +8667,11 @@ msgstr "Fator de Conversão (para nosso armaz.)"
 
 #: CustItem.php:438
 msgid "Customer Stock Code"
-msgstr "Código estoque cliente"
+msgstr ""
 
 #: CustItem.php:442
 msgid "Customer Stock Description"
-msgstr "Descrição Estoque do Cliente"
+msgstr ""
 
 #: CustItem.php:455 MailingGroupMaintenance.php:250 ProductSpecs.php:163
 #: ProductSpecs.php:238 PurchData.php:763 SellThroughSupport.php:481
@@ -8898,31 +8873,29 @@ msgstr "Idioma"
 
 #: CustomerAccount.php:6
 msgid "Customer Account"
-msgstr "Conta Cliente"
+msgstr ""
 
 #: CustomerAccount.php:14
 msgid ""
 "To display the account a customer must first be selected from the customer "
 "selection screen"
 msgstr ""
-"Para exibir a conta do cliente, primeiro selecionar na tela de seleção de "
-"cliente"
 
 #: CustomerAccount.php:15
 msgid "Select a Customer Account to Display"
-msgstr "Selecionar Conta Cliente para Exibir"
+msgstr ""
 
 #: CustomerAccount.php:28 CustomerInquiry.php:28
 msgid "Failed to retrieve sales data"
-msgstr "Falha na recuperação dados de venda"
+msgstr ""
 
 #: CustomerAccount.php:37
 msgid "There is no salesman data set for this customer"
-msgstr "Não há dados do vendedor para esse cliente"
+msgstr ""
 
 #: CustomerAccount.php:42
 msgid "You have no authority to review this customer account"
-msgstr "Seu usuário/login não tem permissão para revisar conta desse cliente"
+msgstr ""
 
 #: CustomerAccount.php:56 PrintCustStatements.php:139
 msgid ""
@@ -8950,11 +8923,11 @@ msgstr "Há um problema recuperando transaç. para "
 
 #: CustomerAccount.php:216 CustomerInquiry.php:158
 msgid "Back to Customer Screen"
-msgstr "voltar para Tela Clientes"
+msgstr ""
 
 #: CustomerAccount.php:220
 msgid "Customer Statement For"
-msgstr "Dados Cliente para"
+msgstr ""
 
 #: CustomerAccount.php:231 CustomerInquiry.php:162 CustomerReceipt.php:1028
 #: SelectOrderItems.php:698 SupplierCredit.php:264 SupplierInquiry.php:123
@@ -9017,11 +8990,11 @@ msgstr "Saldo"
 
 #: CustomerAccount.php:275
 msgid "TRANSACTIONS SETTLED SINCE"
-msgstr "Transações lançadas desde"
+msgstr ""
 
 #: CustomerAccount.php:278
 msgid "OUTSTANDING TRANSACTIONS"
-msgstr "Transações Pendentes de Conciliação"
+msgstr ""
 
 #: CustomerAccount.php:306 CustomerInquiry.php:311 CustomerInquiry.php:357
 #: CustomerInquiry.php:396 CustomerTransInquiry.php:140
@@ -9297,7 +9270,7 @@ msgstr "Não há alocações a serem feitas"
 #: CustomerBalancesMovement.php:5 CustomerBalancesMovement.php:12
 #: includes/MainMenuLinksArray.php:118
 msgid "Customer Activity and Balances"
-msgstr "Atividade Cliente e Saldos"
+msgstr ""
 
 #: CustomerBalancesMovement.php:38 CustomerBranches.php:787
 #: SalesAnalRepts.php:20 SalesAnalRepts.php:22 SalesInquiry.php:776
@@ -9328,16 +9301,16 @@ msgstr "Data Final"
 
 #: CustomerBalancesMovement.php:66
 msgid "Create CSV"
-msgstr "Criar CSV"
+msgstr ""
 
 #: CustomerBalancesMovement.php:73
 msgid "Show Customer Balance Movements"
-msgstr "Exibir Saldo Movimento Cliente"
+msgstr ""
 
 #: CustomerBalancesMovement.php:116 CustomerBalancesMovement.php:122
 #: CustomerBalancesMovement.php:195 includes/DatabaseTranslations.php:55
 msgid "Opening Balance"
-msgstr "Saldo Abertura"
+msgstr ""
 
 #: CustomerBalancesMovement.php:117 CustomerBalancesMovement.php:122
 #: CustomerBalancesMovement.php:196 GLTransInquiry.php:50
@@ -9346,7 +9319,7 @@ msgstr "Deb."
 
 #: CustomerBalancesMovement.php:201 CustomerBalancesMovement.php:209
 msgid "TOTALS"
-msgstr "TOTAIS"
+msgstr ""
 
 #: CustomerBranches.php:6
 msgid "Customer Branches"
@@ -9424,8 +9397,6 @@ msgid ""
 "Warning - Geocode Integration is enabled, but no hosts are setup. Go to "
 "Geocode Setup"
 msgstr ""
-"Atenção - integração Geocode habilitada, mas nenhum host configurado. Vá "
-"para Config Geocode"
 
 #: CustomerBranches.php:134
 msgid "Geocode Notice"
@@ -9531,7 +9502,6 @@ msgid ""
 "Cannot delete this branch because it is the only branch defined for this "
 "customer."
 msgstr ""
-"Não pode remover essa sucursal pois é a única definida para esse cliente"
 
 #: CustomerBranches.php:355
 msgid "The branch record could not be deleted"
@@ -9840,23 +9810,23 @@ msgstr "Selecione Cliente"
 
 #: CustomerInquiry.php:37
 msgid "There is no salesman data set for this debtor"
-msgstr "Não há dados de vendedor para esse Devedor"
+msgstr ""
 
 #: CustomerInquiry.php:42
 msgid "You have no authority to review this data"
-msgstr "Seu login não tem autoridade para revisar esses dados"
+msgstr ""
 
 #: CustomerInquiry.php:57
 msgid "The balance status should be all or zero balance or not zero balance"
-msgstr "Status do saldo deve ser tudo ou saldo zero"
+msgstr ""
 
 #: CustomerInquiry.php:194 CustomerInquiry.php:199 CustomerInquiry.php:203
 msgid "Invoices not fully allocated"
-msgstr "Pedidos não alocados totalmente"
+msgstr ""
 
 #: CustomerInquiry.php:195 CustomerInquiry.php:200 CustomerInquiry.php:204
 msgid "Invoices fully allocated"
-msgstr "Pedidos totalmente alocados"
+msgstr ""
 
 #: CustomerInquiry.php:236 SupplierInquiry.php:194
 msgid "No transactions were returned by the SQL because"
@@ -9879,12 +9849,12 @@ msgstr "Clique para creditar o Pedido"
 #: CustomerInquiry.php:328 CustomerInquiry.php:455 CustomerInquiry.php:530
 #: CustomerInquiry.php:586 CustomerInquiry.php:636 SupplierInquiry.php:276
 msgid "Click to view the GL entries"
-msgstr "Clique para ver lançamentos GL"
+msgstr ""
 
 #: CustomerInquiry.php:330 CustomerInquiry.php:457 CustomerInquiry.php:532
 #: CustomerInquiry.php:588 CustomerInquiry.php:638 SupplierInquiry.php:277
 msgid "GL Entries"
-msgstr "Entradas GL"
+msgstr ""
 
 #: CustomerPurchases.php:6
 msgid "Customer Purchases"
@@ -9990,10 +9960,6 @@ msgid ""
 "accounts are automatically maintained. This setting can be disabled in "
 "System Configuration"
 msgstr ""
-"Pagamentos envolvendo conta de controle de devedores não pode ser informada. "
-"integração para devedores contábeis (AR) está habilidado, portanto as contas "
-"são automaticamente mantidas. Essas configurações podem ser desabilitadas em "
-"Config Sistema"
 
 #: CustomerReceipt.php:187 Payments.php:707
 msgid ""
@@ -10002,18 +9968,12 @@ msgid ""
 "enabled so control accounts are automatically maintained. This setting can "
 "be disabled in System Configuration"
 msgstr ""
-"Pagamentos envolvendo contas contábeis de controle de credores ou suspensão "
-"dos recebimentos não podem ser informados. Integração contábil para módulo "
-"(AP) podem ser automaticamente mantidas. Essa configuração pode ser feita em "
-"Config Sistema"
 
 #: CustomerReceipt.php:191 Payments.php:711
 msgid ""
 "Payments involving the retained earnings control account cannot be entered. "
 "This account is automtically maintained."
 msgstr ""
-"Conta Contábil dos pagamentos envolvendo retençao de lucros não pode ser "
-"informada. Essa conta é automaticamente mantida."
 
 #: CustomerReceipt.php:240
 msgid "The company has not yet been set up properly"
@@ -10244,7 +10204,7 @@ msgstr ""
 
 #: CustomerReceipt.php:1043
 msgid "Customer Transaction Inquiry"
-msgstr "Consulta Transações Cliente"
+msgstr ""
 
 #: CustomerReceipt.php:1052 SelectGLAccount.php:129 SelectGLAccount.php:144
 #, php-format
@@ -10456,24 +10416,22 @@ msgstr "registros de vendas desse cliente"
 
 #: Customers.php:323
 msgid "Cannot delete this customer because users exist that refer to it"
-msgstr "Não pode remover esse cliente pois existem usuários que o utilizam."
+msgstr ""
 
 #: Customers.php:333
 msgid ""
 "Cannot delete this customer because contracts have been created that refer "
 "to it"
 msgstr ""
-"Não pode remover este cliente porque contratos foram criados referindo-se a "
-"ele"
 
 #: Customers.php:334
 msgid "contracts referring to this customer"
-msgstr "contratos que referem esse cliente"
+msgstr ""
 
 #: Customers.php:348
 msgid ""
 "has been deleted - together with all the associated branches and contacts"
-msgstr "foi removido. junto com todas as sucursais e contatos associados"
+msgstr ""
 
 #: Customers.php:424
 msgid ""
@@ -11090,11 +11048,11 @@ msgstr "Média Diária Vendas"
 
 #: Dashboard.php:6 Dashboard.php:10
 msgid "Dashboard"
-msgstr "Painel Controle"
+msgstr ""
 
 #: Dashboard.php:15 Dashboard.php:42
 msgid "The security for Aging Debtors cannot be retrieved because"
-msgstr "A securança para Saldo de Devedores não ode ser recuperada porque."
+msgstr ""
 
 #: Dashboard.php:16 Dashboard.php:25 Dashboard.php:34 Dashboard.php:43
 #: ProductSpecs.php:78 ProductSpecs.php:282 ProductSpecs.php:317
@@ -11107,15 +11065,15 @@ msgstr "SQL usado foi"
 
 #: Dashboard.php:24
 msgid "The security for upcoming payments cannot be retrieved because"
-msgstr "A segurança para pagamentos não pode ser recuperada porque"
+msgstr ""
 
 #: Dashboard.php:33
 msgid "The security for G/L Accounts cannot be retrieved because"
-msgstr "A segurança para conta GL não pode ser recuperada porque"
+msgstr ""
 
 #: Dashboard.php:49
 msgid "Overdue Customer Balances"
-msgstr "Saldo do Cliente Excedido"
+msgstr ""
 
 #: Dashboard.php:55 includes/PDFCustTransListingPageHeader.inc:50
 #: includes/PDFPeriodStockTransListingPageHeader.inc:49
@@ -11152,7 +11110,7 @@ msgstr "Totais"
 
 #: Dashboard.php:367
 msgid "Supplier Invoices Due within 1 Month"
-msgstr "Ordem Compra Acum em 1 Mês"
+msgstr ""
 
 #: Dashboard.php:372 PrintCustTrans.php:788 PrintCustTransPortrait.php:857
 #: SalesInquiry.php:1088 SupplierInvoice.php:634
@@ -11161,7 +11119,7 @@ msgstr "Data do Aviso"
 
 #: Dashboard.php:374
 msgid "Amount Due"
-msgstr "Valor Acum."
+msgstr ""
 
 #: Dashboard.php:437 SuppPaymentRun.php:111
 msgid "The details of supplier invoices due could not be retrieved because"
@@ -11173,7 +11131,7 @@ msgstr "Total Geral Pagtos Feito"
 
 #: Dashboard.php:526
 msgid "Bank and Credit Card Balances"
-msgstr "Saldo Bancário e Cartão Crédito"
+msgstr ""
 
 #: Dashboard.php:601 Dashboard.php:620 GLAccountCSV.php:193
 #: GLAccountCSV.php:222 GLAccountInquiry.php:210 GLAccountInquiry.php:247
@@ -11183,7 +11141,7 @@ msgstr "Detalhes Plano de Contas"
 
 #: Dashboard.php:653
 msgid "Outstanding Orders"
-msgstr "Ordens Pendentes"
+msgstr ""
 
 #: Dashboard.php:656 ../webSHOP/includes/Functions.php:63
 #: ../webSHOP/includes/header.php:193
@@ -12940,7 +12898,7 @@ msgstr ""
 
 #: FixedAssetCategories.php:316
 msgid "Profit or Loss on Disposal GL Code"
-msgstr "Código GL Lucros e Perdas "
+msgstr ""
 
 #: FixedAssetCategories.php:317
 msgid ""
@@ -14064,7 +14022,7 @@ msgstr "GeoCode para Clientes e Fornecedores"
 
 #: geocode.php:54
 msgid "Customer Code: "
-msgstr "Código Cliente:"
+msgstr ""
 
 #: geocode.php:89
 msgid "failed to geocode."
@@ -14206,7 +14164,7 @@ msgstr "Exibir Mapas de Fornecedores"
 
 #: geo_displaymap_customers.php:5
 msgid "Geocoded Customers Report"
-msgstr "Relatório de Clientes com GeoCode"
+msgstr ""
 
 #: geo_displaymap_customers.php:118 geo_displaymap_suppliers.php:118
 msgid "Go to Geocode Setup"
@@ -14673,21 +14631,21 @@ msgstr ""
 
 #: GLAccountUsers.php:191 LocationUsers.php:192
 msgid "Are you sure you wish to remove Update for this user?"
-msgstr "Confirma remover usuário para o Local?"
+msgstr ""
 
 #: GLAccountUsers.php:191 LocationUsers.php:192 UserGLAccounts.php:197
 #: UserLocations.php:193
 msgid "Remove Update"
-msgstr "Remoção atualizada"
+msgstr ""
 
 #: GLAccountUsers.php:194 LocationUsers.php:194
 msgid "Are you sure you wish to add Update for this user?"
-msgstr "Confirma adição para esse usuário?"
+msgstr ""
 
 #: GLAccountUsers.php:194 LocationUsers.php:194 UserGLAccounts.php:200
 #: UserLocations.php:195
 msgid "Add Update"
-msgstr "Adic. Atualização"
+msgstr ""
 
 #: GLAccountUsers.php:201
 msgid "GL account does not have access permissions for users"
@@ -14707,7 +14665,7 @@ msgstr ""
 
 #: GLBalanceSheet.php:22
 msgid "Print Statement of Financial Position"
-msgstr "Imprimir Posição Financeira ou Balancete"
+msgstr ""
 
 #: GLBalanceSheet.php:27
 msgid ""
@@ -14759,7 +14717,7 @@ msgstr "Não há entradas a serem impressas para as seleções especificadas"
 
 #: GLBalanceSheet.php:399
 msgid "Statement of Financial Position"
-msgstr "Posição Financeira Lançamentos"
+msgstr ""
 
 #: GLBalanceSheet.php:413 GLBalanceSheet.php:419 GLProfit_Loss.php:639
 #: GLProfit_Loss.php:646 includes/PDFBalanceSheetPageHeader.inc:30
@@ -15017,7 +14975,7 @@ msgstr ""
 
 #: GLProfit_Loss.php:25
 msgid "Print Statement of Comprehensive Income"
-msgstr "Imprimir Lançamentos Entradas"
+msgstr ""
 
 #: GLProfit_Loss.php:26
 msgid "Print Profit and Loss Report"
@@ -15092,7 +15050,7 @@ msgstr "Percent. Lucro Líq."
 
 #: GLProfit_Loss.php:620
 msgid "Statement of Comprehensive Income"
-msgstr "Entradas de Lançamentos"
+msgstr ""
 
 #: GLProfit_Loss.php:621 includes/MainMenuLinksArray.php:376
 msgid "Profit and Loss Statement"
@@ -15232,7 +15190,7 @@ msgstr ""
 
 #: GLTrialBalance.php:34
 msgid "Print Trial Balance"
-msgstr "Imprimir Balancete Analítico"
+msgstr ""
 
 #: GLTrialBalance.php:55 SalesGraph.php:43
 msgid "Select Period From:"
@@ -15267,7 +15225,7 @@ msgstr "Balancete para o mês de"
 
 #: GLTrialBalance.php:444
 msgid " AND for the "
-msgstr "e para "
+msgstr ""
 
 #: GLTrialBalance.php:454 includes/PDFTrialBalancePageHeader.inc:30
 msgid "Month Actual"
@@ -15652,7 +15610,7 @@ msgstr "Imprime Doc. Entrada Merc. DEM/GRN"
 
 #: GoodsReceived.php:800
 msgid "Print QA Labels for this Receipt"
-msgstr "Imprimir Etiq. QA desse Recebimento"
+msgstr ""
 
 #: GoodsReceived.php:815
 msgid "Modify Order Items"
@@ -15664,7 +15622,7 @@ msgstr "Processar Recebimentos"
 
 #: HistoricalTestResults.php:5
 msgid "Historical Test Results"
-msgstr "Resultados Testes Históricos"
+msgstr ""
 
 #: HistoricalTestResults.php:26 MRPCalendar.php:47 POReport.php:88
 #: POReport.php:871 SalesInquiry.php:82 SelectQASamples.php:166
@@ -15680,37 +15638,37 @@ msgstr "Data Final Inválida"
 
 #: HistoricalTestResults.php:51
 msgid "Show Test Results For"
-msgstr "Exibir Resultado Testes para"
+msgstr ""
 
 #: HistoricalTestResults.php:72 SelectQASamples.php:251
 #: TestPlanResults.php:128
 msgid "From Sample Date"
-msgstr "Data Inicial"
+msgstr ""
 
 #: HistoricalTestResults.php:76 SelectQASamples.php:251
 #: TestPlanResults.php:128
 msgid "To Sample Date"
-msgstr "Data Final"
+msgstr ""
 
 #: HistoricalTestResults.php:134
 msgid "Historical Test Results for"
-msgstr "Testar resultados históricos para"
+msgstr ""
 
 #: HistoricalTestResults.php:136
 msgid "Sample ID:"
-msgstr "ID Amostra:"
+msgstr ""
 
 #: HistoricalTestResults.php:136 PDFGrn.php:146 PDFStockTransfer.php:135
 msgid "Lot/Serial:"
-msgstr "Lote Série:"
+msgstr ""
 
 #: HistoricalTestResults.php:136
 msgid "Identifier:"
-msgstr "Identif:"
+msgstr ""
 
 #: HistoricalTestResults.php:136
 msgid "Sample Date:"
-msgstr "Data Amostra:"
+msgstr ""
 
 #: ImportBankTransAnalysis.php:14
 msgid "Imported Bank Transaction General Ledger Analysis"
@@ -15859,16 +15817,14 @@ msgid ""
 "bank statement transactions. First define the file format used by your bank "
 "for statement exports."
 msgstr ""
-"Não há contas bancárias definidas para importar transações bancárias. "
-"Definir o formato do arquivo exportado pelo seu banco."
 
 #: ImportBankTrans.php:38
 msgid "Setup Import Format for Bank Accounts"
-msgstr "Config formato Importação Contas Bancárias"
+msgstr ""
 
 #: ImportBankTrans.php:46
 msgid "Bank Account to Import Transaction For"
-msgstr "Conta Bancária para importar transações"
+msgstr ""
 
 #: ImportBankTrans.php:56
 msgid "MT940 format Bank Statement File to import"
@@ -15883,8 +15839,6 @@ msgid ""
 "The file size is over the maximum allowed. The maximum size allowed is 1 "
 "megabyte. This file size is (bytes)"
 msgstr ""
-"O tamanho excede o máximo permitido. O máximo é 1 megabyte. Esse arquivo tem "
-"(bytes)"
 
 #: ImportBankTrans.php:71 includes/ImportBankTrans_MT940_SCB.php:30
 msgid "The MT940 bank statement file cannot be imported and processed"
@@ -16236,7 +16190,7 @@ msgstr "Produto"
 
 #: InternalStockRequestAuthorisation.php:107
 msgid "Cancel Line"
-msgstr "Cancela Linha"
+msgstr ""
 
 #: InternalStockRequestFulfill.php:7 InternalStockRequestFulfill.php:14
 msgid "Fulfill Stock Requests"
@@ -16596,11 +16550,11 @@ msgstr "Não há itens no intervalo e local especificados"
 
 #: InventoryPlanning.php:419 InventoryValuation.php:197
 msgid "Category ID"
-msgstr "ID Categoria"
+msgstr ""
 
 #: InventoryPlanning.php:430
 msgid "The stock usage of this item could not be retrieved because"
-msgstr "Uso do estoque desse item não pode ser recuperado porque"
+msgstr ""
 
 #: InventoryPlanning.php:455
 msgid "Inventory Planning Reporting"
@@ -16609,7 +16563,7 @@ msgstr "Relatório Planejamento Estoque"
 #: InventoryPlanning.php:467 InventoryValuation.php:226 PDFPriceList.php:293
 #: StockCheck.php:262
 msgid "Select Inventory Categories"
-msgstr "Selecionar Categoria Inventário"
+msgstr ""
 
 #: InventoryPlanning.php:485 InventoryPlanningPrefSupplier.php:393
 #: InventoryValuation.php:244 StockCheck.php:280
@@ -16633,7 +16587,7 @@ msgstr "Um Mês MAX"
 
 #: InventoryPlanning.php:504
 msgid "One Month and a half MAX"
-msgstr "1 Mês e meio MAX"
+msgstr "1 Mês e 50% MAX"
 
 #: InventoryPlanning.php:505
 msgid "Two Months MAX"
@@ -16677,7 +16631,7 @@ msgstr "4 meses AVG"
 
 #: InventoryPlanning.php:522
 msgid "Export 24 months to CSV"
-msgstr "Exportar 24 meses para CSV"
+msgstr ""
 
 #: InventoryPlanningPrefSupplier.php:49
 msgid "Preferred Supplier Inventory Plan"
@@ -16755,7 +16709,7 @@ msgstr "Estoque planejado com base nos prazos do fornecedor principal"
 
 #: InventoryPlanningPrefSupplier.php:350
 msgid "Nil"
-msgstr "Nenhum"
+msgstr "***"
 
 #: InventoryPlanningPrefSupplier.php:383
 msgid "Preferred Supplier Inventory Planning"
@@ -16870,7 +16824,7 @@ msgstr "Relatório Valorização Estoque"
 
 #: InventoryValuation.php:274
 msgid "Output to CSV"
-msgstr "Saída para CSV"
+msgstr ""
 
 #: Labels.php:6
 msgid "Label Templates"
@@ -16890,9 +16844,6 @@ msgid ""
 "installation is not capable currently. You will most likely experience "
 "problems with this script until the GD module is enabled."
 msgstr ""
-"Módulo GD para PHP é requerido para imprimir código de barras. Sua "
-"instalação não encontrou esse módulo. Verificar pois podem haver problemas "
-"até o GD ser habilitado."
 
 #: Labels.php:141
 msgid ""
@@ -17109,11 +17060,11 @@ msgstr "e novos locais de estoque inseridos para todos os itens existentes"
 msgid ""
 "The users/locations that need user location records created cannot be "
 "retrieved because"
-msgstr "Registro Usuário / Local não pode ser recuperado porque"
+msgstr ""
 
 #: Locations.php:205
 msgid "Existing users have been authorized for this location"
-msgstr "Usuários existentes foram autorizados para esse local"
+msgstr ""
 
 #: Locations.php:278
 msgid ""
@@ -17241,7 +17192,7 @@ msgstr "Imposto Local."
 
 #: Locations.php:414 Locations.php:701
 msgid "Allow Invoicing"
-msgstr "Permitir Pedido"
+msgstr ""
 
 #: Locations.php:440
 #, php-format
@@ -17317,7 +17268,6 @@ msgstr ""
 #: Locations.php:638
 msgid "The email address should be an email format such as adm@weberp.org"
 msgstr ""
-"Endereço de email deve ser um email com formato válido usuario@dominio.com"
 
 #: Locations.php:659
 msgid "Default Counter Sales Customer Code"
@@ -17354,67 +17304,64 @@ msgstr "Permite req. Interna?"
 
 #: Locations.php:682
 msgid "Use for Work Order Productions?"
-msgstr "Usar Ordens de Produção?"
+msgstr ""
 
 #: Locations.php:696
 msgid ""
 "Enter the GL account for this location, or leave it in blank if not needed"
 msgstr ""
-"Informar contas GL para esse local ou deixar em branco se desnecessário"
 
 #: Locations.php:700
 msgid ""
 "Use this parameter to indicate whether these inventory location allows or "
 "denies the invoicing of its items."
 msgstr ""
-"Use esse parâmetro para indicar quando local de inventário permite ou nega "
-"solicitação de itens."
 
 #: LocationUsers.php:5 includes/MainMenuLinksArray.php:544
 msgid "Inventory Location Authorised Users Maintenance"
-msgstr "Manutenção Usuários Aut. Local Inventário"
+msgstr ""
 
 #: LocationUsers.php:10
 msgid "Location Authorised Users"
-msgstr "Usuários Autorizados para Local"
+msgstr ""
 
 #: LocationUsers.php:33
 msgid "You have not selected any Location"
-msgstr "Selecionar algum local"
+msgstr ""
 
 #: LocationUsers.php:46
 msgid "You have not selected an user to be authorised to use this Location"
-msgstr "Favor escolher um usuário para ser autorizado para esse local"
+msgstr ""
 
 #: LocationUsers.php:65
 msgid "is already authorised to use this location"
-msgstr "já está autorizado para esse local"
+msgstr ""
 
 #: LocationUsers.php:77 UserBankAccounts.php:74 UserLocations.php:77
 msgid "authority to use the"
-msgstr "autorizado para usar"
+msgstr ""
 
 #: LocationUsers.php:77 UserLocations.php:77
 msgid "location has been changed"
-msgstr "local foi modificado"
+msgstr ""
 
 #: LocationUsers.php:88 LocationUsers.php:98 UserLocations.php:88
 #: UserLocations.php:98
 msgid "The Location user record could not be deleted because"
-msgstr "O registro de usuário não pode ser removido porque"
+msgstr ""
 
 #: LocationUsers.php:90 UserBankAccounts.php:87 UserLocations.php:90
 msgid "has had their authority to use the"
-msgstr "pois tem autorização para usar"
+msgstr ""
 
 #: LocationUsers.php:90 LocationUsers.php:100 UserLocations.php:90
 #: UserLocations.php:100
 msgid "location removed"
-msgstr "local removido"
+msgstr ""
 
 #: LocationUsers.php:100 UserLocations.php:100
 msgid "has had their authority to update"
-msgstr "teve sua autoridade modificada"
+msgstr ""
 
 #: LocationUsers.php:112 NoSalesItems.php:19 TopItems.php:24
 #: UserLocations.php:223
@@ -17423,7 +17370,7 @@ msgstr "Selec. Local"
 
 #: LocationUsers.php:171
 msgid "Authorised users for Location"
-msgstr "Usuários autorizados para Local"
+msgstr ""
 
 #: MailingGroupMaintenance.php:3 includes/MainMenuLinksArray.php:490
 msgid "Mailing Group Maintenance"
@@ -18194,7 +18141,7 @@ msgstr "Usar Demanda ERP"
 
 #: MRP.php:592
 msgid "Use Reorder Level Demands"
-msgstr "Usar Ponto de Pedido"
+msgstr ""
 
 #: MRP.php:596
 msgid "Use EOQ"
@@ -18218,7 +18165,7 @@ msgstr "Usar Demanda MRP?"
 
 #: MRP.php:642
 msgid "Use Reorder Level Demands?"
-msgstr "Usar Nível de Pedido?"
+msgstr ""
 
 #: MRP.php:646
 msgid "Use EOQ?"
@@ -18266,7 +18213,7 @@ msgstr " até "
 #: MRPPlannedPurchaseOrders.php:116
 msgid ""
 "The MRP planned purchase orders could not be retrieved by the SQL because"
-msgstr "SQL Ordens de compra planejamento MRP não podem ser recuperadas porque"
+msgstr " "
 
 #: MRPPlannedPurchaseOrders.php:125
 msgid "Print MRP Planned Purchase Orders Error"
@@ -18493,7 +18440,7 @@ msgstr "Disp. Proj."
 
 #: MRPReport.php:283 MRPReport.php:353 MRPReport.php:423
 msgid "Planned Acc"
-msgstr "Conta Planej"
+msgstr ""
 
 #: MRPReport.php:438
 msgid "Dem Type"
@@ -19656,23 +19603,23 @@ msgstr "Dias ou Dia no Próximo mês"
 
 #: PcAnalysis.php:179
 msgid "Excel file for petty Cash Expenses Analysis"
-msgstr "Arquivo excel para Análise Despesas Pequeno Caixa"
+msgstr ""
 
 #: PcAnalysis.php:192 PcAnalysis.php:202
 msgid "Excel file for Petty Cash Expenses Analysis"
-msgstr "Arquivo Excel para Análise Despesas Pequeno Caixa"
+msgstr ""
 
 #: PcAnalysis.php:207
 msgid "For Petty Cash Tabs"
-msgstr "Abas para Pequeno Caixa"
+msgstr ""
 
 #: PcAnalysis.php:215
 msgid "All Tabs"
-msgstr "Todas abas"
+msgstr ""
 
 #: PcAnalysis.php:228
 msgid "Create Petty Cash Expenses Excel File"
-msgstr "Criar arquivo despesas pequeno caixa"
+msgstr ""
 
 #: PcAssignCashToTab.php:5
 msgid "Assignment of Cash to Petty Cash Tab"
@@ -19782,7 +19729,7 @@ msgstr "Fundo Fixo"
 
 #: PcAuthorizeExpenses.php:46 PcAuthorizeExpenses.php:49
 msgid "Authorisation Of Petty Cash Expenses"
-msgstr "Autorização Despesas Pequeno Caixa"
+msgstr ""
 
 #: PcAuthorizeExpenses.php:64
 msgid "Detail Of Movement For Last "
@@ -20454,7 +20401,7 @@ msgstr ""
 
 #: PDFCOA.php:27
 msgid "Select Certificate of Analysis To Print"
-msgstr "Selec. Certificado de Análise para Imprimir"
+msgstr ""
 
 #: PDFCOA.php:35 PO_Items.php:844
 msgid "Enter Item"
@@ -20462,68 +20409,68 @@ msgstr "Entrar Este Item"
 
 #: PDFCOA.php:37
 msgid "Enter Lot"
-msgstr "Informar Lote"
+msgstr ""
 
 #: PDFCOA.php:51
 msgid "Or Select Existing Lot"
-msgstr "Ou Selec. Lote Existente"
+msgstr ""
 
 #: PDFCOA.php:64
 msgid "Lot/Serial"
-msgstr "Lote / Série"
+msgstr ""
 
 #: PDFCOA.php:81
 msgid "There was a problem retrieving the Lot Information"
-msgstr "Há um problema na recuperação da informação do lote"
+msgstr ""
 
 #: PDFCOA.php:126
 msgid "Print Certificate of Analysis Error"
-msgstr "Imprimir Certif. de Análise de Erro"
+msgstr ""
 
 #: PDFCOA.php:132
 msgid "Unable to Locate Lot"
-msgstr "Não localizou o Lote"
+msgstr ""
 
 #: PDFCOA.php:139 PDFCOA.php:157 PDFCOA.php:158 includes/PDFCOAHeader.inc:28
 msgid "Certificate of Analysis"
-msgstr "Certificado de Análise"
+msgstr ""
 
 #: PDFCOA.php:169
 msgid "Physical Properties"
-msgstr "Propriedades Físicas"
+msgstr ""
 
 #: PDFCOA.php:169 PDFCOA.php:170 PDFProdSpec.php:130 PDFProdSpec.php:131
 msgid "Physical Property"
-msgstr "Propriedade Física"
+msgstr ""
 
 #: PDFCOA.php:169 PDFCOA.php:170 PDFProdSpec.php:130 PDFProdSpec.php:131
 #: TestPlanResults.php:804
 msgid "Test Method"
-msgstr "Método de Teste"
+msgstr ""
 
 #: PDFCOA.php:170 PDFProdSpec.php:131
 msgid "Header"
-msgstr "Cabeçalho"
+msgstr ""
 
 #: PDFCOA.php:170 PDFProdSpec.php:131
 msgid "* Trailer"
-msgstr "* Rodapé"
+msgstr ""
 
 #: PDFCOA.php:171 PDFProdSpec.php:132
 msgid "Injection Molding Processing Guidelines"
-msgstr "Guia Processamento Injeção Moldes"
+msgstr ""
 
 #: PDFCOA.php:171 PDFProdSpec.php:132
 msgid "* Desicant type dryer required."
-msgstr "* Tipo de Secante Requerido."
+msgstr ""
 
 #: PDFCOA.php:171 PDFProdSpec.php:132
 msgid "Setting"
-msgstr "Configuração"
+msgstr ""
 
 #: PDFCOA.php:172 PDFProdSpec.php:133
 msgid "Regulatory Compliance"
-msgstr "Regulamento Acordo"
+msgstr ""
 
 #: PDFCustomerList.php:12 PDFCustomerList.php:13
 msgid "Customer Listing"
@@ -20796,7 +20743,7 @@ msgstr "Relatório DIFOT de"
 
 #: PDFFGLabel.php:94
 msgid "FG Label"
-msgstr "FG Rótulo"
+msgstr ""
 
 #: PDFFGLabel.php:146 PDFGrn.php:133 PDFQALabel.php:66
 #: PDFStockTransfer.php:121 ReverseGRN.php:79
@@ -20810,7 +20757,7 @@ msgstr "telef."
 
 #: PDFFGLabel.php:182 PDFWOPrint.php:479
 msgid "Please Process this Work order number"
-msgstr "Por favor processar essa Ordem Número"
+msgstr ""
 
 #: PDFFGLabel.php:193 PDFWOPrint.php:490 PO_PDFPurchOrder.php:343
 msgid "The SMTP settings are wrong, please ask administrator for help"
@@ -20818,7 +20765,7 @@ msgstr "Conf. SMTP estão incorretas. Solicite ajuda do admin."
 
 #: PDFFGLabel.php:199 PDFFGLabel.php:205 PDFWOPrint.php:496 PDFWOPrint.php:502
 msgid "Email a Work Order"
-msgstr "Email Ordem de Produção"
+msgstr ""
 
 #: PDFFGLabel.php:202 PDFWOPrint.php:499 PO_PDFPurchOrder.php:352
 #: PrintCustTrans.php:505 PrintCustTransPortrait.php:539
@@ -20831,7 +20778,7 @@ msgstr "diretamente"
 
 #: PDFFGLabel.php:208 PDFWOPrint.php:505
 msgid "Emailing Work order"
-msgstr "Email Ordem Produção"
+msgstr ""
 
 #: PDFFGLabel.php:208 PDFWOPrint.php:505 PO_PDFPurchOrder.php:358
 #: Z_ChangeStockCode.php:172
@@ -20840,11 +20787,11 @@ msgstr "falhou"
 
 #: PDFFGLabel.php:214
 msgid "Label Error"
-msgstr "Erro Etiqueta"
+msgstr ""
 
 #: PDFFGLabel.php:216
 msgid "There were no labels to print"
-msgstr "Não há etiqueta para imprimir"
+msgstr ""
 
 #: PDFGLJournal.php:28
 msgid "General Ledger Journal"
@@ -21147,7 +21094,7 @@ msgstr ""
 
 #: PDFPriceList.php:26
 msgid "Price list by inventory category"
-msgstr "Lista de preço por categoria Inventário"
+msgstr ""
 
 #: PDFPriceList.php:38 PDFPriceList.php:340 PDFPriceList.php:389
 msgid "Customer Special Prices Only"
@@ -21214,7 +21161,7 @@ msgstr "Lista Preço"
 
 #: PDFPriceList.php:285
 msgid "Print a price list by inventory category"
-msgstr "Imprimir lista preço por categoria"
+msgstr ""
 
 #: PDFPriceList.php:310 PDFPrintLabel.php:307 Z_DataExport.php:542
 msgid "For Sales Type/Price List"
@@ -21258,7 +21205,7 @@ msgstr "Data Vigência"
 
 #: PDFPriceList.php:441
 msgid "Prices excluding tax"
-msgstr "Preço excluindo impostos"
+msgstr ""
 
 #: PDFPrintLabel.php:41
 msgid "The Price Labels could not be retrieved by the SQL because"
@@ -21309,55 +21256,53 @@ msgstr "Exibir Detalhes"
 
 #: PDFProdSpec.php:17
 msgid "Select Product Specification To Print"
-msgstr "Selecione Especificação do Produto para Imprimir"
+msgstr ""
 
 #: PDFProdSpec.php:25 ProductSpecs.php:94
 msgid "Enter Specification Name"
-msgstr "Informar Nome da Especificação"
+msgstr ""
 
 #: PDFProdSpec.php:39 ProductSpecs.php:108
 msgid "Or Select Existing Specification"
-msgstr "ou Selecionar Especificação Existente"
+msgstr ""
 
 #: PDFProdSpec.php:65
 msgid "There was a problem retrieving the Product Specification"
-msgstr "Há um problema na recuperação especificação do produto"
+msgstr ""
 
 #: PDFProdSpec.php:91
 msgid "Print Product Specification Error"
-msgstr "Erro na impressão Especif. do Produto"
+msgstr ""
 
 #: PDFProdSpec.php:97
 msgid "Unable to Locate Specification"
-msgstr "Não foi possível localizar especificação"
+msgstr ""
 
 #: PDFProdSpec.php:104 includes/MainMenuLinksArray.php:343
 msgid "Product Specifications"
-msgstr "Especificação Produto"
+msgstr ""
 
 #: PDFProdSpec.php:118 PDFProdSpec.php:119 ProductSpecs.php:349
 msgid "Product Specification"
-msgstr "Especificação Produto"
+msgstr ""
 
 #: PDFProdSpec.php:130
 msgid "Technical Data Sheet Properties"
-msgstr "Folha Dados e Propriedades Técnicas"
+msgstr ""
 
 #: PDFProdSpec.php:130
 msgid "* Data herein is typical and not to be construed as specifications."
-msgstr "* Dados descritos são típicos e não são especificações"
+msgstr ""
 
 #: PDFProdSpec.php:266
 msgid ""
 "The information provided on this datasheet should only be used as a "
 "guideline. Actual lot to lot values will vary."
 msgstr ""
-"A informação registrada aqui nesse formulário deve ser apenas um guia. "
-"Haverá variações em cada lote."
 
 #: PDFQALabel.php:20
 msgid "QA Label"
-msgstr "Etiqueta QA"
+msgstr ""
 
 #: PDFQuotation.php:12 PDFQuotationPortrait.php:12
 msgid "Select Quotation To Print"
@@ -21518,15 +21463,15 @@ msgstr "Este Pagamento"
 
 #: PDFSalesBySalesperson.php:15 PDFWeeklyOrders.php:15
 msgid "Weekly Orders"
-msgstr "Pedidos Semanais"
+msgstr ""
 
 #: PDFSalesBySalesperson.php:17 PDFWeeklyOrders.php:17
 msgid "There are no members of the Weekly Orders Recipients email group"
-msgstr "Não há membros no grupo de email Pedidos Semanais"
+msgstr ""
 
 #: PDFSalesBySalesperson.php:64 PDFWeeklyOrders.php:60 PDFWeeklyOrders.php:197
 msgid "Weekly Orders Report"
-msgstr "Relatório Pedidos Semanais"
+msgstr ""
 
 #: PDFSalesBySalesperson.php:88 PDFWeeklyOrders.php:84 ReverseGRN.php:31
 #: SalesByTypePeriodInquiry.php:356 SalesTopCustomersInquiry.php:218
@@ -21537,27 +21482,27 @@ msgstr "Vendas"
 
 #: PDFSalesBySalesperson.php:106 PDFWeeklyOrders.php:103
 msgid "Partial"
-msgstr "Parcial"
+msgstr ""
 
 #: PDFSalesBySalesperson.php:146
 msgid "Please find the Sales By Salesperson report"
-msgstr "Por favor localizar relatório Por Vendedor"
+msgstr ""
 
 #: PDFSalesBySalesperson.php:147
 msgid "Sales By Salesperson Report"
-msgstr "Relatório por Vendedor"
+msgstr ""
 
 #: PDFSalesBySalesperson.php:157 PDFWeeklyOrders.php:206
 msgid "Print Weekly Orders"
-msgstr "Imprimir Ordens Semanais"
+msgstr ""
 
 #: PDFSalesBySalesperson.php:159 PDFWeeklyOrders.php:208
 msgid "The Weekly Orders report has been mailed"
-msgstr "Relatório Pedidos Semanais foi enviado por email"
+msgstr ""
 
 #: PDFSalesBySalesperson.php:165 PDFWeeklyOrders.php:214
 msgid "Print Weekly Orders Error"
-msgstr "Erro ao Imprimir Pedidos Semanais"
+msgstr ""
 
 #: PDFSellThroughSupportClaim.php:6 PDFSellThroughSupportClaim.php:164
 #: includes/MainMenuLinksArray.php:70
@@ -21660,7 +21605,7 @@ msgstr "Os contadores de estoque não foram recuperados porque"
 
 #: PDFStockCheckComparison.php:282
 msgid "Bin:"
-msgstr "Baia:"
+msgstr ""
 
 #: PDFStockCheckComparison.php:291
 msgid "No counts entered"
@@ -21711,11 +21656,11 @@ msgstr "Transfer. Local Estoque para Reimpressão"
 
 #: PDFStockLocTransfer.php:40 PDFStockTransfer.php:45
 msgid "Transfer docket to reprint Shipping Labels"
-msgstr "Transf. para reimpressão Etiquetas Envio"
+msgstr ""
 
 #: PDFStockLocTransfer.php:46 PDFStockTransfer.php:51
 msgid "Print Shipping Labels"
-msgstr "Imprimir Etiquetas Envio"
+msgstr ""
 
 #: PDFStockLocTransfer.php:55 PDFStockLocTransfer.php:56
 msgid "Inventory Location Transfer BOL"
@@ -21818,35 +21763,35 @@ msgstr "Resultado Pesq. Princ. Itens"
 
 #: PDFWeeklyOrders.php:138
 msgid "Total Order Amounts"
-msgstr "Total Pedido"
+msgstr ""
 
 #: PDFWeeklyOrders.php:184
 msgid "Monthly Invoiced Total"
-msgstr "Total Pedidos Mês"
+msgstr ""
 
 #: PDFWeeklyOrders.php:196
 msgid "Please find the weekly order report"
-msgstr "Por favor localizar relatório pedido semanal"
+msgstr ""
 
 #: PDFWOPrint.php:89
 msgid "Select a Work Order"
-msgstr "Selec. Ordem Produção"
+msgstr ""
 
 #: PDFWOPrint.php:92
 msgid "Select a Work Order Number to Print before calling this page"
-msgstr "Selecionar Número Ordem Produção para imprimir antes dessa página."
+msgstr ""
 
 #: PDFWOPrint.php:98 PDFWOPrint.php:187
 msgid "Select Work Order"
-msgstr "Selecionar Ordem de Produção"
+msgstr ""
 
 #: PDFWOPrint.php:108
 msgid "This page must be called with a Work order number to print"
-msgstr "Essa página deve ser chamada com um número de Ordem"
+msgstr ""
 
 #: PDFWOPrint.php:118
 msgid "Print Work Order Number"
-msgstr "Imprimir Número Ordem Produção"
+msgstr ""
 
 #: PDFWOPrint.php:122 PO_PDFPurchOrder.php:45
 msgid ""
@@ -21858,19 +21803,18 @@ msgstr "O endereço de email não é valido. nenhum email foi enviado"
 msgid ""
 "There was a problem retrieving the Work order header details for Order Number"
 msgstr ""
-"Há problema na recuperação do cabeçalho / detalhes de ordem de produção "
 
 #: PDFWOPrint.php:178
 msgid "Print Work Order Error"
-msgstr "Erro na impressão Ordem Produção"
+msgstr ""
 
 #: PDFWOPrint.php:181
 msgid "Unable to Locate Work Order Number"
-msgstr "Não localizou Ordem de Produção"
+msgstr ""
 
 #: PDFWOPrint.php:451
 msgid "Signed for: "
-msgstr "Assinado por:"
+msgstr ""
 
 #: PDFWOPrint.php:581 PDFWOPrint.php:664 PO_PDFPurchOrder.php:388
 msgid "Print or Email the Order"
@@ -21878,35 +21822,35 @@ msgstr "Imprimir ou Enviar Email da Ord. Compra"
 
 #: PDFWOPrint.php:612
 msgid "There was a problem retrieving the contact details for the location"
-msgstr "Há um problema na recuperação dos detalhes do contato para o local"
+msgstr ""
 
 #: PDFWOPrint.php:656
 msgid "Label Item"
-msgstr "Etiq. Item"
+msgstr ""
 
 #: PDFWOPrint.php:658
 msgid "Label Lot"
-msgstr "Etiq. Lote "
+msgstr ""
 
 #: PDFWOPrint.php:659
 msgid "No of Full Packages"
-msgstr "Número Pacotes"
+msgstr ""
 
 #: PDFWOPrint.php:660
 msgid "Labels/Package"
-msgstr "Etiquetas Pacotes"
+msgstr ""
 
 #: PDFWOPrint.php:661
 msgid "Weight/Package"
-msgstr "Peso Pacotes"
+msgstr ""
 
 #: PDFWOPrint.php:662
 msgid "LeftOver Qty"
-msgstr "Quant. Total"
+msgstr ""
 
 #: PDFWOPrint.php:707
 msgid "Labels"
-msgstr "Etiquetas"
+msgstr ""
 
 #: PeriodsInquiry.php:7
 msgid "Periods Inquiry"
@@ -22743,11 +22687,11 @@ msgstr "cada"
 
 #: PO_Items.php:1062
 msgid "Failed to retrieve result count"
-msgstr "Falhou em recuperar contagem resultado"
+msgstr ""
 
 #: PO_Items.php:1063
 msgid "The SQL failed is "
-msgstr "SQL que falhou foi"
+msgstr ""
 
 #: PO_Items.php:1124
 msgid "Item Category"
@@ -22864,7 +22808,7 @@ msgstr "Imprimir uma Cópia"
 
 #: PO_OrderDetails.php:160
 msgid "Status Coments"
-msgstr "Comentário Status"
+msgstr ""
 
 #: PO_OrderDetails.php:169
 msgid "The line items of the purchase order could not be retrieved"
@@ -23202,7 +23146,7 @@ msgstr "No Local Estoque"
 
 #: PO_SelectOSPurchOrder.php:174
 msgid "Failed to retrieve location data"
-msgstr "Falhou na recuperação dados do local"
+msgstr ""
 
 #: PO_SelectOSPurchOrder.php:226 PO_SelectPurchOrder.php:134
 msgid "Order Status:"
@@ -23214,7 +23158,7 @@ msgstr "Pend. e Autoriz."
 
 #: PO_SelectOSPurchOrder.php:256
 msgid "Orders Between"
-msgstr "Pedidos entre"
+msgstr ""
 
 #: PO_SelectOSPurchOrder.php:260 PO_SelectPurchOrder.php:5
 #: PO_SelectPurchOrder.php:165
@@ -23284,15 +23228,15 @@ msgstr "Requisição"
 
 #: PriceMatrix.php:6
 msgid "Price break matrix Maintenance"
-msgstr "Manutenção Matrix Preços"
+msgstr ""
 
 #: PriceMatrix.php:31
 msgid "at which the price will apply is 0 or less than 0"
-msgstr "na qual o preço aplicado é zero ou menor que"
+msgstr ""
 
 #: PriceMatrix.php:35
 msgid "The price must be entered as a positive number"
-msgstr "O preço deve ser informado como um número positivo"
+msgstr ""
 
 #: PriceMatrix.php:40 PricesBasedOnMarkUp.php:191 Prices_Customer.php:90
 #: Prices.php:74
@@ -23325,23 +23269,23 @@ msgstr "Preço atualizado"
 
 #: PriceMatrix.php:115
 msgid "Failed to insert price data"
-msgstr "Falhou ao inserir dados do preço"
+msgstr ""
 
 #: PriceMatrix.php:117
 msgid "The price matrix record has been added"
-msgstr "Registro adicionado na matrix de preço"
+msgstr ""
 
 #: PriceMatrix.php:139
 msgid "Failed to delete price data"
-msgstr "Falha ao remover dados do preço"
+msgstr ""
 
 #: PriceMatrix.php:141
 msgid "The price matrix record has been deleted"
-msgstr "Registro da Matrix de preços foi removido"
+msgstr ""
 
 #: PriceMatrix.php:202
 msgid "You must select a stock item first before set a price maxtrix"
-msgstr "Selecionar item estoque antes de configurar a matrix de preço"
+msgstr ""
 
 #: PriceMatrix.php:219 PriceMatrix.php:266 Prices.php:329
 msgid "Price Effective From Date"
@@ -23368,7 +23312,6 @@ msgid ""
 "The price to apply to orders where the quantity exceeds the specified "
 "quantity"
 msgstr ""
-"Preço para aplicar nos pedidos onde a quantidade excede quant. especificada"
 
 #: PriceMatrix.php:269 SpecialOrder.php:630 includes/PDFLowGPPageHeader.inc:47
 #: includes/PDFSellThroughSupportClaimPageHeader.inc:26
@@ -24122,11 +24065,11 @@ msgstr "Quant. recebida foi"
 
 #: PrintCustStatements.php:423
 msgid "Please make payments to our account:"
-msgstr "Favor efetuar pagamentos em nossa conta"
+msgstr ""
 
 #: PrintCustStatements.php:424
 msgid "Quoting your account reference"
-msgstr "Sua Quotação Referência"
+msgstr ""
 
 #: PrintCustStatements.php:446
 msgid "Please find attached Statements"
@@ -24405,59 +24348,59 @@ msgstr "Número GST"
 
 #: PrintWOItemSlip.php:38
 msgid "The SQL to find the details of the item to produce failed"
-msgstr "SQL que falhou em encontrar detalhes do item "
+msgstr ""
 
 #: PrintWOItemSlip.php:44 PrintWOItemSlip.php:45
 msgid "WO Production Slip"
-msgstr "Ficha Ordem Produção"
+msgstr ""
 
 #: PrintWOItemSlip.php:105
 msgid "Incidences / Production Notes"
-msgstr "Anotações Produção / Incidentes"
+msgstr ""
 
 #: PrintWOItemSlip.php:108
 msgid "Components Ready By"
-msgstr "Componentes Disponíveis em"
+msgstr ""
 
 #: PrintWOItemSlip.php:108
 msgid "Item Produced By"
-msgstr "Item Produzidos por"
+msgstr ""
 
 #: PrintWOItemSlip.php:108
 msgid "Quality Control By"
-msgstr "Controle Qualidade por"
+msgstr ""
 
 #: PrintWOItemSlip.php:118
 msgid "WO Item production Slip"
-msgstr "Ficha Item da Ordem de Produção"
+msgstr ""
 
 #: PrintWOItemSlip.php:120
 msgid "There were no items with ready to produce"
-msgstr "Não há itens disponíveis para produzir"
+msgstr ""
 
 #: PrintWOItemSlip.php:146
 msgid "Work Order Item Production Slip"
-msgstr "Ficha Item Ordem de Produção"
+msgstr ""
 
 #: PrintWOItemSlip.php:149 WOCanBeProducedNow.php:42
 msgid "WO"
-msgstr "OP"
+msgstr ""
 
 #: PrintWOItemSlip.php:167
 msgid "Component Code"
-msgstr "Código Componente"
+msgstr ""
 
 #: PrintWOItemSlip.php:168
 msgid "Qty BOM"
-msgstr "Qtd BOM"
+msgstr ""
 
 #: PrintWOItemSlip.php:170
 msgid "Qty Needed"
-msgstr "Qtd Neces"
+msgstr ""
 
 #: PrintWOItemSlip.php:172 WOCanBeProducedNow.php:51
 msgid "Shrinkage"
-msgstr "Arredond"
+msgstr ""
 
 #: PrintWOItemSlip.php:188 PrintWOItemSlip.php:199 PrintWOItemSlip.php:210
 #: StockDispatch.php:281 StockDispatch.php:292 StockDispatch.php:303
@@ -24471,12 +24414,11 @@ msgstr "Assinatura"
 
 #: ProductSpecs.php:5
 msgid "Product Specifications Maintenance"
-msgstr "Especificações Manutenção Produto"
+msgstr ""
 
 #: ProductSpecs.php:45
 msgid "Enter The Item, Fixed Asset or Template to Copy this Specification to"
 msgstr ""
-"Informe Item, Ativo Fixo ou Modelo para onde copiar essas especificações"
 
 #: ProductSpecs.php:48 PurchData.php:313 TestPlanResults.php:331
 #, php-format
@@ -24485,40 +24427,40 @@ msgstr "Copia"
 
 #: ProductSpecs.php:76
 msgid "A Product Specification has been copied to"
-msgstr "Especificação Produto copiada para "
+msgstr ""
 
 #: ProductSpecs.php:77 ProductSpecs.php:281
 msgid "The insert of the Product Specification failed because"
-msgstr "Inserção das Especificações do Produto falhou porque"
+msgstr ""
 
 #: ProductSpecs.php:140
 msgid "Product Specification for"
-msgstr "Especificação do Produto para"
+msgstr ""
 
 #: ProductSpecs.php:165 ProductSpecs.php:386 QATests.php:244 QATests.php:392
 #: TestPlanResults.php:509
 msgid "Method"
-msgstr "Método"
+msgstr ""
 
 #: ProductSpecs.php:167 ProductSpecs.php:389 ProductSpecs.php:585
 #: QATests.php:285 QATests.php:396 TestPlanResults.php:511
 msgid "Possible Values"
-msgstr "Valores Possíveis"
+msgstr ""
 
 #: ProductSpecs.php:168 ProductSpecs.php:390 ProductSpecs.php:590
 #: TestPlanResults.php:512 TestPlanResults.php:806
 msgid "Target Value"
-msgstr "Valor Meta"
+msgstr ""
 
 #: ProductSpecs.php:169 ProductSpecs.php:391 ProductSpecs.php:596
 #: TestPlanResults.php:513
 msgid "Range Min"
-msgstr "Intervervalo Min"
+msgstr ""
 
 #: ProductSpecs.php:170 ProductSpecs.php:392 ProductSpecs.php:600
 #: TestPlanResults.php:514
 msgid "Range Max"
-msgstr "Intervalo Max"
+msgstr ""
 
 #: ProductSpecs.php:196 QATests.php:260 QATests.php:262
 #: StockCategories.php:589 StockCategories.php:591 StockCategories.php:635
@@ -24543,31 +24485,29 @@ msgstr "Data Caixa"
 #: ProductSpecs.php:209 QATests.php:280 QATests.php:282
 #: TestPlanResults.php:805
 msgid "Range"
-msgstr "Intervalo"
+msgstr ""
 
 #: ProductSpecs.php:280
 msgid "A Product Specification record has been added for Test ID"
-msgstr "Registro de Especificação Produto adicionado para o Teste ID"
+msgstr ""
 
 #: ProductSpecs.php:315
 msgid "Product Specification record for"
-msgstr "Registro Especificação produto para"
+msgstr ""
 
 #: ProductSpecs.php:316
 msgid "The update of the Product Specification failed because"
-msgstr "Atualização de especificação do produto falhou porque"
+msgstr ""
 
 #: ProductSpecs.php:342
 msgid ""
 "Cannot delete this Product Specification because there are test results tied "
 "to it"
 msgstr ""
-"Não pode remover essa Especificação de produto porque há resultados testes "
-"vinculados"
 
 #: ProductSpecs.php:346
 msgid "The Product Specification could not be deleted because"
-msgstr "Especificação de Produto não pode ser removida porque"
+msgstr ""
 
 #: ProductSpecs.php:349 QATests.php:144 SalesPeople.php:179
 #: SelectQASamples.php:140 TestPlanResults.php:709
@@ -24576,44 +24516,44 @@ msgstr "foi removido do DB."
 
 #: ProductSpecs.php:393 QATests.php:398
 msgid "Show on Cert"
-msgstr "Exibir Certificado"
+msgstr ""
 
 #: ProductSpecs.php:394 QATests.php:399
 msgid "Show on Spec"
-msgstr "Exibir Especificações"
+msgstr ""
 
 #: ProductSpecs.php:395 QATests.php:400
 msgid "Show on Test Plan"
-msgstr "Exibir Plano Teste"
+msgstr ""
 
 #: ProductSpecs.php:396 QATests.php:401
 msgid "Active"
-msgstr "Ativar"
+msgstr ""
 
 #: ProductSpecs.php:466
 #, php-format
 msgid "Are you sure you wish to delete this Product Specification ?"
-msgstr "Confirma remoção desta Especificação de Produto?"
+msgstr ""
 
 #: ProductSpecs.php:492
 msgid "Show All Product Specs"
-msgstr "Exibir Todas Especificações de Produto"
+msgstr ""
 
 #: ProductSpecs.php:548 TestPlanResults.php:803
 msgid "Test Name"
-msgstr "Nome Teste"
+msgstr ""
 
 #: ProductSpecs.php:605 QATests.php:303
 msgid "Show On Cert?"
-msgstr "Exibir Certificado?"
+msgstr ""
 
 #: ProductSpecs.php:618 QATests.php:316
 msgid "Show On Spec?"
-msgstr "Exibir Especificação?"
+msgstr ""
 
 #: ProductSpecs.php:631 QATests.php:329
 msgid "Show On Test Plan?"
-msgstr "Exibir Plano Teste?"
+msgstr ""
 
 #: ProductSpecs.php:644 QATests.php:342 SalesCategories.php:272
 msgid "Active?"
@@ -24621,19 +24561,19 @@ msgstr "Ativar?"
 
 #: ProductSpecs.php:667 TestPlanResults.php:972
 msgid "Add More Tests"
-msgstr "Adicionar mais testes"
+msgstr ""
 
 #: ProductSpecs.php:668
 msgid "Copy This Specification"
-msgstr "Copiar Essa Especificação"
+msgstr ""
 
 #: ProductSpecs.php:669 includes/MainMenuLinksArray.php:312
 msgid "Print Product Specification"
-msgstr "Imprimir Especificação Produto"
+msgstr ""
 
 #: ProductSpecs.php:670
 msgid "Product Specification Main Page"
-msgstr "Página Principal Especificação Produto"
+msgstr ""
 
 #: PurchaseByPrefSupplier.php:6
 msgid "Preferred Supplier Purchasing"
@@ -25079,68 +25019,67 @@ msgstr "Percent."
 
 #: QATests.php:5
 msgid "QA Tests Maintenance"
-msgstr "Manutenção Testes e QA"
+msgstr ""
 
 #: QATests.php:37
 msgid "The QA Test name must be fifty characters or less long"
-msgstr "Nome Teste QA deve ter no máximo 50 caracteres"
+msgstr ""
 
 #: QATests.php:44
 msgid "The Type must not be blank"
-msgstr "Tipo deve estar preenchido"
+msgstr ""
 
 #: QATests.php:54
 msgid "The QA Test name already exists"
-msgstr "Nome Teste QA já existe"
+msgstr ""
 
 #: QATests.php:76
 msgid "QA Test record for"
-msgstr "Registro Teste QA para"
+msgstr ""
 
 #: QATests.php:105
 msgid "A new QA Test record has been added for"
-msgstr "Novo registro Teste de QA adicionado para"
+msgstr ""
 
 #: QATests.php:109
 msgid "The insert or update of the QA Test failed because"
-msgstr "Inserção ou Atualização Teste de QA falhou porque"
+msgstr ""
 
 #: QATests.php:138
 msgid "Cannot delete this QA Test because Product Specs are using it"
 msgstr ""
-"Não pode remover essa Teste QA pois há Especificações Produto esse Teste QA"
 
 #: QATests.php:141
 msgid "The QA Test could not be deleted because"
-msgstr "Teste QA não pode ser removido porque"
+msgstr ""
 
 #: QATests.php:144
 msgid "QA Test"
-msgstr "Teste QA"
+msgstr ""
 
 #: QATests.php:152
 msgid "Show All QA Tests"
-msgstr "Exibir todos Testes QA"
+msgstr ""
 
 #: QATests.php:200
 msgid "QA Test ID"
-msgstr "ID Teste QA"
+msgstr ""
 
 #: QATests.php:240
 msgid "QA Test Name"
-msgstr "Nome Teste QA"
+msgstr ""
 
 #: QATests.php:241
 msgid "The name of the Test you are setting up"
-msgstr "Nome do Teste QA sendo configurado"
+msgstr ""
 
 #: QATests.php:245
 msgid "ASTM, ISO, UL or other"
-msgstr "ASTM, ISO, UL ou outro"
+msgstr ""
 
 #: QATests.php:248 QATests.php:393
 msgid "Group By"
-msgstr "Agrupado Por"
+msgstr ""
 
 #: QATests.php:249
 msgid ""
@@ -25148,26 +25087,22 @@ msgid ""
 "Certificate of\n"
 "Analysis or left blank"
 msgstr ""
-"Pode ser usado para agrupar certos Testes da Especificação do Produto ou "
-"Certificado\n"
-"de Análise ou deixado em branco"
 
 #: QATests.php:254
 msgid "How this is measured. PSI, Fahrenheit, Celsius etc."
-msgstr "Como é medido. PSI, Fahrenheit, Celsius, etc."
+msgstr ""
 
 #: QATests.php:258
 msgid "What sort of data field is required to record the results for this test"
 msgstr ""
-"Quais campos de dados são requeridos para registrar o resultados do test"
 
 #: QATests.php:290
 msgid "Numeric Value?"
-msgstr "Valor Numérico?"
+msgstr ""
 
 #: QATests.php:390
 msgid "Test ID"
-msgstr "ID Teste"
+msgstr ""
 
 #: QATests.php:397 StockCategories.php:577
 msgid "Numeric Value"
@@ -25176,7 +25111,7 @@ msgstr "Valor Numérico"
 #: QATests.php:468
 #, php-format
 msgid "Are you sure you wish to delete this QA Test ?"
-msgstr "Confirma remoção deste Teste QA?"
+msgstr ""
 
 #: RecurringSalesOrders.php:13
 msgid "Recurring Orders"
@@ -25444,67 +25379,67 @@ msgstr ""
 
 #: RelatedItemsUpdate.php:5
 msgid "Update Related Items"
-msgstr "Atualizar Itens Relativos"
+msgstr ""
 
 #: RelatedItemsUpdate.php:35
 msgid "Only valid parts can have related items entered against them"
-msgstr "Somente componentes válidos podem ser informados"
+msgstr ""
 
 #: RelatedItemsUpdate.php:63
 msgid "The part code entered as related item does not exist in the database"
-msgstr "Componente informado como item não existe no DB"
+msgstr ""
 
 #: RelatedItemsUpdate.php:63
 msgid "Only valid parts can be related items"
-msgstr "Somente componentes válidos podem ser relacionados"
+msgstr ""
 
 #: RelatedItemsUpdate.php:75
 msgid "This related item has already been entered."
-msgstr "Componente relacionado já informado."
+msgstr ""
 
 #: RelatedItemsUpdate.php:80
 msgid "An item can not be related to itself"
-msgstr "Componente não pode vincular ele mesmo"
+msgstr ""
 
 #: RelatedItemsUpdate.php:89 RelatedItemsUpdate.php:107
 msgid "The new related item could not be added"
-msgstr "Novo componente relacionado não pode ser adicionado"
+msgstr ""
 
 #: RelatedItemsUpdate.php:92 RelatedItemsUpdate.php:109
 msgid "is now related to"
-msgstr "atualmente relacionado com"
+msgstr ""
 
 #: RelatedItemsUpdate.php:123
 msgid "Could not delete this relationshop"
-msgstr "Não pode remover relacionamento"
+msgstr ""
 
 #: RelatedItemsUpdate.php:125
 msgid "This relationship has been deleted"
-msgstr "Relacionamento foi removido"
+msgstr ""
 
 #: RelatedItemsUpdate.php:146
 msgid "Related Items To"
-msgstr "Itens Relacionados Com"
+msgstr ""
 
 #: RelatedItemsUpdate.php:148
 msgid "List Related Items"
-msgstr "Lista Componentes Relacionados"
+msgstr ""
 
 #: RelatedItemsUpdate.php:170
 msgid "Are you sure you wish to delete this relationship?"
-msgstr "Confirma remover esse relacionamento?"
+msgstr ""
 
 #: RelatedItemsUpdate.php:179
 msgid "There are no items related set up for this part"
-msgstr "Não há item relacionado com esse componente"
+msgstr ""
 
 #: RelatedItemsUpdate.php:194
 msgid "Related Item Code"
-msgstr "Código Item Relacionado"
+msgstr ""
 
 #: RelatedItemsUpdate.php:204
 msgid "Amend Relation"
-msgstr "Relação"
+msgstr ""
 
 #: ReorderLevelLocation.php:9
 msgid "Reorder Level Location Reporting"
@@ -25644,11 +25579,11 @@ msgstr ""
 
 #: ReprintGRN.php:112
 msgid "Reprint GRN "
-msgstr "Reimprimir GRN"
+msgstr ""
 
 #: ReprintGRN.php:113
 msgid "Reprint Labels"
-msgstr "Reimprimir Etiquetas"
+msgstr ""
 
 #: ReverseGRN.php:9 includes/MainMenuLinksArray.php:208
 msgid "Reverse Goods Received"
@@ -25869,15 +25804,15 @@ msgstr "Reverter"
 #: RevisionTranslations.php:7 RevisionTranslations.php:13
 #: RevisionTranslations.php:14 includes/MainMenuLinksArray.php:275
 msgid "Review Translated Descriptions"
-msgstr "Rever Descrições das Traduções "
+msgstr ""
 
 #: RevisionTranslations.php:30
 msgid "descriptions"
-msgstr "descrições"
+msgstr ""
 
 #: RevisionTranslations.php:41
 msgid "Translations to revise"
-msgstr "Traduções para revisar"
+msgstr ""
 
 #: RevisionTranslations.php:61
 msgid "Part Description (short)"
@@ -25889,7 +25824,7 @@ msgstr "Descrição Produto (longa)"
 
 #: RevisionTranslations.php:63
 msgid "Revised?"
-msgstr "Revisadas?"
+msgstr ""
 
 #: SalesAnalReptCols.php:7
 msgid "Sales Analysis Report Columns"
@@ -27071,7 +27006,7 @@ msgstr "Atual?"
 
 #: SalesTopCustomersInquiry.php:6 SalesTopCustomersInquiry.php:9
 msgid "Top Customer Sales Inquiry"
-msgstr "Consulta Maiores Vendas a Clientes"
+msgstr ""
 
 #: SalesTopCustomersInquiry.php:82 SalesTopItemsInquiry.php:83
 #: WWW_Users.php:703
@@ -27705,7 +27640,7 @@ msgstr "Consulta Transações por Cliente"
 
 #: SelectCustomer.php:199
 msgid "Customer Account statement on screen"
-msgstr "Conta Contábil Cliente na Tela"
+msgstr ""
 
 #: SelectCustomer.php:200
 msgid "View Customer Details"
@@ -28196,15 +28131,15 @@ msgstr "Ident. Material Consumo"
 
 #: SelectOrderItems.php:1611
 msgid "If checked, Raw material will be shown on search result"
-msgstr "Se marcado, Materiais Insumos serão exibidos no resultado pesquisa"
+msgstr ""
 
 #: SelectOrderItems.php:1612
 msgid "Customer Item flag"
-msgstr "Marcar Item Cliente"
+msgstr ""
 
 #: SelectOrderItems.php:1612
 msgid "If checked, only items for this customer will show"
-msgstr "Se marcado, somente itens desse cliente serão exibidos"
+msgstr ""
 
 #: SelectOrderItems.php:1621
 msgid "Fixed Asset Disposal"
@@ -28216,7 +28151,7 @@ msgstr "Usar esta tela para"
 
 #: SelectOrderItems.php:1744
 msgid " of products to be ordered"
-msgstr " produtos que serão solicitados"
+msgstr " produtos que serão pedidos"
 
 #: SelectOrderItems.php:1761
 msgid "Enter the customer purchase order reference"
@@ -28272,7 +28207,7 @@ msgstr "Itens de Estoque"
 
 #: SelectProduct.php:98
 msgid "Item Type"
-msgstr "Tipo Item"
+msgstr ""
 
 #: SelectProduct.php:102
 msgid "Assembly Item"
@@ -28280,7 +28215,7 @@ msgstr "Item Montado"
 
 #: SelectProduct.php:106
 msgid "Phantom Assembly Item"
-msgstr "Item de Montagem Fantasma"
+msgstr ""
 
 #: SelectProduct.php:111
 msgid "Kitset Item"
@@ -28300,7 +28235,7 @@ msgstr "Item Manufaturado"
 
 #: SelectProduct.php:130
 msgid "Control Level"
-msgstr "Nível Controle"
+msgstr ""
 
 #: SelectProduct.php:132
 msgid "serialised"
@@ -28423,7 +28358,7 @@ msgstr "Manter Dados Compra"
 
 #: SelectProduct.php:483
 msgid "Maintain Customer Item Data"
-msgstr "Manutenção Dados Item Cliente"
+msgstr ""
 
 #: SelectProduct.php:489
 msgid "Maintain Pricing"
@@ -28443,11 +28378,11 @@ msgstr "Duplicar este item"
 
 #: SelectProduct.php:497
 msgid "Maintain Related Items"
-msgstr "Manutenção Itens Relacionados"
+msgstr ""
 
 #: SelectProduct.php:498
 msgid "Maintain Price Matrix"
-msgstr "Manutenção Matrix Preço"
+msgstr ""
 
 #: SelectProduct.php:544 SelectProduct.php:546
 msgid "Enter text that you wish to search for in the item description"
@@ -28463,131 +28398,128 @@ msgstr ""
 
 #: SelectQASamples.php:5
 msgid "Select QA Samples"
-msgstr "Selecionar Exemplos QA"
+msgstr ""
 
 #: SelectQASamples.php:67 TestPlanResults.php:690
 msgid ""
 "Test Results have not all been entered.  This Lot is not able to be used for "
 "a a Certificate of Analysis"
 msgstr ""
-"Resultados Testes não foram informados. Esse lote não pode ser usado para "
-"Certificado de Análise"
 
 #: SelectQASamples.php:76
 msgid "Some Results are out of Spec"
-msgstr "Alguns Resuldados fora da Especificação"
+msgstr ""
 
 #: SelectQASamples.php:85
 msgid "QA Sample record for"
-msgstr "Registro Amostra QA"
+msgstr ""
 
 #: SelectQASamples.php:86 SelectQASamples.php:100 TestPlanResults.php:691
 msgid "The update of the QA Sample failed because"
-msgstr "Atualização Amostra QA falhou porque"
+msgstr ""
 
 #: SelectQASamples.php:99
 msgid "All other samples for this Specification and Lot was marked as Cert=No"
-msgstr "Todos exemplos dessa Especificação e lote marcados como Cert=Não"
+msgstr ""
 
 #: SelectQASamples.php:111
 msgid "Created New Sample"
-msgstr "Criar Nova Amostra"
+msgstr ""
 
 #: SelectQASamples.php:131
 msgid "Cannot delete this Sample ID because there are test results tied to it"
-msgstr "Não pode remover ID Amostra pois tem resultados vinculados"
+msgstr ""
 
 #: SelectQASamples.php:134 TestPlanResults.php:706
 msgid "The sample results could not be deleted because"
-msgstr "Resultados Amostra não pode ser removida porque"
+msgstr ""
 
 #: SelectQASamples.php:137
 msgid "The QA Sample could not be deleted because"
-msgstr "Amostra QA não pode ser removida porque"
+msgstr ""
 
 #: SelectQASamples.php:140
 msgid "QA Sample"
-msgstr "Amostra QA"
+msgstr ""
 
 #: SelectQASamples.php:158 TestPlanResults.php:41
 msgid "The Sample ID entered"
-msgstr "ID Amostra informada"
+msgstr ""
 
 #: SelectQASamples.php:161 SelectQASamples.php:250 SelectQASamples.php:490
 #: TestPlanResults.php:44 TestPlanResults.php:127 TestPlanResults.php:755
 msgid "Sample ID"
-msgstr "ID Amostra"
+msgstr ""
 
 #: SelectQASamples.php:250 TestPlanResults.php:127
 msgid "Lot Number"
-msgstr "Num. Lote"
+msgstr ""
 
 #: SelectQASamples.php:252 TestPlanResults.php:129
 msgid "Search Samples"
-msgstr "Pesquisar Amostras"
+msgstr ""
 
 #: SelectQASamples.php:263 TestPlanResults.php:142
 msgid ""
 "To search for Pick Lists for a specific part use the part selection "
 "facilities below"
 msgstr ""
-"Para pesquisar lista pick para componente utilizar funcionalidades abaixo"
 
 #: SelectQASamples.php:389 TestPlanResults.php:271
 msgid "No QA samples were returned by the SQL because"
-msgstr "Não nenhuma amostra QA para esse SQL porque"
+msgstr ""
 
 #: SelectQASamples.php:395 TestPlanResults.php:278
 msgid "Enter Results"
-msgstr "Informar Resultados"
+msgstr ""
 
 #: SelectQASamples.php:396 SelectQASamples.php:495 SelectQASamples.php:551
 #: TestPlanResults.php:279 TestPlanResults.php:756
 msgid "Specification"
-msgstr "Especificação"
+msgstr ""
 
 #: SelectQASamples.php:398 TestPlanResults.php:281 TestPlanResults.php:757
 msgid "Lot / Serial"
-msgstr "Lote / Série"
+msgstr ""
 
 #: SelectQASamples.php:399 SelectQASamples.php:503 SelectQASamples.php:563
 #: TestPlanResults.php:282 TestPlanResults.php:758
 msgid "Identifier"
-msgstr "Identificador"
+msgstr ""
 
 #: SelectQASamples.php:400 TestPlanResults.php:283
 msgid "Created By"
-msgstr "Criado por"
+msgstr ""
 
 #: SelectQASamples.php:401 SelectQASamples.php:511 TestPlanResults.php:284
 #: TestPlanResults.php:759
 msgid "Sample Date"
-msgstr "Data Amostra"
+msgstr ""
 
 #: SelectQASamples.php:403 TestPlanResults.php:286
 msgid "Cert Allowed"
-msgstr "Cert Permitido"
+msgstr ""
 
 #: SelectQASamples.php:418
 msgid "Are you sure you wish to delete this Sample ID ?"
-msgstr "Confirma remoção desse ID da Amostra?"
+msgstr ""
 
 #: SelectQASamples.php:456
 msgid "Show All Samples"
-msgstr "Exibir todas Amostras"
+msgstr ""
 
 #: SelectQASamples.php:499 SelectQASamples.php:559
 #: includes/PDFWOPageHeader.inc:45
 msgid "Lot"
-msgstr "Lote"
+msgstr ""
 
 #: SelectQASamples.php:515 SelectQASamples.php:571
 msgid "Use for Cert?"
-msgstr "Usar para Cert?"
+msgstr ""
 
 #: SelectQASamples.php:585
 msgid "Duplicate for Lot OK?"
-msgstr "Duplicar Lote OK?"
+msgstr ""
 
 #: SelectRecurringSalesOrder.php:5
 msgid "Search Recurring Sales Orders"
@@ -29893,7 +29825,7 @@ msgstr "Usuário PayPal"
 msgid ""
 "Merchant User account for credit card payment available in only USA and "
 "Canada"
-msgstr "Usuário Conta Merchant para cartão crédito disponível EUA e Canadá"
+msgstr ""
 
 #: ShopParameters.php:568
 msgid "PayPal Pro Password"
@@ -29903,7 +29835,7 @@ msgstr "Senha PayPal Pro "
 msgid ""
 "Merchant account password for credit card payment available in only USA and "
 "Canada"
-msgstr "Senha conta Merchant para cartão de crédito disponível EUA e Canadá"
+msgstr ""
 
 #: ShopParameters.php:573
 msgid "PayPal Pro Signature"
@@ -29913,7 +29845,7 @@ msgstr "Assinatura PayPal Pro"
 msgid ""
 "merchant account signature for credit card payment available in only USA and "
 "Canada"
-msgstr "Assinatura conta Merchant para cartão crédito disponível EUA e Canadá"
+msgstr ""
 
 #: ShopParameters.php:578
 msgid "Pay Flow Pro User"
@@ -30306,11 +30238,10 @@ msgid ""
 "The decimal places input is more than the decimals of this item defined,the "
 "defined decimal places is "
 msgstr ""
-"Posições decimais entrada incompatível com decimais do item definido com"
 
 #: StockAdjustments.php:168
 msgid "and the input decimal places is "
-msgstr "e decimais da entrada com "
+msgstr ""
 
 #: StockAdjustments.php:171
 msgid "There would be no adjustment to make"
@@ -30661,43 +30592,43 @@ msgstr ""
 #: StockCategorySalesInquiry.php:6 StockCategorySalesInquiry.php:9
 #: includes/MainMenuLinksArray.php:59
 msgid "Sales By Category By Item Inquiry"
-msgstr "Consulta Vendas por Categoria por Item"
+msgstr ""
 
 #: StockCategorySalesInquiry.php:10
 msgid "Select the parameters for the inquiry"
-msgstr "Selecionar paramêtros para consulta"
+msgstr ""
 
 #: StockCategorySalesInquiry.php:122
 msgid "Qty Sold"
-msgstr "Qtd Vendida"
+msgstr ""
 
 #: StockCategorySalesInquiry.php:123
 msgid "Sales Revenue"
-msgstr "Lucro Venda"
+msgstr ""
 
 #: StockCategorySalesInquiry.php:124
 msgid "COGS"
-msgstr "COGS"
+msgstr ""
 
 #: StockCategorySalesInquiry.php:125
 msgid "Gross Margin"
-msgstr "Margem Bruta"
+msgstr ""
 
 #: StockCategorySalesInquiry.php:126 StockCategorySalesInquiry.php:127
 msgid "Avg Unit"
-msgstr "Unidade Média"
+msgstr ""
 
 #: StockCategorySalesInquiry.php:126
 msgid "Sale Price"
-msgstr "Preço Venda"
+msgstr ""
 
 #: StockCategorySalesInquiry.php:128
 msgid "Margin %"
-msgstr "Margem %"
+msgstr ""
 
 #: StockCategorySalesInquiry.php:145 StockCategorySalesInquiry.php:208
 msgid "Category Total"
-msgstr "Total Categoria"
+msgstr ""
 
 #: StockCheck.php:10 StockCheck.php:11
 msgid "Stock Count Sheets"
@@ -31027,7 +30958,7 @@ msgstr ""
 
 #: StockClone.php:526
 msgid "New cloned Item"
-msgstr "Novo Item Clonado"
+msgstr ""
 
 #: StockClone.php:527
 msgid "We also attempted to setup item purchase data and pricing."
@@ -31300,13 +31231,10 @@ msgid ""
 "once these are created can the stock counts be entered. Currently there is "
 "no stock check to enter counts for"
 msgstr ""
-"Planilhas de verificação do estoque devem ser criadas primeiro. Somente após "
-"essa criação as contagens poderão ser feitas. Atualmente não há estoque para "
-"entrar contagem."
 
 #: StockCounts.php:102
 msgid "Create New Stock Check"
-msgstr "Criar Novas Planilhas Contagem Estoque"
+msgstr ""
 
 #: StockCounts.php:106
 msgid "Stock Check Counts at Location"
@@ -31314,11 +31242,11 @@ msgstr "Confer. Contagem Estoque no Local"
 
 #: StockCounts.php:119
 msgid "Enter By Category"
-msgstr "Informar por Categoria"
+msgstr ""
 
 #: StockCounts.php:138
 msgid "Entering Counts For Stock Category"
-msgstr "Entrar Contagem para Categoria de Estoque"
+msgstr ""
 
 #: StockCounts.php:188
 msgid "Enter Above Counts"
@@ -31783,18 +31711,18 @@ msgstr ""
 #: StockLocTransferReceive.php:214 StockLocTransferReceive.php:367
 #: StockTransfers.php:231 StockTransfers.php:387
 msgid "The standard cost of the item cannot be retrieved because"
-msgstr "Custo padrão do item não pode ser recuperado porque"
+msgstr ""
 
 #: StockLocTransferReceive.php:235 StockTransfers.php:253
 msgid ""
 "The outgoing inventory GL transacction record could not be inserted because"
-msgstr "Transação Contábil do Inventário de saída não pode ser inserida porque"
+msgstr ""
 
 #: StockLocTransferReceive.php:236 StockLocTransferReceive.php:389
 #: StockLocTransferReceive.php:707 StockTransfers.php:254
 #: StockTransfers.php:410
 msgid "The following SQL to insert records was used"
-msgstr "SQL usado na inserção de registros foi"
+msgstr ""
 
 #: StockLocTransferReceive.php:264
 msgid ""
@@ -31820,7 +31748,7 @@ msgstr ""
 #: StockLocTransferReceive.php:388 StockTransfers.php:409
 msgid ""
 "The incoming inventory GL transacction record could not be inserted because"
-msgstr "Transação de entrada Contábil não pode ser inserida porque"
+msgstr ""
 
 #: StockLocTransferReceive.php:393
 msgid "A stock transfer for item code"
@@ -31948,7 +31876,7 @@ msgstr "Não há transf. pendentes para esse local"
 
 #: StockLocTransferReceive.php:706
 msgid "The transfer cancellation record could not be inserted because"
-msgstr "Registro de cancelamento de transferência não pode ser inserido porque"
+msgstr ""
 
 #: StockMovements.php:6
 msgid "Stock Movements"
@@ -32264,12 +32192,12 @@ msgstr "SQL que falhou em atualizar o item de estoque foi"
 
 #: Stocks.php:469
 msgid "The stock description translations could not be updated because"
-msgstr "Traduções de descrição de item estoque não pode ser atualizada porque"
+msgstr ""
 
 #: Stocks.php:470
 msgid ""
 "The SQL that was used to set the flag for translation revision failed was"
-msgstr "SQL usado para config indicador de revisão de tradução que falhou foi"
+msgstr ""
 
 #: Stocks.php:517 Stocks.php:534 Stocks.php:571 Stocks.php:588
 msgid "Change stock category"
@@ -32471,16 +32399,16 @@ msgstr ""
 
 #: Stocks.php:1042
 msgid "Long Description"
-msgstr "Descrição Longa"
+msgstr ""
 
 #: Stocks.php:1345
 msgid "Order multiple. It is the minimum packing quantity."
-msgstr "Pedir múltiplos. Quantidade mínima da embalagem."
+msgstr ""
 
 #: Stocks.php:1349
 msgid ""
 "Amount by which an output falls short of the estimated or planned output."
-msgstr "Quantidade abaixo da estimada ou saída planejada"
+msgstr ""
 
 #: Stocks.php:1455
 msgid ""
@@ -33979,7 +33907,7 @@ msgstr "Transações do Fornecedor não podem ser atualizadas porque"
 
 #: SupplierInquiry.php:266
 msgid "Click to view payments"
-msgstr "Selecione para ver pagamentos"
+msgstr ""
 
 #: SupplierInquiry.php:317
 msgid "View Payments"
@@ -34517,7 +34445,7 @@ msgstr ""
 
 #: Suppliers.php:430
 msgid "Goole map url not loading"
-msgstr "URL mapa Google não carregada"
+msgstr ""
 
 #: Suppliers.php:498 Z_ImportSuppliers.php:247
 msgid "Cannot change currency code as transactions already exist"
@@ -35419,13 +35347,13 @@ msgstr ""
 #: SuppWhereAlloc.php:31 SuppWhereAlloc.php:36 SuppWhereAlloc.php:40
 #: SuppWhereAlloc.php:158 includes/DatabaseTranslations.php:34
 msgid "Purchase Invoice"
-msgstr "Remessa de Compra"
+msgstr ""
 
 #: SuppWhereAlloc.php:33 SuppWhereAlloc.php:37 SuppWhereAlloc.php:39
 #: SuppWhereAlloc.php:98 SuppWhereAlloc.php:156
 #: includes/DatabaseTranslations.php:35
 msgid "Debit Note"
-msgstr "Nota Débito"
+msgstr ""
 
 #: SystemParameters.php:7 includes/MainMenuLinksArray.php:473
 msgid "System Parameters"
@@ -35526,33 +35454,31 @@ msgstr "Config. SMTP deve ser SIM ou NÃO"
 
 #: SystemParameters.php:106
 msgid "The Quality Log Samples setting should be selected as Yes or No"
-msgstr "Qualidade Log das amostras deve ser Sim ou Não"
+msgstr ""
 
 #: SystemParameters.php:109
 msgid ""
 "The Quality ProdSpec Text may not contain single quotes and may not be "
 "longer than 5000 chars"
 msgstr ""
-"Texto da Qualidade Inspeção Produto não pode conter aspas ou exceder 5000 "
-"caracteres"
 
 #: SystemParameters.php:112
 msgid ""
 "The Quality COA Text may not contain single quotes and may not be longer "
 "than 5000 chars"
-msgstr "Texto Qualidade COA não pode conter aspas ou exceder 5000 caracteres"
+msgstr ""
 
 #: SystemParameters.php:131
 msgid "Cannot write to the configuration file."
-msgstr "Não pode gravar arquivo de configuração"
+msgstr ""
 
 #: SystemParameters.php:133
 msgid "The configuration file was updated."
-msgstr "Arquivo de configuração foi atualizado."
+msgstr ""
 
 #: SystemParameters.php:137
 msgid "Cannot open the configuration file."
-msgstr "Não pode abrir arquivo de configuração."
+msgstr ""
 
 #: SystemParameters.php:381
 msgid "The system configuration could not be updated because"
@@ -35596,15 +35522,13 @@ msgstr "Formato Padrão para Datas "
 
 #: SystemParameters.php:430
 msgid "Default Theme"
-msgstr "Tema Padrão"
+msgstr ""
 
 #: SystemParameters.php:443
 msgid ""
 "The default theme to use for the login screen and the setup of new users. "
 "The users' theme selection will override it."
 msgstr ""
-"Tema padrão a ser utilizado na Tela de Login e Novos Usuários. Seleção do "
-"usuário sobrepõe-se a isso."
 
 #: SystemParameters.php:449
 msgid "Accounts Receivable/Payable Settings"
@@ -35757,20 +35681,16 @@ msgid ""
 "Select the languages in which translations of the item description will be "
 "maintained. The default language is excluded."
 msgstr ""
-"Seleção dos idiomas nas quais traduções das descrições do item serão "
-"mantidas. Idioma padrão não se inclui."
 
 #: SystemParameters.php:536
 msgid "Google Translator API Key"
-msgstr "Chave API do Google Tradutor"
+msgstr ""
 
 #: SystemParameters.php:538
 msgid ""
 "Google Translator API Key to allow automatic translations. More info at "
 "https://cloud.google.com/translate/"
 msgstr ""
-"Chave Google Tradutor para habilitar tradução automática. Mais detalhes em "
-"http://translate.google.com.br/about/intl/pt-BR_ALL"
 
 #: SystemParameters.php:541
 msgid "A picking note must be produced before an order can be delivered"
@@ -35843,11 +35763,11 @@ msgstr "Selecione o formato do aviso"
 
 #: SystemParameters.php:584
 msgid "Invoice Quantity Default"
-msgstr "Quantidade Padrão Pedido"
+msgstr ""
 
 #: SystemParameters.php:586
 msgid "0"
-msgstr "0"
+msgstr ""
 
 #: SystemParameters.php:589
 msgid ""
@@ -35856,9 +35776,6 @@ msgid ""
 "default the invoice quantity to the balance outstanding, after previous "
 "deliveries, on the sales order"
 msgstr ""
-"Configuração controla o comportamento dos pedidos. Configuração padrão para "
-"quantidade zero force entrada. Configuração para quantidade padrão do pedido "
-"do saldo restante, após remessa anteriores no pedido de vendas"
 
 #: SystemParameters.php:593
 msgid "Show company details on packing slips"
@@ -36018,14 +35935,13 @@ msgstr "Se Automático, os códigos de cliente serão sequêncialmente"
 
 #: SystemParameters.php:697
 msgid "Create Supplier Codes Automatically"
-msgstr "Criar Código Fornecedor Automaticamente"
+msgstr ""
 
 #: SystemParameters.php:708
 msgid ""
 "Set to Automatic - Supplier codes are automatically created - as a "
 "sequential number"
 msgstr ""
-"Configurar para Automático, faz com que o sistema gere um número sequencial."
 
 #: SystemParameters.php:714
 msgid "Could not load tax categories table"
@@ -36123,11 +36039,11 @@ msgstr "Permitido Sobre Taxa na Proporção"
 
 #: SystemParameters.php:787 SystemParameters.php:792
 msgid "The input must between 0 and 100"
-msgstr "A entrada deve estar entre 0 e 100"
+msgstr ""
 
 #: SystemParameters.php:787
 msgid "integer between 0 and 100"
-msgstr "Inteiro entre 0 e 100"
+msgstr ""
 
 #: SystemParameters.php:788
 msgid ""
@@ -36245,11 +36161,11 @@ msgstr "Tamanho Pág. Relatório"
 
 #: SystemParameters.php:835 SystemParameters.php:859
 msgid "The input should be between 1 and 999"
-msgstr "Entrada deve estar entre 1 e 999"
+msgstr ""
 
 #: SystemParameters.php:835 SystemParameters.php:859
 msgid "1 to 999"
-msgstr "1 a 999"
+msgstr ""
 
 #: SystemParameters.php:840
 msgid "Default Maximum Number of Records to Show"
@@ -36707,32 +36623,29 @@ msgstr ""
 
 #: SystemParameters.php:1220
 msgid "Text for Quality Product Specification"
-msgstr "Texto para Especificação de Qualidade do Produto"
+msgstr ""
 
 #: SystemParameters.php:1222
 msgid "This text appears on product specifications"
-msgstr "Texto aparece nas especificações do produto"
+msgstr ""
 
 #: SystemParameters.php:1223
 msgid "Text for Quality Product Certifications"
-msgstr "Texto para Certificações Qualidade do Produto"
+msgstr ""
 
 #: SystemParameters.php:1225
 msgid "This text appears on product certifications"
-msgstr "Texto para certificações do produto"
+msgstr ""
 
 #: SystemParameters.php:1227
 msgid "Auto Log Quality Samples"
-msgstr "Log Automático Amostras Qualidade"
+msgstr ""
 
 #: SystemParameters.php:1240
 msgid ""
 "The flag determines if the system creates quality samples automatically for "
 "each lot during P/O Receipt and W/O Receipt transactions."
 msgstr ""
-"O indicador determina se o sistema cria amostras de qualidades "
-"automaticamente para cada lote durante o Recebimento da Ordem de Compra ou "
-"na transação da Ordem de Produção."
 
 #: TaxAuthorities.php:5
 msgid "Tax Authorities"
@@ -36740,7 +36653,7 @@ msgstr "Autoridade Impostos"
 
 #: TaxAuthorities.php:11 TaxAuthorities.php:12 TaxAuthorityRates.php:120
 msgid "Tax Authorities Maintenance"
-msgstr "Manutenção Autoridade Impostos"
+msgstr ""
 
 #: TaxAuthorities.php:26
 msgid "The tax type description may not be empty"
@@ -36876,7 +36789,7 @@ msgstr "Aliq. Impostos"
 
 #: TaxAuthorityRates.php:11 TaxAuthorityRates.php:12
 msgid "Tax Rates Maintenance"
-msgstr "Manutenção Taxas Impostos"
+msgstr ""
 
 #: TaxAuthorityRates.php:22
 msgid ""
@@ -37146,7 +37059,7 @@ msgstr "Imposto sobre Anterior"
 
 #: TaxGroups.php:308
 msgid "The input must be positive integer and less than 10"
-msgstr "Essa entrada deve ser inteiro positivo e menor que 10"
+msgstr ""
 
 #: TaxGroups.php:324
 msgid "Update Order"
@@ -37191,7 +37104,7 @@ msgstr "o sql retornou o seguinte erro"
 
 #: Tax.php:24 Tax.php:324 includes/PDFTaxPageHeader.inc:25
 msgid "Tax Report"
-msgstr "Relatório Impostos"
+msgstr ""
 
 #: Tax.php:54 Tax.php:168 Tax.php:307
 msgid "Taxation Reporting Error"
@@ -37239,16 +37152,12 @@ msgid ""
 "Adjustments for tax paid to Customs, FBT, entertainments, etc. must also be "
 "entered."
 msgstr ""
-"Ajustes para impostos pagos Alfândega, entretenimentos, desembaraço etc, "
-"deve ser informado."
 
 #: Tax.php:302
 msgid ""
 "This information excludes tax on journal entries/payments/receipts. All tax "
 "should be entered through AR/AP."
 msgstr ""
-"Essa informação exclue impostos recebimentos/pagamentos/entradas. Todas os "
-"impostos devem ser informados pelo Contas a Pagar/Receber"
 
 #: Tax.php:309
 msgid "There are no tax entries to list"
@@ -37260,7 +37169,7 @@ msgstr "Relatório Impostos"
 
 #: Tax.php:331
 msgid "Tax Authority To Report On"
-msgstr "Autoridades de Tributos para Relatórios"
+msgstr ""
 
 #: Tax.php:340
 msgid "Return Covering"
@@ -37268,27 +37177,27 @@ msgstr "Coberturas"
 
 #: Tax.php:343
 msgid "2 Months"
-msgstr "2 Meses"
+msgstr ""
 
 #: Tax.php:344
 msgid "3 Months"
-msgstr "3 Meses"
+msgstr ""
 
 #: Tax.php:345
 msgid "6 Months"
-msgstr "6 Meses"
+msgstr ""
 
 #: Tax.php:346
 msgid "12 Months"
-msgstr "12 Meses"
+msgstr ""
 
 #: Tax.php:347
 msgid "24 Months"
-msgstr "24 Meses"
+msgstr ""
 
 #: Tax.php:348
 msgid "48 Months"
-msgstr "48 Meses"
+msgstr ""
 
 #: Tax.php:353
 msgid "Return To"
@@ -37416,130 +37325,127 @@ msgstr "No máximo 30 caracteres válidos"
 
 #: TestPlanResults.php:5
 msgid "Test Plan Results"
-msgstr "Resultado Plano Testes"
+msgstr ""
 
 #: TestPlanResults.php:277
 msgid "Copy Results"
-msgstr "Copiar Resultados"
+msgstr ""
 
 #: TestPlanResults.php:300
 msgid "Copy to This Sample"
-msgstr "Copiar para esssa Amostra"
+msgstr ""
 
 #: TestPlanResults.php:330
 msgid "Override existing Test values?"
-msgstr "Sobrepor valores teste existente?"
+msgstr ""
 
 #: TestPlanResults.php:354
 msgid "Test Results have been copied to sample"
-msgstr "Resultados testes devem ser copiados para a Amostra"
+msgstr ""
 
 #: TestPlanResults.php:355 TestPlanResults.php:434 TestPlanResults.php:475
 msgid "The insert of the test results failed because"
-msgstr "Resultados da inserção falharam porque"
+msgstr ""
 
 #: TestPlanResults.php:433
 msgid "Test Results have been overwritten to sample"
-msgstr "Resultados dos Testes foram sobrepostos para a amostra"
+msgstr ""
 
 #: TestPlanResults.php:433
 msgid " from sample"
-msgstr "da amostra"
+msgstr ""
 
 #: TestPlanResults.php:433
 msgid " for test "
-msgstr "para teste"
+msgstr ""
 
 #: TestPlanResults.php:439
 msgid "Test Results have NOT BEEN overwritten for Result ID "
-msgstr "Resultados do Testes NÃO FORAM sobrepostos para o resultado ID"
+msgstr ""
 
 #: TestPlanResults.php:474
 msgid "Test Results have been copied to"
-msgstr "Resultados Testes foram copiados para"
+msgstr ""
 
 #: TestPlanResults.php:474
 msgid " from "
-msgstr "de"
+msgstr ""
 
 #: TestPlanResults.php:474
 msgid " for "
-msgstr "para"
+msgstr ""
 
 #: TestPlanResults.php:620
 msgid "A Sample Result record has been added for Test ID"
-msgstr "Registro de Resultado de Amostra foi adicionaod para o Teste ID"
+msgstr ""
 
 #: TestPlanResults.php:621
 msgid "The insert of the Sample Result failed because"
-msgstr "A inserção do Exemplo Resultado falhou porque"
+msgstr ""
 
 #: TestPlanResults.php:673
 msgid "Sample Results were updated for Result ID"
-msgstr "Resultados da Amostra foram atualizados com ID"
+msgstr ""
 
 #: TestPlanResults.php:674
 msgid "The updated of the sampleresults failed because"
-msgstr "Atualização de resultado amostra falhou porque"
+msgstr ""
 
 #: TestPlanResults.php:703
 msgid ""
 "Cannot delete this Result ID because it is a part of the Product "
 "Specification"
 msgstr ""
-"Não pode remover resultado ID pois faz parte da Especificação do Produto"
 
 #: TestPlanResults.php:709
 msgid "Result QA Sample"
-msgstr "Amostra Resulta QA"
+msgstr ""
 
 #: TestPlanResults.php:717
 msgid "Select a sample to enter results against"
-msgstr "Selecione para qual amostra deseja informar resultados"
+msgstr ""
 
 #: TestPlanResults.php:719
 msgid ""
 "This page can only be opened if a QA Sample has been selected. Please select "
 "a sample first"
 msgstr ""
-"Essa página só pode ser aberta se Amostra QA foi selecionada. Favor informar "
-"Amostra primeiro."
 
 #: TestPlanResults.php:724
 msgid "Back to Samples"
-msgstr "Voltar para Amostras"
+msgstr ""
 
 #: TestPlanResults.php:761
 msgid "Used for Cert"
-msgstr "Usado para Cert"
+msgstr ""
 
 #: TestPlanResults.php:807
 msgid "Test Date"
-msgstr "Data Teste"
+msgstr ""
 
 #: TestPlanResults.php:808
 msgid "Tested By"
-msgstr "Testado Por"
+msgstr ""
 
 #: TestPlanResults.php:809
 msgid "Test Result"
-msgstr "Resultado do Teste"
+msgstr ""
 
 #: TestPlanResults.php:810
 msgid "On Cert"
-msgstr "No Cert"
+msgstr ""
 
 #: TestPlanResults.php:920
 msgid "Are you sure you wish to delete this Test from this Sample ?"
-msgstr "Confirma remoção desse Teste da Amostra?"
+msgstr ""
 
 #: TestPlanResults.php:973
 msgid "Copy These Results"
-msgstr "Copiar Esses resultados"
+msgstr ""
 
 #: TestPlanResults.php:976
 msgid "Print COA"
-msgstr "Imprimir COA"
+msgstr ""
 
 #: TopItems.php:8
 msgid "Top Items Searching"
@@ -37678,7 +37584,7 @@ msgstr "não pode conter caract. inválidos"
 
 #: UnitsOfMeasure.php:236
 msgid "More than one character"
-msgstr "Mais de um caracter"
+msgstr ""
 
 #: UpgradeDatabase.php:7
 msgid "Upgrade webERP Database"
@@ -37877,7 +37783,7 @@ msgstr ""
 
 #: UserBankAccounts.php:34 UserLocations.php:33
 msgid "You have not selected any User"
-msgstr "Selecionar algum Usuário"
+msgstr ""
 
 #: UserBankAccounts.php:47
 msgid "You have not selected a bank account to be authorised for this user"
@@ -37889,7 +37795,7 @@ msgstr ""
 
 #: UserBankAccounts.php:66 UserGLAccounts.php:103 UserLocations.php:65
 msgid "is already authorised for this user"
-msgstr "já está autorizado para esse usuário"
+msgstr ""
 
 #: UserBankAccounts.php:74
 msgid "bank account has been changed"
@@ -37983,41 +37889,41 @@ msgstr ""
 
 #: UserLocations.php:5 includes/MainMenuLinksArray.php:545
 msgid "User Authorised Inventory Locations Maintenance"
-msgstr "Manutenção Autorização Usuário e Locais Inventário"
+msgstr ""
 
 #: UserLocations.php:10
 msgid "User Authorised Locations"
-msgstr "Usuário Autorizado para Locais"
+msgstr ""
 
 #: UserLocations.php:46
 msgid ""
 "You have not selected an inventory location to be authorised for this user"
-msgstr "Selecionar locais de inventário para autorizar esse usuário"
+msgstr ""
 
 #: UserLocations.php:65
 msgid "The location"
-msgstr "Local"
+msgstr ""
 
 #: UserLocations.php:154
 msgid "Authorised inventory locations for"
-msgstr "Locais autorizados para"
+msgstr ""
 
 #: UserLocations.php:172
 msgid "Authorised Inventory Locations for User"
-msgstr "Locais autorizados para Usuário"
+msgstr ""
 
 #: UserLocations.php:193
 msgid "Are you sure you wish to remove Update for this location?"
-msgstr "Confirma remoção atualização para esse local?"
+msgstr ""
 
 #: UserLocations.php:195
 msgid "Are you sure you wish to add Update for this location?"
-msgstr "Confirma adição Atualização para esse Local?"
+msgstr ""
 
 #: UserLocations.php:203
 #, php-format
 msgid "Are you sure you wish to un-authorise this location?"
-msgstr "Confirma desautorização para esse Local?"
+msgstr ""
 
 #: UserSettings.php:6 UserSettings.php:13 UserSettings.php:14
 msgid "User Settings"
@@ -38150,15 +38056,15 @@ msgstr "Exibir BOM"
 
 #: WOCanBeProducedNow.php:4
 msgid "WO items can be produced with available stock"
-msgstr "Itens OP podem ser produzidos com o estoque disponível"
+msgstr ""
 
 #: WOCanBeProducedNow.php:33
 msgid "The SQL to find the WO items to produce "
-msgstr "Sql para encontrar itens da OP que serão produzidos"
+msgstr ""
 
 #: WOCanBeProducedNow.php:44
 msgid "Requested"
-msgstr "Requisitado"
+msgstr ""
 
 #: WOCanBeProducedNow.php:54 Z_ImportGLAccountGroups.php:26
 #: Z_ImportGLAccountSections.php:28 Z_ImportPartCodes.php:30
@@ -38167,11 +38073,11 @@ msgstr "Resultado"
 
 #: WOCanBeProducedNow.php:219
 msgid "For Factory Location"
-msgstr "Do Local Fabricação"
+msgstr ""
 
 #: WOCanBeProducedNow.php:244
 msgid "Search Items To Produce"
-msgstr "Buscar Itens para Produzir"
+msgstr ""
 
 #: WorkCentres.php:6
 msgid "Work Centres"
@@ -38458,8 +38364,6 @@ msgid ""
 "Your security settings do not allow you to create or update new Work Order "
 "at this location"
 msgstr ""
-"Suas configurações segurança não permitem criação ou atualização da OP nesse "
-"local"
 
 #: WorkOrderEntry.php:49 WorkOrderEntry.php:330 WorkOrderEntry.php:553
 msgid "Select an existing work order"
@@ -38555,7 +38459,7 @@ msgstr "Não pode obter itnes para ordem produção"
 #: WorkOrderEntry.php:552
 msgid ""
 "Your location security settings do not allow you to Update this Work Order"
-msgstr "Sua Configuração de Segurança para esse local não permite atualizar OP"
+msgstr ""
 
 #: WorkOrderEntry.php:561
 msgid "Work Order Reference"
@@ -38638,8 +38542,6 @@ msgid ""
 "This issue cannot be processed because the system parameter is set to "
 "prohibit negative stock and this batch does not exist"
 msgstr ""
-"Esse requerimento não pode ser processado pois o sistema está configurado "
-"para inibir estoque negativo e esse lote não existe"
 
 #: WorkOrderIssue.php:129
 msgid ""
@@ -38647,8 +38549,6 @@ msgid ""
 "prohibit negative stock and this issue would result in this batch going into "
 "negative. Please correct the stock first before attempting another issue"
 msgstr ""
-"Esse processamento não pode ser feito pois o sistema está configurado para "
-"inibir estoque negativo. Favor abastecer estoque antecipadamente"
 
 #: WorkOrderIssue.php:142
 msgid ""
@@ -38776,7 +38676,7 @@ msgstr "Qtd Pedida"
 
 #: WorkOrderIssue.php:710
 msgid "Failed to retrieve the item data"
-msgstr "Falha na recuperação dados do item"
+msgstr ""
 
 #: WorkOrderIssue.php:853
 msgid "Could not get the detail of the item being issued because"
@@ -38864,7 +38764,7 @@ msgstr "Quant. informada deve ser número"
 
 #: WorkOrderReceive.php:127
 msgid "The Expiry Date should be in date format"
-msgstr "Data expiração deve ser formato data válida"
+msgstr ""
 
 #: WorkOrderReceive.php:140
 msgid ""
@@ -38990,7 +38890,7 @@ msgstr "SQL usado para remover ordem pre-definida, foi "
 msgid ""
 "The input quantity should not be negative since there are no this lot no "
 "existed"
-msgstr "A quantidade informada não pode ser negativa pois esse lote não existe"
+msgstr ""
 
 #: WorkOrderReceive.php:712
 msgid ""
@@ -39077,7 +38977,7 @@ msgstr "Neces. Manual"
 
 #: WorkOrderStatus.php:155
 msgid "Additional Issue"
-msgstr "Requerimento Adicional."
+msgstr ""
 
 #: WOSerialNos.php:33
 msgid "This page must to be called from the work order entry screen"
@@ -39358,7 +39258,7 @@ msgstr "Registro de usuário foi inserido"
 
 #: WWW_Users.php:219
 msgid "The default user locations could not be processed because"
-msgstr "O local padrão do usuário não pode ser processado porque"
+msgstr ""
 
 #: WWW_Users.php:220
 msgid "The SQL that was used to create the user locations and failed was"
@@ -39393,7 +39293,7 @@ msgstr ""
 
 #: WWW_Users.php:276
 msgid "The Location - User could not be deleted because"
-msgstr "Local - Usuário não pode ser removido porque"
+msgstr ""
 
 #: WWW_Users.php:280
 msgid "The GL Account - User could not be deleted because"
@@ -39425,7 +39325,7 @@ msgstr "Tamanho Relatório"
 
 #: WWW_Users.php:348
 msgid "No login record"
-msgstr "Nenhum registro Login"
+msgstr ""
 
 #: WWW_Users.php:369
 #, php-format
@@ -39449,8 +39349,6 @@ msgid ""
 "Please input not less than 4 characters and canot be admin or contains "
 "illegal characters"
 msgstr ""
-"Favor informar mais de 4 caracteres, conter caracteres válidos e não pode "
-"ser admin"
 
 #: WWW_Users.php:498
 msgid "At least 5 characters"
@@ -39507,7 +39405,7 @@ msgstr "módulo"
 
 #: WWW_Users.php:718
 msgid "Display Dashboard after Login"
-msgstr "Exibir Painel Controle após Login"
+msgstr ""
 
 #: WWW_Users.php:750
 msgid "Allowed Department for Internal Requests"
@@ -39527,11 +39425,11 @@ msgstr "Bloqueado"
 
 #: Z_AutoCustomerAllocations.php:12
 msgid "Automatic Customer Receipt"
-msgstr "Recebimento Automático Cliente"
+msgstr ""
 
 #: Z_AutoCustomerAllocations.php:144
 msgid "Could not insert allocation record"
-msgstr "Não pode inserir registro alocação"
+msgstr ""
 
 #: Z_BottomUpCosts.php:6
 msgid "Recalculate BOM costs"
@@ -40141,7 +40039,7 @@ msgstr "Página Utilit. Modif. Categoria Estoque."
 #: Z_ChangeStockCategory.php:12 Z_ChangeStockCategory.php:13
 #: includes/MainMenuLinksArray.php:569
 msgid "Change A Stock Category Code"
-msgstr "Modificar Código Categoria de Estoque"
+msgstr ""
 
 #: Z_ChangeStockCategory.php:24
 msgid "The stock Category"
@@ -40156,15 +40054,11 @@ msgid ""
 "The new stock category to change the old code to contains illegal characters "
 "- no changes will be made"
 msgstr ""
-"Nova categoria de estoque para atualizar código antigo contém caracteres "
-"ilegais - não foram feitas atualizações"
 
 #: Z_ChangeStockCategory.php:36
 msgid ""
 "The new stock category to change the old code to must be entered as well"
 msgstr ""
-"Nova categoria de estoque para atualizar código antigo deve ser informada "
-"também"
 
 #: Z_ChangeStockCategory.php:46
 msgid "The replacement stock category"
@@ -40204,11 +40098,11 @@ msgstr "SQL para atualizar categoria de estoque falhou"
 
 #: Z_ChangeStockCategory.php:94
 msgid "Changing internal stock category roles records"
-msgstr "Modif. registros categoria interna de estoque"
+msgstr ""
 
 #: Z_ChangeStockCategory.php:96
 msgid "The SQL to update internal stock category role records failed"
-msgstr "SQL para atualização interna da categoria do estoque que falhou"
+msgstr ""
 
 #: Z_ChangeStockCategory.php:103
 msgid "Deleting the old stock category record"
@@ -40555,7 +40449,7 @@ msgstr "Saldos Devedores em Moeda"
 
 #: Z_CurrencyDebtorsBalances.php:12
 msgid "Show Local Currency Total Debtors Balances"
-msgstr "Exibir total Saldo Devedor Moeda Local"
+msgstr ""
 
 #: Z_CurrencyDebtorsBalances.php:13 includes/MainMenuLinksArray.php:594
 msgid "Debtors Balances By Currency Totals"
@@ -41096,43 +40990,43 @@ msgstr "Padrão"
 
 #: Z_ExportSalesAnalysis.php:17
 msgid "Create and send sales analysis files"
-msgstr "Criar e Enviar arquivos análise vendas"
+msgstr ""
 
 #: Z_ExportSalesAnalysis.php:20
 msgid "Export Sales Analysis Files"
-msgstr "Exportar Arq. Análise Vendas"
+msgstr ""
 
 #: Z_ExportSalesAnalysis.php:26
 msgid "Making a comma separated values file of the stock items"
-msgstr "Criar arquivo de itens de estoque no formato CSV"
+msgstr ""
 
 #: Z_ExportSalesAnalysis.php:28
 msgid "The SQL to get the stock items failed with the message"
-msgstr "SQL para obter estoque de itens falhou com a mensagem"
+msgstr ""
 
 #: Z_ExportSalesAnalysis.php:59
 msgid "Making a comma separated values file of the customers"
-msgstr "Criar arquivo de clientes no formato CSV"
+msgstr ""
 
 #: Z_ExportSalesAnalysis.php:61
 msgid "The SQL to get the customers failed with the message"
-msgstr "SQL para obter clientes falhou com a mensagem"
+msgstr ""
 
 #: Z_ExportSalesAnalysis.php:89
 msgid "Making a comma separated values file of the sales lines"
-msgstr "Criar arquivo das linhas de venda no formato CSV"
+msgstr ""
 
 #: Z_ExportSalesAnalysis.php:91
 msgid "The SQL to get the sales data failed with the message"
-msgstr "SQL para obter dados vendas falhou com a mensagem"
+msgstr ""
 
 #: Z_ImportChartOfAccounts.php:5
 msgid "Import Chart Of Accounts"
-msgstr "Importar Plano de Contas"
+msgstr ""
 
 #: Z_ImportChartOfAccounts.php:9 Z_ImportChartOfAccounts.php:10
 msgid "Import Chart of Accounts from CSV file"
-msgstr "Importar Plano de Contas de arquivo CSV"
+msgstr ""
 
 #: Z_ImportChartOfAccounts.php:34 Z_ImportFixedAssets.php:52
 #: Z_ImportGLTransactions.php:40 Z_ImportPriceList.php:34
@@ -41142,15 +41036,13 @@ msgstr "colunas, esperadas"
 
 #: Z_ImportChartOfAccounts.php:34 Z_ImportChartOfAccounts.php:44
 msgid "There should be three column headings:"
-msgstr "Deve haver três colunas de cabeçalho:"
+msgstr ""
 
 #: Z_ImportChartOfAccounts.php:44
 msgid ""
 "The file to import the chart of accounts from contains incorrect column "
 "headings"
 msgstr ""
-"O arquivo para importação do plano de contas contém cabeçalho de coluna "
-"inválidos"
 
 #: Z_ImportChartOfAccounts.php:62 Z_ImportPriceList.php:62
 msgid "fields required"
@@ -41165,16 +41057,14 @@ msgid ""
 "does not exist. First enter the account groups you require in webERP before "
 "attempting to import the accounts."
 msgstr ""
-"não existe. Primeiro informe o grupo contábil para o módulo GL antes de "
-"importar contas contábeis."
 
 #: Z_ImportChartOfAccounts.php:95
 msgid "The general ledger account could not be added because"
-msgstr "Conta Contábil não pode ser adicionado porque"
+msgstr ""
 
 #: Z_ImportChartOfAccounts.php:96
 msgid "The SQL that was used to add the general ledger account that failed was"
-msgstr "SQL que foi usado para adicionar conta contábil falhou porque"
+msgstr ""
 
 #: Z_ImportChartOfAccounts.php:107 Z_ImportGLTransactions.php:210
 msgid "Failed on row"
@@ -41183,7 +41073,6 @@ msgstr "Falhou na linha "
 #: Z_ImportChartOfAccounts.php:107
 msgid "Batch import of the chart of accounts has been rolled back."
 msgstr ""
-"Transações de Importação batch, do plano de contas, foram desfeitas no DB."
 
 #: Z_ImportChartOfAccounts.php:111 Z_ImportDebtors.php:623
 #: Z_ImportFixedAssets.php:278 Z_ImportGLTransactions.php:214
@@ -41193,41 +41082,35 @@ msgstr "Importar em Batch "
 
 #: Z_ImportChartOfAccounts.php:111
 msgid "has been completed"
-msgstr "foi completado"
+msgstr ""
 
 #: Z_ImportChartOfAccounts.php:111
 msgid "All general ledger accounts have been added to the chart of accounts"
-msgstr "Todas contas contábeis foram adicionadas ao plano de contas"
+msgstr ""
 
 #: Z_ImportChartOfAccounts.php:124
 msgid ""
 "This function loads a chart of accounts from a comma separated variable "
 "(csv) file."
-msgstr "Essa função carrega plano de contas a partir de arquivo do tipo CSV."
+msgstr ""
 
 #: Z_ImportChartOfAccounts.php:125
 msgid ""
 "The file must contain three columns, and the first row should be the "
 "following headers:"
 msgstr ""
-"O arquivo deve conter três colunas e o primeiro registro deve ter os "
-"seguindos cabeçalhos:"
 
 #: Z_ImportChartOfAccounts.php:126
 msgid ""
 "followed by rows containing these three fields for each general ledger "
 "account to be uploaded."
 msgstr ""
-"seguido por linhas contendo esses três campos para cada conta contábil que "
-"será carregada."
 
 #: Z_ImportChartOfAccounts.php:127
 msgid ""
 "The Account Group field must have a corresponding entry in the account "
 "groups table. So these need to be set up first."
 msgstr ""
-"Campo Grupo Contábil deve corresponder a entrada na tabela de grupos "
-"contábeis.  Portanto configurar isso primeiro."
 
 #: Z_ImportChartOfAccounts.php:130 Z_ImportCustbranch.php:548
 #: Z_ImportDebtors.php:651 Z_ImportGLTransactions.php:259
@@ -41265,118 +41148,113 @@ msgstr " campos obrigatórios, "
 
 #: Z_ImportCustbranch.php:188
 msgid "The Debtor No cannot contain any of the following characters"
-msgstr "Número Debito não pode conter nenhum dos caracteres"
+msgstr ""
 
 #: Z_ImportCustbranch.php:194
 msgid ""
 "The Branch code must be at least one character long and cannot be more than "
 "10 characters"
 msgstr ""
-"Código Sucursal deve ter pelo menos 1 caracter e não pode ser maior que 10 "
-"caracteres"
 
 #: Z_ImportCustbranch.php:208
 msgid "The Branch address1 must be no more than"
-msgstr "Endereço da Sucursal não pode ter mais que"
+msgstr ""
 
 #: Z_ImportCustbranch.php:208 Z_ImportCustbranch.php:331
 msgid "characters"
-msgstr "caracteres"
+msgstr ""
 
 #: Z_ImportCustbranch.php:214
 msgid "The latitude is expected to be a numeric"
-msgstr "A latitude esperada deve ser numérica"
+msgstr ""
 
 #: Z_ImportCustbranch.php:220
 msgid "The longitude is expected to be a numeric"
-msgstr "A longitude esperada deve ser numérica"
+msgstr ""
 
 #: Z_ImportCustbranch.php:250
 msgid "The salesman not empty and must exist."
-msgstr "Vendedor deve estar preenchido e existir."
+msgstr ""
 
 #: Z_ImportCustbranch.php:256
 msgid ""
 "The phone no should not contains characters other than digital,parenthese,"
 "space,minus and plus sign"
 msgstr ""
-"Telefone não pode conter dígitos, parenteses, espaço, sinal menos ou mais"
 
 #: Z_ImportCustbranch.php:262
 msgid ""
 "The fax no should not contains characters other than digital,parenthese,"
 "space,minus and plus sign"
 msgstr ""
-"Número Fax não pode conter caracteres que não digitos, parenteses, spaços, "
-"menos e sinal mais"
 
 #: Z_ImportCustbranch.php:268
 msgid "The contact name must not be over 30 characters"
-msgstr "Nome Contato deve ter no máximo 30 caracteres"
+msgstr ""
 
 #: Z_ImportCustbranch.php:274
 msgid "The email address is not valid"
-msgstr "O endereço do email não é válido"
+msgstr ""
 
 #: Z_ImportCustbranch.php:281
 msgid "Or length is over 40"
-msgstr "Ou tamanho maior de 40"
+msgstr ""
 
 #: Z_ImportCustbranch.php:287
 msgid "The sales area not empty and must exist."
-msgstr "Área de vendas deve estar preenchida e existir."
+msgstr ""
 
 #: Z_ImportCustbranch.php:293
 msgid "The default location not empty and must exist."
-msgstr "Local padrão deve estar preenchido e existir."
+msgstr ""
 
 #: Z_ImportCustbranch.php:299
 msgid "The default shipper not empty and must exist."
-msgstr "Transportador Padrão deve estar preenchido e existir."
+msgstr ""
 
 #: Z_ImportCustbranch.php:305
 msgid "The taxgroup not empty and must exist."
-msgstr "Grupo Impostos deve estar preenchido e existir."
+msgstr ""
 
 #: Z_ImportCustbranch.php:311
 msgid "The Deliver Blind must be set as 2 or 1"
-msgstr "Remessa Blind deve ser 2 ou 1"
+msgstr ""
 
 #: Z_ImportCustbranch.php:317
 msgid "The Disable Trans status should be 0 or 1"
-msgstr "Status Trans. Desabilitada deve ser 0 ou 1"
+msgstr ""
 
 #: Z_ImportCustbranch.php:331
 msgid "The Branch Post Address"
-msgstr "Endereço postal Sucursal"
+msgstr ""
 
 #: Z_ImportCustbranch.php:331
 msgid "must be no more than"
-msgstr "não pode ser mais que"
+msgstr ""
 
 #: Z_ImportCustbranch.php:339
 msgid "The Cust branch code for EDI must be less than 30 characters"
-msgstr "Código Sucursal Cliente para EDI de ter menos de 30 caracteres"
+msgstr ""
 
 #: Z_ImportCustbranch.php:359
 msgid "The Debtor No"
-msgstr "Núm Débito"
+msgstr ""
 
 #: Z_ImportCustbranch.php:359
 msgid "has not existed, and its branches data cannot be imported"
-msgstr "não existiu e suas sucursais não podem ser importadas"
+msgstr ""
 
 #: Z_ImportCustbranch.php:487
 msgid "New branch of debtor"
-msgstr "Nova Sucursal Devedora"
+msgstr ""
 
 #: Z_ImportCustbranch.php:487
 msgid "with branch code"
-msgstr "com código sucursal"
+msgstr ""
 
 #: Z_ImportCustbranch.php:487
 msgid "has been passed validation"
-msgstr "passou na validação"
+msgstr ""
 
 #: Z_ImportCustbranch.php:508 Z_ImportDebtors.php:619
 #: Z_ImportFixedAssets.php:274 Z_ImportPriceList.php:138
@@ -41386,23 +41264,23 @@ msgstr "Falhou na linha "
 
 #: Z_ImportCustbranch.php:513
 msgid "Updated brances total:"
-msgstr "Total Sucursais atualizadas"
+msgstr ""
 
 #: Z_ImportCustbranch.php:513
 msgid "Insert branches total:"
-msgstr "Inserir Total de Sucursais:"
+msgstr ""
 
 #: Z_ImportCustbranch.php:515
 msgid "Exist branches total:"
-msgstr "Total Sucursais Exist:"
+msgstr ""
 
 #: Z_ImportCustbranch.php:515
 msgid "Inserted branches total:"
-msgstr "Total de Sucursais Inseridas:"
+msgstr ""
 
 #: Z_ImportCustbranch.php:517
 msgid "Branches not updated"
-msgstr "Sucursais não atualizadas"
+msgstr ""
 
 #: Z_ImportCustbranch.php:536 Z_ImportDebtors.php:639
 msgid ""
@@ -41414,7 +41292,7 @@ msgstr ""
 
 #: Z_ImportCustbranch.php:550
 msgid "Update if Customer Branch exists"
-msgstr "Atualizar se Sucursal Cliente existir"
+msgstr ""
 
 #: Z_ImportDebtors.php:598 Z_ImportStocks.php:250
 msgid "has been added to the transaction"
@@ -41607,7 +41485,7 @@ msgstr " registros importados com sucesso"
 #: Z_ImportGLAccountGroups.php:62 Z_ImportGLAccountSections.php:66
 #: Z_ImportPartCodes.php:68
 msgid " records failed to import"
-msgstr " registros que falharam na importação"
+msgstr " registros que falharam importação"
 
 #: Z_ImportGLAccountGroups.php:66 Z_ImportGLAccountSections.php:70
 msgid ""
@@ -41835,7 +41713,7 @@ msgstr "Imp. Itens a partir de arq. CSV"
 
 #: Z_ImportStocks.php:69
 msgid "File contains incorrect headers "
-msgstr "Arquivo contém cabeçalhos inválidos"
+msgstr ""
 
 #: Z_ImportStocks.php:105
 msgid "Stock item \""
@@ -41895,7 +41773,7 @@ msgstr "Itens sem Imagem no WebERP"
 
 #: Z_MakeLocUsers.php:6
 msgid "Make locationusers Records"
-msgstr "Criar registros Local e Usuários"
+msgstr ""
 
 #: Z_MakeLocUsers.php:9 Z_MakeStockLocns.php:9
 msgid ""
@@ -41909,8 +41787,6 @@ msgid ""
 "Any users that may not have had user location records have now been given "
 "new location user records"
 msgstr ""
-"Usuários que não tinham registro de local de estoque passam a ter novo local "
-"de registros"
 
 #: Z_MakeNewCompany.php:15
 msgid "Make New Company Database Utility"
@@ -42372,26 +42248,23 @@ msgstr "Atualiz. custo análise de vendas por período"
 
 #: Z_RebuildSalesAnalysis.php:6
 msgid "Rebuild sales analysis Records"
-msgstr "Reconstruir Registros Análise de Vendas"
+msgstr ""
 
 #: Z_RebuildSalesAnalysis.php:9
 msgid ""
 "This script rebuilds sales analysis records. NB: all sales budget figures "
 "will be lost!"
 msgstr ""
-"Esse script reconstroi registro da análise de vendas. NB: previsões "
-"anteriores serão perdidas!"
 
 #: Z_RebuildSalesAnalysis.php:58
 msgid "The sales analysis data could not be recreated because"
-msgstr "Dados análise de venda não pode ser recriada porque"
+msgstr ""
 
 #: Z_RebuildSalesAnalysis.php:62
 msgid ""
 "The sales analsysis data has been recreated based on current stock master "
 "and customer master information"
 msgstr ""
-"Dados Análise de Venda foi recriada com base em informações estoque e cliente"
 
 #: Z_RePostGLFromPeriod.php:6
 msgid "Recalculation of GL Balances in Chart Details Table"
@@ -42599,46 +42472,41 @@ msgstr "Selec. novamente período relatório"
 
 #: Z_UpdateItemCosts.php:3
 msgid "Update Item Costs From CSV"
-msgstr "Atualizar Custos Itens a partir de arquivo CSV"
+msgstr ""
 
 #: Z_UpdateItemCosts.php:8 Z_UpdateItemCosts.php:9
 msgid "Update Item Costs from CSV file"
-msgstr "Atualizar Custos Itens a partir arquivo CSV"
+msgstr ""
 
 #: Z_UpdateItemCosts.php:41
 msgid ""
 "The file to import the item cost updates from contains incorrect column "
 "headings"
 msgstr ""
-"O arquivo para importar atualização de custo de itens contém cabeçalhos "
-"coluna incorretos"
 
 #: Z_UpdateItemCosts.php:71
 msgid "The selected item code does not exist"
-msgstr "Código Item selecionado não existe"
+msgstr ""
 
 #: Z_UpdateItemCosts.php:104
 msgid "Batch Update of costs"
-msgstr "Atualização Batch dos Custos"
+msgstr ""
 
 #: Z_UpdateItemCosts.php:114
 msgid ""
 "This function updates the costs of all items from a comma separated variable "
 "(csv) file."
-msgstr "Essa função atualiza os custos dos itens a partir de um arquivo csv."
+msgstr ""
 
 #: Z_UpdateItemCosts.php:116
 msgid ""
 "followed by rows containing these four fields for each cost to be updated."
 msgstr ""
-"seguido por linhas contendo esses quatro campos para cada custo a ser "
-"atualizado"
 
 #: Z_UpdateItemCosts.php:117
 msgid ""
 "The StockID field must have a corresponding entry in the stockmaster table."
 msgstr ""
-"Campo ID Estoque deve ter entrada correspondente na tabela mestre de estoque."
 
 #: Z_UpdateSalesAnalysisWithLatestCustomerData.php:6
 msgid "Apply Current Customer and Branch Data to Sales Analysis"
@@ -42902,15 +42770,15 @@ msgstr ""
 
 #: includes/Add_SerialItems.php:16
 msgid "Please correct input quantity "
-msgstr "Favor confirmar quantidade correta"
+msgstr ""
 
 #: includes/Add_SerialItems.php:16
 msgid "decimalplaces"
-msgstr "pos. decimais"
+msgstr ""
 
 #: includes/Add_SerialItems.php:24
 msgid "The input quantity must be numeric"
-msgstr "A quantidade da entrada deve ser numérico"
+msgstr ""
 
 #: includes/Add_SerialItems.php:73 includes/Add_SerialItems.php:246
 #: includes/Add_SerialItems.php:343
@@ -43968,7 +43836,7 @@ msgstr "Cuban peso"
 
 #: includes/CurrenciesArray.php:49
 msgid "Cape Verde escudo"
-msgstr " Cabo Verde"
+msgstr " Cria Pedido"
 
 #: includes/CurrenciesArray.php:50
 msgid "Czech koruna"
@@ -43976,7 +43844,7 @@ msgstr "Czech koruna"
 
 #: includes/CurrenciesArray.php:51
 msgid "Djiboutian franc"
-msgstr " Djiboutian franco"
+msgstr " Desconto"
 
 #: includes/CurrenciesArray.php:52
 msgid "Danish krone"
@@ -44524,75 +44392,75 @@ msgstr "Zambian kwacha"
 
 #: includes/DatabaseTranslations.php:22
 msgid "Journal - GL"
-msgstr "Lançamento - GL"
+msgstr ""
 
 #: includes/DatabaseTranslations.php:23
 msgid "Payment - GL"
-msgstr "Pagamento - GL"
+msgstr ""
 
 #: includes/DatabaseTranslations.php:24
 msgid "Receipt - GL"
-msgstr "Recebimento - GL"
+msgstr ""
 
 #: includes/DatabaseTranslations.php:25
 msgid "Standing Journal"
-msgstr "Criando Lançamento"
+msgstr ""
 
 #: includes/DatabaseTranslations.php:29
 msgid "Journal - Debtors"
-msgstr "Lançamentos - Débitos"
+msgstr ""
 
 #: includes/DatabaseTranslations.php:36
 msgid "Creditors Payment"
-msgstr "Pagamento Credores"
+msgstr ""
 
 #: includes/DatabaseTranslations.php:37
 msgid "Creditors Journal"
-msgstr "Lançamentos Credores"
+msgstr ""
 
 #: includes/DatabaseTranslations.php:41
 msgid "Work Order Variance"
-msgstr "Variação Ordem Produção"
+msgstr ""
 
 #: includes/DatabaseTranslations.php:43
 msgid "Shipment Close"
-msgstr "Fechar Remessa"
+msgstr ""
 
 #: includes/DatabaseTranslations.php:44
 msgid "Contract Close"
-msgstr "Fechar Contrato"
+msgstr ""
 
 #: includes/DatabaseTranslations.php:45
 msgid "Cost Update"
-msgstr "Atualizar Custos"
+msgstr ""
 
 #: includes/DatabaseTranslations.php:46
 msgid "Exchange Difference"
-msgstr "Diferença Câmbio"
+msgstr ""
 
 #: includes/DatabaseTranslations.php:48
 msgid "Stock Requests"
-msgstr "Requisição Estoque"
+msgstr ""
 
 #: includes/DatabaseTranslations.php:51
 msgid "Asset Category Change"
-msgstr "Mudar Categoria Ativo"
+msgstr ""
 
 #: includes/DatabaseTranslations.php:52
 msgid "Delete w/down asset"
-msgstr "Remover ou Baixar Ativo"
+msgstr ""
 
 #: includes/DatabaseTranslations.php:56
 msgid "Auto Debtor Number"
-msgstr "Número Débito Auto"
+msgstr ""
 
 #: includes/DatabaseTranslations.php:59
 msgid "Exempt"
-msgstr "Exemplo"
+msgstr ""
 
 #: includes/DatabaseTranslations.php:61
 msgid "Handling"
-msgstr "Separação"
+msgstr ""
 
 #: includes/DefineCartClass.php:172
 msgid "The order line for"
@@ -44751,7 +44619,8 @@ msgstr "A proposta de fornecedores não pode ser inserida no banco de dados"
 msgid ""
 "The SQL statement used to insert the suppliers offer record and failed was"
 msgstr ""
-"SQL usado para inserir o registro de proposta dos fornecedores e falhou foi"
+"A instrução dSQL usado para inserir o registro de proposta dos fornecedores "
+"e falhou foi"
 
 #: includes/DefineOfferClass.php:96 includes/DefineOfferClass.php:100
 #: includes/DefineOfferClass.php:118 includes/DefineOfferClass.php:122
@@ -44893,8 +44762,6 @@ msgid ""
 "The bank statement currency is a currency not defined in the system. Please "
 "see you system administrator"
 msgstr ""
-"Moeda transação Bancária não está definida no sistema. Favor consultar admin "
-"sistema"
 
 #: includes/InputSerialItemsExisting.php:19
 msgid "Could not retrieve the items for"
@@ -45117,7 +44984,7 @@ msgstr "Consulta Resumida Pedido Vendas Det."
 
 #: includes/MainMenuLinksArray.php:67
 msgid "Top Customers Inquiry"
-msgstr "Consulta Maiores Clientes"
+msgstr ""
 
 #: includes/MainMenuLinksArray.php:68
 msgid "Worst Sales Items Report"
@@ -45333,7 +45200,7 @@ msgstr "Nota Transf. de Estoque"
 
 #: includes/MainMenuLinksArray.php:247
 msgid "Aged Controlled Stock Report"
-msgstr "Relat. Hist. Estoque Controlado"
+msgstr ""
 
 #: includes/MainMenuLinksArray.php:273
 msgid "Add A New Item"
@@ -45361,7 +45228,7 @@ msgstr "Selecionar Ordem Produção"
 
 #: includes/MainMenuLinksArray.php:293
 msgid "QA Samples and Test Results"
-msgstr "Amostra QA e Resultados Testes"
+msgstr ""
 
 #: includes/MainMenuLinksArray.php:299
 msgid "Costed Bill Of Material Inquiry"
@@ -45385,7 +45252,7 @@ msgstr "Relatório Identado Onde Usado"
 
 #: includes/MainMenuLinksArray.php:306
 msgid "WO Items ready to produce"
-msgstr "Itens da OP prontos para produção"
+msgstr ""
 
 #: includes/MainMenuLinksArray.php:307
 msgid "MRP"
@@ -45405,11 +45272,11 @@ msgstr "MRP Reprogramação Requerida"
 
 #: includes/MainMenuLinksArray.php:313
 msgid "Print Certificate of Analysis"
-msgstr "Imprimir Certificado de Análise"
+msgstr ""
 
 #: includes/MainMenuLinksArray.php:314
 msgid "Historical QA Test Results"
-msgstr "Histórico Resultados Testes QA"
+msgstr ""
 
 #: includes/MainMenuLinksArray.php:315
 msgid "Multiple Work Orders Total Cost Inquiry"
@@ -45437,7 +45304,7 @@ msgstr "Processar MRP"
 
 #: includes/MainMenuLinksArray.php:342
 msgid "Quality Tests Maintenance"
-msgstr "Manutenção Testes Qualidade"
+msgstr ""
 
 #: includes/MainMenuLinksArray.php:357
 msgid "Bank Account Payments Matching"
@@ -45549,7 +45416,7 @@ msgstr "Relatório Geral PC TAB"
 
 #: includes/MainMenuLinksArray.php:457
 msgid "PC Expenses Analysis"
-msgstr "Análise Despesas PC"
+msgstr ""
 
 #: includes/MainMenuLinksArray.php:462
 msgid "Types of PC Tabs"
@@ -45681,19 +45548,19 @@ msgstr "Opções Exportação Dados"
 
 #: includes/MainMenuLinksArray.php:607
 msgid "Import Customers from .csv file"
-msgstr "Importar Clientes de arquivo CSV"
+msgstr ""
 
 #: includes/MainMenuLinksArray.php:608
 msgid "Import Stock Items from .csv file"
-msgstr "Importar Itens Estoque de arquivo CSV"
+msgstr ""
 
 #: includes/MainMenuLinksArray.php:609
 msgid "Import Price List from .csv file"
-msgstr "Importar Lista Preço de arquivo CSV"
+msgstr ""
 
 #: includes/MainMenuLinksArray.php:611
 msgid "Import GL Payments Receipts Or Journals From .csv file"
-msgstr "Importar GL Pagamentos Recebidos ou Lançamentos de arquivos CSV"
+msgstr ""
 
 #: includes/MainMenuLinksArray.php:612
 msgid "Create new company template SQL file and submit to webERP"
@@ -46082,11 +45949,11 @@ msgstr "sql que retornou a mensagem foi"
 
 #: includes/GetPrice.inc:152
 msgid "There is an error to retrieve price from price matrix for stock"
-msgstr "Há erro na recuperação preço da matrix de preço do estoque"
+msgstr ""
 
 #: includes/GetPrice.inc:152
 msgid "and the error message returned by SQL server is "
-msgstr "e a mensagem de erro que o SQL retornou foi"
+msgstr ""
 
 #: includes/GetPrice.inc:159
 msgid "There are no prices set up for"
@@ -46509,7 +46376,7 @@ msgstr "Quant. Separ."
 
 #: includes/PDFProdSpecHeader.inc:30
 msgid "Technical Data Sheet"
-msgstr "Folha Dados Técnicos"
+msgstr ""
 
 #: includes/PDFProfitAndLossPageHeader.inc:21
 #: includes/PDFTagProfitAndLossPageHeader.inc:21
@@ -46583,7 +46450,7 @@ msgstr "Observações"
 
 #: includes/PDFStockComparisonPageHeader.inc:16
 msgid "Stock Check Comparison at"
-msgstr "Comparação Estoque em"
+msgstr ""
 
 #: includes/PDFStockComparisonPageHeader.inc:35
 msgid "Counted"
@@ -46698,23 +46565,23 @@ msgstr " e para o "
 
 #: includes/PDFWOPageHeader.inc:29
 msgid "Produced At"
-msgstr "Produzido em"
+msgstr ""
 
 #: includes/PDFWOPageHeader.inc:46
 msgid "Required Qty"
-msgstr "Quant. Requerida"
+msgstr ""
 
 #: includes/PDFWOPageHeader.inc:48
 msgid "Packing Qty"
-msgstr "Quant. Embalagens"
+msgstr ""
 
 #: includes/PDFWOPageHeader.inc:64
 msgid "Material Requirements for this Work Order"
-msgstr "Requerimentos Materiais para essa OP (ordem produção)"
+msgstr ""
 
 #: includes/PDFWOPageHeader.inc:71
 msgid "Quantity Reqd"
-msgstr "Quantidade Requerida"
+msgstr ""
 
 #: includes/PO_PDFOrderPageHeader.inc:14
 msgid "FOR VIEWING ONLY"
@@ -46923,35 +46790,35 @@ msgstr "Entradas Contábeis criadas não fecham deb/créd. Avise admin Sistema."
 
 #: includes/SQL_CommonFunctions.inc:381 includes/SQL_CommonFunctions.inc:385
 msgid "The quantity on order due to purchase orders for"
-msgstr "Quant. Ordem de Compra devido a Pedido de Vendas para"
+msgstr ""
 
 #: includes/SQL_CommonFunctions.inc:381 includes/SQL_CommonFunctions.inc:426
 msgid "to be received into all locations cannot be retrieved because"
-msgstr "para ser recebido em todos os locais não pode ser recuperado porque"
+msgstr ""
 
 #: includes/SQL_CommonFunctions.inc:385 includes/SQL_CommonFunctions.inc:430
 msgid "to be received into"
-msgstr "para ser recebido em"
+msgstr ""
 
 #: includes/SQL_CommonFunctions.inc:426 includes/SQL_CommonFunctions.inc:430
 msgid "The quantity on order due to work orders for"
-msgstr "Quant. Ordem Compra devido a O.Produção"
+msgstr ""
 
 #: includes/SQL_CommonFunctions.inc:485
 msgid "The create of the qasamples record failed"
-msgstr "Criação do registro de Amostra QA falhou"
+msgstr ""
 
 #: includes/SQL_CommonFunctions.inc:486
 msgid "The following SQL to create the qasamples was used"
-msgstr "O SQL usado para criar Amostra QA foi"
+msgstr ""
 
 #: includes/SQL_CommonFunctions.inc:507
 msgid "The create of the sampleresults record failed"
-msgstr "Criação do registro de Resultados de Amostra falhou"
+msgstr ""
 
 #: includes/SQL_CommonFunctions.inc:508
 msgid "The following SQL to create the sampleresults was used"
-msgstr "O SQL usado para criar resultados de amostras de QA foi"
+msgstr ""
 
 #: api/api_debtortransactions.php:1271 api/api_debtortransactions.php:1284
 #: api/api_debtortransactions.php:1569 api/api_debtortransactions.php:1581
@@ -49421,7 +49288,7 @@ msgstr ""
 
 #: install/index.php:171
 msgid "The Company names cannot contain illegal characters such as /\\?%:|<>\""
-msgstr "Nome da empresa não pode conter caracteres inválidos como /\\?%:|<>\""
+msgstr ""
 
 #: install/index.php:177
 msgid "The Company Name name should not be empty"
@@ -49431,7 +49298,7 @@ msgstr "Nome da empresa deve estar preenchido"
 msgid ""
 "The database name should not contains illegal characters such as \"/\\?%:|<>"
 "\" etc"
-msgstr "Nome DB não pode conter caracteres ilegais como \"/\\?%:|<>\" e outros"
+msgstr ""
 
 #: install/index.php:194 install/index.php:541
 msgid "The database name should not be empty"
@@ -49528,8 +49395,6 @@ msgid ""
 "The database name should be lower case and not contains illegal characters "
 "such as \"/\\?%:|<>\""
 msgstr ""
-"Nome DB deve ser minúsculo e não pode conter caracteres ilegais como \"/\\?"
-"%:|<>\""
 
 #: install/index.php:563
 msgid "Please correct the displayed error first"
@@ -49742,7 +49607,7 @@ msgstr "Configurações Empresa"
 #: install/index.php:1026
 msgid ""
 "The name of your company should not contain characters such as |\\?%:<>\""
-msgstr "O nome da Empresa não pode conter caracteres como |\\?%:<>\""
+msgstr ""
 
 #: install/index.php:1029
 msgid "Chart of Accounts"
@@ -51114,773 +50979,11 @@ msgstr "Crédito"
 msgid "Bank Transfer"
 msgstr "Banco Transfer."
 
-#~ msgid ""
-#~ "The name you entered is a default report. Please enter a new My Report "
-#~ "name."
-#~ msgstr ""
-#~ "O nome informado é de um relatório padrão. Informar um novo nome para "
-#~ "Meus Relatórios."
-
-#~ msgid ""
-#~ "This report name already exists! Press Replace to overwrite or enter a "
-#~ "new name and press continue."
-#~ msgstr ""
-#~ "Esse relatório já existe! Pressione Substituir para sobrepor ou Informe "
-#~ "novo nome e pressione Continuar"
-
-#~ msgid ""
-#~ "There is an error in your database selection. Check your database names "
-#~ "and link equations."
-#~ msgstr "Há erro na seleção do Banco de Dados. Verifique nomes e links."
-
-#~ msgid ""
-#~ "There is an error in your database field or description. Please check and "
-#~ "try again."
-#~ msgstr ""
-#~ "Há erro na descrição do seu Campo Banco de Dados. Corrigir e processar "
-#~ "novamente."
-
-#~ msgid ""
-#~ "There is an error in one of your data fields. Please check and try again."
-#~ msgstr ""
-#~ "Há um erro dos campos de dados. Favor verificar e processar novamente."
-
-#~ msgid "A data field has been left empty located at sequence number: "
-#~ msgstr "Campo foi deixado em branco na sequência:"
-
-#~ msgid ""
-#~ "If you replace this report/form, the original report/form will be deleted!"
-#~ msgstr ""
-#~ "Se continuar e substituir esse Relatório / Form., o original será perdido!"
-
-#~ msgid ""
-#~ "There was not any data in this report based on the criteria provided!"
-#~ msgstr "Não há nenhum dado com base no critério informado para o Relatório!"
-
-#~ msgid "You do not have any rows to show!"
-#~ msgstr "Não há linhas a exibir!"
-
-#~ msgid " was saved and copied to report: "
-#~ msgstr "foi salva e copiada para o relatório"
-
-#~ msgid "The report name has been updated!"
-#~ msgstr "Nome do Relatório Atualizado!"
-
-#~ msgid "No form name was selected to perform this operation."
-#~ msgstr "Nenhum nome de Formulário selecionado para essa operação."
-
-#~ msgid "No report or form was selected to perform this operation."
-#~ msgstr "Nenhum Relatório selecionado para essa operação."
-
-#~ msgid "Either Report or Form type needs to be selected!"
-#~ msgstr "Selecionar Relatório ou Formulário!"
-
-#~ msgid ""
-#~ "The name you entered is already in use. Please enter a new report name!"
-#~ msgstr ""
-#~ "O name informado já está em uso. Informar um novo nome de relatório!"
-
-#~ msgid "Press OK to delete this report."
-#~ msgstr "Pressione OK para remover esse Relatório."
-
-#~ msgid "Press OK to overwrite this report."
-#~ msgstr "Pressione OK para sobrepor esse relatório."
-
-#~ msgid "There are no fields to show!"
-#~ msgstr "Não há campos para exibir!"
-
-#~ msgid "Enter a name for this form."
-#~ msgstr "Informe nome do Formulário"
-
-#~ msgid "Enter a name for this report."
-#~ msgstr "Informe o nome do Relatório"
-
-#~ msgid "(Leave blank to use default report name from import file)"
-#~ msgstr "(deixar em branco para usar o nome do arquivo de importação)"
-
-#~ msgid "(maximum 30 characters)"
-#~ msgstr "(máximo 30 caracteres)"
-
-#~ msgid "Enter the group this form is a part of:"
-#~ msgstr "Informe o grupo a que pertence esse formulário:"
-
-#~ msgid "Enter the group this report is a part of:"
-#~ msgstr "Informe o grupo ao qual pertence esse Relatório:"
-
-#~ msgid "Select a default report to import."
-#~ msgstr "Selecionar relatório padrão para importar"
-
-#~ msgid "Or browse for a report to upload."
-#~ msgstr "Ou Pesquisar para upload de Relatório."
-
-#~ msgid ""
-#~ "The filesize exceeds the upload_max_filesize directive in your php.ini "
-#~ "settings."
-#~ msgstr ""
-#~ "O tamanho do arquivo excede a diretiva upload_max_filesize das "
-#~ "configurações do php.ini."
-
-#~ msgid "The filesize exceeds the MAX_FILE_SIZE directive in the webERP form."
-#~ msgstr ""
-#~ "O tamanho do arquivo excede a diretiva MAX_FILE_SIZE for formulário "
-#~ "webERP."
-
-#~ msgid "The file was not completely uploaded. Please retry."
-#~ msgstr "O arquivo não foi completamente carregado. Favor reprocessar."
-
-#~ msgid "No file was selected to upload."
-#~ msgstr "Nenhum arquivo selecionado para carga."
-
-#~ msgid "Unknown php upload error, php returned error # "
-#~ msgstr "Erro desconhecido na carga, php retornou erro #"
-
-#~ msgid "This file is not reported by the server as a text file."
-#~ msgstr "Servidor informa que esse arquivo não é do tipo texto."
-
-#~ msgid "The uploaded file does not contain any data!"
-#~ msgstr "Arquivo carregado não contem dados!"
-
-#~ msgid "webERP could not find a valid report to import in the uploaded file!"
-#~ msgstr "webERP não pode encontrar relatório válido para importar arquivo!"
-
-#~ msgid " was successfully imported!"
-#~ msgstr "foi importada com sucesso!"
-
-#~ msgid "There was an unexpected error uploading the file!"
-#~ msgstr "Houve um erro não esperado na carga do arquivo!"
-
-#~ msgid "Abscissa"
-#~ msgstr "Abscissa"
-
-#~ msgid "Align"
-#~ msgstr "Alinhar"
-
-#~ msgid "Bottom"
-#~ msgstr "Rodapé"
-
-#~ msgid "Center"
-#~ msgstr "Centro"
-
-#~ msgid "Color"
-#~ msgstr "Cor"
-
-#~ msgid "Custom Color (Range 0-255)"
-#~ msgstr "Cor Configuração (de 0-255)"
-
-#~ msgid "Custom"
-#~ msgstr "Configurar"
-
-#~ msgid "Fields"
-#~ msgstr "Campos"
-
-#~ msgid "Fifth"
-#~ msgstr "Quinta"
-
-#~ msgid "Filter"
-#~ msgstr "Filtrar"
-
-#~ msgid "Form"
-#~ msgstr "Formulário"
-
-#~ msgid "Forms"
-#~ msgstr "Formulário"
-
-#~ msgid "Font"
-#~ msgstr "Fonte"
-
-#~ msgid "Fourth"
-#~ msgstr "Quarto"
-
-#~ msgid "Inactive"
-#~ msgstr "Inativo"
-
-#~ msgid "Move"
-#~ msgstr "Mover"
-
-#~ msgid "Ordinate"
-#~ msgstr "Ordenar"
-
-#~ msgid "Primary"
-#~ msgstr "Principal"
-
-#~ msgid "Reports"
-#~ msgstr "Relatórios"
-
-#~ msgid "Second"
-#~ msgstr "Segundo"
-
-#~ msgid "Separator"
-#~ msgstr "Separador"
-
-#~ msgid "Select a table..."
-#~ msgstr "Selecionar uma tabela..."
-
-#~ msgid "Select a field..."
-#~ msgstr "Selecionar um campo..."
-
-#~ msgid "Sixth"
-#~ msgstr "Sexto"
-
-#~ msgid "Standard Color"
-#~ msgstr "Côr padrão"
-
-#~ msgid "Third"
-#~ msgstr "Terceiro"
-
-#~ msgid "Top"
-#~ msgstr "Topo"
-
-#~ msgid "Truncate"
-#~ msgstr "Truncado"
-
-#~ msgid "Truncate Long Descriptions"
-#~ msgstr "Truncar Descrições Longas"
-
-#~ msgid "Unprinted"
-#~ msgstr "Não Impresso"
-
-#~ msgid "Report/Form: "
-#~ msgstr "Relat/Form:"
-
-#~ msgid "Report and Form Builder - "
-#~ msgstr "Construtor de Relatório ou Formulário"
-
-#~ msgid "Menu"
-#~ msgstr "Menu"
-
-#~ msgid "Step 2"
-#~ msgstr "Passo 2"
-
-#~ msgid "Step 3"
-#~ msgstr "Passo 3"
-
-#~ msgid "Step 4"
-#~ msgstr "Passo 4"
-
-#~ msgid "Step 5"
-#~ msgstr "Passo 5"
-
-#~ msgid "Step 6"
-#~ msgstr "Passo 6"
-
-#~ msgid "Reports Menu"
-#~ msgstr "Menu Relatórios"
-
-#~ msgid "Criteria Setup"
-#~ msgstr "Critério Config"
-
-#~ msgid "Save Report"
-#~ msgstr "Salvar Relatório"
-
-#~ msgid "Report Page Setup"
-#~ msgstr "Config Página Relatório"
-
-#~ msgid "Add New"
-#~ msgstr "Adic. Novo"
-
-#~ msgid "Go Back"
-#~ msgstr "Retornar"
-
-#~ msgid "Change"
-#~ msgstr "Modificar"
-
-#~ msgid "Continue"
-#~ msgstr "Continua"
-
-#~ msgid "Copy To My Reports"
-#~ msgstr "Copiar para Meus Relatórios"
-
-#~ msgid "Database Setup"
-#~ msgstr "Config Banco Dados"
-
-#~ msgid "Delete Report"
-#~ msgstr "Remover Relatório"
-
-#~ msgid "Export CSV"
-#~ msgstr "Exportar CSV"
-
-#~ msgid "Export PDF"
-#~ msgstr "Export PDF"
-
-#~ msgid "Finish"
-#~ msgstr "Terminar"
-
-#~ msgid "Field Setup"
-#~ msgstr "Config Campo"
-
-#~ msgid "Import"
-#~ msgstr "Importar"
-
-#~ msgid "Page Setup"
-#~ msgstr "Página Config"
-
-#~ msgid "Properties"
-#~ msgstr "Propriedades"
-
-#~ msgid "Replace"
-#~ msgstr "Substituir"
-
-#~ msgid "Rename"
-#~ msgstr "Renomear"
-
 #~ msgid "Save"
 #~ msgstr "Salvar"
 
-#~ msgid "Report Filters: "
-#~ msgstr "Filtros Relatório:"
-
-#~ msgid "Grouped by:"
-#~ msgstr "Agrupado por:"
-
-#~ msgid "Sorted by:"
-#~ msgstr "Classif. por:"
-
-#~ msgid "Date Range:"
-#~ msgstr "Interv. Data:"
-
-#~ msgid "Filters:"
-#~ msgstr "Filtros:"
-
-#~ msgid "Administrator Page"
-#~ msgstr "Pág. Admin"
-
-#~ msgid "Border Line"
-#~ msgstr "Linha Borda"
-
-#~ msgid "Box  Dimensions (mm)"
-#~ msgstr "Dimens. Caixa (mm)"
-
-#~ msgid "Column 1"
-#~ msgstr "Coluna 1"
-
-#~ msgid "Column 2"
-#~ msgstr "Coluna 2"
-
-#~ msgid "Column 3"
-#~ msgstr "Coluna 3"
-
-#~ msgid "Column 4"
-#~ msgstr "Coluna 4"
-
-#~ msgid "Column 5"
-#~ msgstr "Coluna 5"
-
-#~ msgid "Column 6"
-#~ msgstr "Coluna 6"
-
-#~ msgid "Column 7"
-#~ msgstr "Coluna 7"
-
-#~ msgid "Column 8"
-#~ msgstr "Coluna 8"
-
-#~ msgid "Column 9"
-#~ msgstr "Coluna 9"
-
-#~ msgid "Column 10"
-#~ msgstr "Coluna 10"
-
-#~ msgid "Column 11"
-#~ msgstr "Coluna 11"
-
-#~ msgid "Column 12"
-#~ msgstr "Coluna 12"
-
-#~ msgid "Column 13"
-#~ msgstr "Coluna 13"
-
-#~ msgid "Column 14"
-#~ msgstr "Coluna 14"
-
-#~ msgid "Column 15"
-#~ msgstr "Coluna 15"
-
-#~ msgid "Column 16"
-#~ msgstr "Coluna 16"
-
-#~ msgid "Column 17"
-#~ msgstr "Coluna 17"
-
-#~ msgid "Column 18"
-#~ msgstr "Coluna 18"
-
-#~ msgid "Column 19"
-#~ msgstr "Coluna 19"
-
-#~ msgid "Column 20"
-#~ msgstr "Coluna 20"
-
-#~ msgid "Type of Criteria"
-#~ msgstr "Tipo de Critério"
-
-#~ msgid "Select report or form type to create:"
-#~ msgstr "Selecionar Relatório ou Formulário para Criar:"
-
-#~ msgid "Column widths - mm (0 for same as prior column)"
-#~ msgstr "Larg. Coluna - mm (0 indica igual coluna anterior)"
-
-#~ msgid "Default Date Selected"
-#~ msgstr "Data Padrão Selec."
-
-#~ msgid "Date Fieldname (table.fieldname)"
-#~ msgstr "Nome Campo Data (tabela.campo)"
-
-#~ msgid "Report Date Information"
-#~ msgstr "Informação Data Relatório"
-
-#~ msgid ""
-#~ "Uncheck all boxes for date independent reports; leave Date Fieldname empty"
-#~ msgstr ""
-#~ "Desmarque todas caixas para relatório independente de Data; Deixar Campo "
-#~ "Data vazio"
-
-#~ msgid "Date Field List<br />(check all that apply)"
-#~ msgstr "Lista Campo Data<br/>(marcar todos que se aplicam)"
-
-#~ msgid "Default Reports"
-#~ msgstr "Relatórios Padrão"
-
-#~ msgid "End Position (mm)"
-#~ msgstr "Posição Final (mm)"
-
-#~ msgid "Enter a New Field"
-#~ msgstr "Informe Novo Campo"
-
-#~ msgid "Field List"
-#~ msgstr "Lista Campos"
-
-#~ msgid "Fill"
-#~ msgstr "Preencher"
-
-#~ msgid "Select a Form to Output"
-#~ msgstr "Selecine Formulário para Saída"
-
-#~ msgid "Form Selection"
-#~ msgstr "Seleção Formulário"
-
-#~ msgid "Grouping List"
-#~ msgstr "Lista Agrupada"
-
-#~ msgid "Current Image"
-#~ msgstr "Imagem Atual"
-
-#~ msgid "Image Selection"
-#~ msgstr "Seleção Imagem"
-
-#~ msgid "Select Stored Image"
-#~ msgstr "Selec. Armaz. Imagem"
-
-#~ msgid "Image  Dimensions (mm)"
-#~ msgstr "Dimensões Imagem (mm)"
-
-#~ msgid "Line Attributes"
-#~ msgstr "Atributos Linha"
-
-#~ msgid "Line Width (pts)"
-#~ msgstr "Largura Linha (pts)"
-
-#~ msgid ""
-#~ "Link Equation (SQL Syntax)<br />example: tablename1.fieldname1=tablename2."
-#~ "fieldname2"
-#~ msgstr ""
-#~ "Link Equação (Sintaxe SQL)<br/> exemplo: tabela1.campo1=tabela2.campo2"
-
-#~ msgid "My Reports"
-#~ msgstr "Meus Relatórios"
-
-#~ msgid "No Border"
-#~ msgstr "Sem Borda"
-
-#~ msgid "No Fill"
-#~ msgstr "Sem preencher"
-
-#~ msgid "Name to Display"
-#~ msgstr "Nome para Exibir"
-
-#~ msgid "Report Filter Description"
-#~ msgstr "Descrição Filtro Relatório"
-
-#~ msgid "Header Information / Formatting"
-#~ msgstr "Informação Cabeçalho / Formatação"
-
-#~ msgid "Page Layout"
-#~ msgstr "Layout Página"
-
-#~ msgid "Page Margins"
-#~ msgstr "Margem Página"
-
-#~ msgid "Rename Report"
-#~ msgstr "Renomear Relatório"
-
-#~ msgid "Report Title 1"
-#~ msgstr "Título 1 Relatório"
-
-#~ msgid "Report Title 2"
-#~ msgstr "Título 2 Relatório"
-
-#~ msgid "Report Data"
-#~ msgstr "Dados Relatório"
-
-#~ msgid "Report/Form Identification"
-#~ msgstr "Identif. Relatório / Formulário"
-
-#~ msgid "Report Import"
-#~ msgstr "Importar Relatório"
-
-#~ msgid "Sorting Information"
-#~ msgstr "Classif. Informação"
-
-#~ msgid "Start Position (Upper Left Corner in mm)"
-#~ msgstr "Pos. Inicial (Canto Superior Esq. em mm)"
-
-#~ msgid "Table Name"
-#~ msgstr "Nome Tabela"
-
-#~ msgid "Text Attributes"
-#~ msgstr "Atributos Texto"
-
-#~ msgid "Text to Display"
-#~ msgstr "Texto para Exibir"
-
-#~ msgid "Text Processing"
-#~ msgstr "Processamento Texto"
-
-#~ msgid "Fieldname (table.fieldname)"
-#~ msgstr "Nome Campo (tabela.campo)"
-
-#~ msgid "Report Totals"
-#~ msgstr "Totais Relatório"
-
-#~ msgid "Enter fields to total (Table.Fieldname)"
-#~ msgstr "Informe campos para Totalizar (tabela.campo)"
-
-#~ msgid "Financial Reports"
-#~ msgstr "Relatórios Financeiros"
-
-#~ msgid "Miscellaneous"
-#~ msgstr "Diversos"
-
-#~ msgid "Bank Checks"
-#~ msgstr "Verificação Bancária"
-
-#~ msgid "Bank Deposit Slips"
-#~ msgstr "Slips Depósito Bancário"
-
-#~ msgid "Collection Letters"
-#~ msgstr "Cartas Coleção"
-
-#~ msgid "Labels - Customer"
-#~ msgstr "Etiqueta - Cliente"
-
-#~ msgid "Customer Quotes"
-#~ msgstr "Quotação Cliente"
-
-#~ msgid "Invoices and Packing Slips"
-#~ msgstr "Lista de Separação e Remessa"
-
-#~ msgid "Sales Receipts"
-#~ msgstr "Recebimento Vendas"
-
-#~ msgid "Labels - Vendor"
-#~ msgstr "Etiqueta - Fornecedor"
-
-#~ msgid "Data Line"
-#~ msgstr "Linha Dados"
-
-#~ msgid "Data Block"
-#~ msgstr "Bloco Dados"
-
-#~ msgid "Data Table"
-#~ msgstr "Tabela Dados"
-
-#~ msgid "Data Total"
-#~ msgstr "Total Dados"
-
-#~ msgid "Fixed Text Field"
-#~ msgstr "Campo Texto Fixo"
-
-#~ msgid "Image - JPG or PNG"
-#~ msgstr "Imagem - JPG ou PNG"
-
-#~ msgid "Rectangle"
-#~ msgstr "Retângulo"
-
-#~ msgid "Line"
-#~ msgstr "Linha"
-
-#~ msgid "Company Data Line"
-#~ msgstr "Linha Dados Empresa"
-
-#~ msgid "Company Data Block"
-#~ msgstr "Bloco Dados Empresa"
-
-#~ msgid "Page Number"
-#~ msgstr "Número Página"
-
-#~ msgid "Uppercase"
-#~ msgstr "Maiúsculas"
-
-#~ msgid "Lowercase"
-#~ msgstr "Minúsculas"
-
-#~ msgid "Negate"
-#~ msgstr "Negar"
-
-#~ msgid "Round (2 decimal)"
-#~ msgstr "Arredond (2 decimais)"
-
-#~ msgid "Convert Dollars"
-#~ msgstr "Converter Dolares"
-
-#~ msgid "Convert Euros"
-#~ msgstr "Converter Euros"
-
-#~ msgid "Single Space"
-#~ msgstr "Espaço Simples"
-
-#~ msgid "Double Space"
-#~ msgstr "Espaço Duplo"
-
-#~ msgid "Comma"
-#~ msgstr "Vírgula"
-
-#~ msgid "Comma-Space"
-#~ msgstr "Espaço-Vírgula"
-
-#~ msgid "Line Break"
-#~ msgstr "Quebra Linha"
-
-#~ msgid "Semicolon-space"
-#~ msgstr "Espaço Ponto e Vírgula"
-
-#~ msgid "Paper Size:"
-#~ msgstr "Tamanho Papel:"
-
-#~ msgid "Orientation:"
-#~ msgstr "Orientação:"
-
-#~ msgid "mm"
-#~ msgstr "mm"
-
-#~ msgid "A5"
-#~ msgstr "A5"
-
-#~ msgid "Courier"
-#~ msgstr "Courier"
-
-#~ msgid "Helvetica"
-#~ msgstr "Helvética"
-
-#~ msgid "Times"
-#~ msgstr "Vezes"
-
-#~ msgid "1"
-#~ msgstr "1"
-
-#~ msgid "4"
-#~ msgstr "4"
-
-#~ msgid "5"
-#~ msgstr "5"
-
-#~ msgid "6"
-#~ msgstr "6"
-
-#~ msgid "7"
-#~ msgstr "7"
-
-#~ msgid "8"
-#~ msgstr "8"
-
-#~ msgid "9"
-#~ msgstr "9"
-
-#~ msgid "10"
-#~ msgstr "10"
-
-#~ msgid "12"
-#~ msgstr "12"
-
-#~ msgid "14"
-#~ msgstr "14"
-
-#~ msgid "16"
-#~ msgstr "16"
-
-#~ msgid "18"
-#~ msgstr "18"
-
-#~ msgid "20"
-#~ msgstr "20"
-
-#~ msgid "24"
-#~ msgstr "24"
-
-#~ msgid "28"
-#~ msgstr "28"
-
-#~ msgid "32"
-#~ msgstr "32"
-
-#~ msgid "36"
-#~ msgstr "36"
-
-#~ msgid "40"
-#~ msgstr "40"
-
-#~ msgid "50"
-#~ msgstr "50"
-
-#~ msgid "Black"
-#~ msgstr "Preto"
-
-#~ msgid "Blue"
-#~ msgstr "Azul"
-
-#~ msgid "Red"
-#~ msgstr "Vermelho"
-
-#~ msgid "Orange"
-#~ msgstr "Laranja"
-
-#~ msgid "Yellow"
-#~ msgstr "Amarelo"
-
-#~ msgid "Green"
-#~ msgstr "Verde"
-
-#~ msgid "White"
-#~ msgstr "Branco"
-
-#~ msgid "Today"
-#~ msgstr "Hoje"
-
-#~ msgid "This Week To Date"
-#~ msgstr "Essa Semana até Hoje"
-
-#~ msgid "This Month To Date"
-#~ msgstr "Esse Mês até Hoje"
-
-#~ msgid "This Quarter To Date"
-#~ msgstr "Esse Trimestre até Hoje"
-
-#~ msgid "This Year"
-#~ msgstr "Esse Ano"
-
-#~ msgid "This Year To Date"
-#~ msgstr "Esse Ano até Hoje"
-
-#~ msgid "Process payment using your PayPal Account"
-#~ msgstr "Processar pagamento usando Conta PayPal"
-
 #~ msgid "incl Tax"
 #~ msgstr "Incl Imposto"
-
-#~ msgid "The billing address must be entered"
-#~ msgstr "Informar endereço para pagamento"
-
-#~ msgid "The billing address is expected to 4 characters or more long"
-#~ msgstr "Endereço pagamento deve ter 4 ou mais caracteres de tamanho"
 
 #~ msgid "Last Paid Date:"
 #~ msgstr "Última Data Pagto:"
@@ -51919,9 +51022,6 @@ msgstr "Banco Transfer."
 #~ "Enter em Pagamento para, ou Recebimento de Fornecedor, e use um valor "
 #~ "negativo nesse formulário."
 
-#~ msgid "all measurements in PDF points"
-#~ msgstr "todas medidas PDF em pontos"
-
 #~ msgid "From Inventory Category Code"
 #~ msgstr "Código Categoria Inicial Estoque"
 
@@ -51940,10 +51040,6 @@ msgstr "Banco Transfer."
 
 #~ msgid "Eff Date"
 #~ msgstr "Data Eff."
-
-#~ msgid "The SQL that was used to update the user locations and failed was"
-#~ msgstr ""
-#~ "O SQL que falhou usado para atualizar locais autorizados pelo usuário foi"
 
 #~ msgid "Email "
 #~ msgstr "Correio Eletrônico"
