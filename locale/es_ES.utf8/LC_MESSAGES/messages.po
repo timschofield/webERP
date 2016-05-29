@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-05-16 21:31+1200\n"
-"PO-Revision-Date: 2016-05-28 11:40-0600\n"
+"PO-Revision-Date: 2016-05-29 09:40-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -1624,11 +1624,11 @@ msgstr "Nombre de la cuenta"
 
 #: AnalysisHorizontalIncome.php:160 AnalysisHorizontalPosition.php:114
 msgid "Current period"
-msgstr ""
+msgstr "Período actual"
 
 #: AnalysisHorizontalIncome.php:161 AnalysisHorizontalPosition.php:115
 msgid "Last period"
-msgstr ""
+msgstr "Período anterior"
 
 #: AnalysisHorizontalIncome.php:162 AnalysisHorizontalPosition.php:116
 msgid "Actual change"
@@ -1720,7 +1720,7 @@ msgstr "Análisis horizontal del estado de situación"
 
 #: AnalysisHorizontalPosition.php:27
 msgid "Print Horizontal Analysis of Statement of Financial Position"
-msgstr ""
+msgstr "Imprimir análisis horizontal del estado de situación"
 
 #: AnalysisHorizontalPosition.php:40 GLBalanceSheet.php:36
 msgid "Select the balance date"
@@ -4029,7 +4029,7 @@ msgstr ""
 
 #: CollectiveWorkOrderCost.php:81
 msgid "Select Other Work Orders"
-msgstr ""
+msgstr "Seleccionar otras órdenes de trabajo"
 
 #: CollectiveWorkOrderCost.php:112 SelectWorkOrder.php:39
 msgid "The work order number entered MUST be numeric"
@@ -18248,7 +18248,7 @@ msgstr "Tipo de Demanda"
 
 #: MRPCreateDemands.php:211
 msgid "Inventory Categories"
-msgstr ""
+msgstr "Categorías de inventario"
 
 #: MRPCreateDemands.php:228 PDFDeliveryDifferences.php:62 PDFDIFOT.php:66
 #: PDFOrdersInvoiced.php:64 PDFOrderStatus.php:61
@@ -18257,11 +18257,11 @@ msgstr "Ubicación del inventario"
 
 #: MRPCreateDemands.php:249
 msgid "From Sales Date"
-msgstr "Desde la Fecha de Venta"
+msgstr "Desde la fecha de venta"
 
 #: MRPCreateDemands.php:250
 msgid "To Sales Date"
-msgstr "Hasta la Fecha de Venta"
+msgstr "Hasta la fecha de venta"
 
 #: MRPCreateDemands.php:253
 msgid "Start Date For Distribution"
@@ -18289,7 +18289,7 @@ msgstr "Mensual"
 
 #: MRPCreateDemands.php:264
 msgid "Number of Periods"
-msgstr "Número de Períodos"
+msgstr "Cantidad de períodos"
 
 #: MRPCreateDemands.php:268
 msgid "Exclude Total Quantity Less Than"
@@ -51543,7 +51543,7 @@ msgstr ""
 #: ../webSHOP/CreditCardPayFlowPro.php:240
 #: ../webSHOP/CreditCardPayPalPro.php:307
 msgid "Card Number"
-msgstr ""
+msgstr "Número de tarjeta"
 
 #: ../webSHOP/CreditCardPayFlowPro.php:241
 #: ../webSHOP/CreditCardPayPalPro.php:308
