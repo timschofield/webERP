@@ -2,6 +2,7 @@ webERP Change Log
 
 22/5/16 Release 4.13
 
+30/5/16 Andew Galuski: remove hidden GP_Percent form field when customer login to prevent un-authorised viewing of this data when looking at the page source
 28/5/16 Gilberto Dos Santos Alves: Updated Portuguese Brazilian translation
 28/5/16 Phil: PrintCustStatement.php now has an option to email the statement and uses the customer contacts email addresses defined as wanting a statement and sends individual statements to each of the customer contacts for their customer statement and lists the customers and the recipients they have been sent to. The existing emailcustomerstatement script had too much potential to send statement for other customers to another customer by mistake - so I've removed it!
 23/5/16 Phil: PrintCustStatement.php now shows all the date.

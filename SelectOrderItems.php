@@ -727,7 +727,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						custitem.cust_part,
 						custitem.cust_description
 				FROM stockmaster INNER JOIN stockcategory
-				ON stockmaster.categoryid=stockcategory.categoryid 
+				ON stockmaster.categoryid=stockcategory.categoryid
 				" . $IncludeCustItem . "
 				WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='L' " . $RawMaterialSellable . ")
 				AND stockmaster.mbflag <>'G'
@@ -1371,7 +1371,6 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					<td><input class="number" maxlength="40" name="GPPercent_' . $OrderLine->LineNumber . '" required="required" size="4" value="' . locale_number_format($OrderLine->GPPercent,2) . '" title="' . _('Enter a gross profit percentage to use as the basis to calculate the price to charge the customer for this line item') . '" type="text" /></td>';
 			} else {
 				echo '<td class="number">' . locale_number_format($OrderLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
-				echo '<input class="number" maxlength="40" name="GPPercent_' . $OrderLine->LineNumber . '" size="4" type="hidden" value="' . locale_number_format($OrderLine->GPPercent,2) . '" />';
 				echo '<input name="Price_' . $OrderLine->LineNumber . '" type="hidden" value="' . locale_number_format($OrderLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '" /></td>';
 			}
 
