@@ -329,7 +329,7 @@ if (! isset($_GET['delete'])) {
 	  $_POST['Breakpoint']=0;
 	}
 	if (!isset($_POST['Current'])){
-	  $_POST['Current']=0;
+	  $_POST['Current']=1;
 	}
 
 	echo '<tr>
