@@ -50,31 +50,19 @@ if (!isset($_GET['Section'])){
 ***************************************************************************************/
 
 if ($KL_SystemAdmin){
-
 	// WARNINGS STILL NOT DOCUMENTED ON WIKI
 prnMsg("START OF PENDING FOR KL INTRANET ",'success');
-		ItemsInWrongShops("KAPAL-LAUT", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ItemsInWrongShops("BLINK", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ItemsInWrongShops("OUTLET", $RootPath, $db);
-		$NumberOfTestExecuted++;
 		over_or_below_limit("Items changing price or moving category", "OVER", 50, $RootPath, $db);
 		over_or_below_limit("Items changing price", "OVER", 20, $RootPath, $db);
 		over_or_below_limit("Items moving to 20% discount", "OVER", 20, $RootPath, $db);
 		over_or_below_limit("Items moving to 50% discount", "OVER", 20, $RootPath, $db);
 		over_or_below_limit("Items moving to 80% discount", "OVER", 20, $RootPath, $db);
-		DiscountedItemsOnNotOutletShops("DISC20", $RootPath, $db);
-		DiscountedItemsOnNotOutletShops("DISC50", $RootPath, $db);
-		DiscountedItemsOnNotOutletShops("DISC80", $RootPath, $db);
-		NotDiscountedItemsOnOutLetShops($RootPath, $db);
 		DiscountedItemsWithWrongDiscount("DISC20", "20", $RootPath, $db);
 		DiscountedItemsWithWrongDiscount("DISC50", "50", $RootPath, $db);
 		NotDiscountedItemsWithDiscount($RootPath, $db);
 		GoodsReceivedNotInvoicedControl(1000000, $periodnow, $db);
 		CustomersDebtControl(100000, $periodnow, $db);
 		ObsoleteComponentsInActiveBOM($RootPath, $db);
-		OvestockAtSamples(1, $RootPath, $db);
 		SamplesNotLongerNeeded($RootPath, $db);
 		FlaggedAsObsoleteButStockAvailable($RootPath, $db);
 		ItemsInKLProcessAndRLNotZero($RootPath, $db);
@@ -405,9 +393,17 @@ if ($ProcessSection01){
 
 	if ($KL_BusinessDevelopmentManager
 		OR $KL_PurchasingTeam){
-		ItemsinSetUp("ReadyToTest", $RootPath, $db);
+		ItemsinSetUp("ReadyToTest", "SETKL", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsinSetUp("NeedDescription", $RootPath, $db);
+		ItemsinSetUp("ReadyToTest", "SETBL", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsinSetUp("ReadyToTest", "SETGE", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsinSetUp("NeedDescription", "SETKL", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsinSetUp("NeedDescription", "SETBL", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsinSetUp("NeedDescription", "SETGE", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		//ItemsinSetUp("NeedPrice", $RootPath, $db);
 		//$NumberOfTestExecuted++;
@@ -417,7 +413,11 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		ItemsWithoutRetailPrice("SETGE", 4.75, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsinSetUp("WithReorderLevel", $RootPath, $db);
+		ItemsinSetUp("WithReorderLevel", "SETKL", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsinSetUp("WithReorderLevel", "SETBL", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsinSetUp("WithReorderLevel", "SETGE", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		ObsoleteComponentsInActiveBOM($RootPath, $db);
 		$NumberOfTestExecuted++;
