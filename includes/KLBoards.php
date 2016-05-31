@@ -3416,7 +3416,8 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $RootPath, $db){
 					(SELECT SUM(l.quantity)
 						FROM locstock l
 						WHERE l.stockid = stockmaster.stockid
-							AND l.loccode NOT IN " . LIST_SERVICE_LOCATIONS . ") AS qoh,
+							AND l.loccode NOT IN " . LIST_SERVICE_LOCATIONS . "
+							AND l.loccode NOT IN " . LIST_SAMPLE_LOCATIONS . ") AS qoh,
 					locstock.reorderlevel
 			FROM stockmaster, locstock
 			WHERE stockmaster.stockid = locstock.stockid
@@ -3432,7 +3433,8 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $RootPath, $db){
 				AND ((SELECT SUM(l.quantity)
 						FROM locstock l
 						WHERE l.stockid = stockmaster.stockid
-							AND l.loccode NOT IN " . LIST_SERVICE_LOCATIONS . ") >= ". $MinQOH .")
+							AND l.loccode NOT IN " . LIST_SERVICE_LOCATIONS . "
+							AND l.loccode NOT IN " . LIST_SAMPLE_LOCATIONS . ") >= ". $MinQOH .")
 				AND ((SELECT SUM(l.reorderlevel)
 						FROM locstock l
 						WHERE l.stockid = stockmaster.stockid
