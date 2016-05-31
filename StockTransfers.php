@@ -256,7 +256,7 @@ if(isset($_POST['EnterTransfer']) ) {
 					16,'" .
 					$TransferNumber . "','" .
 					$AccountCode . "','" .
-					$_SESSION['Transfer']->StockLocationFrom.' - '.$_SESSION['Transfer']->TransferItem[0]->StockID.' x '.$_SESSION['Transfer']->TransferItem[0]->Quantity.' @ '. $StandardCost . "','" .
+					$_SESSION['Transfer']->StockLocationFrom.' - '.$_SESSION['Transfer']->TransferItem[0]->StockID.' x '.$_SESSION['Transfer'] ->TransferItem[0]->Quantity.' @ '. $StandardCost . "','" .
 					-$_SESSION['Transfer']->TransferItem[0]->Quantity * $StandardCost . "')";
 					$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The outgoing inventory GL transacction record could not be inserted because');
 					$DbgMsg =  _('The following SQL to insert records was used');
@@ -281,7 +281,7 @@ if(isset($_POST['EnterTransfer']) ) {
 						'" . $SQLTransferDate . "',
 						'" . $_SESSION['UserID'] . "',
 						'" . $PeriodNo . "',
-						'To " . $_SESSION['Transfer']->StockLocationTo ."',
+						'To " . $_SESSION['Transfer']->StockLocationTo .": " . $_POST['Reason'] . "',
 						'" . round(-$_SESSION['Transfer']->TransferItem[0]->Quantity,$_SESSION['Transfer']->TransferItem[0]->DecimalPlaces)  . "',
 						'" . ($QtyOnHandPrior - round($_SESSION['Transfer']->TransferItem[0]->Quantity,$_SESSION['Transfer']->TransferItem[0]->DecimalPlaces)) . "'
 						)";
@@ -436,7 +436,7 @@ if(isset($_POST['EnterTransfer']) ) {
 					'" . $SQLTransferDate . "',
 					'" . $_SESSION['UserID'] . "',
 					'" . $PeriodNo . "',
-					'" . _('From') . " " . $_SESSION['Transfer']->StockLocationFrom . "',
+					'" . _('From') . " " . $_SESSION['Transfer']->StockLocationFrom . ": " . $_POST['Reason'] . "',
 					'" . $_SESSION['Transfer']->TransferItem[0]->Quantity . "',
 					'" . round($QtyOnHandPrior + $_SESSION['Transfer']->TransferItem[0]->Quantity,$_SESSION['Transfer']->TransferItem[0]->DecimalPlaces) . "')";
 
@@ -558,6 +558,7 @@ echo '<p class="page_title_text">
 echo '<form action="'. htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<input type="hidden" name="Reason" value="' . $_POST['Reason'] . '" />';
 
 if(!isset($_GET['Description'])) {
 	$_GET['Description']='';
@@ -652,6 +653,15 @@ if(isset($_SESSION['Transfer']->TransferItem[0]->Controlled)
 		</tr>';
 }
 
+echo '<tr>
+		<td>' 
+			. _('Reason').':
+		</td>
+		<td>
+			<input type="text" name="Reason" size="51" value="' . $_POST['Reason'] . '" maxlength="80" >
+		</td>
+	</tr>';
+	
 echo '</table>
 	<div class="centre">
 		<br />
