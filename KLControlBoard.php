@@ -52,11 +52,6 @@ if (!isset($_GET['Section'])){
 if ($KL_SystemAdmin){
 	// WARNINGS STILL NOT DOCUMENTED ON WIKI
 prnMsg("START OF PENDING FOR KL INTRANET ",'success');
-		over_or_below_limit("Items changing price or moving category", "OVER", 50, $RootPath, $db);
-		over_or_below_limit("Items changing price", "OVER", 20, $RootPath, $db);
-		over_or_below_limit("Items moving to 20% discount", "OVER", 20, $RootPath, $db);
-		over_or_below_limit("Items moving to 50% discount", "OVER", 20, $RootPath, $db);
-		over_or_below_limit("Items moving to 80% discount", "OVER", 20, $RootPath, $db);
 		DiscountedItemsWithWrongDiscount("DISC20", "20", $RootPath, $db);
 		DiscountedItemsWithWrongDiscount("DISC50", "50", $RootPath, $db);
 		NotDiscountedItemsWithDiscount($RootPath, $db);
@@ -66,8 +61,6 @@ prnMsg("START OF PENDING FOR KL INTRANET ",'success');
 		SamplesNotLongerNeeded($RootPath, $db);
 		FlaggedAsObsoleteButStockAvailable($RootPath, $db);
 		ItemsInKLProcessAndRLNotZero($RootPath, $db);
-		OldPurchasingOrdersStillActive(90, $RootPath, $db);
-
 prnMsg("END OF PENDING FOR KL INTRANET ",'success');
 
 //	phpinfo();
