@@ -370,10 +370,19 @@ if (isset($SearchResult)) {
 			$k=1;
 		}
 
-		if (file_exists( $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg') ) {
-			$ImageSource = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC&amp;StockID=' . $myrow['stockid']. '&amp;text=&amp;width=50&amp;height=50" />';
+		$SupportedImgExt = array('png','jpg','jpeg');
+		$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
+		if (extension_loaded('gd') && function_exists('gd_info') && file_exists ($imagefile) ) {
+			$ImageSource = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
+				'&amp;StockID='.urlencode($myrow['stockid']).
+				'&amp;text='.
+				'&amp;width=64'.
+				'&amp;height=64'.
+				'" alt="" />';
+		} else if (file_exists ($imagefile)) {
+			$ImageSource = '<img src="' . $imagefile . '" height="100" width="100" />';
 		} else {
-			$ImageSource = '<i>' . _('No Image') . '</i>';
+			$ImageSource = _('No Image');
 		}
 
 		echo '<td>' . $myrow['stockid'] . '</td>

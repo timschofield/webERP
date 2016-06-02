@@ -1,5 +1,5 @@
 <?php
-/* $Id: StockDispatch.php 6944 2014-10-27 07:15:34Z daintree $*/
+/* $Id: StockDispatch.php 7494 2016-04-25 09:53:53Z daintree $*/
 
 // StockDispatch.php - Report of parts with overstock at one location that can be transferred
 // to another location to cover shortage based on reorder level. Creates loctransfer records
@@ -223,8 +223,10 @@ if (isset($_POST['PrintPDF'])) {
 			} else {
 				//for full template
 				$pdf->addTextWrap(50,$YPos,70,$FontSize,$myrow['stockid'],'',0,$fill);
-				if(file_exists($_SESSION['part_pics_dir'] . '/' .$myrow['stockid'].'.jpg') ) {
-					$pdf->Image($_SESSION['part_pics_dir'] . '/'.$myrow['stockid'].'.jpg',135,$Page_Height-$Top_Margin-$YPos+10,45,35);
+				$SupportedImgExt = array('png','jpg','jpeg');
+				$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
+				if (file_exists ($imagefile) ) {
+					$pdf->Image($imagefile,135,$Page_Height-$Top_Margin-$YPos+10,35,35);
 				}/*end checked file exist*/
 				$pdf->addTextWrap(180,$YPos,200,$FontSize,$myrow['description'],'',0,$fill);
 				$pdf->addTextWrap(355,$YPos,40,$FontSize,locale_number_format($myrow['fromquantity'] - $InTransitQuantityAtFrom,$myrow['decimalplaces']),'right',0,$fill);

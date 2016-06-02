@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: SelectCreditItems.php 7444 2016-01-13 07:32:36Z daintree $*/
+/* $Id: SelectCreditItems.php 7494 2016-04-25 09:53:53Z daintree $*/
 
 /*The credit selection screen uses the Cart class used for the making up orders
 some of the variable names refer to order - please think credit when you read order */
@@ -117,6 +117,7 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1){
 			    $myrow=DB_fetch_array($result_CustSelect);
 			    $SelectedCustomer = trim($myrow['debtorno']);
 			    $SelectedBranch = trim($myrow['branchcode']);
+			    $_POST['JustSelectedACustomer'] = true;
 		  } elseif (DB_num_rows($result_CustSelect)==0){
 			    prnMsg(_('Sorry') . ' ... ' . _('there are no customer branch records contain the selected text') . ' - ' . _('please alter your search criteria and try again'),'info');
 		  }
@@ -1031,11 +1032,20 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				    echo '<tr class="OddTableRows">';
 				    $k++;
 				}
-				if(file_exists($_SESSION['part_pics_dir'] . '/' .mb_strtoupper($myrow['stockid']).'.jpg') ) {
+				
+				$SupportedImgExt = array('png','jpg','jpeg');
+				$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
+				if (extension_loaded('gd') && function_exists('gd_info') && file_exists ($imagefile) ) {
+						$ImageSource = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
+							'&amp;StockID='.urlencode($myrow['stockid']).
+							'&amp;text='.
+							'&amp;width=64'.
+							'&amp;height=64'.
+							'" alt="" />';
 					printf('<td><input type="submit" name="NewItem" value="%s" /></td>
 							<td>%s</td>
 							<td>%s</td>
-							<td><img src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC&StockID=%s&text=&width=120&height=120" /></td></tr>',
+							<td>' . $ImageSource . '</td></tr>',
 							$myrow['stockid'],
 							$myrow['description'],
 							$myrow['units'],

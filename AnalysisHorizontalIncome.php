@@ -2,10 +2,10 @@
 /* $Id: AnalysisHorizontalIncome.php 7349 2015-09-14 14:43:19Z rchacon $*/
 /* Shows the horizontal analysis of the statement of comprehensive income. */
 
-function RelativeChange($SelectedPeriod, $PreviousPeriod) {
+function RelativeChange($selected_period, $previous_period) {
 	// Calculates the relative change between selected and previous periods. Uses percent with locale number format.
-	if($PreviousPeriod<>0) {
-		return locale_number_format(($SelectedPeriod-$PreviousPeriod)*100/$PreviousPeriod,$_SESSION['CompanyRecord']['decimalplaces']) . '%';
+	if($previous_period<>0) {
+		return locale_number_format(($selected_period-$previous_period)*100/$previous_period, $_SESSION['CompanyRecord']['decimalplaces']) . '%';
 	} else {
 		return _('N/A');
 	}
@@ -157,8 +157,8 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 	} else {// Summary report:
 		echo '<th class="text" colspan="2">', _('Summary'), '</th>';
 	}
-	echo	'<th class="number">', ' - ', $myrow[0], '</th>
-			<th class="number">', _('Last Year'), '</th>
+	echo	'<th class="number">', _('Current period'), '</th>
+			<th class="number">', _('Last period'), '</th>
 			<th class="number">', _('Actual change'), '</th>
 			<th class="number">', _('Relative change'), '</th>
 		</tr>
@@ -183,8 +183,8 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 					SUM(CASE WHEN chartdetails.period='" . $_POST['ToPeriod'] . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lastprdcfwd,
 					SUM(CASE WHEN chartdetails.period='" . ($_POST['FromPeriod'] - 12) . "' THEN chartdetails.bfwd ELSE 0 END) AS firstprdbfwdly,
 					SUM(CASE WHEN chartdetails.period='" . ($_POST['ToPeriod']-12) . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lastprdcfwdly
-			FROM chartmaster 
-				INNER JOIN accountgroups ON chartmaster.group_ = accountgroups.groupname 
+			FROM chartmaster
+				INNER JOIN accountgroups ON chartmaster.group_ = accountgroups.groupname
 				INNER JOIN chartdetails	ON chartmaster.accountcode= chartdetails.accountcode
 				INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canview=1
 			WHERE accountgroups.pandl=1

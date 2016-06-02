@@ -1,5 +1,5 @@
 <?php
-/* $Id: PDFPriceList.php 7068 2015-01-06 07:52:25Z daintree $*/
+/* $Id: PDFPriceList.php 7494 2016-04-25 09:53:53Z daintree $*/
 /*	Script to print a price list by inventory category */
 /*	Output column sizes:
 		* stockmaster.stockid, varchar(20), len = 20chr
@@ -230,14 +230,14 @@ If (isset($_POST['PrintPDF'])) {
 			$YPos -= $FontSize;
 
 			// Prints item image:
+			$SupportedImgExt = array('png','jpg','jpeg');
+			$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/' . $PriceList['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
 			$YPosImage = $YPos;// Initializes the image bottom $YPos.
-			if(file_exists($_SESSION['part_pics_dir'] . '/' .$PriceList['stockid'].'.jpg') ) {
-				$img = imagecreatefromjpeg($_SESSION['part_pics_dir'] . '/' . $PriceList['stockid'] . '.jpg');
+			if (file_exists($imagefile) ) {
 				if($YPos-36 < $Bottom_Margin) {// If the image bottom reaches the bottom margin, do PageHeader().
 					PageHeader();
 				}
-				$LeftOvers = $pdf->Image($_SESSION['part_pics_dir'] . '/'.$PriceList['stockid'].'.jpg',
-					$Left_Margin+3, $Page_Height-$YPos, 36, 36);
+				$LeftOvers = $pdf->Image($imagefile,$Left_Margin+3, $Page_Height-$YPos, 36, 36);
 				$YPosImage = $YPos-36;// Stores the $YPos of the image bottom (see bottom).
 			}
 			// Prints stockmaster.longdescription:

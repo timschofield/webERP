@@ -1,5 +1,5 @@
 <?php
-/* $Id: SalesPeople.php 7048 2014-12-28 09:33:08Z daintree $*/
+/* $Id: SalesPeople.php 7548 2016-05-30 09:59:55Z daintree $*/
 
 include('includes/session.inc');
 $Title = _('Sales People Maintenance');
@@ -329,7 +329,7 @@ if (! isset($_GET['delete'])) {
 	  $_POST['Breakpoint']=0;
 	}
 	if (!isset($_POST['Current'])){
-	  $_POST['Current']=0;
+	  $_POST['Current']=1;
 	}
 
 	echo '<tr>

@@ -153,7 +153,7 @@ $MenuItems['AP']['Reports']['Caption'] = array(	_('Where Allocated Inquiry.php')
 												_('List Daily Transactions'),
 												_('Supplier Transaction Inquiries'));
 
-$MenuItems['AP']['Reports']['URL'] = array( '/SuppWhereAlloc.php',	
+$MenuItems['AP']['Reports']['URL'] = array( '/SuppWhereAlloc.php',
 											'/AgedSuppliers.php',
 											'/SuppPaymentRun.php',
 											'/PDFRemittanceAdvice.php',
@@ -398,23 +398,21 @@ $MenuItems['GL']['Reports']['URL'] = array(	'/GLTrialBalance.php',
 $MenuItems['GL']['Maintenance']['Caption'] = array(	_('Account Sections'),
 													_('Account Groups'),
 													_('GL Accounts'),
+													_('GL Account Authorised Users'),
+													_('User Authorised GL Accounts'),
 													_('GL Budgets'),
 													_('GL Tags'),
-													_('GL Accounts Authorised Users Maintenance'),
-													_('User Authorised GL Accounts Maintenance'),
-													_('Copy Authority GL Accounts from user A to B'),
 													_('Bank Accounts'),
-													_('Bank Account Authorized Users'),
-													_('User Authorized Bank Accounts'));
+													_('Bank Account Authorised Users'),
+													_('User Authorised Bank Accounts'));
 
 $MenuItems['GL']['Maintenance']['URL'] = array(		'/AccountSections.php',
 													'/AccountGroups.php',
 													'/GLAccounts.php',
-													'/GLBudgets.php',
-													'/GLTags.php',
 													'/GLAccountUsers.php',
 													'/UserGLAccounts.php',
-													'/GLAccountUsersCopyAuthority.php',
+													'/GLBudgets.php',
+													'/GLTags.php',
 													'/BankAccounts.php',
 													'/BankAccountUsers.php',
 													'/UserBankAccounts.php');
@@ -575,7 +573,8 @@ $MenuItems['Utilities']['Transactions']['Caption'] = array(	_('Change A Customer
 															_('Re-apply costs to Sales Analysis'),
 															_('Delete sales transactions'),
 															_('Reverse all supplier payments on a specified date'),
-															_('Update sales analysis with latest customer data'));
+															_('Update sales analysis with latest customer data'),
+															_('Copy Authority of GL Accounts from one user to another'));
 
 $MenuItems['Utilities']['Transactions']['URL'] = array(	'/Z_ChangeCustomerCode.php',
 														'/Z_ChangeBranchCode.php',
@@ -589,7 +588,8 @@ $MenuItems['Utilities']['Transactions']['URL'] = array(	'/Z_ChangeCustomerCode.p
 														'/Z_ReApplyCostToSA.php',
 														'/Z_DeleteSalesTransActions.php',
 														'/Z_ReverseSuppPaymentRun.php',
-														'/Z_UpdateSalesAnalysisWithLatestCustomerData.php');
+														'/Z_UpdateSalesAnalysisWithLatestCustomerData.php',
+														'/Z_GLAccountUsersCopyAuthority.php');
 
 $MenuItems['Utilities']['Reports']['Caption'] = array(	_('Debtors Balances By Currency Totals'),
 														_('Suppliers Balances By Currency Totals'),

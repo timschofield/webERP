@@ -1,5 +1,5 @@
 <?php
-/* $Id: GLAccountInquiry.php 7441 2016-01-13 02:38:17Z exsonqu $*/
+/* $Id: GLAccountInquiry.php 7477 2016-03-18 08:09:22Z exsonqu $*/
 
 include ('includes/session.inc');
 $Title = _('General Ledger Account Inquiry');
@@ -51,7 +51,8 @@ echo '<table class="selection">
 
 $sql = "SELECT chartmaster.accountcode, 
 			bankaccounts.accountcode AS bankact,
-			   chartmaster.accountname
+			bankaccounts.currcode,
+			chartmaster.accountname
 		FROM chartmaster LEFT JOIN bankaccounts
 		ON chartmaster.accountcode=bankaccounts.accountcode
 		INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canview=1
@@ -295,6 +296,10 @@ if (isset($_POST['Show'])){
 				$BankRef = $bankrow['ref'];
 				$OrgAmt = $bankrow['amount'];
 				$Currency = $bankrow['currcode'];
+			} elseif(isset($BankAccount)){
+				$BankRef = '';
+				$OrgAmt = $myrow['amount'];
+				$Currency = $_SESSION['CompanyRecord']['currencydefault'];
 			}
 		} 
 
