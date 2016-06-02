@@ -20,7 +20,8 @@ $begintime = time_start();
 $result = DB_query($SQL);
 */
 // Select items and classify them
-$SQL = "SELECT DISTINCT(stockmaster.stockid)
+$SQL = "SELECT stockmaster.stockid,
+			stockmaster.categoryid
 		FROM stockmaster, salescatprod
 		WHERE stockmaster.stockid = salescatprod.stockid
 		ORDER BY stockmaster.stockid";
@@ -79,6 +80,36 @@ if (DB_num_rows($result) != 0){
 						$i, 
 						$myrow['stockid'], 
 						$myrelated['stockid']
+						);
+			}
+		}
+		
+		if (ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_KAPAL_LAUT)){
+			$SQLExists = "SELECT *
+							FROM relateditems
+							WHERE relateditems.stockid = '" . $myrow['stockid'] . "'
+								AND relateditems.related = 'WKPC01'";
+			$resultExists = DB_query($SQLExists);
+			
+			if (DB_num_rows($resultExists) == 0){
+				$sqlinsert = "INSERT INTO relateditems (
+							stockid,
+							related)
+						VALUES (
+							'" . $myrow['stockid'] . "',
+							'WKPC01')";
+				$ErrMsg =_('Could not insert the related items because');
+				$resultinsert = DB_query($sqlinsert,$ErrMsg);
+
+				$i++;
+				$k = StartEvenOrOddRow($k);
+				printf('<td class="number">%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						</tr>', 
+						$i, 
+						$myrow['stockid'], 
+						'WKPC01'
 						);
 			}
 		}
