@@ -5,17 +5,25 @@
 	addText() and other functions. Use addText() instead of addTextWrap() to
 	print left aligned elements.*/
 
-if (!$FirstPage){ /* only initiate a new page if its not the first */
+if(!$FirstPage) { /* only initiate a new page if its not the first */
 	$pdf->newPage();
 }
 
 $YPos = $Page_Height-$Top_Margin;
 
-// Company Logo
-$pdf->addJpegFromFile($_SESSION['LogoFile'],$Page_Width/2 -118,$YPos-60,0,35);
+// Company Logo:
+/*$pdf->addJpegFromFile($_SESSION['LogoFile'], $Page_Width/2-118, $YPos-60, 0, 35);*/
+$pdf->Image(
+	$_SESSION['LogoFile'],// Name of the file containing the image.
+	$Page_Width/2-118,// Abscissa from left border to the upper-left corner (LTR).
+	$Page_Height -($YPos-60) -(35),// Ordinate from top border to the upper-left corner (LTR).
+	0,// Width of the image in the page. If not specified or equal to zero, it is automatically calculated.
+	35,// Height of the image in the page. If not specified or equal to zero, it is automatically calculated.
+	''// Image format. If not specified, the type is inferred from the file extension.
+);// Public function Image() in ~/includes/tcpdf/tcpdf.php.
 
 $FontSize =15;
-if ($InvOrCredit=='Invoice') {
+if($InvOrCredit=='Invoice') {
 
 	$pdf->addText($Page_Width/2 - 60, $YPos, $FontSize, _('TAX INVOICE') . ' ');
 } else {
@@ -31,23 +39,14 @@ $pdf->addTextWrap($Page_Width-$Left_Margin-72, $YPos, 72, $FontSize,
 
 $XPos = $Page_Width - 265;
 $YPos -= 85;
-// Draws a nice curved corner box around the billing details:
-/*from the top right */
-$pdf->partEllipse($XPos+225,$YPos+67,0,90,10,10);
-/*line to the top left */
-$pdf->line($XPos+225, $YPos+77,$XPos, $YPos+77);
-/*Do top left corner */
-$pdf->partEllipse($XPos, $YPos+67,90,180,10,10);
-/*Do a line to the bottom left corner */
-$pdf->line($XPos-10, $YPos+67,$XPos-10, $YPos-10);
-/*Now do the bottom left corner 180 - 270 coming back west*/
-$pdf->partEllipse($XPos, $YPos-10,180,270,10,10);
-/*Now a line to the bottom right */
-$pdf->line($XPos, $YPos-20,$XPos+225, $YPos-20);
-/*Now do the bottom right corner */
-$pdf->partEllipse($XPos+225, $YPos-10,270,360,10,10);
-/*Finally join up to the top right corner where started */
-$pdf->line($XPos+235, $YPos-10,$XPos+235, $YPos+67);
+// Draws a rounded rectangle around billing details:
+$pdf->RoundRectangle(
+	$XPos-10,// RoundRectangle $XPos.
+	$YPos+77,// RoundRectangle $YPos.
+	245,// RoundRectangle $Width.
+	97,// RoundRectangle $Height.
+	10,// RoundRectangle $RadiusX.
+	10);// RoundRectangle $RadiusY.
 
 $YPos = $Page_Height - $Top_Margin - 10;
 
@@ -63,7 +62,7 @@ $LineCount += 1;
 $pdf->addText($Page_Width-268, $YPos-$LineCount*$LineHeight, $FontSize, _('Date'));
 $pdf->addText($Page_Width-180, $YPos-$LineCount*$LineHeight, $FontSize, ConvertSQLDate($myrow['trandate']));
 
-if ($InvOrCredit=='Invoice') {
+if($InvOrCredit=='Invoice') {
 	$LineCount += 1;
 	$pdf->addText($Page_Width-268, $YPos-$LineCount*$LineHeight, $FontSize, _('Order No'));
 	$pdf->addText($Page_Width-180, $YPos-$LineCount*$LineHeight, $FontSize, $myrow['orderno']);
@@ -94,15 +93,15 @@ $pdf->addText($XPos, $YPos-$LineCount*$LineHeight, $FontSize, $_SESSION['Company
 $FontSize = 8;
 $LineHeight = 10;
 
-if ($_SESSION['CompanyRecord']['regoffice1'] <> '') {
+if($_SESSION['CompanyRecord']['regoffice1'] <> '') {
   $LineCount += 1;
   $pdf->addText($XPos, $YPos-$LineCount*$LineHeight,$FontSize, $_SESSION['CompanyRecord']['regoffice1']);
 }
-if ($_SESSION['CompanyRecord']['regoffice2'] <> '') {
+if($_SESSION['CompanyRecord']['regoffice2'] <> '') {
   $LineCount += 1;
   $pdf->addText($XPos, $YPos-$LineCount*$LineHeight,$FontSize, $_SESSION['CompanyRecord']['regoffice2']);
 }
-if (($_SESSION['CompanyRecord']['regoffice3'] <> '') OR ($_SESSION['CompanyRecord']['regoffice4'] <> '') OR ($_SESSION['CompanyRecord']['regoffice5'] <> '')) {
+if(($_SESSION['CompanyRecord']['regoffice3'] <> '') OR ($_SESSION['CompanyRecord']['regoffice4'] <> '') OR ($_SESSION['CompanyRecord']['regoffice5'] <> '')) {
   $LineCount += 1;
   $pdf->addText($XPos, $YPos-$LineCount*$LineHeight,$FontSize, $_SESSION['CompanyRecord']['regoffice3'] . ' ' . $_SESSION['CompanyRecord']['regoffice4'] . ' ' . $_SESSION['CompanyRecord']['regoffice5']);  // country in 6 not printed
 }
@@ -130,7 +129,7 @@ $XPos += 20;
 $FontSize = 10;
 $LineHeight = 13;
 
-if ($myrow['invaddrbranch']==0){
+if($myrow['invaddrbranch']==0) {
 	$LineCount += 2;
 	$pdf->addText($XPos, $YPos-$LineCount*$LineHeight, $FontSize, html_entity_decode($myrow['name']));
 	$LineCount += 1;
@@ -157,14 +156,14 @@ $FontSize = 8;
 $LineHeight = 10;
 $LineCount = 0;
 
-if ($InvOrCredit=='Invoice') {
+if($InvOrCredit=='Invoice') {
 	$pdf->addText($XPos, $YPos-$LineCount*$LineHeight, $FontSize, _('Delivered To (check Dispatch Detail)') . ':');
 	$FontSize = 10;
 	$LineHeight = 13;
 	$XPos += 20;
 	$LineCount += 1;
 // Before trying to call htmlspecialchars_decode, check that its supported, if not substitute a compatible version
-if (!function_exists('htmlspecialchars_decode')) {
+if(!function_exists('htmlspecialchars_decode')) {
         function htmlspecialchars_decode($str) {
                 $trans = get_html_translation_table(HTML_SPECIALCHARS);
 
@@ -187,7 +186,7 @@ if (!function_exists('htmlspecialchars_decode')) {
 	$pdf->addText($XPos, $YPos-$LineCount*$LineHeight, $FontSize, html_entity_decode($myrow['deladd3']) . ' ' . html_entity_decode($myrow['deladd4']) . ' ' . html_entity_decode($myrow['deladd5']) . ' ' . html_entity_decode($myrow['deladd6']));
 	//$XPos -=80;
 }
-if ($InvOrCredit=='Credit'){
+if($InvOrCredit=='Credit') {
 /* then its a credit note */
 	$pdf->addText($XPos, $YPos-$LineCount*$LineHeight, $FontSize, _('Charge Branch') . ':');
 	$FontSize = 10;
@@ -215,24 +214,14 @@ $pdf->addText($Left_Margin, $YPos-8, $FontSize, _('All amounts stated in') . ': 
 
 $BoxHeight = $Page_Height-282;
 
-// Draws a box with nice round corner for entering line items:
-/*90 degree arc at top right of box 0 degrees starts a bottom */
-$pdf->partEllipse($Page_Width-$Right_Margin-10, $Bottom_Margin+$BoxHeight,0,90,10,10);
-/*line to the top left */
-$pdf->line($Page_Width-$Right_Margin-10, $Bottom_Margin+$BoxHeight+10,$Left_Margin+10, $Bottom_Margin+$BoxHeight+10);
-/*Dow top left corner */
-$pdf->partEllipse($Left_Margin+10, $Bottom_Margin+$BoxHeight,90,180,10,10);
-/*Do a line to the bottom left corner */
-$pdf->line($Left_Margin, $Bottom_Margin+$BoxHeight,$Left_Margin, $Bottom_Margin+10);
-/*Now do the bottom left corner 180 - 270 coming back west*/
-$pdf->partEllipse($Left_Margin+10, $Bottom_Margin+10,180,270,10,10);
-/*Now a line to the bottom right */
-$pdf->line($Left_Margin+10, $Bottom_Margin,$Page_Width-$Right_Margin-10, $Bottom_Margin);
-/*Now do the bottom right corner */
-$pdf->partEllipse($Page_Width-$Right_Margin-10, $Bottom_Margin+10,270,360,10,10);
-/*Finally join up to the top right corner where started */
-$pdf->line($Page_Width-$Right_Margin, $Bottom_Margin+10,$Page_Width-$Right_Margin, $Bottom_Margin+$BoxHeight);
-
+// Draws a rounded rectangle around line items:
+$pdf->RoundRectangle(
+	$Left_Margin,// RoundRectangle $XPos.
+	$Bottom_Margin+$BoxHeight+10,// RoundRectangle $YPos.
+	$Page_Width-$Right_Margin-$Left_Margin,// RoundRectangle $Width.
+	$BoxHeight+10,// RoundRectangle $Height.
+	10,// RoundRectangle $RadiusX.
+	10);// RoundRectangle $RadiusY.
 
 $YPos -= 35;
 /*Set up headings */
@@ -249,7 +238,7 @@ $pdf->line($Left_Margin+358, $YPos+$LineHeight,$Left_Margin+358, $YPos-$LineHeig
 $pdf->addText($Left_Margin+360, ($YPos+$LineHeight)-$LineCount*$LineHeight, $FontSize, _('Sales Person') . ':');
 $LineCount += 1;
 $pdf->addText($Left_Margin+12, ($YPos+$LineHeight)-$LineCount*$LineHeight, $FontSize, $myrow['taxref']);
-if ($InvOrCredit=='Invoice'){
+if($InvOrCredit=='Invoice') {
 	$pdf->addText($Left_Margin+190, ($YPos+$LineHeight)-$LineCount*$LineHeight, $FontSize, $myrow['customerref']);
 }
 $pdf->addText($Left_Margin+370, ($YPos+$LineHeight)-$LineCount*$LineHeight, $FontSize, $myrow['salesmanname']);
