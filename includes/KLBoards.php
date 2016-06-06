@@ -1216,9 +1216,7 @@ function CheckNegativeStock($RootPath, $db){
 
 	$SQL = "SELECT stockmaster.stockid,			
 				   stockmaster.description,			
-				   stockmaster.categoryid,			
 				   stockmaster.decimalplaces,			
-				   locstock.loccode,			
 				   locations.locationname,			
 				   locstock.quantity			
 			FROM stockmaster INNER JOIN locstock 			
@@ -1226,10 +1224,8 @@ function CheckNegativeStock($RootPath, $db){
 			INNER JOIN locations 			
 			ON locstock.loccode = locations.loccode			
 			WHERE locstock.quantity < 0			
-			ORDER BY locstock.loccode, 			
-				stockmaster.categoryid, 
-				stockmaster.stockid,
-				stockmaster.decimalplaces";
+			ORDER BY stockmaster.stockid";
+				
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Items with Negative Stock') . '</strong></p>';
