@@ -7,12 +7,20 @@
 
 // $PageNumber is initialised in 0 by includes/PDFStarter.php.
 $PageNumber ++;// Increments $PageNumber before printing.
-if ($PageNumber>1) {// Inserts a page break if it is not the first page.
+if($PageNumber>1) {// Inserts a page break if it is not the first page.
 	$pdf->newPage();
 }
 
 // Prints company logo:
-$pdf->addJpegFromFile($_SESSION['LogoFile'], 301, 520, 0, 60);
+/*$pdf->addJpegFromFile($_SESSION['LogoFile'], 301, 520, 0, 60);// Old function. See ~/includes/class.pdf.php.*/
+$pdf->Image(
+	$_SESSION['LogoFile'],// Name of the file containing the image.
+	301,// Abscissa from left border to the upper-left corner (LTR).
+	$Page_Height -(520) -(60),// Ordinate from top border to the upper-left corner (LTR).
+	0,// Width of the image in the page. If not specified or equal to zero, it is automatically calculated.
+	60,// Height of the image in the page. If not specified or equal to zero, it is automatically calculated.
+	''// Image format. If not specified, the type is inferred from the file extension.
+);// Public function Image() in ~/includes/tcpdf/tcpdf.php.
 
 // Prints 'Quotation' title:
 $pdf->addTextWrap(0, $Page_Height-$Top_Margin-18, $Page_Width, 18, _('Quotation'), 'center');
@@ -45,19 +53,21 @@ $XPos = 46;
 $YPos = 566;
 $FontSize=14;
 $myrow = array_map(html_entity_decode, $myrow);
+$line_height = 15;
 $pdf->addText($XPos, $YPos, $FontSize, _('Delivery To').':' );
-$pdf->addText($XPos, $YPos-15, $FontSize, $myrow['deliverto']);
-$pdf->addText($XPos, $YPos-30, $FontSize, $myrow['deladd1']);
-$pdf->addText($XPos, $YPos-45, $FontSize, $myrow['deladd2']);
-$pdf->addText($XPos, $YPos-60, $FontSize, $myrow['deladd3'] . ' ' . $myrow['deladd4'] . ' ' . $myrow['deladd5']);
+$pdf->addText($XPos, $YPos-$line_height*1, $FontSize, $myrow['deliverto']);
+$pdf->addText($XPos, $YPos-$line_height*2, $FontSize, $myrow['deladd1']);
+$pdf->addText($XPos, $YPos-$line_height*3, $FontSize, $myrow['deladd2']);
+$pdf->addText($XPos, $YPos-$line_height*4, $FontSize, $myrow['deladd3'] . ' ' . $myrow['deladd4'] . ' ' . $myrow['deladd5']);
 
 // Prints 'Quotation For' info:
 $YPos -= 80;
+$line_height = 15;
 $pdf->addText($XPos, $YPos, $FontSize, _('Quotation For').':');
-$pdf->addText($XPos, $YPos-15, $FontSize, $myrow['name']);
-$pdf->addText($XPos, $YPos-30, $FontSize, $myrow['address1']);
-$pdf->addText($XPos, $YPos-45, $FontSize, $myrow['address2']);
-$pdf->addText($XPos, $YPos-60, $FontSize, $myrow['address3'] . ' ' . $myrow['address4'] . ' ' . $myrow['address5']);
+$pdf->addText($XPos, $YPos-$line_height*1, $FontSize, $myrow['name']);
+$pdf->addText($XPos, $YPos-$line_height*2, $FontSize, $myrow['address1']);
+$pdf->addText($XPos, $YPos-$line_height*3, $FontSize, $myrow['address2']);
+$pdf->addText($XPos, $YPos-$line_height*4, $FontSize, $myrow['address3'] . ' ' . $myrow['address4'] . ' ' . $myrow['address5']);
 
 // Draws a box with round corners around 'Delivery To' info:
 $XPos= 50;
@@ -65,8 +75,8 @@ $YPos += 12;
 $pdf->RoundRectangle(
 	$XPos-10,// RoundRectangle $XPos.
 	$YPos+70,// RoundRectangle $YPos.
-	245,// RoundRectangle $Width.225+10+10
-	80,// RoundRectangle $Height.60+10+10
+	245,// RoundRectangle $Width.
+	80,// RoundRectangle $Height.
 	10,// RoundRectangle $RadiusX.
 	10);// RoundRectangle $RadiusY.
 
@@ -75,8 +85,8 @@ $YPos -= 82;
 $pdf->RoundRectangle(
 	$XPos-10,// RoundRectangle $XPos.
 	$YPos+70,// RoundRectangle $YPos.
-	245,// RoundRectangle $Width.225+10+10
-	80,// RoundRectangle $Height.60+10+10
+	245,// RoundRectangle $Width.
+	80,// RoundRectangle $Height.
 	10,// RoundRectangle $RadiusX.
 	10);// RoundRectangle $RadiusY.
 
@@ -91,7 +101,7 @@ $pdf->addText($Page_Width/2+$Left_Margin, $YPos-5, $FontSize,
 $XPos = 40;
 $YPos -= 37;
 $LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos,103, $FontSize, _('Item Code'));
-	if (strlen($LeftOvers) > 0) { // If translated text is greater than 103, prints remainder
+	if(strlen($LeftOvers) > 0) { // If translated text is greater than 103, prints remainder
 		$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos-$FontSize, 65, $FontSize, $LeftOvers);
 	}
 $LeftOvers = $pdf->addTextWrap(145, $YPos,250, $FontSize, _('Item Description'));
@@ -99,11 +109,11 @@ $LeftOvers = $pdf->addTextWrap(420, $YPos, 85, $FontSize, _('Quantity'),'right')
 $LeftOvers = $pdf->addTextWrap(485, $YPos, 85, $FontSize, _('Price'),'right');
 $LeftOvers = $pdf->addTextWrap(535, $YPos, 85, $FontSize, _('Discount'),'right');
 $LeftOvers = $pdf->addTextWrap(615, $YPos, 55, $FontSize, _('Tax Class'),'right');
-	if (strlen($LeftOvers) > 0) { // If translated text is greater than 55, prints remainder
+	if(strlen($LeftOvers) > 0) { // If translated text is greater than 55, prints remainder
 		$LeftOvers = $pdf->addTextWrap(615,$YPos-$FontSize,55, $FontSize, $LeftOvers,'right');
 	}
 $LeftOvers = $pdf->addTextWrap(665, $YPos, 70, $FontSize, _('Tax Amount'),'right');
-	if (strlen($LeftOvers) > 0) { // If translated text is greater than 70, prints remainder
+	if(strlen($LeftOvers) > 0) { // If translated text is greater than 70, prints remainder
 		$LeftOvers = $pdf->addTextWrap(665, $YPos-$FontSize, 70, $FontSize, $LeftOvers,'right');
 	}
 $LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-90, $YPos, 90, $FontSize, _('Total'),'right');
