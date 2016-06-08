@@ -319,6 +319,7 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 		array('black')	//Border Colors
 	);
 	$graph->SetLegend(array(_('Actual'),_('Budget')));
+	$graph->SetYDataLabelPos('plotin');
 
 	//Draw it
 	$graph->DrawGraph();
