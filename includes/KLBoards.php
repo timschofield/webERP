@@ -3429,7 +3429,7 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $RootPath, $db){
 				AND ((SELECT l.reorderlevel
 						FROM locstock l
 						WHERE l.stockid = stockmaster.stockid
-							AND l.loccode = 'KASPE') >= 1)
+							AND l.loccode = 'KASPE') = 0)
 				AND ((SELECT SUM(l.quantity)
 						FROM locstock l
 						WHERE l.stockid = stockmaster.stockid
