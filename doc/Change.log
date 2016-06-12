@@ -1,5 +1,6 @@
 webERP Change Log
 
+12/06/16 TurboPT: Fix syntax error in StockClone.php
 08/06/16 Exson: add data label for SalesGraph.php.
 
 22/5/16 Release 4.13

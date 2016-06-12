@@ -344,10 +344,10 @@ if (isset($_POST['submit'])) {
 																							language_id,
 																							descriptiontranslation,
 																							longdescriptiontranslation)
-													VALUES('" . $_POST['StockID'] . "','" . 
-																$LanguageId . "', '" . 
-																$_POST['Description_' . str_replace('.','_',$LanguageId)]  . "', '" . 
-																$_POST['LongDescription_' . str_replace('.','_',$LanguageId)]. 
+													VALUES('" . $_POST['StockID'] . "','" .
+																$LanguageId . "', '" .
+																$_POST['Description_' . str_replace('.','_',$LanguageId)]  . "', '" .
+																$_POST['LongDescription_' . str_replace('.','_',$LanguageId)].
 																"')",$ErrMsg,$DbgMsg,true);
 							}
 						}
@@ -588,7 +588,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 	<input type="hidden" name="New" value="'.$_POST['New'].'" />
 	<table class="selection">';
 
-if (empty($_POST['StockID']) || $_POST['StockID'] == $_POST['OldStockID']) || isset($_POST['UpdateCategories'])) {
+if (empty($_POST['StockID']) || ($_POST['StockID'] == $_POST['OldStockID']) || isset($_POST['UpdateCategories'])) {
 
 /*If the page was called without $StockID or empty $StockID  then a new cloned stock item is to be entered. Show a form with a part Code field,
   otherwise show form for editing with only a hidden OldStockID field. */
@@ -655,10 +655,10 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
 	$_POST['Pansize'] = $myrow['pansize'];
 	$_POST['ShrinkFactor'] = $myrow['shrinkfactor'];
 
-	$sql = "SELECT descriptiontranslation, 
-					longdescriptiontranslation, 
-					language_id 
-			FROM stockdescriptiontranslations 
+	$sql = "SELECT descriptiontranslation,
+					longdescriptiontranslation,
+					language_id
+			FROM stockdescriptiontranslations
 			WHERE stockid='" . $selectedStockID . "' AND (";
 	foreach ($ItemDescriptionLanguagesArray as $LanguageId) {
 		$sql .= "language_id='" . $LanguageId ."' OR ";
@@ -694,7 +694,7 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
             echo '<tr>
                 <td>' . $LanguagesArray[$LanguageId]['LanguageName'] . ' ' . _('Description') . ':</td>
                 <td><input type="text" name="'. $PostVariableName . '" size="52" maxlength="50" value="' . $_POST[$PostVariableName] . '" /></td>
-		<td><input type="hidden" name="' . $LongDescriptionTranslated . '" value="' . $_POST['LongDescription_' . str_replace('.','_',$LanguageId)] . '" />  
+		<td><input type="hidden" name="' . $LongDescriptionTranslated . '" value="' . $_POST['LongDescription_' . str_replace('.','_',$LanguageId)] . '" />
             </tr>';
         }
     }
