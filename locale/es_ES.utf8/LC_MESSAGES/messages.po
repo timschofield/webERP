@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-05-16 21:31+1200\n"
-"PO-Revision-Date: 2016-05-29 09:40-0600\n"
+"PO-Revision-Date: 2016-06-11 14:24-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -27795,7 +27795,7 @@ msgstr "Denominación del Tipo"
 
 #: SecurityTokens.php:6 includes/MainMenuLinksArray.php:475
 msgid "Maintain Security Tokens"
-msgstr "Administrar Testigos de Seguridad"
+msgstr "Administrar fichas de seguridad"
 
 #: SecurityTokens.php:14
 msgid ""
@@ -40227,11 +40227,11 @@ msgstr "Introducir Perfil"
 
 #: WWW_Access.php:210
 msgid "Assigned Security Tokens"
-msgstr "Asignación de Testigos de Seguridad"
+msgstr "Fichas de seguridad asignadas"
 
 #: WWW_Access.php:211
 msgid "Available Security Tokens"
-msgstr "Testigos de Seguridad Disponibles"
+msgstr "Fichas de seguridad disponibles"
 
 #: WWW_Access.php:229
 #, php-format
