@@ -3661,33 +3661,96 @@ function PurchasingOrdersDeliveryControl($reason, $maxdays, $RootPath, $db){
 							<th class="ascending">' . _('Order Date') . '</th>
 							<th class="ascending">' . _('Delivery Date') . '</th>
 							<th class="ascending">' . _('Supplier') . '</th>
-							<th class="ascending">' . _('Order Value') . '</th>
-							<th class="ascending">' . _('Currency') . '</th>
+							<th class="ascending">' . _('IDR') . '</th>
+							<th class="ascending">' . _('USD') . '</th>
+							<th class="ascending">' . _('THB') . '</th>
+							<th class="ascending">' . _('EUR') . '</th>
+							<th class="ascending">' . _('HKD') . '</th>
 						</tr>';
 		echo $TableHeader;
+		
+		$TotalIDR = 0;
+		$TotalUSD = 0;
+		$TotalTHB = 0;
+		$TotalEUR = 0;
+		$TotalHKD = 0;
+		
 		$k = 0; //row colour counter
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
 			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/PO_OrderDetails.php?OrderNo=' . $myrow['orderno'] . '">' . $myrow['orderno'] . '</a>';
+
+			$ValueIDR = 0;
+			$ValueUSD = 0;
+			$ValueTHB = 0;
+			$ValueEUR = 0;
+			$ValueHKD = 0;
+			
+			if ($myrow['currcode'] == 'IDR'){
+				$ValueIDR = $myrow['ordervalue'];
+				$TotalIDR = $TotalIDR + $ValueIDR; 
+			}elseif	($myrow['currcode'] == 'USD'){
+				$ValueUSD = $myrow['ordervalue'];
+				$TotalUSD = $TotalUSD + $ValueUSD; 
+			}elseif	($myrow['currcode'] == 'THB'){
+				$ValueTHB = $myrow['ordervalue'];
+				$TotalTHB = $TotalTHB + $ValueTHB; 
+			}elseif	($myrow['currcode'] == 'EUR'){
+				$ValueEUR = $myrow['ordervalue'];
+				$TotalEUR = $TotalEUR + $ValueEUR; 
+			}elseif	($myrow['currcode'] == 'HKD'){
+				$ValueHKD = $myrow['ordervalue'];
+				$TotalHKD = $TotalHKD + $ValueHKD; 
+			}
+			
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
-					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
 					</tr>', 
 					$i, 
 					$CodeLink, 
 					ConvertSQLDate($myrow['orddate']), 
 					ConvertSQLDate($myrow['deliverydate']), 
 					$myrow['suppname'],
-					locale_number_format($myrow['ordervalue'],0),
-					$myrow['currcode']
+					locale_number_format_zero_blank($ValueIDR,0),
+					locale_number_format_zero_blank($ValueUSD,0),
+					locale_number_format_zero_blank($ValueTHB,0),
+					locale_number_format_zero_blank($ValueEUR,0),
+					locale_number_format_zero_blank($ValueHKD,0)
 					);
 			$i++;
 		}
+		$k = StartEvenOrOddRow($k);
+		printf('<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'', 
+				'', 
+				'', 
+				'', 
+				'TOTALS',
+				locale_number_format_zero_blank($TotalIDR,0),
+				locale_number_format_zero_blank($TotalUSD,0),
+				locale_number_format_zero_blank($TotalTHB,0),
+				locale_number_format_zero_blank($TotalEUR,0),
+				locale_number_format_zero_blank($TotalHKD,0)
+				);
 		echo '</table>
 				</div>';
 	}
