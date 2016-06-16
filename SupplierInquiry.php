@@ -44,21 +44,21 @@ $SQL = "SELECT suppliers.suppname,
 			CASE WHEN (TO_DAYS(Now()) - TO_DAYS(supptrans.trandate)) >= paymentterms.daysbeforedue
 			THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
 		ELSE
-			CASE WHEN TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(supptrans.trandate, " . INTERVAL('1', 'MONTH') . "), " . INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(supptrans.trandate))', 'DAY') . ")) >= 0 THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
+			CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(supptrans.trandate),paymentterms.dayinfollowingmonth)) >= 0 THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
 		END) AS due,
 		SUM(CASE WHEN paymentterms.daysbeforedue > 0  THEN
 			CASE WHEN (TO_DAYS(Now()) - TO_DAYS(supptrans.trandate)) > paymentterms.daysbeforedue
 					AND (TO_DAYS(Now()) - TO_DAYS(supptrans.trandate)) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays1'] . ")
 			THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
 		ELSE
-			CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(supptrans.trandate, " . INTERVAL('1','MONTH') . "), " . INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(supptrans.trandate))', 'DAY') .")) >= '" . $_SESSION['PastDueDays1'] . "')
+			CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(supptrans.trandate),paymentterms.dayinfollowingmonth)) >= '" . $_SESSION['PastDueDays1'] . "'
 			THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
 		END) AS overdue1,
 		Sum(CASE WHEN paymentterms.daysbeforedue > 0 THEN
 			CASE WHEN TO_DAYS(Now()) - TO_DAYS(supptrans.trandate) > paymentterms.daysbeforedue AND TO_DAYS(Now()) - TO_DAYS(supptrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays2'] . ")
 			THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
 		ELSE
-			CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(supptrans.trandate, " . INTERVAL('1','MONTH') . "), " . INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(supptrans.trandate))', 'DAY') . ")) >= '" . $_SESSION['PastDueDays2'] . "')
+			CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(supptrans.trandate),paymentterms.dayinfollowingmonth)) >= '" . $_SESSION['PastDueDays2'] . "'
 			THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
 		END ) AS overdue2
 		FROM suppliers INNER JOIN paymentterms

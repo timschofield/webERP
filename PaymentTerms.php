@@ -59,13 +59,13 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'Terms';
 		$i++;
 	}
-
+	/*
 	if ($_POST['DayNumber'] > 30 AND empty($_POST['DaysOrFoll'])) {
 		$InputError = 1;
 		prnMsg( _('When the check box is not checked to indicate a day in the following month is the due date') . ', ' . _('the due date cannot be a day after the 30th') . '. ' . _('A number between 1 and 30 is expected') ,'error');
 		$Errors[$i] = 'DayNumber';
 		$i++;
-	}
+	} */
 	if ($_POST['DayNumber']>360 AND !empty($_POST['DaysOrFoll'])) {
 		$InputError = 1;
 		prnMsg( _('When the check box is checked to indicate that the term expects a number of days after which accounts are due') . ', ' . _('the number entered should be less than 361 days') ,'error');
