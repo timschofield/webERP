@@ -1,5 +1,6 @@
 webERP Change Log
-
+20/06/16 Exson: Fixed bom clone failure due to fields missing in CopyBom.php. Reported by shane.
+20/06/16 Exson: Fixed the bug that # is not allowed as part of stockid in SelectProduct.php.
 16/06/16 Exson: Make monthly payment term can be more than 30 days. 
 12/06/16 TurboPT: Fix syntax error in StockClone.php
 08/06/16 Exson: add data label for SalesGraph.php.
