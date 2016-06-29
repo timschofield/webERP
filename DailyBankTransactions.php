@@ -152,7 +152,7 @@ if (!isset($_POST['Show'])) {
 					<th class="number">' . _('Number') . '</th>
 					<th class="text">' . _('Type') . '</th>
 					<th class="text">' . _('Reference') . '</th>
-					<th class="number">' . _('Amount in org').' '.$BankDetailRow['currcode'] . '</th>
+					<th class="number">' . _('Amount in org currency') . '</th>
 					<th class="number">' . _('Balance in') . ' ' . $BankDetailRow['currcode'] . '</th>
 					<th class="number">' . _('Running Total').' '.$BankDetailRow['currcode'] . '</th>
 					<th class="number">' . _('Amount in').' '.$_SESSION['CompanyRecord']['currencydefault'] . '</th>
@@ -203,9 +203,8 @@ if (!isset($_POST['Show'])) {
 			} else {
 				$GLNarrative = 'NA';
 			}
-			$Balance += $myrow['amount'];
-
-			$AccountCurrTotal += $myrow['amount'];
+			$Balance += $myrow['amount']/$myrow['exrate'];
+			$AccountCurrTotal += $myrow['amount']/$myrow['exrate'];
 			$LocalCurrTotal += $myrow['amount']/$myrow['functionalexrate']/$myrow['exrate'];
 		
 			if ($myrow['amount']==$myrow['amountcleared']) {
@@ -220,7 +219,7 @@ if (!isset($_POST['Show'])) {
 					<td class="number"><a href="' . $RootPath . '/GLTransInquiry.php?TypeID=' . $myrow['typeid'] . '&amp;TransNo=' . $myrow['transno'] . '">' . $myrow['transno'] . '</a></td>
 					<td>' . $myrow['banktranstype'] . '</td>
 					<td>' . $myrow['ref'] . '</td>
-					<td class="number">' . locale_number_format($myrow['amount'],$BankDetailRow['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($myrow['amount'],$BankDetailRow['decimalplaces']) . ' ' . $myrow['currcode'] . '</td>
 					<td class="number">' . locale_number_format($Balance,$BankDetailRow['decimalplaces']) . '</td>
 					<td class="number">' . locale_number_format($AccountCurrTotal,$BankDetailRow['decimalplaces']) . '</td>
 					<td class="number">' . locale_number_format($myrow['amount']/$myrow['functionalexrate']/$myrow['exrate'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
