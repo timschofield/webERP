@@ -1,4 +1,7 @@
 webERP Change Log
+
+29/06/16 Exson: add identifier to avoid SESSION overwritten in CustomerReceipt.php.
+29/06/16 Exson: Fixed the wrong balance of amount in bank account currency in DailyBankTransactions.php.
 20/06/16 Exson: Fixed bom clone failure due to fields missing in CopyBom.php. Reported by shane.
 20/06/16 Exson: Fixed the bug that # is not allowed as part of stockid in SelectProduct.php.
 16/06/16 Exson: Make monthly payment term can be more than 30 days. 
