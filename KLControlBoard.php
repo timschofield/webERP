@@ -56,11 +56,9 @@ prnMsg("START OF PENDING FOR KL INTRANET ",'success');
 		DiscountedItemsWithWrongDiscount("DISC50", "50", $RootPath, $db);
 		NotDiscountedItemsWithDiscount($RootPath, $db);
 		GoodsReceivedNotInvoicedControl(1000000, $periodnow, $db);
-		CustomersDebtControl(100000, $periodnow, $db);
 		ObsoleteComponentsInActiveBOM($RootPath, $db);
 		SamplesNotLongerNeeded($RootPath, $db);
 		FlaggedAsObsoleteButStockAvailable($RootPath, $db);
-		ItemsInKLProcessAndRLNotZero($RootPath, $db);
 prnMsg("END OF PENDING FOR KL INTRANET ",'success');
 
 //	phpinfo();
