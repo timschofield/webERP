@@ -194,6 +194,10 @@ if (!isset($_POST['Show'])) {
 				$k = 0;
 			}
 			//check the GL narrative
+			if ($myrow['type'] == 2) {
+				$myrow['typeid'] = 1;
+				$myrow['transno'] = substr($myrow['ref'],1,strpos($myrow['ref'],' ')-1);
+			}
 			$sql = "SELECT narrative FROM gltrans WHERE type='" . $myrow['typeid'] . "' AND typeno='" . $myrow['transno'] . "'";
 			$ErrMsg = _('Failed to retrieve gl narrative');
 			$glresult = DB_query($sql,$ErrMsg);

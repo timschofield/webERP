@@ -165,7 +165,6 @@ if (isset($_POST['Show'])){
 	}
 
 	$sql = $sql . " ORDER BY periodno, gltrans.trandate, counterindex";
-
 	$namesql = "SELECT accountname FROM chartmaster WHERE accountcode='" . $SelectedAccount . "'";
 	$nameresult = DB_query($namesql);
 	$namerow=DB_fetch_array($nameresult);
@@ -296,6 +295,29 @@ if (isset($_POST['Show'])){
 				$BankRef = $bankrow['ref'];
 				$OrgAmt = $bankrow['amount'];
 				$Currency = $bankrow['currcode'];
+			} elseif ($myrow['type'] == 1) {
+				//We should find out when transaction happens between bank accounts;
+				$bankreceivesql = "SELECT ref,type,transno,currcode,amount FROM banktrans 
+							WHERE ref LIKE '@%' AND transdate='" . $myrow['trandate'] . "' AND bankact='" . $SelectedAccount . "'";
+				$ErrMsg = _('Failed to retrieve bank receive data');
+				$bankresult = DB_query($bankreceivesql,$ErrMsg);
+				if (DB_num_rows($bankresult)>0) {
+					while ($bankrow = DB_fetch_array($bankresult)) {
+						if (substr($bankrow['ref'],1,strpos($bankrow['ref'],' ')-1) == $myrow['typeno']) {
+							$BankRef = $bankrow['ref'];
+							$OrgAmt = $bankrow['amount'];
+							$Currency = $bankrow['currcode'];
+							$BankReceipt = true;
+							break;
+						}
+					}
+				}
+				if (!isset($BankReceipt)) {
+					$BankRef = '';
+					$OrgAmt = $myrow['amount'];
+					$Currency = $_SESSION['CompanyRecord']['currencydefault'];
+				}
+
 			} elseif(isset($BankAccount)){
 				$BankRef = '';
 				$OrgAmt = $myrow['amount'];

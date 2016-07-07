@@ -460,7 +460,7 @@ if(isset($_POST['CommitBatch'])) {
 								$ReceiptTransNo . "',
 								2,'" .
 								$PaymentItem->GLCode . "','" .
-								_('Act Transfer From ') . $_SESSION['PaymentDetail'.$identifier]->Account . ' - ' . $PaymentItem->Narrative . "','" .
+								'@' . $TransNo . ' ' . _('Act Transfer From ') . $_SESSION['PaymentDetail'.$identifier]->Account . ' - ' . $PaymentItem->Narrative . "','" .
 								(($_SESSION['PaymentDetail'.$identifier]->ExRate * $_SESSION['PaymentDetail'.$identifier]->FunctionalExRate)/$TrfToBankExRate). "','" .
 								$TrfToBankExRate . "','" .
 								FormatDateForSQL($_SESSION['PaymentDetail'.$identifier]->DatePaid) . "','" .
