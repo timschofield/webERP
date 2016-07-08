@@ -1,5 +1,6 @@
 webERP Change Log
 
+08/07/16 Exson: Fixed the bug that when bank account or currency changes the functional rate or exrate unchanged with suggested rate in Payments.php.
 07/07/16: Exson: Fixed the bug of wrong original amount of payments to another bank accounts in GLAccountInquiry.php and wrong transaction link in DailyBankTransactions.php and add payment transaction no in bank transaction ref to make it traceable. 
 29/06/16 Exson: add identifier to avoid SESSION overwritten in CustomerReceipt.php.
 29/06/16 Exson: Fixed the wrong balance of amount in bank account currency in DailyBankTransactions.php.
