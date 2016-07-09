@@ -1,5 +1,5 @@
 webERP Change Log
-
+09/07/16 Exson: Fixed the utf8 character print incorrect of pdf file in class.pdf.php.
 08/07/16 Exson: Fixed the transaction atomicity bug by change table lock to row lock in SQL_CommonFunctions.inc.
 08/07/16 Exson: Fixed the bug that when bank account or currency changes the functional rate or exrate unchanged with suggested rate in Payments.php.
 07/07/16: Exson: Fixed the bug of wrong original amount of payments to another bank accounts in GLAccountInquiry.php and wrong transaction link in DailyBankTransactions.php and add payment transaction no in bank transaction ref to make it traceable. 
