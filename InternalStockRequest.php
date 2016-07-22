@@ -59,7 +59,8 @@ foreach ($_POST as $key => $value) {
 	}
 }
 
-if (isset($_POST['Submit'])) {
+if (isset($_POST['Submit']) AND (!empty($_SESSION['Request']->LineItems))) {
+
 	DB_Txn_Begin();
 	$InputError=0;
 	if ($_SESSION['Request']->Department=='') {
@@ -133,6 +134,8 @@ if (isset($_POST['Submit'])) {
 	include('includes/footer.inc');
 	unset($_SESSION['Request']);
 	exit;
+} elseif(isset($_POST['Submit'])) {
+	prnMsg(_('There are no items added to this request'),'error');
 }
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Dispatch') .
@@ -275,24 +278,24 @@ echo '<br />
 	</tr>';
 
 $k=0;
-
-foreach ($_SESSION['Request']->LineItems as $LineItems) {
-
-	if ($k==1){
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k++;
+if (isset($_SESSION['Request']->LineItems)) {
+	foreach ($_SESSION['Request']->LineItems as $LineItems) {
+		if ($k==1){
+			echo '<tr class="EvenTableRows">';
+			$k=0;
+		} else {
+			echo '<tr class="OddTableRows">';
+			$k++;
+		}
+		echo '<td>' . $LineItems->LineNumber . '</td>
+				<td>' . $LineItems->StockID . '</td>
+				<td>' . $LineItems->ItemDescription . '</td>
+				<td class="number">' . locale_number_format($LineItems->Quantity, $LineItems->DecimalPlaces) . '</td>
+				<td>' . $LineItems->UOM . '</td>
+				<td><a href="'. htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Edit='.$LineItems->LineNumber.'">' . _('Edit') . '</a></td>
+				<td><a href="'. htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Delete='.$LineItems->LineNumber.'">' . _('Delete') . '</a></td>
+			</tr>';
 	}
-	echo '<td>' . $LineItems->LineNumber . '</td>
-			<td>' . $LineItems->StockID . '</td>
-			<td>' . $LineItems->ItemDescription . '</td>
-			<td class="number">' . locale_number_format($LineItems->Quantity, $LineItems->DecimalPlaces) . '</td>
-			<td>' . $LineItems->UOM . '</td>
-			<td><a href="'. htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Edit='.$LineItems->LineNumber.'">' . _('Edit') . '</a></td>
-			<td><a href="'. htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Delete='.$LineItems->LineNumber.'">' . _('Delete') . '</a></td>
-		</tr>';
 }
 
 echo '</table>

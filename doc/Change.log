@@ -1,4 +1,5 @@
 webERP Change Log
+22/07/16 Exson: Add empty check for internal request to avoid empty request creating in InternalStockRequest.php.
 09/07/16 Exson: Fixed the utf8 character print incorrect of pdf file in class.pdf.php.
 08/07/16 Exson: Fixed the transaction atomicity bug by change table lock to row lock in SQL_CommonFunctions.inc.
 08/07/16 Exson: Fixed the bug that when bank account or currency changes the functional rate or exrate unchanged with suggested rate in Payments.php.
