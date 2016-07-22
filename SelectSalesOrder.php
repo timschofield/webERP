@@ -530,6 +530,7 @@ if (!isset($StockID)) {
 		<tr>
       		<td>' . _('Select a stock category') . ':
       			<select name="StockCat">';
+		echo '<option value="All">' . _('All') . '</option>';
 
 	while ($myrow1 = DB_fetch_array($result1)) {
 		echo '<option value="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
@@ -552,7 +553,7 @@ if (!isset($StockID)) {
 		<br />';
 
 if (isset($StockItemsResult)
-	AND DB_num_rows($StockItemsResult)>0) {
+	AND DB_num_rows($StockItemsResult)>1) {
 
 	echo '<table cellpadding="2" class="selection">';
 	echo '<tr>
@@ -592,6 +593,10 @@ if (isset($StockItemsResult)
 }
 //end if stock search results to show
   else {
+	 if (isset($StockItemsResult) AND DB_num_rows($StockItemsResult) == 1) {
+		 $mystkrow = DB_fetch_array($StockItemsResult);
+		 $SelectedStockItem = $mystkrow['stockid'];
+	 }
 
 	//figure out the SQL required from the inputs available
 	if (isset($_POST['Quotations']) AND $_POST['Quotations']=='Orders_Only'){
@@ -880,9 +885,12 @@ function GetSearchItems ($SQLConstraint='') {
 				   stockmaster.decimalplaces,
 				   SUM(locstock.quantity) AS qoh,
 				   stockmaster.units
-			  FROM stockmaster INNER JOIN locstock
+			FROM salesorderdetails INNER JOIN stockmaster
+				ON salesorderdetails.stkcode = stockmaster.stockid AND completed=0
+			INNER JOIN locstock
 			  ON stockmaster.stockid=locstock.stockid";
-	if (isset($_POST['StockCat']) AND trim($_POST['StockCat'])==''){
+	if (isset($_POST['StockCat']) 
+		AND ((trim($_POST['StockCat']) == '') OR $_POST['StockCat'] == 'All')){
 		 $WhereStockCat = '';
 	} else {
 		 $WhereStockCat = " AND stockmaster.categoryid='" . $_POST['StockCat'] . "' ";
