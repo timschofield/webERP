@@ -1,5 +1,5 @@
 webERP Change Log
-
+25/07/16 Exson: Add InternalStockRequestInquiry.php script.
 22/07/16 Exson: Make items search limited to the sales orders and if search result is 1 show the result immediately in SelectSalesOrder.php
 22/07/16 Exson: Add empty check for internal request to avoid empty request creating in InternalStockRequest.php.
 09/07/16 Exson: Fixed the utf8 character print incorrect of pdf file in class.pdf.php.

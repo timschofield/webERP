@@ -77,13 +77,15 @@ if (isset($_POST['Submit']) AND (!empty($_SESSION['Request']->LineItems))) {
 											loccode,
 											departmentid,
 											despatchdate,
-											narrative)
+											narrative,
+											initiator)
 										VALUES(
 											'" . $RequestNo . "',
 											'" . $_SESSION['Request']->Location . "',
 											'" . $_SESSION['Request']->Department . "',
 											'" . FormatDateForSQL($_SESSION['Request']->DispatchDate) . "',
-											'" . $_SESSION['Request']->Narrative . "')";
+											'" . $_SESSION['Request']->Narrative . "',
+											'" . $_SESSION['UserID'] . "')";
 		$ErrMsg =_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The request header record could not be inserted because');
 		$DbgMsg = _('The following SQL to insert the request header record was used');
 		$Result = DB_query($HeaderSQL,$ErrMsg,$DbgMsg,true);
