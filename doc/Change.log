@@ -1,4 +1,6 @@
 webERP Change Log
+
+27/07/16 Exson: Add error proof to avoid a blank credit note issued without any items credited or freight charge input in Credit_Invoice.php.
 25/07/16 Exson: Add InternalStockRequestInquiry.php script.
 22/07/16 Exson: Make items search limited to the sales orders and if search result is 1 show the result immediately in SelectSalesOrder.php
 22/07/16 Exson: Add empty check for internal request to avoid empty request creating in InternalStockRequest.php.

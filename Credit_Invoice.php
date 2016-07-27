@@ -219,14 +219,24 @@ if(isset($_POST['Location'])) {
 	$myrow = DB_fetch_array($NewDispatchTaxProvResult);
 
 	$_SESSION['CreditItems' . $identifier]->DispatchTaxProvince = $myrow['taxprovinceid'];
+	
+	$TotalQtyCredited = 0;
 
 	foreach($_SESSION['CreditItems' . $identifier]->LineItems as $LineItem) {
 		$_SESSION['CreditItems' . $identifier]->GetTaxes($LineItem->LineNumber);
+		$TotalQtyCredited += $LineItem->QtyDispatched;
 	}
 }
 
 if(isset($_POST['ChargeFreightCost'])) {
 	$_SESSION['CreditItems' . $identifier]->FreightCost = filter_number_format($_POST['ChargeFreightCost']);
+	if (($TotalQtyCredit + abs($_POST['ChargeFreightCost']))<=0) {
+		prnMsg(_('There are no item quantity or freight charge input'),'error');
+		if (isset($_POST['ProcessCredit'])) {
+			unset($_POST['ProcessCredit']);
+		}
+	}
+
 }
 if($_SESSION['SalesmanLogin'] == '') {
 	if(isset($_POST['SalesPerson'])) {
