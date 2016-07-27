@@ -87,10 +87,10 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 	$Result = DB_query($SQL);
 	$IssueItemRow = DB_fetch_array($Result);
 	//now lets get the decimalplaces needed
-	if ($IssueItemRow['decimalplaces'] <=4) {
+	if ($IssueItemRow['decimalplaces'] <=3) {
 		$VarianceAllowed = 0.0001;
 	} else {
-		$VarianceAllowed = pow(10,-$IssueItemRow['decimalplaces']);
+		$VarianceAllowed = pow(10,-(1+$IssueItemRow['decimalplaces']));
 	}
 
 	$QuantityIssued =0;

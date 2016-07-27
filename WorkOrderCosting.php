@@ -413,14 +413,18 @@ If (isset($_POST['Close'])) {
 				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 			}
-
-			$NewCost = $WORow['currcost'] +(-$TotalVariance	* $ShareProportion *$ProportionOnHand)/$TotalOnHand;
+			if ($TotalOnHand>0) {//to avoid negative quantity make cost data abnormal
+				$NewCost = $WORow['currcost'] +(-$TotalVariance	* $ShareProportion *$ProportionOnHand)/$TotalOnHand;
+			} else {
+				$NewCost = $WORow['currcost'];
+			}
 
 			$SQL = "UPDATE stockmaster SET
 						materialcost='" . $NewCost . "',
 						labourcost=0,
 						overheadcost=0,
-						lastcost='" . $WORow['currcost'] . "'
+						lastcost='" . $WORow['currcost'] . "',
+						lastcostupdate = '" . Date('Y-m-d') . "'
 					WHERE stockid='" . $WORow['stockid'] . "'";
 
 			$ErrMsg = _('The cost details for the stock item could not be updated because');
@@ -515,9 +519,9 @@ If (isset($_POST['Close'])) {
 	} // end loop around the items on the work order
 
 	$CloseWOResult =DB_query("UPDATE workorders SET closed=1, closecomments = '". $_POST['CloseComments'] ."' WHERE wo='" .$_POST['WO'] . "'",
-							_('Could not update the work order to closed because:'),
-							_('The SQL used to close the work order was:'),
-							true);
+				_('Could not update the work order to closed because:'),
+				_('The SQL used to close the work order was:'),
+				true);
 	$DeleteAnyWOSerialNos = DB_query("DELETE FROM woserialnos WHERE wo='" . $_POST['WO'] . "'",
 									_('Could not delete the predefined work order serial numbers'),
 									_('The SQL used to delete the predefined serial numbers was:'),
@@ -550,7 +554,6 @@ if ($WorkOrderRow['closed']==0){
 
 echo 	'<tr>
 			<td colspan="9">
-
 				<div class="centre">
 					<textarea ' . $ReadOnly . ' style="width:100%" rows="5" cols="80" name="CloseComments" >' . $_POST['CloseComments'] . '</textarea>
 				</div>

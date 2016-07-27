@@ -1,4 +1,6 @@
 webERP Change Log
+
+27/07/16 Exson: Add cost update date for material cost in WorkOrderCosting.php and WorkOrderIssue.php.
 27/07/16 Exson: Fixed the typo in Credit_Invoice.php introduced in previous update.
 27/07/16 Exson: Fixed the divided by zero error when discount is 100% in SelectOrderItems.php.
 27/07/16 Exson: Add error proof to avoid a blank credit note issued without any items credited or freight charge input in Credit_Invoice.php.
