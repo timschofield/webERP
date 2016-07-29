@@ -259,6 +259,10 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 		PurchasingOrdersDeliveryControl("Coming Soon", 30, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		PurchasingOrdersDeliveryControl("Coming Soon", 60, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		PurchasingOrdersDeliveryControl("Coming Soon", 90, $RootPath, $db);
+		$NumberOfTestExecuted++;
 	}
 
 //	RetailTypePayments("Shop",180, $db);

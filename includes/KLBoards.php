@@ -355,13 +355,13 @@ function ErrorsInTransfers($maxdays, $RootPath, $db){
 		$TotalCancelledQty = 0;
 		
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 
 			$TotalShippedModels += $myrow['shipped_models'];
 			$TotalCancelledModels += $myrow['cancelled_models'];
 			$TotalShippedQty += $myrow['shipped_quantity'];
 			$TotalCancelledQty += $myrow['cancelled_quantity'];
 
+/*			$k = StartEvenOrOddRow($k);
 			$TransferLink = '<a href="' . $RootPath . '/StockLocTransferReceive.php?Trf_ID=' . $myrow['reference'] . '">' . $myrow['reference'] . '</a>';
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -387,7 +387,7 @@ function ErrorsInTransfers($maxdays, $RootPath, $db){
 					locale_number_format($myrow['cancelled_quantity'],0),
 					locale_number_format($myrow['cancelled_quantity'] / $myrow['shipped_quantity'] * 100,2) . '%'
 					);
-			$i++;
+*/			$i++;
 		}
 		$k = StartEvenOrOddRow($k);
 		printf('<td class="number">%s</td>
