@@ -1,4 +1,6 @@
 <?php
+/* $Id: WriteReport.inc 7512 2016-05-08 15:59:07Z rchacon $*/
+
 require_once($PathPrefix .'/includes/class.pdf.php');
 
 class PDF extends Cpdf {
@@ -299,14 +301,11 @@ function BuildSQL($Prefs) {
 	// fetch date filter info
 	$df = $Prefs['DateListings']['fieldname'];
 	$Today = date('Y-m-d', time());
-	$ThisDay = mb_substr($Today,8,2);
-	$ThisMonth = mb_substr($Today,5,2);
-	$ThisYear = mb_substr($Today,0,4);
-	// find total number of days in this month
-	if ($ThisMonth==04 OR $ThisMonth==06 OR $ThisMonth==09 OR $ThisMonth==11) { $TotalDays=30; }
-	elseif ($ThisMonth==02 AND date('L', $t)) { $TotalDays=29; } // Leap year
-	elseif ($ThisMonth==02 AND !date('L', $t)) { $TotalDays=28; }
-	else { $TotalDays=31; }
+	$ThisDay = date('d');
+	$ThisMonth = date('m');
+	$ThisYear = date('Y');
+	// Find total number of days in this month:
+	$TotalDays = cal_days_in_month(CAL_GREGORIAN, $ThisMonth, $ThisYear);
 	// Calculate date range
 	$DateArray=explode(':',$Prefs['DateListings']['params']);
 	switch ($DateArray[0]) { // based on the date choice selected

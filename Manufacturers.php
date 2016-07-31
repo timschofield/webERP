@@ -15,6 +15,8 @@ if (isset($_GET['SelectedManufacturer'])){
 	$SelectedManufacturer = $_POST['SelectedManufacturer'];
 }
 
+$SupportedImgExt = array('png','jpg','jpeg');
+
 if (isset($_POST['submit'])) {
 
 	
@@ -30,11 +32,13 @@ if (isset($_POST['submit'])) {
 	
 			$result	= $_FILES['BrandPicture']['error'];
 		 	$UploadTheFile = 'Yes'; //Assume all is well to start off with
-			$FileName = $_SESSION['part_pics_dir'] . '/BRAND-' . $SelectedManufacturer . '.jpg';
+			
+			$ImgExt = pathinfo($_FILES['BrandPicture']['name'], PATHINFO_EXTENSION);
+			$FileName = $_SESSION['part_pics_dir'] . '/BRAND-' . $SelectedManufacturer . '.' . $ImgExt;
 		
 			 //But check for the worst
-			if (mb_strtoupper(mb_substr(trim($_FILES['BrandPicture']['name']),mb_strlen($_FILES['BrandPicture']['name'])-3))!='JPG'){
-				prnMsg(_('Only jpg files are supported - a file extension of .jpg is expected'),'warn');
+			if (!in_array ($ImgExt, $SupportedImgExt)) {
+				prnMsg(_('Only ' . implode(", ", $SupportedImgExt) . ' files are supported - a file extension of ' . implode(", ", $SupportedImgExt) . ' is expected'),'warn');
 				$UploadTheFile ='No';
 			} elseif ( $_FILES['BrandPicture']['size'] > ($_SESSION['MaxImageSize']*1024)) { //File Size Check
 				prnMsg(_('The file size is over the maximum allowed. The maximum size allowed in KB is') . ' ' . $_SESSION['MaxImageSize'],'warn');
@@ -42,12 +46,15 @@ if (isset($_POST['submit'])) {
 			} elseif ( $_FILES['BrandPicture']['type'] == 'text/plain' ) {  //File Type Check
 				prnMsg( _('Only graphics files can be uploaded'),'warn');
 				 	$UploadTheFile ='No';
-			} elseif (file_exists($FileName)){
-				prnMsg(_('Attempting to overwrite an existing item image'),'warn');
-				$result = unlink($FileName);
-				if (!$result){
-					prnMsg(_('The existing image could not be removed'),'error');
-					$UploadTheFile ='No';
+			}
+			foreach ($SupportedImgExt as $ext) {
+				$file = $_SESSION['part_pics_dir'] . '/BRAND-' . $SelectedManufacturer . '.' . $ext;
+				if (file_exists ($file) ) {
+					$result = unlink($file);
+					if (!$result){
+						prnMsg(_('The existing image could not be removed'),'error');
+						$UploadTheFile ='No';
+					}
 				}
 			}
 		
@@ -60,13 +67,30 @@ if (isset($_POST['submit'])) {
 			}
 		}
 		if( isset($_POST['ManufacturersImage'])){
-			if (file_exists($_SESSION['part_pics_dir'] . '/' .'BRAND-' . $SelectedManufacturer . '.jpg') ) {
-				$_POST['ManufacturersImage'] = 'BRAND-' . $SelectedManufacturer . '.jpg';
-			} else {
-				$_POST['ManufacturersImage'] = '';
+			foreach ($SupportedImgExt as $ext) {
+				$file = $_SESSION['part_pics_dir'] . '/BRAND-' . $SelectedManufacturer . '.' . $ext;
+				if (file_exists ($file) ) {
+					$_POST['ManufacturersImage'] = 'BRAND-' . $SelectedManufacturer;
+					break;
+				} else {
+					$_POST['ManufacturersImage'] = '';
+				}
+			}
+			
+		}
+		if (isset($_POST['ClearImage']) ) {
+		foreach ($SupportedImgExt as $ext) {
+				$file = $_SESSION['part_pics_dir'] . '/BRAND-' . $SelectedManufacturer . '.' . $ext;
+				if (file_exists ($file) ) {
+					@unlink($file);
+					$_POST['ManufacturersImage'] = '';
+					if(is_file($imagefile)) {
+						prnMsg(_('You do not have access to delete this item image file.'),'error');
+					}
+				}
 			}
 		}
-		
+
 		$sql = "UPDATE manufacturers SET manufacturers_name='" . $_POST['ManufacturersName'] . "',
 									manufacturers_url='" . $_POST['ManufacturersURL'] . "'";
 		if (isset($_POST['ManufacturersImage'])){
@@ -102,11 +126,13 @@ if (isset($_POST['submit'])) {
 	
 			$result	= $_FILES['BrandPicture']['error'];
 		 	$UploadTheFile = 'Yes'; //Assume all is well to start off with
-			$FileName = $_SESSION['part_pics_dir'] . '/BRAND-' . $_SESSION['LastInsertId'] . '.jpg';
+			
+			$ImgExt = pathinfo($_FILES['BrandPicture']['name'], PATHINFO_EXTENSION);
+			$FileName = $_SESSION['part_pics_dir'] . '/BRAND-' . $_SESSION['LastInsertId'] . '.' . $ImgExt;
 		
 			 //But check for the worst
-			if (mb_strtoupper(mb_substr(trim($_FILES['BrandPicture']['name']),mb_strlen($_FILES['BrandPicture']['name'])-3))!='JPG'){
-				prnMsg(_('Only jpg files are supported - a file extension of .jpg is expected'),'warn');
+			if (!in_array ($ImgExt, $SupportedImgExt)) {
+				prnMsg(_('Only ' . implode(", ", $SupportedImgExt) . ' files are supported - a file extension of ' . implode(", ", $SupportedImgExt) . ' is expected'),'warn');
 				$UploadTheFile ='No';
 			} elseif ( $_FILES['BrandPicture']['size'] > ($_SESSION['MaxImageSize']*1024)) { //File Size Check
 				prnMsg(_('The file size is over the maximum allowed. The maximum size allowed in KB is') . ' ' . $_SESSION['MaxImageSize'],'warn');
@@ -114,19 +140,25 @@ if (isset($_POST['submit'])) {
 			} elseif ( $_FILES['BrandPicture']['type'] == 'text/plain' ) {  //File Type Check
 				prnMsg( _('Only graphics files can be uploaded'),'warn');
 				 	$UploadTheFile ='No';
-			} elseif (file_exists($FileName)){
-				prnMsg(_('Attempting to overwrite an existing item image'),'warn');
-				$result = unlink($FileName);
-				if (!$result){
-					prnMsg(_('The existing image could not be removed'),'error');
-					$UploadTheFile ='No';
+			}
+			foreach ($SupportedImgExt as $ext) {
+				$file = $_SESSION['part_pics_dir'] . '/BRAND-' . $_SESSION['LastInsertId'] . '.' . $ext;
+				if (file_exists ($file) ) {
+					$result = unlink($file);
+					if (!$result){
+						prnMsg(_('The existing image could not be removed'),'error');
+						$UploadTheFile ='No';
+					}
 				}
 			}
 		
 			if ($UploadTheFile=='Yes'){
 				$result  =  move_uploaded_file($_FILES['BrandPicture']['tmp_name'], $FileName);
 				$message = ($result)?_('File url')  . '<a href="' . $FileName .'">' .  $FileName . '</a>' : _('Something is wrong with uploading a file');
-				DB_query("UPDATE manufacturers SET  manufacturers_image='" . $FileName . "'");
+				DB_query("UPDATE manufacturers 
+					SET  manufacturers_image='" . 'BRAND-' . $_SESSION['LastInsertId'] . "'
+					WHERE manufacturers_id = '" . $_SESSION['LastInsertId'] . "'
+					");
 			} 
 		}
 
@@ -137,7 +169,6 @@ if (isset($_POST['submit'])) {
 		unset($_POST['ManufacturersImage']);
 		unset($SelectedManufacturer);
 	}
-
 
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
@@ -155,10 +186,13 @@ if (isset($_POST['submit'])) {
 	}
 	
 	if (!$CancelDelete) {
-
+		
 		$result = DB_query("DELETE FROM manufacturers WHERE manufacturers_id='" . $SelectedManufacturer . "'");
-		if( file_exists($_SESSION['part_pics_dir'] . '/BRAND-' . $SelectedManufacturer . '.jpg') ) {
-			unlink($_SESSION['part_pics_dir'] . '/BRAND-' . $SelectedManufacturer . '.jpg');
+		foreach ($SupportedImgExt as $ext) {
+			$file = $_SESSION['part_pics_dir'] . '/BRAND-' . $SelectedManufacturer . '.' . $ext;
+			if (file_exists ($file) ) {
+				@unlink($file);
+			}
 		}
 		prnMsg( _('Manufacturer') . ' ' . $SelectedManufacturer . ' ' . _('has been deleted') . '!', 'success');
 		unset ($SelectedManufacturer);
@@ -205,16 +239,25 @@ while ($myrow = DB_fetch_array($result)) {
 		$k=1;
 	}
 	
-	if( file_exists($_SESSION['part_pics_dir'] . '/BRAND-' . $myrow['manufacturers_id'] . '.jpg') ) {
-		$BrandImgLink = '<img width="120" height="120" src="' . $_SESSION['part_pics_dir'] . '/BRAND-' . $myrow['manufacturers_id'] . '.jpg"  />';
+	$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/BRAND-' . $myrow['manufacturers_id'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
+	if (extension_loaded('gd') && function_exists('gd_info') && file_exists($imagefile)){
+		$BrandImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
+			'&amp;StockID='.urlencode('/BRAND-' . $myrow['manufacturers_id']).
+			'&amp;text='.
+			'&amp;width=120'.
+			'&amp;height=120'.
+			'" alt="" />';
+	} else if (file_exists ($imagefile)) {
+		$BrandImgLink = '<img src="' . $imagefile . '" height="120" width="120" />';
 	} else {
 		$BrandImgLink = _('No Image');
 	}
+
 	printf('<td>%s</td>
 			<td>%s</td>
 			<td><a target="_blank" href="%s">%s</a></td>
 			<td>%s</td>
-			<td><a href="%sSelectedManufacturer=%s">' . _('Edit') . '</a></td>
+			<td><a href="%sSelectedManufacturer=%s&amp;edit=1">' . _('Edit') . '</a></td>
 			<td><a href="%sSelectedManufacturer=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this brand?') . '\');">' . _('Delete') . '</a></td>
 			</tr>',
 			$myrow['manufacturers_id'],
@@ -297,13 +340,33 @@ if (!isset($_GET['delete'])) {
 			<td><input type="text" name="ManufacturersURL" value="' . $_POST['ManufacturersURL'] . '" size="50" maxlength="50" /></td>
 		</tr>
 		<tr>
-			<td>' .  _('Brand Image File (.jpg)') . ':</td>
-			<td><input type="file" id="BrandPicture" name="BrandPicture" /></td>
+			<td>' .  _('Brand Image File (' . implode(", ", $SupportedImgExt) . ')') . ':</td>
+			<td><input type="file" id="BrandPicture" name="BrandPicture" />';
+	
+	if (isset ($_GET['edit']) ) {
+		echo '	<br /><input type="checkbox" name="ClearImage" id="ClearImage" value="1" > '._('Clear Image').' ';
+	}
+	
+	echo '	</td>
 		</tr>';
 		if (isset($SelectedManufacturer)){
-			if(file_exists($_SESSION['part_pics_dir'] . '/' .'BRAND-' . $SelectedManufacturer . '.jpg') ) {
-				echo '</tr><td colspan="2"><img width="100" height="100" src="' . $_SESSION['part_pics_dir'] . '/' .'BRAND-' . $SelectedManufacturer . '.jpg" /></tr></tr>';
-			} 
+			
+			$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/BRAND-' . $SelectedManufacturer . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
+			if (extension_loaded('xgd') && function_exists('gd_info') && file_exists($imagefile)){
+				$BrandImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
+					'&amp;StockID='.urlencode('/BRAND-' . $SelectedManufacturer).
+					'&amp;text='.
+					'&amp;width=100'.
+					'&amp;height=100'.
+					'" alt="" />';
+			} else {
+				if( isset($SelectedManufacturer) AND  !empty($SelectedManufacturer) AND file_exists($imagefile) ) {
+					$BrandImgLink = '<img src="' . $imagefile . '" height="100" width="100" />';
+				} else {
+					$BrandImgLink = _('No Image');
+				}
+			}
+			echo '<tr><td colspan="2">' . $BrandImgLink . '</td></tr>';
 		}
 		
 		echo 	'</table>

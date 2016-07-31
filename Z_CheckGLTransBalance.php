@@ -1,5 +1,5 @@
 <?php
-/* $Id: Z_CheckGLTransBalance.php 7320 2015-06-13 03:43:34Z tehonu $*/
+/* $Id: Z_CheckGLTransBalance.php 7564 2016-07-03 06:58:29Z daintree $*/
 
 include('includes/session.inc');
 $Title=_('Check Period Sales Ledger Control Account');
@@ -21,9 +21,10 @@ $sql = "SELECT gltrans.type,
 			gltrans.typeno,
 			periodno,
 			SUM(amount) AS nettot
-		FROM gltrans,
-			systypes
-		WHERE gltrans.type = systypes.typeid
+		FROM gltrans
+			INNER JOIN chartmaster ON
+			gltrans.account=chartmaster.accountcode
+			INNER JOIN systypes ON gltrans.type = systypes.typeid
 		GROUP BY gltrans.type,
 			systypes.typename,
 			typeno,

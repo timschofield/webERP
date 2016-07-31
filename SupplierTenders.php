@@ -1,5 +1,5 @@
 <?php
-/* $Id: SupplierTenders.php 6941 2014-10-26 23:18:08Z daintree $*/
+/* $Id: SupplierTenders.php 7494 2016-04-25 09:53:53Z daintree $*/
 
 include('includes/DefineOfferClass.php');
 include('includes/session.inc');
@@ -705,13 +705,19 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 				$k=1;
 			}
 
-			$FileName = $myrow['stockid'] . '.jpg';
-			if (file_exists( $_SESSION['part_pics_dir'] . '/' . $FileName) ) {
-
-				$ImageSource = '<img src="'.$RootPath . '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg" width="50" height="50" />';
-
+			$SupportedImgExt = array('png','jpg','jpeg');
+			$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
+			if (extension_loaded('gd') && function_exists('gd_info') && file_exists ($imagefile) ) {
+				$ImageSource = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
+					'&amp;StockID='.urlencode($myrow['stockid']).
+					'&amp;text='.
+					'&amp;width=64'.
+					'&amp;height=64'.
+					'" alt="" />';
+			} else if (file_exists ($imagefile)) {
+				$ImageSource = '<img src="' . $imagefile . '" height="64" width="64" />';
 			} else {
-				$ImageSource = '<i>' . _('No Image') . '</i>';
+				$ImageSource = _('No Image');
 			}
 
 			$UOMsql="SELECT conversionfactor,

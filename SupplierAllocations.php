@@ -1,5 +1,5 @@
 <?php
-/*	$Id: SupplierAllocations.php 6983 2014-11-15 03:58:43Z exsonqu $*/
+/*	$Id: SupplierAllocations.php 7511 2016-05-07 22:48:34Z daintree $*/
 
 /*	This page can be called with...
 
@@ -82,8 +82,7 @@ if (isset($_POST['UpdateDatabase']) OR isset($_POST['RefreshAllocTotal'])) {
 		 $_SESSION['Alloc']->Allocs[$_POST['AllocID' . $AllocCounter]]->DiffOnExch = ($_POST['Amt' . $AllocCounter] / $_SESSION['Alloc']->TransExRate) - ($_POST['Amt' . $AllocCounter] / $_SESSION['Alloc']->Allocs[$_POST['AllocID' . $AllocCounter]]->ExRate);
 
 		 $TotalDiffOnExch += $_SESSION['Alloc']->Allocs[$_POST['AllocID' . $AllocCounter]]->DiffOnExch;
-		 $TotalAllocated += $_POST['Amt' . $AllocCounter];
-
+		 $TotalAllocated += round($_POST['Amt' . $AllocCounter],$_SESSION['Alloc']->CurrDecimalPlaces);
 	} /*end of the loop to set the new allocation amounts,
 	recalc diff on exchange and add up total allocations */
 

@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: GLPostings.inc 7456 2016-02-01 19:17:56Z exsonqu $*/
+/* $Id: GLPostings.inc 7506 2016-05-06 03:25:37Z exsonqu $*/
 
 /* This file contains the code to post GL transactions.
 
@@ -60,7 +60,7 @@ if(DB_num_rows($ChartDetailsNotSetUpResult)>0){
 		LEFT JOIN chartdetails ON chartmaster.accountcode=chartdetails.accountcode 
 		AND periods.periodno=chartdetails.period 
 		WHERE (periods.periodno BETWEEN '" . $CreateFrom . "' AND '" . $CreateTo . "')
-		AND chartdetails.account code IS NULL ORDER BY accountcode,periodno";
+		AND chartdetails.accountcode IS NULL ORDER BY accountcode,periodno";
 	$ErrMsg = _('Failed to retrieve new account code and periods');
 	$NewPeriodResult = DB_query($sql,$ErrMsg);
 	if (DB_num_rows($result)>0){ 

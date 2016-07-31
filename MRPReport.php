@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: MRPReport.php 7232 2015-03-25 05:25:28Z exsonqu $*/
+/* $Id: MRPReport.php 7478 2016-03-24 02:21:39Z exsonqu $*/
 
 // MRPReport.php - Shows supply and demand for a part as determined by MRP
 
@@ -184,7 +184,7 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 	$pdf->addTextWrap(410,$YPos,50,$FontSize,locale_number_format($qoh,$myrow['decimalplaces']),'right');
 	$YPos -=$line_height;
 	$pdf->addTextWrap($Left_Margin,$YPos,30,$FontSize,_('Desc:'),'');
-	$pdf->addTextWrap(70,$YPos,150,$FontSize,$myrow['description'],'');
+	$pdf->addTextWrap(70,$YPos,240,$FontSize,$myrow['description'],'');
 	$pdf->addTextWrap(245,$YPos,40,$FontSize,_('Pan Size:'),'right');
 	$pdf->addTextWrap(285,$YPos,45,$FontSize,locale_number_format($myrow['pansize'],$myrow['decimalplaces']),'right');
 	$pdf->addTextWrap(360,$YPos,50,$FontSize,_('On Order:'),'right');

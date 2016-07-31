@@ -1,5 +1,5 @@
 <?php
-/* $Id: GLAccountInquiry.php 7441 2016-01-13 02:38:17Z exsonqu $*/
+/* $Id: GLAccountInquiry.php 7565 2016-07-07 11:11:34Z exsonqu $*/
 
 include ('includes/session.inc');
 $Title = _('General Ledger Account Inquiry');
@@ -51,7 +51,8 @@ echo '<table class="selection">
 
 $sql = "SELECT chartmaster.accountcode, 
 			bankaccounts.accountcode AS bankact,
-			   chartmaster.accountname
+			bankaccounts.currcode,
+			chartmaster.accountname
 		FROM chartmaster LEFT JOIN bankaccounts
 		ON chartmaster.accountcode=bankaccounts.accountcode
 		INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canview=1
@@ -164,7 +165,6 @@ if (isset($_POST['Show'])){
 	}
 
 	$sql = $sql . " ORDER BY periodno, gltrans.trandate, counterindex";
-
 	$namesql = "SELECT accountname FROM chartmaster WHERE accountcode='" . $SelectedAccount . "'";
 	$nameresult = DB_query($namesql);
 	$namerow=DB_fetch_array($nameresult);
@@ -295,6 +295,33 @@ if (isset($_POST['Show'])){
 				$BankRef = $bankrow['ref'];
 				$OrgAmt = $bankrow['amount'];
 				$Currency = $bankrow['currcode'];
+			} elseif ($myrow['type'] == 1) {
+				//We should find out when transaction happens between bank accounts;
+				$bankreceivesql = "SELECT ref,type,transno,currcode,amount FROM banktrans 
+							WHERE ref LIKE '@%' AND transdate='" . $myrow['trandate'] . "' AND bankact='" . $SelectedAccount . "'";
+				$ErrMsg = _('Failed to retrieve bank receive data');
+				$bankresult = DB_query($bankreceivesql,$ErrMsg);
+				if (DB_num_rows($bankresult)>0) {
+					while ($bankrow = DB_fetch_array($bankresult)) {
+						if (substr($bankrow['ref'],1,strpos($bankrow['ref'],' ')-1) == $myrow['typeno']) {
+							$BankRef = $bankrow['ref'];
+							$OrgAmt = $bankrow['amount'];
+							$Currency = $bankrow['currcode'];
+							$BankReceipt = true;
+							break;
+						}
+					}
+				}
+				if (!isset($BankReceipt)) {
+					$BankRef = '';
+					$OrgAmt = $myrow['amount'];
+					$Currency = $_SESSION['CompanyRecord']['currencydefault'];
+				}
+
+			} elseif(isset($BankAccount)){
+				$BankRef = '';
+				$OrgAmt = $myrow['amount'];
+				$Currency = $_SESSION['CompanyRecord']['currencydefault'];
 			}
 		} 
 

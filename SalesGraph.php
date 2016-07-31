@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: SalesGraph.php 6944 2014-10-27 07:15:34Z daintree $*/
+/* $Id: SalesGraph.php 7552 2016-06-08 04:16:42Z exsonqu $*/
 
 include('includes/session.inc');
 include('includes/phplot/phplot.php');
@@ -320,6 +320,7 @@ prnMsg($SQL);
 		array('black')	//Border Colors
 	);
 	$graph->SetLegend(array(_('Actual'),_('Budget')));
+	$graph->SetYDataLabelPos('plotin');
 
 	//Draw it
 	$graph->DrawGraph();

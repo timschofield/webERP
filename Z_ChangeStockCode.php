@@ -1,5 +1,5 @@
 <?php
-/*	$Id: Z_ChangeStockCode.php 7091 2015-01-21 14:00:57Z agaluski $*/
+/*	$Id: Z_ChangeStockCode.php 7494 2016-04-25 09:53:53Z daintree $*/
 /*	This script is an utility to change an inventory item code. */
 /*	It uses function ChangeFieldInTable($TableName, $FieldName, $OldValue, 
 	$NewValue, $db) from .../includes/MiscFunctions.php.*/
@@ -185,15 +185,19 @@ if (isset($_POST['ProcessStockChange'])){
 /*		ChangeFieldInTable("Stockdescriptions", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);// Updates the translated item descriptions (StockDescriptions)*/
 
 		echo '<br />' . _('Changing any image files');
-		if (file_exists($_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'.jpg')){
-			if (rename($_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'.jpg',
-				$_SESSION['part_pics_dir'] . '/' .$_POST['NewStockID'].'.jpg')) {
-				echo ' ... ' . _('completed');
+		$SupportedImgExt = array('png','jpg','jpeg');
+		foreach ($SupportedImgExt as $ext) {
+			$file = $_SESSION['part_pics_dir'] . '/' . $_POST['OldStockID'] . '.' . $ext;
+			if (file_exists ($file) ) {
+				if (rename($file,
+					$_SESSION['part_pics_dir'] . '/' .$_POST['NewStockID'] . '.' . $ext)) {
+					echo ' ... ' . _('completed');
+				} else {
+					echo ' ... ' . _('failed');
+				}
 			} else {
-				echo ' ... ' . _('failed');
+				echo ' .... ' . _('no image to rename');
 			}
-		} else {
-			echo ' .... ' . _('no image to rename');
 		}
 
 		ChangeFieldInTable("stockitemproperties", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);

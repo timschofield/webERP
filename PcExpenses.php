@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: PcExpenses.php 6941 2014-10-26 23:18:08Z daintree $*/
+/* $Id: PcExpenses.php 7482 2016-04-01 08:36:03Z exsonqu $*/
 
 include('includes/session.inc');
 $Title = _('Maintenance Of Petty Cash Of Expenses');
@@ -191,11 +191,11 @@ or deletion of the records*/
 
 	echo '<table class="selection">';
 	echo '<tr>
-		<th>' . _('Code Of Expense') . '</th>
-		<th>' . _('Description') . '</th>
-		<th>' . _('Account Code') . '</th>
-		<th>' . _('Account Description') . '</th>
-		<th>' . _('Tag') . '</th>
+		<th class="ascending">' . _('Code Of Expense') . '</th>
+		<th class="ascending">' . _('Description') . '</th>
+		<th class="ascending">' . _('Account Code') . '</th>
+		<th class="ascending">' . _('Account Description') . '</th>
+		<th class="ascending">' . _('Tag') . '</th>
 		<th>' . _('% PPH23') . '</th>
 		</tr>';
 

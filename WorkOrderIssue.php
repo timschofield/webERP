@@ -1,5 +1,5 @@
 <?php
-/* $Id: WorkOrderIssue.php 7437 2016-01-07 10:15:33Z exsonqu $*/
+/* $Id: WorkOrderIssue.php 7576 2016-07-27 10:10:03Z exsonqu $*/
 
 include('includes/session.inc');
 $Title = _('Issue Materials To Work Order');
@@ -87,10 +87,10 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 	$Result = DB_query($SQL);
 	$IssueItemRow = DB_fetch_array($Result);
 	//now lets get the decimalplaces needed
-	if ($IssueItemRow['decimalplaces'] <=4) {
+	if ($IssueItemRow['decimalplaces'] <=3) {
 		$VarianceAllowed = 0.0001;
 	} else {
-		$VarianceAllowed = pow(10,-$IssueItemRow['decimalplaces']);
+		$VarianceAllowed = pow(10,-(1+$IssueItemRow['decimalplaces']));
 	}
 
 	$QuantityIssued =0;
@@ -792,15 +792,20 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 
 			while ($myrow=DB_fetch_array($SearchResult)) {
 
+				$SupportedImgExt = array('png','jpg','jpeg');
 				if (!in_array($myrow['stockid'],$ItemCodes)){
-					if (function_exists('imagecreatefrompng') ){
-						$ImageSource = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC&amp;StockID=' . urlencode($myrow['stockid']). '&amp;text=&amp;width=64&amp;height=64" alt="" />';
+					$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
+					if (extension_loaded('gd') && function_exists('gd_info') && file_exists ($imagefile) ) {
+						$ImageSource = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
+							'&amp;StockID='.urlencode($myrow['stockid']).
+							'&amp;text='.
+							'&amp;width=64'.
+							'&amp;height=64'.
+							'" alt="" />';
+					} else if (file_exists ($imagefile)) {
+						$ImageSource = '<img src="' . $imagefile . '" height="64" width="64" />';
 					} else {
-						if(file_exists($_SERVER['DOCUMENT_ROOT'] . $RootPath. '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg')) {
-							$ImageSource = '<img src="' .$_SERVER['DOCUMENT_ROOT'] . $RootPath . '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg" alt="" />';
-						} else {
-							$ImageSource = _('No Image');
-						}
+						$ImageSource = _('No Image');
 					}
 
 					if ($k==1){

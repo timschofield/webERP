@@ -1,5 +1,5 @@
 <?php
-/* $Id: SelectOrderItems.php 7431 2015-12-28 03:47:44Z exsonqu $*/
+/* $Id: SelectOrderItems.php 7574 2016-07-27 07:19:16Z exsonqu $*/
 
 /**************************************************************************************
 KL RICARD MODIFICATIONS:
@@ -732,7 +732,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						custitem.cust_part,
 						custitem.cust_description
 				FROM stockmaster INNER JOIN stockcategory
-				ON stockmaster.categoryid=stockcategory.categoryid 
+				ON stockmaster.categoryid=stockcategory.categoryid
 				" . $IncludeCustItem . "
 				WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='L' " . $RawMaterialSellable . ")
 				AND stockmaster.mbflag <>'G'
@@ -1030,7 +1030,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					/*There is a new price being input for the line item */
 
 					$Price = filter_number_format($_POST['Price_' . $OrderLine->LineNumber]);
+					if ($_POST['Discount_' . $OrderLine->LineNumber] < 100) {//to avoid divided by zero error
 					$_POST['GPPercent_' . $OrderLine->LineNumber] = (($Price*(1-(filter_number_format($_POST['Discount_' . $OrderLine->LineNumber])/100))) - $OrderLine->StandardCost*$ExRate)/($Price *(1-filter_number_format($_POST['Discount_' . $OrderLine->LineNumber])/100)/100);
+					} else {
+						$_POST['GPPercent_' . $OrderLine->LineNumber] = 0;
+					}
 
 				} elseif (ABS($OrderLine->GPPercent - filter_number_format($_POST['GPPercent_' . $OrderLine->LineNumber]))>=0.01) {
 					/* A GP % has been input so need to do a recalculation of the price at this new GP Percentage */
@@ -1376,7 +1380,6 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					<td><input class="number" maxlength="40" name="GPPercent_' . $OrderLine->LineNumber . '" required="required" size="4" value="' . locale_number_format($OrderLine->GPPercent,2) . '" title="' . _('Enter a gross profit percentage to use as the basis to calculate the price to charge the customer for this line item') . '" type="text" /></td>';
 			} else {
 				echo '<td class="number">' . locale_number_format($OrderLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
-				echo '<input class="number" maxlength="40" name="GPPercent_' . $OrderLine->LineNumber . '" size="4" type="hidden" value="' . locale_number_format($OrderLine->GPPercent,2) . '" />';
 				echo '<input name="Price_' . $OrderLine->LineNumber . '" type="hidden" value="' . locale_number_format($OrderLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '" /></td>';
 			}
 

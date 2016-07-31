@@ -226,7 +226,7 @@ $MenuItems['AP']['Reports']['Caption'] = array(	_('Where Allocated Inquiry.php')
 												_('KL Goods Received Not Invoiced Yet'),
 												_('Supplier Transaction Inquiries'));
 
-$MenuItems['AP']['Reports']['URL'] = array( '/SuppWhereAlloc.php',	
+$MenuItems['AP']['Reports']['URL'] = array( '/SuppWhereAlloc.php',
 											'/AgedSuppliers.php',
 											'/SuppPaymentRun.php',
 											'/PDFRemittanceAdvice.php',
@@ -350,7 +350,8 @@ $MenuItems['stock']['Reports']['Caption'] = array(	_('Serial Item Research Tool'
 													_('KL Price Analysis'),
 													_('KL Inventory Distribution By Type'),
 													_('Stock Transfer Note'),
-													_('Aged Controlled Stock Report'));
+													_('Aged Controlled Stock Report'),
+													_('Internal stock request inquiry'));
 
 $MenuItems['stock']['Reports']['URL'] = array(	'/StockSerialItemResearch.php',
 												'/KLPDFPrintLabel.php',
@@ -389,7 +390,8 @@ $MenuItems['stock']['Reports']['URL'] = array(	'/StockSerialItemResearch.php',
 												'/KLExcelPriceAnalysis.php',
 												'/KLInventoryDistribution.php',
 												'/PDFStockTransfer.php',
-												'/AgedControlledInventory.php');
+												'/AgedControlledInventory.php',
+												'/InternalStockRequestInquiry.php');
 
 $MenuItems['stock']['Maintenance']['Caption'] = array(	_('Add A New Item'),
 														_('Select An Item'),
@@ -568,12 +570,9 @@ $MenuItems['GL']['Maintenance']['Caption'] = array(	_('Account Sections'),
 													_('GL Accounts for PT. Bumi Biru'),
 													_('GL Budgets'),
 													_('GL Tags'),
-													_('GL Accounts Authorised Users Maintenance'),
-													_('User Authorised GL Accounts Maintenance'),
-													_('Copy Authority GL Accounts from user A to B'),
 													_('Bank Accounts'),
-													_('Bank Account Authorized Users'),
-													_('User Authorized Bank Accounts'));
+													_('Bank Account Authorised Users'),
+													_('User Authorised Bank Accounts'));
 
 $MenuItems['GL']['Maintenance']['URL'] = array(		'/AccountSections.php',
 													'/AccountGroups.php',
@@ -583,9 +582,6 @@ $MenuItems['GL']['Maintenance']['URL'] = array(		'/AccountSections.php',
 													'/KLGLAccountsPT.php',
 													'/GLBudgets.php',
 													'/GLTags.php',
-													'/GLAccountUsers.php',
-													'/UserGLAccounts.php',
-													'/GLAccountUsersCopyAuthority.php',
 													'/BankAccounts.php',
 													'/BankAccountUsers.php',
 													'/UserBankAccounts.php');
@@ -748,7 +744,8 @@ $MenuItems['Utilities']['Transactions']['Caption'] = array(	_('Change A Customer
 															_('Re-apply costs to Sales Analysis'),
 															_('Delete sales transactions'),
 															_('Reverse all supplier payments on a specified date'),
-															_('Update sales analysis with latest customer data'));
+															_('Update sales analysis with latest customer data'),
+															_('Copy Authority of GL Accounts from one user to another'));
 
 $MenuItems['Utilities']['Transactions']['URL'] = array(	'/Z_ChangeCustomerCode.php',
 														'/Z_ChangeBranchCode.php',
@@ -762,7 +759,8 @@ $MenuItems['Utilities']['Transactions']['URL'] = array(	'/Z_ChangeCustomerCode.p
 														'/Z_ReApplyCostToSA.php',
 														'/Z_DeleteSalesTransActions.php',
 														'/Z_ReverseSuppPaymentRun.php',
-														'/Z_UpdateSalesAnalysisWithLatestCustomerData.php');
+														'/Z_UpdateSalesAnalysisWithLatestCustomerData.php',
+														'/Z_GLAccountUsersCopyAuthority.php');
 
 $MenuItems['Utilities']['Reports']['Caption'] = array(	_('Debtors Balances By Currency Totals'),
 														_('Suppliers Balances By Currency Totals'),
