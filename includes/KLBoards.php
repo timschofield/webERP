@@ -2315,7 +2315,7 @@ function PettyCashToBeAuthorized($db){
 			FROM pcashdetails,pctabs	
 			WHERE pcashdetails.tabcode = pctabs.tabcode	
 				AND pcashdetails.authorized = '0000-00-00'
-				AND pctabs.authorizer = '". $_SESSION['UserID'] ."'
+				AND pctabs.authorizer LIKE '%" . $_SESSION['UserID'] . "%'
 			GROUP BY pcashdetails.tabcode";
 
 	$result = DB_query($SQL);
@@ -2354,7 +2354,7 @@ function PettyCashToBeAuthorized($db){
 function PettyCashBalance($TypeUser, $db){
 
 	if ($TypeUser == 'Authorizer'){
-		$WhereUser = "AND pctabs.authorizer = '". $_SESSION['UserID'] ."'";
+		$WhereUser = "AND pctabs.authorizer LIKE '%" . $_SESSION['UserID'] . "%'";
 	}elseif($TypeUser == 'User'){
 		$WhereUser = "AND pctabs.usercode = '". $_SESSION['UserID'] ."'";
 	}else{
