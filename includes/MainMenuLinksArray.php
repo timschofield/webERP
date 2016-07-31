@@ -244,7 +244,8 @@ $MenuItems['stock']['Reports']['Caption'] = array(	_('Serial Item Research Tool'
 													_('List Negative Stocks'),
 													_('Period Stock Transaction Listing'),
 													_('Stock Transfer Note'),
-													_('Aged Controlled Stock Report'));
+													_('Aged Controlled Stock Report'),
+													_('Internal stock request inquiry'));
 
 $MenuItems['stock']['Reports']['URL'] = array(	'/StockSerialItemResearch.php',
 												'/PDFPrintLabel.php',
@@ -268,7 +269,8 @@ $MenuItems['stock']['Reports']['URL'] = array(	'/StockSerialItemResearch.php',
 												'/PDFStockNegatives.php',
 												'/PDFPeriodStockTransListing.php',
 												'/PDFStockTransfer.php',
-												'/AgedControlledInventory.php');
+												'/AgedControlledInventory.php',
+												'/InternalStockRequestInquiry.php');
 
 $MenuItems['stock']['Maintenance']['Caption'] = array(	_('Add A New Item'),
 														_('Select An Item'),

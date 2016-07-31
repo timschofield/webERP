@@ -1,5 +1,5 @@
 <?php
-/* $Id: class.pdf.php 7488 2016-04-07 14:42:22Z rchacon $ */
+/* $Id: class.pdf.php 7569 2016-07-09 03:17:59Z exsonqu $ */
 
      /* -----------------------------------------------------------------------------------------------
 	This class was an extension to the FPDF class to use the syntax of the R&OS pdf.php class,
@@ -109,7 +109,7 @@ if (!class_exists('Cpdf', false)) {
 				case 'full':
 					$Align = 'J'; break;
 				default:
-					$Align = 'L'; break;
+					$Align = 'L';
 			}
 			$this->SetFontSize($Height);// Public function SetFontSize() in ~/includes/tcpdf/tcpdf.php.
 
@@ -177,9 +177,9 @@ if (!class_exists('Cpdf', false)) {
 				}
 			}
 
-			$this->Cell($Width, $Height, mb_substr($s,0,$sep), $b, 2, $Align, $fill);
+			$this->Cell($Width,$Height,mb_substr($s,0,$sep,'UTF-8'),$b,2,$Align,$fill);
 			$this->x=$this->lMargin;
-			return mb_substr($s, $sep);
+			return mb_substr($s, $sep,null,'UTF-8');
 		}// End function addTextWrap.
 
 		function addInfo($label, $value) {

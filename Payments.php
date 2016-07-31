@@ -1,5 +1,5 @@
 <?php
-/* $Id: Payments.php 7523 2016-05-15 15:23:11Z rchacon $*/
+/* $Id: Payments.php 7567 2016-07-08 08:17:10Z exsonqu $*/
 /* Entry of bank account payments either against an AP account or a general ledger payment - if the AP-GL link in company preferences is set */
 
 include('includes/DefinePaymentClass.php');
@@ -460,7 +460,7 @@ if(isset($_POST['CommitBatch'])) {
 								$ReceiptTransNo . "',
 								2,'" .
 								$PaymentItem->GLCode . "','" .
-								_('Act Transfer From ') . $_SESSION['PaymentDetail'.$identifier]->Account . ' - ' . $PaymentItem->Narrative . "','" .
+								'@' . $TransNo . ' ' . _('Act Transfer From ') . $_SESSION['PaymentDetail'.$identifier]->Account . ' - ' . $PaymentItem->Narrative . "','" .
 								(($_SESSION['PaymentDetail'.$identifier]->ExRate * $_SESSION['PaymentDetail'.$identifier]->FunctionalExRate)/$TrfToBankExRate). "','" .
 								$TrfToBankExRate . "','" .
 								FormatDateForSQL($_SESSION['PaymentDetail'.$identifier]->DatePaid) . "','" .
@@ -899,9 +899,7 @@ if(!isset($_POST['FunctionalExRate'])) {
 	$_POST['FunctionalExRate']=1;
 }
 if($_SESSION['PaymentDetail'.$identifier]->AccountCurrency != $_SESSION['PaymentDetail'.$identifier]->Currency AND isset($_SESSION['PaymentDetail'.$identifier]->AccountCurrency)) {
-	if($_POST['ExRate']==1 AND isset($SuggestedExRate)) {
-		$_POST['ExRate'] = locale_number_format($SuggestedExRate,8);
-	} elseif($_POST['Currency'] != $_POST['PreviousCurrency'] AND isset($SuggestedExRate)) {
+	if (isset($SuggestedExRate) AND ($_POST['ExRate'] == 1 OR $_POST['Currency'] != $_POST['PreviousCurrency'] OR $_POST['PreviousBankAccount'] != $_SESSION['PaymentDetail' . $identifier]->Account)) {
 		$_POST['ExRate'] = locale_number_format($SuggestedExRate,8);
 	}
 
@@ -917,9 +915,9 @@ if($_SESSION['PaymentDetail'.$identifier]->AccountCurrency != $_SESSION['Payment
 }
 
 if($_SESSION['PaymentDetail'.$identifier]->AccountCurrency != $_SESSION['CompanyRecord']['currencydefault'] AND isset($_SESSION['PaymentDetail'.$identifier]->AccountCurrency)) {
-	if($_POST['FunctionalExRate']==1 AND isset($SuggestedFunctionalExRate)) {
+	if (isset($SuggestedFunctionalExRate) AND ($_POST['FunctionalExRate']==1 OR $_POST['Currency'] != $_POST['PreviousCurrency'] OR $_POST['PreviousBankAccount'] != $_SESSION['PaymentDetail' . $identifier]->Account)) {
 		$_POST['FunctionalExRate'] = locale_number_format($SuggestedFunctionalExRate,'Variable');
-	}
+	} 
 
 	if(isset($SuggestedFunctionalExRate)) {
 		$SuggestedFunctionalExRateText = '<b>' . _('Suggested rate:') . ' 1 ' . $_SESSION['CompanyRecord']['currencydefault'] . ' = ' . locale_number_format($SuggestedFunctionalExRate,8) . ' ' . $_SESSION['PaymentDetail'.$identifier]->AccountCurrency . '</b>';
@@ -979,6 +977,7 @@ echo '<tr>
 echo '<tr>
 		<td colspan="2"><div class="centre">
 			<input name="PreviousCurrency" type="hidden" value="', $_POST['Currency'], '" />
+			<input type="hidden" name="PreviousBankAccount" value="' . $_SESSION['PaymentDetail' . $identifier]->Account . '" />
 			<input name="UpdateHeader" type="submit" value="', _('Update'), '" />
 		</div></td>
 	</tr>

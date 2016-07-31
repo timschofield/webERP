@@ -1,5 +1,5 @@
 <?php
-/* $Id: WorkOrderIssue.php 7494 2016-04-25 09:53:53Z daintree $*/
+/* $Id: WorkOrderIssue.php 7576 2016-07-27 10:10:03Z exsonqu $*/
 
 include('includes/session.inc');
 $Title = _('Issue Materials To Work Order');
@@ -87,10 +87,10 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 	$Result = DB_query($SQL);
 	$IssueItemRow = DB_fetch_array($Result);
 	//now lets get the decimalplaces needed
-	if ($IssueItemRow['decimalplaces'] <=4) {
+	if ($IssueItemRow['decimalplaces'] <=3) {
 		$VarianceAllowed = 0.0001;
 	} else {
-		$VarianceAllowed = pow(10,-$IssueItemRow['decimalplaces']);
+		$VarianceAllowed = pow(10,-(1+$IssueItemRow['decimalplaces']));
 	}
 
 	$QuantityIssued =0;
