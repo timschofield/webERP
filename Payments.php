@@ -624,6 +624,44 @@ if(isset($_POST['CommitBatch'])) {
 		$DbgMsg = _('Cannot insert a bank transaction using the SQL');
 		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
+		/* RICARD KL prepare the e-mail text just in case there are any controlled accounts */
+		$EmailText = _('Transaction') . ': ' . $TransNo . "\n" .
+					 _('User') . ': ' . $_SESSION['UserID'] . "\n\n" ;
+		$emailToBeSent = false;
+
+		foreach($_SESSION['PaymentDetail'.$identifier]->GLItems as $PaymentItem) {
+
+			$SQL = "SELECT controlled
+					FROM chartmaster
+					WHERE accountcode='" . $PaymentItem->GLCode . "'";
+			$ControlledResult = DB_query($SQL);
+			$ControlledRow = DB_fetch_array($ControlledResult) ;
+			if ($ControlledRow['controlled'] == 1)
+			{
+				$emailToBeSent = true;
+				$EmailSubject = _('GL transaction to be controlled'); 
+			}
+			$EmailText .= $PaymentItem->GLCode . ' X ' . 
+						locale_number_format($PaymentItem->Amount,$_SESSION['PaymentDetail'.$identifier]->CurrDecimalPlaces) . ' ' . 
+						$_SESSION['PaymentDetail'.$identifier]->Currency . ' -> ' . 
+						$PaymentItem->Narrative . "\n" ;
+		}
+
+		if ($emailToBeSent){
+			$EmailText .= _('Email sent by webERP'). ' ' .date('d/M/Y H:i:s').'';
+			//Send email to the Admin
+			if($_SESSION['SmtpSetting']==0) {
+				mail($SysAdminEmail,$EmailSubject,$EmailText);
+
+			} else {
+				include('includes/htmlMimeMail.php');
+				$mail = new htmlMimeMail();
+				$mail->setSubject($EmailSubject);
+				$mail->setHTML($EmailText);
+				$result = SendmailBySmtp($mail,array($SysAdminEmail));
+			}
+		}
+		
 		DB_Txn_Commit();
 		prnMsg(_('Payment') . ' ' . $TransNo . ' ' . _('has been successfully entered'),'success');
 

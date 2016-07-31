@@ -3,3 +3,4 @@ ALTER table stockrequest ADD initiator varchar(20) NOT NULL DEFAULT '';
 INSERT INTO securitytokens VALUES (19,'Internal stock request fully access authority');
 
 
+ALTER TABLE `chartmaster` ADD `controlled` TINYINT(1) NOT NULL DEFAULT '0' ;
