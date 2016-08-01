@@ -626,7 +626,8 @@ if(isset($_POST['CommitBatch'])) {
 
 		/* RICARD KL prepare the e-mail text just in case there are any controlled accounts */
 		$EmailText = _('Transaction') . ': ' . $TransNo . "\n" .
-					 _('User') . ': ' . $_SESSION['UserID'] . "\n\n" ;
+					 _('User') . ': ' . $_SESSION['UserID'] . "\n" .
+					 _('Bank Account') . ': ' .$_SESSION['PaymentDetail'.$identifier]->Account . "\n";
 		$emailToBeSent = false;
 
 		foreach($_SESSION['PaymentDetail'.$identifier]->GLItems as $PaymentItem) {

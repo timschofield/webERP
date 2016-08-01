@@ -35,6 +35,7 @@ if (isset($_POST['submit'])) {
 	if (isset($SelectedAccount) AND $InputError !=1) {
 
 		$sql = "UPDATE chartmaster SET accountname='" . $_POST['AccountName'] . "',
+						controlled='" . $_POST['Controlled'] . "',
 						group_='" . $_POST['Group'] . "'
 				WHERE accountcode ='" . $SelectedAccount . "'";
 
@@ -48,9 +49,11 @@ if (isset($_POST['submit'])) {
 		$ErrMsg = _('Could not add the new account code');
 		$sql = "INSERT INTO chartmaster (accountcode,
 						accountname,
+						controlled,
 						group_)
 					VALUES ('" . $_POST['AccountCode'] . "',
 							'" . $_POST['AccountName'] . "',
+							'" . $_POST['Controlled'] . "',
 							'" . $_POST['Group'] . "')";
 		$result = DB_query($sql,$ErrMsg);
 
@@ -60,6 +63,7 @@ if (isset($_POST['submit'])) {
 	unset ($_POST['Group']);
 	unset ($_POST['AccountCode']);
 	unset ($_POST['AccountName']);
+	unset ($_POST['Controlled']);
 	unset($SelectedAccount);
 
 } elseif (isset($_GET['delete'])) {
@@ -213,13 +217,14 @@ if (!isset($_GET['delete'])) {
 	if (isset($SelectedAccount)) {
 		//editing an existing account
 
-		$sql = "SELECT accountcode, accountname, group_ FROM chartmaster WHERE accountcode='" . $SelectedAccount ."'";
+		$sql = "SELECT accountcode, accountname, controlled, group_ FROM chartmaster WHERE accountcode='" . $SelectedAccount ."'";
 
 		$result = DB_query($sql);
 		$myrow = DB_fetch_array($result);
 
 		$_POST['AccountCode'] = $myrow['accountcode'];
 		$_POST['AccountName']	= $myrow['accountname'];
+		$_POST['Controlled']	= $myrow['controlled'];
 		$_POST['Group'] = $myrow['group_'];
 
 		echo '<input type="hidden" name="SelectedAccount" value="' . $SelectedAccount . '" />';
@@ -257,7 +262,21 @@ if (!isset($_GET['delete'])) {
 		}
 		echo $myrow[0] . '">' . $myrow[0] . '</option>';
 	}
-    echo '</select></td>
+ 	echo '<tr>
+			<td>' . _('Controlled?') . ':</td>
+			<td><select required="required" name="Controlled">';
+	if (!isset($_POST['Controlled'])){
+		$_POST['Controlled']=0;
+	}
+	if ($_POST['Controlled']==1){
+		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
+		echo '<option value="0">' . _('No') . '</option>';
+	} else {
+		echo '<option selected="selected" value="0">' . _('No') . '</option>';
+		echo '<option value="1">' . _('Yes') . '</option>';
+	}
+	
+	echo '</select></td>
 		</tr>
 		</table>
 		<br />
@@ -279,7 +298,8 @@ or deletion of the records*/
 	$sql = "SELECT accountcode,
 			accountname,
 			group_,
-			CASE WHEN pandl=0 THEN '" . _('Balance Sheet') . "' ELSE '" . _('Profit/Loss') . "' END AS acttype
+			CASE WHEN pandl=0 THEN '" . _('Balance Sheet') . "' ELSE '" . _('Profit/Loss') . "' END AS acttype,
+			controlled
 		FROM chartmaster,
 			accountgroups
 		WHERE chartmaster.group_=accountgroups.groupname
@@ -295,6 +315,7 @@ or deletion of the records*/
 			<th class="ascending">' . _('Account Name') . '</th>
 			<th class="ascending">' . _('Account Group') . '</th>
 			<th class="ascending">' . _('P/L or B/S') . '</th>
+			<th class="ascending">' . _('Controlled') . '</th>
 			<th colspan="2">&nbsp;</th>
 		</tr>';
 
@@ -308,9 +329,15 @@ or deletion of the records*/
 			echo '<tr class="OddTableRows">';
 			$k=1;
 		}
+		if ($myrow[4] == 1) {
+			$ActiveText = _('Yes');
+		} else {
+			$ActiveText = _('No');
+		}
 
 
 	printf("<td>%s</td>
+		<td>%s</td>
 		<td>%s</td>
 		<td>%s</td>
 		<td>%s</td>
@@ -321,6 +348,7 @@ or deletion of the records*/
 		htmlspecialchars($myrow[1],ENT_QUOTES,'UTF-8'),
 		$myrow[2],
 		$myrow[3],
+		$ActiveText,
 		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 		$myrow[0],
 		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
