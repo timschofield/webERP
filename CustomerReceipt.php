@@ -8,7 +8,6 @@ KL RICARD MODIFICATIONS:
 - Temporary solution. Better use a dedicated script for this functionality: Payment by bank transfer of online
 customers. It needs to take shipment into account as well (currently it doesn't.
 ***************************************************************************************/
-
 include('includes/DefineReceiptClass.php');
 include('includes/session.inc');
 
@@ -442,7 +441,6 @@ if (isset($_POST['CommitBatch'])){
 											order_,
 											trandate,
 											inputdate,
-											order_,
 											prd,
 											reference,
 											tpe,
@@ -456,10 +454,9 @@ if (isset($_POST['CommitBatch'])){
 						12,
 						'" . $ReceiptItem->Customer . "',
 						'',
-						'" . $ReceiptItem->ID . "',
+						'" . $ReceiptItem->OrderPaid . "',
 						'" . FormatDateForSQL($_SESSION['ReceiptBatch' . $identifier]->DateBanked) . "',
 						'" . date('Y-m-d H-i-s') . "',
-						'" . $ReceiptItem->OrderPaid . "',
 						'" . $PeriodNo . "',
 						'" . $_SESSION['ReceiptBatch' . $identifier]->ReceiptType  . ' ' . $ReceiptItem->PayeeBankDetail . "',
 						'',
@@ -1082,7 +1079,7 @@ if (isset($_SESSION['CustomerRecord' . $identifier])
 
 }
 
-if (isset($_POST['GLEntry']) AND isset($_SESSION['ReceiptBatch'])){
+if (isset($_POST['GLEntry']) AND isset($_SESSION['ReceiptBatch' . $identifier])){
 /* Set up a heading for the transaction entry for a GL Receipt */
 	echo '<br />
 		<table class="selection">
