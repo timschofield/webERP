@@ -1,5 +1,5 @@
 webERP Change Log
-
+02/08/16 Exson: Make account inquiry shown directly when GL Code selected or inquiry result is 1 in SelectGLAccount.php.
 27/07/16 Exson: Add cost update date for material cost in WorkOrderCosting.php and WorkOrderIssue.php.
 27/07/16 Exson: Fixed the typo in Credit_Invoice.php introduced in previous update.
 27/07/16 Exson: Fixed the divided by zero error when discount is 100% in SelectOrderItems.php.
