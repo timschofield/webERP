@@ -108,6 +108,19 @@ switch ($PaperSize) {
 		$Left_Margin=50;
 		$Right_Margin=40;
 		break;
+   
+   case 'P/3/A4_pingzheng':
+
+	   	$DocumentPaper = 'Z2'; 
+	   	$DocumentOrientation ='L';
+
+      		$Page_Width=595;
+      		$Page_Height=320;
+      		$Top_Margin=10;
+      		$Bottom_Margin=10;
+      		$Left_Margin=20;
+      		$Right_Margin=10;
+      		break;
 
    case 'Letter': // 216mm x 279mm
 
