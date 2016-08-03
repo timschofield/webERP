@@ -43,11 +43,11 @@ $SQL = "SELECT stockmaster.stockid,
 			AND stockcategory.stocktype = 'F'
 			AND stockmaster.categoryid IN " . CATEGORIES_AVAILABLE_WEBSITE ."
 			AND stockmaster.discontinued = 0
+			AND stockmaster.grossweight != 0
+			AND stockmaster.volume != 0
 			AND (((NOT EXISTS (SELECT * 
 								FROM salescatprod
-								WHERE stockmaster.stockid = salescatprod.stockid))
-					OR stockmaster.grossweight = 0
-					OR stockmaster.volume = 0)
+								WHERE stockmaster.stockid = salescatprod.stockid)))
 				OR ((EXISTS (SELECT * 
 							FROM salescatprod
 							WHERE stockmaster.stockid = salescatprod.stockid
