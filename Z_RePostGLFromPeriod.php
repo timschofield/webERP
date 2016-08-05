@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: Z_RePostGLFromPeriod.php 7506 2016-05-06 03:25:37Z exsonqu $*/
+/* $Id: Z_RePostGLFromPeriod.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 include ('includes/session.inc');
 $Title = _('Recalculation of GL Balances in Chart Details Table');
@@ -56,7 +56,7 @@ if (!isset($_POST['FromPeriod'])){
 
 	/*Now repost the lot */
 
-	include('includes/GLPostingsZero.inc');
+	include('includes/GLPostings.inc');
 
 	prnMsg(_('All general ledger postings have been reposted from period') . ' ' . $_POST['FromPeriod'],'success');
 }
