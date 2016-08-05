@@ -1071,8 +1071,8 @@ if (isset($_SESSION['CustomerRecord' . $identifier])
 
 }
 
-if (isset($_POST['GLEntry']) AND isset($_SESSION['ReceiptBatch'])){
-/* Set up a heading for the transaction entry for a GL Receipt */
+if (isset($_POST['GLEntry']) AND isset($_SESSION['ReceiptBatch' . $identifier])){
+	/* Set up a heading for the transaction entry for a GL Receipt */
 	echo '<br />
 		<table class="selection">
 			<tr>
