@@ -306,7 +306,8 @@ echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_
 
 	$SQL = "SELECT tabcode,authorizer
 		FROM pctabs
-		WHERE authorizer LIKE '%" . $_SESSION['UserID'] . "%'";
+		WHERE authorizer LIKE '%" . $_SESSION['UserID'] . "%'
+		ORDER BY tabcode";
 
 	$result = DB_query($SQL);
 
