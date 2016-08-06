@@ -1,11 +1,18 @@
 <?php
 /* $Id$*/
+/* Shows the general ledger transactions for a specified account over a specified range of periods */
 
 include ('includes/session.inc');
 $Title = _('General Ledger Account Inquiry');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLAccountInquiry';
 include('includes/header.inc');
+
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+	'/images/transactions.png" title="',// Icon image.
+	_('General Ledger Account Inquiry'), '" /> ',// Icon title.
+	_('General Ledger Account Inquiry'), '</p>';// Page title.
+
 include('includes/GLPostings.inc');
 
 if (isset($_POST['Account'])){
@@ -32,12 +39,10 @@ if (isset($SelectedPeriod)) { //If it was called from itself (in other words an 
 	$LastPeriodSelected = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
 }
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('General Ledger Account Inquiry') . '" alt="" />' . ' ' . _('General Ledger Account Inquiry') . '</p>';
-
-echo '<div class="page_help_text">' . _('Use the keyboard Shift key to select multiple periods') . '</div><br />';
+echo '<div class="page_help_text noprint">' . _('Use the keyboard Shift key to select multiple periods') . '</div><br />';
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-echo '<div>';
+echo '<div class="noprint">';// Begin input of criteria div.
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 /*Dates in SQL format for the last day of last month*/
@@ -49,7 +54,7 @@ echo '<table class="selection">
 			<td>' . _('Account').':</td>
 			<td><select name="Account">';
 
-$sql = "SELECT chartmaster.accountcode, 
+$sql = "SELECT chartmaster.accountcode,
 			bankaccounts.accountcode AS bankact,
 			bankaccounts.currcode,
 			chartmaster.accountname
@@ -114,8 +119,8 @@ echo '</select></td>
 	<div class="centre">
 		<input type="submit" name="Show" value="'._('Show Account Transactions').'" />
 	</div>
-	</div>
-	</form>';
+	</div>',// End input of criteria div.
+	'</form>';
 
 /* End of the Form  rest of script is what happens if the show button is hit*/
 
@@ -172,9 +177,8 @@ if (isset($_POST['Show'])){
 	$ErrMsg = _('The transactions for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved because') ;
 	$TransResult = DB_query($sql,$ErrMsg);
 	$BankAccountInfo = isset($BankAccount)?'<th>' . _('Org Currency') . '</th>
-						<th>' . _('Amount in Org Currency') . '</th>	
+						<th>' . _('Amount in Org Currency') . '</th>
 						<th>' . _('Bank Ref') .'</th>':'';
-
 
 	echo '<br />
 		<table class="selection">
@@ -187,7 +191,7 @@ if (isset($_POST['Show'])){
 				<th class="number">', _('Number'), '</th>
 				<th class="centre">', ('Date'), '</th>
 				<th class="number">', _('Debit'), '</th>
-				<th class="number">', _('Credit'), '</th>' . 
+				<th class="number">', _('Credit'), '</th>' .
 				$BankAccountInfo .'
 				<th class="text">', _('Narrative'), '</th>
 				<th class="number">', _('Balance'), '</th>
@@ -286,7 +290,7 @@ if (isset($_POST['Show'])){
 		$OrgAmt = '';
 		$Currency = '';
 		if ($myrow['type'] == 12 OR $myrow['type'] == 22 OR $myrow['type'] == 2 OR $myrow['type'] == 1) {
-			$banksql = "SELECT ref,currcode,amount FROM banktrans 
+			$banksql = "SELECT ref,currcode,amount FROM banktrans
 				WHERE type='" .$myrow['type']."' AND transno='" . $myrow['typeno'] . "' AND bankact='" . $SelectedAccount . "'";
 			$ErrMsg = _('Failed to retrieve bank data');
 			$bankresult = DB_query($banksql,$ErrMsg);
@@ -297,7 +301,7 @@ if (isset($_POST['Show'])){
 				$Currency = $bankrow['currcode'];
 			} elseif ($myrow['type'] == 1) {
 				//We should find out when transaction happens between bank accounts;
-				$bankreceivesql = "SELECT ref,type,transno,currcode,amount FROM banktrans 
+				$bankreceivesql = "SELECT ref,type,transno,currcode,amount FROM banktrans
 							WHERE ref LIKE '@%' AND transdate='" . $myrow['trandate'] . "' AND bankact='" . $SelectedAccount . "'";
 				$ErrMsg = _('Failed to retrieve bank receive data');
 				$bankresult = DB_query($bankreceivesql,$ErrMsg);
@@ -323,7 +327,7 @@ if (isset($_POST['Show'])){
 				$OrgAmt = $myrow['amount'];
 				$Currency = $_SESSION['CompanyRecord']['currencydefault'];
 			}
-		} 
+		}
 
 		$RunningTotal += $myrow['amount'];
 		$PeriodTotal += $myrow['amount'];

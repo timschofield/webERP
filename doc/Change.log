@@ -1,4 +1,5 @@
 webERP Change Log
+05/08/16 RChacon: In GLAccountInquiry.php, add noprint class to clean up printer output and improve code documentation.
 05/08/16 RChacon: Fix html code in SuppInvGRNs.php.
 02/08/16 Exson: Make account inquiry shown directly when GL Code selected or inquiry result is 1 in SelectGLAccount.php.
 27/07/16 Exson: Add cost update date for material cost in WorkOrderCosting.php and WorkOrderIssue.php.
