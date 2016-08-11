@@ -171,7 +171,7 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 							contact
 						FROM locations
 						INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
-						WHERE loccode = '" .$_SESSION['UserStockLocation']  . "'";
+						WHERE locations.loccode = '" .$_SESSION['UserStockLocation']  . "'";
 			$ErrMsg = _('The delivery address for the order could not be obtained from the user default stock location');
 			$DelAddResult = DB_query($sql,$ErrMsg);
 			$DelAddRow = DB_fetch_array($DelAddResult);
@@ -889,7 +889,7 @@ function GetSearchItems ($SQLConstraint='') {
 				ON salesorderdetails.stkcode = stockmaster.stockid AND completed=0
 			INNER JOIN locstock
 			  ON stockmaster.stockid=locstock.stockid";
-	if (isset($_POST['StockCat']) 
+	if (isset($_POST['StockCat'])
 		AND ((trim($_POST['StockCat']) == '') OR $_POST['StockCat'] == 'All')){
 		 $WhereStockCat = '';
 	} else {
