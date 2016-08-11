@@ -347,7 +347,8 @@ function ErrorsInTransfers($maxdays, $RootPath, $db){
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
-		$i = 1;
+		$NumTransfers = 1;
+		$NumTransfersWithErrors = 1;
 		
 		$TotalShippedModels = 0;
 		$TotalCancelledModels = 0;
@@ -360,34 +361,38 @@ function ErrorsInTransfers($maxdays, $RootPath, $db){
 			$TotalCancelledModels += $myrow['cancelled_models'];
 			$TotalShippedQty += $myrow['shipped_quantity'];
 			$TotalCancelledQty += $myrow['cancelled_quantity'];
+			
+			if (($myrow['cancelled_models'] != 0) OR ($myrow['cancelled_quantity'] != 0)){
+				$k = StartEvenOrOddRow($k);
+				$TransferLink = '<a href="' . $RootPath . '/StockLocTransferReceive.php?Trf_ID=' . $myrow['reference'] . '">' . $myrow['reference'] . '</a>';
+				printf('<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						</tr>', 
+						$NumTransfersWithErrors, 
+						$TransferLink, 
+						ConvertSQLDateTime($myrow['shipdate']), 
+						$myrow['shiploc'], 
+						$myrow['recloc'],
+						locale_number_format($myrow['shipped_models'],0),
+						locale_number_format($myrow['cancelled_models'],0),
+						locale_number_format($myrow['cancelled_models'] / $myrow['shipped_models'] * 100,2) . '%',
+						locale_number_format($myrow['shipped_quantity'],0),
+						locale_number_format($myrow['cancelled_quantity'],0),
+						locale_number_format($myrow['cancelled_quantity'] / $myrow['shipped_quantity'] * 100,2) . '%'
+						);
+				$NumTransfersWithErrors++;
 
-/*			$k = StartEvenOrOddRow($k);
-			$TransferLink = '<a href="' . $RootPath . '/StockLocTransferReceive.php?Trf_ID=' . $myrow['reference'] . '">' . $myrow['reference'] . '</a>';
-			printf('<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					$i, 
-					$TransferLink, 
-					ConvertSQLDateTime($myrow['shipdate']), 
-					$myrow['shiploc'], 
-					$myrow['recloc'],
-					locale_number_format($myrow['shipped_models'],0),
-					locale_number_format($myrow['cancelled_models'],0),
-					locale_number_format($myrow['cancelled_models'] / $myrow['shipped_models'] * 100,2) . '%',
-					locale_number_format($myrow['shipped_quantity'],0),
-					locale_number_format($myrow['cancelled_quantity'],0),
-					locale_number_format($myrow['cancelled_quantity'] / $myrow['shipped_quantity'] * 100,2) . '%'
-					);
-*/			$i++;
+			}
+			$NumTransfers++;
 		}
 		$k = StartEvenOrOddRow($k);
 		printf('<td class="number">%s</td>
@@ -402,8 +407,8 @@ function ErrorsInTransfers($maxdays, $RootPath, $db){
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				</tr>', 
-				'', 
-				'', 
+				locale_number_format($NumTransfers,0), 
+				locale_number_format($NumTransfersWithErrors / $NumTransfers * 100,2) . '%', 
 				'', 
 				'', 
 				'TOTAL',

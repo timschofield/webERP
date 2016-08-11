@@ -252,7 +252,14 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 	}
 
-
+	if ($KL_OperationalManager 
+		OR $KL_ShopSupportLeader){
+		ErrorsInTransfers( 7, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ErrorsInTransfers(30, $RootPath, $db);
+		$NumberOfTestExecuted++;
+	}
+	
 	/***************************************************************************************
 	* BALANCE ACCOUNTS         
 	***************************************************************************************/

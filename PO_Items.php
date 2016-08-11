@@ -871,9 +871,9 @@ if (isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])){ 
 						AND stockmaster.discontinued<>1
 						AND purchdata.supplierno='" . $_SESSION['PO'.$identifier]->SupplierID . "'
 						AND stockmaster.description " . LIKE . " '" . $SearchString ."'
-						ORDER BY stockmaster.stockid ";
+						GROUP BY stockmaster.stockid
+						ORDER BY stockmaster.stockid";
 			} else { // not just supplier purchdata items
-
 				$sql = "SELECT stockmaster.stockid,
 							stockmaster.description,
 							stockmaster.units
@@ -904,6 +904,7 @@ if (isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])){ 
 						AND stockmaster.discontinued<>1
 						AND stockmaster.description " . LIKE . " '". $SearchString ."'
 						AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+						GROUP BY stockmaster.stockid
 						ORDER BY stockmaster.stockid ";
 			} else {
 				$sql = "SELECT stockmaster.stockid,
@@ -942,6 +943,7 @@ if (isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])){ 
 						AND purchdata.supplierno='" . $_SESSION['PO'.$identifier]->SupplierID . "'
 						AND stockmaster.discontinued<>1
 						AND stockmaster.stockid " . LIKE . " '" . $_POST['StockCode'] . "'
+						GROUP BY stockmaster.stockid
 						ORDER BY stockmaster.stockid ";
 			} else {
 				$sql = "SELECT stockmaster.stockid,
@@ -974,6 +976,7 @@ if (isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])){ 
 						and stockmaster.discontinued<>1
 						AND stockmaster.stockid " . LIKE  . " '" . $_POST['StockCode'] . "'
 						AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+						GROUP BY stockmaster.stockid
 						ORDER BY stockmaster.stockid ";
 			} else {
 				$sql = "SELECT stockmaster.stockid,
@@ -1008,6 +1011,7 @@ if (isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])){ 
 						AND stockmaster.mbflag<>'G'
 						AND purchdata.supplierno='" . $_SESSION['PO'.$identifier]->SupplierID . "'
 						AND stockmaster.discontinued<>1
+						GROUP BY stockmaster.stockid
 						ORDER BY stockmaster.stockid ";
 			} else {
 				$sql = "SELECT stockmaster.stockid,
@@ -1038,6 +1042,7 @@ if (isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])){ 
 						AND purchdata.supplierno='" . $_SESSION['PO'.$identifier]->SupplierID . "'
 						AND stockmaster.discontinued<>1
 						AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+						GROUP BY stockmaster.stockid
 						ORDER BY stockmaster.stockid ";
 			} else {
 				$sql = "SELECT stockmaster.stockid,
