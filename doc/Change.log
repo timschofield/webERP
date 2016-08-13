@@ -1,5 +1,6 @@
 webERP Change Log
 
+13/8/16 RChacon:In CustWhereAlloc.php, show transaction date in report. Standardise trandate in debtortrans. Improvements in HTML code and code documentation.
 11/8/16 Phil: committed falkoners fix for the upgrade script - was not adding the new field in customercontact required for the customer statements email address
 11/8/16 Simon Kelly: Fix SQL for location users in SelectSalesOrder.php
 05/08/16 RChacon: In GLAccountInquiry.php, add noprint class to clean up printer output and improve code documentation.

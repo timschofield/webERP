@@ -1,14 +1,13 @@
 <?php
-
 /* $Id$*/
+/* Shows to which invoices a receipt was allocated to */
 
 include('includes/session.inc');
 $Title = _('Customer How Paid Inquiry');
-
 $ViewTopic = 'ARInquiries';
 $BookMark = 'WhereAllocated';
-
 include('includes/header.inc');
+
 if (isset($_GET['TransNo']) AND isset($_GET['TransType'])) {
 	$_POST['TransNo'] = (int)$_GET['TransNo'];
 	$_POST['TransType'] = (int)$_GET['TransType'];
@@ -18,10 +17,11 @@ if (isset($_GET['TransNo']) AND isset($_GET['TransType'])) {
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
 	<div>
 	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-	<p class="page_title_text noprint">
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' .	_('Customer Where Allocated'). '" alt="" />' . $Title . '
-	</p>
-	<table class="selection noprint">
+	<p class="page_title_text noprint"><img alt="" src="'. $RootPath. '/css/'. $Theme.
+	'/images/money_add.png" title="',// Icon image.
+	_('Customer Where Allocated'), '" /> ',// Icon title.
+	$Title. '</p>',// Page title.
+	'<table class="selection noprint">
 	<tr>
 		<td>' . _('Type') . ':</td>
 		<td><select tabindex="1" name="TransType"> ';
@@ -60,8 +60,7 @@ if (isset($_POST['ShowResults']) AND  $_POST['TransNo']==''){
 	prnMsg(_('The transaction number to be queried must be entered first'),'warn');
 }
 
-if (isset($_POST['ShowResults']) AND $_POST['TransNo']!=''){
-
+if(isset($_POST['ShowResults']) AND $_POST['TransNo']!='') {
 
 /*First off get the DebtorTransID of the transaction (invoice normally) selected */
 	$sql = "SELECT debtortrans.id,
@@ -74,7 +73,7 @@ if (isset($_POST['ShowResults']) AND $_POST['TransNo']!=''){
 			ON debtorsmaster.currcode=currencies.currabrev
 			WHERE type='" . $_POST['TransType'] . "'
 			AND transno = '" . $_POST['TransNo']."'";
-	
+
 	if ($_SESSION['SalesmanLogin'] != '') {
 			$sql .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 	}
@@ -98,7 +97,7 @@ if (isset($_POST['ShowResults']) AND $_POST['TransNo']!=''){
 		if ($_POST['TransType']==12 OR $_POST['TransType'] == 11){
 
 			$TitleInfo = ($_POST['TransType'] == 12)?_('Receipt'):_('Credit Note');
-			$sql .= "ON debtortrans.id = custallocns.transid_allocto 
+			$sql .= "ON debtortrans.id = custallocns.transid_allocto
 				WHERE custallocns.transid_allocfrom = '" . $AllocToID . "'";
 		} else {
 			$TitleInfo = _('invoice');
@@ -120,33 +119,35 @@ if (isset($_POST['ShowResults']) AND $_POST['TransNo']!=''){
 		} else {
 			$Printer = true;
 			echo '<br />
-			<div id="Report">
-				<table class="selection">';
-
-			echo '<tr>
-					<th colspan="6">
-					<div class="centre">
-						<b>' . _('Allocations made against') . ' ' . $TitleInfo . ' ' . _('number') . ' ' . $_POST['TransNo'] . '<br />' . _('Transaction Total').': '. locale_number_format($myrow['totamt'],$CurrDecimalPlaces) . ' ' . $CurrCode . '</b>
-					</div>
+				<div id="Report">
+				<table class="selection">
+				<thead>
+				<tr>
+					<th class="centre" colspan="7">
+						<b>' . _('Allocations made against') . ' ' . $TitleInfo . ' ' . _('number') . ' ' . $_POST['TransNo'] . '<br />' .
+						_('Transaction Total').': '. locale_number_format($myrow['totamt'],$CurrDecimalPlaces) . ' ' . $CurrCode . '</b>
 					</th>
 				</tr>';
 
 			$TableHeader = '<tr>
-								<th>' . _('Type') . '</th>
-								<th>' . _('Number') . '</th>
-								<th>' . _('Reference') . '</th>
-								<th>' . _('Ex Rate') . '</th>
-								<th>' . _('Amount') . '</th>
-								<th>' . _('Alloc') . '</th>
-							</tr>';
-			echo $TableHeader;
+					<th class="centre">' . _('Date') . '</th>
+					<th class="text">' . _('Type') . '</th>
+					<th class="number">' . _('Number') . '</th>
+					<th class="text">' . _('Reference') . '</th>
+					<th class="number">' . _('Ex Rate') . '</th>
+					<th class="number">' . _('Amount') . '</th>
+					<th class="number">' . _('Alloc') . '</th>
+				</tr>';
+			echo $TableHeader,
+				'</thead>
+				<tbody>';
 
 			$RowCounter = 1;
 			$k = 0; //row colour counter
 			$AllocsTotal = 0;
 
-			while ($myrow=DB_fetch_array($TransResult)) {
-				if ($k==1){
+			while($myrow=DB_fetch_array($TransResult)) {
+				if($k==1) {
 					echo '<tr class="EvenTableRows">';
 					$k=0;
 				} else {
@@ -161,12 +162,13 @@ if (isset($_POST['ShowResults']) AND $_POST['TransNo']!=''){
 				} else {
 					$TransType = _('Receipt');
 				}
-				echo '<td>' . $TransType . '</td>
-					<td>' . $myrow['transno'] . '</td>
-					<td>' . $myrow['reference'] . '</td>
-					<td>' . $myrow['rate'] . '</td>
-					<td class="number">' . locale_number_format($myrow['totalamt'],$CurrDecimalPlaces) . '</td>
-					<td class="number">' . locale_number_format($myrow['amt'],$CurrDecimalPlaces) . '</td>
+				echo '	<td class="centre">' . $myrow['trandate'] . '</td>
+						<td class="text">' . $TransType . '</td>
+						<td class="number">' . $myrow['transno'] . '</td>
+						<td class="text">' . $myrow['reference'] . '</td>
+						<td class="number">' . $myrow['rate'] . '</td>
+						<td class="number">' . locale_number_format($myrow['totalamt'], $CurrDecimalPlaces) . '</td>
+						<td class="number">' . locale_number_format($myrow['amt'], $CurrDecimalPlaces) . '</td>
 					</tr>';
 
 				$RowCounter++;
@@ -175,14 +177,15 @@ if (isset($_POST['ShowResults']) AND $_POST['TransNo']!=''){
 					echo $TableHeader;
 				}
 				//end of page full new headings if
-				$AllocsTotal +=$myrow['amt'];
+				$AllocsTotal += $myrow['amt'];
 			}
 			//end of while loop
 			echo '<tr>
-					<td colspan="5" class="number">' . _('Total allocated') . '</td>
+					<td colspan="6" class="number">' . _('Total allocated') . '</td>
 					<td class="number">' . locale_number_format($AllocsTotal,$CurrDecimalPlaces) . '</td>
 				</tr>
-				</table>
+
+</tbody></table>
 			</div>';
 		} // end if there are allocations against the transaction
 	} //got the ID of the transaction to find allocations for
@@ -198,5 +201,4 @@ if (isset($Printer)) {
 		</div>';// "Print This" button.
 }
 include('includes/footer.inc');
-
 ?>

@@ -5,3 +5,7 @@ INSERT INTO scripts VALUES ('PDFGLJournalCN.php',1,'Print GL Journal Chinese ver
 ALTER table custcontacts ADD statement tinyint(4) NOT NULL DEFAULT 0;
 INSERT INTO scripts VALUES ('PcTabExpensesList.php', '15', 'Creates excel with all movements of tab between dates');
 
+-- standardise transaction date to DATE type:
+ALTER TABLE `debtortrans` CHANGE `trandate` `trandate` DATE NOT NULL DEFAULT '0000-00-00';
+
+
