@@ -33,11 +33,14 @@ if (isset($_GET['ToCust'])) {
 	$_POST['ToCust'] = $_GET['ToCust'];
 }
 
-If (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust']!=''){
+if (isset($_GET['EmailOrPrint'])){
+	$_POST['EmailOrPrint'] = $_GET['EmailOrPrint'];
+}
+if (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust']!=''){
 
 	$_POST['FromCust'] = mb_strtoupper($_POST['FromCust']);
 
-	If (!isset($_POST['ToCust'])){
+	if (!isset($_POST['ToCust'])){
 		$_POST['ToCust'] = $_POST['FromCust'];
 	} else {
 		$_POST['ToCust'] = mb_strtoupper($_POST['ToCust']);
@@ -79,8 +82,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 		$Title = _('Print Statements') . ' - ' . _('No Customers Found');
 	    require('includes/header.inc');
 		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . _('Print Customer Account Statements') . '</p>';
-		prnMsg( _('There were no Customers matching your selection of '). $_POST['FromCust']. ' - '.
-			$_POST['ToCust'].'.' , 'error');
+		prnMsg( _('There were no Customers matching your selection of ') . $_POST['FromCust'] . ' - ' . $_POST['ToCust'] . '.' , 'error');
 		include('includes/footer.inc');
 		exit();
 	}
@@ -504,14 +506,24 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 	} /* end loop to print statements */
 
 	if (isset($pdf) AND $_POST['EmailOrPrint']=='print'){
-			$pdf->OutputD($_SESSION['DatabaseName'] . '_CustStatements_' . date('Y-m-d') . '.pdf');
-			$pdf->__destruct();
+		$pdf->OutputD($_SESSION['DatabaseName'] . '_CustStatements_' . date('Y-m-d') . '.pdf');
+		$pdf->__destruct();
 	} elseif (!isset($pdf)) {
 		$Title = _('Print Statements') . ' - ' . _('No Statements Found');
-		include('includes/header.inc');
-		echo '<br /><br /><br />' . prnMsg( _('There were no statements to print') );
-	        echo '<br /><br /><br />';
-	        include('includes/footer.inc');
+		if ($_POST['EmailOrPrint']=='print') {
+			include('includes/header.inc');
+			echo '<br />
+				<br />
+				<br />' . prnMsg( _('There were no statements to print');
+		} else {
+			echo '<br />
+				<br />
+				<br />' . prnMsg( _('There were no statements to email');
+		}
+		echo'<br />
+				<br />
+				<br />';
+		include('includes/footer.inc');
 	}
 
 } else { /*The option to print PDF was not hit */
@@ -527,8 +539,8 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
         echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-        echo '<table class="selection">';
-		echo '<tr>
+        echo '<table class="selection">
+			<tr>
 				<td>' , _('Starting Customer statement to print (Customer code)') , '</td>
 				<td><input type="text" maxlength="10" size="8" name="FromCust" value="0" /></td></tr>
 			<tr>

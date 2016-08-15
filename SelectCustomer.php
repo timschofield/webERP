@@ -198,15 +198,15 @@ if($_SESSION['CustomerID'] != '' AND !isset($_POST['Search']) AND !isset($_POST[
 	echo '<a href="', $RootPath, '/CustomerInquiry.php?CustomerID=', urlencode($_SESSION['CustomerID']), '">' . _('Customer Transaction Inquiries') . '</a><br />';
 	echo '<a href="', $RootPath, '/CustomerAccount.php?CustomerID=', urlencode($_SESSION['CustomerID']), '">' . _('Customer Account statement on screen') . '</a><br />';
 	echo '<a href="', $RootPath, '/Customers.php?DebtorNo=', urlencode($_SESSION['CustomerID']), '&amp;Modify=No">' . _('View Customer Details') . '</a><br />';
-	echo '<a href="', $RootPath, '/PrintCustStatements.php?FromCust=', urlencode($_SESSION['CustomerID']), '&amp;ToCust=', urlencode($_SESSION['CustomerID']), '&amp;PrintPDF=Yes">' . _('Print Customer Statement') . '</a><br />';
-	echo '<a href="', $RootPath, '/EmailCustStatements.php?FromCust=', urlencode($_SESSION['CustomerID']), '&amp;ToCust=', urlencode($_SESSION['CustomerID']), '&amp;PrintPDF=Yes">' . _('Email Customer Statement') . '</a><br />';
+	echo '<a href="', $RootPath, '/PrintCustStatements.php?FromCust=', urlencode($_SESSION['CustomerID']), '&amp;ToCust=', urlencode($_SESSION['CustomerID']), '&amp;EmailOrPrint=print&amp;PrintPDF=Yes">' . _('Print Customer Statement') . '</a><br />';
+	echo '<a title="' . _('One of the customer\'s contacts must have an email address and be flagged as the address to send the customer statement to for this function to work') . '" href="', $RootPath, '/PrintCustStatements.php?FromCust=', urlencode($_SESSION['CustomerID']), '&amp;ToCust=', urlencode($_SESSION['CustomerID']), '&amp;EmailOrPrint=email&amp;PrintPDF=Yes">' . _('Email Customer Statement') . '</a><br />';
 	echo '<a href="', $RootPath, '/SelectCompletedOrder.php?SelectedCustomer=', urlencode($_SESSION['CustomerID']), '">' . _('Order Inquiries') . '</a><br />';
 	echo '<a href="', $RootPath, '/CustomerPurchases.php?DebtorNo=', urlencode($_SESSION['CustomerID']), '">' . _('Show purchases from this customer') . '</a><br />';
 	wikiLink('Customer', $_SESSION['CustomerID']);
 	echo '</td><td valign="top" class="select">';
 	// Customer transactions options:
 	echo '<a href="', $RootPath, '/SelectSalesOrder.php?SelectedCustomer=', urlencode($_SESSION['CustomerID']), '">' . _('Modify Outstanding Sales Orders') . '</a><br />';
-	echo '<a href="', $RootPath, '/CustomerAllocations.php?DebtorNo=', urlencode($_SESSION['CustomerID']), '">' . _('Allocate Receipts OR Credit Notes') . '</a><br />';
+	echo '<a title="' . _('This allows the deposits received from the customer to be matched against invoices') . '" href="', $RootPath, '/CustomerAllocations.php?DebtorNo=', urlencode($_SESSION['CustomerID']), '">' . _('Allocate Receipts OR Credit Notes') . '</a><br />';
 	if(isset($_SESSION['CustomerID']) AND isset($_SESSION['BranchCode'])) {
 	echo '<a href="', $RootPath, '/CounterSales.php?DebtorNo=', urlencode($_SESSION['CustomerID']), '&amp;BranchNo=' . $_SESSION['BranchCode'] . '">' . _('Create a Counter Sale for this Customer') . '</a><br />';
 	}
