@@ -872,7 +872,9 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 		WrongItemsOnPurchaseOrders($RootPath, $db);
 		$NumberOfTestExecuted++;
-		
+		WrongItemsOnWorkOrders($RootPath, $db);
+		$NumberOfTestExecuted++;
+	
 		PurchasingOrdersDeliveryControl("Delayed", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		PurchasingOrdersDeliveryControl("Coming Soon", 15, $RootPath, $db);
