@@ -69,6 +69,10 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		prnMsg( _('The amount must be greater than 0'),'error');
 	}
+	if (!is_date($_POST['Date'])) {
+		$InputError = 1;
+		prnMsg(_('The date input is not a right format'),'error');
+	}
 
 	if (isset($SelectedIndex) AND $InputError !=1)  {
 		$sql = "UPDATE pcashdetails
