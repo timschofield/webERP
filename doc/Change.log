@@ -1,5 +1,6 @@
 webERP Change Log
 
+18/08/16 Exson: Add date format validation in PcClaimExpensesFromTab.php.
 17/8/16 RChacon committed for Tim: In CustWhereAlloc.php and SuppWhereAlloc.php, use the ConvertSQLDate() function for the dates.
 14/8/16 RChacon:In SuppWhereAlloc.php, show transaction date in report. Improvements in HTML code and code documentation.
 13/8/16 RChacon:In CustWhereAlloc.php, show transaction date in report. Standardise trandate in debtortrans. Improvements in HTML code and code documentation.
