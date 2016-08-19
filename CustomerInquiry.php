@@ -231,7 +231,8 @@ $SQL = "SELECT systypes.typename,
 				ON salesorders.orderno=debtortrans.order_
 			WHERE debtortrans.debtorno = '" . $CustomerID . "'
 				AND debtortrans.trandate >= '" . $DateAfterCriteria . "'
-				ORDER BY debtortrans.id";
+				ORDER BY debtortrans.trandate,
+					debtortrans.id";
 
 $ErrMsg = _('No transactions were returned by the SQL because');
 $TransResult = DB_query($SQL, $ErrMsg);
