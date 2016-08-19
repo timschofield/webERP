@@ -112,7 +112,7 @@ define("IMPROVEMENT_AVERAGE_SALES", 5);
 define("IMPROVEMENT_SALES_COMPARED_LAST_YEAR", 5);
 
 /* Defines about Retail Sales at KL Shops*/
-define("LENGHT_OF_LIST_OF_CODES_RETAIL_SHOP_SALES", 6); 
+define("LENGHT_OF_LIST_OF_CODES_RETAIL_SHOP_SALES", 1); 
 
 /* Defines about Stock Control*/
 define("STOCK_MOVEMENT_DAYS_FOR_SPG", 60); 

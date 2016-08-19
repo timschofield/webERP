@@ -1,6 +1,7 @@
 <?php
 
 /************************************************************************
+v 3.00 read barcode + print receipt
 v 2.15 Do not account returns in debtortrans to avoid balance errors getting large
 v 2.14 Do not allow splitted payments. 
 v 2.13 Mod to use Amex credit card with BCA ECDD
@@ -24,12 +25,12 @@ v 1.00 2011-08-10: Shops start using it.
 v 1.00 2011-07-25: Kantor starts using it.
 *********************************************************************/
 
-define("VERSIONFILE", "2.15"); // 
+define("VERSIONFILE", "3.00"); // 
 
 include('includes/DefineCartClass.php');
 include('includes/session.inc');
 
-$Title = _('Retail Shop Sales for Kapal-Laut '. VERSIONFILE);
+$Title = _('Retail Shop Sales for KL '. VERSIONFILE);
 
 include('includes/header.inc');
 include('includes/GetPrice.inc');
@@ -606,7 +607,49 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 	echo'<tr>';
 	echo'<th colspan=5>' . _('Payment details') . '</th>'; 
 	echo'</tr>';
-	
+
+	echo '<tr>';
+	echo'<th colspan=2>' . _('Cash Payments') . '</th>'; 
+	echo '<td></td>';
+	echo'<th colspan=2>' . _('Credit Card Payments') . '</th>'; 
+	echo '</tr>';
+
+	echo '<tr>';
+	echo '<td>' . _('Amount Paid Cash') . ':</td>
+		  <td><input type="text" class="number" name="AmountPaidCash" maxlength="12" size="12" value="' . $_POST['AmountPaidCash'] . '" /></td>';
+	echo '<td></td>';
+	echo '<td>' . _('Amount Paid CC EDC Danamon') . ':</td>
+		  <td><input type="text" class="number" name="AmountPaidCCDanamon" maxlength="12" size="12" value="' . $_POST['AmountPaidCCDanamon'] . '" /></td>';
+	echo '</tr>';
+
+	echo '<tr>';
+	echo'<th colspan=2>' . _('Returned / Vouchers') . '</th>'; 
+	echo '<td></td>';
+	echo '<td>' . _('Amount Paid CC EDC Mandiri') . ':</td>
+		  <td><input type="text" class="number" name="AmountPaidCCMandiri" maxlength="12" size="12" value="' . $_POST['AmountPaidCCMandiri'] . '" /></td>';
+	echo '</tr>';
+
+	echo '<tr>';
+	echo '<td>' . _('Amount Returned Goods') . ':</td>
+		  <td><input type="text" class="number" name="AmountReturnedGoods" maxlength="12" size="12" value="' . $_POST['AmountReturnedGoods'] . '" /></td>';
+	echo '<td></td>';
+	echo '<td>' . _('Amount Paid CC EDC BCA') . ':</td>
+		  <td><input type="text" class="number" name="AmountPaidCCBCA" maxlength="12" size="12" value="' . $_POST['AmountPaidCCBCA'] . '" /></td>';
+	echo '</tr>';
+
+	echo '<tr>';
+	echo '<td>' . _('Amount Voucher/Discounts') . ':</td>
+		  <td><input type="text" class="number" name="AmountVouchers" maxlength="12" size="12" value="' . $_POST['AmountVouchers'] . '" /></td>';
+	echo '<td></td>';
+	echo '<td>' . _('Amount Paid AMEX EDC BCA') . ':</td>
+		  <td><input type="text" class="number" name="AmountPaidAmexBCA" maxlength="12" size="12" value="' . $_POST['AmountPaidAmexBCA'] . '" /></td>';
+	echo '</tr>';
+
+	echo '<tr>';
+	echo '<td>'. _('Comments') .':</td>
+		  <td colspan= 4><textarea name="Comments" cols="60" rows="3">' . stripcslashes($_SESSION['Items'.$identifier]->Comments) .'</textarea></td>';
+	echo '</tr>';
+
 	echo '<tr>
 		  <td>'. _('Yellow Paper Invoice number') .':</td>
 		  <td><input type="text" size="12" maxlength="25" name="CustRef" value="' . stripcslashes($_SESSION['Items'.$identifier]->CustRef) . '" /></td>';
@@ -615,48 +658,6 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 	echo '<td></td>';
 	echo'</tr>';
 
-	echo '<tr>';
-	echo '<td>' . _('Amount Paid Cash') . ':</td>
-		  <td><input type="text" class="number" name="AmountPaidCash" maxlength="12" size="12" value="' . $_POST['AmountPaidCash'] . '" /></td>';
-	echo '<td></td>';
-	echo'<th colspan=2>' . _('Credit Card Payments') . '</th>'; 
-	echo '</tr>';
-
-	echo '<tr>';
-	echo'<th colspan=2>' . _('Returned / Vouchers') . '</th>'; 
-	echo '<td></td>';
-	echo '<td>' . _('Amount Paid CC EDC Danamon') . ':</td>
-		  <td><input type="text" class="number" name="AmountPaidCCDanamon" maxlength="12" size="12" value="' . $_POST['AmountPaidCCDanamon'] . '" /></td>';
-	echo '</tr>';
-
-	echo '<tr>';
-	echo '<td>' . _('Amount Returned Goods') . ':</td>
-		  <td><input type="text" class="number" name="AmountReturnedGoods" maxlength="12" size="12" value="' . $_POST['AmountReturnedGoods'] . '" /></td>';
-	echo '<td></td>';
-	echo '<td>' . _('Amount Paid Amex EDC BCA') . ':</td>
-		  <td><input type="text" class="number" name="AmountPaidAmexBCA" maxlength="12" size="12" value="' . $_POST['AmountPaidAmexBCA'] . '" /></td>';
-	echo '</tr>';
-
-	echo '<tr>';
-	echo '<td>' . _('Amount Voucher/Discounts') . ':</td>
-		  <td><input type="text" class="number" name="AmountVouchers" maxlength="12" size="12" value="' . $_POST['AmountVouchers'] . '" /></td>';
-	echo '<td></td>';
-	echo '<td>' . _('Amount Paid CC EDC Mandiri') . ':</td>
-		  <td><input type="text" class="number" name="AmountPaidCCMandiri" maxlength="12" size="12" value="' . $_POST['AmountPaidCCMandiri'] . '" /></td>';
-	echo '</tr>';
-
-	echo '<tr>';
-	echo '<td></td>
-		  <td></td>';
-	echo '<td></td>';
-	echo '<td>' . _('Amount Paid CC EDC BCA') . ':</td>
-		  <td><input type="text" class="number" name="AmountPaidCCBCA" maxlength="12" size="12" value="' . $_POST['AmountPaidCCBCA'] . '" /></td>';
-	echo '</tr>';
-
-	echo '<tr>';
-	echo '<td>'. _('Comments') .':</td>
-		  <td colspan= 4><textarea name="Comments" cols="50" rows="3">' . stripcslashes($_SESSION['Items'.$identifier]->Comments) .'</textarea></td>';
-	echo '</tr>';
 	echo '</table>';
 
 	/////////////////////////////////////////////////////////////////////
@@ -862,7 +863,7 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 	/////////////////////////////////////////////////
 	// TABLE for Customer Information Data Entry
 	/////////////////////////////////////////////////
-
+/* COMMENTED OUT FOR POS v3.0
 	if (!isset($_POST['FirstName'])){
 		$_POST['FisrtName'] ='';
 	}
@@ -924,6 +925,7 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 	echo '</tr>';	
 
 	echo '</table>';
+*/
 
 	/////////////////////////////////////////////////
 	// Buttons confirm / recalculate the sale
@@ -1001,11 +1003,12 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 	}
 	
 	// Yellow paper invoice number is mandatory
+/* KL RICARD Commented out on POS v3.0 as it is only for manual sales
 	if ($_POST['CustRef']== "") {
 		prnMsg(_('Please enter the number of the yellow paper invoice'),'error');
 		$InputError = true;
 	}
-
+*/
 /*******************************************************************************************************************
 KL RICARD: 20/03/2016 Commented out the QOH verification at shop to prevent SPG calling for QOH inconsistencies and adjustments
 Instead of preventing the sale report, webERP sends an email to control what happened, but at least sale can be reported
