@@ -89,9 +89,10 @@ td.select {
 td.number {
 	text-align: right;
 }
-td.numberTotal {
+td.numberTotal { /* KL Modified */
+	background-color:#e6f8c1;
 	text-align: right;
-	font-size: 15px;
+	font-size: 30px;
 }
 div.centre { /* centering buttons / links */
   margin: 0 auto;
