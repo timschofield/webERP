@@ -6,7 +6,16 @@ $Perforation = $Page_Width - $Right_Margin - 160;
 
 $YPos = $Page_Height - $Top_Margin;
 
-$pdf->addJpegFromFile($_SESSION['LogoFile'],$Page_Width/2 -130,$YPos-80,0,60);
+// Company Logo:
+/*$pdf->addJpegFromFile($_SESSION['LogoFile'], $Page_Width/2-130, $YPos-80, 0, 60);*/
+$pdf->Image(
+	$_SESSION['LogoFile'],// Name of the file containing the image.
+	$Page_Width/2-130,// Abscissa from left border to the upper-left corner (LTR).
+	$Page_Height -($YPos-80) -(60),// Ordinate from top border to the upper-left corner (LTR).
+	0,// Width of the image in the page. If not specified or equal to zero, it is automatically calculated.
+	60,// Height of the image in the page. If not specified or equal to zero, it is automatically calculated.
+	''// Image format. If not specified, the type is inferred from the file extension.
+);// Public function Image() in ~/includes/tcpdf/tcpdf.php
 
 // Title
 $FontSize =15;
@@ -121,45 +130,31 @@ $YPos = $Page_Height - $Top_Margin - 180;
 //$YPos -= $line_height;
 $XPos = $Left_Margin;
 
+// Draws a rounded rectangle around the statement details:
+$pdf->RoundedRect(
+	($Left_Margin),// Abscissa of upper-left corner from left border (LTR).
+	$Page_Height -($YPos),// Ordinate of upper-left corner from top border (LTR).
+	($Perforation) -($Left_Margin),// Width.
+	($YPos) -($Bottom_Margin),// Height.
+	10,// The radius of the circle used to round off the corners of the rectangle.
+	'1111',// Draws rounded corner or not. String with a 0 (not rounded i-corner) or 1 (rounded i-corner) in i-position. Positions are, in order and begin to 0: top right, bottom right, bottom left and top left. Default value: all rounded corner ("1111").
+	'',// Style of rendering. See the getPathPaintOperator() function for more information. Default value: empty ("").
+	array(),// Border style of rectangle. Array like for SetLineStyle(). Default value: default line style (empty array).
+	array()// Fill color. Format: array(GREY) or array(R,G,B) or array(C,M,Y,K) or array(C,M,Y,K,SpotColorName). Default value: default color (empty array).
+);// Public function RoundedRect() in ~/includes/tcpdf/tcpdf.php
 
-/*draw a nice curved corner box around the statement details */
-/*from the top right */
-$pdf->partEllipse($Perforation-10,$YPos-10,0,90,10,10);
-/*line to the top left */
-$pdf->line($Perforation-10, $YPos,$Left_Margin+10, $YPos);
-/*Do top left corner */
-$pdf->partEllipse($Left_Margin+10, $YPos-10,90,180,10,10);
-/*Do a line to the bottom left corner */
-$pdf->line($Left_Margin, $YPos-10,$Left_Margin, $Bottom_Margin+10);
-/*Now do the bottom left corner 180 - 270 coming back west*/
-$pdf->partEllipse($Left_Margin+10, $Bottom_Margin+10,180,270,10,10);
-/*Now a line to the bottom right */
-$pdf->line($Left_Margin+10, $Bottom_Margin,$Perforation-10, $Bottom_Margin);
-/*Now do the bottom right corner */
-$pdf->partEllipse($Perforation-10, $Bottom_Margin+10,270,360,10,10);
-/*Finally join up to the top right corner where started */
-$pdf->line($Perforation, $Bottom_Margin+10,$Perforation, $YPos-10);
-
-
-/*draw a nice curved corner box around the remittance advice section */
-$pdf->partEllipse($Page_Width-$Right_Margin-10,$YPos-10,0,90,10,10);
-/*line to the top left */
-$pdf->line($Page_Width-$Right_Margin-10, $YPos, $Perforation + 11, $YPos);
-/*Do top left corner */
-$pdf->partEllipse($Perforation+11, $YPos-10,90,180,10,10);
-/*Do a line to the bottom left corner */
-$pdf->line($Perforation+1, $YPos-10,$Perforation+1, $Bottom_Margin+10);
-/*Now do the bottom left corner 180 - 270 coming back west*/
-$pdf->partEllipse($Perforation+11, $Bottom_Margin+10,180,270,10,10);
-/*Now a line to the bottom right */
-$pdf->line($Perforation+11, $Bottom_Margin,$Page_Width-$Right_Margin-10, $Bottom_Margin);
-/*Now do the bottom right corner */
-$pdf->partEllipse($Page_Width-$Right_Margin-10, $Bottom_Margin+10,270,360,10,10);
-/*Finally join up to the top right corner where started */
-$pdf->line($Page_Width-$Right_Margin, $Bottom_Margin+10,$Page_Width-$Right_Margin, $YPos-10);
-
-
-
+// Draws a rounded rectangle around the remittance advice section:
+$pdf->RoundedRect(
+	($Perforation+1),// Abscissa of upper-left corner from left border (LTR).
+	$Page_Height -($YPos),// Ordinate of upper-left corner from top border (LTR).
+	($Page_Width-$Right_Margin) -($Perforation+1),// Width.
+	($YPos) -($Bottom_Margin),// Height.
+	10,// The radius of the circle used to round off the corners of the rectangle.
+	'1111',// Draws rounded corner or not. String with a 0 (not rounded i-corner) or 1 (rounded i-corner) in i-position. Positions are, in order and begin to 0: top right, bottom right, bottom left and top left. Default value: all rounded corner ("1111").
+	'',// Style of rendering. See the getPathPaintOperator() function for more information. Default value: empty ("").
+	array(),// Border style of rectangle. Array like for SetLineStyle(). Default value: default line style (empty array).
+	array()// Fill color. Format: array(GREY) or array(R,G,B) or array(C,M,Y,K) or array(C,M,Y,K,SpotColorName). Default value: default color (empty array).
+);// Public function RoundedRect() in ~/includes/tcpdf/tcpdf.php
 
 $YPos -= $line_height;
 $FontSize =10;
@@ -172,13 +167,11 @@ $pdf->addText($Left_Margin+382, $YPos,$FontSize, _('Credits') );
 $pdf->addText($Left_Margin+459, $YPos,$FontSize, _('Allocated') );
 $pdf->addText($Left_Margin+536, $YPos,$FontSize, _('Outstanding') );
 
-
 /*Set up remittance section headings */
 $FontSize=8;
 $pdf->addText($Perforation+10, $YPos,$FontSize, _('Trans') );
 $pdf->addText($Perforation+55, $YPos,$FontSize, _('Number') );
 $pdf->addText($Perforation+100, $YPos,$FontSize, _('Outstanding') );
-
 
 $YPos -= $line_height;
 /*draw a line */
