@@ -1,5 +1,6 @@
 webERP Change Log
 
+20/08/16 RChacon: In ConfirmDispatch_Invoice.php, fix table html code.
 18/08/16 RChacon: In PDFStatementPageHeader.inc, replace addJpegFromFile() and RoundRectangle() functions from class.pdf.php with Image() and RoundedRect() functions from tcpdf.php.
 18/08/16 Exson: Add a Cancel button on SupplierAllocations.php to make user can return to previous page easily.
 18/08/16 Exson: Add date format validation in PcClaimExpensesFromTab.php.
