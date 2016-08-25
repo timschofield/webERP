@@ -297,7 +297,7 @@ if (!isset($_GET['Modify'])){
 			if(isset($_POST['SelectAll'])) {
 				echo ' checked';
 			}
-			echo 'name=" GRNNo_', $GRNTmp->GRNNo, '" type="checkbox" /></td>
+			echo ' name=" GRNNo_', $GRNTmp->GRNNo, '" type="checkbox" /></td>
 				</tr>';
 		}
 		echo '</tbody>
