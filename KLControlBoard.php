@@ -52,12 +52,9 @@ if (!isset($_GET['Section'])){
 if ($KL_SystemAdmin){
 	// WARNINGS STILL NOT DOCUMENTED ON WIKI
 prnMsg("START OF PENDING FOR KL INTRANET ",'success');
-		DiscountedItemsWithWrongDiscount("DISC20", "20", $RootPath, $db);
-		DiscountedItemsWithWrongDiscount("DISC50", "50", $RootPath, $db);
 		NotDiscountedItemsWithDiscount($RootPath, $db);
 		GoodsReceivedNotInvoicedControl(1000000, $periodnow, $db);
 		ObsoleteComponentsInActiveBOM($RootPath, $db);
-		SamplesNotLongerNeeded($RootPath, $db);
 		FlaggedAsObsoleteButStockAvailable($RootPath, $db);
 prnMsg("END OF PENDING FOR KL INTRANET ",'success');
 
