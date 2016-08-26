@@ -1,5 +1,5 @@
 <?php
-/* $Id: CustomerInquiry.php 7556 2016-06-16 11:11:45Z exsonqu $*/
+/* $Id: CustomerInquiry.php 7597 2016-08-19 12:03:21Z tehonu $*/
 /* Shows the customers account transactions with balances outstanding, links available to drill down to invoice/credit note or email invoices/credit notes. */
 
 include('includes/session.inc');
@@ -231,7 +231,8 @@ $SQL = "SELECT systypes.typename,
 				ON salesorders.orderno=debtortrans.order_
 			WHERE debtortrans.debtorno = '" . $CustomerID . "'
 				AND debtortrans.trandate >= '" . $DateAfterCriteria . "'
-				ORDER BY debtortrans.id";
+				ORDER BY debtortrans.trandate,
+					debtortrans.id";
 
 $ErrMsg = _('No transactions were returned by the SQL because');
 $TransResult = DB_query($SQL, $ErrMsg);

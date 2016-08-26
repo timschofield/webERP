@@ -8,10 +8,17 @@ include('includes/session.inc');
 
 if (isset($_POST['JournalNo'])) {
 	$JournalNo=$_POST['JournalNo'];
+	$Type = $_POST['Type'];
 } else if (isset($_GET['JournalNo'])) {
 	$JournalNo=$_GET['JournalNo'];
+	$Type = $_GET['Type'];
 } else {
 	$JournalNo='';
+}
+if (empty($JournalNo) OR empty($Type)) {
+	prnMsg(_('This page should be called with Journal No and Type'),'error');
+	include('includes/footer.inc');
+	exit;
 }
 
 if ($JournalNo=='Preview') {
@@ -44,8 +51,9 @@ if ($JournalNo=='Preview') {
 				ON gltrans.account=chartmaster.accountcode
 			LEFT JOIN tags
 				ON gltrans.tag=tags.tagref
-			WHERE gltrans.type='0'
+			WHERE gltrans.type='" . $Type . "'
 				AND gltrans.typeno='" . $JournalNo . "'";
+
 	$result=DB_query($sql);
 	$LineCount = DB_num_rows($result); // UldisN
 	$myrow=DB_fetch_array($result);

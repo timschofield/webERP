@@ -1,5 +1,5 @@
 <?php
-/*	$Id: SupplierAllocations.php 7511 2016-05-07 22:48:34Z daintree $*/
+/*	$Id: SupplierAllocations.php 7595 2016-08-18 08:50:28Z exsonqu $*/
 
 /*	This page can be called with...
 
@@ -517,6 +517,7 @@ if (isset($_POST['AllocTrans'])){
 			<br />
 			<input type="submit" name="RefreshAllocTotal" value="' . _('Recalculate Total To Allocate') . '" />
 			<input type="submit" name="UpdateDatabase" value="' . _('Process Allocations') . '" />
+			<input type="submit" name="Cancel" value="' . _('Cancel') . '" />
 		</div>';
 
 } elseif(isset($_GET['SupplierID'])){

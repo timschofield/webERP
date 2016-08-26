@@ -1,5 +1,5 @@
 <?php
-/* $Id: SelectGLAccount.php 7385 2015-11-11 08:03:20Z tehonu $*/
+/* $Id: SelectGLAccount.php 7577 2016-08-02 06:29:19Z exsonqu $*/
 
 include('includes/session.inc');
 
@@ -52,6 +52,10 @@ if (isset($_POST['Search'])){
 					chartmaster.accountcode";
 
 		} elseif (mb_strlen($_POST['GLCode'])>0){
+			if (!empty($_POST['GLCode'])) {
+				header('location:' . $RootPath . '/GLAccountInquiry.php?Account=' . $_POST['GLCode'] . '&Show=Yes');
+				exit;
+			}
 
 			$SQL = "SELECT chartmaster.accountcode,
 					chartmaster.accountname,
@@ -69,6 +73,11 @@ if (isset($_POST['Search'])){
 		}
 		if (isset($SQL) and $SQL!=''){
 			$result = DB_query($SQL);
+			if (DB_num_rows($result) == 1) {
+				$AccountRow = DB_fetch_row($result);
+				header('location:' . $RootPath . '/GLAccountInquiry.php?Account=' . $AccountRow[0] . '&Show=Yes');
+				exit;
+			}
 		}
 } //end of if search
 

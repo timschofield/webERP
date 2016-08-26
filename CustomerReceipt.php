@@ -1,5 +1,5 @@
 <?php
-/* $Id: CustomerReceipt.php 7562 2016-06-29 06:27:55Z exsonqu $ */
+/* $Id: CustomerReceipt.php 7591 2016-08-16 13:33:08Z tehonu $ */
 /* Entry of both customer receipts against accounts receivable and also general ledger or nominal receipts */
 
 include('includes/DefineReceiptClass.php');
@@ -912,7 +912,7 @@ if($_SESSION['ReceiptBatch' . $identifier]->AccountCurrency != $_SESSION['Compan
 	}
 	echo '<tr>
 			<td>', _('Functional Exchange Rate'), ':</td>
-			<td><input class="number" maxlength="12" name="FunctionalExRate" pattern="[0-9\.,]*" required="required" size="14" tabindex="5" type="text" value="', $_POST['FunctionalExRate'], '" /> ', $SuggestedFunctionalExRateText, ' <i>', _('The exchange rate between the currency of the business (the functional currency) and the currency of the bank account'),  '.</i></td>
+			<td><input class="number" maxlength="12" name="FunctionalExRate" pattern="[0-9\.,]*" required="required" size="14" tabindex="5" type="text" value="', $_SESSION['ReceiptBatch' . $identifier]->FunctionalExRate, '" /> ', $SuggestedFunctionalExRateText, ' <i>', _('The exchange rate between the currency of the business (the functional currency) and the currency of the bank account'),  '.</i></td>
 		</tr>';
 }
 
@@ -1071,8 +1071,8 @@ if (isset($_SESSION['CustomerRecord' . $identifier])
 
 }
 
-if (isset($_POST['GLEntry']) AND isset($_SESSION['ReceiptBatch'])){
-/* Set up a heading for the transaction entry for a GL Receipt */
+if (isset($_POST['GLEntry']) AND isset($_SESSION['ReceiptBatch' . $identifier])){
+	/* Set up a heading for the transaction entry for a GL Receipt */
 	echo '<br />
 		<table class="selection">
 			<tr>
