@@ -1829,10 +1829,11 @@ function OnlineOrdersFollowUp($Source, $numDays, $RootPath, $db){
 							<th class="ascending">' . _('Order Date') . '</th>
 							<th class="ascending">' . _('Order Value') . '</th>
 							<th class="ascending">' . _('Currency') . '</th>
-							<th class="ascending">' . _('Payment Confirmation Sent On') . '</th>
+							<th class="ascending">' . _('Payment Confirmation') . '</th>
 							<th class="ascending">' . _('Tracking Number') . '</th>
-							<th class="ascending">' . _('Tracking Confirmation Sent On') . '</th>
-							<th class="ascending">' . _('Thank You Sent On') . '</th>
+							<th class="ascending">' . _('Tracking Confirmation') . '</th>
+							<th class="ascending">' . _('Thank You') . '</th>
+							<th class="ascending">' . _('NO Thank You') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -1842,18 +1843,22 @@ function OnlineOrdersFollowUp($Source, $numDays, $RootPath, $db){
 			$CodeLink = '<a href="' . $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . $myrow['orderno'] . '">' . $myrow['orderno'] . '</a>';
 			
 			$EmailType3 = "ThankYouOrder";
+			$EmailType4 = "NoSendThankYou";
 			if ($myrow['klemailthankyouorder']== '0000-00-00'){
 				$EmailLinkText = 'Not Sent yet';
 				$EmailLink3 = '<a href="' . $RootPath . '/KLFollowUpOnlineEmails.php?TransNo=' . $myrow['orderno'] . '&EmailType=' . $EmailType3. '&CustomerOrder=' . $myrow['customerref'] . '">'. $EmailLinkText .'</a>';
+				$EmailLink4 = '<a href="' . $RootPath . '/KLFollowUpOnlineEmails.php?TransNo=' . $myrow['orderno'] . '&EmailType=' . $EmailType4. '&CustomerOrder=' . $myrow['customerref'] . '">'. $EmailLinkText .'</a>';
 			}else{
 				$EmailLink3 = ConvertSQLDate($myrow['klemailthankyouorder']);
+				$EmailLink4 = ConvertSQLDate($myrow['klemailthankyouorder']);
 			}
 
 			$EmailType2 = "TrackingConfirmation";
 			if ($myrow['klemailtrackingconfirm']== '0000-00-00'){
 				$EmailLinkText = 'Not Sent yet';
 				$EmailLink2 = '<a href="' . $RootPath . '/KLFollowUpOnlineEmails.php?TransNo=' . $myrow['orderno'] . '&EmailType=' . $EmailType2. '&CustomerOrder=' . $myrow['customerref'] . '">'. $EmailLinkText .'</a>';
-				$EmailLink3 = 'Send Tracking Confirmation first';
+				$EmailLink3 = 'Tracking Confirmation first';
+				$EmailLink4 = 'Tracking Confirmation first';
 			}else{
 				$EmailLink2 = ConvertSQLDate($myrow['klemailtrackingconfirm']);
 			}
@@ -1862,8 +1867,9 @@ function OnlineOrdersFollowUp($Source, $numDays, $RootPath, $db){
 			if ($myrow['klemailpaymentconfirm']== '0000-00-00'){
 				$EmailLinkText = 'Not Sent yet';
 				$EmailLink1 = '<a href="' . $RootPath . '/KLFollowUpOnlineEmails.php?TransNo=' . $myrow['orderno'] . '&EmailType=' . $EmailType1. '&CustomerOrder=' . $myrow['customerref'] . '">'. $EmailLinkText .'</a>';
-				$EmailLink2 = 'Send Payment Confirmation first';
-				$EmailLink3 = 'Send Payment Confirmation first';
+				$EmailLink2 = 'Payment Confirmation first';
+				$EmailLink3 = 'Payment Confirmation first';
+				$EmailLink4 = 'Payment Confirmation first';
 			}else{
 				$EmailLink1 = ConvertSQLDate($myrow['klemailpaymentconfirm']);
 			}
@@ -1884,6 +1890,7 @@ function OnlineOrdersFollowUp($Source, $numDays, $RootPath, $db){
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
+					<td>%s</td>
 					</tr>', 
 					$i, 
 					$CodeLink, 
@@ -1896,7 +1903,8 @@ function OnlineOrdersFollowUp($Source, $numDays, $RootPath, $db){
 					$EmailLink1,
 					$myrow['shippername'] . ' ' . $myrow['consignment'],
 					$EmailLink2,
-					$EmailLink3
+					$EmailLink3,
+					$EmailLink4
 					);
 			$i++;
 		}
