@@ -540,11 +540,7 @@ if ($ProcessSection01){
 		
 		CategoryItemsNotInShop("TESTBL", "TOKPS", 3, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("TESTBL", "TOKMU", 3, $RootPath, $db);
-		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("TESTBL", "TOKSB", 3, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("TESTBL", "TOKPB", 3, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("TESTBL", "TOKBU", 3, $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -564,8 +560,8 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("NOPOBL", "TOKSB", 2, $RootPath, $db);
 		$NumberOfTestExecuted++;
-//		CategoryItemsNotInShop("NOPOBL", "TOKPB", 2, $RootPath, $db);
-//		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABBL", "TOKBU", 3, $RootPath, $db);
+		$NumberOfTestExecuted++;
 
 
 		CategoryItemsNotInShop("DISC20", "TOKAR", 3, $RootPath, $db);
