@@ -223,13 +223,65 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 			$EmailAddress = "kl-saleswithnotenoughqoh@kapal-laut.com";
 			break;
 
-		/* OTHER GENERAL EMAILS */
+		/* USERS GENERAL EMAILS */
 		case "UserLoggingIn":
 			$EmailSubject = "User Logging in KL webERP : ". $Param1;
 			$EmailText = $EmailSubject . ' at ' . $Param2 . ' from IP: ' . $Param3 . "\n\n";
 			$EmailAddress = "it@bumibiru.com";
 			break;
 
+		case "SpgUsernameUpdated":
+			$EmailSubject = "SPG Username Updated : ". $Param1;
+			if ($Param2 != ''){
+				$PassText = 'Password :'. ' '. $Param2 ;
+			}else{
+				$PassText = 'Password NOT changed';
+			}
+			$EmailText = $EmailSubject . "\n\n" .
+					$PassText . "\r\n" .
+					'Shop : '. $Param3 . "\r\n" .
+					'Updated by : ' . $Param4; 		
+			$EmailAddress = "kl-administrationteam@kapal-laut.com";
+			break;
+
+		case "SpgUsernameCreated":
+			$EmailSubject = "SPG Username Created : ". $Param1;
+			$EmailText = $EmailSubject . "\n\n" .
+					'Password :'. ' '. $Param2 . "\r\n" .
+					'Shop : '. $Param3 . "\r\n" .
+					'Created by : ' . $Param4; 		
+			$EmailAddress = "kl-administrationteam@kapal-laut.com";
+			break;
+
+		case "SpgUsernameDeleted":
+			$EmailSubject = "SPG Username Deleted : ". $Param1;
+			$EmailText = $EmailSubject . "\n\n" .
+					'Deleted by : ' . $Param2; 		
+			$EmailAddress = "kl-administrationteam@kapal-laut.com";
+			break;
+
+		case "SpgCodeUpdated":
+			$EmailSubject = "SPG Code Updated : ". $Param1;
+			$EmailText = $EmailSubject . "\n\n" .
+					'Name :'. ' '. $Param2 . "\r\n" .
+					'Updated by : ' . $Param3; 		
+			$EmailAddress = "kl-administrationteam@kapal-laut.com";
+			break;
+
+		case "SpgCodeCreated":
+			$EmailSubject = "SPG Code Created : ". $Param1;
+			$EmailText = $EmailSubject . "\n\n" .
+					'Name :'. ' '. $Param2 . "\r\n" .
+					'Created by : ' . $Param3; 		
+			$EmailAddress = "kl-administrationteam@kapal-laut.com";
+			break;
+			
+		case "SpgCodeDeleted":
+			$EmailSubject = "SPG Code Deleted : ". $Param1;
+			$EmailText = $EmailSubject . "\n\n" .
+					'Deleted by : ' . $Param2; 		
+			$EmailAddress = "kl-administrationteam@kapal-laut.com";
+			break;
 	}
 
 	/* If sent from TEST weberp, add some text to not confuse the receiver */

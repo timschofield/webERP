@@ -27,6 +27,7 @@ $BookMark = 'UserMaintenance';
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
+include('includes/KLEmails.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>
 	<br />';
@@ -141,7 +142,10 @@ if (isset($_POST['submit'])) {
 						department='" . $_POST['Department'] . "'
 					WHERE userid = '". $SelectedUser . "'";
 
-		prnMsg( _('The selected user record has been updated'), 'success' );
+		prnMsg( _('The selected user record has been updated'), 'success');
+		
+		KLSendEmail("SpgUsernameUpdated", "Silent", $SelectedUser, $_POST['Password'], $_POST['DefaultLocation'], $_SESSION['UserID']);
+		
 	} elseif ($InputError !=1) {
 
 		$LocationSql = "INSERT INTO locationusers (loccode,
@@ -212,6 +216,9 @@ if (isset($_POST['submit'])) {
 						'" . $PDFLanguage ."',
 						'" . $_POST['Department'] . "')";
 		prnMsg( _('A new user record has been inserted'), 'success' );
+
+		KLSendEmail("SpgUsernameCreated", "Silent", $_POST['UserID'], $_POST['Password'], $_POST['DefaultLocation'], $_SESSION['UserID']);
+
 	}
 
 	if ($InputError!=1){
@@ -250,6 +257,7 @@ if (isset($_POST['submit'])) {
 			$ErrMsg = _('The User could not be deleted because');;
 			$result = DB_query($sql,$ErrMsg);
 			prnMsg(_('User Deleted'),'info');
+			KLSendEmail("SpgUsernameDeleted", "Silent", $SelectedUser, $_SESSION['UserID']);
 		}
 		unset($SelectedUser);
 	}

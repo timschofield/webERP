@@ -17,6 +17,7 @@ if(isset($_GET['delete'])) {
 	$BookMark = 'SalespeopleDelete';
 }// For Delete's ERROR Message Report.
 include('includes/header.inc');
+include('includes/KLEmails.php');
 
 if (isset($_GET['SelectedSalesPerson'])){
 	$SelectedSalesPerson =mb_strtoupper($_GET['SelectedSalesPerson']);
@@ -93,6 +94,9 @@ if (isset($_POST['submit'])) {
 				WHERE salesmancode = '".$SelectedSalesPerson."'";
 
 		$msg = _('Salesperson record for') . ' ' . $_POST['SalesmanName'] . ' ' . _('has been updated');
+
+		KLSendEmail("SpgCodeUpdated", "Silent", $SelectedSalesPerson, $_POST['SalesmanName'], $_SESSION['UserID']);
+
 	} elseif ($InputError !=1) {
 
 	/*Selected group is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new Sales-person form */
@@ -116,6 +120,8 @@ if (isset($_POST['submit'])) {
 					)";
 
 		$msg = _('A new salesperson record has been added for') . ' ' . $_POST['SalesmanName'];
+
+		KLSendEmail("SpgCodeCreated", "Silent",$_POST['SalesmanCode'], $_POST['SalesmanName'], $_SESSION['UserID']);
 	}
 	if ($InputError !=1) {
 		//run the SQL from either of the above possibilites
@@ -167,6 +173,7 @@ $BookMark = 'SalespeopleDelete';
 				$result = DB_query($sql,$ErrMsg);
 
 				prnMsg(_('Salesperson') . ' ' . $SelectedSalesPerson . ' ' . _('has been deleted from the database'),'success');
+				KLSendEmail("SpgCodeDeleted", "Silent", $SelectedSalesPerson, $_SESSION['UserID']);
 				unset ($SelectedSalesPerson);
 				unset($delete);
 			}
