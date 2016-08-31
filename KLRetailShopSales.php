@@ -1082,15 +1082,14 @@ END OF QOH Verification */
 		// Get the Customer invoice number depending on Area
 		if ($Area == "REZ"){
 			// Cash sales
-			$_SESSION['Items'.$identifier]->CustRef = "C-".number_format(GetNextTransNo(9002, $db),0);
+			$_SESSION['Items'.$identifier]->CustRef = "C-".zerofill(GetNextTransNo(9002, $db),8);
 		}elseif ($Area == "REC"){
 			// Cash sales PT
-			$_SESSION['Items'.$identifier]->CustRef = "B-".number_format(GetNextTransNo(9001, $db),0);
+			$_SESSION['Items'.$identifier]->CustRef = "B-".zerofill(GetNextTransNo(9001, $db),8);
 		}else{
 			// Credit Card Sales PT
-			$_SESSION['Items'.$identifier]->CustRef = "A-".number_format(GetNextTransNo(9000, $db),0);
+			$_SESSION['Items'.$identifier]->CustRef = "A-".zerofill(GetNextTransNo(9000, $db),8);
 		}
-
 		
 		$HeaderSQL = "INSERT INTO salesorders (	orderno,
 												debtorno,
@@ -1179,7 +1178,7 @@ END OF QOH Verification */
 
 		} /* end inserted line items into sales order details */
 
-		prnMsg(_('Order Number') . ' ' . $OrderNo . ' ' . _('OK.') . 
+/*		prnMsg(_('Order Number') . ' ' . $OrderNo . ' ' . _('OK.') . 
 				' SPG: ' . $_SESSION['SalesmanLogin'] . 
 				' Area: ' . $Area . 
 				' Total invoice: ' . number_format(($_SESSION['Items'.$identifier]->total+$_POST['TaxTotal']),0) .
@@ -1191,7 +1190,7 @@ END OF QOH Verification */
 				' Returned Goods: '. number_format($_POST['AmountReturnedGoods'],0) .
 				' Vouchers/Discounts: '. number_format($_POST['AmountVouchers'],0) .
 				' Yellow invoice: '. $_SESSION['Items'.$identifier]->CustRef,'success');
-
+*/
 		/* End of insertion of new sales order */
 
 		/*Now insert the DebtorTrans */
@@ -1350,7 +1349,6 @@ END OF QOH Verification */
 							'" . $Tax->TaxRate . "',
 							'" . $Tax->TaxCalculationOrder . "',
 							'" . $Tax->TaxOnTax . "')";
-
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('Taxes and rates applicable to this invoice line item could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the stock movement tax detail records was used');
 				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
@@ -1944,21 +1942,51 @@ END OF QOH Verification */
 		}
 		/*	End account for the packaging */
 		
-		RecordRetailCustomerInformation($OrderNo, $_POST['FirstName'], $_POST['LastName'], $_POST['Country'], $_POST['DateOfBirth'], $_POST['Email'], $_POST['Sex'], $db);
+//		RecordRetailCustomerInformation($OrderNo, $_POST['FirstName'], $_POST['LastName'], $_POST['Country'], $_POST['DateOfBirth'], $_POST['Email'], $_POST['Sex'], $db);
 
 		DB_Txn_Commit();
 	// *************************************************************************
 	//   E N D   O F   I N V O I C E   S Q L   P R O C E S S I N G
 	// *************************************************************************
 
-		echo prnMsg( _('YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' WI'). ' '. $InvoiceNo . _('. Total Cash: ') . number_format($_POST['AmountPaidCash'],0) , 'success');
-		echo prnMsg( _('YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' WI'). ' '. $InvoiceNo . _('. Total CC EDC Danamon: ') . number_format($_POST['AmountPaidCCDanamon'],0)  , 'success');
-		echo prnMsg( _('YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' WI'). ' '. $InvoiceNo . _('. Total Amex EDC BCA: ') . number_format($_POST['AmountPaidAmexBCA'],0)  , 'success');
-		echo prnMsg( _('YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' WI'). ' '. $InvoiceNo . _('. Total CC EDC Mandiri: ') . number_format($_POST['AmountPaidCCMandiri'],0)  , 'success');
-		echo prnMsg( _('YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' WI'). ' '. $InvoiceNo . _('. Total CC EDC BCA: ') . number_format($_POST['AmountPaidCCBCA'],0)  , 'success');
-		echo prnMsg( _('YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' WI'). ' '. $InvoiceNo . _('. Total Returned Goods: ') . number_format($_POST['AmountReturnedGoods'],0) , 'success');
-		echo prnMsg( _('YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' WI'). ' '. $InvoiceNo . _('. Total Vouchers/Discounts: ') . number_format($_POST['AmountVouchers'],0) , 'success');
-		echo '<br /><div class="centre">';
+		// *************************************************************************
+		//   SHOW THE DETAILS OF PAYMENTS 
+		// *************************************************************************
+
+		echo '<table class="selection">
+				<tr>
+					<th colspan=2>' . _('Retail Sale Reported') . '
+					</th>
+				</tr>';
+		
+		echo '<tr><td>' . _('Receipt Number') . ':</td> <td>' . $_SESSION['Items'.$identifier]->CustRef . '</td></tr>';
+		echo '<tr><td>' . _('Order webERP') . ':</td> <td>' . number_format($OrderNo,0) . '</td></tr>';
+		if ($_POST['AmountPaidCash'] > 0){
+			echo '<tr><td>' . _('Payment Cash') . ':</td> <td>' . number_format($_POST['AmountPaidCash'],0) . '</td></tr>';
+		}
+		if ($_POST['AmountPaidCCDanamon'] > 0){
+			echo '<tr><td>' . _('Payment CC EDC Danamon') . ':</td> <td>' . number_format($_POST['AmountPaidCCDanamon'],0) . '</td></tr>';
+		}
+		if ($_POST['AmountPaidCCMandiri'] > 0){
+			echo '<tr><td>' . _('Payment CC EDC Mandiri') . ':</td> <td>' . number_format($_POST['AmountPaidCCMandiri'],0) . '</td></tr>';
+		}
+		if ($_POST['AmountPaidCCBCA'] > 0){
+			echo '<tr><td>' . _('Payment CC EDC BCA') . ':</td> <td>' . number_format($_POST['AmountPaidCCBCA'],0) . '</td></tr>';
+		}
+		if ($_POST['AmountPaidAmexBCA'] > 0){
+			echo '<tr><td>' . _('Payment AMEX EDC BCA') . ':</td> <td>' . number_format($_POST['AmountPaidAmexBCA'],0) . '</td></tr>';
+		}
+		if ($_POST['AmountReturnedGoods'] > 0){
+			echo '<tr><td>' . _('Returned Goods') . ':</td> <td>' . number_format($_POST['AmountReturnedGoods'],0) . '</td></tr>';
+		}
+		if ($_POST['AmountVouchers'] > 0){
+			echo '<tr><td>' . _('Voucher/Discounts') . ':</td> <td>' . number_format($_POST['AmountVouchers'],0) . '</td></tr>';
+		}
+		echo '</table>';	//end of table of final show of order
+
+		// *************************************************************************
+		//   END OF SHOW THE DETAILS OF PAYMENTS 
+		// *************************************************************************
 		
 		// if splitted payments
 		
@@ -2057,8 +2085,7 @@ END OF QOH Verification */
 		/*                         PRINT THE CUSTOMER INVOICE                               */
 		/************************************************************************************/
 		
-
-
+		KLPrintReceipt();
 		
 		unset($_SESSION['Items'.$identifier]->LineItems);
 		unset($_SESSION['Items'.$identifier]);

@@ -175,7 +175,7 @@ TRUNCATE `www_users_webshop`;
 INSERT INTO kurakura_kl_test_erp.accountgroups SELECT * FROM kurakura_kl_erp.accountgroups;
 INSERT INTO kurakura_kl_test_erp.accountsection SELECT * FROM kurakura_kl_erp.accountsection;
 INSERT INTO kurakura_kl_test_erp.areas SELECT * FROM kurakura_kl_erp.areas;
-INSERT INTO kurakura_kl_test_erp.audittrail SELECT * FROM kurakura_kl_erp.audittrail;
+/* INSERT INTO kurakura_kl_test_erp.audittrail SELECT * FROM kurakura_kl_erp.audittrail; */
 INSERT INTO kurakura_kl_test_erp.bankaccounts SELECT * FROM kurakura_kl_erp.bankaccounts;
 INSERT INTO kurakura_kl_test_erp.bankaccountusers SELECT * FROM kurakura_kl_erp.bankaccountusers;
 INSERT INTO kurakura_kl_test_erp.banktrans SELECT * FROM kurakura_kl_erp.banktrans;
@@ -221,7 +221,7 @@ INSERT INTO kurakura_kl_test_erp.fixedassettrans SELECT * FROM kurakura_kl_erp.f
 INSERT INTO kurakura_kl_test_erp.freightcosts SELECT * FROM kurakura_kl_erp.freightcosts;
 INSERT INTO kurakura_kl_test_erp.geocode_param SELECT * FROM kurakura_kl_erp.geocode_param;
 INSERT INTO kurakura_kl_test_erp.glaccountusers SELECT * FROM kurakura_kl_erp.glaccountusers;
-INSERT INTO kurakura_kl_test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans;
+INSERT INTO kurakura_kl_test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE trandate > "20150101";
 INSERT INTO kurakura_kl_test_erp.grns SELECT * FROM kurakura_kl_erp.grns;
 INSERT INTO kurakura_kl_test_erp.holdreasons SELECT * FROM kurakura_kl_erp.holdreasons;
 INSERT INTO kurakura_kl_test_erp.internalstockcatrole SELECT * FROM kurakura_kl_erp.internalstockcatrole;

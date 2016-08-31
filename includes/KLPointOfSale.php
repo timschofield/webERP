@@ -1,21 +1,14 @@
 <?php
 
-/*
-
-*************************************************************************************************
-			FUNCTIONS RELATED TO P.O.S. AT SHOPS
-*************************************************************************************************
-function KapalLautRetailAreaSelection($Debtor, $PaymentMethod, $db)
-function KapalLautRetailBankAccountSelection($Debtor, $PaymentMethod, $db)
-function KapalLautRetailTagSelection($Debtor, $db)
-function webERP_in_test()
-
-*/
-
 function webERP_in_test(){
 	return (strpos($_SERVER['PHP_SELF'],"TEST"));
 }
 
+
+function zerofill($mStretch, $iLength = 2){
+    $sPrintfString = '%0' . (int)$iLength . 's';
+    return sprintf($sPrintfString, $mStretch);
+}
 
 /*************************************************************************************************
 			FUNCTIONS RELATED TO P.O.S. AT SHOPS
@@ -506,8 +499,6 @@ function AccountDiscountOnOrderRetail($TypeDiscount,
 	return $ReceiptNumber;
 }
 
-
-
 function AccountDebtorPayment($ReceiptNumber,
 							$PaymentMethod,
 							$PeriodNo,
@@ -692,6 +683,29 @@ function AccountDebtorDiscount($ReceiptNumber,
 	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 	return $ReceiptNumber;
+}
+
+function KLPrintReceipt(){
+	$TextToPrint = KLPrintReceiptCreateText();
+	
+	echo $TextToPrint;
+}
+
+function KLPrintReceiptCreateText(){
+	// name of shop
+	if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_KAPAL_LAUT)){
+		$TextToPrint = "Kapal-Laut. Your Essential Jewellery";
+	}else if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_BLINK)){
+		$TextToPrint = "Blink by Kapal-laut";
+	}else if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_OUTLET)){
+		$TextToPrint = "OUTLET by Kapal-Laut";
+	}
+	
+	
+	// read terms and conditions
+	$TextToPrint .= "For more information check www.kapal-laut.com";
+	
+	echo $TextToPrint;
 }
 
 ?>
