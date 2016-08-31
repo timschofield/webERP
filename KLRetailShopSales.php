@@ -651,14 +651,14 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 		  <td colspan= 4><textarea name="Comments" cols="60" rows="3">' . stripcslashes($_SESSION['Items'.$identifier]->Comments) .'</textarea></td>';
 	echo '</tr>';
 
-	echo '<tr>
+/*	echo '<tr>
 		  <td>'. _('Yellow Paper Invoice number') .':</td>
 		  <td><input type="text" size="12" maxlength="25" name="CustRef" value="' . stripcslashes($_SESSION['Items'.$identifier]->CustRef) . '" /></td>';
 	echo '<td></td>';
 	echo '<td></td>';
 	echo '<td></td>';
 	echo'</tr>';
-
+*/
 	echo '</table>';
 
 	/////////////////////////////////////////////////////////////////////
@@ -818,7 +818,7 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 		echo '</table>';	//end of column/row/master table
 	}
 
-	
+	// If the shop is using OUTLET packaging, show it!
 	if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_OUTLET)){
 		echo '<table class="selection">
 				<tr>
@@ -1079,6 +1079,19 @@ END OF QOH Verification */
 		$InvoiceNo = GetNextTransNo(10, $db);
 		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 
+		// Get the Customer invoice number depending on Area
+		if ($Area == "REZ"){
+			// Cash sales
+			$_SESSION['Items'.$identifier]->CustRef = "C-".number_format(GetNextTransNo(9002, $db),0);
+		}elseif ($Area == "REC"){
+			// Cash sales PT
+			$_SESSION['Items'.$identifier]->CustRef = "B-".number_format(GetNextTransNo(9001, $db),0);
+		}else{
+			// Credit Card Sales PT
+			$_SESSION['Items'.$identifier]->CustRef = "A-".number_format(GetNextTransNo(9000, $db),0);
+		}
+
+		
 		$HeaderSQL = "INSERT INTO salesorders (	orderno,
 												debtorno,
 												branchcode,
