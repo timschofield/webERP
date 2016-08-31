@@ -1,4 +1,6 @@
 webERP Change Log
+
+31/08/16 Exson: Addd new feature assign cash from one tab to another. 
 24/08/16 Exson: Fixed the latin1 charset mixed bug in supplierdiscounts table;
 24/9/16 Exson: Fixed the bug that days of payment terms in the following month over 31 days can not be handled correctly in DateFunctions.inc.
 20/08/16 RChacon: In ConfirmDispatch_Invoice.php, fix table html code.
