@@ -8,5 +8,6 @@ INSERT INTO scripts VALUES ('PcTabExpensesList.php', '15', 'Creates excel with a
 -- standardise transaction date to DATE type:
 ALTER TABLE `debtortrans` CHANGE `trandate` `trandate` DATE NOT NULL DEFAULT '0000-00-00';
 ALTER table supplierdiscounts CONVERT TO CHARACTER SET utf8;
+INSERT INTO scripts VALUES ('PcAssignCashTabToTab.php',12,'Assign cash from one tab to another');
 
 

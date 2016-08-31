@@ -446,10 +446,12 @@ $MenuItems['FA']['Maintenance']['URL'] = array(	'/FixedAssetCategories.php',
 												'/MaintenanceTasks.php');
 
 $MenuItems['PC']['Transactions']['Caption'] = array(_('Assign Cash to PC Tab'),
+							_('Cash Transfer Between Tabs'),
 													_('Claim Expenses From PC Tab'),
 													_('Expenses Authorisation'));
 
 $MenuItems['PC']['Transactions']['URL'] = array('/PcAssignCashToTab.php',
+						'/PcAssignCashTabToTab.php',
 												'/PcClaimExpensesFromTab.php',
 												'/PcAuthorizeExpenses.php');
 
