@@ -144,7 +144,7 @@ if (isset($_POST['submit'])) {
 
 		prnMsg( _('The selected user record has been updated'), 'success');
 		
-		KLSendEmail("SpgUsernameUpdated", "Silent", $SelectedUser, $_POST['Password'], $_POST['DefaultLocation'], $_SESSION['UserID']);
+		KLSendEmail("SpgUsernameUpdated", "Silent", $SelectedUser, $_POST['Password'], $_POST['DefaultLocation'], $_SESSION['UserID'],$_POST['Blocked']);
 		
 	} elseif ($InputError !=1) {
 
@@ -217,7 +217,7 @@ if (isset($_POST['submit'])) {
 						'" . $_POST['Department'] . "')";
 		prnMsg( _('A new user record has been inserted'), 'success' );
 
-		KLSendEmail("SpgUsernameCreated", "Silent", $_POST['UserID'], $_POST['Password'], $_POST['DefaultLocation'], $_SESSION['UserID']);
+		KLSendEmail("SpgUsernameCreated", "Silent", $_POST['UserID'], $_POST['Password'], $_POST['DefaultLocation'], $_SESSION['UserID'],$_POST['Blocked']);
 
 	}
 

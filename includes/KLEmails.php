@@ -237,18 +237,30 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 			}else{
 				$PassText = 'Password NOT changed';
 			}
+			if ($Param5 != 0){
+				$BlockText = 'Account: Closed';
+			}else{
+				$BlockText = 'Account: Open';
+			}
 			$EmailText = $EmailSubject . "\n\n" .
 					$PassText . "\r\n" .
 					'Shop : '. $Param3 . "\r\n" .
+					$BlockText . "\r\n" .
 					'Updated by : ' . $Param4; 		
 			$EmailAddress = "kl-administrationteam@kapal-laut.com";
 			break;
 
 		case "SpgUsernameCreated":
 			$EmailSubject = "SPG Username Created : ". $Param1;
+			if ($Param5 != 0){
+				$BlockText = 'Account: Closed';
+			}else{
+				$BlockText = 'Account: Open';
+			}
 			$EmailText = $EmailSubject . "\n\n" .
 					'Password :'. ' '. $Param2 . "\r\n" .
 					'Shop : '. $Param3 . "\r\n" .
+					$BlockText . "\r\n" .
 					'Created by : ' . $Param4; 		
 			$EmailAddress = "kl-administrationteam@kapal-laut.com";
 			break;
