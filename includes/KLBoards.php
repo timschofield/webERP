@@ -4389,6 +4389,11 @@ function ActiveItemsNoSales($maxdays, $group, $RootPath, $db){
 									WHERE 	stockmaster.stockid = salesorderdetails.stkcode
 											AND (salesorderdetails.orderno = salesorders.orderno)
 											AND salesorderdetails.actualdispatchdate > '" . $FromDate . "')
+					AND (IFNULL((SELECT SUM(woitems.qtyreqd -woitems.qtyrecd) 
+							FROM woitems, workorders
+							WHERE woitems.stockid = stockmaster.stockid
+								AND woitems.wo = workorders.wo
+								AND workorders.closed = 0) ,0) = 0 )
 					AND NOT EXISTS (SELECT * 
 									FROM 	stockmoves
 									WHERE 	stockmoves.stockid = stockmaster.stockid
@@ -4408,7 +4413,7 @@ function ActiveItemsNoSales($maxdays, $group, $RootPath, $db){
 	$result = DB_query($SQL);		
 	
 	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . $group . _(' Items with NO sales on last ') . $maxdays . ' days and NO current PO. Move to next category step</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . $group . _(' Items with NO sales on last ') . $maxdays . ' days and NO current PO or WO. Move to next category step</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
