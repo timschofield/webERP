@@ -482,6 +482,26 @@ if (isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button ha
 		exit;
 	}
 }
+if (isset($_GET['Delete'])) {
+	//delete items
+		DB_Txn_Begin();
+		$ErrMsg = _('The work order could not be deleted');
+		$DbgMsg = _('The SQL used to delete the work order was');
+		//delete the worequirements
+		$SQL = "DELETE FROM worequirements WHERE wo='" . $_GET['WO'] . "' AND parentstockid='" . $_GET['StockID'] . "'";
+		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		//delete the item on the work order
+		$SQL = "DELETE FROM woitems WHERE wo='" . $_GET['WO'] . "' AND stockid='" . $_GET['StockID'] . "' ";
+		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		//delete the controlled items defined in wip
+		$SQL="DELETE FROM woserialnos WHERE wo='" . $_GET['WO'] . "' AND stockid='" . $_GET['StockID'] . "' ";
+		$ErrMsg=_('The work order serial numbers could not be deleted');
+		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		DB_Txn_Commit();
+		prnMsg(_('The item in this work order has been cancelled'),'success');
+		header('Location: '. $_SERVER['PHP_SELF'] . '?WO=' . $_GET['WO']);	
+}
+
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" name="form1">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -615,19 +635,25 @@ if (isset($NumberOfOutputs)){
 			$j=0;
 		} else {
 			echo '<tr class="EvenTableRows">';
-			$j++;
+			$j=1;
 		}
 		echo '<td><input type="hidden" name="OutputItem' . $i . '" value="' . $_POST['OutputItem' .$i] . '" />' .
-			$_POST['OutputItem' . $i] . ' - ' . $_POST['OutputItemDesc' .$i] . '</td>';
-		echo'<td><textarea style="width:100%" rows="5" cols="20" name="WOComments' . $i . '" >' . $_POST['WOComments' . $i] . '</textarea></td>';
+			$_POST['OutputItem' . $i] . ' - ' . $_POST['OutputItemDesc' .$i] . '
+			</td>';
+		echo'<td><textarea style="width:100%" rows="5" cols="20" name="WOComments' . $i . '" >' . $_POST['WOComments' . $i] . '</textarea>
+			</td>';
 		if ($_POST['Controlled'.$i]==1 AND $_SESSION['DefineControlledOnWOEntry']==1){
-			echo '<td class="number">' . locale_number_format($_POST['OutputQty' . $i], $_POST['DecimalPlaces' . $i]) . '</td>';
+			echo '<td class="number">' . locale_number_format($_POST['OutputQty' . $i], $_POST['DecimalPlaces' . $i]) . '
+				</td>';
 			echo '<input type="hidden" name="OutputQty' . $i .'" value="' . locale_number_format($_POST['OutputQty' . $i]-$_POST['RecdQty' .$i], $_POST['DecimalPlaces' . $i]) . '" />';
 		} else {
-		  	echo'<td><input type="text" required="required" class="number" name="OutputQty' . $i . '" value="' . locale_number_format($_POST['OutputQty' . $i]-$_POST['RecdQty' .$i], $_POST['DecimalPlaces' . $i]) . '" size="10" maxlength="10" title="'._('The input format must be positive numeric').'" /></td>';
+			echo'<td><input type="text" required="required" class="number" name="OutputQty' . $i . '" value="' . locale_number_format($_POST['OutputQty' . $i]-$_POST['RecdQty' .$i], $_POST['DecimalPlaces' . $i]) . '" size="10" maxlength="10" title="'._('The input format must be positive numeric').'" />
+				</td>';
 		}
-		 echo '<td class="number"><input type="hidden" name="RecdQty' . $i . '" value="' . locale_number_format($_POST['RecdQty' .$i], $_POST['DecimalPlaces' . $i]) . '" />' . locale_number_format($_POST['RecdQty' .$i], $_POST['DecimalPlaces' . $i])  . '</td>
-		  		<td class="number">' . locale_number_format(($_POST['OutputQty' . $i] - $_POST['RecdQty' .$i]), $_POST['DecimalPlaces' . $i]) . '</td>';
+		echo '<td class="number"><input type="hidden" name="RecdQty' . $i . '" value="' . locale_number_format($_POST['RecdQty' .$i], $_POST['DecimalPlaces' . $i]) . '" />' . locale_number_format($_POST['RecdQty' .$i], $_POST['DecimalPlaces' . $i])  . '
+			</td>
+			<td class="number">' . locale_number_format(($_POST['OutputQty' . $i] - $_POST['RecdQty' .$i]), $_POST['DecimalPlaces' . $i]) . '
+			</td>';
 		if ($_POST['Controlled'.$i]==1){
 			echo '<td><input type="text" name="NextLotSNRef' .$i . '" value="' . $_POST['NextLotSNRef'.$i] . '" /></td>';
 			if ($_SESSION['DefineControlledOnWOEntry']==1){
@@ -638,12 +664,17 @@ if (isset($NumberOfOutputs)){
 				}
 				echo '<td><a href="' . $RootPath . '/WOSerialNos.php?WO=' . $_POST['WO'] . '&StockID=' . $_POST['OutputItem' .$i] . '&Description=' . $_POST['OutputItemDesc' .$i] . '&Serialised=' . $_POST['Serialised' .$i] . '&NextSerialNo=' . $_POST['NextLotSNRef' .$i] . '">' . $LotOrSN . '</a></td>';
 			}
+		} else {
+			echo '<td></td>';
 		}
-		echo '<td>';
+		echo '<td>
+			<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=Yes&StockID=' . $_POST['OutputItem' . $i] . '&WO='.$_POST['WO'].'" onclick="return confirm(\''._('Are you sure').'?\');">' . _('Delete') . '</a></td>';	
+		
 		if ($_SESSION['WikiApp']!=0){
+			echo '<td>';
 			wikiLink('WorkOrder', $_POST['WO'] . $_POST['OutputItem' .$i]);
+			echo '</td>';
 		}
-		echo '</td>';
 		echo '</tr>';
 		if (isset($_POST['Controlled' . $i])) {
 			echo '<input type="hidden" name="Controlled' . $i .'" value="' . $_POST['Controlled' . $i] . '" />';
