@@ -1,4 +1,6 @@
 webERP Change Log
+
+04/09/16 Exson: Fixed the bug that work order location will be wrong when user select location which is not user's default location.
 04/09/16 Dave Parrish fixed accumulated No of orders bug in SalesByTypePeriodInquiry.php.
 31/08/16 Exson: Addd new feature assign cash from one tab to another. 
 24/08/16 Exson: Fixed the latin1 charset mixed bug in supplierdiscounts table;
