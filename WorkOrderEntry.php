@@ -279,7 +279,8 @@ if (isset($NewItem) AND isset($_POST['WO'])){
 
 
 	if ($InputError==false){
-		$CostResult = DB_query("SELECT SUM((materialcost+labourcost+overheadcost)*bom.quantity) AS cost
+		$CostResult = DB_query("SELECT SUM((materialcost+labourcost+overheadcost)*bom.quantity) AS cost,
+									bom.loccode
 									FROM stockmaster
 									INNER JOIN bom
 										ON stockmaster.stockid=bom.component
@@ -315,7 +316,7 @@ if (isset($NewItem) AND isset($_POST['WO'])){
 		$result = DB_query($SQL,$ErrMsg);
 
 		//Recursively insert real component requirements - see includes/SQL_CommonFunctions.in for function WoRealRequirements
-		WoRealRequirements($db, $_POST['WO'], $_POST['StockLocation'], $NewItem);
+		WoRealRequirements($db, $_POST['WO'], $CostRow['loccode'], $NewItem);
 
 		$result = DB_Txn_Commit();
 
@@ -382,11 +383,11 @@ if (isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button ha
 			}
 			if ($_POST['RecdQty'.$i]==0 AND (!isset($_POST['HasWOSerialNos'.$i]) OR $_POST['HasWOSerialNos'.$i]==false)){
 				/* can only change location cost if QtyRecd=0 */
-				$CostResult = DB_query("SELECT SUM((materialcost+labourcost+overheadcost)*bom.quantity) AS cost
+				$CostResult = DB_query("SELECT SUM((materialcost+labourcost+overheadcost)*bom.quantity) AS cost,bom.loccode
 												FROM stockmaster
 												INNER JOIN bom ON stockmaster.stockid=bom.component
 												WHERE bom.parent='" . $_POST['OutputItem'.$i] . "'
-												AND bom.loccode='" . $_POST['StockLocation'] . "'
+												AND bom.loccode=(SELECT loccode FROM workorders WHERE wo='" . $_POST['WO'] . "')
 												AND bom.effectiveafter<='" . Date('Y-m-d') . "'
 												AND bom.effectiveto>='" . Date('Y-m-d') . "'");
 				$CostRow = DB_fetch_array($CostResult);
