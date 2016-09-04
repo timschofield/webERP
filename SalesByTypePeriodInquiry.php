@@ -545,7 +545,7 @@ if (isset($_POST['ShowSales'])){
 		$PrdTotalGP += ($SalesRow['salesvalue']+$SalesRow['returnvalue']-$SalesRow['cost']);
 
 		$CumulativeTotalSales += $SalesRow['salesvalue'];
-		$CumulativeTotalOrders = $SalesRow['nooforders'];
+		$CumulativeTotalOrders += $SalesRow['nooforders'];
 		$CumulativeTotalRefunds += $SalesRow['returnvalue'];
 		$CumulativeTotalNetSales += ($SalesRow['salesvalue']+$SalesRow['returnvalue']);
 		$CumulativeTotalCost += $SalesRow['cost'];
