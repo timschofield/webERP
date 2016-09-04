@@ -483,7 +483,19 @@ if (isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button ha
 	}
 }
 if (isset($_GET['Delete'])) {
+	$CancelDelete=false; //always assume the best
+
+	// can't delete it there are open work issues
+	$HasTransResult = DB_query("SELECT transno
+									FROM stockmoves
+								WHERE (stockmoves.type= 26 OR stockmoves.type=28)
+								AND reference " . LIKE  . " '%" . $_POST['WO'] . "%'");
+	if (DB_num_rows($HasTransResult)>0){
+		prnMsg(_('This work order cannot be deleted because it has issues or receipts related to it'),'error');
+		$CancelDelete=true;
+	}
 	//delete items
+	if ($CancelDelete===false) {
 		DB_Txn_Begin();
 		$ErrMsg = _('The work order could not be deleted');
 		$DbgMsg = _('The SQL used to delete the work order was');
@@ -500,6 +512,7 @@ if (isset($_GET['Delete'])) {
 		DB_Txn_Commit();
 		prnMsg(_('The item in this work order has been cancelled'),'success');
 		header('Location: '. $_SERVER['PHP_SELF'] . '?WO=' . $_GET['WO']);	
+	}
 }
 
 
