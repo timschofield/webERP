@@ -89,6 +89,8 @@ function KapalLautRetailBankAccountSelection($Debtor, $PaymentMethod, $db){
 			$Bank = ACCOUNT_CASH_TOKPB;
 		}elseif($Debtor == "RETAILBU"){
 			$Bank = ACCOUNT_CASH_TOKBU;
+		}elseif($Debtor == "RETAILM2"){
+			$Bank = ACCOUNT_CASH_TOKM2;
 		}else{
 			prnMsg(_('Error calculating Cash Bank Account from the shop. Seek help from the administrator.'),'error');
 			include('includes/footer.inc');
@@ -151,6 +153,8 @@ function KapalLautRetailTagSelection($Debtor, $db){
 		$Tag = 23;
 	}elseif($Debtor == "RETAILBU"){
 		$Tag = 24;
+	}elseif($Debtor == "RETAILM2"){
+		$Tag = 25;
 	}else{
 		prnMsg(_('Error calculating accounting TAG from the shop. Seek help from the administrator.'),'error');
 		prnMsg($Debtor,'error');
