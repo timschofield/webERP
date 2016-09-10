@@ -39,6 +39,11 @@ function display_children($Parent, $Level, &$BOMTree) {
 				// child's children
 				$i++;
 				display_children($row['component'], $Level + 1, $BOMTree);
+			} else {
+				prnMsg(_('The component and the parent is the same'),'error');
+				echo $row['component'] . '<br/>';
+				include('includes/footer.inc');
+				exit;
 			}
 		}
 	}
@@ -328,6 +333,11 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 				prnMsg(_('Only non-serialised or non-lot controlled items can be set to auto issue. These items require the lot/serial numbers of items issued to the works orders to be specified so autoissue is not an option. Auto issue has been automatically set to off for this component'),'warn');
 				$_POST['AutoIssue']=0;
 			}
+		}
+		if ($_POST['Component'] == $SelectedParent) {
+			$InputError = 1;
+			prnMsg(_('The component selected is the same with the parent, it is not allowed'),'error');
+			$Errors[$i] = 'Component';
 		}
 
 		if (!in_array('EffectiveAfter', $Errors)) {
