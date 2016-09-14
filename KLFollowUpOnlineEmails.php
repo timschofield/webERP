@@ -371,33 +371,42 @@ if ($_GET['EmailType']!='NoSendThankYou'){
 	}
 
 	if ($_GET['EmailType']=='TrackingConfirmation'){
-		  $MailMessage .= '
-				<tr>
-					<td colspan="4">
-						<p>' . 'We just shipped your order via ' . DB_escape_string($myrow['shippername']) . '. The tracking number of your parcel is:' . DB_escape_string($myrow['consignment']) .'</p>
-					</td>
-				</tr>';
-		if($myrow['shippername'] == 'EMS'){
+		if($myrow['shippername'] == 'Pick up from store') {
 			$MailMessage .= '
 				<tr>
 					<td colspan="4">
-						' . 'You can track your shipment at http://ems.posindonesia.co.id/index.php' . '
+						' . 'Your parcel is ready to pick up from the chosen store. In case we agreed a delivery in Bali, it will be delivered there soon. Please contact us for further details if needed.' . '
 					</td>
 				</tr>';
 		}else{
 			$MailMessage .= '
 				<tr>
 					<td colspan="4">
-						' . 'You can track your shipment at http://jne.co.id/index.php?lang=IN' . '
+						<p>' . 'We just shipped your order via ' . DB_escape_string($myrow['shippername']) . '. The tracking number of your parcel is:' . DB_escape_string($myrow['consignment']) .'</p>
 					</td>
 				</tr>';
-		 }
-		$MailMessage .= '
-			<tr>
-				<td colspan="4">
-					' . 'For delivery transit schedules and general information check http://www.kapal-laut.com/Delivery-Shipping-Information' . '
-				</td>
-			</tr>';
+			if($myrow['shippername'] == 'EMS'){
+				$MailMessage .= '
+					<tr>
+						<td colspan="4">
+							' . 'You can track your shipment at http://ems.posindonesia.co.id/index.php' . '
+						</td>
+					</tr>';
+			}else{
+				$MailMessage .= '
+					<tr>
+						<td colspan="4">
+							' . 'You can track your shipment at http://jne.co.id/index.php?lang=IN' . '
+						</td>
+					</tr>';
+			 }
+			$MailMessage .= '
+				<tr>
+					<td colspan="4">
+						' . 'For delivery transit schedules and general information check http://www.kapal-laut.com/Delivery-Shipping-Information' . '
+					</td>
+				</tr>';
+		}
 		$MailMessage .= '
 			<tr>
 				<td colspan="4">
