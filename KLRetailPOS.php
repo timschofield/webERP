@@ -30,7 +30,7 @@ define("VERSIONFILE", "3.00"); //
 include('includes/DefineCartClass.php');
 include('includes/session.inc');
 
-$Title = _('Retail Shop Sales for KL '. VERSIONFILE);
+$Title = _('Retail POS for KL '. VERSIONFILE);
 
 include('includes/header.inc');
 include('includes/GetPrice.inc');
@@ -55,6 +55,13 @@ if (isset($_SESSION['Items'.$identifier])){
 	$_SESSION['Items'.$identifier]->CustRef = $_POST['CustRef'];
 	$_SESSION['Items'.$identifier]->Comments = $_POST['Comments'];
 }
+
+// Verify if shop is allowed to use the POS system, or should use the old system 
+if (!ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_WITH_POS)){
+		prnMsg(_('This shop is not allowed to use this version of Point Of Sale. Contact Shop Manager inmediately to report this issue.'),'error');
+		include('includes/footer.inc');
+		exit;
+}	
 
 if (isset($_POST['QuickEntry'])){
 	unset($_POST['PartSearch']);
@@ -729,7 +736,6 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 		$_POST['BlinkPouchBag03S'] =0;
 	}
 
-
 	// If the shop is using KAPAL-LAUT packaging, show it!
 	if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_KAPAL_LAUT)){
 		echo '<table class="selection">
@@ -1082,13 +1088,13 @@ END OF QOH Verification */
 		// Get the Customer invoice number depending on Area
 		if ($Area == "REZ"){
 			// Cash sales
-			$_SESSION['Items'.$identifier]->CustRef = "C-".zerofill(GetNextTransNo(9002, $db),8);
+			$_SESSION['Items'.$identifier]->CustRef = "C-".$_SESSION['UserStockLocation']."-".zerofill(GetNextTransNo(9002, $db),8);
 		}elseif ($Area == "REC"){
 			// Cash sales PT
-			$_SESSION['Items'.$identifier]->CustRef = "B-".zerofill(GetNextTransNo(9001, $db),8);
+			$_SESSION['Items'.$identifier]->CustRef = "B-".$_SESSION['UserStockLocation']."-".zerofill(GetNextTransNo(9001, $db),8);
 		}else{
 			// Credit Card Sales PT
-			$_SESSION['Items'.$identifier]->CustRef = "A-".zerofill(GetNextTransNo(9000, $db),8);
+			$_SESSION['Items'.$identifier]->CustRef = "A-".$_SESSION['UserStockLocation']."-".zerofill(GetNextTransNo(9000, $db),8);
 		}
 		
 		$HeaderSQL = "INSERT INTO salesorders (	orderno,

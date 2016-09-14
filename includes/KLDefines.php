@@ -87,6 +87,7 @@ define("CODE_ONLINE_SHOP","'TOKWS'");
 
 define("LIST_ALL_SHOPS",           "('TOK66','TOKSA','TOKKS','TOKSE','TOKUB','TOKMF','TOKPU','TOKSU','TOKOB','TOKSS','TOKPA','TOKKA','TOKMU','TOKPS','TOKAR','TOKSB','TOKPB','TOKBU')"); // NOT includes the shop online
 define("LIST_SHOPS_KAPAL_LAUT",    "('TOK66','TOKSA','TOKKS','TOKSE','TOKMF','TOKPU','TOKOB','TOKSS','TOKPA','TOKKA')"); // NOT includes the shop online
+define("LIST_SHOPS_WITH_POS",      "('TOKSA')"); // Shops allowed to use POS
 define("LIST_SHOPS_OUTLET",        "('TOKSU','TOKUB','TOKAR')"); 
 define("LIST_SHOPS_BLINK",         "('TOKMU','TOKPS','TOKSB','TOKPB','TOKBU')");
 
