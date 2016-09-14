@@ -1,6 +1,7 @@
 <?php
 
 /************************************************************************
+v 3.00 read barcode + print receipt
 v 2.15 Do not account returns in debtortrans to avoid balance errors getting large
 v 2.14 Do not allow splitted payments. 
 v 2.13 Mod to use Amex credit card with BCA ECDD
@@ -24,12 +25,12 @@ v 1.00 2011-08-10: Shops start using it.
 v 1.00 2011-07-25: Kantor starts using it.
 *********************************************************************/
 
-define("VERSIONFILE", "2.15"); // 
+define("VERSIONFILE", "3.00"); // 
 
 include('includes/DefineCartClass.php');
 include('includes/session.inc');
 
-$Title = _('Retail Shop Sales for Kapal-Laut '. VERSIONFILE);
+$Title = _('Retail Shop Sales for KL '. VERSIONFILE);
 
 include('includes/header.inc');
 include('includes/GetPrice.inc');
@@ -564,8 +565,9 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 
 	} /* end of loop around items */
 
-	echo '<tr class="TotalTableRows"><td colspan="7" class="numberTotal"><b>' . _('Total') . '</b></td>
-				<td class="numberTotal">' . number_format(($_SESSION['Items'.$identifier]->total+$TaxTotal),0) . '</td>
+	echo '<tr class="TotalTableRows">
+				<td colspan="6" class="numberTotal"><b>' . _('Total') . '</b></td>
+				<td colspan="2" class="numberTotal">' . number_format(($_SESSION['Items'.$identifier]->total+$TaxTotal),0) . '</td>
 						</tr>
 		</table>';
 	echo '<input type="hidden" name="TaxTotal" value="'.$TaxTotal.'" />';
@@ -606,57 +608,57 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 	echo'<tr>';
 	echo'<th colspan=5>' . _('Payment details') . '</th>'; 
 	echo'</tr>';
-	
-	echo '<tr>
-		  <td>'. _('Yellow Paper Invoice number') .':</td>
-		  <td><input type="text" size="12" maxlength="25" name="CustRef" value="' . stripcslashes($_SESSION['Items'.$identifier]->CustRef) . '" /></td>';
-	echo '<td></td>';
-	echo '<td></td>';
-	echo '<td></td>';
-	echo'</tr>';
 
 	echo '<tr>';
-	echo '<td>' . _('Amount Paid Cash') . ':</td>
-		  <td><input type="text" class="number" name="AmountPaidCash" maxlength="12" size="12" value="' . $_POST['AmountPaidCash'] . '" /></td>';
+	echo'<th colspan=2>' . _('Cash Payments') . '</th>'; 
 	echo '<td></td>';
 	echo'<th colspan=2>' . _('Credit Card Payments') . '</th>'; 
 	echo '</tr>';
 
 	echo '<tr>';
-	echo'<th colspan=2>' . _('Returned / Vouchers') . '</th>'; 
+	echo '<td>' . _('Amount Paid Cash') . ':</td>
+		  <td><input type="text" class="number" name="AmountPaidCash" maxlength="12" size="12" value="' . $_POST['AmountPaidCash'] . '" /></td>';
 	echo '<td></td>';
 	echo '<td>' . _('Amount Paid CC EDC Danamon') . ':</td>
 		  <td><input type="text" class="number" name="AmountPaidCCDanamon" maxlength="12" size="12" value="' . $_POST['AmountPaidCCDanamon'] . '" /></td>';
 	echo '</tr>';
 
 	echo '<tr>';
-	echo '<td>' . _('Amount Returned Goods') . ':</td>
-		  <td><input type="text" class="number" name="AmountReturnedGoods" maxlength="12" size="12" value="' . $_POST['AmountReturnedGoods'] . '" /></td>';
-	echo '<td></td>';
-	echo '<td>' . _('Amount Paid Amex EDC BCA') . ':</td>
-		  <td><input type="text" class="number" name="AmountPaidAmexBCA" maxlength="12" size="12" value="' . $_POST['AmountPaidAmexBCA'] . '" /></td>';
-	echo '</tr>';
-
-	echo '<tr>';
-	echo '<td>' . _('Amount Voucher/Discounts') . ':</td>
-		  <td><input type="text" class="number" name="AmountVouchers" maxlength="12" size="12" value="' . $_POST['AmountVouchers'] . '" /></td>';
+	echo'<th colspan=2>' . _('Returned / Vouchers') . '</th>'; 
 	echo '<td></td>';
 	echo '<td>' . _('Amount Paid CC EDC Mandiri') . ':</td>
 		  <td><input type="text" class="number" name="AmountPaidCCMandiri" maxlength="12" size="12" value="' . $_POST['AmountPaidCCMandiri'] . '" /></td>';
 	echo '</tr>';
 
 	echo '<tr>';
-	echo '<td></td>
-		  <td></td>';
+	echo '<td>' . _('Amount Returned Goods') . ':</td>
+		  <td><input type="text" class="number" name="AmountReturnedGoods" maxlength="12" size="12" value="' . $_POST['AmountReturnedGoods'] . '" /></td>';
 	echo '<td></td>';
 	echo '<td>' . _('Amount Paid CC EDC BCA') . ':</td>
 		  <td><input type="text" class="number" name="AmountPaidCCBCA" maxlength="12" size="12" value="' . $_POST['AmountPaidCCBCA'] . '" /></td>';
 	echo '</tr>';
 
 	echo '<tr>';
-	echo '<td>'. _('Comments') .':</td>
-		  <td colspan= 4><textarea name="Comments" cols="50" rows="3">' . stripcslashes($_SESSION['Items'.$identifier]->Comments) .'</textarea></td>';
+	echo '<td>' . _('Amount Voucher/Discounts') . ':</td>
+		  <td><input type="text" class="number" name="AmountVouchers" maxlength="12" size="12" value="' . $_POST['AmountVouchers'] . '" /></td>';
+	echo '<td></td>';
+	echo '<td>' . _('Amount Paid AMEX EDC BCA') . ':</td>
+		  <td><input type="text" class="number" name="AmountPaidAmexBCA" maxlength="12" size="12" value="' . $_POST['AmountPaidAmexBCA'] . '" /></td>';
 	echo '</tr>';
+
+	echo '<tr>';
+	echo '<td>'. _('Comments') .':</td>
+		  <td colspan= 4><textarea name="Comments" cols="60" rows="3">' . stripcslashes($_SESSION['Items'.$identifier]->Comments) .'</textarea></td>';
+	echo '</tr>';
+
+/*	echo '<tr>
+		  <td>'. _('Yellow Paper Invoice number') .':</td>
+		  <td><input type="text" size="12" maxlength="25" name="CustRef" value="' . stripcslashes($_SESSION['Items'.$identifier]->CustRef) . '" /></td>';
+	echo '<td></td>';
+	echo '<td></td>';
+	echo '<td></td>';
+	echo'</tr>';
+*/
 	echo '</table>';
 
 	/////////////////////////////////////////////////////////////////////
@@ -816,7 +818,7 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 		echo '</table>';	//end of column/row/master table
 	}
 
-	
+	// If the shop is using OUTLET packaging, show it!
 	if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_OUTLET)){
 		echo '<table class="selection">
 				<tr>
@@ -862,7 +864,7 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 	/////////////////////////////////////////////////
 	// TABLE for Customer Information Data Entry
 	/////////////////////////////////////////////////
-
+/* COMMENTED OUT FOR POS v3.0
 	if (!isset($_POST['FirstName'])){
 		$_POST['FisrtName'] ='';
 	}
@@ -924,6 +926,7 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 	echo '</tr>';	
 
 	echo '</table>';
+*/
 
 	/////////////////////////////////////////////////
 	// Buttons confirm / recalculate the sale
@@ -1001,11 +1004,12 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 	}
 	
 	// Yellow paper invoice number is mandatory
+/* KL RICARD Commented out on POS v3.0 as it is only for manual sales
 	if ($_POST['CustRef']== "") {
 		prnMsg(_('Please enter the number of the yellow paper invoice'),'error');
 		$InputError = true;
 	}
-
+*/
 /*******************************************************************************************************************
 KL RICARD: 20/03/2016 Commented out the QOH verification at shop to prevent SPG calling for QOH inconsistencies and adjustments
 Instead of preventing the sale report, webERP sends an email to control what happened, but at least sale can be reported
@@ -1075,6 +1079,18 @@ END OF QOH Verification */
 		$InvoiceNo = GetNextTransNo(10, $db);
 		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 
+		// Get the Customer invoice number depending on Area
+		if ($Area == "REZ"){
+			// Cash sales
+			$_SESSION['Items'.$identifier]->CustRef = "C-".zerofill(GetNextTransNo(9002, $db),8);
+		}elseif ($Area == "REC"){
+			// Cash sales PT
+			$_SESSION['Items'.$identifier]->CustRef = "B-".zerofill(GetNextTransNo(9001, $db),8);
+		}else{
+			// Credit Card Sales PT
+			$_SESSION['Items'.$identifier]->CustRef = "A-".zerofill(GetNextTransNo(9000, $db),8);
+		}
+		
 		$HeaderSQL = "INSERT INTO salesorders (	orderno,
 												debtorno,
 												branchcode,
@@ -1162,7 +1178,7 @@ END OF QOH Verification */
 
 		} /* end inserted line items into sales order details */
 
-		prnMsg(_('Order Number') . ' ' . $OrderNo . ' ' . _('OK.') . 
+/*		prnMsg(_('Order Number') . ' ' . $OrderNo . ' ' . _('OK.') . 
 				' SPG: ' . $_SESSION['SalesmanLogin'] . 
 				' Area: ' . $Area . 
 				' Total invoice: ' . number_format(($_SESSION['Items'.$identifier]->total+$_POST['TaxTotal']),0) .
@@ -1174,7 +1190,7 @@ END OF QOH Verification */
 				' Returned Goods: '. number_format($_POST['AmountReturnedGoods'],0) .
 				' Vouchers/Discounts: '. number_format($_POST['AmountVouchers'],0) .
 				' Yellow invoice: '. $_SESSION['Items'.$identifier]->CustRef,'success');
-
+*/
 		/* End of insertion of new sales order */
 
 		/*Now insert the DebtorTrans */
@@ -1333,7 +1349,6 @@ END OF QOH Verification */
 							'" . $Tax->TaxRate . "',
 							'" . $Tax->TaxCalculationOrder . "',
 							'" . $Tax->TaxOnTax . "')";
-
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('Taxes and rates applicable to this invoice line item could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the stock movement tax detail records was used');
 				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
@@ -1927,21 +1942,51 @@ END OF QOH Verification */
 		}
 		/*	End account for the packaging */
 		
-		RecordRetailCustomerInformation($OrderNo, $_POST['FirstName'], $_POST['LastName'], $_POST['Country'], $_POST['DateOfBirth'], $_POST['Email'], $_POST['Sex'], $db);
+//		RecordRetailCustomerInformation($OrderNo, $_POST['FirstName'], $_POST['LastName'], $_POST['Country'], $_POST['DateOfBirth'], $_POST['Email'], $_POST['Sex'], $db);
 
 		DB_Txn_Commit();
 	// *************************************************************************
 	//   E N D   O F   I N V O I C E   S Q L   P R O C E S S I N G
 	// *************************************************************************
 
-		echo prnMsg( _('YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' WI'). ' '. $InvoiceNo . _('. Total Cash: ') . number_format($_POST['AmountPaidCash'],0) , 'success');
-		echo prnMsg( _('YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' WI'). ' '. $InvoiceNo . _('. Total CC EDC Danamon: ') . number_format($_POST['AmountPaidCCDanamon'],0)  , 'success');
-		echo prnMsg( _('YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' WI'). ' '. $InvoiceNo . _('. Total Amex EDC BCA: ') . number_format($_POST['AmountPaidAmexBCA'],0)  , 'success');
-		echo prnMsg( _('YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' WI'). ' '. $InvoiceNo . _('. Total CC EDC Mandiri: ') . number_format($_POST['AmountPaidCCMandiri'],0)  , 'success');
-		echo prnMsg( _('YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' WI'). ' '. $InvoiceNo . _('. Total CC EDC BCA: ') . number_format($_POST['AmountPaidCCBCA'],0)  , 'success');
-		echo prnMsg( _('YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' WI'). ' '. $InvoiceNo . _('. Total Returned Goods: ') . number_format($_POST['AmountReturnedGoods'],0) , 'success');
-		echo prnMsg( _('YI: ') . $_SESSION['Items'.$identifier]->CustRef  . _(' WI'). ' '. $InvoiceNo . _('. Total Vouchers/Discounts: ') . number_format($_POST['AmountVouchers'],0) , 'success');
-		echo '<br /><div class="centre">';
+		// *************************************************************************
+		//   SHOW THE DETAILS OF PAYMENTS 
+		// *************************************************************************
+
+		echo '<table class="selection">
+				<tr>
+					<th colspan=2>' . _('Retail Sale Reported') . '
+					</th>
+				</tr>';
+		
+		echo '<tr><td>' . _('Receipt Number') . ':</td> <td>' . $_SESSION['Items'.$identifier]->CustRef . '</td></tr>';
+		echo '<tr><td>' . _('Order webERP') . ':</td> <td>' . number_format($OrderNo,0) . '</td></tr>';
+		if ($_POST['AmountPaidCash'] > 0){
+			echo '<tr><td>' . _('Payment Cash') . ':</td> <td>' . number_format($_POST['AmountPaidCash'],0) . '</td></tr>';
+		}
+		if ($_POST['AmountPaidCCDanamon'] > 0){
+			echo '<tr><td>' . _('Payment CC EDC Danamon') . ':</td> <td>' . number_format($_POST['AmountPaidCCDanamon'],0) . '</td></tr>';
+		}
+		if ($_POST['AmountPaidCCMandiri'] > 0){
+			echo '<tr><td>' . _('Payment CC EDC Mandiri') . ':</td> <td>' . number_format($_POST['AmountPaidCCMandiri'],0) . '</td></tr>';
+		}
+		if ($_POST['AmountPaidCCBCA'] > 0){
+			echo '<tr><td>' . _('Payment CC EDC BCA') . ':</td> <td>' . number_format($_POST['AmountPaidCCBCA'],0) . '</td></tr>';
+		}
+		if ($_POST['AmountPaidAmexBCA'] > 0){
+			echo '<tr><td>' . _('Payment AMEX EDC BCA') . ':</td> <td>' . number_format($_POST['AmountPaidAmexBCA'],0) . '</td></tr>';
+		}
+		if ($_POST['AmountReturnedGoods'] > 0){
+			echo '<tr><td>' . _('Returned Goods') . ':</td> <td>' . number_format($_POST['AmountReturnedGoods'],0) . '</td></tr>';
+		}
+		if ($_POST['AmountVouchers'] > 0){
+			echo '<tr><td>' . _('Voucher/Discounts') . ':</td> <td>' . number_format($_POST['AmountVouchers'],0) . '</td></tr>';
+		}
+		echo '</table>';	//end of table of final show of order
+
+		// *************************************************************************
+		//   END OF SHOW THE DETAILS OF PAYMENTS 
+		// *************************************************************************
 		
 		// if splitted payments
 		
@@ -2040,8 +2085,7 @@ END OF QOH Verification */
 		/*                         PRINT THE CUSTOMER INVOICE                               */
 		/************************************************************************************/
 		
-
-
+		KLPrintReceipt();
 		
 		unset($_SESSION['Items'.$identifier]->LineItems);
 		unset($_SESSION['Items'.$identifier]);
