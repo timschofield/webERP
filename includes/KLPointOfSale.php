@@ -158,9 +158,9 @@ function AdjustPackagingMovement($StockId, $QtyDelivered, $InvoiceNo, $PeriodNo,
 
 	if ($QtyDelivered != 0){
 		/* Need to get the current standard cost */
-		$SQL="SELECT (materialcost + labourcost + overheadcost)
-						FROM stockmaster
-						WHERE stockmaster.stockid='" . $StockId . "'";
+		$SQL=	"SELECT (materialcost + labourcost + overheadcost)
+				FROM stockmaster
+				WHERE stockmaster.stockid='" . $StockId . "'";
 		$ErrMsg = _('ERROR: Contact the office!!!  -> AdjustPackagingMovement-0010');
 		$Result = DB_query($SQL, $ErrMsg);
 		if (DB_num_rows($Result)==1){
@@ -172,10 +172,10 @@ function AdjustPackagingMovement($StockId, $QtyDelivered, $InvoiceNo, $PeriodNo,
 		}
 
 		/* Need to get the current location quantity will need it later for the stock movement */
-		$SQL="SELECT locstock.quantity
-						FROM locstock
-						WHERE locstock.stockid='" . $StockId . "'
-						AND loccode= '" . $_SESSION['UserStockLocation'] . "'";
+		$SQL=	"SELECT locstock.quantity
+				FROM locstock
+				WHERE locstock.stockid='" . $StockId . "'
+					AND loccode= '" . $_SESSION['UserStockLocation'] . "'";
 		$ErrMsg = _('ERROR: Contact the office!!!  -> AdjustPackagingMovement-0020');
 		$Result = DB_query($SQL, $ErrMsg);
 
@@ -202,12 +202,11 @@ function AdjustPackagingMovement($StockId, $QtyDelivered, $InvoiceNo, $PeriodNo,
 		$ErrMsg = _('ERROR: Contact the office!!!  -> AdjustPackagingMovement-0030');
 		$DbgMsg = _('The following SQL to insert the packaging used was used');
 		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-
 		
 		/*	Update locstock at the shop for the qty */
 		$SQL = "UPDATE locstock
 					SET quantity = locstock.quantity - " . $QtyDelivered . "
-					WHERE locstock.stockid = '" . $StockId . "'
+				WHERE locstock.stockid = '" . $StockId . "'
 					AND loccode = '" . $_SESSION['UserStockLocation'] . "'";
 
 		$ErrMsg = _('ERROR: Contact the office!!!  -> AdjustPackagingMovement-0040');
@@ -685,13 +684,14 @@ function AccountDebtorDiscount($ReceiptNumber,
 	return $ReceiptNumber;
 }
 
-function KLPrintReceipt(){
-	$TextToPrint = KLPrintReceiptCreateText();
+function KLPrintReceipt($identifier){
+	$TextToPrint = KLPrintReceiptCreateText($identifier);
 	
 	echo $TextToPrint;
 }
 
-function KLPrintReceiptCreateText(){
+function KLPrintReceiptCreateText($identifier){
+	$NewLine = "\n";
 	// name of shop
 	if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_KAPAL_LAUT)){
 		$TextToPrint = "Kapal-Laut. Your Essential Jewellery";
@@ -700,12 +700,17 @@ function KLPrintReceiptCreateText(){
 	}else if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_OUTLET)){
 		$TextToPrint = "OUTLET by Kapal-Laut";
 	}
+	$TextToPrint .= $NewLine;
 	
+	foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
+		$TextToPrint .= $OrderLine->Quantity . "x " . $OrderLine->StockID . " x " . $OrderLine->Price;
+		$TextToPrint .= $NewLine;
+	}
 	
 	// read terms and conditions
 	$TextToPrint .= "For more information check www.kapal-laut.com";
 	
-	echo $TextToPrint;
+	return $TextToPrint;
 }
 
 ?>

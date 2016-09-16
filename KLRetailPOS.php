@@ -102,8 +102,8 @@ if (!isset($_SESSION['Items'.$identifier])){
 					cashsalebranch,
 					locationname,
 					taxprovinceid
-		 FROM locations
-		 WHERE loccode='" . $_SESSION['UserStockLocation'] ."'";
+			 FROM locations
+			 WHERE loccode='" . $_SESSION['UserStockLocation'] ."'";
 	$result = DB_query($sql);
 	if (DB_num_rows($result)==0) {
 		prnMsg(_('Your user account does not have a valid default inventory location set up. Please see the system administrator to modify your user account.'),'error');
@@ -477,15 +477,15 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 		<table width="90%" cellpadding="2" colspan="7">
 		<tr bgcolor="#800000">';
 
-		echo '<th>' . _('Item Code') . '</th>
-   	      <th>' . _('Item Description') . '</th>
-	      <th>' . _('Quantity') . '</th>
-	      <th>' . _('QOH') . '</th>
-	      <th>' . _('Unit') . '</th>
-	      <th>' . _('Price') . '</th>
-	      <th>' . _('Discount') . '</th>
-	      <th>' . _('Total') . '</th>
-	      </tr>';
+	echo '<th>' . _('Item Code') . '</th>
+		  <th>' . _('Item Description') . '</th>
+		  <th>' . _('Quantity') . '</th>
+		  <th>' . _('QOH') . '</th>
+		  <th>' . _('Unit') . '</th>
+		  <th>' . _('Price') . '</th>
+		  <th>' . _('Discount') . '</th>
+		  <th>' . _('Total') . '</th>
+		  </tr>';
 		  
 	$_SESSION['Items'.$identifier]->total = 0;
 	$_SESSION['Items'.$identifier]->totalVolume = 0;
@@ -2091,7 +2091,7 @@ END OF QOH Verification */
 		/*                         PRINT THE CUSTOMER INVOICE                               */
 		/************************************************************************************/
 		
-		KLPrintReceipt();
+		KLPrintReceipt($identifier);
 		
 		unset($_SESSION['Items'.$identifier]->LineItems);
 		unset($_SESSION['Items'.$identifier]);
