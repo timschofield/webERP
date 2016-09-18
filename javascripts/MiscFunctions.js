@@ -355,4 +355,13 @@ function initial(){
 		if (ds[i].className=="ascending") ds[i].onclick=SortSelect;
 	}
 }
+function AddAmount(t,Target,d) {
+	if (t.checked) {
+		document.getElementById(Target).value=Number(t.value);
+		if(d) document.getElementById(d).required="required";
+	} else {
+		document.getElementById(Target).value=Number(document.getElementById(Target).value)-Number(t.value);
+		if(d) document.getElementById(d).required="";
+	}
+}
 window.onload=initial;
