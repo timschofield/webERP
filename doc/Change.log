@@ -1,5 +1,6 @@
 webERP Change Log
 
+18/09/16 Exson: Add multiple items issue for non-controlled items feature to Work Orders in WorkOrderIssue.php.
 14/09/16 Exson: Add narrative, transaction date data to PDFOrdersInvoiced.php.
 14/09/16: Exson: Add order line narrative and invoices link to sales order inquiry in OrderDetails.php.
 12/09/16 Exson: Add a filter to avoid tons of zero valued gl transaction records generated in SQL_CommonFunctions.inc.
