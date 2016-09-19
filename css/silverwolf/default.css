@@ -16,6 +16,12 @@ the next project. :)
 
 ***/
 
+button img {
+	/* Describes how button image should be displayed. */
+	height:21px;
+	width:21px;
+}
+
 
 body{
 	font-family:Arial, Verdana, Helvetica, sans-serif;

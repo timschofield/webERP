@@ -8,6 +8,12 @@ This is a fluid theme capable to adjust itself on small screen devices (phones, 
 Beware, the contents is currently not fluid! :D
 */
 
+button img {
+	/* Describes how button image should be displayed. */
+	height:21px;
+	width:21px;
+}
+
 body{
 	font-family:Arial, Verdana, Helvetica, sans-serif;
 	font-size:10pt;

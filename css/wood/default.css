@@ -19,6 +19,12 @@ Notes:
 
 */
 
+button img {
+	/* Describes how button image should be displayed. */
+	height:24px;
+	width:24px;
+}
+
 body{
 	font-family:Arial, Verdana, Helvetica, sans-serif;
 	font-size:10pt;
