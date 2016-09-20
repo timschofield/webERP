@@ -684,13 +684,16 @@ function AccountDebtorDiscount($ReceiptNumber,
 	return $ReceiptNumber;
 }
 
-function KLPrintReceipt($identifier){
-	$TextToPrint = KLPrintReceiptCreateText($identifier);
-	
+function KLPrintReceipt($identifier, $OrderNo){
+	$TextToPrint = KLPrintReceiptCreateText($identifier, $OrderNo);
+	$ShopTextToPrint = KLPrintReceiptShopText($identifier, $OrderNo);
+
+	// for test only
+	$TextToPrint = $TextToPrint . $ShopTextToPrint;
 	echo $TextToPrint;
 }
 
-function KLPrintReceiptCreateText($identifier){
+function KLPrintReceiptCreateText($identifier, $OrderNo){
 	$NewLine = "\n";
 	// name of shop
 	if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_KAPAL_LAUT)){
@@ -701,14 +704,160 @@ function KLPrintReceiptCreateText($identifier){
 		$TextToPrint = "OUTLET by Kapal-Laut";
 	}
 	$TextToPrint .= $NewLine;
-	
-	foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
-		$TextToPrint .= $OrderLine->Quantity . "x " . $OrderLine->StockID . " x " . $OrderLine->Price;
+
+	if (webERP_in_test()){
+		$TextToPrint .= "TEST SALE - IT IS NOT A VALID INVOICE";
 		$TextToPrint .= $NewLine;
 	}
 	
+	$TextToPrint .= 'Invoice#: ' . $_SESSION['Items'.$identifier]->CustRef;
+	$TextToPrint .= $NewLine;
+	$TextToPrint .= DisplayDateTime();
+	$TextToPrint .= $NewLine;
+	$TextToPrint .= 'ERP#: ' . number_format($OrderNo);
+	$TextToPrint .= $NewLine;
+	$TextToPrint .= 'SPG#: ' . $_SESSION['SalesmanLogin'];
+	$TextToPrint .= $NewLine;
+	
+	foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
+		$SubTotal = $OrderLine->Quantity * $OrderLine->Price * (1 - $OrderLine->DiscountPercent);
+		$Total = $Total + $SubTotal;
+
+		$TextToPrint .= $OrderLine->Quantity . " x " . $OrderLine->StockID . " x " . number_format($OrderLine->Price);
+		$TextToPrint .= $NewLine;
+		$TextToPrint .= $OrderLine->ItemDescription;
+		$TextToPrint .= $NewLine;
+		if ($OrderLine->DiscountPercent != 0){
+			$TextToPrint .= "Discount " . number_format($OrderLine->DiscountPercent*100) . "%";
+			$TextToPrint .= $NewLine;
+		}
+		if (($OrderLine->DiscountPercent != 0) OR ($OrderLine->Quantity >1)){
+			$TextToPrint .= number_format($SubTotal);
+			$TextToPrint .= $NewLine;
+		}
+	}
+
+	$Goods = $Total / 1.1;
+	$PPN = $Total-$Goods;
+
+	$TextToPrint .= 'Total: ' . number_format($Total);
+	$TextToPrint .= $NewLine;
+	$TextToPrint .= 'Goods: ' . number_format($Goods);
+	$TextToPrint .= $NewLine;
+	$TextToPrint .= 'PPN 10%: ' . number_format($PPN);
+	$TextToPrint .= $NewLine;
+	
 	// read terms and conditions
-	$TextToPrint .= "For more information check www.kapal-laut.com";
+	$TextToPrint .= "This invoice is the only valid proof of purchase";
+	$TextToPrint .= $NewLine;
+	$TextToPrint .= "For more information on terms, conditions and warranty check www.kapal-laut.com";
+	$TextToPrint .= $NewLine;
+	
+	if (webERP_in_test()){
+		$TextToPrint .= "TEST SALE - IT IS NOT A VALID INVOICE";
+		$TextToPrint .= $NewLine;
+	}
+	
+	return $TextToPrint;
+}
+
+function KLPrintReceiptShopText($identifier, $OrderNo){
+	$NewLine = "\n";
+
+	// Packaging included
+	$TextToPrint .= "Packaging included";
+	$TextToPrint .= $NewLine;
+	if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_KAPAL_LAUT)){
+		if ($_POST['PackagingBox01L'] != 0){
+			$TextToPrint .= "KL Box-L: ". $_POST['PackagingBox01L'] . " boxes";
+			$TextToPrint .= $NewLine;
+		}
+		if ($_POST['PackagingBox01M'] != 0){
+			$TextToPrint .= "KL Box-M: ". $_POST['PackagingBox01M'] . " boxes";
+			$TextToPrint .= $NewLine;
+		}
+		if ($_POST['PackagingBox01S'] != 0){
+			$TextToPrint .= "KL Box-S: ". $_POST['PackagingBox01S'] . " boxes";
+			$TextToPrint .= $NewLine;
+		}
+		if ($_POST['PackagingPouchBag01L'] != 0){
+			$TextToPrint .= "KL Pouchbag-L: ". $_POST['PackagingPouchBag01L'] . " pouches";
+			$TextToPrint .= $NewLine;
+		}
+		if ($_POST['PackagingPouchBag01M'] != 0){
+			$TextToPrint .= "KL Pouchbag-M: ". $_POST['PackagingPouchBag01M'] . " pouches";
+			$TextToPrint .= $NewLine;
+		}
+		if ($_POST['PackagingPouchBag01S'] != 0){
+			$TextToPrint .= "KL Pouchbag-S: ". $_POST['PackagingPouchBag01S'] . " pouches";
+			$TextToPrint .= $NewLine;
+		}
+		if ($_POST['ShoppingBag02L'] != 0){
+			$TextToPrint .= "KL Shopping Bag-L: ". $_POST['ShoppingBag02L'] . " bags";
+			$TextToPrint .= $NewLine;
+		}
+		if ($_POST['ShoppingBag02M'] != 0){
+			$TextToPrint .= "KL Shopping Bag-L: ". $_POST['ShoppingBag02M'] . " bags";
+			$TextToPrint .= $NewLine;
+		}
+		if ($_POST['ShoppingBag02S'] != 0){
+			$TextToPrint .= "KL Shopping Bag-S: ". $_POST['ShoppingBag02S'] . " bags";
+			$TextToPrint .= $NewLine;
+		}
+	}
+	if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_BLINK)){
+		if ($_POST['BlinkPouchBag03L'] != 0){
+			$TextToPrint .= "Blink Pouchbag-L: ". $_POST['BlinkPouchBag03L'] . " pouches";
+			$TextToPrint .= $NewLine;
+		}
+		if ($_POST['BlinkPouchBag03M'] != 0){
+			$TextToPrint .= "Blink Pouchbag-M: ". $_POST['BlinkPouchBag03M'] . " pouches";
+			$TextToPrint .= $NewLine;
+		}
+		if ($_POST['BlinkPouchBag03S'] != 0){
+			$TextToPrint .= "Blink Pouchbag-S: ". $_POST['BlinkPouchBag03S'] . " pouches";
+			$TextToPrint .= $NewLine;
+		}
+		if ($_POST['BlinkShoppingBag04XL'] != 0){
+			$TextToPrint .= "Blink Shopping Bag-XL: ". $_POST['BlinkShoppingBag04XL'] . " bags";
+			$TextToPrint .= $NewLine;
+		}
+		if ($_POST['BlinkShoppingBag04L'] != 0){
+			$TextToPrint .= "Blink Shopping Bag-L: ". $_POST['BlinkShoppingBag04L'] . " bags";
+			$TextToPrint .= $NewLine;
+		}
+		if ($_POST['BlinkShoppingBag04M'] != 0){
+			$TextToPrint .= "Blink Shopping Bag-M: ". $_POST['BlinkShoppingBag04M'] . " bags";
+			$TextToPrint .= $NewLine;
+		}
+		if ($_POST['BlinkShoppingBag04S'] != 0){
+			$TextToPrint .= "Blink Shopping Bag-S: ". $_POST['BlinkShoppingBag04S'] . " bags";
+			$TextToPrint .= $NewLine;
+		}
+	}
+	if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_OUTLET)){
+		if ($_POST['OutletPouchBag02L'] != 0){
+			$TextToPrint .= "Outlet Pouchbag-L: ". $_POST['OutletPouchBag02L'] . " pouches";
+			$TextToPrint .= $NewLine;
+		}
+		if ($_POST['OutletPouchBag02M'] != 0){
+			$TextToPrint .= "Outlet Pouchbag-M: ". $_POST['OutletPouchBag02M'] . " pouches";
+			$TextToPrint .= $NewLine;
+		}
+		if ($_POST['OutletPouchBag02S'] != 0){
+			$TextToPrint .= "Outlet Pouchbag-S: ". $_POST['OutletPouchBag02S'] . " pouches";
+			$TextToPrint .= $NewLine;
+		}
+		if ($_POST['OutletShoppingBag03M'] != 0){
+			$TextToPrint .= "Outlet Shopping Bag-M: ". $_POST['OutletShoppingBag03M'] . " bags";
+			$TextToPrint .= $NewLine;
+		}
+	}
+
+	if (webERP_in_test()){
+		$TextToPrint .= "TEST SALE - IT IS NOT A VALID INVOICE";
+		$TextToPrint .= $NewLine;
+	}
 	
 	return $TextToPrint;
 }

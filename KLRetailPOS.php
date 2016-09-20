@@ -1088,13 +1088,18 @@ END OF QOH Verification */
 		// Get the Customer invoice number depending on Area
 		if ($Area == "REZ"){
 			// Cash sales
-			$_SESSION['Items'.$identifier]->CustRef = "C-".$_SESSION['UserStockLocation']."-".zerofill(GetNextTransNo(9002, $db),8);
+			$_SESSION['Items'.$identifier]->CustRef = "C-".substr($_SESSION['UserStockLocation'],3,2)."-".zerofill(GetNextTransNo(9002, $db),8);
 		}elseif ($Area == "REC"){
 			// Cash sales PT
-			$_SESSION['Items'.$identifier]->CustRef = "B-".$_SESSION['UserStockLocation']."-".zerofill(GetNextTransNo(9001, $db),8);
-		}else{
+			$_SESSION['Items'.$identifier]->CustRef = "B-".substr($_SESSION['UserStockLocation'],3,2)."-".zerofill(GetNextTransNo(9001, $db),8);
+		}elseif ($Area == "RER"){
 			// Credit Card Sales PT
-			$_SESSION['Items'.$identifier]->CustRef = "A-".$_SESSION['UserStockLocation']."-".zerofill(GetNextTransNo(9000, $db),8);
+			$_SESSION['Items'.$identifier]->CustRef = "A-".substr($_SESSION['UserStockLocation'],3,2)."-".zerofill(GetNextTransNo(9000, $db),8);
+		}else{
+			/*The area is wrong for any reason */
+			prnMsg('ERROR POS0050: The area ' . $Area . ' is not defined. Please call the office inmediately', 'error');
+			include('includes/footer.inc');
+			exit;
 		}
 		
 		$HeaderSQL = "INSERT INTO salesorders (	orderno,
@@ -1184,19 +1189,6 @@ END OF QOH Verification */
 
 		} /* end inserted line items into sales order details */
 
-/*		prnMsg(_('Order Number') . ' ' . $OrderNo . ' ' . _('OK.') . 
-				' SPG: ' . $_SESSION['SalesmanLogin'] . 
-				' Area: ' . $Area . 
-				' Total invoice: ' . number_format(($_SESSION['Items'.$identifier]->total+$_POST['TaxTotal']),0) .
-				' Paid Cash: '. number_format($_POST['AmountPaidCash'],0) .
-				' Paid CC EDC Danamon: '. number_format($_POST['AmountPaidCCDanamon'],0) .
-				' Paid Amex EDC BCA: '. number_format($_POST['AmountPaidAmexBCA'],0) .
-				' Paid CC EDC Mandiri: '. number_format($_POST['AmountPaidCCMandiri'],0) .
-				' Paid CC EDC BCA: '. number_format($_POST['AmountPaidCCBCA'],0) .
-				' Returned Goods: '. number_format($_POST['AmountReturnedGoods'],0) .
-				' Vouchers/Discounts: '. number_format($_POST['AmountVouchers'],0) .
-				' Yellow invoice: '. $_SESSION['Items'.$identifier]->CustRef,'success');
-*/
 		/* End of insertion of new sales order */
 
 		/*Now insert the DebtorTrans */
@@ -2091,7 +2083,7 @@ END OF QOH Verification */
 		/*                         PRINT THE CUSTOMER INVOICE                               */
 		/************************************************************************************/
 		
-		KLPrintReceipt($identifier);
+		KLPrintReceipt($identifier, $OrderNo);
 		
 		unset($_SESSION['Items'.$identifier]->LineItems);
 		unset($_SESSION['Items'.$identifier]);
