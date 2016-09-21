@@ -79,7 +79,7 @@ if(isset($_POST['ShowResults']) AND $_POST['TransNo']!='') {
 	}
 	$result = DB_query($sql );
 
-	if(DB_num_rows($result)==1) {
+	if(DB_num_rows($result) > 0) {
 		$myrow = DB_fetch_array($result);
 		$AllocToID = $myrow['id'];
 		$CurrCode = $myrow['currcode'];
