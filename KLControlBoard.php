@@ -171,6 +171,18 @@ if ($ProcessSection01){
 		over_or_below_limit("Items moving to 80% discount", "OVER", 0, $RootPath, $db);
 	}
 	*/
+	if ($KL_BusinessDevelopmentManager
+		OR $KL_SystemAdmin){
+		
+		over_or_below_limit("DISC20 Items in AR", "BELOW", 50, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		over_or_below_limit("DISC80 Items in AR", "BELOW", 15, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		over_or_below_limit("DISC20 Items in UB", "BELOW", 50, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		over_or_below_limit("DISC80 Items in UB", "BELOW", 15, $RootPath, $db);
+		$NumberOfTestExecuted++;
+	}
 
 	if ($KL_BusinessDevelopmentManager
 		OR $KL_ShopSupportTeam){

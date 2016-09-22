@@ -6182,6 +6182,34 @@ function over_or_below_limit($Request, $Sign, $Limit, $RootPath, $db){
 					OR stockmaster.klmovingdiscount20 != 0
 					OR stockmaster.klmovingdiscount50 != 0
 					OR stockmaster.klmovingdiscount80 != 0";
+	}elseif ($Request =="DISC20 Items in AR"){
+		$SQL = "SELECT COUNT(*)
+				FROM stockmaster,locstock
+				WHERE stockmaster.stockid = locstock.stockid
+					AND stockmaster.categoryid = 'DISC20'
+					AND locstock.reorderlevel > 0
+					AND locstock.loccode ='TOKAR'";
+	}elseif ($Request =="DISC80 Items in AR"){
+		$SQL = "SELECT COUNT(*)
+				FROM stockmaster,locstock
+				WHERE stockmaster.stockid = locstock.stockid
+					AND stockmaster.categoryid = 'DISC80'
+					AND locstock.reorderlevel > 0
+					AND locstock.loccode ='TOKAR'";
+	}elseif ($Request =="DISC20 Items in UB"){
+		$SQL = "SELECT COUNT(*)
+				FROM stockmaster,locstock
+				WHERE stockmaster.stockid = locstock.stockid
+					AND stockmaster.categoryid = 'DISC20'
+					AND locstock.reorderlevel > 0
+					AND locstock.loccode ='TOKUB'";
+	}elseif ($Request =="DISC80 Items in UB"){
+		$SQL = "SELECT COUNT(*)
+				FROM stockmaster,locstock
+				WHERE stockmaster.stockid = locstock.stockid
+					AND stockmaster.categoryid = 'DISC80'
+					AND locstock.reorderlevel > 0
+					AND locstock.loccode ='TOKUB'";
 	}
 	
 	$result = DB_query($SQL);
