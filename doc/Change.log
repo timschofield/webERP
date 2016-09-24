@@ -1,5 +1,6 @@
 webERP Change Log
 
+24/09/16 Exson: Fixed the AddTextWrap missing characters errors when there is space and make it more reliable. 
 21/09/16 RChacon: In SuppWhereAlloc.php, accepts the payment multiple creditors. In CustWhereAlloc.php, accepts the receipt of multiple debtors.
 18/09/16 RChacon: Add style to describe how button image should be displayed. Clean up Xenos css.
 18/09/16 Exson: Add multiple items issue for non-controlled items feature to Work Orders in WorkOrderIssue.php.
