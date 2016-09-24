@@ -80,7 +80,7 @@ if (!class_exists('Cpdf', false)) {
 			$this->Text($XPos, $this->h-$YPos, $text);// Public function Text() in ~/includes/tcpdf/tcpdf.php.
 		}
 
-		function addTextWrap($XPos, $YPos, $Width, $Height, $Text, $Align='J', $border=0, $fill=0) {
+		function addTextWrap($XPos, $YPos, $Width, $Height, $Text, $Align='full', $border=0, $fill=0) {
 			// R&OS version 0.12.2: "addTextWrap function is no more, use addText instead".
 			/* Returns the balance of the string that could not fit in the width */
 			// $XPos = cell horizontal coordinate from page left side to cell left side in dpi (72dpi = 25.4mm).
