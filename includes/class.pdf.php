@@ -120,7 +120,7 @@ if (!class_exists('Cpdf', false)) {
 			$s=str_replace("\r",'',$Text);
 			$s=str_replace("\n",' ',$s);
 			$s = trim($s).' ';
-			$nb=mb_strlen($s);
+			$nb=mb_strlen($s,'UTF-8');
 			$b=0;
 			if ($border) {
 				if ($border==1) {
@@ -129,13 +129,13 @@ if (!class_exists('Cpdf', false)) {
 					$b2='LR';
 				} else {
 					$b2='';
-					if(is_int(mb_strpos($border,'L'))) {
+					if(is_int(mb_strpos($border,'L',0,'UTF-8'))) {
 						$b2.='L';
 					}
-					if(is_int(mb_strpos($border,'R'))) {
+					if(is_int(mb_strpos($border,'R',0,'UTF-8'))) {
 						$b2.='R';
 					}
-					$b=is_int(mb_strpos($border,'T')) ? $b2.'T' : $b2;
+					$b=is_int(mb_strpos($border,'T',0,'UTF-8')) ? $b2.'T' : $b2;
 				}
 			}
 			$sep=-1;
@@ -146,7 +146,7 @@ if (!class_exists('Cpdf', false)) {
 			while($i<$nb) {
 				/*$c=$s{$i};*/
 				$c=mb_substr($s, $i, 1, 'UTF-8');
-				if($c==' ' AND $i>0) {
+				if($c===' ' AND $i>0) {
 					$sep=$i;
 					$ls=$l;
 					$ns++;
@@ -169,17 +169,17 @@ if (!class_exists('Cpdf', false)) {
 					$this->ws=0;
 					$this->_out('0 Tw');
 				}
-				$sep = $i;
 			} else {
 				if($Align=='J') {
 					$this->ws=($ns>1) ? ($wmax-$ls)/($ns-1) : 0;
 					$this->_out(sprintf('%.3f Tw',$this->ws*$this->k));
 				}
 			}
+			$sep = $i;
 
 			$this->Cell($Width,$Height,mb_substr($s,0,$sep,'UTF-8'),$b,2,$Align,$fill);
 			$this->x=$this->lMargin;
-			return mb_substr($s, $sep,null,'UTF-8');
+			return mb_substr($s, $sep,$nb-$sep,'UTF-8');
 		}// End function addTextWrap.
 
 		function addInfo($label, $value) {
