@@ -1,12 +1,13 @@
 webERP Change Log
 
+24/09/16 waynemcdougall: Fixed missing date in Sales Price history
 24/09/16 Exson: Make Justify feature workable in addTextWrap in class.pdf.php.
 24/09/16 Exson: Fixed the AddTextWrap missing characters errors when there is space and make it more reliable. 
 21/09/16 RChacon: In SuppWhereAlloc.php, accepts the payment multiple creditors. In CustWhereAlloc.php, accepts the receipt of multiple debtors.
 18/09/16 RChacon: Add style to describe how button image should be displayed. Clean up Xenos css.
 18/09/16 Exson: Add multiple items issue for non-controlled items feature to Work Orders in WorkOrderIssue.php.
 14/09/16 Exson: Add narrative, transaction date data to PDFOrdersInvoiced.php.
-14/09/16: Exson: Add order line narrative and invoices link to sales order inquiry in OrderDetails.php.
+14/09/16 Exson: Add order line narrative and invoices link to sales order inquiry in OrderDetails.php.
 12/09/16 Exson: Add a filter to avoid tons of zero valued gl transaction records generated in SQL_CommonFunctions.inc.
 04/09/16 Exson: Add WO items delete constraint in WorkOrderEntry.php. Thanks for Phil's reminder.
 04/09/16 Exson: Add delete Work orders Items feature in WorkOrderEntry.php.

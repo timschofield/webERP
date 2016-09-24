@@ -301,7 +301,7 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
                   break; /* 10 price records is enough to display */
                 }
 	    	if ($myrow['trandate'] < FormatDateForSQL(DateAdd(date($_SESSION['DefaultDateFormat']),'y', -1))) {
-	    	  break; /* stop displaying pirce history more than a year old once we have at least one  to display */
+	    	  break; /* stop displaying price history more than a year old once we have at least one  to display */
    	        }
 	    }
 	    $LastPrice = $myrow['price'];
@@ -355,7 +355,7 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 					<td class="number">%s</td>
 					<td class="number">%s%%</td>
 					</tr>',
-					$ph[0],
+					$PreviousPrice[0],
 					locale_number_format($PreviousPrice[1],$DecimalPlaces),
 					locale_number_format($PreviousPrice[2],$_SESSION['CompanyRecord']['decimalplaces']),
 					locale_number_format($PreviousPrice[3]*100,2));
