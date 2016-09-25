@@ -752,8 +752,7 @@ $MenuItems['Utilities']['Transactions']['Caption'] = array(	_('Change A Customer
 															_('Re-apply costs to Sales Analysis'),
 															_('Delete sales transactions'),
 															_('Reverse all supplier payments on a specified date'),
-															_('Update sales analysis with latest customer data'),
-															_('Copy Authority of GL Accounts from one user to another'));
+															_('Update sales analysis with latest customer data'));
 
 $MenuItems['Utilities']['Transactions']['URL'] = array(	'/Z_ChangeCustomerCode.php',
 														'/Z_ChangeBranchCode.php',
@@ -767,8 +766,7 @@ $MenuItems['Utilities']['Transactions']['URL'] = array(	'/Z_ChangeCustomerCode.p
 														'/Z_ReApplyCostToSA.php',
 														'/Z_DeleteSalesTransActions.php',
 														'/Z_ReverseSuppPaymentRun.php',
-														'/Z_UpdateSalesAnalysisWithLatestCustomerData.php',
-														'/Z_GLAccountUsersCopyAuthority.php');
+														'/Z_UpdateSalesAnalysisWithLatestCustomerData.php');
 
 $MenuItems['Utilities']['Reports']['Caption'] = array(	_('Debtors Balances By Currency Totals'),
 														_('Suppliers Balances By Currency Totals'),
@@ -791,7 +789,7 @@ $MenuItems['Utilities']['Maintenance']['Caption'] = array(	_('Maintain Language 
 															_('Create new company template SQL file and submit to webERP'),
 															_('Re-calculate brought forward amounts in GL'),
 															_('Re-Post all GL transactions from a specified period'),
-															_('KL Database Maintenance'),
+															_('KL Daily Database Maintenance'),
 															_('Purge all old prices'));
 
 $MenuItems['Utilities']['Maintenance']['URL'] = array(	'/Z_poAdmin.php',
