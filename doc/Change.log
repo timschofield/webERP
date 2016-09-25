@@ -1,5 +1,6 @@
 webERP Change Log
 
+24/10/16 Simon Kelly: Fixed placing POs for sales orders using array form variable
 24/09/16 waynemcdougall: Fixed missing date in Sales Price history
 24/09/16 Exson: Make Justify feature workable in addTextWrap in class.pdf.php.
 24/09/16 Exson: Fixed the AddTextWrap missing characters errors when there is space and make it more reliable. 

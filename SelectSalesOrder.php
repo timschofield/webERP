@@ -30,12 +30,12 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 
 	/*Note the button would not have been displayed if the user had no authority to create purchase orders */
 	$OrdersToPlacePOFor = '';
-	for ($i=1;$i<count($_POST);$i++){
-		if (isset($_POST['PlacePO_' . $i])) { //checkboxes only set if they are checked
+	for ($i=0;$i<=count($_POST['PlacePO_']);$i++){
+		if (isset($_POST['PlacePO_'][$i])) { //checkboxes only set if they are checked
 			if ($OrdersToPlacePOFor==''){
-				$OrdersToPlacePOFor .= " orderno='" . $_POST['OrderNo_PO_'.$i] . "'";
+				$OrdersToPlacePOFor .= " orderno='" . $_POST['OrderNo_PO_'][$i] . "'";
 			} else {
-				$OrdersToPlacePOFor .= " OR orderno='" . $_POST['OrderNo_PO_'.$i] . "'";
+				$OrdersToPlacePOFor .= " OR orderno='" . $_POST['OrderNo_PO_'][$i] . "'";
 			}
 		}
 	}
@@ -782,7 +782,7 @@ if (isset($StockItemsResult)
 		 				<td>%s</td>
 		 				<td>%s</td>
 		 				<td class="number">%s</td>
-		 				<td><input type="checkbox" name="PlacePO_%s" /><input type="hidden" name="OrderNo_PO_%s" value="%s" /></td>
+		 				<td><input type="checkbox" name="PlacePO_[]" /><input type="hidden" name="OrderNo_PO_[]" value="%s" /></td>
 		 				</tr>',
 		 				$ModifyPage,
 		 				$myrow['orderno'],
@@ -854,7 +854,11 @@ if (isset($StockItemsResult)
 		if ($_POST['Quotations']=='Orders_Only'
 			AND $AuthRow['cancreate']==0){ //cancreate==0 means can create POs
 
-			echo '<tfoot><tr><td colspan="11" class="number"><input type="submit" name="PlacePO" value="' . _('Place') . " " . _('PO') . '" onclick="return confirm(\'' . _('This will create purchase orders for all the items on the checked sales orders above, based on the preferred supplier purchasing data held in the system. Are You Absolutely Sure?') . '\');" /></td></tr></tfoot>';
+			echo '<tfoot>
+					<tr>
+						<td colspan="11" class="number"><input type="submit" name="PlacePO" value="' . _('Place') . " " . _('PO') . '" onclick="return confirm(\'' . _('This will create purchase orders for all the items on the checked sales orders above, based on the preferred supplier purchasing data held in the system. Are You Absolutely Sure?') . '\');" /></td>
+					</tr>
+				</tfoot>';
 		}
 		echo '<tfoot><tr><td colspan="9" class="number">';
 		if ($_POST['Quotations']=='Orders_Only'){
