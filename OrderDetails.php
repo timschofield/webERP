@@ -54,7 +54,9 @@ $GetOrdHdrResult = DB_query($OrderHeaderSQL, $ErrMsg, $DbgMsg);
 if (DB_num_rows($GetOrdHdrResult)==1) {
 	echo '<p class="page_title_text">
 			<img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Order Details') . '" alt="" />' . ' ' . $Title . '
-		</p>';
+		</p>
+		<a href="' . $RootPath . '/SelectCompletedOrder.php">' . _('Return to Sales Order Inquiry') . '</a><br/>
+		<a href="' . $RootPath . '/SelectCustomer.php">' . _('Return to Customer Inquiry Interface') . '</a>';
 
 	$myrow = DB_fetch_array($GetOrdHdrResult);
 	$CurrDecimalPlaces = $myrow['decimalplaces'];
