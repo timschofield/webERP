@@ -9,6 +9,9 @@ $ViewTopic= "SalesOrders";
 $BookMark = "SelectSalesOrder";
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
+if (isset($_POST['Reset'])) {
+	unset($_POST);
+}
 
 if (isset($_GET['SelectedStockItem'])) {
 	$SelectedStockItem = $_GET['SelectedStockItem'];
@@ -25,7 +28,7 @@ if (isset($_GET['SelectedCustomer'])) {
 } else {
 	unset($SelectedCustomer);
 }
-
+	
 if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders */
 
 	/*Note the button would not have been displayed if the user had no authority to create purchase orders */
@@ -424,6 +427,9 @@ if (isset($_GET['OrderNumber'])){
 } else {
 	unset($OrderNumber);
 }
+if (isset($_POST['CustomerRef'])) {
+	$CustomerRef = $_POST['CustomerRef'];
+}
 
 if (isset($OrderNumber) AND $OrderNumber!='') {
 	$OrderNumber = trim($OrderNumber);
@@ -503,14 +509,49 @@ if (!isset($StockID)) {
 		if (isset($_POST['Quotations']) AND $_POST['Quotations']=='Quotes_Only'){
 			echo '<option selected="selected" value="Quotes_Only">' . _('Quotations Only') . '</option>';
 			echo '<option value="Orders_Only">' . _('Orders Only')  . '</option>';
+			echo '<option value="Overdue_Only">' . _('Overdue Only') . '</option>';
+		} elseif (isset($_POST['Quotations']) AND $_POST['Quotations'] == 'Overdue_Only'){
+			echo '<option selected="selected" value="Overdue_Only">' . _('Overdue Only') . '</option>';
+			echo '<option value="Quotes_Only">' . _('Quotations Only') . '</option>';
+			echo '<option value="Orders_Only">' . _('Orders Only') . '</option>';
 		} else {
 			echo '<option selected="selected" value="Orders_Only">' . _('Orders Only') . '</option>';
 			echo '<option value="Quotes_Only">' . _('Quotations Only') . '</option>';
+			echo '<option value="Overdue_Only">' . _('Overdue Only') . '</option>';
+		}
+		if (!isset($_POST['DueDateFrom'])) {
+			$_POST['DueDateFrom'] = '';
+		}
+		if (!isset($_POST['DueDateTo'])) {
+			$_POST['DueDateTo'] = '';
+		}
+		if (!isset($_POST['CustomerRef'])) {
+			$_POST['CustomerRef'] = '';
+		}
+		if (!isset($_POST['OrderDateFrom'])) {
+			$_POST['OrderDateFrom'] = '';
+		}
+		if (!isset($_POST['OrderDateTo'])) {
+			$_POST['OrderDateTo'] = '';
 		}
 
+
 		echo '</select> </td>
+			<td>' . _('Due Date From') . '</td>
+			<td><input type="text" class="date" name="DueDateFrom" value="' . $_POST['DueDateFrom'] . '" alt="' . $_SESSION['DefaultDateFormat'] . '" size="10" /></td> 
+			<td>' . _('Due Date To') . '</td>
+			<td><input type="text" class="date" name="DueDateTo" value="' . $_POST['DueDateTo'] . '" alt="' . $_SESSION['DefaultDateFormat'] . '" size="10" /></td>
 				<td><input type="submit" name="SearchOrders" value="' . _('Search') . '" /></td>
+				<td><input type="submit" name="Reset" value="' . _('Reset') . '" /></td>
 				<td><a href="' . $RootPath . '/SelectOrderItems.php?NewOrder=Yes">' . _('Add Sales Order') . '</a></td>
+			</tr>
+			<tr>
+				<td>' . _('Customer Ref') . '</td>
+				<td><input type="text" name="CustomerRef" value="' . $_POST['CustomerRef'] . '" size="12" /></td>
+				<td>' . _('Order Date From') . '</td>
+				<td><input type="text" name="OrderDateFrom" value="' . $_POST['OrderDateFrom'] . '" size="10" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" /></td>
+				<td>' . _('Order Date To') . '</td>
+				<td><input type="text" name="OrderDateTo" value="' . $_POST['OrderDateTo'] . '" size="10" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" /></td>
 			</tr>
 			</table>';
 	}
@@ -601,13 +642,42 @@ if (isset($StockItemsResult)
 	//figure out the SQL required from the inputs available
 	if (isset($_POST['Quotations']) AND $_POST['Quotations']=='Orders_Only'){
 		$Quotations = 0;
-	} else {
+	} elseif(isset($_POST['Quotations']) AND $_POST['Quotations'] == 'Quotations_Only') {
 		$Quotations =1;
+	} elseif(isset($_POST['Quotations']) AND $_POST['Quotations'] == 'Overdue_Only') {
+		$Quotations = "0 AND itemdue<'" . Date('Y-m-d') . "'";
+	} else {
+		$Quotations = 0;
 	}
+	if (isset($_POST['DueDateFrom']) AND is_date($_POST['DueDateFrom'])) {
+		$DueDateFrom = " AND itemdue>='"  . FormatDateForSQL($_POST['DueDateFrom']) . "' ";
+	} else {
+		$DueDateFrom = '';
+	}
+	if (isset($_POST['DueDateTo']) AND is_date($_POST['DueDateTo'])) {
+		$DueDateTo = " AND itemdue<='" . FormatDateForSQL($_POST['DueDateTo']) . "'";
+	} else {
+		$DueDateTo = '';
+	}
+	if (isset($_POST['OrderDateFrom']) AND is_date($_POST['OrderDateFrom'])) {
+		$OrderDateFrom = " AND orddate >='" . FormatDateForSQL($_POST['OrderDateFrom']) . "' ";
+	} else {
+		$OrderDateFrom = '';
+	}
+	if (isset($_POST['OrderDateTo']) AND is_date($_POST['OrderDateTo'])) {
+		$OrderDateTo = " AND orddate <='" . FormatDateForSQL($_POST['OrderDateTo']) . "' ";
+	} else {
+		$OrderDateTo = '';
+	}
+
 	if(!isset($_POST['StockLocation'])) {
 		$_POST['StockLocation'] = '';
 	}
 	//Harmonize the ordervalue with SUM function since webERP allowed same items appeared several times in one sales orders. If there is no sum value, this situation not inclued.
+	//We should separate itemdue inquiry from normal inquiry. 
+	if (($Quotations === 0 OR $Quotations === 1) 
+		AND (!isset($DueDateFrom) OR !is_date($DueDateFrom)) 
+		AND (!isset($DueDateTo) OR !is_date($DueDateTo))) {
 
 			$SQL = "SELECT salesorders.orderno,
 					debtorsmaster.name,
@@ -629,6 +699,76 @@ if (isset($StockItemsResult)
 					INNER JOIN currencies
 					ON debtorsmaster.currcode = currencies.currabrev
 					WHERE salesorderdetails.completed=0 ";
+			$SQL .= $OrderDateFrom . $OrderDateTo;
+		} else {
+			if ($Quotations !==0 AND $Quotations !==1) {//overdue inquiry only 
+				$SQL = "SELECT salesorders.orderno,
+						debtorsmaster.name,
+						custbranch.brname,
+						salesorders.customerref,
+						salesorders.orddate,
+						salesorders.deliverydate,
+						salesorders.deliverto,
+						salesorders.printedpackingslip,
+						salesorders.poplaced,
+						SUM(CASE WHEN itemdue<'" . Date('Y-m-d') . "' 
+						     THEN salesorderdetails.unitprice*(salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*(1-salesorderdetails.discountpercent)/currencies.rate 
+						     ELSE 0 END) as ordervalue";
+			} elseif (isset($DueDateFrom) AND is_date($DueDateFrom) AND (!isset($DueDateTo) OR !is_date($DueDateTo))) {
+					$SQL = "SELECT salesorders.orderno,
+						debtorsmaster.name,
+						custbranch.brname,
+						salesorders.customerref,
+						salesorders.orddate,
+						salesorders.deliverydate,
+						salesorders.deliverto,
+						salesorders.printedpackingslip,
+						salesorders.poplaced,
+						SUM(CASE WHEN itemdue>='" . FormatDateFromSQL($DueDateFrom) . "' 
+						     THEN salesorderdetails.unitprice*(salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*(1-salesorderdetails.discountpercent)/currencies.rate
+						     ELSE 0 END) as ordervalue";
+			} elseif (isset($DueDateFrom) AND is_date($DueDateFrom) AND isset($DueDateTo) AND is_date($DueDateTo)) {
+					$SQL = "SELECT salesorders.orderno,
+						debtorsmaster.name,
+						custbranch.brname,
+						salesorders.customerref,
+						salesorders.orddate,
+						salesorders.deliverydate,
+						salesorders.deliverto,
+						salesorders.printedpackingslip,
+						salesorders.poplaced,
+						SUM (CASE WHEN itemdue>='" . FormatDateForSQL($DueDateFrom) . "' AND itemdue<='" . FormatDateForSQL($DueDateTo) ."'
+						     THEN salesorderdetails.unitprice*(salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*(1-salesorderdetails.discountpercent)/currencies.rate 
+						     ELSE 0 END) as ordervalue"; 
+			} elseif ((!isset($DueDateFrom) OR !is_date($DueDateFrom)) AND isset($DueDateTo) AND is_date($DueDateTo)) {
+						$SQL = "SELECT salesorders.orderno,
+						debtorsmaster.name,
+						custbranch.brname,
+						salesorders.customerref,
+						salesorders.orddate,
+						salesorders.deliverydate,
+						salesorders.deliverto,
+						salesorders.printedpackingslip,
+						salesorders.poplaced,
+						SUM(CASE WHEN AND itemdue<='" . FormatDateForSQL($DueDateTo) ."'
+						     THEN salesorderdetails.unitprice*(salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*(1-salesorderdetails.discountpercent)/currencies.rate 
+						     ELSE 0 END) as ordervalue"; 
+			}//end of due date inquiry
+				$SQL .= $OrderDateFrom . $OrderDateTo;
+			
+
+				$SQL .=" FROM salesorders INNER JOIN salesorderdetails
+						ON salesorders.orderno = salesorderdetails.orderno
+						INNER JOIN debtorsmaster
+						ON salesorders.debtorno = debtorsmaster.debtorno
+						INNER JOIN custbranch
+						ON debtorsmaster.debtorno = custbranch.debtorno
+						AND salesorders.branchcode = custbranch.branchcode
+						INNER JOIN currencies
+						ON debtorsmaster.currcode = currencies.currabrev
+						WHERE salesorderdetails.completed=0 ";
+		}
+
 		//Add salesman role control
 			if ($_SESSION['SalesmanLogin'] != '') {
 				$SQL .= " AND salesorders.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
@@ -639,46 +779,52 @@ if (isset($StockItemsResult)
 
 				$SQL .= "AND salesorders.orderno=". $OrderNumber ."
 				    AND salesorders.quotation=" .$Quotations;
-	} else {
-	      /* $DateAfterCriteria = FormatDateforSQL($OrdersAfterDate); */
-
-		if (isset($SelectedCustomer)) {
-
-			if (isset($SelectedStockItem)) {
-				$SQL .= "AND salesorders.quotation =" .$Quotations . "
-					AND salesorderdetails.stkcode='". $SelectedStockItem ."'
-					AND salesorders.debtorno='" . $SelectedCustomer ."'
-					AND salesorders.fromstkloc = '". $_POST['StockLocation'] . "'";
-
+				
+			} elseif (isset($CustomerRef) AND $CustomerRef != ''){
+				$SQL .= "AND salesorders.customerref='" . $CustomerRef . "'
+					AND salesorders.quotation=" . $Quotations;
+			
 			} else {
-				$SQL .= "AND  salesorders.quotation =" .$Quotations . "
-					AND salesorders.debtorno='" . $SelectedCustomer . "'
-					AND salesorders.fromstkloc = '". $_POST['StockLocation'] . "'";
+	      			/* $DateAfterCriteria = FormatDateforSQL($OrdersAfterDate); */
 
-			}
-		} else { //no customer selected
-			if (isset($SelectedStockItem)) {
-				$SQL .= "AND salesorders.quotation =" .$Quotations . "
-					AND salesorderdetails.stkcode='". $SelectedStockItem . "'
-					AND salesorders.fromstkloc = '". $_POST['StockLocation'] . "'";
-			} else {
-				$SQL .= "AND salesorders.quotation =" .$Quotations . "
-						AND salesorders.fromstkloc = '". $_POST['StockLocation'] . "'";
-			}
+				if (isset($SelectedCustomer)) {
 
-		} //end selected customer
+					if (isset($SelectedStockItem)) {
+						$SQL .= "AND salesorders.quotation =" .$Quotations . "
+							AND salesorderdetails.stkcode='". $SelectedStockItem ."'
+							AND salesorders.debtorno='" . $SelectedCustomer ."'
+							AND salesorders.fromstkloc = '". $_POST['StockLocation'] . "'";
 
-		$SQL .= ' GROUP BY salesorders.orderno,
-						debtorsmaster.name,
-						custbranch.brname,
-						salesorders.customerref,
-						salesorders.orddate,
-						salesorders.deliverydate,
-						salesorders.deliverto,
-						salesorders.printedpackingslip,
-						salesorders.poplaced
-					ORDER BY salesorders.orderno';
-	} //end not order number selected
+					} else {
+						$SQL .= "AND  salesorders.quotation =" .$Quotations . "
+							AND salesorders.debtorno='" . $SelectedCustomer . "'
+							AND salesorders.fromstkloc = '". $_POST['StockLocation'] . "'";
+
+					}
+				} else { //no customer selected
+					if (isset($SelectedStockItem)) {
+							$SQL .= "AND salesorders.quotation =" .$Quotations . "
+								AND salesorderdetails.stkcode='". $SelectedStockItem . "'
+								AND salesorders.fromstkloc = '". $_POST['StockLocation'] . "'";
+					} else {
+							$SQL .= "AND salesorders.quotation =" .$Quotations . "
+								AND salesorders.fromstkloc = '". $_POST['StockLocation'] . "'";
+					}
+
+				} //end selected customer
+				$SQL .= $DueDateFrom . $DueDateTo;
+
+				$SQL .= ' GROUP BY salesorders.orderno,
+							debtorsmaster.name,
+							custbranch.brname,
+							salesorders.customerref,
+							salesorders.orddate,
+							salesorders.deliverydate,
+							salesorders.deliverto,
+							salesorders.printedpackingslip,
+							salesorders.poplaced
+							ORDER BY salesorders.orderno';
+			} //end not order number selected
 
 	$ErrMsg = _('No orders or quotations were returned by the SQL because');
 	$SalesOrdersResult = DB_query($SQL,$ErrMsg);
@@ -698,7 +844,7 @@ if (isset($StockItemsResult)
 
 		echo '<table cellpadding="2" width="95%" class="selection">';
 
-		if (isset($_POST['Quotations']) AND $_POST['Quotations']=='Orders_Only'){
+		if (isset($_POST['Quotations']) AND ($_POST['Quotations']=='Orders_Only' OR $_POST['Quotations'] == 'Overdue_Only')){
 			$TableHeader = '<tr>
 								<th class="ascending" >' . _('Modify') . '</th>
 								<th>' . _('Invoice') . '</th>
@@ -761,6 +907,11 @@ if (isset($StockItemsResult)
 			$FormatedDelDate = ConvertSQLDate($myrow['deliverydate']);
 			$FormatedOrderDate = ConvertSQLDate($myrow['orddate']);
 			$FormatedOrderValue = locale_number_format($myrow['ordervalue'],$_SESSION['CompanyRecord']['decimalplaces']);
+			if ($myrow['customerref'] !== '') {
+				$CustomerRef = '<a href="' . $RootPath . '/SelectCompletedOrder.php?CustomerRef=' . $myrow['customerref'] . '" target="_blank">' . $myrow['customerref'] . '</a>';
+			} else {
+				$CustomerRef = '';
+			}
 
 			if ($myrow['printedpackingslip']==0) {
 			  $PrintText = _('Print');
@@ -768,7 +919,7 @@ if (isset($StockItemsResult)
 			  $PrintText = _('Reprint');
 			}
 
-			if ($_POST['Quotations']=='Orders_Only'){
+			if ($_POST['Quotations']=='Orders_Only' OR $_POST['Quotations']=='Overdue_Only'){
 
 			 /*Check authority to create POs if user has authority then show the check boxes to select sales orders to place POs for otherwise don't provide this option */
 				if ($AuthRow['cancreate']==0 AND $myrow['poplaced']==0){ //cancreate==0 if the user can create POs and not already placed
@@ -790,7 +941,7 @@ if (isset($StockItemsResult)
 		 				$PrintDispatchNote,
 		 				$myrow['name'],
 		 				$myrow['brname'],
-		 				$myrow['customerref'],
+		 				$CustomerRef,
 		 				$FormatedOrderDate,
 		 				$FormatedDelDate,
 		 				html_entity_decode($myrow['deliverto'],ENT_QUOTES,'UTF-8'),

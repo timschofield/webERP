@@ -1,5 +1,6 @@
 webERP Change Log
 
+25/09/16 Exson: Make customer reference GET method workable in SelectCompletedOrder.php. Fixed decimalplaces missing bug in SelectOrderItems.php. Add due date, order date and customer reference option in SelectSalesOrder.php.
 25/09/16 Exson: Make the details show immediately when the search result is one in SelectCompletedOrder.php.And add return links in OrderDetails.php.
 24/10/16 Simon Kelly: Fixed placing POs for sales orders using array form variable
 24/09/16 waynemcdougall: Fixed missing date in Sales Price history
