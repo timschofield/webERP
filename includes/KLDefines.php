@@ -159,6 +159,14 @@ define("ACCOUNT_BANK_MANDIRI_IDR", "111121101PT"); // number of account for Bank
 define("ACCOUNT_BANK_BCA_IDR", "111121110PT"); // number of account for Bank BCA IDR
 define("ACCOUNT_COMISSION_CREDITCARD", "700211300PT"); // number of account used to charge the bank comission
 
+/* Defines about financial Analysis*/
+define("JUTA", 1000000);
+define("GL_INCOME_CC_PT",   "('410000010PT')");
+define("GL_INCOME_CASH_PT",   "('410000000PT')");
+define("GL_INCOME_CASH",   "('410000000')");
+define("GL_INCOME_OTHERS_PT",   "('410000500PT','410010000PT','410010010PT')");
+define("GL_INCOME_OTHERS",   "('410000500','410010000')");
+
 /* Defines about WebStore */
 
 define("ONLINE_PRICE_LIST", 'RT');
