@@ -54,14 +54,17 @@ if ($KL_SystemAdmin
 
 if ($KL_SystemAdmin 
 	OR $KL_BusinessDevelopmentManager){
+	PriceBelowStandard("SETKL", 4.75, 0, 10, $RootPath, $db);
 	PriceBelowStandard("TESTKL", 4.75, 0, 10, $RootPath, $db);
 	PriceBelowStandard("STABKL", 4.75, 0, 10, $RootPath, $db);
 	PriceBelowStandard("NOPOKL", 4.75, 0, 10, $RootPath, $db);
 
+	PriceBelowStandard("SETBL", 4.75, 0, 10, $RootPath, $db);
 	PriceBelowStandard("TESTBL", 5.50, 0, 10, $RootPath, $db);
 	PriceBelowStandard("STABBL", 5.50, 0, 10, $RootPath, $db);
 	PriceBelowStandard("NOPOBL", 5.50, 0, 10, $RootPath, $db);
 
+	PriceBelowStandard("SETGE", 4.75, 0, 10, $RootPath, $db);
 	PriceBelowStandard("TESTGE", 5.50, 0, 10, $RootPath, $db);
 	PriceBelowStandard("STABGE", 5.50, 0, 10, $RootPath, $db);
 	PriceBelowStandard("NOPOGE", 5.50, 0, 10, $RootPath, $db);
