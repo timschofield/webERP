@@ -9075,21 +9075,5 @@ function SuppliersWithoutBasicData($RootPath, $db){
 	}
 }
 
-function StructureIncome($PeriodNow, $db){
-
-	// Get the 1st period of this year
-	if (Date('m') > $_SESSION['YearEnd']){
-		/*Dates in SQL format */
-		$DefaultFromDate = Date ('Y-m-d', Mktime(0,0,0,$_SESSION['YearEnd'] + 2,0,Date('Y')));
-		$FromDate = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,$_SESSION['YearEnd'] + 2,0,Date('Y')));
-	} else {
-		$DefaultFromDate = Date ('Y-m-d', Mktime(0,0,0,$_SESSION['YearEnd'] + 2,0,Date('Y')-1));
-		$FromDate = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,$_SESSION['YearEnd'] + 2,0,Date('Y')-1));
-	}
-	$StartThisYear=GetPeriod($FromDate, $db);
-	$StartLastYear=$StartThisYear - 12;
-	$FinishLastYear=$StartThisYear - 1;
-
-}
 
 ?>

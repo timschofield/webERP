@@ -21,20 +21,16 @@ $periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 $ShowSectionInfo = FALSE;
 $ProcessSection01 = FALSE;
 $ProcessSection02 = FALSE;
-$ProcessSection03 = FALSE;
 
 if (!isset($_GET['Section'])){
 	$ProcessSection01 = TRUE;
 	$ProcessSection02 = TRUE;
-	$ProcessSection03 = TRUE;
 }else{
 	$ShowSectionInfo = TRUE;
 	if ($_GET['Section'] == '01'){
 		$ProcessSection01 = TRUE;
 	}elseif($_GET['Section'] == '02'){
 		$ProcessSection02 = TRUE;
-	}elseif($_GET['Section'] == '03'){
-		$ProcessSection03 = TRUE;
 	}
 }
 
@@ -295,22 +291,6 @@ if ($ProcessSection02){
 		PettyCashStatus("HKD", $db);
 		$NumberOfTestExecuted++;
 	}
-}
-
-/***************************************************************************************
-* SECTION 3         
-***************************************************************************************/
-
-if ($ProcessSection03){
-	if($ShowSectionInfo){
-		prnMsg("Performing Control Panel Section 03",'info');
-	}
-
-	if ($KL_SystemAdmin){
-//		StructureIncome($periodnow, $db);
-		$NumberOfTestExecuted++;
-	}
-	
 }
 
 prnMsg("Performed ". $NumberOfTestExecuted . " performance tests",'success');
