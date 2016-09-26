@@ -64,9 +64,12 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 										 ->setKeywords("")
 										 ->setCategory("");
 
-			 $objPHPExcel->getActiveSheet()->getStyle('D')->getNumberFormat()->setFormatCode('#,###');
-			 $objPHPExcel->getActiveSheet()->getStyle('F')->getNumberFormat()->setFormatCode('#,###');
-			 $objPHPExcel->getActiveSheet()->getStyle('H')->getNumberFormat()->setFormatCode('#,###');
+			$objPHPExcel->getActiveSheet()->getStyle('D')->getNumberFormat()->setFormatCode('#,###');
+			$objPHPExcel->getActiveSheet()->getStyle('E')->getNumberFormat()->setFormatCode('0.0%');
+			$objPHPExcel->getActiveSheet()->getStyle('F')->getNumberFormat()->setFormatCode('#,###');
+			$objPHPExcel->getActiveSheet()->getStyle('G')->getNumberFormat()->setFormatCode('0.0%');
+			$objPHPExcel->getActiveSheet()->getStyle('H')->getNumberFormat()->setFormatCode('#,###');
+			$objPHPExcel->getActiveSheet()->getStyle('I')->getNumberFormat()->setFormatCode('0.0%');
 
 /*			$objPHPExcel->getActiveSheet()->getStyle('A:AZ')->getNumberFormat()->setFormatCode('#,###');
 			$objPHPExcel->getActiveSheet()->getStyle('R')->getNumberFormat()->setFormatCode('#,##0.0');
@@ -79,36 +82,74 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 
 			$objPHPExcel->getActiveSheet()->setCellValue('C2', 'Account');
 			$objPHPExcel->getActiveSheet()->setCellValue('D2', 'Last Year');
-			$objPHPExcel->getActiveSheet()->setCellValue('E2', '%');
+			$objPHPExcel->getActiveSheet()->setCellValue('E2', '');
 			$objPHPExcel->getActiveSheet()->setCellValue('F2', 'YTD');
-			$objPHPExcel->getActiveSheet()->setCellValue('G2', '%');
+			$objPHPExcel->getActiveSheet()->setCellValue('G2', '');
  			$objPHPExcel->getActiveSheet()->setCellValue('H2', 'MTD');
-			$objPHPExcel->getActiveSheet()->setCellValue('I2', '%');
+			$objPHPExcel->getActiveSheet()->setCellValue('I2', '');
 
 			$objPHPExcel->getActiveSheet()->setCellValue('C3', 'Income CC PT');
 			$objPHPExcel->getActiveSheet()->setCellValue('D3', -MovementAccountsBetweenPeriods(GL_INCOME_CC_PT, $StartLastYear,$FinishLastYear,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('E3', '=D3/$D$8');
 			$objPHPExcel->getActiveSheet()->setCellValue('F3', -MovementAccountsBetweenPeriods(GL_INCOME_CC_PT, $StartThisYear,$Now,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('G3', '=F3/$F$8');
 			$objPHPExcel->getActiveSheet()->setCellValue('H3', -MovementAccountsBetweenPeriods(GL_INCOME_CC_PT, $Now,$Now,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('I3', '=H3/$H$8');
 
 			$objPHPExcel->getActiveSheet()->setCellValue('C4', 'Income Cash PT');
 			$objPHPExcel->getActiveSheet()->setCellValue('D4', -MovementAccountsBetweenPeriods(GL_INCOME_CASH_PT, $StartLastYear,$FinishLastYear,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('E4', '=D4/$D$8');
 			$objPHPExcel->getActiveSheet()->setCellValue('F4', -MovementAccountsBetweenPeriods(GL_INCOME_CASH_PT, $StartThisYear,$Now,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('G4', '=F4/$F$8');
 			$objPHPExcel->getActiveSheet()->setCellValue('H4', -MovementAccountsBetweenPeriods(GL_INCOME_CASH_PT, $Now,$Now,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('I4', '=H4/$H$8');
 
 			$objPHPExcel->getActiveSheet()->setCellValue('C5', 'Income Cash');
 			$objPHPExcel->getActiveSheet()->setCellValue('D5', -MovementAccountsBetweenPeriods(GL_INCOME_CASH, $StartLastYear,$FinishLastYear,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('E5', '=D5/$D$8');
 			$objPHPExcel->getActiveSheet()->setCellValue('F5', -MovementAccountsBetweenPeriods(GL_INCOME_CASH, $StartThisYear,$Now,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('G5', '=F5/$F$8');
 			$objPHPExcel->getActiveSheet()->setCellValue('H5', -MovementAccountsBetweenPeriods(GL_INCOME_CASH, $Now,$Now,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('I5', '=H5/$H$8');
 
 			$objPHPExcel->getActiveSheet()->setCellValue('C6', 'Income Others PT');
 			$objPHPExcel->getActiveSheet()->setCellValue('D6', -MovementAccountsBetweenPeriods(GL_INCOME_OTHERS_PT, $StartLastYear,$FinishLastYear,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('E6', '=D6/$D$8');
 			$objPHPExcel->getActiveSheet()->setCellValue('F6', -MovementAccountsBetweenPeriods(GL_INCOME_OTHERS_PT, $StartThisYear,$Now,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('G6', '=F6/$F$8');
 			$objPHPExcel->getActiveSheet()->setCellValue('H6', -MovementAccountsBetweenPeriods(GL_INCOME_OTHERS_PT, $Now,$Now,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('I6', '=H6/$H$8');
 			
 			$objPHPExcel->getActiveSheet()->setCellValue('C7', 'Income Others');
 			$objPHPExcel->getActiveSheet()->setCellValue('D7', -MovementAccountsBetweenPeriods(GL_INCOME_OTHERS, $StartLastYear,$FinishLastYear,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('E7', '=D7/$D$8');
 			$objPHPExcel->getActiveSheet()->setCellValue('F7', -MovementAccountsBetweenPeriods(GL_INCOME_OTHERS, $StartThisYear,$Now,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('G7', '=F7/$F$8');
 			$objPHPExcel->getActiveSheet()->setCellValue('H7', -MovementAccountsBetweenPeriods(GL_INCOME_OTHERS, $Now,$Now,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('I7', '=H7/$H$8');
+
+			$objPHPExcel->getActiveSheet()->setCellValue('C8', 'TOTAL INCOME');
+			$objPHPExcel->getActiveSheet()->setCellValue('D8', '=SUM(D3:D7)');
+			$objPHPExcel->getActiveSheet()->setCellValue('F8', '=SUM(F3:F7)');
+			$objPHPExcel->getActiveSheet()->setCellValue('H8', '=SUM(H3:H7)');
+
+			$objPHPExcel->getActiveSheet()->setCellValue('C10', 'INCOME PT');
+			$objPHPExcel->getActiveSheet()->setCellValue('D10', '=D3+D4+D6');
+			$objPHPExcel->getActiveSheet()->setCellValue('E10', '=D10/$D$8');
+			$objPHPExcel->getActiveSheet()->setCellValue('F10', '=F3+F4+F6');
+			$objPHPExcel->getActiveSheet()->setCellValue('G10', '=F10/$F$8');
+			$objPHPExcel->getActiveSheet()->setCellValue('H10', '=H3+H4+H6');
+			$objPHPExcel->getActiveSheet()->setCellValue('I10', '=H10/$H$8');
+
+			$objPHPExcel->getActiveSheet()->setCellValue('C11', 'INCOME CASH');
+			$objPHPExcel->getActiveSheet()->setCellValue('D11', '=D5+D7');
+			$objPHPExcel->getActiveSheet()->setCellValue('E11', '=D11/$D$8');
+			$objPHPExcel->getActiveSheet()->setCellValue('F11', '=F5+F7');
+			$objPHPExcel->getActiveSheet()->setCellValue('G11', '=F11/$F$8');
+			$objPHPExcel->getActiveSheet()->setCellValue('H11', '=H5+H7');
+			$objPHPExcel->getActiveSheet()->setCellValue('I11', '=H11/$H$8');
+
+
 			// Freeze panes
 			$objPHPExcel->getActiveSheet()->freezePane('D3');
 
@@ -145,9 +186,9 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 			$objWriter->save('php://output');
 
 		}else{
-			$Title = _('Excel file for Sales Analysis');
+			$Title = _('Excel file for Financial Analysis');
 			include('includes/header.inc');
-			prnMsg('No items selected to analyse');
+			prnMsg('No info selected to analyse');
 			include('includes/footer.inc');
 		}
 	}
