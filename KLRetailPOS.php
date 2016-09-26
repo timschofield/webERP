@@ -1681,7 +1681,7 @@ END OF QOH Verification */
 
 			if ($_POST['AmountPaidCash']!=0){
 				// si han pagat CASH, tot o en part
-				$BankAccountCash = KapalLautRetailBankAccountSelection($_SESSION['Items'.$identifier]->DebtorNo, 2,	$db);
+				$BankAccountCash = KapalLautRetailBankAccountSelection($_SESSION['Items'.$identifier]->Location, $db);
 				$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CASH,
 									$PeriodNo,
 									$BankAccountCash,

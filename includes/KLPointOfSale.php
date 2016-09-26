@@ -38,64 +38,19 @@ function KapalLautRetailAreaSelection($Debtor, $PaymentMethod, $db){
 	return $Area;
 }
 
-function KapalLautRetailBankAccountSelection($Debtor, $PaymentMethod, $db){
-	if($PaymentMethod == PAYMENT_BY_CASH){
-		if($Debtor == "RETAIL66"){
-			$Bank = ACCOUNT_CASH_TOK66;
-		}elseif($Debtor == "RETAILSA"){
-			$Bank = ACCOUNT_CASH_TOKSA;
-		}elseif($Debtor == "RETAILKS"){
-			$Bank = ACCOUNT_CASH_TOKKS;
-		}elseif($Debtor == "RETAILLE"){
-			$Bank = ACCOUNT_CASH_TOKLE;
-		}elseif($Debtor == "RETAILJC"){
-			$Bank = ACCOUNT_CASH_TOKJC;
-		}elseif($Debtor == "RETAILBW"){
-			$Bank = ACCOUNT_CASH_TOKBW;
-		}elseif($Debtor == "RETAILMF"){
-			$Bank = ACCOUNT_CASH_TOKMF;
-		}elseif($Debtor == "RETAILUB"){
-			$Bank = ACCOUNT_CASH_TOKUB;
-		}elseif($Debtor == "RETAILSE"){
-			$Bank = ACCOUNT_CASH_TOKSE;
-		}elseif($Debtor == "RETAILPU"){
-			$Bank = ACCOUNT_CASH_TOKPU;
-		}elseif($Debtor == "RETAILSU"){
-			$Bank = ACCOUNT_CASH_TOKSU;
-		}elseif($Debtor == "RETAILOB"){
-			$Bank = ACCOUNT_CASH_TOKOB;
-		}elseif($Debtor == "RETAILSS"){
-			$Bank = ACCOUNT_CASH_TOKSS;
-		}elseif($Debtor == "RETAILPA"){
-			$Bank = ACCOUNT_CASH_TOKPA;
-		}elseif($Debtor == "RETAILKA"){
-			$Bank = ACCOUNT_CASH_TOKKA;
-		}elseif($Debtor == "RETAILMU"){
-			$Bank = ACCOUNT_CASH_TOKMU;
-		}elseif($Debtor == "RETAILPS"){
-			$Bank = ACCOUNT_CASH_TOKPS;
-		}elseif($Debtor == "RETAILAR"){
-			$Bank = ACCOUNT_CASH_TOKAR;
-		}elseif($Debtor == "RETAILSB"){
-			$Bank = ACCOUNT_CASH_TOKSB;
-		}elseif($Debtor == "RETAILPB"){
-			$Bank = ACCOUNT_CASH_TOKPB;
-		}elseif($Debtor == "RETAILBU"){
-			$Bank = ACCOUNT_CASH_TOKBU;
-		}else{
-			prnMsg(_('Error calculating Cash Bank Account from the shop. Seek help from the administrator.'),'error');
-			include('includes/footer.inc');
-			exit;
-		}
-	}elseif($PaymentMethod == PAYMENT_BY_CREDITCARD){
-		// No sense from v2.00 since 2 banks have EDC at shops It is resolved by constants in main code
-		$Bank = 0;
-	}else{
-		prnMsg(_('Error calculating Cash Bank Account. Seek help from the administrator.'),'error');
+function KapalLautRetailBankAccountSelection($Location, $db){
+	$sql = "SELECT klposcashaccount
+			FROM locations
+			WHERE loccode='" . $Location . "'";
+	$result = DB_query($sql);
+	if(DB_num_rows($result)==0) {
+		prnMsg(_('Error retrieving POS Cash GL Account. Seek help from the administrator.'),'error');
 		include('includes/footer.inc');
 		exit;
+	}else{
+		$myrow = DB_fetch_array($result); //get the only row returned
+		return $myrow['klposcashaccount'];
 	}
-	return $Bank;
 }
 
 function KapalLautRetailTagSelection($Debtor, $db){

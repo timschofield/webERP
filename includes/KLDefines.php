@@ -132,27 +132,6 @@ define("COMISSION_CC_MANDIRI",     1.80); // % of Credit card comission paid to 
 define("COMISSION_CC_BCA",         1.80); // % of Credit card comission paid to BCA
 define("COMISSION_AMEX_BCA",       3.00); // % of Credit card comission paid to American Express by BCA
 
-define("ACCOUNT_CASH_TOK66", "111111101"); // number of account for toko 66
-define("ACCOUNT_CASH_TOKSA", "111111102"); // number of account for toko SA
-define("ACCOUNT_CASH_TOKKS", "111111103"); // number of account for toko KS
-define("ACCOUNT_CASH_TOKLE", "111111104"); // number of account for toko LE
-define("ACCOUNT_CASH_TOKJC", "111111105"); // number of account for toko JC
-define("ACCOUNT_CASH_TOKBW", "111111106"); // number of account for toko BW
-define("ACCOUNT_CASH_TOKMF", "111111107"); // number of account for toko MF
-define("ACCOUNT_CASH_TOKUB", "111111108"); // number of account for toko UB
-define("ACCOUNT_CASH_TOKSE", "111111109"); // number of account for toko SE
-define("ACCOUNT_CASH_TOKPU", "111111110"); // number of account for toko PU
-define("ACCOUNT_CASH_TOKSU", "111111111"); // number of account for toko SU
-define("ACCOUNT_CASH_TOKOB", "111111112"); // number of account for toko OB
-define("ACCOUNT_CASH_TOKSS", "111111113"); // number of account for toko SS
-define("ACCOUNT_CASH_TOKPA", "111111114"); // number of account for toko PA
-define("ACCOUNT_CASH_TOKKA", "111111115"); // number of account for toko KA
-define("ACCOUNT_CASH_TOKMU", "111111116"); // number of account for toko MU
-define("ACCOUNT_CASH_TOKPS", "111111117"); // number of account for toko PS
-define("ACCOUNT_CASH_TOKAR", "111111118"); // number of account for toko AR
-define("ACCOUNT_CASH_TOKSB", "111111119"); // number of account for toko SB
-define("ACCOUNT_CASH_TOKPB", "111111120"); // number of account for toko PB
-define("ACCOUNT_CASH_TOKBU", "111111121"); // number of account for toko BU
 
 define("ACCOUNT_BANK_DANAMON_IDR", "111121105PT"); // number of account for Bank Danamon IDR
 define("ACCOUNT_BANK_MANDIRI_IDR", "111121101PT"); // number of account for Bank Mandiri IDR
