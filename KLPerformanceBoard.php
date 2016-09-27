@@ -118,6 +118,8 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		SPGPerformanceByShop("RETAILMF", 30, 60, 90, $db);
 		$NumberOfTestExecuted++;
+		SPGPerformanceByShop("RETAILM2", 30, 60, 90, $db);
+		$NumberOfTestExecuted++;
 		SPGPerformanceByShop("RETAILMU", 30, 60, 90, $db);
 		$NumberOfTestExecuted++;
 		SPGPerformanceByShop("RETAILPU", 30, 60, 90, $db);

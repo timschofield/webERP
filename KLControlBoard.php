@@ -322,6 +322,8 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111111121",         0,   15000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
+		BalanceAccountControl("111111122",         0,   15000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin 
@@ -515,27 +517,29 @@ if ($ProcessSection01){
 		CategoryItemsNotInShop("TESTKL", "TOK66", 10, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-		CategoryItemsNotInShop("STABKL", "TOKPU", 14, $RootPath, $db);
+		CategoryItemsNotInShop("STABKL", "TOKPU", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("STABKL", "TOKKA", 14, $RootPath, $db);
+		CategoryItemsNotInShop("STABKL", "TOKKA", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("STABKL", "TOKMF", 14, $RootPath, $db);
+		CategoryItemsNotInShop("STABKL", "TOKMF", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("STABKL", "TOKSU", 14, $RootPath, $db);
+		CategoryItemsNotInShop("STABKL", "TOKSU", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("STABKL", "TOKSS", 14, $RootPath, $db);
+		CategoryItemsNotInShop("STABKL", "TOKSS", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("STABKL", "TOKPA", 14, $RootPath, $db);
+		CategoryItemsNotInShop("STABKL", "TOKPA", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("STABKL", "TOKSA", 14, $RootPath, $db);
+		CategoryItemsNotInShop("STABKL", "TOKSA", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("STABKL", "TOK66", 14, $RootPath, $db);
+		CategoryItemsNotInShop("STABKL", "TOK66", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("STABKL", "TOKSE", 14, $RootPath, $db);
+		CategoryItemsNotInShop("STABKL", "TOKSE", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("STABKL", "TOKKS", 14, $RootPath, $db);
+		CategoryItemsNotInShop("STABKL", "TOKKS", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("STABKL", "TOKOB", 14, $RootPath, $db);
+		CategoryItemsNotInShop("STABKL", "TOKOB", 15, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABKL", "TOKM2", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 		CategoryItemsNotInShop("NOPOKL", "TOKPU", 10, $RootPath, $db);
