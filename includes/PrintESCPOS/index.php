@@ -38,7 +38,7 @@
                 installed on <strong>Windows, Linux & Mac!</strong>
             </p>
             <p>
-                <a href="http://www.neodynamic.com/downloads/wcpp/" target="_blank">Download and Install WCPP from Neodynamic website</a><br />                
+                <a href="https://www.neodynamic.com/downloads/wcpp/" target="_blank">Download and Install WCPP from Neodynamic website</a><br />                
             </p>         
             <h3>#2 After installing WCPP...</h3>
             <p>
@@ -48,10 +48,10 @@
         </div>
         
         <!-- Add Reference to jQuery at Google CDN -->
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 
         <!-- Add Reference to spin.js (an animated spinner) -->
-        <script src="http://fgnass.github.io/spin.js/spin.min.js"></script>
+        <script src="https://fgnass.github.io/spin.js/spin.min.js"></script>
 
         <script type="text/javascript">
 
@@ -77,7 +77,7 @@
             }
 
             $(document).ready(function () {
-                // Create the Spinner with options (http://fgnass.github.io/spin.js/)
+                // Create the Spinner with options (https://fgnass.github.io/spin.js/)
                 var spinner = new Spinner({
                       lines: 12, 
                       length: 7, 

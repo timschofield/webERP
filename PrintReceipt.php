@@ -1,7 +1,7 @@
 <?php 
     session_start();
 
-    include 'WebClientPrint.php';
+    include 'includes/PrintESCPOS/WebClientPrint.php';
     use Neodynamic\SDK\Web\WebClientPrint;
     use Neodynamic\SDK\Web\Utils;
     use Neodynamic\SDK\Web\DefaultPrinter;
@@ -131,12 +131,12 @@
     </script>
     
     <!-- Add Reference to jQuery at Google CDN -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" type="text/javascript"></script>
 
     <?php
     //Specify the ABSOLUTE URL to the php file that will create the ClientPrintJob object
     //In this case, this same page
-    echo WebClientPrint::createScript(Utils::getRoot().'/TEST/PrintESCPOSReceiptSample/PrintReceipt.php')
+    echo WebClientPrint::createScript(Utils::getRoot().'/TEST/weberp/PrintReceipt.php')
     ?>
        
 
