@@ -3636,6 +3636,7 @@ function PurchasingOrdersDeliveryControl($reason, $maxdays, $RootPath, $db){
 				purchorders.requisitionno,
 				purchorders.allowprint,
 				suppliers.currcode,
+				currencies.rate AS exchangerate,
 				currencies.decimalplaces AS currdecimalplaces,
 				SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue
 			FROM purchorders INNER JOIN purchorderdetails
@@ -3679,6 +3680,7 @@ function PurchasingOrdersDeliveryControl($reason, $maxdays, $RootPath, $db){
 							<th class="ascending">' . _('THB') . '</th>
 							<th class="ascending">' . _('EUR') . '</th>
 							<th class="ascending">' . _('HKD') . '</th>
+							<th class="ascending">' . _('Acum IDR') . '</th>
 						</tr>';
 		echo $TableHeader;
 		
@@ -3687,6 +3689,7 @@ function PurchasingOrdersDeliveryControl($reason, $maxdays, $RootPath, $db){
 		$TotalTHB = 0;
 		$TotalEUR = 0;
 		$TotalHKD = 0;
+		$AcumIDR = 0;
 		
 		$k = 0; //row colour counter
 		$i = 1;
@@ -3703,18 +3706,23 @@ function PurchasingOrdersDeliveryControl($reason, $maxdays, $RootPath, $db){
 			if ($myrow['currcode'] == 'IDR'){
 				$ValueIDR = $myrow['ordervalue'];
 				$TotalIDR = $TotalIDR + $ValueIDR; 
+				$AcumIDR = $AcumIDR + $ValueIDR; 
 			}elseif	($myrow['currcode'] == 'USD'){
 				$ValueUSD = $myrow['ordervalue'];
 				$TotalUSD = $TotalUSD + $ValueUSD; 
+				$AcumIDR = $AcumIDR + ($ValueUSD/$myrow['exchangerate']); 
 			}elseif	($myrow['currcode'] == 'THB'){
 				$ValueTHB = $myrow['ordervalue'];
 				$TotalTHB = $TotalTHB + $ValueTHB; 
+				$AcumIDR = $AcumIDR + ($ValueTHB/$myrow['exchangerate']); 
 			}elseif	($myrow['currcode'] == 'EUR'){
 				$ValueEUR = $myrow['ordervalue'];
 				$TotalEUR = $TotalEUR + $ValueEUR; 
+				$AcumIDR = $AcumIDR + ($ValueEUR/$myrow['exchangerate']); 
 			}elseif	($myrow['currcode'] == 'HKD'){
 				$ValueHKD = $myrow['ordervalue'];
 				$TotalHKD = $TotalHKD + $ValueHKD; 
+				$AcumIDR = $AcumIDR + ($ValueHKD/$myrow['exchangerate']); 
 			}
 			
 			printf('<td class="number">%s</td>
@@ -3722,6 +3730,7 @@ function PurchasingOrdersDeliveryControl($reason, $maxdays, $RootPath, $db){
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
+					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -3737,7 +3746,8 @@ function PurchasingOrdersDeliveryControl($reason, $maxdays, $RootPath, $db){
 					locale_number_format_zero_blank($ValueUSD,0),
 					locale_number_format_zero_blank($ValueTHB,0),
 					locale_number_format_zero_blank($ValueEUR,0),
-					locale_number_format_zero_blank($ValueHKD,0)
+					locale_number_format_zero_blank($ValueHKD,0),
+					locale_number_format_zero_blank($AcumIDR,0)
 					);
 			$i++;
 		}
@@ -3747,6 +3757,7 @@ function PurchasingOrdersDeliveryControl($reason, $maxdays, $RootPath, $db){
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
+				<td class="number">%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
@@ -3762,7 +3773,8 @@ function PurchasingOrdersDeliveryControl($reason, $maxdays, $RootPath, $db){
 				locale_number_format_zero_blank($TotalUSD,0),
 				locale_number_format_zero_blank($TotalTHB,0),
 				locale_number_format_zero_blank($TotalEUR,0),
-				locale_number_format_zero_blank($TotalHKD,0)
+				locale_number_format_zero_blank($TotalHKD,0),
+				locale_number_format_zero_blank($AcumIDR,0)
 				);
 		echo '</table>
 				</div>';
