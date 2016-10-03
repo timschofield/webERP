@@ -109,14 +109,22 @@ function RetailCustomerAnalysisBySex($NumDays, $ListShops, $db){
 			
 }
 
-function RetailCustomerAnalysisByCountry($NumDays, $ListShops, $MinimCustomersToShow, $CountriesForRetail, $db){
+function RetailCustomerAnalysisByCountry($NumDays, $TypeOfShops, $MinimCustomersToShow, $CountriesForRetail, $db){
 	$Yesterday  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 	$StartDate  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 
-	if ($ListShops == 'ALL'){
+	if ($TypeOfShops == 'ALL'){
 		$WhereListShops = " ";
-	}else{
-		$WhereListShops = " AND salesorders.fromstkloc IN (" . $ListShops . ") ";
+		$NameOfShops = "ALL";
+	}elseif ($TypeOfShops == 'KAPAL-LAUT'){
+		$WhereListShops = " AND salesorders.fromstkloc IN " . LIST_SHOPS_KAPAL_LAUT . " ";
+		$NameOfShops = "KAPAL-LAUT";
+	}elseif ($TypeOfShops == 'BLINK'){
+		$WhereListShops = " AND salesorders.fromstkloc IN " . LIST_SHOPS_BLINK . " ";
+		$NameOfShops = "BLINK";
+	}elseif ($TypeOfShops == 'OUTLET'){
+		$WhereListShops = " AND salesorders.fromstkloc IN " . LIST_SHOPS_OUTLET . " ";
+		$NameOfShops = "OUTLET";
 	}
 	
 	// Get the total of sales 
@@ -155,11 +163,7 @@ function RetailCustomerAnalysisByCountry($NumDays, $ListShops, $MinimCustomersTo
 	$result = DB_query($SQL);
 	
 	if (DB_num_rows($result) != 0){
-		if ($ListShops == 'ALL'){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Retail Customers By Country during the last ') . locale_number_format($NumDays,0) . ' days</strong></p>';
-		}else{
-			echo '<p class="page_title_text" align="center"><strong>' . _('Retail Customers By Country during the last ') . locale_number_format($NumDays,0) . ' days in shop ' . $ListShops . '</strong></p>';
-		}
+		echo '<p class="page_title_text" align="center"><strong>' . _('Retail Customers By Country during the last ') . locale_number_format($NumDays,0) . ' days in ' . $NameOfShops . ' shops</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
@@ -222,14 +226,22 @@ function RetailCustomerAnalysisByCountry($NumDays, $ListShops, $MinimCustomersTo
 	}
 }
 
-function EmailHarvested($NumDays, $ListShops, $db){
+function EmailHarvested($NumDays, $TypeOfShops, $db){
 	$Yesterday  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 	$StartDate  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 
-	if ($ListShops == 'ALL'){
+	if ($TypeOfShops == 'ALL'){
 		$WhereListShops = " ";
-	}else{
-		$WhereListShops = " AND salesorders.fromstkloc IN (" . $ListShops . ") ";
+		$NameOfShops = "ALL";
+	}elseif ($TypeOfShops == 'KAPAL-LAUT'){
+		$WhereListShops = " AND salesorders.fromstkloc IN " . LIST_SHOPS_KAPAL_LAUT . " ";
+		$NameOfShops = "KAPAL-LAUT";
+	}elseif ($TypeOfShops == 'BLINK'){
+		$WhereListShops = " AND salesorders.fromstkloc IN " . LIST_SHOPS_BLINK . " ";
+		$NameOfShops = "BLINK";
+	}elseif ($TypeOfShops == 'OUTLET'){
+		$WhereListShops = " AND salesorders.fromstkloc IN " . LIST_SHOPS_OUTLET . " ";
+		$NameOfShops = "OUTLET";
 	}
 	
 	// Get the total of sales 
@@ -254,11 +266,7 @@ function EmailHarvested($NumDays, $ListShops, $db){
 	$myrow = DB_fetch_array($result);
 	$NumberEmails = $myrow[0];
 
-	if ($ListShops == 'ALL'){
-		echo '<p class="page_title_text" align="center"><strong>' . _('e-mail harvested during the last ') . locale_number_format($NumDays,0) . ' days</strong></p>';
-	}else{
-		echo '<p class="page_title_text" align="center"><strong>' . _('e-mail harvested during the last ') . locale_number_format($NumDays,0) . ' days in shop ' . $ListShops . '</strong></p>';
-	}
+	echo '<p class="page_title_text" align="center"><strong>' . _('e-mail harvested during the last ') . locale_number_format($NumDays,0) . ' days in ' . $NameOfShops . ' shops</strong></p>';
 	echo '<div>';
 	echo '<table class="selection">';
 	$TableHeader = '<tr>
@@ -294,14 +302,22 @@ function EmailHarvested($NumDays, $ListShops, $db){
 			
 }
 
-function RetailCustomerAnalysisByAge($NumDays, $ListShops, $CountriesForRetail, $db){
+function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops, $CountriesForRetail, $db){
 	$Yesterday  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 	$StartDate  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 
-	if ($ListShops == 'ALL'){
+	if ($TypeOfShops == 'ALL'){
 		$WhereListShops = " ";
-	}else{
-		$WhereListShops = " AND salesorders.fromstkloc IN (" . $ListShops . ") ";
+		$NameOfShops = "ALL";
+	}elseif ($TypeOfShops == 'KAPAL-LAUT'){
+		$WhereListShops = " AND salesorders.fromstkloc IN " . LIST_SHOPS_KAPAL_LAUT . " ";
+		$NameOfShops = "KAPAL-LAUT";
+	}elseif ($TypeOfShops == 'BLINK'){
+		$WhereListShops = " AND salesorders.fromstkloc IN " . LIST_SHOPS_BLINK . " ";
+		$NameOfShops = "BLINK";
+	}elseif ($TypeOfShops == 'OUTLET'){
+		$WhereListShops = " AND salesorders.fromstkloc IN " . LIST_SHOPS_OUTLET . " ";
+		$NameOfShops = "OUTLET";
 	}
 	
 	// Get the total of sales 
@@ -429,11 +445,7 @@ function RetailCustomerAnalysisByAge($NumDays, $ListShops, $CountriesForRetail, 
 	$myrow = DB_fetch_array($result);
 	$NumberCases08 = $myrow[0];
 	
-	if ($ListShops == 'ALL'){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Retail Customers By Age during the last ') . locale_number_format($NumDays,0) . ' days</strong></p>';
-	}else{
-		echo '<p class="page_title_text" align="center"><strong>' . _('Retail Customers By Age during the last ') . locale_number_format($NumDays,0) . ' days in shop ' . $ListShops . '</strong></p>';
-	}
+	echo '<p class="page_title_text" align="center"><strong>' . _('Retail Customers By Age during the last ') . locale_number_format($NumDays,0) . ' days in ' . $NameOfShops . ' shops</strong></p>';
 	echo '<div>';
 	echo '<table class="selection">';
 	$TableHeader = '<tr>

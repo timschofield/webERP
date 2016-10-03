@@ -1,5 +1,5 @@
 <?php
-define("VERSIONFILE", "1.11");
+define("VERSIONFILE", "1.12");
 define("NUMBER_OF_TESTS", 28); 
 
 include ('includes/session.inc');
@@ -14,9 +14,11 @@ include('includes/KLRetailCustomer.php');
 include ('includes/KLRoles.inc');
 
 $begintime = time_start();
+$NumberOfTestExecuted = 0;
 
 if ($KL_SystemAdmin){
 	RetailCustomerDataQualitySPG("ALL", 7, $db);
+	$NumberOfTestExecuted++;
 }
 
 if ($KL_SystemAdmin 
@@ -24,25 +26,20 @@ if ($KL_SystemAdmin
 	OR $KL_BusinessDevelopmentManager 
 	OR $KL_SalesDirector){
 	RetailCustomerDataQualitySPG("ALL", 30, $db);
+	$NumberOfTestExecuted++;
 }
 
 if ($KL_SystemAdmin 
 	OR $KL_OperationalManager 
 	OR $KL_BusinessDevelopmentManager 
 	OR $KL_SalesDirector){
-
 	RetailCustomerAnalysisBySex(90, "ALL", $db);
+	$NumberOfTestExecuted++;
 }
 
 if ($KL_SystemAdmin){
 	RetailCustomerAnalysisByCountry(365, "ALL", 50, $CountriesForRetail, $db);
-
-//	RetailCustomerAnalysisByCountry(7, "ALL", 3, $CountriesForRetail, $db);
-//	RetailCustomerAnalysisByCountry(7, "'TOK66','TOKSE','TOKOB'", 3, $CountriesForRetail, $db);
-//	RetailCustomerAnalysisByCountry(7, "'TOKKS','TOKBW'", 3, $CountriesForRetail, $db);
-//	RetailCustomerAnalysisByCountry(7, "'TOKJC'", 3, $CountriesForRetail, $db);
-//	RetailCustomerAnalysisByCountry(7, "'TOKSA','TOKSS','TOKSU'", 3, $CountriesForRetail, $db);
-//	RetailCustomerAnalysisByCountry(7, "'TOKUB','TOKPU','TOKMF'", 3, $CountriesForRetail, $db);
+	$NumberOfTestExecuted++;
 }
 
 if ($KL_SystemAdmin 
@@ -51,13 +48,17 @@ if ($KL_SystemAdmin
 	OR $KL_SalesDirector){
 
 	RetailCustomerAnalysisByCountry(90, "ALL", 20, $CountriesForRetail, $db);
+	$NumberOfTestExecuted++;
 	RetailCustomerAnalysisByCountry(60, "ALL", 20, $CountriesForRetail, $db);
+	$NumberOfTestExecuted++;
 	RetailCustomerAnalysisByCountry(30, "ALL", 20, $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(90, "'TOK66','TOKSE','TOKOB','TOKKA'", 10, $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(90, "'TOKKS','TOKBW','TOKPA'", 10, $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(90, "'TOKJC'", 10, $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(90, "'TOKSA','TOKSS','TOKSU'", 10, $CountriesForRetail, $db);
-	RetailCustomerAnalysisByCountry(90, "'TOKUB','TOKPU','TOKMF'", 10, $CountriesForRetail, $db);
+	$NumberOfTestExecuted++;
+	RetailCustomerAnalysisByCountry(30, "KAPAL-LAUT", 10, $CountriesForRetail, $db);
+	$NumberOfTestExecuted++;
+	RetailCustomerAnalysisByCountry(30, "BLINK", 10, $CountriesForRetail, $db);
+	$NumberOfTestExecuted++;
+	RetailCustomerAnalysisByCountry(30, "OUTLET", 10, $CountriesForRetail, $db);
+	$NumberOfTestExecuted++;
 }
 
 if ($KL_SystemAdmin 
@@ -66,27 +67,30 @@ if ($KL_SystemAdmin
 	OR $KL_SalesDirector){
 
 	RetailCustomerAnalysisByAge(60, "ALL", $db);
-	RetailCustomerAnalysisByAge(60, "'TOK66','TOKSE','TOKOB','TOKKA'", $db);
-	RetailCustomerAnalysisByAge(60, "'TOKKS','TOKBW','TOKPA'", $db);
-	RetailCustomerAnalysisByAge(60, "'TOKJC'", $db);
-	RetailCustomerAnalysisByAge(60, "'TOKSA','TOKSS','TOKSU'", $db);
-	RetailCustomerAnalysisByAge(60, "'TOKUB','TOKPU','TOKMF'", $db);
+	$NumberOfTestExecuted++;
+	RetailCustomerAnalysisByAge(90, "ALL", $db);
+	$NumberOfTestExecuted++;
+	RetailCustomerAnalysisByAge(60, "ALL", $db);
+	$NumberOfTestExecuted++;
+	RetailCustomerAnalysisByAge(30, "ALL", $db);
+	$NumberOfTestExecuted++;
+	RetailCustomerAnalysisByAge(30, "KAPAL-LAUT", $db);
+	$NumberOfTestExecuted++;
+	RetailCustomerAnalysisByAge(30, "BLINK", $db);
+	$NumberOfTestExecuted++;
+	RetailCustomerAnalysisByAge(30, "OUTLET", $db);
+	$NumberOfTestExecuted++;
 
 	EmailHarvested(30, "ALL", $db);
+	$NumberOfTestExecuted++;
 }
 
 if ($KL_SystemAdmin){
 	EmailHarvested(365, "ALL", $db);
-
-//	EmailHarvested(1, "ALL", $db);
-//	EmailHarvested(1, "'TOK66','TOKSE','TOKOB'", $db);
-//	EmailHarvested(1, "'TOKKS','TOKBW'", $db);
-//	EmailHarvested(1, "'TOKJC'", $db);
-//	EmailHarvested(1, "'TOKSA','TOKSS','TOKSU'", $db);
-//	EmailHarvested(1, "'TOKUB','TOKPU','TOKMF'", $db);
+	$NumberOfTestExecuted++;
 }
 
-prnMsg("Performed ". NUMBER_OF_TESTS . " Retail Customers Analysis",'success');
+prnMsg("Performed ". $NumberOfTestExecuted . " Retail Customers Analysis",'success');
 time_finish($begintime);
 
 include ('includes/footer.inc');
