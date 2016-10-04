@@ -82,7 +82,7 @@ if (!class_exists('Cpdf', false)) {
 
 		function addTextWrap($XPos, $YPos, $Width, $Height, $Text, $Align='full', $border=0, $fill=0) {
 			// R&OS version 0.12.2: "addTextWrap function is no more, use addText instead".
-			/* Returns the balance of the string that could not fit in the width */
+			// Adds text to the page and returns the balance of the string that could not fit in the width.
 			// $XPos = cell horizontal coordinate from page left side to cell left side in dpi (72dpi = 25.4mm).
 			// $YPos = cell vertical coordinate from page bottom side to cell bottom side in dpi (72dpi = 25.4mm).
 			// $Width = Cell (line) width in dpi (72dpi = 25.4mm).
@@ -207,8 +207,15 @@ if (!class_exists('Cpdf', false)) {
 			}
 		}
 
-		function addJpegFromFile($img,$XPos,$YPos,$Width=0,$Height=0,$Type=''){
-			$this->Image($img, $x=$XPos, $y=$this->h-$YPos-$Height, $w=$Width, $h=$Height,$type=$Type);
+		function addJpegFromFile($file, $x, $YPos, $width=0, $height) {
+			// Puts an image in the page.
+			// $file (string) Name of the file containing the image.
+			// $x (float) Abscissa from left border to the upper-left corner (LTR).
+			// $this->h is the page height.
+			// $YPos Ordinate of upper-left corner. WARNING: Measured from bottom left corner!
+			// $width (float) Width of the image in the page. If not specified or equal to zero, it is automatically calculated.
+	 		// $height (float) Height of the image in the page.
+			$this->Image($file, $x, $this->h-$YPos-$height, $width, $height);// Public function Image() in ~/includes/tcpdf/tcpdf.php.
 		}
 
 		/*
@@ -320,26 +327,26 @@ if (!class_exists('Cpdf', false)) {
 			$this->Output($DocumentFilename,'D');
 		}
 
-		function Rectangle($x, $YPos, $w, $h) {
+		function Rectangle($x, $YPos, $width, $height) {
 			// Draws a rectangle.
 			// $x (float) Abscissa from left border to the upper-left corner (LTR).
-			// $this->h is page height.
-			// $YPos Ordinate of upper-left corner. WARNING: Mesured from bottom left corner!
-			// $w (float) Rectangle width.
-			// $h (float) Rectangle height.
-			$this->Rect($x, $this->h-$YPos, $w, $h);// Public function Rect() in ~/includes/tcpdf/tcpdf.php.
+			// $this->h is the page height.
+			// $YPos Ordinate of upper-left corner. WARNING: Measured from bottom left corner!
+			// $width (float) Rectangle width.
+			// $height (float) Rectangle height.
+			$this->Rect($x, $this->h-$YPos, $width, $height);// Public function Rect() in ~/includes/tcpdf/tcpdf.php.
 		}
 
-		function RoundRectangle($x, $YPos, $w, $h, $rx, $ry) {
+		function RoundRectangle($x, $YPos, $width, $height, $rx, $ry) {
 			// Draws a rounded rectangle.
 			// $x (float) Abscissa from left border to the upper-left corner (LTR).
-			// $this->h is page height.
-			// $YPos Ordinate of upper-left corner. WARNING: Mesured from bottom left corner!
-			// $w (float) Rectangle width.
-			// $h (float) Rectangle height.
+			// $this->h is the page height.
+			// $YPos Ordinate of upper-left corner. WARNING: Measured from bottom left corner!
+			// $width (float) Rectangle width.
+			// $height (float) Rectangle height.
 			// $rx (float) the x-axis radius of the ellipse used to round off the corners of the rectangle.
 			// $ry (float) the y-axis radius of the ellipse used to round off the corners of the rectangle.
-			$this->RoundedRectXY($x, $this->h-$YPos, $w, $h, $rx, $ry);// Public function RoundedRectXY() in ~/includes/tcpdf/tcpdf.php.
+			$this->RoundedRectXY($x, $this->h-$YPos, $width, $height, $rx, $ry);// Public function RoundedRectXY() in ~/includes/tcpdf/tcpdf.php.
 		}
 
 	} // end of class
