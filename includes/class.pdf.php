@@ -68,7 +68,7 @@ if (!class_exists('Cpdf', false)) {
 		function line($x1,$y1,$x2,$y2,$style=array()) {
 	// Javier	FPDF::line($x1, $this->h-$y1, $x2, $this->h-$y2);
 	// Javier: width, color and style might be edited
-			TCPDF::Line ($x1,$this->h-$y1,$x2,$this->h-$y2,$style);
+			TCPDF::Line($x1,$this->h-$y1,$x2,$this->h-$y2,$style);
 		}
 
 		function addText($XPos,$YPos,$fontsize,$text/*,$angle=0,$wordSpaceAdjust=0*/) {
@@ -89,7 +89,7 @@ if (!class_exists('Cpdf', false)) {
 			// $Height = Font size in dpi (72dpi = 25.4mm).
 			// $Text = Text to be split in portion to be add to the page and the remainder to be returned.
 			// $Align = 'left', 'center', 'centre', 'full' or 'right'.
-			
+
 			//some special characters are html encoded
 			//this code serves to make them appear human readable in pdf file
 			$Text = html_entity_decode($Text, ENT_QUOTES, 'UTF-8');// Convert all HTML entities to their applicable characters.
@@ -320,27 +320,26 @@ if (!class_exists('Cpdf', false)) {
 			$this->Output($DocumentFilename,'D');
 		}
 
-		function Rectangle($XPos, $YPos, $Width, $Height) {
-			// $XPos, $YPos = Left top position (left line, top line).
-			// $Width, $Height = Size (line-to-line).
-			$this->line($XPos, $YPos, $XPos+$Width, $YPos);// Top side.
-			$this->line($XPos, $YPos-$Height, $XPos+$Width, $YPos-$Height);// Bottom side.
-			$this->line($XPos, $YPos, $XPos, $YPos-$Height);// Left side.
-			$this->line($XPos+$Width, $YPos, $XPos+$Width, $YPos-$Height);// Right side
+		function Rectangle($x, $YPos, $w, $h) {
+			// Draws a rectangle.
+			// $x (float) Abscissa from left border to the upper-left corner (LTR).
+			// $this->h is page height.
+			// $YPos Ordinate of upper-left corner. WARNING: Mesured from bottom left corner!
+			// $w (float) Rectangle width.
+			// $h (float) Rectangle height.
+			$this->Rect($x, $this->h-$YPos, $w, $h);// Public function Rect() in ~/includes/tcpdf/tcpdf.php.
 		}
 
-		function RoundRectangle($XPos, $YPos, $Width, $Height, $RadiusX, $RadiusY) {
-			// $XPos, $YPos = Left top position (left line, top line).
-			// $Width, $Height = Size (line-to-line).
-			// $RadiusX, $RadiusY = corner radii (horizontal, vertical).
-			$this->line($XPos+$RadiusX, $YPos, $XPos+$Width-$RadiusX, $YPos);// Top side.
-			$this->line($XPos+$RadiusX, $YPos-$Height, $XPos+$Width-$RadiusX, $YPos-$Height);// Bottom side.
-			$this->line($XPos, $YPos-$RadiusY, $XPos, $YPos-$Height+$RadiusY);// Left side.
-			$this->line($XPos+$Width, $YPos-$RadiusY, $XPos+$Width, $YPos-$Height+$RadiusY);// Right side.
-			$this->partEllipse($XPos+$RadiusX, $YPos-$RadiusY, 90, 180, $RadiusX, $RadiusY);// Top left corner.
-			$this->partEllipse($XPos+$Width-$RadiusX, $YPos-$RadiusY, 0, 90, $RadiusX, $RadiusY);// Top right corner.
-			$this->partEllipse($XPos+$RadiusX, $YPos-$Height+$RadiusY, 180, 270, $RadiusX, $RadiusY);// Bottom left corner.
-			$this->partEllipse($XPos+$Width-$RadiusX, $YPos-$Height+$RadiusY, 270, 360, $RadiusX, $RadiusY);// Bottom right corner.
+		function RoundRectangle($x, $YPos, $w, $h, $rx, $ry) {
+			// Draws a rounded rectangle.
+			// $x (float) Abscissa from left border to the upper-left corner (LTR).
+			// $this->h is page height.
+			// $YPos Ordinate of upper-left corner. WARNING: Mesured from bottom left corner!
+			// $w (float) Rectangle width.
+			// $h (float) Rectangle height.
+			// $rx (float) the x-axis radius of the ellipse used to round off the corners of the rectangle.
+			// $ry (float) the y-axis radius of the ellipse used to round off the corners of the rectangle.
+			$this->RoundedRectXY($x, $this->h-$YPos, $w, $h, $rx, $ry);// Public function RoundedRectXY() in ~/includes/tcpdf/tcpdf.php.
 		}
 
 	} // end of class
