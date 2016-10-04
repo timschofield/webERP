@@ -5915,7 +5915,8 @@ function ImagesWithoutProduct($RootPath, $db){
 	$suffix = ".jpg";
 	$imagefiles = getDirectoryTree($_SESSION['part_pics_dir'], 'jpg');
 	foreach ($imagefiles as $file) {
-		if ($file != '.ftpquota'){
+		if ($file != '.ftpquota' AND
+			$file != 'Obsolete'){
 			$StockId = substr($file, 0, strpos($file, $suffix));
 			if (strpos($StockId, '.1') > 0){
 				$StockId = substr($file, 0, strpos($StockId, '.1'));
