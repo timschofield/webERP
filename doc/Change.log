@@ -1,5 +1,6 @@
 webERP Change Log
 
+04/10/16 RChacon: Add return.svg image for Returnbutton in Scalable Vector Graphics (SVG) format.
 27/09/16 RChacon: Add webERP logo in Scalable Vector Graphics format.
 25/09/16 Exson: Make customer reference GET method workable in SelectCompletedOrder.php. Fixed decimalplaces missing bug in SelectOrderItems.php. Add due date, order date and customer reference option in SelectSalesOrder.php.
 25/09/16 Exson: Make the details show immediately when the search result is one in SelectCompletedOrder.php.And add return links in OrderDetails.php.
