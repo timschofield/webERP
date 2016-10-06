@@ -1,5 +1,6 @@
 webERP Change Log
 
+05/10/16 RChacon: Add cross.svg, next.svg, previous.svg, and tick.svg images in Scalable Vector Graphics (SVG) format for general use (any size).
 04/10/16 RChacon: In class.pdf.php, fix the function addJpegFromFile() use of the functionality Image() of TCPDF class.
 04/10/16 RChacon: In class.pdf.php, functions Rectangle() and RoundRectangle() use the functionalities Rect() and RoundedRectXY() of TCPDF class.
 04/10/16 RChacon: Add return.svg image for Return button in Scalable Vector Graphics (SVG) format.
