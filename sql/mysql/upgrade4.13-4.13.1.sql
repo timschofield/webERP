@@ -11,3 +11,5 @@ ALTER table supplierdiscounts CONVERT TO CHARACTER SET utf8;
 INSERT INTO scripts VALUES ('PcAssignCashTabToTab.php',12,'Assign cash from one tab to another');
 ALTER table workorders ADD remark text DEFAULT NULL;
 ALTER table workorders ADD reference varchar(40) NOT NULL DEFAULT '';
+
+ALTER TABLE `salesanalysis` CHANGE `salesperson` `salesperson` VARCHAR(4) DEFAULT '' NOT NULL;

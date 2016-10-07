@@ -122,3 +122,6 @@ p {
 	margin-left:2%;
 	margin-right:2%;
 }
+pre {
+    font-size: 1.2em;
+}

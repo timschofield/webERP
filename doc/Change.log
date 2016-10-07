@@ -1,5 +1,8 @@
 webERP Change Log
 
+05/10/16 Eatong: Format the ManualAPITutorial.html for easier reading.
+05/10/16 Eatong: Add CSS rule for <pre> for easier reading.
+05/10/16 Eatong: Align field length of salesanalysis.salesperson to salesman.salesmancode.
 05/10/16 RChacon: Add cross.svg, next.svg, previous.svg, and tick.svg images in Scalable Vector Graphics (SVG) format for general use (any size).
 04/10/16 RChacon: In class.pdf.php, fix the function addJpegFromFile() use of the functionality Image() of TCPDF class.
 04/10/16 RChacon: In class.pdf.php, functions Rectangle() and RoundRectangle() use the functionalities Rect() and RoundedRectXY() of TCPDF class.
@@ -10,7 +13,7 @@ webERP Change Log
 24/10/16 Simon Kelly: Fixed placing POs for sales orders using array form variable
 24/09/16 waynemcdougall: Fixed missing date in Sales Price history
 24/09/16 Exson: Make Justify feature workable in addTextWrap in class.pdf.php.
-24/09/16 Exson: Fixed the AddTextWrap missing characters errors when there is space and make it more reliable. 
+24/09/16 Exson: Fixed the AddTextWrap missing characters errors when there is space and make it more reliable.
 21/09/16 RChacon: In SuppWhereAlloc.php, accepts the payment multiple creditors. In CustWhereAlloc.php, accepts the receipt of multiple debtors.
 18/09/16 RChacon: Add style to describe how button image should be displayed. Clean up Xenos css.
 18/09/16 Exson: Add multiple items issue for non-controlled items feature to Work Orders in WorkOrderIssue.php.
@@ -22,7 +25,7 @@ webERP Change Log
 04/09/16 Exson: Fixed the undefined noise in WorkOrderStatus.php.
 04/09/16 Exson: Fixed the bug that work order location will be wrong when user select location which is not user's default location.
 04/09/16 Dave Parrish fixed accumulated No of orders bug in SalesByTypePeriodInquiry.php.
-31/08/16 Exson: Addd new feature assign cash from one tab to another. 
+31/08/16 Exson: Addd new feature assign cash from one tab to another.
 24/08/16 Exson: Fixed the latin1 charset mixed bug in supplierdiscounts table;
 24/9/16 Exson: Fixed the bug that days of payment terms in the following month over 31 days can not be handled correctly in DateFunctions.inc.
 20/08/16 RChacon: In ConfirmDispatch_Invoice.php, fix table html code.
