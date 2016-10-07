@@ -42,6 +42,7 @@ include('includes/KLCountriesForRetail.php');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLPointOfSale.php');
+include('includes/KLPrintESCPOS.php');
 include('includes/KLEmails.php');
 
  
@@ -2083,7 +2084,13 @@ END OF QOH Verification */
 		/*                         PRINT THE CUSTOMER INVOICE                               */
 		/************************************************************************************/
 		
-		KLPrintReceipt($identifier, $OrderNo);
+		$TextToPrint = KLPrintReceiptCreateText($identifier, $OrderNo);
+		KLPrintESCPOSReceipt($TextToPrint);
+
+//		$ShopTextToPrint = $TextToPrint . KLPrintReceiptShopText($identifier, $OrderNo);
+//		KLPrintESCPOSReceipt($ShopTextToPrint);
+//		// for test only
+//		echo $ShopTextToPrint;		
 		
 		unset($_SESSION['Items'.$identifier]->LineItems);
 		unset($_SESSION['Items'.$identifier]);
