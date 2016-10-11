@@ -1,11 +1,9 @@
 <?php
-
-/* $Id$*/
+/* $Id$ */
+/* Defines the settings applicable for the company, including name, address, tax authority reference, whether GL integration used etc. */
 
 include('includes/session.inc');
-
 $Title = _('Company Preferences');
-/* webERP manual links before header.inc */
 $ViewTopic= 'CreatingNewSystem';
 $BookMark = 'CompanyParameters';
 include('includes/header.inc');
@@ -234,8 +232,8 @@ $result=DB_query("SELECT currabrev, currency FROM currencies");
 include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
 
 echo '<tr>
-		<td>' . _('Home Currency') . ':</td>
-		<td><select tabindex="13" name="CurrencyDefault">';
+		<td><label for="CurrencyDefault">', _('Home Currency'), ':</label></td>
+		<td><select id="CurrencyDefault" name="CurrencyDefault" tabindex="13" >';
 
 while ($myrow = DB_fetch_array($result)) {
 	if ($_POST['CurrencyDefault']==$myrow['currabrev']){

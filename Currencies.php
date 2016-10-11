@@ -389,7 +389,7 @@ or deletion of the records*/
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?&amp;SelectedCurrency=' . urlencode($myrow['currabrev']) . '">' . _('Edit') . '</a></td>
-					<td colspan="2">' . _('Functional Currency') . '</td>
+					<td colspan="2"><a href="CompanyPreferences.php#CurrencyDefault">' . _('Functional Currency') . '</a></td>
 					</tr>',
 					$ImageFile,
 					$myrow['currabrev'],
