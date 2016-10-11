@@ -1,25 +1,5 @@
 <?php 
-define("VERSIONFILE", "99.00"); // 
-
-include('includes/DefineCartClass.php');
-include('includes/session.inc');
-
-$Title = _('TEST TEST Retail POS for KL '. VERSIONFILE);
-
-include('includes/header.inc');
-include('includes/GetPrice.inc');
-include('includes/SQL_CommonFunctions.inc');
-include('includes/GetSalesTransGLCodes.inc');
-
-include('includes/KLCountriesForRetail.php');
-
-include('includes/KLDefines.php');
-include('includes/KLGeneralFunctions.php');
-include('includes/KLPointOfSale.php');
-include('includes/KLPrintESCPOS.php');
-include('includes/KLEmails.php');
-
-//    session_start();
+    session_start();
 
     include 'includes/PrintESCPOS/WebClientPrint.php';
     use Neodynamic\SDK\Web\WebClientPrint;
