@@ -20,8 +20,10 @@ if(isset($_GET['orderno'])) {
 
 if (TRUE) {
 	$TextToPrint = KLPrintReceiptCreateText($identifier, $OrderNo);
-	// echo $TextToPrint;
+	echo $TextToPrint;
+	//
 	// HERE WE SHOULD START THE PRINTING PROCESS OF THE POS RECEIPT
+	//
 } 
 
 ?>

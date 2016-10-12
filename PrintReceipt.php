@@ -11,10 +11,8 @@
     // Process request
     // Generate ClientPrintJob? only if clientPrint param is in the query string
     $urlParts = parse_url($_SERVER['REQUEST_URI']);
-echo '$urlParts = ' . $urlParts;
     if (isset($urlParts['query'])){
         $rawQuery = $urlParts['query'];
-echo '$rawQuery = ' . $rawQuery;
         parse_str($rawQuery, $qs);
         if(isset($qs[WebClientPrint::CLIENT_PRINT_JOB])){
 
