@@ -1,5 +1,5 @@
 <?php 
-    session_start();
+//    session_start();
 
     include 'includes/PrintESCPOS/WebClientPrint.php';
     use Neodynamic\SDK\Web\WebClientPrint;
@@ -11,18 +11,14 @@
     // Process request
     // Generate ClientPrintJob? only if clientPrint param is in the query string
     $urlParts = parse_url($_SERVER['REQUEST_URI']);
-
-prnMsg('$urlParts = ' . $urlParts);
-   
+echo '$urlParts = ' . $urlParts;
     if (isset($urlParts['query'])){
         $rawQuery = $urlParts['query'];
-prnMsg('$rawQuery = ' . $rawQuery);
+echo '$rawQuery = ' . $rawQuery;
         parse_str($rawQuery, $qs);
-prnMsg('puto if = '. $qs[WebClientPrint::CLIENT_PRINT_JOB]);
         if(isset($qs[WebClientPrint::CLIENT_PRINT_JOB])){
 
- //           $useDefaultPrinter = ($qs['useDefaultPrinter'] === 'checked');
-            $useDefaultPrinter = TRUE;
+            $useDefaultPrinter = ($qs['useDefaultPrinter'] === 'checked');
             $printerName = urldecode($qs['printerName']);
 
             //Create ESC/POS commands for sample receipt
@@ -79,7 +75,6 @@ prnMsg('puto if = '. $qs[WebClientPrint::CLIENT_PRINT_JOB]);
         }
     }
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>

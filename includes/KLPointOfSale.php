@@ -1,13 +1,5 @@
 <?php
 
-/*USE needed to silent print ESCPOS*/    
-/* 
-use Neodynamic\SDK\Web\WebClientPrint;
-use Neodynamic\SDK\Web\Utils;
-use Neodynamic\SDK\Web\DefaultPrinter;
-use Neodynamic\SDK\Web\InstalledPrinter;
-use Neodynamic\SDK\Web\ClientPrintJob;
-*/	
 function webERP_in_test(){
 	return (strpos($_SERVER['PHP_SELF'],"TEST"));
 }
@@ -115,7 +107,6 @@ function KapalLautRetailTagSelection($Debtor, $db){
 	}
 	return $Tag;
 }
-
 
 function AdjustPackagingMovement($StockId, $QtyDelivered, $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db){
 
@@ -414,6 +405,7 @@ function AccountPaymentRetail($PaymentMethod,
 	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 	return $ReceiptNumber;
 }
+
 
 function AccountDiscountOnOrderRetail($TypeDiscount,
 							$ReceiptNumber,

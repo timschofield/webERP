@@ -1,50 +1,7 @@
 <?php
 
-/*USE needed to silent print ESCPOS*/    
-/*
-use Neodynamic\SDK\Web\WebClientPrint;
-use Neodynamic\SDK\Web\Utils;
-use Neodynamic\SDK\Web\DefaultPrinter;
-use Neodynamic\SDK\Web\InstalledPrinter;
-use Neodynamic\SDK\Web\ClientPrintJob;
-*/
 function KLPrintESCPOSReceipt($Receipt){
-   include 'includes/PrintESCPOS/WebClientPrint.php';
-
-    // Process request
-    // Generate ClientPrintJob? only if clientPrint param is in the query string
-    $urlParts = parse_url($_SERVER['REQUEST_URI']);
-    
-    if (isset($urlParts['query'])){
-        $rawQuery = $urlParts['query'];
-        parse_str($rawQuery, $qs);
-        if(isset($qs[WebClientPrint::CLIENT_PRINT_JOB])){
-
-            $useDefaultPrinter = ($qs['useDefaultPrinter'] === 'checked');
-            $printerName = urldecode($qs['printerName']);
-
-            //Create a ClientPrintJob obj that will be processed at the client side by the WCPP
-            $cpj = new ClientPrintJob();
-            //set ESC/POS commands to print...
-            $cpj->printerCommands = $Receipt;
-            $cpj->formatHexValues = true;
-            //set client printer
-            if ($useDefaultPrinter || $printerName === 'null'){
-                $cpj->clientPrinter = new DefaultPrinter();
-            }else{
-                $cpj->clientPrinter = new InstalledPrinter($printerName);
-            }
-
-            //Send ClientPrintJob back to the client
-            ob_start();
-            ob_clean();
-            echo $cpj->sendToClient();
-            ob_end_flush();
-            exit();
-        }
-    }
 }
-
 
 function KLPrintReceiptCreateText($identifier, $OrderNo){
   /*Test version*/

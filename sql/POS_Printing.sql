@@ -3,6 +3,7 @@ INSERT INTO `systypes` (`typeid`, `typename`, `typeno`) VALUES ('9001', 'KL Cust
 INSERT INTO `systypes` (`typeid`, `typename`, `typeno`) VALUES ('9002', 'KL Customer Invoice CASH', '1');
 INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('KLRetailPOS.php', '1500', 'Modified version of CounterSales.php for KL allowing printing in Thermal printer');
 INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('KLRetailCustomerInfoCard.php', '1500', 'SPG input of customer info card');
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('PrintPOSReceipt.php', '1500', 'Print POS receipt');
 ALTER TABLE `locations` ADD `klposcashaccount` VARCHAR(20) NULL COMMENT 'GL account for cash payments for KL POS ' AFTER `klyearlyrent`;
 UPDATE `locations` SET `klposcashaccount` = '111111101' WHERE `locations`.`loccode` = 'TOK66';
 UPDATE `locations` SET `klposcashaccount` = '111111102' WHERE `locations`.`loccode` = 'TOKSA';
