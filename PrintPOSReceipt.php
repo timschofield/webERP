@@ -15,9 +15,11 @@ include 'includes/WebClientPrint.php';
 
 
 if(isset($_GET['identifier'])) {
-	$identifier = filter_number_format($_GET['identifier']);
+//	$identifier = filter_number_format($_GET['identifier']);
+	$identifier = $_GET['identifier'];
 } elseif(isset($_POST['identifier'])) {
-	$identifier = filter_number_format($_POST['identifier']);
+//	$identifier = filter_number_format($_POST['identifier']);
+	$identifier = $_POST['identifier'];
 } else {
 	$identifier = '';
 }

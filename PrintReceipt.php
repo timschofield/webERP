@@ -1,7 +1,7 @@
 <?php 
 //    session_start();
 
-    include 'includes/PrintESCPOS/WebClientPrint.php';
+    include 'includes/WebClientPrint.php';
     use Neodynamic\SDK\Web\WebClientPrint;
     use Neodynamic\SDK\Web\Utils;
     use Neodynamic\SDK\Web\DefaultPrinter;

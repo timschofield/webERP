@@ -21,11 +21,11 @@ include('includes/KLPrintESCPOS.php');
 include('includes/KLEmails.php');
 
 //################## PRINTING STUFF ##################### 
-echo '<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>'
+echo '<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>';
 include 'includes/WebClientPrint.php';
 use Neodynamic\SDK\Web\WebClientPrint;
 //Specify the ABSOLUTE URL to the php file that will create the ClientPrintJob object
-echo WebClientPrint::createScript('https://www.bumibiru.com/TEST/weberp/PrintPOSReceipt.php')
+echo WebClientPrint::createScript('https://www.bumibiru.com/TEST/weberp/PrintPOSReceipt.php');
 //################## PRINTING STUFF #####################    
 
 
