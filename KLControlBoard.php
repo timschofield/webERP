@@ -921,6 +921,12 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 
+	if ($KL_ShopSupportLeader
+		OR $KL_ShopSupportTeam){
+		OutstandingOrders("Wholesale", "Order", $RootPath, $db);
+		$NumberOfTestExecuted++;
+	}
+	
 	/*
 	if ($KL_SystemAdmin 
 		OR $KL_OperationalManager
