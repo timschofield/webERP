@@ -20,6 +20,14 @@ include('includes/KLPointOfSale.php');
 include('includes/KLPrintESCPOS.php');
 include('includes/KLEmails.php');
 
+//################## PRINTING STUFF ##################### 
+echo '<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>'
+include 'includes/WebClientPrint.php';
+use Neodynamic\SDK\Web\WebClientPrint;
+//Specify the ABSOLUTE URL to the php file that will create the ClientPrintJob object
+echo WebClientPrint::createScript('https://www.bumibiru.com/TEST/weberp/PrintPOSReceipt.php')
+//################## PRINTING STUFF #####################    
+
 
 if (isset($_POST['CancelOrder'])) {
 	echo '<br /><br /><a href="' .$_SERVER['PHP_SELF'] . '">' . _('Start a new Retail Sale') . '</a>';
@@ -62,8 +70,10 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 	/*                         PRINT THE CUSTOMER REEIPT                                */
 	/************************************************************************************/
 	
-	echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . '<a target="_blank" href="'.$RootPath.'/PrintPOSReceipt.php?identifier='.$identifier.'&amp;orderno='.$OrderNo.'">' .  _('Print this invoice'). '</a><br /><br />';
-
+	//################## PRINTING STUFF ##################### 
+	echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . '<a href="#"' . 'onclick="javascript:jsWebClientPrint.print(\'identifier='.$identifier.'&orderno='.$OrderNo.'\');">' .  _('Print this invoice'). '</a><br /><br />';
+    //################## PRINTING STUFF ##################### 
+	
 	echo '<br /><br /><a href="' .$_SERVER['PHP_SELF'] . '">' . _('Start a new Retail Sale') . '</a></div>';
 
 } else {

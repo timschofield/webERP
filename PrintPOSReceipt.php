@@ -1,8 +1,18 @@
 <?php
 
-include('includes/session.inc');
+//include('includes/session.inc');
 include('includes/KLPointOfSale.php');
 include('includes/KLPrintESCPOS.php');
+
+//################## PRINTING STUFF #####################
+include 'includes/WebClientPrint.php';
+    use Neodynamic\SDK\Web\WebClientPrint;
+    use Neodynamic\SDK\Web\Utils;
+    use Neodynamic\SDK\Web\DefaultPrinter;
+    use Neodynamic\SDK\Web\InstalledPrinter;
+    use Neodynamic\SDK\Web\ClientPrintJob;
+//################## PRINTING STUFF #####################	
+
 
 if(isset($_GET['identifier'])) {
 	$identifier = filter_number_format($_GET['identifier']);
@@ -20,10 +30,32 @@ if(isset($_GET['orderno'])) {
 
 if (TRUE) {
 	$TextToPrint = KLPrintReceiptCreateText($identifier, $OrderNo);
-	echo $TextToPrint;
+	//echo $TextToPrint;
 	//
 	// HERE WE SHOULD START THE PRINTING PROCESS OF THE POS RECEIPT
 	//
+	
+	
+	//################## PRINTING STUFF #####################
+	
+	//Create a ClientPrintJob obj that will be processed at the client side by the WCPP
+            $cpj = new ClientPrintJob();
+            //set ESC/POS commands to print...
+            $cpj->printerCommands = $TextToPrint;
+            $cpj->formatHexValues = true;
+            //set client printer
+            $cpj->clientPrinter = new DefaultPrinter();
+            
+            //Send ClientPrintJob back to the client
+            ob_start();
+            ob_clean();
+            echo $cpj->sendToClient();
+            ob_end_flush();
+            exit();
+			
+	//################## PRINTING STUFF #####################
+	
+	
 } 
 
 ?>
