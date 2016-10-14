@@ -2082,9 +2082,8 @@ END OF QOH Verification */
 		/************************************************************************************/
 		/*                         PRINT THE CUSTOMER INVOICE                               */
 		/************************************************************************************/
+		echo 'RootPath = '. $RootPath ;
 		
-//		$TextToPrint = KLPrintReceiptCreateText($identifier, $OrderNo);
-//		KLPrintESCPOSReceipt($TextToPrint);
 		echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . '<a target="_blank" href="'.$RootPath.'/PrintPOSReceipt.php?identifier='.$identifier.'&amp;orderno='.$OrderNo.'">' .  _('Print this invoice'). '</a><br /><br />';
 
 		unset($_SESSION['Items'.$identifier]->LineItems);
