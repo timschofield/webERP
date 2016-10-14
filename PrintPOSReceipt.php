@@ -1,18 +1,17 @@
 <?php
 
-//  IMPORTANT: the file WebClientPrint.php MUST NOT require authentication!!! It must allow Anonymous access because WCPP cannot provide any user credentials!!!
-// include('includes/session.inc');
+//include('includes/session.inc');
 include('includes/KLPointOfSale.php');
 include('includes/KLPrintESCPOS.php');
 
-//################## SILENT PRINTING STUFF #####################
+//################## PRINTING STUFF #####################
 include 'includes/WebClientPrint.php';
     use Neodynamic\SDK\Web\WebClientPrint;
     use Neodynamic\SDK\Web\Utils;
     use Neodynamic\SDK\Web\DefaultPrinter;
     use Neodynamic\SDK\Web\InstalledPrinter;
     use Neodynamic\SDK\Web\ClientPrintJob;
-//################## SILENT PRINTING STUFF #####################	
+//################## PRINTING STUFF #####################	
 
 
 if(isset($_GET['identifier'])) {
@@ -39,7 +38,7 @@ if (TRUE) {
 	//
 	
 	
-	//################## SILENT PRINTING STUFF #####################
+	//################## PRINTING STUFF #####################
 	
 	//Create a ClientPrintJob obj that will be processed at the client side by the WCPP
             $cpj = new ClientPrintJob();
@@ -56,7 +55,7 @@ if (TRUE) {
             ob_end_flush();
             exit();
 			
-	//################## SILENT PRINTING STUFF #####################
+	//################## PRINTING STUFF #####################
 	
 	
 } 

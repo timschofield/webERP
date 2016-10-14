@@ -20,13 +20,13 @@ include('includes/KLPointOfSale.php');
 include('includes/KLPrintESCPOS.php');
 include('includes/KLEmails.php');
 
-//################## SILENT PRINTING STUFF ##################### 
+//################## PRINTING STUFF ##################### 
 echo '<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>';
-include ('includes/WebClientPrint.php');
+include 'includes/WebClientPrint.php';
 use Neodynamic\SDK\Web\WebClientPrint;
 //Specify the ABSOLUTE URL to the php file that will create the ClientPrintJob object
-echo WebClientPrint::createScript($RootPath . '/PrintPOSReceipt.php');
-//################## SILENT PRINTING STUFF #####################    
+echo WebClientPrint::createScript('https://www.bumibiru.com/TEST/weberp/PrintPOSReceipt.php');
+//################## PRINTING STUFF #####################    
 
 
 if (isset($_POST['CancelOrder'])) {
@@ -70,11 +70,9 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 	/*                         PRINT THE CUSTOMER REEIPT                                */
 	/************************************************************************************/
 	
-	//################## SILENT PRINTING STUFF ##################### 
-	echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print customer receipt') .'" alt="" />' . ' ' .
-		'<a href="#"' . 'onclick="javascript:jsWebClientPrint.print(\'identifier='.$identifier.'&orderno='.$OrderNo.'\');">' .
-		_('Print customer receipt'). '</a><br /><br />';
-    //################## SILENT PRINTING STUFF ##################### 
+	//################## PRINTING STUFF ##################### 
+	echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . '<a href="#"' . 'onclick="javascript:jsWebClientPrint.print(\'identifier='.$identifier.'&orderno='.$OrderNo.'\');">' .  _('Print this invoice'). '</a><br /><br />';
+    //################## PRINTING STUFF ##################### 
 	
 	echo '<br /><br /><a href="' .$_SERVER['PHP_SELF'] . '">' . _('Start a new Retail Sale') . '</a></div>';
 

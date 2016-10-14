@@ -12,10 +12,10 @@ WebClientPrint::$licenseKey = '';
 //===================
 //Set ABSOLUTE URL to WebClientPrint.php file
 //WebClientPrint::$webClientPrintAbsoluteUrl = Utils::getRoot().'/TEST/weberp/includes/PrintESCPOS/WebClientPrint.php';
-WebClientPrint::$webClientPrintAbsoluteUrl = $RootPath . '/includes/WebClientPrint.php';
+WebClientPrint::$webClientPrintAbsoluteUrl = 'https://www.bumibiru.com/TEST/weberp/includes/WebClientPrint.php';
 //Set wcpcache folder RELATIVE to WebClientPrint.php file
 //FILE WRITE permission on this folder is required!!!
-WebClientPrint::$wcpCacheFolder = 'includes/wcpcache/';
+WebClientPrint::$wcpCacheFolder = 'wcpcache/';
 //===================
 
 // Clean built-in Cache
@@ -29,6 +29,7 @@ if (isset($urlParts['query'])){
         WebClientPrint::processRequest($urlParts['query']);
     }
 } 
+
 
 /**
  * WebClientPrint provides functions for registering the "WebClientPrint for PHP" solution 

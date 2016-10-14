@@ -45,13 +45,6 @@ include('includes/KLPointOfSale.php');
 include('includes/KLPrintESCPOS.php');
 include('includes/KLEmails.php');
 
-//################## SILENT PRINTING STUFF ##################### 
-echo '<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>';
-include ('includes/WebClientPrint.php');
-use Neodynamic\SDK\Web\WebClientPrint;
-//Specify the ABSOLUTE URL to the php file that will create the ClientPrintJob object
-echo WebClientPrint::createScript($RootPath . '/PrintPOSReceipt.php');
-//################## SILENT PRINTING STUFF #####################    
  
 if (empty($_GET['identifier'])) {
 	$identifier=date('U');
@@ -2092,13 +2085,7 @@ END OF QOH Verification */
 		
 //		$TextToPrint = KLPrintReceiptCreateText($identifier, $OrderNo);
 //		KLPrintESCPOSReceipt($TextToPrint);
-//		echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . '<a target="_blank" href="'.$RootPath.'/PrintPOSReceipt.php?identifier='.$identifier.'&amp;orderno='.$OrderNo.'">' .  _('Print this invoice'). '</a><br /><br />';
-
-		//################## SILENT PRINTING STUFF ##################### 
-		echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print customer receipt') .'" alt="" />' . ' ' .
-			'<a href="#"' . 'onclick="javascript:jsWebClientPrint.print(\'identifier='.$identifier.'&orderno='.$OrderNo.'\');">' .
-			_('Print customer receipt'). '</a><br /><br />';
-		//################## SILENT PRINTING STUFF ##################### 
+		echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . '<a target="_blank" href="'.$RootPath.'/PrintPOSReceipt.php?identifier='.$identifier.'&amp;orderno='.$OrderNo.'">' .  _('Print this invoice'). '</a><br /><br />';
 
 		unset($_SESSION['Items'.$identifier]->LineItems);
 		unset($_SESSION['Items'.$identifier]);
