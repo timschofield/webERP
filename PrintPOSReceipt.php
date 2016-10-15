@@ -14,38 +14,22 @@ use Neodynamic\SDK\Web\ClientPrintJob;
 //################## PRINTING STUFF #####################	
 
 
-if(isset($_GET['identifier'])) {
-//	$identifier = filter_number_format($_GET['identifier']);
-	$identifier = $_GET['identifier'];
-} elseif(isset($_POST['identifier'])) {
-//	$identifier = filter_number_format($_POST['identifier']);
-	$identifier = $_POST['identifier'];
+if(isset($_GET['texttoprint'])) {
+	$texttoprint = $_GET['texttoprint'];
+} elseif(isset($_POST['texttoprint'])) {
+	$texttoprint = $_POST['texttoprint'];
 } else {
-	$identifier = '';
+	$texttoprint = '';
 }
 
-if(isset($_GET['orderno'])) {
-	$OrderNo = $_GET['orderno'];
-} elseif(isset($_POST['orderno'])) {
-	$OrderNo = $_POST['orderno'];
-}
-
-// TEST if we can read the _SESSION variables
-//$identifier = $_SESSION['DatabaseName'];
-// $TextToPrint = KLPrintReceiptCreateText($identifier, $OrderNo);
-$TextToPrint = str_replace("%20", " ", $identifier);
-
-//
-// HERE WE SHOULD START THE PRINTING PROCESS OF THE POS RECEIPT
-//
-
+$texttoprint = str_replace("%20", " ", $texttoprint);
 
 //################## PRINTING STUFF #####################
 
 //Create a ClientPrintJob obj that will be processed at the client side by the WCPP
 		$cpj = new ClientPrintJob();
 		//set ESC/POS commands to print...
-		$cpj->printerCommands = $TextToPrint;
+		$cpj->printerCommands = $texttoprint;
 		$cpj->formatHexValues = true;
 		//set client printer
 		$cpj->clientPrinter = new DefaultPrinter();

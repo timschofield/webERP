@@ -71,14 +71,17 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 	/*                         PRINT THE CUSTOMER RECEIPT                                */
 	/************************************************************************************/
 
-	$TextToPrint = KLPrintReceiptCreateText($identifier, $OrderNo);
+	$HeaderText = KLPrintReceiptHeader($identifier, $OrderNo);
+	$CustomerFooter = KLPrintReceiptCustomerFooter($identifier, $OrderNo);
+	$ShopFooter = KLPrintReceiptShopFooter($identifier, $OrderNo);
+	$Receipt = $HeaderText . $CustomerFooter . $HeaderText . $ShopFooter;
+	
 	//################## PRINTING STUFF ##################### 
 	echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . 
-		_('Print') . '" alt="" />' . ' ' . 
-		'<a href="#"' . 'onclick="javascript:jsWebClientPrint.print(\'identifier='.$TextToPrint.
-																	'&orderno='.$OrderNo.
+		_('Print the customer receipt') . '" alt="" />' . ' ' . 
+		'<a href="#"' . 'onclick="javascript:jsWebClientPrint.print(\'texttoprint='.$Receipt.
 																	'\');">' .  
-		_('Print this invoice'). '</a><br /><br />';
+		_('Print the customer receipt'). '</a><br /><br />';
     //################## PRINTING STUFF ##################### 
 	
 	echo '<br /><br /><a href="' .$_SERVER['PHP_SELF'] . '">' . _('Start a new Retail Sale') . '</a></div>';
@@ -101,48 +104,12 @@ echo '</form>';
 include('includes/footer.inc');
 
 
-function KLPrintReceiptCreateText($identifier, $OrderNo){
-  /*Test version*/
-			//Create ESC/POS commands for sample receipt
- /*          $esc = '0x1B'; //ESC byte in hex notation
-            $newLine = '0x0A'; //LF byte in hex notation
-
-            $cmds = $esc . "@"; //Initializes the printer (ESC @)
-            $cmds .= $esc . '!' . '0x38'; //Emphasized + Double-height + Double-width mode selected (ESC ! (8 + 16 + 32)) 56 dec => 38 hex
-            $cmds .= 'BEST DEAL STORES'; //text to print
-            $cmds .= $newLine . $newLine;
-            $cmds .= $esc . '!' . '0x00'; //Character font A selected (ESC ! 0)
-			$cmds .= 'identifier='.$identifier; 
-            $cmds .= $newLine;
- 			$cmds .= 'OrderNo='.$OrderNo; 
-            $cmds .= $newLine;
-            $cmds .= 'RootPath='.$RootPath; 
-            $cmds .= $newLine;
-            $cmds .= 'UserStockLocation='.$_SESSION['UserStockLocation']; 
-            $cmds .= $newLine;
-            $cmds .= 'DatabaseName='.$_SESSION['DatabaseName']; 
-            $cmds .= $newLine;
-
-            $cmds .= $esc . '!' . '0x00'; //Character font A selected (ESC ! 0)
-            $cmds .= $newLine . $newLine;
-            $cmds .= date('d/M/Y H:i:s');
-			$cmds .= $newLine;
-			$cmds .= '0x1D0x560x410x00';
-			$cmds .= $newLine;
-			return $cmds;
-// webERP version
-*/
-	$esc = '0x1B'; //ESC byte in hex notation
-	$NewLine = '0x0A'; //LF byte in hex notation
-	$CutPaper = $NewLine. '0x1D0x560x410x00' . $NewLine;
-	$InitPrinter = $esc . "@"; //Initializes the printer (ESC @)
-	$EmphasizedDoubleHeight = $esc . '!' . '0x18'; //Emphasized + Double-height mode selected (ESC ! (16 + 8)) 24 dec => 18 hex
-	$EmphasizedDoubleHeightDoubleWidth = $esc . '!' . '0x38'; //Emphasized + Double-height + Double-width mode selected (ESC ! (8 + 16 + 32)) 56 dec => 38 hex
-	$CharacterFontA = $esc . '!' . '0x00'; //Character font A selected (ESC ! 0);
+function KLPrintReceiptHeader($identifier, $OrderNo){
 	
+	include('includes/ESCPOSCommands.php');
 
 	$TextToPrint = $InitPrinter;
-	$TextToPrint .= $EmphasizedDoubleHeight;
+	$TextToPrint .= $EmphasizedDoubleHeight. $CenteredJustified ;
 	
 	// name of shop
 	if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_KAPAL_LAUT)){
@@ -158,11 +125,9 @@ function KLPrintReceiptCreateText($identifier, $OrderNo){
 	$TextToPrint .= $CharacterFontA;
 
 	if (webERP_in_test()){
-		$TextToPrint .= $NewLine;
-		$TextToPrint .= "TEST SALE - IT IS NOT A VALID INVOICE" . $NewLine;
+		$TextToPrint .= $NewLine . $CenteredJustified . "TEST SALE - IT IS NOT A VALID INVOICE" . $NewLine;
 	}
-
-	
+	$TextToPrint .= $LeftJustified;
 	$TextToPrint .= 'Invoice: ' . $_SESSION['Items'.$identifier]->CustRef . $NewLine;
 	$TextToPrint .= DisplayDateTime() . $NewLine;
 	$TextToPrint .= 'ERP: ' . number_format($OrderNo) . $NewLine;
@@ -185,21 +150,49 @@ function KLPrintReceiptCreateText($identifier, $OrderNo){
 	$Goods = $Total / 1.1;
 	$PPN = $Total-$Goods;
 
-	$TextToPrint .= 'Total: ' . number_format($Total) . $NewLine;
-	$TextToPrint .= 'Goods: ' . number_format($Goods) . $NewLine;
-	$TextToPrint .= 'PPN 10%: ' . number_format($PPN) . $NewLine;
+	$TextToPrint .= 'Total: Rp. ' . number_format($Total) . $NewLine;
+	$TextToPrint .= 'Goods: Rp. ' . number_format($Goods) . $NewLine;
+	$TextToPrint .= 'PPN 10%: Rp. ' . number_format($PPN) . $NewLine;
+	
+	return $TextToPrint;
+
+}
+
+function KLPrintReceiptCustomerFooter($identifier, $OrderNo){
+
+	include('includes/ESCPOSCommands.php');
 	
 	// read terms and conditions
 	$TextToPrint .= $NewLine;
-	$TextToPrint .= "This invoice is the only valid proof of purchase." . $NewLine;
-	$TextToPrint .= "For more information on terms, conditions and warranty check www.kapal-laut.com" . $NewLine;
+	$TextToPrint .= $CharacterFontB . $LeftJustified;
+	$TextToPrint .= "This invoice is the only valid proof of purchase. ";
+	$TextToPrint .= "For more information on location of all our shops, terms, conditions and warranty check www.kapal-laut.com" . $NewLine;
 
+	$TextToPrint .= $CharacterFontA;
 	if (webERP_in_test()){
-		$TextToPrint .= $NewLine;
-		$TextToPrint .= "TEST SALE - IT IS NOT A VALID INVOICE" . $NewLine;
+		$TextToPrint .= $NewLine . $CenteredJustified . "TEST SALE - IT IS NOT A VALID INVOICE" . $NewLine;
 	}
 	
 	$TextToPrint .= $NewLine;
+	$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth . $CenteredJustified . "CUSTOMER COPY" . $NewLine;
+	$TextToPrint .= $NewLine;
+	$TextToPrint .= $CutPaper;
+	
+	return $TextToPrint;
+
+}
+
+function KLPrintReceiptShopFooter($identifier, $OrderNo){
+
+	include('includes/ESCPOSCommands.php');
+
+	$TextToPrint .= $CharacterFontA;
+	if (webERP_in_test()){
+		$TextToPrint .= $NewLine .  $CenteredJustified . "TEST SALE - IT IS NOT A VALID INVOICE" . $NewLine;
+	}
+	
+	$TextToPrint .= $NewLine;
+	$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth . $CenteredJustified . "SHOP COPY" . $NewLine;
 	$TextToPrint .= $NewLine;
 	$TextToPrint .= $CutPaper;
 	
@@ -209,9 +202,6 @@ function KLPrintReceiptCreateText($identifier, $OrderNo){
 
 /* NOT NEEDED AT THIS STAGE. TO CREATE SHOP COPY.
 
-function webERP_in_test(){
-	return (strpos($_SERVER['PHP_SELF'],"TEST"));
-}
 
 function KLPrintReceiptShopText($identifier, $OrderNo){
 	$NewLine = "\n";
