@@ -648,7 +648,7 @@ function KLPrintReceiptTestWarning(){
 	include('includes/ESCPOSCommands.php');
 	$TextToPrint = $CharacterFontA;
 	if (webERP_in_test()){
-		$TextToPrint .= $NewLine .  $CenteredJustified . "TEST SALE - IT IS NOT A VALID INVOICE" . $NewLine;
+		$TextToPrint .= $NewLine .  $CenteredJustified . "TEST ONLY - THIS IS NOT A VALID INVOICE" . $NewLine;
 	}
 	return $TextToPrint;
 }
@@ -658,28 +658,29 @@ function KLPrintReceiptHeader($identifier, $OrderNo){
 	
 	include('includes/ESCPOSCommands.php');
 
-	$TextToPrint = $InitPrinter;
-	$TextToPrint .= $EmphasizedDoubleHeight. $CenteredJustified ;
+	$TextToPrint = $InitPrinter . $CenteredJustified;
 	
 	// name of shop
 	if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_KAPAL_LAUT)){
-		$TextToPrint .= "Kapal-Laut. Your Essential Jewellery" . $NewLine;
+		$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth . "Kapal-Laut" . $Emphasized . ". Your Essential Jewellery" . $NewLine;
 	}else if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_BLINK)){
-		$TextToPrint .= "Blink by Kapal-laut" . $NewLine;
+		$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth . "Blink by Kapal-laut" . $NewLine;
 	}else if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_OUTLET)){
-		$TextToPrint .= "OUTLET by Kapal-Laut" . $NewLine;
+		$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth . "OUTLET by Kapal-Laut" . $NewLine;
 	}else{
-		$TextToPrint .= "SHOP NAME NOT FOUND" . $NewLine;
+		$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth . "SHOP NAME NOT FOUND" . $NewLine;
 	}
 
-	$TextToPrint .= KLPrintReceiptTestWarning(). $NewLine;
+	$TextToPrint .= KLPrintReceiptTestWarning(). $NewLine . $LeftJustified;
 	
-	$TextToPrint .= $LeftJustified;
-	$TextToPrint .= 'Invoice: ' . $_SESSION['Items'.$identifier]->CustRef . $NewLine;
-	$TextToPrint .= DisplayDateTime() . $NewLine;
-	$TextToPrint .= 'Order: ' . $OrderNo . $NewLine;
-	$TextToPrint .= 'SPG: ' . $_SESSION['SalesmanLogin'] . $NewLine. $NewLine;
-	
+	$TextInvoiceNumber = 'Invoice: ' . $_SESSION['Items'.$identifier]->CustRef;
+	$TextOrderNumber = 'Order: ' . $OrderNo;
+	$TextToPrint .=  str_pad($TextInvoiceNumber, $LineLenghtCharA - strlen($TextOrderNumber)) . $TextOrderNumber . $NewLine;
+
+	$TextDateTime = DisplayDateTime();
+	$TextSPG = 'SPG: ' . $_SESSION['SalesmanLogin'];
+	$TextToPrint .=  str_pad($TextDateTime, $LineLenghtCharA - strlen($TextSPG)) . $TextSPG. $NewLine. $NewLine;
+
 	foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
 		$SubTotal = $OrderLine->Quantity * $OrderLine->Price * (1 - $OrderLine->DiscountPercent);
 		$Total = $Total + $SubTotal;
@@ -697,10 +698,11 @@ function KLPrintReceiptHeader($identifier, $OrderNo){
 	$Goods = $Total / 1.1;
 	$PPN = $Total-$Goods;
 	
-	$TextToPrint .= $RightJustified. $NewLine;
+	$TextToPrint .= $NewLine;
+	$TextToPrint .= $RightJustified;
 	$TextToPrint .= 'Goods: Rp. ' . number_format($Goods) . $NewLine;
-	$TextToPrint .= 'PPN 10%: Rp. ' . number_format($PPN) . $NewLine;
-	$TextToPrint .= $Emphasized;
+	$TextToPrint .= 'PPN 10%: Rp.  ' . number_format($PPN) . $NewLine;
+	$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth;
 	$TextToPrint .= 'Total: Rp. ' . number_format($Total) . $CharacterFontA. $NewLine;
 	
 	return $TextToPrint;
@@ -711,13 +713,21 @@ function KLPrintReceiptCustomerFooter($identifier, $OrderNo){
 
 	include('includes/ESCPOSCommands.php');
 	
-	// read terms and conditions
 	$TextToPrint .= $NewLine;
-	if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_OUTLET)){
+
+	// Discounted items no refund...
+	$DiscountedItems = FALSE;
+	foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
+		if ($OrderLine->DiscountPercent != 0){
+			$DiscountedItems = TRUE;
+		}
+	}
+	if ($DiscountedItems){
 		$TextToPrint .= $CharacterFontA . $CenteredJustified;
-		$TextToPrint .= "No exchange and no refund for discounted or outlet items." . $NewLine;
+		$TextToPrint .= "No exchange, no refund, no warranty for discounted or outlet items." . $NewLine;
 	}
 
+	// read terms and conditions
 	$TextToPrint .= $CharacterFontB . $LeftJustified;
 	$TextToPrint .= "This invoice is the only valid proof of purchase. ";
 	$TextToPrint .= "For more information on: our full catalog, location of all our shops, news, job opportunities, sale terms and conditions and warranty check our website." . $NewLine;
