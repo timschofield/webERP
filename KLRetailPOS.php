@@ -45,6 +45,15 @@ include('includes/KLPointOfSale.php');
 include('includes/KLPrintESCPOS.php');
 include('includes/KLEmails.php');
 
+//################## PRINTING STUFF ##################### 
+echo '<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>';
+include 'includes/WebClientPrint.php';
+use Neodynamic\SDK\Web\WebClientPrint;
+//Specify the ABSOLUTE URL to the php file that will create the ClientPrintJob object
+// RICARD: To be improved to remove the hardcoded paths and get just 1 wcpcache folder in all installation
+echo WebClientPrint::createScript('https://www.bumibiru.com/TEST/weberp/PrintPOSReceipt.php');
+//################## PRINTING STUFF #####################    
+
  
 if (empty($_GET['identifier'])) {
 	$identifier=date('U');
@@ -2082,9 +2091,20 @@ END OF QOH Verification */
 		/************************************************************************************/
 		/*                         PRINT THE CUSTOMER INVOICE                               */
 		/************************************************************************************/
-		echo 'RootPath = '. $RootPath ;
-		
-		echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . '<a target="_blank" href="'.$RootPath.'/PrintPOSReceipt.php?identifier='.$identifier.'&amp;orderno='.$OrderNo.'">' .  _('Print this invoice'). '</a><br /><br />';
+		$HeaderText = KLPrintReceiptHeader($identifier, $OrderNo);
+		$CustomerFooter = KLPrintReceiptCustomerFooter($identifier, $OrderNo);
+		$ShopFooter = KLPrintReceiptShopFooter($identifier, $OrderNo);
+		$Receipt = $HeaderText . $CustomerFooter . $HeaderText . $ShopFooter;
+		$filename = 'wcpcache/'.$identifier.'.pos';   
+		file_put_contents($filename, $Receipt);
+
+		//################## PRINTING STUFF ##################### 
+		echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . 
+			_('Print the customer receipt') . '" alt="" />' . ' ' . 
+			'<a href="#"' . 'onclick="javascript:jsWebClientPrint.print(\'identifier='.$identifier.
+																		'\');">' .  
+			_('Print the customer receipt'). '</a><br /><br />';
+	   //################## PRINTING STUFF ##################### 
 
 		unset($_SESSION['Items'.$identifier]->LineItems);
 		unset($_SESSION['Items'.$identifier]);

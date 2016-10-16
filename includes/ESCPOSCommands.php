@@ -4,6 +4,7 @@
 	$NewLine = '0x0A'; //LF byte in hex notation
 	$CutPaper = $NewLine. '0x1D0x560x410x00' . $NewLine;
 	$InitPrinter = $esc . "@"; //Initializes the printer (ESC @)
+	$Emphasized = $esc . '!' . '0x08'; //Emphasized 
 	$EmphasizedDoubleHeight = $esc . '!' . '0x18'; //Emphasized + Double-height mode selected (ESC ! (16 + 8)) 24 dec => 18 hex
 	$EmphasizedDoubleHeightDoubleWidth = $esc . '!' . '0x38'; //Emphasized + Double-height + Double-width mode selected (ESC ! (8 + 16 + 32)) 56 dec => 38 hex
 	$CharacterFontA = $esc . '!' . '0x00'; //Character font A selected (ESC ! 0);

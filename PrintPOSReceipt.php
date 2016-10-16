@@ -1,8 +1,6 @@
 <?php
 
 include('includes/KLPointOfSale.php');
-include('includes/KLGeneralFunctions.php');
-include('includes/KLDefines.php');
 
 //################## PRINTING STUFF #####################
 include 'includes/WebClientPrint.php';
@@ -14,15 +12,22 @@ use Neodynamic\SDK\Web\ClientPrintJob;
 //################## PRINTING STUFF #####################	
 
 
-if(isset($_GET['texttoprint'])) {
-	$texttoprint = $_GET['texttoprint'];
-} elseif(isset($_POST['texttoprint'])) {
-	$texttoprint = $_POST['texttoprint'];
+if(isset($_GET['identifier'])) {
+	$identifier = $_GET['identifier'];
+} elseif(isset($_POST['identifier'])) {
+	$identifier = $_POST['identifier'];
 } else {
-	$texttoprint = '';
+	$identifier = '';
 }
 
-$texttoprint = str_replace("%20", " ", $texttoprint);
+// RICARD: To be improved to remove the hardcoded paths and get just 1 wcpcache folder in all installation
+if (webERP_in_test()){
+	$filename = 'https://www.bumibiru.com/TEST/weberp/wcpcache/'.$identifier.'.pos';   
+}else{
+	$filename = 'https://www.bumibiru.com/weberp/wcpcache/'.$identifier.'.pos';   
+}
+	
+$texttoprint = file_get_contents($filename);
 
 //################## PRINTING STUFF #####################
 
