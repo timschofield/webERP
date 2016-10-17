@@ -662,7 +662,7 @@ function KLPrintReceiptHeader($identifier, $OrderNo){
 	
 	// name of shop
 	if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_KAPAL_LAUT)){
-		$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth . "Kapal-Laut" . $Emphasized . ". Your Essential Jewellery" . $NewLine;
+		$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth . "Kapal-Laut" . $NewLine . $Emphasized . "Your Essential Jewellery" . $NewLine;
 	}else if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_BLINK)){
 		$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth . "Blink by Kapal-laut" . $NewLine;
 	}else if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_OUTLET)){
@@ -670,40 +670,62 @@ function KLPrintReceiptHeader($identifier, $OrderNo){
 	}else{
 		$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth . "SHOP NAME NOT FOUND" . $NewLine;
 	}
+	// shop address
+	$TextToPrint .= $CharacterFontB;
+	if (isset($_SESSION['ShopAddress1'])){
+		$TextAddress = $_SESSION['ShopAddress1'];
+	}
+	if (isset($_SESSION['ShopAddress2'])){
+		$TextAddress .= " " . $_SESSION['ShopAddress2'];
+	}
+	if (isset($_SESSION['ShopAddress3'])){
+		$TextAddress .= " " . $_SESSION['ShopAddress3'];
+	}
+	if (isset($_SESSION['ShopAddress4'])){
+		$TextAddress .= " " . $_SESSION['ShopAddress4'];
+	}
+	if (isset($_SESSION['ShopAddress5'])){
+		$TextAddress .= " " . $_SESSION['ShopAddress5'];
+	}
+	$TextToPrint .= $TextAddress . $NewLine;
 
+	// warning if it is a TEST
 	$TextToPrint .= KLPrintReceiptTestWarning(). $NewLine . $LeftJustified;
 	
+	// identification of the sale
 	$TextInvoiceNumber = 'Invoice: ' . $_SESSION['Items'.$identifier]->CustRef;
 	$TextOrderNumber = 'Order: ' . $OrderNo;
-	$TextToPrint .=  str_pad($TextInvoiceNumber, $LineLenghtCharA - strlen($TextOrderNumber)) . $TextOrderNumber . $NewLine;
+	$TextToPrint .=  DoubleJustified($TextInvoiceNumber, $TextOrderNumber, $LineLenghtCharA, " ");
 
 	$TextDateTime = DisplayDateTime();
 	$TextSPG = 'SPG: ' . $_SESSION['SalesmanLogin'];
-	$TextToPrint .=  str_pad($TextDateTime, $LineLenghtCharA - strlen($TextSPG)) . $TextSPG. $NewLine. $NewLine;
+	$TextToPrint .=  DoubleJustified($TextDateTime, $TextSPG, $LineLenghtCharA, " ");
+
+	$TextToPrint .=  $NewLine . $NewLine;
 
 	foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
 		$SubTotal = $OrderLine->Quantity * $OrderLine->Price * (1 - $OrderLine->DiscountPercent);
 		$Total = $Total + $SubTotal;
 
-		$TextToPrint .= $OrderLine->Quantity . " x " . $OrderLine->StockID . " x " . number_format($OrderLine->Price) . $NewLine;
-//		$TextToPrint .= $OrderLine->ItemDescription . $NewLine;
-		if ($OrderLine->DiscountPercent != 0){
-			$TextToPrint .= "Discount " . number_format($OrderLine->DiscountPercent*100) . "%" . $NewLine;
+		$CodeSide = $OrderLine->Quantity . " " . $OrderLine->StockID;
+		if(($OrderLine->Quantity > 1) OR ($OrderLine->DiscountPercent != 0)){
+			$CodeSide .= " @ " . number_format($OrderLine->Price);
 		}
-		if (($OrderLine->DiscountPercent != 0) OR ($OrderLine->Quantity >1)){
-			$TextToPrint .= number_format($SubTotal) . $NewLine;
+		if($OrderLine->DiscountPercent != 0){
+			$CodeSide .= " (-" .number_format($OrderLine->DiscountPercent*100) . "%)";
 		}
+
+		$SubTotalSide = number_format($SubTotal);
+		$TextToPrint .=  DoubleJustified($CodeSide, $SubTotalSide, $LineLenghtCharA, " ");
 	}
 
 	$Goods = $Total / 1.1;
 	$PPN = $Total-$Goods;
 	
-	$TextToPrint .= $NewLine;
-	$TextToPrint .= $RightJustified;
-	$TextToPrint .= 'Goods: Rp. ' . number_format($Goods) . $NewLine;
-	$TextToPrint .= 'PPN 10%: Rp.  ' . number_format($PPN) . $NewLine;
-	$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth;
+	$TextToPrint .= $NewLine . $NewLine . $RightJustified . $EmphasizedDoubleHeightDoubleWidth;
 	$TextToPrint .= 'Total: Rp. ' . number_format($Total) . $CharacterFontA. $NewLine;
+	$TextToPrint .=   'Goods: Rp. ' . number_format($Goods) . $NewLine;
+	$TextToPrint .= 'PPN 10%: Rp.  ' . number_format($PPN) . $NewLine;
 	
 	return $TextToPrint;
 
@@ -723,7 +745,7 @@ function KLPrintReceiptCustomerFooter($identifier, $OrderNo){
 		}
 	}
 	if ($DiscountedItems){
-		$TextToPrint .= $CharacterFontA . $CenteredJustified;
+		$TextToPrint .= $CharacterFontA . $LeftJustified;
 		$TextToPrint .= "No exchange, no refund, no warranty for discounted or outlet items." . $NewLine;
 	}
 
@@ -861,112 +883,9 @@ function KLPrintReceiptShopFooter($identifier, $OrderNo){
 
 }
 
-/* NOT NEEDED AT THIS STAGE. TO CREATE SHOP COPY.
-
-
-function KLPrintReceiptShopText($identifier, $OrderNo){
-	$NewLine = "\n";
-
-	// Packaging included
-	$TextToPrint .= "Packaging included";
-	$TextToPrint .= $NewLine;
-	if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_KAPAL_LAUT)){
-		if ($_POST['PackagingBox01L'] != 0){
-			$TextToPrint .= "KL Box-L: ". $_POST['PackagingBox01L'] . " boxes";
-			$TextToPrint .= $NewLine;
-		}
-		if ($_POST['PackagingBox01M'] != 0){
-			$TextToPrint .= "KL Box-M: ". $_POST['PackagingBox01M'] . " boxes";
-			$TextToPrint .= $NewLine;
-		}
-		if ($_POST['PackagingBox01S'] != 0){
-			$TextToPrint .= "KL Box-S: ". $_POST['PackagingBox01S'] . " boxes";
-			$TextToPrint .= $NewLine;
-		}
-		if ($_POST['PackagingPouchBag01L'] != 0){
-			$TextToPrint .= "KL Pouchbag-L: ". $_POST['PackagingPouchBag01L'] . " pouches";
-			$TextToPrint .= $NewLine;
-		}
-		if ($_POST['PackagingPouchBag01M'] != 0){
-			$TextToPrint .= "KL Pouchbag-M: ". $_POST['PackagingPouchBag01M'] . " pouches";
-			$TextToPrint .= $NewLine;
-		}
-		if ($_POST['PackagingPouchBag01S'] != 0){
-			$TextToPrint .= "KL Pouchbag-S: ". $_POST['PackagingPouchBag01S'] . " pouches";
-			$TextToPrint .= $NewLine;
-		}
-		if ($_POST['ShoppingBag02L'] != 0){
-			$TextToPrint .= "KL Shopping Bag-L: ". $_POST['ShoppingBag02L'] . " bags";
-			$TextToPrint .= $NewLine;
-		}
-		if ($_POST['ShoppingBag02M'] != 0){
-			$TextToPrint .= "KL Shopping Bag-L: ". $_POST['ShoppingBag02M'] . " bags";
-			$TextToPrint .= $NewLine;
-		}
-		if ($_POST['ShoppingBag02S'] != 0){
-			$TextToPrint .= "KL Shopping Bag-S: ". $_POST['ShoppingBag02S'] . " bags";
-			$TextToPrint .= $NewLine;
-		}
-	}
-	if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_BLINK)){
-		if ($_POST['BlinkPouchBag03L'] != 0){
-			$TextToPrint .= "Blink Pouchbag-L: ". $_POST['BlinkPouchBag03L'] . " pouches";
-			$TextToPrint .= $NewLine;
-		}
-		if ($_POST['BlinkPouchBag03M'] != 0){
-			$TextToPrint .= "Blink Pouchbag-M: ". $_POST['BlinkPouchBag03M'] . " pouches";
-			$TextToPrint .= $NewLine;
-		}
-		if ($_POST['BlinkPouchBag03S'] != 0){
-			$TextToPrint .= "Blink Pouchbag-S: ". $_POST['BlinkPouchBag03S'] . " pouches";
-			$TextToPrint .= $NewLine;
-		}
-		if ($_POST['BlinkShoppingBag04XL'] != 0){
-			$TextToPrint .= "Blink Shopping Bag-XL: ". $_POST['BlinkShoppingBag04XL'] . " bags";
-			$TextToPrint .= $NewLine;
-		}
-		if ($_POST['BlinkShoppingBag04L'] != 0){
-			$TextToPrint .= "Blink Shopping Bag-L: ". $_POST['BlinkShoppingBag04L'] . " bags";
-			$TextToPrint .= $NewLine;
-		}
-		if ($_POST['BlinkShoppingBag04M'] != 0){
-			$TextToPrint .= "Blink Shopping Bag-M: ". $_POST['BlinkShoppingBag04M'] . " bags";
-			$TextToPrint .= $NewLine;
-		}
-		if ($_POST['BlinkShoppingBag04S'] != 0){
-			$TextToPrint .= "Blink Shopping Bag-S: ". $_POST['BlinkShoppingBag04S'] . " bags";
-			$TextToPrint .= $NewLine;
-		}
-	}
-	if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_OUTLET)){
-		if ($_POST['OutletPouchBag02L'] != 0){
-			$TextToPrint .= "Outlet Pouchbag-L: ". $_POST['OutletPouchBag02L'] . " pouches";
-			$TextToPrint .= $NewLine;
-		}
-		if ($_POST['OutletPouchBag02M'] != 0){
-			$TextToPrint .= "Outlet Pouchbag-M: ". $_POST['OutletPouchBag02M'] . " pouches";
-			$TextToPrint .= $NewLine;
-		}
-		if ($_POST['OutletPouchBag02S'] != 0){
-			$TextToPrint .= "Outlet Pouchbag-S: ". $_POST['OutletPouchBag02S'] . " pouches";
-			$TextToPrint .= $NewLine;
-		}
-		if ($_POST['OutletShoppingBag03M'] != 0){
-			$TextToPrint .= "Outlet Shopping Bag-M: ". $_POST['OutletShoppingBag03M'] . " bags";
-			$TextToPrint .= $NewLine;
-		}
-	}
-
-	if (webERP_in_test()){
-		$TextToPrint .= "TEST SALE - IT IS NOT A VALID INVOICE";
-		$TextToPrint .= $NewLine;
-	}
-	
-	return $TextToPrint;
+function DoubleJustified($left, $right, $lenght, $fillchar){
+	return str_pad($left, $lenght - strlen($right), $fillchar) . $right;
 }
-*/
-
-
 
 
 ?>

@@ -51,7 +51,7 @@ include 'includes/WebClientPrint.php';
 use Neodynamic\SDK\Web\WebClientPrint;
 //Specify the ABSOLUTE URL to the php file that will create the ClientPrintJob object
 // RICARD: To be improved to remove the hardcoded paths and get just 1 wcpcache folder in all installation
-echo WebClientPrint::createScript('https://www.bumibiru.com/TEST/weberp/PrintPOSReceipt.php');
+echo WebClientPrint::createScript('https://www.bumibiru.com/TEST/weberp/PrintPOSFile.php');
 //################## PRINTING STUFF #####################    
 
  
@@ -68,9 +68,9 @@ if (isset($_SESSION['Items'.$identifier])){
 
 // Verify if shop is allowed to use the POS system, or should use the old system 
 if (!ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_WITH_POS)){
-		prnMsg(_('This shop is not allowed to use this version of Point Of Sale. Contact Shop Manager inmediately to report this issue.'),'error');
-		include('includes/footer.inc');
-		exit;
+	prnMsg(_('This shop is not allowed to use this version of Point Of Sale. Contact Shop Manager inmediately to report this issue.'),'error');
+	include('includes/footer.inc');
+	exit;
 }	
 
 if (isset($_POST['QuickEntry'])){
@@ -107,10 +107,20 @@ if (!isset($_SESSION['Items'.$identifier])){
 	$_SESSION['ExistingOrder'] = 0;
 	$_SESSION['Items'.$identifier] = new cart;
 	$_SESSION['PrintedPackingSlip'] = 0; /*Of course 'cos the order ain't even started !!*/
+	unset($_SESSION['ShopAddress1']);
+	unset($_SESSION['ShopAddress2']);
+	unset($_SESSION['ShopAddress3']);
+	unset($_SESSION['ShopAddress4']);
+	unset($_SESSION['ShopAddress5']);
 	/*Get the default customer-branch combo from the user's default location record */
 	$sql = "SELECT 	cashsalecustomer,
 					cashsalebranch,
 					locationname,
+					deladd1,
+					deladd2,
+					deladd3,
+					deladd4,
+					deladd5,
 					taxprovinceid
 			 FROM locations
 			 WHERE loccode='" . $_SESSION['UserStockLocation'] ."'";
@@ -133,7 +143,18 @@ if (!isset($_SESSION['Items'.$identifier])){
 		$_SESSION['Items'.$identifier]->LocationName = $myrow['locationname'];
 		$_SESSION['Items'.$identifier]->Location = $_SESSION['UserStockLocation'];
 		$_SESSION['Items'.$identifier]->DispatchTaxProvince = $myrow['taxprovinceid'];
+		$_SESSION['ShopAddress1'] = $myrow['deladd1'];
+		$_SESSION['ShopAddress2'] = $myrow['deladd2'];
+		$_SESSION['ShopAddress3'] = $myrow['deladd3'];
+		$_SESSION['ShopAddress4'] = $myrow['deladd4'];
+		$_SESSION['ShopAddress5'] = $myrow['deladd5'];
 		
+prnMsg('ShopAddress1: '. $_SESSION['ShopAddress1']);		
+prnMsg('ShopAddress2: '. $_SESSION['ShopAddress2']);		
+prnMsg('ShopAddress3: '. $_SESSION['ShopAddress3']);		
+prnMsg('ShopAddress4: '. $_SESSION['ShopAddress4']);		
+prnMsg('ShopAddress5: '. $_SESSION['ShopAddress5']);		
+
 		// Now check to ensure this customer account exists and set defaults */
 		$sql = "SELECT debtorsmaster.name,
 				holdreasons.dissallowinvoices,
@@ -372,7 +393,7 @@ if (isset($_POST['Recalculate'])) {
 	foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
 		$NewItem=$OrderLine->StockID;
 		$sql = "SELECT stockmaster.mbflag, 
-                               stockmaster.controlled
+						stockmaster.controlled
 			FROM stockmaster
 			WHERE stockmaster.stockid='". $OrderLine->StockID."'";
 
@@ -394,7 +415,7 @@ Now figure out if the item is a kit set - the field MBFlag='K'
 * controlled items and ghost/phantom items cannot be selected because the SQL to show items to select doesn't show 'em
 * */
 	$sql = "SELECT stockmaster.mbflag,
-			stockmaster.taxcatid
+					stockmaster.taxcatid
 		FROM stockmaster
 		WHERE stockmaster.stockid='". $NewItem ."'";
 
@@ -668,14 +689,6 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 		  <td colspan= 4><textarea name="Comments" cols="60" rows="3">' . stripcslashes($_SESSION['Items'.$identifier]->Comments) .'</textarea></td>';
 	echo '</tr>';
 
-/*	echo '<tr>
-		  <td>'. _('Yellow Paper Invoice number') .':</td>
-		  <td><input type="text" size="12" maxlength="25" name="CustRef" value="' . stripcslashes($_SESSION['Items'.$identifier]->CustRef) . '" /></td>';
-	echo '<td></td>';
-	echo '<td></td>';
-	echo '<td></td>';
-	echo'</tr>';
-*/
 	echo '</table>';
 
 	/////////////////////////////////////////////////////////////////////

@@ -26,7 +26,7 @@ include 'includes/WebClientPrint.php';
 use Neodynamic\SDK\Web\WebClientPrint;
 //Specify the ABSOLUTE URL to the php file that will create the ClientPrintJob object
 // RICARD: To be improved to remove the hardcoded paths and get just 1 wcpcache folder in all installation
-echo WebClientPrint::createScript('https://www.bumibiru.com/TEST/weberp/PrintPOSReceipt.php');
+echo WebClientPrint::createScript('https://www.bumibiru.com/TEST/weberp/PrintPOSFile.php');
 //################## PRINTING STUFF #####################    
 
 
