@@ -2,9 +2,11 @@ function defaultControl(c){
 c.select();
 c.focus();
 }
+
 function ReloadForm(fB){
 fB.click();
 }
+
 function rTN(event){
 	if (window.event) k=window.event.keyCode;
 	else if (event) k=event.which;
@@ -15,6 +17,7 @@ function rTN(event){
 	else if ((("0123456789.,- ").indexOf(kC)>-1)) return true;
 	else return false;
 }
+
 function rTI(event){
 	if (window.event) k=window.event.keyCode;
 	else if (event) k=event.which;
@@ -24,6 +27,7 @@ function rTI(event){
 	else if ((("0123456789-").indexOf(kC)>-1)) return true;
 	else return false;
 }
+
 function rLocaleNumber(){
 	var Lang = document.getElementById('Lang').value;
 	switch(Lang){
@@ -56,9 +60,11 @@ function rLocaleNumber(){
 		return false;
 	};
 }
+
 function assignComboToInput(c,i){
 	i.value=c.value;
 }
+
 function inArray(v,tA,m){
 	for (i=0;i<tA.length;i++) {
 		if (v.value==tA[i].value) {
@@ -68,6 +74,7 @@ function inArray(v,tA,m){
 	alert(m);
 	return false;
 }
+
 function isDate(dS,dF){
 	switch (dF) {
 		case "d/m/Y":
@@ -120,6 +127,7 @@ function isDate(dS,dF){
 	}
 	return true;
 }
+
 function eitherOr(o,t){
 	if (o.value!='') t.value='';
 	else if (o.value=='NaN') o.value='';
@@ -155,6 +163,7 @@ function Calendar(md,dF){
 	cD.style.zIndex=10000;
 	drawCalendar(md,dt.getFullYear(),dt.getMonth(),dt.getDate(),dF);
 }
+
 function drawCalendar(md,y,m,d,dF){
 	var tD=new Date();
 	if ((m>=0) && (y>0)) tD=new Date(y,m,1);
@@ -183,6 +192,7 @@ function drawCalendar(md,y,m,d,dF){
 		html+="</table>";
 	document.getElementById(dateDivID).innerHTML=html;
 }
+
 function getButtonCode(mD,dV,a,lb,dF){
 	nM=(dV.getMonth()+a)%12;
 	nY=dV.getFullYear()+parseInt((dV.getMonth()+a)/12,10);
@@ -192,6 +202,7 @@ if (nM<0){
 }
 return "<button onClick='drawCalendar(\""+mD+"\","+nY+","+nM+","+1+",\""+dF+"\");'>"+lb+"</button>";
 }
+
 function formatDate(dV,dF){
 	ds=String(dV.getDate());
 	ms=String(dV.getMonth()+1);
@@ -211,37 +222,50 @@ function formatDate(dV,dF){
 			return m+"/"+d+"/"+y;
 	}
 }
+
 function convertDate(dS,dF){
-	var d,m,y;
-	if (dF=="d.m.Y")
-		dA=dS.split(".");
-	else
-		dA=dS.split("/");
-	switch (dF){
-		case "d/m/Y":
+	// Converts a date in DefaultDateFormat into a javascript date-object.
+	// dS: Date to convert.
+	// dF: Date format. Formats: "d/m/Y", "d.m.Y", "m/d/Y", "Y-m-d", "Y/m/d".
+	var y,m,d;
+	switch(dF){
+	    case "d/m/Y":
+			dA=dS.split("/");
 			d=parseInt(dA[0],10);
 			m=parseInt(dA[1],10)-1;
 			y=parseInt(dA[2],10);
-			break;
-	case "d.m.Y":
-		d=parseInt(dA[0],10);
-		m=parseInt(dA[1],10)-1;
-		y=parseInt(dA[2],10);
-		break;
-	case "Y-m-d":
-	case "Y/m/d":
-		d=parseInt(dA[2],10);
-		m=parseInt(dA[1],10)-1;
-		y=parseInt(dA[0],10);
-		break;
-	default :
-		d=parseInt(dA[1],10);
-		m=parseInt(dA[0],10)-1;
-		y=parseInt(dA[2],10);
-		break;
-}
+	        break;
+	    case "d.m.Y":
+			dA=dS.split(".");
+			d=parseInt(dA[0],10);
+			m=parseInt(dA[1],10)-1;
+			y=parseInt(dA[2],10);
+	        break;
+	    case "m/d/Y":
+			dA=dS.split("/");
+			m=parseInt(dA[0],10);
+			d=parseInt(dA[1],10)-1;
+			y=parseInt(dA[2],10);
+	        break;
+	    case "Y-m-d":
+			dA=dS.split("-");
+			y=parseInt(dA[0],10);
+			m=parseInt(dA[1],10)-1;
+			d=parseInt(dA[2],10);
+	        break;
+	    case "Y/m/d":
+			dA=dS.split("/");
+			y=parseInt(dA[0],10);
+			m=parseInt(dA[1],10)-1;
+			d=parseInt(dA[2],10);
+	        break;
+	    default:
+			alert("Unknown date format "+dF);
+			return false;
+	}
 return new Date(y,m,d);
 }
+
 function postDate(mydate,dS){
 var iF=document.getElementsByName(mydate).item(0);
 iF.value=dS;
@@ -250,12 +274,15 @@ cD.style.visibility="hidden";
 cD.style.display="none";
 iF.focus();
 }
+
 function clickDate(){
 	Calendar(this.name,this.alt);
 }
+
 function changeDate(){
 	isDate(this.value,this.alt);
 }
+
 function SortSelect() {
 	selElem=this;
 	var tmpArray = new Array();
@@ -321,6 +348,7 @@ function SortSelect() {
 	}
 	return;
 }
+
 function initial(){
 	if (document.getElementsByTagName){
 		var as=document.getElementsByTagName("a");
@@ -355,6 +383,7 @@ function initial(){
 		if (ds[i].className=="ascending") ds[i].onclick=SortSelect;
 	}
 }
+
 function AddAmount(t,Target,d) {
 	if (t.checked) {
 		document.getElementById(Target).value=Number(t.value);

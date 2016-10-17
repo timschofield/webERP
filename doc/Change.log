@@ -1,5 +1,6 @@
 webERP Change Log
 
+16/10/16 RChacon: Fix function convertDate(dS,dF).
 05/10/16 Eatong: Format the ManualAPITutorial.html for easier reading.
 05/10/16 Eatong: Add CSS rule for <pre> for easier reading.
 05/10/16 Eatong: Align field length of salesanalysis.salesperson to salesman.salesmancode.
