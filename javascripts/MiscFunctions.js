@@ -1,3 +1,4 @@
+/* $Id: $ */
 function defaultControl(c){
 c.select();
 c.focus();
