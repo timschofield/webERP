@@ -112,6 +112,7 @@ if (!isset($_SESSION['Items'.$identifier])){
 	unset($_SESSION['ShopAddress3']);
 	unset($_SESSION['ShopAddress4']);
 	unset($_SESSION['ShopAddress5']);
+	
 	/*Get the default customer-branch combo from the user's default location record */
 	$sql = "SELECT 	cashsalecustomer,
 					cashsalebranch,
@@ -126,7 +127,7 @@ if (!isset($_SESSION['Items'.$identifier])){
 			 WHERE loccode='" . $_SESSION['UserStockLocation'] ."'";
 	$result = DB_query($sql);
 	if (DB_num_rows($result)==0) {
-		prnMsg(_('Your user account does not have a valid default inventory location set up. Please see the system administrator to modify your user account.'),'error');
+		prnMsg(_('Your SPG user account is not linked to any valid shop. Please contact Kantor IT inmediately.'),'error');
 		include('includes/footer.inc');
 		exit;
 	} else {
@@ -148,12 +149,6 @@ if (!isset($_SESSION['Items'.$identifier])){
 		$_SESSION['ShopAddress3'] = $myrow['deladd3'];
 		$_SESSION['ShopAddress4'] = $myrow['deladd4'];
 		$_SESSION['ShopAddress5'] = $myrow['deladd5'];
-		
-prnMsg('ShopAddress1: '. $_SESSION['ShopAddress1']);		
-prnMsg('ShopAddress2: '. $_SESSION['ShopAddress2']);		
-prnMsg('ShopAddress3: '. $_SESSION['ShopAddress3']);		
-prnMsg('ShopAddress4: '. $_SESSION['ShopAddress4']);		
-prnMsg('ShopAddress5: '. $_SESSION['ShopAddress5']);		
 
 		// Now check to ensure this customer account exists and set defaults */
 		$sql = "SELECT debtorsmaster.name,
@@ -177,62 +172,52 @@ prnMsg('ShopAddress5: '. $_SESSION['ShopAddress5']);
 		$result =DB_query($sql,$ErrMsg,$DbgMsg);
 
 		$myrow = DB_fetch_array($result);
-		if ($myrow['dissallowinvoices'] != 1){
 
-			$_SESSION['RequireCustomerSelection']=0;
-			$_SESSION['Items'.$identifier]->CustomerName = $myrow['name'];
-			// the sales type is the price list to be used for this sale
-			$_SESSION['Items'.$identifier]->DefaultSalesType = $myrow['salestype'];
-			$_SESSION['Items'.$identifier]->SalesTypeName = $myrow['sales_type'];
-			$_SESSION['Items'.$identifier]->DefaultCurrency = $myrow['currcode'];
-			$_SESSION['Items'.$identifier]->DefaultPOLine = $myrow['customerpoline'];
-			$_SESSION['Items'.$identifier]->PaymentTerms = $myrow['terms'];
+		$_SESSION['RequireCustomerSelection']=0;
+		$_SESSION['Items'.$identifier]->CustomerName = $myrow['name'];
+		// the sales type is the price list to be used for this sale
+		$_SESSION['Items'.$identifier]->DefaultSalesType = $myrow['salestype'];
+		$_SESSION['Items'.$identifier]->SalesTypeName = $myrow['sales_type'];
+		$_SESSION['Items'.$identifier]->DefaultCurrency = $myrow['currcode'];
+		$_SESSION['Items'.$identifier]->DefaultPOLine = $myrow['customerpoline'];
+		$_SESSION['Items'.$identifier]->PaymentTerms = $myrow['terms'];
 
-			/* now get the branch defaults from the customer branches table CustBranch. */
+		/* now get the branch defaults from the customer branches table CustBranch. */
 
-			$sql = "SELECT custbranch.brname,
-				       custbranch.braddress1,
-				       custbranch.defaultshipvia,
-				       custbranch.deliverblind,
-				       custbranch.specialinstructions,
-				       custbranch.estdeliverydays,
-				       custbranch.salesman,
-				       custbranch.taxgroupid,
-				       custbranch.defaultshipvia
-				FROM custbranch
-				WHERE custbranch.branchcode='" . $_SESSION['Items'.$identifier]->Branch . "'
-				AND custbranch.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
-            $ErrMsg = _('The customer branch record of the customer selected') . ': ' . $_SESSION['Items'.$identifier]->Branch . ' ' . _('cannot be retrieved because');
-			$DbgMsg = _('SQL used to retrieve the branch details was') . ':';
-			$result =DB_query($sql,$ErrMsg,$DbgMsg);
+		$sql = "SELECT custbranch.brname,
+				   custbranch.braddress1,
+				   custbranch.defaultshipvia,
+				   custbranch.deliverblind,
+				   custbranch.specialinstructions,
+				   custbranch.estdeliverydays,
+				   custbranch.salesman,
+				   custbranch.taxgroupid,
+				   custbranch.defaultshipvia
+			FROM custbranch
+			WHERE custbranch.branchcode='" . $_SESSION['Items'.$identifier]->Branch . "'
+			AND custbranch.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
+		$ErrMsg = _('The customer branch record of the customer selected') . ': ' . $_SESSION['Items'.$identifier]->Branch . ' ' . _('cannot be retrieved because');
+		$DbgMsg = _('SQL used to retrieve the branch details was') . ':';
+		$result =DB_query($sql,$ErrMsg,$DbgMsg);
 
-			if (DB_num_rows($result)==0){
+		if (DB_num_rows($result)==0){
+			prnMsg(_('The branch details for branch code') . ': ' . $_SESSION['Items'.$identifier]->Branch . ' ' . _('against customer code') . ': ' . $_POST['Select'] . ' ' . _('could not be retrieved') . '. ' . _('Check the set up of the customer and branch'),'error');
+			include('includes/footer.inc');
+			exit;
+		}
+		echo '<br />';
+		$myrow = DB_fetch_array($result);
 
-				prnMsg(_('The branch details for branch code') . ': ' . $_SESSION['Items'.$identifier]->Branch . ' ' . _('against customer code') . ': ' . $_POST['Select'] . ' ' . _('could not be retrieved') . '. ' . _('Check the set up of the customer and branch'),'error');
+		$_SESSION['Items'.$identifier]->DeliverTo = '';
+		$_SESSION['Items'.$identifier]->DelAdd1 = $myrow['braddress1'];
+		$_SESSION['Items'.$identifier]->ShipVia = $myrow['defaultshipvia'];
+		$_SESSION['Items'.$identifier]->DeliverBlind = $myrow['deliverblind'];
+		$_SESSION['Items'.$identifier]->SpecialInstructions = $myrow['specialinstructions'];
+		$_SESSION['Items'.$identifier]->DeliveryDays = $myrow['estdeliverydays'];
+		$_SESSION['Items'.$identifier]->TaxGroup = $myrow['taxgroupid'];
 
-				if ($debug==1){
-					echo '<br />' . _('The SQL that failed to get the branch details was') . ':<br />' . $sql;
-				}
-				include('includes/footer.inc');
-				exit;
-			}
-			echo '<br />';
-			$myrow = DB_fetch_array($result);
-
-			$_SESSION['Items'.$identifier]->DeliverTo = '';
-			$_SESSION['Items'.$identifier]->DelAdd1 = $myrow['braddress1'];
-			$_SESSION['Items'.$identifier]->ShipVia = $myrow['defaultshipvia'];
-			$_SESSION['Items'.$identifier]->DeliverBlind = $myrow['deliverblind'];
-			$_SESSION['Items'.$identifier]->SpecialInstructions = $myrow['specialinstructions'];
-			$_SESSION['Items'.$identifier]->DeliveryDays = $myrow['estdeliverydays'];
-			$_SESSION['Items'.$identifier]->TaxGroup = $myrow['taxgroupid'];
-	
-			if ($_SESSION['Items'.$identifier]->SpecialInstructions) {
-				prnMsg($_SESSION['Items'.$identifier]->SpecialInstructions,'warn');
-			}
-
-		} else {
-			prnMsg($myrow['brname'] . ' ' . _('Although the account is defined as the cash sale account for the location the account is currently on hold. Please contact the credit control personnel to discuss'),'warn');
+		if ($_SESSION['Items'.$identifier]->SpecialInstructions) {
+			prnMsg($_SESSION['Items'.$identifier]->SpecialInstructions,'warn');
 		}
 
 	}
@@ -2104,6 +2089,9 @@ END OF QOH Verification */
 		/************************************************************************************/
 		/*                         PRINT THE CUSTOMER INVOICE                               */
 		/************************************************************************************/
+
+prnMsg('self=' . $_SERVER['PHP_SELF']);
+
 		$HeaderText = KLPrintReceiptHeader($identifier, $OrderNo);
 		$CustomerFooter = KLPrintReceiptCustomerFooter($identifier, $OrderNo);
 		$ShopFooter = KLPrintReceiptShopFooter($identifier, $OrderNo);
