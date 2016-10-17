@@ -47,7 +47,7 @@ include('includes/KLEmails.php');
 
 //################## PRINTING STUFF ##################### 
 echo '<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>';
-include 'includes/WebClientPrint.php';
+include 'includes/PrintESCPOS/WebClientPrint.php';
 use Neodynamic\SDK\Web\WebClientPrint;
 //Specify the ABSOLUTE URL to the php file that will create the ClientPrintJob object
 // RICARD: To be improved to remove the hardcoded paths and get just 1 wcpcache folder in all installation

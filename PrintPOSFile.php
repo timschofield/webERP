@@ -3,7 +3,7 @@
 include('includes/KLPointOfSale.php');
 
 //################## PRINTING STUFF #####################
-include 'includes/WebClientPrint.php';
+include 'includes/PrintESCPOS/WebClientPrint.php';
 use Neodynamic\SDK\Web\WebClientPrint;
 use Neodynamic\SDK\Web\Utils;
 use Neodynamic\SDK\Web\DefaultPrinter;
