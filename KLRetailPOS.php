@@ -449,7 +449,6 @@ if (isset($NewItemArray) and isset($_POST['OrderItems'])){
 	}
 }
 
-
 /* Run through each line of the order and work out the appropriate discount from the discount matrix */
 $DiscCatsDone = array();
 $counter =0;
@@ -1530,9 +1529,71 @@ END OF QOH Verification */
 			} /*end of if sales integrated with debtors */
 		} /*end of OrderLine loop */
 
-		if ($_SESSION['CompanyRecord']['gllink_debtors']==1){
-			/*Post debtors transaction to GL debit debtors, credit freight re-charged and credit sales */
-			if (($_SESSION['Items'.$identifier]->total + $_POST['TaxTotal']) !=0) {
+		/*Post debtors transaction to GL debit debtors, credit freight re-charged and credit sales */
+		if (($_SESSION['Items'.$identifier]->total + $_POST['TaxTotal']) !=0) {
+			$SQL = "INSERT INTO gltrans (	type,
+											typeno,
+											trandate,
+											periodno,
+											account,
+											narrative,
+											amount,
+											tag )
+										VALUES ( 10,
+											'" . $InvoiceNo . "',
+											'" . Date('Y-m-d') . "',
+											'" . $PeriodNo . "',
+											'" . $_SESSION['CompanyRecord']['debtorsact'] . "',
+											'" . $_SESSION['Items'.$identifier]->DebtorNo . 
+												 _(' WI:') . $InvoiceNo . 
+												 _(' YI:') . $_SESSION['Items'.$identifier]->CustRef  . 
+												 _(' SPG:'). $_SESSION['SalesmanLogin'] . "',
+											'" . (($_SESSION['Items'.$identifier]->total + $_POST['TaxTotal'] - $_POST['AmountVouchers'] - $_POST['AmountReturnedGoods'])/$ExRate) . "',
+											'" . $Tag . "')";
+
+			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The total debtor GL posting could not be inserted because');
+			$DbgMsg = _('The following SQL to insert the total debtors control GLTrans record was used');
+			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		}
+
+		if ($_POST['AmountVouchers']!=0){
+			// If there's any general discount or voucher on the purchase, not item by item
+			$ReceiptNumber = AccountDiscountOnOrderRetail('Voucher/Discount',
+								$InvoiceNo,
+								$PeriodNo,
+								$SalesGLAccounts['discountglcode'],
+								$Area,
+								$InvoiceNo,
+								$_SESSION['Items'.$identifier]->CustRef,
+								$_SESSION['Items'.$identifier]->Location,
+								$_POST['AmountVouchers'],
+								0,
+								$_POST['AmountVouchers'],
+								$Tag,
+								'',
+								$ExRate);
+		}//amount vouched or discount was not zero
+		
+		if ($_POST['AmountReturnedGoods']!=0){
+			// If there's any good returned, also account for it
+			$ReceiptNumber = AccountDiscountOnOrderRetail('Returned Goods',
+								$InvoiceNo,
+								$PeriodNo,
+								$SalesGLAccounts['discountglcode'],
+								$Area,
+								$InvoiceNo,
+								$_SESSION['Items'.$identifier]->CustRef,
+								$_SESSION['Items'.$identifier]->Location,
+								$_POST['AmountReturnedGoods'],
+								0,
+								$_POST['AmountReturnedGoods'],
+								$Tag,
+								'',
+								$ExRate);
+		}//amount vouched or discount was not zero
+
+		foreach ( $_SESSION['Items'.$identifier]->TaxTotals as $TaxAuthID => $TaxAmount){
+			if ($TaxAmount !=0 ){
 				$SQL = "INSERT INTO gltrans (	type,
 												typeno,
 												trandate,
@@ -1545,184 +1606,119 @@ END OF QOH Verification */
 												'" . $InvoiceNo . "',
 												'" . Date('Y-m-d') . "',
 												'" . $PeriodNo . "',
-												'" . $_SESSION['CompanyRecord']['debtorsact'] . "',
-												'" . $_SESSION['Items'.$identifier]->DebtorNo . 
-													 _(' WI:') . $InvoiceNo . 
-													 _(' YI:') . $_SESSION['Items'.$identifier]->CustRef  . 
-													 _(' SPG:'). $_SESSION['SalesmanLogin'] . "',
-												'" . (($_SESSION['Items'.$identifier]->total + $_POST['TaxTotal'] - $_POST['AmountVouchers'] - $_POST['AmountReturnedGoods'])/$ExRate) . "',
+												'" . $_SESSION['Items'.$identifier]->TaxGLCodes[$TaxAuthID] . "',
+												'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
+												'" . (-$TaxAmount/$ExRate) . "',
 												'" . $Tag . "')";
 
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The total debtor GL posting could not be inserted because');
-				$DbgMsg = _('The following SQL to insert the total debtors control GLTrans record was used');
+				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The tax GL posting could not be inserted because');
+				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
 				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 			}
+		}
+		/*Also if GL is linked to debtors need to process the debit to bank and credit to debtors for the payment */
+		/*Need to figure out the cross rate between customer currency and bank account currency */
 
-			if ($_POST['AmountVouchers']!=0){
-				// If there's any general discount or voucher on the purchase, not item by item
-				$ReceiptNumber = AccountDiscountOnOrderRetail('Voucher/Discount',
-									$InvoiceNo,
-									$PeriodNo,
-									$SalesGLAccounts['discountglcode'],
-									$Area,
-									$InvoiceNo,
-									$_SESSION['Items'.$identifier]->CustRef,
-									$_SESSION['Items'.$identifier]->Location,
-									$_POST['AmountVouchers'],
-									0,
-									$_POST['AmountVouchers'],
-									$Tag,
-									'',
-									$ExRate);
-			}//amount vouched or discount was not zero
+		if ($_POST['AmountPaidCash']!=0){
+			// si han pagat CASH, tot o en part
+			$BankAccountCash = KapalLautRetailBankAccountSelection($_SESSION['Items'.$identifier]->Location, $db);
+			$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CASH,
+								$PeriodNo,
+								$BankAccountCash,
+								$Area,
+								$InvoiceNo,
+								$_SESSION['Items'.$identifier]->CustRef,
+								$_SESSION['Items'.$identifier]->Location,
+								$_POST['AmountPaidCash'],
+								0,
+								$_POST['AmountPaidCash'],
+								$Tag,
+								'',
+								$ExRate);
+		}//amount paid cash was not zero
+		
+		if ($_POST['AmountPaidCCDanamon']!=0){
+			// si han pagat CREDITCARD DANAMON, tot o en part
+			$CreditCardNetPayment = ($_POST['AmountPaidCCDanamon']*(100- COMISSION_CC_DANAMON)/100);
+			$CreditCardBankComissions = ($_POST['AmountPaidCCDanamon']*(COMISSION_CC_DANAMON)/100);
+
+			$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CREDITCARD,
+								$PeriodNo,
+								ACCOUNT_BANK_DANAMON_IDR,
+								$Area,
+								$InvoiceNo,
+								$_SESSION['Items'.$identifier]->CustRef,
+								$_SESSION['Items'.$identifier]->Location,
+								$_POST['AmountPaidCCDanamon'],
+								$CreditCardBankComissions,
+								$CreditCardNetPayment,
+								$Tag,
+								ACCOUNT_COMISSION_CREDITCARD,
+								$ExRate);
+
+		}//amount paid Credit Card DANAMON  was not zero
+
+		if ($_POST['AmountPaidAmexBCA']!=0){
+			// si han pagat AMEX DANAMON, tot o en part
+			$CreditCardNetPayment = ($_POST['AmountPaidAmexBCA']*(100- COMISSION_AMEX_BCA)/100);
+			$CreditCardBankComissions = ($_POST['AmountPaidAmexBCA']*(COMISSION_AMEX_BCA)/100);
 			
-			if ($_POST['AmountReturnedGoods']!=0){
-				// If there's any good returned, also account for it
-				$ReceiptNumber = AccountDiscountOnOrderRetail('Returned Goods',
-									$InvoiceNo,
-									$PeriodNo,
-									$SalesGLAccounts['discountglcode'],
-									$Area,
-									$InvoiceNo,
-									$_SESSION['Items'.$identifier]->CustRef,
-									$_SESSION['Items'.$identifier]->Location,
-									$_POST['AmountReturnedGoods'],
-									0,
-									$_POST['AmountReturnedGoods'],
-									$Tag,
-									'',
-									$ExRate);
-			}//amount vouched or discount was not zero
-	
-			foreach ( $_SESSION['Items'.$identifier]->TaxTotals as $TaxAuthID => $TaxAmount){
-				if ($TaxAmount !=0 ){
-					$SQL = "INSERT INTO gltrans (	type,
-													typeno,
-													trandate,
-													periodno,
-													account,
-													narrative,
-													amount,
-													tag )
-												VALUES ( 10,
-													'" . $InvoiceNo . "',
-													'" . Date('Y-m-d') . "',
-													'" . $PeriodNo . "',
-													'" . $_SESSION['Items'.$identifier]->TaxGLCodes[$TaxAuthID] . "',
-													'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
-													'" . (-$TaxAmount/$ExRate) . "',
-													'" . $Tag . "')";
+			$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CREDITCARD,
+								$PeriodNo,
+								ACCOUNT_BANK_BCA_IDR,
+								$Area,
+								$InvoiceNo,
+								$_SESSION['Items'.$identifier]->CustRef,
+								$_SESSION['Items'.$identifier]->Location,
+								$_POST['AmountPaidAmexBCA'],
+								$CreditCardBankComissions,
+								$CreditCardNetPayment,
+								$Tag,
+								ACCOUNT_COMISSION_CREDITCARD,
+								$ExRate);
 
-					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The tax GL posting could not be inserted because');
-					$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-					$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-				}
-			}
-			/*Also if GL is linked to debtors need to process the debit to bank and credit to debtors for the payment */
-			/*Need to figure out the cross rate between customer currency and bank account currency */
+		}//amount paid American Express was not zero
 
-			if ($_POST['AmountPaidCash']!=0){
-				// si han pagat CASH, tot o en part
-				$BankAccountCash = KapalLautRetailBankAccountSelection($_SESSION['Items'.$identifier]->Location, $db);
-				$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CASH,
-									$PeriodNo,
-									$BankAccountCash,
-									$Area,
-									$InvoiceNo,
-									$_SESSION['Items'.$identifier]->CustRef,
-									$_SESSION['Items'.$identifier]->Location,
-									$_POST['AmountPaidCash'],
-									0,
-									$_POST['AmountPaidCash'],
-									$Tag,
-									'',
-									$ExRate);
-			}//amount paid cash was not zero
+		if ($_POST['AmountPaidCCMandiri']!=0){
+			// si han pagat CREDITCARD MANDIRI, tot o en part
+			$CreditCardNetPayment = ($_POST['AmountPaidCCMandiri']*(100- COMISSION_CC_MANDIRI)/100);
+			$CreditCardBankComissions = ($_POST['AmountPaidCCMandiri']*(COMISSION_CC_MANDIRI)/100);
+
+			$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CREDITCARD,
+								$PeriodNo,
+								ACCOUNT_BANK_MANDIRI_IDR,
+								$Area,
+								$InvoiceNo,
+								$_SESSION['Items'.$identifier]->CustRef,
+								$_SESSION['Items'.$identifier]->Location,
+								$_POST['AmountPaidCCMandiri'],
+								$CreditCardBankComissions,
+								$CreditCardNetPayment,
+								$Tag,
+								ACCOUNT_COMISSION_CREDITCARD,
+								$ExRate);
 			
-			if ($_POST['AmountPaidCCDanamon']!=0){
-				// si han pagat CREDITCARD DANAMON, tot o en part
-				$CreditCardNetPayment = ($_POST['AmountPaidCCDanamon']*(100- COMISSION_CC_DANAMON)/100);
-				$CreditCardBankComissions = ($_POST['AmountPaidCCDanamon']*(COMISSION_CC_DANAMON)/100);
-
-				$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CREDITCARD,
-									$PeriodNo,
-									ACCOUNT_BANK_DANAMON_IDR,
-									$Area,
-									$InvoiceNo,
-									$_SESSION['Items'.$identifier]->CustRef,
-									$_SESSION['Items'.$identifier]->Location,
-									$_POST['AmountPaidCCDanamon'],
-									$CreditCardBankComissions,
-									$CreditCardNetPayment,
-									$Tag,
-									ACCOUNT_COMISSION_CREDITCARD,
-									$ExRate);
-
-			}//amount paid Credit Card DANAMON  was not zero
-
-			if ($_POST['AmountPaidAmexBCA']!=0){
-				// si han pagat AMEX DANAMON, tot o en part
-				$CreditCardNetPayment = ($_POST['AmountPaidAmexBCA']*(100- COMISSION_AMEX_BCA)/100);
-				$CreditCardBankComissions = ($_POST['AmountPaidAmexBCA']*(COMISSION_AMEX_BCA)/100);
-				
-				$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CREDITCARD,
-									$PeriodNo,
-									ACCOUNT_BANK_BCA_IDR,
-									$Area,
-									$InvoiceNo,
-									$_SESSION['Items'.$identifier]->CustRef,
-									$_SESSION['Items'.$identifier]->Location,
-									$_POST['AmountPaidAmexBCA'],
-									$CreditCardBankComissions,
-									$CreditCardNetPayment,
-									$Tag,
-									ACCOUNT_COMISSION_CREDITCARD,
-									$ExRate);
-
-			}//amount paid American Express was not zero
-
-			if ($_POST['AmountPaidCCMandiri']!=0){
-				// si han pagat CREDITCARD MANDIRI, tot o en part
-				$CreditCardNetPayment = ($_POST['AmountPaidCCMandiri']*(100- COMISSION_CC_MANDIRI)/100);
-				$CreditCardBankComissions = ($_POST['AmountPaidCCMandiri']*(COMISSION_CC_MANDIRI)/100);
-
-				$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CREDITCARD,
-									$PeriodNo,
-									ACCOUNT_BANK_MANDIRI_IDR,
-									$Area,
-									$InvoiceNo,
-									$_SESSION['Items'.$identifier]->CustRef,
-									$_SESSION['Items'.$identifier]->Location,
-									$_POST['AmountPaidCCMandiri'],
-									$CreditCardBankComissions,
-									$CreditCardNetPayment,
-									$Tag,
-									ACCOUNT_COMISSION_CREDITCARD,
-									$ExRate);
-				
-			}//amount paid Credit Card MANDIRI was not zero
+		}//amount paid Credit Card MANDIRI was not zero
+		
+		if ($_POST['AmountPaidCCBCA']!=0){
+			// si han pagat CREDITCARD BCA, tot o en part
+			$CreditCardNetPayment = ($_POST['AmountPaidCCBCA']*(100- COMISSION_CC_BCA)/100);
+			$CreditCardBankComissions = ($_POST['AmountPaidCCBCA']*(COMISSION_CC_BCA)/100);
 			
-			if ($_POST['AmountPaidCCBCA']!=0){
-				// si han pagat CREDITCARD BCA, tot o en part
-				$CreditCardNetPayment = ($_POST['AmountPaidCCBCA']*(100- COMISSION_CC_BCA)/100);
-				$CreditCardBankComissions = ($_POST['AmountPaidCCBCA']*(COMISSION_CC_BCA)/100);
-				
-				$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CREDITCARD,
-									$PeriodNo,
-									ACCOUNT_BANK_BCA_IDR,
-									$Area,
-									$InvoiceNo,
-									$_SESSION['Items'.$identifier]->CustRef,
-									$_SESSION['Items'.$identifier]->Location,
-									$_POST['AmountPaidCCBCA'],
-									$CreditCardBankComissions,
-									$CreditCardNetPayment,
-									$Tag,
-									ACCOUNT_COMISSION_CREDITCARD,
-									$ExRate);
-			}//amount paid Credit Card BCA was not zero
-
-		} /*end of if Sales and GL integrated */
+			$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CREDITCARD,
+								$PeriodNo,
+								ACCOUNT_BANK_BCA_IDR,
+								$Area,
+								$InvoiceNo,
+								$_SESSION['Items'.$identifier]->CustRef,
+								$_SESSION['Items'.$identifier]->Location,
+								$_POST['AmountPaidCCBCA'],
+								$CreditCardBankComissions,
+								$CreditCardNetPayment,
+								$Tag,
+								ACCOUNT_COMISSION_CREDITCARD,
+								$ExRate);
+		}//amount paid Credit Card BCA was not zero
 		
 		if ($_POST['AmountPaidCash']!=0){
 			$ReceiptNumber = AccountDebtorPayment($ReceiptNumber,
@@ -1882,8 +1878,6 @@ END OF QOH Verification */
 		}
 		/*	End account for the packaging */
 		
-//		RecordRetailCustomerInformation($OrderNo, $_POST['FirstName'], $_POST['LastName'], $_POST['Country'], $_POST['DateOfBirth'], $_POST['Email'], $_POST['Sex'], $db);
-
 		DB_Txn_Commit();
 	// *************************************************************************
 	//   E N D   O F   I N V O I C E   S Q L   P R O C E S S I N G
@@ -2023,8 +2017,6 @@ END OF QOH Verification */
 		/************************************************************************************/
 		/*                         PRINT THE CUSTOMER INVOICE                               */
 		/************************************************************************************/
-
-prnMsg('self=' . $_SERVER['PHP_SELF']);
 
 		$HeaderText = KLPrintReceiptHeader($identifier, $OrderNo);
 		$CustomerFooter = KLPrintReceiptCustomerFooter($identifier, $OrderNo);

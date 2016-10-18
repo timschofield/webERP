@@ -773,8 +773,8 @@ function KLPrintReceiptCustomerFooter($identifier, $OrderNo){
 
 	// read terms and conditions
 	$TextToPrint .= $CharacterFontB . $LeftJustified;
-	$TextToPrint .= "This invoice is the only valid proof of purchase. ";
-	$TextToPrint .= "For more information on: our full catalog, location of all our shops, news, job opportunities, sale terms and conditions and warranty check our website." . $NewLine;
+	$TextToPrint .= "This invoice is the only valid proof of purchase. Keep it for future reference. ";
+	$TextToPrint .= "For more information on our catalog, promotions, location of our shops, news, job opportunities, sale terms and conditions and warranty terms check our website." . $NewLine;
 	
 	// website
 	$TextToPrint .= $NewLine . $EmphasizedDoubleHeightDoubleWidth . $CenteredJustified;
@@ -802,6 +802,30 @@ function KLPrintReceiptCustomerFooter($identifier, $OrderNo){
 function KLPrintReceiptShopFooter($identifier, $OrderNo){
 
 	include('includes/ESCPOSCommands.php');
+
+	// payment descriptions
+	$TextToPrint .= $CharacterFontA. $NewLine;
+	if ($_POST['AmountPaidCash'] > 0){
+		$TextToPrint .= 'Paid Cash: ' . number_format($_POST['AmountPaidCash'],0) . $NewLine;
+	}
+	if ($_POST['AmountPaidCCDanamon'] > 0){
+		$TextToPrint .= 'Paid CC EDC Danamon: ' . number_format($_POST['AmountPaidCCDanamon'],0) . $NewLine;
+	}
+	if ($_POST['AmountPaidCCMandiri'] > 0){
+		$TextToPrint .= 'Paid CC EDC Mandiri: ' . number_format($_POST['AmountPaidCCMandiri'],0) . $NewLine;
+	}
+	if ($_POST['AmountPaidCCBCA'] > 0){
+		$TextToPrint .= 'Paid CC EDC BCA: ' . number_format($_POST['AmountPaidCCBCA'],0) . $NewLine;
+	}
+	if ($_POST['AmountPaidAmexBCA'] > 0){
+		$TextToPrint .= 'Paid AMEX EDC BCA: ' . number_format($_POST['AmountPaidAmexBCA'],0) . $NewLine;
+	}
+	if ($_POST['AmountReturnedGoods'] > 0){
+		$TextToPrint .= 'Returned Goods: ' . number_format($_POST['AmountReturnedGoods'],0) . $NewLine;
+	}
+	if ($_POST['AmountVouchers'] > 0){
+		$TextToPrint .= 'Voucher/Discounts: ' . number_format($_POST['AmountVouchers'],0) . $NewLine;
+	}
 	
 	$TextToPrint .= $Emphasized . $LeftJustified. $NewLine;
 	$TextToPrint .= "Packaging included";

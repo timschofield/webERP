@@ -55,6 +55,13 @@ if (isset($_SESSION['Items'.$identifier])){
 	$_SESSION['Items'.$identifier]->Comments = $_POST['Comments'];
 }
 
+// Verify if shop is allowed to use the OLD system, or should use the POS system 
+if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_WITH_POS)){
+	prnMsg(_('This shop is not allowed to use the OLD version of Retail Shop Sales, should use the new Retail Point Of Sale. Contact Shop Manager inmediately to report this issue.'),'error');
+	include('includes/footer.inc');
+	exit;
+}	
+
 if (isset($_POST['QuickEntry'])){
 	unset($_POST['PartSearch']);
 }
