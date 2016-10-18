@@ -1,5 +1,6 @@
 webERP Change Log
 
+17/10/16 Phil: Fix SQL in ReverseGRN.php as reported by Ricard/Tim
 16/10/16 RChacon: Fix function convertDate(dS,dF).
 05/10/16 Eatong: Format the ManualAPITutorial.html for easier reading.
 05/10/16 Eatong: Add CSS rule for <pre> for easier reading.

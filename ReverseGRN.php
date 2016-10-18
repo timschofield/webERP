@@ -304,7 +304,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 									'" . $GRN['deliverydate'] . "',
 									'" . $PeriodNo . "',
 									'" . $GRN['glcode'] . "',
-									'" . _('GRN Reversal for PO') .": " . $GRN['orderno'] . " " . $_POST['SupplierID'] . " - " . $GRN['itemcode'] . "-" . $GRN['itemdescription'] . " x " . $QtyToReverse . " @ " . locale_number_format($GRN['stdcostunit'],$_SESSION['CompanyRecord']['decimalplaces']) . "',
+									'" . _('GRN Reversal for PO') .": " . $GRN['orderno'] . " " . $_POST['SupplierID'] . " - " . $GRN['itemcode'] . "-" . DB_escape_string($GRN['itemdescription']) . " x " . $QtyToReverse . " @ " . locale_number_format($GRN['stdcostunit'],$_SESSION['CompanyRecord']['decimalplaces']) . "',
 									'" . -($GRN['stdcostunit'] * $QtyToReverse) . "')";
 
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The purchase GL posting could not be inserted for the reversal of the received item because');
@@ -325,7 +325,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 								'" . $GRN['deliverydate'] . "',
 								'" . $PeriodNo . "',
 								'" . $_SESSION['CompanyRecord']['grnact'] . "', '"
-								. _('GRN Reversal PO') . ': ' . $GRN['orderno'] . " " . $_POST['SupplierID'] . " - " . $GRN['itemcode'] . "-" . $GRN['itemdescription'] . " x " . $QtyToReverse . " @ " . locale_number_format($GRN['stdcostunit'],$_SESSION['CompanyRecord']['decimalplaces']) . "',
+								. _('GRN Reversal PO') . ': ' . $GRN['orderno'] . " " . $_POST['SupplierID'] . " - " . $GRN['itemcode'] . "-" . DB_escape_string($GRN['itemdescription']) . " x " . $QtyToReverse . " @ " . locale_number_format($GRN['stdcostunit'],$_SESSION['CompanyRecord']['decimalplaces']) . "',
 								'" . $GRN['stdcostunit'] * $QtyToReverse . "'
 								)";
 
@@ -360,9 +360,9 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 		<br />
 		<div class="centre">
 			<input type="submit" name="ShowGRNS" value="' . _('Show Outstanding Goods Received') . '" />
-		</div>';
-    echo '</div>
-          </form>';
+		</div>
+		</div>
+	</form>';
 
 	if (isset($_POST['ShowGRNS'])){
 
