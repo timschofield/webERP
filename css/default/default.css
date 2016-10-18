@@ -11,7 +11,7 @@ button img {
 	width:16px;
 }
 
-body{
+body {
 	background-color:#ccd;
 	font-family:Arial, Verdana, Helvetica, sans-serif;
 	font-size:10pt;
@@ -19,60 +19,70 @@ body{
 	padding:0;
 }
 
-a{
+a {
 	color:blue;
 	text-decoration:none;
 }
-a:hover{
+
+a:hover {
 	color:blue;
 	text-decoration:underline;
 }
 
-img{
+img {
 	border:none;
 	vertical-align:middle;
 }
 
-p.good{
-	font-weight:bold;
-	color:green;
-}
-p.bad{
-	font-weight:bold;
+p.bad {
 	color:red;
+	font-weight:bold;
 }
-table{
+
+p.good {
+	color:green;
+	font-weight:bold;
+}
+
+table {
 	margin:0 auto;
 	width:auto;
 	max-width:90%;
 	padding-bottom:5px;
 }
-table.selection{
+
+table.selection {
 	padding-bottom:5px;
 }
+
 th {
 	background-color:#B06161;
 	color:white;
 	font-weight:normal;
 }
+
 th.ascending {
   cursor: s-resize;
 }
+
 th.descending {
   cursor: n-resize;
 }
+
 th:after {
 	content: "";
 	float: right;
 	margin-top: 7px;
 	visibility: hidden;
 }
+
 th.ascending:after {
 	border-width: 0 4px 4px;
 	border-style: solid;
 	border-color: #000 transparent;
 	visibility: visible;
 }
+
 th.descending:after {
 	border-bottom: none;
 	border-left: 4px solid transparent;
@@ -80,67 +90,91 @@ th.descending:after {
 	border-top: 4px solid #000;
 	visibility: visible;
 }
+
 td {
 	text-align:left;
 }
-td.select{
+
+td.select {
 	background-color:#eee;
 }
-div.centre{
+
+td a img {
+	height:16px;
+	width:16px;
+	/* Icon for a link inside a table element. */
+}
+
+div.centre {
 	margin:0 auto;
 	text-align:center;
 	padding:5px;
 }
-input{
+
+input {
 	font-family:Arial, Verdana, Helvetica, sans-serif;
 }
-input.number{
+
+input.number {
 	text-align:right;
 }
-input.image{
+
+input.image {
 	border-width:0px;
 	background-color:transparent;
 }
+
 input:required, select:required, textarea:required {
 	background-color:lightyellow;
 }
-input:hover{
+
+input:hover {
 }
-select{
+
+select {
 	font-family:Arial, Verdana, Helvetica, sans-serif;
 }
-textarea{
+
+textarea {
 	font-family:Arial, Verdana, Helvetica, sans-serif;
 }
-textarea:hover{
+
+textarea:hover {
 }
-.EvenTableRows{
+
+.EvenTableRows {
 	background-color:#CCCCCC;
 }
-.OddTableRows{
+
+.OddTableRows {
 	background-color:#EEEEEE;
 }
-div.error{
+
+div.error {
 	background-color:#fddbdb;
 	color:red;
 	border:1px solid red;
 }
-div.warn{
+
+div.warn {
 background-color:#f5dbfd;
 color:maroon;
 border:1px solid maroon;
 }
-div.success{
+
+div.success {
 background-color:#b9ecb4;
 color:darkgreen;
 border:1px solid darkgreen;
 }
-div.info{
+
+div.info {
 	background-color:#c7ccf6;
 	color:navy;
 	border:1px solid navy;
 }
-DIV.page_help_text{
+
+DIV.page_help_text {
 	background:lightgrey url(images/help.png) top left no-repeat;
 	BORDER:#a52a2a 1px solid;
 	padding-top:2px;
@@ -157,7 +191,8 @@ DIV.page_help_text{
 	color:black;
 	TEXT-ALIGN:center;
 }
-DIV.system_check{
+
+DIV.system_check {
 	BORDER:#a52a2a 1px solid;
 	PADDING-LEFT:3px;
 	Z-INDEX:1;
@@ -180,21 +215,24 @@ DIV.system_check{
 	background:white;
 	box-shadow: 3px 3px 4px #000; /* shadow on modern browsers */
 }
-.dpTD{
+
+.dpTD {
 	border:0;
 	width:20px;
 	background-color:#EEEEEE;
 	text-align:right;
 	cursor:pointer;
 }
-.dpDayHighlight{
+
+.dpDayHighlight {
 	border:0;
 	width:20px;
 	background-color:yellow;
 	text-align:right;
 	cursor:pointer;
 }
-.dpTDHover{
+
+.dpTDHover {
 	border:0;
 	width:20px;
 	background-color:#CCCCCC;
@@ -203,42 +241,48 @@ DIV.system_check{
 }
 
 /* Table type is used for UI tables type 1 */
-.table1{
+.table1 {
 	width:90%;
 	background:#eee;
 	border:0px 0px 2px 2px #222 solid;
 	margin:0 auto;
 }
+
 /* Table type is used for UI tables type 2 */
-/*.table2{
+/*.table2 {
 width:90%;
 background:#eee;
 border:0px 0px 2px 2px #222 solid;
 margin:0 auto;
-}*/
+}
 
-.tableheader{
+*/
+
+.tableheader {
 	font-weight:normal;
 	background-color:#800000;
 	color:white;
 }
-.notavailable{
+
+.notavailable {
 	font-weight:lighter;
 	font-style:italic;
 	color:#555555;
 }
-.label{
+
+.label {
 	font-weight:bold;
 	font-style:normal;
 	font-size:120%;
 	color:black;
 	background-color:#cccccc;
 }
-.table_index{
+
+.table_index {
 	background-color:#F1FFDD;
 }
 
-.header{
+.header {
 	background-image:url("");
 	background-repeat:no-repeat;
 	background-attachment:fixed;
@@ -246,52 +290,58 @@ margin:0 auto;
 	margin:0px;
 	padding:0px;
 }
+
 input.inputerror, input.error, select.error, select.selecterror, label.error {
 	color:red;
 	border: 2px solid red;
 }
 
-textarea.texterror{
+textarea.texterror {
 	background-color:#fddbdb;
 }
 
-.OsRow{
+.OsRow {
 	background-color:#234567;
 	color:white;
 }
 
 /*** CANVAS ***/
 
-#CanvasDiv{
+#CanvasDiv {
 	background:#588BB6;
 }
 
 /*** HEADER ***/
 
-#HeaderDiv{
+#HeaderDiv {
 	color:white;
 	/*background:#588BB6;*/
 	/*overflow:hidden;*/
 }
-#HeaderDiv a{
+
+#HeaderDiv a {
 	color:white;
 }
-#HeaderDiv a:hover{
+
+#HeaderDiv a:hover {
 	text-decoration:underline;
 }
-#HeaderWrapDiv{
+
+#HeaderWrapDiv {
 }
 
 /*** HEADER - APP INFO ***/
 
-#AppInfoDiv{
+#AppInfoDiv {
 	float:left;
 	padding:0;
 }
-#AppInfoCompanyDiv,#AppInfoUserDiv{
+
+#AppInfoCompanyDiv,#AppInfoUserDiv {
 	display:table-cell;
 }
-#AppInfoModuleDiv{
+
+#AppInfoModuleDiv {
 	font-weight:bold;
 	font-size:120%;
 	padding:3px;
@@ -299,13 +349,15 @@ textarea.texterror{
 
 /*** HEADER - QUICK MENU ***/
 
-#QuickMenuDiv{
+#QuickMenuDiv {
 	float:right;
 	margin-top:2px;
 }
-#QuickMenuDiv ul{
+
+#QuickMenuDiv ul {
 }
-#QuickMenuDiv li{
+
+#QuickMenuDiv li {
 	display:inline;
 	border-left:thin ridge #588BB6;
 	padding:14px 12px;
@@ -313,10 +365,11 @@ textarea.texterror{
 
 /*** BODY ***/
 
-#BodyDiv{
+#BodyDiv {
 	clear:both;
 }
-#BodyWrapDiv{
+
+#BodyWrapDiv {
 	background:#CCCCCC;
 	/*border:thin solid #ccc;*/
 	clear:both;
@@ -324,86 +377,101 @@ textarea.texterror{
 
 /*** BODY - MAIN MENU ***/
 
-#MainMenuDiv{
+#MainMenuDiv {
 	float:left;
 	width:11%;
 	border:thin solid #000;
 	text-align:center;
 	white-space:nowrap;
 }
-#MainMenuDiv ul{
+
+#MainMenuDiv ul {
 	margin:0;
 	padding:0;
 }
-#MainMenuDiv li{
+
+#MainMenuDiv li {
 	list-style:none;
 }
 
-#MainMenuDiv li a{
+#MainMenuDiv li a {
 	color:black;
 }
-#MainMenuDiv li a:hover{
+
+#MainMenuDiv li a:hover {
 	color:black;
 	text-decoration:underline;
 }
-.main_menu_unselected{
+
+.main_menu_unselected {
 	background:#8EDE8D;
 	padding:2px;
 }
-.main_menu_unselected:hover{
+
+.main_menu_unselected:hover {
 	background:white;
 }
-.main_menu_selected{
+
+.main_menu_selected {
 	background-color:white;
 	padding:2px;
 }
 
 /*** BODY - SUB MENU ***/
 
-#SubMenuDiv{
+#SubMenuDiv {
 	display:table;
 	float:right;
 	overflow:hidden;
 	width:88.5%;
 }
-#SubMenuDiv ul{
+
+#SubMenuDiv ul {
 	margin:0;
 	padding:0;
 	background:#fff;
 	border:thin solid black;
 	margin-left:3px;
 }
-#SubMenuDiv li{
+
+#SubMenuDiv li {
 	list-style:none;
 }
-#SubMenuDiv a{
+
+#SubMenuDiv a {
 	color:blue;
 }
-#SubMenuDiv a:hover{
+
+#SubMenuDiv a:hover {
 	color:blue;
 	text-decoration:underline;
 }
+
 #TransactionsDiv,
 #InquiriesDiv,
-#MaintenanceDiv{
+#MaintenanceDiv {
 	display:table-cell;
 }
-.menu_group_headers{
+
+.menu_group_headers {
 	text-align:center;
 	color:black;
 	background:#eee;
 	border-bottom:thin solid black;
 }
-.menu_group_item{
+
+.menu_group_item {
 	background-color:white;
 	padding:2px;
 }
-.menu_group_item p{
+
+.menu_group_item p {
 	color:#00f; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
 	text-indent:-12px; /* this makes the bullet to appear as the li tag previously used */
 	margin:0 0 0 12px; /* One thing that I didnÂ´t like of the li was that it had no left margin applied */
 }
-#InquiriesDiv div{ /* header for standard reports/forms, custom reports */
+
+#InquiriesDiv div { /* header for standard reports/forms, custom reports */
 	border-top:thin solid black;
 	border-bottom:thin solid black;
 	background:#eee;
@@ -413,47 +481,57 @@ textarea.texterror{
 
 /*** FOOTER ***/
 
-#FooterDiv{
+#FooterDiv {
 	clear:both;
 	overflow:hidden;
 	color:#CCCCCC;
 	padding:3px 2px;
 }
-#FooterWrapDiv{
+
+#FooterWrapDiv {
 
 }
-#FooterLogoDiv{
+
+#FooterLogoDiv {
 	background:white;
 	border-radius:7px;
 	float:left;
 	padding:3px;
 }
-#FooterVersionDiv{
+
+#FooterVersionDiv {
 	float:left;
 	margin-left:10px;
 	margin-top:15px;
 }
-#FooterTimeDiv{
+
+#FooterTimeDiv {
 	float:right;
 	margin-top:15px;
 }
+
 #Report {
 	/* Division id for reports. */}
+
 #Report table {
 	/* Body of a report formatted with table tag. */
 }
+
 .centre {
 	text-align:center;
 	/* Class selector to horizontal align a text (centre) in an element. */
 }
+
 .number {
 	text-align:right;
 	/* Class selector to horizontal align a number (right) in an element. */
 }
+
 .text {
 	text-align:left;
 	/* Class selector to horizontal align a text (left) in an element. */
 }
+
 .page_title_text {
 	color:black;
 	font-weight:bold;
@@ -461,6 +539,7 @@ textarea.texterror{
 	text-align:center;
 	/* Class selector for page title. */
 }
+
 /* END Style for all. ********************************************************/
 
 
@@ -477,3 +556,5 @@ textarea.texterror{
 @media only screen and (min-device-width:1024px) {
 	/* Style for new browser in a device with a rendering width greater than 1024px. */
 }
+
+
