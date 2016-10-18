@@ -875,72 +875,6 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 
 		echo '</table>';	//end of column/row/master table
 	}
-	/////////////////////////////////////////////////
-	// TABLE for Customer Information Data Entry
-	/////////////////////////////////////////////////
-/* COMMENTED OUT FOR POS v3.0
-	if (!isset($_POST['FirstName'])){
-		$_POST['FisrtName'] ='';
-	}
-	if (!isset($_POST['LastName'])){
-		$_POST['LastName'] ='';
-	}
-	if (!isset($_POST['Country'])){
-		$_POST['Country'] ='';
-	}
-	if (!isset($_POST['DateOfBirth'])){
-		$_POST['DateOfBirth'] ='';
-	}
-	if (!isset($_POST['Email'])){
-		$_POST['Email'] ='';
-	}
-	if (!isset($_POST['Sex'])){
-		$_POST['Sex'] ='';
-	}
-
-	echo '<table class="selection">
-			<tr><th colspan=3>' . _('Customer Info Card') . '</th></tr>';
-	
-	echo '<tr>';
-	echo 	'<td>' . _('Name') . ':</td>';
-	echo 	'<td><input type="text" class="text" name="FirstName" maxlength="32" size="32" value="' . $_POST['FirstName'] . '" /></td>';
-	echo 	'<td><input type="text" class="text" name="LastName" maxlength="32" size="32" value="' . $_POST['LastName'] . '" /></td>';
-	echo '</tr>';	
-
-	echo '<tr>
-			<td>' . _('Country') . ':</td>
-			<td><select name="Country">';
-	foreach ($CountriesForRetail as $CountryEntry => $CountryName){
-		if (isset($_POST['Country']) AND (strtoupper($_POST['Country']) == strtoupper($CountryName))){
-			echo '<option selected="selected" value="' . $CountryEntry . '">' . $CountryName  . '</option>';
-		} else {
-			echo '<option value="' . $CountryEntry . '">' . $CountryName  . '</option>';
-		}
-	}
-	echo '</select></td>	
-		</tr>';
-
-	echo '<tr>';
-	echo	'<td>' . _('Date Of Birth') . ':</td>';
-	echo	'<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="DateOfBirth" maxlength="10" size="10" value="' . $_POST['DateOfBirth'] . '" /></td>';
-	echo '</tr>';	
-
-	echo '<tr><td>' . _('Sex') . ':</td>
-			<td><select name="Sex">
-				<option selected="selected" value="">' . _('') . '</option>
-				<option value="F">' . _('Female') . '</option>
-				<option value="M">' . _('Male') . '</option>
-				</select>
-			</td>
-		</tr>';
-
-	echo '<tr>';
-	echo	'<td>' . _('email') . ':</td>';
-	echo	'<td><input type="email" class="text" name="Email" maxlength="255" size="32" value="' . $_POST['Email'] . '" /></td>';
-	echo '</tr>';	
-
-	echo '</table>';
-*/
 
 	/////////////////////////////////////////////////
 	// Buttons confirm / recalculate the sale
@@ -1948,7 +1882,7 @@ END OF QOH Verification */
 		}
 		/*	End account for the packaging */
 		
-//		RecordRetailCustomerInformation($OrderNo, $_POST['FirstName'], $_POST['LastName'], $_POST['Country'], $_POST['DateOfBirth'], $_POST['Email'], $_POST['Sex'], $db);
+//		RecordRetailCustomerInformation("INSERT", $OrderNo, $_POST['FirstName'], $_POST['LastName'], $_POST['Country'], $_POST['DateOfBirth'], $_POST['Email'], $_POST['Sex'], $db);
 
 		DB_Txn_Commit();
 	// *************************************************************************

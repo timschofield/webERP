@@ -257,7 +257,7 @@ function AdjustPackagingMovement($StockId, $QtyDelivered, $InvoiceNo, $PeriodNo,
 	}
 }
 
-function RecordRetailCustomerInformation($OrderNo, $FirstName, $LastName, $Country, $DateOfBirth, $Email, $Sex, $db){
+function RecordRetailCustomerInformation($Action, $OrderNo, $FirstName, $LastName, $Country, $DateOfBirth, $Email, $Sex, $db){
 	// If some field is filled, record it.
 	// For some reason, Country = 0 if empty
 	if (Is_date($DateOfBirth)){
@@ -280,27 +280,38 @@ function RecordRetailCustomerInformation($OrderNo, $FirstName, $LastName, $Count
 		}else{
 			$Age = 0;
 		}
+		if ($Action == "INSERT"){
+			$SQL = "INSERT INTO klretailcustomers (orderno,
+													firstname,
+													lastname,
+													country,
+													date_of_birth,
+													age,
+													email,
+													sex
+													)
+							VALUES (" . $OrderNo . ",
+								'" . $FirstName . "',
+								'" . $LastName . "',
+								'" . $Country . "',
+								'" . $DateOfBirth . "',
+								'" . $Age . "',
+								'" . $Email . "',
+								'" . $Sex . "')";
 
-		$SQL = "INSERT INTO klretailcustomers (orderno,
-												firstname,
-												lastname,
-												country,
-												date_of_birth,
-												age,
-												email,
-												sex
-												)
-						VALUES (" . $OrderNo . ",
-							'" . $FirstName . "',
-							'" . $LastName . "',
-							'" . $Country . "',
-							'" . $DateOfBirth . "',
-							'" . $Age . "',
-							'" . $Email . "',
-							'" . $Sex . "')";
-
-		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The Retail Customer Info could not be inserted because');
-		$DbgMsg = _('The following SQL to insert the retail customer data was used');
+			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The Retail Customer Info could not be inserted because');
+			$DbgMsg = _('The following SQL to insert the retail customer data was used');
+		}else{
+			$SQL = "UPDATE klretailcustomers
+					SET firstname = '" . $FirstName . "',
+						lastname = '" . $LastName . "',
+						country = '" . $Country . "',
+						date_of_birth = '" . $DateOfBirth . "',
+						age = '" . $Age . "',
+						email = " . $Email . "',
+						sex = '" . $Sex . "'
+					WHERE orderno = '" . $OrderNo . "'";
+		}
 		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 	}
 }
