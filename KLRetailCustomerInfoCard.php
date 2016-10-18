@@ -52,15 +52,8 @@ if (isset($_POST['submit'])) {
 		$_POST['Sex'] ='';
 	}
 
-	if (isset($SelectedOrder) AND $InputError !=1) {
-		/*SelectedOrder could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
-		$Action = "INSERT";
-	} elseif ($InputError !=1) {
-		/*Selected group is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new Sales-person form */
-		$Action = "UPDATE";
-	}
 	if ($InputError !=1) {
-		RecordRetailCustomerInformation($Action, $SelectedOrder, $_POST['FirstName'], $_POST['LastName'], $_POST['Country'], $_POST['DateOfBirth'], $_POST['Email'], $_POST['Sex'], $db);
+		RecordRetailCustomerInformation($SelectedOrder, $_POST['FirstName'], $_POST['LastName'], $_POST['Country'], $_POST['DateOfBirth'], $_POST['Email'], $_POST['Sex'], $db);
 		unset($SelectedOrder);
 		unset($_POST['FirstName']);
 		unset($_POST['LastName']);
@@ -96,7 +89,7 @@ or deletion of the records*/
 					salesorders.klvouchers,
 					klretailcustomers.firstname,
 					klretailcustomers.lastname,
-					klretailcustomers.country,
+					klretailcustomers.Country,
 					IF(klretailcustomers.date_of_birth IS NULL,'',klretailcustomers.date_of_birth) AS date_of_birth,
 					klretailcustomers.age,
 					klretailcustomers.email,
@@ -105,7 +98,7 @@ or deletion of the records*/
 			LEFT JOIN klretailcustomers
 				ON salesorders.orderno = klretailcustomers.orderno
 			WHERE salesorders.salesperson ='".$_SESSION['SalesmanLogin']."'
-				AND salesorders.orddate >=DATE_SUB(CURDATE(), INTERVAL 2 DAY)
+				AND salesorders.orddate >=DATE_SUB(CURDATE(), INTERVAL 1 DAY)
 			ORDER BY salesorders.orddate DESC";
 	$result = DB_query($sql);
 
@@ -137,6 +130,11 @@ or deletion of the records*/
 	} else {
 		$TextDOB = ConvertSQLDate($myrow['date_of_birth']);
 	}
+	if ($myrow['Country'] == '0') {
+		$TextCountry = '';
+	} else {
+		$TextCountry = $myrow['Country'];
+	}
 
 	printf('<td>%s</td>
 			<td>%s</td>
@@ -155,7 +153,7 @@ or deletion of the records*/
 			ConvertSQLDate($myrow['orddate']),
 			$myrow['firstname'],
 			$myrow['lastname'],
-			$myrow['country'],
+			$TextCountry,
 			$TextDOB,
 			$myrow['email'],
 			$myrow['sex'],
@@ -163,7 +161,10 @@ or deletion of the records*/
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $myrow['orderno']);
 
 	} //END WHILE LIST LOOP
-	echo '</table><br />';
+	echo '</table>
+		<br />
+		</div>
+		</form>';
 } //end of ifs and buts!
 
 if (isset($SelectedOrder)) {
@@ -208,6 +209,7 @@ if (! isset($_GET['delete'])) {
 		$_POST['klvouchers'] = $myrow['klvouchers'];
 		$_POST['FirstName'] = $myrow['firstname'];
 		$_POST['LastName'] = $myrow['lastname'];
+		$_POST['Country'] = $myrow['country'];
 		$_POST['date_of_birth'] = $myrow['date_of_birth'];
 		$_POST['Email'] = $myrow['email'];
 		$_POST['Sex'] = $myrow['sex'];
@@ -226,7 +228,7 @@ if (! isset($_GET['delete'])) {
 				<td>' . _('Country') . ':</td>
 				<td><select name="Country">';
 		foreach ($CountriesForRetail as $CountryEntry => $CountryName){
-			if (isset($_POST['Country']) AND (strtoupper($_POST['Country']) == strtoupper($CountryName))){
+			if (isset($_POST['Country']) AND (strtoupper($_POST['Country']) == strtoupper($CountryEntry))){
 				echo '<option selected="selected" value="' . $CountryEntry . '">' . $CountryName  . '</option>';
 			} else {
 				echo '<option value="' . $CountryEntry . '">' . $CountryName  . '</option>';
@@ -240,12 +242,25 @@ if (! isset($_GET['delete'])) {
 		echo	'<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="DateOfBirth" maxlength="10" size="10" value="' . $_POST['DateOfBirth'] . '" /></td>';
 		echo '</tr>';	
 
+
 		echo '<tr><td>' . _('Sex') . ':</td>
-				<td><select name="Sex">
-					<option selected="selected" value="">' . _('') . '</option>
-					<option value="F">' . _('Female') . '</option>
+				<td><select name="Sex">';
+
+		if ($_POST['Sex']=="M"){
+			echo 	'<option value="">' . _('') . '</option>
+					<option selected="selected" value="M">' . _('Male') . '</option>
+					<option value="F">' . _('Female') . '</option>';
+		} elseif ($_POST['Sex']=="F"){
+			echo 	'<option value="">' . _('') . '</option>
 					<option value="M">' . _('Male') . '</option>
-					</select>
+					<option selected="selected" value="F">' . _('Female') . '</option>';
+		}else{
+			echo 	'<option selected="selected" value="">' . _('') . '</option>
+					<option value="M">' . _('Male') . '</option>
+					<option value="F">' . _('Female') . '</option>';
+		}
+
+		echo '		</select>
 				</td>
 			</tr>';
 

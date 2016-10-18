@@ -1927,7 +1927,7 @@ END OF QOH Verification */
 		}
 		/*	End account for the packaging */
 		
-		RecordRetailCustomerInformation("INSERT", $OrderNo, $_POST['FirstName'], $_POST['LastName'], $_POST['Country'], $_POST['DateOfBirth'], $_POST['Email'], $_POST['Sex'], $db);
+		RecordRetailCustomerInformation($OrderNo, $_POST['FirstName'], $_POST['LastName'], $_POST['Country'], $_POST['DateOfBirth'], $_POST['Email'], $_POST['Sex'], $db);
 
 		DB_Txn_Commit();
 	// *************************************************************************

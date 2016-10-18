@@ -257,7 +257,7 @@ function AdjustPackagingMovement($StockId, $QtyDelivered, $InvoiceNo, $PeriodNo,
 	}
 }
 
-function RecordRetailCustomerInformation($Action, $OrderNo, $FirstName, $LastName, $Country, $DateOfBirth, $Email, $Sex, $db){
+function RecordRetailCustomerInformation($OrderNo, $FirstName, $LastName, $Country, $DateOfBirth, $Email, $Sex, $db){
 	// If some field is filled, record it.
 	// For some reason, Country = 0 if empty
 	if (Is_date($DateOfBirth)){
@@ -280,6 +280,17 @@ function RecordRetailCustomerInformation($Action, $OrderNo, $FirstName, $LastNam
 		}else{
 			$Age = 0;
 		}
+
+		$SQL = "SELECT *
+				FROM klretailcustomers
+				WHERE orderno = '" . $OrderNo . "'";
+		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		if (DB_num_rows($Result)==1){
+			$Action = "UPDATE";
+		} else {
+			$Action = "INSERT";
+		}
+		
 		if ($Action == "INSERT"){
 			$SQL = "INSERT INTO klretailcustomers (orderno,
 													firstname,
@@ -308,7 +319,7 @@ function RecordRetailCustomerInformation($Action, $OrderNo, $FirstName, $LastNam
 						country = '" . $Country . "',
 						date_of_birth = '" . $DateOfBirth . "',
 						age = '" . $Age . "',
-						email = " . $Email . "',
+						email = '" . $Email . "',
 						sex = '" . $Sex . "'
 					WHERE orderno = '" . $OrderNo . "'";
 		}
