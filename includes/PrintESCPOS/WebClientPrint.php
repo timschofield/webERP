@@ -5,8 +5,8 @@ use Exception;
 use ZipArchive;
 
 // Setting WebClientPrint
-WebClientPrint::$licenseOwner = '';
-WebClientPrint::$licenseKey = '';
+WebClientPrint::$licenseOwner = 'PT Bumi Biru - 1 WebApp Lic - 1 WebServer Lic';
+WebClientPrint::$licenseKey = 'C6C5F6CDE8CF3D055C65F9FF24C9550EFA8BEC9B';
 
 //IMPORTANT SETTINGS:
 //===================
