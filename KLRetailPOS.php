@@ -122,6 +122,8 @@ if (!isset($_SESSION['Items'.$identifier])){
 					deladd3,
 					deladd4,
 					deladd5,
+					klposcashaccount,
+					klpostag,
 					taxprovinceid
 			 FROM locations
 			 WHERE loccode='" . $_SESSION['UserStockLocation'] ."'";
@@ -149,6 +151,8 @@ if (!isset($_SESSION['Items'.$identifier])){
 		$_SESSION['ShopAddress3'] = $myrow['deladd3'];
 		$_SESSION['ShopAddress4'] = $myrow['deladd4'];
 		$_SESSION['ShopAddress5'] = $myrow['deladd5'];
+		$_SESSION['klposcashaccount'] = $myrow['klposcashaccount'];
+		$_SESSION['klpostag'] = $myrow['klpostag'];
 
 		// Now check to ensure this customer account exists and set defaults */
 		$sql = "SELECT debtorsmaster.name,
@@ -949,62 +953,19 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		prnMsg(_('Splited payments by several Cards are not allowed.'),'error');
 		$InputError = true;
 	}
-	
-	// Yellow paper invoice number is mandatory
-/* KL RICARD Commented out on POS v3.0 as it is only for manual sales
-	if ($_POST['CustRef']== "") {
-		prnMsg(_('Please enter the number of the yellow paper invoice'),'error');
-		$InputError = true;
-	}
-*/
-/*******************************************************************************************************************
-KL RICARD: 20/03/2016 Commented out the QOH verification at shop to prevent SPG calling for QOH inconsistencies and adjustments
-Instead of preventing the sale report, webERP sends an email to control what happened, but at least sale can be reported
-********************************************************************************************************************/
-/*	if ($_SESSION['ProhibitNegativeStock']==1){ // checks for negative stock after processing invoice
-	//sadly this check does not combine quantities occuring twice on and order and each line is considered individually :-(
-		$NegativesFound = false;
-		foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
-			$SQL = "SELECT stockmaster.description,
-					   		locstock.quantity,
-					   		stockmaster.mbflag
-		 			FROM locstock
-		 			INNER JOIN stockmaster
-					ON stockmaster.stockid=locstock.stockid
-					WHERE stockmaster.stockid='" . $OrderLine->StockID . "'
-					AND locstock.loccode='" . $_SESSION['Items'.$identifier]->Location . "'";
-
-			$ErrMsg = _('Could not retrieve the quantity left at the location once this order is invoiced (for the purposes of checking that stock will not go negative because)');
-			$Result = DB_query($SQL,$ErrMsg);
-			$CheckNegRow = DB_fetch_array($Result);
-			if ($CheckNegRow['quantity'] < $OrderLine->Quantity){
-				prnMsg( _('Invoicing the selected order would result in negative stock. The system parameters are set to prohibit negative stocks from occurring. This invoice cannot be created until the stock on hand is corrected.'),'error',$OrderLine->StockID . ' ' . $CheckNegRow['description'] . ' - ' . _('Negative Stock Prohibited'));
-				$NegativesFound = true;
-			}
-		} //end of loop around items on the order for negative check
-
-		if ($NegativesFound){
-			prnMsg(_('The parameter to prohibit negative stock is set and invoicing this sale would result in negative stock. No futher processing can be performed. Alter the sale first changing quantities or deleting lines which do not have sufficient stock.'),'error');
-			$InputError = true;
-		}
-
-	}//end of testing for negative stocks
-
-END OF QOH Verification */
 
 	if ($InputError == false) { //all good so let's get on with the processing
 
 		/* Now Get the where the sale is to from the branches table */
 
-		// RICARD: KL Mod to select area
 		// If all (or part of) the goods were paid with CC, consider payment as CC
 		if ($TotalReceivedCreditCard > 0) {
 			$PaymentMethod = PAYMENT_BY_CREDITCARD;
 		}else{
 			$PaymentMethod = PAYMENT_BY_CASH;
 		}
-		$Area = KapalLautRetailAreaSelection($_SESSION['Items'.$identifier]->DebtorNo, $PaymentMethod, $db);
-		$Tag = KapalLautRetailTagSelection($_SESSION['Items'.$identifier]->DebtorNo, $db);
+		$Area = KapalLautRetailAreaSelection($PaymentMethod);
+		$Tag = $_SESSION['klpostag'];
 		$DefaultShipVia = 1; // Hand Carried
 			
 		/*company record read in on login with info on GL Links and debtors GL account*/
@@ -1029,13 +990,13 @@ END OF QOH Verification */
 		// Get the Customer invoice number depending on Area
 		if ($Area == "REZ"){
 			// Cash sales
-			$_SESSION['Items'.$identifier]->CustRef = "C-".substr($_SESSION['UserStockLocation'],3,2)."-".zerofill(GetNextTransNo(9002, $db),8);
+			$_SESSION['Items'.$identifier]->CustRef = substr($_SESSION['UserStockLocation'],3,2)."-".zerofill(GetNextTransNo(9002, $db),7) ."-C".;
 		}elseif ($Area == "REC"){
 			// Cash sales PT
-			$_SESSION['Items'.$identifier]->CustRef = "B-".substr($_SESSION['UserStockLocation'],3,2)."-".zerofill(GetNextTransNo(9001, $db),8);
+			$_SESSION['Items'.$identifier]->CustRef = substr($_SESSION['UserStockLocation'],3,2)."-".zerofill(GetNextTransNo(9001, $db),7) ."-B".;
 		}elseif ($Area == "RER"){
 			// Credit Card Sales PT
-			$_SESSION['Items'.$identifier]->CustRef = "A-".substr($_SESSION['UserStockLocation'],3,2)."-".zerofill(GetNextTransNo(9000, $db),8);
+			$_SESSION['Items'.$identifier]->CustRef = substr($_SESSION['UserStockLocation'],3,2)."-".zerofill(GetNextTransNo(9000, $db),7) ."-A".;
 		}else{
 			/*The area is wrong for any reason */
 			prnMsg('ERROR POS0050: The area ' . $Area . ' is not defined. Please call the office inmediately', 'error');
@@ -1398,7 +1359,7 @@ END OF QOH Verification */
 
 				$AccountCOGS = GetCOGSGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType, $db);
 				if ($Area == "REZ"){
-					// Cash sales
+					// No PT sales do not have COGS corrections
 					$StandardCost = round($OrderLine->StandardCost,0);
 					$Compensation = 0;
 				}else{
@@ -1621,7 +1582,7 @@ END OF QOH Verification */
 
 		if ($_POST['AmountPaidCash']!=0){
 			// si han pagat CASH, tot o en part
-			$BankAccountCash = KapalLautRetailBankAccountSelection($_SESSION['Items'.$identifier]->Location, $db);
+			$BankAccountCash = $_SESSION['klposcashaccount'];
 			$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CASH,
 								$PeriodNo,
 								$BankAccountCash,

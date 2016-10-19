@@ -13,7 +13,7 @@ function zerofill($mStretch, $iLength = 2){
 /*************************************************************************************************
 			FUNCTIONS RELATED TO P.O.S. AT SHOPS
 *************************************************************************************************/
-function KapalLautRetailAreaSelection($Debtor, $PaymentMethod, $db){
+function KapalLautRetailAreaSelection($PaymentMethod){
 	if($PaymentMethod == PAYMENT_BY_CASH){
 		// Cash
 		// Needs to be splitted into Cash PT and Cash normal
@@ -36,76 +36,6 @@ function KapalLautRetailAreaSelection($Debtor, $PaymentMethod, $db){
 		exit;
 	}
 	return $Area;
-}
-
-function KapalLautRetailBankAccountSelection($Location, $db){
-	$sql = "SELECT klposcashaccount
-			FROM locations
-			WHERE loccode='" . $Location . "'";
-	$result = DB_query($sql);
-	if(DB_num_rows($result)==0) {
-		prnMsg(_('Error retrieving POS Cash GL Account. Seek help from the administrator.'),'error');
-		include('includes/footer.inc');
-		exit;
-	}else{
-		$myrow = DB_fetch_array($result); //get the only row returned
-		return $myrow['klposcashaccount'];
-	}
-}
-
-function KapalLautRetailTagSelection($Debtor, $db){
-	$Tag = 0;
-	if($Debtor      == "RETAIL66"){
-		$Tag = 2;
-	}elseif($Debtor == "RETAILSA"){
-		$Tag = 3;
-	}elseif($Debtor == "RETAILKS"){
-		$Tag = 4;
-	}elseif($Debtor == "RETAILLE"){
-		$Tag = 5;
-	}elseif($Debtor == "RETAILJC"){
-		$Tag = 6;
-	}elseif($Debtor == "RETAILBW"){
-		$Tag = 7;
-	}elseif($Debtor == "RETAILKB"){
-		$Tag = 8;
-	}elseif($Debtor == "RETAILUB"){
-		$Tag = 9;
-	}elseif($Debtor == "RETAILMF"){
-		$Tag = 10;
-	}elseif($Debtor == "RETAILSE"){
-		$Tag = 11;
-	}elseif($Debtor == "RETAILPU"){
-		$Tag = 13;
-	}elseif($Debtor == "RETAILSU"){
-		$Tag = 14;
-	}elseif($Debtor == "RETAILOB"){
-		$Tag = 15;
-	}elseif($Debtor == "RETAILSS"){
-		$Tag = 16;
-	}elseif($Debtor == "RETAILPA"){
-		$Tag = 17;
-	}elseif($Debtor == "RETAILKA"){
-		$Tag = 18;
-	}elseif($Debtor == "RETAILMU"){
-		$Tag = 19;
-	}elseif($Debtor == "RETAILPS"){
-		$Tag = 20;
-	}elseif($Debtor == "RETAILAR"){
-		$Tag = 21;
-	}elseif($Debtor == "RETAILSB"){
-		$Tag = 22;
-	}elseif($Debtor == "RETAILPB"){
-		$Tag = 23;
-	}elseif($Debtor == "RETAILBU"){
-		$Tag = 24;
-	}else{
-		prnMsg(_('Error calculating accounting TAG from the shop. Seek help from the administrator.'),'error');
-		prnMsg($Debtor,'error');
-		include('includes/footer.inc');
-		exit;
-	}
-	return $Tag;
 }
 
 function AdjustPackagingMovement($StockId, $QtyDelivered, $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db){
