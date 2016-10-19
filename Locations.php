@@ -82,6 +82,7 @@ if(isset($_POST['submit'])) {
 									smartdispatchmaxmodels = '" . $_POST['SmartDispatchMaxModels'] . "',
 									klyearlyrent = '" . $_POST['KLyearlyRent'] . "',
 									klposcashaccount = '" . $_POST['KLPOSCashAccount'] . "',
+									klpostag = '" . $_POST['KLPOSTag'] . "',
 									usedforwo = '" . $_POST['UsedForWO'] . "',
 									glaccountcode = '" . $_POST['GLAccountCode'] . "',
 									allowinvoicing = '" . $_POST['AllowInvoicing'] . "'
@@ -116,6 +117,7 @@ if(isset($_POST['submit'])) {
 		unset($_POST['SmartDispatchMaxModels']);
 		unset($_POST['KLyearlyRent']);
 		unset($_POST['KLPOSCashAccount']);
+		unset($_POST['KLPOSTag']);
 		unset($_POST['UsedForWO']);
 		unset($_POST['GLAccountCode']);
 		unset($_POST['AllowInvoicing']);
@@ -154,6 +156,7 @@ if(isset($_POST['submit'])) {
 										smartdispatchmaxmodels,
 										klyearlyrent,
 										klposcashaccount,
+										klpostag,
 										usedforwo,
 										glaccountcode,
 										allowinvoicing)
@@ -179,6 +182,7 @@ if(isset($_POST['submit'])) {
 								'" . $_POST['SmartDispatchMaxModels'] . "',
 								'" . $_POST['KLyearlyRent'] . "',
 								'" . $_POST['KLPOSCashAccount'] . "',
+								'" . $_POST['KLPOSTag'] . "',
 								'" . $_POST['UsedForWO'] . "',
 								'" . $_POST['GLAccountCode'] . "',
 								'" . $_POST['AllowInvoicing'] . "')";
@@ -247,6 +251,7 @@ if(isset($_POST['submit'])) {
 		unset($_POST['SmartDispatchMaxModels']);
 		unset($_POST['KLyearlyRent']);
 		unset($_POST['KLPOSCashAccount']);
+		unset($_POST['KLPOSTag']);
 		unset($_POST['UsedForWO']);
 		unset($_POST['GLAccountCode']);
 		unset($_POST['AllowInvoicing']);
@@ -422,6 +427,7 @@ or deletion of the records*/
 				smartdispatchfrom,
 				smartdispatchmaxmodels,
 				klposcashaccount,
+				klpostag,
 				glaccountcode,
 				allowinvoicing,
 				managed
@@ -441,7 +447,8 @@ or deletion of the records*/
 			<th class="ascending">', _('Priority'), '</th>
 			<th class="ascending">', _('KL ST From'), '</th>
 			<th class="ascending">', _('KL ST Max Models'), '</th>
-			<th class="ascending">', _('Cash POS GL Account'), '</th>
+			<th class="ascending">', _('POS Cash GL Account'), '</th>
+			<th class="ascending">', _('POS Tag'), '</th>
 			<th class="noprint" colspan="2">&nbsp;</th>
 		</tr>';
 
@@ -467,6 +474,7 @@ while ($myrow = DB_fetch_array($result)) {
 			<td>%s</td>
 			<td class="number">%s</td>
 			<td>%s</td>
+			<td>%s</td>
 			<td class="noprint"><a href="%sSelectedLocation=%s">' . _('Edit') . '</a></td>
 			<td class="noprint"><a href="%sSelectedLocation=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this inventory location?') . '\');">' . _('Delete') . '</a></td>
 			</tr>',
@@ -476,6 +484,7 @@ while ($myrow = DB_fetch_array($result)) {
 			$myrow['smartdispatchfrom'],
 			$myrow['smartdispatchmaxmodels'],
 			$myrow['klposcashaccount'],
+			$myrow['klpostag'],
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $myrow['loccode'],
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $myrow['loccode']);
 	}
@@ -522,6 +531,7 @@ if(!isset($_GET['delete'])) {
 					smartdispatchmaxmodels,
 					klyearlyrent,
 					klposcashaccount,
+					klpostag,
 					usedforwo,
 					glaccountcode,
 					allowinvoicing
@@ -554,6 +564,7 @@ if(!isset($_GET['delete'])) {
 		$_POST['SmartDispatchMaxModels'] = $myrow['smartdispatchmaxmodels'];
 		$_POST['KLyearlyRent'] = $myrow['klyearlyrent'];
 		$_POST['KLPOSCashAccount'] = $myrow['klposcashaccount'];
+		$_POST['KLPOSTag'] = $myrow['klpostag'];
 		$_POST['UsedForWO'] = $myrow['usedforwo'];
 		$_POST['GLAccountCode'] = $myrow['glaccountcode'];
 		$_POST['AllowInvoicing'] = $myrow['allowinvoicing'];
@@ -726,6 +737,10 @@ if(!isset($_GET['delete'])) {
 	echo '<tr title="', _('Enter the KL POS Cash GL account for this location, or leave it in blank if not needed'), '">
 			<td><label for="GLAccountCode">', _('KL POS Cash GL Account'), ':</label></td>
 			<td><input data-type="no-illegal-chars" id="KLPOSCashAccount" maxlength="20" name="KLPOSCashAccount" size="20" type="text" value="', $_POST['KLPOSCashAccount'], '" /></td></tr>';
+	// POS Tag
+	echo '<tr title="', _('Enter the KL POS Tag code for this location, or leave it in blank if not needed'), '">
+			<td><label for="KLPOSTag">', _('KL POS Tag'), ':</label></td>
+			<td><input data-type="no-illegal-chars" id="KLPOSTag" maxlength="20" name="KLPOSTag" size="4" type="text" value="', $_POST['KLPOSTag'], '" /></td></tr>';
 	echo '<tr>
 			<td>' . _('Allow internal requests?') . ':</td>
 			<td><select name="InternalRequest">';
