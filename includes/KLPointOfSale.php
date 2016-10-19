@@ -596,21 +596,17 @@ function AccountDebtorDiscount($ReceiptNumber,
 /********************************************************************************************************/
 
 
-function KLPrintReceiptTestWarning(){
+function KLPrintReceiptTestWarning($KindOfDoc){
 	include('includes/ESCPOSCommands.php');
 	$TextToPrint = $CharacterFontA;
 	if (webERP_in_test()){
-		$TextToPrint .= $NewLine .  $CenteredJustified . "TEST ONLY - THIS IS NOT A VALID INVOICE" . $NewLine;
+		$TextToPrint .= $NewLine .  $CenteredJustified . "TEST ONLY - THIS IS NOT A VALID " . $KindOfDoc . $NewLine;
 	}
 	return $TextToPrint;
 }
 
-
-function KLPrintReceiptHeader($identifier, $OrderNo){
-	
+function KLPrintNameOfShop(){
 	include('includes/ESCPOSCommands.php');
-
-	$TextToPrint = $InitPrinter . $CenteredJustified;
 	
 	// name of shop
 	if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_KAPAL_LAUT)){
@@ -624,6 +620,7 @@ function KLPrintReceiptHeader($identifier, $OrderNo){
 	}
 	// shop address
 	$TextToPrint .= $CharacterFontB;
+	$TextAddress = "";
 	if (isset($_SESSION['ShopAddress1'])){
 		$TextAddress = $_SESSION['ShopAddress1'];
 	}
@@ -639,10 +636,26 @@ function KLPrintReceiptHeader($identifier, $OrderNo){
 	if (isset($_SESSION['ShopAddress5'])){
 		$TextAddress .= " " . $_SESSION['ShopAddress5'];
 	}
-	$TextToPrint .= $TextAddress . $NewLine;
 
+	if ($TextAddress != ""){
+		$TextToPrint .= $TextAddress . $NewLine;
+	}
+
+	return $TextToPrint;
+}
+
+
+function KLPrintReceiptHeader($identifier, $OrderNo){
+	
+	include('includes/ESCPOSCommands.php');
+
+	$TextToPrint = $InitPrinter . $CenteredJustified;
+
+	// name of shop
+	$TextToPrint .= KLPrintNameOfShop();
+	
 	// warning if it is a TEST
-	$TextToPrint .= KLPrintReceiptTestWarning(). $NewLine . $LeftJustified;
+	$TextToPrint .= KLPrintReceiptTestWarning("INVOICE"). $NewLine . $LeftJustified;
 	
 	// identification of the sale
 	$TextInvoiceNumber = 'Invoice: ' . $_SESSION['Items'.$identifier]->CustRef;
@@ -680,7 +693,6 @@ function KLPrintReceiptHeader($identifier, $OrderNo){
 	$TextToPrint .= 'PPN 10%: Rp.  ' . number_format($PPN) . $NewLine;
 	
 	return $TextToPrint;
-
 }
 
 function KLPrintReceiptCustomerFooter($identifier, $OrderNo){
@@ -718,7 +730,7 @@ function KLPrintReceiptCustomerFooter($identifier, $OrderNo){
 		$TextToPrint .= "SHOP NAME NOT FOUND" . $NewLine;
 	}
 
-	$TextToPrint .= KLPrintReceiptTestWarning();
+	$TextToPrint .= KLPrintReceiptTestWarning("INVOICE");
 
 	$TextToPrint .= $NewLine;
 	$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth . $CenteredJustified . "CUSTOMER COPY" . $NewLine;
@@ -848,7 +860,7 @@ function KLPrintReceiptShopFooter($identifier, $OrderNo){
 		}
 	}
 
-	$TextToPrint .= KLPrintReceiptTestWarning();
+	$TextToPrint .= KLPrintReceiptTestWarning("INVOICE");
 	
 	$TextToPrint .= $NewLine;
 	$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth . $CenteredJustified . "SHOP COPY" . $NewLine;

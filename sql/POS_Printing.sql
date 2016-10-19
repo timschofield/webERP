@@ -4,6 +4,8 @@ INSERT INTO `systypes` (`typeid`, `typename`, `typeno`) VALUES ('9002', 'KL Cust
 INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('KLRetailPOS.php', '1500', 'Modified version of CounterSales.php for KL allowing printing in Thermal printer');
 INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('KLRetailCustomerInfoCard.php', '1500', 'SPG input of customer info card');
 INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('PrintPOSReceipt.php', '1500', 'Print POS receipt');
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('KLRetailEndOfShift.php', '1500', 'Print Daily End Of Shift');
+
 ALTER TABLE `locations` ADD `klposcashaccount` VARCHAR(20) NULL COMMENT 'GL account for cash payments for KL POS ' AFTER `klyearlyrent`;
 UPDATE `locations` SET `klposcashaccount` = '111111101' WHERE `locations`.`loccode` = 'TOK66';
 UPDATE `locations` SET `klposcashaccount` = '111111102' WHERE `locations`.`loccode` = 'TOKSA';

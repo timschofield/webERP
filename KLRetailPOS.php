@@ -42,7 +42,6 @@ include('includes/KLCountriesForRetail.php');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLPointOfSale.php');
-include('includes/KLPrintESCPOS.php');
 include('includes/KLEmails.php');
 
 //################## PRINTING STUFF ##################### 
