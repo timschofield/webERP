@@ -105,28 +105,60 @@ if (!isset($_SESSION['Items'.$identifier])){
 	inserted depending on the value of ExistingOrder */
 
 	$_SESSION['ExistingOrder'] = 0;
-	$_SESSION['Items'.$identifier] = new cart;
+	$_SESSION['Items'.$identifier]->DeliverTo = '';
 	$_SESSION['PrintedPackingSlip'] = 0; /*Of course 'cos the order ain't even started !!*/
+	$_SESSION['Items'.$identifier] = new cart;
+
 	unset($_SESSION['ShopAddress1']);
 	unset($_SESSION['ShopAddress2']);
 	unset($_SESSION['ShopAddress3']);
 	unset($_SESSION['ShopAddress4']);
 	unset($_SESSION['ShopAddress5']);
+	unset($_SESSION['klposcashaccount']);
+	unset($_SESSION['klpostag']);
 	
 	/*Get the default customer-branch combo from the user's default location record */
-	$sql = "SELECT 	cashsalecustomer,
-					cashsalebranch,
-					locationname,
-					deladd1,
-					deladd2,
-					deladd3,
-					deladd4,
-					deladd5,
-					klposcashaccount,
-					klpostag,
-					taxprovinceid
-			 FROM locations
-			 WHERE loccode='" . $_SESSION['UserStockLocation'] ."'";
+	$sql = "SELECT 	locations.cashsalecustomer,
+					locations.cashsalebranch,
+					locations.locationname,
+					locations.deladd1,
+					locations.deladd2,
+					locations.deladd3,
+					locations.deladd4,
+					locations.deladd5,
+					locations.klposcashaccount,
+					locations.klpostag,
+					locations.taxprovinceid,
+					debtorsmaster.name,
+					debtorsmaster.salestype,
+					debtorsmaster.currcode,
+					debtorsmaster.customerpoline,
+					custbranch.brname,
+					custbranch.braddress1,
+					custbranch.defaultshipvia,
+					custbranch.deliverblind,
+					custbranch.specialinstructions,
+					custbranch.estdeliverydays,
+					custbranch.salesman,
+					custbranch.taxgroupid,
+					custbranch.defaultshipvia,
+					holdreasons.dissallowinvoices,
+					salestypes.sales_type,
+					paymentterms.terms
+			 FROM locations,
+					debtorsmaster,
+					holdreasons,
+					salestypes,
+					paymentterms,
+					custbranch
+			 WHERE debtorsmaster.salestype=salestypes.typeabbrev
+				AND debtorsmaster.holdreason=holdreasons.reasoncode
+				AND debtorsmaster.paymentterms=paymentterms.termsindicator
+				AND debtorsmaster.debtorno = locations.cashsalecustomer
+				AND custbranch.debtorno = locations.cashsalecustomer
+				AND custbranch.branchcode = locations.cashsalebranch
+				AND loccode='" . $_SESSION['UserStockLocation'] ."'";
+
 	$result = DB_query($sql);
 	if (DB_num_rows($result)==0) {
 		prnMsg(_('Your SPG user account is not linked to any valid shop. Please contact Kantor IT inmediately.'),'error');
@@ -154,30 +186,6 @@ if (!isset($_SESSION['Items'.$identifier])){
 		$_SESSION['klposcashaccount'] = $myrow['klposcashaccount'];
 		$_SESSION['klpostag'] = $myrow['klpostag'];
 
-		// Now check to ensure this customer account exists and set defaults */
-		$sql = "SELECT debtorsmaster.name,
-				holdreasons.dissallowinvoices,
-				debtorsmaster.salestype,
-				salestypes.sales_type,
-				debtorsmaster.currcode,
-				debtorsmaster.customerpoline,
-				paymentterms.terms
-			FROM debtorsmaster,
-				holdreasons,
-				salestypes,
-				paymentterms
-			WHERE debtorsmaster.salestype=salestypes.typeabbrev
-			AND debtorsmaster.holdreason=holdreasons.reasoncode
-			AND debtorsmaster.paymentterms=paymentterms.termsindicator
-			AND debtorsmaster.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
-
-		$ErrMsg = _('The details of the customer selected') . ': ' .  $_SESSION['Items'.$identifier]->DebtorNo . ' ' . _('cannot be retrieved because');
-		$DbgMsg = _('The SQL used to retrieve the customer details and failed was') . ':';
-		$result =DB_query($sql,$ErrMsg,$DbgMsg);
-
-		$myrow = DB_fetch_array($result);
-
-		$_SESSION['RequireCustomerSelection']=0;
 		$_SESSION['Items'.$identifier]->CustomerName = $myrow['name'];
 		// the sales type is the price list to be used for this sale
 		$_SESSION['Items'.$identifier]->DefaultSalesType = $myrow['salestype'];
@@ -185,34 +193,6 @@ if (!isset($_SESSION['Items'.$identifier])){
 		$_SESSION['Items'.$identifier]->DefaultCurrency = $myrow['currcode'];
 		$_SESSION['Items'.$identifier]->DefaultPOLine = $myrow['customerpoline'];
 		$_SESSION['Items'.$identifier]->PaymentTerms = $myrow['terms'];
-
-		/* now get the branch defaults from the customer branches table CustBranch. */
-
-		$sql = "SELECT custbranch.brname,
-				   custbranch.braddress1,
-				   custbranch.defaultshipvia,
-				   custbranch.deliverblind,
-				   custbranch.specialinstructions,
-				   custbranch.estdeliverydays,
-				   custbranch.salesman,
-				   custbranch.taxgroupid,
-				   custbranch.defaultshipvia
-			FROM custbranch
-			WHERE custbranch.branchcode='" . $_SESSION['Items'.$identifier]->Branch . "'
-			AND custbranch.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
-		$ErrMsg = _('The customer branch record of the customer selected') . ': ' . $_SESSION['Items'.$identifier]->Branch . ' ' . _('cannot be retrieved because');
-		$DbgMsg = _('SQL used to retrieve the branch details was') . ':';
-		$result =DB_query($sql,$ErrMsg,$DbgMsg);
-
-		if (DB_num_rows($result)==0){
-			prnMsg(_('The branch details for branch code') . ': ' . $_SESSION['Items'.$identifier]->Branch . ' ' . _('against customer code') . ': ' . $_POST['Select'] . ' ' . _('could not be retrieved') . '. ' . _('Check the set up of the customer and branch'),'error');
-			include('includes/footer.inc');
-			exit;
-		}
-		echo '<br />';
-		$myrow = DB_fetch_array($result);
-
-		$_SESSION['Items'.$identifier]->DeliverTo = '';
 		$_SESSION['Items'.$identifier]->DelAdd1 = $myrow['braddress1'];
 		$_SESSION['Items'.$identifier]->ShipVia = $myrow['defaultshipvia'];
 		$_SESSION['Items'.$identifier]->DeliverBlind = $myrow['deliverblind'];
@@ -223,6 +203,7 @@ if (!isset($_SESSION['Items'.$identifier])){
 		if ($_SESSION['Items'.$identifier]->SpecialInstructions) {
 			prnMsg($_SESSION['Items'.$identifier]->SpecialInstructions,'warn');
 		}
+		echo '<br />';
 
 	}
 } // end if its a new sale to be set up ...
@@ -252,18 +233,8 @@ if (isset($_POST['CancelOrder'])) {
 echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID .'identifier='.$identifier . '" name="SelectParts" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-//Get The exchange rate used for GPPercent calculations on adding or amending items
-if ($_SESSION['Items'.$identifier]->DefaultCurrency != $_SESSION['CompanyRecord']['currencydefault']){
-	$ExRateResult = DB_query("SELECT rate FROM currencies WHERE currabrev='" . $_SESSION['Items'.$identifier]->DefaultCurrency . "'");
-	if (DB_num_rows($ExRateResult)>0){
-		$ExRateRow = DB_fetch_row($ExRateResult);
-		$ExRate = $ExRateRow[0];
-	} else {
-		$ExRate =1;
-	}
-} else {
-	$ExRate = 1;
-}
+//Fix The exchange rate, only to work in functional currency
+$ExRate = 1;
 
 /*Process Quick Entry */
 /* If enter is pressed on the quick entry screen, the default button may be Recalculate */
@@ -990,13 +961,13 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		// Get the Customer invoice number depending on Area
 		if ($Area == "REZ"){
 			// Cash sales
-			$_SESSION['Items'.$identifier]->CustRef = substr($_SESSION['UserStockLocation'],3,2)."-".zerofill(GetNextTransNo(9002, $db),7) ."-C".;
+			$_SESSION['Items'.$identifier]->CustRef = substr($_SESSION['UserStockLocation'],3,2)."-".zerofill(GetNextTransNo(9002, $db),7) ."-C";
 		}elseif ($Area == "REC"){
 			// Cash sales PT
-			$_SESSION['Items'.$identifier]->CustRef = substr($_SESSION['UserStockLocation'],3,2)."-".zerofill(GetNextTransNo(9001, $db),7) ."-B".;
+			$_SESSION['Items'.$identifier]->CustRef = substr($_SESSION['UserStockLocation'],3,2)."-".zerofill(GetNextTransNo(9001, $db),7) ."-B";
 		}elseif ($Area == "RER"){
 			// Credit Card Sales PT
-			$_SESSION['Items'.$identifier]->CustRef = substr($_SESSION['UserStockLocation'],3,2)."-".zerofill(GetNextTransNo(9000, $db),7) ."-A".;
+			$_SESSION['Items'.$identifier]->CustRef = substr($_SESSION['UserStockLocation'],3,2)."-".zerofill(GetNextTransNo(9000, $db),7) ."-A";
 		}else{
 			/*The area is wrong for any reason */
 			prnMsg('ERROR POS0050: The area ' . $Area . ' is not defined. Please call the office inmediately', 'error');
