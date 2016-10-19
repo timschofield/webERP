@@ -28,18 +28,16 @@ if (isset($_GET['SelectedCustomer'])) {
 } else {
 	unset($SelectedCustomer);
 }
-	
+
 if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders */
 
 	/*Note the button would not have been displayed if the user had no authority to create purchase orders */
 	$OrdersToPlacePOFor = '';
 	for ($i=0;$i<=count($_POST['PlacePO_']);$i++){
-		if (isset($_POST['PlacePO_'][$i])) { //checkboxes only set if they are checked
-			if ($OrdersToPlacePOFor==''){
-				$OrdersToPlacePOFor .= " orderno='" . $_POST['OrderNo_PO_'][$i] . "'";
-			} else {
-				$OrdersToPlacePOFor .= " OR orderno='" . $_POST['OrderNo_PO_'][$i] . "'";
-			}
+		if ($OrdersToPlacePOFor==''){
+			$OrdersToPlacePOFor .= " orderno='" . $_POST['PlacePO_'][$i] . "'";
+		} else {
+			$OrdersToPlacePOFor .= " OR orderno='" . $_POST['PlacePO_'][$i] . "'";
 		}
 	}
 	if (mb_strlen($OrdersToPlacePOFor)==''){
@@ -149,6 +147,7 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 
 		/* We need the items to order to be in supplier order so that only a single order is created for a supplier - so need to sort the multi-dimensional array to ensure it is listed by supplier sequence. To use array_multisort we need to get arrays of supplier with the same keys as the main array of rows
 		 */
+		$SupplierArray =array();
 		foreach ($ItemArray as $key => $row) {
 			//to make the Supplier array with the keys of the $ItemArray
 			$SupplierArray[$key]  = $row['supplierno'];
@@ -157,7 +156,9 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 		/* Use array_multisort to Sort the ItemArray with supplierno ascending
 		Add $ItemArray as the last parameter, to sort by the common key
 		*/
-		array_multisort($SupplierArray, SORT_ASC, $ItemArray);
+		if (count($SupplierArray)>1) {
+			array_multisort($SupplierArray, SORT_ASC, $ItemArray);
+		}
 
 		if (count($ItemArray)==0){
 			prnMsg(_('There might be no supplier purchasing data set up for any items on the selected sales order(s). No purchase orders have been created'),'warn');
@@ -202,7 +203,7 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 
 						$AuthResult=DB_query($AuthSQL);
 						$AuthRow=DB_fetch_array($AuthResult);
-						if ($AuthRow['authlevel']=''){
+						if ($AuthRow['authlevel']==''){
 							$AuthRow['authlevel'] = 0;
 						}
 
@@ -368,7 +369,7 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 
 				$AuthResult=DB_query($AuthSQL);
 				$AuthRow=DB_fetch_array($AuthResult);
-				if ($AuthRow['authlevel']=''){
+				if ($AuthRow['authlevel']==''){
 				      $AuthRow['authlevel'] = 0;
 				}
 
@@ -538,7 +539,7 @@ if (!isset($StockID)) {
 
 		echo '</select> </td>
 			<td>' . _('Due Date From') . '</td>
-			<td><input type="text" class="date" name="DueDateFrom" value="' . $_POST['DueDateFrom'] . '" alt="' . $_SESSION['DefaultDateFormat'] . '" size="10" /></td> 
+			<td><input type="text" class="date" name="DueDateFrom" value="' . $_POST['DueDateFrom'] . '" alt="' . $_SESSION['DefaultDateFormat'] . '" size="10" /></td>
 			<td>' . _('Due Date To') . '</td>
 			<td><input type="text" class="date" name="DueDateTo" value="' . $_POST['DueDateTo'] . '" alt="' . $_SESSION['DefaultDateFormat'] . '" size="10" /></td>
 				<td><input type="submit" name="SearchOrders" value="' . _('Search') . '" /></td>
@@ -674,9 +675,9 @@ if (isset($StockItemsResult)
 		$_POST['StockLocation'] = '';
 	}
 	//Harmonize the ordervalue with SUM function since webERP allowed same items appeared several times in one sales orders. If there is no sum value, this situation not inclued.
-	//We should separate itemdue inquiry from normal inquiry. 
-	if (($Quotations === 0 OR $Quotations === 1) 
-		AND (!isset($DueDateFrom) OR !is_date($DueDateFrom)) 
+	//We should separate itemdue inquiry from normal inquiry.
+	if (($Quotations === 0 OR $Quotations === 1)
+		AND (!isset($DueDateFrom) OR !is_date($DueDateFrom))
 		AND (!isset($DueDateTo) OR !is_date($DueDateTo))) {
 
 			$SQL = "SELECT salesorders.orderno,
@@ -701,7 +702,7 @@ if (isset($StockItemsResult)
 					WHERE salesorderdetails.completed=0 ";
 			$SQL .= $OrderDateFrom . $OrderDateTo;
 		} else {
-			if ($Quotations !==0 AND $Quotations !==1) {//overdue inquiry only 
+			if ($Quotations !==0 AND $Quotations !==1) {//overdue inquiry only
 				$SQL = "SELECT salesorders.orderno,
 						debtorsmaster.name,
 						custbranch.brname,
@@ -711,8 +712,8 @@ if (isset($StockItemsResult)
 						salesorders.deliverto,
 						salesorders.printedpackingslip,
 						salesorders.poplaced,
-						SUM(CASE WHEN itemdue<'" . Date('Y-m-d') . "' 
-						     THEN salesorderdetails.unitprice*(salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*(1-salesorderdetails.discountpercent)/currencies.rate 
+						SUM(CASE WHEN itemdue<'" . Date('Y-m-d') . "'
+						     THEN salesorderdetails.unitprice*(salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*(1-salesorderdetails.discountpercent)/currencies.rate
 						     ELSE 0 END) as ordervalue";
 			} elseif (isset($DueDateFrom) AND is_date($DueDateFrom) AND (!isset($DueDateTo) OR !is_date($DueDateTo))) {
 					$SQL = "SELECT salesorders.orderno,
@@ -724,7 +725,7 @@ if (isset($StockItemsResult)
 						salesorders.deliverto,
 						salesorders.printedpackingslip,
 						salesorders.poplaced,
-						SUM(CASE WHEN itemdue>='" . FormatDateFromSQL($DueDateFrom) . "' 
+						SUM(CASE WHEN itemdue>='" . FormatDateFromSQL($DueDateFrom) . "'
 						     THEN salesorderdetails.unitprice*(salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*(1-salesorderdetails.discountpercent)/currencies.rate
 						     ELSE 0 END) as ordervalue";
 			} elseif (isset($DueDateFrom) AND is_date($DueDateFrom) AND isset($DueDateTo) AND is_date($DueDateTo)) {
@@ -738,8 +739,8 @@ if (isset($StockItemsResult)
 						salesorders.printedpackingslip,
 						salesorders.poplaced,
 						SUM (CASE WHEN itemdue>='" . FormatDateForSQL($DueDateFrom) . "' AND itemdue<='" . FormatDateForSQL($DueDateTo) ."'
-						     THEN salesorderdetails.unitprice*(salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*(1-salesorderdetails.discountpercent)/currencies.rate 
-						     ELSE 0 END) as ordervalue"; 
+						     THEN salesorderdetails.unitprice*(salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*(1-salesorderdetails.discountpercent)/currencies.rate
+						     ELSE 0 END) as ordervalue";
 			} elseif ((!isset($DueDateFrom) OR !is_date($DueDateFrom)) AND isset($DueDateTo) AND is_date($DueDateTo)) {
 						$SQL = "SELECT salesorders.orderno,
 						debtorsmaster.name,
@@ -751,11 +752,11 @@ if (isset($StockItemsResult)
 						salesorders.printedpackingslip,
 						salesorders.poplaced,
 						SUM(CASE WHEN AND itemdue<='" . FormatDateForSQL($DueDateTo) ."'
-						     THEN salesorderdetails.unitprice*(salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*(1-salesorderdetails.discountpercent)/currencies.rate 
-						     ELSE 0 END) as ordervalue"; 
+						     THEN salesorderdetails.unitprice*(salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*(1-salesorderdetails.discountpercent)/currencies.rate
+						     ELSE 0 END) as ordervalue";
 			}//end of due date inquiry
 				$SQL .= $OrderDateFrom . $OrderDateTo;
-			
+
 
 				$SQL .=" FROM salesorders INNER JOIN salesorderdetails
 						ON salesorders.orderno = salesorderdetails.orderno
@@ -779,11 +780,11 @@ if (isset($StockItemsResult)
 
 				$SQL .= "AND salesorders.orderno=". $OrderNumber ."
 				    AND salesorders.quotation=" .$Quotations;
-				
+
 			} elseif (isset($CustomerRef) AND $CustomerRef != ''){
 				$SQL .= "AND salesorders.customerref='" . $CustomerRef . "'
 					AND salesorders.quotation=" . $Quotations;
-			
+
 			} else {
 	      			/* $DateAfterCriteria = FormatDateforSQL($OrdersAfterDate); */
 
@@ -933,7 +934,7 @@ if (isset($StockItemsResult)
 		 				<td>%s</td>
 		 				<td>%s</td>
 		 				<td class="number">%s</td>
-		 				<td><input type="checkbox" name="PlacePO_[]" /><input type="hidden" name="OrderNo_PO_[]" value="%s" /></td>
+		 				<td><input type="checkbox" name="PlacePO_[]" /></td>
 		 				</tr>',
 		 				$ModifyPage,
 		 				$myrow['orderno'],
