@@ -104,11 +104,6 @@ if (!isset($_SESSION['Items'.$identifier])){
 	set to 1. The delivery check screen is where the details of the order are either updated or
 	inserted depending on the value of ExistingOrder */
 
-	$_SESSION['ExistingOrder'] = 0;
-	$_SESSION['Items'.$identifier]->DeliverTo = '';
-	$_SESSION['PrintedPackingSlip'] = 0; /*Of course 'cos the order ain't even started !!*/
-	$_SESSION['Items'.$identifier] = new cart;
-
 	unset($_SESSION['ShopAddress1']);
 	unset($_SESSION['ShopAddress2']);
 	unset($_SESSION['ShopAddress3']);
@@ -116,6 +111,12 @@ if (!isset($_SESSION['Items'.$identifier])){
 	unset($_SESSION['ShopAddress5']);
 	unset($_SESSION['klposcashaccount']);
 	unset($_SESSION['klpostag']);
+
+	$_SESSION['ExistingOrder'] = 0;
+	$_SESSION['PrintedPackingSlip'] = 0; 
+	$_SESSION['Items'.$identifier] = new cart;
+	$_SESSION['Items'.$identifier]->DeliverTo = '';
+	$_SESSION['Items'.$identifier]->ShipVia = 1; // Hand Carried
 	
 	/*Get the default customer-branch combo from the user's default location record */
 	$sql = "SELECT 	locations.cashsalecustomer,
@@ -135,13 +136,9 @@ if (!isset($_SESSION['Items'.$identifier])){
 					debtorsmaster.customerpoline,
 					custbranch.brname,
 					custbranch.braddress1,
-					custbranch.defaultshipvia,
-					custbranch.deliverblind,
 					custbranch.specialinstructions,
-					custbranch.estdeliverydays,
 					custbranch.salesman,
 					custbranch.taxgroupid,
-					custbranch.defaultshipvia,
 					holdreasons.dissallowinvoices,
 					salestypes.sales_type,
 					paymentterms.terms
@@ -194,10 +191,7 @@ if (!isset($_SESSION['Items'.$identifier])){
 		$_SESSION['Items'.$identifier]->DefaultPOLine = $myrow['customerpoline'];
 		$_SESSION['Items'.$identifier]->PaymentTerms = $myrow['terms'];
 		$_SESSION['Items'.$identifier]->DelAdd1 = $myrow['braddress1'];
-		$_SESSION['Items'.$identifier]->ShipVia = $myrow['defaultshipvia'];
-		$_SESSION['Items'.$identifier]->DeliverBlind = $myrow['deliverblind'];
 		$_SESSION['Items'.$identifier]->SpecialInstructions = $myrow['specialinstructions'];
-		$_SESSION['Items'.$identifier]->DeliveryDays = $myrow['estdeliverydays'];
 		$_SESSION['Items'.$identifier]->TaxGroup = $myrow['taxgroupid'];
 
 		if ($_SESSION['Items'.$identifier]->SpecialInstructions) {
@@ -263,7 +257,7 @@ $ExRate = 1;
 			$NewItemQty = $_POST[$QuickEntryQty];
 		}
 
-		$NewItemDue = DateAdd (Date($_SESSION['DefaultDateFormat']),'d', $_SESSION['Items'.$identifier]->DeliveryDays);
+		$NewItemDue = date($_SESSION['DefaultDateFormat']);
 
 		if (isset($_POST[$QuickEntryPOLine])) {
 			$NewPOLine = $_POST[$QuickEntryPOLine];
@@ -332,7 +326,6 @@ if ((isset($_SESSION['Items'.$identifier])) OR isset($NewItem)) {
 						or $OrderLine->Price != $Price
 						or abs($OrderLine->DiscountPercent -$DiscountPercentage/100) >0.001
 						or $OrderLine->Narrative != $Narrative
-						or $OrderLine->ItemDue != $_POST['ItemDue_' . $OrderLine->LineNumber]
 						or $OrderLine->POLine != $_POST['POLine_' . $OrderLine->LineNumber]) {
 
 				$_SESSION['Items'.$identifier]->update_cart_item($OrderLine->LineNumber,
@@ -523,7 +516,7 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 
 		$LineDueDate = $OrderLine->ItemDue;
 		if (!Is_Date($OrderLine->ItemDue)){
-			$LineDueDate = DateAdd (Date($_SESSION['DefaultDateFormat']),'d', $_SESSION['Items'.$identifier]->DeliveryDays);
+			$LineDueDate = date($_SESSION['DefaultDateFormat']);
 			$_SESSION['Items'.$identifier]->LineItems[$OrderLine->LineNumber]->ItemDue= $LineDueDate;
 		}
 		$i=0; // initialise the number of taxes iterated through
@@ -937,7 +930,6 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		}
 		$Area = KapalLautRetailAreaSelection($PaymentMethod);
 		$Tag = $_SESSION['klpostag'];
-		$DefaultShipVia = 1; // Hand Carried
 			
 		/*company record read in on login with info on GL Links and debtors GL account*/
 
@@ -1992,7 +1984,7 @@ if (!isset($_POST['ProcessSale'])){
 	echo '<th>' . _('Item Code') . '</th>
 				  <th>' . _('Quantity') . '</th>
 				  </tr>';
-	$DefaultDeliveryDate = DateAdd(Date($_SESSION['DefaultDateFormat']),'d',$_SESSION['Items'.$identifier]->DeliveryDays);
+	$DefaultDeliveryDate = date($_SESSION['DefaultDateFormat']);
 	if (count($_SESSION['Items'.$identifier]->LineItems)==0) {
 		echo '<input type="hidden" name="CustRef" value="'.$_SESSION['Items'.$identifier]->CustRef.'" />';
 		echo '<input type="hidden" name="Comments" value="'.$_SESSION['Items'.$identifier]->Comments.'" />';
