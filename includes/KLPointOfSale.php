@@ -872,7 +872,8 @@ function KLPrintReceiptShopFooter($identifier, $OrderNo){
 }
 
 function DoubleJustified($left, $right, $lenght, $fillchar){
-	return str_pad($left, $lenght - strlen($right), $fillchar) . $right;
+	include('includes/ESCPOSCommands.php');
+	return str_pad($left, $lenght - strlen($right), $fillchar) . $right . $NewLine;
 }
 
 

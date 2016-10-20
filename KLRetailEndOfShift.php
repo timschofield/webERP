@@ -26,7 +26,7 @@ $today = date('Y-m-d');
 $TextToPrint = $InitPrinter . $CenteredJustified;
 // name of shop
 $TextToPrint .= KLPrintNameOfShop();
-$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth . 'END OF SHIFT REPORT' . $NewLine;
+$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth . 'SPG END OF SHIFT REPORT' . $NewLine;
 // warning if it is a TEST
 $TextToPrint .= KLPrintReceiptTestWarning("END OF SHIFT"). $NewLine . $CenteredJustified;
 $TextToPrint .= DisplayDateTime() . $NewLine;
@@ -48,7 +48,7 @@ $SQL = "SELECT salesorders.orderno,
 $result = DB_query($SQL);
 
 if (DB_num_rows($result) != 0){
-	echo '<p class="page_title_text" align="center"><strong>' . $_SESSION['SalesmanLogin'] .  ' SPG End Of Shift Report' . '</strong></p>';
+	echo '<p class="page_title_text" align="center"><strong>' . $_SESSION['SalesmanLogin'] . ' SPG End Of Shift Report' . '</strong></p>';
 	echo '<div>';
 	echo '<table class="selection">';
 	$TableHeader = '<tr>
@@ -91,7 +91,7 @@ if (DB_num_rows($result) != 0){
 				$TextToPrint .=  $RightJustified . $TextPayment . $NewLine;
 			}
 		}
-		if ($_POST['klpaidcreditcard'] > 0){
+		if ($myrow['klpaidcreditcard'] > 0){
 			$TextPayment = 'Credit Card: ' . number_format($myrow['klpaidcreditcard'],0);
 			if(!$FirstLinePrinted){
 				$TextToPrint .= DoubleJustified($TextInvoice, $TextPayment, $LineLenghtCharA, " ");
@@ -100,7 +100,7 @@ if (DB_num_rows($result) != 0){
 				$TextToPrint .=  $RightJustified . $TextPayment . $NewLine;
 			}
 		}
-		if ($_POST['klreturnedgoods'] > 0){
+		if ($myrow['klreturnedgoods'] > 0){
 			$TextPayment = 'Returned Goods: ' . number_format($myrow['klreturnedgoods'],0);
 			if(!$FirstLinePrinted){
 				$TextToPrint .= DoubleJustified($TextInvoice, $TextPayment, $LineLenghtCharA, " ");
@@ -109,7 +109,7 @@ if (DB_num_rows($result) != 0){
 				$TextToPrint .=  $RightJustified . $TextPayment . $NewLine;
 			}
 		}
-		if ($_POST['klvouchers'] > 0){
+		if ($myrow['klvouchers'] > 0){
 			$TextPayment = 'Voucher/Discount: ' . number_format($myrow['klvouchers'],0);
 			if(!$FirstLinePrinted){
 				$TextToPrint .= DoubleJustified($TextInvoice, $TextPayment, $LineLenghtCharA, " ");
@@ -139,9 +139,10 @@ if (DB_num_rows($result) != 0){
 				number_format($SubTotal)
 				);
 	}
+	$TextToPrint .= $NewLine;
 	$TextInvoice = "# Invoices: " . $Invoices;
 	$TextCash .= "Total Cash: " . number_format($TotalCash);
-	$TextToPrint .= $NewLine . DoubleJustified($TextInvoice, $TextCash, $LineLenghtCharA, " ") . $NewLine . $RightJustified;
+	$TextToPrint .= DoubleJustified($TextInvoice, $TextCash, $LineLenghtCharA, " ") . $RightJustified;
 	$TextToPrint .= "Total Credit Card: " . number_format($TotalCreditCard) . $NewLine;
 	$TextToPrint .= "Total Returned Goods: " . number_format($TotalReturned) . $NewLine;
 	$TextToPrint .= "Total Voucher/Discounts: " . number_format($TotalVouchers) . $NewLine;
