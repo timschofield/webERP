@@ -3,7 +3,7 @@
 include('includes/KLPointOfSale.php');
 
 //################## PRINTING STUFF #####################
-include 'includes/PrintESCPOS/WebClientPrint.php';
+include 'includes/WebClientPrint/WebClientPrint.php';
 use Neodynamic\SDK\Web\WebClientPrint;
 use Neodynamic\SDK\Web\Utils;
 use Neodynamic\SDK\Web\DefaultPrinter;
@@ -20,13 +20,24 @@ if(isset($_GET['identifier'])) {
 	$identifier = '';
 }
 
-// RICARD: To be improved to remove the hardcoded paths and get just 1 wcpcache folder in all installation
-if (webERP_in_test()){
-	$filename = 'https://www.bumibiru.com/TEST/weberp/wcpcache/'.$identifier.'.pos';   
+// RICARD: To be improved to get just 1 wcpcache folder in all installation
+if($_SESSION['HTTPS_Only'] == 1){
+	$Protocol = "https";
 }else{
-	$filename = 'https://www.bumibiru.com/weberp/wcpcache/'.$identifier.'.pos';   
+	$Protocol = "http";
 }
-	
+
+$RootPath = dirname(htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'));
+if (isset($DirectoryLevelsDeep)){
+	for ($i=0;$i<$DirectoryLevelsDeep;$i++){
+		$RootPath = mb_substr($RootPath,0, strrpos($RootPath,'/'));
+	}
+}
+if ($RootPath == "/" OR $RootPath == "\\") {
+	$RootPath = "";
+}
+$filename =  $Protocol . "://$_SERVER[HTTP_HOST]" . $RootPath . '/includes/WebClientPrint/wcpcache/'.$identifier.'.pos';   
+
 $texttoprint = file_get_contents($filename);
 
 //################## PRINTING STUFF #####################

@@ -597,7 +597,7 @@ function AccountDebtorDiscount($ReceiptNumber,
 
 
 function KLPrintReceiptTestWarning($KindOfDoc){
-	include('includes/ESCPOSCommands.php');
+	include('includes/wcpESCPOSCommands.php');
 	$TextToPrint = $CharacterFontA;
 	if (webERP_in_test()){
 		$TextToPrint .= $NewLine .  $CenteredJustified . "TEST ONLY - THIS IS NOT A VALID " . $KindOfDoc . $NewLine;
@@ -606,7 +606,7 @@ function KLPrintReceiptTestWarning($KindOfDoc){
 }
 
 function KLPrintNameOfShop(){
-	include('includes/ESCPOSCommands.php');
+	include('includes/wcpESCPOSCommands.php');
 	
 	// name of shop
 	if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_KAPAL_LAUT)){
@@ -647,7 +647,7 @@ function KLPrintNameOfShop(){
 
 function KLPrintReceiptHeader($identifier, $OrderNo){
 	
-	include('includes/ESCPOSCommands.php');
+	include('includes/wcpESCPOSCommands.php');
 
 	$TextToPrint = $InitPrinter . $CenteredJustified;
 
@@ -697,7 +697,7 @@ function KLPrintReceiptHeader($identifier, $OrderNo){
 
 function KLPrintReceiptCustomerFooter($identifier, $OrderNo){
 
-	include('includes/ESCPOSCommands.php');
+	include('includes/wcpESCPOSCommands.php');
 	
 	$TextToPrint .= $NewLine;
 
@@ -743,7 +743,7 @@ function KLPrintReceiptCustomerFooter($identifier, $OrderNo){
 
 function KLPrintReceiptShopFooter($identifier, $OrderNo){
 
-	include('includes/ESCPOSCommands.php');
+	include('includes/wcpESCPOSCommands.php');
 
 	// payment descriptions
 	$TextToPrint .= $CharacterFontA. $NewLine;
@@ -872,7 +872,7 @@ function KLPrintReceiptShopFooter($identifier, $OrderNo){
 }
 
 function DoubleJustified($left, $right, $lenght, $fillchar){
-	include('includes/ESCPOSCommands.php');
+	include('includes/wcpESCPOSCommands.php');
 	return str_pad($left, $lenght - strlen($right), $fillchar) . $right . $NewLine;
 }
 

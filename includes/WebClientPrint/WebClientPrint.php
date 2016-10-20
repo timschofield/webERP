@@ -11,8 +11,17 @@ WebClientPrint::$licenseKey = 'C6C5F6CDE8CF3D055C65F9FF24C9550EFA8BEC9B';
 //IMPORTANT SETTINGS:
 //===================
 //Set ABSOLUTE URL to WebClientPrint.php file
-//WebClientPrint::$webClientPrintAbsoluteUrl = Utils::getRoot().'/TEST/weberp/includes/PrintESCPOS/WebClientPrint.php';
-WebClientPrint::$webClientPrintAbsoluteUrl = 'https://www.bumibiru.com/TEST/weberp/includes/PrintESCPOS/WebClientPrint.php';
+$RootPath = dirname(htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'));
+if (isset($DirectoryLevelsDeep)){
+	for ($i=0;$i<$DirectoryLevelsDeep;$i++){
+		$RootPath = mb_substr($RootPath,0, strrpos($RootPath,'/'));
+	}
+}
+if ($RootPath == "/" OR $RootPath == "\\") {
+	$RootPath = "";
+}
+WebClientPrint::$webClientPrintAbsoluteUrl = Utils::getRoot(). $RootPath .'/includes/WebClientPrint/WebClientPrint.php';
+
 //Set wcpcache folder RELATIVE to WebClientPrint.php file
 //FILE WRITE permission on this folder is required!!!
 WebClientPrint::$wcpCacheFolder = 'wcpcache/';

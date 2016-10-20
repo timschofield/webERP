@@ -10,16 +10,9 @@ include ('includes/header.inc');
 include ('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLPointOfSale.php');
-include('includes/ESCPOSCommands.php');
 
-//################## PRINTING STUFF ##################### 
-echo '<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>';
-include 'includes/PrintESCPOS/WebClientPrint.php';
-use Neodynamic\SDK\Web\WebClientPrint;
-//Specify the ABSOLUTE URL to the php file that will create the ClientPrintJob object
-// RICARD: To be improved to remove the hardcoded paths and get just 1 wcpcache folder in all installation
-echo WebClientPrint::createScript('https://www.bumibiru.com/TEST/weberp/PrintPOSFile.php');
-//################## PRINTING STUFF #####################    
+include('includes/wcpESCPOSCommands.php');
+include('includes/wcpInitScript.php');
 
 $today = date('Y-m-d');
 
@@ -176,7 +169,7 @@ if (DB_num_rows($result) != 0){
 }
 
 $identifier=date('U');
-$filename = 'wcpcache/'.$identifier.'.pos';   
+$filename = 'includes/WebClientPrint/wcpcache/'.$identifier.'.pos';   
 file_put_contents($filename, $TextToPrint);
 
 //################## PRINTING STUFF ##################### 
