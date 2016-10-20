@@ -934,7 +934,7 @@ if (isset($StockItemsResult)
 		 				<td>%s</td>
 		 				<td>%s</td>
 		 				<td class="number">%s</td>
-		 				<td><input type="checkbox" name="PlacePO_[]" /></td>
+		 				<td><input type="checkbox" name="PlacePO_[]" value="%s"/></td>
 		 				</tr>',
 		 				$ModifyPage,
 		 				$myrow['orderno'],
@@ -947,9 +947,7 @@ if (isset($StockItemsResult)
 		 				$FormatedDelDate,
 		 				html_entity_decode($myrow['deliverto'],ENT_QUOTES,'UTF-8'),
 		 				$FormatedOrderValue,
-				   $i,
-				   $i,
-				   $myrow['orderno']);
+						$myrow['orderno']);
 				} else {  /*User is not authorised to create POs so don't even show the option */
 					printf('<td><a href="%s">%s</a></td>
 							<td><a href="%s">' . _('Invoice') . '</a></td>
