@@ -60,6 +60,7 @@ if ($ProcessSection01){
 	}
 	
 	if ($KL_SystemAdmin
+		OR $KL_OperationalManager
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_ShopManager
 		OR $KL_SalesDirector){
@@ -98,8 +99,6 @@ if ($ProcessSection01){
 
 		SPGPerformanceByShop("RETAILKS", 30, 60, 90, $db);
 		$NumberOfTestExecuted++;
-	//	SPGPerformanceByShop("RETAILBW", 30, 60, 90, $db);
-	//	$NumberOfTestExecuted++;
 		SPGPerformanceByShop("RETAILPA", 30, 60, 90, $db);
 		$NumberOfTestExecuted++;
 		SPGPerformanceByShop("RETAILPB", 30, 60, 90, $db);
@@ -127,8 +126,6 @@ if ($ProcessSection01){
 		SPGPerformanceByShop("RETAILBU", 30, 60, 90, $db);
 		$NumberOfTestExecuted++;
 
-//		SPGPerformanceByShop("RETAILJC", 30, 60, 90, $db);
-//		$NumberOfTestExecuted++;
 	}
 	
 	if ($KL_SystemAdmin){
@@ -144,6 +141,7 @@ if ($ProcessSection01){
 	}
 
 	if ($KL_SystemAdmin 
+		OR $KL_OperationalManager
 		OR $KL_ShopManager
 		OR $KL_SalesDirector
 		OR $KL_BusinessDevelopmentManager){
@@ -152,6 +150,7 @@ if ($ProcessSection01){
 	}
 
 	if ($KL_SystemAdmin
+		OR $KL_OperationalManager
 		OR $KL_SalesDirector){
 		AverageCustomerBehaviourByValueInvoice("Shop", 90, $db);
 		$NumberOfTestExecuted++;
@@ -161,6 +160,7 @@ if ($ProcessSection01){
 
 	if ($KL_SystemAdmin 
 		OR $KL_ShopManager
+		OR $KL_OperationalManager
 		OR $KL_SalesDirector
 		OR $KL_BusinessDevelopmentManager){
 		GeneralCustomerBehaviour(30, $db);
@@ -257,8 +257,7 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_SystemAdmin
-		OR $KL_OperationalManager){
+	if ($KL_SystemAdmin){
 		PurchasingOrdersDeliveryControl("Delayed", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		PurchasingOrdersDeliveryControl("Coming Soon", 30, $RootPath, $db);
@@ -273,6 +272,7 @@ if ($ProcessSection02){
 //	NumberOfTestExecuted++;
 
 	if ($KL_SystemAdmin 
+		OR $KL_OperationalManager
 		OR $KL_ShopManager
 		OR $KL_SalesDirector
 		OR $KL_BusinessDevelopmentManager){	
