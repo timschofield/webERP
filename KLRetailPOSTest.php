@@ -68,7 +68,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 	$CustomerFooter = KLPrintReceiptCustomerFooter($identifier, $OrderNo);
 	$ShopFooter = KLPrintReceiptShopFooter($identifier, $OrderNo);
 	$Receipt = $HeaderText . $CustomerFooter . $HeaderText . $ShopFooter;
-	$filename = 'wcpcache/'.$identifier.'.pos';   
+	$filename = 'includes/WebClientPrint/wcpcache/'.$identifier.'.pos';   
 	file_put_contents($filename, $Receipt);
 
 	//################## PRINTING STUFF ##################### 
