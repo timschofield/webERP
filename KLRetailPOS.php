@@ -271,76 +271,74 @@ $ExRate = 1;
 			prnMsg( _('The item code') . ' ' . $NewItem . ' ' . _('could not be retrieved from the database'),'warn');
 		} elseif ($myrow=DB_fetch_array($PackagingResult)){
 			if ($myrow['categoryid'] == "SHPACK"){
-				if ($NewItem == "PKBX01-L"){
-					$_POST['PackagingBox01L']++;
+				switch ($NewItem) {
+					case 'PKBX01-L':
+						$_POST['PackagingBox01L']++;
+						break;
+					case 'PKBX01-M':
+						$_POST['PackagingBox01M']++;
+						break;
+					case 'PKBX01-S':
+						$_POST['PackagingBox01S']++;
+						break;
+					case 'PKPB01-L':
+						$_POST['PackagingPouchBag01L']++;
+						break;
+					case 'PKPB01-M':
+						$_POST['PackagingPouchBag01M']++;
+						break;
+					case 'PKPB01-S':
+						$_POST['PackagingPouchBag01S']++;
+						break;
+					case 'PKSB02-L':
+						$_POST['ShoppingBag02L']++;
+						break;
+					case 'PKSB02-M':
+						$_POST['ShoppingBag02M']++;
+						break;
+					case 'PKSB02-S':
+						$_POST['ShoppingBag02S']++;
+						break;
+					case 'PKPB03-L':
+						$_POST['BlinkPouchBag03L']++;
+						break;
+					case 'PKPB03-M':
+						$_POST['BlinkPouchBag03M']++;
+						break;
+					case 'PKPB03-S':
+						$_POST['BlinkPouchBag03S']++;
+						break;
+					case 'PKSB04-XL':
+						$_POST['BlinkShoppingBag04XL']++;
+						break;
+					case 'PKSB04-L':
+						$_POST['BlinkShoppingBag04L']++;
+						break;
+					case 'PKSB04-M':
+						$_POST['BlinkShoppingBag04M']++;
+						break;
+					case 'PKSB04-S':
+						$_POST['BlinkShoppingBag04S']++;
+						break;
+					case 'PKPB02-L':
+						$_POST['OutletPouchBag02L']++;
+						break;
+					case 'PKPB02-M':
+						$_POST['OutletPouchBag02M']++;
+						break;
+					case 'PKPB02-S':
+						$_POST['OutletPouchBag02S']++;
+						break;
+					case 'PKSB03':
+						$_POST['OutletShoppingBag03M']++;
+						break;
 				}
-/*				if (!isset($_POST['PackagingPouchBag01L'])){
-					$_POST['PackagingPouchBag01L']++;
-				}
-				if (!isset($_POST['PackagingBox01M'])){
-					$_POST['PackagingBox01M']++;
-				}
-				if (!isset($_POST['PackagingPouchBag01M'])){
-					$_POST['PackagingPouchBag01M']++;
-				}
-				if (!isset($_POST['PackagingBox01S'])){
-					$_POST['PackagingBox01S']++;
-				}
-				if (!isset($_POST['PackagingPouchBag01S'])){
-					$_POST['PackagingPouchBag01S']++;
-				}
-				if (!isset($_POST['ShoppingBag02S'])){
-					$_POST['ShoppingBag02S']++;
-				}
-				if (!isset($_POST['ShoppingBag02M'])){
-					$_POST['ShoppingBag02M']++;
-				}
-				if (!isset($_POST['ShoppingBag02L'])){
-					$_POST['ShoppingBag02L']++;
-				}
-				// OUTLET Packaging
-				if (!isset($_POST['OutletPouchBag02L'])){
-					$_POST['OutletPouchBag02L']++;
-				}
-				if (!isset($_POST['OutletPouchBag02M'])){
-					$_POST['OutletPouchBag02M']++;
-				}
-				if (!isset($_POST['OutletPouchBag02S'])){
-					$_POST['OutletPouchBag02S']++;
-				}
-				if (!isset($_POST['OutletShoppingBag03M'])){
-					$_POST['OutletShoppingBag03M']++;
-				}
-				// BLINK Packaging
-				if (!isset($_POST['BlinkShoppingBag04XL'])){
-					$_POST['BlinkShoppingBag04XL']++;
-				}
-				if (!isset($_POST['BlinkShoppingBag04L'])){
-					$_POST['BlinkShoppingBag04L']++;
-				}
-				if (!isset($_POST['BlinkShoppingBag04M'])){
-					$_POST['BlinkShoppingBag04M']++;
-				}
-				if (!isset($_POST['BlinkShoppingBag04S'])){
-					$_POST['BlinkShoppingBag04S']++;
-				}
-				if (!isset($_POST['BlinkPouchBag03L'])){
-					$_POST['BlinkPouchBag03L']++;
-				}
-				if (!isset($_POST['BlinkPouchBag03M'])){
-					$_POST['BlinkPouchBag03M']++;
-				}
-				if (!isset($_POST['BlinkPouchBag03S'])){
-					$_POST['BlinkPouchBag03S']++;
-				}
-*/			
 			}else{
 				include('includes/SelectOrderItems_IntoCart.inc');
 				$_SESSION['Items'.$identifier]->GetTaxes(($_SESSION['Items'.$identifier]->LineCounter - 1));
 			}
 		}
 		$i++;
-
 	 }
 	 unset($NewItem);
  } /* end of if quick entry */
