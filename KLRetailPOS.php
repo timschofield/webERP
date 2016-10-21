@@ -240,8 +240,6 @@ $ExRate = 1;
 		$QuickEntryPOLine = 'poline_' . $i;
 		$QuickEntryItemDue = 'ItemDue_' . $i;
 
-		$i++;
-
 		if (isset($_POST[$QuickEntryCode])) {
 			$NewItem = strtoupper($_POST[$QuickEntryCode]);
 		}
@@ -261,22 +259,88 @@ $ExRate = 1;
 			unset($NewItem);
 			break;	/* break out of the loop if nothing in the quick entry fields*/
 		}
-
-		/*Now figure out if the item is a kit set - the field MBFlag='K'*/
-		$sql = "SELECT stockmaster.mbflag, stockmaster.controlled
+		/*Now figure out if the item is shop packaging or not*/
+		$sql = "SELECT stockmaster.categoryid
 						FROM stockmaster
 						WHERE stockmaster.stockid='". $NewItem ."'";
 
-		$ErrMsg = _('Could not determine if the part being ordered was a kitset or not because');
-		$DbgMsg = _('The sql that was used to determine if the part being ordered was a kitset or not was ');
-		$KitResult = DB_query($sql,$ErrMsg,$DbgMsg);
-
-		if (DB_num_rows($KitResult)==0){
-			prnMsg( _('The item code') . ' ' . $NewItem . ' ' . _('could not be retrieved from the database and has not been added to the order'),'warn');
-		} elseif ($myrow=DB_fetch_array($KitResult)){
-			include('includes/SelectOrderItems_IntoCart.inc');
-			$_SESSION['Items'.$identifier]->GetTaxes(($_SESSION['Items'.$identifier]->LineCounter - 1));
+		$ErrMsg = _('Could not determine if the part was shop packaging or not because');
+		$DbgMsg = _('The sql that was used to determine if the part being ordered was shop packaging or not was ');
+		$PackagingResult = DB_query($sql,$ErrMsg,$DbgMsg);
+		if (DB_num_rows($PackagingResult)==0){
+			prnMsg( _('The item code') . ' ' . $NewItem . ' ' . _('could not be retrieved from the database'),'warn');
+		} elseif ($myrow=DB_fetch_array($PackagingResult)){
+			if ($myrow['categoryid'] == "SHPACK"){
+				if ($NewItem == "PKBX01-L"){
+					$_POST['PackagingBox01L']++;
+				}
+/*				if (!isset($_POST['PackagingPouchBag01L'])){
+					$_POST['PackagingPouchBag01L']++;
+				}
+				if (!isset($_POST['PackagingBox01M'])){
+					$_POST['PackagingBox01M']++;
+				}
+				if (!isset($_POST['PackagingPouchBag01M'])){
+					$_POST['PackagingPouchBag01M']++;
+				}
+				if (!isset($_POST['PackagingBox01S'])){
+					$_POST['PackagingBox01S']++;
+				}
+				if (!isset($_POST['PackagingPouchBag01S'])){
+					$_POST['PackagingPouchBag01S']++;
+				}
+				if (!isset($_POST['ShoppingBag02S'])){
+					$_POST['ShoppingBag02S']++;
+				}
+				if (!isset($_POST['ShoppingBag02M'])){
+					$_POST['ShoppingBag02M']++;
+				}
+				if (!isset($_POST['ShoppingBag02L'])){
+					$_POST['ShoppingBag02L']++;
+				}
+				// OUTLET Packaging
+				if (!isset($_POST['OutletPouchBag02L'])){
+					$_POST['OutletPouchBag02L']++;
+				}
+				if (!isset($_POST['OutletPouchBag02M'])){
+					$_POST['OutletPouchBag02M']++;
+				}
+				if (!isset($_POST['OutletPouchBag02S'])){
+					$_POST['OutletPouchBag02S']++;
+				}
+				if (!isset($_POST['OutletShoppingBag03M'])){
+					$_POST['OutletShoppingBag03M']++;
+				}
+				// BLINK Packaging
+				if (!isset($_POST['BlinkShoppingBag04XL'])){
+					$_POST['BlinkShoppingBag04XL']++;
+				}
+				if (!isset($_POST['BlinkShoppingBag04L'])){
+					$_POST['BlinkShoppingBag04L']++;
+				}
+				if (!isset($_POST['BlinkShoppingBag04M'])){
+					$_POST['BlinkShoppingBag04M']++;
+				}
+				if (!isset($_POST['BlinkShoppingBag04S'])){
+					$_POST['BlinkShoppingBag04S']++;
+				}
+				if (!isset($_POST['BlinkPouchBag03L'])){
+					$_POST['BlinkPouchBag03L']++;
+				}
+				if (!isset($_POST['BlinkPouchBag03M'])){
+					$_POST['BlinkPouchBag03M']++;
+				}
+				if (!isset($_POST['BlinkPouchBag03S'])){
+					$_POST['BlinkPouchBag03S']++;
+				}
+*/			
+			}else{
+				include('includes/SelectOrderItems_IntoCart.inc');
+				$_SESSION['Items'.$identifier]->GetTaxes(($_SESSION['Items'.$identifier]->LineCounter - 1));
+			}
 		}
+		$i++;
+
 	 }
 	 unset($NewItem);
  } /* end of if quick entry */
