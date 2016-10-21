@@ -400,49 +400,25 @@ if ((isset($_SESSION['Items'.$identifier])) OR isset($NewItem)) {
 if (isset($_POST['Recalculate'])) {
 	foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
 		$NewItem=$OrderLine->StockID;
-		$sql = "SELECT stockmaster.mbflag, 
-						stockmaster.controlled
-			FROM stockmaster
-			WHERE stockmaster.stockid='". $OrderLine->StockID."'";
-
-		$ErrMsg = _('Could not determine if the part being ordered was a kitset or not because');
-		$DbgMsg = _('The sql that was used to determine if the part being ordered was a kitset or not was ');
-		$KitResult = DB_query($sql,$ErrMsg,$DbgMsg);
-		if ($myrow=DB_fetch_array($KitResult)){
-				$NewItemDue = date($_SESSION['DefaultDateFormat']);
-				$NewPOLine = 0;
-				$_SESSION['Items'.$identifier]->GetTaxes($OrderLine->LineNumber);
-		}
+		$NewItemDue = date($_SESSION['DefaultDateFormat']);
+		$NewPOLine = 0;
+		$_SESSION['Items'.$identifier]->GetTaxes($OrderLine->LineNumber);
 		unset($NewItem);
 	} /* end of if its a new item */
 }
 
 if (isset($NewItem)){
-/* get the item details from the database and hold them in the cart object make the quantity 1 by default then add it to the cart
-Now figure out if the item is a kit set - the field MBFlag='K'
-* controlled items and ghost/phantom items cannot be selected because the SQL to show items to select doesn't show 'em
-* */
-	$sql = "SELECT stockmaster.mbflag,
-					stockmaster.taxcatid
-		FROM stockmaster
-		WHERE stockmaster.stockid='". $NewItem ."'";
-
-	$ErrMsg =  _('Could not determine if the part being ordered was a kitset or not because');
-
-	$KitResult = DB_query($sql,$ErrMsg);
+	/* get the item details from the database and hold them in the cart object make the quantity 1 by default then add it to the cart
+	Now figure out if the item is a kit set - the field MBFlag='K'
+	* controlled items and ghost/phantom items cannot be selected because the SQL to show items to select doesn't show 'em
+	* */
 
 	$NewItemQty = 1; /*By Default */
 	$Discount = 0; /*By default - can change later or discount category override */
-
-	if ($myrow=DB_fetch_array($KitResult)){
-		/*KL suppose Its not a kit set item*/
-		$NewItemDue = date($_SESSION['DefaultDateFormat']);
-		$NewPOLine = 0;
-
-		include('includes/SelectOrderItems_IntoCart.inc');
-		$_SESSION['Items'.$identifier]->GetTaxes(($_SESSION['Items'.$identifier]->LineCounter - 1));
-	} /* end of if its a new item */
-
+	$NewItemDue = date($_SESSION['DefaultDateFormat']);
+	$NewPOLine = 0;
+	include('includes/SelectOrderItems_IntoCart.inc');
+	$_SESSION['Items'.$identifier]->GetTaxes(($_SESSION['Items'.$identifier]->LineCounter - 1));
 } /*end of if its a new item */
 
 if (isset($NewItemArray) and isset($_POST['OrderItems'])){
@@ -450,24 +426,12 @@ if (isset($NewItemArray) and isset($_POST['OrderItems'])){
 /*Now figure out if the item is a kit set - the field MBFlag='K'*/
 	foreach($NewItemArray as $NewItem => $NewItemQty) {
 		if($NewItemQty > 0)	{
-			$sql = "SELECT stockmaster.mbflag
-				FROM stockmaster
-				WHERE stockmaster.stockid='". $NewItem ."'";
-
-			$ErrMsg =  _('Could not determine if the part being ordered was a kitset or not because');
-
-			$KitResult = DB_query($sql,$ErrMsg);
-
 			//$NewItemQty = 1; /*By Default */
 			$Discount = 0; /*By default - can change later or discount category override */
-
-			if ($myrow=DB_fetch_array($KitResult)){
-				/*KL suppose Its not a kit set item*/
-				$NewItemDue = date($_SESSION['DefaultDateFormat']);
-				$NewPOLine = 0;
-				include('includes/SelectOrderItems_IntoCart.inc');
-				$_SESSION['Items'.$identifier]->GetTaxes(($_SESSION['Items'.$identifier]->LineCounter - 1));
-			} /* end of if its a new item */
+			$NewItemDue = date($_SESSION['DefaultDateFormat']);
+			$NewPOLine = 0;
+			include('includes/SelectOrderItems_IntoCart.inc');
+			$_SESSION['Items'.$identifier]->GetTaxes(($_SESSION['Items'.$identifier]->LineCounter - 1));
 		} /*end of if its a new item */
 	}
 }
