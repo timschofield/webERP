@@ -41,7 +41,7 @@ include('includes/KLCountriesForRetail.php');
 
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
-include('includes/KLPointOfSale.php');
+include('includes/KLPOSGeneral.php');
 include('includes/KLEmails.php');
 
 include('includes/wcpInitScript.php');   
@@ -271,6 +271,7 @@ $ExRate = 1;
 			prnMsg( _('The item code') . ' ' . $NewItem . ' ' . _('could not be retrieved from the database'),'warn');
 		} elseif ($myrow=DB_fetch_array($PackagingResult)){
 			if ($myrow['categoryid'] == "SHPACK"){
+				// It's a packaging item
 				switch ($NewItem) {
 					case 'PKBX01-L':
 						$_POST['PackagingBox01L']++;
@@ -334,6 +335,7 @@ $ExRate = 1;
 						break;
 				}
 			}else{
+				// it's not packaging, so a sold item
 				include('includes/SelectOrderItems_IntoCart.inc');
 				$_SESSION['Items'.$identifier]->GetTaxes(($_SESSION['Items'.$identifier]->LineCounter - 1));
 			}
@@ -648,255 +650,17 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 		$_POST['Comments'] ='';
 	}
 
-	echo '<table class="selection">';
-	echo'<tr>';
-	echo'<th colspan=5>' . _('Payment details') . '</th>'; 
-	echo'</tr>';
-
-	echo '<tr>';
-	echo'<th colspan=2>' . _('Cash Payments') . '</th>'; 
-	echo '<td></td>';
-	echo'<th colspan=2>' . _('Credit Card Payments') . '</th>'; 
-	echo '</tr>';
-
-	echo '<tr>';
-	echo '<td>' . _('Amount Paid Cash') . ':</td>
-		  <td><input type="text" class="number" name="AmountPaidCash" maxlength="12" size="12" value="' . $_POST['AmountPaidCash'] . '" /></td>';
-	echo '<td></td>';
-	echo '<td>' . _('Amount Paid CC EDC Danamon') . ':</td>
-		  <td><input type="text" class="number" name="AmountPaidCCDanamon" maxlength="12" size="12" value="' . $_POST['AmountPaidCCDanamon'] . '" /></td>';
-	echo '</tr>';
-
-	echo '<tr>';
-	echo'<th colspan=2>' . _('Returned / Vouchers') . '</th>'; 
-	echo '<td></td>';
-	echo '<td>' . _('Amount Paid CC EDC Mandiri') . ':</td>
-		  <td><input type="text" class="number" name="AmountPaidCCMandiri" maxlength="12" size="12" value="' . $_POST['AmountPaidCCMandiri'] . '" /></td>';
-	echo '</tr>';
-
-	echo '<tr>';
-	echo '<td>' . _('Amount Returned Goods') . ':</td>
-		  <td><input type="text" class="number" name="AmountReturnedGoods" maxlength="12" size="12" value="' . $_POST['AmountReturnedGoods'] . '" /></td>';
-	echo '<td></td>';
-	echo '<td>' . _('Amount Paid CC EDC BCA') . ':</td>
-		  <td><input type="text" class="number" name="AmountPaidCCBCA" maxlength="12" size="12" value="' . $_POST['AmountPaidCCBCA'] . '" /></td>';
-	echo '</tr>';
-
-	echo '<tr>';
-	echo '<td>' . _('Amount Voucher/Discounts') . ':</td>
-		  <td><input type="text" class="number" name="AmountVouchers" maxlength="12" size="12" value="' . $_POST['AmountVouchers'] . '" /></td>';
-	echo '<td></td>';
-	echo '<td>' . _('Amount Paid AMEX EDC BCA') . ':</td>
-		  <td><input type="text" class="number" name="AmountPaidAmexBCA" maxlength="12" size="12" value="' . $_POST['AmountPaidAmexBCA'] . '" /></td>';
-	echo '</tr>';
-
-	echo '<tr>';
-	echo '<td>'. _('Comments') .':</td>
-		  <td colspan= 4><textarea name="Comments" cols="60" rows="3">' . stripcslashes($_SESSION['Items'.$identifier]->Comments) .'</textarea></td>';
-	echo '</tr>';
-
-	echo '</table>';
-
 	/////////////////////////////////////////////////////////////////////
 	//  PACKAGING  / SHOPPING BAGS Table
 	/////////////////////////////////////////////////////////////////////
+	include('includes/KLPOSPackagingTable.php');
+
+	/////////////////////////////////////////////////////////////////////
+	//  PAYMENTS Table
+	////////////////////////////////////////////////////////////////////
+	include('includes/KLPOSPaymentsTable.php');
+
 	
-	// KL Packaging
-	if (!isset($_POST['PackagingBox01L'])){
-		$_POST['PackagingBox01L'] =0;
-	}
-	if (!isset($_POST['PackagingPouchBag01L'])){
-		$_POST['PackagingPouchBag01L'] =0;
-	}
-	if (!isset($_POST['PackagingBox01M'])){
-		$_POST['PackagingBox01M'] =0;
-	}
-	if (!isset($_POST['PackagingPouchBag01M'])){
-		$_POST['PackagingPouchBag01M'] =0;
-	}
-	if (!isset($_POST['PackagingBox01S'])){
-		$_POST['PackagingBox01S'] =0;
-	}
-	if (!isset($_POST['PackagingPouchBag01S'])){
-		$_POST['PackagingPouchBag01S'] =0;
-	}
-	if (!isset($_POST['ShoppingBag02S'])){
-		$_POST['ShoppingBag02S'] =0;
-	}
-	if (!isset($_POST['ShoppingBag02M'])){
-		$_POST['ShoppingBag02M'] =0;
-	}
-	if (!isset($_POST['ShoppingBag02L'])){
-		$_POST['ShoppingBag02L'] =0;
-	}
-	// OUTLET Packaging
-	if (!isset($_POST['OutletPouchBag02L'])){
-		$_POST['OutletPouchBag02L'] =0;
-	}
-	if (!isset($_POST['OutletPouchBag02M'])){
-		$_POST['OutletPouchBag02M'] =0;
-	}
-	if (!isset($_POST['OutletPouchBag02S'])){
-		$_POST['OutletPouchBag02S'] =0;
-	}
-	if (!isset($_POST['OutletShoppingBag03M'])){
-		$_POST['OutletShoppingBag03M'] =0;
-	}
-	// BLINK Packaging
-	if (!isset($_POST['BlinkShoppingBag04XL'])){
-		$_POST['BlinkShoppingBag04XL'] =0;
-	}
-	if (!isset($_POST['BlinkShoppingBag04L'])){
-		$_POST['BlinkShoppingBag04L'] =0;
-	}
-	if (!isset($_POST['BlinkShoppingBag04M'])){
-		$_POST['BlinkShoppingBag04M'] =0;
-	}
-	if (!isset($_POST['BlinkShoppingBag04S'])){
-		$_POST['BlinkShoppingBag04S'] =0;
-	}
-	if (!isset($_POST['BlinkPouchBag03L'])){
-		$_POST['BlinkPouchBag03L'] =0;
-	}
-	if (!isset($_POST['BlinkPouchBag03M'])){
-		$_POST['BlinkPouchBag03M'] =0;
-	}
-	if (!isset($_POST['BlinkPouchBag03S'])){
-		$_POST['BlinkPouchBag03S'] =0;
-	}
-
-	// If the shop is using KAPAL-LAUT packaging, show it!
-	if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_KAPAL_LAUT)){
-		echo '<table class="selection">
-				<tr>
-					<th colspan=8>' . _('Kapal-Laut Packaging & Shopping Bags included in this sale') . '
-					</th>
-				</tr>';
-		
-		echo '<tr>
-			  <td>' . _('KL Box Large') . ':</td>
-			  <td><input type="text" class="number" name="PackagingBox01L" maxlength="3" size="3" value="' . $_POST['PackagingBox01L'] . '" /></td>';
-		echo '<td></td>';
-		echo '<td>' . _('KL Pouch Bag Large') . ':</td>
-			  <td><input type="text" class="number" name="PackagingPouchBag01L" maxlength="3" size="3" value="' . $_POST['PackagingPouchBag01L'] . '" /></td>';
-		echo '<td></td>';
-		echo '<td>' . _('KL Shopping Bag Large') . ':</td>
-			  <td><input type="text" class="number" name="ShoppingBag02L" maxlength="3" size="3" value="' . $_POST['ShoppingBag02L'] . '" /></td></tr>';
-		echo'</tr>';
-
-		echo '<tr>
-			  <td>' . _('KL Box Medium') . ':</td>
-			  <td><input type="text" class="number" name="PackagingBox01M" maxlength="3" size="3" value="' . $_POST['PackagingBox01M'] . '" /></td>';
-		echo '<td></td>';
-		echo '<td>' . _('KL Pouch Bag Medium') . ':</td>
-			  <td><input type="text" class="number" name="PackagingPouchBag01M" maxlength="3" size="3" value="' . $_POST['PackagingPouchBag01M'] . '" /></td>';
-		echo '<td></td>';
-		echo '<td>' . _('KL Shopping Bag Medium') . ':</td>
-			  <td><input type="text" class="number" name="ShoppingBag02M" maxlength="3" size="3" value="' . $_POST['ShoppingBag02M'] . '" /></td>';
-		echo'</tr>';
-		
-		echo '<tr>
-			  <td>' . _('KL Box Small') . ':</td>
-			  <td><input type="text" class="number" name="PackagingBox01S" maxlength="3" size="3" value="' . $_POST['PackagingBox01S'] . '" /></td>';
-		echo '<td></td>';
-		echo '<td>' . _('KL Pouch Bag Small') . ':</td>
-			  <td><input type="text" class="number" name="PackagingPouchBag01S" maxlength="3" size="3" value="' . $_POST['PackagingPouchBag01S'] . '" /></td>';
-		echo '<td></td>';
-		echo '<td>' . _('KL Shopping Bag Small') . ':</td>
-			  <td><input type="text" class="number" name="ShoppingBag02S" maxlength="3" size="3" value="' . $_POST['ShoppingBag02S'] . '" /></td>';
-		echo'</tr>';
-
-		echo '</table>';	//end of column/row/master table
-	}
-
-	// If the shop is using BLINK packaging, show it!
-	if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_BLINK)){
-		echo '<table class="selection">
-				<tr>
-					<th colspan=8>' . _('BLINK Packaging & Shopping Bags included in this sale') . '
-					</th>
-				</tr>';
-		
-		echo '<tr>
-			  <td></td>
-			  <td></td>';
-		echo '<td></td>';
-		echo '<td>' . _('BLINK Pouch Bag Large') . ':</td>
-			  <td><input type="text" class="number" name="BlinkPouchBag03L" maxlength="3" size="3" value="' . $_POST['BlinkPouchBag03L'] . '" /></td>';
-		echo '<td></td>';
-		echo '<td>' . _('BLINK Shopping Bag XL') . ':</td>
-			  <td><input type="text" class="number" name="BlinkShoppingBag04XL" maxlength="3" size="3" value="' . $_POST['BlinkShoppingBag04XL'] . '" /></td></tr>';
-		echo'</tr>';
-
-		echo '<tr>
-			  <td></td>
-			  <td></td>';
-		echo '<td></td>';
-		echo '<td>' . _('BLINK Pouch Bag Medium') . ':</td>
-			  <td><input type="text" class="number" name="BlinkPouchBag03M" maxlength="3" size="3" value="' . $_POST['BlinkPouchBag03M'] . '" /></td>';
-		echo '<td></td>';
-		echo '<td>' . _('BLINK Shopping Bag Medium') . ':</td>
-			  <td><input type="text" class="number" name="BlinkShoppingBag04M" maxlength="3" size="3" value="' . $_POST['BlinkShoppingBag04M'] . '" /></td>';
-		echo'</tr>';
-		
-		echo '<tr>
-			  <td></td>
-			  <td></td>';
-		echo '<td></td>';
-		echo '<td>' . _('BLINK Pouch Bag Small') . ':</td>
-			  <td><input type="text" class="number" name="BlinkPouchBag03S" maxlength="3" size="3" value="' . $_POST['BlinkPouchBag03S'] . '" /></td>';
-		echo '<td></td>';
-		echo '<td>' . _('BLINK Shopping Bag Small') . ':</td>
-			  <td><input type="text" class="number" name="BlinkShoppingBag04S" maxlength="3" size="3" value="' . $_POST['BlinkShoppingBag04S'] . '" /></td>';
-		echo'</tr>';
-
-		echo '</table>';	//end of column/row/master table
-	}
-
-	// If the shop is using OUTLET packaging, show it!
-	if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_OUTLET)){
-		echo '<table class="selection">
-				<tr>
-					<th colspan=8>' . _('OUTLET Packaging & Shopping Bags included in this sale') . '
-					</th>
-				</tr>';
-		
-		echo '<tr>
-			  <td></td>
-			  <td></td>';
-		echo '<td></td>';
-		echo '<td>' . _('OUTLET Pouch Bag Large') . ':</td>
-			  <td><input type="text" class="number" name="OutletPouchBag02L" maxlength="3" size="3" value="' . $_POST['OutletPouchBag02L'] . '" /></td>';
-		echo '<td></td>';
-		echo '<td></td>
-			  <td></td>';
-		echo'</tr>';
-
-		echo '<tr>
-			  <td></td>
-			  <td></td>';
-		echo '<td></td>';
-		echo '<td>' . _('OUTLET Pouch Bag Medium') . ':</td>
-			  <td><input type="text" class="number" name="OutletPouchBag02M" maxlength="3" size="3" value="' . $_POST['OutletPouchBag02M'] . '" /></td>';
-		echo '<td></td>';
-		echo '<td>' . _('OUTLET Shopping Bag') . ':</td>
-			  <td><input type="text" class="number" name="OutletShoppingBag03M" maxlength="3" size="3" value="' . $_POST['OutletShoppingBag03M'] . '" /></td></tr>';
-		echo'</tr>';
-		
-		echo '<tr>
-			  <td></td>
-			  <td></td>';
-		echo '<td></td>';
-		echo '<td>' . _('OUTLET Pouch Bag Small') . ':</td>
-			  <td><input type="text" class="number" name="OutletPouchBag02S" maxlength="3" size="3" value="' . $_POST['OutletPouchBag02S'] . '" /></td>';
-		echo '<td></td>';
-		echo '<td></td>
-			  <td></td>';
-		echo'</tr>';
-
-		echo '</table>';	//end of column/row/master table
-	}
-
 	/////////////////////////////////////////////////
 	// Buttons confirm / recalculate the sale
 	/////////////////////////////////////////////////
