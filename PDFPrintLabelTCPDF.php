@@ -11,7 +11,21 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 
 	$Title = _('Print Labels');
 	include('includes/header.inc');
-
+	
+	if ($_POST['LabelID'] == 'T570'){
+		$SQLPrice = "prices.price, ";
+		$MainWhere = " INNER JOIN prices 
+							ON stockmaster.stockid=prices.stockid
+						WHERE prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
+							AND prices.currabrev = '". CURRENCY_CODE ."'
+							AND prices.startdate<='" . FormatDateForSQL($_POST['EffectiveDate']) . "'
+							AND (prices.enddate='0000-00-00' OR prices.enddate>'" . FormatDateForSQL($_POST['EffectiveDate']) . "')
+							AND prices.debtorno=''";
+	}elseif ($_POST['LabelID'] == 'CodeSticker'){
+		$SQLPrice = "0 AS price, ";
+		$MainWhere = "	WHERE stockmaster.stockid = stockmaster.stockid ";
+	}
+	
 	if ($_POST['Location'] != "None"){
 		$SQLQOH = " (SELECT SUM(quantity)
 					FROM locstock
@@ -74,23 +88,18 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 		$SQLStockCategory = " AND stockmaster.categoryid = '" . $_POST['StockCategory'] . "' ";
 	}
 
-	$SQL = "SELECT prices.stockid,
+	$SQL = "SELECT stockmaster.stockid,
 					stockmaster.description,
 					stockmaster.categoryid,
-					stockmaster.discountcategory,
-					prices.price, "
-					. $SQLQOH .	"
+					stockmaster.discountcategory, " . 
+					$SQLPrice . 
+					$SQLQOH . "
 			FROM stockmaster INNER JOIN	stockcategory
-   			     ON stockmaster.categoryid=stockcategory.categoryid
-			INNER JOIN prices
-				ON stockmaster.stockid=prices.stockid
-			WHERE prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
-				AND prices.currabrev = '". CURRENCY_CODE ."'
-				AND prices.startdate<='" . FormatDateForSQL($_POST['EffectiveDate']) . "'
-				AND (prices.enddate='0000-00-00' OR prices.enddate>'" . FormatDateForSQL($_POST['EffectiveDate']) . "')
-				AND prices.debtorno=''".
+   			     ON stockmaster.categoryid=stockcategory.categoryid ".
+			$MainWhere .
 				$SQLStockCategory.
-				$SQLChange."
+				$SQLChange. "
+				AND stockmaster.discontinued = 0
 			ORDER BY stockmaster.stockid";
 
 	$LabelsResult = DB_query($SQL,'','',false,false);
