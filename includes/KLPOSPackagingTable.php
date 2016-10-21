@@ -4,72 +4,37 @@
 //  PACKAGING  / SHOPPING BAGS Table
 /////////////////////////////////////////////////////////////////////
 
-// KL Packaging
-if (!isset($_POST['PackagingBox01L'])){
-	$_POST['PackagingBox01L'] =0;
-}
-if (!isset($_POST['PackagingPouchBag01L'])){
-	$_POST['PackagingPouchBag01L'] =0;
-}
-if (!isset($_POST['PackagingBox01M'])){
-	$_POST['PackagingBox01M'] =0;
-}
-if (!isset($_POST['PackagingPouchBag01M'])){
-	$_POST['PackagingPouchBag01M'] =0;
-}
-if (!isset($_POST['PackagingBox01S'])){
-	$_POST['PackagingBox01S'] =0;
-}
-if (!isset($_POST['PackagingPouchBag01S'])){
-	$_POST['PackagingPouchBag01S'] =0;
-}
-if (!isset($_POST['ShoppingBag02S'])){
-	$_POST['ShoppingBag02S'] =0;
-}
-if (!isset($_POST['ShoppingBag02M'])){
-	$_POST['ShoppingBag02M'] =0;
-}
-if (!isset($_POST['ShoppingBag02L'])){
-	$_POST['ShoppingBag02L'] =0;
-}
-// OUTLET Packaging
-if (!isset($_POST['OutletPouchBag02L'])){
-	$_POST['OutletPouchBag02L'] =0;
-}
-if (!isset($_POST['OutletPouchBag02M'])){
-	$_POST['OutletPouchBag02M'] =0;
-}
-if (!isset($_POST['OutletPouchBag02S'])){
-	$_POST['OutletPouchBag02S'] =0;
-}
-if (!isset($_POST['OutletShoppingBag03M'])){
-	$_POST['OutletShoppingBag03M'] =0;
-}
-// BLINK Packaging
-if (!isset($_POST['BlinkShoppingBag04XL'])){
-	$_POST['BlinkShoppingBag04XL'] =0;
-}
-if (!isset($_POST['BlinkShoppingBag04L'])){
-	$_POST['BlinkShoppingBag04L'] =0;
-}
-if (!isset($_POST['BlinkShoppingBag04M'])){
-	$_POST['BlinkShoppingBag04M'] =0;
-}
-if (!isset($_POST['BlinkShoppingBag04S'])){
-	$_POST['BlinkShoppingBag04S'] =0;
-}
-if (!isset($_POST['BlinkPouchBag03L'])){
-	$_POST['BlinkPouchBag03L'] =0;
-}
-if (!isset($_POST['BlinkPouchBag03M'])){
-	$_POST['BlinkPouchBag03M'] =0;
-}
-if (!isset($_POST['BlinkPouchBag03S'])){
-	$_POST['BlinkPouchBag03S'] =0;
-}
 
 // If the shop is using KAPAL-LAUT packaging, show it!
 if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_KAPAL_LAUT)){
+
+	if (!isset($_POST['PackagingBox01L'])){
+		$_POST['PackagingBox01L'] =0;
+	}
+	if (!isset($_POST['PackagingPouchBag01L'])){
+		$_POST['PackagingPouchBag01L'] =0;
+	}
+	if (!isset($_POST['PackagingBox01M'])){
+		$_POST['PackagingBox01M'] =0;
+	}
+	if (!isset($_POST['PackagingPouchBag01M'])){
+		$_POST['PackagingPouchBag01M'] =0;
+	}
+	if (!isset($_POST['PackagingBox01S'])){
+		$_POST['PackagingBox01S'] =0;
+	}
+	if (!isset($_POST['PackagingPouchBag01S'])){
+		$_POST['PackagingPouchBag01S'] =0;
+	}
+	if (!isset($_POST['ShoppingBag02S'])){
+		$_POST['ShoppingBag02S'] =0;
+	}
+	if (!isset($_POST['ShoppingBag02M'])){
+		$_POST['ShoppingBag02M'] =0;
+	}
+	if (!isset($_POST['ShoppingBag02L'])){
+		$_POST['ShoppingBag02L'] =0;
+	}
 	echo '<table class="selection">
 			<tr>
 				<th colspan=8>' . _('Kapal-Laut Packaging & Shopping Bags included in this sale') . '
@@ -114,6 +79,28 @@ if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_KAPAL_LAUT)){
 
 // If the shop is using BLINK packaging, show it!
 if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_BLINK)){
+
+	if (!isset($_POST['BlinkShoppingBag04XL'])){
+		$_POST['BlinkShoppingBag04XL'] =0;
+	}
+	if (!isset($_POST['BlinkShoppingBag04L'])){
+		$_POST['BlinkShoppingBag04L'] =0;
+	}
+	if (!isset($_POST['BlinkShoppingBag04M'])){
+		$_POST['BlinkShoppingBag04M'] =0;
+	}
+	if (!isset($_POST['BlinkShoppingBag04S'])){
+		$_POST['BlinkShoppingBag04S'] =0;
+	}
+	if (!isset($_POST['BlinkPouchBag03L'])){
+		$_POST['BlinkPouchBag03L'] =0;
+	}
+	if (!isset($_POST['BlinkPouchBag03M'])){
+		$_POST['BlinkPouchBag03M'] =0;
+	}
+	if (!isset($_POST['BlinkPouchBag03S'])){
+		$_POST['BlinkPouchBag03S'] =0;
+	}
 	echo '<table class="selection">
 			<tr>
 				<th colspan=8>' . _('BLINK Packaging & Shopping Bags included in this sale') . '
@@ -158,6 +145,19 @@ if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_BLINK)){
 
 // If the shop is using OUTLET packaging, show it!
 if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_OUTLET)){
+
+	if (!isset($_POST['OutletPouchBag02L'])){
+		$_POST['OutletPouchBag02L'] =0;
+	}
+	if (!isset($_POST['OutletPouchBag02M'])){
+		$_POST['OutletPouchBag02M'] =0;
+	}
+	if (!isset($_POST['OutletPouchBag02S'])){
+		$_POST['OutletPouchBag02S'] =0;
+	}
+	if (!isset($_POST['OutletShoppingBag03M'])){
+		$_POST['OutletShoppingBag03M'] =0;
+	}
 	echo '<table class="selection">
 			<tr>
 				<th colspan=8>' . _('OUTLET Packaging & Shopping Bags included in this sale') . '

@@ -21,7 +21,6 @@ include('includes/KLEmails.php');
 
 include('includes/wcpInitScript.php');  
 
-
 if (isset($_POST['CancelOrder'])) {
 	echo '<br /><br /><a href="' .$_SERVER['PHP_SELF'] . '">' . _('Start a new Retail Sale') . '</a>';
 	include('includes/footer.inc');

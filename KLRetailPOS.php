@@ -46,7 +46,6 @@ include('includes/KLEmails.php');
 
 include('includes/wcpInitScript.php');   
 
- 
 if (empty($_GET['identifier'])) {
 	$identifier=date('U');
 } else {
@@ -210,7 +209,7 @@ if (isset($_POST['CancelOrder'])) {
 } else { /*Not cancelling the order */
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Retail Sales') . '" alt="" />' . ' ';
-	echo _('Retail Sale') . ' - ' . $_SESSION['Items'.$identifier]->LocationName . ' (' . _('all amounts in') . ' ' . $_SESSION['Items'.$identifier]->DefaultCurrency . ')';
+	echo _('Retail Sale') . $_SESSION['Items'.$identifier]->LocationName . ' (' . _('all amounts in') . ' ' . $_SESSION['Items'.$identifier]->DefaultCurrency . ')';
 	echo '</p>';
 }
 
@@ -511,155 +510,9 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 //   T H I S   W H E R E   T H E   S A L E  I S   D I S P L A Y E D
 // *************************************************************************
 */
-
-	echo '<br />
-		<table width="90%" cellpadding="2" colspan="7">
-		<tr bgcolor="#800000">';
-
-	echo '<th>' . _('Item Code') . '</th>
-		  <th>' . _('Item Description') . '</th>
-		  <th>' . _('Quantity') . '</th>
-		  <th>' . _('QOH') . '</th>
-		  <th>' . _('Unit') . '</th>
-		  <th>' . _('Price') . '</th>
-		  <th>' . _('Discount') . '</th>
-		  <th>' . _('Total') . '</th>
-		  </tr>';
-		  
-	$_SESSION['Items'.$identifier]->total = 0;
-	$_SESSION['Items'.$identifier]->totalVolume = 0;
-	$_SESSION['Items'.$identifier]->totalWeight = 0;
-	$TaxTotals = array();
-	$TaxGLCodes = array();
-	$TaxTotal =0;
-	$k =0;  //row colour counter
-	foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
-
-		$SubTotal = $OrderLine->Quantity * $OrderLine->Price * (1 - $OrderLine->DiscountPercent);
-		$QtyOrdered = $OrderLine->Quantity;
-		$QtyRemain = $QtyOrdered - $OrderLine->QtyInv;
-
-		if ($OrderLine->QOHatLoc < $OrderLine->Quantity AND ($OrderLine->MBflag=='B' OR $OrderLine->MBflag=='M')) {
-			/*There is a stock deficiency in the stock location selected */
-			$RowStarter = '<tr bgcolor="#EEAABB">';
-		} elseif ($k==1){
-			$RowStarter = '<tr class="OddTableRows">';
-			$k=0;
-		} else {
-			$RowStarter = '<tr class="EvenTableRows">';
-			$k=1;
-		}
-
-		echo $RowStarter;
-		echo '<input type="hidden" name="POLine_' .	 $OrderLine->LineNumber . '" value="" />';
-		echo '<input type="hidden" name="ItemDue_' .	 $OrderLine->LineNumber . '" value="'.$OrderLine->ItemDue.'" />';
-
-		echo '<td>' . $OrderLine->StockID . '</td>
-			<td>' . $OrderLine->ItemDescription . '</td>';
-
-		echo '<td><input class="number" tabindex="2" type="text" name="Quantity_' . $OrderLine->LineNumber . '" size="6" maxlength="6" value="' . $OrderLine->Quantity . '" />';
-
-		echo '</td>
-			<td class="number">' . $OrderLine->QOHatLoc . '</td>
-			<td>' . $OrderLine->Units . '</td>';
-
-		echo '<input type="hidden" name="Price_' .	 $OrderLine->LineNumber . '" value="' . $OrderLine->Price . '" />';
-		echo '<input type="hidden" name="Discount_' .	 $OrderLine->LineNumber . '" value="' . ($OrderLine->DiscountPercent * 100) . '" />';
-		echo '<input type="hidden" name="GPPercent_' .	 $OrderLine->LineNumber . '" value="' . $OrderLine->GPPercent . '" />';
-
-		echo '<td class="number">' . number_format($OrderLine->Price,0) . '</td>';
-		echo '<td class="number">' . number_format($OrderLine->DiscountPercent *100,0) . '</td>';
-
-		$LineDueDate = $OrderLine->ItemDue;
-		if (!Is_Date($OrderLine->ItemDue)){
-			$LineDueDate = date($_SESSION['DefaultDateFormat']);
-			$_SESSION['Items'.$identifier]->LineItems[$OrderLine->LineNumber]->ItemDue= $LineDueDate;
-		}
-		$i=0; // initialise the number of taxes iterated through
-		$TaxLineTotal =0; //initialise tax total for the line
-
-		foreach ($OrderLine->Taxes AS $Tax) {
-			if (empty($TaxTotals[$Tax->TaxAuthID])) {
-				$TaxTotals[$Tax->TaxAuthID]=0;
-			}
-			if ($Tax->TaxOnTax ==1){
-				$TaxTotals[$Tax->TaxAuthID] += ($Tax->TaxRate * ($SubTotal + $TaxLineTotal));
-				$TaxLineTotal += ($Tax->TaxRate * ($SubTotal + $TaxLineTotal));
-			} else {
-				$TaxTotals[$Tax->TaxAuthID] += ($Tax->TaxRate * $SubTotal);
-				$TaxLineTotal += ($Tax->TaxRate * $SubTotal);
-			}
-			$TaxGLCodes[$Tax->TaxAuthID] = $Tax->TaxGLCode;
-		}
-
-		$TaxTotal += $TaxLineTotal;
-		$_SESSION['Items'.$identifier]->TaxTotals=$TaxTotals;
-		$_SESSION['Items'.$identifier]->TaxGLCodes=$TaxGLCodes;
-		echo '<td class="number">' . number_format($SubTotal + $TaxLineTotal ,0) . '</td>';
-		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID .'&amp;identifier='.$identifier . '&amp;Delete=' . $OrderLine->LineNumber . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">' . _('Delete') . '</a></td></tr>';
-
-		if ($_SESSION['AllowOrderLineItemNarrative'] == 1){
-			echo $RowStarter;
-			echo '<td valign="top" colspan="11">' . _('Narrative') . ':<textarea name="Narrative_' . $OrderLine->LineNumber . '" cols="100" rows="1">' . stripslashes(AddCarriageReturns($OrderLine->Narrative)) . '</textarea><br /></td></tr>';
-		} else {
-			echo '<input type="hidden" name="Narrative" value="" />';
-		}
-
-		$_SESSION['Items'.$identifier]->total = $_SESSION['Items'.$identifier]->total + $SubTotal;
-		$_SESSION['Items'.$identifier]->totalVolume = $_SESSION['Items'.$identifier]->totalVolume + $OrderLine->Quantity * $OrderLine->Volume;
-		$_SESSION['Items'.$identifier]->totalWeight = $_SESSION['Items'.$identifier]->totalWeight + $OrderLine->Quantity * $OrderLine->Weight;
-
-	} /* end of loop around items */
-
-	echo '<tr class="TotalTableRows">
-				<td colspan="6" class="numberTotal"><b>' . _('Total') . '</b></td>
-				<td colspan="2" class="numberTotal">' . number_format(($_SESSION['Items'.$identifier]->total+$TaxTotal),0) . '</td>
-						</tr>
-		</table>';
-	echo '<input type="hidden" name="TaxTotal" value="'.$TaxTotal.'" />';
-
-	/////////////////////////////////////////////////////////////////////
-	//  PAYMENT DETAILS Table
-	/////////////////////////////////////////////////////////////////////
-
-	if (!isset($_POST['CustRef'])){
-		$_POST['CustRef'] ='';
-	}
-	if (!isset($_POST['AmountPaidCash'])){
-		$_POST['AmountPaidCash'] =0;
-	}
-	if (!isset($_POST['AmountPaidCCDanamon'])){
-		$_POST['AmountPaidCCDanamon'] =0;
-	}
-	if (!isset($_POST['AmountPaidAmexBCA'])){
-		$_POST['AmountPaidAmexBCA'] =0;
-	}
-	if (!isset($_POST['AmountPaidCCMandiri'])){
-		$_POST['AmountPaidCCMandiri'] =0;
-	}
-	if (!isset($_POST['AmountPaidCCBCA'])){
-		$_POST['AmountPaidCCBCA'] =0;
-	}
-	if (!isset($_POST['AmountReturnedGoods'])){
-		$_POST['AmountReturnedGoods'] =0;
-	}
-	if (!isset($_POST['AmountVouchers'])){
-		$_POST['AmountVouchers'] =0;
-	}
-	if (!isset($_POST['Comments'])){
-		$_POST['Comments'] ='';
-	}
-
-	/////////////////////////////////////////////////////////////////////
-	//  PACKAGING  / SHOPPING BAGS Table
-	/////////////////////////////////////////////////////////////////////
+	include('includes/KLPOSItemsTable.php');
 	include('includes/KLPOSPackagingTable.php');
-
-	/////////////////////////////////////////////////////////////////////
-	//  PAYMENTS Table
-	////////////////////////////////////////////////////////////////////
 	include('includes/KLPOSPaymentsTable.php');
-
 	
 	/////////////////////////////////////////////////
 	// Buttons confirm / recalculate the sale
@@ -1631,7 +1484,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 		echo '<table class="selection">
 				<tr>
-					<th colspan=2>' . _('Retail Sale Reported') . '
+					<th colspan=2>' . _('Retail Sale Reported to DataBase') . '
 					</th>
 				</tr>';
 		
@@ -1795,7 +1648,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 /* Now show the stock item selection search stuff below */
 if (!isset($_POST['ProcessSale'])){
 
-	echo '<div class="page_help_text"><b>' . _('Add the item codes and quantities sold of each') . '</b></div><br />
+	echo '<div class="page_help_text"><b>' . _('Scan the price tag of the items purchased and packaging used') . '</b></div><br />
 				<table border="1">
 				<tr>';
 		/*do not display colum unless customer requires po line number by sales order line*/
