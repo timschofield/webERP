@@ -95,102 +95,33 @@ if (!isset($_SESSION['Items'.$identifier])){
 	set to 1. The delivery check screen is where the details of the order are either updated or
 	inserted depending on the value of ExistingOrder */
 
-	unset($_SESSION['ShopAddress1']);
-	unset($_SESSION['ShopAddress2']);
-	unset($_SESSION['ShopAddress3']);
-	unset($_SESSION['ShopAddress4']);
-	unset($_SESSION['ShopAddress5']);
-	unset($_SESSION['klposcashaccount']);
-	unset($_SESSION['klpostag']);
-
 	$_SESSION['ExistingOrder'] = 0;
 	$_SESSION['PrintedPackingSlip'] = 0; 
+
 	$_SESSION['Items'.$identifier] = new cart;
 	$_SESSION['Items'.$identifier]->DeliverTo = '';
 	$_SESSION['Items'.$identifier]->ShipVia = 1; // Hand Carried
-	
-	/*Get the default customer-branch combo from the user's default location record */
-	$sql = "SELECT 	locations.cashsalecustomer,
-					locations.cashsalebranch,
-					locations.locationname,
-					locations.deladd1,
-					locations.deladd2,
-					locations.deladd3,
-					locations.deladd4,
-					locations.deladd5,
-					locations.klposcashaccount,
-					locations.klpostag,
-					locations.taxprovinceid,
-					debtorsmaster.name,
-					debtorsmaster.salestype,
-					debtorsmaster.currcode,
-					debtorsmaster.customerpoline,
-					custbranch.brname,
-					custbranch.braddress1,
-					custbranch.specialinstructions,
-					custbranch.salesman,
-					custbranch.taxgroupid,
-					holdreasons.dissallowinvoices,
-					salestypes.sales_type,
-					paymentterms.terms
-			 FROM locations,
-					debtorsmaster,
-					holdreasons,
-					salestypes,
-					paymentterms,
-					custbranch
-			 WHERE debtorsmaster.salestype=salestypes.typeabbrev
-				AND debtorsmaster.holdreason=holdreasons.reasoncode
-				AND debtorsmaster.paymentterms=paymentterms.termsindicator
-				AND debtorsmaster.debtorno = locations.cashsalecustomer
-				AND custbranch.debtorno = locations.cashsalecustomer
-				AND custbranch.branchcode = locations.cashsalebranch
-				AND loccode='" . $_SESSION['UserStockLocation'] ."'";
+	/* The following variables have been set in session.inc, so we only need to access DB once per SPG session, not every retail sale */
+	$_SESSION['Items'.$identifier]->Branch = $_SESSION['cashsalebranch'];
+	$_SESSION['Items'.$identifier]->DebtorNo = $_SESSION['cashsalecustomer'];
+	$_SESSION['Items'.$identifier]->LocationName = $_SESSION['locationname'];
+	$_SESSION['Items'.$identifier]->Location = $_SESSION['UserStockLocation'];
+	$_SESSION['Items'.$identifier]->DispatchTaxProvince = $_SESSION['taxprovinceid'];
+	$_SESSION['Items'.$identifier]->CustomerName = $_SESSION['customername'];
+	$_SESSION['Items'.$identifier]->DefaultSalesType = $_SESSION['salestype'];
+	$_SESSION['Items'.$identifier]->SalesTypeName = $_SESSION['sales_type'];
+	$_SESSION['Items'.$identifier]->DefaultCurrency = $_SESSION['currcode'];
+	$_SESSION['Items'.$identifier]->DefaultPOLine = $_SESSION['customerpoline'];
+	$_SESSION['Items'.$identifier]->PaymentTerms = $_SESSION['terms'];
+	$_SESSION['Items'.$identifier]->DelAdd1 = $_SESSION['braddress1'];
+	$_SESSION['Items'.$identifier]->SpecialInstructions = $_SESSION['specialinstructions'];
+	$_SESSION['Items'.$identifier]->TaxGroup = $_SESSION['taxgroupid'];
 
-	$result = DB_query($sql);
-	if (DB_num_rows($result)==0) {
-		prnMsg(_('Your SPG user account is not linked to any valid shop. Please contact Kantor IT inmediately.'),'error');
-		include('includes/footer.inc');
-		exit;
-	} else {
-		$myrow = DB_fetch_array($result); //get the only row returned
-
-		if ($myrow['cashsalecustomer']=='' OR $myrow['cashsalebranch']==''){
-			prnMsg(_('To use this script it is first necessary to define a cash sales customer for the location that is your default location. The default cash sale customer is defined under set up ->Inventory Locations Maintenance. The customer should be entered using the customer code and a valid branch code of the customer entered.'),'error');
-			include('includes/footer.inc');
-			exit;
-		}
-
-		$_SESSION['Items'.$identifier]->Branch = $myrow['cashsalebranch'];
-		$_SESSION['Items'.$identifier]->DebtorNo = $myrow['cashsalecustomer'];
-		$_SESSION['Items'.$identifier]->LocationName = $myrow['locationname'];
-		$_SESSION['Items'.$identifier]->Location = $_SESSION['UserStockLocation'];
-		$_SESSION['Items'.$identifier]->DispatchTaxProvince = $myrow['taxprovinceid'];
-		$_SESSION['ShopAddress1'] = $myrow['deladd1'];
-		$_SESSION['ShopAddress2'] = $myrow['deladd2'];
-		$_SESSION['ShopAddress3'] = $myrow['deladd3'];
-		$_SESSION['ShopAddress4'] = $myrow['deladd4'];
-		$_SESSION['ShopAddress5'] = $myrow['deladd5'];
-		$_SESSION['klposcashaccount'] = $myrow['klposcashaccount'];
-		$_SESSION['klpostag'] = $myrow['klpostag'];
-
-		$_SESSION['Items'.$identifier]->CustomerName = $myrow['name'];
-		// the sales type is the price list to be used for this sale
-		$_SESSION['Items'.$identifier]->DefaultSalesType = $myrow['salestype'];
-		$_SESSION['Items'.$identifier]->SalesTypeName = $myrow['sales_type'];
-		$_SESSION['Items'.$identifier]->DefaultCurrency = $myrow['currcode'];
-		$_SESSION['Items'.$identifier]->DefaultPOLine = $myrow['customerpoline'];
-		$_SESSION['Items'.$identifier]->PaymentTerms = $myrow['terms'];
-		$_SESSION['Items'.$identifier]->DelAdd1 = $myrow['braddress1'];
-		$_SESSION['Items'.$identifier]->SpecialInstructions = $myrow['specialinstructions'];
-		$_SESSION['Items'.$identifier]->TaxGroup = $myrow['taxgroupid'];
-
-		if ($_SESSION['Items'.$identifier]->SpecialInstructions) {
-			prnMsg($_SESSION['Items'.$identifier]->SpecialInstructions,'warn');
-		}
-		echo '<br />';
-
+	if ($_SESSION['Items'.$identifier]->SpecialInstructions) {
+		prnMsg($_SESSION['Items'.$identifier]->SpecialInstructions,'warn');
 	}
+	echo '<br />';
+
 } // end if its a new sale to be set up ...
 
 if (isset($_POST['CancelOrder'])) {
