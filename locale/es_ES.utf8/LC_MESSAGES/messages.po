@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-05-16 21:31+1200\n"
-"PO-Revision-Date: 2016-10-07 12:41-0600\n"
+"PO-Revision-Date: 2016-10-23 13:23-0600\n"
 "Last-Translator: Rafael E. Chacón <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -5698,7 +5698,7 @@ msgstr ""
 
 #: ConfirmDispatch_Invoice.php:1453
 msgid "accumulated depreciation disposal"
-msgstr ""
+msgstr "eliminación de la depreciación acumulada"
 
 #: ConfirmDispatch_Invoice.php:1456
 msgid ""
@@ -5710,13 +5710,15 @@ msgstr ""
 
 #: ConfirmDispatch_Invoice.php:1475
 msgid "cost disposal"
-msgstr ""
+msgstr "eliminación de costos"
 
 #: ConfirmDispatch_Invoice.php:1478
 msgid ""
 "The reversal of asset cost on disposal GL posting could not be inserted "
 "because"
 msgstr ""
+"La reversión del costo de los activos mediante el asiento contable de "
+"eliminación no pudo insertarse porque"
 
 #: ConfirmDispatch_Invoice.php:1497
 msgid "net book value disposal"
@@ -36474,7 +36476,7 @@ msgstr ""
 
 #: SystemParameters.php:477
 msgid "Show Settled Last Month"
-msgstr "Mostrar Conformes del Mes"
+msgstr "Mostrar liquidado del mes pasado"
 
 #: SystemParameters.php:482
 msgid ""
@@ -36485,10 +36487,10 @@ msgid ""
 "allocated"
 msgstr ""
 "Esta opción se refiere al formato de los estados de cuenta del cliente. "
-"Seleccione Sí para que se muestren las facturas y las notas de crédito que "
-"han sido pagadas y conformes durante el mes en curso. Seleccione No para "
-"mostrar sólo las facturas pendientes, notas de crédito y pagos que no han "
-"sido consignados."
+"Seleccione Si para mostrar las facturas y las notas de crédito que han sido "
+"pagadas y liquidadas durante el mes en curso. Seleccione No para mostrar "
+"sólo las facturas pendientes, y notas de crédito y pagos que no han sido "
+"consignados."
 
 #: SystemParameters.php:485
 msgid "Romalpa Clause"
@@ -36583,7 +36585,8 @@ msgstr ""
 #: SystemParameters.php:541
 msgid "A picking note must be produced before an order can be delivered"
 msgstr ""
-"Debe producirse una nota de Recolección para que una orden pueda despacharse"
+"Se debe producir una nota de recolección para que un pedido pueda ser "
+"entregado"
 
 #: SystemParameters.php:546
 msgid ""
@@ -36628,7 +36631,7 @@ msgstr "Especifique la fuente para los tipos de cambio"
 
 #: SystemParameters.php:566
 msgid "Format of Packing Slips"
-msgstr "Formato de las Hojas de Embalaje"
+msgstr "Formato de los albaranes (notas de entrega)"
 
 #: SystemParameters.php:568
 msgid "Laser Printed"
@@ -36640,7 +36643,8 @@ msgstr "Impreso Especial de Imprenta"
 
 #: SystemParameters.php:571
 msgid "Choose the format that packing notes should be printed by default"
-msgstr "Elija el formato predeterminado al imprimir hojas de embalaje."
+msgstr ""
+"Elija el formato predeterminado al imprimir albaranes (notas de entrega)"
 
 #: SystemParameters.php:575
 msgid "Invoice Orientation"
@@ -36654,7 +36658,7 @@ msgstr ""
 
 #: SystemParameters.php:584
 msgid "Invoice Quantity Default"
-msgstr ""
+msgstr "Cantidad predeterminada en la factura"
 
 #: SystemParameters.php:586
 msgid "0"
@@ -36708,7 +36712,7 @@ msgstr "Cantidad de días laborales en una semana"
 
 #: SystemParameters.php:614
 msgid "Dispatch Cut-Off Time"
-msgstr "No Despachar después de esta hora"
+msgstr "Hora de cierre de los despachos"
 
 #: SystemParameters.php:619
 msgid ""
@@ -36854,7 +36858,7 @@ msgstr ""
 
 #: SystemParameters.php:730
 msgid "Tax Authority Reference Name"
-msgstr "Nombre de Referencia de la Autoridad Fiscal"
+msgstr "Nombre de la referencia de la autoridad fiscal"
 
 #: SystemParameters.php:732
 msgid ""
@@ -36886,7 +36890,7 @@ msgstr "Cantidad de decimales que se usarán en el costo estándar"
 
 #: SystemParameters.php:754
 msgid "Number Of Periods Of StockUsage"
-msgstr "Número de Períodos de Uso de Existencias"
+msgstr "Cantidad de períodos de uso de inventario"
 
 #: SystemParameters.php:758
 msgid ""
@@ -36970,7 +36974,7 @@ msgstr ""
 
 #: SystemParameters.php:796
 msgid "Purchase Order Allows Same Item Multiple Times"
-msgstr "La Orden de Compra permite el mismo Artículo muchas veces"
+msgstr "La orden de compra permite el mismo artículo varias veces"
 
 #: SystemParameters.php:800
 msgid ""
@@ -37047,7 +37051,7 @@ msgstr "Diciembre"
 
 #: SystemParameters.php:826
 msgid "Financial Year Ends On"
-msgstr "El Ejercicio termina en"
+msgstr "El año contable concluye en"
 
 #: SystemParameters.php:831
 msgid ""
@@ -37059,7 +37063,7 @@ msgstr ""
 
 #: SystemParameters.php:834
 msgid "Report Page Length"
-msgstr "Longitud de la Página del Informe"
+msgstr "Longitud de la página del informe"
 
 #: SystemParameters.php:835 SystemParameters.php:859
 msgid "The input should be between 1 and 999"
@@ -37177,7 +37181,7 @@ msgstr ""
 
 #: SystemParameters.php:952
 msgid "Perform Database Maintenance At Logon"
-msgstr "Ejecutar Mantenimiento de la BD al Iniciar Sesión"
+msgstr "Realizar el mantenimiento de la base de datos al iniciar sesión"
 
 #: SystemParameters.php:970 SystemParameters.php:972
 msgid "Never"
@@ -37300,7 +37304,7 @@ msgstr ""
 
 #: SystemParameters.php:1037
 msgid "Prohibit GL Journals to Control Accounts"
-msgstr "Prohibir a los Diarios Contables Controlar las Cuentas"
+msgstr "Prohibir a los diarios contables el controlar las cuentas"
 
 #: SystemParameters.php:1040 SystemParameters.php:1043
 msgid "Prohibited"
@@ -37322,7 +37326,7 @@ msgstr ""
 
 #: SystemParameters.php:1050
 msgid "Prohibit GL Journals to Periods Prior To"
-msgstr "Prohibir a los Diarios Contables a Períodos Anteriores a"
+msgstr "Prohibir a los diarios contables los períodos anteriores a"
 
 #: SystemParameters.php:1067
 msgid ""
@@ -37336,15 +37340,15 @@ msgstr ""
 
 #: SystemParameters.php:1070
 msgid "Inventory Costing Method"
-msgstr "Método de Cálculo del Costo del Inventario"
+msgstr "Método de costeo del inventario"
 
 #: SystemParameters.php:1074 SystemParameters.php:1078
 msgid "Weighted Average Costing"
-msgstr "Costo Medio Ponderado"
+msgstr "Costo promedio ponderado"
 
 #: SystemParameters.php:1075 SystemParameters.php:1077
 msgid "Standard Costing"
-msgstr "Costo Estándar"
+msgstr "Costo estándar"
 
 #: SystemParameters.php:1081
 msgid ""
@@ -46158,7 +46162,7 @@ msgstr "Informe de diferencias en entrega de pedidos"
 
 #: includes/MainMenuLinksArray.php:65
 msgid "Sales Order Detail Or Summary Inquiries"
-msgstr "Consultar Detalles/Sumario de Pedidos de Venta"
+msgstr "Consultas detalladas o resumidas de órdenes de venta"
 
 #: includes/MainMenuLinksArray.php:67
 msgid "Top Customers Inquiry"
@@ -46279,7 +46283,7 @@ msgstr "Seleccione un embarque"
 
 #: includes/MainMenuLinksArray.php:192
 msgid "Purchase Order Detail Or Summary Inquiries"
-msgstr "Consultar Detalle ó Sumario de Órdenes de Compra"
+msgstr "Consultas detalladas o resumidas de órdenes de compra"
 
 #: includes/MainMenuLinksArray.php:199
 msgid "Maintain Supplier Price Lists"
@@ -46460,7 +46464,7 @@ msgstr "Resultados de pruebas de control de calidad históricas"
 
 #: includes/MainMenuLinksArray.php:315
 msgid "Multiple Work Orders Total Cost Inquiry"
-msgstr ""
+msgstr "Consulta de costo total de varias ordenes de trabajo"
 
 #: includes/MainMenuLinksArray.php:337
 msgid "Bills Of Material"
@@ -46468,7 +46472,7 @@ msgstr "Listas de materiales"
 
 #: includes/MainMenuLinksArray.php:338
 msgid "Copy a Bill Of Materials Between Items"
-msgstr "Copiar una Lista de Materiales entre Artículos"
+msgstr "Copiar una lista de materiales entre artículos"
 
 #: includes/MainMenuLinksArray.php:339
 msgid "Master Schedule"
