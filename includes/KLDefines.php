@@ -121,6 +121,7 @@ define("TRANSFER_LIST_DAYS_FOR_SPG", 7);
 
 define("PAYMENT_BY_CASH", 2); 
 define("PAYMENT_BY_CREDITCARD", 3); 
+define("PERCENTAGE_PPN", 10); // %PPN
 define("PERCENTAGE_SALES_CASH_TO_PT", 10.5); // % of cash transactions going to PT cash acccounts
 define("PERCENTAGE_COMPENSATION_HPP_PT", 110.0); // % of HPP to be assigned to PT sales. 100 means NO compensation.
 define("ACCOUNT_COMPENSATION_HPP_PT", "510010050"); 

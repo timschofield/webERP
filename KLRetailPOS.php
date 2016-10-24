@@ -234,7 +234,7 @@ $ExRate = 1;
 	$Discount = 0;
 
 	$i=1;
-	while ($i<=LENGHT_OF_LIST_OF_CODES_RETAIL_SHOP_SALES and isset($_POST['part_' . $i]) and $_POST['part_' . $i]!='') {
+	while ($i<= 1 and isset($_POST['part_' . $i]) and $_POST['part_' . $i]!='') {
 		$QuickEntryCode = 'part_' . $i;
 		$QuickEntryQty = 'qty_' . $i;
 		$QuickEntryPOLine = 'poline_' . $i;
@@ -2044,7 +2044,7 @@ if (!isset($_POST['ProcessSale'])){
 		echo '<input type="hidden" name="Comments" value="'.$_SESSION['Items'.$identifier]->Comments.'" />';
 	}
 	$DefaultQuantityInput = 1;
-	for ($i=1;$i<=LENGHT_OF_LIST_OF_CODES_RETAIL_SHOP_SALES;$i++){
+	for ($i=1;$i<=1;$i++){
 
 		echo '<tr class="OddTableRow">';
 		/* Do not display column unless customer requires po line number by sales order line*/

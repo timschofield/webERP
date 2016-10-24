@@ -673,6 +673,33 @@ function KLPrintReceiptHeader($identifier, $OrderNo){
 		$Total = $Total + $SubTotal;
 
 		$CodeSide = $OrderLine->Quantity . " " . $OrderLine->StockID;
+
+		if (isRing($OrderLine->StockID)){
+			$CodeSide .= " " . "Ring";
+		}elseif (isToeRing($OrderLine->StockID)){
+			$CodeSide .= " " . "Toe Ring";
+		}elseif (isBead($OrderLine->StockID)){
+			$CodeSide .= " " . "Beads";
+		}elseif (isBrooche($OrderLine->StockID)){
+			$CodeSide .= " " . "Brooche";
+		}elseif (isEarring($OrderLine->StockID)  OR isEarcuff($OrderLine->StockID)) {
+			$CodeSide .= " " . "Earrings";
+		}elseif (isBracelet($OrderLine->StockID)){
+			$CodeSide .= " " . "Bracelet";
+		}elseif (isAnklet($OrderLine->StockID)){
+			$CodeSide .= " " . "Anklet";
+		}elseif (isPendant($OrderLine->StockID)){
+			$CodeSide .= " " . "Pendant";
+		}elseif (isNecklace($OrderLine->StockID)){
+			$CodeSide .= " " . "Necklace";
+		}elseif (isFoulard($OrderLine->StockID)){
+			$CodeSide .= " " . "Foulard";
+		}elseif (isBag($OrderLine->StockID) OR isPlasticBag($OrderLine->StockID)){
+			$CodeSide .= " " . "Bag";
+		}elseif (isTali($OrderLine->StockID)){
+			$CodeSide .= " " . "Cord";
+		}
+
 		if(($OrderLine->Quantity > 1) OR ($OrderLine->DiscountPercent != 0)){
 			$CodeSide .= " @ " . number_format($OrderLine->Price);
 		}
@@ -684,7 +711,7 @@ function KLPrintReceiptHeader($identifier, $OrderNo){
 		$TextToPrint .=  DoubleJustified($CodeSide, $SubTotalSide, $LineLenghtCharA, " ");
 	}
 
-	$Goods = $Total / 1.1;
+	$Goods = $Total / ((100 + PERCENTAGE_PPN) / 100);
 	$PPN = $Total-$Goods;
 	
 	$TextToPrint .= $NewLine . $NewLine . $RightJustified . $EmphasizedDoubleHeightDoubleWidth;
@@ -734,7 +761,6 @@ function KLPrintReceiptCustomerFooter($identifier, $OrderNo){
 
 	$TextToPrint .= $NewLine;
 	$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth . $CenteredJustified . "CUSTOMER COPY" . $NewLine;
-	$TextToPrint .= $NewLine;
 	$TextToPrint .= $CutPaper;
 	
 	return $TextToPrint;
@@ -864,7 +890,6 @@ function KLPrintReceiptShopFooter($identifier, $OrderNo){
 	
 	$TextToPrint .= $NewLine;
 	$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth . $CenteredJustified . "SHOP COPY" . $NewLine;
-	$TextToPrint .= $NewLine;
 	$TextToPrint .= $CutPaper;
 	
 	return $TextToPrint;

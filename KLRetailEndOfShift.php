@@ -143,7 +143,6 @@ if (DB_num_rows($result) != 0){
 	$TextToPrint .= 'Total: ' . number_format($Total) . $NewLine;
 	// warning if it is a TEST
 	$TextToPrint .= KLPrintReceiptTestWarning("END OF SHIFT"). $NewLine . $LeftJustified;
-	$TextToPrint .= $NewLine;
 	$TextToPrint .= $CutPaper;
 	
 	printf('<td class="number">%s</td>

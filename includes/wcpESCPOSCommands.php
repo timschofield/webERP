@@ -4,7 +4,7 @@
 	
 	$esc = '0x1B'; //ESC byte in hex notation
 	$NewLine = '0x0A'; //LF byte in hex notation
-	$CutPaper = $NewLine. '0x1D0x560x410x00' . $NewLine;
+	$CutPaper = $NewLine. $NewLine. $NewLine. '0x1D0x560x410x00';
 	$InitPrinter = $esc . "@"; //Initializes the printer (ESC @)
 	$Emphasized = $esc . '!' . '0x08'; //Emphasized 
 	$DoubleHeight = $esc . '!' . '0x10'; //Emphasized 
