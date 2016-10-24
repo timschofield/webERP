@@ -164,7 +164,7 @@ $ExRate = 1;
 	$Discount = 0;
 
 	$i=1;
-	while ($i<= 1 and isset($_POST['part_' . $i]) and $_POST['part_' . $i]!='') {
+	if (isset($_POST['part_' . $i]) and $_POST['part_' . $i]!='') {
 		$QuickEntryCode = 'part_' . $i;
 		$QuickEntryQty = 'qty_' . $i;
 		$QuickEntryPOLine = 'poline_' . $i;
@@ -1556,15 +1556,14 @@ if (!isset($_POST['ProcessSale'])){
 		echo '<input type="hidden" name="Comments" value="'.$_SESSION['Items'.$identifier]->Comments.'" />';
 	}
 	$DefaultQuantityInput = 1;
-	for ($i=1;$i<=1;$i++){
+	$i=1;
+	echo '<tr class="OddTableRow">';
+	/* Do not display column unless customer requires po line number by sales order line*/
+	echo '<td><input type="text" name="part_' . $i . '" size="21" maxlength="20" /></td>
+			<td><input type="text" class="number" name="qty_' . $i . '" size="6" maxlength="6"value="' . $DefaultQuantityInput . '" /></td>
+				<input type="hidden" class="date" name="ItemDue_' . $i . '"value="' . $DefaultDeliveryDate . '" /></tr>';
 
-		echo '<tr class="OddTableRow">';
-		/* Do not display column unless customer requires po line number by sales order line*/
-		echo '<td><input type="text" name="part_' . $i . '" size="21" maxlength="20" /></td>
-				<td><input type="text" class="number" name="qty_' . $i . '" size="6" maxlength="6"value="' . $DefaultQuantityInput . '" /></td>
-					<input type="hidden" class="date" name="ItemDue_' . $i . '"value="' . $DefaultDeliveryDate . '" /></tr>';
-	}
-	echo '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.part_1);}</script>';
+				echo '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.part_1);}</script>';
 
 	echo '</table><br /><div class="centre"><input type="submit" name="QuickEntry" value="' . _('Entry Codes') . '" />
 				 </div>';

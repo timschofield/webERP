@@ -98,7 +98,7 @@ or deletion of the records*/
 			LEFT JOIN klretailcustomers
 				ON salesorders.orderno = klretailcustomers.orderno
 			WHERE salesorders.salesperson ='".$_SESSION['SalesmanLogin']."'
-				AND salesorders.orddate >=DATE_SUB(CURDATE(), INTERVAL 1 DAY)
+				AND salesorders.orddate >=CURDATE()
 			ORDER BY salesorders.orddate DESC";
 	$result = DB_query($sql);
 

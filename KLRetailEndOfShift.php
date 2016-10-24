@@ -24,7 +24,7 @@ $TextToPrint .= $EmphasizedDoubleHeightDoubleWidth . 'SPG END OF SHIFT REPORT' .
 $TextToPrint .= KLPrintReceiptTestWarning("END OF SHIFT"). $NewLine . $CenteredJustified;
 $TextToPrint .= DisplayDateTime() . $NewLine;
 $TextToPrint .= 'SPG Code: ' . $_SESSION['SalesmanLogin'] . $NewLine;
-$TextToPrint .= 'Shop Code: ' . $_SESSION['UserStockLocation'] . $NewLine;
+$TextToPrint .= 'Shop Code: ' . substr($_SESSION['UserStockLocation'],3,2) . $NewLine;
 $TextToPrint .=  $NewLine . $NewLine;
 
 $SQL = "SELECT salesorders.orderno,
