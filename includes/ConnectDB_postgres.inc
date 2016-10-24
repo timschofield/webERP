@@ -1,6 +1,6 @@
 <?php
-
 /* $Id$ */
+/* Database abstraction for postgres */
 
 define ('LIKE','ILIKE');
 /* $PgConnStr = $PgConnStr = "host=".$host." dbname=".$_SESSION['DatabaseName']; */
@@ -84,8 +84,8 @@ function DB_fetch_assoc (&$ResultIndex) {
 	Return $RowPointer;
 }
 
-function DB_fetch_array (&$ResultIndex) {
-	$RowPointer=pg_fetch_array($ResultIndex);
+function DB_fetch_array(&$ResultIndex) {
+	$RowPointer = pg_fetch_array($ResultIndex);
 	Return $RowPointer;
 }
 

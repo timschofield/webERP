@@ -1,6 +1,6 @@
 <?php
-
 /* $Id$ */
+/* Database abstraction for mysql */
 
 define ('LIKE','LIKE');
 
@@ -122,9 +122,8 @@ function DB_fetch_assoc (&$ResultIndex) {
 	Return $RowPointer;
 }
 
-function DB_fetch_array (&$ResultIndex) {
-
-	$RowPointer=mysql_fetch_array($ResultIndex);
+function DB_fetch_array(&$ResultIndex) {
+	$RowPointer = mysql_fetch_array($ResultIndex);
 	Return $RowPointer;
 }
 

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-05-16 21:31+1200\n"
-"PO-Revision-Date: 2016-10-23 13:23-0600\n"
+"PO-Revision-Date: 2016-10-23 13:47-0600\n"
 "Last-Translator: Rafael E. Chacón <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -36535,7 +36535,7 @@ msgstr ""
 
 #: SystemParameters.php:500
 msgid "Sales Order Allows Same Item Multiple Times"
-msgstr "La Orden de Venta permite el mismo Artículo muchas veces"
+msgstr "La orden de venta permite el mismo artículo varias veces"
 
 #: SystemParameters.php:508
 msgid "Order Entry allows Line Item Narrative"
@@ -36843,6 +36843,8 @@ msgid ""
 "Set to Automatic - Supplier codes are automatically created - as a "
 "sequential number"
 msgstr ""
+"Establecida en automático - los códigos de proveedores se crean "
+"automáticamente - como un número secuencial"
 
 #: SystemParameters.php:714
 msgid "Could not load tax categories table"
@@ -36942,7 +36944,7 @@ msgstr "Proporción de Sobre Cargo Permitida"
 
 #: SystemParameters.php:787 SystemParameters.php:792
 msgid "The input must between 0 and 100"
-msgstr ""
+msgstr "La entrada debe ser entre 0 y 100"
 
 #: SystemParameters.php:787
 msgid "integer between 0 and 100"
@@ -37125,7 +37127,7 @@ msgstr "No se pudo cargar el Número de Meses a Mostrar"
 
 #: SystemParameters.php:872
 msgid "Number Of Month Must Be Shown"
-msgstr "El número de mes se debe demostrar"
+msgstr "Cantidad de meses a mostrar"
 
 #: SystemParameters.php:873
 msgid "input must be positive integer"
@@ -37136,8 +37138,8 @@ msgid ""
 "Number of month must be shown on report can be changed with this parameters "
 "ex: in CustomerInquiry.php "
 msgstr ""
-"La cantidad de meses a mostrar por omisión en el informe se puede cambiar "
-"con este parámetro. E.g. en CustomerInquiry.php"
+"La cantidad de meses a mostrar en un informe se puede cambiar con este "
+"parámetro. E.g. en CustomerInquiry.php"
 
 #: SystemParameters.php:878
 msgid "The directory where images are stored"
