@@ -40,7 +40,7 @@ include('includes/KLCountriesForRetail.php');
 
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
-include('includes/KLPointOfSale.php');
+include('includes/KLPOSGeneral.php');
 include('includes/KLEmails.php');
 
  

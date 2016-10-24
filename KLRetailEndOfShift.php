@@ -9,7 +9,7 @@ $Title = _('SPG End Of Shift Report '. VERSIONFILE);
 include ('includes/header.inc');
 include ('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
-include('includes/KLPointOfSale.php');
+include('includes/KLPOSGeneral.php');
 
 include('includes/wcpESCPOSCommands.php');
 include('includes/wcpInitScript.php');

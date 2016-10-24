@@ -1,6 +1,6 @@
 <?php
 
-include('includes/KLPointOfSale.php');
+include('includes/KLPOSGeneral.php');
 
 //################## PRINTING STUFF #####################
 include 'includes/WebClientPrint/WebClientPrint.php';

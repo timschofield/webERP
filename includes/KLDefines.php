@@ -125,14 +125,13 @@ define("PERCENTAGE_PPN", 10); // %PPN
 define("PERCENTAGE_SALES_CASH_TO_PT", 10.5); // % of cash transactions going to PT cash acccounts
 define("PERCENTAGE_COMPENSATION_HPP_PT", 110.0); // % of HPP to be assigned to PT sales. 100 means NO compensation.
 define("ACCOUNT_COMPENSATION_HPP_PT", "510010050"); 
-define("ACCOUNT_HUTANG_PPH23", "611012005PT"); // number of account for retention PPH23
+define("ACCOUNT_HUTANG_PPH23", "611012005PT"); // GL account for retention of PPH23 in Petty cash
 
 define("COMISSION_CC_DANAMON",     1.80); // % of Credit card comission paid to Danamon
 define("COMISSION_AMEX_DANAMON",   3.00); // % of Credit card comission paid to American Express by Danamon
 define("COMISSION_CC_MANDIRI",     1.80); // % of Credit card comission paid to Mandiri
 define("COMISSION_CC_BCA",         1.80); // % of Credit card comission paid to BCA
 define("COMISSION_AMEX_BCA",       3.00); // % of Credit card comission paid to American Express by BCA
-
 
 define("ACCOUNT_BANK_DANAMON_IDR", "111121105PT"); // number of account for Bank Danamon IDR
 define("ACCOUNT_BANK_MANDIRI_IDR", "111121101PT"); // number of account for Bank Mandiri IDR
@@ -168,7 +167,7 @@ define('STANDARD_FOULARD_VOLUME',  0.0010);
 define('STANDARD_BROOCHE_VOLUME',  0.0004);
 
 /* Defines about website sales categories */
-define("CATEGORIES_AVAILABLE_WEBSITE", "('TESTKL','TESTBL','TESTGE','STABKL','STABBL','STABGE','NOPOKL','NOPOBL','NOPOGE','DISC20','DISC50','CONSIG')");
+define("CATEGORIES_AVAILABLE_WEBSITE", "('TESTKL','TESTBL','TESTGE','STABKL','STABBL','STABGE','NOPOKL','NOPOBL','NOPOGE','DISC20','DISC50')");
 define('FEATURED_IN_WEBSITE_AS_TOP_SALES',20);
 
 define('ITEM_EXCLUDED_FROM_WEBSITE',-9999);

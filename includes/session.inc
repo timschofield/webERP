@@ -234,14 +234,86 @@ if (in_array($_SESSION['PageSecurityArray']['WWW_Users.php'], $_SESSION['Allowed
 	$debug = 0; //don't allow debug messages
 }
 
-// KL RICARD: Commented as KL does not need Dashboard, already have all KL Boards 
-//if ($FirstLogin AND !$SupplierLogin AND !$CustomerLogin AND $_SESSION['ShowDashboard']==1) {
-//	header('Location: ' . $PathPrefix .'Dashboard.php');
-//}
-// END KL RICARD Mod
+/* KL RICARD If it's an SPG logging in, charge all info in _SESSION to avoid the same SQL for every retail sale.*/
+include('includes/KLRoles.inc');
+if ($KL_SPG OR $KL_SPGSupport){
+	/*Get the default customer-branch combo from the user's default location record */
+	$sql = "SELECT 	locations.cashsalecustomer,
+					locations.cashsalebranch,
+					locations.locationname,
+					locations.deladd1,
+					locations.deladd2,
+					locations.deladd3,
+					locations.deladd4,
+					locations.deladd5,
+					locations.klposcashaccount,
+					locations.klpostag,
+					locations.taxprovinceid,
+					debtorsmaster.name,
+					debtorsmaster.salestype,
+					debtorsmaster.currcode,
+					debtorsmaster.customerpoline,
+					custbranch.brname,
+					custbranch.braddress1,
+					custbranch.specialinstructions,
+					custbranch.salesman,
+					custbranch.taxgroupid,
+					holdreasons.dissallowinvoices,
+					salestypes.sales_type,
+					paymentterms.terms
+			 FROM locations,
+					debtorsmaster,
+					holdreasons,
+					salestypes,
+					paymentterms,
+					custbranch
+			 WHERE debtorsmaster.salestype=salestypes.typeabbrev
+				AND debtorsmaster.holdreason=holdreasons.reasoncode
+				AND debtorsmaster.paymentterms=paymentterms.termsindicator
+				AND debtorsmaster.debtorno = locations.cashsalecustomer
+				AND custbranch.debtorno = locations.cashsalecustomer
+				AND custbranch.branchcode = locations.cashsalebranch
+				AND loccode='" . $_SESSION['UserStockLocation'] ."'";
 
+	$result = DB_query($sql);
+	if (DB_num_rows($result)==0) {
+		prnMsg(_('Your SPG user account is not linked to any valid shop. Please contact Kantor IT inmediately.'),'error');
+		include('includes/footer.inc');
+		exit;
+	} else {
+		$myrow = DB_fetch_array($result); //get the only row returned
 
-//if ($FirstLogin AND !$SupplierLogin AND !$CustomerLogin) {
+		if ($myrow['cashsalecustomer']=='' OR $myrow['cashsalebranch']==''){
+			prnMsg(_('To use this script it is first necessary to define a cash sales customer for the location that is your default location. The default cash sale customer is defined under set up ->Inventory Locations Maintenance. The customer should be entered using the customer code and a valid branch code of the customer entered.'),'error');
+			include('includes/footer.inc');
+			exit;
+		}
+
+		$_SESSION['ShopAddress1'] = $myrow['deladd1'];
+		$_SESSION['ShopAddress2'] = $myrow['deladd2'];
+		$_SESSION['ShopAddress3'] = $myrow['deladd3'];
+		$_SESSION['ShopAddress4'] = $myrow['deladd4'];
+		$_SESSION['ShopAddress5'] = $myrow['deladd5'];
+		$_SESSION['klposcashaccount'] = $myrow['klposcashaccount'];
+		$_SESSION['klpostag'] = $myrow['klpostag'];
+
+		$_SESSION['cashsalebranch'] = $myrow['cashsalebranch'];
+		$_SESSION['cashsalecustomer'] = $myrow['cashsalecustomer'];
+		$_SESSION['locationname'] = $myrow['locationname'];
+		$_SESSION['taxprovinceid'] = $myrow['taxprovinceid'];
+		$_SESSION['customername'] = $myrow['name'];
+		$_SESSION['salestype'] = $myrow['salestype'];
+		$_SESSION['sales_type'] = $myrow['sales_type'];
+		$_SESSION['currcode'] = $myrow['currcode'];
+		$_SESSION['terms'] = $myrow['terms'];
+		$_SESSION['braddress1'] = $myrow['braddress1'];
+		$_SESSION['specialinstructions'] = $myrow['specialinstructions'];
+		$_SESSION['taxgroupid'] = $myrow['taxgroupid'];
+		$_SESSION['ShopAddress1'] = $myrow['deladd1'];
+		$_SESSION['ShopAddress1'] = $myrow['deladd1'];
+	}
+}
+/* END KL RICARD */
 
 function CryptPass( $Password ) {
     if (PHP_VERSION_ID < 50500) {

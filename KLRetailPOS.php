@@ -41,12 +41,11 @@ include('includes/KLCountriesForRetail.php');
 
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
-include('includes/KLPointOfSale.php');
+include('includes/KLPOSGeneral.php');
 include('includes/KLEmails.php');
 
 include('includes/wcpInitScript.php');   
 
- 
 if (empty($_GET['identifier'])) {
 	$identifier=date('U');
 } else {
@@ -96,102 +95,33 @@ if (!isset($_SESSION['Items'.$identifier])){
 	set to 1. The delivery check screen is where the details of the order are either updated or
 	inserted depending on the value of ExistingOrder */
 
-	unset($_SESSION['ShopAddress1']);
-	unset($_SESSION['ShopAddress2']);
-	unset($_SESSION['ShopAddress3']);
-	unset($_SESSION['ShopAddress4']);
-	unset($_SESSION['ShopAddress5']);
-	unset($_SESSION['klposcashaccount']);
-	unset($_SESSION['klpostag']);
-
 	$_SESSION['ExistingOrder'] = 0;
 	$_SESSION['PrintedPackingSlip'] = 0; 
+
 	$_SESSION['Items'.$identifier] = new cart;
 	$_SESSION['Items'.$identifier]->DeliverTo = '';
 	$_SESSION['Items'.$identifier]->ShipVia = 1; // Hand Carried
-	
-	/*Get the default customer-branch combo from the user's default location record */
-	$sql = "SELECT 	locations.cashsalecustomer,
-					locations.cashsalebranch,
-					locations.locationname,
-					locations.deladd1,
-					locations.deladd2,
-					locations.deladd3,
-					locations.deladd4,
-					locations.deladd5,
-					locations.klposcashaccount,
-					locations.klpostag,
-					locations.taxprovinceid,
-					debtorsmaster.name,
-					debtorsmaster.salestype,
-					debtorsmaster.currcode,
-					debtorsmaster.customerpoline,
-					custbranch.brname,
-					custbranch.braddress1,
-					custbranch.specialinstructions,
-					custbranch.salesman,
-					custbranch.taxgroupid,
-					holdreasons.dissallowinvoices,
-					salestypes.sales_type,
-					paymentterms.terms
-			 FROM locations,
-					debtorsmaster,
-					holdreasons,
-					salestypes,
-					paymentterms,
-					custbranch
-			 WHERE debtorsmaster.salestype=salestypes.typeabbrev
-				AND debtorsmaster.holdreason=holdreasons.reasoncode
-				AND debtorsmaster.paymentterms=paymentterms.termsindicator
-				AND debtorsmaster.debtorno = locations.cashsalecustomer
-				AND custbranch.debtorno = locations.cashsalecustomer
-				AND custbranch.branchcode = locations.cashsalebranch
-				AND loccode='" . $_SESSION['UserStockLocation'] ."'";
+	/* The following variables have been set in session.inc, so we only need to access DB once per SPG session, not every retail sale */
+	$_SESSION['Items'.$identifier]->Branch = $_SESSION['cashsalebranch'];
+	$_SESSION['Items'.$identifier]->DebtorNo = $_SESSION['cashsalecustomer'];
+	$_SESSION['Items'.$identifier]->LocationName = $_SESSION['locationname'];
+	$_SESSION['Items'.$identifier]->Location = $_SESSION['UserStockLocation'];
+	$_SESSION['Items'.$identifier]->DispatchTaxProvince = $_SESSION['taxprovinceid'];
+	$_SESSION['Items'.$identifier]->CustomerName = $_SESSION['customername'];
+	$_SESSION['Items'.$identifier]->DefaultSalesType = $_SESSION['salestype'];
+	$_SESSION['Items'.$identifier]->SalesTypeName = $_SESSION['sales_type'];
+	$_SESSION['Items'.$identifier]->DefaultCurrency = $_SESSION['currcode'];
+	$_SESSION['Items'.$identifier]->DefaultPOLine = $_SESSION['customerpoline'];
+	$_SESSION['Items'.$identifier]->PaymentTerms = $_SESSION['terms'];
+	$_SESSION['Items'.$identifier]->DelAdd1 = $_SESSION['braddress1'];
+	$_SESSION['Items'.$identifier]->SpecialInstructions = $_SESSION['specialinstructions'];
+	$_SESSION['Items'.$identifier]->TaxGroup = $_SESSION['taxgroupid'];
 
-	$result = DB_query($sql);
-	if (DB_num_rows($result)==0) {
-		prnMsg(_('Your SPG user account is not linked to any valid shop. Please contact Kantor IT inmediately.'),'error');
-		include('includes/footer.inc');
-		exit;
-	} else {
-		$myrow = DB_fetch_array($result); //get the only row returned
-
-		if ($myrow['cashsalecustomer']=='' OR $myrow['cashsalebranch']==''){
-			prnMsg(_('To use this script it is first necessary to define a cash sales customer for the location that is your default location. The default cash sale customer is defined under set up ->Inventory Locations Maintenance. The customer should be entered using the customer code and a valid branch code of the customer entered.'),'error');
-			include('includes/footer.inc');
-			exit;
-		}
-
-		$_SESSION['Items'.$identifier]->Branch = $myrow['cashsalebranch'];
-		$_SESSION['Items'.$identifier]->DebtorNo = $myrow['cashsalecustomer'];
-		$_SESSION['Items'.$identifier]->LocationName = $myrow['locationname'];
-		$_SESSION['Items'.$identifier]->Location = $_SESSION['UserStockLocation'];
-		$_SESSION['Items'.$identifier]->DispatchTaxProvince = $myrow['taxprovinceid'];
-		$_SESSION['ShopAddress1'] = $myrow['deladd1'];
-		$_SESSION['ShopAddress2'] = $myrow['deladd2'];
-		$_SESSION['ShopAddress3'] = $myrow['deladd3'];
-		$_SESSION['ShopAddress4'] = $myrow['deladd4'];
-		$_SESSION['ShopAddress5'] = $myrow['deladd5'];
-		$_SESSION['klposcashaccount'] = $myrow['klposcashaccount'];
-		$_SESSION['klpostag'] = $myrow['klpostag'];
-
-		$_SESSION['Items'.$identifier]->CustomerName = $myrow['name'];
-		// the sales type is the price list to be used for this sale
-		$_SESSION['Items'.$identifier]->DefaultSalesType = $myrow['salestype'];
-		$_SESSION['Items'.$identifier]->SalesTypeName = $myrow['sales_type'];
-		$_SESSION['Items'.$identifier]->DefaultCurrency = $myrow['currcode'];
-		$_SESSION['Items'.$identifier]->DefaultPOLine = $myrow['customerpoline'];
-		$_SESSION['Items'.$identifier]->PaymentTerms = $myrow['terms'];
-		$_SESSION['Items'.$identifier]->DelAdd1 = $myrow['braddress1'];
-		$_SESSION['Items'.$identifier]->SpecialInstructions = $myrow['specialinstructions'];
-		$_SESSION['Items'.$identifier]->TaxGroup = $myrow['taxgroupid'];
-
-		if ($_SESSION['Items'.$identifier]->SpecialInstructions) {
-			prnMsg($_SESSION['Items'.$identifier]->SpecialInstructions,'warn');
-		}
-		echo '<br />';
-
+	if ($_SESSION['Items'.$identifier]->SpecialInstructions) {
+		prnMsg($_SESSION['Items'.$identifier]->SpecialInstructions,'warn');
 	}
+	echo '<br />';
+
 } // end if its a new sale to be set up ...
 
 if (isset($_POST['CancelOrder'])) {
@@ -210,7 +140,7 @@ if (isset($_POST['CancelOrder'])) {
 } else { /*Not cancelling the order */
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Retail Sales') . '" alt="" />' . ' ';
-	echo _('Retail Sale') . ' - ' . $_SESSION['Items'.$identifier]->LocationName . ' (' . _('all amounts in') . ' ' . $_SESSION['Items'.$identifier]->DefaultCurrency . ')';
+	echo _('Retail Sale') . $_SESSION['Items'.$identifier]->LocationName . ' (' . _('all amounts in') . ' ' . $_SESSION['Items'.$identifier]->DefaultCurrency . ')';
 	echo '</p>';
 }
 
@@ -271,6 +201,7 @@ $ExRate = 1;
 			prnMsg( _('The item code') . ' ' . $NewItem . ' ' . _('could not be retrieved from the database'),'warn');
 		} elseif ($myrow=DB_fetch_array($PackagingResult)){
 			if ($myrow['categoryid'] == "SHPACK"){
+				// It's a packaging item
 				switch ($NewItem) {
 					case 'PKBX01-L':
 						$_POST['PackagingBox01L']++;
@@ -334,6 +265,7 @@ $ExRate = 1;
 						break;
 				}
 			}else{
+				// it's not packaging, so a sold item
 				include('includes/SelectOrderItems_IntoCart.inc');
 				$_SESSION['Items'.$identifier]->GetTaxes(($_SESSION['Items'.$identifier]->LineCounter - 1));
 			}
@@ -399,49 +331,25 @@ if ((isset($_SESSION['Items'.$identifier])) OR isset($NewItem)) {
 if (isset($_POST['Recalculate'])) {
 	foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
 		$NewItem=$OrderLine->StockID;
-		$sql = "SELECT stockmaster.mbflag, 
-						stockmaster.controlled
-			FROM stockmaster
-			WHERE stockmaster.stockid='". $OrderLine->StockID."'";
-
-		$ErrMsg = _('Could not determine if the part being ordered was a kitset or not because');
-		$DbgMsg = _('The sql that was used to determine if the part being ordered was a kitset or not was ');
-		$KitResult = DB_query($sql,$ErrMsg,$DbgMsg);
-		if ($myrow=DB_fetch_array($KitResult)){
-				$NewItemDue = date($_SESSION['DefaultDateFormat']);
-				$NewPOLine = 0;
-				$_SESSION['Items'.$identifier]->GetTaxes($OrderLine->LineNumber);
-		}
+		$NewItemDue = date($_SESSION['DefaultDateFormat']);
+		$NewPOLine = 0;
+		$_SESSION['Items'.$identifier]->GetTaxes($OrderLine->LineNumber);
 		unset($NewItem);
 	} /* end of if its a new item */
 }
 
 if (isset($NewItem)){
-/* get the item details from the database and hold them in the cart object make the quantity 1 by default then add it to the cart
-Now figure out if the item is a kit set - the field MBFlag='K'
-* controlled items and ghost/phantom items cannot be selected because the SQL to show items to select doesn't show 'em
-* */
-	$sql = "SELECT stockmaster.mbflag,
-					stockmaster.taxcatid
-		FROM stockmaster
-		WHERE stockmaster.stockid='". $NewItem ."'";
-
-	$ErrMsg =  _('Could not determine if the part being ordered was a kitset or not because');
-
-	$KitResult = DB_query($sql,$ErrMsg);
+	/* get the item details from the database and hold them in the cart object make the quantity 1 by default then add it to the cart
+	Now figure out if the item is a kit set - the field MBFlag='K'
+	* controlled items and ghost/phantom items cannot be selected because the SQL to show items to select doesn't show 'em
+	* */
 
 	$NewItemQty = 1; /*By Default */
 	$Discount = 0; /*By default - can change later or discount category override */
-
-	if ($myrow=DB_fetch_array($KitResult)){
-		/*KL suppose Its not a kit set item*/
-		$NewItemDue = date($_SESSION['DefaultDateFormat']);
-		$NewPOLine = 0;
-
-		include('includes/SelectOrderItems_IntoCart.inc');
-		$_SESSION['Items'.$identifier]->GetTaxes(($_SESSION['Items'.$identifier]->LineCounter - 1));
-	} /* end of if its a new item */
-
+	$NewItemDue = date($_SESSION['DefaultDateFormat']);
+	$NewPOLine = 0;
+	include('includes/SelectOrderItems_IntoCart.inc');
+	$_SESSION['Items'.$identifier]->GetTaxes(($_SESSION['Items'.$identifier]->LineCounter - 1));
 } /*end of if its a new item */
 
 if (isset($NewItemArray) and isset($_POST['OrderItems'])){
@@ -449,24 +357,12 @@ if (isset($NewItemArray) and isset($_POST['OrderItems'])){
 /*Now figure out if the item is a kit set - the field MBFlag='K'*/
 	foreach($NewItemArray as $NewItem => $NewItemQty) {
 		if($NewItemQty > 0)	{
-			$sql = "SELECT stockmaster.mbflag
-				FROM stockmaster
-				WHERE stockmaster.stockid='". $NewItem ."'";
-
-			$ErrMsg =  _('Could not determine if the part being ordered was a kitset or not because');
-
-			$KitResult = DB_query($sql,$ErrMsg);
-
 			//$NewItemQty = 1; /*By Default */
 			$Discount = 0; /*By default - can change later or discount category override */
-
-			if ($myrow=DB_fetch_array($KitResult)){
-				/*KL suppose Its not a kit set item*/
-				$NewItemDue = date($_SESSION['DefaultDateFormat']);
-				$NewPOLine = 0;
-				include('includes/SelectOrderItems_IntoCart.inc');
-				$_SESSION['Items'.$identifier]->GetTaxes(($_SESSION['Items'.$identifier]->LineCounter - 1));
-			} /* end of if its a new item */
+			$NewItemDue = date($_SESSION['DefaultDateFormat']);
+			$NewPOLine = 0;
+			include('includes/SelectOrderItems_IntoCart.inc');
+			$_SESSION['Items'.$identifier]->GetTaxes(($_SESSION['Items'.$identifier]->LineCounter - 1));
 		} /*end of if its a new item */
 	}
 }
@@ -509,394 +405,10 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 //   T H I S   W H E R E   T H E   S A L E  I S   D I S P L A Y E D
 // *************************************************************************
 */
-
-	echo '<br />
-		<table width="90%" cellpadding="2" colspan="7">
-		<tr bgcolor="#800000">';
-
-	echo '<th>' . _('Item Code') . '</th>
-		  <th>' . _('Item Description') . '</th>
-		  <th>' . _('Quantity') . '</th>
-		  <th>' . _('QOH') . '</th>
-		  <th>' . _('Unit') . '</th>
-		  <th>' . _('Price') . '</th>
-		  <th>' . _('Discount') . '</th>
-		  <th>' . _('Total') . '</th>
-		  </tr>';
-		  
-	$_SESSION['Items'.$identifier]->total = 0;
-	$_SESSION['Items'.$identifier]->totalVolume = 0;
-	$_SESSION['Items'.$identifier]->totalWeight = 0;
-	$TaxTotals = array();
-	$TaxGLCodes = array();
-	$TaxTotal =0;
-	$k =0;  //row colour counter
-	foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
-
-		$SubTotal = $OrderLine->Quantity * $OrderLine->Price * (1 - $OrderLine->DiscountPercent);
-		$QtyOrdered = $OrderLine->Quantity;
-		$QtyRemain = $QtyOrdered - $OrderLine->QtyInv;
-
-		if ($OrderLine->QOHatLoc < $OrderLine->Quantity AND ($OrderLine->MBflag=='B' OR $OrderLine->MBflag=='M')) {
-			/*There is a stock deficiency in the stock location selected */
-			$RowStarter = '<tr bgcolor="#EEAABB">';
-		} elseif ($k==1){
-			$RowStarter = '<tr class="OddTableRows">';
-			$k=0;
-		} else {
-			$RowStarter = '<tr class="EvenTableRows">';
-			$k=1;
-		}
-
-		echo $RowStarter;
-		echo '<input type="hidden" name="POLine_' .	 $OrderLine->LineNumber . '" value="" />';
-		echo '<input type="hidden" name="ItemDue_' .	 $OrderLine->LineNumber . '" value="'.$OrderLine->ItemDue.'" />';
-
-		echo '<td>' . $OrderLine->StockID . '</td>
-			<td>' . $OrderLine->ItemDescription . '</td>';
-
-		echo '<td><input class="number" tabindex="2" type="text" name="Quantity_' . $OrderLine->LineNumber . '" size="6" maxlength="6" value="' . $OrderLine->Quantity . '" />';
-
-		echo '</td>
-			<td class="number">' . $OrderLine->QOHatLoc . '</td>
-			<td>' . $OrderLine->Units . '</td>';
-
-		echo '<input type="hidden" name="Price_' .	 $OrderLine->LineNumber . '" value="' . $OrderLine->Price . '" />';
-		echo '<input type="hidden" name="Discount_' .	 $OrderLine->LineNumber . '" value="' . ($OrderLine->DiscountPercent * 100) . '" />';
-		echo '<input type="hidden" name="GPPercent_' .	 $OrderLine->LineNumber . '" value="' . $OrderLine->GPPercent . '" />';
-
-		echo '<td class="number">' . number_format($OrderLine->Price,0) . '</td>';
-		echo '<td class="number">' . number_format($OrderLine->DiscountPercent *100,0) . '</td>';
-
-		$LineDueDate = $OrderLine->ItemDue;
-		if (!Is_Date($OrderLine->ItemDue)){
-			$LineDueDate = date($_SESSION['DefaultDateFormat']);
-			$_SESSION['Items'.$identifier]->LineItems[$OrderLine->LineNumber]->ItemDue= $LineDueDate;
-		}
-		$i=0; // initialise the number of taxes iterated through
-		$TaxLineTotal =0; //initialise tax total for the line
-
-		foreach ($OrderLine->Taxes AS $Tax) {
-			if (empty($TaxTotals[$Tax->TaxAuthID])) {
-				$TaxTotals[$Tax->TaxAuthID]=0;
-			}
-			if ($Tax->TaxOnTax ==1){
-				$TaxTotals[$Tax->TaxAuthID] += ($Tax->TaxRate * ($SubTotal + $TaxLineTotal));
-				$TaxLineTotal += ($Tax->TaxRate * ($SubTotal + $TaxLineTotal));
-			} else {
-				$TaxTotals[$Tax->TaxAuthID] += ($Tax->TaxRate * $SubTotal);
-				$TaxLineTotal += ($Tax->TaxRate * $SubTotal);
-			}
-			$TaxGLCodes[$Tax->TaxAuthID] = $Tax->TaxGLCode;
-		}
-
-		$TaxTotal += $TaxLineTotal;
-		$_SESSION['Items'.$identifier]->TaxTotals=$TaxTotals;
-		$_SESSION['Items'.$identifier]->TaxGLCodes=$TaxGLCodes;
-		echo '<td class="number">' . number_format($SubTotal + $TaxLineTotal ,0) . '</td>';
-		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID .'&amp;identifier='.$identifier . '&amp;Delete=' . $OrderLine->LineNumber . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">' . _('Delete') . '</a></td></tr>';
-
-		if ($_SESSION['AllowOrderLineItemNarrative'] == 1){
-			echo $RowStarter;
-			echo '<td valign="top" colspan="11">' . _('Narrative') . ':<textarea name="Narrative_' . $OrderLine->LineNumber . '" cols="100" rows="1">' . stripslashes(AddCarriageReturns($OrderLine->Narrative)) . '</textarea><br /></td></tr>';
-		} else {
-			echo '<input type="hidden" name="Narrative" value="" />';
-		}
-
-		$_SESSION['Items'.$identifier]->total = $_SESSION['Items'.$identifier]->total + $SubTotal;
-		$_SESSION['Items'.$identifier]->totalVolume = $_SESSION['Items'.$identifier]->totalVolume + $OrderLine->Quantity * $OrderLine->Volume;
-		$_SESSION['Items'.$identifier]->totalWeight = $_SESSION['Items'.$identifier]->totalWeight + $OrderLine->Quantity * $OrderLine->Weight;
-
-	} /* end of loop around items */
-
-	echo '<tr class="TotalTableRows">
-				<td colspan="6" class="numberTotal"><b>' . _('Total') . '</b></td>
-				<td colspan="2" class="numberTotal">' . number_format(($_SESSION['Items'.$identifier]->total+$TaxTotal),0) . '</td>
-						</tr>
-		</table>';
-	echo '<input type="hidden" name="TaxTotal" value="'.$TaxTotal.'" />';
-
-	/////////////////////////////////////////////////////////////////////
-	//  PAYMENT DETAILS Table
-	/////////////////////////////////////////////////////////////////////
-
-	if (!isset($_POST['CustRef'])){
-		$_POST['CustRef'] ='';
-	}
-	if (!isset($_POST['AmountPaidCash'])){
-		$_POST['AmountPaidCash'] =0;
-	}
-	if (!isset($_POST['AmountPaidCCDanamon'])){
-		$_POST['AmountPaidCCDanamon'] =0;
-	}
-	if (!isset($_POST['AmountPaidAmexBCA'])){
-		$_POST['AmountPaidAmexBCA'] =0;
-	}
-	if (!isset($_POST['AmountPaidCCMandiri'])){
-		$_POST['AmountPaidCCMandiri'] =0;
-	}
-	if (!isset($_POST['AmountPaidCCBCA'])){
-		$_POST['AmountPaidCCBCA'] =0;
-	}
-	if (!isset($_POST['AmountReturnedGoods'])){
-		$_POST['AmountReturnedGoods'] =0;
-	}
-	if (!isset($_POST['AmountVouchers'])){
-		$_POST['AmountVouchers'] =0;
-	}
-	if (!isset($_POST['Comments'])){
-		$_POST['Comments'] ='';
-	}
-
-	echo '<table class="selection">';
-	echo'<tr>';
-	echo'<th colspan=5>' . _('Payment details') . '</th>'; 
-	echo'</tr>';
-
-	echo '<tr>';
-	echo'<th colspan=2>' . _('Cash Payments') . '</th>'; 
-	echo '<td></td>';
-	echo'<th colspan=2>' . _('Credit Card Payments') . '</th>'; 
-	echo '</tr>';
-
-	echo '<tr>';
-	echo '<td>' . _('Amount Paid Cash') . ':</td>
-		  <td><input type="text" class="number" name="AmountPaidCash" maxlength="12" size="12" value="' . $_POST['AmountPaidCash'] . '" /></td>';
-	echo '<td></td>';
-	echo '<td>' . _('Amount Paid CC EDC Danamon') . ':</td>
-		  <td><input type="text" class="number" name="AmountPaidCCDanamon" maxlength="12" size="12" value="' . $_POST['AmountPaidCCDanamon'] . '" /></td>';
-	echo '</tr>';
-
-	echo '<tr>';
-	echo'<th colspan=2>' . _('Returned / Vouchers') . '</th>'; 
-	echo '<td></td>';
-	echo '<td>' . _('Amount Paid CC EDC Mandiri') . ':</td>
-		  <td><input type="text" class="number" name="AmountPaidCCMandiri" maxlength="12" size="12" value="' . $_POST['AmountPaidCCMandiri'] . '" /></td>';
-	echo '</tr>';
-
-	echo '<tr>';
-	echo '<td>' . _('Amount Returned Goods') . ':</td>
-		  <td><input type="text" class="number" name="AmountReturnedGoods" maxlength="12" size="12" value="' . $_POST['AmountReturnedGoods'] . '" /></td>';
-	echo '<td></td>';
-	echo '<td>' . _('Amount Paid CC EDC BCA') . ':</td>
-		  <td><input type="text" class="number" name="AmountPaidCCBCA" maxlength="12" size="12" value="' . $_POST['AmountPaidCCBCA'] . '" /></td>';
-	echo '</tr>';
-
-	echo '<tr>';
-	echo '<td>' . _('Amount Voucher/Discounts') . ':</td>
-		  <td><input type="text" class="number" name="AmountVouchers" maxlength="12" size="12" value="' . $_POST['AmountVouchers'] . '" /></td>';
-	echo '<td></td>';
-	echo '<td>' . _('Amount Paid AMEX EDC BCA') . ':</td>
-		  <td><input type="text" class="number" name="AmountPaidAmexBCA" maxlength="12" size="12" value="' . $_POST['AmountPaidAmexBCA'] . '" /></td>';
-	echo '</tr>';
-
-	echo '<tr>';
-	echo '<td>'. _('Comments') .':</td>
-		  <td colspan= 4><textarea name="Comments" cols="60" rows="3">' . stripcslashes($_SESSION['Items'.$identifier]->Comments) .'</textarea></td>';
-	echo '</tr>';
-
-	echo '</table>';
-
-	/////////////////////////////////////////////////////////////////////
-	//  PACKAGING  / SHOPPING BAGS Table
-	/////////////////////////////////////////////////////////////////////
+	include('includes/KLPOSItemsTable.php');
+	include('includes/KLPOSPackagingTable.php');
+	include('includes/KLPOSPaymentsTable.php');
 	
-	// KL Packaging
-	if (!isset($_POST['PackagingBox01L'])){
-		$_POST['PackagingBox01L'] =0;
-	}
-	if (!isset($_POST['PackagingPouchBag01L'])){
-		$_POST['PackagingPouchBag01L'] =0;
-	}
-	if (!isset($_POST['PackagingBox01M'])){
-		$_POST['PackagingBox01M'] =0;
-	}
-	if (!isset($_POST['PackagingPouchBag01M'])){
-		$_POST['PackagingPouchBag01M'] =0;
-	}
-	if (!isset($_POST['PackagingBox01S'])){
-		$_POST['PackagingBox01S'] =0;
-	}
-	if (!isset($_POST['PackagingPouchBag01S'])){
-		$_POST['PackagingPouchBag01S'] =0;
-	}
-	if (!isset($_POST['ShoppingBag02S'])){
-		$_POST['ShoppingBag02S'] =0;
-	}
-	if (!isset($_POST['ShoppingBag02M'])){
-		$_POST['ShoppingBag02M'] =0;
-	}
-	if (!isset($_POST['ShoppingBag02L'])){
-		$_POST['ShoppingBag02L'] =0;
-	}
-	// OUTLET Packaging
-	if (!isset($_POST['OutletPouchBag02L'])){
-		$_POST['OutletPouchBag02L'] =0;
-	}
-	if (!isset($_POST['OutletPouchBag02M'])){
-		$_POST['OutletPouchBag02M'] =0;
-	}
-	if (!isset($_POST['OutletPouchBag02S'])){
-		$_POST['OutletPouchBag02S'] =0;
-	}
-	if (!isset($_POST['OutletShoppingBag03M'])){
-		$_POST['OutletShoppingBag03M'] =0;
-	}
-	// BLINK Packaging
-	if (!isset($_POST['BlinkShoppingBag04XL'])){
-		$_POST['BlinkShoppingBag04XL'] =0;
-	}
-	if (!isset($_POST['BlinkShoppingBag04L'])){
-		$_POST['BlinkShoppingBag04L'] =0;
-	}
-	if (!isset($_POST['BlinkShoppingBag04M'])){
-		$_POST['BlinkShoppingBag04M'] =0;
-	}
-	if (!isset($_POST['BlinkShoppingBag04S'])){
-		$_POST['BlinkShoppingBag04S'] =0;
-	}
-	if (!isset($_POST['BlinkPouchBag03L'])){
-		$_POST['BlinkPouchBag03L'] =0;
-	}
-	if (!isset($_POST['BlinkPouchBag03M'])){
-		$_POST['BlinkPouchBag03M'] =0;
-	}
-	if (!isset($_POST['BlinkPouchBag03S'])){
-		$_POST['BlinkPouchBag03S'] =0;
-	}
-
-	// If the shop is using KAPAL-LAUT packaging, show it!
-	if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_KAPAL_LAUT)){
-		echo '<table class="selection">
-				<tr>
-					<th colspan=8>' . _('Kapal-Laut Packaging & Shopping Bags included in this sale') . '
-					</th>
-				</tr>';
-		
-		echo '<tr>
-			  <td>' . _('KL Box Large') . ':</td>
-			  <td><input type="text" class="number" name="PackagingBox01L" maxlength="3" size="3" value="' . $_POST['PackagingBox01L'] . '" /></td>';
-		echo '<td></td>';
-		echo '<td>' . _('KL Pouch Bag Large') . ':</td>
-			  <td><input type="text" class="number" name="PackagingPouchBag01L" maxlength="3" size="3" value="' . $_POST['PackagingPouchBag01L'] . '" /></td>';
-		echo '<td></td>';
-		echo '<td>' . _('KL Shopping Bag Large') . ':</td>
-			  <td><input type="text" class="number" name="ShoppingBag02L" maxlength="3" size="3" value="' . $_POST['ShoppingBag02L'] . '" /></td></tr>';
-		echo'</tr>';
-
-		echo '<tr>
-			  <td>' . _('KL Box Medium') . ':</td>
-			  <td><input type="text" class="number" name="PackagingBox01M" maxlength="3" size="3" value="' . $_POST['PackagingBox01M'] . '" /></td>';
-		echo '<td></td>';
-		echo '<td>' . _('KL Pouch Bag Medium') . ':</td>
-			  <td><input type="text" class="number" name="PackagingPouchBag01M" maxlength="3" size="3" value="' . $_POST['PackagingPouchBag01M'] . '" /></td>';
-		echo '<td></td>';
-		echo '<td>' . _('KL Shopping Bag Medium') . ':</td>
-			  <td><input type="text" class="number" name="ShoppingBag02M" maxlength="3" size="3" value="' . $_POST['ShoppingBag02M'] . '" /></td>';
-		echo'</tr>';
-		
-		echo '<tr>
-			  <td>' . _('KL Box Small') . ':</td>
-			  <td><input type="text" class="number" name="PackagingBox01S" maxlength="3" size="3" value="' . $_POST['PackagingBox01S'] . '" /></td>';
-		echo '<td></td>';
-		echo '<td>' . _('KL Pouch Bag Small') . ':</td>
-			  <td><input type="text" class="number" name="PackagingPouchBag01S" maxlength="3" size="3" value="' . $_POST['PackagingPouchBag01S'] . '" /></td>';
-		echo '<td></td>';
-		echo '<td>' . _('KL Shopping Bag Small') . ':</td>
-			  <td><input type="text" class="number" name="ShoppingBag02S" maxlength="3" size="3" value="' . $_POST['ShoppingBag02S'] . '" /></td>';
-		echo'</tr>';
-
-		echo '</table>';	//end of column/row/master table
-	}
-
-	// If the shop is using BLINK packaging, show it!
-	if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_BLINK)){
-		echo '<table class="selection">
-				<tr>
-					<th colspan=8>' . _('BLINK Packaging & Shopping Bags included in this sale') . '
-					</th>
-				</tr>';
-		
-		echo '<tr>
-			  <td></td>
-			  <td></td>';
-		echo '<td></td>';
-		echo '<td>' . _('BLINK Pouch Bag Large') . ':</td>
-			  <td><input type="text" class="number" name="BlinkPouchBag03L" maxlength="3" size="3" value="' . $_POST['BlinkPouchBag03L'] . '" /></td>';
-		echo '<td></td>';
-		echo '<td>' . _('BLINK Shopping Bag XL') . ':</td>
-			  <td><input type="text" class="number" name="BlinkShoppingBag04XL" maxlength="3" size="3" value="' . $_POST['BlinkShoppingBag04XL'] . '" /></td></tr>';
-		echo'</tr>';
-
-		echo '<tr>
-			  <td></td>
-			  <td></td>';
-		echo '<td></td>';
-		echo '<td>' . _('BLINK Pouch Bag Medium') . ':</td>
-			  <td><input type="text" class="number" name="BlinkPouchBag03M" maxlength="3" size="3" value="' . $_POST['BlinkPouchBag03M'] . '" /></td>';
-		echo '<td></td>';
-		echo '<td>' . _('BLINK Shopping Bag Medium') . ':</td>
-			  <td><input type="text" class="number" name="BlinkShoppingBag04M" maxlength="3" size="3" value="' . $_POST['BlinkShoppingBag04M'] . '" /></td>';
-		echo'</tr>';
-		
-		echo '<tr>
-			  <td></td>
-			  <td></td>';
-		echo '<td></td>';
-		echo '<td>' . _('BLINK Pouch Bag Small') . ':</td>
-			  <td><input type="text" class="number" name="BlinkPouchBag03S" maxlength="3" size="3" value="' . $_POST['BlinkPouchBag03S'] . '" /></td>';
-		echo '<td></td>';
-		echo '<td>' . _('BLINK Shopping Bag Small') . ':</td>
-			  <td><input type="text" class="number" name="BlinkShoppingBag04S" maxlength="3" size="3" value="' . $_POST['BlinkShoppingBag04S'] . '" /></td>';
-		echo'</tr>';
-
-		echo '</table>';	//end of column/row/master table
-	}
-
-	// If the shop is using OUTLET packaging, show it!
-	if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_OUTLET)){
-		echo '<table class="selection">
-				<tr>
-					<th colspan=8>' . _('OUTLET Packaging & Shopping Bags included in this sale') . '
-					</th>
-				</tr>';
-		
-		echo '<tr>
-			  <td></td>
-			  <td></td>';
-		echo '<td></td>';
-		echo '<td>' . _('OUTLET Pouch Bag Large') . ':</td>
-			  <td><input type="text" class="number" name="OutletPouchBag02L" maxlength="3" size="3" value="' . $_POST['OutletPouchBag02L'] . '" /></td>';
-		echo '<td></td>';
-		echo '<td></td>
-			  <td></td>';
-		echo'</tr>';
-
-		echo '<tr>
-			  <td></td>
-			  <td></td>';
-		echo '<td></td>';
-		echo '<td>' . _('OUTLET Pouch Bag Medium') . ':</td>
-			  <td><input type="text" class="number" name="OutletPouchBag02M" maxlength="3" size="3" value="' . $_POST['OutletPouchBag02M'] . '" /></td>';
-		echo '<td></td>';
-		echo '<td>' . _('OUTLET Shopping Bag') . ':</td>
-			  <td><input type="text" class="number" name="OutletShoppingBag03M" maxlength="3" size="3" value="' . $_POST['OutletShoppingBag03M'] . '" /></td></tr>';
-		echo'</tr>';
-		
-		echo '<tr>
-			  <td></td>
-			  <td></td>';
-		echo '<td></td>';
-		echo '<td>' . _('OUTLET Pouch Bag Small') . ':</td>
-			  <td><input type="text" class="number" name="OutletPouchBag02S" maxlength="3" size="3" value="' . $_POST['OutletPouchBag02S'] . '" /></td>';
-		echo '<td></td>';
-		echo '<td></td>
-			  <td></td>';
-		echo'</tr>';
-
-		echo '</table>';	//end of column/row/master table
-	}
-
 	/////////////////////////////////////////////////
 	// Buttons confirm / recalculate the sale
 	/////////////////////////////////////////////////
@@ -1867,7 +1379,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 		echo '<table class="selection">
 				<tr>
-					<th colspan=2>' . _('Retail Sale Reported') . '
+					<th colspan=2>' . _('Retail Sale Reported to DataBase') . '
 					</th>
 				</tr>';
 		
@@ -2031,7 +1543,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 /* Now show the stock item selection search stuff below */
 if (!isset($_POST['ProcessSale'])){
 
-	echo '<div class="page_help_text"><b>' . _('Add the item codes and quantities sold of each') . '</b></div><br />
+	echo '<div class="page_help_text"><b>' . _('Scan the price tag of the items purchased and packaging used') . '</b></div><br />
 				<table border="1">
 				<tr>';
 		/*do not display colum unless customer requires po line number by sales order line*/

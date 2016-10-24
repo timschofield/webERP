@@ -5,7 +5,7 @@ $Title = _('Customer Info Card Maintenance');
 
 include('includes/KLCountriesForRetail.php');
 include('includes/KLGeneralFunctions.php');
-include('includes/KLPointOfSale.php');
+include('includes/KLPOSGeneral.php');
 include('includes/header.inc');
 
 if (isset($_GET['SelectedOrder'])){
