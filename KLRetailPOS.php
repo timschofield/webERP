@@ -1512,10 +1512,12 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		$CustomerFooter = KLPrintReceiptCustomerFooter($identifier, $OrderNo);
 		$ShopFooter = KLPrintReceiptShopFooter($identifier, $OrderNo);
 		$Receipt = $HeaderText . $CustomerFooter . $HeaderText . $ShopFooter;
+
+
+		//################## PRINTING STUFF ##################### 
 		$filename = 'includes/WebClientPrint/wcpcache/'.$identifier.'.pos';   
 		file_put_contents($filename, $Receipt);
 
-		//################## PRINTING STUFF ##################### 
 		echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . 
 			_('Print the customer receipt') . '" alt="" />' . ' ' . 
 			'<a href="#"' . 'onclick="javascript:jsWebClientPrint.print(\'identifier='.$identifier.

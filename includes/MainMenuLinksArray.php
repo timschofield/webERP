@@ -286,7 +286,7 @@ $MenuItems['PO']['Maintenance']['Caption'] = array(_('Maintain Supplier Price Li
 $MenuItems['PO']['Maintenance']['URL'] = array('/SupplierPriceList.php');
 
 if ($KL_SPG OR $KL_SPGSupport){
-	$TextTransferReceive = _('KL Shop Inventory Transfer') . ' - ' . _('Receive from kantor');
+	$TextTransferReceive = _('KL Shop Transfer - Receive Transfer FROM kantor');
 } else {
 	$TextTransferReceive = _('Bulk Inventory Transfer') . ' - ' . _('Receive');
 }
@@ -295,7 +295,8 @@ $MenuItems['stock']['Transactions']['Caption'] = array(	_('Receive Purchase Orde
 														_('Inventory Location Transfers'),
 														_('Bulk Inventory Transfer') . ' - ' . _('Dispatch'),
 														$TextTransferReceive,
-														_('KL Shop Inventory Transfer') . ' - ' . _('Send return to kantor'),
+														_('KL Shop Transfer - Send Return Transfer TO kantor OLD'),
+														_('KL Shop Transfer - Send Return Transfer TO kantor NEW'),
 														_('KL Shop Packaging Fill Up'),
 														_('KL Export Products for Zalora'),
 														_('KL Export Products for Lazada'),
@@ -312,6 +313,7 @@ $MenuItems['stock']['Transactions']['URL'] = array(	'/PO_SelectOSPurchOrder.php'
 													'/StockLocTransfer.php',
 													'/StockLocTransferReceive.php',
 													'/KLStockLocTransfer.php',
+													'/KLPOSReturnToKantor.php',
 													'/KLFillUpShopPackaging.php',
 													'/KLExcelZalora.php',
 													'/KLExcelLazada.php',

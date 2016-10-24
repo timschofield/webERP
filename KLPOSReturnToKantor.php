@@ -15,9 +15,13 @@ include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/KLEmails.php');
 
+include('includes/KLPOSGeneral.php');
+include('includes/wcpESCPOSCommands.php');
+include('includes/wcpInitScript.php');
+
 // Verify if shop is allowed to use the POS system, or should use the old system 
-if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_WITH_POS)){
-	prnMsg(_('This shop is not allowed to use this OLD version of return transfer. Use the NEW one.'),'error');
+if (!ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_WITH_POS)){
+	prnMsg(_('This shop is not allowed to use this NEW version of Return to kantor. Use the OLD one.'),'error');
 	include('includes/footer.inc');
 	exit;
 }	
@@ -34,7 +38,7 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 		$ErrorMessage = _('This transaction has already been entered') . '. ' . _('Please start over now') . '<br />';
 		unset($_POST['submit']);
 		unset($_POST['EnterMoreItems']);
-		for ($i=$_POST['LinesCounter']-10;$i<$_POST['LinesCounter'];$i++){
+		for ($i=$_POST['LinesCounter']-2;$i<$_POST['LinesCounter'];$i++){
 			unset($_POST['StockID' . $i]);
 			unset($_POST['StockQTY' . $i]);
 		}
@@ -43,13 +47,13 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 
 		if (isset($_POST['ClearAll'])){
 			unset($_POST['EnterMoreItems']);
-			for ($i=$_POST['LinesCounter']-10;$i<$_POST['LinesCounter'];$i++){
+			for ($i=$_POST['LinesCounter']-2;$i<$_POST['LinesCounter'];$i++){
 				unset($_POST['StockID' . $i]);
 				unset($_POST['StockQTY' . $i]);
 			}
 		}
 		$StockIDAccQty = array(); //set an array to hold all items' quantity
-		for ($i=$_POST['LinesCounter']-10;$i<$_POST['LinesCounter'];$i++){
+		for ($i=$_POST['LinesCounter']-2;$i<$_POST['LinesCounter'];$i++){
 			if (isset($_POST['Delete' . $i])){ //check box to delete the item is set
 				unset($_POST['StockID' . $i]);
 				unset($_POST['StockQTY' . $i]);
@@ -61,18 +65,18 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 				if ($myrow[0]==0){
 					$InputError = True;
 					$ErrorMessage .= _('The part code entered of'). ' ' . $_POST['StockID' . $i] . ' '. _('is not set up in the database') . '. ' . _('Only valid parts can be entered for transfers'). '<br />';
-					$_POST['LinesCounter'] -= 10;
+					$_POST['LinesCounter'] -= 2;
 				}
 				DB_free_result( $result );
 				if (!is_numeric(filter_number_format($_POST['StockQTY' . $i]))){
 					$InputError = True;
 					$ErrorMessage .= _('The quantity entered of'). ' ' . $_POST['StockQTY' . $i] . ' '. _('for part code'). ' ' . $_POST['StockID' . $i] . ' '. _('is not numeric') . '. ' . _('The quantity entered for transfers is expected to be numeric') . '<br />';
-					$_POST['LinesCounter'] -= 10;
+					$_POST['LinesCounter'] -= 2;
 				}
 				if (filter_number_format($_POST['StockQTY' . $i]) <= 0){
 					$InputError = True;
 					$ErrorMessage .= _('The quantity entered for').' '. $_POST['StockID' . $i] . ' ' . _('is less than or equal to 0') . '. ' . _('Please correct this or remove the item') . '<br />';
-					$_POST['LinesCounter'] -= 10;
+					$_POST['LinesCounter'] -= 2;
 				}
 				if ($_SESSION['ProhibitNegativeStock']==1){
 					$InTransitSQL="SELECT SUM(shipqty-recqty) as intransit
@@ -90,21 +94,21 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 										AND loccode='".$_POST['FromStockLocation']."'");
 
 					$myrow = DB_fetch_array($result);
-					if (($myrow['quantity']-$InTransitQuantity) < filter_number_format($_POST['StockQTY' . $i])){
+/*					if (($myrow['quantity']-$InTransitQuantity) < filter_number_format($_POST['StockQTY' . $i])){
 						$InputError = True;
 						$ErrorMessage .= _('The part code entered of'). ' ' . $_POST['StockID' . $i] . ' '. _('does not have enough stock available for transfer.') . '.<br />';
-						$_POST['LinesCounter'] -= 10;
+						$_POST['LinesCounter'] -= 2;
 					}
-				}
+*/				}
 				// Check the accumulated quantity for each item
 				if(isset($StockIDAccQty[$_POST['StockID'.$i]])){
 					$StockIDAccQty[$_POST['StockID'.$i]] += filter_number_format($_POST['StockQTY' . $i]);
-					if($myrow[0] < $StockIDAccQty[$_POST['StockID'.$i]]){
+/*					if($myrow[0] < $StockIDAccQty[$_POST['StockID'.$i]]){
 						$InputError = True;
 						$ErrorMessage .=_('The part code entered of'). ' ' . $_POST['StockID'.$i] . ' '._('does not have enough stock available for transter due to accumulated quantity is over quantity on hand.') . '<br />';
-						$_POST['LinesCounter'] -= 10;
+						$_POST['LinesCounter'] -= 2;
 					}
-				} else {
+*/				} else {
 					$StockIDAccQty[$_POST['StockID'.$i]] = filter_number_format($_POST['StockQTY' . $i]);
 				} //end of accumulated check
 
@@ -130,6 +134,19 @@ if(isset($_POST['Submit']) AND $InputError==False){
 
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to BEGIN Location Transfer transaction');
 
+	$TextToPrint = $InitPrinter . $CenteredJustified;
+	// name of shop
+	$TextToPrint .= KLPrintNameOfShop();
+	$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth . 'RETURN TRANSFER TO KANTOR' . $NewLine;
+	// warning if it is a TEST
+	$TextToPrint .= KLPrintReceiptTestWarning("RETURN TRANSFER"). $NewLine . $CenteredJustified;
+	$TextToPrint .= DisplayDateTime() . $NewLine;
+	$TextToPrint .= 'SPG Code: ' . $_SESSION['SalesmanLogin'] . $NewLine;
+	$TextToPrint .= 'Shop Code: ' . substr($_SESSION['UserStockLocation'],3,2) . $NewLine;
+	$TextToPrint .= 'Transfer Number: ' . $_POST['Trf_ID'] . $NewLine;
+	$TextToPrint .=  $NewLine . $NewLine;
+	$TextToPrint .=  $LeftJustified;
+
 	DB_Txn_Begin();
 
 	for ($i=0;$i < $_POST['LinesCounter'];$i++){
@@ -154,19 +171,34 @@ if(isset($_POST['Submit']) AND $InputError==False){
 							'" . $_POST['ToStockLocation'] . "')";
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to enter Location Transfer record for'). ' '.$_POST['StockID' . $i];
 			$resultLocShip = DB_query($sql, $ErrMsg);
-			/* KL RICARD Send emails to team if transfer from / to special location */
+
 			if ($_POST['ToStockLocation'] == 'SERDE'){
 				KLSendEmail("ItemTransferredToSpecialLocation", "Silent", $_POST['StockID' . $i], round(filter_number_format($_POST['StockQTY' . $i]), $DecimalRow['decimalplaces']),$_POST['FromStockLocation'], $_POST['ToStockLocation']);
 			}
-			/* KL RICARD End modification */
+			
+			$TextToPrint .= round(filter_number_format($_POST['StockQTY' . $i]), $DecimalRow['decimalplaces']) . ' x ' . $_POST['StockID' . $i] . $NewLine;
+
 		}
 	}
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to COMMIT Location Transfer transaction');
 	DB_Txn_Commit();
 
-	prnMsg( _('The return Transfer to Kantor has been created'),'success');
-	prnMsg( _('Copy the transfer number: '. $_POST['Trf_ID'] . ' in the paper slip transfer.'),'info');
-	prnMsg( _('Paper Slip Transfer MUST contain the same items than this transfer'),'info');
+	// warning if it is a TEST
+	$TextToPrint .= KLPrintReceiptTestWarning("RETURN TRANSFER"). $NewLine . $LeftJustified;
+	$TextToPrint .= $CutPaper;
+
+	//################## PRINTING STUFF ##################### 
+	$identifier=date('U');
+	$filename = 'includes/WebClientPrint/wcpcache/'.$identifier.'.pos';   
+	file_put_contents($filename, $TextToPrint);
+
+	echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . 
+		_('Print the Daily SPG End Of Shift') . '" alt="" />' . ' ' . 
+		'<a href="#"' . 'onclick="javascript:jsWebClientPrint.print(\'identifier='.$identifier.
+																	'\');">' .  
+		_('Print Return Transfer number: '). $_POST['Trf_ID'] . '</a><br /><br />';
+	//################## PRINTING STUFF ##################### 
+
 	include('includes/footer.inc');
 
 } else {
@@ -201,6 +233,11 @@ if(isset($_POST['Submit']) AND $InputError==False){
 	echo '<tr>
 			<th colspan="4"><input type="hidden" name="Trf_ID" value="' . $Trf_ID . '" /><h3>' .  _('Return Transfer from Shop to Kantor').' # '. $Trf_ID. '</h3></th>
 		</tr>';
+	echo '<tr>
+			<th class="ascending">' . _('Code') . '</th>
+			<th class="ascending">' . _('Quantity') . '</th>
+			<th colspan="2"></th>
+		</tr>';
 	$j=0; /* row counter for reindexing */
 	if(isset($_POST['LinesCounter'])){
 
@@ -222,22 +259,18 @@ if(isset($_POST['Submit']) AND $InputError==False){
 	} else {
 		$j = 0;
 	}
-	// $i is incremented an extra time, so 9 to get 10...
-	$z=($j + 9);
-
-	while($j < $z) {
-		if (!isset($_POST['StockID' . $j])) {
-			$_POST['StockID' . $j]='';
-		}
-		if (!isset($_POST['StockQTY' . $j])) {
-			$_POST['StockQTY' . $j]=0;
-		}
-		echo '<tr>
-				<td><input type="text" name="StockID' . $j .'" ' . ($j==0 OR $j==$z-9 ? 'autofocus="autofocus"' : '') . ' size="21"  maxlength="20" value="' . $_POST['StockID' . $j] . '" /></td>
-				<td><input type="text" name="StockQTY' . $j .'" size="10" maxlength="10" class="number" value="' . locale_number_format($_POST['StockQTY' . $j]) . '" /></td>
-			</tr>';
-		$j++;
+	// $i is incremented an extra time, so 1 to get 2...
+	if (!isset($_POST['StockID' . $j])) {
+		$_POST['StockID' . $j]='';
 	}
+	if (!isset($_POST['StockQTY' . $j])) {
+		$_POST['StockQTY' . $j]=1;
+	}
+	echo '<tr>
+			<td><input type="text" name="StockID' . $j .'" autofocus="autofocus" size="21"  maxlength="20" value="' . $_POST['StockID' . $j] . '" /></td>
+			<td><input type="text" name="StockQTY' . $j .'" size="10" maxlength="10" class="number" value="' . locale_number_format($_POST['StockQTY' . $j]) . '" /></td>
+		</tr>';
+	$j++;
 
 	echo '</table>
 		<br />
