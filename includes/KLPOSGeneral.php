@@ -744,6 +744,7 @@ function KLPrintReceiptCustomerFooter($identifier, $OrderNo){
 	$TextToPrint .= $CharacterFontB . $LeftJustified;
 	$TextToPrint .= "This invoice is the only valid proof of purchase. Keep it for future reference. ";
 	$TextToPrint .= "For more information on our catalog, promotions, location of our shops, news, job opportunities, sale terms and conditions and warranty terms check our website." . $NewLine;
+	$TextToPrint .= "PT. Bumi Biru Jl. Kesambi No 1 Kerobokan, Bali - NPWP: 31.780.967.1-906.000" . $NewLine;
 	
 	// website
 	$TextToPrint .= $NewLine . $EmphasizedDoubleHeightDoubleWidth . $CenteredJustified;

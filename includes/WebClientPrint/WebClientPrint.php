@@ -24,6 +24,7 @@ WebClientPrint::$webClientPrintAbsoluteUrl = Utils::getRoot(). $RootPath .'/incl
 
 //Set wcpcache folder RELATIVE to WebClientPrint.php file
 //FILE WRITE permission on this folder is required!!!
+//WebClientPrint::$wcpCacheFolder = Utils::getRoot() . $RootPath .'/includes/WebClientPrint/wcpcache/';
 WebClientPrint::$wcpCacheFolder = 'wcpcache/';
 //===================
 

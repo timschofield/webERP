@@ -5,6 +5,7 @@ INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('KLRetai
 INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('KLRetailCustomerInfoCard.php', '1500', 'SPG input of customer info card');
 INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('PrintPOSReceipt.php', '1500', 'Print POS receipt');
 INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('KLRetailEndOfShift.php', '1500', 'Print Daily End Of Shift');
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('KLPOSReturnToKantor.php', '1500', 'Return to kantor Transfer POS version');
 
 ALTER TABLE `locations` ADD `klposcashaccount` VARCHAR(20) NULL COMMENT 'GL account for cash payments for KL POS ' AFTER `klyearlyrent`;
 UPDATE `locations` SET `klposcashaccount` = '111111101' WHERE `locations`.`loccode` = 'TOK66';

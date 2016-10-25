@@ -13,6 +13,7 @@ $ViewTopic = "Inventory";
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
+include('includes/KLGeneralFunctions.php');
 include('includes/KLEmails.php');
 
 include('includes/KLPOSGeneral.php');
@@ -137,7 +138,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 	$TextToPrint = $InitPrinter . $CenteredJustified;
 	// name of shop
 	$TextToPrint .= KLPrintNameOfShop();
-	$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth . 'RETURN TRANSFER TO KANTOR' . $NewLine;
+	$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth . 'TRANSFER TO KANTOR' . $NewLine;
 	// warning if it is a TEST
 	$TextToPrint .= KLPrintReceiptTestWarning("RETURN TRANSFER"). $NewLine . $CenteredJustified;
 	$TextToPrint .= DisplayDateTime() . $NewLine;
@@ -183,6 +184,18 @@ if(isset($_POST['Submit']) AND $InputError==False){
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to COMMIT Location Transfer transaction');
 	DB_Txn_Commit();
 
+	$TextToPrint .= $NewLine. $Emphasized . 'Prepared by: ' . $_SESSION['SalesmanLogin'] . $NewLine;
+	$TextToPrint .= $CharacterFontA . 'Date: ' . DisplayDateTime() . $NewLine;
+	$TextToPrint .= 'Signature: ' . $NewLine . $NewLine . $NewLine . $NewLine . $NewLine;
+	
+	$TextToPrint .= $Emphasized . 'Shipped by: ' . $NewLine;
+	$TextToPrint .= $CharacterFontA . 'Date: ' . $NewLine;
+	$TextToPrint .= 'Signature: ' . $NewLine . $NewLine . $NewLine . $NewLine . $NewLine;
+
+	$TextToPrint .= $Emphasized . 'Received by: ' . $NewLine;
+	$TextToPrint .= $CharacterFontA . 'Date: ' . $NewLine;
+	$TextToPrint .= 'Signature: ' . $NewLine . $NewLine . $NewLine . $NewLine . $NewLine;
+	
 	// warning if it is a TEST
 	$TextToPrint .= KLPrintReceiptTestWarning("RETURN TRANSFER"). $NewLine . $LeftJustified;
 	$TextToPrint .= $CutPaper;
