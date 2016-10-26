@@ -141,9 +141,6 @@ if (DB_num_rows($result) != 0){
 	$TextToPrint .= "Total Voucher/Discounts: " . number_format($TotalVouchers) . $NewLine;
 	$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth;
 	$TextToPrint .= 'Total: ' . number_format($Total) . $NewLine;
-	// warning if it is a TEST
-	$TextToPrint .= KLPrintReceiptTestWarning("END OF SHIFT"). $NewLine . $LeftJustified;
-	$TextToPrint .= $CutPaper;
 	
 	printf('<td class="number">%s</td>
 			<td>%s</td>
@@ -165,7 +162,13 @@ if (DB_num_rows($result) != 0){
 			);
 	echo '</table>
 			</div>';
+}else{
+	$TextToPrint .= $Emphasized . $CenteredJustified . "NO SALES TODAY" . $NewLine;
 }
+
+// warning if it is a TEST
+$TextToPrint .= KLPrintReceiptTestWarning("END OF SHIFT"). $NewLine . $LeftJustified;
+$TextToPrint .= $CutPaper;
 
 //################## PRINTING STUFF ##################### 
 $identifier=date('U');
