@@ -85,8 +85,9 @@ define("LIST_STOCK_CATEGORIES_GENERAL",    "('TESTGE','STABGE','NOPOGE')");
 define("CODE_KANTOR",     "'KANTO'");
 define("CODE_ONLINE_SHOP","'TOKWS'");
 
-define("LIST_ALL_SHOPS",           "('TOK66','TOKSA','TOKKS','TOKSE','TOKUB','TOKMF','TOKPU','TOKSU','TOKOB','TOKSS','TOKPA','TOKKA','TOKMU','TOKPS','TOKAR','TOKSB','TOKPB','TOKBU','TOKM2')"); // NOT includes the shop online
-define("LIST_SHOPS_KAPAL_LAUT",    "('TOK66','TOKSA','TOKKS','TOKSE','TOKMF','TOKPU','TOKOB','TOKSS','TOKPA','TOKKA','TOKSU','TOKM2')"); // NOT includes the shop online
+define("LIST_ALL_SHOPS",           "('TOK66','TOKSA','TOKKS','TOKSE','TOKUB','TOKMF','TOKPU','TOKSU','TOKOB','TOKSS','TOKPA','TOKKA','TOKMU','TOKPS','TOKAR','TOKSB','TOKPB','TOKBU')"); // NOT includes the shop online
+define("LIST_SHOPS_KAPAL_LAUT",    "('TOK66','TOKSA','TOKKS','TOKSE','TOKMF','TOKPU','TOKOB','TOKSS','TOKPA','TOKKA')"); // NOT includes the shop online
+define("LIST_SHOPS_WITH_POS",      "('')"); // Shops allowed to use POS
 define("LIST_SHOPS_OUTLET",        "('TOKUB','TOKAR')"); 
 define("LIST_SHOPS_BLINK",         "('TOKMU','TOKPS','TOKSB','TOKPB','TOKBU')");
 
@@ -112,7 +113,7 @@ define("IMPROVEMENT_AVERAGE_SALES", 5);
 define("IMPROVEMENT_SALES_COMPARED_LAST_YEAR", 5);
 
 /* Defines about Retail Sales at KL Shops*/
-define("LENGHT_OF_LIST_OF_CODES_RETAIL_SHOP_SALES", 6); 
+define("LENGHT_OF_LIST_OF_CODES_RETAIL_SHOP_SALES", 1); 
 
 /* Defines about Stock Control*/
 define("STOCK_MOVEMENT_DAYS_FOR_SPG", 60); 
@@ -120,10 +121,11 @@ define("TRANSFER_LIST_DAYS_FOR_SPG", 7);
 
 define("PAYMENT_BY_CASH", 2); 
 define("PAYMENT_BY_CREDITCARD", 3); 
+define("PERCENTAGE_PPN", 10); // %PPN
 define("PERCENTAGE_SALES_CASH_TO_PT", 10.5); // % of cash transactions going to PT cash acccounts
 define("PERCENTAGE_COMPENSATION_HPP_PT", 130.0); // % of HPP to be assigned to PT sales. 100 means NO compensation.
 define("ACCOUNT_COMPENSATION_HPP_PT", "510010050"); 
-define("ACCOUNT_HUTANG_PPH23", "611012005PT"); // number of account for retention PPH23
+define("ACCOUNT_HUTANG_PPH23", "611012005PT"); // GL account for retention of PPH23 in Petty cash
 
 define("COMISSION_CC_DANAMON",     1.80); // % of Credit card comission paid to Danamon
 define("COMISSION_AMEX_DANAMON",   3.00); // % of Credit card comission paid to American Express by Danamon
@@ -196,7 +198,7 @@ define('STANDARD_FOULARD_VOLUME',  0.0010);
 define('STANDARD_BROOCHE_VOLUME',  0.0004);
 
 /* Defines about website sales categories */
-define("CATEGORIES_AVAILABLE_WEBSITE", "('TESTKL','TESTBL','TESTGE','STABKL','STABBL','STABGE','NOPOKL','NOPOBL','NOPOGE','DISC20','DISC50','CONSIG')");
+define("CATEGORIES_AVAILABLE_WEBSITE", "('TESTKL','TESTBL','TESTGE','STABKL','STABBL','STABGE','NOPOKL','NOPOBL','NOPOGE','DISC20','DISC50')");
 define('FEATURED_IN_WEBSITE_AS_TOP_SALES',20);
 
 define('ITEM_EXCLUDED_FROM_WEBSITE',-9999);
