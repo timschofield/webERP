@@ -3628,7 +3628,7 @@ function PurchasingOrdersDeliveryControl($reason, $maxdays, $RootPath, $db){
 		$EndDate = Date("Y-m-d");
 	}
 	$SQL = "SELECT purchorders.orderno,
-				suppliers.suppname,
+				purchorders.supplierno,
 				purchorders.orddate,
 				purchorders.deliverydate,
 				purchorders.status,
@@ -3648,9 +3648,9 @@ function PurchasingOrdersDeliveryControl($reason, $maxdays, $RootPath, $db){
 			WHERE purchorderdetails.completed=0
 				AND purchorders.deliverydate <  '". $StartDate ."'		
 				AND purchorders.deliverydate >= '". $EndDate ."'		
-				AND purchorders.status IN ('Authorised', 'Printed', 'Pending')		
+				AND purchorders.status IN ('Authorised', 'Printed', 'Pending')	
 			GROUP BY purchorders.orderno ASC,
-				suppliers.suppname,
+				purchorders.supplierno,
 				purchorders.orddate,
 				purchorders.status,
 				purchorders.initiator,
@@ -3670,66 +3670,110 @@ function PurchasingOrdersDeliveryControl($reason, $maxdays, $RootPath, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
+							<th colspan="7">' . _('Order') . '</th>
+							<th colspan="3">' . _('Supplier DP') . '</th>
+							<th colspan="3">' . _('Payment Needed') . '</th>
+							<th colspan="3">' . _('Acummulated Payment') . '</th>
+						</tr>
+						<tr>
 							<th class="ascending">' . _('#') . '</th>
 							<th class="ascending">' . _('PO') . '</th>
-							<th class="ascending">' . _('Order Date') . '</th>
-							<th class="ascending">' . _('Delivery Date') . '</th>
 							<th class="ascending">' . _('Supplier') . '</th>
+							<th class="ascending">' . _('Delivery Date') . '</th>
 							<th class="ascending">' . _('IDR') . '</th>
 							<th class="ascending">' . _('USD') . '</th>
 							<th class="ascending">' . _('THB') . '</th>
-							<th class="ascending">' . _('EUR') . '</th>
-							<th class="ascending">' . _('HKD') . '</th>
-							<th class="ascending">' . _('Acum IDR') . '</th>
+							<th class="ascending">' . _('IDR') . '</th>
+							<th class="ascending">' . _('USD') . '</th>
+							<th class="ascending">' . _('THB') . '</th>
+							<th class="ascending">' . _('IDR') . '</th>
+							<th class="ascending">' . _('USD') . '</th>
+							<th class="ascending">' . _('THB') . '</th>
+							<th class="ascending">' . _('IDR') . '</th>
+							<th class="ascending">' . _('USD') . '</th>
+							<th class="ascending">' . _('THB') . '</th>
 						</tr>';
 		echo $TableHeader;
 		
-		$TotalIDR = 0;
-		$TotalUSD = 0;
-		$TotalTHB = 0;
-		$TotalEUR = 0;
-		$TotalHKD = 0;
 		$AcumIDR = 0;
+		$AcumUSD = 0;
+		$AcumTHB = 0;
+		$Payments = array();
 		
 		$k = 0; //row colour counter
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
 			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/PO_OrderDetails.php?OrderNo=' . $myrow['orderno'] . '">' . $myrow['orderno'] . '</a>';
-
-			$ValueIDR = 0;
-			$ValueUSD = 0;
-			$ValueTHB = 0;
-			$ValueEUR = 0;
-			$ValueHKD = 0;
+			
+			if (isset($Payments[$myrow['supplierno']])){
+				// we already have info in memory about the supplier
+			}else{
+				// the first time we find this supplier, let's get the balance
+				$SQL = "SELECT SUM(supptrans.ovamount + supptrans.ovgst - supptrans.alloc) AS balance
+						FROM supptrans
+						WHERE supptrans.supplierno = '" . $myrow['supplierno'] . "'";
+				$SupplierResult = DB_query($SQL);
+				$mySupplier=DB_fetch_array($SupplierResult);
+				$Payments[$myrow['supplierno']]['currency'] = $myrow['currcode']; 
+				$Payments[$myrow['supplierno']]['balance'] = -$mySupplier['balance']; 
+			}
+			
+			$ValueOrderIDR = 0;
+			$ValueOrderUSD = 0;
+			$ValueOrderTHB = 0;
+			$PaymentOrderIDR = 0;
+			$PaymentOrderUSD = 0;
+			$PaymentOrderTHB = 0;
 			
 			if ($myrow['currcode'] == 'IDR'){
-				$ValueIDR = $myrow['ordervalue'];
-				$TotalIDR = $TotalIDR + $ValueIDR; 
-				$AcumIDR = $AcumIDR + $ValueIDR; 
+				$ValueOrderIDR = $myrow['ordervalue'];
+				$SupplierBalanceIDR =  $Payments[$myrow['supplierno']]['balance'];
+				$SupplierBalanceUSD =  0;
+				$SupplierBalanceTHB =  0;
+				if ($SupplierBalanceIDR >= $ValueOrderIDR){
+					// we have enough balance to cover the order, no payment needed
+					$PaymentOrderIDR = 0;
+				}else{
+					$PaymentOrderIDR = $ValueOrderIDR - $SupplierBalanceIDR;
+					$AcumIDR = $AcumIDR + $PaymentOrderIDR; 
+				}
 			}elseif	($myrow['currcode'] == 'USD'){
-				$ValueUSD = $myrow['ordervalue'];
-				$TotalUSD = $TotalUSD + $ValueUSD; 
-				$AcumIDR = $AcumIDR + ($ValueUSD/$myrow['exchangerate']); 
+				$ValueOrderUSD = $myrow['ordervalue'];
+				$SupplierBalanceIDR =  0;
+				$SupplierBalanceUSD =  $Payments[$myrow['supplierno']]['balance'];
+				$SupplierBalanceTHB =  0;
+				if ($SupplierBalanceUSD >= $ValueOrderUSD){
+					// we have enough balance to cover the order, no payment needed
+					$PaymentOrderUSD = 0;
+				}else{
+					$PaymentOrderUSD = $ValueOrderUSD - $SupplierBalanceUSD;
+					$AcumUSD = $AcumUSD + $PaymentOrderUSD; 
+				}
 			}elseif	($myrow['currcode'] == 'THB'){
-				$ValueTHB = $myrow['ordervalue'];
-				$TotalTHB = $TotalTHB + $ValueTHB; 
-				$AcumIDR = $AcumIDR + ($ValueTHB/$myrow['exchangerate']); 
-			}elseif	($myrow['currcode'] == 'EUR'){
-				$ValueEUR = $myrow['ordervalue'];
-				$TotalEUR = $TotalEUR + $ValueEUR; 
-				$AcumIDR = $AcumIDR + ($ValueEUR/$myrow['exchangerate']); 
-			}elseif	($myrow['currcode'] == 'HKD'){
-				$ValueHKD = $myrow['ordervalue'];
-				$TotalHKD = $TotalHKD + $ValueHKD; 
-				$AcumIDR = $AcumIDR + ($ValueHKD/$myrow['exchangerate']); 
+				$ValueOrderTHB = $myrow['ordervalue'];
+				$SupplierBalanceIDR =  0;
+				$SupplierBalanceUSD =  0;
+				$SupplierBalanceTHB =  $Payments[$myrow['supplierno']]['balance'];
+				if ($SupplierBalanceTHB >= $ValueOrderTHB){
+					// we have enough balance to cover the order, no payment needed
+					$PaymentOrderTHB = 0;
+				}else{
+					$PaymentOrderTHB = $ValueOrderTHB - $SupplierBalanceTHB;
+					$AcumTHB = $AcumTHB + $PaymentOrderTHB; 
+				}
 			}
 			
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
-					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -3739,43 +3783,28 @@ function PurchasingOrdersDeliveryControl($reason, $maxdays, $RootPath, $db){
 					</tr>', 
 					$i, 
 					$CodeLink, 
-					ConvertSQLDate($myrow['orddate']), 
+					$myrow['supplierno'],
 					ConvertSQLDate($myrow['deliverydate']), 
-					$myrow['suppname'],
-					locale_number_format_zero_blank($ValueIDR,0),
-					locale_number_format_zero_blank($ValueUSD,0),
-					locale_number_format_zero_blank($ValueTHB,0),
-					locale_number_format_zero_blank($ValueEUR,0),
-					locale_number_format_zero_blank($ValueHKD,0),
-					locale_number_format_zero_blank($AcumIDR,0)
+					locale_number_format_zero_blank($ValueOrderIDR,0),
+					locale_number_format_zero_blank($ValueOrderUSD,0),
+					locale_number_format_zero_blank($ValueOrderTHB,0),
+					locale_number_format_zero_blank($SupplierBalanceIDR,0),
+					locale_number_format_zero_blank($SupplierBalanceUSD,0),
+					locale_number_format_zero_blank($SupplierBalanceTHB,0),
+					locale_number_format_zero_blank($PaymentOrderIDR,0),
+					locale_number_format_zero_blank($PaymentOrderUSD,0),
+					locale_number_format_zero_blank($PaymentOrderTHB,0),
+					locale_number_format_zero_blank($AcumIDR,0),
+					locale_number_format_zero_blank($AcumUSD,0),
+					locale_number_format_zero_blank($AcumTHB,0)
 					);
+			// update the supplier balance after the order 
+			$Payments[$myrow['supplierno']]['balance'] = $Payments[$myrow['supplierno']]['balance'] - $myrow['ordervalue']; 
+			if ($Payments[$myrow['supplierno']]['balance'] < 0){
+				$Payments[$myrow['supplierno']]['balance'] = 0;
+			}
 			$i++;
 		}
-		$k = StartEvenOrOddRow($k);
-		printf('<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				'', 
-				'', 
-				'', 
-				'', 
-				'TOTALS',
-				locale_number_format_zero_blank($TotalIDR,0),
-				locale_number_format_zero_blank($TotalUSD,0),
-				locale_number_format_zero_blank($TotalTHB,0),
-				locale_number_format_zero_blank($TotalEUR,0),
-				locale_number_format_zero_blank($TotalHKD,0),
-				locale_number_format_zero_blank($AcumIDR,0)
-				);
 		echo '</table>
 				</div>';
 	}

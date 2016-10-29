@@ -890,7 +890,7 @@ if ($ProcessSection02){
 	
 		PurchasingOrdersDeliveryControl("Delayed", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PurchasingOrdersDeliveryControl("Coming Soon", 15, $RootPath, $db);
+		PurchasingOrdersDeliveryControl("Coming Soon", 90, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
