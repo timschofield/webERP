@@ -1,6 +1,6 @@
 <?php
-
-/* $Id: ConnectDB_mysql.inc 7167 2015-02-21 23:36:17Z daintree $ */
+/* $Id: ConnectDB_mysql.inc 7653 2016-10-24 01:18:52Z rchacon $ */
+/* Database abstraction for mysql */
 
 define ('LIKE','LIKE');
 
@@ -122,9 +122,8 @@ function DB_fetch_assoc (&$ResultIndex) {
 	Return $RowPointer;
 }
 
-function DB_fetch_array (&$ResultIndex) {
-
-	$RowPointer=mysql_fetch_array($ResultIndex);
+function DB_fetch_array(&$ResultIndex) {
+	$RowPointer = mysql_fetch_array($ResultIndex);
 	Return $RowPointer;
 }
 

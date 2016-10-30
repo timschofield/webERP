@@ -11,6 +11,12 @@ This CSS is not yet fully optimized. Some styles maybe redundant and not support
 
 ***/
 
+button img {
+	/* Describes how button image should be displayed. */
+	height:21px;
+	width:21px;
+}
+
 body {
 	font-family:Arial, Verdana, Helvetica, sans-serif;
 	font-size:10pt;

@@ -1,5 +1,5 @@
 <?php
-/* $Id: WorkOrderStatus.php 6942 2014-10-27 02:48:29Z daintree $*/
+/* $Id: WorkOrderStatus.php 7611 2016-09-04 06:12:47Z exsonqu $*/
 
 include('includes/session.inc');
 $Title = _('Work Order Status Inquiry');
@@ -138,7 +138,7 @@ echo '<table cellpadding="2" class="selection">
 			<td class="number">'.locale_number_format($Issued,$RequirementsRow['decimalplaces']).'</td></tr>';
 	}
 	/* Now do any additional issues of items not in the BOM */
-	if(count($IssuedAlreadyRow)>0){
+	if(isset($IssuedAlreadyRow) AND count($IssuedAlreadyRow)>0){
 		$AdditionalStocks = implode("','",array_keys($IssuedAlreadyRow));
 		$RequirementsSQL = "SELECT stockid,
 						description,

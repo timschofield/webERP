@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: SelectCompletedOrder.php 6944 2014-10-27 07:15:34Z daintree $*/
+/* $Id: SelectCompletedOrder.php 7637 2016-09-25 10:38:47Z exsonqu $*/
 
 include('includes/session.inc');
 
@@ -35,6 +35,7 @@ if (isset($_GET['OrderNumber'])){
 }
 if (isset($_GET['CustomerRef'])){
 	$CustomerRef = $_GET['CustomerRef'];
+	$CustomerGet = 1;
 } elseif (isset($_POST['CustomerRef'])){
 	$CustomerRef = $_POST['CustomerRef'];
 }
@@ -236,7 +237,7 @@ if (isset($_POST['SearchParts']) AND $_POST['SearchParts']!=''){
 		  	echo '<br />' . _('For the part') . ': ' . $SelectedStockItem . ' ' . _('and') . ' <input type="hidden" name="SelectedStockItem" value="' . $SelectedStockItem . '" />';
 		}
 	}
-} else if (isset($_POST['SearchOrders']) AND Is_Date($_POST['OrdersAfterDate'])==1) {
+} else if ((isset($_POST['SearchOrders']) AND Is_Date($_POST['OrdersAfterDate'])==1) OR (isset($CustomerGet))) {
 
 	//figure out the SQL required from the inputs available
 	if (isset($OrderNumber)) {
@@ -547,6 +548,14 @@ If (isset($StockItemsResult)) {
 //end if stock search results to show
 
 If (isset($SalesOrdersResult)) {
+	if (DB_num_rows($SalesOrdersResult) == 1) {
+		if (!isset($OrderNumber)) {
+			$ordrow = DB_fetch_array($SalesOrdersResult);
+			$OrderNumber = $ordrow['orderno'];
+		}
+		header('location:' . $RootPath .'/OrderDetails.php?OrderNumber=' . $OrderNumber);
+		exit;
+	}
 
 /*show a table of the orders returned by the SQL */
 

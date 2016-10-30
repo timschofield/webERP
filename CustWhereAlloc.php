@@ -1,5 +1,5 @@
 <?php
-/* $Id: CustWhereAlloc.php 7592 2016-08-17 13:22:42Z rchacon $*/
+/* $Id: CustWhereAlloc.php 7628 2016-09-21 16:14:21Z rchacon $*/
 /* Shows to which invoices a receipt was allocated to */
 
 include('includes/session.inc');
@@ -79,7 +79,7 @@ if(isset($_POST['ShowResults']) AND $_POST['TransNo']!='') {
 	}
 	$result = DB_query($sql );
 
-	if(DB_num_rows($result)==1) {
+	if(DB_num_rows($result) > 0) {
 		$myrow = DB_fetch_array($result);
 		$AllocToID = $myrow['id'];
 		$CurrCode = $myrow['currcode'];

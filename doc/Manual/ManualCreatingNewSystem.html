@@ -60,29 +60,32 @@ Notice that the stock GL integration is a separate flag. If GL integration of ac
 For GL integration at the sales level the posting codes for sales for a specific sales type, sales area and stock category need to be defined from Setup &gt; Sales GL Interface Postings. For Stock GL integration then the cost of sales posting codes for a specific sales type, sales area and stock catgeory also need to be set up from Setup &gt; COGS GL Interface Postings (COGS = Cost Of Goods Sold). If appropriate GL codes are not specified the system will automatically create a new GL account number 1 for the postings to be made to. If you have this account keep appearing then this is a good sign that default posting codes are not created.</p>
 
 <!-- Help End: CompanyPreferences -->
- <!-- Help Begin: SystemConfiguration -->
+ <!-- Help Begin: SystemParameters -->
  <div class="floatright">    <a class="minitext" href="#top">⬆ Top</a></div>
-<h2><a id="SystemConfiguration">System Configuration</a></h2>
+<h2><a id="SystemParameters">System Parameters</a></h2>
 <p>
 From the setup tab the main system configuration parameters can be set from the link "Configuration Settings". Narrative is shown alongside each parameter to give the user an idea of where the setting is used.</p>
 
 <table border="1" width="100%">
+<thead>
     <tr>
         <th style="width:20%;">Parameter</th>
 
         <th>Description</th>
     </tr>
+</thead>
 
+<tbody>
     <tr>
-        <td>Default Date Format (for input and to appear on reports)</td>
-
-        <td>The default date format for entry of dates and display use d/m/Y for England/Australia/NZ or m/d/Y for US and Canada</td>
+        <td align="center" colspan="2"><b>General Settings</b></td>
     </tr>
-
     <tr>
-        <td>New Users Default Theme:</td>
-
-        <td>The default theme is used for new users who have not yet defined the display colour scheme theme of their choice</td>
+        <td>Default Date Format:</td>
+        <td>The default date format for entry of dates and display. It is for input and to appear on reports. The default date format for entry of dates and display use Y-m-d for ISO 8601, d/m/Y for England/Australia/NZ, m/d/Y for US and Canada, or else.</td>
+    </tr>
+    <tr>
+        <td>Default Theme:</td>
+        <td>The default theme to use for the login screen and the setup of new users. It is used for new users who have not yet defined the display colour scheme theme of their choice. The users' theme selection will override it.</td>
     </tr>
 
     <tr>
@@ -360,6 +363,7 @@ From the setup tab the main system configuration parameters can be set from the 
             <p></p>
         </td>
     </tr>
+</tbody>
 </table>
 
 <!-- Help End: SystemConfiguration -->
