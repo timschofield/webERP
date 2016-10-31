@@ -8,49 +8,27 @@ $ViewTopic = 'SecuritySchema';
 $BookMark = 'SecurityTokens';// Pending ?
 include('includes/header.inc');
 
-if(isset($_GET['SelectedToken'])) {
-	if($_GET['Action'] == 'delete'){
-		$Result = DB_query("SELECT script FROM scripts WHERE pagesecurity='" . $_GET['SelectedToken'] . "'");
-		if(DB_num_rows($Result)>0) {
-			prnMsg(_('This secuirty token is currently used by the following scripts and cannot be deleted'), 'error');
-			echo '<table>
-					<tr>';
-			$i = 0;
-			while($ScriptRow = DB_fetch_array($Result)) {
-				if($i == 5){
-					$i = 0;
-					echo '</tr>
-							<tr>';
-				}
-				$i++;
-				echo '<td>', $ScriptRow['script'], '</td>';
-			}
-			echo '</tr></table>';
-		} else {
-			$Result = DB_query("DELETE FROM securitytokens WHERE tokenid='" . $_GET['SelectedToken'] . "'");
-		}
-	} else {// It must be an edit
-		$Sql = "SELECT tokenid, tokenname
-				FROM securitytokens
-				WHERE tokenid='" . $_GET['SelectedToken'] . "'";
-		$Result = DB_query($Sql);
-		$MyRow = DB_fetch_array($Result);
-		$_POST['TokenID'] = $MyRow['tokenid'];
-		$_POST['TokenDescription'] = $MyRow['tokenname'];
-	}
+// Merge gets into posts:
+if(isset($_GET['Action'])) {
+	$_POST['Action'] = $_GET['Action'];
 }
-if(!isset($_POST['TokenID'])) {
-	$_POST['TokenID'] = '';
-	$_POST['TokenDescription'] = '';
+if(isset($_GET['TokenId'])) {
+	$_POST['TokenId'] = $_GET['TokenId'];
+}
+if(isset($_GET['TokenDescription'])) {
+	$_POST['TokenDescription'] = $_GET['TokenDescription'];
 }
 
+// Validate the data sent:
 $InputError = 0;
-
-if(isset($_POST['Submit']) OR isset($_POST['Update'])) {
-	if(!is_numeric($_POST['TokenID'])) {
+if($_POST['Action']=='insert' OR $_POST['Action']=='update') {
+	if(!is_numeric($_POST['TokenId'])) {
 		prnMsg(_('The token ID is expected to be a number. Please enter a number for the token ID'), 'error');
 		$InputError = 1;
-
+	}
+	if(mb_strlen($_POST['TokenId']) == 0) {
+		prnMsg(_('A token ID must be entered'), 'error');
+		$InputError = 1;
 	}
 	if(mb_strlen($_POST['TokenDescription']) == 0) {
 		prnMsg(_('A token description must be entered'), 'error');
@@ -58,36 +36,72 @@ if(isset($_POST['Submit']) OR isset($_POST['Update'])) {
 	}
 }
 
-if(isset($_POST['Submit'])) {
-	$TestSql = "SELECT tokenid FROM securitytokens WHERE tokenid='" . $_POST['TokenID'] . "'";
-	$TestResult = DB_query($TestSql);
-	if(DB_num_rows($TestResult)!=0) {
-		prnMsg( _('This token ID has already been used. Please use a new one') , 'warn');
-		$InputError = 1;
-	}
-	if($InputError == 0) {
-		$Sql = "INSERT INTO securitytokens values('" . $_POST['TokenID'] . "', '" . $_POST['TokenDescription'] . "')";
-		$Result = DB_query($Sql);
-		$_POST['TokenID'] = '';
-		$_POST['TokenDescription'] = '';
-	}
-}
-
-if(isset($_POST['Update']) AND $InputError == 0) {
-	$Sql = "UPDATE securitytokens
-			SET tokenname='" . $_POST['TokenDescription'] . "'
-			WHERE tokenid='" . $_POST['TokenID'] . "'";
-	$Result = DB_query($Sql);
-	$_POST['TokenDescription'] = '';
-	$_POST['TokenID'] = '';
-}
+// Execute the requested action:
+switch($_POST['Action']) {
+    case 'cancel':
+		unset($_POST['Action']);
+		unset($_POST['TokenId']);
+		unset($_POST['TokenDescription']);
+		break;
+    case 'delete':
+		$Result = DB_query("SELECT script FROM scripts WHERE pagesecurity='" . $_POST['TokenId'] . "'");
+		if(DB_num_rows($Result) > 0) {
+			$List = '';
+			while($ScriptRow = DB_fetch_array($Result)) {
+					$List .= ' ' . $ScriptRow['script'];
+				}
+			prnMsg(_('This secuirty token is currently used by the following scripts and cannot be deleted') . ':' . $List, 'error');
+		} else {
+			$Result = DB_query("DELETE FROM securitytokens WHERE tokenid='" . $_POST['TokenId'] . "'");
+			if($Result) {prnMsg(_('The security token was deleted successfully'), 'success');}
+		}
+		unset($_POST['Action']);
+		unset($_POST['TokenId']);
+		unset($_POST['TokenDescription']);
+		break;
+    case 'edit':
+		$Result = DB_query("SELECT tokenid, tokenname FROM securitytokens WHERE tokenid='" . $_POST['TokenId'] . "'");
+		$MyRow = DB_fetch_array($Result);
+		// Keeps $_POST['Action']=edit, and sets $_POST['TokenId'] and $_POST['TokenDescription'].
+		$_POST['TokenId'] = $MyRow['tokenid'];
+		$_POST['TokenDescription'] = $MyRow['tokenname'];
+		break;
+    case 'insert':
+		$Result = DB_query("SELECT tokenid FROM securitytokens WHERE tokenid='" . $_POST['TokenId'] . "'");
+		if(DB_num_rows($Result) != 0) {
+			prnMsg( _('This token ID has already been used. Please use a new one') , 'warn');
+			$InputError = 1;
+		}
+		if($InputError == 0) {
+			$Result = DB_query("INSERT INTO securitytokens values('" . $_POST['TokenId'] . "', '" . $_POST['TokenDescription'] . "')");
+			if($Result) {prnMsg(_('The security token was inserted successfully'), 'success');}
+			unset($_POST['Action']);
+			unset($_POST['TokenId']);
+			unset($_POST['TokenDescription']);
+		}
+		break;
+    case 'update':
+		if($InputError == 0) {
+			$Result = DB_query("UPDATE securitytokens SET tokenname='" . $_POST['TokenDescription'] . "' WHERE tokenid='" . $_POST['TokenId'] . "'");
+			if($Result) {prnMsg(_('The security token was updated successfully'), 'success');}
+			unset($_POST['Action']);
+			unset($_POST['TokenId']);
+			unset($_POST['TokenDescription']);
+		}
+		break;
+    default:// Unknown requested action.
+		prnMsg(_('Unknown requested action'), 'error');
+		unset($_POST['Action']);
+		unset($_POST['TokenId']);
+		unset($_POST['TokenDescription']);
+}// END switch($_POST['Action']).
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/maintenance.png" title="', // Icon image.
 	$Title, '" /> ', // Icon title.
-	$Title, '</p>';// Page title.
-
-echo '<table class="selection">
+	$Title, '</p>', // Page title.
+// Security Token Data table:
+	'<table class="selection">
 	<thead>
 		<tr>
 			<th>', _('Token ID'), '</th>
@@ -95,60 +109,64 @@ echo '<table class="selection">
 			<th class="noprint" colspan="2">&nbsp;</th>
 		</tr>
 	</thead><tbody>';
-$Sql = "SELECT tokenid, tokenname FROM securitytokens ORDER BY tokenid";
-$Result = DB_query($Sql);
+$Result = DB_query("SELECT tokenid, tokenname FROM securitytokens ORDER BY tokenid");
 while($MyRow = DB_fetch_array($Result)) {
 	echo '<tr>
 			<td class="number">', $MyRow['tokenid'], '</td>
 			<td class="text">', htmlspecialchars($MyRow['tokenname'], ENT_QUOTES, 'UTF-8'), '</td>
-			<td class="noprint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?SelectedToken=', $MyRow['tokenid'], '&amp;Action=edit">', _('Edit'), '</a></td>
-			<td class="noprint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?SelectedToken=', $MyRow['tokenid'], '&amp;Action=delete" onclick="return confirm(\'', _('Are you sure you wish to delete this security token?'), '\');">', _('Delete'), '</a></td>
+			<td class="noprint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?Action=edit&amp;TokenId=', $MyRow['tokenid'], '">', _('Edit'), '</a></td>
+			<td class="noprint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?Action=delete&amp;TokenId=', $MyRow['tokenid'], '" onclick="return confirm(\'', _('Are you sure you wish to delete this security token?'), '\');">', _('Delete'), '</a></td>
 		</tr>';
 }
-echo '</tbody></table>';
-
-echo '<br />
-	<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" id="form" method="post">
-	<input name="FormID" type="hidden" value="' . $_SESSION['FormID'] . '" />
+echo '</tbody></table>
+	<br />
+	<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" id="form" method="post">
+	<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />
 	<table class="noprint">
 	<thead>
 		<tr>
 			<th colspan="2">';
-
-if(isset($_GET['Action']) and $_GET['Action']=='edit') {
-	echo		('Edit'), '</th>',
+// Edit or New Security Token form table:
+if(isset($_POST['Action']) and $_POST['Action']=='edit') {
+	echo		('Edit Security Token'), '</th>',
 		'</tr>
 		</thead><tfoot>',
 		'<tr>
 			<td colspan="2" class="centre">',
-				'<button name="Update" type="submit" value="', _('Update'), '"><img alt="" src="', $RootPath, '/css/', $Theme,
+				'<button name="Action" type="submit" value="update"><img alt="" src="', $RootPath, '/css/', $Theme,
 					'/images/tick.svg" /> ', _('Update'), '</button>', // "Update" button.
+				'<button formaction="SecurityTokens.php?Action=cancel" type="submit"><img alt="" src="', $RootPath, '/css/', $Theme,
+					'/images/cross.svg" /> ', _('Cancel'), '</button>', // "Cancel" button.
+				'<button onclick="window.location=\'index.php?Application=system\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
+					'/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
 			'</td>',
 		'</tr>
 		</tfoot><tbody>',
 		'<tr>
 			<td>', _('Token ID'), '</td>
-			<td>', $_GET['SelectedToken'], '<input name="TokenID" type="hidden" value="', $_GET['SelectedToken'], '" />';
+			<td>', $_POST['TokenId'], '<input name="TokenId" type="hidden" value="';
 } else {
-	echo		('Insert'), '</th>',
+	echo		('New Security Token'), '</th>',
 		'</tr>
 		</thead><tfoot>',
 		'<tr>
 			<td colspan="2" class="centre">',
-				'<button name="Submit" type="submit" value="', _('Insert'), '"><img alt="" src="', $RootPath, '/css/', $Theme,
+				'<button name="Action" type="submit" value="insert"><img alt="" src="', $RootPath, '/css/', $Theme,
 					'/images/tick.svg" /> ', _('Insert'), '</button>', // "Insert" button.
+				'<button onclick="window.location=\'index.php?Application=system\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
+					'/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
 			'</td>',
 		'</tr>
 		</tfoot><tbody>',
 		'<tr>
-			<td><label for="TokenID">', _('Token ID'), '</label></td>
-			<td><input autofocus="autofocus" class="number" id="TokenID" maxlength="4" name="TokenID" required="required" size="6" type="text" value="', $_POST['TokenID'], '" />';
+			<td><label for="TokenId">', _('Token ID'), '</label></td>
+			<td><input autofocus="autofocus" class="number" id="TokenId" maxlength="4" name="TokenId" required="required" size="6" type="text" value="';
 }
-echo		'</td>
+echo			$_POST['TokenId'], '" /></td>
 		</tr>
 		<tr>
 			<td><label for="TokenDescription">', _('Description'), '</label></td>
-			<td><input id="TokenDescription" maxlength="50" name="TokenDescription" required="required" size="50" title="', _('The security token description should describe which functions this token allows a user/role to access'), '" type="text" value="', $_POST['TokenDescription'], '" /></td>
+			<td><input id="TokenDescription" maxlength="60" name="TokenDescription" required="required" size="50" title="', _('The security token description should describe which functions this token allows a user/role to access'), '" type="text" value="', $_POST['TokenDescription'], '" /></td>
 		</tr>
 	</table>
 	</form>';
