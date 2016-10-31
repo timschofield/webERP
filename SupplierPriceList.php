@@ -1,10 +1,12 @@
 <?php
+/* $Id: SupplierPriceList.php 6941 2014-10-26 23:18:08Z daintree $*/
+/* Maintain Supplier Price Lists */
 
-include ('includes/session.inc');
-
+include('includes/session.inc');
 $Title = _('Supplier Purchasing Data');
-
-include ('includes/header.inc');
+$ViewTopic = 'PurchaseOrdering';
+$BookMark = 'SupplierPriceList';
+include('includes/header.inc');
 
 if (isset($_POST['StockSearch'])) {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">
@@ -540,6 +542,7 @@ if (isset($_POST['SupplierID'])) {
 			<th>' . _('Effective From') . '</th>
 			<th>' . _('Suppliers Item Code') . '</th>
 			<th>' . _('Min Order Qty') . '</th>
+			<th>', _('Save'), '</th>
 		</tr>';
 
 	if (isset($_POST['Select'])) {
