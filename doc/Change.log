@@ -1,5 +1,6 @@
 webERP Change Log
 
+30/10/16 RChacon: In SecurityTokens.php: Fix Description's input maxlength, fix table head in data table, move form-tables after data table, add cancel button in edit form table, add return button, add style to print data table, add title in form tables, regroup code, change from if/elseif to switch/case to improve code readability, and add code documentation.
 30/10/16 RChacon: On SupplierPriceList.php, add ViewTopic and BookMark, and complete html table. Add info to manual.
 17/10/16 Phil: Fix SQL in ReverseGRN.php as reported by Ricard/Tim.
 16/10/16 RChacon: Fix function convertDate(dS,dF).
