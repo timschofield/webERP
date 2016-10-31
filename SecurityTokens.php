@@ -90,7 +90,6 @@ switch($_POST['Action']) {
 		}
 		break;
     default:// Unknown requested action.
-		prnMsg(_('Unknown requested action'), 'error');
 		unset($_POST['Action']);
 		unset($_POST['TokenId']);
 		unset($_POST['TokenDescription']);
