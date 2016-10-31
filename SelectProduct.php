@@ -188,7 +188,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		echo '</td>';
 		}
 		echo '</tr>';
-	} //end of if PricesSecuirty allows viewing of prices
+	} //end of if PricesSecurity allows viewing of prices
 	echo '</table>'; //end of first nested table
 	// Item Category Property mod: display the item properties
 	echo '<table>';

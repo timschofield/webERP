@@ -27801,7 +27801,7 @@ msgstr "Administrar fichas de seguridad"
 
 #: SecurityTokens.php:14
 msgid ""
-"This secuirty token is currently used by the following scripts and cannot be "
+"This security token is currently used by the following scripts and cannot be "
 "deleted"
 msgstr ""
 "Este testigo de seguridad es utilizado actualmente por los siguientes "

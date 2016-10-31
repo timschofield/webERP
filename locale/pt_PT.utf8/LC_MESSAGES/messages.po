@@ -27172,7 +27172,7 @@ msgstr "Manter Tokens Segur."
 
 #: SecurityTokens.php:14
 msgid ""
-"This secuirty token is currently used by the following scripts and cannot be "
+"This security token is currently used by the following scripts and cannot be "
 "deleted"
 msgstr "Esse token segurança é usado pelos scripts e não pode ser removido"
 

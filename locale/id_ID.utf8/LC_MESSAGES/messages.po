@@ -27135,7 +27135,7 @@ msgstr "Pengaturan Token Keamanan"
 
 #: SecurityTokens.php:14
 msgid ""
-"This secuirty token is currently used by the following scripts and cannot be "
+"This security token is currently used by the following scripts and cannot be "
 "deleted"
 msgstr ""
 "Token keamanan ini sedang digunakan oleh script berikut dan tdk dapat dihapus"

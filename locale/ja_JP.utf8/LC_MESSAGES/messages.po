@@ -26316,7 +26316,7 @@ msgstr "セキュリティトークン設定可能"
 
 #: SecurityTokens.php:14
 msgid ""
-"This secuirty token is currently used by the following scripts and cannot be "
+"This security token is currently used by the following scripts and cannot be "
 "deleted"
 msgstr ""
 

@@ -26968,7 +26968,7 @@ msgstr "보안 토큰을 유지"
 
 #: SecurityTokens.php:14
 msgid ""
-"This secuirty token is currently used by the following scripts and cannot be "
+"This security token is currently used by the following scripts and cannot be "
 "deleted"
 msgstr ""
 "이 보안] 토큰은 현재 다음과 같은 스크립트에 의해 사용되며 삭제할 수 없습니다"

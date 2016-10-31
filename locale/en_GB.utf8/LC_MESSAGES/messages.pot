@@ -24914,7 +24914,7 @@ msgid "Maintain Security Tokens"
 msgstr ""
 
 #: SecurityTokens.php:14
-msgid "This secuirty token is currently used by the following scripts and cannot be deleted"
+msgid "This security token is currently used by the following scripts and cannot be deleted"
 msgstr ""
 
 #: SecurityTokens.php:51

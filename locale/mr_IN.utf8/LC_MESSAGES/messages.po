@@ -26764,9 +26764,9 @@ msgstr "सुरक्षा टोकन ठेवा"
 
 #: SecurityTokens.php:14
 msgid ""
-"This secuirty token is currently used by the following scripts and cannot be "
+"This security token is currently used by the following scripts and cannot be "
 "deleted"
-msgstr "हे secuirty टोकन सध्या खालील स्क्रिप्ट वापरली जाते आणि हटविले जाऊ शकत नाही"
+msgstr "हे security टोकन सध्या खालील स्क्रिप्ट वापरली जाते आणि हटविले जाऊ शकत नाही"
 
 #: SecurityTokens.php:51
 msgid ""

@@ -27549,7 +27549,7 @@ msgstr "Maintenir les jetons de sécurité (Tokens)"
 
 #: SecurityTokens.php:14
 msgid ""
-"This secuirty token is currently used by the following scripts and cannot be "
+"This security token is currently used by the following scripts and cannot be "
 "deleted"
 msgstr ""
 "Ce jeton de sécurité est utilisé par le(s) script(s) suivants et ne peut pas "

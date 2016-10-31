@@ -26478,7 +26478,7 @@ msgstr "設置系統模組權限代碼"
 
 #: SecurityTokens.php:14
 msgid ""
-"This secuirty token is currently used by the following scripts and cannot be "
+"This security token is currently used by the following scripts and cannot be "
 "deleted"
 msgstr "這個編制主任令牌是目前使用以下腳本，不能被刪除"
 
