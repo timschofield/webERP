@@ -20,7 +20,6 @@ if(isset($_GET['identifier'])) {
 	$identifier = '';
 }
 
-// RICARD: To be improved to get just 1 wcpcache folder in all installation
 if($_SESSION['HTTPS_Only'] == 1){
 	$Protocol = "https";
 }else{
@@ -36,7 +35,7 @@ if (isset($DirectoryLevelsDeep)){
 if ($RootPath == "/" OR $RootPath == "\\") {
 	$RootPath = "";
 }
-$filename =  $Protocol . "://$_SERVER[HTTP_HOST]" . $RootPath . '/includes/WebClientPrint/wcpcache/'.$identifier.'.pos';   
+$filename =  $Protocol . "://$_SERVER[HTTP_HOST]" . $RootPath . '/wcpcache/'.$identifier.'.pos';   
 
 $texttoprint = file_get_contents($filename);
 

@@ -202,7 +202,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 
 	//################## PRINTING STUFF ##################### 
 	$identifier=date('U');
-	$filename = 'includes/WebClientPrint/wcpcache/'.$identifier.'.pos';   
+	$filename = 'wcpcache/'.$identifier.'.pos';   
 	file_put_contents($filename, $TextToPrint);
 
 	echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . 
