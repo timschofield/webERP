@@ -3625,7 +3625,7 @@ function PurchasingOrdersDeliveryControl($reason, $maxdays, $RootPath, $db){
 		$EndDate = "0000-00-00";
 	}else{
 		$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',+$maxdays));
-		$EndDate = Date("Y-m-d");
+		$EndDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-30));
 	}
 	$SQL = "SELECT purchorders.orderno,
 				purchorders.supplierno,
@@ -3658,7 +3658,8 @@ function PurchasingOrdersDeliveryControl($reason, $maxdays, $RootPath, $db){
 				purchorders.allowprint,
 				suppliers.currcode,
 				currencies.decimalplaces
-			ORDER BY purchorders.deliverydate ASC";
+			ORDER BY purchorders.deliverydate ASC,
+				purchorders.orderno ASC";
 	
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
