@@ -1,5 +1,6 @@
 webERP Change Log
 
+03/11/16 RChacon: On Dashboard.php, fix creditors payment to point to allocation instead to payment, replace printf() with plain list echo, regroup code, and complete column styles.
 01/11/16 RChacon: On SupplierInquiry.php, replace the printf() statements with echo statements to fix bug caused by a supplier invoice with a comment that includes a % character (reported by R2-G, solution by Tim).
 30/10/16 RChacon: In SecurityTokens.php: Fix Description's input maxlength, fix table head in data table, move form-tables after data table, add cancel button in edit form table, add return button, add style to print data table, add title in form tables, regroup code, change from if/elseif to switch/case to improve code readability, and add code documentation.
 30/10/16 RChacon: On SupplierPriceList.php, add ViewTopic and BookMark, and complete html table. Add info to manual.
