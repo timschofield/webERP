@@ -1,15 +1,15 @@
 <?php
 /* $Id$*/
+/* Selects a supplier. A supplier is required to be selected before any AP transactions and before any maintenance or inquiry of the supplier */
 
-include ('includes/session.inc');
+include('includes/session.inc');
 $Title = _('Search Suppliers');
-
-/* webERP manual links before header.inc */
-$ViewTopic= 'AccountsPayable';
+$ViewTopic = 'AccountsPayable';
 $BookMark = 'SelectSupplier';
+include('includes/header.inc');
 
-include ('includes/header.inc');
-include ('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.inc');
+
 if (!isset($_SESSION['SupplierID'])) {
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Suppliers') . '</p>';
 }
