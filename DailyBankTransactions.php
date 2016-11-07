@@ -92,7 +92,7 @@ if (!isset($_POST['Show'])) {
 	$BankResult = DB_query($SQL,_('Could not retrieve the bank account details'));
 
 
-	$sql="SELECT (SELECT sum(banktrans.amount) FROM banktrans 
+	$sql="SELECT (SELECT sum(banktrans.amount) FROM banktrans
 				WHERE transdate < '" . FormatDateForSQL($_POST['FromTransDate']) . "'
 				AND bankact='" . $_POST['BankAccount'] ."') AS prebalance,
 					banktrans.currcode,
@@ -125,7 +125,7 @@ if (!isset($_POST['Show'])) {
 		_('Bank Transactions Inquiry') . '" /> ' .// Icon title.
 		_('Bank Transactions Inquiry') . '</p>';// Page title.
 		prnMsg(_('There are no transactions for this account in the date range selected'), 'info');
-		
+
 		$sql = "SELECT sum(banktrans.amount) FROM banktrans WHERE bankact='" . $_POST['BankAccount'] . "'";
 		$ErrMsg = _('Failed to retrive balance data');
 		$balresult = DB_query($sql,$ErrMsg);
@@ -136,7 +136,7 @@ if (!isset($_POST['Show'])) {
 				echo '<p class="page_title_text">' . _('The Bank Account Balance Is in') . '  ' . $BankDetailRow['currcode'] . ' <span style="font-weight:bold">' . locale_number_format($Balance,$BankDetailRow['decimalplaces']) . '</span></p>';
 			}
 		}
-	
+
 	} else {
 		echo '<div id="Report">';// Division to identify the report block.
 		echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
@@ -168,7 +168,7 @@ if (!isset($_POST['Show'])) {
 		$j = 0;
 		$k = 0;
 		while ($myrow = DB_fetch_array($result)){
-		
+
 			if ($j == 0) {
 				if (ABS($myrow['prebalance'])>0.0001) {
 						if ($k == 0) {
@@ -184,7 +184,7 @@ if (!isset($_POST['Show'])) {
 						<td colspan="5"></td></tr>';
 					$j++;
 
-				}	
+				}
 			}
 			if ($k == 0) {
 				echo '<tr class="OddTableRows">';
@@ -210,7 +210,7 @@ if (!isset($_POST['Show'])) {
 			$Balance += $myrow['amount']/$myrow['exrate'];
 			$AccountCurrTotal += $myrow['amount']/$myrow['exrate'];
 			$LocalCurrTotal += $myrow['amount']/$myrow['functionalexrate']/$myrow['exrate'];
-		
+
 			if ($myrow['amount']==$myrow['amountcleared']) {
 				$Matched=_('Yes');
 			} else {
@@ -253,9 +253,8 @@ if (!isset($_POST['Show'])) {
 				'<button name="SelectADifferentPeriod" type="submit" value="'. _('Select A Different Period') .'"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 					'/images/gl.png" /> ' .
 					_('Select Another Date') . '</button>'.// "Select A Different Period" button.
-				'<button formaction="index.php?Application=GL" type="submit"><img alt="" src="'.$RootPath.'/css/'.$Theme.
-					'/images/previous.png" /> ' .
-					_('Return') . '</button>'.// "Return" button.
+				'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+					'/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
 			'</div>
 		</form>';
 }

@@ -166,8 +166,8 @@ if ((!isset($_POST['FromPeriod'])
 					Sum(CASE WHEN chartdetails.period='" . ($_POST['FromPeriod'] - 12) . "' THEN chartdetails.bfwd ELSE 0 END) AS lyfirstprdbfwd,
 					Sum(CASE WHEN chartdetails.period='" . ($_POST['ToPeriod']-12) . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lylastprdcfwd,
 					Sum(CASE WHEN chartdetails.period='" . $_POST['ToPeriod'] . "' THEN chartdetails.bfwdbudget + chartdetails.budget ELSE 0 END) AS lastprdbudgetcfwd
-				FROM chartmaster 
-					INNER JOIN accountgroups ON chartmaster.group_ = accountgroups.groupname 
+				FROM chartmaster
+					INNER JOIN accountgroups ON chartmaster.group_ = accountgroups.groupname
 					INNER JOIN chartdetails ON chartmaster.accountcode= chartdetails.accountcode
 					INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canview=1
 				WHERE accountgroups.pandl=1
@@ -595,8 +595,8 @@ if ((!isset($_POST['FromPeriod'])
 					SUM(CASE WHEN chartdetails.period='" . ($_POST['FromPeriod'] - 12) . "' THEN chartdetails.bfwd ELSE 0 END) AS lyfirstprdbfwd,
 					SUM(CASE WHEN chartdetails.period='" . ($_POST['ToPeriod']-12) . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lylastprdcfwd,
 					SUM(CASE WHEN chartdetails.period='" . $_POST['ToPeriod'] . "' THEN chartdetails.bfwdbudget + chartdetails.budget ELSE 0 END) AS lastprdbudgetcfwd
-			FROM chartmaster 
-				INNER JOIN accountgroups ON chartmaster.group_ = accountgroups.groupname 
+			FROM chartmaster
+				INNER JOIN accountgroups ON chartmaster.group_ = accountgroups.groupname
 				INNER JOIN chartdetails	ON chartmaster.accountcode= chartdetails.accountcode
 				INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canview=1
 			WHERE accountgroups.pandl=1
@@ -1313,8 +1313,8 @@ if ((!isset($_POST['FromPeriod'])
 				'/images/printer.png" /> ', _('Print This'), '</button> ', // "Print This" button.
 			'<button name="SelectADifferentPeriod" type="submit" value="', _('Select A Different Period'), '"><img alt="" src="', $RootPath, '/css/', $Theme,
 				'/images/gl.png" /> ', _('Select A Different Period'), '</button> ', // "Select A Different Period" button.
-			'<button formaction="index.php?Application=GL" type="submit"><img alt="" src="', $RootPath, '/css/', $Theme,
-				'/images/previous.png" /> ', _('Return'), '</button>', // "Return" button.
+			'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
+				'/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
 		'</div>';
 }
 echo '</div>';// div class=?

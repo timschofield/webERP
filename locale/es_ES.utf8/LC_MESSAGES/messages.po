@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-10-31 20:01-0600\n"
-"PO-Revision-Date: 2016-11-06 11:51-0600\n"
+"PO-Revision-Date: 2016-11-06 21:23-0600\n"
 "Last-Translator: Rafael E. Chacón <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -14616,7 +14616,7 @@ msgstr "Movimientos por Registro de la tabla ChartDetails"
 
 #: GLAccountInquiry.php:272
 msgid "Period difference"
-msgstr "Diferencia del Período"
+msgstr "Diferencia del período"
 
 #: GLAccountInquiry.php:295
 msgid "Failed to retrieve bank data"
@@ -15360,7 +15360,7 @@ msgstr "Período actual"
 #: includes/PDFTagProfitAndLossPageHeader.inc:36
 #: includes/PDFTrialBalancePageHeader.inc:33
 msgid "Period Budget"
-msgstr "Presupuesto del Período"
+msgstr "Presupuesto del período"
 
 #: GLProfit_Loss.php:912
 #, php-format
@@ -15524,7 +15524,7 @@ msgstr "Mes actual"
 
 #: GLTrialBalance.php:455 includes/PDFTrialBalancePageHeader.inc:31
 msgid "Month Budget"
-msgstr "Presupuesto Mensual"
+msgstr "Presupuesto mensual"
 
 #: GoodsReceivedControlled.php:9
 msgid "Receive Controlled Items"
@@ -22399,7 +22399,7 @@ msgstr "Etiquetas"
 
 #: PeriodsInquiry.php:7
 msgid "Periods Inquiry"
-msgstr "Consultar Períodos"
+msgstr "Consultar períodos"
 
 #: PeriodsInquiry.php:16
 msgid "No periods were returned by the SQL because"
@@ -24667,7 +24667,7 @@ msgstr ""
 
 #: PrintCustStatements.php:103
 msgid "Account #"
-msgstr ""
+msgstr "Cuenta #"
 
 #: PrintCustStatements.php:105
 msgid "Recipients"
@@ -30461,7 +30461,7 @@ msgstr "Permitir sobrecargos en pago"
 
 #: ShopParameters.php:344
 msgid "Add surcharges for different payment methods."
-msgstr ""
+msgstr "Añadir recargos para diferentes métodos de pago."
 
 #: ShopParameters.php:349
 msgid "Surcharges Stock Item"
@@ -39671,7 +39671,7 @@ msgstr "Añadir a orden de trabajo"
 
 #: WorkOrderEntry.php:1055
 msgid "Add To Work Order"
-msgstr ""
+msgstr "Añadir a la orden de trabajo"
 
 #: WorkOrderIssue.php:5
 msgid "Issue Materials To Work Order"
@@ -51451,7 +51451,7 @@ msgstr "Abscisa"
 
 #: reportwriter/languages/en_US/reports.php:55
 msgid "Align"
-msgstr ""
+msgstr "Alinear"
 
 #: reportwriter/languages/en_US/reports.php:57
 msgid "Bottom"
@@ -51624,7 +51624,7 @@ msgstr "Volver"
 
 #: reportwriter/languages/en_US/reports.php:135
 msgid "Change"
-msgstr ""
+msgstr "Cambiar"
 
 #: reportwriter/languages/en_US/reports.php:136
 msgid "Continue"

@@ -255,8 +255,8 @@ if(!isset($SelectedUser)) {// If is NOT set a user for GL accounts.
 			'<button formaction="UserGLAccounts.php?Cancel" type="submit"><img alt="" src="', $RootPath, '/css/', $Theme,
 				'/images/user.png" /> ', _('Select A Different User'), '</button>'; // "Select A Different User" button.
 }
-echo		'<button formaction="index.php?Application=GL" type="submit"><img alt="" src="', $RootPath, '/css/', $Theme,
-				'/images/previous.png" /> ', _('Return'), '</button>', // "Return" button.
+echo		'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
+				'/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
 		'</div>
 	</form>';
 
