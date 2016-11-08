@@ -85,8 +85,8 @@ define("LIST_STOCK_CATEGORIES_GENERAL",    "('TESTGE','STABGE','NOPOGE')");
 define("CODE_KANTOR",     "'KANTO'");
 define("CODE_ONLINE_SHOP","'TOKWS'");
 
-define("LIST_ALL_SHOPS",           "('TOK66','TOKSA','TOKKS','TOKSE','TOKUB','TOKMF','TOKPU','TOKSU','TOKOB','TOKSS','TOKPA','TOKKA','TOKMU','TOKPS','TOKAR','TOKSB','TOKPB','TOKBU')"); // NOT includes the shop online
-define("LIST_SHOPS_KAPAL_LAUT",    "('TOK66','TOKSA','TOKKS','TOKSE','TOKMF','TOKPU','TOKOB','TOKSS','TOKPA','TOKKA')"); // NOT includes the shop online
+define("LIST_ALL_SHOPS",           "('TOK66','TOKSA','TOKKS','TOKSE','TOKUB','TOKMF','TOKPU','TOKSU','TOKOB','TOKSS','TOKPA','TOKKA','TOKMU','TOKPS','TOKAR','TOKSB','TOKPB','TOKBU','TOKM2')"); // NOT includes the shop online
+define("LIST_SHOPS_KAPAL_LAUT",    "('TOK66','TOKSA','TOKKS','TOKSE','TOKMF','TOKPU','TOKOB','TOKSS','TOKPA','TOKKA','TOKM2','TOKSU')"); // NOT includes the shop online
 define("LIST_SHOPS_WITH_POS",      "('')"); // Shops allowed to use POS
 define("LIST_SHOPS_OUTLET",        "('TOKUB','TOKAR')"); 
 define("LIST_SHOPS_BLINK",         "('TOKMU','TOKPS','TOKSB','TOKPB','TOKBU')");
@@ -113,7 +113,7 @@ define("IMPROVEMENT_AVERAGE_SALES", 5);
 define("IMPROVEMENT_SALES_COMPARED_LAST_YEAR", 5);
 
 /* Defines about Retail Sales at KL Shops*/
-define("LENGHT_OF_LIST_OF_CODES_RETAIL_SHOP_SALES", 1); 
+define("LENGHT_OF_LIST_OF_CODES_RETAIL_SHOP_SALES", 5); 
 
 /* Defines about Stock Control*/
 define("STOCK_MOVEMENT_DAYS_FOR_SPG", 60); 
