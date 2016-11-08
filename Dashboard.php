@@ -439,7 +439,7 @@ if(in_array($PayeeSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($P
 			}
 			$DislayTranDate = ConvertSQLDate($DetailTrans['trandate']);
 			$AccumBalance += $DetailTrans['balance'];
-			if(_($DetailTrans['type']) == 20) {// If Purchase Invoice:
+			if($DetailTrans['type'] == 20) {// If Purchase Invoice:
 				echo '<td style="text-align:center">', _($DetailTrans['typename']), '</td>
 						<td class="centre">', $DislayTranDate, '</td>
 						<td class="text"><a href="', $RootPath, '/Payments.php?&SupplierID=', $SupplierID, '&amp;Amount=', $DetailTrans['balance'], '&amp;BankTransRef=', $DetailTrans['suppreference'], '">', $DetailTrans['suppreference'], '</a></td>
