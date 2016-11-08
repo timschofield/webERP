@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-10-31 20:01-0600\n"
-"PO-Revision-Date: 2016-11-06 21:23-0600\n"
+"PO-Revision-Date: 2016-11-07 08:06-0600\n"
 "Last-Translator: Rafael E. Chacón <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -25514,7 +25514,7 @@ msgstr "Costo por nuestra unidad"
 #: PurchData.php:277 PurchData.php:702 SellThroughSupport.php:266
 #: SupplierPriceList.php:542
 msgid "Effective From"
-msgstr "Vigente Desde"
+msgstr "Vigente desde"
 
 #: PurchData.php:278 SelectProduct.php:328 SupplierPriceList.php:544
 msgid "Min Order Qty"
@@ -35259,7 +35259,7 @@ msgstr "Descripción de proveedores"
 
 #: SupplierPriceList.php:543
 msgid "Suppliers Item Code"
-msgstr "Código de Artículo de proveedor"
+msgstr "Código de artículo del proveedor"
 
 #: SupplierPriceList.php:545 reportwriter/languages/en_US/reports.php:155
 msgid "Save"

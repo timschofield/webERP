@@ -1,15 +1,5 @@
 /* $Id$*/
-/***
-
-New Default Theme for WebERP
-
-***/
-
-button img {
-	/* Describes how button image should be displayed. */
-	height:16px;
-	width:16px;
-}
+/* Default theme for WebERP by . */
 
 body {
 	background-color:#ccd;
@@ -17,6 +7,12 @@ body {
 	font-size:10pt;
 	margin:0;
 	padding:0;
+}
+
+button img {
+	height:16px;
+	width:16px;
+	/* Describes how button image should be displayed. Related with body font-size in px. */
 }
 
 a {

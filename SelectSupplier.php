@@ -348,14 +348,22 @@ if (isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') {
 			echo '<br />';
 			echo '<div class="centre">' . _('Mapping is enabled, but no Mapping data to display for this Supplier.') . '</div>';
 		} else {
-			echo '<div class="centre"><br />';
-			echo '<tr><td colspan="2">';
-			echo '<table width="45%" class="selection">';
-			echo '<tr><th style="width:33%">' . _('Supplier Mapping') . '</th></tr>';
-			echo '</td><td valign="top">'; /* Mapping */
-			echo '<div class="centre">' . _('Mapping is enabled, Map will display below.') . '</div>';
-			echo '<div class="centre" id="map" style="width: ' . $map_width . 'px; height: ' . $map_height . 'px"></div></div><br />';
-			echo '</th></tr></table>';
+
+			echo '<br />
+				<table class="selection">
+				<thead>
+					<tr>
+						<th>', _('Supplier Mapping'), '</th>
+					</tr>
+				</thead><tbody>
+					<tr>
+						<td class="centre">', _('Mapping is enabled, Map will display below.'), '</td>
+					</tr><tr>
+						<td class="centre">', // Mapping:
+							'<div class="centre" id="map" style="width: ', $map_width, 'px; height: ', $map_height, 'px"></div>
+						</td>
+					</tr>
+				<tbody></table>';
 		}
 	}
 	// Extended Info only if selected in Configuration
