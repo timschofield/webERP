@@ -1515,7 +1515,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 
 		//################## PRINTING STUFF ##################### 
-		$filename = 'wcpcache/'.$identifier.'.pos';   
+		$filename = 'includes/WebClientPrint/wcpcache/'.$identifier.'.pos';   
 		file_put_contents($filename, $Receipt);
 
 		echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . 
