@@ -12,6 +12,7 @@ $BookMark = "LocationTransfers";
 $ViewTopic = "Inventory";
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
+include('includes/KLGeneralFunctions.php');
 include('includes/KLDefines.php');
 include('includes/KLEmails.php');
 

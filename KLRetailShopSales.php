@@ -1059,7 +1059,7 @@ END OF QOH Verification */
 		}else{
 			$PaymentMethod = PAYMENT_BY_CASH;
 		}
-		$Area = KapalLautRetailAreaSelection($_SESSION['Items'.$identifier]->DebtorNo, $PaymentMethod, $db);
+		$Area = KapalLautRetailAreaSelection($PaymentMethod, $db);
 		$Tag = KapalLautRetailTagSelection($_SESSION['Items'.$identifier]->DebtorNo, $db);
 		$DefaultShipVia = 1; // Hand Carried
 			
