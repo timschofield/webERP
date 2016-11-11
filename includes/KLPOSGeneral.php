@@ -858,15 +858,15 @@ function KLPrintReceiptCustomerFooter($identifier, $OrderNo){
 		}
 	}
 	if ($DiscountedItems){
-		$TextToPrint .= $CharacterFontA . $LeftJustified;
-		$TextToPrint .= "No exchange, no refund, no warranty for discounted or outlet items." . $NewLine;
+		$TextToPrint .= $CharacterFontA . $Emphasized . $CenteredJustified;
+		$TextToPrint .= "No exchange, no refund, no warranty" . $NewLine . "for discounted or outlet items." . $NewLine . $NewLine;
 	}
 
 	// read terms and conditions
 	$TextToPrint .= $CharacterFontB . $LeftJustified;
-	$TextToPrint .= "This invoice is the only valid proof of purchase. Keep it for future reference. ";
-	$TextToPrint .= "For more information on our catalog, promotions, location of our shops, news, job opportunities, sale terms and conditions and warranty terms check our website." . $NewLine;
-	$TextToPrint .= "PT. Bumi Biru Jl. Kesambi No 1 Kerobokan, Bali - NPWP: 31.780.967.1-906.000" . $NewLine;
+	$TextToPrint .= "This invoice is the only valid proof of purchase. Keep it. ";
+	$TextToPrint .= "For  more information on our catalog, promotions, shop locations, jobopportunities, news and warranty terms and conditions check our website. ";
+	$TextToPrint .= "PT.Bumi Biru Jl. Kesambi No 1 Kerobokan, Bali NPWP:31.780.967.1-906.000" . $NewLine;
 	
 	// website
 	$TextToPrint .= $NewLine . $EmphasizedDoubleHeightDoubleWidth . $CenteredJustified;
@@ -879,6 +879,12 @@ function KLPrintReceiptCustomerFooter($identifier, $OrderNo){
 	}else{
 		$TextToPrint .= "SHOP NAME NOT FOUND" . $NewLine;
 	}
+
+	// Follow us
+	$TextToPrint .= $CharacterFontA . $Emphasized . $CenteredJustified . $NewLine;
+	$TextToPrint .= "Follow us on" . $NewLine ;
+	$TextToPrint .= "Facebook: KapalLautBali" . $NewLine ;
+	$TextToPrint .= "Twitter: @KapalLautBali" . $NewLine ;
 
 	$TextToPrint .= KLPrintReceiptTestWarning("INVOICE");
 
