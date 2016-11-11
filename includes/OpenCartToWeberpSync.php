@@ -160,7 +160,7 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db,
 
 			if ($CustomerCode != 'Error'){
 				// First process order header
-				if (DataExistsInWebERP($db, 'salesorders', 'customerref', $myrow['order_id'])){
+				if (DataExistsInWebERP($db, 'salesorders', 'debtorno', $CustomerCode, 'customerref', $myrow['order_id'])){
 					$Action = "Update";
 				}else{
 					$Action = "Insert";
@@ -587,6 +587,7 @@ function SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeR
 								<th>' . _('Order Total') . '</th>
 								<th>' . _('Order Curr') . '</th>
 								<th>' . _('Paypal Total') . '</th>
+								<th>' . _('Shipment') . '</th>
 								<th>' . _('Paypal Curr') . '</th>
 								<th>' . _('Paypal Trx') . '</th>
 								<th>' . _('Trx Total') . '</th>

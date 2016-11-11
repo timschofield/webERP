@@ -143,6 +143,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 								<th>' . _('Description') . '</th>
 								<th>' . _('QOH') . '</th>
 								<th>' . _('Basic Price') . '</th>
+								<th>' . _('Store') . '</th>
 								<th>' . _('Action') . '</th>
 							</tr>';
 			echo $TableHeader;
@@ -209,12 +210,16 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 			
 			if (ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_KAPAL_LAUT)){
 				$StoreId = OPENCART_STORE_KAPAL_LAUT;
+				$StoreText = "KL";
 			}elseif (ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_BLINK)){
 				$StoreId = OPENCART_STORE_BLINK;
+				$StoreText = "Blink";
 			}elseif (ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_OUTLET)){
 				$StoreId = OPENCART_STORE_OUTLET;
+				$StoreText = "Outlet";
 			}else{
 				$StoreId = OPENCART_STORE_KAPAL_LAUT;
+				$StoreText = "KL";
 			}
 			
 			/* Google Product Feed Fields */
@@ -267,6 +272,10 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 								AND language_id = '" . $LanguageId . "'";
 				$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
 
+				$sqlUpdate = "UPDATE " . $oc_tableprefix . "product_to_store SET
+								store_id = '" . $StoreId . "'
+							WHERE product_id = '" . $ProductId . "'";
+				$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
 				// update discounts if needed
 				MaintainOpenCartDiscountForItem($ProductId, $Price, $DiscountCategory, $PriceList, $db, $db_oc, $oc_tableprefix);
 
@@ -405,11 +414,13 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 						<td>%s</td>
 						<td class="number">%s</td>
 						<td>%s</td>
+						<td>%s</td>
 						</tr>',
 						$Model,
 						$Name,
 						locale_number_format($Quantity,0),
 						locale_number_format($Price,0),
+						$StoreText,
 						$Action
 						);
 			}
