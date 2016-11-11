@@ -30,7 +30,7 @@ define("VERSIONFILE", "3.00"); //
 include('includes/DefineCartClass.php');
 include('includes/session.inc');
 
-$Title = _('Retail POS for KL '. VERSIONFILE);
+$Title = _('Retail POS '. VERSIONFILE);
 
 include('includes/header.inc');
 include('includes/GetPrice.inc');
@@ -648,8 +648,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 				10,
 				'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
 				'" . $_SESSION['Items'.$identifier]->Branch . "',
-				'" . Date('Y-m-d') . "',
-				'" . date('Y-m-d H-i-s') . "',
+				'" . date('Y-m-d H:i:s') . "',
+				'" . date('Y-m-d H:i:s') . "',
 				'" . $PeriodNo . "',
 				'" . $_SESSION['Items'.$identifier]->CustRef  . "',
 				'" . $_SESSION['Items'.$identifier]->DefaultSalesType . "',
@@ -1064,6 +1064,17 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								$Tag,
 								'',
 								$ExRate);
+			$ReceiptNumber = AccountDebtorDiscount($ReceiptNumber,
+								'VOUCHER_DISCOUNT',
+								$PeriodNo,
+								$Area,
+								$InvoiceNo,
+								$_SESSION['Items'.$identifier]->CustRef,
+								$_SESSION['Items'.$identifier]->Location,
+								$_POST['AmountVouchers'],
+								$ExRate,
+								$OrderNo,
+								$_SESSION['Items'.$identifier]->DebtorNo);
 		}//amount vouched or discount was not zero
 		
 		if ($_POST['AmountReturnedGoods']!=0){
@@ -1082,7 +1093,19 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								$Tag,
 								'',
 								$ExRate);
-		}//amount vouched or discount was not zero
+/* DO NOT account it, so retuns will tend to compensate one another. Otherwise, will keep growing
+			$ReceiptNumber = AccountDebtorDiscount($ReceiptNumber,
+								'RETURNED_GOODS',
+								$PeriodNo,
+								$Area,
+								$InvoiceNo,
+								$_SESSION['Items'.$identifier]->CustRef,
+								$_SESSION['Items'.$identifier]->Location,
+								$_POST['AmountReturnedGoods'],
+								$ExRate,
+								$OrderNo,
+								$_SESSION['Items'.$identifier]->DebtorNo);
+*/		}//amount vouched or discount was not zero
 
 		foreach ( $_SESSION['Items'.$identifier]->TaxTotals as $TaxAuthID => $TaxAmount){
 			if ($TaxAmount !=0 ){
@@ -1127,6 +1150,22 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								$Tag,
 								'',
 								$ExRate);
+
+			$ReceiptNumber = AccountDebtorPayment($ReceiptNumber,
+								PAYMENT_BY_CASH,
+								$PeriodNo,
+								$BankAccountCash,
+								$Area,
+								$InvoiceNo,
+								$_SESSION['Items'.$identifier]->CustRef,
+								$_SESSION['Items'.$identifier]->Location,
+								$_POST['AmountPaidCash'],
+								$CreditCardNetPayment,
+								$ExRate,
+								$DebtorTransID,
+								$OrderNo,
+								$_SESSION['Items'.$identifier]->DefaultCurrency,
+								$_SESSION['Items'.$identifier]->DebtorNo);
 		}//amount paid cash was not zero
 		
 		if ($_POST['AmountPaidCCDanamon']!=0){
@@ -1148,6 +1187,21 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								ACCOUNT_COMISSION_CREDITCARD,
 								$ExRate);
 
+			$ReceiptNumber = AccountDebtorPayment($ReceiptNumber,
+								PAYMENT_BY_CREDITCARD,
+								$PeriodNo,
+								ACCOUNT_BANK_DANAMON_IDR,
+								$Area,
+								$InvoiceNo,
+								$_SESSION['Items'.$identifier]->CustRef,
+								$_SESSION['Items'.$identifier]->Location,
+								$_POST['AmountPaidCCDanamon'],
+								$CreditCardNetPayment,
+								$ExRate,
+								$DebtorTransID,
+								$OrderNo,
+								$_SESSION['Items'.$identifier]->DefaultCurrency,
+								$_SESSION['Items'.$identifier]->DebtorNo);
 		}//amount paid Credit Card DANAMON  was not zero
 
 		if ($_POST['AmountPaidAmexBCA']!=0){
@@ -1169,6 +1223,21 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								ACCOUNT_COMISSION_CREDITCARD,
 								$ExRate);
 
+			$ReceiptNumber = AccountDebtorPayment($ReceiptNumber,
+								PAYMENT_BY_CREDITCARD,
+								$PeriodNo,
+								ACCOUNT_BANK_BCA_IDR,
+								$Area,
+								$InvoiceNo,
+								$_SESSION['Items'.$identifier]->CustRef,
+								$_SESSION['Items'.$identifier]->Location,
+								$_POST['AmountPaidAmexBCA'],
+								$CreditCardNetPayment,
+								$ExRate,
+								$DebtorTransID,
+								$OrderNo,
+								$_SESSION['Items'.$identifier]->DefaultCurrency,
+								$_SESSION['Items'.$identifier]->DebtorNo);
 		}//amount paid American Express was not zero
 
 		if ($_POST['AmountPaidCCMandiri']!=0){
@@ -1190,6 +1259,21 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								ACCOUNT_COMISSION_CREDITCARD,
 								$ExRate);
 			
+			$ReceiptNumber = AccountDebtorPayment($ReceiptNumber,
+								PAYMENT_BY_CREDITCARD,
+								$PeriodNo,
+								ACCOUNT_BANK_MANDIRI_IDR,
+								$Area,
+								$InvoiceNo,
+								$_SESSION['Items'.$identifier]->CustRef,
+								$_SESSION['Items'.$identifier]->Location,
+								$_POST['AmountPaidCCMandiri'],
+								$CreditCardNetPayment,
+								$ExRate,
+								$DebtorTransID,
+								$OrderNo,
+								$_SESSION['Items'.$identifier]->DefaultCurrency,
+								$_SESSION['Items'.$identifier]->DebtorNo);
 		}//amount paid Credit Card MANDIRI was not zero
 		
 		if ($_POST['AmountPaidCCBCA']!=0){
@@ -1210,85 +1294,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								$Tag,
 								ACCOUNT_COMISSION_CREDITCARD,
 								$ExRate);
-		}//amount paid Credit Card BCA was not zero
-		
-		if ($_POST['AmountPaidCash']!=0){
-			$ReceiptNumber = AccountDebtorPayment($ReceiptNumber,
-								PAYMENT_BY_CASH,
-								$PeriodNo,
-								$BankAccountCash,
-								$Area,
-								$InvoiceNo,
-								$_SESSION['Items'.$identifier]->CustRef,
-								$_SESSION['Items'.$identifier]->Location,
-								$_POST['AmountPaidCash'],
-								$CreditCardNetPayment,
-								$ExRate,
-								$DebtorTransID,
-								$OrderNo,
-								$_SESSION['Items'.$identifier]->DefaultCurrency,
-								$_SESSION['Items'.$identifier]->DebtorNo);
-		} //end if $_POST['AmountPaidCash']!= 0
 
-		if ($_POST['AmountPaidCCDanamon']!=0){
-			$CreditCardNetPayment = ($_POST['AmountPaidCCDanamon']*(100- COMISSION_CC_DANAMON)/100);
-			$ReceiptNumber = AccountDebtorPayment($ReceiptNumber,
-								PAYMENT_BY_CREDITCARD,
-								$PeriodNo,
-								ACCOUNT_BANK_DANAMON_IDR,
-								$Area,
-								$InvoiceNo,
-								$_SESSION['Items'.$identifier]->CustRef,
-								$_SESSION['Items'.$identifier]->Location,
-								$_POST['AmountPaidCCDanamon'],
-								$CreditCardNetPayment,
-								$ExRate,
-								$DebtorTransID,
-								$OrderNo,
-								$_SESSION['Items'.$identifier]->DefaultCurrency,
-								$_SESSION['Items'.$identifier]->DebtorNo);
-		} //end if $_POST['AmountPaidCCDanamon']!= 0
-
-		if ($_POST['AmountPaidAmexBCA']!=0){
-			$CreditCardNetPayment = ($_POST['AmountPaidAmexBCA']*(100- COMISSION_AMEX_BCA)/100);
-			$ReceiptNumber = AccountDebtorPayment($ReceiptNumber,
-								PAYMENT_BY_CREDITCARD,
-								$PeriodNo,
-								ACCOUNT_BANK_BCA_IDR,
-								$Area,
-								$InvoiceNo,
-								$_SESSION['Items'.$identifier]->CustRef,
-								$_SESSION['Items'.$identifier]->Location,
-								$_POST['AmountPaidAmexBCA'],
-								$CreditCardNetPayment,
-								$ExRate,
-								$DebtorTransID,
-								$OrderNo,
-								$_SESSION['Items'.$identifier]->DefaultCurrency,
-								$_SESSION['Items'.$identifier]->DebtorNo);
-		} //end if $_POST['AmountPaidAmexBCA']!= 0
-
-		if ($_POST['AmountPaidCCMandiri']!=0){
-			$CreditCardNetPayment = ($_POST['AmountPaidCCMandiri']*(100- COMISSION_CC_MANDIRI)/100);
-			$ReceiptNumber = AccountDebtorPayment($ReceiptNumber,
-								PAYMENT_BY_CREDITCARD,
-								$PeriodNo,
-								ACCOUNT_BANK_MANDIRI_IDR,
-								$Area,
-								$InvoiceNo,
-								$_SESSION['Items'.$identifier]->CustRef,
-								$_SESSION['Items'.$identifier]->Location,
-								$_POST['AmountPaidCCMandiri'],
-								$CreditCardNetPayment,
-								$ExRate,
-								$DebtorTransID,
-								$OrderNo,
-								$_SESSION['Items'.$identifier]->DefaultCurrency,
-								$_SESSION['Items'.$identifier]->DebtorNo);
-		} //end if $_POST['AmountPaidCCMandiri']!= 0
-
-		if ($_POST['AmountPaidCCBCA']!=0){
-			$CreditCardNetPayment = ($_POST['AmountPaidCCBCA']*(100- COMISSION_CC_BCA)/100);
 			$ReceiptNumber = AccountDebtorPayment($ReceiptNumber,
 								PAYMENT_BY_CREDITCARD,
 								$PeriodNo,
@@ -1304,37 +1310,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								$OrderNo,
 								$_SESSION['Items'.$identifier]->DefaultCurrency,
 								$_SESSION['Items'.$identifier]->DebtorNo);
-		} //end if $_POST['AmountPaidCCBCA']!= 0
+		}//amount paid Credit Card BCA was not zero
 		
-		if ($_POST['AmountVouchers']!=0){
-			$ReceiptNumber = AccountDebtorDiscount($ReceiptNumber,
-								'VOUCHER_DISCOUNT',
-								$PeriodNo,
-								$Area,
-								$InvoiceNo,
-								$_SESSION['Items'.$identifier]->CustRef,
-								$_SESSION['Items'.$identifier]->Location,
-								$_POST['AmountVouchers'],
-								$ExRate,
-								$OrderNo,
-								$_SESSION['Items'.$identifier]->DebtorNo);
-		} //end if $_POST['AmountVouchers']!= 0
-
-/* DO NOT account it, so retuns will tend to compensate one another. Otherwise, will keep growing
-		if ($_POST['AmountReturnedGoods']!=0){
-			$ReceiptNumber = AccountDebtorDiscount($ReceiptNumber,
-								'RETURNED_GOODS',
-								$PeriodNo,
-								$Area,
-								$InvoiceNo,
-								$_SESSION['Items'.$identifier]->CustRef,
-								$_SESSION['Items'.$identifier]->Location,
-								$_POST['AmountReturnedGoods'],
-								$ExRate,
-								$OrderNo,
-								$_SESSION['Items'.$identifier]->DebtorNo);
-		} //end if $_POST['AmountReturnedGoods']!= 0
-*/		
 		/* Account for the Packaging */
 		if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_KAPAL_LAUT)){
 			AdjustPackagingMovement("PKBX01-L", $_POST['PackagingBox01L'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
@@ -1385,8 +1362,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 					</th>
 				</tr>';
 		
-		echo '<tr><td>' . _('Receipt Number') . ':</td> <td>' . $_SESSION['Items'.$identifier]->CustRef . '</td></tr>';
-		echo '<tr><td>' . _('Order webERP') . ':</td> <td>' . number_format($OrderNo,0) . '</td></tr>';
+		echo '<tr><td>' . _('Invoice Number') . ':</td> <td>' . $_SESSION['Items'.$identifier]->CustRef . '</td></tr>';
+		echo '<tr><td>' . _('Order Number') . ':</td> <td>' . $OrderNo . '</td></tr>';
 		if ($_POST['AmountPaidCash'] > 0){
 			echo '<tr><td>' . _('Payment Cash') . ':</td> <td>' . number_format($_POST['AmountPaidCash'],0) . '</td></tr>';
 		}
