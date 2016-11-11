@@ -47,7 +47,7 @@ include('includes/KLEmails.php');
 include('includes/wcpInitScript.php');   
 
 if (empty($_GET['identifier'])) {
-	$identifier=date('U');
+	$identifier=date('U').zerofill(mt_rand(0,999999),6);
 } else {
 	$identifier=$_GET['identifier'];
 }
