@@ -308,7 +308,7 @@ INSERT INTO kurakura_kl_test_erp.stockcounts SELECT * FROM kurakura_kl_erp.stock
 INSERT INTO kurakura_kl_test_erp.stockdescriptiontranslations SELECT * FROM kurakura_kl_erp.stockdescriptiontranslations;
 INSERT INTO kurakura_kl_test_erp.stockitemproperties SELECT * FROM kurakura_kl_erp.stockitemproperties;
 INSERT INTO kurakura_kl_test_erp.stockmaster SELECT * FROM kurakura_kl_erp.stockmaster;
-INSERT INTO kurakura_kl_test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves;
+INSERT INTO kurakura_kl_test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE trandate > "20150101";
 INSERT INTO kurakura_kl_test_erp.stockmovestaxes SELECT * FROM kurakura_kl_erp.stockmovestaxes;
 INSERT INTO kurakura_kl_test_erp.stockrequest SELECT * FROM kurakura_kl_erp.stockrequest;
 INSERT INTO kurakura_kl_test_erp.stockrequestitems SELECT * FROM kurakura_kl_erp.stockrequestitems;
