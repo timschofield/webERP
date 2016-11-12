@@ -1955,7 +1955,9 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 							<th class="ascending">' . _('Order Date') . '</th>
 							<th class="ascending">' . _('Order Value') . '</th>
 							<th class="ascending">' . _('Currency') . '</th>
-							<th class="ascending">' . _('Reminder Bank Transfer Sent On') . '</th>
+							<th class="ascending">' . _('Reminder Bank Transfer') . '</th>
+							<th class="ascending">' . _('Paid by Mandiri') . '</th>
+							<th class="ascending">' . _('Paid by iPayMu') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -1970,12 +1972,20 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 			}else{
 				$EmailLink = ConvertSQLDate($myrow['klemailremindbanktransfer']);
 			}
+			$BankCode = "111121100PT";
+			$PaymentMandiriLinkText = 'Not Paid yet';
+			$PaymentValue = $myrow['ordervalue']+$myrow['freightcost'];
+			$PaymentMandiri = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&Bank=' . $BankCode . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentMandiriLinkText .'</a>';
+			$PaymentiPayMu = "Not Coded Yet";
+			
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					</tr>', 
@@ -1986,7 +1996,9 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 					ConvertSQLDate($myrow['orddate']), 
 					locale_number_format($myrow['ordervalue']+$myrow['freightcost'],$myrow['decimalplaces']),
 					$myrow['currcode'], 
-					$EmailLink
+					$EmailLink,
+					$PaymentMandiri,
+					$PaymentiPayMu
 					);
 			$i++;
 		}
