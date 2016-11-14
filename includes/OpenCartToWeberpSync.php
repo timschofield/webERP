@@ -1,0 +1,715 @@
+<?php
+
+function OpenCartToWeberpSync($ShowMessages, $db, $db_oc, $oc_tableprefix, $EmailText=''){
+	$begintime = time_start();
+
+	// connect to opencart DB
+	DB_Txn_Begin();
+
+	// check last time we run this script, so we know which records need to update from OC to webERP
+	$LastTimeRun = CheckLastTimeRun('OpenCartToWeberp', $db);
+	$TimeDifference = Get_SQL_to_PHP_time_difference($db);
+	if ($ShowMessages){
+		prnMsg('This script was last run on: ' . $LastTimeRun . ' Server time difference: ' . $TimeDifference,'success');
+		prnMsg('Server time now: ' . GetServerTimeNow($TimeDifference) ,'success');
+	}
+	if ($EmailText!=''){
+		$EmailText = $EmailText . 'OpenCart to webERP Sync was last run on: ' . $LastTimeRun .  "\n" .
+					PrintTimeInformation($db);
+	}
+	// update order information
+	$EmailText = SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
+
+	// update payment information
+	$EmailText = SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
+
+	// We are done!
+	SetLastTimeRun('OpenCartToWeberp', $db);
+	DB_Txn_Commit();
+	if ($ShowMessages){
+		time_finish($begintime);
+	}
+	return $EmailText;
+}
+
+function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText=''){
+
+	if ($EmailText !=''){
+		$EmailText = $EmailText . "Sync OpenCart Order Information" . "\n" . PrintTimeInformation($db);
+	}
+
+	$SQL = "SELECT 	" . $oc_tableprefix . "order.order_id,
+					" . $oc_tableprefix . "order.customer_id,
+					" . $oc_tableprefix . "order.firstname AS customerfirstname,
+					" . $oc_tableprefix . "order.lastname AS customerlastname,
+					" . $oc_tableprefix . "order.email,
+					" . $oc_tableprefix . "order.telephone,
+					" . $oc_tableprefix . "order.fax,
+					" . $oc_tableprefix . "order.comment,
+					" . $oc_tableprefix . "order.payment_firstname AS paymentfirstname,
+					" . $oc_tableprefix . "order.payment_lastname AS paymentlastname,
+					" . $oc_tableprefix . "order.payment_company AS paymentcompany,
+					" . $oc_tableprefix . "order.payment_address_1,
+					" . $oc_tableprefix . "order.payment_address_2,
+					" . $oc_tableprefix . "order.payment_city,
+					" . $oc_tableprefix . "order.payment_postcode,
+					" . $oc_tableprefix . "order.payment_zone,
+					" . $oc_tableprefix . "order.payment_country,
+					" . $oc_tableprefix . "order.payment_method,
+					" . $oc_tableprefix . "order.shipping_firstname AS shippingfirstname,
+					" . $oc_tableprefix . "order.shipping_lastname AS shippinglastname,
+					" . $oc_tableprefix . "order.shipping_company AS shippingcompany,
+					" . $oc_tableprefix . "order.shipping_address_1,
+					" . $oc_tableprefix . "order.shipping_address_2,
+					" . $oc_tableprefix . "order.shipping_city,
+					" . $oc_tableprefix . "order.shipping_postcode,
+					" . $oc_tableprefix . "order.shipping_zone,
+					" . $oc_tableprefix . "order.shipping_country,
+					" . $oc_tableprefix . "order.shipping_method,
+					" . $oc_tableprefix . "order.shipping_code,
+					" . $oc_tableprefix . "order.total,
+					" . $oc_tableprefix . "order.order_status_id,
+					" . $oc_tableprefix . "order.currency_code,
+					" . $oc_tableprefix . "order.currency_value,
+					" . $oc_tableprefix . "order.date_modified
+			FROM " . $oc_tableprefix . "order
+			WHERE " . $oc_tableprefix . "order.order_status_id >= 1
+				AND ( " . $oc_tableprefix . "order.date_added >= '" . $LastTimeRun . "'
+					OR " . $oc_tableprefix . "order.date_modified >= '" . $LastTimeRun . "')
+			ORDER BY " . $oc_tableprefix . "order.order_id";
+
+	$result = DB_query_oc($SQL);
+	if (DB_num_rows($result) != 0){
+		if ($ShowMessages){
+			echo '<p class="page_title_text" align="center"><strong>' . _('Orders from OpenCart') .'</strong></p>';
+			echo '<div>';
+			$TableHeader = '<tr>
+								<th>' . _('OC #') . '</th>
+								<th>' . _('webERP #') . '</th>
+								<th>' . _('Name') . '</th>
+								<th>' . _('eMail') . '</th>
+								<th>' . _('Shipping Cost') . '</th>
+								<th>' . _('Shipper') . '</th>
+								<th>' . _('Currency') . '</th>
+								<th>' . _('Country') . '</th>
+								<th>' . _('Action') . '</th>
+							</tr>';
+
+			$TableHeaderForItems = '<tr>
+								<th>' . _('OC #') . '</th>
+								<th>' . _('webERP #') . '</th>
+								<th>' . _('OrderLine') . '</th>
+								<th>' . _('Code') . '</th>
+								<th>' . _('Unit Price') . '</th>
+								<th>' . _('Quantity') . '</th>
+								<th>' . _('Action') . '</th>
+							</tr>';
+		}
+		$DbgMsg = _('The SQL statement that failed was');
+		$UpdateErrMsg = _('The SQL to update OpenCart orders in webERP failed');
+		$InsertErrMsg = _('The SQL to insert OpenCart orders in webERP failed');
+
+		$k = 0; //row colour counter
+		$i = 0;
+		while ($myrow = DB_fetch_array($result)) {
+			if ($ShowMessages){
+				echo '<table class="selection">';
+				echo $TableHeader;
+				echo '<tr class="EvenTableRows">';
+			}
+			/* FIELD MATCHING */
+			$CustomerCode = GetWeberpCustomerIdFromCurrency($myrow['currency_code'], $db);
+			$CustomerName = CleanStringForWebERP(CapitalizeName($myrow['customerfirstname'] . ' ' . $myrow['customerlastname']));
+			$PaymentName = CleanStringForWebERP(CapitalizeName($myrow['paymentfirstname'] . ' ' . $myrow['paymentlastname']));
+			$ShippingName = CleanStringForWebERP(CapitalizeName($myrow['shippingfirstname'] . ' ' . $myrow['shippinglastname']));
+			$SalesType = OPENCART_DEFAULT_CUSTOMER_SALES_TYPE;
+			$DefaultShipVia = GetWeberpShippingMethod($myrow['shipping_method']);
+			$Quotation = 1; // is NOT a firm order until we check the payments
+			$FreightCost = RoundPriceFromCart(GetTotalFromOrder("shipping", $myrow['order_id'], $db_oc, $oc_tableprefix) * $myrow['currency_value'],$myrow['currency_code']);
+			$CouponDiscount = RoundPriceFromCart(GetTotalFromOrder("coupon", $myrow['order_id'], $db_oc, $oc_tableprefix) * $myrow['currency_value'],$myrow['currency_code']);
+			$OrderDiscount = RoundPriceFromCart(GetTotalFromOrder("dco", $myrow['order_id'], $db_oc, $oc_tableprefix) * $myrow['currency_value'],$myrow['currency_code']);
+			$OpenCartOrderNumber = $myrow['order_id'];
+			$Salesman = OPENCART_DEFAULT_SALESMAN;
+			$Location = OPENCART_DEFAULT_LOCATION;
+			$Comments =  CleanStringForWebERP($myrow['comment']);
+			$WebERPDateOrder = date('Y-m-d H:i:s', strtotime( $myrow['date_modified'] . -$TimeDifference . ' hours'));
+
+			if ($CustomerCode == 'WEB-KL-IDR'){
+				$Area = OPENCART_DEFAULT_AREA_INDONESIA;
+			}else{
+				$Area = OPENCART_DEFAULT_AREA;
+			}
+			
+			if($DefaultShipVia == 10){
+				// if shipping is "Pickup From Store"
+				$ShippingAddress1 = "Pick up from store";
+				$ShippingAddress2 = "";
+				$ShippingCity     = "";
+				$ShippingZone	  = "";
+				$ShippingPostCode = "";
+				$ShippingCountry  = DB_escape_string($myrow['shipping_country']);
+			}else{
+				// any other shipping method, we need the details
+				$ShippingAddress1 = DB_escape_string($myrow['shipping_address_1']);
+				$ShippingAddress2 = DB_escape_string($myrow['shipping_address_2']);
+				$ShippingCity     = DB_escape_string($myrow['shipping_city']);
+				$ShippingZone     = DB_escape_string($myrow['shipping_zone']);
+				$ShippingPostCode = DB_escape_string($myrow['shipping_postcode']);
+				$ShippingCountry  = DB_escape_string($myrow['shipping_country']);
+			}
+
+			if ($CustomerCode != 'Error'){
+				// First process order header
+				if (DataExistsInWebERP($db, 'salesorders', 'debtorno', $CustomerCode, 'customerref', $myrow['order_id'])){
+					$Action = "Update";
+				}else{
+					$Action = "Insert";
+					do {
+						$OrderNo = GetNextSequenceNo(30);
+						$CheckDoesntExistResult = DB_query("SELECT count(*) FROM salesorders WHERE orderno='" . $OrderNo . "'");
+						$CheckDoesntExistRow = DB_fetch_row($CheckDoesntExistResult);
+					} while ($CheckDoesntExistRow[0]==1);
+
+					$sqlInsert = "INSERT INTO salesorders (
+									orderno,
+									debtorno,
+									branchcode,
+									customerref,
+									comments,
+									orddate,
+									ordertype,
+									shipvia,
+									deliverto,
+									deladd1,
+									deladd2,
+									deladd3,
+									deladd4,
+									deladd5,
+									deladd6,
+									contactphone,
+									contactemail,
+									salesperson,
+									fromstkloc,
+									freightcost,
+									quotation,
+									area,
+									deliverydate,
+									quotedate,
+									confirmeddate)
+								VALUES (
+									'". $OrderNo . "',
+									'" . $CustomerCode . "',
+									'" . $CustomerCode . "',
+									'" . $OpenCartOrderNumber ."',
+									'" . $Comments ."',
+									'" . $WebERPDateOrder . "',
+									'" . $SalesType . "',
+									'" . $DefaultShipVia ."',
+									'" . $ShippingName . "',
+									'" . $ShippingAddress1 . "',
+									'" . $ShippingAddress2 . "',
+									'" . $ShippingCity . "',
+									'" . $ShippingZone . "',
+									'" . $ShippingPostCode . "',
+									'" . $ShippingCountry . "',
+									'" . DB_escape_string($myrow['telephone']) . "',
+									'" . DB_escape_string($myrow['email']). "',
+									'" . $Salesman . "',
+									'" . $Location ."',
+									'" . $FreightCost ."',
+									'" . $Quotation ."',
+									'" . $Area ."',
+									'" . $myrow['date_modified'] . "',
+									'" . $myrow['date_modified'] . "',
+									'" . $myrow['date_modified'] . "')";
+					$resultInsert = DB_query($sqlInsert,$InsertErrMsg,$DbgMsg,true);
+				}
+				if ($ShowMessages){
+					printf('<td>%s</td>
+							<td>%s</td>
+							<td>%s</td>
+							<td>%s</td>
+							<td>%s</td>
+							<td>%s</td>
+							<td>%s</td>
+							<td>%s</td>
+							<td>%s</td>
+							</tr>',
+							$myrow['order_id'],
+							$OrderNo,
+							$ShippingName,
+							$myrow['email'],
+							$FreightCost,
+							$DefaultShipVia,
+							$myrow['currency_code'],
+							$ShippingCountry,
+							$Action
+							);
+				}
+				if ($EmailText !=''){
+					$EmailText = $EmailText . $myrow['order_id'] .
+											  " = " . $OrderNo .
+											  " = " . $ShippingName .
+											  " = " . $myrow['email'] .
+											  " = " . $myrow['currency_code'] .
+											  " = " . $ShippingCountry .
+											  " --> " . $Action . "\n";
+				}
+				// Now the items of the order
+				$SQLItemsOrder = "SELECT " . $oc_tableprefix . "order_product.model,
+										" . $oc_tableprefix . "order_product.quantity,
+										" . $oc_tableprefix . "order_product.price,
+										" . $oc_tableprefix . "order_product.total,
+										" . $oc_tableprefix . "order_product.tax,
+										" . $oc_tableprefix . "order_product.reward
+								FROM " . $oc_tableprefix . "order_product
+								WHERE " . $oc_tableprefix . "order_product.order_id = " . $myrow['order_id'] . "
+								ORDER BY " . $oc_tableprefix . "order_product.order_product_id";
+				$resultItemsOrder = DB_query_oc($SQLItemsOrder);
+				$ItemsOrder = 0;
+				if ($ShowMessages){
+					echo '<table class="selection">';
+					echo $TableHeaderForItems;
+					echo '<tr class="OddTableRows">';
+				}
+				while ($myitems = DB_fetch_array($resultItemsOrder)) {
+					$ItemsOrder++;
+					if ($Action == "Update"){
+						$Action = "Update";
+					}else{
+						$Price = RoundPriceFromCart($myitems['price'] * $myrow['currency_value'],$myrow['currency_code']);
+						$sqlInsert = "INSERT INTO salesorderdetails
+											(orderlineno,
+											orderno,
+											stkcode,
+											unitprice,
+											quantity,
+											itemdue,
+											discountpercent)
+									VALUES ('" . $ItemsOrder . "',
+											'" . $OrderNo . "',
+											'" . $myitems['model'] . "',
+											'" . $Price . "',
+											'" . $myitems['quantity'] . "',
+											'" . $myrow['date_modified'] . "',
+											'0')"; // prices come already net from OpenCart
+						$resultInsert = DB_query($sqlInsert,$InsertErrMsg,$DbgMsg,true);
+
+						// prepare the RL for the items just ordered online
+						$sqlUpdate = "UPDATE locstock
+										SET reorderlevel = reorderlevel + " . $myitems['quantity'] . "
+										WHERE stockid = '" . $myitems['model'] . "'
+										AND loccode = '" . $Location . "'";
+						$resultUpdate = DB_query($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
+						if ($ShowMessages){
+							printf('<td>%s</td>
+									<td>%s</td>
+									<td>%s</td>
+									<td>%s</td>
+									<td>%s</td>
+									<td>%s</td>
+									<td>%s</td>
+									</tr>',
+									$myrow['order_id'],
+									$OrderNo,
+									$ItemsOrder,
+									$myitems['model'],
+									$Price,
+									$myitems['quantity'],
+									$Action
+									);
+						}
+						if ($EmailText !=''){
+							$EmailText = $EmailText . "            " . $ItemsOrder .
+													  " = " . $myitems['model'] .
+													  " = " . $ShippingName .
+													  " = " . $Price .
+													  " = " . $myitems['quantity'] .
+													  " --> " . $Action . "\n";
+						}
+					}
+				}
+				if ($CouponDiscount != 0){
+					$ItemsOrder++;
+					// we need to register the coupon use
+					$CouponCode = GetTotalTitleFromOrder("coupon", $myrow['order_id'], $db_oc, $oc_tableprefix);
+					if (strpos(strtoupper($CouponCode),"VBE") !== false){
+						$CouponStockId = OPENCART_VIP_ELITE_CODE;
+					}else if (strpos(strtoupper($CouponCode),"VBG") !== false){
+						$CouponStockId = OPENCART_VIP_GOLD_CODE;
+					}else if (strpos(strtoupper($CouponCode),"VBS") !== false){
+						$CouponStockId = OPENCART_VIP_SILVER_CODE;
+					}else if (strpos(strtoupper($CouponCode),"RF-") !== false){
+						$CouponStockId = OPENCART_CUSTOMER_REFUND_CODE;  // Customer refunds
+					}else if (strpos(strtoupper($CouponCode),"AUSDAY") !== false){   // Australia Day
+						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
+					}else if (strpos(strtoupper($CouponCode),"BLFDAY") !== false){   // Black Friday Day
+						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
+					}else if (strpos(strtoupper($CouponCode),"CANDAY") !== false){   // Canada Day
+						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
+					}else if (strpos(strtoupper($CouponCode),"CHIDAY") !== false){   // China Day
+						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
+					}else if (strpos(strtoupper($CouponCode),"DADDAY") !== false){   // Dad's Day
+						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
+					}else if (strpos(strtoupper($CouponCode),"DOUDAY") !== false){   // China Double Seven Festival Day
+						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
+					}else if (strpos(strtoupper($CouponCode),"FRADAY") !== false){    // France Day
+						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
+					}else if (strpos(strtoupper($CouponCode),"GERDAY") !== false){    // German Day
+						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
+					}else if (strpos(strtoupper($CouponCode),"IDULAD") !== false){    // Idul Adha Day
+						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
+					}else if (strpos(strtoupper($CouponCode),"IDULFI") !== false){    // Idul Fitri Day
+						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
+					}else if (strpos(strtoupper($CouponCode),"INDDAY") !== false){    // Indonesia Day
+						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
+					}else if (strpos(strtoupper($CouponCode),"KARTINI") !== false){   // Indonesia Kartini Day
+						$CouponStockId = OPENCART_KARTINI_DAY_DISCOUNT_CODE;
+					}else if (strpos(strtoupper($CouponCode),"MALDAY") !== false){    // Malaysia Day
+						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
+					}else if (strpos(strtoupper($CouponCode),"THADAY") !== false){    // ThanksGiving Day
+						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
+					}else if (strpos(strtoupper($CouponCode),"SNGDAY") !== false){    // Singapore Day
+						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
+					}else if (strpos(strtoupper($CouponCode),"USADAY") !== false){    // USA Day
+						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
+					}else if (strpos(strtoupper($CouponCode),"AVIDAY") !== false){    // USA Aviation Day
+						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
+					}else if (strpos(strtoupper($CouponCode),"WOEDAY") !== false){    // USA Wonen's Equality Day
+						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
+					}else if (strpos(strtoupper($CouponCode),"BIRTHDAY") !== false){  // Birthday mailing
+						$CouponStockId = OPENCART_BIRTHDAY_DISCOUNT_CODE;
+					}else if (strpos(strtoupper($CouponCode),"MOTHER") !== false){    // Mother's Day
+						$CouponStockId = OPENCART_MOTHERS_DAY_DISCOUNT_CODE;
+					}else if (strpos(strtoupper($CouponCode),"VALENTINE") !== false){ // Valentine's Day
+						$CouponStockId = OPENCART_VALENTINE_DAY_DISCOUNT_CODE;
+					}else if (strpos(strtoupper($CouponCode),OPENCART_GIFT_100K_CODE) !== false){
+						$CouponStockId = OPENCART_GIFT_100K_CODE;
+					}else if (strpos(strtoupper($CouponCode),OPENCART_GIFT_125K_CODE) !== false){
+						$CouponStockId = OPENCART_GIFT_125K_CODE;
+					}else if (strpos(strtoupper($CouponCode),OPENCART_GIFT_250K_CODE) !== false){
+						$CouponStockId = OPENCART_GIFT_250K_CODE;
+					}else if (strpos(strtoupper($CouponCode),OPENCART_GIFT_300K_CODE) !== false){
+						$CouponStockId = OPENCART_GIFT_300K_CODE;
+					}else{
+						$CouponStockId = OPENCART_ONLINE_COUPON_CODE;
+					}
+					$CouponQty = 1;
+					if ($Action == "Update"){
+						$Action = "Update";
+					}else{
+						$sqlInsert = "INSERT INTO salesorderdetails
+											(orderlineno,
+											orderno,
+											stkcode,
+											unitprice,
+											quantity,
+											itemdue,
+											narrative,
+											discountpercent)
+									VALUES ('" . $ItemsOrder . "',
+											'" . $OrderNo . "',
+											'" . $CouponStockId . "',
+											'" . $CouponDiscount . "',
+											'" . $CouponQty . "',
+											'" . $myrow['date_modified'] . "',
+											'" . $CouponCode . "',
+											'0')"; // prices come already net from OpenCart
+						$resultInsert = DB_query($sqlInsert,$InsertErrMsg,$DbgMsg,true);
+						if ($ShowMessages){
+							printf('<td>%s</td>
+									<td>%s</td>
+									<td>%s</td>
+									<td>%s</td>
+									<td>%s</td>
+									<td>%s</td>
+									<td>%s</td>
+									</tr>',
+									$myrow['order_id'],
+									$OrderNo,
+									$ItemsOrder,
+									$CouponStockId,
+									$CouponDiscount,
+									$CouponQty,
+									$Action
+									);
+						}
+						if ($EmailText !=''){
+							$EmailText = $EmailText . "            " . $ItemsOrder .
+													  " = " . $CouponStockId .
+													  " = " . $CouponDiscount .
+													  " = " . $CouponQty .
+													  " --> " . $Action . "\n";
+						}
+					}
+				}
+				if ($OrderDiscount != 0){
+					$ItemsOrder++;
+					// we need to register the dco discount use (GENERAL ORDER DISCOUNT)
+					$DiscountCode = GetTotalTitleFromOrder("dco", $myrow['order_id'], $db_oc, $oc_tableprefix);
+					if (strpos(strtoupper($DiscountCode),"20") !== false){
+						$DiscountStockId = OPENCART_ONLINE_ORDER_DISCOUNT20;
+					}else if (strpos(strtoupper($DiscountCode),"30") !== false){
+						$DiscountStockId = OPENCART_ONLINE_ORDER_DISCOUNT30;
+					}else if (strpos(strtoupper($DiscountCode),"40") !== false){
+						$DiscountStockId = OPENCART_ONLINE_ORDER_DISCOUNT40;
+					}else if (strpos(strtoupper($DiscountCode),"50") !== false){
+						$DiscountStockId = OPENCART_ONLINE_ORDER_DISCOUNT50;
+					}else{
+						$DiscountStockId = OPENCART_ONLINE_ORDER_DISCOUNT10;
+					}
+					$DiscountQty = 1;
+					
+					if ($Action == "Update"){
+						$Action = "Update";
+					}else{
+						$sqlInsert = "INSERT INTO salesorderdetails
+											(orderlineno,
+											orderno,
+											stkcode,
+											unitprice,
+											quantity,
+											itemdue,
+											narrative,
+											discountpercent)
+									VALUES ('" . $ItemsOrder . "',
+											'" . $OrderNo . "',
+											'" . $DiscountStockId . "',
+											'" . $OrderDiscount . "',
+											'" . $DiscountQty . "',
+											'" . $myrow['date_modified'] . "',
+											'" . $DiscountCode . "',
+											'0')"; // prices come already net from OpenCart
+						$resultInsert = DB_query($sqlInsert,$InsertErrMsg,$DbgMsg,true);
+						if ($ShowMessages){
+							printf('<td>%s</td>
+									<td>%s</td>
+									<td>%s</td>
+									<td>%s</td>
+									<td>%s</td>
+									<td>%s</td>
+									<td>%s</td>
+									</tr>',
+									$myrow['order_id'],
+									$OrderNo,
+									$ItemsOrder,
+									$DiscountStockId,
+									$OrderDiscount,
+									$DiscountQty,
+									$Action
+									);
+						}
+						if ($EmailText !=''){
+							$EmailText = $EmailText . "            " . $ItemsOrder .
+													  " = " . $DiscountStockId .
+													  " = " . $OrderDiscount .
+													  " = " . $DiscountQty .
+													  " --> " . $Action . "\n";
+						}
+					}
+				}
+				$i++;
+				if ($ShowMessages){
+					echo '</table>';
+					echo '</table>';
+				}
+			}else{
+				// Order does not belong to a valid customer for any reason, escape it
+				if ($ShowMessages){
+					prnMsg('Sales Order from ' . $myrow['email'] .' is not valid as is not a valid currency code.', 'warn');
+				}
+			}
+		}
+		if ($ShowMessages){
+			echo '</div>
+					</form>';
+		}
+	}
+	if ($ShowMessages){
+		prnMsg(locale_number_format($i,0) . ' ' . _('Orders synchronized from OpenCart to webERP'),'success');
+	}
+	if ($EmailText !=''){
+		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . _('Orders synchronized from OpenCart to webERP') . "\n\n";
+	}
+	return $EmailText;
+}
+
+function SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText=''){
+
+	if ($EmailText !=''){
+		$EmailText = $EmailText . "Sync OpenCart Order Information" . "\n" . PrintTimeInformation($db);
+	}
+
+	// Now deal with the Paypal payment/s of the order...
+	$SQL = "SELECT 	" . $oc_tableprefix . "paypal_order.paypal_order_id,
+				" . $oc_tableprefix . "order.order_id,
+				" . $oc_tableprefix . "order.currency_code AS ordercurrency,
+				" . $oc_tableprefix . "order.currency_value,
+				" . $oc_tableprefix . "order.customer_id,
+				" . $oc_tableprefix . "customer.email,
+				" . $oc_tableprefix . "order.total AS ordertotal,
+				" . $oc_tableprefix . "paypal_order.paypal_order_id,
+				" . $oc_tableprefix . "paypal_order.capture_status,
+				" . $oc_tableprefix . "paypal_order.currency_code AS paypalcurrency,
+				" . $oc_tableprefix . "paypal_order.authorization_id,
+				" . $oc_tableprefix . "paypal_order.total AS paypaltotal,
+				" . $oc_tableprefix . "paypal_order_transaction.transaction_id,
+				" . $oc_tableprefix . "paypal_order_transaction.created,
+				" . $oc_tableprefix . "paypal_order_transaction.payment_status,
+				" . $oc_tableprefix . "paypal_order_transaction.pending_reason,
+				" . $oc_tableprefix . "paypal_order_transaction.transaction_entity,
+				" . $oc_tableprefix . "paypal_order_transaction.amount,
+				" . $oc_tableprefix . "paypal_order_transaction.debug_data,
+				" . $oc_tableprefix . "paypal_order_transaction.call_data
+		FROM " . $oc_tableprefix . "paypal_order,
+			 " . $oc_tableprefix . "paypal_order_transaction,
+			 " . $oc_tableprefix . "order,
+			 " . $oc_tableprefix . "customer
+		WHERE " . $oc_tableprefix . "paypal_order.paypal_order_id = " . $oc_tableprefix . "paypal_order_transaction.paypal_order_id
+				AND " . $oc_tableprefix . "paypal_order.order_id  = " . $oc_tableprefix . "order.order_id
+				AND " . $oc_tableprefix . "order.customer_id  = " . $oc_tableprefix . "customer.customer_id
+				AND ( " . $oc_tableprefix . "paypal_order.created >= '" . $LastTimeRun . "'
+					OR " . $oc_tableprefix . "paypal_order.modified >= '" . $LastTimeRun . "')
+		ORDER BY " . $oc_tableprefix . "paypal_order.paypal_order_id";
+	$result = DB_query_oc($SQL);
+
+	if (DB_num_rows($result) != 0){
+		if ($ShowMessages){
+			echo '<p class="page_title_text" align="center"><strong>' . _('Paypal Payments from OpenCart') .'</strong></p>';
+			echo '<div>';
+			echo '<table class="selection">';
+			$TableHeader = '<tr>
+								<th>' . _('CustomerID') . '</th>
+								<th>' . _('email') . '</th>
+								<th>' . _('webERP Code') . '</th>
+								<th>' . _('OrderID') . '</th>
+								<th>' . _('webERP #') . '</th>
+								<th>' . _('Order Total') . '</th>
+								<th>' . _('Order Curr') . '</th>
+								<th>' . _('Paypal Total') . '</th>
+								<th>' . _('Shipment') . '</th>
+								<th>' . _('Paypal Curr') . '</th>
+								<th>' . _('Paypal Trx') . '</th>
+								<th>' . _('Trx Total') . '</th>
+								<th>' . _('Commission') . '</th>
+								<th>' . _('Date') . '</th>
+								<th>' . _('Status') . '</th>
+								<th>' . _('Pending reason') . '</th>
+							</tr>';
+			echo $TableHeader;
+		}
+		$DbgMsg = _('The SQL statement that failed was');
+		$UpdateErrMsg = _('The SQL to update OpenCart Paypal payments in webERP failed');
+		$InsertErrMsg = _('The SQL to insert OpenCart Paypal payments in webERP failed');
+
+		$k = 0; //row colour counter
+		$i = 0;
+		while ($myrow = DB_fetch_array($result)) {
+			if ($k == 1) {
+				echo '<tr class="EvenTableRows">';
+				$k = 0;
+			} else {
+				echo '<tr class="OddTableRows">';
+				$k = 1;
+			}
+
+			/* FIELD MATCHING */
+			$CustomerCode = GetWeberpCustomerIdFromCurrency($myrow['ordercurrency'], $db);
+			$OrderNo = GetWeberpOrderNo($CustomerCode, $myrow['order_id'], $db);
+			$PaymentSystem = OPENCART_DEFAULT_PAYMENT_SYSTEM;
+			$CurrencyOrder = $myrow['ordercurrency'];
+			$CurrencyPayment = $myrow['paypalcurrency'];
+			$TotalOrder = round($myrow['ordertotal'] * $myrow['currency_value'],2); // from OC default currency to order and payment currency
+			$Rate = GetWeberpCurrencyRate($CurrencyOrder, $db);
+			$AmountPaid = $myrow['paypaltotal'];
+			$TransactionID = $myrow['transaction_id'];
+			$GLAccount = GetWeberpGLAccountFromCurrency($CurrencyPayment, $db);
+			$GLCommissionAccount = GetWeberpGLCommissionAccountFromCurrency($CurrencyPayment, $db);
+			$PayPalResponseArray = GetPaypalReturnDataInArray($myrow['debug_data']);
+			$Commission = urldecode($PayPalResponseArray['PAYMENTINFO_0_FEEAMT']);
+			$WebERPDateOrder = date('Y-m-d H:i:s', strtotime( $myrow['created'] . -$TimeDifference . ' hours'));
+			$FreightCost = RoundPriceFromCart(GetTotalFromOrder("shipping", $myrow['order_id'], $db_oc, $oc_tableprefix) * $myrow['currency_value'],$myrow['ordercurrency']);
+
+
+			if (($myrow['paypalcurrency'] == $myrow['ordercurrency']) AND ($myrow['pending_reason'] == 'None')) {
+				// order currency and Paypal currency are the same
+				// AND has been paid OK
+				$PaymentOK = true;
+			}else{
+				prnMsg("HORROR: Currency mess", "warn");
+				$PaymentOK = false;
+			}
+
+			if ($PaymentOK){
+				$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']),$db);
+				InsertCustomerReceipt($CustomerCode, $AmountPaid, $FreightCost, $CurrencyPayment, $Rate, $GLAccount, $PaymentSystem, $TransactionID, $OrderNo, $PeriodNo, $db);
+				TransactionCommissionGL($CustomerCode, $GLAccount, $GLCommissionAccount, $Commission, $CurrencyPayment, $Rate, $PaymentSystem, $TransactionID, $PeriodNo, $db);
+				ChangeOrderQuotationFlag($OrderNo, 0, $db); // it has been paid, so we consider it a firm order
+			}
+
+			if ($ShowMessages){
+				printf('<td class="number">%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						</tr>',
+						$myrow['customer_id'],
+						$myrow['email'],
+						$CustomerCode,
+						$myrow['order_id'],
+						$OrderNo,
+						$TotalOrder,
+						$myrow['ordercurrency'],
+						$AmountPaid,
+						$FreightCost,
+						$myrow['paypalcurrency'],
+						$TransactionID,
+						$myrow['amount'],
+						$Commission,
+						$WebERPDateOrder,
+						$myrow['payment_status'],
+						$myrow['pending_reason']
+						);
+			}
+			if ($EmailText !=''){
+				$EmailText = $EmailText . $myrow['customer_id'] .
+									      " = " . $myrow['email'] .
+									      " = " . $CustomerCode .
+									      " = " . $myrow['order_id'] .
+									      " = " . $TotalOrder .
+									      " = " . $myrow['ordercurrency'] .
+									      " = " . $AmountPaid .
+									      " = " . $FreightCost .
+									      " = " . $myrow['payment_status'] .
+										  " --> " . $Action . "\n";
+			}
+			$i++;
+		}
+		if ($ShowMessages){
+			echo '</table>
+					</div>
+					</form>';
+		}
+	}
+	if ($ShowMessages){
+		prnMsg(locale_number_format($i,0) . ' ' . _('Payments synchronized from OpenCart to webERP'),'success');
+	}
+	if ($EmailText !=''){
+		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . _('Payments synchronized from OpenCart to webERP') . "\n\n";
+	}
+	return $EmailText;
+}
+
+?>

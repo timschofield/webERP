@@ -171,7 +171,7 @@ $TextToPrint .= KLPrintReceiptTestWarning("END OF SHIFT"). $NewLine . $LeftJusti
 $TextToPrint .= $CutPaper;
 
 //################## PRINTING STUFF ##################### 
-$identifier=date('U');
+$identifier=date('U').zerofill(mt_rand(0,999999),6);
 $filename = 'includes/WebClientPrint/wcpcache/'.$identifier.'.pos';   
 file_put_contents($filename, $TextToPrint);
 

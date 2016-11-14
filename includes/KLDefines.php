@@ -87,7 +87,7 @@ define("CODE_ONLINE_SHOP","'TOKWS'");
 
 define("LIST_ALL_SHOPS",           "('TOK66','TOKSA','TOKKS','TOKSE','TOKUB','TOKMF','TOKPU','TOKSU','TOKOB','TOKSS','TOKPA','TOKKA','TOKMU','TOKPS','TOKAR','TOKSB','TOKPB','TOKBU','TOKM2')"); // NOT includes the shop online
 define("LIST_SHOPS_KAPAL_LAUT",    "('TOK66','TOKSA','TOKKS','TOKSE','TOKMF','TOKPU','TOKOB','TOKSS','TOKPA','TOKKA','TOKM2','TOKSU')"); // NOT includes the shop online
-define("LIST_SHOPS_WITH_POS",      "('')"); // Shops allowed to use POS
+define("LIST_SHOPS_WITH_POS",      "('TOK66')"); // Shops allowed to use POS
 define("LIST_SHOPS_OUTLET",        "('TOKUB','TOKAR')"); 
 define("LIST_SHOPS_BLINK",         "('TOKMU','TOKPS','TOKSB','TOKPB','TOKBU')");
 
@@ -99,7 +99,7 @@ define("LIST_LOCATIONS_SPG_STOCK_STATUS",	 "('KANTO','TOK66','TOKSA','TOKKS','TO
 
 define("LIST_ITEMS_KAPAL_LAUT_PACKAGING", "('PKBX01-L','PKBX01-M','PKBX01-S','PKPB01-L','PKPB01-M','PKPB01-S','PKSB02-L','PKSB02-M','PKSB02-S')");
 define("LIST_ITEMS_OUTLET_PACKAGING",     "('PKPB02-L','PKPB02-M','PKPB02-S','PKSB03')");
-define("LIST_ITEMS_BLINK_PACKAGING",      "('PKPB03-L','PKPB03-M','PKPB03-S','PKSB04-XL','PKSB04-M','PKSB04-S')");
+define("LIST_ITEMS_BLINK_PACKAGING",      "('PKPB03-L','PKPB03-M','PKPB03-S','PKSB04-L','PKSB04-M','PKSB04-S')");
 
 define("LIST_KANTOR_LOCATIONS",      "('KANTO','SAMPR','SASPG','SERSU','SERVI','SERDE','WHOLE')");
 define("LIST_SERVICE_LOCATIONS",     "('SERSU','SERVI')");
@@ -123,7 +123,7 @@ define("PAYMENT_BY_CASH", 2);
 define("PAYMENT_BY_CREDITCARD", 3); 
 define("PERCENTAGE_PPN", 10); // %PPN
 define("PERCENTAGE_SALES_CASH_TO_PT", 10.5); // % of cash transactions going to PT cash acccounts
-define("PERCENTAGE_COMPENSATION_HPP_PT", 130.0); // % of HPP to be assigned to PT sales. 100 means NO compensation.
+define("PERCENTAGE_COMPENSATION_HPP_PT", 140.0); // % of HPP to be assigned to PT sales. 100 means NO compensation.
 define("ACCOUNT_COMPENSATION_HPP_PT", "510010050"); 
 define("ACCOUNT_HUTANG_PPH23", "611012005PT"); // GL account for retention of PPH23 in Petty cash
 
