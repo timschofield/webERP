@@ -712,9 +712,6 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 		$_POST['OutletShoppingBag03M'] =0;
 	}
 	// BLINK Packaging
-	if (!isset($_POST['BlinkShoppingBag04XL'])){
-		$_POST['BlinkShoppingBag04XL'] =0;
-	}
 	if (!isset($_POST['BlinkShoppingBag04L'])){
 		$_POST['BlinkShoppingBag04L'] =0;
 	}
@@ -794,8 +791,8 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 and !isset($_POST['Proces
 		echo '<td>' . _('BLINK Pouch Bag Large') . ':</td>
 			  <td><input type="text" class="number" name="BlinkPouchBag03L" maxlength="3" size="3" value="' . $_POST['BlinkPouchBag03L'] . '" /></td>';
 		echo '<td></td>';
-		echo '<td>' . _('BLINK Shopping Bag XL') . ':</td>
-			  <td><input type="text" class="number" name="BlinkShoppingBag04XL" maxlength="3" size="3" value="' . $_POST['BlinkShoppingBag04XL'] . '" /></td></tr>';
+		echo '<td>' . _('BLINK Shopping Bag L') . ':</td>
+			  <td><input type="text" class="number" name="BlinkShoppingBag04L" maxlength="3" size="3" value="' . $_POST['BlinkShoppingBag04L'] . '" /></td></tr>';
 		echo'</tr>';
 
 		echo '<tr>
@@ -1919,7 +1916,6 @@ END OF QOH Verification */
 			AdjustPackagingMovement("PKPB03-M", $_POST['BlinkPouchBag03M'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
 			AdjustPackagingMovement("PKPB03-S", $_POST['BlinkPouchBag03S'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
 
-			AdjustPackagingMovement("PKSB04-XL", $_POST['BlinkShoppingBag04XL'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
 			AdjustPackagingMovement("PKSB04-L", $_POST['BlinkShoppingBag04L'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
 			AdjustPackagingMovement("PKSB04-M", $_POST['BlinkShoppingBag04M'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
 			AdjustPackagingMovement("PKSB04-S", $_POST['BlinkShoppingBag04S'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);

@@ -239,9 +239,6 @@ $ExRate = 1;
 					case 'PKPB03-S':
 						$_POST['BlinkPouchBag03S']++;
 						break;
-					case 'PKSB04-XL':
-						$_POST['BlinkShoppingBag04XL']++;
-						break;
 					case 'PKSB04-L':
 						$_POST['BlinkShoppingBag04L']++;
 						break;
@@ -1332,7 +1329,6 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 			AdjustPackagingMovement("PKPB03-M", $_POST['BlinkPouchBag03M'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
 			AdjustPackagingMovement("PKPB03-S", $_POST['BlinkPouchBag03S'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
 
-			AdjustPackagingMovement("PKSB04-XL", $_POST['BlinkShoppingBag04XL'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
 			AdjustPackagingMovement("PKSB04-L", $_POST['BlinkShoppingBag04L'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
 			AdjustPackagingMovement("PKSB04-M", $_POST['BlinkShoppingBag04M'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
 			AdjustPackagingMovement("PKSB04-S", $_POST['BlinkShoppingBag04S'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);

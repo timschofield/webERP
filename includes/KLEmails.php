@@ -47,7 +47,7 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 						$Param2 . " x PKPB03-L (BLINK PouchBag-L)" . "\n\n" . 
 						$Param3 . " x PKPB03-M (BLINK PouchBag-M)" . "\n\n" . 
 						$Param4 . " x PKPB03-S (BLINK PouchBag-S)" . "\n\n" . 
-						$Param5 . " x PKSB04-XL (BLINK ShoppingBag-XL)" . "\n\n" . 
+						$Param5 . " x PKSB04-L (BLINK ShoppingBag-L)" . "\n\n" . 
 						$Param6 . " x PKSB04-M (BLINK ShoppingBag-M)" . "\n\n" . 
 						$Param7 . " x PKSB04-S (BLINK ShoppingBag-S)" . "\n\n" . 
 						"Once ready inform Ike if transfer by car is needed.";

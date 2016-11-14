@@ -80,9 +80,6 @@ if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_KAPAL_LAUT)){
 // If the shop is using BLINK packaging, show it!
 if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_BLINK)){
 
-	if (!isset($_POST['BlinkShoppingBag04XL'])){
-		$_POST['BlinkShoppingBag04XL'] =0;
-	}
 	if (!isset($_POST['BlinkShoppingBag04L'])){
 		$_POST['BlinkShoppingBag04L'] =0;
 	}
@@ -114,8 +111,8 @@ if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_BLINK)){
 	echo '<td>' . _('BLINK Pouch Bag Large') . ':</td>
 		  <td><input type="text" class="number" name="BlinkPouchBag03L" maxlength="3" size="3" value="' . $_POST['BlinkPouchBag03L'] . '" /></td>';
 	echo '<td></td>';
-	echo '<td>' . _('BLINK Shopping Bag XL') . ':</td>
-		  <td><input type="text" class="number" name="BlinkShoppingBag04XL" maxlength="3" size="3" value="' . $_POST['BlinkShoppingBag04XL'] . '" /></td></tr>';
+	echo '<td>' . _('BLINK Shopping Bag L') . ':</td>
+		  <td><input type="text" class="number" name="BlinkShoppingBag04L" maxlength="3" size="3" value="' . $_POST['BlinkShoppingBag04L'] . '" /></td></tr>';
 	echo'</tr>';
 
 	echo '<tr>

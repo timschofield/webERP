@@ -17,7 +17,7 @@ if (!isset($_GET['Shop'])){
 KLSendEmail("SendBlinkPackagingToShop", "ShortConfirmation", $_GET['Name'], $_GET['BagL'], 
 																	   $_GET['BagM'], 
 																	   $_GET['BagS'],
-																	   $_GET['ShoppingXL'],
+																	   $_GET['ShoppingL'],
 																	   $_GET['ShoppingM'],
 																	   $_GET['ShoppingS']);
 
