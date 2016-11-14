@@ -153,20 +153,17 @@ if (strcmp($Version,$_SESSION['VersionNumber'])>0 AND (basename($_SERVER['SCRIPT
 	header('Location: UpgradeDatabase.php');
 }
 
-if (strpos($_SERVER['PHP_SELF'],"TEST")){
-	$_SESSION['Theme'] = 'gel';
-	$Theme = 'gel'; 
-}else{
-	if (isset($_POST['Theme']) AND ($_SESSION['UsersRealName'] == $_POST['RealName'])) {
-		$_SESSION['Theme'] = $_POST['Theme'];
-		$Theme = $_POST['Theme'];
-	} elseif (isset($_SESSION['Theme'])) {
-		$Theme = $_SESSION['Theme'];
-	} else {
-		$Theme = $DefaultTheme;
-		$_SESSION['Theme'] = '$DefaultTheme';
-	}
+
+If (isset($_POST['Theme']) AND ($_SESSION['UsersRealName'] == $_POST['RealName'])) {
+	$_SESSION['Theme'] = $_POST['Theme'];
+	$Theme = $_POST['Theme'];
+} elseif (isset($_SESSION['Theme'])) {
+	$Theme = $_SESSION['Theme'];
+} else {
+	$Theme = $DefaultTheme;
+	$_SESSION['Theme'] = '$DefaultTheme';
 }
+
 
 if ($_SESSION['HTTPS_Only']==1){
 	if ($_SERVER['HTTPS']!='on'){

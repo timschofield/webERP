@@ -1,8 +1,5 @@
 UPDATE  `config` SET `confvalue` = 'data/KL/part_pics/' WHERE confname = 'WeberpImagesFromOpenCart';
 
-ALTER TABLE  `kloldprices` ADD  `date_created` DATETIME NOT NULL ,
-	ADD  `date_updated` DATETIME NOT NULL;
-
 ALTER TABLE `stockmaster`  
 	ADD `length` DECIMAL(15,8) NULL DEFAULT '0' AFTER `netweight`,  
 	ADD `width` DECIMAL(15,8) NULL DEFAULT '0' AFTER `length`,  
@@ -80,27 +77,6 @@ ALTER TABLE  `relateditems`
 CREATE TRIGGER stockmaster_creation_timestamp BEFORE INSERT ON stockmaster 
 FOR EACH ROW
 SET NEW.date_created = NOW();	
-
-ALTER TABLE  `currencies` 
-	ADD  `date_created` DATETIME NOT NULL ,
-	ADD  `date_updated` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL;
-
-CREATE TRIGGER currencies_creation_timestamp BEFORE INSERT ON currencies 
-FOR EACH ROW
-SET NEW.date_created = NOW();	
-
-UPDATE currencies SET date_created = NOW();
-
-ALTER TABLE  `stockdescriptiontranslations` 
-	ADD  `date_created` DATETIME NOT NULL ,
-	ADD  `date_updated` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL;
-
-CREATE TRIGGER stockdescriptiontranslations_creation_timestamp BEFORE INSERT ON stockdescriptiontranslations 
-FOR EACH ROW
-SET NEW.date_created = NOW();	
-
-UPDATE stockdescriptiontranslations SET date_created = NOW();
-
 
 /* FOR TESTING PURPOSES ONLY WHILE DEVELOPING ... DELETE ON FINAL RELEASE*/
 UPDATE config

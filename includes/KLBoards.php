@@ -1955,9 +1955,7 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 							<th class="ascending">' . _('Order Date') . '</th>
 							<th class="ascending">' . _('Order Value') . '</th>
 							<th class="ascending">' . _('Currency') . '</th>
-							<th class="ascending">' . _('Reminder Bank Transfer') . '</th>
-							<th class="ascending">' . _('Paid by Mandiri') . '</th>
-							<th class="ascending">' . _('Paid by iPayMu') . '</th>
+							<th class="ascending">' . _('Reminder Bank Transfer Sent On') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -1972,20 +1970,12 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 			}else{
 				$EmailLink = ConvertSQLDate($myrow['klemailremindbanktransfer']);
 			}
-			$BankCode = "111121100PT";
-			$PaymentMandiriLinkText = 'Not Paid yet';
-			$PaymentValue = $myrow['ordervalue']+$myrow['freightcost'];
-			$PaymentMandiri = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&Bank=' . $BankCode . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentMandiriLinkText .'</a>';
-			$PaymentiPayMu = "Not Coded Yet";
-			
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					</tr>', 
@@ -1996,9 +1986,7 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 					ConvertSQLDate($myrow['orddate']), 
 					locale_number_format($myrow['ordervalue']+$myrow['freightcost'],$myrow['decimalplaces']),
 					$myrow['currcode'], 
-					$EmailLink,
-					$PaymentMandiri,
-					$PaymentiPayMu
+					$EmailLink
 					);
 			$i++;
 		}
@@ -7126,16 +7114,16 @@ Updated 3 index in loctransfers
 					(SELECT locstock.quantity
 						FROM locstock
 						WHERE locstock.loccode = locations.loccode
-							AND locstock.stockid = 'PKSB04-L') AS qty_shopping_l,
+							AND locstock.stockid = 'PKSB04-XL') AS qty_shopping_xl,
 					(SELECT locstock.reorderlevel
 						FROM locstock
 						WHERE locstock.loccode = locations.loccode
-							AND locstock.stockid = 'PKSB04-L') AS rl_shopping_l,
+							AND locstock.stockid = 'PKSB04-XL') AS rl_shopping_xl,
 					(SELECT SUM(loctransfers.shipqty - loctransfers.recqty)
 						FROM loctransfers
 						WHERE loctransfers.recloc = locations.loccode
 							AND loctransfers.shipqty != loctransfers.recqty
-							AND loctransfers.stockid = 'PKSB04-L') AS ot_shopping_l,
+							AND loctransfers.stockid = 'PKSB04-XL') AS ot_shopping_xl,
 					(SELECT locstock.quantity
 						FROM locstock
 						WHERE locstock.loccode = locations.loccode
@@ -7181,21 +7169,21 @@ Updated 3 index in loctransfers
 			$TableResult[$numshops]['qty_bag_l'] = $myrow['qty_bag_l'];
 			$TableResult[$numshops]['qty_bag_m'] = $myrow['qty_bag_m'];
 			$TableResult[$numshops]['qty_bag_s'] = $myrow['qty_bag_s'];
-			$TableResult[$numshops]['qty_shopping_l'] = $myrow['qty_shopping_l'];
+			$TableResult[$numshops]['qty_shopping_xl'] = $myrow['qty_shopping_xl'];
 			$TableResult[$numshops]['qty_shopping_m'] = $myrow['qty_shopping_m'];
 			$TableResult[$numshops]['qty_shopping_s'] = $myrow['qty_shopping_s'];
 
 			$TableResult[$numshops]['ot_bag_l'] = $myrow['ot_bag_l'];
 			$TableResult[$numshops]['ot_bag_m'] = $myrow['ot_bag_m'];
 			$TableResult[$numshops]['ot_bag_s'] = $myrow['ot_bag_s'];
-			$TableResult[$numshops]['ot_shopping_l'] = $myrow['ot_shopping_l'];
+			$TableResult[$numshops]['ot_shopping_xl'] = $myrow['ot_shopping_xl'];
 			$TableResult[$numshops]['ot_shopping_m'] = $myrow['ot_shopping_m'];
 			$TableResult[$numshops]['ot_shopping_s'] = $myrow['ot_shopping_s'];
 
 			$TableResult[$numshops]['rl_bag_l'] = $myrow['rl_bag_l'];
 			$TableResult[$numshops]['rl_bag_m'] = $myrow['rl_bag_m'];
 			$TableResult[$numshops]['rl_bag_s'] = $myrow['rl_bag_s'];
-			$TableResult[$numshops]['rl_shopping_l'] = $myrow['rl_shopping_l'];
+			$TableResult[$numshops]['rl_shopping_xl'] = $myrow['rl_shopping_xl'];
 			$TableResult[$numshops]['rl_shopping_m'] = $myrow['rl_shopping_m'];
 			$TableResult[$numshops]['rl_shopping_s'] = $myrow['rl_shopping_s'];
 		}
@@ -7207,7 +7195,7 @@ Updated 3 index in loctransfers
 		if (($TableResult[$i]['qty_bag_l'] < $TableResult[$i]['rl_bag_l']) OR 
 			($TableResult[$i]['qty_bag_m'] < $TableResult[$i]['rl_bag_m']) OR 
 			($TableResult[$i]['qty_bag_s'] < $TableResult[$i]['rl_bag_s']) OR 
-			($TableResult[$i]['qty_shopping_l'] < $TableResult[$i]['rl_shopping_l']) OR 
+			($TableResult[$i]['qty_shopping_xl'] < $TableResult[$i]['rl_shopping_xl']) OR 
 			($TableResult[$i]['qty_shopping_m'] < $TableResult[$i]['rl_shopping_m']) OR 
 			($TableResult[$i]['qty_shopping_s'] < $TableResult[$i]['rl_shopping_s'])) 
 		{
@@ -7272,14 +7260,14 @@ Updated 3 index in loctransfers
 				$NeedBagL = max(0,round(($TableResult[$i]['rl_bag_l'] * $TableResult[$i]['rlfactorforpackaging']) - $TableResult[$i]['qty_bag_l'],0));
 				$NeedBagM = max(0,round(($TableResult[$i]['rl_bag_m'] * $TableResult[$i]['rlfactorforpackaging']) - $TableResult[$i]['qty_bag_m'],0));
 				$NeedBagS = max(0,round(($TableResult[$i]['rl_bag_s'] * $TableResult[$i]['rlfactorforpackaging']) - $TableResult[$i]['qty_bag_s'],0));
-				$NeedShoppingL = max(0,round(($TableResult[$i]['rl_shopping_l'] * $TableResult[$i]['rlfactorforpackaging']) - $TableResult[$i]['qty_shopping_l'],0));
+				$NeedShoppingXL = max(0,round(($TableResult[$i]['rl_shopping_xl'] * $TableResult[$i]['rlfactorforpackaging']) - $TableResult[$i]['qty_shopping_xl'],0));
 				$NeedShoppingM  = max(0,round(($TableResult[$i]['rl_shopping_m'] * $TableResult[$i]['rlfactorforpackaging']) - $TableResult[$i]['qty_shopping_m'],0));
 				$NeedShoppingS  = max(0,round(($TableResult[$i]['rl_shopping_s'] * $TableResult[$i]['rlfactorforpackaging']) - $TableResult[$i]['qty_shopping_s'],0));
 
 				$ToShipBagL = max(0,$NeedBagL - $TableResult[$i]['ot_bag_l']);
 				$ToShipBagM = max(0,$NeedBagM - $TableResult[$i]['ot_bag_m']);
 				$ToShipBagS = max(0,$NeedBagS - $TableResult[$i]['ot_bag_s']);
-				$ToShipShoppingL = max(0,$NeedShoppingL - $TableResult[$i]['ot_shopping_l']);
+				$ToShipShoppingXL = max(0,$NeedShoppingXL - $TableResult[$i]['ot_shopping_xl']);
 				$ToShipShoppingM  = max(0,$NeedShoppingM - $TableResult[$i]['ot_shopping_m']);
 				$ToShipShoppingS  = max(0,$NeedShoppingS - $TableResult[$i]['ot_shopping_s']);
 
@@ -7288,7 +7276,7 @@ Updated 3 index in loctransfers
 																						. '&BagL=' . $ToShipBagL 
 																						. '&BagM=' . $ToShipBagM 
 																						. '&BagS=' . $ToShipBagS 
-																						. '&ShoppingL=' . $ToShipShoppingM 
+																						. '&ShoppingXL=' . $ToShipShoppingM 
 																						. '&ShoppingM=' . $ToShipShoppingM 
 																						. '&ShoppingS=' . $ToShipShoppingS 
 																						.'">' . 'Send email to team' . '</a>';
@@ -7325,9 +7313,9 @@ Updated 3 index in loctransfers
 						locale_number_format_zero_blank($NeedBagS,0),
 						locale_number_format_zero_blank($TableResult[$i]['ot_bag_s'],0),
 						locale_number_format_zero_blank($ToShipBagS,0),
-						locale_number_format_zero_blank($NeedShoppingL,0),
-						locale_number_format_zero_blank($TableResult[$i]['ot_shopping_l'],0),
-						locale_number_format_zero_blank($ToShipShoppingL,0),
+						locale_number_format_zero_blank($NeedShoppingXL,0),
+						locale_number_format_zero_blank($TableResult[$i]['ot_shopping_xl'],0),
+						locale_number_format_zero_blank($ToShipShoppingXL,0),
 						locale_number_format_zero_blank($NeedShoppingM,0),
 						locale_number_format_zero_blank($TableResult[$i]['ot_shopping_m'],0),
 						locale_number_format_zero_blank($ToShipShoppingM,0),
@@ -7493,7 +7481,7 @@ function PackagingStatusForKapalLaut($RootPath, $db){
 		$k = 0; //row colour counter
 		while ($myrow = DB_fetch_array($result)) {
 			if($showHeader){
-				echo '<p class="page_title_text" align="center"><strong>' . 'KAPAL-lAUT Shop Packaging Stock Status by Shop' . '</strong></p>';
+				echo '<p class="page_title_text" align="center"><strong>' . 'KAPAL-LAUT Shop Packaging Stock Status by Shop' . '</strong></p>';
 				echo '<div>';
 				echo '<table class="selection">';
 				$TableHeader = '<tr>
@@ -7813,16 +7801,16 @@ function PackagingStatusForBlink($RootPath, $db){
 					(SELECT locstock.quantity
 						FROM locstock
 						WHERE locstock.loccode = locations.loccode
-							AND locstock.stockid = 'PKSB04-L') AS qty_shopping_l,
+							AND locstock.stockid = 'PKSB04-XL') AS qty_shopping_xl,
 					(SELECT locstock.reorderlevel
 						FROM locstock
 						WHERE locstock.loccode = locations.loccode
-							AND locstock.stockid = 'PKSB04-L') AS rl_shopping_l,
+							AND locstock.stockid = 'PKSB04-XL') AS rl_shopping_xl,
 					(SELECT SUM(loctransfers.shipqty - loctransfers.recqty)
 						FROM loctransfers
 						WHERE loctransfers.recloc = locations.loccode
 							AND loctransfers.shipqty != loctransfers.recqty
-							AND loctransfers.stockid = 'PKSB04-L') AS ot_shopping_l,
+							AND loctransfers.stockid = 'PKSB04-XL') AS ot_shopping_xl,
 					(SELECT locstock.quantity
 						FROM locstock
 						WHERE locstock.loccode = locations.loccode
@@ -7937,9 +7925,9 @@ function PackagingStatusForBlink($RootPath, $db){
 					locale_number_format_zero_blank($myrow['qty_bag_s'],0), 
 					locale_number_format_zero_blank($myrow['ot_bag_s'],0),
 					locale_number_format_zero_blank($myrow['rl_bag_s'],0),
-					locale_number_format_zero_blank($myrow['qty_shopping_l'],0), 
-					locale_number_format_zero_blank($myrow['ot_shopping_l'],0),
-					locale_number_format_zero_blank($myrow['rl_shopping_l'],0),
+					locale_number_format_zero_blank($myrow['qty_shopping_xl'],0), 
+					locale_number_format_zero_blank($myrow['ot_shopping_xl'],0),
+					locale_number_format_zero_blank($myrow['rl_shopping_xl'],0),
 					locale_number_format_zero_blank($myrow['qty_shopping_m'],0), 
 					locale_number_format_zero_blank($myrow['ot_shopping_m'],0),
 					locale_number_format_zero_blank($myrow['rl_shopping_m'],0),
@@ -8081,7 +8069,7 @@ function PackagingUsageForKapalLaut($NumDays, $RootPath, $db){
 		$k = 0; //row colour counter
 		while ($myrow = DB_fetch_array($result)) {
 			if($showHeader){
-				echo '<p class="page_title_text" align="center"><strong>' . 'KAPAL-lAUT Shop Packaging Usage during the last ' . $NumDays . ' days'. '</strong></p>';
+				echo '<p class="page_title_text" align="center"><strong>' . 'KAPAL-LAUT Shop Packaging Usage during the last ' . $NumDays . ' days'. '</strong></p>';
 				echo '<div>';
 				echo '<table class="selection">';
 				$TableHeader = '<tr>
@@ -8315,12 +8303,12 @@ function PackagingUsageForBlink($NumDays, $RootPath, $db){
 					(SELECT locstock.quantity
 						FROM locstock
 						WHERE locstock.loccode = locations.loccode
-							AND locstock.stockid = 'PKSB04-L') AS qty_shopping_l,
+							AND locstock.stockid = 'PKSB04-XL') AS qty_shopping_xl,
 					(SELECT SUM(packagingused.qty)
 						FROM packagingused
 						WHERE packagingused.fromlocation = locations.loccode
-							AND packagingused.stockid = 'PKSB04-L'
-							AND packagingused.date >= '". $FromDate ."') AS sales_shopping_l,
+							AND packagingused.stockid = 'PKSB04-XL'
+							AND packagingused.date >= '". $FromDate ."') AS sales_shopping_xl,
 					(SELECT locstock.quantity
 						FROM locstock
 						WHERE locstock.loccode = locations.loccode
@@ -8355,8 +8343,8 @@ function PackagingUsageForBlink($NumDays, $RootPath, $db){
 	$totalqty_bag_s   = 0;
 	$totalsales_bag_s = 0;
 	
-	$totalqty_shopping_l   = 0;
-	$totalsales_shopping_l = 0;
+	$totalqty_shopping_xl   = 0;
+	$totalsales_shopping_xl = 0;
 	$totalqty_shopping_m    = 0;
 	$totalsales_shopping_m  = 0;
 	$totalqty_shopping_s    = 0;
@@ -8434,9 +8422,9 @@ function PackagingUsageForBlink($NumDays, $RootPath, $db){
 					locale_number_format_zero_blank($myrow['qty_bag_s'],0), 
 					locale_number_format_zero_blank($myrow['sales_bag_s'],0),
 					locale_number_format_zero_blank($myrow['qty_bag_s']/($myrow['sales_bag_s']/$NumDays),0),
-					locale_number_format_zero_blank($myrow['qty_shopping_l'],0), 
-					locale_number_format_zero_blank($myrow['sales_shopping_l'],0),
-					locale_number_format_zero_blank($myrow['qty_shopping_l']/($myrow['sales_shopping_l']/$NumDays),0),
+					locale_number_format_zero_blank($myrow['qty_shopping_xl'],0), 
+					locale_number_format_zero_blank($myrow['sales_shopping_xl'],0),
+					locale_number_format_zero_blank($myrow['qty_shopping_xl']/($myrow['sales_shopping_xl']/$NumDays),0),
 					locale_number_format_zero_blank($myrow['qty_shopping_m'],0), 
 					locale_number_format_zero_blank($myrow['sales_shopping_m'],0),
 					locale_number_format_zero_blank($myrow['qty_shopping_m']/($myrow['sales_shopping_m']/$NumDays),0),
@@ -8452,8 +8440,8 @@ function PackagingUsageForBlink($NumDays, $RootPath, $db){
 			$totalqty_bag_s   = $totalqty_bag_s + $myrow['qty_bag_s'];
 			$totalsales_bag_s = $totalsales_bag_s + $myrow['sales_bag_s'];
 
-			$totalqty_shopping_l    = $totalqty_shopping_l + $myrow['qty_shopping_l'];
-			$totalsales_shopping_l  = $totalsales_shopping_l + $myrow['sales_shopping_l'];
+			$totalqty_shopping_xl    = $totalqty_shopping_xl + $myrow['qty_shopping_xl'];
+			$totalsales_shopping_xl  = $totalsales_shopping_xl + $myrow['sales_shopping_xl'];
 			$totalqty_shopping_m    = $totalqty_shopping_m + $myrow['qty_shopping_m'];
 			$totalsales_shopping_m  = $totalsales_shopping_m + $myrow['sales_shopping_m'];
 			$totalqty_shopping_s    = $totalqty_shopping_s + $myrow['qty_shopping_s'];
@@ -8492,9 +8480,9 @@ function PackagingUsageForBlink($NumDays, $RootPath, $db){
 					locale_number_format_zero_blank($totalqty_bag_s,0), 
 					locale_number_format_zero_blank($totalsales_bag_s,0),
 					locale_number_format_zero_blank($totalqty_bag_s/($totalsales_bag_s/$NumDays),0),
-					locale_number_format_zero_blank($totalqty_shopping_l,0), 
-					locale_number_format_zero_blank($totalsales_shopping_l,0),
-					locale_number_format_zero_blank($totalqty_shopping_l/($totalsales_shopping_l/$NumDays),0),
+					locale_number_format_zero_blank($totalqty_shopping_xl,0), 
+					locale_number_format_zero_blank($totalsales_shopping_xl,0),
+					locale_number_format_zero_blank($totalqty_shopping_xl/($totalsales_shopping_xl/$NumDays),0),
 					locale_number_format_zero_blank($totalqty_shopping_m,0), 
 					locale_number_format_zero_blank($totalsales_shopping_m,0),
 					locale_number_format_zero_blank($totalqty_shopping_m/($totalsales_shopping_m/$NumDays),0),

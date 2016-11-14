@@ -214,25 +214,11 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 			 * we are not in session (i.e. before login)
 			 */
 			if (empty($_SESSION['LogoFile'])) {
-				include('includes/KLDefines.php');
-				include('includes/KLRoles.inc');
-				include('includes/KLGeneralFunctions.php');
-				if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_KAPAL_LAUT)){
-					if (file_exists($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/LogoKL.png')) {
-						$_SESSION['LogoFile'] = 'companies/' .  $_SESSION['DatabaseName'] . '/LogoKL.png';
-					}
-				} else if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_BLINK)){
-					if (file_exists($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/LogoBlink.png')) {
-						$_SESSION['LogoFile'] = 'companies/' .  $_SESSION['DatabaseName'] . '/LogoBlink.png';
-					}
-				} else if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_OUTLET)){
-					if (file_exists($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/LogoOutlet.png')) {
-						$_SESSION['LogoFile'] = 'companies/' .  $_SESSION['DatabaseName'] . '/LogoOutlet.png';
-					}
-				} else {
-					if (file_exists($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/LogoPTBB.png')) {
-						$_SESSION['LogoFile'] = 'companies/' .  $_SESSION['DatabaseName'] . '/LogoPTBB.png';
-					}
+				/* find a logo in companies/CompanyDir */
+				if (file_exists($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/logo.png')) {
+					$_SESSION['LogoFile'] = 'companies/' .  $_SESSION['DatabaseName'] . '/logo.png';
+				} elseif (file_exists($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/logo.jpg')) {
+					$_SESSION['LogoFile'] = 'companies/' .  $_SESSION['DatabaseName'] . '/logo.jpg';
 				}
 			}
 

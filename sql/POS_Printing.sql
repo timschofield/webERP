@@ -47,5 +47,3 @@ UPDATE `locations` SET `klpostag` = '22' WHERE `locations`.`loccode` = 'TOKSB';
 UPDATE `locations` SET `klpostag` = '23' WHERE `locations`.`loccode` = 'TOKPB';
 UPDATE `locations` SET `klpostag` = '24' WHERE `locations`.`loccode` = 'TOKBU';
 UPDATE `locations` SET `klpostag` = '25' WHERE `locations`.`loccode` = 'TOKM2';
-
-ALTER TABLE `salesorders` ADD `ordtime` TIME NOT NULL DEFAULT '00:00:00' AFTER `orddate`;

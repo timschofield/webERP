@@ -1,1 +1,0 @@
-UPDATE locstock SET date_updated = NOW();
