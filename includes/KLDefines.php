@@ -90,7 +90,7 @@ define("LIST_SHOPS_KAPAL_LAUT",    "('TOK66','TOKSA','TOKKS','TOKSE','TOKMF','TO
 define("LIST_SHOPS_OUTLET",        "('TOKUB','TOKAR')"); 
 define("LIST_SHOPS_BLINK",         "('TOKMU','TOKPS','TOKSB','TOKPB','TOKBU')");
 
-define("LIST_SHOPS_WITH_POS",      "('TOK66','TOKUB','TOKMF','TOKPU','TOKMU','TOKBU','TOKM2')"); 
+define("LIST_SHOPS_WITH_POS",      "('TOK66','TOKUB','TOKMF','TOKPU','TOKMU','TOKBU','TOKM2','TOKSA','TOKSB','TOKSU','TOKSS')"); 
 
 
 define("LIST_ONLINE_SHOPS", "('TOKWS')");
