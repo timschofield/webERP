@@ -85,32 +85,33 @@ function SPGNotReportingSalesInDays($maxdays, $db){
 
 	$SQL = "SELECT salesman.salesmancode,
 				salesman.salesmanname,
+				www_users.defaultlocation,
 				(SELECT orddate
 					FROM salesorders
 					WHERE salesorders.salesperson = salesman.salesmancode
 					ORDER BY orddate DESC
 					LIMIT 1) AS lastsale
-		FROM salesman
-		WHERE salesman.current = 1	
-		AND salesman.salesmancode != '999'
-		AND NOT EXISTS (SELECT *
-						FROM salesorders
-						WHERE orddate >= '". $StartDate. "'
-							AND salesorders.salesperson = salesman.salesmancode)
-		AND EXISTS (SELECT *
-					FROM www_users
-					WHERE www_users.salesman = salesman.salesmancode
-						AND www_users.fullaccess = '17')
+		FROM salesman, www_users
+		WHERE www_users.salesman = salesman.salesmancode
+			AND salesman.current = 1	
+			AND salesman.salesmancode != '999'
+			AND www_users.fullaccess = '17'
+			AND www_users.blocked = 0
+			AND NOT EXISTS (SELECT *
+							FROM salesorders
+							WHERE orddate >= '". $StartDate. "'
+								AND salesorders.salesperson = salesman.salesmancode)
 		ORDER BY salesman.salesmancode";
 //	prnMsg($SQL);			
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Senior SPG with more than ') . $maxdays . _(' days not reporting ANY sales.') .'</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . _('Senior or Support SPG with more than ') . $maxdays . _(' days not reporting ANY sales.') .'</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
 							<th class="ascending">' .  _('SPG') . '</th>
 							<th class="ascending">' . _('Name') . '</th>
+							<th class="ascending">' . _('Shop') . '</th>
 							<th class="ascending">' . _('Last Sale') . '</th>
 						</tr>';
 		echo $TableHeader;
@@ -126,9 +127,11 @@ function SPGNotReportingSalesInDays($maxdays, $db){
 			printf('<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
+					<td>%s</td>
 					</tr>', 
 					$myrow['salesmancode'],
 					$myrow['salesmanname'],
+					$myrow['defaultlocation'],
 					$Day
 					);
 			$i++;
