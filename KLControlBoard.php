@@ -71,8 +71,8 @@ if ($KL_SystemAdmin
 	OR $KL_ShopSupportLeader 
 	OR $KL_SalesDirector 
 	OR $KL_PettyCash 
-	OR $KL_SPG 
-	OR $KL_SPGSupport){
+	OR $KL_SPGSeniorOrSupport 
+	OR $KL_SPGJunior){
 
 //	$NumberOfTestExecuted++;
 	
@@ -143,6 +143,8 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		WrongStandardCost("Philippines", "", STANDARD_COST_FACTOR_PHILIPPINES, 0.04, "SHOWLINK", $RootPath, $db);
 		$NumberOfTestExecuted++;
+		WrongStandardCost("India"      , "", STANDARD_COST_FACTOR_INDIA, 0.04, "SHOWLINK", $RootPath, $db);
+		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_PurchasingTeam) {
@@ -157,6 +159,8 @@ if ($ProcessSection01){
 		WrongStandardCost("Catalonia"  , "", STANDARD_COST_FACTOR_CATALONIA, 0.10, "SHOWONLY", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		WrongStandardCost("Philippines", "", STANDARD_COST_FACTOR_PHILIPPINES, 0.05, "SHOWONLY", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		WrongStandardCost("India", "", STANDARD_COST_FACTOR_INDIA, 0.05, "SHOWONLY", $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 	/***************************************************************************************
@@ -1031,8 +1035,8 @@ if ($ProcessSection02){
 		OR $KL_ShopSupportLeader 
 		OR $KL_SalesDirector 
 		OR $KL_PettyCash 
-		OR $KL_SPG 
-		OR $KL_SPGSupport){
+		OR $KL_SPGSeniorOrSupport 
+		OR $KL_SPGJunior){
 		PettyCashBalance('User', $db);
 		$NumberOfTestExecuted++;
 	}

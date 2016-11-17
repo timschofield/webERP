@@ -648,7 +648,7 @@ if(isset($_SESSION['Transfer'])) {
 			echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		} else {
 			// RICARD let's find who is using this script to block "To" locations if it's SPG ot SPG Support
-			if ($KL_SPG OR $KL_SPGSupport){
+			if ($KL_SPGSeniorOrSupport OR $KL_SPGJunior){
 			}else{
 				// if user is not SPG or SPG Support, then show all options.
 				echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';

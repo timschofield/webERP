@@ -285,7 +285,7 @@ $MenuItems['PO']['Maintenance']['Caption'] = array(_('Maintain Supplier Price Li
 
 $MenuItems['PO']['Maintenance']['URL'] = array('/SupplierPriceList.php');
 
-if ($KL_SPG OR $KL_SPGSupport){
+if ($KL_SPGSeniorOrSupport OR $KL_SPGJunior){
 	$TextTransferReceive = _('KL Shop Transfer - Receive Transfer FROM kantor');
 } else {
 	$TextTransferReceive = _('Bulk Inventory Transfer') . ' - ' . _('Receive');

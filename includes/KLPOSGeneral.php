@@ -396,19 +396,15 @@ function AccountPaymentRetail($PaymentMethod,
 	$ReceiptNumber = GetNextTransNo(12,$db);
 
 	if ($PaymentMethod == PAYMENT_BY_CREDITCARD){
-		$Description = $Area . 
-					 _(' WI:') . $InvoiceNo . 
+		$Description = _(' WI:') . $InvoiceNo . 
 					 _(' YI:') . $CustomerReference  . 
 					 _(' SPG:'). $_SESSION['SalesmanLogin'] . 
-					 ' ' . $Location . 
 					 ' CC -> T:' . number_format($AmountPaid,0) . 
 					 ' C:' . number_format($BankCommision,0);
 	}else{
-		$Description = $Area . 
-					 _(' WI:') . $InvoiceNo . 
+		$Description = _(' WI:') . $InvoiceNo . 
 					 _(' YI:') . $CustomerReference  . 
-					 _(' SPG:'). $_SESSION['SalesmanLogin'] . 
-					 ' ' . $Location;
+					 _(' SPG:'). $_SESSION['SalesmanLogin'];
 	}
 	
 	$SQL="INSERT INTO gltrans (type,
@@ -547,11 +543,9 @@ function AccountDebtorPayment($ReceiptNumber,
 		$ReceiptNumber = GetNextTransNo(12,$db);
 	}
 
-	$Description = $Area . 
-				 _(' WI:') . $InvoiceNo . 
+	$Description = _(' WI:') . $InvoiceNo . 
 				 _(' YI:') . $CustomerReference  . 
-				 _(' SPG:'). $_SESSION['SalesmanLogin'] . 
-				 ' ' . $Location;
+				 _(' SPG:'). $_SESSION['SalesmanLogin'];
 
 	if ($PaymentMethod == PAYMENT_BY_CREDITCARD){
 		$Description = $Description . ' CC';
