@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-17 19:39-0600\n"
-"PO-Revision-Date: 2016-11-17 20:29-0600\n"
+"PO-Revision-Date: 2016-11-17 22:24-0600\n"
 "Last-Translator: Rafael E. Chacón <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: French <none>\n"
 "Language: fr_FR\n"
@@ -1504,11 +1504,11 @@ msgstr "webERP est un système de comptabilité commerciale à double entrée"
 
 #: AnalysisHorizontalIncome.php:43 GLCashFlowsIndirect.php:782
 msgid "Select period from"
-msgstr ""
+msgstr "Sélectionner la période de"
 
 #: AnalysisHorizontalIncome.php:79 GLCashFlowsIndirect.php:803
 msgid "Select period to"
-msgstr ""
+msgstr "Sélectionner la période à"
 
 #: AnalysisHorizontalIncome.php:105 AnalysisHorizontalPosition.php:63
 msgid "Detail or summary"
@@ -1558,7 +1558,7 @@ msgstr "Afficher sur l'écran (HTML)"
 #: SecurityTokens.php:156 UserGLAccounts.php:259
 #: Z_GLAccountUsersCopyAuthority.php:96 includes/Login.php:8
 msgid "Return"
-msgstr ""
+msgstr "Retour"
 
 #: AnalysisHorizontalIncome.php:131 GLProfit_Loss.php:147 GLProfit_Loss.php:577
 #: GLTagProfit_Loss.php:155 GLTagProfit_Loss.php:480
@@ -1684,7 +1684,6 @@ msgstr "Pas de compte GL trouvé avec la commande SQL"
 msgid "total"
 msgstr "Total"
 
-# JDN
 #: AnalysisHorizontalIncome.php:312 AnalysisHorizontalIncome.php:481
 #: Contracts.php:949 GLProfit_Loss.php:324 GLProfit_Loss.php:517
 #: GLProfit_Loss.php:831 GLProfit_Loss.php:1188 GLTagProfit_Loss.php:310
@@ -1703,7 +1702,7 @@ msgstr ""
 
 #: AnalysisHorizontalIncome.php:501
 msgid "Net Profit"
-msgstr ""
+msgstr "Résultat net"
 
 #: AnalysisHorizontalIncome.php:518 AnalysisHorizontalPosition.php:358
 #: BOMs.php:919 CustWhereAlloc.php:199 DailyBankTransactions.php:252
@@ -1711,7 +1710,7 @@ msgstr ""
 #: GLProfit_Loss.php:1313 GLTrialBalance.php:736 SuppWhereAlloc.php:197
 #: UserGLAccounts.php:254
 msgid "Print This"
-msgstr ""
+msgstr "Imprimer ceci"
 
 #: AnalysisHorizontalIncome.php:519 AnalysisHorizontalIncome.php:520
 #: AnalysisHorizontalPosition.php:359 AnalysisHorizontalPosition.php:360
@@ -14690,7 +14689,7 @@ msgstr "Activité de financement"
 
 #: GLAccounts.php:14 GLAccounts.php:286 GLCashFlowsIndirect.php:20
 msgid "Cash or cash equivalent"
-msgstr "Trésorerie et des équivalents de trésorerie"
+msgstr "Trésorerie et équivalents de trésorerie"
 
 #: GLAccounts.php:15 GLCashFlowsIndirect.php:21
 msgid "Unknown"
@@ -15031,7 +15030,7 @@ msgstr "Impossible de mettre à jour l'enregistrement parce chartdetails"
 
 #: GLCashFlowsIndirect.php:17
 msgid "Operating activities"
-msgstr "Activités opérationnelles"
+msgstr "Activités d'exploitation"
 
 #: GLCashFlowsIndirect.php:18
 msgid "Investing activities"
@@ -15039,11 +15038,11 @@ msgstr "Activités d'investissement"
 
 #: GLCashFlowsIndirect.php:19
 msgid "Financing activities"
-msgstr "activités de financement"
+msgstr "Activités de financement"
 
 #: GLCashFlowsIndirect.php:36
 msgid "Statement of Cash Flows, Indirect Method"
-msgstr "Etat des flux de trésorerie, méthode indirecte"
+msgstr "État des flux de trésorerie, méthode indirecte"
 
 #: GLCashFlowsIndirect.php:63
 msgid ""
@@ -15073,7 +15072,7 @@ msgstr "Période courante"
 #: includes/PDFTagProfitAndLossPageHeader.inc:36
 #: includes/PDFTrialBalancePageHeader.inc:33
 msgid "Period Budget"
-msgstr "Budget pour la Période"
+msgstr "Budget pour la période"
 
 #: GLCashFlowsIndirect.php:127 GLCashFlowsIndirect.php:446
 msgid ""
@@ -15090,7 +15089,7 @@ msgid ""
 "a positive number indicates a cash inflow."
 msgstr ""
 "Signes de trésorerie et équivalents de trésorerie: un nombre négatif indique "
-"une sortie de trésorerie; Un nombre positif indique une entrée de trésorerie."
+"une sortie de trésorerie; un nombre positif indique une entrée de trésorerie."
 
 #: GLCashFlowsIndirect.php:136 GLCashFlowsIndirect.php:455
 msgid "Net profit and dividends"
@@ -15110,7 +15109,7 @@ msgstr "Réserves comptables"
 
 #: GLCashFlowsIndirect.php:266 GLCashFlowsIndirect.php:569
 msgid "Net increase in cash and cash equivalents"
-msgstr "Augmentation nette de la trésorerie et des équivalents de trésorerie"
+msgstr "Augmentation nette de trésorerie et équivalents de trésorerie"
 
 #: GLCashFlowsIndirect.php:330 GLCashFlowsIndirect.php:625
 msgid "Cash and cash equivalents at beginning of period"
@@ -15122,7 +15121,7 @@ msgstr "Trésorerie et équivalents de trésorerie à la fin de la période"
 
 #: GLCashFlowsIndirect.php:734
 msgid "Run Setup"
-msgstr ""
+msgstr "Lancer l'installation"
 
 #: GLCashFlowsIndirect.php:750
 msgid ""
@@ -15148,6 +15147,9 @@ msgid ""
 "the statement of financial position, which represents a single moment in "
 "time."
 msgstr ""
+"L'état des flux de trésorerie représente une période de temps. Cela "
+"contraste avec l'état de la situation financière, qui représente un moment "
+"unique dans le temps."
 
 #: GLCashFlowsIndirect.php:753
 msgid ""
@@ -15194,7 +15196,7 @@ msgstr ""
 
 #: GLCashFlowsSetup.php:7
 msgid "Cash Flows Activities Maintenance"
-msgstr ""
+msgstr "Gestion des activités de flux de trésorerie"
 
 #: GLCashFlowsSetup.php:29 GLCashFlowsSetup.php:39 GLCashFlowsSetup.php:48
 msgid "Can not update chartmaster.cashflowsactivity because"
@@ -15290,12 +15292,18 @@ msgid ""
 "partitioned into three sections: operating activities, investing activities "
 "and financing activities."
 msgstr ""
+"L'état des flux de trésorerie, en utilisant des méthodes directes et "
+"indirectes, est divisé en trois sections: activités d'exploitation, "
+"activités d'investissement et activités de financement."
 
 #: GLCashFlowsSetup.php:154
 msgid ""
 "You must classify all accounts in any of those three sections of the cash "
 "flow statement, or as no effect on cash flow, or as cash or cash equivalent."
 msgstr ""
+"Vous devez classer tous les comptes dans l'une de ces trois sections de "
+"l'état des flux de trésorerie, ou comme sans effet sur le flux de "
+"trésorerie, ou en trésorerie et équivalents de trésorerie."
 
 #: GLCashFlowsSetup.php:166
 msgid "Action to do"
@@ -15328,19 +15336,19 @@ msgstr "Configuration manuelle"
 
 #: GLCashFlowsSetup.php:194
 msgid "Net profit for the period GL account"
-msgstr ""
+msgstr "Compte GL pour le résultat net de la période"
 
 #: GLCashFlowsSetup.php:209
 msgid "GL account to post the net profit for the period"
-msgstr ""
+msgstr "Compte GL pour comptabiliser le résultat net de la période"
 
 #: GLCashFlowsSetup.php:214
 msgid "Retained earnings GL account"
-msgstr ""
+msgstr "Compte GL pour les réserves comptables"
 
 #: GLCashFlowsSetup.php:230
 msgid "GL account to post the retained earnings"
-msgstr ""
+msgstr "Compte GL pour comptabiliser les réserves comptables"
 
 #: GLCodesInquiry.php:7
 msgid "GL Codes Inquiry"
@@ -15590,11 +15598,11 @@ msgstr "Bénéfice net pour cent"
 
 #: GLProfit_Loss.php:620
 msgid "Statement of Comprehensive Income"
-msgstr ""
+msgstr "État du résultat global"
 
 #: GLProfit_Loss.php:621 includes/MainMenuLinksArray.php:377
 msgid "Profit and Loss Statement"
-msgstr ""
+msgstr "État du résultat global"
 
 #: GLProfit_Loss.php:912
 #, php-format
@@ -51177,7 +51185,7 @@ msgstr "Liste des comptes au format CSV"
 
 #: includes/MainMenuLinksArray.php:378
 msgid "Statement of Cash Flows"
-msgstr ""
+msgstr "État des flux de trésorerie"
 
 #: includes/MainMenuLinksArray.php:381
 msgid "Tag Reports"

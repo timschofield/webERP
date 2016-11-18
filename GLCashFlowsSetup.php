@@ -125,7 +125,7 @@ switch ($_POST['Action']) {
 		foreach ($Criterion as $Criteria) {
 			$Sql = "UPDATE `chartmaster`
 				SET `cashflowsactivity`=". $Criteria['CashFlowsActivity'] . "
-				WHERE `accountname` LIKE '%". _($Criteria['AccountLike']) . "%'
+				WHERE `accountname` LIKE '%". addslashes(_($Criteria['AccountLike'])) . "%'
 				AND `cashflowsactivity`=-1";// Uses cashflowsactivity=-1 to NOT overwrite.
 			$ErrMsg = _('Can not update chartmaster.cashflowsactivity. Error code:');
 			$Result = DB_query($Sql, $ErrMsg);
@@ -169,13 +169,13 @@ echo '<br />',
 			<tr>
 				<td colspan="2">',
 					'<div class="centre">',
-						'<button name="Action" type="submit" value="', _('Update'), '"><img alt="" src="', $RootPath, '/css/', $Theme,
+						'<button name="Action" type="submit" value="Update"><img alt="" src="', $RootPath, '/css/', $Theme,
 							'/images/tick.svg" /> ', _('Update'), '</button>', // "Update" button.
-						'<button name="Action" type="submit" value="', _('Reset'), '"><img alt="" src="', $RootPath, '/css/', $Theme,
+						'<button name="Action" type="submit" value="Reset"><img alt="" src="', $RootPath, '/css/', $Theme,
 							'/images/cross.svg" /> ', _('Reset values'), '</button>', // "Reset values" button.
-						'<button name="Action" type="submit" value="', _('Automatic'), '"><img alt="" src="', $RootPath, '/css/', $Theme,
+						'<button name="Action" type="submit" value="Automatic"><img alt="" src="', $RootPath, '/css/', $Theme,
 							'/images/next.svg" /> ', _('Automatic setup'), '</button>', // "Automatic setup" button.
-						'<button name="Action" type="submit" value="', _('Manual'), '"><img alt="" src="', $RootPath, '/css/', $Theme,
+						'<button name="Action" type="submit" value="Manual"><img alt="" src="', $RootPath, '/css/', $Theme,
 							'/images/previous.svg" /> ', _('Manual setup'), '</button>', // "Manual setup" button.
 						'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
 							'/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.

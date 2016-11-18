@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-17 19:39-0600\n"
-"PO-Revision-Date: 2016-11-17 21:19-0600\n"
+"PO-Revision-Date: 2016-11-17 21:34-0600\n"
 "Last-Translator: Rafael E. Chacón <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -14575,7 +14575,7 @@ msgstr "Sin efecto sobre el flujo de caja"
 
 #: GLAccounts.php:11 GLAccounts.php:283
 msgid "Operating activity"
-msgstr "Actividad operativa"
+msgstr "Actividad de explotación"
 
 #: GLAccounts.php:12 GLAccounts.php:284
 msgid "Investing activity"
