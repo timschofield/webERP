@@ -348,19 +348,31 @@
 		<p>The purpose of the statement of changes in equity is to show the changes in a company&apos;s retained earnings during the period being reported.</p>
 		<p>The changes in equity report can be run as a pdf file for later printing, emailing, or archiving, or it can be shown on screen. It can be run in summary mode - just showing the totals for each account group, or in detailed mode listing each general ledger account balance for all profit and loss accounts grouped by account group.</p>
 	</li>
+
 	<li>
 		<h3><a id="GLCashFlows">Statement of Cash Flows</a></h3>
-		<p>Because the statement of comprehensive income is prepared under the accrual basis of accounting, the revenues reported may not have been collected. Similarly, the expenses reported on the income statement might not have been paid.</p>
-		<p>The statement of cash flows, also known as the successor of the old source and application of funds statement, reports how changes in balance sheet accounts and income affect cash and cash equivalents, and breaks the analysis down to operating, investing and financing activities.</p>
-		<p>The purpose of the statement of cash flows is to show where the company got their money from and how it was spent during the period being reported for a user selectable range of periods.</p>
-		<p>The cash flows report can be run as a pdf file for later printing, emailing, or archiving, or it can be shown on screen. It can be run in summary mode - just showing the totals for each account group, or in detailed mode listing each general ledger account balance for all profit and loss accounts grouped by account group.</p>
-		<p>Also, the cash flows report can be generated using either direct method or indirect method. The main difference between them is the cash flows from operating activities, the first section of the statement of cash flows; there is no difference in the investing and financing activities sections.</p>
+		<p>The purpose of the statement of cash flows, also known as the successor of the old source and application of funds statement, is to show where the company got their money from and how it was spent during the period being reported for a user selectable range of periods.</p>
+		<p>The statement of cash flows reports how changes in balance sheet accounts and income affect cash and cash equivalents, and breaks the analysis down to operating, investing and financing activities (see <a href="ManualContents.php?
+ViewTopic=GeneralLedger#GLCashFlowsSetup">GLCashFlowsSetup</a>).</p>
+		<p>It can be generated using either direct method or indirect method. The main difference between them is the cash flows from operating activities, the first section of the statement of cash flows; there is no difference in the investing and financing activities sections.</p>
 			<h4><a id="GLCashFlowsDirect">Statement of Cash Flows using Direct Method</a></h4>
 			<p>The cash flows from operating activities will show lines such as cash from customers and cash paid to suppliers. "<i>Major classes of gross cash receipts and gross cash payments are disclosed</i>" (Reference: IAS 7, paragraph 18).</p>
 			<h4><a id="GLCashFlowsIndirect">Statement of Cash Flows using Indirect Method</a></h4>
 			<p>The cash flows from operating activities will include net income followed by the adjustments needed to convert the total net income to the cash amount from operating activities. "<i>Profit or loss is adjusted for the effects of transactions of a non-cash nature, any deferrals or accruals of past or future operating cash receipts or payments, and items of income or expense associated with investing or financing cash flows</i>" (Reference: IAS 7, paragraph 18).</p>
-			<p>Activities are reported on a net basis.</p>
+			<p>Activities are reported on a net basis (only one line per account).</p>
+			<p>Report parameters:</p>
+			<ul>
+				<li><b>Select period from.</b> Select the beginning of the reporting period. Default: first period of the current fiscal year.</li>
+				<li><b>Select period to.</b> Select the end of the reporting period. Default: current period.</li>
+				<li><b>Show the budget for the period.</b> Check this box to show the budget for the period. Default: off.</li>
+				<li><b>Show accounts with zero balance.</b> Check this box to show all accounts including those with zero balance. Default: off.</li>
+				<li><b>Show cash and cash equivalents accounts.</b> Check this box to show cash and cash equivalents accounts. Use this por validation, not for final report. Default: off.</li>
+			</ul>
+			<p><b>Note 1</b>. The "<i>net profit for the period</i>" is calculated from the accounts of the <i>statement of comprehensive income</i>.</p>
+			<p><b>Note 2</b>. The "<i>dividends</i>" are calculated as "<i>net profit for the period</i>" minus "<i>retained earnings</i>". The "<i>retained earnings</i>" are calculated using the complement method; that is: the changes of retained earnings are equal to the opposite of changes in other <i>statement of financial position</i> accounts. This is done to correct the impact of the "<i>net profit for the period</i>" underreporting before the end of that period; so, if you have differences between dividents in this report and the real dividend payments, check retained earnings related accounts.</p>
+			<p><b>Warning!</b> Although the standard states that "<i>Net profit for the period</i>", "<i>Dividends</i>", and "<i>No effect on cash flow</i>" are part of section "<i>Operating activities</i>", in this report they are shown separately to cover those accountants that use that practice.</p>
 	</li>
+
 	<li>
 		<h3><a id="AnalysisHorizontal">Horizontal analysis</a></h3>
 		<p>The horizontal analysis, also known as trend analysis, is a financial statement analysis technique that shows changes in the amounts of corresponding financial statement items over a period of time. It is a useful tool to evaluate trend situations.</p>

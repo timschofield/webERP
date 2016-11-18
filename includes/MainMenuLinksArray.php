@@ -375,8 +375,9 @@ $MenuItems['GL']['Reports']['Caption'] = array(	_('Bank Account Reconciliation S
 												_('Trial Balance'),
 												_('Balance Sheet'),
 												_('Profit and Loss Statement'),
-												_('Horizontal Analysis of Statement of Comprehensive Income'),
+												_('Statement of Cash Flows'),
 												_('Horizontal Analysis of Statement of Financial Position'),
+												_('Horizontal Analysis of Statement of Comprehensive Income'),
 												_('Tag Reports'),
 												_('Tax Reports'));
 
@@ -390,8 +391,9 @@ $MenuItems['GL']['Reports']['URL'] = array(	'/BankReconciliation.php',
 											'/GLTrialBalance.php',
 											'/GLBalanceSheet.php',
 											'/GLProfit_Loss.php',
-											'/AnalysisHorizontalIncome.php',
+											'/GLCashFlowsIndirect.php',
 											'/AnalysisHorizontalPosition.php',
+											'/AnalysisHorizontalIncome.php',
 											'/GLTagProfit_Loss.php',
 											'/Tax.php');
 

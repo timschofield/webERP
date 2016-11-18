@@ -1,5 +1,6 @@
 webERP Change Log
 
+08/11/16 RChacon: Add scripts to shows a statement of cash flows for the period using the indirect method.
 08/11/16 RChacon: On SelectSupplier.php, fix table html code.
 06/11/16 RChacon: On SupplierPriceList.php, fix to show price in user's locale format, add supplier's id and name to title, replace printf() with plain list echo, and regroup and document code.
 03/11/16 RChacon: On Dashboard.php, fix creditors payment to point to allocation instead to payment, replace printf() with plain list echo, regroup code, and complete column styles.

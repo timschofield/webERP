@@ -12,3 +12,9 @@ INSERT INTO `scripts` VALUES ('PcTabExpensesList.php', '15', 'Creates excel with
 INSERT INTO `scripts` VALUES ('PDFGLJournalCN.php', 1, 'Print GL Journal Chinese version');
 INSERT INTO `securitytokens` VALUES (19, 'Internal stock request fully access authority');
 
+-- Add the CashFlowsSection identificator:
+ALTER TABLE `chartmaster` ADD `cashflowsactivity` TINYINT(1) NOT NULL DEFAULT '-1' COMMENT 'Cash flows activity' AFTER `group_`;
+
+-- Add new scripts:
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('GLCashFlowsIndirect.php', '8', 'Shows a statement of cash flows for the period using the indirect method');
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('GLCashFlowsSetup.php', '8', 'Setups the statement of cash flows sections');
