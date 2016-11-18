@@ -9,15 +9,15 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-17 19:39-0600\n"
-"PO-Revision-Date: 2015-09-14 09:56-0600\n"
-"Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
+"PO-Revision-Date: 2016-11-17 20:29-0600\n"
+"Last-Translator: Rafael E. Chacón <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: French <none>\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: s;\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.8.7.1\n"
 "X-Launchpad-Export-Date: 2011-03-31 06:25+0000\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
@@ -14674,27 +14674,27 @@ msgstr ""
 
 #: GLAccounts.php:10 GLAccounts.php:282 GLCashFlowsIndirect.php:16
 msgid "No effect on cash flow"
-msgstr ""
+msgstr "Sans effet sur les flux de trésorerie"
 
 #: GLAccounts.php:11 GLAccounts.php:283
 msgid "Operating activity"
-msgstr ""
+msgstr "Activité d’exploitation"
 
 #: GLAccounts.php:12 GLAccounts.php:284
 msgid "Investing activity"
-msgstr ""
+msgstr "Activité d’investissement"
 
 #: GLAccounts.php:13 GLAccounts.php:285
 msgid "Financing activity"
-msgstr ""
+msgstr "Activité de financement"
 
 #: GLAccounts.php:14 GLAccounts.php:286 GLCashFlowsIndirect.php:20
 msgid "Cash or cash equivalent"
-msgstr ""
+msgstr "Trésorerie et des équivalents de trésorerie"
 
 #: GLAccounts.php:15 GLCashFlowsIndirect.php:21
 msgid "Unknown"
-msgstr ""
+msgstr "Inconnu"
 
 #: GLAccounts.php:22
 msgid "General Ledger Accounts"
@@ -14848,7 +14848,7 @@ msgstr "Groupe"
 
 #: GLAccounts.php:280 GLAccounts.php:317
 msgid "Cash Flows Activity"
-msgstr ""
+msgstr "Activité de flux de trésorerie"
 
 #: GLAccounts.php:316
 msgid "P/L or B/S"
@@ -14940,7 +14940,7 @@ msgstr ""
 
 #: GLBalanceSheet.php:399
 msgid "Statement of Financial Position"
-msgstr ""
+msgstr "Etat de la situation financière"
 
 #: GLBalanceSheet.php:413 GLBalanceSheet.php:419 GLCashFlowsIndirect.php:121
 #: GLCashFlowsIndirect.php:440 GLProfit_Loss.php:639 GLProfit_Loss.php:646
@@ -15031,31 +15031,34 @@ msgstr "Impossible de mettre à jour l'enregistrement parce chartdetails"
 
 #: GLCashFlowsIndirect.php:17
 msgid "Operating activities"
-msgstr ""
+msgstr "Activités opérationnelles"
 
 #: GLCashFlowsIndirect.php:18
 msgid "Investing activities"
-msgstr ""
+msgstr "Activités d'investissement"
 
 #: GLCashFlowsIndirect.php:19
 msgid "Financing activities"
-msgstr ""
+msgstr "activités de financement"
 
 #: GLCashFlowsIndirect.php:36
 msgid "Statement of Cash Flows, Indirect Method"
-msgstr ""
+msgstr "Etat des flux de trésorerie, méthode indirecte"
 
 #: GLCashFlowsIndirect.php:63
 msgid ""
 "The beginning of the period should be before or equal to the end of the "
 "period. Please reselect the reporting period."
 msgstr ""
+"Le début de la période doit être antérieur ou égal à la fin de la période. "
+"Veuillez resélectionner la période de déclaration."
 
 #: GLCashFlowsIndirect.php:69
 msgid ""
 "The period should be 12 months or less in duration. Please select an "
 "alternative period range."
 msgstr ""
+"La période doit être de 12 mois ou moins. Veuillez choisir une autre période."
 
 #: GLCashFlowsIndirect.php:90 GLProfit_Loss.php:637 GLProfit_Loss.php:644
 #: GLTagProfit_Loss.php:539 GLTagProfit_Loss.php:544 GLTrialBalance.php:456
@@ -15077,40 +15080,45 @@ msgid ""
 "Cash flows signs: a negative number indicates a cash flow used in "
 "activities; a positive number indicates a cash flow provided by activities."
 msgstr ""
+"Signes des flux de trésorerie: un nombre négatif indique un flux de "
+"trésorerie utilisé dans les activités; un nombre positif indique un flux de "
+"trésorerie fourni par les activités."
 
 #: GLCashFlowsIndirect.php:129 GLCashFlowsIndirect.php:448
 msgid ""
 "Cash and cash equivalents signs: a negative number indicates a cash outflow; "
 "a positive number indicates a cash inflow."
 msgstr ""
+"Signes de trésorerie et équivalents de trésorerie: un nombre négatif indique "
+"une sortie de trésorerie; Un nombre positif indique une entrée de trésorerie."
 
 #: GLCashFlowsIndirect.php:136 GLCashFlowsIndirect.php:455
 msgid "Net profit and dividends"
-msgstr ""
+msgstr "Résultat net et dividendes"
 
 #: GLCashFlowsIndirect.php:140 GLCashFlowsIndirect.php:459
 msgid "Net profit for the period"
-msgstr ""
+msgstr "Résultat net de la période"
 
 #: GLCashFlowsIndirect.php:157 GLCashFlowsIndirect.php:474
 msgid "Dividends"
-msgstr ""
+msgstr "Dividendes"
 
 #: GLCashFlowsIndirect.php:174 GLCashFlowsIndirect.php:489
 msgid "Retained earnings"
-msgstr ""
+msgstr "Réserves comptables"
 
 #: GLCashFlowsIndirect.php:266 GLCashFlowsIndirect.php:569
 msgid "Net increase in cash and cash equivalents"
-msgstr ""
+msgstr "Augmentation nette de la trésorerie et des équivalents de trésorerie"
 
 #: GLCashFlowsIndirect.php:330 GLCashFlowsIndirect.php:625
 msgid "Cash and cash equivalents at beginning of period"
-msgstr ""
+msgstr "Trésorerie et équivalents de trésorerie au début de la période"
 
 #: GLCashFlowsIndirect.php:374 GLCashFlowsIndirect.php:665
 msgid "Cash and cash equivalents at end of period"
-msgstr ""
+msgstr "Trésorerie et équivalents de trésorerie à la fin de la période"
 
 #: GLCashFlowsIndirect.php:734
 msgid "Run Setup"
@@ -15130,6 +15138,9 @@ msgid ""
 "their money from and how it was spent during the period being reported for a "
 "user selectable range of periods."
 msgstr ""
+"L'objet de l'état des flux de trésorerie est de montrer d'où l'entreprise a "
+"obtenu de l'argent et comment il a été dépensé au cours de la période qui "
+"est signalé pour une gamme de périodes sélectionnables par l'utilisateur."
 
 #: GLCashFlowsIndirect.php:752
 msgid ""
@@ -15147,35 +15158,39 @@ msgstr ""
 
 #: GLCashFlowsIndirect.php:798
 msgid "Select the beginning of the reporting period"
-msgstr ""
+msgstr "Sélectionner le début de la période de rapport"
 
 #: GLCashFlowsIndirect.php:812
 msgid "Select the end of the reporting period"
-msgstr ""
+msgstr "Sélectionner la fin de la période de rapport"
 
 #: GLCashFlowsIndirect.php:817
 msgid "Show the budget for the period"
-msgstr ""
+msgstr "Montrer le budget de la période"
 
 #: GLCashFlowsIndirect.php:819
 msgid "Check this box to show the budget for the period"
-msgstr ""
+msgstr "Cocher cette case pour afficher le budget de la période"
 
 #: GLCashFlowsIndirect.php:824
 msgid "Show accounts with zero balance"
-msgstr ""
+msgstr "Afficher les comptes avec solde nul"
 
 #: GLCashFlowsIndirect.php:826
 msgid "Check this box to show all accounts including those with zero balance"
 msgstr ""
+"Cocher cette case pour afficher tous les comptes, y compris ceux dont le "
+"solde est nul"
 
 #: GLCashFlowsIndirect.php:831
 msgid "Show cash and cash equivalents accounts"
-msgstr ""
+msgstr "Afficher les comptes de trésorerie et d'équivalents de trésorerie"
 
 #: GLCashFlowsIndirect.php:833
 msgid "Check this box to show cash and cash equivalents accounts"
 msgstr ""
+"Cocher cette case pour afficher les comptes de trésorerie et d'équivalents "
+"de trésorerie"
 
 #: GLCashFlowsSetup.php:7
 msgid "Cash Flows Activities Maintenance"
@@ -15215,11 +15230,11 @@ msgstr ""
 
 #: GLCashFlowsSetup.php:80
 msgid "Dividend"
-msgstr ""
+msgstr "Dividende"
 
 #: GLCashFlowsSetup.php:83
 msgid "Interest"
-msgstr ""
+msgstr "Intérêt"
 
 #: GLCashFlowsSetup.php:86
 msgid "Loan"
@@ -15227,23 +15242,23 @@ msgstr ""
 
 #: GLCashFlowsSetup.php:89
 msgid "Building"
-msgstr ""
+msgstr "Bâtiment"
 
 #: GLCashFlowsSetup.php:92
 msgid "Equipment"
-msgstr ""
+msgstr "Équipement"
 
 #: GLCashFlowsSetup.php:95
 msgid "Land"
-msgstr ""
+msgstr "Terrain"
 
 #: GLCashFlowsSetup.php:98
 msgid "Vehicle"
-msgstr ""
+msgstr "Véhicule"
 
 #: GLCashFlowsSetup.php:101
 msgid "Sale"
-msgstr ""
+msgstr "Vente"
 
 #: GLCashFlowsSetup.php:107
 msgid "Receivable"
@@ -15259,7 +15274,7 @@ msgstr "Ajustement"
 
 #: GLCashFlowsSetup.php:119
 msgid "Amortisation"
-msgstr ""
+msgstr "Amortissement"
 
 #: GLCashFlowsSetup.php:130
 msgid "Can not update chartmaster.cashflowsactivity. Error code:"
@@ -15284,11 +15299,11 @@ msgstr ""
 
 #: GLCashFlowsSetup.php:166
 msgid "Action to do"
-msgstr ""
+msgstr "Action à faire"
 
 #: GLCashFlowsSetup.php:175
 msgid "Reset values"
-msgstr ""
+msgstr "Réinitialiser les valeurs"
 
 #: GLCashFlowsSetup.php:176 SupplierCredit.php:530 SupplierCredit.php:533
 #: SupplierInvoice.php:882 SupplierInvoice.php:885 SystemParameters.php:552
@@ -15299,7 +15314,7 @@ msgstr "Automatique"
 
 #: GLCashFlowsSetup.php:177
 msgid "Automatic setup"
-msgstr ""
+msgstr "Configuration automatique"
 
 # JDN pb: même terme utilisé à différents endroits sans avoir le mm sens.
 # rapport de bug en cours
@@ -15309,7 +15324,7 @@ msgstr "Manuel"
 
 #: GLCashFlowsSetup.php:179
 msgid "Manual setup"
-msgstr ""
+msgstr "Configuration manuelle"
 
 #: GLCashFlowsSetup.php:194
 msgid "Net profit for the period GL account"

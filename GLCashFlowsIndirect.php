@@ -762,7 +762,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !isset($_POST['
 		// Content of the header and footer of the input table:
 		'<thead>
 			<tr>
-				<th colspan="2">',('Report parameters'), '</th>
+				<th colspan="2">', _('Report parameters'), '</th>
 			</tr>
 		</thead><tfoot>
 			<tr>

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-17 19:39-0600\n"
-"PO-Revision-Date: 2016-11-17 19:44-0600\n"
+"PO-Revision-Date: 2016-11-17 21:19-0600\n"
 "Last-Translator: Rafael E. Chacón <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -15064,6 +15064,9 @@ msgid ""
 "the statement of financial position, which represents a single moment in "
 "time."
 msgstr ""
+"El estado de flujos de efectivo representa un período de tiempo. Esto "
+"contrasta con el estado de situación, que representa un solo momento en el "
+"tiempo."
 
 #: GLCashFlowsIndirect.php:753
 msgid ""
@@ -15071,6 +15074,10 @@ msgid ""
 "systems include items when they are invoiced to the customer, and when "
 "expenses are owed based on the supplier invoice date."
 msgstr ""
+"webERP es un sistema basado en \"devengados\" (no un sistema basado en \"caja"
+"\"). Los sistemas  en valores devengados incluyen los artículos cuando se "
+"facturan al cliente y cuando los gastos se adeudan en función de la fecha de "
+"factura del proveedor."
 
 #: GLCashFlowsIndirect.php:798
 msgid "Select the beginning of the reporting period"
@@ -15194,7 +15201,7 @@ msgstr "Amortización"
 
 #: GLCashFlowsSetup.php:130
 msgid "Can not update chartmaster.cashflowsactivity. Error code:"
-msgstr ""
+msgstr "No se puede actualizar chartmaster.cashflowsactivity. Código de error:"
 
 #: GLCashFlowsSetup.php:135
 msgid "The cash flow activity was updated in some accounts"
@@ -15206,20 +15213,26 @@ msgid ""
 "partitioned into three sections: operating activities, investing activities "
 "and financing activities."
 msgstr ""
+"El estado de flujos de efectivo, utilizando métodos directos e indirectos, "
+"se divide en tres secciones: actividades de explotación, actividades de "
+"inversión y actividades de financiamiento."
 
 #: GLCashFlowsSetup.php:154
 msgid ""
 "You must classify all accounts in any of those three sections of the cash "
 "flow statement, or as no effect on cash flow, or as cash or cash equivalent."
 msgstr ""
+"Debe clasificar todas las cuentas en cualquiera de esas tres secciones del "
+"estado de flujo de efectivo, o como sin efecto en el flujo de efectivo, o "
+"como efectivo o equivalente en efectivo."
 
 #: GLCashFlowsSetup.php:166
 msgid "Action to do"
-msgstr ""
+msgstr "Acción a hacer"
 
 #: GLCashFlowsSetup.php:175
 msgid "Reset values"
-msgstr ""
+msgstr "Restablecer valores"
 
 #: GLCashFlowsSetup.php:176 SupplierCredit.php:530 SupplierCredit.php:533
 #: SupplierInvoice.php:882 SupplierInvoice.php:885 SystemParameters.php:552
@@ -15230,7 +15243,7 @@ msgstr "Automático"
 
 #: GLCashFlowsSetup.php:177
 msgid "Automatic setup"
-msgstr ""
+msgstr "Configuración automática"
 
 #: GLCashFlowsSetup.php:178 includes/header.inc:77 includes/header.inc:81
 msgid "Manual"
@@ -15238,23 +15251,23 @@ msgstr "Manual"
 
 #: GLCashFlowsSetup.php:179
 msgid "Manual setup"
-msgstr ""
+msgstr "Configuración manual"
 
 #: GLCashFlowsSetup.php:194
 msgid "Net profit for the period GL account"
-msgstr ""
+msgstr "Cuenta contable para la utilidad neta del período"
 
 #: GLCashFlowsSetup.php:209
 msgid "GL account to post the net profit for the period"
-msgstr ""
+msgstr "Cuenta contable para registrar la utilidad neta del período"
 
 #: GLCashFlowsSetup.php:214
 msgid "Retained earnings GL account"
-msgstr ""
+msgstr "Cuenta contable de utlidades retenidas"
 
 #: GLCashFlowsSetup.php:230
 msgid "GL account to post the retained earnings"
-msgstr ""
+msgstr "Cuenta contable para registrar las utilidades retenidas"
 
 #: GLCodesInquiry.php:7
 msgid "GL Codes Inquiry"
