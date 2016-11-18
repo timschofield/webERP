@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-17 18:42-0600\n"
-"PO-Revision-Date: 2016-11-07 08:06-0600\n"
+"POT-Creation-Date: 2016-11-17 19:39-0600\n"
+"PO-Revision-Date: 2016-11-17 19:44-0600\n"
 "Last-Translator: Rafael E. Chacón <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -14567,31 +14567,31 @@ msgstr "Seleccionar una cuenta contable diferente"
 
 #: GLAccounts.php:9 GLCashFlowsIndirect.php:15
 msgid "Without setting up"
-msgstr ""
+msgstr "Sin configurar"
 
 #: GLAccounts.php:10 GLAccounts.php:282 GLCashFlowsIndirect.php:16
 msgid "No effect on cash flow"
-msgstr ""
+msgstr "Sin efecto sobre el flujo de caja"
 
 #: GLAccounts.php:11 GLAccounts.php:283
 msgid "Operating activity"
-msgstr ""
+msgstr "Actividad operativa"
 
 #: GLAccounts.php:12 GLAccounts.php:284
 msgid "Investing activity"
-msgstr ""
+msgstr "Actividad de inversión"
 
 #: GLAccounts.php:13 GLAccounts.php:285
 msgid "Financing activity"
-msgstr ""
+msgstr "Actividad de financiamiento"
 
 #: GLAccounts.php:14 GLAccounts.php:286 GLCashFlowsIndirect.php:20
 msgid "Cash or cash equivalent"
-msgstr ""
+msgstr "Efectivo o equivalente en efectivo"
 
 #: GLAccounts.php:15 GLCashFlowsIndirect.php:21
 msgid "Unknown"
-msgstr ""
+msgstr "Desconocido"
 
 #: GLAccounts.php:22
 msgid "General Ledger Accounts"
@@ -14755,7 +14755,7 @@ msgstr "Grupo contable"
 
 #: GLAccounts.php:280 GLAccounts.php:317
 msgid "Cash Flows Activity"
-msgstr ""
+msgstr "Actividad de flujos de efectivo"
 
 #: GLAccounts.php:316
 msgid "P/L or B/S"
@@ -14941,31 +14941,35 @@ msgstr ""
 
 #: GLCashFlowsIndirect.php:17
 msgid "Operating activities"
-msgstr ""
+msgstr "Actividades de explotación"
 
 #: GLCashFlowsIndirect.php:18
 msgid "Investing activities"
-msgstr ""
+msgstr "Actividades de inversión"
 
 #: GLCashFlowsIndirect.php:19
 msgid "Financing activities"
-msgstr ""
+msgstr "Actividades de financiamiento"
 
 #: GLCashFlowsIndirect.php:36
 msgid "Statement of Cash Flows, Indirect Method"
-msgstr ""
+msgstr "Estado de flujos de efectivo, método indirecto"
 
 #: GLCashFlowsIndirect.php:63
 msgid ""
 "The beginning of the period should be before or equal to the end of the "
 "period. Please reselect the reporting period."
 msgstr ""
+"El inicio del período debe ser anterior o igual al final del período. "
+"Seleccione nuevamente el período del informe."
 
 #: GLCashFlowsIndirect.php:69
 msgid ""
 "The period should be 12 months or less in duration. Please select an "
 "alternative period range."
 msgstr ""
+"El período debe ser de 12 meses o menos de duración. Seleccione un intervalo "
+"alternativo de período."
 
 #: GLCashFlowsIndirect.php:90 GLProfit_Loss.php:637 GLProfit_Loss.php:644
 #: GLTagProfit_Loss.php:539 GLTagProfit_Loss.php:544 GLTrialBalance.php:456
@@ -14987,58 +14991,72 @@ msgid ""
 "Cash flows signs: a negative number indicates a cash flow used in "
 "activities; a positive number indicates a cash flow provided by activities."
 msgstr ""
+"Signos de flujos de efectivo: un número negativo indica un flujo de efectivo "
+"usado en actividades; un número positivo indica un flujo de efectivo "
+"proporcionado por las actividades."
 
 #: GLCashFlowsIndirect.php:129 GLCashFlowsIndirect.php:448
 msgid ""
 "Cash and cash equivalents signs: a negative number indicates a cash outflow; "
 "a positive number indicates a cash inflow."
 msgstr ""
+"Signos de efectivo y equivalentes de efectivo: un número negativo indica una "
+"salida de efectivo; un número positivo indica una entrada de efectivo."
 
 #: GLCashFlowsIndirect.php:136 GLCashFlowsIndirect.php:455
 msgid "Net profit and dividends"
-msgstr ""
+msgstr "Utilidad neta y dividendos"
 
 #: GLCashFlowsIndirect.php:140 GLCashFlowsIndirect.php:459
 msgid "Net profit for the period"
-msgstr ""
+msgstr "Utilidad neta del período"
 
 #: GLCashFlowsIndirect.php:157 GLCashFlowsIndirect.php:474
 msgid "Dividends"
-msgstr ""
+msgstr "Dividendos"
 
 #: GLCashFlowsIndirect.php:174 GLCashFlowsIndirect.php:489
 msgid "Retained earnings"
-msgstr ""
+msgstr "Ganancias retenidas"
 
 #: GLCashFlowsIndirect.php:266 GLCashFlowsIndirect.php:569
 msgid "Net increase in cash and cash equivalents"
-msgstr ""
+msgstr "Aumento neto en efectivo y equivalentes de efectivo"
 
 #: GLCashFlowsIndirect.php:330 GLCashFlowsIndirect.php:625
 msgid "Cash and cash equivalents at beginning of period"
-msgstr ""
+msgstr "Efectivo y equivalentes de efectivo al inicio del período"
 
 #: GLCashFlowsIndirect.php:374 GLCashFlowsIndirect.php:665
 msgid "Cash and cash equivalents at end of period"
-msgstr ""
+msgstr "Efectivo y equivalentes de efectivo al final del período"
 
 #: GLCashFlowsIndirect.php:734
 msgid "Run Setup"
-msgstr ""
+msgstr "Ejecutar la instalación"
 
 #: GLCashFlowsIndirect.php:750
 msgid ""
-"The statement of cash flows, also known as cash flow statement, reports how "
-"changes in balance sheet accounts and income affect cash and cash "
-"equivalents, and breaks the analysis down to operating, investing and "
-"financing activities."
+"The statement of cash flows, also known as the successor of the old source "
+"and application of funds statement, reports how changes in balance sheet "
+"accounts and income affect cash and cash equivalents, and breaks the "
+"analysis down to operating, investing and financing activities."
 msgstr ""
+"El estado de flujos de efectivo, también conocido como el sucesor de la "
+"antiguo origen y aplicación de fondos, informa cómo los cambios en las "
+"cuentas del balance y los ingresos afectan el efectivo y equivalentes de "
+"efectivo, y divide el análisis en actividades de explotación, de inversión "
+"yde  financiamiento."
 
 #: GLCashFlowsIndirect.php:751
 msgid ""
-"The purpose of the statement of cash flows is to show whether the company "
-"generated and used cash during the period being reported."
+"The purpose of the statement of cash flows is to show where the company got "
+"their money from and how it was spent during the period being reported for a "
+"user selectable range of periods."
 msgstr ""
+"El propósito del estado de flujos de efectivo es mostrar de dónde la empresa "
+"obtuvo su dinero y cómo se gastó durante el período que se informa para un "
+"rando de períodos seleccionables por el usuario."
 
 #: GLCashFlowsIndirect.php:752
 msgid ""
@@ -15056,111 +15074,115 @@ msgstr ""
 
 #: GLCashFlowsIndirect.php:798
 msgid "Select the beginning of the reporting period"
-msgstr ""
+msgstr "Seleccione el inicio del periodo del informe"
 
 #: GLCashFlowsIndirect.php:812
 msgid "Select the end of the reporting period"
-msgstr ""
+msgstr "Seleccione el final del periodo del informe"
 
 #: GLCashFlowsIndirect.php:817
 msgid "Show the budget for the period"
-msgstr ""
+msgstr "Muestrar el presupuesto para el período"
 
 #: GLCashFlowsIndirect.php:819
 msgid "Check this box to show the budget for the period"
-msgstr ""
+msgstr "Marcar esta casilla para mostrar el presupuesto del período"
 
 #: GLCashFlowsIndirect.php:824
 msgid "Show accounts with zero balance"
-msgstr ""
+msgstr "Mostrar cuentas con saldo cero"
 
 #: GLCashFlowsIndirect.php:826
 msgid "Check this box to show all accounts including those with zero balance"
 msgstr ""
+"Marcar esta casilla para mostrar todas las cuentas, incluidas aquellas con "
+"saldo cero"
 
 #: GLCashFlowsIndirect.php:831
 msgid "Show cash and cash equivalents accounts"
-msgstr ""
+msgstr "Mostrar cuentas de efectivo y equivalentes de efectivo"
 
 #: GLCashFlowsIndirect.php:833
 msgid "Check this box to show cash and cash equivalents accounts"
 msgstr ""
+"Marcar esta casilla para mostrar las cuentas de efectivo y equivalentes de "
+"efectivo"
 
 #: GLCashFlowsSetup.php:7
 msgid "Cash Flows Activities Maintenance"
-msgstr ""
+msgstr "Mantenimiento de las actividades de flujos de efectivo  "
 
 #: GLCashFlowsSetup.php:29 GLCashFlowsSetup.php:39 GLCashFlowsSetup.php:48
 msgid "Can not update chartmaster.cashflowsactivity because"
-msgstr ""
+msgstr "No se pudo actualizar chartmaster.cashflowsactivity porque"
 
 #: GLCashFlowsSetup.php:32
 msgid "The net profit of the period GL account was updated"
-msgstr ""
+msgstr "Se actualizó la cuenta contable de la utilidad neta del período"
 
 #: GLCashFlowsSetup.php:42
 msgid "The retained earnings GL account was updated"
-msgstr ""
+msgstr "Se actualizó la cuenta contable de ganancias retenidas"
 
 #: GLCashFlowsSetup.php:51
 msgid "The cash flow activity was reset in all accounts"
-msgstr ""
+msgstr "La actividad de flujo de efectivo se restableció en todas las cuentas"
 
 #: GLCashFlowsSetup.php:65
 msgid "Cash"
-msgstr ""
+msgstr "Caja"
 
 #: GLCashFlowsSetup.php:71
 msgid "Investment"
-msgstr ""
+msgstr "Inversión"
 
 #: GLCashFlowsSetup.php:74
 msgid "Commission"
-msgstr ""
+msgstr "Comisión"
 
 #: GLCashFlowsSetup.php:77
 msgid "Share"
-msgstr ""
+msgstr "Acción"
 
 #: GLCashFlowsSetup.php:80
 msgid "Dividend"
-msgstr ""
+msgstr "Dividendo"
 
 #: GLCashFlowsSetup.php:83
 msgid "Interest"
-msgstr ""
+msgstr "Interés"
 
 #: GLCashFlowsSetup.php:86
 msgid "Loan"
-msgstr ""
+msgstr "Préstamo"
 
 #: GLCashFlowsSetup.php:89
 msgid "Building"
-msgstr ""
+msgstr "Edificio"
 
 #: GLCashFlowsSetup.php:92
 msgid "Equipment"
-msgstr ""
+msgstr "Equipo"
 
 #: GLCashFlowsSetup.php:95
 msgid "Land"
-msgstr ""
+msgstr "Terreno"
 
 #: GLCashFlowsSetup.php:98
 msgid "Vehicle"
-msgstr ""
+msgstr "Vehículo"
 
 #: GLCashFlowsSetup.php:101
 msgid "Sale"
-msgstr ""
+msgstr "Venta"
 
 #: GLCashFlowsSetup.php:107
 msgid "Receivable"
-msgstr ""
+msgstr "Cuenta por cobrar"
 
 #: GLCashFlowsSetup.php:113
 msgid "Payable"
-msgstr ""
+msgstr "Cuenta por pagar"
 
 #: GLCashFlowsSetup.php:116 includes/PDFStockComparisonPageHeader.inc:37
 msgid "Adjustment"
@@ -15168,7 +15190,7 @@ msgstr "Ajuste/Regularización/Diferencia"
 
 #: GLCashFlowsSetup.php:119
 msgid "Amortisation"
-msgstr ""
+msgstr "Amortización"
 
 #: GLCashFlowsSetup.php:130
 msgid "Can not update chartmaster.cashflowsactivity. Error code:"
@@ -50854,7 +50876,7 @@ msgstr "Lista de cuentas a archivo CSV"
 
 #: includes/MainMenuLinksArray.php:378
 msgid "Statement of Cash Flows"
-msgstr ""
+msgstr "Estado de flujos de efectivo"
 
 #: includes/MainMenuLinksArray.php:381
 msgid "Tag Reports"
@@ -53662,6 +53684,17 @@ msgstr "Tarjeta de crédito"
 #: ../webSHOP/includes/session.php:137
 msgid "Bank Transfer"
 msgstr "Transferencia bancaria"
+
+#~ msgid ""
+#~ "The statement of cash flows, also known as cash flow statement, reports "
+#~ "how changes in balance sheet accounts and income affect cash and cash "
+#~ "equivalents, and breaks the analysis down to operating, investing and "
+#~ "financing activities."
+#~ msgstr ""
+#~ "El estado de flujos de efectivo, también conocido como estado de flujos "
+#~ "de efectivo, informa cómo los cambios en las cuentas del balance y los "
+#~ "ingresos afectan al efectivo y equivalentes de efectivo y divide el "
+#~ "análisis en actividades operativas, de inversión y de financiación."
 
 #~ msgid "Chart of Accounts Maintenance"
 #~ msgstr "Administrar el Plan de Cuentas"

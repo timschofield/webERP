@@ -747,8 +747,8 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !isset($_POST['
 		$Title, '</p>';// Page title.
 	if(!isset($page_help) OR $page_help) {// If it is not set the $page_help parameter OR it is TRUE, shows the page help text:
 		echo '<div class="page_help_text">',
-			_('The statement of cash flows, also known as cash flow statement, reports how changes in balance sheet accounts and income affect cash and cash equivalents, and breaks the analysis down to operating, investing and financing activities.'), '<br />',
-			_('The purpose of the statement of cash flows is to show whether the company generated and used cash during the period being reported.'), '<br />',
+			_('The statement of cash flows, also known as the successor of the old source and application of funds statement, reports how changes in balance sheet accounts and income affect cash and cash equivalents, and breaks the analysis down to operating, investing and financing activities.'), '<br />',
+			_('The purpose of the statement of cash flows is to show where the company got their money from and how it was spent during the period being reported for a user selectable range of periods.'), '<br />',
 			_('The statement of cash flows represents a period of time. This contrasts with the statement of financial position, which represents a single moment in time.'), '<br />',
 			_('webERP is an "accrual" based system (not a "cash based" system). Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.'),
 			'</div>';

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-17 18:42-0600\n"
+"POT-Creation-Date: 2016-11-17 19:39-0600\n"
 "PO-Revision-Date: 2015-02-06 10:12-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: french <none>\n"
@@ -14865,16 +14865,17 @@ msgstr ""
 
 #: GLCashFlowsIndirect.php:750
 msgid ""
-"The statement of cash flows, also known as cash flow statement, reports how "
-"changes in balance sheet accounts and income affect cash and cash "
-"equivalents, and breaks the analysis down to operating, investing and "
-"financing activities."
+"The statement of cash flows, also known as the successor of the old source "
+"and application of funds statement, reports how changes in balance sheet "
+"accounts and income affect cash and cash equivalents, and breaks the "
+"analysis down to operating, investing and financing activities."
 msgstr ""
 
 #: GLCashFlowsIndirect.php:751
 msgid ""
-"The purpose of the statement of cash flows is to show whether the company "
-"generated and used cash during the period being reported."
+"The purpose of the statement of cash flows is to show where the company got "
+"their money from and how it was spent during the period being reported for a "
+"user selectable range of periods."
 msgstr ""
 
 #: GLCashFlowsIndirect.php:752
