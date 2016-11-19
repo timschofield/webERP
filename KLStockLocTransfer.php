@@ -16,13 +16,6 @@ include('includes/KLGeneralFunctions.php');
 include('includes/KLDefines.php');
 include('includes/KLEmails.php');
 
-// Verify if shop is allowed to use the POS system, or should use the old system 
-if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_WITH_POS)){
-	prnMsg(_('This shop is not allowed to use this OLD version of return transfer. Use the NEW one.'),'error');
-	include('includes/footer.inc');
-	exit;
-}	
-
 if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 /*Trap any errors in input */
 

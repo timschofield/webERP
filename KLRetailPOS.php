@@ -57,13 +57,6 @@ if (isset($_SESSION['Items'.$identifier])){
 	$_SESSION['Items'.$identifier]->Comments = $_POST['Comments'];
 }
 
-// Verify if shop is allowed to use the POS system, or should use the old system 
-if (!ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_WITH_POS)){
-	prnMsg(_('This shop is not allowed to use this version of Point Of Sale. Please use the OLD version.'),'error');
-	include('includes/footer.inc');
-	exit;
-}	
-
 if (isset($_POST['QuickEntry'])){
 	unset($_POST['PartSearch']);
 }

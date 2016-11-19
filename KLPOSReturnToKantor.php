@@ -20,13 +20,6 @@ include('includes/KLPOSGeneral.php');
 include('includes/wcpESCPOSCommands.php');
 include('includes/wcpInitScript.php');
 
-// Verify if shop is allowed to use the POS system, or should use the old system 
-if (!ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_WITH_POS)){
-	prnMsg(_('This shop is not allowed to use this NEW version of Return to kantor. Use the OLD one.'),'error');
-	include('includes/footer.inc');
-	exit;
-}	
-
 if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 /*Trap any errors in input */
 
