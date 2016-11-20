@@ -1,5 +1,5 @@
 <?php
-/* $Id: GLCashFlowsIndirect.php 1 2014-03-12 10:42:50Z rchacon $ */
+/* $Id: GLCashFlowsIndirect.php 7672 2016-11-17 10:42:50Z rchacon $ */
 /* Shows a statement of cash flows for the period using the indirect method. */
 /* This program is under the GNU General Public License, last version. Rafael E. Chacón, 2016-10-08. */
 /* This creative work is under the CC BY-NC-SA, later version. Rafael E. Chacón, 2016-10-08. */
@@ -783,7 +783,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !isset($_POST['
 		 		<td><select id="PeriodFrom" name="PeriodFrom" required="required">';
 	$Periods = DB_query('SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno ASC');
 	if(!isset($_POST['PeriodFrom'])) {
-		$BeginMonth =($_SESSION['YearEnd']==12 ? 1 : $_SESSION['YearEnd']+1);// Sets January as the month that follows December.
+		$BeginMonth = ($_SESSION['YearEnd']==12 ? 1 : $_SESSION['YearEnd']+1);// Sets January as the month that follows December.
 		if($BeginMonth <= date('n')) {// It is a month in the current year.
 			$BeginDate = mktime(0, 0, 0, $BeginMonth, 1, date('Y'));
 		} else {// It is a month in the previous year.
