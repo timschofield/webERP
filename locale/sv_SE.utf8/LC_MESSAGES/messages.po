@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-17 19:39-0600\n"
+"POT-Creation-Date: 2016-11-20 17:14-0600\n"
 "PO-Revision-Date: 2014-08-14 18:47-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: Swedish <LL@li.org>\n"
@@ -271,10 +271,10 @@ msgstr "Kan inte hämta kontogrupper för att"
 #: SupplierTenderCreate.php:556 SupplierTenderCreate.php:664
 #: SupplierTenders.php:322 SupplierTenders.php:388 SupplierTransInquiry.php:10
 #: Suppliers.php:304 TestPlanResults.php:27 TopItems.php:118
-#: UnitsOfMeasure.php:10 WWW_Users.php:34 WhereUsedInquiry.php:18
-#: WorkCentres.php:113 WorkOrderCosting.php:22 WorkOrderEntry.php:11
-#: WorkOrderIssue.php:22 WorkOrderReceive.php:34 WorkOrderStatus.php:58
-#: Z_BottomUpCosts.php:57 ../webSHOP/includes/header.php:251
+#: UnitsOfMeasure.php:10 WhereUsedInquiry.php:18 WorkCentres.php:113
+#: WorkOrderCosting.php:22 WorkOrderEntry.php:11 WorkOrderIssue.php:22
+#: WorkOrderReceive.php:34 WorkOrderStatus.php:58 Z_BottomUpCosts.php:57
+#: ../webSHOP/includes/header.php:251
 msgid "Search"
 msgstr "Sök"
 
@@ -358,8 +358,8 @@ msgstr "Resultaträkning"
 #: TaxGroups.php:365 TestPlanResults.php:304 TestPlanResults.php:532
 #: TestPlanResults.php:747 TestPlanResults.php:864 TestPlanResults.php:924
 #: TestPlanResults.php:928 UserGLAccounts.php:187 UserGLAccounts.php:196
-#: WWW_Users.php:534 WWW_Users.php:536 WWW_Users.php:707 WWW_Users.php:709
-#: WWW_Users.php:722 WWW_Users.php:724
+#: WWW_Users.php:528 WWW_Users.php:530 WWW_Users.php:699 WWW_Users.php:702
+#: WWW_Users.php:714 WWW_Users.php:717
 #: reportwriter/languages/en_US/reports.php:114
 msgid "Yes"
 msgstr "Ja"
@@ -427,8 +427,8 @@ msgstr "Ja"
 #: TaxGroups.php:367 TestPlanResults.php:306 TestPlanResults.php:535
 #: TestPlanResults.php:749 TestPlanResults.php:866 TestPlanResults.php:925
 #: TestPlanResults.php:927 UserGLAccounts.php:189 UserGLAccounts.php:199
-#: WWW_Users.php:533 WWW_Users.php:537 WWW_Users.php:706 WWW_Users.php:710
-#: WWW_Users.php:721 WWW_Users.php:725 includes/PDFLowGPPageHeader.inc:44
+#: WWW_Users.php:527 WWW_Users.php:531 WWW_Users.php:698 WWW_Users.php:701
+#: WWW_Users.php:713 WWW_Users.php:716 includes/PDFLowGPPageHeader.inc:44
 #: reportwriter/languages/en_US/reports.php:82
 msgid "No"
 msgstr "Nej"
@@ -459,7 +459,7 @@ msgstr "Nej"
 #: StockCategories.php:296 SuppTransGLAnalysis.php:126 SupplierContacts.php:165
 #: SupplierTenderCreate.php:157 SupplierTypes.php:170 TaxAuthorities.php:172
 #: TaxCategories.php:184 TaxGroups.php:191 TaxProvinces.php:179
-#: UnitsOfMeasure.php:185 WWW_Access.php:132 WWW_Users.php:368
+#: UnitsOfMeasure.php:185 WWW_Access.php:132 WWW_Users.php:379
 #: WorkCentres.php:145 includes/InputSerialItems.php:110
 #: includes/OutputSerialItems.php:20
 #: reportwriter/languages/en_US/reports.php:143
@@ -506,7 +506,7 @@ msgstr ""
 #: SupplierTenderCreate.php:452 SupplierTypes.php:172 TaxAuthorities.php:173
 #: TaxCategories.php:186 TaxGroups.php:192 TaxProvinces.php:180
 #: TestPlanResults.php:920 UnitsOfMeasure.php:186 WOSerialNos.php:335
-#: WWW_Access.php:133 WWW_Users.php:369 WorkCentres.php:146
+#: WWW_Access.php:133 WWW_Users.php:380 WorkCentres.php:146
 #: WorkOrderEntry.php:864 includes/InputSerialItemsKeyed.php:60
 #: includes/OutputSerialItems.php:99
 #: reportwriter/languages/en_US/reports.php:141
@@ -552,7 +552,7 @@ msgstr ""
 #: SelectQASamples.php:601 Shippers.php:203 StockCategories.php:653
 #: SuppLoginSetup.php:291 SupplierContacts.php:284 TaxAuthorities.php:327
 #: TaxCategories.php:244 TaxProvinces.php:234 TestPlanResults.php:967
-#: UnitsOfMeasure.php:241 WWW_Users.php:792 WorkCentres.php:289
+#: UnitsOfMeasure.php:241 WWW_Users.php:783 WorkCentres.php:289
 msgid "Enter Information"
 msgstr "Ok"
 
@@ -750,7 +750,7 @@ msgstr "Telnr"
 #: PrintCustTransPortrait.php:1034 PrintCustTransPortrait.php:1090
 #: SelectCustomer.php:408 SelectCustomer.php:730 SelectSupplier.php:290
 #: SupplierContacts.php:156 SupplierContacts.php:277 UserSettings.php:186
-#: WWW_Users.php:322 includes/PDFPickingListHeader.inc:25
+#: WWW_Users.php:321 includes/PDFPickingListHeader.inc:25
 #: includes/PDFStatementPageHeader.inc:76 includes/PDFTransPageHeader.inc:85
 #: includes/PDFTransPageHeaderPortrait.inc:113 includes/PDFWOPageHeader.inc:19
 #: includes/PO_PDFOrderPageHeader.inc:29 ../webSHOP/Checkout.php:298
@@ -988,7 +988,7 @@ msgstr ""
 #: StockDispatch.php:321 StockMovements.php:22 StockQties_csv.php:8
 #: StockQuantityByDate.php:10 StockReorderLevel.php:20
 #: StockSerialItemResearch.php:9 StockSerialItems.php:9 StockStatus.php:45
-#: StockTransferControlled.php:14 SuppLoginSetup.php:24 WWW_Users.php:15
+#: StockTransferControlled.php:14 SuppLoginSetup.php:24 WWW_Users.php:28
 #: includes/MainMenuLinksArray.php:24
 #: reportwriter/languages/en_US/reports.php:243
 msgid "Inventory"
@@ -4268,7 +4268,7 @@ msgstr "Faxnr"
 
 #: CompanyPreferences.php:226 CustLoginSetup.php:162 SuppLoginSetup.php:145
 #: SupplierTenderCreate.php:415 Suppliers.php:744 Suppliers.php:988
-#: WWW_Users.php:509 ../webSHOP/Checkout.php:430
+#: WWW_Users.php:503 ../webSHOP/Checkout.php:430
 msgid "Email Address"
 msgstr "E-postaddress"
 
@@ -4415,9 +4415,9 @@ msgstr ""
 #: CompanyPreferences.php:466 ConfirmDispatch_Invoice.php:656
 #: ConfirmDispatch_Invoice.php:1707 Credit_Invoice.php:1634 CustItem.php:452
 #: FixedAssetItems.php:132 FixedAssetItems.php:683 GLAccountUsers.php:153
-#: GLBudgets.php:240 GLCashFlowsSetup.php:172 GLCashFlowsSetup.php:173
-#: GLTags.php:68 GoodsReceived.php:298 GoodsReceived.php:304
-#: GoodsReceived.php:311 GoodsReceived.php:819 ImportBankTransAnalysis.php:154
+#: GLBudgets.php:240 GLCashFlowsSetup.php:173 GLTags.php:68
+#: GoodsReceived.php:298 GoodsReceived.php:304 GoodsReceived.php:311
+#: GoodsReceived.php:819 ImportBankTransAnalysis.php:154
 #: ImportBankTransAnalysis.php:185 InternalStockRequest.php:255
 #: InternalStockRequestAuthorisation.php:123
 #: InternalStockRequestFulfill.php:364 LocationUsers.php:177
@@ -4595,7 +4595,7 @@ msgstr "Kund"
 #: OrderDetails.php:85 SalesAnalRepts.php:30 SalesAnalRepts.php:32
 #: SalesInquiry.php:771 SalesInquiry.php:781 SalesInquiry.php:803
 #: SalesInquiry.php:951 SalesInquiry.php:966 SalesInquiry.php:972
-#: SalesInquiry.php:1231 WWW_Users.php:323 WWW_Users.php:569
+#: SalesInquiry.php:1231 WWW_Users.php:322 WWW_Users.php:563
 #: Z_ChangeBranchCode.php:209 includes/PDFStatementPageHeader.inc:121
 #: includes/PDFTransPageHeader.inc:49
 #: includes/PDFTransPageHeaderPortrait.inc:59
@@ -6567,9 +6567,8 @@ msgstr ""
 msgid "Part of the Branch Phone Number"
 msgstr "Del av Kontakttelefonnummer"
 
-#: Contracts.php:777 Customers.php:677 Customers.php:1188
-#: GLCashFlowsSetup.php:174 PO_Header.php:555 SelectGLAccount.php:126
-#: SelectOrderItems.php:581 SelectSalesOrder.php:546
+#: Contracts.php:777 Customers.php:677 Customers.php:1188 PO_Header.php:555
+#: SelectGLAccount.php:126 SelectOrderItems.php:581 SelectSalesOrder.php:546
 msgid "Reset"
 msgstr "Rensa"
 
@@ -6695,7 +6694,7 @@ msgstr ""
 msgid "Contract Status"
 msgstr "Kontrakt Status"
 
-#: Contracts.php:967 SuppLoginSetup.php:29 WWW_Users.php:20
+#: Contracts.php:967 SuppLoginSetup.php:29 WWW_Users.php:33
 #: includes/MainMenuLinksArray.php:29
 msgid "Setup"
 msgstr "Inställningar"
@@ -8216,7 +8215,7 @@ msgstr "Fel tecken"
 
 #: CustEDISetup.php:31 CustLoginSetup.php:51 Customers.php:67
 #: InternalStockCategoriesByRole.php:24 StockClone.php:164 Stocks.php:142
-#: SuppLoginSetup.php:51 TaxCategories.php:32 WWW_Users.php:75
+#: SuppLoginSetup.php:51 TaxCategories.php:32 WWW_Users.php:90
 #: WorkCentres.php:37 Z_ChangeBranchCode.php:35 Z_ImportDebtors.php:224
 #: Z_ImportDebtors.php:298 Z_ImportStocks.php:123
 msgid "or a space"
@@ -8592,25 +8591,25 @@ msgstr ""
 msgid " has been selected"
 msgstr " har valts"
 
-#: CustLoginSetup.php:48 SuppLoginSetup.php:48 WWW_Users.php:72
+#: CustLoginSetup.php:48 SuppLoginSetup.php:48 WWW_Users.php:87
 msgid "The user ID entered must be at least 4 characters long"
 msgstr "Användar ID måste vara minst 4 tecken lång"
 
-#: CustLoginSetup.php:51 SuppLoginSetup.php:51 WWW_Users.php:75
+#: CustLoginSetup.php:51 SuppLoginSetup.php:51 WWW_Users.php:90
 msgid "User names cannot contain any of the following characters"
 msgstr "Användarnamn får inte innehålla följande tecken"
 
 #: CustLoginSetup.php:55 SuppLoginSetup.php:54 UserSettings.php:46
-#: WWW_Users.php:79
+#: WWW_Users.php:94
 msgid "The password entered must be at least 5 characters long"
 msgstr "Lösenordet måste vara minst 5 tecken långt"
 
 #: CustLoginSetup.php:59 SuppLoginSetup.php:57 UserSettings.php:49
-#: WWW_Users.php:83
+#: WWW_Users.php:98
 msgid "The password cannot contain the user id"
 msgstr "kan inte sätta användar-id till %lu"
 
-#: CustLoginSetup.php:62 WWW_Users.php:87
+#: CustLoginSetup.php:62 WWW_Users.php:102
 msgid ""
 "If you enter a Customer Code you must also enter a Branch Code valid for "
 "this Customer"
@@ -8618,16 +8617,16 @@ msgstr ""
 "Om du anger en kund-kod måste du även ange en Branch Code gäller för denna "
 "kund"
 
-#: CustLoginSetup.php:72 WWW_Users.php:109
+#: CustLoginSetup.php:72 WWW_Users.php:124
 msgid "The check on validity of the customer code and branch failed because"
 msgstr ""
 "Validitetskontrollen för kundkod och leveransplats misslyckades eftersom"
 
-#: CustLoginSetup.php:73 WWW_Users.php:110
+#: CustLoginSetup.php:73 WWW_Users.php:125
 msgid "The SQL that was used to check the customer code and branch was"
 msgstr "SQL som användes för att kontrollera kundens kod och filialen"
 
-#: CustLoginSetup.php:77 WWW_Users.php:114
+#: CustLoginSetup.php:77 WWW_Users.php:129
 msgid "The entered Branch Code is not valid for the entered Customer Code"
 msgstr "Den angivna Branch koden inte giltig för den angivna Kundkod"
 
@@ -8643,8 +8642,8 @@ msgstr ""
 msgid "A new customer login has been created"
 msgstr ""
 
-#: CustLoginSetup.php:132 SuppLoginSetup.php:115 WWW_Users.php:319
-#: WWW_Users.php:465
+#: CustLoginSetup.php:132 SuppLoginSetup.php:115 WWW_Users.php:318
+#: WWW_Users.php:459
 msgid "User Login"
 msgstr "Användaren login"
 
@@ -8653,7 +8652,7 @@ msgid "Enter a userid for this customer login"
 msgstr ""
 
 #: CustLoginSetup.php:150 SMTPServer.php:118 SuppLoginSetup.php:133
-#: WWW_Users.php:497 includes/Login.php:100 includes/Login.php:101
+#: WWW_Users.php:491 includes/Login.php:100 includes/Login.php:101
 #: install/index.php:932 ../webSHOP/Checkout.php:302
 #: ../webSHOP/Register.php:600 ../webSHOP/includes/header.php:239
 msgid "Password"
@@ -8663,8 +8662,8 @@ msgstr "Lösenord"
 msgid "Enter a password for this customer login"
 msgstr ""
 
-#: CustLoginSetup.php:154 SuppLoginSetup.php:137 WWW_Users.php:320
-#: WWW_Users.php:501
+#: CustLoginSetup.php:154 SuppLoginSetup.php:137 WWW_Users.php:319
+#: WWW_Users.php:495
 msgid "Full Name"
 msgstr "Fullständigt namn"
 
@@ -8673,7 +8672,7 @@ msgid "Enter the user's real name"
 msgstr ""
 
 #: CustLoginSetup.php:158 Locations.php:630 SalesPeople.php:340
-#: SuppLoginSetup.php:141 SupplierContacts.php:265 WWW_Users.php:505
+#: SuppLoginSetup.php:141 SupplierContacts.php:265 WWW_Users.php:499
 msgid "Telephone No"
 msgstr "Telefonnr"
 
@@ -8682,27 +8681,27 @@ msgid "Enter the user's email address"
 msgstr ""
 
 #: CustLoginSetup.php:167 CustomerBranches.php:600 CustomerBranches.php:637
-#: CustomerPurchases.php:85 WWW_Users.php:324 WWW_Users.php:574
+#: CustomerPurchases.php:85 WWW_Users.php:323 WWW_Users.php:568
 #: Z_ImportCustbranch.php:519 api/api_xml-rpc.php:241
 #: includes/PDFCustomerListPageHeader.inc:84
 msgid "Branch Code"
 msgstr "Leveransplatskod"
 
-#: CustLoginSetup.php:187 SuppLoginSetup.php:203 WWW_Users.php:608
+#: CustLoginSetup.php:187 SuppLoginSetup.php:203 WWW_Users.php:602
 msgid "Reports Page Size"
 msgstr "Sidstorlek"
 
 #: CustLoginSetup.php:191 CustLoginSetup.php:193 EmailConfirmation.php:121
 #: PrintCustOrder.php:108 PrintCustOrder_generic.php:118 SuppLoginSetup.php:207
-#: SuppLoginSetup.php:209 WWW_Users.php:612 WWW_Users.php:614
+#: SuppLoginSetup.php:209 WWW_Users.php:606 WWW_Users.php:608
 #: reportwriter/languages/en_US/reports.php:295
 msgid "A4"
 msgstr "A4"
 
 #: CustLoginSetup.php:197 CustLoginSetup.php:199 CustLoginSetup.php:203
 #: CustLoginSetup.php:205 SuppLoginSetup.php:213 SuppLoginSetup.php:215
-#: SuppLoginSetup.php:219 SuppLoginSetup.php:221 WWW_Users.php:618
-#: WWW_Users.php:620 WWW_Users.php:624 WWW_Users.php:626
+#: SuppLoginSetup.php:219 SuppLoginSetup.php:221 WWW_Users.php:612
+#: WWW_Users.php:614 WWW_Users.php:618 WWW_Users.php:620
 #: reportwriter/languages/en_US/reports.php:294
 msgid "A3"
 msgstr "A3"
@@ -8712,35 +8711,35 @@ msgstr "A3"
 #: EmailConfirmation.php:121 PrintCustOrder.php:108
 #: PrintCustOrder_generic.php:118 SuppLoginSetup.php:219 SuppLoginSetup.php:221
 #: SuppLoginSetup.php:231 SuppLoginSetup.php:233 SuppLoginSetup.php:242
-#: SuppLoginSetup.php:244 WWW_Users.php:624 WWW_Users.php:626 WWW_Users.php:636
-#: WWW_Users.php:638 WWW_Users.php:647 WWW_Users.php:649
+#: SuppLoginSetup.php:244 WWW_Users.php:618 WWW_Users.php:620 WWW_Users.php:630
+#: WWW_Users.php:632 WWW_Users.php:641 WWW_Users.php:643
 msgid "landscape"
 msgstr "liggande"
 
 #: CustLoginSetup.php:209 CustLoginSetup.php:211 CustLoginSetup.php:215
 #: CustLoginSetup.php:217 SuppLoginSetup.php:225 SuppLoginSetup.php:227
-#: SuppLoginSetup.php:231 SuppLoginSetup.php:233 WWW_Users.php:630
-#: WWW_Users.php:632 WWW_Users.php:636 WWW_Users.php:638
+#: SuppLoginSetup.php:231 SuppLoginSetup.php:233 WWW_Users.php:624
+#: WWW_Users.php:626 WWW_Users.php:630 WWW_Users.php:632
 #: reportwriter/languages/en_US/reports.php:298
 msgid "Letter"
 msgstr "Letter"
 
 #: CustLoginSetup.php:221 CustLoginSetup.php:223 CustLoginSetup.php:226
 #: CustLoginSetup.php:228 SuppLoginSetup.php:237 SuppLoginSetup.php:239
-#: SuppLoginSetup.php:242 SuppLoginSetup.php:244 WWW_Users.php:642
-#: WWW_Users.php:644 WWW_Users.php:647 WWW_Users.php:649
+#: SuppLoginSetup.php:242 SuppLoginSetup.php:244 WWW_Users.php:636
+#: WWW_Users.php:638 WWW_Users.php:641 WWW_Users.php:643
 #: reportwriter/languages/en_US/reports.php:297
 msgid "Legal"
 msgstr "Legal"
 
 #: CustLoginSetup.php:234 SuppLoginSetup.php:250 UserSettings.php:149
-#: WWW_Users.php:330 WWW_Users.php:656
+#: WWW_Users.php:329 WWW_Users.php:650
 msgid "Theme"
 msgstr "Tema"
 
 #: CustLoginSetup.php:256 Customers.php:638 Customers.php:1021
 #: Customers.php:1031 RevisionTranslations.php:60 SuppLoginSetup.php:274
-#: UserSettings.php:132 WWW_Users.php:331 WWW_Users.php:681
+#: UserSettings.php:132 WWW_Users.php:330 WWW_Users.php:675
 msgid "Language"
 msgstr "Språk"
 
@@ -9607,7 +9606,7 @@ msgid "Forward Date After (day in month)"
 msgstr "Forward datum efter (dag i månaden)"
 
 #: CustomerBranches.php:734 CustomerBranches.php:758 DailySalesInquiry.php:40
-#: PDFSalesBySalesperson.php:90 SalesPeople.php:179 WWW_Users.php:326
+#: PDFSalesBySalesperson.php:90 SalesPeople.php:179 WWW_Users.php:325
 msgid "Salesperson"
 msgstr "Säljare"
 
@@ -12612,7 +12611,7 @@ msgstr "Tillverkningsföretagsnamn"
 #: PrintCustTransPortrait.php:786 PrintCustTransPortrait.php:1032
 #: PrintCustTransPortrait.php:1088 SalesPeople.php:209 SelectSupplier.php:289
 #: SupplierTenderCreate.php:144 Suppliers.php:736 Suppliers.php:980
-#: WWW_Users.php:321
+#: WWW_Users.php:320
 msgid "Telephone"
 msgstr "Telefon"
 
@@ -14527,6 +14526,10 @@ msgid ""
 "expenses are owed based on the supplier invoice date."
 msgstr ""
 
+#: GLCashFlowsIndirect.php:765
+msgid "Report parameters"
+msgstr ""
+
 #: GLCashFlowsIndirect.php:798
 msgid "Select the beginning of the reporting period"
 msgstr ""
@@ -14672,20 +14675,9 @@ msgstr ""
 msgid "Reset values"
 msgstr ""
 
-#: GLCashFlowsSetup.php:176 SupplierCredit.php:530 SupplierCredit.php:533
-#: SupplierInvoice.php:882 SupplierInvoice.php:885 SystemParameters.php:552
-#: SystemParameters.php:689 SystemParameters.php:691 SystemParameters.php:702
-#: SystemParameters.php:704
-msgid "Automatic"
-msgstr "Automatisk"
-
 #: GLCashFlowsSetup.php:177
 msgid "Automatic setup"
 msgstr ""
-
-#: GLCashFlowsSetup.php:178 includes/header.inc:77 includes/header.inc:81
-msgid "Manual"
-msgstr "Manual"
 
 #: GLCashFlowsSetup.php:179
 msgid "Manual setup"
@@ -20199,7 +20191,7 @@ msgstr ""
 #: PDFSalesBySalesperson.php:88 PDFWeeklyOrders.php:84 ReverseGRN.php:31
 #: SalesByTypePeriodInquiry.php:356 SalesTopCustomersInquiry.php:218
 #: SalesTopItemsInquiry.php:225 SelectSalesOrder.php:411 Tax.php:256
-#: includes/MainMenuLinksArray.php:20
+#: WWW_Users.php:24 includes/MainMenuLinksArray.php:20
 msgid "Sales"
 msgstr "Försäljning"
 
@@ -21645,7 +21637,7 @@ msgid "Order Header Details"
 msgstr "Beställ Header Detaljer"
 
 #: PO_OrderDetails.php:96 SelectProduct.php:561 SupplierTenderCreate.php:413
-#: Suppliers.php:693 Suppliers.php:934 WWW_Users.php:325 WWW_Users.php:579
+#: Suppliers.php:693 Suppliers.php:934 WWW_Users.php:324 WWW_Users.php:573
 msgid "Supplier Code"
 msgstr "Leverantörsnummer"
 
@@ -21891,7 +21883,7 @@ msgid "Search Parts Now"
 msgstr "Sök produkter nu"
 
 #: PO_SelectOSPurchOrder.php:312 PO_SelectPurchOrder.php:216
-#: Shipt_Select.php:193 SuppLoginSetup.php:20 WWW_Users.php:11
+#: Shipt_Select.php:193 SuppLoginSetup.php:20
 #: reportwriter/languages/en_US/reports.php:239
 msgid "Orders"
 msgstr "Beställningar"
@@ -22687,7 +22679,7 @@ msgid "You Must First Select a Petty Cash Tab To Authorise"
 msgstr ""
 
 #: PcAuthorizeExpenses.php:45 PcAuthorizeExpenses.php:48 SuppLoginSetup.php:28
-#: WWW_Users.php:19 includes/MainMenuLinksArray.php:28
+#: WWW_Users.php:32 includes/MainMenuLinksArray.php:28
 #: reportwriter/languages/en_US/reports.php:247
 msgid "Petty Cash"
 msgstr "SMÅPOSTER"
@@ -27083,7 +27075,6 @@ msgid "Top Customer Sales Inquiry"
 msgstr ""
 
 #: SalesTopCustomersInquiry.php:82 SalesTopItemsInquiry.php:83
-#: WWW_Users.php:703
 msgid "Display"
 msgstr "Visa"
 
@@ -33147,33 +33138,33 @@ msgstr "Lägg till faktura"
 msgid "A supplier must first be selected before logins can be defined for it"
 msgstr ""
 
-#: SuppLoginSetup.php:21 WWW_Users.php:12 includes/MainMenuLinksArray.php:21
+#: SuppLoginSetup.php:21 WWW_Users.php:25 includes/MainMenuLinksArray.php:21
 #: reportwriter/languages/en_US/reports.php:242
 msgid "Receivables"
 msgstr "Fakturering/Kundreskontra"
 
-#: SuppLoginSetup.php:22 WWW_Users.php:14 includes/MainMenuLinksArray.php:23
+#: SuppLoginSetup.php:22 WWW_Users.php:27 includes/MainMenuLinksArray.php:23
 #: reportwriter/languages/en_US/reports.php:240
 msgid "Payables"
 msgstr "Leverantörsreskontra"
 
-#: SuppLoginSetup.php:23 WWW_Users.php:13
+#: SuppLoginSetup.php:23
 msgid "Purchasing"
 msgstr "Inköp"
 
-#: SuppLoginSetup.php:25 WWW_Users.php:16 includes/MainMenuLinksArray.php:25
+#: SuppLoginSetup.php:25 WWW_Users.php:29 includes/MainMenuLinksArray.php:25
 #: reportwriter/languages/en_US/reports.php:244
 msgid "Manufacturing"
 msgstr "Tillverkning"
 
 #: SuppLoginSetup.php:26 SuppTransGLAnalysis.php:98 SuppTransGLAnalysis.php:101
 #: SupplierCredit.php:227 SupplierCredit.php:302 SupplierInvoice.php:575
-#: SupplierInvoice.php:648 WWW_Users.php:17 includes/MainMenuLinksArray.php:26
+#: SupplierInvoice.php:648 WWW_Users.php:30 includes/MainMenuLinksArray.php:26
 #: reportwriter/languages/en_US/reports.php:245
 msgid "General Ledger"
 msgstr "Redovisning"
 
-#: SuppLoginSetup.php:27 WWW_Users.php:18 includes/MainMenuLinksArray.php:27
+#: SuppLoginSetup.php:27 WWW_Users.php:31 includes/MainMenuLinksArray.php:27
 #: reportwriter/languages/en_US/reports.php:246
 msgid "Asset Manager"
 msgstr "Tillgångs manager"
@@ -33265,7 +33256,7 @@ msgid ""
 "up until this role is defined"
 msgstr ""
 
-#: SuppLoginSetup.php:186 WWW_Users.php:542
+#: SuppLoginSetup.php:186 WWW_Users.php:536
 msgid "Default Location"
 msgstr "Default plats"
 
@@ -33959,6 +33950,12 @@ msgstr "Kreditbeloppet i Supplier Valuta"
 #: SupplierCredit.php:526 SupplierInvoice.php:878
 msgid "Update Tax Calculation"
 msgstr "Uppdatera skatteberäkning"
+
+#: SupplierCredit.php:530 SupplierCredit.php:533 SupplierInvoice.php:882
+#: SupplierInvoice.php:885 SystemParameters.php:552 SystemParameters.php:689
+#: SystemParameters.php:691 SystemParameters.php:702 SystemParameters.php:704
+msgid "Automatic"
+msgstr "Automatisk"
 
 #: SupplierCredit.php:531 SupplierCredit.php:534 SystemParameters.php:688
 #: SystemParameters.php:692 SystemParameters.php:701 SystemParameters.php:705
@@ -36690,7 +36687,7 @@ msgstr "Moms på inköp"
 msgid "Total Inputs"
 msgstr "Välj _indata"
 
-#: Tax.php:269 includes/MainMenuLinksArray.php:22
+#: Tax.php:269 WWW_Users.php:26 includes/MainMenuLinksArray.php:22
 #: reportwriter/languages/en_US/reports.php:241
 #: ../webSHOP/CreditCardPayPalPro.php:90
 #: ../webSHOP/includes/ProcessPayPalPayment.php:8
@@ -37920,11 +37917,11 @@ msgstr ""
 msgid "Eastern European Russian Japanese Korean Hebrew Arabic Thai"
 msgstr "Östeuropa Ryska Japanska Koreanska Hebreiska Arabiska thailändska"
 
-#: UserSettings.php:18 WWW_Users.php:25
+#: UserSettings.php:18 WWW_Users.php:51
 msgid "Chinese"
 msgstr "Kinesiska"
 
-#: UserSettings.php:19 WWW_Users.php:26
+#: UserSettings.php:19 WWW_Users.php:52
 msgid "Free Serif"
 msgstr ""
 
@@ -37944,11 +37941,11 @@ msgstr ""
 msgid "The password and password confirmation fields entered do not match"
 msgstr "Lösenorden är inte lika"
 
-#: UserSettings.php:71 UserSettings.php:87 WWW_Users.php:236
+#: UserSettings.php:71 UserSettings.php:87 WWW_Users.php:251
 msgid "The user alterations could not be processed because"
 msgstr "Användarändringar kunde inte genomföras eftersom"
 
-#: UserSettings.php:72 UserSettings.php:88 WWW_Users.php:237
+#: UserSettings.php:72 UserSettings.php:88 WWW_Users.php:252
 #: ../webSHOP/Register.php:370
 msgid "The SQL that was used to update the user and failed was"
 msgstr "Den SQL som användes och misslyckades var"
@@ -37981,7 +37978,7 @@ msgstr "Bekräfta lösenord"
 msgid "If you leave the password boxes empty your password will not change"
 msgstr "Om du lämnar lösenfälten tomma ändras inte lösenordet."
 
-#: UserSettings.php:203 WWW_Users.php:735
+#: UserSettings.php:203 WWW_Users.php:726
 msgid "PDF Language Support"
 msgstr "PDF Språkstöd"
 
@@ -38264,202 +38261,241 @@ msgstr "Tillgängliga säkerhetstoken"
 msgid "Are you sure you wish to delete this security token from this role?"
 msgstr ""
 
-#: WWW_Users.php:21 includes/MainMenuLinksArray.php:30
-msgid "Utilities"
-msgstr ""
-
-#: WWW_Users.php:23
-msgid "Latin Western Languages"
-msgstr "Västerlänska språk (Latin)"
-
-#: WWW_Users.php:24
-msgid "Eastern European Russian Japanese Korean Vietnamese Hebrew Arabic Thai"
-msgstr ""
-
-#: WWW_Users.php:28 includes/MainMenuLinksArray.php:478
+#: WWW_Users.php:12 includes/MainMenuLinksArray.php:478
 msgid "Users Maintenance"
 msgstr ""
 
-#: WWW_Users.php:89
+#: WWW_Users.php:34 includes/MainMenuLinksArray.php:30
+msgid "Utilities"
+msgstr ""
+
+#: WWW_Users.php:37
+msgid "Display Sales module"
+msgstr ""
+
+#: WWW_Users.php:38
+msgid "Display Receivables module"
+msgstr ""
+
+#: WWW_Users.php:39
+msgid "Display Purchases module"
+msgstr ""
+
+#: WWW_Users.php:40
+msgid "Display Payables module"
+msgstr ""
+
+#: WWW_Users.php:41
+msgid "Display Inventory module"
+msgstr ""
+
+#: WWW_Users.php:42
+msgid "Display Manufacturing module"
+msgstr ""
+
+#: WWW_Users.php:43
+msgid "Display General Ledger module"
+msgstr ""
+
+#: WWW_Users.php:44
+msgid "Display Asset Manager module"
+msgstr ""
+
+#: WWW_Users.php:45
+msgid "Display Petty Cash module"
+msgstr ""
+
+#: WWW_Users.php:46
+msgid "Display Setup module"
+msgstr ""
+
+#: WWW_Users.php:47
+msgid "Display Utilities module"
+msgstr ""
+
+#: WWW_Users.php:49
+msgid "Latin Western Languages"
+msgstr "Västerlänska språk (Latin)"
+
+#: WWW_Users.php:50
+msgid "Eastern European Russian Japanese Korean Vietnamese Hebrew Arabic Thai"
+msgstr ""
+
+#: WWW_Users.php:104
 msgid "The demonstration user called demo cannot be modified."
 msgstr ""
 
-#: WWW_Users.php:98
+#: WWW_Users.php:113
 msgid "The user ID"
 msgstr ""
 
-#: WWW_Users.php:98
+#: WWW_Users.php:113
 msgid "already exists and cannot be used again"
 msgstr ""
 
-#: WWW_Users.php:166
+#: WWW_Users.php:181
 msgid "The selected user record has been updated"
 msgstr "Den valda användarposten har uppdaterats"
 
-#: WWW_Users.php:207
+#: WWW_Users.php:222
 msgid "A new user record has been inserted"
 msgstr "En ny användarpost har infogats"
 
-#: WWW_Users.php:219
+#: WWW_Users.php:234
 msgid "The default user locations could not be processed because"
 msgstr ""
 
-#: WWW_Users.php:220
+#: WWW_Users.php:235
 msgid "The SQL that was used to create the user locations and failed was"
 msgstr ""
 
-#: WWW_Users.php:222
+#: WWW_Users.php:237
 msgid ""
 "User has been authorized to use and update only his / her default location"
 msgstr ""
 
-#: WWW_Users.php:228
+#: WWW_Users.php:243
 msgid "The default user GL Accounts could not be processed because"
 msgstr ""
 
-#: WWW_Users.php:229
+#: WWW_Users.php:244
 msgid "The SQL that was used to create the user GL Accounts and failed was"
 msgstr ""
 
-#: WWW_Users.php:231
+#: WWW_Users.php:246
 msgid "User has been authorized to use and update all GL accounts"
 msgstr ""
 
-#: WWW_Users.php:268
+#: WWW_Users.php:283
 msgid "The demonstration user called demo cannot be deleted"
 msgstr ""
 
-#: WWW_Users.php:273
+#: WWW_Users.php:288
 msgid "Cannot delete user as entries already exist in the audit trail"
 msgstr "Kan inte ta bort användaren eftersom det redan finns revisionsposter"
 
-#: WWW_Users.php:276
+#: WWW_Users.php:291
 msgid "The Location - User could not be deleted because"
 msgstr ""
 
-#: WWW_Users.php:280
+#: WWW_Users.php:295
 msgid "The GL Account - User could not be deleted because"
 msgstr ""
 
-#: WWW_Users.php:284
+#: WWW_Users.php:299
 msgid "The Bank Accounts - User could not be deleted because"
 msgstr ""
 
-#: WWW_Users.php:288
+#: WWW_Users.php:303
 msgid "The User could not be deleted because"
 msgstr "Användaren kunde inte tas bort eftersom"
 
-#: WWW_Users.php:290
+#: WWW_Users.php:305
 msgid "User Deleted"
 msgstr "Användaren raderad"
 
-#: WWW_Users.php:327
+#: WWW_Users.php:326
 msgid "Last Visit"
 msgstr "Senaste besök"
 
-#: WWW_Users.php:328 WWW_Users.php:513
+#: WWW_Users.php:327 WWW_Users.php:507
 msgid "Security Role"
 msgstr "Säkerhetsroll"
 
-#: WWW_Users.php:329
+#: WWW_Users.php:328
 msgid "Report Size"
 msgstr "Rapport storlek"
 
-#: WWW_Users.php:348
+#: WWW_Users.php:361
 msgid "No login record"
 msgstr ""
 
-#: WWW_Users.php:369
-#, php-format
+#: WWW_Users.php:380
 msgid "Are you sure you wish to delete this user?"
 msgstr ""
 
-#: WWW_Users.php:395
+#: WWW_Users.php:389
 msgid "Review Existing Users"
 msgstr "Uppdatera existerande användare"
 
-#: WWW_Users.php:457
+#: WWW_Users.php:451
 msgid "User code"
 msgstr "Användarkod"
 
-#: WWW_Users.php:466
+#: WWW_Users.php:460
 msgid "At least 4 characters"
 msgstr ""
 
-#: WWW_Users.php:466
+#: WWW_Users.php:460
 msgid ""
 "Please input not less than 4 characters and canot be admin or contains "
 "illegal characters"
 msgstr ""
 
-#: WWW_Users.php:498
+#: WWW_Users.php:492
 msgid "At least 5 characters"
 msgstr ""
 
-#: WWW_Users.php:498
+#: WWW_Users.php:492
 msgid ""
 "Passwords must be 5 characters or more and cannot same as the users id. A "
 "mix of upper and lower case and some non-alphanumeric characters are "
 "recommended."
 msgstr ""
 
-#: WWW_Users.php:510
+#: WWW_Users.php:504
 msgid "e.g. user@domain.com"
 msgstr ""
 
-#: WWW_Users.php:510
+#: WWW_Users.php:504
 msgid "A valid email address is required"
 msgstr ""
 
-#: WWW_Users.php:529
+#: WWW_Users.php:523
 msgid "User Can Create Tenders"
 msgstr ""
 
-#: WWW_Users.php:570
+#: WWW_Users.php:564
 msgid ""
 "If this user login is to be associated with a customer account, enter the "
 "customer account code"
 msgstr ""
 
-#: WWW_Users.php:575
+#: WWW_Users.php:569
 msgid ""
 "If this user login is to be associated with a customer account a valid "
 "branch for the customer account must be entered."
 msgstr ""
 
-#: WWW_Users.php:584
+#: WWW_Users.php:578
 msgid "Restrict to Sales Person"
 msgstr "Endast för säljare"
 
-#: WWW_Users.php:590 WWW_Users.php:592
+#: WWW_Users.php:584 WWW_Users.php:586
 msgid "Not a salesperson only login"
 msgstr "Ej säljare endast login"
 
-#: WWW_Users.php:703
-msgid "module"
-msgstr ""
-
-#: WWW_Users.php:718
+#: WWW_Users.php:710
 msgid "Display Dashboard after Login"
 msgstr ""
 
-#: WWW_Users.php:750
+#: WWW_Users.php:741
 msgid "Allowed Department for Internal Requests"
 msgstr ""
 
-#: WWW_Users.php:760 WWW_Users.php:762
+#: WWW_Users.php:751 WWW_Users.php:753
 msgid "Any Internal Department"
 msgstr ""
 
-#: WWW_Users.php:777 index.php:38
+#: WWW_Users.php:768 index.php:38
 msgid "Account Status"
 msgstr "Kontostatus"
 
-#: WWW_Users.php:780 WWW_Users.php:784
+#: WWW_Users.php:771 WWW_Users.php:775
 msgid "Open"
 msgstr "öppna"
 
-#: WWW_Users.php:781 WWW_Users.php:783
+#: WWW_Users.php:772 WWW_Users.php:774
 msgid "Blocked"
 msgstr "Blockerad"
 
@@ -46438,6 +46474,10 @@ msgstr "Företag"
 #: includes/header.inc:74
 msgid "Items"
 msgstr "Produkter"
+
+#: includes/header.inc:77 includes/header.inc:81
+msgid "Manual"
+msgstr "Manual"
 
 #: includes/header.inc:90 ../webSHOP/includes/header.php:232
 msgid "Are you sure you wish to logout?"

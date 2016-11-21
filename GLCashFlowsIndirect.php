@@ -63,7 +63,7 @@ if($_POST['PeriodFrom'] > $_POST['PeriodTo']) {
 	prnMsg(_('The beginning of the period should be before or equal to the end of the period. Please reselect the reporting period.'), 'error');
 }
 if($_POST['PeriodTo']-$_POST['PeriodFrom']+1 > 12) {
-	// The reporting period is greater then 12 months.
+	// The reporting period is greater than 12 months.
 	unset($_POST['PeriodFrom']);
 	unset($_POST['PeriodTo']);
 	prnMsg(_('The period should be 12 months or less in duration. Please select an alternative period range.'), 'error');
