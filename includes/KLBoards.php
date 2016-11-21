@@ -9133,5 +9133,206 @@ function SuppliersWithoutBasicData($RootPath, $db){
 	}
 }
 
+function HourlySales($numDays, $RootPath, $db){
+	if ($numDays == 0){
+		$Yesterday = date('Y-m-d');
+		$InitialDate = date('Y-m-d');
+	}else{
+		$Yesterday = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
+		$InitialDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$numDays));
+	}
+	$SQL = "SELECT debtorno,
+				(SELECT COUNT(*)
+				FROM salesorders
+				WHERE salesorders.debtorno = debtorsmaster.debtorno
+					AND salesorders.orddate >= '". $InitialDate ."'
+					AND salesorders.orddate <= '". $Yesterday ."'
+					AND salesorders.ordtime >= '09:00:00'
+					AND salesorders.ordtime < '10:00:00') AS sales09,
+				(SELECT COUNT(*)
+				FROM salesorders
+				WHERE salesorders.debtorno = debtorsmaster.debtorno
+					AND salesorders.orddate >= '". $InitialDate ."'
+					AND salesorders.orddate <= '". $Yesterday ."'
+					AND salesorders.ordtime >= '10:00:00'
+					AND salesorders.ordtime <  '11:00:00') AS sales10,
+				(SELECT COUNT(*)
+				FROM salesorders
+				WHERE salesorders.debtorno = debtorsmaster.debtorno
+					AND salesorders.orddate >= '". $InitialDate ."'
+					AND salesorders.orddate <= '". $Yesterday ."'
+					AND salesorders.ordtime >= '11:00:00'
+					AND salesorders.ordtime <  '12:00:00') AS sales11,
+				(SELECT COUNT(*)
+				FROM salesorders
+				WHERE salesorders.debtorno = debtorsmaster.debtorno
+					AND salesorders.orddate >= '". $InitialDate ."'
+					AND salesorders.orddate <= '". $Yesterday ."'
+					AND salesorders.ordtime >= '12:00:00'
+					AND salesorders.ordtime <  '13:00:00') AS sales12,
+				(SELECT COUNT(*)
+				FROM salesorders
+				WHERE salesorders.debtorno = debtorsmaster.debtorno
+					AND salesorders.orddate >= '". $InitialDate ."'
+					AND salesorders.orddate <= '". $Yesterday ."'
+					AND salesorders.ordtime >= '13:00:00'
+					AND salesorders.ordtime <  '14:00:00') AS sales13,
+				(SELECT COUNT(*)
+				FROM salesorders
+				WHERE salesorders.debtorno = debtorsmaster.debtorno
+					AND salesorders.orddate >= '". $InitialDate ."'
+					AND salesorders.orddate <= '". $Yesterday ."'
+					AND salesorders.ordtime >= '14:00:00'
+					AND salesorders.ordtime <  '15:00:00') AS sales14,
+				(SELECT COUNT(*)
+				FROM salesorders
+				WHERE salesorders.debtorno = debtorsmaster.debtorno
+					AND salesorders.orddate >= '". $InitialDate ."'
+					AND salesorders.orddate <= '". $Yesterday ."'
+					AND salesorders.ordtime >= '15:00:00'
+					AND salesorders.ordtime <  '16:00:00') AS sales15,
+				(SELECT COUNT(*)
+				FROM salesorders
+				WHERE salesorders.debtorno = debtorsmaster.debtorno
+					AND salesorders.orddate >= '". $InitialDate ."'
+					AND salesorders.orddate <= '". $Yesterday ."'
+					AND salesorders.ordtime >= '16:00:00'
+					AND salesorders.ordtime <  '17:00:00') AS sales16,
+				(SELECT COUNT(*)
+				FROM salesorders
+				WHERE salesorders.debtorno = debtorsmaster.debtorno
+					AND salesorders.orddate >= '". $InitialDate ."'
+					AND salesorders.orddate <= '". $Yesterday ."'
+					AND salesorders.ordtime >= '17:00:00'
+					AND salesorders.ordtime <  '18:00:00') AS sales17,
+				(SELECT COUNT(*)
+				FROM salesorders
+				WHERE salesorders.debtorno = debtorsmaster.debtorno
+					AND salesorders.orddate >= '". $InitialDate ."'
+					AND salesorders.orddate <= '". $Yesterday ."'
+					AND salesorders.ordtime >= '18:00:00'
+					AND salesorders.ordtime <  '19:00:00') AS sales18,
+				(SELECT COUNT(*)
+				FROM salesorders
+				WHERE salesorders.debtorno = debtorsmaster.debtorno
+					AND salesorders.orddate >= '". $InitialDate ."'
+					AND salesorders.orddate <= '". $Yesterday ."'
+					AND salesorders.ordtime >= '19:00:00'
+					AND salesorders.ordtime <  '20:00:00') AS sales19,
+				(SELECT COUNT(*)
+				FROM salesorders
+				WHERE salesorders.debtorno = debtorsmaster.debtorno
+					AND salesorders.orddate >= '". $InitialDate ."'
+					AND salesorders.orddate <= '". $Yesterday ."'
+					AND salesorders.ordtime >= '20:00:00'
+					AND salesorders.ordtime <  '21:00:00') AS sales20,
+				(SELECT COUNT(*)
+				FROM salesorders
+				WHERE salesorders.debtorno = debtorsmaster.debtorno
+					AND salesorders.orddate >= '". $InitialDate ."'
+					AND salesorders.orddate <= '". $Yesterday ."'
+					AND salesorders.ordtime >= '21:00:00'
+					AND salesorders.ordtime <  '22:00:00') AS sales21,
+				(SELECT COUNT(*)
+				FROM salesorders
+				WHERE salesorders.debtorno = debtorsmaster.debtorno
+					AND salesorders.orddate >= '". $InitialDate ."'
+					AND salesorders.orddate <= '". $Yesterday ."'
+					AND salesorders.ordtime >= '22:00:00'
+					AND salesorders.ordtime <  '23:00:00') AS sales22,
+				(SELECT COUNT(*)
+				FROM salesorders
+				WHERE salesorders.debtorno = debtorsmaster.debtorno
+					AND salesorders.orddate >= '". $InitialDate ."'
+					AND salesorders.orddate <= '". $Yesterday ."'
+					AND salesorders.ordtime >= '23:00:00'
+					AND salesorders.ordtime <  '24:00:00') AS sales23
+			FROM debtorsmaster
+			WHERE debtorsmaster.typeid IN (". CUSTOMER_TYPE_RETAIL . ")
+				AND debtorsmaster.debtorno LIKE 'RETAIL%'
+			ORDER BY debtorsmaster.debtorno";
+
+	$result = DB_query($SQL);
+	$showHeader = TRUE;
+	if (DB_num_rows($result) != 0){
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			if (TRUE){
+				if ($showHeader){
+					if ($numDays == 0){
+						echo '<p class="page_title_text" align="center"><strong>' .'Number of sales by hour of the day for today</strong></p>';
+					}else{
+						echo '<p class="page_title_text" align="center"><strong>' .'Number of sales by hour of the day for the last ' . $numDays . ' days</strong></p>';
+					}
+					echo '<div>';
+					echo '<table class="selection">';
+					$TableHeader = '<tr>
+										<th class="ascending">' . _('Shop') . '</th>
+										<th class="ascending">' . _('09-10') . '</th>
+										<th class="ascending">' . _('10-11') . '</th>
+										<th class="ascending">' . _('11-12') . '</th>
+										<th class="ascending">' . _('12-13') . '</th>
+										<th class="ascending">' . _('13-14') . '</th>
+										<th class="ascending">' . _('14-15') . '</th>
+										<th class="ascending">' . _('15-16') . '</th>
+										<th class="ascending">' . _('16-17') . '</th>
+										<th class="ascending">' . _('17-18') . '</th>
+										<th class="ascending">' . _('18-19') . '</th>
+										<th class="ascending">' . _('19-20') . '</th>
+										<th class="ascending">' . _('20-21') . '</th>
+										<th class="ascending">' . _('21-22') . '</th>
+										<th class="ascending">' . _('22-23') . '</th>
+										<th class="ascending">' . _('23-24') . '</th>
+									</tr>';
+					echo $TableHeader;
+					$showHeader = FALSE;
+				}
+				$k = StartEvenOrOddRow($k);
+				printf('<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						</tr>', 
+						$myrow['debtorno'],
+						locale_number_format($myrow['sales09'],0),
+						locale_number_format($myrow['sales10'],0),
+						locale_number_format($myrow['sales11'],0),
+						locale_number_format($myrow['sales12'],0),
+						locale_number_format($myrow['sales13'],0),
+						locale_number_format($myrow['sales14'],0),
+						locale_number_format($myrow['sales15'],0),
+						locale_number_format($myrow['sales16'],0),
+						locale_number_format($myrow['sales17'],0),
+						locale_number_format($myrow['sales18'],0),
+						locale_number_format($myrow['sales19'],0),
+						locale_number_format($myrow['sales20'],0),
+						locale_number_format($myrow['sales21'],0),
+						locale_number_format($myrow['sales22'],0),
+						locale_number_format($myrow['sales23'],0)
+						);
+				$i++;
+			}
+		}
+		if (!$showHeader){
+			echo '</table>
+				</div>';
+		}
+	}
+}
+
+
 
 ?>
