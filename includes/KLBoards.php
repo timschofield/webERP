@@ -9134,13 +9134,11 @@ function SuppliersWithoutBasicData($RootPath, $db){
 }
 
 function HourlySales($numDays, $RootPath, $db){
-	if ($numDays == 0){
-		$Yesterday = date('Y-m-d');
-		$InitialDate = date('Y-m-d');
-	}else{
-		$Yesterday = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
-		$InitialDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$numDays));
-	}
+
+	$Today = date('Y-m-d');
+	$Yesterday = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
+	$InitialDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$numDays));
+
 	$SQL = "SELECT debtorno,
 				(SELECT COUNT(*)
 				FROM salesorders
@@ -9246,7 +9244,97 @@ function HourlySales($numDays, $RootPath, $db){
 					AND salesorders.orddate >= '". $InitialDate ."'
 					AND salesorders.orddate <= '". $Yesterday ."'
 					AND salesorders.ordtime >= '23:00:00'
-					AND salesorders.ordtime <  '24:00:00') AS sales23
+					AND salesorders.ordtime <  '24:00:00') AS sales23,
+				(SELECT COUNT(*)
+				FROM salesorders
+				WHERE salesorders.debtorno = debtorsmaster.debtorno
+					AND salesorders.orddate = '". $Today ."'
+					AND salesorders.ordtime >= '09:00:00'
+					AND salesorders.ordtime < '10:00:00') AS today09,
+				(SELECT COUNT(*)
+				FROM salesorders
+				WHERE salesorders.debtorno = debtorsmaster.debtorno
+					AND salesorders.orddate = '". $Today ."'
+					AND salesorders.ordtime >= '10:00:00'
+					AND salesorders.ordtime <  '11:00:00') AS today10,
+				(SELECT COUNT(*)
+				FROM salesorders
+				WHERE salesorders.debtorno = debtorsmaster.debtorno
+					AND salesorders.orddate = '". $Today ."'
+					AND salesorders.ordtime >= '11:00:00'
+					AND salesorders.ordtime <  '12:00:00') AS today11,
+				(SELECT COUNT(*)
+				FROM salesorders
+				WHERE salesorders.debtorno = debtorsmaster.debtorno
+					AND salesorders.orddate = '". $Today ."'
+					AND salesorders.ordtime >= '12:00:00'
+					AND salesorders.ordtime <  '13:00:00') AS today12,
+				(SELECT COUNT(*)
+				FROM salesorders
+				WHERE salesorders.debtorno = debtorsmaster.debtorno
+					AND salesorders.orddate = '". $Today ."'
+					AND salesorders.ordtime >= '13:00:00'
+					AND salesorders.ordtime <  '14:00:00') AS today13,
+				(SELECT COUNT(*)
+				FROM salesorders
+				WHERE salesorders.debtorno = debtorsmaster.debtorno
+					AND salesorders.orddate = '". $Today ."'
+					AND salesorders.ordtime >= '14:00:00'
+					AND salesorders.ordtime <  '15:00:00') AS today14,
+				(SELECT COUNT(*)
+				FROM salesorders
+				WHERE salesorders.debtorno = debtorsmaster.debtorno
+					AND salesorders.orddate = '". $Today ."'
+					AND salesorders.ordtime >= '15:00:00'
+					AND salesorders.ordtime <  '16:00:00') AS today15,
+				(SELECT COUNT(*)
+				FROM salesorders
+				WHERE salesorders.debtorno = debtorsmaster.debtorno
+					AND salesorders.orddate = '". $Today ."'
+					AND salesorders.ordtime >= '16:00:00'
+					AND salesorders.ordtime <  '17:00:00') AS today16,
+				(SELECT COUNT(*)
+				FROM salesorders
+				WHERE salesorders.debtorno = debtorsmaster.debtorno
+					AND salesorders.orddate = '". $Today ."'
+					AND salesorders.ordtime >= '17:00:00'
+					AND salesorders.ordtime <  '18:00:00') AS today17,
+				(SELECT COUNT(*)
+				FROM salesorders
+				WHERE salesorders.debtorno = debtorsmaster.debtorno
+					AND salesorders.orddate = '". $Today ."'
+					AND salesorders.ordtime >= '18:00:00'
+					AND salesorders.ordtime <  '19:00:00') AS today18,
+				(SELECT COUNT(*)
+				FROM salesorders
+				WHERE salesorders.debtorno = debtorsmaster.debtorno
+					AND salesorders.orddate = '". $Today ."'
+					AND salesorders.ordtime >= '19:00:00'
+					AND salesorders.ordtime <  '20:00:00') AS today19,
+				(SELECT COUNT(*)
+				FROM salesorders
+				WHERE salesorders.debtorno = debtorsmaster.debtorno
+					AND salesorders.orddate = '". $Today ."'
+					AND salesorders.ordtime >= '20:00:00'
+					AND salesorders.ordtime <  '21:00:00') AS today20,
+				(SELECT COUNT(*)
+				FROM salesorders
+				WHERE salesorders.debtorno = debtorsmaster.debtorno
+					AND salesorders.orddate = '". $Today ."'
+					AND salesorders.ordtime >= '21:00:00'
+					AND salesorders.ordtime <  '22:00:00') AS today21,
+				(SELECT COUNT(*)
+				FROM salesorders
+				WHERE salesorders.debtorno = debtorsmaster.debtorno
+					AND salesorders.orddate = '". $Today ."'
+					AND salesorders.ordtime >= '22:00:00'
+					AND salesorders.ordtime <  '23:00:00') AS today22,
+				(SELECT COUNT(*)
+				FROM salesorders
+				WHERE salesorders.debtorno = debtorsmaster.debtorno
+					AND salesorders.orddate = '". $Today ."'
+					AND salesorders.ordtime >= '23:00:00'
+					AND salesorders.ordtime <  '24:00:00') AS today23	
 			FROM debtorsmaster
 			WHERE debtorsmaster.typeid IN (". CUSTOMER_TYPE_RETAIL . ")
 				AND debtorsmaster.debtorno LIKE 'RETAIL%'
@@ -9260,15 +9348,12 @@ function HourlySales($numDays, $RootPath, $db){
 		while ($myrow = DB_fetch_array($result)) {
 			if (TRUE){
 				if ($showHeader){
-					if ($numDays == 0){
-						echo '<p class="page_title_text" align="center"><strong>' .'Number of sales by hour of the day for today</strong></p>';
-					}else{
-						echo '<p class="page_title_text" align="center"><strong>' .'Number of sales by hour of the day for the last ' . $numDays . ' days</strong></p>';
-					}
+					echo '<p class="page_title_text" align="center"><strong>' .'Daily Number of sales by hour of the day for the last ' . $numDays . ' days</strong></p>';
 					echo '<div>';
 					echo '<table class="selection">';
 					$TableHeader = '<tr>
 										<th class="ascending">' . _('Shop') . '</th>
+										<th class="ascending">' . _('Type') . '</th>
 										<th class="ascending">' . _('09-10') . '</th>
 										<th class="ascending">' . _('10-11') . '</th>
 										<th class="ascending">' . _('11-12') . '</th>
@@ -9290,6 +9375,7 @@ function HourlySales($numDays, $RootPath, $db){
 				}
 				$k = StartEvenOrOddRow($k);
 				printf('<td>%s</td>
+						<td>%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
@@ -9307,23 +9393,168 @@ function HourlySales($numDays, $RootPath, $db){
 						<td class="number">%s</td>
 						</tr>', 
 						$myrow['debtorno'],
-						locale_number_format($myrow['sales09'],0),
-						locale_number_format($myrow['sales10'],0),
-						locale_number_format($myrow['sales11'],0),
-						locale_number_format($myrow['sales12'],0),
-						locale_number_format($myrow['sales13'],0),
-						locale_number_format($myrow['sales14'],0),
-						locale_number_format($myrow['sales15'],0),
-						locale_number_format($myrow['sales16'],0),
-						locale_number_format($myrow['sales17'],0),
-						locale_number_format($myrow['sales18'],0),
-						locale_number_format($myrow['sales19'],0),
-						locale_number_format($myrow['sales20'],0),
-						locale_number_format($myrow['sales21'],0),
-						locale_number_format($myrow['sales22'],0),
-						locale_number_format($myrow['sales23'],0)
+						'Hourly '. $numDays . ' days',
+						locale_number_format_zero_blank($myrow['sales09']/$numDays,1),
+						locale_number_format_zero_blank($myrow['sales10']/$numDays,1),
+						locale_number_format_zero_blank($myrow['sales11']/$numDays,1),
+						locale_number_format_zero_blank($myrow['sales12']/$numDays,1),
+						locale_number_format_zero_blank($myrow['sales13']/$numDays,1),
+						locale_number_format_zero_blank($myrow['sales14']/$numDays,1),
+						locale_number_format_zero_blank($myrow['sales15']/$numDays,1),
+						locale_number_format_zero_blank($myrow['sales16']/$numDays,1),
+						locale_number_format_zero_blank($myrow['sales17']/$numDays,1),
+						locale_number_format_zero_blank($myrow['sales18']/$numDays,1),
+						locale_number_format_zero_blank($myrow['sales19']/$numDays,1),
+						locale_number_format_zero_blank($myrow['sales20']/$numDays,1),
+						locale_number_format_zero_blank($myrow['sales21']/$numDays,1),
+						locale_number_format_zero_blank($myrow['sales22']/$numDays,1),
+						locale_number_format_zero_blank($myrow['sales23']/$numDays,1)
 						);
-				$i++;
+
+				$Acum09 = $myrow['sales09'];
+				$Acum10 = $Acum09 + $myrow['sales10'];
+				$Acum11 = $Acum10 + $myrow['sales11'];
+				$Acum12 = $Acum11 + $myrow['sales12'];
+				$Acum13 = $Acum12 + $myrow['sales13'];
+				$Acum14 = $Acum13 + $myrow['sales14'];
+				$Acum15 = $Acum14 + $myrow['sales15'];
+				$Acum16 = $Acum15 + $myrow['sales16'];
+				$Acum17 = $Acum16 + $myrow['sales17'];
+				$Acum18 = $Acum17 + $myrow['sales18'];
+				$Acum19 = $Acum18 + $myrow['sales19'];
+				$Acum20 = $Acum19 + $myrow['sales20'];
+				$Acum21 = $Acum20 + $myrow['sales21'];
+				$Acum22 = $Acum21 + $myrow['sales22'];
+				$Acum23 = $Acum22 + $myrow['sales23'];
+				
+				$k = StartEvenOrOddRow($k);
+				printf('<td>%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						</tr>', 
+						'',
+						'Acumulated '. $numDays . ' days',
+						locale_number_format_zero_blank($Acum09/$numDays,1),
+						locale_number_format_zero_blank($Acum10/$numDays,1),
+						locale_number_format_zero_blank($Acum11/$numDays,1),
+						locale_number_format_zero_blank($Acum12/$numDays,1),
+						locale_number_format_zero_blank($Acum13/$numDays,1),
+						locale_number_format_zero_blank($Acum14/$numDays,1),
+						locale_number_format_zero_blank($Acum15/$numDays,1),
+						locale_number_format_zero_blank($Acum16/$numDays,1),
+						locale_number_format_zero_blank($Acum17/$numDays,1),
+						locale_number_format_zero_blank($Acum18/$numDays,1),
+						locale_number_format_zero_blank($Acum19/$numDays,1),
+						locale_number_format_zero_blank($Acum20/$numDays,1),
+						locale_number_format_zero_blank($Acum21/$numDays,1),
+						locale_number_format_zero_blank($Acum22/$numDays,1),
+						locale_number_format_zero_blank($Acum23/$numDays,1)
+						);
+				$k = StartEvenOrOddRow($k);
+				printf('<td>%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						</tr>', 
+						'',
+						'Hourly today',
+						locale_number_format_zero_blank($myrow['today09'],1),
+						locale_number_format_zero_blank($myrow['today10'],1),
+						locale_number_format_zero_blank($myrow['today11'],1),
+						locale_number_format_zero_blank($myrow['today12'],1),
+						locale_number_format_zero_blank($myrow['today13'],1),
+						locale_number_format_zero_blank($myrow['today14'],1),
+						locale_number_format_zero_blank($myrow['today15'],1),
+						locale_number_format_zero_blank($myrow['today16'],1),
+						locale_number_format_zero_blank($myrow['today17'],1),
+						locale_number_format_zero_blank($myrow['today18'],1),
+						locale_number_format_zero_blank($myrow['today19'],1),
+						locale_number_format_zero_blank($myrow['today20'],1),
+						locale_number_format_zero_blank($myrow['today21'],1),
+						locale_number_format_zero_blank($myrow['today22'],1),
+						locale_number_format_zero_blank($myrow['today23'],1)
+						);
+				$Acum09 = $myrow['today09'];
+				$Acum10 = $Acum09 + $myrow['today10'];
+				$Acum11 = $Acum10 + $myrow['today11'];
+				$Acum12 = $Acum11 + $myrow['today12'];
+				$Acum13 = $Acum12 + $myrow['today13'];
+				$Acum14 = $Acum13 + $myrow['today14'];
+				$Acum15 = $Acum14 + $myrow['today15'];
+				$Acum16 = $Acum15 + $myrow['today16'];
+				$Acum17 = $Acum16 + $myrow['today17'];
+				$Acum18 = $Acum17 + $myrow['today18'];
+				$Acum19 = $Acum18 + $myrow['today19'];
+				$Acum20 = $Acum19 + $myrow['today20'];
+				$Acum21 = $Acum20 + $myrow['today21'];
+				$Acum22 = $Acum21 + $myrow['today22'];
+				$Acum23 = $Acum22 + $myrow['today23'];
+
+				$k = StartEvenOrOddRow($k);
+				printf('<td>%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						</tr>', 
+						'',
+						'Acumulated today',
+						locale_number_format_zero_blank($Acum09,1),
+						locale_number_format_zero_blank($Acum10,1),
+						locale_number_format_zero_blank($Acum11,1),
+						locale_number_format_zero_blank($Acum12,1),
+						locale_number_format_zero_blank($Acum13,1),
+						locale_number_format_zero_blank($Acum14,1),
+						locale_number_format_zero_blank($Acum15,1),
+						locale_number_format_zero_blank($Acum16,1),
+						locale_number_format_zero_blank($Acum17,1),
+						locale_number_format_zero_blank($Acum18,1),
+						locale_number_format_zero_blank($Acum19,1),
+						locale_number_format_zero_blank($Acum20,1),
+						locale_number_format_zero_blank($Acum21,1),
+						locale_number_format_zero_blank($Acum22,1),
+						locale_number_format_zero_blank($Acum23,1)
+						);
+						$i++;
 			}
 		}
 		if (!$showHeader){

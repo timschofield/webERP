@@ -1,7 +1,7 @@
 <?php
 
 define("CURRENCY_CODE", 'IDR');
-define("CUSTOMER_TYPE_RETAIL", '2,7');
+define("CUSTOMER_TYPE_RETAIL", '2');
 define("CUSTOMER_TYPE_CONSIGNMENT", '6');
 define("CUSTOMER_TYPE_WHOLESALE", '3,4,5');
 define("CUSTOMER_TYPE_ONLINE", '9');
