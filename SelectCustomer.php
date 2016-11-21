@@ -206,7 +206,7 @@ if($_SESSION['CustomerID'] != '' AND !isset($_POST['Search']) AND !isset($_POST[
 	echo '</td><td valign="top" class="select">';
 	// Customer transactions options:
 	echo '<a href="', $RootPath, '/SelectSalesOrder.php?SelectedCustomer=', urlencode($_SESSION['CustomerID']), '">' . _('Modify Outstanding Sales Orders') . '</a><br />';
-	echo '<a title="' . _('This allows the deposits received from the customer to be matched against invoices') . '" href="', $RootPath, '/CustomerAllocations.php?DebtorNo=', urlencode($_SESSION['CustomerID']), '">' . _('Allocate Receipts OR Credit Notes') . '</a><br />';
+	echo '<a title="' . _('This allows the deposits received from the customer to be matched against invoices') . '" href="', $RootPath, '/CustomerAllocations.php?DebtorNo=', urlencode($_SESSION['CustomerID']), '">' . _('Allocate Receipts or Credit Notes') . '</a><br />';
 	if(isset($_SESSION['CustomerID']) AND isset($_SESSION['BranchCode'])) {
 	echo '<a href="', $RootPath, '/CounterSales.php?DebtorNo=', urlencode($_SESSION['CustomerID']), '&amp;BranchNo=' . $_SESSION['BranchCode'] . '">' . _('Create a Counter Sale for this Customer') . '</a><br />';
 	}

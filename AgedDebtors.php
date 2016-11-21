@@ -1,10 +1,10 @@
 <?php
-
  /* $Id$ */
+ /* Lists customer account balances in detail or summary in selected currency */
 
 include('includes/session.inc');
 
-if (isset($_POST['PrintPDF'])
+if(isset($_POST['PrintPDF'])
 	and isset($_POST['FromCriteria'])
 	and mb_strlen($_POST['FromCriteria'])>=1
 	and isset($_POST['ToCriteria'])
@@ -18,15 +18,15 @@ if (isset($_POST['PrintPDF'])
 	$line_height = 12;
 
 	  /*Now figure out the aged analysis for the customer range under review */
-	if ($_SESSION['SalesmanLogin'] != '') {
+	if($_SESSION['SalesmanLogin'] != '') {
 		$_POST['Salesman'] = $_SESSION['SalesmanLogin'];
 	}
-	if (trim($_POST['Salesman'])!=''){
+	if(trim($_POST['Salesman'])!='') {
 		$SalesLimit = " AND debtorsmaster.debtorno IN (SELECT DISTINCT debtorno FROM custbranch WHERE salesman = '".$_POST['Salesman']."') ";
 	} else {
 		$SalesLimit = "";
 	}
-	if ($_POST['All_Or_Overdues']=='All'){
+	if($_POST['All_Or_Overdues']=='All') {
 		$SQL = "SELECT debtorsmaster.debtorno,
 				debtorsmaster.name,
 				currencies.currency,
@@ -46,7 +46,7 @@ if (isset($_POST['PrintPDF'])
 						ELSE 0 END
 					ELSE
 						CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(debtortrans.trandate),paymentterms.dayinfollowingmonth)) >= 0
-						THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc 
+						THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc
 						ELSE 0 END
 					END
 				) AS due,
@@ -97,7 +97,7 @@ if (isset($_POST['PrintPDF'])
 				HAVING
 					ROUND(ABS(SUM(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc)),currencies.decimalplaces) > 0";
 
-	} elseif ($_POST['All_Or_Overdues']=='OverduesOnly') {
+	} elseif($_POST['All_Or_Overdues']=='OverduesOnly') {
 
 		$SQL = "SELECT debtorsmaster.debtorno,
 				debtorsmaster.name,
@@ -117,7 +117,7 @@ if (isset($_POST['PrintPDF'])
 							THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc
 							ELSE 0 END
 						ELSE
-						CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(debtortrans.trandate),paymentterms.dayinfollowingmonth)) >= 0 
+						CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(debtortrans.trandate),paymentterms.dayinfollowingmonth)) >= 0
 						THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END
 					END
 				) AS due,
@@ -180,7 +180,7 @@ if (isset($_POST['PrintPDF'])
 					END
 					) > 0.01";
 
-	} elseif ($_POST['All_Or_Overdues']=='HeldOnly'){
+	} elseif($_POST['All_Or_Overdues']=='HeldOnly') {
 
 		$SQL = "SELECT debtorsmaster.debtorno,
 					debtorsmaster.name,
@@ -264,12 +264,12 @@ if (isset($_POST['PrintPDF'])
 	}
 	$CustomerResult = DB_query($SQL,'','',False,False); /*dont trap errors handled below*/
 
-	if (DB_error_no() !=0) {
+	if(DB_error_no() !=0) {
 		$Title = _('Aged Customer Account Analysis') . ' - ' . _('Problem Report') . '.... ';
 		include('includes/header.inc');
 		prnMsg(_('The customer details could not be retrieved by the SQL because') . ' ' . DB_error_msg(),'error');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		if ($debug==1){
+		if($debug==1) {
 			echo '<br />' . $SQL;
 		}
 		include('includes/footer.inc');
@@ -287,7 +287,7 @@ if (isset($_POST['PrintPDF'])
  	$ListCount = DB_num_rows($CustomerResult);
 	$CurrDecimalPlaces =2; //by default
 
-	while ($AgedAnalysis = DB_fetch_array($CustomerResult,$db)){
+	while ($AgedAnalysis = DB_fetch_array($CustomerResult,$db)) {
 		$CurrDecimalPlaces = $AgedAnalysis['decimalplaces'];
 		$DisplayDue = locale_number_format($AgedAnalysis['due']-$AgedAnalysis['overdue1'],$CurrDecimalPlaces);
 		$DisplayCurrent = locale_number_format($AgedAnalysis['balance']-$AgedAnalysis['due'],$CurrDecimalPlaces);
@@ -309,12 +309,12 @@ if (isset($_POST['PrintPDF'])
 		$LeftOvers = $pdf->addTextWrap(460,$YPos,60,$FontSize,$DisplayOverdue2,'right');
 
 		$YPos -=$line_height;
-		if ($YPos < $Bottom_Margin + $line_height){
+		if($YPos < $Bottom_Margin + $line_height) {
 			include('includes/PDFAgedDebtorsPageHeader.inc');
 		}
 
 
-		if ($_POST['DetailedReport']=='Yes'){
+		if($_POST['DetailedReport']=='Yes') {
 
 			/*draw a line under the customer aged analysis*/
 			$pdf->line($Page_Width-$Right_Margin, $YPos+10,$Left_Margin, $YPos+10);
@@ -361,24 +361,24 @@ if (isset($_POST['PrintPDF'])
 						AND debtortrans.debtorno = '" . $AgedAnalysis['debtorno'] . "'
 						AND ABS(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc)>0.004";
 
-			if ($_SESSION['SalesmanLogin'] != '') {
+			if($_SESSION['SalesmanLogin'] != '') {
 				$sql .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 			}
 
 			$DetailResult = DB_query($sql,'','',False,False); /*Dont trap errors */
-			if (DB_error_no() !=0) {
+			if(DB_error_no() !=0) {
 				$Title = _('Aged Customer Account Analysis') . ' - ' . _('Problem Report') . '....';
 				include('includes/header.inc');
 				prnMsg(_('The details of outstanding transactions for customer') . ' - ' . $AgedAnalysis['debtorno'] . ' ' . _('could not be retrieved because') . ' - ' . DB_error_msg(),'error');
 				echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-				if ($debug==1){
+				if($debug==1) {
 					echo '<br />' . _('The SQL that failed was') . '<br />' . $sql;
 				}
 				include('includes/footer.inc');
 				exit;
 			}
 
-			while ($DetailTrans = DB_fetch_array($DetailResult)){
+			while ($DetailTrans = DB_fetch_array($DetailResult)) {
 
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos,60,$FontSize,$DetailTrans['typename'],'left');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+65,$YPos,60,$FontSize,$DetailTrans['transno'],'left');
@@ -398,7 +398,7 @@ if (isset($_POST['PrintPDF'])
 				$LeftOvers = $pdf->addTextWrap(460,$YPos,60,$FontSize,$DisplayOverdue2,'right');
 
 				$YPos -=$line_height;
-				if ($YPos < $Bottom_Margin + $line_height){
+				if($YPos < $Bottom_Margin + $line_height) {
 					include('includes/PDFAgedDebtorsPageHeader.inc');
 				}
 
@@ -410,10 +410,10 @@ if (isset($_POST['PrintPDF'])
 	} /*end customer aged analysis while loop */
 
 	$YPos -=$line_height;
-	if ($YPos < $Bottom_Margin + (2*$line_height)){
+	if($YPos < $Bottom_Margin + (2*$line_height)) {
 		$PageNumber++;
 		include('includes/PDFAgedDebtorsPageHeader.inc');
-	} elseif ($_POST['DetailedReport']=='Yes') {
+	} elseif($_POST['DetailedReport']=='Yes') {
 		//dont do a line if the totals have to go on a new page
 		$pdf->line($Page_Width-$Right_Margin, $YPos+10 ,220, $YPos+10);
 	}
@@ -430,7 +430,7 @@ if (isset($_POST['PrintPDF'])
 	$LeftOvers = $pdf->addTextWrap(400,$YPos,60,$FontSize,$DisplayTotOverdue1,'right');
 	$LeftOvers = $pdf->addTextWrap(460,$YPos,60,$FontSize,$DisplayTotOverdue2,'right');
 
-	if ($ListCount == 0) {
+	if($ListCount == 0) {
 		$Title = _('Aged Customer Account Analysis') . ' - ' . _('Problem Report') . '....';
 		include('includes/header.inc');
 		prnMsg(_('There are no customers with balances meeting the criteria specified to list'),'info');
@@ -453,7 +453,7 @@ if (isset($_POST['PrintPDF'])
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
 
-	if ((!isset($_POST['FromCriteria']) or !isset($_POST['ToCriteria']))) {
+	if((!isset($_POST['FromCriteria']) or !isset($_POST['ToCriteria']))) {
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
@@ -480,7 +480,7 @@ if (isset($_POST['PrintPDF'])
 			</tr>
 			<tr>
 				<td>' . _('Only Show Customers Of') . ':' . '</td>';
-		if ($_SESSION['SalesmanLogin'] != '') {
+		if($_SESSION['SalesmanLogin'] != '') {
 			echo '<td>';
 			echo $_SESSION['UsersRealName'];
 			echo '</td>';
@@ -490,8 +490,8 @@ if (isset($_POST['PrintPDF'])
 			$sql = "SELECT salesmancode, salesmanname FROM salesman";
 
 			$result=DB_query($sql);
-			echo '<option value="">' . _('All Sales people') . '</option>';
-			while ($myrow=DB_fetch_array($result)){
+			echo '<option value="">' . _('All Salespeople') . '</option>';
+			while ($myrow=DB_fetch_array($result)) {
 					echo '<option value="' . $myrow['salesmancode'] . '">' . $myrow['salesmanname'] . '</option>';
 			}
 			echo '</select></td>';
@@ -504,8 +504,8 @@ if (isset($_POST['PrintPDF'])
 		$sql = "SELECT currency, currabrev FROM currencies";
 
 		$result=DB_query($sql);
-		while ($myrow=DB_fetch_array($result)){
-			  if ($myrow['currabrev'] == $_SESSION['CompanyRecord']['currencydefault']){
+		while ($myrow=DB_fetch_array($result)) {
+			  if($myrow['currabrev'] == $_SESSION['CompanyRecord']['currencydefault']) {
 				echo '<option selected="selected" value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
 			  } else {
 				  echo '<option value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
