@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-20 17:14-0600\n"
-"PO-Revision-Date: 2016-11-21 07:31-0600\n"
+"PO-Revision-Date: 2016-11-22 11:01-0600\n"
 "Last-Translator: Rafael E. Chacón <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -3777,7 +3777,7 @@ msgstr "El SQL se pudo obtener los cheques no cobrados porque"
 
 #: BankReconciliation.php:208
 msgid "Add back unpresented cheques"
-msgstr "Sumar cheques no cobrados"
+msgstr "Añadir cheques no cobrados"
 
 #: BankReconciliation.php:214 BankReconciliation.php:291 CustWhereAlloc.php:135
 #: CustomerAccount.php:251 CustomerAllocations.php:347
@@ -9476,11 +9476,11 @@ msgstr "No se pudo actualizar el control de deudores en el Libro Mayor"
 
 #: CustomerAllocations.php:340
 msgid "Allocate Receipt"
-msgstr "Asignar Cobro"
+msgstr "Asignar cobro"
 
 #: CustomerAllocations.php:340 CustomerReceipt.php:594
 msgid "Allocate Receipts"
-msgstr "Asignar Cobros"
+msgstr "Asignar cobros"
 
 #: CustomerAllocations.php:344 PDFRemittanceAdvice.php:307
 #: SupplierAllocations.php:566 SupplierAllocations.php:641
@@ -13080,7 +13080,7 @@ msgstr "Teléfono"
 
 #: Factors.php:256
 msgid "Insert New Factor"
-msgstr "Agregar la Nueva Compañía Financiera"
+msgstr "Insertar compañía de factoreo nueva"
 
 #: Factors.php:263
 msgid "Update Factor"
@@ -13770,7 +13770,7 @@ msgstr "Última Corrida de Depreciación"
 
 #: FixedAssetItems.php:679
 msgid "Insert New Fixed Asset"
-msgstr "Insertar Nuevo activo fijo"
+msgstr "Insertar activo fijo nuevo"
 
 #: FixedAssetItems.php:685
 msgid ""
@@ -14342,7 +14342,7 @@ msgstr "Para el rango del Período"
 
 #: GLAccountCSV.php:79 GLAccountInquiry.php:90 GLAccountReport.php:282
 msgid "All tags"
-msgstr "Todos los Centros de Costo"
+msgstr "Todos los centros de costo"
 
 #: GLAccountCSV.php:91 SalesAnalRepts.php:306
 #, php-format
@@ -15598,7 +15598,7 @@ msgstr ""
 
 #: GLTags.php:70 SecurityTokens.php:154
 msgid "Insert"
-msgstr "Crear"
+msgstr "Insertar"
 
 #: GLTags.php:81
 msgid "Tag ID"
@@ -22334,7 +22334,7 @@ msgstr "Solo artículos definidos desde este proveedor"
 #: PO_Items.php:1164 SelectProduct.php:477 SelectProduct.php:515
 #: StockClone.php:1116 Stocks.php:1445
 msgid "Insert New Item"
-msgstr "Agregar nuevo artículo"
+msgstr "Insertar artículo nuevo"
 
 #: PO_Items.php:1169
 msgid "Order a non stock item"
@@ -27050,7 +27050,7 @@ msgstr "Numerador X Constante"
 
 #: SalesAnalReptCols.php:515 SalesAnalReptCols.php:517
 msgid "Add to"
-msgstr "Sumar a"
+msgstr "Añadir a"
 
 #: SalesAnalReptCols.php:520 SalesAnalReptCols.php:522
 msgid "Numerator Minus Denominator"
@@ -31394,7 +31394,7 @@ msgstr "Ajuste de artículo controlado"
 
 #: StockAdjustmentsControlled.php:56
 msgid "Adding Items"
-msgstr "Agregando Artículos"
+msgstr "Añadiendo artículos"
 
 #: StockAdjustmentsControlled.php:61
 msgid "Removing Items"
@@ -36568,7 +36568,7 @@ msgstr "No requerido"
 
 #: Suppliers.php:859
 msgid "Insert New Supplier"
-msgstr "Inserte nuevo proveedor"
+msgstr "Insertar proveedor nuevo"
 
 #: Suppliers.php:953 Suppliers.php:957 Suppliers.php:961
 msgid "Within 40 characters"
@@ -41406,7 +41406,7 @@ msgstr "debe introducir un código de localidad único para el nuevo código"
 
 #: Z_ChangeLocationCode.php:61
 msgid "Adding the new location record"
-msgstr "Agregando registro de nueva localidad"
+msgstr "Añadiendo registro de nueva localidad"
 
 #: Z_ChangeLocationCode.php:107
 msgid "The SQL to insert the new location record failed"
@@ -41648,7 +41648,7 @@ msgstr ""
 
 #: Z_ChangeStockCategory.php:51
 msgid "Adding the new stock Category record"
-msgstr "Agregar la nueva categoría del registro de la ubicación de productos"
+msgstr "Añadiendo la nueva categoría del registro de la ubicación de productos"
 
 #: Z_ChangeStockCategory.php:75
 msgid "The SQL to insert the new stock category record failed"
@@ -41744,7 +41744,7 @@ msgstr "debe introducir un código de existencia único para el nuevo código"
 
 #: Z_ChangeStockCode.php:56
 msgid "Adding the new stock master record"
-msgstr "Agregando nuevo registro maestro de existencias"
+msgstr "Añadiendo nuevo registro maestro de existencias"
 
 #: Z_ChangeStockCode.php:113
 msgid "The SQL to insert the new stock master record failed"
@@ -42748,7 +42748,7 @@ msgstr ""
 
 #: Z_ImportChartOfAccounts.php:111
 msgid "All general ledger accounts have been added to the chart of accounts"
-msgstr ""
+msgstr "Todas las cuentas contables se han añadido al catálogo contable"
 
 #: Z_ImportChartOfAccounts.php:124
 msgid ""
@@ -42930,7 +42930,7 @@ msgstr ""
 
 #: Z_ImportCustbranch.php:513
 msgid "Insert branches total:"
-msgstr ""
+msgstr "Insertar total de sucursales:"
 
 #: Z_ImportCustbranch.php:515
 msgid "Exist branches total:"
@@ -42970,7 +42970,7 @@ msgstr ""
 #: Z_ImportDebtors.php:625 Z_ImportDebtors.php:627 Z_ImportSuppliers.php:335
 #: Z_ImportSuppliers.php:337
 msgid "Insert:"
-msgstr ""
+msgstr "Insertar:"
 
 #: Z_ImportDebtors.php:627 Z_ImportSuppliers.php:337
 msgid "Exist:"
@@ -46281,7 +46281,7 @@ msgstr ""
 
 #: api/api_xml-rpc.php:1218
 msgid "Insert Sales Order Header"
-msgstr "Insertar el Encabezado de Pedidos de Venta"
+msgstr "Insertar encabezado de orden de venta"
 
 #: api/api_xml-rpc.php:1222
 msgid ""
@@ -46333,7 +46333,7 @@ msgstr ""
 
 #: api/api_xml-rpc.php:1316
 msgid "Insert Sales Order Line"
-msgstr "Inserte la Línea de Pedidos de Venta"
+msgstr "Insertar línea de orden de ventas"
 
 #: api/api_xml-rpc.php:1320
 msgid "The orderno key must be one of these values. "
@@ -50974,7 +50974,7 @@ msgstr "Correos-e para recordatorio de mantenimiento"
 
 #: includes/MainMenuLinksArray.php:441
 msgid "Add or Maintain Asset Locations"
-msgstr "Agregar o Administrar Ubicaciones de activos"
+msgstr "Añadir o Administrar Ubicaciones de activos"
 
 #: includes/MainMenuLinksArray.php:448
 msgid "Assign Cash to PC Tab"
@@ -51615,7 +51615,7 @@ msgstr ""
 
 #: install/index.php:1070
 msgid "Administrator account settings"
-msgstr ""
+msgstr "Configuración de la cuenta del administrador"
 
 #: install/index.php:1074
 msgid "The default user name is 'admin' and it cannot be changed."
@@ -52077,7 +52077,7 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:164
 msgid "Administrator Page"
-msgstr ""
+msgstr "Página del administrador"
 
 #: reportwriter/languages/en_US/reports.php:165
 msgid "Border Line"
