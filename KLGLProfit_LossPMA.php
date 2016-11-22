@@ -3,7 +3,7 @@
 /* $Id: GLProfit_Loss.php 4837 2012-01-24 23:41:46Z vvs2012 $*/
 
 include ('includes/session.inc');
-$Title = _('Profit and Loss for CV. Merta Bali');
+$Title = _('Profit and Loss for PT. Angin Dingin Utara');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/AccountSectionsDef.inc'); // This loads the $Sections variable
 
@@ -149,22 +149,22 @@ if ((!isset($_POST['FromPeriod'])
 					accountgroups.groupname,
 					accountgroups.parentgroupname,
 					chartdetails.accountcode ,
-					chartmasterCV.accountname,
+					chartmasterPMA.accountname,
 					Sum(CASE WHEN chartdetails.period='" . $_POST['FromPeriod'] . "' THEN chartdetails.bfwd ELSE 0 END) AS firstprdbfwd,
 					Sum(CASE WHEN chartdetails.period='" . $_POST['FromPeriod'] . "' THEN chartdetails.bfwdbudget ELSE 0 END) AS firstprdbudgetbfwd,
 					Sum(CASE WHEN chartdetails.period='" . $_POST['ToPeriod'] . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lastprdcfwd,
 					Sum(CASE WHEN chartdetails.period='" . ($_POST['FromPeriod'] - 12) . "' THEN chartdetails.bfwd ELSE 0 END) AS lyfirstprdbfwd,
 					Sum(CASE WHEN chartdetails.period='" . ($_POST['ToPeriod']-12) . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lylastprdcfwd,
 					Sum(CASE WHEN chartdetails.period='" . $_POST['ToPeriod'] . "' THEN chartdetails.bfwdbudget + chartdetails.budget ELSE 0 END) AS lastprdbudgetcfwd
-				FROM chartmasterCV INNER JOIN accountgroups
-				ON chartmasterCV.group_ = accountgroups.groupname INNER JOIN chartdetails
-				ON chartmasterCV.accountcode= chartdetails.accountcode
+				FROM chartmasterPMA INNER JOIN accountgroups
+				ON chartmasterPMA.group_ = accountgroups.groupname INNER JOIN chartdetails
+				ON chartmasterPMA.accountcode= chartdetails.accountcode
 				WHERE accountgroups.pandl=1
 				GROUP BY accountgroups.sectioninaccounts,
 					accountgroups.groupname,
 					accountgroups.parentgroupname,
 					chartdetails.accountcode,
-					chartmasterCV.accountname,
+					chartmasterPMA.accountname,
 					accountgroups.sequenceintb
 				ORDER BY accountgroups.sectioninaccounts,
 					accountgroups.sequenceintb,
@@ -572,22 +572,22 @@ if ((!isset($_POST['FromPeriod'])
 					accountgroups.parentgroupname,
 					accountgroups.groupname,
 					chartdetails.accountcode,
-					chartmasterCV.accountname,
+					chartmasterPMA.accountname,
 					SUM(CASE WHEN chartdetails.period='" . $_POST['FromPeriod'] . "' THEN chartdetails.bfwd ELSE 0 END) AS firstprdbfwd,
 					SUM(CASE WHEN chartdetails.period='" . $_POST['FromPeriod'] . "' THEN chartdetails.bfwdbudget ELSE 0 END) AS firstprdbudgetbfwd,
 					SUM(CASE WHEN chartdetails.period='" . $_POST['ToPeriod'] . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lastprdcfwd,
 					SUM(CASE WHEN chartdetails.period='" . ($_POST['FromPeriod'] - 12) . "' THEN chartdetails.bfwd ELSE 0 END) AS lyfirstprdbfwd,
 					SUM(CASE WHEN chartdetails.period='" . ($_POST['ToPeriod']-12) . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lylastprdcfwd,
 					SUM(CASE WHEN chartdetails.period='" . $_POST['ToPeriod'] . "' THEN chartdetails.bfwdbudget + chartdetails.budget ELSE 0 END) AS lastprdbudgetcfwd
-			FROM chartmasterCV INNER JOIN accountgroups
-			ON chartmasterCV.group_ = accountgroups.groupname INNER JOIN chartdetails
-			ON chartmasterCV.accountcode= chartdetails.accountcode
+			FROM chartmasterPMA INNER JOIN accountgroups
+			ON chartmasterPMA.group_ = accountgroups.groupname INNER JOIN chartdetails
+			ON chartmasterPMA.accountcode= chartdetails.accountcode
 			WHERE accountgroups.pandl=1
 			GROUP BY accountgroups.sectioninaccounts,
 					accountgroups.parentgroupname,
 					accountgroups.groupname,
 					chartdetails.accountcode,
-					chartmasterCV.accountname
+					chartmasterPMA.accountname
 			ORDER BY accountgroups.sectioninaccounts,
 					accountgroups.sequenceintb,
 					accountgroups.groupname,
