@@ -216,16 +216,15 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 			if (empty($_SESSION['LogoFile'])) {
 				include('includes/KLDefines.php');
 				include('includes/KLRoles.inc');
-				include('includes/KLGeneralFunctions.php');
-				if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_KAPAL_LAUT)){
+				if (CheckItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_KAPAL_LAUT)){
 					if (file_exists($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/LogoKL.png')) {
 						$_SESSION['LogoFile'] = 'companies/' .  $_SESSION['DatabaseName'] . '/LogoKL.png';
 					}
-				} else if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_BLINK)){
+				} else if (CheckItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_BLINK)){
 					if (file_exists($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/LogoBlink.png')) {
 						$_SESSION['LogoFile'] = 'companies/' .  $_SESSION['DatabaseName'] . '/LogoBlink.png';
 					}
-				} else if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_OUTLET)){
+				} else if (CheckItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_OUTLET)){
 					if (file_exists($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/LogoOutlet.png')) {
 						$_SESSION['LogoFile'] = 'companies/' .  $_SESSION['DatabaseName'] . '/LogoOutlet.png';
 					}
@@ -285,4 +284,12 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 	return   UL_OK;		    /* All is well */
 }
 
+function CheckItemInList($Item, $List){
+	// http://www.php.net/manual/en/function.strpos.php for details on ===	
+	if (strpos($List, $Item) === FALSE){
+		return false;
+	}else{
+		return true;
+	}
+}
 ?>
