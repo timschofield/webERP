@@ -1,6 +1,6 @@
 <?php
-
 /* $Id$*/
+/* Shows the bill of material indented for each level */
 
 // BOMIndented.php - Indented Bill of Materials
 
@@ -323,7 +323,7 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 	$FontSize=8;
 	$YPos =$YPos - (2*$line_height);
 
-	$pdf->addTextWrap($Left_Margin+1,$YPos,40,$FontSize,_('Assembly:'),'',0);
+	$pdf->addTextWrap($Left_Margin+1,$YPos,40,$FontSize,_('Assembly').':','',0);
 	$pdf->addTextWrap(85,$YPos,100,$FontSize,mb_strtoupper($_POST['Part']),'',0);
 	$pdf->addTextWrap(185,$YPos,150,$FontSize,$assemblydesc,'',0);
 	$YPos -=(2*$line_height);

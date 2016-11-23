@@ -1,6 +1,6 @@
 <?php
-
 /* $Id$*/
+/*  */
 
 include('includes/session.inc');
 
@@ -246,7 +246,6 @@ if (isset($_POST['PrintPDF'])) {
 	}
 	echo '</select></td>
 		</tr>';
-
 	echo '<tr>
 			<td>' . _('Price List') . ':</td>
 			<td><select name="price">
@@ -255,8 +254,6 @@ if (isset($_POST['PrintPDF'])) {
 				</select>
 			</td>
 		</tr>';
-
-
 	echo '</table>
 			<br/>
 			<div class="centre">
@@ -293,15 +290,15 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 		 Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber,'left');
 	$YPos -= $line_height;
 	$pdf->addTextWrap($Left_Margin,$YPos,50,$FontSize,_('Supplier').'   ');
-	$pdf->addTextWrap(95,$YPos,150,$FontSize,_(': ').$SupplierName);
+	$pdf->addTextWrap(95,$YPos,150,$FontSize,': '.$SupplierName);
 
 	$YPos -= $line_height;
 	$pdf->addTextWrap($Left_Margin,$YPos,50,$FontSize,_('Category').' ');
 
-	$pdf->addTextWrap(95,$YPos,150,$FontSize,_(': ').$Categoryname);
+	$pdf->addTextWrap(95,$YPos,150,$FontSize,': '.$Categoryname);
 	$YPos -= $line_height;
 	$pdf->addTextWrap($Left_Margin,$YPos,50,$FontSize,_('Currency').'  ');
-	$pdf->addTextWrap(95,$YPos,50,$FontSize,_(': ').$CurrCode);
+	$pdf->addTextWrap(95,$YPos,50,$FontSize,': '.$CurrCode);
 	$YPos -=(2*$line_height);
 	/*set up the headings */
 

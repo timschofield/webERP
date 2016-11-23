@@ -34,7 +34,7 @@ while ($myrow = DB_fetch_array($result)){
 		${'Mail' . $myrow['userresponsible']}->setSubject('Maintenance Tasks Reminder');
 		${'Mail' . $myrow['userresponsible']}->setFrom('Do_not_reply <>');
 	}
-	$MailText .=  "Asset: " . $myrow['description'] . "\nTask: " . $myrow['taskdescription'] . "\nDue: " . ConvertSQLDate($myrow['duedate']);
+	$MailText .= 'Asset' . ': ' . $myrow['description'] . "\nTask: " . $myrow['taskdescription'] . "\nDue: " . ConvertSQLDate($myrow['duedate']);
 	if (Date1GreaterThanDate2(ConvertSQLDate($myrow['duedate']),Date($_SESSION['DefaultDateFormat']))) {
 		$MailText .= _('NB: THIS JOB IS OVERDUE');
 	}
@@ -74,7 +74,7 @@ while ($myrow = DB_fetch_array($result)){
 		${'Mail' . $myrow['manager']}->setSubject('Overdue Maintenance Tasks Reminder');
 		${'Mail' . $myrow['manager']}->setFrom('Do_not_reply <>');
 	}
-	$MailText .=  _('Asset:') .' ' . $myrow['description'] . "\n" . _('Task:') . ' ' . $myrow['taskdescription'] . "\n" . _('Due:') . ' ' . ConvertSQLDate($myrow['duedate']);
+	$MailText .= _('Asset') . ': ' . $myrow['description'] . "\n" . _('Task:') . ' ' . $myrow['taskdescription'] . "\n" . _('Due:') . ' ' . ConvertSQLDate($myrow['duedate']);
 	$MailText . "\n\n";
 }
 if (DB_num_rows($result)>0){

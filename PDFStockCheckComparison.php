@@ -1,6 +1,6 @@
 <?php
-
 /* $Id$*/
+/* Creates a pdf comparing the quantites entered as counted at a given range of locations against the quantity stored as on hand as at the time a stock check was initiated. */
 
 include('includes/session.inc');
 
@@ -219,7 +219,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 	$FirstRow = DB_fetch_array($CheckedItems);
 	$LocationName = $FirstRow['locationname'];
 	DB_data_seek($CheckedItems,0);
-	
+
 	include ('includes/PDFStockComparisonPageHeader.inc');
 
 	$Location = '';
@@ -254,7 +254,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 			$YPos -=$line_height;
 		}
 
-		
+
 		$SQL = "SELECT qtycounted,
 						reference
 				FROM stockcounts
@@ -279,7 +279,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 			$YPos -=$line_height;
 			$FontSize=8;
 			if (mb_strlen($CheckItemRow['bin'])>0){
-				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,120,$FontSize,$CheckItemRow['stockid'] . ' - ' . _('Bin:') . $CheckItemRow['bin'], 'left');
+				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,120,$FontSize,$CheckItemRow['stockid'] . ' - ' . _('Bin') . ':' . $CheckItemRow['bin'], 'left');
 			} else {
 				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,120,$FontSize,$CheckItemRow['stockid'], 'left');
 			}
