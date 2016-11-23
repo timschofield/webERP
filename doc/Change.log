@@ -1,5 +1,6 @@
 webERP Change Log
 
+23/11/16 RChacon: On AccountGroups.php, add navigation aids (return button).
 08/11/16 RChacon: On WWW_Users.php, fix hardcoded label (difficult to translate for languages with a different structure to English), do sortable the users list, replace printf() with plain list echo, and add format class.
 08/11/16 RChacon: Add scripts to show a statement of cash flows for the period using the indirect method.
 08/11/16 RChacon: On SelectSupplier.php, fix table html code.
