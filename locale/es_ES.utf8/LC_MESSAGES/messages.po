@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.12.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-20 17:14-0600\n"
-"PO-Revision-Date: 2016-11-22 11:01-0600\n"
+"PO-Revision-Date: 2016-11-23 08:21-0600\n"
 "Last-Translator: Rafael E. Chacón <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -11948,7 +11948,7 @@ msgstr "¿Está seguro que desea suprimir este departamento?"
 
 #: Departments.php:197
 msgid "View all Departments"
-msgstr "Ver todos los Departamentos"
+msgstr "Ver todos los departamentos"
 
 #: Departments.php:220
 msgid "The selected departemnt could not be found."
@@ -12870,11 +12870,11 @@ msgstr "OK"
 
 #: ExchangeRateTrend.php:6
 msgid "View Currency Trends"
-msgstr "Ver Tendencias de la Divisa"
+msgstr "Ver tendencia de la moneda"
 
 #: ExchangeRateTrend.php:29 ExchangeRateTrend.php:30
 msgid "View Currency Trend"
-msgstr "Ver Tendencia de la Divisa"
+msgstr "Ver tendencia de la moneda"
 
 #: ExchangeRateTrend.php:76
 msgid "Trend Currently Unavailable"
@@ -29849,7 +29849,7 @@ msgstr "Añadir/Aprobar/Ver Órdenes de Compra Pendientes"
 
 #: SelectSupplier.php:178
 msgid "View All Purchase Orders"
-msgstr "Ver todas las Órdenes de Compra"
+msgstr "Ver todas las órdenes de compra"
 
 #: SelectSupplier.php:180
 msgid "List all open shipments for"

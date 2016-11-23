@@ -3,9 +3,9 @@
 /* This script shows the trend in exchange rates as retrieved from ECB. */
 
 include('includes/session.inc');
-$Title = _('View Currency Trends');// Screen identification.
-$ViewTopic= 'Currencies';// Filename's id in ManualContents.php's TOC.
-$BookMark = 'ExchangeRateTrend';// Anchor's id in the manual's html document.
+$Title = _('View Currency Trend');
+$ViewTopic= 'Currencies';
+$BookMark = 'ExchangeRateTrend';
 include('includes/header.inc');
 
 $FunctionalCurrency = $_SESSION['CompanyRecord']['currencydefault'];
@@ -23,12 +23,11 @@ if ( isset($_GET['CurrencyToShow']) ){
 	echo '<form method="post" id="update" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<div class="centre">';
-	echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
-		'/images/currency.png" title="' .// Icon image.
-		_('View Currency Trend') . '" /> ' .// Icon title.
-		_('View Currency Trend') . '</p>';// Page title.
-	echo '</div><table>'; // First column
+	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+		'/images/currency.png" title="', // Icon image.
+		_('View Currency Trend'), '" /> ', // Icon title.
+		_('View Currency Trend'), '</p>';// Page title.
+	echo '<table>'; // First column
 
 	$SQL = "SELECT currabrev FROM currencies";
 	$result=DB_query($SQL);
