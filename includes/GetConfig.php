@@ -81,6 +81,13 @@ if(isset($ForceConfigReload) AND $ForceConfigReload==true OR !isset($_SESSION['C
 		$_SESSION['CompanyRecord'] = DB_fetch_array($ReadCoyResult);
 	}
 
+	if(strpos($_SERVER['HTTP_HOST'],"bumibiru")){
+		$_SESSION['CompanyRecord']['coyname'] = "PT. Bumi Biru";
+	}
+	if(strpos($_SERVER['HTTP_HOST'],"adu")){
+		$_SESSION['CompanyRecord']['coyname'] = "PT. ADU";
+	}
+
 	/*Now read in smtp email settings - not needed in a properly set up server environment - but helps for those who can't control their server .. I think! */
 
 	$sql="SELECT id,

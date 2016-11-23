@@ -233,7 +233,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 						if (file_exists($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/LogoPTBB.png')) {
 							$_SESSION['LogoFile'] = 'companies/' .  $_SESSION['DatabaseName'] . '/LogoPTBB.png';
 						}
-					}elseif(strpos($_SERVER['HTTP_HOST'],"ptadu")){
+					}elseif(strpos($_SERVER['HTTP_HOST'],"adu")){
 						if (file_exists($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/LogoPTADU.png')) {
 							$_SESSION['LogoFile'] = 'companies/' .  $_SESSION['DatabaseName'] . '/LogoPTADU.png';
 						}
