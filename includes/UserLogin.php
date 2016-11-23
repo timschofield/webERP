@@ -229,8 +229,18 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 						$_SESSION['LogoFile'] = 'companies/' .  $_SESSION['DatabaseName'] . '/LogoOutlet.png';
 					}
 				} else {
-					if (file_exists($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/LogoPTBB.png')) {
-						$_SESSION['LogoFile'] = 'companies/' .  $_SESSION['DatabaseName'] . '/LogoPTBB.png';
+					if(strpos($_SERVER['HTTP_HOST'],"bumibiru")){
+						if (file_exists($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/LogoPTBB.png')) {
+							$_SESSION['LogoFile'] = 'companies/' .  $_SESSION['DatabaseName'] . '/LogoPTBB.png';
+						}
+					}elseif(strpos($_SERVER['HTTP_HOST'],"ptadu")){
+						if (file_exists($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/LogoPTADU.png')) {
+							$_SESSION['LogoFile'] = 'companies/' .  $_SESSION['DatabaseName'] . '/LogoPTADU.png';
+						}
+					}else{
+						if (file_exists($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/LogowebERP.png')) {
+							$_SESSION['LogoFile'] = 'companies/' .  $_SESSION['DatabaseName'] . '/LogowebERP.png';
+						}
 					}
 				}
 			}
