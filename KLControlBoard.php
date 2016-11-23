@@ -51,7 +51,7 @@ if (!isset($_GET['Section'])){
 
 if ($KL_SystemAdmin){
 	// WARNINGS STILL NOT DOCUMENTED ON WIKI
-	HourlySales(3,$RootPath, $db);
+	HourlySales(7,$RootPath, $db);
 prnMsg("START OF PENDING FOR KL INTRANET ",'success');
 		NotDiscountedItemsWithDiscount($RootPath, $db);
 		GoodsReceivedNotInvoicedControl(1000000, $periodnow, $db);

@@ -1835,8 +1835,7 @@ function OnlineOrdersFollowUp($Source, $numDays, $RootPath, $db){
 							<th class="ascending">' . _('Payment Confirmation') . '</th>
 							<th class="ascending">' . _('Tracking Number') . '</th>
 							<th class="ascending">' . _('Tracking Confirmation') . '</th>
-							<th class="ascending">' . _('Thank You') . '</th>
-							<th class="ascending">' . _('NO Thank You') . '</th>
+							<th colspan="3" class="ascending">' . _('Thank You') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -1848,9 +1847,10 @@ function OnlineOrdersFollowUp($Source, $numDays, $RootPath, $db){
 			$EmailType3 = "ThankYouOrder";
 			$EmailType4 = "NoSendThankYou";
 			if ($myrow['klemailthankyouorder']== '0000-00-00'){
-				$EmailLinkText = 'Not Sent yet';
-				$EmailLink3 = '<a href="' . $RootPath . '/KLFollowUpOnlineEmails.php?TransNo=' . $myrow['orderno'] . '&EmailType=' . $EmailType3. '&CustomerOrder=' . $myrow['customerref'] . '">'. $EmailLinkText .'</a>';
-				$EmailLink4 = '<a href="' . $RootPath . '/KLFollowUpOnlineEmails.php?TransNo=' . $myrow['orderno'] . '&EmailType=' . $EmailType4. '&CustomerOrder=' . $myrow['customerref'] . '">'. $EmailLinkText .'</a>';
+				$EmailLinkText3 = 'Send now';
+				$EmailLinkText4 = 'Do NOT send';
+				$EmailLink3 = '<a href="' . $RootPath . '/KLFollowUpOnlineEmails.php?TransNo=' . $myrow['orderno'] . '&EmailType=' . $EmailType3. '&CustomerOrder=' . $myrow['customerref'] . '">'. $EmailLinkText3 .'</a>';
+				$EmailLink4 = '<a href="' . $RootPath . '/KLFollowUpOnlineEmails.php?TransNo=' . $myrow['orderno'] . '&EmailType=' . $EmailType4. '&CustomerOrder=' . $myrow['customerref'] . '">'. $EmailLinkText4 .'</a>';
 			}else{
 				$EmailLink3 = ConvertSQLDate($myrow['klemailthankyouorder']);
 				$EmailLink4 = ConvertSQLDate($myrow['klemailthankyouorder']);
@@ -9427,7 +9427,7 @@ function HourlySales($numDays, $RootPath, $db){
 				$Acum22 = $Acum21 + $myrow['sales22'];
 				$Acum23 = $Acum22 + $myrow['sales23'];
 				
-				$k = StartEvenOrOddRow($k);
+				$k = StartSameColourRow($k);
 				printf('<td>%s</td>
 						<td>%s</td>
 						<td class="number">%s</td>
@@ -9464,7 +9464,7 @@ function HourlySales($numDays, $RootPath, $db){
 						locale_number_format_zero_blank($Acum22/$numDays,1),
 						locale_number_format_zero_blank($Acum23/$numDays,1)
 						);
-				$k = StartEvenOrOddRow($k);
+				$k = StartSameColourRow($k);
 				printf('<td>%s</td>
 						<td>%s</td>
 						<td class="number">%s</td>
@@ -9517,7 +9517,7 @@ function HourlySales($numDays, $RootPath, $db){
 				$Acum22 = $Acum21 + $myrow['today22'];
 				$Acum23 = $Acum22 + $myrow['today23'];
 
-				$k = StartEvenOrOddRow($k);
+				$k = StartSameColourRow($k);
 				printf('<td>%s</td>
 						<td>%s</td>
 						<td class="number">%s</td>

@@ -321,6 +321,14 @@ function StartEvenOrOddRow($k){
 	return $k;
 }
 
+function StartSameColourRow($k){
+	if ($k == 1) {
+		echo '<tr class="OddTableRows">';
+	} else {
+		echo '<tr class="EvenTableRows">';
+	}
+	return $k;
+}
 function getDirectoryTree( $outerDir , $x){ 
     $dirs = array_diff( scandir( $outerDir ), Array( ".", ".." ) ); 
     return $dirs; 
