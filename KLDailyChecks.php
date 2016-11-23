@@ -115,7 +115,7 @@ function KL_DailyOptimizationDatabase($ShowMessages, $db, $EmailText = ''){
 					`buckets` ,
 					`chartdetails` ,
 					`chartmaster` ,
-					`chartmasterCV` ,
+					`chartmasterPMA` ,
 					`chartmasterM` ,
 					`chartmasterPT` ,
 					`cogsglpostings` ,

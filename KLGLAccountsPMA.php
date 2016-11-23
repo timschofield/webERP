@@ -2,7 +2,7 @@
 /* $Id: GLAccounts.php 4837 2012-01-24 23:41:46Z vvs2012 $*/
 
 include('includes/session.inc');
-$Title = _('Chart of Accounts Maintenance for KL Manager Team');
+$Title = _('Chart of Accounts Maintenance for PT. Angin Dingin Utara');
 
 $ViewTopic= 'GeneralLedger';
 $BookMark = 'GLAccounts';
@@ -35,7 +35,7 @@ if (isset($_POST['submit'])) {
 
 	if (isset($SelectedAccount) AND $InputError !=1) {
 
-		$sql = "UPDATE chartmasterM SET accountname='" . $_POST['AccountName'] . "',
+		$sql = "UPDATE chartmasterPMA SET accountname='" . $_POST['AccountName'] . "',
 						group_='" . $_POST['Group'] . "'
 				WHERE accountcode ='" . $SelectedAccount . "'";
 
@@ -47,7 +47,7 @@ if (isset($_POST['submit'])) {
 	/*SelectedAccount is null cos no item selected on first time round so must be adding a	record must be submitting new entries */
 
 		$ErrMsg = _('Could not add the new account code');
-		$sql = "INSERT INTO chartmasterM (accountcode,
+		$sql = "INSERT INTO chartmasterPMA (accountcode,
 						accountname,
 						group_)
 					VALUES ('" . $_POST['AccountCode'] . "',
@@ -65,7 +65,7 @@ if (isset($_POST['submit'])) {
 
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
-	$sql="DELETE FROM chartmasterM WHERE accountcode= '" . $SelectedAccount ."'";
+	$sql="DELETE FROM chartmasterPMA WHERE accountcode= '" . $SelectedAccount ."'";
 	$result = DB_query($sql);
 	prnMsg( _('Account') . ' ' . $SelectedAccount . ' ' . _('has been deleted'),'succes');
 }
@@ -78,7 +78,7 @@ if (!isset($_GET['delete'])) {
 	if (isset($SelectedAccount)) {
 		//editing an existing account
 
-		$sql = "SELECT accountcode, accountname, group_ FROM chartmasterM WHERE accountcode='" . $SelectedAccount ."'";
+		$sql = "SELECT accountcode, accountname, group_ FROM chartmasterPMA WHERE accountcode='" . $SelectedAccount ."'";
 
 		$result = DB_query($sql);
 		$myrow = DB_fetch_array($result);
@@ -133,7 +133,7 @@ if (!isset($_GET['delete'])) {
 
 if (!isset($SelectedAccount)) {
 /* It could still be the second time the page has been run and a record has been selected for modification - SelectedAccount will exist because it was sent with the new call. If its the first time the page has been displayed with no parameters
-then none of the above are true and the list of chartmasterM will be displayed with
+then none of the above are true and the list of chartmasterPMA will be displayed with
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
@@ -141,10 +141,10 @@ or deletion of the records*/
 			accountname,
 			group_,
 			CASE WHEN pandl=0 THEN '" . _('Balance Sheet') . "' ELSE '" . _('Profit/Loss') . "' END AS acttype
-		FROM chartmasterM,
+		FROM chartmasterPMA,
 			accountgroups
-		WHERE chartmasterM.group_=accountgroups.groupname
-		ORDER BY chartmasterM.accountcode";
+		WHERE chartmasterPMA.group_=accountgroups.groupname
+		ORDER BY chartmasterPMA.accountcode";
 
 	$ErrMsg = _('The chart accounts could not be retrieved because');
 

@@ -32,7 +32,7 @@ $DefaultPeriodDate = Date ('Y-m-d', Mktime(0,0,0,Date('m'),0,Date('Y')));
 
 /*Show a form to allow input of criteria for TB to show */
 echo '<table class="selection"><tr><td>'._('Account').':</td><td><select name="Account">';
-$sql = "SELECT accountcode, accountname FROM chartmasterM ORDER BY accountcode";
+$sql = "SELECT accountcode, accountname FROM chartmasterPMA ORDER BY accountcode";
 $Account = DB_query($sql);
 while ($myrow=DB_fetch_array($Account,$db)){
 	if($myrow['accountcode'] == $SelectedAccount){
@@ -264,7 +264,7 @@ if (isset($_POST['Show'])){
 		}
 
 		$FormatedTranDate = ConvertSQLDate($myrow['trandate']);
-		$URL_to_TransDetail = $RootPath . '/KLGLTransInquiry.php?' . SID . '&amp;TypeID=' . $myrow['type'] . '&amp;TransNo=' . $myrow['typeno'];
+		$URL_to_TransDetail = $RootPath . '/GLTransInquiry.php?' . SID . '&amp;TypeID=' . $myrow['type'] . '&amp;TransNo=' . $myrow['typeno'];
 
 		$tagsql="SELECT tagdescription FROM tags WHERE tagref='".$myrow['tag'] . "'";
 		$tagresult=DB_query($tagsql);
@@ -273,7 +273,7 @@ if (isset($_POST['Show'])){
 			$tagrow['tagdescription']=_('None');
 		}
 		printf('<td>%s</td>
-				<td class="number"><a href="%s">%s</a></td>
+			<td class="number">%s</td>
 			<td>%s</td>
 			<td class="number">%s</td>
 			<td class="number">%s</td>
@@ -282,7 +282,6 @@ if (isset($_POST['Show'])){
 			<td>%s</td>
 			</tr>',
 			$myrow['typename'],
-			$URL_to_TransDetail,
 			$myrow['typeno'],
 			$FormatedTranDate,
 			$DebitAmount,
