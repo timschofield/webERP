@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-20 17:14-0600\n"
-"PO-Revision-Date: 2016-11-23 13:05-0600\n"
+"PO-Revision-Date: 2016-11-24 08:08-0600\n"
 "Last-Translator: Rafael E. Chacón <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -1896,7 +1896,7 @@ msgstr "Formato de fecha incorrecto, por favor, inténtelo de nuevo"
 #: AuditTrail.php:43 BOMIndented.php:319 BOMIndentedReverse.php:297
 #: MRPCalendar.php:264
 msgid "From Date"
-msgstr "Desde la fecha"
+msgstr "Fecha inicial"
 
 #: AuditTrail.php:47 BOMIndented.php:320 BOMIndentedReverse.php:298
 #: MRPCalendar.php:266
@@ -3512,7 +3512,7 @@ msgstr "Mostrar"
 #: InternalStockRequestFulfill.php:39 StockLocTransferReceive.php:537
 #: SuppShiptChgs.php:137 SupplierAllocations.php:434
 msgid "from"
-msgstr "Desde"
+msgstr "desde"
 
 #: BankMatching.php:137 ConfirmDispatchControlled_Invoice.php:68
 #: CounterReturns.php:197 EmailCustTrans.php:65 FTP_RadioBeacon.php:280
@@ -10654,7 +10654,7 @@ msgstr "Elija el tipo de transacción de la que informar"
 #: includes/PDFStockLocTransferHeader.inc:43
 #: reportwriter/languages/en_US/reports.php:73
 msgid "From"
-msgstr "De"
+msgstr "Desde"
 
 #: CustomerTransInquiry.php:58 DailyBankTransactions.php:70
 #: SupplierTransInquiry.php:65
@@ -19970,7 +19970,7 @@ msgstr "Todas las zonas"
 
 #: PDFCustomerList.php:389
 msgid "For Sales folk"
-msgstr "Para el equipo de Ventas"
+msgstr "Para el vendedor"
 
 #: PDFCustomerList.php:391
 msgid "All sales folk"
@@ -27691,7 +27691,7 @@ msgstr "Para Clase de Existencia:"
 
 #: SalesGraph.php:145
 msgid "For Sales Person:"
-msgstr "Para el Vendedor:"
+msgstr "Para el vendedor:"
 
 #: SalesGraph.php:165
 msgid "Graph Type"
@@ -27784,7 +27784,7 @@ msgstr "Para todos los vendedores"
 
 #: SalesGraph.php:246
 msgid "For Salesperson:"
-msgstr "Para el Vendedor:"
+msgstr "Para el vendedor:"
 
 #: SalesGraph.php:251
 msgid "For Customers from"
@@ -27874,7 +27874,7 @@ msgstr "Sólo se Aplica al Tipo de Fecha de la Factura"
 
 #: SalesInquiry.php:1179
 msgid "For Sales Person"
-msgstr "Para el Vendedor"
+msgstr "Para el vendedor"
 
 #: SalesInquiry.php:1188
 msgid "All Salesmen"

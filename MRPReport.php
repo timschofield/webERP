@@ -1,5 +1,4 @@
 <?php
-
 /* $Id$*/
 
 // MRPReport.php - Shows supply and demand for a part as determined by MRP
@@ -178,7 +177,7 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 	$myrow=DB_fetch_array($result);
 	$pdf->addTextWrap($Left_Margin,$YPos,35,$FontSize,_('Part:'),'');
 	$pdf->addTextWrap(70,$YPos,100,$FontSize,$myrow['part'],'');
-	$pdf->addTextWrap(245,$YPos,40,$FontSize,_('EOQ:'),'right');
+	$pdf->addTextWrap(245,$YPos,40,$FontSize,_('EOQ').':','right');
 	$pdf->addTextWrap(285,$YPos,45,$FontSize,locale_number_format($myrow['eoq'],$myrow['decimalplaces']),'right');
 	$pdf->addTextWrap(360,$YPos,50,$FontSize,_('On Hand:'),'right');
 	$pdf->addTextWrap(410,$YPos,50,$FontSize,locale_number_format($qoh,$myrow['decimalplaces']),'right');

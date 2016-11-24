@@ -1,5 +1,4 @@
 <?php
-
 /* $Id$*/
 
 // MRPPlannedWorkOrders.php - Report of manufactured parts that MRP has determined should have
@@ -13,7 +12,7 @@ if (DB_num_rows($result)==0) {
 	$Title=_('MRP error');
 	include('includes/header.inc');
 	echo '<br />';
-	prnMsg( _('The MRP calculation must be run before you can run this report') . '<br />' . 
+	prnMsg( _('The MRP calculation must be run before you can run this report') . '<br />' .
 			_('To run the MRP calculation click').' ' . '<a href="' . $RootPath . '/MRP.php">' . _('here') . '</a>', 'error');
 	include('includes/footer.inc');
 	exit;
@@ -381,7 +380,7 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 	} else {
 		$displayconsolidation = _('Monthly');
 	};
-	$pdf->addTextWrap($Left_Margin,$YPos,65,$FontSize,_('Consolidation:'));
+	$pdf->addTextWrap($Left_Margin,$YPos,65,$FontSize,_('Consolidation').':');
 	$pdf->addTextWrap(110,$YPos,40,$FontSize,$displayconsolidation);
 
 	$YPos -=(2*$line_height);

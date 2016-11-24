@@ -386,7 +386,7 @@ if(isset($_POST['PrintPDF'])) {
 	}
 	echo '</select></td></tr>';
 
-	echo '<tr><td>' . _('For Sales folk'). ':</td>
+	echo '<tr><td>' . _('For Salesperson:') . '</td>
 			<td><select name="SalesPeople[]" multiple="multiple">
 				<option selected="selected" value="All">' .  _('All Salespeople') . '</option>';
 

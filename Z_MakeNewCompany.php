@@ -176,7 +176,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
             $_POST['NewCompany'] =  html_entity_decode($_POST['NewCompany'],ENT_QUOTES,'UTF-8');
             $config_php = preg_replace('/\/\/End Installed companies-do not change this line/', "\$CompanyList[] = array('database'=>'".$_POST['NewDatabase']."' ,'company'=>'".$_POST['NewCompany']."');\n//End Installed companies-do not change this line", $config_php);
             if (!$fp = fopen($ConfigFile, 'wb')) {
-                prnMsg(_("Cannot open the configuration file: ").$ConfigFile.". Please add the following line to the end of the file:\n\$CompanyList[] = array('database'=>'".$_POST['NewDatabase']."' ,'company'=>'".htmlspecialchars($_POST['NewCompany'],ENT_QUOTES,'UTF-8').");",'error');
+                prnMsg(_('Cannot open the configuration file' . ': ').$ConfigFile.". Please add the following line to the end of the file:\n\$CompanyList[] = array('database'=>'".$_POST['NewDatabase']."' ,'company'=>'".htmlspecialchars($_POST['NewCompany'],ENT_QUOTES,'UTF-8').");",'error');
             } else {
                 fwrite ($fp, $config_php);
                 fclose ($fp);

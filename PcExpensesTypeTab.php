@@ -1,5 +1,4 @@
 <?php
-
 /* $Id$ */
 
 include('includes/session.inc');
@@ -76,7 +75,7 @@ if (isset($_POST['submit'])) {
 										VALUES ('" . $_POST['SelectedTab'] . "',
 												'" . $_POST['SelectedExpense'] . "')";
 
-			$msg = _('Expense code:') . ' ' . $_POST['SelectedExpense'].' '._('for Type of Tab:') .' '. $_POST['SelectedTab'] .  ' ' . _('has been created');
+			$msg = _('Expense code') . ': ' . $_POST['SelectedExpense'].' '._('for Type of Tab:') .' '. $_POST['SelectedTab'] .  ' ' . _('has been created');
 			$checkSql = "SELECT count(typetabcode)
 							FROM pctypetabs";
 			$result = DB_query($checkSql);

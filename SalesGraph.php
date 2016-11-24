@@ -1,5 +1,4 @@
 <?php
-
 /* $Id$*/
 
 include('includes/session.inc');
@@ -119,7 +118,7 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 		$_POST['CategoryID']='';
 	}
 	echo '<tr>
-			<td>' . _('For Stock Category:')  . '</td>
+			<td>' . _('For Stock Category')  . ':</td>
 			<td><select name="CategoryID">';
 	if($_POST['CategoryID']=='All'){
 		echo '<option selected="selected" value="All">' . _('All') . '</option>';
@@ -142,7 +141,7 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	}
 
 	echo '<tr>
-			<td>' . _('For Sales Person:')  . '</td>
+			<td>' . _('For Salesperson:') . '</td>
 			<td><select name="SalesmanCode">';
 
 	if($_POST['SalesmanCode']=='All'){

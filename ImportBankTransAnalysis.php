@@ -110,10 +110,10 @@ if (isset($_GET['Edit'])){
 /*Show all the selected GLEntries so far from the $_SESSION['Trans'][$TransID]->GLEntries array */
 if ($_SESSION['Trans'][$TransID]->Amount >= 0){ //its a receipt
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Bank Account Transaction Analysis') . '" alt="" />' . ' '
-	. _('Imported Bank Receipt of') . ' ' . $_SESSION['Trans'][$TransID]->Amount . ' ' .  $_SESSION['Statement']->CurrCode . ' ' . _('dated:') . ' ' . $_SESSION['Trans'][$TransID]->ValueDate . '<br /> ' . $_SESSION['Trans'][$TransID]->Description;
+	. _('Imported Bank Receipt of') . ' ' . $_SESSION['Trans'][$TransID]->Amount . ' ' .  $_SESSION['Statement']->CurrCode . ' ' . _('dated') . ': ' . $_SESSION['Trans'][$TransID]->ValueDate . '<br /> ' . $_SESSION['Trans'][$TransID]->Description;
 } else {
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Bank Account Transaction Analysis') . '" alt="" />' . ' '
-	. _('Imported Bank Payment of') . ' ' . $_SESSION['Trans'][$TransID]->Amount . ' ' . $_SESSION['Statement']->CurrCode . ' ' ._('dated:') . ' ' . $_SESSION['Trans'][$TransID]->ValueDate . '<br /> ' . $_SESSION['Trans'][$TransID]->Description;
+	. _('Imported Bank Payment of') . ' ' . $_SESSION['Trans'][$TransID]->Amount . ' ' . $_SESSION['Statement']->CurrCode . ' ' ._('dated') . ': ' . $_SESSION['Trans'][$TransID]->ValueDate . '<br /> ' . $_SESSION['Trans'][$TransID]->Description;
 }
 
 /*Set up a form to allow input of new GL entries */
