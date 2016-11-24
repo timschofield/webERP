@@ -1,11 +1,11 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# webERP - Korean Translation File.
+# Copyright (C) 2004 weberp.org
+# This file is distributed under the same license as the webERP package.
 # FIRST AUTHOR Dongbak Cha <human@humansoft.kr>, 2015.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-20 17:14-0600\n"
 "PO-Revision-Date: 2015-09-18 10:34+0900\n"

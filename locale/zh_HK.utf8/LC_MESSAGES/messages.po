@@ -5,7 +5,7 @@
 # THIS VERSION FROM http://weberp-china.oicp.net
 msgid ""
 msgstr ""
-"Project-Id-Version: webERP 4.12.2\n"
+"Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-20 17:14-0600\n"
 "PO-Revision-Date: 2013-11-25 08:24-0600\n"

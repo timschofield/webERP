@@ -5,7 +5,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: web-erp\n"
+"Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-20 17:14-0600\n"
 "PO-Revision-Date: 2015-11-12 20:40+0200\n"
