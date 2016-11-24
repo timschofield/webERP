@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-24 06:21-0600\n"
+"POT-Creation-Date: 2016-11-24 08:54-0600\n"
 "PO-Revision-Date: 2013-06-01 16:38-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: WebERP Translation Team <web-erp-translation@lists."
@@ -250,7 +250,7 @@ msgstr "HESAP GRUPLARI GÖSTERILEMIYOR:"
 #: GLBudgets.php:32 GLJournal.php:250 GLJournalInquiry.php:11
 #: HistoricalTestResults.php:42 InternalStockRequest.php:316
 #: InternalStockRequestInquiry.php:168 InventoryPlanning.php:459
-#: InventoryPlanningPrefSupplier.php:386 MRPReport.php:544
+#: InventoryPlanningPrefSupplier.php:386 MRPReport.php:543
 #: MaintenanceTasks.php:14 MaintenanceUserSchedule.php:16 NoSalesItems.php:91
 #: PDFPickingList.php:29 PDFStockLocTransfer.php:16 POReport.php:60
 #: POReport.php:64 POReport.php:68 PO_AuthorisationLevels.php:10
@@ -262,7 +262,7 @@ msgstr "HESAP GRUPLARI GÖSTERILEMIYOR:"
 #: PurchData.php:241 PurchData.php:373 PurchData.php:401
 #: PurchaseByPrefSupplier.php:305 QATests.php:22 RecurringSalesOrders.php:320
 #: RelatedItemsUpdate.php:24 SalesAnalReptCols.php:51 SalesAnalRepts.php:14
-#: SalesCategories.php:11 SalesGLPostings.php:19 SalesGraph.php:40
+#: SalesCategories.php:11 SalesGLPostings.php:19 SalesGraph.php:39
 #: SalesPeople.php:28 SalesTypes.php:20 SelectAsset.php:48
 #: SelectCompletedOrder.php:11 SelectContract.php:69 SelectCreditItems.php:221
 #: SelectCreditItems.php:292 SelectCustomer.php:258 SelectGLAccount.php:86
@@ -480,7 +480,7 @@ msgstr ""
 #: AccountGroups.php:322 AccountSections.php:201 AddCustomerContacts.php:159
 #: AddCustomerNotes.php:138 AddCustomerTypeNotes.php:132 Areas.php:165
 #: BOMs.php:200 BankAccounts.php:244 COGSGLPostings.php:113
-#: COGSGLPostings.php:220 ContractBOM.php:272 ContractOtherReqts.php:124
+#: COGSGLPostings.php:220 ContractBOM.php:271 ContractOtherReqts.php:123
 #: CounterReturns.php:740 CounterSales.php:836 CreditStatus.php:176
 #: Credit_Invoice.php:420 Currencies.php:377 CustItem.php:167
 #: CustomerReceipt.php:1001 CustomerTypes.php:206 Customers.php:1166
@@ -494,7 +494,7 @@ msgstr ""
 #: Manufacturers.php:261 PO_AuthorisationLevels.php:153 PO_Items.php:768
 #: PaymentMethods.php:211 PaymentTerms.php:206 Payments.php:1155
 #: PcAssignCashToTab.php:295 PcClaimExpensesFromTab.php:281 PcExpenses.php:227
-#: PcExpensesTypeTab.php:187 PcTabs.php:257 PcTypeTabs.php:181
+#: PcExpensesTypeTab.php:186 PcTabs.php:257 PcTypeTabs.php:181
 #: PriceMatrix.php:292 Prices.php:254 Prices_Customer.php:287
 #: ProductSpecs.php:466 PurchData.php:314 PurchData.php:721 QATests.php:468
 #: RelatedItemsUpdate.php:155 RelatedItemsUpdate.php:170
@@ -1023,8 +1023,8 @@ msgstr ""
 #: AgedControlledInventory.php:12 GLCashFlowsSetup.php:110
 #: InventoryQuantities.php:155 InventoryValuation.php:217 Locations.php:12
 #: MRP.php:542 MRPCalendar.php:21 MRPCreateDemands.php:193
-#: MRPDemandTypes.php:17 MRPDemands.php:27 MRPPlannedPurchaseOrders.php:265
-#: MRPPlannedWorkOrders.php:247 MRPPlannedWorkOrders.php:321 PricesByCost.php:8
+#: MRPDemandTypes.php:17 MRPDemands.php:27 MRPPlannedPurchaseOrders.php:264
+#: MRPPlannedWorkOrders.php:246 MRPPlannedWorkOrders.php:320 PricesByCost.php:8
 #: ReorderLevel.php:194 ReorderLevelLocation.php:12 SelectProduct.php:90
 #: StockDispatch.php:321 StockMovements.php:22 StockQties_csv.php:8
 #: StockQuantityByDate.php:10 StockReorderLevel.php:20
@@ -1047,8 +1047,8 @@ msgstr "Hisse senedi"
 #: AgedControlledInventory.php:43 AutomaticTranslationDescriptions.php:37
 #: BOMIndented.php:315 BOMIndentedReverse.php:293 BOMInquiry.php:109
 #: BOMInquiry.php:198 BOMs.php:656 BOMs.php:1015 CollectiveWorkOrderCost.php:45
-#: CollectiveWorkOrderCost.php:317 ContractBOM.php:242 ContractBOM.php:354
-#: ContractOtherReqts.php:98 CounterReturns.php:1692 CounterSales.php:2102
+#: CollectiveWorkOrderCost.php:317 ContractBOM.php:241 ContractBOM.php:353
+#: ContractOtherReqts.php:97 CounterReturns.php:1692 CounterSales.php:2102
 #: CounterSales.php:2256 CreditStatus.php:152 CreditStatus.php:243
 #: CustomerPurchases.php:81 EmailConfirmation.php:219 EmailConfirmation.php:349
 #: FixedAssetCategories.php:167 FixedAssetDepreciation.php:91
@@ -1061,14 +1061,14 @@ msgstr "Hisse senedi"
 #: InternalStockRequestInquiry.php:405 InventoryPlanning.php:419
 #: InventoryQuantities.php:246 InventoryValuation.php:197 Labels.php:290
 #: MRPDemandTypes.php:113 MRPDemands.php:92 MRPDemands.php:295
-#: MRPPlannedWorkOrders.php:258 MRPReport.php:564 MRPReport.php:778
+#: MRPPlannedWorkOrders.php:257 MRPReport.php:563 MRPReport.php:777
 #: MRPReschedules.php:192 MRPShortages.php:350 MaintenanceTasks.php:95
 #: MaintenanceUserSchedule.php:50 MaterialsNotUsed.php:35 NoSalesItems.php:194
 #: PDFCOA.php:64 PDFOrderStatus.php:337 PDFOrdersInvoiced.php:335
 #: PDFSalesBySalesperson.php:86 PDFWeeklyOrders.php:82 PO_Items.php:716
 #: PO_Items.php:1194 PO_SelectOSPurchOrder.php:310 PO_SelectPurchOrder.php:214
 #: PaymentTerms.php:182 PcExpenses.php:190 PcExpenses.php:296
-#: PcExpensesTypeTab.php:171 PcReportTab.php:181 PcTypeTabs.php:164
+#: PcExpensesTypeTab.php:170 PcReportTab.php:181 PcTypeTabs.php:164
 #: PricesByCost.php:153 RelatedItemsUpdate.php:154 ReorderLevel.php:298
 #: ReorderLevelLocation.php:73 ReverseGRN.php:400 SalesCategories.php:549
 #: SecurityTokens.php:107 SecurityTokens.php:167 SelectAsset.php:264
@@ -1173,8 +1173,8 @@ msgstr "YASLANDIRILMIS MÜSTERI HESAPLARI ANALIZI"
 #: InventoryPlanning.php:262 InventoryPlanningPrefSupplier.php:183
 #: InventoryPlanningPrefSupplier.php:241 InventoryPlanningPrefSupplier.php:268
 #: InventoryPlanningPrefSupplier.php:301 InventoryQuantities.php:84
-#: InventoryValuation.php:64 MRPPlannedPurchaseOrders.php:114
-#: MRPPlannedWorkOrders.php:106 MRPReport.php:147 MRPReport.php:536
+#: InventoryValuation.php:64 MRPPlannedPurchaseOrders.php:113
+#: MRPPlannedWorkOrders.php:105 MRPReport.php:146 MRPReport.php:535
 #: MRPReschedules.php:45 MRPReschedules.php:57 MRPShortages.php:155
 #: MRPShortages.php:167 MailInventoryValuation.php:22
 #: MailInventoryValuation.php:120 MailSalesReport.php:23
@@ -1215,10 +1215,10 @@ msgstr "MÜSTERI DETAYLARI ALINAMADI:"
 #: InventoryPlanningPrefSupplier.php:304 InventoryPlanningPrefSupplier.php:372
 #: InventoryQuantities.php:87 InventoryQuantities.php:98
 #: InventoryValuation.php:67 InventoryValuation.php:92
-#: MRPPlannedPurchaseOrders.php:117 MRPPlannedPurchaseOrders.php:128
-#: MRPPlannedWorkOrders.php:109 MRPPlannedWorkOrders.php:120
-#: MRPPlannedWorkOrders.php:311 MRPReport.php:39 MRPReport.php:50
-#: MRPReport.php:150 MRPReschedules.php:48 MRPReschedules.php:60
+#: MRPPlannedPurchaseOrders.php:116 MRPPlannedPurchaseOrders.php:127
+#: MRPPlannedWorkOrders.php:108 MRPPlannedWorkOrders.php:119
+#: MRPPlannedWorkOrders.php:310 MRPReport.php:38 MRPReport.php:49
+#: MRPReport.php:149 MRPReschedules.php:48 MRPReschedules.php:60
 #: MRPShortages.php:158 MRPShortages.php:170 MailInventoryValuation.php:123
 #: MailInventoryValuation.php:219 MailInventoryValuation.php:243
 #: MailInventoryValuation.php:251 OutstandingGRNs.php:49 OutstandingGRNs.php:62
@@ -1381,8 +1381,8 @@ msgstr "DETAYLI RAPOR"
 #: BOMIndented.php:278 BOMIndentedReverse.php:255 BOMListing.php:131
 #: DebtorsAtPeriodEnd.php:168 InventoryPlanning.php:521
 #: InventoryPlanningPrefSupplier.php:437 InventoryQuantities.php:210
-#: InventoryValuation.php:273 MRPPlannedPurchaseOrders.php:294
-#: MRPPlannedWorkOrders.php:348 MRPReschedules.php:153 MRPShortages.php:303
+#: InventoryValuation.php:273 MRPPlannedPurchaseOrders.php:293
+#: MRPPlannedWorkOrders.php:347 MRPReschedules.php:153 MRPShortages.php:303
 #: OutstandingGRNs.php:280 PDFCustomerList.php:421 PDFLowGP.php:146
 #: PDFPriceList.php:351 PDFRemittanceAdvice.php:175
 #: PDFStockCheckComparison.php:373 PrintCustTrans.php:564
@@ -1586,7 +1586,7 @@ msgid "Please select an alternative period range"
 msgstr "LÜTFEN ALTERNATIF PERIYOD SEÇIN"
 
 #: AnalysisHorizontalIncome.php:149 FreightCosts.php:76 GLProfit_Loss.php:624
-#: MRPReport.php:446 SalesGraph.php:229 SalesGraph.php:237
+#: MRPReport.php:445 SalesGraph.php:228 SalesGraph.php:236
 msgid "For"
 msgstr "Için"
 
@@ -1687,7 +1687,7 @@ msgstr "TOPLAM"
 #: GLTagProfit_Loss.php:448 GLTagProfit_Loss.php:685 GLTagProfit_Loss.php:884
 #: PDFPriceList.php:431 SalesAnalReptCols.php:31 SalesAnalReptCols.php:33
 #: SalesByTypePeriodInquiry.php:362 SalesCategoryPeriodInquiry.php:169
-#: SalesGraph.php:196 SalesGraph.php:215 SalesGraph.php:278
+#: SalesGraph.php:195 SalesGraph.php:214 SalesGraph.php:277
 #: SelectProduct.php:181
 #, php-format
 msgid "Gross Profit"
@@ -1715,7 +1715,7 @@ msgstr ""
 #: GLCashFlowsIndirect.php:738 GLCashFlowsIndirect.php:739
 #: GLProfit_Loss.php:1314 GLProfit_Loss.php:1315 GLTagProfit_Loss.php:939
 #: GLTrialBalance.php:24 GLTrialBalance.php:737 GLTrialBalance.php:738
-#: SalesGraph.php:20 SalesGraph.php:29 SalesGraph.php:34
+#: SalesGraph.php:19 SalesGraph.php:28 SalesGraph.php:33
 msgid "Select A Different Period"
 msgstr "FARKLI BIR PERIYOD SEÇIN"
 
@@ -1828,7 +1828,7 @@ msgstr "BÖLGE KODU"
 #: FixedAssetCategories.php:142 GLAccounts.php:213
 #: InternalStockCategoriesByRole.php:102 Locations.php:380 MRPDemands.php:250
 #: Manufacturers.php:197 PcAssignCashToTab.php:149
-#: PcClaimExpensesFromTab.php:134 PcExpenses.php:169 PcExpensesTypeTab.php:101
+#: PcClaimExpensesFromTab.php:134 PcExpenses.php:169 PcExpensesTypeTab.php:100
 #: PcTabs.php:188 PcTypeTabs.php:143 SalesAnalReptCols.php:215
 #: SalesCategories.php:158 SalesTypes.php:156 StockCategories.php:233
 #: SupplierTypes.php:132 Suppliers.php:672 Z_DeleteInvoice.php:178
@@ -1882,7 +1882,7 @@ msgstr "KULLANICI ADI"
 
 #: AuditTrail.php:55 AuditTrail.php:69 CollectiveWorkOrderCost.php:241
 #: CollectiveWorkOrderCost.php:245 CollectiveWorkOrderCost.php:249
-#: CollectiveWorkOrderCost.php:253 ContractBOM.php:306 CounterReturns.php:1637
+#: CollectiveWorkOrderCost.php:253 ContractBOM.php:305 CounterReturns.php:1637
 #: CounterReturns.php:1640 CounterSales.php:2201 CounterSales.php:2204
 #: CustomerBalancesMovement.php:30 CustomerBalancesMovement.php:40
 #: CustomerBalancesMovement.php:50 CustomerInquiry.php:193
@@ -1894,16 +1894,16 @@ msgstr "KULLANICI ADI"
 #: InternalStockRequestInquiry.php:108 InternalStockRequestInquiry.php:137
 #: InternalStockRequestInquiry.php:139 InventoryQuantities.php:168
 #: InventoryQuantities.php:194 InventoryQuantities.php:196 MRP.php:619
-#: MRPReport.php:552 MRPReport.php:554 MRPReschedules.php:145
+#: MRPReport.php:551 MRPReport.php:553 MRPReschedules.php:145
 #: NoSalesItems.php:22 NoSalesItems.php:50 NoSalesItems.php:70
 #: NoSalesItems.php:72 PDFPeriodStockTransListing.php:58 PDFPriceList.php:225
 #: PDFPriceList.php:324 POReport.php:1600 PO_Items.php:1131
 #: PO_SelectOSPurchOrder.php:185 PO_SelectOSPurchOrder.php:195
 #: PO_SelectOSPurchOrder.php:208 PO_SelectOSPurchOrder.php:278
 #: ReorderLevel.php:212 ReorderLevel.php:214 ReorderLevel.php:244
-#: ReorderLevel.php:246 SalesGraph.php:103 SalesGraph.php:105
-#: SalesGraph.php:125 SalesGraph.php:127 SalesGraph.php:149 SalesGraph.php:151
-#: SalesGraph.php:187 SalesInquiry.php:1096 SalesInquiry.php:1159
+#: ReorderLevel.php:246 SalesGraph.php:102 SalesGraph.php:104
+#: SalesGraph.php:124 SalesGraph.php:126 SalesGraph.php:148 SalesGraph.php:150
+#: SalesGraph.php:186 SalesInquiry.php:1096 SalesInquiry.php:1159
 #: SelectCreditItems.php:983 SelectOrderItems.php:1580
 #: SelectOrderItems.php:1583 SelectProduct.php:530 SelectProduct.php:532
 #: SelectSalesOrder.php:575 StockCategorySalesInquiry.php:35
@@ -1931,7 +1931,7 @@ msgid "Containing text"
 msgstr ""
 
 #: AuditTrail.php:90 GLAccountUsers.php:152 InternalStockRequest.php:598
-#: LocationUsers.php:176 MRPReport.php:807 PO_SelectPurchOrder.php:432
+#: LocationUsers.php:176 MRPReport.php:806 PO_SelectPurchOrder.php:432
 #: SelectContract.php:187 SelectProduct.php:865 UserGLAccounts.php:158
 #: UserLocations.php:177
 msgid "View"
@@ -2001,12 +2001,12 @@ msgid "#"
 msgstr "#"
 
 #: AutomaticTranslationDescriptions.php:36 BOMInquiry.php:108 BOMs.php:655
-#: BOMs.php:1014 CollectiveWorkOrderCost.php:316 ContractBOM.php:353
+#: BOMs.php:1014 CollectiveWorkOrderCost.php:316 ContractBOM.php:352
 #: CounterReturns.php:1691 CounterSales.php:2101 CounterSales.php:2255
 #: CustItem.php:297 CustomerBranches.php:408 CustomerReceipt.php:1216
 #: GLCodesInquiry.php:26 InternalStockRequest.php:563
 #: InternalStockRequest.php:633 InternalStockRequestInquiry.php:267
-#: MRPDemands.php:91 MRPPlannedWorkOrders.php:257 MRPReport.php:777
+#: MRPDemands.php:91 MRPPlannedWorkOrders.php:256 MRPReport.php:776
 #: MaterialsNotUsed.php:34 NoSalesItems.php:193 PDFOrderStatus.php:336
 #: PDFOrdersInvoiced.php:334 PO_Header.php:561 PO_Items.php:1193
 #: PO_SelectOSPurchOrder.php:309 PO_SelectPurchOrder.php:213
@@ -2089,8 +2089,8 @@ msgstr ""
 #: BOMExtendedQty.php:267 BOMExtendedQty.php:334 BOMExtendedQty.php:335
 #: BOMExtendedQty.php:336 BOMExtendedQty.php:337 BOMIndented.php:318
 #: BOMIndentedReverse.php:296 BOMInquiry.php:199 BOMs.php:659 BOMs.php:858
-#: ContractBOM.php:243 ContractBOM.php:357 ContractCosting.php:81
-#: ContractCosting.php:87 ContractCosting.php:152 ContractOtherReqts.php:99
+#: ContractBOM.php:242 ContractBOM.php:356 ContractCosting.php:81
+#: ContractCosting.php:87 ContractCosting.php:152 ContractOtherReqts.php:98
 #: Contracts.php:1006 Contracts.php:1042 CounterReturns.php:669
 #: CounterReturns.php:1698 CounterReturns.php:1797 CounterSales.php:749
 #: CounterSales.php:2108 CounterSales.php:2262 CounterSales.php:2365
@@ -2100,8 +2100,8 @@ msgstr ""
 #: InternalStockRequestFulfill.php:323 InternalStockRequestFulfill.php:324
 #: InternalStockRequestInquiry.php:406 InventoryPlanningPrefSupplier.php:78
 #: InventoryQuantities.php:248 MRPDemands.php:297 MRPDemands.php:395
-#: MRPPlannedPurchaseOrders.php:341 MRPPlannedWorkOrders.php:261
-#: MRPPlannedWorkOrders.php:395 MRPReport.php:441 MRPReport.php:447
+#: MRPPlannedPurchaseOrders.php:340 MRPPlannedWorkOrders.php:260
+#: MRPPlannedWorkOrders.php:394 MRPReport.php:440 MRPReport.php:446
 #: MRPReschedules.php:195 OffersReceived.php:108 OffersReceived.php:218
 #: OffersReceived.php:278 OrderDetails.php:189 PDFOrdersInvoiced.php:380
 #: PDFSalesBySalesperson.php:87 PDFWeeklyOrders.php:83 POReport.php:770
@@ -2110,7 +2110,7 @@ msgstr ""
 #: PrintCustTransPortrait.php:1098 PrintWOItemSlip.php:155
 #: RecurringSalesOrders.php:331 ReorderLevel.php:300 ReverseGRN.php:402
 #: ReverseGRN.php:403 SalesAnalReptCols.php:16 SalesAnalReptCols.php:18
-#: SalesGraph.php:197 SalesGraph.php:280 SalesInquiry.php:998
+#: SalesGraph.php:196 SalesGraph.php:279 SalesInquiry.php:998
 #: SalesTopCustomersInquiry.php:218 SalesTopItemsInquiry.php:225
 #: SelectCreditItems.php:688 SelectCreditItems.php:1074
 #: SelectOrderItems.php:1313 SelectOrderItems.php:1488
@@ -2161,19 +2161,19 @@ msgid "Only Show Shortages"
 msgstr "Sadece Noksanları göster"
 
 #: BOMExtendedQty.php:278 BOMIndented.php:268 BOMIndentedReverse.php:246
-#: MRPPlannedPurchaseOrders.php:280 MRPPlannedWorkOrders.php:336
+#: MRPPlannedPurchaseOrders.php:279 MRPPlannedWorkOrders.php:335
 #: MRPReschedules.php:136 MRPShortages.php:293
 msgid "Print Option"
 msgstr "Baskı Seçeneği"
 
 #: BOMExtendedQty.php:280 BOMIndented.php:270 BOMIndentedReverse.php:248
-#: MRPPlannedPurchaseOrders.php:282 MRPPlannedWorkOrders.php:338
+#: MRPPlannedPurchaseOrders.php:281 MRPPlannedWorkOrders.php:337
 #: MRPReschedules.php:138 MRPShortages.php:295
 msgid "Print With Alternating Highlighted Lines"
 msgstr "Vurgulanan Hatları ile Alternatif Baskı"
 
 #: BOMExtendedQty.php:281 BOMIndented.php:271 BOMIndentedReverse.php:249
-#: MRPPlannedPurchaseOrders.php:283 MRPPlannedWorkOrders.php:339
+#: MRPPlannedPurchaseOrders.php:282 MRPPlannedWorkOrders.php:338
 #: MRPReschedules.php:139 MRPShortages.php:296
 msgid "Plain Print"
 msgstr "Düz Baskı"
@@ -2184,8 +2184,8 @@ msgstr ""
 
 #: BOMExtendedQty.php:316 BOMIndented.php:305 BOMIndentedReverse.php:283
 #: GLAccountReport.php:331 InventoryPlanningPrefSupplier.php:58
-#: InventoryQuantities.php:234 MRPPlannedPurchaseOrders.php:320
-#: MRPPlannedWorkOrders.php:374 MRPReport.php:845 MRPReschedules.php:180
+#: InventoryQuantities.php:234 MRPPlannedPurchaseOrders.php:319
+#: MRPPlannedWorkOrders.php:373 MRPReport.php:844 MRPReschedules.php:180
 #: MRPShortages.php:334 PDFOrderStatus.php:323 PDFPriceList.php:395
 #: PDFReceipt.php:34 PO_Header.php:848 PO_PDFPurchOrder.php:64
 #: PO_SelectOSPurchOrder.php:646 PrintWOItemSlip.php:142 ReorderLevel.php:283
@@ -2222,8 +2222,8 @@ msgstr "TARIH"
 #: BOMExtendedQty.php:317 BOMIndented.php:306 BOMIndentedReverse.php:284
 #: FixedAssetRegister.php:367 GLAccountReport.php:331
 #: InventoryPlanningPrefSupplier.php:58 InventoryQuantities.php:235
-#: MRPPlannedPurchaseOrders.php:321 MRPPlannedWorkOrders.php:375
-#: MRPReport.php:846 MRPReschedules.php:181 MRPShortages.php:335
+#: MRPPlannedPurchaseOrders.php:320 MRPPlannedWorkOrders.php:374
+#: MRPReport.php:845 MRPReschedules.php:181 MRPShortages.php:335
 #: PDFPriceList.php:385 PDFReceipt.php:34 PDFRemittanceAdvice.php:218
 #: PrintCustOrder.php:175 PrintCustTransPortrait.php:813
 #: PrintCustTransPortrait.php:1035 PrintCustTransPortrait.php:1091
@@ -2303,8 +2303,8 @@ msgstr "WO"
 
 #: BOMExtendedQty.php:331 BOMIndented.php:313 BOMIndentedReverse.php:291
 #: InventoryQuantities.php:245 MRPDemands.php:294 MRPDemands.php:371
-#: MRPDemands.php:381 MRPPlannedPurchaseOrders.php:338
-#: MRPPlannedWorkOrders.php:392 MRPReschedules.php:191 MRPShortages.php:280
+#: MRPDemands.php:381 MRPPlannedPurchaseOrders.php:337
+#: MRPPlannedWorkOrders.php:391 MRPReschedules.php:191 MRPShortages.php:280
 #: MRPShortages.php:349 POReport.php:493 POReport.php:502 POReport.php:521
 #: POReport.php:541 POReport.php:630 POReport.php:733 POReport.php:1277
 #: POReport.php:1286 POReport.php:1300 POReport.php:1315 POReport.php:1368
@@ -2442,13 +2442,13 @@ msgid "description"
 msgstr "AÇIKLAMA"
 
 #: BOMInquiry.php:28 BOMs.php:999 CollectiveWorkOrderCost.php:304
-#: ContractBOM.php:332 ContractBOM.php:337 Contracts.php:766 Contracts.php:769
+#: ContractBOM.php:331 ContractBOM.php:336 Contracts.php:766 Contracts.php:769
 #: CounterReturns.php:1662 CounterSales.php:2225 CustItem.php:220
 #: CustomerReceipt.php:1195 CustomerReceipt.php:1198 DiscountCategories.php:121
 #: DiscountCategories.php:123 DiscountCategories.php:127
 #: DiscountCategories.php:129 FixedAssetTransfer.php:94
 #: InternalStockRequest.php:359 InternalStockRequestInquiry.php:231
-#: MRPDemands.php:338 MRPDemands.php:341 MRPReport.php:574 PO_Header.php:547
+#: MRPDemands.php:338 MRPDemands.php:341 MRPReport.php:573 PO_Header.php:547
 #: PO_Items.php:1160 PO_Items.php:1164 PO_SelectOSPurchOrder.php:292
 #: PO_SelectPurchOrder.php:195 PurchData.php:383 SelectAsset.php:104
 #: SelectCompletedOrder.php:485 SelectCreditItems.php:228
@@ -2476,7 +2476,7 @@ msgstr "ARANACAK >>"
 #: BOMInquiry.php:29 BOMs.php:1000 EmailConfirmation.php:218
 #: EmailConfirmation.php:348 InternalStockRequest.php:159
 #: InternalStockRequest.php:359 InternalStockRequestInquiry.php:231
-#: MRPDemands.php:339 MRPReport.php:574 PO_SelectOSPurchOrder.php:292
+#: MRPDemands.php:339 MRPReport.php:573 PO_SelectOSPurchOrder.php:292
 #: PO_SelectPurchOrder.php:195 SalesInquiry.php:769 SalesInquiry.php:780
 #: SalesInquiry.php:800 SalesInquiry.php:826 SalesInquiry.php:845
 #: SalesInquiry.php:955 SalesInquiry.php:1114 SalesInquiry.php:1211
@@ -2492,10 +2492,10 @@ msgstr "ARANACAK >>"
 msgid "Stock Code"
 msgstr "STOK KODU"
 
-#: BOMInquiry.php:35 BOMs.php:1004 ContractBOM.php:342 Contracts.php:776
+#: BOMInquiry.php:35 BOMs.php:1004 ContractBOM.php:341 Contracts.php:776
 #: CounterReturns.php:1666 CounterSales.php:2231 CustomerReceipt.php:1205
 #: FixedAssetTransfer.php:107 InternalStockRequest.php:370
-#: InternalStockRequestInquiry.php:242 MRPDemands.php:343 MRPReport.php:586
+#: InternalStockRequestInquiry.php:242 MRPDemands.php:343 MRPReport.php:585
 #: PO_Header.php:554 PO_Items.php:1168 SelectAsset.php:116
 #: SelectCreditItems.php:235 SelectCreditItems.php:1009 SelectCustomer.php:354
 #: SelectGLAccount.php:125 SelectOrderItems.php:580 SelectOrderItems.php:1619
@@ -2507,8 +2507,8 @@ msgid "Search Now"
 msgstr "ARA"
 
 #: BOMInquiry.php:47 BOMs.php:934 CollectiveWorkOrderCost.php:124
-#: ContractBOM.php:52 InternalStockRequestInquiry.php:509 MRPDemands.php:56
-#: MRPReport.php:606 PO_Items.php:852 PO_SelectOSPurchOrder.php:65
+#: ContractBOM.php:51 InternalStockRequestInquiry.php:509 MRPDemands.php:56
+#: MRPReport.php:605 PO_Items.php:852 PO_SelectOSPurchOrder.php:65
 #: PO_SelectPurchOrder.php:48 SelectCompletedOrder.php:98
 #: SelectCreditItems.php:302 SelectProduct.php:582 SelectQASamples.php:176
 #: SelectSalesOrder.php:1035 SelectWorkOrder.php:51 Shipt_Select.php:61
@@ -2534,13 +2534,13 @@ msgid "The SQL to find the parts selected failed with the message"
 msgstr "ISLEM BASARISIZ!"
 
 #: BOMInquiry.php:111 BOMs.php:1017 CollectiveWorkOrderCost.php:319
-#: ConfirmDispatch_Invoice.php:305 ContractBOM.php:355 CounterReturns.php:1693
+#: ConfirmDispatch_Invoice.php:305 ContractBOM.php:354 CounterReturns.php:1693
 #: CounterSales.php:2103 CounterSales.php:2257 Credit_Invoice.php:305
 #: GoodsReceived.php:124 GoodsReceived.php:128 InternalStockRequest.php:566
 #: InternalStockRequest.php:635 InternalStockRequestAuthorisation.php:106
 #: InternalStockRequestFulfill.php:325 InternalStockRequestInquiry.php:270
 #: InternalStockRequestInquiry.php:407 InventoryValuation.php:197
-#: MRPReport.php:780 NoSalesItems.php:197 OffersReceived.php:109
+#: MRPReport.php:779 NoSalesItems.php:197 OffersReceived.php:109
 #: PO_Items.php:1197 PO_SelectOSPurchOrder.php:313 PO_SelectPurchOrder.php:217
 #: ProductSpecs.php:166 ProductSpecs.php:387 QATests.php:253 QATests.php:394
 #: SelectCompletedOrder.php:510 SelectCreditItems.php:1020
@@ -2581,16 +2581,16 @@ msgstr "/"
 msgid "Component"
 msgstr "KOMPONENT"
 
-#: BOMInquiry.php:200 ContractBOM.php:245 ContractCosting.php:83
-#: ContractCosting.php:89 ContractCosting.php:153 ContractOtherReqts.php:100
+#: BOMInquiry.php:200 ContractBOM.php:244 ContractCosting.php:83
+#: ContractCosting.php:89 ContractCosting.php:153 ContractOtherReqts.php:99
 #: Contracts.php:1008 Contracts.php:1043 InventoryValuation.php:197
-#: MRPPlannedWorkOrders.php:262 MRPShortages.php:352 SpecialOrder.php:727
+#: MRPPlannedWorkOrders.php:261 MRPShortages.php:352 SpecialOrder.php:727
 #: StockAdjustments.php:450
 msgid "Unit Cost"
 msgstr "ÜRÜN MALIYETI"
 
 #: BOMInquiry.php:201 BOMInquiry.php:249 CollectiveWorkOrderCost.php:72
-#: ContractBOM.php:278 ContractCosting.php:84 ContractCosting.php:90
+#: ContractBOM.php:277 ContractCosting.php:84 ContractCosting.php:90
 #: ContractCosting.php:154 ContractCosting.php:179 Contracts.php:1009
 #: Contracts.php:1044 SpecialOrder.php:631 SpecialOrder.php:633
 msgid "Total Cost"
@@ -2690,7 +2690,7 @@ msgstr "Hayır düşük düzeylerde"
 msgid "Drill Down"
 msgstr "Matkap Down"
 
-#: BOMs.php:181 BOMs.php:635 ContractBOM.php:385 CounterSales.php:2116
+#: BOMs.php:181 BOMs.php:635 ContractBOM.php:384 CounterSales.php:2116
 #: FixedAssetItems.php:514 FixedAssetItems.php:517 FixedAssetItems.php:535
 #: InternalStockRequest.php:642 Manufacturers.php:253 Manufacturers.php:366
 #: PO_Items.php:1227 SalesCategories.php:84 SalesCategories.php:298
@@ -2915,7 +2915,7 @@ msgstr "DEPO"
 msgid "Work Centre"
 msgstr "IS MERKEZI"
 
-#: BOMs.php:660 ContractBOM.php:244 InternalStockRequest.php:279
+#: BOMs.php:660 ContractBOM.php:243 InternalStockRequest.php:279
 #: SupplierTenderCreate.php:436 SupplierTenders.php:328
 #: WOCanBeProducedNow.php:47 WOCanBeProducedNow.php:52
 #: includes/PDFTransPageHeader.inc:214
@@ -3113,8 +3113,8 @@ msgstr ""
 #: GLAccountUsers.php:226 InternalStockCategoriesByRole.php:120
 #: InternalStockCategoriesByRole.php:209 LocationUsers.php:119
 #: LocationUsers.php:234 PcClaimExpensesFromTab.php:161
-#: PcClaimExpensesFromTab.php:381 PcExpenses.php:310 PcExpensesTypeTab.php:123
-#: PcExpensesTypeTab.php:212 PurchaseByPrefSupplier.php:317 StockCounts.php:121
+#: PcClaimExpensesFromTab.php:381 PcExpenses.php:310 PcExpensesTypeTab.php:122
+#: PcExpensesTypeTab.php:211 PurchaseByPrefSupplier.php:317 StockCounts.php:121
 #: UserBankAccounts.php:110 UserBankAccounts.php:211 UserGLAccounts.php:54
 #: UserGLAccounts.php:232 UserLocations.php:120 UserLocations.php:236
 #: Z_GLAccountUsersCopyAuthority.php:66 Z_GLAccountUsersCopyAuthority.php:81
@@ -3130,8 +3130,8 @@ msgstr ""
 #: PcAssignCashTabToTab.php:181 PcAssignCashTabToTab.php:385
 #: PcAssignCashToTab.php:195 PcAssignCashToTab.php:412
 #: PcAuthorizeExpenses.php:338 PcClaimExpensesFromTab.php:178
-#: PcClaimExpensesFromTab.php:426 PcExpenses.php:350 PcExpensesTypeTab.php:139
-#: PcExpensesTypeTab.php:229 PcTabs.php:509 PcTypeTabs.php:253
+#: PcClaimExpensesFromTab.php:426 PcExpenses.php:350 PcExpensesTypeTab.php:138
+#: PcExpensesTypeTab.php:228 PcTabs.php:509 PcTypeTabs.php:253
 #: SalesTypes.php:282 SupplierTypes.php:236 UserBankAccounts.php:127
 #: UserBankAccounts.php:230 UserGLAccounts.php:76 UserLocations.php:137
 #: UserLocations.php:255 Z_CheckDebtorsControl.php:61
@@ -3145,8 +3145,8 @@ msgstr "TAMAM"
 #: PcAssignCashTabToTab.php:182 PcAssignCashTabToTab.php:386
 #: PcAssignCashToTab.php:196 PcAssignCashToTab.php:413
 #: PcAuthorizeExpenses.php:339 PcClaimExpensesFromTab.php:179
-#: PcClaimExpensesFromTab.php:427 PcExpenses.php:351 PcExpensesTypeTab.php:140
-#: PcExpensesTypeTab.php:230 PcTabs.php:510 PcTypeTabs.php:254
+#: PcClaimExpensesFromTab.php:427 PcExpenses.php:351 PcExpensesTypeTab.php:139
+#: PcExpensesTypeTab.php:229 PcTabs.php:510 PcTypeTabs.php:254
 #: SalesTypes.php:282 SecurityTokens.php:138 SelectCreditItems.php:955
 #: SupplierAllocations.php:520 UserBankAccounts.php:128
 #: UserBankAccounts.php:231 UserLocations.php:138 UserLocations.php:256
@@ -3455,8 +3455,8 @@ msgstr "dan"
 #: PcAssignCashTabToTab.php:117 PcReportTab.php:113 PricesBasedOnMarkUp.php:219
 #: PricesBasedOnMarkUp.php:358 PrintCustStatements.php:94 PrintCustTrans.php:56
 #: PrintCustTrans.php:57 PrintCustTrans.php:60 PrintCustTransPortrait.php:62
-#: PrintCustTransPortrait.php:65 SalesGraph.php:222 SalesGraph.php:251
-#: SalesGraph.php:255 StockLocTransferReceive.php:393
+#: PrintCustTransPortrait.php:65 SalesGraph.php:221 SalesGraph.php:250
+#: SalesGraph.php:254 StockLocTransferReceive.php:393
 #: StockLocTransferReceive.php:537 StockStatus.php:326 StockStatus.php:367
 #: StockTransfers.php:530 Stocks.php:310 Stocks.php:315
 #: Z_GLAccountUsersCopyAuthority.php:37
@@ -4059,7 +4059,7 @@ msgstr "STOK KATEGORISI"
 msgid "Enter text extract(s) in the description"
 msgstr "ARANACAK >> AÇIKLAMA"
 
-#: CollectiveWorkOrderCost.php:304 ContractBOM.php:332 CounterReturns.php:1662
+#: CollectiveWorkOrderCost.php:304 ContractBOM.php:331 CounterReturns.php:1662
 #: CounterSales.php:2225 PO_Items.php:1160 SelectCompletedOrder.php:485
 #: SelectCreditItems.php:1002 SelectOrderItems.php:1608
 #: SelectSalesOrder.php:587 SelectWorkOrder.php:206
@@ -4137,7 +4137,7 @@ msgstr "MALIYET"
 msgid "Paperwork"
 msgstr ""
 
-#: CollectiveWorkOrderCost.php:445 ContractOtherReqts.php:159
+#: CollectiveWorkOrderCost.php:445 ContractOtherReqts.php:158
 #: InternalStockRequest.php:278 InternalStockRequestAuthorisation.php:105
 #: SelectWorkOrder.php:334 WhereUsedInquiry.php:75 WorkOrderCosting.php:99
 msgid "Quantity Required"
@@ -4583,7 +4583,7 @@ msgstr "Sevk ve Fatura Onay"
 #: Customers.php:348 Dashboard.php:58 Dashboard.php:610 DeliveryDetails.php:858
 #: FTP_RadioBeacon.php:51 PDFOrderStatus.php:293 PDFOrdersInvoiced.php:292
 #: PDFSalesBySalesperson.php:83 PDFWeeklyOrders.php:79 PricesByCost.php:154
-#: SalesGraph.php:188 SalesTopCustomersInquiry.php:214
+#: SalesGraph.php:187 SalesTopCustomersInquiry.php:214
 #: SelectCompletedOrder.php:565 SelectContract.php:148
 #: SelectCreditItems.php:243 SelectCustomer.php:13 SelectCustomer.php:181
 #: SelectCustomer.php:182 SelectOrderItems.php:594
@@ -4607,8 +4607,8 @@ msgstr "MÜSTERI"
 #: SalesInquiry.php:771 SalesInquiry.php:781 SalesInquiry.php:803
 #: SalesInquiry.php:951 SalesInquiry.php:966 SalesInquiry.php:972
 #: SalesInquiry.php:1231 WWW_Users.php:322 WWW_Users.php:563
-#: Z_ChangeBranchCode.php:209 includes/PDFStatementPageHeader.inc:121
-#: includes/PDFTransPageHeader.inc:49
+#: Z_ChangeBranchCode.php:209 geocode.php:54
+#: includes/PDFStatementPageHeader.inc:121 includes/PDFTransPageHeader.inc:49
 #: includes/PDFTransPageHeaderPortrait.inc:59
 msgid "Customer Code"
 msgstr "MUSTERI KODU"
@@ -4629,7 +4629,7 @@ msgstr "MÜSTERI ADI"
 msgid "Invoice amounts stated in"
 msgstr "FATURA TUTARLARI"
 
-#: ConfirmDispatch_Invoice.php:302 ContractBOM.php:241 ContractCosting.php:79
+#: ConfirmDispatch_Invoice.php:302 ContractBOM.php:240 ContractCosting.php:79
 #: ContractCosting.php:85 Contracts.php:1004 CounterReturns.php:667
 #: CounterReturns.php:1796 CounterSales.php:747 CounterSales.php:2364
 #: Credit_Invoice.php:302 DeliveryDetails.php:878 GoodsReceived.php:120
@@ -4640,7 +4640,7 @@ msgstr "FATURA TUTARLARI"
 #: PrintCustTransPortrait.php:1040 PrintCustTransPortrait.php:1096
 #: PrintWOItemSlip.php:152 PurchaseByPrefSupplier.php:412
 #: RecurringSalesOrders.php:329 ReorderLevelLocation.php:195 ReprintGRN.php:88
-#: ReverseGRN.php:399 SalesGraph.php:189 SelectCreditItems.php:686
+#: ReverseGRN.php:399 SalesGraph.php:188 SelectCreditItems.php:686
 #: SelectOrderItems.php:1311 StockCategorySalesInquiry.php:120
 #: StockCostUpdate.php:126 StockLocMovements.php:89 StockLocTransfer.php:306
 #: StockLocTransferReceive.php:541 StockQuantityByDate.php:108 Stocks.php:917
@@ -5344,7 +5344,7 @@ msgstr "ISLEM BASARISIZ! "
 #: CustomerAccount.php:256 CustomerInquiry.php:256 CustomerTransInquiry.php:105
 #: DeliveryDetails.php:624 DeliveryDetails.php:630 DeliveryDetails.php:637
 #: DeliveryDetails.php:814 DeliveryDetails.php:820 DeliveryDetails.php:843
-#: MRPReport.php:440 PDFOrderStatus.php:292 PDFOrdersInvoiced.php:291
+#: MRPReport.php:439 PDFOrderStatus.php:292 PDFOrdersInvoiced.php:291
 #: PDFSalesBySalesperson.php:82 PDFWeeklyOrders.php:78
 #: SelectCompletedOrder.php:564 SelectContract.php:143 SelectOrderItems.php:686
 #: SelectProduct.php:373 Shipments.php:397 Shipments.php:484
@@ -5621,7 +5621,7 @@ msgid "processed"
 msgstr "ISLENDI"
 
 #: ConfirmDispatch_Invoice.php:1655 ConfirmDispatch_Invoice.php:1657
-#: ContractBOM.php:299 CounterReturns.php:1607 CounterReturns.php:1609
+#: ContractBOM.php:298 CounterReturns.php:1607 CounterReturns.php:1609
 #: CounterSales.php:2056 CounterSales.php:2058 CustomerReceipt.php:593
 #: DeliveryDetails.php:605 DeliveryDetails.php:609 DeliveryDetails.php:831
 #: DeliveryDetails.php:835 GLJournalInquiry.php:156 GLJournalInquiry.php:158
@@ -5702,11 +5702,11 @@ msgstr "FATURA TEXT"
 msgid "Process Invoice"
 msgstr "FATURAYI ISLE"
 
-#: ContractBOM.php:9
+#: ContractBOM.php:8
 msgid "Contract Bill of Materials"
 msgstr "Malzemelerin Sözleşme Bill"
 
-#: ContractBOM.php:44 ContractOtherReqts.php:47
+#: ContractBOM.php:43 ContractOtherReqts.php:46
 msgid ""
 "You should automatically be forwarded to the Contract page. If this does not "
 "happen perhaps the browser does not support META Refresh"
@@ -5714,7 +5714,7 @@ msgstr ""
 "Otomatik Sözleşme sayfaya iletilmelidir. Bu META Yenile desteklemiyor belki "
 "tarayıcı olmazsa"
 
-#: ContractBOM.php:44 ContractOtherReqts.php:47 Contracts.php:96
+#: ContractBOM.php:43 ContractOtherReqts.php:46 Contracts.php:96
 #: Contracts.php:105 DeliveryDetails.php:276 DeliveryDetails.php:285
 #: EmailCustTrans.php:23 EmailCustTrans.php:27 GLAccountCSV.php:272
 #: POReport.php:1502 PO_Header.php:243 SalesAnalysis_UserDefined.php:46
@@ -5727,7 +5727,7 @@ msgstr ""
 msgid "click here"
 msgstr "TIKLAYIN"
 
-#: ContractBOM.php:44 ContractOtherReqts.php:47 Contracts.php:96
+#: ContractBOM.php:43 ContractOtherReqts.php:46 Contracts.php:96
 #: Contracts.php:105 DeliveryDetails.php:276 DeliveryDetails.php:285
 #: PO_Header.php:243 SalesAnalysis_UserDefined.php:46 SelectOrderItems.php:1152
 #: StockUsage.php:21 SupplierCredit.php:210 SupplierCredit.php:221
@@ -5738,14 +5738,14 @@ msgstr "TIKLAYIN"
 msgid "to continue"
 msgstr "DEVAM"
 
-#: ContractBOM.php:144 CounterReturns.php:324 CounterSales.php:352
+#: ContractBOM.php:143 CounterReturns.php:324 CounterSales.php:352
 #: InternalStockRequest.php:505 PO_Items.php:1098 SelectCreditItems.php:391
 #: SelectOrderItems.php:785 SupplierTenderCreate.php:834
 #: SupplierTenders.php:667 WorkOrderEntry.php:271 WorkOrderIssue.php:717
 msgid "There is a problem selecting the part records to display because"
 msgstr "PARÇA KAYITLARI SEÇILIRKEN BIR HATA OLUSTU:"
 
-#: ContractBOM.php:145 PO_Items.php:1099 SupplierTenderCreate.php:835
+#: ContractBOM.php:144 PO_Items.php:1099 SupplierTenderCreate.php:835
 #: SupplierTenders.php:668 Z_ChangeGLAccountCode.php:62
 #: Z_ChangeLocationCode.php:106 Z_ChangeStockCategory.php:74
 #: Z_ChangeStockCode.php:112 Z_GLAccountUsersCopyAuthority.php:32
@@ -5753,24 +5753,24 @@ msgstr "PARÇA KAYITLARI SEÇILIRKEN BIR HATA OLUSTU:"
 msgid "The SQL statement that failed was"
 msgstr "HATALI SQL:"
 
-#: ContractBOM.php:149 PO_Items.php:1103 SupplierTenderCreate.php:839
+#: ContractBOM.php:148 PO_Items.php:1103 SupplierTenderCreate.php:839
 #: SupplierTenders.php:672
 msgid "There are no products to display matching the criteria provided"
 msgstr "SEÇILEN KRITERLERE UYAN ÜRÜN YOK"
 
-#: ContractBOM.php:164
+#: ContractBOM.php:163
 msgid ""
 "The contract BOM cannot be altered because the customer has already placed "
 "the order"
 msgstr ""
 
-#: ContractBOM.php:180 PO_Items.php:561 StockLocTransfer.php:85
+#: ContractBOM.php:179 PO_Items.php:561 StockLocTransfer.php:85
 #: includes/SelectOrderItems_IntoCart.inc:27
 #: includes/SelectOrderItems_IntoCart.inc:65
 msgid "The item"
 msgstr "ÜRÜN"
 
-#: ContractBOM.php:180
+#: ContractBOM.php:179
 msgid ""
 "is already in the bill of material for this contract. The system will not "
 "allow the same item on the contract more than once. However you can change "
@@ -5779,116 +5779,117 @@ msgstr ""
 "Bu sözleşme için malzeme faturası zaten. Sistem birden fazla sözleşme aynı "
 "öğe izin vermeyecektir. Ancak madde için gerekli miktar değiştirebilirsiniz."
 
-#: ContractBOM.php:195
+#: ContractBOM.php:194
 msgid "The item details could not be retrieved"
 msgstr "Öğe detayları alınamadı"
 
-#: ContractBOM.php:196 PO_Items.php:581 PurchaseByPrefSupplier.php:30
+#: ContractBOM.php:195 PO_Items.php:581 PurchaseByPrefSupplier.php:30
 #: SelectCreditItems.php:638
 msgid "The SQL used to retrieve the item details but failed was"
 msgstr "HATAYA YOL AÇAN KOMUT:"
 
-#: ContractBOM.php:209 CounterReturns.php:409 CounterSales.php:452
+#: ContractBOM.php:208 CounterReturns.php:409 CounterSales.php:452
 #: PO_Items.php:684 SelectOrderItems.php:881
 #: includes/SelectOrderItems_IntoCart.inc:60
 #: includes/SelectOrderItems_IntoCart.inc:238
 msgid "The item code"
 msgstr "STOK KODU"
 
-#: ContractBOM.php:209
+#: ContractBOM.php:208
 msgid ""
 "does not exist in the database and therefore cannot be added to the contract "
 "BOM"
 msgstr "ve veritabanında yoksa bu nedenle sözleşme BOM ilave edilemez"
 
-#: ContractBOM.php:229
+#: ContractBOM.php:228
 msgid "Contract Bill of Material"
 msgstr "Malzemenin Sözleşme Bill"
 
-#: ContractBOM.php:236 ContractOtherReqts.php:93
-msgid "Contract Reference:"
-msgstr "Sözleşme Referans:"
+#: ContractBOM.php:235 ContractOtherReqts.php:92 Contracts.php:847
+#: SelectContract.php:31 SelectContract.php:41 SuppContractChgs.php:132
+msgid "Contract Reference"
+msgstr "Sözleşme Referans"
 
-#: ContractBOM.php:246 ContractOtherReqts.php:101
+#: ContractBOM.php:245 ContractOtherReqts.php:100
 msgid "Sub-total"
 msgstr "Alt toplam"
 
-#: ContractBOM.php:268
+#: ContractBOM.php:267
 msgid "Enter the quantity of this component required to complete the contract"
 msgstr ""
 
-#: ContractBOM.php:272
+#: ContractBOM.php:271
 msgid "Are you sure you wish to delete this item from the contract BOM?"
 msgstr ""
 
-#: ContractBOM.php:272
+#: ContractBOM.php:271
 msgid "Confirm Deletion"
 msgstr ""
 
-#: ContractBOM.php:283
+#: ContractBOM.php:282
 msgid "Update Lines"
 msgstr "Güncelleme Hatları"
 
-#: ContractBOM.php:284 ContractOtherReqts.php:138
+#: ContractBOM.php:283 ContractOtherReqts.php:137
 msgid "Back To Contract Header"
 msgstr "Geri Sözleşme Header için"
 
-#: ContractBOM.php:295 PO_Items.php:1120
+#: ContractBOM.php:294 PO_Items.php:1120
 msgid "The supplier category details could not be retrieved because"
 msgstr "Tedarikçi kategori ayrıntıları çünkü alınamadı"
 
-#: ContractBOM.php:296 PO_Items.php:1121
+#: ContractBOM.php:295 PO_Items.php:1121
 msgid "The SQL used to retrieve the category details but failed was"
 msgstr "SQL kategori bilgilerini almak için kullanılan, ancak başarısız oldu"
 
-#: ContractBOM.php:299 PO_Items.php:1126
+#: ContractBOM.php:298 PO_Items.php:1126
 msgid "Search For Stock Items"
 msgstr "ÜRÜN ARA"
 
-#: ContractBOM.php:327 PO_Items.php:1153 SelectCompletedOrder.php:480
+#: ContractBOM.php:326 PO_Items.php:1153 SelectCompletedOrder.php:480
 #: SelectCreditItems.php:999
 msgid "Enter text extracts in the description"
 msgstr "ARANACAK >> AÇIKLAMA"
 
-#: ContractBOM.php:328
+#: ContractBOM.php:327
 msgid ""
 "Enter any text that should appear in the item description as the basis of "
 "your search"
 msgstr ""
 
-#: ContractBOM.php:333
+#: ContractBOM.php:332
 msgid ""
 "Enter any part of an item code to seach for all matching items containing "
 "that text in the code"
 msgstr ""
 
-#: ContractBOM.php:337
+#: ContractBOM.php:336
 msgid "Create a New Stock Item"
 msgstr "Yeni Hazır Öğe oluşturma"
 
-#: ContractBOM.php:356 FixedAssetItems.php:518 StockClone.php:756
+#: ContractBOM.php:355 FixedAssetItems.php:518 StockClone.php:756
 #: Stocks.php:1069 SupplierTenderCreate.php:855 SupplierTenders.php:689
 msgid "Image"
 msgstr "FOTOGRAF"
 
-#: ContractBOM.php:392
+#: ContractBOM.php:391
 msgid "Enter the quantity required of this item to complete the contract"
 msgstr ""
 
-#: ContractBOM.php:408 SupplierTenders.php:764
+#: ContractBOM.php:407 SupplierTenders.php:764
 msgid "Only the first"
 msgstr "SADECE ILK"
 
-#: ContractBOM.php:408 SupplierTenders.php:764
+#: ContractBOM.php:407 SupplierTenders.php:764
 msgid "can be displayed"
 msgstr "GÖSTERILEBILIR"
 
-#: ContractBOM.php:408 SupplierTenders.php:765
+#: ContractBOM.php:407 SupplierTenders.php:765
 msgid "Please restrict your search to only the parts required"
 msgstr ""
 "LÜTFEN ARAMA YAPARKEN GEREKLI PARÇALAR IÇIN ARAMA KRITERLERINIZI KISITLAYINIZ"
 
-#: ContractBOM.php:412
+#: ContractBOM.php:411
 msgid "Add to Contract Bill Of Material"
 msgstr "Materyal Of Sözleşme Bill ekle"
 
@@ -6112,61 +6113,61 @@ msgstr ""
 "yapılmaktadır. Varyansları kâr ve zarar hesabı ile alınacaktır. Eğer Emin "
 "misiniz?"
 
-#: ContractOtherReqts.php:8 ContractOtherReqts.php:85
+#: ContractOtherReqts.php:7 ContractOtherReqts.php:84
 msgid "Contract Other Requirements"
 msgstr "Sözleşme Diğer Gereksinimler"
 
-#: ContractOtherReqts.php:57
+#: ContractOtherReqts.php:56
 msgid ""
 "The other contract requirements cannot be altered because the customer has "
 "already placed the order"
 msgstr "Müşteri zaten siparişiniz çünkü diğer sözleşme şartları değiştirilemez"
 
-#: ContractOtherReqts.php:63
+#: ContractOtherReqts.php:62
 msgid "The quantity of the new requirement is expected to be numeric"
 msgstr "Yeni ihtiyacının miktar sayısal olması bekleniyor"
 
-#: ContractOtherReqts.php:67
+#: ContractOtherReqts.php:66
 msgid "The cost per unit of the new requirement is expected to be numeric"
 msgstr "Yeni gereksinimi birim maliyet sayısal olması bekleniyor"
 
-#: ContractOtherReqts.php:120 ContractOtherReqts.php:156
+#: ContractOtherReqts.php:119 ContractOtherReqts.php:155
 msgid "Enter a description of this requirement for the contract"
 msgstr ""
 
-#: ContractOtherReqts.php:121 ContractOtherReqts.php:160
+#: ContractOtherReqts.php:120 ContractOtherReqts.php:159
 msgid "Enter the quantity of this requirement for the contract"
 msgstr ""
 
-#: ContractOtherReqts.php:124
+#: ContractOtherReqts.php:123
 msgid "Are you sure you wish to delete this contract requirement?"
 msgstr ""
 
-#: ContractOtherReqts.php:131
+#: ContractOtherReqts.php:130
 msgid "Total Other Requirements Cost"
 msgstr "Toplam Diğer Gereksinimler Maliyeti"
 
-#: ContractOtherReqts.php:137
+#: ContractOtherReqts.php:136
 msgid "Update Other Requirements Lines"
 msgstr "Güncelleştirme Diğer Gereksinimler Hatları"
 
-#: ContractOtherReqts.php:152
+#: ContractOtherReqts.php:151
 msgid "Enter New Requirements"
 msgstr "Yeni Talepler girin"
 
-#: ContractOtherReqts.php:155
+#: ContractOtherReqts.php:154
 msgid "Requirement Description"
 msgstr "Gereksinimi Açıklama"
 
-#: ContractOtherReqts.php:163
+#: ContractOtherReqts.php:162
 msgid "Cost Per Unit"
 msgstr "Birim Maliyet"
 
-#: ContractOtherReqts.php:164
+#: ContractOtherReqts.php:163
 msgid "Enter the cost per unit of this requirement"
 msgstr ""
 
-#: ContractOtherReqts.php:171
+#: ContractOtherReqts.php:170
 msgid "Enter New Contract Requirement"
 msgstr "Yeni Sözleşme Gereği girin"
 
@@ -6604,11 +6605,6 @@ msgstr "IRTIBAT"
 #: includes/PO_PDFOrderPageHeader.inc:28
 msgid "Fax"
 msgstr "FAKS"
-
-#: Contracts.php:847 SelectContract.php:31 SelectContract.php:41
-#: SuppContractChgs.php:132
-msgid "Contract Reference"
-msgstr "Sözleşme Referans"
 
 #: Contracts.php:851 Contracts.php:854
 msgid ""
@@ -7198,7 +7194,7 @@ msgstr ""
 
 #: CounterReturns.php:1688 CounterReturns.php:1784 CounterSales.php:2252
 #: CounterSales.php:2346 InternalStockRequest.php:554
-#: InternalStockRequest.php:630 InternalStockRequest.php:750 MRPReport.php:769
+#: InternalStockRequest.php:630 InternalStockRequest.php:750 MRPReport.php:768
 #: PO_Items.php:1183 PO_Items.php:1185 SelectAsset.php:251
 #: SelectCustomer.php:395 SelectCustomer.php:472 SelectOrderItems.php:1641
 #: SelectOrderItems.php:1737 SelectProduct.php:819 SelectSupplier.php:273
@@ -10298,7 +10294,7 @@ msgstr "Müşteri tipi"
 
 #: CustomerTypes.php:92 PO_Items.php:237 PcAssignCashTabToTab.php:117
 #: PcAssignCashToTab.php:126 PcClaimExpensesFromTab.php:113 PcExpenses.php:127
-#: PcExpensesTypeTab.php:79 PcTabs.php:162 PcTypeTabs.php:88 SalesTypes.php:90
+#: PcExpensesTypeTab.php:78 PcTabs.php:162 PcTypeTabs.php:88 SalesTypes.php:90
 #: SelectSalesOrder.php:237 SelectSalesOrder.php:400 SpecialOrder.php:479
 #: SupplierTypes.php:77
 msgid "has been created"
@@ -10530,8 +10526,8 @@ msgstr ""
 msgid "Click"
 msgstr "Tıklayın"
 
-#: Customers.php:425 Customers.php:434 MRPPlannedPurchaseOrders.php:18
-#: MRPPlannedWorkOrders.php:17 MRPReschedules.php:17 MRPShortages.php:17
+#: Customers.php:425 Customers.php:434 MRPPlannedPurchaseOrders.php:17
+#: MRPPlannedWorkOrders.php:16 MRPReschedules.php:17 MRPShortages.php:17
 #: OffersReceived.php:259 OffersReceived.php:261 PO_Header.php:462
 #: SelectCustomer.php:488 includes/ConnectDB_mysql.inc:25
 #: includes/ConnectDB_mysqli.inc:30
@@ -10915,8 +10911,8 @@ msgstr "Trans Tarihi"
 
 #: Dashboard.php:61 Dashboard.php:339 EmailConfirmation.php:221
 #: EmailConfirmation.php:351 MRPDemands.php:298 MRPDemands.php:399
-#: MRPPlannedPurchaseOrders.php:339 MRPPlannedWorkOrders.php:260
-#: MRPPlannedWorkOrders.php:393 MRPReport.php:442 MRPReport.php:448
+#: MRPPlannedPurchaseOrders.php:338 MRPPlannedWorkOrders.php:259
+#: MRPPlannedWorkOrders.php:392 MRPReport.php:441 MRPReport.php:447
 #: OrderDetails.php:195 SelectOrderItems.php:1324 SelectOrderItems.php:1756
 #: SupplierTransInquiry.php:114
 msgid "Due Date"
@@ -11978,6 +11974,7 @@ msgid "Order date"
 msgstr "SIPARIS TARIHI"
 
 #: EDIProcessOrders.php:275 EDIProcessOrders.php:277
+#: ImportBankTransAnalysis.php:113 ImportBankTransAnalysis.php:116
 #: SupplierAllocations.php:436
 msgid "dated"
 msgstr "tarihli"
@@ -13476,7 +13473,7 @@ msgstr "Varlık kategorisinde"
 #: FixedAssetTransfer.php:60 FixedAssetTransfer.php:94
 #: InternalStockRequest.php:350 InternalStockRequest.php:359
 #: InternalStockRequestInquiry.php:222 InternalStockRequestInquiry.php:231
-#: MRPReport.php:564 MRPReport.php:574 SelectProduct.php:542
+#: MRPReport.php:563 MRPReport.php:573 SelectProduct.php:542
 #: SelectProduct.php:552 SelectProduct.php:561 SupplierPriceList.php:44
 #: SupplierPriceList.php:54 SupplierTenderCreate.php:695
 #: SupplierTenderCreate.php:706 SupplierTenders.php:421 SupplierTenders.php:433
@@ -14387,12 +14384,12 @@ msgid "Year ended"
 msgstr "Yıl sona erdi"
 
 #: GLBudgets.php:183 SalesAnalReptCols.php:277 SalesAnalReptCols.php:473
-#: SalesAnalReptCols.php:476 SalesGraph.php:321
+#: SalesAnalReptCols.php:476 SalesGraph.php:320
 msgid "Actual"
 msgstr "AKTÜEL"
 
 #: GLBudgets.php:184 SalesAnalReptCols.php:264 SalesAnalReptCols.php:279
-#: SalesAnalReptCols.php:472 SalesAnalReptCols.php:475 SalesGraph.php:321
+#: SalesAnalReptCols.php:472 SalesAnalReptCols.php:475 SalesGraph.php:320
 msgid "Budget"
 msgstr "BÜTÇE"
 
@@ -14809,9 +14806,9 @@ msgid "GL Tag"
 msgstr "GL Etiket"
 
 #: GLJournal.php:311 GLJournal.php:413 GLTagProfit_Loss.php:106
-#: ImportBankTransAnalysis.php:303 MRPPlannedPurchaseOrders.php:274
-#: MRPPlannedPurchaseOrders.php:324 MRPPlannedWorkOrders.php:330
-#: MRPPlannedWorkOrders.php:378 PcExpenses.php:334 StockAdjustments.php:503
+#: ImportBankTransAnalysis.php:303 MRPPlannedPurchaseOrders.php:273
+#: MRPPlannedPurchaseOrders.php:323 MRPPlannedWorkOrders.php:329
+#: MRPPlannedWorkOrders.php:377 PcExpenses.php:334 StockAdjustments.php:503
 #: Suppliers.php:795 Suppliers.php:1046 SystemParameters.php:523
 #: SystemParameters.php:1115 SystemParameters.php:1121
 #: SystemParameters.php:1127 SystemParameters.php:1133
@@ -15054,7 +15051,7 @@ msgstr "Yayınlanmıştır"
 msgid "Trial Balance"
 msgstr "Mizan"
 
-#: GLTrialBalance.php:23 SalesGraph.php:19
+#: GLTrialBalance.php:23 SalesGraph.php:18
 msgid ""
 "The selected period from is actually after the period to! Please re-select "
 "the reporting period"
@@ -15064,11 +15061,11 @@ msgstr "dan seçilen döneme süre sonra aslında! yeniden rapor döneminde seç
 msgid "Print Trial Balance"
 msgstr ""
 
-#: GLTrialBalance.php:55 SalesGraph.php:43
+#: GLTrialBalance.php:55 SalesGraph.php:42
 msgid "Select Period From:"
 msgstr "PERIYOD BASLANGICI:"
 
-#: GLTrialBalance.php:91 SalesGraph.php:79
+#: GLTrialBalance.php:91 SalesGraph.php:78
 msgid "Select Period To:"
 msgstr "PERIYOD BITISI:"
 
@@ -15935,10 +15932,6 @@ msgstr ""
 msgid "Imported Bank Receipt of"
 msgstr ""
 
-#: ImportBankTransAnalysis.php:113 ImportBankTransAnalysis.php:116
-msgid "dated:"
-msgstr ""
-
 #: ImportBankTransAnalysis.php:116
 msgid "Imported Bank Payment of"
 msgstr ""
@@ -16010,7 +16003,7 @@ msgid "Internal Stock Categories Requests By Security Role Maintenance "
 msgstr ""
 
 #: InternalStockCategoriesByRole.php:11 Payments.php:8
-#: PcClaimExpensesFromTab.php:146 PcExpenses.php:12 PcExpensesTypeTab.php:9
+#: PcClaimExpensesFromTab.php:146 PcExpenses.php:12 PcExpensesTypeTab.php:8
 #: PcReportTab.php:23 PcReportTab.php:240 PcTabs.php:11 PcTypeTabs.php:11
 msgid "Payment Entry"
 msgstr "ÖDEME GIRISI"
@@ -16193,14 +16186,14 @@ msgstr ""
 msgid "Line Number"
 msgstr ""
 
-#: InternalStockRequest.php:316 MRPReport.php:544 SelectProduct.php:522
+#: InternalStockRequest.php:316 MRPReport.php:543 SelectProduct.php:522
 #: SupplierPriceList.php:15 SupplierPriceList.php:229
 #: SupplierTenderCreate.php:664 SupplierTenders.php:388
 msgid "Search for Inventory Items"
 msgstr "Envanter Öğeler ara"
 
 #: InternalStockRequest.php:325 InternalStockRequestInquiry.php:251
-#: InventoryQuantities.php:181 MRPReport.php:536 ReorderLevel.php:231
+#: InventoryQuantities.php:181 MRPReport.php:535 ReorderLevel.php:231
 #: SelectProduct.php:46 StockDispatch.php:381 StockLocStatus.php:62
 #: SupplierTenderCreate.php:672 SupplierTenders.php:398
 msgid ""
@@ -16211,13 +16204,13 @@ msgstr ""
 "KATEGORI OLUSTURUN"
 
 #: InternalStockRequest.php:327 InternalStockRequestInquiry.php:253
-#: InventoryQuantities.php:182 MRPReport.php:537 ReorderLevel.php:232
+#: InventoryQuantities.php:182 MRPReport.php:536 ReorderLevel.php:232
 #: SelectProduct.php:47 StockDispatch.php:382 StockLocStatus.php:63
 #: SupplierTenderCreate.php:673 SupplierTenders.php:399
 msgid "Define Stock Categories"
 msgstr "STOK KATEGORILERINI BELIRLE"
 
-#: InternalStockRequest.php:332 InventoryQuantities.php:188 MRPReport.php:547
+#: InternalStockRequest.php:332 InventoryQuantities.php:188 MRPReport.php:546
 #: NoSalesItems.php:63 ReorderLevel.php:238 SelectProduct.php:524
 #: StockCategorySalesInquiry.php:29 StockDispatch.php:390 StockLocStatus.php:68
 #: SupplierPriceList.php:22 SupplierTenderCreate.php:678
@@ -16239,7 +16232,7 @@ msgid "Stock Code has been used in search"
 msgstr "Stok Kodu arama kullanılmıştır"
 
 #: InternalStockRequest.php:540 InternalStockRequestFulfill.php:39
-#: MRPReport.php:755 SelectAsset.php:237 SelectCustomer.php:381
+#: MRPReport.php:754 SelectAsset.php:237 SelectCustomer.php:381
 #: SelectCustomer.php:457 SelectOrderItems.php:1364 SelectProduct.php:805
 #: SelectSupplier.php:259 SelectSupplier.php:325 StockLocTransfer.php:64
 #: SupplierPriceList.php:252 SupplierTenderCreate.php:594
@@ -16251,21 +16244,21 @@ msgstr "Stok Kodu arama kullanılmıştır"
 msgid "of"
 msgstr "/"
 
-#: InternalStockRequest.php:540 MRPReport.php:755 SelectAsset.php:237
+#: InternalStockRequest.php:540 MRPReport.php:754 SelectAsset.php:237
 #: SelectCustomer.php:381 SelectCustomer.php:457 SelectProduct.php:805
 #: SelectSupplier.php:259 SelectSupplier.php:325 SupplierPriceList.php:252
 #: SupplierTenderCreate.php:594
 msgid "pages"
 msgstr "SAYFA"
 
-#: InternalStockRequest.php:540 MRPReport.php:755 SelectAsset.php:237
+#: InternalStockRequest.php:540 MRPReport.php:754 SelectAsset.php:237
 #: SelectCustomer.php:381 SelectCustomer.php:457 SelectProduct.php:805
 #: SelectSupplier.php:259 SelectSupplier.php:325 SupplierPriceList.php:252
 #: SupplierTenderCreate.php:594
 msgid "Go to Page"
 msgstr "SAYFAYA GIT"
 
-#: InternalStockRequest.php:552 MRPReport.php:767 PcAssignCashTabToTab.php:235
+#: InternalStockRequest.php:552 MRPReport.php:766 PcAssignCashTabToTab.php:235
 #: PcAssignCashToTab.php:249 PcAuthorizeExpenses.php:66
 #: PcClaimExpensesFromTab.php:219 SelectAsset.php:249 SelectCustomer.php:393
 #: SelectCustomer.php:470 SelectProduct.php:817 SelectSupplier.php:271
@@ -16274,7 +16267,7 @@ msgstr "SAYFAYA GIT"
 msgid "Go"
 msgstr "GIT"
 
-#: InternalStockRequest.php:553 MRPReport.php:768
+#: InternalStockRequest.php:553 MRPReport.php:767
 #: PurchaseByPrefSupplier.php:418 SelectAsset.php:250 SelectCustomer.php:394
 #: SelectCustomer.php:471 SelectOrderItems.php:1639 SelectOrderItems.php:1735
 #: SelectProduct.php:818 SelectSupplier.php:272 SelectSupplier.php:338
@@ -16282,11 +16275,11 @@ msgstr "GIT"
 msgid "Previous"
 msgstr "ÖNCEKI"
 
-#: InternalStockRequest.php:565 MRPReport.php:779 SelectProduct.php:831
+#: InternalStockRequest.php:565 MRPReport.php:778 SelectProduct.php:831
 msgid "Total Qty On Hand"
 msgstr "ELDEKI TOPLAM MIKTAR"
 
-#: InternalStockRequest.php:567 MRPReport.php:781 SelectProduct.php:828
+#: InternalStockRequest.php:567 MRPReport.php:780 SelectProduct.php:828
 #: StockStatus.php:7
 msgid "Stock Status"
 msgstr "STOK DURUMU"
@@ -16509,7 +16502,7 @@ msgstr ""
 msgid "There are no stock request available"
 msgstr ""
 
-#: InternalStockRequestInquiry.php:548 MRPReport.php:722
+#: InternalStockRequestInquiry.php:548 MRPReport.php:721
 #: PO_SelectOSPurchOrder.php:137 PO_SelectPurchOrder.php:105
 #: SelectCompletedOrder.php:228 SelectProduct.php:773 SelectQASamples.php:234
 #: SelectSalesOrder.php:1074 SupplierPriceList.php:218 TestPlanResults.php:117
@@ -17624,17 +17617,17 @@ msgstr "Dağıtımı için Başlangıç Tarihi"
 msgid "Distribution Period"
 msgstr "Dağıtım Dönemi"
 
-#: MRPCreateDemands.php:259 MRPPlannedPurchaseOrders.php:275
-#: MRPPlannedPurchaseOrders.php:326 MRPPlannedWorkOrders.php:331
-#: MRPPlannedWorkOrders.php:380 RecurringSalesOrders.php:450
+#: MRPCreateDemands.php:259 MRPPlannedPurchaseOrders.php:274
+#: MRPPlannedPurchaseOrders.php:325 MRPPlannedWorkOrders.php:330
+#: MRPPlannedWorkOrders.php:379 RecurringSalesOrders.php:450
 #: RecurringSalesOrders.php:452 SalesByTypePeriodInquiry.php:93
 #: SystemParameters.php:960 SystemParameters.php:962
 msgid "Weekly"
 msgstr "HAFTALIK"
 
-#: MRPCreateDemands.php:260 MRPPlannedPurchaseOrders.php:276
-#: MRPPlannedPurchaseOrders.php:328 MRPPlannedWorkOrders.php:332
-#: MRPPlannedWorkOrders.php:382 RecurringSalesOrders.php:460
+#: MRPCreateDemands.php:260 MRPPlannedPurchaseOrders.php:275
+#: MRPPlannedPurchaseOrders.php:327 MRPPlannedWorkOrders.php:331
+#: MRPPlannedWorkOrders.php:381 RecurringSalesOrders.php:460
 #: RecurringSalesOrders.php:462 SalesByTypePeriodInquiry.php:101
 #: SystemParameters.php:965 SystemParameters.php:967
 msgid "Monthly"
@@ -17785,182 +17778,179 @@ msgstr "Silmek Talep Türü"
 msgid "Or Delete Record"
 msgstr "Veya Kayıt Sil"
 
-#: MRPPlannedPurchaseOrders.php:14 MRPPlannedWorkOrders.php:13
+#: MRPPlannedPurchaseOrders.php:13 MRPPlannedWorkOrders.php:12
 #: MRPShortages.php:13
 msgid "MRP error"
 msgstr ""
 
-#: MRPPlannedPurchaseOrders.php:17 MRPPlannedWorkOrders.php:16
+#: MRPPlannedPurchaseOrders.php:16 MRPPlannedWorkOrders.php:15
 #: MRPReschedules.php:16 MRPShortages.php:16
 msgid "The MRP calculation must be run before you can run this report"
 msgstr "Bu rapor yayınlanmadan önce MRP hesaplama çalıştırılması gerekir"
 
-#: MRPPlannedPurchaseOrders.php:18 MRPPlannedWorkOrders.php:17
+#: MRPPlannedPurchaseOrders.php:17 MRPPlannedWorkOrders.php:16
 #: MRPReschedules.php:17 MRPShortages.php:17
 msgid "To run the MRP calculation click"
 msgstr "MİP hesaplama tıklayın çalıştırmak için"
 
-#: MRPPlannedPurchaseOrders.php:25 MRPPlannedPurchaseOrders.php:318
+#: MRPPlannedPurchaseOrders.php:24 MRPPlannedPurchaseOrders.php:317
 msgid "MRP Planned Purchase Orders Report"
 msgstr "MRP Planlı Satınalma Siparişleri Raporu"
 
-#: MRPPlannedPurchaseOrders.php:26 MRPPlannedPurchaseOrders.php:114
+#: MRPPlannedPurchaseOrders.php:25 MRPPlannedPurchaseOrders.php:113
 msgid "MRP Planned Purchase Orders"
 msgstr "MRP Satınalma Siparişleri Planlanan"
 
-#: MRPPlannedPurchaseOrders.php:37
+#: MRPPlannedPurchaseOrders.php:36
 msgid " Through  "
 msgstr " Ile  "
 
-#: MRPPlannedPurchaseOrders.php:116
+#: MRPPlannedPurchaseOrders.php:115
 msgid ""
 "The MRP planned purchase orders could not be retrieved by the SQL because"
 msgstr "MRP planlanmış siparişleri SQL çünkü tarafından alınamadı"
 
-#: MRPPlannedPurchaseOrders.php:125
+#: MRPPlannedPurchaseOrders.php:124
 msgid "Print MRP Planned Purchase Orders Error"
 msgstr "Baskı MRP Planlı Satın Alma Siparişleri Hata"
 
-#: MRPPlannedPurchaseOrders.php:127
+#: MRPPlannedPurchaseOrders.php:126
 msgid "There were no items with planned purchase orders"
 msgstr "planlı satın alma siparişleri ile öğe yok edildi"
 
-#: MRPPlannedPurchaseOrders.php:161 MRPPlannedPurchaseOrders.php:223
-#: MRPPlannedWorkOrders.php:164 MRPPlannedWorkOrders.php:216
+#: MRPPlannedPurchaseOrders.php:160 MRPPlannedPurchaseOrders.php:222
+#: MRPPlannedWorkOrders.php:163 MRPPlannedWorkOrders.php:215
 msgid "Unit Cost: "
 msgstr "Birim Maliyet: "
 
-#: MRPPlannedPurchaseOrders.php:165 MRPPlannedPurchaseOrders.php:227
-#: MRPPlannedWorkOrders.php:169 MRPPlannedWorkOrders.php:220
+#: MRPPlannedPurchaseOrders.php:164 MRPPlannedPurchaseOrders.php:226
+#: MRPPlannedWorkOrders.php:168 MRPPlannedWorkOrders.php:219
 msgid "M/B: "
 msgstr "M / B: "
 
-#: MRPPlannedPurchaseOrders.php:174 MRPPlannedPurchaseOrders.php:236
+#: MRPPlannedPurchaseOrders.php:173 MRPPlannedPurchaseOrders.php:235
 msgid "Last Purchase Date: "
 msgstr "Son Satın Alma Tarihi: "
 
-#: MRPPlannedPurchaseOrders.php:176 MRPPlannedPurchaseOrders.php:238
+#: MRPPlannedPurchaseOrders.php:175 MRPPlannedPurchaseOrders.php:237
 msgid "Supplier: "
 msgstr "Tedarikçi: "
 
-#: MRPPlannedPurchaseOrders.php:178 MRPPlannedPurchaseOrders.php:240
+#: MRPPlannedPurchaseOrders.php:177 MRPPlannedPurchaseOrders.php:239
 msgid "Preferred Supplier: "
 msgstr "Tercih Tedarikçi: "
 
-#: MRPPlannedPurchaseOrders.php:251
+#: MRPPlannedPurchaseOrders.php:250
 msgid "Number of Purchase Orders: "
 msgstr "Satın alma siparişleri sayısı: "
 
-#: MRPPlannedPurchaseOrders.php:253 MRPPlannedWorkOrders.php:233
+#: MRPPlannedPurchaseOrders.php:252 MRPPlannedWorkOrders.php:232
 msgid "Total Extended Cost:"
 msgstr "Toplam Genişletilmiş Maliyet:"
 
-#: MRPPlannedPurchaseOrders.php:262
+#: MRPPlannedPurchaseOrders.php:261
 msgid "MRP Planned Purchase Orders Reporting"
 msgstr "MRP Satınalma Siparişleri Raporlama Planlanan"
 
-#: MRPPlannedPurchaseOrders.php:272 MRPPlannedWorkOrders.php:253
-#: MRPPlannedWorkOrders.php:328
+#: MRPPlannedPurchaseOrders.php:271 MRPPlannedPurchaseOrders.php:329
+#: MRPPlannedWorkOrders.php:252 MRPPlannedWorkOrders.php:327
+#: MRPPlannedWorkOrders.php:383
 msgid "Consolidation"
 msgstr "Konsolidasyon"
 
-#: MRPPlannedPurchaseOrders.php:287 MRPPlannedWorkOrders.php:343
+#: MRPPlannedPurchaseOrders.php:286 MRPPlannedWorkOrders.php:342
 msgid "Cut Off Date"
 msgstr "Sınırlandırma Tarihi"
 
-#: MRPPlannedPurchaseOrders.php:330 MRPPlannedWorkOrders.php:384
-msgid "Consolidation:"
-msgstr "Konsolidasyon:"
-
-#: MRPPlannedPurchaseOrders.php:340 MRPPlannedWorkOrders.php:259
-#: MRPPlannedWorkOrders.php:394 MRPReport.php:449 MRPReschedules.php:197
+#: MRPPlannedPurchaseOrders.php:339 MRPPlannedWorkOrders.php:258
+#: MRPPlannedWorkOrders.php:393 MRPReport.php:448 MRPReschedules.php:197
 msgid "MRP Date"
 msgstr "MRP Tarihi"
 
-#: MRPPlannedPurchaseOrders.php:342 MRPPlannedWorkOrders.php:263
-#: MRPPlannedWorkOrders.php:396
+#: MRPPlannedPurchaseOrders.php:341 MRPPlannedWorkOrders.php:262
+#: MRPPlannedWorkOrders.php:395
 msgid "Ext. Cost"
 msgstr "Ext. Maliyet"
 
-#: MRPPlannedPurchaseOrders.php:344 MRPPlannedWorkOrders.php:398
+#: MRPPlannedPurchaseOrders.php:343 MRPPlannedWorkOrders.php:397
 msgid "Source Type"
 msgstr "Kaynak Türü"
 
-#: MRPPlannedPurchaseOrders.php:345 MRPPlannedWorkOrders.php:399
+#: MRPPlannedPurchaseOrders.php:344 MRPPlannedWorkOrders.php:398
 msgid "Source Order"
 msgstr "Kaynak Sipariş"
 
-#: MRPPlannedPurchaseOrders.php:347 MRPPlannedWorkOrders.php:401
+#: MRPPlannedPurchaseOrders.php:346 MRPPlannedWorkOrders.php:400
 msgid "Consolidation Count"
 msgstr "Konsolidasyon Toplamı"
 
-#: MRPPlannedWorkOrders.php:28
+#: MRPPlannedWorkOrders.php:27
 msgid "Through"
 msgstr ""
 
-#: MRPPlannedWorkOrders.php:106 MRPPlannedWorkOrders.php:117
-#: MRPPlannedWorkOrders.php:130
+#: MRPPlannedWorkOrders.php:105 MRPPlannedWorkOrders.php:116
+#: MRPPlannedWorkOrders.php:129
 msgid "MRP Planned Work Orders"
 msgstr "MRP İş Emirleri Planlanan"
 
-#: MRPPlannedWorkOrders.php:108
+#: MRPPlannedWorkOrders.php:107
 msgid "The MRP planned work orders could not be retrieved by the SQL because"
 msgstr "MRP planlanmış iş emirlerinin SQL çünkü tarafından alınamadı"
 
-#: MRPPlannedWorkOrders.php:119 ReorderLevel.php:181
+#: MRPPlannedWorkOrders.php:118 ReorderLevel.php:181
 msgid "There were no items with demand greater than supply"
 msgstr "talep arzdan daha büyük olan öğe yok edildi"
 
-#: MRPPlannedWorkOrders.php:129 MRPPlannedWorkOrders.php:372
+#: MRPPlannedWorkOrders.php:128 MRPPlannedWorkOrders.php:371
 msgid "MRP Planned Work Orders Report"
 msgstr "MRP Planlı İş Emirleri Raporu"
 
-#: MRPPlannedWorkOrders.php:231
+#: MRPPlannedWorkOrders.php:230
 msgid "Number of Work Orders: "
 msgstr "Iş Siparişler sayısı: "
 
-#: MRPPlannedWorkOrders.php:244
+#: MRPPlannedWorkOrders.php:243
 msgid "Review/Convert MRP Planned Work Orders"
 msgstr "Inceleme / MRP Planlı İş Emirleri dönüştürme"
 
-#: MRPPlannedWorkOrders.php:254
+#: MRPPlannedWorkOrders.php:253
 msgid "Cutoff Date"
 msgstr ""
 
-#: MRPPlannedWorkOrders.php:264
+#: MRPPlannedWorkOrders.php:263
 msgid "Consolidations"
 msgstr "Konsolidasyonlar"
 
-#: MRPPlannedWorkOrders.php:283
+#: MRPPlannedWorkOrders.php:282
 msgid "Convert"
 msgstr "Dönüştürmek"
 
-#: MRPPlannedWorkOrders.php:304
+#: MRPPlannedWorkOrders.php:303
 msgid "Number of Work Orders"
 msgstr ""
 
-#: MRPPlannedWorkOrders.php:305
+#: MRPPlannedWorkOrders.php:304
 msgid "Total Extended Cost"
 msgstr ""
 
-#: MRPPlannedWorkOrders.php:318
+#: MRPPlannedWorkOrders.php:317
 msgid "MRP Planned Work Orders Reporting"
 msgstr "MRP İş Emirleri Raporlama Planlanan"
 
-#: MRPPlannedWorkOrders.php:348
+#: MRPPlannedWorkOrders.php:347
 msgid "Review"
 msgstr "Inceleme"
 
-#: MRPReport.php:17 MRPReport.php:18 MRPReport.php:147 MRPReport.php:523
-#: MRPReport.php:844
+#: MRPReport.php:16 MRPReport.php:17 MRPReport.php:146 MRPReport.php:522
+#: MRPReport.php:843
 msgid "MRP Report"
 msgstr "MRP Raporu"
 
-#: MRPReport.php:36
+#: MRPReport.php:35
 msgid "Print MRP Report Error"
 msgstr "Baskı MRP Hata Bildir"
 
-#: MRPReport.php:38
+#: MRPReport.php:37
 msgid ""
 "The MRP calculation must be run before this report will have any output. MRP "
 "requires set up of many parameters, including, EOQ, lead times, minimums, "
@@ -17970,11 +17960,11 @@ msgstr ""
 "gerekir. MRP vb EOQ dahil olmak üzere birçok parametre, teslim süreleri, "
 "minimum, malzeme faturalarını, talep türleri, master planı kurmak gerektirir"
 
-#: MRPReport.php:47
+#: MRPReport.php:46
 msgid "Print MRP Report Warning"
 msgstr "Baskı MRP Uyarı Raporu"
 
-#: MRPReport.php:49
+#: MRPReport.php:48
 msgid ""
 "The MRP calculation must be run before this report will have any output. MRP "
 "requires set up of many parameters, including, EOQ, lead times, minimums, "
@@ -17984,83 +17974,83 @@ msgstr ""
 "gerekir. MRP vb EOQ dahil olmak üzere birçok parametre, teslim süreleri, "
 "minimum, malzeme, talep türleri, master planı faturaları, kurulumu gerektirir"
 
-#: MRPReport.php:149
+#: MRPReport.php:148
 msgid "The MRP Report could not be retrieved by the SQL because"
 msgstr "MRP Rapor SQL çünkü tarafından alınamadı"
 
-#: MRPReport.php:179
+#: MRPReport.php:178
 msgid "Part:"
 msgstr "Bölüm:"
 
-#: MRPReport.php:181
-msgid "EOQ:"
-msgstr "EOQ:"
+#: MRPReport.php:180 SelectProduct.php:144
+msgid "EOQ"
+msgstr "EOQ"
 
-#: MRPReport.php:183
+#: MRPReport.php:182
 msgid "On Hand:"
 msgstr "Yandan:"
 
-#: MRPReport.php:186
+#: MRPReport.php:185
 msgid "Desc:"
 msgstr "Desc:"
 
-#: MRPReport.php:188
+#: MRPReport.php:187
 msgid "Pan Size:"
 msgstr "Pan boyutu:"
 
-#: MRPReport.php:190
+#: MRPReport.php:189
 msgid "On Order:"
 msgstr "Sipariş üzerine:"
 
-#: MRPReport.php:197
+#: MRPReport.php:196
 msgid "Gross Req:"
 msgstr "Brüt Gereksinimleri:"
 
-#: MRPReport.php:202
+#: MRPReport.php:201
 msgid "Last Cost:"
 msgstr "Son Maliyet:"
 
-#: MRPReport.php:223 PrintCustStatements.php:437
+#: MRPReport.php:222 PrintCustStatements.php:437
 msgid "Past Due"
 msgstr "Geçtiğimiz nedeniyle"
 
-#: MRPReport.php:235 MRPReport.php:305 MRPReport.php:375
+#: MRPReport.php:234 MRPReport.php:304 MRPReport.php:374
 msgid "Gross Reqts"
 msgstr "Brüt Reqts"
 
-#: MRPReport.php:247 MRPReport.php:317 MRPReport.php:387
+#: MRPReport.php:246 MRPReport.php:316 MRPReport.php:386
 msgid "Open Order"
 msgstr "Açık sipariş"
 
-#: MRPReport.php:259 MRPReport.php:329 MRPReport.php:399
+#: MRPReport.php:258 MRPReport.php:328 MRPReport.php:398
 msgid "Planned"
 msgstr "Planlı"
 
-#: MRPReport.php:271 MRPReport.php:341 MRPReport.php:411
+#: MRPReport.php:270 MRPReport.php:340 MRPReport.php:410
 msgid "Proj Avail"
 msgstr "Proj Avail"
 
-#: MRPReport.php:283 MRPReport.php:353 MRPReport.php:423
+#: MRPReport.php:282 MRPReport.php:352 MRPReport.php:422
 msgid "Planned Acc"
 msgstr ""
 
-#: MRPReport.php:438
+#: MRPReport.php:437
 msgid "Dem Type"
 msgstr "Dem Tip"
 
-#: MRPReport.php:439
+#: MRPReport.php:438
 msgid "Where Required"
 msgstr "Burada Gerekli"
 
-#: MRPReport.php:444 MRPReschedules.php:193
+#: MRPReport.php:443 MRPReschedules.php:193
 msgid "Order No."
 msgstr "Bu sipariş Nolu"
 
-#: MRPReport.php:445
+#: MRPReport.php:444
 msgid "Sup Type"
 msgstr "Sup Tip"
 
-#: MRPReport.php:527
+#: MRPReport.php:526
 msgid ""
 "This report shows the MRP calculation for a specific item - a part code must "
 "be selected"
@@ -18068,12 +18058,12 @@ msgstr ""
 "bir parçası kod seçili olmalıdır - Bu rapor, belirli bir öğe için MRP "
 "hesaplama gösteriyor"
 
-#: MRPReport.php:723 SelectAsset.php:208 SelectProduct.php:774
+#: MRPReport.php:722 SelectAsset.php:208 SelectProduct.php:774
 #: SupplierPriceList.php:219
 msgid "The SQL that returned an error was"
 msgstr "bir hata döndürdü SQL oldu"
 
-#: MRPReport.php:726 SelectProduct.php:777 SupplierPriceList.php:222
+#: MRPReport.php:725 SelectProduct.php:777 SupplierPriceList.php:222
 msgid ""
 "No stock items were returned by this search please re-enter alternative "
 "criteria to try again"
@@ -19256,9 +19246,9 @@ msgstr "SATIS BÖLGELERI IÇIN"
 msgid "All Areas"
 msgstr "TÜM BÖLGELER"
 
-#: PDFCustomerList.php:389
-msgid "For Sales folk"
-msgstr "For Sales folk"
+#: PDFCustomerList.php:389 SalesGraph.php:144 SalesGraph.php:245
+msgid "For Salesperson:"
+msgstr "SATIS PERSONELI:"
 
 #: PDFCustomerList.php:401
 msgid "Level Of Activity"
@@ -19947,7 +19937,7 @@ msgstr "Baskı Fiyat Etiketleri"
 msgid "Label to print"
 msgstr ""
 
-#: PDFPrintLabel.php:298 StockQuantityByDate.php:23
+#: PDFPrintLabel.php:298 SalesGraph.php:121 StockQuantityByDate.php:23
 #: includes/PDFOrderStatusPageHeader.inc:19
 #: includes/PDFOrdersInvoicedPageHeader.inc:19
 msgid "For Stock Category"
@@ -20579,7 +20569,7 @@ msgstr "Müşteri sayısı"
 #: POReport.php:497 POReport.php:757 POReport.php:758 POReport.php:1281
 #: POReport.php:1457 POReport.php:1458 POReport.php:1641
 #: PurchaseByPrefSupplier.php:418 PurchaseByPrefSupplier.php:419
-#: SalesGraph.php:274 SalesInquiry.php:773 SalesInquiry.php:992
+#: SalesGraph.php:273 SalesInquiry.php:773 SalesInquiry.php:992
 #: SalesInquiry.php:993 SalesInquiry.php:1233 StockUsage.php:149
 #: StockUsageGraph.php:11
 msgid "Month"
@@ -22591,7 +22581,7 @@ msgid "Days"
 msgstr "GÜN"
 
 #: PcAssignCashTabToTab.php:239 PcAssignCashToTab.php:253
-#: PcAuthorizeExpenses.php:95 PcExpensesTypeTab.php:170
+#: PcAuthorizeExpenses.php:95 PcExpensesTypeTab.php:169
 msgid "Expense Code"
 msgstr "Gider Kodu"
 
@@ -22836,66 +22826,62 @@ msgstr ""
 msgid "Show All Petty Cash Expenses Defined"
 msgstr "Tanımlanan tüm Petty Cash Giderleri göster"
 
-#: PcExpensesTypeTab.php:6
+#: PcExpensesTypeTab.php:5
 msgid "Maintenance Of Petty Cash Expenses For a Type Tab"
 msgstr "Tip Sekme için Petty Cash Giderleri Of Bakım"
 
-#: PcExpensesTypeTab.php:22
+#: PcExpensesTypeTab.php:21
 msgid ""
 "The petty cash tab type contain any of the following characters \" ' - &amp; "
 "or a space"
 msgstr ""
 
-#: PcExpensesTypeTab.php:39
+#: PcExpensesTypeTab.php:38
 msgid "You have not selected a tab to maintain the expenses on"
 msgstr ""
 
-#: PcExpensesTypeTab.php:52
+#: PcExpensesTypeTab.php:51
 msgid "You have not selected an expense to add to this tab"
 msgstr ""
 
-#: PcExpensesTypeTab.php:71
+#: PcExpensesTypeTab.php:70
 msgid "The Expense"
 msgstr ""
 
-#: PcExpensesTypeTab.php:71
+#: PcExpensesTypeTab.php:70
 msgid "already exists in this Type of Tab"
 msgstr ""
 
-#: PcExpensesTypeTab.php:79
-msgid "Expense code:"
-msgstr "Gider kodu:"
-
-#: PcExpensesTypeTab.php:79
-msgid "for Type of Tab:"
-msgstr "Sekmesine Türü:"
-
-#: PcExpensesTypeTab.php:99 PcTypeTabs.php:141
-msgid "The Tab Type record could not be deleted because"
-msgstr "Tab Tipi kaydından dolayı silinemedi"
-
-#: PcExpensesTypeTab.php:101
+#: PcExpensesTypeTab.php:78 PcExpensesTypeTab.php:100
 msgid "Expense code"
 msgstr "Gider kodu"
 
-#: PcExpensesTypeTab.php:101
+#: PcExpensesTypeTab.php:78
+msgid "for Type of Tab:"
+msgstr "Sekmesine Türü:"
+
+#: PcExpensesTypeTab.php:98 PcTypeTabs.php:141
+msgid "The Tab Type record could not be deleted because"
+msgstr "Tab Tipi kaydından dolayı silinemedi"
+
+#: PcExpensesTypeTab.php:100
 msgid "for type of tab"
 msgstr "sekme türü için"
 
-#: PcExpensesTypeTab.php:116
+#: PcExpensesTypeTab.php:115
 msgid "Select Type of Tab"
 msgstr "Sekme seçin Tipi"
 
-#: PcExpensesTypeTab.php:150 PcExpensesTypeTab.php:168
+#: PcExpensesTypeTab.php:149 PcExpensesTypeTab.php:167
 msgid "Expense Codes for Type of Tab "
 msgstr "Sekme türü için Gider Kodları "
 
-#: PcExpensesTypeTab.php:187
+#: PcExpensesTypeTab.php:186
 #, php-format
 msgid "Are you sure you wish to delete this expense code?"
 msgstr ""
 
-#: PcExpensesTypeTab.php:204
+#: PcExpensesTypeTab.php:203
 msgid "Select Expense Code"
 msgstr "Seçmek Gider Kodu"
 
@@ -26013,7 +25999,7 @@ msgstr "BASLIK SATIRI 2"
 msgid "Calculation"
 msgstr "ISLEM/HESAP"
 
-#: SalesAnalReptCols.php:431 SalesGraph.php:222
+#: SalesAnalReptCols.php:431 SalesGraph.php:221
 msgid "From Period"
 msgstr "BASLANGIÇ"
 
@@ -26654,11 +26640,11 @@ msgstr "SATISLARI MUH.HESABINA GÖNDER"
 msgid "Post Discount to GL Account"
 msgstr "ISKONTOLARI MUH.HESABINA GÖNDER"
 
-#: SalesGraph.php:7
+#: SalesGraph.php:6
 msgid "Sales Report Graph"
 msgstr "SATIS RAPORU GRAFIGI"
 
-#: SalesGraph.php:28
+#: SalesGraph.php:27
 msgid ""
 "For graphs including either a customer or item range - the range must be "
 "specified. Please enter the value from and the value to for the range"
@@ -26666,125 +26652,113 @@ msgstr ""
 "grafikler ya bir müşteri veya ürün yelpazesi içeren için - aralığı "
 "belirtilmelidir. aralığı için gelen değer ve değer girin"
 
-#: SalesGraph.php:100
+#: SalesGraph.php:99
 msgid "For Sales Area/Region:"
 msgstr "SATIS BÖLGESI:"
 
-#: SalesGraph.php:122
-msgid "For Stock Category:"
-msgstr "STOK KATEGORISI:"
-
-#: SalesGraph.php:145
-msgid "For Sales Person:"
-msgstr "SATIS PERSONELI:"
-
-#: SalesGraph.php:165
+#: SalesGraph.php:164
 msgid "Graph Type"
 msgstr "Grafik Tip"
 
-#: SalesGraph.php:167
+#: SalesGraph.php:166
 msgid "Bar Graph"
 msgstr "Bar Grafik"
 
-#: SalesGraph.php:168
+#: SalesGraph.php:167
 msgid "Stacked Bar Graph"
 msgstr "Yığılmış Bar Grafiği"
 
-#: SalesGraph.php:169
+#: SalesGraph.php:168
 msgid "Line Graph"
 msgstr "Çizgi grafiği"
 
-#: SalesGraph.php:170
+#: SalesGraph.php:169
 msgid "Line Point Graph"
 msgstr "Hat Noktası Grafik"
 
-#: SalesGraph.php:171
+#: SalesGraph.php:170
 msgid "Area Graph"
 msgstr "Alan grafiği"
 
-#: SalesGraph.php:172
+#: SalesGraph.php:171
 msgid "Points Graph"
 msgstr "Puan Grafik"
 
-#: SalesGraph.php:173
+#: SalesGraph.php:172
 msgid "Pie Graph"
 msgstr "Pasta grafiği"
 
-#: SalesGraph.php:174
+#: SalesGraph.php:173
 msgid "Thin Bar Line Graph"
 msgstr "Ince Bar Hattı Grafik"
 
-#: SalesGraph.php:175
+#: SalesGraph.php:174
 msgid "Squared Graph"
 msgstr "Squared Grafik"
 
-#: SalesGraph.php:176
+#: SalesGraph.php:175
 msgid "Stacked Area Graph"
 msgstr "Yığılmış Alan Grafik"
 
-#: SalesGraph.php:186
+#: SalesGraph.php:185
 msgid "Graph On:"
 msgstr "GRAFIK:"
 
-#: SalesGraph.php:190
+#: SalesGraph.php:189
 msgid "From:"
 msgstr "ILK:"
 
-#: SalesGraph.php:191
+#: SalesGraph.php:190
 msgid "To:"
 msgstr "SON:"
 
-#: SalesGraph.php:194
+#: SalesGraph.php:193
 msgid "Graph Value:"
 msgstr "GRAFIK DEGER ALANI:"
 
-#: SalesGraph.php:195
+#: SalesGraph.php:194
 msgid "Net Sales Value"
 msgstr "NET SATISLAR"
 
-#: SalesGraph.php:201
+#: SalesGraph.php:200
 msgid "Show Sales Graph"
 msgstr "SATIS GRAFIGINI GÖSTER"
 
-#: SalesGraph.php:212 SalesGraph.php:276 SalesTopCustomersInquiry.php:215
+#: SalesGraph.php:211 SalesGraph.php:275 SalesTopCustomersInquiry.php:215
 #: SalesTopItemsInquiry.php:222
 msgid "Sales Value"
 msgstr "SATISLARIN DEGERI"
 
-#: SalesGraph.php:218
+#: SalesGraph.php:217
 msgid "Unit Sales"
 msgstr "ÜRÜN SATISLARI"
 
-#: SalesGraph.php:225
+#: SalesGraph.php:224
 msgid "For All Sales Areas"
 msgstr "BÜTÜN SATIS BÖLGELERI"
 
-#: SalesGraph.php:233
+#: SalesGraph.php:232
 msgid "For All Stock Categories"
 msgstr "BÜTÜN STOK KATEGORILERI"
 
-#: SalesGraph.php:242
+#: SalesGraph.php:241
 msgid "For All Salespeople"
 msgstr "BÜTÜN SATIS PERSONELI"
 
-#: SalesGraph.php:246
-msgid "For Salesperson:"
-msgstr "SATIS PERSONELI:"
-
-#: SalesGraph.php:251
+#: SalesGraph.php:250
 msgid "For Customers from"
 msgstr "MÜSTERI"
 
-#: SalesGraph.php:255
+#: SalesGraph.php:254
 msgid "For Items from"
 msgstr "ÜRÜN"
 
-#: SalesGraph.php:299
+#: SalesGraph.php:298
 msgid ""
 "The sales graph data for the selected criteria could not be retrieved because"
 msgstr "SEÇTIGINIZ KRITERLERE UYGUN SATIS GRAFIGI OLUSTURULAMIYOR:"
 
-#: SalesGraph.php:304
+#: SalesGraph.php:303
 msgid "There is not sales data for the criteria entered to graph"
 msgstr "KRITERLERE GÖRE GÖSTERILECEK GRAFIK YOK"
 
@@ -28284,10 +28258,6 @@ msgstr "Hacim"
 #: SelectProduct.php:142
 msgid "Weight"
 msgstr "Ağırlık"
-
-#: SelectProduct.php:144
-msgid "EOQ"
-msgstr "EOQ"
 
 #: SelectProduct.php:171
 msgid "No Default Price Set"
@@ -42627,10 +42597,6 @@ msgstr "Coğrafi kod üret"
 msgid "Geocoding of Customers and Suppliers"
 msgstr "Müşteri ve Tedarikçiler Geocoding"
 
-#: geocode.php:54
-msgid "Customer Code: "
-msgstr ""
-
 #: geocode.php:89
 msgid "failed to geocode."
 msgstr "coğrafi kod için başarısız oldu."
@@ -51676,6 +51642,27 @@ msgstr ""
 #: ../webSHOP/includes/session.php:137
 msgid "Bank Transfer"
 msgstr ""
+
+#~ msgid "Contract Reference:"
+#~ msgstr "Sözleşme Referans:"
+
+#~ msgid "Consolidation:"
+#~ msgstr "Konsolidasyon:"
+
+#~ msgid "EOQ:"
+#~ msgstr "EOQ:"
+
+#~ msgid "For Sales folk"
+#~ msgstr "For Sales folk"
+
+#~ msgid "Expense code:"
+#~ msgstr "Gider kodu:"
+
+#~ msgid "For Stock Category:"
+#~ msgstr "STOK KATEGORISI:"
+
+#~ msgid "For Sales Person:"
+#~ msgstr "SATIS PERSONELI:"
 
 #~ msgid "Assembly:"
 #~ msgstr "Montaj:"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-20 17:14-0600\n"
+"POT-Creation-Date: 2016-11-24 08:54-0600\n"
 "PO-Revision-Date: 2013-06-01 11:22-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -40,54 +40,54 @@ msgstr ""
 "Η SQL, πού χρησιμοποιήθηκε για την ανάκτηση των Ομάδων Λογαριασμών του "
 "Βασικού Λογαριασμού και που απέτυχε κατά την διαδικασία, ήταν"
 
-#: AccountGroups.php:46
+#: AccountGroups.php:45
 msgid "An error occurred in moving the account group"
 msgstr ""
 
-#: AccountGroups.php:47
+#: AccountGroups.php:46
 msgid "The SQL that was used to move the account group was"
 msgstr ""
 
-#: AccountGroups.php:49 AccountGroups.php:331
+#: AccountGroups.php:48 AccountGroups.php:330
 msgid "Review Account Groups"
 msgstr "Επισκόπηση Ομάδων Λογαριασμών"
 
-#: AccountGroups.php:50
+#: AccountGroups.php:49
 msgid "All accounts in the account group:"
 msgstr ""
 
-#: AccountGroups.php:50
+#: AccountGroups.php:49
 msgid "have been changed to the account group:"
 msgstr ""
 
-#: AccountGroups.php:69 AccountGroups.php:106 AccountGroups.php:208
-#: AccountGroups.php:243
+#: AccountGroups.php:68 AccountGroups.php:105 AccountGroups.php:207
+#: AccountGroups.php:242
 msgid "The SQL that was used to retrieve the information was"
 msgstr "Ο SQL που χρησιμοποιείται για την ανάκτηση των πληροφοριών που είχε"
 
-#: AccountGroups.php:70
+#: AccountGroups.php:69
 msgid "Could not check whether the group exists because"
 msgstr "Δεν μπόρεσα να ελέγχει κατά πόσον ο όμιλος υπάρχει γιατί"
 
-#: AccountGroups.php:77
+#: AccountGroups.php:76
 msgid "The account group name already exists in the database"
 msgstr "Το όνομα της ομάδας λογαριασμός υπάρχει ήδη στη βάση δεδομένων"
 
-#: AccountGroups.php:83
+#: AccountGroups.php:82
 msgid "The account group name cannot contain the character"
 msgstr "Το όνομα της Ομάδας Λογαριασμού δεν μπορεί να περιέχει τον χαρακτήρα"
 
-#: AccountGroups.php:83 Departments.php:30 TaxCategories.php:32
+#: AccountGroups.php:82 Departments.php:30 TaxCategories.php:32
 msgid "or the character"
 msgstr "ή τον χαρακτήρα"
 
-#: AccountGroups.php:89
+#: AccountGroups.php:88
 msgid "The account group name must be at least one character long"
 msgstr ""
 "Το όνομα της Ομάδας Λογαριασμού πρέπει να έχει μήκος τουλάχιστον έναν "
 "χαρακτήρα."
 
-#: AccountGroups.php:96
+#: AccountGroups.php:95
 msgid ""
 "The parent account group selected appears to result in a recursive account "
 "structure - select an alternative parent account group or make this group a "
@@ -97,11 +97,11 @@ msgstr ""
 "επαναλαμβανόμενη δομή Λογαριασμού - επιλέξτε μια άλλη μητρική Ομάδα "
 "Λογαριασμού ή μετατρέψτε αυτή την ομάδα σε Κεντρική."
 
-#: AccountGroups.php:107
+#: AccountGroups.php:106
 msgid "Could not check whether the group is recursive because"
 msgstr "Δεν μπόρεσα να ελέγξει αν η ομάδα έχει επαναληπτικό επειδή"
 
-#: AccountGroups.php:115
+#: AccountGroups.php:114
 msgid ""
 "Since this account group is a child group, the sequence in the trial "
 "balance, the section in the accounts and whether or not the account group "
@@ -110,57 +110,57 @@ msgid ""
 "will have no effect."
 msgstr ""
 
-#: AccountGroups.php:120
+#: AccountGroups.php:119
 msgid "The section in accounts must be an integer"
 msgstr "Το τμήμα στους Λογαριασμούς πρέπει να είναι ένας ακέραιος αριθμός"
 
-#: AccountGroups.php:126
+#: AccountGroups.php:125
 msgid "The sequence in the trial balance must be an integer"
 msgstr ""
 "Η ακολουθία στο δοκιμαστικό ισολογισμό πρέπει να είναι ένας ακέραιος αριθμός"
 
-#: AccountGroups.php:132
+#: AccountGroups.php:131
 msgid "The sequence in the TB must be numeric and less than"
 msgstr "Η ακολουθία της φυματίωσης πρέπει να είναι αριθμητικά και λιγότερο από"
 
-#: AccountGroups.php:148
+#: AccountGroups.php:147
 msgid "An error occurred in renaming the account group"
 msgstr ""
 
-#: AccountGroups.php:149
+#: AccountGroups.php:148
 msgid "The SQL that was used to rename the account group was"
 msgstr ""
 
-#: AccountGroups.php:168
+#: AccountGroups.php:167
 msgid "An error occurred in updating the account group"
 msgstr "Παρουσιάστηκε σφάλμα στην ενημέρωση της ομάδας λογαριασμού"
 
-#: AccountGroups.php:169
+#: AccountGroups.php:168
 msgid "The SQL that was used to update the account group was"
 msgstr "Ο SQL που χρησιμοποιήθηκε για την ενημέρωση της ομάδας λογαριασμός"
 
-#: AccountGroups.php:171 AccountSections.php:98 PaymentMethods.php:84
+#: AccountGroups.php:170 AccountSections.php:98 PaymentMethods.php:84
 msgid "Record Updated"
 msgstr "Εγγραφή ενημερώθηκε"
 
-#: AccountGroups.php:187
+#: AccountGroups.php:186
 msgid "An error occurred in inserting the account group"
 msgstr "Παρουσιάστηκε σφάλμα κατά την εισαγωγή της ομάδας λογαριασμού"
 
-#: AccountGroups.php:188
+#: AccountGroups.php:187
 msgid "The SQL that was used to insert the account group was"
 msgstr "Ο SQL που χρησιμοποιείται για την εισαγωγή στην ομάδα λογαριασμού"
 
-#: AccountGroups.php:189 AccountSections.php:108
+#: AccountGroups.php:188 AccountSections.php:108
 msgid "Record inserted"
 msgstr "Εγγραφή προστέθηκε"
 
-#: AccountGroups.php:207
+#: AccountGroups.php:206
 msgid "An error occurred in retrieving the group information from chartmaster"
 msgstr ""
 "Παρουσιάστηκε σφάλμα κατά την ανάκτηση των πληροφοριών ομάδα από chartmaster"
 
-#: AccountGroups.php:212
+#: AccountGroups.php:211
 msgid ""
 "Cannot delete this account group because general ledger accounts have been "
 "created using this group"
@@ -168,7 +168,7 @@ msgstr ""
 "Δεν μπορείτε να διαγράψετε αυτήν την ομάδα Λογαρισμού επειδή οι γενικοί  "
 "καθολικοί λογαρισμοί  έχουν δημιουργηθεί χρησιμοποιώντας αυτήν την ομάδα"
 
-#: AccountGroups.php:213 AccountGroups.php:248 AccountSections.php:130
+#: AccountGroups.php:212 AccountGroups.php:247 AccountSections.php:130
 #: Areas.php:115 Areas.php:124 BankAccounts.php:165 CreditStatus.php:125
 #: Currencies.php:247 Currencies.php:255 Currencies.php:263 Currencies.php:273
 #: CustomerBranches.php:300 CustomerBranches.php:310 CustomerBranches.php:320
@@ -192,24 +192,24 @@ msgstr ""
 msgid "There are"
 msgstr "Υπάρχουν"
 
-#: AccountGroups.php:213
+#: AccountGroups.php:212
 msgid "general ledger accounts that refer to this account group"
 msgstr ""
 "γενικοί καθολικοί λογαριασμοί που αναφέρονται σε αυτή την Ομάδα Λογαριασμών"
 
-#: AccountGroups.php:220 AccountGroups.php:290 AccountGroups.php:418
+#: AccountGroups.php:219 AccountGroups.php:289 AccountGroups.php:432
 msgid "Parent Group"
 msgstr "Μητρική Ομάδα"
 
-#: AccountGroups.php:236
+#: AccountGroups.php:235
 msgid "Move Group"
 msgstr ""
 
-#: AccountGroups.php:242
+#: AccountGroups.php:241
 msgid "An error occurred in retrieving the parent group information"
 msgstr "Παρουσιάστηκε σφάλμα κατά την ανάκτηση των πληροφοριών ομάδα γονέων"
 
-#: AccountGroups.php:247
+#: AccountGroups.php:246
 msgid ""
 "Cannot delete this account group because it is a parent account group of "
 "other account group(s)"
@@ -217,33 +217,33 @@ msgstr ""
 "Δεν είναι δυνατή η διαγραφή αυτής της Ομάδας Λογαριασμών επειδή είναι μια "
 "Μητρική Ομάδα Λογαριασμού άλλων Ομάδων Λογαριασμού"
 
-#: AccountGroups.php:248
+#: AccountGroups.php:247
 msgid "account groups that have this group as its/there parent account group"
 msgstr "Όμάδες Λογαριασμών που έχουν αυτή την ομάδα ως Μητρική Ομάδα"
 
-#: AccountGroups.php:252
+#: AccountGroups.php:251
 msgid "An error occurred in deleting the account group"
 msgstr "Παρουσιάστηκε σφάλμα κατά τη διαγραφή της ομάδας λογαριασμού"
 
-#: AccountGroups.php:253
+#: AccountGroups.php:252
 msgid "The SQL that was used to delete the account group was"
 msgstr "Ο SQL που χρησιμοποιήθηκε για να διαγράψετε την ομάδα λογαριασμού"
 
-#: AccountGroups.php:255
+#: AccountGroups.php:254
 msgid "group has been deleted"
 msgstr "Η ομάδα διαγράφηκε"
 
-#: AccountGroups.php:279
+#: AccountGroups.php:278
 msgid "The sql that was used to retrieve the account group information was "
 msgstr ""
 "Ο SQL που χρησιμοποιείται για την ανάκτηση των πληροφοριών της ομάδας "
 "λογαριασμός "
 
-#: AccountGroups.php:280
+#: AccountGroups.php:279
 msgid "Could not get account groups because"
 msgstr "Δεν μπορούσαν να ανακτηθούν οι Ομάδες Λογαριασμών γιατι,"
 
-#: AccountGroups.php:282 AddCustomerContacts.php:28 AddCustomerContacts.php:30
+#: AccountGroups.php:281 AddCustomerContacts.php:28 AddCustomerContacts.php:30
 #: AddCustomerNotes.php:101 AddCustomerTypeNotes.php:94 AgedDebtors.php:454
 #: AgedSuppliers.php:276 Areas.php:144 AuditTrail.php:11 BOMExtendedQty.php:256
 #: BOMIndented.php:249 BOMIndentedReverse.php:236 BOMInquiry.php:186
@@ -259,7 +259,7 @@ msgstr "Δεν μπορούσαν να ανακτηθούν οι Ομάδες Λ
 #: GLBudgets.php:32 GLJournal.php:250 GLJournalInquiry.php:11
 #: HistoricalTestResults.php:42 InternalStockRequest.php:316
 #: InternalStockRequestInquiry.php:168 InventoryPlanning.php:459
-#: InventoryPlanningPrefSupplier.php:386 MRPReport.php:544
+#: InventoryPlanningPrefSupplier.php:386 MRPReport.php:543
 #: MaintenanceTasks.php:14 MaintenanceUserSchedule.php:16 NoSalesItems.php:91
 #: PDFPickingList.php:29 PDFStockLocTransfer.php:16 POReport.php:60
 #: POReport.php:64 POReport.php:68 PO_AuthorisationLevels.php:10
@@ -271,7 +271,7 @@ msgstr "Δεν μπορούσαν να ανακτηθούν οι Ομάδες Λ
 #: PurchData.php:241 PurchData.php:373 PurchData.php:401
 #: PurchaseByPrefSupplier.php:305 QATests.php:22 RecurringSalesOrders.php:320
 #: RelatedItemsUpdate.php:24 SalesAnalReptCols.php:51 SalesAnalRepts.php:14
-#: SalesCategories.php:11 SalesGLPostings.php:19 SalesGraph.php:40
+#: SalesCategories.php:11 SalesGLPostings.php:19 SalesGraph.php:39
 #: SalesPeople.php:28 SalesTypes.php:20 SelectAsset.php:48
 #: SelectCompletedOrder.php:11 SelectContract.php:69 SelectCreditItems.php:221
 #: SelectCreditItems.php:292 SelectCustomer.php:258 SelectGLAccount.php:86
@@ -287,32 +287,32 @@ msgstr "Δεν μπορούσαν να ανακτηθούν οι Ομάδες Λ
 #: SupplierTenders.php:322 SupplierTenders.php:388 SupplierTransInquiry.php:10
 #: Suppliers.php:304 TestPlanResults.php:27 TopItems.php:118
 #: UnitsOfMeasure.php:10 WhereUsedInquiry.php:18 WorkCentres.php:113
-#: WorkOrderCosting.php:22 WorkOrderEntry.php:11 WorkOrderIssue.php:22
-#: WorkOrderReceive.php:34 WorkOrderStatus.php:58 Z_BottomUpCosts.php:57
+#: WorkOrderCosting.php:22 WorkOrderIssue.php:22 WorkOrderReceive.php:34
+#: WorkOrderStatus.php:58 Z_BottomUpCosts.php:57
 #: ../webSHOP/includes/header.php:251
 msgid "Search"
 msgstr "Αναζήτηση"
 
-#: AccountGroups.php:286
+#: AccountGroups.php:285
 msgid "Group Name"
 msgstr "Όνομα Ομάδας"
 
-#: AccountGroups.php:287 EDIMessageFormat.php:129 EDIMessageFormat.php:208
+#: AccountGroups.php:286 EDIMessageFormat.php:129 EDIMessageFormat.php:208
 msgid "Section"
 msgstr "Τομέας"
 
-#: AccountGroups.php:288 AccountGroups.php:474
+#: AccountGroups.php:287 AccountGroups.php:481
 msgid "Sequence In TB"
 msgstr "Κωδικός Στο ΔΙ"
 
-#: AccountGroups.php:289 AccountGroups.php:457 GLProfit_Loss.php:6
+#: AccountGroups.php:288 AccountGroups.php:469 GLProfit_Loss.php:6
 #: GLProfit_Loss.php:135 GLProfit_Loss.php:136 GLProfit_Loss.php:188
 #: SelectGLAccount.php:23 SelectGLAccount.php:41 SelectGLAccount.php:63
 msgid "Profit and Loss"
 msgstr "Κέρδος και Ζημία"
 
-#: AccountGroups.php:307 AccountGroups.php:310 AccountGroups.php:461
-#: AccountGroups.php:463 AddCustomerContacts.php:165
+#: AccountGroups.php:306 AccountGroups.php:309 AccountGroups.php:473
+#: AccountGroups.php:476 AddCustomerContacts.php:165
 #: AddCustomerContacts.php:275 AddCustomerContacts.php:279
 #: AddCustomerContacts.php:282 BOMs.php:140 BOMs.php:896 BOMs.php:898
 #: CompanyPreferences.php:423 CompanyPreferences.php:425
@@ -334,7 +334,7 @@ msgstr "Κέρδος και Ζημία"
 #: PO_Header.php:807 PO_PDFPurchOrder.php:413 PO_PDFPurchOrder.php:416
 #: PaymentMethods.php:206 PaymentMethods.php:207 PaymentMethods.php:208
 #: PaymentMethods.php:209 PaymentMethods.php:275 PaymentMethods.php:282
-#: PaymentMethods.php:289 PaymentMethods.php:296 PcAuthorizeExpenses.php:248
+#: PaymentMethods.php:289 PaymentMethods.php:296 PcAuthorizeExpenses.php:249
 #: ProductSpecs.php:188 ProductSpecs.php:409 ProductSpecs.php:414
 #: ProductSpecs.php:420 ProductSpecs.php:425 ProductSpecs.php:430
 #: ProductSpecs.php:562 ProductSpecs.php:608 ProductSpecs.php:610
@@ -379,7 +379,7 @@ msgstr "Κέρδος και Ζημία"
 msgid "Yes"
 msgstr "Ναί"
 
-#: AccountGroups.php:313 AccountGroups.php:466 AccountGroups.php:468
+#: AccountGroups.php:312 AccountGroups.php:472 AccountGroups.php:475
 #: AddCustomerContacts.php:165 AddCustomerContacts.php:274
 #: AddCustomerContacts.php:278 AddCustomerContacts.php:281 BOMs.php:142
 #: BOMs.php:895 BOMs.php:899 BankAccounts.php:218 BankAccounts.php:412
@@ -404,7 +404,7 @@ msgstr "Ναί"
 #: PO_PDFPurchOrder.php:417 PaymentMethods.php:206 PaymentMethods.php:207
 #: PaymentMethods.php:208 PaymentMethods.php:209 PaymentMethods.php:276
 #: PaymentMethods.php:283 PaymentMethods.php:290 PaymentMethods.php:297
-#: PcAuthorizeExpenses.php:246 ProductSpecs.php:191 ProductSpecs.php:411
+#: PcAuthorizeExpenses.php:247 ProductSpecs.php:191 ProductSpecs.php:411
 #: ProductSpecs.php:417 ProductSpecs.php:422 ProductSpecs.php:427
 #: ProductSpecs.php:432 ProductSpecs.php:613 ProductSpecs.php:615
 #: ProductSpecs.php:626 ProductSpecs.php:628 ProductSpecs.php:639
@@ -448,7 +448,7 @@ msgstr "Ναί"
 msgid "No"
 msgstr "Όχι"
 
-#: AccountGroups.php:322 AccountSections.php:196 AddCustomerContacts.php:158
+#: AccountGroups.php:321 AccountSections.php:196 AddCustomerContacts.php:158
 #: AddCustomerNotes.php:137 AddCustomerTypeNotes.php:131 Areas.php:164
 #: BOMs.php:198 BankAccounts.php:243 COGSGLPostings.php:112
 #: COGSGLPostings.php:219 CreditStatus.php:175 Currencies.php:374
@@ -482,14 +482,14 @@ msgstr "Όχι"
 msgid "Edit"
 msgstr "Επεξεργασία"
 
-#: AccountGroups.php:323
+#: AccountGroups.php:322
 msgid "Are you sure you wish to delete this account group?"
 msgstr ""
 
-#: AccountGroups.php:323 AccountSections.php:201 AddCustomerContacts.php:159
+#: AccountGroups.php:322 AccountSections.php:201 AddCustomerContacts.php:159
 #: AddCustomerNotes.php:138 AddCustomerTypeNotes.php:132 Areas.php:165
 #: BOMs.php:200 BankAccounts.php:244 COGSGLPostings.php:113
-#: COGSGLPostings.php:220 ContractBOM.php:272 ContractOtherReqts.php:124
+#: COGSGLPostings.php:220 ContractBOM.php:271 ContractOtherReqts.php:123
 #: CounterReturns.php:740 CounterSales.php:836 CreditStatus.php:176
 #: Credit_Invoice.php:420 Currencies.php:377 CustItem.php:167
 #: CustomerReceipt.php:1001 CustomerTypes.php:206 Customers.php:1166
@@ -503,7 +503,7 @@ msgstr ""
 #: Manufacturers.php:261 PO_AuthorisationLevels.php:153 PO_Items.php:768
 #: PaymentMethods.php:211 PaymentTerms.php:206 Payments.php:1155
 #: PcAssignCashToTab.php:295 PcClaimExpensesFromTab.php:281 PcExpenses.php:227
-#: PcExpensesTypeTab.php:187 PcTabs.php:257 PcTypeTabs.php:181
+#: PcExpensesTypeTab.php:186 PcTabs.php:257 PcTypeTabs.php:181
 #: PriceMatrix.php:292 Prices.php:254 Prices_Customer.php:287
 #: ProductSpecs.php:466 PurchData.php:314 PurchData.php:721 QATests.php:468
 #: RelatedItemsUpdate.php:155 RelatedItemsUpdate.php:170
@@ -522,19 +522,19 @@ msgstr ""
 #: TaxCategories.php:186 TaxGroups.php:192 TaxProvinces.php:180
 #: TestPlanResults.php:920 UnitsOfMeasure.php:186 WOSerialNos.php:335
 #: WWW_Access.php:133 WWW_Users.php:380 WorkCentres.php:146
-#: WorkOrderEntry.php:864 includes/InputSerialItemsKeyed.php:60
+#: WorkOrderEntry.php:865 includes/InputSerialItemsKeyed.php:60
 #: includes/OutputSerialItems.php:99
 #: reportwriter/languages/en_US/reports.php:141
 #, php-format
 msgid "Delete"
 msgstr "Διαγραφή"
 
-#: AccountGroups.php:351
+#: AccountGroups.php:350
 msgid "An error occurred in retrieving the account group information"
 msgstr ""
 "Παρουσιάστηκε σφάλμα κατά την ανάκτηση των πληροφοριών της ομάδας λογαριασμού"
 
-#: AccountGroups.php:352
+#: AccountGroups.php:351
 msgid ""
 "The SQL that was used to retrieve the account group and that failed in the "
 "process was"
@@ -542,69 +542,86 @@ msgstr ""
 "Ο SQL που χρησιμοποιείται για την ανάκτηση της ομάδας λογαριασμό και ότι "
 "απέτυχε στη διαδικασία ήταν"
 
-#: AccountGroups.php:355
+#: AccountGroups.php:354
 msgid "The account group name does not exist in the database"
 msgstr "Το όνομα της ομάδας λογαριασμός δεν υπάρχει στη βάση δεδομένων"
 
-#: AccountGroups.php:370
+#: AccountGroups.php:369
 msgid "Edit Account Group Details"
 msgstr ""
 
-#: AccountGroups.php:400
+#: AccountGroups.php:376 CompanyPreferences.php:466
+#: ConfirmDispatch_Invoice.php:656 ConfirmDispatch_Invoice.php:1707
+#: Credit_Invoice.php:1634 CustItem.php:452 FixedAssetItems.php:132
+#: FixedAssetItems.php:683 GLAccountUsers.php:153 GLBudgets.php:240
+#: GLCashFlowsSetup.php:173 GLTags.php:68 GoodsReceived.php:298
+#: GoodsReceived.php:304 GoodsReceived.php:311 GoodsReceived.php:819
+#: ImportBankTransAnalysis.php:154 ImportBankTransAnalysis.php:185
+#: InternalStockRequest.php:255 InternalStockRequestAuthorisation.php:123
+#: InternalStockRequestFulfill.php:364 LocationUsers.php:177
+#: MRPCalendar.php:315 PO_AuthoriseMyOrders.php:142 Payments.php:981
+#: PcAuthorizeExpenses.php:109 PcAuthorizeExpenses.php:294 PricesByCost.php:223
+#: PurchData.php:758 ReorderLevelLocation.php:140 RevisionTranslations.php:111
+#: SMTPServer.php:126 SecurityTokens.php:136 SelectCreditItems.php:954
+#: SellThroughSupport.php:476 ShopParameters.php:610 StockCostUpdate.php:196
+#: StockReorderLevel.php:111 Stocks.php:1452 SystemParameters.php:1246
+#: UserGLAccounts.php:159 UserLocations.php:178 WOSerialNos.php:345
+#: WorkOrderEntry.php:887 reportwriter/languages/en_US/reports.php:156
+msgid "Update"
+msgstr "Ενημέρωση"
+
+#: AccountGroups.php:378 AccountGroups.php:418 AnalysisHorizontalIncome.php:121
+#: AnalysisHorizontalIncome.php:522 AnalysisHorizontalPosition.php:79
+#: AnalysisHorizontalPosition.php:362 DailyBankTransactions.php:257
+#: GLAccountUsers.php:253 GLBalanceSheet.php:720 GLCashFlowsIndirect.php:741
+#: GLCashFlowsIndirect.php:774 GLCashFlowsSetup.php:181 GLProfit_Loss.php:1317
+#: GLTrialBalance.php:740 InternalStockRequestInquiry.php:264
+#: SecurityTokens.php:140 SecurityTokens.php:156 UserGLAccounts.php:259
+#: Z_GLAccountUsersCopyAuthority.php:96 includes/Login.php:8
+msgid "Return"
+msgstr ""
+
+#: AccountGroups.php:409
 msgid "New Account Group Details"
 msgstr ""
 
-#: AccountGroups.php:405 AccountSections.php:285 AddCustomerContacts.php:297
-#: AddCustomerNotes.php:242 AddCustomerTypeNotes.php:221 Areas.php:229
-#: BOMs.php:916 BankAccounts.php:433 COGSGLPostings.php:368
-#: CreditStatus.php:259 Currencies.php:537 CustLoginSetup.php:273
-#: Departments.php:258 DiscountMatrix.php:142 EDIMessageFormat.php:248
-#: FixedAssetCategories.php:350 FixedAssetLocations.php:161
-#: FreightCosts.php:371 GLAccounts.php:297 GeocodeSetup.php:271 Labels.php:647
-#: Locations.php:716 MRPDemandTypes.php:188 MRPDemands.php:424
-#: Manufacturers.php:375 OffersReceived.php:57 OffersReceived.php:146
-#: PO_AuthorisationLevels.php:264 PaymentMethods.php:302 PaymentTerms.php:310
-#: PriceMatrix.php:236 Prices_Customer.php:369 ProductSpecs.php:661
-#: QATests.php:359 SalesAnalReptCols.php:552 SalesAnalRepts.php:519
-#: SalesGLPostings.php:427 SalesPeople.php:381 SelectQASamples.php:531
-#: SelectQASamples.php:601 Shippers.php:203 StockCategories.php:653
-#: SuppLoginSetup.php:291 SupplierContacts.php:284 TaxAuthorities.php:327
-#: TaxCategories.php:244 TaxProvinces.php:234 TestPlanResults.php:967
-#: UnitsOfMeasure.php:241 WWW_Users.php:783 WorkCentres.php:289
-msgid "Enter Information"
-msgstr "Καταχώρηση Πληροφοριών"
+#: AccountGroups.php:416 GLTags.php:70 SecurityTokens.php:154
+#: Z_ImportDebtors.php:626 Z_ImportDebtors.php:628 Z_ImportSuppliers.php:336
+#: Z_ImportSuppliers.php:338
+msgid "Insert"
+msgstr "Εισαγωγή"
 
-#: AccountGroups.php:414
+#: AccountGroups.php:428
 msgid "Account Group Name"
 msgstr "Όνομα λογαριασμού Group"
 
-#: AccountGroups.php:415
+#: AccountGroups.php:429
 msgid "Enter the account group name"
 msgstr ""
 
-#: AccountGroups.php:415
+#: AccountGroups.php:429
 msgid ""
 "A unique name for the account group must be entered - at least 3 characters "
 "long and less than 30 characters long. Only alpha numeric characters can be "
 "used."
 msgstr ""
 
-#: AccountGroups.php:427
+#: AccountGroups.php:438
 msgid "Top Level Group"
 msgstr "Κεντρική Ομάδα"
 
-#: AccountGroups.php:440
+#: AccountGroups.php:452
 msgid "Section In Accounts"
 msgstr "Τομέας στους Λογαριασμούς"
 
-#: AccountGroups.php:458
+#: AccountGroups.php:470
 msgid ""
 "Select YES if this account group will contain accounts that will consist of "
 "only profit and loss accounts or NO if the group will contain balance sheet "
 "account"
 msgstr ""
 
-#: AccountGroups.php:475
+#: AccountGroups.php:482
 msgid ""
 "Enter the sequence number that this account group and its child general "
 "ledger accounts should display in the trial balance"
@@ -681,6 +698,26 @@ msgstr ""
 #: AccountSections.php:267
 msgid "New Account Section Details"
 msgstr ""
+
+#: AccountSections.php:285 AddCustomerContacts.php:297 AddCustomerNotes.php:242
+#: AddCustomerTypeNotes.php:221 Areas.php:229 BOMs.php:916 BankAccounts.php:433
+#: COGSGLPostings.php:368 CreditStatus.php:259 Currencies.php:537
+#: CustLoginSetup.php:273 Departments.php:258 DiscountMatrix.php:142
+#: EDIMessageFormat.php:248 FixedAssetCategories.php:350
+#: FixedAssetLocations.php:161 FreightCosts.php:371 GLAccounts.php:297
+#: GeocodeSetup.php:271 Labels.php:647 Locations.php:716 MRPDemandTypes.php:188
+#: MRPDemands.php:424 Manufacturers.php:375 OffersReceived.php:57
+#: OffersReceived.php:146 PO_AuthorisationLevels.php:264 PaymentMethods.php:302
+#: PaymentTerms.php:310 PriceMatrix.php:236 Prices_Customer.php:369
+#: ProductSpecs.php:661 QATests.php:359 SalesAnalReptCols.php:552
+#: SalesAnalRepts.php:519 SalesGLPostings.php:427 SalesPeople.php:381
+#: SelectQASamples.php:531 SelectQASamples.php:601 Shippers.php:203
+#: StockCategories.php:653 SuppLoginSetup.php:291 SupplierContacts.php:284
+#: TaxAuthorities.php:327 TaxCategories.php:244 TaxProvinces.php:234
+#: TestPlanResults.php:967 UnitsOfMeasure.php:241 WWW_Users.php:783
+#: WorkCentres.php:289
+msgid "Enter Information"
+msgstr "Καταχώρηση Πληροφοριών"
 
 #: AddCustomerContacts.php:6 AddCustomerContacts.php:63 SelectCustomer.php:723
 #: SelectCustomer.php:791
@@ -790,9 +827,9 @@ msgstr "Δήλωση"
 #: GLCashFlowsIndirect.php:445 PDFQuotation.php:252
 #: PDFQuotationPortrait.php:249 PcAssignCashTabToTab.php:242
 #: PcAssignCashTabToTab.php:365 PcAssignCashToTab.php:256
-#: PcAssignCashToTab.php:394 PcAuthorizeExpenses.php:97
+#: PcAssignCashToTab.php:394 PcAuthorizeExpenses.php:98
 #: PcClaimExpensesFromTab.php:242 PcClaimExpensesFromTab.php:409
-#: PcReportTab.php:333 SelectCustomer.php:732 ShopParameters.php:198
+#: PcReportTab.php:336 SelectCustomer.php:732 ShopParameters.php:198
 #: SystemParameters.php:411 WOSerialNos.php:306 WOSerialNos.php:312
 msgid "Notes"
 msgstr "Σημειώσεις"
@@ -886,7 +923,7 @@ msgstr "Σημειώσεις για την Εξυπηρέτηση Πελατών
 #: GLTransInquiry.php:47 GoodsReceived.php:130 MRPCalendar.php:219
 #: PDFOrdersInvoiced.php:378 PDFRemittanceAdvice.php:308 PDFWOPrint.php:450
 #: PaymentAllocations.php:66 PcAssignCashTabToTab.php:238
-#: PcAssignCashToTab.php:252 PcAuthorizeExpenses.php:93 PrintCustTrans.php:822
+#: PcAssignCashToTab.php:252 PcAuthorizeExpenses.php:94 PrintCustTrans.php:822
 #: PrintCustTransPortrait.php:902 PrintWOItemSlip.php:186
 #: PrintWOItemSlip.php:197 PrintWOItemSlip.php:208 ReverseGRN.php:401
 #: SelectCustomer.php:810 SelectCustomer.php:852 ShipmentCosting.php:538
@@ -904,7 +941,7 @@ msgstr "Σημειώσεις για την Εξυπηρέτηση Πελατών
 msgid "Date"
 msgstr "Ημερομηνία"
 
-#: AddCustomerNotes.php:118 AddCustomerTypeNotes.php:112 PcReportTab.php:180
+#: AddCustomerNotes.php:118 AddCustomerTypeNotes.php:112 PcReportTab.php:183
 #: SelectCustomer.php:811 SelectCustomer.php:853 StockClone.php:942
 #: Stocks.php:1270 UpgradeDatabase.php:246 UpgradeDatabase.php:249
 #: UpgradeDatabase.php:252 UpgradeDatabase.php:255 UpgradeDatabase.php:258
@@ -1004,8 +1041,8 @@ msgstr ""
 #: AgedControlledInventory.php:12 GLCashFlowsSetup.php:110
 #: InventoryQuantities.php:155 InventoryValuation.php:217 Locations.php:12
 #: MRP.php:542 MRPCalendar.php:21 MRPCreateDemands.php:193
-#: MRPDemandTypes.php:17 MRPDemands.php:27 MRPPlannedPurchaseOrders.php:265
-#: MRPPlannedWorkOrders.php:247 MRPPlannedWorkOrders.php:321 PricesByCost.php:8
+#: MRPDemandTypes.php:17 MRPDemands.php:27 MRPPlannedPurchaseOrders.php:264
+#: MRPPlannedWorkOrders.php:246 MRPPlannedWorkOrders.php:320 PricesByCost.php:8
 #: ReorderLevel.php:194 ReorderLevelLocation.php:12 SelectProduct.php:90
 #: StockDispatch.php:321 StockMovements.php:22 StockQties_csv.php:8
 #: StockQuantityByDate.php:10 StockReorderLevel.php:20
@@ -1028,8 +1065,8 @@ msgstr "Χρηματιστήριο"
 #: AgedControlledInventory.php:43 AutomaticTranslationDescriptions.php:37
 #: BOMIndented.php:315 BOMIndentedReverse.php:293 BOMInquiry.php:109
 #: BOMInquiry.php:198 BOMs.php:656 BOMs.php:1015 CollectiveWorkOrderCost.php:45
-#: CollectiveWorkOrderCost.php:317 ContractBOM.php:242 ContractBOM.php:354
-#: ContractOtherReqts.php:98 CounterReturns.php:1692 CounterSales.php:2102
+#: CollectiveWorkOrderCost.php:317 ContractBOM.php:241 ContractBOM.php:353
+#: ContractOtherReqts.php:97 CounterReturns.php:1692 CounterSales.php:2102
 #: CounterSales.php:2256 CreditStatus.php:152 CreditStatus.php:243
 #: CustomerPurchases.php:81 EmailConfirmation.php:219 EmailConfirmation.php:349
 #: FixedAssetCategories.php:167 FixedAssetDepreciation.php:91
@@ -1042,14 +1079,14 @@ msgstr "Χρηματιστήριο"
 #: InternalStockRequestInquiry.php:405 InventoryPlanning.php:419
 #: InventoryQuantities.php:246 InventoryValuation.php:197 Labels.php:290
 #: MRPDemandTypes.php:113 MRPDemands.php:92 MRPDemands.php:295
-#: MRPPlannedWorkOrders.php:258 MRPReport.php:564 MRPReport.php:778
+#: MRPPlannedWorkOrders.php:257 MRPReport.php:563 MRPReport.php:777
 #: MRPReschedules.php:192 MRPShortages.php:350 MaintenanceTasks.php:95
 #: MaintenanceUserSchedule.php:50 MaterialsNotUsed.php:35 NoSalesItems.php:194
 #: PDFCOA.php:64 PDFOrderStatus.php:337 PDFOrdersInvoiced.php:335
 #: PDFSalesBySalesperson.php:86 PDFWeeklyOrders.php:82 PO_Items.php:716
 #: PO_Items.php:1194 PO_SelectOSPurchOrder.php:310 PO_SelectPurchOrder.php:214
 #: PaymentTerms.php:182 PcExpenses.php:190 PcExpenses.php:296
-#: PcExpensesTypeTab.php:171 PcReportTab.php:178 PcTypeTabs.php:164
+#: PcExpensesTypeTab.php:170 PcReportTab.php:181 PcTypeTabs.php:164
 #: PricesByCost.php:153 RelatedItemsUpdate.php:154 ReorderLevel.php:298
 #: ReorderLevelLocation.php:73 ReverseGRN.php:400 SalesCategories.php:549
 #: SecurityTokens.php:107 SecurityTokens.php:167 SelectAsset.php:264
@@ -1061,14 +1098,14 @@ msgstr "Χρηματιστήριο"
 #: StockCounts.php:142 StockDispatch.php:506 StockLocStatus.php:176
 #: StockQuantityByDate.php:109 Stocks.php:1018 SuppCreditGRNs.php:92
 #: SuppCreditGRNs.php:192 SuppFixedAssetChgs.php:78 SuppInvGRNs.php:120
-#: SuppInvGRNs.php:263 SuppPriceList.php:309 SupplierCredit.php:317
+#: SuppInvGRNs.php:263 SuppPriceList.php:306 SupplierCredit.php:317
 #: SupplierCredit.php:385 SupplierInvoice.php:668 SupplierInvoice.php:750
 #: SupplierPriceList.php:44 SupplierPriceList.php:276 SupplierPriceList.php:542
 #: SupplierTenderCreate.php:434 SupplierTenderCreate.php:695
 #: SupplierTenderCreate.php:853 SupplierTenders.php:326 SupplierTenders.php:421
 #: SupplierTenders.php:687 TestPlanResults.php:177 TestPlanResults.php:280
 #: TopItems.php:170 WorkCentres.php:130 WorkOrderCosting.php:98
-#: WorkOrderCosting.php:130 WorkOrderEntry.php:972 WorkOrderIssue.php:1009
+#: WorkOrderCosting.php:130 WorkOrderEntry.php:973 WorkOrderIssue.php:1009
 #: Z_ItemsWithoutPicture.php:35 api/api_xml-rpc.php:3489
 #: includes/PDFGrnHeader.inc:30 includes/PDFInventoryPlanPageHeader.inc:51
 #: includes/PDFOstdgGRNsPageHeader.inc:38
@@ -1154,8 +1191,8 @@ msgstr "Ανάλυση Ενηλικιωμένου Λογαριασμού Πελ�
 #: InventoryPlanning.php:262 InventoryPlanningPrefSupplier.php:183
 #: InventoryPlanningPrefSupplier.php:241 InventoryPlanningPrefSupplier.php:268
 #: InventoryPlanningPrefSupplier.php:301 InventoryQuantities.php:84
-#: InventoryValuation.php:64 MRPPlannedPurchaseOrders.php:114
-#: MRPPlannedWorkOrders.php:106 MRPReport.php:147 MRPReport.php:536
+#: InventoryValuation.php:64 MRPPlannedPurchaseOrders.php:113
+#: MRPPlannedWorkOrders.php:105 MRPReport.php:146 MRPReport.php:535
 #: MRPReschedules.php:45 MRPReschedules.php:57 MRPShortages.php:155
 #: MRPShortages.php:167 MailInventoryValuation.php:22
 #: MailInventoryValuation.php:120 MailSalesReport.php:23
@@ -1196,10 +1233,10 @@ msgstr "Οι πληροφορίες πελάτη δεν μπορούσαν να 
 #: InventoryPlanningPrefSupplier.php:304 InventoryPlanningPrefSupplier.php:372
 #: InventoryQuantities.php:87 InventoryQuantities.php:98
 #: InventoryValuation.php:67 InventoryValuation.php:92
-#: MRPPlannedPurchaseOrders.php:117 MRPPlannedPurchaseOrders.php:128
-#: MRPPlannedWorkOrders.php:109 MRPPlannedWorkOrders.php:120
-#: MRPPlannedWorkOrders.php:311 MRPReport.php:39 MRPReport.php:50
-#: MRPReport.php:150 MRPReschedules.php:48 MRPReschedules.php:60
+#: MRPPlannedPurchaseOrders.php:116 MRPPlannedPurchaseOrders.php:127
+#: MRPPlannedWorkOrders.php:108 MRPPlannedWorkOrders.php:119
+#: MRPPlannedWorkOrders.php:310 MRPReport.php:38 MRPReport.php:49
+#: MRPReport.php:149 MRPReschedules.php:48 MRPReschedules.php:60
 #: MRPShortages.php:158 MRPShortages.php:170 MailInventoryValuation.php:123
 #: MailInventoryValuation.php:219 MailInventoryValuation.php:243
 #: MailInventoryValuation.php:251 OutstandingGRNs.php:49 OutstandingGRNs.php:62
@@ -1337,9 +1374,10 @@ msgstr "Δεσμευμένοι λογαριασμοί μόνο"
 msgid "Only Show Customers Of"
 msgstr "Να εμφανιστούν μόνο οι Πελάτες του"
 
-#: AgedDebtors.php:493
-msgid "All Sales people"
-msgstr ""
+#: AgedDebtors.php:493 PDFCustomerList.php:391 SalesInquiry.php:1188
+#: includes/PDFCustomerListPageHeader.inc:43
+msgid "All Salespeople"
+msgstr "Όλες οι πωλητές"
 
 #: AgedDebtors.php:501
 msgid "Only show customers trading in"
@@ -1361,13 +1399,13 @@ msgstr "Λεπτομερής Αναφορά"
 #: BOMIndented.php:278 BOMIndentedReverse.php:255 BOMListing.php:131
 #: DebtorsAtPeriodEnd.php:168 InventoryPlanning.php:521
 #: InventoryPlanningPrefSupplier.php:437 InventoryQuantities.php:210
-#: InventoryValuation.php:273 MRPPlannedPurchaseOrders.php:294
-#: MRPPlannedWorkOrders.php:348 MRPReschedules.php:153 MRPShortages.php:303
+#: InventoryValuation.php:273 MRPPlannedPurchaseOrders.php:293
+#: MRPPlannedWorkOrders.php:347 MRPReschedules.php:153 MRPShortages.php:303
 #: OutstandingGRNs.php:280 PDFCustomerList.php:421 PDFLowGP.php:146
 #: PDFPriceList.php:351 PDFRemittanceAdvice.php:175
 #: PDFStockCheckComparison.php:373 PrintCustTrans.php:564
 #: PrintCustTransPortrait.php:609 ReorderLevel.php:259 StockDispatch.php:449
-#: SuppPriceList.php:263 SupplierBalsAtPeriodEnd.php:159 Tax.php:385
+#: SuppPriceList.php:260 SupplierBalsAtPeriodEnd.php:159 Tax.php:385
 msgid "Print PDF"
 msgstr "Εκτύπωση σε PDF"
 
@@ -1544,17 +1582,6 @@ msgstr ""
 msgid "Show on Screen (HTML)"
 msgstr "Εμφάνιση στην οθόνη (HTML)"
 
-#: AnalysisHorizontalIncome.php:121 AnalysisHorizontalIncome.php:522
-#: AnalysisHorizontalPosition.php:79 AnalysisHorizontalPosition.php:362
-#: DailyBankTransactions.php:257 GLAccountUsers.php:253 GLBalanceSheet.php:720
-#: GLCashFlowsIndirect.php:741 GLCashFlowsIndirect.php:774
-#: GLCashFlowsSetup.php:181 GLProfit_Loss.php:1317 GLTrialBalance.php:740
-#: InternalStockRequestInquiry.php:264 SecurityTokens.php:140
-#: SecurityTokens.php:156 UserGLAccounts.php:259
-#: Z_GLAccountUsersCopyAuthority.php:96 includes/Login.php:8
-msgid "Return"
-msgstr ""
-
 #: AnalysisHorizontalIncome.php:131 GLProfit_Loss.php:147 GLProfit_Loss.php:577
 #: GLTagProfit_Loss.php:155 GLTagProfit_Loss.php:480
 msgid "A period up to 12 months in duration can be specified"
@@ -1581,7 +1608,7 @@ msgid "Please select an alternative period range"
 msgstr "Παρακαλώ επιλέξτε μια εναλλακτική σειρά περιόδου"
 
 #: AnalysisHorizontalIncome.php:149 FreightCosts.php:76 GLProfit_Loss.php:624
-#: MRPReport.php:446 SalesGraph.php:229 SalesGraph.php:237
+#: MRPReport.php:445 SalesGraph.php:228 SalesGraph.php:236
 msgid "For"
 msgstr "Για"
 
@@ -1682,7 +1709,7 @@ msgstr "συνολικά"
 #: GLTagProfit_Loss.php:448 GLTagProfit_Loss.php:685 GLTagProfit_Loss.php:884
 #: PDFPriceList.php:431 SalesAnalReptCols.php:31 SalesAnalReptCols.php:33
 #: SalesByTypePeriodInquiry.php:362 SalesCategoryPeriodInquiry.php:169
-#: SalesGraph.php:196 SalesGraph.php:215 SalesGraph.php:278
+#: SalesGraph.php:195 SalesGraph.php:214 SalesGraph.php:277
 #: SelectProduct.php:181
 #, php-format
 msgid "Gross Profit"
@@ -1710,7 +1737,7 @@ msgstr ""
 #: GLCashFlowsIndirect.php:738 GLCashFlowsIndirect.php:739
 #: GLProfit_Loss.php:1314 GLProfit_Loss.php:1315 GLTagProfit_Loss.php:939
 #: GLTrialBalance.php:24 GLTrialBalance.php:737 GLTrialBalance.php:738
-#: SalesGraph.php:20 SalesGraph.php:29 SalesGraph.php:34
+#: SalesGraph.php:19 SalesGraph.php:28 SalesGraph.php:33
 msgid "Select A Different Period"
 msgstr "Επιλέξτε μια διαφορετική χρονική περίοδο"
 
@@ -1827,7 +1854,7 @@ msgstr "Κωδικός Περιοχής"
 #: FixedAssetCategories.php:142 GLAccounts.php:213
 #: InternalStockCategoriesByRole.php:102 Locations.php:380 MRPDemands.php:250
 #: Manufacturers.php:197 PcAssignCashToTab.php:149
-#: PcClaimExpensesFromTab.php:134 PcExpenses.php:169 PcExpensesTypeTab.php:101
+#: PcClaimExpensesFromTab.php:134 PcExpenses.php:169 PcExpensesTypeTab.php:100
 #: PcTabs.php:188 PcTypeTabs.php:143 SalesAnalReptCols.php:215
 #: SalesCategories.php:158 SalesTypes.php:156 StockCategories.php:233
 #: SupplierTypes.php:132 Suppliers.php:672 Z_DeleteInvoice.php:178
@@ -1881,7 +1908,7 @@ msgstr "Αναγνωριστικό χρήστη"
 
 #: AuditTrail.php:55 AuditTrail.php:69 CollectiveWorkOrderCost.php:241
 #: CollectiveWorkOrderCost.php:245 CollectiveWorkOrderCost.php:249
-#: CollectiveWorkOrderCost.php:253 ContractBOM.php:306 CounterReturns.php:1637
+#: CollectiveWorkOrderCost.php:253 ContractBOM.php:305 CounterReturns.php:1637
 #: CounterReturns.php:1640 CounterSales.php:2201 CounterSales.php:2204
 #: CustomerBalancesMovement.php:30 CustomerBalancesMovement.php:40
 #: CustomerBalancesMovement.php:50 CustomerInquiry.php:193
@@ -1893,16 +1920,16 @@ msgstr "Αναγνωριστικό χρήστη"
 #: InternalStockRequestInquiry.php:108 InternalStockRequestInquiry.php:137
 #: InternalStockRequestInquiry.php:139 InventoryQuantities.php:168
 #: InventoryQuantities.php:194 InventoryQuantities.php:196 MRP.php:619
-#: MRPReport.php:552 MRPReport.php:554 MRPReschedules.php:145
+#: MRPReport.php:551 MRPReport.php:553 MRPReschedules.php:145
 #: NoSalesItems.php:22 NoSalesItems.php:50 NoSalesItems.php:70
 #: NoSalesItems.php:72 PDFPeriodStockTransListing.php:58 PDFPriceList.php:225
 #: PDFPriceList.php:324 POReport.php:1600 PO_Items.php:1131
 #: PO_SelectOSPurchOrder.php:185 PO_SelectOSPurchOrder.php:195
 #: PO_SelectOSPurchOrder.php:208 PO_SelectOSPurchOrder.php:278
 #: ReorderLevel.php:212 ReorderLevel.php:214 ReorderLevel.php:244
-#: ReorderLevel.php:246 SalesGraph.php:103 SalesGraph.php:105
-#: SalesGraph.php:125 SalesGraph.php:127 SalesGraph.php:149 SalesGraph.php:151
-#: SalesGraph.php:187 SalesInquiry.php:1096 SalesInquiry.php:1159
+#: ReorderLevel.php:246 SalesGraph.php:102 SalesGraph.php:104
+#: SalesGraph.php:124 SalesGraph.php:126 SalesGraph.php:148 SalesGraph.php:150
+#: SalesGraph.php:186 SalesInquiry.php:1096 SalesInquiry.php:1159
 #: SelectCreditItems.php:983 SelectOrderItems.php:1580
 #: SelectOrderItems.php:1583 SelectProduct.php:530 SelectProduct.php:532
 #: SelectSalesOrder.php:575 StockCategorySalesInquiry.php:35
@@ -1915,8 +1942,8 @@ msgstr "Αναγνωριστικό χρήστη"
 #: SupplierTransInquiry.php:31 SystemParameters.php:1119
 #: SystemParameters.php:1125 SystemParameters.php:1131
 #: SystemParameters.php:1137 SystemParameters.php:1143 TopItems.php:32
-#: TopItems.php:49 TopItems.php:71 TopItems.php:73 WorkOrderEntry.php:902
-#: WorkOrderEntry.php:905 WorkOrderIssue.php:964 WorkOrderIssue.php:967
+#: TopItems.php:49 TopItems.php:71 TopItems.php:73 WorkOrderEntry.php:903
+#: WorkOrderEntry.php:906 WorkOrderIssue.php:964 WorkOrderIssue.php:967
 #: reportwriter/languages/en_US/reports.php:54
 msgid "All"
 msgstr "Όλες"
@@ -1930,7 +1957,7 @@ msgid "Containing text"
 msgstr ""
 
 #: AuditTrail.php:90 GLAccountUsers.php:152 InternalStockRequest.php:598
-#: LocationUsers.php:176 MRPReport.php:807 PO_SelectPurchOrder.php:432
+#: LocationUsers.php:176 MRPReport.php:806 PO_SelectPurchOrder.php:432
 #: SelectContract.php:187 SelectProduct.php:865 UserGLAccounts.php:158
 #: UserLocations.php:177
 msgid "View"
@@ -1943,7 +1970,7 @@ msgstr "Ημερομηνία / Ώρα"
 #: AuditTrail.php:176 BankAccountUsers.php:77 BankAccountUsers.php:90
 #: GLAccountUsers.php:117 GLAccountUsers.php:129 GLAccountUsers.php:140
 #: LocationUsers.php:77 LocationUsers.php:90 LocationUsers.php:100
-#: PcReportTab.php:266 UserBankAccounts.php:77 UserBankAccounts.php:90
+#: PcReportTab.php:269 UserBankAccounts.php:77 UserBankAccounts.php:90
 #: UserGLAccounts.php:118 UserGLAccounts.php:130 UserGLAccounts.php:146
 #: UserLocations.php:77 UserLocations.php:90 UserLocations.php:100
 #: includes/header.inc:59
@@ -2000,12 +2027,12 @@ msgid "#"
 msgstr "#"
 
 #: AutomaticTranslationDescriptions.php:36 BOMInquiry.php:108 BOMs.php:655
-#: BOMs.php:1014 CollectiveWorkOrderCost.php:316 ContractBOM.php:353
+#: BOMs.php:1014 CollectiveWorkOrderCost.php:316 ContractBOM.php:352
 #: CounterReturns.php:1691 CounterSales.php:2101 CounterSales.php:2255
 #: CustItem.php:297 CustomerBranches.php:408 CustomerReceipt.php:1216
 #: GLCodesInquiry.php:26 InternalStockRequest.php:563
 #: InternalStockRequest.php:633 InternalStockRequestInquiry.php:267
-#: MRPDemands.php:91 MRPPlannedWorkOrders.php:257 MRPReport.php:777
+#: MRPDemands.php:91 MRPPlannedWorkOrders.php:256 MRPReport.php:776
 #: MaterialsNotUsed.php:34 NoSalesItems.php:193 PDFOrderStatus.php:336
 #: PDFOrdersInvoiced.php:334 PO_Header.php:561 PO_Items.php:1193
 #: PO_SelectOSPurchOrder.php:309 PO_SelectPurchOrder.php:213
@@ -2016,12 +2043,12 @@ msgstr "#"
 #: SelectOrderItems.php:1643 SelectProduct.php:324 SelectProduct.php:829
 #: SelectQASamples.php:298 SelectSalesOrder.php:602 SelectSupplier.php:282
 #: SelectWorkOrder.php:218 SellThroughSupport.php:159 Shipt_Select.php:190
-#: SpecialOrder.php:148 StockCategories.php:263 SuppPriceList.php:308
+#: SpecialOrder.php:148 StockCategories.php:263 SuppPriceList.php:305
 #: SupplierPriceList.php:275 SupplierPriceList.php:466
 #: SupplierTenderCreate.php:617 SupplierTenderCreate.php:852
 #: SupplierTenders.php:686 TestPlanResults.php:176 TopItems.php:169
 #: UserBankAccounts.php:163 UserGLAccounts.php:156 UserLocations.php:175
-#: WorkOrderEntry.php:971 WorkOrderIssue.php:1008
+#: WorkOrderEntry.php:972 WorkOrderIssue.php:1008
 #: includes/PDFTopItemsHeader.inc:49 includes/PO_PDFOrderPageHeader.inc:75
 #: ../webSHOP/ItemDetails.php:72
 msgid "Code"
@@ -2029,7 +2056,7 @@ msgstr "Κωδικός"
 
 #: AutomaticTranslationDescriptions.php:38 CustomerTransInquiry.php:52
 #: FixedAssetRegister.php:366 GLJournalInquiry.php:45 GLJournalInquiry.php:62
-#: POReport.php:519 POReport.php:1535 PcReportTab.php:269
+#: POReport.php:519 POReport.php:1535 PcReportTab.php:272
 #: PcTabExpensesList.php:211 SalesAnalRepts.php:436 SalesAnalRepts.php:464
 #: SalesAnalRepts.php:493 SalesAnalRepts.php:512 SalesInquiry.php:798
 #: SalesInquiry.php:1107 StockDispatch.php:515 StockLocTransferReceive.php:106
@@ -2090,8 +2117,8 @@ msgstr ""
 #: BOMExtendedQty.php:267 BOMExtendedQty.php:334 BOMExtendedQty.php:335
 #: BOMExtendedQty.php:336 BOMExtendedQty.php:337 BOMIndented.php:318
 #: BOMIndentedReverse.php:296 BOMInquiry.php:199 BOMs.php:659 BOMs.php:858
-#: ContractBOM.php:243 ContractBOM.php:357 ContractCosting.php:81
-#: ContractCosting.php:87 ContractCosting.php:152 ContractOtherReqts.php:99
+#: ContractBOM.php:242 ContractBOM.php:356 ContractCosting.php:81
+#: ContractCosting.php:87 ContractCosting.php:152 ContractOtherReqts.php:98
 #: Contracts.php:1006 Contracts.php:1042 CounterReturns.php:669
 #: CounterReturns.php:1698 CounterReturns.php:1797 CounterSales.php:749
 #: CounterSales.php:2108 CounterSales.php:2262 CounterSales.php:2365
@@ -2101,8 +2128,8 @@ msgstr ""
 #: InternalStockRequestFulfill.php:323 InternalStockRequestFulfill.php:324
 #: InternalStockRequestInquiry.php:406 InventoryPlanningPrefSupplier.php:78
 #: InventoryQuantities.php:248 MRPDemands.php:297 MRPDemands.php:395
-#: MRPPlannedPurchaseOrders.php:341 MRPPlannedWorkOrders.php:261
-#: MRPPlannedWorkOrders.php:395 MRPReport.php:441 MRPReport.php:447
+#: MRPPlannedPurchaseOrders.php:340 MRPPlannedWorkOrders.php:260
+#: MRPPlannedWorkOrders.php:394 MRPReport.php:440 MRPReport.php:446
 #: MRPReschedules.php:195 OffersReceived.php:108 OffersReceived.php:218
 #: OffersReceived.php:278 OrderDetails.php:189 PDFOrdersInvoiced.php:380
 #: PDFSalesBySalesperson.php:87 PDFWeeklyOrders.php:83 POReport.php:770
@@ -2111,7 +2138,7 @@ msgstr ""
 #: PrintCustTransPortrait.php:1098 PrintWOItemSlip.php:155
 #: RecurringSalesOrders.php:331 ReorderLevel.php:300 ReverseGRN.php:402
 #: ReverseGRN.php:403 SalesAnalReptCols.php:16 SalesAnalReptCols.php:18
-#: SalesGraph.php:197 SalesGraph.php:280 SalesInquiry.php:998
+#: SalesGraph.php:196 SalesGraph.php:279 SalesInquiry.php:998
 #: SalesTopCustomersInquiry.php:218 SalesTopItemsInquiry.php:225
 #: SelectCreditItems.php:688 SelectCreditItems.php:1074
 #: SelectOrderItems.php:1313 SelectOrderItems.php:1488
@@ -2162,19 +2189,19 @@ msgid "Only Show Shortages"
 msgstr "Μόνο παρουσιάζουν έλειμμα"
 
 #: BOMExtendedQty.php:278 BOMIndented.php:268 BOMIndentedReverse.php:246
-#: MRPPlannedPurchaseOrders.php:280 MRPPlannedWorkOrders.php:336
+#: MRPPlannedPurchaseOrders.php:279 MRPPlannedWorkOrders.php:335
 #: MRPReschedules.php:136 MRPShortages.php:293
 msgid "Print Option"
 msgstr "Εκτύπωση Επιλογή"
 
 #: BOMExtendedQty.php:280 BOMIndented.php:270 BOMIndentedReverse.php:248
-#: MRPPlannedPurchaseOrders.php:282 MRPPlannedWorkOrders.php:338
+#: MRPPlannedPurchaseOrders.php:281 MRPPlannedWorkOrders.php:337
 #: MRPReschedules.php:138 MRPShortages.php:295
 msgid "Print With Alternating Highlighted Lines"
 msgstr "Εκτύπωση με εναλλασσόμενο Επισημασμένο Lines"
 
 #: BOMExtendedQty.php:281 BOMIndented.php:271 BOMIndentedReverse.php:249
-#: MRPPlannedPurchaseOrders.php:283 MRPPlannedWorkOrders.php:339
+#: MRPPlannedPurchaseOrders.php:282 MRPPlannedWorkOrders.php:338
 #: MRPReschedules.php:139 MRPShortages.php:296
 msgid "Plain Print"
 msgstr "Απλό Εκτύπωση"
@@ -2185,12 +2212,12 @@ msgstr ""
 
 #: BOMExtendedQty.php:316 BOMIndented.php:305 BOMIndentedReverse.php:283
 #: GLAccountReport.php:331 InventoryPlanningPrefSupplier.php:58
-#: InventoryQuantities.php:234 MRPPlannedPurchaseOrders.php:320
-#: MRPPlannedWorkOrders.php:374 MRPReport.php:845 MRPReschedules.php:180
+#: InventoryQuantities.php:234 MRPPlannedPurchaseOrders.php:319
+#: MRPPlannedWorkOrders.php:373 MRPReport.php:844 MRPReschedules.php:180
 #: MRPShortages.php:334 PDFOrderStatus.php:323 PDFPriceList.php:395
 #: PDFReceipt.php:34 PO_Header.php:848 PO_PDFPurchOrder.php:64
 #: PO_SelectOSPurchOrder.php:646 PrintWOItemSlip.php:142 ReorderLevel.php:283
-#: StockDispatch.php:479 SuppPriceList.php:292
+#: StockDispatch.php:479 SuppPriceList.php:289
 #: includes/PDFAgedDebtorsPageHeader.inc:34
 #: includes/PDFAgedSuppliersPageHeader.inc:21
 #: includes/PDFBOMListingPageHeader.inc:26
@@ -2223,13 +2250,13 @@ msgstr "Τυπωμένο"
 #: BOMExtendedQty.php:317 BOMIndented.php:306 BOMIndentedReverse.php:284
 #: FixedAssetRegister.php:367 GLAccountReport.php:331
 #: InventoryPlanningPrefSupplier.php:58 InventoryQuantities.php:235
-#: MRPPlannedPurchaseOrders.php:321 MRPPlannedWorkOrders.php:375
-#: MRPReport.php:846 MRPReschedules.php:181 MRPShortages.php:335
+#: MRPPlannedPurchaseOrders.php:320 MRPPlannedWorkOrders.php:374
+#: MRPReport.php:845 MRPReschedules.php:181 MRPShortages.php:335
 #: PDFPriceList.php:385 PDFReceipt.php:34 PDFRemittanceAdvice.php:218
 #: PrintCustOrder.php:175 PrintCustTransPortrait.php:813
 #: PrintCustTransPortrait.php:1035 PrintCustTransPortrait.php:1091
 #: PrintWOItemSlip.php:143 ReorderLevel.php:284 StockDispatch.php:480
-#: SuppPriceList.php:293 includes/PDFAgedDebtorsPageHeader.inc:34
+#: SuppPriceList.php:290 includes/PDFAgedDebtorsPageHeader.inc:34
 #: includes/PDFAgedSuppliersPageHeader.inc:21
 #: includes/PDFBOMListingPageHeader.inc:26
 #: includes/PDFBalanceSheetPageHeader.inc:26
@@ -2304,8 +2331,8 @@ msgstr "WO"
 
 #: BOMExtendedQty.php:331 BOMIndented.php:313 BOMIndentedReverse.php:291
 #: InventoryQuantities.php:245 MRPDemands.php:294 MRPDemands.php:371
-#: MRPDemands.php:381 MRPPlannedPurchaseOrders.php:338
-#: MRPPlannedWorkOrders.php:392 MRPReschedules.php:191 MRPShortages.php:280
+#: MRPDemands.php:381 MRPPlannedPurchaseOrders.php:337
+#: MRPPlannedWorkOrders.php:391 MRPReschedules.php:191 MRPShortages.php:280
 #: MRPShortages.php:349 POReport.php:493 POReport.php:502 POReport.php:521
 #: POReport.php:541 POReport.php:630 POReport.php:733 POReport.php:1277
 #: POReport.php:1286 POReport.php:1300 POReport.php:1315 POReport.php:1368
@@ -2365,9 +2392,14 @@ msgstr "Locn"
 msgid "WC"
 msgstr "WC"
 
-#: BOMIndented.php:326
-msgid "Assembly:"
-msgstr "Συνέλευση:"
+#: BOMIndented.php:326 BOMs.php:499 ConfirmDispatch_Invoice.php:1052
+#: CounterReturns.php:1074 CounterSales.php:1474 Credit_Invoice.php:823
+#: Credit_Invoice.php:853 SelectCreditItems.php:1501 StockClone.php:863
+#: StockClone.php:865 Stocks.php:1191 Stocks.php:1193
+#: api/api_debtortransactions.php:753 api/api_salesorders.php:920
+#: reportwriter/languages/en_US/reports.php:56
+msgid "Assembly"
+msgstr "Συναρμολόγηση"
 
 #: BOMIndented.php:331 BOMIndentedReverse.php:307
 msgid " 12345678901234567890"
@@ -2426,25 +2458,25 @@ msgstr ""
 #: BOMInquiry.php:26 BOMs.php:997 MRPDemands.php:336
 #: PO_SelectOSPurchOrder.php:288 PO_SelectPurchOrder.php:190
 #: SelectQASamples.php:275 Shipt_Select.php:169 TestPlanResults.php:153
-#: WorkOrderEntry.php:932 WorkOrderIssue.php:980
+#: WorkOrderEntry.php:933 WorkOrderIssue.php:980
 msgid "Enter text extracts in the"
 msgstr "Εισάγετε τα αποσπάσματα κειμένων στο"
 
 #: BOMInquiry.php:26 BOMs.php:997 MRPDemands.php:336
 #: PO_SelectOSPurchOrder.php:288 PO_SelectPurchOrder.php:190
 #: SelectQASamples.php:275 Shipt_Select.php:169 TestPlanResults.php:153
-#: WorkOrderEntry.php:932 WorkOrderIssue.php:980
+#: WorkOrderEntry.php:933 WorkOrderIssue.php:980
 msgid "description"
 msgstr "περιγραφή"
 
 #: BOMInquiry.php:28 BOMs.php:999 CollectiveWorkOrderCost.php:304
-#: ContractBOM.php:332 ContractBOM.php:337 Contracts.php:766 Contracts.php:769
+#: ContractBOM.php:331 ContractBOM.php:336 Contracts.php:766 Contracts.php:769
 #: CounterReturns.php:1662 CounterSales.php:2225 CustItem.php:220
 #: CustomerReceipt.php:1195 CustomerReceipt.php:1198 DiscountCategories.php:121
 #: DiscountCategories.php:123 DiscountCategories.php:127
 #: DiscountCategories.php:129 FixedAssetTransfer.php:94
 #: InternalStockRequest.php:359 InternalStockRequestInquiry.php:231
-#: MRPDemands.php:338 MRPDemands.php:341 MRPReport.php:574 PO_Header.php:547
+#: MRPDemands.php:338 MRPDemands.php:341 MRPReport.php:573 PO_Header.php:547
 #: PO_Items.php:1160 PO_Items.php:1164 PO_SelectOSPurchOrder.php:292
 #: PO_SelectPurchOrder.php:195 PurchData.php:383 SelectAsset.php:104
 #: SelectCompletedOrder.php:485 SelectCreditItems.php:228
@@ -2457,7 +2489,7 @@ msgstr "περιγραφή"
 #: SuppFixedAssetChgs.php:126 SupplierPriceList.php:54
 #: SupplierPriceList.php:414 SupplierTenderCreate.php:566
 #: SupplierTenderCreate.php:706 SupplierTenders.php:433 TestPlanResults.php:158
-#: WorkOrderEntry.php:937 WorkOrderEntry.php:941 WorkOrderEntry.php:943
+#: WorkOrderEntry.php:938 WorkOrderEntry.php:942 WorkOrderEntry.php:944
 #: WorkOrderIssue.php:985
 msgid "OR"
 msgstr "Ή"
@@ -2465,14 +2497,14 @@ msgstr "Ή"
 #: BOMInquiry.php:29 BOMs.php:1000 MRPDemands.php:339
 #: PO_SelectOSPurchOrder.php:292 PO_SelectPurchOrder.php:195
 #: SelectQASamples.php:280 Shipt_Select.php:174 TestPlanResults.php:158
-#: WorkOrderEntry.php:937 WorkOrderIssue.php:985
+#: WorkOrderEntry.php:938 WorkOrderIssue.php:985
 msgid "Enter extract of the"
 msgstr "Εισάγετε το απόσπασμα"
 
 #: BOMInquiry.php:29 BOMs.php:1000 EmailConfirmation.php:218
 #: EmailConfirmation.php:348 InternalStockRequest.php:159
 #: InternalStockRequest.php:359 InternalStockRequestInquiry.php:231
-#: MRPDemands.php:339 MRPReport.php:574 PO_SelectOSPurchOrder.php:292
+#: MRPDemands.php:339 MRPReport.php:573 PO_SelectOSPurchOrder.php:292
 #: PO_SelectPurchOrder.php:195 SalesInquiry.php:769 SalesInquiry.php:780
 #: SalesInquiry.php:800 SalesInquiry.php:826 SalesInquiry.php:845
 #: SalesInquiry.php:955 SalesInquiry.php:1114 SalesInquiry.php:1211
@@ -2482,34 +2514,34 @@ msgstr "Εισάγετε το απόσπασμα"
 #: StockMovements.php:36 StockReorderLevel.php:51 StockStatus.php:62
 #: StockTransfers.php:49 StockTransfers.php:552 StockUsage.php:64
 #: SupplierPriceList.php:54 SupplierTenderCreate.php:706
-#: SupplierTenders.php:433 TestPlanResults.php:158 WorkOrderEntry.php:937
+#: SupplierTenders.php:433 TestPlanResults.php:158 WorkOrderEntry.php:938
 #: WorkOrderIssue.php:985 Z_ChangeStockCode.php:200
 #: ../webSHOP/includes/PlaceOrder.php:235
 msgid "Stock Code"
 msgstr "Κωδικός Αποθέματος"
 
-#: BOMInquiry.php:35 BOMs.php:1004 ContractBOM.php:342 Contracts.php:776
+#: BOMInquiry.php:35 BOMs.php:1004 ContractBOM.php:341 Contracts.php:776
 #: CounterReturns.php:1666 CounterSales.php:2231 CustomerReceipt.php:1205
 #: FixedAssetTransfer.php:107 InternalStockRequest.php:370
-#: InternalStockRequestInquiry.php:242 MRPDemands.php:343 MRPReport.php:586
+#: InternalStockRequestInquiry.php:242 MRPDemands.php:343 MRPReport.php:585
 #: PO_Header.php:554 PO_Items.php:1168 SelectAsset.php:116
 #: SelectCreditItems.php:235 SelectCreditItems.php:1009 SelectCustomer.php:354
 #: SelectGLAccount.php:125 SelectOrderItems.php:580 SelectOrderItems.php:1619
 #: SelectProduct.php:569 SelectSupplier.php:243 SelectSupplier.php:276
 #: SupplierPriceList.php:66 SupplierTenderCreate.php:572
 #: SupplierTenderCreate.php:611 SupplierTenderCreate.php:717
-#: SupplierTenders.php:445 WorkOrderEntry.php:949 WorkOrderIssue.php:992
+#: SupplierTenders.php:445 WorkOrderEntry.php:950 WorkOrderIssue.php:992
 msgid "Search Now"
 msgstr "Εύρεση τώρα"
 
 #: BOMInquiry.php:47 BOMs.php:934 CollectiveWorkOrderCost.php:124
-#: ContractBOM.php:52 InternalStockRequestInquiry.php:509 MRPDemands.php:56
-#: MRPReport.php:606 PO_Items.php:852 PO_SelectOSPurchOrder.php:65
+#: ContractBOM.php:51 InternalStockRequestInquiry.php:509 MRPDemands.php:56
+#: MRPReport.php:605 PO_Items.php:852 PO_SelectOSPurchOrder.php:65
 #: PO_SelectPurchOrder.php:48 SelectCompletedOrder.php:98
 #: SelectCreditItems.php:302 SelectProduct.php:582 SelectQASamples.php:176
 #: SelectSalesOrder.php:1035 SelectWorkOrder.php:51 Shipt_Select.php:61
 #: SupplierPriceList.php:81 SupplierTenderCreate.php:731
-#: SupplierTenders.php:576 TestPlanResults.php:59 WorkOrderEntry.php:111
+#: SupplierTenders.php:576 TestPlanResults.php:59 WorkOrderEntry.php:112
 #: WorkOrderIssue.php:630
 msgid ""
 "Stock description keywords have been used in preference to the Stock code "
@@ -2532,13 +2564,13 @@ msgid "The SQL to find the parts selected failed with the message"
 msgstr "Η SQL για να βρεί τα επιλεγμένα μέρη απέτυχε με το μήνυμα"
 
 #: BOMInquiry.php:111 BOMs.php:1017 CollectiveWorkOrderCost.php:319
-#: ConfirmDispatch_Invoice.php:305 ContractBOM.php:355 CounterReturns.php:1693
+#: ConfirmDispatch_Invoice.php:305 ContractBOM.php:354 CounterReturns.php:1693
 #: CounterSales.php:2103 CounterSales.php:2257 Credit_Invoice.php:305
 #: GoodsReceived.php:124 GoodsReceived.php:128 InternalStockRequest.php:566
 #: InternalStockRequest.php:635 InternalStockRequestAuthorisation.php:106
 #: InternalStockRequestFulfill.php:325 InternalStockRequestInquiry.php:270
 #: InternalStockRequestInquiry.php:407 InventoryValuation.php:197
-#: MRPReport.php:780 NoSalesItems.php:197 OffersReceived.php:109
+#: MRPReport.php:779 NoSalesItems.php:197 OffersReceived.php:109
 #: PO_Items.php:1197 PO_SelectOSPurchOrder.php:313 PO_SelectPurchOrder.php:217
 #: ProductSpecs.php:166 ProductSpecs.php:387 QATests.php:253 QATests.php:394
 #: SelectCompletedOrder.php:510 SelectCreditItems.php:1020
@@ -2548,7 +2580,7 @@ msgstr "Η SQL για να βρεί τα επιλεγμένα μέρη απέτ�
 #: Shipt_Select.php:194 StockLocTransferReceive.php:546
 #: SupplierPriceList.php:277 SupplierTenderCreate.php:854
 #: SupplierTenders.php:688 TestPlanResults.php:179 TestPlanResults.php:510
-#: TopItems.php:172 WorkOrderCosting.php:100 WorkOrderEntry.php:973
+#: TopItems.php:172 WorkOrderCosting.php:100 WorkOrderEntry.php:974
 #: WorkOrderIssue.php:1010 WorkOrderIssue.php:1090
 #: includes/PDFInventoryValnPageHeader.inc:34 includes/DefineLabelClass.php:21
 msgid "Units"
@@ -2579,16 +2611,16 @@ msgstr "ανά"
 msgid "Component"
 msgstr "Συστατικό"
 
-#: BOMInquiry.php:200 ContractBOM.php:245 ContractCosting.php:83
-#: ContractCosting.php:89 ContractCosting.php:153 ContractOtherReqts.php:100
+#: BOMInquiry.php:200 ContractBOM.php:244 ContractCosting.php:83
+#: ContractCosting.php:89 ContractCosting.php:153 ContractOtherReqts.php:99
 #: Contracts.php:1008 Contracts.php:1043 InventoryValuation.php:197
-#: MRPPlannedWorkOrders.php:262 MRPShortages.php:352 SpecialOrder.php:727
+#: MRPPlannedWorkOrders.php:261 MRPShortages.php:352 SpecialOrder.php:727
 #: StockAdjustments.php:450
 msgid "Unit Cost"
 msgstr "Κόστος μονάδας"
 
 #: BOMInquiry.php:201 BOMInquiry.php:249 CollectiveWorkOrderCost.php:72
-#: ContractBOM.php:278 ContractCosting.php:84 ContractCosting.php:90
+#: ContractBOM.php:277 ContractCosting.php:84 ContractCosting.php:90
 #: ContractCosting.php:154 ContractCosting.php:179 Contracts.php:1009
 #: Contracts.php:1044 SpecialOrder.php:631 SpecialOrder.php:633
 msgid "Total Cost"
@@ -2693,7 +2725,7 @@ msgstr "Δεν χαμηλότερα επίπεδα"
 msgid "Drill Down"
 msgstr "Drill Down"
 
-#: BOMs.php:181 BOMs.php:635 ContractBOM.php:385 CounterSales.php:2116
+#: BOMs.php:181 BOMs.php:635 ContractBOM.php:384 CounterSales.php:2116
 #: FixedAssetItems.php:514 FixedAssetItems.php:517 FixedAssetItems.php:535
 #: InternalStockRequest.php:642 Manufacturers.php:253 Manufacturers.php:366
 #: PO_Items.php:1227 SalesCategories.php:84 SalesCategories.php:298
@@ -2701,7 +2733,7 @@ msgstr "Drill Down"
 #: SelectOrderItems.php:1653 SelectProduct.php:441 StockClone.php:116
 #: StockClone.php:741 StockClone.php:746 StockClone.php:751 StockClone.php:755
 #: Stocks.php:1065 Stocks.php:1068 Stocks.php:1081 SupplierTenderCreate.php:884
-#: SupplierTenders.php:720 WorkOrderEntry.php:997 WorkOrderIssue.php:1032
+#: SupplierTenders.php:720 WorkOrderEntry.php:998 WorkOrderIssue.php:1032
 #: reportwriter/languages/en_US/reports.php:270
 #, php-format
 msgid "No Image"
@@ -2722,7 +2754,7 @@ msgid "The effective to date field must be a date in the format"
 msgstr ""
 
 #: BOMs.php:308 StockAdjustments.php:165 StockTransfers.php:173
-#: WorkOrderEntry.php:493
+#: WorkOrderEntry.php:494
 msgid "The quantity entered must be numeric"
 msgstr "Η ποσότητα που εισάγεται πρέπει να είναι αριθμητική"
 
@@ -2858,14 +2890,6 @@ msgstr ""
 "Το SQL που χρησιμοποιήθηκε για να ανακτηθεί η περιγραφή του κυρίως "
 "συστατικού ήταν"
 
-#: BOMs.php:499 ConfirmDispatch_Invoice.php:1052 CounterReturns.php:1074
-#: CounterSales.php:1474 Credit_Invoice.php:823 Credit_Invoice.php:853
-#: SelectCreditItems.php:1501 StockClone.php:863 StockClone.php:865
-#: Stocks.php:1191 Stocks.php:1193 api/api_debtortransactions.php:753
-#: api/api_salesorders.php:920 reportwriter/languages/en_US/reports.php:56
-msgid "Assembly"
-msgstr "Συναρμολόγηση"
-
 #: BOMs.php:502 FixedAssetRegister.php:390 StockClone.php:883
 #: StockClone.php:885 Stocks.php:1211 Stocks.php:1213
 msgid "Purchased"
@@ -2934,7 +2958,7 @@ msgstr "Θέση"
 msgid "Work Centre"
 msgstr "Κέντρο Εργασίας"
 
-#: BOMs.php:660 ContractBOM.php:244 InternalStockRequest.php:279
+#: BOMs.php:660 ContractBOM.php:243 InternalStockRequest.php:279
 #: SupplierTenderCreate.php:436 SupplierTenders.php:328
 #: WOCanBeProducedNow.php:47 WOCanBeProducedNow.php:52
 #: includes/PDFTransPageHeader.inc:214
@@ -3031,7 +3055,7 @@ msgstr ""
 msgid "Auto Issue this Component to Work Orders"
 msgstr "Αυτόματη Καταχώρηση του Συστατικού  σε Εντολή Εργασίας"
 
-#: BOMs.php:909 WorkOrderEntry.php:805
+#: BOMs.php:909 WorkOrderEntry.php:806
 msgid "Remark"
 msgstr ""
 
@@ -3139,8 +3163,8 @@ msgstr ""
 #: GLAccountUsers.php:226 InternalStockCategoriesByRole.php:120
 #: InternalStockCategoriesByRole.php:209 LocationUsers.php:119
 #: LocationUsers.php:234 PcClaimExpensesFromTab.php:161
-#: PcClaimExpensesFromTab.php:381 PcExpenses.php:310 PcExpensesTypeTab.php:123
-#: PcExpensesTypeTab.php:212 PurchaseByPrefSupplier.php:317 StockCounts.php:121
+#: PcClaimExpensesFromTab.php:381 PcExpenses.php:310 PcExpensesTypeTab.php:122
+#: PcExpensesTypeTab.php:211 PurchaseByPrefSupplier.php:317 StockCounts.php:121
 #: UserBankAccounts.php:110 UserBankAccounts.php:211 UserGLAccounts.php:54
 #: UserGLAccounts.php:232 UserLocations.php:120 UserLocations.php:236
 #: Z_GLAccountUsersCopyAuthority.php:66 Z_GLAccountUsersCopyAuthority.php:81
@@ -3148,16 +3172,16 @@ msgid "Not Yet Selected"
 msgstr ""
 
 #: BankAccountUsers.php:129 BankAccountUsers.php:228 CustomerReceipt.php:961
-#: CustomerReceipt.php:1179 CustomerTypes.php:269 ExchangeRateTrend.php:56
+#: CustomerReceipt.php:1179 CustomerTypes.php:269 ExchangeRateTrend.php:55
 #: FreightCosts.php:60 GLAccountUsers.php:74 GLJournal.php:139
 #: GLJournal.php:378 InternalStockCategoriesByRole.php:136
 #: InternalStockCategoriesByRole.php:226 LocationUsers.php:136
 #: LocationUsers.php:253 OffersReceived.php:114 Payments.php:1123
 #: PcAssignCashTabToTab.php:181 PcAssignCashTabToTab.php:385
 #: PcAssignCashToTab.php:195 PcAssignCashToTab.php:412
-#: PcAuthorizeExpenses.php:337 PcClaimExpensesFromTab.php:178
-#: PcClaimExpensesFromTab.php:426 PcExpenses.php:350 PcExpensesTypeTab.php:139
-#: PcExpensesTypeTab.php:229 PcTabs.php:509 PcTypeTabs.php:253
+#: PcAuthorizeExpenses.php:338 PcClaimExpensesFromTab.php:178
+#: PcClaimExpensesFromTab.php:426 PcExpenses.php:350 PcExpensesTypeTab.php:138
+#: PcExpensesTypeTab.php:228 PcTabs.php:509 PcTypeTabs.php:253
 #: SalesTypes.php:282 SupplierTypes.php:236 UserBankAccounts.php:127
 #: UserBankAccounts.php:230 UserGLAccounts.php:76 UserLocations.php:137
 #: UserLocations.php:255 Z_CheckDebtorsControl.php:61
@@ -3170,9 +3194,9 @@ msgstr "Αποδοχή"
 #: LocationUsers.php:137 LocationUsers.php:254 Payments.php:1124
 #: PcAssignCashTabToTab.php:182 PcAssignCashTabToTab.php:386
 #: PcAssignCashToTab.php:196 PcAssignCashToTab.php:413
-#: PcAuthorizeExpenses.php:338 PcClaimExpensesFromTab.php:179
-#: PcClaimExpensesFromTab.php:427 PcExpenses.php:351 PcExpensesTypeTab.php:140
-#: PcExpensesTypeTab.php:230 PcTabs.php:510 PcTypeTabs.php:254
+#: PcAuthorizeExpenses.php:339 PcClaimExpensesFromTab.php:179
+#: PcClaimExpensesFromTab.php:427 PcExpenses.php:351 PcExpensesTypeTab.php:139
+#: PcExpensesTypeTab.php:229 PcTabs.php:510 PcTypeTabs.php:254
 #: SalesTypes.php:282 SecurityTokens.php:138 SelectCreditItems.php:955
 #: SupplierAllocations.php:520 UserBankAccounts.php:128
 #: UserBankAccounts.php:231 UserLocations.php:138 UserLocations.php:256
@@ -3345,10 +3369,10 @@ msgstr ""
 #: PO_AuthorisationLevels.php:126 PO_AuthorisationLevels.php:210
 #: PO_AuthorisationLevels.php:216 PO_AuthoriseMyOrders.php:115
 #: PO_Header.php:564 PO_SelectOSPurchOrder.php:597 PO_SelectPurchOrder.php:434
-#: PcReportTab.php:274 PcTabs.php:228 PcTabs.php:375 PriceMatrix.php:166
+#: PcReportTab.php:277 PcTabs.php:228 PcTabs.php:375 PriceMatrix.php:166
 #: PriceMatrix.php:264 Prices.php:220 Prices.php:292 PricesByCost.php:282
 #: PurchData.php:276 PurchData.php:471 PurchData.php:612 SelectSupplier.php:284
-#: SellThroughSupport.php:161 SuppPriceList.php:303 SupplierCredit.php:263
+#: SellThroughSupport.php:161 SuppPriceList.php:300 SupplierCredit.php:263
 #: SupplierInvoice.php:607 SupplierPriceList.php:468
 #: SupplierTenderCreate.php:619 SupplierTenders.php:126 SupplierTenders.php:536
 #: SupplierTransInquiry.php:117 Z_ImportPriceList.php:98
@@ -3491,11 +3515,11 @@ msgstr "από"
 #: PDFOrderStatus.php:274 PDFOrdersInvoiced.php:87 PDFOrdersInvoiced.php:261
 #: PDFRemittanceAdvice.php:48 PDFSalesBySalesperson.php:65 PDFWOPrint.php:505
 #: PDFWeeklyOrders.php:61 PO_PDFPurchOrder.php:358 Payments.php:800
-#: PcAssignCashTabToTab.php:117 PcReportTab.php:110 PricesBasedOnMarkUp.php:219
+#: PcAssignCashTabToTab.php:117 PcReportTab.php:113 PricesBasedOnMarkUp.php:219
 #: PricesBasedOnMarkUp.php:358 PrintCustStatements.php:94 PrintCustTrans.php:56
 #: PrintCustTrans.php:57 PrintCustTrans.php:60 PrintCustTransPortrait.php:62
-#: PrintCustTransPortrait.php:65 SalesGraph.php:222 SalesGraph.php:251
-#: SalesGraph.php:255 StockLocTransferReceive.php:393
+#: PrintCustTransPortrait.php:65 SalesGraph.php:221 SalesGraph.php:250
+#: SalesGraph.php:254 StockLocTransferReceive.php:393
 #: StockLocTransferReceive.php:537 StockStatus.php:326 StockStatus.php:367
 #: StockTransfers.php:530 Stocks.php:310 Stocks.php:315
 #: Z_GLAccountUsersCopyAuthority.php:37
@@ -3610,9 +3634,9 @@ msgstr "Συ/ση"
 #: ImportBankTransAnalysis.php:281 PaymentAllocations.php:67 Payments.php:1111
 #: Payments.php:1116 Payments.php:1132 PcAssignCashTabToTab.php:240
 #: PcAssignCashTabToTab.php:356 PcAssignCashToTab.php:254
-#: PcAssignCashToTab.php:385 PcAuthorizeExpenses.php:95
+#: PcAssignCashToTab.php:385 PcAuthorizeExpenses.php:96
 #: PcClaimExpensesFromTab.php:240 PcClaimExpensesFromTab.php:400
-#: PcReportTab.php:179 PcReportTab.php:332 PrintCheque.php:83
+#: PcReportTab.php:182 PcReportTab.php:335 PrintCheque.php:83
 #: PrintCheque.php:97 SelectCreditItems.php:696 SuppContractChgs.php:79
 #: SuppContractChgs.php:164 SuppFixedAssetChgs.php:79
 #: SuppFixedAssetChgs.php:153 SuppShiptChgs.php:81 SuppShiptChgs.php:147
@@ -3779,7 +3803,7 @@ msgstr "Αριθμός"
 #: ShiptsList.php:37 StockCounts.php:144 StockCounts.php:169
 #: StockCounts.php:216 StockLocMovements.php:95 StockMovements.php:110
 #: SuppWhereAlloc.php:135 SupplierInquiry.php:207 Tax.php:412
-#: WorkOrderEntry.php:798 Z_CheckAllocs.php:64
+#: WorkOrderEntry.php:799 Z_CheckAllocs.php:64
 #: includes/PDFBankingSummaryPageHeader.inc:40
 #: includes/PDFCustTransListingPageHeader.inc:49
 #: includes/PDFPeriodStockTransListingPageHeader.inc:48
@@ -3836,7 +3860,7 @@ msgstr ""
 
 #: BankReconciliation.php:361 CounterReturns.php:740 CounterSales.php:836
 #: Customers.php:1194 SelectOrderItems.php:1395 Stocks.php:1458
-#: WorkOrderCosting.php:567 WorkOrderEntry.php:888
+#: WorkOrderCosting.php:567 WorkOrderEntry.php:889
 msgid "Are You Sure?"
 msgstr "Είστε βέβαιοι;"
 
@@ -3949,7 +3973,7 @@ msgstr "Οποιοδήποτε Άλλο"
 #: PDFPriceList.php:144 PDFPriceList.php:285 PDFPriceList.php:390
 #: PDFPriceList.php:392 PricesBasedOnMarkUp.php:226 PricesByCost.php:268
 #: SalesGLPostings.php:365 SelectOrderItems.php:697 SuppPriceList.php:138
-#: SuppPriceList.php:251
+#: SuppPriceList.php:250
 msgid "Price List"
 msgstr "Τιμοκατάλογος"
 
@@ -4105,7 +4129,7 @@ msgstr ""
 #: PO_SelectPurchOrder.php:181 SelectCompletedOrder.php:468
 #: SelectCreditItems.php:981 SelectQASamples.php:266 SelectSalesOrder.php:573
 #: SelectWorkOrder.php:193 Shipt_Select.php:158 TestPlanResults.php:144
-#: WorkOrderEntry.php:899 WorkOrderIssue.php:961
+#: WorkOrderEntry.php:900 WorkOrderIssue.php:961
 msgid "Select a stock category"
 msgstr "Επιλέξτε μια κατηγορία μετοχών"
 
@@ -4114,7 +4138,7 @@ msgstr "Επιλέξτε μια κατηγορία μετοχών"
 msgid "Enter text extract(s) in the description"
 msgstr "Εισάγετε το κείμενο απόσπασμα (-ες) στην περιγραφή"
 
-#: CollectiveWorkOrderCost.php:304 ContractBOM.php:332 CounterReturns.php:1662
+#: CollectiveWorkOrderCost.php:304 ContractBOM.php:331 CounterReturns.php:1662
 #: CounterSales.php:2225 PO_Items.php:1160 SelectCompletedOrder.php:485
 #: SelectCreditItems.php:1002 SelectOrderItems.php:1608
 #: SelectSalesOrder.php:587 SelectWorkOrder.php:206
@@ -4192,7 +4216,7 @@ msgstr "Κοστολόγηση"
 msgid "Paperwork"
 msgstr ""
 
-#: CollectiveWorkOrderCost.php:445 ContractOtherReqts.php:159
+#: CollectiveWorkOrderCost.php:445 ContractOtherReqts.php:158
 #: InternalStockRequest.php:278 InternalStockRequestAuthorisation.php:105
 #: SelectWorkOrder.php:334 WhereUsedInquiry.php:75 WorkOrderCosting.php:99
 msgid "Quantity Required"
@@ -4210,7 +4234,7 @@ msgstr "Ποσότητα Εξαιρετική"
 
 #: CollectiveWorkOrderCost.php:448 Prices.php:223 PricesByCost.php:156
 #: Prices_Customer.php:354 RecurringSalesOrders.php:428 SelectWorkOrder.php:337
-#: WorkOrderEntry.php:782 WorkOrderStatus.php:85
+#: WorkOrderEntry.php:783 WorkOrderStatus.php:85
 msgid "Start Date"
 msgstr "Ημερομηνία Έναρξης"
 
@@ -4244,7 +4268,7 @@ msgstr ""
 "Το όνομα επιχείρησης πρέπει να εισαχθεί και να είναι πενήντα χαρακτήρες ή "
 "λιγότεροι"
 
-#: CompanyPreferences.php:37 Suppliers.php:374 Z_ImportSuppliers.php:177
+#: CompanyPreferences.php:37 Suppliers.php:374 Z_ImportSuppliers.php:178
 msgid "The email address is not correctly formed"
 msgstr "Η διεύθυνση ηλεκτρονικού ταχυδρομείου δεν είναι σωστά διαμορφωμένο"
 
@@ -4500,26 +4524,6 @@ msgid ""
 "Only balance sheet general ledger accounts can be selected."
 msgstr ""
 
-#: CompanyPreferences.php:466 ConfirmDispatch_Invoice.php:656
-#: ConfirmDispatch_Invoice.php:1707 Credit_Invoice.php:1634 CustItem.php:452
-#: FixedAssetItems.php:132 FixedAssetItems.php:683 GLAccountUsers.php:153
-#: GLBudgets.php:240 GLCashFlowsSetup.php:173 GLTags.php:68
-#: GoodsReceived.php:298 GoodsReceived.php:304 GoodsReceived.php:311
-#: GoodsReceived.php:819 ImportBankTransAnalysis.php:154
-#: ImportBankTransAnalysis.php:185 InternalStockRequest.php:255
-#: InternalStockRequestAuthorisation.php:123
-#: InternalStockRequestFulfill.php:364 LocationUsers.php:177
-#: MRPCalendar.php:315 PO_AuthoriseMyOrders.php:142 Payments.php:981
-#: PcAuthorizeExpenses.php:108 PcAuthorizeExpenses.php:293 PricesByCost.php:223
-#: PurchData.php:758 ReorderLevelLocation.php:140 RevisionTranslations.php:111
-#: SMTPServer.php:126 SecurityTokens.php:136 SelectCreditItems.php:954
-#: SellThroughSupport.php:476 ShopParameters.php:610 StockCostUpdate.php:196
-#: StockReorderLevel.php:111 Stocks.php:1452 SystemParameters.php:1246
-#: UserGLAccounts.php:159 UserLocations.php:178 WOSerialNos.php:345
-#: WorkOrderEntry.php:886 reportwriter/languages/en_US/reports.php:156
-msgid "Update"
-msgstr "Ενημέρωση"
-
 #: ConfirmDispatchControlled_Invoice.php:8
 msgid "Specify Dispatched Controlled Items"
 msgstr "Προσδιορίστε τα αποσταλμένα ελεγχόμενα στοιχεία"
@@ -4665,7 +4669,7 @@ msgstr "Επιβεβαίωση Αποστολή και Τιμολόγιο"
 #: Customers.php:348 Dashboard.php:58 Dashboard.php:610 DeliveryDetails.php:858
 #: FTP_RadioBeacon.php:51 PDFOrderStatus.php:293 PDFOrdersInvoiced.php:292
 #: PDFSalesBySalesperson.php:83 PDFWeeklyOrders.php:79 PricesByCost.php:154
-#: SalesGraph.php:188 SalesTopCustomersInquiry.php:214
+#: SalesGraph.php:187 SalesTopCustomersInquiry.php:214
 #: SelectCompletedOrder.php:565 SelectContract.php:148
 #: SelectCreditItems.php:243 SelectCustomer.php:13 SelectCustomer.php:181
 #: SelectCustomer.php:182 SelectOrderItems.php:594
@@ -4689,8 +4693,8 @@ msgstr "Πελάτης"
 #: SalesInquiry.php:771 SalesInquiry.php:781 SalesInquiry.php:803
 #: SalesInquiry.php:951 SalesInquiry.php:966 SalesInquiry.php:972
 #: SalesInquiry.php:1231 WWW_Users.php:322 WWW_Users.php:563
-#: Z_ChangeBranchCode.php:209 includes/PDFStatementPageHeader.inc:121
-#: includes/PDFTransPageHeader.inc:49
+#: Z_ChangeBranchCode.php:209 geocode.php:54
+#: includes/PDFStatementPageHeader.inc:121 includes/PDFTransPageHeader.inc:49
 #: includes/PDFTransPageHeaderPortrait.inc:59
 msgid "Customer Code"
 msgstr "Κωδικός Πελάτη"
@@ -4711,7 +4715,7 @@ msgstr "Επωνυμία Πελάτη"
 msgid "Invoice amounts stated in"
 msgstr "Τιμολόγηση ποσών που δηλώνονται"
 
-#: ConfirmDispatch_Invoice.php:302 ContractBOM.php:241 ContractCosting.php:79
+#: ConfirmDispatch_Invoice.php:302 ContractBOM.php:240 ContractCosting.php:79
 #: ContractCosting.php:85 Contracts.php:1004 CounterReturns.php:667
 #: CounterReturns.php:1796 CounterSales.php:747 CounterSales.php:2364
 #: Credit_Invoice.php:302 DeliveryDetails.php:878 GoodsReceived.php:120
@@ -4722,7 +4726,7 @@ msgstr "Τιμολόγηση ποσών που δηλώνονται"
 #: PrintCustTransPortrait.php:1040 PrintCustTransPortrait.php:1096
 #: PrintWOItemSlip.php:152 PurchaseByPrefSupplier.php:412
 #: RecurringSalesOrders.php:329 ReorderLevelLocation.php:195 ReprintGRN.php:88
-#: ReverseGRN.php:399 SalesGraph.php:189 SelectCreditItems.php:686
+#: ReverseGRN.php:399 SalesGraph.php:188 SelectCreditItems.php:686
 #: SelectOrderItems.php:1311 StockCategorySalesInquiry.php:120
 #: StockCostUpdate.php:126 StockLocMovements.php:89 StockLocTransfer.php:306
 #: StockLocTransferReceive.php:541 StockQuantityByDate.php:108 Stocks.php:917
@@ -4800,7 +4804,7 @@ msgstr "Αυτή η αποστολή"
 #: SelectOrderItems.php:1316 SelectProduct.php:169 Shipments.php:403
 #: StockLocMovements.php:96 StockMovements.php:111 StockStatus.php:331
 #: SuppCreditGRNs.php:197 SuppCreditGRNs.php:293 SuppCreditGRNs.php:294
-#: SuppPriceList.php:311 SupplierPriceList.php:543 SupplierTenders.php:127
+#: SuppPriceList.php:308 SupplierPriceList.php:543 SupplierTenders.php:127
 #: SupplierTenders.php:329 SupplierTenders.php:537 SupplierTenders.php:691
 #: api/api_xml-rpc.php:981 includes/PDFQuotationPageHeader.inc:109
 #: includes/PDFQuotationPortraitPageHeader.inc:96
@@ -5457,7 +5461,7 @@ msgstr ""
 #: CustomerAccount.php:256 CustomerInquiry.php:256 CustomerTransInquiry.php:105
 #: DeliveryDetails.php:624 DeliveryDetails.php:630 DeliveryDetails.php:637
 #: DeliveryDetails.php:814 DeliveryDetails.php:820 DeliveryDetails.php:843
-#: MRPReport.php:440 PDFOrderStatus.php:292 PDFOrdersInvoiced.php:291
+#: MRPReport.php:439 PDFOrderStatus.php:292 PDFOrdersInvoiced.php:291
 #: PDFSalesBySalesperson.php:82 PDFWeeklyOrders.php:78
 #: SelectCompletedOrder.php:564 SelectContract.php:143 SelectOrderItems.php:686
 #: SelectProduct.php:373 Shipments.php:397 Shipments.php:484
@@ -5779,7 +5783,7 @@ msgid "processed"
 msgstr "επεξεργασμένος"
 
 #: ConfirmDispatch_Invoice.php:1655 ConfirmDispatch_Invoice.php:1657
-#: ContractBOM.php:299 CounterReturns.php:1607 CounterReturns.php:1609
+#: ContractBOM.php:298 CounterReturns.php:1607 CounterReturns.php:1609
 #: CounterSales.php:2056 CounterSales.php:2058 CustomerReceipt.php:593
 #: DeliveryDetails.php:605 DeliveryDetails.php:609 DeliveryDetails.php:831
 #: DeliveryDetails.php:835 GLJournalInquiry.php:156 GLJournalInquiry.php:158
@@ -5860,11 +5864,11 @@ msgstr "Κείμενο Τιμολογίου Πώλησης"
 msgid "Process Invoice"
 msgstr "Επεξεργασία Τιμολογίου Πώλησης"
 
-#: ContractBOM.php:9
+#: ContractBOM.php:8
 msgid "Contract Bill of Materials"
 msgstr "Συμβόλαιο Bill of Materials"
 
-#: ContractBOM.php:44 ContractOtherReqts.php:47
+#: ContractBOM.php:43 ContractOtherReqts.php:46
 msgid ""
 "You should automatically be forwarded to the Contract page. If this does not "
 "happen perhaps the browser does not support META Refresh"
@@ -5872,7 +5876,7 @@ msgstr ""
 "Θα πρέπει αυτομάτως να διαβιβάζονται στην σελίδα Σύμβασης. Εάν αυτό δεν "
 "συμβεί ίσως το πρόγραμμα περιήγησης δεν υποστηρίζει META REFRESH"
 
-#: ContractBOM.php:44 ContractOtherReqts.php:47 Contracts.php:96
+#: ContractBOM.php:43 ContractOtherReqts.php:46 Contracts.php:96
 #: Contracts.php:105 DeliveryDetails.php:276 DeliveryDetails.php:285
 #: EmailCustTrans.php:23 EmailCustTrans.php:27 GLAccountCSV.php:272
 #: POReport.php:1502 PO_Header.php:243 SalesAnalysis_UserDefined.php:46
@@ -5885,7 +5889,7 @@ msgstr ""
 msgid "click here"
 msgstr "πατήστε εδώ"
 
-#: ContractBOM.php:44 ContractOtherReqts.php:47 Contracts.php:96
+#: ContractBOM.php:43 ContractOtherReqts.php:46 Contracts.php:96
 #: Contracts.php:105 DeliveryDetails.php:276 DeliveryDetails.php:285
 #: PO_Header.php:243 SalesAnalysis_UserDefined.php:46 SelectOrderItems.php:1152
 #: StockUsage.php:21 SupplierCredit.php:210 SupplierCredit.php:221
@@ -5896,15 +5900,15 @@ msgstr "πατήστε εδώ"
 msgid "to continue"
 msgstr "για να συνεχίσετε"
 
-#: ContractBOM.php:144 CounterReturns.php:324 CounterSales.php:352
+#: ContractBOM.php:143 CounterReturns.php:324 CounterSales.php:352
 #: InternalStockRequest.php:505 PO_Items.php:1098 SelectCreditItems.php:391
 #: SelectOrderItems.php:785 SupplierTenderCreate.php:834
-#: SupplierTenders.php:667 WorkOrderEntry.php:270 WorkOrderIssue.php:717
+#: SupplierTenders.php:667 WorkOrderEntry.php:271 WorkOrderIssue.php:717
 msgid "There is a problem selecting the part records to display because"
 msgstr ""
 "Υπάρχει ένα πρόβλημα επιλογής των εγγραφών μέρος για να εμφανιστεί, επειδή"
 
-#: ContractBOM.php:145 PO_Items.php:1099 SupplierTenderCreate.php:835
+#: ContractBOM.php:144 PO_Items.php:1099 SupplierTenderCreate.php:835
 #: SupplierTenders.php:668 Z_ChangeGLAccountCode.php:62
 #: Z_ChangeLocationCode.php:106 Z_ChangeStockCategory.php:74
 #: Z_ChangeStockCode.php:112 Z_GLAccountUsersCopyAuthority.php:32
@@ -5912,26 +5916,26 @@ msgstr ""
 msgid "The SQL statement that failed was"
 msgstr "Η πρόταση SQL που απέτυχε ήταν"
 
-#: ContractBOM.php:149 PO_Items.php:1103 SupplierTenderCreate.php:839
+#: ContractBOM.php:148 PO_Items.php:1103 SupplierTenderCreate.php:839
 #: SupplierTenders.php:672
 msgid "There are no products to display matching the criteria provided"
 msgstr ""
 "Δεν υπάρχουν προϊόντα προς εμφάνιση ταιριάζουν με τα κριτήρια που "
 "προβλέπονται"
 
-#: ContractBOM.php:164
+#: ContractBOM.php:163
 msgid ""
 "The contract BOM cannot be altered because the customer has already placed "
 "the order"
 msgstr ""
 
-#: ContractBOM.php:180 PO_Items.php:561 StockLocTransfer.php:85
+#: ContractBOM.php:179 PO_Items.php:561 StockLocTransfer.php:85
 #: includes/SelectOrderItems_IntoCart.inc:27
 #: includes/SelectOrderItems_IntoCart.inc:65
 msgid "The item"
 msgstr "Το στοιχείο"
 
-#: ContractBOM.php:180
+#: ContractBOM.php:179
 msgid ""
 "is already in the bill of material for this contract. The system will not "
 "allow the same item on the contract more than once. However you can change "
@@ -5941,25 +5945,25 @@ msgstr ""
 "δεν θα επιτρέψει το ίδιο θέμα της σύμβασης περισσότερες από μία φορές. "
 "Ωστόσο, μπορείτε να αλλάξετε την ποσότητα που απαιτείται για το στοιχείο."
 
-#: ContractBOM.php:195
+#: ContractBOM.php:194
 msgid "The item details could not be retrieved"
 msgstr "Το στοιχείο λεπτομέρειες δεν θα μπορούσε να ανακτηθεί"
 
-#: ContractBOM.php:196 PO_Items.php:581 PurchaseByPrefSupplier.php:30
+#: ContractBOM.php:195 PO_Items.php:581 PurchaseByPrefSupplier.php:30
 #: SelectCreditItems.php:638
 msgid "The SQL used to retrieve the item details but failed was"
 msgstr ""
 "Η SQL χρησιμοποιείται για τη λήψη του στοιχείου λεπτομέρειες, αλλά απέτυχε "
 "ήταν"
 
-#: ContractBOM.php:209 CounterReturns.php:409 CounterSales.php:452
+#: ContractBOM.php:208 CounterReturns.php:409 CounterSales.php:452
 #: PO_Items.php:684 SelectOrderItems.php:881
 #: includes/SelectOrderItems_IntoCart.inc:60
 #: includes/SelectOrderItems_IntoCart.inc:238
 msgid "The item code"
 msgstr "Ο κωδικός του"
 
-#: ContractBOM.php:209
+#: ContractBOM.php:208
 msgid ""
 "does not exist in the database and therefore cannot be added to the contract "
 "BOM"
@@ -5967,95 +5971,96 @@ msgstr ""
 "δεν υπάρχει στη βάση δεδομένων και ως εκ τούτου δεν μπορεί να προστεθεί στη "
 "σύμβαση BOM"
 
-#: ContractBOM.php:229
+#: ContractBOM.php:228
 msgid "Contract Bill of Material"
 msgstr "Συμβόλαιο Bill του υλικού"
 
-#: ContractBOM.php:236 ContractOtherReqts.php:93
-msgid "Contract Reference:"
-msgstr "Συμβόλαιο Αναφορά:"
+#: ContractBOM.php:235 ContractOtherReqts.php:92 Contracts.php:847
+#: SelectContract.php:31 SelectContract.php:41 SuppContractChgs.php:132
+msgid "Contract Reference"
+msgstr "Συμβόλαιο Αναφορά"
 
-#: ContractBOM.php:246 ContractOtherReqts.php:101
+#: ContractBOM.php:245 ContractOtherReqts.php:100
 msgid "Sub-total"
 msgstr "Υποσύνολο"
 
-#: ContractBOM.php:268
+#: ContractBOM.php:267
 msgid "Enter the quantity of this component required to complete the contract"
 msgstr ""
 
-#: ContractBOM.php:272
+#: ContractBOM.php:271
 msgid "Are you sure you wish to delete this item from the contract BOM?"
 msgstr ""
 
-#: ContractBOM.php:272
+#: ContractBOM.php:271
 msgid "Confirm Deletion"
 msgstr ""
 
-#: ContractBOM.php:283
+#: ContractBOM.php:282
 msgid "Update Lines"
 msgstr "Ενημέρωση Lines"
 
-#: ContractBOM.php:284 ContractOtherReqts.php:138
+#: ContractBOM.php:283 ContractOtherReqts.php:137
 msgid "Back To Contract Header"
 msgstr "Επιστροφή στην Κεφαλίδα Συμβόλαιο"
 
-#: ContractBOM.php:295 PO_Items.php:1120
+#: ContractBOM.php:294 PO_Items.php:1120
 msgid "The supplier category details could not be retrieved because"
 msgstr "Τα στοιχεία της κατηγορίας προμηθευτής δεν μπορεί να ανακτηθεί, επειδή"
 
-#: ContractBOM.php:296 PO_Items.php:1121
+#: ContractBOM.php:295 PO_Items.php:1121
 msgid "The SQL used to retrieve the category details but failed was"
 msgstr ""
 "Ο SQL που χρησιμοποιείται για να ανακτήσει τις λεπτομέρειες της κατηγορίας, "
 "αλλά απέτυχε ήταν"
 
-#: ContractBOM.php:299 PO_Items.php:1126
+#: ContractBOM.php:298 PO_Items.php:1126
 msgid "Search For Stock Items"
 msgstr "Αναζήτηση στοιχείων Χρηματιστήριο"
 
-#: ContractBOM.php:327 PO_Items.php:1153 SelectCompletedOrder.php:480
+#: ContractBOM.php:326 PO_Items.php:1153 SelectCompletedOrder.php:480
 #: SelectCreditItems.php:999
 msgid "Enter text extracts in the description"
 msgstr "Εισάγετε αποσπάσματα κειμένου στην περιγραφή"
 
-#: ContractBOM.php:328
+#: ContractBOM.php:327
 msgid ""
 "Enter any text that should appear in the item description as the basis of "
 "your search"
 msgstr ""
 
-#: ContractBOM.php:333
+#: ContractBOM.php:332
 msgid ""
 "Enter any part of an item code to seach for all matching items containing "
 "that text in the code"
 msgstr ""
 
-#: ContractBOM.php:337
+#: ContractBOM.php:336
 msgid "Create a New Stock Item"
 msgstr "Δημιουργήστε ένα νέο στοιχείο Χρηματιστήριο"
 
-#: ContractBOM.php:356 FixedAssetItems.php:518 StockClone.php:756
+#: ContractBOM.php:355 FixedAssetItems.php:518 StockClone.php:756
 #: Stocks.php:1069 SupplierTenderCreate.php:855 SupplierTenders.php:689
 msgid "Image"
 msgstr "Εικόνα"
 
-#: ContractBOM.php:392
+#: ContractBOM.php:391
 msgid "Enter the quantity required of this item to complete the contract"
 msgstr ""
 
-#: ContractBOM.php:408 SupplierTenders.php:764
+#: ContractBOM.php:407 SupplierTenders.php:764
 msgid "Only the first"
 msgstr "Μόνο η πρώτη"
 
-#: ContractBOM.php:408 SupplierTenders.php:764
+#: ContractBOM.php:407 SupplierTenders.php:764
 msgid "can be displayed"
 msgstr "μπορεί να εμφανιστεί"
 
-#: ContractBOM.php:408 SupplierTenders.php:765
+#: ContractBOM.php:407 SupplierTenders.php:765
 msgid "Please restrict your search to only the parts required"
 msgstr "Παρακαλούμε να περιορίσεις την έρευνα σε απαιτούνται μόνο τα τμήματα"
 
-#: ContractBOM.php:412
+#: ContractBOM.php:411
 msgid "Add to Contract Bill Of Material"
 msgstr "Προσθήκη στο Bill Σύμβαση Υλικό"
 
@@ -6148,7 +6153,7 @@ msgstr "Προϋπολογισθέν Λοιπές Δαπάνες"
 #: ReprintGRN.php:85 SelectProduct.php:323 SelectSupplier.php:161
 #: ShipmentCosting.php:535 ShipmentCosting.php:612 Shipt_Select.php:294
 #: ShiptsList.php:11 SuppCreditGRNs.php:293 SuppLoginSetup.php:33
-#: SuppPriceList.php:222 SuppPriceList.php:295 SupplierAllocations.php:567
+#: SuppPriceList.php:222 SuppPriceList.php:292 SupplierAllocations.php:567
 #: SupplierAllocations.php:642 SupplierCredit.php:262
 #: SupplierGRNAndInvoiceInquiry.php:30 SupplierInquiry.php:119
 #: SupplierInquiry.php:120 SupplierInvoice.php:606 SupplierTransInquiry.php:112
@@ -6291,11 +6296,11 @@ msgstr ""
 "χορηγηθεί και τα τέλη που καταβάλλονται κατ &#39;αυτής. Αποκλίσεις θα "
 "μεταφέρονται στο λογαριασμό αποτελεσμάτων χρήσεως. Είσαι σίγουρος;"
 
-#: ContractOtherReqts.php:8 ContractOtherReqts.php:85
+#: ContractOtherReqts.php:7 ContractOtherReqts.php:84
 msgid "Contract Other Requirements"
 msgstr "Συμβόλαιο Άλλες Απαιτήσεις"
 
-#: ContractOtherReqts.php:57
+#: ContractOtherReqts.php:56
 msgid ""
 "The other contract requirements cannot be altered because the customer has "
 "already placed the order"
@@ -6303,52 +6308,52 @@ msgstr ""
 "Οι άλλες απαιτήσεις της σύμβασης δεν μπορούν να τροποποιηθούν, διότι ο "
 "πελάτης έχει θέσει ήδη τη σειρά"
 
-#: ContractOtherReqts.php:63
+#: ContractOtherReqts.php:62
 msgid "The quantity of the new requirement is expected to be numeric"
 msgstr "Η ποσότητα των νέων απαιτήσεων αναμένεται να είναι αριθμητική"
 
-#: ContractOtherReqts.php:67
+#: ContractOtherReqts.php:66
 msgid "The cost per unit of the new requirement is expected to be numeric"
 msgstr ""
 "Το κόστος ανά μονάδα των νέων απαιτήσεων αναμένεται να είναι αριθμητική"
 
-#: ContractOtherReqts.php:120 ContractOtherReqts.php:156
+#: ContractOtherReqts.php:119 ContractOtherReqts.php:155
 msgid "Enter a description of this requirement for the contract"
 msgstr ""
 
-#: ContractOtherReqts.php:121 ContractOtherReqts.php:160
+#: ContractOtherReqts.php:120 ContractOtherReqts.php:159
 msgid "Enter the quantity of this requirement for the contract"
 msgstr ""
 
-#: ContractOtherReqts.php:124
+#: ContractOtherReqts.php:123
 msgid "Are you sure you wish to delete this contract requirement?"
 msgstr ""
 
-#: ContractOtherReqts.php:131
+#: ContractOtherReqts.php:130
 msgid "Total Other Requirements Cost"
 msgstr "Συνολικό Κόστος Άλλες Απαιτήσεις"
 
-#: ContractOtherReqts.php:137
+#: ContractOtherReqts.php:136
 msgid "Update Other Requirements Lines"
 msgstr "Ενημέρωση άλλων γραμμών Απαιτήσεις"
 
-#: ContractOtherReqts.php:152
+#: ContractOtherReqts.php:151
 msgid "Enter New Requirements"
 msgstr "Εισάγετε νέες απαιτήσεις"
 
-#: ContractOtherReqts.php:155
+#: ContractOtherReqts.php:154
 msgid "Requirement Description"
 msgstr "Απαίτηση Περιγραφή"
 
-#: ContractOtherReqts.php:163
+#: ContractOtherReqts.php:162
 msgid "Cost Per Unit"
 msgstr "Κόστος ανά μονάδα"
 
-#: ContractOtherReqts.php:164
+#: ContractOtherReqts.php:163
 msgid "Enter the cost per unit of this requirement"
 msgstr ""
 
-#: ContractOtherReqts.php:171
+#: ContractOtherReqts.php:170
 msgid "Enter New Contract Requirement"
 msgstr "Εισάγετε νέα απαίτηση των συμβάσεων"
 
@@ -6621,7 +6626,7 @@ msgstr "Οι θέσεις για το στοιχείο"
 #: SupplierCredit.php:1256 SupplierCredit.php:1284 SupplierInvoice.php:1145
 #: SupplierInvoice.php:1203 SupplierInvoice.php:1575 SupplierInvoice.php:1813
 #: SupplierInvoice.php:1842 Suppliers.php:589 Z_ImportStocks.php:245
-#: Z_ImportSuppliers.php:306
+#: Z_ImportSuppliers.php:307
 msgid "could not be added because"
 msgstr "δεν ήταν δυνατό να προστεθεί επειδή"
 
@@ -6821,11 +6826,6 @@ msgstr "Επαφή"
 msgid "Fax"
 msgstr "Fax"
 
-#: Contracts.php:847 SelectContract.php:31 SelectContract.php:41
-#: SuppContractChgs.php:132
-msgid "Contract Reference"
-msgstr "Συμβόλαιο Αναφορά"
-
 #: Contracts.php:851 Contracts.php:854
 msgid ""
 "Enter the contract reference. This reference will be used as the item code "
@@ -6837,7 +6837,7 @@ msgstr ""
 #: SalesCategoryPeriodInquiry.php:164 SalesTopItemsInquiry.php:221
 #: SelectProduct.php:97 SpecialOrder.php:697 StockClone.php:761
 #: StockDispatch.php:489 Stocks.php:1089 SuppPriceList.php:237
-#: SuppPriceList.php:299 Z_ItemsWithoutPicture.php:33
+#: SuppPriceList.php:296 Z_ItemsWithoutPicture.php:33
 #: includes/PDFInventoryValnPageHeader.inc:32
 #: includes/PDFInventoryValnPageHeader.inc:38
 msgid "Category"
@@ -7126,12 +7126,12 @@ msgid "Stock Category has been used in search"
 msgstr "Αποθήκη Κατηγορία έχει χρησιμοποιηθεί στην αναζήτηση"
 
 #: CounterReturns.php:325 CounterSales.php:353 InternalStockRequest.php:506
-#: SelectOrderItems.php:786 WorkOrderEntry.php:271 WorkOrderIssue.php:718
+#: SelectOrderItems.php:786 WorkOrderEntry.php:272 WorkOrderIssue.php:718
 msgid "The SQL used to get the part selection was"
 msgstr "Ο SQL που χρησιμοποιείται για να πάρει την επιλογή μέρος ήταν"
 
 #: CounterReturns.php:329 CounterSales.php:357 InternalStockRequest.php:510
-#: SelectOrderItems.php:791 WorkOrderEntry.php:275 WorkOrderIssue.php:722
+#: SelectOrderItems.php:791 WorkOrderEntry.php:276 WorkOrderIssue.php:722
 msgid "There are no products available meeting the criteria specified"
 msgstr ""
 "Δεν υπάρχουν διαθέσιμα προϊόντα που πληρούν τα κριτήρια που καθορίζονται"
@@ -7424,7 +7424,7 @@ msgstr ""
 #: CounterReturns.php:1686 CounterReturns.php:1780 CounterSales.php:2250
 #: CounterSales.php:2344 InternalStockRequest.php:624
 #: InternalStockRequest.php:746 PO_Items.php:1178 PO_Items.php:1180
-#: WorkOrderEntry.php:958 WorkOrderEntry.php:960
+#: WorkOrderEntry.php:959 WorkOrderEntry.php:961
 msgid "Prev"
 msgstr "Προηγούμενο"
 
@@ -7434,12 +7434,12 @@ msgstr ""
 
 #: CounterReturns.php:1688 CounterReturns.php:1784 CounterSales.php:2252
 #: CounterSales.php:2346 InternalStockRequest.php:554
-#: InternalStockRequest.php:630 InternalStockRequest.php:750 MRPReport.php:769
+#: InternalStockRequest.php:630 InternalStockRequest.php:750 MRPReport.php:768
 #: PO_Items.php:1183 PO_Items.php:1185 SelectAsset.php:251
 #: SelectCustomer.php:395 SelectCustomer.php:472 SelectOrderItems.php:1641
 #: SelectOrderItems.php:1737 SelectProduct.php:819 SelectSupplier.php:273
 #: SelectSupplier.php:339 SupplierPriceList.php:266
-#: SupplierTenderCreate.php:608 WorkOrderEntry.php:963 WorkOrderEntry.php:965
+#: SupplierTenderCreate.php:608 WorkOrderEntry.php:964 WorkOrderEntry.php:966
 msgid "Next"
 msgstr "Επόμενο"
 
@@ -7610,7 +7610,7 @@ msgstr "Παίρνεται από"
 #: SelectQASamples.php:402 SelectQASamples.php:507 SelectQASamples.php:567
 #: SpecialOrder.php:613 SupplierCredit.php:602 SupplierInquiry.php:208
 #: SupplierInvoice.php:956 SupplierTransInquiry.php:113 TestPlanResults.php:285
-#: TestPlanResults.php:760 WorkOrderEntry.php:817
+#: TestPlanResults.php:760 WorkOrderEntry.php:818
 #: Z_ImportGLAccountGroups.php:26 Z_ImportGLAccountSections.php:29
 #: Z_ImportPartCodes.php:31 includes/PDFOrderPageHeader_generic.inc:58
 #: includes/PO_PDFOrderPageHeader.inc:65 ../webSHOP/Checkout.php:435
@@ -7707,7 +7707,7 @@ msgstr ""
 "υλικού που έχει συσταθεί ... μπορεί να θελήσετε στο διπλό έλεγχο αυτό"
 
 #: CounterSales.php:1238 DeliveryDetails.php:535 DeliveryDetails.php:737
-#: WorkOrderEntry.php:377 WorkOrderEntry.php:468
+#: WorkOrderEntry.php:378 WorkOrderEntry.php:469
 msgid "The work order item could not be added"
 msgstr "Το στοιχείο για το έργο δεν θα μπορούσε να προστεθεί"
 
@@ -8528,7 +8528,7 @@ msgstr ""
 msgid "Customer EDI Set Up"
 msgstr "Δημιουργία Πελάτη ΗΑΔ"
 
-#: CustEDISetup.php:31 Z_ImportDebtors.php:298
+#: CustEDISetup.php:31 Z_ImportDebtors.php:299
 msgid ""
 "The customers EDI reference code cannot contain any of the following "
 "characters"
@@ -8539,12 +8539,12 @@ msgstr ""
 #: CustEDISetup.php:31 CustLoginSetup.php:51 Customers.php:67
 #: InternalStockCategoriesByRole.php:24 StockClone.php:164 Stocks.php:142
 #: SuppLoginSetup.php:51 TaxCategories.php:32 WWW_Users.php:90
-#: WorkCentres.php:37 Z_ChangeBranchCode.php:35 Z_ImportDebtors.php:224
-#: Z_ImportDebtors.php:298 Z_ImportStocks.php:123
+#: WorkCentres.php:37 Z_ChangeBranchCode.php:35 Z_ImportDebtors.php:225
+#: Z_ImportDebtors.php:299 Z_ImportStocks.php:123
 msgid "or a space"
 msgstr "ή ένα διάστημα"
 
-#: CustEDISetup.php:35 Z_ImportDebtors.php:302
+#: CustEDISetup.php:35 Z_ImportDebtors.php:303
 msgid ""
 "The customers EDI reference code must be set when EDI Invoices or EDI orders "
 "are activated"
@@ -8552,7 +8552,7 @@ msgstr ""
 "Ο κωδικός αναφοράς πελατών ΗΑΔ πρέπει να τεθεί όταν ενεργοποιούνται τα "
 "τιμολόγια ΗΑΔ ή οι διαταγές ΗΑΔ"
 
-#: CustEDISetup.php:41 Z_ImportDebtors.php:308
+#: CustEDISetup.php:41 Z_ImportDebtors.php:309
 msgid ""
 "The customers EDI email address or FTP server address must be entered if EDI "
 "Invoices are to be sent"
@@ -9086,9 +9086,9 @@ msgstr "Πελάτης Όταν Διατεθέντα"
 #: CustWhereAlloc.php:34 CustWhereAlloc.php:37 CustWhereAlloc.php:43
 #: CustWhereAlloc.php:99 CustWhereAlloc.php:163 PcAssignCashTabToTab.php:243
 #: PcAssignCashTabToTab.php:374 PcAssignCashToTab.php:257
-#: PcAssignCashToTab.php:403 PcAuthorizeExpenses.php:98
+#: PcAssignCashToTab.php:403 PcAuthorizeExpenses.php:99
 #: PcClaimExpensesFromTab.php:243 PcClaimExpensesFromTab.php:418
-#: PcReportTab.php:181 PcReportTab.php:334 Z_CheckAllocs.php:87
+#: PcReportTab.php:184 PcReportTab.php:337 Z_CheckAllocs.php:87
 #: Z_SalesIntegrityCheck.php:90 Z_SalesIntegrityCheck.php:105
 #: includes/DatabaseTranslations.php:28
 msgid "Receipt"
@@ -9582,7 +9582,7 @@ msgstr "Πωλήσεις Πρόσωπο"
 #: CustomerBalancesMovement.php:58 InternalStockRequestInquiry.php:164
 #: SalesByTypePeriodInquiry.php:70 SalesCategoryPeriodInquiry.php:64
 #: SalesTopCustomersInquiry.php:66 SalesTopItemsInquiry.php:67
-#: StockCategorySalesInquiry.php:58 SuppPriceList.php:312
+#: StockCategorySalesInquiry.php:58 SuppPriceList.php:309
 msgid "Date From"
 msgstr ""
 
@@ -9639,17 +9639,17 @@ msgstr ""
 "Επιλέξτε έναν πελάτη πρώτα έπειτα επιλέξτε τη σύνδεση με τα υποκαταστήματα"
 
 #: CustomerBranches.php:57 Z_ImportCustbranch.php:182
-#: Z_ImportCustbranch.php:281 Z_ImportDebtors.php:438
+#: Z_ImportCustbranch.php:281 Z_ImportDebtors.php:439
 msgid "The Branch code cannot contain any of the following characters"
 msgstr ""
 "Ο κωδικός Δικτύου δεν μπορεί να περιέχει κανέναν από τους ακόλουθους "
 "χαρακτήρες"
 
-#: CustomerBranches.php:63 Z_ImportDebtors.php:444
+#: CustomerBranches.php:63 Z_ImportDebtors.php:445
 msgid "The Branch code must be at least one character long"
 msgstr "Ο κωδικός Δικτύου πρέπει να είναι τουλάχιστον ένας χαρακτήρας"
 
-#: CustomerBranches.php:69 Z_ImportCustbranch.php:226 Z_ImportDebtors.php:450
+#: CustomerBranches.php:69 Z_ImportCustbranch.php:226 Z_ImportDebtors.php:451
 msgid ""
 "The date after which invoices are charged to the following month is expected "
 "to be a number and a recognised number has not been entered"
@@ -9658,7 +9658,7 @@ msgstr ""
 "αναμένεται να είναι ένας αριθμός και ένας αναγνωρίσιμος αριθμός δεν έχει "
 "εισαχθεί"
 
-#: CustomerBranches.php:75 Z_ImportCustbranch.php:232 Z_ImportDebtors.php:456
+#: CustomerBranches.php:75 Z_ImportCustbranch.php:232 Z_ImportDebtors.php:457
 msgid ""
 "The date (in the month) after which invoices are charged to the following "
 "month should be a number less than 31"
@@ -9666,7 +9666,7 @@ msgstr ""
 "Η ημερομηνία (στο μήνα)μετά απο την οποία τα τιμολόγια χρεώνονται στον "
 "επόμενο μήνα πρέπει να είναι ένας αριθμός λιγότερο από 31"
 
-#: CustomerBranches.php:81 Z_ImportCustbranch.php:238 Z_ImportDebtors.php:462
+#: CustomerBranches.php:81 Z_ImportCustbranch.php:238 Z_ImportDebtors.php:463
 msgid ""
 "The estimated delivery days is expected to be a number and a recognised "
 "number has not been entered"
@@ -9674,11 +9674,11 @@ msgstr ""
 "Οι αναμενόμενες ημέρες παράδοσης αναμένοντα να είναι ένας αριθμός και ένας "
 "αναγνωρισμένος αριθμός δεν έχει εισαχθεί"
 
-#: CustomerBranches.php:87 Z_ImportCustbranch.php:244 Z_ImportDebtors.php:468
+#: CustomerBranches.php:87 Z_ImportCustbranch.php:244 Z_ImportDebtors.php:469
 msgid "The estimated delivery days should be a number of days less than 60"
 msgstr "Οι αναμενόμενες ημέρες παράδοσης πρέπει να είναι λιγότερες από 60"
 
-#: CustomerBranches.php:87 Z_ImportCustbranch.php:244 Z_ImportDebtors.php:468
+#: CustomerBranches.php:87 Z_ImportCustbranch.php:244 Z_ImportDebtors.php:469
 msgid ""
 "A package can be delivered by seafreight anywhere in the world normally in "
 "less than 60 days"
@@ -9739,7 +9739,7 @@ msgstr ""
 msgid "Main Menu"
 msgstr "Κεντρικό Μενού"
 
-#: CustomerBranches.php:252 Z_ImportCustbranch.php:483 Z_ImportDebtors.php:593
+#: CustomerBranches.php:252 Z_ImportCustbranch.php:483 Z_ImportDebtors.php:594
 msgid "The branch record could not be inserted or updated because"
 msgstr "Το αρχείο δικτύων δεν θα μπορούσε να προστεθεί ή να ενημερωθεί επειδή"
 
@@ -10618,8 +10618,8 @@ msgstr "Επιλέξτε το είδος της συναλλαγής να υπο
 
 #: CustomerTransInquiry.php:50 FixedAssetRegister.php:82
 #: FixedAssetRegister.php:365 FreightCosts.php:79 GLCashFlowsIndirect.php:81
-#: GLJournalInquiry.php:44 GLJournalInquiry.php:61 PcReportTab.php:143
-#: PcReportTab.php:263 SalesAnalRepts.php:435 SalesAnalRepts.php:463
+#: GLJournalInquiry.php:44 GLJournalInquiry.php:61 PcReportTab.php:146
+#: PcReportTab.php:266 SalesAnalRepts.php:435 SalesAnalRepts.php:463
 #: SalesAnalRepts.php:492 SalesAnalRepts.php:511 ShipmentCosting.php:56
 #: Shipments.php:306 StockDispatch.php:514 StockLocTransferReceive.php:259
 #: StockTransfers.php:431 SuppContractChgs.php:72 SuppCreditGRNs.php:184
@@ -10692,7 +10692,7 @@ msgstr "Είδος Πελάτη"
 
 #: CustomerTypes.php:92 PO_Items.php:237 PcAssignCashTabToTab.php:117
 #: PcAssignCashToTab.php:126 PcClaimExpensesFromTab.php:113 PcExpenses.php:127
-#: PcExpensesTypeTab.php:79 PcTabs.php:162 PcTypeTabs.php:88 SalesTypes.php:90
+#: PcExpensesTypeTab.php:78 PcTabs.php:162 PcTypeTabs.php:88 SalesTypes.php:90
 #: SelectSalesOrder.php:237 SelectSalesOrder.php:400 SpecialOrder.php:479
 #: SupplierTypes.php:77
 msgid "has been created"
@@ -10773,68 +10773,68 @@ msgstr "Συντήρηση Πελάτη"
 msgid "The customer number already exists in the database"
 msgstr "Ο αριθμός των πελατών υπάρχει ήδη στη βάση δεδομένων"
 
-#: Customers.php:57 Z_ImportDebtors.php:230
+#: Customers.php:57 Z_ImportDebtors.php:231
 msgid "The customer name must be entered and be forty characters or less long"
 msgstr ""
 "Το όνομα πελατών πρέπει να εισαχθεί και να είναι σαράντα χαρακτήρες ή "
 "μικρότερο"
 
-#: Customers.php:62 Z_ImportDebtors.php:219
+#: Customers.php:62 Z_ImportDebtors.php:220
 msgid "The debtor code cannot be empty"
 msgstr "Ο κωδικός χρεωστών δεν μπορεί να είναι κενός"
 
-#: Customers.php:67 Z_ImportDebtors.php:224
+#: Customers.php:67 Z_ImportDebtors.php:225
 msgid "The customer code cannot contain any of the following characters"
 msgstr ""
 "Ο κωδικός πελάτη δεν μπορεί να περιέχει κανέναν από τους ακόλουθους "
 "χαρακτήρες"
 
-#: Customers.php:72 Z_ImportDebtors.php:235
+#: Customers.php:72 Z_ImportDebtors.php:236
 msgid "The Line 1 of the address must be forty characters or less long"
 msgstr ""
 "Η γραμμή 1 της διεύθυνσης πρέπει να είναι σαράντα χαρακτήρες ή λιγότεροι"
 
-#: Customers.php:77 Z_ImportDebtors.php:240
+#: Customers.php:77 Z_ImportDebtors.php:241
 msgid "The Line 2 of the address must be forty characters or less long"
 msgstr ""
 "Η γραμμή 2 της διεύθυνσης πρέπει να είναι σαράντα χαρακτήρες ή λιγότεροι"
 
-#: Customers.php:82 Z_ImportDebtors.php:245
+#: Customers.php:82 Z_ImportDebtors.php:246
 msgid "The Line 3 of the address must be forty characters or less long"
 msgstr ""
 "Η γραμμή 3 της διεύθυνσης πρέπει να είναι σαράντα χαρακτήρες ή λιγότεροι"
 
-#: Customers.php:87 Z_ImportDebtors.php:250
+#: Customers.php:87 Z_ImportDebtors.php:251
 msgid "The Line 4 of the address must be fifty characters or less long"
 msgstr ""
 "Η γραμμή της 4 της διεύθυνσης πρέπει να είναι πενήντα χαρακτήρες ή μικρότερη"
 
-#: Customers.php:92 Z_ImportDebtors.php:255
+#: Customers.php:92 Z_ImportDebtors.php:256
 msgid "The Line 5 of the address must be twenty characters or less long"
 msgstr ""
 "Η γραμμή 5 της διεύθυνσης πρέπει να είναι σαράντα χαρακτήρες ή λιγότεροι"
 
-#: Customers.php:97 Z_ImportDebtors.php:260
+#: Customers.php:97 Z_ImportDebtors.php:261
 msgid "The credit limit must be numeric"
 msgstr "Το πιστωτικό όριο πρέπει να είναι αριθμητικό"
 
-#: Customers.php:102 Z_ImportDebtors.php:265
+#: Customers.php:102 Z_ImportDebtors.php:266
 msgid "The payment discount must be numeric"
 msgstr "Η έκπτωση πληρωμής πρέπει να είναι αριθμητική"
 
-#: Customers.php:107 Z_ImportDebtors.php:270
+#: Customers.php:107 Z_ImportDebtors.php:271
 msgid "The customer since field must be a date in the format"
 msgstr "Το πεδίο -πελάτης από- πρέπει να είναι μια ημερομηνία της μορφής"
 
-#: Customers.php:112 Z_ImportDebtors.php:275
+#: Customers.php:112 Z_ImportDebtors.php:276
 msgid "The discount percentage must be numeric"
 msgstr "Το ποσοστό έκπτωσης πρέπει να είναι αριθμητικό"
 
-#: Customers.php:117 Z_ImportDebtors.php:280
+#: Customers.php:117 Z_ImportDebtors.php:281
 msgid "The credit limit must be a positive number"
 msgstr "Το πιστωτικό όριο πρέπει να είναι ένας θετικός αριθμός"
 
-#: Customers.php:122 Z_ImportDebtors.php:285
+#: Customers.php:122 Z_ImportDebtors.php:286
 msgid ""
 "The payment discount is expected to be less than 10% and greater than or "
 "equal to 0"
@@ -10842,13 +10842,13 @@ msgstr ""
 "Η έκπτωση πληρωμής αναμένεται για να είναι λιγότερο από 10% και μεγαλύτερη ή "
 "ίση με 0"
 
-#: Customers.php:127 Z_ImportDebtors.php:290
+#: Customers.php:127 Z_ImportDebtors.php:291
 msgid ""
 "The discount is expected to be less than 100% and greater than or equal to 0"
 msgstr ""
 "Η έκπτωση αναμένεται για να είναι λιγότερο από 100% και μεγαλύτερη ή ίση με 0"
 
-#: Customers.php:199 Z_ImportDebtors.php:342
+#: Customers.php:199 Z_ImportDebtors.php:343
 msgid ""
 "The currency code cannot be updated as there are already transactions for "
 "this customer"
@@ -10856,7 +10856,7 @@ msgstr ""
 "Ο κωδικός του νομίσματος δεν μπορεί να ανανεωθεί, καθώς υπάρχουν ήδη οι "
 "συναλλαγές για αυτόν τον πελάτη"
 
-#: Customers.php:203 Z_ImportDebtors.php:373
+#: Customers.php:203 Z_ImportDebtors.php:374
 msgid "The customer could not be updated because"
 msgstr "Ο πελάτης δεν ήταν δυνατό να ενημερωθεί επειδή"
 
@@ -10864,7 +10864,7 @@ msgstr "Ο πελάτης δεν ήταν δυνατό να ενημερωθεί
 msgid "Customer updated"
 msgstr "Ο Πελάτης Ενημερώθηκε"
 
-#: Customers.php:264 Z_ImportDebtors.php:424 ../webSHOP/Register.php:139
+#: Customers.php:264 Z_ImportDebtors.php:425 ../webSHOP/Register.php:139
 msgid "This customer could not be added because"
 msgstr "Αυτός ο πελάτης δεν ήταν δυνατό να προστεθεί επειδή"
 
@@ -10948,8 +10948,8 @@ msgstr ""
 msgid "Click"
 msgstr "Κάντε κλικ στο κουμπί"
 
-#: Customers.php:425 Customers.php:434 MRPPlannedPurchaseOrders.php:18
-#: MRPPlannedWorkOrders.php:17 MRPReschedules.php:17 MRPShortages.php:17
+#: Customers.php:425 Customers.php:434 MRPPlannedPurchaseOrders.php:17
+#: MRPPlannedWorkOrders.php:16 MRPReschedules.php:17 MRPShortages.php:17
 #: OffersReceived.php:259 OffersReceived.php:261 PO_Header.php:462
 #: SelectCustomer.php:488 includes/ConnectDB_mysql.inc:25
 #: includes/ConnectDB_mysqli.inc:30
@@ -11339,8 +11339,8 @@ msgstr "Trans Ημερομηνία"
 
 #: Dashboard.php:61 Dashboard.php:339 EmailConfirmation.php:221
 #: EmailConfirmation.php:351 MRPDemands.php:298 MRPDemands.php:399
-#: MRPPlannedPurchaseOrders.php:339 MRPPlannedWorkOrders.php:260
-#: MRPPlannedWorkOrders.php:393 MRPReport.php:442 MRPReport.php:448
+#: MRPPlannedPurchaseOrders.php:338 MRPPlannedWorkOrders.php:259
+#: MRPPlannedWorkOrders.php:392 MRPReport.php:441 MRPReport.php:447
 #: OrderDetails.php:195 SelectOrderItems.php:1324 SelectOrderItems.php:1756
 #: SupplierTransInquiry.php:114
 msgid "Due Date"
@@ -11942,7 +11942,7 @@ msgstr ""
 msgid "Department Name"
 msgstr ""
 
-#: Departments.php:170 Departments.php:242 PcReportTab.php:272 PcTabs.php:231
+#: Departments.php:170 Departments.php:242 PcReportTab.php:275 PcTabs.php:231
 #: PcTabs.php:431
 msgid "Authoriser"
 msgstr ""
@@ -12438,6 +12438,7 @@ msgid "Order date"
 msgstr "Ημερομηνία παραγγελίας"
 
 #: EDIProcessOrders.php:275 EDIProcessOrders.php:277
+#: ImportBankTransAnalysis.php:113 ImportBankTransAnalysis.php:116
 #: SupplierAllocations.php:436
 msgid "dated"
 msgstr "χρονολογημένος"
@@ -12876,15 +12877,11 @@ msgstr "Υπήρξε ένα πρόβλημα ανακτώντας τις λεπ�
 msgid "OK"
 msgstr "ΟΚ"
 
-#: ExchangeRateTrend.php:6
-msgid "View Currency Trends"
-msgstr "Δείτε Τάσεις Νόμισμα"
-
-#: ExchangeRateTrend.php:29 ExchangeRateTrend.php:30
+#: ExchangeRateTrend.php:6 ExchangeRateTrend.php:28 ExchangeRateTrend.php:29
 msgid "View Currency Trend"
 msgstr "Δείτε Trend Νόμισμα"
 
-#: ExchangeRateTrend.php:76
+#: ExchangeRateTrend.php:75
 msgid "Trend Currently Unavailable"
 msgstr ""
 
@@ -13572,8 +13569,8 @@ msgstr ""
 "απέτυχε ήταν"
 
 #: FixedAssetItems.php:255 FixedAssetRegister.php:294
-#: FixedAssetRegister.php:387 MaintenanceTasks.php:94
-#: MaintenanceUserSchedule.php:49
+#: FixedAssetRegister.php:387 MaintenanceReminders.php:77
+#: MaintenanceTasks.php:94 MaintenanceUserSchedule.php:49
 msgid "Asset"
 msgstr "Asset"
 
@@ -13759,7 +13756,7 @@ msgstr "Ποσοστό απόσβεσης"
 msgid "Asset Financial Summary"
 msgstr "Οικονομικά Στοιχεία Ενεργητικού"
 
-#: FixedAssetItems.php:627 WorkOrderEntry.php:811
+#: FixedAssetItems.php:627 WorkOrderEntry.php:812
 msgid "Accumulated Costs"
 msgstr "Συνολικές δαπάνες"
 
@@ -13989,7 +13986,7 @@ msgstr "Στην κατηγορία περιουσιακών στοιχείων"
 #: FixedAssetTransfer.php:60 FixedAssetTransfer.php:94
 #: InternalStockRequest.php:350 InternalStockRequest.php:359
 #: InternalStockRequestInquiry.php:222 InternalStockRequestInquiry.php:231
-#: MRPReport.php:564 MRPReport.php:574 SelectProduct.php:542
+#: MRPReport.php:563 MRPReport.php:573 SelectProduct.php:542
 #: SelectProduct.php:552 SelectProduct.php:561 SupplierPriceList.php:44
 #: SupplierPriceList.php:54 SupplierTenderCreate.php:695
 #: SupplierTenderCreate.php:706 SupplierTenders.php:421 SupplierTenders.php:433
@@ -14924,12 +14921,12 @@ msgid "Year ended"
 msgstr "Έτος που έληξε στις"
 
 #: GLBudgets.php:183 SalesAnalReptCols.php:277 SalesAnalReptCols.php:473
-#: SalesAnalReptCols.php:476 SalesGraph.php:321
+#: SalesAnalReptCols.php:476 SalesGraph.php:320
 msgid "Actual"
 msgstr "Πραγματική"
 
 #: GLBudgets.php:184 SalesAnalReptCols.php:264 SalesAnalReptCols.php:279
-#: SalesAnalReptCols.php:472 SalesAnalReptCols.php:475 SalesGraph.php:321
+#: SalesAnalReptCols.php:472 SalesAnalReptCols.php:475 SalesGraph.php:320
 msgid "Budget"
 msgstr "Προϋπολογισμός"
 
@@ -15350,9 +15347,9 @@ msgid "GL Tag"
 msgstr "GL Tag"
 
 #: GLJournal.php:311 GLJournal.php:413 GLTagProfit_Loss.php:106
-#: ImportBankTransAnalysis.php:303 MRPPlannedPurchaseOrders.php:274
-#: MRPPlannedPurchaseOrders.php:324 MRPPlannedWorkOrders.php:330
-#: MRPPlannedWorkOrders.php:378 PcExpenses.php:334 StockAdjustments.php:503
+#: ImportBankTransAnalysis.php:303 MRPPlannedPurchaseOrders.php:273
+#: MRPPlannedPurchaseOrders.php:323 MRPPlannedWorkOrders.php:329
+#: MRPPlannedWorkOrders.php:377 PcExpenses.php:334 StockAdjustments.php:503
 #: Suppliers.php:795 Suppliers.php:1046 SystemParameters.php:523
 #: SystemParameters.php:1115 SystemParameters.php:1121
 #: SystemParameters.php:1127 SystemParameters.php:1133
@@ -15512,7 +15509,7 @@ msgstr "Επιλέξτε ετικέτα"
 msgid "Show Statement of Income and Expenditure"
 msgstr "Εμφάνιση Κατάσταση εσόδων και δαπανών"
 
-#: GLTagProfit_Loss.php:131 GLTrialBalance.php:111 PcReportTab.php:76
+#: GLTagProfit_Loss.php:131 GLTrialBalance.php:111 PcReportTab.php:79
 msgid "PrintPDF"
 msgstr "PrintPDF"
 
@@ -15564,10 +15561,6 @@ msgstr ""
 msgid "Enter the description of the general ledger tag up to 30 characters"
 msgstr ""
 
-#: GLTags.php:70 SecurityTokens.php:154
-msgid "Insert"
-msgstr "Εισαγωγή"
-
 #: GLTags.php:81
 msgid "Tag ID"
 msgstr "Ετικέτα ID"
@@ -15592,7 +15585,7 @@ msgstr "Αυτή η σελίδα απαιτεί ένα έγκυρο είδος �
 msgid "No transaction of this type with id"
 msgstr "Δεν συναλλαγή αυτού του τύπου με κωδικό"
 
-#: GLTransInquiry.php:52 PcAuthorizeExpenses.php:96
+#: GLTransInquiry.php:52 PcAuthorizeExpenses.php:97
 msgid "Posted"
 msgstr "Καταχωρήθηκε"
 
@@ -15602,7 +15595,7 @@ msgstr "Καταχωρήθηκε"
 msgid "Trial Balance"
 msgstr "Ισοζύγιο"
 
-#: GLTrialBalance.php:23 SalesGraph.php:19
+#: GLTrialBalance.php:23 SalesGraph.php:18
 msgid ""
 "The selected period from is actually after the period to! Please re-select "
 "the reporting period"
@@ -15614,11 +15607,11 @@ msgstr ""
 msgid "Print Trial Balance"
 msgstr ""
 
-#: GLTrialBalance.php:55 SalesGraph.php:43
+#: GLTrialBalance.php:55 SalesGraph.php:42
 msgid "Select Period From:"
 msgstr "Επιλογή Περιόδου Από:"
 
-#: GLTrialBalance.php:91 SalesGraph.php:79
+#: GLTrialBalance.php:91 SalesGraph.php:78
 msgid "Select Period To:"
 msgstr "Επιλέξτε Περίοδος Μέχρι:"
 
@@ -15635,8 +15628,8 @@ msgstr "Εκτύπωση Σφάλμα ισοζύγιο του καθολικού
 msgid "Check Totals"
 msgstr "Ελέγξτε Σύνολα"
 
-#: GLTrialBalance.php:438 PcReportTab.php:123 PcReportTab.php:254
-#: PcReportTab.php:326 ShopParameters.php:169
+#: GLTrialBalance.php:438 PcReportTab.php:126 PcReportTab.php:257
+#: PcReportTab.php:329 ShopParameters.php:169
 #: includes/ConnectDB_postgres.inc:49
 msgid "The SQL that failed was:"
 msgstr "Ο SQL που απέτυχε ήταν:"
@@ -16514,10 +16507,6 @@ msgstr ""
 msgid "Imported Bank Receipt of"
 msgstr ""
 
-#: ImportBankTransAnalysis.php:113 ImportBankTransAnalysis.php:116
-msgid "dated:"
-msgstr ""
-
 #: ImportBankTransAnalysis.php:116
 msgid "Imported Bank Payment of"
 msgstr ""
@@ -16589,8 +16578,8 @@ msgid "Internal Stock Categories Requests By Security Role Maintenance "
 msgstr ""
 
 #: InternalStockCategoriesByRole.php:11 Payments.php:8
-#: PcClaimExpensesFromTab.php:146 PcExpenses.php:12 PcExpensesTypeTab.php:9
-#: PcReportTab.php:20 PcReportTab.php:237 PcTabs.php:11 PcTypeTabs.php:11
+#: PcClaimExpensesFromTab.php:146 PcExpenses.php:12 PcExpensesTypeTab.php:8
+#: PcReportTab.php:23 PcReportTab.php:240 PcTabs.php:11 PcTypeTabs.php:11
 msgid "Payment Entry"
 msgstr "Πληρωμή Είσοδος"
 
@@ -16772,14 +16761,14 @@ msgstr ""
 msgid "Line Number"
 msgstr ""
 
-#: InternalStockRequest.php:316 MRPReport.php:544 SelectProduct.php:522
+#: InternalStockRequest.php:316 MRPReport.php:543 SelectProduct.php:522
 #: SupplierPriceList.php:15 SupplierPriceList.php:229
 #: SupplierTenderCreate.php:664 SupplierTenders.php:388
 msgid "Search for Inventory Items"
 msgstr "Αναζήτηση για στοιχεία απογραφής"
 
 #: InternalStockRequest.php:325 InternalStockRequestInquiry.php:251
-#: InventoryQuantities.php:181 MRPReport.php:536 ReorderLevel.php:231
+#: InventoryQuantities.php:181 MRPReport.php:535 ReorderLevel.php:231
 #: SelectProduct.php:46 StockDispatch.php:381 StockLocStatus.php:62
 #: SupplierTenderCreate.php:672 SupplierTenders.php:398
 msgid ""
@@ -16790,13 +16779,13 @@ msgstr ""
 "το παρακάτω σύνδεσμο για να τους συστήσει"
 
 #: InternalStockRequest.php:327 InternalStockRequestInquiry.php:253
-#: InventoryQuantities.php:182 MRPReport.php:537 ReorderLevel.php:232
+#: InventoryQuantities.php:182 MRPReport.php:536 ReorderLevel.php:232
 #: SelectProduct.php:47 StockDispatch.php:382 StockLocStatus.php:63
 #: SupplierTenderCreate.php:673 SupplierTenders.php:399
 msgid "Define Stock Categories"
 msgstr "Ορίστε Κατηγορίες Χρηματιστήριο"
 
-#: InternalStockRequest.php:332 InventoryQuantities.php:188 MRPReport.php:547
+#: InternalStockRequest.php:332 InventoryQuantities.php:188 MRPReport.php:546
 #: NoSalesItems.php:63 ReorderLevel.php:238 SelectProduct.php:524
 #: StockCategorySalesInquiry.php:29 StockDispatch.php:390 StockLocStatus.php:68
 #: SupplierPriceList.php:22 SupplierTenderCreate.php:678
@@ -16818,7 +16807,7 @@ msgid "Stock Code has been used in search"
 msgstr "Κωδικός Μετοχής έχει χρησιμοποιηθεί στην αναζήτηση"
 
 #: InternalStockRequest.php:540 InternalStockRequestFulfill.php:39
-#: MRPReport.php:755 SelectAsset.php:237 SelectCustomer.php:381
+#: MRPReport.php:754 SelectAsset.php:237 SelectCustomer.php:381
 #: SelectCustomer.php:457 SelectOrderItems.php:1364 SelectProduct.php:805
 #: SelectSupplier.php:259 SelectSupplier.php:325 StockLocTransfer.php:64
 #: SupplierPriceList.php:252 SupplierTenderCreate.php:594
@@ -16830,22 +16819,22 @@ msgstr "Κωδικός Μετοχής έχει χρησιμοποιηθεί στ
 msgid "of"
 msgstr "του"
 
-#: InternalStockRequest.php:540 MRPReport.php:755 SelectAsset.php:237
+#: InternalStockRequest.php:540 MRPReport.php:754 SelectAsset.php:237
 #: SelectCustomer.php:381 SelectCustomer.php:457 SelectProduct.php:805
 #: SelectSupplier.php:259 SelectSupplier.php:325 SupplierPriceList.php:252
 #: SupplierTenderCreate.php:594
 msgid "pages"
 msgstr "σελίδες"
 
-#: InternalStockRequest.php:540 MRPReport.php:755 SelectAsset.php:237
+#: InternalStockRequest.php:540 MRPReport.php:754 SelectAsset.php:237
 #: SelectCustomer.php:381 SelectCustomer.php:457 SelectProduct.php:805
 #: SelectSupplier.php:259 SelectSupplier.php:325 SupplierPriceList.php:252
 #: SupplierTenderCreate.php:594
 msgid "Go to Page"
 msgstr "Μετάβαση στη σελίδα"
 
-#: InternalStockRequest.php:552 MRPReport.php:767 PcAssignCashTabToTab.php:235
-#: PcAssignCashToTab.php:249 PcAuthorizeExpenses.php:65
+#: InternalStockRequest.php:552 MRPReport.php:766 PcAssignCashTabToTab.php:235
+#: PcAssignCashToTab.php:249 PcAuthorizeExpenses.php:66
 #: PcClaimExpensesFromTab.php:219 SelectAsset.php:249 SelectCustomer.php:393
 #: SelectCustomer.php:470 SelectProduct.php:817 SelectSupplier.php:271
 #: SelectSupplier.php:337 SupplierPriceList.php:264
@@ -16853,7 +16842,7 @@ msgstr "Μετάβαση στη σελίδα"
 msgid "Go"
 msgstr "Go"
 
-#: InternalStockRequest.php:553 MRPReport.php:768
+#: InternalStockRequest.php:553 MRPReport.php:767
 #: PurchaseByPrefSupplier.php:418 SelectAsset.php:250 SelectCustomer.php:394
 #: SelectCustomer.php:471 SelectOrderItems.php:1639 SelectOrderItems.php:1735
 #: SelectProduct.php:818 SelectSupplier.php:272 SelectSupplier.php:338
@@ -16861,11 +16850,11 @@ msgstr "Go"
 msgid "Previous"
 msgstr "Προηγούμενη"
 
-#: InternalStockRequest.php:565 MRPReport.php:779 SelectProduct.php:831
+#: InternalStockRequest.php:565 MRPReport.php:778 SelectProduct.php:831
 msgid "Total Qty On Hand"
 msgstr "Συνολική Ποσότητα για το χέρι"
 
-#: InternalStockRequest.php:567 MRPReport.php:781 SelectProduct.php:828
+#: InternalStockRequest.php:567 MRPReport.php:780 SelectProduct.php:828
 #: StockStatus.php:7
 msgid "Stock Status"
 msgstr "Χρηματιστήριο Κατάσταση"
@@ -17096,7 +17085,7 @@ msgstr ""
 msgid "There are no stock request available"
 msgstr ""
 
-#: InternalStockRequestInquiry.php:548 MRPReport.php:722
+#: InternalStockRequestInquiry.php:548 MRPReport.php:721
 #: PO_SelectOSPurchOrder.php:137 PO_SelectPurchOrder.php:105
 #: SelectCompletedOrder.php:228 SelectProduct.php:773 SelectQASamples.php:234
 #: SelectSalesOrder.php:1074 SupplierPriceList.php:218 TestPlanResults.php:117
@@ -17281,7 +17270,7 @@ msgstr "Lead Time"
 msgid "in months"
 msgstr "σε μήνες"
 
-#: InventoryPlanningPrefSupplier.php:87 WorkOrderEntry.php:818
+#: InventoryPlanningPrefSupplier.php:87 WorkOrderEntry.php:819
 #: WorkOrderIssue.php:859 WorkOrderStatus.php:98
 msgid "Qty Required"
 msgstr "Ποσότητα Απαιτούμενη"
@@ -18243,17 +18232,17 @@ msgstr "Ημερομηνία Έναρξης Για Διανομής"
 msgid "Distribution Period"
 msgstr "Διανομή Περίοδος"
 
-#: MRPCreateDemands.php:259 MRPPlannedPurchaseOrders.php:275
-#: MRPPlannedPurchaseOrders.php:326 MRPPlannedWorkOrders.php:331
-#: MRPPlannedWorkOrders.php:380 RecurringSalesOrders.php:450
+#: MRPCreateDemands.php:259 MRPPlannedPurchaseOrders.php:274
+#: MRPPlannedPurchaseOrders.php:325 MRPPlannedWorkOrders.php:330
+#: MRPPlannedWorkOrders.php:379 RecurringSalesOrders.php:450
 #: RecurringSalesOrders.php:452 SalesByTypePeriodInquiry.php:93
 #: SystemParameters.php:960 SystemParameters.php:962
 msgid "Weekly"
 msgstr "Εβδομαδιαία"
 
-#: MRPCreateDemands.php:260 MRPPlannedPurchaseOrders.php:276
-#: MRPPlannedPurchaseOrders.php:328 MRPPlannedWorkOrders.php:332
-#: MRPPlannedWorkOrders.php:382 RecurringSalesOrders.php:460
+#: MRPCreateDemands.php:260 MRPPlannedPurchaseOrders.php:275
+#: MRPPlannedPurchaseOrders.php:327 MRPPlannedWorkOrders.php:331
+#: MRPPlannedWorkOrders.php:381 RecurringSalesOrders.php:460
 #: RecurringSalesOrders.php:462 SalesByTypePeriodInquiry.php:101
 #: SystemParameters.php:965 SystemParameters.php:967
 msgid "Monthly"
@@ -18408,188 +18397,185 @@ msgstr "Διαγραφή Τύπος Ζήτηση"
 msgid "Or Delete Record"
 msgstr "Ή Διαγραφή εγγραφής"
 
-#: MRPPlannedPurchaseOrders.php:14 MRPPlannedWorkOrders.php:13
+#: MRPPlannedPurchaseOrders.php:13 MRPPlannedWorkOrders.php:12
 #: MRPShortages.php:13
 msgid "MRP error"
 msgstr ""
 
-#: MRPPlannedPurchaseOrders.php:17 MRPPlannedWorkOrders.php:16
+#: MRPPlannedPurchaseOrders.php:16 MRPPlannedWorkOrders.php:15
 #: MRPReschedules.php:16 MRPShortages.php:16
 msgid "The MRP calculation must be run before you can run this report"
 msgstr ""
 "Ο υπολογισμός MRP θα πρέπει να τρέξει για να μπορέσετε να εκτελέσετε αυτή "
 "την έκθεση"
 
-#: MRPPlannedPurchaseOrders.php:18 MRPPlannedWorkOrders.php:17
+#: MRPPlannedPurchaseOrders.php:17 MRPPlannedWorkOrders.php:16
 #: MRPReschedules.php:17 MRPShortages.php:17
 msgid "To run the MRP calculation click"
 msgstr "Για να εκτελέσετε το κλικ υπολογισμό MRP"
 
-#: MRPPlannedPurchaseOrders.php:25 MRPPlannedPurchaseOrders.php:318
+#: MRPPlannedPurchaseOrders.php:24 MRPPlannedPurchaseOrders.php:317
 msgid "MRP Planned Purchase Orders Report"
 msgstr "MRP Προγραμματισμένη Έκθεση Εντολές Αγοράς"
 
-#: MRPPlannedPurchaseOrders.php:26 MRPPlannedPurchaseOrders.php:114
+#: MRPPlannedPurchaseOrders.php:25 MRPPlannedPurchaseOrders.php:113
 msgid "MRP Planned Purchase Orders"
 msgstr "MRP Προγραμματισμένες εντολές αγοράς"
 
-#: MRPPlannedPurchaseOrders.php:37
+#: MRPPlannedPurchaseOrders.php:36
 msgid " Through  "
 msgstr " Μέσω  "
 
-#: MRPPlannedPurchaseOrders.php:116
+#: MRPPlannedPurchaseOrders.php:115
 msgid ""
 "The MRP planned purchase orders could not be retrieved by the SQL because"
 msgstr ""
 "Το MRP προγραμματισμένες εντολές αγοράς δεν θα μπορούσε να ανακτηθεί από τον "
 "SQL επειδή"
 
-#: MRPPlannedPurchaseOrders.php:125
+#: MRPPlannedPurchaseOrders.php:124
 msgid "Print MRP Planned Purchase Orders Error"
 msgstr "Εκτύπωση MRP Προγραμματισμένη Σφάλμα Εντολές Αγοράς"
 
-#: MRPPlannedPurchaseOrders.php:127
+#: MRPPlannedPurchaseOrders.php:126
 msgid "There were no items with planned purchase orders"
 msgstr "Δεν υπήρχαν στοιχεία με προγραμματισμένες εντολές αγοράς"
 
-#: MRPPlannedPurchaseOrders.php:161 MRPPlannedPurchaseOrders.php:223
-#: MRPPlannedWorkOrders.php:164 MRPPlannedWorkOrders.php:216
+#: MRPPlannedPurchaseOrders.php:160 MRPPlannedPurchaseOrders.php:222
+#: MRPPlannedWorkOrders.php:163 MRPPlannedWorkOrders.php:215
 msgid "Unit Cost: "
 msgstr "Μονάδα Κόστος: "
 
-#: MRPPlannedPurchaseOrders.php:165 MRPPlannedPurchaseOrders.php:227
-#: MRPPlannedWorkOrders.php:169 MRPPlannedWorkOrders.php:220
+#: MRPPlannedPurchaseOrders.php:164 MRPPlannedPurchaseOrders.php:226
+#: MRPPlannedWorkOrders.php:168 MRPPlannedWorkOrders.php:219
 msgid "M/B: "
 msgstr "M / B: "
 
-#: MRPPlannedPurchaseOrders.php:174 MRPPlannedPurchaseOrders.php:236
+#: MRPPlannedPurchaseOrders.php:173 MRPPlannedPurchaseOrders.php:235
 msgid "Last Purchase Date: "
 msgstr "Τελευταία Ημερομηνία Αγοράς: "
 
-#: MRPPlannedPurchaseOrders.php:176 MRPPlannedPurchaseOrders.php:238
+#: MRPPlannedPurchaseOrders.php:175 MRPPlannedPurchaseOrders.php:237
 msgid "Supplier: "
 msgstr "Προμηθευτής: "
 
-#: MRPPlannedPurchaseOrders.php:178 MRPPlannedPurchaseOrders.php:240
+#: MRPPlannedPurchaseOrders.php:177 MRPPlannedPurchaseOrders.php:239
 msgid "Preferred Supplier: "
 msgstr "Προτεινόμενα Προμηθευτής: "
 
-#: MRPPlannedPurchaseOrders.php:251
+#: MRPPlannedPurchaseOrders.php:250
 msgid "Number of Purchase Orders: "
 msgstr "Αριθμός εντολές αγοράς: "
 
-#: MRPPlannedPurchaseOrders.php:253 MRPPlannedWorkOrders.php:233
+#: MRPPlannedPurchaseOrders.php:252 MRPPlannedWorkOrders.php:232
 msgid "Total Extended Cost:"
 msgstr "Συνολικό Εκτεταμένη Κόστος:"
 
-#: MRPPlannedPurchaseOrders.php:262
+#: MRPPlannedPurchaseOrders.php:261
 msgid "MRP Planned Purchase Orders Reporting"
 msgstr "MRP προγραμματισμένες εντολές αγοράς Πληροφόρησης"
 
-#: MRPPlannedPurchaseOrders.php:272 MRPPlannedWorkOrders.php:253
-#: MRPPlannedWorkOrders.php:328
+#: MRPPlannedPurchaseOrders.php:271 MRPPlannedPurchaseOrders.php:329
+#: MRPPlannedWorkOrders.php:252 MRPPlannedWorkOrders.php:327
+#: MRPPlannedWorkOrders.php:383
 msgid "Consolidation"
 msgstr "Ενοποίησης"
 
-#: MRPPlannedPurchaseOrders.php:287 MRPPlannedWorkOrders.php:343
+#: MRPPlannedPurchaseOrders.php:286 MRPPlannedWorkOrders.php:342
 msgid "Cut Off Date"
 msgstr "Cut Ημερομηνία Off"
 
-#: MRPPlannedPurchaseOrders.php:330 MRPPlannedWorkOrders.php:384
-msgid "Consolidation:"
-msgstr "Ενοποίηση:"
-
-#: MRPPlannedPurchaseOrders.php:340 MRPPlannedWorkOrders.php:259
-#: MRPPlannedWorkOrders.php:394 MRPReport.php:449 MRPReschedules.php:197
+#: MRPPlannedPurchaseOrders.php:339 MRPPlannedWorkOrders.php:258
+#: MRPPlannedWorkOrders.php:393 MRPReport.php:448 MRPReschedules.php:197
 msgid "MRP Date"
 msgstr "MRP Ημερομηνία"
 
-#: MRPPlannedPurchaseOrders.php:342 MRPPlannedWorkOrders.php:263
-#: MRPPlannedWorkOrders.php:396
+#: MRPPlannedPurchaseOrders.php:341 MRPPlannedWorkOrders.php:262
+#: MRPPlannedWorkOrders.php:395
 msgid "Ext. Cost"
 msgstr "Ext. Κόστος"
 
-#: MRPPlannedPurchaseOrders.php:344 MRPPlannedWorkOrders.php:398
+#: MRPPlannedPurchaseOrders.php:343 MRPPlannedWorkOrders.php:397
 msgid "Source Type"
 msgstr "Τύπος πηγής"
 
-#: MRPPlannedPurchaseOrders.php:345 MRPPlannedWorkOrders.php:399
+#: MRPPlannedPurchaseOrders.php:344 MRPPlannedWorkOrders.php:398
 msgid "Source Order"
 msgstr "Πηγή Παραγγελία"
 
-#: MRPPlannedPurchaseOrders.php:347 MRPPlannedWorkOrders.php:401
+#: MRPPlannedPurchaseOrders.php:346 MRPPlannedWorkOrders.php:400
 msgid "Consolidation Count"
 msgstr "Ενοποίηση Count"
 
-#: MRPPlannedWorkOrders.php:28
+#: MRPPlannedWorkOrders.php:27
 msgid "Through"
 msgstr ""
 
-#: MRPPlannedWorkOrders.php:106 MRPPlannedWorkOrders.php:117
-#: MRPPlannedWorkOrders.php:130
+#: MRPPlannedWorkOrders.php:105 MRPPlannedWorkOrders.php:116
+#: MRPPlannedWorkOrders.php:129
 msgid "MRP Planned Work Orders"
 msgstr "MRP προγραμματισμένες παραγγελίες εργασίας"
 
-#: MRPPlannedWorkOrders.php:108
+#: MRPPlannedWorkOrders.php:107
 msgid "The MRP planned work orders could not be retrieved by the SQL because"
 msgstr ""
 "Το MRP προγραμματισμένες εντολές εργασίας δεν μπορεί να ανακτηθεί από τον "
 "SQL επειδή"
 
-#: MRPPlannedWorkOrders.php:119 ReorderLevel.php:181
+#: MRPPlannedWorkOrders.php:118 ReorderLevel.php:181
 msgid "There were no items with demand greater than supply"
 msgstr "Δεν υπήρχαν στοιχεία με τη ζήτηση μεγαλύτερη από την προσφορά"
 
-#: MRPPlannedWorkOrders.php:129 MRPPlannedWorkOrders.php:372
+#: MRPPlannedWorkOrders.php:128 MRPPlannedWorkOrders.php:371
 msgid "MRP Planned Work Orders Report"
 msgstr "MRP Προγραμματισμένη Έκθεση Εργασία Παραγγελίες"
 
-#: MRPPlannedWorkOrders.php:231
+#: MRPPlannedWorkOrders.php:230
 msgid "Number of Work Orders: "
 msgstr "Αριθμός εντολών εργασίας: "
 
-#: MRPPlannedWorkOrders.php:244
+#: MRPPlannedWorkOrders.php:243
 msgid "Review/Convert MRP Planned Work Orders"
 msgstr "Επανεξέταση / Μετατροπή MRP προγραμματισμένες παραγγελίες εργασίας"
 
-#: MRPPlannedWorkOrders.php:254
+#: MRPPlannedWorkOrders.php:253
 msgid "Cutoff Date"
 msgstr ""
 
-#: MRPPlannedWorkOrders.php:264
+#: MRPPlannedWorkOrders.php:263
 msgid "Consolidations"
 msgstr "Ενοποιήσεις"
 
-#: MRPPlannedWorkOrders.php:283
+#: MRPPlannedWorkOrders.php:282
 msgid "Convert"
 msgstr "Μετατροπή"
 
-#: MRPPlannedWorkOrders.php:304
+#: MRPPlannedWorkOrders.php:303
 msgid "Number of Work Orders"
 msgstr ""
 
-#: MRPPlannedWorkOrders.php:305
+#: MRPPlannedWorkOrders.php:304
 msgid "Total Extended Cost"
 msgstr ""
 
-#: MRPPlannedWorkOrders.php:318
+#: MRPPlannedWorkOrders.php:317
 msgid "MRP Planned Work Orders Reporting"
 msgstr "MRP προγραμματισμένες παραγγελίες Εργασία Αναφοράς"
 
-#: MRPPlannedWorkOrders.php:348
+#: MRPPlannedWorkOrders.php:347
 msgid "Review"
 msgstr "Αναθεώρηση"
 
-#: MRPReport.php:17 MRPReport.php:18 MRPReport.php:147 MRPReport.php:523
-#: MRPReport.php:844
+#: MRPReport.php:16 MRPReport.php:17 MRPReport.php:146 MRPReport.php:522
+#: MRPReport.php:843
 msgid "MRP Report"
 msgstr "MRP Έκθεση"
 
-#: MRPReport.php:36
+#: MRPReport.php:35
 msgid "Print MRP Report Error"
 msgstr "Εκτύπωση αναφοράς σφάλματος MRP"
 
-#: MRPReport.php:38
+#: MRPReport.php:37
 msgid ""
 "The MRP calculation must be run before this report will have any output. MRP "
 "requires set up of many parameters, including, EOQ, lead times, minimums, "
@@ -18600,11 +18586,11 @@ msgstr ""
 "χρόνοι παράδοσης, τα ελάχιστα, τους λογαριασμούς των υλικών, τα είδη της "
 "ζήτησης, βασικού χρονοδιαγράμματος κλπ"
 
-#: MRPReport.php:47
+#: MRPReport.php:46
 msgid "Print MRP Report Warning"
 msgstr "Εκτύπωση Προειδοποίηση Έκθεση MRP"
 
-#: MRPReport.php:49
+#: MRPReport.php:48
 msgid ""
 "The MRP calculation must be run before this report will have any output. MRP "
 "requires set up of many parameters, including, EOQ, lead times, minimums, "
@@ -18615,83 +18601,83 @@ msgstr ""
 "χρόνοι παράδοσης, τα ελάχιστα, τους λογαριασμούς των υλικών, τα είδη της "
 "ζήτησης, βασικού χρονοδιαγράμματος, κλπ."
 
-#: MRPReport.php:149
+#: MRPReport.php:148
 msgid "The MRP Report could not be retrieved by the SQL because"
 msgstr "Το MRP έκθεση δεν θα μπορούσε να ανακτηθεί από τον SQL επειδή"
 
-#: MRPReport.php:179
+#: MRPReport.php:178
 msgid "Part:"
 msgstr "Μέρος:"
 
-#: MRPReport.php:181
-msgid "EOQ:"
-msgstr "EOQ:"
+#: MRPReport.php:180 SelectProduct.php:144
+msgid "EOQ"
+msgstr "EOQ"
 
-#: MRPReport.php:183
+#: MRPReport.php:182
 msgid "On Hand:"
 msgstr "Στο χέρι:"
 
-#: MRPReport.php:186
+#: MRPReport.php:185
 msgid "Desc:"
 msgstr "Desc:"
 
-#: MRPReport.php:188
+#: MRPReport.php:187
 msgid "Pan Size:"
 msgstr "Pan Μέγεθος:"
 
-#: MRPReport.php:190
+#: MRPReport.php:189
 msgid "On Order:"
 msgstr "Με Διάταξη:"
 
-#: MRPReport.php:197
+#: MRPReport.php:196
 msgid "Gross Req:"
 msgstr "Μικτό Req:"
 
-#: MRPReport.php:202
+#: MRPReport.php:201
 msgid "Last Cost:"
 msgstr "Τελευταία Κόστος:"
 
-#: MRPReport.php:223 PrintCustStatements.php:437
+#: MRPReport.php:222 PrintCustStatements.php:437
 msgid "Past Due"
 msgstr "Ληξιπρόθεσμης οφειλής"
 
-#: MRPReport.php:235 MRPReport.php:305 MRPReport.php:375
+#: MRPReport.php:234 MRPReport.php:304 MRPReport.php:374
 msgid "Gross Reqts"
 msgstr "Μικτά Reqts"
 
-#: MRPReport.php:247 MRPReport.php:317 MRPReport.php:387
+#: MRPReport.php:246 MRPReport.php:316 MRPReport.php:386
 msgid "Open Order"
 msgstr "Ανοίξτε Παραγγελία"
 
-#: MRPReport.php:259 MRPReport.php:329 MRPReport.php:399
+#: MRPReport.php:258 MRPReport.php:328 MRPReport.php:398
 msgid "Planned"
 msgstr "Προγραμματισμένη"
 
-#: MRPReport.php:271 MRPReport.php:341 MRPReport.php:411
+#: MRPReport.php:270 MRPReport.php:340 MRPReport.php:410
 msgid "Proj Avail"
 msgstr "Proj Διαθ"
 
-#: MRPReport.php:283 MRPReport.php:353 MRPReport.php:423
+#: MRPReport.php:282 MRPReport.php:352 MRPReport.php:422
 msgid "Planned Acc"
 msgstr ""
 
-#: MRPReport.php:438
+#: MRPReport.php:437
 msgid "Dem Type"
 msgstr "Dem Τύπος"
 
-#: MRPReport.php:439
+#: MRPReport.php:438
 msgid "Where Required"
 msgstr "Όπου απαιτείται"
 
-#: MRPReport.php:444 MRPReschedules.php:193
+#: MRPReport.php:443 MRPReschedules.php:193
 msgid "Order No."
 msgstr "Διάταγμα αριθ."
 
-#: MRPReport.php:445
+#: MRPReport.php:444
 msgid "Sup Type"
 msgstr "Sup Τύπος"
 
-#: MRPReport.php:527
+#: MRPReport.php:526
 msgid ""
 "This report shows the MRP calculation for a specific item - a part code must "
 "be selected"
@@ -18699,12 +18685,12 @@ msgstr ""
 "Η έκθεση αυτή δείχνει τον υπολογισμό MRP για ένα συγκεκριμένο στοιχείο - "
 "κώδικας μέρος πρέπει να επιλεγεί"
 
-#: MRPReport.php:723 SelectAsset.php:208 SelectProduct.php:774
+#: MRPReport.php:722 SelectAsset.php:208 SelectProduct.php:774
 #: SupplierPriceList.php:219
 msgid "The SQL that returned an error was"
 msgstr "Ο SQL που επέστρεψε σφάλμα ήταν"
 
-#: MRPReport.php:726 SelectProduct.php:777 SupplierPriceList.php:222
+#: MRPReport.php:725 SelectProduct.php:777 SupplierPriceList.php:222
 msgid ""
 "No stock items were returned by this search please re-enter alternative "
 "criteria to try again"
@@ -19007,10 +18993,6 @@ msgstr ""
 
 #: MaintenanceReminders.php:39
 msgid "NB: THIS JOB IS OVERDUE"
-msgstr ""
-
-#: MaintenanceReminders.php:77
-msgid "Asset:"
 msgstr ""
 
 #: MaintenanceReminders.php:77
@@ -19556,7 +19538,7 @@ msgid "PO#"
 msgstr ""
 
 #: OutstandingGRNs.php:181 POReport.php:546 POReport.php:1320
-#: WorkOrderEntry.php:819 includes/PDFStockLocTransferHeader.inc:67
+#: WorkOrderEntry.php:820 includes/PDFStockLocTransferHeader.inc:67
 msgid "Qty Received"
 msgstr "Ποσότητα Παρελήφθη"
 
@@ -19929,13 +19911,9 @@ msgstr "Για Πωλήσεις Περιοχές"
 msgid "All Areas"
 msgstr "Όλες οι Περιοχές"
 
-#: PDFCustomerList.php:389
-msgid "For Sales folk"
-msgstr "Για Πωλήσεις λαϊκή"
-
-#: PDFCustomerList.php:391
-msgid "All sales folk"
-msgstr "Όλες οι λαϊκές πωλήσεις"
+#: PDFCustomerList.php:389 SalesGraph.php:144 SalesGraph.php:245
+msgid "For Salesperson:"
+msgstr "Για ΥΠΕΥΘΥΝΟΣ:"
 
 #: PDFCustomerList.php:401
 msgid "Level Of Activity"
@@ -20024,12 +20002,12 @@ msgstr ""
 "στη βάση δεδομένων κατά την περίοδο από"
 
 #: PDFDIFOT.php:201 PDFDeliveryDifferences.php:202 PDFOrderStatus.php:274
-#: PDFOrdersInvoiced.php:261 PcReportTab.php:110
+#: PDFOrdersInvoiced.php:261 PcReportTab.php:113
 msgid "Please try again selecting a different date range"
 msgstr "Παρακαλώ δοκιμάστε να επιλέξετε ξανά ένα διαφορετικό εύρος ημερομηνιών"
 
 #: PDFDIFOT.php:203 PDFDeliveryDifferences.php:204 PDFOrdersInvoiced.php:263
-#: PcReportTab.php:112
+#: PcReportTab.php:115
 msgid "The SQL that returned no rows was"
 msgstr "Ο SQL που δεν επέστρεψε γραμμές ήταν"
 
@@ -20293,12 +20271,12 @@ msgid "Orders from"
 msgstr "Παραγγελίες από"
 
 #: PDFOrderStatus.php:265 PDFOrdersInvoiced.php:253
-#: PDFSalesBySalesperson.php:55 PDFWeeklyOrders.php:51 PcReportTab.php:102
+#: PDFSalesBySalesperson.php:55 PDFWeeklyOrders.php:51 PcReportTab.php:105
 msgid "An error occurred getting the orders details"
 msgstr "Παρουσιάστηκε σφάλμα να πάρει τις λεπτομέρειες παραγγελιών"
 
 #: PDFOrderStatus.php:267 PDFOrdersInvoiced.php:255
-#: PDFSalesBySalesperson.php:57 PDFWeeklyOrders.php:53 PcReportTab.php:104
+#: PDFSalesBySalesperson.php:57 PDFWeeklyOrders.php:53 PcReportTab.php:107
 msgid "The SQL used to get the orders that failed was"
 msgstr ""
 "Ο SQL που χρησιμοποιείται για να πάρει τις παραγγελίες που απέτυχε ήταν"
@@ -20329,8 +20307,8 @@ msgid "Orders Invoiced Report"
 msgstr "Παραγγελίες Τιμολογημένες Έκθεση"
 
 #: PDFOrdersInvoiced.php:253 PDFOrdersInvoiced.php:255
-#: PDFOrdersInvoiced.php:263 PcReportTab.php:102 PcReportTab.php:104
-#: PcReportTab.php:112 includes/ConnectDB_mysql.inc:73
+#: PDFOrdersInvoiced.php:263 PcReportTab.php:105 PcReportTab.php:107
+#: PcReportTab.php:115 includes/ConnectDB_mysql.inc:73
 #: includes/ConnectDB_mysqli.inc:81
 msgid "Database Error"
 msgstr "Λάθος στη βάση δεδομένων"
@@ -20643,7 +20621,7 @@ msgstr "Εκτύπωση ετικετών"
 msgid "Label to print"
 msgstr ""
 
-#: PDFPrintLabel.php:298 StockQuantityByDate.php:23
+#: PDFPrintLabel.php:298 SalesGraph.php:121 StockQuantityByDate.php:23
 #: includes/PDFOrderStatusPageHeader.inc:19
 #: includes/PDFOrdersInvoicedPageHeader.inc:19
 msgid "For Stock Category"
@@ -21020,8 +20998,8 @@ msgid "The inventory counts could not be retrieved by the SQL because"
 msgstr ""
 "Οι μετρήσεις απογραφής δεν ήταν δυνατόν να ανακτηθούν από τον SQL επειδή"
 
-#: PDFStockCheckComparison.php:282
-msgid "Bin:"
+#: PDFStockCheckComparison.php:282 PurchaseByPrefSupplier.php:414
+msgid "Bin"
 msgstr ""
 
 #: PDFStockCheckComparison.php:291
@@ -21291,7 +21269,7 @@ msgstr "Αριθμός πελάτη"
 #: POReport.php:497 POReport.php:757 POReport.php:758 POReport.php:1281
 #: POReport.php:1457 POReport.php:1458 POReport.php:1641
 #: PurchaseByPrefSupplier.php:418 PurchaseByPrefSupplier.php:419
-#: SalesGraph.php:274 SalesInquiry.php:773 SalesInquiry.php:992
+#: SalesGraph.php:273 SalesInquiry.php:773 SalesInquiry.php:992
 #: SalesInquiry.php:993 SalesInquiry.php:1233 StockUsage.php:149
 #: StockUsageGraph.php:11
 msgid "Month"
@@ -21508,7 +21486,7 @@ msgstr "Initiator"
 #: PO_Header.php:858 PO_Header.php:862 PO_SelectOSPurchOrder.php:239
 #: PO_SelectOSPurchOrder.php:241 PO_SelectPurchOrder.php:146
 #: PO_SelectPurchOrder.php:148 PcAssignCashTabToTab.php:241
-#: PcAssignCashToTab.php:255 PcAuthorizeExpenses.php:99
+#: PcAssignCashToTab.php:255 PcAuthorizeExpenses.php:100
 msgid "Authorised"
 msgstr "Εξουσιοδοτημένος"
 
@@ -23070,11 +23048,11 @@ msgstr ""
 msgid "Act Transfer From "
 msgstr "Πράξη μεταβίβασης Από "
 
-#: Payments.php:471 Payments.php:623 PcAuthorizeExpenses.php:224
+#: Payments.php:471 Payments.php:623 PcAuthorizeExpenses.php:225
 msgid "Cannot insert a bank transaction because"
 msgstr "Δεν είναι δυνατή η εισαγωγή μιας τραπεζικής συναλλαγής, διότι"
 
-#: Payments.php:472 PcAuthorizeExpenses.php:225
+#: Payments.php:472 PcAuthorizeExpenses.php:226
 msgid "Cannot insert a bank transaction with the SQL"
 msgstr "Δεν είναι δυνατή η εισαγωγή μιας τραπεζικής συναλλαγής με το SQL"
 
@@ -23363,7 +23341,7 @@ msgid "The Tab selected From should not be the same as the selected To"
 msgstr ""
 
 #: PcAssignCashTabToTab.php:47 PcAssignCashToTab.php:49
-#: PcAuthorizeExpenses.php:39 PcClaimExpensesFromTab.php:51
+#: PcAuthorizeExpenses.php:40 PcClaimExpensesFromTab.php:51
 msgid "The number of days must be a positive number"
 msgstr ""
 
@@ -23401,18 +23379,18 @@ msgid "Detail Of PC Tab Movements For Last"
 msgstr ""
 
 #: PcAssignCashTabToTab.php:234 PcAssignCashToTab.php:248
-#: PcAuthorizeExpenses.php:64 PcClaimExpensesFromTab.php:218
+#: PcAuthorizeExpenses.php:65 PcClaimExpensesFromTab.php:218
 #: includes/PDFDIFOTPageHeader.inc:46
 msgid "Days"
 msgstr "Ημέρες"
 
 #: PcAssignCashTabToTab.php:239 PcAssignCashToTab.php:253
-#: PcAuthorizeExpenses.php:94 PcExpensesTypeTab.php:170
+#: PcAuthorizeExpenses.php:95 PcExpensesTypeTab.php:169
 msgid "Expense Code"
 msgstr "Έξοδα κώδικα"
 
 #: PcAssignCashTabToTab.php:316 PcAssignCashToTab.php:321
-#: PcAuthorizeExpenses.php:285 PcClaimExpensesFromTab.php:323
+#: PcAuthorizeExpenses.php:286 PcClaimExpensesFromTab.php:323
 msgid "Current balance"
 msgstr "Τρέχον υπόλοιπο"
 
@@ -23468,33 +23446,27 @@ msgstr ""
 msgid "Update Cash Assignment"
 msgstr "Ενημέρωση Εκχώρηση Μετρητά"
 
-#: PcAuthorizeExpenses.php:5
+#: PcAuthorizeExpenses.php:6 PcAuthorizeExpenses.php:47
+#: PcAuthorizeExpenses.php:50
 msgid "Authorisation of Petty Cash Expenses"
 msgstr ""
 
-#: PcAuthorizeExpenses.php:32
+#: PcAuthorizeExpenses.php:33
 msgid "You Must First Select a Petty Cash Tab To Authorise"
 msgstr ""
 
-#: PcAuthorizeExpenses.php:45 PcAuthorizeExpenses.php:48 SuppLoginSetup.php:28
-#: WWW_Users.php:32 includes/MainMenuLinksArray.php:28
+#: PcAuthorizeExpenses.php:46 PcAuthorizeExpenses.php:49
+#: PcAuthorizeExpenses.php:143 SuppLoginSetup.php:28 WWW_Users.php:32
+#: includes/MainMenuLinksArray.php:28
 #: reportwriter/languages/en_US/reports.php:247
 msgid "Petty Cash"
 msgstr "Μικροέξοδα"
 
-#: PcAuthorizeExpenses.php:46 PcAuthorizeExpenses.php:49
-msgid "Authorisation Of Petty Cash Expenses"
-msgstr ""
-
-#: PcAuthorizeExpenses.php:64
+#: PcAuthorizeExpenses.php:65
 msgid "Detail Of Movement For Last "
 msgstr "Λεπτομέρεια κυκλοφορία των Last "
 
-#: PcAuthorizeExpenses.php:142
-msgid "PettyCash"
-msgstr ""
-
-#: PcAuthorizeExpenses.php:315
+#: PcAuthorizeExpenses.php:316
 msgid "Authorise expenses to Petty Cash Tab"
 msgstr ""
 
@@ -23547,11 +23519,11 @@ msgid "Detail Of Movements For Last "
 msgstr "Λεπτομέρεια των μετακινήσεων Τελευταία "
 
 #: PcClaimExpensesFromTab.php:238 PcClaimExpensesFromTab.php:363
-#: PcReportTab.php:177 PcReportTab.php:330
+#: PcReportTab.php:180 PcReportTab.php:333
 msgid "Date Of Expense"
 msgstr "Ημερομηνία εξόδου"
 
-#: PcClaimExpensesFromTab.php:239 PcReportTab.php:331
+#: PcClaimExpensesFromTab.php:239 PcReportTab.php:334
 msgid "Expense Description"
 msgstr "Έξοδα Περιγραφή"
 
@@ -23662,164 +23634,153 @@ msgstr ""
 msgid "Show All Petty Cash Expenses Defined"
 msgstr "Εμφάνιση όλων των μικροδαπάνες Ορίζεται Μετρητά"
 
-#: PcExpensesTypeTab.php:6
+#: PcExpensesTypeTab.php:5
 msgid "Maintenance Of Petty Cash Expenses For a Type Tab"
 msgstr "Συντήρηση Από μικροδαπάνες μετρητά για ένα τύπο Tab"
 
-#: PcExpensesTypeTab.php:22
+#: PcExpensesTypeTab.php:21
 msgid ""
 "The petty cash tab type contain any of the following characters \" ' - &amp; "
 "or a space"
 msgstr ""
 
-#: PcExpensesTypeTab.php:39
+#: PcExpensesTypeTab.php:38
 msgid "You have not selected a tab to maintain the expenses on"
 msgstr ""
 
-#: PcExpensesTypeTab.php:52
+#: PcExpensesTypeTab.php:51
 msgid "You have not selected an expense to add to this tab"
 msgstr ""
 
-#: PcExpensesTypeTab.php:71
+#: PcExpensesTypeTab.php:70
 msgid "The Expense"
 msgstr ""
 
-#: PcExpensesTypeTab.php:71
+#: PcExpensesTypeTab.php:70
 msgid "already exists in this Type of Tab"
 msgstr ""
 
-#: PcExpensesTypeTab.php:79
-msgid "Expense code:"
-msgstr "Έξοδα Κωδικός:"
-
-#: PcExpensesTypeTab.php:79
-msgid "for Type of Tab:"
-msgstr "για τον τύπο του Tab:"
-
-#: PcExpensesTypeTab.php:99 PcTypeTabs.php:141
-msgid "The Tab Type record could not be deleted because"
-msgstr "Το Tab τύπου αρχείο θα μπορούσε να μην διαγραφεί, διότι"
-
-#: PcExpensesTypeTab.php:101
+#: PcExpensesTypeTab.php:78 PcExpensesTypeTab.php:100
 msgid "Expense code"
 msgstr "Έξοδα κωδικό"
 
-#: PcExpensesTypeTab.php:101
+#: PcExpensesTypeTab.php:78
+msgid "for Type of Tab:"
+msgstr "για τον τύπο του Tab:"
+
+#: PcExpensesTypeTab.php:98 PcTypeTabs.php:141
+msgid "The Tab Type record could not be deleted because"
+msgstr "Το Tab τύπου αρχείο θα μπορούσε να μην διαγραφεί, διότι"
+
+#: PcExpensesTypeTab.php:100
 msgid "for type of tab"
 msgstr "για τον τύπο της καρτέλας"
 
-#: PcExpensesTypeTab.php:116
+#: PcExpensesTypeTab.php:115
 msgid "Select Type of Tab"
 msgstr "Επιλογή τύπου του Tab"
 
-#: PcExpensesTypeTab.php:150 PcExpensesTypeTab.php:168
+#: PcExpensesTypeTab.php:149 PcExpensesTypeTab.php:167
 msgid "Expense Codes for Type of Tab "
 msgstr "Δαπάνη Κωδικοποίηση του τύπου του Tab "
 
-#: PcExpensesTypeTab.php:187
+#: PcExpensesTypeTab.php:186
 #, php-format
 msgid "Are you sure you wish to delete this expense code?"
 msgstr ""
 
-#: PcExpensesTypeTab.php:204
+#: PcExpensesTypeTab.php:203
 msgid "Select Expense Code"
 msgstr "Επιλέξτε Κώδικας Εξόδων"
 
-#: PcReportTab.php:8
+#: PcReportTab.php:6
 msgid "Petty Cash Management Report"
 msgstr "Petty Έκθεση Ταμειακή Διαχείριση"
 
-#: PcReportTab.php:38
+#: PcReportTab.php:41
 msgid "Code Of Petty Cash Tab"
 msgstr "Κώδικας Petty Cash Tab"
 
-#: PcReportTab.php:65
+#: PcReportTab.php:68
 msgid "From Date :"
 msgstr "Από Ημερομηνία:"
 
-#: PcReportTab.php:69
+#: PcReportTab.php:72
 msgid "To Date:"
 msgstr "Μέχρι σήμερα:"
 
-#: PcReportTab.php:75
+#: PcReportTab.php:78
 msgid "Show HTML"
 msgstr "Εμφάνιση HTML"
 
-#: PcReportTab.php:86 PcReportTab.php:87
+#: PcReportTab.php:89 PcReportTab.php:90
 msgid "Petty Cash Report Of Tab"
 msgstr "Petty Cash Έκθεση της καρτέλας"
 
-#: PcReportTab.php:110
+#: PcReportTab.php:113
 msgid "There were no expenses found in the database within the period from"
 msgstr ""
 "Δεν υπήρχαν τα έξοδα που βρέθηκαν στη βάση δεδομένων κατά την περίοδο από"
 
-#: PcReportTab.php:123
+#: PcReportTab.php:126
 msgid "No Petty Cash tabs were returned by the SQL because"
 msgstr "Δεν Petty καρτέλες Ταμειακά επιστρέφονται από τον SQL επειδή"
 
-#: PcReportTab.php:140
+#: PcReportTab.php:143
 msgid "Tab Code :"
 msgstr "Tab Κωδικός:"
 
-#: PcReportTab.php:141 PcReportTab.php:144 PcReportTab.php:149
-#: PcReportTab.php:152 PcReportTab.php:157 PcReportTab.php:162
-#: PcReportTab.php:168 PcReportTab.php:225 SuppPriceList.php:296
-#: SuppPriceList.php:301 SuppPriceList.php:304
-msgid ": "
-msgstr ": "
-
-#: PcReportTab.php:148
+#: PcReportTab.php:151
 msgid "User "
 msgstr "Χρήστης "
 
-#: PcReportTab.php:151
+#: PcReportTab.php:154
 msgid "To "
 msgstr "Για να "
 
-#: PcReportTab.php:156
+#: PcReportTab.php:159
 msgid "Authoriser "
 msgstr ""
 
-#: PcReportTab.php:161
+#: PcReportTab.php:164
 msgid "Currency "
 msgstr "Νόμισμα "
 
-#: PcReportTab.php:166 PcReportTab.php:290
+#: PcReportTab.php:169 PcReportTab.php:293
 msgid "Balance before "
 msgstr "Υπόλοιπο πριν "
 
-#: PcReportTab.php:182 PcReportTab.php:335
+#: PcReportTab.php:185 PcReportTab.php:338
 msgid "Date Authorised"
 msgstr ""
 
-#: PcReportTab.php:223
+#: PcReportTab.php:226
 msgid "Balance at"
 msgstr "Υπόλοιπο"
 
-#: PcReportTab.php:253
+#: PcReportTab.php:256
 msgid "No Petty Cash Tabs were returned by the SQL because"
 msgstr "Δεν Petty καρτέλες Ταμειακά επιστρέφονται από τον SQL επειδή"
 
-#: PcReportTab.php:260 PcTabs.php:225 PcTabs.php:311 PcTabs.php:317
+#: PcReportTab.php:263 PcTabs.php:225 PcTabs.php:311 PcTabs.php:317
 msgid "Tab Code"
 msgstr "Καρτέλα κώδικα"
 
-#: PcReportTab.php:309
+#: PcReportTab.php:312
 msgid "Total not authorised before "
 msgstr ""
 
-#: PcReportTab.php:325
+#: PcReportTab.php:328
 msgid "No Petty Cash movements for this tab were returned by the SQL because"
 msgstr ""
 "Δεν Petty κινήσεων ρευστών διαθεσίμων για αυτή την καρτέλα επιστρέφονται από "
 "τον SQL επειδή"
 
-#: PcReportTab.php:405
+#: PcReportTab.php:408
 msgid "Balance At"
 msgstr "Υπόλοιπο στις"
 
-#: PcReportTab.php:409
+#: PcReportTab.php:412
 msgid "Select A Different Date"
 msgstr "Επιλέξτε μια διαφορετική ημερομηνία"
 
@@ -25826,10 +25787,6 @@ msgid ""
 "The supplier inventory quantities could not be retrieved by the SQL because"
 msgstr ""
 
-#: PurchaseByPrefSupplier.php:414
-msgid "Bin"
-msgstr ""
-
 #: PurchaseByPrefSupplier.php:417
 msgid "Supp Ords"
 msgstr ""
@@ -26949,7 +26906,7 @@ msgstr "Τομέας γραμμή 2"
 msgid "Calculation"
 msgstr "Υπολογισμός"
 
-#: SalesAnalReptCols.php:431 SalesGraph.php:222
+#: SalesAnalReptCols.php:431 SalesGraph.php:221
 msgid "From Period"
 msgstr "Από Περίοδος"
 
@@ -27612,11 +27569,11 @@ msgstr "Δημοσίευση Πωλήσεις GL Λογαριασμό"
 msgid "Post Discount to GL Account"
 msgstr "Δημοσίευση Έκπτωση στις GL Λογαριασμό"
 
-#: SalesGraph.php:7
+#: SalesGraph.php:6
 msgid "Sales Report Graph"
 msgstr "Πωλήσεις Έκθεση Γράφημα"
 
-#: SalesGraph.php:28
+#: SalesGraph.php:27
 msgid ""
 "For graphs including either a customer or item range - the range must be "
 "specified. Please enter the value from and the value to for the range"
@@ -27625,127 +27582,115 @@ msgstr ""
 "πρέπει να προσδιορίζεται. Παρακαλώ εισάγετε την τιμή από την τιμή και για "
 "την για την περιοχή"
 
-#: SalesGraph.php:100
+#: SalesGraph.php:99
 msgid "For Sales Area/Region:"
 msgstr "Για Πωλήσεις Περιοχή / Περιφέρεια:"
 
-#: SalesGraph.php:122
-msgid "For Stock Category:"
-msgstr "Για την κατηγορία Διαθέσιμα:"
-
-#: SalesGraph.php:145
-msgid "For Sales Person:"
-msgstr "Για Πωλήσεων Υπεύθυνος:"
-
-#: SalesGraph.php:165
+#: SalesGraph.php:164
 msgid "Graph Type"
 msgstr "Γράφημα Τύπος"
 
-#: SalesGraph.php:167
+#: SalesGraph.php:166
 msgid "Bar Graph"
 msgstr "Μπαρ Διάγραμμα"
 
-#: SalesGraph.php:168
+#: SalesGraph.php:167
 msgid "Stacked Bar Graph"
 msgstr "Σωρευμένης ραβδόγραμμα"
 
-#: SalesGraph.php:169
+#: SalesGraph.php:168
 msgid "Line Graph"
 msgstr "Γραμμή Γράφημα"
 
-#: SalesGraph.php:170
+#: SalesGraph.php:169
 msgid "Line Point Graph"
 msgstr "Γραμμή Γράφημα Point"
 
-#: SalesGraph.php:171
+#: SalesGraph.php:170
 msgid "Area Graph"
 msgstr "Περιοχή Γράφημα"
 
-#: SalesGraph.php:172
+#: SalesGraph.php:171
 msgid "Points Graph"
 msgstr "Σημεία Γράφημα"
 
-#: SalesGraph.php:173
+#: SalesGraph.php:172
 msgid "Pie Graph"
 msgstr "Πίτα Γράφημα"
 
-#: SalesGraph.php:174
+#: SalesGraph.php:173
 msgid "Thin Bar Line Graph"
 msgstr "Thin Γράφημα γραμμής Bar"
 
-#: SalesGraph.php:175
+#: SalesGraph.php:174
 msgid "Squared Graph"
 msgstr "Squared Γράφημα"
 
-#: SalesGraph.php:176
+#: SalesGraph.php:175
 msgid "Stacked Area Graph"
 msgstr "Stacked Γράφημα Χώρο"
 
-#: SalesGraph.php:186
+#: SalesGraph.php:185
 msgid "Graph On:"
 msgstr "Γράφημα στις:"
 
-#: SalesGraph.php:190
+#: SalesGraph.php:189
 msgid "From:"
 msgstr "Από:"
 
-#: SalesGraph.php:191
+#: SalesGraph.php:190
 msgid "To:"
 msgstr "Προς:"
 
-#: SalesGraph.php:194
+#: SalesGraph.php:193
 msgid "Graph Value:"
 msgstr "Γράφημα Αξία:"
 
-#: SalesGraph.php:195
+#: SalesGraph.php:194
 msgid "Net Sales Value"
 msgstr "Καθαρής αξίας των πωλήσεων"
 
-#: SalesGraph.php:201
+#: SalesGraph.php:200
 msgid "Show Sales Graph"
 msgstr "Εμφάνιση Γράφημα Πωλήσεις"
 
-#: SalesGraph.php:212 SalesGraph.php:276 SalesTopCustomersInquiry.php:215
+#: SalesGraph.php:211 SalesGraph.php:275 SalesTopCustomersInquiry.php:215
 #: SalesTopItemsInquiry.php:222
 msgid "Sales Value"
 msgstr "Η αξία των πωλήσεων"
 
-#: SalesGraph.php:218
+#: SalesGraph.php:217
 msgid "Unit Sales"
 msgstr "Μονάδα Πωλήσεων"
 
-#: SalesGraph.php:225
+#: SalesGraph.php:224
 msgid "For All Sales Areas"
 msgstr "Για όλους τους τομείς Πωλήσεων"
 
-#: SalesGraph.php:233
+#: SalesGraph.php:232
 msgid "For All Stock Categories"
 msgstr "Για όλες τις κατηγορίες Χρηματιστήριο"
 
-#: SalesGraph.php:242
+#: SalesGraph.php:241
 msgid "For All Salespeople"
 msgstr "Για όλους τους πωλητές"
 
-#: SalesGraph.php:246
-msgid "For Salesperson:"
-msgstr "Για ΥΠΕΥΘΥΝΟΣ:"
-
-#: SalesGraph.php:251
+#: SalesGraph.php:250
 msgid "For Customers from"
 msgstr "Για πελάτες από"
 
-#: SalesGraph.php:255
+#: SalesGraph.php:254
 msgid "For Items from"
 msgstr "Για τα στοιχεία από"
 
-#: SalesGraph.php:299
+#: SalesGraph.php:298
 msgid ""
 "The sales graph data for the selected criteria could not be retrieved because"
 msgstr ""
 "Τα γραφικά δεδομένα των πωλήσεων για τα επιλεγμένα κριτήρια δεν θα μπορούσε "
 "να ανακτηθεί, επειδή"
 
-#: SalesGraph.php:304
+#: SalesGraph.php:303
 msgid "There is not sales data for the criteria entered to graph"
 msgstr ""
 "Δεν υπάρχουν στοιχεία για τις πωλήσεις των κριτηρίων που εγγράφονται στο "
@@ -27821,10 +27766,6 @@ msgstr "Ισχύει μόνο για Τιμολόγιο Τύπος Ημερομ�
 #: SalesInquiry.php:1179
 msgid "For Sales Person"
 msgstr ""
-
-#: SalesInquiry.php:1188
-msgid "All Salesmen"
-msgstr "Όλα Πωλητές"
 
 #: SalesInquiry.php:1217
 msgid "Transaction Number sort only valid for Invoice Date Type"
@@ -28416,7 +28357,7 @@ msgstr ""
 "Δεν υπάρχουν διαθέσιμα προϊόντα που ταιριάζουν με τα κριτήρια που "
 "καθορίζονται"
 
-#: SelectCreditItems.php:397 WorkOrderEntry.php:278 WorkOrderIssue.php:725
+#: SelectCreditItems.php:397 WorkOrderEntry.php:279 WorkOrderIssue.php:725
 msgid "The SQL statement used was"
 msgstr "Η πρόταση SQL χρησιμοποιήθηκε ήταν"
 
@@ -28713,9 +28654,9 @@ msgid ""
 "invoices"
 msgstr ""
 
-#: SelectCustomer.php:209
-msgid "Allocate Receipts OR Credit Notes"
-msgstr ""
+#: SelectCustomer.php:209 includes/MainMenuLinksArray.php:101
+msgid "Allocate Receipts or Credit Notes"
+msgstr "Διαθέστε Αποδείξεις ή πιστωτικά σημειώματα"
 
 #: SelectCustomer.php:211
 msgid "Create a Counter Sale for this Customer"
@@ -29331,10 +29272,6 @@ msgstr "Τόμος"
 #: SelectProduct.php:142
 msgid "Weight"
 msgstr "Βάρος"
-
-#: SelectProduct.php:144
-msgid "EOQ"
-msgstr "EOQ"
 
 #: SelectProduct.php:171
 msgid "No Default Price Set"
@@ -32546,7 +32483,7 @@ msgid "Serial Numbers"
 msgstr "Serial Numbers"
 
 #: StockLocStatus.php:287 StockLocStatus.php:319 StockStatus.php:238
-#: WorkOrderEntry.php:856
+#: WorkOrderEntry.php:857
 msgid "Batches"
 msgstr "Παρτίδες"
 
@@ -33269,7 +33206,7 @@ msgstr "Αποθήκη Μεταφορές ως εκ τούτου δεν είνα
 msgid "Enter another Transfer"
 msgstr "Εισάγετε ένα άλλο Μεταφορά"
 
-#: StockTransfers.php:177 WorkOrderEntry.php:496
+#: StockTransfers.php:177 WorkOrderEntry.php:497
 msgid "The quantity entered must be a positive number greater than zero"
 msgstr ""
 "Η ποσότητα που τέθηκε πρέπει να είναι ένας θετικός αριθμός μεγαλύτερος του "
@@ -33578,7 +33515,7 @@ msgstr ""
 "επιβάλουν οι κωδικούς αποθεμάτων που απαγορεύεται από το σύστημα. Δοκιμάστε "
 "επιλέγοντας μια εναλλακτική κωδικό απόθεμα"
 
-#: Stocks.php:713 Z_ImportDebtors.php:598 Z_ImportStocks.php:250
+#: Stocks.php:713 Z_ImportDebtors.php:599 Z_ImportStocks.php:250
 msgid "New Item"
 msgstr "Νέα θέση"
 
@@ -34441,7 +34378,7 @@ msgstr "Εκτύπωση και πληρωμές Διαδικασία"
 msgid "Price List of goods from a Supplier"
 msgstr "Τιμοκατάλογος των εμπορευμάτων από προμηθευτή"
 
-#: SuppPriceList.php:51 SuppPriceList.php:253
+#: SuppPriceList.php:51 SuppPriceList.php:252
 msgid "All Prices"
 msgstr "Όλες οι τιμές"
 
@@ -34466,19 +34403,19 @@ msgstr "Αγορά"
 msgid "View the Price List from supplier"
 msgstr "Δείτε τον τιμοκατάλογο από τον προμηθευτή"
 
-#: SuppPriceList.php:254
+#: SuppPriceList.php:253
 msgid "Only Current Price"
 msgstr "Μόνο Τρέχουσα τιμή"
 
-#: SuppPriceList.php:290
+#: SuppPriceList.php:287
 msgid "Supplier Price List for"
 msgstr "Προμηθευτής Τιμοκατάλογος για"
 
-#: SuppPriceList.php:310
+#: SuppPriceList.php:307
 msgid "Conv Factor"
 msgstr ""
 
-#: SuppPriceList.php:313
+#: SuppPriceList.php:310
 msgid "Supp Code"
 msgstr "Supp κώδικα"
 
@@ -36025,7 +35962,7 @@ msgstr "Διαδικασία"
 msgid "Tender"
 msgstr ""
 
-#: SupplierTenders.php:533 WorkOrderCosting.php:69 WorkOrderEntry.php:791
+#: SupplierTenders.php:533 WorkOrderCosting.php:69 WorkOrderEntry.php:792
 #: WorkOrderIssue.php:780 WorkOrderReceive.php:835 WorkOrderStatus.php:71
 msgid "Required By"
 msgstr "Απαιτείται από το"
@@ -36262,29 +36199,29 @@ msgstr ""
 msgid "The supplier number already exists in the database"
 msgstr "Ο αριθμός προμηθευτή υπάρχει ήδη στη βάση δεδομένων"
 
-#: Suppliers.php:338 Z_ImportSuppliers.php:141
+#: Suppliers.php:338 Z_ImportSuppliers.php:142
 msgid "The supplier name must be entered and be forty characters or less long"
 msgstr ""
 "Το όνομα του προμηθευτή πρέπει να εισαχθεί και να είναι σαράντα χαρακτήρες ή "
 "λιγότερο μακρά"
 
-#: Suppliers.php:344 Z_ImportSuppliers.php:147
+#: Suppliers.php:344 Z_ImportSuppliers.php:148
 msgid "The Supplier Code cannot be empty"
 msgstr "Ο Προμηθευτής κώδικα δεν μπορεί να είναι κενή"
 
-#: Suppliers.php:350 Z_ImportSuppliers.php:153
+#: Suppliers.php:350 Z_ImportSuppliers.php:154
 msgid "The supplier code cannot contain any of the illegal characters"
 msgstr ""
 
-#: Suppliers.php:356 Z_ImportSuppliers.php:159
+#: Suppliers.php:356 Z_ImportSuppliers.php:160
 msgid "The telephone number must be 25 characters or less long"
 msgstr "Ο αριθμός τηλεφώνου πρέπει να είναι 25 χαρακτήρες ή λιγότεροι"
 
-#: Suppliers.php:362 Z_ImportSuppliers.php:165
+#: Suppliers.php:362 Z_ImportSuppliers.php:166
 msgid "The fax number must be 25 characters or less long"
 msgstr "Ο αριθμός fax πρέπει να είναι 25  χαρακτήρες ή λιγότεροι"
 
-#: Suppliers.php:368 Z_ImportSuppliers.php:171
+#: Suppliers.php:368 Z_ImportSuppliers.php:172
 msgid "The email address must be 55 characters or less long"
 msgstr ""
 "Η διεύθυνση ηλεκτρονικού ταχυδρομείου πρέπει να είναι 55 χαρακτήρες ή "
@@ -36294,12 +36231,12 @@ msgstr ""
 msgid "The URL address must be 50 characters or less long"
 msgstr ""
 
-#: Suppliers.php:386 Z_ImportSuppliers.php:183
+#: Suppliers.php:386 Z_ImportSuppliers.php:184
 msgid "The bank reference text must be less than 12 characters long"
 msgstr ""
 "Το κείμενο αναφοράς τράπεζα πρέπει να είναι μικρότερο από 12 χαρακτήρες"
 
-#: Suppliers.php:392 Z_ImportSuppliers.php:189
+#: Suppliers.php:392 Z_ImportSuppliers.php:190
 msgid "The supplier since field must be a date in the format"
 msgstr ""
 "Ο προμηθευτής δεδομένου ότι το πεδίο πρέπει να είναι μια ημερομηνία με τη "
@@ -36317,16 +36254,16 @@ msgstr ""
 msgid "Goole map url not loading"
 msgstr ""
 
-#: Suppliers.php:498 Z_ImportSuppliers.php:247
+#: Suppliers.php:498 Z_ImportSuppliers.php:248
 msgid "Cannot change currency code as transactions already exist"
 msgstr ""
 "Δεν μπορείτε να αλλάξετε τον κωδικό νομίσματος ως συναλλαγές ήδη υπάρχουν"
 
-#: Suppliers.php:526 Z_ImportSuppliers.php:250
+#: Suppliers.php:526 Z_ImportSuppliers.php:251
 msgid "The supplier could not be updated because"
 msgstr "Ο προμηθευτής δεν μπορεί να ενημερωθεί, επειδή"
 
-#: Suppliers.php:527 Z_ImportSuppliers.php:251
+#: Suppliers.php:527 Z_ImportSuppliers.php:252
 msgid "The SQL that was used to update the supplier but failed was"
 msgstr ""
 "Ο SQL που χρησιμοποιήθηκε για την ενημέρωση του προμηθευτή, αλλά απέτυχε ήταν"
@@ -36335,11 +36272,11 @@ msgstr ""
 msgid "The supplier master record for"
 msgstr "Η εγγραφή πλοίαρχος προμηθευτή για"
 
-#: Suppliers.php:589 Z_ImportSuppliers.php:306
+#: Suppliers.php:589 Z_ImportSuppliers.php:307
 msgid "The supplier"
 msgstr "Ο προμηθευτής"
 
-#: Suppliers.php:590 Z_ImportSuppliers.php:307
+#: Suppliers.php:590 Z_ImportSuppliers.php:308
 msgid "The SQL that was used to insert the supplier but failed was"
 msgstr ""
 "Ο SQL που χρησιμοποιείται για να εισαχθεί ο προμηθευτής, αλλά απέτυχε ήταν"
@@ -37134,7 +37071,7 @@ msgstr ""
 "είναι πάντα φορτισμένη. Η συνολική αξία της παραγγελίας είναι σε σύγκριση με "
 "την τιμή αυτή να αποφασίσει εάν ή να μην ναύλο"
 
-#: SystemParameters.php:684 Z_ImportDebtors.php:653
+#: SystemParameters.php:684 Z_ImportDebtors.php:654
 msgid "Create Debtor Codes Automatically"
 msgstr "Δημιουργία Κώδικες οφειλέτη Αυτόματα"
 
@@ -40144,21 +40081,21 @@ msgstr ""
 msgid "Work Order Entry"
 msgstr "Οι εργασίες εισόδου Παραγγελία"
 
-#: WorkOrderEntry.php:48
+#: WorkOrderEntry.php:49
 msgid ""
 "Your security settings do not allow you to create or update new Work Order "
 "at this location"
 msgstr ""
 
-#: WorkOrderEntry.php:49 WorkOrderEntry.php:487 WorkOrderEntry.php:752
+#: WorkOrderEntry.php:50 WorkOrderEntry.php:488 WorkOrderEntry.php:753
 msgid "Select an existing work order"
 msgstr "Επιλέξτε μια υπάρχουσα εντολή εργασίας"
 
-#: WorkOrderEntry.php:238
+#: WorkOrderEntry.php:239
 msgid "Failed to retrieve item number"
 msgstr ""
 
-#: WorkOrderEntry.php:323 WorkOrderEntry.php:412
+#: WorkOrderEntry.php:324 WorkOrderEntry.php:413
 msgid ""
 "The item selected cannot be added to a work order because it is not a "
 "manufactured item"
@@ -40166,17 +40103,17 @@ msgstr ""
 "Το επιλεγμένο αντικείμενο δεν μπορεί να προστεθεί σε μια σειρά εργασιών, "
 "διότι δεν είναι ένα κατασκευασμένο στοιχείο"
 
-#: WorkOrderEntry.php:327 WorkOrderEntry.php:416
+#: WorkOrderEntry.php:328 WorkOrderEntry.php:417
 msgid "The item selected cannot be found in the database"
 msgstr "Το επιλεγμένο αντικείμενο δεν μπορεί να βρεθεί στη βάση δεδομένων"
 
-#: WorkOrderEntry.php:335 WorkOrderEntry.php:425
+#: WorkOrderEntry.php:336 WorkOrderEntry.php:426
 msgid "This item is already on the work order and cannot be added again"
 msgstr ""
 "Το σημείο αυτό είναι ήδη στην εντολή εργασίας και δεν μπορεί να προστεθεί "
 "και πάλι"
 
-#: WorkOrderEntry.php:353 WorkOrderEntry.php:445 WorkOrderEntry.php:556
+#: WorkOrderEntry.php:354 WorkOrderEntry.php:446 WorkOrderEntry.php:557
 msgid ""
 "The cost of this item as accumulated from the sum of the component costs is "
 "nil. This could be because there is no bill of material set up ... you may "
@@ -40187,31 +40124,31 @@ msgstr ""
 "υπάρχει νομοσχέδιο του υλικού που έχει συσταθεί ... μπορεί να θελήσετε στο "
 "διπλό έλεγχο αυτό"
 
-#: WorkOrderEntry.php:356
+#: WorkOrderEntry.php:357
 msgid ""
 "The cost of this item as accumulated from the sum of the component costs is "
 "zero"
 msgstr ""
 
-#: WorkOrderEntry.php:448
+#: WorkOrderEntry.php:449
 msgid ""
 "The The cost of this item as accumulated from the sum of the component costs "
 "is zero"
 msgstr ""
 
-#: WorkOrderEntry.php:486
+#: WorkOrderEntry.php:487
 msgid "Enter a new work order"
 msgstr "Εισάγετε μια νέα τάξη εργασίας"
 
-#: WorkOrderEntry.php:488
+#: WorkOrderEntry.php:489
 msgid "Go to Costing"
 msgstr "Μετάβαση στην Κοστολόγηση"
 
-#: WorkOrderEntry.php:501
+#: WorkOrderEntry.php:502
 msgid "The required by date entered is in an invalid format"
 msgstr "Η απαιτούμενη από εγγράφεται η ημερομηνία αυτή είναι σε έγκυρη μορφή"
 
-#: WorkOrderEntry.php:523
+#: WorkOrderEntry.php:524
 msgid ""
 "The factory where this work order is made can only be updated if the "
 "quantity received on all output items is 0"
@@ -40219,15 +40156,15 @@ msgstr ""
 "Το εργοστάσιο όπου αυτή τη σειρά έργο που γίνεται μπορούν να ενημερωθούν "
 "μόνο αν η ποσότητα που ελήφθη για όλες τις θέσεις παραγωγής είναι 0"
 
-#: WorkOrderEntry.php:574
+#: WorkOrderEntry.php:575
 msgid "The work order could not be added/updated"
 msgstr "Η σειρά έργο δεν θα μπορούσε να προστεθεί / ενημέρωση"
 
-#: WorkOrderEntry.php:581
+#: WorkOrderEntry.php:582
 msgid "The work order has been updated"
 msgstr "Η εντολή εργασίας έχει ενημερωθεί"
 
-#: WorkOrderEntry.php:604 WorkOrderEntry.php:654
+#: WorkOrderEntry.php:605 WorkOrderEntry.php:655
 msgid ""
 "This work order cannot be deleted because it has issues or receipts related "
 "to it"
@@ -40235,89 +40172,89 @@ msgstr ""
 "Αυτή η εντολή εργασίας δεν μπορεί να διαγραφεί, επειδή έχει τα ζητήματα ή οι "
 "εισπράξεις που σχετίζονται με την"
 
-#: WorkOrderEntry.php:610 WorkOrderEntry.php:624 WorkOrderEntry.php:661
+#: WorkOrderEntry.php:611 WorkOrderEntry.php:625 WorkOrderEntry.php:662
 msgid "The work order could not be deleted"
 msgstr "Η σειρά έργο δεν θα μπορούσε να διαγραφεί"
 
-#: WorkOrderEntry.php:611 WorkOrderEntry.php:662
+#: WorkOrderEntry.php:612 WorkOrderEntry.php:663
 msgid "The SQL used to delete the work order was"
 msgstr ""
 
-#: WorkOrderEntry.php:620 WorkOrderEntry.php:671
+#: WorkOrderEntry.php:621 WorkOrderEntry.php:672
 msgid "The work order serial numbers could not be deleted"
 msgstr "Οι αριθμοί σειράς εργασιών ώστε δεν θα μπορούσε να διαγραφεί"
 
-#: WorkOrderEntry.php:628
+#: WorkOrderEntry.php:629
 msgid "The work order has been cancelled"
 msgstr ""
 
-#: WorkOrderEntry.php:631
+#: WorkOrderEntry.php:632
 msgid "Select an existing outstanding work order"
 msgstr "Επιλέξτε ένα υπάρχον εκκρεμεί εντολή εργασίας"
 
-#: WorkOrderEntry.php:674
+#: WorkOrderEntry.php:675
 msgid "The item in this work order has been cancelled"
 msgstr ""
 
-#: WorkOrderEntry.php:708
+#: WorkOrderEntry.php:709
 msgid "Could not get the work order items"
 msgstr "Δεν μπόρεσα να πάρω τα στοιχεία για το έργο"
 
-#: WorkOrderEntry.php:751
+#: WorkOrderEntry.php:752
 msgid ""
 "Your location security settings do not allow you to Update this Work Order"
 msgstr ""
 
-#: WorkOrderEntry.php:760
+#: WorkOrderEntry.php:761
 msgid "Work Order Reference"
 msgstr "Εργασία Αναφορά Παραγγελία"
 
-#: WorkOrderEntry.php:761
+#: WorkOrderEntry.php:762
 msgid "Factory Location"
 msgstr "Εργοστάσιο Θέση"
 
-#: WorkOrderEntry.php:816
+#: WorkOrderEntry.php:817
 msgid "Output Item"
 msgstr "Θέση εξόδου"
 
-#: WorkOrderEntry.php:820
+#: WorkOrderEntry.php:821
 msgid "Balance Remaining"
 msgstr "Υπόλοιπο"
 
-#: WorkOrderEntry.php:821
+#: WorkOrderEntry.php:822
 msgid "Next Lot/SN Ref"
 msgstr "Επόμενη Παρτίδα / Ref SN"
 
-#: WorkOrderEntry.php:843
+#: WorkOrderEntry.php:844
 msgid "The input format must be positive numeric"
 msgstr ""
 
-#: WorkOrderEntry.php:854
+#: WorkOrderEntry.php:855
 msgid "S/Ns"
 msgstr "S / Ns"
 
-#: WorkOrderEntry.php:864
+#: WorkOrderEntry.php:865
 msgid "Are you sure"
 msgstr ""
 
-#: WorkOrderEntry.php:888
+#: WorkOrderEntry.php:889
 msgid "Cancel This Work Order"
 msgstr ""
 
-#: WorkOrderEntry.php:941
+#: WorkOrderEntry.php:942
 msgid "Enter Sales Order"
 msgstr ""
 
-#: WorkOrderEntry.php:943
+#: WorkOrderEntry.php:944
 msgid "Enter Customer Order Ref"
 msgstr ""
 
-#: WorkOrderEntry.php:1014 WorkOrderEntry.php:1033 WorkOrderIssue.php:1049
+#: WorkOrderEntry.php:1015 WorkOrderEntry.php:1034 WorkOrderIssue.php:1049
 #, php-format
 msgid "Add to Work Order"
 msgstr "Προσθήκη στο τολ"
 
-#: WorkOrderEntry.php:1055
+#: WorkOrderEntry.php:1056
 msgid "Add To Work Order"
 msgstr ""
 
@@ -42589,9 +42526,9 @@ msgstr ""
 msgid "Batch import of the chart of accounts has been rolled back."
 msgstr ""
 
-#: Z_ImportChartOfAccounts.php:111 Z_ImportDebtors.php:623
+#: Z_ImportChartOfAccounts.php:111 Z_ImportDebtors.php:624
 #: Z_ImportFixedAssets.php:278 Z_ImportGLTransactions.php:214
-#: Z_ImportPriceList.php:142 Z_ImportStocks.php:276 Z_ImportSuppliers.php:333
+#: Z_ImportPriceList.php:142 Z_ImportStocks.php:276 Z_ImportSuppliers.php:334
 msgid "Batch Import of"
 msgstr "Εισαγωγή παρτίδας του"
 
@@ -42628,35 +42565,35 @@ msgid ""
 msgstr ""
 
 #: Z_ImportChartOfAccounts.php:130 Z_ImportCustbranch.php:548
-#: Z_ImportDebtors.php:651 Z_ImportGLTransactions.php:259
-#: Z_ImportPriceList.php:160 Z_ImportStocks.php:297 Z_ImportSuppliers.php:362
+#: Z_ImportDebtors.php:652 Z_ImportGLTransactions.php:259
+#: Z_ImportPriceList.php:160 Z_ImportStocks.php:297 Z_ImportSuppliers.php:363
 #: Z_UpdateItemCosts.php:119
 msgid "Upload file"
 msgstr "Προσθήκη αρχείου"
 
 #: Z_ImportChartOfAccounts.php:131 Z_ImportCustbranch.php:549
-#: Z_ImportDebtors.php:652 Z_ImportFixedAssets.php:309
+#: Z_ImportDebtors.php:653 Z_ImportFixedAssets.php:309
 #: Z_ImportGLTransactions.php:260 Z_ImportPriceList.php:161
-#: Z_ImportStocks.php:298 Z_ImportSuppliers.php:363 Z_UpdateItemCosts.php:120
+#: Z_ImportStocks.php:298 Z_ImportSuppliers.php:364 Z_UpdateItemCosts.php:120
 #: Z_UploadForm.php:17
 msgid "Send File"
 msgstr "Αποστολή αρχείου"
 
-#: Z_ImportCustbranch.php:5 Z_ImportDebtors.php:5
+#: Z_ImportCustbranch.php:5 Z_ImportDebtors.php:6
 msgid "Import Debtors And branches"
 msgstr ""
 
-#: Z_ImportCustbranch.php:68 Z_ImportDebtors.php:105 Z_ImportStocks.php:59
-#: Z_ImportSuppliers.php:67
+#: Z_ImportCustbranch.php:68 Z_ImportDebtors.php:106 Z_ImportStocks.php:59
+#: Z_ImportSuppliers.php:68
 msgid "File contains "
 msgstr "Φάκελος περιέχει "
 
-#: Z_ImportCustbranch.php:113 Z_ImportDebtors.php:115 Z_ImportSuppliers.php:77
+#: Z_ImportCustbranch.php:113 Z_ImportDebtors.php:116 Z_ImportSuppliers.php:78
 msgid "File contains incorrect headers ("
 msgstr "Φάκελος περιέχει εσφαλμένες κεφαλίδες ("
 
-#: Z_ImportCustbranch.php:136 Z_ImportDebtors.php:135
-#: Z_ImportGLTransactions.php:80 Z_ImportStocks.php:87 Z_ImportSuppliers.php:96
+#: Z_ImportCustbranch.php:136 Z_ImportDebtors.php:136
+#: Z_ImportGLTransactions.php:80 Z_ImportStocks.php:87 Z_ImportSuppliers.php:97
 msgid " fields required, "
 msgstr " πεδία είναι υποχρεωτικά, "
 
@@ -42770,9 +42707,9 @@ msgstr ""
 msgid "has been passed validation"
 msgstr ""
 
-#: Z_ImportCustbranch.php:508 Z_ImportDebtors.php:619
+#: Z_ImportCustbranch.php:508 Z_ImportDebtors.php:620
 #: Z_ImportFixedAssets.php:274 Z_ImportPriceList.php:138 Z_ImportStocks.php:272
-#: Z_ImportSuppliers.php:329
+#: Z_ImportSuppliers.php:330
 msgid "Failed on row "
 msgstr "Αποτυχία για την γραμμή "
 
@@ -42796,7 +42733,7 @@ msgstr ""
 msgid "Branches not updated"
 msgstr ""
 
-#: Z_ImportCustbranch.php:536 Z_ImportDebtors.php:639
+#: Z_ImportCustbranch.php:536 Z_ImportDebtors.php:640
 msgid ""
 "Please ensure that your csv file is encoded in UTF-8, otherwise the input "
 "data will not store correctly in database"
@@ -42806,29 +42743,24 @@ msgstr ""
 msgid "Update if Customer Branch exists"
 msgstr ""
 
-#: Z_ImportDebtors.php:598 Z_ImportStocks.php:250
+#: Z_ImportDebtors.php:599 Z_ImportStocks.php:250
 msgid "has been added to the transaction"
 msgstr "έχει προστεθεί η συναλλαγή"
 
-#: Z_ImportDebtors.php:623 Z_ImportPriceList.php:142 Z_ImportStocks.php:276
-#: Z_ImportSuppliers.php:333 Z_UpdateItemCosts.php:104
+#: Z_ImportDebtors.php:624 Z_ImportPriceList.php:142 Z_ImportStocks.php:276
+#: Z_ImportSuppliers.php:334 Z_UpdateItemCosts.php:104
 msgid "has been completed. All transactions committed to the database."
 msgstr "έχει ολοκληρωθεί. Όλες οι πράξεις που αναλήφθηκαν στη βάση δεδομένων."
 
-#: Z_ImportDebtors.php:625 Z_ImportSuppliers.php:335
+#: Z_ImportDebtors.php:626 Z_ImportSuppliers.php:336
 msgid "Updated:"
 msgstr ""
 
-#: Z_ImportDebtors.php:625 Z_ImportDebtors.php:627 Z_ImportSuppliers.php:335
-#: Z_ImportSuppliers.php:337
-msgid "Insert:"
-msgstr ""
-
-#: Z_ImportDebtors.php:627 Z_ImportSuppliers.php:337
+#: Z_ImportDebtors.php:628 Z_ImportSuppliers.php:338
 msgid "Exist:"
 msgstr ""
 
-#: Z_ImportDebtors.php:656
+#: Z_ImportDebtors.php:657
 msgid "Update if DebtorNo exists"
 msgstr ""
 
@@ -43210,7 +43142,7 @@ msgstr ""
 msgid "Prices effective from"
 msgstr ""
 
-#: Z_ImportStocks.php:5 Z_ImportSuppliers.php:5
+#: Z_ImportStocks.php:5 Z_ImportSuppliers.php:6
 msgid "Import Items"
 msgstr "Εισαγωγή στοιχείων"
 
@@ -43261,13 +43193,13 @@ msgid "ItemPDF must contain either a filename, or the keyword `none`"
 msgstr ""
 "ItemPDF πρέπει να περιέχουν είτε ένα όνομα αρχείου, ή την λέξη «κανένας»"
 
-#: Z_ImportSuppliers.php:350
+#: Z_ImportSuppliers.php:351
 msgid ""
 "Please ensure that your csv file charset is UTF-8, otherwise the data will "
 "not store correctly in database"
 msgstr ""
 
-#: Z_ImportSuppliers.php:365
+#: Z_ImportSuppliers.php:366
 msgid "Update if SupplierNo exists"
 msgstr ""
 
@@ -44308,10 +44240,6 @@ msgstr "Geocode Δημιουργία"
 #: geocode.php:26
 msgid "Geocoding of Customers and Suppliers"
 msgstr "Γεωκωδικοποίησης των πελατών και προμηθευτών"
-
-#: geocode.php:54
-msgid "Customer Code: "
-msgstr ""
 
 #: geocode.php:89
 msgid "failed to geocode."
@@ -47402,10 +47330,6 @@ msgstr "Εδάφη"
 msgid "and for"
 msgstr "και για την"
 
-#: includes/PDFCustomerListPageHeader.inc:43
-msgid "All Salespeople"
-msgstr "Όλες οι πωλητές"
-
 #: includes/PDFCustomerListPageHeader.inc:48
 msgid "Salespeople"
 msgstr "Πωλητές"
@@ -50420,10 +50344,6 @@ msgstr "Επιλέξτε Διάταξη για Τιμολόγιο"
 #: includes/MainMenuLinksArray.php:99
 msgid "Create A Credit Note"
 msgstr "Δημιουργήστε το πιστωτικό σημείωμα"
-
-#: includes/MainMenuLinksArray.php:101
-msgid "Allocate Receipts or Credit Notes"
-msgstr "Διαθέστε Αποδείξεις ή πιστωτικά σημειώματα"
 
 #: includes/MainMenuLinksArray.php:107
 msgid "Where Allocated Inquiry"
@@ -53566,6 +53486,42 @@ msgstr ""
 #: ../webSHOP/includes/session.php:137
 msgid "Bank Transfer"
 msgstr ""
+
+#~ msgid "Assembly:"
+#~ msgstr "Συνέλευση:"
+
+#~ msgid "Contract Reference:"
+#~ msgstr "Συμβόλαιο Αναφορά:"
+
+#~ msgid "View Currency Trends"
+#~ msgstr "Δείτε Τάσεις Νόμισμα"
+
+#~ msgid "Consolidation:"
+#~ msgstr "Ενοποίηση:"
+
+#~ msgid "EOQ:"
+#~ msgstr "EOQ:"
+
+#~ msgid "For Sales folk"
+#~ msgstr "Για Πωλήσεις λαϊκή"
+
+#~ msgid "All sales folk"
+#~ msgstr "Όλες οι λαϊκές πωλήσεις"
+
+#~ msgid "Expense code:"
+#~ msgstr "Έξοδα Κωδικός:"
+
+#~ msgid ": "
+#~ msgstr ": "
+
+#~ msgid "For Stock Category:"
+#~ msgstr "Για την κατηγορία Διαθέσιμα:"
+
+#~ msgid "For Sales Person:"
+#~ msgstr "Για Πωλήσεων Υπεύθυνος:"
+
+#~ msgid "All Salesmen"
+#~ msgstr "Όλα Πωλητές"
 
 #~ msgid "Chart of Accounts Maintenance"
 #~ msgstr "Λογιστικό Σχέδιο Συντήρησης"
