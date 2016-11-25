@@ -22,7 +22,7 @@ if ($KL_SystemAdmin
 	OR $KL_SalesDirector){
 	HourlyPerformance(7,$RootPath, $db);
 	$NumberOfTestExecuted++;
-	HourlySales(15,$RootPath, $db);
+	HourlySales(7,$RootPath, $db);
 	$NumberOfTestExecuted++;
 }
 
@@ -514,7 +514,11 @@ function HourlyPerformance($numDays, $RootPath, $db){
 			FROM debtorsmaster
 			WHERE debtorsmaster.typeid IN (". CUSTOMER_TYPE_RETAIL . ")
 				AND debtorsmaster.debtorno LIKE 'RETAIL%'
-			ORDER BY debtorsmaster.debtorno";
+			ORDER BY (SELECT COUNT(*)
+				FROM salesorders
+				WHERE salesorders.debtorno = debtorsmaster.debtorno
+					AND salesorders.orddate = '". $Today ."') DESC,
+				debtorsmaster.debtorno";
 
 	$result = DB_query($SQL);
 	$showHeader = TRUE;
@@ -531,7 +535,7 @@ function HourlyPerformance($numDays, $RootPath, $db){
 		$k = 0; //row colour counter
 		while ($myrow = DB_fetch_array($result)) {
 			if ($showHeader){
-				echo '<p class="page_title_text" align="center"><strong>' .'Hourly Sales Performance</strong></p>';
+				echo '<p class="page_title_text" align="center"><strong>' .'Hourly Sales Performance until '. $Now .'</strong></p>';
 				echo '<div>';
 				echo '<table class="selection">';
 				$TableHeader = '<tr>
@@ -623,6 +627,27 @@ function HourlyPerformance($numDays, $RootPath, $db){
 					$LastSaleToday,
 					locale_number_format_zero_blank($TotalSalesToday,0),
 					locale_number_format_zero_blank($ValueSalesToday,0)
+					);
+			$k = StartEvenOrOddRow($k);
+			printf('<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					locale_number_format_zero_blank($TotalSalesToday/($TotalSales/$numDays)*100,0).'%',
+					locale_number_format_zero_blank($ValueSalesToday/($ValueSales/$numDays)*100,0).'%'
 					);
 			echo '</table>
 				</div>';
