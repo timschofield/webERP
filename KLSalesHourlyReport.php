@@ -19,10 +19,11 @@ if ($KL_SystemAdmin){
 if ($KL_SystemAdmin 
 	OR $KL_OperationalManager 
 	OR $KL_BusinessDevelopmentManager 
+	OR $KL_ShopManager 
 	OR $KL_SalesDirector){
-	HourlyPerformance(7,$RootPath, $db);
+	HourlyPerformance(8,$RootPath, $db);
 	$NumberOfTestExecuted++;
-	HourlySales(7,$RootPath, $db);
+	HourlySales(8,$RootPath, $db);
 	$NumberOfTestExecuted++;
 }
 
