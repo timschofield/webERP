@@ -1,5 +1,6 @@
 webERP Change Log
 
+26/11/2016 Exson: Add a constraint to Pc assignment transfer in PcAssignCashTabToTab.php
 26/11/16 Exson: Fixed the bugs in InternalStockRequestInquiry.php. Thanks for Tim's report.
 23/11/16 RChacon: On AccountGroups.php, add navigation aids (return button).
 08/11/16 RChacon: On WWW_Users.php, fix hardcoded label (difficult to translate for languages with a different structure to English), do sortable the users list, replace printf() with plain list echo, and add format class.

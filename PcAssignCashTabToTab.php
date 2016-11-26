@@ -38,6 +38,25 @@ if (isset($_POST['Process'])) {
 		unset($_POST['SelectedTabsTo']);
 		unset($_POST['Process']);
 	}
+	//to ensure currency is the same 
+	$CurrSQL = "SELECT currency 
+				FROM pctabs
+				WHERE tabcode IN ('" . $SelectedTabs . "','" . $_POST['SelectedTabsTo'] . "')";
+	$CurrResult = DB_query($CurrSQL);
+	if (DB_num_rows($CurrResult)>0) {
+		$Currency = '';
+		while ($CurrRow = DB_fetch_array($CurrResult)) {
+			if ($Currency === '') {
+				$Currency = $CurrRow['currency'];
+			} elseif ($Currency != $CurrRow['currency']) {
+				prnMsg (_('The currency transferred from shoud be the same with the transferred to'),'error');
+				unset($SelectedTabs);
+				unset($_POST['SelectedTabsTo']);
+				unset($_POST['Process']);
+			}
+		}
+	}
+
 }
 
 if (isset($_POST['Go'])) {
