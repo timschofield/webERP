@@ -18,3 +18,6 @@ ALTER TABLE `chartmaster` ADD `cashflowsactivity` TINYINT(1) NOT NULL DEFAULT '-
 -- Add new scripts:
 INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('GLCashFlowsIndirect.php', '8', 'Shows a statement of cash flows for the period using the indirect method');
 INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('GLCashFlowsSetup.php', '8', 'Setups the statement of cash flows sections');
+
+-- Update version number:
+UPDATE config SET confvalue='4.13.1' WHERE confname='VersionNumber';
