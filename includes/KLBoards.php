@@ -7496,7 +7496,7 @@ function PackagingStatusForKapalLaut($RootPath, $db){
 		$k = 0; //row colour counter
 		while ($myrow = DB_fetch_array($result)) {
 			if($showHeader){
-				echo '<p class="page_title_text" align="center"><strong>' . 'KAPAL-lAUT Shop Packaging Stock Status by Shop' . '</strong></p>';
+				echo '<p class="page_title_text" align="center"><strong>' . 'KAPAL-LAUT Shop Packaging Stock Status by Shop' . '</strong></p>';
 				echo '<div>';
 				echo '<table class="selection">';
 				$TableHeader = '<tr>
@@ -8084,7 +8084,7 @@ function PackagingUsageForKapalLaut($NumDays, $RootPath, $db){
 		$k = 0; //row colour counter
 		while ($myrow = DB_fetch_array($result)) {
 			if($showHeader){
-				echo '<p class="page_title_text" align="center"><strong>' . 'KAPAL-lAUT Shop Packaging Usage during the last ' . $NumDays . ' days'. '</strong></p>';
+				echo '<p class="page_title_text" align="center"><strong>' . 'KAPAL-LAUT Shop Packaging Usage during the last ' . $NumDays . ' days'. '</strong></p>';
 				echo '<div>';
 				echo '<table class="selection">';
 				$TableHeader = '<tr>

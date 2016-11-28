@@ -21,9 +21,9 @@ if ($KL_SystemAdmin
 	OR $KL_BusinessDevelopmentManager 
 	OR $KL_ShopManager 
 	OR $KL_SalesDirector){
-	HourlyPerformance(8,$RootPath, $db);
+	HourlyPerformance(10,$RootPath, $db);
 	$NumberOfTestExecuted++;
-	HourlySales(8,$RootPath, $db);
+	HourlySales(10,$RootPath, $db);
 	$NumberOfTestExecuted++;
 }
 
@@ -476,6 +476,26 @@ function HourlyPerformance($numDays, $RootPath, $db){
 				FROM salesorders
 				WHERE salesorders.debtorno = debtorsmaster.debtorno
 					AND salesorders.orddate >= '". $InitialDate ."'
+					AND salesorders.orddate <= '". $Yesterday ."') AS firstsalefull,
+				(SELECT MAX(salesorders.ordtime)
+				FROM salesorders
+				WHERE salesorders.debtorno = debtorsmaster.debtorno
+					AND salesorders.orddate >= '". $InitialDate ."'
+					AND salesorders.orddate <= '". $Yesterday ."') AS lastsalefull,
+				(SELECT COUNT(*)
+				FROM salesorders
+				WHERE salesorders.debtorno = debtorsmaster.debtorno
+					AND salesorders.orddate >= '". $InitialDate ."'
+					AND salesorders.orddate <= '". $Yesterday ."') AS totalsalesfull,
+				(SELECT SUM(klpaidcash+klpaidcreditcard+klreturnedgoods+klvouchers)
+				FROM salesorders
+				WHERE salesorders.debtorno = debtorsmaster.debtorno
+					AND salesorders.orddate >= '". $InitialDate ."'
+					AND salesorders.orddate <= '". $Yesterday ."') AS valuesalesfull,
+				(SELECT MIN(salesorders.ordtime)
+				FROM salesorders
+				WHERE salesorders.debtorno = debtorsmaster.debtorno
+					AND salesorders.orddate >= '". $InitialDate ."'
 					AND salesorders.orddate <= '". $Yesterday ."'
 					AND salesorders.ordtime <= '". $Now ."') AS firstsale,
 				(SELECT MAX(salesorders.ordtime)
@@ -519,10 +539,19 @@ function HourlyPerformance($numDays, $RootPath, $db){
 				FROM salesorders
 				WHERE salesorders.debtorno = debtorsmaster.debtorno
 					AND salesorders.orddate = '". $Today ."') DESC,
+				(SELECT COUNT(*)
+				FROM salesorders
+				WHERE salesorders.debtorno = debtorsmaster.debtorno
+					AND salesorders.orddate >= '". $InitialDate ."'
+					AND salesorders.orddate <= '". $Yesterday ."') DESC,
 				debtorsmaster.debtorno";
 
 	$result = DB_query($SQL);
 	$showHeader = TRUE;
+	$FirstSaleFull = '99:99:99';
+	$LastSaleFull = '00:00:00';
+	$TotalSalesFull = 0;
+	$ValueSalesFull = 0;
 	$FirstSale = '99:99:99';
 	$LastSale = '00:00:00';
 	$TotalSales = 0;
@@ -541,11 +570,16 @@ function HourlyPerformance($numDays, $RootPath, $db){
 				echo '<table class="selection">';
 				$TableHeader = '<tr>
 									<th class="ascending">' . _('Shop') . '</th>
-									<th class="ascending" colspan=4>' . 'Last ' . $numDays . ' days' . '</th>
+									<th class="ascending" colspan=4>' . 'Last ' . $numDays . ' days</th>
+									<th class="ascending" colspan=4>' . 'Last ' . $numDays . ' days until ' . $Now . '</th>
 									<th class="ascending" colspan=4>' . 'Today' . '</th>
 								</tr>
 								<tr>
 									<th class="ascending">' . _('Name') . '</th>
+									<th class="ascending">' . _('First Sale') . '</th>
+									<th class="ascending">' . _('Last Sale') . '</th>
+									<th class="ascending">' . _('# Sales') . '</th>
+									<th class="ascending">' . _('Value Sales') . '</th>
 									<th class="ascending">' . _('First Sale') . '</th>
 									<th class="ascending">' . _('Last Sale') . '</th>
 									<th class="ascending">' . _('# Sales') . '</th>
@@ -568,8 +602,16 @@ function HourlyPerformance($numDays, $RootPath, $db){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
 					</tr>', 
 					$myrow['debtorno'],
+					$myrow['firstsalefull'],
+					$myrow['lastsalefull'],
+					locale_number_format_zero_blank($myrow['totalsalesfull']/$numDays,1),
+					locale_number_format_zero_blank($myrow['valuesalesfull']/$numDays,0),
 					$myrow['firstsale'],
 					$myrow['lastsale'],
 					locale_number_format_zero_blank($myrow['totalsales']/$numDays,1),
@@ -580,6 +622,19 @@ function HourlyPerformance($numDays, $RootPath, $db){
 					locale_number_format_zero_blank($myrow['valuesalestoday'],0)
 					);
 					
+			if (isset($myrow['firstsalefull'])){		
+				if ($FirstSaleFull > $myrow['firstsalefull']){
+					$FirstSaleFull = $myrow['firstsalefull'];
+				}
+			}
+			if (isset($myrow['lastsalefull'])){		
+				if ($LastSaleFull < $myrow['lastsalefull']){
+					$LastSaleFull = $myrow['lastsalefull'];
+				}
+			}
+			$TotalSalesFull = $TotalSalesFull + $myrow['totalsalesfull'];
+			$ValueSalesFull = $ValueSalesFull + $myrow['valuesalesfull'];
+
 			if (isset($myrow['firstsale'])){		
 				if ($FirstSale > $myrow['firstsale']){
 					$FirstSale = $myrow['firstsale'];
@@ -618,8 +673,16 @@ function HourlyPerformance($numDays, $RootPath, $db){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
 					</tr>', 
 					'TOTALS',
+					$FirstSaleFull,
+					$LastSaleFull,
+					locale_number_format_zero_blank($TotalSalesFull/$numDays,1),
+					locale_number_format_zero_blank($ValueSalesFull/$numDays,0),
 					$FirstSale,
 					$LastSale,
 					locale_number_format_zero_blank($TotalSales/$numDays,1),
@@ -639,7 +702,15 @@ function HourlyPerformance($numDays, $RootPath, $db){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
 					</tr>', 
+					'',
+					'',
+					'',
+					'',
 					'',
 					'',
 					'',
