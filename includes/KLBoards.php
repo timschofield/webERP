@@ -1858,7 +1858,7 @@ function OnlineOrdersFollowUp($Source, $numDays, $RootPath, $db){
 
 			$EmailType2 = "TrackingConfirmation";
 			if ($myrow['klemailtrackingconfirm']== '0000-00-00'){
-				$EmailLinkText = 'Not Sent yet';
+				$EmailLinkText = 'Send now';
 				$EmailLink2 = '<a href="' . $RootPath . '/KLFollowUpOnlineEmails.php?TransNo=' . $myrow['orderno'] . '&EmailType=' . $EmailType2. '&CustomerOrder=' . $myrow['customerref'] . '">'. $EmailLinkText .'</a>';
 				$EmailLink3 = 'Tracking Confirmation first';
 				$EmailLink4 = 'Tracking Confirmation first';
@@ -1868,7 +1868,7 @@ function OnlineOrdersFollowUp($Source, $numDays, $RootPath, $db){
 			
 			$EmailType1 = "PaymentConfirmation";
 			if ($myrow['klemailpaymentconfirm']== '0000-00-00'){
-				$EmailLinkText = 'Not Sent yet';
+				$EmailLinkText = 'Send now';
 				$EmailLink1 = '<a href="' . $RootPath . '/KLFollowUpOnlineEmails.php?TransNo=' . $myrow['orderno'] . '&EmailType=' . $EmailType1. '&CustomerOrder=' . $myrow['customerref'] . '">'. $EmailLinkText .'</a>';
 				$EmailLink2 = 'Payment Confirmation first';
 				$EmailLink3 = 'Payment Confirmation first';
@@ -1970,7 +1970,7 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 			$CodeLink = '<a href="' . $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . $myrow['orderno'] . '">' . $myrow['orderno'] . '</a>';
 			$EmailType = "RemindBankTransfer";
 			if ($myrow['klemailremindbanktransfer']== '0000-00-00'){
-				$EmailLinkText = 'Not Sent yet';
+				$EmailLinkText = 'Send now';
 				$EmailLink = '<a href="' . $RootPath . '/KLFollowUpOnlineEmails.php?TransNo=' . $myrow['orderno'] . '&EmailType=' . $EmailType. '&CustomerOrder=' . $myrow['customerref'] . '">'. $EmailLinkText .'</a>';
 			}else{
 				$EmailLink = ConvertSQLDate($myrow['klemailremindbanktransfer']);
@@ -2064,7 +2064,7 @@ function OldOnlineQuotations($NumDays, $RootPath, $db){
 			$CodeLink = '<a href="' . $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . $myrow['orderno'] . '">' . $myrow['orderno'] . '</a>';
 			$EmailType = "RemindBankTransfer";
 			if ($myrow['klemailremindbanktransfer']== '0000-00-00'){
-				$EmailLinkText = 'Not Sent yet';
+				$EmailLinkText = 'Send now';
 				$EmailLink = '<a href="' . $RootPath . '/KLFollowUpOnlineEmails.php?TransNo=' . $myrow['orderno'] . '&EmailType=' . $EmailType. '&CustomerOrder=' . $myrow['customerref'] . '">'. $EmailLinkText .'</a>';
 			}else{
 				$EmailLink = ConvertSQLDate($myrow['klemailremindbanktransfer']);
