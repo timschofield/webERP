@@ -1976,7 +1976,7 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 				$EmailLink = ConvertSQLDate($myrow['klemailremindbanktransfer']);
 			}
 			$BankCode = "111121100PT";
-			$PaymentMandiriLinkText = 'Not Paid yet';
+			$PaymentMandiriLinkText = 'Apply Payment';
 			$PaymentValue = $myrow['ordervalue']+$myrow['freightcost'];
 			$PaymentMandiri = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&Bank=' . $BankCode . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentMandiriLinkText .'</a>';
 			$PaymentiPayMu = "Not Coded Yet";
