@@ -1,5 +1,6 @@
 webERP Change Log
 
+30/11/16  Exson: Fixed the bug that write off option not work without freight cost input in Credit_Invoice.php.
 27/11/2016  4.13.1 release
 
 26/11/2016 Exson: Add a constraint to Pc assignment transfer in PcAssignCashTabToTab.php
