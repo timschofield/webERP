@@ -228,7 +228,7 @@ if(isset($_POST['Location'])) {
 	}
 }
 
-if(isset($_POST['ChargeFreightCost'])) {
+if(isset($_POST['ChargeFreightCost']) AND abs($_POST['ChargeFreightCost'])>0) {
 	$_SESSION['CreditItems' . $identifier]->FreightCost = filter_number_format($_POST['ChargeFreightCost']);
 	if (($TotalQtyCredited + abs($_POST['ChargeFreightCost']))<=0) {
 		prnMsg(_('There are no item quantity or freight charge input'),'error');
