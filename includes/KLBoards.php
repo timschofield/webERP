@@ -7237,7 +7237,7 @@ Updated 3 index in loctransfers
 										<th colspan="3">' . _('PouchBag L') . '</th>
 										<th colspan="3">' . _('PouchBag M') . '</th>
 										<th colspan="3">' . _('PouchBag S') . '</th>
-										<th colspan="3">' . _('ShoppingBag XL') . '</th>
+										<th colspan="3">' . _('ShoppingBag L') . '</th>
 										<th colspan="3">' . _('ShoppingBag M') . '</th>
 										<th colspan="3">' . _('ShoppingBag S') . '</th>
 										<th>' . _('') . '</th>
@@ -7874,7 +7874,7 @@ function PackagingStatusForBlink($RootPath, $db){
 									<th colspan="3">' . _('BLINK PouchBag L') . '</th>
 									<th colspan="3">' . _('BLINK PouchBag M') . '</th>
 									<th colspan="3">' . _('BLINK PouchBag S') . '</th>
-									<th colspan="3">' . _('BLINK ShoppingBag XL') . '</th>
+									<th colspan="3">' . _('BLINK ShoppingBag L') . '</th>
 									<th colspan="3">' . _('BLINK ShoppingBag M') . '</th>
 									<th colspan="3">' . _('BLINK ShoppingBag S') . '</th>
 								</tr>';
@@ -8377,7 +8377,7 @@ function PackagingUsageForBlink($NumDays, $RootPath, $db){
 									<th colspan="3">' . _('PouchBag L') . '</th>
 									<th colspan="3">' . _('PouchBag M') . '</th>
 									<th colspan="3">' . _('PouchBag S') . '</th>
-									<th colspan="3">' . _('ShoppingBag XL') . '</th>
+									<th colspan="3">' . _('ShoppingBag L') . '</th>
 									<th colspan="3">' . _('ShoppingBag M') . '</th>
 									<th colspan="3">' . _('ShoppingBag S') . '</th>
 								</tr>';
