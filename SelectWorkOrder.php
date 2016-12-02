@@ -266,7 +266,9 @@ if (!isset($StockID)) {
 								woitems.qtyreqd,
 								woitems.qtyrecd,
 								workorders.requiredby,
-								workorders.startdate
+								workorders.startdate,
+								workorders.reference,
+								workorders.loccode
 						FROM workorders
 						INNER JOIN woitems ON workorders.wo=woitems.wo
 						INNER JOIN stockmaster ON woitems.stockid=stockmaster.stockid
@@ -286,7 +288,9 @@ if (!isset($StockID)) {
 									woitems.qtyreqd,
 									woitems.qtyrecd,
 									workorders.requiredby,
-									workorders.startdate
+									workorders.startdate,
+									workorders.reference,
+									workorders.loccode
 							FROM workorders
 							INNER JOIN woitems ON workorders.wo=woitems.wo
 							INNER JOIN stockmaster ON woitems.stockid=stockmaster.stockid
@@ -304,7 +308,9 @@ if (!isset($StockID)) {
 									woitems.qtyreqd,
 									woitems.qtyrecd,
 									workorders.requiredby,
-									workorders.startdate
+									workorders.startdate,
+									workorders.reference,
+									workorders.loccode
 							FROM workorders
 							INNER JOIN woitems ON workorders.wo=woitems.wo
 							INNER JOIN locationusers ON locationusers.loccode=workorders.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
@@ -330,6 +336,7 @@ if (!isset($StockID)) {
 					<th>' . _('Receive') . '</th>
 					<th>' . _('Costing') . '</th>
 					<th>' . _('Paperwork') . '</th>
+					<th>' . _('Location') . '</th>
 					<th class="ascending">' . _('Item') . '</th>
 					<th class="ascending">' . _('Quantity Required') . '</th>
 					<th class="ascending">' . _('Quantity Received') . '</th>
@@ -366,6 +373,7 @@ if (!isset($StockID)) {
 					<td><a href="%s">' . _('Receive') . '</a></td>
 					<td><a href="%s">' . _('Costing') . '</a></td>
 					<td><a href="%s">' . _('Print W/O') . '</a></td>
+					<td>%s</td>
 					<td>%s - %s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -374,12 +382,13 @@ if (!isset($StockID)) {
 					<td>%s</td>
 					</tr>',
 					$ModifyPage,
-					$myrow['wo'],
+					$myrow['wo'].'['.$myrow['reference'] . ']',
 					$Status_WO,
 					$Issue_WO,
 					$Receive_WO,
 					$Costing_WO,
 					$Printing_WO,
+					$myrow['loccode'],
 					$myrow['stockid'],
 					$myrow['description'],
 					locale_number_format($myrow['qtyreqd'],$myrow['decimalplaces']),
