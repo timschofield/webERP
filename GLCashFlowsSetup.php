@@ -20,10 +20,10 @@ if(isset($_GET['RetainedEarningsAccount'])) {
 	$_POST['RetainedEarningsAccount'] = $_GET['RetainedEarningsAccount'];
 }
 // Do selected action:
-switch ($_POST['Action']) {
+switch($_POST['Action']) {
 	case 'Update':
 		// Updates config accounts:
-		if ($_SESSION['PeriodProfitAccount'] != $_POST['PeriodProfitAccount'] ) {
+		if($_SESSION['PeriodProfitAccount'] != $_POST['PeriodProfitAccount'] ) {
 			if(DB_query(
 				"UPDATE config SET confvalue = '" . $_POST['PeriodProfitAccount'] . "' WHERE confname = 'PeriodProfitAccount'",
 				_('Can not update chartmaster.cashflowsactivity because')
@@ -32,10 +32,9 @@ switch ($_POST['Action']) {
 				prnMsg(_('The net profit of the period GL account was updated'), 'success');
 			}
 		}
-		if ($_SESSION['RetainedEarningsAccount'] != $_POST['RetainedEarningsAccount'] ) {
+		if($_SESSION['RetainedEarningsAccount'] != $_POST['RetainedEarningsAccount'] ) {
 			if(DB_query(
-/*				"UPDATE config SET confvalue = '" . $_POST['RetainedEarningsAccount'] . "' WHERE confname = 'RetainedEarningsAccount'",*/
-				"UPDATE companies SET retainedearnings = '" . $_POST['RetainedEarnings'] . "' WHERE coycode = 1",
+				"UPDATE companies SET retainedearnings = '" . $_POST['RetainedEarningsAccount'] . "' WHERE coycode = 1",
 				_('Can not update chartmaster.cashflowsactivity because')
 				)) {
 				$_SESSION['RetainedEarningsAccount'] = $_POST['RetainedEarningsAccount'];
@@ -122,7 +121,7 @@ switch ($_POST['Action']) {
 		$Criterion[$i]['AccountLike'] = _('Depreciation');
 		$Criterion[$i++]['CashFlowsActivity'] = 0;
 
-		foreach ($Criterion as $Criteria) {
+		foreach($Criterion as $Criteria) {
 			$Sql = "UPDATE `chartmaster`
 				SET `cashflowsactivity`=". $Criteria['CashFlowsActivity'] . "
 				WHERE `accountname` LIKE '%". addslashes(_($Criteria['AccountLike'])) . "%'
@@ -193,13 +192,17 @@ $GLAccounts = DB_query($Sql);
 echo		'<tr>
 				<td><label for="PeriodProfitAccount">', _('Net profit for the period GL account'), ':</label></td>
 	 			<td><select id="PeriodProfitAccount" name="PeriodProfitAccount" required="required">';
-if(!isset($_SESSION['PeriodProfitAccount'])) {
-	$_SESSION['PeriodProfitAccount'] = '';
-	$MyRow = DB_fetch_array(DB_query("SELECT confvalue FROM `config` WHERE confname ='PeriodProfitAccount'"));
-	if($MyRow) {
-		$_SESSION['PeriodProfitAccount'] = $MyRow['confvalue'];
-	} else {
-		// RChacon: Search account with _('period') in accountname.
+if(!isset($_SESSION['PeriodProfitAccount']) OR $_SESSION['PeriodProfitAccount']=='') {
+	$Result = DB_fetch_array(DB_query("SELECT confvalue FROM `config` WHERE confname ='PeriodProfitAccount'"));
+	if($Result == NULL) {// If $Result is NULL (false, 0, or the empty; because we use "==", instead of "==="), the parameter NOT exists so creates it.
+		echo		'<option value="">', _('Select...'), '</option>';
+		// Creates a configuration parameter for the net profit for the period GL account:
+		$Sql = "INSERT INTO `config` (confname, confvalue) VALUES ('PeriodProfitAccount', '" . $Result['accountcode'] . "')";
+		$ErrMsg = _('Could not add the new account code');
+		$Result = DB_query($Sql, $ErrMsg);
+		$_SESSION['PeriodProfitAccount'] = '';
+	} else {// If $Result is NOT NULL, the parameter exists so gets it.
+		$_SESSION['PeriodProfitAccount'] = $Result['confvalue'];
 	}
 }
 foreach($GLAccounts as $MyRow) {
@@ -213,14 +216,13 @@ echo				'</select>',
 echo		'<tr>
 				<td><label for="RetainedEarningsAccount">', _('Retained earnings GL account'), ':</label></td>
 	 			<td><select id="RetainedEarningsAccount" name="RetainedEarningsAccount" required="required">';
-if(!isset($_SESSION['RetainedEarningsAccount'])) {
-	$_SESSION['RetainedEarningsAccount'] = '';
-/*	$MyRow = DB_fetch_array(DB_query("SELECT confvalue FROM `config` WHERE confname ='RetainedEarningsAccount'"));*/
-	$MyRow = DB_fetch_array(DB_query("SELECT retainedearnings FROM companies WHERE coycode = 1"));
-	if($MyRow) {
-		$_SESSION['RetainedEarningsAccount'] = $MyRow['confvalue'];
-	} else {
-		// RChacon: Search account with _('earnings') in accountname.
+if(!isset($_SESSION['RetainedEarningsAccount']) OR $_SESSION['RetainedEarningsAccount']=='') {
+	$Result = DB_fetch_array(DB_query("SELECT retainedearnings FROM `companies` WHERE `coycode`=1"));
+	if($Result == NULL) {// If $Result is NULL (false, 0, or the empty; because we use "==", instead of "==="), the parameter NOT exists.
+		echo		'<option value="">', _('Select...'), '</option>';
+		$_SESSION['RetainedEarningsAccount'] = '';
+	} else {// If $Result is NOT NULL, the parameter exists so gets it.
+		$_SESSION['RetainedEarningsAccount'] = $Result['retainedearnings'];
 	}
 }
 foreach($GLAccounts as $MyRow) {
