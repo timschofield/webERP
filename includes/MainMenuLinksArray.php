@@ -6,12 +6,12 @@
 KL RICARD MODIFICATIONS:
 - Added entries for all KL scripts
 *****************************************************************************************/
-// RICARD: personalize menu entries by level
+// RICARD: Personalianalize menu entries by level
 include('includes/KLRoles.inc');
 
 /* webERP menus with Captions and URLs. */
 
-$ModuleLink = array('orders', 'AR', 'PO', 'AP', 'stock', 'manuf',  'GL', 'FA', 'PC', 'system', 'Utilities');
+$ModuleLink = array('orders', 'AR', 'PO', 'AP', 'stock', 'manuf',  'GL', 'FA', 'PC', 'Personalia', 'system', 'Utilities');
 $ReportList = array('orders'=>'ord',
 					'AR'=>'ar',
 					'PO'=>'prch',
@@ -21,6 +21,7 @@ $ReportList = array('orders'=>'ord',
 					'GL'=>'gl',
 					'FA'=>'fa',
 					'PC'=>'pc',
+					'Personalia'=>'pe',
 					'system'=>'sys',
 					'Utilities'=>'utils'
 					);
@@ -35,6 +36,7 @@ $ModuleList = array(_('Sales'),
 					_('General Ledger'),
 					_('Asset Manager'),
 					_('Petty Cash'),
+					_('Personalia'),
 					_('Setup'),
 					_('Utilities'));
 
@@ -189,7 +191,7 @@ $MenuItems['AR']['Reports']['Caption'] = array(	_('Where Allocated Inquiry'),
 												_('Aged Customer Balances/Overdues Report'),
 												_('Re-Print A Deposit Listing'),
 												_('Debtor Balances At A Prior Month End'),
-												_('Customer Listing By Area/Salesperson'),
+												_('Customer Listing By Area/SalesPersonalian'),
 												_('List Daily Transactions'),
 												_('Customer Transaction Inquiries'),
 												_('Customer Activity and Balances'));
@@ -636,6 +638,18 @@ $MenuItems['PC']['Maintenance']['URL'] = array(	'/PcTypeTabs.php',
 												'/PcExpenses.php',
 												'/PcExpensesTypeTab.php');
 
+$MenuItems['Personalia']['Transactions']['Caption'] = array();
+
+$MenuItems['Personalia']['Transactions']['URL'] = array();
+
+$MenuItems['Personalia']['Reports']['Caption'] = array();
+
+$MenuItems['Personalia']['Reports']['URL'] = array();
+
+$MenuItems['Personalia']['Maintenance']['Caption'] = array();
+
+$MenuItems['Personalia']['Maintenance']['URL'] = array();
+												
 $MenuItems['system']['Transactions']['Caption'] = array(_('Company Preferences'),
 														_('System Parameters'),
 														_('User Maintenance'),

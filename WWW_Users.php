@@ -17,6 +17,7 @@ $ModuleList = array(_('Orders'),
 					_('General Ledger'),
 					_('Asset Manager'),
 					_('Petty Cash'),
+					_('Personalia'),
 					_('Setup'),
 					_('Utilities'));
 

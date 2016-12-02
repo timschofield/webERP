@@ -5,7 +5,7 @@ KL RICARD WWW_Users modified for KL use ONLY to maintain SPG accounts
 /* $Id: WWW_Users.php 6807 2014-08-11 14:12:30Z agaluski $*/
 
 // HARDCODED FOR KL 
-$ModulesAllowed = "1,0,0,0,1,0,0,0,0,0,0,";
+$ModulesAllowed = "1,0,0,0,1,0,0,0,0,0,0,0,";
 $PDFLanguage = 0;
 $Language = "en_GB.utf8";
 $ThemeSPG = "freshSPG";
