@@ -57,7 +57,7 @@ if(isset($_POST['Submit'])) {
 									serialised,
 									appendfile,
 									perishable,
-									decimalplaces,
+									digitals,
 									nextserialno,
 									pansize,
 									shrinkfactor,
@@ -85,7 +85,7 @@ if(isset($_POST['Submit'])) {
 									serialised,
 									appendfile,
 									perishable,
-									decimalplaces,
+									digitals,
 									nextserialno,
 									pansize,
 									shrinkfactor,
@@ -131,7 +131,7 @@ if(isset($_POST['Submit'])) {
 							autoissue,
 							remark,
 							digitals,
-							decimalplaces
+							digitals
 					FROM bom
 					WHERE parent='".$StockID."';";
 		$result = DB_query($sql);

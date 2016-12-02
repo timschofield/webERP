@@ -349,7 +349,7 @@ if(!isset($SelectedUser)) {
 	$Result = DB_query($Sql);
 
 	$k = 1;// Row colour counter.
-	foreach($Result as $MyRow) {
+	while ($MyRow = DB_fetch_array($Result)) {
 		if($k == 1) {
 			echo '<tr class="OddTableRows">';
 			$k = 0;
