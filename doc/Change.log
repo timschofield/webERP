@@ -1,7 +1,9 @@
 webERP Change Log
 
+02/12/16  Exson: Fixed the no users data displayed bug and copy BOM fields error bug in WWW_Users.php and CopyBOM.php. Thanks for shane's report. 
 30/11/16  Exson: Fixed the bug that write off option not work without freight cost input in Credit_Invoice.php.
-27/11/2016  4.13.1 release
+
+27/11/16  4.13.1 release
 
 26/11/2016 Exson: Add a constraint to Pc assignment transfer in PcAssignCashTabToTab.php
 26/11/16 Exson: Fixed the bugs in InternalStockRequestInquiry.php. Thanks for Tim's report.
