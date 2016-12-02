@@ -1,5 +1,6 @@
 webERP Change Log
 
+02/12/16  Exson: Add location code and reference to Work Orders search result in SelectWorkOrder.php.
 02/12/16  Exson: Fixed the no users data displayed bug and copy BOM fields error bug in WWW_Users.php and CopyBOM.php. Thanks for shane's report. 
 30/11/16  Exson: Fixed the bug that write off option not work without freight cost input in Credit_Invoice.php.
 
