@@ -361,7 +361,7 @@ function BuildSQL($Prefs) {
 		case "h": // RPT_GROUP_QUARTER
 			$QtrStrt = intval(($ThisMonth-1)/3)*3+1;
 			$QtrEnd = intval(($ThisMonth-1)/3)*3+3;
-			if ($QtrEnd==04 OR $QtrEnd==06 OR $QtrEnd==09 OR $QtrEnd==11) { $TotalDays=30; }
+			if ( $QtrEnd == 4 OR $QtrEnd == 6 OR $QtrEnd == 9 OR $QtrEnd == 11 ) { $TotalDays=30; }
 			$qs = date('Y-m-d', mktime(0,0,0, $QtrStrt, 1, $ThisYear));
 			$qe = date('Y-m-d', mktime(0,0,0, $QtrEnd, $TotalDays, $ThisYear));
 			$d = $df.">='".$qs."'";
