@@ -577,7 +577,8 @@ if (isset($_POST['AllocTrans'])) {
 			$BalSQL= "SELECT SUM(ovamount+ovgst+ovfreight+ovdiscount-alloc) as total
 						FROM debtortrans
 						WHERE (type=12 OR type=11)
-						AND debtorno='" . $myrow['debtorno'] . "'";
+						AND debtorno='" . $myrow['debtorno'] . "'
+						AND ovamount<0";
 			$BalResult = DB_query($BalSQL);
 			$BalRow = DB_fetch_array($BalResult);
 			$Balance = $BalRow['total'];
