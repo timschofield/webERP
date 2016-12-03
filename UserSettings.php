@@ -7,6 +7,7 @@ $Title = _('User Settings');
 $ViewTopic = 'GettingStarted';
 $BookMark = 'UserSettings';
 include('includes/header.inc');
+include('includes/KLRoles.inc');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/user.png" title="',// Icon image.
@@ -121,49 +122,50 @@ echo '<tr>
 		<td>' . _('User Name') . ':</td>
 		<td>' . $_SESSION['UsersRealName'] . '
 		<input type="hidden" name="RealName" value="'.$_SESSION['UsersRealName'].'" /></td></tr>';
-/*
-echo '<tr>
-	<td>' . _('Maximum Number of Records to Display') . ':</td>
-	<td><input type="text" class="integer" required="required" title="'._('The input must be positive integer').'" name="DisplayRecordsMax" size="3" maxlength="3" value="' . $_POST['DisplayRecordsMax'] . '"  /></td>
-	</tr>';
 
-// Select language:
-echo '<tr>
-	<td>', _('Language'), ':</td>
-	<td><select name="Language">';
-if(!isset($_POST['Language'])) {
-	$_POST['Language'] = $_SESSION['Language'];
-}
-foreach($LanguagesArray as $LanguageEntry => $LanguageName) {
-	echo '<option ';
-	if(isset($_POST['Language']) AND $_POST['Language'] == $LanguageEntry) {
-		echo 'selected="selected" ';
+if ($KL_SystemAdmin){
+	echo '<tr>
+		<td>' . _('Maximum Number of Records to Display') . ':</td>
+		<td><input type="text" class="integer" required="required" title="'._('The input must be positive integer').'" name="DisplayRecordsMax" size="3" maxlength="3" value="' . $_POST['DisplayRecordsMax'] . '"  /></td>
+		</tr>';
+
+	// Select language:
+	echo '<tr>
+		<td>', _('Language'), ':</td>
+		<td><select name="Language">';
+	if(!isset($_POST['Language'])) {
+		$_POST['Language'] = $_SESSION['Language'];
 	}
-	echo 'value="', $LanguageEntry, '">', $LanguageName['LanguageName'], '</option>';
-}
-echo '</select></td>
-	</tr>';
+	foreach($LanguagesArray as $LanguageEntry => $LanguageName) {
+		echo '<option ';
+		if(isset($_POST['Language']) AND $_POST['Language'] == $LanguageEntry) {
+			echo 'selected="selected" ';
+		}
+		echo 'value="', $LanguageEntry, '">', $LanguageName['LanguageName'], '</option>';
+	}
+	echo '</select></td>
+		</tr>';
 
-// Select theme:
-echo '<tr>
-	<td>' . _('Theme') . ':</td>
-	<td><select name="Theme">';
+	// Select theme:
+	echo '<tr>
+		<td>' . _('Theme') . ':</td>
+		<td><select name="Theme">';
 
-$ThemeDirectories = scandir('css/');
+	$ThemeDirectories = scandir('css/');
 
 
-foreach ($ThemeDirectories as $ThemeName) {
+	foreach ($ThemeDirectories as $ThemeName) {
 
-	if (is_dir('css/' . $ThemeName) AND $ThemeName != '.' AND $ThemeName != '..' AND $ThemeName != '.svn'){
+		if (is_dir('css/' . $ThemeName) AND $ThemeName != '.' AND $ThemeName != '..' AND $ThemeName != '.svn'){
 
-		if ($_SESSION['Theme'] == $ThemeName){
-			echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName . '</option>';
-		} else {
-			echo '<option value="' . $ThemeName . '">' . $ThemeName . '</option>';
+			if ($_SESSION['Theme'] == $ThemeName){
+				echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName . '</option>';
+			} else {
+				echo '<option value="' . $ThemeName . '">' . $ThemeName . '</option>';
+			}
 		}
 	}
 }
-*/
 if (!isset($_POST['PasswordCheck'])) {
 	$_POST['PasswordCheck']='';
 }
@@ -198,21 +200,21 @@ echo '<td><input type="email" name="email" size="40" value="' . $_POST['email'] 
 if (!isset($_POST['PDFLanguage'])){
 	$_POST['PDFLanguage']=$_SESSION['PDFLanguage'];
 }
-/*
-echo '<tr>
-		<td>' . _('PDF Language Support') . ': </td>
-		<td><select name="PDFLanguage">';
+if ($KL_SystemAdmin){
+	echo '<tr>
+			<td>' . _('PDF Language Support') . ': </td>
+			<td><select name="PDFLanguage">';
 
-for($i=0;$i<count($PDFLanguages);$i++){
-	if ($_POST['PDFLanguage']==$i){
-		echo '<option selected="selected" value="' . $i .'">' . $PDFLanguages[$i] . '</option>';
-	} else {
-		echo '<option value="' . $i .'">' . $PDFLanguages[$i]. '</option>';
+	for($i=0;$i<count($PDFLanguages);$i++){
+		if ($_POST['PDFLanguage']==$i){
+			echo '<option selected="selected" value="' . $i .'">' . $PDFLanguages[$i] . '</option>';
+		} else {
+			echo '<option value="' . $i .'">' . $PDFLanguages[$i]. '</option>';
+		}
 	}
+	echo '</select></td>
+		</tr>';
 }
-echo '</select></td>
-	</tr>';
-*/
 echo '</table>
 	<br />
 	<div class="centre"><input type="submit" name="Modify" value="' . _('Modify') . '" /></div>

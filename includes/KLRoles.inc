@@ -4,6 +4,7 @@
 
 $KL_SystemAdmin = FALSE;
 $KL_OperationalManager = FALSE;
+$KL_OperationalTeam = FALSE;
 $KL_AdministrationTeam = FALSE;
 $KL_BusinessDevelopmentManager = FALSE;
 $KL_PurchasingTeam = FALSE;
@@ -28,6 +29,9 @@ if ($_SESSION['AccessLevel'] == 8){ // webERP System Administration
 	$KL_ShopSupportLeader = TRUE;
 }else if ($_SESSION['AccessLevel'] == 14){ // Operational Manager
 	$KL_OperationalManager = TRUE;
+	$KL_OperationalTeam = TRUE;	
+}else if ($_SESSION['AccessLevel'] == 33){ // Operational Team
+	$KL_OperationalTeam = TRUE;	
 }else if ($_SESSION['AccessLevel'] == 15){ // PettyCash Only User (courier, IT, etc...)
 	$KL_PettyCash = TRUE;
 }else if ($_SESSION['AccessLevel'] == 16){ // Sales Director
