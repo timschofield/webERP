@@ -121,7 +121,7 @@ echo '<tr>
 		<td>' . _('User Name') . ':</td>
 		<td>' . $_SESSION['UsersRealName'] . '
 		<input type="hidden" name="RealName" value="'.$_SESSION['UsersRealName'].'" /></td></tr>';
-
+/*
 echo '<tr>
 	<td>' . _('Maximum Number of Records to Display') . ':</td>
 	<td><input type="text" class="integer" required="required" title="'._('The input must be positive integer').'" name="DisplayRecordsMax" size="3" maxlength="3" value="' . $_POST['DisplayRecordsMax'] . '"  /></td>
@@ -163,7 +163,7 @@ foreach ($ThemeDirectories as $ThemeName) {
 		}
 	}
 }
-
+*/
 if (!isset($_POST['PasswordCheck'])) {
 	$_POST['PasswordCheck']='';
 }
@@ -198,7 +198,7 @@ echo '<td><input type="email" name="email" size="40" value="' . $_POST['email'] 
 if (!isset($_POST['PDFLanguage'])){
 	$_POST['PDFLanguage']=$_SESSION['PDFLanguage'];
 }
-
+/*
 echo '<tr>
 		<td>' . _('PDF Language Support') . ': </td>
 		<td><select name="PDFLanguage">';
@@ -211,8 +211,9 @@ for($i=0;$i<count($PDFLanguages);$i++){
 	}
 }
 echo '</select></td>
-	</tr>
-	</table>
+	</tr>';
+*/
+echo '</table>
 	<br />
 	<div class="centre"><input type="submit" name="Modify" value="' . _('Modify') . '" /></div>
     </div>
