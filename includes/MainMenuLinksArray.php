@@ -638,9 +638,9 @@ $MenuItems['PC']['Maintenance']['URL'] = array(	'/PcTypeTabs.php',
 												'/PcExpenses.php',
 												'/PcExpensesTypeTab.php');
 
-$MenuItems['Personalia']['Transactions']['Caption'] = array();
+$MenuItems['Personalia']['Transactions']['Caption'] = array(_('Import Salaries from Excel'));
 
-$MenuItems['Personalia']['Transactions']['URL'] = array();
+$MenuItems['Personalia']['Transactions']['URL'] = array('/KLPersonaliaImportSalaries.php');
 
 $MenuItems['Personalia']['Reports']['Caption'] = array();
 
