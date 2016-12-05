@@ -638,9 +638,15 @@ $MenuItems['PC']['Maintenance']['URL'] = array(	'/PcTypeTabs.php',
 												'/PcExpenses.php',
 												'/PcExpensesTypeTab.php');
 
-$MenuItems['Personalia']['Transactions']['Caption'] = array(_('Import Salaries from Excel'));
+$MenuItems['Personalia']['Transactions']['Caption'] = array(_('SPG List'),
+															_('User Maintenance'),
+															_('KL SPG User Maintenance'),
+															_('Import Salaries from Excel'));
 
-$MenuItems['Personalia']['Transactions']['URL'] = array('/KLPersonaliaImportSalaries.php');
+$MenuItems['Personalia']['Transactions']['URL'] = array('/SalesPeople.php',
+													'/WWW_Users.php',
+													'/KLUsersSPG.php',
+													'/KLPersonaliaImportSalaries.php');
 
 $MenuItems['Personalia']['Reports']['Caption'] = array();
 
@@ -652,8 +658,6 @@ $MenuItems['Personalia']['Maintenance']['URL'] = array();
 												
 $MenuItems['system']['Transactions']['Caption'] = array(_('Company Preferences'),
 														_('System Parameters'),
-														_('User Maintenance'),
-														_('KL SPG User Maintenance'),
 														_('Maintain Security Tokens'),
 														_('Access Permissions Maintenance'),
 														_('Page Security Settings'),
@@ -673,8 +677,6 @@ $MenuItems['system']['Transactions']['Caption'] = array(_('Company Preferences')
 
 $MenuItems['system']['Transactions']['URL'] = array('/CompanyPreferences.php',
 													'/SystemParameters.php',
-													'/WWW_Users.php',
-													'/KLUsersSPG.php',
 													'/SecurityTokens.php',
 													'/WWW_Access.php',
 													'/PageSecurity.php',
@@ -699,7 +701,6 @@ $MenuItems['system']['Reports']['Caption'] = array(	_('Sales Types'),
 													_('Payment Terms'),
 													_('Set Purchase Order Authorisation levels'),
 													_('Payment Methods'),
-													_('SPG List'),
 													_('Sales Areas'),
 													_('Shippers'),
 													_('Sales GL Interface Postings'),
@@ -713,7 +714,6 @@ $MenuItems['system']['Reports']['URL'] = array(	'/SalesTypes.php',
 												'/PaymentTerms.php',
 												'/PO_AuthorisationLevels.php',
 												'/PaymentMethods.php',
-												'/SalesPeople.php',
 												'/Areas.php',
 												'/Shippers.php',
 												'/SalesGLPostings.php',
