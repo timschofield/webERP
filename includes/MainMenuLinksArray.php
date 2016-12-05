@@ -721,6 +721,7 @@ $MenuItems['system']['Reports']['URL'] = array(	'/SalesTypes.php',
 												'/FreightCosts.php',
 												'/DiscountMatrix.php');
 $MenuItems['system']['Maintenance']['Caption'] = array(	_('Inventory Categories Maintenance'),
+														_('Inventory Location Zones Maintenance'),
 														_('Inventory Locations Maintenance'),
 														_('Inventory Location Authorised Users Maintenance'),
 														_('User Authorised Inventory Locations Maintenance'),
@@ -734,6 +735,7 @@ $MenuItems['system']['Maintenance']['Caption'] = array(	_('Inventory Categories 
 														_('webERP Label Templates Maintenance'));
 
 $MenuItems['system']['Maintenance']['URL'] = array(	'/StockCategories.php',
+													'/LocationZones.php',
 													'/Locations.php',
 													'/LocationUsers.php',
 													'/UserLocations.php',

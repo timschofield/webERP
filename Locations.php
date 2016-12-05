@@ -83,6 +83,7 @@ if(isset($_POST['submit'])) {
 									klyearlyrent = '" . $_POST['KLyearlyRent'] . "',
 									klposcashaccount = '" . $_POST['KLPOSCashAccount'] . "',
 									klpostag = '" . $_POST['KLPOSTag'] . "',
+									zone = '" . $_POST['Zone'] . "',
 									usedforwo = '" . $_POST['UsedForWO'] . "',
 									glaccountcode = '" . $_POST['GLAccountCode'] . "',
 									allowinvoicing = '" . $_POST['AllowInvoicing'] . "'
@@ -118,6 +119,7 @@ if(isset($_POST['submit'])) {
 		unset($_POST['KLyearlyRent']);
 		unset($_POST['KLPOSCashAccount']);
 		unset($_POST['KLPOSTag']);
+		unset($_POST['Zone']);
 		unset($_POST['UsedForWO']);
 		unset($_POST['GLAccountCode']);
 		unset($_POST['AllowInvoicing']);
@@ -157,6 +159,7 @@ if(isset($_POST['submit'])) {
 										klyearlyrent,
 										klposcashaccount,
 										klpostag,
+										zone,
 										usedforwo,
 										glaccountcode,
 										allowinvoicing)
@@ -183,6 +186,7 @@ if(isset($_POST['submit'])) {
 								'" . $_POST['KLyearlyRent'] . "',
 								'" . $_POST['KLPOSCashAccount'] . "',
 								'" . $_POST['KLPOSTag'] . "',
+								'" . $_POST['Zone'] . "',
 								'" . $_POST['UsedForWO'] . "',
 								'" . $_POST['GLAccountCode'] . "',
 								'" . $_POST['AllowInvoicing'] . "')";
@@ -252,6 +256,7 @@ if(isset($_POST['submit'])) {
 		unset($_POST['KLyearlyRent']);
 		unset($_POST['KLPOSCashAccount']);
 		unset($_POST['KLPOSTag']);
+		unset($_POST['Zone']);
 		unset($_POST['UsedForWO']);
 		unset($_POST['GLAccountCode']);
 		unset($_POST['AllowInvoicing']);
@@ -532,6 +537,7 @@ if(!isset($_GET['delete'])) {
 					klyearlyrent,
 					klposcashaccount,
 					klpostag,
+					zone,
 					usedforwo,
 					glaccountcode,
 					allowinvoicing
@@ -565,6 +571,7 @@ if(!isset($_GET['delete'])) {
 		$_POST['KLyearlyRent'] = $myrow['klyearlyrent'];
 		$_POST['KLPOSCashAccount'] = $myrow['klposcashaccount'];
 		$_POST['KLPOSTag'] = $myrow['klpostag'];
+		$_POST['Zone'] = $myrow['zone'];
 		$_POST['UsedForWO'] = $myrow['usedforwo'];
 		$_POST['GLAccountCode'] = $myrow['glaccountcode'];
 		$_POST['AllowInvoicing'] = $myrow['allowinvoicing'];
@@ -669,34 +676,35 @@ if(!isset($_GET['delete'])) {
 		<tr>
 			<td>' . _('Country') . ':</td>
 			<td><select name="DelAdd6">';
-		foreach ($CountriesArray as $CountryEntry => $CountryName) {
-			if(isset($_POST['DelAdd6']) AND (strtoupper($_POST['DelAdd6']) == strtoupper($CountryName))) {
-				echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName . '</option>';
-			} elseif(!isset($_POST['Address6']) AND $CountryName == "") {
-				echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName . '</option>';
-			} else {
-				echo '<option value="' . $CountryName . '">' . $CountryName . '</option>';
-			}
+	foreach ($CountriesArray as $CountryEntry => $CountryName) {
+		if(isset($_POST['DelAdd6']) AND (strtoupper($_POST['DelAdd6']) == strtoupper($CountryName))) {
+			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName . '</option>';
+		} elseif(!isset($_POST['Address6']) AND $CountryName == "") {
+			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName . '</option>';
+		} else {
+			echo '<option value="' . $CountryName . '">' . $CountryName . '</option>';
 		}
-		echo '</select></td>
-		</tr>
-		<tr>
-			<td>' . _('Telephone No') . ':' . '</td>
-			<td><input name="Tel" type="tel" pattern="[0-9+\-\s()]*" value="' . $_POST['Tel'] . '" size="31" maxlength="30" title="' . _('The phone number should consist of numbers, spaces, parentheses, or the + character') . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Facsimile No') . ':' . '</td>
-			<td><input name="Fax" type="tel" pattern="[0-9+\-\s()]*" value="' . $_POST['Fax'] . '" size="31" maxlength="30" title="' . _('The fax number should consist of numbers, parentheses, spaces or the + character') . '"/></td>
-		</tr>';
-		// Email address:
-		echo '<tr title="', _('The email address should be an email format such as adm@weberp.org'), '">
-			<td><label for="Email">', _('Email'), ':</label></td>
-			<td><input id="Email" maxlength="55" name="Email" size="31" type="email" value="', $_POST['Email'], '" /></td>
-		</tr>';
-		// Tax Province:
-		echo '<tr>
-			<td>' . _('Tax Province') . ':' . '</td>
-			<td><select name="TaxProvince">';
+	}
+	echo '</select></td>
+	</tr>
+	<tr>
+		<td>' . _('Telephone No') . ':' . '</td>
+		<td><input name="Tel" type="tel" pattern="[0-9+\-\s()]*" value="' . $_POST['Tel'] . '" size="31" maxlength="30" title="' . _('The phone number should consist of numbers, spaces, parentheses, or the + character') . '" /></td>
+	</tr>
+	<tr>
+		<td>' . _('Facsimile No') . ':' . '</td>
+		<td><input name="Fax" type="tel" pattern="[0-9+\-\s()]*" value="' . $_POST['Fax'] . '" size="31" maxlength="30" title="' . _('The fax number should consist of numbers, parentheses, spaces or the + character') . '"/></td>
+	</tr>';
+	// Email address:
+	echo '<tr title="', _('The email address should be an email format such as adm@weberp.org'), '">
+		<td><label for="Email">', _('Email'), ':</label></td>
+		<td><input id="Email" maxlength="55" name="Email" size="31" type="email" value="', $_POST['Email'], '" /></td>
+	</tr>';
+
+	// Tax Province:
+	echo '<tr>
+		<td>' . _('Tax Province') . ':' . '</td>
+		<td><select name="TaxProvince">';
 
 	$TaxProvinceResult = DB_query("SELECT taxprovinceid, taxprovincename FROM taxprovinces");
 	while ($myrow=DB_fetch_array($TaxProvinceResult)) {
@@ -741,6 +749,24 @@ if(!isset($_GET['delete'])) {
 	echo '<tr title="', _('Enter the KL POS Tag code for this location, or leave it in blank if not needed'), '">
 			<td><label for="KLPOSTag">', _('KL POS Tag'), ':</label></td>
 			<td><input data-type="no-illegal-chars" id="KLPOSTag" maxlength="20" name="KLPOSTag" size="4" type="text" value="', $_POST['KLPOSTag'], '" /></td></tr>';
+
+	// LOcation Zone:
+	echo '<tr>
+		<td>' . _('Location Zone') . ':' . '</td>
+		<td><select name="Zone">';
+
+	$ZonesResult = DB_query("SELECT code, description FROM locationzones");
+	while ($myrow=DB_fetch_array($ZonesResult)) {
+		if($_POST['Zone']==$myrow['code']) {
+			echo '<option selected="selected" value="' . $myrow['code'] . '">' . $myrow['description'] . '</option>';
+		} else {
+			echo '<option value="' . $myrow['code'] . '">' . $myrow['description'] . '</option>';
+		}
+	}
+
+	echo '</select></td>
+		</tr>';
+
 	echo '<tr>
 			<td>' . _('Allow internal requests?') . ':</td>
 			<td><select name="InternalRequest">';

@@ -35,9 +35,9 @@ if (isset($_POST['submit'])) {
 		prnMsg(_('The zone code must be six characters or less long'),'error');
 		$Errors[$i] = 'LocationZone';
 		$i++;
-	} elseif ($_POST['code']=='' OR $_POST['code']==' ' OR $_POST['code']=='  ') {
+	} elseif ($_POST['code']=='') {
 		$InputError = 1;
-		prnMsg( _('The zone code cannot be an empty string or spaces'),'error');
+		prnMsg( _('The zone code cannot be an empty string'),'error');
 		$Errors[$i] = 'LocationZone';
 		$i++;
 	} elseif( trim($_POST['description'])==''){
@@ -167,8 +167,8 @@ while ($myrow = DB_fetch_row($result)) {
 
 	printf('<td>%s</td>
 		<td>%s</td>
-		<td><a href="%sSelectedType=%s">' . _('Edit') . '</a></td>
-		<td><a href="%sSelectedType=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this zone?') . '\');">' . _('Delete') . '</a></td>
+		<td><a href="%sSelectedCode=%s">' . _('Edit') . '</a></td>
+		<td><a href="%sSelectedCode=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this zone?') . '\');">' . _('Delete') . '</a></td>
 		</tr>',
 		$myrow[0],
 		$myrow[1],
