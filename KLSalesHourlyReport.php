@@ -21,9 +21,9 @@ if ($KL_SystemAdmin
 	OR $KL_BusinessDevelopmentManager 
 	OR $KL_ShopManager 
 	OR $KL_SalesDirector){
-	HourlyPerformance(10,$RootPath, $db);
+	HourlyPerformance(15,$RootPath, $db);
 	$NumberOfTestExecuted++;
-	HourlySales(10,$RootPath, $db);
+	HourlySales(15,$RootPath, $db);
 	$NumberOfTestExecuted++;
 }
 
@@ -246,216 +246,216 @@ function HourlySales($numDays, $RootPath, $db){
 		$k = 0; //row colour counter
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			if (TRUE){
-				if ($showHeader){
-					echo '<p class="page_title_text" align="center"><strong>' .'Daily Number of sales by hour of the day for the last ' . $numDays . ' days</strong></p>';
-					echo '<div>';
-					echo '<table class="selection">';
-					$TableHeader = '<tr>
-										<th class="ascending">' . _('Shop') . '</th>
-										<th class="ascending">' . _('Type') . '</th>
-										<th class="ascending">' . _('09-10') . '</th>
-										<th class="ascending">' . _('10-11') . '</th>
-										<th class="ascending">' . _('11-12') . '</th>
-										<th class="ascending">' . _('12-13') . '</th>
-										<th class="ascending">' . _('13-14') . '</th>
-										<th class="ascending">' . _('14-15') . '</th>
-										<th class="ascending">' . _('15-16') . '</th>
-										<th class="ascending">' . _('16-17') . '</th>
-										<th class="ascending">' . _('17-18') . '</th>
-										<th class="ascending">' . _('18-19') . '</th>
-										<th class="ascending">' . _('19-20') . '</th>
-										<th class="ascending">' . _('20-21') . '</th>
-										<th class="ascending">' . _('21-22') . '</th>
-										<th class="ascending">' . _('22-23') . '</th>
-										<th class="ascending">' . _('23-24') . '</th>
-									</tr>';
-					echo $TableHeader;
-					$showHeader = FALSE;
-				}
-				$k = StartEvenOrOddRow($k);
-				printf('<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						</tr>', 
-						$myrow['debtorno'],
-						'Hourly '. $numDays . ' days',
-						locale_number_format_zero_blank($myrow['sales09']/$numDays,1),
-						locale_number_format_zero_blank($myrow['sales10']/$numDays,1),
-						locale_number_format_zero_blank($myrow['sales11']/$numDays,1),
-						locale_number_format_zero_blank($myrow['sales12']/$numDays,1),
-						locale_number_format_zero_blank($myrow['sales13']/$numDays,1),
-						locale_number_format_zero_blank($myrow['sales14']/$numDays,1),
-						locale_number_format_zero_blank($myrow['sales15']/$numDays,1),
-						locale_number_format_zero_blank($myrow['sales16']/$numDays,1),
-						locale_number_format_zero_blank($myrow['sales17']/$numDays,1),
-						locale_number_format_zero_blank($myrow['sales18']/$numDays,1),
-						locale_number_format_zero_blank($myrow['sales19']/$numDays,1),
-						locale_number_format_zero_blank($myrow['sales20']/$numDays,1),
-						locale_number_format_zero_blank($myrow['sales21']/$numDays,1),
-						locale_number_format_zero_blank($myrow['sales22']/$numDays,1),
-						locale_number_format_zero_blank($myrow['sales23']/$numDays,1)
-						);
-
-				$Acum09 = $myrow['sales09'];
-				$Acum10 = $Acum09 + $myrow['sales10'];
-				$Acum11 = $Acum10 + $myrow['sales11'];
-				$Acum12 = $Acum11 + $myrow['sales12'];
-				$Acum13 = $Acum12 + $myrow['sales13'];
-				$Acum14 = $Acum13 + $myrow['sales14'];
-				$Acum15 = $Acum14 + $myrow['sales15'];
-				$Acum16 = $Acum15 + $myrow['sales16'];
-				$Acum17 = $Acum16 + $myrow['sales17'];
-				$Acum18 = $Acum17 + $myrow['sales18'];
-				$Acum19 = $Acum18 + $myrow['sales19'];
-				$Acum20 = $Acum19 + $myrow['sales20'];
-				$Acum21 = $Acum20 + $myrow['sales21'];
-				$Acum22 = $Acum21 + $myrow['sales22'];
-				$Acum23 = $Acum22 + $myrow['sales23'];
-				
-				$k = StartSameColourRow($k);
-				printf('<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						</tr>', 
-						'',
-						'Acumulated '. $numDays . ' days',
-						locale_number_format_zero_blank($Acum09/$numDays,1),
-						locale_number_format_zero_blank($Acum10/$numDays,1),
-						locale_number_format_zero_blank($Acum11/$numDays,1),
-						locale_number_format_zero_blank($Acum12/$numDays,1),
-						locale_number_format_zero_blank($Acum13/$numDays,1),
-						locale_number_format_zero_blank($Acum14/$numDays,1),
-						locale_number_format_zero_blank($Acum15/$numDays,1),
-						locale_number_format_zero_blank($Acum16/$numDays,1),
-						locale_number_format_zero_blank($Acum17/$numDays,1),
-						locale_number_format_zero_blank($Acum18/$numDays,1),
-						locale_number_format_zero_blank($Acum19/$numDays,1),
-						locale_number_format_zero_blank($Acum20/$numDays,1),
-						locale_number_format_zero_blank($Acum21/$numDays,1),
-						locale_number_format_zero_blank($Acum22/$numDays,1),
-						locale_number_format_zero_blank($Acum23/$numDays,1)
-						);
-				$k = StartSameColourRow($k);
-				printf('<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						</tr>', 
-						'',
-						'Hourly today',
-						locale_number_format_zero_blank($myrow['today09'],1),
-						locale_number_format_zero_blank($myrow['today10'],1),
-						locale_number_format_zero_blank($myrow['today11'],1),
-						locale_number_format_zero_blank($myrow['today12'],1),
-						locale_number_format_zero_blank($myrow['today13'],1),
-						locale_number_format_zero_blank($myrow['today14'],1),
-						locale_number_format_zero_blank($myrow['today15'],1),
-						locale_number_format_zero_blank($myrow['today16'],1),
-						locale_number_format_zero_blank($myrow['today17'],1),
-						locale_number_format_zero_blank($myrow['today18'],1),
-						locale_number_format_zero_blank($myrow['today19'],1),
-						locale_number_format_zero_blank($myrow['today20'],1),
-						locale_number_format_zero_blank($myrow['today21'],1),
-						locale_number_format_zero_blank($myrow['today22'],1),
-						locale_number_format_zero_blank($myrow['today23'],1)
-						);
-				$Acum09 = $myrow['today09'];
-				$Acum10 = $Acum09 + $myrow['today10'];
-				$Acum11 = $Acum10 + $myrow['today11'];
-				$Acum12 = $Acum11 + $myrow['today12'];
-				$Acum13 = $Acum12 + $myrow['today13'];
-				$Acum14 = $Acum13 + $myrow['today14'];
-				$Acum15 = $Acum14 + $myrow['today15'];
-				$Acum16 = $Acum15 + $myrow['today16'];
-				$Acum17 = $Acum16 + $myrow['today17'];
-				$Acum18 = $Acum17 + $myrow['today18'];
-				$Acum19 = $Acum18 + $myrow['today19'];
-				$Acum20 = $Acum19 + $myrow['today20'];
-				$Acum21 = $Acum20 + $myrow['today21'];
-				$Acum22 = $Acum21 + $myrow['today22'];
-				$Acum23 = $Acum22 + $myrow['today23'];
-
-				$k = StartSameColourRow($k);
-				printf('<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						</tr>', 
-						'',
-						'Acumulated today',
-						locale_number_format_zero_blank($Acum09,1),
-						locale_number_format_zero_blank($Acum10,1),
-						locale_number_format_zero_blank($Acum11,1),
-						locale_number_format_zero_blank($Acum12,1),
-						locale_number_format_zero_blank($Acum13,1),
-						locale_number_format_zero_blank($Acum14,1),
-						locale_number_format_zero_blank($Acum15,1),
-						locale_number_format_zero_blank($Acum16,1),
-						locale_number_format_zero_blank($Acum17,1),
-						locale_number_format_zero_blank($Acum18,1),
-						locale_number_format_zero_blank($Acum19,1),
-						locale_number_format_zero_blank($Acum20,1),
-						locale_number_format_zero_blank($Acum21,1),
-						locale_number_format_zero_blank($Acum22,1),
-						locale_number_format_zero_blank($Acum23,1)
-						);
-						$i++;
+			if ($showHeader){
+				echo '<p class="page_title_text" align="center"><strong>' .'Daily Number of sales by hour of the day for the last ' . $numDays . ' days</strong></p>';
+				echo '<div>';
+				echo '<table class="selection">';
 			}
+			if (($showHeader) OR ($i % 3 == 1)){
+				$TableHeader = '<tr>
+									<th class="ascending">' . _('Shop') . '</th>
+									<th class="ascending">' . _('Type') . '</th>
+									<th class="ascending">' . _('09-10') . '</th>
+									<th class="ascending">' . _('10-11') . '</th>
+									<th class="ascending">' . _('11-12') . '</th>
+									<th class="ascending">' . _('12-13') . '</th>
+									<th class="ascending">' . _('13-14') . '</th>
+									<th class="ascending">' . _('14-15') . '</th>
+									<th class="ascending">' . _('15-16') . '</th>
+									<th class="ascending">' . _('16-17') . '</th>
+									<th class="ascending">' . _('17-18') . '</th>
+									<th class="ascending">' . _('18-19') . '</th>
+									<th class="ascending">' . _('19-20') . '</th>
+									<th class="ascending">' . _('20-21') . '</th>
+									<th class="ascending">' . _('21-22') . '</th>
+									<th class="ascending">' . _('22-23') . '</th>
+									<th class="ascending">' . _('23-24') . '</th>
+								</tr>';
+				echo $TableHeader;
+				$showHeader = FALSE;
+			}
+			$k = StartEvenOrOddRow($k);
+			printf('<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$myrow['debtorno'],
+					'Hourly '. $numDays . ' days',
+					locale_number_format_zero_blank($myrow['sales09']/$numDays,1),
+					locale_number_format_zero_blank($myrow['sales10']/$numDays,1),
+					locale_number_format_zero_blank($myrow['sales11']/$numDays,1),
+					locale_number_format_zero_blank($myrow['sales12']/$numDays,1),
+					locale_number_format_zero_blank($myrow['sales13']/$numDays,1),
+					locale_number_format_zero_blank($myrow['sales14']/$numDays,1),
+					locale_number_format_zero_blank($myrow['sales15']/$numDays,1),
+					locale_number_format_zero_blank($myrow['sales16']/$numDays,1),
+					locale_number_format_zero_blank($myrow['sales17']/$numDays,1),
+					locale_number_format_zero_blank($myrow['sales18']/$numDays,1),
+					locale_number_format_zero_blank($myrow['sales19']/$numDays,1),
+					locale_number_format_zero_blank($myrow['sales20']/$numDays,1),
+					locale_number_format_zero_blank($myrow['sales21']/$numDays,1),
+					locale_number_format_zero_blank($myrow['sales22']/$numDays,1),
+					locale_number_format_zero_blank($myrow['sales23']/$numDays,1)
+					);
+
+			$Acum09 = $myrow['sales09'];
+			$Acum10 = $Acum09 + $myrow['sales10'];
+			$Acum11 = $Acum10 + $myrow['sales11'];
+			$Acum12 = $Acum11 + $myrow['sales12'];
+			$Acum13 = $Acum12 + $myrow['sales13'];
+			$Acum14 = $Acum13 + $myrow['sales14'];
+			$Acum15 = $Acum14 + $myrow['sales15'];
+			$Acum16 = $Acum15 + $myrow['sales16'];
+			$Acum17 = $Acum16 + $myrow['sales17'];
+			$Acum18 = $Acum17 + $myrow['sales18'];
+			$Acum19 = $Acum18 + $myrow['sales19'];
+			$Acum20 = $Acum19 + $myrow['sales20'];
+			$Acum21 = $Acum20 + $myrow['sales21'];
+			$Acum22 = $Acum21 + $myrow['sales22'];
+			$Acum23 = $Acum22 + $myrow['sales23'];
+			
+			$k = StartSameColourRow($k);
+			printf('<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					'',
+					'Acumulated '. $numDays . ' days',
+					locale_number_format_zero_blank($Acum09/$numDays,1),
+					locale_number_format_zero_blank($Acum10/$numDays,1),
+					locale_number_format_zero_blank($Acum11/$numDays,1),
+					locale_number_format_zero_blank($Acum12/$numDays,1),
+					locale_number_format_zero_blank($Acum13/$numDays,1),
+					locale_number_format_zero_blank($Acum14/$numDays,1),
+					locale_number_format_zero_blank($Acum15/$numDays,1),
+					locale_number_format_zero_blank($Acum16/$numDays,1),
+					locale_number_format_zero_blank($Acum17/$numDays,1),
+					locale_number_format_zero_blank($Acum18/$numDays,1),
+					locale_number_format_zero_blank($Acum19/$numDays,1),
+					locale_number_format_zero_blank($Acum20/$numDays,1),
+					locale_number_format_zero_blank($Acum21/$numDays,1),
+					locale_number_format_zero_blank($Acum22/$numDays,1),
+					locale_number_format_zero_blank($Acum23/$numDays,1)
+					);
+			$k = StartSameColourRow($k);
+			printf('<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					'',
+					'Hourly today',
+					locale_number_format_zero_blank($myrow['today09'],1),
+					locale_number_format_zero_blank($myrow['today10'],1),
+					locale_number_format_zero_blank($myrow['today11'],1),
+					locale_number_format_zero_blank($myrow['today12'],1),
+					locale_number_format_zero_blank($myrow['today13'],1),
+					locale_number_format_zero_blank($myrow['today14'],1),
+					locale_number_format_zero_blank($myrow['today15'],1),
+					locale_number_format_zero_blank($myrow['today16'],1),
+					locale_number_format_zero_blank($myrow['today17'],1),
+					locale_number_format_zero_blank($myrow['today18'],1),
+					locale_number_format_zero_blank($myrow['today19'],1),
+					locale_number_format_zero_blank($myrow['today20'],1),
+					locale_number_format_zero_blank($myrow['today21'],1),
+					locale_number_format_zero_blank($myrow['today22'],1),
+					locale_number_format_zero_blank($myrow['today23'],1)
+					);
+			$Acum09 = $myrow['today09'];
+			$Acum10 = $Acum09 + $myrow['today10'];
+			$Acum11 = $Acum10 + $myrow['today11'];
+			$Acum12 = $Acum11 + $myrow['today12'];
+			$Acum13 = $Acum12 + $myrow['today13'];
+			$Acum14 = $Acum13 + $myrow['today14'];
+			$Acum15 = $Acum14 + $myrow['today15'];
+			$Acum16 = $Acum15 + $myrow['today16'];
+			$Acum17 = $Acum16 + $myrow['today17'];
+			$Acum18 = $Acum17 + $myrow['today18'];
+			$Acum19 = $Acum18 + $myrow['today19'];
+			$Acum20 = $Acum19 + $myrow['today20'];
+			$Acum21 = $Acum20 + $myrow['today21'];
+			$Acum22 = $Acum21 + $myrow['today22'];
+			$Acum23 = $Acum22 + $myrow['today23'];
+
+			$k = StartSameColourRow($k);
+			printf('<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					'',
+					'Acumulated today',
+					locale_number_format_zero_blank($Acum09,1),
+					locale_number_format_zero_blank($Acum10,1),
+					locale_number_format_zero_blank($Acum11,1),
+					locale_number_format_zero_blank($Acum12,1),
+					locale_number_format_zero_blank($Acum13,1),
+					locale_number_format_zero_blank($Acum14,1),
+					locale_number_format_zero_blank($Acum15,1),
+					locale_number_format_zero_blank($Acum16,1),
+					locale_number_format_zero_blank($Acum17,1),
+					locale_number_format_zero_blank($Acum18,1),
+					locale_number_format_zero_blank($Acum19,1),
+					locale_number_format_zero_blank($Acum20,1),
+					locale_number_format_zero_blank($Acum21,1),
+					locale_number_format_zero_blank($Acum22,1),
+					locale_number_format_zero_blank($Acum23,1)
+					);
+					$i++;
 		}
 		if (!$showHeader){
 			echo '</table>
