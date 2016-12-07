@@ -1,10 +1,10 @@
 <?php
-/* $Id: ConnectDB.inc 7528 2016-05-16 00:29:16Z exsonqu $*/
+/* $Id: ConnectDB.inc 7686 2016-11-27 07:14:21Z exsonqu $*/
 /* $Version is compared against the value for config.confvalue WHERE confname=VersionNumber in the database
  * this value is saved in the $_SESSION['Versionumber'] when includes/GetConfig.php is run
  * if  VersionNumber is < $Version  then the DB update script is run */
 
-$Version='4.13'; //must update manually every time there is a DB change
+$Version='4.13.1'; //must update manually every time there is a DB change
 
 require_once ($PathPrefix .'includes/MiscFunctions.php');
 if (!isset($_SESSION['DatabaseName'])){

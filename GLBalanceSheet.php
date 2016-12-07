@@ -1,5 +1,5 @@
 <?php
-/* $Id: GLBalanceSheet.php 7385 2015-11-11 08:03:20Z tehonu $*/
+/* $Id: GLBalanceSheet.php 7663 2016-11-07 03:25:49Z rchacon $*/
 /* This script shows the balance sheet for the company as at a specified date. */
 
 /*Through deviousness and cunning, this system allows shows the balance sheets as at the end of any period selected - so first off need to show the input of criteria screen while the user is selecting the period end of the balance date meanwhile the system is posting any unposted transactions */
@@ -130,8 +130,8 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 			chartmaster.accountname,
 			Sum(CASE WHEN chartdetails.period='" . $_POST['BalancePeriodEnd'] . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS balancecfwd,
 			Sum(CASE WHEN chartdetails.period='" . ($_POST['BalancePeriodEnd'] - 12) . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lybalancecfwd
-		FROM chartmaster 
-			INNER JOIN accountgroups ON chartmaster.group_ = accountgroups.groupname 
+		FROM chartmaster
+			INNER JOIN accountgroups ON chartmaster.group_ = accountgroups.groupname
 			INNER JOIN chartdetails	ON chartmaster.accountcode= chartdetails.accountcode
 			INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canview=1
 		WHERE accountgroups.pandl=0
@@ -373,8 +373,8 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 			chartmaster.accountname,
 			Sum(CASE WHEN chartdetails.period='" . $_POST['BalancePeriodEnd'] . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS balancecfwd,
 			Sum(CASE WHEN chartdetails.period='" . ($_POST['BalancePeriodEnd'] - 12) . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lybalancecfwd
-		FROM chartmaster 
-			INNER JOIN accountgroups ON chartmaster.group_ = accountgroups.groupname 
+		FROM chartmaster
+			INNER JOIN accountgroups ON chartmaster.group_ = accountgroups.groupname
 			INNER JOIN chartdetails	ON chartmaster.accountcode= chartdetails.accountcode
 			INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canview=1
 		WHERE accountgroups.pandl=0
@@ -716,8 +716,8 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 				'/images/printer.png" /> ' . _('Print This') . '</button>'.// "Print This" button.
 			'<button name="SelectADifferentPeriod" type="submit" value="'. _('Select A Different Period') .'"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 				'/images/gl.png" /> ' . _('Select A Different Balance Date') . '</button>'.// "Select A Different Period" button.
-			'<button formaction="index.php?Application=GL" type="submit"><img alt="" src="'.$RootPath.'/css/'.$Theme.
-				'/images/previous.png" /> ' . _('Return') . '</button>'.// "Return" button.
+			'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+				'/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
 		'</div>';
 
 	echo '</div>';// div class=?

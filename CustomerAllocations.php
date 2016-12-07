@@ -1,5 +1,5 @@
 <?php
-/*	$Id: CustomerAllocations.php 7534 2016-05-20 05:19:41Z daintree $*/
+/*	$Id: CustomerAllocations.php 7693 2016-12-02 08:48:17Z exsonqu $*/
 
 /*	Call this page with:
 	1. A TransID to show the make up and to modify existing allocations.
@@ -577,7 +577,8 @@ if (isset($_POST['AllocTrans'])) {
 			$BalSQL= "SELECT SUM(ovamount+ovgst+ovfreight+ovdiscount-alloc) as total
 						FROM debtortrans
 						WHERE (type=12 OR type=11)
-						AND debtorno='" . $myrow['debtorno'] . "'";
+						AND debtorno='" . $myrow['debtorno'] . "'
+						AND ovamount<0";
 			$BalResult = DB_query($BalSQL);
 			$BalRow = DB_fetch_array($BalResult);
 			$Balance = $BalRow['total'];

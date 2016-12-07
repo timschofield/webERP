@@ -1,15 +1,15 @@
 <?php
-/* $Id: SelectSupplier.php 7373 2015-10-30 12:12:52Z exsonqu $*/
+/* $Id: SelectSupplier.php 7665 2016-11-08 15:51:11Z rchacon $*/
+/* Selects a supplier. A supplier is required to be selected before any AP transactions and before any maintenance or inquiry of the supplier */
 
-include ('includes/session.inc');
+include('includes/session.inc');
 $Title = _('Search Suppliers');
-
-/* webERP manual links before header.inc */
-$ViewTopic= 'AccountsPayable';
+$ViewTopic = 'AccountsPayable';
 $BookMark = 'SelectSupplier';
+include('includes/header.inc');
 
-include ('includes/header.inc');
-include ('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.inc');
+
 if (!isset($_SESSION['SupplierID'])) {
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Suppliers') . '</p>';
 }
@@ -348,14 +348,22 @@ if (isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') {
 			echo '<br />';
 			echo '<div class="centre">' . _('Mapping is enabled, but no Mapping data to display for this Supplier.') . '</div>';
 		} else {
-			echo '<div class="centre"><br />';
-			echo '<tr><td colspan="2">';
-			echo '<table width="45%" class="selection">';
-			echo '<tr><th style="width:33%">' . _('Supplier Mapping') . '</th></tr>';
-			echo '</td><td valign="top">'; /* Mapping */
-			echo '<div class="centre">' . _('Mapping is enabled, Map will display below.') . '</div>';
-			echo '<div class="centre" id="map" style="width: ' . $map_width . 'px; height: ' . $map_height . 'px"></div></div><br />';
-			echo '</th></tr></table>';
+
+			echo '<br />
+				<table class="selection">
+				<thead>
+					<tr>
+						<th>', _('Supplier Mapping'), '</th>
+					</tr>
+				</thead><tbody>
+					<tr>
+						<td class="centre">', _('Mapping is enabled, Map will display below.'), '</td>
+					</tr><tr>
+						<td class="centre">', // Mapping:
+							'<div class="centre" id="map" style="width: ', $map_width, 'px; height: ', $map_height, 'px"></div>
+						</td>
+					</tr>
+				<tbody></table>';
 		}
 	}
 	// Extended Info only if selected in Configuration

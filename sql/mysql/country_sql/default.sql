@@ -7133,6 +7133,7 @@ INSERT INTO `scripts` VALUES ('Z_ImportGLTransactions.php',15,'Import General Le
 INSERT INTO `scripts` VALUES ('Z_ImportPartCodes.php',11,'Allows inventory items to be imported from a csv');
 INSERT INTO `scripts` VALUES ('Z_ImportPriceList.php',15,'Loads a new price list from a csv file');
 INSERT INTO `scripts` VALUES ('Z_ImportStocks.php',15,'');
+INSERT INTO `scripts` VALUES ('Z_ImportSuppliers.php',15,'Import suppliers by csv file');
 INSERT INTO `scripts` VALUES ('Z_index.php',15,'Utility menu page');
 INSERT INTO `scripts` VALUES ('Z_ItemsWithoutPicture.php',15,'Shows the list of curent items without picture in webERP');
 INSERT INTO `scripts` VALUES ('Z_MakeLocUsers.php',15,'Create User Location records');

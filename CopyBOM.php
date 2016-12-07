@@ -4,7 +4,7 @@
  *
  * Script to duplicate BoMs.
  */
-/* $Id: CopyBOM.php 7558 2016-06-20 06:40:21Z exsonqu $*/
+/* $Id: CopyBOM.php 7691 2016-12-02 07:56:18Z exsonqu $*/
 
 include('includes/session.inc');
 
@@ -57,7 +57,7 @@ if(isset($_POST['Submit'])) {
 									serialised,
 									appendfile,
 									perishable,
-									decimalplaces,
+									digitals,
 									nextserialno,
 									pansize,
 									shrinkfactor,
@@ -85,7 +85,7 @@ if(isset($_POST['Submit'])) {
 									serialised,
 									appendfile,
 									perishable,
-									decimalplaces,
+									digitals,
 									nextserialno,
 									pansize,
 									shrinkfactor,
@@ -131,7 +131,7 @@ if(isset($_POST['Submit'])) {
 							autoissue,
 							remark,
 							digitals,
-							decimalplaces
+							digitals
 					FROM bom
 					WHERE parent='".$StockID."';";
 		$result = DB_query($sql);

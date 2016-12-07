@@ -11,10 +11,10 @@ fB.click();
 }
 
 function rTN(event) {
-	if(window.event) k=window.event.keyCode;
-	else if(event) k=event.which;
+	if(window.event) k = window.event.keyCode;
+	else if (event) k = event.which;
 	else return true;
-	kC=String.fromCharCode(k);
+	kC = String.fromCharCode(k);
 	if(k==13) return false;
 	if((k==null) || (k==0) || (k==8) || (k==9) || (k==13) || (k==27)) return true;
 	else if((("0123456789.,- ").indexOf(kC)>-1)) return true;
@@ -22,10 +22,10 @@ function rTN(event) {
 }
 
 function rTI(event) {
-	if(window.event) k=window.event.keyCode;
-	else if(event) k=event.which;
+	if(window.event) k = window.event.keyCode;
+	else if(event) k = event.which;
 	else return true;
-	kC=String.fromCharCode(k);
+	kC = String.fromCharCode(k);
 	if((k==null) || (k==0) || (k==8) || (k==9) || (k==13) || (k==27)) return true;
 	else if((("0123456789-").indexOf(kC)>-1)) return true;
 	else return false;
@@ -55,6 +55,7 @@ function rLocaleNumber() {
 	if(patt.test(this.value)) {
 		this.setCustomValidity('');
 		return true;
+
 	} else {
 		this.setCustomValidity('The number format is wrong');
 		return false;

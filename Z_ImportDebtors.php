@@ -1,27 +1,28 @@
 <?php
 /* $Id: Z_ImportDebtors.php 6067 2013-07-10 02:04:22Z tehonu $*/
+/* Import debtors by csv file */
 
 include('includes/session.inc');
 $Title = _('Import Debtors And branches');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
-if(isset($_POST['FormID'])){
-	if(!isset($_POST['AutoDebtorNo'])){
+if(isset($_POST['FormID'])) {
+	if(!isset($_POST['AutoDebtorNo'])) {
 		$_POST['AutoDebtorNo']=0;
-	}else{
+	} else {
 		$_POST['AutoDebtorNo']=1;
 	}
-	if($_POST['AutoDebtorNo']==1){
+	if($_POST['AutoDebtorNo']==1) {
 		$_POST['UpdateIfExists']=0;
-	}else{
-		if(!isset($_POST['UpdateIfExists'])){
+	} else {
+		if(!isset($_POST['UpdateIfExists'])) {
 			$_POST['UpdateIfExists']=0;
-		}else{
+		} else {
 			$_POST['UpdateIfExists']=1;
 		}
 	}
-}else{
+} else {
 	$_POST['AutoDebtorNo']=$_SESSION['AutoDebtorNo'];
 	$_POST['UpdateIfExists']=0;
 }
@@ -86,7 +87,7 @@ $FieldHeadings = array(
 	'custbranchcode',	//53
 );
 
-if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file processing
+if(isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file processing
 
 	//initialize
 	$FieldTarget = count($FieldHeadings);
@@ -101,7 +102,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	//get the header row
 	$headRow = fgetcsv($FileHandle, 10000, ",");
 	//check for correct number of fields
-	if ( count($headRow) != count($FieldHeadings) ) {
+	if( count($headRow) != count($FieldHeadings) ) {
 		prnMsg (_('File contains '. count($headRow). ' columns, expected '. count($FieldHeadings). '. Try downloading a new template.'),'error');
 		fclose($FileHandle);
 		include('includes/footer.inc');
@@ -110,8 +111,8 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 	//test header row field name and sequence
 	$head = 0;
-	foreach ($headRow as $headField) {
-		if ( mb_strtoupper($headField) != mb_strtoupper($FieldHeadings[$head]) ) {
+	foreach($headRow as $headField) {
+		if( mb_strtoupper($headField) != mb_strtoupper($FieldHeadings[$head]) ) {
 			prnMsg (_('File contains incorrect headers ('. mb_strtoupper($headField). ' != '. mb_strtoupper($header[$head]). '. Try downloading a new template.'),'error');
 			fclose($FileHandle);
 			include('includes/footer.inc');
@@ -127,11 +128,11 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	$row = 1;
 	$UpdatedNum=0;
 	$InsertNum=0;
-	while ( ($filerow = fgetcsv($FileHandle, 10000, ",")) !== FALSE ) {
+	while( ($filerow = fgetcsv($FileHandle, 10000, ",")) !== FALSE ) {
 
 		//check for correct number of fields
 		$fieldCount = count($filerow);
-		if ($fieldCount != $FieldTarget){
+		if($fieldCount != $FieldTarget) {
 			prnMsg (_($FieldTarget. ' fields required, '. $fieldCount. ' fields received'),'error');
 			fclose($FileHandle);
 			include('includes/footer.inc');
@@ -139,7 +140,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		}
 
 		// cleanup the data (csv files often import with empty strings and such)
-		foreach ($filerow as &$value) {
+		foreach($filerow as &$value) {
 			$value = trim($value);
 		}
 
@@ -175,9 +176,9 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		$_POST['CustomerPOLine']=$filerow[29];
 		$_POST['typeid']=$filerow[30];
 
-		if ($_POST['AutoDebtorNo']== 1) {
+		if($_POST['AutoDebtorNo']== 1) {
 			$_POST['DebtorNo'] = GetNextTransNo(500, $db);
-		}else{
+		} else {
 			$_POST['DebtorNo'] = mb_strtoupper($_POST['DebtorNo']);
 		}
 
@@ -214,96 +215,96 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		$_POST['SpecialInstructions']=$filerow[52];
 
 		$i=0;
-		if ($_POST['AutoDebtorNo']==0 AND mb_strlen($_POST['DebtorNo']) ==0) {
+		if($_POST['AutoDebtorNo']==0 AND mb_strlen($_POST['DebtorNo']) ==0) {
 			$InputError = 1;
 			prnMsg( _('The debtor code cannot be empty'),'error');
 			$Errors[$i] = 'DebtorNo';
 			$i++;
-		} elseif ($_POST['AutoDebtorNo']==0 AND (ContainsIllegalCharacters($_POST['DebtorNo']) OR mb_strpos($_POST['DebtorNo'], ' '))) {
+		} elseif($_POST['AutoDebtorNo']==0 AND (ContainsIllegalCharacters($_POST['DebtorNo']) OR mb_strpos($_POST['DebtorNo'], ' '))) {
 			$InputError = 1;
 			prnMsg( _('The customer code cannot contain any of the following characters') . " . - ' &amp; + \" " . _('or a space'),'error');
 			$Errors[$i] = 'DebtorNo';
 			$i++;
 		}
-		if (mb_strlen($_POST['CustName']) > 40 OR mb_strlen($_POST['CustName'])==0) {
+		if(mb_strlen($_POST['CustName']) > 40 OR mb_strlen($_POST['CustName'])==0) {
 			$InputError = 1;
 			prnMsg( _('The customer name must be entered and be forty characters or less long'),'error');
 			$Errors[$i] = 'CustName';
 			$i++;
-		} elseif (mb_strlen($_POST['Address1']) >40) {
+		} elseif(mb_strlen($_POST['Address1']) >40) {
 			$InputError = 1;
 			prnMsg( _('The Line 1 of the address must be forty characters or less long'),'error');
 			$Errors[$i] = 'Address1';
 			$i++;
-		} elseif (mb_strlen($_POST['Address2']) >40) {
+		} elseif(mb_strlen($_POST['Address2']) >40) {
 			$InputError = 1;
 			prnMsg( _('The Line 2 of the address must be forty characters or less long'),'error');
 			$Errors[$i] = 'Address2';
 			$i++;
-		} elseif (mb_strlen($_POST['Address3']) >40) {
+		} elseif(mb_strlen($_POST['Address3']) >40) {
 			$InputError = 1;
 			prnMsg( _('The Line 3 of the address must be forty characters or less long'),'error');
 			$Errors[$i] = 'Address3';
 			$i++;
-		} elseif (mb_strlen($_POST['Address4']) >50) {
+		} elseif(mb_strlen($_POST['Address4']) >50) {
 			$InputError = 1;
 			prnMsg( _('The Line 4 of the address must be fifty characters or less long'),'error');
 			$Errors[$i] = 'Address4';
 			$i++;
-		} elseif (mb_strlen($_POST['Address5']) >20) {
+		} elseif(mb_strlen($_POST['Address5']) >20) {
 			$InputError = 1;
 			prnMsg( _('The Line 5 of the address must be twenty characters or less long'),'error');
 			$Errors[$i] = 'Address5';
 			$i++;
-		} elseif (!is_numeric(filter_number_format($_POST['CreditLimit']))) {
+		} elseif(!is_numeric(filter_number_format($_POST['CreditLimit']))) {
 			$InputError = 1;
 			prnMsg( _('The credit limit must be numeric'),'error');
 			$Errors[$i] = 'CreditLimit';
 			$i++;
-		} elseif (!is_numeric(filter_number_format($_POST['PymtDiscount']))) {
+		} elseif(!is_numeric(filter_number_format($_POST['PymtDiscount']))) {
 			$InputError = 1;
 			prnMsg( _('The payment discount must be numeric'),'error');
 			$Errors[$i] = 'PymtDiscount';
 			$i++;
-		} elseif (!Is_Date($_POST['ClientSince'])) {
+		} elseif(!Is_Date($_POST['ClientSince'])) {
 			$InputError = 1;
 			prnMsg( _('The customer since field must be a date in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
 			$Errors[$i] = 'ClientSince';
 			$i++;
-		} elseif (!is_numeric(filter_number_format($_POST['Discount']))) {
+		} elseif(!is_numeric(filter_number_format($_POST['Discount']))) {
 			$InputError = 1;
 			prnMsg( _('The discount percentage must be numeric'),'error');
 			$Errors[$i] = 'Discount';
 			$i++;
-		} elseif (filter_number_format($_POST['CreditLimit']) <0) {
+		} elseif(filter_number_format($_POST['CreditLimit']) <0) {
 			$InputError = 1;
 			prnMsg( _('The credit limit must be a positive number'),'error');
 			$Errors[$i] = 'CreditLimit';
 			$i++;
-		} elseif ((filter_number_format($_POST['PymtDiscount'])> 10) OR (filter_number_format($_POST['PymtDiscount']) <0)) {
+		} elseif((filter_number_format($_POST['PymtDiscount'])> 10) OR (filter_number_format($_POST['PymtDiscount']) <0)) {
 			$InputError = 1;
 			prnMsg( _('The payment discount is expected to be less than 10% and greater than or equal to 0'),'error');
 			$Errors[$i] = 'PymtDiscount';
 			$i++;
-		} elseif ((filter_number_format($_POST['Discount'])> 100) OR (filter_number_format($_POST['Discount']) <0)) {
+		} elseif((filter_number_format($_POST['Discount'])> 100) OR (filter_number_format($_POST['Discount']) <0)) {
 			$InputError = 1;
 			prnMsg( _('The discount is expected to be less than 100% and greater than or equal to 0'),'error');
 			$Errors[$i] = 'Discount';
 			$i++;
 		}
 
-		if (ContainsIllegalCharacters($_POST['EDIReference'])
+		if(ContainsIllegalCharacters($_POST['EDIReference'])
 			OR mb_strstr($_POST['EDIReference'],' ')) {
 			$InputError = 1;
 			prnMsg(_('The customers EDI reference code cannot contain any of the following characters') .' - \' &amp; + \" ' . _('or a space'),'warn');
 		}
-		if (mb_strlen($_POST['EDIReference'])<4 AND ($_POST['EDIInvoices']==1 OR $_POST['EDIOrders']==1)){
+		if(mb_strlen($_POST['EDIReference'])<4 AND ($_POST['EDIInvoices']==1 OR $_POST['EDIOrders']==1)) {
 			$InputError = 1;
 			prnMsg(_('The customers EDI reference code must be set when EDI Invoices or EDI orders are activated'),'warn');
 			$Errors[$i] = 'EDIReference';
 			$i++;
 		}
-		if (mb_strlen($_POST['EDIAddress'])<4 AND $_POST['EDIInvoices']==1){
+		if(mb_strlen($_POST['EDIAddress'])<4 AND $_POST['EDIInvoices']==1) {
 			$InputError = 1;
 			prnMsg(_('The customers EDI email address or FTP server address must be entered if EDI Invoices are to be sent'),'warn');
 			$Errors[$i] = 'EDIAddress';
@@ -311,17 +312,17 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		}
 
 
-		if ($InputError !=1){
+		if($InputError !=1) {
 			$sql="SELECT 1 FROM debtorsmaster WHERE debtorno='".$_POST['DebtorNo']."' LIMIT 1";
 			$result=DB_query($sql);
 			$DebtorExists=(DB_num_rows($result)>0);
-			if ($DebtorExists AND $_POST['UpdateIfExists']!=1) {
+			if($DebtorExists AND $_POST['UpdateIfExists']!=1) {
 				$UpdatedNum++;
-			}else{
+			} else {
 
 				$SQL_ClientSince = FormatDateForSQL($_POST['ClientSince']);
 
-				if ($DebtorExists) {//update
+				if($DebtorExists) {//update
 					$UpdatedNum++;
 					$sql = "SELECT 1
 							  FROM debtortrans
@@ -329,16 +330,16 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 					$result = DB_query($sql);
 
 					$curr=false;
-					if (DB_num_rows($result) == 0) {
+					if(DB_num_rows($result) == 0) {
 						$curr=true;
-					}else{
+					} else {
 						$CurrSQL = "SELECT currcode
 							FROM debtorsmaster
 							where debtorno = '" . $_POST['DebtorNo'] . "'";
 						$CurrResult = DB_query($CurrSQL);
 						$CurrRow = DB_fetch_array($CurrResult);
 						$OldCurrency = $CurrRow[0];
-						if ($OldCurrency != $_POST['CurrCode']) {
+						if($OldCurrency != $_POST['CurrCode']) {
 							prnMsg( _('The currency code cannot be updated as there are already transactions for this customer'),'info');
 						}
 					}
@@ -426,52 +427,52 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 				}
 			}
 
-		}else{
+		} else {
 
 			break;
 		}
 
 		$i=0;
 
-		if (ContainsIllegalCharacters($_POST['BranchCode']) OR mb_strstr($_POST['BranchCode'],' ')) {
+		if(ContainsIllegalCharacters($_POST['BranchCode']) OR mb_strstr($_POST['BranchCode'],' ')) {
 			$InputError = 1;
 			prnMsg(_('The Branch code cannot contain any of the following characters')." -  &amp; \' &lt; &gt;",'error');
 			$Errors[$i] = 'BranchCode';
 			$i++;
 		}
-		if (mb_strlen($_POST['BranchCode'])==0) {
+		if(mb_strlen($_POST['BranchCode'])==0) {
 			$InputError = 1;
 			prnMsg(_('The Branch code must be at least one character long'),'error');
 			$Errors[$i] = 'BranchCode';
 			$i++;
 		}
-		if (!is_numeric($_POST['FwdDate'])) {
+		if(!is_numeric($_POST['FwdDate'])) {
 			$InputError = 1;
 			prnMsg(_('The date after which invoices are charged to the following month is expected to be a number and a recognised number has not been entered'),'error');
 			$Errors[$i] = 'FwdDate';
 			$i++;
 		}
-		if ($_POST['FwdDate'] >30) {
+		if($_POST['FwdDate'] >30) {
 			$InputError = 1;
 			prnMsg(_('The date (in the month) after which invoices are charged to the following month should be a number less than 31'),'error');
 			$Errors[$i] = 'FwdDate';
 			$i++;
 		}
-		if (!is_numeric(filter_number_format($_POST['EstDeliveryDays']))) {
+		if(!is_numeric(filter_number_format($_POST['EstDeliveryDays']))) {
 			$InputError = 1;
 			prnMsg(_('The estimated delivery days is expected to be a number and a recognised number has not been entered'),'error');
 			$Errors[$i] = 'EstDeliveryDays';
 			$i++;
 		}
-		if (filter_number_format($_POST['EstDeliveryDays']) >60) {
+		if(filter_number_format($_POST['EstDeliveryDays']) >60) {
 			$InputError = 1;
 			prnMsg(_('The estimated delivery days should be a number of days less than 60') . '. ' . _('A package can be delivered by seafreight anywhere in the world normally in less than 60 days'),'error');
 			$Errors[$i] = 'EstDeliveryDays';
 			$i++;
 		}
 
-		if ($InputError !=1){
-			if (DB_error_no() ==0) {
+		if($InputError !=1) {
+			if(DB_error_no() ==0) {
 
 				$sql = "SELECT 1
 				     FROM custbranch
@@ -479,18 +480,18 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 				           branchcode='".$_POST['BranchCode']."' LIMIT 1";
 				$result=DB_query($sql);
 				$BranchExists=(DB_num_rows($result)>0);
-				if ($BranchExists AND $_POST['UpdateIfExists']!=1) {
+				if($BranchExists AND $_POST['UpdateIfExists']!=1) {
 					//do nothing
-				}else{
+				} else {
 
-					if (!isset($_POST['EstDeliveryDays'])) {
+					if(!isset($_POST['EstDeliveryDays'])) {
 						$_POST['EstDeliveryDays']=1;
 					}
-					if (!isset($Latitude)) {
+					if(!isset($Latitude)) {
 						$Latitude=0.0;
 						$Longitude=0.0;
 					}
-					if ($BranchExists) {
+					if($BranchExists) {
 						$sql = "UPDATE custbranch SET brname = '" . $_POST['BrName'] . "',
 									braddress1 = '" . $_POST['BrAddress1'] . "',
 									braddress2 = '" . $_POST['BrAddress2'] . "',
@@ -594,7 +595,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 					$result = DB_query($sql, $ErrMsg);
 
 
-					if (DB_error_no() ==0) {
+					if(DB_error_no() ==0) {
 						prnMsg( _('New Item') .' ' . $StockID  . ' '. _('has been added to the transaction'),'info');
 					} else { //location insert failed so set some useful error info
 						$InputError = 1;
@@ -608,29 +609,29 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 		}
 
-		if ($InputError == 1) { //this row failed so exit loop
+		if($InputError == 1) { //this row failed so exit loop
 			break;
 		}
 
 		$row++;
 	}
 
-	if ($InputError == 1) { //exited loop with errors so rollback
+	if($InputError == 1) { //exited loop with errors so rollback
 		prnMsg(_('Failed on row '. $row. '. Batch import has been rolled back.'),'error');
 		DB_Txn_Rollback();
 	} else { //all good so commit data transaction
 		DB_Txn_Commit();
 		prnMsg( _('Batch Import of') .' ' . $FileName  . ' '. _('has been completed. All transactions committed to the database.'),'success');
-		if($_POST['UpdateIfExists']==1){
-			prnMsg( _('Updated:') .' ' . $UpdatedNum .' '._('Insert:'). $InsertNum );
-		}else{
-			prnMsg( _('Exist:') .' ' . $UpdatedNum .' '._('Insert:'). $InsertNum );
+		if($_POST['UpdateIfExists']==1) {
+			prnMsg( _('Updated:') .' ' . $UpdatedNum .' '._('Insert') . ':' . $InsertNum );
+		} else {
+			prnMsg( _('Exist:') .' ' . $UpdatedNum .' '. _('Insert') . ':' . $InsertNum );
 		}
 	}
 
 	fclose($FileHandle);
 
-} elseif ( isset($_POST['gettemplate']) || isset($_GET['gettemplate']) ) { //download an import template
+} elseif( isset($_POST['gettemplate']) || isset($_GET['gettemplate']) ) { //download an import template
 
 	echo '<br /><br /><br />"'. implode('","',$FieldHeadings). '"<br /><br /><br />';
 

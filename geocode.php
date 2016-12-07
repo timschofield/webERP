@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: geocode.php 6941 2014-10-26 23:18:08Z daintree $*/
+/* $Id: geocode.php 7682 2016-11-24 14:10:25Z rchacon $*/
 //$PageSecurity = 3;
 $Title = _('Geocode Generate');
 
@@ -51,13 +51,13 @@ while ($row = DB_fetch_array($result)) {
     $debtorno =$row["debtorno"];
     $request_url = $base_url . $address . ',&sensor=true';
 
-    echo '<br \>' . _('Customer Code: ') . $id;
+    echo '<br \>', _('Customer Code'), ': ', $id;
 
 
     $xml = simplexml_load_string(utf8_encode(file_get_contents($request_url))) or die("url not loading");
 //    $xml = simplexml_load_file($request_url) or die("url not loading");
 
-    $status = $xml->status; 
+    $status = $xml->status;
 
     if (strcmp($status, "OK") == 0) {
       // Successful geocode
@@ -82,7 +82,7 @@ while ($row = DB_fetch_array($result)) {
       if ($update_result==1) {
       echo '<br />'. 'Address: ' . $address . ' updated to geocode.';
       echo '<br />'. 'Received status ' . $status . '<br />';
-	}      
+	}
     } else {
       // failure to geocode
       $geocode_pending = false;
@@ -108,7 +108,7 @@ while ($row2 = DB_fetch_array($result2)) {
     $xml = simplexml_load_string(utf8_encode(file_get_contents($request_url))) or die("url not loading");
 //    $xml = simplexml_load_file($request_url) or die("url not loading");
 
-    $status = $xml->status; 
+    $status = $xml->status;
 
     if (strcmp($status, "OK") == 0) {
       // Successful geocode
@@ -128,7 +128,7 @@ while ($row2 = DB_fetch_array($result2)) {
              ($id));
 
       $update_result = DB_query($query);
- 
+
       if ($update_result==1) {
       echo '<br />' . 'Address: ' . $address . ' updated to geocode.';
       echo '<br />' . 'Received status ' . $status . '<br />';

@@ -1,7 +1,5 @@
 <?php
-
 /* $Id: MainMenuLinksArray.php 6190 2013-08-12 02:12:02Z rchacon $*/
-
 /* webERP menus with Captions and URLs. */
 
 $ModuleLink = array('orders', 'AR', 'PO', 'AP', 'stock', 'manuf',  'GL', 'FA', 'PC', 'system', 'Utilities');
@@ -367,33 +365,35 @@ $MenuItems['GL']['Transactions']['URL'] = array('/Payments.php?NewPayment=Yes',
 												'/BankMatching.php?Type=Receipts',
 												'/GLJournal.php?NewJournal=Yes');
 
-$MenuItems['GL']['Reports']['Caption'] = array(	_('Trial Balance'),
+$MenuItems['GL']['Reports']['Caption'] = array(	_('Bank Account Reconciliation Statement'),
+												_('Cheque Payments Listing'),
+												_('Daily Bank Transactions'),
 												_('Account Inquiry'),
 												_('Account Listing'),
 												_('Account Listing to CSV File'),
 												_('General Ledger Journal Inquiry'),
-												_('Bank Account Reconciliation Statement'),
-												_('Cheque Payments Listing'),
-												_('Daily Bank Transactions'),
-												_('Profit and Loss Statement'),
+												_('Trial Balance'),
 												_('Balance Sheet'),
-												_('Horizontal Analysis of Statement of Comprehensive Income'),
+												_('Profit and Loss Statement'),
+												_('Statement of Cash Flows'),
 												_('Horizontal Analysis of Statement of Financial Position'),
+												_('Horizontal Analysis of Statement of Comprehensive Income'),
 												_('Tag Reports'),
 												_('Tax Reports'));
 
-$MenuItems['GL']['Reports']['URL'] = array(	'/GLTrialBalance.php',
+$MenuItems['GL']['Reports']['URL'] = array(	'/BankReconciliation.php',
+											'/PDFChequeListing.php',
+											'/DailyBankTransactions.php',
 											'/SelectGLAccount.php',
 											'/GLAccountReport.php',
 											'/GLAccountCSV.php',
 											'/GLJournalInquiry.php',
-											'/BankReconciliation.php',
-											'/PDFChequeListing.php',
-											'/DailyBankTransactions.php',
-											'/GLProfit_Loss.php',
+											'/GLTrialBalance.php',
 											'/GLBalanceSheet.php',
-											'/AnalysisHorizontalIncome.php',
+											'/GLProfit_Loss.php',
+											'/GLCashFlowsIndirect.php',
 											'/AnalysisHorizontalPosition.php',
+											'/AnalysisHorizontalIncome.php',
 											'/GLTagProfit_Loss.php',
 											'/Tax.php');
 
