@@ -55,7 +55,6 @@ if ($KL_SystemAdmin){
 prnMsg("START OF PENDING FOR KL INTRANET ",'success');
 		NotDiscountedItemsWithDiscount($RootPath, $db);
 		GoodsReceivedNotInvoicedControl(1000000, $periodnow, $db);
-		ObsoleteComponentsInActiveBOM($RootPath, $db);
 		FlaggedAsObsoleteButStockAvailable($RootPath, $db);
 prnMsg("END OF PENDING FOR KL INTRANET ",'success');
 
