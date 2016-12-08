@@ -73,7 +73,6 @@ if(in_array($DebtorSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($
 	$TotDue = 0;
 	$TotOD1 = 0;
 	$TotOD2 = 0;
- 	$ListCount = DB_num_rows($CustomerResult);
 	$CurrDecimalPlaces = 2;//By default.
 
 	if(!isset($_POST['Salesman'])) {
@@ -261,7 +260,7 @@ if(in_array($DebtorSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($
 
 				if($DetailTrans['daysbeforedue'] > 0) {
 					$AddDays=$DetailTrans['daysbeforedue'] . ' days';
-					if(function_exists(date_add)) {
+					if(function_exists('date_add')) {
 						$DisplayDueDate = date_add(date_create($DetailTrans['trandate']), date_interval_create_from_date_string($AddDays));
 					} else {
 				 		$DisplayDueDate = strtotime($AddDays,strtotime($DetailTrans['trandate']));
@@ -269,7 +268,7 @@ if(in_array($DebtorSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($
 
 				} else {
 					$AddDays=(intval($DetailTrans['dayinfollowingmonth']) - 1) . ' days';
-					if(function_exists(date_add)) {
+					if(function_exists('date_add')) {
 						$DisplayDueDate = date_create($DetailTrans['trandate']);
 						$DisplayDueDate->modify('first day of next month');
 						$DisplayDueDate = date_add($DisplayDueDate, date_interval_create_from_date_string($AddDays));
@@ -279,7 +278,7 @@ if(in_array($DebtorSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($
 					}
 
 				}
-				if(function_exists(date_add)) {
+				if(function_exists('date_add')) {
 					$DisplayDueDate=date_format($DisplayDueDate,$_SESSION['DefaultDateFormat']);
 				} else {
 					$DisplayDueDate = Date($_SESSION['DefaultDateFormat'],$DisplayDueDate);
