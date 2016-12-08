@@ -1,5 +1,6 @@
 webERP Change Log
 
+08/12/16  Exson: Fixed noise of undefined variable and string required for function_exists in Dashboard.php. Reported by Shane.
 06/12/16  PaulT: SelectProduct.php: Add footer before the script exits when stock categories are not defined.
 02/12/16  PaulT: WriteReport.inc: Fix condition needed to support PHP7, reported by Tim.
 02/12/16  RChacon: fix and improve code for existent parameters in GLCashFlowsSetup.php.
