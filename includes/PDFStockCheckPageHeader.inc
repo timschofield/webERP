@@ -12,8 +12,9 @@ $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,$_SESSION['Compa
 $LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-180,$YPos,180,$FontSize,_('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber);
 
 $YPos -=15;
-
-$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,550,$FontSize,_('Check Sheets for Categories between') . ' ' . $_POST['FromCriteria'] . ' ' . _('and') . ' ' . $_POST['ToCriteria'] . ' ' . _('for stock at') . ' ' . $_POST['Location']);
+sort($_POST['Categories']);
+$q = count($_POST['Categories'])-1;
+$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,550,$FontSize,_('Check Sheets for Categories between') . ' ' . $_POST['Categories'][0] . ' ' . _('and') . ' ' . $_POST['Categories'][$q] . ' ' . _('for stock at') . ' ' . $_POST['Location']);
 
 $YPos -=20;
 /*Draw a rectangle to put the headings in     */

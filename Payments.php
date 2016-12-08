@@ -838,7 +838,7 @@ if(DB_num_rows($AccountsResults)==0) {
 	while($myrow=DB_fetch_array($AccountsResults)) {
 	/*list the bank account names */
 		echo '<option ';
-		if(/*isset($_POST['BankAccount']) AND */$_POST['BankAccount']==$myrow['accountcode']) {
+		if(isset($_POST['BankAccount']) AND $_POST['BankAccount']==$myrow['accountcode']) {
 			echo 'selected="selected" ';
 		}
 		echo 'value="', $myrow['accountcode'], '">', $myrow['bankaccountname'], ' - ', $myrow['currcode'], '</option>';
