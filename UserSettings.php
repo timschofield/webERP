@@ -28,10 +28,6 @@ if (isset($_POST['Modify'])) {
 	ie the page has called itself with some user input */
 
 	//first off validate inputs sensible
-	if ($_POST['DisplayRecordsMax'] <= 0){
-		$InputError = 1;
-		prnMsg(_('The Maximum Number of Records on Display entered must not be negative') . '. ' . _('0 will default to system setting'),'error');
-	}
 
 	//!!!for the demo only - enable this check so password is not changed
 	if ($AllowDemoMode AND $_POST['Password'] != ''){
@@ -61,14 +57,19 @@ if (isset($_POST['Modify'])) {
 	if ($InputError != 1) {
 		// no errors
 		if ($UpdatePassword != 'Y'){
-			$sql = "UPDATE www_users
-					SET displayrecordsmax='" . $_POST['DisplayRecordsMax'] . "',
-						theme='" . $_POST['Theme'] . "',
-						language='" . $_POST['Language'] . "',
-						email='". $_POST['email'] ."',
-						pdflanguage='" . $_POST['PDFLanguage'] . "'
-					WHERE userid = '" . $_SESSION['UserID'] . "'";
-
+			if ($KL_SystemAdmin){
+				$sql = "UPDATE www_users
+						SET displayrecordsmax='" . $_POST['DisplayRecordsMax'] . "',
+							theme='" . $_POST['Theme'] . "',
+							language='" . $_POST['Language'] . "',
+							email='". $_POST['email'] ."',
+							pdflanguage='" . $_POST['PDFLanguage'] . "'
+						WHERE userid = '" . $_SESSION['UserID'] . "'";
+			}else{
+				$sql = "UPDATE www_users
+						SET email='". $_POST['email'] ."'
+						WHERE userid = '" . $_SESSION['UserID'] . "'";
+			}
 			$ErrMsg =  _('The user alterations could not be processed because');
 			$DbgMsg = _('The SQL that was used to update the user and failed was');
 
@@ -76,15 +77,21 @@ if (isset($_POST['Modify'])) {
 
 			prnMsg( _('The user settings have been updated') . '. ' . _('Be sure to remember your password for the next time you login'),'success');
 		} else {
-			$sql = "UPDATE www_users
-				SET displayrecordsmax='" . $_POST['DisplayRecordsMax'] . "',
-					theme='" . $_POST['Theme'] . "',
-					language='" . $_POST['Language'] . "',
-					email='". $_POST['email'] ."',
-					pdflanguage='" . $_POST['PDFLanguage'] . "',
-					password='" . CryptPass($_POST['Password']) . "'
-				WHERE userid = '" . $_SESSION['UserID'] . "'";
-
+			if ($KL_SystemAdmin){
+				$sql = "UPDATE www_users
+						SET displayrecordsmax='" . $_POST['DisplayRecordsMax'] . "',
+							theme='" . $_POST['Theme'] . "',
+							language='" . $_POST['Language'] . "',
+							email='". $_POST['email'] ."',
+							pdflanguage='" . $_POST['PDFLanguage'] . "',
+							password='" . CryptPass($_POST['Password']) . "'
+						WHERE userid = '" . $_SESSION['UserID'] . "'";
+			}else{
+				$sql = "UPDATE www_users
+						SET email='". $_POST['email'] ."',
+							password='" . CryptPass($_POST['Password']) . "'
+						WHERE userid = '" . $_SESSION['UserID'] . "'";
+			}
 			$ErrMsg =  _('The user alterations could not be processed because');
 			$DbgMsg = _('The SQL that was used to update the user and failed was');
 
@@ -93,12 +100,14 @@ if (isset($_POST['Modify'])) {
 			prnMsg(_('The user settings have been updated'),'success');
 		}
 	  // update the session variables to reflect user changes on-the-fly
-		$_SESSION['DisplayRecordsMax'] = $_POST['DisplayRecordsMax'];
-		$_SESSION['Theme'] = trim($_POST['Theme']); /*already set by session.inc but for completeness */
-		$Theme = $_SESSION['Theme'];
-		$_SESSION['Language'] = trim($_POST['Language']);
-		$_SESSION['PDFLanguage'] = $_POST['PDFLanguage'];
-		include ('includes/LanguageSetup.php'); // After last changes in LanguageSetup.php, is it required to update?
+		if ($KL_SystemAdmin){
+			$_SESSION['DisplayRecordsMax'] = $_POST['DisplayRecordsMax'];
+			$_SESSION['Theme'] = trim($_POST['Theme']); /*already set by session.inc but for completeness */
+			$Theme = $_SESSION['Theme'];
+			$_SESSION['Language'] = trim($_POST['Language']);
+			$_SESSION['PDFLanguage'] = $_POST['PDFLanguage'];
+			include ('includes/LanguageSetup.php'); // After last changes in LanguageSetup.php, is it required to update?
+		}
 	}
 }
 
