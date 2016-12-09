@@ -33,35 +33,157 @@ include('includes/footer.inc');
 function submit(&$db, $DateOfFile, $SelectedFile) {
 
 	//initialise no input errors
-	$InputError = 1;
-
-prnMsg($DateOfFile);
-prnMsg($SelectedFile);
-
-$FileHandle = fopen($_FILES['SelectedFile']['tmp_name'], 'r');
-prnMsg($_FILES['SelectedFile']['tmp_name']);
-prnMsg($FileHandle);
-
-	$objPHPExcel = PHPExcel_IOFactory::load("PTGaji.xlsx");
-
-	$dataArr = array();
-	 
-	foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
-		$worksheetTitle     = $worksheet->getTitle();
+	$InputError = FALSE;
+	$InsertErrMsg = _('The SQL to insert Imported Salary Info failed');
+	
+	$PeriodDateOfFile = GetPeriod(ConvertSQLDate($DateOfFile), $db);
+	$PeriodNow = $PeriodNo = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
+	if($PeriodNow =! ($PeriodDateOfFile + 1)){
+		prnMsg("The month selected should be last month","warn");
+	}
+	
+	if(!$InputError){
+		// upload to server and read later on...
+		// http://stackoverflow.com/questions/34127361/phpexcel-iofactoryloadtarget-file-is-working-on-localhost-but-not-on-server
+		
+		
+		$ExcelFile = "/home4/kurakura/public_html/bumibiru.com/weberp/" . $_SESSION['reports_dir'] . '/' ."PT Gaji.xlsx";
+		$objPHPExcel = PHPExcel_IOFactory::load($ExcelFile);
+		
+		$ExcelSheetName = "SalaryToPrint";
+		$objPHPExcel->setActiveSheetIndexByName($ExcelSheetName);
+		$worksheet = $objPHPExcel->getActiveSheet();
+		
 		$highestRow         = $worksheet->getHighestRow(); // e.g. 10
 		$highestColumn      = $worksheet->getHighestColumn(); // e.g 'F'
 		$highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn);
+		
+		for ($row = 2; $row <= $highestRow; ++ $row) {
+			// first check if the row belongs to an active employee or not (old one so don't need to process)
+			$Active = $worksheet->getCell('A'.$row)->getCalculatedValue();
+			if ($Active === 'YES'){
+				// dump the employee info into variables
+				$CodeName = $worksheet->getCell('B'.$row)->getCalculatedValue();
+				$FullName = $worksheet->getCell('C'.$row)->getCalculatedValue();
+				$CompanyCode = $worksheet->getCell('D'.$row)->getCalculatedValue();
+				$Position = $worksheet->getCell('E'.$row)->getCalculatedValue();
+				$PaymentMethod = $worksheet->getCell('F'.$row)->getCalculatedValue();
+				if ($PaymentMethod == "Bank"){
+					$BankCode = $worksheet->getCell('G'.$row)->getCalculatedValue();
+					$BankAccount = $worksheet->getCell('H'.$row)->getCalculatedValue();
+					$BankAccountHolder = $worksheet->getCell('I'.$row)->getCalculatedValue();
+				}else{
+					$BankCode = "";
+					$BankAccount = "";
+					$BankAccountHolder = "";
+				}
+				$ZonePPH21 = $worksheet->getCell('J'.$row)->getCalculatedValue();
+				$SalaryFrom = ConvertExcelDate($worksheet->getCell('K'.$row));
+				$SalaryTo = ConvertExcelDate($worksheet->getCell('O'.$row));
+				$PaymentDate = $worksheet->getCell('BE'.$row)->getCalculatedValue();
+				$UpahPokok = $worksheet->getCell('S'.$row)->getCalculatedValue();
+				$TunjanganMakan = $worksheet->getCell('T'.$row)->getCalculatedValue();
+				$TunjanganTransport = $worksheet->getCell('U'.$row)->getCalculatedValue();
+				$TunjanganJabatan = $worksheet->getCell('V'.$row)->getCalculatedValue();
+				$TunjanganMasaKerja = $worksheet->getCell('Y'.$row)->getCalculatedValue();
+				$TunjanganKendaraan = $worksheet->getCell('Z'.$row)->getCalculatedValue();
+				$KomisiTetap = $worksheet->getCell('W'.$row)->getCalculatedValue();
+				$KomisiRetail = $worksheet->getCell('AA'.$row)->getCalculatedValue();
+				$KomisiSupport = $worksheet->getCell('AB'.$row)->getCalculatedValue();
+				$BonusPenjualan = $worksheet->getCell('AC'.$row)->getCalculatedValue();
+				$FixedLembur = $worksheet->getCell('AD'.$row)->getCalculatedValue();
+				$Lembur = $worksheet->getCell('AJ'.$row)->getCalculatedValue();
+				$THR = $worksheet->getCell('AK'.$row)->getCalculatedValue();
+				$PenerimaanLain2 = $worksheet->getCell('AL'.$row)->getCalculatedValue();
+				$PenerimaanLain2Notes = $worksheet->getCell('AM'.$row)->getCalculatedValue();
+				$PotonganJHT = $worksheet->getCell('AO'.$row)->getCalculatedValue();
+				$PotonganASKES = $worksheet->getCell('AP'.$row)->getCalculatedValue();
+				$PotonganPPH21 = $worksheet->getCell('AQ'.$row)->getCalculatedValue();
+				$PotonganAbsen = $worksheet->getCell('AR'.$row)->getCalculatedValue();
+				$PotonganLain2 = $worksheet->getCell('AS'.$row)->getCalculatedValue();
+				$PotonganLain2Notes = $worksheet->getCell('AT'.$row)->getCalculatedValue();
+				$Bulatan = $worksheet->getCell('AW'.$row)->getCalculatedValue();
 
-prnMsg($worksheetTitle);		
-/*		for ($row = 1; $row <= $highestRow; ++ $row) {
-			for ($col = 0; $col < $highestColumnIndex; ++ $col) {
-				$cell = $worksheet->getCellByColumnAndRow($col, $row);
-				$val = $cell->getValue();
-				$dataArr[$row][$col] = $val;
+				//Insert into the database
+				$sqlInsert = "INSERT INTO salariescalculated
+								(periodno,
+								codename,
+								fullname,
+								company,
+								position,
+								paymentmethod,
+								bankcode,
+								bankaccount,
+								bankaccountholder,
+								zonepph21,
+								salaryfrom,
+								salaryto,
+								paymentday,
+								upahpokok,
+								tunjanganmakan,
+								tunjangantransport,
+								tunjanganjabatan,
+								tunjanganmasakerja,
+								tunjangankendaraan,
+								komisitetap,
+								komisiretail,
+								komisisupport,
+								bonuspenjualan,
+								fixedlembur,
+								lembur,
+								thr,
+								penerimaanlain,
+								penerimaanlainnotes,
+								potonganjht,
+								potonganaskes,
+								potonganpph21,
+								potonganabsen,
+								potonganlain2,
+								potonganlain2notes,
+								bulatan)
+							VALUES
+								('" . $PeriodDateOfFile . "',
+								'" . $CodeName . "',
+								'" . $FullName . "',
+								'" . $CompanyCode . "',
+								'" . $Position . "',
+								'" . $PaymentMethod . "',
+								'" . $BankCode . "',
+								'" . $BankAccount . "',
+								'" . $BankAccountHolder . "',
+								'" . $ZonePPH21 . "',
+								'" . $SalaryFrom . "',
+								'" . $SalaryTo . "',
+								'" . $PaymentDate . "',
+								'" . $UpahPokok . "',
+								'" . $TunjanganMakan . "',
+								'" . $TunjanganTransport . "',
+								'" . $TunjanganJabatan . "',
+								'" . $TunjanganMasaKerja . "',
+								'" . $TunjanganKendaraan . "',
+								'" . $KomisiTetap . "',
+								'" . $KomisiRetail . "',
+								'" . $KomisiSupport . "',
+								'" . $BonusPenjualan . "',
+								'" . $FixedLembur . "',
+								'" . $Lembur . "',
+								'" . $THR . "',
+								'" . $PenerimaanLain2 . "',
+								'" . $PenerimaanLain2Notes . "',
+								'" . $PotonganJHT . "',
+								'" . $PotonganASKES . "',
+								'" . $PotonganPPH21 . "',
+								'" . $PotonganAbsen . "',
+								'" . $PotonganLain2 . "',
+								'" . $PotonganLain2Notes . "',
+								'" . $Bulatan . "'
+								)";
+				$resultInsert = DB_query($sqlInsert,$InsertErrMsg,$DbgMsg,true);
+				
+				prnMsg($CodeName . " Imported", "success");
 			}
 		}
-*/	}
-
+	}
 } // End of function submit()
 
 
@@ -99,5 +221,16 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 		</form>';
 
 } // End of function display()
+
+
+function ConvertExcelDate($cell, $format = 'Y-m-d'){
+	// converts an excel cell into a valid date to work with
+	if(PHPExcel_Shared_Date::isDateTime($cell)) {
+		$ConvertedDate = date($format,PHPExcel_Shared_Date::ExcelToPHP($cell->getCalculatedValue()));                          
+	}else{
+		$ConvertedDate = '0000-00-00';                          
+	}
+	return $ConvertedDate;
+}
 
 ?>

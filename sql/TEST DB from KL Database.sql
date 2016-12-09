@@ -339,7 +339,7 @@ INSERT INTO kurakura_kl_test_erp.woserialnos SELECT * FROM kurakura_kl_erp.woser
 INSERT INTO kurakura_kl_test_erp.www_users SELECT * FROM kurakura_kl_erp.www_users;
 
 UPDATE  `config` SET  `confvalue` =  'companies/kurakura_kl_test_erp/part_pics' WHERE  `confname` =  'part_pics_dir';
-UPDATE  `config` SET  `confvalue` =  'companies/kurakura_kl_test_erp/reportwriter' WHERE  `confname` =  'reports_dir';
+UPDATE  `config` SET  `confvalue` =  'companies/kurakura_kl_test_erp/reports' WHERE  `confname` =  'reports_dir';
 UPDATE  `config` SET  `confvalue` =  'companies/kurakura_kl_test_erp/logs' WHERE  `confname` =  'LogPath';
 
 UPDATE  `config` SET  `confvalue` =  'TEST SHOP' WHERE  `confname` =  'ShopName';

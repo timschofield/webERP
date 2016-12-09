@@ -640,24 +640,22 @@ $MenuItems['PC']['Maintenance']['URL'] = array(	'/PcTypeTabs.php',
 												'/PcExpenses.php',
 												'/PcExpensesTypeTab.php');
 
-$MenuItems['Personalia']['Transactions']['Caption'] = array(_('SPG List'),
-															_('User Maintenance'),
-															_('KL SPG User Maintenance'),
-															_('Import Salaries from Excel'));
+$MenuItems['Personalia']['Transactions']['Caption'] = array(_('Import Salaries Info from Excel File'));
 
-$MenuItems['Personalia']['Transactions']['URL'] = array('/SalesPeople.php',
-													'/WWW_Users.php',
-													'/KLUsersSPG.php',
-													'/KLPersonaliaImportSalaries.php');
+$MenuItems['Personalia']['Transactions']['URL'] = array('/KLPersonaliaImportSalaries.php');
 
 $MenuItems['Personalia']['Reports']['Caption'] = array();
 
 $MenuItems['Personalia']['Reports']['URL'] = array();
 
-$MenuItems['Personalia']['Maintenance']['Caption'] = array();
+$MenuItems['Personalia']['Maintenance']['Caption'] = array(_('SPG List'),
+															_('User Maintenance'),
+															_('KL SPG User Maintenance'));
 
-$MenuItems['Personalia']['Maintenance']['URL'] = array();
-												
+$MenuItems['Personalia']['Maintenance']['URL'] = array('/SalesPeople.php',
+													'/WWW_Users.php',
+													'/KLUsersSPG.php');
+
 $MenuItems['system']['Transactions']['Caption'] = array(_('Company Preferences'),
 														_('System Parameters'),
 														_('Maintain Security Tokens'),
