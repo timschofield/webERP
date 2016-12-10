@@ -32,23 +32,39 @@ include('includes/footer.inc');
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
 function submit(&$db, $DateOfFile, $SelectedFile) {
 
+	// upload to server and read later on...
+	// http://stackoverflow.com/questions/34127361/phpexcel-iofactoryloadtarget-file-is-working-on-localhost-but-not-on-server
+	
+	$ExcelFile = "/home4/kurakura/public_html/bumibiru.com/weberp/" . $_SESSION['reports_dir'] . '/' ."PT Gaji.xlsx";
+	$objPHPExcel = PHPExcel_IOFactory::load($ExcelFile);
+	
 	//initialise no input errors
 	$InputError = FALSE;
-	$InsertErrMsg = _('The SQL to insert Imported Salary Info failed');
 	
+	// The date on the excel should be the same as the date selected by the user
+	$ExcelSheetName = "General Settings";
+	$objPHPExcel->setActiveSheetIndexByName($ExcelSheetName);
+	$worksheet = $objPHPExcel->getActiveSheet();
+	$ExcelPeriodLastDate = ConvertExcelDate($worksheet->getCell('E10'));
+	if($ExcelPeriodLastDate != $DateOfFile){
+		prnMsg("The month selected by the user is not the same as the month of the Excel file","warn");
+		$InputError = TRUE;
+	}
+
+	// The month selected should be last month
 	$PeriodDateOfFile = GetPeriod(ConvertSQLDate($DateOfFile), $db);
-	$PeriodNow = $PeriodNo = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
-	if($PeriodNow =! ($PeriodDateOfFile + 1)){
-		prnMsg("The month selected should be last month","warn");
+	$PeriodNow = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
+	if($PeriodNow != ($PeriodDateOfFile + 1)){
+		prnMsg("The month selected by the user and the Excel file should be last month","warn");
+		$InputError = TRUE;
 	}
 	
 	if(!$InputError){
-		// upload to server and read later on...
-		// http://stackoverflow.com/questions/34127361/phpexcel-iofactoryloadtarget-file-is-working-on-localhost-but-not-on-server
 		
-		
-		$ExcelFile = "/home4/kurakura/public_html/bumibiru.com/weberp/" . $_SESSION['reports_dir'] . '/' ."PT Gaji.xlsx";
-		$objPHPExcel = PHPExcel_IOFactory::load($ExcelFile);
+		// let's delete the previous records of that month for test purposes
+		$SQL = "DELETE FROM salariescalculated
+				WHERE periodno = '" . $PeriodDateOfFile . "'";
+		$result = DB_query($SQL);
 		
 		$ExcelSheetName = "SalaryToPrint";
 		$objPHPExcel->setActiveSheetIndexByName($ExcelSheetName);
@@ -57,6 +73,7 @@ function submit(&$db, $DateOfFile, $SelectedFile) {
 		$highestRow         = $worksheet->getHighestRow(); // e.g. 10
 		$highestColumn      = $worksheet->getHighestColumn(); // e.g 'F'
 		$highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn);
+		$InsertErrMsg = _('The SQL to insert Imported Salary Info failed');
 		
 		for ($row = 2; $row <= $highestRow; ++ $row) {
 			// first check if the row belongs to an active employee or not (old one so don't need to process)
@@ -180,7 +197,7 @@ function submit(&$db, $DateOfFile, $SelectedFile) {
 								)";
 				$resultInsert = DB_query($sqlInsert,$InsertErrMsg,$DbgMsg,true);
 				
-				prnMsg($CodeName . " Imported", "success");
+				prnMsg($CodeName . " " . $Position . " Imported", "success");
 			}
 		}
 	}
@@ -198,10 +215,16 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	echo '<tr><td>' . _('Select Month of the Salaries') . '</td>
 							<td><select name="DateOfFile">';
 							
-	$PeriodsResult = DB_query("SELECT lastdate_in_period FROM periods ORDER BY periodno");
+	$PeriodNow = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
 	
+	$PeriodsResult = DB_query("SELECT lastdate_in_period, periodno FROM periods ORDER BY periodno");
+
 	while ($PeriodRow = DB_fetch_row($PeriodsResult)){
-		echo '<option value="' . $PeriodRow[0] . '">' . MonthAndYearFromSQLDate($PeriodRow[0]) . '</option>';
+		if ($PeriodRow[1] == ($PeriodNow-1)){
+			echo '<option selected="selected" value="' . $PeriodRow[0] . '">' . MonthAndYearFromSQLDate($PeriodRow[0]) . '</option>';
+		}else{
+			echo '<option value="' . $PeriodRow[0] . '">' . MonthAndYearFromSQLDate($PeriodRow[0]) . '</option>';
+		}
 	}
 	echo '</select></td></tr>';
 	
