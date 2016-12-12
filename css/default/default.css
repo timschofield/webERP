@@ -1,5 +1,9 @@
 /* $Id$*/
 /* Default theme for WebERP by . */
+/*	Design guidelines:
+	Fonts are 10px hight.
+	Icons are 16px x 16px size.
+*/
 
 body {
 	background-color:#ccd;
@@ -7,6 +11,7 @@ body {
 	font-size:10pt;
 	margin:0;
 	padding:0;
+	/* Tag selector for body. */
 }
 
 button img {
@@ -19,25 +24,26 @@ a {
 	color:blue;
 	text-decoration:none;
 }
-
 a:hover {
 	color:blue;
+	background-color:transparent;
 	text-decoration:underline;
+	/* Tag selector for mouse over link. */
 }
 
 img {
 	border:none;
 	vertical-align:middle;
 }
-
 p.bad {
 	color:red;
 	font-weight:bold;
+	/* Tag selector for paragraph class "bad". */
 }
-
 p.good {
 	color:green;
 	font-weight:bold;
+	/* Tag selector for paragraph class "good". */
 }
 
 table {
@@ -515,19 +521,16 @@ textarea.texterror {
 
 .centre {
 	text-align:center;
-	/* Class selector to horizontal align a text (centre) in an element. */
+	/* Class selector to horizontally align a text (centre) in an element. */
 }
-
 .number {
 	text-align:right;
-	/* Class selector to horizontal align a number (right) in an element. */
+	/* Class selector to horizontally align a number (right) in an element. */
 }
-
 .text {
 	text-align:left;
-	/* Class selector to horizontal align a text (left) in an element. */
+	/* Class selector to horizontally align a text (left) in an element. */
 }
-
 .page_title_text {
 	color:black;
 	font-weight:bold;

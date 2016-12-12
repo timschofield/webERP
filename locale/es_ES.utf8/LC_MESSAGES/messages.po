@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-24 08:54-0600\n"
-"PO-Revision-Date: 2016-11-24 08:08-0600\n"
+"PO-Revision-Date: 2016-12-02 12:32-0600\n"
 "Last-Translator: Rafael E. Chacón <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -15077,7 +15077,7 @@ msgstr ""
 
 #: GLCashFlowsIndirect.php:765
 msgid "Report parameters"
-msgstr ""
+msgstr "Parámetros del informe"
 
 #: GLCashFlowsIndirect.php:798
 msgid "Select the beginning of the reporting period"

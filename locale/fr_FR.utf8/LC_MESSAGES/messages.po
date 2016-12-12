@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-24 08:54-0600\n"
-"PO-Revision-Date: 2016-11-20 17:50-0600\n"
+"PO-Revision-Date: 2016-12-02 12:36-0600\n"
 "Last-Translator: Rafael E. Chacón <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: French <none>\n"
 "Language: fr_FR\n"
@@ -15156,7 +15156,7 @@ msgstr ""
 
 #: GLCashFlowsIndirect.php:765
 msgid "Report parameters"
-msgstr ""
+msgstr "Paramètres du rapport"
 
 #: GLCashFlowsIndirect.php:798
 msgid "Select the beginning of the reporting period"
@@ -51270,10 +51270,9 @@ msgstr "Paramètres du serveur SMTP"
 msgid "Set Purchase Order Authorisation levels"
 msgstr "Autorisations pour les achats"
 
-# JDN
 #: includes/MainMenuLinksArray.php:523
 msgid "Sales People"
-msgstr "Gestion des vendeurs"
+msgstr "Vendeurs"
 
 #: includes/MainMenuLinksArray.php:524
 msgid "Sales Areas"
