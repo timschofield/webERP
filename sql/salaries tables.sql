@@ -1,3 +1,5 @@
+DROP TABLE salariescalculated;
+
 CREATE TABLE IF NOT EXISTS `salariescalculated` (
   `periodno` smallint(6) NOT NULL COMMENT 'period of the salary',
   `codename` varchar(30) NOT NULL COMMENT 'code name of employee',
@@ -11,7 +13,7 @@ CREATE TABLE IF NOT EXISTS `salariescalculated` (
   `zonepph21` varchar(30) NOT NULL COMMENT 'zone for PPH21',
   `salaryfrom` date NOT NULL DEFAULT '0000-00-00',
   `salaryto` date NOT NULL DEFAULT '0000-00-00',
-  `paymentday` date NOT NULL DEFAULT '0000-00-00',
+  `paymentday` varchar(30) NOT NULL DEFAULT '0000-00-00',
   `upahpokok` double NOT NULL DEFAULT '0',
   `tunjanganmakan` double NOT NULL DEFAULT '0',
   `tunjangantransport` double NOT NULL DEFAULT '0',
