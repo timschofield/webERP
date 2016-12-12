@@ -642,11 +642,13 @@ $MenuItems['PC']['Maintenance']['URL'] = array(	'/PcTypeTabs.php',
 
 $MenuItems['Personalia']['Transactions']['Caption'] = array(_('Import Monthly Salaries Info from Excel File'),
 															_('Export Info for PPH21 Deduction PT. Bumi Biru'),
-															_('Export Info for PPH21 Deduction PT. ADU'));
+//															_('Export Info for PPH21 Deduction PT. ADU')
+															_('Update PPH21 Deduction PT. Bumi Biru'));
 
 $MenuItems['Personalia']['Transactions']['URL'] = array('/KLPersonaliaImportSalaries.php',
-														'/KLPersonaliaExportInfoPPH21.php?Group=PTBB',
-														'/KLPersonaliaExportInfoPPH21.php?Group=PTADU');
+														'/KLPersonaliaExportInfoPPH21.php?Company=PTBB',
+//														'/KLPersonaliaExportInfoPPH21.php?Company=PTADU',
+														'/KLPersonaliaDeductionPPH21.php?Company=PTBB');
 
 $MenuItems['Personalia']['Reports']['Caption'] = array();
 

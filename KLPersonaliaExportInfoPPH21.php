@@ -4,29 +4,13 @@ require_once ('Classes/PHPExcel.php');
 include('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
-//include('includes/KLBoards.php');
-//include('includes/KLGeneralFunctions.php');
-
-
-if (!isset($_GET['Group']) AND !isset($_POST['Group'])){
-	$Title = _('Export Info for PPH21 Deduction');
-	include('includes/header.inc');
-	prnMsg('Script called without the correct parameters','warn');
-	include('includes/footer.inc');
-}else{
-	if(isset($_GET['Group'])){
-		$Company = $_GET['Group'];
-	}else{
-		$Company = $_POST['Group'];
-	}
-}
+include('includes/KLCompanySelection.php');
 
 if (isset($_POST['submit'])) {
 	submit($db, $Company, $_POST['DateOfFile']);
 } else {
 	display($db);
 }
-
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
 function submit(&$db, $Company, $LastDateOfPeriod) {
@@ -200,7 +184,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
           <div>
 			<br/>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<input type="hidden" name="Group" value="' . $_GET['Group'] . '" />';
+	echo '<input type="hidden" name="Company" value="' . $_GET['Company'] . '" />';
 
 	echo '<p class="page_title_text">
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '
