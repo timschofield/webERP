@@ -1,5 +1,6 @@
 <?php
 require_once ('Classes/PHPExcel.php');
+require_once ('Classes/PHPExcel/IOFactory.php');
 
 include('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
@@ -10,14 +11,10 @@ $Title = _('Import Excel with Monthly Salary Information');
 
 include('includes/header.inc');
 
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" enctype="multipart/form-data">
 	  <div>
 		<br/>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-
-echo '<p class="page_title_text">
-		<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Import Excel with Monthly Salary Information') . '" alt="" />' . ' ' . _('Import Excel with Monthly Salary Information') . '
-	</p>';
 
 if (isset($_POST['submit'])) {
     submit($db, $_POST['DateOfFile'], $_POST['SelectedFile']);
@@ -32,11 +29,16 @@ include('includes/footer.inc');
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
 function submit(&$db, $DateOfFile, $SelectedFile) {
 
-	// upload to server and read later on...
-	// http://stackoverflow.com/questions/34127361/phpexcel-iofactoryloadtarget-file-is-working-on-localhost-but-not-on-server
-	
-	$ExcelFile = "/home4/kurakura/public_html/bumibiru.com/weberp/" . $_SESSION['reports_dir'] . '/' ."PT Gaji.xlsx";
-	$objPHPExcel = PHPExcel_IOFactory::load($ExcelFile);
+	// upload to server and load it...
+	// http://stackoverflow.com/questions/38581632/how-to-upload-excel-file-to-php-server-from-input-type-file
+
+	$target_dir =  $_SESSION['reports_dir'] . '/';
+	$target_file = $target_dir . basename($_FILES["SelectedFile"]["name"]);
+	$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+	move_uploaded_file($_FILES["SelectedFile"]["tmp_name"], $target_file);
+	$inputFileType = PHPExcel_IOFactory::identify($target_file);
+	$objReader = PHPExcel_IOFactory::createReader($inputFileType);
+	$objPHPExcel = $objReader->load($target_file);
 	
 	//initialise no input errors
 	$InputError = FALSE;
@@ -46,7 +48,11 @@ function submit(&$db, $DateOfFile, $SelectedFile) {
 	$objPHPExcel->setActiveSheetIndexByName($ExcelSheetName);
 	$worksheet = $objPHPExcel->getActiveSheet();
 	$ExcelPeriodLastDate = ConvertExcelDate($worksheet->getCell('E10'));
+	$MonthOfSalary = $worksheet->getCell('E11')->getCalculatedValue();
 	if($ExcelPeriodLastDate != $DateOfFile){
+		echo '<p class="page_title_text">
+				<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Import Excel with Monthly Salary Information') . '" alt="" />' . ' ' . _('Import Excel with Monthly Salary Information') . '
+			</p>';
 		prnMsg("The month selected by the user is not the same as the month of the Excel file","warn");
 		$InputError = TRUE;
 	}
@@ -55,12 +61,21 @@ function submit(&$db, $DateOfFile, $SelectedFile) {
 	$PeriodDateOfFile = GetPeriod(ConvertSQLDate($DateOfFile), $db);
 	$PeriodNow = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
 	if($PeriodNow != ($PeriodDateOfFile + 1)){
+		echo '<p class="page_title_text">
+				<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Import Excel with Monthly Salary Information') . '" alt="" />' . ' ' . _('Import Excel with Monthly Salary Information') . '
+			</p>';
 		prnMsg("The month selected by the user and the Excel file should be last month","warn");
 		$InputError = TRUE;
 	}
 	
 	if(!$InputError){
 		
+		echo '<p class="page_title_text">
+				<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . 
+					_('Importing Excel with Salary Information for ') . $MonthOfSalary . '" alt="" />' . ' ' . 
+					_('Importing Excel with Salary Information for ') . $MonthOfSalary . '
+			</p>';
+
 		// let's delete the previous records of that month for test purposes
 		$SQL = "DELETE FROM salariescalculated
 				WHERE periodno = '" . $PeriodDateOfFile . "'";
@@ -75,6 +90,18 @@ function submit(&$db, $DateOfFile, $SelectedFile) {
 		$highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn);
 		$InsertErrMsg = _('The SQL to insert Imported Salary Info failed');
 		
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code Name') . '</th>
+							<th class="ascending">' . _('Position') . '</th>
+							<th class="ascending">' . _('Via') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+
 		for ($row = 2; $row <= $highestRow; ++ $row) {
 			// first check if the row belongs to an active employee or not (old one so don't need to process)
 			$Active = $worksheet->getCell('A'.$row)->getCalculatedValue();
@@ -197,28 +224,41 @@ function submit(&$db, $DateOfFile, $SelectedFile) {
 								)";
 				$resultInsert = DB_query($sqlInsert,$InsertErrMsg,$DbgMsg,true);
 				
-				prnMsg($CodeName . " " . $Position . " Imported", "success");
+				$k = StartEvenOrOddRow($k);
+				printf('<td class="number">%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						</tr>', 
+						$i,
+						$CodeName,
+						$Position,
+						$PaymentMethod
+						);
+				$i++;
 			}
 		}
+		echo '</table>
+				</div>
+				</form>';
+
 	}
 } // End of function submit()
 
 
 function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 {
-// Display form fields. This function is called the first time
-// the page is called.
-
-
+	// Display form fields. This function is called the first time the page is called.
+	echo '<p class="page_title_text">
+			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Import Excel with Monthly Salary Information') . '" alt="" />' . ' ' . _('Import Excel with Monthly Salary Information') . '
+		</p>';
 	echo '<table class="selection">';
 
 	echo '<tr><td>' . _('Select Month of the Salaries') . '</td>
 							<td><select name="DateOfFile">';
 							
 	$PeriodNow = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
-	
 	$PeriodsResult = DB_query("SELECT lastdate_in_period, periodno FROM periods ORDER BY periodno");
-
 	while ($PeriodRow = DB_fetch_row($PeriodsResult)){
 		if ($PeriodRow[1] == ($PeriodNow-1)){
 			echo '<option selected="selected" value="' . $PeriodRow[0] . '">' . MonthAndYearFromSQLDate($PeriodRow[0]) . '</option>';
@@ -227,8 +267,8 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 		}
 	}
 	echo '</select></td></tr>';
-	
-	echo '<tr><td>' . _('PTGaji file:') . '</td><td><input name="SelectedFile" type="file" />
+
+	echo '<tr><td>' . _('Excel file with Gaji Information:') . '</td><td><input type="file"  name="SelectedFile" id="SelectedFile"/></td><td>
 			</td></tr>
 		</table>';
 
