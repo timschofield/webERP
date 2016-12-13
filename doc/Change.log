@@ -1,5 +1,6 @@
 webERP Change Log
 
+11/12/16  PaulT: Dashboard.php: Correct table closure. When there are no outstanding orders, causes footer artifact.
 08/12/16  Exson: Fixed the variable error in stock take pdf header in includes/PDFStockCheckPageHeader.inc. And fixed undefined noise in Payments.php. Reported by shane.
 08/12/16  Exson: Fixed noise of undefined variable and string required for function_exists in Dashboard.php. Reported by Shane.
 06/12/16  PaulT: SelectProduct.php: Add footer before the script exits when stock categories are not defined.

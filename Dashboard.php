@@ -684,10 +684,10 @@ if(in_array($OrderSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($O
 		echo	'<tr>
 					<td class="number" colspan="7"><b>', _('Total Order(s) Value in'), ' ', $_SESSION['CompanyRecord']['currencydefault'], ' :</b></td>
 					<td class="number"><b>', locale_number_format($OrdersTotal,$_SESSION['CompanyRecord']['decimalplaces']), '</b></td>
-				</tr>
-			</tbody></table>';
-
+				</tr>';
 	} //rows > 0
+
+	echo '</tbody></table>';
 } //OrderSecurity
 include('includes/footer.inc');
 ?>
