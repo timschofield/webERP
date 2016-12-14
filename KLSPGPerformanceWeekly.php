@@ -176,10 +176,10 @@ function SPGPerformanceWeekly($db){
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
 							<th colspan="4">' . 'SPG' . '</th>
-							<th colspan="3">' . 'From ' . ConvertSQLDate($YesterdayD) . '</th>
-							<th colspan="3">' . 'From ' . ConvertSQLDate($YesterdayC) . '</th>
-							<th colspan="3">' . 'From ' . ConvertSQLDate($YesterdayB) . '</th>
-							<th colspan="3">' . 'From ' . ConvertSQLDate($YesterdayA) . '</th>
+							<th colspan="3">' . ConvertSQLDate($YesterdayD) . '</th>
+							<th colspan="3">' . ConvertSQLDate($YesterdayC) . '</th>
+							<th colspan="3">' . ConvertSQLDate($YesterdayB) . '</th>
+							<th colspan="3">' . ConvertSQLDate($YesterdayA) . '</th>
 						</tr>';
 		echo $TableHeader;
 		
@@ -230,17 +230,17 @@ function SPGPerformanceWeekly($db){
 					$myrow['salesmancode'],
 					$myrow['salesmanname'],
 					locale_number_format_zero_blank($myrow['mtdD'],0),
-					locale_number_format_zero_blank($myrow['last7D'],0),
-					locale_number_format_zero_blank($myrow['last30D'],0),
+					locale_number_format_zero_blank($myrow['last7D']/7,0),
+					locale_number_format_zero_blank($myrow['last30D']/30,0),
 					locale_number_format_zero_blank($myrow['mtdC'],0),
-					locale_number_format_zero_blank($myrow['last7C'],0),
-					locale_number_format_zero_blank($myrow['last30C'],0),
+					locale_number_format_zero_blank($myrow['last7C']/7,0),
+					locale_number_format_zero_blank($myrow['last30C']/30,0),
 					locale_number_format_zero_blank($myrow['mtdB'],0),
-					locale_number_format_zero_blank($myrow['last7B'],0),
-					locale_number_format_zero_blank($myrow['last30B'],0),
+					locale_number_format_zero_blank($myrow['last7B']/7,0),
+					locale_number_format_zero_blank($myrow['last30B']/30,0),
 					locale_number_format_zero_blank($myrow['mtdA'],0),
-					locale_number_format_zero_blank($myrow['last7A'],0),
-					locale_number_format_zero_blank($myrow['last30A'],0)
+					locale_number_format_zero_blank($myrow['last7A']/7,0),
+					locale_number_format_zero_blank($myrow['last30A']/30,0)
 					);
 			$lastshop = $myrow['loccode'];
 		}
