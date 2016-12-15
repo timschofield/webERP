@@ -351,7 +351,7 @@ function ErrorsInTransfers($maxdays, $RootPath, $db){
 		echo $TableHeader;
 		$k = 0; //row colour counter
 		$NumTransfers = 1;
-		$NumTransfersWithErrors = 1;
+		$NumTransfersWithErrors = 0;
 		
 		$TotalShippedModels = 0;
 		$TotalCancelledModels = 0;
