@@ -8,21 +8,23 @@ include('includes/KLCompanySelection.php');
 $Title = _('Export CSV File for Transfer LLG Danamon');
 
 if (isset($_POST['submit'])) {
-	submit($db, $Company, $_POST['DateOfFile']);
+	submit($Title, $Company, $_POST['DateOfFile'], $db);
 } else {
-	display($db);
+	display($Title, $db);
 }
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit(&$db, $Company, $LastDateOfPeriod) {
+function submit($Title, $Company, $LastDateOfPeriod, &$db) {
 
 	//initialise no input errors
 	$InputError = FALSE;
 
 	//first off validate inputs sensible
 	$PeriodExportDate = GetPeriod(ConvertSQLDate($LastDateOfPeriod), $db);
+	$Today = date('Y-m-d');
 	$PeriodNow = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
 	$PeriodMonth = MonthAndYearFromSQLDate($LastDateOfPeriod);
+	
 	
 	if($PeriodNow != ($PeriodExportDate + 1)){
 		include('includes/header.inc');
@@ -67,22 +69,22 @@ function submit(&$db, $Company, $LastDateOfPeriod) {
 		if (DB_num_rows($result) != 0){
 			// prepare CSV file
 			header("Content-Type: text/csv");
-			header("Content-Disposition: attachment; filename=file.csv");
+			header("Content-Disposition: attachment; filename=GajiTransferDanamon-" . $Today . ".csv");
 			$output = fopen("php://output", "w");
-			
+			$Separator = ",";
+			$EOL = "\n";
+			$i = 0;
 			while ($myrow = DB_fetch_array($result)) {
-				$row = array();
-				$row[0] = $myrow['bankaccount'];
-				$row[1] = 123456789;
-				$row[2] = substr($Company . ' '. $PeriodMonth,0,30);
-				$row[3] = substr('Gaji' . ' '. $PeriodMonth,0,20);
-				$row[4] = $myrow['bankaccountholder'];
-				
-				fputcsv($output, $row, ","); 
+				$Line = $myrow['bankaccount'] . $Separator . 
+						"123456789" . $Separator . 
+						substr($Company . ' '. $PeriodMonth,0,30). $Separator . 
+						substr('Gaji' . ' '. $PeriodMonth,0,20). $Separator . 
+						$myrow['bankaccountholder'] . $EOL;
+
+				fwrite($output, $Line);
 				$i++;
 			}
 			fclose($output);
-
 		}else{
 			include('includes/header.inc');
 			prnMsg('No data to export CSV File for Transfer LLG Danamon ');
@@ -92,7 +94,7 @@ function submit(&$db, $Company, $LastDateOfPeriod) {
 } // End of function submit()
 
 
-function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
+function display($Title, &$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 {
 // Display form fields. This function is called the first time
 // the page is called.
