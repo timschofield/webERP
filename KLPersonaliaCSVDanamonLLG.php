@@ -75,11 +75,35 @@ function submit($Title, $Company, $LastDateOfPeriod, &$db) {
 			$EOL = "\n";
 			$i = 0;
 			while ($myrow = DB_fetch_array($result)) {
+				$ValueTransfer = $myrow['upahpokok'] +
+								$myrow['tunjanganmakan'] +
+								$myrow['tunjangantransport'] +
+								$myrow['tunjanganjabatan'] +
+								$myrow['tunjanganmasakerja'] +
+								$myrow['tunjangankendaraan'] +
+								$myrow['komisitetap'] +
+								$myrow['komisiretail'] +
+								$myrow['komisisupport'] +
+								$myrow['bonuspenjualan'] +
+								$myrow['lembur'] +
+								$myrow['thr'] +
+								$myrow['penerimaanlain'] +
+								$myrow['potonganjht'] +
+								$myrow['potonganaskes'] +
+								$myrow['potonganpph21'] +
+								$myrow['potonganabsen'] +
+								$myrow['potonganlain2'];
+								
 				$Line = $myrow['bankaccount'] . $Separator . 
-						"123456789" . $Separator . 
-						substr($Company . ' '. $PeriodMonth,0,30). $Separator . 
-						substr('Gaji' . ' '. $PeriodMonth,0,20). $Separator . 
-						$myrow['bankaccountholder'] . $EOL;
+						round($ValueTransfer,0) . $Separator . 
+						substr($Company . ' '. $PeriodMonth,0,30) . $Separator . 
+						substr('Gaji' . ' '. $PeriodMonth,0,20) . $Separator . 
+						$myrow['bankaccountholder'] . $Separator . 
+						"PUSAT" . $Separator . 
+						$myrow['bankcode'] . $Separator . 
+						"PUSAT" . $Separator . 
+						"1" . $Separator . 
+						"Y" . $EOL;
 
 				fwrite($output, $Line);
 				$i++;
