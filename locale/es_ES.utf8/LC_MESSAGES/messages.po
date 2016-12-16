@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-24 08:54-0600\n"
-"PO-Revision-Date: 2016-12-02 12:32-0600\n"
+"PO-Revision-Date: 2016-12-16 11:38-0600\n"
 "Last-Translator: Rafael E. Chacón <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -10528,7 +10528,7 @@ msgstr "Recibido"
 #: Payments.php:1135 PcExpenses.php:193 PcExpenses.php:325
 #: SuppTransGLAnalysis.php:111 SupplierCredit.php:461 SupplierInvoice.php:835
 msgid "Tag"
-msgstr "Centro de Costo (Tag)"
+msgstr "Etiqueta"
 
 #: CustomerReceipt.php:1025
 msgid ""
@@ -15595,7 +15595,7 @@ msgstr ""
 
 #: GLTags.php:81
 msgid "Tag ID"
-msgstr "ID Centro de Costo"
+msgstr "Identificación de la etiqueta"
 
 #: GLTags.php:97
 msgid "Are you sure you wish to delete this GL tag?"
@@ -43139,7 +43139,7 @@ msgstr ""
 
 #: Z_ImportGLTransactions.php:114
 msgid "Tag ref"
-msgstr ""
+msgstr "Referencia de la etiqueta"
 
 #: Z_ImportGLTransactions.php:114 Z_ImportPriceList.php:81
 #: Z_ImportPriceList.php:89 Z_ImportPriceList.php:98
@@ -47590,7 +47590,7 @@ msgstr "Fecha en libro diario"
 
 #: includes/PDFGLJournalHeader.inc:23
 msgid "Tag Details"
-msgstr ""
+msgstr "Detalles de la etiqueta"
 
 #: includes/PDFGrnHeader.inc:20
 msgid "GRN number "
