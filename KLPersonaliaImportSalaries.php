@@ -110,6 +110,7 @@ function submit(&$db, $DateOfFile, $SelectedFile) {
 				$CodeName = $worksheet->getCell('B'.$row)->getCalculatedValue();
 				$FullName = $worksheet->getCell('C'.$row)->getCalculatedValue();
 				$CompanyCode = $worksheet->getCell('D'.$row)->getCalculatedValue();
+				$JoiningDate = ConvertExcelDate($worksheet->getCell('BF'.$row));
 				$Position = $worksheet->getCell('E'.$row)->getCalculatedValue();
 				$PaymentMethod = $worksheet->getCell('F'.$row)->getCalculatedValue();
 				if ($PaymentMethod == "Bank"){
@@ -154,6 +155,7 @@ function submit(&$db, $DateOfFile, $SelectedFile) {
 								codename,
 								fullname,
 								company,
+								joiningdate,
 								position,
 								paymentmethod,
 								bankcode,
@@ -190,6 +192,7 @@ function submit(&$db, $DateOfFile, $SelectedFile) {
 								'" . $CodeName . "',
 								'" . $FullName . "',
 								'" . $CompanyCode . "',
+								'" . $JoiningDate . "',
 								'" . $Position . "',
 								'" . $PaymentMethod . "',
 								'" . $BankCode . "',

@@ -64,7 +64,8 @@ function submit($Title, $Company, $LastDateOfPeriod, &$db) {
 				WHERE company = '" . $Company . "'
 					AND periodno = '" . $PeriodExportDate . "'
 					AND paymentmethod = 'Bank'
-				ORDER BY fullname";
+				ORDER BY joiningdate,
+					fullname";
 		$result = DB_query($SQL);
 		if (DB_num_rows($result) != 0){
 			// prepare CSV file
@@ -95,7 +96,8 @@ function submit($Title, $Company, $LastDateOfPeriod, &$db) {
 								$myrow['potonganlain2'];
 								
 				$Line = $myrow['bankaccount'] . $Separator . 
-						round($ValueTransfer,0) . $Separator . 
+//						round($ValueTransfer,0) . $Separator . 
+						$ValueTransfer . $Separator . 
 						substr($Company . ' '. $PeriodMonth,0,30) . $Separator . 
 						substr('Gaji' . ' '. $PeriodMonth,0,20) . $Separator . 
 						$myrow['bankaccountholder'] . $Separator . 
