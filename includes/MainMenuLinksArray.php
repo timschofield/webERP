@@ -648,7 +648,9 @@ $MenuItems['Personalia']['Transactions']['Caption'] = array(_('Import Monthly Sa
 															_('Export Monthly Salary Slips PT. Bumi Biru'),
 //															_('Export Monthly Salary Slips PT. ADU'),
 															_('Export CSV File for Transfer LLG Danamon PT. Bumi Biru'),
-//															_('Export CSV File for Transfer LLG Danamon PT. ADU')
+//															_('Export CSV File for Transfer LLG Danamon PT. ADU'),
+															_('Move Salaries info to Petty Cash PT. Bumi Biru'),
+//															_('Move Salaries info to Petty Cash PT. ADU')
 															);
 
 $MenuItems['Personalia']['Transactions']['URL'] = array('/KLPersonaliaImportSalaries.php',
@@ -659,7 +661,9 @@ $MenuItems['Personalia']['Transactions']['URL'] = array('/KLPersonaliaImportSala
 														'/KLPersonaliaPDFMonthlySalarySlips.php?Company=PTBB',
 //														'/KLPersonaliaPDFMonthlySalarySlips.php?Company=PTADU'
 														'/KLPersonaliaCSVDanamonLLG.php?Company=PTBB',
-//														'/KLPersonaliaCSVDanamonLLG.php?Company=PTADU'
+//														'/KLPersonaliaCSVDanamonLLG.php?Company=PTADU',
+														'/KLPersonaliaMoveTxToPC.php?Company=PTBB',
+//														'/KLPersonaliaMoveTxToPC.php?Company=PTADU'
 														);
 
 $MenuItems['Personalia']['Reports']['Caption'] = array();
