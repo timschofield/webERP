@@ -645,14 +645,22 @@ $MenuItems['Personalia']['Transactions']['Caption'] = array(_('Import Monthly Sa
 //															_('Export Info for PPH21 Deduction PT. ADU'),
 															_('Update PPH21 Deduction PT. Bumi Biru'),
 //															_('Update PPH21 Deduction PT. ADU'),
-															_('Export CSV File for Transfer LLG Danamon PT. Bumi Biru'));
+															_('Export Monthly Salary Slips PT. Bumi Biru'),
+//															_('Export Monthly Salary Slips PT. ADU'),
+															_('Export CSV File for Transfer LLG Danamon PT. Bumi Biru'),
+//															_('Export CSV File for Transfer LLG Danamon PT. ADU')
+															);
 
 $MenuItems['Personalia']['Transactions']['URL'] = array('/KLPersonaliaImportSalaries.php',
 														'/KLPersonaliaExportInfoPPH21.php?Company=PTBB',
 //														'/KLPersonaliaExportInfoPPH21.php?Company=PTADU',
 														'/KLPersonaliaDeductionPPH21.php?Company=PTBB',
 //														'/KLPersonaliaDeductionPPH21.php?Company=PTADU',
-														'/KLPersonaliaCSVDanamonLLG.php?Company=PTBB');
+														'/KLPersonaliaPDFMonthlySalarySlips.php?Company=PTBB',
+//														'/KLPersonaliaPDFMonthlySalarySlips.php?Company=PTADU'
+														'/KLPersonaliaCSVDanamonLLG.php?Company=PTBB',
+//														'/KLPersonaliaCSVDanamonLLG.php?Company=PTADU'
+														);
 
 $MenuItems['Personalia']['Reports']['Caption'] = array();
 
