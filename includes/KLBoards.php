@@ -196,6 +196,62 @@ function UsersNotLoggingIn($maxdays, $type, $db){
 	}
 }
 
+function RegularTransfersToShopNotReceived($PreparationTime, $LimitTime, $RootPath, $db){
+
+	$StartDate = Date('Y-m-d');
+	$StartTime = Date('H:i:s');
+
+	if ($StartTime >= $LimitTime){
+		$SQL = "SELECT DISTINCT reference,
+						shipdate,
+						shiploc,
+						recloc
+				FROM loctransfers 
+				WHERE  recqty < shipqty
+					AND shipdate <= '". $StartDate ." " . $PreparationTime . "'
+					AND recloc LIKE 'TOK%'
+				ORDER BY reference";
+		$result = DB_query($SQL);
+
+		if (DB_num_rows($result) != 0){
+			echo '<p class="page_title_text" align="center"><strong>' . 'Transfers to Shops prepared before ' . Date($_SESSION['DefaultDateFormat']) . 
+																		' at ' . $PreparationTime . ' but not received by SPG before ' . $LimitTime . '</strong></p>';
+			echo '<div>';
+			echo '<table class="selection">';
+			$TableHeader = '<tr>
+								<th class="ascending">' . _('#') . '</th>
+								<th class="ascending">' . _('Transfer') . '</th>
+								<th class="ascending">' . _('Date') . '</th>
+								<th class="ascending">' . _('From') . '</th>
+								<th class="ascending">' . _('To') . '</th>
+							</tr>';
+			echo $TableHeader;
+			$k = 0; //row colour counter
+			$i = 1;
+			while ($myrow = DB_fetch_array($result)) {
+				$k = StartEvenOrOddRow($k);
+				$CodeLink = '<a href="' . $RootPath . '/StockLocTransferReceive.php?Trf_ID=' . $myrow['reference'] . '">' . $myrow['reference'] . '</a>';
+				printf('<td class="number">%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						</tr>', 
+						$i, 
+						$CodeLink, 
+						ConvertSQLDateTime($myrow['shipdate']), 
+						$myrow['shiploc'], 
+						$myrow['recloc'] 
+						);
+				$i++;
+			}
+			echo '</table>
+					</div>';
+		}
+	}
+}
+
+
 function TransfersDelayed($maxdays, $RootPath, $db){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 	$SQL = "SELECT DISTINCT reference,

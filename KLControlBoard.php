@@ -52,7 +52,10 @@ if (!isset($_GET['Section'])){
 if ($KL_SystemAdmin){
 	// WARNINGS STILL NOT DOCUMENTED ON WIKI
 
+
+
 prnMsg("START OF PENDING FOR KL INTRANET ",'success');
+		RegularTransfersToShopNotReceived('08:00:00','15:00:00', $RootPath, $db);
 		NotDiscountedItemsWithDiscount($RootPath, $db);
 		GoodsReceivedNotInvoicedControl(1000000, $periodnow, $db);
 		FlaggedAsObsoleteButStockAvailable($RootPath, $db);
@@ -998,6 +1001,16 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 		UsersNotLoggingIn(90, "SPGSUPPORT", $db);
 		$NumberOfTestExecuted++;
+	}
+	
+	if ($KL_SystemAdmin 
+		OR $KL_OperationalManager 
+		OR $KL_BusinessDevelopmentManager 
+		OR $KL_ShopSupportLeader 
+		OR $KL_SalesDirector){
+		RegularTransfersToShopNotReceived('08:00:00','15:00:00', $RootPath, $db);
+		$NumberOfTestExecuted++;
+		
 	}
 
 	if ($KL_ShopSupportTeam){ 
