@@ -1,6 +1,7 @@
 <?php
 /* $Id$*/
 /* Defines the general ledger accounts */
+/* To delete, insert, or update an account. */
 
 // BEGIN: Functions division ---------------------------------------------------
 function CashFlowsActivityName($Activity) {
@@ -226,37 +227,29 @@ if(!isset($_GET['delete'])) {
 	echo '<form method="post" id="GLAccounts" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	if(isset($SelectedAccount)) {
-		//editing an existing account
-
+	if(isset($SelectedAccount)) {// Edit an existing account.
+		echo '<input type="hidden" name="SelectedAccount" value="' . $SelectedAccount . '" />';
 		$Sql = "SELECT accountcode, accountname, group_, cashflowsactivity FROM chartmaster WHERE accountcode='" . $SelectedAccount ."'";
 		$Result = DB_query($Sql);
 		$MyRow = DB_fetch_array($Result);
 
 		$_POST['AccountCode'] = $MyRow['accountcode'];
-		$_POST['AccountName']	= $MyRow['accountname'];
+		$_POST['AccountName'] = $MyRow['accountname'];
 		$_POST['Group'] = $MyRow['group_'];
 		$_POST['CashFlowsActivity'] = $MyRow['cashflowsactivity'];
-
-		echo '<input type="hidden" name="SelectedAccount" value="' . $SelectedAccount . '" />';
-		echo '<input type="hidden" name="AccountCode" value="' . $_POST['AccountCode'] .'" />';
-		echo '<table class="selection">
-				<tr><td>' . _('Account Code') . ':</td>
-					<td>' . $_POST['AccountCode'] . '</td></tr>';
 	} else {
-		echo '<table class="selection">';
-		echo '<tr>
-				<td>' . _('Account Code') . ':</td>
-				<td><input type="text" name="AccountCode" required="required" autofocus="autofocus" data-type="no-illegal-chars" title="' . _('Enter up to 20 alpha-numeric characters for the general ledger account code') . '" size="20" maxlength="20" /></td>
-			</tr>';
+		$_POST['AccountCode'] = '';
+		$_POST['AccountName'] = '';
 	}
 
-	if(!isset($_POST['AccountName'])) {
-		$_POST['AccountName']='';
-	}
-	echo '<tr>
+	echo '<table class="selection">
+		<tr>
+			<td>', _('Account Code'), ':</td>
+			<td><input ', (isset($_POST['AccountCode']) ? 'disabled="disabled" ' : 'autofocus="autofocus" '), 'data-type="no-illegal-chars" maxlength="20" name="AccountCode" required="required" size="20" title="', _('Enter up to 20 alpha-numeric characters for the general ledger account code'), '" type="text" value="', $_POST['AccountCode'], '" /></td>
+		</tr>
+		<tr>
 			<td>' . _('Account Name') . ':</td>
-			<td><input type="text" size="51" required="required" ' . (isset($_POST['AccountCode']) ? 'autofocus="autofocus"':'') . ' title="' . _('Enter up to 50 alpha-numeric characters for the general ledger account name') . '" maxlength="50" name="AccountName" value="' . $_POST['AccountName'] . '" /></td></tr>';
+			<td><input ', (isset($_POST['AccountCode']) ? 'autofocus="autofocus" ' : ''), 'maxlength="50" name="AccountName" required="required" size="51" title="' . _('Enter up to 50 alpha-numeric characters for the general ledger account name') . '" type="text" value="', $_POST['AccountName'], '" /></td></tr>';
 
 	$Sql = "SELECT groupname FROM accountgroups ORDER BY sequenceintb";
 	$Result = DB_query($Sql);
@@ -264,18 +257,15 @@ if(!isset($_GET['delete'])) {
 	echo '<tr>
 			<td>' . _('Account Group') . ':</td>
 			<td><select required="required" name="Group">';
-
 	while($MyRow = DB_fetch_array($Result)) {
+		echo '<option';
 		if(isset($_POST['Group']) and $MyRow[0]==$_POST['Group']) {
-			echo '<option selected="selected" value="';
-		} else {
-			echo '<option value="';
+			echo ' selected="selected"';
 		}
-		echo $MyRow[0] . '">' . $MyRow[0] . '</option>';
+		echo ' value="', $MyRow[0], '">', $MyRow[0], '</option>';
 	}
 	echo '</select></td>
 		</tr>
-
 		<tr>
 			<td><label for="CashFlowsActivity">', _('Cash Flows Activity'), ':</label></td>
 			<td><select id="CashFlowsActivity" name="CashFlowsActivity" required="required">
@@ -287,8 +277,6 @@ if(!isset($_GET['delete'])) {
 				</select>
 			</td>
 		</tr>
-
-
 		</table>';
 
 	echo '
