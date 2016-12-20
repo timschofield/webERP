@@ -914,10 +914,9 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			<br />
 			<div class="centre noprint">
 				<input tabindex="8" type="submit" name="Submit" value="' . _('Enter Information') . '" />
-					<button onclick="javascript:window.print()" type="button"><img alt="" src="' . $RootPath . '/css/' . $Theme .
-					'/images/printer.png" /> ' .
-					_('Print This') . '</button>
-			</div>
+					<button onclick="javascript:window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
+						'/images/printer.png" /> ', _('Print'), '</button>', // "Print" button.
+			'</div>
             </div>
 			</form>';
 

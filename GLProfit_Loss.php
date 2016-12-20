@@ -1307,10 +1307,10 @@ if ((!isset($_POST['FromPeriod'])
 /*	echo '</tbody>';// See comment at the begin of the table.*/
 	echo '</table>';
 	echo '</div>';// div id="Report".
-	echo '<br />', // Form buttons:
-		'<div class="centre noprint">',
+	echo '<br />',
+		'<div class="centre noprint">', // Form buttons:
 			'<button onclick="javascript:window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
-				'/images/printer.png" /> ', _('Print This'), '</button> ', // "Print This" button.
+				'/images/printer.png" /> ', _('Print'), '</button>', // "Print" button.
 			'<button name="SelectADifferentPeriod" type="submit" value="', _('Select A Different Period'), '"><img alt="" src="', $RootPath, '/css/', $Theme,
 				'/images/gl.png" /> ', _('Select A Different Period'), '</button> ', // "Select A Different Period" button.
 			'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,

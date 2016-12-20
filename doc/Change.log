@@ -1,5 +1,6 @@
 webERP Change Log
 
+20/12/16  RChacon: Standardise to "Print" button.
 20/12/16  RChacon: Add a report of purchases to suppliers for the range of selected dates.
 11/12/16  PaulT: Dashboard.php: Correct table closure. When there are no outstanding orders, causes footer artifact.
 08/12/16  Exson: Fixed the variable error in stock take pdf header in includes/PDFStockCheckPageHeader.inc. And fixed undefined noise in Payments.php. Reported by shane.
