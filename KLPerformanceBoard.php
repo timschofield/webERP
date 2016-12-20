@@ -681,14 +681,14 @@ function YearDifferenceSales($typereport, $NumDaysA, $db){
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
-							AND salesorders.orddate >  '". $StartDateA . "'
+							AND salesorders.orddate >= '". $StartDateA . "'
 							AND salesorders.orddate <= '". $YesterdayA . "'
 							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesA,
 					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
-							AND salesorders.orddate >  '". $StartDateB . "'
+							AND salesorders.orddate >= '". $StartDateB . "'
 							AND salesorders.orddate <= '". $YesterdayB . "'
 							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesB
 				FROM debtorsmaster
@@ -697,7 +697,7 @@ function YearDifferenceSales($typereport, $NumDaysA, $db){
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
-							AND salesorders.orddate >  '". $StartDateA . "'
+							AND salesorders.orddate >= '". $StartDateA . "'
 							AND salesorders.orddate <= '". $YesterdayA . "'
 							AND salesorders.debtorno = debtorsmaster.debtorno) DESC";
 	}else{
@@ -707,14 +707,14 @@ function YearDifferenceSales($typereport, $NumDaysA, $db){
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
-							AND salesorders.orddate >  '". $StartDateA . "'
+							AND salesorders.orddate >= '". $StartDateA . "'
 							AND salesorders.orddate <= '". $YesterdayA . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS salesA,
 					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
-							AND salesorders.orddate >  '". $StartDateB . "'
+							AND salesorders.orddate >= '". $StartDateB . "'
 							AND salesorders.orddate <= '". $YesterdayB . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS salesB
 				FROM salesman
@@ -723,7 +723,7 @@ function YearDifferenceSales($typereport, $NumDaysA, $db){
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
-							AND salesorders.orddate >  '". $StartDateA . "'
+							AND salesorders.orddate >= '". $StartDateA . "'
 							AND salesorders.orddate <= '". $YesterdayA . "'
 							AND salesorders.salesperson = salesman.salesmancode) DESC";
 	}
@@ -952,42 +952,42 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
-							AND salesorders.orddate >  '". $StartDateA . "'
+							AND salesorders.orddate >= '". $StartDateA . "'
 							AND salesorders.orddate <= '". $Yesterday . "'
 							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesA,
 					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
-							AND salesorders.orddate >  '". $StartDateB . "'
+							AND salesorders.orddate >= '". $StartDateB . "'
 							AND salesorders.orddate <= '". $Yesterday . "'
 							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesB,
 					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
-							AND salesorders.orddate >  '". $StartDateC . "'
+							AND salesorders.orddate >= '". $StartDateC . "'
 							AND salesorders.orddate <= '". $Yesterday . "'
 							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesC,
 					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
-							AND salesorders.orddate >  '". $StartDateD . "'
+							AND salesorders.orddate >= '". $StartDateD . "'
 							AND salesorders.orddate <= '". $Yesterday . "'
 							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesD,
 					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
-							AND salesorders.orddate >  '". $StartDateE . "'
+							AND salesorders.orddate >= '". $StartDateE . "'
 							AND salesorders.orddate <= '". $Yesterday . "'
 							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesE,
 					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
-							AND salesorders.orddate >  '". $StartDateF . "'
+							AND salesorders.orddate >= '". $StartDateF . "'
 							AND salesorders.orddate <= '". $Yesterday . "'
 							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesF,
 					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
@@ -1003,7 +1003,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
-							AND salesorders.orddate >  '". $StartDateSort . "'
+							AND salesorders.orddate >= '". $StartDateSort . "'
 							AND salesorders.orddate <= '". $Yesterday . "'
 							AND salesorders.debtorno = debtorsmaster.debtorno) DESC";
 	}else{
@@ -1014,7 +1014,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1 ".
 							$SQLByShop . "
-							AND salesorders.orddate >  '". $StartDateA . "'
+							AND salesorders.orddate >= '". $StartDateA . "'
 							AND salesorders.orddate <= '". $Yesterday . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS salesA,
 					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
@@ -1022,7 +1022,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1 ".
 							$SQLByShop . "
-							AND salesorders.orddate >  '". $StartDateB . "'
+							AND salesorders.orddate >= '". $StartDateB . "'
 							AND salesorders.orddate <= '". $Yesterday . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS salesB,
 					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
@@ -1030,7 +1030,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1 ".
 							$SQLByShop . "
-							AND salesorders.orddate >  '". $StartDateC . "'
+							AND salesorders.orddate >= '". $StartDateC . "'
 							AND salesorders.orddate <= '". $Yesterday . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS salesC,
 					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
@@ -1038,7 +1038,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1 ".
 							$SQLByShop . "
-							AND salesorders.orddate >  '". $StartDateD . "'
+							AND salesorders.orddate >= '". $StartDateD . "'
 							AND salesorders.orddate <= '". $Yesterday . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS salesD,
 					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
@@ -1046,7 +1046,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1 ".
 							$SQLByShop . "
-							AND salesorders.orddate >  '". $StartDateE . "'
+							AND salesorders.orddate >= '". $StartDateE . "'
 							AND salesorders.orddate <= '". $Yesterday . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS salesE,
 					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
@@ -1054,7 +1054,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1 ".
 							$SQLByShop . "
-							AND salesorders.orddate >  '". $StartDateF . "'
+							AND salesorders.orddate >= '". $StartDateF . "'
 							AND salesorders.orddate <= '". $Yesterday . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS salesF,
 					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
@@ -1071,7 +1071,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
-							AND salesorders.orddate >  '". $StartDateSort . "'
+							AND salesorders.orddate >= '". $StartDateSort . "'
 							AND salesorders.orddate <= '". $Yesterday . "'
 							AND salesorders.salesperson = salesman.salesmancode) DESC";
 	}
@@ -1223,14 +1223,14 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 function SPGPerformanceByShop($Shop, $NumDaysA, $NumDaysB, $NumDaysC, $db){
 
 	$YesterdayA  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
-	$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-1));
+	$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA));
 
-	$YesterdayB = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-1-1));
-	$StartDateB = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysB-1));
+	$YesterdayB = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-1));
+	$StartDateB = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysB));
 
-	$YesterdayC = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysB-1-1));
-	$StartDateC = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysC-1));
-	
+	$YesterdayC = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysB-1));
+	$StartDateC = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysC));
+
 	$SQL = "SELECT salesmancode,
 				salesmanname,
 				securityroles.secrolename,
@@ -1239,7 +1239,7 @@ function SPGPerformanceByShop($Shop, $NumDaysA, $NumDaysB, $NumDaysC, $db){
 					WHERE salesorderdetails.orderno = salesorders.orderno
 						AND salesorderdetails.completed = 1
 						AND salesorders.debtorno = '" . $Shop . "'
-						AND salesorders.orddate >  '". $StartDateA . "'
+						AND salesorders.orddate >= '". $StartDateA . "'
 						AND salesorders.orddate <= '". $YesterdayA . "'
 						AND salesorders.salesperson = salesman.salesmancode) AS daysA,
 				(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
@@ -1247,7 +1247,7 @@ function SPGPerformanceByShop($Shop, $NumDaysA, $NumDaysB, $NumDaysC, $db){
 					WHERE salesorderdetails.orderno = salesorders.orderno
 						AND salesorderdetails.completed = 1
 						AND salesorders.debtorno = '" . $Shop . "'
-						AND salesorders.orddate >  '". $StartDateA . "'
+						AND salesorders.orddate >= '". $StartDateA . "'
 						AND salesorders.orddate <= '". $YesterdayA . "'
 						AND salesorders.salesperson = salesman.salesmancode) AS salesA,
 				(SELECT COUNT(DISTINCT(salesorders.orddate))
@@ -1255,7 +1255,7 @@ function SPGPerformanceByShop($Shop, $NumDaysA, $NumDaysB, $NumDaysC, $db){
 					WHERE salesorderdetails.orderno = salesorders.orderno
 						AND salesorderdetails.completed = 1
 						AND salesorders.debtorno = '" . $Shop . "'
-						AND salesorders.orddate >  '". $StartDateB . "'
+						AND salesorders.orddate >= '". $StartDateB . "'
 						AND salesorders.orddate <= '". $YesterdayB . "'
 						AND salesorders.salesperson = salesman.salesmancode) AS daysB,
 				(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
@@ -1263,7 +1263,7 @@ function SPGPerformanceByShop($Shop, $NumDaysA, $NumDaysB, $NumDaysC, $db){
 					WHERE salesorderdetails.orderno = salesorders.orderno
 						AND salesorderdetails.completed = 1
 						AND salesorders.debtorno = '" . $Shop . "'
-						AND salesorders.orddate >  '". $StartDateB . "'
+						AND salesorders.orddate >= '". $StartDateB . "'
 						AND salesorders.orddate <= '". $YesterdayB . "'
 						AND salesorders.salesperson = salesman.salesmancode) AS salesB,
 				(SELECT COUNT(DISTINCT(salesorders.orddate))
@@ -1271,7 +1271,7 @@ function SPGPerformanceByShop($Shop, $NumDaysA, $NumDaysB, $NumDaysC, $db){
 					WHERE salesorderdetails.orderno = salesorders.orderno
 						AND salesorderdetails.completed = 1
 						AND salesorders.debtorno = '" . $Shop . "'
-						AND salesorders.orddate >  '". $StartDateC . "'
+						AND salesorders.orddate >= '". $StartDateC . "'
 						AND salesorders.orddate <= '". $YesterdayC . "'
 						AND salesorders.salesperson = salesman.salesmancode) AS daysC,
 				(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
@@ -1279,7 +1279,7 @@ function SPGPerformanceByShop($Shop, $NumDaysA, $NumDaysB, $NumDaysC, $db){
 					WHERE salesorderdetails.orderno = salesorders.orderno
 						AND salesorderdetails.completed = 1
 						AND salesorders.debtorno = '" . $Shop . "'
-						AND salesorders.orddate >  '". $StartDateC . "'
+						AND salesorders.orddate >= '". $StartDateC . "'
 						AND salesorders.orddate <= '". $YesterdayC . "'
 						AND salesorders.salesperson = salesman.salesmancode) AS salesC
 			FROM salesman, www_users, securityroles
@@ -1291,12 +1291,11 @@ function SPGPerformanceByShop($Shop, $NumDaysA, $NumDaysB, $NumDaysC, $db){
 					WHERE salesorderdetails.orderno = salesorders.orderno
 						AND salesorderdetails.completed = 1
 						AND salesorders.debtorno = '" . $Shop . "'
-						AND salesorders.orddate >  '". $StartDateA . "'
+						AND salesorders.orddate >= '". $StartDateA . "'
 						AND salesorders.orddate <= '". $YesterdayA . "'
 						AND salesorders.salesperson = salesman.salesmancode) > 0)
 			ORDER BY salesman.salesmancode";
-	
-						
+				
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('SPG Performance in ') . $Shop . " during the last " . $NumDaysA . " days and ". ($NumDaysB - $NumDaysA) . " previous days". '</strong></p>';

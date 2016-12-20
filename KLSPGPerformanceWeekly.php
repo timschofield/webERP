@@ -58,6 +58,14 @@ function SPGPerformanceWeekly($db){
 					locations.loccode,
 					salesman.salesmancode,
 					salesman.salesmanname,
+					(SELECT COUNT(DISTINCT(salesorders.orddate))
+						FROM salesorderdetails, salesorders
+						WHERE salesorderdetails.orderno = salesorders.orderno
+							AND salesorderdetails.completed = 1
+							AND salesorders.fromstkloc = locations.loccode
+							AND salesorders.orddate >= '". $Last7A . "'
+							AND salesorders.orddate <= '". $YesterdayA . "'
+							AND salesorders.salesperson = salesman.salesmancode) AS days7A,
 					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
@@ -66,6 +74,14 @@ function SPGPerformanceWeekly($db){
 							AND salesorders.orddate >= '" . $Last7A . "'
 							AND salesorders.orddate <= '" . $YesterdayA . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS last7A,
+					(SELECT COUNT(DISTINCT(salesorders.orddate))
+						FROM salesorderdetails, salesorders
+						WHERE salesorderdetails.orderno = salesorders.orderno
+							AND salesorderdetails.completed = 1
+							AND salesorders.fromstkloc = locations.loccode
+							AND salesorders.orddate >= '". $Last30A . "'
+							AND salesorders.orddate <= '". $YesterdayA . "'
+							AND salesorders.salesperson = salesman.salesmancode) AS days30A,
 					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
@@ -82,6 +98,14 @@ function SPGPerformanceWeekly($db){
 							AND salesorders.orddate >= '" . $StartMonthA . "'
 							AND salesorders.orddate <= '" . $YesterdayA . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS mtdA,
+					(SELECT COUNT(DISTINCT(salesorders.orddate))
+						FROM salesorderdetails, salesorders
+						WHERE salesorderdetails.orderno = salesorders.orderno
+							AND salesorderdetails.completed = 1
+							AND salesorders.fromstkloc = locations.loccode
+							AND salesorders.orddate >= '". $Last7B . "'
+							AND salesorders.orddate <= '". $YesterdayB . "'
+							AND salesorders.salesperson = salesman.salesmancode) AS days7B,
 					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
@@ -90,6 +114,14 @@ function SPGPerformanceWeekly($db){
 							AND salesorders.orddate >= '" . $Last7B . "'
 							AND salesorders.orddate <= '" . $YesterdayB . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS last7B,
+					(SELECT COUNT(DISTINCT(salesorders.orddate))
+						FROM salesorderdetails, salesorders
+						WHERE salesorderdetails.orderno = salesorders.orderno
+							AND salesorderdetails.completed = 1
+							AND salesorders.fromstkloc = locations.loccode
+							AND salesorders.orddate >= '". $Last30B . "'
+							AND salesorders.orddate <= '". $YesterdayB . "'
+							AND salesorders.salesperson = salesman.salesmancode) AS days30B,
 					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
@@ -106,6 +138,14 @@ function SPGPerformanceWeekly($db){
 							AND salesorders.orddate >= '" . $StartMonthB . "'
 							AND salesorders.orddate <= '" . $YesterdayB . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS mtdB,
+					(SELECT COUNT(DISTINCT(salesorders.orddate))
+						FROM salesorderdetails, salesorders
+						WHERE salesorderdetails.orderno = salesorders.orderno
+							AND salesorderdetails.completed = 1
+							AND salesorders.fromstkloc = locations.loccode
+							AND salesorders.orddate >= '". $Last7C . "'
+							AND salesorders.orddate <= '". $YesterdayC . "'
+							AND salesorders.salesperson = salesman.salesmancode) AS days7C,
 					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
@@ -114,6 +154,14 @@ function SPGPerformanceWeekly($db){
 							AND salesorders.orddate >= '" . $Last7C . "'
 							AND salesorders.orddate <= '" . $YesterdayC . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS last7C,
+					(SELECT COUNT(DISTINCT(salesorders.orddate))
+						FROM salesorderdetails, salesorders
+						WHERE salesorderdetails.orderno = salesorders.orderno
+							AND salesorderdetails.completed = 1
+							AND salesorders.fromstkloc = locations.loccode
+							AND salesorders.orddate >= '". $Last30C . "'
+							AND salesorders.orddate <= '". $YesterdayC . "'
+							AND salesorders.salesperson = salesman.salesmancode) AS days30C,
 					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
@@ -130,6 +178,14 @@ function SPGPerformanceWeekly($db){
 							AND salesorders.orddate >= '" . $StartMonthC . "'
 							AND salesorders.orddate <= '" . $YesterdayC . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS mtdC,
+					(SELECT COUNT(DISTINCT(salesorders.orddate))
+						FROM salesorderdetails, salesorders
+						WHERE salesorderdetails.orderno = salesorders.orderno
+							AND salesorderdetails.completed = 1
+							AND salesorders.fromstkloc = locations.loccode
+							AND salesorders.orddate >= '". $Last7D . "'
+							AND salesorders.orddate <= '". $YesterdayD . "'
+							AND salesorders.salesperson = salesman.salesmancode) AS days7D,
 					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
@@ -138,6 +194,14 @@ function SPGPerformanceWeekly($db){
 							AND salesorders.orddate >= '" . $Last7D . "'
 							AND salesorders.orddate <= '" . $YesterdayD . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS last7D,
+					(SELECT COUNT(DISTINCT(salesorders.orddate))
+						FROM salesorderdetails, salesorders
+						WHERE salesorderdetails.orderno = salesorders.orderno
+							AND salesorderdetails.completed = 1
+							AND salesorders.fromstkloc = locations.loccode
+							AND salesorders.orddate >= '". $Last30D . "'
+							AND salesorders.orddate <= '". $YesterdayD . "'
+							AND salesorders.salesperson = salesman.salesmancode) AS days30D,
 					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
@@ -168,7 +232,6 @@ function SPGPerformanceWeekly($db){
 			ORDER BY locations.zone,
 				locations.loccode,
 				salesman.salesmancode";
-						
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . "SPG Weekly performance". '</strong></p>';
@@ -230,17 +293,17 @@ function SPGPerformanceWeekly($db){
 					$myrow['salesmancode'],
 					$myrow['salesmanname'],
 					locale_number_format_zero_blank($myrow['mtdD'],0),
-					locale_number_format_zero_blank($myrow['last7D']/7,0),
-					locale_number_format_zero_blank($myrow['last30D']/30,0),
+					locale_number_format_zero_blank($myrow['last7D']/$myrow['days7D'],0),
+					locale_number_format_zero_blank($myrow['last30D']/$myrow['days30D'],0),
 					locale_number_format_zero_blank($myrow['mtdC'],0),
-					locale_number_format_zero_blank($myrow['last7C']/7,0),
-					locale_number_format_zero_blank($myrow['last30C']/30,0),
+					locale_number_format_zero_blank($myrow['last7C']/$myrow['days7C'],0),
+					locale_number_format_zero_blank($myrow['last30C']/$myrow['days30C'],0),
 					locale_number_format_zero_blank($myrow['mtdB'],0),
-					locale_number_format_zero_blank($myrow['last7B']/7,0),
-					locale_number_format_zero_blank($myrow['last30B']/30,0),
+					locale_number_format_zero_blank($myrow['last7B']/$myrow['days7B'],0),
+					locale_number_format_zero_blank($myrow['last30B']/$myrow['days30B'],0),
 					locale_number_format_zero_blank($myrow['mtdA'],0),
-					locale_number_format_zero_blank($myrow['last7A']/7,0),
-					locale_number_format_zero_blank($myrow['last30A']/30,0)
+					locale_number_format_zero_blank($myrow['last7A']/$myrow['days7A'],0),
+					locale_number_format_zero_blank($myrow['last30A']/$myrow['days30A'],0)
 					);
 			$lastshop = $myrow['loccode'];
 		}
