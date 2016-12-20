@@ -535,11 +535,7 @@ function HourlyPerformance($numDays, $RootPath, $db){
 			FROM debtorsmaster
 			WHERE debtorsmaster.typeid IN (". CUSTOMER_TYPE_RETAIL . ")
 				AND debtorsmaster.debtorno LIKE 'RETAIL%'
-			ORDER BY (SELECT COUNT(*)
-				FROM salesorders
-				WHERE salesorders.debtorno = debtorsmaster.debtorno
-					AND salesorders.orddate = '". $Today ."') DESC,
-				(SELECT COUNT(*)
+			ORDER BY (SELECT SUM(klpaidcash+klpaidcreditcard+klreturnedgoods+klvouchers)
 				FROM salesorders
 				WHERE salesorders.debtorno = debtorsmaster.debtorno
 					AND salesorders.orddate >= '". $InitialDate ."'
@@ -610,11 +606,11 @@ function HourlyPerformance($numDays, $RootPath, $db){
 					$myrow['debtorno'],
 					$myrow['firstsalefull'],
 					$myrow['lastsalefull'],
-					locale_number_format_zero_blank($myrow['totalsalesfull']/$numDays,1),
+					locale_number_format_zero_blank($myrow['totalsalesfull']/$numDays,0),
 					locale_number_format_zero_blank($myrow['valuesalesfull']/$numDays,0),
 					$myrow['firstsale'],
 					$myrow['lastsale'],
-					locale_number_format_zero_blank($myrow['totalsales']/$numDays,1),
+					locale_number_format_zero_blank($myrow['totalsales']/$numDays,0),
 					locale_number_format_zero_blank($myrow['valuesales']/$numDays,0),
 					$myrow['firstsaletoday'],
 					$myrow['lastsaletoday'],
@@ -681,11 +677,11 @@ function HourlyPerformance($numDays, $RootPath, $db){
 					'TOTALS',
 					$FirstSaleFull,
 					$LastSaleFull,
-					locale_number_format_zero_blank($TotalSalesFull/$numDays,1),
+					locale_number_format_zero_blank($TotalSalesFull/$numDays,0),
 					locale_number_format_zero_blank($ValueSalesFull/$numDays,0),
 					$FirstSale,
 					$LastSale,
-					locale_number_format_zero_blank($TotalSales/$numDays,1),
+					locale_number_format_zero_blank($TotalSales/$numDays,0),
 					locale_number_format_zero_blank($ValueSales/$numDays,0),
 					$FirstSaleToday,
 					$LastSaleToday,
