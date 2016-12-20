@@ -55,7 +55,6 @@ if ($KL_SystemAdmin){
 
 
 prnMsg("START OF PENDING FOR KL INTRANET ",'success');
-		RegularTransfersToShopNotReceived('08:00:00','15:00:00', $RootPath, $db);
 		NotDiscountedItemsWithDiscount($RootPath, $db);
 		GoodsReceivedNotInvoicedControl(1000000, $periodnow, $db);
 		FlaggedAsObsoleteButStockAvailable($RootPath, $db);
