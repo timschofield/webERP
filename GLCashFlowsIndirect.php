@@ -70,7 +70,7 @@ if($_POST['PeriodTo']-$_POST['PeriodFrom']+1 > 12) {
 }
 
 // Main code:
-if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !isset($_POST['SelectADifferentPeriod'])) {// If all parameters are set and valid, generates the report:
+if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action']!='New') {// If all parameters are set and valid, generates the report:
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 		'/images/reports.png" title="', // Icon image.
 		$Title, '" /> ', // Icon title.
@@ -105,7 +105,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !isset($_POST['
 	// Gets the retained earnings GL account:
 	if(!isset($_SESSION['RetainedEarningsAccount'])) {
 		$_SESSION['RetainedEarningsAccount'] = '';
-/*		$MyRow = DB_fetch_array(DB_query("SELECT confvalue FROM `config` WHERE confname ='RetainedEarningsAccount'"));*/
+/*		$MyRow = DB_fetch_array(DB_query("SELECT confvalue FROM `config` WHERE confname ='RetainedEarningsAccount'"));// RChacon: Standardise to config table? */
 		$MyRow = DB_fetch_array(DB_query("SELECT retainedearnings FROM companies WHERE coycode = 1"));
 		if($MyRow) {
 			$_SESSION['RetainedEarningsAccount'] = $MyRow['confvalue'];
@@ -727,16 +727,16 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !isset($_POST['
 		'<input name="ShowDetail" type="hidden" value="', $_POST['ShowDetail'], '" />',
 		'<input name="ShowZeroBalance" type="hidden" value="', $_POST['ShowZeroBalance'], '" />',
 		'<input name="ShowBudget" type="hidden" value="', $_POST['ShowBudget'], '" />',
-		'<input name="ShowCash" type="hidden" value="', $_POST['ShowCash'], '" />', // Form buttons:
-		'<div class="centre noprint">';
+		'<input name="ShowCash" type="hidden" value="', $_POST['ShowCash'], '" />',
+		'<div class="centre noprint">'; // Form buttons:
 	if($NeedSetup) {
 		echo '<button onclick="javascript:window.location=\'GLCashFlowsSetup.php\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
 				'/images/maintenance.png" /> ', _('Run Setup'), '</button>'; // "Run Setup" button.
 	}
 	echo	'<button onclick="javascript:window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
-				'/images/printer.png" /> ', _('Print This'), '</button>', // "Print This" button.
-			'<button name="SelectADifferentPeriod" type="submit" value="', _('Select A Different Period'), '"><img alt="" src="', $RootPath, '/css/', $Theme,
-				'/images/gl.png" /> ', _('Select A Different Period'), '</button>', // "Select A Different Period" button.
+				'/images/printer.png" /> ', _('Print'), '</button>', // "Print" button.
+			'<button name="Action" type="submit" value="New"><img alt="" src="', $RootPath, '/css/', $Theme,
+				'/images/reports.png" /> ', _('New Report'), '</button>', // "New Report" button.
 			'<button onclick="javascript:window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
 				'/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
 		'</div>';
@@ -779,7 +779,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !isset($_POST['
 		// Content of the body of the input table:
 			// Select period from:
 			'<tr>',
-				'<td><label for="PeriodFrom">', _('Select period from'), ':</label></td>
+				'<td><label for="PeriodFrom">', _('Select period from'), '</label></td>
 		 		<td><select id="PeriodFrom" name="PeriodFrom" required="required">';
 	$Periods = DB_query('SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno ASC');
 	if(!isset($_POST['PeriodFrom'])) {
@@ -800,7 +800,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !isset($_POST['
 			</tr>',
 			// Select period to:
 			'<tr>',
-				'<td><label for="PeriodTo">', _('Select period to'), ':</label></td>
+				'<td><label for="PeriodTo">', _('Select period to'), '</label></td>
 		 		<td><select id="PeriodTo" name="PeriodTo" required="required">';
 	if(!isset($_POST['PeriodTo'])) {
 		$_POST['PeriodTo'] = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);

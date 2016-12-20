@@ -175,9 +175,22 @@
 <p>The goods received note should signed off by the person who received the goods - optionally a copy to the supplier's driver. </p>
 <p>An alternative short-cut method is also provided for auto-receiving purchase orders at the prices defined in the purchase order, for authorised purchase orders. After having entered a purchase order or modified a purchase order a link to automatically receive the entire order and create the supplier invoice will show if the order is authorised. This will happen automatically if the configuration option to auto authorise purchase orders is set and the user creating or modifying the order is authorised to do so. Clicking this link will receive all the items on the purchase order to the extent there is any quantity yet to be received. However, this program cannot handle controlled items. If there is even one line of controlled/serialised stock on the purchase order then this facility cannot be used.</p>
 
-<div class="floatright">
-    <a class="minitext" href="#top">⬆ Top</a>
-</div>
+
+<div class="floatright"><a class="minitext" href="#top">⬆ Top</a></div>
+<h2>Inquiries and Reports</h2>
+
+<h3><a id="PurchasesReport">Purchases to Suppliers</a></h3>
+<p>This report shows purchases to suppliers over a period of time. It shows the overall amount, taxes and total in the supplier's currency and in the functional currency.</p>
+<p>Report parameters:</p>
+<ul>
+	<li><b>Select period from.</b> Select the beginning of the reporting period. Default: one year before current date.</li>
+	<li><b>Select period to.</b> Select the end of the reporting period. Default: current date.</li>
+	<li><b>Show details.</b> Check this box to show purchase invoices. With <i>show details <b>on</b></i>, the report as links to view where allocated and to view the General Ledger transaction. With <i>show details <b>off</b></i>, the report as links to view the supplier account inquiry. Default: off.</li>
+</ul>
+<p><b>Note</b>. The conversion between the supplier's currency and the functional currency is done with the exchange rate used in the respective transaction.</p>
+
+
+<div class="floatright"><a class="minitext" href="#top">⬆ Top</a></div>
 <h2>Maintenance</h2>
 
 <h3><a id="SupplierPriceList">Maintain Supplier Price Lists</a></h3>
