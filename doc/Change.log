@@ -1,5 +1,6 @@
 webERP Change Log
 
+21/12/16  RChacon: In PurchasesReport.php, fix date comparison and title. Thanks Tim.
 20/12/16  RChacon: Standardise to "Print" button.
 20/12/16  RChacon: Add a report of purchases to suppliers for the range of selected dates.
 11/12/16  PaulT: Dashboard.php: Correct table closure. When there are no outstanding orders, causes footer artifact.

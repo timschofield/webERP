@@ -1,6 +1,6 @@
 <?php
 /* $Id: PurchasesReport.php 7672 2016-11-27 10:42:50Z rchacon $ */
-/* Shows a report of purchases to suppliers for the range of selected dates. */
+/* Shows a report of purchases from suppliers for the range of selected dates. */
 /* This program is under the GNU General Public License, last version. Rafael E. Chacón, 2016-12-18. */
 /* This creative work is under the CC BY-NC-SA, later version. Rafael E. Chacón, 2016-12-18. */
 
@@ -8,11 +8,12 @@
 // Coding Conventions/Style: http://www.weberp.org/CodingConventions.html
 
 // BEGIN: Functions division ---------------------------------------------------
+// RChacon: load DateFunctions.inc ? **********************************************************************************Date1GreaterThanDate2()
 // END: Functions division -----------------------------------------------------
 
 // BEGIN: Procedure division ---------------------------------------------------
 include('includes/session.inc');
-$Title = _('Purchases to Suppliers');
+$Title = _('Purchases from Suppliers');
 $ViewTopic = 'PurchaseOrdering';
 $BookMark = 'PurchasesReport';
 include('includes/header.inc');
@@ -34,11 +35,13 @@ if(isset($_GET['ShowDetails'])) {// Show the budget for the period.
 }
 
 // Validates the data submitted in the form:
-if($_POST['PeriodFrom'] > $_POST['PeriodTo']) {// RChacon: Is it the correct way to do this? **********************************************************************************
-	// The beginning is after the end.
-	unset($_POST['PeriodFrom']);
-	unset($_POST['PeriodTo']);
-	prnMsg(_('The beginning of the period should be before or equal to the end of the period. Please reselect the reporting period.'), 'error');
+if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo'])) {
+	if(Date1GreaterThanDate2($_POST['PeriodFrom'], $_POST['PeriodTo'])) {
+		// The beginning is after the end.
+		unset($_POST['PeriodFrom']);
+		unset($_POST['PeriodTo']);
+		prnMsg(_('The beginning of the period should be before or equal to the end of the period. Please reselect the reporting period.'), 'error');
+	}
 }
 
 // Main code:
