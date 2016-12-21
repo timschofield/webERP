@@ -1,5 +1,5 @@
 <?php
-/* $Id: CustWhereAlloc.php 7628 2016-09-21 16:14:21Z rchacon $*/
+/* $Id: CustWhereAlloc.php 7709 2016-12-20 15:57:10Z rchacon $*/
 /* Shows to which invoices a receipt was allocated to */
 
 include('includes/session.inc');
@@ -194,11 +194,9 @@ echo '</div>';
 echo '</form>';
 if(isset($Printer)) {
 	echo '<div class="centre noprint">
-		<button onclick="javascript:window.print()" type="button"><img alt="" src="' . $RootPath . '/css/' . $Theme .
-					'/images/printer.png" /> ' .
-					_('Print This') . '
-		</button>
-		</div>';// "Print This" button.
+			<button onclick="javascript:window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
+				'/images/printer.png" /> ', _('Print'), '</button>', // "Print" button.	
+		'</div>';// "Print This" button.
 }
 include('includes/footer.inc');
 ?>

@@ -246,10 +246,9 @@ if (!isset($_POST['Show'])) {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
 			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			<br />
-			<div class="centre noprint">'.
-				'<button onclick="javascript:window.print()" type="button"><img alt="" src="'.$RootPath.'/css/'.$Theme.
-					'/images/printer.png" /> ' .
-					_('Print This') . '</button>'.// "Print This" button.
+			<div class="centre noprint">', // Form buttons:
+				'<button onclick="javascript:window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
+					'/images/printer.png" /> ', _('Print'), '</button>', // "Print" button.
 				'<button name="SelectADifferentPeriod" type="submit" value="'. _('Select A Different Period') .'"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 					'/images/gl.png" /> ' .
 					_('Select Another Date') . '</button>'.// "Select A Different Period" button.

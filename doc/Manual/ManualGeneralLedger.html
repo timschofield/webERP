@@ -72,7 +72,7 @@
 <!-- Help End: GLAccounts -->
 
 <h2><a id="GLTags">General Ledger Tags (Or Cost Centres)</a></h2>
-<p>General Ledger tags provide an alternative way of viewing General Ledger transactions. Each income or expenditure transaction can be given its own tag, and then reports acan be run based on tags.</p>
+<p>General Ledger tags provide an alternative way of viewing General Ledger transactions. Each income or expenditure transaction can be given its own tag, and then reports can be run based on tags.</p>
 <p>As an example consider an organisation with several vehicles and the organisation wishes to report on how much each vehicle costs to run. A tag can be setup for each vehicle, and then when there is any expense, such as fuel, maintenance, licensing, insurance etc then each transaction can be tagged to individual vehicles, and then a report be produced for the cost of each tag corresponding to each vehicle.</p>
 <p>Tags effectively add another dimension to the general ledger  - or &quot;cost centre&quot; functionality. There is a &quot;tag&quot; profit and loss account so you can produce a p & l  for each &quot;tag&quot;.
 <p>The tag is offered up each time you create a general ledger transaction or purchase invoice or stock adjustment so all general ledger transactions can be captured with the &quot;tag&quot; or &quot;cost centre&quot; they relate to and the P &amp; L can be reported by &quot;tag&quot; (or &quot;cost centre&quot;).</p>
@@ -350,8 +350,8 @@
 	</li>
 <!-- ----------------------------------------------------------------------- -->
 	<li>
-		<h3><a id="GLCashFlows">Statement of Cash Flows</a></h3>		
-		<p>The purpose of the statement of cash flows is to show where the company got their money from and how it was spent during the period being reported for a user selectable range of periods.</p>		
+		<h3><a id="GLCashFlows">Statement of Cash Flows</a></h3>
+		<p>The purpose of the statement of cash flows is to show where the company got their money from and how it was spent during the period being reported for a user selectable range of periods.</p>
 		<p>The statement of cash flows, also known as the successor of the old source and application of funds statement, reports how changes in balance sheet accounts and income affect cash and cash equivalents, and breaks the analysis down to operating, investing and financing activities (see <a href="ManualContents.php?
 ViewTopic=GeneralLedger#GLCashFlowsSetup">GLCashFlowsSetup</a>).</p>
 		<p>It can be generated using either direct method or indirect method. The main difference between them is the cash flows from operating activities, the first section of the statement of cash flows; there is no difference in the investing and financing activities sections.</p>
@@ -370,7 +370,7 @@ ViewTopic=GeneralLedger#GLCashFlowsSetup">GLCashFlowsSetup</a>).</p>
 			</ul>
 			<p><b>Note 1</b>. The "<i>net profit for the period</i>" is calculated from the accounts of the <i>statement of comprehensive income</i>.</p>
 			<p><b>Note 2</b>. The "<i>dividends</i>" are calculated as "<i>net profit for the period</i>" minus "<i>retained earnings</i>". The "<i>retained earnings</i>" are calculated using the complement method; that is: the changes of retained earnings are equal to the opposite of changes in other <i>statement of financial position</i> accounts. This is done to correct the impact of the "<i>net profit for the period</i>" underreporting before the end of that period; so, if you have differences between dividents in this report and the real dividend payments, check retained earnings related accounts.</p>
-			<p><b>Warning!</b> Although the standard states that "<i>Net profit for the period</i>", "<i>Dividends</i>", and "<i>No effect on cash flow</i>" are part of section "<i>Operating activities</i>", in this report they are shown separately to cover those accountants that use that practice.</p>
+			<p><b>Warning!</b> Although the standard states that "<i>Net profit for the period</i>", "<i>Dividends</i>", and "<i>No effect on cash flow</i>" are part of section "<i>Operating activities</i>", in this report they are shown separately to cover the accountants that use to separate those accounts.</p>
 	</li>
 <!-- ----------------------------------------------------------------------- -->
 	<li>
@@ -418,6 +418,26 @@ ViewTopic=GeneralLedger#GLCashFlowsSetup">GLCashFlowsSetup</a>).</p>
 <div class="floatright"><a class="minitext" href="#top">⬆ Top</a></div>
 <h2>Maintenance</h2>
 
+<!--h3><a id="BankAccounts">Bank Accounts</a></h3>
+<p>.</p-->
+
+<h3><a id="BankAccountUsers">Bank Account Authorised Users</a></h3>
+<p>This software has methods to assign permissions or access rights to specific users and groups of users. The system controls the ability of the users to view and make changes to the contents of the bank accounts.</p>
+<p>With this script, you can add or remove the access permission for each user that grants or denies his ability to view or update that bank account.</p>
+
+<h3><a id="UserBankAccounts">User Authorised Bank Accounts</a></h3>
+<p>This software has methods to assign permissions or access rights to specific users and groups of users. The system controls the ability of the users to view and make changes to the contents of the bank accounts.</p>
+<p>With this script, you can add or remove the access permission for each bank account that grants or denies the ability of that user to view or update it.</p>
+
+<!--h3><a id="AccountSections">Account Sections</a></h3>
+<p>.</p-->
+
+<!--h3><a id="AccountGroups">Account Groups</a></h3>
+<p>.</p-->
+
+<!--h3><a id="GLAccounts">GL Accounts</a></h3>
+<p>.</p-->
+
 <h3><a id="GLAccountUsers">GL Account Authorised Users</a></h3>
 <p>This software has methods to assign permissions or access rights to specific users and groups of users. The system controls the ability of the users to view or make changes to the contents of the GL accounts.</p>
 <p>With this script, you can change a specific GL account access permissions for users:</p>
@@ -438,13 +458,8 @@ ViewTopic=SpecialUtilities#Z_GLAccountUsersCopyAuthority">Copy Authority of GL A
 <p>If you need to copy the access rights to general ledger accounts from one user to another, you can use an utility. See: <a href="ManualContents.php?
 ViewTopic=SpecialUtilities#Z_GLAccountUsersCopyAuthority">Copy Authority of GL Accounts from one user to another</a>.</p>
 
-<!--h3><a id="BankAccounts.php">Bank Accounts</a></h3>
+<!--h3><a id="GLBudgets">GL Budgets</a></h3>
 <p>.</p-->
 
-<h3><a id="BankAccountUsers">Bank Account Authorised Users</a></h3>
-<p>This software has methods to assign permissions or access rights to specific users and groups of users. The system controls the ability of the users to view and make changes to the contents of the bank accounts.</p>
-<p>With this script, you can add or remove the access permission for each user that grants or denies his ability to view or update that bank account.</p>
-
-<h3><a id="UserBankAccounts">User Authorised Bank Accounts</a></h3>
-<p>This software has methods to assign permissions or access rights to specific users and groups of users. The system controls the ability of the users to view and make changes to the contents of the bank accounts.</p>
-<p>With this script, you can add or remove the access permission for each bank account that grants or denies the ability of that user to view or update it.</p>
+<h3><a id="GLTagsMaintenance">GL Tags (maintenance)</a></h3>
+<p>This software allows the use of accounting tags to help you track specific units within your organization. You can set up any quantity of accounting tags. In this way, you can group transactions and assign them to cost centres, profit centres, activities centres, divisions, departments, or any units for which you need to produce a statement of comprehensive income for each "<i>tag</i>". See: <a href="#GLTags">GL Tags</a>.</p>

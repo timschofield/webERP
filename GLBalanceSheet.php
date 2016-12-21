@@ -1,5 +1,5 @@
 <?php
-/* $Id: GLBalanceSheet.php 7663 2016-11-07 03:25:49Z rchacon $*/
+/* $Id: GLBalanceSheet.php 7709 2016-12-20 15:57:10Z rchacon $*/
 /* This script shows the balance sheet for the company as at a specified date. */
 
 /*Through deviousness and cunning, this system allows shows the balance sheets as at the end of any period selected - so first off need to show the input of criteria screen while the user is selecting the period end of the balance date meanwhile the system is posting any unposted transactions */
@@ -711,9 +711,9 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 	echo '</table>';
 	echo '</div>';// div id="Report".
 	echo '<br />
-		<div class="centre noprint">'.
-			'<button onclick="javascript:window.print()" type="button"><img alt="" src="'.$RootPath.'/css/'.$Theme.
-				'/images/printer.png" /> ' . _('Print This') . '</button>'.// "Print This" button.
+		<div class="centre noprint">', // Form buttons:
+			'<button onclick="javascript:window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
+				'/images/printer.png" /> ', _('Print'), '</button>', // "Print" button.
 			'<button name="SelectADifferentPeriod" type="submit" value="'. _('Select A Different Period') .'"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 				'/images/gl.png" /> ' . _('Select A Different Balance Date') . '</button>'.// "Select A Different Period" button.
 			'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="'.$RootPath.'/css/'.$Theme.

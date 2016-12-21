@@ -1,5 +1,5 @@
 <?php
-/* $Id: Payments.php 7567 2016-07-08 08:17:10Z exsonqu $*/
+/* $Id: Payments.php 7702 2016-12-08 14:24:19Z exsonqu $*/
 /* Entry of bank account payments either against an AP account or a general ledger payment - if the AP-GL link in company preferences is set */
 
 include('includes/DefinePaymentClass.php');
@@ -838,7 +838,7 @@ if(DB_num_rows($AccountsResults)==0) {
 	while($myrow=DB_fetch_array($AccountsResults)) {
 	/*list the bank account names */
 		echo '<option ';
-		if(/*isset($_POST['BankAccount']) AND */$_POST['BankAccount']==$myrow['accountcode']) {
+		if(isset($_POST['BankAccount']) AND $_POST['BankAccount']==$myrow['accountcode']) {
 			echo 'selected="selected" ';
 		}
 		echo 'value="', $myrow['accountcode'], '">', $myrow['bankaccountname'], ' - ', $myrow['currcode'], '</option>';
