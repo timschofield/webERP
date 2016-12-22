@@ -8,7 +8,6 @@
 // Coding Conventions/Style: http://www.weberp.org/CodingConventions.html
 
 // BEGIN: Functions division ---------------------------------------------------
-// RChacon: load DateFunctions.inc ? **********************************************************************************Date1GreaterThanDate2()
 // END: Functions division -----------------------------------------------------
 
 // BEGIN: Procedure division ---------------------------------------------------
