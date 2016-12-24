@@ -37,8 +37,6 @@ include('includes/GetPrice.inc');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/GetSalesTransGLCodes.inc');
 
-include('includes/KLCountriesForRetail.php');
-
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLPOSGeneral.php');
