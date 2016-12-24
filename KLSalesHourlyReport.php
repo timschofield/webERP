@@ -39,7 +39,8 @@ function HourlySales($numDays, $RootPath, $db){
 	$Yesterday = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 	$InitialDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$numDays));
 
-	$SQL = "SELECT debtorno,
+	$SQL = "SELECT debtorsmaster.debtorno,
+				locations.zone,
 				(SELECT COUNT(*)
 				FROM salesorders
 				WHERE salesorders.debtorno = debtorsmaster.debtorno
@@ -235,10 +236,13 @@ function HourlySales($numDays, $RootPath, $db){
 					AND salesorders.orddate = '". $Today ."'
 					AND salesorders.ordtime >= '23:00:00'
 					AND salesorders.ordtime <  '24:00:00') AS today23	
-			FROM debtorsmaster
-			WHERE debtorsmaster.typeid IN (". CUSTOMER_TYPE_RETAIL . ")
+			FROM debtorsmaster, custbranch, locations
+			WHERE debtorsmaster.debtorno = custbranch.debtorno
+				AND custbranch.defaultlocation = locations.loccode
+				AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_RETAIL . ")
 				AND debtorsmaster.debtorno LIKE 'RETAIL%'
-			ORDER BY debtorsmaster.debtorno";
+			ORDER BY locations.zone, 
+				debtorsmaster.debtorno";
 
 	$result = DB_query($SQL);
 	$showHeader = TRUE;
@@ -253,6 +257,7 @@ function HourlySales($numDays, $RootPath, $db){
 			}
 			if (($showHeader) OR ($i % 3 == 1)){
 				$TableHeader = '<tr>
+									<th class="ascending">' . _('Zone') . '</th>
 									<th class="ascending">' . _('Shop') . '</th>
 									<th class="ascending">' . _('Type') . '</th>
 									<th class="ascending">' . _('09-10') . '</th>
@@ -277,6 +282,7 @@ function HourlySales($numDays, $RootPath, $db){
 			$k = StartEvenOrOddRow($k);
 			printf('<td>%s</td>
 					<td>%s</td>
+					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -293,6 +299,7 @@ function HourlySales($numDays, $RootPath, $db){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>', 
+					$myrow['zone'],
 					$myrow['debtorno'],
 					'Hourly '. $numDays . ' days',
 					locale_number_format_zero_blank($myrow['sales09']/$numDays,1),
@@ -331,6 +338,7 @@ function HourlySales($numDays, $RootPath, $db){
 			$k = StartSameColourRow($k);
 			printf('<td>%s</td>
 					<td>%s</td>
+					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -347,6 +355,7 @@ function HourlySales($numDays, $RootPath, $db){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>', 
+					'',
 					'',
 					'Acumulated '. $numDays . ' days',
 					locale_number_format_zero_blank($Acum09/$numDays,1),
@@ -368,6 +377,7 @@ function HourlySales($numDays, $RootPath, $db){
 			$k = StartSameColourRow($k);
 			printf('<td>%s</td>
 					<td>%s</td>
+					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -384,6 +394,7 @@ function HourlySales($numDays, $RootPath, $db){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>', 
+					'',
 					'',
 					'Hourly today',
 					locale_number_format_zero_blank($myrow['today09'],1),
@@ -421,6 +432,7 @@ function HourlySales($numDays, $RootPath, $db){
 			$k = StartSameColourRow($k);
 			printf('<td>%s</td>
 					<td>%s</td>
+					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -437,6 +449,7 @@ function HourlySales($numDays, $RootPath, $db){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>', 
+					'',
 					'',
 					'Acumulated today',
 					locale_number_format_zero_blank($Acum09,1),
