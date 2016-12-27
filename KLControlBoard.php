@@ -1023,6 +1023,9 @@ if ($ProcessSection02){
 		OR $KL_OperationalManager){
 		TransfersDelayed(4, $RootPath, $db);
 		$NumberOfTestExecuted++;
+	}
+
+	if ($KL_OperationalManager){
 		ItemsCancelledInTransfers(3, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}

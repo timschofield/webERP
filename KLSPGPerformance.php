@@ -24,10 +24,60 @@ if ($KL_SystemAdmin
 	OR $KL_SalesDirector){
 	SPGPerformanceWeekly($db);
 	$NumberOfTestExecuted++;
+
+	AverageSales("SPG", 365, 90, 30, 15, 7, 1,30, "CurrentYear", "All", $db);
+	$NumberOfTestExecuted++;
+
+	SPGPerformanceByShop("RETAIL66", 30, 60, 90, $db);
+	$NumberOfTestExecuted++;
+	SPGPerformanceByShop("RETAILSE", 30, 60, 90, $db);
+	$NumberOfTestExecuted++;
+	SPGPerformanceByShop("RETAILOB", 30, 60, 90, $db);
+	$NumberOfTestExecuted++;
+	SPGPerformanceByShop("RETAILKA", 30, 60, 90, $db);
+	$NumberOfTestExecuted++;
+	SPGPerformanceByShop("RETAILPS", 30, 60, 90, $db);
+	$NumberOfTestExecuted++;
+	SPGPerformanceByShop("RETAILAR", 30, 60, 90, $db);
+	$NumberOfTestExecuted++;
+
+	SPGPerformanceByShop("RETAILKS", 30, 60, 90, $db);
+	$NumberOfTestExecuted++;
+	SPGPerformanceByShop("RETAILPA", 30, 60, 90, $db);
+	$NumberOfTestExecuted++;
+	SPGPerformanceByShop("RETAILPB", 30, 60, 90, $db);
+	$NumberOfTestExecuted++;
+
+	SPGPerformanceByShop("RETAILSA", 30, 60, 90, $db);
+	$NumberOfTestExecuted++;
+	SPGPerformanceByShop("RETAILSB", 30, 60, 90, $db);
+	$NumberOfTestExecuted++;
+	SPGPerformanceByShop("RETAILSU", 30, 60, 90, $db);
+	$NumberOfTestExecuted++;
+	SPGPerformanceByShop("RETAILSS", 30, 60, 90, $db);
+	$NumberOfTestExecuted++;
+
+	SPGPerformanceByShop("RETAILUB", 30, 60, 90, $db);
+	$NumberOfTestExecuted++;
+	SPGPerformanceByShop("RETAILMF", 30, 60, 90, $db);
+	$NumberOfTestExecuted++;
+	SPGPerformanceByShop("RETAILM2", 30, 60, 90, $db);
+	$NumberOfTestExecuted++;
+	SPGPerformanceByShop("RETAILMU", 30, 60, 90, $db);
+	$NumberOfTestExecuted++;
+	SPGPerformanceByShop("RETAILPU", 30, 60, 90, $db);
+	$NumberOfTestExecuted++;
+	SPGPerformanceByShop("RETAILBU", 30, 60, 90, $db);
+	$NumberOfTestExecuted++;
+
+	//	YearDifferenceSales("SPG", 30, $db);
+	//  $NumberOfTestExecuted++;
+	//	YearDifferenceSales("SPG", 90, $db);
+	//	$NumberOfTestExecuted++;
+
 }
 
-
-prnMsg("Performed ". $NumberOfTestExecuted . " SPG Performance Weekly Report",'success');
+prnMsg("Performed ". $NumberOfTestExecuted . " SPG Performance Report",'success');
 time_finish($begintime);
 
 include ('includes/footer.inc');

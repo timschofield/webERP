@@ -9189,6 +9189,449 @@ function SuppliersWithoutBasicData($RootPath, $db){
 	}
 }
 
+function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE, $NumDaysF, $NumDaysSort, $Year, $Shop, $db){
+
+	if ($Year == "LastYear"){
+		$Yesterday  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-365-1));
+		$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-365));
+		$StartDateB = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysB-365));
+		$StartDateC = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysC-365));
+		$StartDateD = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysD-365));
+		$StartDateE = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysE-365));
+		$StartDateF = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysF-365));
+		$StartDateSort = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysSort-365));
+		$StartDateMTD=FormatDateForSQL(Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,Date('m'),1,Date('Y'))));
+	}else{
+		$Yesterday  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
+		$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA));
+		$StartDateB = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysB));
+		$StartDateC = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysC));
+		$StartDateD = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysD));
+		$StartDateE = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysE));
+		$StartDateF = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysF));
+		$StartDateSort = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysSort));
+		$StartDateMTD=FormatDateForSQL(Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,Date('m'),1,Date('Y'))));
+	}
+
+	$TotalDateA = 0;
+	$TotalDateB = 0;
+	$TotalDateC = 0;
+	$TotalDateD = 0;
+	$TotalDateE = 0;
+	$TotalDateF = 0;
+	$TotalForecast = 0;
+	$TotalMTD = 0;
+	
+	if ($Shop == "All"){
+		$SQLByShop = "";
+	}else{
+		$SQLByShop = " AND salesorders.debtorno =  '". $Shop . "' ";
+	}
+
+	if ($typereport == "Shop"){
+		$SQL = "SELECT debtorsmaster.debtorno,
+					debtorsmaster.name,
+					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+						FROM salesorderdetails, salesorders
+						WHERE salesorderdetails.orderno = salesorders.orderno
+							AND salesorderdetails.completed = 1
+							AND salesorders.orddate >= '". $StartDateA . "'
+							AND salesorders.orddate <= '". $Yesterday . "'
+							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesA,
+					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+						FROM salesorderdetails, salesorders
+						WHERE salesorderdetails.orderno = salesorders.orderno
+							AND salesorderdetails.completed = 1
+							AND salesorders.orddate >= '". $StartDateB . "'
+							AND salesorders.orddate <= '". $Yesterday . "'
+							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesB,
+					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+						FROM salesorderdetails, salesorders
+						WHERE salesorderdetails.orderno = salesorders.orderno
+							AND salesorderdetails.completed = 1
+							AND salesorders.orddate >= '". $StartDateC . "'
+							AND salesorders.orddate <= '". $Yesterday . "'
+							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesC,
+					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+						FROM salesorderdetails, salesorders
+						WHERE salesorderdetails.orderno = salesorders.orderno
+							AND salesorderdetails.completed = 1
+							AND salesorders.orddate >= '". $StartDateD . "'
+							AND salesorders.orddate <= '". $Yesterday . "'
+							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesD,
+					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+						FROM salesorderdetails, salesorders
+						WHERE salesorderdetails.orderno = salesorders.orderno
+							AND salesorderdetails.completed = 1
+							AND salesorders.orddate >= '". $StartDateE . "'
+							AND salesorders.orddate <= '". $Yesterday . "'
+							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesE,
+					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+						FROM salesorderdetails, salesorders
+						WHERE salesorderdetails.orderno = salesorders.orderno
+							AND salesorderdetails.completed = 1
+							AND salesorders.orddate >= '". $StartDateF . "'
+							AND salesorders.orddate <= '". $Yesterday . "'
+							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesF,
+					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+						FROM salesorderdetails, salesorders
+						WHERE salesorderdetails.orderno = salesorders.orderno
+							AND salesorderdetails.completed = 1
+							AND salesorders.orddate >=  '". $StartDateMTD . "'
+							AND salesorders.orddate <= '". $Yesterday . "'
+							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesMTD
+				FROM debtorsmaster
+				WHERE debtorsmaster.typeid = 2
+				ORDER BY (SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+						FROM salesorderdetails, salesorders
+						WHERE salesorderdetails.orderno = salesorders.orderno
+							AND salesorderdetails.completed = 1
+							AND salesorders.orddate >= '". $StartDateSort . "'
+							AND salesorders.orddate <= '". $Yesterday . "'
+							AND salesorders.debtorno = debtorsmaster.debtorno) DESC";
+	}else{
+		$SQL = "SELECT salesmancode,
+					salesmanname,
+					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+						FROM salesorderdetails, salesorders
+						WHERE salesorderdetails.orderno = salesorders.orderno
+							AND salesorderdetails.completed = 1 ".
+							$SQLByShop . "
+							AND salesorders.orddate >= '". $StartDateA . "'
+							AND salesorders.orddate <= '". $Yesterday . "'
+							AND salesorders.salesperson = salesman.salesmancode) AS salesA,
+					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+						FROM salesorderdetails, salesorders
+						WHERE salesorderdetails.orderno = salesorders.orderno
+							AND salesorderdetails.completed = 1 ".
+							$SQLByShop . "
+							AND salesorders.orddate >= '". $StartDateB . "'
+							AND salesorders.orddate <= '". $Yesterday . "'
+							AND salesorders.salesperson = salesman.salesmancode) AS salesB,
+					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+						FROM salesorderdetails, salesorders
+						WHERE salesorderdetails.orderno = salesorders.orderno
+							AND salesorderdetails.completed = 1 ".
+							$SQLByShop . "
+							AND salesorders.orddate >= '". $StartDateC . "'
+							AND salesorders.orddate <= '". $Yesterday . "'
+							AND salesorders.salesperson = salesman.salesmancode) AS salesC,
+					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+						FROM salesorderdetails, salesorders
+						WHERE salesorderdetails.orderno = salesorders.orderno
+							AND salesorderdetails.completed = 1 ".
+							$SQLByShop . "
+							AND salesorders.orddate >= '". $StartDateD . "'
+							AND salesorders.orddate <= '". $Yesterday . "'
+							AND salesorders.salesperson = salesman.salesmancode) AS salesD,
+					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+						FROM salesorderdetails, salesorders
+						WHERE salesorderdetails.orderno = salesorders.orderno
+							AND salesorderdetails.completed = 1 ".
+							$SQLByShop . "
+							AND salesorders.orddate >= '". $StartDateE . "'
+							AND salesorders.orddate <= '". $Yesterday . "'
+							AND salesorders.salesperson = salesman.salesmancode) AS salesE,
+					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+						FROM salesorderdetails, salesorders
+						WHERE salesorderdetails.orderno = salesorders.orderno
+							AND salesorderdetails.completed = 1 ".
+							$SQLByShop . "
+							AND salesorders.orddate >= '". $StartDateF . "'
+							AND salesorders.orddate <= '". $Yesterday . "'
+							AND salesorders.salesperson = salesman.salesmancode) AS salesF,
+					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+						FROM salesorderdetails, salesorders
+						WHERE salesorderdetails.orderno = salesorders.orderno
+							AND salesorderdetails.completed = 1 ".
+							$SQLByShop . "
+							AND salesorders.orddate >=  '". $StartDateMTD . "'
+							AND salesorders.orddate <= '". $Yesterday . "'
+							AND salesorders.salesperson = salesman.salesmancode) AS salesMTD
+				FROM salesman
+				WHERE salesman.current = 1
+				ORDER BY (SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+						FROM salesorderdetails, salesorders
+						WHERE salesorderdetails.orderno = salesorders.orderno
+							AND salesorderdetails.completed = 1
+							AND salesorders.orddate >= '". $StartDateSort . "'
+							AND salesorders.orddate <= '". $Yesterday . "'
+							AND salesorders.salesperson = salesman.salesmancode) DESC";
+	}
+	
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		if ($Year == "LastYear"){
+			echo '<p class="page_title_text" align="center"><strong>' . _('LAST YEAR Average Daily sales by ') . $typereport . " during the last " . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . ", ". $NumDaysE . ", ". $NumDaysF . " days. Sorted by " . $NumDaysSort ." days. Trend by " . $NumDaysD . " days.".'</strong></p>';
+			$TitleTarget = "";
+		}else{
+			if ($Shop == "All"){
+				echo '<p class="page_title_text" align="center"><strong>' . _('Current Average Daily sales by ') . $typereport . " during the last " . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . ", ". $NumDaysE . ", ". $NumDaysF . " days. Sorted by " . $NumDaysSort ." days. Trend by " . $NumDaysD . " days.".'</strong></p>';
+			}else{
+				echo '<p class="page_title_text" align="center"><strong>' . _('Current Average Daily sales in ') . $Shop . ' by ' . $typereport . " during the last " . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . ", ". $NumDaysE . ", ". $NumDaysF . " days. Sorted by " . $NumDaysSort ." days. Trend by " . $NumDaysD . " days.".'</strong></p>';
+			}
+			if($typereport == "Shop"){
+// Ricard Do not show
+//				$TitleTarget = "Minimum Target";
+				$TitleTarget = "";
+			}else{
+				$TitleTarget = "";
+			}
+		}
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . $typereport . '</th>
+							<th class="ascending">' . _('Name') . '</th>
+							<th class="ascending">' . $NumDaysA . _(' days') . '</th>
+							<th class="ascending">' . $NumDaysB . _(' days') . '</th>
+							<th class="ascending">' . $NumDaysC . _(' days') . '</th>
+							<th class="ascending">' . $NumDaysD . _(' days') . '</th>
+							<th class="ascending">' . $NumDaysE . _(' days') . '</th>
+							<th class="ascending">' . $NumDaysF . _(' days') . '</th>
+							<th class="ascending">' . _('MTD') . '</th>
+							<th class="ascending">' . _('Trend') . '</th>
+							<th class="ascending">' . 'Forecast '. $NumDaysC . _(' days') . '</th>
+							<th class="ascending">' . $TitleTarget . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			
+			$target = "";
+			if ($typereport == "Shop"){
+				$Code = $myrow['debtorno'];
+				$Name = $myrow['name'];
+				if($Year != "LastYear"){
+//					$target = locale_number_format($myrow['minmonthlysalestarget']/30*$NumDaysC,0);
+				}
+			}else{
+				$Code = $myrow['salesmancode'];
+				$Name = $myrow['salesmanname'];
+			}
+			
+			$dailyA = locale_number_format(($myrow['salesA']/$NumDaysA),0);
+			$dailyB = locale_number_format(($myrow['salesB']/$NumDaysB),0);
+			$dailyC = locale_number_format(($myrow['salesC']/$NumDaysC),0);
+			$dailyD = locale_number_format(($myrow['salesD']/$NumDaysD),0);
+			$dailyE = locale_number_format(($myrow['salesE']/$NumDaysE),0);
+			$dailyF = locale_number_format(($myrow['salesF']/$NumDaysF),0);
+			$percent = (($myrow['salesD']/$NumDaysD)-($myrow['salesC']/$NumDaysC))/($myrow['salesC']/$NumDaysC) * 100;
+			$trend = " ";
+			if ($percent > IMPROVEMENT_AVERAGE_SALES){
+				$trend = "Improving ". locale_number_format($percent,0) . "%";
+			}
+			if ($percent < -IMPROVEMENT_AVERAGE_SALES){
+				$trend = "Degrading ". locale_number_format($percent,0) . "%";
+			}
+			$forecast = locale_number_format(round($myrow['salesC'], -5),0);
+			$MTD = locale_number_format($myrow['salesMTD'], 0);
+			
+			printf('<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$i,
+					$Code,
+					$Name,
+					$dailyA, 
+					$dailyB, 
+					$dailyC,
+					$dailyD,
+					$dailyE,
+					$dailyF,
+					$MTD,
+					$trend,
+					$forecast,
+					$target
+					);
+			$TotalDateA = $TotalDateA +($myrow['salesA']/$NumDaysA);
+			$TotalDateB = $TotalDateB +($myrow['salesB']/$NumDaysB);
+			$TotalDateC = $TotalDateC +($myrow['salesC']/$NumDaysC);
+			$TotalDateD = $TotalDateD +($myrow['salesD']/$NumDaysD);
+			$TotalDateE = $TotalDateE +($myrow['salesE']/$NumDaysE);
+			$TotalDateF = $TotalDateF +($myrow['salesF']/$NumDaysF);
+			$TotalDateMTD = $TotalDateMTD +$myrow['salesMTD'];
+			$TotalForecast = $TotalForecast + round($myrow['salesC'], -5);
+			$i++;
+		}
+		if ($typereport == "Shop"){
+			printf('<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					"",
+					"",
+					"TOTAL",
+					locale_number_format($TotalDateA,0), 
+					locale_number_format($TotalDateB,0), 
+					locale_number_format($TotalDateC,0),
+					locale_number_format($TotalDateD,0),
+					locale_number_format($TotalDateE,0),
+					locale_number_format($TotalDateF,0),
+					locale_number_format($TotalDateMTD,0),
+					"",
+					locale_number_format($TotalForecast,0),
+					""
+					);
+		}
+		echo '</table>
+				</div>';
+	}
+}
+
+function SPGPerformanceByShop($Shop, $NumDaysA, $NumDaysB, $NumDaysC, $db){
+
+	$YesterdayA  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
+	$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA));
+
+	$YesterdayB = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-1));
+	$StartDateB = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysB));
+
+	$YesterdayC = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysB-1));
+	$StartDateC = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysC));
+
+	$SQL = "SELECT salesmancode,
+				salesmanname,
+				securityroles.secrolename,
+				(SELECT COUNT(DISTINCT(salesorders.orddate))
+					FROM salesorderdetails, salesorders
+					WHERE salesorderdetails.orderno = salesorders.orderno
+						AND salesorderdetails.completed = 1
+						AND salesorders.debtorno = '" . $Shop . "'
+						AND salesorders.orddate >= '". $StartDateA . "'
+						AND salesorders.orddate <= '". $YesterdayA . "'
+						AND salesorders.salesperson = salesman.salesmancode) AS daysA,
+				(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					FROM salesorderdetails, salesorders
+					WHERE salesorderdetails.orderno = salesorders.orderno
+						AND salesorderdetails.completed = 1
+						AND salesorders.debtorno = '" . $Shop . "'
+						AND salesorders.orddate >= '". $StartDateA . "'
+						AND salesorders.orddate <= '". $YesterdayA . "'
+						AND salesorders.salesperson = salesman.salesmancode) AS salesA,
+				(SELECT COUNT(DISTINCT(salesorders.orddate))
+					FROM salesorderdetails, salesorders
+					WHERE salesorderdetails.orderno = salesorders.orderno
+						AND salesorderdetails.completed = 1
+						AND salesorders.debtorno = '" . $Shop . "'
+						AND salesorders.orddate >= '". $StartDateB . "'
+						AND salesorders.orddate <= '". $YesterdayB . "'
+						AND salesorders.salesperson = salesman.salesmancode) AS daysB,
+				(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					FROM salesorderdetails, salesorders
+					WHERE salesorderdetails.orderno = salesorders.orderno
+						AND salesorderdetails.completed = 1
+						AND salesorders.debtorno = '" . $Shop . "'
+						AND salesorders.orddate >= '". $StartDateB . "'
+						AND salesorders.orddate <= '". $YesterdayB . "'
+						AND salesorders.salesperson = salesman.salesmancode) AS salesB,
+				(SELECT COUNT(DISTINCT(salesorders.orddate))
+					FROM salesorderdetails, salesorders
+					WHERE salesorderdetails.orderno = salesorders.orderno
+						AND salesorderdetails.completed = 1
+						AND salesorders.debtorno = '" . $Shop . "'
+						AND salesorders.orddate >= '". $StartDateC . "'
+						AND salesorders.orddate <= '". $YesterdayC . "'
+						AND salesorders.salesperson = salesman.salesmancode) AS daysC,
+				(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					FROM salesorderdetails, salesorders
+					WHERE salesorderdetails.orderno = salesorders.orderno
+						AND salesorderdetails.completed = 1
+						AND salesorders.debtorno = '" . $Shop . "'
+						AND salesorders.orddate >= '". $StartDateC . "'
+						AND salesorders.orddate <= '". $YesterdayC . "'
+						AND salesorders.salesperson = salesman.salesmancode) AS salesC
+			FROM salesman, www_users, securityroles
+			WHERE www_users.salesman = salesman.salesmancode
+				AND www_users.fullaccess = securityroles.secroleid
+				AND www_users.customerid = '" . $Shop . "'
+				AND ((SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					FROM salesorderdetails, salesorders
+					WHERE salesorderdetails.orderno = salesorders.orderno
+						AND salesorderdetails.completed = 1
+						AND salesorders.debtorno = '" . $Shop . "'
+						AND salesorders.orddate >= '". $StartDateA . "'
+						AND salesorders.orddate <= '". $YesterdayA . "'
+						AND salesorders.salesperson = salesman.salesmancode) > 0)
+			ORDER BY salesman.salesmancode";
+				
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . _('SPG Performance in ') . $Shop . " during the last " . $NumDaysA . " days and ". ($NumDaysB - $NumDaysA) . " previous days". '</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th colspan="3">' . _('SPG') . '</th>
+							<th colspan="2">' . $NumDaysA . ' last days' . '</th>
+							<th colspan="2">' . $NumDaysA . '-' . $NumDaysB . ' previous days' . '</th>
+							<th colspan="2">' . $NumDaysB . '-' . $NumDaysC . ' previous days' . '</th>
+						</tr>';
+		echo $TableHeader;
+		$TableHeader = '<tr>
+							<th>' . _('Code') . '</th>
+							<th>' . _('Name') . '</th>
+							<th>' . _('Role') . '</th>
+							<th>' . _('Days') . '</th>
+							<th>' . _('Avg Daily Sales') . '</th>
+							<th>' . _('Days') . '</th>
+							<th>' . _('Avg Daily Sales') . '</th>
+							<th>' . _('Days') . '</th>
+							<th>' . _('Avg Daily Sales') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			
+			printf('<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$myrow['salesmancode'],
+					$myrow['salesmanname'],
+					$myrow['secrolename'],
+					locale_number_format_zero_blank($myrow['daysA'],0),
+					locale_number_format_zero_blank($myrow['salesA']/$myrow['daysA'],0),
+					locale_number_format_zero_blank($myrow['daysB'],0),
+					locale_number_format_zero_blank($myrow['salesB']/$myrow['daysB'],0),
+					locale_number_format_zero_blank($myrow['daysC'],0),
+					locale_number_format_zero_blank($myrow['salesC']/$myrow['daysC'],0)
+					);
+		}
+		echo '</table>
+				</div>';
+	}
+}
 
 
 
