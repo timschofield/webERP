@@ -76,6 +76,8 @@
 
 			$DefaultManualLink = '<li><a rel="external" accesskey="8" href="' .  $RootPath . '../../wiki/index.php'. '">' . _('KL-Intranet') . '</a></li>';
 			echo $DefaultManualLink;
+			$DefaultWebLink = '<li><a rel="external" accesskey="9" href="' .   'http://www.kapal-laut.com'. '">' . _('KL-Website') . '</a></li>';
+			echo $DefaultWebLink;
 		}
 
 		echo '<li><a href="'.$RootPath.'/Logout.php" onclick="return confirm(\''._('Are you sure you wish to logout?').'\');">' . _('Logout') . '</a></li>';
