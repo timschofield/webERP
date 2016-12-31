@@ -493,18 +493,14 @@ function HourlyPerformance($numDays, $RootPath, $db){
 				echo '<table class="selection">';
 				$TableHeader = '<tr>
 									<th class="ascending">' . _('Shop') . '</th>
-									<th class="ascending" colspan=4>' . 'Last ' . $numDays . ' days</th>
-									<th class="ascending" colspan=4>' . 'Last ' . $numDays . ' days until ' . $Now . '</th>
+									<th class="ascending" colspan=2>' . 'Last ' . $numDays . ' days</th>
+									<th class="ascending" colspan=2>' . 'Last ' . $numDays . ' days until ' . $Now . '</th>
 									<th class="ascending" colspan=4>' . 'Today' . '</th>
 								</tr>
 								<tr>
 									<th class="ascending">' . _('Name') . '</th>
-									<th class="ascending">' . _('First Sale') . '</th>
-									<th class="ascending">' . _('Last Sale') . '</th>
 									<th class="ascending">' . _('# Sales') . '</th>
 									<th class="ascending">' . _('Value Sales') . '</th>
-									<th class="ascending">' . _('First Sale') . '</th>
-									<th class="ascending">' . _('Last Sale') . '</th>
 									<th class="ascending">' . _('# Sales') . '</th>
 									<th class="ascending">' . _('Value Sales') . '</th>
 									<th class="ascending">' . _('First Sale ') . '</th>
@@ -525,18 +521,10 @@ function HourlyPerformance($numDays, $RootPath, $db){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
 					</tr>', 
 					$myrow['debtorno'],
-					$myrow['firstsalefull'],
-					$myrow['lastsalefull'],
 					locale_number_format_zero_blank($myrow['totalsalesfull']/$numDays,0),
 					locale_number_format_zero_blank($myrow['valuesalesfull']/$numDays,0),
-					$myrow['firstsale'],
-					$myrow['lastsale'],
 					locale_number_format_zero_blank($myrow['totalsales']/$numDays,0),
 					locale_number_format_zero_blank($myrow['valuesales']/$numDays,0),
 					$myrow['firstsaletoday'],
@@ -596,18 +584,10 @@ function HourlyPerformance($numDays, $RootPath, $db){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
 					</tr>', 
 					'TOTALS',
-					$FirstSaleFull,
-					$LastSaleFull,
 					locale_number_format_zero_blank($TotalSalesFull/$numDays,0),
 					locale_number_format_zero_blank($ValueSalesFull/$numDays,0),
-					$FirstSale,
-					$LastSale,
 					locale_number_format_zero_blank($TotalSales/$numDays,0),
 					locale_number_format_zero_blank($ValueSales/$numDays,0),
 					$FirstSaleToday,
@@ -625,15 +605,7 @@ function HourlyPerformance($numDays, $RootPath, $db){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
 					</tr>', 
-					'',
-					'',
-					'',
-					'',
 					'',
 					'',
 					'',
@@ -643,6 +615,27 @@ function HourlyPerformance($numDays, $RootPath, $db){
 					'',
 					locale_number_format_zero_blank($TotalSalesToday/($TotalSales/$numDays)*100,0).'%',
 					locale_number_format_zero_blank($ValueSalesToday/($ValueSales/$numDays)*100,0).'%'
+					);
+			$k = StartEvenOrOddRow($k);
+			printf('<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					'Today Forecast',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					locale_number_format_zero_blank(round($ValueSalesToday/($TotalSales/$TotalSalesFull)/JUTA)*JUTA,0)
 					);
 			echo '</table>
 				</div>';
