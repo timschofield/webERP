@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-20 10:25-0600\n"
+"POT-Creation-Date: 2016-12-21 18:08-0600\n"
 "PO-Revision-Date: 2016-12-20 10:49-0600\n"
 "Last-Translator: Rafael E. Chacón <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
@@ -179,7 +179,7 @@ msgstr ""
 #: CustomerBranches.php:330 CustomerBranches.php:340 CustomerTypes.php:146
 #: CustomerTypes.php:156 Customers.php:296 Customers.php:305 Customers.php:313
 #: Customers.php:324 Customers.php:334 Departments.php:141 Factors.php:134
-#: FixedAssetCategories.php:137 GLAccounts.php:109 GLAccounts.php:123
+#: FixedAssetCategories.php:137 GLAccounts.php:110 GLAccounts.php:124
 #: Locations.php:279 Locations.php:287 Locations.php:298 Locations.php:307
 #: Locations.php:316 Locations.php:325 Locations.php:334 Locations.php:343
 #: Locations.php:351 MRPDemandTypes.php:87 Manufacturers.php:185
@@ -457,7 +457,7 @@ msgstr "No"
 #: CustomerTypes.php:205 Customers.php:1131 Customers.php:1165
 #: Departments.php:186 EDIMessageFormat.php:150 Factors.php:334
 #: FixedAssetCategories.php:190 FixedAssetLocations.php:111
-#: FreightCosts.php:253 GLAccounts.php:347 GLTags.php:96 GeocodeSetup.php:173
+#: FreightCosts.php:253 GLAccounts.php:335 GLTags.php:96 GeocodeSetup.php:173
 #: ImportBankTransAnalysis.php:223 InternalStockRequest.php:297 Labels.php:333
 #: Labels.php:358 Locations.php:439 MRPDemandTypes.php:120 MRPDemands.php:309
 #: MailingGroupMaintenance.php:178 MaintenanceTasks.php:118
@@ -496,7 +496,7 @@ msgstr "¿Está seguro que desea suprimir este grupo de cuenta?"
 #: CustomerReceipt.php:1001 CustomerTypes.php:206 Customers.php:1166
 #: Departments.php:187 DiscountCategories.php:238 DiscountMatrix.php:183
 #: EDIMessageFormat.php:151 FixedAssetCategories.php:191 FreightCosts.php:254
-#: GLAccounts.php:348 GLJournal.php:431 GLTags.php:97 GeocodeSetup.php:174
+#: GLAccounts.php:336 GLJournal.php:431 GLTags.php:97 GeocodeSetup.php:174
 #: ImportBankTransAnalysis.php:224 InternalStockCategoriesByRole.php:184
 #: InternalStockRequest.php:298 Labels.php:334 Labels.php:359 Labels.php:612
 #: Locations.php:440 MRPDemandTypes.php:121 MRPDemands.php:310
@@ -574,7 +574,7 @@ msgstr "Actualizar"
 #: GLAccountUsers.php:253 GLBalanceSheet.php:720 GLCashFlowsIndirect.php:741
 #: GLCashFlowsIndirect.php:774 GLCashFlowsSetup.php:180 GLProfit_Loss.php:1317
 #: GLTrialBalance.php:740 InternalStockRequestInquiry.php:263
-#: PurchasesReport.php:229 PurchasesReport.php:251 SecurityTokens.php:140
+#: PurchasesReport.php:232 PurchasesReport.php:254 SecurityTokens.php:140
 #: SecurityTokens.php:156 UserGLAccounts.php:259
 #: Z_GLAccountUsersCopyAuthority.php:96 includes/Login.php:8
 msgid "Return"
@@ -709,7 +709,7 @@ msgstr "Detalles de sección contable nueva"
 #: COGSGLPostings.php:368 CreditStatus.php:259 Currencies.php:537
 #: CustLoginSetup.php:273 Departments.php:258 DiscountMatrix.php:142
 #: EDIMessageFormat.php:248 FixedAssetCategories.php:350
-#: FixedAssetLocations.php:161 FreightCosts.php:371 GLAccounts.php:297
+#: FixedAssetLocations.php:161 FreightCosts.php:371 GLAccounts.php:285
 #: GeocodeSetup.php:271 Labels.php:647 Locations.php:716 MRPDemandTypes.php:188
 #: MRPDemands.php:424 Manufacturers.php:375 OffersReceived.php:57
 #: OffersReceived.php:146 PO_AuthorisationLevels.php:264 PaymentMethods.php:302
@@ -834,7 +834,7 @@ msgstr "Estado de cuenta"
 #: PcAssignCashTabToTab.php:384 PcAssignCashToTab.php:256
 #: PcAssignCashToTab.php:394 PcAuthorizeExpenses.php:98
 #: PcClaimExpensesFromTab.php:242 PcClaimExpensesFromTab.php:409
-#: PcReportTab.php:336 PurchasesReport.php:54 SelectCustomer.php:732
+#: PcReportTab.php:336 PurchasesReport.php:57 SelectCustomer.php:732
 #: ShopParameters.php:198 SystemParameters.php:411 WOSerialNos.php:306
 #: WOSerialNos.php:312
 msgid "Notes"
@@ -930,7 +930,7 @@ msgstr "Anotaciones del cliente"
 #: PaymentAllocations.php:66 PcAssignCashTabToTab.php:257
 #: PcAssignCashToTab.php:252 PcAuthorizeExpenses.php:94 PrintCustTrans.php:822
 #: PrintCustTransPortrait.php:902 PrintWOItemSlip.php:186
-#: PrintWOItemSlip.php:197 PrintWOItemSlip.php:208 PurchasesReport.php:65
+#: PrintWOItemSlip.php:197 PrintWOItemSlip.php:208 PurchasesReport.php:68
 #: ReverseGRN.php:401 SelectCustomer.php:810 SelectCustomer.php:852
 #: ShipmentCosting.php:538 ShipmentCosting.php:615 Shipments.php:489
 #: StockDispatch.php:279 StockDispatch.php:290 StockDispatch.php:301
@@ -1558,12 +1558,12 @@ msgstr ""
 "de la fecha de factura del proveedor."
 
 #: AnalysisHorizontalIncome.php:43 GLCashFlowsIndirect.php:782
-#: PurchasesReport.php:259
+#: PurchasesReport.php:262
 msgid "Select period from"
 msgstr "Seleccionar el período desde"
 
 #: AnalysisHorizontalIncome.php:79 GLCashFlowsIndirect.php:803
-#: PurchasesReport.php:269
+#: PurchasesReport.php:272
 msgid "Select period to"
 msgstr "Seleccionar el período hasta"
 
@@ -1658,7 +1658,7 @@ msgid "All amounts stated in"
 msgstr "Todos los montos en"
 
 #: AnalysisHorizontalIncome.php:155 AnalysisHorizontalPosition.php:109
-#: GLAccountInquiry.php:53 GLAccounts.php:213 GLBalanceSheet.php:410
+#: GLAccountInquiry.php:53 GLAccounts.php:214 GLBalanceSheet.php:410
 #: GLCashFlowsIndirect.php:88 GLProfit_Loss.php:635 GLTagProfit_Loss.php:537
 #: GLTrialBalance.php:452 ImportBankTransAnalysis.php:206
 #: PrintCustTransPortrait.php:96 SuppTransGLAnalysis.php:107
@@ -1670,7 +1670,7 @@ msgid "Account"
 msgstr "Cuenta"
 
 #: AnalysisHorizontalIncome.php:156 AnalysisHorizontalPosition.php:110
-#: Dashboard.php:484 GLAccounts.php:258 GLAccounts.php:314
+#: Dashboard.php:484 GLAccounts.php:251 GLAccounts.php:302
 #: GLBalanceSheet.php:411 GLCashFlowsIndirect.php:89 GLCodesInquiry.php:27
 #: GLProfit_Loss.php:636 GLTagProfit_Loss.php:538 GLTrialBalance.php:453
 #: SelectGLAccount.php:135 SupplierCredit.php:459 SupplierInvoice.php:833
@@ -1772,7 +1772,7 @@ msgstr "Utilidad neta"
 #: PO_SelectOSPurchOrder.php:603 PO_SelectOSPurchOrder.php:644
 #: PrintCustStatements.php:84 PrintCustStatements.php:533
 #: PrintCustStatements.php:553 PrintCustTrans.php:531
-#: PrintCustTransPortrait.php:566 PurchasesReport.php:225
+#: PrintCustTransPortrait.php:566 PurchasesReport.php:228
 #: SelectSalesOrder.php:918 SuppWhereAlloc.php:196 UserGLAccounts.php:254
 msgid "Print"
 msgstr "Imprimir"
@@ -1898,7 +1898,7 @@ msgid "Area Code"
 msgstr "Código de zona"
 
 #: Areas.php:131 CustomerTypes.php:167 Factors.php:140
-#: FixedAssetCategories.php:142 GLAccounts.php:213
+#: FixedAssetCategories.php:142 GLAccounts.php:214
 #: InternalStockCategoriesByRole.php:102 Locations.php:380 MRPDemands.php:250
 #: Manufacturers.php:197 PcAssignCashToTab.php:149
 #: PcClaimExpensesFromTab.php:134 PcExpenses.php:169 PcExpensesTypeTab.php:100
@@ -3847,7 +3847,7 @@ msgstr "Número"
 #: CustomerTransInquiry.php:103 DailyBankTransactions.php:154 Dashboard.php:59
 #: GLAccountReport.php:346 PDFRemittanceAdvice.php:309
 #: PaymentAllocations.php:64 PaymentAllocations.php:65 Payments.php:964
-#: PurchasesReport.php:67 ShiptsList.php:37 StockCounts.php:144
+#: PurchasesReport.php:70 ShiptsList.php:37 StockCounts.php:144
 #: StockCounts.php:169 StockCounts.php:216 StockLocMovements.php:95
 #: StockMovements.php:110 SuppWhereAlloc.php:135 SupplierInquiry.php:207
 #: Tax.php:412 WorkOrderEntry.php:799 Z_CheckAllocs.php:64
@@ -4300,8 +4300,8 @@ msgstr "Imprimir orden de trabajo"
 #: InternalStockRequest.php:306 MRPCreateDemands.php:285
 #: MailingGroupMaintenance.php:145 PDFCOA.php:43 PDFCOA.php:73
 #: PDFProdSpec.php:31 PDFProdSpec.php:57 PricesByCost.php:295
-#: ProductSpecs.php:100 ProductSpecs.php:127 PurchasesReport.php:248
-#: PurchasesReport.php:249 ReorderLevelLocation.php:201
+#: ProductSpecs.php:100 ProductSpecs.php:127 PurchasesReport.php:251
+#: PurchasesReport.php:252 ReorderLevelLocation.php:201
 #: SupplierGRNAndInvoiceInquiry.php:46
 msgid "Submit"
 msgstr "Enviar"
@@ -10178,7 +10178,7 @@ msgid "Click to credit the invoice"
 msgstr "Haga clic para acreditar la factura"
 
 #: CustomerInquiry.php:329 CustomerInquiry.php:456 CustomerInquiry.php:531
-#: CustomerInquiry.php:587 CustomerInquiry.php:637 PurchasesReport.php:137
+#: CustomerInquiry.php:587 CustomerInquiry.php:637 PurchasesReport.php:140
 #: SupplierInquiry.php:260
 msgid "Click to view the GL entries"
 msgstr "Haga clic para ver los asientos contables"
@@ -14564,60 +14564,60 @@ msgstr "Cuenta contable tiene permisos de acceso para todos los usuarios"
 msgid "Select A Different GL account"
 msgstr "Seleccionar una cuenta contable diferente"
 
-#: GLAccounts.php:9 GLCashFlowsIndirect.php:15
+#: GLAccounts.php:10 GLCashFlowsIndirect.php:15
 msgid "Without setting up"
 msgstr "Sin configurar"
 
-#: GLAccounts.php:10 GLAccounts.php:282 GLCashFlowsIndirect.php:16
+#: GLAccounts.php:11 GLAccounts.php:272 GLCashFlowsIndirect.php:16
 msgid "No effect on cash flow"
 msgstr "Sin efecto sobre el flujo de caja"
 
-#: GLAccounts.php:11 GLAccounts.php:283
+#: GLAccounts.php:12 GLAccounts.php:273
 msgid "Operating activity"
 msgstr "Actividad de explotación"
 
-#: GLAccounts.php:12 GLAccounts.php:284
+#: GLAccounts.php:13 GLAccounts.php:274
 msgid "Investing activity"
 msgstr "Actividad de inversión"
 
-#: GLAccounts.php:13 GLAccounts.php:285
+#: GLAccounts.php:14 GLAccounts.php:275
 msgid "Financing activity"
 msgstr "Actividad de financiamiento"
 
-#: GLAccounts.php:14 GLAccounts.php:286 GLCashFlowsIndirect.php:20
+#: GLAccounts.php:15 GLAccounts.php:276 GLCashFlowsIndirect.php:20
 msgid "Cash or cash equivalent"
 msgstr "Efectivo o equivalente en efectivo"
 
-#: GLAccounts.php:15 GLCashFlowsIndirect.php:21
+#: GLAccounts.php:16 GLCashFlowsIndirect.php:21
 msgid "Unknown"
 msgstr "Desconocido"
 
-#: GLAccounts.php:22
+#: GLAccounts.php:23
 msgid "General Ledger Accounts"
 msgstr "Cuentas Contables"
 
-#: GLAccounts.php:55
+#: GLAccounts.php:56
 msgid "The account name must be fifty characters or less long"
 msgstr ""
 "El nombre de la cuenta debe ser de cincuenta caracteres o menos de longitud"
 
-#: GLAccounts.php:65
+#: GLAccounts.php:66
 msgid "Could not update the account because"
 msgstr "No se pudo actualizar la cuenta porque"
 
-#: GLAccounts.php:68
+#: GLAccounts.php:69
 msgid "The general ledger account has been updated"
 msgstr "La cuenta contable ha sido actualizada"
 
-#: GLAccounts.php:83 GLCashFlowsSetup.php:201
+#: GLAccounts.php:84 GLCashFlowsSetup.php:201
 msgid "Could not add the new account code"
 msgstr "No se pudo agregar el nuevo código de cuenta"
 
-#: GLAccounts.php:86
+#: GLAccounts.php:87
 msgid "The new general ledger account has been added"
 msgstr "Se agregó la nueva cuenta contable"
 
-#: GLAccounts.php:108
+#: GLAccounts.php:109
 msgid ""
 "Cannot delete this account because chart details have been created using "
 "this account and at least one period has postings to it"
@@ -14625,15 +14625,15 @@ msgstr ""
 "No se puede suprimir esta cuenta porque hay detalles del plan que la usan y "
 "al menos un período tiene asientos en ella"
 
-#: GLAccounts.php:109
+#: GLAccounts.php:110
 msgid "chart details that require this account code"
 msgstr "detalles del plan que requieren de este código de cuenta"
 
-#: GLAccounts.php:116
+#: GLAccounts.php:117
 msgid "Could not test for existing transactions because"
 msgstr "No se pudo hacer la prueba para las transacciones existentes porque"
 
-#: GLAccounts.php:122
+#: GLAccounts.php:123
 msgid ""
 "Cannot delete this account because transactions have been created using this "
 "account"
@@ -14641,15 +14641,15 @@ msgstr ""
 "No se puede suprimir esta cuenta porque se han creado transacciones "
 "utilizando esta cuenta"
 
-#: GLAccounts.php:123
+#: GLAccounts.php:124
 msgid "transactions that require this account code"
 msgstr "transacciones que requieren de este código de cuenta"
 
-#: GLAccounts.php:136
+#: GLAccounts.php:137
 msgid "Could not test for default company GL codes because"
 msgstr "No se pudo probar con los códigos contables de la compañía porque"
 
-#: GLAccounts.php:142
+#: GLAccounts.php:143
 msgid ""
 "Cannot delete this account because it is used as one of the company default "
 "accounts"
@@ -14657,12 +14657,12 @@ msgstr ""
 "No se puede suprimir esta cuenta ya que se utiliza como una de las cuentas "
 "de la empresa predeterminada"
 
-#: GLAccounts.php:149
+#: GLAccounts.php:150
 msgid "Could not test for tax authority GL codes because"
 msgstr ""
 "No se pudieron probar los códigos contables de la autoridad fiscal porque "
 
-#: GLAccounts.php:155
+#: GLAccounts.php:156
 msgid ""
 "Cannot delete this account because it is used as one of the tax authority "
 "accounts"
@@ -14670,13 +14670,13 @@ msgstr ""
 "No se puede suprimir esta cuenta, ya que se utiliza como una de las cuentas "
 "de la autoridad fiscal"
 
-#: GLAccounts.php:161
+#: GLAccounts.php:162
 msgid "Could not test for existing sales interface GL codes because"
 msgstr ""
 "No se pudo probar con los códigos contables existentes de la interfaz de "
 "ventas porque"
 
-#: GLAccounts.php:167
+#: GLAccounts.php:168
 msgid ""
 "Cannot delete this account because it is used by one of the sales GL posting "
 "interface records"
@@ -14684,13 +14684,13 @@ msgstr ""
 "No se puede suprimir esta cuenta porque es usada por uno de los registros de "
 "la interfaz de registros contables de ventas"
 
-#: GLAccounts.php:173
+#: GLAccounts.php:174
 msgid "Could not test for existing cost of sales interface codes because"
 msgstr ""
 "No se pudo probar por el costo actual de los códigos de interfaz de ventas "
 "debido a "
 
-#: GLAccounts.php:179
+#: GLAccounts.php:180
 msgid ""
 "Cannot delete this account because it is used by one of the cost of sales GL "
 "posting interface records"
@@ -14698,12 +14698,12 @@ msgstr ""
 "No se puede suprimir esta cuenta porque es usada por uno de los registros de "
 "la interfaz de registros contables de costos de ventas"
 
-#: GLAccounts.php:189
+#: GLAccounts.php:190
 msgid "Could not test for existing stock GL codes because"
 msgstr ""
 "No se pudo probar con los códigos contables existentes del inventario porque"
 
-#: GLAccounts.php:195
+#: GLAccounts.php:196
 msgid ""
 "Cannot delete this account because it is used by one of the stock GL posting "
 "interface records"
@@ -14711,13 +14711,13 @@ msgstr ""
 "No se puede suprimir esta cuenta, ya que es utilizada por uno de los "
 "registros de la interfaz contable de la existencia "
 
-#: GLAccounts.php:200
+#: GLAccounts.php:201
 msgid "Could not test for existing bank account GL codes because"
 msgstr ""
 "No se ha podido comprobar por los códigos contables de las cuentas bancarias "
 "existentes debido a"
 
-#: GLAccounts.php:206
+#: GLAccounts.php:207
 msgid ""
 "Cannot delete this account because it is used by one the defined bank "
 "accounts"
@@ -14725,42 +14725,41 @@ msgstr ""
 "No se puede suprimir esta cuenta, ya que es utilizada por una de las cuentas "
 "bancarias definidas"
 
-#: GLAccounts.php:244 GLAccounts.php:249 GLAccounts.php:313
-#: GLJournalInquiry.php:99 ImportBankTransAnalysis.php:256 PcExpenses.php:191
-#: PcExpenses.php:301 SuppTransGLAnalysis.php:191
-#: Z_CreateCompanyTemplateFile.php:236 Z_UpdateChartDetailsBFwd.php:81
-#: includes/PDFGLJournalHeader.inc:19
+#: GLAccounts.php:247 GLAccounts.php:301 GLJournalInquiry.php:99
+#: ImportBankTransAnalysis.php:256 PcExpenses.php:191 PcExpenses.php:301
+#: SuppTransGLAnalysis.php:191 Z_CreateCompanyTemplateFile.php:236
+#: Z_UpdateChartDetailsBFwd.php:81 includes/PDFGLJournalHeader.inc:19
 msgid "Account Code"
 msgstr "Código contable"
 
-#: GLAccounts.php:250
+#: GLAccounts.php:248
 msgid ""
 "Enter up to 20 alpha-numeric characters for the general ledger account code"
 msgstr ""
 "Introducir hasta 20 caracteres alfanuméricos para el código de cuenta del "
 "Libro Mayor"
 
-#: GLAccounts.php:259
+#: GLAccounts.php:252
 msgid ""
 "Enter up to 50 alpha-numeric characters for the general ledger account name"
 msgstr ""
 "Introducir hasta 50 caracteres alfanuméricos para el nombre de cuenta del "
 "libro mayor"
 
-#: GLAccounts.php:265 GLAccounts.php:315 Z_ImportChartOfAccounts.php:81
+#: GLAccounts.php:258 GLAccounts.php:303 Z_ImportChartOfAccounts.php:81
 #: Z_ImportGLAccountGroups.php:26
 msgid "Account Group"
 msgstr "Grupo contable"
 
-#: GLAccounts.php:280 GLAccounts.php:317
+#: GLAccounts.php:270 GLAccounts.php:305
 msgid "Cash Flows Activity"
 msgstr "Actividad de flujos de efectivo"
 
-#: GLAccounts.php:316
+#: GLAccounts.php:304
 msgid "P/L or B/S"
 msgstr "P. y G. ó B. S."
 
-#: GLAccounts.php:325 GLBalanceSheet.php:9 GLBalanceSheet.php:23
+#: GLAccounts.php:313 GLBalanceSheet.php:9 GLBalanceSheet.php:23
 #: GLBalanceSheet.php:88 GLBalanceSheet.php:89 GLBalanceSheet.php:112
 #: GLBalanceSheet.php:152 GLBalanceSheet.php:400 SelectGLAccount.php:23
 #: SelectGLAccount.php:42 SelectGLAccount.php:63
@@ -14768,15 +14767,15 @@ msgstr "P. y G. ó B. S."
 msgid "Balance Sheet"
 msgstr "Balance General"
 
-#: GLAccounts.php:325
+#: GLAccounts.php:313
 msgid "Profit/Loss"
 msgstr "Ganancias y Pérdidas"
 
-#: GLAccounts.php:330
+#: GLAccounts.php:318
 msgid "The chart accounts could not be retrieved because"
 msgstr "El Plan de Cuentas no se pudo obtener porque"
 
-#: GLAccounts.php:348
+#: GLAccounts.php:336
 msgid ""
 "Are you sure you wish to delete this account? Additional checks will be "
 "performed in any event to ensure data integrity is not compromised."
@@ -14785,7 +14784,7 @@ msgstr ""
 "adicionales en todo caso para garantizar que la integridad de los datos no "
 "se vea comprometida."
 
-#: GLAccounts.php:360
+#: GLAccounts.php:348
 msgid "Show All Accounts"
 msgstr "Mostrar Todas las Cuentas"
 
@@ -14954,7 +14953,7 @@ msgstr "Actividades de financiamiento"
 msgid "Statement of Cash Flows, Indirect Method"
 msgstr "Estado de flujos de efectivo, método indirecto"
 
-#: GLCashFlowsIndirect.php:63 PurchasesReport.php:41
+#: GLCashFlowsIndirect.php:63 PurchasesReport.php:43
 msgid ""
 "The beginning of the period should be before or equal to the end of the "
 "period. Please reselect the reporting period."
@@ -15034,7 +15033,7 @@ msgstr "Efectivo y equivalentes de efectivo al final del período"
 msgid "Run Setup"
 msgstr "Ejecutar la instalación"
 
-#: GLCashFlowsIndirect.php:739 PurchasesReport.php:227
+#: GLCashFlowsIndirect.php:739 PurchasesReport.php:230
 msgid "New Report"
 msgstr "Nuevo informe"
 
@@ -15082,15 +15081,15 @@ msgstr ""
 "facturan al cliente y cuando los gastos se adeudan en función de la fecha de "
 "factura del proveedor."
 
-#: GLCashFlowsIndirect.php:765
-msgid "Report parameters"
+#: GLCashFlowsIndirect.php:765 PurchasesReport.php:245
+msgid "Report Parameters"
 msgstr "Parámetros del informe"
 
-#: GLCashFlowsIndirect.php:798 PurchasesReport.php:264
+#: GLCashFlowsIndirect.php:798 PurchasesReport.php:267
 msgid "Select the beginning of the reporting period"
 msgstr "Seleccione el inicio del periodo del informe"
 
-#: GLCashFlowsIndirect.php:812 PurchasesReport.php:274
+#: GLCashFlowsIndirect.php:812 PurchasesReport.php:277
 msgid "Select the end of the reporting period"
 msgstr "Seleccione el final del periodo del informe"
 
@@ -19594,7 +19593,7 @@ msgstr ""
 #: POReport.php:1306 POReport.php:1318 POReport.php:1371 POReport.php:1428
 #: POReport.php:1439 POReport.php:1571 POReport.php:1626 POReport.php:1640
 #: PO_Header.php:562 PO_OrderDetails.php:98 PurchData.php:470 PurchData.php:571
-#: PurchData.php:576 PurchasesReport.php:163 SelectSupplier.php:283
+#: PurchData.php:576 PurchasesReport.php:166 SelectSupplier.php:283
 #: SellThroughSupport.php:160 SupplierPriceList.php:467
 #: SupplierTenderCreate.php:414 SupplierTenderCreate.php:618 Suppliers.php:698
 #: Suppliers.php:940
@@ -22404,7 +22403,7 @@ msgstr "el SQL resultó también en varias órdenes de compra"
 msgid "Order Header Details"
 msgstr "Detalles de la Cabecera de la Orden"
 
-#: PO_OrderDetails.php:96 PurchasesReport.php:162 SelectProduct.php:562
+#: PO_OrderDetails.php:96 PurchasesReport.php:165 SelectProduct.php:562
 #: SupplierTenderCreate.php:413 Suppliers.php:693 Suppliers.php:934
 #: WWW_Users.php:324 WWW_Users.php:573
 msgid "Supplier Code"
@@ -25902,11 +25901,11 @@ msgid ""
 "the grid above for immediate delivery. Are you sure?"
 msgstr ""
 
-#: PurchasesReport.php:15 includes/MainMenuLinksArray.php:192
-msgid "Purchases to Suppliers"
+#: PurchasesReport.php:16 includes/MainMenuLinksArray.php:192
+msgid "Purchases from Suppliers"
 msgstr "Compras a proveedores"
 
-#: PurchasesReport.php:55
+#: PurchasesReport.php:58
 msgid ""
 "Original amounts in the supplier's currency. GL amounts in the functional "
 "currency."
@@ -25914,53 +25913,49 @@ msgstr ""
 "Montos originales en la moneda del proveedor. Montos contables en la moneda "
 "funcional."
 
-#: PurchasesReport.php:66 SuppWhereAlloc.php:33 SuppWhereAlloc.php:38
+#: PurchasesReport.php:69 SuppWhereAlloc.php:33 SuppWhereAlloc.php:38
 #: SuppWhereAlloc.php:42 SuppWhereAlloc.php:160
 #: includes/DatabaseTranslations.php:34
 msgid "Purchase Invoice"
 msgstr "Factura de compra"
 
-#: PurchasesReport.php:68 PurchasesReport.php:165
+#: PurchasesReport.php:71 PurchasesReport.php:168
 msgid "Original Overall Amount"
 msgstr "Monto global original"
 
-#: PurchasesReport.php:69 PurchasesReport.php:166
+#: PurchasesReport.php:72 PurchasesReport.php:169
 msgid "Original Overall Taxes"
 msgstr "Impuesto global original"
 
-#: PurchasesReport.php:70 PurchasesReport.php:167
+#: PurchasesReport.php:73 PurchasesReport.php:170
 msgid "Original Overall Total"
 msgstr "Total global original"
 
-#: PurchasesReport.php:71 PurchasesReport.php:168
+#: PurchasesReport.php:74 PurchasesReport.php:171
 msgid "GL Overall Amount"
 msgstr "Monto global contable"
 
-#: PurchasesReport.php:72 PurchasesReport.php:169
+#: PurchasesReport.php:75 PurchasesReport.php:172
 msgid "GL Overall Taxes"
 msgstr "Impuesto global contable"
 
-#: PurchasesReport.php:73 PurchasesReport.php:170
+#: PurchasesReport.php:76 PurchasesReport.php:173
 msgid "GL Overall Total"
 msgstr "Total global contable"
 
-#: PurchasesReport.php:134
+#: PurchasesReport.php:137
 msgid "Click to view where allocated"
 msgstr "Haga clic para ver dónde fue asignado"
 
-#: PurchasesReport.php:164
+#: PurchasesReport.php:167
 msgid "Supplier's Currency"
 msgstr "Moneda del proveedor"
 
-#: PurchasesReport.php:242
-msgid "Report Parameters"
-msgstr "Parámetros del informe"
-
-#: PurchasesReport.php:279
+#: PurchasesReport.php:282
 msgid "Show details"
 msgstr "Mostrar detalles"
 
-#: PurchasesReport.php:281
+#: PurchasesReport.php:284
 msgid "Check this box to show purchase invoices"
 msgstr "Marque esta casilla para mostrar las facturas de compra"
 
@@ -53732,6 +53727,9 @@ msgstr "Tarjeta de crédito"
 #: ../webSHOP/includes/session.php:137
 msgid "Bank Transfer"
 msgstr "Transferencia bancaria"
+
+#~ msgid "Report parameters"
+#~ msgstr "Parámetros del informe"
 
 #~ msgid "Print This"
 #~ msgstr "Imprimir esto"

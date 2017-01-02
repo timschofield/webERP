@@ -1,5 +1,5 @@
 <?php
-/* $Id: Z_CheckGLTransBalance.php 7564 2016-07-03 06:58:29Z daintree $*/
+/* $Id: Z_CheckGLTransBalance.php 7715 2017-01-02 00:40:32Z tehonu $*/
 
 include('includes/session.inc');
 $Title=_('Check Period Sales Ledger Control Account');
@@ -8,6 +8,7 @@ include('includes/header.inc');
 echo '<table>';
 
 $Header = '<tr>
+			<th>' . _('Date') . '</th>
 			<th>' . _('Type') . '</th>
 			<th>' . _('Number') . '</th>
 			<th>' . _('Period') . '</th>
@@ -17,6 +18,7 @@ $Header = '<tr>
 echo $Header;
 
 $sql = "SELECT gltrans.type,
+			gltrans.trandate,
 			systypes.typename,
 			gltrans.typeno,
 			periodno,
@@ -46,6 +48,7 @@ while ($OutOfWackRow = DB_fetch_array($OutOfWackResult)){
 		$RowCounter++;
 	}
 	echo '<tr>
+	<td>' . ConvertSQLDate($OutOfWackRow['trandate']) . '</td>
 	<td><a href="' . $RootPath . '/GLTransInquiry.php?TypeID=' . $OutOfWackRow['type'] . '&TransNo=' . $OutOfWackRow['typeno'] . '">' . $OutOfWackRow['typename'] . '</a></td>
 	<td class="number">' . $OutOfWackRow['typeno'] . '</td>
 	<td class="number">' . $OutOfWackRow['periodno'] . '</td>

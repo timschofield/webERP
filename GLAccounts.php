@@ -1,5 +1,5 @@
 <?php
-/* $Id: GLAccounts.php 7711 2016-12-20 23:48:35Z rchacon $*/
+/* $Id: GLAccounts.php 7712 2016-12-21 23:44:26Z rchacon $*/
 /* Defines the general ledger accounts */
 /* To delete, insert, or update an account. */
 
@@ -245,11 +245,11 @@ if(!isset($_GET['delete'])) {
 	echo '<table class="selection">
 		<tr>
 			<td>', _('Account Code'), ':</td>
-			<td><input ', (isset($_POST['AccountCode']) ? 'disabled="disabled" ' : 'autofocus="autofocus" '), 'data-type="no-illegal-chars" maxlength="20" name="AccountCode" required="required" size="20" title="', _('Enter up to 20 alpha-numeric characters for the general ledger account code'), '" type="text" value="', $_POST['AccountCode'], '" /></td>
+			<td><input ', (empty($_POST['AccountCode']) ? 'autofocus="autofocus" ' : 'disabled="disabled" '), 'data-type="no-illegal-chars" maxlength="20" name="AccountCode" required="required" size="20" title="', _('Enter up to 20 alpha-numeric characters for the general ledger account code'), '" type="text" value="', $_POST['AccountCode'], '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Account Name') . ':</td>
-			<td><input ', (isset($_POST['AccountCode']) ? 'autofocus="autofocus" ' : ''), 'maxlength="50" name="AccountName" required="required" size="51" title="' . _('Enter up to 50 alpha-numeric characters for the general ledger account name') . '" type="text" value="', $_POST['AccountName'], '" /></td></tr>';
+			<td><input ', (empty($_POST['AccountCode']) ? '' : 'autofocus="autofocus" '), 'maxlength="50" name="AccountName" required="required" size="51" title="' . _('Enter up to 50 alpha-numeric characters for the general ledger account name') . '" type="text" value="', $_POST['AccountName'], '" /></td></tr>';
 
 	$Sql = "SELECT groupname FROM accountgroups ORDER BY sequenceintb";
 	$Result = DB_query($Sql);

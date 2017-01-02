@@ -1,5 +1,5 @@
 <?php
-/* $Id: DeliveryDetails.php 7321 2015-06-14 03:38:33Z tehonu $ */
+/* $Id: DeliveryDetails.php 7714 2016-12-26 08:51:03Z tehonu $ */
 /* Used during order entry to allow the entry of delivery addresses other than the defaulted branch delivery address and information about carrier/shipping method etc. */
 
 /*
@@ -372,7 +372,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 								'" . $_SESSION['Items'.$identifier]->Branch . "',
 								'". DB_escape_string($_SESSION['Items'.$identifier]->CustRef) ."',
 								'". DB_escape_string($_SESSION['Items'.$identifier]->Comments) ."',
-								'" . Date("Y-m-d H:i") . "',
+								'" . Date("Y-m-d") . "',
 								'" . $_SESSION['Items'.$identifier]->DefaultSalesType . "',
 								'" . $_POST['ShipVia'] ."',
 								'". DB_escape_string($_SESSION['Items'.$identifier]->DeliverTo) . "',
