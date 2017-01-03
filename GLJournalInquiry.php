@@ -17,11 +17,28 @@ if (!isset($_POST['Show'])) {
 	echo '<table class="selection">';
 	echo '<tr><th colspan="3">' . _('Selection Criteria') . '</th></tr>';
 
-	$sql = "SELECT typeno FROM systypes WHERE typeid=0";
+	$sql = "SELECT typeid,systypes.typeno,typename FROM 
+		systypes INNER JOIN gltrans ON systypes.typeid=gltrans.type
+		GROUP BY typeid";
 	$result = DB_query($sql);
-	$myrow = DB_fetch_array($result);
-	$MaxJournalNumberUsed = $myrow['typeno'];
+	if (DB_num_rows($result)>0) {
+		echo '<tr>
 
+			<td>' . _('Transaction Type') . ' </td>
+			<td> <select name="TransType">';
+		while ($myrow = DB_fetch_array($result)) {
+			if (!isset($MaxJournalNumberUsed)) {
+					$MaxJournalNumberUsed = $myrow['typeno'];
+			} else {
+					$MaxJournalNumberUsed = ($myrow['typeno']>$MaxJournalNumberUsed)?$myrow['typeno']:$MaxJournalNumberUsed;
+			}
+			echo '<option value="' . $myrow['typeid'] . '">' . _($myrow['typename']) . '</option>';
+		}
+		echo '</select></td>
+			</tr>';
+
+	}
+	
 	echo '<tr>
 			<td>' . _('Journal Number Range') . ' (' . _('Between') . ' 1 ' . _('and') . ' ' . $MaxJournalNumberUsed . ')</td>
 			<td>' . _('From') . ':'. '<input type="text" class="number" name="NumberFrom" size="10" maxlength="11" value="1" />' . '</td>
@@ -64,7 +81,7 @@ if (!isset($_POST['Show'])) {
 				ON gltrans.account=chartmaster.accountcode
 			LEFT JOIN tags
 				ON gltrans.tag=tags.tagref
-			WHERE gltrans.type='0'
+			WHERE gltrans.type='" . $_POST['TransType'] . "'
 				AND gltrans.trandate>='" . FormatDateForSQL($_POST['FromTransDate']) . "'
 				AND gltrans.trandate<='" . FormatDateForSQL($_POST['ToTransDate']) . "'
 				AND gltrans.typeno>='" . $_POST['NumberFrom'] . "'
@@ -87,7 +104,7 @@ if (!isset($_POST['Show'])) {
 			</tr>';
 
 		$LastJournal = 0;
-
+		$i = 0;
 		while ($myrow = DB_fetch_array($result)){
 
 			if ($myrow['tag']==0) {
@@ -95,12 +112,21 @@ if (!isset($_POST['Show'])) {
 			}
 
 			if ($myrow['typeno']!=$LastJournal) {
-				echo '<tr><td colspan="8"</td></tr><tr>
+				if ($i == 0) {
+					$RowClass = 'class="OddTableRows"';
+					$i = 1;
+				} else {
+					$RowClass = 'class="EvenTableRows"';
+					$i = 0;
+				}
+
+				echo '<tr ' . $RowClass . '><td colspan="8"></td></tr><tr>
+					<tr ' . $RowClass . '>
 					<td>' .  ConvertSQLDate($myrow['trandate']) . '</td>
 					<td class="number">' . $myrow['typeno'] . '</td>';
 
 			} else {
-				echo '<tr><td colspan="2"></td>';
+				echo '<tr ' . $RowClass . '><td colspan="2"></td>';
 			}
 			
 			// if user is allowed to see the account we show it, other wise we show "OTHERS ACCOUNTS"
@@ -125,9 +151,15 @@ if (!isset($_POST['Show'])) {
 					<td class="number">' . locale_number_format($myrow['amount'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 					<td class="number">' . $myrow['tag'] . ' - ' . $myrow['tagdescription'] . '</td>';
 
-			if ($myrow['typeno']!=$LastJournal) {
-				echo '<td class="number"><a href="PDFGLJournal.php?JournalNo='.$myrow['typeno'].'">' . _('Print')  . '</a></td></tr>';
-
+			if ($myrow['typeno']!=$LastJournal AND $CheckRow[0]>0) {
+				if ($_SESSION['Language'] == 'zh_CN.utf8' OR $_SESSION['Language'] =='zh_hk.utf8') {
+					echo '<td class="number"><a href="PDFGLJournalCN.php?JournalNo='.$myrow['typeno'].'&Type=' . $_POST['TransType'] . '">' . _('Print') . '</a></td></tr>';
+				} else {
+					echo '<td class="number"><a href="PDFGLJournal.php?JournalNo='.$myrow['typeno'].'">' . _('Print')  . '</a></td></tr>';
+				}
+				
+				
+				
 				$LastJournal = $myrow['typeno'];
 			} else {
 				echo '<td colspan="1"></td></tr>';

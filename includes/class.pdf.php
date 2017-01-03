@@ -1,5 +1,5 @@
 <?php
-/* $Id: class.pdf.php 7569 2016-07-09 03:17:59Z exsonqu $ */
+/* $Id: class.pdf.php 7641 2016-10-04 20:37:44Z rchacon $ */
 
      /* -----------------------------------------------------------------------------------------------
 	This class was an extension to the FPDF class to use the syntax of the R&OS pdf.php class,
@@ -68,7 +68,7 @@ if (!class_exists('Cpdf', false)) {
 		function line($x1,$y1,$x2,$y2,$style=array()) {
 	// Javier	FPDF::line($x1, $this->h-$y1, $x2, $this->h-$y2);
 	// Javier: width, color and style might be edited
-			TCPDF::Line ($x1,$this->h-$y1,$x2,$this->h-$y2,$style);
+			TCPDF::Line($x1,$this->h-$y1,$x2,$this->h-$y2,$style);
 		}
 
 		function addText($XPos,$YPos,$fontsize,$text/*,$angle=0,$wordSpaceAdjust=0*/) {
@@ -80,16 +80,16 @@ if (!class_exists('Cpdf', false)) {
 			$this->Text($XPos, $this->h-$YPos, $text);// Public function Text() in ~/includes/tcpdf/tcpdf.php.
 		}
 
-		function addTextWrap($XPos, $YPos, $Width, $Height, $Text, $Align='J', $border=0, $fill=0) {
+		function addTextWrap($XPos, $YPos, $Width, $Height, $Text, $Align='full', $border=0, $fill=0) {
 			// R&OS version 0.12.2: "addTextWrap function is no more, use addText instead".
-			/* Returns the balance of the string that could not fit in the width */
+			// Adds text to the page and returns the balance of the string that could not fit in the width.
 			// $XPos = cell horizontal coordinate from page left side to cell left side in dpi (72dpi = 25.4mm).
 			// $YPos = cell vertical coordinate from page bottom side to cell bottom side in dpi (72dpi = 25.4mm).
 			// $Width = Cell (line) width in dpi (72dpi = 25.4mm).
 			// $Height = Font size in dpi (72dpi = 25.4mm).
 			// $Text = Text to be split in portion to be add to the page and the remainder to be returned.
 			// $Align = 'left', 'center', 'centre', 'full' or 'right'.
-			
+
 			//some special characters are html encoded
 			//this code serves to make them appear human readable in pdf file
 			$Text = html_entity_decode($Text, ENT_QUOTES, 'UTF-8');// Convert all HTML entities to their applicable characters.
@@ -120,7 +120,7 @@ if (!class_exists('Cpdf', false)) {
 			$s=str_replace("\r",'',$Text);
 			$s=str_replace("\n",' ',$s);
 			$s = trim($s).' ';
-			$nb=mb_strlen($s);
+			$nb=mb_strlen($s,'UTF-8');
 			$b=0;
 			if ($border) {
 				if ($border==1) {
@@ -129,13 +129,13 @@ if (!class_exists('Cpdf', false)) {
 					$b2='LR';
 				} else {
 					$b2='';
-					if(is_int(mb_strpos($border,'L'))) {
+					if(is_int(mb_strpos($border,'L',0,'UTF-8'))) {
 						$b2.='L';
 					}
-					if(is_int(mb_strpos($border,'R'))) {
+					if(is_int(mb_strpos($border,'R',0,'UTF-8'))) {
 						$b2.='R';
 					}
-					$b=is_int(mb_strpos($border,'T')) ? $b2.'T' : $b2;
+					$b=is_int(mb_strpos($border,'T',0,'UTF-8')) ? $b2.'T' : $b2;
 				}
 			}
 			$sep=-1;
@@ -146,7 +146,7 @@ if (!class_exists('Cpdf', false)) {
 			while($i<$nb) {
 				/*$c=$s{$i};*/
 				$c=mb_substr($s, $i, 1, 'UTF-8');
-				if($c==' ' AND $i>0) {
+				if($c===' ' AND $i>0) {
 					$sep=$i;
 					$ls=$l;
 					$ns++;
@@ -169,17 +169,17 @@ if (!class_exists('Cpdf', false)) {
 					$this->ws=0;
 					$this->_out('0 Tw');
 				}
-				$sep = $i;
 			} else {
 				if($Align=='J') {
 					$this->ws=($ns>1) ? ($wmax-$ls)/($ns-1) : 0;
 					$this->_out(sprintf('%.3f Tw',$this->ws*$this->k));
 				}
 			}
+			$sep = $i;
 
 			$this->Cell($Width,$Height,mb_substr($s,0,$sep,'UTF-8'),$b,2,$Align,$fill);
 			$this->x=$this->lMargin;
-			return mb_substr($s, $sep,null,'UTF-8');
+			return mb_substr($s, $sep,$nb-$sep,'UTF-8');
 		}// End function addTextWrap.
 
 		function addInfo($label, $value) {
@@ -207,8 +207,15 @@ if (!class_exists('Cpdf', false)) {
 			}
 		}
 
-		function addJpegFromFile($img,$XPos,$YPos,$Width=0,$Height=0,$Type=''){
-			$this->Image($img, $x=$XPos, $y=$this->h-$YPos-$Height, $w=$Width, $h=$Height,$type=$Type);
+		function addJpegFromFile($file, $x, $YPos, $width=0, $height) {
+			// Puts an image in the page.
+			// $file (string) Name of the file containing the image.
+			// $x (float) Abscissa from left border to the upper-left corner (LTR).
+			// $this->h is the page height.
+			// $YPos Ordinate of upper-left corner. WARNING: Measured from bottom left corner!
+			// $width (float) Width of the image in the page. If not specified or equal to zero, it is automatically calculated.
+	 		// $height (float) Height of the image in the page.
+			$this->Image($file, $x, $this->h-$YPos-$height, $width, $height);// Public function Image() in ~/includes/tcpdf/tcpdf.php.
 		}
 
 		/*
@@ -320,27 +327,26 @@ if (!class_exists('Cpdf', false)) {
 			$this->Output($DocumentFilename,'D');
 		}
 
-		function Rectangle($XPos, $YPos, $Width, $Height) {
-			// $XPos, $YPos = Left top position (left line, top line).
-			// $Width, $Height = Size (line-to-line).
-			$this->line($XPos, $YPos, $XPos+$Width, $YPos);// Top side.
-			$this->line($XPos, $YPos-$Height, $XPos+$Width, $YPos-$Height);// Bottom side.
-			$this->line($XPos, $YPos, $XPos, $YPos-$Height);// Left side.
-			$this->line($XPos+$Width, $YPos, $XPos+$Width, $YPos-$Height);// Right side
+		function Rectangle($x, $YPos, $width, $height) {
+			// Draws a rectangle.
+			// $x (float) Abscissa from left border to the upper-left corner (LTR).
+			// $this->h is the page height.
+			// $YPos Ordinate of upper-left corner. WARNING: Measured from bottom left corner!
+			// $width (float) Rectangle width.
+			// $height (float) Rectangle height.
+			$this->Rect($x, $this->h-$YPos, $width, $height);// Public function Rect() in ~/includes/tcpdf/tcpdf.php.
 		}
 
-		function RoundRectangle($XPos, $YPos, $Width, $Height, $RadiusX, $RadiusY) {
-			// $XPos, $YPos = Left top position (left line, top line).
-			// $Width, $Height = Size (line-to-line).
-			// $RadiusX, $RadiusY = corner radii (horizontal, vertical).
-			$this->line($XPos+$RadiusX, $YPos, $XPos+$Width-$RadiusX, $YPos);// Top side.
-			$this->line($XPos+$RadiusX, $YPos-$Height, $XPos+$Width-$RadiusX, $YPos-$Height);// Bottom side.
-			$this->line($XPos, $YPos-$RadiusY, $XPos, $YPos-$Height+$RadiusY);// Left side.
-			$this->line($XPos+$Width, $YPos-$RadiusY, $XPos+$Width, $YPos-$Height+$RadiusY);// Right side.
-			$this->partEllipse($XPos+$RadiusX, $YPos-$RadiusY, 90, 180, $RadiusX, $RadiusY);// Top left corner.
-			$this->partEllipse($XPos+$Width-$RadiusX, $YPos-$RadiusY, 0, 90, $RadiusX, $RadiusY);// Top right corner.
-			$this->partEllipse($XPos+$RadiusX, $YPos-$Height+$RadiusY, 180, 270, $RadiusX, $RadiusY);// Bottom left corner.
-			$this->partEllipse($XPos+$Width-$RadiusX, $YPos-$Height+$RadiusY, 270, 360, $RadiusX, $RadiusY);// Bottom right corner.
+		function RoundRectangle($x, $YPos, $width, $height, $rx, $ry) {
+			// Draws a rounded rectangle.
+			// $x (float) Abscissa from left border to the upper-left corner (LTR).
+			// $this->h is the page height.
+			// $YPos Ordinate of upper-left corner. WARNING: Measured from bottom left corner!
+			// $width (float) Rectangle width.
+			// $height (float) Rectangle height.
+			// $rx (float) the x-axis radius of the ellipse used to round off the corners of the rectangle.
+			// $ry (float) the y-axis radius of the ellipse used to round off the corners of the rectangle.
+			$this->RoundedRectXY($x, $this->h-$YPos, $width, $height, $rx, $ry);// Public function RoundedRectXY() in ~/includes/tcpdf/tcpdf.php.
 		}
 
 	} // end of class

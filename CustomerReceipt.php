@@ -1,5 +1,5 @@
 <?php
-/* $Id: CustomerReceipt.php 7562 2016-06-29 06:27:55Z exsonqu $ */
+/* $Id: CustomerReceipt.php 7591 2016-08-16 13:33:08Z tehonu $ */
 /* Entry of both customer receipts against accounts receivable and also general ledger or nominal receipts */
 
 /**************************************************************************************
@@ -1080,7 +1080,7 @@ if (isset($_SESSION['CustomerRecord' . $identifier])
 }
 
 if (isset($_POST['GLEntry']) AND isset($_SESSION['ReceiptBatch' . $identifier])){
-/* Set up a heading for the transaction entry for a GL Receipt */
+	/* Set up a heading for the transaction entry for a GL Receipt */
 	echo '<br />
 		<table class="selection">
 			<tr>

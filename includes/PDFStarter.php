@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: PDFStarter.php 6955 2014-10-31 02:23:19Z tehonu $ */
+/* $Id: PDFStarter.php 7578 2016-08-02 10:02:32Z exsonqu $ */
 
 /*****************************************************************************************
 KL RICARD MODIFICATIONS:
@@ -117,6 +117,19 @@ switch ($PaperSize) {
 		$Left_Margin=50;
 		$Right_Margin=40;
 		break;
+   
+   case 'P/3/A4_pingzheng':
+
+	   	$DocumentPaper = 'Z2'; 
+	   	$DocumentOrientation ='L';
+
+      		$Page_Width=595;
+      		$Page_Height=320;
+      		$Top_Margin=10;
+      		$Bottom_Margin=10;
+      		$Left_Margin=20;
+      		$Right_Margin=10;
+      		break;
 
    case 'Letter': // 216mm x 279mm
 

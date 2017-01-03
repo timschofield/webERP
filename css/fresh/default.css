@@ -1,4 +1,4 @@
-/* $Id: default.css 7489 2016-04-10 17:12:51Z rchacon $*/
+/* $Id: default.css 7627 2016-09-19 03:55:49Z rchacon $*/
 /***
 
 New "Fresh" Theme for WebERP
@@ -17,6 +17,12 @@ To optimized the rest we should examined the whole codes! That would be for
 the next project. :)
 
 ***/
+
+button img {
+	/* Describes how button image should be displayed. */
+	height:21px;
+	width:21px;
+}
 
 body {
 	font-family: Arial, Verdana, Helvetica, sans-serif;

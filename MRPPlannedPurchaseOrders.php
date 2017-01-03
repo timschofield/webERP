@@ -1,6 +1,5 @@
 <?php
-
-/* $Id: MRPPlannedPurchaseOrders.php 6944 2014-10-27 07:15:34Z daintree $*/
+/* $Id: MRPPlannedPurchaseOrders.php 7682 2016-11-24 14:10:25Z rchacon $*/
 // MRPPlannedPurchaseOrders.php - Report of purchase parts that MRP has determined should have
 // purchase orders created for them
 
@@ -14,7 +13,7 @@ if (DB_num_rows($result)==0) {
 	$Title=_('MRP error');
 	include('includes/header.inc');
 	echo '<br />';
-	prnMsg( _('The MRP calculation must be run before you can run this report') . '<br />' . 
+	prnMsg( _('The MRP calculation must be run before you can run this report') . '<br />' .
 			_('To run the MRP calculation click').' ' . '<a href='.$RootPath .'/MRP.php>' . _('here') . '</a>', 'error');
 	include('includes/footer.inc');
 	exit;
@@ -327,7 +326,7 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 	} else {
 		$displayconsolidation = _('Monthly');
 	};
-	$pdf->addTextWrap($Left_Margin,$YPos,65,$FontSize,_('Consolidation:'));
+	$pdf->addTextWrap($Left_Margin,$YPos,65,$FontSize,_('Consolidation').':');
 	$pdf->addTextWrap(110,$YPos,40,$FontSize,$displayconsolidation);
 
 	$YPos -=(2*$line_height);

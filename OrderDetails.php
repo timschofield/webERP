@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: OrderDetails.php 6941 2014-10-26 23:18:08Z daintree $*/
+/* $Id: OrderDetails.php 7635 2016-09-25 03:59:01Z exsonqu $*/
 
 /* Session started in header.inc for password checking and authorisation level check */
 include('includes/session.inc');
@@ -54,7 +54,9 @@ $GetOrdHdrResult = DB_query($OrderHeaderSQL, $ErrMsg, $DbgMsg);
 if (DB_num_rows($GetOrdHdrResult)==1) {
 	echo '<p class="page_title_text">
 			<img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Order Details') . '" alt="" />' . ' ' . $Title . '
-		</p>';
+		</p>
+		<a href="' . $RootPath . '/SelectCompletedOrder.php">' . _('Return to Sales Order Inquiry') . '</a><br/>
+		<a href="' . $RootPath . '/SelectCustomer.php">' . _('Return to Customer Inquiry Interface') . '</a>';
 
 	$myrow = DB_fetch_array($GetOrdHdrResult);
 	$CurrDecimalPlaces = $myrow['decimalplaces'];
@@ -64,6 +66,16 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 		include('includes/footer.inc');
 		exit;
 	}
+	//retrieve invoice number
+	$Invs = explode(' Inv ',$myrow['comments']);
+	$Inv = '';
+	foreach ($Invs as $value) {
+		if (is_numeric($value)) {
+			$Inv .= '<a href="' . $RootPath . '/PrintCustTrans.php?FromTransNo=' . $value . '&InvOrCredit=Invoice">'.$value.'</a>  ';
+		}
+	}
+
+
 
 	echo '<table class="selection">
 			<tr>
@@ -125,6 +137,9 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 				<th style="text-align: left">' . _('Comments'). ': </th>
 				<td colspan="3">' . $myrow['comments'] . '</td>
 			</tr>
+			<tr>	<th style="text-align: left">' . _('Invoices') . ': </th>
+				<td colspan="3">' . $Inv . '</td>
+			</tr>
 			</table>';
 }
 
@@ -146,7 +161,8 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 							actualdispatchdate,
 							qtyinvoiced,
 							itemdue,
-							poline
+							poline,
+							narrative
 						FROM salesorderdetails INNER JOIN stockmaster
 						ON salesorderdetails.stkcode = stockmaster.stockid
 						WHERE orderno ='" . $_GET['OrderNumber'] . "'";
@@ -177,6 +193,7 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 				<th>' . _('Total') . '</th>
 				<th>' . _('Qty Del') . '</th>
 				<th>' . _('Last Del') . '/' . _('Due Date') . '</th>
+				<th>' . _('Narrative') . '</th>
 			</tr>';
 		$k=0;
 		while ($myrow=DB_fetch_array($LineItemsResult)) {
@@ -205,6 +222,7 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 				<td class="number">' . locale_number_format($myrow['quantity'] * $myrow['unitprice'] * (1 - $myrow['discountpercent']),$CurrDecimalPlaces) . '</td>
 				<td class="number">' . locale_number_format($myrow['qtyinvoiced'],$myrow['decimalplaces']) . '</td>
 				<td>' . $DisplayActualDeliveryDate . '</td>
+				<td>' . $myrow['narrative'] . '</td>
 			</tr>';
 
 			$OrderTotal += ($myrow['quantity'] * $myrow['unitprice'] * (1 - $myrow['discountpercent']));

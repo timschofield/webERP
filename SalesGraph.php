@@ -1,6 +1,5 @@
 <?php
-
-/* $Id: SalesGraph.php 7552 2016-06-08 04:16:42Z exsonqu $*/
+/* $Id: SalesGraph.php 7682 2016-11-24 14:10:25Z rchacon $*/
 
 include('includes/session.inc');
 include('includes/phplot/phplot.php');
@@ -119,7 +118,7 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 		$_POST['CategoryID']='';
 	}
 	echo '<tr>
-			<td>' . _('For Stock Category:')  . '</td>
+			<td>' . _('For Stock Category')  . ':</td>
 			<td><select name="CategoryID">';
 	if($_POST['CategoryID']=='All'){
 		echo '<option selected="selected" value="All">' . _('All') . '</option>';
@@ -142,7 +141,7 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	}
 
 	echo '<tr>
-			<td>' . _('For Sales Person:')  . '</td>
+			<td>' . _('For Salesperson:') . '</td>
 			<td><select name="SalesmanCode">';
 
 	if($_POST['SalesmanCode']=='All'){

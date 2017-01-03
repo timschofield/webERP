@@ -1,5 +1,5 @@
 <?php
-/* $Id: Currencies.php 7317 2015-06-05 03:28:26Z turbopt $*/
+/* $Id: Currencies.php 7644 2016-10-11 15:52:19Z rchacon $*/
 /* This script defines the currencies available. Each customer and supplier must be defined as transacting in one of the currencies defined here. */
 
 include('includes/session.inc');
@@ -389,7 +389,7 @@ or deletion of the records*/
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?&amp;SelectedCurrency=' . urlencode($myrow['currabrev']) . '">' . _('Edit') . '</a></td>
-					<td colspan="2">' . _('Functional Currency') . '</td>
+					<td colspan="2"><a href="CompanyPreferences.php#CurrencyDefault">' . _('Functional Currency') . '</a></td>
 					</tr>',
 					$ImageFile,
 					$myrow['currabrev'],

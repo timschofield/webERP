@@ -1,5 +1,5 @@
 <?php
-/* $Id: SelectOrderItems.php 7574 2016-07-27 07:19:16Z exsonqu $*/
+/* $Id: SelectOrderItems.php 7637 2016-09-25 10:38:47Z exsonqu $*/
 
 /**************************************************************************************
 KL RICARD MODIFICATIONS:
@@ -1031,7 +1031,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 					$Price = filter_number_format($_POST['Price_' . $OrderLine->LineNumber]);
 					if ($_POST['Discount_' . $OrderLine->LineNumber] < 100) {//to avoid divided by zero error
-					$_POST['GPPercent_' . $OrderLine->LineNumber] = (($Price*(1-(filter_number_format($_POST['Discount_' . $OrderLine->LineNumber])/100))) - $OrderLine->StandardCost*$ExRate)/($Price *(1-filter_number_format($_POST['Discount_' . $OrderLine->LineNumber])/100)/100);
+						$_POST['GPPercent_' . $OrderLine->LineNumber] = (($Price*(1-(filter_number_format($_POST['Discount_' . $OrderLine->LineNumber])/100))) - $OrderLine->StandardCost*$ExRate)/($Price *(1-filter_number_format($_POST['Discount_' . $OrderLine->LineNumber])/100)/100);
 					} else {
 						$_POST['GPPercent_' . $OrderLine->LineNumber] = 0;
 					}
@@ -1500,9 +1500,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 // This code needs sorting out, but until then :
 				$ImageSource = _('No Image');
 // Find the quantity in stock at location
-				$QOHSQL = "SELECT sum(locstock.quantity) AS qoh
-							FROM locstock
-							WHERE stockid='" .$myrow['stockid'] . "'
+				$QOHSQL = "SELECT sum(locstock.quantity) AS qoh,decimalplaces
+							FROM locstock INNER JOIN stockmaster ON stockmaster.stockid=locstock.stockid
+							WHERE locstock.stockid='" .$myrow['stockid'] . "'
 							AND loccode = '" . $_SESSION['Items'.$identifier]->Location . "'";
 				$QOHResult =  DB_query($QOHSQL);
 				$QOHRow = DB_fetch_array($QOHResult);

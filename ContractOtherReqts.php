@@ -1,5 +1,4 @@
 <?php
-
 /* $Id: ContractOtherReqts.php 3692 2010-08-15 09:22:08Z daintree $*/
 
 include('includes/DefineContractClass.php');
@@ -90,7 +89,7 @@ if (count($_SESSION['Contract'.$identifier]->ContractReqts)>0){
 
 	if (isset($_SESSION['Contract'.$identifier]->ContractRef)) {
 		echo  '<tr>
-				<th colspan="5">' . _('Contract Reference:') .' '. $_SESSION['Contract'.$identifier]->ContractRef . '</th>
+				<th colspan="5">' . _('Contract Reference') . ': '. $_SESSION['Contract'.$identifier]->ContractRef . '</th>
 			</tr>';
 	}
 

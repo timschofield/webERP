@@ -31,7 +31,7 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 		echo '<table class="selection">
 			<tr>
 				<td>' . _('Request Number') . ':</td>
-				<td><input type="text" name="OrderNumber" maxlength="8" size="9" /></td>
+				<td><input type="text" name="RequestNo" maxlength="8" size="9" /></td>
 				<td>' . _('From Stock Location') . ':</td>
 				<td><select name="StockLocation">';
 		$sql = "SELECT locations.loccode, locationname, canview FROM locations
@@ -40,13 +40,12 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 				AND locationusers.userid='" . $_SESSION['UserID'] . "'
 				AND locationusers.canview=1 
 				AND locations.internalrequest=1";
-		$locresult = DB_query($sql);
-		$LocationCounter = DB_num_rows($locresult);
+		$LocResult = DB_query($sql);
+		$LocationCounter = DB_num_rows($LocResult);
 		$locallctr = 0;//location all counter
-		$locctr = 0;//location counter
 		$Locations = array();
 		if ($LocationCounter>0) {
-			while ($myrow = DB_fetch_array($locresult)) {
+			while ($myrow = DB_fetch_array($LocResult)) {
 				$Locations[] = $myrow['loccode'];
 				if (isset($_POST['StockLocation'])){
 					if ($_POST['StockLocation'] == 'All' AND $locallctr == 0) {
@@ -56,9 +55,9 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 						echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 					}
 				} else {
-					if ($LocationCounter>1 AND $locctr == 0) {//we show All only when it is necessary	
+					if ($LocationCounter>1 AND $locallctr == 0) {//we show All only when it is necessary	
 						echo '<option value="All">' . _('All') . '</option>';
-						$loctr = 1;
+						$locallctr = 1;
 					}
 					echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 				}
@@ -83,8 +82,8 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 							echo '<option value="' . $myrow['loccode'] . '" selected="selected">' . $myrow['locationname'] . '</option>';
 						}
 					} else {
-						if ($LocationCounter>1 AND $locctr == 0) {
-							$locctr = 1;
+						if ($LocationCounter>1 AND $locallctr == 0) {
+							$locallctr = 1;
 							echo '<option value="All">' . _('All') . '</option>';
 						}
 						echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] .'</option>';
@@ -342,8 +341,8 @@ if(isset($StockItemsResult)){
 				        INNER JOIN locations ON locations.loccode=stockrequest.loccode	";
 	}
 	//lets add the condition selected by users
-	if (isset($_POST['RequestNo'])) {
-		$SQL .= "WHERE stockrequest.dispatchid = '" . $_POST['RequsetNo'] . "'";
+	if (isset($_POST['RequestNo']) AND $_POST['RequestNo'] !== '') {
+		$SQL .= "WHERE stockrequest.dispatchid = '" . $_POST['RequestNo'] . "'";
 	} else {
 		//first the constraint of locations;
 		if ($_POST['StockLocation'] != 'All') {//retrieve the location data from current code
@@ -353,6 +352,8 @@ if(isset($StockItemsResult)){
 				$Locations = unserialize($_POST['Locations']);
 				$Locations = implode("','",$Locations);
 				$SQL .= "WHERE stockrequest.loccode in ('" . $Locations . "')";
+			} else {
+			 	$SQL .= "WHERE 1 ";
 			}
 		}
 		//the authorization status
@@ -375,11 +376,11 @@ if(isset($StockItemsResult)){
 			$SQL .= " AND stockrequest.departmentid='" . $_POST['Department'] . "'";
 		}
 		//Date from
-		if (isset($_POST['DateFrom']) AND is_date($_POST['DateFrom'])) {
-			$SQL .= " AND despatchdate>='" . $_POST['DateFrom'] . "'";
+		if (isset($_POST['FromDate']) AND is_date($_POST['FromDate'])) {
+			$SQL .= " AND despatchdate>='" . $_POST['FromDate'] . "'";
 		}
-		if (isset($_POST['DateTo']) AND is_date($_POST['DateTo'])) {
-			$SQL .= " AND despatchdate<='" . $_POST['DateTo'] . "'";
+		if (isset($_POST['ToDate']) AND is_date($_POST['ToDate'])) {
+			$SQL .= " AND despatchdate<='" . $_POST['ToDate'] . "'";
 		}
 		//item selected 
 		if (isset($StockID)) {

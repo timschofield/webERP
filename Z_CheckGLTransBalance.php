@@ -1,5 +1,5 @@
 <?php
-/* $Id: Z_CheckGLTransBalance.php 7564 2016-07-03 06:58:29Z daintree $*/
+/* $Id: Z_CheckGLTransBalance.php 7715 2017-01-02 00:40:32Z tehonu $*/
 
 include('includes/session.inc');
 $Title=_('Check Period Sales Ledger Control Account');

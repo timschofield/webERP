@@ -1,6 +1,5 @@
 <?php
-
-/* $Id: PcExpensesTypeTab.php 6941 2014-10-26 23:18:08Z daintree $ */
+/* $Id: PcExpensesTypeTab.php 7682 2016-11-24 14:10:25Z rchacon $ */
 
 include('includes/session.inc');
 $Title = _('Maintenance Of Petty Cash Expenses For a Type Tab');
@@ -76,7 +75,7 @@ if (isset($_POST['submit'])) {
 										VALUES ('" . $_POST['SelectedTab'] . "',
 												'" . $_POST['SelectedExpense'] . "')";
 
-			$msg = _('Expense code:') . ' ' . $_POST['SelectedExpense'].' '._('for Type of Tab:') .' '. $_POST['SelectedTab'] .  ' ' . _('has been created');
+			$msg = _('Expense code') . ': ' . $_POST['SelectedExpense'].' '._('for Type of Tab:') .' '. $_POST['SelectedTab'] .  ' ' . _('has been created');
 			$checkSql = "SELECT count(typetabcode)
 							FROM pctypetabs";
 			$result = DB_query($checkSql);

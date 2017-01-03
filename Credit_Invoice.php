@@ -1,5 +1,5 @@
 <?php
-/* $Id: Credit_Invoice.php 7575 2016-07-27 09:27:05Z exsonqu $*/
+/* $Id: Credit_Invoice.php 7689 2016-11-30 05:11:51Z exsonqu $*/
 
 /*Functions to get the GL codes to post the transaction to */
 include('includes/GetSalesTransGLCodes.inc');
@@ -228,7 +228,7 @@ if(isset($_POST['Location'])) {
 	}
 }
 
-if(isset($_POST['ChargeFreightCost'])) {
+if(isset($_POST['ChargeFreightCost']) AND abs($_POST['ChargeFreightCost'])>0) {
 	$_SESSION['CreditItems' . $identifier]->FreightCost = filter_number_format($_POST['ChargeFreightCost']);
 	if (($TotalQtyCredited + abs($_POST['ChargeFreightCost']))<=0) {
 		prnMsg(_('There are no item quantity or freight charge input'),'error');

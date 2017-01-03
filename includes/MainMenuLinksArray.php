@@ -1,5 +1,4 @@
 <?php
-
 /* $Id: MainMenuLinksArray.php 6190 2013-08-12 02:12:02Z rchacon $*/
 
 /*****************************************************************************************
@@ -275,11 +274,13 @@ $MenuItems['PO']['Transactions']['URL'] = array(	'/PO_Header.php?NewOrder=Yes',
 
 $MenuItems['PO']['Reports']['Caption'] = array(	_('Purchase Order Inquiry'),
 												_('Purchase Order Detail Or Summary Inquiries'),
-												_('Supplier Price List'));
+												_('Supplier Price List'),
+												_('Purchases from Suppliers'));
 
 $MenuItems['PO']['Reports']['URL'] = array(	'/PO_SelectPurchOrder.php',
 											'/POReport.php',
-											'/SuppPriceList.php');
+											'/SuppPriceList.php',
+											'/PurchasesReport.php');
 
 $MenuItems['PO']['Maintenance']['Caption'] = array(_('Maintain Supplier Price Lists'));
 
@@ -538,7 +539,9 @@ $MenuItems['GL']['Reports']['Caption'] = array(	_('Trial Balance'),
 												_('Tag Reports'),
 												_('Tax Reports'));
 
-$MenuItems['GL']['Reports']['URL'] = array(	'/GLTrialBalance.php',
+$MenuItems['GL']['Reports']['URL'] = array(	'/BankReconciliation.php',
+											'/PDFChequeListing.php',
+											'/DailyBankTransactions.php',
 											'/SelectGLAccount.php',
 											'/GLAccountReport.php',
 											'/GLAccountCSV.php',
@@ -615,10 +618,12 @@ $MenuItems['FA']['Maintenance']['URL'] = array(	'/FixedAssetCategories.php',
 												'/MaintenanceTasks.php');
 
 $MenuItems['PC']['Transactions']['Caption'] = array(_('Assign Cash to PC Tab'),
+							_('Cash Transfer Between Tabs'),
 													_('Claim Expenses From PC Tab'),
 													_('Expenses Authorisation'));
 
 $MenuItems['PC']['Transactions']['URL'] = array('/PcAssignCashToTab.php',
+						'/PcAssignCashTabToTab.php',
 												'/PcClaimExpensesFromTab.php',
 												'/PcAuthorizeExpenses.php');
 

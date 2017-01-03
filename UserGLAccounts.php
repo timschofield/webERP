@@ -248,15 +248,15 @@ if(!isset($SelectedUser)) {// If is NOT set a user for GL accounts.
 			</tr>
 		</table>';
 	DB_free_result($Result);
-	echo '<br>', // Form buttons:
-		'<div class="centre noprint">',
+	echo '<br>',
+		'<div class="centre noprint">', // Form buttons:
 			'<button onclick="javascript:window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
-				'/images/printer.png" /> ', _('Print This'), '</button>', // "Print This" button.
+				'/images/printer.png" /> ', _('Print'), '</button>', // "Print" button.
 			'<button formaction="UserGLAccounts.php?Cancel" type="submit"><img alt="" src="', $RootPath, '/css/', $Theme,
 				'/images/user.png" /> ', _('Select A Different User'), '</button>'; // "Select A Different User" button.
 }
-echo		'<button formaction="index.php?Application=GL" type="submit"><img alt="" src="', $RootPath, '/css/', $Theme,
-				'/images/previous.png" /> ', _('Return'), '</button>', // "Return" button.
+echo		'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
+				'/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
 		'</div>
 	</form>';
 

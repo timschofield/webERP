@@ -1,17 +1,17 @@
 <?php
-/* $Id: SystemParameters.php 7263 2015-04-07 10:30:19Z exsonqu $*/
+/* $Id: SystemParameters.php 7644 2016-10-11 15:52:19Z rchacon $*/
 /* This script is for maintenance of the system parameters. */
 
 include('includes/session.inc');
-
-$Title = _('System Parameters');// Screen identificator.
-$ViewTopic= 'GettingStarted';// Filename's id in ManualContents.php's TOC.
-$BookMark = 'SystemConfiguration';// Anchor's id in the manual's html document.
+$Title = _('System Parameters');
+$ViewTopic = 'CreatingNewSystem';
+$BookMark = 'SystemParameters';
 include('includes/header.inc');
-echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
-	'/images/maintenance.png" title="' .// Title icon.
-	$Title . '" />' .// Icon title.
-	$Title . '</p>';// Page title.
+
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+	'/images/maintenance.png" title="', // Icon image.
+	$Title, '" /> ', // Icon title.
+	$Title, '</p>';// Page title.
 
 include('includes/CountriesArray.php');
 

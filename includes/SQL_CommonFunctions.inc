@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: SQL_CommonFunctions.inc 7568 2016-07-08 10:08:45Z exsonqu $*/
+/* $Id: SQL_CommonFunctions.inc 7618 2016-09-12 02:35:30Z exsonqu $*/
 
 /* Common SQL Functions */
 
@@ -221,7 +221,9 @@ function BomMaterialCost($Parent, $db) {
 	$MyRow = DB_fetch_row($result);
 	$MaterialCost = $MyRow[0];
 	$Result = DB_Txn_Begin();
-	ItemCostUpdateGL($db, $Parent, $MaterialCost, $OldCost, $QOH);
+	if (abs($MaterialCost-$OldCost)>0) {
+		ItemCostUpdateGL($db, $Parent, $MaterialCost, $OldCost, $QOH);
+	}
 	$Result = DB_Txn_Commit();
 	return $MaterialCost;
 }

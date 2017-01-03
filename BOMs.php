@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: BOMs.php 7522 2016-05-15 09:46:15Z exsonqu $*/
+/* $Id: BOMs.php 7709 2016-12-20 15:57:10Z rchacon $*/
 
 include('includes/session.inc');
 
@@ -39,6 +39,11 @@ function display_children($Parent, $Level, &$BOMTree) {
 				// child's children
 				$i++;
 				display_children($row['component'], $Level + 1, $BOMTree);
+			} else {
+				prnMsg(_('The component and the parent is the same'),'error');
+				echo $row['component'] . '<br/>';
+				include('includes/footer.inc');
+				exit;
 			}
 		}
 	}
@@ -328,6 +333,11 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 				prnMsg(_('Only non-serialised or non-lot controlled items can be set to auto issue. These items require the lot/serial numbers of items issued to the works orders to be specified so autoissue is not an option. Auto issue has been automatically set to off for this component'),'warn');
 				$_POST['AutoIssue']=0;
 			}
+		}
+		if ($_POST['Component'] == $SelectedParent) {
+			$InputError = 1;
+			prnMsg(_('The component selected is the same with the parent, it is not allowed'),'error');
+			$Errors[$i] = 'Component';
 		}
 
 		if (!in_array('EffectiveAfter', $Errors)) {
@@ -904,10 +914,9 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			<br />
 			<div class="centre noprint">
 				<input tabindex="8" type="submit" name="Submit" value="' . _('Enter Information') . '" />
-					<button onclick="javascript:window.print()" type="button"><img alt="" src="' . $RootPath . '/css/' . $Theme .
-					'/images/printer.png" /> ' .
-					_('Print This') . '</button>
-			</div>
+					<button onclick="javascript:window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
+						'/images/printer.png" /> ', _('Print'), '</button>', // "Print" button.
+			'</div>
             </div>
 			</form>';
 
