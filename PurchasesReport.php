@@ -263,7 +263,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 		$_POST['PeriodFrom'] = date($_SESSION['DefaultDateFormat'], strtotime("-1 year", time()));// One year before current date.
 	}
 	echo 		'<td><input alt="', $_SESSION['DefaultDateFormat'], '" class="date" id="PeriodFrom" maxlength="10" minlength="0" name="PeriodFrom" required="required" size="12" type="text" value="', $_POST['PeriodFrom'], '" />',
-					(!isset($field_help) || $field_help ? _('Select the beginning of the reporting period') : ''), // If it is not set the $field_help parameter OR it is TRUE, shows the page help text.
+					(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Select the beginning of the reporting period') : ''), // If it is not set the $_SESSION['ShowFieldHelp'] parameter OR it is TRUE, shows the page help text.
 		 		'</td>
 			</tr>',
 			// Select period to:
@@ -273,14 +273,14 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 		$_POST['PeriodTo'] = date($_SESSION['DefaultDateFormat']);
 	}
 	echo 		'<td><input alt="', $_SESSION['DefaultDateFormat'], '" class="date" id="PeriodTo" maxlength="10" minlength="0" name="PeriodTo" required="required" size="12" type="text" value="', $_POST['PeriodTo'], '" />',
-					(!isset($field_help) || $field_help ? _('Select the end of the reporting period') : ''), // If it is not set the $field_help parameter OR it is TRUE, shows the page help text.
+					(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Select the end of the reporting period') : ''), // If it is not set the $_SESSION['ShowFieldHelp'] parameter OR it is TRUE, shows the page help text.
 		 		'</td>
 			</tr>',
 			// Show the budget for the period:
 			'<tr>',
 			 	'<td><label for="ShowDetails">', _('Show details'), '</label></td>
 			 	<td><input',($_POST['ShowDetails'] ? ' checked="checked"' : ''), ' id="ShowDetails" name="ShowDetails" type="checkbox">', // "Checked" if ShowDetails is set AND it is TRUE.
-			 		(!isset($field_help) || $field_help ? _('Check this box to show purchase invoices') : ''), // If it is not set the $field_help parameter OR it is TRUE, shows the page help text.
+			 		(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Check this box to show purchase invoices') : ''), // If it is not set the $_SESSION['ShowFieldHelp'] parameter OR it is TRUE, shows the page help text.
 		 		'</td>
 			</tr>',
 		 '</tbody></table>';

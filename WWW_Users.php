@@ -173,12 +173,16 @@ if(isset($_POST['submit'])) {
 						defaultlocation='" . $_POST['DefaultLocation'] ."',
 						modulesallowed='" . $ModulesAllowed . "',
 						showdashboard='" . $_POST['ShowDashboard'] . "',
+						showpagehelp='" . $_POST['ShowPageHelp'] . "',
+						showfieldhelp='" . $_POST['ShowFieldHelp'] . "',
 						blocked='" . $_POST['Blocked'] . "',
 						pdflanguage='" . $_POST['PDFLanguage'] . "',
 						department='" . $_POST['Department'] . "'
 					WHERE userid = '". $SelectedUser . "'";
-
 		prnMsg( _('The selected user record has been updated'), 'success' );
+		$_SESSION['ShowPageHelp'] = $_POST['ShowPageHelp'];
+		$_SESSION['ShowFieldHelp'] = $_POST['ShowFieldHelp'];
+
 	} elseif($InputError !=1) {
 
 		$sql = "INSERT INTO www_users (userid,
@@ -220,6 +224,8 @@ if(isset($_POST['submit'])) {
 						'" . $_POST['PDFLanguage'] . "',
 						'" . $_POST['Department'] . "')";
 		prnMsg( _('A new user record has been inserted'), 'success' );
+		$_SESSION['ShowPageHelp'] = $_POST['ShowPageHelp'];
+		$_SESSION['ShowFieldHelp'] = $_POST['ShowFieldHelp'];
 
 		$LocationSql = "INSERT INTO locationusers (loccode,
 													userid,
@@ -267,6 +273,8 @@ if(isset($_POST['submit'])) {
 		unset($_POST['DefaultLocation']);
 		unset($_POST['ModulesAllowed']);
 		unset($_POST['ShowDashboard']);
+		unset($_POST['ShowPageHelp']);
+		unset($_POST['ShowFieldHelp']);
 		unset($_POST['Blocked']);
 		unset($_POST['Theme']);
 		unset($_POST['UserLanguage']);
@@ -411,6 +419,8 @@ if(isset($SelectedUser)) {
 			defaultlocation,
 			modulesallowed,
 			showdashboard,
+			showpagehelp,
+			showfieldhelp,
 			blocked,
 			theme,
 			language,
@@ -438,6 +448,8 @@ if(isset($SelectedUser)) {
 	$_POST['Theme'] = $myrow['theme'];
 	$_POST['UserLanguage'] = $myrow['language'];
 	$_POST['ShowDashboard'] = $myrow['showdashboard'];
+	$_POST['ShowPageHelp'] = $myrow['showpagehelp'];
+	$_POST['ShowFieldHelp'] = $myrow['showfieldhelp'];
 	$_POST['Blocked'] = $myrow['blocked'];
 	$_POST['PDFLanguage'] = $myrow['pdflanguage'];
 	$_POST['Department'] = $myrow['department'];
@@ -710,6 +722,34 @@ echo '<tr>
 		<td><label for="ShowDashboard">', _('Display Dashboard after Login'), ':</label></td>
 		<td><select id="ShowDashboard" name="ShowDashboard">';
 if($_POST['ShowDashboard']==0) {
+	echo '<option selected="selected" value="0">' . _('No') . '</option>',
+		 '<option value="1">', _('Yes'), '</option>';
+} else {
+	echo '<option value="0">', _('No'), '</option>',
+ 		 '<option selected="selected" value="1">' . _('Yes') . '</option>';
+}
+echo '</select></td>
+	</tr>';
+
+// Turn off/on page help:
+echo '<tr>
+		<td><label for="ShowPageHelp">', _('Display page help'), ':</label></td>
+		<td><select id="ShowPageHelp" name="ShowPageHelp">';
+if($_POST['ShowPageHelp']==0) {
+	echo '<option selected="selected" value="0">' . _('No') . '</option>',
+		 '<option value="1">', _('Yes'), '</option>';
+} else {
+	echo '<option value="0">', _('No'), '</option>',
+ 		 '<option selected="selected" value="1">' . _('Yes') . '</option>';
+}
+echo '</select></td>
+	</tr>';
+
+// Turn off/on field help:
+echo '<tr>
+		<td><label for="ShowFieldHelp">', _('Display field help'), ':</label></td>
+		<td><select id="ShowFieldHelp" name="ShowFieldHelp">';
+if($_POST['ShowFieldHelp']==0) {
 	echo '<option selected="selected" value="0">' . _('No') . '</option>',
 		 '<option value="1">', _('Yes'), '</option>';
 } else {

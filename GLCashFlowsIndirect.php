@@ -76,10 +76,8 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 		$Title, '" /> ', // Icon title.
 		$Title, '<br />', // Page title, reporting statement.
 		stripslashes($_SESSION['CompanyRecord']['coyname']), '<br />'; // Page title, reporting entity.
-	$Result = DB_query('SELECT lastdate_in_period FROM `periods` WHERE `periodno`=' . $_POST['PeriodFrom']);
-	$PeriodFromName = DB_fetch_array($Result);
-	$Result = DB_query('SELECT lastdate_in_period FROM `periods` WHERE `periodno`=' . $_POST['PeriodTo']);
-	$PeriodToName = DB_fetch_array($Result);
+	$PeriodFromName = DB_fetch_array(DB_query('SELECT lastdate_in_period FROM `periods` WHERE `periodno`=' . $_POST['PeriodFrom']));
+	$PeriodToName = DB_fetch_array(DB_query('SELECT lastdate_in_period FROM `periods` WHERE `periodno`=' . $_POST['PeriodTo']));
 	echo _('From'), ' ', MonthAndYearFromSQLDate($PeriodFromName['lastdate_in_period']), ' ', _('to'), ' ', MonthAndYearFromSQLDate($PeriodToName['lastdate_in_period']), '<br />'; // Page title, reporting period.
 	include_once('includes/CurrenciesArray.php');// Array to retrieve currency name.
 	echo _('All amounts stated in'), ': ', _($CurrencyName[$_SESSION['CompanyRecord']['currencydefault']]), '</p>';// Page title, reporting presentation currency and level of rounding used.
@@ -99,8 +97,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 	// Gets the net profit for the period GL account:
 	if(!isset($_SESSION['PeriodProfitAccount'])) {
 		$_SESSION['PeriodProfitAccount'] = '';
-		$Result = DB_query("SELECT confvalue FROM `config` WHERE confname ='PeriodProfitAccount'");
-		$MyRow = DB_fetch_array($Result);
+		$MyRow = DB_fetch_array(DB_query("SELECT confvalue FROM `config` WHERE confname ='PeriodProfitAccount'"));
 		if($MyRow) {
 			$_SESSION['PeriodProfitAccount'] = $MyRow['confvalue'];
 		}
@@ -470,8 +467,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 					INNER JOIN chartdetails ON chartmaster.accountcode=chartdetails.accountcode
 					INNER JOIN accountgroups ON chartmaster.group_=accountgroups.groupname
 				WHERE accountgroups.pandl=1";
-		$Result1 = DB_query($Sql);
-		$MyRow1 = DB_fetch_array($Result1);
+		$MyRow1 = DB_fetch_array(DB_query($Sql));
 		echo	colDebitCredit($MyRow1['ActualProfit']),
 				colDebitCredit($MyRow1['LastProfit']),
 			'</tr>
@@ -488,8 +484,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 				WHERE accountgroups.pandl=0
 					AND chartdetails.accountcode!='" . $_SESSION['PeriodProfitAccount'] . "'
 					AND chartdetails.accountcode!='" . $_SESSION['RetainedEarningsAccount'] . "'";// Gets retained earnings by the complement method to include differences. The complement method: Changes(retained earnings) = -Changes(other accounts).
-		$Result2 = DB_query($Sql);
-		$MyRow2 = DB_fetch_array($Result2);
+		$MyRow2 = DB_fetch_array(DB_query($Sql));
 		echo	colDebitCredit($MyRow2['ActualRetained'] - $MyRow1['ActualProfit']),
 				colDebitCredit($MyRow2['LastRetained'] - $MyRow1['LastProfit']),
 			'</tr><tr>',
@@ -752,7 +747,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 		'/images/reports.png" title="', // Icon image.
 		$Title, '" /> ', // Icon title.
 		$Title, '</p>';// Page title.
-	if(!isset($page_help) OR $page_help) {// If it is not set the $page_help parameter OR it is TRUE, shows the page help text:
+	if(!isset($_SESSION['ShowPageHelp']) OR $_SESSION['ShowPageHelp']) {// If it is not set the $_SESSION['ShowPageHelp'] parameter OR it is TRUE, shows the page help text:
 		echo '<div class="page_help_text">',
 			_('The statement of cash flows, also known as the successor of the old source and application of funds statement, reports how changes in balance sheet accounts and income affect cash and cash equivalents, and breaks the analysis down to operating, investing and financing activities.'), '<br />',
 			_('The purpose of the statement of cash flows is to show where the company got their money from and how it was spent during the period being reported for a user selectable range of periods.'), '<br />',
@@ -802,7 +797,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 	    echo			'<option',($MyRow['periodno'] == $_POST['PeriodFrom'] ? ' selected="selected"' : '' ), ' value="', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
 	}
 	echo			'</select>',
-					(!isset($field_help) || $field_help ? _('Select the beginning of the reporting period') : ''), // If it is not set the $field_help parameter OR it is TRUE, shows the page help text.
+					(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Select the beginning of the reporting period') : ''), // If it is not set the $_SESSION['ShowFieldHelp'] parameter OR it is TRUE, shows the page help text.
 		 		'</td>
 			</tr>',
 			// Select period to:
@@ -816,28 +811,28 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 	    echo			'<option',($MyRow['periodno'] == $_POST['PeriodTo'] ? ' selected="selected"' : '' ), ' value="', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
 	}
 	echo			'</select>',
-					(!isset($field_help) || $field_help ? _('Select the end of the reporting period') : ''), // If it is not set the $field_help parameter OR it is TRUE, shows the page help text.
+					(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Select the end of the reporting period') : ''), // If it is not set the $_SESSION['ShowFieldHelp'] parameter OR it is TRUE, shows the page help text.
 		 		'</td>
 			</tr>',
 			// Show the budget for the period:
 			'<tr>',
-			 	'<td><label for="ShowBudget">', _('Show the budget for the period'), ':</label></td>
+			 	'<td><label for="ShowBudget">', _('Show the budget for the period'), '</label></td>
 			 	<td><input',($_POST['ShowBudget'] ? ' checked="checked"' : ''), ' id="ShowBudget" name="ShowBudget" type="checkbox">', // "Checked" if ShowBudget is set AND it is TRUE.
-			 		(!isset($field_help) || $field_help ? _('Check this box to show the budget for the period') : ''), // If it is not set the $field_help parameter OR it is TRUE, shows the page help text.
+			 		(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Check this box to show the budget for the period') : ''), // If it is not set the $_SESSION['ShowFieldHelp'] parameter OR it is TRUE, shows the page help text.
 		 		'</td>
 			</tr>',
 			// Show accounts with zero balance:
 			'<tr>',
-				'<td><label for="ShowZeroBalance">', _('Show accounts with zero balance'), ':</label></td>
+				'<td><label for="ShowZeroBalance">', _('Show accounts with zero balance'), '</label></td>
 			 	<td><input',(isset($_POST['ShowZeroBalance']) && $_POST['ShowZeroBalance'] ? ' checked="checked"' : ''), ' id="ShowZeroBalance" name="ShowZeroBalance" type="checkbox">', // "Checked" if ShowZeroBalance is set AND it is TRUE.
-					(!isset($field_help) || $field_help ? _('Check this box to show all accounts including those with zero balance') : ''), // If it is not set the $field_help parameter OR it is TRUE, shows the page help text.
+					(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Check this box to show all accounts including those with zero balance') : ''), // If it is not set the $_SESSION['ShowFieldHelp'] parameter OR it is TRUE, shows the page help text.
 		 		'</td>
 			</tr>',
 			// Show cash and cash equivalents accounts:
 			'<tr>',
-			 	'<td><label for="ShowCash">', _('Show cash and cash equivalents accounts'), ':</label></td>
+			 	'<td><label for="ShowCash">', _('Show cash and cash equivalents accounts'), '</label></td>
 			 	<td><input',($_POST['ShowCash'] ? ' checked="checked"' : ''), ' id="ShowCash" name="ShowCash" type="checkbox">', // "Checked" if ShowZeroBalance is set AND it is TRUE.
-					(!isset($field_help) || $field_help ? _('Check this box to show cash and cash equivalents accounts') : ''), // If it is not set the $field_help parameter OR it is TRUE, shows the page help text.
+					(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Check this box to show cash and cash equivalents accounts') : ''), // If it is not set the $_SESSION['ShowFieldHelp'] parameter OR it is TRUE, shows the page help text.
 		 		'</td>
 			</tr>',
 		 '</tbody></table>';
