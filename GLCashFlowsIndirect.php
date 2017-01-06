@@ -112,7 +112,8 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 		$Result = DB_query("SELECT retainedearnings FROM companies WHERE coycode = 1");
 		$MyRow = DB_fetch_array($Result);
 		if($MyRow) {
-			$_SESSION['RetainedEarningsAccount'] = $MyRow['confvalue'];
+/*			$_SESSION['RetainedEarningsAccount'] = $MyRow['confvalue'];// RChacon: See above comment */
+			$_SESSION['RetainedEarningsAccount'] = $MyRow['retainedearnings'];
 		}
 	}
 	include('includes/GLPostings.inc');// Posts pending GL transactions.
