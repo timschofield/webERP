@@ -233,10 +233,9 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 						$LogoFile = 'companies/' .  $_SESSION['DatabaseName'] . '/LogowebERP.png';
 					}
 				}
-			}
-
-			if (file_exists($LogoFile)) {
-				$_SESSION['LogoFile'] = $LogoFile;
+				if (file_exists($LogoFile)) {
+					$_SESSION['LogoFile'] = $LogoFile;
+				}
 			}
 
 			if(!isset($_SESSION['DB_Maintenance'])){
