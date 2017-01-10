@@ -84,6 +84,8 @@ if(isset($_POST['submit'])) {
 									klposcashaccount = '" . $_POST['KLPOSCashAccount'] . "',
 									klpostag = '" . $_POST['KLPOSTag'] . "',
 									zone = '" . $_POST['Zone'] . "',
+									rlfactorforpackaging = '" . $_POST['RLFactorForPackaging'] . "',
+									rldaysforpackaging = '" . $_POST['RLDaysForPackaging'] . "',
 									usedforwo = '" . $_POST['UsedForWO'] . "',
 									glaccountcode = '" . $_POST['GLAccountCode'] . "',
 									allowinvoicing = '" . $_POST['AllowInvoicing'] . "'
@@ -120,6 +122,8 @@ if(isset($_POST['submit'])) {
 		unset($_POST['KLPOSCashAccount']);
 		unset($_POST['KLPOSTag']);
 		unset($_POST['Zone']);
+		unset($_POST['RLFactorForPackaging']);
+		unset($_POST['RLDaysForPackaging']);
 		unset($_POST['UsedForWO']);
 		unset($_POST['GLAccountCode']);
 		unset($_POST['AllowInvoicing']);
@@ -160,6 +164,8 @@ if(isset($_POST['submit'])) {
 										klposcashaccount,
 										klpostag,
 										zone,
+										rlfactorforpackaging,
+										rldaysforpackaging,
 										usedforwo,
 										glaccountcode,
 										allowinvoicing)
@@ -187,6 +193,8 @@ if(isset($_POST['submit'])) {
 								'" . $_POST['KLPOSCashAccount'] . "',
 								'" . $_POST['KLPOSTag'] . "',
 								'" . $_POST['Zone'] . "',
+								'" . $_POST['RLFactorForPackaging'] . "',
+								'" . $_POST['RLDaysForPackaging'] . "',
 								'" . $_POST['UsedForWO'] . "',
 								'" . $_POST['GLAccountCode'] . "',
 								'" . $_POST['AllowInvoicing'] . "')";
@@ -257,6 +265,8 @@ if(isset($_POST['submit'])) {
 		unset($_POST['KLPOSCashAccount']);
 		unset($_POST['KLPOSTag']);
 		unset($_POST['Zone']);
+		unset($_POST['RLFactorForPackaging']);
+		unset($_POST['RLDaysForPackaging']);
 		unset($_POST['UsedForWO']);
 		unset($_POST['GLAccountCode']);
 		unset($_POST['AllowInvoicing']);
@@ -538,6 +548,8 @@ if(!isset($_GET['delete'])) {
 					klposcashaccount,
 					klpostag,
 					zone,
+					rlfactorforpackaging,
+					rldaysforpackaging,
 					usedforwo,
 					glaccountcode,
 					allowinvoicing
@@ -572,6 +584,8 @@ if(!isset($_GET['delete'])) {
 		$_POST['KLPOSCashAccount'] = $myrow['klposcashaccount'];
 		$_POST['KLPOSTag'] = $myrow['klpostag'];
 		$_POST['Zone'] = $myrow['zone'];
+		$_POST['RLFactorForPackaging'] = $myrow['rlfactorforpackaging'];
+		$_POST['RLDaysForPackaging'] = $myrow['rldaysforpackaging'];
 		$_POST['UsedForWO'] = $myrow['usedforwo'];
 		$_POST['GLAccountCode'] = $myrow['glaccountcode'];
 		$_POST['AllowInvoicing'] = $myrow['allowinvoicing'];
@@ -720,13 +734,14 @@ if(!isset($_GET['delete'])) {
 		<tr>
 			<td>' . _('Default Counter Sales Customer Code') . ':' . '</td>
 			<td><input type="text" name="CashSaleCustomer" data-type="no-illegal-chars" title="' . _('If counter sales are being used for this location then an existing customer account code needs to be entered here. All sales created from the counter sales will be recorded against this customer account') . '" value="' . $_POST['CashSaleCustomer'] . '" size="11" maxlength="10" /></td>
-		</tr>
-		<tr>
+		</tr>';
+	echo '<tr>
 			<td>' . _('Counter Sales Branch Code') . ':' . '</td>
 			<td><input type="text" name="CashSaleBranch" data-type="no-illegal-chars" title="' . _('If counter sales are being used for this location then an existing customer branch code for the customer account code entered above needs to be entered here. All sales created from the counter sales will be recorded against this branch') . '" value="' . $_POST['CashSaleBranch'] . '" size="11" maxlength="10" /></td>
-		</tr>
+		</tr>';
+	echo '
 		<tr>
-			<td>' . _('Priority for KL Smart Transfers') . ':' . '</td>
+			<td>' . _('KL Priority for KL Smart Transfers') . ':' . '</td>
 			<td><input type="text" name="Priority" class="number" title="' . _('Priority for KL Shops Smart Transfers 1-Max Priority 9-Min Priority') . '" value="' . $_POST['Priority'] . '" size="1" maxlength="1" /></td>
 		</tr>';
 	echo '<tr>
@@ -738,7 +753,7 @@ if(!isset($_GET['delete'])) {
 			<td><input type="text" name="SmartDispatchMaxModels" class="number" title="' . _('Enter the maximum number of models to be included in KL Smart Transfers') . '" name="MaxModels" value="' . $_POST['SmartDispatchMaxModels'] . '" size="5" maxlength="5" /></td>
 		</tr>';
 	echo '<tr>
-			<td>' . _('Yearly Rent IDR (Shops Only)') . ':</td>
+			<td>' . _('KL Yearly Rent IDR (Shops Only)') . ':</td>
 			<td><input type="text" name="KLyearlyRent" class="number" title="' . _('Enter the yearly rent in IDR') . '" name="KLyearlyRent" value="' . $_POST['KLyearlyRent'] . '" size="12" maxlength="12" /></td>
 		</tr>';
 	// POS Cash GL Account
@@ -752,7 +767,7 @@ if(!isset($_GET['delete'])) {
 
 	// LOcation Zone:
 	echo '<tr>
-		<td>' . _('Location Zone') . ':' . '</td>
+		<td>' . _('KL Location Zone') . ':' . '</td>
 		<td><select name="Zone">';
 
 	$ZonesResult = DB_query("SELECT code, description FROM locationzones");
@@ -766,8 +781,18 @@ if(!isset($_GET['delete'])) {
 
 	echo '</select></td>
 		</tr>';
+		
+	echo '<tr>
+			<td>' . _('KL RL Factor for Packaging Transfers') . ':' . '</td>
+			<td><input type="text" name="RLFactorForPackaging" class="number" title="' . _('Factor to Multiply Reorder Level for Packaging Transfers') . '" value="' . $_POST['RLFactorForPackaging'] . '" size="4" maxlength="4" /></td>
+		</tr>';
 
 	echo '<tr>
+			<td>' . _('KL RL Days for Packaging Transfers') . ':' . '</td>
+			<td><input type="text" name="RLDaysForPackaging" class="number" title="' . _('Set Reorder Level as needs of pacjaking for a number of days') . '" value="' . $_POST['RLDaysForPackaging'] . '" size="2" maxlength="2" /></td>
+		</tr>';
+
+		echo '<tr>
 			<td>' . _('Allow internal requests?') . ':</td>
 			<td><select name="InternalRequest">';
 	if($_POST['InternalRequest']==1) {
