@@ -1,3 +1,5 @@
+-- Add new script:
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('PurchasesReport.php', '2', 'Shows a report of purchases from suppliers for the range of selected dates');
 
 -- Add the CashFlowsSection identificator:
 ALTER TABLE `chartmaster` ADD `cashflowsactivity` TINYINT(1) NOT NULL DEFAULT '-1' COMMENT 'Cash flows activity' AFTER `group_`;
