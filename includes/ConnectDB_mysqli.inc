@@ -27,7 +27,7 @@ if(mysqli_connect_errno()) {
 	printf("Connect failed: %s\n", mysqli_connect_error());
 	session_unset();
 	session_destroy();
-	echo '<p>' . _('Click') . ' ' . '<a href="index.php">' . _('here') . '</a>' . ' '  ._('to try logging in again') . '</p>';
+	echo '<p>' . _('Click') . ' ' . '<a href="index.php">' . _('here') . '</a>' . ' ' ._('to try logging in again') . '</p>';
 	exit();
 }
 
@@ -51,22 +51,18 @@ if(isset($DatabaseName)) {
 
 		unset ($_SESSION['DatabaseName']);
 		exit;
-        }
+	}
 }
 
 //DB wrapper functions to change only once for whole application
 
-function DB_query($SQL,
-					$ErrorMessage='',
-					$DebugMessage= '',
-					$Transaction=false,
-					$TrapErrors=true) {
+function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false, $TrapErrors=true) {
 
 	global $debug;
 	global $PathPrefix;
 	global $db;
 
-	$result=mysqli_query($db, $SQL);
+	$result = mysqli_query($db, $SQL);
 
 	$_SESSION['LastInsertId'] = mysqli_insert_id($db);
 
@@ -120,34 +116,34 @@ function DB_query($SQL,
 
 function DB_fetch_row($ResultIndex) {
 	$RowPointer=mysqli_fetch_row($ResultIndex);
-	Return $RowPointer;
+	return $RowPointer;
 }
 
-function DB_fetch_assoc(&$ResultIndex) {
+function DB_fetch_assoc($ResultIndex) {
 	$RowPointer=mysqli_fetch_assoc($ResultIndex);
-	Return $RowPointer;
+	return $RowPointer;
 }
 
 function DB_fetch_array($ResultIndex) {
 	$RowPointer = mysqli_fetch_array($ResultIndex);
-	Return $RowPointer;
+	return $RowPointer;
 }
 
 function DB_data_seek(&$ResultIndex,$Record) {
 	mysqli_data_seek($ResultIndex,$Record);
 }
 
-function DB_free_result(&$ResultIndex) {
-    if(is_resource($ResultIndex)) {
-    	mysqli_free_result($ResultIndex);
-    }
+function DB_free_result($ResultIndex) {
+	if(is_resource($ResultIndex)) {
+		mysqli_free_result($ResultIndex);
+	}
 }
 
-function DB_num_rows(&$ResultIndex) {
+function DB_num_rows($ResultIndex) {
 	return mysqli_num_rows($ResultIndex);
 }
 
-function DB_affected_rows(&$ResultIndex) {
+function DB_affected_rows($ResultIndex) {
 	global $db;
 	return mysqli_affected_rows($db);
 
@@ -182,12 +178,12 @@ function DB_escape_string($String) {
 function DB_show_tables($Conn='') {
 	global $db;
 	$Result = DB_query('SHOW TABLES');
-	Return $Result;
+	return $Result;
 }
 
 function DB_show_fields($TableName, $Conn='') {
 	$Result = DB_query("DESCRIBE $TableName");
-	Return $Result;
+	return $Result;
 }
 
 function interval($val, $Inter) {

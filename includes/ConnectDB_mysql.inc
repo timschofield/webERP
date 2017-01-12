@@ -49,17 +49,13 @@ require_once($PathPrefix . 'includes/MiscFunctions.php');
 
 //DB wrapper functions to change only once for whole application
 
-function DB_query($SQL,
-		$ErrorMessage='',
-		$DebugMessage= '',
-		$Transaction=false,
-		$TrapErrors=true) {
+function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false, $TrapErrors=true) {
 
 	global $debug;
 	global $PathPrefix;
 	global $db;
 
-	$result=mysql_query($SQL,$db);
+	$result = mysql_query($SQL, $db);
 	$_SESSION['LastInsertId'] = mysql_insert_id($db);
 
 	if($DebugMessage == '') {
@@ -112,32 +108,32 @@ function DB_query($SQL,
 
 function DB_fetch_row($ResultIndex) {
 	$RowPointer = mysql_fetch_row($ResultIndex);
-	Return $RowPointer;
+	return $RowPointer;
 }
 
-function DB_fetch_assoc(&$ResultIndex) {
+function DB_fetch_assoc($ResultIndex) {
 	$RowPointer = mysql_fetch_assoc($ResultIndex);
-	Return $RowPointer;
+	return $RowPointer;
 }
 
 function DB_fetch_array($ResultIndex) {
 	$RowPointer = mysql_fetch_array($ResultIndex);
-	Return $RowPointer;
+	return $RowPointer;
 }
 
 function DB_data_seek(&$ResultIndex,$Record) {
 	mysql_data_seek($ResultIndex,$Record);
 }
 
-function DB_free_result(&$ResultIndex) {
+function DB_free_result($ResultIndex) {
 	mysql_free_result($ResultIndex);
 }
 
-function DB_num_rows(&$ResultIndex) {
+function DB_num_rows($ResultIndex) {
 	return mysql_num_rows($ResultIndex);
 }
 
-function DB_affected_rows(&$ResultIndex) {
+function DB_affected_rows($ResultIndex) {
 	return mysql_affected_rows($ResultIndex);
 }
 
@@ -168,17 +164,17 @@ function DB_escape_string($String) {
 
 function DB_show_tables(&$Conn='') {
 	$Result = DB_query('SHOW TABLES');
-	Return $Result;
+	return $Result;
 }
 
 function DB_show_fields($TableName, &$Conn='') {
 	$Result = DB_query("DESCRIBE $TableName");
-	Return $Result;
+	return $Result;
 }
 
 function interval( $val, $Inter ) {
-		global $DBType;
-		return "\n".'interval ' . $val . ' '. $Inter."\n";
+	global $DBType;
+	return "\n".'interval ' . $val . ' '. $Inter."\n";
 }
 
 function DB_Maintenance() {

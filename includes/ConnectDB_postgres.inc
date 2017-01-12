@@ -11,14 +11,14 @@ if( isset($host) && ($host != "")) {
 }
 
 if( isset( $DBUser ) && ($DBUser != "") ) {
-    // if we have a user we need to use password if supplied
-    $PgConnStr .= " user=".$DBUser;
-    if( isset( $DBPassword ) && ($DBPassword != "") ) {
-	$PgConnStr .= " password=".$DBPassword;
-    }
+	// if we have a user we need to use password if supplied
+	$PgConnStr .= " user=".$DBUser;
+	if( isset( $DBPassword ) && ($DBPassword != "") ) {
+		$PgConnStr .= " password=".$DBPassword;
+	}
 }
 
-global  $db;		// Make sure it IS global, regardless of our context
+global $db;		// Make sure it IS global, regardless of our context
 $db = pg_connect( $PgConnStr );
 
 if( !$db ) {
@@ -61,7 +61,7 @@ function DB_query ($SQL,
 			$SQL = 'rollback';
 			$Result = DB_query($SQL);
 			if(DB_error_no($Conn) !=0) {
-				prnMsg('<br />' .   _('Error Rolling Back Transaction!!'), '', _('DB DEBUG:') );
+				prnMsg('<br />' . _('Error Rolling Back Transaction!!'), '', _('DB DEBUG:') );
 			}
 		}
 		if($TrapErrors) {
@@ -75,32 +75,32 @@ function DB_query ($SQL,
 
 function DB_fetch_row($ResultIndex) {
 	$RowPointer=pg_fetch_row($ResultIndex);
-	Return $RowPointer;
+	return $RowPointer;
 }
 
-function DB_fetch_assoc(&$ResultIndex) {
+function DB_fetch_assoc($ResultIndex) {
 	$RowPointer=pg_fetch_assoc($ResultIndex);
-	Return $RowPointer;
+	return $RowPointer;
 }
 
 function DB_fetch_array($ResultIndex) {
 	$RowPointer = pg_fetch_array($ResultIndex);
-	Return $RowPointer;
+	return $RowPointer;
 }
 
 function DB_data_seek(&$ResultIndex,$Record) {
 	pg_result_seek($ResultIndex,$Record);
 }
 
-function DB_free_result(&$ResultIndex) {
+function DB_free_result($ResultIndex) {
 	pg_free_result($ResultIndex);
 }
 
-function DB_num_rows(&$ResultIndex) {
+function DB_num_rows($ResultIndex) {
 	return pg_num_rows($ResultIndex);
 }
 // Added by MGT
-function DB_affected_rows(&$ResultIndex) {
+function DB_affected_rows($ResultIndex) {
 	return pg_affected_rows($ResultIndex);
 }
 
@@ -120,7 +120,7 @@ function DB_Last_Insert_ID(&$Conn, $table, $fieldname) {
 }
 
 function DB_escape_string($String) {
-	Return pg_escape_string(htmlspecialchars($String, ENT_COMPAT, 'ISO-8859-1'));
+	return pg_escape_string(htmlspecialchars($String, ENT_COMPAT, 'ISO-8859-1'));
 }
 
 function INTERVAL( $val, $Inter ) {
@@ -129,13 +129,13 @@ function INTERVAL( $val, $Inter ) {
 }
 function DB_show_tables(&$Conn) {
 	$Result =DB_query("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'");
-	Return $Result;
+	return $Result;
 }
 function DB_show_fields($TableName,&$Conn) {
 	$Result = DB_query("SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_name='" . $TableName . "'");
 	if(DB_num_rows($Result)==1) {
 		$Result = DB_query("SELECT column_name FROM information_schema.columns WHERE table_name ='$TableName'");
-		Return $Result;
+		return $Result;
 	}
 }
 function DB_Maintenance() {

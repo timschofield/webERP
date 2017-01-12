@@ -1,7 +1,7 @@
 webERP Change Log
 
+12/01/17  RChacon: Removes the "&" before the variable $ResultIndex in ConnectDB_XXX.inc.
 12/1/17 Phil: Added a discount percentage field to the payment methods - to allow calculation of discount when receipts entered... still yet to code this bit
-06/01/17  RChacon: Add Turn off/on the page help and the field help.
 05/01/17  RChacon: In GLCashFlowsIndirect.php, fix named key in Associative array with config value. Thanks Tim.
 05/01/17  RChacon: For strict Standards, removes the "&" before the variable in DB_fetch_row() and in DB_fetch_array() in ConnectDB_XXX.inc. Thanks Tim.
 21/12/16  RChacon: In PurchasesReport.php, fix date comparison and title. Thanks Tim.
