@@ -47,6 +47,22 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'MethodName';
 		$i++;
 	}
+	if (!is_numeric(filter_number_format($_POST['DiscountPercent']))) {
+		$InputError = 1;
+		prnMsg( _('The discount percentage must be a number less than 1'),'error');
+		$Errors[$i] = 'DiscountPercent';
+		$i++;
+	} else if (filter_number_format($_POST['DiscountPercent'])>1) {
+		$InputError = 1;
+		prnMsg( _('The discount percentage must be a number less than 1'),'error');
+		$Errors[$i] = 'DiscountPercent';
+		$i++;
+	} else if (filter_number_format($_POST['DiscountPercent'])<0) {
+		$InputError = 1;
+		prnMsg( _('The discount percentage must be either zero or less than 1'),'error');
+		$Errors[$i] = 'DiscountPercent';
+		$i++;
+	}
 	if (isset($_POST['SelectedPaymentID']) AND $InputError !=1) {
 
 		/*SelectedPaymentID could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
@@ -73,7 +89,8 @@ if (isset($_POST['submit'])) {
 							paymenttype = '" . $_POST['ForPayment'] . "',
 							receipttype = '" . $_POST['ForReceipt'] . "',
 							usepreprintedstationery = '" . $_POST['UsePrePrintedStationery']. "',
-							opencashdrawer = '" . $_POST['OpenCashDrawer'] . "'
+							opencashdrawer = '" . $_POST['OpenCashDrawer'] . "',
+							percentdiscount = '" . filter_number_format($_POST['DiscountPercent']) . "'
 						WHERE paymentname " . LIKE . " '".$OldName."'";
 
 			} else {
@@ -97,12 +114,14 @@ if (isset($_POST['submit'])) {
 												paymenttype,
 												receipttype,
 												usepreprintedstationery,
-												opencashdrawer)
+												opencashdrawer,
+												percentdiscount)
 								VALUES ('" . $_POST['MethodName'] ."',
 										'" . $_POST['ForPayment'] ."',
 										'" . $_POST['ForReceipt'] ."',
 										'" . $_POST['UsePrePrintedStationery'] ."',
-										'" . $_POST['OpenCashDrawer']  . "')";
+										'" . $_POST['OpenCashDrawer']  . "',
+										'" . filter_number_format($_POST['DiscountPercent']) . "')";
 		}
 		$msg = _('New payment method added');
 		$ErrMsg = _('Could not insert the new payment method');
@@ -174,7 +193,8 @@ if (isset($_POST['submit'])) {
 					paymenttype,
 					receipttype,
 					usepreprintedstationery,
-					opencashdrawer
+					opencashdrawer,
+					percentdiscount
 			FROM paymentmethods
 			ORDER BY paymentid";
 
@@ -188,6 +208,7 @@ if (isset($_POST['submit'])) {
 			<th class="ascending">' . _('Use For Receipts') . '</th>
 			<th class="ascending">' . _('Use Pre-printed Stationery') . '</th>
 			<th class="ascending">' . _('Open POS Cash Drawer for Sale') . '</th>
+			<th class="ascending">' . _('Payment discount') . ' %</th>
 			<th colspan="2">&nbsp;</th>
 		</tr>';
 
@@ -207,6 +228,7 @@ if (isset($_POST['submit'])) {
 				<td class="centre">' . ($myrow['receipttype'] ? _('Yes') : _('No')) . '</td>
 				<td class="centre">' . ($myrow['usepreprintedstationery'] ? _('Yes') : _('No')) . '</td>
 				<td class="centre">' . ($myrow['opencashdrawer'] ? _('Yes') : _('No')) . '</td>
+				<td class="centre">' . locale_number_format($myrow['percentdiscount']*100,2) . '</td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedPaymentID=' . $myrow['paymentid'] . '">' . _('Edit') . '</a></td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedPaymentID=' . $myrow['paymentid'] . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this payment method?') . '\');">' . _('Delete')  . '</a></td>
 			</tr>';
@@ -235,7 +257,9 @@ if (! isset($_GET['delete'])) {
 						paymentname,
 						paymenttype,
 						receipttype,
-						usepreprintedstationery
+						usepreprintedstationery,
+						opencashdrawer,
+						percentdiscount
 				FROM paymentmethods
 				WHERE paymentid='" . $SelectedPaymentID . "'";
 
@@ -252,6 +276,7 @@ if (! isset($_GET['delete'])) {
 			$_POST['ForReceipt'] = $myrow['receipttype'];
 			$_POST['UsePrePrintedStationery'] = $myrow['usepreprintedstationery'];
 			$_POST['OpenCashDrawer'] = $myrow['opencashdrawer'];
+			$_POST['DiscountPercent'] = $myrow['percentdiscount'];
 
 			echo '<input type="hidden" name="SelectedPaymentID" value="' . $_POST['MethodID'] . '" />';
 			echo '<table class="selection">';
@@ -263,6 +288,7 @@ if (! isset($_GET['delete'])) {
 		$_POST['ForReceipt'] = 1; // Default is use for receipts
 		$_POST['UsePrePrintedStationery'] = 0; // Default is use for receipts
 		$_POST['OpenCashDrawer'] = 0; //Default is not to open cash drawer
+		$_POST['DiscountPercent']=0;
 		echo '<table class="selection">';
 	}
 	echo '<tr>
@@ -296,6 +322,10 @@ if (! isset($_GET['delete'])) {
 				<option' . ($_POST['OpenCashDrawer'] ? ' selected="selected"' : '') .' value="1">' . _('Yes') . '</option>
 				<option' . ($_POST['OpenCashDrawer'] ? '' : ' selected="selected"') .' value="0">' . _('No') . '</option>
 			</select></td>
+		</tr>';
+	echo '<tr>
+			<td>' . _('Payment Discount Percent on Receipts') . ':' . '</td>
+			<td><input type="text" class="number" min="0" max="1" name="DiscountPercent" value="' . locale_number_format($_POST['DiscountPercent'],2) . '" /></td>
 		</tr>';
 	echo '</table>';
 

@@ -1,5 +1,6 @@
 webERP Change Log
 
+12/1/17 Phil: Added a discount percentage field to the payment methods - to allow calculation of discount when receipts entered... still yet to code this bit
 06/01/17  RChacon: Add Turn off/on the page help and the field help.
 05/01/17  RChacon: In GLCashFlowsIndirect.php, fix named key in Associative array with config value. Thanks Tim.
 05/01/17  RChacon: For strict Standards, removes the "&" before the variable in DB_fetch_row() and in DB_fetch_array() in ConnectDB_XXX.inc. Thanks Tim.
@@ -13,7 +14,7 @@ webERP Change Log
 02/12/16  PaulT: WriteReport.inc: Fix condition needed to support PHP7, reported by Tim.
 02/12/16  RChacon: fix and improve code for existent parameters in GLCashFlowsSetup.php.
 02/12/16  Exson: Add location code and reference to Work Orders search result in SelectWorkOrder.php.
-02/12/16  Exson: Fixed the no users data displayed bug and copy BOM fields error bug in WWW_Users.php and CopyBOM.php. Thanks for shane's report. 
+02/12/16  Exson: Fixed the no users data displayed bug and copy BOM fields error bug in WWW_Users.php and CopyBOM.php. Thanks for shane's report.
 30/11/16  Exson: Fixed the bug that write off option not work without freight cost input in Credit_Invoice.php.
 
 27/11/16  4.13.1 release
