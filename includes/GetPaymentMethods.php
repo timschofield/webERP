@@ -1,12 +1,14 @@
 <?php
-/* $Id: GetPaymentMethods.php 6941 2014-10-26 23:18:08Z daintree $*/
+/* $Id: GetPaymentMethods.php 7726 2017-01-13 23:02:10Z daintree $*/
 
 $PaytTypes    = array();
 $ReceiptTypes = array();
 
-$sql = 'SELECT paymentname,
+$sql = 'SELECT paymentid,
+			paymentname,
 			paymenttype,
-			receipttype
+			receipttype,
+			percentdiscount
 			FROM paymentmethods
 			ORDER by paymentname';
 
@@ -16,7 +18,7 @@ while( $PMrow = DB_fetch_array($PMResult) ) {
 		$PaytTypes[] = $PMrow['paymentname'];
 	}
 	if ($PMrow['receipttype']==1) {
-		$ReceiptTypes[] = $PMrow['paymentname'];
+		$ReceiptTypes[$PMrow['paymentid']] = $PMrow;
 	}
 }
 DB_free_result($PMResult); // no longer needed

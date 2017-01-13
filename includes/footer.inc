@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: footer.inc 6594 2014-03-02 23:15:39Z turbopt $*/
+/* $Id: footer.inc 7726 2017-01-13 23:02:10Z daintree $*/
 
 echo '</div>'; // BodyWrapDiv
 echo '</div>'; // BodyDiv
@@ -24,7 +24,7 @@ echo '</div>'; // FooterWrapDiv
 echo '</div>'; // FooterDiv
 echo '</div>'; // Canvas
 
-echo '</body>';
-echo '</html>';
+echo '</body>
+	</html>';
 
 ?>

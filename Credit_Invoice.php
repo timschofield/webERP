@@ -1,5 +1,5 @@
 <?php
-/* $Id: Credit_Invoice.php 7720 2017-01-11 05:50:37Z waynemcdougall $*/
+/* $Id: Credit_Invoice.php 7722 2017-01-12 09:16:31Z daintree $*/
 
 /*Functions to get the GL codes to post the transaction to */
 include('includes/GetSalesTransGLCodes.inc');
@@ -219,7 +219,7 @@ if(isset($_POST['Location'])) {
 	$myrow = DB_fetch_array($NewDispatchTaxProvResult);
 
 	$_SESSION['CreditItems' . $identifier]->DispatchTaxProvince = $myrow['taxprovinceid'];
-	
+
 	$TotalQtyCredited = 0;
 
 	foreach($_SESSION['CreditItems' . $identifier]->LineItems as $LineItem) {
@@ -244,12 +244,10 @@ if($_SESSION['SalesmanLogin'] == '') {
 	}
 }
 foreach ($_SESSION['CreditItems'.$identifier]->FreightTaxes as $FreightTaxKey=>$FreightTaxLine) {
-     $tmp=filter_number_format($_POST['FreightTaxRate'  . $FreightTaxLine->TaxCalculationOrder]);
-	if (is_numeric($tmp)){
-		$_SESSION['CreditItems'.$identifier]->FreightTaxes[$FreightTaxKey]->TaxRate = $tmp/100;
+	if (is_numeric(filter_number_format($_POST['FreightTaxRate'  . $FreightTaxLine->TaxCalculationOrder]))){
+		$_SESSION['CreditItems'.$identifier]->FreightTaxes[$FreightTaxKey]->TaxRate = filter_number_format($_POST['FreightTaxRate'  . $FreightTaxLine->TaxCalculationOrder])/100;
 	}
 }
-
 
 if($_SESSION['CreditItems' . $identifier]->ItemsOrdered > 0 OR isset($_POST['NewItem'])) {
 
@@ -275,9 +273,8 @@ if($_SESSION['CreditItems' . $identifier]->ItemsOrdered > 0 OR isset($_POST['New
 				$_SESSION['CreditItems' . $identifier]->LineItems[$LineItem->LineNumber]->Narrative=$Narrative;
 			}
 			foreach ($LineItem->Taxes as $TaxKey=>$TaxLine) {
-                     $tmp=filter_number_format($_POST[$LineItem->LineNumber  . $TaxLine->TaxCalculationOrder . '_TaxRate']);
-				if (is_numeric($tmp)){
-					$_SESSION['CreditItems'.$identifier]->LineItems[$LineItem->LineNumber]->Taxes[$TaxKey]->TaxRate = $tmp/100;
+				if (is_numeric(filter_number_format($_POST[$LineItem->LineNumber  . $TaxLine->TaxCalculationOrder . '_TaxRate']))){
+					$_SESSION['CreditItems'.$identifier]->LineItems[$LineItem->LineNumber]->Taxes[$TaxKey]->TaxRate = filter_number_format($_POST[$LineItem->LineNumber  . $TaxLine->TaxCalculationOrder . '_TaxRate'])/100;
 				}
 			}
 		}

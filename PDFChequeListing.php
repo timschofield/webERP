@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: PDFChequeListing.php 7385 2015-11-11 08:03:20Z tehonu $*/
+/* $Id: PDFChequeListing.php 7726 2017-01-13 23:02:10Z daintree $*/
 
 include('includes/SQL_CommonFunctions.inc');
 include ('includes/session.inc');
@@ -224,7 +224,4 @@ if ($_POST['Email']=='Yes'){
 		$result = SendmailBySmtp($mail,$ChkListingRecipients);
 	}
 }
-
-
-
 ?>

@@ -1,5 +1,5 @@
 <?php
-/* $Id: DefineReceiptClass.php 6941 2014-10-26 23:18:08Z daintree $*/
+/* $Id: DefineReceiptClass.php 7728 2017-01-13 23:41:06Z daintree $*/
 
 /* definition of the ReceiptBatch class */
 
