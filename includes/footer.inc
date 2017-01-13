@@ -24,7 +24,7 @@ echo '</div>'; // FooterWrapDiv
 echo '</div>'; // FooterDiv
 echo '</div>'; // Canvas
 
-echo '</body>';
-echo '</html>';
+echo '</body>
+	</html>';
 
 ?>

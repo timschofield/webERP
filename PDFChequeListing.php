@@ -224,7 +224,4 @@ if ($_POST['Email']=='Yes'){
 		$result = SendmailBySmtp($mail,$ChkListingRecipients);
 	}
 }
-
-
-
 ?>
