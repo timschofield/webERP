@@ -26,7 +26,7 @@ v 1.00 2011-08-10: Shops start using it.
 v 1.00 2011-07-25: Kantor starts using it.
 *********************************************************************/
 
-define("VERSIONFILE", "3.00"); // 
+define("VERSIONFILE", "3.01"); // 
 
 include('includes/DefineCartClass.php');
 include('includes/session.inc');
@@ -470,10 +470,28 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 	
 	// if CC is used, only 1 CC is allowed per invoice (no splitted payments)
 	if (($TotalReceivedCash == 0) && ($PaymentSystemsUsed > 1)) {
-		prnMsg(_('Splited payments by several Cards are not allowed.'),'error');
+		prnMsg(_('Splited payments by several credit Cards are not allowed.'),'error');
 		$InputError = true;
 	}
 
+	// if returned goods, then we also request invvoice number
+	if (($_POST['AmountReturnedGoods'] <> 0) && ($_POST['ReturnedGoodsOldInvoice'] == '')){
+		prnMsg(_('If customer returned items, invoice of returned items must be reported'),'error');
+		$InputError = true;
+	}
+
+	// if returned goods, then we also request item codes 
+	if (($_POST['AmountReturnedGoods'] <> 0) && ($_POST['ReturnedGoodsItems'] == '')){
+		prnMsg(_('If customer returned items, the codes or returned items must be reported'),'error');
+		$InputError = true;
+	}
+
+	// if vouchers were presented, we need the code of the voucher
+	if (($_POST['AmountVouchers'] <> 0) && ($_POST['VoucherCode'] == '')){
+		prnMsg(_('If voucher or discoutn was used, the code of voucher or discount must be reported'),'error');
+		$InputError = true;
+	}
+	
 	if ($InputError == false) { //all good so let's get on with the processing
 
 		/* Now Get the where the sale is to from the branches table */
