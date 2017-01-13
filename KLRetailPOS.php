@@ -1,6 +1,7 @@
 <?php
 
 /************************************************************************
+v 3.01 add fields for returned goods
 v 3.00 read barcode + print receipt
 v 2.15 Do not account returns in debtortrans to avoid balance errors getting large
 v 2.14 Do not allow splitted payments. 
@@ -49,6 +50,7 @@ if (empty($_GET['identifier'])) {
 } else {
 	$identifier=$_GET['identifier'];
 }
+
 if (isset($_SESSION['Items'.$identifier])){
 	//update the Items object variable with the data posted from the form
 	$_SESSION['Items'.$identifier]->CustRef = $_POST['CustRef'];
@@ -145,9 +147,9 @@ $ExRate = 1;
 
 /*Process Quick Entry */
 /* If enter is pressed on the quick entry screen, the default button may be Recalculate */
- if (isset($_POST['OrderItems'])
-		OR isset($_POST['QuickEntry'])
-		OR isset($_POST['Recalculate'])){
+if (isset($_POST['OrderItems'])
+	OR isset($_POST['QuickEntry'])
+	OR isset($_POST['Recalculate'])){
 
 	/* get the item details from the database and hold them in the cart object */
 
@@ -261,7 +263,7 @@ $ExRate = 1;
 		$i++;
 	 }
 	 unset($NewItem);
- } /* end of if quick entry */
+} /* end of if quick entry */
 
  /*Now do non-quick entry delete/edits/adds */
 
@@ -1335,9 +1337,9 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		/*	End account for the packaging */
 		
 		DB_Txn_Commit();
-	// *************************************************************************
-	//   E N D   O F   I N V O I C E   S Q L   P R O C E S S I N G
-	// *************************************************************************
+		// *************************************************************************
+		//   E N D   O F   I N V O I C E   S Q L   P R O C E S S I N G
+		// *************************************************************************
 
 		// *************************************************************************
 		//   SHOW THE DETAILS OF PAYMENTS 
