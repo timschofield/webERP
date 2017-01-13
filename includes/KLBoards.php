@@ -8878,7 +8878,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 						if ($ShowAll){
 							echo '<p class="page_title_text" align="center"><strong>Shop packaging order status</strong></p>';
 						}else{
-							echo '<p class="page_title_text" align="center"><strong>Shop packaging with insufficient stock for the next ' . $DaysMinimumStock . ' days.</strong></p>';
+							echo '<p class="page_title_text" align="center"><strong>Shop packaging with insufficient stock for the next ' . ($DaysMinimumStock + $DaysProduction) . ' days.</strong></p>';
 						}
 					}
 					if ($Category == 'ZAPON'){
