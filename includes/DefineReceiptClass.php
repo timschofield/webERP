@@ -25,7 +25,6 @@ Class Receipt_Batch {
 		$this->Items = array();
 		$this->ItemCounter=0;
 		$this->total=0;
-		$this->ReceiptType=array();
 	}
 
 	function add_to_batch($Amount, $Customer, $Discount, $Narrative, $GLCode, $PayeeBankDetail, $CustomerName, $tag){
