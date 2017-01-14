@@ -722,6 +722,7 @@ $MenuItems['system']['Transactions']['URL'] = array('/CompanyPreferences.php',
 											       	'/MailingGroupMaintenance.php'	);
 
 $MenuItems['system']['Reports']['Caption'] = array(	_('Sales Types'),
+													_('Returned Item Reasons'),
 													_('Customer Types'),
 													_('Supplier Types'),
 													_('Credit Status'),
@@ -735,6 +736,7 @@ $MenuItems['system']['Reports']['Caption'] = array(	_('Sales Types'),
 													_('Freight Costs Maintenance'),
 													_('Discount Matrix'));
 $MenuItems['system']['Reports']['URL'] = array(	'/SalesTypes.php',
+												'/ReturnedItemsReasons.php',
 												'/CustomerTypes.php',
 												'/SupplierTypes.php',
 												'/CreditStatus.php',
