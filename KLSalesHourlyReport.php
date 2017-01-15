@@ -635,7 +635,7 @@ function HourlyPerformance($numDays, $RootPath, $db){
 					'',
 					'',
 					'',
-					locale_number_format_zero_blank(round($ValueSalesToday/($TotalSales/$TotalSalesFull)/JUTA)*JUTA,0)
+					locale_number_format_zero_blank(round($ValueSalesFull/$ValueSales*$ValueSalesToday/JUTA)*JUTA,0)
 					);
 			echo '</table>
 				</div>';
