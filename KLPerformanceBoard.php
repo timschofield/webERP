@@ -113,6 +113,8 @@ if ($ProcessSection01){
 		OR $KL_BusinessDevelopmentManager){
 		DailySalesRecords(10, $db);
 		$NumberOfTestExecuted++;
+		DailySalesRecordsByShops(10, $db);
+		$NumberOfTestExecuted++;
 	}
 }
 
@@ -1065,5 +1067,51 @@ function DailySalesRecords($Days, $db){
 	}
 }
 
+function DailySalesRecordsByShops($Days, $db){
+
+	$SQL = "SELECT salesorders.orddate,
+				salesorders.debtorno,
+				SUM(salesorderdetails.qtyinvoiced * (salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent))) AS sales
+			FROM salesorders
+				INNER JOIN salesorderdetails ON
+						salesorders.orderno=salesorderdetails.orderno
+			WHERE salesorders.debtorno LIKE 'RETAIL%'
+			GROUP BY salesorders.orddate,salesorders.debtorno
+			ORDER BY SUM(salesorderdetails.qtyinvoiced * (salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent))) DESC
+			LIMIT ". $Days . "";
+
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . _('Top ') . $Days . _(' retail sales days by shop') .'</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' .  _('#') . '</th>
+							<th class="ascending">' .  _('Date') . '</th>
+							<th class="ascending">' .  _('Shop') . '</th>
+							<th class="ascending">' . _('Sales') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while (($myrow = DB_fetch_array($result)) AND ($i <= $Days)) {
+			$k = StartEvenOrOddRow($k);
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					locale_number_format($i,0),
+					ConvertSQLDate($myrow['orddate']),
+					$myrow['debtorno'],
+					locale_number_format($myrow['sales'],0)
+					);
+			$i++;
+		}
+		echo '</table>
+				</div>
+				</form>';
+	}
+}
 
 ?>
