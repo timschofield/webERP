@@ -28,6 +28,9 @@ if (!isset($_POST['ReturnedGoodsOldInvoice'])){
 if (!isset($_POST['ReturnedGoodsItems'])){
 	$_POST['ReturnedGoodsItems'] ='';
 }
+if (!isset($_POST['ReturnedGoodsReason'])){
+	$_POST['ReturnedGoodsReason'] =0;
+}
 if (!isset($_POST['AmountVouchers'])){
 	$_POST['AmountVouchers'] =0;
 }
@@ -98,6 +101,28 @@ echo '<td></td>';
 echo '<td>' . _('Items returned') . ':</td>
 	  <td><input type="text" class="number" name="ReturnedGoodsItems" maxlength="40" size="12" value="' . $_POST['ReturnedGoodsItems'] . '" /></td>';
 echo '</tr>';
+
+echo '<tr>
+		<td></td>
+		<td></td>
+		<td>' . _('Reason of return') . ':</td>
+		<td><select name="ReturnedGoodsReason">';
+
+$SQL = "SELECT reasonid,
+				reasonname
+		FROM returnitemreasons
+		ORDER BY reasonname";
+
+$result=DB_query($SQL);
+while ($myrow=DB_fetch_array($result)){
+	if (isset($_POST['ReturnedGoodsReason']) and $_POST['ReturnedGoodsReason']==$myrow['reasonid']){
+		echo '<option selected="selected" value="' . $myrow['reasonid'] . '">' . $myrow['reasonname'] . '</option>';
+	} else {
+		echo '<option value="' . $myrow['reasonid'] . '">' . $myrow['reasonname'] . '</option>';
+	}
+}
+echo '</select></td></tr>';
+
 
 echo '<tr>';
 echo '<th>' . _('Vouchers/Discounts') . '</th>'; 

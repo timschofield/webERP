@@ -1387,7 +1387,9 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 			echo '<tr><td>' . _('Payment AMEX EDC BCA') . ':</td> <td>' . number_format($_POST['AmountPaidAmexBCA'],0) . '</td></tr>';
 		}
 		if ($_POST['AmountReturnedGoods'] > 0){
-			echo '<tr><td>' . _('Returned Goods') . ':</td> <td>' . number_format($_POST['AmountReturnedGoods'],0) . '</td></tr>';
+			echo '<tr><td>' . _('Returned Goods Value') . ':</td> <td>' . number_format($_POST['AmountReturnedGoods'],0) . '</td></tr>';
+			echo '<tr><td>' . _('Returned Goods Codes') . ':</td> <td>' . $_POST['ReturnedGoodsItems'] . '</td></tr>';
+			echo '<tr><td>' . _('Returned Goods Old Invoice') . ':</td> <td>' . $_POST['ReturnedGoodsOldInvoice'] . '</td></tr>';
 		}
 		if ($_POST['AmountVouchers'] > 0){
 			echo '<tr><td>' . _('Voucher/Discounts') . ':</td> <td>' . number_format($_POST['AmountVouchers'],0) . '</td></tr>';
