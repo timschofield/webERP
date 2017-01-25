@@ -1,5 +1,5 @@
 <?php
-/* $Id: class.pdf.php 7641 2016-10-04 20:37:44Z rchacon $ */
+/* $Id: class.pdf.php 7730 2017-01-25 02:38:37Z tehonu $ */
 
      /* -----------------------------------------------------------------------------------------------
 	This class was an extension to the FPDF class to use the syntax of the R&OS pdf.php class,
@@ -80,7 +80,7 @@ if (!class_exists('Cpdf', false)) {
 			$this->Text($XPos, $this->h-$YPos, $text);// Public function Text() in ~/includes/tcpdf/tcpdf.php.
 		}
 
-		function addTextWrap($XPos, $YPos, $Width, $Height, $Text, $Align='full', $border=0, $fill=0) {
+		function addTextWrap($XPos, $YPos, $Width, $Height, $Text, $Align='J', $border=0, $fill=0) {
 			// R&OS version 0.12.2: "addTextWrap function is no more, use addText instead".
 			// Adds text to the page and returns the balance of the string that could not fit in the width.
 			// $XPos = cell horizontal coordinate from page left side to cell left side in dpi (72dpi = 25.4mm).
