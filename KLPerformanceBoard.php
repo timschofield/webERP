@@ -111,9 +111,9 @@ if ($ProcessSection01){
 	}
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager){
-		DailySalesRecords(10, $db);
+		DailySalesRecords(10, '2016-01-01', $db);
 		$NumberOfTestExecuted++;
-		DailySalesRecordsByShops(10, $db);
+		DailySalesRecordsByShops(10, '2015-06-01', $db);
 		$NumberOfTestExecuted++;
 	}
 }
@@ -1024,7 +1024,7 @@ function PettyCashStatus($currency, $db){
 	}
 }
 
-function DailySalesRecords($Days, $db){
+function DailySalesRecords($Days, $FromDate, $db){
 
 	$SQL = "SELECT salesorders.orddate,
 				SUM(salesorderdetails.qtyinvoiced * (salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent))) AS sales
@@ -1032,13 +1032,14 @@ function DailySalesRecords($Days, $db){
 				INNER JOIN salesorderdetails ON
 						salesorders.orderno=salesorderdetails.orderno
 			WHERE salesorders.debtorno LIKE 'RETAIL%'
+				AND salesorders.orddate >= '" . $FromDate . "'
 			GROUP BY salesorders.orddate
 			ORDER BY SUM(salesorderdetails.qtyinvoiced * (salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent))) DESC
 			LIMIT ". $Days . "";
 
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Top ') . $Days . _(' retail sales days') .'</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . _('Top ') . $Days . _(' retail sales days since '). ConvertSQLDate($FromDate) .'</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
@@ -1067,7 +1068,7 @@ function DailySalesRecords($Days, $db){
 	}
 }
 
-function DailySalesRecordsByShops($Days, $db){
+function DailySalesRecordsByShops($Days, $FromDate, $db){
 
 	$SQL = "SELECT salesorders.orddate,
 				salesorders.debtorno,
@@ -1076,13 +1077,14 @@ function DailySalesRecordsByShops($Days, $db){
 				INNER JOIN salesorderdetails ON
 						salesorders.orderno=salesorderdetails.orderno
 			WHERE salesorders.debtorno LIKE 'RETAIL%'
+				AND salesorders.orddate >= '" . $FromDate . "'
 			GROUP BY salesorders.orddate,salesorders.debtorno
 			ORDER BY SUM(salesorderdetails.qtyinvoiced * (salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent))) DESC
 			LIMIT ". $Days . "";
 
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Top ') . $Days . _(' retail sales days by shop') .'</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . _('Top ') . $Days . _(' retail sales days by shop since '). ConvertSQLDate($FromDate) .'</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
