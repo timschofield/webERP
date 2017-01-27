@@ -276,6 +276,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 								store_id = '" . $StoreId . "'
 							WHERE product_id = '" . $ProductId . "'";
 				$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
+
 				// update discounts if needed
 				MaintainOpenCartDiscountForItem($ProductId, $Price, $DiscountCategory, $PriceList, $db, $db_oc, $oc_tableprefix);
 
@@ -408,6 +409,20 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 
 				$SortOrder++;
 			}
+		
+			// if it's not on the wholesale store, we add it.
+			if (!DataExistsInOpenCart($db_oc, $oc_tableprefix . 'product_to_store', 'product_id', $ProductId, 'store_id', OPENCART_STORE_WHOLESALE)){
+				$sqlInsert = "INSERT INTO " . $oc_tableprefix . "product_to_store
+								(product_id,
+								store_id)
+							VALUES
+								('" . $ProductId . "',
+								'" . OPENCART_STORE_WHOLESALE . "'
+								)";
+				$resultInsert = DB_query_oc($sqlInsert,$InsertErrMsg,$DbgMsg,true);
+				$StoreText = $StoreText . " + WH";
+			}
+			
 			if ($ShowMessages){
 				printf('<td>%s</td>
 						<td>%s</td>
