@@ -973,8 +973,7 @@ if ($ProcessSection02){
 	/***************************************************************************************
 	* Other tests     
 	***************************************************************************************/
-	if ($KL_SystemAdmin 
-		OR $KL_ITSupport
+	if ($KL_ITSupport
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_PurchasingTeam){
 		ActiveItemsWithoutPicture($RootPath, $db);
