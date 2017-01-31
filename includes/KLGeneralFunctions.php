@@ -404,4 +404,12 @@ function GetLocationNameFromCode($LocCode){
 	return $Row['0'];
 }
 
+function FindReasonOfReturn($ReasonCode, $db){
+	$ErrMsg = 'Error in function FindReasonOfReturn()';
+	$SQL="SELECT reasonname FROM returnitemreasons WHERE reasonid='" . $ReasonCode . "'";
+	$result = DB_query($SQL,$ErrMsg);
+	$Row = DB_fetch_row($result);
+	return $Row['0'];
+}
+
 ?>

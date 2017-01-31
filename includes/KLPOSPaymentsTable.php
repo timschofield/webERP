@@ -64,7 +64,7 @@ echo '<td>' . _('Amount Paid CC EDC Danamon') . ':</td>
 	  <td><input type="text" class="number" name="AmountPaidCCDanamon" maxlength="12" size="12" value="' . $_POST['AmountPaidCCDanamon'] . '" /></td>';
 echo '<td></td>';
 echo '<td>' . _('Invoice number') . ':</td>
-	  <td><input type="text" class="number" name="ReturnedGoodsOldInvoice" maxlength="12" size="12" value="' . $_POST['ReturnedGoodsOldInvoice'] . '" /></td>';
+	  <td><input type="text" class="text" name="ReturnedGoodsOldInvoice" maxlength="12" size="12" value="' . $_POST['ReturnedGoodsOldInvoice'] . '" /></td>';
 echo '</tr>';
 
 echo '<tr>';

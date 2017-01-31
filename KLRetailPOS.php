@@ -1114,22 +1114,6 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								$OrderNo,
 								$_SESSION['Items'.$identifier]->DebtorNo);
 */		
-			// Also record the data of the returned items
-			$SQL = "INSERT INTO returneditems (	orderno,
-											reasonid,
-											itemcodes,
-											oldinvoice,
-											oldinvoicedate
-											)
-										VALUES ( '" . $OrderNo . "',
-											'" . $_POST['ReturnedGoodsReason'] . "',
-											'" . $_POST['ReturnedGoodsItems'] . "',
-											'" . $_POST['ReturnedGoodsOldInvoice'] . "',
-											'" . $_POST['ReturnDate'] . "')";
-prnMsg($SQL);
-			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The tax GL posting could not be inserted because');
-			$DbgMsg = _('The following SQL to insert returned goods record was used');
-			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		}//amount vouched or discount was not zero
 
 		foreach ( $_SESSION['Items'.$identifier]->TaxTotals as $TaxAuthID => $TaxAmount){
@@ -1407,6 +1391,7 @@ prnMsg($SQL);
 			echo '<tr><td>' . _('Returned Goods Value') . ':</td> <td>' . number_format($_POST['AmountReturnedGoods'],0) . '</td></tr>';
 			echo '<tr><td>' . _('Returned Goods Codes') . ':</td> <td>' . $_POST['ReturnedGoodsItems'] . '</td></tr>';
 			echo '<tr><td>' . _('Returned Goods Old Invoice') . ':</td> <td>' . $_POST['ReturnedGoodsOldInvoice'] . '</td></tr>';
+			echo '<tr><td>' . _('Returned Goods Old Invoice Date') . ':</td> <td>' . $_POST['ReturnDate'] . '</td></tr>';
 		}
 		if ($_POST['AmountVouchers'] > 0){
 			echo '<tr><td>' . _('Voucher/Discounts') . ':</td> <td>' . number_format($_POST['AmountVouchers'],0) . '</td></tr>';
@@ -1444,6 +1429,24 @@ prnMsg($SQL);
 			OR ($_POST['AmountVouchers'] <> 0 ) 
 			OR (stripcslashes($_SESSION['Items'.$identifier]->Comments) != "" )){
 			if ($_POST['AmountReturnedGoods'] <> 0 ){
+				// Record the information of the returned items
+				$SQL = "INSERT INTO returneditems (	orderno,
+												reasonid,
+												itemcodes,
+												oldinvoice,
+												oldinvoicedate
+												)
+											VALUES ( '" . $OrderNo . "',
+												'" . $_POST['ReturnedGoodsReason'] . "',
+												'" . $_POST['ReturnedGoodsItems'] . "',
+												'" . $_POST['ReturnedGoodsOldInvoice'] . "',
+												'" . FormatDateForSQL($_POST['ReturnDate']) . "')";
+				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The tax GL posting could not be inserted because');
+				$DbgMsg = _('The following SQL to insert returned goods record was used');
+				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				
+				// and send email about it
+				$ReturnReasonText = FindReasonOfReturn($_POST['ReturnedGoodsReason'], $db);
 				KLSendEmail("GoodsReturnedToShop", 
 						"Silent",
 						$InvoiceNo, 
@@ -1458,6 +1461,10 @@ prnMsg($SQL);
 						number_format($_POST['AmountPaidCCBCA'],0),
 						number_format($_POST['AmountReturnedGoods'],0),
 						number_format($_POST['AmountVouchers'],0),
+						$_POST['ReturnedGoodsOldInvoice'],
+						$_POST['ReturnDate'],
+						$_POST['ReturnedGoodsItems'],
+						$ReturnReasonText,
 						stripcslashes($_SESSION['Items'.$identifier]->Comments));
 			}
 			if ($_POST['AmountVouchers'] <> 0 ){

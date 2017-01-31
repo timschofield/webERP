@@ -179,14 +179,18 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 						'SPG : ' . $Param3 ."\r\n" .
 						'Shop: ' . $Param4 . "\r\n" .
 						'Area: ' . $Param5 ."\r\n" .
-						'Total Cash              : ' . $Param6  . "\r\n" .
-						'Total CC EDC Danamon    : ' . $Param7  . "\r\n" .
-						'Total Amex EDC BCA      : ' . $Param8  . "\r\n" .
-						'Total CC EDC Mandiri    : ' . $Param9  . "\r\n" .
-						'Total CC EDC BCA        : ' . $Param10  . "\r\n" .
-						'Total Returned Goods    : ' . $Param11 . "\r\n" .
-						'Total Voucher/Discount  : ' . $Param12 . "\r\n" .
-						'Comments                : ' . $Param13; 		
+						'Total Cash             : ' . $Param6  . "\r\n" .
+						'Total CC EDC Danamon   : ' . $Param7  . "\r\n" .
+						'Total Amex EDC BCA     : ' . $Param8  . "\r\n" .
+						'Total CC EDC Mandiri   : ' . $Param9  . "\r\n" .
+						'Total CC EDC BCA       : ' . $Param10  . "\r\n" .
+						'Total Returned Goods   : ' . $Param11 . "\r\n" .
+						'Total Voucher/Discount : ' . $Param12 . "\r\n" .
+						'Old Invoice            : ' . $Param13 . "\r\n" .
+						'Old Invoice Date       : ' . $Param14 . "\r\n" .
+						'Items Returned         : ' . $Param15 . "\r\n" .
+						'Reason of return       : ' . $Param16 . "\r\n" .
+						'Comments               : ' . $Param17; 		
 			$EmailAddress = "kl-goodsreturnedtoshop@kapal-laut.com";
 			break;
 		case "VoucherDiscounts":
