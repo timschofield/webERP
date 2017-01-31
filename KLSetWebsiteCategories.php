@@ -421,6 +421,12 @@ function WebsiteCategoryBlinkJewellery($StockId, $Description, $Long, $Category)
 	if (($WebCat == BLINK_JEWELLERY) AND isBrooche($StockId)){
 		$WebCat = BLINK_BROOCHES;	
 	}	
+	if (($WebCat == BLINK_JEWELLERY) AND isBag($StockId)){
+		$WebCat = BAGS;	
+	}	
+	if (($WebCat == BLINK_JEWELLERY) AND isPlasticBag($StockId)){
+		$WebCat = BAGS;	
+	}	
 	return $WebCat; 
 }
 
