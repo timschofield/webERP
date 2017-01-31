@@ -738,8 +738,8 @@ function KLPrintReceiptCustomerFooter($identifier, $OrderNo){
 	// read terms and conditions
 	$TextToPrint .= $CharacterFontB . $LeftJustified;
 	$TextToPrint .= "This invoice is the only valid proof of purchase. Keep it. ";
-	$TextToPrint .= "No refund. Exchange within 7 days with this original invoice, packaging and perfect conditions. We reserve the right to refuse any exchange. ";
-	$TextToPrint .= "For  more information on our catalog, promotions, shop locations, job opportunities, news and warranty terms and conditions check our website. ";
+	$TextToPrint .= "No refund. Exchange within 7 days with this original invoice, packaging and goods in perfect and unused conditions. We reserve the right to refuse any exchange. ";
+	$TextToPrint .= "For more information on our catalog, promotions, shop locations, job opportunities, news and warranty terms and conditions check our website. ";
 	$TextToPrint .= "PT.Bumi Biru Jl. Kesambi No 1 Kerobokan, Bali NPWP:31.780.967.1-906.000" . $NewLine;
 	
 	// website
