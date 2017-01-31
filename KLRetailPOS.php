@@ -1113,7 +1113,24 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								$ExRate,
 								$OrderNo,
 								$_SESSION['Items'.$identifier]->DebtorNo);
-*/		}//amount vouched or discount was not zero
+*/		
+			// Also record the data of the returned items
+			$SQL = "INSERT INTO returneditems (	orderno,
+											reasonid,
+											itemcodes,
+											oldinvoice,
+											oldinvoicedate
+											)
+										VALUES ( '" . $OrderNo . "',
+											'" . $_POST['ReturnedGoodsReason'] . "',
+											'" . $_POST['ReturnedGoodsItems'] . "',
+											'" . $_POST['ReturnedGoodsOldInvoice'] . "',
+											'" . $_POST['ReturnDate'] . "')";
+prnMsg($SQL);
+			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The tax GL posting could not be inserted because');
+			$DbgMsg = _('The following SQL to insert returned goods record was used');
+			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		}//amount vouched or discount was not zero
 
 		foreach ( $_SESSION['Items'.$identifier]->TaxTotals as $TaxAuthID => $TaxAmount){
 			if ($TaxAmount !=0 ){

@@ -82,7 +82,7 @@ echo '<td>' . _('Amount Paid CC EDC BCA') . ':</td>
 	  <td><input type="text" class="number" name="AmountPaidCCBCA" maxlength="12" size="12" value="' . $_POST['AmountPaidCCBCA'] . '" /></td>';
 echo '<td></td>';
 echo '<td>' . _('Items returned') . ':</td>
-	  <td><input type="text" class="number" name="ReturnedGoodsItems" maxlength="40" size="12" value="' . $_POST['ReturnedGoodsItems'] . '" /></td>';
+	  <td><input type="text" class="text" name="ReturnedGoodsItems" maxlength="40" size="12" value="' . $_POST['ReturnedGoodsItems'] . '" /></td>';
 echo '</tr>';
 
 echo '<tr>';
