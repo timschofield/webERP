@@ -1005,6 +1005,7 @@ if ($ProcessSection02){
 		OR $KL_OperationalManager 
 		OR $KL_BusinessDevelopmentManager 
 		OR $KL_ShopSupportLeader 
+		OR $KL_ShopManager
 		OR $KL_SalesDirector){
 		RegularTransfersToShopNotReceived('08:00:00','15:00:00', $RootPath, $db);
 		$NumberOfTestExecuted++;
