@@ -141,11 +141,11 @@ function submit(&$db, $DateOfFile, $SelectedFile) {
 				$THR = $worksheet->getCell('AK'.$row)->getCalculatedValue();
 				$PenerimaanLain2 = $worksheet->getCell('AL'.$row)->getCalculatedValue();
 				$PenerimaanLain2Notes = $worksheet->getCell('AM'.$row)->getCalculatedValue();
-				$PotonganJHT = $worksheet->getCell('AO'.$row)->getCalculatedValue();
-				$PotonganASKES = $worksheet->getCell('AP'.$row)->getCalculatedValue();
-				$PotonganPPH21 = $worksheet->getCell('AQ'.$row)->getCalculatedValue();
-				$PotonganAbsen = $worksheet->getCell('AR'.$row)->getCalculatedValue();
-				$PotonganLain2 = $worksheet->getCell('AS'.$row)->getCalculatedValue();
+				$PotonganJHT = NegativeNumber($worksheet->getCell('AO'.$row)->getCalculatedValue());
+				$PotonganASKES = NegativeNumber($worksheet->getCell('AP'.$row)->getCalculatedValue());
+				$PotonganPPH21 = NegativeNumber($worksheet->getCell('AQ'.$row)->getCalculatedValue());
+				$PotonganAbsen = NegativeNumber($worksheet->getCell('AR'.$row)->getCalculatedValue());
+				$PotonganLain2 = NegativeNumber($worksheet->getCell('AS'.$row)->getCalculatedValue());
 				$PotonganLain2Notes = $worksheet->getCell('AT'.$row)->getCalculatedValue();
 				$Bulatan = $worksheet->getCell('AW'.$row)->getCalculatedValue();
 

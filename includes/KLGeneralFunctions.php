@@ -404,4 +404,20 @@ function GetLocationNameFromCode($LocCode){
 	return $Row['0'];
 }
 
+function NegativeNumber($Value){
+	// be sure the value returned is negative
+	if ($Value > 0){
+		$Value = -$Value;
+	}
+	return $Value;
+}
+
+function PositiveNumber($Value){
+	// be sure the value returned is positive
+	if ($Value < 0){
+		$Value = -$Value;
+	}
+	return $Value;
+}
+
 ?>
