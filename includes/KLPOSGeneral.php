@@ -607,7 +607,7 @@ function KLPrintNameOfShop(){
 	if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_KAPAL_LAUT)){
 		$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth . "Kapal-Laut" . $NewLine . $Emphasized . "Your Essential Jewellery" . $NewLine;
 	}else if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_BLINK)){
-		$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth . "Blink by Kapal-laut" . $NewLine;
+		$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth . "Blink by Kapal-Laut" . $NewLine;
 	}else if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_OUTLET)){
 		$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth . "OUTLET by Kapal-Laut" . $NewLine;
 	}else{
