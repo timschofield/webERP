@@ -124,7 +124,7 @@ echo '<td></td>';
 echo '<td></td>';
 echo '<td></td>';
 echo '<td>' . _('Voucher/Discount Code') . ':</td>
-	  <td><input type="text" class="number" name="VoucherCode" maxlength="40" size="12" value="' . $_POST['VoucherCode'] . '" /></td>';
+	  <td><input type="text" class="text" name="VoucherCode" maxlength="40" size="12" value="' . $_POST['VoucherCode'] . '" /></td>';
 echo '</tr>';
 
 echo '<tr>';
