@@ -1438,8 +1438,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 												)
 											VALUES ( '" . $OrderNo . "',
 												'" . $_POST['ReturnedGoodsReason'] . "',
-												'" . $_POST['ReturnedGoodsItems'] . "',
-												'" . $_POST['ReturnedGoodsOldInvoice'] . "',
+												'" . mb_strtoupper($_POST['ReturnedGoodsItems']) . "',
+												'" . mb_strtoupper($_POST['ReturnedGoodsOldInvoice']) . "',
 												'" . FormatDateForSQL($_POST['ReturnDate']) . "')";
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The tax GL posting could not be inserted because');
 				$DbgMsg = _('The following SQL to insert returned goods record was used');
@@ -1461,9 +1461,9 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						number_format($_POST['AmountPaidCCBCA'],0),
 						number_format($_POST['AmountReturnedGoods'],0),
 						number_format($_POST['AmountVouchers'],0),
-						$_POST['ReturnedGoodsOldInvoice'],
+						mb_strtoupper($_POST['ReturnedGoodsOldInvoice']),
 						$_POST['ReturnDate'],
-						$_POST['ReturnedGoodsItems'],
+						mb_strtoupper($_POST['ReturnedGoodsItems']),
 						$ReturnReasonText,
 						stripcslashes($_SESSION['Items'.$identifier]->Comments));
 			}
