@@ -1,6 +1,7 @@
 <?php
 
 /************************************************************************
+v 3.01 add fields for returned goods
 v 3.00 read barcode + print receipt
 v 2.15 Do not account returns in debtortrans to avoid balance errors getting large
 v 2.14 Do not allow splitted payments. 
@@ -25,7 +26,7 @@ v 1.00 2011-08-10: Shops start using it.
 v 1.00 2011-07-25: Kantor starts using it.
 *********************************************************************/
 
-define("VERSIONFILE", "3.00"); // 
+define("VERSIONFILE", "3.01"); // 
 
 include('includes/DefineCartClass.php');
 include('includes/session.inc');
@@ -49,6 +50,7 @@ if (empty($_GET['identifier'])) {
 } else {
 	$identifier=$_GET['identifier'];
 }
+
 if (isset($_SESSION['Items'.$identifier])){
 	//update the Items object variable with the data posted from the form
 	$_SESSION['Items'.$identifier]->CustRef = $_POST['CustRef'];
@@ -145,9 +147,9 @@ $ExRate = 1;
 
 /*Process Quick Entry */
 /* If enter is pressed on the quick entry screen, the default button may be Recalculate */
- if (isset($_POST['OrderItems'])
-		OR isset($_POST['QuickEntry'])
-		OR isset($_POST['Recalculate'])){
+if (isset($_POST['OrderItems'])
+	OR isset($_POST['QuickEntry'])
+	OR isset($_POST['Recalculate'])){
 
 	/* get the item details from the database and hold them in the cart object */
 
@@ -261,7 +263,7 @@ $ExRate = 1;
 		$i++;
 	 }
 	 unset($NewItem);
- } /* end of if quick entry */
+} /* end of if quick entry */
 
  /*Now do non-quick entry delete/edits/adds */
 
@@ -468,10 +470,28 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 	
 	// if CC is used, only 1 CC is allowed per invoice (no splitted payments)
 	if (($TotalReceivedCash == 0) && ($PaymentSystemsUsed > 1)) {
-		prnMsg(_('Splited payments by several Cards are not allowed.'),'error');
+		prnMsg(_('Splited payments by several credit Cards are not allowed.'),'error');
 		$InputError = true;
 	}
 
+	// if returned goods, then we also request invvoice number
+	if (($_POST['AmountReturnedGoods'] <> 0) && ($_POST['ReturnedGoodsOldInvoice'] == '')){
+		prnMsg(_('If customer returned items, invoice of returned items must be reported'),'error');
+		$InputError = true;
+	}
+
+	// if returned goods, then we also request item codes 
+	if (($_POST['AmountReturnedGoods'] <> 0) && ($_POST['ReturnedGoodsItems'] == '')){
+		prnMsg(_('If customer returned items, the codes or returned items must be reported'),'error');
+		$InputError = true;
+	}
+
+	// if vouchers were presented, we need the code of the voucher
+	if (($_POST['AmountVouchers'] <> 0) && ($_POST['VoucherCode'] == '')){
+		prnMsg(_('If voucher or discoutn was used, the code of voucher or discount must be reported'),'error');
+		$InputError = true;
+	}
+	
 	if ($InputError == false) { //all good so let's get on with the processing
 
 		/* Now Get the where the sale is to from the branches table */
@@ -1093,7 +1113,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								$ExRate,
 								$OrderNo,
 								$_SESSION['Items'.$identifier]->DebtorNo);
-*/		}//amount vouched or discount was not zero
+*/		
+		}//amount vouched or discount was not zero
 
 		foreach ( $_SESSION['Items'.$identifier]->TaxTotals as $TaxAuthID => $TaxAmount){
 			if ($TaxAmount !=0 ){
@@ -1335,9 +1356,9 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		/*	End account for the packaging */
 		
 		DB_Txn_Commit();
-	// *************************************************************************
-	//   E N D   O F   I N V O I C E   S Q L   P R O C E S S I N G
-	// *************************************************************************
+		// *************************************************************************
+		//   E N D   O F   I N V O I C E   S Q L   P R O C E S S I N G
+		// *************************************************************************
 
 		// *************************************************************************
 		//   SHOW THE DETAILS OF PAYMENTS 
@@ -1367,7 +1388,10 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 			echo '<tr><td>' . _('Payment AMEX EDC BCA') . ':</td> <td>' . number_format($_POST['AmountPaidAmexBCA'],0) . '</td></tr>';
 		}
 		if ($_POST['AmountReturnedGoods'] > 0){
-			echo '<tr><td>' . _('Returned Goods') . ':</td> <td>' . number_format($_POST['AmountReturnedGoods'],0) . '</td></tr>';
+			echo '<tr><td>' . _('Returned Goods Value') . ':</td> <td>' . number_format($_POST['AmountReturnedGoods'],0) . '</td></tr>';
+			echo '<tr><td>' . _('Returned Goods Codes') . ':</td> <td>' . $_POST['ReturnedGoodsItems'] . '</td></tr>';
+			echo '<tr><td>' . _('Returned Goods Old Invoice') . ':</td> <td>' . $_POST['ReturnedGoodsOldInvoice'] . '</td></tr>';
+			echo '<tr><td>' . _('Returned Goods Old Invoice Date') . ':</td> <td>' . $_POST['ReturnDate'] . '</td></tr>';
 		}
 		if ($_POST['AmountVouchers'] > 0){
 			echo '<tr><td>' . _('Voucher/Discounts') . ':</td> <td>' . number_format($_POST['AmountVouchers'],0) . '</td></tr>';
@@ -1405,6 +1429,24 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 			OR ($_POST['AmountVouchers'] <> 0 ) 
 			OR (stripcslashes($_SESSION['Items'.$identifier]->Comments) != "" )){
 			if ($_POST['AmountReturnedGoods'] <> 0 ){
+				// Record the information of the returned items
+				$SQL = "INSERT INTO returneditems (	orderno,
+												reasonid,
+												itemcodes,
+												oldinvoice,
+												oldinvoicedate
+												)
+											VALUES ( '" . $OrderNo . "',
+												'" . $_POST['ReturnedGoodsReason'] . "',
+												'" . $_POST['ReturnedGoodsItems'] . "',
+												'" . $_POST['ReturnedGoodsOldInvoice'] . "',
+												'" . FormatDateForSQL($_POST['ReturnDate']) . "')";
+				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The tax GL posting could not be inserted because');
+				$DbgMsg = _('The following SQL to insert returned goods record was used');
+				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				
+				// and send email about it
+				$ReturnReasonText = FindReasonOfReturn($_POST['ReturnedGoodsReason'], $db);
 				KLSendEmail("GoodsReturnedToShop", 
 						"Silent",
 						$InvoiceNo, 
@@ -1419,6 +1461,10 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						number_format($_POST['AmountPaidCCBCA'],0),
 						number_format($_POST['AmountReturnedGoods'],0),
 						number_format($_POST['AmountVouchers'],0),
+						$_POST['ReturnedGoodsOldInvoice'],
+						$_POST['ReturnDate'],
+						$_POST['ReturnedGoodsItems'],
+						$ReturnReasonText,
 						stripcslashes($_SESSION['Items'.$identifier]->Comments));
 			}
 			if ($_POST['AmountVouchers'] <> 0 ){

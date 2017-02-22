@@ -156,11 +156,11 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 		case "SplittedPayment":
 			$EmailSubject = "Splitted Cash/CreditCard payment at Y#: ". $Param2;
 			$EmailText = $EmailSubject . "\n\n" .
-						'Order  :'. ' '. $Param1 . "\r\n" .
-						'Invoice: '. $Param2 . "\r\n" .
-						'SPG    : ' . $Param3 ."\r\n" .
+						'Order  : ' . $Param1 . "\r\n" .
+						'Invoice: ' . $Param2 . "\r\n" .
+						'SPG    : ' . $Param3 . "\r\n" .
 						'Shop   : ' . $Param4 . "\r\n" .
-						'Area   : ' . $Param5 ."\r\n" .
+						'Area   : ' . $Param5 . "\r\n" .
 						'Total Cash            : ' . $Param6  . "\r\n" .
 						'Total CC EDC Danamon  : ' . $Param7  . "\r\n" .
 						'Total Amex EDC BCA    : ' . $Param8  . "\r\n" .
@@ -174,29 +174,33 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 		case "GoodsReturnedToShop":
 			$EmailSubject = "Goods Returned To Shop at Y#: ". $Param2;
 			$EmailText = $EmailSubject . "\n\n" .
-						'Order  :'. ' '. $Param1 . "\r\n" .
-						'Invoice: '. $Param2 . "\r\n" .
-						'SPG    : ' . $Param3 ."\r\n" .
+						'Order  : ' . $Param1 . "\r\n" .
+						'Invoice: ' . $Param2 . "\r\n" .
+						'SPG    : ' . $Param3 . "\r\n" .
 						'Shop   : ' . $Param4 . "\r\n" .
-						'Area   : ' . $Param5 ."\r\n" .
-						'Total Cash            : ' . $Param6  . "\r\n" .
-						'Total CC EDC Danamon  : ' . $Param7  . "\r\n" .
-						'Total Amex EDC BCA    : ' . $Param8  . "\r\n" .
-						'Total CC EDC Mandiri  : ' . $Param9  . "\r\n" .
-						'Total CC EDC BCA      : ' . $Param10  . "\r\n" .
-						'Total Returned Goods  : ' . $Param11 . "\r\n" .
-						'Total Voucher/Discount: ' . $Param12 . "\r\n" .
-						'Comments              : ' . $Param13; 		
+						'Area   : ' . $Param5 . "\r\n" .
+						'Total Cash             : ' . $Param6  . "\r\n" .
+						'Total CC EDC Danamon   : ' . $Param7  . "\r\n" .
+						'Total Amex EDC BCA     : ' . $Param8  . "\r\n" .
+						'Total CC EDC Mandiri   : ' . $Param9  . "\r\n" .
+						'Total CC EDC BCA       : ' . $Param10  . "\r\n" .
+						'Total Returned Goods   : ' . $Param11 . "\r\n" .
+						'Total Voucher/Discount : ' . $Param12 . "\r\n" .
+						'Old Invoice            : ' . $Param13 . "\r\n" .
+						'Old Invoice Date       : ' . $Param14 . "\r\n" .
+						'Items Returned         : ' . $Param15 . "\r\n" .
+						'Reason of return       : ' . $Param16 . "\r\n" .
+						'Comments               : ' . $Param17; 		
 			$EmailAddress = "kl-goodsreturnedtoshop@kapal-laut.com";
 			break;
 		case "VoucherDiscounts":
 			$EmailSubject = "Voucher / Discount granted by SPG at Y#: ". $Param2;
 			$EmailText = $EmailSubject . "\n\n" .
-						'Order  :'. ' '. $Param1 . "\r\n" .
-						'Invoice: '. $Param2 . "\r\n" .
-						'SPG    : ' . $Param3 ."\r\n" .
+						'Order  : ' . $Param1 . "\r\n" .
+						'Invoice: ' . $Param2 . "\r\n" .
+						'SPG    : ' . $Param3 . "\r\n" .
 						'Shop   : ' . $Param4 . "\r\n" .
-						'Area   : ' . $Param5 ."\r\n" .
+						'Area   : ' . $Param5 . "\r\n" .
 						'Total Cash            : ' . $Param6  . "\r\n" .
 						'Total CC EDC Danamon  : ' . $Param7  . "\r\n" .
 						'Total Amex EDC BCA    : ' . $Param8  . "\r\n" .
@@ -210,12 +214,11 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 		case "SalesWithNotEnoughQOH":
 			$EmailSubject = "Sale created a negative QOH for " . $Param6 . " at shop ". $Param4;
 			$EmailText = $EmailSubject . "\n\n" .
-						'Order  :'. ' '. $Param1 . "\r\n" .
-						'Invoice: '. $Param2 . "\r\n" .
-						'SPG    : ' . $Param3 ."\r\n" .
+						'Order  : ' . $Param1 . "\r\n" .
+						'Invoice: ' . $Param2 . "\r\n" .
+						'SPG    : ' . $Param3 . "\r\n" .
 						'Shop   : ' . $Param4 . "\r\n" .
-						'Area   : ' . $Param5 ."\r\n" .
-						'Item   : ' . $Param6  . "\r\n" .
+						'Area   : ' . $Param5 . "\r\n" .
 						'QOH before sale: ' . $Param7 . "\r\n" .
 						'Qty sold       : ' . $Param8  . "\r\n" .
 						'QOH after sale : ' . $Param9  . "\r\n" .
