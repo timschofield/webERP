@@ -111,7 +111,7 @@ if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_BLINK)){
 	echo '<td>' . _('BLINK Pouch Bag Large') . ':</td>
 		  <td><input type="text" class="number" name="BlinkPouchBag03L" maxlength="3" size="3" value="' . $_POST['BlinkPouchBag03L'] . '" /></td>';
 	echo '<td></td>';
-	echo '<td>' . _('BLINK Shopping Bag L') . ':</td>
+	echo '<td>' . _('BLINK Shopping Bag Large') . ':</td>
 		  <td><input type="text" class="number" name="BlinkShoppingBag04L" maxlength="3" size="3" value="' . $_POST['BlinkShoppingBag04L'] . '" /></td></tr>';
 	echo'</tr>';
 
