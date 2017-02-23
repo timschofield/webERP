@@ -8,5 +8,7 @@ ALTER TABLE `www_users` ADD `showpagehelp` TINYINT(1) NOT NULL DEFAULT '1' COMME
 
 ALTER TABLE  `paymentmethods` ADD COLUMN  `percentdiscount` DOUBLE NOT NULL DEFAULT 0;
 
+ALTER TABLE `pcashdetails` ADD UNIQUE KEY `tabcodedate` (`tabcode`,`date`,`codeexpense`,`counterindex`);
+
 -- Update version number:
 UPDATE config SET confvalue='4.14' WHERE confname='VersionNumber';
