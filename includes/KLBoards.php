@@ -7332,22 +7332,22 @@ Updated 3 index in loctransfers
 				$NeedBagM = max(0,round(($TableResult[$i]['rl_bag_m'] * $TableResult[$i]['rlfactorforpackaging']) - $TableResult[$i]['qty_bag_m'],0));
 				$NeedBagS = max(0,round(($TableResult[$i]['rl_bag_s'] * $TableResult[$i]['rlfactorforpackaging']) - $TableResult[$i]['qty_bag_s'],0));
 				$NeedShoppingL = max(0,round(($TableResult[$i]['rl_shopping_l'] * $TableResult[$i]['rlfactorforpackaging']) - $TableResult[$i]['qty_shopping_l'],0));
-				$NeedShoppingM  = max(0,round(($TableResult[$i]['rl_shopping_m'] * $TableResult[$i]['rlfactorforpackaging']) - $TableResult[$i]['qty_shopping_m'],0));
-				$NeedShoppingS  = max(0,round(($TableResult[$i]['rl_shopping_s'] * $TableResult[$i]['rlfactorforpackaging']) - $TableResult[$i]['qty_shopping_s'],0));
+				$NeedShoppingM = max(0,round(($TableResult[$i]['rl_shopping_m'] * $TableResult[$i]['rlfactorforpackaging']) - $TableResult[$i]['qty_shopping_m'],0));
+				$NeedShoppingS = max(0,round(($TableResult[$i]['rl_shopping_s'] * $TableResult[$i]['rlfactorforpackaging']) - $TableResult[$i]['qty_shopping_s'],0));
 
 				$ToShipBagL = max(0,$NeedBagL - $TableResult[$i]['ot_bag_l']);
 				$ToShipBagM = max(0,$NeedBagM - $TableResult[$i]['ot_bag_m']);
 				$ToShipBagS = max(0,$NeedBagS - $TableResult[$i]['ot_bag_s']);
 				$ToShipShoppingL = max(0,$NeedShoppingL - $TableResult[$i]['ot_shopping_l']);
-				$ToShipShoppingM  = max(0,$NeedShoppingM - $TableResult[$i]['ot_shopping_m']);
-				$ToShipShoppingS  = max(0,$NeedShoppingS - $TableResult[$i]['ot_shopping_s']);
+				$ToShipShoppingM = max(0,$NeedShoppingM - $TableResult[$i]['ot_shopping_m']);
+				$ToShipShoppingS = max(0,$NeedShoppingS - $TableResult[$i]['ot_shopping_s']);
 
 				$EmailLink = '<a href="' . $RootPath . '/KLPreparePackagingTransferBlink.php?Shop=' . $TableResult[$i]['loccode'] 
 																						. '&Name=' . $TableResult[$i]['locationname'] 
 																						. '&BagL=' . $ToShipBagL 
 																						. '&BagM=' . $ToShipBagM 
 																						. '&BagS=' . $ToShipBagS 
-																						. '&ShoppingL=' . $ToShipShoppingM 
+																						. '&ShoppingL=' . $ToShipShoppingL 
 																						. '&ShoppingM=' . $ToShipShoppingM 
 																						. '&ShoppingS=' . $ToShipShoppingS 
 																						.'">' . 'Send email to team' . '</a>';
