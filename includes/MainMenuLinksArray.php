@@ -453,15 +453,17 @@ $MenuItems['PC']['Transactions']['Caption'] = array(_('Assign Cash to PC Tab'),
 													_('Expenses Authorisation'));
 
 $MenuItems['PC']['Transactions']['URL'] = array('/PcAssignCashToTab.php',
-						'/PcAssignCashTabToTab.php',
+												'/PcAssignCashTabToTab.php',
 												'/PcClaimExpensesFromTab.php',
 												'/PcAuthorizeExpenses.php');
 
 $MenuItems['PC']['Reports']['Caption'] = array(_('PC Tab General Report'),
+											   _('PC Expense General Report'),
 											   _('PC Tab Expenses List'),
 											   _('PC Expenses Analysis'));
 
 $MenuItems['PC']['Reports']['URL'] = array('/PcReportTab.php',
+										   '/PcReportExpense.php',
 										   '/PcTabExpensesList.php',
 										   '/PcAnalysis.php');
 

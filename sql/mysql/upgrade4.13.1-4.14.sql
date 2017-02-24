@@ -10,5 +10,7 @@ ALTER TABLE  `paymentmethods` ADD COLUMN  `percentdiscount` DOUBLE NOT NULL DEFA
 
 ALTER TABLE `pcashdetails` ADD UNIQUE KEY `tabcodedate` (`tabcode`,`date`,`codeexpense`,`counterindex`);
 
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('PcReportExpense.php', '15', '');
+
 -- Update version number:
 UPDATE config SET confvalue='4.14' WHERE confname='VersionNumber';
