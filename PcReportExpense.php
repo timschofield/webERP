@@ -6,8 +6,15 @@ $ViewTopic = 'PettyCash';
 $BookMark = 'PcReportExpense';
 
 include ('includes/SQL_CommonFunctions.inc');
+include  ('includes/header.inc');
 
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('PC Expense Report')
+. '" alt="" />' . ' ' . $Title . '</p>';
 
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
+	<div>
+	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+		
 if (isset($_POST['SelectedExpense'])){
 	$SelectedExpense = mb_strtoupper($_POST['SelectedExpense']);
 } elseif (isset($_GET['SelectedExpense'])){
@@ -16,14 +23,7 @@ if (isset($_POST['SelectedExpense'])){
 
 if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST['SelectDifferentDate'])) {
 
-	include  ('includes/header.inc');
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('PC Expense Report')
-	. '" alt="" />' . ' ' . $Title . '</p>';
-
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
-		<div>
-		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (!isset($_POST['FromDate'])){
 		$_POST['FromDate']=Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,Date('m'),1,Date('Y')));
@@ -33,7 +33,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 		$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
 	}
 
-	/*Show a form to allow input of criteria for Tabs to show */
+	/*Show a form to allow input of criteria for Expenses to show */
 	echo '<table class="selection">
 		<tr>
 			<td>' . _('Code Of Petty Cash Expense') . ':</td>
@@ -65,11 +65,11 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	echo '</select></td>
 		</tr>
 		<tr>
-			<td>' . _('From Date :') . '</td>
+			<td>' . _('From Date') . ':' . '</td>
 			<td><input tabindex="2" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" /></td>
 		</tr>
 		<tr>
-			<td>' . _('To Date:')  . '</td>
+			<td>' . _('To Date') . ':' . '</td>
 			<td><input tabindex="3" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
 		</tr>
 		</table>
@@ -82,42 +82,26 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 
 } else {
 
-	include('includes/header.inc');
-
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Payment Entry')
-	. '" alt="" />' . ' ' . $Title . '</p>';
-
 	$SQL_FromDate = FormatDateForSQL($_POST['FromDate']);
 	$SQL_ToDate = FormatDateForSQL($_POST['ToDate']);
 
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type="hidden" name="FromDate" value="' . $_POST['FromDate'] . '" />
 			<input type="hidden" name="ToDate" value="' . $_POST['ToDate'] . '" />';
 
-	$SqlTabs = "SELECT * FROM pcexpenses
-			WHERE codeexpense='".$SelectedExpense."'";
-
-	$TabResult = DB_query($SqlTabs,
-						 _('No Petty Cash Expense were returned by the SQL because'),
-						 _('The SQL that failed was:'));
-
-	$Tabs=DB_fetch_array($TabResult);
-
 	echo '<br /><table class="selection">';
 
-	echo '<tr><td>' . _('Expense Code') . '</td>
-				<td>:</td>
-				<td style="width:200px">' . ''.$SelectedExpense . '</td>'  .
-				'<td>' . _('From') . '</td><td>:</td><td>' .
-			''.$_POST['FromDate'] . '</td></tr>';
-
-	echo '<tr><td></td>
-				<td></td>
-				<td></td>' .
-				'<td>' . _('To') . '</td><td>:</td><td>' .
-			''.$_POST['ToDate'] . '</td></tr>';
+	echo '<tr>
+			<td>' . _('Expense Code') . ':</td>
+			<td style="width:200px">' . $SelectedExpense . '</td>'  .
+			'<td>' . _('From') . ':</td>
+			<td>' . $_POST['FromDate'] . '</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>' .
+			'<td>' . _('To') . ':</td>
+			<td>' . $_POST['ToDate'] . '</td>
+		</tr>';
 
 	echo '</table>';
 
@@ -135,10 +119,13 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 				AND codeexpense='".$SelectedExpense."'
 				AND date >='" . $SQL_FromDate . "'
 				AND date <= '" . $SQL_ToDate . "'
+				AND (pctabs.authorizer='" . $_SESSION['UserID'] .
+					"' OR pctabs.usercode ='" . $_SESSION['UserID'].
+					"' OR pctabs.assigner ='" . $_SESSION['UserID'] . "')
 			ORDER BY date, counterindex ASC";
 
 	$TabDetail = DB_query($SQL,
-						_('No Petty Cash movements for this tab were returned by the SQL because'),
+						_('No Petty Cash movements for this expense code were returned by the SQL because'),
 						_('The SQL that failed was:'));
 
 	echo '<br /><table class="selection">
@@ -152,35 +139,33 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 			<th>' . _('Authorised') . '</th>
 		</tr>';
 
-	$j = 1;
 	$k=0; //row colour counter
 
 	while ($myrow = DB_fetch_array($TabDetail)) {
-	if ($k==1){
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k=1;
-	}
+		if ($k==1){
+			echo '<tr class="EvenTableRows">';
+			$k=0;
+		} else {
+			echo '<tr class="OddTableRows">';
+			$k=1;
+		}
 
-	printf("<td>%s</td>
-			<td>%s</td>
-			<td class='number'>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			</tr>",
-			ConvertSQLDate($myrow['date']),
-			$myrow['tabcode'],
-			locale_number_format($myrow['amount'],$myrow['decimalplaces']),
-			$myrow['currency'],
-			$myrow['notes'],
-			$myrow['receipt'],
-			ConvertSQLDate($myrow['authorized'])
-			);
-
+		printf("<td>%s</td>
+				<td>%s</td>
+				<td class='number'>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				</tr>",
+				ConvertSQLDate($myrow['date']),
+				$myrow['tabcode'],
+				locale_number_format($myrow['amount'],$myrow['decimalplaces']),
+				$myrow['currency'],
+				$myrow['notes'],
+				$myrow['receipt'],
+				ConvertSQLDate($myrow['authorized'])
+				);
 	}
 
 	echo '</table>';
