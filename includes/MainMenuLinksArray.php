@@ -623,7 +623,7 @@ $MenuItems['PC']['Transactions']['Caption'] = array(_('Assign Cash to PC Tab'),
 													_('Expenses Authorisation'));
 
 $MenuItems['PC']['Transactions']['URL'] = array('/PcAssignCashToTab.php',
-						'/PcAssignCashTabToTab.php',
+												'/PcAssignCashTabToTab.php',
 												'/PcClaimExpensesFromTab.php',
 												'/PcAuthorizeExpenses.php');
 
