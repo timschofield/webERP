@@ -130,7 +130,6 @@ if(isset($_POST['Submit'])) {
 							quantity,
 							autoissue,
 							remark,
-							digitals,
 							digitals
 					FROM bom
 					WHERE parent='".$StockID."';";

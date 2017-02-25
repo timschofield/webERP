@@ -1,5 +1,6 @@
 webERP Change Log
 
+26/02/17 TurboPT: CopyBOM.php fixed insert SQL had duplicate digitals field
 14/1/17	Phil: CustomerReceipt now calculates payment discount based on percentages entered in payment methods
 12/1/17  RChacon: Removes the "&" before the variable $ResultIndex in ConnectDB_XXX.inc.
 12/1/17 Phil: Added a discount percentage field to the payment methods - to allow calculation of discount when receipts entered... still yet to code this bit
