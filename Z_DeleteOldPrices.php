@@ -5,9 +5,12 @@ include ('includes/session.inc');
 $Title = _('UTILITY PAGE To Delete All Old Prices');
 include('includes/header.inc');
 
+$result=DB_query("UPDATE prices SET enddate='9999-12-31' WHERE enddate='0000-00-00'"); //convert old data to use end date of 9999-12-31 rather than SQL mode specific end date
+
 if (isset($_POST['DeleteOldPrices'])){
 	DB_Txn_Begin();
-	$result=DB_query("DELETE FROM prices WHERE enddate<'" . Date('Y-m-d') . "' AND enddate <>'0000-00-00'",'','',true);
+	
+	$result=DB_query("DELETE FROM prices WHERE enddate<'" . Date('Y-m-d') . "'",'','',true);
 	$result=DB_query("SELECT stockid,
 							typeabbrev,
 							currabrev,
@@ -15,8 +18,7 @@ if (isset($_POST['DeleteOldPrices'])){
 							branchcode,
 							MAX(startdate) as lateststart
 					FROM prices
-					WHERE startdate<='" . Date('Y-m-d') . "'
-					AND enddate ='0000-00-00'
+					WHERE startdate<'" . Date('Y-m-d') . "'
 					GROUP BY stockid,
 							typeabbrev,
 							currabrev,
@@ -29,7 +31,7 @@ if (isset($_POST['DeleteOldPrices'])){
 													AND branchcode='" . $myrow['branchcode'] . "'
 													AND currabrev='" . $myrow['currabrev'] . "'
 													AND typeabbrev='" . $myrow['typeabbrev'] . "'
-													AND enddate='0000-00-00'
+													AND enddate='9999-12-31'
 													AND startdate<'" . $myrow['lateststart'] . "'",'','',true);
 	}
 	prnMsg(_('All old prices have been deleted'),'success');
