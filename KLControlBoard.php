@@ -107,20 +107,6 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 	}
 
-	/*
-	if ($KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector){
-		SPGBelowMinimumSales("TOK66", 2, 1300000,$db);
-		SPGBelowMinimumSales("TOKSA", 2, 1650000,$db);
-		SPGBelowMinimumSales("TOKKS", 2, 2000000,$db);
-		SPGBelowMinimumSales("TOKLE", 2, 1500000,$db);
-		SPGBelowMinimumSales("TOKJC", 2, 1300000,$db);
-		SPGBelowMinimumSales("TOKUB", 2, 1300000,$db);
-		SPGBelowMinimumSales("TOKMF", 2, 1500000,$db);
-		SPGBelowMinimumSales("TOKBW", 2, 1500000,$db);
-		SPGBelowMinimumSales("TOKSE", 2, 1300000,$db);
-	}
-	*/
 
 	/***************************************************************************************
 	* STANDARD COST         
@@ -340,9 +326,8 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 	}
 
-
-	if ($KL_SystemAdmin 
-		OR $KL_AdministrationTeam){
+	
+	if ($KL_AdministrationTeam){
 		// Bank Mandiri or  BCA has enough funds to be transferred to Danamon
 		BalanceAccountControl("111121100PT",  1000000,   50000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
@@ -353,9 +338,10 @@ if ($ProcessSection01){
 		BalanceAccountControl("111121111PT", 11000000,  110000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 	}
-
+	
 	if ($KL_SystemAdmin){
-
+		BalanceAccountControl("111121111PT", 11000000,  110000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
 		BalanceAccountControl("111121105PT",250000000, 1000000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111111200",   30000000,   60000000, $periodnow, $db);
