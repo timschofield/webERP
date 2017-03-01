@@ -1433,15 +1433,17 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 				$SQL = "INSERT INTO returneditems (	orderno,
 												reasonid,
 												itemcodes,
+												returndate,
 												oldinvoice,
 												oldinvoicedate
 												)
 											VALUES ( '" . $OrderNo . "',
 												'" . $_POST['ReturnedGoodsReason'] . "',
 												'" . mb_strtoupper($_POST['ReturnedGoodsItems']) . "',
+												'" . Date('Y-m-d') . "',
 												'" . mb_strtoupper($_POST['ReturnedGoodsOldInvoice']) . "',
 												'" . FormatDateForSQL($_POST['ReturnDate']) . "')";
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The tax GL posting could not be inserted because');
+				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The returned goods record could not be inserted because');
 				$DbgMsg = _('The following SQL to insert returned goods record was used');
 				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 				
