@@ -48,27 +48,6 @@ img{
     padding:12px;
     width:190px;
 }
-
-#login_logo_ptbb {
-background:url("../LogoPTBB.jpg") no-repeat scroll center center #FFFFFF;
-border:medium outset gray;
-border-radius:10px 10px 10px 10px;
-height:85px;
-margin:10% auto;
-padding:12px;
-width:239px;
-}
-
-#login_logo_ptadu {
-background:url("../LogoPTADU.jpg") no-repeat scroll center center #FFFFFF;
-border:medium outset gray;
-border-radius:10px 10px 10px 10px;
-height:85px;
-margin:10% auto;
-padding:12px;
-width:239px;
-}
-
 form {
     width: 240px;
     margin: auto;

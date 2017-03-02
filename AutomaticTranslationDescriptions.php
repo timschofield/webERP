@@ -23,7 +23,6 @@ $SQL = "SELECT stockmaster.stockid,
 			AND stockmaster.discontinued = 0
 			AND (descriptiontranslation = ''
 				OR longdescriptiontranslation = '')
-			AND LENGTH(description) > 2
 		ORDER BY stockmaster.stockid,
 				language_id";
 $result = DB_query($SQL);

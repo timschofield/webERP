@@ -1,12 +1,5 @@
 <?php
-/* $Id: session.inc 7056 2015-01-02 00:53:14Z rchacon $*/
-
-/*****************************************************************************************
-KL RICARD MODIFICATIONS:
-- Set up the login theme for regular and test webERP
-- Commented out the standard call to Dashboard
-- Change of AllowAnyone by AllowCronJobToBeRun to minimize risk of intrusions
-*****************************************************************************************/
+/* $Id: session.inc 7734 2017-02-25 04:58:10Z daintree $*/
 
 if (!isset($PathPrefix)) {
 	$PathPrefix='';
@@ -90,7 +83,7 @@ $FirstLogin = False;
 
 if(basename($_SERVER['SCRIPT_NAME'])=='Logout.php'){
 	header('Location: index.php');
-} elseif (isset($AllowCronJobToBeRun)){ /* only do security checks if AllowCronJobToBeRun is not true */
+} elseif (isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true */
 	$_SESSION['AllowedPageSecurityTokens'] = array();
 	$_SESSION['DatabaseName'] = $DefaultDatabase;
 	$_SESSION['CompanyName'] = $DefaultDatabase;
@@ -110,13 +103,6 @@ if(basename($_SERVER['SCRIPT_NAME'])=='Logout.php'){
 
 	/*  Need to set the theme to make login screen nice */
 	$Theme = (isset($_SESSION['Theme'])) ? $_SESSION['Theme'] : $DefaultTheme;
-	/* RICARD KL Set up the login theme for regular and test webERP */
-	if (strpos($_SERVER['PHP_SELF'],"TEST")){
-		$Theme = 'gel'; 
-	}else{
-		$Theme = (isset($_SESSION['Theme'])) ? $_SESSION['Theme'] : 'default'; 
-	}
-	/* RICARD KL END MODIFICATION Set up the login theme for regular and test webERP */
 	switch ($rc) {
 	case  UL_OK; //user logged in successfully
 		include($PathPrefix . 'includes/LanguageSetup.php'); //set up the language
@@ -153,20 +139,17 @@ if (strcmp($Version,$_SESSION['VersionNumber'])>0 AND (basename($_SERVER['SCRIPT
 	header('Location: UpgradeDatabase.php');
 }
 
-if (strpos($_SERVER['PHP_SELF'],"TEST")){
-	$_SESSION['Theme'] = 'gel';
-	$Theme = 'gel'; 
-}else{
-	if (isset($_POST['Theme']) AND ($_SESSION['UsersRealName'] == $_POST['RealName'])) {
-		$_SESSION['Theme'] = $_POST['Theme'];
-		$Theme = $_POST['Theme'];
-	} elseif (isset($_SESSION['Theme'])) {
-		$Theme = $_SESSION['Theme'];
-	} else {
-		$Theme = $DefaultTheme;
-		$_SESSION['Theme'] = '$DefaultTheme';
-	}
+
+If (isset($_POST['Theme']) AND ($_SESSION['UsersRealName'] == $_POST['RealName'])) {
+	$_SESSION['Theme'] = $_POST['Theme'];
+	$Theme = $_POST['Theme'];
+} elseif (isset($_SESSION['Theme'])) {
+	$Theme = $_SESSION['Theme'];
+} else {
+	$Theme = $DefaultTheme;
+	$_SESSION['Theme'] = '$DefaultTheme';
 }
+
 
 if ($_SESSION['HTTPS_Only']==1){
 	if ($_SERVER['HTTPS']!='on'){
@@ -181,7 +164,7 @@ if ($_SESSION['HTTPS_Only']==1){
 // arrays defining access for each group of users. These definitions can be modified by a system admin under setup
 
 
-if (!is_array($_SESSION['AllowedPageSecurityTokens']) AND !isset($AllowCronJobToBeRun)) {
+if (!is_array($_SESSION['AllowedPageSecurityTokens']) AND !isset($AllowAnyone)) {
 	$Title = _('Account Error Report');
 	include($PathPrefix . 'includes/header.inc');
 	echo '<br /><br /><br />';
@@ -199,7 +182,7 @@ if (!isset($PageSecurity)){
 }
 
 
-if (!isset($AllowCronJobToBeRun)){
+if (!isset($AllowAnyone)){
 	if ((!in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PageSecurity))) {
 		$Title = _('Security Permissions Problem');
 		include($PathPrefix . 'includes/header.inc');
@@ -237,86 +220,10 @@ if (in_array($_SESSION['PageSecurityArray']['WWW_Users.php'], $_SESSION['Allowed
 	$debug = 0; //don't allow debug messages
 }
 
-/* KL RICARD If it's an SPG logging in, charge all info in _SESSION to avoid the same SQL for every retail sale.*/
-include('includes/KLRoles.inc');
-if ($KL_SPGSeniorOrSupport OR $KL_SPGJunior){
-	/*Get the default customer-branch combo from the user's default location record */
-	$sql = "SELECT 	locations.cashsalecustomer,
-					locations.cashsalebranch,
-					locations.locationname,
-					locations.deladd1,
-					locations.deladd2,
-					locations.deladd3,
-					locations.deladd4,
-					locations.deladd5,
-					locations.klposcashaccount,
-					locations.klpostag,
-					locations.taxprovinceid,
-					debtorsmaster.name,
-					debtorsmaster.salestype,
-					debtorsmaster.currcode,
-					debtorsmaster.customerpoline,
-					custbranch.brname,
-					custbranch.braddress1,
-					custbranch.specialinstructions,
-					custbranch.salesman,
-					custbranch.taxgroupid,
-					holdreasons.dissallowinvoices,
-					salestypes.sales_type,
-					paymentterms.terms
-			 FROM locations,
-					debtorsmaster,
-					holdreasons,
-					salestypes,
-					paymentterms,
-					custbranch
-			 WHERE debtorsmaster.salestype=salestypes.typeabbrev
-				AND debtorsmaster.holdreason=holdreasons.reasoncode
-				AND debtorsmaster.paymentterms=paymentterms.termsindicator
-				AND debtorsmaster.debtorno = locations.cashsalecustomer
-				AND custbranch.debtorno = locations.cashsalecustomer
-				AND custbranch.branchcode = locations.cashsalebranch
-				AND loccode='" . $_SESSION['UserStockLocation'] ."'";
-
-	$result = DB_query($sql);
-	if (DB_num_rows($result)==0) {
-		prnMsg(_('Your SPG user account is not linked to any valid shop. Please contact Kantor IT inmediately.'),'error');
-		include('includes/footer.inc');
-		exit;
-	} else {
-		$myrow = DB_fetch_array($result); //get the only row returned
-
-		if ($myrow['cashsalecustomer']=='' OR $myrow['cashsalebranch']==''){
-			prnMsg(_('To use this script it is first necessary to define a cash sales customer for the location that is your default location. The default cash sale customer is defined under set up ->Inventory Locations Maintenance. The customer should be entered using the customer code and a valid branch code of the customer entered.'),'error');
-			include('includes/footer.inc');
-			exit;
-		}
-
-		$_SESSION['ShopAddress1'] = $myrow['deladd1'];
-		$_SESSION['ShopAddress2'] = $myrow['deladd2'];
-		$_SESSION['ShopAddress3'] = $myrow['deladd3'];
-		$_SESSION['ShopAddress4'] = $myrow['deladd4'];
-		$_SESSION['ShopAddress5'] = $myrow['deladd5'];
-		$_SESSION['klposcashaccount'] = $myrow['klposcashaccount'];
-		$_SESSION['klpostag'] = $myrow['klpostag'];
-
-		$_SESSION['cashsalebranch'] = $myrow['cashsalebranch'];
-		$_SESSION['cashsalecustomer'] = $myrow['cashsalecustomer'];
-		$_SESSION['locationname'] = $myrow['locationname'];
-		$_SESSION['taxprovinceid'] = $myrow['taxprovinceid'];
-		$_SESSION['customername'] = $myrow['name'];
-		$_SESSION['salestype'] = $myrow['salestype'];
-		$_SESSION['sales_type'] = $myrow['sales_type'];
-		$_SESSION['currcode'] = $myrow['currcode'];
-		$_SESSION['terms'] = $myrow['terms'];
-		$_SESSION['braddress1'] = $myrow['braddress1'];
-		$_SESSION['specialinstructions'] = $myrow['specialinstructions'];
-		$_SESSION['taxgroupid'] = $myrow['taxgroupid'];
-		$_SESSION['ShopAddress1'] = $myrow['deladd1'];
-		$_SESSION['ShopAddress1'] = $myrow['deladd1'];
-	}
+if ($FirstLogin AND !$SupplierLogin AND !$CustomerLogin AND $_SESSION['ShowDashboard']==1) {
+	header('Location: ' . $PathPrefix .'Dashboard.php');
 }
-/* END KL RICARD */
+
 
 function CryptPass( $Password ) {
     if (PHP_VERSION_ID < 50500) {
@@ -329,7 +236,7 @@ function CryptPass( $Password ) {
     return $Hash;
  }
 
- function VerifyPass($Password,$Hash) {
+ function VerifyPass($Password, $Hash) {
      if(PHP_VERSION_ID < 50500) {
          return (crypt($Password,$Hash)==$Hash);
      } else {
@@ -338,7 +245,7 @@ function CryptPass( $Password ) {
  }
 
 
-if (sizeof($_POST) > 0 AND !isset($AllowCronJobToBeRun)) {
+if (sizeof($_POST) > 0 AND !isset($AllowAnyone)) {
 	/*Security check to ensure that the form submitted is originally sourced from webERP with the FormID = $_SESSION['FormID'] - which is set before the first login*/
 	if (!isset($_POST['FormID']) OR ($_POST['FormID'] != $_SESSION['FormID'])) {
 		$Title = _('Error in form verification');

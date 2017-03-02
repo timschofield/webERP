@@ -2,11 +2,6 @@
 /* $Id: ConfirmDispatch_Invoice.php 7652 2016-10-23 19:27:31Z rchacon $*/
 /* Creates sales invoices from entered sales orders based on the quantities dispatched that can be modified */
 
-/**************************************************************************************
-KL RICARD MODIFICATIONS:
-- change of "consignment" to "tracking"
-***************************************************************************************/
-
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
@@ -1685,7 +1680,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 		</tr>';
 	$j++;
 	echo '<tr>
-			<td>' . _('Tracking Number'). ':</td>
+			<td>' . _('Consignment Note Ref'). ':</td>
 			<td><input tabindex="'.$j.'" type="text" data-type="no-illegal-chars" title="' . _('Enter the consignment note reference to enable tracking of the delivery in the event of customer proof of delivery issues') . '" maxlength="20" size="20" name="Consignment" value="' . $_POST['Consignment'] . '" /></td>
 		</tr>';
 	$j++;

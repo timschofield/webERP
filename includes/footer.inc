@@ -17,7 +17,7 @@ echo '<div id="FooterTimeDiv">';
 echo '</div>';
 
 echo '<div id="FooterVersionDiv">';
-	echo 'webERP ' . _('version') . ' ' . $_SESSION['VersionNumber'];
+	echo 'webERP ' . _('version') . ' ' . $_SESSION['VersionNumber'] . ' ' . _('Copyright') . ' &copy; 2004 - ' . Date('Y'). ' <a target="_blank" href="http://www.weberp.org/weberp/doc/Manual/ManualContributors.html">weberp.org</a>';
 echo '</div>';
 
 echo '</div>'; // FooterWrapDiv

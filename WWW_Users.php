@@ -30,7 +30,6 @@ $ModuleList = array(
 	_('General Ledger'),
 	_('Asset Manager'),
 	_('Petty Cash'),
-	_('Personalia'),
 	_('Setup'),
 	_('Utilities'));
 
@@ -44,7 +43,6 @@ $ModuleListLabel = array(
 	_('Display General Ledger module'),
 	_('Display Asset Manager module'),
 	_('Display Petty Cash module'),
-	_('Display Personalia module'),
 	_('Display Setup module'),
 	_('Display Utilities module'));
 
@@ -243,18 +241,15 @@ if(isset($_POST['submit'])) {
 		$DbgMsg = _('The SQL that was used to create the user locations and failed was');
 		$Result = DB_query($LocationSql, $ErrMsg, $DbgMsg);
 		prnMsg( _('User has been authorized to use and update only his / her default location'), 'success' );
-		
-//	KL RICARD commented out. new users have NO rights to see/update GL accounts unless explicitely specified later on.
 
-//		$GLAccountsSql = "INSERT INTO glaccountusers (userid, accountcode, canview, canupd)
-//						  SELECT '" . $_POST['UserID'] . "', chartmaster.accountcode,1,1
-//						  FROM chartmaster;	";
-		
-//		$ErrMsg = _('The default user GL Accounts could not be processed because');
-//		$DbgMsg = _('The SQL that was used to create the user GL Accounts and failed was');
-//		$Result = DB_query($GLAccountsSql, $ErrMsg, $DbgMsg);
-//		prnMsg( _('User has been authorized to use and update all GL accounts'), 'success' );
+		$GLAccountsSql = "INSERT INTO glaccountusers (userid, accountcode, canview, canupd)
+						  SELECT '" . $_POST['UserID'] . "', chartmaster.accountcode,1,1
+						  FROM chartmaster;	";
 
+		$ErrMsg = _('The default user GL Accounts could not be processed because');
+		$DbgMsg = _('The SQL that was used to create the user GL Accounts and failed was');
+		$Result = DB_query($GLAccountsSql, $ErrMsg, $DbgMsg);
+		prnMsg( _('User has been authorized to use and update all GL accounts'), 'success' );
 	}
 
 	if($InputError!=1) {

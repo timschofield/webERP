@@ -173,7 +173,7 @@ if (isset($_POST['UpdateAll'])) {
 				$ConfirmationText = _('An internal stock request for'). ' ' . $StockID . ' ' . _('has been fulfilled from location').' ' . $Location .' '. _('for a quantity of') . ' ' . locale_number_format($Quantity, $DecimalPlaces ) ;
 				prnMsg( $ConfirmationText,'success');
 
-/*				if ($_SESSION['InventoryManagerEmail']!=''){
+				if ($_SESSION['InventoryManagerEmail']!=''){
 					$ConfirmationText = $ConfirmationText . ' ' . _('by user') . ' ' . $_SESSION['UserID'] . ' ' . _('at') . ' ' . Date('Y-m-d H:i:s');
 					$EmailSubject = _('Internal Stock Request Fulfillment for'). ' ' . $StockID;
 					if($_SESSION['SmtpSetting']==0){
@@ -188,7 +188,6 @@ if (isset($_POST['UpdateAll'])) {
 
 				
 				}
-*/
 			} else {
 				$ConfirmationText = _('An internal stock request for'). ' ' . $StockID . ' ' . _('has been fulfilled from location').' ' . $Location .' '. _('for a quantity of') . ' ' . locale_number_format($Quantity, $DecimalPlaces) . ' ' . _('cannot be created as there is insufficient stock and your system is configured to not allow negative stocks');
 				prnMsg( $ConfirmationText,'warn');

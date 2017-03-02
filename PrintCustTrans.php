@@ -1,11 +1,6 @@
 <?php
 
 /* $Id: PrintCustTrans.php 7238 2015-03-27 13:56:35Z exsonqu $ */
-/**************************************************************************************
-KL RICARD MODIFICATIONS:
-- use of salesorders.salesperson instead of custbranch.salesman
-- deleted control of user/location in SQL, as this script can come only from another script where location is controlled.
-***************************************************************************************/
 
 include('includes/session.inc');
 
@@ -145,7 +140,7 @@ if (isset($PrintPDF) AND isset($FromTransNo) AND isset($InvOrCredit)){
 						INNER JOIN shippers
 						ON debtortrans.shipvia=shippers.shipper_id
 						INNER JOIN salesman
-						ON salesorders.salesperson=salesman.salesmancode
+						ON custbranch.salesman=salesman.salesmancode
 						INNER JOIN locations
 						ON salesorders.fromstkloc=locations.loccode
 						INNER JOIN locationusers
@@ -221,7 +216,7 @@ if (isset($PrintPDF) AND isset($FromTransNo) AND isset($InvOrCredit)){
 		if (DB_error_no()!=0) {
 			$Title = _('Transaction Print Error Report');
 			include ('includes/header.inc');
-			prnMsg( _('There was a problem retrieving the invoice or credit note details for note number') . ' ' . $FromTransNo . ' ' . _('from the database') . '. ' . _('To print an invoice, the sales order record, the customer transaction record and the branch record for the customer must not have been purged') . '. ' . _('To print a credit note only requires the customer, transaction, salesman and branch records be available'),'error');
+			prnMsg( _('There was a problem retrieving the invoice or credit note details for note number') . ' ' . $InvoiceToPrint . ' ' . _('from the database') . '. ' . _('To print an invoice, the sales order record, the customer transaction record and the branch record for the customer must not have been purged') . '. ' . _('To print a credit note only requires the customer, transaction, salesman and branch records be available'),'error');
 			if ($debug==1) {
 				prnMsg (_('The SQL used to get this information that failed was') . '<br />' . $sql,'error');
 			}
@@ -643,9 +638,11 @@ if (isset($PrintPDF) AND isset($FromTransNo) AND isset($InvOrCredit)){
 							INNER JOIN shippers
 							ON debtortrans.shipvia=shippers.shipper_id
 							INNER JOIN salesman
-							ON salesorders.salesperson=salesman.salesmancode
+							ON custbranch.salesman=salesman.salesmancode
 							INNER JOIN locations
 							ON salesorders.fromstkloc=locations.loccode
+							INNER JOIN locationusers
+							ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 							INNER JOIN paymentterms
 							ON debtorsmaster.paymentterms=paymentterms.termsindicator
 							INNER JOIN currencies
@@ -693,6 +690,7 @@ if (isset($PrintPDF) AND isset($FromTransNo) AND isset($InvOrCredit)){
 							WHERE debtortrans.type=11
 							AND debtortrans.transno='" . $FromTransNo . "'";
 			}
+
 			$result=DB_query($sql);
 			if ((DB_num_rows($result)==0 AND $InvOrCredit == 'Invoice') OR (DB_error_no()!=0)) {
 				echo '<p>' . _('There was a problem retrieving the invoice or credit note details for note number') . ' ' . $FromTransNo . ' ' . _('from the database') . '. ' . _('To print an invoice, the sales order record, the customer transaction record and the branch record for the customer must not have been purged') . '. ' . _('To print a credit note only requires the customer, transaction, salesman and branch records be available');
@@ -705,7 +703,7 @@ if (isset($PrintPDF) AND isset($FromTransNo) AND isset($InvOrCredit)){
 			} elseif (DB_num_rows($result)==1) {
 
 				$myrow = DB_fetch_array($result);
-				/* Then there's an invoice (or credit note) to print. So print out the invoice header and PPN Number from the company record */
+				/* Then there's an invoice (or credit note) to print. So print out the invoice header and GST Number from the company record */
 				if (count($_SESSION['AllowedPageSecurityTokens'])==1
                      AND in_array(1, $_SESSION['AllowedPageSecurityTokens'])
                      AND $myrow['debtorno'] != $_SESSION['CustomerID']){

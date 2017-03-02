@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form name="FG Label">
+	<PaperSize name="Paper size">A6_Landscape</PaperSize>
+	<LineHeight name="Line height">22</LineHeight>
+	<logo type="image" name="Logo" id="Logo">
+		<x>20</x>
+		<y>40</y>
+		<width>0</width>
+		<height>35</height>
+	</logo>
+	<CompanyAddress type="ElementArray" name="Company address">
+		<Line1 type="SimpleText" name="Line 1" id="CompanyAddress1">
+			<FontSize>8</FontSize>
+			<x>20</x>
+			<y>38</y>
+		</Line1>
+		<Line2 type="SimpleText" name="Line 2" id="CompanyAddress2">
+			<FontSize>8</FontSize>
+			<x>20</x>
+			<y>46</y>
+		</Line2>
+		<Line3 type="SimpleText" name="Line 3" id="CompanyAddress3">
+			<FontSize>8</FontSize>
+			<x>20</x>
+			<y>54</y>
+		</Line3>
+		<phone type="SimpleText" name="phone" id="phone">
+			<FontSize>8</FontSize>
+			<x>20</x>
+			<y>62</y>
+		</phone>
+		<www type="SimpleText" name="www" id="www">
+			<FontSize>8</FontSize>
+			<x>20</x>
+			<y>70</y>
+		</www>
+	</CompanyAddress>
+	<LabelLine name="LabelLine" id="LabelLine" type="Line">
+		<startx>20</startx>
+		<starty>90</starty>
+		<endx>412</endx>
+		<endy>90</endy>
+	</LabelLine>
+	<ItemNbr type="SimpleText" name="Item Number" id="ItemNbr">
+		<FontSize>20</FontSize>
+		<x>20</x>
+		<y>100</y>
+	</ItemNbr>
+	<ItemDesc type="SimpleText" name="Item Description" id="ItemDesc">
+		<FontSize>20</FontSize>
+		<x>20</x>
+		<y>125</y>
+	</ItemDesc>
+	<Lot type="SimpleText" name="Lot" id="Lot">
+		<FontSize>20</FontSize>
+		<x>20</x>
+		<y>175</y>
+	</Lot>
+	<Weight type="SimpleText" name="Weight" id="Weight">
+		<FontSize>20</FontSize>
+		<x>20</x>
+		<y>150</y>
+	</Weight>
+	<Box type="SimpleText" name="Box" id="Box">
+		<FontSize>20</FontSize>
+		<x>20</x>
+		<y>200</y>
+	</Box>
+</form>

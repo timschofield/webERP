@@ -52,6 +52,10 @@ if (isset($_POST['Search'])){
 					chartmaster.accountcode";
 
 		} elseif (mb_strlen($_POST['GLCode'])>0){
+			if (!empty($_POST['GLCode'])) {
+				header('location:' . $RootPath . '/GLAccountInquiry.php?Account=' . $_POST['GLCode'] . '&Show=Yes');
+				exit;
+			}
 
 			$SQL = "SELECT chartmaster.accountcode,
 					chartmaster.accountname,

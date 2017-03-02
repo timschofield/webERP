@@ -12,19 +12,11 @@ and an array of the receipients */
 
 /*The following three variables need to be modified for the report - the company database to use and the receipients */
 /*The Sales report to send */
-
-/*****************************************************************************************
-KL RICARD MODIFICATIONS:
-- Change of AllowAnyone by AllowCronJobToBeRun to minimize risk of intrusions
-*****************************************************************************************/
-
-
 $_GET['ReportID'] = 2;
-$AllowCronJobToBeRun = true;
-$DatabaseName = 'kurakura_kl_erp';
+$AllowAnyone = true;
 include('includes/session.inc');
 /*The company database to use */
-
+$DatabaseName = $_SESSION['DatabaseName'];
 /*The people to receive the emailed report */
 $Recipients = GetMailList('SalesAnalysisReportRecipients');
 if (sizeOf($Recipients) == 0) {
