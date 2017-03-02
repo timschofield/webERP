@@ -106,8 +106,10 @@ function submit($Title, $Company, $LastDateOfPeriod, &$db) {
 			$AmountByBank = 0;
 			$EmployeesByCheck = 0;
 			$AmountByCheck = 0;
+			$Check = array();
 			$EmployeesByCash = 0;
 			$AmountByCash = 0;
+			$Cash = array();
 
 			while ($myrow = DB_fetch_array($result)) {
 				
@@ -142,10 +144,14 @@ function submit($Title, $Company, $LastDateOfPeriod, &$db) {
 				}elseif ($myrow['paymentmethod'] == 'Check'){
 					$SalaryCopiesToPrint = 2;
 					$EmployeesByCheck++;
+					$Check[$EmployeesByCheck]['Name'] = $myrow['codename'];
+					$Check[$EmployeesByCheck]['Amount'] = $TotalBawaPulang;
 					$AmountByCheck += $TotalBawaPulang;
 				}elseif ($myrow['paymentmethod'] == 'Cash'){
 					$SalaryCopiesToPrint = 1;
 					$EmployeesByCash++;
+					$Cash[$EmployeesByCash]['Name'] = $myrow['codename'];
+					$Cash[$EmployeesByCash]['Amount'] = $TotalBawaPulang;
 					$AmountByCash += $TotalBawaPulang;
 				}
 				$CopiesPrinted = 0;
@@ -368,10 +374,26 @@ function submit($Title, $Company, $LastDateOfPeriod, &$db) {
 			$pdf->ln(5);
 			$pdf->MultiCell(0, 0, 'Total Employees by Bank Transfer: ' .	locale_number_format($EmployeesByBank), 0, 'L', 0, 1, '', '', true);
 			$pdf->MultiCell(0, 0, 'Total Amount by Bank Transfer: ' .	locale_number_format($AmountByBank), 0, 'L', 0, 1, '', '', true);
+			$pdf->ln(5);
 			$pdf->MultiCell(0, 0, 'Total Employees by Check : ' .	locale_number_format($EmployeesByCheck), 0, 'L', 0, 1, '', '', true);
 			$pdf->MultiCell(0, 0, 'Total Amount by Check: ' .	locale_number_format($AmountByCheck), 0, 'L', 0, 1, '', '', true);
+			$CheckNumber = 1;
+			while($CheckNumber <= $EmployeesByCheck){
+				$pdf->MultiCell($WidthColumn1, 0, $Check[$CheckNumber]['Name'], 1, 'R', 0, 0, '', '', true);
+				$pdf->MultiCell($WidthColumn2, 0, locale_number_format($Check[$CheckNumber]['Amount']), 1, 'R', 0, 0, '', '', true);
+				$pdf->ln(5);
+				$CheckNumber++;
+			}
+			$pdf->ln(5);
 			$pdf->MultiCell(0, 0, 'Total Employees by Cash: ' .	locale_number_format($EmployeesByCash), 0, 'L', 0, 1, '', '', true);
 			$pdf->MultiCell(0, 0, 'Total Amount by Cash: ' .	locale_number_format($AmountByCash), 0, 'L', 0, 1, '', '', true);
+			$CashNumber = 1;
+			while($CashNumber <= $EmployeesByCash){
+				$pdf->MultiCell($WidthColumn1, 0, $Cash[$CashNumber]['Name'], 1, 'R', 0, 0, '', '', true);
+				$pdf->MultiCell($WidthColumn2, 0, locale_number_format($Cash[$CashNumber]['Amount']), 1, 'R', 0, 0, '', '', true);
+				$pdf->ln(5);
+				$CashNumber++;
+			}
 			
 			// download the pdf file
 			$FileName= $CoreFileName . '.pdf';
