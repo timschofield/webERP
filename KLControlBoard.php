@@ -725,6 +725,14 @@ if ($ProcessSection02){
 		GoodSellingItemsInCategory("NOPOKL", 15, 6, $RootPath, $db);
 		GoodSellingItemsInCategory("NOPOBL", 15, 6, $RootPath, $db);
 	*/
+		ItemsInCategoryForMoreThanDays( 120, "SETKL", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsInCategoryForMoreThanDays( 120, "SETBL", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsInCategoryForMoreThanDays( 120, "SETGE", $RootPath, $db);
+		$NumberOfTestExecuted++;
+
+
 		ActiveItemsNoSales( 30, "TESTKL", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		ItemsInCategoryForMoreThanDays( 60, "TESTKL", $RootPath, $db);
