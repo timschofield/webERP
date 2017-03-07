@@ -1,5 +1,6 @@
 webERP Change Log
 
+07/03/17 TurboPT: (by Tim in forums) BankAccounts.php: Add quotes to variable in query.
 27/02/17 TurboPT: SpecialOrder.php add identifier to delete link; DefineSpecialOrderClass.php remove the "&" with parameter to function remove_from_order().
 26/02/17 TurboPT: CopyBOM.php fixed insert SQL had duplicate digitals field
 14/1/17	Phil: CustomerReceipt now calculates payment discount based on percentages entered in payment methods

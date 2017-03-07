@@ -404,7 +404,7 @@ if (!isset($_POST['DefAccount']) OR $_POST['DefAccount']==''){
 }
 
 if (isset($SelectedBankAccount)) {
-	$result = DB_query("SELECT invoice FROM bankaccounts where accountcode =" . $SelectedBankAccount );
+	$result = DB_query("SELECT invoice FROM bankaccounts where accountcode = '" . $SelectedBankAccount . "'" );
 	while ($myrow = DB_fetch_array($result)) {
 		if ($myrow['invoice']== 1) {
 			echo '<option selected="selected" value="1">' . _('Fall Back Default') . '</option>
