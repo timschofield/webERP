@@ -566,10 +566,17 @@ if ($_GET['EmailType']!='NoSendThankYou'){
 					<td align="right">' . locale_number_format($myrow['freightcost'],$myrow['decimalplaces']) . '</td>
 				</tr>';
 		}else{
-			$MailMessage .=  '
-				<tr>
-					<td colspan="4" align="right">' . _('Freight Costs paid by') . ' ' . $_SESSION['ShopName'] . '</td>
-				</tr>';
+			if ($myrow['shippername'] == 'Pick up from store'){
+				$MailMessage .=  '
+					<tr>
+						<td colspan="4" align="right">' . _('Pick up from store') . '</td>
+					</tr>';
+			}else{
+				$MailMessage .=  '
+					<tr>
+						<td colspan="4" align="right">' . _('Freight Costs paid by') . ' ' . $_SESSION['ShopName'] . '</td>
+					</tr>';
+			}
 		}
 			$MailMessage .=  '
 				<tr>
