@@ -58,7 +58,8 @@ if(isset($_POST['submit'])) {
 
 	if(isset($SelectedAccount) AND $InputError != 1) {
 
-		$Sql = "UPDATE chartmaster SET accountname='" . $_POST['AccountName'] . "',
+		$Sql = "UPDATE
+					chartmaster SET accountname='" . $_POST['AccountName'] . "',
 					controlled='" . $_POST['Controlled'] . "',
 					group_='" . $_POST['Group'] . "',
 					cashflowsactivity='" . $_POST['CashFlowsActivity'] . "'
@@ -82,18 +83,18 @@ if(isset($_POST['submit'])) {
 					$_POST['AccountName'] . "', '" .
 					$_POST['Group'] . "', '" .
 					$_POST['Controlled'] . "', '" .
-				$_POST['CashFlowsActivity'] . "')";
+					$_POST['CashFlowsActivity'] . "')";
 		$ErrMsg = _('Could not add the new account code');
 		$Result = DB_query($Sql, $ErrMsg);
 
 		prnMsg(_('The new general ledger account has been added'),'success');
 	}
 
-	unset ($_POST['Group']);
-	unset ($_POST['AccountCode']);
-	unset ($_POST['AccountName']);
-	unset ($_POST['Controlled']);
-	unset ($_POST['CashFlowsActivity']);
+	unset($_POST['Group']);
+	unset($_POST['AccountCode']);
+	unset($_POST['AccountName']);
+	unset($_POST['Controlled']);
+	unset($_POST['CashFlowsActivity']);
 	unset($SelectedAccount);
 
 } elseif(isset($_GET['delete'])) {
@@ -230,11 +231,9 @@ if(!isset($_GET['delete'])) {
 	echo '<form method="post" id="GLAccounts" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	if (isset($SelectedAccount)) {
-		//editing an existing account
-
-		$Sql = "SELECT accountcode, accountname, group_ FROM chartmaster WHERE accountcode='" . $SelectedAccount ."'";
-
+	if(isset($SelectedAccount)) {// Edit an existing account.
+		echo '<input type="hidden" name="SelectedAccount" value="' . $SelectedAccount . '" />';
+		$Sql = "SELECT accountcode, accountname, group_, controlled, cashflowsactivity FROM chartmaster WHERE accountcode='" . $SelectedAccount ."'";
 		$Result = DB_query($Sql);
 		$MyRow = DB_fetch_array($Result);
 
@@ -315,6 +314,18 @@ then none of the above are true and the list of ChartMaster will be displayed wi
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
+	echo '<br />
+		<table class="selection">
+			<tr>
+				<th class="ascending">', _('Account Code'), '</th>
+				<th class="ascending">', _('Account Name'), '</th>
+				<th class="ascending">', _('Account Group'), '</th>
+				<th class="ascending">', _('P/L or B/S'), '</th>
+				<th class="ascending">' . _('Controlled') . '</th>
+				<th class="ascending">', _('Cash Flows Activity'), '</th>
+				<th class="noprint" colspan="2">&nbsp;</th>
+			</tr>';
+
 	$Sql = "SELECT
 				accountcode,
 				accountname,
@@ -328,55 +339,30 @@ or deletion of the records*/
 	$ErrMsg = _('The chart accounts could not be retrieved because');
 	$Result = DB_query($Sql, $ErrMsg);
 
-	echo '<br /><table class="selection">';
-	echo '<br />
-		<table class="selection">
-			<tr>
-				<th class="ascending">', _('Account Code'), '</th>
-				<th class="ascending">', _('Account Name'), '</th>
-				<th class="ascending">', _('Account Group'), '</th>
-				<th class="ascending">', _('P/L or B/S'), '</th>
-				<th class="ascending">' . _('Controlled') . '</th>
-				<th class="ascending">', _('Cash Flows Activity'), '</th>
-				<th class="noprint" colspan="2">&nbsp;</th>
-			</tr>';
-
-	$k=0; //row colour counter
-
-	while ($MyRow = DB_fetch_row($Result)) {
-		if ($k==1){
+	$k = 1;// Row colour counter.
+	foreach($Result as $MyRow) {
+		if($k == 1) {
 			echo '<tr class="OddTableRows">';
-			$k=0;
+			$k = 0;
 		} else {
 			echo '<tr class="EvenTableRows">';
 			$k = 1;
 		}
-		if ($MyRow[4] == 1) {
+		if ($MyRow['controlled'] == 1) {
 			$ActiveText = _('Yes');
 		} else {
 			$ActiveText = _('No');
 		}
 
-		printf("<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td><a href=\"%s&amp;SelectedAccount=%s\">" . _('Edit') . "</a></td>
-			<td><a href=\"%s&amp;SelectedAccount=%s&amp;delete=1\" onclick=\"return confirm('" . _('Are you sure you wish to delete this account? Additional checks will be performed in any event to ensure data integrity is not compromised.') . "');\">" . _('Delete') . "</a></td>
-			</tr>",
-			$MyRow[0],
-			htmlspecialchars($MyRow[1],ENT_QUOTES,'UTF-8'),
-			$MyRow[2],
-			$MyRow[3],
-			$ActiveText,
-			CashFlowsActivityName($MyRow[5]),
-			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-			$MyRow[0],
-			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-			$MyRow[0]);
-		
+		echo	'<td class="text">', $MyRow['accountcode'], '</td>
+				<td class="text">', htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8'), '</td>
+				<td class="text">', $MyRow['group_'], '</td>
+				<td class="text">', $MyRow['acttype'], '</td>
+				<td class="text">', $ActiveText, '</td>
+				<td class="text">', CashFlowsActivityName($MyRow['cashflowsactivity']), '</td>
+				<td class="noprint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?', '&amp;SelectedAccount=', $MyRow['accountcode'], '">', _('Edit'), '</a></td>
+				<td class="noprint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?', '&amp;SelectedAccount=', $MyRow['accountcode'], '&amp;delete=1" onclick="return confirm(\'', _('Are you sure you wish to delete this account? Additional checks will be performed in any event to ensure data integrity is not compromised.'), '\');">', _('Delete'), '</a></td>
+			</tr>';
 	}// END foreach($Result as $MyRow).
 
 	echo '</table>';
