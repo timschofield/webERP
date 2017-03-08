@@ -29,21 +29,7 @@ if (get_magic_quotes_gpc()){
 
 ?>
 <div id="container">
-<?php
-// select the icon to show depending on the path
-if(strpos($_SERVER['HTTP_HOST'],"bumibiru")){
-?>
-	<div id="login_logo_ptbb"></div>
-<?php
-}elseif(strpos($_SERVER['HTTP_HOST'],"adu")){
-?>
-	<div id="login_logo_ptadu"></div><?php
-}else{
-?>
 	<div id="login_logo"></div>
-<?php
-}
-?>
 	<div id="login_box">
 	<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');?>" method="post">
     <div>
@@ -127,6 +113,7 @@ if(strpos($_SERVER['HTTP_HOST'],"bumibiru")){
 	</form>
 	</div>
 	<br />
+	<div style="text-align:center"><a href="https://sourceforge.net/projects/web-erp"><img src="https://sflogo.sourceforge.net/sflogo.php?group_id=70949&amp;type=8" width="80" height="15" alt="Get webERP Accounting &amp; Business Management at SourceForge.net. Fast, secure and Free Open Source software downloads" /></a></div>
 </div>
 </body>
 </html>

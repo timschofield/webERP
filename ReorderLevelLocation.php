@@ -2,11 +2,6 @@
 
 /* $Id: ReorderLevelLocation.php 6941 2014-10-26 23:18:08Z daintree $*/
 
-/*****************************************************************************************
-KL RICARD MODIFICATIONS:
-- Added 4 fields. 3 KL fields from stockmaster to calculate and show notes (KL status of the item)
-*****************************************************************************************/
-
 // ReorderLevelLocation.php - Report of reorder level by category
 
 include('includes/session.inc');
@@ -41,17 +36,12 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 	}else{
 		$Sequence="locstock.stockid";
 	}
-	
-	/* KL RICARD: Add 3 fields kl* to query */
 
 	$sql="SELECT locstock.stockid,
 				description,
 				reorderlevel,
 				bin,
 				quantity,
-				stockmaster.klchangingprice,
-				stockmaster.klmovingdiscount50,
-				stockmaster.klmovingdiscount80,
 				decimalplaces,
 				canupd
 			FROM locstock INNER JOIN stockmaster
@@ -78,7 +68,6 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
     echo '<table>';
- 	/* KL RICARD: Add Notes field */
     echo '<tr>
             <th>' . _('Code') . '</th>
             <th>' . _('Description') . '</th>
@@ -87,7 +76,6 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
             <th>' . _('On Hand')  . '<br />' ._('At Location') . '</th>
             <th>' . _('Reorder Level') . '</th>
             <th>' . _('Bin Location') . '</th>
-            <th>' . _('Notes') . '</th>
         </tr>';
 
 	$i=1;
@@ -129,17 +117,6 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 		$TotQtyResult = DB_query($SqlOH);
 		$TotQtyRow = DB_fetch_array($TotQtyResult);
 
-		/*	KL RICARD Fill the $Notes variable*/
-		if	   ($myrow['klchangingprice']){
-			$Notes = "Changing price";
-		}elseif($myrow['klmovingdiscount50']){
-			$Notes = "Moving to discount";
-		}elseif($myrow['klmovingdiscount80']){
-			$Notes = "Moving to outlet";
-		}else{
-			$Notes = "";
-		}
-
 		echo $myrow['stockid'] . '</td>
 			<td>' . $myrow['description'] . '</td>
 			<td class="number">' . locale_number_format($SalesRow['qtyinvoiced'],$myrow['decimalplaces']) . '</td>
@@ -155,12 +132,11 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 		}
 			
 		echo '</td>
-			<td>'.$Notes.'</td>
 			</tr> ';
 		$i++;
 	} //end of looping
 	echo'<tr>
-			<td style="text-align:center" colspan="8">
+			<td style="text-align:center" colspan="7">
 				<input type="submit" name="submit" value="' . _('Update') . '" />
 			</td>
 		</tr>

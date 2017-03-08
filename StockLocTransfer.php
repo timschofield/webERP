@@ -1,11 +1,5 @@
 <?php
 /* $Id: StockLocTransfer.php 6945 2014-10-27 07:20:48Z daintree $*/
-
-/**************************************************************************************
-KL RICARD MODIFICATIONS:
-- send email if destination = location SERDE (to be destroyed)
-***************************************************************************************/
-
 /* Inventory Transfer - Bulk Dispatch */
 
 include('includes/session.inc');
@@ -14,8 +8,6 @@ $BookMark = "LocationTransfers";
 $ViewTopic = "Inventory";
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
-
-include('includes/KLEmails.php');
 
 if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 /*Trap any errors in input */
@@ -221,11 +213,6 @@ if(isset($_POST['Submit']) AND $InputError==False){
 							'" . $_POST['ToStockLocation'] . "')";
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to enter Location Transfer record for'). ' '.$_POST['StockID' . $i];
 			$resultLocShip = DB_query($sql, $ErrMsg);
-			/* KL RICARD Send emails to team if transfer from / to special location */
-			if ($_POST['ToStockLocation'] == 'SERDE'){
-				KLSendEmail("ItemTransferredToSpecialLocation", "Silent", $_POST['StockID' . $i], round(filter_number_format($_POST['StockQTY' . $i]), $DecimalRow['decimalplaces']),$_POST['FromStockLocation'], $_POST['ToStockLocation']);
-			}
-			/* KL RICARD End modification */
 		}
 	}
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to COMMIT Location Transfer transaction');

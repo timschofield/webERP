@@ -2,12 +2,7 @@
 
 /* $Id: Logout.php 5785 2012-12-29 04:47:42Z daintree $*/
 
-/*****************************************************************************************
-KL RICARD MODIFICATIONS:
-- Change of AllowAnyone by AllowCronJobToBeRun to minimize risk of intrusions
-*****************************************************************************************/
-
-$AllowCronJobToBeRun=True; /* Allow all users to log off  */
+$AllowAnyone=True; /* Allow all users to log off  */
 
 include('includes/session.inc');
 

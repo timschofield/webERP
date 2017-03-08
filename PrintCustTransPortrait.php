@@ -2,11 +2,6 @@
 /* $Id: PrintCustTransPortrait.php 7549 2016-06-05 18:19:51Z rchacon $ */
 /*  Print Invoices or Credit Notes (Portrait Mode) */
 
-/**************************************************************************************
-KL RICARD MODIFICATIONS:
-- change of "consignment" to "tracking"
-***************************************************************************************/
-
 include('includes/session.inc');
 
 $ViewTopic = 'ARReports';
@@ -857,7 +852,7 @@ if(isset($PrintPDF)
 							<td align="left" style="background-color:#bbbbbb"><b>' . _('Invoice Date') . '</b></td>
 							<td align="left" style="background-color:#bbbbbb"><b>' . _('Sales Person') . '</b></td>
 							<td align="left" style="background-color:#bbbbbb"><b>' . _('Shipper') . '</b></td>
-							<td align="left" style="background-color:#bbbbbb"><b>' . _('Tracking #') . '</b></td>
+							<td align="left" style="background-color:#bbbbbb"><b>' . _('Consignment Ref') . '</b></td>
 						</tr>';
 					echo '<tr>
 							<td style="background-color:#EEEEEE">' . $myrow['customerref'] . '</td>

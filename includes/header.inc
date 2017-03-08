@@ -74,10 +74,17 @@
 			echo '<li><a href="'.$RootPath.'/SelectProduct.php">' . _('Items')     . '</a></li>';
 			echo '<li><a href="'.$RootPath.'/SelectSupplier.php">' . _('Suppliers') . '</a></li>';
 
-			$DefaultManualLink = '<li><a rel="external" accesskey="8" href="' .  $RootPath . '../../wiki/index.php'. '">' . _('KL-Intranet') . '</a></li>';
-			echo $DefaultManualLink;
-			$DefaultWebLink = '<li><a rel="external" accesskey="9" href="' .   'http://www.kapal-laut.com'. '">' . _('KL-Website') . '</a></li>';
-			echo $DefaultWebLink;
+			$DefaultManualLink = '<li><a rel="external" accesskey="8" href="' .  $RootPath . '/doc/Manual/ManualContents.php'. $ViewTopic . $BookMark. '">' . _('Manual') . '</a></li>';
+
+			if (mb_substr($_SESSION['Language'],0,2) != 'en'){
+				if (file_exists('locale/'.$_SESSION['Language'].'/Manual/ManualContents.php')){
+					echo '<li><a target="_blank" href="'.$RootPath.'/locale/'.$_SESSION['Language'].'/Manual/ManualContents.php'. $ViewTopic . $BookMark. '">' . _('Manual') . '</a></li>';
+				} else {
+					echo $DefaultManualLink;
+				}
+			} else {
+					echo $DefaultManualLink;
+			}
 		}
 
 		echo '<li><a href="'.$RootPath.'/Logout.php" onclick="return confirm(\''._('Are you sure you wish to logout?').'\');">' . _('Logout') . '</a></li>';

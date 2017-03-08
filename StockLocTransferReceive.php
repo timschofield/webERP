@@ -1,13 +1,5 @@
 <?php
 /* $Id: StockLocTransferReceive.php 7343 2015-08-19 07:37:57Z tehonu $*/
-
-/**************************************************************************************
-KL RICARD MODIFICATIONS:
-- do not send email to inventory manager.
-- block "To" options for SPG
-***************************************************************************************/
-
-/* $Id: StockLocTransferReceive.php 6808 2014-08-11 21:27:11Z agaluski $*/
 /* Inventory Transfer - Receive */
 
 include('includes/DefineSerialItems.php');
@@ -21,15 +13,13 @@ include('includes/header.inc');
 
 include('includes/SQL_CommonFunctions.inc');
 
-// RICARD: later on we find who is using this script to block "To" locations if it's SPG or SPG Support
-include('includes/KLRoles.inc');
-
 if(isset($_GET['NewTransfer'])) {
 	unset($_SESSION['Transfer']);
 }
 if(isset($_SESSION['Transfer']) and $_SESSION['Transfer']->TrfID == '') {
 	unset($_SESSION['Transfer']);
 }
+
 
 if(isset($_POST['ProcessTransfer'])) {
 /*Ok Time To Post transactions to Inventory Transfers, and Update Posted variable & received Qty's  to LocTransfers */
@@ -93,7 +83,7 @@ if(isset($_POST['ProcessTransfer'])) {
 					/* There must actually be some error this should never happen */
 					$QtyOnHandPrior = 0;
 				}
-				
+
 				/* Insert the stock movement for the stock going out of the from location */
 				$SQL = "INSERT INTO stockmoves (stockid,
 												type,
@@ -427,9 +417,7 @@ if(isset($_POST['ProcessTransfer'])) {
 				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('Unable to set the quantity received to the quantity shipped to cancel the balance on this transfer line');
 				$Result = DB_query($sql, $ErrMsg, $DbgMsg, true);
 				// send an email to the inventory manager about this cancellation (as can lead to employee fraud)
-// KL RICARD NEVER SEND THIS EMAIL
-//				if ($_SESSION['InventoryManagerEmail']!=''){
-				if (FALSE){
+				if($_SESSION['InventoryManagerEmail']!='') {
 					$ConfirmationText = _('Cancelled balance of transfer'). ': ' . $_SESSION['Transfer']->TrfID .
 										"\r\n" . _('From Location') . ': ' . $_SESSION['Transfer']->StockLocationFrom .
 										"\r\n" . _('To Location') . ': ' . $_SESSION['Transfer']->StockLocationTo .
@@ -647,12 +635,7 @@ if(isset($_SESSION['Transfer'])) {
 		if($myrow['loccode'] == $_POST['RecLocation']) {
 			echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		} else {
-			// RICARD let's find who is using this script to block "To" locations if it's SPG ot SPG Support
-			if ($KL_SPGSeniorOrSupport OR $KL_SPGJunior){
-			}else{
-				// if user is not SPG or SPG Support, then show all options.
-				echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
-			}
+			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		}
 	}
 	echo '</select>

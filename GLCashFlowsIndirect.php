@@ -76,10 +76,8 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 		$Title, '" /> ', // Icon title.
 		$Title, '<br />', // Page title, reporting statement.
 		stripslashes($_SESSION['CompanyRecord']['coyname']), '<br />'; // Page title, reporting entity.
-	$Result = DB_query('SELECT lastdate_in_period FROM `periods` WHERE `periodno`=' . $_POST['PeriodFrom']);
-	$PeriodFromName = DB_fetch_array($Result);
-	$Result = DB_query('SELECT lastdate_in_period FROM `periods` WHERE `periodno`=' . $_POST['PeriodTo']);
-	$PeriodToName = DB_fetch_array($Result);
+	$PeriodFromName = DB_fetch_array(DB_query('SELECT lastdate_in_period FROM `periods` WHERE `periodno`=' . $_POST['PeriodFrom']));
+	$PeriodToName = DB_fetch_array(DB_query('SELECT lastdate_in_period FROM `periods` WHERE `periodno`=' . $_POST['PeriodTo']));
 	echo _('From'), ' ', MonthAndYearFromSQLDate($PeriodFromName['lastdate_in_period']), ' ', _('to'), ' ', MonthAndYearFromSQLDate($PeriodToName['lastdate_in_period']), '<br />'; // Page title, reporting period.
 	include_once('includes/CurrenciesArray.php');// Array to retrieve currency name.
 	echo _('All amounts stated in'), ': ', _($CurrencyName[$_SESSION['CompanyRecord']['currencydefault']]), '</p>';// Page title, reporting presentation currency and level of rounding used.
@@ -99,8 +97,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 	// Gets the net profit for the period GL account:
 	if(!isset($_SESSION['PeriodProfitAccount'])) {
 		$_SESSION['PeriodProfitAccount'] = '';
-		$Result = DB_query("SELECT confvalue FROM `config` WHERE confname ='PeriodProfitAccount'");
-		$MyRow = DB_fetch_array($Result);
+		$MyRow = DB_fetch_array(DB_query("SELECT confvalue FROM `config` WHERE confname ='PeriodProfitAccount'"));
 		if($MyRow) {
 			$_SESSION['PeriodProfitAccount'] = $MyRow['confvalue'];
 		}
@@ -470,8 +467,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 					INNER JOIN chartdetails ON chartmaster.accountcode=chartdetails.accountcode
 					INNER JOIN accountgroups ON chartmaster.group_=accountgroups.groupname
 				WHERE accountgroups.pandl=1";
-		$Result1 = DB_query($Sql);
-		$MyRow1 = DB_fetch_array($Result1);
+		$MyRow1 = DB_fetch_array(DB_query($Sql));
 		echo	colDebitCredit($MyRow1['ActualProfit']),
 				colDebitCredit($MyRow1['LastProfit']),
 			'</tr>
@@ -488,8 +484,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 				WHERE accountgroups.pandl=0
 					AND chartdetails.accountcode!='" . $_SESSION['PeriodProfitAccount'] . "'
 					AND chartdetails.accountcode!='" . $_SESSION['RetainedEarningsAccount'] . "'";// Gets retained earnings by the complement method to include differences. The complement method: Changes(retained earnings) = -Changes(other accounts).
-		$Result2 = DB_query($Sql);
-		$MyRow2 = DB_fetch_array($Result2);
+		$MyRow2 = DB_fetch_array(DB_query($Sql));
 		echo	colDebitCredit($MyRow2['ActualRetained'] - $MyRow1['ActualProfit']),
 				colDebitCredit($MyRow2['LastRetained'] - $MyRow1['LastProfit']),
 			'</tr><tr>',

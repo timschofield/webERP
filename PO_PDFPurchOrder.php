@@ -2,11 +2,6 @@
 
 /* $Id: PO_PDFPurchOrder.php 6941 2014-10-26 23:18:08Z daintree $*/
 
-/*****************************************************************************************
-KL RICARD MODIFICATIONS:
-- Print webERP code and supplier code if possible
-*****************************************************************************************/
-
 include('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/DefinePOClass.php');
@@ -264,18 +259,16 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 			} else {
 				$DisplayLineTotal = '----';
 			}
-// RICARD KL MODIFICATION 
+			/* If the supplier item code is set then use this to display on the PO rather than the businesses item code */
 			if (mb_strlen($POLine['suppliers_partno'])>0){
-				$Desc = $POLine['suppliers_partno'] . ' ' . $POLine['itemdescription'];
+				$ItemCode = $POLine['suppliers_partno'];
 			} else {
-				$Desc = $POLine['itemdescription'];
+				$ItemCode = $POLine['itemcode'];
 			}
-			$ItemCode = $POLine['itemcode'];
 			$OrderTotal += ($POLine['unitprice'] * $POLine['quantityord']);
 
 			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column1->x, $YPos, $FormDesign->Data->Column1->Length, $FormDesign->Data->Column1->FontSize, $ItemCode, 'left');
-			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column2->x, $YPos, $FormDesign->Data->Column2->Length, $FormDesign->Data->Column2->FontSize, $Desc, 'left');
-// END RICARD KL MODIFICATION 
+			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column2->x, $YPos, $FormDesign->Data->Column2->Length, $FormDesign->Data->Column2->FontSize, $POLine['itemdescription'], 'left');
 			while (mb_strlen($LeftOvers) > 1) {
 				$YPos -= $line_height;
 				if ($YPos - $line_height <= $Bottom_Margin) {

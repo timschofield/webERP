@@ -9,8 +9,6 @@ $BookMark = 'AuthorizeExpense';
 include('includes/header.inc');
 
 include('includes/SQL_CommonFunctions.inc');
-include('includes/KLDefines.php');
-
 
 if(isset($_POST['SelectedTabs'])) {
 	$SelectedTabs = mb_strtoupper($_POST['SelectedTabs']);
@@ -123,14 +121,12 @@ if(isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) OR
 				$type = 2;
 				$AccountFrom = $myrow['glaccountassignment'];
 				$AccountTo = $myrow['glaccountpcash'];
-                		$TagTo = 0;
-				$HutangPPH23 = 0;
+                $TagTo = 0;
 			}else{
 				$type = 1;
 				$Amount = -$Amount;
 				$AccountFrom = $myrow['glaccountpcash'];
 				$SQLAccExp = "SELECT glaccount,
-									klretentionpph23,
 									tag
 								FROM pcexpenses
 								WHERE codeexpense = '".$myrow['codeexpense']."'";
@@ -138,11 +134,6 @@ if(isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) OR
 				$myrowAccExp = DB_fetch_array($ResultAccExp);
 				$AccountTo = $myrowAccExp['glaccount'];
 				$TagTo = $myrowAccExp['tag'];
-				if ($myrowAccExp['klretentionpph23'] != 0){
-					$HutangPPH23 = $Amount * ($myrowAccExp['klretentionpph23']/100);
-				}else{
-					$HutangPPH23 = 0;
-				}
 			}
 
 			//get typeno
@@ -200,45 +191,14 @@ if(isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) OR
 										'".$PeriodNo."',
 										'".$AccountTo."',
 										'" . $Narrative . "',
-										'". ($Amount + $HutangPPH23)."',
+										'".$Amount."',
 										0,
 										'',
 										'" . $TagTo ."')";
 
 			$ResultTo = DB_query($sqlTo,'', '', true);
 
-			// if there's a retention, we account for it
-			if ($HutangPPH23 != 0){
-				$sqlHutangPPH23="INSERT INTO `gltrans` (`counterindex`,
-												`type`,
-												`typeno`,
-												`chequeno`,
-												`trandate`,
-												`periodno`,
-												`account`,
-												`narrative`,
-												`amount`,
-												`posted`,
-												`jobref`,
-												`tag`)
-										VALUES (NULL,
-												'".$type."',
-												'".$typeno."',
-												0,
-												'".$myrow['date']."',
-												'".$PeriodNo."',
-												'". ACCOUNT_HUTANG_PPH23 ."',
-												'". $Narrative ."',
-												'".-$HutangPPH23."',
-												0,
-												'',
-												'" . $TagTo ."')";
-
-				$ResultHutangPPH23 = DB_Query($sqlHutangPPH23,'', '', true);
-				
-			}
-			
-			if ($myrow['codeexpense'] == 'ASSIGNCASH'){
+			if($myrow['codeexpense'] == 'ASSIGNCASH') {
 			// if it's a cash assignation we need to updated banktrans table as well.
 				$ReceiptTransNo = GetNextTransNo( 2, $db);
 				$SQLBank= "INSERT INTO banktrans (transno,

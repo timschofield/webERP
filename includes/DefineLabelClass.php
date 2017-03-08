@@ -1,6 +1,6 @@
 <?php
 define('MAX_LINES_PER_LABEL', 5);
-define('LABELS_FILE', $PathPrefix.'companies/'.$_SESSION['DatabaseName'].'/FormDesigns/labels.xml');
+define('LABELS_FILE', $_SESSION['reports_dir'] . '/labels.xml');
 
 /**
  *  These tags contains the more general data of the labels

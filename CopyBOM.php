@@ -4,7 +4,7 @@
  *
  * Script to duplicate BoMs.
  */
-/* $Id: CopyBOM.php 7691 2016-12-02 07:56:18Z exsonqu $*/
+/* $Id: CopyBOM.php 7735 2017-02-25 21:13:27Z daintree $*/
 
 include('includes/session.inc');
 
@@ -130,7 +130,6 @@ if(isset($_POST['Submit'])) {
 							quantity,
 							autoissue,
 							remark,
-							digitals,
 							digitals
 					FROM bom
 					WHERE parent='".$StockID."';";

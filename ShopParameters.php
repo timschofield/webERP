@@ -225,14 +225,14 @@ echo '<tr>
 echo '<tr>
 		<td>' . _('Shop Title') . ':</td>
 		<td><input type="text" name="X_ShopTitle" required="required" size="40" maxlength="40" value="' . $_SESSION['ShopTitle'] . '" /></td>
-		<td>' . _('Enter the title of the shop that will be displayed on the main Online Shop page. Useful for SEO purposes.') . '</td>
+		<td>' . _('Enter the title of the shop that will be displayed on the main webSHOP page. Useful for SEO purposes.') . '</td>
 	</tr>';
 
 //Shop Manager Email
 echo '<tr>
 		<td>' . _('Shop Manager Email') . ':</td>
 		<td><input type="email" name="X_ShopManagerEmail" required="required" size="50" maxlength="50" value="' . $_SESSION['ShopManagerEmail'] . '" /></td>
-		<td>' . _('Enter the email address of the Online Shop manager.') . '</td>
+		<td>' . _('Enter the email address of the webSHOP manager.') . '</td>
 	</tr>';
 
 // Shop Customer
@@ -307,7 +307,7 @@ if ($_SESSION['ShopShowQOHColumn'] == '1') {
 	echo '<option value="1">' . _('Show') . '</option>';
 }
 echo '</select></td>
-		<td>' . _('Shows / Hides the QOH column Select Hide if you do not want Online Shop visitors to know how many stock do you currently hold.') . '</td>
+		<td>' . _('Shows / Hides the QOH column Select Hide if you do not want webSHOP visitors to know how many stock do you currently hold.') . '</td>
 	</tr>';
 
 if (mb_strlen($_SESSION['ShopStockLocations'])>1){
@@ -327,7 +327,7 @@ while ($LocRow = DB_fetch_array($LocResult)){
 	}
 }
 echo '</select></td>
-		<td>' . _('Select one or more stock locations (warehouses) that Online Shop should consider stock for the purposes of displaying the on hand quantity for customer information') . '</td>
+		<td>' . _('Select one or more stock locations (warehouses) that webSHOP should consider stock for the purposes of displaying the on hand quantity for customer information') . '</td>
 	</tr>';
 
 echo '<tr>
@@ -375,7 +375,7 @@ foreach($FreightMethods as $FreightMethod){
 	}
 }
 echo '</select></td>
-		<td>' . _('Select the freight calculation method to use for the Online Shop') . '</td>
+		<td>' . _('Select the freight calculation method to use for the webSHOP') . '</td>
 	</tr>';
 
 

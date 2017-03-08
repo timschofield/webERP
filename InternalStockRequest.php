@@ -109,7 +109,6 @@ if (isset($_POST['Submit']) AND (!empty($_SESSION['Request']->LineItems))) {
 			$Result = DB_query($LineSQL,$ErrMsg,$DbgMsg,true);
 		}
 
-/* RICARD KL: DO not send these emails any more, as authorization is done automatically every day. Commented next 20 lines
 		$EmailSQL="SELECT email
 					FROM www_users, departments
 					WHERE departments.authoriser = www_users.userid
@@ -129,7 +128,7 @@ if (isset($_POST['Submit']) AND (!empty($_SESSION['Request']->LineItems))) {
 			}
 
 		}
-*/
+
 	}
 	DB_Txn_Commit();
 	prnMsg( _('The internal stock request has been entered and now needs to be authorised'), 'success');

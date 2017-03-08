@@ -216,27 +216,14 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 			 * we are not in session (i.e. before login)
 			 */
 			if (empty($_SESSION['LogoFile'])) {
-				include('includes/KLDefines.php');
-				include('includes/KLRoles.inc');
-				if (CheckItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_KAPAL_LAUT)){
-					$LogoFile = 'companies/' .  $_SESSION['DatabaseName'] . '/LogoKL.png';
-				} else if (CheckItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_BLINK)){
-					$LogoFile = 'companies/' .  $_SESSION['DatabaseName'] . '/LogoBlink.png';
-				} else if (CheckItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_OUTLET)){
-					$LogoFile = 'companies/' .  $_SESSION['DatabaseName'] . '/LogoOutlet.png';
-				} else {
-					if(strpos($_SERVER['HTTP_HOST'],"bumibiru")){
-						$LogoFile = 'companies/' .  $_SESSION['DatabaseName'] . '/LogoPTBB.png';
-					}elseif(strpos($_SERVER['HTTP_HOST'],"adu")){
-						$LogoFile = 'companies/' .  $_SESSION['DatabaseName'] . '/LogoPTADU.png';
-					}else{
-						$LogoFile = 'companies/' .  $_SESSION['DatabaseName'] . '/LogowebERP.png';
-					}
-				}
-				if (file_exists($LogoFile)) {
-					$_SESSION['LogoFile'] = $LogoFile;
+				/* find a logo in companies/CompanyDir */
+				if (file_exists($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/logo.png')) {
+					$_SESSION['LogoFile'] = 'companies/' .  $_SESSION['DatabaseName'] . '/logo.png';
+				} elseif (file_exists($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/logo.jpg')) {
+					$_SESSION['LogoFile'] = 'companies/' .  $_SESSION['DatabaseName'] . '/logo.jpg';
 				}
 			}
+
 
 			if(!isset($_SESSION['DB_Maintenance'])){
 				return  UL_CONFIGERR;
@@ -286,12 +273,4 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 	return   UL_OK;		    /* All is well */
 }
 
-function CheckItemInList($Item, $List){
-	// http://www.php.net/manual/en/function.strpos.php for details on ===	
-	if (strpos($List, $Item) === FALSE){
-		return false;
-	}else{
-		return true;
-	}
-}
 ?>
