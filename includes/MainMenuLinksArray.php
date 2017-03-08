@@ -306,7 +306,8 @@ $MenuItems['stock']['Transactions']['Caption'] = array(	_('Receive Purchase Orde
 														_('Enter Stock Counts'),
 														_('Create a New Internal Stock Request'),
 														_('Authorise Internal Stock Requests'),
-														_('Fulfill Internal Stock Requests'));
+														_('Fulfill Internal Stock Requests'),
+														_('Returned Items Maintenance'));
 
 $MenuItems['stock']['Transactions']['URL'] = array(	'/PO_SelectOSPurchOrder.php',
 													'/StockTransfers.php?New=Yes',
@@ -322,7 +323,8 @@ $MenuItems['stock']['Transactions']['URL'] = array(	'/PO_SelectOSPurchOrder.php'
 													'/StockCounts.php',
 													'/InternalStockRequest.php?New=Yes',
 													'/InternalStockRequestAuthorisation.php',
-													'/InternalStockRequestFulfill.php');
+													'/InternalStockRequestFulfill.php',
+													'/ReturnedItems.php');
 
 $MenuItems['stock']['Reports']['Caption'] = array(	_('Serial Item Research Tool'),
 													_('KL Print Price Labels'),
