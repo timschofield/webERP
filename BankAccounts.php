@@ -1,5 +1,5 @@
 <?php
-/* $Id: BankAccounts.php 7092 2015-01-22 14:17:10Z rchacon $*/
+/* $Id: BankAccounts.php 7737 2017-03-07 18:01:30Z turbopt $*/
 /* This script defines the general ledger code for bank accounts and specifies that bank transactions be created for these accounts for the purposes of reconciliation. */
 
 include('includes/session.inc');
@@ -404,7 +404,7 @@ if (!isset($_POST['DefAccount']) OR $_POST['DefAccount']==''){
 }
 
 if (isset($SelectedBankAccount)) {
-	$result = DB_query("SELECT invoice FROM bankaccounts where accountcode =" . $SelectedBankAccount );
+	$result = DB_query("SELECT invoice FROM bankaccounts where accountcode = '" . $SelectedBankAccount . "'" );
 	while ($myrow = DB_fetch_array($result)) {
 		if ($myrow['invoice']== 1) {
 			echo '<option selected="selected" value="1">' . _('Fall Back Default') . '</option>
