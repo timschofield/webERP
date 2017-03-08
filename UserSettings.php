@@ -7,6 +7,7 @@ $Title = _('User Settings');
 $ViewTopic = 'GettingStarted';
 $BookMark = 'UserSettings';
 include('includes/header.inc');
+include('includes/KLRoles.inc');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/user.png" title="',// Icon image.
@@ -27,10 +28,6 @@ if (isset($_POST['Modify'])) {
 	ie the page has called itself with some user input */
 
 	//first off validate inputs sensible
-	if ($_POST['DisplayRecordsMax'] <= 0){
-		$InputError = 1;
-		prnMsg(_('The Maximum Number of Records on Display entered must not be negative') . '. ' . _('0 will default to system setting'),'error');
-	}
 
 	//!!!for the demo only - enable this check so password is not changed
 	if ($AllowDemoMode AND $_POST['Password'] != ''){
@@ -60,14 +57,19 @@ if (isset($_POST['Modify'])) {
 	if ($InputError != 1) {
 		// no errors
 		if ($UpdatePassword != 'Y'){
-			$sql = "UPDATE www_users
-					SET displayrecordsmax='" . $_POST['DisplayRecordsMax'] . "',
-						theme='" . $_POST['Theme'] . "',
-						language='" . $_POST['Language'] . "',
-						email='". $_POST['email'] ."',
-						pdflanguage='" . $_POST['PDFLanguage'] . "'
-					WHERE userid = '" . $_SESSION['UserID'] . "'";
-
+			if ($KL_SystemAdmin){
+				$sql = "UPDATE www_users
+						SET displayrecordsmax='" . $_POST['DisplayRecordsMax'] . "',
+							theme='" . $_POST['Theme'] . "',
+							language='" . $_POST['Language'] . "',
+							email='". $_POST['email'] ."',
+							pdflanguage='" . $_POST['PDFLanguage'] . "'
+						WHERE userid = '" . $_SESSION['UserID'] . "'";
+			}else{
+				$sql = "UPDATE www_users
+						SET email='". $_POST['email'] ."'
+						WHERE userid = '" . $_SESSION['UserID'] . "'";
+			}
 			$ErrMsg =  _('The user alterations could not be processed because');
 			$DbgMsg = _('The SQL that was used to update the user and failed was');
 
@@ -75,15 +77,21 @@ if (isset($_POST['Modify'])) {
 
 			prnMsg( _('The user settings have been updated') . '. ' . _('Be sure to remember your password for the next time you login'),'success');
 		} else {
-			$sql = "UPDATE www_users
-				SET displayrecordsmax='" . $_POST['DisplayRecordsMax'] . "',
-					theme='" . $_POST['Theme'] . "',
-					language='" . $_POST['Language'] . "',
-					email='". $_POST['email'] ."',
-					pdflanguage='" . $_POST['PDFLanguage'] . "',
-					password='" . CryptPass($_POST['Password']) . "'
-				WHERE userid = '" . $_SESSION['UserID'] . "'";
-
+			if ($KL_SystemAdmin){
+				$sql = "UPDATE www_users
+						SET displayrecordsmax='" . $_POST['DisplayRecordsMax'] . "',
+							theme='" . $_POST['Theme'] . "',
+							language='" . $_POST['Language'] . "',
+							email='". $_POST['email'] ."',
+							pdflanguage='" . $_POST['PDFLanguage'] . "',
+							password='" . CryptPass($_POST['Password']) . "'
+						WHERE userid = '" . $_SESSION['UserID'] . "'";
+			}else{
+				$sql = "UPDATE www_users
+						SET email='". $_POST['email'] ."',
+							password='" . CryptPass($_POST['Password']) . "'
+						WHERE userid = '" . $_SESSION['UserID'] . "'";
+			}
 			$ErrMsg =  _('The user alterations could not be processed because');
 			$DbgMsg = _('The SQL that was used to update the user and failed was');
 
@@ -92,12 +100,14 @@ if (isset($_POST['Modify'])) {
 			prnMsg(_('The user settings have been updated'),'success');
 		}
 	  // update the session variables to reflect user changes on-the-fly
-		$_SESSION['DisplayRecordsMax'] = $_POST['DisplayRecordsMax'];
-		$_SESSION['Theme'] = trim($_POST['Theme']); /*already set by session.inc but for completeness */
-		$Theme = $_SESSION['Theme'];
-		$_SESSION['Language'] = trim($_POST['Language']);
-		$_SESSION['PDFLanguage'] = $_POST['PDFLanguage'];
-		include ('includes/LanguageSetup.php'); // After last changes in LanguageSetup.php, is it required to update?
+		if ($KL_SystemAdmin){
+			$_SESSION['DisplayRecordsMax'] = $_POST['DisplayRecordsMax'];
+			$_SESSION['Theme'] = trim($_POST['Theme']); /*already set by session.inc but for completeness */
+			$Theme = $_SESSION['Theme'];
+			$_SESSION['Language'] = trim($_POST['Language']);
+			$_SESSION['PDFLanguage'] = $_POST['PDFLanguage'];
+			include ('includes/LanguageSetup.php'); // After last changes in LanguageSetup.php, is it required to update?
+		}
 	}
 }
 
@@ -122,48 +132,49 @@ echo '<tr>
 		<td>' . $_SESSION['UsersRealName'] . '
 		<input type="hidden" name="RealName" value="'.$_SESSION['UsersRealName'].'" /></td></tr>';
 
-echo '<tr>
-	<td>' . _('Maximum Number of Records to Display') . ':</td>
-	<td><input type="text" class="integer" required="required" title="'._('The input must be positive integer').'" name="DisplayRecordsMax" size="3" maxlength="3" value="' . $_POST['DisplayRecordsMax'] . '"  /></td>
-	</tr>';
+if ($KL_SystemAdmin){
+	echo '<tr>
+		<td>' . _('Maximum Number of Records to Display') . ':</td>
+		<td><input type="text" class="integer" required="required" title="'._('The input must be positive integer').'" name="DisplayRecordsMax" size="3" maxlength="3" value="' . $_POST['DisplayRecordsMax'] . '"  /></td>
+		</tr>';
 
-// Select language:
-echo '<tr>
-	<td>', _('Language'), ':</td>
-	<td><select name="Language">';
-if(!isset($_POST['Language'])) {
-	$_POST['Language'] = $_SESSION['Language'];
-}
-foreach($LanguagesArray as $LanguageEntry => $LanguageName) {
-	echo '<option ';
-	if(isset($_POST['Language']) AND $_POST['Language'] == $LanguageEntry) {
-		echo 'selected="selected" ';
+	// Select language:
+	echo '<tr>
+		<td>', _('Language'), ':</td>
+		<td><select name="Language">';
+	if(!isset($_POST['Language'])) {
+		$_POST['Language'] = $_SESSION['Language'];
 	}
-	echo 'value="', $LanguageEntry, '">', $LanguageName['LanguageName'], '</option>';
-}
-echo '</select></td>
-	</tr>';
+	foreach($LanguagesArray as $LanguageEntry => $LanguageName) {
+		echo '<option ';
+		if(isset($_POST['Language']) AND $_POST['Language'] == $LanguageEntry) {
+			echo 'selected="selected" ';
+		}
+		echo 'value="', $LanguageEntry, '">', $LanguageName['LanguageName'], '</option>';
+	}
+	echo '</select></td>
+		</tr>';
 
-// Select theme:
-echo '<tr>
-	<td>' . _('Theme') . ':</td>
-	<td><select name="Theme">';
+	// Select theme:
+	echo '<tr>
+		<td>' . _('Theme') . ':</td>
+		<td><select name="Theme">';
 
-$ThemeDirectories = scandir('css/');
+	$ThemeDirectories = scandir('css/');
 
 
-foreach ($ThemeDirectories as $ThemeName) {
+	foreach ($ThemeDirectories as $ThemeName) {
 
-	if (is_dir('css/' . $ThemeName) AND $ThemeName != '.' AND $ThemeName != '..' AND $ThemeName != '.svn'){
+		if (is_dir('css/' . $ThemeName) AND $ThemeName != '.' AND $ThemeName != '..' AND $ThemeName != '.svn'){
 
-		if ($_SESSION['Theme'] == $ThemeName){
-			echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName . '</option>';
-		} else {
-			echo '<option value="' . $ThemeName . '">' . $ThemeName . '</option>';
+			if ($_SESSION['Theme'] == $ThemeName){
+				echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName . '</option>';
+			} else {
+				echo '<option value="' . $ThemeName . '">' . $ThemeName . '</option>';
+			}
 		}
 	}
 }
-
 if (!isset($_POST['PasswordCheck'])) {
 	$_POST['PasswordCheck']='';
 }
@@ -198,21 +209,22 @@ echo '<td><input type="email" name="email" size="40" value="' . $_POST['email'] 
 if (!isset($_POST['PDFLanguage'])){
 	$_POST['PDFLanguage']=$_SESSION['PDFLanguage'];
 }
+if ($KL_SystemAdmin){
+	echo '<tr>
+			<td>' . _('PDF Language Support') . ': </td>
+			<td><select name="PDFLanguage">';
 
-echo '<tr>
-		<td>' . _('PDF Language Support') . ': </td>
-		<td><select name="PDFLanguage">';
-
-for($i=0;$i<count($PDFLanguages);$i++){
-	if ($_POST['PDFLanguage']==$i){
-		echo '<option selected="selected" value="' . $i .'">' . $PDFLanguages[$i] . '</option>';
-	} else {
-		echo '<option value="' . $i .'">' . $PDFLanguages[$i]. '</option>';
+	for($i=0;$i<count($PDFLanguages);$i++){
+		if ($_POST['PDFLanguage']==$i){
+			echo '<option selected="selected" value="' . $i .'">' . $PDFLanguages[$i] . '</option>';
+		} else {
+			echo '<option value="' . $i .'">' . $PDFLanguages[$i]. '</option>';
+		}
 	}
+	echo '</select></td>
+		</tr>';
 }
-echo '</select></td>
-	</tr>
-	</table>
+echo '</table>
 	<br />
 	<div class="centre"><input type="submit" name="Modify" value="' . _('Modify') . '" /></div>
     </div>

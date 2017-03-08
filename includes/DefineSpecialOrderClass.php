@@ -1,5 +1,5 @@
 <?php
-/* $Id: DefineSpecialOrderClass.php 7736 2017-02-27 20:30:00Z turbopt $*/
+/* $Id: DefineSpecialOrderClass.php 5768 2012-12-20 08:38:22Z daintree $*/
 /* Definition of the SpecialOrder class to hold all the information for a special quote/order and delivery
 */
 
@@ -46,7 +46,7 @@ Class SpecialOrder {
 	}
 
 
-	function remove_from_order($LineNo){
+	function remove_from_order(&$LineNo){
 		 unset($this->LineItems[$LineNo]);
 	}
 

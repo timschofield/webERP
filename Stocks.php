@@ -1,5 +1,9 @@
 <?php
 /* $Id: Stocks.php 7494 2016-04-25 09:53:53Z daintree $ */
+/**************************************************************************************
+KL RICARD MODIFICATIONS:
+- management of the extra KL fileds in stockmaster
+***************************************************************************************/
 
 include('includes/session.inc');
 $Title = _('Item Maintenance');
@@ -192,6 +196,26 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'NetWeight';
 		$i++;
 	}
+// KL RICARD: Add length, Width, Height and Units_dimension
+	if (filter_number_format($_POST['length'])<0) {
+		$InputError = 1;
+		prnMsg(_('The length of the item must be a positive number'),'error');
+		$Errors[$i] = 'length';
+		$i++;
+	}
+	if (filter_number_format($_POST['Width'])<0) {
+		$InputError = 1;
+		prnMsg(_('The width of the item must be a positive number'),'error');
+		$Errors[$i] = 'Width';
+		$i++;
+	}
+	if (filter_number_format($_POST['Height'])<0) {
+		$InputError = 1;
+		prnMsg(_('The height of the item must be a positive number'),'error');
+		$Errors[$i] = 'Height';
+		$i++;
+	}
+// END KL RICARD
 	if (!is_numeric(filter_number_format($_POST['EOQ']))) {
 		$InputError = 1;
 		prnMsg(_('The economic order quantity must be numeric'),'error');
@@ -261,12 +285,14 @@ if (isset($_POST['submit'])) {
 			/*first check on the changes being made we must disallow:
 			- changes from manufactured or purchased to Service, Assembly or Kitset if there is stock			- changes from manufactured, kitset or assembly where a BOM exists
 			*/
+			// KL Ricard: ADDED stockmaster.categoryid to QUERY
 			$sql = "SELECT mbflag,
 							controlled,
 							serialised,
 							materialcost+labourcost+overheadcost AS itemcost,
 							stockcategory.stockact,
 							stockcategory.wipact,
+							stockmaster.categoryid,
 							description,
 							longdescription
 					FROM stockmaster
@@ -281,8 +307,9 @@ if (isset($_POST['submit'])) {
 			$UnitCost = $myrow[3];
 			$OldStockAccount = $myrow[4];
 			$OldWIPAccount = $myrow[5];
-			$OldDescription = $myrow[6];
-			$OldLongDescription = $myrow[7];
+			$OldCategoryId = $myrow[6]; // KL Ricard: ADDED THIS line
+			$OldDescription = $myrow[7];
+			$OldLongDescription = $myrow[8];
 
 
 			$sql = "SELECT SUM(locstock.quantity)
@@ -410,8 +437,17 @@ if (isset($_POST['submit'])) {
 							controlled='" . $_POST['Controlled'] . "',
 							serialised='" . $_POST['Serialised']."',
 							perishable='" . $_POST['Perishable']."',
-							categoryid='" . $_POST['CategoryID'] . "',
-							units='" . $_POST['Units'] . "',
+							categoryid='" . $_POST['CategoryID'] . "', ";
+				// KL RICARD
+				if ($OldCategoryId != $_POST['CategoryID']){
+					$sql = $sql . "lastcategoryupdate='" . date('Y-m-d') . "', ";
+				}
+				$sql = $sql . "length='" . filter_number_format($_POST['length']) . "',
+							width='" . filter_number_format($_POST['Width']) . "',
+							height='" . filter_number_format($_POST['Height']) . "',
+							unitsdimension='" . $_POST['UnitsDimension'] . "', ";
+				// KL RICARD END MODIF AND BEGINNING OF NEXT LINE TO CONTACTENATE THE STRINGS
+				$sql = $sql . "units='" . $_POST['Units'] . "',
 							mbflag='" . $_POST['MBFlag'] . "',
 							eoq='" . filter_number_format($_POST['EOQ']) . "',
 							volume='" . filter_number_format($_POST['Volume']) . "',
@@ -608,10 +644,13 @@ if (isset($_POST['submit'])) {
 				$i++;
 			} else {
 				DB_Txn_Begin();
+			    // KL Ricard: ADDED lastcategoryupdate, to query and '" . date('Y-m-d') . "', to values
+				// Added fields length, width, height and unitsdimension
 				$sql = "INSERT INTO stockmaster (stockid,
 												description,
 												longdescription,
 												categoryid,
+												lastcategoryupdate,
 												units,
 												mbflag,
 												eoq,
@@ -622,6 +661,10 @@ if (isset($_POST['submit'])) {
 												volume,
 												grossweight,
 												netweight,
+												length,
+												width,
+												height,
+												unitsdimension,
 												barcode,
 												discountcategory,
 												taxcatid,
@@ -632,6 +675,7 @@ if (isset($_POST['submit'])) {
 								'" . $_POST['Description'] . "',
 								'" . $_POST['LongDescription'] . "',
 								'" . $_POST['CategoryID'] . "',
+								'" . date('Y-m-d') . "',
 								'" . $_POST['Units'] . "',
 								'" . $_POST['MBFlag'] . "',
 								'" . filter_number_format($_POST['EOQ']) . "',
@@ -642,6 +686,10 @@ if (isset($_POST['submit'])) {
 								'" . filter_number_format($_POST['Volume']) . "',
 								'" . filter_number_format($_POST['GrossWeight']) . "',
 								'" . filter_number_format($_POST['NetWeight']) . "',
+								'" . filter_number_format($_POST['length']) . "',
+								'" . filter_number_format($_POST['Width']) . "',
+								'" . filter_number_format($_POST['Height']) . "',
+								'" . $_POST['UnitsDimension']. "',
 								'" . $_POST['BarCode'] . "',
 								'" . $_POST['DiscountCategory'] . "',
 								'" . $_POST['TaxCat'] . "',
@@ -718,8 +766,9 @@ if (isset($_POST['submit'])) {
 						unset($_POST['Description']);
 						unset($_POST['LongDescription']);
 						unset($_POST['EOQ']);
-// Leave Category ID set for ease of batch entry
-//						unset($_POST['CategoryID']);
+// KL RICARD: Next Line Commented on original version. Uncommented by Ricard
+
+						unset($_POST['CategoryID']);
 						unset($_POST['Units']);
 						unset($_POST['MBFlag']);
 						unset($_POST['Discontinued']);
@@ -729,6 +778,12 @@ if (isset($_POST['submit'])) {
 						unset($_POST['Volume']);
 						unset($_POST['GrossWeight']);
 						unset($_POST['NetWeight']);
+// KL RICARD Added lines for new fields
+						unset($_POST['length']);
+						unset($_POST['Width']);
+						unset($_POST['Height']);
+						unset($_POST['UnitsDimension']);
+// KL RICARD END Added lines for new fields
 						unset($_POST['BarCode']);
 						unset($_POST['ReorderLevel']);
 						unset($_POST['DiscountCategory']);
@@ -876,6 +931,12 @@ if (isset($_POST['submit'])) {
 		unset($_POST['Volume']);
 		unset($_POST['GrossWeight']);
 		unset($_POST['NetWeight']);
+// KL RICARD Added lines for new fields
+		unset($_POST['length']);
+		unset($_POST['Width']);
+		unset($_POST['Height']);
+		unset($_POST['UnitsDimension']);
+// KL RICARD END Added lines for new fields
 		unset($_POST['BarCode']);
 		unset($_POST['ReorderLevel']);
 		unset($_POST['DiscountCategory']);
@@ -925,7 +986,7 @@ if (!isset($StockID) OR $StockID=='' or isset($_POST['UpdateCategories'])) {
 	}
 
 } elseif (!isset($_POST['UpdateCategories']) AND $InputError!=1) { // Must be modifying an existing item and no changes made yet
-
+// KL RICARD added the new fields of dimensions
 	$sql = "SELECT stockid,
 					description,
 					longdescription,
@@ -940,6 +1001,10 @@ if (!isset($StockID) OR $StockID=='' or isset($_POST['UpdateCategories'])) {
 					volume,
 					grossweight,
 					netweight,
+					length,
+					width,
+					height,
+					unitsdimension,
 					barcode,
 					discountcategory,
 					taxcatid,
@@ -966,6 +1031,10 @@ if (!isset($StockID) OR $StockID=='' or isset($_POST['UpdateCategories'])) {
 	$_POST['Volume']  = $myrow['volume'];
 	$_POST['GrossWeight']  = $myrow['grossweight'];
 	$_POST['NetWeight']  = $myrow['netweight'];
+	$_POST['length']  = $myrow['length'];
+	$_POST['Width']  = $myrow['width'];
+	$_POST['Height']  = $myrow['height'];
+	$_POST['UnitsDimension']  = $myrow['unitsdimension'];
 	$_POST['BarCode']  = $myrow['barcode'];
 	$_POST['DiscountCategory']  = $myrow['discountcategory'];
 	$_POST['TaxCat'] = $myrow['taxcatid'];
@@ -1123,6 +1192,21 @@ if (!isset($_POST['GrossWeight']) OR $_POST['GrossWeight']==''){
 if (!isset($_POST['NetWeight']) OR $_POST['NetWeight']==''){
 	$_POST['NetWeight']=0;
 }
+// KL RICARD
+if (!isset($_POST['length']) OR $_POST['length']==''){
+	$_POST['length']=0;
+}
+if (!isset($_POST['Width']) OR $_POST['Width']==''){
+	$_POST['Width']=0;
+}
+if (!isset($_POST['Height']) OR $_POST['Height']==''){
+	$_POST['Height']=0;
+}
+if (!isset($_POST['UnitsDimension']) OR $_POST['UnitsDimension']==''){
+	$_POST['UnitsDimension']='mm';
+}
+// KL RICARD END
+
 if (!isset($_POST['Controlled']) OR $_POST['Controlled']==''){
 	$_POST['Controlled']=0;
 }
@@ -1151,20 +1235,51 @@ echo '<tr>
 		<td><input ' . (in_array('EOQ',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="EOQ" size="12" maxlength="10" value="' . locale_number_format($_POST['EOQ'],'Variable') . '" /></td></tr>';
 
 echo '<tr>
-		<td>' . _('Packaged Volume (metres cubed)') . ':</td>
-		<td><input ' . (in_array('Volume',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="Volume" size="12" maxlength="10" value="' . locale_number_format($_POST['Volume'],'Variable') . '" /></td>
+		<td>' . _('Packaged Volume (m3)') . ':</td>
+		<td><input ' . (in_array('Volume',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="Volume" size="12" maxlength="10" value="' . locale_number_format($_POST['Volume'],'Variable') . '" />
+		<i>' .  _('Volume of the shipping box containing the item in m3.') . '</i></td>
 	</tr>';
+echo '<tr>
+		<td>' . _('Packaged Gross Weight (KGs)') . ':</td><td><input ' . (in_array('GrossWeight',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="GrossWeight" size="12" maxlength="10" value="' . locale_number_format($_POST['GrossWeight'],'Variable') . '" />
+		<i>' .  _('Weight of the item + shipping box in KG.') . '</i></td>
+	</tr>';
+echo '<tr>
+		<td>' . _('Net Weight (KGs)') . ':</td><td><input ' . (in_array('NetWeight',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="NetWeight" size="12" maxlength="10" value="' . locale_number_format($_POST['NetWeight'],'Variable') . '" />
+		<i>' .  _('Weight of the item (only) in KG.') . '</i></td>
+	</tr>';
+// KL RICARD DIMENSION FIELDS	
+echo '<tr>
+		<td>' . _('Units of Dimension') . ':</td>
+		<td><select ' . (in_array('Description',$Errors) ?  'class="selecterror"' : '' ) .'  name="UnitsDimension">';
+
+$sql = "SELECT unitname FROM unitsofdimension ORDER by unitname";
+$UODResult = DB_query($sql);
+
+if (!isset($_POST['UnitsDimension'])) {
+	$UODrow['unitname']=_('mm');
+}
+while( $UODrow = DB_fetch_array($UODResult) ) {
+	 if (isset($_POST['UnitsDimension']) AND $_POST['UnitsDimension']==$UODrow['unitname']){
+		echo '<option selected="selected" value="' . $UODrow['unitname'] . '">' . $UODrow['unitname'] . '</option>';
+	 } else {
+		echo '<option value="' . $UODrow['unitname'] . '">' . $UODrow['unitname']  . '</option>';
+	 }
+}
+	
+echo '<tr>
+		<td>' . _('length') . ':</td><td><input ' . (in_array('length',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="length" size="12" maxlength="11" value="' . locale_number_format($_POST['length'],0) . '" />' . ' '. $_POST['UnitsDimension'] . '</td>
+	</tr>';
+echo '<tr>
+		<td>' . _('Width') . ':</td><td><input ' . (in_array('Width',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="Width" size="12" maxlength="11" value="' . locale_number_format($_POST['Width'],0) . '" />' . ' '. $_POST['UnitsDimension'] . '</td>
+	</tr>';
+echo '<tr>
+		<td>' . _('Height') . ':</td><td><input ' . (in_array('Height',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="Height" size="12" maxlength="11" value="' . locale_number_format($_POST['Height'],0) . '" />' . ' '. $_POST['UnitsDimension'] . '</td>
+	</tr>';
+
+// KL RICARD DIMENSION FIELDS	END
 
 echo '<tr>
-		<td>' . _('Packaged Gross Weight (KGs)') . ':</td><td><input ' . (in_array('GrossWeight',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="GrossWeight" size="12" maxlength="10" value="' . locale_number_format($_POST['GrossWeight'],'Variable') . '" /></td>
-	</tr>';
-
-echo '<tr>
-		<td>' . _('Net Weight (KGs)') . ':</td><td><input ' . (in_array('NetWeight',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="NetWeight" size="12" maxlength="10" value="' . locale_number_format($_POST['NetWeight'],'Variable') . '" /></td>
-	</tr>';
-
-	echo '<tr>
-		<td>' . _('Units of Measure') . ':</td>
+		<td>' . _('Units of Measure of Item') . ':</td>
 		<td><select ' . (in_array('Description',$Errors) ?  'class="selecterror"' : '' ) .'  name="Units">';
 
 $sql = "SELECT unitname FROM unitsofmeasure ORDER by unitname";

@@ -2,6 +2,11 @@
 /* $Id: Z_ChangeGLAccountCode.php 6946 2014-10-27 07:30:11Z daintree $*/
 /* Utility to change a GL account code in all webERP. */
 
+/**************************************************************************************
+KL RICARD MODIFICATIONS:
+- change the account code also in KL tables using this field
+***************************************************************************************/
+
 include ('includes/session.inc');
 $Title = _('UTILITY PAGE Change A GL Account Code');// Screen identificator.
 $ViewTopic = 'SpecialUtilities';// Filename's id in ManualContents.php's TOC.
@@ -92,7 +97,7 @@ if(isset($_POST['ProcessGLAccountCode'])) {
 		ChangeFieldInTable("fixedassetcategories", "accumdepnact", $_POST['OldAccountCode'], $_POST['NewAccountCode'], $db);
 
 		ChangeFieldInTable("glaccountusers", "accountcode", $_POST['OldAccountCode'], $_POST['NewAccountCode'], $db);
-		
+
 		ChangeFieldInTable("gltrans", "account", $_POST['OldAccountCode'], $_POST['NewAccountCode'], $db);
 
 		ChangeFieldInTable("lastcostrollup", "stockact", $_POST['OldAccountCode'], $_POST['NewAccountCode'], $db);
@@ -124,6 +129,12 @@ if(isset($_POST['ProcessGLAccountCode'])) {
 		ChangeFieldInTable("workcentres", "overheadrecoveryact", $_POST['OldAccountCode'], $_POST['NewAccountCode'], $db);
 
 		DB_ReinstateForeignKeys();
+		// KL RICARD tables
+		ChangeFieldInTable("chartmasterPMA", "accountcode", $_POST['OldAccountCode'], $_POST['NewAccountCode'], $db);
+		ChangeFieldInTable("chartmasterPT", "accountcode", $_POST['OldAccountCode'], $_POST['NewAccountCode'], $db);
+		ChangeFieldInTable("chartmasterM", "accountcode", $_POST['OldAccountCode'], $_POST['NewAccountCode'], $db);
+		
+		DB_ReinstateForeignKeys($db);
 
 		$result = DB_Txn_Commit();
 

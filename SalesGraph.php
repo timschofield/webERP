@@ -300,6 +300,7 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 		exit;
 	}
 	if (DB_num_rows($SalesResult)==0){
+prnMsg($SQL);
 		prnMsg(_('There is not sales data for the criteria entered to graph'),'info');
 		include('includes/footer.inc');
 		exit;

@@ -1,0 +1,140 @@
+<?php
+/* $Id: SalesPeople.php 5785 2012-12-29 04:47:42Z daintree $*/
+
+include('includes/session.inc');
+$Title = _('KL Change of Retail Price -> Step 02');
+include('includes/header.inc');
+include('includes/KLBoards.php');
+include('includes/KLGeneralFunctions.php');
+include('includes/KLDefines.php');
+include('includes/KLPrices.php');
+
+	$SQL = "SELECT stockmaster.stockid, 
+				stockmaster.description,
+				(SELECT sum(quantity)
+					FROM locstock
+					WHERE locstock.stockid = stockmaster.stockid
+					AND loccode IN " . LIST_ALL_SHOPS . ") AS qohpos,
+				(SELECT sum(quantity)
+					FROM locstock
+					WHERE locstock.stockid = stockmaster.stockid
+					AND loccode IN " . LIST_CONSIGNMENT_LOCATIONS . ") AS qohconsignment,
+				(SELECT sum(quantity)
+					FROM locstock
+					WHERE locstock.stockid = stockmaster.stockid
+					AND loccode IN " . LIST_KANTOR_LOCATIONS . ") AS qohkantor,
+				(SELECT sum(quantity)
+					FROM locstock
+					WHERE locstock.stockid = stockmaster.stockid
+					AND loccode NOT IN " . LIST_KANTOR_LOCATIONS . "
+					AND loccode NOT IN " . LIST_ALL_SHOPS . "
+					AND loccode NOT IN " . LIST_CONSIGNMENT_LOCATIONS . ") AS qohotherlocs,
+				(SELECT SUM(loctransfers.shipqty-loctransfers.recqty) 
+						FROM loctransfers
+						WHERE loctransfers.stockid = stockmaster.stockid
+						AND loctransfers.shiploc IN " . LIST_ALL_SHOPS . ") AS intransitfromshops,
+				(SELECT SUM(loctransfers.shipqty-loctransfers.recqty) 
+						FROM loctransfers
+						WHERE loctransfers.stockid = stockmaster.stockid
+						AND loctransfers.shiploc IN " . LIST_CONSIGNMENT_LOCATIONS . ") AS intransitfromconsignment,
+				(SELECT SUM(loctransfers.shipqty-loctransfers.recqty) 
+						FROM loctransfers
+						WHERE loctransfers.stockid = stockmaster.stockid
+						AND loctransfers.shiploc IN " . LIST_KANTOR_LOCATIONS . ") AS intransitfromkantor,
+				(SELECT sum(quantity)
+					FROM locstock
+					WHERE locstock.stockid = stockmaster.stockid) AS qohtotal,
+				klchangeprice.counterpricechange,
+				klchangeprice.startprocessdate,
+				klchangeprice.pricechanged,
+				klchangeprice.newretailprice
+			FROM stockmaster, klchangeprice					
+			WHERE stockmaster.stockid = klchangeprice.stockid
+				AND klchangeprice.endprocessdate = '0000-00-00'";
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . _('Items ready to change Retail Price in KL kantor') . '</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th>' . _('#') . '</th>
+							<th>' . _('Code') . '</th>
+							<th>' . _('Description') . '</th>
+							<th>' . _('Start Date') . '</th>
+							<th>' . _('QOH KL Shops') . '</th>
+							<th>' . _('Transit From Kantor') . '</th>
+							<th>' . _('Transit To Kantor') . '</th>
+							<th>' . _('QOH Kantor') . '</th>
+							<th>' . _('QOH Others') . '</th>
+							<th>' . _('QOH Total') . '</th>
+							<th>' . _('New Retail Price') . '</th>
+							<th>' . _('Labels') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			if ($k == 1) {
+				echo '<tr class="EvenTableRows">';
+				$k = 0;
+			} else {
+				echo '<tr class="OddTableRows">';
+				$k = 1;
+			}
+			$CodeLink = '<a href="' . $RootPath . '/StockStatus.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+			if ((($myrow['qohkantor'] + $myrow['qohotherlocs']) == $myrow['qohtotal'])
+				AND ($myrow['intransitfromkantor'] == 0)
+				AND ($myrow['intransitfromconsignment'] == 0)
+				AND ($myrow['intransitfromshops'] == 0)
+				){
+				if ($myrow['pricechanged']==1){
+					// already changed the price, so now it's time to see if labels have been printed and finish the process
+					$NewPriceLink = locale_number_format($myrow['newretailprice'],0);
+					$NewLabelsPrinted = '<a href="' . $RootPath . '/KLChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $myrow['newretailprice'] .  '&Action=Finish">' . _('Printed') . '</a>';
+				}else{
+					// the category is still the old one. We still need to change it!
+					// if we have ONLY stock in kantor (or in locations not needing procedure) and NO transit, all the QOH is at kantor
+					// We can apply the new discount category
+					$NewPriceLink = '<a href="' . $RootPath . '/KLChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $myrow['newretailprice'] .  '&Action=Change">' . locale_number_format($myrow['newretailprice'],0) . '</a>';
+					$NewLabelsPrinted = 'Not yet';
+				}
+			}else{
+				$NewPriceLink = locale_number_format($myrow['newretailprice'],0);
+				$NewLabelsPrinted = 'Not yet';
+			}
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					</tr>', 
+					locale_number_format($myrow['counterpricechange'],0),
+					$CodeLink, 
+					$myrow['description'],
+					ConvertSQLDate($myrow['startprocessdate']),
+					locale_number_format_zero_blank($myrow['qohpos']-$myrow['intransitfromshops'],0),
+					locale_number_format_zero_blank($myrow['intransitfromkantor'],0),
+					locale_number_format_zero_blank($myrow['intransitfromshops']+$myrow['intransitfromconsignment'],0),
+					locale_number_format_zero_blank($myrow['qohkantor']-$myrow['intransitfromkantor'],0),
+					locale_number_format_zero_blank($myrow['qohotherlocs'],0),
+					locale_number_format_zero_blank($myrow['qohtotal'],0),
+					$NewPriceLink,
+					$NewLabelsPrinted
+					);
+			$i++;
+		}
+		echo '</table>
+				</div>';
+	}else{
+		prnMsg("No items in process of price change at the moment", "success");
+	}
+
+include('includes/footer.inc');
+?>

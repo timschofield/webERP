@@ -9,8 +9,11 @@ while the user is selecting the criteria the system is posting any unposted tran
 /*Needs to have FromPeriod and ToPeriod sent with URL
  * also need to work on authentication with username and password sent too*/
 
-
-//$AllowAnyone = true;
+/************************************************************************************
+KL RICARD MODIFICATIONS:
+ Change of AllowAnyone by AllowCronJobToBeRun to minimize risk of intrusions
+*************************************************************************************/
+//$AllowCronJobToBeRun = true;
 
 //Page must be called with GLTrialBalance_csv.php?CompanyName=XXXXX&FromPeriod=Y&ToPeriod=Z
 $_POST['CompanyNameField'] = $_GET['CompanyName'];

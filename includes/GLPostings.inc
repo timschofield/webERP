@@ -88,7 +88,7 @@ if(DB_num_rows($ChartDetailsNotSetUpResult)>0){
 if (isset($NewPeriods)) {
 	foreach ($NewPeriods as $Account=>$Period) {
 		if ($Period>$CreateFrom) {
-			$sql = "UPDATE chartdetails SET bfwd=(SELECT t.bfwd FROM (SELECT bfwd+actual as bfwd FROM chartdetails WHERE accountcode='" . $Account . "' AND period='" . ($Period - 1) . "') AS t) WHERE accountcode='" . $Account . "' AND period>= " . $Period;
+			$sql = "UPDATE chartdetails SET bfwd=(SELECT bfwd+actual FROM chartdetails WHERE accountcode='" . $Account . "' AND period='" . $Period - 1 . "') WHERE accountcode='" . $Account . "' AND period>= " . $Period;
 			$ErrMsg = _('Failed to update the bfwd amount');
 			$BfwdResult = DB_query($sql,$ErrMsg);
 		}

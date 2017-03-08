@@ -2,6 +2,12 @@
 /* $Id: CustomerReceipt.php 7726 2017-01-13 23:02:10Z daintree $ */
 /* Entry of both customer receipts against accounts receivable and also general ledger or nominal receipts */
 
+/**************************************************************************************
+KL RICARD MODIFICATIONS:
+- Added field OrderPaid to allow the registration of the orderno. Only useful for online orders.
+- Temporary solution. Better use a dedicated script for this functionality: Payment by bank transfer of online
+customers. It needs to take shipment into account as well (currently it doesn't.
+***************************************************************************************/
 include('includes/DefineReceiptClass.php');
 include('includes/session.inc');
 
@@ -214,7 +220,8 @@ if (isset($_POST['Process'])){ //user hit submit a new entry to the receipt batc
 													$_POST['GLCode'],
 													$_POST['PayeeBankDetail'],
 													$_POST['CustomerName'],
-													$_POST['tag']);
+													$_POST['tag'],
+													$_POST['OrderPaid']);
 			/*Make sure the same receipt is not double processed by a page refresh */
 			$Cancel = 1;
 		}
@@ -229,6 +236,7 @@ if (isset($Cancel)){
 	unset($_POST['Discount']);
 	unset($_POST['Narrative']);
 	unset($_POST['PayeeBankDetail']);
+	unset($_POST['OrderPaid']);
 }
 
 
@@ -454,7 +462,7 @@ if (isset($_POST['CommitBatch'])){
 						12,
 						'" . $ReceiptItem->Customer . "',
 						'',
-						'" . $ReceiptItem->ID . "',
+						'" . $ReceiptItem->OrderPaid . "',
 						'" . FormatDateForSQL($_SESSION['ReceiptBatch' . $identifier]->DateBanked) . "',
 						'" . date('Y-m-d H-i-s') . "',
 						'" . $PeriodNo . "',
@@ -1164,6 +1172,9 @@ if (((isset($_SESSION['CustomerRecord' . $identifier])
 	if (!isset($_POST['PayeeBankDetail'])) {
 		$_POST['PayeeBankDetail']='';
 	}
+	if (!isset($_POST['OrderPaid'])) {
+		$_POST['OrderPaid']='';
+	}
 	if (!isset($_POST['Narrative'])) {
 		$_POST['Narrative']='';
 	}
@@ -1184,6 +1195,10 @@ if (((isset($_SESSION['CustomerRecord' . $identifier])
 	echo '<tr>
 			<td>' . _('Payee Bank Details') . ':</td>
 			<td><input tabindex="12" type="text" name="PayeeBankDetail" maxlength="22" size="20" value="' . $_POST['PayeeBankDetail'] . '" /></td>
+		</tr>
+		<tr>
+			<td>' . _('webERP Order (Online ONLY!)') . ':</td>
+			<td><input tabindex="13" type="text" name="OrderPaid" maxlength="22" size="20" value="' . $_POST['OrderPaid'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Narrative') . ':</td>

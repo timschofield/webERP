@@ -1,0 +1,213 @@
+<h1>EDI</h1>
+
+<p>The webERP implementation of EDI is not complete and needs sponsorship to complete. This narrative explains the work that has been completed and basis upon which it will work.</p>
+<p>EDI stands for electronic data interchange - the electronic transmission of transaction information between trading partners. There are numerous standards for the encoding of such transactions the most widely used being UN/EDIFACT and its derivative EANCOM implementation. In fact many industry groups use the standard formats in slightly different ways and some businesses within the industry use the industry standard slightly differently again. So ultimately, the standards are really only a framework for what the actual messages look like. In implementing EDI in webERP, some flexibility in the format of messages to be sent and received is available. EDI messages are created in flat files in the directory specified in config.php for EDI outgoing messages and a log of the EDI messages sent is retained also. The messages can be sent either as an email attachment to the customer supplied email address or via ftp to a customer supplied ftp server address - using the ftp username and password provided by the customer.</p><!-- Help Begin: CustEDISetup -->
+
+<h2>EDI Setup</h2>
+
+<p>To enable EDI transactions for a customer, first select the customer from the Select Customer link on any page, then click the link - Customer EDI Configuration. This page allows selection of the type of transactions that are to transmitted electronically currently only invoices/credit notes and orders are available. Each must be specifically enabled to activate them. Each customer must have their:</p>
+<p>
+
+<ul>
+    <li>EDI reference that they are identified by</li>
+
+    <li>Transport mechanism and address to which the invoice/credit note messages are to be sent - either email as a file attachment or via ftp (file transfer protocol)</li>
+</ul>
+
+<p>If the transport mechanism is to be ftp - this must be compiled into PHP with the flag -enable-ftp, most windows PHP installtions have this by default now. Additional fields for the ftp server username and password will also be required.</p>
+
+<p>To activate EDI polling for invoices to send the script EDISendInvoices.php must be run as a scheduled job - using cron or some other scheduling system -see automating sales reports. It can also be run from the utilites menu Z_index.php with debugging output.</p>
+
+<p>To activate EDI polling for orders to be entered as received the script ???? must be run as a scheduled job using cron or some other scheduling system.</p>
+
+<h2>Sending EDI Invoices</h2>
+
+<p>EDI messages are made up of segments which must appear in a certain order. Since customers will require EDI invoices in slightly different formats, the exact format can be defined in the table EDIMessageFormat. This table has a record for each customer invoice line and the sequence when it must appear in the message. The field line text in this table can include any of the predefined EDI invoice variables surrounded by "[" and "]" to denote them as a variable to be replaced with the appropriate value as follows:</p>
+
+<table>
+    <tr>
+        <th colspan="2">EDI Invoice Detail Section</th>
+    </tr>
+
+    <tr>
+        <td>EDITransNo</td>
+
+        <td>The unique EDI transaction number</td>
+    </tr>
+
+    <tr>
+        <td>InvOrCrd</td>
+
+        <td>Whether the transaction is an invoice or a credit - the value of this variable is an EANCOM defined number, 388 for a tax invoice and 381 for a credit note</td>
+    </tr>
+
+    <tr>
+        <td>TransNo</td>
+
+        <td>The transaction number of invoice or credit</td>
+    </tr>
+
+    <tr>
+        <td>OrigOrDup</td>
+
+        <td>Whether the transaction is a duplicate or original sending the value of this variable is an EANCOM defined number 7 for a duplicate and 9 for an original</td>
+    </tr>
+
+    <tr>
+        <td>TranDate</td>
+
+        <td>The transaction date in the format CCYYMMDD</td>
+    </tr>
+
+    <tr>
+        <td>OrderNo</td>
+
+        <td>The original order number - only for invoices</td>
+    </tr>
+
+    <tr>
+        <td>CustBranchCode</td>
+
+        <td>The customer's internal code for the branch</td>
+    </tr>
+
+    <tr>
+        <td>CompanyEDIReference</td>
+
+        <td>The customer's EDI reference code</td>
+    </tr>
+
+    <tr>
+        <td>BranchName</td>
+
+        <td>The branch name</td>
+    </tr>
+
+    <tr>
+        <td>BranchStreet</td>
+
+        <td>&nbsp;</td>
+    </tr>
+
+    <tr>
+        <td>BranchCity</td>
+
+        <td>&nbsp;</td>
+    </tr>
+
+    <tr>
+        <td>BranchState</td>
+
+        <td>&nbsp;</td>
+    </tr>
+
+    <tr>
+        <td>TaxAuthorityRef</td>
+
+        <td>The businesses Tax Authority reference number</td>
+    </tr>
+
+    <tr>
+        <td>DatePaymentDue</td>
+
+        <td>The due date for this transaction</td>
+    </tr>
+
+    <tr>
+        <td>TaxTotal</td>
+
+        <td>The total amount of tax on the transaction</td>
+    </tr>
+</table>
+
+<table>
+    <tr>
+        <th>EDI Invoice Detail Section - for the lines on the transaction</th>
+    </tr>
+
+    <tr>
+        <td>LineNumber</td>
+
+        <td>&nbsp;</td>
+    </tr>
+
+    <tr>
+        <td>StockID</td>
+
+        <td>The webERP item code</td>
+    </tr>
+
+    <tr>
+        <td>CustStockID</td>
+
+        <td>The customer's internal code for the item</td>
+    </tr>
+
+    <tr>
+        <td>ItemDescription</td>
+
+        <td>&nbsp;</td>
+    </tr>
+
+    <tr>
+        <td>QtyInvoiced</td>
+
+        <td>Quantity invoiced or credited</td>
+    </tr>
+
+    <tr>
+        <td>LineTotalExclTax</td>
+
+        <td>The total for the line excluding tax</td>
+    </tr>
+
+    <tr>
+        <td>UnitPrice</td>
+
+        <td>Unit price for the item</td>
+    </tr>
+
+    <tr>
+        <td>LineTaxAmount</td>
+
+        <td>The tax applicable to the line</td>
+    </tr>
+</table>
+
+<table>
+    <tr>
+        <th>EDI Invoice Summary Section</th>
+    </tr>
+
+    <tr>
+        <td>NoLines</td>
+
+        <td>The total number of lines on the invoice/credit</td>
+    </tr>
+
+    <tr>
+        <td>TotalAmountExclTax</td>
+
+        <td>Total amount of the transaction excluding tax</td>
+    </tr>
+
+    <tr>
+        <td>TotalAmountInclTax</td>
+
+        <td>Total amount of the transaction including tax</td>
+    </tr>
+
+    <tr>
+        <td>NoSegments</td>
+
+        <td>The total number of segments in the transaction this is required as a control check in the summary</td>
+    </tr>
+</table>
+
+<p>There is therefore great flexibility in how the messages are defined. The variables for the summary and heading sections can be used in any section. The detail section variables can only be used in the detail section.</p>
+
+<p>Most customers will require that the branch to which the invoiced goods are delivered to, be identified using the customer's coding system. It is therefore important to ensure that the customer's branch code is actually entered against the webERP branch record. The variable CustBranchCode is retrieved from the branch record and if it is not entered then the EDI transaction will fail.</p>
+
+<p>Some customers may also require the item code to be their item code, not the webERP item code. The variable CustStockID is derived from the cross reference table EDIItemMapping which would need to contain a cross reference record for each item that they may buy.</p>
+
+<p>The script that creates the EDI invoices (EDISendInvoices.php) should be run automatically in the background as a scheduled task. It first gets a list of all customers who should receive EDI invoices (or credit notes) - as determined in the settings of their DebtorsMaster record. Then the script goes through each customer returned in turn to get any invoices or credits that have not already been sent. A flat file is created for all the customers invoices and credits and sent to the customer using the transport, address and other parameters defined in the customer edi setup page - recorded against their DebtorsMaster record. There is a link to enable the script to be run manually - the browser will also show the output of the EDI message.</p><!-- Help End: CustEDISetup -->

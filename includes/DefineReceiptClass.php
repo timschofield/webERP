@@ -1,6 +1,12 @@
 <?php
 /* $Id: DefineReceiptClass.php 7728 2017-01-13 23:41:06Z daintree $*/
 
+/**************************************************************************************
+KL RICARD MODIFICATIONS:
+- Added field OrderPaid to allow the registration of the orderno. Only useful for online orders.
+- Linked to CustomerReceipt.php mod
+***************************************************************************************/
+
 /* definition of the ReceiptBatch class */
 
 Class Receipt_Batch {
@@ -27,9 +33,9 @@ Class Receipt_Batch {
 		$this->total=0;
 	}
 
-	function add_to_batch($Amount, $Customer, $Discount, $Narrative, $GLCode, $PayeeBankDetail, $CustomerName, $tag){
+	function add_to_batch($Amount, $Customer, $Discount, $Narrative, $GLCode, $PayeeBankDetail, $CustomerName, $tag, $OrderPaid){
 		if ((isset($Customer) OR isset($GLCode)) AND ($Amount + $Discount) !=0){
-			$this->Items[$this->ItemCounter] = new Receipt($Amount, $Customer, $Discount, $Narrative, $this->ItemCounter, $GLCode, $PayeeBankDetail, $CustomerName, $tag);
+			$this->Items[$this->ItemCounter] = new Receipt($Amount, $Customer, $Discount, $Narrative, $this->ItemCounter, $GLCode, $PayeeBankDetail, $CustomerName, $tag, $OrderPaid);
 			$this->ItemCounter++;
 			$this->total = $this->total + ($Amount + $Discount) / $this->ExRate;
 			Return 1;
@@ -57,8 +63,9 @@ Class Receipt {
 	Var $ID;
 	var $tag;
 	var $TagName;
+	var $OrderPaid;
 
-	function Receipt ($Amt, $Cust, $Disc, $Narr, $id, $GLCode, $PayeeBankDetail, $CustomerName, $Tag){
+	function Receipt ($Amt, $Cust, $Disc, $Narr, $id, $GLCode, $PayeeBankDetail, $CustomerName, $Tag, $OrderPaid = ""){
 		global $db;
 /* Constructor function to add a new Receipt object with passed params */
 		$this->Amount =$Amt;
@@ -70,6 +77,7 @@ Class Receipt {
 		$this->PayeeBankDetail=$PayeeBankDetail;
 		$this->ID = $id;
 		$this->tag = $Tag;
+		$this->OrderPaid = $OrderPaid;
 		$result = DB_query("SELECT tagdescription FROM tags WHERE tagref='" . $Tag . "'");
 		if (DB_num_rows($result)==1){
 			$TagRow = DB_fetch_array($result);

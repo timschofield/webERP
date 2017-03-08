@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form name="GL Journal">
+	<PaperSize name="Paper size">A4_Landscape</PaperSize>
+	<LineHeight name="Line height">12</LineHeight>
+	<logo type="image" name="Logo" id="Logo">
+		<x>20</x>
+		<y>80</y>
+		<width>0</width>
+		<height>60</height>
+	</logo>
+	<CompanyName type="SimpleText" name="Company name" id="CompanyName">
+		<FontSize>10</FontSize>
+		<x>625</x>
+		<y>30</y>
+	</CompanyName>
+	<GRNNumber type="SimpleText" name="GRN Number" id="GRNNumber">
+		<FontSize>10</FontSize>
+		<x>625</x>
+		<y>48</y>
+	</GRNNumber>
+	<OrderNumber type="SimpleText" name="Order Number" id="OrderNumber">
+		<FontSize>10</FontSize>
+		<x>625</x>
+		<y>66</y>
+	</OrderNumber>
+	<PrintDate type="SimpleText" name="Date Printed" id="PrintDate">
+		<FontSize>10</FontSize>
+		<x>625</x>
+		<y>84</y>
+	</PrintDate>
+	<HeaderRectangle type="Rectangle" name="Header rectangle" id="HeaderRectangle">
+		<x>40</x>
+		<y>114</y>
+		<width>772</width>
+		<height>24</height>
+	</HeaderRectangle>
+	<Headings type="ElementArray" name="Column headings">
+		<Column1 type="SimpleText" name="Heading 1" id="Heading1">
+			<FontSize>10</FontSize>
+			<x>41</x>
+			<y>126</y>
+		</Column1>
+		<Column2 type="SimpleText" name="Heading 2" id="Heading2">
+			<FontSize>10</FontSize>
+			<x>116</x>
+			<y>126</y>
+		</Column2>
+		<Column3 type="SimpleText" name="Heading 3" id="Heading3">
+			<FontSize>10</FontSize>
+			<x>256</x>
+			<y>126</y>
+		</Column3>
+		<Column4 type="MultiLineText" name="Heading 4" id="Heading4">
+			<FontSize>10</FontSize>
+			<x>486</x>
+			<y>136</y>
+			<Length>100</Length>
+		</Column4>
+		<Column5 type="MultiLineText" name="Heading 5" id="Heading5">
+			<FontSize>10</FontSize>
+			<x>616</x>
+			<y>136</y>
+			<Length>100</Length>
+		</Column5>
+	</Headings>
+	<DataRectangle type="Rectangle" name="Data rectangle" id="DataRectangle">
+		<x>40</x>
+		<y>138</y>
+		<width>772</width>
+		<height>430</height>
+	</DataRectangle>
+	<LineAboveFooter type="Line" name="Line Above Footer" id="LineAboveFooter">
+		<startx>40</startx>
+		<starty>530</starty>
+		<endx>812</endx>
+		<endy>530</endy>
+	</LineAboveFooter>
+	<Column1 type="Line" name="Column 1" id="Column1">
+		<startx>114</startx>
+		<starty>114</starty>
+		<endx>114</endx>
+		<endy>530</endy>
+	</Column1>
+	<Column3 type="Line" name="Column 3" id="Column3">
+		<startx>254</startx>
+		<starty>114</starty>
+		<endx>254</endx>
+		<endy>530</endy>
+	</Column3>
+	<Column4 type="Line" name="Column 4" id="Column4">
+		<startx>489</startx>
+		<starty>114</starty>
+		<endx>489</endx>
+		<endy>530</endy>
+	</Column4>
+	<Column5 type="Line" name="Column 5" id="Column5">
+		<startx>616</startx>
+		<starty>114</starty>
+		<endx>616</endx>
+		<endy>530</endy>
+	</Column5>
+	<Data type="ElementArray" name="Column Data">
+		<y type="StartLine" name="Y co-ordinate of first data line" id="DataStartLine">156</y>
+		<Column1 type="DataText" name="Column 1" id="Data1">
+			<FontSize>10</FontSize>
+			<x>41</x>
+			<Length>94</Length>
+		</Column1>
+		<Column2 type="DataText" name="Column 2" id="Data2">
+			<FontSize>10</FontSize>
+			<x>116</x>
+			<Length>270</Length>
+		</Column2>
+		<Column3 type="DataText" name="Column 3" id="Data3">
+			<FontSize>10</FontSize>
+			<x>256</x>
+			<Length>85</Length>
+		</Column3>
+		<Column4 type="DataText" name="Column 5" id="Data5">
+			<FontSize>10</FontSize>
+			<x>568</x>
+			<Length>30</Length>
+		</Column4>
+		<Column5 type="DataText" name="Column 6" id="Data6">
+			<FontSize>10</FontSize>
+			<x>638</x>
+			<Length>60</Length>
+		</Column5>
+		<Column6 type="DataText" name="Column 7" id="Data7">
+			<FontSize>10</FontSize>
+			<x>700</x>
+			<Length>30</Length>
+		</Column6>
+	</Data>
+	<ReceiptDate type="SimpleText" name="Date Received" id="ReceiptDate">
+		<FontSize>10</FontSize>
+		<x>300</x>
+		<y>550</y>
+	</ReceiptDate>
+	<SignedFor type="SimpleText" name="Signed Fror" id="SignedFor">
+		<FontSize>10</FontSize>
+		<x>50</x>
+		<y>550</y>
+	</SignedFor>
+</form>

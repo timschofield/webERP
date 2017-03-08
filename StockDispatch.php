@@ -1,6 +1,12 @@
 <?php
 /* $Id: StockDispatch.php 7494 2016-04-25 09:53:53Z daintree $*/
 
+/**************************************************************************************
+KL RICARD MODIFICATIONS:
+- not use items from categories SHCONS, SHPACK
+- send email if destination = location SERDE (to be destroyed)
+***************************************************************************************/
+
 // StockDispatch.php - Report of parts with overstock at one location that can be transferred
 // to another location to cover shortage based on reorder level. Creates loctransfer records
 // that can be processed using Bulk Inventory Transfer - Receive.
@@ -8,6 +14,9 @@
 include('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/GetPrice.inc');
+
+include('includes/KLEmails.php');
+
 if (isset($_POST['PrintPDF'])) {
 
 	include('includes/PDFStarter.php');
@@ -80,7 +89,9 @@ if (isset($_POST['PrintPDF'])) {
 		$WhereCategory = " AND stockmaster.categoryid ='" . $_POST['StockCat'] . "' ";
 	} else {
 		$CategoryDescription=_('All');
-		$WhereCategory = " ";
+// KL RICARD 18/12/2013
+		$WhereCategory = " AND stockmaster.categoryid !='SHCONS'
+						   AND stockmaster.categoryid !='SHPACK' ";
 	}
 
 	// If Strategy is "Items needed at TO location with overstock at FROM" we need to control the "needed at TO" part
@@ -269,6 +280,11 @@ if (isset($_POST['PrintPDF'])) {
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to enter Location Transfer record for'). ' '.$myrow['stockid'];
 			if ($_POST['ReportType'] == 'Batch') {
 				$resultLocShip = DB_query($sql2, $ErrMsg);
+				/* KL RICARD Send emails to team if transfer from / to special location */
+				if ($_POST['ToLocation'] == 'SERDE'){
+					KLSendEmail("ItemTransferredToSpecialLocation", "Silent", $myrow['stockid'], $ShipQty, $_POST['FromLocation'], $_POST['ToLocation']);
+				}
+				/* KL RICARD End modification */
 			}
 		}
 	} /*end while loop  */

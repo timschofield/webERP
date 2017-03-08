@@ -2,6 +2,15 @@
 
 /* $Id: PDFStarter.php 7578 2016-08-02 10:02:32Z exsonqu $ */
 
+/*****************************************************************************************
+KL RICARD MODIFICATIONS:
+- Deleted the Default page size parameters, as it messed up with Print Label functions, 
+needing to set up their own page sizes.
+- Commited also to SVN Commit 6955. 
+- Commited as KL file in case Phil rolls back my commit.
+- This KL file mod should be reversed if Phil accepts the commit long time. 
+*****************************************************************************************/
+
 /*	-------------------------------------------------------------------------------------
 	November 2009. Moving from FPDF to TCPDF.
  	This file is included by most of the scripts (47 from 54 at now) that creates a pdf.

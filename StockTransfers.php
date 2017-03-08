@@ -1,14 +1,22 @@
 <?php
-/* $Id: StockTransfers.php 7462 2016-02-20 08:27:29Z tehonu $*/
-/* Entry of point to point stock location transfers of a single part. */
+/* $Id: StockTransfers.php 7021 2014-12-14 02:04:44Z tehonu $*/
+/**************************************************************************************
+KL RICARD MODIFICATIONS:
+- send email if destination = location SERDE (to be destroyed)
+***************************************************************************************/
+
+/* Inventory Transfer - Item Dispatch */
 
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockTransfers.php');
 
 include('includes/session.inc');
-$Title = _('Stock Transfers');// Screen identification.
-$ViewTopic = "Inventory";// Filename's id in ManualContents.php's TOC.
-$BookMark = "LocationTransfers";// Anchor's id in the manual's html document.
+
+include('includes/KLEmails.php');
+
+$Title = _('Stock Transfers');
+$BookMark = "LocationTransfers";
+$ViewTopic = "Inventory";
 include('includes/header.inc');
 
 include('includes/SQL_CommonFunctions.inc');
@@ -248,7 +256,7 @@ if(isset($_POST['EnterTransfer']) ) {
 					16,'" .
 					$TransferNumber . "','" .
 					$AccountCode . "','" .
-					$_SESSION['Transfer']->StockLocationFrom.' - '.$_SESSION['Transfer']->TransferItem[0]->StockID.' x '.$_SESSION['Transfer']->TransferItem[0]->Quantity.' @ '. $StandardCost . "','" .
+					$_SESSION['Transfer']->StockLocationFrom.' - '.$_SESSION['Transfer']->TransferItem[0]->StockID.' x '.$_SESSION['Transfer'] ->TransferItem[0]->Quantity.' @ '. $StandardCost . "','" .
 					-$_SESSION['Transfer']->TransferItem[0]->Quantity * $StandardCost . "')";
 					$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The outgoing inventory GL transacction record could not be inserted because');
 					$DbgMsg =  _('The following SQL to insert records was used');
@@ -273,7 +281,7 @@ if(isset($_POST['EnterTransfer']) ) {
 						'" . $SQLTransferDate . "',
 						'" . $_SESSION['UserID'] . "',
 						'" . $PeriodNo . "',
-						'To " . $_SESSION['Transfer']->StockLocationTo ."',
+						'To " . $_SESSION['Transfer']->StockLocationTo .": " . $_POST['Reason'] . "',
 						'" . round(-$_SESSION['Transfer']->TransferItem[0]->Quantity,$_SESSION['Transfer']->TransferItem[0]->DecimalPlaces)  . "',
 						'" . ($QtyOnHandPrior - round($_SESSION['Transfer']->TransferItem[0]->Quantity,$_SESSION['Transfer']->TransferItem[0]->DecimalPlaces)) . "'
 						)";
@@ -428,7 +436,7 @@ if(isset($_POST['EnterTransfer']) ) {
 					'" . $SQLTransferDate . "',
 					'" . $_SESSION['UserID'] . "',
 					'" . $PeriodNo . "',
-					'" . _('From') . " " . $_SESSION['Transfer']->StockLocationFrom . "',
+					'" . _('From') . " " . $_SESSION['Transfer']->StockLocationFrom . ": " . $_POST['Reason'] . "',
 					'" . $_SESSION['Transfer']->TransferItem[0]->Quantity . "',
 					'" . round($QtyOnHandPrior + $_SESSION['Transfer']->TransferItem[0]->Quantity,$_SESSION['Transfer']->TransferItem[0]->DecimalPlaces) . "')";
 
@@ -526,6 +534,13 @@ if(isset($_POST['EnterTransfer']) ) {
 		$Result = DB_query($SQL,$ErrMsg, $DbgMsg, true);
 
 		$Result = DB_Txn_Commit();
+		/* KL RICARD Send emails to team if transfer from / to special location */
+		if ($_SESSION['Transfer']->StockLocationTo == 'SERDE'){
+			KLSendEmail("ItemTransferredToSpecialLocation", "Silent", $_SESSION['Transfer']->TransferItem[0]->StockID, $_SESSION['Transfer']->TransferItem[0]->Quantity, $_SESSION['Transfer']->StockLocationFrom, $_SESSION['Transfer']->StockLocationTo);
+		}
+		/* KL RICARD End modification */
+
+		$Result = DB_Txn_Commit();
 
 		prnMsg(_('An inventory transfer of').' ' . $_SESSION['Transfer']->TransferItem[0]->StockID . ' - ' . $_SESSION['Transfer']->TransferItem[0]->ItemDescription . ' '. _('has been created from').' ' . $_SESSION['Transfer']->StockLocationFrom . ' '. _('to') . ' ' . $_SESSION['Transfer']->StockLocationTo . ' '._('for a quantity of').' ' . $_SESSION['Transfer']->TransferItem[0]->Quantity,'success');
 		echo '<br /><a href="PDFStockTransfer.php?TransferNo='.$TransferNumber.'">' . _('Print Transfer Note') . '</a>';
@@ -543,6 +558,7 @@ echo '<p class="page_title_text">
 echo '<form action="'. htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<input type="hidden" name="Reason" value="' . $_POST['Reason'] . '" />';
 
 if(!isset($_GET['Description'])) {
 	$_GET['Description']='';
@@ -637,6 +653,15 @@ if(isset($_SESSION['Transfer']->TransferItem[0]->Controlled)
 		</tr>';
 }
 
+echo '<tr>
+		<td>' 
+			. _('Reason').':
+		</td>
+		<td>
+			<input type="text" name="Reason" size="51" value="' . $_POST['Reason'] . '" maxlength="80" >
+		</td>
+	</tr>';
+	
 echo '</table>
 	<div class="centre">
 		<br />

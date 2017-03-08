@@ -1,8 +1,16 @@
 <?php
 /* $Id: MainMenuLinksArray.php 6190 2013-08-12 02:12:02Z rchacon $*/
+
+/*****************************************************************************************
+KL RICARD MODIFICATIONS:
+- Added entries for all KL scripts
+*****************************************************************************************/
+// RICARD: Personalianalize menu entries by level
+include('includes/KLRoles.inc');
+
 /* webERP menus with Captions and URLs. */
 
-$ModuleLink = array('orders', 'AR', 'PO', 'AP', 'stock', 'manuf',  'GL', 'FA', 'PC', 'system', 'Utilities');
+$ModuleLink = array('orders', 'AR', 'PO', 'AP', 'stock', 'manuf',  'GL', 'FA', 'PC', 'Personalia', 'system', 'Utilities');
 $ReportList = array('orders'=>'ord',
 					'AR'=>'ar',
 					'PO'=>'prch',
@@ -12,6 +20,7 @@ $ReportList = array('orders'=>'ord',
 					'GL'=>'gl',
 					'FA'=>'fa',
 					'PC'=>'pc',
+					'Personalia'=>'pe',
 					'system'=>'sys',
 					'Utilities'=>'utils'
 					);
@@ -26,12 +35,16 @@ $ModuleList = array(_('Sales'),
 					_('General Ledger'),
 					_('Asset Manager'),
 					_('Petty Cash'),
+					_('Personalia'),
 					_('Setup'),
 					_('Utilities'));
 
 $MenuItems['orders']['Transactions']['Caption'] = array(_('New Sales Order or Quotation'),
 														_('Enter Counter Sales'),
 														_('Enter Counter Returns'),
+														_('Retail Point Of Sale'),
+														_('Retail Customer Info Card'),
+														_('Shop Tali Exchanges'),
 														_('Print Picking Lists'),
 														_('Outstanding Sales Orders/Quotations'),
 														_('Special Order'),
@@ -41,11 +54,38 @@ $MenuItems['orders']['Transactions']['Caption'] = array(_('New Sales Order or Qu
 $MenuItems['orders']['Transactions']['URL'] = array('/SelectOrderItems.php?NewOrder=Yes',
 													'/CounterSales.php',
 													'/CounterReturns.php',
+													'/KLRetailPOS.php',
+													'/KLRetailCustomerInfoCard.php',
+													'/KLShopFreeExchanges.php',
 													'/PDFPickingList.php',
 													'/SelectSalesOrder.php',
 													'/SpecialOrder.php',
 													'/SelectRecurringSalesOrder.php',
 													'/RecurringSalesOrdersProcess.php');
+
+if ($KL_BusinessDevelopmentManager){
+	$TextControlBoard01 = _('KL Control Board Section 01');
+	$LinkControlBoard01 = "/KLControlBoard.php?Section=01";
+	$TextControlBoard02 = _('KL Control Board Section 02');
+	$LinkControlBoard02 = "/KLControlBoard.php?Section=02";
+} else {
+	$TextControlBoard01 = _('KL Control Board');
+	$LinkControlBoard01 = '/KLControlBoard.php';
+	$TextControlBoard02 = '';
+	$LinkControlBoard02 = '';
+}	
+													
+if ($KL_SystemAdmin OR $KL_BusinessDevelopmentManager){
+	$TextPerformanceBoard01 = _('KL Performance Board Section 01');
+	$LinkPerformanceBoard01 = "/KLPerformanceBoard.php?Section=01";
+	$TextPerformanceBoard02 = _('KL Performance Board Section 02');
+	$LinkPerformanceBoard02 = "/KLPerformanceBoard.php?Section=02";
+} else {
+	$TextPerformanceBoard01 = _('KL Performance Board');
+	$LinkPerformanceBoard01 = '/KLPerformanceBoard.php';
+	$TextPerformanceBoard02 = '';
+	$LinkPerformanceBoard02 = '';
+}	
 
 $MenuItems['orders']['Reports']['Caption'] = array( _('Sales Order Inquiry'),
 													_('Print Price Lists'),
@@ -61,10 +101,23 @@ $MenuItems['orders']['Reports']['Caption'] = array( _('Sales Order Inquiry'),
 													_('Order Delivery Differences Report'),
 													_('Delivery In Full On Time (DIFOT) Report'),
 													_('Sales Order Detail Or Summary Inquiries'),
-													_('Top Sales Items Inquiry'),
+													_('KL Sales Hourly Report'),
+													_('KL Sales Order Detail Or Summary Inquiries'),
+													_('Top Sales Items Report'),
 													_('Top Customers Inquiry'),
 													_('Worst Sales Items Report'),
 													_('Sales With Low Gross Profit Report'),
+													$TextControlBoard01,
+													$TextControlBoard02,
+													_('KL Control Board for Pricing'),
+													_('KL SPG Control Board'),
+													_('KL SPG End Of Shift Report'),
+													$TextPerformanceBoard01,
+													$TextPerformanceBoard02,
+													_('KL SPG Performance Report'),
+													_('KL Retail Customer Analysis'),
+													_('KL Excel Sales Analysis'),
+													_('KL Excel Sales Monthly Report'),
 													_('Sell Through Support Claims Report'));
 
 $MenuItems['orders']['Reports']['URL'] = array( '/SelectCompletedOrder.php',
@@ -81,18 +134,47 @@ $MenuItems['orders']['Reports']['URL'] = array( '/SelectCompletedOrder.php',
 												'/PDFDeliveryDifferences.php',
 												'/PDFDIFOT.php',
 												'/SalesInquiry.php',
+												'/KLSalesHourlyReport.php',
+												'/KLSalesInquiry.php',
 												'/TopItems.php',
 												'/SalesTopCustomersInquiry.php',
 												'/NoSalesItems.php',
 												'/PDFLowGP.php',
+												$LinkControlBoard01,
+												$LinkControlBoard02,
+												'/KLControlBoardPrices.php',
+												'/KLControlBoardSPG.php',
+												'/KLRetailEndOfShift.php',
+												$LinkPerformanceBoard01,
+												$LinkPerformanceBoard02,
+												'/KLSPGPerformance.php',
+												'/KLRetailCustomerBoard.php',
+												'/KLExcelSalesAnalysis.php',
+												'/KLExcelSalesMonthlyReport.php',
 												'/PDFSellThroughSupportClaim.php');
 
 $MenuItems['orders']['Maintenance']['Caption'] = array( _('Create Contract'),
 														_('Select Contract'),
+														_('KL Set Website Sales Categories'),
+														_('KL Set Related Items'),
+														_('Sendinblue: Export KL Retail Customers'),
+														_('Sendinblue: Export KL webERP Customers'),
+														_('Sendinblue: Export Newsletter Subscribers'),
+														_('OpenCart: Sync webERP to OC Daily'),
+														_('OpenCart: Sync webERP to OC Hourly'),
+														_('OpenCart: Sync OC to webERP'),
 														_('Sell Through Support Deals'));
 
 $MenuItems['orders']['Maintenance']['URL'] = array( '/Contracts.php',
 													'/SelectContract.php',
+													'/KLSetWebsiteCategories.php',
+													'/KLSetRelatedItems.php',
+													'/KLExcelExportCustomersSendinblue.php',
+													'/KLExcelExportOnlineSendinblue.php',
+													'/KLExcelExportNewsletterSendinblue.php',
+													'/WeberpToOpenCartDaily.php',
+													'/WeberpToOpenCartHourly.php',
+													'/OpenCartToWeberp.php',
 													'/SellThroughSupport.php');
 
 $MenuItems['AR']['Transactions']['Caption'] = array(_('Select Order to Invoice'),
@@ -110,7 +192,7 @@ $MenuItems['AR']['Reports']['Caption'] = array(	_('Where Allocated Inquiry'),
 												_('Aged Customer Balances/Overdues Report'),
 												_('Re-Print A Deposit Listing'),
 												_('Debtor Balances At A Prior Month End'),
-												_('Customer Listing By Area/Salesperson'),
+												_('Customer Listing By Area/SalesPersonalian'),
 												_('List Daily Transactions'),
 												_('Customer Transaction Inquiries'),
 												_('Customer Activity and Balances'));
@@ -149,6 +231,8 @@ $MenuItems['AP']['Reports']['Caption'] = array(	_('Where Allocated Inquiry.php')
 												_('Outstanding GRNs Report'),
 												_('Supplier Balances At A Prior Month End'),
 												_('List Daily Transactions'),
+												_('Purchase Order Financial Planning'),
+												_('KL Goods Received Not Invoiced Yet'),
 												_('Supplier Transaction Inquiries'));
 
 $MenuItems['AP']['Reports']['URL'] = array( '/SuppWhereAlloc.php',
@@ -158,6 +242,8 @@ $MenuItems['AP']['Reports']['URL'] = array( '/SuppWhereAlloc.php',
 											'/OutstandingGRNs.php',
 											'/SupplierBalsAtPeriodEnd.php',
 											'/PDFSuppTransListing.php',
+											'/POFinancialPlanning.php',
+											'/KLGoodsReceivedNotInvoiced.php',
 											'/SupplierTransInquiry.php');
 
 $MenuItems['AP']['Maintenance']['Caption'] = array(	_('Add Supplier'),
@@ -200,10 +286,21 @@ $MenuItems['PO']['Maintenance']['Caption'] = array(_('Maintain Supplier Price Li
 
 $MenuItems['PO']['Maintenance']['URL'] = array('/SupplierPriceList.php');
 
+if ($KL_SPGSeniorOrSupport OR $KL_SPGJunior){
+	$TextTransferReceive = _('KL Shop Transfer - Receive Transfer FROM kantor');
+} else {
+	$TextTransferReceive = _('Bulk Inventory Transfer') . ' - ' . _('Receive');
+}
+
 $MenuItems['stock']['Transactions']['Caption'] = array(	_('Receive Purchase Orders'),
-														_('Inventory Location Transfers'),	//"Inventory Transfer - Item Dispatch"
-														_('Bulk Inventory Transfer') . ' - ' . _('Dispatch'),	//"Inventory Transfer - Bulk Dispatch"
-														_('Bulk Inventory Transfer') . ' - ' . _('Receive'),	//"Inventory Transfer - Receive"
+														_('Inventory Location Transfers'),
+														_('Bulk Inventory Transfer') . ' - ' . _('Dispatch'),
+														$TextTransferReceive,
+														_('KL Shop Transfer - Send Return Transfer TO kantor'),
+														_('KL Shop Packaging Fill Up'),
+														_('KL Export Products for Zalora'),
+														_('KL Export Products for Lazada'),
+														_('KL Standard Cost Bulk Adjustments'),
 														_('Inventory Adjustments'),
 														_('Reverse Goods Received'),
 														_('Enter Stock Counts'),
@@ -216,6 +313,11 @@ $MenuItems['stock']['Transactions']['URL'] = array(	'/PO_SelectOSPurchOrder.php'
 													'/StockTransfers.php?New=Yes',
 													'/StockLocTransfer.php',
 													'/StockLocTransferReceive.php',
+													'/KLPOSReturnToKantor.php',
+													'/KLFillUpShopPackaging.php',
+													'/KLExcelZalora.php',
+													'/KLExcelLazada.php',
+													'/KLUpdateStandardCostCountry.php',
 													'/StockAdjustments.php?NewAdjustment=Yes',
 													'/ReverseGRN.php',
 													'/StockCounts.php',
@@ -225,10 +327,17 @@ $MenuItems['stock']['Transactions']['URL'] = array(	'/PO_SelectOSPurchOrder.php'
 													'/ReturnedItems.php');
 
 $MenuItems['stock']['Reports']['Caption'] = array(	_('Serial Item Research Tool'),
+													_('KL Print Price Labels'),
 													_('Print Price Labels'),
 													_('Reprint GRN'),
 													_('Inventory Item Movements'),
 													_('Inventory Item Status'),
+													_('Shop Inventory for SPG'),
+													_('Item Movements for SPG'),
+													_('Item Status at all KL Shops for SPG'),
+													_('Item Status at all KL Shops for Manager'),
+													_('Shop Transfers List for SPG'),
+													_('Item Sold List for SPG'),
 													_('Inventory Item Usage'),
 													_('Inventory Quantities'),
 													_('Reorder Level'),
@@ -245,15 +354,30 @@ $MenuItems['stock']['Reports']['Caption'] = array(	_('Serial Item Research Tool'
 													_('Historical Stock Quantity By Location/Category'),
 													_('List Negative Stocks'),
 													_('Period Stock Transaction Listing'),
+													_('KL Excel Inventory Taking At Location'),
+													_('KL Inventory Taking At Shop'),
+													_('KL Internal Usage Consumable Stock'),
+													_('KL Stock Available Not in Shop'),
+													_('KL Reorder Level Distribution'),
+													_('KL Active Transfer Status'),
+													_('KL Price Analysis'),
+													_('KL Inventory Distribution By Type'),
 													_('Stock Transfer Note'),
 													_('Aged Controlled Stock Report'),
 													_('Internal stock request inquiry'));
 
 $MenuItems['stock']['Reports']['URL'] = array(	'/StockSerialItemResearch.php',
-												'/PDFPrintLabel.php',
+												'/KLPDFPrintLabel.php',
+												'/PDFPrintLabelTCPDF.php',
 												'/ReprintGRN.php',
 												'/StockMovements.php',
 												'/StockStatus.php',
+												'/KLShopInventorySPG.php',
+												'/KLStockMovementsSPG.php',
+												'/KLStockStatusSPG.php',
+												'/KLStockStatusManagers.php',
+												'/KLShopTransfersSPG.php',
+												'/KLShopSalesSPG.php',
 												'/StockUsage.php',
 												'/InventoryQuantities.php',
 												'/ReorderLevel.php',
@@ -270,6 +394,14 @@ $MenuItems['stock']['Reports']['URL'] = array(	'/StockSerialItemResearch.php',
 												'/StockQuantityByDate.php',
 												'/PDFStockNegatives.php',
 												'/PDFPeriodStockTransListing.php',
+												'/KLExcelInventoryTaking.php',
+												'/KLInventoryAtShop.php',
+												'/KLUsageInternalStock.php',
+												'/KLAvailableItemsNotInShop.php',
+												'/KLReorderLevelDistribution.php',
+												'/KLTransferStatus.php',
+												'/KLExcelPriceAnalysis.php',
+												'/KLInventoryDistribution.php',
 												'/PDFStockTransfer.php',
 												'/AgedControlledInventory.php',
 												'/InternalStockRequestInquiry.php');
@@ -281,6 +413,15 @@ $MenuItems['stock']['Maintenance']['Caption'] = array(	_('Add A New Item'),
 														_('Brands Maintenance'),
 														_('Add or Update Prices Based On Costs'),
 														_('View or Update Prices Based On Costs'),
+														_('KL Automatic Reorder Level Adjustments'),
+														_('KL Price Change Process - Step 01'),
+														_('KL Price Change Process - Step 02'),
+														_('KL Move To 20% Discount Process - Step 01'),
+														_('KL Move To 20% Discount Process - Step 02'),
+														_('KL Move To 50% Discount Process - Step 01'),
+														_('KL Move To 50% Discount Process - Step 02'),
+														_('KL Move To 80% Discount Process - Step 01'),
+														_('KL Move To 80% Discount Process - Step 02'),
 														_('Reorder Level By Category/Location'));
 
 $MenuItems['stock']['Maintenance']['URL'] = array(	'/Stocks.php',
@@ -290,6 +431,15 @@ $MenuItems['stock']['Maintenance']['URL'] = array(	'/Stocks.php',
 													'/Manufacturers.php',
 													'/PricesBasedOnMarkUp.php',
 													'/PricesByCost.php',
+													'/KLAdjustReorderLevel.php',
+													'/KLRetailPriceChangeStep01.php',
+													'/KLRetailPriceChangeStep02.php',
+													'/KLMoveToDiscount20Step01.php',
+													'/KLMoveToDiscount20Step02.php',
+													'/KLMoveToDiscount50Step01.php',
+													'/KLMoveToDiscount50Step02.php',
+													'/KLMoveToDiscount80Step01.php',
+													'/KLMoveToDiscount80Step02.php',
 													'/ReorderLevelLocation.php');
 
 $MenuItems['manuf']['Transactions']['Caption'] = array(	_('Work Order Entry'),
@@ -358,18 +508,18 @@ $MenuItems['manuf']['Maintenance']['URL'] = array(	'/WorkCentres.php',
 $MenuItems['GL']['Transactions']['Caption'] = array(	_('Bank Account Payments Entry'),
 														_('Bank Account Receipts Entry'),
 														_('Import Bank Transactions'),
+														_('Journal Entry'),
 														_('Bank Account Payments Matching'),
-														_('Bank Account Receipts Matching'),
-														_('Journal Entry'));
+														_('Bank Account Receipts Matching'));
 
 $MenuItems['GL']['Transactions']['URL'] = array('/Payments.php?NewPayment=Yes',
 												'/CustomerReceipt.php?NewReceipt=Yes&amp;Type=GL',
 												'/ImportBankTrans.php',
+												'/GLJournal.php?NewJournal=Yes',
 												'/BankMatching.php?Type=Payments',
-												'/BankMatching.php?Type=Receipts',
-												'/GLJournal.php?NewJournal=Yes');
-
-$MenuItems['GL']['Reports']['Caption'] = array(	_('Bank Account Reconciliation Statement'),
+												'/BankMatching.php?Type=Receipts');
+										
+$MenuItems['GL']['Reports']['Caption'] = array( _('Bank Account Reconciliation Statement'),
 												_('Cheque Payments Listing'),
 												_('Daily Bank Transactions'),
 												_('Account Inquiry'),
@@ -378,10 +528,17 @@ $MenuItems['GL']['Reports']['Caption'] = array(	_('Bank Account Reconciliation S
 												_('General Ledger Journal Inquiry'),
 												_('Trial Balance'),
 												_('Balance Sheet'),
+												_('Balance Sheet for PT. Angin Dingin Utara'),
+												_('Balance Sheet for PT. Bumi Biru'),
 												_('Profit and Loss Statement'),
+												_('Profit and Loss Statement for PT. Angin Dingin Utara'),
+												_('Profit and Loss Statement for PT. Bumi Biru'),
 												_('Statement of Cash Flows'),
-												_('Horizontal Analysis of Statement of Financial Position'),
+												_('GL Transactions for PT. Angin Dingin Utara (Excel File)'),
+												_('GL Transactions for PT. Bumi Biru (Excel File)'),
 												_('Horizontal Analysis of Statement of Comprehensive Income'),
+												_('Horizontal Analysis of Statement of Financial Position'),
+												_('KL Excel Financial Analysis'),
 												_('Tag Reports'),
 												_('Tax Reports'));
 
@@ -394,31 +551,44 @@ $MenuItems['GL']['Reports']['URL'] = array(	'/BankReconciliation.php',
 											'/GLJournalInquiry.php',
 											'/GLTrialBalance.php',
 											'/GLBalanceSheet.php',
+											'/KLGLBalanceSheetPMA.php',
+											'/KLGLBalanceSheetPT.php',
 											'/GLProfit_Loss.php',
+											'/KLGLProfit_LossPMA.php',
+											'/KLGLProfit_LossPT.php',
 											'/GLCashFlowsIndirect.php',
+											'/KLExcelGLTransactionsPajakPMA.php',
+											'/KLExcelGLTransactionsPajakPT.php',
 											'/AnalysisHorizontalPosition.php',
 											'/AnalysisHorizontalIncome.php',
+											'/KLExcelFinancialAnalysis.php',
 											'/GLTagProfit_Loss.php',
-											'/Tax.php');
+											'/Tax.php');																						
 
 $MenuItems['GL']['Maintenance']['Caption'] = array(	_('Account Sections'),
 													_('Account Groups'),
 													_('GL Accounts'),
-													_('GL Account Authorised Users'),
-													_('User Authorised GL Accounts'),
+													_('GL Accounts for PT. Angin Dingin Utara'),
+													_('GL Accounts for PT. Bumi Biru'),
 													_('GL Budgets'),
 													_('GL Tags'),
+													_('GL Accounts Authorised Users Maintenance'),
+													_('User Authorised GL Accounts Maintenance'),
+													_('Copy Authority GL Accounts from user A to B'),
 													_('Bank Accounts'),
-													_('Bank Account Authorised Users'),
-													_('User Authorised Bank Accounts'));
+													_('Bank Account Authorized Users'),
+													_('User Authorized Bank Accounts'));
 
 $MenuItems['GL']['Maintenance']['URL'] = array(		'/AccountSections.php',
 													'/AccountGroups.php',
 													'/GLAccounts.php',
-													'/GLAccountUsers.php',
-													'/UserGLAccounts.php',
+													'/KLGLAccountsPMA.php',
+													'/KLGLAccountsPT.php',
 													'/GLBudgets.php',
 													'/GLTags.php',
+													'/GLAccountUsers.php',
+													'/UserGLAccounts.php',
+													'/GLAccountUsersCopyAuthority.php',
 													'/BankAccounts.php',
 													'/BankAccountUsers.php',
 													'/UserBankAccounts.php');
@@ -479,9 +649,46 @@ $MenuItems['PC']['Maintenance']['URL'] = array(	'/PcTypeTabs.php',
 												'/PcExpenses.php',
 												'/PcExpensesTypeTab.php');
 
+$MenuItems['Personalia']['Transactions']['Caption'] = array(_('Import Monthly Salaries Info from Excel File'),
+															_('Export Info for PPH21 Deduction PT. Bumi Biru'),
+//															_('Export Info for PPH21 Deduction PT. ADU'),
+															_('Update PPH21 Deduction PT. Bumi Biru'),
+//															_('Update PPH21 Deduction PT. ADU'),
+															_('Export Monthly Salary Slips PT. Bumi Biru'),
+//															_('Export Monthly Salary Slips PT. ADU'),
+															_('Export CSV File for Transfer LLG Danamon PT. Bumi Biru'),
+//															_('Export CSV File for Transfer LLG Danamon PT. ADU'),
+															_('Move Salaries info to Petty Cash PT. Bumi Biru'),
+//															_('Move Salaries info to Petty Cash PT. ADU')
+															);
+
+$MenuItems['Personalia']['Transactions']['URL'] = array('/KLPersonaliaImportSalaries.php',
+														'/KLPersonaliaExportInfoPPH21.php?Company=PTBB',
+//														'/KLPersonaliaExportInfoPPH21.php?Company=PTADU',
+														'/KLPersonaliaDeductionPPH21.php?Company=PTBB',
+//														'/KLPersonaliaDeductionPPH21.php?Company=PTADU',
+														'/KLPersonaliaPDFMonthlySalarySlips.php?Company=PTBB',
+//														'/KLPersonaliaPDFMonthlySalarySlips.php?Company=PTADU'
+														'/KLPersonaliaCSVDanamonLLG.php?Company=PTBB',
+//														'/KLPersonaliaCSVDanamonLLG.php?Company=PTADU',
+														'/KLPersonaliaMoveTxToPC.php?Company=PTBB',
+//														'/KLPersonaliaMoveTxToPC.php?Company=PTADU'
+														);
+
+$MenuItems['Personalia']['Reports']['Caption'] = array();
+
+$MenuItems['Personalia']['Reports']['URL'] = array();
+
+$MenuItems['Personalia']['Maintenance']['Caption'] = array(_('SPG List'),
+															_('User Maintenance'),
+															_('KL SPG User Maintenance'));
+
+$MenuItems['Personalia']['Maintenance']['URL'] = array('/SalesPeople.php',
+													'/WWW_Users.php',
+													'/KLUsersSPG.php');
+
 $MenuItems['system']['Transactions']['Caption'] = array(_('Company Preferences'),
 														_('System Parameters'),
-														_('Users Maintenance'),
 														_('Maintain Security Tokens'),
 														_('Access Permissions Maintenance'),
 														_('Page Security Settings'),
@@ -494,14 +701,13 @@ $MenuItems['system']['Transactions']['Caption'] = array(_('Company Preferences')
 														_('Report Builder Tool'),
 														_('View Audit Trail'),
 														_('Geocode Maintenance'),
-														_('Form Designer'),
+														_('Form Design'),
 														_('Web-Store Configuration'),
 														_('SMTP Server Details'),
-												       	_('Mailing Group Maintenance'));
+												       	_('Mailing Group Maintenance')	);
 
 $MenuItems['system']['Transactions']['URL'] = array('/CompanyPreferences.php',
 													'/SystemParameters.php',
-													'/WWW_Users.php',
 													'/SecurityTokens.php',
 													'/WWW_Access.php',
 													'/PageSecurity.php',
@@ -517,39 +723,38 @@ $MenuItems['system']['Transactions']['URL'] = array('/CompanyPreferences.php',
 													'/FormDesigner.php',
 													'/ShopParameters.php',
 													'/SMTPServer.php',
-											       	'/MailingGroupMaintenance.php');
+											       	'/MailingGroupMaintenance.php'	);
 
 $MenuItems['system']['Reports']['Caption'] = array(	_('Sales Types'),
+													_('Returned Item Reasons'),
 													_('Customer Types'),
 													_('Supplier Types'),
 													_('Credit Status'),
 													_('Payment Terms'),
 													_('Set Purchase Order Authorisation levels'),
 													_('Payment Methods'),
-													_('Sales People'),
 													_('Sales Areas'),
 													_('Shippers'),
 													_('Sales GL Interface Postings'),
 													_('COGS GL Interface Postings'),
 													_('Freight Costs Maintenance'),
 													_('Discount Matrix'));
-
 $MenuItems['system']['Reports']['URL'] = array(	'/SalesTypes.php',
+												'/ReturnedItemsReasons.php',
 												'/CustomerTypes.php',
 												'/SupplierTypes.php',
 												'/CreditStatus.php',
 												'/PaymentTerms.php',
 												'/PO_AuthorisationLevels.php',
 												'/PaymentMethods.php',
-												'/SalesPeople.php',
 												'/Areas.php',
 												'/Shippers.php',
 												'/SalesGLPostings.php',
 												'/COGSGLPostings.php',
 												'/FreightCosts.php',
 												'/DiscountMatrix.php');
-
 $MenuItems['system']['Maintenance']['Caption'] = array(	_('Inventory Categories Maintenance'),
+														_('Inventory Location Zones Maintenance'),
 														_('Inventory Locations Maintenance'),
 														_('Inventory Location Authorised Users Maintenance'),
 														_('User Authorised Inventory Locations Maintenance'),
@@ -559,9 +764,11 @@ $MenuItems['system']['Maintenance']['Caption'] = array(	_('Inventory Categories 
 														_('MRP Demand Types'),
 														_('Maintain Internal Departments'),
 														_('Maintain Internal Stock Categories to User Roles'),
-														_('Label Templates Maintenance'));
+														_('KL Label Templates Maintenance'),
+														_('webERP Label Templates Maintenance'));
 
 $MenuItems['system']['Maintenance']['URL'] = array(	'/StockCategories.php',
+													'/LocationZones.php',
 													'/Locations.php',
 													'/LocationUsers.php',
 													'/UserLocations.php',
@@ -571,6 +778,7 @@ $MenuItems['system']['Maintenance']['URL'] = array(	'/StockCategories.php',
 													'/MRPDemandTypes.php',
 													'/Departments.php',
 													'/InternalStockCategoriesByRole.php',
+													'/KLLabels.php',
 													'/Labels.php');
 
 $MenuItems['Utilities']['Transactions']['Caption'] = array(	_('Change A Customer Code'),
@@ -585,8 +793,7 @@ $MenuItems['Utilities']['Transactions']['Caption'] = array(	_('Change A Customer
 															_('Re-apply costs to Sales Analysis'),
 															_('Delete sales transactions'),
 															_('Reverse all supplier payments on a specified date'),
-															_('Update sales analysis with latest customer data'),
-															_('Copy Authority of GL Accounts from one user to another'));
+															_('Update sales analysis with latest customer data'));
 
 $MenuItems['Utilities']['Transactions']['URL'] = array(	'/Z_ChangeCustomerCode.php',
 														'/Z_ChangeBranchCode.php',
@@ -600,8 +807,7 @@ $MenuItems['Utilities']['Transactions']['URL'] = array(	'/Z_ChangeCustomerCode.p
 														'/Z_ReApplyCostToSA.php',
 														'/Z_DeleteSalesTransActions.php',
 														'/Z_ReverseSuppPaymentRun.php',
-														'/Z_UpdateSalesAnalysisWithLatestCustomerData.php',
-														'/Z_GLAccountUsersCopyAuthority.php');
+														'/Z_UpdateSalesAnalysisWithLatestCustomerData.php');
 
 $MenuItems['Utilities']['Reports']['Caption'] = array(	_('Debtors Balances By Currency Totals'),
 														_('Suppliers Balances By Currency Totals'),
@@ -624,6 +830,7 @@ $MenuItems['Utilities']['Maintenance']['Caption'] = array(	_('Maintain Language 
 															_('Create new company template SQL file and submit to webERP'),
 															_('Re-calculate brought forward amounts in GL'),
 															_('Re-Post all GL transactions from a specified period'),
+															_('KL Daily Database Maintenance'),
 															_('Purge all old prices'));
 
 $MenuItems['Utilities']['Maintenance']['URL'] = array(	'/Z_poAdmin.php',
@@ -637,5 +844,6 @@ $MenuItems['Utilities']['Maintenance']['URL'] = array(	'/Z_poAdmin.php',
 														'/Z_CreateCompanyTemplateFile.php',
 														'/Z_UpdateChartDetailsBFwd.php',
 														'/Z_RePostGLFromPeriod.php',
+														'/KLMaintainDatabase.php',
 														'/Z_DeleteOldPrices.php');
 ?>

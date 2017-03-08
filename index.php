@@ -102,12 +102,14 @@ echo '</li>'; // SubMenuHeader
 $i=0;
 foreach ($MenuItems[$_SESSION['Module']]['Transactions']['Caption'] as $Caption) {
 /* Transactions Menu Item */
-	$ScriptNameArray = explode('?', substr($MenuItems[$_SESSION['Module']]['Transactions']['URL'][$i],1));
-	$PageSecurity = $_SESSION['PageSecurityArray'][$ScriptNameArray[0]];
-	if ((in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PageSecurity))) {
-		echo '<li class="menu_group_item">
-				<p>&bull; <a href="' . $RootPath . $MenuItems[$_SESSION['Module']]['Transactions']['URL'][$i] .'">' . $Caption . '</a></p>
-			  </li>';
+	if ($Caption != ''){
+		$ScriptNameArray = explode('?', substr($MenuItems[$_SESSION['Module']]['Transactions']['URL'][$i],1));
+		$PageSecurity = $_SESSION['PageSecurityArray'][$ScriptNameArray[0]];
+		if ((in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PageSecurity))) {
+			echo '<li class="menu_group_item">
+					<p>&bull; <a href="' . $RootPath . $MenuItems[$_SESSION['Module']]['Transactions']['URL'][$i] .'">' . $Caption . '</a></p>
+				  </li>';
+		}
 	}
 	$i++;
 }
@@ -129,16 +131,18 @@ echo '</li>';
 $i=0;
 foreach ($MenuItems[$_SESSION['Module']]['Reports']['Caption'] as $Caption) {
 /* Transactions Menu Item */
-	$ScriptNameArray = explode('?', substr($MenuItems[$_SESSION['Module']]['Reports']['URL'][$i],1));
-	$PageSecurity = $_SESSION['PageSecurityArray'][$ScriptNameArray[0]];
-	if ((in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PageSecurity))) {
-		echo '<li class="menu_group_item">
-				<p>&bull; <a href="' . $RootPath . $MenuItems[$_SESSION['Module']]['Reports']['URL'][$i] .'">' . $Caption . '</a></p>
-			  </li>';
+	if ($Caption != ''){
+		$ScriptNameArray = explode('?', substr($MenuItems[$_SESSION['Module']]['Reports']['URL'][$i],1));
+		$PageSecurity = $_SESSION['PageSecurityArray'][$ScriptNameArray[0]];
+		if ((in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PageSecurity))) {
+			echo '<li class="menu_group_item">
+					<p>&bull; <a href="' . $RootPath . $MenuItems[$_SESSION['Module']]['Reports']['URL'][$i] .'">' . $Caption . '</a></p>
+				  </li>';
+		}
 	}
 	$i++;
 }
-echo GetRptLinks($_SESSION['Module']); //=== GetRptLinks() must be modified!!! ===
+//echo GetRptLinks($_SESSION['Module']); //=== GetRptLinks() must be modified!!! ===
 echo '</ul></div>'; //=== InquiriesDiv ===
 
 
@@ -156,12 +160,14 @@ echo '</li>';
 $i=0;
 foreach ($MenuItems[$_SESSION['Module']]['Maintenance']['Caption'] as $Caption) {
 /* Transactions Menu Item */
-	$ScriptNameArray = explode('?', substr($MenuItems[$_SESSION['Module']]['Maintenance']['URL'][$i],1));
-	$PageSecurity = $_SESSION['PageSecurityArray'][$ScriptNameArray[0]];
-	if ((in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PageSecurity))) {
-		echo '<li class="menu_group_item">
-				<p>&bull; <a href="' . $RootPath . $MenuItems[$_SESSION['Module']]['Maintenance']['URL'][$i] .'">' . $Caption . '</a></p>
-			  </li>';
+	if ($Caption != ''){
+		$ScriptNameArray = explode('?', substr($MenuItems[$_SESSION['Module']]['Maintenance']['URL'][$i],1));
+		$PageSecurity = $_SESSION['PageSecurityArray'][$ScriptNameArray[0]];
+		if ((in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PageSecurity))) {
+			echo '<li class="menu_group_item">
+					<p>&bull; <a href="' . $RootPath . $MenuItems[$_SESSION['Module']]['Maintenance']['URL'][$i] .'">' . $Caption . '</a></p>
+				  </li>';
+		}
 	}
 	$i++;
 }

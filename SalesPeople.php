@@ -1,8 +1,13 @@
 <?php
 /* $Id: SalesPeople.php 7548 2016-05-30 09:59:55Z daintree $*/
 
+/*****************************************************************************************
+KL RICARD MODIFICATIONS:
+- Simplified fields not used in KL (or anyway in webERP)
+*****************************************************************************************/
+
 include('includes/session.inc');
-$Title = _('Sales People Maintenance');
+$Title = _('SPG Maintenance');
 $ViewTopic = 'SalesPeople';
 $BookMark = 'SalesPeople';
 if(isset($_GET['SelectedSalesPerson'])) {
@@ -12,6 +17,7 @@ if(isset($_GET['delete'])) {
 	$BookMark = 'SalespeopleDelete';
 }// For Delete's ERROR Message Report.
 include('includes/header.inc');
+include('includes/KLEmails.php');
 
 if (isset($_GET['SelectedSalesPerson'])){
 	$SelectedSalesPerson =mb_strtoupper($_GET['SelectedSalesPerson']);
@@ -53,21 +59,6 @@ if (isset($_POST['submit'])) {
 		prnMsg(_('The salesperson name must be thirty characters or less long'),'error');
 		$Errors[$i] = 'SalesmanName';
 		$i++;
-	} elseif (mb_strlen($_POST['SManTel']) > 20) {
-		$InputError = 1;
-		prnMsg(_('The salesperson telephone number must be twenty characters or less long'),'error');
-
-	} elseif (mb_strlen($_POST['SManFax']) > 20) {
-		$InputError = 1;
-		prnMsg(_('The salesperson telephone number must be twenty characters or less long'),'error');
-
-	} elseif (!is_numeric(filter_number_format($_POST['CommissionRate1']))
-			OR !is_numeric(filter_number_format($_POST['CommissionRate2']))) {
-		$InputError = 1;
-		prnMsg(_('The commission rates must be a floating point number'),'error');
-	} elseif (!is_numeric(filter_number_format($_POST['Breakpoint']))) {
-		$InputError = 1;
-		prnMsg(_('The breakpoint should be a floating point number'),'error');
 	}
 
 	if (!isset($_POST['SManTel'])){
@@ -103,6 +94,9 @@ if (isset($_POST['submit'])) {
 				WHERE salesmancode = '".$SelectedSalesPerson."'";
 
 		$msg = _('Salesperson record for') . ' ' . $_POST['SalesmanName'] . ' ' . _('has been updated');
+
+		KLSendEmail("SpgCodeUpdated", "Silent", $SelectedSalesPerson, $_POST['SalesmanName'], $_SESSION['UserID']);
+
 	} elseif ($InputError !=1) {
 
 	/*Selected group is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new Sales-person form */
@@ -126,6 +120,8 @@ if (isset($_POST['submit'])) {
 					)";
 
 		$msg = _('A new salesperson record has been added for') . ' ' . $_POST['SalesmanName'];
+
+		KLSendEmail("SpgCodeCreated", "Silent",$_POST['SalesmanCode'], $_POST['SalesmanName'], $_SESSION['UserID']);
 	}
 	if ($InputError !=1) {
 		//run the SQL from either of the above possibilites
@@ -177,6 +173,7 @@ $BookMark = 'SalespeopleDelete';
 				$result = DB_query($sql,$ErrMsg);
 
 				prnMsg(_('Salesperson') . ' ' . $SelectedSalesPerson . ' ' . _('has been deleted from the database'),'success');
+				KLSendEmail("SpgCodeDeleted", "Silent", $SelectedSalesPerson, $_SESSION['UserID']);
 				unset ($SelectedSalesPerson);
 				unset($delete);
 			}
@@ -199,18 +196,15 @@ or deletion of the records*/
 				breakpoint,
 				commissionrate2,
 				current
-			FROM salesman";
+			FROM salesman
+			ORDER BY current DESC,
+				salesmancode";
 	$result = DB_query($sql);
 
 	echo '<table class="selection">';
 	echo '<tr>
 			<th>' . _('Code') . '</th>
 			<th>' . _('Name') . '</th>
-			<th>' . _('Telephone') . '</th>
-			<th>' . _('Facsimile') . '</th>
-			<th>' . _('Comm Rate 1') . '</th>
-			<th>' . _('Break') . '</th>
-			<th>' . _('Comm Rate 2') . '</th>
 			<th>' . _('Current') . '</th>
 		</tr>';
 	$k=0;
@@ -232,21 +226,11 @@ or deletion of the records*/
 	printf('<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
-			<td>%s</td>
-			<td class="number">%s</td>
-			<td class="number">%s</td>
-			<td class="number">%s</td>
-			<td>%s</td>
 			<td><a href="%sSelectedSalesPerson=%s">' .  _('Edit') . '</a></td>
 			<td><a href="%sSelectedSalesPerson=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this sales person?') . '\');">' . _('Delete') . '</a></td>
 			</tr>',
 			$myrow['salesmancode'],
 			$myrow['salesmanname'],
-			$myrow['smantel'],
-			$myrow['smanfax'],
-			locale_number_format($myrow['commissionrate1'],2),
-			locale_number_format($myrow['breakpoint'],$_SESSION['CompanyRecord']['decimalplaces']),
-			locale_number_format($myrow['commissionrate2'],2),
 			$ActiveText,
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 			$myrow['salesmancode'],
@@ -306,7 +290,7 @@ if (! isset($_GET['delete'])) {
 
 		echo '<table class="selection">
 				<tr>
-					<td>' . _('Salesperson code') . ':</td>
+					<td>' . _('SPG Code') . ':</td>
 					<td><input type="text" '. (in_array('SalesmanCode',$Errors) ? 'class="inputerror"' : '' ) .' name="SalesmanCode" size="3" maxlength="3" /></td>
 				</tr>';
 	}
@@ -333,10 +317,10 @@ if (! isset($_GET['delete'])) {
 	}
 
 	echo '<tr>
-			<td>' . _('Salesperson Name') . ':</td>
+			<td>' . _('SPG Name') . ':</td>
 			<td><input type="text" '. (in_array('SalesmanName',$Errors) ? 'class="inputerror"' : '' ) .' name="SalesmanName"  size="30" maxlength="30" value="' . $_POST['SalesmanName'] . '" /></td>
 		</tr>';
-	echo '<tr>
+/*	echo '<tr>
 			<td>' . _('Telephone No') . ':</td>
 			<td><input type="text" name="SManTel" size="20" maxlength="20" value="' . $_POST['SManTel'] . '" /></td>
 		</tr>';
@@ -356,7 +340,7 @@ if (! isset($_GET['delete'])) {
 			<td>' . _('Commission Rate 2') . ':</td>
 			<td><input type="text" class="number" name="CommissionRate2" size="5" maxlength="5" value="' . $_POST['CommissionRate2']. '" /></td>
 		</tr>';
-
+*/
 	echo '<tr>
 			<td>' . _('Current?') . ':</td>
 			<td><select name="Current">';

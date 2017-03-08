@@ -1,0 +1,688 @@
+[16-May-2013 06:51:15] PHP Notice:  Undefined index:  DefGroup in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/ReportMaker.php on line 355
+[16-May-2013 06:51:15] PHP Warning:  fopen(logs/webERP-test.log) [<a href='function.fopen'>function.fopen</a>]: failed to open stream: No such file or directory in /home/kurakura/public_html/kapal-laut.com/weberp/includes/MiscFunctions.php on line 24
+[16-May-2013 06:51:15] PHP Warning:  fwrite(): supplied argument is not a valid stream resource in /home/kurakura/public_html/kapal-laut.com/weberp/includes/MiscFunctions.php on line 38
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:  DefGroup in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/ReportMaker.php on line 355
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:18] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:18] PHP Notice:  Use of undefined constant RowSpace - assumed 'RowSpace' in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 31
+[16-May-2013 06:53:19] PHP Notice:  Undefined property: PDF::$title in /home/kurakura/public_html/kapal-laut.com/weberp/includes/tcpdf/tcpdf.php on line 7295
+[16-May-2013 06:53:19] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/ReportMaker.php:355) in /home/kurakura/public_html/kapal-laut.com/weberp/includes/tcpdf/tcpdf.php on line 5817
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:  DefGroup in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/ReportMaker.php on line 355
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 497
+[16-May-2013 06:53:49] PHP Notice:  Undefined index:   in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 505
+[16-May-2013 06:53:49] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/ReportMaker.php:355) in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 574
+[16-May-2013 06:53:49] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/ReportMaker.php:355) in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 575
+[16-May-2013 06:53:49] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/ReportMaker.php:355) in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 576
+[16-May-2013 06:53:49] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/ReportMaker.php:355) in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 577
+[16-May-2013 06:53:49] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/ReportMaker.php:355) in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 578
+[16-May-2013 06:53:49] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/ReportMaker.php:355) in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 579
+[16-May-2013 06:53:49] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/ReportMaker.php:355) in /home/kurakura/public_html/kapal-laut.com/weberp/reportwriter/WriteReport.inc on line 580
+[20-Jun-2013 11:54:16] PHP Fatal error:  Allowed memory size of 67108864 bytes exhausted (tried to allocate 4 bytes) in /home/kurakura/public_html/kapal-laut.com/weberp/includes/ConnectDB_mysqli.inc on line 126
+[21-Jun-2013 16:56:58] PHP Fatal error:  Allowed memory size of 67108864 bytes exhausted (tried to allocate 24 bytes) in /home/kurakura/public_html/kapal-laut.com/weberp/includes/ConnectDB_mysqli.inc on line 126
+[21-Aug-2013 10:45:55] PHP Fatal error:  Call to undefined function  db_query() in /home4/kurakura/public_html/kapal-laut.com/weberp/includes/UserLogin.php on line 47
+[21-Aug-2013 14:19:39] PHP Fatal error:  Call to undefined function  db_query() in /home4/kurakura/public_html/kapal-laut.com/weberp/includes/UserLogin.php on line 47
+[10-Sep-2013 11:08:55] PHP Fatal error:  Allowed memory size of 67108864 bytes exhausted (tried to allocate 72 bytes) in /home4/kurakura/public_html/kapal-laut.com/weberp/includes/ConnectDB_mysqli.inc on line 126
+[11-Feb-2014 06:03:26 America/Chicago] PHP Warning:  PHP Startup: magickwand: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[11-Feb-2014 06:03:26 America/Chicago] PHP Warning:  PHP Startup: imagick: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[11-Feb-2014 06:03:26 America/Chicago] PHP Warning:  PHP Startup: OAuth: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[11-Feb-2014 06:03:26 America/Chicago] PHP Warning:  PHP Startup: PDO: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[11-Feb-2014 06:03:26 America/Chicago] PHP Warning:  PHP Startup: pdo_sqlite: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[11-Feb-2014 06:03:26 America/Chicago] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/local/lib/php/extensions/no-debug-non-zts-20060613/sqlite.so' - /usr/local/lib/php/extensions/no-debug-non-zts-20060613/sqlite.so: undefined symbol: third_arg_force_ref in Unknown on line 0
+[11-Feb-2014 06:03:26 America/Chicago] PHP Warning:  PHP Startup: pdo_mysql: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[11-Feb-2014 06:03:26 America/Chicago] PHP Warning:  PHP Startup: uploadprogress: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[11-Feb-2014 06:03:26 America/Chicago] PHP Warning:  PHP Startup: SourceGuardian: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[16-Feb-2014 06:46:50 America/Chicago] PHP Warning:  PHP Startup: magickwand: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[16-Feb-2014 06:46:50 America/Chicago] PHP Warning:  PHP Startup: imagick: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[16-Feb-2014 06:46:50 America/Chicago] PHP Warning:  PHP Startup: OAuth: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[16-Feb-2014 06:46:50 America/Chicago] PHP Warning:  PHP Startup: PDO: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[16-Feb-2014 06:46:50 America/Chicago] PHP Warning:  PHP Startup: pdo_sqlite: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[16-Feb-2014 06:46:50 America/Chicago] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/local/lib/php/extensions/no-debug-non-zts-20060613/sqlite.so' - /usr/local/lib/php/extensions/no-debug-non-zts-20060613/sqlite.so: undefined symbol: third_arg_force_ref in Unknown on line 0
+[16-Feb-2014 06:46:50 America/Chicago] PHP Warning:  PHP Startup: pdo_mysql: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[16-Feb-2014 06:46:50 America/Chicago] PHP Warning:  PHP Startup: uploadprogress: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[16-Feb-2014 06:46:50 America/Chicago] PHP Warning:  PHP Startup: SourceGuardian: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[09-Mar-2014 06:44:13 America/Chicago] PHP Warning:  PHP Startup: magickwand: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[09-Mar-2014 06:44:13 America/Chicago] PHP Warning:  PHP Startup: imagick: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[09-Mar-2014 06:44:13 America/Chicago] PHP Warning:  PHP Startup: OAuth: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[09-Mar-2014 06:44:13 America/Chicago] PHP Warning:  PHP Startup: PDO: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[09-Mar-2014 06:44:13 America/Chicago] PHP Warning:  PHP Startup: pdo_sqlite: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[09-Mar-2014 06:44:13 America/Chicago] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/local/lib/php/extensions/no-debug-non-zts-20060613/sqlite.so' - /usr/local/lib/php/extensions/no-debug-non-zts-20060613/sqlite.so: undefined symbol: third_arg_force_ref in Unknown on line 0
+[09-Mar-2014 06:44:13 America/Chicago] PHP Warning:  PHP Startup: pdo_mysql: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[09-Mar-2014 06:44:13 America/Chicago] PHP Warning:  PHP Startup: uploadprogress: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[09-Mar-2014 06:44:13 America/Chicago] PHP Warning:  PHP Startup: SourceGuardian: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[17-Mar-2014 01:42:52 America/Chicago] PHP Warning:  PHP Startup: magickwand: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[17-Mar-2014 01:42:52 America/Chicago] PHP Warning:  PHP Startup: imagick: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[17-Mar-2014 01:42:52 America/Chicago] PHP Warning:  PHP Startup: OAuth: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[17-Mar-2014 01:42:52 America/Chicago] PHP Warning:  PHP Startup: PDO: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[17-Mar-2014 01:42:52 America/Chicago] PHP Warning:  PHP Startup: pdo_sqlite: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[17-Mar-2014 01:42:52 America/Chicago] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/local/lib/php/extensions/no-debug-non-zts-20060613/sqlite.so' - /usr/local/lib/php/extensions/no-debug-non-zts-20060613/sqlite.so: undefined symbol: third_arg_force_ref in Unknown on line 0
+[17-Mar-2014 01:42:52 America/Chicago] PHP Warning:  PHP Startup: pdo_mysql: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[17-Mar-2014 01:42:52 America/Chicago] PHP Warning:  PHP Startup: uploadprogress: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[17-Mar-2014 01:42:52 America/Chicago] PHP Warning:  PHP Startup: SourceGuardian: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[19-Mar-2014 07:17:58 America/Chicago] PHP Warning:  PHP Startup: magickwand: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[19-Mar-2014 07:17:58 America/Chicago] PHP Warning:  PHP Startup: imagick: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[19-Mar-2014 07:17:58 America/Chicago] PHP Warning:  PHP Startup: OAuth: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[19-Mar-2014 07:17:58 America/Chicago] PHP Warning:  PHP Startup: PDO: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[19-Mar-2014 07:17:58 America/Chicago] PHP Warning:  PHP Startup: pdo_sqlite: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[19-Mar-2014 07:17:58 America/Chicago] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/local/lib/php/extensions/no-debug-non-zts-20060613/sqlite.so' - /usr/local/lib/php/extensions/no-debug-non-zts-20060613/sqlite.so: undefined symbol: third_arg_force_ref in Unknown on line 0
+[19-Mar-2014 07:17:58 America/Chicago] PHP Warning:  PHP Startup: pdo_mysql: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[19-Mar-2014 07:17:58 America/Chicago] PHP Warning:  PHP Startup: uploadprogress: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[19-Mar-2014 07:17:58 America/Chicago] PHP Warning:  PHP Startup: SourceGuardian: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[24-Mar-2014 07:48:07 America/Chicago] PHP Warning:  PHP Startup: magickwand: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[24-Mar-2014 07:48:07 America/Chicago] PHP Warning:  PHP Startup: imagick: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[24-Mar-2014 07:48:07 America/Chicago] PHP Warning:  PHP Startup: OAuth: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[24-Mar-2014 07:48:07 America/Chicago] PHP Warning:  PHP Startup: PDO: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[24-Mar-2014 07:48:07 America/Chicago] PHP Warning:  PHP Startup: pdo_sqlite: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[24-Mar-2014 07:48:07 America/Chicago] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/local/lib/php/extensions/no-debug-non-zts-20060613/sqlite.so' - /usr/local/lib/php/extensions/no-debug-non-zts-20060613/sqlite.so: undefined symbol: third_arg_force_ref in Unknown on line 0
+[24-Mar-2014 07:48:07 America/Chicago] PHP Warning:  PHP Startup: pdo_mysql: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[24-Mar-2014 07:48:07 America/Chicago] PHP Warning:  PHP Startup: uploadprogress: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[24-Mar-2014 07:48:07 America/Chicago] PHP Warning:  PHP Startup: SourceGuardian: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[03-Apr-2014 09:14:02 America/Chicago] PHP Warning:  PHP Startup: magickwand: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[03-Apr-2014 09:14:02 America/Chicago] PHP Warning:  PHP Startup: imagick: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[03-Apr-2014 09:14:02 America/Chicago] PHP Warning:  PHP Startup: OAuth: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[03-Apr-2014 09:14:02 America/Chicago] PHP Warning:  PHP Startup: PDO: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[03-Apr-2014 09:14:02 America/Chicago] PHP Warning:  PHP Startup: pdo_sqlite: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[03-Apr-2014 09:14:02 America/Chicago] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/local/lib/php/extensions/no-debug-non-zts-20060613/sqlite.so' - /usr/local/lib/php/extensions/no-debug-non-zts-20060613/sqlite.so: undefined symbol: third_arg_force_ref in Unknown on line 0
+[03-Apr-2014 09:14:02 America/Chicago] PHP Warning:  PHP Startup: pdo_mysql: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[03-Apr-2014 09:14:02 America/Chicago] PHP Warning:  PHP Startup: uploadprogress: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[03-Apr-2014 09:14:02 America/Chicago] PHP Warning:  PHP Startup: SourceGuardian: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[03-Apr-2014 09:14:32 America/Chicago] PHP Warning:  PHP Startup: magickwand: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[03-Apr-2014 09:14:32 America/Chicago] PHP Warning:  PHP Startup: imagick: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[03-Apr-2014 09:14:32 America/Chicago] PHP Warning:  PHP Startup: OAuth: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[03-Apr-2014 09:14:32 America/Chicago] PHP Warning:  PHP Startup: PDO: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[03-Apr-2014 09:14:32 America/Chicago] PHP Warning:  PHP Startup: pdo_sqlite: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[03-Apr-2014 09:14:32 America/Chicago] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/local/lib/php/extensions/no-debug-non-zts-20060613/sqlite.so' - /usr/local/lib/php/extensions/no-debug-non-zts-20060613/sqlite.so: undefined symbol: third_arg_force_ref in Unknown on line 0
+[03-Apr-2014 09:14:32 America/Chicago] PHP Warning:  PHP Startup: pdo_mysql: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[03-Apr-2014 09:14:32 America/Chicago] PHP Warning:  PHP Startup: uploadprogress: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[03-Apr-2014 09:14:32 America/Chicago] PHP Warning:  PHP Startup: SourceGuardian: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[06-Apr-2014 04:39:14 America/Chicago] PHP Warning:  PHP Startup: magickwand: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[06-Apr-2014 04:39:14 America/Chicago] PHP Warning:  PHP Startup: imagick: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[06-Apr-2014 04:39:14 America/Chicago] PHP Warning:  PHP Startup: OAuth: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[06-Apr-2014 04:39:14 America/Chicago] PHP Warning:  PHP Startup: PDO: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[06-Apr-2014 04:39:14 America/Chicago] PHP Warning:  PHP Startup: pdo_sqlite: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[06-Apr-2014 04:39:14 America/Chicago] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/local/lib/php/extensions/no-debug-non-zts-20060613/sqlite.so' - /usr/local/lib/php/extensions/no-debug-non-zts-20060613/sqlite.so: undefined symbol: third_arg_force_ref in Unknown on line 0
+[06-Apr-2014 04:39:14 America/Chicago] PHP Warning:  PHP Startup: pdo_mysql: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[06-Apr-2014 04:39:14 America/Chicago] PHP Warning:  PHP Startup: uploadprogress: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[06-Apr-2014 04:39:14 America/Chicago] PHP Warning:  PHP Startup: SourceGuardian: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[06-Apr-2014 09:39:56 America/Chicago] PHP Warning:  PHP Startup: magickwand: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[06-Apr-2014 09:39:56 America/Chicago] PHP Warning:  PHP Startup: imagick: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[06-Apr-2014 09:39:56 America/Chicago] PHP Warning:  PHP Startup: OAuth: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[06-Apr-2014 09:39:56 America/Chicago] PHP Warning:  PHP Startup: PDO: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[06-Apr-2014 09:39:56 America/Chicago] PHP Warning:  PHP Startup: pdo_sqlite: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[06-Apr-2014 09:39:56 America/Chicago] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/local/lib/php/extensions/no-debug-non-zts-20060613/sqlite.so' - /usr/local/lib/php/extensions/no-debug-non-zts-20060613/sqlite.so: undefined symbol: third_arg_force_ref in Unknown on line 0
+[06-Apr-2014 09:39:56 America/Chicago] PHP Warning:  PHP Startup: pdo_mysql: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[06-Apr-2014 09:39:56 America/Chicago] PHP Warning:  PHP Startup: uploadprogress: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[06-Apr-2014 09:39:56 America/Chicago] PHP Warning:  PHP Startup: SourceGuardian: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[06-Apr-2014 09:40:12 America/Chicago] PHP Warning:  PHP Startup: magickwand: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[06-Apr-2014 09:40:12 America/Chicago] PHP Warning:  PHP Startup: imagick: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[06-Apr-2014 09:40:12 America/Chicago] PHP Warning:  PHP Startup: OAuth: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[06-Apr-2014 09:40:12 America/Chicago] PHP Warning:  PHP Startup: PDO: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[06-Apr-2014 09:40:12 America/Chicago] PHP Warning:  PHP Startup: pdo_sqlite: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[06-Apr-2014 09:40:12 America/Chicago] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/local/lib/php/extensions/no-debug-non-zts-20060613/sqlite.so' - /usr/local/lib/php/extensions/no-debug-non-zts-20060613/sqlite.so: undefined symbol: third_arg_force_ref in Unknown on line 0
+[06-Apr-2014 09:40:12 America/Chicago] PHP Warning:  PHP Startup: pdo_mysql: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[06-Apr-2014 09:40:12 America/Chicago] PHP Warning:  PHP Startup: uploadprogress: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[06-Apr-2014 09:40:12 America/Chicago] PHP Warning:  PHP Startup: SourceGuardian: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[18-Apr-2014 04:34:03 America/Chicago] PHP Warning:  PHP Startup: magickwand: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[18-Apr-2014 04:34:03 America/Chicago] PHP Warning:  PHP Startup: imagick: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[18-Apr-2014 04:34:03 America/Chicago] PHP Warning:  PHP Startup: OAuth: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[18-Apr-2014 04:34:03 America/Chicago] PHP Warning:  PHP Startup: PDO: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[18-Apr-2014 04:34:03 America/Chicago] PHP Warning:  PHP Startup: pdo_sqlite: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[18-Apr-2014 04:34:03 America/Chicago] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/local/lib/php/extensions/no-debug-non-zts-20060613/sqlite.so' - /usr/local/lib/php/extensions/no-debug-non-zts-20060613/sqlite.so: undefined symbol: third_arg_force_ref in Unknown on line 0
+[18-Apr-2014 04:34:03 America/Chicago] PHP Warning:  PHP Startup: pdo_mysql: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[18-Apr-2014 04:34:03 America/Chicago] PHP Warning:  PHP Startup: uploadprogress: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0
+[18-Apr-2014 04:34:03 America/Chicago] PHP Warning:  PHP Startup: SourceGuardian: Unable to initialize module
+Module compiled with module API=20060613
+PHP    compiled with module API=20090626
+These options need to match
+ in Unknown on line 0

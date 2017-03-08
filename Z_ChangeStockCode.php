@@ -4,6 +4,11 @@
 /*	It uses function ChangeFieldInTable($TableName, $FieldName, $OldValue, 
 	$NewValue, $db) from .../includes/MiscFunctions.php.*/
 
+/**************************************************************************************
+KL RICARD MODIFICATIONS:
+- change the stock code also in KL tables using this field in webERP and OpenCart
+***************************************************************************************/
+
 include ('includes/session.inc');
 $Title = _('UTILITY PAGE Change A Stock Code');// Screen identificator.
 $ViewTopic = 'SpecialUtilities'; // Filename in ManualContents.php's TOC.
@@ -53,6 +58,7 @@ if (isset($_POST['ProcessStockChange'])){
 
 		DB_IgnoreForeignKeys();
 		$result = DB_Txn_Begin();
+/* RICARD KL: Added lastcategoryupdate and kl*** fields, and 4 dimension fields */	
 		echo '<br />' . _('Adding the new stock master record');
 		$sql = "INSERT INTO stockmaster (stockid,
 										categoryid,
@@ -79,7 +85,16 @@ if (isset($_POST['ProcessStockChange'])){
 										pansize,
 										netweight,
 										perishable,
-										nextserialno)
+										nextserialno,
+										lastcategoryupdate,
+										length,
+										width,
+										height,
+										unitsdimension,
+										klchangingprice,
+										klmovingdiscount20,
+										klmovingdiscount50,
+										klmovingdiscount80)
 				SELECT '" . $_POST['NewStockID'] . "',
 					categoryid,
 					description,
@@ -105,7 +120,16 @@ if (isset($_POST['ProcessStockChange'])){
 					pansize,
 					netweight,
 					perishable,
-					nextserialno
+					nextserialno,
+					lastcategoryupdate,
+					length,
+					width,
+					height,
+					unitsdimension,
+					klchangingprice,
+					klmovingdiscount20,
+					klmovingdiscount50,
+					klmovingdiscount80
 				FROM stockmaster
 				WHERE stockid='" . $_POST['OldStockID'] . "'";
 
@@ -189,6 +213,25 @@ if (isset($_POST['ProcessStockChange'])){
 		ChangeFieldInTable("qasamples", "prodspeckey", $_POST['OldStockID'], $_POST['NewStockID'], $db);
 
 		DB_ReinstateForeignKeys();
+		/* KL RICARD TABLES */
+		ChangeFieldInTable("kladjustrl", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
+		ChangeFieldInTable("klchangeprice", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
+		ChangeFieldInTable("klfreeexchanges", "itemfrom", $_POST['OldStockID'], $_POST['NewStockID'], $db);
+		ChangeFieldInTable("klfreeexchanges", "itemto", $_POST['OldStockID'], $_POST['NewStockID'], $db);
+		ChangeFieldInTable("klmovetodiscount20", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
+		ChangeFieldInTable("klmovetodiscount50", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
+		ChangeFieldInTable("klmovetodiscount80", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
+		ChangeFieldInTable("relateditems", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
+		ChangeFieldInTable("relateditems", "related", $_POST['OldStockID'], $_POST['NewStockID'], $db);
+
+		include ('includes/OpenCartConnectDB.php');
+		ChangeFieldInOpenCartTable( $oc_tableprefix."product", "model", $_POST['OldStockID'], $_POST['NewStockID'], $db_oc);
+		ChangeFieldInOpenCartTable( $oc_tableprefix."product", "sku", $_POST['OldStockID'], $_POST['NewStockID'], $db_oc);
+		ChangeFieldInOpenCartTable( $oc_tableprefix."product", "mpn", $_POST['OldStockID'], $_POST['NewStockID'], $db_oc);
+		
+		/* END OF KL TABLES */
+		
+		DB_ReinstateForeignKeys();
 
 		$result = DB_Txn_Commit();
 
@@ -228,5 +271,17 @@ echo '<br />
 	</form>';
 
 include('includes/footer.inc');
+
+function ChangeFieldInOpenCartTable($TableName, $FieldName, $OldValue, $NewValue, $db_oc){
+	/* Used in Z_ scripts to change one field across the table.
+	*/
+	echo '<br />' . _('Changing OPENCART') . ' ' . $TableName . ' ' . _('records');
+	$sql = "UPDATE " . $TableName . " SET " . $FieldName . " ='" . $NewValue . "' WHERE " . $FieldName . "='" . $OldValue . "'";
+	$DbgMsg = _('The SQL statement that failed was');
+	$ErrMsg = _('The SQL to update' . ' ' . $TableName . ' ' . _('records failed'));
+	$result = DB_query_oc($sql,$ErrMsg,$DbgMsg,true);
+	echo ' ... ' . _('completed');
+}
+
 
 ?>
