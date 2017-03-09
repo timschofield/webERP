@@ -352,9 +352,9 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111520000",         -1,          1, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111512000",   50000000,  125000000, $periodnow, $db);
+		BalanceAccountControl("111512000",   50000000,  150000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111513000",         -1,          1, $periodnow, $db);
+		BalanceAccountControl("111513000",   -1000000,    1000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111800000",  200000000,  300000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
@@ -366,7 +366,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("211021400",  -50000000,          0, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("211021500",  100000000,  300000000, $periodnow, $db);
+		BalanceAccountControl("211021500",  200000000,  500000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("612011215",         -1,          1, $periodnow, $db);
 		$NumberOfTestExecuted++;
