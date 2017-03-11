@@ -5,7 +5,7 @@
 KL RICARD MODIFICATIONS:
 - Added entries for all KL scripts
 *****************************************************************************************/
-// RICARD: Personalianalize menu entries by level
+// RICARD: Personalize menu entries by level
 include('includes/KLRoles.inc');
 
 /* webERP menus with Captions and URLs. */
@@ -755,6 +755,7 @@ $MenuItems['system']['Reports']['URL'] = array(	'/SalesTypes.php',
 												'/DiscountMatrix.php');
 $MenuItems['system']['Maintenance']['Caption'] = array(	_('Inventory Categories Maintenance'),
 														_('Inventory Location Zones Maintenance'),
+														_('Inventory Location Types Maintenance'),
 														_('Inventory Locations Maintenance'),
 														_('Inventory Location Authorised Users Maintenance'),
 														_('User Authorised Inventory Locations Maintenance'),
@@ -769,6 +770,7 @@ $MenuItems['system']['Maintenance']['Caption'] = array(	_('Inventory Categories 
 
 $MenuItems['system']['Maintenance']['URL'] = array(	'/StockCategories.php',
 													'/LocationZones.php',
+													'/LocationTypes.php',
 													'/Locations.php',
 													'/LocationUsers.php',
 													'/UserLocations.php',

@@ -84,6 +84,7 @@ if(isset($_POST['submit'])) {
 									klposcashaccount = '" . $_POST['KLPOSCashAccount'] . "',
 									klpostag = '" . $_POST['KLPOSTag'] . "',
 									zone = '" . $_POST['Zone'] . "',
+									typeloc = '" . $_POST['TypeLoc'] . "',
 									rlfactorforpackaging = '" . $_POST['RLFactorForPackaging'] . "',
 									rldaysforpackaging = '" . $_POST['RLDaysForPackaging'] . "',
 									usedforwo = '" . $_POST['UsedForWO'] . "',
@@ -122,6 +123,7 @@ if(isset($_POST['submit'])) {
 		unset($_POST['KLPOSCashAccount']);
 		unset($_POST['KLPOSTag']);
 		unset($_POST['Zone']);
+		unset($_POST['TypeLoc']);
 		unset($_POST['RLFactorForPackaging']);
 		unset($_POST['RLDaysForPackaging']);
 		unset($_POST['UsedForWO']);
@@ -164,6 +166,7 @@ if(isset($_POST['submit'])) {
 										klposcashaccount,
 										klpostag,
 										zone,
+										typeloc,
 										rlfactorforpackaging,
 										rldaysforpackaging,
 										usedforwo,
@@ -193,6 +196,7 @@ if(isset($_POST['submit'])) {
 								'" . $_POST['KLPOSCashAccount'] . "',
 								'" . $_POST['KLPOSTag'] . "',
 								'" . $_POST['Zone'] . "',
+								'" . $_POST['TypeLoc'] . "',
 								'" . $_POST['RLFactorForPackaging'] . "',
 								'" . $_POST['RLDaysForPackaging'] . "',
 								'" . $_POST['UsedForWO'] . "',
@@ -265,6 +269,7 @@ if(isset($_POST['submit'])) {
 		unset($_POST['KLPOSCashAccount']);
 		unset($_POST['KLPOSTag']);
 		unset($_POST['Zone']);
+		unset($_POST['TypeLoc']);
 		unset($_POST['RLFactorForPackaging']);
 		unset($_POST['RLDaysForPackaging']);
 		unset($_POST['UsedForWO']);
@@ -445,6 +450,8 @@ or deletion of the records*/
 				klpostag,
 				glaccountcode,
 				allowinvoicing,
+				zone,
+				typeloc,
 				managed
 			FROM locations INNER JOIN taxprovinces
 			ON locations.taxprovinceid=taxprovinces.taxprovinceid
@@ -457,12 +464,14 @@ or deletion of the records*/
 
 	echo '<table class="selection">
 		<tr>
-			<th class="ascending">', _('Location Code'), '</th>
+			<th class="ascending">', _('Code'), '</th>
 			<th class="ascending">', _('Location Name'), '</th>
 			<th class="ascending">', _('Priority'), '</th>
-			<th class="ascending">', _('KL ST From'), '</th>
-			<th class="ascending">', _('KL ST Max Models'), '</th>
-			<th class="ascending">', _('POS Cash GL Account'), '</th>
+			<th class="ascending">', _('Zone'), '</th>
+			<th class="ascending">', _('Type'), '</th>
+			<th class="ascending">', _('ST From'), '</th>
+			<th class="ascending">', _('ST Max'), '</th>
+			<th class="ascending">', _('POS Cash GL'), '</th>
 			<th class="ascending">', _('POS Tag'), '</th>
 			<th class="noprint" colspan="2">&nbsp;</th>
 		</tr>';
@@ -487,15 +496,19 @@ while ($myrow = DB_fetch_array($result)) {
 			<td>%s</td>
 			<td class="number">%s</td>
 			<td>%s</td>
+			<td>%s</td>
+			<td>%s</td>
 			<td class="number">%s</td>
 			<td>%s</td>
-			<td>%s</td>
+			<td class="number">%s</td>
 			<td class="noprint"><a href="%sSelectedLocation=%s">' . _('Edit') . '</a></td>
 			<td class="noprint"><a href="%sSelectedLocation=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this inventory location?') . '\');">' . _('Delete') . '</a></td>
 			</tr>',
 			$myrow['loccode'],
 			$myrow['locationname'],
 			$myrow['priority'],
+			$myrow['zone'],
+			$myrow['typeloc'],
 			$myrow['smartdispatchfrom'],
 			$myrow['smartdispatchmaxmodels'],
 			$myrow['klposcashaccount'],
@@ -548,6 +561,7 @@ if(!isset($_GET['delete'])) {
 					klposcashaccount,
 					klpostag,
 					zone,
+					typeloc,
 					rlfactorforpackaging,
 					rldaysforpackaging,
 					usedforwo,
@@ -584,6 +598,7 @@ if(!isset($_GET['delete'])) {
 		$_POST['KLPOSCashAccount'] = $myrow['klposcashaccount'];
 		$_POST['KLPOSTag'] = $myrow['klpostag'];
 		$_POST['Zone'] = $myrow['zone'];
+		$_POST['TypeLoc'] = $myrow['typeloc'];
 		$_POST['RLFactorForPackaging'] = $myrow['rlfactorforpackaging'];
 		$_POST['RLDaysForPackaging'] = $myrow['rldaysforpackaging'];
 		$_POST['UsedForWO'] = $myrow['usedforwo'];
@@ -765,12 +780,12 @@ if(!isset($_GET['delete'])) {
 			<td><label for="KLPOSTag">', _('KL POS Tag'), ':</label></td>
 			<td><input data-type="no-illegal-chars" id="KLPOSTag" maxlength="20" name="KLPOSTag" size="4" type="text" value="', $_POST['KLPOSTag'], '" /></td></tr>';
 
-	// LOcation Zone:
+	// Location Zone:
 	echo '<tr>
 		<td>' . _('KL Location Zone') . ':' . '</td>
 		<td><select name="Zone">';
 
-	$ZonesResult = DB_query("SELECT code, description FROM locationzones");
+	$ZonesResult = DB_query("SELECT code, description FROM locationzones ORDER BY description");
 	while ($myrow=DB_fetch_array($ZonesResult)) {
 		if($_POST['Zone']==$myrow['code']) {
 			echo '<option selected="selected" value="' . $myrow['code'] . '">' . $myrow['description'] . '</option>';
@@ -779,6 +794,19 @@ if(!isset($_GET['delete'])) {
 		}
 	}
 
+	// Location Type:
+	echo '<tr>
+		<td>' . _('KL Location Type') . ':' . '</td>
+		<td><select name="TypeLoc">';
+
+	$TypesResult = DB_query("SELECT code, description FROM locationtypes ORDER BY description");
+	while ($myrow=DB_fetch_array($TypesResult)) {
+		if($_POST['TypeLoc']==$myrow['code']) {
+			echo '<option selected="selected" value="' . $myrow['code'] . '">' . $myrow['description'] . '</option>';
+		} else {
+			echo '<option value="' . $myrow['code'] . '">' . $myrow['description'] . '</option>';
+		}
+	}
 	echo '</select></td>
 		</tr>';
 		
