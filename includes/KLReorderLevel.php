@@ -4,30 +4,73 @@ function DailyReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db, 
 
 	$EmailText = OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db, $EmailText); // Updates RL for online orders
 
-	$EmailText = SetRLForTopSalesItems(   1, 100, 60,  60, 999999, 4, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
-	$EmailText = SetRLForTopSalesItems(   1, 100, 60,  45,     60, 3, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
-	$EmailText = SetRLForTopSalesItems(   1, 100, 60,  30,     45, 2, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
-	$EmailText = SetRLForTopSalesItems( 101, 250, 60,  45, 999999, 3, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
-	$EmailText = SetRLForTopSalesItems( 101, 250, 60,  30,     45, 2, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	// For KL SHOPS
+	$Shops = NumberOfShops("SHOPKL", $db);
+	if ($EmailText!=''){
+		$EmailText = $EmailText . "\n" . "Number of Shops Kapal-Laut = " . $Shops . "\n\n";
+	}
+	if ($ShowMessages){
+		prnMsg('Number of Shops Kapal-laut = ' . $Shops,'info');
+	}
+	$EmailText = SetRLForTopSalesItems("SHOPKL",   1,  50, 60, ($Shops * 7),       999999, 6, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	$EmailText = SetRLForTopSalesItems("SHOPKL",   1,  50, 60, ($Shops * 6), ($Shops * 7), 5, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	$EmailText = SetRLForTopSalesItems("SHOPKL",   1,  50, 60, ($Shops * 5), ($Shops * 6), 4, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 
+	$EmailText = SetRLForTopSalesItems("SHOPKL",  51, 100, 60, ($Shops * 6),       999999, 5, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	$EmailText = SetRLForTopSalesItems("SHOPKL",  51, 100, 60, ($Shops * 5), ($Shops * 6), 4, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	$EmailText = SetRLForTopSalesItems("SHOPKL",  51, 100, 60, ($Shops * 4), ($Shops * 5), 3, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+
+	$EmailText = SetRLForTopSalesItems("SHOPKL", 101, 250, 60, ($Shops * 5),       999999, 4, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	$EmailText = SetRLForTopSalesItems("SHOPKL", 101, 250, 60, ($Shops * 4), ($Shops * 5), 3, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	$EmailText = SetRLForTopSalesItems("SHOPKL", 101, 250, 60, ($Shops * 3), ($Shops * 4), 2, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+
+	SetRLForLowSalesHighRL("SHOPKL",  30, 6, 5, ($Shops * 6), $ShowMessages, $updateDB, $RootPath, $db);
+	SetRLForLowSalesHighRL("SHOPKL",  40, 5, 4, ($Shops * 5), $ShowMessages, $updateDB, $RootPath, $db);
+	SetRLForLowSalesHighRL("SHOPKL",  50, 4, 3, ($Shops * 4), $ShowMessages, $updateDB, $RootPath, $db);
+	
+	// For BLINK SHOPS
+	$Shops = NumberOfShops("SHOPBL", $db);
+	if ($EmailText!=''){
+		$EmailText = $EmailText . "\n" . "Number of Shops Blink = " . $Shops . "\n\n";
+	}
+	if ($ShowMessages){
+		prnMsg('Number of Shops Blink = ' . $Shops,'info');
+	}
+	$EmailText = SetRLForTopSalesItems("SHOPBL",   1,  50, 60, ($Shops * 7),       999999, 6, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	$EmailText = SetRLForTopSalesItems("SHOPBL",   1,  50, 60, ($Shops * 6), ($Shops * 7), 5, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	$EmailText = SetRLForTopSalesItems("SHOPBL",   1,  50, 60, ($Shops * 5), ($Shops * 6), 4, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+
+	$EmailText = SetRLForTopSalesItems("SHOPBL",  51, 100, 60, ($Shops * 6),       999999, 5, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	$EmailText = SetRLForTopSalesItems("SHOPBL",  51, 100, 60, ($Shops * 5), ($Shops * 6), 4, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	$EmailText = SetRLForTopSalesItems("SHOPBL",  51, 100, 60, ($Shops * 4), ($Shops * 5), 3, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+
+	$EmailText = SetRLForTopSalesItems("SHOPBL", 101, 200, 60, ($Shops * 5),       999999, 4, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	$EmailText = SetRLForTopSalesItems("SHOPBL", 101, 200, 60, ($Shops * 4), ($Shops * 5), 3, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	$EmailText = SetRLForTopSalesItems("SHOPBL", 101, 200, 60, ($Shops * 3), ($Shops * 4), 2, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+
+	SetRLForLowSalesHighRL("SHOPBL",  30, 6, 5, ($Shops * 6), $ShowMessages, $updateDB, $RootPath, $db);
+	SetRLForLowSalesHighRL("SHOPBL",  40, 5, 4, ($Shops * 5), $ShowMessages, $updateDB, $RootPath, $db);
+	SetRLForLowSalesHighRL("SHOPBL",  50, 4, 3, ($Shops * 4), $ShowMessages, $updateDB, $RootPath, $db);
+
+	// for OUTLET SHOPS
+	$Shops = NumberOfShops("SHOPOU", $db);
+	if ($EmailText!=''){
+		$EmailText = $EmailText . "\n" . "Number of Shops Outlet = " . $Shops . "\n\n";
+	}
+	if ($ShowMessages){
+		prnMsg('Number of Shops Outlet = ' . $Shops,'info');
+	}
+	$EmailText = SetRLForTopSalesItems("SHOPOU",   1,  50, 60, ($Shops * 7),       999999, 6, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	$EmailText = SetRLForTopSalesItems("SHOPOU",   1,  50, 60, ($Shops * 6), ($Shops * 7), 5, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	$EmailText = SetRLForTopSalesItems("SHOPOU",   1,  50, 60, ($Shops * 5), ($Shops * 6), 4, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+
+	$EmailText = SetRLForTopSalesItems("SHOPOU",  51, 100, 60, ($Shops * 6),       999999, 5, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	$EmailText = SetRLForTopSalesItems("SHOPOU",  51, 100, 60, ($Shops * 5), ($Shops * 6), 4, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	$EmailText = SetRLForTopSalesItems("SHOPOU",  51, 100, 60, ($Shops * 4), ($Shops * 5), 3, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	
+	
+	// These functions does not need to be segregated by type of shop, as it only takes care of shops with RL > 0
 	RebalancingBetweenShops(60, $ShowMessages, $updateDB, $RootPath, $db);
-
-/*	AdjustNoSales("TOK66", 180, 0, 400, 60, $ShowMessages, $updateDB, $RootPath, $db);
-	AdjustNoSales("TOKSA", 180, 0, 400, 60, $ShowMessages, $updateDB, $RootPath, $db);
-	AdjustNoSales("TOKKS", 100, 0, 400, 60, $ShowMessages, $updateDB, $RootPath, $db);
-	AdjustNoSales("TOKJC", 200, 0, 400, 60, $ShowMessages, $updateDB, $RootPath, $db);
-	AdjustNoSales("TOKBW", 150, 0, 400, 60, $ShowMessages, $updateDB, $RootPath, $db);
-	AdjustNoSales("TOKUB", 180, 0, 400, 60, $ShowMessages, $updateDB, $RootPath, $db);
-	AdjustNoSales("TOKMF", 180, 0, 400, 60, $ShowMessages, $updateDB, $RootPath, $db);
-	AdjustNoSales("TOKSE", 180, 0, 400, 60, $ShowMessages, $updateDB, $RootPath, $db);
-
-	AdjustNoSales("WABOM", 180, 0, 250, 60, $ShowMessages, $updateDB, $RootPath, $db);
-	AdjustNoSales("WHAYA", 180, 0, 250, 60, $ShowMessages, $updateDB, $RootPath, $db);
-	AdjustNoSales("WHINT", 180, 0, 250, 60, $ShowMessages, $updateDB, $RootPath, $db);
-*/
-	SetRLForLowSalesHighRL( 30, 5, 4, 60, $ShowMessages, $updateDB, $RootPath, $db);
-	SetRLForLowSalesHighRL( 45, 4, 3, 45, $ShowMessages, $updateDB, $RootPath, $db);
-	SetRLForLowSalesHighRL( 60, 3, 2, 30, $ShowMessages, $updateDB, $RootPath, $db);
 
 	SetRLZeroForNotAvailableItems($ShowMessages, $updateDB, $RootPath, $db);
 
@@ -36,6 +79,19 @@ function DailyReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db, 
 	$EmailText = AdjustPackaging(60, 'BLINK', $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 	
 	return $EmailText;
+}
+
+function NumberOfShops($ShopType, $db){
+	$SQL="SELECT COUNT(*)
+		FROM locations
+		WHERE typeloc LIKE '%" . $ShopType . "%'";
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		$myrow = DB_fetch_array($result);
+		return $myrow[0];
+	}else{
+		return 0;
+	}
 }
 
 function AdjustNoSales($location, $maxdays, $maxmanualchanges, $topitems, $topitemsdays, $ShowMessages, $updateDB, $RootPath, $db){
@@ -482,21 +538,21 @@ function SetRLZeroForNotAvailableItems($ShowMessages, $updateDB, $RootPath, $db)
 	$SQL = "SELECT locstock.stockid,
 					stockmaster.description,
 					locstock.reorderlevel
-			FROM locstock, stockmaster, stockcategory
+			FROM locstock, stockmaster, stockcategory, locations
 			WHERE locstock.stockid = stockmaster.stockid
+				AND locstock.loccode = locations.loccode
 				AND stockmaster.discontinued = 0
 				AND stockmaster.categoryid = stockcategory.categoryid
 				AND stockmaster.categoryid != 'SHCONS'
 				AND stockmaster.categoryid != 'SHPACK'
 				AND stockcategory.stocktype = 'F'
-				AND (locstock.loccode IN " . LIST_ALL_SHOPS . "
-					OR locstock.loccode = " . CODE_KANTOR . ")
+				AND locations.stockreadytosell = 1
 				AND EXISTS (SELECT *
-							FROM locstock
+							FROM locstock, locations loc2
 							WHERE locstock.stockid = stockmaster.stockid
+								AND locstock.loccode = loc2.loccode
 								AND locstock.reorderlevel > 0 
-								AND (locstock.loccode IN " . LIST_ALL_SHOPS . "
-									OR locstock.loccode = " . CODE_KANTOR . "))
+								AND loc2.stockreadytosell = 1)
 			GROUP BY locstock.stockid
 			HAVING SUM(locstock.quantity) = 0";
 	$result = DB_query($SQL);
@@ -543,7 +599,7 @@ function SetRLZeroForNotAvailableItems($ShowMessages, $updateDB, $RootPath, $db)
 	}
 }
 
-function SetRLForTopSalesItems( $starttopitems, $endtopitems, $daystopitems, $minstockavailable, $maxstockavailable, $NewRL, $ShowMessages, $updateDB, $RootPath, $db, $EmailText){
+function SetRLForTopSalesItems($ShopType, $starttopitems, $endtopitems, $daystopitems, $minstockavailable, $maxstockavailable, $NewRL, $ShowMessages, $updateDB, $RootPath, $db, $EmailText){
 
 /* function SetRLForTopSalesItems Increases RL for good selling items with enough stock.
 Sets Reorder Level to $NewRL 
@@ -561,9 +617,10 @@ to the shops with RL > 0.
 						AND prices.startdate > '". $Today. "')
 19/04/2013 modification: Change the condition of "not changing price" to the new flag
 24/07/2013 modification: Do not increase RL for toko online
+11/03/2017 modification: filter by ShopType (brand) and simplified code with stockreadytosell
 */	
 	if ($EmailText!=''){
-		$EmailText = $EmailText . "\n" . "SetRLForTopSalesItems" . "\n\n";
+		$EmailText = $EmailText . "\n" . "SetRLForTopSalesItems for " . $ShopType . "\n\n";
 	}
 
 	$Today = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
@@ -574,12 +631,14 @@ to the shops with RL > 0.
 					stockmaster.description,
 					SUM(salesorderdetails.qtyinvoiced) AS totalinvoiced,
 					(SELECT SUM(locstock.quantity)
-						FROM locstock
+						FROM locstock, locations loc2
 						WHERE stockmaster.stockid  = locstock.stockid
-							AND (locstock.loccode = " . CODE_KANTOR . " OR locstock.loccode IN " . LIST_ALL_SHOPS . ")
-							AND locstock.loccode != ". CODE_ONLINE_SHOP .") AS QtyAvailable
-			FROM salesorderdetails, salesorders, stockmaster
+							AND locstock.loccode = loc2.loccode
+							AND loc2.stockreadytosell = 1) AS QtyAvailable
+			FROM salesorderdetails, salesorders, stockmaster, locations
 			WHERE salesorderdetails.orderno = salesorders.orderno 
+				AND salesorders.fromstkloc = locations.loccode
+				AND locations.typeloc LIKE '%" . $ShopType . "%'
 				AND stockmaster.discontinued = 0
 				AND salesorderdetails.stkcode = stockmaster.stockid
 				AND salesorderdetails.actualdispatchdate >= '" . $StartDate . "'
@@ -599,11 +658,11 @@ to the shops with RL > 0.
 
 				$SQLDistribution = "SELECT locstock.loccode, 
 										locstock.reorderlevel AS oldrl
-									FROM locstock
+									FROM locstock,locations
 									WHERE locstock.stockid = '" . $myrow['stockid'] . "'
-									AND locstock.loccode IN " . LIST_ALL_SHOPS . "
-									AND locstock.loccode != ". CODE_ONLINE_SHOP ."
-									AND locstock.reorderlevel > 0";
+										AND locstock.loccode = locations.loccode
+										AND locations.stockreadytosell = 1
+										AND locstock.reorderlevel > 0";
 				$resultdistribution = DB_query($SQLDistribution);
 				$LocationsToDistribute = DB_num_rows($resultdistribution);
 				if ($LocationsToDistribute != 0){
@@ -620,7 +679,12 @@ to the shops with RL > 0.
 							SetReorderLevel("TopSalesAdjust", $myrow['stockid'], $mydistribution['loccode'], $mydistribution['oldrl'], $CurrentNewRL, $updateDB, $db);
 							if ($ShowMessages){
 								if($showHeader){
-									echo '<p class="page_title_text" align="center"><strong>' . _('Set RL min to ') . $NewRL . ' for Top Sales '. $starttopitems . '-'. $endtopitems . ' with Stock Available > '. $minstockavailable.'</strong></p>';
+									echo '<p class="page_title_text" align="center"><strong>' . 'Set RL minimum to ' . $NewRL . 
+																								' for Top Sales '. $starttopitems . '-'. $endtopitems . 
+																								' with Stock Available > '. $minstockavailable .
+																								' and <= '. $maxstockavailable .
+																								' at '. $ShopType .
+																								'</strong></p>';
 									echo '<div>';
 									echo '<table class="selection">';
 									$TableHeader = '<tr>
@@ -628,6 +692,7 @@ to the shops with RL > 0.
 														<th>' . _('Code') . '</th>
 														<th>' . _('Category') . '</th>
 														<th>' . _('Description') . '</th>
+														<th>' . _('Qty') . '</th>
 														<th>' . _('Toko') . '</th>
 														<th>' . _('Old RL') . '</th>
 														<th>' . _('New RL') . '</th>
@@ -645,6 +710,7 @@ to the shops with RL > 0.
 									<td>%s</td>
 									<td>%s</td>
 									<td>%s</td>
+									<td class="number">%s</td>
 									<td>%s</td>
 									<td class="number">%s</td>
 									<td class="number">%s</td>
@@ -653,6 +719,7 @@ to the shops with RL > 0.
 									$CodeLink, 
 									$myrow['categoryid'], 
 									$myrow['description'], 
+									locale_number_format($myrow['QtyAvailable'],0),
 									$mydistribution['loccode'],
 									locale_number_format($mydistribution['oldrl'],0),
 									locale_number_format($CurrentNewRL,0)
@@ -772,7 +839,7 @@ function SetRLForLowSalesItems( $starttopitems, $endtopitems, $daystopitems, $Ne
 	}
 }
 
-function SetRLForLowSalesHighRL($maxdays, $oldRL, $maxRL, $minavailablestock, $ShowMessages, $updateDB, $RootPath, $db){
+function SetRLForLowSalesHighRL($ShopType, $maxdays, $oldRL, $maxRL, $minavailablestock, $ShowMessages, $updateDB, $RootPath, $db){
 	/* No Sales during last maxdays, 
 		with stock at the shop
 		with RL >= oldRL at the shop
@@ -792,16 +859,15 @@ function SetRLForLowSalesHighRL($maxdays, $oldRL, $maxRL, $minavailablestock, $S
 			FROM 	stockmaster,locstock,locations
 			WHERE 	stockmaster.stockid = locstock.stockid
 					AND stockmaster.categoryid NOT IN ('SHDISP')
-					AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_DISCOUNT . " 
-					AND (locstock.loccode = locations.loccode)
-					AND (locstock.loccode IN " . LIST_ALL_SHOPS . ")
+					AND locstock.loccode = locations.loccode
+					AND locations.typeloc LIKE '%" . $ShopType . "%'
 					AND (locstock.quantity > 0)
 					AND (locstock.reorderlevel >= ". $oldRL .")
 					AND (SELECT SUM(locstock.quantity)
-						FROM locstock
+						FROM locstock, locations loc2
 						WHERE stockmaster.stockid = locstock.stockid
-							AND (locstock.loccode IN " . LIST_ALL_SHOPS . " 
-								OR locstock.loccode = " . CODE_KANTOR . " )) <= ".$minavailablestock."
+							AND locstock.loccode = loc2.loccode
+							AND loc2.stockreadytosell = 1) <= ".$minavailablestock."
 					AND NOT EXISTS (SELECT * 
 									FROM 	salesorderdetails, salesorders
 									WHERE 	stockmaster.stockid = salesorderdetails.stkcode
@@ -909,12 +975,12 @@ function MaxRLCorrectionSomeModels($stockid, $loccode, $NewRL){
 	//
 	// MAX correction for some locations, depending on some items
 	//
-	if ($loccode == "TOKPA"){
+/*	if ($loccode == "TOKPA"){
 		if ($stockid != "GIFT-ALAR01"){
 			$CurrentNewRL	= min($NewRL, 2);
 		}
 	}
-
+*/
 
 	//
 	// MAX correction for some models, depending on the shops
