@@ -88,6 +88,7 @@ if(isset($_POST['submit'])) {
 									rlfactorforpackaging = '" . $_POST['RLFactorForPackaging'] . "',
 									rldaysforpackaging = '" . $_POST['RLDaysForPackaging'] . "',
 									usedforwo = '" . $_POST['UsedForWO'] . "',
+									stockreadytosell = '" . $_POST['StockReadyToSell'] . "',
 									glaccountcode = '" . $_POST['GLAccountCode'] . "',
 									allowinvoicing = '" . $_POST['AllowInvoicing'] . "'
 						WHERE loccode = '" . $SelectedLocation . "'";
@@ -127,6 +128,7 @@ if(isset($_POST['submit'])) {
 		unset($_POST['RLFactorForPackaging']);
 		unset($_POST['RLDaysForPackaging']);
 		unset($_POST['UsedForWO']);
+		unset($_POST['StockReadyToSell']);
 		unset($_POST['GLAccountCode']);
 		unset($_POST['AllowInvoicing']);
 
@@ -170,6 +172,7 @@ if(isset($_POST['submit'])) {
 										rlfactorforpackaging,
 										rldaysforpackaging,
 										usedforwo,
+										stockreadytosell,
 										glaccountcode,
 										allowinvoicing)
 						VALUES ('" . $_POST['LocCode'] . "',
@@ -200,6 +203,7 @@ if(isset($_POST['submit'])) {
 								'" . $_POST['RLFactorForPackaging'] . "',
 								'" . $_POST['RLDaysForPackaging'] . "',
 								'" . $_POST['UsedForWO'] . "',
+								'" . $_POST['StockReadyToSell'] . "',
 								'" . $_POST['GLAccountCode'] . "',
 								'" . $_POST['AllowInvoicing'] . "')";
 
@@ -273,6 +277,7 @@ if(isset($_POST['submit'])) {
 		unset($_POST['RLFactorForPackaging']);
 		unset($_POST['RLDaysForPackaging']);
 		unset($_POST['UsedForWO']);
+		unset($_POST['StockReadyToSell']);
 		unset($_POST['GLAccountCode']);
 		unset($_POST['AllowInvoicing']);
 	}
@@ -452,6 +457,7 @@ or deletion of the records*/
 				allowinvoicing,
 				zone,
 				typeloc,
+				stockreadytosell,
 				managed
 			FROM locations INNER JOIN taxprovinces
 			ON locations.taxprovinceid=taxprovinces.taxprovinceid
@@ -469,6 +475,7 @@ or deletion of the records*/
 			<th class="ascending">', _('Priority'), '</th>
 			<th class="ascending">', _('Zone'), '</th>
 			<th class="ascending">', _('Type'), '</th>
+			<th class="ascending">', _('Stock Ready Sell'), '</th>
 			<th class="ascending">', _('ST From'), '</th>
 			<th class="ascending">', _('ST Max'), '</th>
 			<th class="ascending">', _('POS Cash GL'), '</th>
@@ -485,16 +492,15 @@ while ($myrow = DB_fetch_array($result)) {
 		echo '<tr class="OddTableRows">';
 		$k=1;
 	}
-/* warehouse management not implemented ... yet
-	if($myrow['managed'] == 1) {
-		$myrow['managed'] = _('Yes');
+	if($myrow['stockreadytosell'] == 1) {
+		$ReadyToSell = _('Yes');
 	} else {
-		$myrow['managed'] = _('No');
+		$ReadyToSell = _('No');
 	}
-*/
 	printf('<td>%s</td>
 			<td>%s</td>
 			<td class="number">%s</td>
+			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
@@ -509,6 +515,7 @@ while ($myrow = DB_fetch_array($result)) {
 			$myrow['priority'],
 			$myrow['zone'],
 			$myrow['typeloc'],
+			$ReadyToSell,
 			$myrow['smartdispatchfrom'],
 			$myrow['smartdispatchmaxmodels'],
 			$myrow['klposcashaccount'],
@@ -565,6 +572,7 @@ if(!isset($_GET['delete'])) {
 					rlfactorforpackaging,
 					rldaysforpackaging,
 					usedforwo,
+					stockreadytosell,
 					glaccountcode,
 					allowinvoicing
 				FROM locations
@@ -602,6 +610,7 @@ if(!isset($_GET['delete'])) {
 		$_POST['RLFactorForPackaging'] = $myrow['rlfactorforpackaging'];
 		$_POST['RLDaysForPackaging'] = $myrow['rldaysforpackaging'];
 		$_POST['UsedForWO'] = $myrow['usedforwo'];
+		$_POST['StockReadyToSell'] = $myrow['stockreadytosell'];
 		$_POST['GLAccountCode'] = $myrow['glaccountcode'];
 		$_POST['AllowInvoicing'] = $myrow['allowinvoicing'];
 
@@ -809,6 +818,21 @@ if(!isset($_GET['delete'])) {
 	}
 	echo '</select></td>
 		</tr>';
+
+	echo '<tr>
+			<td>' . _('With Stock ready To Sell?') . ':</td>
+			<td><select name="StockReadyToSell">';
+	if($_POST['StockReadyToSell']==1) {
+		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
+	} else {
+		echo '<option value="1">' . _('Yes') . '</option>';
+	}
+	if($_POST['StockReadyToSell']==0) {
+		echo '<option selected="selected" value="0">' . _('No') . '</option>';
+	} else {
+		echo '<option value="0">' . _('No') . '</option>';
+	}
+	echo '</select></td></tr>';
 		
 	echo '<tr>
 			<td>' . _('KL RL Factor for Packaging Transfers') . ':' . '</td>
