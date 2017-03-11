@@ -1,5 +1,7 @@
 webERP Change Log
 
+
+11/3/17 Tim - committed by Phil: allow sales order item lines to be imported from a csv consisting of lines of item code, quantity
 07/03/17 TurboPT: (by Tim in forums) BankAccounts.php: Add quotes to variable in query.
 27/02/17 TurboPT: SpecialOrder.php add identifier to delete link; DefineSpecialOrderClass.php remove the "&" with parameter to function remove_from_order().
 26/02/17 TurboPT: CopyBOM.php fixed insert SQL had duplicate digitals field

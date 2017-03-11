@@ -33,6 +33,35 @@ if (isset($_POST['SelectingOrderItems'])){
 	}
 }
 
+if (isset($_POST['UploadFile'])) {
+	if (isset($_FILES['CSVFile']) and $_FILES['CSVFile']['name']) {
+		//check file info
+		$FileName = $_FILES['CSVFile']['name'];
+		$TempName = $_FILES['CSVFile']['tmp_name'];
+		$FileSize = $_FILES['CSVFile']['size'];
+		//get file handle
+		$FileHandle = fopen($TempName, 'r');
+		$Row = 0;
+		$InsertNum = 0;
+		while (($FileRow = fgetcsv($FileHandle, 10000, ",")) !== False) {
+			/* Check the stock code exists */
+			++$Row;
+			$SQL = "SELECT stockid FROM stockmaster WHERE stockid='" . $FileRow[0] . "'";
+			$Result = DB_query($SQL);
+			if (DB_num_rows($Result) > 0) {
+				$NewItemArray[$FileRow[0]] = filter_number_format($FileRow[1]);
+				++$InsertNum;
+			}
+		}
+	}
+	$_POST['SelectingOrderItems'] = 1;
+	if (sizeof($NewItemArray) == 0) {
+		prnMsg(_('There are no items that can be imported'), 'error');
+	} else {
+		prnMsg($InsertNum . ' ' . _('of') . ' ' . $Row . ' ' . _('rows have been added to the order'), 'info');
+	}
+}
+
 if (isset($_GET['NewItem'])){
 	$NewItem = trim($_GET['NewItem']);
 }
@@ -802,7 +831,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 #Always do the stuff below if not looking for a customerid
 
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier . '" id="SelectParts" method="post">';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier . '" id="SelectParts" method="post" enctype="multipart/form-data">';
     echo '<div>';
 	echo '<input name="FormID" type="hidden" value="' . $_SESSION['FormID'] . '" />';
 
@@ -1623,10 +1652,19 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo '<td style="text-align:center" colspan="1"><input tabindex="6" type="submit" name="ChangeCustomer" value="' . _('Change Customer') . '" /></td>
 			<td style="text-align:center" colspan="1"><input tabindex="7" type="submit" name="SelectAsset" value="' . _('Fixed Asset Disposal') . '" /></td>';
 		}
+		echo '<tr>
+				<td colspan="10">
+					<div class="centre">
+						<h2>' . _('Or') . '</h2>
+						' . _('Upload items from csv file') . '<input tabindex="5" type="file" name="CSVFile" />
+						<input tabindex="5" type="submit" name="UploadFile" value="' . _('Upload File') . '" />
+					</div>
+				</td>';
         echo '</tr>
 			</table>
 			<br />
 			</div>';
+		echo '<div class="page_help_text">' . _('The csv file should have exactly 2 columns, part code and quantity.') . '</div>';
 		if (isset($SearchResult)) {
 			echo '<br />';
 			echo '<div class="page_help_text">' . _('Select an item by entering the quantity required.  Click Order when ready.') . '</div>';
