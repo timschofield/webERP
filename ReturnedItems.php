@@ -55,19 +55,22 @@ if (isset($_POST['submit'])) {
 	if (isset($SelectedReturnedItemsId) AND $InputError !=1) {
 
 		$sql = "UPDATE returneditems
-			SET description = '" . $_POST['description'] . "',
-				description = '" . $_POST['description'] . "',
-			
-			WHERE code = '".$SelectedReturnedItemsId."'";
+			SET orderno = '" . $_POST['orderno'] . "',
+				returndate = '" . $_POST['returndate'] . "'
+				reasonid = '" . $_POST['reasonid'] . "'
+				itemcodes = '" . $_POST['itemcodes'] . "'
+				oldinvoice = '" . $_POST['oldinvoice'] . "'
+				oldinvoicedate = '" . $_POST['oldinvoicedate'] . "'
+			WHERE returneditemsid = '".$SelectedReturnedItemsId."'";
 
-		$msg = _('The location zone') . ' ' . $SelectedReturnedItemsId . ' ' .  _('has been updated');
+		$msg = _('The Returned Item') . ' ' . $SelectedReturnedItemsId . ' ' .  _('has been updated');
 	} elseif ( $InputError !=1 ) {
 
 		// First check the type is not being duplicated
 
 		$checkSql = "SELECT count(*)
 			     FROM returneditems
-			     WHERE code = '" . $_POST['code'] . "'";
+			     WHERE returneditemsid = '" . $_POST['returneditemsid'] . "'";
 
 		$CheckResult = DB_query($checkSql);
 		$CheckRow = DB_fetch_row($CheckResult);
@@ -106,31 +109,13 @@ if (isset($_POST['submit'])) {
 
 } elseif ( isset($_GET['delete']) ) {
 
-	// PREVENT DELETES IF DEPENDENT RECORDS IN 'Locations'
-	// Prevent delete if location zone exist in customer transactions
-
-	$sql= "SELECT COUNT(*)
-	       FROM locations
-	       WHERE locations.zone='".$SelectedReturnedItemsId."'";
-
-	$ErrMsg = _('The number of locations using this zone could not be retrieved');
+	$sql="DELETE FROM returneditems WHERE code='" . $SelectedReturnedItemsId . "'";
+	$ErrMsg = _('The Returned Item record could not be deleted because');
 	$result = DB_query($sql,$ErrMsg);
+	prnMsg(_('The returned item') . ' ' . $SelectedReturnedItemsId  . ' ' . _('has been deleted') ,'success');
 
-	$myrow = DB_fetch_row($result);
-	if ($myrow[0]>0) {
-		prnMsg(_('Cannot delete this zone because locations have been created using this zone') . '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('locations using this zone code'),'error');
-
-	} else {
-
-		$sql="DELETE FROM returneditems WHERE code='" . $SelectedReturnedItemsId . "'";
-		$ErrMsg = _('The Location Zone record could not be deleted because');
-		$result = DB_query($sql,$ErrMsg);
-		prnMsg(_('Location zone') . ' ' . $SelectedReturnedItemsId  . ' ' . _('has been deleted') ,'success');
-
-		unset ($SelectedReturnedItemsId);
-		unset($_GET['delete']);
-
-	} //end if sales type used in debtor transactions or in customers set up
+	unset ($SelectedReturnedItemsId);
+	unset($_GET['delete']);
 }
 
 
@@ -162,6 +147,7 @@ or deletion of the records*/
 
 	echo '<table class="selection">
 		<tr>
+				<th class="ascending">' . '#' . '</th>
 				<th class="ascending">' . _('Item Code') . '</th>
 				<th class="ascending">' . _('Reason') . '</th>
 				<th class="ascending">' . _('Date Return') . '</th>
@@ -185,9 +171,11 @@ while ($myrow = DB_fetch_array($result)) {
 		<td>%s</td>
 		<td>%s</td>
 		<td>%s</td>
+		<td>%s</td>
 		<td><a href="%sSelectedReturnedItemsId=%s">' . _('Edit') . '</a></td>
 		<td><a href="%sSelectedReturnedItemsId=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this zone?') . '\');">' . _('Delete') . '</a></td>
 		</tr>',
+		$myrow['returneditemsid'],
 		$myrow['itemcodes'],
 		$myrow['reasonname'],
 		ConvertSQLDate($myrow['returndate']),
@@ -219,26 +207,34 @@ if (! isset($_GET['delete'])) {
 	// The user wish to EDIT an existing type
 	if ( isset($SelectedReturnedItemsId) AND $SelectedReturnedItemsId!='' ) {
 
-		$sql = "SELECT code,
-			       description
+		$sql = "SELECT orderno,
+						returndate,
+						reasonid,
+						itemcodes,
+						oldinvoice,
+						oldinvoicedate
 		        FROM returneditems
-		        WHERE code='" . $SelectedReturnedItemsId . "'";
+		        WHERE returneditemsid='" . $SelectedReturnedItemsId . "'";
 
 		$result = DB_query($sql);
 		$myrow = DB_fetch_array($result);
 
 		$_POST['code'] = $myrow['code'];
-		$_POST['description']  = $myrow['description'];
+		$_POST['returndate']  = $myrow['returndate'];
+		$_POST['reasonid']  = $myrow['reasonid'];
+		$_POST['itemcodes']  = $myrow['itemcodes'];
+		$_POST['oldinvoice']  = $myrow['oldinvoice'];
+		$_POST['ooldinvoicedate']  = $myrow['ooldinvoicedate'];
 
 		echo '<input type="hidden" name="SelectedReturnedItemsId" value="' . $SelectedReturnedItemsId . '" />
 			<input type="hidden" name="code" value="' . $_POST['code'] . '" />
 			<table class="selection">
 			<tr>
-				<th colspan="4"><b>' . _('Location Zones Setup') . '</b></th>
+				<th colspan="4"><b>' . _('Returned Item') . '</b></th>
 			</tr>
 			<tr>
-				<td>' . _('Type Code') . ':</td>
-				<td>' . $_POST['code'] . '</td>
+				<td>' . _('# Return') . ':</td>
+				<td>' . $SelectedReturnedItemsId . '</td>
 			</tr>';
 
 	} else 	{
@@ -247,22 +243,63 @@ if (! isset($_GET['delete'])) {
 
 		echo '<table class="selection">
 				<tr>
-					<th colspan="4"><b>' . _('Location Zone Setup') . '</b></th>
-				</tr>
-				<tr>
+					<th colspan="4"><b>' . _('Returned Item') . '</b></th>
+				</tr>';
+/*				<tr>
 					<td>' . _('Type Code') . ':</td>
 					<td><input type="text" ' . (in_array('LocationZone',$Errors) ? 'class="inputerror"' : '' ) .' size="7" maxlength="6" name="code" /></td>
 				</tr>';
-	}
+*/	}
 
-	if (!isset($_POST['description'])) {
-		$_POST['description']='';
+	if (!isset($_POST['itemcodes'])) {
+		$_POST['itemcodes']='';
 	}
 	echo '<tr>
-			<td>' . _('Location Zone Name') . ':</td>
-			<td><input type="text" name="description" value="' . $_POST['description'] . '" /></td>
-		</tr>
-		</table>'; // close main table
+			<td>' . _('Item Code') . ':</td>
+			<td><input type="text" name="description" value="' . $_POST['itemcodes'] . '" /></td>
+		</tr>';
+	
+	if (!isset($_POST['reasonid'])) {
+		$_POST['reasonid'] = 1;
+	}
+	echo '<tr>
+		<td>' . _('Return Reason') . ':' . '</td>
+		<td><select name="reasonid">';
+
+	$ReasonResult = DB_query("SELECT reasonname, reasonid FROM returnitemreasons ORDER BY reasonname");
+	while ($myrow=DB_fetch_array($ReasonResult)) {
+		if($_POST['reasonid']==$myrow['reasonid']) {
+			echo '<option selected="selected" value="' . $myrow['reasonid'] . '">' . $myrow['reasonname'] . '</option>';
+		} else {
+			echo '<option value="' . $myrow['reasonid'] . '">' . $myrow['reasonname'] . '</option>';
+		}
+	}
+
+	if (!isset($_POST['returndate'])) {
+		$_POST['returndate']=Date($_SESSION['DefaultDateFormat']);
+	}
+	echo '<tr>
+			<td>' . _('Date Of Return') . ':</td>
+			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="Date" size="10" required="required" autofocus="autofocus" maxlength="10" value="' . $_POST['returndate']. '" /></td>
+		</tr>';
+	
+	if (!isset($_POST['oldinvoice'])) {
+		$_POST['oldinvoice']='';
+	}
+	echo '<tr>
+			<td>' . _('Old Invoice') . ':</td>
+			<td><input type="text" name="description" value="' . $_POST['oldinvoice'] . '" /></td>
+		</tr>';	
+
+	if (!isset($_POST['oldinvoicedate'])) {
+		$_POST['oldinvoicedate']=Date($_SESSION['DefaultDateFormat']);
+	}
+	echo '<tr>
+			<td>' . _('Date Of Return') . ':</td>
+			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="Date" size="10" required="required" autofocus="autofocus" maxlength="10" value="' . $_POST['oldinvoicedate']. '" /></td>
+		</tr>';
+		
+	echo '</table>'; // close main table
 
 	echo '<br /><div class="centre"><input type="submit" name="submit" value="' . _('Accept') . '" /><input type="submit" name="Cancel" value="' . _('Cancel') . '" /></div>
 			</div>
