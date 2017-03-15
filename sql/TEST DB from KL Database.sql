@@ -114,6 +114,7 @@ TRUNCATE kurakura_kl_test_erp.`reportlinks`;
 TRUNCATE kurakura_kl_test_erp.`reports`;
 TRUNCATE kurakura_kl_test_erp.`returnitemreasons`;
 TRUNCATE kurakura_kl_test_erp.`returneditems`;
+TRUNCATE kurakura_kl_test_erp.`salariescalculated`;
 TRUNCATE kurakura_kl_test_erp.`salesanalysis`;
 TRUNCATE kurakura_kl_test_erp.`salescat`;
 TRUNCATE kurakura_kl_test_erp.`salescatprod`;
@@ -287,6 +288,7 @@ INSERT INTO kurakura_kl_test_erp.reportlinks SELECT * FROM kurakura_kl_erp.repor
 INSERT INTO kurakura_kl_test_erp.reports SELECT * FROM kurakura_kl_erp.reports;
 INSERT INTO kurakura_kl_test_erp.returnitemreasons SELECT * FROM kurakura_kl_erp.returnitemreasons;
 INSERT INTO kurakura_kl_test_erp.returneditems SELECT * FROM kurakura_kl_erp.returneditems;
+INSERT INTO kurakura_kl_test_erp.salariescalculated SELECT * FROM kurakura_kl_erp.salariescalculated WHERE periodno >= 82;
 INSERT INTO kurakura_kl_test_erp.salesanalysis SELECT * FROM kurakura_kl_erp.salesanalysis WHERE periodno >= 82;
 INSERT INTO kurakura_kl_test_erp.salescat SELECT * FROM kurakura_kl_erp.salescat;
 INSERT INTO kurakura_kl_test_erp.salescatprod SELECT * FROM kurakura_kl_erp.salescatprod;

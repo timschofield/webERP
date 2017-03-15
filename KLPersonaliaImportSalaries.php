@@ -17,7 +17,7 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($_POST['submit'])) {
-    submit($db, $_POST['DateOfFile'], $_POST['SelectedFile']);
+    submit($db, $_POST['DateOfFile'], $_POST['SelectedFile'], $_POST['SalaryType']);
 } else {
     display($db);
 }
@@ -27,7 +27,7 @@ include('includes/footer.inc');
 
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit(&$db, $DateOfFile, $SelectedFile) {
+function submit(&$db, $DateOfFile, $SelectedFile, $SalaryType) {
 
 	// upload to server and load it...
 	// http://stackoverflow.com/questions/38581632/how-to-upload-excel-file-to-php-server-from-input-type-file
@@ -49,36 +49,50 @@ function submit(&$db, $DateOfFile, $SelectedFile) {
 	$worksheet = $objPHPExcel->getActiveSheet();
 	$ExcelPeriodLastDate = ConvertExcelDate($worksheet->getCell('E10'));
 	$MonthOfSalary = $worksheet->getCell('E11')->getCalculatedValue();
-	if($ExcelPeriodLastDate != $DateOfFile){
-		echo '<p class="page_title_text">
-				<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Import Excel with Monthly Salary Information') . '" alt="" />' . ' ' . _('Import Excel with Monthly Salary Information') . '
-			</p>';
-		prnMsg("The month selected by the user is not the same as the month of the Excel file","warn");
-		$InputError = TRUE;
-	}
 
-	// The month selected should be last month
-	$PeriodDateOfFile = GetPeriod(ConvertSQLDate($DateOfFile), $db);
-	$PeriodNow = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
-	if($PeriodNow != ($PeriodDateOfFile + 1)){
-		echo '<p class="page_title_text">
-				<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Import Excel with Monthly Salary Information') . '" alt="" />' . ' ' . _('Import Excel with Monthly Salary Information') . '
-			</p>';
-		prnMsg("The month selected by the user and the Excel file should be last month","warn");
+	if ($SalaryType == "MONTHLY"){
+		$PageTitle = _('Importing Excel with Monthly Salary Information for '). $MonthOfSalary;
+	}elseif($SalaryType == "THRONLY"){
+		$PageTitle = _('Importing Excel with THR ONLY Salary Information for '). $MonthOfSalary;
+	}else{
+		prnMsg("The type of Salary " . $SalaryType . " is not accepted", "warn");
 		$InputError = TRUE;
 	}
 	
-	if(!$InputError){
-		
-		echo '<p class="page_title_text">
-				<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . 
-					_('Importing Excel with Salary Information for ') . $MonthOfSalary . '" alt="" />' . ' ' . 
-					_('Importing Excel with Salary Information for ') . $MonthOfSalary . '
-			</p>';
+	echo '<p class="page_title_text">
+			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $PageTitle . '" alt="" />' . ' ' . $PageTitle . 
+		'</p>';
 
+	if($ExcelPeriodLastDate != $DateOfFile){
+		prnMsg("The month selected by the user " . $DateOfFile . " is not the same as the month of the Excel file " . $ExcelPeriodLastDate,"warn");
+		$InputError = TRUE;
+	}
+
+	$PeriodDateOfFile = GetPeriod(ConvertSQLDate($DateOfFile), $db);
+	$PeriodNow = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
+	// The month selected should be last month for Monthly salaries
+	if ($SalaryType == "MONTHLY"){
+		if($PeriodNow != ($PeriodDateOfFile + 1)){
+			prnMsg("The month selected by the user and the Excel file should be last month","warn");
+			$InputError = TRUE;
+		}
+	}
+	
+	// The month selected should be current month for THR Only salaries
+	if ($SalaryType == "THRONLY"){
+		if($PeriodNow != ($PeriodDateOfFile)){
+			prnMsg("The month selected by the user and the Excel file should be this current month","warn");
+			$InputError = TRUE;
+		}
+	}
+	
+	
+	if(!$InputError){
+	
 		// let's delete the previous records of that month for test purposes
 		$SQL = "DELETE FROM salariescalculated
-				WHERE periodno = '" . $PeriodDateOfFile . "'";
+				WHERE periodno = '" . $PeriodDateOfFile . "'
+					AND salarytype = '" . $SalaryType . "'";
 		$result = DB_query($SQL);
 		
 		$ExcelSheetName = "SalaryToPrint";
@@ -94,6 +108,7 @@ function submit(&$db, $DateOfFile, $SelectedFile) {
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
 							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Type') . '</th>
 							<th class="ascending">' . _('Code Name') . '</th>
 							<th class="ascending">' . _('Position') . '</th>
 							<th class="ascending">' . _('Via') . '</th>
@@ -126,119 +141,151 @@ function submit(&$db, $DateOfFile, $SelectedFile) {
 				$SalaryFrom = ConvertExcelDate($worksheet->getCell('K'.$row));
 				$SalaryTo = ConvertExcelDate($worksheet->getCell('O'.$row));
 				$PaymentDate = $worksheet->getCell('BE'.$row)->getCalculatedValue();
-				$UpahPokok = $worksheet->getCell('S'.$row)->getCalculatedValue();
-				$TunjanganMakan = $worksheet->getCell('T'.$row)->getCalculatedValue();
-				$TunjanganTransport = $worksheet->getCell('U'.$row)->getCalculatedValue();
-				$TunjanganJabatan = $worksheet->getCell('V'.$row)->getCalculatedValue();
-				$TunjanganMasaKerja = $worksheet->getCell('Y'.$row)->getCalculatedValue();
-				$TunjanganKendaraan = $worksheet->getCell('Z'.$row)->getCalculatedValue();
-				$KomisiTetap = $worksheet->getCell('W'.$row)->getCalculatedValue();
-				$KomisiRetail = $worksheet->getCell('AA'.$row)->getCalculatedValue();
-				$KomisiSupport = $worksheet->getCell('AB'.$row)->getCalculatedValue();
-				$BonusPenjualan = $worksheet->getCell('AC'.$row)->getCalculatedValue();
-				$FixedLembur = $worksheet->getCell('AD'.$row)->getCalculatedValue();
-				$Lembur = $worksheet->getCell('AJ'.$row)->getCalculatedValue();
+
+				$EmployeeWithTHR = $worksheet->getCell('BG'.$row)->getCalculatedValue();
 				$THR = $worksheet->getCell('AK'.$row)->getCalculatedValue();
-				$PenerimaanLain2 = $worksheet->getCell('AL'.$row)->getCalculatedValue();
-				$PenerimaanLain2Notes = $worksheet->getCell('AM'.$row)->getCalculatedValue();
-				$PotonganJHT = NegativeNumber($worksheet->getCell('AO'.$row)->getCalculatedValue());
-				$PotonganASKES = NegativeNumber($worksheet->getCell('AP'.$row)->getCalculatedValue());
-				$PotonganPPH21 = NegativeNumber($worksheet->getCell('AQ'.$row)->getCalculatedValue());
-				$PotonganAbsen = NegativeNumber($worksheet->getCell('AR'.$row)->getCalculatedValue());
-				$PotonganLain2 = NegativeNumber($worksheet->getCell('AS'.$row)->getCalculatedValue());
-				$PotonganLain2Notes = $worksheet->getCell('AT'.$row)->getCalculatedValue();
 				$Bulatan = $worksheet->getCell('AW'.$row)->getCalculatedValue();
 
-				//Insert into the database
-				$sqlInsert = "INSERT INTO salariescalculated
-								(periodno,
-								codename,
-								fullname,
-								company,
-								joiningdate,
-								position,
-								paymentmethod,
-								bankcode,
-								bankaccount,
-								bankaccountholder,
-								zonepph21,
-								salaryfrom,
-								salaryto,
-								paymentday,
-								upahpokok,
-								tunjanganmakan,
-								tunjangantransport,
-								tunjanganjabatan,
-								tunjanganmasakerja,
-								tunjangankendaraan,
-								komisitetap,
-								komisiretail,
-								komisisupport,
-								bonuspenjualan,
-								fixedlembur,
-								lembur,
-								thr,
-								penerimaanlain,
-								penerimaanlainnotes,
-								potonganjht,
-								potonganaskes,
-								potonganpph21,
-								potonganabsen,
-								potonganlain2,
-								potonganlain2notes,
-								bulatan)
-							VALUES
-								('" . $PeriodDateOfFile . "',
-								'" . $CodeName . "',
-								'" . $FullName . "',
-								'" . $CompanyCode . "',
-								'" . $JoiningDate . "',
-								'" . $Position . "',
-								'" . $PaymentMethod . "',
-								'" . $BankCode . "',
-								'" . $BankAccount . "',
-								'" . $BankAccountHolder . "',
-								'" . $ZonePPH21 . "',
-								'" . $SalaryFrom . "',
-								'" . $SalaryTo . "',
-								'" . $PaymentDate . "',
-								'" . $UpahPokok . "',
-								'" . $TunjanganMakan . "',
-								'" . $TunjanganTransport . "',
-								'" . $TunjanganJabatan . "',
-								'" . $TunjanganMasaKerja . "',
-								'" . $TunjanganKendaraan . "',
-								'" . $KomisiTetap . "',
-								'" . $KomisiRetail . "',
-								'" . $KomisiSupport . "',
-								'" . $BonusPenjualan . "',
-								'" . $FixedLembur . "',
-								'" . $Lembur . "',
-								'" . $THR . "',
-								'" . $PenerimaanLain2 . "',
-								'" . $PenerimaanLain2Notes . "',
-								'" . $PotonganJHT . "',
-								'" . $PotonganASKES . "',
-								'" . $PotonganPPH21 . "',
-								'" . $PotonganAbsen . "',
-								'" . $PotonganLain2 . "',
-								'" . $PotonganLain2Notes . "',
-								'" . $Bulatan . "'
-								)";
-				$resultInsert = DB_query($sqlInsert,$InsertErrMsg,$DbgMsg,true);
+				if ($SalaryType == "MONTHLY"){
+					$UpahPokok = $worksheet->getCell('S'.$row)->getCalculatedValue();
+					$TunjanganMakan = $worksheet->getCell('T'.$row)->getCalculatedValue();
+					$TunjanganTransport = $worksheet->getCell('U'.$row)->getCalculatedValue();
+					$TunjanganJabatan = $worksheet->getCell('V'.$row)->getCalculatedValue();
+					$TunjanganMasaKerja = $worksheet->getCell('Y'.$row)->getCalculatedValue();
+					$TunjanganKendaraan = $worksheet->getCell('Z'.$row)->getCalculatedValue();
+					$KomisiTetap = $worksheet->getCell('W'.$row)->getCalculatedValue();
+					$KomisiRetail = $worksheet->getCell('AA'.$row)->getCalculatedValue();
+					$KomisiSupport = $worksheet->getCell('AB'.$row)->getCalculatedValue();
+					$BonusPenjualan = $worksheet->getCell('AC'.$row)->getCalculatedValue();
+					$FixedLembur = $worksheet->getCell('AD'.$row)->getCalculatedValue();
+					$Lembur = $worksheet->getCell('AJ'.$row)->getCalculatedValue();
+					$PenerimaanLain2 = $worksheet->getCell('AL'.$row)->getCalculatedValue();
+					$PenerimaanLain2Notes = $worksheet->getCell('AM'.$row)->getCalculatedValue();
+					$PotonganJHT = NegativeNumber($worksheet->getCell('AO'.$row)->getCalculatedValue());
+					$PotonganASKES = NegativeNumber($worksheet->getCell('AP'.$row)->getCalculatedValue());
+					$PotonganPPH21 = NegativeNumber($worksheet->getCell('AQ'.$row)->getCalculatedValue());
+					$PotonganAbsen = NegativeNumber($worksheet->getCell('AR'.$row)->getCalculatedValue());
+					$PotonganLain2 = NegativeNumber($worksheet->getCell('AS'.$row)->getCalculatedValue());
+					$PotonganLain2Notes = $worksheet->getCell('AT'.$row)->getCalculatedValue();
+				}else{
+					$UpahPokok = 0;
+					$TunjanganMakan = 0;
+					$TunjanganTransport = 0;
+					$TunjanganJabatan = 0;
+					$TunjanganMasaKerja = 0;
+					$TunjanganKendaraan = 0;
+					$KomisiTetap = 0;
+					$KomisiRetail = 0;
+					$KomisiSupport = 0;
+					$BonusPenjualan = 0;
+					$FixedLembur = 0;
+					$Lembur = 0;
+					$PenerimaanLain2 = 0;
+					$PenerimaanLain2Notes = 0;
+					$PotonganJHT = 0;
+					$PotonganASKES = 0;
+					$PotonganPPH21 = 0;
+					$PotonganAbsen = 0;
+					$PotonganLain2 = 0;
+					$PotonganLain2Notes = 0;
+				}
 				
-				$k = StartEvenOrOddRow($k);
-				printf('<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						</tr>', 
-						$i,
-						$CodeName,
-						$Position,
-						$PaymentMethod
-						);
-				$i++;
+				//Insert into the database if it's a Monthly salary or THR-Only is for employee
+				if (($SalaryType == "MONTHLY") OR (($SalaryType == "THRONLY") AND ($EmployeeWithTHR == "YES"))){
+					$sqlInsert = "INSERT INTO salariescalculated
+									(periodno,
+									salarytype,
+									codename,
+									fullname,
+									company,
+									joiningdate,
+									position,
+									paymentmethod,
+									bankcode,
+									bankaccount,
+									bankaccountholder,
+									zonepph21,
+									salaryfrom,
+									salaryto,
+									paymentday,
+									upahpokok,
+									tunjanganmakan,
+									tunjangantransport,
+									tunjanganjabatan,
+									tunjanganmasakerja,
+									tunjangankendaraan,
+									komisitetap,
+									komisiretail,
+									komisisupport,
+									bonuspenjualan,
+									fixedlembur,
+									lembur,
+									thr,
+									penerimaanlain,
+									penerimaanlainnotes,
+									potonganjht,
+									potonganaskes,
+									potonganpph21,
+									potonganabsen,
+									potonganlain2,
+									potonganlain2notes,
+									bulatan)
+								VALUES
+									('" . $PeriodDateOfFile . "',
+									'" . $SalaryType . "',
+									'" . $CodeName . "',
+									'" . $FullName . "',
+									'" . $CompanyCode . "',
+									'" . $JoiningDate . "',
+									'" . $Position . "',
+									'" . $PaymentMethod . "',
+									'" . $BankCode . "',
+									'" . $BankAccount . "',
+									'" . $BankAccountHolder . "',
+									'" . $ZonePPH21 . "',
+									'" . $SalaryFrom . "',
+									'" . $SalaryTo . "',
+									'" . $PaymentDate . "',
+									'" . $UpahPokok . "',
+									'" . $TunjanganMakan . "',
+									'" . $TunjanganTransport . "',
+									'" . $TunjanganJabatan . "',
+									'" . $TunjanganMasaKerja . "',
+									'" . $TunjanganKendaraan . "',
+									'" . $KomisiTetap . "',
+									'" . $KomisiRetail . "',
+									'" . $KomisiSupport . "',
+									'" . $BonusPenjualan . "',
+									'" . $FixedLembur . "',
+									'" . $Lembur . "',
+									'" . $THR . "',
+									'" . $PenerimaanLain2 . "',
+									'" . $PenerimaanLain2Notes . "',
+									'" . $PotonganJHT . "',
+									'" . $PotonganASKES . "',
+									'" . $PotonganPPH21 . "',
+									'" . $PotonganAbsen . "',
+									'" . $PotonganLain2 . "',
+									'" . $PotonganLain2Notes . "',
+									'" . $Bulatan . "'
+									)";
+					$resultInsert = DB_query($sqlInsert,$InsertErrMsg,$DbgMsg,true);
+					
+					$k = StartEvenOrOddRow($k);
+					printf('<td class="number">%s</td>
+							<td>%s</td>
+							<td>%s</td>
+							<td>%s</td>
+							<td>%s</td>
+							</tr>', 
+							$i,
+							$SalaryType,
+							$CodeName,
+							$Position,
+							$PaymentMethod
+							);
+					$i++;
+				}
 			}
 		}
 		echo '</table>
@@ -271,6 +318,25 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	}
 	echo '</select></td></tr>';
 
+
+	// check the type of salary to import
+	if(!isset($_POST['SalaryType'])) {
+		$_POST['SalaryType']='MONTHLY';
+	}
+
+	echo '<tr>
+			<td>' . _('Type Of Salary') . ':</td>
+			<td><select name="SalaryType">';
+	if($_POST['SalaryType']=="MONTHLY") {
+		echo '<option selected="selected" value="MONTHLY">' . _('Monthly Salary') . '</option>';
+		echo '<option value="THRONLY">' . _('THR Only') . '</option>';
+	} else {
+		echo '<option selected="selected" value="THRONLY">' . _('THR Only') . '</option>';
+		echo '<option value="MONTHLY">' . _('Monthly Salary') . '</option>';
+	}
+	echo '</select></td></tr>';
+
+	
 	echo '<tr><td>' . _('Excel file with Gaji Information:') . '</td><td><input type="file"  name="SelectedFile" id="SelectedFile"/></td><td>
 			</td></tr>
 		</table>';
