@@ -267,7 +267,7 @@ if ($ProcessSection01){
 	if ($KL_SystemAdmin){
 		GoodsReceivedNotInvoicedControl(1000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		CustomersDebtControl(100000, $periodnow, $db);
+		CustomersDebtControl(10, $periodnow, $db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -315,6 +315,12 @@ if ($ProcessSection01){
 		BalanceAccountControl("111111121",         0,   15000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111111122",         0,   15000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
+		BalanceAccountControl("111111123",         0,   15000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
+		BalanceAccountControl("111111124",         0,   15000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
+		BalanceAccountControl("111111125",         0,   15000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 	}
 
