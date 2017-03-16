@@ -2,7 +2,8 @@
 /* $Id: returneditems.php 6998 2014-11-22 02:28:56Z daintree $*/
 
 include('includes/session.inc');
-$Title = _('Returned Items Maintenance');
+$NumDays = 90;
+$Title = _('Returned Items Maintenance for the last ') . $NumDays . ' days';
 include('includes/header.inc');
 
 if (isset($_POST['SelectedReturnedItemsId'])){
@@ -30,38 +31,16 @@ if (isset($_POST['submit'])) {
 	//first off validate inputs sensible
 	$i=1;
 
-/*	if (mb_strlen($_POST['code']) > 6) {
-		$InputError = 1;
-		prnMsg(_('The zone code must be six characters or less long'),'error');
-		$Errors[$i] = 'LocationZone';
-		$i++;
-	} elseif ($_POST['code']=='') {
-		$InputError = 1;
-		prnMsg( _('The zone code cannot be an empty string'),'error');
-		$Errors[$i] = 'LocationZone';
-		$i++;
-	} elseif( trim($_POST['description'])==''){
-		$InputError = 1;
-		prnMsg (_('The zone description cannot be empty'),'error');
-		$Errors[$i] = 'LocationZone';
-		$i++;
-	} elseif (mb_strlen($_POST['description']) >50) {
-		$InputError = 1;
-		echo prnMsg(_('The zone description must be fifty characters or less long'),'error');
-		$Errors[$i] = 'LocationZone';
-		$i++;
-	}
-*/
 	if (isset($SelectedReturnedItemsId) AND $InputError !=1) {
 
 		$sql = "UPDATE returneditems
-			SET orderno = '" . $_POST['orderno'] . "',
-				returndate = '" . $_POST['returndate'] . "'
-				reasonid = '" . $_POST['reasonid'] . "'
-				itemcodes = '" . $_POST['itemcodes'] . "'
-				oldinvoice = '" . $_POST['oldinvoice'] . "'
-				oldinvoicedate = '" . $_POST['oldinvoicedate'] . "'
-			WHERE returneditemsid = '".$SelectedReturnedItemsId."'";
+				SET orderno = '" . $_POST['orderno'] . "',
+					returndate = '" . $_POST['returndate'] . "'
+					reasonid = '" . $_POST['reasonid'] . "'
+					itemcodes = '" . $_POST['itemcodes'] . "'
+					oldinvoice = '" . $_POST['oldinvoice'] . "'
+					oldinvoicedate = '" . $_POST['oldinvoicedate'] . "'
+				WHERE returneditemsid = '".$SelectedReturnedItemsId."'";
 
 		$msg = _('The Returned Item') . ' ' . $SelectedReturnedItemsId . ' ' .  _('has been updated');
 	} elseif ( $InputError !=1 ) {
@@ -77,22 +56,25 @@ if (isset($_POST['submit'])) {
 
 		if ( $CheckRow[0] > 0 ) {
 			$InputError = 1;
-			prnMsg( _('The location zone ') . $_POST['code'] . _(' already exist.'),'error');
+			prnMsg( _('The Returned Item ') . $_POST['returneditemsid'] . _(' already exist.'),'error');
 		} else {
 
 			// Add new record on submit
 
-			$sql = "INSERT INTO returneditems (code,
-											description)
-							VALUES ('" . str_replace(' ', '', $_POST['code']) . "',
-									'" . $_POST['description'] . "')";
+			$sql = "INSERT INTO returneditems (orderno,
+											returndate,
+											reasonid,
+											itemcodes,
+											oldinvoice,
+											oldinvoicedate)
+							VALUES ('" . $_POST['orderno'] . "',
+							'" . $_POST['returndate'] . "',
+							'" . $_POST['reasonid'] . "',
+							'" . $_POST['itemcodes'] . "',
+							'" . $_POST['oldinvoice'] . "',
+							'" . $_POST['oldinvoicedate'] . "')";
 
-			$msg = _('Location zone') . ' ' . $_POST['description'] .  ' ' . _('has been created');
-			$checkSql = "SELECT count(code)
-						FROM returneditems";
-			$result = DB_query($checkSql);
-			$row = DB_fetch_row($result);
-
+			$msg = _('Returned Item') . ' ' . $_POST['orderno'] .  ' ' . _('has been created');
 		}
 	}
 
@@ -103,8 +85,12 @@ if (isset($_POST['submit'])) {
 		prnMsg($msg,'success');
 
 		unset($SelectedReturnedItemsId);
-		unset($_POST['code']);
-		unset($_POST['description']);
+		unset($_POST['orderno']);
+		unset($_POST['returndate']);
+		unset($_POST['reasonid']);
+		unset($_POST['itemcodes']);
+		unset($_POST['oldinvoice']);
+		unset($_POST['oldinvoicedate']);
 	}
 
 } elseif ( isset($_GET['delete']) ) {
@@ -120,9 +106,13 @@ if (isset($_POST['submit'])) {
 
 
 if(isset($_POST['Cancel'])){
-	unset($SelectedReturnedItemsId);
-	unset($_POST['code']);
-	unset($_POST['description']);
+		unset($SelectedReturnedItemsId);
+		unset($_POST['orderno']);
+		unset($_POST['returndate']);
+		unset($_POST['reasonid']);
+		unset($_POST['itemcodes']);
+		unset($_POST['oldinvoice']);
+		unset($_POST['oldinvoicedate']);
 }
 
 if (!isset($SelectedReturnedItemsId)){
@@ -131,8 +121,10 @@ if (!isset($SelectedReturnedItemsId)){
 then none of the above are true and the list of sales types will be displayed with
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 
 	$sql = "SELECT  returneditemsid,
+					orderno,
 					returneditems.reasonid,
 					reasonname,
 					itemcodes,
@@ -141,8 +133,8 @@ or deletion of the records*/
 					oldinvoicedate
 			FROM returneditems, returnitemreasons
 			WHERE returneditems.reasonid = returnitemreasons.reasonid
-			ORDER BY returneditemsid DESC
-			LIMIT 1, 50";
+				AND returndate >= '" . $StartDate . "'
+			ORDER BY returndate DESC, returneditemsid DESC";
 	$result = DB_query($sql);
 
 	echo '<table class="selection">
@@ -150,6 +142,7 @@ or deletion of the records*/
 				<th class="ascending">' . '#' . '</th>
 				<th class="ascending">' . _('Item Code') . '</th>
 				<th class="ascending">' . _('Reason') . '</th>
+				<th class="ascending">' . _('Order Return') . '</th>
 				<th class="ascending">' . _('Date Return') . '</th>
 				<th class="ascending">' . _('Original Invoice') . '</th>
 				<th class="ascending">' . _('Date Invoice') . '</th>
@@ -166,9 +159,10 @@ while ($myrow = DB_fetch_array($result)) {
 		$k=1;
 	}
 
-	printf('<td>%s</td>
+	printf('<td class="number">%s</td>
 		<td>%s</td>
 		<td>%s</td>
+		<td class="number">%s</td>
 		<td>%s</td>
 		<td>%s</td>
 		<td>%s</td>
@@ -178,6 +172,7 @@ while ($myrow = DB_fetch_array($result)) {
 		$myrow['returneditemsid'],
 		$myrow['itemcodes'],
 		$myrow['reasonname'],
+		$myrow['orderno'],
 		ConvertSQLDate($myrow['returndate']),
 		$myrow['oldinvoice'],
 		ConvertSQLDate($myrow['oldinvoicedate']),
@@ -207,7 +202,8 @@ if (! isset($_GET['delete'])) {
 	// The user wish to EDIT an existing type
 	if ( isset($SelectedReturnedItemsId) AND $SelectedReturnedItemsId!='' ) {
 
-		$sql = "SELECT orderno,
+		$sql = "SELECT returneditemsid
+						orderno,
 						returndate,
 						reasonid,
 						itemcodes,
@@ -219,7 +215,8 @@ if (! isset($_GET['delete'])) {
 		$result = DB_query($sql);
 		$myrow = DB_fetch_array($result);
 
-		$_POST['code'] = $myrow['code'];
+		$_POST['SelectedReturnedItemsId'] = $myrow['returneditemsid'];
+		$_POST['orderno']  = $myrow['orderno'];
 		$_POST['returndate']  = $myrow['returndate'];
 		$_POST['reasonid']  = $myrow['reasonid'];
 		$_POST['itemcodes']  = $myrow['itemcodes'];
@@ -227,7 +224,7 @@ if (! isset($_GET['delete'])) {
 		$_POST['ooldinvoicedate']  = $myrow['ooldinvoicedate'];
 
 		echo '<input type="hidden" name="SelectedReturnedItemsId" value="' . $SelectedReturnedItemsId . '" />
-			<input type="hidden" name="code" value="' . $_POST['code'] . '" />
+			<input type="hidden" name="code" value="' . $_POST['SelectedReturnedItemsId'] . '" />
 			<table class="selection">
 			<tr>
 				<th colspan="4"><b>' . _('Returned Item') . '</b></th>
@@ -245,11 +242,7 @@ if (! isset($_GET['delete'])) {
 				<tr>
 					<th colspan="4"><b>' . _('Returned Item') . '</b></th>
 				</tr>';
-/*				<tr>
-					<td>' . _('Type Code') . ':</td>
-					<td><input type="text" ' . (in_array('LocationZone',$Errors) ? 'class="inputerror"' : '' ) .' size="7" maxlength="6" name="code" /></td>
-				</tr>';
-*/	}
+	}
 
 	if (!isset($_POST['itemcodes'])) {
 		$_POST['itemcodes']='';
@@ -274,6 +267,14 @@ if (! isset($_GET['delete'])) {
 			echo '<option value="' . $myrow['reasonid'] . '">' . $myrow['reasonname'] . '</option>';
 		}
 	}
+
+	if (!isset($_POST['orderno'])) {
+		$_POST['orderno']=0;
+	}
+	echo '<tr>
+			<td>' . _('Order Return') . ':</td>
+			<td><input type="text" name="description" value="' . $_POST['orderno'] . '" /></td>
+		</tr>';
 
 	if (!isset($_POST['returndate'])) {
 		$_POST['returndate']=Date($_SESSION['DefaultDateFormat']);
