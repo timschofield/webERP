@@ -428,4 +428,19 @@ function FindReasonOfReturn($ReasonCode, $db){
 	return $Row['0'];
 }
 
+function ConvertExcelDate($cell, $format = 'Y-m-d'){
+	// converts an excel cell into a valid date to work with
+	if(PHPExcel_Shared_Date::isDateTime($cell)) {
+		$ConvertedDate = date($format,PHPExcel_Shared_Date::ExcelToPHP($cell->getCalculatedValue()));                          
+	}else{
+		$ConvertedDate = '0000-00-00';                          
+	}
+	return $ConvertedDate;
+}
+
+function AdjustBulatan($Amount, $RoundTo){
+	return (ceil($Amount/$RoundTo)*$RoundTo)-$Amount;
+}
+
+
 ?>

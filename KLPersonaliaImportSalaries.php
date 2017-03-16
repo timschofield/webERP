@@ -188,7 +188,6 @@ function submit(&$db, $DateOfFile, $SelectedFile, $SalaryType) {
 					$PotonganLain2 = 0;
 					$PotonganLain2Notes = '';
 				}
-
 				$TotalBawaPulang = $UpahPokok +
 								$TunjanganMakan +
 								$TunjanganTransport +
@@ -207,8 +206,14 @@ function submit(&$db, $DateOfFile, $SelectedFile, $SalaryType) {
 								$PotonganASKES +
 								$PotonganPPH21 +
 								$PotonganAbsen +
-								$PotonganLain2 +
-								$Bulatan;
+								$PotonganLain2;
+				
+				if ($PaymentMethod == "Cash"){
+					$Bulatan = AdjustBulatan($TotalBawaPulang, 500);
+				}else{
+					$Bulatan = 0;
+				}
+				$TotalBawaPulang += $Bulatan;
 				
 				//Insert into the database if it's a Monthly salary or THR-Only is for employee
 				if ((($SalaryType == "MONTHLY") 
@@ -377,14 +382,6 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 } // End of function display()
 
 
-function ConvertExcelDate($cell, $format = 'Y-m-d'){
-	// converts an excel cell into a valid date to work with
-	if(PHPExcel_Shared_Date::isDateTime($cell)) {
-		$ConvertedDate = date($format,PHPExcel_Shared_Date::ExcelToPHP($cell->getCalculatedValue()));                          
-	}else{
-		$ConvertedDate = '0000-00-00';                          
-	}
-	return $ConvertedDate;
-}
+
 
 ?>
