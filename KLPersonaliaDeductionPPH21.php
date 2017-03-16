@@ -19,6 +19,7 @@ if (isset($_POST['submit'])){
 			$SQLUpdate="UPDATE salariescalculated SET potonganpph21 = '" . filter_number_format($_POST['PotonganPPH21'.$i]) . "' 
 						WHERE company = '" . $Company . "'
 						AND periodno = '" . $_POST['PeriodPPH21'] . "'
+						AND salarytype = '" . $_POST['SalaryType'] . "'
 						AND codename = '" . $_POST['CodeName' . $i] . "'";
 			$Result = DB_query($SQLUpdate);
 		}
@@ -36,7 +37,8 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 				potonganpph21
 			FROM salariescalculated
 			WHERE periodno = '" . $PeriodPPH21 . "'
-			AND company = '" . $Company . "'
+				AND company = '" . $Company . "'
+				AND salarytype = '" . $_POST['SalaryType'] . "'
 			ORDER BY zonepph21,
 				fullname";
 
@@ -73,6 +75,7 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 
 		echo'<input type="hidden" value="' . $_POST['Company'] . '" name="Company" />
 			<input type="hidden" value="' . $_POST['MonthOfSalaries'] . '" name="MonthOfSalaries" />
+			<input type="hidden" value="' . $_POST['SalaryType'] . '" name="SalaryType" />
 			<input type="hidden" value="' . $PeriodPPH21 . '" name="PeriodPPH21" />';
 
 		echo '<td>'. $myrow['zonepph21'] . '</td>
@@ -121,6 +124,23 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 		}
 	}
 	echo '</select></td></tr>';
+
+	// check the type of salary to import
+	if(!isset($_POST['SalaryType'])) {
+		$_POST['SalaryType']='MONTHLY';
+	}
+
+	echo '<tr>
+			<td>' . _('Type Of Salary') . ':</td>
+			<td><select name="SalaryType">';
+	if($_POST['SalaryType']=="MONTHLY") {
+		echo '<option selected="selected" value="MONTHLY">' . _('Monthly Salary') . '</option>';
+		echo '<option value="THRONLY">' . _('THR Only') . '</option>';
+	} else {
+		echo '<option selected="selected" value="THRONLY">' . _('THR Only') . '</option>';
+		echo '<option value="MONTHLY">' . _('Monthly Salary') . '</option>';
+	}
+	echo '</select></td></tr>';	
 
 	echo '</table>
 			<br />

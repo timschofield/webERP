@@ -7,13 +7,13 @@ include('includes/KLDefines.php');
 include('includes/KLCompanySelection.php');
 
 if (isset($_POST['submit'])) {
-	submit($db, $Company, $_POST['DateOfFile']);
+	submit($db, $Company, $_POST['DateOfFile'], $_POST['SalaryType']);
 } else {
 	display($db);
 }
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit(&$db, $Company, $LastDateOfPeriod) {
+function submit(&$db, $Company, $LastDateOfPeriod, $SalaryType) {
 
 	//initialise no input errors
 	$InputError = FALSE;
@@ -21,17 +21,32 @@ function submit(&$db, $Company, $LastDateOfPeriod) {
 	//first off validate inputs sensible
 	$PeriodExportDate = GetPeriod(ConvertSQLDate($LastDateOfPeriod), $db);
 	$PeriodNow = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
-	if($PeriodNow != ($PeriodExportDate + 1)){
-		$Title = _('Export Info for PPH21 Deduction');
-		include('includes/header.inc');
-		echo '<p class="page_title_text">
-				<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '
-			</p>';
-		prnMsg("The month selected to export info for PPH21 deduction calculation should be last month","warn");
-		include('includes/footer.inc');
+
+	if ($SalaryType == "MONTHLY"){
+		$PageTitle = _('Export PPh21 Monthly Info for '). ConvertSQLDate($LastDateOfPeriod);
+	}elseif($SalaryType == "THRONLY"){
+		$PageTitle = _('Export PPh21 THR Only Info for '). ConvertSQLDate($LastDateOfPeriod);
+	}else{
+		$InputErrorMessage = "The type of Salary " . $SalaryType . " is not accepted";
 		$InputError = TRUE;
 	}
 
+	// The month selected should be last month for Monthly salaries
+	if ($SalaryType == "MONTHLY"){
+		if($PeriodNow != ($PeriodExportDate + 1)){
+			$InputErrorMessage = "The month selected to export PPh21 Monthly Salary Slips should be last month";
+			$InputError = TRUE;
+		}
+	}
+	
+	// The month selected should be current month for THR Only salaries
+	if ($SalaryType == "THRONLY"){
+		if($PeriodNow != ($PeriodExportDate)){
+			$InputErrorMessage = "The month selected to export PPh21 THR Only Salary Slips should be this current month";
+			$InputError = TRUE;
+		}
+	}
+	
 	if(!$InputError){
 		$SQL = "SELECT codename,
 						fullname,
@@ -56,6 +71,7 @@ function submit(&$db, $Company, $LastDateOfPeriod) {
 				FROM salariescalculated
 				WHERE company = '" . $Company . "'
 					AND periodno = '" . $PeriodExportDate . "'
+					AND salarytype = '" . $SalaryType . "'
 				ORDER BY zonepph21,
 					fullname";
 		$result = DB_query($SQL);
@@ -147,7 +163,11 @@ function submit(&$db, $Company, $LastDateOfPeriod) {
 
 			// Redirect output to a client’s web browser (Excel2007)
 			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-			$File ='InfoPPH21-' .  $Company . '-' . $LastDateOfPeriod. '.xlsx';
+			if ($SalaryType == "MONTHLY"){
+				$File ='InfoPPH21-' .  $Company . '-' . $LastDateOfPeriod. '.xlsx';
+			}else{
+				$File ='InfoPPH21-THR-' .  $Company . '-' . $LastDateOfPeriod. '.xlsx';
+			}
 			header('Content-Disposition: attachment;filename="' . $File . '"');
 			header('Cache-Control: max-age=0');
 			// If you're serving to IE 9, then the following may be needed
@@ -168,6 +188,13 @@ function submit(&$db, $Company, $LastDateOfPeriod) {
 			prnMsg('No data to export for PPH21 deduction calculation');
 			include('includes/footer.inc');
 		}
+	}else{
+		include('includes/header.inc');
+		echo '<p class="page_title_text">
+				<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $PageTitle . '" alt="" />' . ' ' . $PageTitle . 
+			'</p>';
+		prnMsg($InputErrorMessage, "warn");
+		include('includes/footer.inc');
 	}
 } // End of function submit()
 
@@ -204,8 +231,24 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 			echo '<option value="' . $PeriodRow[0] . '">' . MonthAndYearFromSQLDate($PeriodRow[0]) . '</option>';
 		}
 	}
-	echo '</select></td></tr>
-		</table>';
+	echo '</select></td></tr>';
+	
+	// check the type of salary to import
+	if(!isset($_POST['SalaryType'])) {
+		$_POST['SalaryType']='MONTHLY';
+	}
+
+	echo '<tr>
+			<td>' . _('Type Of Salary') . ':</td>
+			<td><select name="SalaryType">';
+	if($_POST['SalaryType']=="MONTHLY") {
+		echo '<option selected="selected" value="MONTHLY">' . _('Monthly Salary') . '</option>';
+		echo '<option value="THRONLY">' . _('THR Only') . '</option>';
+	} else {
+		echo '<option selected="selected" value="THRONLY">' . _('THR Only') . '</option>';
+		echo '<option value="MONTHLY">' . _('Monthly Salary') . '</option>';
+	}
+	echo '</select></td></tr>';	
 
 	echo '<table>';
 	echo '<tr><td>&nbsp;</td></tr>

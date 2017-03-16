@@ -14,7 +14,7 @@ echo '<p class="page_title_text">
 	</p>';
 
 if (isset($_POST['submit'])) {
-	submit($Title, $Company, $_POST['DateOfFile'], $_POST['PaymentDate'], $db);
+	submit($Title, $Company, $_POST['DateOfFile'], $_POST['PaymentDate'], $_POST['SalaryType'], $db);
 } else {
 	display($Title, $db);
 }
@@ -22,23 +22,42 @@ if (isset($_POST['submit'])) {
 include('includes/footer.inc');
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit($Title, $Company, $LastDateOfPeriod, $PaymentDate, &$db) {
+function submit($Title, $Company, $LastDateOfPeriod, $PaymentDate, $SalaryType, &$db) {
 
 	$PaymentDate = FormatDateForSQL($PaymentDate);
 	
 	//initialise no input errors
 	$InputError = FALSE;
-
+	
 	//first off validate inputs sensible
 	$PeriodExportDate = GetPeriod(ConvertSQLDate($LastDateOfPeriod), $db);
 	$Today = date('Y-m-d');
 	$PeriodNow = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
 	$PeriodMonth = MonthAndYearFromSQLDate($LastDateOfPeriod);
-	
-	
-	if($PeriodNow != ($PeriodExportDate + 1)){
-		prnMsg("The month selected to Move Monthly Salaries Data to Petty Cash should be last month","warn");
+
+	if ($SalaryType == "MONTHLY"){
+		$PageTitle = _('Move Monthly Salary to Petty Cash for '). ConvertSQLDate($LastDateOfPeriod);
+	}elseif($SalaryType == "THRONLY"){
+		$PageTitle = _('Move THR Only to Petty Cash for '). ConvertSQLDate($LastDateOfPeriod);
+	}else{
+		$InputErrorMessage = "The type of Salary " . $SalaryType . " is not accepted";
 		$InputError = TRUE;
+	}
+
+	// The month selected should be last month for Monthly salaries
+	if ($SalaryType == "MONTHLY"){
+		if($PeriodNow != ($PeriodExportDate + 1)){
+			$InputErrorMessage = "The month selected to Move Monthly Salaries Data to Petty Cash should be last month";
+			$InputError = TRUE;
+		}
+	}
+	
+	// The month selected should be current month for THR Only salaries
+	if ($SalaryType == "THRONLY"){
+		if($PeriodNow != ($PeriodExportDate)){
+			$InputErrorMessage = "The month selected to Move THR Only Data to Petty Cash should be this current month";
+			$InputError = TRUE;
+		}
 	}
 
 	if(!$InputError){
@@ -76,6 +95,7 @@ function submit($Title, $Company, $LastDateOfPeriod, $PaymentDate, &$db) {
 				FROM salariescalculated
 				WHERE company = '" . $Company . "'
 					AND periodno = '" . $PeriodExportDate . "'
+					AND salarytype = '" . $SalaryType . "'
 				ORDER BY paymentmethod,
 					joiningdate,
 					codename";
@@ -183,6 +203,13 @@ function submit($Title, $Company, $LastDateOfPeriod, $PaymentDate, &$db) {
 			prnMsg('No data to Move Monthly Salaries Data to Petty Cash ');
 			include('includes/footer.inc');
 		}
+	}else{
+		include('includes/header.inc');
+		echo '<p class="page_title_text">
+				<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $PageTitle . '" alt="" />' . ' ' . $PageTitle . 
+			'</p>';
+		prnMsg($InputErrorMessage, "warn");
+		include('includes/footer.inc');
 	}
 } // End of function submit()
 
@@ -244,6 +271,24 @@ function display($Title, &$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DI
 		}
 	}
 	echo '</select></td></tr>';
+
+	// check the type of salary to import
+	if(!isset($_POST['SalaryType'])) {
+		$_POST['SalaryType']='MONTHLY';
+	}
+
+	echo '<tr>
+			<td>' . _('Type Of Salary') . ':</td>
+			<td><select name="SalaryType">';
+	if($_POST['SalaryType']=="MONTHLY") {
+		echo '<option selected="selected" value="MONTHLY">' . _('Monthly Salary') . '</option>';
+		echo '<option value="THRONLY">' . _('THR Only') . '</option>';
+	} else {
+		echo '<option selected="selected" value="THRONLY">' . _('THR Only') . '</option>';
+		echo '<option value="MONTHLY">' . _('Monthly Salary') . '</option>';
+	}
+	echo '</select></td></tr>';	
+
 	echo '<tr>
 		<td>' . _('Payment date') . ':</td>
 		<td><input type="text" size="11" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="PaymentDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" />';

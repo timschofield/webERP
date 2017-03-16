@@ -5,16 +5,16 @@ include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/KLCompanySelection.php');
 
-$Title = _('Export PDF Monthly Salary Slips');
+$Title = _('Export PDF Salary Slips');
 
 if (isset($_POST['submit'])) {
-	submit($Title, $Company, $_POST['DateOfFile'], $db);
+	submit($Title, $Company, $_POST['DateOfFile'], $_POST['SalaryType'], $db);
 } else {
 	display($Title, $db);
 }
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit($Title, $Company, $LastDateOfPeriod, &$db) {
+function submit($Title, $Company, $LastDateOfPeriod, $SalaryType, &$db) {
 
 	//initialise no input errors
 	$InputError = FALSE;
@@ -24,16 +24,30 @@ function submit($Title, $Company, $LastDateOfPeriod, &$db) {
 	$Today = date('Y-m-d');
 	$PeriodNow = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
 	$PeriodMonth = MonthAndYearFromSQLDate($LastDateOfPeriod);
-	
-	
-	if($PeriodNow != ($PeriodExportDate + 1)){
-		include('includes/header.inc');
-		echo '<p class="page_title_text">
-				<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '
-			</p>';
-		prnMsg("The month selected to export PDF Monthly Salary Slips should be last month","warn");
-		include('includes/footer.inc');
+
+	if ($SalaryType == "MONTHLY"){
+		$PageTitle = _('Export PDF Monthly Salary Slips for '). ConvertSQLDate($LastDateOfPeriod);
+	}elseif($SalaryType == "THRONLY"){
+		$PageTitle = _('Export PDF THR Only Slips for '). ConvertSQLDate($LastDateOfPeriod);
+	}else{
+		$InputErrorMessage = "The type of Salary " . $SalaryType . " is not accepted";
 		$InputError = TRUE;
+	}
+
+	// The month selected should be last month for Monthly salaries
+	if ($SalaryType == "MONTHLY"){
+		if($PeriodNow != ($PeriodExportDate + 1)){
+			$InputErrorMessage = "The month selected to export PDF Monthly Salary Slips should be last month";
+			$InputError = TRUE;
+		}
+	}
+	
+	// The month selected should be current month for THR Only salaries
+	if ($SalaryType == "THRONLY"){
+		if($PeriodNow != ($PeriodExportDate)){
+			$InputErrorMessage = "The month selected to export PDF THR Only Salary Slips should be this current month";
+			$InputError = TRUE;
+		}
 	}
 
 	if(!$InputError){
@@ -71,6 +85,7 @@ function submit($Title, $Company, $LastDateOfPeriod, &$db) {
 				FROM salariescalculated
 				WHERE company = '" . $Company . "'
 					AND periodno = '" . $PeriodExportDate . "'
+					AND salarytype = '" . $SalaryType . "'
 				ORDER BY paymentmethod,
 					codename";
 		$result = DB_query($SQL);
@@ -79,8 +94,11 @@ function submit($Title, $Company, $LastDateOfPeriod, &$db) {
 			require_once('includes/tcpdf/tcpdf.php');
 			
 			$pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
-			$CoreFileName = $Company . '-MonthlySalarySlips-' . substr($LastDateOfPeriod,0,7);
-			
+			if ($SalaryType == "MONTHLY"){
+				$CoreFileName = $Company . '-MonthlySalarySlips-' . substr($LastDateOfPeriod,0,7);
+			}else{
+				$CoreFileName = $Company . '-THROnlySalarySlips-' . substr($LastDateOfPeriod,0,7);
+			}
 			// set PDF document information
 			$pdf->SetCreator('webERP');
 			$pdf->SetAuthor('webERP');
@@ -161,7 +179,6 @@ function submit($Title, $Company, $LastDateOfPeriod, &$db) {
 					// https://tcpdf.org/examples/example_005/
 					// https://tcpdf.org/docs/source_docs/classTCPDF/#aa81d4b585de305c054760ec983ed3ece
 					
-					
 					// Company header
 					if ($Company == 'PTBB'){
 						$pdf->SetFont($FontType, 'B', $FontBigSize);
@@ -178,7 +195,7 @@ function submit($Title, $Company, $LastDateOfPeriod, &$db) {
 					}				
 					
 					$pdf->SetFont($FontType, '', $FontNormalSize);
-											// employee header
+					// employee header
 					$WidthColumn1 = 120;
 					$WidthColumn2 = 0;
 					$pdf->MultiCell($WidthColumn1, 0, 'Nama Panggilan:', 0, 'R', 0, 0, '', '', true);
@@ -187,9 +204,14 @@ function submit($Title, $Company, $LastDateOfPeriod, &$db) {
 					$pdf->MultiCell($WidthColumn2, 0, $myrow['fullname'], 0, 'L', 0, 1, '', '', true);
 					$pdf->MultiCell($WidthColumn1, 0, 'Posisi:', 0, 'R', 0, 0, '', '', true);
 					$pdf->MultiCell($WidthColumn2, 0, $myrow['position'], 0, 'L', 0, 1, '', '', true);
-					$pdf->MultiCell($WidthColumn1, 0, 'Slip Gaji Periode:', 0, 'R', 0, 0, '', '', true);
-					$pdf->MultiCell($WidthColumn2, 0, ConvertSQLDate($myrow['salaryfrom']) . ' - ' . 
-													ConvertSQLDate($myrow['salaryto']), 0, 'L', 0, 1, '', '', true);
+					if ($SalaryType == "MONTHLY"){
+						$pdf->MultiCell($WidthColumn1, 0, 'Slip Gaji Periode:', 0, 'R', 0, 0, '', '', true);
+						$pdf->MultiCell($WidthColumn2, 0, ConvertSQLDate($myrow['salaryfrom']) . ' - ' . 
+														ConvertSQLDate($myrow['salaryto']), 0, 'L', 0, 1, '', '', true);
+					}else{
+						$pdf->MultiCell($WidthColumn1, 0, 'Slip THR:', 0, 'R', 0, 0, '', '', true);
+						$pdf->MultiCell($WidthColumn2, 0, $PeriodMonth, 0, 'L', 0, 1, '', '', true);
+					}
 					
 					$pdf->ln(5);
 					
@@ -341,8 +363,12 @@ function submit($Title, $Company, $LastDateOfPeriod, &$db) {
 					
 					// footer
 					$pdf->ln(5);
-					$pdf->MultiCell($WidthColumn4, 0, 'Saya telah menerima gaji sebesar jumlah tertera di atas pada tanggal: ' . 
-													$myrow['paymentday'], 0, 'L', 0, 1, '', '', true);
+					if ($SalaryType == "MONTHLY"){
+						$TextMenerima = 'Saya telah menerima gaji sebesar jumlah tertera di atas pada tanggal: ';
+					}else{
+						$TextMenerima = 'Saya telah menerima THR sebesar jumlah tertera di atas pada tanggal: ';
+					}
+					$pdf->MultiCell($WidthColumn4, 0, $TextMenerima . $myrow['paymentday'], 0, 'L', 0, 1, '', '', true);
 
 					$pdf->ln(40);
 					$pdf->MultiCell($WidthColumn4, 0, 'Tanda tangan: ' . $myrow['fullname'], 0, 'l', 0, 1, '', '', true);
@@ -406,6 +432,13 @@ function submit($Title, $Company, $LastDateOfPeriod, &$db) {
 			prnMsg('No data to export PDF Monthly Salary Slips ');
 			include('includes/footer.inc');
 		}
+	}else{
+		include('includes/header.inc');
+		echo '<p class="page_title_text">
+				<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $PageTitle . '" alt="" />' . ' ' . $PageTitle . 
+			'</p>';
+		prnMsg($InputErrorMessage, "warn");
+		include('includes/footer.inc');
 	}
 } // End of function submit()
 
@@ -440,8 +473,26 @@ function display($Title, &$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DI
 			echo '<option value="' . $PeriodRow[0] . '">' . MonthAndYearFromSQLDate($PeriodRow[0]) . '</option>';
 		}
 	}
-	echo '</select></td></tr>
-		</table>';
+	echo '</select></td></tr>';
+	
+	// check the type of salary to import
+	if(!isset($_POST['SalaryType'])) {
+		$_POST['SalaryType']='MONTHLY';
+	}
+
+	echo '<tr>
+			<td>' . _('Type Of Salary') . ':</td>
+			<td><select name="SalaryType">';
+	if($_POST['SalaryType']=="MONTHLY") {
+		echo '<option selected="selected" value="MONTHLY">' . _('Monthly Salary') . '</option>';
+		echo '<option value="THRONLY">' . _('THR Only') . '</option>';
+	} else {
+		echo '<option selected="selected" value="THRONLY">' . _('THR Only') . '</option>';
+		echo '<option value="MONTHLY">' . _('Monthly Salary') . '</option>';
+	}
+	echo '</select></td></tr>';	
+	
+	echo '</table>';
 
 	echo '<table>';
 	echo '<tr><td>&nbsp;</td></tr>

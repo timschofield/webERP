@@ -8,13 +8,13 @@ include('includes/KLCompanySelection.php');
 $Title = _('Export CSV File for Transfer LLG Danamon');
 
 if (isset($_POST['submit'])) {
-	submit($Title, $Company, $_POST['DateOfFile'], $db);
+	submit($Title, $Company, $_POST['DateOfFile'], $_POST['SalaryType'], $db);
 } else {
 	display($Title, $db);
 }
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit($Title, $Company, $LastDateOfPeriod, &$db) {
+function submit($Title, $Company, $LastDateOfPeriod, $SalaryType, &$db) {
 
 	//initialise no input errors
 	$InputError = FALSE;
@@ -25,15 +25,29 @@ function submit($Title, $Company, $LastDateOfPeriod, &$db) {
 	$PeriodNow = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
 	$PeriodMonth = MonthAndYearFromSQLDate($LastDateOfPeriod);
 	
-	
-	if($PeriodNow != ($PeriodExportDate + 1)){
-		include('includes/header.inc');
-		echo '<p class="page_title_text">
-				<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '
-			</p>';
-		prnMsg("The month selected to export CSV File for Transfer LLG Danamon should be last month","warn");
-		include('includes/footer.inc');
+	if ($SalaryType == "MONTHLY"){
+		$PageTitle = _('Export CSV Danamon Monthly Salary for '). ConvertSQLDate($LastDateOfPeriod);
+	}elseif($SalaryType == "THRONLY"){
+		$PageTitle = _('Export CSV Danamon THR Only for '). ConvertSQLDate($LastDateOfPeriod);
+	}else{
+		$InputErrorMessage = "The type of Salary " . $SalaryType . " is not accepted";
 		$InputError = TRUE;
+	}
+
+	// The month selected should be last month for Monthly salaries
+	if ($SalaryType == "MONTHLY"){
+		if($PeriodNow != ($PeriodExportDate + 1)){
+			$InputErrorMessage = "The month selected to export Monthly Salary CSV File for Transfer LLG Danamon should be last month";
+			$InputError = TRUE;
+		}
+	}
+		
+	// The month selected should be current month for THR Only salaries
+	if ($SalaryType == "THRONLY"){
+		if($PeriodNow != ($PeriodExportDate)){
+			$InputErrorMessage = "The month selected to export THR Only CSV File for Transfer LLG Danamon should be current month";
+			$InputError = TRUE;
+		}
 	}
 
 	if(!$InputError){
@@ -63,6 +77,7 @@ function submit($Title, $Company, $LastDateOfPeriod, &$db) {
 				FROM salariescalculated
 				WHERE company = '" . $Company . "'
 					AND periodno = '" . $PeriodExportDate . "'
+					AND salarytype = '" . $SalaryType . "'
 					AND paymentmethod = 'Bank'
 				ORDER BY joiningdate,
 					fullname";
@@ -70,7 +85,11 @@ function submit($Title, $Company, $LastDateOfPeriod, &$db) {
 		if (DB_num_rows($result) != 0){
 			// prepare CSV file
 			header("Content-Type: text/csv");
-			header("Content-Disposition: attachment; filename=GajiTransferDanamon-" . $Today . ".csv");
+			if ($SalaryType == "MONTHLY"){
+				header("Content-Disposition: attachment; filename=GajiTransferDanamon-" . $Today . ".csv");
+			}else{
+				header("Content-Disposition: attachment; filename=THRTransferDanamon-" . $Today . ".csv");
+			}
 			$output = fopen("php://output", "w");
 			$Separator = ",";
 			$EOL = "\n";
@@ -94,12 +113,17 @@ function submit($Title, $Company, $LastDateOfPeriod, &$db) {
 								$myrow['potonganpph21'] +
 								$myrow['potonganabsen'] +
 								$myrow['potonganlain2'];
+
+				if ($SalaryType == "MONTHLY"){
+					$TextMessage = substr('Gaji' . ' '. $PeriodMonth,0,20);
+				}else{
+					$TextMessage = substr('THR' . ' '. $PeriodMonth,0,20);
+				}
 								
 				$Line = $myrow['bankaccount'] . $Separator . 
-//						round($ValueTransfer,0) . $Separator . 
 						$ValueTransfer . $Separator . 
 						substr($Company . ' '. $PeriodMonth,0,30) . $Separator . 
-						substr('Gaji' . ' '. $PeriodMonth,0,20) . $Separator . 
+						$TextMessage . $Separator . 
 						$myrow['bankaccountholder'] . $Separator . 
 						"PUSAT" . $Separator . 
 						$myrow['bankcode'] . $Separator . 
@@ -116,6 +140,13 @@ function submit($Title, $Company, $LastDateOfPeriod, &$db) {
 			prnMsg('No data to export CSV File for Transfer LLG Danamon ');
 			include('includes/footer.inc');
 		}
+	}else{
+		include('includes/header.inc');
+		echo '<p class="page_title_text">
+				<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $PageTitle . '" alt="" />' . ' ' . $PageTitle . 
+			'</p>';
+		prnMsg($InputErrorMessage, "warn");
+		include('includes/footer.inc');
 	}
 } // End of function submit()
 
@@ -150,8 +181,26 @@ function display($Title, &$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DI
 			echo '<option value="' . $PeriodRow[0] . '">' . MonthAndYearFromSQLDate($PeriodRow[0]) . '</option>';
 		}
 	}
-	echo '</select></td></tr>
-		</table>';
+	echo '</select></td></tr>';
+	
+	// check the type of salary to import
+	if(!isset($_POST['SalaryType'])) {
+		$_POST['SalaryType']='MONTHLY';
+	}
+
+	echo '<tr>
+			<td>' . _('Type Of Salary') . ':</td>
+			<td><select name="SalaryType">';
+	if($_POST['SalaryType']=="MONTHLY") {
+		echo '<option selected="selected" value="MONTHLY">' . _('Monthly Salary') . '</option>';
+		echo '<option value="THRONLY">' . _('THR Only') . '</option>';
+	} else {
+		echo '<option selected="selected" value="THRONLY">' . _('THR Only') . '</option>';
+		echo '<option value="MONTHLY">' . _('Monthly Salary') . '</option>';
+	}
+	echo '</select></td></tr>';	
+	
+	echo '</table>';
 
 	echo '<table>';
 	echo '<tr><td>&nbsp;</td></tr>

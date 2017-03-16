@@ -86,7 +86,6 @@ function submit(&$db, $DateOfFile, $SelectedFile, $SalaryType) {
 		}
 	}
 	
-	
 	if(!$InputError){
 	
 		// let's delete the previous records of that month for test purposes
@@ -181,17 +180,40 @@ function submit(&$db, $DateOfFile, $SelectedFile, $SalaryType) {
 					$FixedLembur = 0;
 					$Lembur = 0;
 					$PenerimaanLain2 = 0;
-					$PenerimaanLain2Notes = 0;
+					$PenerimaanLain2Notes = '';
 					$PotonganJHT = 0;
 					$PotonganASKES = 0;
 					$PotonganPPH21 = 0;
 					$PotonganAbsen = 0;
 					$PotonganLain2 = 0;
-					$PotonganLain2Notes = 0;
+					$PotonganLain2Notes = '';
 				}
+
+				$TotalBawaPulang = $UpahPokok +
+								$TunjanganMakan +
+								$TunjanganTransport +
+								$TunjanganJabatan +
+								$KomisiTetap +
+								$GajiPokok +
+								$TunjanganMasaKerja +
+								$TunjanganKendaraan +
+								$KomisiRetail +
+								$KomisiSupport +
+								$BonusPenjualan +
+								$Lembur +
+								$THR +
+								$PenerimaanLain2 +
+								$PotonganJHT +
+								$PotonganASKES +
+								$PotonganPPH21 +
+								$PotonganAbsen +
+								$PotonganLain2 +
+								$Bulatan;
 				
 				//Insert into the database if it's a Monthly salary or THR-Only is for employee
-				if (($SalaryType == "MONTHLY") OR (($SalaryType == "THRONLY") AND ($EmployeeWithTHR == "YES"))){
+				if ((($SalaryType == "MONTHLY") 
+					OR (($SalaryType == "THRONLY") AND ($EmployeeWithTHR == "YES")))
+					AND ($TotalBawaPulang > 0)){
 					$sqlInsert = "INSERT INTO salariescalculated
 									(periodno,
 									salarytype,
