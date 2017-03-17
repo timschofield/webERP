@@ -12,6 +12,14 @@ if (isset($_POST['SelectedReturnedItemsId'])){
 	$SelectedReturnedItemsId = mb_strtoupper($_GET['SelectedReturnedItemsId']);
 }
 
+prnMsg("SelectedReturnedItemsId ". $SelectedReturnedItemsId);
+prnMsg("orderno ". $_POST['orderno']);
+prnMsg("returndate ". $_POST['returndate']);
+prnMsg("reasonid ". $_POST['reasonid']);
+prnMsg("itemcodes ". $_POST['itemcodes']);
+prnMsg("oldinvoice ". $_POST['oldinvoice']);
+prnMsg("oldinvoicedate ". $_POST['oldinvoicedate']);
+
 if (isset($Errors)) {
 	unset($Errors);
 }
@@ -21,6 +29,10 @@ $Errors = array();
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (isset($_POST['submit'])) {
+
+	$_POST['orderno']=mb_strtoupper($_POST['orderno']);
+	$_POST['itemcodes']=mb_strtoupper($_POST['itemcodes']);
+	$_POST['oldinvoice']=mb_strtoupper($_POST['oldinvoice']);
 
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
@@ -35,11 +47,11 @@ if (isset($_POST['submit'])) {
 
 		$sql = "UPDATE returneditems
 				SET orderno = '" . $_POST['orderno'] . "',
-					returndate = '" . $_POST['returndate'] . "'
+					returndate = '" . FormatDateForSQL($_POST['returndate']) . "'
 					reasonid = '" . $_POST['reasonid'] . "'
 					itemcodes = '" . $_POST['itemcodes'] . "'
 					oldinvoice = '" . $_POST['oldinvoice'] . "'
-					oldinvoicedate = '" . $_POST['oldinvoicedate'] . "'
+					oldinvoicedate = '" . FormatDateForSQL($_POST['oldinvoicedate']) . "'
 				WHERE returneditemsid = '".$SelectedReturnedItemsId."'";
 
 		$msg = _('The Returned Item') . ' ' . $SelectedReturnedItemsId . ' ' .  _('has been updated');
@@ -49,14 +61,14 @@ if (isset($_POST['submit'])) {
 
 		$checkSql = "SELECT count(*)
 			     FROM returneditems
-			     WHERE returneditemsid = '" . $_POST['returneditemsid'] . "'";
+			     WHERE returneditemsid = '" . $SelectedReturnedItemsId . "'";
 
 		$CheckResult = DB_query($checkSql);
 		$CheckRow = DB_fetch_row($CheckResult);
 
 		if ( $CheckRow[0] > 0 ) {
 			$InputError = 1;
-			prnMsg( _('The Returned Item ') . $_POST['returneditemsid'] . _(' already exist.'),'error');
+			prnMsg( _('The Returned Item ') . $SelectedReturnedItemsId . _(' already exist.'),'error');
 		} else {
 
 			// Add new record on submit
@@ -68,11 +80,11 @@ if (isset($_POST['submit'])) {
 											oldinvoice,
 											oldinvoicedate)
 							VALUES ('" . $_POST['orderno'] . "',
-							'" . $_POST['returndate'] . "',
+							'" . FormatDateForSQL($_POST['returndate']) . "',
 							'" . $_POST['reasonid'] . "',
 							'" . $_POST['itemcodes'] . "',
 							'" . $_POST['oldinvoice'] . "',
-							'" . $_POST['oldinvoicedate'] . "')";
+							'" . FormatDateForSQL($_POST['oldinvoicedate']) . "')";
 
 			$msg = _('Returned Item') . ' ' . $_POST['orderno'] .  ' ' . _('has been created');
 		}
@@ -104,15 +116,14 @@ if (isset($_POST['submit'])) {
 	unset($_GET['delete']);
 }
 
-
 if(isset($_POST['Cancel'])){
-		unset($SelectedReturnedItemsId);
-		unset($_POST['orderno']);
-		unset($_POST['returndate']);
-		unset($_POST['reasonid']);
-		unset($_POST['itemcodes']);
-		unset($_POST['oldinvoice']);
-		unset($_POST['oldinvoicedate']);
+	unset($SelectedReturnedItemsId);
+	unset($_POST['orderno']);
+	unset($_POST['returndate']);
+	unset($_POST['reasonid']);
+	unset($_POST['itemcodes']);
+	unset($_POST['oldinvoice']);
+	unset($_POST['oldinvoicedate']);
 }
 
 if (!isset($SelectedReturnedItemsId)){
@@ -221,10 +232,9 @@ if (! isset($_GET['delete'])) {
 		$_POST['reasonid']  = $myrow['reasonid'];
 		$_POST['itemcodes']  = $myrow['itemcodes'];
 		$_POST['oldinvoice']  = $myrow['oldinvoice'];
-		$_POST['ooldinvoicedate']  = $myrow['ooldinvoicedate'];
+		$_POST['oldinvoicedate']  = $myrow['oldinvoicedate'];
 
-		echo '<input type="hidden" name="SelectedReturnedItemsId" value="' . $SelectedReturnedItemsId . '" />
-			<input type="hidden" name="code" value="' . $_POST['SelectedReturnedItemsId'] . '" />
+		echo '<input type="hidden" name="SelectedReturnedItemsId" value="' . $_POST['SelectedReturnedItemsId'] . '" />
 			<table class="selection">
 			<tr>
 				<th colspan="4"><b>' . _('Returned Item') . '</b></th>
@@ -249,7 +259,7 @@ if (! isset($_GET['delete'])) {
 	}
 	echo '<tr>
 			<td>' . _('Item Code') . ':</td>
-			<td><input type="text" name="description" value="' . $_POST['itemcodes'] . '" /></td>
+			<td><input type="text" name="itemcodes" value="' . $_POST['itemcodes'] . '" /></td>
 		</tr>';
 	
 	if (!isset($_POST['reasonid'])) {
@@ -273,7 +283,7 @@ if (! isset($_GET['delete'])) {
 	}
 	echo '<tr>
 			<td>' . _('Order Return') . ':</td>
-			<td><input type="text" name="description" value="' . $_POST['orderno'] . '" /></td>
+			<td><input type="text" name="orderno" value="' . $_POST['orderno'] . '" /></td>
 		</tr>';
 
 	if (!isset($_POST['returndate'])) {
@@ -281,7 +291,7 @@ if (! isset($_GET['delete'])) {
 	}
 	echo '<tr>
 			<td>' . _('Date Of Return') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="Date" size="10" required="required" autofocus="autofocus" maxlength="10" value="' . $_POST['returndate']. '" /></td>
+			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="returndate" size="10" required="required" autofocus="autofocus" maxlength="10" value="' . $_POST['returndate']. '" /></td>
 		</tr>';
 	
 	if (!isset($_POST['oldinvoice'])) {
@@ -289,7 +299,7 @@ if (! isset($_GET['delete'])) {
 	}
 	echo '<tr>
 			<td>' . _('Old Invoice') . ':</td>
-			<td><input type="text" name="description" value="' . $_POST['oldinvoice'] . '" /></td>
+			<td><input type="text" name="oldinvoice" value="' . $_POST['oldinvoice'] . '" /></td>
 		</tr>';	
 
 	if (!isset($_POST['oldinvoicedate'])) {
@@ -297,7 +307,7 @@ if (! isset($_GET['delete'])) {
 	}
 	echo '<tr>
 			<td>' . _('Date Of Return') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="Date" size="10" required="required" autofocus="autofocus" maxlength="10" value="' . $_POST['oldinvoicedate']. '" /></td>
+			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="oldinvoicedate" size="10" required="required" autofocus="autofocus" maxlength="10" value="' . $_POST['oldinvoicedate']. '" /></td>
 		</tr>';
 		
 	echo '</table>'; // close main table
