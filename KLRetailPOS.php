@@ -488,7 +488,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 	// if vouchers were presented, we need the code of the voucher
 	if (($_POST['AmountVouchers'] <> 0) && ($_POST['VoucherCode'] == '')){
-		prnMsg(_('If voucher or discoutn was used, the code of voucher or discount must be reported'),'error');
+		prnMsg(_('If voucher or discount was used, the code of voucher or discount must be reported'),'error');
 		$InputError = true;
 	}
 	
@@ -667,7 +667,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 				'" . $ExRate . "',
 				'" ."" . "',
 				'" . $_SESSION['Items'.$identifier]->ShipVia . "',
-				'" . ($_SESSION['Items'.$identifier]->total + $_POST['TaxTotal'] - $_POST['AmountReturnedGoods'] - $_POST['AmountVouchers']) . "')";
+				'" . ($_SESSION['Items'.$identifier]->total + $_POST['TaxTotal'] - $_POST['AmountVouchers']) . "')";
+//				'" . ($_SESSION['Items'.$identifier]->total + $_POST['TaxTotal'] - $_POST['AmountReturnedGoods'] - $_POST['AmountVouchers']) . "')";
 
 		$ErrMsg =_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The debtor transaction record could not be inserted because');
 		$DbgMsg = _('The following SQL to insert the debtor transaction record was used');
@@ -772,10 +773,10 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 			$DbgMsg = _('The following SQL to insert the stock movement records was used');
 			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-		/*Get the ID of the StockMove... */
+			/*Get the ID of the StockMove... */
 			$StkMoveNo = DB_Last_Insert_ID($db,'stockmoves','stkmoveno');
 
-		/*Insert the taxes that applied to this line */
+			/*Insert the taxes that applied to this line */
 			foreach ($OrderLine->Taxes as $Tax) {
 
 				$SQL = "INSERT INTO stockmovestaxes (stkmoveno,
@@ -793,7 +794,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 			} //end for each tax for the line
 
-		/*Insert Sales Analysis records */
+			/*Insert Sales Analysis records */
 
 			$SQL="SELECT COUNT(*),
 					salesanalysis.stockid,
@@ -951,7 +952,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 					$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 				}
 
-		/*now the stock entry*/
+				/*now the stock entry*/
 				$StockGLCode = GetStockGLCode($OrderLine->StockID,$db);
 				$SQL = "INSERT INTO gltrans (	type,
 												typeno,
