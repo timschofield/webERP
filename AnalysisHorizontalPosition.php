@@ -16,7 +16,7 @@ $Title = _('Horizontal Analysis of Statement of Financial Position');// Screen i
 $ViewTopic = 'GeneralLedger';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'AnalysisHorizontalPosition';// Anchor's id in the manual's html document.
 include('includes/SQL_CommonFunctions.inc');
-include('includes/AccountSectionsDef.inc'); // This loads the $Sections variable
+include('includes/AccountSectionsDef.php'); // This loads the $Sections variable
 
 if(! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'])) {
 

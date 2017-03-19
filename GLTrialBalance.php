@@ -13,7 +13,7 @@ $ViewTopic= 'GeneralLedger';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'TrialBalance';// Anchor's id in the manual's html document.
 
 include('includes/SQL_CommonFunctions.inc');
-include('includes/AccountSectionsDef.inc'); //this reads in the Accounts Sections array
+include('includes/AccountSectionsDef.php'); //this reads in the Accounts Sections array
 
 
 if (isset($_POST['FromPeriod'])

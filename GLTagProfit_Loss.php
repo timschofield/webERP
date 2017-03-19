@@ -5,7 +5,7 @@
 include ('includes/session.inc');
 $Title = _('Income and Expenditure by Tag');
 include('includes/SQL_CommonFunctions.inc');
-include('includes/AccountSectionsDef.inc'); // This loads the $Sections variable
+include('includes/AccountSectionsDef.php'); // This loads the $Sections variable
 
 $ViewTopic= 'GeneralLedger';
 $BookMark = 'TagReports';

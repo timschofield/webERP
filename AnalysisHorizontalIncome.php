@@ -16,7 +16,7 @@ $Title = _('Horizontal Analysis of Statement of Comprehensive Income');// Screen
 $ViewTopic= 'GeneralLedger';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'AnalysisHorizontalIncome';// Anchor's id in the manual's html document.
 include('includes/SQL_CommonFunctions.inc');
-include('includes/AccountSectionsDef.inc');// This loads the $Sections variable
+include('includes/AccountSectionsDef.php');// This loads the $Sections variable
 
 if(isset($_POST['FromPeriod']) and ($_POST['FromPeriod'] > $_POST['ToPeriod'])) {
 	prnMsg(_('The selected period from is actually after the period to') . '! ' . _('Please reselect the reporting period'),'error');
