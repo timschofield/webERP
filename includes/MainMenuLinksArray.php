@@ -536,8 +536,8 @@ $MenuItems['GL']['Reports']['Caption'] = array( _('Bank Account Reconciliation S
 												_('Statement of Cash Flows'),
 												_('GL Transactions for PT. Angin Dingin Utara (Excel File)'),
 												_('GL Transactions for PT. Bumi Biru (Excel File)'),
-												_('Horizontal Analysis of Statement of Comprehensive Income'),
 												_('Horizontal Analysis of Statement of Financial Position'),
+												_('Horizontal Analysis of Statement of Comprehensive Income'),
 												_('KL Excel Financial Analysis'),
 												_('Tag Reports'),
 												_('Tax Reports'));
