@@ -667,7 +667,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 				'" . $ExRate . "',
 				'" ."" . "',
 				'" . $_SESSION['Items'.$identifier]->ShipVia . "',
-				'" . ($_SESSION['Items'.$identifier]->total + $_POST['TaxTotal'] - $_POST['AmountVouchers']) . "')";
+				'" . ($_SESSION['Items'.$identifier]->total + $_POST['TaxTotal']) . "')";
 //				'" . ($_SESSION['Items'.$identifier]->total + $_POST['TaxTotal'] - $_POST['AmountReturnedGoods'] - $_POST['AmountVouchers']) . "')";
 
 		$ErrMsg =_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The debtor transaction record could not be inserted because');
