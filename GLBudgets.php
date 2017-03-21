@@ -40,10 +40,11 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 			<td>' .   _('Select GL Account').  ':</td>
 			<td><select name="SelectedAccount" required="required" onchange="ReloadForm(selectaccount.Select)">';
 
-$SQL = "SELECT accountcode,
-				accountname
-			FROM chartmaster
-			ORDER BY accountcode";
+$SQL = "SELECT chartmaster.accountcode, 
+			   chartmaster.accountname
+		FROM chartmaster 
+		INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canupd=1
+		ORDER BY chartmaster.accountcode";
 
 $result=DB_query($SQL);
 if (DB_num_rows($result)==0){
