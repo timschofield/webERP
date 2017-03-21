@@ -198,8 +198,12 @@ echo '<tr>
 		<br />' . _('otherwise select the account from the list') . ')</td>
 	<td><select name="AcctSelection">';
 
-$sql = "SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode";
-
+$sql = "SELECT chartmaster.accountcode, 
+			   chartmaster.accountname
+		FROM chartmaster 
+		INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canview=1
+		ORDER BY chartmaster.accountcode";
+		
 $result = DB_query($sql);
 echo '<option value=""></option>';
 while ($myrow = DB_fetch_array($result)) {
