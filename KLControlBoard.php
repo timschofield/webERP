@@ -271,8 +271,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_SystemAdmin 
-		OR $KL_AdministrationTeam){
+	if ($KL_AdministrationTeam){
 		
 		BalanceAccountControl("111111101",         0,   15000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
