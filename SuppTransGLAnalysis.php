@@ -201,7 +201,7 @@ echo '<tr>
 $sql = "SELECT chartmaster.accountcode, 
 			   chartmaster.accountname
 		FROM chartmaster 
-		INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canview=1
+		INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canupd=1
 		ORDER BY chartmaster.accountcode";
 		
 $result = DB_query($sql);
