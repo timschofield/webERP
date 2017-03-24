@@ -9060,7 +9060,8 @@ function ItemsinSetUp($Check, $Category, $RootPath, $db){
 		$SQLWhere = "AND LENGTH(stockmaster.description) > 2
 					AND (SELECT SUM(locstock.quantity)
 							FROM locstock
-							WHERE locstock.stockid = stockmaster.stockid) > 0
+							WHERE locstock.stockid = stockmaster.stockid
+								AND locstock.loccode = " . CODE_KANTOR . ") > 0
 					AND (SELECT price
 							FROM prices
 							WHERE stockmaster.stockid = prices.stockid
