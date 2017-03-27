@@ -275,15 +275,15 @@ function AccountPaymentRetail($PaymentMethod,
 	$ReceiptNumber = GetNextTransNo(12,$db);
 
 	if ($PaymentMethod == PAYMENT_BY_CREDITCARD){
-		$Description = _(' WI:') . $InvoiceNo . 
-					 _(' YI:') . $CustomerReference  . 
-					 _(' SPG:'). $_SESSION['SalesmanLogin'] . 
+		$Description = $CustomerReference  . 
+					' (' . $InvoiceNo . 
+					') SPG:'. $_SESSION['SalesmanLogin'] . 
 					 ' CC -> T:' . number_format($AmountPaid,0) . 
 					 ' C:' . number_format($BankCommision,0);
 	}else{
-		$Description = _(' WI:') . $InvoiceNo . 
-					 _(' YI:') . $CustomerReference  . 
-					 _(' SPG:'). $_SESSION['SalesmanLogin'];
+		$Description = $CustomerReference  . 
+					' (' . $InvoiceNo . 
+					') SPG:'. $_SESSION['SalesmanLogin'];
 	}
 	
 	$SQL="INSERT INTO gltrans (type,
@@ -342,11 +342,7 @@ function AccountPaymentRetail($PaymentMethod,
 		'" . Date('Y-m-d') . "',
 		'" . $PeriodNo . "',
 		'" . $_SESSION['CompanyRecord']['debtorsact'] . "',
-		'" . $Area . 
-			 _(' WI:') . $InvoiceNo . 
-			 _(' YI:') . $CustomerReference  . 
-			 _(' SPG:'). $_SESSION['SalesmanLogin'] . 
-			 ' ' . $Location . "',
+		'" . $Description . "',
 		'" . -($AmountPaid/$ExRate) . "',
 		'" . $Tag . "')";
 	$DbgMsg = _('The SQL that failed to insert the GL transaction for the debtors account credit was');
@@ -375,9 +371,9 @@ function AccountDiscountOnOrderRetail($TypeDiscount,
 		$ReceiptNumber = GetNextTransNo(10,$db);
 	}
 	
-	$Description = $Area . 
-				 _(' WI:') . $InvoiceNo . 
-				 ' ' . $TypeDiscount;
+	$Description = $CustomerReference  . 
+					' (' . $InvoiceNo . 
+					') ' . $TypeDiscount;
 	
 	$SQL="INSERT INTO gltrans (type,
 			typeno,
@@ -422,10 +418,11 @@ function AccountDebtorPayment($ReceiptNumber,
 		$ReceiptNumber = GetNextTransNo(12,$db);
 	}
 
-	$Description = _(' WI:') . $InvoiceNo . 
-				 _(' YI:') . $CustomerReference  . 
-				 _(' SPG:'). $_SESSION['SalesmanLogin'];
-
+	$Description = $CustomerReference  . 
+					' (' . $InvoiceNo . 
+					') SPG:'. $_SESSION['SalesmanLogin'];
+						
+	
 	if ($PaymentMethod == PAYMENT_BY_CREDITCARD){
 		$Description = $Description . ' CC';
 	}
@@ -483,10 +480,10 @@ function AccountDebtorPayment($ReceiptNumber,
 			VALUES ('" . $ReceiptNumber . "',
 				12,
 				'" . $DebtorNo . "',
-				'" . Date('Y-m-d') . "',
+				'" . date('Y-m-d H-i-s') . "',
 				'" . date('Y-m-d H-i-s') . "',
 				'" . $PeriodNo . "',
-				'" . $InvoiceNo . "',
+				'" . $CustomerReference . "',
 				'" . $OrderNo . "',
 				'" . $ExRate . "',
 				'" . -$AmountPaid . "',
@@ -539,17 +536,15 @@ function AccountDebtorDiscount($ReceiptNumber,
 	}
 
 	if ($Type == 'VOUCHER_DISCOUNT'){
-		$Description = $Area . 
-					 _(' WI:') . $InvoiceNo . 
-					 _(' YI:') . $CustomerReference  . 
-					 _(' SPG:'). $_SESSION['SalesmanLogin'] . 
-					 ' ' . $Location . ' Voucher/Discount';
+		$Description = $CustomerReference  . 
+						' (' . $InvoiceNo . 
+						') SPG:'. $_SESSION['SalesmanLogin'] . 
+						' ' . ' Voucher/Discount';
 	}else{
-		$Description = $Area . 
-					 _(' WI:') . $InvoiceNo . 
-					 _(' YI:') . $CustomerReference  . 
-					 _(' SPG:'). $_SESSION['SalesmanLogin'] . 
-					 ' ' . $Location . ' Returned Goods';
+		$Description = $CustomerReference  . 
+						' (' . $InvoiceNo . 
+						') SPG:'. $_SESSION['SalesmanLogin'] . 
+						 ' ' . ' Returned Goods';
 	}
 	//insert a new debtortrans for the receipt
 
@@ -569,10 +564,10 @@ function AccountDebtorDiscount($ReceiptNumber,
 			VALUES ('" . $ReceiptNumber . "',
 				12,
 				'" . $DebtorNo . "',
-				'" . Date('Y-m-d') . "',
+				'" . date('Y-m-d H-i-s') . "',
 				'" . date('Y-m-d H-i-s') . "',
 				'" . $PeriodNo . "',
-				'" . $InvoiceNo . "',
+				'" . $CustomerReference . "',
 				'" . $OrderNo . "',
 				'" . $ExRate . "',
 				'" . 0 . "',

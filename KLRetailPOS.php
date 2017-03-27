@@ -575,7 +575,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 												'" . $_SESSION['Items'.$identifier]->DefaultSalesType . "',
 												'" . $_SESSION['Items'.$identifier]->ShipVia . "',
 												'". "" . "',
-												'" . _('Shop Sale') . "',
+												'" . _('POS') . "',
 												'" . "" . "',
 												'" . "" . "',
 												'" . $_SESSION['Items'.$identifier]->Location ."',
@@ -633,6 +633,9 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		/* End of insertion of new sales order */
 
 		/*Now insert the DebtorTrans */
+		$InvoiceText = $_SESSION['Items'.$identifier]->CustRef . 
+					' (' . $InvoiceNo . 
+					') SPG:'. $_SESSION['SalesmanLogin'];
 
 		$SQL = "INSERT INTO debtortrans (
 				transno,
@@ -665,7 +668,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 				'" . ($_SESSION['Items'.$identifier]->total) . "',
 				'" . $_POST['TaxTotal'] . "',
 				'" . $ExRate . "',
-				'" ."" . "',
+				'" . $InvoiceText . "',
 				'" . $_SESSION['Items'.$identifier]->ShipVia . "',
 				'" . ($_SESSION['Items'.$identifier]->total + $_POST['TaxTotal']) . "')";
 //				'" . ($_SESSION['Items'.$identifier]->total + $_POST['TaxTotal'] - $_POST['AmountReturnedGoods'] - $_POST['AmountVouchers']) . "')";
@@ -1032,6 +1035,10 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 		/*Post debtors transaction to GL debit debtors, credit freight re-charged and credit sales */
 		if (($_SESSION['Items'.$identifier]->total + $_POST['TaxTotal']) !=0) {
+			$DescriptionText = $_SESSION['Items'.$identifier]->CustRef  . 
+								' (' . $InvoiceNo . 
+								') SPG:'. $_SESSION['SalesmanLogin'];
+
 			$SQL = "INSERT INTO gltrans (	type,
 											typeno,
 											trandate,
@@ -1045,10 +1052,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 											'" . Date('Y-m-d') . "',
 											'" . $PeriodNo . "',
 											'" . $_SESSION['CompanyRecord']['debtorsact'] . "',
-											'" . $_SESSION['Items'.$identifier]->DebtorNo . 
-												 _(' WI:') . $InvoiceNo . 
-												 _(' YI:') . $_SESSION['Items'.$identifier]->CustRef  . 
-												 _(' SPG:'). $_SESSION['SalesmanLogin'] . "',
+											'" . $DescriptionText . "',
 											'" . (($_SESSION['Items'.$identifier]->total + $_POST['TaxTotal'] - $_POST['AmountVouchers'] - $_POST['AmountReturnedGoods'])/$ExRate) . "',
 											'" . $Tag . "')";
 
@@ -1073,7 +1077,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								$Tag,
 								'',
 								$ExRate);
-			$ReceiptNumber = AccountDebtorDiscount($ReceiptNumber,
+/*	Voucher and discounts do not have to be recorded against the debtor table as it gets unbalanced accounts
+		$ReceiptNumber = AccountDebtorDiscount($ReceiptNumber,
 								'VOUCHER_DISCOUNT',
 								$PeriodNo,
 								$Area,
@@ -1084,7 +1089,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								$ExRate,
 								$OrderNo,
 								$_SESSION['Items'.$identifier]->DebtorNo);
-		}//amount vouched or discount was not zero
+*/		}//amount vouched or discount was not zero
 		
 		if ($_POST['AmountReturnedGoods']!=0){
 			// If there's any good returned, also account for it
