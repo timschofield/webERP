@@ -1,6 +1,7 @@
 webERP Change Log
 
-26/3/17 Abel World: Make degine $ReportList as an array to comply with PHP 7
+29/3/17 RChacon: In webERP manual, allow to use default pages if locale pages do not exist.
+26/3/17 Abel World: Make degine $ReportList as an array to comply with PHP 7.
 19/3/17 RChacon: Rename AccountSectionsDef.inc to AccountSectionsDef.php.
 11/3/17 Tim - committed by Phil: allow sales order item lines to be imported from a csv consisting of lines of item code, quantity
 07/03/17 TurboPT: (by Tim in forums) BankAccounts.php: Add quotes to variable in query.
