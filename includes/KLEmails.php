@@ -208,7 +208,8 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 						'Total CC EDC BCA      : ' . $Param10  . "\r\n" .
 						'Total Returned Goods  : ' . $Param11 . "\r\n" .
 						'Total Voucher/Discount: ' . $Param12 . "\r\n" .
-						'Comments              : ' . $Param13; 		
+						'Voucher/Discount Code : ' . $Param13 . "\r\n" .
+						'Comments              : ' . $Param14; 		
 			$EmailAddress = "kl-voucherdiscounts@kapal-laut.com";
 			break;
 		case "SalesWithNotEnoughQOH":

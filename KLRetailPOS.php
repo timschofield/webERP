@@ -1490,6 +1490,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						number_format($_POST['AmountPaidCCBCA'],0),
 						number_format($_POST['AmountReturnedGoods'],0),
 						number_format($_POST['AmountVouchers'],0),
+						stripcslashes($_POST['VoucherCode']),
 						stripcslashes($_SESSION['Items'.$identifier]->Comments));
 			}
 		}
