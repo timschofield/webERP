@@ -1,5 +1,6 @@
 webERP Change Log
 
+30/3/17 RChacon: In ManualContents.php, fix checkbox showing and do some improvements.
 29/3/17 RChacon: In webERP manual, allow to use default pages if locale pages do not exist.
 26/3/17 Abel World: Make degine $ReportList as an array to comply with PHP 7.
 19/3/17 RChacon: Rename AccountSectionsDef.inc to AccountSectionsDef.php.

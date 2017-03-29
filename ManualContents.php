@@ -35,10 +35,8 @@ if(!file_exists($ManualOutline)) {// If locale outline not exist, use doc/Manual
 	$ManualOutline = 'doc/Manual/ManualOutline.php';
 }
 
-
-// Begin old code ==============================================================
 ob_start();
-$PathPrefix = '../../';
+/*$PathPrefix = '../../';*/
 
 // Output the header part:
 $ManualHeader = 'locale/' . $Language . '/Manual/ManualHeader.html';
@@ -65,56 +63,49 @@ $_GET['Bookmark'] = isset($_GET['Bookmark']) ? $_GET['Bookmark'] : '';
 $_GET['ViewTopic'] = isset($_GET['ViewTopic']) ? $_GET['ViewTopic'] : '';
 
 //all sections of manual listed here
-
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
-
 if(((!isset($_POST['Submit'])) and (empty($_GET['ViewTopic']))) || ((isset($_POST['Submit'])) and (isset($_POST['SelectTableOfContents'])))) {
+	echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">';
 	// if not submittws then coming into manual to look at TOC
 	// if SelectTableOfContents set then user wants it displayed
 	if(!isset($_POST['Submit'])) {
-		echo '<p>Click on a link to view a page, or<br />
-			 Check boxes and click on Display Checked to view selected in one page
-			 <input type="submit" name="Submit" value="Display Checked" />
-			</p>';
+		echo '<p>', _('Click on a link to view a page, or check boxes and click on "Display Checked" to view selected in one page'), '</p>';
+		echo '<p><input type="submit" name="Submit" value="', _('Display Checked'), '" /></p>';
 	}
-	echo "<ul>\n<li style=\"list-style-type:none;\">\n<h1>";
+	echo '<h1>';
 	if(!isset($_POST['Submit'])) {
-		echo ' <input type="checkbox" name="SelectTableOfContents">';
+		echo '<input name="SelectTableOfContents" type="checkbox">';
 	}
-	echo _('Table of Contents'), "</h1></li>\n";
+	echo _('Table of Contents'), '</h1>';
 	$j = 0;
 	foreach($TOC_Array['TableOfContents'] as $Title => $SubLinks) {
 		$Name = 'Select' . $Title;
-		echo "<ul>\n";
+		echo '<ul>
+			<li class="toc"';
+		// List topic title:
 		if(!isset($_POST['Submit'])) {
-			echo '<li class="toc" style="list-style-type:none;"><input type="checkbox" name="' . $Name . '">' . "\n";
-			echo '<section style="margin-bottom:5px;">
-					<div class="roundedOne">
-						<input type="checkbox" value="None" id="roundedOne'.$j.'" name="' . $Name . '" />
-						<label for="roundedOne'.$j.'"></label>';
-
-			echo '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?ViewTopic=' . $Title . '" style="padding-left:1%";>' . $SubLinks[0] . '</a></li>' . "\n";
-
-			echo '</div>
-				</section>';
-		} else {
-			echo ' <li class="toc"><a href="#' . $Title . '">' . $SubLinks[0] . '</a></li>' . "\n";
+			echo ' style="list-style-type:none;"><input id="roundedOne', $j, '" name="', $Name, '" type="checkbox" value="None" /';
 		}
+		echo '>
+			<a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?ViewTopic=', $Title, '">', $SubLinks[0], '</a></li>';
+		// List topic content:
 		if(count($SubLinks) > 1) {
-			echo '<ul>' . "\n";
+			echo '<ul>';
 			foreach($SubLinks as $k => $SubName) {
-				if($k == 0)
+				if($k == 0) {// Skip first array element $SubLinks[0].
 					continue;
-				echo '<li>' . $SubName . '</li>' . "\n";
+				}
+				echo '<li>', $SubName, '</li>';
 			}
-			echo '</ul>' . "\n";
+			echo '</ul>';
 		}
-		echo '</ul>' . "\n";
+
+		echo '</ul>';
 		++$j;
 	}
-	echo '</ul>' . "\n";
+	echo '</ul>',
+		'<p><input type="submit" name="Submit" value="', _('Display Checked'), '" /></p>',
+		'</form>';
 }
-echo '</form>' . "\n";
 
 if(!isset($_GET['ViewTopic'])) {
 	$_GET['ViewTopic'] = '';
@@ -151,8 +142,5 @@ if(file_exists($ManualFooter)) {// Use locale ManualHeader.html if exists. Each 
 }
 
 ob_end_flush();
-// End old code ================================================================
-
-
 // END: Procedure division -----------------------------------------------------
 ?>

@@ -1,3 +1,4 @@
+/* $Id: manual.css 7643 2016-10-07 15:28:49Z daintree $ */
 /*
  * manual.css used with the webERP manual
  * http://web-erp.sourceforge.net
@@ -113,10 +114,10 @@ li {
 li.toc {
 	color:#03c;
 }
-
+/*
 input[type=checkbox] {
 	visibility:hidden;
-}
+}*/
 
 p {
 	margin-left:2%;
@@ -124,4 +125,9 @@ p {
 }
 pre {
     font-size: 1.2em;
+}
+
+.noprint {
+	display:none;
+	/* Remove unwanted elements. */
 }
