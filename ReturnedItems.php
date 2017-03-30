@@ -12,14 +12,6 @@ if (isset($_POST['SelectedReturnedItemsId'])){
 	$SelectedReturnedItemsId = mb_strtoupper($_GET['SelectedReturnedItemsId']);
 }
 
-prnMsg("SelectedReturnedItemsId ". $SelectedReturnedItemsId);
-prnMsg("orderno ". $_POST['orderno']);
-prnMsg("returndate ". $_POST['returndate']);
-prnMsg("reasonid ". $_POST['reasonid']);
-prnMsg("itemcodes ". $_POST['itemcodes']);
-prnMsg("oldinvoice ". $_POST['oldinvoice']);
-prnMsg("oldinvoicedate ". $_POST['oldinvoicedate']);
-
 if (isset($Errors)) {
 	unset($Errors);
 }
@@ -47,11 +39,11 @@ if (isset($_POST['submit'])) {
 
 		$sql = "UPDATE returneditems
 				SET orderno = '" . $_POST['orderno'] . "',
-					returndate = '" . FormatDateForSQL($_POST['returndate']) . "'
-					reasonid = '" . $_POST['reasonid'] . "'
-					itemcodes = '" . $_POST['itemcodes'] . "'
-					oldinvoice = '" . $_POST['oldinvoice'] . "'
-					oldinvoicedate = '" . FormatDateForSQL($_POST['oldinvoicedate']) . "'
+					returndate = '" . $_POST['returndate'] . "',
+					reasonid = '" . $_POST['reasonid'] . "',
+					itemcodes = '" . $_POST['itemcodes'] . "',
+					oldinvoice = '" . $_POST['oldinvoice'] . "',
+					oldinvoicedate = '" . $_POST['oldinvoicedate'] . "'
 				WHERE returneditemsid = '".$SelectedReturnedItemsId."'";
 
 		$msg = _('The Returned Item') . ' ' . $SelectedReturnedItemsId . ' ' .  _('has been updated');
@@ -145,7 +137,9 @@ or deletion of the records*/
 			FROM returneditems, returnitemreasons
 			WHERE returneditems.reasonid = returnitemreasons.reasonid
 				AND returndate >= '" . $StartDate . "'
-			ORDER BY returndate DESC, returneditemsid DESC";
+			ORDER BY returndate DESC, 
+					orderno DESC, 
+					returneditemsid DESC";
 	$result = DB_query($sql);
 
 	echo '<table class="selection">
@@ -178,7 +172,7 @@ while ($myrow = DB_fetch_array($result)) {
 		<td>%s</td>
 		<td>%s</td>
 		<td><a href="%sSelectedReturnedItemsId=%s">' . _('Edit') . '</a></td>
-		<td><a href="%sSelectedReturnedItemsId=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this zone?') . '\');">' . _('Delete') . '</a></td>
+		<td><a href="%sSelectedReturnedItemsId=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this return?') . '\');">' . _('Delete') . '</a></td>
 		</tr>',
 		$myrow['returneditemsid'],
 		$myrow['itemcodes'],
@@ -213,7 +207,7 @@ if (! isset($_GET['delete'])) {
 	// The user wish to EDIT an existing type
 	if ( isset($SelectedReturnedItemsId) AND $SelectedReturnedItemsId!='' ) {
 
-		$sql = "SELECT returneditemsid
+		$sql = "SELECT returneditemsid,
 						orderno,
 						returndate,
 						reasonid,
