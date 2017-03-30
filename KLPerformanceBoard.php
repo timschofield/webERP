@@ -187,6 +187,7 @@ if ($ProcessSection02){
 		FinishedStockDistribution("PACKAGING", "LOCATION", $db);
 		$NumberOfTestExecuted++;
 	}
+	
 	if ($KL_SystemAdmin 
 		OR $KL_OperationalManager
 		OR $KL_BusinessDevelopmentManager){
@@ -202,6 +203,12 @@ if ($ProcessSection02){
 		GoodsToBeProduced("COMPON", "ALL", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		ComponentsToObsolete(false, 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+	}
+
+	if ($KL_SystemAdmin 
+		OR $KL_BusinessDevelopmentManager){
+		QualityIssuesByItem(90, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 

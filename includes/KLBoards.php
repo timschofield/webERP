@@ -9634,6 +9634,44 @@ function SPGPerformanceByShop($Shop, $NumDaysA, $NumDaysB, $NumDaysC, $db){
 	}
 }
 
+function QualityIssuesByItem($numdays, $RootPath, $db){
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$numdays+1));
+
+	$SQL = "SELECT itemcodes, count(*) AS incidences
+			FROM returneditems
+			WHERE (reasonid = 4 OR reasonid = 5)
+				AND oldinvoicedate > '". $StartDate . "'
+			GROUP BY itemcodes";
+						
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . _('Items with Customer Quality Issues on the last ') . $numdays . ' days</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Incidences') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$i, 
+					$myrow['itemcodes'],
+					locale_number_format($myrow['incidences'],0)
+					);
+			$i++;
+		}
+		echo '</table>
+				</div>';
+	}
+}
 
 
 ?>
