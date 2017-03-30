@@ -326,7 +326,7 @@
         <li>Weighted Average Costing</li>
     </ul>
 	<p>To choose the costing mode the System Parameter must be changed from the Main Menu -> Setup tab -> System Parameters</p>
-	<p><img src="images/SystemParameterCosting.jpg" alt="system parameters costing flag screen" /></p>
+	<p><img src="doc/Manual/images/SystemParameterCosting.jpg" alt="system parameters costing flag screen" /></p>
     <h3>Standard Costing</h3>
 
     <p>Standard costing is used in situations where costs do vary and a middle ground standard is adopted - variances away from the standard are reported as price variances. Standard costing is particularly relevant to importers and manufacturers where exchange rate, freight and manufacturing costs and volumes vary making each item have different costs.</p>
@@ -517,7 +517,7 @@
     <p>A table of locations is maintained which contains a location code of 5 characters and the location description (up to 20 characters).</p>
     <p>Inventory locations are the factories or warehouses where inventory is stored. When a sales order is created the location from which the inventory is to be picked is specified. Also, when a work order is created it is created on a specific location - in this case a manufacturing facility. Every transaction involving inventory must specify the location.</p>
     <p>To create or modify inventory locations go to the Main Menu -> Setup -> Inventory Setup tab and select Inventory Location Maintenance</p>
-	<p><img src="images/InventoryLocations.png" alt="Inventory Locations" /></p>
+	<p><img src="doc/Manual/images/InventoryLocations.png" alt="Inventory Locations" /></p>
     <p>The description is the field used in lookups on invoicing and crediting. To keep the database as compact as possible it is the code which is stored against stock movement transactions. As many locations as required can be set up. When a new location is defined, location records for all items in the database are created. When a location is deleted, so too are all the item location records. However, a location record cannot be deleted if there are stock movements or stock held for any part in the location.</p>
     <p>When creating a purchase order, the inventory location that it is required for is specified. The inventory location address and contact details defined here are used as the default addresses available for delivery of goods ordered on purchase orders.</p>
 
@@ -580,7 +580,7 @@
 	<p>With the release of 4.11.3 only users with appropriate permissions can process transactions involving a location. This requires that users are specifically given access to individual locations.</p>
 	<p>Normally to modifiy the users that have access to a location requires system administrator access.</p>
 	<p>From the Main Menu -> Inventory Setup Tab -> Inventory Location Authorised Users Maintenance</p>
-	<p><img src="images/LocationUsers.jpg" alt="Inventory Authorised Users Maintenance" /></p>
+	<p><img src="doc/Manual/images/LocationUsers.jpg" alt="Inventory Authorised Users Maintenance" /></p>
 	<p>This screen allows you to select a location and see the users that are authorised to access and create transactions. You can add users are required.</p>
 
 <!-- Help End: Inventory Location Authorised Users Maintenance -->
@@ -592,7 +592,7 @@
     <h2><a id="InventoryAdjustments">Inventory Adjustments</a></h2>
 
     <p>Inventory can be written on or off for individual stock items using this option. Corrections to physical stocks and deliveries of stock can be entered using this option. Adjustments can be entered by selecting the link on the SelectProduct.php page.</p>
-	<p><img src="images/StockAdjustment.jpg" alt="Stock Adjustment Screen" /></p>
+	<p><img src="doc/Manual/images/StockAdjustment.jpg" alt="Stock Adjustment Screen" /></p>
 	<p>Ajustments can also be created directly from the main menu under transactions. Using the second link, the item code must be known and entered, there is no facility to select an item code from this page.</p>
     <p>If Stock GL integration is enabled from the company preferences page (under the setup tab), then the system creates the necessary journals in the general ledger to update the stock account and the profit and loss account stock adjustment account specified in the stock category record. (see Inventory Categories above and also see General Ledger Integration later)</p>
 

@@ -51,24 +51,24 @@
     <li>Enter the URL for the new webERP directory into your web browser, and the installer welcome screen will display:</li>
 
     <li style="list-style: none; display: inline">
-        <p align="center"><img src="images/Installer_1.jpg"></p>
+        <p align="center"><img src="doc/Manual/images/Installer_1.jpg"></p>
     </li>
 
     <li>The installer welcome screen provides information on the type of messages you might receive during installation. At this page, you must also select your preferred language from the drop down selection box. Click on Next Step to go to the next phase of installation.</li>
     <li style="list-style: none; display: inline">
-        <p align="center"><img src="images/Installer_1a.jpg"></p>
+        <p align="center"><img src="doc/Manual/images/Installer_1a.jpg"></p>
     </li>
 
     <li>The installer checks that all the pre-requistes are met for an installation. You will note from the screen shot above that this installation does not have sufficient privileges to install webERP because the web server is unable to write to the webERP directory. <b>It is necessary to change the permissions on the directory where webERP is installed to ensure that the user that the web-server runs as is able to write a new configuration file to the web space.</b> Cpanel and Plesk have facilities to enable this change to the permissions. Any error messages displayed in red need to be resolved before the installation can proceed. Do not attempt to run the installer while red messages persist. Fix the error and then click on Check Again to restart from the prior step.</li>
     <li style="list-style: none; display: inline">
-        <p align="center"><img src="images/Installer_2.jpg"></p>
+        <p align="center"><img src="doc/Manual/images/Installer_2.jpg"></p>
     </li>
     <li>If your web server fulfills all requirements for the installation, clicking on Next Step will display the Database Settings screen. Many of the fields required will be populated correctly by default - but all entries should be reviewed to ensure that they are correct. The installer will not be able to determine the host (computer) where the mysql database server is installed and this must be entered. Help appears when you click into an input field.</li>
 
     <li>The user name and the password to the mysql database server are also required. The mysql database user must have permission to create a database and tables. Once the required information is entered and checked, click on Next Screen to continue.</li>
 
     <li style="list-style: none; display: inline">
-        <p align="center"><img src="images/Installer_3.jpg"></p>
+        <p align="center"><img src="doc/Manual/images/Installer_3.jpg"></p>
     </li>
 
     <li>The next installer screen displays Company Settings, Options and Administrator Account settings. The name of the company entered in the installer screen will be used in the log in screen and in various reports and screens in your final webERP instsallation.</li>
@@ -369,7 +369,7 @@ enter password 'weberp'<br></p>
 
 <p>To change the language displayed for a specific user - the user clicks on their name as shown on every screen at the top of the page. This brings up their user settings.</p>
 
-<p align="center"><img src="images/UserSettings.jpg"></p>webERP looks at all the directories available under webERP/locale to see which languages are installed and provides a convenient way for users to select their preferred language. In addition to selecting the language it is also necessary to select the fonts required for pdf support in the selected language.
+<p align="center"><img src="doc/Manual/images/UserSettings.jpg"></p>webERP looks at all the directories available under webERP/locale to see which languages are installed and provides a convenient way for users to select their preferred language. In addition to selecting the language it is also necessary to select the fonts required for pdf support in the selected language.
 <p>
 
 <p>PDFs are produced in utf-8 character set which has 4 bytes for each character. Unfortunately, the CID fonts used in PDFs only have 2 bytes so there is required to be some mapping of CID characters to utf-8 fonts to make everything work. In practise all this means is that the correct language needs also to be selected for the PDF language.</p>
