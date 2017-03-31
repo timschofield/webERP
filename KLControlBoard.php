@@ -347,9 +347,9 @@ if ($ProcessSection01){
 	if ($KL_SystemAdmin){
 		BalanceAccountControl("111121111PT", 11000000,  110000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111121105PT",250000000, 1000000000, $periodnow, $db);
+		BalanceAccountControl("111121105PT",500000000, 1500000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111200",   30000000,   60000000, $periodnow, $db);
+		BalanceAccountControl("111111200",   40000000,  100000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111111209",          0,   25000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
