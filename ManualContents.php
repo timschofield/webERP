@@ -134,7 +134,8 @@ if(file_exists($ManualFooter)) {// Use locale ManualHeader.html if exists. Each 
 	include($ManualFooter);
 } else {// Default page footer:
 	echo '<div class="right">
-			<a id="bottom">&#160;</a><a class="minitext" href="#top">⬆ ', _('Go to Top'), '</a>
+			<a id="bottom">&#160;</a><a class="minitext" href="#top">⬆ ', _('Go to Top'), '</a><br />
+			<a id="top">&#160;</a><a class="minitext" href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '">☜ ', _('Table of Contents'), '</a>
 		</div>
 	</body>
 	</html>';
