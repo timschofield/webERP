@@ -369,8 +369,15 @@ enter password 'weberp'<br></p>
 
 <p>To change the language displayed for a specific user - the user clicks on their name as shown on every screen at the top of the page. This brings up their user settings.</p>
 
-<p align="center"><img src="doc/Manual/images/UserSettings.jpg"></p>webERP looks at all the directories available under webERP/locale to see which languages are installed and provides a convenient way for users to select their preferred language. In addition to selecting the language it is also necessary to select the fonts required for pdf support in the selected language.
-<p>
+<p align="center"><img src="doc/Manual/images/UserSettings.jpg"></p>
+
+<p>webERP looks at all the directories available under webERP/locale to see which languages are installed and provides a convenient way for users to select their preferred language. In addition to selecting the language it is also necessary to select the fonts required for pdf support in the selected language.</p>
+
+<p><b>Display Dashboard after Login.</b> Select "Yes" to show the dashboard page after Login, otherwise "No" to do not. This page shows overdue customer balances, supplier invoices due within one month, bank and credit card balances, and outstanding orders. Default: no.</p>
+
+<p><b>Display page help.</b> Select "Yes" to show the page help when available, otherwise "No" to hide it. This help is displayed at the top of the page in a box. Default: yes.</p>
+
+<p><b>Display field help.</b> Select "Yes" to show the field help when available, otherwise "No" to hide it. This help is displayed next to the input field. Default: yes.</p>
 
 <p>PDFs are produced in utf-8 character set which has 4 bytes for each character. Unfortunately, the CID fonts used in PDFs only have 2 bytes so there is required to be some mapping of CID characters to utf-8 fonts to make everything work. In practise all this means is that the correct language needs also to be selected for the PDF language.</p>
 

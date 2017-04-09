@@ -46,10 +46,10 @@ $ModuleListLabel = array(
 	_('Display Setup module'),
 	_('Display Utilities module'));
 
-$PDFLanguages = array(_('Latin Western Languages'),
-						_('Eastern European Russian Japanese Korean Vietnamese Hebrew Arabic Thai'),
-						_('Chinese'),
-						_('Free Serif'));
+$PDFLanguages = array(_('Latin Western Languages - Times'),
+					_('Eastern European Russian Japanese Korean Hebrew Arabic Thai'),
+					_('Chinese'),
+					_('Free Serif'));
 
 include('includes/SQL_CommonFunctions.inc');
 
@@ -185,47 +185,52 @@ if(isset($_POST['submit'])) {
 
 	} elseif($InputError !=1) {
 
-		$sql = "INSERT INTO www_users (userid,
-						realname,
-						customerid,
-						branchcode,
-						supplierid,
-						salesman,
-						password,
-						phone,
-						email,
-						pagesize,
-						fullaccess,
-						cancreatetender,
-						defaultlocation,
-						modulesallowed,
-						displayrecordsmax,
-						theme,
-						language,
-						pdflanguage,
-						department)
-					VALUES ('" . $_POST['UserID'] . "',
-						'" . $_POST['RealName'] ."',
-						'" . $_POST['Cust'] ."',
-						'" . $_POST['BranchCode'] ."',
-						'" . $_POST['SupplierID'] ."',
-						'" . $_POST['Salesman'] . "',
-						'" . CryptPass($_POST['Password']) ."',
-						'" . $_POST['Phone'] . "',
-						'" . $_POST['Email'] ."',
-						'" . $_POST['PageSize'] ."',
-						'" . $_POST['Access'] . "',
-						'" . $_POST['CanCreateTender'] . "',
-						'" . $_POST['DefaultLocation'] ."',
-						'" . $ModulesAllowed . "',
-						'" . $_SESSION['DefaultDisplayRecordsMax'] . "',
-						'" . $_POST['Theme'] . "',
-						'". $_POST['UserLanguage'] ."',
-						'" . $_POST['PDFLanguage'] . "',
-						'" . $_POST['Department'] . "')";
+		$sql = "INSERT INTO www_users (
+					userid,
+					realname,
+					customerid,
+					branchcode,
+					supplierid,
+					salesman,
+					password,
+					phone,
+					email,
+					pagesize,
+					fullaccess,
+					cancreatetender,
+					defaultlocation,
+					modulesallowed,
+					showdashboard,
+					showpagehelp,
+					showfieldhelp,
+					displayrecordsmax,
+					theme,
+					language,
+					pdflanguage,
+					department)
+				VALUES ('" . $_POST['UserID'] . "',
+					'" . $_POST['RealName'] ."',
+					'" . $_POST['Cust'] ."',
+					'" . $_POST['BranchCode'] ."',
+					'" . $_POST['SupplierID'] ."',
+					'" . $_POST['Salesman'] . "',
+					'" . CryptPass($_POST['Password']) ."',
+					'" . $_POST['Phone'] . "',
+					'" . $_POST['Email'] ."',
+					'" . $_POST['PageSize'] ."',
+					'" . $_POST['Access'] . "',
+					'" . $_POST['CanCreateTender'] . "',
+					'" . $_POST['DefaultLocation'] ."',
+					'" . $ModulesAllowed . "',
+					'" . $_POST['ShowDashboard'] . "',
+					'" . $_POST['ShowPageHelp'] . "',
+					'" . $_POST['ShowFieldHelp'] . "',
+					'" . $_SESSION['DefaultDisplayRecordsMax'] . "',
+					'" . $_POST['Theme'] . "',
+					'". $_POST['UserLanguage'] ."',
+					'" . $_POST['PDFLanguage'] . "',
+					'" . $_POST['Department'] . "')";
 		prnMsg( _('A new user record has been inserted'), 'success' );
-		$_SESSION['ShowPageHelp'] = $_POST['ShowPageHelp'];
-		$_SESSION['ShowFieldHelp'] = $_POST['ShowFieldHelp'];
 
 		$LocationSql = "INSERT INTO locationusers (loccode,
 													userid,
@@ -404,30 +409,31 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 if(isset($SelectedUser)) {
 	//editing an existing User
 
-	$sql = "SELECT userid,
-			realname,
-			phone,
-			email,
-			customerid,
-			password,
-			branchcode,
-			supplierid,
-			salesman,
-			pagesize,
-			fullaccess,
-			cancreatetender,
-			defaultlocation,
-			modulesallowed,
-			showdashboard,
-			showpagehelp,
-			showfieldhelp,
-			blocked,
-			theme,
-			language,
-			pdflanguage,
-			department
-		FROM www_users
-		WHERE userid='" . $SelectedUser . "'";
+	$sql = "SELECT
+				userid,
+				realname,
+				phone,
+				email,
+				customerid,
+				password,
+				branchcode,
+				supplierid,
+				salesman,
+				pagesize,
+				fullaccess,
+				cancreatetender,
+				defaultlocation,
+				modulesallowed,
+				showdashboard,
+				showpagehelp,
+				showfieldhelp,
+				blocked,
+				theme,
+				language,
+				pdflanguage,
+				department
+			FROM www_users
+			WHERE userid='" . $SelectedUser . "'";
 
 	$result = DB_query($sql);
 	$myrow = DB_fetch_array($result);
@@ -445,12 +451,12 @@ if(isset($SelectedUser)) {
 	$_POST['CanCreateTender'] = $myrow['cancreatetender'];
 	$_POST['DefaultLocation'] = $myrow['defaultlocation'];
 	$_POST['ModulesAllowed'] = $myrow['modulesallowed'];
-	$_POST['Theme'] = $myrow['theme'];
-	$_POST['UserLanguage'] = $myrow['language'];
 	$_POST['ShowDashboard'] = $myrow['showdashboard'];
 	$_POST['ShowPageHelp'] = $myrow['showpagehelp'];
 	$_POST['ShowFieldHelp'] = $myrow['showfieldhelp'];
 	$_POST['Blocked'] = $myrow['blocked'];
+	$_POST['Theme'] = $myrow['theme'];
+	$_POST['UserLanguage'] = $myrow['language'];
 	$_POST['PDFLanguage'] = $myrow['pdflanguage'];
 	$_POST['Department'] = $myrow['department'];
 
@@ -485,6 +491,9 @@ if(isset($SelectedUser)) {
 		$_POST['ModulesAllowed'] .= '1';
 		$i++;
 	}
+	$_POST['ShowDashboard'] = 0;
+	$_POST['ShowPageHelp'] = 1;
+	$_POST['ShowFieldHelp'] = 1;
 }
 
 if(!isset($_POST['Password'])) {
@@ -718,45 +727,48 @@ foreach($ModuleList as $ModuleName) {
 	$i++;
 }// END foreach($ModuleList as $ModuleName).
 
+// Turn off/on dashboard after Login:
 echo '<tr>
 		<td><label for="ShowDashboard">', _('Display Dashboard after Login'), ':</label></td>
 		<td><select id="ShowDashboard" name="ShowDashboard">';
 if($_POST['ShowDashboard']==0) {
-	echo '<option selected="selected" value="0">' . _('No') . '</option>',
+	echo '<option selected="selected" value="0">', _('No'), '</option>',
 		 '<option value="1">', _('Yes'), '</option>';
 } else {
 	echo '<option value="0">', _('No'), '</option>',
- 		 '<option selected="selected" value="1">' . _('Yes') . '</option>';
+ 		 '<option selected="selected" value="1">', _('Yes'), '</option>';
 }
 echo '</select></td>
 	</tr>';
-
 // Turn off/on page help:
 echo '<tr>
 		<td><label for="ShowPageHelp">', _('Display page help'), ':</label></td>
 		<td><select id="ShowPageHelp" name="ShowPageHelp">';
 if($_POST['ShowPageHelp']==0) {
-	echo '<option selected="selected" value="0">' . _('No') . '</option>',
+	echo '<option selected="selected" value="0">', _('No'), '</option>',
 		 '<option value="1">', _('Yes'), '</option>';
 } else {
 	echo '<option value="0">', _('No'), '</option>',
- 		 '<option selected="selected" value="1">' . _('Yes') . '</option>';
+ 		 '<option selected="selected" value="1">', _('Yes'), '</option>';
 }
-echo '</select></td>
+echo '</select>',
+		(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Show page help when available') : ''), // If the parameter $_SESSION['ShowFieldHelp'] is not set OR is TRUE, shows this field help text.
+		'</td>
 	</tr>';
-
 // Turn off/on field help:
 echo '<tr>
 		<td><label for="ShowFieldHelp">', _('Display field help'), ':</label></td>
 		<td><select id="ShowFieldHelp" name="ShowFieldHelp">';
 if($_POST['ShowFieldHelp']==0) {
-	echo '<option selected="selected" value="0">' . _('No') . '</option>',
+	echo '<option selected="selected" value="0">', _('No'), '</option>',
 		 '<option value="1">', _('Yes'), '</option>';
 } else {
 	echo '<option value="0">', _('No'), '</option>',
- 		 '<option selected="selected" value="1">' . _('Yes') . '</option>';
+ 		 '<option selected="selected" value="1">', _('Yes'), '</option>';
 }
-echo '</select></td>
+echo '</select>',
+		(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Show field help when available') : ''), // If the parameter $_SESSION['ShowFieldHelp'] is not set OR is TRUE, shows this field help text.
+		'</td>
 	</tr>';
 
 if(!isset($_POST['PDFLanguage'])) {

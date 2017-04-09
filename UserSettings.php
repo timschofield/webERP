@@ -18,8 +18,7 @@ $PDFLanguages = array(_('Latin Western Languages - Times'),
 					_('Chinese'),
 					_('Free Serif'));
 
-
-if (isset($_POST['Modify'])) {
+if(isset($_POST['Modify'])) {
 	// no input errors assumed initially before we test
 	$InputError = 0;
 
@@ -64,38 +63,38 @@ if (isset($_POST['Modify'])) {
 					SET displayrecordsmax='" . $_POST['DisplayRecordsMax'] . "',
 						theme='" . $_POST['Theme'] . "',
 						language='" . $_POST['Language'] . "',
-						email='". $_POST['email'] ."',
+						email='" . $_POST['email'] . "',
+						showpagehelp='" . $_POST['ShowPageHelp'] . "',
+						showfieldhelp='" . $_POST['ShowFieldHelp'] . "',
 						pdflanguage='" . $_POST['PDFLanguage'] . "'
 					WHERE userid = '" . $_SESSION['UserID'] . "'";
-
 			$ErrMsg =  _('The user alterations could not be processed because');
 			$DbgMsg = _('The SQL that was used to update the user and failed was');
-
 			$result = DB_query($sql, $ErrMsg, $DbgMsg);
-
 			prnMsg( _('The user settings have been updated') . '. ' . _('Be sure to remember your password for the next time you login'),'success');
 		} else {
 			$sql = "UPDATE www_users
-				SET displayrecordsmax='" . $_POST['DisplayRecordsMax'] . "',
-					theme='" . $_POST['Theme'] . "',
-					language='" . $_POST['Language'] . "',
-					email='". $_POST['email'] ."',
-					pdflanguage='" . $_POST['PDFLanguage'] . "',
-					password='" . CryptPass($_POST['Password']) . "'
-				WHERE userid = '" . $_SESSION['UserID'] . "'";
-
+					SET displayrecordsmax='" . $_POST['DisplayRecordsMax'] . "',
+						theme='" . $_POST['Theme'] . "',
+						language='" . $_POST['Language'] . "',
+						email='" . $_POST['email'] ."',
+						showpagehelp='" . $_POST['ShowPageHelp'] . "',
+						showfieldhelp='" . $_POST['ShowFieldHelp'] . "',
+						pdflanguage='" . $_POST['PDFLanguage'] . "',
+						password='" . CryptPass($_POST['Password']) . "'
+					WHERE userid = '" . $_SESSION['UserID'] . "'";
 			$ErrMsg =  _('The user alterations could not be processed because');
 			$DbgMsg = _('The SQL that was used to update the user and failed was');
-
 			$result = DB_query($sql, $ErrMsg, $DbgMsg);
-
 			prnMsg(_('The user settings have been updated'),'success');
 		}
-	  // update the session variables to reflect user changes on-the-fly
+		// Update the session variables to reflect user changes on-the-fly:
 		$_SESSION['DisplayRecordsMax'] = $_POST['DisplayRecordsMax'];
 		$_SESSION['Theme'] = trim($_POST['Theme']); /*already set by session.inc but for completeness */
 		$Theme = $_SESSION['Theme'];
 		$_SESSION['Language'] = trim($_POST['Language']);
+		$_SESSION['ShowPageHelp'] = $_POST['ShowPageHelp'];
+		$_SESSION['ShowFieldHelp'] = $_POST['ShowFieldHelp'];
 		$_SESSION['PDFLanguage'] = $_POST['PDFLanguage'];
 		include ('includes/LanguageSetup.php'); // After last changes in LanguageSetup.php, is it required to update?
 	}
@@ -106,9 +105,7 @@ echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 If (!isset($_POST['DisplayRecordsMax']) OR $_POST['DisplayRecordsMax']=='') {
-
-  $_POST['DisplayRecordsMax'] = $_SESSION['DefaultDisplayRecordsMax'];
-
+	$_POST['DisplayRecordsMax'] = $_SESSION['DefaultDisplayRecordsMax'];
 }
 
 echo '<table class="selection">
@@ -185,24 +182,60 @@ echo '</select></td></tr>
 	<tr>
 		<td>' . _('Email') . ':</td>';
 
-$sql = "SELECT email from www_users WHERE userid = '" . $_SESSION['UserID'] . "'";
+$sql = "SELECT
+			email,
+			showpagehelp,
+			showfieldhelp
+		from www_users WHERE userid = '" . $_SESSION['UserID'] . "'";
 $result = DB_query($sql);
 $myrow = DB_fetch_array($result);
+
 if(!isset($_POST['email'])){
 	$_POST['email'] = $myrow['email'];
 }
+$_POST['ShowPageHelp'] = $myrow['showpagehelp'];
+$_POST['ShowFieldHelp'] = $myrow['showfieldhelp'];
 
 echo '<td><input type="email" name="email" size="40" value="' . $_POST['email'] . '" /></td>
 	</tr>';
 
+// Turn off/on page help:
+echo '<tr>
+		<td><label for="ShowPageHelp">', _('Display page help'), ':</label></td>
+		<td><select id="ShowPageHelp" name="ShowPageHelp">';
+if($_POST['ShowPageHelp']==0) {
+	echo '<option selected="selected" value="0">', _('No'), '</option>',
+		 '<option value="1">', _('Yes'), '</option>';
+} else {
+	echo '<option value="0">', _('No'), '</option>',
+ 		 '<option selected="selected" value="1">', _('Yes'), '</option>';
+}
+echo '</select>',
+		(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Show page help when available') : ''), // If the parameter $_SESSION['ShowFieldHelp'] is not set OR is TRUE, shows this field help text.
+		'</td>
+	</tr>';
+// Turn off/on field help:
+echo '<tr>
+		<td><label for="ShowFieldHelp">', _('Display field help'), ':</label></td>
+		<td><select id="ShowFieldHelp" name="ShowFieldHelp">';
+if($_POST['ShowFieldHelp']==0) {
+	echo '<option selected="selected" value="0">', _('No'), '</option>',
+		 '<option value="1">', _('Yes'), '</option>';
+} else {
+	echo '<option value="0">', _('No'), '</option>',
+ 		 '<option selected="selected" value="1">', _('Yes'), '</option>';
+}
+echo '</select>',
+		(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Show field help when available') : ''), // If the parameter $_SESSION['ShowFieldHelp'] is not set OR is TRUE, shows this field help text.
+		'</td>
+	</tr>';
+// PDF Language Support:
 if (!isset($_POST['PDFLanguage'])){
 	$_POST['PDFLanguage']=$_SESSION['PDFLanguage'];
 }
-
 echo '<tr>
 		<td>' . _('PDF Language Support') . ': </td>
 		<td><select name="PDFLanguage">';
-
 for($i=0;$i<count($PDFLanguages);$i++){
 	if ($_POST['PDFLanguage']==$i){
 		echo '<option selected="selected" value="' . $i .'">' . $PDFLanguages[$i] . '</option>';
