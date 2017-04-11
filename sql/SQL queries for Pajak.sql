@@ -71,3 +71,34 @@ WHERE salesorders.orderno = salesorderdetails.orderno
 	AND salesorders.orddate <= "2015-12-31"
 GROUP BY stkcode
 ORDER BY stkcode;
+
+
+/* Amount paid in cash (bank notes) for expenses PT
+*/
+
+SELECT SUM(pcashdetails.amount) 
+FROM pcashdetails, pctabs, pcexpenses
+WHERE pcashdetails.date >= "2017-01-01"
+	AND pcashdetails.date <= "2017-12-31"
+	AND pcashdetails.tabcode = pctabs.tabcode
+	AND pcashdetails.codeexpense = pcexpenses.codeexpense
+	AND pctabs.currency = "IDR"
+	AND pcashdetails.codeexpense != "ASSIGNCASH"
+	AND pctabs.tabcode NOT LIKE "SALARIES%"
+	AND pctabs.tabcode NOT LIKE "%DANAMON"
+	AND pctabs.tabcode NOT LIKE "CC-BCA%"
+	AND pcexpenses.glaccount LIKE "%PT"
+	
+/* Amount moved from Danamon to cash kantor
+*/
+
+SELECT SUM(gltrans.amount)
+FROM gltrans
+WHERE gltrans.trandate >= "2017-01-01"
+	AND gltrans.trandate <= "2017-12-31"
+	AND gltrans.account = "111121105PT"
+	AND (gltrans.narrative LIKE "%CASH TO CASH%"
+		OR gltrans.narrative LIKE "%BANK TO CASH%"
+		OR gltrans.narrative LIKE "%UANG KECIL%")
+
+	
