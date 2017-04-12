@@ -121,34 +121,34 @@ if ($ProcessSection01){
 	if ($KL_SystemAdmin){
 		WrongStandardCost("Indonesia"  , "", STANDARD_COST_FACTOR_INDONESIA, 0.04, "SHOWLINK", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		WrongStandardCost("Thailand"   , "", STANDARD_COST_FACTOR_THAILAND, 0.04, "SHOWLINK", $RootPath, $db);
+		WrongStandardCost("Thailand"   , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		WrongStandardCost("China"      , "", STANDARD_COST_FACTOR_CHINA, 0.04, "SHOWLINK", $RootPath, $db);
+		WrongStandardCost("China"      , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		WrongStandardCost("Hong Kong"  , "", STANDARD_COST_FACTOR_HONG_KONG, 0.04, "SHOWLINK", $RootPath, $db);
+		WrongStandardCost("Hong Kong"  , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		WrongStandardCost("Catalonia"  , "", STANDARD_COST_FACTOR_CATALONIA, 0.10, "SHOWLINK", $RootPath, $db);
+		WrongStandardCost("Catalonia"  , "", STANDARD_COST_FACTOR_FOREIGN, 0.10, "SHOWLINK", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		WrongStandardCost("Philippines", "", STANDARD_COST_FACTOR_PHILIPPINES, 0.04, "SHOWLINK", $RootPath, $db);
+		WrongStandardCost("Philippines", "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		WrongStandardCost("India"      , "", STANDARD_COST_FACTOR_INDIA, 0.04, "SHOWLINK", $RootPath, $db);
+		WrongStandardCost("India"      , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_PurchasingTeam) {
 		WrongStandardCost("Indonesia"  , "", STANDARD_COST_FACTOR_INDONESIA, 0.05, "SHOWONLY", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		WrongStandardCost("Thailand"   , "", STANDARD_COST_FACTOR_THAILAND, 0.05, "SHOWONLY", $RootPath, $db);
+		WrongStandardCost("Thailand"   , "", STANDARD_COST_FACTOR_FOREIGN, 0.05, "SHOWONLY", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		WrongStandardCost("China"      , "", STANDARD_COST_FACTOR_CHINA, 0.05, "SHOWONLY", $RootPath, $db);
+		WrongStandardCost("China"      , "", STANDARD_COST_FACTOR_FOREIGN, 0.05, "SHOWONLY", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		WrongStandardCost("Hong Kong"  , "", STANDARD_COST_FACTOR_HONG_KONG, 0.05, "SHOWONLY", $RootPath, $db);
+		WrongStandardCost("Hong Kong"  , "", STANDARD_COST_FACTOR_FOREIGN, 0.05, "SHOWONLY", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		WrongStandardCost("Catalonia"  , "", STANDARD_COST_FACTOR_CATALONIA, 0.10, "SHOWONLY", $RootPath, $db);
+		WrongStandardCost("Catalonia"  , "", STANDARD_COST_FACTOR_FOREIGN, 0.10, "SHOWONLY", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		WrongStandardCost("Philippines", "", STANDARD_COST_FACTOR_PHILIPPINES, 0.05, "SHOWONLY", $RootPath, $db);
+		WrongStandardCost("Philippines", "", STANDARD_COST_FACTOR_FOREIGN, 0.05, "SHOWONLY", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		WrongStandardCost("India", "", STANDARD_COST_FACTOR_INDIA, 0.05, "SHOWONLY", $RootPath, $db);
+		WrongStandardCost("India", "", STANDARD_COST_FACTOR_FOREIGN, 0.05, "SHOWONLY", $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 	/***************************************************************************************

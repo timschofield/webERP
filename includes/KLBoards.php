@@ -3767,6 +3767,10 @@ function PurchasingOrdersDeliveryControl($reason, $maxdays, $RootPath, $db){
 						</tr>';
 		echo $TableHeader;
 		
+		$TotalValueOrderIDR = 0;
+		$TotalValueOrderUSD = 0;
+		$TotalValueOrderTHB = 0;
+		$TotalValueAllOrders = 0;
 		$AcumIDR = 0;
 		$AcumUSD = 0;
 		$AcumTHB = 0;
@@ -3800,6 +3804,8 @@ function PurchasingOrdersDeliveryControl($reason, $maxdays, $RootPath, $db){
 			
 			if ($myrow['currcode'] == 'IDR'){
 				$ValueOrderIDR = $myrow['ordervalue'];
+				$TotalValueOrderIDR += $ValueOrderIDR;
+				$TotalValueAllOrders += $ValueOrderIDR;
 				$SupplierBalanceIDR =  $Payments[$myrow['supplierno']]['balance'];
 				$SupplierBalanceUSD =  0;
 				$SupplierBalanceTHB =  0;
@@ -3812,6 +3818,8 @@ function PurchasingOrdersDeliveryControl($reason, $maxdays, $RootPath, $db){
 				}
 			}elseif	($myrow['currcode'] == 'USD'){
 				$ValueOrderUSD = $myrow['ordervalue'];
+				$TotalValueOrderUSD += $ValueOrderUSD;
+				$TotalValueAllOrders += ($ValueOrderUSD/$myrow['exchangerate']*STANDARD_COST_FACTOR_FOREIGN);
 				$SupplierBalanceIDR =  0;
 				$SupplierBalanceUSD =  $Payments[$myrow['supplierno']]['balance'];
 				$SupplierBalanceTHB =  0;
@@ -3824,6 +3832,8 @@ function PurchasingOrdersDeliveryControl($reason, $maxdays, $RootPath, $db){
 				}
 			}elseif	($myrow['currcode'] == 'THB'){
 				$ValueOrderTHB = $myrow['ordervalue'];
+				$TotalValueOrderTHB += $ValueOrderTHB;
+				$TotalValueAllOrders += ($ValueOrderTHB/$myrow['exchangerate']*STANDARD_COST_FACTOR_FOREIGN);
 				$SupplierBalanceIDR =  0;
 				$SupplierBalanceUSD =  0;
 				$SupplierBalanceTHB =  $Payments[$myrow['supplierno']]['balance'];
@@ -3876,6 +3886,158 @@ function PurchasingOrdersDeliveryControl($reason, $maxdays, $RootPath, $db){
 				$Payments[$myrow['supplierno']]['balance'] = 0;
 			}
 			$i++;
+		}
+		if ($reason != "Delayed"){
+			$k = StartEvenOrOddRow($k);
+			printf('<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					'', 
+					'', 
+					'TOTAL ORDERS',
+					'', 
+					locale_number_format_zero_blank($TotalValueOrderIDR,0),
+					locale_number_format_zero_blank($TotalValueOrderUSD,0),
+					locale_number_format_zero_blank($TotalValueOrderTHB,0),
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'' 
+					);
+			$k = StartEvenOrOddRow($k);
+			printf('<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					'', 
+					'', 
+					'TOTAL ORDERS @ SC',
+					'IDR', 
+					locale_number_format_zero_blank($TotalValueAllOrders,0),
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'' 
+					);
+
+			$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
+			$SQL = "SELECT SUM(amount) AS cogs
+					FROM  gltrans 
+					WHERE   trandate >= '". $StartDate ."'		
+						AND (account IN " . GL_COGS_GOODS ."
+							OR account IN " . GL_COGS_OTHERS . ")";
+			$result = DB_query($SQL);
+			$myrow = DB_fetch_array($result);
+			$k = StartEvenOrOddRow($k);
+			printf('<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					'', 
+					'', 
+					'COGS',
+					'IDR', 
+					locale_number_format_zero_blank($myrow['cogs'],0),
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'' 
+					);
+			$k = StartEvenOrOddRow($k);
+			printf('<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					'', 
+					'', 
+					'DIFFERENCE STOCK',
+					'IDR', 
+					locale_number_format_zero_blank($TotalValueAllOrders-$myrow['cogs'],0),
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'' 
+					);
+			
 		}
 		echo '</table>
 				</div>';
