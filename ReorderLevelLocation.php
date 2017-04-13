@@ -4,10 +4,10 @@
 
 // ReorderLevelLocation.php - Report of reorder level by category
 
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title=_('Reorder Level Location Reporting');
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . _('Inventory Reorder Level Location Report') . '</p>';
 
@@ -17,7 +17,7 @@ if (isset($_POST['submit'])){
 	for ($i=1;$i<count($_POST);$i++){ //loop through the returned customers
 		if (isset($_POST['StockID' . $i]) AND is_numeric(filter_number_format($_POST['ReorderLevel'.$i]))){
 			$SQLUpdate="UPDATE locstock SET reorderlevel = '" . filter_number_format($_POST['ReorderLevel'.$i]) . "',
-											bin = '" . strtoupper($_POST['BinLocation'.$i]) . "' 
+											bin = '" . strtoupper($_POST['BinLocation'.$i]) . "'
 						WHERE loccode = '" . $_POST['StockLocation'] . "'
 						AND stockid = '" . $_POST['StockID' . $i] . "'";
 			$Result = DB_query($SQLUpdate);
@@ -130,7 +130,7 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 		} else {
 			echo locale_number_format($myrow['reorderlevel'],0) . '</td><td>' . $myrow['bin'] . '</td>';
 		}
-			
+
 		echo '</td>
 			</tr> ';
 		$i++;
@@ -204,5 +204,5 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
           </form>';
 
 } /*end of else not submit */
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

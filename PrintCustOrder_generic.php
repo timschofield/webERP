@@ -3,14 +3,14 @@
 /* $Id$*/
 
 
-include('includes/session.inc');
+include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 
 
 //Get Out if we have no order number to work with
 If (!isset($_GET['TransNo']) OR $_GET['TransNo']==""){
 	$Title = _('Select Order To Print');
-	include('includes/header.inc');
+	include('includes/header.php');
 	echo '<div class="centre"><br /><br /><br />';
 	prnMsg( _('Select an Order Number to Print before calling this page') , 'error');
 	echo '<br />
@@ -30,7 +30,7 @@ If (!isset($_GET['TransNo']) OR $_GET['TransNo']==""){
 			<br />
 			<br />
 			<br />';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit();
 }
 
@@ -79,7 +79,7 @@ $result=DB_query($sql, $ErrMsg);
 //If there are no rows, there's a problem.
 if (DB_num_rows($result)==0){
 	$Title = _('Print Packing Slip Error');
-	include('includes/header.inc');
+	include('includes/header.php');
 	echo '<div class="centre"><br /><br /><br />';
 	prnMsg( _('Unable to Locate Order Number') . ' : ' . $_GET['TransNo'] . ' ', 'error');
 	echo '<br />
@@ -98,7 +98,7 @@ if (DB_num_rows($result)==0){
 			<br />
 			<br />';
 
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit();
 } elseif (DB_num_rows($result)==1){ /*There is only one order header returned - thats good! */
 
@@ -108,7 +108,7 @@ if (DB_num_rows($result)==0){
         $DeliverBlind = $myrow['deliverblind'];
         if ($myrow['printedpackingslip']==1 AND ($_GET['Reprint']!='OK' OR !isset($_GET['Reprint']))){
                 $Title = _('Print Packing Slip Error');
-                include('includes/header.inc');
+                include('includes/header.php');
                 echo '<p>';
                 prnMsg( _('The packing slip for order number') . ' ' . $_GET['TransNo'] . ' ' .
                         _('has previously been printed') . '. ' . _('It was printed on'). ' ' . ConvertSQLDate($myrow['datepackingslipprinted']) .
@@ -132,7 +132,7 @@ if (DB_num_rows($result)==0){
                         <br />
                         <br />';
 
-                include('includes/footer.inc');
+                include('includes/footer.php');
                 exit;
         }//packing slip has been printed.
 }
@@ -249,12 +249,12 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 
 if ($ListCount == 0) {
 	$Title = _('Print Packing Slip Error');
-	include('includes/header.inc');
+	include('includes/header.php');
 	echo '<p>' .  _('There were no outstanding items on the order to deliver') . '. ' . _('A packing slip cannot be printed').
 			'<br /><a href="' . $RootPath . '/SelectSalesOrder.php">' .  _('Print Another Packing Slip/Order').
 			'</a>
 			<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 } else {
     	$pdf->OutputD($_SESSION['DatabaseName'] . '_PackingSlip_' . date('Y-m-d') . '.pdf');

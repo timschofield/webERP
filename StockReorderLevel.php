@@ -2,9 +2,9 @@
 
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Stock Re-Order Level Maintenance');
-include('includes/header.inc');
+include('includes/header.php');
 
 if (isset($_GET['StockID'])){
 	$StockID = trim(mb_strtoupper($_GET['StockID']));
@@ -120,5 +120,5 @@ echo '<br /><a href="' . $RootPath . '/SelectCompletedOrder.php?SelectedStockIte
 echo '</div>
     </div>
 	</form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

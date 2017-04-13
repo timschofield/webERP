@@ -1,11 +1,19 @@
 <?php
+/* $Id: CollectiveWorkOrderCost.php 6946 2016-05-06 07:30:11Z  exsonqu $*/
+/* Multiple work orders cost review */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Search Work Orders');
-include('includes/header.inc');
+$ViewTopic = 'GeneralLedger';
+$BookMark = 'Z_ChangeGLAccountCode';
+include('includes/header.php');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>
-	<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+	'/images/magnifier.png" title="', // Icon image.
+	$Title, '" /> ', // Icon title.
+	$Title, '</p>';// Page title.
+
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
 	<div>
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -49,7 +57,7 @@ if (isset($_POST['Submit'])) {//users have selected the WO to calculate and subm
 						<th class="ascending">' . _('Work Order') . '</th>
 					</tr>';
 				$i = 0;
-				$TotalCost = 0; 
+				$TotalCost = 0;
 				while ($myrow = DB_fetch_array($result)){
 					if ($i==0) {
 						echo '<tr class="EvenTableRows">';
@@ -67,19 +75,19 @@ if (isset($_POST['Submit'])) {//users have selected the WO to calculate and subm
 						<td class="number">' . locale_number_format($IssuedQty,$myrow['decimalplaces']) . '</td>
 						<td class="number">' . locale_number_format($IssuedCost,2) . '</td>
 						<td>' . $myrow['reference'] . '</td>
-					       </tr>';	
+					       </tr>';
 				}
 				echo '<tr><td colspan="4"><b>' . _('Total Cost') . '</b></td>
 					<td colspan="2"><b>' .locale_number_format($TotalCost,2) . '</b></td>
-					</tr></table>';	
+					</tr></table>';
 			} else {
 				prnMsg(_('There are no data available'),'error');
-				include('includes/footer.inc');
+				include('includes/footer.php');
 				exit;
 			}
 		}//end of the work orders are not empty
 		echo '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Select Other Work Orders') . '</a>';
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 
 }
@@ -111,7 +119,7 @@ if (isset($SelectedWO) AND $SelectedWO!='') {
 	if (!is_numeric($SelectedWO)){
 		  prnMsg(_('The work order number entered MUST be numeric'),'warn');
 		  unset ($SelectedWO);
-		  include('includes/footer.inc');
+		  include('includes/footer.php');
 		  exit;
 	} else {
 		echo _('Work Order Number') . ' - ' . $SelectedWO;
@@ -206,9 +214,9 @@ if (!isset($StockID)) {
 		echo _('Work Order number') . ': <input type="text" name="WO" autofocus="autofocus" maxlength="8" size="9" />&nbsp; ' . _('Processing at') . ':<select name="StockLocation"> ';
 
 		$sql = "SELECT locations.loccode, locationname FROM locations
-				INNER JOIN locationusers 
-					ON locationusers.loccode=locations.loccode 
-					AND locationusers.userid='" .  $_SESSION['UserID'] . "' 
+				INNER JOIN locationusers
+					ON locationusers.loccode=locations.loccode
+					AND locationusers.userid='" .  $_SESSION['UserID'] . "'
 					AND locationusers.canview=1
 				WHERE locations.usedforwo = 1";
 
@@ -264,7 +272,7 @@ if (!isset($StockID)) {
 			</tr>
 			<tr>
 			<td colspan="2">' . _('Start Date From') . ':<input type="text" name="DateFrom" value="' . $_POST['DateFrom'] . '" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" />
-			
+
 			' . _('Start Date To') . ':<input type="text" name="DateTo" value="' . $_POST['DateTo'] . '" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" />
 			</td>
 				</tr>
@@ -365,7 +373,7 @@ if (!isset($StockID)) {
 		if (!empty($_POST['DateTo'])) {
 			$StartDateTo = " AND workorders.startdate<='" . FormatDateForSQL($_POST['DateTo']) . "'";
 		}
-	
+
 		if (isset($SelectedWO) AND $SelectedWO !='') {
 				$SQL = "SELECT workorders.wo,
 								woitems.stockid,
@@ -515,5 +523,5 @@ if (!isset($StockID)) {
           </form>';
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

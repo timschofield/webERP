@@ -2,9 +2,9 @@
 /* $Id$*/
 
 include('includes/DefineOfferClass.php');
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Supplier Tendering');
-include('includes/header.inc');
+include('includes/header.php');
 
 $Maximum_Number_Of_Parts_To_Show=50;
 
@@ -25,7 +25,7 @@ if (!isset($_POST['SupplierID'])) {
 	$myrow=DB_fetch_array($result);
 	if ($myrow['supplierid']=='') {
 		prnMsg(_('This functionality can only be accessed via a supplier login.'), 'warning');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	} else {
 		$_POST['SupplierID']=$myrow['supplierid'];
@@ -148,7 +148,7 @@ if (isset($_POST['Process'])) {
 			<input type="submit" name="Cancel" value="' . _('Cancel Offer') . '" />
 		</div>
 		</form>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -253,7 +253,7 @@ if (isset($_POST['Update'])) {
 	$_SESSION['offer'.$identifier]->Save($db, 'Yes');
 	$_SESSION['offer'.$identifier]->EmailOffer();
 	unset($_SESSION['offer'.$identifier]);
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -281,7 +281,7 @@ if (isset($_POST['Save'])) {
 	$_SESSION['offer'.$identifier]->Save($db);
 	$_SESSION['offer'.$identifier]->EmailOffer();
 	unset($_SESSION['offer'.$identifier]);
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -777,6 +777,6 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 
 } //end of if search
 
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

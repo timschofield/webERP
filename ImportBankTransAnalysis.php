@@ -8,17 +8,17 @@ GLEntries objects to hold the GL analysis for each transaction */
 
 include('includes/DefineImportBankTransClass.php');
 
-/* Session started in header.inc for password checking and authorisation level check */
-include('includes/session.inc');
+/* Session started in header.php for password checking and authorisation level check */
+include('includes/session.php');
 
 $Title = _('Imported Bank Transaction General Ledger Analysis');
 
-include('includes/header.inc');
+include('includes/header.php');
 
 if (!isset($_SESSION['Trans'])){
 	prnMsg(_('This page can only be called from the importation of bank transactions page which sets up the data to receive the analysed general ledger entries'),'info');
 	echo '<br /><a href="' . $RootPath . '/ImportBankTrans.php">' . _('Import Bank Transactions') . '</a>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 	/*It all stops here if there aint no bank transactions being imported i.e. $_SESSION['Trans'] has not been initiated
 	 * */
@@ -32,7 +32,7 @@ if (isset($_GET['TransID'])){
 if (!isset($TransID)){
 	prnMsg(_('This page can only be called from the importation of bank transactions page which sets up the data to receive the analysed general ledger entries'),'info');
 	echo '<br /><a href="' . $RootPath . '/ImportBankTrans.php">' . _('Import Bank Transactions') . '</a>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -315,5 +315,5 @@ if ($AllowGLAnalysis==false){
 	echo '<div class="centre"><input type="submit" name="AddGLCodeToTrans" value="' . _('Enter GL Line') . '"></div>';
 }
 echo '</form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

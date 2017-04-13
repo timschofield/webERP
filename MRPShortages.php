@@ -3,7 +3,7 @@
 /*$Id$ */
 // MRPShortages.php - Report of parts with demand greater than supply as determined by MRP
 
-include('includes/session.inc');
+include('includes/session.php');
 
 //ANSI SQL???
 $sql="SHOW TABLES WHERE Tables_in_" . $_SESSION['DatabaseName'] . "='mrprequirements'";
@@ -11,11 +11,11 @@ $sql="SHOW TABLES WHERE Tables_in_" . $_SESSION['DatabaseName'] . "='mrprequirem
 $result=DB_query($sql);
 if (DB_num_rows($result)==0) {
 	$Title=_('MRP error');
-	include('includes/header.inc');
+	include('includes/header.php');
 	echo '<br />';
-	prnMsg( _('The MRP calculation must be run before you can run this report') . '<br />' . 
+	prnMsg( _('The MRP calculation must be run before you can run this report') . '<br />' .
 			_('To run the MRP calculation click').' ' . '<a href="'.$RootPath .'/MRP.php">' . _('here') . '</a>', 'error');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -153,25 +153,25 @@ if (isset($_POST['PrintPDF'])) {
 
 	if (DB_error_no() !=0) {
 	  $Title = _('MRP Shortages and Excesses') . ' - ' . _('Problem Report');
-	  include('includes/header.inc');
+	  include('includes/header.php');
 	   prnMsg( _('The MRP shortages and excesses could not be retrieved by the SQL because') . ' '  . DB_error_msg(),'error');
 	   echo '<br/><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
 		  echo '<br/>' . $sql;
 	   }
-	   include('includes/footer.inc');
+	   include('includes/footer.php');
 	   exit;
 	}
 
 	if (DB_num_rows($result) == 0) {
 	  $Title = _('MRP Shortages and Excesses') . ' - ' . _('Problem Report');
-	  include('includes/header.inc');
+	  include('includes/header.php');
 	   prnMsg( _('No MRP shortages - Excess retrieved'), 'warn');
 	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
 		  echo '<br />' . $sql;
 	   }
-	   include('includes/footer.inc');
+	   include('includes/footer.php');
 	   exit;
 	}
 
@@ -255,7 +255,7 @@ if (isset($_POST['PrintPDF'])) {
 } else { /*The option to print PDF was not hit so display form */
 
 	$Title=_('MRP Shortages - Excess Reporting');
-	include('includes/header.inc');
+	include('includes/header.php');
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="'
 		. _('Stock') . '" alt="" />' . ' ' . $Title . '</p>';
@@ -305,7 +305,7 @@ if (isset($_POST['PrintPDF'])) {
         </div>
         </form>';
 
-	include('includes/footer.inc');
+	include('includes/footer.php');
 
 } /*end of else not PrintPDF */
 

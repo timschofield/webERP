@@ -1,15 +1,15 @@
 <?php
 /* $Id: Z_DeleteOldPrices.php 5296 2012-04-29 15:28:19Z vvs2012 $*/
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('UTILITY PAGE To Delete All Old Prices');
-include('includes/header.inc');
+include('includes/header.php');
 
 $result=DB_query("UPDATE prices SET enddate='9999-12-31' WHERE enddate='0000-00-00'"); //convert old data to use end date of 9999-12-31 rather than SQL mode specific end date
 
 if (isset($_POST['DeleteOldPrices'])){
 	DB_Txn_Begin();
-	
+
 	$result=DB_query("DELETE FROM prices WHERE enddate<'" . Date('Y-m-d') . "'",'','',true);
 	$result=DB_query("SELECT stockid,
 							typeabbrev,
@@ -46,5 +46,5 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 	</div>
       </form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

@@ -1956,7 +1956,7 @@ msgstr "日期/时间"
 #: PcReportTab.php:269 UserBankAccounts.php:77 UserBankAccounts.php:90
 #: UserGLAccounts.php:118 UserGLAccounts.php:130 UserGLAccounts.php:146
 #: UserLocations.php:77 UserLocations.php:90 UserLocations.php:100
-#: includes/header.inc:59
+#: includes/header.php:59
 msgid "User"
 msgstr "用户"
 
@@ -6708,7 +6708,7 @@ msgstr "创建报价"
 msgid "Cancel and Delete Contract"
 msgstr "取消及删除合同"
 
-#: CopyBOM.php:11 includes/header.inc:26
+#: CopyBOM.php:11 includes/header.php:26
 msgid "Copy a BOM to New Item Code"
 msgstr "复制BOM到新的物料代码"
 
@@ -9266,7 +9266,7 @@ msgstr "客户分公司 "
 msgid "has been added, add another branch, or return to the"
 msgstr "已增加，增加另外的分公司，或者返回"
 
-#: CustomerBranches.php:248 index.php:7 includes/header.inc:70
+#: CustomerBranches.php:248 index.php:7 includes/header.php:70
 msgid "Main Menu"
 msgstr "主菜单"
 
@@ -25949,7 +25949,7 @@ msgstr "分组 3"
 msgid "Group By 4"
 msgstr "分组 4"
 
-#: SalesAnalysis_UserDefined.php:9 includes/session.inc:194
+#: SalesAnalysis_UserDefined.php:9 includes/session.php:194
 msgid ""
 "The security settings on your account do not permit you to access this "
 "function"
@@ -27221,7 +27221,7 @@ msgid "Search Customers"
 msgstr "选择客户"
 
 #: SelectCustomer.php:14 includes/PDFTopItemsHeader.inc:27
-#: includes/header.inc:73
+#: includes/header.php:73
 msgid "Customers"
 msgstr "客户"
 
@@ -28270,7 +28270,7 @@ msgstr "报价单总价"
 msgid "Search Suppliers"
 msgstr "选择供应商"
 
-#: SelectSupplier.php:14 Suppliers.php:304 includes/header.inc:75
+#: SelectSupplier.php:14 Suppliers.php:304 includes/header.php:75
 msgid "Suppliers"
 msgstr "供应商"
 
@@ -45248,76 +45248,76 @@ msgid ""
 "items with no cost data entered"
 msgstr "物料没有成本数据，无法输入销售订单"
 
-#: includes/footer.inc:12 includes/footer.inc:20
+#: includes/footer.php:12 includes/footer.php:20
 msgid "Copyright"
 msgstr "版权"
 
-#: includes/footer.inc:20
+#: includes/footer.php:20
 msgid "version"
 msgstr "版本 "
 
-#: includes/header.inc:56 includes/Login.php:52 includes/Login.php:56
+#: includes/header.php:56 includes/Login.php:52 includes/Login.php:56
 #: includes/Login.php:76 includes/Login.php:79
 msgid "Company"
 msgstr "公司"
 
-#: includes/header.inc:74
+#: includes/header.php:74
 msgid "Items"
 msgstr "商品"
 
-#: includes/header.inc:77 includes/header.inc:81
+#: includes/header.php:77 includes/header.php:81
 msgid "Manual"
 msgstr "帮助"
 
-#: includes/header.inc:90 ../webSHOP/includes/header.php:232
+#: includes/header.php:90 ../webSHOP/includes/header.php:232
 msgid "Are you sure you wish to logout?"
 msgstr "确实要退出系统么？"
 
-#: includes/header.inc:90 ../webSHOP/includes/header.php:232
+#: includes/header.php:90 ../webSHOP/includes/header.php:232
 msgid "Logout"
 msgstr "退出"
 
-#: includes/session.inc:119 includes/session.inc:168
+#: includes/session.php:119 includes/session.php:168
 msgid "Account Error Report"
 msgstr "账户设置错误报告"
 
-#: includes/session.inc:122
+#: includes/session.php:122
 msgid ""
 "Your user role does not have any access defined for webERP. There is an "
 "error in the security setup for this user account"
 msgstr "您的用户没有任何功能的访问权限。权限设置错误"
 
-#: includes/session.inc:127
+#: includes/session.php:127
 msgid "incorrect password"
 msgstr "密码错误"
 
-#: includes/session.inc:127
+#: includes/session.php:127
 msgid "The user/password combination"
 msgstr "用户名/密码"
 
-#: includes/session.inc:127
+#: includes/session.php:127
 msgid "is not a valid user of the system"
 msgstr "验证失败"
 
-#: includes/session.inc:131
+#: includes/session.php:131
 msgid "system maintenance"
 msgstr "系统维护"
 
-#: includes/session.inc:131
+#: includes/session.php:131
 msgid "webERP is not available right now"
 msgstr "webERP现在无法取得"
 
-#: includes/session.inc:131
+#: includes/session.php:131
 msgid "during maintenance of the system"
 msgstr "在系统维护期间"
 
-#: includes/session.inc:156
+#: includes/session.php:156
 msgid ""
 "webERP is configured to allow only secure socket connections. Pages must be "
 "called with https://"
 msgstr "WebErp配置为只允许安全连接。web地址必须以https://开头"
 
-#: includes/session.inc:171
+#: includes/session.php:171
 msgid ""
 "Security settings have not been defined for your user account. Please advise "
 "your system administrator. It could also be that there is a session problem "
@@ -45325,15 +45325,15 @@ msgid ""
 msgstr ""
 "您登录的用户没有任何权限。请通知你的系统管理员。也可能是PHP服务器出现了问题"
 
-#: includes/session.inc:187
+#: includes/session.php:187
 msgid "Security Permissions Problem"
 msgstr "权限不足"
 
-#: includes/session.inc:251 ../webSHOP/includes/session.php:147
+#: includes/session.php:251 ../webSHOP/includes/session.php:147
 msgid "Error in form verification"
 msgstr "在表单确认时出现的错误 "
 
-#: includes/session.inc:253 ../webSHOP/includes/session.php:151
+#: includes/session.php:253 ../webSHOP/includes/session.php:151
 msgid "This form was not submitted with a correct ID"
 msgstr "此表单提交的ID不正确"
 

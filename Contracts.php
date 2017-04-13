@@ -3,7 +3,7 @@
 /* $Id: Contracts.php 3692 2010-08-15 09:22:08Z daintree $ */
 
 include('includes/DefineContractClass.php');
-include('includes/session.inc');
+include('includes/session.php');
 
 if (isset($_GET['ModifyContractNo'])) {
 	$Title = _('Modify Contract') . ' ' . $_GET['ModifyContractNo'];
@@ -25,7 +25,7 @@ foreach ($_POST as $FormVariableName=>$FormVariableValue) {
 $ViewTopic= 'Contracts';
 $BookMark = 'CreateContract';
 
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 
 /*If the page is called is called without an identifier being set then
@@ -94,7 +94,7 @@ if (isset($_SESSION['Contract'.$identifier]) AND
 		echo '<br />';
 		prnMsg(_('You should automatically be forwarded to the entry of the Contract line items page') . '. ' .
 		_('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' . '<a href="' . $RootPath . '/ContractBOM.php?identifier='.$identifier . '">' . _('click here') . '</a> ' . _('to continue'),'info');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 	if (isset($_POST['EnterContractRequirements']) AND !$InputError){
@@ -103,7 +103,7 @@ if (isset($_SESSION['Contract'.$identifier]) AND
 		prnMsg(_('You should automatically be forwarded to the entry of the Contract requirements page') . '. ' .
 		_('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' .
 		'<a href="' . $RootPath . '/ContractOtherReqts.php?identifier=' . $identifier . '">' . _('click here') . '</a> ' . _('to continue'),'info');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 } /* end of if going to contract BOM or contract requriements */
@@ -117,7 +117,7 @@ if (isset($_FILES['Drawing']) AND $_FILES['Drawing']['name'] !='' AND $_SESSION[
 
 	$result = $_FILES['Drawing']['error'];
 	$ImgExt = pathinfo($_FILES['Drawing']['name'], PATHINFO_EXTENSION);
-	
+
  	$UploadTheFile = 'Yes'; //Assume all is well to start off with
 	$filename = $_SESSION['part_pics_dir'] . '/' . $_SESSION['Contract'.$identifier]->ContractRef . '.' . $ImgExt;
 
@@ -744,7 +744,7 @@ if (isset($_POST['SelectedCustomer'])) {
 				prnMsg(_('The') . ' ' . $_SESSION['Contract'.$identifier]->CustomerName . ' ' . _('account is currently at or over their credit limit'),'warn');
 			} elseif ($_SESSION['CheckCreditLimits']==2 AND $CreditAvailable <=0){
 				prnMsg(_('No more orders can be placed by') . ' ' . $myrow[0] . ' ' . _(' their account is currently at or over their credit limit'),'warn');
-				include('includes/footer.inc');
+				include('includes/footer.php');
 				exit;
 			}
 		}
@@ -897,7 +897,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 	if (DB_num_rows($result)==0){
 		prnMsg( _('There are no work centres set up yet') . '. ' . _('Please use the link below to set up work centres'),'warn');
 		echo '<br /><a href="'.$RootPath.'/WorkCentres.php">' . _('Work Centre Maintenance') . '</a>';
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 	echo '<tr><td>' . _('Default Work Centre') . ': </td><td>';
@@ -922,9 +922,9 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 		</tr><tr>
 			<td>' .  _('Drawing File') . ' ' . implode(", ", $SupportedImgExt) . ' ' . _('format only') .':</td>
 			<td><input type="file" id="Drawing" name="Drawing" />
-			
+
 			</td>';
-	
+
 	$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/' . $_SESSION['Contract'.$identifier]->ContractRef . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
 	echo '<td> ' . $imagefile . '</td>';
 	echo '</tr>';
@@ -1096,5 +1096,5 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 	echo '</form>';
 } /*end of if customer selected  and entering contract header*/
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

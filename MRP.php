@@ -2,9 +2,9 @@
 
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Run MRP Calculation');
-include('includes/header.inc');
+include('includes/header.php');
 if (isset($_POST['submit'])) {
 
 	if (!isset($_POST['Leeway']) OR !is_numeric(filter_number_format($_POST['Leeway']))) {
@@ -270,7 +270,7 @@ if (isset($_POST['submit'])) {
 									SUM(CASE WHEN stockmoves.qty IS NOT NULL
 										THEN stockmoves.qty
 										ELSE 0
-										END))						
+										END))
 									AS netqty,
 									'WO',
 									woitems.wo,
@@ -756,7 +756,7 @@ function LevelNetting(&$db,$Part,$eoq,$PanSize,$ShrinkFactor,$LeadTime) {
 				if ($SupplyCount > $supi) {
 					$TotalSupply += $Supplies[$supi]['supplyquantity'];
 				}
-			} 
+			}
 		} // End of while
 	} // End of if
 
@@ -929,5 +929,5 @@ function CreateLowerLevelRequirement(&$db,
 
 }  // End of CreateLowerLevelRequirement
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

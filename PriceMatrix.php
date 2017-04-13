@@ -2,9 +2,9 @@
 
 //The scripts used to provide a Price break matrix for those users who like selling product in quantity break at different constant price. 
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Price break matrix Maintenance');
-include('includes/header.inc');
+include('includes/header.php');
 
 if (isset($Errors)) {
 	unset($Errors);
@@ -200,7 +200,7 @@ if(isset($_GET['StockID'])){
 	$StockID = trim(strtoupper($_POST['StockID']));
 }elseif(!isset($StockID)){
 	prnMsg(_('You must select a stock item first before set a price maxtrix'),'error');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 echo '<input type="hidden" name="StockID" value="' . $StockID . '" />';
@@ -323,7 +323,7 @@ echo '</table>
       </div>
 	  </form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 
 function GetMySQLMaxDate () {
 	switch ($_SESSION['DefaultDateFormat']){

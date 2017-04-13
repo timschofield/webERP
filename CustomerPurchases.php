@@ -2,12 +2,12 @@
 /* $Id: CustomerPurchases.php 7090 2015-01-20 13:43:08Z daintree $*/
 /* This script is to view the items purchased by a customer. */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Customer Purchases');// Screen identificator.
 $ViewTopic = 'ARInquiries';// Filename's id in ManualContents.php's TOC.
 /* This help needs to be writing...
 $BookMark = 'CustomerPurchases';// Anchor's id in the manual's html document.*/
-include('includes/header.inc');
+include('includes/header.php');
 
 if(isset($_GET['DebtorNo'])) {
 	$DebtorNo = $_GET['DebtorNo'];// Set DebtorNo from $_GET['DebtorNo'].
@@ -15,7 +15,7 @@ if(isset($_GET['DebtorNo'])) {
 	$DebtorNo = $_POST['DebtorNo'];// Set DebtorNo from $_POST['DebtorNo'].
 } else {
 	prnMsg(_('This script must be called with a customer code.'), 'info');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -113,5 +113,5 @@ else {
 
 echo '<br /><div class="centre"><a href="SelectCustomer.php">' . _('Return to customer selection screen') . '</a></div><br />';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

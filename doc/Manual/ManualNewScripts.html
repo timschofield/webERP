@@ -42,7 +42,7 @@
     <a class="minitext" href="#top">⬆ Top</a>
 </div>
 
-<h3>session.inc</h3>
+<h3>session.php</h3>
 
 <p>This page must be included and has the following functons:</p>
 
@@ -64,9 +64,9 @@
     <a class="minitext" href="#top">⬆ Top</a>
 </div>
 
-<h3>header.inc</h3>
+<h3>header.php</h3>
 
-<p>This file should be included after the variable $Title has been set to the name of the page. This file relies on config.php being already loaded, so session.inc (which in turn includes config.php) must be included before header.inc. The code in this script has the following functions:</p>
+<p>This file should be included after the variable $Title has been set to the name of the page. This file relies on config.php being already loaded, so session.php (which in turn includes config.php) must be included before header.php. The code in this script has the following functions:</p>
 
 <ul>
     <li>Includes the javascript functions used in scripts from the file javascripts/MiscFunctions.js</li>
@@ -80,7 +80,7 @@
     <a class="minitext" href="#top">⬆ Top</a>
 </div>
 
-<h3>footer.inc</h3>
+<h3>footer.php</h3>
 
 <p>This file contains the small logo, company name and copyright notice with the closing "" tags.</p>
 
@@ -90,25 +90,25 @@
 
 <h3>config.php</h3>
 
-<p>The variables in config.php are available to all of tcripts that have included session.inc. There are not many now most of the configuration is stored in the database using the config table. However, the variables that give the software the information to connect to the database such as datbase user, password and host, together with the database type - dbtype - in fact only mysql is supported but there are two libraries that can be used the mysqli and the old mysql functions. There are a couple of other variables including the timezone, $RootPath which is the directory where the web server holds the system files. Also the php error_reporting code.</p>
+<p>The variables in config.php are available to all of tcripts that have included session.php. There are not many now most of the configuration is stored in the database using the config table. However, the variables that give the software the information to connect to the database such as datbase user, password and host, together with the database type - dbtype - in fact only mysql is supported but there are two libraries that can be used the mysqli and the old mysql functions. There are a couple of other variables including the timezone, $RootPath which is the directory where the web server holds the system files. Also the php error_reporting code.</p>
 
-<p>Having started the page with session.inc and header.inc - and then finishing with footer.inc much of the work to ensure a consistent look and feel is already done.</p>
+<p>Having started the page with session.php and header.php - and then finishing with footer.php much of the work to ensure a consistent look and feel is already done.</p>
 
 <h3>An Example webERP Script Template</h3>
 <p>Following from the discussion of the key component scripts of webERP, the general form of a webERP script would look like the following:</p>
 <pre>
 &lt;?php
 
-/* session.inc is the script that brings in session
+/* session.php is the script that brings in session
  * management, database management, and performs
  * any other housekeeping tasks related to the running
  * of webERP. and so should be included right at the
  * top of every script.
  */
-include(&apos;includes/session.inc&apos;);
+include(&apos;includes/session.php&apos;);
 
 /* A title for the script must be assigned prior to
- * including the header.inc script
+ * including the header.php script
  */
 $Title = _(&apos;Simple webERP Script&apos;);
 
@@ -120,13 +120,13 @@ $Title = _(&apos;Simple webERP Script&apos;);
 $ViewTopic = &apos;SimpleScript&apos;;
 $BookMark = &apos;GeneralTopics&apos;;
 
-/* The header.inc file sends all the http headers needed,
+/* The header.php file sends all the http headers needed,
  * links in the style sheets and downloads any javascript
  * files that are needed. It also draws the header on the
  * screen. Muse be included before any output is sent to
  * the browser.
  */
-include(&apos;includes/header.inc&apos;);
+include(&apos;includes/header.php&apos;);
 
 if (!isset($_POST[&apos;Submit&apos;])) {
 /* In this section should go the code to validate the data
@@ -145,11 +145,11 @@ if (!isset($_POST[&apos;Submit&apos;])) {
  * and a form for entry of new details.
  */
 
-/* Finally we must include footer.inc to draw the footer on
+/* Finally we must include footer.php to draw the footer on
  * the screen, display any error messages, and close off the
  * html tags in the page.
  */
-include(&apos;includes/footer.inc&apos;);
+include(&apos;includes/footer.php&apos;);
 ?&gt;
 </pre>
 
@@ -159,7 +159,7 @@ include(&apos;includes/footer.inc&apos;);
 
 <h3>PDFStarter.php</h3>
 
-<p>The only time when it is not appropriate to include session.inc or header.inc is when a pdf script is to be created. Here the file PDFStarter.php contains the initiation of the session and the check for proper user authentication and authorisation for the specific page using the $PageSecurity variable which must be defined before PDFStarter.php is included. Normally, config.php and ConnectDB.inc are included seperately (and before PDF_starter_ros.inc) in PDF scripts. PDF report scripts all make use of the FPDF class by Olivier Plathey but previously a differnt class was used so there is an extension to this which translates the calls to the old pdf class to the FPDF class. Probably better to write new scripts using the FPDF syntax.</p>
+<p>The only time when it is not appropriate to include session.php or header.php is when a pdf script is to be created. Here the file PDFStarter.php contains the initiation of the session and the check for proper user authentication and authorisation for the specific page using the $PageSecurity variable which must be defined before PDFStarter.php is included. Normally, config.php and ConnectDB.inc are included seperately (and before PDF_starter_ros.inc) in PDF scripts. PDF report scripts all make use of the FPDF class by Olivier Plathey but previously a differnt class was used so there is an extension to this which translates the calls to the old pdf class to the FPDF class. Probably better to write new scripts using the FPDF syntax.</p>
 
 <div class="floatright">
     <a class="minitext" href="#top">⬆ Top</a>

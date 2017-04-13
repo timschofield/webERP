@@ -2,11 +2,11 @@
 
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('Multi-Level Bill Of Materials Maintenance');
 
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 
 function display_children($Parent, $Level, &$BOMTree) {
@@ -17,7 +17,7 @@ function display_children($Parent, $Level, &$BOMTree) {
 	// retrive all children of parent
 	$c_result = DB_query("SELECT parent,
 						component,
-						sequence/pow(10,digitals) 
+						sequence/pow(10,digitals)
 							AS sequence
 						FROM bom
 						WHERE parent='" . $Parent. "'
@@ -42,7 +42,7 @@ function display_children($Parent, $Level, &$BOMTree) {
 			} else {
 				prnMsg(_('The component and the parent is the same'),'error');
 				echo $row['component'] . '<br/>';
-				include('includes/footer.inc');
+				include('includes/footer.php');
 				exit;
 			}
 		}
@@ -99,7 +99,7 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 						stockmaster.decimalplaces
 				FROM bom INNER JOIN stockmaster
 				ON bom.component=stockmaster.stockid
-				INNER JOIN stockcategory 
+				INNER JOIN stockcategory
 				ON stockcategory.categoryid = stockmaster.categoryid
 				INNER JOIN locations ON
 				bom.loccode = locations.loccode
@@ -309,7 +309,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			$Errors[$i] = 'Quantity';
 			$i++;
 		}
-		/* Comment this out to make substittute material can be recorded in the BOM 
+		/* Comment this out to make substittute material can be recorded in the BOM
 		if (filter_number_format($_POST['Quantity'])==0) {
 			$InputError = 1;
 			prnMsg(_('The quantity entered cannot be zero'),'error');
@@ -835,7 +835,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		if (DB_num_rows($result)==0){
 			prnMsg( _('There are no work centres set up yet') . '. ' . _('Please use the link below to set up work centres') . '.','warn');
 			echo '<a href="' . $RootPath . '/WorkCentres.php">' . _('Work Centre Maintenance') . '</a></td></tr></table><br />';
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 		}
 
@@ -905,7 +905,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		} else {
 			echo '<input type="hidden" name="AutoIssue" value="0" />';
 		}
-	
+
 		echo '<tr><td>' . _('Remark') . '</td>
 			<td><textarea  rows="3" col="20" name="Remark" >' . $_POST['Remark'] . '</textarea></td>
 			</tr>';
@@ -1084,7 +1084,7 @@ function arrayUnique($array, $preserveKeys = false)
 	return $arrayRewrite;
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 function GetDigitals($Sequence) {
 	$SQLNumber = filter_number_format($Sequence);
 	return strlen(substr(strrchr($SQLNumber, "."),1));

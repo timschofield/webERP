@@ -5,7 +5,7 @@
 // ReorderLevel.php - Report of parts with quantity below reorder level
 // Shows if there are other locations that have quantities for the parts that are short
 
-include('includes/session.inc');
+include('includes/session.php');
 if (isset($_POST['PrintPDF'])) {
 	$PaperSize='A4_Landscape';
 	include('includes/PDFStarter.php');
@@ -58,13 +58,13 @@ if (isset($_POST['PrintPDF'])) {
 
 	if (DB_error_no() !=0) {
 	  $Title = _('Reorder Level') . ' - ' . _('Problem Report');
-	  include('includes/header.inc');
+	  include('includes/header.php');
 	   prnMsg( _('The Reorder Level report could not be retrieved by the SQL because') . ' '  . DB_error_msg(),'error');
 	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
 		  echo '<br />' . $sql;
 	   }
-	   include('includes/footer.inc');
+	   include('includes/footer.php');
 	   exit;
 	}
 
@@ -177,10 +177,10 @@ if (isset($_POST['PrintPDF'])) {
 
 	if ($ListCount == 0){
 			$Title = _('Print Reorder Level Report');
-			include('includes/header.inc');
+			include('includes/header.php');
 			prnMsg(_('There were no items with demand greater than supply'),'error');
 			echo '<br /><a href="' . $RootPath . '/index.php?">' . _('Back to the menu') . '</a>';
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 	} else {
 			$pdf->OutputD($_SESSION['DatabaseName'] . '_ReOrderLevel_' . date('Y-m-d') . '.pdf');
@@ -190,7 +190,7 @@ if (isset($_POST['PrintPDF'])) {
 } else { /*The option to print PDF was not hit so display form */
 
 	$Title=_('Reorder Level Reporting');
-	include('includes/header.inc');
+	include('includes/header.php');
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . _('Inventory Reorder Level Report') . '</p>';
 	echo '<div class="page_help_text">' . _('Use this report to display the reorder levels for Inventory items in different categories.') . '</div><br />';
 
@@ -230,7 +230,7 @@ if (isset($_POST['PrintPDF'])) {
 			<br />';
 		prnMsg(_('There are no stock categories currently defined please use the link below to set them up'),'warn');
 		echo '<br /><a href="' . $RootPath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
-		include ('includes/footer.inc');
+		include ('includes/footer.php');
 		exit;
 	}
 
@@ -260,7 +260,7 @@ if (isset($_POST['PrintPDF'])) {
 			</div>';
     echo '</div>
           </form>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 
 } /*end of else not PrintPDF */
 

@@ -1,9 +1,9 @@
 <?php
 /* $Id: ReprintGrn.php 4486 2011-02-08 09:20:50Z daintree $*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title=_('Reprint a GRN');
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
 
@@ -34,7 +34,7 @@ if (isset($_POST['Show'])) {
 	if ($_POST['PONumber']=='') {
 		echo '<br />';
 		prnMsg( _('You must enter a purchase order number in the box above'), 'warn');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 	$sql="SELECT count(orderno)
@@ -45,7 +45,7 @@ if (isset($_POST['Show'])) {
 	if ($myrow[0]==0) {
 		echo '<br />';
 		prnMsg( _('This purchase order does not exist on the system. Please try again.'), 'warn');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 	$sql="SELECT grnbatch,
@@ -72,7 +72,7 @@ if (isset($_POST['Show'])) {
 	if (DB_num_rows($result)==0) {
 		echo '<br />';
 		prnMsg( _('There are no GRNs for this purchase order that can be reprinted.'), 'warn');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 	$k=0;
@@ -116,6 +116,6 @@ if (isset($_POST['Show'])) {
 	echo '</table>';
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

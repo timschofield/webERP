@@ -2,10 +2,10 @@
 
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Shipment Costing');
-/* Session started in header.inc for password checking and authorisation level check */
-include('includes/header.inc');
+/* Session started in header.php for password checking and authorisation level check */
+include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />
@@ -20,7 +20,7 @@ if (!isset($_GET['SelectedShipment'])){
 
 	echo '<br />';
 	prnMsg( _('This page is expected to be called with the shipment number to show the costing for'), 'error');
-	include ('includes/footer.inc');
+	include ('includes/footer.php');
 	exit;
 }
 
@@ -40,7 +40,7 @@ $GetShiptHdrResult = DB_query($ShipmentHeaderSQL, $ErrMsg);
 if (DB_num_rows($GetShiptHdrResult)==0) {
 	echo '<br />';
 	prnMsg( _('Shipment') . ' ' . $_GET['SelectedShipment'] . ' ' . _('could not be located in the database') , 'error');
-	include ('includes/footer.inc');
+	include ('includes/footer.php');
 	exit;
 }
 
@@ -79,7 +79,7 @@ $GetShiptCostsResult = DB_query($sql, $ErrMsg);
 if (DB_num_rows($GetShiptCostsResult)==0) {
 	echo '<br />';
 	prnMsg (_('No General Cost Records exist for Shipment') . ' ' . $_GET['SelectedShipment'] . ' ' . _('in the database'), 'error');
-	include ('includes/footer.inc');
+	include ('includes/footer.php');
 	exit;
 }
 
@@ -99,7 +99,7 @@ $GetShiptCostsResult = DB_query($sql);
 if (DB_error_no() !=0 OR DB_num_rows($GetShiptCostsResult)==0) {
 	echo '<br />';
 	prnMsg ( _('No Item Cost Records exist for Shipment') . ' ' . $_GET['SelectedShipment'] . ' ' . _('in the database'), 'error');
-	include ('includes/footer.inc');
+	include ('includes/footer.php');
 	exit;
 }
 
@@ -711,5 +711,5 @@ if ( isset($_POST['Close']) ){ /* OK do the shipment close journals */
 	}
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

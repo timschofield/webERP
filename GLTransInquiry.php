@@ -1,11 +1,11 @@
 <?php
 /* $Id$*/
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('General Ledger Transaction Inquiry');
 $ViewTopic = 'GeneralLedger';// Filename in ManualContents.php's TOC.
 $BookMark = 'GLTransInquiry';// Anchor's id in the manual's html document.
-include('includes/header.inc');
+include('includes/header.php');
 
 $MenuURL = '<div><a href="'. $RootPath . '/index.php?&amp;Application=GL">' . _('General Ledger Menu') . '</a></div>';
 
@@ -152,10 +152,10 @@ if( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 					    echo '<tr class="EvenTableRows">';
 					    $j++;
 					}
-					
+
 					echo '	<td>' . MonthAndYearFromSQLDate($TransRow['lastdate_in_period']) . '</td>
 							<td>' . $TranDate . '</td>';
-					
+
 					if ($URL == ""){
 						// User is not allowed to see this GL account, don't show the details
 						echo '	<td>' . $AccountName . '</td>
@@ -164,7 +164,7 @@ if( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 						echo '	<td><a href="' . $URL . '">' . $AccountName . '</a></td>
 								<td>' . $TransRow['narrative'] . '</td>';
 					}
-					
+
 					echo '	<td class="number">' . $DebitAmount . '</td>
 							<td class="number">' . $CreditAmount . '</td>
 							<td>' . $Posted . '</td>
@@ -228,5 +228,5 @@ if( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

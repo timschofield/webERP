@@ -2,9 +2,9 @@
 
 /* $Id: NoSalesItems.php 2012-05-12 $*/
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('No Sales Items Searching');
-include ('includes/header.inc');
+include ('includes/header.php');
 if (!(isset($_POST['Search']))) {
 echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('No Sales Items') . '" alt="" />' . ' ' . _('No Sales Items') . '</p></div>';
 	echo '<div class="page_help_text">'
@@ -260,5 +260,5 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '
 	echo '<br />
 	</form>';
 }
-include ('includes/footer.inc');
+include ('includes/footer.php');
 ?>

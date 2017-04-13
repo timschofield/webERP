@@ -2,7 +2,7 @@
 
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 if (isset($_POST['PrintPDF'])
 	AND isset($_POST['FromCriteria'])
@@ -55,22 +55,22 @@ if (isset($_POST['PrintPDF'])
 
 	if (DB_error_no() !=0) {
 		$Title = _('Customer Balances') . ' - ' . _('Problem Report');
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg(_('The customer details could not be retrieved by the SQL because') . DB_error_msg(),'error');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
 			echo '<br />' . $SQL;
 		}
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
 	if (DB_num_rows($CustomerResult) == 0) {
 		$Title = _('Customer Balances') . ' - ' . _('Problem Report');
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg(_('The customer details listing has no clients to report on'),'warn');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -125,7 +125,7 @@ if (isset($_POST['PrintPDF'])
 	$ViewTopic = 'ARReports';
 	$BookMark = 'PriorMonthDebtors';
 
-	include('includes/header.inc');
+	include('includes/header.php');
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . _('Search') .
 	 '" alt="" />' . ' ' . $Title . '</p><br />';
 
@@ -170,7 +170,7 @@ if (isset($_POST['PrintPDF'])
         </div>
 		</form>';
 
-	include('includes/footer.inc');
+	include('includes/footer.php');
 } /*end of else not PrintPDF */
 
 ?>

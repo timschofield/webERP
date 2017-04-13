@@ -2,9 +2,9 @@
 
 /* $Id: Z_UpdateSalesAnalysisWithLatestCustomerData.php 5784 2012-12-29 04:00:43Z daintree $*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title=_('Apply Current Customer and Branch Data to Sales Analysis');
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
 	<div>
@@ -17,7 +17,7 @@ echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_
 if (isset($_POST['UpdateSalesAnalysis'])){
 
 	/* Loop around each customer/branch combo */
-	
+
 	$sql = "SELECT debtorsmaster.debtorno,
 					branchcode,
 					salestype,
@@ -46,5 +46,5 @@ if (isset($_POST['UpdateSalesAnalysis'])){
 
 	prnMsg(_('Updated the sales analysis with all the latest sales areas, salesman and sales types as set up now'),'success');
 }
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

@@ -1,7 +1,7 @@
 <?php
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $result = DB_query("SELECT description FROM stockmaster WHERE stockid='" . trim(mb_strtoupper($_GET['StockID'])) . "'");
 $myrow = DB_fetch_row($result);
 
@@ -49,19 +49,19 @@ if($_GET['StockLocation']=='All'){
 $MovtsResult = DB_query($sql);
 if (DB_error_no() !=0) {
 	$Title = _('Stock Usage Graph Problem');
-	include ('includes/header.inc');
+	include ('includes/header.php');
 	echo _('The stock usage for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg();
 	if ($debug==1){
 	echo '<br />' . _('The SQL that failed was') . $sql;
 	}
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 if (DB_num_rows($MovtsResult)==0){
 	$Title = _('Stock Usage Graph Problem');
-	include ('includes/header.inc');
+	include ('includes/header.php');
 	prnMsg(_('There are no movements of this item from the selected location to graph'),'info');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 

@@ -1,11 +1,11 @@
 <?php
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Tax Rates');
 $ViewTopic = 'Tax';// Filename in ManualContents.php's TOC.
 $BookMark = 'TaxAuthorityRates';// Anchor's id in the manual's html document.
-include('includes/header.inc');
+include('includes/header.php');
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
 		'/images/maintenance.png" title="' .
 		_('Tax Rates Maintenance') . '" />' . ' ' .
@@ -23,7 +23,7 @@ if(!isset($TaxAuthority)) {
 		_('Please select the Rates link from the tax authority page') . '<br /><a href="' .
 		$RootPath . '/TaxAuthorities.php">' . _('click here') . '</a> ' .
 		_('to go to the Tax Authority page'), 'error');
-	include ('includes/footer.inc');
+	include ('includes/footer.php');
 	exit;
 }
 
@@ -123,5 +123,5 @@ echo '<br />
 		<a href="' . $RootPath . '/TaxCategories.php">' . _('Tax Category Maintenance') .  '</a>
 	</div>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

@@ -1,7 +1,7 @@
 <?php
 /* $Id: GLAccountReport.php 4618 2011-07-02 23:04:59Z daintree $*/
 
-include ('includes/session.inc');
+include ('includes/session.php');
 
 $ViewTopic= 'GeneralLedger';
 $BookMark = 'GLAccountReport';
@@ -16,12 +16,12 @@ if (isset($_POST['RunReport'])){
 
 	if (!isset($SelectedPeriod)){
 		prnMsg(_('A period or range of periods must be selected from the list box'),'info');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 	if (!isset($_POST['Account'])){
 		prnMsg(_('An account or range of accounts must be selected from the list box'),'info');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -206,7 +206,7 @@ if (isset($_POST['RunReport'])){
 	/*Now check that there is some output and print the report out */
 	if (count($_POST['Account'])==0) {
 	   prnMsg(_('An account or range of accounts must be selected from the list box'),'info');
-	   include('includes/footer.inc');
+	   include('includes/footer.php');
 	   exit;
 
 	} else { //print the report
@@ -217,7 +217,7 @@ if (isset($_POST['RunReport'])){
 } /* end of if PrintReport button hit */
  else {
 	$Title = _('General Ledger Account Report');
-	include('includes/header.inc');
+	include('includes/header.php');
 	include('includes/GLPostings.inc');
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('General Ledger Account Inquiry') . '" alt="" />' . ' ' . _('General Ledger Account Report') . '</p>';
@@ -235,9 +235,9 @@ if (isset($_POST['RunReport'])){
 		        <tr>
 		         <td>' . _('Selected Accounts') . ':</td>
 		         <td><select name="Account[]" multiple="multiple">';
-	$sql = "SELECT chartmaster.accountcode, 
+	$sql = "SELECT chartmaster.accountcode,
 				   chartmaster.accountname
-			FROM chartmaster 
+			FROM chartmaster
 			INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canview=1
 			ORDER BY chartmaster.accountcode";
 	$AccountsResult = DB_query($sql);
@@ -297,7 +297,7 @@ if (isset($_POST['RunReport'])){
 		</div>
 		</form>';
 
-	include ('includes/footer.inc');
+	include ('includes/footer.php');
 	exit;
 }
 

@@ -1971,7 +1971,7 @@ msgstr "Data / czas"
 #: PcReportTab.php:269 UserBankAccounts.php:77 UserBankAccounts.php:90
 #: UserGLAccounts.php:118 UserGLAccounts.php:130 UserGLAccounts.php:146
 #: UserLocations.php:77 UserLocations.php:90 UserLocations.php:100
-#: includes/header.inc:59
+#: includes/header.php:59
 msgid "User"
 msgstr "Użytkownik"
 
@@ -6810,7 +6810,7 @@ msgstr "Tworzenie ofertowe"
 msgid "Cancel and Delete Contract"
 msgstr "Anuluj i usuwanie umowy"
 
-#: CopyBOM.php:11 includes/header.inc:26
+#: CopyBOM.php:11 includes/header.php:26
 msgid "Copy a BOM to New Item Code"
 msgstr ""
 
@@ -9425,7 +9425,7 @@ msgstr ""
 msgid "has been added, add another branch, or return to the"
 msgstr ""
 
-#: CustomerBranches.php:248 index.php:7 includes/header.inc:70
+#: CustomerBranches.php:248 index.php:7 includes/header.php:70
 msgid "Main Menu"
 msgstr "Menu Główne"
 
@@ -26467,7 +26467,7 @@ msgstr "Grupa 3"
 msgid "Group By 4"
 msgstr "Grupa 4"
 
-#: SalesAnalysis_UserDefined.php:9 includes/session.inc:194
+#: SalesAnalysis_UserDefined.php:9 includes/session.php:194
 msgid ""
 "The security settings on your account do not permit you to access this "
 "function"
@@ -27772,7 +27772,7 @@ msgid "Search Customers"
 msgstr "Wybierz Klienta"
 
 #: SelectCustomer.php:14 includes/PDFTopItemsHeader.inc:27
-#: includes/header.inc:73
+#: includes/header.php:73
 msgid "Customers"
 msgstr "Klienci"
 
@@ -28849,7 +28849,7 @@ msgstr ""
 msgid "Search Suppliers"
 msgstr "Szukaj Dostawców"
 
-#: SelectSupplier.php:14 Suppliers.php:304 includes/header.inc:75
+#: SelectSupplier.php:14 Suppliers.php:304 includes/header.php:75
 msgid "Suppliers"
 msgstr "Dostawcy"
 
@@ -46506,40 +46506,40 @@ msgstr ""
 "nie ma ustawionych kosztów i wprowadzanie zamówienia jest ustawione na "
 "zapobieganie sprzedaży towarów bez wprowadzonych danych kosztowych"
 
-#: includes/footer.inc:12 includes/footer.inc:20
+#: includes/footer.php:12 includes/footer.php:20
 msgid "Copyright"
 msgstr "Copyright"
 
-#: includes/footer.inc:20
+#: includes/footer.php:20
 msgid "version"
 msgstr ""
 
-#: includes/header.inc:56 includes/Login.php:52 includes/Login.php:56
+#: includes/header.php:56 includes/Login.php:52 includes/Login.php:56
 #: includes/Login.php:76 includes/Login.php:79
 msgid "Company"
 msgstr "Firma"
 
-#: includes/header.inc:74
+#: includes/header.php:74
 msgid "Items"
 msgstr "Towary"
 
-#: includes/header.inc:77 includes/header.inc:81
+#: includes/header.php:77 includes/header.php:81
 msgid "Manual"
 msgstr "Podręcznik"
 
-#: includes/header.inc:90 ../webSHOP/includes/header.php:232
+#: includes/header.php:90 ../webSHOP/includes/header.php:232
 msgid "Are you sure you wish to logout?"
 msgstr "Na pewno chcesz się wylogować?"
 
-#: includes/header.inc:90 ../webSHOP/includes/header.php:232
+#: includes/header.php:90 ../webSHOP/includes/header.php:232
 msgid "Logout"
 msgstr "Logout"
 
-#: includes/session.inc:119 includes/session.inc:168
+#: includes/session.php:119 includes/session.php:168
 msgid "Account Error Report"
 msgstr "Raport błędu konta"
 
-#: includes/session.inc:122
+#: includes/session.php:122
 msgid ""
 "Your user role does not have any access defined for webERP. There is an "
 "error in the security setup for this user account"
@@ -46547,31 +46547,31 @@ msgstr ""
 "Twoje stanowisko nie ma żadnego zdefiniowanego zakresu dostępu. Błąd w "
 "ustawieniach dostępu dla tego konta."
 
-#: includes/session.inc:127
+#: includes/session.php:127
 msgid "incorrect password"
 msgstr "nieprawidłowe hasło"
 
-#: includes/session.inc:127
+#: includes/session.php:127
 msgid "The user/password combination"
 msgstr "Kombinacja użytkownik/hasło"
 
-#: includes/session.inc:127
+#: includes/session.php:127
 msgid "is not a valid user of the system"
 msgstr "jest nieprawidłowa"
 
-#: includes/session.inc:131
+#: includes/session.php:131
 msgid "system maintenance"
 msgstr "konserwacji systemu"
 
-#: includes/session.inc:131
+#: includes/session.php:131
 msgid "webERP is not available right now"
 msgstr "webERP nie jest dostępna w tej chwili"
 
-#: includes/session.inc:131
+#: includes/session.php:131
 msgid "during maintenance of the system"
 msgstr "podczas konserwacji systemu"
 
-#: includes/session.inc:156
+#: includes/session.php:156
 msgid ""
 "webERP is configured to allow only secure socket connections. Pages must be "
 "called with https://"
@@ -46579,7 +46579,7 @@ msgstr ""
 "webERP jest skonfigurowany wyłącznie na bezpieczne połączenia sieciowe. "
 "Strony należy wywoływać z https://"
 
-#: includes/session.inc:171
+#: includes/session.php:171
 msgid ""
 "Security settings have not been defined for your user account. Please advise "
 "your system administrator. It could also be that there is a session problem "
@@ -46588,15 +46588,15 @@ msgstr ""
 "Nie zdefiniowano zakresu dostępu dla Twojego konta. Skontaktuj się z "
 "administratorem. Powodem może być również zarządzanie sesją w serwerze PHP."
 
-#: includes/session.inc:187
+#: includes/session.php:187
 msgid "Security Permissions Problem"
 msgstr "Problem z systemem dostępu"
 
-#: includes/session.inc:251 ../webSHOP/includes/session.php:147
+#: includes/session.php:251 ../webSHOP/includes/session.php:147
 msgid "Error in form verification"
 msgstr ""
 
-#: includes/session.inc:253 ../webSHOP/includes/session.php:151
+#: includes/session.php:253 ../webSHOP/includes/session.php:151
 msgid "This form was not submitted with a correct ID"
 msgstr "Formularz ten nie został złożony we właściwej ID"
 

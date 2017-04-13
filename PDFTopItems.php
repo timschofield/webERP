@@ -2,7 +2,7 @@
 
 /* $Id$*/
 
-include ('includes/session.inc');
+include ('includes/session.php');
 include ('includes/PDFStarter.php');
 $FontSize = 10;
 $pdf->addInfo('Title', _('Top Items Search Result'));
@@ -20,7 +20,7 @@ if (($_GET['Location'] == 'All') AND ($_GET['Customers'] == 'All')) {
 				stockmaster.description,
 				stockmaster.units,
 				stockmaster.decimalplaces
-			FROM 	salesorderdetails, salesorders INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1, 
+			FROM 	salesorderdetails, salesorders INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1,
 			debtorsmaster,stockmaster
 			WHERE 	salesorderdetails.orderno = salesorders.orderno
 				AND salesorderdetails.stkcode = stockmaster.stockid
@@ -36,7 +36,7 @@ if (($_GET['Location'] == 'All') AND ($_GET['Customers'] == 'All')) {
 					SUM(salesorderdetails.qtyinvoiced * salesorderdetails.unitprice ) AS valuesales,
 					stockmaster.description,
 					stockmaster.units
-				FROM 	salesorderdetails, salesorders INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1, 
+				FROM 	salesorderdetails, salesorders INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1,
 				debtorsmaster,stockmaster
 				WHERE 	salesorderdetails.orderno = salesorders.orderno
 						AND salesorderdetails.stkcode = stockmaster.stockid

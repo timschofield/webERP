@@ -4,14 +4,14 @@
 
 include('includes/DefineStockAdjustment.php');
 include('includes/DefineSerialItems.php');
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Stock Adjustments');
 
-/* webERP manual links before header.inc */
+/* webERP manual links before header.php */
 $ViewTopic= 'Inventory';
 $BookMark = 'InventoryAdjustments';
 
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 
 if (empty($_GET['identifier'])) {
@@ -149,7 +149,7 @@ if (isset($_POST['CheckCode'])) {
 			</tr>';
 	}
 	echo '</table>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -535,5 +535,5 @@ echo '<br />
 echo '</div>
       </div>
       </form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

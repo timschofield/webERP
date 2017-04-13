@@ -1,8 +1,8 @@
 <?php
 //Token 19 is used as the authority overwritten token to ensure that all internal request can be viewed.
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Internal Stock Request Inquiry');
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
 
@@ -94,7 +94,7 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 
 			} else {
 				prnMsg(_('You have no authority to do the internal request inquiry'),'error');
-				include('includes/footer.inc');
+				include('includes/footer.php');
 				exit;
 			}
 		}
@@ -149,7 +149,7 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 		echo '<input type="hidden" name="Departments" value="' . base64_encode(serialize($Departments)) . '" />';
 	} else {
 		prnMsg(_('There are no internal request result available for your or your department'),'error');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -501,7 +501,7 @@ if(isset($StockItemsResult)){
 
 }
 		
-include('includes/footer.inc');
+include('includes/footer.php');
 exit;
 
 function GetSearchItems ($SQLConstraint='') {

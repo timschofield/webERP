@@ -147,13 +147,13 @@ function GetPrice ($StockID, $DebtorNo, $BranchCode, $OrderLineQty=1, $ReportZer
 												AND pricematrix.currabrev = debtorsmaster.currcode
 												AND pricematrix.salestype = debtorsmaster.salestype
 												AND pricematrix.quantitybreak >= '" . $OrderLineQty . "'
-												AND pricematrix.startdate <= '" . Date('Y-m-d') . "' 
+												AND pricematrix.startdate <= '" . Date('Y-m-d') . "'
 												AND pricematrix.enddate >='" . Date('Y-m-d') . "'";
 									$ErrMsg = _('There is an error to retrieve price from price matrix for stock') . ' ' . $StockID . ' ' . _('and the error message returned by SQL server is ');
 									$result = DB_query($sql,$ErrMsg);
 									$MaxPriceRow = DB_fetch_row($result);
 								}
-								if ($MaxPriceRow[0]==NULL){	
+								if ($MaxPriceRow[0]==NULL){
 									/*Not even a price set up in the default price list so return 0 */
 									if ($ReportZeroPrice ==1){
 										prnMsg(_('There are no prices set up for') . ' ' . $StockID,'warn');
@@ -172,7 +172,7 @@ function GetPrice ($StockID, $DebtorNo, $BranchCode, $OrderLineQty=1, $ReportZer
 		/*There is a price from one of the above so return that */
 		$myrow=DB_fetch_row($result);
 
-		
+
 		Return $myrow[0];
 	} else {
 		Return 0;

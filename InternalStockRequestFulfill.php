@@ -2,13 +2,13 @@
 
 /* $Id: InternalStockRequestFulfill.php  $*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('Fulfill Stock Requests');
 $ViewTopic = 'Inventory';
 $BookMark = 'FulfilRequest';
 
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Contract') . '" alt="" />' . _('Fulfill Stock Requests') . '</p>';
@@ -186,7 +186,7 @@ if (isset($_POST['UpdateAll'])) {
 						$result = SendmailBySmtp($mail,array($_SESSION['InventoryManagerEmail']));
 					}
 
-				
+
 				}
 			} else {
 				$ConfirmationText = _('An internal stock request for'). ' ' . $StockID . ' ' . _('has been fulfilled from location').' ' . $Location .' '. _('for a quantity of') . ' ' . locale_number_format($Quantity, $DecimalPlaces) . ' ' . _('cannot be created as there is insufficient stock and your system is configured to not allow negative stocks');
@@ -244,7 +244,7 @@ if (!isset($_POST['Location'])) {
 	echo '<div class="centre"><input type="submit" name="EnterAdjustment" value="'. _('Show Requests'). '" /></div>';
     echo '</div>
           </form>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -274,7 +274,7 @@ if (isset($_POST['Location'])) {
 		prnMsg( _('There are no outstanding authorised requests for this location'), 'info');
 		echo '<br />';
 		echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Select another location') . '</a></div>';
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -366,6 +366,6 @@ if (isset($_POST['Location'])) {
           </form>';
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

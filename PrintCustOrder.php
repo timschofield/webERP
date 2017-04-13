@@ -2,14 +2,14 @@
 
 /* $Id$ */
 
-include('includes/session.inc');
+include('includes/session.php');
 include('includes/class.pdf.php');
 include('includes/SQL_CommonFunctions.inc');
 
 //Get Out if we have no order number to work with
 If (!isset($_GET['TransNo']) OR $_GET['TransNo']==''){
 	$Title = _('Select Order To Print');
-	include('includes/header.inc');
+	include('includes/header.php');
 	echo '<div class="centre">
          <br />
          <br />
@@ -31,7 +31,7 @@ If (!isset($_GET['TransNo']) OR $_GET['TransNo']==''){
 			<br />
 			<br />
 			<br />';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -82,14 +82,14 @@ if (DB_num_rows($result)==0){
 	$ListCount = 0;
 
 	$Title = _('Print Packing Slip Error');
-        include('includes/header.inc');
+        include('includes/header.php');
         echo '<div class="centre"><br /><br /><br />';
 	prnMsg( _('Unable to Locate Order Number') . ' : ' . $_GET['TransNo'] . ' ', 'error');
         echo '<br /><br /><br /><table class="table_index"><tr><td class="menu_group_item">
                 <li><a href="'. $RootPath . '/SelectSalesOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
                 <li><a href="'. $RootPath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
                 </td></tr></table></div><br /><br /><br />';
-        include('includes/footer.inc');
+        include('includes/footer.php');
         exit();
 } elseif (DB_num_rows($result)==1){ /*There is only one order header returned - thats good! */
 
@@ -98,7 +98,7 @@ if (DB_num_rows($result)==0){
 	$myrow = DB_fetch_array($result);
 	if ($myrow['printedpackingslip']==1 AND ($_GET['Reprint']!='OK' OR !isset($_GET['Reprint']))){
 		$Title = _('Print Packing Slip Error');
-	      	include('includes/header.inc');
+	      	include('includes/header.php');
 		echo '<p>';
 		prnMsg( _('The packing slip for order number') . ' ' . $_GET['TransNo'] . ' ' .
 			_('has previously been printed') . '. ' . _('It was printed on'). ' ' . ConvertSQLDate($myrow['datepackingslipprinted']) .
@@ -122,7 +122,7 @@ if (DB_num_rows($result)==0){
 				<br />
 				<br />';
 
-      		include('includes/footer.inc');
+      		include('includes/footer.php');
 		exit;
    	}//packing slip has been printed.
 }
@@ -232,11 +232,11 @@ if (DB_num_rows($result)>0){
 	$result = DB_query($sql);
 } else {
 	$Title = _('Print Packing Slip Error');
-	include('includes/header.inc');
+	include('includes/header.php');
 	echo '<p>' .  _('There were no outstanding items on the order to deliver. A dispatch note cannot be printed').
 		'<br /><a href="' . $RootPath . '/SelectSalesOrder.php">' .  _('Print Another Packing Slip/Order').
 		'</a>' . '<br />' .  '<a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 } /*end if there are order details to show on the order*/
 ?>

@@ -17,11 +17,11 @@
 */
 
 include('includes/DefineSuppAllocsClass.php');
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Supplier Payment') . '/' . _('Credit Note Allocations');
 $ViewTopic = 'ARTransactions';// Filename in ManualContents.php's TOC./* RChacon: To do ManualAPInquiries.html from ManualARInquiries.html */
 $BookMark = 'SupplierAllocations';// Anchor's id in the manual's html document.
-include('includes/header.inc');
+include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.inc');
 
@@ -32,11 +32,11 @@ if (isset($_POST['UpdateDatabase']) OR isset($_POST['RefreshAllocTotal'])) {
 
 	if (!isset($_SESSION['Alloc'])){
 		prnMsg(
-			_('Allocations can not be processed again') . '. ' . 
-				_('If you hit refresh on this page after having just processed an allocation') . ', ' . 
+			_('Allocations can not be processed again') . '. ' .
+				_('If you hit refresh on this page after having just processed an allocation') . ', ' .
 				_('try to use the navigation links provided rather than the back button, to avoid this message in future'),
 			'warn');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -557,7 +557,7 @@ if (isset($_POST['AllocTrans'])){
   $result = DB_query($sql);
   if (DB_num_rows($result) == 0){
 	prnMsg(_('There are no outstanding payments or credits yet to be allocated for this supplier'),'info');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
   }
   echo '<table class="selection">';
@@ -692,5 +692,5 @@ if (isset($_POST['AllocTrans'])){
 
 echo '</div>
       </form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

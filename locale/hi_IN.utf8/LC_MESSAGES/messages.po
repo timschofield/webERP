@@ -1962,7 +1962,7 @@ msgstr "तिथि / समय"
 #: PcReportTab.php:269 UserBankAccounts.php:77 UserBankAccounts.php:90
 #: UserGLAccounts.php:118 UserGLAccounts.php:130 UserGLAccounts.php:146
 #: UserLocations.php:77 UserLocations.php:90 UserLocations.php:100
-#: includes/header.inc:59
+#: includes/header.php:59
 msgid "User"
 msgstr "उपयोगकर्ता"
 
@@ -6787,7 +6787,7 @@ msgstr "उद्धरण बनाएँ"
 msgid "Cancel and Delete Contract"
 msgstr "रद्द करें और हटाएँ अनुबंध"
 
-#: CopyBOM.php:11 includes/header.inc:26
+#: CopyBOM.php:11 includes/header.php:26
 msgid "Copy a BOM to New Item Code"
 msgstr ""
 
@@ -9399,7 +9399,7 @@ msgstr ""
 msgid "has been added, add another branch, or return to the"
 msgstr ""
 
-#: CustomerBranches.php:248 index.php:7 includes/header.inc:70
+#: CustomerBranches.php:248 index.php:7 includes/header.php:70
 msgid "Main Menu"
 msgstr "मुख्य मेनू"
 
@@ -26324,7 +26324,7 @@ msgstr "3 से समूह"
 msgid "Group By 4"
 msgstr "4 से समूह"
 
-#: SalesAnalysis_UserDefined.php:9 includes/session.inc:194
+#: SalesAnalysis_UserDefined.php:9 includes/session.php:194
 msgid ""
 "The security settings on your account do not permit you to access this "
 "function"
@@ -27642,7 +27642,7 @@ msgid "Search Customers"
 msgstr "खोज ग्राहक"
 
 #: SelectCustomer.php:14 includes/PDFTopItemsHeader.inc:27
-#: includes/header.inc:73
+#: includes/header.php:73
 msgid "Customers"
 msgstr "ग्राहकों"
 
@@ -28712,7 +28712,7 @@ msgstr ""
 msgid "Search Suppliers"
 msgstr "खोज आपूर्तिकर्ता"
 
-#: SelectSupplier.php:14 Suppliers.php:304 includes/header.inc:75
+#: SelectSupplier.php:14 Suppliers.php:304 includes/header.php:75
 msgid "Suppliers"
 msgstr "आपूर्तिकर्ताओं"
 
@@ -46100,40 +46100,40 @@ msgstr ""
 "करता है एक लागत की स्थापना और व्यवस्था प्रविष्टि के लिए सेट है कोई भी कीमत डेटा के साथ "
 "आइटम की बिक्री निषेध दर्ज नहीं किया गया"
 
-#: includes/footer.inc:12 includes/footer.inc:20
+#: includes/footer.php:12 includes/footer.php:20
 msgid "Copyright"
 msgstr "कॉपीराइट"
 
-#: includes/footer.inc:20
+#: includes/footer.php:20
 msgid "version"
 msgstr ""
 
-#: includes/header.inc:56 includes/Login.php:52 includes/Login.php:56
+#: includes/header.php:56 includes/Login.php:52 includes/Login.php:56
 #: includes/Login.php:76 includes/Login.php:79
 msgid "Company"
 msgstr "कंपनी"
 
-#: includes/header.inc:74
+#: includes/header.php:74
 msgid "Items"
 msgstr "आइटम"
 
-#: includes/header.inc:77 includes/header.inc:81
+#: includes/header.php:77 includes/header.php:81
 msgid "Manual"
 msgstr "पुस्तिका"
 
-#: includes/header.inc:90 ../webSHOP/includes/header.php:232
+#: includes/header.php:90 ../webSHOP/includes/header.php:232
 msgid "Are you sure you wish to logout?"
 msgstr "क्या आप लॉग आउट करना चाहते हैं?"
 
-#: includes/header.inc:90 ../webSHOP/includes/header.php:232
+#: includes/header.php:90 ../webSHOP/includes/header.php:232
 msgid "Logout"
 msgstr "लॉगआउट"
 
-#: includes/session.inc:119 includes/session.inc:168
+#: includes/session.php:119 includes/session.php:168
 msgid "Account Error Report"
 msgstr "खाता त्रुटि रिपोर्ट"
 
-#: includes/session.inc:122
+#: includes/session.php:122
 msgid ""
 "Your user role does not have any access defined for webERP. There is an "
 "error in the security setup for this user account"
@@ -46141,31 +46141,31 @@ msgstr ""
 "आपके उपयोगकर्ता किसी भी भूमिका webERP के लिए परिभाषित पहुँच नहीं है. इस उपयोगकर्ता "
 "खाते के लिए सुरक्षा व्यवस्था में एक त्रुटि है"
 
-#: includes/session.inc:127
+#: includes/session.php:127
 msgid "incorrect password"
 msgstr "गलत पासवर्ड"
 
-#: includes/session.inc:127
+#: includes/session.php:127
 msgid "The user/password combination"
 msgstr "उपयोगकर्ता / कूटशब्द संयोजन"
 
-#: includes/session.inc:127
+#: includes/session.php:127
 msgid "is not a valid user of the system"
 msgstr "प्रणाली की एक वैध उपयोगकर्ता नहीं है"
 
-#: includes/session.inc:131
+#: includes/session.php:131
 msgid "system maintenance"
 msgstr "सिस्टम अनुरक्षण"
 
-#: includes/session.inc:131
+#: includes/session.php:131
 msgid "webERP is not available right now"
 msgstr "webERP अभी उपलब्ध नहीं है"
 
-#: includes/session.inc:131
+#: includes/session.php:131
 msgid "during maintenance of the system"
 msgstr "सिस्टम के रखरखाव के दौरान"
 
-#: includes/session.inc:156
+#: includes/session.php:156
 msgid ""
 "webERP is configured to allow only secure socket connections. Pages must be "
 "called with https://"
@@ -46173,7 +46173,7 @@ msgstr ""
 "webERP करने के लिए केवल सुरक्षित गर्तिका कनेक्शन की अनुमति कॉन्फ़िगर किया गया है. पृष्ठों "
 "https के साथ बुलाया जाना चाहिए: / /"
 
-#: includes/session.inc:171
+#: includes/session.php:171
 msgid ""
 "Security settings have not been defined for your user account. Please advise "
 "your system administrator. It could also be that there is a session problem "
@@ -46183,15 +46183,15 @@ msgstr ""
 "व्यवस्थापक से सलाह. यह भी हो सकता है कि वहाँ आपके PHP वेब सर्वर के साथ एक सत्र समस्या है "
 "हो सकता है"
 
-#: includes/session.inc:187
+#: includes/session.php:187
 msgid "Security Permissions Problem"
 msgstr "सुरक्षा अनुमतियाँ समस्या"
 
-#: includes/session.inc:251 ../webSHOP/includes/session.php:147
+#: includes/session.php:251 ../webSHOP/includes/session.php:147
 msgid "Error in form verification"
 msgstr ""
 
-#: includes/session.inc:253 ../webSHOP/includes/session.php:151
+#: includes/session.php:253 ../webSHOP/includes/session.php:151
 msgid "This form was not submitted with a correct ID"
 msgstr "यह फार्म एक सही पहचान पत्र के साथ प्रस्तुत नहीं किया गया"
 

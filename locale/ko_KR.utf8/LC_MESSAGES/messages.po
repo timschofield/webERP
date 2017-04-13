@@ -1971,7 +1971,7 @@ msgstr "날짜 시간"
 #: PcReportTab.php:269 UserBankAccounts.php:77 UserBankAccounts.php:90
 #: UserGLAccounts.php:118 UserGLAccounts.php:130 UserGLAccounts.php:146
 #: UserLocations.php:77 UserLocations.php:90 UserLocations.php:100
-#: includes/header.inc:59
+#: includes/header.php:59
 msgid "User"
 msgstr "사용자"
 
@@ -6829,7 +6829,7 @@ msgstr "견적 만들기"
 msgid "Cancel and Delete Contract"
 msgstr "취소 및 계약 삭제"
 
-#: CopyBOM.php:11 includes/header.inc:26
+#: CopyBOM.php:11 includes/header.php:26
 msgid "Copy a BOM to New Item Code"
 msgstr "새 상품 코드에 BOM을 복사"
 
@@ -9467,7 +9467,7 @@ msgstr "고객 지점"
 msgid "has been added, add another branch, or return to the"
 msgstr "또 다른 지점을 추가하거나으로 돌아가 추가되었습니다"
 
-#: CustomerBranches.php:248 index.php:7 includes/header.inc:70
+#: CustomerBranches.php:248 index.php:7 includes/header.php:70
 msgid "Main Menu"
 msgstr "주 메뉴"
 
@@ -26493,7 +26493,7 @@ msgstr "(3)에 의해 그룹"
 msgid "Group By 4"
 msgstr "4 그룹"
 
-#: SalesAnalysis_UserDefined.php:9 includes/session.inc:194
+#: SalesAnalysis_UserDefined.php:9 includes/session.php:194
 msgid ""
 "The security settings on your account do not permit you to access this "
 "function"
@@ -27803,7 +27803,7 @@ msgid "Search Customers"
 msgstr "검색 고객"
 
 #: SelectCustomer.php:14 includes/PDFTopItemsHeader.inc:27
-#: includes/header.inc:73
+#: includes/header.php:73
 msgid "Customers"
 msgstr "고객"
 
@@ -28887,7 +28887,7 @@ msgstr "총 견적 (들) 값"
 msgid "Search Suppliers"
 msgstr "검색 공급자"
 
-#: SelectSupplier.php:14 Suppliers.php:304 includes/header.inc:75
+#: SelectSupplier.php:14 Suppliers.php:304 includes/header.php:75
 msgid "Suppliers"
 msgstr "공급 업체"
 
@@ -46440,40 +46440,40 @@ msgstr ""
 "가격 설정 및 주문 입력 입력 무료 데이터와 아이템의 판매를 금지하도록 설정되"
 "어 있지 않습니다"
 
-#: includes/footer.inc:12 includes/footer.inc:20
+#: includes/footer.php:12 includes/footer.php:20
 msgid "Copyright"
 msgstr "저작권"
 
-#: includes/footer.inc:20
+#: includes/footer.php:20
 msgid "version"
 msgstr "버전"
 
-#: includes/header.inc:56 includes/Login.php:52 includes/Login.php:56
+#: includes/header.php:56 includes/Login.php:52 includes/Login.php:56
 #: includes/Login.php:76 includes/Login.php:79
 msgid "Company"
 msgstr "회사"
 
-#: includes/header.inc:74
+#: includes/header.php:74
 msgid "Items"
 msgstr "항목"
 
-#: includes/header.inc:77 includes/header.inc:81
+#: includes/header.php:77 includes/header.php:81
 msgid "Manual"
 msgstr "매뉴얼"
 
-#: includes/header.inc:90 ../webSHOP/includes/header.php:232
+#: includes/header.php:90 ../webSHOP/includes/header.php:232
 msgid "Are you sure you wish to logout?"
 msgstr "당신은 당신이 로그 아웃 하시겠습니까?"
 
-#: includes/header.inc:90 ../webSHOP/includes/header.php:232
+#: includes/header.php:90 ../webSHOP/includes/header.php:232
 msgid "Logout"
 msgstr "로그 아웃"
 
-#: includes/session.inc:119 includes/session.inc:168
+#: includes/session.php:119 includes/session.php:168
 msgid "Account Error Report"
 msgstr "계정 오류 보고서"
 
-#: includes/session.inc:122
+#: includes/session.php:122
 msgid ""
 "Your user role does not have any access defined for webERP. There is an "
 "error in the security setup for this user account"
@@ -46481,31 +46481,31 @@ msgstr ""
 "사용자 역할은 webERP에 정의 된 모든 액세스 할 수 없습니다. 이 사용자 계정에 "
 "대한 보안 설정에 오류가 있습니다"
 
-#: includes/session.inc:127
+#: includes/session.php:127
 msgid "incorrect password"
 msgstr "잘못된 암호"
 
-#: includes/session.inc:127
+#: includes/session.php:127
 msgid "The user/password combination"
 msgstr "사용자 / 암호 조합"
 
-#: includes/session.inc:127
+#: includes/session.php:127
 msgid "is not a valid user of the system"
 msgstr "시스템의 유효한 사용자가 아닙니다"
 
-#: includes/session.inc:131
+#: includes/session.php:131
 msgid "system maintenance"
 msgstr "시스템 유지 보수"
 
-#: includes/session.inc:131
+#: includes/session.php:131
 msgid "webERP is not available right now"
 msgstr "webERP 지금은 사용할 수 없습니다"
 
-#: includes/session.inc:131
+#: includes/session.php:131
 msgid "during maintenance of the system"
 msgstr "시스템의 유지 보수시"
 
-#: includes/session.inc:156
+#: includes/session.php:156
 msgid ""
 "webERP is configured to allow only secure socket connections. Pages must be "
 "called with https://"
@@ -46513,7 +46513,7 @@ msgstr ""
 "webERP은 보안 소켓 연결을 허용하도록 구성된다. 페이지는 https로 호출해야합니"
 "다 : //"
 
-#: includes/session.inc:171
+#: includes/session.php:171
 msgid ""
 "Security settings have not been defined for your user account. Please advise "
 "your system administrator. It could also be that there is a session problem "
@@ -46522,15 +46522,15 @@ msgstr ""
 "보안 설정은 사용자 계정에 대해 정의되지 않았습니다. 시스템 관리자에게 알려 주"
 "시기 바랍니다. 그것은 또한 당신의 PHP 웹 서버와의 세션 문제가 있음을 수"
 
-#: includes/session.inc:187
+#: includes/session.php:187
 msgid "Security Permissions Problem"
 msgstr "보안 권한 문제"
 
-#: includes/session.inc:251 ../webSHOP/includes/session.php:147
+#: includes/session.php:251 ../webSHOP/includes/session.php:147
 msgid "Error in form verification"
 msgstr "폼 검증 오류"
 
-#: includes/session.inc:253 ../webSHOP/includes/session.php:151
+#: includes/session.php:253 ../webSHOP/includes/session.php:151
 msgid "This form was not submitted with a correct ID"
 msgstr "이 양식은 올바른 ID로 제출되지 않았습니다"
 

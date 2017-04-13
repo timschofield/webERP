@@ -2,8 +2,8 @@
 
 /* $Id$*/
 
-include ('includes/session.inc');
-include ('includes/header.inc');
+include ('includes/session.php');
+include ('includes/header.php');
 include('includes/SQL_CommonFunctions.inc'); //need for EDITransNo
 include('includes/htmlMimeMail.php'); // need for sending email attachments
 
@@ -237,7 +237,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 				$login_result = ftp_login($conn_id, $CustDetails['ediserveruser'], $CustDetails['ediserverpwd']); // check connection
 				if ((!$conn_id) || (!$login_result)) {
 					prnMsg( _('Ftp connection has failed'). '<br />' . _('Attempted to connect to') . ' ' . $CustDetails['ediaddress'] . ' ' ._('for user') . ' ' . $CustDetails['ediserveruser'],'error');
-					include('includes/footer.inc');
+					include('includes/footer.php');
 					exit;
 				}
 				$MessageSent = ftp_put($conn_id, $_SESSION['EDI_MsgPending'] . '/EDI_INV_' . $EDITransNo, 'EDI_INV_' . $EDITransNo, FTP_ASCII); // check upload status
@@ -266,5 +266,5 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 
 } /*loop around all the customers enabled for EDI Invoices */
 
-include ('includes/footer.inc');
+include ('includes/footer.php');
 ?>

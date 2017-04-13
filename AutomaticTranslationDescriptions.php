@@ -1,11 +1,11 @@
 <?php
 /* $Id: AutomaticTranslationDescriptions.php 7037 2014-12-22 14:45:20Z tehonu $ */
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('Translate Item Descriptions');
 $ViewTopic = 'SpecialUtilities'; // Filename in ManualContents.php's TOC.
 $BookMark = 'Z_TranslateItemDescriptions'; // Anchor's id in the manual's html document.
-include ('includes/header.inc');
+include ('includes/header.php');
 
 include ('includes/GoogleTranslator.php');
 
@@ -52,7 +52,7 @@ if(DB_num_rows($result) != 0) {
 						"needsrevision= '1' " .
 					"WHERE stockid='" . $myrow['stockid'] . "' AND (language_id='" . $myrow['language_id'] . "')";
 			$update = DB_query($sql, $ErrMsg, $DbgMsg, true);
-			
+
 			if ($k==1){
 				echo '<tr class="EvenTableRows">';
 				$k=0;
@@ -66,9 +66,9 @@ if(DB_num_rows($result) != 0) {
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
-					</tr>', 
-					$i, 
-					$myrow['stockid'], 
+					</tr>',
+					$i,
+					$myrow['stockid'],
 					$myrow['description'],
 					$myrow['language_id'],
 					$TranslatedText
@@ -97,9 +97,9 @@ if(DB_num_rows($result) != 0) {
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
-					</tr>', 
-					$i, 
-					$myrow['stockid'], 
+					</tr>',
+					$i,
+					$myrow['stockid'],
 					$myrow['longdescription'],
 					$myrow['language_id'],
 					$TranslatedText
@@ -120,5 +120,5 @@ echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $The
 
 }
 
-include ('includes/footer.inc');
+include ('includes/footer.php');
 ?>

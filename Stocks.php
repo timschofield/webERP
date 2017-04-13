@@ -1,12 +1,12 @@
 <?php
 /* $Id$ */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Item Maintenance');
-/* webERP manual links before header.inc */
+/* webERP manual links before header.php */
 $ViewTopic= 'Inventory';
 $BookMark = 'InventoryAddingItems';
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 
 /*If this form is called with the StockID then it is assumed that the stock item is to be modified */
@@ -67,7 +67,7 @@ $SupportedImgExt = array('png','jpg','jpeg');
 
 if (isset($_FILES['ItemPicture']) AND $_FILES['ItemPicture']['name'] !='') {
 	$ImgExt = pathinfo($_FILES['ItemPicture']['name'], PATHINFO_EXTENSION);
-	
+
 	$result	= $_FILES['ItemPicture']['error'];
  	$UploadTheFile = 'Yes'; //Assume all is well to start off with
 	$filename = $_SESSION['part_pics_dir'] . '/' . $StockID . '.' . $ImgExt;
@@ -1461,5 +1461,5 @@ if ($New==1) {
 echo '</div>
     </div>
 	</form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

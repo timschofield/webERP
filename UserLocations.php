@@ -1,11 +1,11 @@
 <?php
 /* $Id: LocationUsers.php 6806 2013-09-28 05:10:46Z daintree $*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('User Authorised Inventory Locations Maintenance');
 $ViewTopic = 'Inventory';// Filename in ManualContents.php's TOC.
 $BookMark = 'LocationUsers';// Anchor's id in the manual's html document.
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/money_add.png" title="' . _('User Authorised Locations') . '" alt="" />' . ' ' . $Title . '</p>';
 
@@ -260,5 +260,5 @@ if (isset($_POST['process']) or isset($SelectedUser)) {
 	} // end if user wish to delete
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

@@ -2,7 +2,7 @@
 
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 include('includes/PDFStarter.php');
 $pdf->addInfo('Title', _('Inventory Negatives Listing') );
@@ -36,9 +36,9 @@ $sql = "SELECT stockmaster.stockid,
 $result = DB_query($sql, $ErrMsg, $DbgMsg);
 
 If (DB_num_rows($result)==0){
-	include ('includes/header.inc');
+	include ('includes/header.php');
 	prnMsg(_('There are no negative stocks to list'),'error');
-	include ('includes/footer.inc');
+	include ('includes/footer.php');
 	exit;
 }
 
@@ -70,8 +70,8 @@ if (DB_num_rows($result)>0){
 	$pdf->__destruct();
 } else {
 	$Title = _('Negative Stock Listing Problem');
-	include('includes/header.inc');
+	include('includes/header.php');
 	prnMsg(_('There are no negative stocks to list'),'info');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 }
 ?>

@@ -2,13 +2,13 @@
 
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 
 //Get Out if we have no order number to work with
 If (!isset($_GET['TransNo']) OR $_GET['TransNo']==''){
 	$Title = _('Select Order To Print');
-	include('includes/header.inc');
+	include('includes/header.php');
 	echo '<div class="centre">
 			<br />
 			<br />
@@ -31,7 +31,7 @@ If (!isset($_GET['TransNo']) OR $_GET['TransNo']==''){
 			<br />
 			<br />
 			<br />';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -81,7 +81,7 @@ $result=DB_query($sql, $ErrMsg);
 //If there are no rows, there's a problem.
 if (DB_num_rows($result)==0){
 	$Title = _('Print Packing Slip Error');
-	include('includes/header.inc');
+	include('includes/header.php');
 	 echo '<div class="centre">
 			<br />
 			<br />
@@ -104,7 +104,7 @@ if (DB_num_rows($result)==0){
 			<br />
 			<br />
 			<br />';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 } elseif (DB_num_rows($result)==1){ /*There is only one order header returned - thats good! */
 
@@ -115,7 +115,7 @@ if (DB_num_rows($result)==0){
 	$DeliveryDate = $myrow['salesorders.deliverydate'];
 	if ($myrow['printedpackingslip']==1 AND ($_GET['Reprint']!='OK' OR !isset($_GET['Reprint']))){
 		$Title = _('Print Packing Slip Error');
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg( _('The packing slip for order number') . ' ' . $_GET['TransNo'] . ' ' . _('has previously been printed') . ' ' . _('It was printed on'). ' ' . ConvertSQLDate($myrow['datepackingslipprinted']) . '<br />' . _('This check is there to ensure that duplicate packing slips are not produced and dispatched more than once to the customer'), 'warn' );
 		echo '<p><a href="' . $RootPath . '/PrintCustOrder.php?TransNo=' . $_GET['TransNo'] . '&Reprint=OK">'
 		. _('Do a Re-Print') . ' (' . _('On Pre-Printed Stationery') . ') ' . _('Even Though Previously Printed') . '</a></p><p><a href="' . $RootPath. '/PrintCustOrder_generic.php?TransNo=' . $_GET['TransNo'] . '&Reprint=OK">' .  _('Do a Re-Print') . ' (' . _('Plain paper') . ' - ' . _('A4') . ' ' . _('landscape') . ') ' . _('Even Though Previously Printed'). '</a></p>';
@@ -139,7 +139,7 @@ if (DB_num_rows($result)==0){
 			<br />
 			<br />';
 
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}//packing slip has been printed.
 	$MailSubject = _('Order Confirmation-Sales Order') . ' ' .  $_GET['TransNo'] . ' - '. _('Your PO') . ' ' . $myrow['customerref'] ;
@@ -270,7 +270,7 @@ $MailMessage .= '</table>
 	// echo $MailMessage . "=mailMessage<br />";
 	if($_SESSION['SmtpSetting']==0){
 		$result = mail( $MailTo, $MailSubject, $MailMessage, $headers );
-	
+
 	}else{
 		include('includes/htmlMimeMail.php');
 		$mail = new htmlMimeMail();
@@ -278,7 +278,7 @@ $MailMessage .= '</table>
 		$mail->setHTML($MailMessage);
 		$result = SendmailBySmtp($mail,array($MailTo));
 	}
-					
+
 if($result){
 	echo ' ' ._('The following E-Mail was sent to') . ' ' . $MailTo . ' :';
 }

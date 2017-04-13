@@ -2,7 +2,7 @@
 
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 
 /* Check that the config variable is set for
@@ -10,17 +10,17 @@ include('includes/SQL_CommonFunctions.inc');
  */
 if ($_SESSION['RequirePickingNote']==0) {
 	$Title = _('Picking Lists Not Enabled');
-	include('includes/header.inc');
+	include('includes/header.php');
 	echo '<br />';
 	prnMsg( _('The system is not configured for picking lists. A configuration parameter is required where picking slips are required. Please consult your system administrator.'), 'info');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
 /* Show selection screen if we have no orders to work with */
 if ((!isset($_GET['TransNo']) or $_GET['TransNo']=='') and !isset($_POST['TransDate'])){
 	$Title = _('Select Picking Lists');
-	include('includes/header.inc');
+	include('includes/header.php');
 	$sql="SELECT locations.loccode,
 				locationname
 			FROM locations
@@ -50,7 +50,7 @@ if ((!isset($_GET['TransNo']) or $_GET['TransNo']=='') and !isset($_POST['TransD
 		</div>
         </div>
 		</form>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit();
 }
 
@@ -142,7 +142,7 @@ if (isset($_POST['TransDate'])
 	/*if there are no rows, there's a problem. */
 	if (DB_num_rows($result)==0){
 		$Title = _('Print Picking List Error');
-		include('includes/header.inc');
+		include('includes/header.php');
 		echo '<br />';
 		prnMsg( _('Unable to Locate any orders for this criteria '), 'info');
 		echo '<br />
@@ -152,7 +152,7 @@ if (isset($_POST['TransDate'])
 				</tr>
 				</table>
 				<br />';
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit();
 	}
 
@@ -346,8 +346,8 @@ for ($i=0;$i<sizeof($OrdersToPick);$i++){
 
 if ($ListCount == 0){
 	$Title = _('Print Picking List Error');
-	include('includes/header.inc');
-	include('includes/footer.inc');
+	include('includes/header.php');
+	include('includes/footer.php');
 	exit;
 } else {
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_PickingLists_' . date('Y-m-d') . '.pdf');

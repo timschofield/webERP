@@ -2,11 +2,11 @@
 /* $Id$*/
 /*  */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Authorisation of Petty Cash Expenses');
 $ViewTopic= 'PettyCash';
 $BookMark = 'AuthorizeExpense';
-include('includes/header.inc');
+include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.inc');
 
@@ -342,5 +342,5 @@ echo '<tr>
 		</form>';
 } /*end of else not submit */
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

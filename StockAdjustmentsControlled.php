@@ -4,11 +4,11 @@
 
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockAdjustment.php');
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('Adjusting Controlled Items');
-/* Session started in header.inc for password checking and authorisation level check */
-include('includes/header.inc');
+/* Session started in header.php for password checking and authorisation level check */
+include('includes/header.php');
 
 if (empty($_GET['identifier'])) {
 	/*unique session identifier to ensure that there is no conflict with other stock adjustment sessions on the same machine  */
@@ -22,7 +22,7 @@ if (!isset($_SESSION['Adjustment'.$identifier])) {
 	echo '<div class="centre"><a href="' . $RootPath . '/StockAdjustments.php?NewAdjustment=Yes">' .  _('Enter A Stock Adjustment'). '</a><br />';
 	prnMsg( _('This page can only be opened if a stock adjustment for a controlled item has been entered') . '<br />','error');
 	echo '</div>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 if (isset($_SESSION['Adjustment'.$identifier])){
@@ -38,7 +38,7 @@ $LineItem = $_SESSION['Adjustment'.$identifier];
 if ( $LineItem->Controlled != 1 ){
 	echo '<a href="' . $RootPath . '/StockAdjustments.php?NewAdjustment=Yes">' . _('Enter A Stock Adjustment') . '</a>';
 	prnMsg('<br />' .  _('Notice') . ' - ' . _('The adjusted item must be defined as controlled to require input of the batch numbers or serial numbers being adjusted'),'error');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -64,7 +64,7 @@ if ($LineItem->AdjustmentType == 'ADD'){
 	$ShowExisting = true;
 } else {
 	prnMsg( _('The Adjustment Type needs to be set') . '. ' . _('Please try again'). '.' );
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 echo '</b></div>';
@@ -75,5 +75,5 @@ of the item selected for adjusting */
 $_SESSION['Adjustment'.$identifier]->Quantity = $TotalQuantity;
 
 /*Also a multi select box for adding bundles to the adjustment without keying, showing only when keying */
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

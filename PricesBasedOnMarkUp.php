@@ -1,9 +1,9 @@
 <?php
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title=_('Update Pricing');
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Search') . '" alt="" />' . $Title . '</p>';
 
@@ -230,12 +230,12 @@ if (isset($_POST['UpdatePrices'])){
 
 		if ($_POST['PriceList']=='0'){
 			echo '<br />' . _('The price list/sales type to be updated must be selected first');
-			include ('includes/footer.inc');
+			include ('includes/footer.php');
 			exit;
 		}
 		if ($_POST['CurrCode']=='0'){
 			echo '<br />' . _('The currency of prices to be updated must be selected first');
-			include ('includes/footer.inc');
+			include ('includes/footer.php');
 			exit;
 		}
 		if (Is_Date($_POST['PriceEndDate'])){
@@ -361,5 +361,5 @@ if (isset($_POST['UpdatePrices'])){
 		}//end while loop around items in the category
 	}
 }
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

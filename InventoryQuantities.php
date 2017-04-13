@@ -5,7 +5,7 @@
 // InventoryQuantities.php - Report of parts with quantity. Sorts by part and shows
 // all locations where there are quantities of the part
 
-include('includes/session.inc');
+include('includes/session.php');
 If (isset($_POST['PrintPDF'])) {
 
 	include('includes/PDFStarter.php');
@@ -82,21 +82,21 @@ If (isset($_POST['PrintPDF'])) {
 
 	if (DB_error_no() !=0) {
 	  $Title = _('Inventory Quantities') . ' - ' . _('Problem Report');
-	  include('includes/header.inc');
+	  include('includes/header.php');
 	   prnMsg( _('The Inventory Quantity report could not be retrieved by the SQL because') . ' '  . DB_error_msg(),'error');
 	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
 	      echo '<br />' . $sql;
 	   }
-	   include('includes/footer.inc');
+	   include('includes/footer.php');
 	   exit;
 	}
 	if (DB_num_rows($result)==0){
 			$Title = _('Print Inventory Quantities Report');
-			include('includes/header.inc');
+			include('includes/header.php');
 			prnMsg(_('There were no items with inventory quantities'),'error');
 			echo '<br /><a href="'.$RootPath.'/index.php">' . _('Back to the menu') . '</a>';
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 	}
 
@@ -151,7 +151,7 @@ If (isset($_POST['PrintPDF'])) {
 } else { /*The option to print PDF was not hit so display form */
 
 	$Title=_('Inventory Quantities Reporting');
-	include('includes/header.inc');
+	include('includes/header.php');
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . _('Inventory Quantities Report') . '</p>';
 echo '<div class="page_help_text">' . _('Use this report to display the quantity of Inventory items in different categories.') . '</div><br />';
 
@@ -180,7 +180,7 @@ echo '<div class="page_help_text">' . _('Use this report to display the quantity
 			<p />';
 		prnMsg(_('There are no stock categories currently defined please use the link below to set them up'),'warn');
 		echo '<br /><a href="' . $RootPath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
-		include ('includes/footer.inc');
+		include ('includes/footer.php');
 		exit;
 	}
 
@@ -211,7 +211,7 @@ echo '<div class="page_help_text">' . _('Use this report to display the quantity
 		</div>';
     echo '</div>
           </form>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 
 } /*end of else not PrintPDF */
 

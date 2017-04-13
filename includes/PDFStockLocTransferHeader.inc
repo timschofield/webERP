@@ -44,7 +44,7 @@ _('From').' ' . $TransferRow['shiplocname']);
 
 $YPos -=15;
 $FontSize=12;
-$LeftOvers2 = $pdf->addTextWrap($Left_Margin,$YPos,550,$FontSize, 
+$LeftOvers2 = $pdf->addTextWrap($Left_Margin,$YPos,550,$FontSize,
 _('to').' ' . $TransferRow['reclocname']);
 
 /*Draw a rectangle to put the headings in     */

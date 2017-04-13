@@ -2,7 +2,7 @@
 
 /* $Id: PDFFGLabel.php agaluski $*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 if (isset($_GET['WO'])) {
 	$SelectedWO = $_GET['WO'];
@@ -69,7 +69,7 @@ if (isset($_GET['LeftOverQty'])) {
 } else {
 	unset($LeftOverQty);
 }
-	 
+
 /* If we are previewing the order then we dont want to email it */
 if ($SelectedWO == 'Preview') { //WO is set to 'Preview' when just looking at the format of the printed order
 	$_POST['PrintOrEmail'] = 'Print';
@@ -131,7 +131,7 @@ if ($SelectedWO == 'Preview'){
 			$j++;
 			$NoOfLabels++;
 		}
-	}	
+	}
 } // get data to print
 if ($NoOfLabels >0){
 
@@ -150,7 +150,7 @@ if ($NoOfLabels >0){
 		if ($PageNumber>1){
 			$pdf->newPage();
 		}
-		$PageNumber++;		
+		$PageNumber++;
 		$pdf->addJpegFromFile($_SESSION['LogoFile'] ,$FormDesign->logo->x,$Page_Height-$FormDesign->logo->y,$FormDesign->logo->width,$FormDesign->logo->height);
 		$pdf->addText($FormDesign->CompanyAddress->Line1->x,$Page_Height - $FormDesign->CompanyAddress->Line1->y, $FormDesign->CompanyAddress->Line1->FontSize,  $_SESSION['CompanyRecord']['regoffice1']);
 		$pdf->addText($FormDesign->CompanyAddress->Line2->x,$Page_Height - $FormDesign->CompanyAddress->Line2->y, $FormDesign->CompanyAddress->Line2->FontSize,  $_SESSION['CompanyRecord']['regoffice2']);
@@ -162,7 +162,7 @@ if ($NoOfLabels >0){
 		$pdf->addText($FormDesign->ItemDesc->x,$Page_Height-$FormDesign->ItemDesc->y,$FormDesign->ItemDesc->FontSize,'Description: ' . $myrow['itemdescription']);
 		$pdf->addText($FormDesign->Weight->x,$Page_Height-$FormDesign->Weight->y,$FormDesign->Weight->FontSize,'Weight' . '(' . $ControlledRow['1'] . '): ' . $myrow['weight']);
 		$pdf->addText($FormDesign->Box->x,$Page_Height-$FormDesign->Box->y,$FormDesign->Box->FontSize,'Box' . ': ' . $myrow['box']);
-		
+
 		if ($ControlledRow[0]==1) { /*Then its a controlled item */
 			$pdf->addText($FormDesign->Lot->x,$Page_Height-$FormDesign->Lot->y,$FormDesign->Lot->FontSize,'Lot: ' . $myrow['serialno']);
 		} //controlled item*/
@@ -192,29 +192,29 @@ if ($NoOfLabels >0){
 		}else{
 			prnMsg(_('The SMTP settings are wrong, please ask administrator for help'),'error');
 			exit;
-			include('includes/footer.inc');
+			include('includes/footer.php');
 		}
 
 		if ($Success == 1) {
 			$Title = _('Email a Work Order');
-			include('includes/header.inc');
+			include('includes/header.php');
 			echo '<div class="centre"><br /><br /><br />';
 			prnMsg(_('Work Order') . ' ' . $SelectedWO . ' ' . _('has been emailed to') . ' ' . $_POST['EmailTo'] . ' ' . _('as directed'), 'success');
 
 		} else { //email failed
 			$Title = _('Email a Work Order');
-			include('includes/header.inc');
+			include('includes/header.php');
 			echo '<div class="centre"><br /><br /><br />';
 			prnMsg(_('Emailing Work order') . ' ' . $SelectedWO . ' ' . _('to') . ' ' . $_POST['EmailTo'] . ' ' . _('failed'), 'error');
 		}
 	}
-	include('includes/footer.inc');
+	include('includes/footer.php');
 
 } else { //there were not labels to print
 	$Title = _('Label Error');
-	include('includes/header.inc');
+	include('includes/header.php');
 	prnMsg(_('There were no labels to print'),'warn');
 	echo '<br /><a href="'.$RootPath.'/index.php">' .  _('Back to the menu') . '</a>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 }
 ?>

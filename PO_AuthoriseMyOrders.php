@@ -2,11 +2,11 @@
 
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('Authorise Purchase Orders');
 
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title .
 	 '" alt="" />' . ' ' . $Title . '</p>';
@@ -143,5 +143,5 @@ echo '<br />
 		</div>
         </div>
 		</form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

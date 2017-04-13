@@ -2,7 +2,7 @@
 
 /* $Id$ */
 
-include('includes/session.inc');
+include('includes/session.php');
 if (isset($_POST['PrintPDF']) OR isset($_POST['CSV'])){
 
 /*Now figure out the inventory data to report for the category range under review */
@@ -62,13 +62,13 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['CSV'])){
 
 	if (DB_error_no() !=0) {
 	  $Title = _('Inventory Valuation') . ' - ' . _('Problem Report');
-	  include('includes/header.inc');
+	  include('includes/header.php');
 	   prnMsg( _('The inventory valuation could not be retrieved by the SQL because') . ' '  . DB_error_msg(),'error');
 	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
 		  echo '<br />' . $SQL;
 	   }
-	   include('includes/footer.inc');
+	   include('includes/footer.php');
 	   exit;
 	}
 }
@@ -84,13 +84,13 @@ if (isset($_POST['PrintPDF'])){
 	$line_height=12;
 
 
-	
+
 	if (DB_num_rows($InventoryResult)==0){
 		$Title = _('Print Inventory Valuation Error');
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg(_('There were no items with any value to print out for the location specified'),'info');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -191,7 +191,7 @@ if (isset($_POST['PrintPDF'])){
 
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_Inventory_Valuation_' . Date('Y-m-d') . '.pdf');
 	$pdf->__destruct();
-	
+
 } elseif (isset($_POST['CSV'])) {
 
 	$CSVListing = _('Category ID') .','. _('Category Description') .','. _('Stock ID') .','. _('Description') .','. _('Decimal Places') .','. _('Qty On Hand') .','. _('Units') .','. _('Unit Cost') .','. _('Total') . "\n";
@@ -211,7 +211,7 @@ if (isset($_POST['PrintPDF'])){
 } else { /*The option to print PDF nor to create the CSV was not hit */
 
 	$Title=_('Inventory Valuation Reporting');
-	include('includes/header.inc');
+	include('includes/header.php');
 
 	echo '<p class="page_title_text">
 			<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . $Title . '
@@ -225,8 +225,8 @@ if (isset($_POST['PrintPDF'])){
 			<tr>
 				<td>' . _('Select Inventory Categories') . ':</td>
 				<td><select autofocus="autofocus" required="required" minlength="1" size="12" name="Categories[]"multiple="multiple">';
-	$SQL = 'SELECT categoryid, categorydescription 
-			FROM stockcategory 
+	$SQL = 'SELECT categoryid, categorydescription
+			FROM stockcategory
 			ORDER BY categorydescription';
 	$CatResult = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($CatResult)) {
@@ -276,7 +276,7 @@ if (isset($_POST['PrintPDF'])){
 	echo '</div>
 		  </form>';
 
-	include('includes/footer.inc');
+	include('includes/footer.php');
 
 } /*end of else not PrintPDF */
 ?>

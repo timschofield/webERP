@@ -1979,7 +1979,7 @@ msgstr "Tgl/Waktu"
 #: PcReportTab.php:269 UserBankAccounts.php:77 UserBankAccounts.php:90
 #: UserGLAccounts.php:118 UserGLAccounts.php:130 UserGLAccounts.php:146
 #: UserLocations.php:77 UserLocations.php:90 UserLocations.php:100
-#: includes/header.inc:59
+#: includes/header.php:59
 msgid "User"
 msgstr "User"
 
@@ -6836,7 +6836,7 @@ msgstr "Buat Penawaran"
 msgid "Cancel and Delete Contract"
 msgstr "Batal dan Hapus Kontrak"
 
-#: CopyBOM.php:11 includes/header.inc:26
+#: CopyBOM.php:11 includes/header.php:26
 msgid "Copy a BOM to New Item Code"
 msgstr "Salin BOM ke Kode Item Baru"
 
@@ -9498,7 +9498,7 @@ msgstr "Cabang Customer"
 msgid "has been added, add another branch, or return to the"
 msgstr "telah ditambah, tambahkan cabang lainnya, atau kembali ke"
 
-#: CustomerBranches.php:248 index.php:7 includes/header.inc:70
+#: CustomerBranches.php:248 index.php:7 includes/header.php:70
 msgid "Main Menu"
 msgstr "Menu Utama"
 
@@ -26650,7 +26650,7 @@ msgstr "Grup Berdasarkan 3"
 msgid "Group By 4"
 msgstr "Grup Berdasarkan 4"
 
-#: SalesAnalysis_UserDefined.php:9 includes/session.inc:194
+#: SalesAnalysis_UserDefined.php:9 includes/session.php:194
 msgid ""
 "The security settings on your account do not permit you to access this "
 "function"
@@ -27983,7 +27983,7 @@ msgid "Search Customers"
 msgstr "Cari Customer"
 
 #: SelectCustomer.php:14 includes/PDFTopItemsHeader.inc:27
-#: includes/header.inc:73
+#: includes/header.php:73
 msgid "Customers"
 msgstr "Customer"
 
@@ -29073,7 +29073,7 @@ msgstr "Total Nilai Penawaran dalam"
 msgid "Search Suppliers"
 msgstr "Cari Supplier"
 
-#: SelectSupplier.php:14 Suppliers.php:304 includes/header.inc:75
+#: SelectSupplier.php:14 Suppliers.php:304 includes/header.php:75
 msgid "Suppliers"
 msgstr "Supplier"
 
@@ -46825,40 +46825,40 @@ msgstr ""
 "Tdk memiliki HPP dan entri order diatur utk tdk memperbolehkan penjualan "
 "item tanpa ada data HPP dimasukkan"
 
-#: includes/footer.inc:12 includes/footer.inc:20
+#: includes/footer.php:12 includes/footer.php:20
 msgid "Copyright"
 msgstr "Hak Cipta"
 
-#: includes/footer.inc:20
+#: includes/footer.php:20
 msgid "version"
 msgstr "versi"
 
-#: includes/header.inc:56 includes/Login.php:52 includes/Login.php:56
+#: includes/header.php:56 includes/Login.php:52 includes/Login.php:56
 #: includes/Login.php:76 includes/Login.php:79
 msgid "Company"
 msgstr "Perusahaan"
 
-#: includes/header.inc:74
+#: includes/header.php:74
 msgid "Items"
 msgstr "Item"
 
-#: includes/header.inc:77 includes/header.inc:81
+#: includes/header.php:77 includes/header.php:81
 msgid "Manual"
 msgstr "Manual"
 
-#: includes/header.inc:90 ../webSHOP/includes/header.php:232
+#: includes/header.php:90 ../webSHOP/includes/header.php:232
 msgid "Are you sure you wish to logout?"
 msgstr "Apakah Anda yakin ingin logout?"
 
-#: includes/header.inc:90 ../webSHOP/includes/header.php:232
+#: includes/header.php:90 ../webSHOP/includes/header.php:232
 msgid "Logout"
 msgstr "Logout"
 
-#: includes/session.inc:119 includes/session.inc:168
+#: includes/session.php:119 includes/session.php:168
 msgid "Account Error Report"
 msgstr "Laporan Kesalahan Akun"
 
-#: includes/session.inc:122
+#: includes/session.php:122
 msgid ""
 "Your user role does not have any access defined for webERP. There is an "
 "error in the security setup for this user account"
@@ -46866,31 +46866,31 @@ msgstr ""
 "Posisi user Anda tdk memiliki akses dibuat webERP. Ada kesalahan di "
 "pengaturan keamanan utk akun user ini"
 
-#: includes/session.inc:127
+#: includes/session.php:127
 msgid "incorrect password"
 msgstr "kata sandi salah"
 
-#: includes/session.inc:127
+#: includes/session.php:127
 msgid "The user/password combination"
 msgstr "Kombinasi user/kata sandi"
 
-#: includes/session.inc:127
+#: includes/session.php:127
 msgid "is not a valid user of the system"
 msgstr "bukan user berlaku di sistem"
 
-#: includes/session.inc:131
+#: includes/session.php:131
 msgid "system maintenance"
 msgstr "pemeliharaan sistem"
 
-#: includes/session.inc:131
+#: includes/session.php:131
 msgid "webERP is not available right now"
 msgstr "webERP tdk tersedia sekarang"
 
-#: includes/session.inc:131
+#: includes/session.php:131
 msgid "during maintenance of the system"
 msgstr "selama pemeliharaan sistem"
 
-#: includes/session.inc:156
+#: includes/session.php:156
 msgid ""
 "webERP is configured to allow only secure socket connections. Pages must be "
 "called with https://"
@@ -46898,7 +46898,7 @@ msgstr ""
 "webERP dikonfigurasi hanya terbatas utk koneksi dgn menggunakan socket "
 "secure. Halaman harus dipanggil dgn https://"
 
-#: includes/session.inc:171
+#: includes/session.php:171
 msgid ""
 "Security settings have not been defined for your user account. Please advise "
 "your system administrator. It could also be that there is a session problem "
@@ -46908,15 +46908,15 @@ msgstr ""
 "administrator sistem Anda. Dapat juga karena ada masalah session dgn web "
 "server PHP Anda"
 
-#: includes/session.inc:187
+#: includes/session.php:187
 msgid "Security Permissions Problem"
 msgstr "Masalah Izin Keamanan"
 
-#: includes/session.inc:251 ../webSHOP/includes/session.php:147
+#: includes/session.php:251 ../webSHOP/includes/session.php:147
 msgid "Error in form verification"
 msgstr "Kesalahan saat verifikasi formulir"
 
-#: includes/session.inc:253 ../webSHOP/includes/session.php:151
+#: includes/session.php:253 ../webSHOP/includes/session.php:151
 msgid "This form was not submitted with a correct ID"
 msgstr "Formulir ini tdk disampaikan dgn ID yg benar"
 

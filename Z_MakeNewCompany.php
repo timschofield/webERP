@@ -2,7 +2,7 @@
 /* $Id$*/
 
 
-include ('includes/session.inc');
+include ('includes/session.php');
 include ('includes/SQL_CommonFunctions.inc');
 
 /* Was the Cancel button pressed the last time through ? */
@@ -14,13 +14,13 @@ if (isset($_POST['EnterCompanyDetails'])) {
 }
 $Title = _('Make New Company Database Utility');
 
-include('includes/header.inc');
+include('includes/header.php');
 
 /* Your webserver user MUST have read/write access to here,
 	otherwise you'll be wasting your time */
 if (! is_writeable('./companies/')){
 		prnMsg(_('The web-server does not appear to be able to write to the companies directory to create the required directories for the new company and to upload the logo to. The system administrator will need to modify the permissions on your installation before a new company can be created'),'error');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 }
 
@@ -163,7 +163,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 
             echo '</div>';
   			echo '</form>';
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 		}
 
@@ -217,7 +217,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 
         echo '</div>';
 		echo '</form>';
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -252,5 +252,5 @@ echo '<br /><input type="submit" name="submit" value="' . _('Proceed') . '" />';
 echo '</div>';
 echo '</form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

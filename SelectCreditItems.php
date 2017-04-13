@@ -7,14 +7,14 @@ some of the variable names refer to order - please think credit when you read or
 
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
-/* Session started in session.inc for password checking and authorisation level check */
-include('includes/session.inc');
+/* Session started in session.php for password checking and authorisation level check */
+include('includes/session.php');
 
 $Title = _('Create Credit Note');
 $ViewTopic= 'ARTransactions';
 $BookMark = 'CreateCreditNote';
 
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/GetSalesTransGLCodes.inc');
 include('includes/GetPrice.inc');
@@ -30,7 +30,7 @@ if (empty($_GET['identifier'])) {
 if (isset($_POST['ProcessCredit']) AND !isset($_SESSION['CreditItems'.$identifier])){
 	prnMsg(_('This credit note has already been processed. Refreshing the page will not enter the credit note again') . '<br />' . _('Please use the navigation links provided rather than using the browser back button and then having to refresh'),'info');
 	echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
   exit;
 }
 
@@ -1032,7 +1032,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				    echo '<tr class="OddTableRows">';
 				    $k++;
 				}
-				
+
 				$SupportedImgExt = array('png','jpg','jpeg');
 				$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
 				if (extension_loaded('gd') && function_exists('gd_info') && file_exists ($imagefile) ) {
@@ -1120,7 +1120,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 		OR $_POST['WriteOffGLCode']=='')){
 
 		  prnMsg(_('For credit notes created to write off the stock a general ledger account is required to be selected. Please select an account to write the cost of the stock off to then click on Process again'),'error');
-		  include('includes/footer.inc');
+		  include('includes/footer.php');
 		  exit;
 	 }
 
@@ -2023,5 +2023,5 @@ then debit the expense account the stock is to written off to */
 
 } /*end of process credit note */
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

@@ -2,7 +2,7 @@
 
 /* $Id$ */
 
-include('includes/session.inc');
+include('includes/session.php');
 
 $ViewTopic = 'ARReports';
 $BookMark = 'PrintInvoicesCredits';
@@ -215,12 +215,12 @@ if (isset($PrintPDF) AND isset($FromTransNo) AND isset($InvOrCredit)){
 
 		if (DB_error_no()!=0) {
 			$Title = _('Transaction Print Error Report');
-			include ('includes/header.inc');
+			include ('includes/header.php');
 			prnMsg( _('There was a problem retrieving the invoice or credit note details for note number') . ' ' . $InvoiceToPrint . ' ' . _('from the database') . '. ' . _('To print an invoice, the sales order record, the customer transaction record and the branch record for the customer must not have been purged') . '. ' . _('To print a credit note only requires the customer, transaction, salesman and branch records be available'),'error');
 			if ($debug==1) {
 				prnMsg (_('The SQL used to get this information that failed was') . '<br />' . $sql,'error');
 			}
-			include ('includes/footer.inc');
+			include ('includes/footer.php');
 			exit;
 		}
 		if (DB_num_rows($result)==1) {
@@ -268,14 +268,14 @@ if (isset($PrintPDF) AND isset($FromTransNo) AND isset($InvOrCredit)){
 
 			$result=DB_query($sql);
 			if (DB_error_no()!=0 OR (DB_num_rows($result)==0 AND $InvOrCredit == 'Invoice')) {
-			
+
 				$Title = _('Transaction Print Error Report');
-				include ('includes/header.inc');
+				include ('includes/header.php');
 				echo '<br />' . _('There was a problem retrieving the invoice or credit note stock movement details for invoice number') . ' ' . $FromTransNo . ' ' . _('from the database');
 				if ($debug==1) {
 					echo '<br />' . _('The SQL used to get this information that failed was') . '<br />' . $sql;
 				}
-				include('includes/footer.inc');
+				include('includes/footer.php');
 				exit;
 			} else {
 
@@ -480,7 +480,7 @@ if (isset($PrintPDF) AND isset($FromTransNo) AND isset($InvOrCredit)){
 	$FromTransNo--;
 
 	if (isset($_GET['Email'])){ //email the invoice to address supplied
-		include('includes/header.inc');
+		include('includes/header.php');
 
 		include ('includes/htmlMimeMail.php');
 		$FileName = $_SESSION['reports_dir'] . '/' . $_SESSION['DatabaseName'] . '_' . $InvOrCredit . '_' . $FromTransNo . '.pdf';
@@ -501,9 +501,9 @@ if (isset($PrintPDF) AND isset($FromTransNo) AND isset($InvOrCredit)){
 		unlink($FileName); //delete the temporary file
 
 		$Title = _('Emailing') . ' ' .$InvOrCredit . ' ' . _('Number') . ' ' . $FromTransNo;
-		include('includes/header.inc');
+		include('includes/header.php');
 		echo '<p>' . $InvOrCredit . ' '  . _('number') . ' ' . $FromTransNo . ' ' . _('has been emailed to') . ' ' . $_GET['Email'];
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 
 	} else { //its not an email just print the invoice to PDF
@@ -519,7 +519,7 @@ if (isset($PrintPDF) AND isset($FromTransNo) AND isset($InvOrCredit)){
 } else { /*The option to print PDF was not hit */
 
 	$Title=_('Select Invoices/Credit Notes To Print');
-	include('includes/header.inc');
+	include('includes/header.php');
 
 	if (!isset($FromTransNo) OR $FromTransNo=='') {
 
@@ -698,7 +698,7 @@ if (isset($PrintPDF) AND isset($FromTransNo) AND isset($InvOrCredit)){
 					echo _('The SQL used to get this information that failed was') . '<br />' . $sql;
 				}
 				break;
-				include('includes/footer.inc');
+				include('includes/footer.php');
 				exit;
 			} elseif (DB_num_rows($result)==1) {
 
@@ -727,7 +727,7 @@ if (isset($PrintPDF) AND isset($FromTransNo) AND isset($InvOrCredit)){
                     '<br />' . $myrow['address5'] .
                     '<br />' . $myrow['address6'];
                 echo '</td>';
-                
+
                 echo '<td><h2>' . $_SESSION['CompanyRecord']['coyname'] . '</h2><br />';
                 echo $_SESSION['CompanyRecord']['regoffice1'] . '<br />';
                 echo $_SESSION['CompanyRecord']['regoffice2'] . '<br />';
@@ -739,7 +739,7 @@ if (isset($PrintPDF) AND isset($FromTransNo) AND isset($InvOrCredit)){
                 echo _('Facsimile') . ': ' . $_SESSION['CompanyRecord']['fax'] . '<br />';
                 echo _('Email') . ': ' . $_SESSION['CompanyRecord']['email'] . '<br />';
                 echo '</td>';
-                
+
                 echo '<td align="right">';
                 if ($InvOrCredit=='Invoice') {
                    echo '<h2>' . _('TAX INVOICE') . '</h2>';
@@ -947,7 +947,7 @@ if (isset($PrintPDF) AND isset($FromTransNo) AND isset($InvOrCredit)){
 			$FromTransNo++;
 		} /* end loop to print invoices */
 	} /*end of if FromTransNo exists */
-	include('includes/footer.inc');
+	include('includes/footer.php');
 } /*end of else not PrintPDF */
 
 

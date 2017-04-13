@@ -2,13 +2,13 @@
 /* $Id$ */
 /* This script is an utility to change a stock category code. */
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('UTILITY PAGE Change A Stock Category');// Screen identificator.
 $ViewTopic = 'SpecialUtilities'; // Filename's id in ManualContents.php's TOC.
 $BookMark = 'Z_ChangeStockCategory'; // Anchor's id in the manual's html document
-include('includes/header.inc');
+include('includes/header.php');
 echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
-	'/images/inventory.png" title="' . 
+	'/images/inventory.png" title="' .
 	_('Change A Stock Category Code') . '" /> ' .// Icon title.
 	_('Change A Stock Category Code') . '</p>';// Page title.
 
@@ -22,19 +22,19 @@ if (isset($_POST['ProcessStockChange'])) {
 
 	if (DB_num_rows($result) == 0) {
 		prnMsg(_('The stock Category') . ': ' . $_POST['OldStockCategory'] . ' ' . _('does not currently exist as a stock category in the system'), 'error');
-		include ('includes/footer.inc');
+		include ('includes/footer.php');
 		exit;
 	}
 
 	if (ContainsIllegalCharacters($_POST['NewStockCategory'])) {
 		prnMsg(_('The new stock category to change the old code to contains illegal characters - no changes will be made'), 'error');
-		include ('includes/footer.inc');
+		include ('includes/footer.php');
 		exit;
 	}
 
 	if ($_POST['NewStockCategory'] == '') {
 		prnMsg(_('The new stock category to change the old code to must be entered as well'), 'error');
-		include ('includes/footer.inc');
+		include ('includes/footer.php');
 		exit;
 	}
 
@@ -44,7 +44,7 @@ if (isset($_POST['ProcessStockChange'])) {
 	if (DB_num_rows($result) != 0) {
 		echo '<br /><br />';
 		prnMsg(_('The replacement stock category') . ': ' . $_POST['NewStockCategory'] . ' ' . _('already exists as a stock category in the system') . ' - ' . _('a unique stock category must be entered for the new stock category'), 'error');
-		include ('includes/footer.inc');
+		include ('includes/footer.php');
 		exit;
 	}
 	$result = DB_Txn_Begin();
@@ -96,7 +96,7 @@ if (isset($_POST['ProcessStockChange'])) {
 	$ErrMsg = _('The SQL to update internal stock category role records failed');
 	$result = DB_query($sql, $ErrMsg, $DbgMsg, true);
 	echo ' ... ' . _('completed');
-	
+
 	$sql = 'SET FOREIGN_KEY_CHECKS=1';
 	$result = DB_query($sql, $ErrMsg, $DbgMsg, true);
 	$result = DB_Txn_Commit();
@@ -126,5 +126,5 @@ echo '<br />
 		<input type="submit" name="ProcessStockChange" value="' . _('Process') . '" />
 	</div>
 	</form>';
-include ('includes/footer.inc');
+include ('includes/footer.php');
 ?>

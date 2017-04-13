@@ -5,14 +5,14 @@
 
 //$PageSecurity = 15;
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('UTILITY PAGE') . ' ' . _('that helps maintain language files');// _('Maintain Language Files')
 $ViewTopic = 'SpecialUtilities';// Filename in ManualContents.php's TOC.
 $BookMark = 'Z_poAdmin';// Anchor's id in the manual's html document.
-include('includes/header.inc');
-echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme . 
-		'/images/maintenance.png" title="' . 
-		_('Maintain Language Files') . '" />' . ' ' . 
+include('includes/header.php');
+echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
+		'/images/maintenance.png" title="' .
+		_('Maintain Language Files') . '" />' . ' ' .
 		_('Maintain Language Files') . '</p>';
 
 /* Check if we have gettext - we're useless without it... */
@@ -34,5 +34,5 @@ if (!is_writable('./locale/' . $_SESSION['Language'])) {
 	echo '<p><a href="' . $RootPath . '/locale/'.$_SESSION['Language'].'/LC_MESSAGES/messages.mo' . SID . '">' .  _('Download messages.mo file') . '</a>';
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

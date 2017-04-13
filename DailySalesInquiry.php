@@ -2,9 +2,9 @@
 
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Daily Sales Inquiry');
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Daily Sales') . '" alt="" />' . ' ' . _('Daily Sales') . '</p>';
 echo '<div class="page_help_text">' . _('Select the month to show daily sales for') . '</div>
@@ -197,5 +197,5 @@ echo '<th colspan="7">' . _('Total Sales for month') . ': ' . locale_number_form
 
 echo '</table>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

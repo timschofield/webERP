@@ -8,11 +8,11 @@ if(isset($_POST['UserID']) AND isset($_POST['ID'])) {
 	}
 }
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Users Maintenance');
 $ViewTopic = 'GettingStarted';
 $BookMark = 'UserMaintenance';
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/group_add.png" title="', // Icon image.
@@ -837,5 +837,5 @@ echo '</table>
     </div>
 	</form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

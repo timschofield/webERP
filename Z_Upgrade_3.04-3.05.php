@@ -2,9 +2,9 @@
 /* $Id$*/
 
 //$PageSecurity = 15;
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Upgrade webERP 3.04 - 3.05');
-include('includes/header.inc');
+include('includes/header.php');
 
 
 prnMsg(_('This script will run perform any modifications to the database required to allow the additional functionality in version 3.05 scripts'),'info');
@@ -66,7 +66,7 @@ if ($_POST['DoUpgrade'] == _('Perform Upgrade')){
 	$TestAlreadyDoneResult = DB_query('SELECT * FROM grns WHERE stdcostunit<>0');
 	if (DB_num_rows($TestAlreadyDoneResult)>0){
 		prnMsg(_('The upgrade script appears to have been run already successfully - there is no need to re-run it'),'info');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -77,5 +77,5 @@ if ($_POST['DoUpgrade'] == _('Perform Upgrade')){
 	prnMsg(_('The GRN records have been updated with cost information from purchorderdetails successfully'),'success');
 } /*Dont do upgrade */
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

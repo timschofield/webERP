@@ -2,11 +2,11 @@
 
 /* $Id: AgedControlledInventory.php 1 2014-08-08 04:47:42Z agaluski $ */
 
-include('includes/session.inc');
+include('includes/session.php');
 $PricesSecurity = 12;//don't show pricing info unless security token 12 available to user
 $Today =  time();
 $Title = _('Aged Controlled Inventory') . ' ' ._('as-of') .' ' . Date(($_SESSION['DefaultDateFormat']), strtotime($UpcomingDate . ' + 0 days'));
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') .
@@ -91,5 +91,5 @@ if ($k==1){
 echo '<td colspan="3"><b>' . _('Total') . '</b></td><td class="number"><b>' . locale_number_format($TotalQty,2) . '</td><td class="number"><b>' . locale_number_format($TotalVal,2) . '</td><td colspan="2"></td>';
 echo '</table>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

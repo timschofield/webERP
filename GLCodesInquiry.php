@@ -2,11 +2,11 @@
 
 /* $Id$*/
 
-include ('includes/session.inc');
+include ('includes/session.php');
 
 $Title = _('GL Codes Inquiry');
 
-include('includes/header.inc');
+include('includes/header.php');
 
 $SQL = "SELECT group_,
 		accountcode ,
@@ -61,5 +61,5 @@ while ($myrow=DB_fetch_array($AccountsResult)) {
 //end of while loop
 
 echo '</table>';
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

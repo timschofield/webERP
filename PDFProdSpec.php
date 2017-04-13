@@ -2,7 +2,7 @@
 
 /* $Id: PDFProdSpec.php 1 2014-09-15 06:31:08Z agaluski $ */
 
-include('includes/session.inc');
+include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 
 if (isset($_GET['KeyValue']))  {
@@ -15,7 +15,7 @@ if (isset($_GET['KeyValue']))  {
 //Get Out if we have no product specification
 If (!isset($SelectedProdSpec) OR $SelectedProdSpec==''){
         $Title = _('Select Product Specification To Print');
-        include('includes/header.inc');
+        include('includes/header.php');
 		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print')  . '" alt="" />' . ' ' . $Title . '</p>';
         echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">
 		<div>
@@ -57,7 +57,7 @@ If (!isset($SelectedProdSpec) OR $SelectedProdSpec==''){
 		<input type="submit" name="PickSpec" value="' . _('Submit') . '" />
 		</div>
 		</form>';
-    include('includes/footer.inc');
+    include('includes/footer.php');
     exit();
 }
 
@@ -89,7 +89,7 @@ $result=DB_query($sql,$ErrMsg);
 //If there are no rows, there's a problem.
 if (DB_num_rows($result)==0){
 	$Title = _('Print Product Specification Error');
-	include('includes/header.inc');
+	include('includes/header.php');
 	 echo '<div class="centre">
 			<br />
 			<br />
@@ -109,7 +109,7 @@ if (DB_num_rows($result)==0){
 			<br />
 			<br />
 			<br />';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 $PaperSize = 'Letter';

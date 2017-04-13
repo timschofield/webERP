@@ -1,11 +1,11 @@
 <?php
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Item Prices');
 $ViewTopic = 'Prices';
 /*$BookMark = '';// Anchor's id in the manual's html document.*/
-include('includes/header.inc');
+include('includes/header.php');
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
 		'/images/money_add.png" title="' .
 		_('Search') . '" />' . ' ' .
@@ -46,7 +46,7 @@ if (DB_num_rows($result)==0) {
 if (!isset($Item)) {
 	echo '<p>';
 	prnMsg (_('An item must first be selected before this page is called') . '. ' . _('The product selection page should call this page with a valid product code'),'error');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -347,7 +347,7 @@ echo '<tr><td>' . _('Price') . ':</td>
 
 echo '</div>
       </form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 
 
 function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $db) {

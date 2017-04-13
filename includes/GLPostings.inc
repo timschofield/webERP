@@ -55,15 +55,15 @@ $ChartDetailsNotSetUpResult = DB_query($sql,_('Could not test to see that all ch
 
 if(DB_num_rows($ChartDetailsNotSetUpResult)>0){
 	//first lets retrieve those new added accountcode and period;
-	$sql = "SELECT chartmaster.accountcode,periods.periodno 
-		FROM (chartmaster CROSS JOIN periods) 
-		LEFT JOIN chartdetails ON chartmaster.accountcode=chartdetails.accountcode 
-		AND periods.periodno=chartdetails.period 
+	$sql = "SELECT chartmaster.accountcode,periods.periodno
+		FROM (chartmaster CROSS JOIN periods)
+		LEFT JOIN chartdetails ON chartmaster.accountcode=chartdetails.accountcode
+		AND periods.periodno=chartdetails.period
 		WHERE (periods.periodno BETWEEN '" . $CreateFrom . "' AND '" . $CreateTo . "')
 		AND chartdetails.accountcode IS NULL ORDER BY accountcode,periodno";
 	$ErrMsg = _('Failed to retrieve new account code and periods');
 	$NewPeriodResult = DB_query($sql,$ErrMsg);
-	if (DB_num_rows($result)>0){ 
+	if (DB_num_rows($result)>0){
 		$NewPeriods = array();
 		while ($NewPeriodsRow = DB_fetch_array($NewPeriodResult)) {
 			if (!isset($NewPeriods[$NewPeriodsRow['accountcode']])) {
@@ -130,7 +130,7 @@ for ( $CurrPeriod = $CreateFrom; $CurrPeriod <= $CreateTo; $CurrPeriod++ ) {
 		}
 		$CurrentAccount = $UnpostedTrans['account'];
 		$TotalAmount += $UnpostedTrans['amount'];
-	} 
+	}
 	// There will be one account still to post after the loop
 	if($CurrentAccount != '0') {
 		$sql = "UPDATE chartdetails SET actual = actual + " . $TotalAmount . "
@@ -145,11 +145,11 @@ for ( $CurrPeriod = $CreateFrom; $CurrPeriod <= $CreateTo; $CurrPeriod++ ) {
 		$ErrMsg = _('Failed to update actual amount in chartdetails table');
 		$PostBFwds = DB_query($sql,$ErrMsg,'',true);
 	}
-	
+
 	$sql = "UPDATE gltrans SET posted = 1 WHERE periodno = '" . $CurrPeriod . "' AND posted=0";
 	$ErrMsg = _('Failed to update gltrans table');
 	$Posted = DB_query($sql,$ErrMsg,'',true);
-	
+
 	$TransCommit = DB_Txn_Commit();
 }
 

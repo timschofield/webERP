@@ -19,11 +19,11 @@ function CashFlowsActivityName($Activity) {
 // END: Functions division -----------------------------------------------------
 
 // BEGIN: Procedure division ---------------------------------------------------
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('General Ledger Accounts');
 $ViewTopic= 'GeneralLedger';
 $BookMark = 'GLAccounts';
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/transactions.png" title="', // Icon image.
@@ -348,5 +348,5 @@ if(isset($SelectedAccount)) {
 	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Show All Accounts') . '</a></div>';
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

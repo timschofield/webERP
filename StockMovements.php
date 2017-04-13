@@ -2,12 +2,12 @@
 
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Stock Movements');
-/* webERP manual links before header.inc */
+/* webERP manual links before header.php */
 $ViewTopic= "Inventory";
 $BookMark = "InventoryMovement";
-include('includes/header.inc');
+include('includes/header.php');
 
 if (isset($_GET['StockID'])){
 	$StockID = trim(mb_strtoupper($_GET['StockID']));
@@ -38,9 +38,9 @@ echo '<tr><th colspan="10">' . _('Stock Code') . ':<input type="text" name="Stoc
 echo '  ' . _('From Stock Location') . ':<select name="StockLocation"> ';
 
 $sql = "SELECT locations.loccode, locationname FROM locations
-		INNER JOIN locationusers 
-			ON locationusers.loccode=locations.loccode 
-				AND locationusers.userid='" .  $_SESSION['UserID'] . "' 
+		INNER JOIN locationusers
+			ON locationusers.loccode=locations.loccode
+				AND locationusers.userid='" .  $_SESSION['UserID'] . "'
 				AND locationusers.canview=1
 		ORDER BY locationname
 		";
@@ -225,6 +225,6 @@ echo '</div>
       </div>
       </form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

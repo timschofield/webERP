@@ -2,10 +2,10 @@
 
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('Purchase Order Authorisation Maintenance');
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
 
@@ -266,5 +266,5 @@ if (isset($_GET['Edit'])) {
 }
 echo '</div>
         </form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

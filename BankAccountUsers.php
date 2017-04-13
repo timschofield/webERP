@@ -2,11 +2,11 @@
 /* $Id: BankAccountUsers.php 6946 2014-10-27 07:30:11Z daintree $*/
 /* This script maintains table bankaccountusers (Authorized users to work with a bank account in webERP) */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Bank Account Users');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'BankAccountUsers';
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 	'/images/bank.png" title="' .
@@ -234,5 +234,5 @@ while ($myrow = DB_fetch_array($result)) {
 	} // end if user wish to delete
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

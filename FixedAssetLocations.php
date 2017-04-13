@@ -2,13 +2,13 @@
 
 /* $Id$ */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Fixed Asset Locations');
 
 $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetLocations';
 
-include('includes/header.inc');
+include('includes/header.php');
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'
 	</p>';
@@ -164,5 +164,5 @@ echo '</div>
       </div>
 	</form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

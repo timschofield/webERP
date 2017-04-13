@@ -2,12 +2,12 @@
 
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Maintenance Of Petty Cash Of Expenses');
-/* webERP manual links before header.inc */
+/* webERP manual links before header.php */
 $ViewTopic= "PettyCash";
 $BookMark = "PCExpenses";
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Payment Entry')
 	. '" alt="" />' . ' ' . $Title . '</p>';
@@ -357,5 +357,5 @@ if (! isset($_GET['delete'])) {
 } // end if user wish to delete
 
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

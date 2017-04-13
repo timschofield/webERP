@@ -1,12 +1,12 @@
 <?php
 /* $Id: StockClone.php 6669 2014-04-05 23:31:54Z rchacon $ */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Clone Item');
-/* webERP manual links before header.inc */
+/* webERP manual links before header.php */
 $ViewTopic= 'Inventory';
 $BookMark = 'CloneItem';
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 
 if (isset($_GET['OldStockID']) || isset($_POST['OldStockID']) ){ //we are cloning
@@ -1120,6 +1120,6 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
 echo '</div>
     </div>
 	</form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

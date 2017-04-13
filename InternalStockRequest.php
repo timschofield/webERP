@@ -4,11 +4,11 @@
 
 include('includes/DefineStockRequestClass.php');
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Create an Internal Materials Request');
 $ViewTopic = 'Inventory';
 $BookMark = 'CreateRequest';
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 
 if (isset($_GET['New'])) {
@@ -133,7 +133,7 @@ if (isset($_POST['Submit']) AND (!empty($_SESSION['Request']->LineItems))) {
 	DB_Txn_Commit();
 	prnMsg( _('The internal stock request has been entered and now needs to be authorised'), 'success');
 	echo '<br /><div class="centre"><a href="'. htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?New=Yes">' . _('Create another request') . '</a></div>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	unset($_SESSION['Request']);
 	exit;
 } elseif(isset($_POST['Submit'])) {
@@ -179,7 +179,7 @@ if (isset($_GET['Edit'])) {
 		</div>
         </div>
 		</form>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -258,7 +258,7 @@ echo '<div class="centre">
 	</form>';
 
 if (!isset($_SESSION['Request']->Location)) {
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -755,5 +755,5 @@ if (isset($SearchResult)) {
 }#end if SearchResults to show
 
 //*********************************************************************************************************
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

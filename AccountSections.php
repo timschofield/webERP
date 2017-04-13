@@ -2,11 +2,11 @@
 /* $Id$*/
 /* Defines the sections in the general ledger reports */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Account Sections');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'AccountSections';
-include('includes/header.inc');
+include('includes/header.php');
 
 // SOME TEST TO ENSURE THAT AT LEAST INCOME AND COST OF SALES ARE THERE
 	$sql= "SELECT sectionid FROM accountsection WHERE sectionid=1";
@@ -291,5 +291,5 @@ if(! isset($_GET['delete'])) {
 		</form>';
 } //end if record deleted no point displaying form to add record
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

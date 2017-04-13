@@ -1,9 +1,9 @@
 <?php
 /* $Id: TestPlanResults.php 1 2014-09-08 10:42:50Z agaluski $*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Test Plan Results');
-include('includes/header.inc');
+include('includes/header.php');
 
 if (isset($_GET['SelectedSampleID'])){
 	$SelectedSampleID =mb_strtoupper($_GET['SelectedSampleID']);
@@ -35,7 +35,7 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 		if (isset($_POST['ResetPart'])) {
 			unset($SelectedStockItem);
 		}
-		
+
 		if (isset($SampleID) AND $SampleID != '') {
 			if (!is_numeric($SampleID)) {
 				prnMsg(_('The Sample ID entered') . ' <U>' . _('MUST') . '</U> ' . _('be numeric'), 'error');
@@ -48,12 +48,12 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 			$InputError = 1;
 			prnMsg(_('Invalid From Date'),'error');
 			$_POST['FromDate']=Date(($_SESSION['DefaultDateFormat']), strtotime($UpcomingDate . ' - 15 days'));
-		} 
+		}
 		if (!Is_Date($_POST['ToDate'])) {
 			$InputError = 1;
 			prnMsg(_('Invalid To Date'),'error');
 			$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
-		} 
+		}
 		if (isset($_POST['SearchParts'])) {
 			if ($_POST['Keywords'] AND $_POST['StockCode']) {
 				prnMsg(_('Stock description keywords have been used in preference to the Stock code extract entered'), 'info');
@@ -67,7 +67,7 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 						SUM(locstock.quantity) as qoh,
 						stockmaster.units,
 					FROM stockmaster INNER JOIN locstock
-					ON stockmaster.stockid = locstock.stockid 
+					ON stockmaster.stockid = locstock.stockid
 					INNER JOIN locationusers ON locationusers.loccode = locstock.loccode
 							AND locationusers.userid='" .  $_SESSION['UserID'] . "'
 							AND locationusers.canview=1
@@ -113,7 +113,7 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 						stockmaster.units
 					ORDER BY stockmaster.stockid";
 			}
-			
+
 			$ErrMsg = _('No stock items were returned by the SQL because');
 			$DbgMsg = _('The SQL used to retrieve the searched parts was');
 			$StockItemsResult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
@@ -299,13 +299,13 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 					$ModifySampleID = $RootPath . '/TestPlanResults.php?SelectedSampleID=' . $myrow['sampleid'];
 					$Copy = '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedSampleID=' . $SelectedSampleID .'&CopyToSampleID=' . $myrow['sampleid'] .'">' . _('Copy to This Sample') .'</a>';
 					$FormatedSampleDate = ConvertSQLDate($myrow['sampledate']);
-					
+
 					if ($myrow['cert']==1) {
 						$CertAllowed='<a target="_blank" href="'. $RootPath . '/PDFCOA.php?LotKey=' .$myrow['lotkey'] .'&ProdSpec=' .$myrow['prodspeckey'] .'">' . _('Yes') . '</a>';
 					} else {
 						$CertAllowed=_('No');
 					}
-					
+
 					echo '<td><input type="radio" name="CopyToSampleID" value="' . $myrow['sampleid'] .'">
 							<td><a target="blank" href="' . $ModifySampleID . '">' . str_pad($myrow['sampleid'],10,'0',STR_PAD_LEFT) . '</a></td>
 							<td>' . $myrow['prodspeckey'] . '</td>
@@ -330,7 +330,7 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 		echo '</div>' . _('Override existing Test values?') .
 			 '<input type="checkbox" name="OverRide"><input type="submit" name="Copy" value="' . _('Copy') . '" />
 			  </form>';
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	} else {
 		$sql = "SELECT sampleresults.testid,
@@ -347,8 +347,8 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 						sampleresults.showontestplan,
 						prodspeckey,
 						type
-					FROM sampleresults 
-					INNER JOIN qasamples ON qasamples.sampleid=sampleresults.sampleid 
+					FROM sampleresults
+					INNER JOIN qasamples ON qasamples.sampleid=sampleresults.sampleid
 					INNER JOIN qatests ON qatests.testid=sampleresults.testid
 					WHERE sampleresults.sampleid='" .$SelectedSampleID. "'";
 		$msg = _('Test Results have been copied to sample') . ' ' . $_POST['CopyToSampleID']  . ' from sample' . ' ' . $SelectedSampleID ;
@@ -389,7 +389,7 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 					}
 					$CompareRange='yes';
 				}
-				
+
 			} else {
 				$RangeDisplay='&nbsp;';
 				$CompareRange='no';
@@ -397,7 +397,7 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 			if ($myrow['type']==3) {
 				$CompareVal='no';
 			}
-			//var_dump($CompareVal); var_dump($CompareRange); 
+			//var_dump($CompareVal); var_dump($CompareRange);
 			if ($CompareVal=='yes'){
 				if ($CompareRange=='yes'){
 					if ($myrow2['rangemin'] > '' AND $myrow2['rangemax'] > '') {
@@ -441,7 +441,7 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 				}
 			} else {
 				//Need to insert the test and results
-				$inssql = "INSERT INTO sampleresults 
+				$inssql = "INSERT INTO sampleresults
 							(sampleid,
 							testid,
 							defaultvalue,
@@ -458,7 +458,7 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 							isinspec)
 						VALUES ( '"  . $_POST['CopyToSampleID'] . "',
 								'"  . $myrow['testid'] . "',
-								'"  . $myrow['defaultvalue'] . "', 
+								'"  . $myrow['defaultvalue'] . "',
 								'"  . $myrow['targetvalue']. "',
 								'"  . $myrow['testvalue']. "',
 								'"  . $myrow['rangemin'] . "',
@@ -493,7 +493,7 @@ if (isset($_GET['ListTests'])) {
 				numericvalue,
 				qatests.defaultvalue
 			FROM qatests
-			LEFT JOIN sampleresults 
+			LEFT JOIN sampleresults
 			ON sampleresults.testid=qatests.testid
 			AND sampleresults.sampleid='".$SelectedSampleID."'
 			WHERE qatests.active='1'
@@ -534,7 +534,7 @@ if (isset($_GET['ListTests'])) {
 	} else {
 		$IsNumeric = _('No');
 	}
-	
+
 	switch ($myrow['type']) {
 	 	case 0; //textbox
 	 		$TypeDisp='Text Box';
@@ -574,14 +574,14 @@ if (isset($_GET['ListTests'])) {
 			$RangeMax);
 
 	} //END WHILE LIST LOOP
-	
-	echo '</table><br /></div>	
+
+	echo '</table><br /></div>
 			<div class="centre">
 				<input type="hidden" name="SelectedSampleID" value="' . $SelectedSampleID . '" />
 				<input type="hidden" name="AddTestsCounter" value="' . $x . '" />
 				<input type="submit" name="AddTests" value="' . _('Add') . '" />
 		</div></form>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }  //ListTests
 if (isset($_POST['AddTests'])) {
@@ -597,7 +597,7 @@ if (isset($_POST['AddTests'])) {
 			} else {
 				$AddRangeMax="'" . $_POST['AddRangeMax' .$i] . "'";
 			}
-			$sql = "INSERT INTO sampleresults 
+			$sql = "INSERT INTO sampleresults
 							(sampleid,
 							testid,
 							defaultvalue,
@@ -608,12 +608,12 @@ if (isset($_POST['AddTests'])) {
 							showontestplan,
 							manuallyadded)
 						SELECT '"  . $SelectedSampleID . "',
-								testid, 
-								defaultvalue, 
+								testid,
+								defaultvalue,
 								'"  .  $_POST['AddTargetValue' .$i] . "',
 								"  . $AddRangeMin . ",
 								"  . $AddRangeMax . ",
-								showoncert, 
+								showoncert,
 								'1',
 								'1'
 						FROM qatests WHERE testid='" .$_POST['AddTestID' .$i]. "'";
@@ -654,9 +654,9 @@ if (isset($_POST['submit'])) {
 						//echo "three";
 						$IsInSpec=0;
 					}
-				}	
+				}
 				//echo "four";
-				//var_dump($_POST['TestValue' .$i]); var_dump($_POST['ExpectedValue' .$i]); var_dump($_POST['MinVal' .$i]); var_dump($_POST['MaxVal' .$i]); var_dump($IsInSpec);	
+				//var_dump($_POST['TestValue' .$i]); var_dump($_POST['ExpectedValue' .$i]); var_dump($_POST['MinVal' .$i]); var_dump($_POST['MaxVal' .$i]); var_dump($IsInSpec);
 			} else {
 				if (($_POST['TestValue' .$i]<>$_POST['ExpectedValue' .$i])) {
 					$IsInSpec=0;
@@ -669,7 +669,7 @@ if (isset($_POST['submit'])) {
 										showoncert='".  $_POST['ShowOnCert' .$i] . "',
 										isinspec='".  $IsInSpec . "'
 						WHERE resultid='".  $_POST['ResultID' .$i] . "'";
-		
+
 		$msg = _('Sample Results were updated for Result ID') . ' ' . $_POST['ResultID' .$i] ;
 		$ErrMsg = _('The updated of the sampleresults failed because');
 		$DbgMsg = _('The SQL that was used and failed was');
@@ -705,7 +705,7 @@ if (isset($_GET['Delete'])) {
 		$sql="DELETE FROM sampleresults WHERE resultid='". $_GET['ResultID']."'";
 		$ErrMsg = _('The sample results could not be deleted because');
 		$result = DB_query($sql,$db,$ErrMsg);
-		
+
 		prnMsg(_('Result QA Sample') . ' ' . $_GET['ResultID'] . _('has been deleted from the database'),'success');
 		unset($_GET['ResultID']);
 		unset($delete);
@@ -717,9 +717,9 @@ if (!isset($SelectedSampleID)) {
 			<a href="' . $RootPath . '/SelectQASamples.php">' .  _('Select a sample to enter results against') . '</a>
 		</div>';
 	prnMsg(_('This page can only be opened if a QA Sample has been selected. Please select a sample first'),'info');
-	include ('includes/footer.inc');
+	include ('includes/footer.php');
 	exit;
-} 
+}
 
 echo '<div class="centre"><a href="' . $RootPath . '/SelectQASamples.php">' . _('Back to Samples') . '</a></div>';
 
@@ -736,7 +736,7 @@ $sql = "SELECT prodspeckey,
 				sampledate,
 				comments,
 				cert
-		FROM qasamples 
+		FROM qasamples
 		LEFT OUTER JOIN stockmaster on stockmaster.stockid=qasamples.prodspeckey
 		WHERE sampleid='".$SelectedSampleID."'";
 
@@ -760,7 +760,7 @@ echo '<table class="selection">
 			<th>' . _('Comments') . '</th>
 			<th>' . _('Used for Cert') . '</th>
 		</tr>';
-		
+
 echo '<tr class="EvenTableRows"><td>' . str_pad($SelectedSampleID,10,'0',STR_PAD_LEFT)  . '</td>
 	<td>' . $myrow['prodspeckey'] . ' - ' . $myrow['description'] . '</td>
 	<td>' . $myrow['lotkey'] . '</td>
@@ -790,7 +790,7 @@ $sql = "SELECT sampleid,
 				sampleresults.showoncert,
 				isinspec,
 				sampleresults.manuallyadded
-		FROM sampleresults 
+		FROM sampleresults
 		INNER JOIN qatests ON qatests.testid=sampleresults.testid
 		WHERE sampleresults.sampleid='".$SelectedSampleID."'
 		AND sampleresults.showontestplan='1'
@@ -805,8 +805,8 @@ $TableHeader = '<tr>
 					<th class="ascending">' . _('Range') . '</th>
 					<th class="ascending">' . _('Target Value') . '</th>
 					<th class="ascending">' . _('Test Date') . '</th>
-					<th class="ascending">' . _('Tested By') . '</th>					
-					<th class="ascending">' . _('Test Result') . '</th>					
+					<th class="ascending">' . _('Tested By') . '</th>
+					<th class="ascending">' . _('Test Result') . '</th>
 					<th class="ascending">' . _('On Cert') . '</th>
 				</tr>';
 echo $TableHeader;
@@ -876,14 +876,14 @@ while ($myrow = DB_fetch_array($result)) {
 		$BGColor=' style="background-color:yellow;" ';
 	} else {
 		if ($myrow['isinspec']==0) {
-		$BGColor=' style="background-color:orange;" ';		
+		$BGColor=' style="background-color:orange;" ';
 		}
 	}
-	
+
 	$Class='';
 	if ($myrow['numericvalue'] == 1) {
 		$Class="number";
-	}	
+	}
 	switch ($myrow['type']) {
 		case 0; //textbox
 			$TypeDisp='Text Box';
@@ -936,11 +936,11 @@ while ($myrow = DB_fetch_array($result)) {
 		$myrow['testedby']=$_SESSION['UserID'];
 	}
 	echo '<td><input type="hidden" name="ResultID' .$x. '" value="' . $myrow['resultid'] . '" /> ' . $myrow['name'] . '
-			<input type="hidden" name="ExpectedValue' .$x. '" value="' . $myrow['targetvalue'] . '" /> 
-			<input type="hidden" name="MinVal' .$x. '" value="' . $myrow['rangemin'] . '" /> 
-			<input type="hidden" name="MaxVal' .$x. '" value="' . $myrow['rangemax'] . '" /> 
-			<input type="hidden" name="CompareRange' .$x. '" value="' . $CompareRange . '" /> 
-			<input type="hidden" name="CompareVal' .$x. '" value="' . $CompareVal . '" /> 
+			<input type="hidden" name="ExpectedValue' .$x. '" value="' . $myrow['targetvalue'] . '" />
+			<input type="hidden" name="MinVal' .$x. '" value="' . $myrow['rangemin'] . '" />
+			<input type="hidden" name="MaxVal' .$x. '" value="' . $myrow['rangemax'] . '" />
+			<input type="hidden" name="CompareRange' .$x. '" value="' . $CompareRange . '" />
+			<input type="hidden" name="CompareVal' .$x. '" value="' . $CompareVal . '" />
 			</td>
 			<td>' . $myrow['method'] . '</td>
 			<td>' . $RangeDisplay . '</td>
@@ -961,7 +961,7 @@ while ($myrow = DB_fetch_array($result)) {
 			<td>' . $Delete . '</td>
 		</tr>';
 }
-	
+
 echo '</table><div class="centre">
 		<input type="hidden" name="TestResultsCounter" value="' . $x . '" />
 		<input type="submit" name="submit" value="' . _('Enter Information') . '" />
@@ -976,5 +976,5 @@ if ($CanCert==1){
 	echo '<div class="centre"><a target="_blank" href="'. $RootPath . '/PDFCOA.php?LotKey=' .$LotKey .'&ProdSpec=' . $ProdSpec. '">' . _('Print COA') . '</a></div>';
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

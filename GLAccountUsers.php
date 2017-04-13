@@ -2,11 +2,11 @@
 /* $Id: GLAccountUsers.php 7385 2015-11-11 05:10:46Z tehonu $*/
 /* Maintenance of GL Accounts allowed for a user. */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('GL Account Authorised Users');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLAccountUsers';
-include('includes/header.inc');
+include('includes/header.php');
 
 if(isset($_POST['SelectedGLAccount']) and $_POST['SelectedGLAccount']<>'') {//If POST not empty:
 	$SelectedGLAccount = mb_strtoupper($_POST['SelectedGLAccount']);
@@ -254,5 +254,5 @@ echo		'<button onclick="window.location=\'index.php?Application=GL\'" type="butt
 		'</div>
 	</form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

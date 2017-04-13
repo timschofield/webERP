@@ -1960,7 +1960,7 @@ msgstr "日期/時間"
 #: PcReportTab.php:269 UserBankAccounts.php:77 UserBankAccounts.php:90
 #: UserGLAccounts.php:118 UserGLAccounts.php:130 UserGLAccounts.php:146
 #: UserLocations.php:77 UserLocations.php:90 UserLocations.php:100
-#: includes/header.inc:59
+#: includes/header.php:59
 msgid "User"
 msgstr "用戶 "
 
@@ -6737,7 +6737,7 @@ msgstr "新建報價"
 msgid "Cancel and Delete Contract"
 msgstr "取消和刪除合同"
 
-#: CopyBOM.php:11 includes/header.inc:26
+#: CopyBOM.php:11 includes/header.php:26
 msgid "Copy a BOM to New Item Code"
 msgstr "BOM表複製到新物料編號"
 
@@ -9310,7 +9310,7 @@ msgstr "客戶分公司"
 msgid "has been added, add another branch, or return to the"
 msgstr "已經新增，新增另一個分公司，或返回"
 
-#: CustomerBranches.php:248 index.php:7 includes/header.inc:70
+#: CustomerBranches.php:248 index.php:7 includes/header.php:70
 msgid "Main Menu"
 msgstr "主目錄"
 
@@ -26031,7 +26031,7 @@ msgstr "群組 3"
 msgid "Group By 4"
 msgstr "群組 4"
 
-#: SalesAnalysis_UserDefined.php:9 includes/session.inc:194
+#: SalesAnalysis_UserDefined.php:9 includes/session.php:194
 msgid ""
 "The security settings on your account do not permit you to access this "
 "function"
@@ -27299,7 +27299,7 @@ msgid "Search Customers"
 msgstr "搜尋客戶"
 
 #: SelectCustomer.php:14 includes/PDFTopItemsHeader.inc:27
-#: includes/header.inc:73
+#: includes/header.php:73
 msgid "Customers"
 msgstr "客戶"
 
@@ -28350,7 +28350,7 @@ msgstr "在總報價（S）價值"
 msgid "Search Suppliers"
 msgstr "搜尋供應商"
 
-#: SelectSupplier.php:14 Suppliers.php:304 includes/header.inc:75
+#: SelectSupplier.php:14 Suppliers.php:304 includes/header.php:75
 msgid "Suppliers"
 msgstr "供應商"
 
@@ -45385,76 +45385,76 @@ msgid ""
 "items with no cost data entered"
 msgstr "未設定成本, 系統設定為訂單不能輸入未設定成本數據的商品"
 
-#: includes/footer.inc:12 includes/footer.inc:20
+#: includes/footer.php:12 includes/footer.php:20
 msgid "Copyright"
 msgstr "版權"
 
-#: includes/footer.inc:20
+#: includes/footer.php:20
 msgid "version"
 msgstr "版本"
 
-#: includes/header.inc:56 includes/Login.php:52 includes/Login.php:56
+#: includes/header.php:56 includes/Login.php:52 includes/Login.php:56
 #: includes/Login.php:76 includes/Login.php:79
 msgid "Company"
 msgstr "公司"
 
-#: includes/header.inc:74
+#: includes/header.php:74
 msgid "Items"
 msgstr "商品"
 
-#: includes/header.inc:77 includes/header.inc:81
+#: includes/header.php:77 includes/header.php:81
 msgid "Manual"
 msgstr "線上手冊"
 
-#: includes/header.inc:90 ../webSHOP/includes/header.php:232
+#: includes/header.php:90 ../webSHOP/includes/header.php:232
 msgid "Are you sure you wish to logout?"
 msgstr "是否確定要登出?"
 
-#: includes/header.inc:90 ../webSHOP/includes/header.php:232
+#: includes/header.php:90 ../webSHOP/includes/header.php:232
 msgid "Logout"
 msgstr "登出"
 
-#: includes/session.inc:119 includes/session.inc:168
+#: includes/session.php:119 includes/session.php:168
 msgid "Account Error Report"
 msgstr "帳戶錯誤報告"
 
-#: includes/session.inc:122
+#: includes/session.php:122
 msgid ""
 "Your user role does not have any access defined for webERP. There is an "
 "error in the security setup for this user account"
 msgstr "你的用戶身份未設定成可登入 ERP.  這用戶帳戶安全設定錯誤 "
 
-#: includes/session.inc:127
+#: includes/session.php:127
 msgid "incorrect password"
 msgstr "密碼錯誤"
 
-#: includes/session.inc:127
+#: includes/session.php:127
 msgid "The user/password combination"
 msgstr "用戶名稱/密碼組合"
 
-#: includes/session.inc:127
+#: includes/session.php:127
 msgid "is not a valid user of the system"
 msgstr "不是系統的有效使用者"
 
-#: includes/session.inc:131
+#: includes/session.php:131
 msgid "system maintenance"
 msgstr "系統維護"
 
-#: includes/session.inc:131
+#: includes/session.php:131
 msgid "webERP is not available right now"
 msgstr "ERP現在不可用"
 
-#: includes/session.inc:131
+#: includes/session.php:131
 msgid "during maintenance of the system"
 msgstr "系統維護期間"
 
-#: includes/session.inc:156
+#: includes/session.php:156
 msgid ""
 "webERP is configured to allow only secure socket connections. Pages must be "
 "called with https://"
 msgstr "ERP設定只提供安全連線接口.  頁必須開啟於 https://"
 
-#: includes/session.inc:171
+#: includes/session.php:171
 msgid ""
 "Security settings have not been defined for your user account. Please advise "
 "your system administrator. It could also be that there is a session problem "
@@ -45463,15 +45463,15 @@ msgstr ""
 "安全設定並未設置你的使用者帳戶.  請通知你的系統管理員. 也可能是PHP網頁伺服器"
 "的問題"
 
-#: includes/session.inc:187
+#: includes/session.php:187
 msgid "Security Permissions Problem"
 msgstr "安全權限問題"
 
-#: includes/session.inc:251 ../webSHOP/includes/session.php:147
+#: includes/session.php:251 ../webSHOP/includes/session.php:147
 msgid "Error in form verification"
 msgstr "表單驗證錯誤"
 
-#: includes/session.inc:253 ../webSHOP/includes/session.php:151
+#: includes/session.php:253 ../webSHOP/includes/session.php:151
 msgid "This form was not submitted with a correct ID"
 msgstr "這種形式沒有確認新增了正確的ID"
 

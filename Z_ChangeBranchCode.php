@@ -2,13 +2,13 @@
 /* $Id$*/
 /* This script is an utility to change a customer branch code. */
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('UTILITY PAGE To Changes A Customer Branch Code In All Tables');// Screen identificator.
 $ViewTopic = 'SpecialUtilities'; // Filename's id in ManualContents.php's TOC.
 $BookMark = 'Z_ChangeBranchCode'; // Anchor's id in the manual's html document.
-include('includes/header.inc');
+include('includes/header.php');
 echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
-	'/images/customer.png" title="' . 
+	'/images/customer.png" title="' .
 	_('Change A Customer Branch Code') . '" /> ' .// Icon title.
 	_('Change A Customer Branch Code') . '</p>';// Page title.
 
@@ -22,18 +22,18 @@ if (isset($_POST['ProcessCustomerChange'])){
 						AND branchcode='" . $_POST['OldBranchCode'] . "'");
 	if (DB_num_rows($result)==0){
 		prnMsg (_('The customer branch code') . ': ' . $_POST['DebtorNo'] . ' - ' . $_POST['OldBranchCode'] . ' ' . _('does not currently exist as a customer branch code in the system'),'error');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
 	if ($_POST['NewBranchCode']==''){
 		prnMsg(_('The new customer branch code to change the old code to must be entered as well'),'error');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 	if (ContainsIllegalCharacters($_POST['NewBranchCode']) OR mb_strstr($_POST['NewBranchCode'],' ')){
 		prnMsg(_('The new customer branch code cannot contain') . ' - & . ' . _('or a space'),'error');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -42,7 +42,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 	$result=DB_query("SELECT debtorno FROM custbranch WHERE debtorno='" . $_POST['DebtorNo'] . "' AND branchcode ='" . $_POST['NewBranchCode'] . "'");
 	if (DB_num_rows($result)!=0){
 		prnMsg(_('The replacement customer branch code') . ': ' . $_POST['NewBranchCode'] . ' ' . _('already exists as a branch code for the same customer') . ' - ' . _('a unique branch code must be entered for the new code'),'error');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -224,5 +224,5 @@ echo '<input type="submit" name="ProcessCustomerChange" value="' . _('Process') 
 echo '</div>
       </form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

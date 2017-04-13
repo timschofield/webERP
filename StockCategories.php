@@ -1,12 +1,12 @@
 <?php
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('Inventory Categories Maintenance');
 $ViewTopic= 'Inventory';
 $BookMark = 'InventoryCategories';
-include('includes/header.inc');
+include('includes/header.php');
 
 // BEGIN: Stock Type Name array.
 $StockTypeName = array();
@@ -655,5 +655,5 @@ echo '<br />
     </div>
 	</form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

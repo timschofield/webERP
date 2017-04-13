@@ -2,11 +2,11 @@
 /* $Id: Dashboard.php 6843 2014-08-20 06:04:47Z daintree $*/
 /* Display outstanding debtors, creditors, etc */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Dashboard');
 $ViewTopic = 'GeneralLedger';// RChacon: You should be in this topic ?
 $BookMark = 'Dashboard';
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/gl.png" title="',// Icon image.
@@ -159,7 +159,7 @@ if(in_array($DebtorSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($
 		if($debug==1) {
 			echo '<br />', $Sql;
 		}
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -246,7 +246,7 @@ if(in_array($DebtorSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($
 				if($debug==1) {
 					echo '<br />' . _('The SQL that failed was') . '<br />' . $Sql;
 				}
-				include('includes/footer.inc');
+				include('includes/footer.php');
 				exit;
 			}
 
@@ -399,7 +399,7 @@ if(in_array($PayeeSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($P
 			if($debug==1) {
 				echo '<br />' . _('The SQL that failed was') . ' ' . $Sql;
 			}
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 		}
 
@@ -689,5 +689,5 @@ if(in_array($OrderSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($O
 
 	echo '</tbody></table>';
 } //OrderSecurity
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

@@ -96,7 +96,7 @@ function NewPageHeader () {
 	$FontSize=8;
 }
 
-include('includes/session.inc');
+include('includes/session.php');
 include ('includes/SQL_CommonFunctions.inc');
 
 if (isset($_POST['PrintPDF'])){
@@ -181,13 +181,13 @@ if (isset($_POST['PrintPDF'])){
 
 	if (DB_error_no() !=0) {
 	  $Title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
-	  include('includes/header.inc');
+	  include('includes/header.php');
 	   prnMsg(_('The inventory quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
 	      echo '<br />' . $SQL;
 	   }
-	   include('includes/footer.inc');
+	   include('includes/footer.php');
 	   exit;
 	}
 
@@ -239,13 +239,13 @@ if (isset($_POST['PrintPDF'])){
 
 		if (DB_error_no() !=0) {
 	 		 $Title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
-	  		include('includes/header.inc');
+	  		include('includes/header.php');
 	   		prnMsg( _('The sales quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 	   		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 	   		if ($debug==1){
 	      			echo '<br />' .  $SQL;
 	   		}
-	   		include('includes/footer.inc');
+	   		include('includes/footer.php');
 	   		exit;
 		}
 
@@ -266,13 +266,13 @@ if (isset($_POST['PrintPDF'])){
 
 		if (DB_error_no() !=0) {
 	 		 $Title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
-	  		include('includes/header.inc');
+	  		include('includes/header.php');
 	   		prnMsg( _('The sales order demand quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 	   		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 	   		if ($debug==1){
 	      			echo '<br />' . $SQL;
 	   		}
-	   		include('includes/footer.inc');
+	   		include('includes/footer.php');
 	   		exit;
 		}
 
@@ -299,13 +299,13 @@ if (isset($_POST['PrintPDF'])){
 
 		if (DB_error_no() !=0) {
 	 		$Title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
-	  		include('includes/header.inc');
+	  		include('includes/header.php');
 	   		prnMsg( _('The sales order demand quantities from parent assemblies could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 	   		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 	   		if ($debug==1){
 	      			echo '<br />' . $SQL;
 	   		}
-	   		include('includes/footer.inc');
+	   		include('includes/footer.php');
 	   		exit;
 		}
 
@@ -367,10 +367,10 @@ if (isset($_POST['PrintPDF'])){
 
 	if ($ListCount == 0) {
 		$Title = _('Print Inventory Planning Report Empty');
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg( _('There were no items in the range and location specified'),'error');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	} else {
 		$pdf->OutputD($_SESSION['DatabaseName'] . '_Inventory_Planning_PrefSupplier_' . Date('Y-m-d') . '.pdf');
@@ -381,7 +381,7 @@ if (isset($_POST['PrintPDF'])){
 } else { /*The option to print PDF was not hit */
 
 	$Title=_('Preferred Supplier Inventory Planning');
-	include('includes/header.inc');
+	include('includes/header.php');
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
 
@@ -439,6 +439,6 @@ if (isset($_POST['PrintPDF'])){
     echo '</div>
           </form>';
 
-	include('includes/footer.inc');
+	include('includes/footer.php');
 } /*end of else not PrintPDF */
 ?>

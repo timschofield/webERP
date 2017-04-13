@@ -11,11 +11,11 @@ purchase price variance calculated when the shipment is closed */
 include('includes/DefineSuppTransClass.php');
 
 /* Session started here for password checking and authorisation level check */
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('Shipment Charges or Credits');
 
-include('includes/header.inc');
+include('includes/header.php');
 
 if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice'){
 	echo '<a href="' . $RootPath . '/SupplierInvoice.php">' . _('Back to Invoice Entry') . '</a>';
@@ -156,5 +156,5 @@ echo '<br />
     </div>
 	</form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

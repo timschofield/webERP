@@ -3,7 +3,7 @@
 /* $Id$*/
 
 
-include('includes/session.inc');
+include('includes/session.php');
 
 function stripcomma($str) { //because we're using comma as a delimiter
     $str = trim($str);
@@ -67,13 +67,13 @@ if ( isset($_POST['pricelist']) ) {
 
 	if (DB_error_no() !=0) {
 		$Title = _('Price List Export Problem ....');
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg( _('The Price List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
 		echo '<br /><a href="' .$RootPath .'/index.php?' . SID . '">' .   _('Back to the menu'). '</a>';
 		if ($debug==1){
 			echo '<br />' .  $SQL;
 		}
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -163,13 +163,13 @@ if ( isset($_POST['pricelist']) ) {
 
 	if (DB_error_no() !=0) {
 		$Title = _('Customer List Export Problem ....');
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg( _('The Customer List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
 		if ($debug==1){
 			echo '<br />' .  $SQL;
 		}
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -254,13 +254,13 @@ if ( isset($_POST['pricelist']) ) {
 
 	if (DB_error_no() !=0) {
 		$Title = _('Salesman List Export Problem ....');
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg( _('The Salesman List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
 		if ($debug==1){
 			echo '<br />' .  $SQL;
 		}
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -303,13 +303,13 @@ if ( isset($_POST['pricelist']) ) {
 
 	if (DB_error_no() !=0) {
 		$Title = _('Security Token List Export Problem ....');
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg( _('The Image List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
 		if ($debug==1){
 			echo '<br />' .  $SQL;
 		}
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -342,13 +342,13 @@ if ( isset($_POST['pricelist']) ) {
 
 	if (DB_error_no() !=0) {
 		$Title = _('Security Token List Export Problem ....');
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg( _('The Security Token List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
 		echo '<br /><a href="' .$RootPath .'/index.php?' . SID . '">' .   _('Back to the menu'). '</a>';
 		if ($debug==1){
 			echo '<br />' .  $SQL;
 		}
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -378,13 +378,13 @@ if ( isset($_POST['pricelist']) ) {
 
 	if (DB_error_no() !=0) {
 		$Title = _('Security Role List Export Problem ....');
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg( _('The Security Role List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
 		if ($debug==1){
 			echo '<br />' .  $SQL;
 		}
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -414,13 +414,13 @@ if ( isset($_POST['pricelist']) ) {
 
 	if (DB_error_no() !=0) {
 		$Title = _('Security Group List Export Problem ....');
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg( _('The Security Group List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
 		echo '<br /><a href="' .$RootPath .'/index.php?' . SID . '">' .   _('Back to the menu'). '</a>';
 		if ($debug==1){
 			echo '<br />' .  $SQL;
 		}
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -466,13 +466,13 @@ if ( isset($_POST['pricelist']) ) {
 
 	if (DB_error_no() !=0) {
 		$Title = _('Security User List Export Problem ....');
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg( _('The Security User List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
 		if ($debug==1){
 			echo '<br />' .  $SQL;
 		}
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -527,7 +527,7 @@ if ( isset($_POST['pricelist']) ) {
 	exit;
 } else {
 	$Title = _('Data Exports');
-	include('includes/header.inc');
+	include('includes/header.php');
 
 	// SELECT EXPORT FOR PRICE LIST
 
@@ -653,6 +653,6 @@ if ( isset($_POST['pricelist']) ) {
           </form><br />';
 
 
-	include('includes/footer.inc');
+	include('includes/footer.php');
 }
 ?>

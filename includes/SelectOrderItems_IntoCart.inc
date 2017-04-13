@@ -112,7 +112,7 @@ if ($AlreadyOnThisOrder!=1){
 			$Price = GetPrice($NewItem, $_SESSION['Items'.$identifier]->DebtorNo,$_SESSION['Items'.$identifier]->Branch, $NewItemQty);
 
 			/* Need to check for sell through support deals */
-			
+
 			$sql = "SELECT rebateamount/rate AS rebateinfunctionalcurrency,
 							rebatepercent
 					FROM sellthroughsupport INNER JOIN suppliers
@@ -138,7 +138,7 @@ if ($AlreadyOnThisOrder!=1){
 					}
 				}
 			}
-			
+
 			/* Sell support can also be specified by stock category */
 
 			$sql = "SELECT rebateamount/rate AS rebateinfunctionalcurrency,
@@ -181,7 +181,7 @@ if ($AlreadyOnThisOrder!=1){
 				$Discount += $SellSupportPercent; //combine any discount matrix discount with the sell through support.
 				prnMsg(_('Sell through support available and applied of') . ' ' . locale_number_format($SellSupportPercent*100,2), 'info');
 			}
-			
+
 			$WithinCreditLimit = true;
 
 			if ($_SESSION['Items'.$identifier]->SpecialInstructions) {

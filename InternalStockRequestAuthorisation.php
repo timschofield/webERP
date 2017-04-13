@@ -2,13 +2,13 @@
 
 /* $Id: InternalStockRequestAuthorisation.php 4576 2011-05-27 10:59:20Z daintree $*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('Authorise Internal Stock Requests');
 $ViewTopic = 'Inventory';
 $BookMark = 'AuthoriseRequest';
 
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
 
@@ -124,5 +124,5 @@ echo '<br /><div class="centre"><input type="submit" name="UpdateAll" value="' .
       </div>
       </form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

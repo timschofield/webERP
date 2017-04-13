@@ -4,11 +4,11 @@
 
 $PricesSecurity = 12;
 
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('Search Outstanding Purchase Orders');
 
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/DefinePOClass.php');
 
 if (isset($_GET['SelectedStockItem'])) {
@@ -188,7 +188,7 @@ if (!isset($OrderNumber) or $OrderNumber == '') {
 				} else { //it's not the first loop
 					echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 				}
-			
+
 			} else {//user have not selected all locations; There are two possibilities that users have right, but not choose all; or vice visa
 				if ($myrow['total'] == $UserLocations) { //user have allloc right
 					if($AllListed === false){//first loop
@@ -205,7 +205,7 @@ if (!isset($OrderNumber) or $OrderNumber == '') {
 		} else {//users have not selected locations
 			if($myrow['total'] == $UserLocations){//users have right to submit All locations
 				if($AllListed === false){//first loop
-					echo '<option selected="selected" value="ALLLOC">' . _('All') . '</option>';//default value is all 
+					echo '<option selected="selected" value="ALLLOC">' . _('All') . '</option>';//default value is all
 					echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 					$AllListed = true;
 				} else {//not first loop
@@ -217,11 +217,11 @@ if (!isset($OrderNumber) or $OrderNumber == '') {
 				} else {
 					echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 				}
-			
+
 			}
 
 		}
-	
+
 	}
 	echo '</select> ' . _('Order Status:') . ' <select name="Status">';
 	if (!isset($_POST['Status']) OR $_POST['Status'] == 'Pending_Authorised') {
@@ -370,7 +370,7 @@ else {
 						SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue
 				FROM purchorders INNER JOIN purchorderdetails
 				ON purchorders.orderno=purchorderdetails.orderno
-				INNER JOIN locationusers 
+				INNER JOIN locationusers
 				ON purchorders.intostocklocation=locationusers.loccode
 				AND userid='" . $_SESSION['UserID'] . "' AND canview = 1
 				INNER JOIN suppliers
@@ -431,7 +431,7 @@ else {
 						AND orddate<='" . $DateTo . "'
 						AND purchorderdetails.itemcode='" . $SelectedStockItem . "'
 						AND purchorders.supplierno='" . $SelectedSupplier . "'
-						" . $WhereStockLocation 
+						" . $WhereStockLocation
 						 . $StatusCriteria . "
 						GROUP BY purchorders.orderno ASC,
 							purchorders.realorderno,
@@ -468,7 +468,7 @@ else {
 						AND orddate>='" . $DateFrom . "'
 						AND orddate<='" . $DateTo . "'
 						AND purchorders.supplierno='" . $SelectedSupplier . "'
-						" . $WhereStockLocation  
+						" . $WhereStockLocation
 						 . $StatusCriteria . "
 						GROUP BY purchorders.orderno ASC,
 							purchorders.realorderno,
@@ -523,7 +523,7 @@ else {
 						AND orddate>='" . $DateFrom . "'
 						AND orddate<='" . $DateTo . "'
 						AND purchorderdetails.itemcode='" . $SelectedStockItem . "'
-						" . $WhereStockLocation . 
+						" . $WhereStockLocation .
 						 $StatusCriteria . "
 						GROUP BY purchorders.orderno ASC,
 							purchorders.realorderno,
@@ -559,7 +559,7 @@ else {
 						WHERE purchorderdetails.completed=0
 						AND orddate>='" . $DateFrom . "'
 						AND orddate<='" . $DateTo . "'
-						" . $WhereStockLocation .  
+						" . $WhereStockLocation .
 						  $StatusCriteria . "
 						GROUP BY purchorders.orderno ASC,
 							purchorders.realorderno,
@@ -680,5 +680,5 @@ else {
 }
 echo '</div>
       </form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

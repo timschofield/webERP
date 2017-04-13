@@ -2,11 +2,11 @@
 
 /* $Id$ */
 
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('Sales Category Maintenance');
 
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
@@ -36,7 +36,7 @@ $SupportedImgExt = array('png','jpg','jpeg');
 
 if (isset($SelectedCategory) AND isset($_FILES['CategoryPicture']) AND $_FILES['CategoryPicture']['name'] !='') {
 	$ImgExt = pathinfo($_FILES['CategoryPicture']['name'], PATHINFO_EXTENSION);
-	
+
 	$result    = $_FILES['CategoryPicture']['error'];
  	$UploadTheFile = 'Yes'; //Assume all is well to start off with
  	// Stock is always capatalized so there is no confusion since "cat_" is lowercase
@@ -157,11 +157,11 @@ if (isset($_POST['submit'])  AND isset($EditName) ) { // Creating or updating a 
 			$result = DB_query($sql);
 			prnMsg(_('The sales category') . ' ' . $SelectedCategory . ' ' . _('has been deleted') .
 				' !','success');
-			
+
 			//if( file_exists($_SESSION['part_pics_dir'] . '/SALESCAT_' . $SelectedCategory . '.jpg') ) {
 			//	unlink($_SESSION['part_pics_dir'] . '/SALESCAT_' . $SelectedCategory . '.jpg');
 			//}
-			
+
 			foreach ($SupportedImgExt as $ext) {
 				$file = $_SESSION['part_pics_dir'] . '/SALESCAT_' . $SelectedCategory . '.' . $ext;
 				if (file_exists ($file) ) {
@@ -177,7 +177,7 @@ if (isset($_POST['submit'])  AND isset($EditName) ) { // Creating or updating a 
 } elseif( isset($_POST['submit']) AND isset($_POST['AddStockID']) AND $_POST['Brand']!='') {
 	$sql = "INSERT INTO salescatprod (stockid,
 										salescatid,
-										manufacturers_id) 
+										manufacturers_id)
 							VALUES ('". $_POST['AddStockID']."',
 									'".(isset($ParentCategory)?($ParentCategory):('NULL'))."',
 									'" . $_POST['Brand'] . "')";
@@ -186,7 +186,7 @@ if (isset($_POST['submit'])  AND isset($EditName) ) { // Creating or updating a 
 	unset($_POST['AddStockID']);
 } elseif( isset($_GET['DelStockID']) ) {
 	$sql = "DELETE FROM salescatprod WHERE
-				stockid='". $_GET['DelStockID']."' 
+				stockid='". $_GET['DelStockID']."'
 				AND salescatid".(isset($ParentCategory)?('='.$ParentCategory):(' IS NULL'));
 	$result = DB_query($sql);
 	prnMsg(_('Stock item') . ' ' . $_GET['DelStockID'] . ' ' . _('has been removed') .
@@ -282,7 +282,7 @@ if (DB_num_rows($result) == 0) {
 			echo '<tr class="OddTableRows">';
 			$k=1;
 		}
-		
+
 		$SupportedImgExt = array('png','jpg','jpeg');
 		$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/SALESCAT_' . $myrow['salescatid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
 		if( extension_loaded('gd') && function_exists('gd_info') && file_exists($imagefile) ) {
@@ -297,7 +297,7 @@ if (DB_num_rows($result) == 0) {
 		} else {
 			$CatImgLink = _('No Image');
 		}
-		
+
 		if ($myrow['active'] == 1){
 			$Active = _('Yes');
 		}else{
@@ -343,8 +343,8 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 if (isset($SelectedCategory)) {
 	//editing an existing stock category
 
-	$sql = "SELECT salescatid, 
-				parentcatid, 
+	$sql = "SELECT salescatid,
+				parentcatid,
 				salescatname,
 				active
 			FROM salescat
@@ -393,8 +393,8 @@ if (isset ($_POST['Active']) && $_POST['Active'] == '1') {
 	echo '<option value="1">' . _('Yes') . '</option>';
 }
 echo '</select></td>
-	</tr>';		
-	
+	</tr>';
+
 // Image upload only if we have a selected category
 if (isset($SelectedCategory)) {
 	echo '<tr>
@@ -447,10 +447,10 @@ if($result AND DB_num_rows($result)) {
 }
 
 // This query will return the stock that is available
-$sql = "SELECT stockid, 
-				description 
-		FROM stockmaster INNER JOIN stockcategory 
-		ON stockmaster.categoryid=stockcategory.categoryid 
+$sql = "SELECT stockid,
+				description
+		FROM stockmaster INNER JOIN stockcategory
+		ON stockmaster.categoryid=stockcategory.categoryid
 		WHERE discontinued = 0
 		AND mbflag<>'G'
 		AND stocktype<>'M'
@@ -468,7 +468,7 @@ if($result AND DB_num_rows($result)) {
 	echo '<input type="hidden" name="ParentCategory" value="' .
 		(isset($_POST['ParentCategory'])?($_POST['ParentCategory']):('0')) . '" /> ';
 
-	
+
 	echo '<table class="selection">
 		<tr>
 			<th colspan="2">' . _('Add Inventory to this category') . '</th>
@@ -476,11 +476,11 @@ if($result AND DB_num_rows($result)) {
 		<tr>
 			<td>' . _('Select Item') . ':</td>
 			<td><select name="AddStockID">';
-		
+
 	while( $myrow = DB_fetch_array($result) ) {
 		if ( !array_keys( $StockIDs, $myrow['stockid']  ) ) {
 			// Only if the StockID is not already selected
-			echo '<option value="'.$myrow['stockid'].'">' . 
+			echo '<option value="'.$myrow['stockid'].'">' .
 				$myrow['stockid'] . '&nbsp;-&nbsp;&quot;'.
 				$myrow['description'] . '&quot;</option>';
 		}
@@ -491,7 +491,7 @@ if($result AND DB_num_rows($result)) {
 			<td>' . _('Select Manufacturer/Brand') . ':</td>
 			<td><select name="Brand">
 			 <option value="">' . _('Select Brand') . '</option>';
-	$BrandResult = DB_query("SELECT manufacturers_id, manufacturers_name FROM manufacturers"); 
+	$BrandResult = DB_query("SELECT manufacturers_id, manufacturers_name FROM manufacturers");
 	while( $myrow = DB_fetch_array($BrandResult) ) {
 		echo '<option value="'.$myrow['manufacturers_id'].'">' .  $myrow['manufacturers_name'] . '</option>';
 	}
@@ -523,15 +523,15 @@ if (isset($ParentCategory)){
 	$ShowSalesCategory = "='" . $ParentCategory . "'";
 } else {
 	$ShowSalesCategory = ' IS NULL';
-} 
+}
 $sql = "SELECT salescatprod.stockid,
 				salescatprod.featured,
 				stockmaster.description,
-				manufacturers_name 
-		FROM salescatprod 
-		INNER JOIN stockmaster 
+				manufacturers_name
+		FROM salescatprod
+		INNER JOIN stockmaster
 			ON salescatprod.stockid=stockmaster.stockid
-		INNER JOIN manufacturers 
+		INNER JOIN manufacturers
 			ON salescatprod.manufacturers_id=manufacturers.manufacturers_id
 		WHERE salescatprod.salescatid". $ShowSalesCategory . "
 		ORDER BY salescatprod.stockid";
@@ -583,5 +583,5 @@ if($result ) {
 	DB_free_result($result);
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

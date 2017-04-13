@@ -1,7 +1,7 @@
 <?php
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 $result = DB_query("SELECT debtorsmaster.name,
 							debtorsmaster.currcode,
@@ -14,7 +14,7 @@ $myrow = DB_fetch_array($result);
 
 $Title = _('Special Prices for') . ' '. htmlspecialchars($myrow['name'], ENT_QUOTES, 'UTF-8');
 
-include('includes/header.inc');
+include('includes/header.php');
 
 if (isset($_GET['Item'])){
 	$Item = $_GET['Item'];
@@ -28,7 +28,7 @@ if (!isset($Item) OR !isset($_SESSION['CustomerID']) OR $_SESSION['CustomerID']=
 		. _('then an item must be selected before this page is called') . '. '
 			. _('The product selection page should call this page with a valid product code'),'info');
 	echo '<br />';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -371,7 +371,7 @@ echo '<br />
         </div>
 		</form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 exit;
 
 function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $CustomerID, $db) {

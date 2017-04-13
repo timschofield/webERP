@@ -1,9 +1,9 @@
 <?php
 /* $Id$*/
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('Create Database Template File');
-include ('includes/header.inc');
+include ('includes/header.php');
 
 if (isset($_POST['CreateTemplate'])){
       $InputError = false; //assume the best - but check for the worst
@@ -250,5 +250,5 @@ echo '<div class="centre"><input type="submit" name="CreateTemplate" value="' . 
 
 echo '</div>
       </form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

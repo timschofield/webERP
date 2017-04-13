@@ -1,16 +1,16 @@
 <?php
 /*	$Id$*/
 /*	This script is an utility to change an inventory item code. */
-/*	It uses function ChangeFieldInTable($TableName, $FieldName, $OldValue, 
+/*	It uses function ChangeFieldInTable($TableName, $FieldName, $OldValue,
 	$NewValue, $db) from .../includes/MiscFunctions.php.*/
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('UTILITY PAGE Change A Stock Code');// Screen identificator.
 $ViewTopic = 'SpecialUtilities'; // Filename in ManualContents.php's TOC.
 $BookMark = 'Z_ChangeStockCode'; // Anchor's id in the manual's html document.
-include('includes/header.inc');
+include('includes/header.php');
 echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
-	'/images/inventory.png" title="' . 
+	'/images/inventory.png" title="' .
 	_('Change An Inventory Item Code') . '" /> ' .// Icon title.
 	_('Change An Inventory Item Code') . '</p>';// Page title.
 
@@ -127,12 +127,12 @@ if (isset($_POST['ProcessStockChange'])){
 			if (DB_error_no()==0) {
 				ChangeFieldInTable("mrpplannedorders", "part", $_POST['OldStockID'], $_POST['NewStockID'], $db);
 			}
-	
+
 			$result = DB_query("SELECT * FROM mrprequirements" ,'','',false,false);
 			if (DB_error_no()==0){
 				ChangeFieldInTable("mrprequirements", "part", $_POST['OldStockID'], $_POST['NewStockID'], $db);
 			}
-			
+
 			$result = DB_query("SELECT * FROM mrpsupplies" ,'','',false,false);
 			if (DB_error_no()==0){
 				ChangeFieldInTable("mrpsupplies", "part", $_POST['OldStockID'], $_POST['NewStockID'], $db);
@@ -150,7 +150,7 @@ if (isset($_POST['ProcessStockChange'])){
 		ChangeFieldInTable("grns", "itemcode", $_POST['OldStockID'], $_POST['NewStockID'], $db);
 		ChangeFieldInTable("contractbom", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
 		ChangeFieldInTable("bom", "component", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-		
+
 		DB_IgnoreForeignKeys($db);
 
 		ChangeFieldInTable("bom", "parent", $_POST['OldStockID'], $_POST['NewStockID'], $db);
@@ -203,7 +203,7 @@ if (isset($_POST['ProcessStockChange'])){
 		if ($_SESSION['SelectedStockItem'] == $_POST['OldStockID']) {
 			$_SESSION['SelectedStockItem'] = $_POST['NewStockID'];
 		}
-		
+
 	} //only do the stuff above if  $InputError==0
 }
 
@@ -227,6 +227,6 @@ echo '<br />
 	</div>
 	</form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

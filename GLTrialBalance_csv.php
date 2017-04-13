@@ -17,7 +17,7 @@ $_POST['CompanyNameField'] = $_GET['CompanyName'];
 $_SESSION['DatabaseName'] =  $_GET['CompanyName'];
 //htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') = dirname(htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')) .'/GLTrialBalance_csv.php?ToPeriod=' . $_GET['ToPeriod'] . '&FromPeriod=' . $_GET['FromPeriod'];
 
-include ('includes/session.inc');
+include ('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 
 include ('includes/GLPostings.inc'); //do any outstanding posting

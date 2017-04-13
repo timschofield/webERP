@@ -1,24 +1,24 @@
 <?php
 /*	$Id$*/
-/*	This script runs xgettext on the sources to produce a .pot (Portable Object 
-	Template) file, which contains a list of all the translatable strings 
-	extracted from the sources. The resultant system default language file 
-	(.pot file) is saved in the .../locale/en_GB.utf8/LC_MESSAGES/messages.po 
-	path. Note: Comments (starting with ///) placed directly before strings 
+/*	This script runs xgettext on the sources to produce a .pot (Portable Object
+	Template) file, which contains a list of all the translatable strings
+	extracted from the sources. The resultant system default language file
+	(.pot file) is saved in the .../locale/en_GB.utf8/LC_MESSAGES/messages.po
+	path. Note: Comments (starting with ///) placed directly before strings
 	thus marked are made available as hints to translators by helper programs.*/
 
 /* Steve Kitchen */
 
 //$PageSecurity = 15;
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('Rebuild the System Default Language File');
 $ViewTopic = 'SpecialUtilities';// Filename in ManualContents.php's TOC.
 $BookMark = 'Z_poRebuildDefault';// Anchor's id in the manual's html document.
-include('includes/header.inc');
-echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme . 
-		'/images/maintenance.png" title="' . 
-		_('Rebuild the System Default Language File') . '" />' . ' ' . 
+include('includes/header.php');
+echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
+		'/images/maintenance.png" title="' .
+		_('Rebuild the System Default Language File') . '" />' . ' ' .
 		_('Rebuild the System Default Language File') . '</p>';
 
 /* Your webserver user MUST have read/write access to here,	otherwise you'll be wasting your time */
@@ -58,5 +58,5 @@ if (isset($_POST['submit'])) {
 	echo '</div>';
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

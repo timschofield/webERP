@@ -2,7 +2,7 @@
 
 /* $Id$*/
 
-include ('includes/session.inc');
+include ('includes/session.php');
 /*
 http://127.0.0.1/~brink/webERP/GetStockImage.php
 ?automake=1&width=81&height=74&stockid=&textcolor=FFFFF0&bevel=3&text=aa&bgcolor=007F00
@@ -138,10 +138,10 @@ if ( file_exists($tmpFileName.'.jpg') ) {
 }
 if( !$automake && !isset($FileName) ) {
 		$Title = _('Stock Image Retrieval ....');
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg( _('The Image could not be retrieved because it does not exist'), 'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 }
 

@@ -2,9 +2,9 @@
 /* $Id$*/
 /* Script to update costs for all BOM items, from the bottom up */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Recalculate BOM costs');
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 
 if (isset($_GET['Run'])){
@@ -63,5 +63,5 @@ if (isset($Run)) { //start bom processing
 		</form>';
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

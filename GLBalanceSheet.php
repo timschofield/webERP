@@ -5,7 +5,7 @@
 /*Through deviousness and cunning, this system allows shows the balance sheets as at the end of any period selected - so first off need to show the input of criteria screen while the user is selecting the period end of the balance date meanwhile the system is posting any unposted transactions */
 
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('Balance Sheet');// Screen identification.
 $ViewTopic = 'GeneralLedger';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'BalanceSheet';// Anchor's id in the manual's html document.
@@ -16,7 +16,7 @@ include('includes/AccountSectionsDef.php'); // This loads the $Sections variable
 if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'])){
 
 	/*Show a form to allow input of criteria for TB to show */
-	include('includes/header.inc');
+	include('includes/header.php');
 	echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 		'/images/printer.png" title="' .// Icon image.
 		_('Print Statement of Financial Position') . '" /> ' .// Icon title.
@@ -110,14 +110,14 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 	$AccumProfitResult = DB_query($SQL);
 	if (DB_error_no() !=0) {
 		$Title = _('Balance Sheet') . ' - ' . _('Problem Report') . '....';
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg( _('The accumulated profits brought forward could not be calculated by the SQL because') . ' - ' . DB_error_msg() );
 		echo '<br />
 				<a href="' .$RootPath .'/index.php">' .  _('Back to the menu'). '</a>';
 		if ($debug==1){
 			echo '<br />' .  $SQL;
 		}
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -150,13 +150,13 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 
 	if (DB_error_no() !=0) {
 		$Title = _('Balance Sheet') . ' - ' . _('Problem Report') . '....';
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg( _('No general ledger accounts were returned by the SQL because') . ' - ' . DB_error_msg() );
 		echo '<br /><a href="' .$RootPath .'/index.php">' .  _('Back to the menu'). '</a>';
 		if ($debug==1){
 			echo '<br />' .  $SQL;
 		}
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -329,10 +329,10 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 
 	if ($ListCount == 0) {   //UldisN
 		$Title = _('Print Balance Sheet Error');
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg( _('There were no entries to print out for the selections specified') );
 		echo '<br /><a href="'. $RootPath.'/index.php?' . SID . '">' .  _('Back to the menu'). '</a>';
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	} else {
 	    $pdf->OutputD($_SESSION['DatabaseName'] . '_GL_Balance_Sheet_' . date('Y-m-d') . '.pdf');
@@ -340,7 +340,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 	}
 	exit;
 } else {
-	include('includes/header.inc');
+	include('includes/header.php');
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<div>';// div class=?
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -724,5 +724,5 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 	echo '</form>';
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

@@ -1,7 +1,7 @@
 <?php
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Update Item Costs From CSV');
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
 		'/images/maintenance.png" title="' .
@@ -30,7 +30,7 @@ if (isset($_FILES['CostUpdateFile']) and $_FILES['CostUpdateFile']['name']) { //
 	if ( count($HeadRow) != count($FieldHeadings) ) {
 		prnMsg (_('File contains') . ' '. count($HeadRow). ' ' . _('columns, expected') . ' '. count($FieldHeadings) ,'error');
 		fclose($FileHandle);
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -40,7 +40,7 @@ if (isset($_FILES['CostUpdateFile']) and $_FILES['CostUpdateFile']['name']) { //
 		if ( trim(mb_strtoupper($HeadField)) != trim(mb_strtoupper($FieldHeadings[$HeadingColumnNumber]))) {
 			prnMsg (_('The file to import the item cost updates from contains incorrect column headings') . ' '. mb_strtoupper($HeadField). ' != '. mb_strtoupper($FieldHeadings[$HeadingColumnNumber]). '<br />' . _('The column headings must be') . ' StockID, Material Cost, Labour Cost, Overhead Cost','error');
 			fclose($FileHandle);
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 		}
 		$HeadingColumnNumber++;
@@ -75,9 +75,9 @@ if (isset($_FILES['CostUpdateFile']) and $_FILES['CostUpdateFile']['name']) { //
 
 	 	$OldCost = $OldRow['materialcost'] + $OldRow['labourcost'] + $OldRow['overheadcost'];
 		//dont update costs for assembly or kit-sets or ghost items!!
-		if ((abs($NewCost - $OldCost) > pow(10,-($_SESSION['StandardCostDecimalPlaces']+1))) 
-			AND $OldRow['mbflag']!='K' 
-			AND $OldRow['mbflag']!='A' 
+		if ((abs($NewCost - $OldCost) > pow(10,-($_SESSION['StandardCostDecimalPlaces']+1)))
+			AND $OldRow['mbflag']!='K'
+			AND $OldRow['mbflag']!='A'
 			AND $OldRow['mbflag']!='G'){
 
 			ItemCostUpdateGL($db, $StockID, $NewCost, $OldCost, $QOH);
@@ -122,6 +122,6 @@ if (isset($_FILES['CostUpdateFile']) and $_FILES['CostUpdateFile']['name']) { //
 		</form>';
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

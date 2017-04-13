@@ -2,7 +2,7 @@
 
 /* $Id$ */
 
-include('includes/session.inc');
+include('includes/session.php');
 include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
 
 if (isset($_POST['Edit']) or isset($_GET['Edit']) or isset($_GET['DebtorNo'])) {
@@ -14,10 +14,10 @@ if (isset($_POST['Edit']) or isset($_GET['Edit']) or isset($_GET['DebtorNo'])) {
 }
 
 $Title = _('Customer Maintenance');
-/* webERP manual links before header.inc */
+/* webERP manual links before header.php */
 $ViewTopic= 'AccountsReceivable';
 $BookMark = 'NewCustomer';
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/CountriesArray.php');
 
@@ -272,7 +272,7 @@ if (isset($_POST['submit'])) {
 			'. ' . _('If this does not happen') .' (' . _('if the browser does not support META Refresh') . ') ' .
 			'<a href="' . $RootPath . '/CustomerBranches.php?DebtorNo=' . $_POST['DebtorNo']  . '"></a></div>';
 
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 		}
 	} else {
@@ -346,7 +346,7 @@ if (isset($_POST['submit'])) {
 		$sql="DELETE FROM debtorsmaster WHERE debtorno='" . $_POST['DebtorNo'] . "'";
 		$result = DB_query($sql);
 		prnMsg( _('Customer') . ' ' . $_POST['DebtorNo'] . ' ' . _('has been deleted - together with all the associated branches and contacts'),'success');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		unset($_SESSION['CustomerID']);
 		exit;
 	} //end if Delete Customer
@@ -437,7 +437,7 @@ if (!isset($DebtorNo)) {
 
 	if ($SetupErrors>0) {
 		echo '<br /><div class="centre"><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'" >' . _('Click here to continue') . '</a></div>';
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
@@ -1199,5 +1199,5 @@ if (!isset($DebtorNo)) {
           </form>';
 } // end of main ifs
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

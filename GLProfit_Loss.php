@@ -2,7 +2,7 @@
 /* $Id$*/
 /* Shows the profit and loss of the company for the range of periods entered. */
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('Profit and Loss');// Screen identification.
 $ViewTopic= 'GeneralLedger';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'ProfitAndLoss';// Anchor's id in the manual's html document.
@@ -19,7 +19,7 @@ if ((!isset($_POST['FromPeriod'])
 	AND !isset($_POST['ToPeriod']))
 		OR isset($_POST['SelectADifferentPeriod'])){
 
-	include('includes/header.inc');
+	include('includes/header.php');
 	echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 		'/images/printer.png" title="' .// Icon image.
 		_('Print Statement of Comprehensive Income') . '" /> ' .// Icon title.
@@ -142,10 +142,10 @@ if ((!isset($_POST['FromPeriod'])
 	$NumberOfMonths = $_POST['ToPeriod'] - $_POST['FromPeriod'] + 1;
 
 	if ($NumberOfMonths > 12){
-		include('includes/header.inc');
+		include('includes/header.php');
 		echo '<p>';
 		prnMsg(_('A period up to 12 months in duration can be specified') . ' - ' . _('the system automatically shows a comparative for the same period from the previous year') . ' - ' . _('it cannot do this if a period of more than 12 months is specified') . '. ' . _('Please select an alternative period range'),'error');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -186,22 +186,22 @@ if ((!isset($_POST['FromPeriod'])
 
 	if (DB_error_no() != 0) {
 		$Title = _('Profit and Loss') . ' - ' . _('Problem Report') . '....';
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg( _('No general ledger accounts were returned by the SQL because') . ' - ' . DB_error_msg() );
 		echo '<br /><a href="' .$RootPath .'/index.php">' .  _('Back to the menu'). '</a>';
 		if ($debug == 1){
 			echo '<br />' .  $SQL;
 		}
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 	if (DB_num_rows($AccountsResult)==0){
 		$Title = _('Print Profit and Loss Error');
-		include('includes/header.inc');
+		include('includes/header.php');
 		echo '<br />';
 		prnMsg( _('There were no entries to print out for the selections specified'),'warn' );
 		echo '<br /><a href="'. $RootPath.'/index.php">' .  _('Back to the menu'). '</a>';
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -563,7 +563,7 @@ if ((!isset($_POST['FromPeriod'])
 
 } else {
 
-	include('includes/header.inc');
+	include('includes/header.php');
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<div>';// div class=?
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
@@ -575,7 +575,7 @@ if ((!isset($_POST['FromPeriod'])
 	if ($NumberOfMonths >12){
 		echo '<br />';
 		prnMsg(_('A period up to 12 months in duration can be specified') . ' - ' . _('the system automatically shows a comparative for the same period from the previous year') . ' - ' . _('it cannot do this if a period of more than 12 months is specified') . '. ' . _('Please select an alternative period range'),'error');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -1319,5 +1319,5 @@ if ((!isset($_POST['FromPeriod'])
 }
 echo '</div>';// div class=?
 echo '</form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

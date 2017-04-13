@@ -2,7 +2,7 @@
 
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 if (isset($_GET['GRNNo'])) {
 	$GRNNo=$_GET['GRNNo'];
@@ -175,9 +175,9 @@ if ($NoOfGRNs >0){
     $pdf->__destruct();
 } else { //there were not GRNs to print
 	$Title = _('GRN Error');
-	include('includes/header.inc');
+	include('includes/header.php');
 	prnMsg(_('There were no GRNs to print'),'warn');
 	echo '<br /><a href="'.$RootPath.'/index.php">' .  _('Back to the menu') . '</a>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 }
 ?>

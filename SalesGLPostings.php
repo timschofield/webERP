@@ -2,11 +2,11 @@
 
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Sales GL Postings Set Up');
 $ViewTopic= 'CreatingNewSystem';
 $BookMark = 'SalesGLPostings';
-include('includes/header.inc');
+include('includes/header.php');
 
 if (isset($_GET['SelectedSalesPostingID'])){
 	$SelectedSalesPostingID =$_GET['SelectedSalesPostingID'];
@@ -432,5 +432,5 @@ if (!isset($_GET['delete'])) {
 } //end if record deleted no point displaying form to add record
 
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

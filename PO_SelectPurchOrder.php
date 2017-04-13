@@ -1,9 +1,9 @@
 <?php
 /* $Id$*/
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('Search Purchase Orders');
-include ('includes/header.inc');
+include ('includes/header.php');
 
 echo '<p class="page_title_text">
 		<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Purchase Orders') . '" alt=""  />' . ' ' . _('Purchase Orders') .
@@ -480,5 +480,5 @@ else {
 }
 echo '</div>
       </form>';
-include ('includes/footer.inc');
+include ('includes/footer.php');
 ?>

@@ -2,7 +2,7 @@
 
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 include ('includes/htmlMimeMail.php');
 $ViewTopic = 'ARReports';
@@ -80,10 +80,10 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 
 	if (DB_Num_Rows($StatementResults) == 0){
 		$Title = _('Print Statements') . ' - ' . _('No Customers Found');
-	    require('includes/header.inc');
+	    require('includes/header.php');
 		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . _('Print Customer Account Statements') . '</p>';
 		prnMsg( _('There were no Customers matching your selection of ') . $_POST['FromCust'] . ' - ' . $_POST['ToCust'] . '.' , 'error');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit();
 	}
 
@@ -95,7 +95,7 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 		$PageNumber = 1;
 	} else {
 		$Title = _('Email Customer Statements');
-		include('includes/header.inc');
+		include('includes/header.php');
 		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/email.png" title="' . _('Email') . '" alt="" />' . ' ' . _('Emailing Customer Account Statements') . '</p>';
 
 		echo '<table class="selection">
@@ -511,7 +511,7 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 	} elseif (!isset($pdf)) {
 		$Title = _('Print Statements') . ' - ' . _('No Statements Found');
 		if ($_POST['EmailOrPrint']=='print') {
-			include('includes/header.inc');
+			include('includes/header.php');
 			echo '<br />
 				<br />
 				<br />' . prnMsg( _('There were no statements to print'));
@@ -523,13 +523,13 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 		echo'<br />
 				<br />
 				<br />';
-		include('includes/footer.inc');
+		include('includes/footer.php');
 	}
 
 } else { /*The option to print PDF was not hit */
 
 	$Title = _('Select Statements to Print');
-	include('includes/header.inc');
+	include('includes/header.php');
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . _('Print Customer Account Statements') . '</p>';
 	if (!isset($_POST['FromCust']) OR $_POST['FromCust']=='') {
 
@@ -562,7 +562,7 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
               </form>';
 	}
 	echo '<br /><br /><br />';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 
 } /*end of else not PrintPDF */
 

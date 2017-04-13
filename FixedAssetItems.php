@@ -2,13 +2,13 @@
 
 /* $Id$ */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Fixed Assets');
 
 $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetItems';
 
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 
 echo '<a href="' . $RootPath . '/SelectAsset.php">' . _('Back to Select') . '</a><br />' . "\n";
@@ -372,7 +372,7 @@ if (isset($_POST['submit'])) {
 		$result=DB_query($sql, _('Could not delete the asset record'),'',true);
 
 		$result = DB_Txn_Commit();
-		
+
 		// Delete the AssetImage
 		foreach ($SupportedImgExt as $ext) {
 			$file = $_SESSION['part_pics_dir'] . '/ASSET_' . $AssetID . '.' . $ext;
@@ -691,5 +691,5 @@ if (isset($New)) {
 echo '</div>
       </div>
 	</form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

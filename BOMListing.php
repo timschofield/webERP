@@ -2,7 +2,7 @@
 
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 If (isset($_POST['PrintPDF'])
 	AND isset($_POST['FromCriteria'])
@@ -40,20 +40,20 @@ If (isset($_POST['PrintPDF'])
 
 	if (DB_error_no() !=0) {
 	   $Title = _('Bill of Materials Listing') . ' - ' . _('Problem Report');
-	   include('includes/header.inc');
+	   include('includes/header.php');
 	   prnMsg(_('The Bill of Material listing could not be retrieved by the SQL because'),'error');
 	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
 	      echo '<br />' . $SQL;
 	   }
-	   include('includes/footer.inc');
+	   include('includes/footer.php');
 	   exit;
 	}
 	if (DB_num_rows($BOMResult)==0){
 	   $Title = _('Bill of Materials Listing') . ' - ' . _('Problem Report');
-	   include('includes/header.inc');
+	   include('includes/header.php');
 	   prnMsg( _('The Bill of Material listing has no bills to report on'),'warn');
-	   include('includes/footer.inc');
+	   include('includes/footer.php');
 	   exit;
 	}
 
@@ -106,7 +106,7 @@ If (isset($_POST['PrintPDF'])
 } else { /*The option to print PDF was not hit */
 
 	$Title=_('Bill Of Material Listing');
-	include('includes/header.inc');
+	include('includes/header.php');
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/reports.png" title="' . _('Search') .
 		'" alt="" />' . ' ' . $Title . '</p><br />';
 	if (!isset($_POST['FromCriteria']) || !isset($_POST['ToCriteria'])) {
@@ -132,7 +132,7 @@ If (isset($_POST['PrintPDF'])
              </div>
              </form>';
 	}
-	include('includes/footer.inc');
+	include('includes/footer.php');
 
 } /*end of else not PrintPDF */
 

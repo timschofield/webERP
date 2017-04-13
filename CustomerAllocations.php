@@ -7,13 +7,13 @@
 	3. No parameters to show all outstanding credits and receipts yet to be allocated.
 */
 
-include('includes/DefineCustAllocsClass.php');// Before includes/session.inc *******
+include('includes/DefineCustAllocsClass.php');// Before includes/session.php *******
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Customer Receipt') . '/' . _('Credit Note Allocations');
 $ViewTopic= 'ARTransactions';
 $BookMark = 'CustomerAllocations';
-include('includes/header.inc');
+include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.inc');
 
@@ -30,7 +30,7 @@ if (isset($_POST['UpdateDatabase']) OR isset($_POST['RefreshAllocTotal'])) {
 				_('try to use the navigation links provided rather than the back button') . ', ' .
 				_('to avoid this message in future'),
 			'info');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -490,7 +490,7 @@ if (isset($_POST['AllocTrans'])) {
 
 	if (DB_num_rows($result)==0) {
 		prnMsg(_('No outstanding receipts or credits to be allocated for this customer'),'info');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 	 echo '<table class="selection">';
@@ -627,6 +627,6 @@ if (isset($_POST['AllocTrans'])) {
 		<br />';
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

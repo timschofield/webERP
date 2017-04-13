@@ -2,12 +2,12 @@
 
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Search Outstanding Sales Orders');
-/* webERP manual links before header.inc */
+/* webERP manual links before header.php */
 $ViewTopic= "SalesOrders";
 $BookMark = "SelectSalesOrder";
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 if (isset($_POST['Reset'])) {
 	unset($_POST);
@@ -439,7 +439,7 @@ if (isset($OrderNumber) AND $OrderNumber!='') {
 			<b>' . _('The Order Number entered MUST be numeric') . '</b>
 			<br />';
 		unset ($OrderNumber);
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	} else {
 		echo _('Order Number') . ' - ' . $OrderNumber;
@@ -1028,7 +1028,7 @@ echo '</div>
 
 } //end StockID already selected
 
-include('includes/footer.inc');
+include('includes/footer.php');
 function GetSearchItems ($SQLConstraint='') {
 	global $db;
 	if ($_POST['Keywords'] AND $_POST['StockCode']) {

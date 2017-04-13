@@ -2,11 +2,11 @@
 /* $Id$*/
 /* Selection of customer - from where all customer related maintenance, transactions and inquiries start */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Search Customers');
 $ViewTopic = 'AccountsReceivable';
 $BookMark = 'SelectCustomer';
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/customer.png" title="',// Icon image.
@@ -486,7 +486,7 @@ if(isset($_SESSION['CustomerID']) AND $_SESSION['CustomerID'] != '') {
 		$result = DB_query($SQL, $ErrMsg);
 		if(DB_num_rows($result) == 0) {
 			prnMsg( _('You must first setup the geocode parameters') . ' ' . '<a href="' . $RootPath . '/GeocodeSetup.php">' . _('here') . '</a>', 'error');
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 		}
 		$myrow = DB_fetch_array($result);
@@ -883,5 +883,5 @@ function initMap() {
 		}
 	}// end if Extended_CustomerInfo is turned on
 }// end if isset($_SESSION['CustomerID']) AND $_SESSION['CustomerID'] != ''
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

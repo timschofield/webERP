@@ -2,11 +2,11 @@
 /* $Id$*/
 /* Shows the general ledger transactions for a specified account over a specified range of periods */
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('General Ledger Account Inquiry');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLAccountInquiry';
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/transactions.png" title="',// Icon image.
@@ -127,7 +127,7 @@ if(isset($_POST['Show'])) {
 
 	if(!isset($SelectedPeriod)) {
 		prnMsg(_('A period or range of periods must be selected from the list box'),'info');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 	/*Is the account a balance sheet or a profit and loss account */
@@ -376,5 +376,5 @@ if(isset($ShowIntegrityReport) AND $ShowIntegrityReport==True AND $_POST['tag']=
 	prnMsg( _('There are differences between the sum of the transactions and the recorded movements in the ChartDetails table') . '. ' . _('A log of the account differences for the periods report shows below'),'warn');
 	echo '<p>' . $IntegrityReport;
 }
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

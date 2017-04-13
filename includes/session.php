@@ -1,5 +1,5 @@
 <?php
-/* $Id$*/
+/* $Id: session.php 7734 2017-02-25 04:58:10Z daintree $*/
 
 if (!isset($PathPrefix)) {
 	$PathPrefix='';
@@ -117,10 +117,10 @@ if(basename($_SERVER['SCRIPT_NAME'])=='Logout.php'){
 
 	case  UL_CONFIGERR:
 		$Title = _('Account Error Report');
-		include($PathPrefix . 'includes/header.inc');
+		include($PathPrefix . 'includes/header.php');
 		echo '<br /><br /><br />';
 		prnMsg(_('Your user role does not have any access defined for webERP. There is an error in the security setup for this user account'),'error');
-		include($PathPrefix . 'includes/footer.inc');
+		include($PathPrefix . 'includes/footer.php');
 			exit;
 
 	case  UL_NOTVALID:
@@ -166,10 +166,10 @@ if ($_SESSION['HTTPS_Only']==1){
 
 if (!is_array($_SESSION['AllowedPageSecurityTokens']) AND !isset($AllowAnyone)) {
 	$Title = _('Account Error Report');
-	include($PathPrefix . 'includes/header.inc');
+	include($PathPrefix . 'includes/header.php');
 	echo '<br /><br /><br />';
 	prnMsg(_('Security settings have not been defined for your user account. Please advise your system administrator. It could also be that there is a session problem with your PHP web server'),'error');
-	include($PathPrefix . 'includes/footer.inc');
+	include($PathPrefix . 'includes/footer.php');
 	exit;
 }
 
@@ -185,7 +185,7 @@ if (!isset($PageSecurity)){
 if (!isset($AllowAnyone)){
 	if ((!in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PageSecurity))) {
 		$Title = _('Security Permissions Problem');
-		include($PathPrefix . 'includes/header.inc');
+		include($PathPrefix . 'includes/header.php');
 		echo '<tr>
 				<td class="menu_group_items">
 					<table width="100%" class="table_index">
@@ -198,7 +198,7 @@ if (!isset($AllowAnyone)){
 				</td>
 			</tr>';
 
-		include($PathPrefix . 'includes/footer.inc');
+		include($PathPrefix . 'includes/footer.php');
 		exit;
 	}
 }
@@ -249,9 +249,9 @@ if (sizeof($_POST) > 0 AND !isset($AllowAnyone)) {
 	/*Security check to ensure that the form submitted is originally sourced from webERP with the FormID = $_SESSION['FormID'] - which is set before the first login*/
 	if (!isset($_POST['FormID']) OR ($_POST['FormID'] != $_SESSION['FormID'])) {
 		$Title = _('Error in form verification');
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg(_('This form was not submitted with a correct ID') , 'error');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 }

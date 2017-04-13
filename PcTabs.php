@@ -1,12 +1,12 @@
 <?php
 /* $Id$ */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Maintenance Of Petty Cash Tabs');
-/* webERP manual links before header.inc */
+/* webERP manual links before header.php */
 $ViewTopic= 'PettyCash';
 $BookMark = 'PCTabSetup';
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Payment Entry') . '" alt="" />' . ' ' . $Title . '</p>';
 
@@ -88,7 +88,7 @@ if (isset($_POST['Submit'])) {
 		$Errors[$i] = 'GLTab';
 		$i++;
 	}
-	
+
 	if ($InputError == 0) {
 		$Authorisers = '';
 		$i = 0;
@@ -109,7 +109,7 @@ if (isset($_POST['Submit'])) {
 
 	if (isset($SelectedTab) AND $InputError !=1) {
 		//get the authorisers value
-	
+
 
 		$sql = "UPDATE pctabs SET usercode = '" . $_POST['SelectUser'] . "',
 									typetabcode = '" . $_POST['SelectTabs'] . "',
@@ -514,5 +514,5 @@ if (!isset($_GET['delete'])) {
 
 } // end if user wish to delete
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

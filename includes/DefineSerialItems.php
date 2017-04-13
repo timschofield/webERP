@@ -20,7 +20,7 @@ function ValidBundleRef ($StockID, $LocCode, $BundleRef){
 function GetExpiryDate ($StockID, $LocCode, $BundleRef){
 	global $db;
 
-	$SQL = "SELECT expirationdate 
+	$SQL = "SELECT expirationdate
 				FROM stockserialitems
 				WHERE stockid = '" . $StockID . "'
 				AND loccode = '" . $LocCode . "'

@@ -2,7 +2,7 @@
 /* $Id$*/
 /*  */
 
-include('includes/session.inc');
+include('includes/session.php');
 
 if (isset($_GET['SelectedSupplier'])) {
 	$_POST['supplierid']=$_GET['SelectedSupplier'];
@@ -136,23 +136,23 @@ if (isset($_POST['PrintPDF'])) {
 
 	if (DB_error_no() !=0) {
 		$Title = _('Price List') . ' - ' . _('Problem Report');
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg( _('The Price List could not be retrieved by the SQL because') . ' '  . DB_error_msg(),'error');
 		echo '<br />
 				<a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
 			echo '<br />' . $sql;
 		}
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
 	if (DB_num_rows($result)==0) {
 
 		$Title = _('Supplier Price List') . '-' . _('Report');
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg(_('There are no result so the PDF is empty'));
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -206,7 +206,7 @@ if (isset($_POST['PrintPDF'])) {
 } else { /*The option to print PDF was not hit so display form */
 
 	$Title=_('Supplier Price List');
-	include('includes/header.inc');
+	include('includes/header.php');
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Purchase') . '" alt="" />' . ' ' . _('Supplier Price List') . '</p>';
 	echo '<div class="page_help_text">' . _('View the Price List from supplier') . '</div><br />';
 
@@ -262,7 +262,7 @@ if (isset($_POST['PrintPDF'])) {
 
     echo '</div>
           </form>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 
 } /*end of else not PrintPDF */
 

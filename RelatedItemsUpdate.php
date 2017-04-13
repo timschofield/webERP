@@ -1,15 +1,22 @@
 <?php
+/* $Id: QATests.php 7123 2015-02-04 07:30:11Z daintree $*/
+/* Quality Test Maintenance */
 
-include('includes/session.inc');
-
+include('includes/session.php');
 $Title = _('Update Related Items');
+$ViewTopic = 'QualityAssurance';
+$BookMark = 'QA_Tests';
+include('includes/header.php');
 
-include('includes/header.inc');
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+	'/images/inventory.png" title="', // Icon image.
+	$Title, '" /> ', // Icon title.
+	$Title, '</p>';// Page title.
+
 include('includes/SQL_CommonFunctions.inc');
 
 //initialise no input errors assumed initially before we test
 $InputError = 0;
-
 
 if (isset($_GET['Item'])){
 	$Item = trim(mb_strtoupper($_GET['Item']));
@@ -21,7 +28,6 @@ if (isset($_GET['Related'])){
 }elseif (isset($_POST['Related'])){
 	$Related = trim(mb_strtoupper($_POST['Related']));
 }
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Search') . '" alt="" />' . $Title . '</p>';
 
 echo '<a href="' . $RootPath . '/SelectProduct.php">' . _('Back to Items') . '</a><br />';
 
@@ -40,7 +46,7 @@ if (DB_num_rows($result)==0){
 if (!isset($Item)){
 	echo '<p>';
 	prnMsg (_('An item must first be selected before this page is called') . '. ' . _('The product selection page should call this page with a valid product code'),'error');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -207,6 +213,6 @@ echo '<tr><td>' . _('Related Item Code') . ':</td>
 
 echo '</div>
       </form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

@@ -1,11 +1,11 @@
 <?php
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Import Sales Price List');
-include('includes/header.inc');
-echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme . 
-		'/images/maintenance.png" title="' . 
-		_('Import Price List from CSV file') . '" />' . ' ' . 
+include('includes/header.php');
+echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
+		'/images/maintenance.png" title="' .
+		_('Import Price List from CSV file') . '" />' . ' ' .
 		_('Import Price List from CSV file') . '</p>';
 
 $FieldHeadings = array(
@@ -33,7 +33,7 @@ if (isset($_FILES['PriceListFile']) and $_FILES['PriceListFile']['name']) { //st
 	if ( count($HeadRow) != count($FieldHeadings) ) {
 		prnMsg (_('File contains') . ' '. count($HeadRow). ' ' . _('columns, expected') . ' '. count($FieldHeadings). '. ' . _('Download the template to see the expected columns.'),'error');
 		fclose($FileHandle);
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -43,7 +43,7 @@ if (isset($_FILES['PriceListFile']) and $_FILES['PriceListFile']['name']) { //st
 		if ( trim(mb_strtoupper($HeadField)) != trim(mb_strtoupper($FieldHeadings[$HeadingColumnNumber]))) {
 			prnMsg (_('The file to import the price list from contains incorrect column headings') . ' '. mb_strtoupper($HeadField). ' != '. mb_strtoupper($FieldHeadings[$HeadingColumnNumber]). '<br />' . _('The column headings must be') . ' StockID, SalesType, CurrencyCode, Price','error');
 			fclose($FileHandle);
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 		}
 		$HeadingColumnNumber++;
@@ -61,7 +61,7 @@ if (isset($_FILES['PriceListFile']) and $_FILES['PriceListFile']['name']) { //st
 		if ($FieldCount != $FieldTarget){
 			prnMsg ($FieldTarget . ' ' . _('fields required') . ', '. $FieldCount. ' ' . _('fields received'),'error');
 			fclose($FileHandle);
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 		}
 
@@ -164,6 +164,6 @@ if (isset($_FILES['PriceListFile']) and $_FILES['PriceListFile']['name']) { //st
 
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

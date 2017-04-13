@@ -1,11 +1,11 @@
 <?php
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('Stock Check Sheets Entry');
 
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<form name="EnterCountsForm" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<div>';
@@ -236,5 +236,5 @@ if ($_GET['Action'] == 'Enter'){
 
 echo '</div>
       </form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

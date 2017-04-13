@@ -2,9 +2,9 @@
 
 /* $Id: PrefSupplierOrdering.php 5785 2012-12-29 04:47:42Z daintree $ */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title=_('Preferred Supplier Purchasing');
-include('includes/header.inc');
+include('includes/header.php');
 
 if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
 	include('includes/SQL_CommonFunctions.inc');
@@ -82,7 +82,7 @@ if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
 						$PurchItems[$StockID]['Price'] = ($PurchRow['price']*(1-$ItemDiscountPercent) - $ItemDiscountAmount)/$PurchRow['conversionfactor'];
 						$PurchItems[$StockID]['ConversionFactor'] = $PurchRow['conversionfactor'];
 						$PurchItems[$StockID]['GLCode'] = $ItemRow['stockact'];
-						
+
 						$PurchItems[$StockID]['SupplierDescription'] = $PurchRow['suppliers_partno'] .' - ';
 						if (mb_strlen($PurchRow['supplierdescription'])>2){
 							$PurchItems[$StockID]['SupplierDescription'] .= $PurchRow['supplierdescription'];
@@ -109,11 +109,11 @@ if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
 					prnmsg(_('An item where a quantity was entered could not be retrieved from the database. The order cannot proceed. The item code was:') . ' ' . $StockID,'error');
 				}
 			} //end if the quantity entered into the form is positive
-		} //end if the form variable name is OrderQtyXXX 
+		} //end if the form variable name is OrderQtyXXX
 	}//end loop around the form variables
 
 	if ($InputError==0) { //only if all continues smoothly
-	
+
 		$sql = "SELECT suppliers.suppname,
 						suppliers.currcode,
 						currencies.decimalplaces,
@@ -131,7 +131,7 @@ if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
 				WHERE supplierid='" . $_POST['Supplier'] . "'";
 		$SupplierResult = DB_query($sql);
 		$SupplierRow = DB_fetch_array($SupplierResult);
-		
+
 		$sql = "SELECT deladd1,
 							deladd2,
 							deladd3,
@@ -160,10 +160,10 @@ if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
 						FROM purchorderauth
 						WHERE userid='" . $_SESSION['UserID'] . "'
 						AND currabrev='" . $SupplierRow['currcode'] ."'";
-	
+
 			$AuthResult=DB_query($AuthSQL);
 			$AuthRow=DB_fetch_array($AuthResult);
-	
+
 			if (DB_num_rows($AuthResult) > 0 AND $AuthRow['authlevel'] > $OrderValue) { //user has authority to authrorise as well as create the order
 				$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created and Authorised by') . $UserDetails;
 				$AllowPrintPO=1;
@@ -174,12 +174,12 @@ if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
 				} else {
 					$AuthMessage = _('You can only authorise up to') . ' ' . $SupplierRow['currcode'] . ' '.$AuthRow['authlevel'] .'.<br />';
 				}
-	
+
 				prnMsg( _('You do not have permission to authorise this purchase order').'.<br />' . _('This order is for') . ' ' . $SupplierRow['currcode'] . ' '. $OrderValue . ' ' .
 					$AuthMessage .
 					_('If you think this is a mistake please contact the systems administrator') . '<br />'.
 					_('The order will be created with a status of pending and will require authorisation'), 'warn');
-	
+
 				$AllowPrintPO=0;
 				$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created by') . ' ' . $UserDetails;
 				$Status = 'Pending';
@@ -189,10 +189,10 @@ if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
 			$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created by') . ' ' . $UserDetails;
 			$Status = 'Pending';
 		}
-	
+
 		/*Get the order number */
 		$OrderNo = GetNextTransNo(18, $db);
-	
+
 		/*Insert to purchase order header record */
 		$sql = "INSERT INTO purchorders ( orderno,
 										supplierno,
@@ -250,16 +250,16 @@ if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
 								'" . Date('Y-m-d',mktime(0,0,0,Date('m'),Date('d')+1,Date('Y'))) . "',
 								'" . $SupplierRow['paymentterms'] . "',
 								'" . $AllowPrintPO . "' )";
-	
+
 		$ErrMsg =  _('The purchase order header record could not be inserted into the database because');
 		$DbgMsg = _('The SQL statement used to insert the purchase order header record and failed was');
 		$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
-	
+
 	     /*Insert the purchase order detail records */
 		foreach ($PurchItems as $StockID=>$POLine) {
-	
+
 			//print_r($POLine);
-			
+
 			$sql = "INSERT INTO purchorderdetails (orderno,
 										itemcode,
 										deliverydate,
@@ -288,7 +288,7 @@ if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
 							'" . $POLine['ConversionFactor'] . "')";
 			$ErrMsg =_('One of the purchase order detail records could not be inserted into the database because');
 			$DbgMsg =_('The SQL statement used to insert the purchase order detail record and failed was');
-	
+
 			$result =DB_query($sql,$ErrMsg,$DbgMsg,true);
 		} /* end of the loop round the detail line items on the order */
 		echo '<p />';
@@ -310,7 +310,7 @@ echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/i
 	<tr>
 		<td>' . _('For Supplier') . ':</td>
 		<td><select name="Supplier">';
-		
+
 $sql = "SELECT supplierid, suppname FROM suppliers WHERE supptype<>7 ORDER BY suppname";
 $SuppResult=DB_query($sql);
 
@@ -362,7 +362,7 @@ echo '</table>
 		<input type="submit" name="ShowItems" value="' . _('Show Items') . '" />
 	</div>';
 
-if (isset($_POST['Supplier']) AND isset($_POST['ShowItems']) AND $_POST['Supplier']!=''){ 
+if (isset($_POST['Supplier']) AND isset($_POST['ShowItems']) AND $_POST['Supplier']!=''){
 
 		$SQL = "SELECT stockmaster.description,
 						stockmaster.eoq,
@@ -391,19 +391,19 @@ if (isset($_POST['Supplier']) AND isset($_POST['ShowItems']) AND $_POST['Supplie
 						locstock.stockid
 					ORDER BY purchdata.supplierno,
 						stockmaster.stockid";
-	
+
 	$ItemsResult = DB_query($SQL, '', '', false, false);
 	$ListCount = DB_num_rows($ItemsResult);
 
 	if (DB_error_no() !=0) {
 		$Title = _('Supplier Ordering') . ' - ' . _('Problem Report') . '....';
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg(_('The supplier inventory quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
 		  echo '<br />' . $SQL;
 		}
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	} else {
 		//head up a new table
@@ -424,10 +424,10 @@ if (isset($_POST['Supplier']) AND isset($_POST['ShowItems']) AND $_POST['Supplie
 				</tr>';
 
 		$i=0;
-		
+
 		while ($ItemRow = DB_fetch_array($ItemsResult,$db)){
-	
-		
+
+
 			$SQL = "SELECT SUM(CASE WHEN (trandate>='" . Date('Y-m-d',mktime(0,0,0, date('m')-2, date('d'), date('Y'))) . "' AND
 								trandate<='" . Date('Y-m-d',mktime(0,0,0, date('m')-1, date('d'), date('Y'))) . "') THEN -qty ELSE 0 END) AS previousmonth,
 						SUM(CASE WHEN (trandate>='" . Date('Y-m-d',mktime(0,0,0, date('m')-1, date('d'), date('Y'))) . "' AND
@@ -440,47 +440,47 @@ if (isset($_POST['Supplier']) AND isset($_POST['ShowItems']) AND $_POST['Supplie
 								trandate<='" . Date('Y-m-d') . "') THEN -qty ELSE 0 END) AS wk1
 					FROM stockmoves
 					WHERE stockid='" . $ItemRow['stockid'] . "'
-					AND (type=10 OR type=11)"; 
+					AND (type=10 OR type=11)";
 			$SalesResult=DB_query($SQL,'','',FALSE,FALSE);
-	
+
 			if (DB_error_no() !=0) {
 		 		$Title = _('Preferred supplier purchasing') . ' - ' . _('Problem Report') . '....';
-		  		include('includes/header.inc');
+		  		include('includes/header.php');
 		   		prnMsg( _('The sales quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 		   		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 		   		if ($debug==1){
 		      			echo '<br />'. $SQL;
 		   		}
-		   		include('includes/footer.inc');
+		   		include('includes/footer.php');
 		   		exit;
 			}
-	
+
 			$SalesRow = DB_fetch_array($SalesResult);
-	
+
 			$SQL = "SELECT SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qtydemand
 					FROM salesorderdetails INNER JOIN salesorders
 					ON salesorderdetails.orderno=salesorders.orderno
 					WHERE salesorderdetails.stkcode = '" . $ItemRow['stockid'] . "'
 					AND salesorderdetails.completed = 0
 					AND salesorders.quotation=0";
-			
+
 			$DemandResult = DB_query($SQL, '', '', false, false);
-	
-	
+
+
 			if (DB_error_no() !=0) {
 		 		$Title = _('Preferred supplier purchasing') . ' - ' . _('Problem Report') . '....';
-		  		include('includes/header.inc');
+		  		include('includes/header.php');
 		   		prnMsg( _('The sales order demand quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 		   		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 		   		if ($debug==1){
 		      			echo '<br />'.$SQL;
 		   		}
-		   		include('includes/footer.inc');
+		   		include('includes/footer.php');
 		   		exit;
 			}
-	
+
 	// Also need to add in the demand as a component of an assembly items if this items has any assembly parents.
-	
+
 			$SQL = "SELECT SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
 					FROM salesorderdetails INNER JOIN bom
 					ON salesorderdetails.stkcode=bom.parent
@@ -493,21 +493,21 @@ if (isset($_POST['Supplier']) AND isset($_POST['ShowItems']) AND $_POST['Supplie
 					AND stockmaster.mbflag='A'
 					AND salesorderdetails.completed=0
 					AND salesorders.quotation=0";
-			
+
 			$BOMDemandResult = DB_query($SQL,'','',false,false);
-	
+
 			if (DB_error_no() !=0) {
 		 		$Title = _('Preferred supplier purchasing') . ' - ' . _('Problem Report') . '....';
-		  		include('includes/header.inc');
+		  		include('includes/header.php');
 		   		prnMsg( _('The sales order demand quantities from parent assemblies could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 		   		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 		   		if ($debug==1){
 		      			echo '<br />'.$SQL;
 		   		}
-		   		include('includes/footer.inc');
+		   		include('includes/footer.php');
 		   		exit;
 			}
-	
+
 			$SQL = "SELECT SUM(purchorderdetails.quantityord- purchorderdetails.quantityrecd) as qtyonorder
 					FROM purchorderdetails
 					LEFT JOIN purchorders
@@ -521,24 +521,24 @@ if (isset($_POST['Supplier']) AND isset($_POST['ShowItems']) AND $_POST['Supplie
 					AND purchorders.status <> 'Rejected'
 					AND purchorders.status <> 'Pending'
 					AND purchorders.status <> 'Completed'";
-			
+
 			$DemandRow = DB_fetch_array($DemandResult);
 			$BOMDemandRow = DB_fetch_array($BOMDemandResult);
 			$TotalDemand = $DemandRow['qtydemand'] + $BOMDemandRow['dem'];
-	
+
 			$OnOrdResult = DB_query($SQL, '', '', false, false);
 			if (DB_error_no() !=0) {
 		 		$Title = _('Preferred supplier purchasing') . ' - ' . _('Problem Report') . '....';
-		  		include('includes/header.inc');
+		  		include('includes/header.php');
 		   		prnMsg( _('The purchase order quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 		   		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 		   		if ($debug==1){
 		      			echo '<br />'. $SQL;
 		   		}
-		   		include('includes/footer.inc');
+		   		include('includes/footer.php');
 		   		exit;
 			}
-	
+
 			$OnOrdRow = DB_fetch_array($OnOrdResult);
 			if (!isset($_POST['OrderQty' . $i])){
 				$_POST['OrderQty' . $i] =0;
@@ -563,13 +563,13 @@ if (isset($_POST['Supplier']) AND isset($_POST['ShowItems']) AND $_POST['Supplie
 				<td colspan="7"><input type="submit" name="CreatePO" value="' . _('Create Purchase Order') . '" onclick="return confirm(\'' . _('Clicking this button will create a purchase order for all the quantities in the grid above for immediate delivery. Are you sure?') . '\');"/></td>
 			</tr>
 			</table>';
-		
+
 	}
 }
 
 echo '</div>
 	  </form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

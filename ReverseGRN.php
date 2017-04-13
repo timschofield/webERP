@@ -4,11 +4,11 @@
 
 include('includes/DefineSerialItems.php');
 include('includes/SQL_CommonFunctions.inc');
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('Reverse Goods Received');
 
-include('includes/header.inc');
+include('includes/header.php');
 
 if ((isset($_SESSION['SupplierID']) AND $_SESSION['SupplierID']!='')
 	OR (!isset($_POST['SupplierID']) OR $_POST['SupplierID'])==''){
@@ -65,7 +65,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 	if ($QtyToReverse ==0){
 		echo '<br />
 				<br />' . _('The GRN') . ' ' . $_GET['GRNNo'] . ' ' . _('has already been reversed or fully invoiced by the supplier - it cannot be reversed - stock quantities must be corrected by stock adjustments - the stock is paid for');
-		include ('includes/footer.inc');
+		include ('includes/footer.php');
 		exit;
 	}
 
@@ -104,7 +104,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 				/*Then some of the original goods received must have been sold
 				or transfered so cannot reverse the GRN */
 				prnMsg(_('Unfortunately, of the original number') . ' (' . $SerialStockMoves['moveqty'] . ') ' . _('that were received on serial number') . ' ' . $SerialStockMoves['serialno'] . ' ' . _('only') . ' ' . $GetQOH[0] . ' ' . _('remain') . '. ' . _('The GRN can only be reversed if all the original serial number items are still in stock in the location they were received into'),'error');
-				include ('includes/footer.inc');
+				include ('includes/footer.php');
 				exit;
 			}
 		}
@@ -458,5 +458,5 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 		}
 	}
 }
-include ('includes/footer.inc');
+include ('includes/footer.php');
 ?>

@@ -2,11 +2,11 @@
 /* $Id$*/
 /* Selects a supplier. A supplier is required to be selected before any AP transactions and before any maintenance or inquiry of the supplier */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Search Suppliers');
 $ViewTopic = 'AccountsPayable';
 $BookMark = 'SelectSupplier';
-include('includes/header.inc');
+include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.inc');
 
@@ -413,5 +413,5 @@ if (isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') {
 		}
 	}
 }
-include ('includes/footer.inc');
+include ('includes/footer.php');
 ?>

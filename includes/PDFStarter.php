@@ -108,10 +108,10 @@ switch ($PaperSize) {
 		$Left_Margin=50;
 		$Right_Margin=40;
 		break;
-   
+
    case 'P/3/A4_pingzheng':
 
-	   	$DocumentPaper = 'Z2'; 
+	   	$DocumentPaper = 'Z2';
 	   	$DocumentOrientation ='L';
 
       		$Page_Width=595;

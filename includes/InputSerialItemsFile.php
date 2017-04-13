@@ -84,18 +84,18 @@ if ((isset($_FILES['ImportFile']) AND $_FILES['ImportFile']['name'] == '') AND $
 	prnMsg($msg);
 	$LineItem->SerialItemsValid=false;
 	echo '</td></tr></table>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit();
 }
 if ((isset($_FILES['ImportFile']) AND $_FILES['ImportFile']['error'] != '') AND !isset($_SESSION['CurImportFile'])){
-		echo _('There was a problem with the uploaded file') . '. ' . _('We received').':<br />' . 
-				 _('Name').':'.$_FILES['ImportFile']['name'] . '<br />' . 
-				 _('Size').':'.locale_number_format($_FILES['ImportFile']['size']/1024,2).'kb<br />' . 
+		echo _('There was a problem with the uploaded file') . '. ' . _('We received').':<br />' .
+				 _('Name').':'.$_FILES['ImportFile']['name'] . '<br />' .
+				 _('Size').':'.locale_number_format($_FILES['ImportFile']['size']/1024,2).'kb<br />' .
 				 _('Type').':'.$_FILES['ImportFile']['type'] . '<br />';
 		echo '<br />' . _('Error was').' '.$_FILES['ImportFile']['error'] . '<br />';
 		$LineItem->SerialItemsValid=false;
 		echo '</td></tr></table><br />';
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit();
 } elseif ((isset($_FILES['ImportFile']) AND $_FILES['ImportFile']['name']!='')){
 	//User has uploaded importfile. reset items, then just 'get hold' of it for later.
@@ -109,7 +109,7 @@ if ((isset($_FILES['ImportFile']) AND $_FILES['ImportFile']['error'] != '') AND 
 		prnMsg(_('Error moving temporary file') . '. ' . _('Please check your configuration'),'error' );
 		$LineItem->SerialItemsValid=false;
 		echo '</td></tr></table>';
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 	$_SESSION['CurImportFile']['Processed']=false;

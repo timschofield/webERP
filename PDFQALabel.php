@@ -2,7 +2,7 @@
 
 /* $Id: PDFQALabel.php agaluski $*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 if (isset($_GET['GRNNo'])) {
 	$GRNNo=$_GET['GRNNo'];
@@ -60,12 +60,12 @@ if ($NoOfGRNs >0){
 		if ($GRNNo!='Preview'){
 			$myrow = DB_fetch_array($GRNResult);
 		}
-		$DeliveryDate = ConvertSQLDate($myrow['deliverydate']);				
+		$DeliveryDate = ConvertSQLDate($myrow['deliverydate']);
 		$SQL = "SELECT stockmaster.controlled
 			    FROM stockmaster WHERE stockid ='" . $myrow['itemcode'] . "'";
 		$CheckControlledResult = DB_query($SQL,'<br />' . _('Could not determine if the item was controlled or not because') . ' ');
 		$ControlledRow = DB_fetch_row($CheckControlledResult);
-		
+
 		if ($ControlledRow[0]==1) { /*Then its a controlled item */
 			$SQL = "SELECT stockserialmoves.serialno
 					FROM stockmoves INNER JOIN stockserialmoves
@@ -88,7 +88,7 @@ if ($NoOfGRNs >0){
 				$LeftOvers = $pdf->addText($FormDesign->OrderNumber->x,$Page_Height-$FormDesign->OrderNumber->y,$FormDesign->OrderNumber->FontSize,'P/O: ' . $myrow['orderno']);
 				$PageNumber++;
 			} //while SerialStockMoves
-			
+
 		} //controlled item*/
 		else {
 			$pdf->addJpegFromFile($_SESSION['LogoFile'] ,$FormDesign->logo->x,$Page_Height-$FormDesign->logo->y,$FormDesign->logo->width,$FormDesign->logo->height);
@@ -111,9 +111,9 @@ if ($NoOfGRNs >0){
     $pdf->__destruct();
 } else { //there were not GRNs to print
 	$Title = _('GRN Error');
-	include('includes/header.inc');
+	include('includes/header.php');
 	prnMsg(_('There were no GRNs to print'),'warn');
 	echo '<br /><a href="'.$RootPath.'/index.php">' .  _('Back to the menu') . '</a>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 }
 ?>

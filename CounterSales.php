@@ -3,17 +3,17 @@
 
 include('includes/DefineCartClass.php');
 
-/* Session started in session.inc for password checking and authorisation level check
-config.php is in turn included in session.inc $PageSecurity now comes from session.inc (and gets read in by GetConfig.php*/
+/* Session started in session.php for password checking and authorisation level check
+config.php is in turn included in session.php $PageSecurity now comes from session.php (and gets read in by GetConfig.php*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('Counter Sales');
-/* webERP manual links before header.inc */
+/* webERP manual links before header.php */
 $ViewTopic= 'SalesOrders';
 $BookMark = 'SalesOrderCounterSales';
 
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/GetPrice.inc');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/GetSalesTransGLCodes.inc');
@@ -84,14 +84,14 @@ if (!isset($_SESSION['Items'.$identifier])){
 	$result = DB_query($sql);
 	if (DB_num_rows($result)==0) {
 		prnMsg(_('Your user account does not have a valid default inventory location set up. Please see the system administrator to modify your user account.'),'error');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	} else {
 		$myrow = DB_fetch_array($result); //get the only row returned
 
 		if ($myrow['cashsalecustomer']=='' OR $myrow['cashsalebranch']==''){
 			prnMsg(_('To use this script it is first necessary to define a cash sales customer for the location that is your default location. The default cash sale customer is defined under set up ->Inventory Locations Maintenance. The customer should be entered using the customer code and a valid branch code of the customer entered.'),'error');
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 		}
 		if (isset($_GET['DebtorNo'])) {
@@ -170,7 +170,7 @@ if (!isset($_SESSION['Items'.$identifier])){
 				if ($debug==1){
 					echo '<br />' . _('The SQL that failed to get the branch details was') . ':<br />' . $sql;
 				}
-				include('includes/footer.inc');
+				include('includes/footer.php');
 				exit;
 			}
 			// add echo
@@ -199,7 +199,7 @@ if (!isset($_SESSION['Items'.$identifier])){
 				} elseif ($_SESSION['CheckCreditLimits']==2 AND $_SESSION['Items'.$identifier]->CreditAvailable <=0){
 					prnMsg(_('No more orders can be placed by') . ' ' . $myrow[0] . ' ' . _(' their account is currently at or over their credit limit'),'warn');
 					$AlreadyWarnedAboutCredit = true;
-					include('includes/footer.inc');
+					include('includes/footer.php');
 					exit;
 				}
 			}
@@ -222,7 +222,7 @@ if (isset($_POST['CancelOrder'])) {
 	echo '<br /><br />';
 	prnMsg(_('This sale has been cancelled as requested'),'success');
 	echo '<br /><br /><a href="' .htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Start a new Counter Sale') . '</a>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 
 } else { /*Not cancelling the order */
@@ -1062,7 +1062,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 		if ($_SESSION['CompanyRecord']==0){
 			/*The company data and preferences could not be retrieved for some reason */
 			prnMsg( _('The company information and preferences could not be retrieved. See your system administrator'), 'error');
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 		}
 
@@ -2387,5 +2387,5 @@ if (!isset($_POST['ProcessSale'])){
 	}
 	echo '</form>';
 }
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

@@ -1,13 +1,13 @@
 <?php
 /* $Id: SelectAsset.php 4443 2010-12-23 15:30:30Z tim_schofield $*/
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('Select an Asset');
 
 $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetSelection';
 
-include ('includes/header.inc');
+include ('includes/header.php');
 
 if (isset($_GET['AssetID'])) {
 	//The page is called with a AssetID
@@ -253,11 +253,11 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 			echo '<br /></div>';
 		}
 		echo '</form>';
-		
+
 		echo '<form action="FixedAssetItems.php" method="post">';
 		echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	
+
 		echo '<table class="selection">';
 		$tableheader = '<tr>
 					<th>' . _('Asset Code') . '</th>
@@ -298,8 +298,8 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 		echo '</div>
           </form>';
 	} // there were records to list
-    
+
 }
 /* end display list if there is more than one record */
-include ('includes/footer.inc');
+include ('includes/footer.php');
 ?>

@@ -4,13 +4,13 @@
 /*	Please note that addTextWrap prints a font-size-height further down than
 	addText and other functions.*/
 
-include('includes/session.inc');
+include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 
 //Get Out if we have no order number to work with
 If (!isset($_GET['QuotationNo']) || $_GET['QuotationNo']==""){
         $Title = _('Select Quotation To Print');
-        include('includes/header.inc');
+        include('includes/header.php');
         echo '<div class="centre">
 				<br />
 				<br />
@@ -31,7 +31,7 @@ If (!isset($_GET['QuotationNo']) || $_GET['QuotationNo']==""){
 				<br />
 				<br />
 				<br />';
-        include('includes/footer.inc');
+        include('includes/footer.php');
         exit();
 }
 
@@ -80,7 +80,7 @@ $result=DB_query($sql, $ErrMsg);
 //If there are no rows, there's a problem.
 if (DB_num_rows($result)==0){
 	$Title = _('Print Quotation Error');
-	include('includes/header.inc');
+	include('includes/header.php');
 	 echo '<div class="centre">
 			<br />
 			<br />
@@ -100,7 +100,7 @@ if (DB_num_rows($result)==0){
 			<br />
 			<br />
 			<br />';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 } elseif (DB_num_rows($result)==1){ /*There is only one order header returned - thats good! */
 	$myrow = DB_fetch_array($result);
@@ -262,11 +262,11 @@ if (DB_num_rows($result)>0){
 
 if ($ListCount == 0){
         $Title = _('Print Quotation Error');
-        include('includes/header.inc');
+        include('includes/header.php');
         echo '<p>' .  _('There were no items on the quotation') . '. ' . _('The quotation cannot be printed').
                 '<br /><a href="' . $RootPath . '/SelectSalesOrder.php?Quotation=Quotes_only">' .  _('Print Another Quotation').
                 '</a>' . '<br />' .  '<a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-        include('includes/footer.inc');
+        include('includes/footer.php');
 	exit;
 } else {
     $pdf->OutputI($_SESSION['DatabaseName'] . '_Quotation_' . $_GET['QuotationNo'] . '_' . date('Y-m-d') . '.pdf');

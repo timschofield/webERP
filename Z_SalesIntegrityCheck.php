@@ -6,9 +6,9 @@
 // No SQL updates or Inserts - so safe to run
 
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('Sales Integrity');
-include('includes/header.inc');
+include('includes/header.php');
 
 
 echo '<div class="centre"><h3>' . _('Sales Integrity Check') . '</h3></div>';
@@ -210,5 +210,5 @@ echo '<br /><br />' . _('Sales Integrity Check completed.') . '<br /><br />';
 
 prnMsg(_('Sales Integrity Check completed.'),'info');
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

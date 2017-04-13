@@ -11,11 +11,11 @@
 // END: Functions division -----------------------------------------------------
 
 // BEGIN: Procedure division ---------------------------------------------------
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Purchases from Suppliers');
 $ViewTopic = 'PurchaseOrdering';
 $BookMark = 'PurchasesReport';
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/reports.png" title="', // Icon image.
@@ -287,6 +287,6 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 
 }
 echo	'</form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 // END: Procedure division -----------------------------------------------------
 ?>

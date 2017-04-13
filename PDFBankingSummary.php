@@ -2,7 +2,7 @@
 
 /* $Id$*/
 
-include ('includes/session.inc');
+include ('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 
 if (isset($_GET['BatchNo'])){
@@ -15,7 +15,7 @@ if (!isset($_POST['BatchNo'])){
 	$ViewTopic = 'ARReports';
 	$BookMark = 'BankingSummary';
 
-	include ('includes/header.inc');
+	include ('includes/header.php');
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' .
 		 $Title . '" alt="" />' . ' ' . $Title . '</p>';
@@ -48,7 +48,7 @@ if (!isset($_POST['BatchNo'])){
         </div>
 		</form>';
 
-	include ('includes/footer.inc');
+	include ('includes/footer.php');
 	exit;
 }
 
@@ -76,9 +76,9 @@ if (isset($_POST['BatchNo']) and $_POST['BatchNo']!='') {
 
 	if (DB_num_rows($Result) == 0){
 		$Title = _('Create PDF Print-out For A Batch Of Receipts');
-		include ('includes/header.inc');
+		include ('includes/header.php');
 		prnMsg(_('The receipt batch number') . ' ' . $_POST['BatchNo'] . ' ' . _('was not found in the database') . '. ' . _('Please try again selecting a different batch number'), 'warn');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 	/* OK get the row of receipt batch header info from the BankTrans table */
@@ -105,12 +105,12 @@ if (isset($_POST['BatchNo']) and $_POST['BatchNo']!='') {
 	$CustRecs=DB_query($SQL,'','',false,false);
 	if (DB_error_no()!=0){
 		$Title = _('Create PDF Print-out For A Batch Of Receipts');
-		include ('includes/header.inc');
+		include ('includes/header.php');
 	   	prnMsg(_('An error occurred getting the customer receipts for batch number') . ' ' . $_POST['BatchNo'],'error');
 		if ($debug==1){
 	        	prnMsg(_('The SQL used to get the customer receipt information that failed was') . '<br />' . $SQL,'error');
 	  	}
-		include('includes/footer.inc');
+		include('includes/footer.php');
 	  	exit;
 	}
 	$SQL = "SELECT narrative,
@@ -124,12 +124,12 @@ if (isset($_POST['BatchNo']) and $_POST['BatchNo']!='') {
 	$GLRecs=DB_query($SQL,'','',false,false);
 	if (DB_error_no()!=0){
 		$Title = _('Create PDF Print-out For A Batch Of Receipts');
-		include ('includes/header.inc');
+		include ('includes/header.php');
 		prnMsg(_('An error occurred getting the GL receipts for batch number') . ' ' . $_POST['BatchNo'],'error');
 		if ($debug==1){
 			prnMsg(_('The SQL used to get the GL receipt information that failed was') . ':<br />' . $SQL,'error');
 		}
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 

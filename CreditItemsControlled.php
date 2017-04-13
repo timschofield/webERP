@@ -4,12 +4,12 @@
 
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('Specify Credited Controlled Items');
 
-/* Session started in header.inc for password checking and authorisation level check */
-include('includes/header.inc');
+/* Session started in header.php for password checking and authorisation level check */
+include('includes/header.php');
 
 
 if ($_GET['CreditInvoice']=='Yes' OR $_POST['CreditInvoice']=='Yes'){
@@ -22,7 +22,7 @@ if (!isset($_GET['identifier'])){
 	echo '<div class="centre"><a href="' . $RootPath . '/' . $CreditLink . '">' .  _('Select Credit Items'). '</a><br /><br />';
 	prnMsg( _('This page must be called with the identifier to uniquely identify the credit note being entered. This is a programming error that should not occur.') , 'error');
 	echo '</div>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 } else {
 	$identifier=$_GET['identifier'];
@@ -37,7 +37,7 @@ if (isset($_GET['LineNo'])){
 	echo '<div class="centre"><a href="' . $RootPath . '/' . $CreditLink . '">' .  _('Select Credit Items'). '</a><br /><br />';
 	prnMsg( _('This page can only be opened if a Line Item on a credit note has been selected.') . ' ' . _('Please do that first'), 'error');
 	echo '</div>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -48,7 +48,7 @@ if (!isset($_SESSION['CreditItems' . $identifier])) {
 		<br />';
 	prnMsg( _('This page can only be opened if a controlled credit note line item has been selected.') . ' ' . _('Please do that first'),'error');
 	echo '</div>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -61,7 +61,7 @@ if ( $LineItem->Controlled != 1 ){
 	echo '<div class="centre"><a href="' . $RootPath . '/' . $CreditLink . '">' .  _('Back to Credit Note Entry') . '</a></div>';
 	echo '<br />';
 	prnMsg( _('Notice') . ' - ' . _('The line item must be defined as controlled to require input of the batch numbers or serial numbers being credited'),'warn');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -99,6 +99,6 @@ if ($CreditLink == 'Credit_Invoice.php?identifier=' . $identifier){
 	$_SESSION['CreditItems' . $identifier]->LineItems[$LineNo]->Quantity = $TotalQuantity;
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 exit;
 ?>

@@ -2,9 +2,9 @@
 
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title=_('Apply Current Cost to Sales Analysis');
-include('includes/header.inc');
+include('includes/header.php');
 
 $Period = 42;
 
@@ -82,5 +82,5 @@ if (isset($_POST['UpdateSalesAnalysis']) AND $_POST['PeriodNo']!=0){
 
 	prnMsg(_('Updated the sales analysis cost data for period') . ' '. $_POST['PeriodNo'],'success');
 }
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

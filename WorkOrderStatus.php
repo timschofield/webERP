@@ -1,9 +1,9 @@
 <?php
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Work Order Status Inquiry');
-include('includes/header.inc');
+include('includes/header.php');
 
 if (isset($_GET['WO'])) {
 	$SelectedWO = $_GET['WO'];
@@ -45,7 +45,7 @@ $WOResult = DB_query("SELECT workorders.loccode,
 
 if (DB_num_rows($WOResult)==0){
 	prnMsg(_('The selected work order item cannot be retrieved from the database'),'info');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 $WORow = DB_fetch_array($WOResult);
@@ -161,6 +161,6 @@ echo '<table cellpadding="2" class="selection">
 		}
 
 	echo '</table>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 
 ?>

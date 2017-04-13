@@ -3,13 +3,13 @@
 
 /* $Id: GLAccountCSV.php 4492 2011-02-18 09:56:52Z daintree $ */
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('General Ledger Account Report');
 
 $ViewTopic= 'GeneralLedger';
 $BookMark = 'GLAccountCSV';
 
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/GLPostings.inc');
 
 if (isset($_POST['Period'])){
@@ -34,9 +34,9 @@ echo '<table>
 	        <tr>
 	         <td>' . _('Selected Accounts') . ':</td>
 	         <td><select name="Account[]" size="12" multiple="multiple">';
-$sql = "SELECT chartmaster.accountcode, 
+$sql = "SELECT chartmaster.accountcode,
 			   chartmaster.accountname
-		FROM chartmaster 
+		FROM chartmaster
 		INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canview=1
 		ORDER BY chartmaster.accountcode";
 $AccountsResult = DB_query($sql);
@@ -98,12 +98,12 @@ if (isset($_POST['MakeCSV'])){
 
 	if (!isset($SelectedPeriod)){
 		prnMsg(_('A period or range of periods must be selected from the list box'),'info');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 	if (!isset($_POST['Account'])){
 		prnMsg(_('An account or range of accounts must be selected from the list box'),'info');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -117,7 +117,7 @@ if (isset($_POST['MakeCSV'])){
 
 	if ($fp==FALSE){
 		prnMsg(_('Could not open or create the file under') . ' ' . $FileName,'error');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -272,5 +272,5 @@ if (isset($_POST['MakeCSV'])){
 	echo '<p><a href="' .  $FileName . '">' . _('click here') . '</a> ' . _('to view the file') . '<br />';
 } /* end of if CreateCSV button hit */
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

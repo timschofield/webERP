@@ -2,9 +2,9 @@
 /* $Id: Z_RebuildSalesAnalysis.php 5784 2012-12-29 04:00:43Z daintree $*/
 /* Script to rebuild sales analysis records from stock movements*/
 $PageSecurity = 15;
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('Rebuild sales analysis Records');
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<br /><br />' . _('This script rebuilds sales analysis records. NB: all sales budget figures will be lost!');
 
@@ -54,14 +54,14 @@ $sql = "INSERT INTO salesanalysis (typeabbrev,
 				salesman,
 				categoryid
 		ORDER BY prd";
-		
+
 $ErrMsg = _('The sales analysis data could not be recreated because');
 $Result = DB_query($sql,$ErrMsg);
 
 echo '<p />';
 prnMsg(_('The sales analsysis data has been recreated based on current stock master and customer master information'),'info');
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>
 
 ?>

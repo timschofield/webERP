@@ -311,15 +311,15 @@ if ($LastLine['col5']!='0' && $LastLine['col7']!='0'){
 	if ($Counter>0){ /*Dont want to print totals if this is the first record */
 		$TotalText = mb_substr(_('TOTAL') . ' ' . $LastLine['col5'] . ' - ' . $LastLine['col6'],0,33);
 		$LeftOvers = $pdf->addTextWrap(30,$Ypos,190,$FontSize,$TotalText);
-	
+
 		DB_data_seek($ColsResult,0);
 		while ($Cols = DB_fetch_array($ColsResult)){
 			$Xpos = 160 + $Cols['colno']*60;
 			if ($Cols['calculation']==0){
 			$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, locale_number_format($AccumLvl3[$Cols['colno']],0),'right');
-	
+
 			} else { /* its a calculation need to re-perform on the totals*/
-	
+
 				switch ($Cols['calcoperator']) {
 					Case '/':
 						if ($AccumLvl3[$Cols['coldenominator']]==0){
@@ -352,7 +352,7 @@ if ($LastLine['col5']!='0' && $LastLine['col7']!='0'){
 				}
 				$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, $TotalCalculation,'right');
 			}
-	
+
 		}
 		$Ypos -=$line_height;
 	}
@@ -368,9 +368,9 @@ if ($LastLine['col3']!='0' AND $LastLine['col5']!='0'){
 			$Xpos = 160 + $Cols['colno']*60;
 			if ($Cols['calculation']==0){
 			$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, locale_number_format($AccumLvl2[$Cols['colno']],0),'right');
-	
+
 			} else { /* its a calculation need to re-perform on the totals*/
-	
+
 				switch ($Cols['calcoperator']) {
 					Case '/':
 						if ($AccumLvl2[$Cols['coldenominator']]==0){
@@ -403,7 +403,7 @@ if ($LastLine['col3']!='0' AND $LastLine['col5']!='0'){
 				}
 				$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, $TotalCalculation,'right');
 			}
-	
+
 		}
 		$Ypos -=$line_height;
 	}
@@ -419,7 +419,7 @@ if ($LastLine['col3']!='0'){
 			if ($Cols['calculation']==0){
 			$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, locale_number_format($AccumLvl1[$Cols['colno']],0),'right');
 			} else { /* its a calculation need to re-perform on the totals*/
-	
+
 				switch ($Cols['calcoperator']) {
 				Case '/':
 					if ($AccumLvl1[$Cols['coldenominator']]==0){
@@ -452,7 +452,7 @@ if ($LastLine['col3']!='0'){
 				}
 				$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, $TotalCalculation,'right');
 			}
-	
+
 		}
 		$Ypos -=(2*$line_height);
 	}
@@ -539,13 +539,13 @@ if (isset($_GET['ProduceCVSFile'])){
 	      }
 	 }
 	 $Title = _('Sales Analysis Comma Separated File (CSV) Generation');
-	include('includes/header.inc');
+	include('includes/header.php');
 
 	 echo 'http://' . getenv(SERVER_NAME) . $RootPath . '/' . $_SESSION['reports_dir'] .  '/SalesAnalysis.csv';
 	 echo "<meta http-equiv='Refresh' content='0; url=http://" . getenv(SERVER_NAME) . $RootPath . '/' . $_SESSION['reports_dir'] .  "/SalesAnalysis.csv'>";
 
 	 echo '<p>' . _('You should automatically be forwarded to the CSV Sales Analysis file when it is ready') . '. ' . _('If this does not happen') . ' <a href="' . $RootPath . '/' . $_SESSION['reports_dir'] . '/SalesAnalysis.csv">' . _('click here') . '</a> ' . _('to continue')  . '<br />';
-	 include('includes/footer.inc');
+	 include('includes/footer.php');
 }
 
 ?>

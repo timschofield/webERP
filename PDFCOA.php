@@ -2,7 +2,7 @@
 
 /* $Id: PDFCOA.php 1 2014-09-15 06:31:08Z agaluski $ */
 
-include('includes/session.inc');
+include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 
 if (isset($_GET['LotKey']))  {
@@ -25,7 +25,7 @@ if (isset($_GET['QASampleID']))  {
 //Get Out if we have no Certificate of Analysis
 If ((!isset($SelectedCOA) || $SelectedCOA=='') AND (!isset($QASampleID) OR $QASampleID=='')){
         $Title = _('Select Certificate of Analysis To Print');
-        include('includes/header.inc');
+        include('includes/header.php');
 		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print')  . '" alt="" />' . ' ' . $Title . '</p>';
         echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">
 		<div>
@@ -73,7 +73,7 @@ If ((!isset($SelectedCOA) || $SelectedCOA=='') AND (!isset($QASampleID) OR $QASa
 		<input type="submit" name="PickSpec" value="' . _('Submit') . '" />
 		</div>
 		</form>';
-    include('includes/footer.inc');
+    include('includes/footer.php');
     exit();
 }
 
@@ -124,7 +124,7 @@ $result=DB_query($sql,$ErrMsg);
 //If there are no rows, there's a problem.
 if (DB_num_rows($result)==0){
 	$Title = _('Print Certificate of Analysis Error');
-	include('includes/header.inc');
+	include('includes/header.php');
 	 echo '<div class="centre">
 			<br />
 			<br />
@@ -144,7 +144,7 @@ if (DB_num_rows($result)==0){
 			<br />
 			<br />
 			<br />';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 $PaperSize = 'Letter';

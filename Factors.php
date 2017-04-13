@@ -2,11 +2,11 @@
 
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('Factor Company Maintenance');
 
-include('includes/header.inc');
+include('includes/header.php');
 
 if (isset($_GET['FactorID'])){
 	$FactorID = mb_strtoupper($_GET['FactorID']);
@@ -44,7 +44,7 @@ if (isset($_POST['Submit']) OR isset($_POST['Update'])) {
 	// But if errors were found in the input
 	if ($InputError>0) {
 		prnMsg(_('Validation failed no insert or update took place'),'warn');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -344,5 +344,5 @@ if (empty($FactorID) AND !isset($_POST['Create']) AND !isset($_POST['Amend'])) {
 		</form>';
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

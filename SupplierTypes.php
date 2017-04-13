@@ -2,9 +2,9 @@
 
 /* $Id SupplierTypes.php 4183 2010-12-14 09:30:20Z daintree $ */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Supplier Types') . ' / ' . _('Maintenance');
-include('includes/header.inc');
+include('includes/header.php');
 
 if (isset($_POST['SelectedType'])){
 	$SelectedType = mb_strtoupper($_POST['SelectedType']);
@@ -243,5 +243,5 @@ if (! isset($_GET['delete'])) {
 
 } // end if user wish to delete
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

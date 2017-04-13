@@ -1,9 +1,9 @@
 <?php
 /* $Id$*/
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('Identify Allocation Stuff Ups');
-include ('includes/header.inc');
+include ('includes/header.php');
 
 $sql = "SELECT debtortrans.type,
 		debtortrans.transno,
@@ -67,5 +67,5 @@ if (DB_num_rows($result)>0){
 	prnMsg(_('There are no inconsistent allocations') . ' - ' . _('all is well'),'info');
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

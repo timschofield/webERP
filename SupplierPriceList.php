@@ -2,11 +2,11 @@
 /* $Id: SupplierPriceList.php 6941 2014-10-26 23:18:08Z daintree $*/
 /* Maintain Supplier Price Lists */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Supplier Purchasing Data');
 $ViewTopic = 'PurchaseOrdering';
 $BookMark = 'SupplierPriceList';
-include('includes/header.inc');
+include('includes/header.php');
 
 if(isset($_POST['StockSearch'])) {
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
@@ -68,7 +68,7 @@ if(isset($_POST['StockSearch'])) {
 		<br />
 		</div>
 	</form>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -303,7 +303,7 @@ if(isset($searchresult) AND !isset($_POST['Select'])) {
               <br />
               </div>
               </form>';
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 }
@@ -417,7 +417,7 @@ if(isset($SupplierID) AND $SupplierID != '' AND !isset($_POST['SearchSupplier'])
 		echo '</tr></table><br />';
 		echo '<div class="centre"><input name="SearchSupplier" type="submit" value="' . _('Find Suppliers Now') . '" /></div>';
         echo '</form>';
-		include ('includes/footer.inc');
+		include ('includes/footer.php');
 		exit;
 	};
 }
@@ -491,7 +491,7 @@ if(isset($SuppliersResult)) {
 	echo '</table>
           </form>
           <br />';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }// END if(isset($SuppliersResult)).
 
@@ -616,7 +616,7 @@ if(isset($_POST['SupplierID'])) {
 	}
 	echo '</table>';
 	echo '</form>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 

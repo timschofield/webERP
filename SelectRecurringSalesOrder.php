@@ -1,13 +1,13 @@
 <?php
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Search Recurring Sales Orders');
-/* webERP manual links before header.inc */
+/* webERP manual links before header.php */
 $ViewTopic= 'SalesOrders';
 $BookMark = 'RecurringSalesOrders';
 
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<div>';
@@ -150,5 +150,5 @@ SUM(recurrsalesorderdetails.unitprice*recurrsalesorderdetails.quantity*(1-recurr
 echo '</div>
       </form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

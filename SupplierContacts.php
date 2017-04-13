@@ -1,13 +1,13 @@
 <?php
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('Supplier Contacts');
-/* webERP manual links before header.inc */
+/* webERP manual links before header.php */
 $ViewTopic= 'AccountsPayable';
 $BookMark = 'SupplierContact';
-include('includes/header.inc');
+include('includes/header.php');
 
 if (isset($_GET['SupplierID'])){
 	$SupplierID = $_GET['SupplierID'];
@@ -24,7 +24,7 @@ if (!isset($SupplierID)) {
 	echo '<p /><p />';
 	prnMsg(_('This page must be called with the supplier code of the supplier for whom you wish to edit the contacts') . '<br />' . _('When the page is called from within the system this will always be the case') .
 	'<br />' . _('Select a supplier first, then select the link to add/edit/delete contacts'),'info');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -147,7 +147,7 @@ if (!isset($SelectedContact)){
 				<tr>
 					<th colspan="7"><h3>' . _('Contacts Defined for') . ' - ' . $myrow['suppname'] . '</h3></th>
 				</tr>';
-		 
+
 		echo '<tbody><tr>
 				<th class="ascending">' . _('Name') . '</th>
 				<th class="ascending">' . _('Position') . '</th>
@@ -288,5 +288,5 @@ if (! isset($_GET['delete'])) {
 
 } //end if record deleted no point displaying form to add record
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

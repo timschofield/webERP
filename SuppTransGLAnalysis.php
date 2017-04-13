@@ -8,17 +8,17 @@ an array of GLCodes objects - only used if the AP - GL link is effective */
 
 include('includes/DefineSuppTransClass.php');
 
-/* Session started in header.inc for password checking and authorisation level check */
-include('includes/session.inc');
+/* Session started in header.php for password checking and authorisation level check */
+include('includes/session.php');
 $Title = _('Supplier Transaction General Ledger Analysis');
 $ViewTopic = 'AccountsPayable';
 $BookMark = 'SuppTransGLAnalysis';
-include('includes/header.inc');
+include('includes/header.php');
 
 if (!isset($_SESSION['SuppTrans'])){
 	prnMsg(_('To enter a supplier invoice or credit note the supplier must first be selected from the supplier selection screen') . ', ' . _('then the link to enter a supplier invoice or supplier credit note must be clicked on'),'info');
 	echo '<br /><a href="' . $RootPath . '/SelectSupplier.php">' . _('Select A Supplier') . '</a>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 	/*It all stops here if there aint no supplier selected and transaction initiated ie $_SESSION['SuppTrans'] started off*/
 }
@@ -198,12 +198,12 @@ echo '<tr>
 		<br />' . _('otherwise select the account from the list') . ')</td>
 	<td><select name="AcctSelection">';
 
-$sql = "SELECT chartmaster.accountcode, 
+$sql = "SELECT chartmaster.accountcode,
 			   chartmaster.accountname
-		FROM chartmaster 
+		FROM chartmaster
 		INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canupd=1
 		ORDER BY chartmaster.accountcode";
-		
+
 $result = DB_query($sql);
 echo '<option value=""></option>';
 while ($myrow = DB_fetch_array($result)) {
@@ -242,5 +242,5 @@ echo '<div class="centre">
 
 echo '</div>
       </form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

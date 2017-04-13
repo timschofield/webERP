@@ -3,11 +3,11 @@
 
 /*	Form Designer notes:
 	- All measurements are in PostScript points (72 points = 25,4 mm).
-	- All coordinates are measured from the lower left corner of the sheet to 
+	- All coordinates are measured from the lower left corner of the sheet to
 	  the top left corner of the field.*/
 /*	General attributes for elements:
 	- x (X coordinate),
-	- y (Y coordinate), 
+	- y (Y coordinate),
 	- Width,
 	- Height,
 	- FontSize,
@@ -18,47 +18,47 @@
 // RCHACON: Question: The use or not of <label for="KeyId">KeyCaption</label> <input id="KeyId" name="KeyName" type="..." value="KeyValue"> for usability ?
 
 /* BEGIN: Start common code division. */
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Form Designer');
 /* $ViewTopic = 'to_add_topic'; // This is to do.*/
 /* $BookMark = 'FormDesigner'; // This is to do.*/
-include('includes/header.inc');
+include('includes/header.php');
 /* END: Start common code division. */
 
 /* BEGIN: FUNCTIONS DIVISION. */
 
-/* Function to input the X coordinate from the left side of the sheet to the 
+/* Function to input the X coordinate from the left side of the sheet to the
 left side of the field in points (72 points = 25,4 mm). */
 function InputX($keyName, $keyValue) {
-	echo '<td class="number">' . _('x') . ' = ' . 
-		'</td><td><input class="number" maxlength="4" name="' . $keyName . 'x" size="4" title="' . 
-		_('Distance from the left side of the sheet to the left side of the element in points') . 
+	echo '<td class="number">' . _('x') . ' = ' .
+		'</td><td><input class="number" maxlength="4" name="' . $keyName . 'x" size="4" title="' .
+		_('Distance from the left side of the sheet to the left side of the element in points') .
 		'" type="number" value="' . $keyValue . '" /></td>';
 }
 
-/* Function to input the Y coordinate from the lower side of the sheet to the 
+/* Function to input the Y coordinate from the lower side of the sheet to the
 top side of the field in points (72 points = 25,4 mm). */
 function InputY($keyName, $keyValue) {
-	echo '<td class="number">' . _('y') . ' = ' . 
-		'</td><td><input class="number" maxlength="4" name="' . $keyName . 'y" size="4" title="'. 
-		_('Distance from the lower side of the sheet to the top side of the element in points') . 
+	echo '<td class="number">' . _('y') . ' = ' .
+		'</td><td><input class="number" maxlength="4" name="' . $keyName . 'y" size="4" title="'.
+		_('Distance from the lower side of the sheet to the top side of the element in points') .
 		'" type="number" value="' . $keyValue . '" /></td>';
 }
 
 /* Function to input the the width of the field in points (72 points = 25,4 mm).*/
 function InputWidth($keyName, $keyValue) {
-	echo '<td class="number">' . _('Width') . ' = ' . 
-		'</td><td><input class="number" maxlength="4" name="' . $keyName . 'Length" size="4" title="'. 
-		_('Width of the element in points') . 
-		'" type="number" value="' . $keyValue . '" /></td>';  
+	echo '<td class="number">' . _('Width') . ' = ' .
+		'</td><td><input class="number" maxlength="4" name="' . $keyName . 'Length" size="4" title="'.
+		_('Width of the element in points') .
+		'" type="number" value="' . $keyValue . '" /></td>';
 	// Requires to standardize xml files from "Length" to "Width" before changing the html name.
 }
 
 /* Function to input the the height of the field in points (72 points = 25,4 mm).*/
 function InputHeight($keyName, $keyValue) {
-	echo '<td class="number">' . _('Height') . ' = ' . 
-		'</td><td><input class="number" maxlength="4" name="' . $keyName . 'height" size="4" title="'. 
-		_('Height of the element in points') . 
+	echo '<td class="number">' . _('Height') . ' = ' .
+		'</td><td><input class="number" maxlength="4" name="' . $keyName . 'height" size="4" title="'.
+		_('Height of the element in points') .
 		'" type="number" value="' . $keyValue . '" /></td>';
 	// Requires to standardize xml files from "height" to "Height" before changing the html name.
 }
@@ -204,7 +204,7 @@ if (empty($_POST['FormName'])) {
 	echo '<br /><div class="centre"><input tabindex="6" type="submit" name="submit" value="' . _('Edit Form Layout') . '" /></div>';
     echo '</div>';
 	echo '</form>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 } // End of if (empty($_POST['FormName']))
 /* If we are not previewing the form then load up the simplexml
@@ -213,12 +213,12 @@ if (empty($_POST['preview'])) {
 	$FormDesign = simplexml_load_file($PathPrefix.'companies/'.$_SESSION['DatabaseName'].'/FormDesigns/'.$_POST['FormName']);
 }
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/reports.png" title="' . _('Form Designer') . '" alt="" />' . ' ' . _('Form Designer') . '<br />' .  _((string)$FormDesign['name']) . '</p>';
-echo '<div class="page_help_text">' . 
-	_('Enter the changes that you want in the form layout below.')  . '<br /> '. 
-	_('All measurements are in PostScript points (72 points = 25,4 mm).')  . '<br /> '. 
+echo '<div class="page_help_text">' .
+	_('Enter the changes that you want in the form layout below.')  . '<br /> '.
+	_('All measurements are in PostScript points (72 points = 25,4 mm).')  . '<br /> '.
 	_('All coordinates are measured from the lower left corner of the sheet to the top left corner of the element.') . '</div><br />';
 
-$Papers=array('A4_Landscape', 'A4_Portrait', 'A5_Landscape', 'A5_Portrait', 'A6_Landscape', 'A3_Landscape', 'A3_Portrait', 'Letter_Portrait', 'Letter_Landscape', 'Legal_Portrait', 'Legal_Landscape'); // Possible paper sizes/orientations 
+$Papers=array('A4_Landscape', 'A4_Portrait', 'A5_Landscape', 'A5_Portrait', 'A6_Landscape', 'A3_Landscape', 'A3_Portrait', 'Letter_Portrait', 'Letter_Landscape', 'Legal_Portrait', 'Legal_Landscape'); // Possible paper sizes/orientations
 echo '<form method="post" id="Form" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . '">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -372,6 +372,6 @@ echo '</form>';
 /* END: PROCEDURE DIVISION. */
 
 /* BEGIN: Final common code division. */
-include('includes/footer.inc');
+include('includes/footer.php');
 /* END: Final common code division. */
 ?>

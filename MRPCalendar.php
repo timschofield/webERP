@@ -5,9 +5,9 @@
 // MRPCalendar.php
 // Maintains the calendar of valid manufacturing dates for MRP
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('MRP Calendar');
-include('includes/header.inc');
+include('includes/header.php');
 
 
 if (isset($_POST['ChangeDate'])){
@@ -322,5 +322,5 @@ function ShowInputForm(&$db,&$ChangeDate)  {//####DISPLAY_DISPLAY_DISPLAY_DISPLA
 
 } // End of function ShowInputForm()
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

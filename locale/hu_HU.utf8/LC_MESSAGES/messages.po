@@ -1959,7 +1959,7 @@ msgstr "Dátum"
 #: PcReportTab.php:269 UserBankAccounts.php:77 UserBankAccounts.php:90
 #: UserGLAccounts.php:118 UserGLAccounts.php:130 UserGLAccounts.php:146
 #: UserLocations.php:77 UserLocations.php:90 UserLocations.php:100
-#: includes/header.inc:59
+#: includes/header.php:59
 msgid "User"
 msgstr "Lézer"
 
@@ -6779,7 +6779,7 @@ msgstr "Árajánlat nyomtatás"
 msgid "Cancel and Delete Contract"
 msgstr "Mégsem törlése és szerződés"
 
-#: CopyBOM.php:11 includes/header.inc:26
+#: CopyBOM.php:11 includes/header.php:26
 msgid "Copy a BOM to New Item Code"
 msgstr ""
 
@@ -9385,7 +9385,7 @@ msgstr ""
 msgid "has been added, add another branch, or return to the"
 msgstr ""
 
-#: CustomerBranches.php:248 index.php:7 includes/header.inc:70
+#: CustomerBranches.php:248 index.php:7 includes/header.php:70
 msgid "Main Menu"
 msgstr "Főmenü"
 
@@ -26383,7 +26383,7 @@ msgstr "Csoportosítás 3"
 msgid "Group By 4"
 msgstr "Group 4-"
 
-#: SalesAnalysis_UserDefined.php:9 includes/session.inc:194
+#: SalesAnalysis_UserDefined.php:9 includes/session.php:194
 msgid ""
 "The security settings on your account do not permit you to access this "
 "function"
@@ -27710,7 +27710,7 @@ msgid "Search Customers"
 msgstr "Keresés a vásárlók"
 
 #: SelectCustomer.php:14 includes/PDFTopItemsHeader.inc:27
-#: includes/header.inc:73
+#: includes/header.php:73
 msgid "Customers"
 msgstr "Vevő"
 
@@ -28791,7 +28791,7 @@ msgstr ""
 msgid "Search Suppliers"
 msgstr "Keresés Beszállítók"
 
-#: SelectSupplier.php:14 Suppliers.php:304 includes/header.inc:75
+#: SelectSupplier.php:14 Suppliers.php:304 includes/header.php:75
 msgid "Suppliers"
 msgstr "Szállító"
 
@@ -46387,70 +46387,70 @@ msgstr ""
 "nincs költség rögzítve, és a megrendelések beállításánál nincs engedélyezve "
 "a költségek nélküli megrendelés készítése"
 
-#: includes/footer.inc:12 includes/footer.inc:20
+#: includes/footer.php:12 includes/footer.php:20
 msgid "Copyright"
 msgstr "Copyright"
 
-#: includes/footer.inc:20
+#: includes/footer.php:20
 msgid "version"
 msgstr ""
 
-#: includes/header.inc:56 includes/Login.php:52 includes/Login.php:56
+#: includes/header.php:56 includes/Login.php:52 includes/Login.php:56
 #: includes/Login.php:76 includes/Login.php:79
 msgid "Company"
 msgstr "Cég"
 
-#: includes/header.inc:74
+#: includes/header.php:74
 msgid "Items"
 msgstr "Termék"
 
-#: includes/header.inc:77 includes/header.inc:81
+#: includes/header.php:77 includes/header.php:81
 msgid "Manual"
 msgstr "Leírás"
 
-#: includes/header.inc:90 ../webSHOP/includes/header.php:232
+#: includes/header.php:90 ../webSHOP/includes/header.php:232
 msgid "Are you sure you wish to logout?"
 msgstr "Biztosan ki akar lépni?"
 
-#: includes/header.inc:90 ../webSHOP/includes/header.php:232
+#: includes/header.php:90 ../webSHOP/includes/header.php:232
 msgid "Logout"
 msgstr "Kilépés"
 
-#: includes/session.inc:119 includes/session.inc:168
+#: includes/session.php:119 includes/session.php:168
 msgid "Account Error Report"
 msgstr "Számla hibajelentés"
 
-#: includes/session.inc:122
+#: includes/session.php:122
 msgid ""
 "Your user role does not have any access defined for webERP. There is an "
 "error in the security setup for this user account"
 msgstr "A felhasználói jogok beállításánál nincs megadva érvényes jogosultság."
 
-#: includes/session.inc:127
+#: includes/session.php:127
 msgid "incorrect password"
 msgstr "Érvénytelen jelszó"
 
-#: includes/session.inc:127
+#: includes/session.php:127
 msgid "The user/password combination"
 msgstr "A felhasználó/jelszó páros"
 
-#: includes/session.inc:127
+#: includes/session.php:127
 msgid "is not a valid user of the system"
 msgstr "érvénytelen felhasználó a rendszerben"
 
-#: includes/session.inc:131
+#: includes/session.php:131
 msgid "system maintenance"
 msgstr "Vevő karbantartás"
 
-#: includes/session.inc:131
+#: includes/session.php:131
 msgid "webERP is not available right now"
 msgstr "webERP nem áll most"
 
-#: includes/session.inc:131
+#: includes/session.php:131
 msgid "during maintenance of the system"
 msgstr "érvénytelen felhasználó a rendszerben"
 
-#: includes/session.inc:156
+#: includes/session.php:156
 msgid ""
 "webERP is configured to allow only secure socket connections. Pages must be "
 "called with https://"
@@ -46458,7 +46458,7 @@ msgstr ""
 "a rendszer biztonságos felületen érhető csak el. Az oldalak eléréséhez "
 "használja a https://.... formátumot"
 
-#: includes/session.inc:171
+#: includes/session.php:171
 msgid ""
 "Security settings have not been defined for your user account. Please advise "
 "your system administrator. It could also be that there is a session problem "
@@ -46467,15 +46467,15 @@ msgstr ""
 "Nincsenek biztonsági beállítások ehhez a felhasználóhoz. Lépjen kapcsolatba "
 "a rendszeradminisztrátorral. Lehet, hogy session hiba a PHP beállításoknál"
 
-#: includes/session.inc:187
+#: includes/session.php:187
 msgid "Security Permissions Problem"
 msgstr "Biztonsági hiba"
 
-#: includes/session.inc:251 ../webSHOP/includes/session.php:147
+#: includes/session.php:251 ../webSHOP/includes/session.php:147
 msgid "Error in form verification"
 msgstr ""
 
-#: includes/session.inc:253 ../webSHOP/includes/session.php:151
+#: includes/session.php:253 ../webSHOP/includes/session.php:151
 msgid "This form was not submitted with a correct ID"
 msgstr "Ez a forma nem került benyújtásra a megfelelő azonosító"
 

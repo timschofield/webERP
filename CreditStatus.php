@@ -2,9 +2,9 @@
 
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Credit Status Code Maintenance');
-include('includes/header.inc');
+include('includes/header.php');
 
 if (isset($_GET['SelectedReason'])){
 	$SelectedReason = $_GET['SelectedReason'];
@@ -261,5 +261,5 @@ if (!isset($_GET['delete'])) {
             </div>
 			</form>';
 } //end if record deleted no point displaying form to add record
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

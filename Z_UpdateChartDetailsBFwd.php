@@ -2,9 +2,9 @@
 
 /* $Id$*/
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('Recalculation of Brought Forward Balances in Chart Details Table');
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<div>';
@@ -91,5 +91,5 @@ if (!isset($_POST['FromPeriod']) OR !isset($_POST['ToPeriod'])){
 	} /* end of for loop */
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

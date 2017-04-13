@@ -2,7 +2,7 @@
 
 /* $Revision: 1.5 $2012.2CQZ二次修改 */
 
-include('includes/session.inc');
+include('includes/session.php');
 if (isset($_POST['JournalNo'])) {
 	$JournalNo=$_POST['JournalNo'];
 	$TypeID=$_POST['Type'];
@@ -47,7 +47,7 @@ if ($JournalNo=='Preview') {
 			INNER JOIN chartmaster
 				ON gltrans.account=chartmaster.accountcode
 			INNER JOIN systypes
-				ON gltrans.type=systypes.typeid 
+				ON gltrans.type=systypes.typeid
 			LEFT JOIN tags
 				ON gltrans.tag=tags.tagref
 			WHERE gltrans.type='".$TypeID."'
@@ -106,16 +106,16 @@ while ($counter<=$LineCount) {
 	}
 	$pdf->SetFont('helvetica', '', 10);
 	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column4->x+3,$Page_Height-$YPos,$FormDesign->Data->Column4->Length,$FormDesign->Data->Column4->FontSize,$DebitAmount , 'right');
-			
+
 	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column5->x+3,$Page_Height-$YPos,$FormDesign->Data->Column5->Length,$FormDesign->Data->Column5->FontSize, $CreditAmount, 'right');
-	
+
 
 	$YPos += $line_height;
-	$counter++;	
+	$counter++;
 
 	$DebitTotal1=locale_number_format($DebitTotal,$_SESSION['CompanyRecord']['decimalplaces'],  'right');
 	$CreditTotal1=locale_number_format(-$CreditTotal,$_SESSION['CompanyRecord']['decimalplaces'],  'right');
-	
+
 	$pdf->SetFont('javiergb', '', 10);
 
 	if ($YPos >= $FormDesign->LineAboveFooter->starty){
@@ -123,8 +123,8 @@ while ($counter<=$LineCount) {
 		$PageNumber++;
 		$YPos=$FormDesign->Data->y;
 		include ('includes/PDFGLJournalHeaderCN.inc');
-	}  
-} 
+	}
+}
 $pdf->setlineStyle(array('width'=>0.8));
 $pdf->SetLineStyle(array('color'=>array(0,0,0)));
 $pdf->Line($XPos=540, $Page_Height-$YPos+15, $FormDesign->Column33->endx,$Page_Height - $FormDesign->Column33->endy);
@@ -143,10 +143,10 @@ $pdf->SetFont('javiergb', '', 10);
 
 if ($LineCount == 0) {   //UldisN
 	$title = _('GRN Error');
-	include('includes/header.inc');
+	include('includes/header.php');
 	prnMsg(_('There were no GRN to print'),'warn');
 	echo '<br /><a href="'.$rootpath.'/index.php">'. _('Back to the menu').'</a>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 } else {
     $pdf->OutputD($_SESSION['DatabaseName'] . '_GRN_' . date('Y-m-d').'.pdf');//UldisN

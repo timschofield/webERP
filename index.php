@@ -3,9 +3,9 @@
 
 $PageSecurity=0;
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title=_('Main Menu');
-include('includes/header.inc');
+include('includes/header.php');
 
 
 /*The module link codes are hard coded in a switch statement below to determine the options to show for each tab */
@@ -29,7 +29,7 @@ if (isset($SupplierLogin) AND $SupplierLogin==1){
 			</td>
 			</tr>
 		</table>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 } elseif (isset($CustomerLogin) AND $CustomerLogin==1){
 	echo '<table class="table_index">
@@ -50,7 +50,7 @@ if (isset($SupplierLogin) AND $SupplierLogin==1){
 			</tr>
 		</table>';
 
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -62,7 +62,7 @@ if (isset($_GET['Application'])){ /*This is sent by this page (to itself) when t
 echo '<div id="MainMenuDiv"><ul>'; //===HJ===
 $i=0;
 while ($i < count($ModuleLink)){
-	// This determines if the user has display access to the module see config.php and header.inc
+	// This determines if the user has display access to the module see config.php and header.php
 	// for the authorisation and security code
 	if ($_SESSION['ModulesEnabled'][$i]==1)	{
 		// If this is the first time the application is loaded then it is possible that
@@ -168,7 +168,7 @@ foreach ($MenuItems[$_SESSION['Module']]['Maintenance']['Caption'] as $Caption) 
 echo '</ul></div>'; // MaintenanceDive ===HJ===
 echo '</div>'; // SubMenuDiv ===HJ===
 
-include('includes/footer.inc');
+include('includes/footer.php');
 
 function GetRptLinks($GroupID) {
 /*

@@ -4,15 +4,16 @@
 
 include('includes/DefineImportBankTransClass.php');
 
-include ('includes/session.inc');
-$Title = _('Import Bank Transactions');// Screen identificator.
-$ViewTopic = 'GeneralLedger';// Filename's id in ManualContents.php's TOC.
-$BookMark = 'ImportBankTrans';// Anchor's id in the manual's html document.
-include('includes/header.inc');
-echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
-	'/images/bank.png" title="' .// Icon image.
-	_('Import Bank Transactions') . '" /> ' .// Icon title.
-	_('Import Bank Transactions') . '</p>';// Page title.
+include ('includes/session.php');
+$Title = _('Import Bank Transactions');
+$ViewTopic = 'GeneralLedger';
+$BookMark = 'ImportBankTrans';
+include('includes/header.php');
+
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+	'/images/bank.png" title="', // Icon image.
+	$Title, '" /> ', // Icon title.
+	$Title, '</p>';// Page title.
 
 include('includes/SQL_CommonFunctions.inc');
 include('includes/CurrenciesArray.php');
@@ -36,7 +37,7 @@ if (!isset($_FILES['ImportFile']) AND !isset($_SESSION['Statement'])) {
 	if (DB_num_rows($result) ==0){
 		prnMsg(_('There are no bank accounts defined that are set up to allow importation of bank statement transactions. First define the file format used by your bank for statement exports.'),'error');
 		echo '<br /><a href="BankAccounts.php>' . _('Setup Import Format for Bank Accounts') . '</a>';
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
     echo '<form name="ImportForm" enctype="multipart/form-data" method="post" action="' . $_SERVER['PHP_SELF'] . '">
@@ -69,7 +70,7 @@ if (!isset($_FILES['ImportFile']) AND !isset($_SESSION['Statement'])) {
     if ($_FILES['ImportFile']['size'] > (1024*1024)) { //File Size Check
 		prnMsg(_('The file size is over the maximum allowed. The maximum size allowed is 1 megabyte. This file size is (bytes)') . ' ' . $_FILES['ImportFile']['size'],'warn');
 		prnMsg(_('The MT940 bank statement file cannot be imported and processed'),'error');
-        include('includes/footer.inc');
+        include('includes/footer.php');
         exit;
 		$ReadTheFile ='No';
 	}
@@ -558,5 +559,5 @@ if (isset($_SESSION['Statement'])){
 		</table>';
 }
 
-include ('includes/footer.inc');
+include ('includes/footer.php');
 ?>

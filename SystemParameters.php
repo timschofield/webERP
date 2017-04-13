@@ -2,11 +2,11 @@
 /* $Id$*/
 /* This script is for maintenance of the system parameters. */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('System Parameters');
 $ViewTopic = 'CreatingNewSystem';
 $BookMark = 'SystemParameters';
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/maintenance.png" title="', // Icon image.
@@ -1247,5 +1247,5 @@ echo '</table>
     </div>
 	</form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

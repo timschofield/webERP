@@ -49,7 +49,7 @@
 			if(!defined('CRLF'))
 				define('CRLF', "\r\n", TRUE);
 
-			$this->authenticated	= FALSE;			
+			$this->authenticated	= FALSE;
 			$this->timeout			= 5;
 			$this->status			= SMTP_STATUS_NOT_CONNECTED;
 
@@ -70,7 +70,7 @@
 		$this->pass = html_entity_decode($_SESSION['SMTPSettings']['password']);
 
 
-		$this->errors   		= array(); 
+		$this->errors   		= array();
 
 			foreach($params as $key => $value){
 				$this->$key = $value;
@@ -79,7 +79,7 @@
 
 		/**
         * Connect function. This will, when called
-		* statically, create a new smtp object, 
+		* statically, create a new smtp object,
 		* call the connect function (ie this function)
 		* and return it. When not called statically,
 		* it will connect to the server and send
@@ -168,7 +168,7 @@
 				return FALSE;
 			}
 		}
-		
+
 		/**
         * Function to implement HELO cmd
         */
@@ -185,7 +185,7 @@
 				return FALSE;
 			}
 		}
-		
+
 		/**
         * Function to implement EHLO cmd
         */
@@ -202,7 +202,7 @@
 				return FALSE;
 			}
 		}
-		
+
 		/**
         * Function to implement RSET cmd
         */
@@ -219,7 +219,7 @@
 				return FALSE;
 			}
 		}
-		
+
 		/**
         * Function to implement QUIT cmd
         */
@@ -238,7 +238,7 @@
 				return FALSE;
 			}
 		}
-		
+
 		/**
         * Function to implement AUTH cmd
         */
@@ -264,7 +264,7 @@
 		/**
         * Function that handles the MAIL FROM: cmd
         */
-		
+
 		function mail($from){
 
 			if($this->is_connected()
@@ -280,7 +280,7 @@
 		/**
         * Function that handles the RCPT TO: cmd
         */
-		
+
 		function rcpt($to){
 
 			if($this->is_connected()
@@ -304,7 +304,7 @@
 			if($this->is_connected()
 				AND $this->send_data('DATA')
 				AND substr(trim($error = $this->get_data()), 0, 3) === '354' ){
- 
+
 				return TRUE;
 
 			}else{
@@ -331,7 +331,7 @@
 
 			if(is_resource($this->connection)){
 				return fwrite($this->connection, $data.CRLF, strlen($data)+2);
-				
+
 			}else
 				return FALSE;
 		}
@@ -361,7 +361,7 @@
 		/**
         * Sets a variable
         */
-		
+
 		function set($var, $value){
 
 			$this->$var = $value;

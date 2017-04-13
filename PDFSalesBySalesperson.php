@@ -4,7 +4,7 @@
 $DatabaseName='weberp';
 $AllowAnyone = true;
 
-include ('includes/session.inc');
+include ('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 include ('includes/class.pdf.php');
 $_POST['FromDate']=date('Y-m-01');
@@ -13,9 +13,9 @@ $WeekStartDate = Date(($_SESSION['DefaultDateFormat']), strtotime($WeekStartDate
 $Recipients = GetMailList('salesbysalesperson');
 if (sizeOf($Recipients) == 0) {
 	$Title = _('Weekly Orders') . ' - ' . _('Problem Report');
-      	include('includes/header.inc');
+      	include('includes/header.php');
 	prnMsg( _('There are no members of the Weekly Orders Recipients email group'), 'warn');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -40,7 +40,7 @@ $sql= "SELECT salesorders.orderno,
 			 ON salesorderdetails.stkcode = stockmaster.stockid
 			 INNER JOIN debtorsmaster
 			 ON salesorders.debtorno=debtorsmaster.debtorno
-			 INNER JOIN custbranch ON custbranch.debtorno=salesorders.debtorno 
+			 INNER JOIN custbranch ON custbranch.debtorno=salesorders.debtorno
 			 AND custbranch.branchcode=salesorders.branchcode
 			 INNER JOIN salesman ON salesman.salesmancode=custbranch.salesman
 		 WHERE salesorders.orddate >='" . FormatDateForSQL($WeekStartDate) . "'
@@ -51,12 +51,12 @@ $sql= "SELECT salesorders.orderno,
 $Result=DB_query($sql,$db,'','',false,false); //dont trap errors here
 
 if (DB_error_no($db)!=0){
-	include('includes/header.inc');
+	include('includes/header.php');
 	echo '<br />' . _('An error occurred getting the orders details');
 	if ($debug==1){
 		echo '<br />' . _('The SQL used to get the orders that failed was') . '<br />' . $sql;
 	}
-	include ('includes/footer.inc');
+	include ('includes/footer.php');
 	exit;
 }
 $PaperSize="Letter_Landscape";
@@ -119,7 +119,7 @@ while ($myrow=DB_fetch_array($Result)){
 		include ('includes/PDFWeeklyOrdersPageHeader.inc');
 	} /*end of new page header  */
 	$Salesman = $myrow['salesmanname'];
-	
+
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+$Col1,$YPos,$Col2-$Col1-5,$FontSize,$myrow['orderno'], 'left');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+$Col2,$YPos,$Col3-$Col2-5,$FontSize,html_entity_decode($myrow['name'],ENT_QUOTES,'UTF-8'), 'left');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+$Col3,$YPos,$Col4-$Col3-5,$FontSize,ConvertSQLDate($myrow['orddate']), 'left');
@@ -155,18 +155,18 @@ if($_SESSION['SmtpSetting']==0){
 }
 if($result){
 		$Title = _('Print Weekly Orders');
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg(_('The Weekly Orders report has been mailed'),'success');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 
 }else{
 		$Title = _('Print Weekly Orders Error');
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg(_('There are errors lead to mails not sent'),'error');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 
 }

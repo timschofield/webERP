@@ -27,7 +27,7 @@ etc
 	$GetTransNoResult = DB_query($SQL,$ErrMsg,$DbgMsg);
 	$myrow = DB_fetch_row($GetTransNoResult);
 	return $myrow[0];
-	
+
 }
 
 
@@ -151,7 +151,7 @@ Function GetCreditAvailable($DebtorNo,&$db) {
 }
 
 function ItemCostUpdateGL($db, $StockID, $NewCost, $OldCost, $QOH) {
-	if ($_SESSION['CompanyRecord']['gllink_stock']==1 
+	if ($_SESSION['CompanyRecord']['gllink_stock']==1
 		AND $QOH!=0
 		AND (abs($NewCost - $OldCost) > pow(10,-($_SESSION['StandardCostDecimalPlaces']+1)))){
 
@@ -502,7 +502,7 @@ function CreateQASample ($ProdSpecKey, $LotKey, $Identifier, $Comments, $Cert, $
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The create of the sampleresults record failed');
 			$DbgMsg = _('The following SQL to create the sampleresults was used');
 			$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
-			
+
 		} //$myrow2[0]=0
 	} //$myrow[0]>0
 }

@@ -2,11 +2,11 @@
 /* $Id$*/
 /* This script displays the bank reconciliation for a selected bank account. */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Bank Reconciliation');;// Screen identificator.
 $ViewTopic= 'GeneralLedger';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'BankAccounts';// Anchor's id in the manual's html document.
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<div>';
@@ -118,7 +118,7 @@ if (DB_num_rows($AccountsResults)==0){
 			</tr>
 			</table>
 			<p>' . _('Bank Accounts have not yet been defined') . '. ' . _('You must first') . '<a href="' . $RootPath . '/BankAccounts.php">' . _('define the bank accounts') . '</a>' . ' ' . _('and general ledger accounts to be affected') . '.';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 } else {
 	while ($myrow=DB_fetch_array($AccountsResults)){
@@ -397,5 +397,5 @@ if (isset($_POST['BankAccount'])) {
 }
 echo '</div>';
 echo '</form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

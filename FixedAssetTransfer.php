@@ -2,14 +2,14 @@
 
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('Change Asset Location');
 
 $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetTransfer';
 
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') .
 		'" alt="" />' . ' ' . $Title . '</p>';
@@ -206,6 +206,6 @@ if (isset($_POST['Search'])) {
           </form>';
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

@@ -5,13 +5,13 @@
 /*Hard coded for currencies with 2 decimal places */
 
 include('includes/DefinePaymentClass.php');
-include('includes/session.inc');
+include('includes/session.php');
 
 if (isset($_GET['identifier'])){
 	$identifier = $_GET['identifier'];
 }else{
 	prnMsg(_('Something was wrong without an identifier, please ask administrator for help'),'error');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 include('includes/PDFStarter.php');
@@ -28,9 +28,9 @@ $result = DB_query("SELECT hundredsname,
                     WHERE currabrev='" . $_SESSION['PaymentDetail' . $identifier]->Currency . "'",$db);
 
 If (DB_num_rows($result) == 0){
-	include ('includes/header.inc');
+	include ('includes/header.php');
 	prnMsg(_('Can not get hundreds name'), 'warn');
-	include ('includes/footer.inc');
+	include ('includes/footer.php');
 	exit;
 }
 

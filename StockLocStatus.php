@@ -2,11 +2,11 @@
 /* $Id$*/
 /* Shows the stock on hand together with outstanding sales orders and outstanding purchase orders by stock location for all items in the selected stock category */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('All Stock Status By Location/Category');
 $ViewTopic = 'Inventory';
 $BookMark = 'StockLocStatus';
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/magnifier.png" title="',// Icon image.
@@ -61,7 +61,7 @@ if(DB_num_rows($result1)==0) {
 	echo '</table><p>';
 	prnMsg(_('There are no stock categories currently defined please use the link below to set them up'),'warn');
 	echo '<br /><a href="' . $RootPath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
-	include ('includes/footer.inc');
+	include ('includes/footer.php');
 	exit;
 }
 
@@ -328,5 +328,5 @@ if(isset($_POST['ShowStatus'])) {
 echo '</div>
       </form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

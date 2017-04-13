@@ -1,7 +1,7 @@
 <?php
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 If ((isset($_POST['PrintPDF']))
 			AND isset($_POST['FromCriteria'])
@@ -35,10 +35,10 @@ If ((isset($_POST['PrintPDF']))
 	if (DB_num_rows($SuppliersResult)==0){
 		//then there aint awt to print
 		$Title = _('Print Remittance Advices Error');
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg(_('There were no remittance advices to print out for the supplier range and payment date specified'),'warn');
 		echo '<br /><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' .  _('Back') . '</a>';
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 /*then print the report */
@@ -78,13 +78,13 @@ If ((isset($_POST['PrintPDF']))
 		$TransResult = DB_query($sql,'','',false,false);
 		if (DB_error_no() !=0) {
 			$Title = _('Remittance Advice Problem Report');
-			include('includes/header.inc');
+			include('includes/header.php');
 			prnMsg(_('The details of the payment to the supplier could not be retrieved because') . ' - ' . DB_error_msg(),'error');
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 			if ($debug==1){
 				echo '<br />' . _('The SQL that failed was') . ' ' . $sql;
 			}
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 		}
 
@@ -128,7 +128,7 @@ If ((isset($_POST['PrintPDF']))
 } else { /*The option to print PDF was not hit */
 
 	$Title=_('Remittance Advices');
-	include('includes/header.inc');
+	include('includes/header.php');
 
     echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . $Title . '" alt="" />' . ' '
         . $Title . '</p>';
@@ -178,7 +178,7 @@ If ((isset($_POST['PrintPDF']))
     echo '</div>
           </form>';
 
-	include ('includes/footer.inc');
+	include ('includes/footer.php');
 } /*end of else not PrintPDF */
 
 function PageHeader(){

@@ -1,12 +1,12 @@
  <?php
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Import Items');
-include('includes/header.inc');
-echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme . 
-		'/images/inventory.png" title="' . 
-		_('Import Stock Items from .csv') . '" />' . ' ' . 
+include('includes/header.php');
+echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
+		'/images/inventory.png" title="' .
+		_('Import Stock Items from .csv') . '" />' . ' ' .
 		_('Import Stock Items from .csv') . '</p>';
 
 // If this script is called with a file object, then the file contents are imported
@@ -47,7 +47,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	$FileName = $_FILES['userfile']['name'];
 	$TempName  = $_FILES['userfile']['tmp_name'];
 	$FileSize = $_FILES['userfile']['size'];
-	
+
 	//get file handle
 	$FileHandle = fopen($TempName, 'r');
 
@@ -58,7 +58,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	if ( count($headRow) != count($FieldHeadings) ) {
 		prnMsg (_('File contains '. count($headRow). ' columns, expected '. count($FieldHeadings). '. Try downloading a new template.'),'error');
 		fclose($FileHandle);
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -68,7 +68,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		if ( mb_strtoupper($headField) != mb_strtoupper($FieldHeadings[$head]) ) {
 			prnMsg (_('File contains incorrect headers '. mb_strtoupper($headField). ' != '. mb_strtoupper($FieldHeadings[$head]). '. Try downloading a new template.'),'error');  //Fixed $FieldHeadings from $headings
 			fclose($FileHandle);
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 		}
 		$head++;
@@ -86,7 +86,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		if ($fieldCount != $FieldTarget){
 			prnMsg (_($FieldTarget. ' fields required, '. $fieldCount. ' fields received'),'error');
 			fclose($FileHandle);
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 		}
 
@@ -302,5 +302,5 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 }
 
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

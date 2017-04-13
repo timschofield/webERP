@@ -11,7 +11,7 @@ define('DBRptFields','reportfields');	// name of the database table holding the 
 //define('FPDF_FONTPATH','../fonts/');  FPDF path to fonts directory
 
 // Fetch necessary include files - Host application specific (webERP)
-require($PathPrefix . 'includes/session.inc');
+require($PathPrefix . 'includes/session.php');
 require_once($PathPrefix . 'includes/DateFunctions.inc');
 
 // Include files for ReportMaker.php
@@ -168,10 +168,10 @@ if (!isset($_GET['action']) OR (!isset($_POST['ReportID']))) {
 	} // end switch 'todo'
 } // end if (!isset($_POST['todo']))
 
-include ($PathPrefix . 'includes/header.inc');
+include ($PathPrefix . 'includes/header.php');
 if ($usrMsg) foreach ($usrMsg as $temp) prnmsg($temp['message'],$temp['level']);
 include ($IncludePage);
-include ( $PathPrefix . 'includes/footer.inc');
+include ( $PathPrefix . 'includes/footer.php');
 // End main body
 
 // Begin functions

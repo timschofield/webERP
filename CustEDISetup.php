@@ -2,9 +2,9 @@
 
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Customer EDI Set Up');
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<a href="' . $RootPath . '/SelectCustomer.php">' . _('Back to Customers') . '</a><br />';
 
@@ -161,5 +161,5 @@ echo '</table>
     </div>
 	</form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

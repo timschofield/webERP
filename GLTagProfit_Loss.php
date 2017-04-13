@@ -2,7 +2,7 @@
 
 /* $Id$*/
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('Income and Expenditure by Tag');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/AccountSectionsDef.php'); // This loads the $Sections variable
@@ -17,7 +17,7 @@ if (isset($_POST['FromPeriod']) AND ($_POST['FromPeriod'] > $_POST['ToPeriod']))
 
 if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST['SelectADifferentPeriod'])){
 
-	include('includes/header.inc');
+	include('includes/header.php');
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -151,9 +151,9 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 	$NumberOfMonths = $_POST['ToPeriod'] - $_POST['FromPeriod'] + 1;
 
 	if ($NumberOfMonths > 12){
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg(_('A period up to 12 months in duration can be specified') . ' - ' . _('the system automatically shows a comparative for the same period from the previous year') . ' - ' . _('it cannot do this if a period of more than 12 months is specified') . '. ' . _('Please select an alternative period range'),'error');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -172,8 +172,8 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 					chartmaster.accountname,
 					Sum(CASE WHEN (gltrans.periodno>='" . $_POST['FromPeriod'] . "' and gltrans.periodno<='" . $_POST['ToPeriod'] . "') THEN gltrans.amount ELSE 0 END) AS TotalAllPeriods,
 					Sum(CASE WHEN (gltrans.periodno='" . $_POST['ToPeriod'] . "') THEN gltrans.amount ELSE 0 END) AS TotalThisPeriod
-			FROM chartmaster 
-				INNER JOIN accountgroups ON chartmaster.group_ = accountgroups.groupname 
+			FROM chartmaster
+				INNER JOIN accountgroups ON chartmaster.group_ = accountgroups.groupname
 				INNER JOIN gltrans ON chartmaster.accountcode= gltrans.account
 				INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canview=1
 			WHERE accountgroups.pandl=1
@@ -193,24 +193,24 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 
 	if (DB_error_no() != 0) {
 		$Title = _('Income and Expenditure') . ' - ' . _('Problem Report') . '....';
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg( _('No general ledger accounts were returned by the SQL because') . ' - ' . DB_error_msg() );
 		echo '<br />
 				<a href="' .$RootPath .'/index.php">' .  _('Back to the menu'). '</a>';
 		if ($debug == 1){
 			echo '<br />' .  $SQL;
 		}
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 	if (DB_num_rows($AccountsResult)==0){
 		$Title = _('Print Income and Expenditure Error');
-		include('includes/header.inc');
+		include('includes/header.php');
 		echo '<br />';
 		prnMsg( _('There were no entries to print out for the selections specified'),'info');
 		echo '<br />
 				<a href="'. $RootPath.'/index.php">' .  _('Back to the menu'). '</a>';
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -466,7 +466,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 
 } else {
 
-	include('includes/header.inc');
+	include('includes/header.php');
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
@@ -478,7 +478,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 	if ($NumberOfMonths >12){
 		echo '<br />';
 		prnMsg(_('A period up to 12 months in duration can be specified') . ' - ' . _('the system automatically shows a comparative for the same period from the previous year') . ' - ' . _('it cannot do this if a period of more than 12 months is specified') . '. ' . _('Please select an alternative period range'),'error');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -941,6 +941,6 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 }
 echo '</div>';
 echo '</form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

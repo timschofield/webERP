@@ -1,12 +1,12 @@
 <?php
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('General Ledger Journal Inquiry');
 
 $ViewTopic= 'GeneralLedger';
 $BookMark = 'GLJournalInquiry';
 
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
@@ -17,7 +17,7 @@ if (!isset($_POST['Show'])) {
 	echo '<table class="selection">';
 	echo '<tr><th colspan="3">' . _('Selection Criteria') . '</th></tr>';
 
-	$sql = "SELECT typeid,systypes.typeno,typename FROM 
+	$sql = "SELECT typeid,systypes.typeno,typename FROM
 		systypes INNER JOIN gltrans ON systypes.typeid=gltrans.type
 		GROUP BY typeid";
 	$result = DB_query($sql);
@@ -38,7 +38,7 @@ if (!isset($_POST['Show'])) {
 			</tr>';
 
 	}
-	
+
 	echo '<tr>
 			<td>' . _('Journal Number Range') . ' (' . _('Between') . ' 1 ' . _('and') . ' ' . $MaxJournalNumberUsed . ')</td>
 			<td>' . _('From') . ':'. '<input type="text" class="number" name="NumberFrom" size="10" maxlength="11" value="1" />' . '</td>
@@ -128,7 +128,7 @@ if (!isset($_POST['Show'])) {
 			} else {
 				echo '<tr ' . $RowClass . '><td colspan="2"></td>';
 			}
-			
+
 			// if user is allowed to see the account we show it, other wise we show "OTHERS ACCOUNTS"
 			$CheckSql = "SELECT count(*)
 						 FROM glaccountusers
@@ -145,8 +145,8 @@ if (!isset($_POST['Show'])) {
 				echo '<td>' . _('Others') . '</td>
 						<td>' . _('Other GL Accounts') . '</td>';
 			}
-			
-					
+
+
 			echo '<td>' . $myrow['narrative']  . '</td>
 					<td class="number">' . locale_number_format($myrow['amount'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 					<td class="number">' . $myrow['tag'] . ' - ' . $myrow['tagdescription'] . '</td>';
@@ -157,9 +157,9 @@ if (!isset($_POST['Show'])) {
 				} else {
 					echo '<td class="number"><a href="PDFGLJournal.php?JournalNo='.$myrow['typeno'].'">' . _('Print')  . '</a></td></tr>';
 				}
-				
-				
-				
+
+
+
 				$LastJournal = $myrow['typeno'];
 			} else {
 				echo '<td colspan="1"></td></tr>';
@@ -174,6 +174,6 @@ if (!isset($_POST['Show'])) {
 	echo '<br /><div class="centre"><input type="submit" name="Return" value="' . _('Select Another Date'). '" /></div>';
 	echo '</form>';
 }
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

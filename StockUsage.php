@@ -2,7 +2,7 @@
 
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('Stock Usage');
 
@@ -22,7 +22,7 @@ if (isset($_POST['ShowGraphUsage'])) {
 	exit;
 }
 
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Dispatch') .
@@ -204,6 +204,6 @@ echo '<br />
 echo '</div>
       </div>
       </form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

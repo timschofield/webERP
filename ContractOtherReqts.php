@@ -3,7 +3,7 @@
 
 include('includes/DefineContractClass.php');
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Contract Other Requirements');
 
 $identifier=$_GET['identifier'];
@@ -20,7 +20,7 @@ if (!isset($_SESSION['Contract'.$identifier])){
 $ViewTopic= 'Contracts';
 $BookMark = 'AddToContract';
 
-include('includes/header.inc');
+include('includes/header.php');
 
 
 if (isset($_POST['UpdateLines']) OR isset($_POST['BackToHeader'])) {
@@ -44,7 +44,7 @@ if (isset($_POST['BackToHeader'])){
 	echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/Contracts.php?identifier='.$identifier. '" />';
 	echo '<br />';
 	prnMsg(_('You should automatically be forwarded to the Contract page. If this does not happen perhaps the browser does not support META Refresh') .	'<a href="' . $RootPath . '/Contracts.php?identifier='.$identifier . '">' . _('click here') . '</a> ' . _('to continue'),'info');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -172,5 +172,5 @@ echo '<table class="selection">
 		</div>
 		</form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

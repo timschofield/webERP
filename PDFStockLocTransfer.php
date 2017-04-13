@@ -1,7 +1,7 @@
 <?php
 
 /* $Id$*/
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Stock Location Transfer Docket Error');
 
 include('includes/PDFStarter.php');
@@ -12,7 +12,7 @@ if (isset($_POST['TransferNo'])) {
 
 if (!isset($_GET['TransferNo'])){
 
-	include ('includes/header.inc');
+	include ('includes/header.php');
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') .
 		'" alt="" />' . ' ' . _('Reprint transfer docket') . '</p><br />';
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
@@ -48,7 +48,7 @@ if (!isset($_GET['TransferNo'])){
     echo '</div>
           </form>';
 
-	include ('includes/footer.inc');
+	include ('includes/footer.php');
 	exit;
 }
 
@@ -83,9 +83,9 @@ $result = DB_query($sql, $ErrMsg, $DbgMsg);
 
 If (DB_num_rows($result)==0){
 
-	include ('includes/header.inc');
+	include ('includes/header.php');
 	prnMsg(_('The transfer reference selected does not appear to be set up') . ' - ' . _('enter the items to be transferred first'),'error');
-	include ('includes/footer.inc');
+	include ('includes/footer.php');
 	exit;
 }
 

@@ -1,9 +1,9 @@
 <?php
 /* $Id$ */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Maintenance Of Petty Cash Expenses For a Type Tab');
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Payment Entry')
 	. '" alt="" />' . ' ' . $Title . '</p>';
@@ -234,5 +234,5 @@ while ($myrow = DB_fetch_array($result)) {
 	} // end if user wish to delete
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

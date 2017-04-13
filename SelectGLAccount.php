@@ -1,12 +1,12 @@
 <?php
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('Search GL Accounts');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLAccountInquiry';
-include('includes/header.inc');
+include('includes/header.php');
 
 $msg='';
 unset($result);
@@ -24,9 +24,9 @@ if (isset($_POST['Search'])){
                     FROM chartmaster,
                         accountgroups,
 						glaccountusers
-					WHERE glaccountusers.accountcode = chartmaster.accountcode 
+					WHERE glaccountusers.accountcode = chartmaster.accountcode
 						AND glaccountusers.userid='" .  $_SESSION['UserID'] . "'
-						AND glaccountusers.canview=1 
+						AND glaccountusers.canview=1
 						AND chartmaster.group_=accountgroups.groupname
                     ORDER BY chartmaster.accountcode";
     }
@@ -43,9 +43,9 @@ if (isset($_POST['Search'])){
 				FROM chartmaster,
 					accountgroups,
 					glaccountusers
-				WHERE glaccountusers.accountcode = chartmaster.accountcode 
+				WHERE glaccountusers.accountcode = chartmaster.accountcode
 					AND glaccountusers.userid='" .  $_SESSION['UserID'] . "'
-					AND glaccountusers.canview=1 
+					AND glaccountusers.canview=1
 					AND chartmaster.group_ = accountgroups.groupname
 					AND accountname " . LIKE  . "'". $SearchString ."'
 				ORDER BY accountgroups.sequenceintb,
@@ -62,11 +62,11 @@ if (isset($_POST['Search'])){
 					chartmaster.group_,
 					CASE WHEN accountgroups.pandl!=0 THEN '" . _('Profit and Loss') . "' ELSE '" . _('Balance Sheet') ."' END AS pl
 					FROM chartmaster,
-						accountgroups, 
+						accountgroups,
 						glaccountusers
-				WHERE glaccountusers.accountcode = chartmaster.accountcode 
+				WHERE glaccountusers.accountcode = chartmaster.accountcode
 					AND glaccountusers.userid='" .  $_SESSION['UserID'] . "'
-					AND glaccountusers.canview=1 
+					AND glaccountusers.canview=1
 					AND chartmaster.group_=accountgroups.groupname
 					AND chartmaster.accountcode >= '" . $_POST['GLCode'] . "'
 					ORDER BY chartmaster.accountcode";
@@ -120,7 +120,7 @@ if (!isset($AccountID)) {
 	echo '	</tr>
 		</table>
 		<br />';
-		
+
 	echo '<div class="centre">
 			<input type="submit" name="Search" value="' . _('Search Now') . '" />
 			<input type="submit" name="reset" value="' . _('Reset') .'" />
@@ -186,5 +186,5 @@ if (!isset($AccountID)) {
 
 } //end AccountID already selected
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

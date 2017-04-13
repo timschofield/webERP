@@ -8,13 +8,13 @@ This is where the delivery details are confirmed/entered/modified and the order 
 
 include('includes/DefineCartClass.php');
 
-/* Session started in header.inc for password checking the session will contain the details of the order from the Cart class object. The details of the order come from SelectOrderItems.php 			*/
+/* Session started in header.php for password checking the session will contain the details of the order from the Cart class object. The details of the order come from SelectOrderItems.php 			*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Order Delivery Details');// Screen identification.
 $ViewTopic = 'SalesOrders';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'DeliveryDetails';// Anchor's id in the manual's html document.
-include('includes/header.inc');
+include('includes/header.php');
 
 include('includes/FreightCalculation.inc');
 include('includes/SQL_CommonFunctions.inc');
@@ -27,13 +27,13 @@ if(isset($_GET['identifier'])) {
 unset($_SESSION['WarnOnce']);
 if(!isset($_SESSION['Items'.$identifier]) OR !isset($_SESSION['Items'.$identifier]->DebtorNo)) {
 	prnMsg(_('This page can only be read if an order has been entered') . '. ' . _('To enter an order select customer transactions then sales order entry'),'error');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
 if($_SESSION['Items'.$identifier]->ItemsOrdered == 0) {
 	prnMsg(_('This page can only be read if an there are items on the order') . '. ' . _('To enter an order select customer transactions then sales order entry'),'error');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -168,7 +168,7 @@ if(isset($_POST['Update'])
 			if($debug==1) {
 				echo '<br />' . _('The SQL that failed to get the branch details was') . ':<br />' . $sql;
 			}
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 		}
 		if(!isset($_POST['SpecialInstructions'])) {
@@ -274,7 +274,7 @@ if(isset($_POST['MakeRecurringOrder']) AND ! $InputErrors) {
 
 	echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/RecurringSalesOrders.php?identifier='.$identifier  . '&amp;NewRecurringOrder=Yes">';
 	prnMsg(_('You should automatically be forwarded to the entry of recurring order details page') . '. ' . _('If this does not happen') . '(' . _('if the browser does not support META Refresh') . ') ' . '<a href="' . $RootPath . '/RecurringOrders.php?identifier='.$identifier . '&amp;NewRecurringOrder=Yes">' . _('click here') . '</a> '. _('to continue'),'info');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -283,7 +283,7 @@ if(isset($_POST['BackToLineDetails']) and $_POST['BackToLineDetails']==_('Modify
 
 	echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/SelectOrderItems.php?identifier='.$identifier  . '">';
 	prnMsg(_('You should automatically be forwarded to the entry of the order line details page') . '. ' . _('If this does not happen') . '(' . _('if the browser does not support META Refresh') . ') ' . '<a href="' . $RootPath . '/SelectOrderItems.php?identifier='.$identifier . '">' . _('click here') . '</a> '. _('to continue'),'info');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 
 }
@@ -645,7 +645,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 
 	unset($_SESSION['Items'.$identifier]->LineItems);
 	unset($_SESSION['Items'.$identifier]);
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 
 } elseif(isset($OK_to_PROCESS) AND ($OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$identifier]!=0)) {
@@ -845,7 +845,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 		</tr>
 		</table>';
 	}//end of print orders
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -1219,5 +1219,5 @@ if($_SESSION['ExistingOrder'.$identifier]==0) {
 echo '</div>
       </div>
       </form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

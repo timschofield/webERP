@@ -1,11 +1,11 @@
 <?php
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Tax Categories');
 $ViewTopic = 'Tax';// Filename in ManualContents.php's TOC.
 $BookMark = 'TaxCategories';// Anchor's id in the manual's html document.
-include('includes/header.inc');
+include('includes/header.php');
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
 		'/images/maintenance.png" title="' .
 		_('Tax Category Maintenance') . '" />' . ' ' .
@@ -255,5 +255,5 @@ echo '<br />
 		<a href="' . $RootPath . '/TaxProvinces.php">' . _('Dispatch Tax Province Maintenance') .  '</a>
 	</div>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

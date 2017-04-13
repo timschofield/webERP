@@ -1,11 +1,11 @@
 <?php
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('All Stock Movements By Location');
 
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<div>';
@@ -151,6 +151,6 @@ echo '</table>';
 echo '</div>
       </form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

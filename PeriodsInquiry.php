@@ -2,11 +2,11 @@
 
 /* $Id$*/
 
-include ('includes/session.inc');
+include ('includes/session.php');
 
 $Title = _('Periods Inquiry');
 
-include('includes/header.inc');
+include('includes/header.php');
 
 $SQL = "SELECT periodno ,
 		lastdate_in_period
@@ -59,5 +59,5 @@ for ($i=0;$i<3;$i++) {
 echo '</tr></table>';
 //end of while loop
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

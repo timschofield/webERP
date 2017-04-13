@@ -2,13 +2,13 @@
 
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('Discount Categories Maintenance');
-/* webERP manual links before header.inc */
+/* webERP manual links before header.php */
 $ViewTopic= "SalesOrders";
 $BookMark = "DiscountMatrix";
-include('includes/header.inc');
+include('includes/header.php');
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
 
 if (isset($_POST['stockID'])) {
@@ -70,7 +70,7 @@ if (isset($_POST['submit']) and !isset($_POST['SubmitCategory'])) {
 		$result=DB_query($sql);
 	}else{
 		prnMsg(_('There are no stock defined for this stock category, you must define stock for it first'),'error');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 }
@@ -272,5 +272,5 @@ if (!isset($_POST['SelectChoice'])) {
           </form>';
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

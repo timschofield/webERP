@@ -2,7 +2,7 @@
 /* $Id$ */
 /*  */
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('Petty Cash Management Report');
 $ViewTopic = 'PettyCash';
 $BookMark = 'PcReportTab';
@@ -18,7 +18,7 @@ if (isset($_POST['SelectedTabs'])){
 
 if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST['SelectDifferentDate'])) {
 
-	include  ('includes/header.inc');
+	include  ('includes/header.php');
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Payment Entry')
 	. '" alt="" />' . ' ' . $Title . '</p>';
@@ -101,20 +101,20 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	$TabDetail = DB_query($SQL);
 
 	if (DB_error_no()!=0){
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg(_('An error occurred getting the orders details'),'',_('Database Error'));
 		if ($debug==1){
 			prnMsg( _('The SQL used to get the orders that failed was') . '<br />' . $SQL, '',_('Database Error'));
 		}
-		include ('includes/footer.inc');
+		include ('includes/footer.php');
 		exit;
 	} elseif (DB_num_rows($TabDetail)==0){
-	  	include('includes/header.inc');
+	  	include('includes/header.php');
 		prnMsg(_('There were no expenses found in the database within the period from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' '. $_POST['ToDate'] . '. ' . _('Please try again selecting a different date range'),'warn');
 		if ($debug==1) {
 			prnMsg(_('The SQL that returned no rows was') . '<br />' . $SQL,'',_('Database Error'));
 		}
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -235,7 +235,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	exit;
 } else {
 
-	include('includes/header.inc');
+	include('includes/header.php');
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Payment Entry')
 	. '" alt="" />' . ' ' . $Title . '</p>';
@@ -413,6 +413,6 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
     echo '</div>
           </form>';
 }
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

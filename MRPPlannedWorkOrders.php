@@ -4,17 +4,17 @@
 // MRPPlannedWorkOrders.php - Report of manufactured parts that MRP has determined should have
 // work orders created for them
 
-include('includes/session.inc');
+include('includes/session.php');
 
 $sql="SHOW TABLES WHERE Tables_in_" . $_SESSION['DatabaseName'] . "='mrprequirements'";
 $result=DB_query($sql);
 if (DB_num_rows($result)==0) {
 	$Title=_('MRP error');
-	include('includes/header.inc');
+	include('includes/header.php');
 	echo '<br />';
 	prnMsg( _('The MRP calculation must be run before you can run this report') . '<br />' .
 			_('To run the MRP calculation click').' ' . '<a href="' . $RootPath . '/MRP.php">' . _('here') . '</a>', 'error');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
@@ -103,21 +103,21 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 
 	if (DB_error_no() !=0) {
 	  $Title = _('MRP Planned Work Orders') . ' - ' . _('Problem Report');
-	  include('includes/header.inc');
+	  include('includes/header.php');
 	   prnMsg( _('The MRP planned work orders could not be retrieved by the SQL because') . ' '  . DB_error_msg(),'error');
 	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
 		  echo '<br />' . $sql;
 	   }
-	   include('includes/footer.inc');
+	   include('includes/footer.php');
 	   exit;
 	}
 	if (DB_num_rows($result)==0){ //then there's nothing to print
 		$Title = _('MRP Planned Work Orders');
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg(_('There were no items with demand greater than supply'),'info');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -241,7 +241,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 	} else { // Review planned work orders
 
 		$Title = _('Review/Convert MRP Planned Work Orders');
-		include('includes/header.inc');
+		include('includes/header.php');
 		echo '<p class="page_title_text">
 				<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
 
@@ -308,14 +308,14 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
               </form>';
 
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		include('includes/footer.inc');
+		include('includes/footer.php');
 
 	}
 
 } else { /*The option to print PDF was not hit so display form */
 
 	$Title=_('MRP Planned Work Orders Reporting');
-	include('includes/header.inc');
+	include('includes/header.php');
 	echo '<p class="page_title_text">
 			<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
 
@@ -349,7 +349,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
              </div>
           </form>';
 
-	include('includes/footer.inc');
+	include('includes/footer.php');
 
 } /*end of else not PrintPDF */
 

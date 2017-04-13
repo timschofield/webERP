@@ -3,11 +3,11 @@
 
 /* $Id: Manufacturers.php 5498 2012-07-13 08:35:54Z tehonu $*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('Brands Maintenance');
 
-include('includes/header.inc');
+include('includes/header.php');
 
 if (isset($_GET['SelectedManufacturer'])){
 	$SelectedManufacturer = $_GET['SelectedManufacturer'];
@@ -19,7 +19,7 @@ $SupportedImgExt = array('png','jpg','jpeg');
 
 if (isset($_POST['submit'])) {
 
-	
+
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
 
@@ -29,13 +29,13 @@ if (isset($_POST['submit'])) {
 	if (isset($SelectedManufacturer) AND $InputError !=1) {
 
 		if (isset($_FILES['BrandPicture']) AND $_FILES['BrandPicture']['name'] !='') {
-	
+
 			$result	= $_FILES['BrandPicture']['error'];
 		 	$UploadTheFile = 'Yes'; //Assume all is well to start off with
-			
+
 			$ImgExt = pathinfo($_FILES['BrandPicture']['name'], PATHINFO_EXTENSION);
 			$FileName = $_SESSION['part_pics_dir'] . '/BRAND-' . $SelectedManufacturer . '.' . $ImgExt;
-		
+
 			 //But check for the worst
 			if (!in_array ($ImgExt, $SupportedImgExt)) {
 				prnMsg(_('Only ' . implode(", ", $SupportedImgExt) . ' files are supported - a file extension of ' . implode(", ", $SupportedImgExt) . ' is expected'),'warn');
@@ -57,7 +57,7 @@ if (isset($_POST['submit'])) {
 					}
 				}
 			}
-		
+
 			if ($UploadTheFile=='Yes'){
 				$result  =  move_uploaded_file($_FILES['BrandPicture']['tmp_name'], $FileName);
 				$message = ($result)?_('File url')  . '<a href="' . $FileName .'">' .  $FileName . '</a>' : _('Something is wrong with uploading a file');
@@ -76,7 +76,7 @@ if (isset($_POST['submit'])) {
 					$_POST['ManufacturersImage'] = '';
 				}
 			}
-			
+
 		}
 		if (isset($_POST['ClearImage']) ) {
 		foreach ($SupportedImgExt as $ext) {
@@ -95,7 +95,7 @@ if (isset($_POST['submit'])) {
 									manufacturers_url='" . $_POST['ManufacturersURL'] . "'";
 		if (isset($_POST['ManufacturersImage'])){
 			$sql .= ", manufacturers_image='" . $_POST['ManufacturersImage'] . "'";
-		} 
+		}
 		$sql .= " WHERE manufacturers_id = '" . $SelectedManufacturer . "'";
 
 		$ErrMsg = _('An error occurred updating the') . ' ' . $SelectedManufacturer . ' ' . _('manufacturer record because');
@@ -123,13 +123,13 @@ if (isset($_POST['submit'])) {
 		$result = DB_query($sql,$ErrMsg,$DbgMsg);
 
 		if (isset($_FILES['BrandPicture']) AND $_FILES['BrandPicture']['name'] !='') {
-	
+
 			$result	= $_FILES['BrandPicture']['error'];
 		 	$UploadTheFile = 'Yes'; //Assume all is well to start off with
-			
+
 			$ImgExt = pathinfo($_FILES['BrandPicture']['name'], PATHINFO_EXTENSION);
 			$FileName = $_SESSION['part_pics_dir'] . '/BRAND-' . $_SESSION['LastInsertId'] . '.' . $ImgExt;
-		
+
 			 //But check for the worst
 			if (!in_array ($ImgExt, $SupportedImgExt)) {
 				prnMsg(_('Only ' . implode(", ", $SupportedImgExt) . ' files are supported - a file extension of ' . implode(", ", $SupportedImgExt) . ' is expected'),'warn');
@@ -151,15 +151,15 @@ if (isset($_POST['submit'])) {
 					}
 				}
 			}
-		
+
 			if ($UploadTheFile=='Yes'){
 				$result  =  move_uploaded_file($_FILES['BrandPicture']['tmp_name'], $FileName);
 				$message = ($result)?_('File url')  . '<a href="' . $FileName .'">' .  $FileName . '</a>' : _('Something is wrong with uploading a file');
-				DB_query("UPDATE manufacturers 
+				DB_query("UPDATE manufacturers
 					SET  manufacturers_image='" . 'BRAND-' . $_SESSION['LastInsertId'] . "'
 					WHERE manufacturers_id = '" . $_SESSION['LastInsertId'] . "'
 					");
-			} 
+			}
 		}
 
 		prnMsg( _('The new manufacturer record has been added'),'success');
@@ -184,9 +184,9 @@ if (isset($_POST['submit'])) {
 		prnMsg( _('Cannot delete this manufacturer because products have been defined as from this manufacturer'),'warn');
 		echo  _('There are') . ' ' . $myrow[0] . ' ' . _('items with this manufacturer code');
 	}
-	
+
 	if (!$CancelDelete) {
-		
+
 		$result = DB_query("DELETE FROM manufacturers WHERE manufacturers_id='" . $SelectedManufacturer . "'");
 		foreach ($SupportedImgExt as $ext) {
 			$file = $_SESSION['part_pics_dir'] . '/BRAND-' . $SelectedManufacturer . '.' . $ext;
@@ -238,7 +238,7 @@ while ($myrow = DB_fetch_array($result)) {
 		echo '<tr class="OddTableRows">';
 		$k=1;
 	}
-	
+
 	$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/BRAND-' . $myrow['manufacturers_id'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
 	if (extension_loaded('gd') && function_exists('gd_info') && file_exists($imagefile)){
 		$BrandImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
@@ -307,7 +307,7 @@ if (!isset($_GET['delete'])) {
 		$_POST['ManufacturersName']  = $myrow['manufacturers_name'];
 		$_POST['ManufacturersURL'] = $myrow['manufacturers_url'];
 		$_POST['ManufacturersImage'] = $myrow['manufacturers_image'];
-		
+
 
 		echo '<input type="hidden" name="SelectedManufacturer" value="' . $SelectedManufacturer . '" />';
 		echo '<table class="selection">';
@@ -315,7 +315,7 @@ if (!isset($_GET['delete'])) {
 				<th colspan="2">' . _('Amend Brand Details') . '</th>
 			</tr>';
 	} else { //end of if $SelectedManufacturer only do the else when a new record is being entered
-		
+
 		echo '<table class="selection">
 				<tr>
 					<th colspan="2"><h3>' . _('New Brand/Manufacturer Details') . '</h3></th>
@@ -330,7 +330,7 @@ if (!isset($_GET['delete'])) {
 	if (!isset($_POST['ManufacturersImage'])) {
 		$_POST['ManufacturersImage'] = '';
 	}
-	
+
 	echo '<tr>
 			<td>' .  _('Brand Name') . ':' . '</td>
 			<td><input type="text" required="required" autofocus="autofocus" name="ManufacturersName" value="'. $_POST['ManufacturersName'] . '" size="32" maxlength="32" /></td>
@@ -342,15 +342,15 @@ if (!isset($_GET['delete'])) {
 		<tr>
 			<td>' .  _('Brand Image File (' . implode(", ", $SupportedImgExt) . ')') . ':</td>
 			<td><input type="file" id="BrandPicture" name="BrandPicture" />';
-	
+
 	if (isset ($_GET['edit']) ) {
 		echo '	<br /><input type="checkbox" name="ClearImage" id="ClearImage" value="1" > '._('Clear Image').' ';
 	}
-	
+
 	echo '	</td>
 		</tr>';
 		if (isset($SelectedManufacturer)){
-			
+
 			$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/BRAND-' . $SelectedManufacturer . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
 			if (extension_loaded('xgd') && function_exists('gd_info') && file_exists($imagefile)){
 				$BrandImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
@@ -368,7 +368,7 @@ if (!isset($_GET['delete'])) {
 			}
 			echo '<tr><td colspan="2">' . $BrandImgLink . '</td></tr>';
 		}
-		
+
 		echo 	'</table>
 			<br />
 			<div class="centre">
@@ -379,5 +379,5 @@ if (!isset($_GET['delete'])) {
 
 } //end if record deleted no point displaying form to add record
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

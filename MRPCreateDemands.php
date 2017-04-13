@@ -2,9 +2,9 @@
 /* $Id$*/
 // MRPCreateDemands.php - Create mrpdemands based on sales order history
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('MRP Create Demands');
-include('includes/header.inc');
+include('includes/header.php');
 
 if (isset($_POST['submit'])) {
    // Create mrpdemands based on sales order history
@@ -210,8 +210,8 @@ echo '</select></td></tr>';
 echo '<tr>
 		<td>' . _('Inventory Categories') . ':</td>
 		<td><select autofocus="autofocus" required="required" minlength="1" size="12" name="Categories[]"multiple="multiple">';
-	$SQL = 'SELECT categoryid, categorydescription 
-			FROM stockcategory 
+	$SQL = 'SELECT categoryid, categorydescription
+			FROM stockcategory
 			ORDER BY categorydescription';
 	$CatResult = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($CatResult)) {
@@ -287,5 +287,5 @@ echo '<tr>
 echo '</div>
       </form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

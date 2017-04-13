@@ -1,14 +1,14 @@
 <?php
 /* $Id: CustomerBalancesMovement.php 6941 2014-10-26 23:18:08Z daintree $*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title=_('Customer Activity and Balances');
 /*To do: Info in the manual. RChacon.
 $ViewTopic = '';// Filename in ManualContents.php's TOC.
 $BookMark = '';// Anchor's id in the manual's html document.*/
 
 if(!isset($_POST['CreateCSV'])) {
-	include('includes/header.inc');
+	include('includes/header.php');
 	echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Customer Activity and Balances') . '" /> ' . _('Customer Activity and Balances') . '</p>';
 }
 
@@ -75,7 +75,7 @@ if (!isset($_POST['RunReport'])){
 		 </div>
 	</form>
 	<br />';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -222,7 +222,7 @@ if (isset($_POST['CreateCSV'])){
 	exit;
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 
 function stripcomma($str) { //because we're using comma as a delimiter
 	return str_replace(',', '', $str);

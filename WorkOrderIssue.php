@@ -1,9 +1,9 @@
 <?php
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Issue Materials To Work Order');
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 
 if (isset($_GET['WO'])){
@@ -31,7 +31,7 @@ if (!isset($_POST['WO']) OR !isset($_POST['StockID'])) {
 	echo '<div class="centre"><a href="' . $RootPath . '/SelectWorkOrder.php">' .
 		_('Select a work order to issue materials to') . '</a></div>';
 	prnMsg(_('This page can only be opened if a work order has been selected. Please select a work order to issue materials to first'),'info');
-	include ('includes/footer.inc');
+	include ('includes/footer.php');
 	exit;
 } else {
 	echo '<input type="hidden" name="WO" value="' .$_POST['WO'] . '" />';
@@ -67,7 +67,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 
 	if (DB_num_rows($WOResult)==0){
 		prnMsg(_('The selected work order item cannot be retrieved from the database'),'info');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 	$WORow = DB_fetch_array($WOResult);
@@ -102,7 +102,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 		if (!isset($_POST['LotCounter']) OR !is_numeric($_POST['LotCounter'])) {
 			$InputError = true;
 			prnMsg(_('The line counter is not set up or not numeric, please ask administrator for help'),'error');
-			include('include/footer.inc');
+			include('include/footer.php');
 			exit;
 		}
 		for ($i=0;$i<$_POST['LotCounter'];$i++){
@@ -290,8 +290,8 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 						if ($AlreadyExistsRow[0]>0 AND $_POST['Qty'.$i] != 0){
 							$SQL = "UPDATE stockserialitems SET quantity = CASE
 												WHEN abs(quantity -" . $_POST['Qty' . $i] . ")<" . $VarianceAllowed . "
-												THEN 0 
-												ELSE  quantity - " . $_POST['Qty' . $i] . " 
+												THEN 0
+												ELSE  quantity - " . $_POST['Qty' . $i] . "
 												END
 										WHERE stockid='" . $_POST['IssueItem'] . "'
 										AND loccode = '" . $_POST['FromLocation'] . "'
@@ -412,7 +412,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 		}
 		unset($_POST['Qty']);
 		/*end of process work order issues entry */
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	} //end if there were not input errors reported - so the processing was allowed to continue
 }//end of if the user hit the process button
@@ -442,7 +442,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 
 			if (DB_num_rows($WOResult)==0){
 				prnMsg(_('The selected work order item cannot be retrieved from the database'),'info');
-				include('includes/footer.inc');
+				include('includes/footer.php');
 				exit;
 			}
 			$WORow = DB_fetch_array($WOResult);
@@ -603,11 +603,11 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 									true);
 
 
-		prnMsg(_('The issue of') . ' ' . $QuantityIssued . ' ' . _('of')  . ' ' . $_POST['IssueItem'] . ' ' . _('against work order') . ' '. $_POST['WO'] . ' ' . _('has been processed'),'info');	
+		prnMsg(_('The issue of') . ' ' . $QuantityIssued . ' ' . _('of')  . ' ' . $_POST['IssueItem'] . ' ' . _('against work order') . ' '. $_POST['WO'] . ' ' . _('has been processed'),'info');
 		} //end of foreach loop;
 
 		$Result = DB_Txn_Commit();
-	
+
 		echo '<p><ul><li><a href="' . $RootPath . '/WorkOrderIssue.php?WO=' . $_POST['WO'] . '&amp;StockID=' . $_POST['StockID'] . '">' . _('Issue more components to this work order') . '</a></li>';
 		echo '<li><a href="' . $RootPath . '/SelectWorkOrder.php">' . _('Select a different work order for issuing materials and components against'). '</a></li></ul>';
 		unset($_POST['WO']);
@@ -616,7 +616,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 		unset($_POST['Process']);
 		unset($_POST['SerialNos']);
 		/*end of process work order issues entry */
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	} //end if there were not input errors reported - so the processing was allowed to continue
  }//end of multiple items input
@@ -759,7 +759,7 @@ $WOResult = DB_query("SELECT workorders.loccode,
 
 if (DB_num_rows($WOResult)==0){
 	prnMsg(_('The selected work order item cannot be retrieved from the database'),'info');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -789,7 +789,7 @@ echo '<table class="selection">
 
 if ($WORow['closed']==1){
 	prnMsg(_('The selected work order has been closed and variances calculated and posted. No more issues of materials and components can be made against this work order.'),'info');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 DB_data_seek($WOResult,0);
@@ -1189,5 +1189,5 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 echo '</div>
       </form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

@@ -1,11 +1,11 @@
 <?php
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('Units Of Measure');
 
-include('includes/header.inc');
+include('includes/header.php');
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' .
 		_('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
@@ -246,5 +246,5 @@ if (! isset($_GET['delete'])) {
 
 } //end if record deleted no point displaying form to add record
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

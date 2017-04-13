@@ -20,7 +20,7 @@ $ReportID = 4;
 /* ----------------------------------------------------------------------------------------------*/
 
 $AllowAnyone = true;
-include('includes/session.inc');
+include('includes/session.php');
 /*The company database to use */
 $DatabaseName = $_SESSION['DatabaseName'];
 /*The people to receive the emailed report, This mail list now can be maintained in Mailing List Maintenance of Set Up */
@@ -28,9 +28,9 @@ $DatabaseName = $_SESSION['DatabaseName'];
 $Recipients = GetMailList('SalesAnalysisReportRecipients');
 if (sizeOf($Recipients) == 0) {
 	$Title = _('Inventory Valuation') . ' - ' . _('Problem Report');
-      	include('includes/header.inc');
+      	include('includes/header.php');
 	prnMsg( _('There are no members of the Sales Analysis Report Recipients email group'), 'warn');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 include('includes/ConstructSQLForUserDefinedSalesReport.inc');

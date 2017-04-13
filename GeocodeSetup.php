@@ -2,9 +2,9 @@
 
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Geocode Maintenance');
-include('includes/header.inc');
+include('includes/header.php');
 
 if (isset($_GET['SelectedParam'])){
 	$SelectedParam = $_GET['SelectedParam'];
@@ -132,7 +132,7 @@ or deletion of the records*/
 			FROM geocode_param";
 	$result = DB_query($sql);
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Geocode Setup') . '" alt="" />' . 
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Geocode Setup') . '" alt="" />' .
 			_('Setup configuration for Geocoding of Customers and Suppliers')  . '</p>';
 	echo '<div class="page_help_text">' .  _('Get a google API key at ') .
 		'<a href="http://code.google.com/apis/maps/signup.html" target="_blank"> http://code.google.com/apis/maps/signup.html</a></div>';
@@ -280,5 +280,5 @@ echo '<div class="centre"><a href="' . $RootPath . '/geocode.php">' . _('Run Geo
 echo '<a href="' . $RootPath . '/geo_displaymap_customers.php">' . _('Display Map of Customer Branches') . '</a><br />';
 echo '<a href="' . $RootPath . '/geo_displaymap_suppliers.php">' . _('Display Map of Suppliers') . '</a></div>';
 } //end if record deleted no point displaying form to add record
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

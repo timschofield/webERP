@@ -1,5 +1,7 @@
 webERP Change Log
 
+13/4/17 RChacon: Rename includes/footer.inc, includes/header.inc and includes/session.inc to includes/footer.php, includes/header.php
+and includes/session.php.
 09/4/17 RChacon: In UserSettings.php, add options to turn off/on page help and field help. In WWW_Users.php, improve code and documentation.
 30/3/17 RChacon: In ManualContents.php, fix checkbox showing and do some improvements.
 29/3/17 RChacon: In webERP manual, allow to use default pages if locale pages do not exist.

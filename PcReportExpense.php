@@ -1,12 +1,12 @@
 <?php
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('Petty Cash Expense Management Report');
 $ViewTopic = 'PettyCash';
 $BookMark = 'PcReportExpense';
 
 include ('includes/SQL_CommonFunctions.inc');
-include  ('includes/header.inc');
+include  ('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('PC Expense Report')
 . '" alt="" />' . ' ' . $Title . '</p>';
@@ -14,7 +14,7 @@ echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/m
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
 	<div>
 	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-		
+
 if (isset($_POST['SelectedExpense'])){
 	$SelectedExpense = mb_strtoupper($_POST['SelectedExpense']);
 } elseif (isset($_GET['SelectedExpense'])){
@@ -173,6 +173,6 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
     echo '</div>
           </form>';
 }
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

@@ -10,14 +10,14 @@ Also an array of shipment charges for charges to shipments to be apportioned acc
 include('includes/DefineSuppTransClass.php');
 include('includes/DefinePOClass.php'); //needed for auto receiving code
 
-/* Session started in header.inc for password checking and authorisation level check */
-include('includes/session.inc');
+/* Session started in header.php for password checking and authorisation level check */
+include('includes/session.php');
 
 $Title = _('Enter Supplier Invoice');
-/* webERP manual links before header.inc */
+/* webERP manual links before header.php */
 $ViewTopic= 'AccountsPayable';
 $BookMark = 'SupplierInvoice';
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 
 
@@ -106,7 +106,7 @@ if (isset($_GET['SupplierID']) AND $_GET['SupplierID']!=''){
 
 	if(DB_num_rows($LocalTaxProvinceResult)==0){
 		prnMsg(_('The tax province associated with your user account has not been set up in this database. Tax calculations are based on the tax group of the supplier and the tax province of the user entering the invoice. The system administrator should redefine your account with a valid default stocking location and this location should refer to a valid tax province'),'error');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -126,7 +126,7 @@ if (isset($_GET['SupplierID']) AND $_GET['SupplierID']!=''){
 
 	prnMsg( _('To enter a supplier invoice the supplier must first be selected from the supplier selection screen'),'warn');
 	echo '<br /><a href="' . $RootPath . '/SelectSupplier.php">' . _('Select A Supplier to Enter an Invoice For') . '</a>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 
 	/*It all stops here if there ain't no supplier selected */
@@ -1556,7 +1556,7 @@ then do the updates and inserts to process the invoice entered */
 					goods received record because');
 			$DbgMsg = _('The following SQL to map the invoice to the GRN was used');
 			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
-			
+
 			if (mb_strlen($EnteredGRN->ShiptRef)>0 AND $EnteredGRN->ShiptRef != '0'){
 				/* insert the shipment charge records */
 				$SQL = "INSERT INTO shipmentcharges (shiptref,
@@ -1911,5 +1911,5 @@ if(isset($InputError) AND $InputError==true){ //add a link to return if users ma
 	echo '<div class="centre"><a href="'.$RootPath.'/SupplierInvoice.php" >' . _('Back to Invoice Entry') . '</a></div>';
 } //end of return link for input errors
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

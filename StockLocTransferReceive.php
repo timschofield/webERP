@@ -5,11 +5,11 @@
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockTransfers.php');
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Inventory Transfer') . ' - ' . _('Receiving');// Screen identification.
 $ViewTopic = 'Inventory';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'LocationTransfers';// Anchor's id in the manual's html document.
-include('includes/header.inc');
+include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.inc');
 
@@ -484,7 +484,7 @@ if(isset($_GET['Trf_ID'])) {
 
 	if(DB_num_rows($result) == 0) {
 		echo '<h3>' . _('Transfer') . ' #' . $_GET['Trf_ID'] . ' '. _('Does Not Exist') . '</h3><br />';
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -686,7 +686,7 @@ if(isset($_SESSION['Transfer'])) {
 	echo '</div>
           </form>';
 }
-include('includes/footer.inc');
+include('includes/footer.php');
 
 function RecordItemCancelledInTransfer($TransferReference, $StockID, $CancelQty){
 	$SQL = "INSERT INTO loctransfercancellations (

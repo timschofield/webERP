@@ -3,10 +3,10 @@
 /* $Id: ContractCosting.php 3692 2010-08-15 09:22:08Z daintree $*/
 
 include('includes/DefineContractClass.php');
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Contract Costing');
-/* Session started in header.inc for password checking and authorisation level check */
-include('includes/header.inc');
+/* Session started in header.php for password checking and authorisation level check */
+include('includes/header.php');
 
 if (empty($_GET['identifier'])) {
 	$identifier=date('U');
@@ -17,7 +17,7 @@ if (empty($_GET['identifier'])) {
 if (!isset($_GET['SelectedContract'])){
 	echo '<br />';
 	prnMsg( _('This page is expected to be called with the contract reference to show the costing for'), 'error');
-	include ('includes/footer.inc');
+	include ('includes/footer.php');
 	exit;
 } else {
 	$ContractRef = $_GET['SelectedContract'];
@@ -454,5 +454,5 @@ if ($_SESSION['Contract'.$identifier]->Status ==2){//the contract is an order be
 		</form>';
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

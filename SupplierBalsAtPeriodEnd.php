@@ -2,7 +2,7 @@
 
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 If (isset($_POST['PrintPDF'])
 	AND isset($_POST['FromCriteria'])
@@ -49,21 +49,21 @@ If (isset($_POST['PrintPDF'])
 
 	if (DB_error_no() !=0) {
 		$Title = _('Supplier Balances - Problem Report');
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg(_('The Supplier details could not be retrieved by the SQL because') . ' ' . DB_error_msg(),'error');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
 			echo '<br />' . $SQL;
 		}
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 	if (DB_num_rows($SupplierResult) ==0) {
 		$Title = _('Supplier Balances - Problem Report');
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg(_('There are no supplier balances to list'),'error');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -110,7 +110,7 @@ If (isset($_POST['PrintPDF'])
 } else { /*The option to print PDF was not hit */
 
 	$Title=_('Supplier Balances At A Period End');
-	include('includes/header.inc');
+	include('includes/header.php');
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' .
 		_('Supplier Allocations') . '" alt="" />' . ' ' . $Title . '</p>';
@@ -160,7 +160,7 @@ If (isset($_POST['PrintPDF'])
 			</div>';
     echo '</div>
           </form>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 }/*end of else not PrintPDF */
 
 ?>

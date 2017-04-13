@@ -1,9 +1,9 @@
 <?php
 /* $Id$*/
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('Create Chart Details Records');
-include ('includes/header.inc');
+include ('includes/header.php');
 
 /*Script to insert ChartDetails records where one should already exist
 only necessary where manual entry of chartdetails has stuffed the system */
@@ -93,5 +93,5 @@ if(DB_num_rows($ChartDetailsNotSetUpResult)>0){
 	prnMsg(_('No additional chart details were required to be added'),'success');
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

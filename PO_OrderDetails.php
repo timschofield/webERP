@@ -2,7 +2,7 @@
 
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 if (isset($_GET['OrderNo'])) {
 	$Title = _('Reviewing Purchase Order Number').' ' . $_GET['OrderNo'];
@@ -10,7 +10,7 @@ if (isset($_GET['OrderNo'])) {
 } else {
 	$Title = _('Reviewing A Purchase Order');
 }
-include('includes/header.inc');
+include('includes/header.php');
 
 if (isset($_GET['FromGRNNo'])){
 
@@ -36,7 +36,7 @@ if (!isset($_GET['OrderNo'])) {
 		<tr><td class="menu_group_item">
                 <li><a href="'. $RootPath . '/PO_SelectPurchOrder.php">' . _('Outstanding Purchase Orders') . '</a></li>
 		</td></tr></table>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -77,7 +77,7 @@ if (DB_num_rows($GetOrdHdrResult)!=1) {
 				</tr>
 				</table>';
 
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
  // the checks all good get the order now
@@ -255,5 +255,5 @@ echo '<tr><td><br /></td>
 	</table>
 	<br />';
 
-include ('includes/footer.inc');
+include ('includes/footer.php');
 ?>

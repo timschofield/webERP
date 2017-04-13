@@ -4,9 +4,9 @@
 
 /*Variables required to configure this script must be set in config.php */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title=_('FTP order to Radio Beacon');
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 
 
@@ -139,7 +139,7 @@ if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
 	if ($_SESSION['CompanyRecord']==0){
 		/*CompanyRecord will be 0 if the company information could not be retrieved */
 		prnMsg(_('There was a problem retrieving the company information ensure that the company record is correctly set up'),'error');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -185,7 +185,7 @@ if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
 			prnMsg(_('Order Number') . ' ' . $_GET['OrderNo'] . ' ' . _('has previously been sent to Radio Beacon') . '. ' . _('It was sent on') . ' ' . ConvertSQLDate($myrow['datepackingslipprinted']) . '<br />' . _('To re-send the order with the balance not previously dispatched and invoiced the order must be modified to allow a reprint (or re-send)') . '.<br />' . _('This check is there to ensure that duplication of dispatches to the customer are avoided'),'warn');
 			echo '<p><a href="' . $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . $_GET['OrderNo'] . '">' . _('Modify the order to allow a re-send or reprint') . ' (' . _('Select Delivery Details') . ')' . '</a>';
 			echo '<p><a href="' . $RootPath/index.php . '">' . _('Back to the menu') . '</a>';
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 		 }
 
@@ -296,5 +296,5 @@ if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
 
 } /*end of if page called with a OrderNo - OrderNo*/
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

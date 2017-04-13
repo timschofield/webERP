@@ -1,13 +1,18 @@
 <?php
-
 /* $Id$*/
+/* Defines the general ledger account to be used for cost of sales entries */
 
-include('includes/session.inc');
-
+include('includes/session.php');
 $Title = _('Cost Of Sales GL Postings Set Up');
-$ViewTopic= 'CreatingNewSystem';
-$BookMark = 'SalesGLPostings';
-include('includes/header.inc');
+$ViewTopic = 'CreatingNewSystem';
+$BookMark = 'COGSGLPostings';
+include('includes/header.php');
+
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+	'/images/maintenance.png" title="', // Icon image.
+	$Title, '" /> ', // Icon title.
+	$Title, '</p>
+	<br />';// Page title.
 
 
 if (isset($_POST['SelectedCOGSPostingID'])){
@@ -15,8 +20,6 @@ if (isset($_POST['SelectedCOGSPostingID'])){
 } elseif (isset($_GET['SelectedCOGSPostingID'])){
 	$SelectedCOGSPostingID=$_GET['SelectedCOGSPostingID'];
 }
-
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
 
 if (isset($_POST['submit'])) {
 
@@ -127,7 +130,7 @@ if (!isset($SelectedCOGSPostingID)) {
 				cogsglpostings.area,
 				cogsglpostings.stkcat,
 				cogsglpostings.salestype
-			FROM cogsglpostings			
+			FROM cogsglpostings
 			ORDER BY cogsglpostings.area,
 				cogsglpostings.stkcat,
 				cogsglpostings.salestype";
@@ -370,5 +373,5 @@ echo '</select></td>
     </div>
 	</form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

@@ -12,12 +12,12 @@ class BankStatement {
 	var $OpeningBalance;
 	var $ClosingDate;
 	var $ClosingBalance;
-	var $BankGLAccount; 
+	var $BankGLAccount;
 	var $BankAccountName;
 	var $CurrDecimalPlaces;
 	var $ExchangeRate;
 	var $Trans;
-	
+
 	function BankStatement () {
 		$this->ReportCreated = '';
 		$this->AccountNumber = '';
@@ -27,7 +27,7 @@ class BankStatement {
 		$this->CurrCode = '';
 		$this->ClosingBalance = 0;
 		$this->OpeningBalance = 0;
-		$this->BankGLAccount = ''; 
+		$this->BankGLAccount = '';
 		$this->BankAccountName = '';
 		$this->CurrDecimalPlaces = 2;
 		$this->ExchangeRate = 1;
@@ -45,7 +45,7 @@ class BankTrans {
 	var $SupplierID;
 	var $GLItemID;
 	var $GLTotal;
-	
+
 	function BankTrans ($ValueDate, $Amount) {
 		$this->ValueDate = $ValueDate;
 		$this->Amount = $Amount;
@@ -56,13 +56,13 @@ class BankTrans {
 		$this->GLTotal = 0;
 		$this->BankTransID = 0;
 	}
-	
+
 	function Add_To_GLAnalysis($Amount, $Narrative, $GLCode, $GLAccountName, $Tag){
 		if (isset($GLCode) AND $Amount!=0){
 			$this->GLEntries[$this->GLItemID] = new GLAnalysis($Amount, $Narrative, $this->GLItemID, $GLCode, $GLAccountName, $Tag);
 			$this->GLItemID++;
 			$this->GLTotal += $Amount;
-			
+
 			Return 1;
 		}
 		Return 0;
@@ -74,7 +74,7 @@ class BankTrans {
 		$this->GLItemCounter--;
 	}
 }
-	
+
 
 Class GLAnalysis {
 
@@ -84,7 +84,7 @@ Class GLAnalysis {
 	var $GLAccountName;
 	Var $ID;
 	var $Tag;
-	
+
 	function GLAnalysis ($Amount, $Narrative, $ID, $GLCode, $GLAccountName, $Tag){
 
 /* Constructor function to add a new JournalGLAnalysis object with passed params */

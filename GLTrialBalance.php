@@ -7,7 +7,7 @@ and shows the balance sheets as at the end of the period selected - so first off
 while the user is selecting the criteria the system is posting any unposted transactions */
 
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('Trial Balance');// Screen identification.
 $ViewTopic= 'GeneralLedger';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'TrialBalance';// Anchor's id in the manual's html document.
@@ -28,7 +28,7 @@ if ((! isset($_POST['FromPeriod'])
 	AND ! isset($_POST['ToPeriod']))
 	OR isset($_POST['SelectADifferentPeriod'])){
 
-	include  ('includes/header.inc');
+	include  ('includes/header.php');
 	echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 		'/images/printer.png" title="' .// Icon image.
 		_('Print Trial Balance') . '" /> ' .// Icon title.
@@ -165,22 +165,22 @@ if ((! isset($_POST['FromPeriod'])
 	$AccountsResult = DB_query($SQL);
 	if (DB_error_no() !=0) {
 		$Title = _('Trial Balance') . ' - ' . _('Problem Report') . '....';
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg( _('No general ledger accounts were returned by the SQL because') . ' - ' . DB_error_msg() );
 		echo '<br /><a href="' .$RootPath .'/index.php">' .  _('Back to the menu'). '</a>';
 		if ($debug==1){
 			echo '<br />' .  $SQL;
 		}
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 	if (DB_num_rows($AccountsResult)==0){
 		$Title = _('Print Trial Balance Error');
-		include('includes/header.inc');
+		include('includes/header.php');
 		echo '<p>';
 		prnMsg( _('There were no entries to print out for the selections specified') );
 		echo '<br /><a href="'. $RootPath.'/index.php">' .  _('Back to the menu'). '</a>';
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -390,7 +390,7 @@ if ((! isset($_POST['FromPeriod'])
 	exit;
 } else {
 
-	include('includes/header.inc');
+	include('includes/header.php');
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
 		<div>
 			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
@@ -742,6 +742,6 @@ if ((! isset($_POST['FromPeriod'])
 }
 echo '</div>
 	</form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

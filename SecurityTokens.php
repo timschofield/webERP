@@ -2,11 +2,11 @@
 /* $Id: SecurityTokens.php 4424 2010-12-22 16:27:45Z tim_schofield $ */
 /* Administration of security tokens */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Maintain Security Tokens');
 $ViewTopic = 'SecuritySchema';
 $BookMark = 'SecurityTokens';// Pending ?
-include('includes/header.inc');
+include('includes/header.php');
 
 // Merge gets into posts:
 if(isset($_GET['Action'])) {
@@ -170,5 +170,5 @@ echo			$_POST['TokenId'], '" /></td>
 	</table>
 	</form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

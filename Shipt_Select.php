@@ -2,9 +2,9 @@
 
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Search Shipments');
-include('includes/header.inc');
+include('includes/header.php');
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') .
 	'" alt="" />' . ' ' . $Title . '</p>';
 
@@ -370,5 +370,5 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 
 echo '</div>
       </form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

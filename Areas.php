@@ -2,12 +2,12 @@
 
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('Sales Area Maintenance');
 $ViewTopic= 'CreatingNewSystem';
 $BookMark = 'Areas';
-include('includes/header.inc');
+include('includes/header.php');
 
 
 if (isset($_GET['SelectedArea'])){
@@ -236,5 +236,5 @@ if (!isset($_GET['delete'])) {
 
  } //end if record deleted no point displaying form to add record
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

@@ -2,7 +2,7 @@
 
 /* $Id: PDFSellThroughSupportClaim.php 5788 2013-01-02 03:22:38Z daintree $*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Sell Through Support Claims Report');
 
 if (isset($_POST['PrintPDF'])) {
@@ -17,9 +17,9 @@ if (isset($_POST['PrintPDF'])) {
 	$Title = _('Sell Through Support Claim') . ' - ' . _('Problem Report');
 
 	if (! Is_Date($_POST['FromDate']) OR ! Is_Date($_POST['ToDate'])){
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg(_('The dates entered must be in the format') . ' '  . $_SESSION['DefaultDateFormat'],'error');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -69,25 +69,25 @@ if (isset($_POST['PrintPDF'])) {
 
 	if (DB_error_no() !=0) {
 
-	  include('includes/header.inc');
+	  include('includes/header.php');
 		prnMsg(_('The sell through support items to claim could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
 		  echo '<br />' . $SQL;
 		}
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
 	if (DB_num_rows($ClaimsResult) == 0) {
 
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg(_('No sell through support items retrieved'), 'warn');
 		echo '<br /><a href="'  . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
 		  echo '<br />' .  $SQL;
 		}
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -116,7 +116,7 @@ if (isset($_POST['PrintPDF'])) {
 			$SupplierClaimTotal=0;
 			$pdf->SetFont('helvetica', $style='N', $size=8);
 			$FontSize =8;
-			$YPos -=$line_height;	
+			$YPos -=$line_height;
 		}
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+2,$YPos,60,$FontSize,$SellThroRow['typename'] . '-' . $SellThroRow['transno']);
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+63,$YPos,160,$FontSize,$SellThroRow['stockid']. '-' . $SellThroRow['description']);
@@ -125,8 +125,8 @@ if (isset($_POST['PrintPDF'])) {
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+334,$YPos,60,$FontSize,$DisplaySellingPrice,'right');
 		$ClaimAmount = (($SellThroRow['fxcost']*$SellThroRow['rebatepercent']) + $SellThroRow['rebateamount']) * -$SellThroRow['qty'];
 		$SupplierClaimTotal += $ClaimAmount;
-		
-		
+
+
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+395,$YPos,60,$FontSize,locale_number_format(-$SellThroRow['qty']), 'right');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+480,$YPos,60,$FontSize,locale_number_format($ClaimAmount,$CurrDecimalPlaces), 'right');
 
@@ -140,15 +140,15 @@ if (isset($_POST['PrintPDF'])) {
 		$YPos -=5;
 		$pdf->line($Left_Margin+480, $YPos,$Left_Margin+480+60, $YPos);
 		$YPos -=$line_height;
-		
+
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+2,$YPos,470,$FontSize,$Supplier . ' ' . _('Total Claim:'),'right');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+480,$YPos,60,$FontSize, locale_number_format($SupplierClaimTotal,$CurrDecimalPlaces), 'right');
 		$YPos -=5;
-		
+
 		$pdf->line($Left_Margin+480, $YPos,$Left_Margin+480+60, $YPos);
 		$YPos -=1;
 		$pdf->line($Left_Margin+480, $YPos,$Left_Margin+480+60, $YPos);
-		
+
 	}
 	$FontSize =10;
 
@@ -158,7 +158,7 @@ if (isset($_POST['PrintPDF'])) {
 
 } else { /*The option to print PDF was not hit */
 
-	include('includes/header.inc');
+	include('includes/header.php');
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '
 		. _('Sell Through Support Claims Report') . '</p>';
@@ -188,7 +188,7 @@ if (isset($_POST['PrintPDF'])) {
         echo '</div>
               </form>';
 	}
-	include('includes/footer.inc');
+	include('includes/footer.php');
 
 } /*end of else not PrintPDF */
 

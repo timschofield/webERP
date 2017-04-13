@@ -11,7 +11,7 @@ function RelativeChange($selected_period, $previous_period) {
 	}
 }
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('Horizontal Analysis of Statement of Financial Position');// Screen identification.
 $ViewTopic = 'GeneralLedger';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'AnalysisHorizontalPosition';// Anchor's id in the manual's html document.
@@ -21,7 +21,7 @@ include('includes/AccountSectionsDef.php'); // This loads the $Sections variable
 if(! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'])) {
 
 	/*Show a form to allow input of criteria for TB to show */
-	include('includes/header.inc');
+	include('includes/header.php');
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 		'/images/printer.png" title="', // Icon image.
 		_('Print Horizontal Analysis of Statement of Financial Position'), '" /> ', // Icon title.
@@ -83,7 +83,7 @@ if(! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 	include ('includes/GLPostings.inc');
 
 } else {
-	include('includes/header.inc');
+	include('includes/header.php');
 
 	$RetainedEarningsAct = $_SESSION['CompanyRecord']['retainedearnings'];
 
@@ -363,5 +363,5 @@ if(! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 		'</div>';
 }
 echo '</form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

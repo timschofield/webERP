@@ -2,11 +2,11 @@
 /* $Id: SuppWhereAlloc.php 7449 2016-01-14 10:08:51Z exsonqu $*/
 /* Suppliers Where allocated */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Supplier How Paid Inquiry');
 $ViewTopic = 'APInquiries';
 $BookMark = 'WhereAllocated';
-include('includes/header.inc');
+include('includes/header.php');
 
 if(isset($_GET['TransNo']) AND isset($_GET['TransType'])) {
 	$_POST['TransNo'] = (int)$_GET['TransNo'];
@@ -73,7 +73,7 @@ if(isset($_POST['ShowResults']) AND $_POST['TransNo']!='') {
 			ON suppliers.currcode=currencies.currabrev
 			WHERE type='" . $_POST['TransType'] . "'
 			AND transno = '" . $_POST['TransNo']."'";
-	
+
 	if($_SESSION['SalesmanLogin'] != '') {
 			$sql .= " AND supptrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 	}
@@ -97,7 +97,7 @@ if(isset($_POST['ShowResults']) AND $_POST['TransNo']!='') {
 		if($_POST['TransType']==22 OR $_POST['TransType'] == 21) {
 
 			$TitleInfo = ($_POST['TransType'] == 22)?_('Payment'):_('Debit Note');
-			$sql .= "ON supptrans.id = suppallocs.transid_allocto 
+			$sql .= "ON supptrans.id = suppallocs.transid_allocto
 				WHERE suppallocs.transid_allocfrom = '" . $AllocToID . "'";
 		} else {
 			$TitleInfo = _('invoice');
@@ -196,5 +196,5 @@ if(isset($Printer)) {
 				'/images/printer.png" /> ', _('Print'), '</button>', // "Print" button.
 		'</div>';
 }
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

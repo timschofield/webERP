@@ -5,7 +5,7 @@
 // to another location to cover shortage based on reorder level. Creates loctransfer records
 // that can be processed using Bulk Inventory Transfer - Receive.
 
-include('includes/session.inc');
+include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/GetPrice.inc');
 if (isset($_POST['PrintPDF'])) {
@@ -48,7 +48,7 @@ if (isset($_POST['PrintPDF'])) {
 	$sqlto="SELECT locationname,
 					cashsalecustomer,
 					cashsalebranch
-			FROM `locations` 
+			FROM `locations`
 			WHERE loccode='" . $_POST['ToLocation'] . "'";
 	$resultto = DB_query($sqlto,$ErrMsg);
 	$RowTo = DB_fetch_row($resultto);
@@ -61,15 +61,15 @@ if (isset($_POST['PrintPDF'])) {
 						debtorsmaster.salestype,
 						currencies.decimalplaces
 				FROM debtorsmaster, currencies
-				WHERE debtorsmaster.currcode = currencies.currabrev 
+				WHERE debtorsmaster.currcode = currencies.currabrev
 					AND debtorsmaster.debtorno ='" . $ToCustomer . "'";
 		$ResultPrices = DB_query($SqlPrices,$ErrMsg);
 		$RowPrices = DB_fetch_row($ResultPrices);
 		$ToCurrency=$RowPrices['0'];
 		$ToPriceList=$RowPrices['1'];
-		$ToDecimalPlaces=$RowPrices['2'];	
+		$ToDecimalPlaces=$RowPrices['2'];
 	}
-	
+
 	// Creates WHERE clause for stock categories. StockCat is defined as an array so can choose
 	// more than one category
 	if ($_POST['StockCat'] != 'All') {
@@ -122,24 +122,24 @@ if (isset($_POST['PrintPDF'])) {
 
 	if (DB_error_no() !=0) {
 		$Title = _('Stock Dispatch - Problem Report');
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg( _('The Stock Dispatch report could not be retrieved by the SQL because') . ' '  . DB_error_msg(),'error');
 		echo '<br />
 				<a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
 			echo '<br />' . $sql;
 		}
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 	if (DB_num_rows($result) ==0) {
 		$Title = _('Stock Dispatch - Problem Report');
-		include('includes/header.inc');
+		include('includes/header.php');
 		echo '<br />';
 		prnMsg( _('The stock dispatch did not have any items to list'),'warn');
 		echo '<br />
 				<a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -203,7 +203,7 @@ if (isset($_POST['PrintPDF'])) {
 			// 4) Height 5) Text 6) Alignment 7) Border 8) Fill - True to use SetFillColor
 			// and False to set to transparent
 			$fill = False;
-		
+
 			if($template=='simple'){
 				//for simple template
 				$pdf->addTextWrap(50,$YPos,70,$FontSize,$myrow['stockid'],'',0,$fill);
@@ -234,7 +234,7 @@ if (isset($_POST['PrintPDF'])) {
 				$pdf->addTextWrap(450,$YPos,40,11,locale_number_format($ShipQty,$myrow['decimalplaces']),'right',0,$fill);
 				$pdf->addTextWrap(510,$YPos,40,$FontSize,'_________','right',0,$fill);
 				if($template=='fullprices'){
-					// looking for price info  
+					// looking for price info
 					$DefaultPrice = GetPrice($myrow['stockid'],$ToCustomer, $ToBranch, $ShipQty, false);
 					if ($myrow['discountcategory'] != "")
 					{
@@ -317,7 +317,7 @@ if (isset($_POST['PrintPDF'])) {
 } else { /*The option to print PDF was not hit so display form */
 
 	$Title=_('Stock Dispatch Report');
-	include('includes/header.inc');
+	include('includes/header.php');
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . _('Inventory Stock Dispatch Report') . '</p>';
 	echo '<div class="page_help_text">' . _('Create a transfer batch of overstock from one location to another location that is below reorder level.') . '<br/>'
 										. _('Quantity to ship is based on reorder level minus the quantity on hand at the To Location; if there is a') . '<br/>'
@@ -334,7 +334,7 @@ if (isset($_POST['PrintPDF'])) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$sql = "SELECT locations.loccode,
 			locationname
-		FROM locations 
+		FROM locations
 		INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
 	$resultStkLocs = DB_query($sql);
 	if (!isset($_POST['FromLocation'])) {
@@ -382,7 +382,7 @@ if (isset($_POST['PrintPDF'])) {
 		echo '<br /><a href="' . $RootPath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
 		echo '</div>
 			  </form>';
-		include ('includes/footer.inc');
+		include ('includes/footer.php');
 		exit;
 	}
 
@@ -451,7 +451,7 @@ if (isset($_POST['PrintPDF'])) {
 	echo '</div>
 		  </form>';
 
-	include('includes/footer.inc');
+	include('includes/footer.php');
 
 } /*end of else not PrintPDF */
 

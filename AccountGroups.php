@@ -2,11 +2,11 @@
 /* $Id$*/
 /* Defines the groupings of general ledger accounts */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Account Groups');
 $ViewTopic= 'GeneralLedger';
 $BookMark = 'AccountGroups';
-include('includes/header.inc');
+include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.inc');
 
@@ -352,7 +352,7 @@ if(!isset($_GET['delete'])) {
 		$result = DB_query($sql,$ErrMsg,$DbgMsg);
 		if(DB_num_rows($result) == 0) {
 			prnMsg( _('The account group name does not exist in the database'),'error');
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 		}
 		$myrow = DB_fetch_array($result);
@@ -489,5 +489,5 @@ if(!isset($_GET['delete'])) {
 
 } //end if record deleted no point displaying form to add record
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

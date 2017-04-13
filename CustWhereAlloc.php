@@ -2,11 +2,11 @@
 /* $Id$*/
 /* Shows to which invoices a receipt was allocated to */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Customer How Paid Inquiry');
 $ViewTopic = 'ARInquiries';
 $BookMark = 'WhereAllocated';
-include('includes/header.inc');
+include('includes/header.php');
 
 if(isset($_GET['TransNo']) AND isset($_GET['TransType'])) {
 	$_POST['TransNo'] = (int)$_GET['TransNo'];
@@ -195,8 +195,8 @@ echo '</form>';
 if(isset($Printer)) {
 	echo '<div class="centre noprint">
 			<button onclick="javascript:window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
-				'/images/printer.png" /> ', _('Print'), '</button>', // "Print" button.	
+				'/images/printer.png" /> ', _('Print'), '</button>', // "Print" button.
 		'</div>';// "Print This" button.
 }
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

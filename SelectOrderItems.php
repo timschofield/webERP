@@ -3,21 +3,21 @@
 
 include('includes/DefineCartClass.php');
 
-/* Session started in session.inc for password checking and authorisation level check
-config.php is in turn included in session.inc*/
+/* Session started in session.php for password checking and authorisation level check
+config.php is in turn included in session.php*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 if (isset($_GET['ModifyOrderNumber'])) {
 	$Title = _('Modifying Order') . ' ' . $_GET['ModifyOrderNumber'];
 } else {
 	$Title = _('Select Order Items');
 }
-/* webERP manual links before header.inc */
+/* webERP manual links before header.php */
 $ViewTopic= 'SalesOrders';
 $BookMark = 'SalesOrderEntry';
 
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/GetPrice.inc');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -173,13 +173,13 @@ if (isset($_GET['ModifyOrderNumber'])
 		$myrow = DB_fetch_array($GetOrdHdrResult);
 		if ($_SESSION['SalesmanLogin']!='' AND $_SESSION['SalesmanLogin']!=$myrow['salesman']){
 			prnMsg(_('Your account is set up to see only a specific salespersons orders. You are not authorised to modify this order'),'error');
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 		}
 		$_SESSION['Items'.$identifier]->OrderNo = $_GET['ModifyOrderNumber'];
 		$_SESSION['Items'.$identifier]->DebtorNo = $myrow['debtorno'];
 		$_SESSION['Items'.$identifier]->CreditAvailable = GetCreditAvailable($_SESSION['Items'.$identifier]->DebtorNo,$db);
-/*CustomerID defined in header.inc */
+/*CustomerID defined in header.php */
 		$_SESSION['Items'.$identifier]->Branch = $myrow['branchcode'];
 		$_SESSION['Items'.$identifier]->CustomerName = $myrow['name'];
 		$_SESSION['Items'.$identifier]->CustRef = $myrow['customerref'];
@@ -463,7 +463,7 @@ if (isset($SelectedCustomer)) {
 			if ($debug==1){
 				prnMsg( _('The SQL that failed to get the branch details was') . ':<br />' . $sql . 'warning');
 			}
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 		}
 		// add echo
@@ -471,7 +471,7 @@ if (isset($SelectedCustomer)) {
 		$myrow = DB_fetch_array($result);
 		if ($_SESSION['SalesmanLogin']!=NULL AND $_SESSION['SalesmanLogin']!=$myrow['salesman']){
 			prnMsg(_('Your login is only set up for a particular salesperson. This customer has a different salesperson.'),'error');
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 		}
 		$_SESSION['Items'.$identifier]->DeliverTo = $myrow['brname'];
@@ -504,7 +504,7 @@ if (isset($SelectedCustomer)) {
 				prnMsg(_('The') . ' ' . htmlspecialchars($myrow[0], ENT_QUOTES, 'UTF-8', false) . ' ' . _('account is currently at or over their credit limit'),'warn');
 			} elseif ($_SESSION['CheckCreditLimits']==2 AND $_SESSION['Items'.$identifier]->CreditAvailable <=0){
 				prnMsg(_('No more orders can be placed by') . ' ' . htmlspecialchars($myrow[0], ENT_QUOTES, 'UTF-8', false) . ' ' . _(' their account is currently at or over their credit limit'),'warn');
-				include('includes/footer.inc');
+				include('includes/footer.php');
 				exit;
 			}
 		}
@@ -576,7 +576,7 @@ if (isset($SelectedCustomer)) {
 		}
 	} else {
 		prnMsg(_('Sorry, your account has been put on hold for some reason, please contact the credit control personnel.'),'warn');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 }
@@ -707,7 +707,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			}
 			echo '<br /><br />';
 			prnMsg(_('This sales order has been cancelled as requested'),'success');
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 		}
 	} else { /*Not cancelling the order */
@@ -1861,7 +1861,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		}
 	}#end of else not selecting a customer
 
-include('includes/footer.inc');
+include('includes/footer.php');
 
 function GetCustBranchDetails($identifier) {
 		global $db;

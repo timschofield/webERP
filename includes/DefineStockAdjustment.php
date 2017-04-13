@@ -13,7 +13,7 @@ class StockAdjustment {
 	var $Quantity;
 	var $tag;
 	var $SerialItems; /*array to hold controlled items*/
-	
+
 	//Constructor
 	function StockAdjustment(){
 		$this->StockID = '';

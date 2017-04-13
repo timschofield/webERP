@@ -1,11 +1,11 @@
 <?php
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Customer Transactions Inquiry');
 $ViewTopic = 'ARInquiries';
 $BookMark = 'ARTransInquiry';
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Transaction Inquiry') . '" alt="" />' . ' ' . _('Transaction Inquiry') . '
@@ -193,6 +193,6 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
  echo '</table>';
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

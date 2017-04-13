@@ -1,9 +1,9 @@
 <?php
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Import Chart Of Accounts');
-include('includes/header.inc');
+include('includes/header.php');
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
 		'/images/maintenance.png" title="' .
 		_('Import Chart of Accounts from CSV file') . '" />' . ' ' .
@@ -33,7 +33,7 @@ if (isset($_FILES['ChartFile']) and $_FILES['ChartFile']['name']) { //start file
 	if ( count($HeadRow) != count($FieldHeadings) ) {
 		prnMsg (_('File contains') . ' '. count($HeadRow). ' ' . _('columns, expected') . ' '. count($FieldHeadings) . '<br/>' . _('There should be three column headings:') . ' Account Code, Description, Account Group','error');
 		fclose($FileHandle);
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -43,7 +43,7 @@ if (isset($_FILES['ChartFile']) and $_FILES['ChartFile']['name']) { //start file
 		if ( trim(mb_strtoupper($HeadField)) != trim(mb_strtoupper($FieldHeadings[$HeadingColumnNumber]))) {
 			prnMsg (_('The file to import the chart of accounts from contains incorrect column headings') . ' '. mb_strtoupper($HeadField). ' != '. mb_strtoupper($FieldHeadings[$HeadingColumnNumber]). '<br />' . _('There should be three column headings:') . ' Account Code, Description, Account Group','error');
 			fclose($FileHandle);
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 		}
 		$HeadingColumnNumber++;
@@ -61,7 +61,7 @@ if (isset($_FILES['ChartFile']) and $_FILES['ChartFile']['name']) { //start file
 		if ($FieldCount != count($FieldHeadings)){
 			prnMsg (count($FieldHeadings) . ' ' . _('fields required') . ', '. $FieldCount. ' ' . _('fields received'),'error');
 			fclose($FileHandle);
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 		}
 
@@ -134,6 +134,6 @@ if (isset($_FILES['ChartFile']) and $_FILES['ChartFile']['name']) { //start file
 
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

@@ -3,7 +3,7 @@
 /* $Id$*/
 
 include('includes/SQL_CommonFunctions.inc');
-include ('includes/session.inc');
+include ('includes/session.php');
 
 $InputError=0;
 if (isset($_POST['Date']) AND !Is_Date($_POST['Date'])){
@@ -15,7 +15,7 @@ if (isset($_POST['Date']) AND !Is_Date($_POST['Date'])){
 if (!isset($_POST['Date'])){
 
 	 $Title = _('Supplier Transaction Listing');
-	 include ('includes/header.inc');
+	 include ('includes/header.php');
 
 	echo '<div class="centre"><p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '
 		. _('Supplier Transaction Listing') . '</p></div>';
@@ -50,7 +50,7 @@ if (!isset($_POST['Date'])){
      echo '</div>
            </form>';
 
-	 include('includes/footer.inc');
+	 include('includes/footer.php');
 	 exit;
 } else {
 
@@ -78,19 +78,19 @@ $result=DB_query($sql,'','',false,false);
 
 if (DB_error_no()!=0){
 	$Title = _('Payment Listing');
-	include('includes/header.inc');
+	include('includes/header.php');
 	prnMsg(_('An error occurred getting the payments'),'error');
 	if ($debug==1){
 			prnMsg(_('The SQL used to get the receipt header information that failed was') . ':<br />' . $sql,'error');
 	}
-	include('includes/footer.inc');
+	include('includes/footer.php');
   	exit;
 } elseif (DB_num_rows($result) == 0){
 	$Title = _('Payment Listing');
-	include('includes/header.inc');
+	include('includes/header.php');
 	echo '<br />';
   	prnMsg (_('There were no transactions found in the database for the date') . ' ' . $_POST['Date'] .'. '._('Please try again selecting a different date'), 'info');
-	include('includes/footer.inc');
+	include('includes/footer.php');
   	exit;
 }
 

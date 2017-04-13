@@ -1968,7 +1968,7 @@ msgstr "Datum / tijd"
 #: PcReportTab.php:269 UserBankAccounts.php:77 UserBankAccounts.php:90
 #: UserGLAccounts.php:118 UserGLAccounts.php:130 UserGLAccounts.php:146
 #: UserLocations.php:77 UserLocations.php:90 UserLocations.php:100
-#: includes/header.inc:59
+#: includes/header.php:59
 msgid "User"
 msgstr "Gebruiker"
 
@@ -6891,7 +6891,7 @@ msgstr "Maak Offerte"
 msgid "Cancel and Delete Contract"
 msgstr "Annuleren en verwijderen Contract"
 
-#: CopyBOM.php:11 includes/header.inc:26
+#: CopyBOM.php:11 includes/header.php:26
 msgid "Copy a BOM to New Item Code"
 msgstr ""
 
@@ -9562,7 +9562,7 @@ msgstr ""
 msgid "has been added, add another branch, or return to the"
 msgstr ""
 
-#: CustomerBranches.php:248 index.php:7 includes/header.inc:70
+#: CustomerBranches.php:248 index.php:7 includes/header.php:70
 msgid "Main Menu"
 msgstr "Hoofd Menu"
 
@@ -26809,7 +26809,7 @@ msgstr "Groepeer bij 3"
 msgid "Group By 4"
 msgstr "Groepeer bij 4"
 
-#: SalesAnalysis_UserDefined.php:9 includes/session.inc:194
+#: SalesAnalysis_UserDefined.php:9 includes/session.php:194
 msgid ""
 "The security settings on your account do not permit you to access this "
 "function"
@@ -28140,7 +28140,7 @@ msgid "Search Customers"
 msgstr "Zoek Klanten"
 
 #: SelectCustomer.php:14 includes/PDFTopItemsHeader.inc:27
-#: includes/header.inc:73
+#: includes/header.php:73
 msgid "Customers"
 msgstr "Klanten"
 
@@ -29227,7 +29227,7 @@ msgstr ""
 msgid "Search Suppliers"
 msgstr "Zoek Leveranciers"
 
-#: SelectSupplier.php:14 Suppliers.php:304 includes/header.inc:75
+#: SelectSupplier.php:14 Suppliers.php:304 includes/header.php:75
 msgid "Suppliers"
 msgstr "Leveranciers"
 
@@ -47091,40 +47091,40 @@ msgstr ""
 "Kosten zijn niet opgezet en bij de huidige opzet is het niet mogelijk om "
 "items zonder kost gegevens te verkopen"
 
-#: includes/footer.inc:12 includes/footer.inc:20
+#: includes/footer.php:12 includes/footer.php:20
 msgid "Copyright"
 msgstr "Copyright"
 
-#: includes/footer.inc:20
+#: includes/footer.php:20
 msgid "version"
 msgstr ""
 
-#: includes/header.inc:56 includes/Login.php:52 includes/Login.php:56
+#: includes/header.php:56 includes/Login.php:52 includes/Login.php:56
 #: includes/Login.php:76 includes/Login.php:79
 msgid "Company"
 msgstr "Bedrijf"
 
-#: includes/header.inc:74
+#: includes/header.php:74
 msgid "Items"
 msgstr "Items"
 
-#: includes/header.inc:77 includes/header.inc:81
+#: includes/header.php:77 includes/header.php:81
 msgid "Manual"
 msgstr "Handleiding"
 
-#: includes/header.inc:90 ../webSHOP/includes/header.php:232
+#: includes/header.php:90 ../webSHOP/includes/header.php:232
 msgid "Are you sure you wish to logout?"
 msgstr "Weet u zeker dat u wilt afmelden"
 
-#: includes/header.inc:90 ../webSHOP/includes/header.php:232
+#: includes/header.php:90 ../webSHOP/includes/header.php:232
 msgid "Logout"
 msgstr "Afmelden"
 
-#: includes/session.inc:119 includes/session.inc:168
+#: includes/session.php:119 includes/session.php:168
 msgid "Account Error Report"
 msgstr "Account Foutrapport"
 
-#: includes/session.inc:122
+#: includes/session.php:122
 msgid ""
 "Your user role does not have any access defined for webERP. There is an "
 "error in the security setup for this user account"
@@ -47132,31 +47132,31 @@ msgstr ""
 "Uw gerbuiker heeft geen toegang tot het systeem. Er is een fout in de "
 "authorisatie voor deze gebuiker"
 
-#: includes/session.inc:127
+#: includes/session.php:127
 msgid "incorrect password"
 msgstr "incorrect passwoord"
 
-#: includes/session.inc:127
+#: includes/session.php:127
 msgid "The user/password combination"
 msgstr "De gerbuiker / passwoord combinatie"
 
-#: includes/session.inc:127
+#: includes/session.php:127
 msgid "is not a valid user of the system"
 msgstr "is geen geldige gebruiker voor het systeem"
 
-#: includes/session.inc:131
+#: includes/session.php:131
 msgid "system maintenance"
 msgstr "onderhoud van het systeem"
 
-#: includes/session.inc:131
+#: includes/session.php:131
 msgid "webERP is not available right now"
 msgstr "webERP is momenteel niet beschikbaar"
 
-#: includes/session.inc:131
+#: includes/session.php:131
 msgid "during maintenance of the system"
 msgstr "tijdens het onderhoud van het systeem"
 
-#: includes/session.inc:156
+#: includes/session.php:156
 msgid ""
 "webERP is configured to allow only secure socket connections. Pages must be "
 "called with https://"
@@ -47164,7 +47164,7 @@ msgstr ""
 "webERP is zo opgezet dat er alleen een secure verbinding kan worden opgezet. "
 "Pagina's moeten worden opgeroepen met https://"
 
-#: includes/session.inc:171
+#: includes/session.php:171
 msgid ""
 "Security settings have not been defined for your user account. Please advise "
 "your system administrator. It could also be that there is a session problem "
@@ -47174,15 +47174,15 @@ msgstr ""
 "uw systeem beherder. Het is ook mogelijk dat er een probleem is met uw PHP "
 "web server"
 
-#: includes/session.inc:187
+#: includes/session.php:187
 msgid "Security Permissions Problem"
 msgstr "Beveiligingsmachtigingen Probleem"
 
-#: includes/session.inc:251 ../webSHOP/includes/session.php:147
+#: includes/session.php:251 ../webSHOP/includes/session.php:147
 msgid "Error in form verification"
 msgstr ""
 
-#: includes/session.inc:253 ../webSHOP/includes/session.php:151
+#: includes/session.php:253 ../webSHOP/includes/session.php:151
 msgid "This form was not submitted with a correct ID"
 msgstr "Dit formulier is niet bij een juiste ID"
 

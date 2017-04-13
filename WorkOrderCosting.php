@@ -1,9 +1,9 @@
 <?php
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Work Order Costing');
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 
 
@@ -31,7 +31,7 @@ if (!isset($SelectedWO)) {
 	echo '<div class="centre><a href="' . $RootPath . '/SelectWorkOrder.php">' .
 		_('Select a work order') . '</a></div>';
 	prnMsg(_('This page can only be opened if a work order has been selected.'),'info');
-	include ('includes/footer.inc');
+	include ('includes/footer.php');
 	exit;
 } else {
 	echo '<input type="hidden" name="WO" value="' .$SelectedWO . '" />';
@@ -54,7 +54,7 @@ $WOResult = DB_query("SELECT workorders.loccode,
 
 if (DB_num_rows($WOResult)==0){
 	prnMsg(_('The selected work order item cannot be retrieved from the database'),'info');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 $WorkOrderRow = DB_fetch_array($WOResult);
@@ -577,5 +577,5 @@ echo '</table>
 	</div>
 	</form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

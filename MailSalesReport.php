@@ -14,16 +14,16 @@ and an array of the receipients */
 /*The Sales report to send */
 $_GET['ReportID'] = 2;
 $AllowAnyone = true;
-include('includes/session.inc');
+include('includes/session.php');
 /*The company database to use */
 $DatabaseName = $_SESSION['DatabaseName'];
 /*The people to receive the emailed report */
 $Recipients = GetMailList('SalesAnalysisReportRecipients');
 if (sizeOf($Recipients) == 0) {
 	$Title = _('Inventory Valuation') . ' - ' . _('Problem Report');
-      	include('includes/header.inc');
+      	include('includes/header.php');
 	prnMsg( _('There are no members of the Sales Analysis Report Recipients email group'), 'warn');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 include ('includes/ConstructSQLForUserDefinedSalesReport.inc');
@@ -33,7 +33,7 @@ include('includes/htmlMimeMail.php');
 $mail = new htmlMimeMail();
 
 if ($Counter >0){ /* the number of lines of the sales report is more than 0  ie there is a report to send! */
-	$pdf->Output($_SESSION['reports_dir'] .'/SalesAnalysis_' . date('Y-m-d') . '.pdf','F'); //save to file 
+	$pdf->Output($_SESSION['reports_dir'] .'/SalesAnalysis_' . date('Y-m-d') . '.pdf','F'); //save to file
 	$pdf->__destruct();
 	$attachment = $mail->getFile($_SESSION['reports_dir'] . '/SalesAnalysis_' . date('Y-m-d') . '.pdf');
 	$mail->setText(_('Please find herewith sales report'));
@@ -53,7 +53,7 @@ if ($Counter >0){ /* the number of lines of the sales report is more than 0  ie 
 	}else{
 		$result = SendmailBySmtp($mail,$Recipients);
 	}
-	
+
 }
 
 ?>

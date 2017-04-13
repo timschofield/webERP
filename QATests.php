@@ -1,11 +1,11 @@
 <?php
 /* $Id: QATests.php 1 2014-09-08 10:42:50Z agaluski $*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('QA Tests Maintenance');
 $ViewTopic= 'QualityAssurance';// Filename in ManualContents.php's TOC.
 $BookMark = 'QA_Tests';// Anchor's id in the manual's html document.
-include('includes/header.inc');
+include('includes/header.php');
 
 if (isset($_GET['SelectedQATest'])){
 	$SelectedQATest =mb_strtoupper($_GET['SelectedQATest']);
@@ -487,5 +487,5 @@ or deletion of the records*/
 	} //END WHILE LIST LOOP
 	echo '</table><br />';
 } //end of ifs and buts!
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

@@ -2,11 +2,11 @@
 /* $Id$*/
 /* Inquiry showing invoices, credit notes and payments made to suppliers together with the amounts outstanding. */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Supplier Inquiry');
 $ViewTopic = 'AccountsPayable';// RChacon: Is there any content for Supplier Inquiry?
 $BookMark = 'AccountsPayable';
-include('includes/header.inc');
+include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.inc');
 
@@ -18,7 +18,7 @@ if(!isset($_GET['SupplierID']) AND !isset($_SESSION['SupplierID'])) {
 			<div class="centre">
 				<a href="' . $RootPath . '/SelectSupplier.php">' . _('Select a Supplier to Inquire On') . '</a>
 			</div>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 } else {
 	if(isset($_GET['SupplierID'])) {
@@ -193,7 +193,7 @@ $TransResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 if(DB_num_rows($TransResult) == 0) {
 	echo '<br /><div class="centre">' . _('There are no transactions to display since') . ' ' . $_POST['TransAfterDate'];
 	echo '</div>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -303,5 +303,5 @@ while($MyRow = DB_fetch_array($TransResult)) {
 }// End of while loop
 
 echo '</tbody></table>';
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

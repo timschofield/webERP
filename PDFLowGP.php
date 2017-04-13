@@ -2,7 +2,7 @@
 
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 if (!isset($_POST['FromCat'])  OR $_POST['FromCat']=='') {
 	$Title=_('Low Gross Profit Sales');
@@ -20,9 +20,9 @@ if (isset($_POST['PrintPDF'])) {
 	$Title = _('Low GP sales') . ' - ' . _('Problem Report');
 
 	if (! Is_Date($_POST['FromDate']) OR ! Is_Date($_POST['ToDate'])){
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg(_('The dates entered must be in the format') . ' '  . $_SESSION['DefaultDateFormat'],'error');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -54,25 +54,25 @@ if (isset($_POST['PrintPDF'])) {
 
 	if (DB_error_no() !=0) {
 
-	  include('includes/header.inc');
+	  include('includes/header.php');
 		prnMsg(_('The low GP items could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
 		  echo '<br />' . $SQL;
 		}
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
 	if (DB_num_rows($LowGPSalesResult) == 0) {
 
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg(_('No low GP items retrieved'), 'warn');
 		echo '<br /><a href="'  . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
 		  echo '<br />' .  $SQL;
 		}
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -113,7 +113,7 @@ if (isset($_POST['PrintPDF'])) {
 
 } else { /*The option to print PDF was not hit */
 
-	include('includes/header.inc');
+	include('includes/header.php');
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '
 		. _('Low Gross Profit Report') . '</p>';
@@ -148,7 +148,7 @@ if (isset($_POST['PrintPDF'])) {
 			</div>
         </form>';
 	}
-	include('includes/footer.inc');
+	include('includes/footer.php');
 
 } /*end of else not PrintPDF */
 

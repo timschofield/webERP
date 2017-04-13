@@ -2,22 +2,22 @@
 
 /* $Id$*/
 
-/* Session started in header.inc for password checking and authorisation level check */
-include('includes/session.inc');
+/* Session started in header.php for password checking and authorisation level check */
+include('includes/session.php');
 
 $_GET['OrderNumber']=(int)$_GET['OrderNumber'];
 
 if (isset($_GET['OrderNumber'])) {
 	$Title = _('Reviewing Sales Order Number') . ' ' . $_GET['OrderNumber'];
 } else {
-	include('includes/header.inc');
+	include('includes/header.php');
 	echo '<br /><br /><br />';
 	prnMsg(_('This page must be called with a sales order number to review') . '.<br />' . _('i.e.') . ' http://????/OrderDetails.php?OrderNumber=<i>xyz</i><br />' . _('Click on back') . '.','error');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
-include('includes/header.inc');
+include('includes/header.php');
 
 $OrderHeaderSQL = "SELECT salesorders.debtorno,
 							debtorsmaster.name,
@@ -63,7 +63,7 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 
 	if ($CustomerLogin ==1 AND $myrow['debtorno']!= $_SESSION['CustomerID']) {
 		prnMsg (_('Your customer login will only allow you to view your own purchase orders'),'error');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 	//retrieve invoice number
@@ -251,5 +251,5 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 		</table>';
 	}
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

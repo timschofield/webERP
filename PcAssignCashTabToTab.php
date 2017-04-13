@@ -1,11 +1,11 @@
 <?php
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Assignment of Cash From Tab To Tab');
-/* webERP manual links before header.inc */
+/* webERP manual links before header.php */
 $ViewTopic= 'PettyCash';
 $BookMark = 'CashAssignment';
-include('includes/header.inc');
+include('includes/header.php');
 
 if (isset($_POST['SelectedTabs'])){
 	$SelectedTabs = mb_strtoupper($_POST['SelectedTabs']);
@@ -38,8 +38,8 @@ if (isset($_POST['Process'])) {
 		unset($_POST['SelectedTabsTo']);
 		unset($_POST['Process']);
 	}
-	//to ensure currency is the same 
-	$CurrSQL = "SELECT currency 
+	//to ensure currency is the same
+	$CurrSQL = "SELECT currency
 				FROM pctabs
 				WHERE tabcode IN ('" . $SelectedTabs . "','" . $_POST['SelectedTabsTo'] . "')";
 	$CurrResult = DB_query($CurrSQL);
@@ -148,7 +148,7 @@ if (isset($_POST['submit'])) {
 		unset($_POST['Date']);
 	}
 
-} 
+}
 
 if (!isset($SelectedTabs)){
 
@@ -188,7 +188,7 @@ if (!isset($SelectedTabs)){
 			echo '<option selected="selected" value="';
 		} else {
 			echo '<option value="';
-		} 
+		}
 		echo $myrow['tabcode'] . '">' . $myrow['tabcode'] . '</option>';
 	}
 	echo '</select></td></tr>';
@@ -337,8 +337,8 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 				<input type="hidden" name="CurrentAmount" value="' . $SelectedTab[0] . '" />
 				<input type="hidden" name="SelectedTabs" value="' . $SelectedTab[1] . '" />
 				<input type="hidden" name="SelectedTabsTo" value="' . $SelectedTabsTo[1] . '" />
-				<input type="hidden" name="SelectedTabsToAmt" value="' . $SelectedTabsTo[0] . '" />'; 
-				
+				<input type="hidden" name="SelectedTabsToAmt" value="' . $SelectedTabsTo[0] . '" />';
+
 
 		echo '</table>';
         echo '</div>
@@ -398,7 +398,7 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 			<input type="hidden" name="SelectedTabs" value="' . $SelectedTabs . '" />
 			<input type="hidden" name="Days" value="' .$Days. '" />
 			<input type="hidden" name="SelectedTabsTo" value="' . $SelectedTabsTo[1] . '" />
-			<input type="hidden" name="SelectedTabsToAmt" value="' . $SelectedTabsTo[0] . '" /> 
+			<input type="hidden" name="SelectedTabsToAmt" value="' . $SelectedTabsTo[0] . '" />
 			<br />
 			<div class="centre">
 				<input type="submit" name="submit" value="' . _('Accept') . '" />
@@ -408,5 +408,5 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

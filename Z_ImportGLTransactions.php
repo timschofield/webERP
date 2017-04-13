@@ -2,13 +2,13 @@
 
 /* $Id: Z_ImportGLTransactions.php 6030 2013-06-18 07:17:20Z daintree $*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Import General Ledger Transactions');
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
-echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme . 
-		'/images/maintenance.png" title="' . 
-		_('Import GL Payments Receipts Or Journals From CSV') . '" />' . ' ' . 
+echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
+		'/images/maintenance.png" title="' .
+		_('Import GL Payments Receipts Or Journals From CSV') . '" />' . ' ' .
 		_('Import GL Payments Receipts Or Journals From CSV') . '</p>';
 
 $FieldHeadings = array(
@@ -39,7 +39,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	if (count($HeadRow) != count($FieldHeadings)) {
 		prnMsg (_('File contains') . ' '. count($HeadRow) . ' ' . _('columns, expected') . ' ' . count($FieldHeadings) . '. ' . _('Try downloading a new template'),'error');
 		fclose($FileHandle);
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -49,7 +49,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		if ( trim(mb_strtoupper($HeadField)) != trim(mb_strtoupper($FieldHeadings[$i]))) {
 			prnMsg (_('File contains incorrect headers') . ' '. mb_strtoupper($HeadField). ' != '. mb_strtoupper($FieldHeadings[$i]). '. ' . _('Try downloading a new template'),'error');
 			fclose($FileHandle);
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 		}
 		$i++;
@@ -79,7 +79,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		if ($FieldCount != $FieldTarget){
 			prnMsg (_($FieldTarget. ' fields required, '. $FieldCount. ' fields received'),'error');
 			fclose($FileHandle);
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 		}
 
@@ -160,7 +160,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 						INNER JOIN bankaccounts
 							ON currencies.currabrev=bankaccounts.currcode
 						WHERE bankaccounts.accountcode='" . $myrow[1] . "'";
-						
+
 				$result = DB_query($sql);
 				$MyRateRow = DB_fetch_array($result);
 				$FuncExRate = $MyRateRow['rate'];
@@ -263,7 +263,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 
 function IsBankAccount($Account) {
 	global $db;

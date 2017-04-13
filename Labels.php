@@ -2,9 +2,9 @@
 
 /* $Id: Labels.php 4950 2012-02-22 06:26:38Z daintree $*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Label Templates');
-include('includes/header.inc');
+include('includes/header.php');
 
 //define PaperSize array sizes in mm
 $PaperSize = array();
@@ -652,6 +652,6 @@ echo '<br />
 		</div>
 	</form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

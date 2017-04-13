@@ -4,9 +4,9 @@
 
 $UpdateSecurity =10;
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Stock Cost Update');
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 
 if (isset($_GET['StockID'])){
@@ -148,7 +148,7 @@ if (($myrow['mbflag']=='D' AND $myrow['stocktype'] != 'L')
         echo '<br />' . $StockID . ' ' . _('is a kit set part');
    }
    prnMsg(_('Cost information cannot be modified for kits assemblies or service items') . '. ' . _('Please select a different part'),'warn');
-   include('includes/footer.inc');
+   include('includes/footer.php');
    exit;
 }
 
@@ -207,5 +207,5 @@ if ($myrow['mbflag']!='D'){
 }
 echo '</div>
       </form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

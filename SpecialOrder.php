@@ -2,13 +2,13 @@
 /* $Id$ */
 
 include('includes/DefineSpecialOrderClass.php');
-/* Session started in header.inc for password checking and authorisation level check */
-include('includes/session.inc');
+/* Session started in header.php for password checking and authorisation level check */
+include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 
 $Title = _('Special Order Entry');
 
-include('includes/header.inc');
+include('includes/header.php');
 
 if (empty($_GET['identifier'])) {
 	/*unique session identifier to ensure that there is no conflict with other supplier tender sessions on the same machine  */
@@ -29,7 +29,7 @@ if (!isset($_SESSION['SupplierID'])){
 	echo '<br /><br />';
 	prnMsg(_('To set up a special') . ', ' . _('the supplier must first be selected from the Select Supplier page'),'info');
 	echo '<br /><a href="' . $RootPath . '/SelectSupplier.php">' . _('Select the supplier now') . '</a>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -38,7 +38,7 @@ if (!isset($_SESSION['CustomerID']) or $_SESSION['CustomerID']==''){
 		<br />' . _('To set up a special') . ', ' . _('the customer must first be selected from the Select Customer page') . '
 		<br />
 		<a href="' . $RootPath . '/SelectCustomer.php">' . _('Select the customer now') . '</a>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -176,12 +176,12 @@ if (!isset($_SESSION['SPL'.$identifier]->BranchCode)){
 		echo '</table>';
 		echo '</div>
               </form>';
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 
 	} else {
 		prnMsg( _('There are no branches defined for the customer selected') . '. ' . _('Please select a customer that has branches defined'),'info');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 }
@@ -758,5 +758,5 @@ echo '<div class="centre">
     </div>
 	</form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

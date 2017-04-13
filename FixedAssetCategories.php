@@ -2,14 +2,14 @@
 
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('Fixed Asset Category Maintenance');
 
 $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetCategories';
 
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<div class="centre">
 	<p class="page_title_text">
@@ -352,5 +352,5 @@ echo '<div class="centre">
     </div>
 	</form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

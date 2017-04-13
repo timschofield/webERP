@@ -51,7 +51,7 @@ function DB_query ($SQL,
 	//if(DB_error_no($Conn) != 0) {
 	if( !$result AND $TrapErrors) {
 		if($TrapErrors) {
-			require_once($PathPrefix . 'includes/header.inc');
+			require_once($PathPrefix . 'includes/header.php');
 		}
 		prnMsg($ErrorMessage . '<BR>' . DB_error_msg(),'error', _('DB ERROR:'));
 		if($debug==1) {
@@ -65,7 +65,7 @@ function DB_query ($SQL,
 			}
 		}
 		if($TrapErrors) {
-			include($PathPrefix . 'includes/footer.inc');
+			include($PathPrefix . 'includes/footer.php');
 			exit;
 		}
 	}

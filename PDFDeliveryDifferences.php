@@ -2,7 +2,7 @@
 
 /* $Id$*/
 
-include ('includes/session.inc');
+include ('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 
 $InputError=0;
@@ -19,7 +19,7 @@ if (isset($_POST['ToDate']) AND !Is_Date($_POST['ToDate'])){
 if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 
 	 $Title = _('Delivery Differences Report');
-	 include ('includes/header.inc');
+	 include ('includes/header.php');
 
 	echo '<div class="centre"><p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '
 		. _('Delivery Differences Report') . '</p></div>';
@@ -87,7 +87,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 	 if ($InputError==1){
 	 	prnMsg($msg,'error');
 	 }
-	 include('includes/footer.inc');
+	 include('includes/footer.php');
 	 exit;
 } else {
 	include('includes/ConnectDB.inc');
@@ -148,7 +148,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 				ON orderdeliverydifferenceslog.invoiceno=debtortrans.transno
 				INNER JOIN salesorders
 					ON orderdeliverydifferenceslog.orderno=salesorders.orderno
-				INNER JOIN locationusers 
+				INNER JOIN locationusers
 					ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 		WHERE debtortrans.type=10
 		AND salesorders.fromstkloc='". $_POST['Location'] . "'
@@ -173,7 +173,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 				AND debtortrans.type=10
 				INNER JOIN salesorders
 					ON orderdeliverydifferenceslog.orderno = salesorders.orderno
-				INNER JOIN locationusers 
+				INNER JOIN locationusers
 					ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 		WHERE salesorders.fromstkloc='" . $_POST['Location'] . "'
 		AND categoryid='" . $_POST['CategoryID'] . "'
@@ -189,21 +189,21 @@ $Result=DB_query($sql,'','',false,false); //dont error check - see below
 
 if (DB_error_no()!=0){
 	$Title = _('Delivery Differences Log Report Error');
-	include('includes/header.inc');
+	include('includes/header.php');
 	prnMsg( _('An error occurred getting the variances between deliveries and orders'),'error');
 	if ($debug==1){
 		prnMsg( _('The SQL used to get the variances between deliveries and orders that failed was') . '<br />' . $SQL,'error');
 	}
-	include ('includes/footer.inc');
+	include ('includes/footer.php');
 	exit;
 } elseif (DB_num_rows($Result) == 0){
 	$Title = _('Delivery Differences Log Report Error');
-  	include('includes/header.inc');
+  	include('includes/header.php');
 	prnMsg( _('There were no variances between deliveries and orders found in the database within the period from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate'] . '. ' . _('Please try again selecting a different date range'), 'info');
 	if ($debug==1) {
 		prnMsg( _('The SQL that returned no rows was') . '<br />' . $sql,'error');
 	}
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -247,8 +247,8 @@ $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,_('Total number 
 if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 	$sql = "SELECT COUNT(salesorderdetails.orderno)
 			FROM salesorderdetails INNER JOIN debtortrans
-				ON salesorderdetails.orderno=debtortrans.order_ INNER JOIN salesorders 
-				ON salesorderdetails.orderno = salesorders.orderno INNER JOIN locationusers 
+				ON salesorderdetails.orderno=debtortrans.order_ INNER JOIN salesorders
+				ON salesorderdetails.orderno = salesorders.orderno INNER JOIN locationusers
 				ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 			WHERE debtortrans.trandate>='" . FormatDateForSQL($_POST['FromDate']) . "'
 			AND debtortrans.trandate <='" . FormatDateForSQL($_POST['ToDate']) . "'";
@@ -257,8 +257,8 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 	$sql = "SELECT COUNT(salesorderdetails.orderno)
 		FROM salesorderdetails INNER JOIN debtortrans
 			ON salesorderdetails.orderno=debtortrans.order_ INNER JOIN stockmaster
-			ON salesorderdetails.stkcode=stockmaster.stockid INNER JOIN salesorders 
-			ON salesorderdetails.orderno = salesorders.orderno INNER JOIN locationusers 
+			ON salesorderdetails.stkcode=stockmaster.stockid INNER JOIN salesorders
+			ON salesorderdetails.orderno = salesorders.orderno INNER JOIN locationusers
 			ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 		WHERE debtortrans.trandate>='" . FormatDateForSQL($_POST['FromDate']) . "'
 		AND debtortrans.trandate <='" . FormatDateForSQL($_POST['ToDate']) . "'
@@ -269,7 +269,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 	$sql = "SELECT COUNT(salesorderdetails.orderno)
 		FROM salesorderdetails INNER JOIN debtortrans
 			ON salesorderdetails.orderno=debtortrans.order_ INNER JOIN salesorders
-			ON salesorderdetails.orderno = salesorders.orderno INNER JOIN locationusers 
+			ON salesorderdetails.orderno = salesorders.orderno INNER JOIN locationusers
 			ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 		WHERE debtortrans.trandate>='". FormatDateForSQL($_POST['FromDate']) . "'
 		AND debtortrans.trandate <='" . FormatDateForSQL($_POST['ToDate']) . "'
@@ -311,7 +311,7 @@ if ($_POST['Email']=='Yes'){
 	if (file_exists($_SESSION['reports_dir'] . '/'.$ReportFileName)){
 		unlink($_SESSION['reports_dir'] . '/'.$ReportFileName);
 	}
-	$pdf->Output($_SESSION['reports_dir'].'/'.$ReportFileName,'F');	
+	$pdf->Output($_SESSION['reports_dir'].'/'.$ReportFileName,'F');
 
 	include('includes/htmlMimeMail.php');
 

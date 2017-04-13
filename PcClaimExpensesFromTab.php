@@ -2,12 +2,12 @@
 
 /* $Id$*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Claim Petty Cash Expenses From Tab');
-/* webERP manual links before header.inc */
+/* webERP manual links before header.php */
 $ViewTopic= 'PettyCash';
 $BookMark = 'ExpenseClaim';
-include('includes/header.inc');
+include('includes/header.php');
 
 
 if (isset($_POST['SelectedTabs'])){
@@ -433,5 +433,5 @@ if (!isset($SelectedTabs)){
 
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

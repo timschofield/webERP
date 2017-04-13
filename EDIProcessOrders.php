@@ -2,11 +2,11 @@
 
 /* $Id$*/
 
-include ('includes/session.inc');
+include ('includes/session.php');
 
 $Title = _('Process EDI Orders');
 
-include ('includes/header.inc');
+include ('includes/header.php');
 include('includes/SQL_CommonFunctions.inc'); // need for EDITransNo
 include('includes/htmlMimeMail.php'); // need for sending email attachments
 include('includes/DefineCartClass.php');
@@ -561,7 +561,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $RootPath . '/' . $_SESSI
  } /*end of the loop around all the incoming order files in the incoming orders directory */
 
 
-include ('includes/footer.inc');
+include ('includes/footer.php');
 
 function StripTrailingComma ($StringToStrip){
 
