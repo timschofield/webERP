@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-04-13 11:01-0600\n"
-"PO-Revision-Date: 2016-12-20 10:49-0600\n"
-"Last-Translator: Rafael E. Chacón <rafael.emilio.chacon@gmail.com>\n"
+"PO-Revision-Date: 2017-04-13 11:36-0600\n"
+"Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
@@ -18406,29 +18406,31 @@ msgstr ""
 
 #: ManualContents.php:20
 msgid "webERP Manual"
-msgstr ""
+msgstr "Manual de webERP"
 
 #: ManualContents.php:55 ManualContents.php:77 ManualContents.php:138
 msgid "Table of Contents"
-msgstr ""
+msgstr "Tabla de contenido"
 
 #: ManualContents.php:56
 msgid "Go to Bottom"
-msgstr ""
+msgstr "Ir abajo"
 
 #: ManualContents.php:70
 msgid ""
 "Click on a link to view a page, or check boxes and click on \"Display Checked"
 "\" to view selected in one page"
 msgstr ""
+"Haga clic en un enlace para ver una página, o marque las casillas y haga "
+"clic en \"Mostrar marcado\" para ver lo seleccionado en una página"
 
 #: ManualContents.php:71 ManualContents.php:105
 msgid "Display Checked"
-msgstr ""
+msgstr "Mostrar marcado"
 
 #: ManualContents.php:137
 msgid "Go to Top"
-msgstr ""
+msgstr "Ir arriba"
 
 #: Manufacturers.php:8 includes/MainMenuLinksArray.php:279
 msgid "Brands Maintenance"
