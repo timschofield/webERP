@@ -41,6 +41,7 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 			$DefaultFromDate = Date ('Y-m-d', Mktime(0,0,0,$_SESSION['YearEnd'] + 2,0,Date('Y')-1));
 			$FromDate = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,$_SESSION['YearEnd'] + 2,0,Date('Y')-1));
 		}
+		$DefaultToDate = Date('Y-m-d');
 		$StartThisYear=GetPeriod($FromDate, $db);
 		$Now=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);	
 		$StartLastYear=$StartThisYear-12;
@@ -63,6 +64,9 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 										 ->setDescription("Financial Analysis")
 										 ->setKeywords("")
 										 ->setCategory("");
+			// Rename worksheet
+			$objPHPExcel->setActiveSheetIndex(0);
+			$objPHPExcel->getActiveSheet()->setTitle('Sales Analysis');
 
 			$objPHPExcel->getActiveSheet()->getStyle('D')->getNumberFormat()->setFormatCode('#,###');
 			$objPHPExcel->getActiveSheet()->getStyle('E')->getNumberFormat()->setFormatCode('0.0%');
@@ -70,16 +74,8 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 			$objPHPExcel->getActiveSheet()->getStyle('G')->getNumberFormat()->setFormatCode('0.0%');
 			$objPHPExcel->getActiveSheet()->getStyle('H')->getNumberFormat()->setFormatCode('#,###');
 			$objPHPExcel->getActiveSheet()->getStyle('I')->getNumberFormat()->setFormatCode('0.0%');
-
-/*			$objPHPExcel->getActiveSheet()->getStyle('A:AZ')->getNumberFormat()->setFormatCode('#,###');
-			$objPHPExcel->getActiveSheet()->getStyle('R')->getNumberFormat()->setFormatCode('#,##0.0');
-			$objPHPExcel->getActiveSheet()->getStyle('3')->getNumberFormat()->setFormatCode('0.0%');
-			$objPHPExcel->getActiveSheet()->getStyle('B3:C3')->getNumberFormat()->setFormatCode('#,##0');
-			$objPHPExcel->getActiveSheet()->getStyle('F')->getNumberFormat()->setFormatCode('dd/mm/yyyy');
-*/		
+	
 			// Add title data
-			$objPHPExcel->setActiveSheetIndex(0);
-
 			$objPHPExcel->getActiveSheet()->setCellValue('C2', 'Account');
 			$objPHPExcel->getActiveSheet()->setCellValue('D2', 'Last Year');
 			$objPHPExcel->getActiveSheet()->setCellValue('E2', '');
@@ -149,21 +145,26 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 			$objPHPExcel->getActiveSheet()->setCellValue('H11', '=H5+H7');
 			$objPHPExcel->getActiveSheet()->setCellValue('I11', '=H11/$H$8');
 
-
 			// Freeze panes
 			$objPHPExcel->getActiveSheet()->freezePane('D3');
 
-			// Set auto filter
-/*			$objPHPExcel->getActiveSheet()->setAutoFilter('A5:AL' . $i);
+			// New worksheet
+			$objPHPExcel->createSheet();
+			$objPHPExcel->setActiveSheetIndex(1);
+			$objPHPExcel->getActiveSheet()->setTitle('Cash PT Balance');
+			$objPHPExcel->getActiveSheet()->getStyle('B')->getNumberFormat()->setFormatCode('#,###');
+
+			$objPHPExcel->getActiveSheet()->setCellValue('A1', 'INCOME CASH PT');
+			$objPHPExcel->getActiveSheet()->setCellValue('A2', 'Income from Retail Cash PT');
+			$objPHPExcel->getActiveSheet()->setCellValue('B2', -MovementAccountsBetweenPeriods(GL_INCOME_CASH_PT, $StartThisYear,$Now,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('A3', 'Cash from Danamon to Kantor Cash');
+			$objPHPExcel->getActiveSheet()->setCellValue('B3', -MovementsFromDanamonToCashKantor($DefaultFromDate, $DefaultToDate, $db));
+			$objPHPExcel->getActiveSheet()->setCellValue('A4', 'EXPENSES CASH PT');
+			$objPHPExcel->getActiveSheet()->setCellValue('A5', 'Expenses paid cash for Accounts PT');
+			$objPHPExcel->getActiveSheet()->setCellValue('B5', ExpensesPaidCashForAccountsPT($DefaultFromDate, $DefaultToDate, $db));
+			$objPHPExcel->getActiveSheet()->setCellValue('A7', 'BALANCE CASH PT');
+			$objPHPExcel->getActiveSheet()->setCellValue('B7', '=B2+B3-B5');
 			
-			// Auto Size columns
-			foreach(range('A','AL') as $columnID) {
-				$objPHPExcel->getActiveSheet()->getColumnDimension($columnID)
-					->setAutoSize(true);
-			}
-*/			
-			// Rename worksheet
-			$objPHPExcel->getActiveSheet()->setTitle('Sales Analysis');
 
 			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 			$objPHPExcel->setActiveSheetIndex(0);
@@ -270,6 +271,38 @@ function MovementAccountsBetweenPeriods($AccountList, $PeriodFrom, $PeriodTo, $d
 			WHERE chartdetails.accountcode IN " . $AccountList ."
 				AND chartdetails.period >='" . $PeriodFrom . "'
 				AND chartdetails.period <='" . $PeriodTo . "'";
+	$Result = DB_query($SQL);
+	$myrow = DB_fetch_array($Result);
+	return $myrow[0]/JUTA;
+}
+
+function ExpensesPaidCashForAccountsPT($DateFrom, $DateTo, $db){
+	$SQL = "SELECT SUM(pcashdetails.amount) 
+			FROM pcashdetails, pctabs, pcexpenses
+			WHERE pcashdetails.date >= '" . $DateFrom . "'
+				AND pcashdetails.date <= '" . $DateTo . "'
+				AND pcashdetails.tabcode = pctabs.tabcode
+				AND pcashdetails.codeexpense = pcexpenses.codeexpense
+				AND pctabs.currency = 'IDR'
+				AND pcashdetails.codeexpense != 'ASSIGNCASH'
+				AND pctabs.tabcode NOT LIKE 'SALARIES%'
+				AND pctabs.tabcode NOT LIKE '%DANAMON'
+				AND pctabs.tabcode NOT LIKE 'CC-BCA%'
+				AND pcexpenses.glaccount LIKE '%PT'";
+	$Result = DB_query($SQL);
+	$myrow = DB_fetch_array($Result);
+	return $myrow[0]/JUTA;
+}
+
+function MovementsFromDanamonToCashKantor($DateFrom, $DateTo, $db){
+	$SQL = "SELECT SUM(gltrans.amount)
+			FROM gltrans
+			WHERE gltrans.trandate >= '" . $DateFrom . "'
+				AND gltrans.trandate <= '" . $DateTo . "'
+				AND gltrans.account = '111121105PT'
+				AND (gltrans.narrative LIKE '%CASH TO CASH%'
+					OR gltrans.narrative LIKE '%BANK TO CASH%'
+					OR gltrans.narrative LIKE '%UANG KECIL%')";
 	$Result = DB_query($SQL);
 	$myrow = DB_fetch_array($Result);
 	return $myrow[0]/JUTA;
