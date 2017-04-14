@@ -2,11 +2,11 @@
 
 /* $Id: StockStatus.php 7633 2016-09-24 22:52:11Z waynemcdougall $*/
 $PricesSecurity = 12;//don't show pricing info unless security token 12 available to user
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('Stock Status');
 
-include('includes/header.inc');
+include('includes/header.php');
 include ('includes/SQL_CommonFunctions.inc');
 
 if (isset($_GET['StockID'])){
@@ -377,6 +377,6 @@ if ($Its_A_KitSet_Assembly_Or_Dummy ==False){
 }
 
 echo '</div></form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

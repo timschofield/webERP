@@ -1,9 +1,9 @@
 <?php
 /* $Id: Z_DescribeTable.php 6941 2014-10-26 23:18:08Z daintree $*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Database table details');
-include('includes/header.inc');
+include('includes/header.php');
 
 $sql='DESCRIBE '.$_GET['table'];
 $result=DB_query($sql);
@@ -20,7 +20,7 @@ while ($myrow=DB_fetch_row($result)) {
 	echo $myrow[4]  . '</td></tr>';
 }
 echo '</table>';
-include('includes/footer.inc');
+include('includes/footer.php');
 
 
 ?>

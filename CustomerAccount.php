@@ -2,18 +2,18 @@
 /* $Id: CustomerAccount.php 7004 2014-11-24 15:56:19Z rchacon $*/
 /* Shows customer account/statement on screen rather than PDF. */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Customer Account');// Screen identification.
 $ViewTopic = 'ARInquiries';// Filename in ManualContents.php's TOC.
 $BookMark = 'CustomerAccount';// Anchor's id in the manual's html document.
-include('includes/header.inc');
+include('includes/header.php');
 
 // always figure out the SQL required from the inputs available
 
 if (!isset($_GET['CustomerID']) and !isset($_SESSION['CustomerID'])) {
 	prnMsg(_('To display the account a customer must first be selected from the customer selection screen'), 'info');
 	echo '<br /><div class="centre"><a href="', $RootPath, '/SelectCustomer.php">', _('Select a Customer Account to Display'), '</a></div>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 } else {
 	if (isset($_GET['CustomerID'])) {
@@ -35,12 +35,12 @@ if ($_SESSION['SalesmanLogin'] != '') {
 		}
 	} else {
 		prnMsg(_('There is no salesman data set for this customer'),'error');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 	if (!$ViewAllowed) {
 		prnMsg(_('You have no authority to review this customer account'),'error');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 }
@@ -408,5 +408,5 @@ echo '</tbody></table>
 		</tr>
 	</table>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

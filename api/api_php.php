@@ -4,14 +4,14 @@ KL RICARD MODIFICATIONS:
  Change of AllowAnyone by AllowCronJobToBeRun to minimize risk of intrusions
 *************************************************************************************/
 
-/* Include session.inc, to allow database connection, and access to
+/* Include session.php, to allow database connection, and access to
    miscfunctions, and datefunctions.*/
 	// FOLLOWING IS ALWAYS REQUIRED
 	$api_DatabaseName='weberpdemo';
 
 	$AllowCronJobToBeRun = true;
 	$PathPrefix=dirname(__FILE__).'/../';
-	include('api_session.inc');
+	include('api_session.php');
 
 	include('api_errorcodes.php');
 	/* Include SQL_CommonFunctions.inc, to use GetNextTransNo().*/

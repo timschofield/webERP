@@ -2,11 +2,11 @@
 /* $Id: Z_GLAccountUsersCopyAuthority.php 7392 2015-11-16 07:30:11Z tehonu $*/
 /* Utility to copy authority of GL accounts from one user to another */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('GLAccount - Users Authority Copy Authority');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = 'Z_GLAccountUsersCopyAuthority';
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/maintenance.png" title="',// Icon image.
@@ -97,5 +97,5 @@ echo		'<button name="ProcessCopyAuthority" type="submit" value="', _('Process Co
 		'</div>
 	</form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

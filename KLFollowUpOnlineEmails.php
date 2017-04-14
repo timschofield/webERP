@@ -1,19 +1,19 @@
 <?php
 
-include('includes/session.inc');
+include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 $Title = _('Kapal-Laut Follow Up Email System');
-include('includes/header.inc');
+include('includes/header.php');
 
 //Get Out if we have no order number to work with
 If (!isset($_GET['TransNo']) OR $_GET['TransNo']==''){
 	prnMsg( _('We need an order number to send an email to online customer') , 'error');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 If (!isset($_GET['EmailType']) OR $_GET['EmailType']==''){
 	prnMsg( _('We need an email type to send an email to online customer') , 'error');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -225,7 +225,7 @@ if ($_GET['EmailType']!='NoSendThankYou'){
 	//If there are no rows, there's a problem.
 	if (DB_num_rows($result)==0){
 		prnMsg( _('Unable to Locate Order Number') . ' : ' . $_GET['TransNo'] . ' ', 'error');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	} elseif (DB_num_rows($result)==1){ /*There is only one order header returned - thats good! */
 		$myrow = DB_fetch_array($result);
@@ -725,7 +725,7 @@ if (($_GET['EmailType']=='ThankYouOrder') OR ($_GET['EmailType']=='NoSendThankYo
 	prnMsg("Updated date of sending thank you! to online customer to today");
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 
 function ShowBankDetails ($Currency, $OrderNo) {
 

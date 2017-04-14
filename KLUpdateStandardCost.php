@@ -1,20 +1,20 @@
 <?php
 
-include ('includes/session.inc');
+include ('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 $Title = _('Kapal-Laut. Update Standard Cost for an item');
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/KLBoards.php');
 
 //Get Out if we have no StockId or NewCost
 If (!isset($_GET['StockId']) OR $_GET['StockId']==''){
 	prnMsg( _('We need an item code to change the standrd cost') , 'error');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 If (!isset($_GET['NewCost']) OR $_GET['NewCost']==''){
 	prnMsg( _('We need anew standard cost to apply to the item ') . $_GET['StockId'] , 'error');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 $sql = "SELECT materialcost,
@@ -50,6 +50,6 @@ if (DB_num_rows($result)==0) {
 	prnMsg (_('Standard Cost of ') . $_GET['StockId'] . ' changed from ' . locale_number_format($OldCost,0) . ' to ' . locale_number_format($NewCost,0),'success');
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

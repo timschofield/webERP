@@ -4,20 +4,20 @@
 
 include('includes/DefineCartClass.php');
 
-/* Session started in header.inc for password checking the session will contain the details of the order from the Cart class object. The details of the order come from SelectOrderItems.php */
-/* webERP manual links before header.inc */
+/* Session started in header.php for password checking the session will contain the details of the order from the Cart class object. The details of the order come from SelectOrderItems.php */
+/* webERP manual links before header.php */
 $ViewTopic= 'SalesOrders';
 $BookMark = 'RecurringSalesOrders';
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Recurring Orders');
 
 
-/* webERP manual links before header.inc */
+/* webERP manual links before header.php */
 $ViewTopic= 'SalesOrders';
 $BookMark = 'RecurringSalesOrders';
 
-include('includes/header.inc');
+include('includes/header.php');
 
 if (empty($_GET['identifier'])) {
 	$identifier=date('U');
@@ -81,7 +81,7 @@ if (isset($_GET['NewRecurringOrder'])){
 			$myrow = DB_fetch_array($GetOrdHdrResult);
 
 			$_SESSION['Items'.$identifier]->DebtorNo = $myrow['debtorno'];
-	/*CustomerID defined in header.inc */
+	/*CustomerID defined in header.php */
 			$_SESSION['Items'.$identifier]->Branch = $myrow['branchcode'];
 			$_SESSION['Items'.$identifier]->CustomerName = $myrow['name'];
 			$_SESSION['Items'.$identifier]->CustRef = $myrow['customerref'];
@@ -165,7 +165,7 @@ if (isset($_GET['NewRecurringOrder'])){
 
 if ((!isset($_SESSION['Items'.$identifier]) OR $_SESSION['Items'.$identifier]->ItemsOrdered == 0) AND $NewRecurringOrder=='Yes'){
 	prnMsg(_('A new recurring order can only be created if an order template has already been created from the normal order entry screen') . '. ' . _('To enter an order template select sales order entry from the orders tab of the main menu'),'error');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -185,7 +185,7 @@ if (isset($_POST['DeleteRecurringOrder'])){
 
 	unset($_SESSION['Items'.$identifier]->LineItems);
 	unset($_SESSION['Items'.$identifier]);
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 If (isset($_POST['Process'])) {
@@ -311,7 +311,7 @@ If (isset($_POST['Process'])) {
 
 	unset($_SESSION['Items'.$identifier]->LineItems);
 	unset($_SESSION['Items'.$identifier]);
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 
 	}
@@ -517,5 +517,5 @@ if ($NewRecurringOrder=='Yes'){
 echo '</div>';
 echo '</div>
       </form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

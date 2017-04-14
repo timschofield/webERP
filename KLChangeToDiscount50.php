@@ -1,8 +1,8 @@
 <?php
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('Kapal-Laut. Change To Discount 50%');
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
 include ('includes/KLGeneralFunctions.php');
@@ -13,7 +13,7 @@ include('includes/SQL_CommonFunctions.inc');
 if (!isset($_GET['Item']) or !isset($_GET['Discount']) or !isset($_GET['Action'])){
 	echo '<br />';
 	prnMsg( _('This page must be given the item code and its new Discount Code.'), 'error');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -35,7 +35,7 @@ if ($_GET['Action'] == "New"){
 }else{
 	echo '<br />';
 	prnMsg( _('Action unknown'), 'error');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -57,6 +57,6 @@ if ($_GET['Action'] == "Finish"){
 
 DB_Txn_Commit();
 
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

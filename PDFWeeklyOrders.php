@@ -4,7 +4,7 @@
 $DatabaseName='weberp';
 $AllowAnyone = true;
 
-include ('includes/session.inc');
+include ('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 include ('includes/class.pdf.php');
 $_POST['FromDate']=date('Y-m-01');
@@ -13,9 +13,9 @@ $WeekStartDate = Date(($_SESSION['DefaultDateFormat']), strtotime($WeekStartDate
 $Recipients = GetMailList('WeeklyOrders');
 if (sizeOf($Recipients) == 0) {
 	$Title = _('Weekly Orders') . ' - ' . _('Problem Report');
-      	include('includes/header.inc');
+      	include('includes/header.php');
 	prnMsg( _('There are no members of the Weekly Orders Recipients email group'), 'warn');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -47,12 +47,12 @@ $sql= "SELECT salesorders.orderno,
 $Result=DB_query($sql,$db,'','',false,false); //dont trap errors here
 
 if (DB_error_no($db)!=0){
-	include('includes/header.inc');
+	include('includes/header.php');
 	echo '<br />' . _('An error occurred getting the orders details');
 	if ($debug==1){
 		echo '<br />' . _('The SQL used to get the orders that failed was') . '<br />' . $sql;
 	}
-	include ('includes/footer.inc');
+	include ('includes/footer.php');
 	exit;
 }
 $PaperSize="Letter_Landscape";
@@ -62,7 +62,7 @@ $pdf->addInfo('Subject',_('Orders from') . ' ' . $_POST['FromDate'] . ' ' . _('t
 $line_height=12;
 $PageNumber = 1;
 $TotalDiffs = 0;
-include ('includes/PDFWeeklyOrdersPageHeader.inc');
+include ('includes/PDFWeeklyOrdersPageheader.php');
 $Col1=2;
 $Col2=40;
 $Col3=160;
@@ -123,7 +123,7 @@ while ($myrow=DB_fetch_array($Result)){
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+$Col10,$YPos,$Col11-$Col10-5,$FontSize,$Status, 'left');
 	if ($YPos - (2 *$line_height) < $Bottom_Margin){
 		$PageNumber++;
-		include ('includes/PDFWeeklyOrdersPageHeader.inc');
+		include ('includes/PDFWeeklyOrdersPageheader.php');
 	} /*end of new page header  */
 	$YPos -= $line_height;
 	$TotalSalesValue += $SalesValue;
@@ -142,7 +142,7 @@ $LeftOvers = $pdf->addTextWrap($Left_Margin+$Col8,$YPos,$Col9-$Col8-5,$FontSize,
 $LeftOvers = $pdf->addTextWrap($Left_Margin+$Col9,$YPos,$Col10-$Col9-5,$FontSize,locale_number_format($TotalGP,2), 'right');
 if ($YPos - (2 *$line_height) < $Bottom_Margin){
 	$PageNumber++;
-	include ('includes/PDFWeeklyOrdersPageHeader.inc');
+	include ('includes/PDFWeeklyOrdersPageheader.php');
 } /*end of new page header  */
 
 $YPos -= $line_height;
@@ -204,18 +204,18 @@ if($_SESSION['SmtpSetting']==0){
 }
 if($result){
 		$Title = _('Print Weekly Orders');
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg(_('The Weekly Orders report has been mailed'),'success');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 
 }else{
 		$Title = _('Print Weekly Orders Error');
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg(_('There are errors lead to mails not sent'),'error');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 
 }

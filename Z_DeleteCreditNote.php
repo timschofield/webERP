@@ -12,9 +12,9 @@ must be called directly with path/DeleteCreditnote.php?CreditNoteNo=???????
 !! */
 
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('Delete Credit Note');
-include('includes/header.inc');
+include('includes/header.php');
 
 
 if (!isset($_GET['CreditNoteNo'])){
@@ -148,5 +148,5 @@ prnMsg(_('Deleted the credit note general ledger transactions').'info');
 $result = DB_Txn_Commit();
 prnMsg(_('Credit note number') . ' ' . $_GET['CreditNoteNo'] . ' ' . _('has been completely deleted') . '. ' . _('To ensure the integrity of the general ledger transactions must be reposted from the period the credit note was created'),'info');
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

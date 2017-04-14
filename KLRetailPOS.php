@@ -29,11 +29,11 @@ v 1.00 2011-07-25: Kantor starts using it.
 define("VERSIONFILE", "3.01"); // 
 
 include('includes/DefineCartClass.php');
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('Retail POS '. VERSIONFILE);
 
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/GetPrice.inc');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/GetSalesTransGLCodes.inc');
@@ -94,7 +94,7 @@ if (!isset($_SESSION['Items'.$identifier])){
 	$_SESSION['Items'.$identifier] = new cart;
 	$_SESSION['Items'.$identifier]->DeliverTo = '';
 	$_SESSION['Items'.$identifier]->ShipVia = 1; // Hand Carried
-	/* The following variables have been set in session.inc, so we only need to access DB once per SPG session, not every retail sale */
+	/* The following variables have been set in session.php, so we only need to access DB once per SPG session, not every retail sale */
 	$_SESSION['Items'.$identifier]->Branch = $_SESSION['cashsalebranch'];
 	$_SESSION['Items'.$identifier]->DebtorNo = $_SESSION['cashsalecustomer'];
 	$_SESSION['Items'.$identifier]->LocationName = $_SESSION['locationname'];
@@ -127,7 +127,7 @@ if (isset($_POST['CancelOrder'])) {
 	echo '<br /><br />';
 	prnMsg(_('This sale has been cancelled as requested'),'success');
 	echo '<br /><br /><a href="' .$_SERVER['PHP_SELF'] . '">' . _('Start a new Retail Sale') . '</a>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 
 } else { /*Not cancelling the order */
@@ -510,7 +510,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		if ($_SESSION['CompanyRecord']==0){
 			/*The company data and preferences could not be retrieved for some reason */
 			prnMsg( _('The company information and preferences could not be retrieved. Please call the office inmediately'), 'error');
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 		}
 
@@ -537,7 +537,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		}else{
 			/*The area is wrong for any reason */
 			prnMsg('ERROR POS0050: The area ' . $Area . ' is not defined. Please call the office inmediately', 'error');
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 		}
 		
@@ -1597,5 +1597,5 @@ if (!isset($_POST['ProcessSale'])){
 	}
 }
 echo '</form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

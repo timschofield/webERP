@@ -1,5 +1,5 @@
 <?php
-/* $Id: PDFStockLocTransferHeader.inc 6167 2013-07-31 21:38:51Z rchacon $*/
+/* $Id: PDFStockLocTransferheader.php 6167 2013-07-31 21:38:51Z rchacon $*/
 
 /*PDF page header for inventory check report */
 if ($PageNumber>1){

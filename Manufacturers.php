@@ -3,11 +3,11 @@
 
 /* $Id: Manufacturers.php 5498 2012-07-13 08:35:54Z tehonu $*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('Brands Maintenance');
 
-include('includes/header.inc');
+include('includes/header.php');
 
 if (isset($_GET['SelectedManufacturer'])){
 	$SelectedManufacturer = $_GET['SelectedManufacturer'];
@@ -379,5 +379,5 @@ if (!isset($_GET['delete'])) {
 
 } //end if record deleted no point displaying form to add record
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

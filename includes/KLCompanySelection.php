@@ -5,9 +5,9 @@
 /////////////////////////////////////////////////////////////////////
 
 if (!isset($_GET['Company']) AND !isset($_POST['Company'])){
-	include('includes/header.inc');
+	include('includes/header.php');
 	prnMsg('Script called without the correct parameters','warn');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 }else{
 	if(isset($_GET['Company'])){
 		$Company = $_GET['Company'];

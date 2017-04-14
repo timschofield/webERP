@@ -5,7 +5,7 @@
 // to another location to cover shortage based on reorder level. Creates loctransfer records
 // that can be processed using Bulk Inventory Transfer - Receive.
 
-include('includes/session.inc');
+include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 if (isset($_POST['PrintPDF'])) {
 
@@ -92,24 +92,24 @@ if (isset($_POST['PrintPDF'])) {
 
 	if (DB_error_no() !=0) {
 		$title = _('Stock Dispatch - Problem Report');
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg( _('The Stock Dispatch report could not be retrieved by the SQL because') . ' '  . DB_error_msg(),'error');
 		echo '<br />
 			<a href="' .$rootpath . '/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
 			echo '<br />' . $sql;
 		}
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 	if (DB_num_rows($result) ==0) {
 		$title = _('Stock Dispatch - Problem Report');
-		include('includes/header.inc');
+		include('includes/header.php');
 		echo '<br />';
 		prnMsg( _('The stock dispatch did not have any items to list'),'warn');
 		echo '<br />
 			 <a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -256,7 +256,7 @@ if (isset($_POST['PrintPDF'])) {
 } else { /*The option to print PDF was not hit so display form */
 
 	$title=_('Stock Dispatch Report');
-	include('includes/header.inc');
+	include('includes/header.php');
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . _('Inventory Stock Dispatch Report') . '</p>';
 	echo '<div class="page_help_text">' . _('Create batch of overstock from one location to transfer to another location that is below reorder level.<br/>
 										 Quantity to ship is based on reorder level minus the quantity on hand at the To Location; if there is a<br/>
@@ -320,7 +320,7 @@ if (isset($_POST['PrintPDF'])) {
 		echo '<br /><a href="' . $rootpath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
 		echo '</div>
 			  </form>';
-		include ('includes/footer.inc');
+		include ('includes/footer.php');
 		exit;
 	}
 
@@ -368,7 +368,7 @@ if (isset($_POST['PrintPDF'])) {
 	echo '</div>
 		  </form>';
 
-	include('includes/footer.inc');
+	include('includes/footer.php');
 
 } /*end of else not PrintPDF */
 

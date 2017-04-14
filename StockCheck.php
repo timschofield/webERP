@@ -2,7 +2,7 @@
 
 /* $Id: StockCheck.php 6962 2014-11-06 02:59:12Z tehonu $*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 If (isset($_POST['PrintPDF'])){
 
@@ -37,13 +37,13 @@ If (isset($_POST['PrintPDF'])){
 		$result = DB_query($sql,'','',false,false);
 		if (DB_error_no() !=0) {
 			$Title = _('Stock Count Sheets - Problem Report');
-			include('includes/header.inc');
+			include('includes/header.php');
 			prnMsg(_('The inventory quantities could not be added to the freeze file because') . ' ' . DB_error_msg(),'error');
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 			if ($debug==1){
 		  			echo '<br />' . $sql;
 			}
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 		}
 	}
@@ -58,13 +58,13 @@ If (isset($_POST['PrintPDF'])){
 		$result = DB_query($sql,'','',false,false);
 		if (DB_error_no() !=0) {
 			$Title = _('Stock Freeze') . ' - ' . _('Problem Report') . '.... ';
-			include('includes/header.inc');
+			include('includes/header.php');
 			prnMsg(_('The old quantities could not be deleted from the freeze file because') . ' ' . DB_error_msg(),'error');
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 			if ($debug==1){
 		  			echo '<br />' . $sql;
 			}
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 		}
 
@@ -88,20 +88,20 @@ If (isset($_POST['PrintPDF'])){
 		$result = DB_query($sql,'','',false,false);
 		if (DB_error_no() !=0) {
 			$Title = _('Stock Freeze - Problem Report');
-			include('includes/header.inc');
+			include('includes/header.php');
 			prnMsg(_('The inventory quantities could not be added to the freeze file because') . ' ' . DB_error_msg(),'error');
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 			if ($debug==1){
 		  			echo '<br />' . $sql;
 			}
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 		} else {
 			$Title = _('Stock Check Freeze Update');
-			include('includes/header.inc');
+			include('includes/header.php');
 			echo '<p><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Print Check Sheets') . '</a>';
 			prnMsg( _('Added to the stock check file successfully'),'success');
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 		}
 	}
@@ -130,25 +130,25 @@ If (isset($_POST['PrintPDF'])){
 
 	if (DB_error_no() !=0) {
 		$Title = _('Stock Sheets') . ' - ' . _('Problem Report') . '.... ';
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg( _('The inventory quantities could not be retrieved by the SQL because') . ' ' . DB_error_msg(),'error');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
 		  	echo '<br />' . $SQL;
 		}
-		include ('includes/footer.inc');
+		include ('includes/footer.php');
 		exit;
 	}
 	if (DB_num_rows($InventoryResult) ==0) {
 		$Title = _('Stock Count Sheets - Problem Report');
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg(_('Before stock count sheets can be printed, a copy of the stock quantities needs to be taken - the stock check freeze. Make a stock check data file first'),'error');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
-	include ('includes/PDFStockCheckPageHeader.inc');
+	include ('includes/PDFStockCheckPageheader.php');
 
 	$Category = '';
 
@@ -183,13 +183,13 @@ If (isset($_POST['PrintPDF'])){
 
 			if (DB_error_no() !=0) {
 	 			$Title = _('Stock Check Sheets - Problem Report');
-		  		include('includes/header.inc');
+		  		include('includes/header.php');
 		   		prnMsg( _('The sales order demand quantities could not be retrieved by the SQL because') . ' ' . DB_error_msg(), 'error');
 	   			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 	   			if ($debug==1){
 		  				echo '<br />' . $SQL;
 		   		}
-		   		include('includes/footer.inc');
+		   		include('includes/footer.php');
 	   			exit;
 			}
 
@@ -239,7 +239,7 @@ If (isset($_POST['PrintPDF'])){
 
 		if ($YPos < $Bottom_Margin + $line_height){
 		   $PageNumber++;
-		   include('includes/PDFStockCheckPageHeader.inc');
+		   include('includes/PDFStockCheckPageheader.php');
 		}
 
 	} /*end STOCK SHEETS while loop */
@@ -249,7 +249,7 @@ If (isset($_POST['PrintPDF'])){
 } else { /*The option to print PDF was not hit */
 
 	$Title=_('Stock Check Sheets');
-	include('includes/header.inc');
+	include('includes/header.php');
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="'
 		. _('print') . '" alt="" />' . ' ' . $Title . '</p><br />';
@@ -346,7 +346,7 @@ If (isset($_POST['PrintPDF'])){
 		</div>
 		</form>';
 
-	include('includes/footer.inc');
+	include('includes/footer.php');
 
 } /*end of else not PrintPDF */
 

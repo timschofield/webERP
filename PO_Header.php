@@ -3,7 +3,7 @@
 /* $Id PO_Header.php 4183 2010-12-14 09:30:20Z daintree $ */
 
 include('includes/DefinePOClass.php');
-include('includes/session.inc');
+include('includes/session.php');
 
 
 if (isset($_GET['ModifyOrderNumber'])) {
@@ -16,11 +16,11 @@ if (isset($_GET['SupplierID'])) {
 	$_POST['Select'] = $_GET['SupplierID'];
 }
 
-/* webERP manual links before header.inc */
+/* webERP manual links before header.php */
 $ViewTopic= 'PurchaseOrdering';
 $BookMark = 'PurchaseOrdering';
 
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 
 /*If the page is called is called without an identifier being set then
@@ -241,7 +241,7 @@ if (isset($_POST['EnterLines']) OR isset($_POST['AllowRePrint'])) {
 		echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/PO_Items.php?identifier=' . $identifier . '">';
 		echo '<p>';
 		prnMsg(_('You should automatically be forwarded to the entry of the purchase order line items page') . '. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' . '<a href="' . $RootPath . '/PO_Items.php?identifier=' . $identifier . '">' . _('click here') . '</a> ' . _('to continue'), 'info');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	} // end if reprint not allowed
 } //isset($_POST['EnterLines']) OR isset($_POST['AllowRePrint'])
@@ -460,7 +460,7 @@ if (isset($_POST['Select'])) {
 	} else {
 
 		prnMsg(_('You do not have the authority to raise Purchase Orders for') . ' ' . $myrow['suppname'] . '. ' . _('Please Consult your system administrator for more information.') . '<br />' . _('You can setup authorisations') . ' ' . '<a href="PO_AuthorisationLevels.php">' . _('here') . '</a>', 'warn');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -1179,5 +1179,5 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 
 echo '</div>
       </form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

@@ -1,9 +1,9 @@
 <?php
 
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title=_('Update of PPH21 Deduction');
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/KLCompanySelection.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
@@ -151,5 +151,5 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
           </form>';
 
 } /*end of else not submit */
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

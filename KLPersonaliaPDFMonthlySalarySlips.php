@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.inc');
+include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/KLCompanySelection.php');
@@ -428,17 +428,17 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType, &$db) {
 		
 		
 		}else{
-			include('includes/header.inc');
+			include('includes/header.php');
 			prnMsg('No data to export PDF Monthly Salary Slips ');
-			include('includes/footer.inc');
+			include('includes/footer.php');
 		}
 	}else{
-		include('includes/header.inc');
+		include('includes/header.php');
 		echo '<p class="page_title_text">
 				<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $PageTitle . '" alt="" />' . ' ' . $PageTitle . 
 			'</p>';
 		prnMsg($InputErrorMessage, "warn");
-		include('includes/footer.inc');
+		include('includes/footer.php');
 	}
 } // End of function submit()
 
@@ -447,7 +447,7 @@ function display($Title, &$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DI
 {
 // Display form fields. This function is called the first time
 // the page is called.
-	include('includes/header.inc');
+	include('includes/header.php');
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
           <div>
@@ -504,7 +504,7 @@ function display($Title, &$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DI
 		<br />';
 	echo '</div>
          </form>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 
 } // End of function display()
 

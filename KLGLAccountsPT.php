@@ -1,13 +1,13 @@
 <?php
 /* $Id: GLAccounts.php 4837 2012-01-24 23:41:46Z vvs2012 $*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Chart of Accounts Maintenance for PT. Bumi Biru');
 
 $ViewTopic= 'GeneralLedger';
 $BookMark = 'GLAccounts';
 
-include('includes/header.inc');
+include('includes/header.php');
 
 if (isset($_POST['SelectedAccount'])){
 	$SelectedAccount = $_POST['SelectedAccount'];
@@ -201,5 +201,5 @@ if (isset($SelectedAccount)) {
 
 echo '<p />';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

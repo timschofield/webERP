@@ -1,8 +1,8 @@
 <?php
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('GLAccount - Users Authority Copy Authority');// Screen identificator.
-include('includes/header.inc');
+include('includes/header.php');
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/maintenance.png" title="',// Icon image.
 	_('Copy Authority of GL Accounts from one user to another'), '" /> ',// Icon title.
@@ -84,5 +84,5 @@ echo '<input type="submit" name="ProcessCopyAuthority" value="' . _('Process Cop
 	</div>
 	</form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

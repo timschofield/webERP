@@ -2,11 +2,11 @@
 /* $Id: SMTPServer.php 4469 2011-01-15 02:28:37Z daintree $*/
 /* This script is <create a description for script table>. */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('SMTP Server details');// Screen identification.
 $ViewTopic = 'CreatingNewSystem';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'SMTPServer';// Anchor's id in the manual's html document.
-include('includes/header.inc');
+include('includes/header.php');
 echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 	'/images/email.png" title="' .// Icon image.
 	_('SMTP Server') . '" /> ' .// Icon title.
@@ -129,6 +129,6 @@ echo '</select></td>
 	</div>
 	</form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

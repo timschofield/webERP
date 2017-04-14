@@ -2,11 +2,11 @@
 /* $Id: CustWhereAlloc.php 7709 2016-12-20 15:57:10Z rchacon $*/
 /* Shows to which invoices a receipt was allocated to */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Customer How Paid Inquiry');
 $ViewTopic = 'ARInquiries';
 $BookMark = 'WhereAllocated';
-include('includes/header.inc');
+include('includes/header.php');
 
 if(isset($_GET['TransNo']) AND isset($_GET['TransType'])) {
 	$_POST['TransNo'] = (int)$_GET['TransNo'];
@@ -198,5 +198,5 @@ if(isset($Printer)) {
 				'/images/printer.png" /> ', _('Print'), '</button>', // "Print" button.	
 		'</div>';// "Print This" button.
 }
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

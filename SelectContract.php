@@ -2,13 +2,13 @@
 
 /* $Id: SelectContract.php 3692 2010-08-15 09:22:08Z daintree $*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Select Contract');
 
 $ViewTopic= 'Contracts';
 $BookMark = 'SelectContract';
 
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/contract.png" title="' . _('Contracts') . '" alt="" />' . ' ' . _('Select A Contract') . '</p> ';
 
@@ -206,5 +206,5 @@ echo '</table>
       </div>
       </form>
       <br />';
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

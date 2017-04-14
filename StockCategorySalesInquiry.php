@@ -2,9 +2,9 @@
 
 /* $Id: StockCategorySalesInquiry.php 4261 2010-12-22 15:56:50Z  $*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Sales By Category By Item Inquiry');
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Sales Report') . '" alt="" />' . ' ' . _('Sales By Category By Item Inquiry') . '</p>';
 echo '<div class="page_help_text">' . _('Select the parameters for the inquiry') . '</div><br />';
@@ -233,5 +233,5 @@ if (isset($_POST['ShowSales'])){
 		</table>';
 
 } //end of if user hit show sales
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

@@ -6,11 +6,11 @@ KL RICARD Clean up of StockLocTransfer so SPG can create transfers from their sh
 
 /* Inventory Transfer - Bulk Dispatch */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Return Transfer from Shop to Kantor');
 $BookMark = "LocationTransfers";
 $ViewTopic = "Inventory";
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
@@ -205,7 +205,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 		_('Print Return Transfer number: '). $_POST['Trf_ID'] . '</a><br /><br />';
 	//################## PRINTING STUFF ##################### 
 
-	include('includes/footer.inc');
+	include('includes/footer.php');
 
 } else {
 	//Get next Inventory Transfer Shipment Reference Number
@@ -288,6 +288,6 @@ if(isset($_POST['Submit']) AND $InputError==False){
 		</div>
 		</div>
 		</form>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 }
 ?>

@@ -5,11 +5,11 @@
 
 //$PageSecurity = 15;
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('Edit Header');// _('Edit a Language File Header')
 $ViewTopic = "SpecialUtilities";
 $BookMark = "Z_poEditLangHeader";// Anchor's id in the manual's html document.
-include('includes/header.inc');
+include('includes/header.php');
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme . 
 		'/images/maintenance.png" title="' . 
 		_('Edit a Language File Header') . '" />' . ' ' . 
@@ -110,6 +110,6 @@ else
 	echo '</form>';
 }
 }
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

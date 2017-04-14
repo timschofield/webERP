@@ -1,13 +1,13 @@
 <?php
 /* $Id: FixedAssetDepreciation.php 4213 2010-12-22 14:33:20Z tim_schofield $*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Depreciation Journal Entry');
 
 $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetDepreciation';
 
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 
 
@@ -293,5 +293,5 @@ if (isset($_POST['CommitDepreciation']) AND $InputError==false){
         </div>
 		</form>';
 }
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

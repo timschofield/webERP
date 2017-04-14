@@ -2,7 +2,7 @@
 
 /* $Id: InventoryValuation.php 7336 2015-08-10 01:43:46Z tehonu $ */
 
-include('includes/session.inc');
+include('includes/session.php');
 if (isset($_POST['PrintPDF']) OR isset($_POST['CSV'])){
 
 /*Now figure out the inventory data to report for the category range under review */
@@ -62,13 +62,13 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['CSV'])){
 
 	if (DB_error_no() !=0) {
 	  $Title = _('Inventory Valuation') . ' - ' . _('Problem Report');
-	  include('includes/header.inc');
+	  include('includes/header.php');
 	   prnMsg( _('The inventory valuation could not be retrieved by the SQL because') . ' '  . DB_error_msg(),'error');
 	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
 		  echo '<br />' . $SQL;
 	   }
-	   include('includes/footer.inc');
+	   include('includes/footer.php');
 	   exit;
 	}
 }
@@ -87,14 +87,14 @@ if (isset($_POST['PrintPDF'])){
 	
 	if (DB_num_rows($InventoryResult)==0){
 		$Title = _('Print Inventory Valuation Error');
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg(_('There were no items with any value to print out for the location specified'),'info');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
-	include ('includes/PDFInventoryValnPageHeader.inc');
+	include ('includes/PDFInventoryValnPageheader.php');
 
 	$Tot_Val=0;
 	$Category = '';
@@ -111,7 +111,7 @@ if (isset($_POST['PrintPDF'])){
 				if ($_POST['DetailedReport']=='Yes'){
 					$YPos -= (2*$line_height);
 					if ($YPos < $Bottom_Margin + (3*$line_height)){
-		 				  include('includes/PDFInventoryValnPageHeader.inc');
+		 				  include('includes/PDFInventoryValnPageheader.php');
 					}
 					$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,_('Total for') . ' ' . $Category . ' - ' . $CategoryName);
 				}
@@ -156,7 +156,7 @@ if (isset($_POST['PrintPDF'])){
 		$CatTot_Qty += $InventoryValn['qtyonhand'];
 
 		if ($YPos < $Bottom_Margin + $line_height){
-		   include('includes/PDFInventoryValnPageHeader.inc');
+		   include('includes/PDFInventoryValnPageheader.php');
 		}
 
 	} /*end inventory valn while loop */
@@ -182,7 +182,7 @@ if (isset($_POST['PrintPDF'])){
 	$YPos -= (2*$line_height);
 
 	if ($YPos < $Bottom_Margin + $line_height){
-		   include('includes/PDFInventoryValnPageHeader.inc');
+		   include('includes/PDFInventoryValnPageheader.php');
 	}
 /*Print out the grand totals */
 	$LeftOvers = $pdf->addTextWrap(80,$YPos,260-$Left_Margin,$FontSize,_('Grand Total Value'), 'right');
@@ -211,7 +211,7 @@ if (isset($_POST['PrintPDF'])){
 } else { /*The option to print PDF nor to create the CSV was not hit */
 
 	$Title=_('Inventory Valuation Reporting');
-	include('includes/header.inc');
+	include('includes/header.php');
 
 	echo '<p class="page_title_text">
 			<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . $Title . '
@@ -276,7 +276,7 @@ if (isset($_POST['PrintPDF'])){
 	echo '</div>
 		  </form>';
 
-	include('includes/footer.inc');
+	include('includes/footer.php');
 
 } /*end of else not PrintPDF */
 ?>

@@ -2,11 +2,11 @@
 /* $Id: CompanyPreferences.php 7644 2016-10-11 15:52:19Z rchacon $ */
 /* Defines the settings applicable for the company, including name, address, tax authority reference, whether GL integration used etc. */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Company Preferences');
 $ViewTopic= 'CreatingNewSystem';
 $BookMark = 'CompanyParameters';
-include('includes/header.inc');
+include('includes/header.php');
 
 if (isset($Errors)) {
 	unset($Errors);
@@ -467,5 +467,5 @@ echo '</table>
 	</div>';
 echo '</div></form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

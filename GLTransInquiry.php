@@ -1,11 +1,11 @@
 <?php
 /* $Id: GLTransInquiry.php 7385 2015-11-11 08:03:20Z tehonu $*/
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('General Ledger Transaction Inquiry');
 $ViewTopic = 'GeneralLedger';// Filename in ManualContents.php's TOC.
 $BookMark = 'GLTransInquiry';// Anchor's id in the manual's html document.
-include('includes/header.inc');
+include('includes/header.php');
 
 $MenuURL = '<div><a href="'. $RootPath . '/index.php?&amp;Application=GL">' . _('General Ledger Menu') . '</a></div>';
 
@@ -228,5 +228,5 @@ if( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

@@ -1,11 +1,11 @@
 <?php
 /* $Id: AutomaticTranslationDescriptions.php 7037 2014-12-22 14:45:20Z tehonu $ */
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('Translate Item Descriptions');
 $ViewTopic = 'SpecialUtilities'; // Filename in ManualContents.php's TOC.
 $BookMark = 'Z_TranslateItemDescriptions'; // Anchor's id in the manual's html document.
-include ('includes/header.inc');
+include ('includes/header.php');
 
 include ('includes/GoogleTranslator.php');
 
@@ -121,5 +121,5 @@ echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $The
 
 }
 
-include ('includes/footer.inc');
+include ('includes/footer.php');
 ?>

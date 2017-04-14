@@ -1,8 +1,8 @@
 <?php
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Financial planning for active (Authorised, Printed, Pending) Purchase Orders by Supplier');
-include('includes/header.inc');
+include('includes/header.php');
 
 if (isset($_POST['submit'])) {
     submit($db, $RootPath, $_POST['Country'], $_POST['Currency']);
@@ -278,5 +278,5 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 
 } // End of function display()
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

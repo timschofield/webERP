@@ -3,11 +3,11 @@
 /* Classifies accounts in any of the three sections of statement of cash flows to assign each account to an activity */
 
 // BEGIN: Procedure division ---------------------------------------------------
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Cash Flows Activities Maintenance');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLCashFlowsSetup';
-include('includes/header.inc');
+include('includes/header.php');
 
 // Merges gets into posts:
 if(isset($_GET['Action'])) {
@@ -236,6 +236,6 @@ echo				'</select>',
 		</table>
 	</form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 // END: Procedure division -----------------------------------------------------
 ?>

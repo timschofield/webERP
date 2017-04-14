@@ -2,9 +2,9 @@
 /* $Id: Z_ImportDebtors.php 6067 2013-07-10 02:04:22Z tehonu $*/
 /* Import debtors by csv file */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Import Debtors And branches');
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 
 if(isset($_POST['FormID'])) {
@@ -105,7 +105,7 @@ if(isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file pr
 	if( count($headRow) != count($FieldHeadings) ) {
 		prnMsg (_('File contains '. count($headRow). ' columns, expected '. count($FieldHeadings). '. Try downloading a new template.'),'error');
 		fclose($FileHandle);
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -115,7 +115,7 @@ if(isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file pr
 		if( mb_strtoupper($headField) != mb_strtoupper($FieldHeadings[$head]) ) {
 			prnMsg (_('File contains incorrect headers ('. mb_strtoupper($headField). ' != '. mb_strtoupper($header[$head]). '. Try downloading a new template.'),'error');
 			fclose($FileHandle);
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 		}
 		$head++;
@@ -135,7 +135,7 @@ if(isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file pr
 		if($fieldCount != $FieldTarget) {
 			prnMsg (_($FieldTarget. ' fields required, '. $fieldCount. ' fields received'),'error');
 			fclose($FileHandle);
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 		}
 
@@ -661,5 +661,5 @@ if(isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file pr
 }
 
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

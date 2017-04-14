@@ -2,7 +2,7 @@
 
 /* $Id: PDFDeliveryDifferences.php 6943 2014-10-27 07:06:42Z daintree $*/
 
-include ('includes/session.inc');
+include ('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 
 $InputError=0;
@@ -19,7 +19,7 @@ if (isset($_POST['ToDate']) AND !Is_Date($_POST['ToDate'])){
 if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 
 	 $Title = _('Delivery Differences Report');
-	 include ('includes/header.inc');
+	 include ('includes/header.php');
 
 	echo '<div class="centre"><p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '
 		. _('Delivery Differences Report') . '</p></div>';
@@ -87,7 +87,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 	 if ($InputError==1){
 	 	prnMsg($msg,'error');
 	 }
-	 include('includes/footer.inc');
+	 include('includes/footer.php');
 	 exit;
 } else {
 	include('includes/ConnectDB.inc');
@@ -189,21 +189,21 @@ $Result=DB_query($sql,'','',false,false); //dont error check - see below
 
 if (DB_error_no()!=0){
 	$Title = _('Delivery Differences Log Report Error');
-	include('includes/header.inc');
+	include('includes/header.php');
 	prnMsg( _('An error occurred getting the variances between deliveries and orders'),'error');
 	if ($debug==1){
 		prnMsg( _('The SQL used to get the variances between deliveries and orders that failed was') . '<br />' . $SQL,'error');
 	}
-	include ('includes/footer.inc');
+	include ('includes/footer.php');
 	exit;
 } elseif (DB_num_rows($Result) == 0){
 	$Title = _('Delivery Differences Log Report Error');
-  	include('includes/header.inc');
+  	include('includes/header.php');
 	prnMsg( _('There were no variances between deliveries and orders found in the database within the period from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate'] . '. ' . _('Please try again selecting a different date range'), 'info');
 	if ($debug==1) {
 		prnMsg( _('The SQL that returned no rows was') . '<br />' . $sql,'error');
 	}
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -217,7 +217,7 @@ $line_height=12;
 $PageNumber = 1;
 $TotalDiffs = 0;
 
-include ('includes/PDFDeliveryDifferencesPageHeader.inc');
+include ('includes/PDFDeliveryDifferencesPageheader.php');
 
 while ($myrow=DB_fetch_array($Result)){
 
@@ -236,7 +236,7 @@ while ($myrow=DB_fetch_array($Result)){
 	  if ($YPos - (2 *$line_height) < $Bottom_Margin){
 		  /*Then set up a new page */
 			  $PageNumber++;
-		  include ('includes/PDFDeliveryDifferencesPageHeader.inc');
+		  include ('includes/PDFDeliveryDifferencesPageheader.php');
 	  } /*end of new page header  */
 } /* end of while there are delivery differences to print */
 

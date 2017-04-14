@@ -4,7 +4,7 @@
 
 /* This script is superseded by the PDFStockLocTransfer.php which produces a multiple item stock transfer listing - this was for the old individual stock transfers where there is just single items being transferred */
 
-include('includes/session.inc');
+include('includes/session.php');
 
 if (!isset($_GET['TransferNo'])){
 	if (isset($_POST['TransferNo'])){
@@ -18,7 +18,7 @@ if (!isset($_GET['TransferNo'])){
 	if (!isset($_GET['TransferNo'])){ //still not set from a post then
 	//open a form for entering a transfer number
 		$Title = _('Print Stock Transfer');
-		include('includes/header.inc');
+		include('includes/header.php');
 		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print Transfer Note') . '" alt="" />' . ' ' . $Title . '</p><br />';
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" id="form">';
         echo '<div>';
@@ -53,7 +53,7 @@ if (!isset($_GET['TransferNo'])){
 		echo '</div>
 			</form>';
 
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit();
 	}
 }
@@ -64,7 +64,7 @@ $pdf->addInfo('Title', _('Stock Transfer Form') );
 $PageNumber=1;
 $line_height=12;
 
-include('includes/PDFStockTransferHeader.inc');
+include('includes/PDFStockTransferheader.php');
 
 /*Print out the category totals */
 
@@ -89,10 +89,10 @@ $sql="SELECT stockmoves.stockid,
 $result=DB_query($sql);
 if (DB_num_rows($result) == 0){
 	$Title = _('Print Stock Transfer - Error');
-	include ('includes/header.inc');
+	include ('includes/header.php');
 	prnMsg(_('There was no transfer found with number') . ': ' . $_GET['TransferNo'], 'error');
 	echo '<a href="PDFStockTransfer.php">' . _('Try Again')  . '</a>';
-	include ('includes/footer.inc');
+	include ('includes/footer.php');
 	exit;
 }
 //get the first stock movement which will be the quantity taken from the initiating location
@@ -113,7 +113,7 @@ while ($myrow=DB_fetch_array($result)) {
 	$YPos=$YPos-$line_height;
 
 	if ($YPos < $Bottom_Margin + $line_height){
-	   include('includes/PDFStockTransferHeader.inc');
+	   include('includes/PDFStockTransferheader.php');
 	}
 
 	$SQL = "SELECT stockmaster.controlled
@@ -138,13 +138,13 @@ while ($myrow=DB_fetch_array($result)) {
 			$YPos=$YPos-$line_height;
 			
 			if ($YPos < $Bottom_Margin + $line_height){
-				include('includes/PDFStockTransferHeader.inc');
+				include('includes/PDFStockTransferheader.php');
 			} //while SerialStockMoves
 		}
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+40,$YPos-10,300-$Left_Margin,$FontSize, ' ');
 		$YPos=$YPos-$line_height;
 		if ($YPos < $Bottom_Margin + $line_height){
-			include('includes/PDFStockTransferHeader.inc');
+			include('includes/PDFStockTransferheader.php');
 		} //controlled item*/
 	}
 

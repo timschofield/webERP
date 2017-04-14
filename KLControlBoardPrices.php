@@ -2,12 +2,12 @@
 define("VERSIONFILE", "4.00");
 define("NUMBER_OF_TESTS", 73); 
 
-/* Session started in session.inc for password checking and authorisation level check
-config.php is in turn included in session.inc*/
+/* Session started in session.php for password checking and authorisation level check
+config.php is in turn included in session.php*/
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('Kapal-Laut General Control Board for Pricing '. VERSIONFILE);
-include ('includes/header.inc');
+include ('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
@@ -108,6 +108,6 @@ prnMsg("Performed ". NUMBER_OF_TESTS . " control tests",'success');
 
 time_finish($begintime);
 
-include ('includes/footer.inc');
+include ('includes/footer.php');
 
 ?>

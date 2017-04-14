@@ -2,13 +2,13 @@
 
 /* $Id: FixedAssetItems.php 7494 2016-04-25 09:53:53Z daintree $ */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Fixed Assets');
 
 $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetItems';
 
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 
 echo '<a href="' . $RootPath . '/SelectAsset.php">' . _('Back to Select') . '</a><br />' . "\n";
@@ -691,5 +691,5 @@ if (isset($New)) {
 echo '</div>
       </div>
 	</form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

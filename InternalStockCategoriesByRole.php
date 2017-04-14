@@ -3,10 +3,10 @@
 /* $Id: InternalStockCategoriesByRole.php 5217 2012-04-03 21:57:50Z tehonu $ */
 /* Functionas as described in http://www.weberp.org/forum/showthread.php?tid=171 */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Internal Stock Categories Requests By Security Role Maintenance ');
 
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Payment Entry')
 	. '" alt="" />' . ' ' . $Title . '</p>';
@@ -232,5 +232,5 @@ while ($myrow = DB_fetch_array($result)) {
 	} // end if user wish to delete
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

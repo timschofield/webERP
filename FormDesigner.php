@@ -18,11 +18,11 @@
 // RCHACON: Question: The use or not of <label for="KeyId">KeyCaption</label> <input id="KeyId" name="KeyName" type="..." value="KeyValue"> for usability ?
 
 /* BEGIN: Start common code division. */
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Form Designer');
 /* $ViewTopic = 'to_add_topic'; // This is to do.*/
 /* $BookMark = 'FormDesigner'; // This is to do.*/
-include('includes/header.inc');
+include('includes/header.php');
 /* END: Start common code division. */
 
 /* BEGIN: FUNCTIONS DIVISION. */
@@ -204,7 +204,7 @@ if (empty($_POST['FormName'])) {
 	echo '<br /><div class="centre"><input tabindex="6" type="submit" name="submit" value="' . _('Edit Form Layout') . '" /></div>';
     echo '</div>';
 	echo '</form>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 } // End of if (empty($_POST['FormName']))
 /* If we are not previewing the form then load up the simplexml
@@ -372,6 +372,6 @@ echo '</form>';
 /* END: PROCEDURE DIVISION. */
 
 /* BEGIN: Final common code division. */
-include('includes/footer.inc');
+include('includes/footer.php');
 /* END: Final common code division. */
 ?>

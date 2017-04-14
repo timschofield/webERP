@@ -2,7 +2,7 @@
 
 /*$Id: OutstandingGRNs.php 7157 2015-02-17 22:27:35Z agaluski $ */
 
-include('includes/session.inc');
+include('includes/session.php');
 
 if (isset($_POST['FromCriteria'])
 	AND mb_strlen($_POST['FromCriteria'])>=1
@@ -44,7 +44,7 @@ if (isset($_POST['FromCriteria'])
 
 	if (DB_error_no() !=0) {
 	  $Title = _('Outstanding GRN Valuation') . ' - ' . _('Problem Report');
-	  include('includes/header.inc');
+	  include('includes/header.php');
 	  prnMsg(_('The outstanding GRNs valuation details could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 		/*
@@ -52,12 +52,12 @@ if (isset($_POST['FromCriteria'])
 		  echo '<br />' . $SQL;
 	   }
 	   * */
-	   include('includes/footer.inc');
+	   include('includes/footer.php');
 	   exit;
 	}
 	if (DB_num_rows($GRNsResult) == 0) {
 	  $Title = _('Outstanding GRN Valuation') . ' - ' . _('Problem Report');
-	  include('includes/header.inc');
+	  include('includes/header.php');
 	  prnMsg(_('No outstanding GRNs valuation details retrieved'), 'warn');
 	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 		/*
@@ -65,7 +65,7 @@ if (isset($_POST['FromCriteria'])
 		  echo '<br />' . $SQL;
 	   }
 	   * */
-	   include('includes/footer.inc');
+	   include('includes/footer.php');
 	   exit;
 	}
 }
@@ -81,7 +81,7 @@ If (isset($_POST['PrintPDF']) AND DB_num_rows($GRNsResult)>0){
 	$line_height=12;
 	$Left_Margin=30;
 
-	include ('includes/PDFOstdgGRNsPageHeader.inc');
+	include ('includes/PDFOstdgGRNsPageheader.php');
 
 	$Tot_Val=0;
 	$Supplier = '';
@@ -93,7 +93,7 @@ If (isset($_POST['PrintPDF']) AND DB_num_rows($GRNsResult)>0){
 			if ($Supplier!=''){ /*Then it's NOT the first time round */
 				/* need to print the total of previous supplier */
                if ($YPos < $Bottom_Margin + $line_height * 5){
-                  include('includes/PDFOstdgGRNsPageHeader.inc');
+                  include('includes/PDFOstdgGRNsPageheader.php');
                }
 				$YPos -= (2*$line_height);
 				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,_('Total for') . ' ' . $Supplier . ' - ' . $SupplierName);
@@ -135,7 +135,7 @@ If (isset($_POST['PrintPDF']) AND DB_num_rows($GRNsResult)>0){
 		$SuppTot_Val += $LineValue;
 
 		if ($YPos < $Bottom_Margin + $line_height){
-		   include('includes/PDFOstdgGRNsPageHeader.inc');
+		   include('includes/PDFOstdgGRNsPageheader.php');
 		}
 
 	} /*end while loop */
@@ -165,7 +165,7 @@ If (isset($_POST['PrintPDF']) AND DB_num_rows($GRNsResult)>0){
 	$pdf->__destruct();
 } elseif (isset($_POST['ShowOnScreen'])  AND DB_num_rows($GRNsResult)>0) {
 	$Title=_('Outstanding GRNs Report');
-	include('includes/header.inc');
+	include('includes/header.php');
 
 	echo '<p class="page_title_text" align="center"><strong>' . _('Goods Received but not invoiced Yet') . '</strong></p>';
 
@@ -250,12 +250,12 @@ If (isset($_POST['PrintPDF']) AND DB_num_rows($GRNsResult)>0){
 	echo '</table>
 			</div>';
 
-	include('includes/footer.inc');
+	include('includes/footer.php');
 
 } else { /*Neither the print PDF nor show on scrren option was hit */
 
 	$Title=_('Outstanding GRNs Report');
-	include('includes/header.inc');
+	include('includes/header.php');
 
 	echo '<p class="page_title_text" align="center"><strong>' . $Title . '</strong></p>';
 
@@ -283,7 +283,7 @@ If (isset($_POST['PrintPDF']) AND DB_num_rows($GRNsResult)>0){
         </div>
         </form>';
 
-	include('includes/footer.inc');
+	include('includes/footer.php');
 
 } /*end of else not PrintPDF */
 

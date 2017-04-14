@@ -10,14 +10,14 @@ KL RICARD MODIFICATIONS:
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockTransfers.php');
 
-include('includes/session.inc');
+include('includes/session.php');
 
 include('includes/KLEmails.php');
 
 $Title = _('Stock Transfers');
 $BookMark = "LocationTransfers";
 $ViewTopic = "Inventory";
-include('includes/header.inc');
+include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.inc');
 
@@ -67,7 +67,7 @@ if(isset($_POST['CheckCode'])) {
 
 	}
 	echo '</table>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -141,7 +141,7 @@ if($NewTransfer) {
 			echo '.<hr />';
 			echo '<a href="' . $RootPath . '/StockTransfers.php?NewTransfer=Yes">' . _('Enter another Transfer') . '</a>';
 			unset($_SESSION['Transfer']);
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 		}
 	}
@@ -220,7 +220,7 @@ if(isset($_POST['EnterTransfer']) ) {
 		if($_SESSION['ProhibitNegativeStock']==1
 			AND $QtyOnHandPrior<$_SESSION['Transfer']->TransferItem[0]->Quantity) {
 			prnMsg( _('There is insufficient stock to make this transfer and webERP is setup to prevent negative stock'), 'warn');
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 		}
 		// Insert outgoing inventory GL transaction if any of the locations has a GL account code:
@@ -545,7 +545,7 @@ if(isset($_POST['EnterTransfer']) ) {
 		prnMsg(_('An inventory transfer of').' ' . $_SESSION['Transfer']->TransferItem[0]->StockID . ' - ' . $_SESSION['Transfer']->TransferItem[0]->ItemDescription . ' '. _('has been created from').' ' . $_SESSION['Transfer']->StockLocationFrom . ' '. _('to') . ' ' . $_SESSION['Transfer']->StockLocationTo . ' '._('for a quantity of').' ' . $_SESSION['Transfer']->TransferItem[0]->Quantity,'success');
 		echo '<br /><a href="PDFStockTransfer.php?TransferNo='.$TransferNumber.'">' . _('Print Transfer Note') . '</a>';
 		unset($_SESSION['Transfer']);
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -690,5 +690,5 @@ if(isset($_SESSION['Transfer'])) {
 echo '</div>
     </div>
 	</form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

@@ -1,5 +1,5 @@
 <?php
-/* $Id: PDFDIFOTPageHeader.inc 5680 2012-09-25 08:21:52Z daintree $*/
+/* $Id: PDFDIFOTPageheader.php 5680 2012-09-25 08:21:52Z daintree $*/
 if ($PageNumber>1){
 	$pdf->newPage();
 }

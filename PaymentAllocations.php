@@ -6,22 +6,22 @@
 	This page is called from SupplierInquiry.php when the 'view payments' button is selected
 */
 
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('Payment Allocations');
 
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 
 if (!isset($_GET['SuppID'])){
 	prnMsg( _('Supplier ID Number is not Set, can not display result'),'warn');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
 if (!isset($_GET['InvID'])){
 	prnMsg( _('Invoice Number is not Set, can not display result'),'warn');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 $SuppID = $_GET['SuppID'];
@@ -55,7 +55,7 @@ $Result = DB_query($SQL);
 if (DB_num_rows($Result) == 0){
 	prnMsg(_('There may be a problem retrieving the information. No data is returned'),'warn');
 	echo '<br /><a href ="javascript:history.back()">' . _('Go back') . '</a>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -95,5 +95,5 @@ $k=0; //row colour counter
 }
   echo '</table>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

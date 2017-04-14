@@ -2,9 +2,9 @@
 
 /* $Id: SelectWorkOrder.php 7694 2016-12-02 12:57:29Z exsonqu $*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Search Work Orders');
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>
 	<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
@@ -38,7 +38,7 @@ if (isset($SelectedWO) AND $SelectedWO!='') {
 	if (!is_numeric($SelectedWO)){
 		  prnMsg(_('The work order number entered MUST be numeric'),'warn');
 		  unset ($SelectedWO);
-		  include('includes/footer.inc');
+		  include('includes/footer.php');
 		  exit;
 	} else {
 		echo _('Work Order Number') . ' - ' . $SelectedWO;
@@ -408,5 +408,5 @@ if (!isset($StockID)) {
           </form>';
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

@@ -14,20 +14,20 @@ $ToCriteria ='zzzzzzzz'; /*Category To */
 $Location =  'All';  /* Location to report on */
 $DetailedReport = 'Yes';  /* Total by category or complete listing */
 
-$_POST['DetailedReport'] = $DetailedReport; /* so PDFInventoryValnPageHeader.inc works too */
-$_POST['FromCriteria']=$FromCriteria; /* so PDFInventoryValnPageHeader.inc works too */
-$_POST['ToCriteria']=$ToCriteria; /* so PDFInventoryValnPageHeader.inc works too */
-$_POST['Location'] = $Location; /* so PDFInventoryValnPageHeader.inc works too */
+$_POST['DetailedReport'] = $DetailedReport; /* so PDFInventoryValnPageheader.php works too */
+$_POST['FromCriteria']=$FromCriteria; /* so PDFInventoryValnPageheader.php works too */
+$_POST['ToCriteria']=$ToCriteria; /* so PDFInventoryValnPageheader.php works too */
+$_POST['Location'] = $Location; /* so PDFInventoryValnPageheader.php works too */
 
-include('includes/session.inc');
+include('includes/session.php');
 include ('includes/class.pdf.php');
 $Recipients = GetMailList('InventoryValuationRecipients');
 
 if (sizeOf($Recipients) == 0) {
 	$Title = _('Inventory Valuation') . ' - ' . _('Problem Report');
-      	include('includes/header.inc');
+      	include('includes/header.php');
 	prnMsg( _('There are no members of the Inventory Valuation Recipients email group'), 'warn');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 /* A4_Portrait */
@@ -123,18 +123,18 @@ $ListCount = DB_num_rows($InventoryResult);
 
 if (DB_error_no() !=0) {
 	$Title = _('Inventory Valuation') . ' - ' . _('Problem Report');
-	include('includes/header.inc');
+	include('includes/header.php');
 	echo _('The inventory valuation could not be retrieved by the SQL because') . ' - ' . DB_error_msg();
 	echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 	if ($debug==1){
 		echo '<br />' . $SQL;
 	}
 
-include('includes/footer.inc');
+include('includes/footer.php');
 exit;
 }
 
-include ('includes/PDFInventoryValnPageHeader.inc');
+include ('includes/PDFInventoryValnPageheader.php');
 
 $Tot_Val=0;
 $Category = '';
@@ -185,7 +185,7 @@ While ($InventoryValn = DB_fetch_array($InventoryResult,$db)){
 	$CatTot_Val += $InventoryValn['itemtotal'];
 
 	if ($YPos < $Bottom_Margin + $line_height){
-		include('includes/PDFInventoryValnPageHeader.inc');
+		include('includes/PDFInventoryValnPageheader.php');
 	}
 
 } /*end inventory valn while loop */
@@ -219,10 +219,10 @@ If ($_POST['DetailedReport']=='Yes'){
 
 if ($ListCount == 0) {
 	$Title = _('Print Inventory Valuation Error');
-	include('includes/header.inc');
+	include('includes/header.php');
 	echo '<p>' . _('There were no items with any value to print out for the location specified');
 	echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit; // Javier: needs check
 } else {
 	include('includes/htmlMimeMail.php');
@@ -243,18 +243,18 @@ if ($ListCount == 0) {
 	}
 	if($result){
 			$Title = _('Print Inventory Valuation');
-			include('includes/header.inc');
+			include('includes/header.php');
 			prnMsg(_('The Inventory valuation report has been mailed'),'success');
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 
 	}else{
 			$Title = _('Print Inventory Valuation Error');
-			include('includes/header.inc');
+			include('includes/header.php');
 			prnMsg(_('There are errors lead to mails not sent'),'error');
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 
 	}

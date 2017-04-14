@@ -101,4 +101,11 @@ WHERE gltrans.trandate >= "2017-01-01"
 		OR gltrans.narrative LIKE "%BANK TO CASH%"
 		OR gltrans.narrative LIKE "%UANG KECIL%")
 
-	
+SELECT SUM(gltrans.amount)
+FROM gltrans
+WHERE gltrans.trandate >= "2017-01-01"
+	AND gltrans.trandate <= "2017-12-31"
+	AND gltrans.account = '111121105PT'
+	AND (gltrans.narrative LIKE '%CASH TO CASH%'
+		OR gltrans.narrative LIKE '%BANK TO CASH%'
+		OR gltrans.narrative LIKE '%UANG KECIL%')	

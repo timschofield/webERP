@@ -1,8 +1,8 @@
 <?php
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('KL Move To 50% Discount -> Step 02');
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLDefines.php');
@@ -139,5 +139,5 @@ include('includes/KLPrices.php');
 		prnMsg("No items to be moved to 50% discount at the moment", "success");
 	}
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

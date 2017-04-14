@@ -2,7 +2,7 @@
 
 /* $Id: PDFOrderStatus.php 6943 2014-10-27 07:06:42Z daintree $*/
 
-include ('includes/session.inc');
+include ('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 
 $InputError=0;
@@ -21,7 +21,7 @@ if (isset($_POST['ToDate']) AND !Is_Date($_POST['ToDate'])){
 if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 
 	$Title = _('Order Status Report');
-	include ('includes/header.inc');
+	include ('includes/header.php');
 
 	if ($InputError==1){
 		prnMsg($msg,'error');
@@ -83,7 +83,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 		</div>
 	</form>';
 
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 } else {
 	include('includes/ConnectDB.inc');
@@ -261,22 +261,22 @@ $sql .= " ORDER BY salesorders.orderno";
 $Result=DB_query($sql,'','',false,false); //dont trap errors here
 
 if (DB_error_no()!=0){
-	include('includes/header.inc');
+	include('includes/header.php');
 	echo '<br />' . _('An error occurred getting the orders details');
 	if ($debug==1){
 		echo '<br />' . _('The SQL used to get the orders that failed was') . '<br />' . $sql;
 	}
-	include ('includes/footer.inc');
+	include ('includes/footer.php');
 	exit;
 } elseif (DB_num_rows($Result)==0){
 	$Title=_('Order Status Report - No Data');
-  	include('includes/header.inc');
+  	include('includes/header.php');
 	prnMsg(_('There were no orders found in the database within the period from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' '. $_POST['ToDate'] . '. ' . _('Please try again selecting a different date range'),'info');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
-include ('includes/PDFOrderStatusPageHeader.inc');
+include ('includes/PDFOrderStatusPageheader.php');
 
 $OrderNo =0; /*initialise */
 
@@ -307,7 +307,7 @@ while ($myrow=DB_fetch_array($Result)){
 		if ($YPos - (2 *$line_height) < $Bottom_Margin){
 			/*Then set up a new page */
 			$PageNumber++;
-			include ('includes/PDFOrderStatusPageHeader.inc');
+			include ('includes/PDFOrderStatusPageheader.php');
 			$OrderNo=0;
 		} /*end of new page header  */
 		$YPos -= $line_height;
@@ -357,7 +357,7 @@ while ($myrow=DB_fetch_array($Result)){
 	 if ($YPos - (2 *$line_height) < $Bottom_Margin){
 		/*Then set up a new page */
 		$PageNumber++;
-		include ('includes/PDFOrderStatusPageHeader.inc');
+		include ('includes/PDFOrderStatusPageheader.php');
 		$OrderNo=0;
 	 } /*end of new page header  */
 } /* end of while there are delivery differences to print */

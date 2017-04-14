@@ -1,12 +1,12 @@
 <?php
 /* $Id: SelectGLAccount.php 7577 2016-08-02 06:29:19Z exsonqu $*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('Search GL Accounts');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLAccountInquiry';
-include('includes/header.inc');
+include('includes/header.php');
 
 $msg='';
 unset($result);
@@ -182,5 +182,5 @@ if (!isset($AccountID)) {
 
 } //end AccountID already selected
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

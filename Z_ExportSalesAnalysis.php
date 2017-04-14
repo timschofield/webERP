@@ -13,9 +13,9 @@ $AllowAnyone=true;
 $PageSecurity=15;
 $_POST['CompanyNameField']= 'yourdatabase';
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('Create and send sales analysis files');
-include ('includes/header.inc');
+include ('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Export Sales Analysis Files') .'" alt="" /><b>' . $Title. '</b></p>';
 
@@ -43,7 +43,7 @@ $fp = fopen($ItemsFileName,'w');
 if ($fp==FALSE){
 
 	prnMsg(_('Could not open or create the file under') . ' ' . $ItemsFileName,'error');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 fputs($fp, '"Item Code", "Category ID", "Item Description"'  . "\n");
@@ -72,7 +72,7 @@ $fp = fopen($CustomersFileName,'w');
 if ($fp==FALSE){
 
 	prnMsg(_('Could not open or create the file under') . ' ' . $CustomersFileName,'error');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 fputs($fp, '"Customer Code", "Customer Name", "Branch Code", "Branch Name", "Price List", "Sales Area", "Salesman"'  . "\n");
@@ -116,7 +116,7 @@ $fp = fopen($SalesFileName,'w');
 if ($fp==FALSE){
 
 	prnMsg(_('Could not open or create the file under') . ' ' . $SalesFileName,'error');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 fputs($fp,'"Customer Code", "Branch Code", "Item Code", "Date", "Quantity", "Line Value", "Line Cost", "Inv/Credit Number"'  . "\n");
@@ -158,6 +158,6 @@ if (!$upload) {
 // close the FTP stream
 ftp_close($conn_id);
 
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

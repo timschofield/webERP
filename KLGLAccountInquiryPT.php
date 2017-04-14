@@ -2,9 +2,9 @@
 
 /* $Id: GLAccountInquiry.php 5239 2012-04-12 07:43:22Z vvs2012 $*/
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('General Ledger Account Inquiry');
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/GLPostings.inc');
 
 if (isset($_POST['Account'])){
@@ -85,7 +85,7 @@ if (isset($_POST['Show'])){
 
 	if (!isset($SelectedPeriod)){
 		prnMsg(_('A period or range of periods must be selected from the list box'),'info');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 	/*Is the account a balance sheet or a profit and loss account */
@@ -315,5 +315,5 @@ if (isset($ShowIntegrityReport) and $ShowIntegrityReport==True){
 	prnMsg( _('There are differences between the sum of the transactions and the recorded movements in the ChartDetails table') . '. ' . _('A log of the account differences for the periods report shows below'),'warn');
 	echo '<p>'.$IntegrityReport;
 }
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

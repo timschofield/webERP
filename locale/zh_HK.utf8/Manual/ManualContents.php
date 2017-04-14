@@ -21,7 +21,7 @@
 -->';*/
 // $PageSecurity=1;
 $PathPrefix='../../';
-//include($PathPrefix.'includes/session.inc');
+//include($PathPrefix.'includes/session.php');
 
 include('ManualHeader.html');
 ?>
@@ -862,9 +862,9 @@ if (!isset($_POST['Submit'])) {
 ?>
               <UL>
                 <LI>路径结构</LI>
-                <LI>session.inc</LI>
-                <LI>header.inc</LI>
-                <LI>footer.inc</LI>
+                <LI>session.php</LI>
+                <LI>header.php</LI>
+                <LI>footer.php</LI>
                 <LI>config.php</LI>
                 <LI>PDFStarter.php</LI>
                 <LI>数据库抽象层 - ConnectDB.inc</LI>

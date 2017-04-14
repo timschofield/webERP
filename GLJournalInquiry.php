@@ -1,12 +1,12 @@
 <?php
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('General Ledger Journal Inquiry');
 
 $ViewTopic= 'GeneralLedger';
 $BookMark = 'GLJournalInquiry';
 
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
@@ -174,6 +174,6 @@ if (!isset($_POST['Show'])) {
 	echo '<br /><div class="centre"><input type="submit" name="Return" value="' . _('Select Another Date'). '" /></div>';
 	echo '</form>';
 }
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

@@ -1,11 +1,11 @@
 <?php
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Assignment of Cash From Tab To Tab');
-/* webERP manual links before header.inc */
+/* webERP manual links before header.php */
 $ViewTopic= 'PettyCash';
 $BookMark = 'CashAssignment';
-include('includes/header.inc');
+include('includes/header.php');
 
 if (isset($_POST['SelectedTabs'])){
 	$SelectedTabs = mb_strtoupper($_POST['SelectedTabs']);
@@ -408,5 +408,5 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

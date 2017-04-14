@@ -6,13 +6,13 @@ $PricesSecurity = 12;//don't show pricing info unless security token 12 availabl
 $SuppliersSecurity = 9; //don't show supplier purchasing info unless security token 9 available to user
 $CostSecurity = 18; //don't show cost info unless security token 18 available to user
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('Search Inventory Items');
-/* webERP manual links before header.inc */
+/* webERP manual links before header.php */
 $ViewTopic= 'Inventory';
 $BookMark = 'SelectingInventory';
 
-include ('includes/header.inc');
+include ('includes/header.php');
 include ('includes/SQL_CommonFunctions.inc');
 
 if (isset($_GET['StockID'])) {
@@ -45,7 +45,7 @@ $result1 = DB_query($SQL);
 if (DB_num_rows($result1) == 0) {
 	echo '<p class="bad">' . _('Problem Report') . ':<br />' . _('There are no stock categories currently defined please use the link below to set them up') . '</p>';
 	echo '<br /><a href="' . $RootPath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 // end of showing search facilities
@@ -885,5 +885,5 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 }
 /* end display list if there is more than one record */
 
-include ('includes/footer.inc');
+include ('includes/footer.php');
 ?>

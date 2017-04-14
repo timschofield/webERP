@@ -2,7 +2,7 @@
 
 /* $Id: PDFOrdersInvoiced.php 7623 2016-09-14 10:03:08Z exsonqu $*/
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('Orders Invoiced Report');
 
 $InputError=0;
@@ -25,7 +25,7 @@ if (isset($_POST['FromDate']) and isset($_POST['ToDate']) and Date1GreaterThanDa
 }
 
 if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
-	include ('includes/header.inc');
+	include ('includes/header.php');
 	if ($InputError==1){
 		prnMsg($msg,'error');
 	}
@@ -79,7 +79,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 		</div>
 	</form>';
 
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 } else {
 	include('includes/PDFStarter.php');
@@ -249,24 +249,24 @@ $sql .= " GROUP BY salesorders.orderno,
 $Result=DB_query($sql,'','',false,false); //dont trap errors here
 
 if (DB_error_no()!=0){
-	include('includes/header.inc');
+	include('includes/header.php');
 	prnMsg(_('An error occurred getting the orders details'),'',_('Database Error'));
 	if ($debug==1){
 		prnMsg( _('The SQL used to get the orders that failed was') . '<br />' . $sql, '',_('Database Error'));
 	}
-	include ('includes/footer.inc');
+	include ('includes/footer.php');
 	exit;
 } elseif (DB_num_rows($Result)==0){
-  	include('includes/header.inc');
+  	include('includes/header.php');
 	prnMsg(_('There were no orders found in the database within the period from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' '. $_POST['ToDate'] . '. ' . _('Please try again selecting a different date range'), 'warn');
 	if ($debug==1) {
 		prnMsg(_('The SQL that returned no rows was') . '<br />' . $sql,'',_('Database Error'));
 	}
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
-include ('includes/PDFOrdersInvoicedPageHeader.inc');
+include ('includes/PDFOrdersInvoicedPageheader.php');
 
 $OrderNo =0; /*initialise */
 $AccumTotalInv =0;
@@ -306,7 +306,7 @@ while ($myrow=DB_fetch_array($Result)){
 		if ($YPos - (2 *$line_height) < $Bottom_Margin){
 			/*Then set up a new page */
 			$PageNumber++;
-			include ('includes/PDFOrdersInvoicedPageHeader.inc');
+			include ('includes/PDFOrdersInvoicedPageheader.php');
 		} /*end of new page header  */
 	}
 
@@ -354,7 +354,7 @@ while ($myrow=DB_fetch_array($Result)){
 	if ($YPos - (2 *$line_height) < $Bottom_Margin){
 		/*Then set up a new page */
 		$PageNumber++;
-		include ('includes/PDFOrdersInvoicedPageHeader.inc');
+		include ('includes/PDFOrdersInvoicedPageheader.php');
 	} /*end of new page header  */
 
 
@@ -401,7 +401,7 @@ while ($myrow=DB_fetch_array($Result)){
 		 	if ($YPos - (2 *$line_height) < $Bottom_Margin){
 				/*Then set up a new page */
 				$PageNumber++;
-				include ('includes/PDFOrdersInvoicedPageHeader.inc');
+				include ('includes/PDFOrdersInvoicedPageheader.php');
 			} /*end of new page header  */
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+450,$YPos,100,$FontSize,$LeftOvers, 'center');
 		}
@@ -410,7 +410,7 @@ while ($myrow=DB_fetch_array($Result)){
 		 if ($YPos - (2 *$line_height) < $Bottom_Margin){
 			/*Then set up a new page */
 			$PageNumber++;
-			include ('includes/PDFOrdersInvoicedPageHeader.inc');
+			include ('includes/PDFOrdersInvoicedPageheader.php');
 		} /*end of new page header  */
 		$AccumOrderTotal += $ValueInvoiced;
 		$AccumTotalInv += $ValueInvoiced;
@@ -421,7 +421,7 @@ while ($myrow=DB_fetch_array($Result)){
 	 if ($YPos - (2 *$line_height) < $Bottom_Margin){
 		/*Then set up a new page */
 			$PageNumber++;
-		 include ('includes/PDFOrdersInvoicedPageHeader.inc');
+		 include ('includes/PDFOrdersInvoicedPageheader.php');
 	 } /*end of new page header  */
 } /* end of while there are invoiced orders to print */
 

@@ -2,7 +2,7 @@
 /* $Id: PDFCustomerList.php 7682 2016-11-24 14:10:25Z rchacon $*/
 /* Creates a report of the customer and branch information held. This report has options to print only customer branches in a specified sales area and sales person. Additional option allows to list only those customers with activity either under or over a specified amount, since a specified date. */
 
-include('includes/session.inc');
+include('includes/session.php');
 $ViewTopic = 'ARReports';
 $BookMark = 'CustomerListing';
 
@@ -18,10 +18,10 @@ if(isset($_POST['PrintPDF'])) {
 	if($_POST['Activity']!='All') {
 		if(!is_numeric($_POST['ActivityAmount'])) {
 			$Title = _('Customer List') . ' - ' . _('Problem Report') . '....';
-			include('includes/header.inc');
+			include('includes/header.php');
 			echo '<p />';
 			prnMsg( _('The activity amount is not numeric and you elected to print customer relative to a certain amount of activity') . ' - ' . _('this level of activity must be specified in the local currency') .'.', 'error');
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 		}
 	}
@@ -230,27 +230,27 @@ if(isset($_POST['PrintPDF'])) {
 
 	if(DB_error_no() !=0) {
 	  $Title = _('Customer List') . ' - ' . _('Problem Report') . '....';
-	  include('includes/header.inc');
+	  include('includes/header.php');
 	   prnMsg( _('The customer List could not be retrieved by the SQL because') . ' - ' . DB_error_msg() );
 	   echo '<br /><a href="' .$RootPath .'/index.php">' .  _('Back to the menu'). '</a>';
 	   if($debug==1) {
 	      echo '<br />' .  $SQL;
 	   }
-	   include('includes/footer.inc');
+	   include('includes/footer.php');
 	   exit;
 	}
 
 	if(DB_num_rows($CustomersResult) == 0) {
 	  $Title = _('Customer List') . ' - ' . _('Problem Report') . '....';
-	  include('includes/header.inc');
+	  include('includes/header.php');
 	  prnMsg( _('This report has no output because there were no customers retrieved'), 'error' );
 	  echo '<br /><a href="' .$RootPath .'/index.php">' .  _('Back to the menu'). '</a>';
-	  include('includes/footer.inc');
+	  include('includes/footer.php');
 	  exit;
 	}
 
 
-	include('includes/PDFCustomerListPageHeader.inc');
+	include('includes/PDFCustomerListPageheader.php');
 
 	$Area ='';
 	$SalesPerson='';
@@ -295,7 +295,7 @@ if(isset($_POST['PrintPDF'])) {
 				$FontSize=10;
 				$YPos -=$line_height;
 				if($YPos < ($Bottom_Margin + 80)) {
-					include('includes/PDFCustomerListPageHeader.inc');
+					include('includes/PDFCustomerListPageheader.php');
 				}
 				$pdf->setFont('','B');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,_('Customers in') . ' ' . $Customers['areadescription']);
@@ -309,7 +309,7 @@ if(isset($_POST['PrintPDF'])) {
 				$FontSize=10;
 				$YPos -=($line_height);
 				if($YPos < ($Bottom_Margin + 80)) {
-					include('includes/PDFCustomerListPageHeader.inc');
+					include('includes/PDFCustomerListPageheader.php');
 				}
 				$pdf->setFont('','B');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,300-$Left_Margin,$FontSize,$Customers['salesmanname']);
@@ -354,7 +354,7 @@ if(isset($_POST['PrintPDF'])) {
 
 			$YPos -=40;
 			if($YPos < ($Bottom_Margin +30)) {
-				include('includes/PDFCustomerListPageHeader.inc');
+				include('includes/PDFCustomerListPageheader.php');
 			}
 		} /*end if $PrintThisCustomer == true */
 	} /*end while loop */
@@ -366,7 +366,7 @@ if(isset($_POST['PrintPDF'])) {
 } else {
 
 	$Title = _('Customer Details Listing');
-	include('includes/header.inc');
+	include('includes/header.php');
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' .
 		 $Title . '" alt="" />' . ' ' . $Title . '</p>';
 
@@ -423,7 +423,7 @@ if(isset($_POST['PrintPDF'])) {
     echo '</div>
           </form>';
 
-	include('includes/footer.inc');
+	include('includes/footer.php');
 
 } /*end of else not PrintPDF */
 ?>

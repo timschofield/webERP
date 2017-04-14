@@ -1,9 +1,9 @@
 <?php
 define("VERSIONFILE", "1.00");
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('Kapal-Laut SPG Performance Report '. VERSIONFILE);
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
@@ -86,7 +86,7 @@ if ($KL_SystemAdmin
 prnMsg("Performed ". $NumberOfTestExecuted . " SPG Performance Report",'success');
 time_finish($begintime);
 
-include ('includes/footer.inc');
+include ('includes/footer.php');
 
 function SPGPerformanceWeekly($db){
 

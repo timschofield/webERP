@@ -2,7 +2,7 @@
 
 /* $Id: PDFGrn.php 7373 2015-10-30 12:12:52Z exsonqu $*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 if (isset($_GET['GRNNo'])) {
 	$GRNNo=$_GET['GRNNo'];
@@ -81,7 +81,7 @@ if ($NoOfGRNs >0){
 	$SupplierRef = DB_fetch_array($GRNResult);
 	$SupplierRef = $SupplierRef['supplierref'];
 	DB_data_seek($GRNResult,0);
-	include ('includes/PDFGrnHeader.inc'); //head up the page
+	include ('includes/PDFGrnheader.php'); //head up the page
 
 	$FooterPrintedInPage= 0;
 	$YPos=$FormDesign->Data->y;
@@ -122,10 +122,10 @@ if ($NoOfGRNs >0){
 
 		if ($YPos >= $FormDesign->LineAboveFooter->starty){
 			/* We reached the end of the page so finsih off the page and start a newy */
-			//$PageNumber++;	// $PageNumber++ available in PDFGrnHeader.inc
+			//$PageNumber++;	// $PageNumber++ available in PDFGrnheader.php
 			$FooterPrintedInPage= 0;	//Set FooterPrintedInPage value zero print footer in new page
 			$YPos=$FormDesign->Data->y;
-			include ('includes/PDFGrnHeader.inc');
+			include ('includes/PDFGrnheader.php');
 		} //end if need a new page headed up
 
 		$SQL = "SELECT stockmaster.controlled
@@ -151,7 +151,7 @@ if ($NoOfGRNs >0){
 				if ($YPos >= $FormDesign->LineAboveFooter->starty){
 					$FooterPrintedInPage= 0;
 					$YPos=$FormDesign->Data->y;
-					include ('includes/PDFGrnHeader.inc');
+					include ('includes/PDFGrnheader.php');
 				} //end if need a new page headed up
 			} //while SerialStockMoves
 			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column2->x,$Page_Height-$YPos,$FormDesign->Data->Column2->Length,$FormDesign->Data->Column2->FontSize, ' ');
@@ -159,7 +159,7 @@ if ($NoOfGRNs >0){
 			if ($YPos >= $FormDesign->LineAboveFooter->starty){
 				$FooterPrintedInPage= 0;
 				$YPos=$FormDesign->Data->y;
-				include ('includes/PDFGrnHeader.inc');
+				include ('includes/PDFGrnheader.php');
 			} //end if need a new page headed up
 		} //controlled item*/
 
@@ -175,9 +175,9 @@ if ($NoOfGRNs >0){
     $pdf->__destruct();
 } else { //there were not GRNs to print
 	$Title = _('GRN Error');
-	include('includes/header.inc');
+	include('includes/header.php');
 	prnMsg(_('There were no GRNs to print'),'warn');
 	echo '<br /><a href="'.$RootPath.'/index.php">' .  _('Back to the menu') . '</a>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 }
 ?>

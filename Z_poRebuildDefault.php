@@ -11,11 +11,11 @@
 
 //$PageSecurity = 15;
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('Rebuild the System Default Language File');
 $ViewTopic = 'SpecialUtilities';// Filename in ManualContents.php's TOC.
 $BookMark = 'Z_poRebuildDefault';// Anchor's id in the manual's html document.
-include('includes/header.inc');
+include('includes/header.php');
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme . 
 		'/images/maintenance.png" title="' . 
 		_('Rebuild the System Default Language File') . '" />' . ' ' . 
@@ -58,5 +58,5 @@ if (isset($_POST['submit'])) {
 	echo '</div>';
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

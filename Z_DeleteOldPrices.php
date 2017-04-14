@@ -1,9 +1,9 @@
 <?php
 /* $Id: Z_DeleteOldPrices.php 5296 2012-04-29 15:28:19Z vvs2012 $*/
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('UTILITY PAGE To Delete All Old Prices');
-include('includes/header.inc');
+include('includes/header.php');
 
 if (isset($_POST['DeleteOldPrices'])){
 	DB_Txn_Begin();
@@ -44,5 +44,5 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 	</div>
       </form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

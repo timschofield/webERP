@@ -1,9 +1,9 @@
 <?php
 define("VERSIONFILE", "1.00");
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('Kapal-Laut Sales Hourly Report '. VERSIONFILE);
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 
@@ -31,7 +31,7 @@ if ($KL_SystemAdmin
 prnMsg("Performed ". $NumberOfTestExecuted . " Sales Hourly Report",'success');
 time_finish($begintime);
 
-include ('includes/footer.inc');
+include ('includes/footer.php');
 
 function HourlySales($numDays, $RootPath, $db){
 

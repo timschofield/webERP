@@ -18,13 +18,13 @@ $RealName = '';
 $CustomerID = '';
 $BranchCode = '';
 
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('KL SPG Username Maintenance');
 
 $ViewTopic= 'GettingStarted';
 $BookMark = 'UserMaintenance';
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/KLEmails.php');
@@ -528,5 +528,5 @@ echo '</table>
     </div>
 	</form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

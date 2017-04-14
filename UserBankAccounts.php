@@ -2,11 +2,11 @@
 /* $Id: UserBankAccounts.php 7398 2015-11-24 19:59:10Z tehonu $*/
 /* Maintains table bankaccountusers (Authorized users to work with a bank account in webERP) */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Bank Account Users');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'UserBankAccounts';
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/money_add.png" title="',// Icon image.
@@ -235,5 +235,5 @@ if (isset($_POST['process']) or isset($SelectedUser)) {
 	} // end if user wish to delete
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

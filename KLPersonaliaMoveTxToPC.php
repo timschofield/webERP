@@ -1,13 +1,13 @@
 <?php
 
-include('includes/session.inc');
+include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLCompanySelection.php');
 
 $Title = _('Move Monthly Salaries Data to Petty Cash');
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text">
 		<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '
@@ -19,7 +19,7 @@ if (isset($_POST['submit'])) {
 	display($Title, $db);
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
 function submit($Title, $Company, $LastDateOfPeriod, $PaymentDate, $SalaryType, &$db) {
@@ -199,17 +199,17 @@ function submit($Title, $Company, $LastDateOfPeriod, $PaymentDate, $SalaryType, 
 				</form>';
 
 		}else{
-			include('includes/header.inc');
+			include('includes/header.php');
 			prnMsg('No data to Move Monthly Salaries Data to Petty Cash ');
-			include('includes/footer.inc');
+			include('includes/footer.php');
 		}
 	}else{
-		include('includes/header.inc');
+		include('includes/header.php');
 		echo '<p class="page_title_text">
 				<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $PageTitle . '" alt="" />' . ' ' . $PageTitle . 
 			'</p>';
 		prnMsg($InputErrorMessage, "warn");
-		include('includes/footer.inc');
+		include('includes/footer.php');
 	}
 } // End of function submit()
 

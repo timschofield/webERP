@@ -4,7 +4,7 @@
 
 /* $Revision: 1.5 $ */
 
-include('includes/session.inc');
+include('includes/session.php');
 
 if (isset($_POST['JournalNo'])) {
 	$JournalNo=$_POST['JournalNo'];
@@ -17,7 +17,7 @@ if (isset($_POST['JournalNo'])) {
 }
 if (empty($JournalNo) OR empty($Type)) {
 	prnMsg(_('This page should be called with Journal No and Type'),'error');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -59,7 +59,7 @@ if ($JournalNo=='Preview') {
 	$myrow=DB_fetch_array($result);
 	$JournalDate=$myrow['trandate'];
 	DB_data_seek($result, 0);
-	include('includes/PDFGLJournalHeader.inc');
+	include('includes/PDFGLJournalheader.php');
 }
 $counter=1;
 $YPos=$FormDesign->Data->y;
@@ -97,16 +97,16 @@ while ($counter<=$LineCount) {
 		/* We reached the end of the page so finsih off the page and start a newy */
 		$PageNumber++;
 		$YPos=$FormDesign->Data->y;
-		include ('includes/PDFGrnHeader.inc');
+		include ('includes/PDFGrnheader.php');
 	} //end if need a new page headed up
 }
 
 if ($LineCount == 0) {   //UldisN
 	$Title = _('Printing Error');
-	include('includes/header.inc');
+	include('includes/header.php');
 	prnMsg(_('There were no Journals to print'),'warn');
 	echo '<br /><a href="'.$RootPath.'/index.php">' .  _('Back to the menu') . '</a>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 } else {
     $pdf->OutputD($_SESSION['DatabaseName'] . '_Journal_' . date('Y-m-d').'.pdf');//UldisN

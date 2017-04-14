@@ -2,11 +2,11 @@
 
 /* $Id: SalesCategories.php 7494 2016-04-25 09:53:53Z daintree $ */
 
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('Sales Category Maintenance');
 
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
@@ -583,5 +583,5 @@ if($result ) {
 	DB_free_result($result);
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

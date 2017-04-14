@@ -2,9 +2,9 @@
 
 /* $Id: DiscountMatrix.php 6941 2014-10-26 23:18:08Z daintree $*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Discount Matrix Maintenance');
-include('includes/header.inc');
+include('includes/header.php');
 
 if (isset($Errors)) {
 	unset($Errors);
@@ -194,5 +194,5 @@ echo '</table>
       </div>
 	  </form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

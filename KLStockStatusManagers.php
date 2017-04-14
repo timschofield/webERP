@@ -2,13 +2,13 @@
 
 /* $Id: StockStatus.php 6338 2013-09-28 05:10:46Z daintree $*/
 
-include('includes/session.inc');
+include('includes/session.php');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 
 $Title = _('Stock Status in KL Shops For Managers');
 
-include('includes/header.inc');
+include('includes/header.php');
 
 if (isset($_GET['StockID'])){
 	$StockID = trim(mb_strtoupper($_GET['StockID']));
@@ -119,6 +119,6 @@ echo '</tbody><tr>
 	</table>';
 
 echo '</div></form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

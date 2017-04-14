@@ -1,7 +1,7 @@
 <?php
 /* $Id: Tax.php 6944 2014-10-27 07:15:34Z daintree $*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 if(isset($_POST['TaxAuthority']) AND
 	isset($_POST['PrintPDF']) AND
@@ -52,13 +52,13 @@ if(isset($_POST['TaxAuthority']) AND
 
 	if(DB_error_no() !=0) {
 		$Title = _('Taxation Reporting Error');
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg(_('The accounts receivable transaction details could not be retrieved because') . ' ' . DB_error_msg(),'error');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		if($debug==1) {
 			echo '<br />' . $SQL;
 		}
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -66,7 +66,7 @@ if(isset($_POST['TaxAuthority']) AND
 	$SalesNet = 0;
 	$SalesTax = 0;
 	if($_POST['DetailOrSummary']=='Detail') {
-		include('includes/PDFTaxPageHeader.inc');
+		include('includes/PDFTaxPageheader.php');
 		PageHeaderDetail();
 
 		$FontSize = 10;
@@ -87,7 +87,7 @@ if(isset($_POST['TaxAuthority']) AND
 				locale_number_format($DebtorTransRow['tax'],$_SESSION['CompanyRecord']['decimalplaces']), 'right');
 			$YPos -= $FontSize;// End-of-line line-feed.
 			if($YPos < $Bottom_Margin + $FontSize) {
-				include('includes/PDFTaxPageHeader.inc');
+				include('includes/PDFTaxPageheader.php');
 				PageHeaderDetail();
 			}
 			$SalesCount ++;// Counts sales transactions.
@@ -98,7 +98,7 @@ if(isset($_POST['TaxAuthority']) AND
 		// Prints out the sales totals:
 		$FontSize = 10;
 		if($YPos < $Bottom_Margin + $FontSize*4) {
-			include('includes/PDFTaxPageHeader.inc');
+			include('includes/PDFTaxPageheader.php');
 			PageHeaderDetail();
 		}
 		$YPos -= $FontSize;
@@ -166,13 +166,13 @@ if(isset($_POST['TaxAuthority']) AND
 
 	if(DB_error_no() !=0) {
 		$Title = _('Taxation Reporting Error');
-		include('includes/header.inc');
+		include('includes/header.php');
 		echo _('The accounts payable transaction details could not be retrieved because') . ' ' . DB_error_msg();
 		echo '<br /><a href="' . $RootPath . '/index.php?">' . _('Back to the menu') . '</a>';
 		if($debug==1) {
 			echo '<br />' . $SQL;
 		}
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -200,7 +200,7 @@ if(isset($_POST['TaxAuthority']) AND
 				locale_number_format($SuppTransRow['taxamt'],$_SESSION['CompanyRecord']['decimalplaces']),'right');
 			$YPos -= $FontSize;// End-of-line line-feed.
 			if($YPos < $Bottom_Margin + $FontSize) {
-				include('includes/PDFTaxPageHeader.inc');
+				include('includes/PDFTaxPageheader.php');
 				PageHeaderDetail();
 			}
 			$PurchasesCount ++;// Counts purchases transactions.
@@ -211,7 +211,7 @@ if(isset($_POST['TaxAuthority']) AND
 		// Print out the purchases totals:
 		$FontSize = 10;
 		if($YPos < $Bottom_Margin + $FontSize*4) {
-			include('includes/PDFTaxPageHeader.inc');
+			include('includes/PDFTaxPageheader.php');
 			PageHeaderDetail();
 		}
 		$YPos -= $FontSize;
@@ -236,7 +236,7 @@ if(isset($_POST['TaxAuthority']) AND
 
 	/*OK and now the summary */
 
-	include('includes/PDFTaxPageHeader.inc');
+	include('includes/PDFTaxPageheader.php');
 	PageHeaderSummary();
 
 	$FontSize = 10;
@@ -305,10 +305,10 @@ if(isset($_POST['TaxAuthority']) AND
 
 	if($SalesCount+$PurchasesCount == 0) {
 		$Title = _('Taxation Reporting Error');
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg(_('There are no tax entries to list'),'info');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	} else {
 		$pdf->OutputD($_SESSION['DatabaseName'] . '_Tax_Report_' . Date('Y-m-d'));
@@ -319,7 +319,7 @@ if(isset($_POST['TaxAuthority']) AND
 	$Title =_('Tax Reporting');
 	$ViewTopic = 'Tax';// Filename in ManualContents.php's TOC.
 	$BookMark = 'Tax';// Anchor's id in the manual's html document.
-	include('includes/header.inc');
+	include('includes/header.php');
 	echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/money_delete.png" title="' .
 		_('Tax Report') . '" />' . ' ' . _('Tax Reporting') . '</p>';
 
@@ -387,7 +387,7 @@ if(isset($_POST['TaxAuthority']) AND
 		</div>
 		</form>';
 
-	include('includes/footer.inc');
+	include('includes/footer.php');
 } /*end of else not PrintPDF */
 
 function PageHeaderDetail() {

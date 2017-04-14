@@ -8,7 +8,7 @@ KL RICARD MODIFICATIONS:
 *****************************************************************************************/
 
 $AllowCronJobToBeRun = true;
-include('includes/session.inc');
+include('includes/session.php');
 include('includes/htmlMimeMail.php');
 
 $sql="SELECT 	description,

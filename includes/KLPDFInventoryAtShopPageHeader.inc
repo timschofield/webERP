@@ -1,5 +1,5 @@
 <?php
-/* $Id: KLPDFInventoryAtShopPageHeader.inc $*/
+/* $Id: KLPDFInventoryAtShopPageheader.php $*/
 
 /*PDF page header for inventory valuation report */
 if ($PageNumber>1){

@@ -1,8 +1,8 @@
 <?php
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('Kapal-Laut. Set Retail Price');
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
 include('includes/KLPrices.php');
@@ -13,12 +13,12 @@ echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/
 if (!isset($_GET['Item']) or !isset($_GET['NewPrice'])){
 	echo '<br />';
 	prnMsg( _('This page must be given the item code and its new Retail price.'), 'error');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
 UpdateTablePrice($_GET['Item'], $_GET['NewPrice'],$db);
 
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

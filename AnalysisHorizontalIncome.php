@@ -11,7 +11,7 @@ function RelativeChange($selected_period, $previous_period) {
 	}
 }
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('Horizontal Analysis of Statement of Comprehensive Income');// Screen identification.
 $ViewTopic= 'GeneralLedger';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'AnalysisHorizontalIncome';// Anchor's id in the manual's html document.
@@ -23,7 +23,7 @@ if(isset($_POST['FromPeriod']) and ($_POST['FromPeriod'] > $_POST['ToPeriod'])) 
 	$_POST['SelectADifferentPeriod']='Select A Different Period';
 }
 
-include('includes/header.inc');
+include('includes/header.php');
 if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST['SelectADifferentPeriod'])) {
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 		'/images/printer.png" title="', // Icon image.
@@ -129,7 +129,7 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 	if($NumberOfMonths >12) {
 		echo '<br />';
 		prnMsg(_('A period up to 12 months in duration can be specified') . ' - ' . _('the system automatically shows a comparative for the same period from the previous year') . ' - ' . _('it cannot do this if a period of more than 12 months is specified') . '. ' . _('Please select an alternative period range'),'error');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -523,5 +523,5 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 		'</div>';
 }
 echo '</form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

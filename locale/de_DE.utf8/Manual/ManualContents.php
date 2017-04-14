@@ -717,9 +717,9 @@ if (!isset($_POST['Submit'])) {
 ?>
               <ul>
                 <li>Verzeichnisstruktur</li>
-                <li>session.inc</li>
-                <li>header.inc</li>
-                <li>footer.inc</li>
+                <li>session.php</li>
+                <li>header.php</li>
+                <li>footer.php</li>
                 <li>config.php</li>
                 <li>PDFStarter.php</li>
                 <li>Datenbank-Abstraktionsschicht - ConnectDB.inc</li>

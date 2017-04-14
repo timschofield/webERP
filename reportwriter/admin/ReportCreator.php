@@ -20,7 +20,7 @@ $DirectoryLevelsDeep = 2;
 $PathPrefix = '../../';
 $PageSecurity = 2; // set security level for webERP
 // Fetch necessary include files for webERP
-require ($PathPrefix . 'includes/session.inc');
+require ($PathPrefix . 'includes/session.php');
 
 // Initialize some constants
 $ReportLanguage = 'en_US';				// default language file
@@ -685,11 +685,11 @@ switch ($_GET['action']) {
 	break; // End Step 8
 } // end switch
 
-$Title = $FormParams['title']; // fetch the title for the header.inc file
+$Title = $FormParams['title']; // fetch the title for the header.php file
 
-include ($PathPrefix . 'includes/header.inc');
+include ($PathPrefix . 'includes/header.php');
 if ($usrMsg) foreach ($usrMsg as $temp) prnmsg($temp['message'],$temp['level']);
 include ($FormParams['IncludePage']);
-include ($PathPrefix . 'includes/footer.inc');
+include ($PathPrefix . 'includes/footer.php');
 // End main body
 ?>

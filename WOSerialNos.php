@@ -13,7 +13,7 @@
 
 
 
-include('includes/session.inc');
+include('includes/session.php');
 
 
 if (isset($_GET['StockID'])){ //the page was called for the first time - get variables into $_POST array
@@ -31,7 +31,7 @@ if (isset($_GET['StockID'])){ //the page was called for the first time - get var
 }
 if (!isset($WO) OR $WO==''){
 	prnMsg(_('This page must to be called from the work order entry screen'),'error');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 if ($Serialised==1){
@@ -40,7 +40,7 @@ if ($Serialised==1){
 	$Title = _('Work Order Batches in Progress');
 }
 
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="" alt="" />' . ' ' . _('For Work Order Number') . ' ' . $WO . ' ' . _('and output item') . ' ' . $StockID . ' - ' . $Description . '
@@ -354,5 +354,5 @@ echo '<br /><a href="' . $RootPath . '/WorkOrderEntry.php?WO=' . $WO . '">' . _(
 echo '</div>
       </form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

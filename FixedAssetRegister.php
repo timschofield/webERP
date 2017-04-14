@@ -1,6 +1,6 @@
 <?php
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('Fixed Asset Register');
 
 $ViewTopic = 'FixedAssets';
@@ -12,7 +12,7 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 		$PaperSize = 'A4_Landscape';
 		include ('includes/PDFStarter.php');
 	} else if (empty($_POST['csv'])) {
-		include ('includes/header.inc');
+		include ('includes/header.php');
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 	}
 	$DateFrom = FormatDateForSQL($_POST['FromDate']);
@@ -252,7 +252,7 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 	$ViewTopic = 'FixedAssets';
 	$BookMark = 'AssetRegister';
 
-	include ('includes/header.inc');
+	include ('includes/header.php');
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	$result = DB_query('SELECT categoryid,categorydescription FROM fixedassetcategories');
@@ -328,7 +328,7 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
     </div>
 	</form>';
 }
-include ('includes/footer.inc');
+include ('includes/footer.php');
 
 
 function PDFPageHeader (){

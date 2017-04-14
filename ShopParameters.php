@@ -2,11 +2,11 @@
 
 /* $Id: ShopParameters.php 5797 2013-01-26 22:31:34Z daintree $*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('Shop Configuration');
 
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Shop Configuration')
 	. '" alt="" />' . $Title. '</p>';
@@ -611,5 +611,5 @@ echo '</table>
     </div>
 	</form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

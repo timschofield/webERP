@@ -1,29 +1,29 @@
 <?php
 
-include('includes/session.inc');
+include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 $Title = _('Kapal-Laut Receipt Payment Online');
-include('includes/header.inc');
+include('includes/header.php');
 
 //Get Out if we don't have the data needed to work with
 if (!isset($_GET['OrderNo']) OR $_GET['OrderNo']==''){
 	prnMsg( _('We need an order number to process the payment of online order') , 'error');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 if (!isset($_GET['Bank']) OR $_GET['Bank']==''){
 	prnMsg( _('We need a bank code to process the payment of online order') , 'error');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 if (!isset($_GET['CustomerCode']) OR $_GET['CustomerCode']==''){
 	prnMsg( _('We need a customer code to process the payment of online order') , 'error');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 if (!isset($_GET['Amount']) OR $_GET['Amount']==''){
 	prnMsg( _('We need an amount to process the payment of online order') , 'error');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 if ($_GET['CustomerCode'] == "WEB-KL-IDR"){
@@ -32,7 +32,7 @@ if ($_GET['CustomerCode'] == "WEB-KL-IDR"){
 	$Currency = "IDR";
 }else{
 	prnMsg( _('Script ready to process IDR online orders only') , 'error');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -178,6 +178,6 @@ echo '<tr><td>' . _('Amount') . ':</td> <td>' . number_format($_GET['Amount'],0)
 echo '</table>';	//end of table of final show of order
 
 	
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

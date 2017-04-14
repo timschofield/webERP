@@ -3,11 +3,11 @@
 define("VERSIONFILE", "0.00"); // 
 
 include('includes/DefineCartClass.php');
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('STRIPPED POS with PRINTING RECEIPT '. VERSIONFILE);
 
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/GetPrice.inc');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/GetSalesTransGLCodes.inc');
@@ -23,7 +23,7 @@ include('includes/wcpInitScript.php');
 
 if (isset($_POST['CancelOrder'])) {
 	echo '<br /><br /><a href="' .$_SERVER['PHP_SELF'] . '">' . _('Start a new Retail Sale') . '</a>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 } else { /*Not cancelling the order */
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Retail Sales') . '" alt="" />' . ' ';
@@ -95,6 +95,6 @@ if (!isset($_POST['ProcessSale'])){
   		echo '<br /><div class="centre"><input type="submit" name="CancelOrder" value="' . _('Cancel Sale') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel this sale?') . '\');" /></div>';
 }
 echo '</form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

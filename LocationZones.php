@@ -1,9 +1,9 @@
 <?php
 /* $Id: locationzones.php 6998 2014-11-22 02:28:56Z daintree $*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Location Zones Maintenance');
-include('includes/header.inc');
+include('includes/header.php');
 
 if (isset($_POST['SelectedCode'])){
 	$SelectedCode = mb_strtoupper($_POST['SelectedCode']);
@@ -249,5 +249,5 @@ if (! isset($_GET['delete'])) {
 
 } // end if user wish to delete
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

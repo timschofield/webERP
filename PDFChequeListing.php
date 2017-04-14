@@ -3,7 +3,7 @@
 /* $Id: PDFChequeListing.php 7726 2017-01-13 23:02:10Z daintree $*/
 
 include('includes/SQL_CommonFunctions.inc');
-include ('includes/session.inc');
+include ('includes/session.php');
 $ViewTopic= 'GeneralLedger';
 $BookMark = 'ChequePaymentListing';
 
@@ -23,7 +23,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 
 
 	 $Title = _('Payment Listing');
-	 include ('includes/header.inc');
+	 include ('includes/header.php');
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' .
 		 $Title . '" alt="" />' . ' ' . $Title . '</p>';
@@ -72,7 +72,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 			</div>
             </form>';
 
-	 include('includes/footer.inc');
+	 include('includes/footer.php');
 	 exit;
 } else {
 
@@ -104,18 +104,18 @@ $sql= "SELECT amount,
 $Result=DB_query($sql,'','',false,false);
 if (DB_error_no()!=0){
 	$Title = _('Payment Listing');
-	include('includes/header.inc');
+	include('includes/header.php');
 	prnMsg(_('An error occurred getting the payments'),'error');
 	if ($debug==1){
 		prnMsg(_('The SQL used to get the receipt header information that failed was') . ':<br />' . $sql,'error');
 	}
-	include('includes/footer.inc');
+	include('includes/footer.php');
   	exit;
 } elseif (DB_num_rows($Result) == 0){
 	$Title = _('Payment Listing');
-	include('includes/header.inc');
+	include('includes/header.php');
   	prnMsg (_('There were no bank transactions found in the database within the period from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate'] . '. ' ._('Please try again selecting a different date range or account'), 'error');
-	include('includes/footer.inc');
+	include('includes/footer.php');
   	exit;
 }
 
@@ -129,7 +129,7 @@ $line_height=12;
 $PageNumber = 1;
 $TotalCheques = 0;
 
-include ('includes/PDFChequeListingPageHeader.inc');
+include ('includes/PDFChequeListingPageheader.php');
 
 while ($myrow=DB_fetch_array($Result)){
 
@@ -148,12 +148,12 @@ while ($myrow=DB_fetch_array($Result)){
 	$GLTransResult = DB_query($sql,'','',false,false);
 	if (DB_error_no()!=0){
 		$Title = _('Payment Listing');
-		include('includes/header.inc');
+		include('includes/header.php');
    		prnMsg(_('An error occurred getting the GL transactions'),'error');
 		if ($debug==1){
 				prnMsg( _('The SQL used to get the receipt header information that failed was') . ':<br />' . $sql, 'error');
 		}
-		include('includes/footer.inc');
+		include('includes/footer.php');
   		exit;
 	}
 	while ($GLRow=DB_fetch_array($GLTransResult)){
@@ -178,7 +178,7 @@ while ($myrow=DB_fetch_array($Result)){
 		if ($YPos - (2 *$line_height) < $Bottom_Margin){
 		  		/*Then set up a new page */
 			  		$PageNumber++;
-		  		include ('includes/PDFChequeListingPageHeader.inc');
+		  		include ('includes/PDFChequeListingPageheader.php');
 	  		} /*end of new page header  */
 	}
 	DB_free_result($GLTransResult);
@@ -189,7 +189,7 @@ while ($myrow=DB_fetch_array($Result)){
 	if ($YPos - (2 *$line_height) < $Bottom_Margin){
 		  /*Then set up a new page */
 		  $PageNumber++;
-		  include ('includes/PDFChequeListingPageHeader.inc');
+		  include ('includes/PDFChequeListingPageheader.php');
 	  } /*end of new page header  */
 } /* end of while there are customer receipts in the batch to print */
 
@@ -213,7 +213,7 @@ if ($_POST['Email']=='Yes'){
 	$ChkListingRecipients = GetMailList('ChkListingRecipients');
 	if(sizeOf($ChkListingRecipients) == 0){
 		prnMsg(_('There are no member in Check Listing Recipients email group,  no mail will be sent'),'error');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 

@@ -1,5 +1,5 @@
 <?php
-/* $Id: PDFStockCheckPageHeader.inc 7702 2016-12-08 14:24:19Z exsonqu $*/
+/* $Id: PDFStockCheckPageheader.php 7702 2016-12-08 14:24:19Z exsonqu $*/
 /*PDF page header for inventory check report */
 if ($PageNumber>1){
 	$pdf->newPage();

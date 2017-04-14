@@ -2,11 +2,11 @@
 
 define("VERSIONFILE", "1.00"); 
 
-/* Session started in session.inc for password checking and authorisation level check
-config.php is in turn included in session.inc*/
-include ('includes/session.inc');
+/* Session started in session.php for password checking and authorisation level check
+config.php is in turn included in session.php*/
+include ('includes/session.php');
 $Title = _('Kapal-Laut Set Related Items '. VERSIONFILE);
-include ('includes/header.inc');
+include ('includes/header.php');
 include ('includes/KLDefines.php');
 include ('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
@@ -118,5 +118,5 @@ if (DB_num_rows($result) != 0){
 			</div>';
 	prnMsg("Number of related items pairs in website catalog: " . locale_number_format($i));
 }
-include ('includes/footer.inc');
+include ('includes/footer.php');
 ?>

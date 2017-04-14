@@ -1,7 +1,7 @@
 <?php
 /* $Id: GLBudgets.php 6941 2014-10-26 23:18:08Z daintree $*/
 
-include('includes/session.inc');
+include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 
 $Title = _('Create GL Budgets');
@@ -9,7 +9,7 @@ $Title = _('Create GL Budgets');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLBudgets';
 
-include('includes/header.inc');
+include('includes/header.php');
 
 if (isset($_POST['SelectedAccount'])){
 	$SelectedAccount = $_POST['SelectedAccount'];
@@ -281,6 +281,6 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 	} /* end of for loop */
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

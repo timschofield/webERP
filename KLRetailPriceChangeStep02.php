@@ -1,9 +1,9 @@
 <?php
 /* $Id: SalesPeople.php 5785 2012-12-29 04:47:42Z daintree $*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('KL Change of Retail Price -> Step 02');
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLDefines.php');
@@ -136,5 +136,5 @@ include('includes/KLPrices.php');
 		prnMsg("No items in process of price change at the moment", "success");
 	}
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

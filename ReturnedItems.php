@@ -1,10 +1,10 @@
 <?php
 /* $Id: returneditems.php 6998 2014-11-22 02:28:56Z daintree $*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $NumDays = 90;
 $Title = _('Returned Items Maintenance for the last ') . $NumDays . ' days';
-include('includes/header.inc');
+include('includes/header.php');
 
 if (isset($_POST['SelectedReturnedItemsId'])){
 	$SelectedReturnedItemsId = mb_strtoupper($_POST['SelectedReturnedItemsId']);
@@ -312,5 +312,5 @@ if (! isset($_GET['delete'])) {
 
 } // end if user wish to delete
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

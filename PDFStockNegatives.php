@@ -2,7 +2,7 @@
 
 /* $Id: PDFStockNegatives.php 6941 2014-10-26 23:18:08Z daintree $*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 include('includes/PDFStarter.php');
 $pdf->addInfo('Title', _('Inventory Negatives Listing') );
@@ -36,15 +36,15 @@ $sql = "SELECT stockmaster.stockid,
 $result = DB_query($sql, $ErrMsg, $DbgMsg);
 
 If (DB_num_rows($result)==0){
-	include ('includes/header.inc');
+	include ('includes/header.php');
 	prnMsg(_('There are no negative stocks to list'),'error');
-	include ('includes/footer.inc');
+	include ('includes/footer.php');
 	exit;
 }
 
 $NegativesRow = DB_fetch_array($result);
 
-include ('includes/PDFStockNegativesHeader.inc');
+include ('includes/PDFStockNegativesheader.php');
 $line_height=15;
 $FontSize=10;
 
@@ -60,7 +60,7 @@ do {
 
 	if ($YPos < $Bottom_Margin + $line_height) {
 		$PageNumber++;
-		include('includes/PDFStockNegativesHeader.inc');
+		include('includes/PDFStockNegativesheader.php');
 	}
 
 } while ($NegativesRow = DB_fetch_array($result));
@@ -70,8 +70,8 @@ if (DB_num_rows($result)>0){
 	$pdf->__destruct();
 } else {
 	$Title = _('Negative Stock Listing Problem');
-	include('includes/header.inc');
+	include('includes/header.php');
 	prnMsg(_('There are no negative stocks to list'),'info');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 }
 ?>

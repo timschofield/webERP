@@ -1,7 +1,7 @@
 <?php
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('List of Transfers from/to shop');
-include ('includes/header.inc');
+include ('includes/header.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLDefines.php');
 
@@ -176,5 +176,5 @@ while ($myrow = DB_fetch_array($result)) {
 echo '</table>';
 echo '<br />';
 
-include ('includes/footer.inc');
+include ('includes/footer.php');
 ?>

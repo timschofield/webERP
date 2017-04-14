@@ -7,7 +7,7 @@
 
      The individual topics in the manual are in straight html files that are called along with the header and foot from here.
 
-     Each function in webERP can initialise a $ViewTopic and $Bookmark variable, prior to including the header.inc file.
+     Each function in webERP can initialise a $ViewTopic and $Bookmark variable, prior to including the header.php file.
      This will display the specified topic and bookmark if it exists when the user clicks on the Manual link in the webERP main menu.
      In this way the help can be easily broken into sections for online context-sensitive help.
 	 Comments beginning with Help Begin and Help End denote the beginning and end of a section that goes into the online help.
@@ -17,7 +17,7 @@
 ob_start();
 $PathPrefix='../../';
 
-//include($PathPrefix.'includes/session.inc');
+//include($PathPrefix.'includes/session.php');
 include('ManualHeader.html');
 include('ManualOutline.php');
 $_GET['Bookmark'] = isset($_GET['Bookmark'])?$_GET['Bookmark']:'';

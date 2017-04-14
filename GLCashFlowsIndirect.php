@@ -32,11 +32,11 @@ function colDebitCredit($Amount) {
 // END: Functions division -----------------------------------------------------
 
 // BEGIN: Procedure division ---------------------------------------------------
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Statement of Cash Flows, Indirect Method');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLCashFlowsIndirect';
-include('includes/header.inc');
+include('includes/header.php');
 
 // Merges gets into posts:
 if(isset($_GET['PeriodFrom'])) {// Select period from.
@@ -843,5 +843,5 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 		 '</tbody></table>';
 }
 echo	'</form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

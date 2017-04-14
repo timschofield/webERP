@@ -2,7 +2,7 @@
 
 /* $Id: MaintenanceTasks.php 5231 2012-04-07 18:10:09Z daitnree $*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('My Maintenance Jobs');
 
@@ -11,7 +11,7 @@ $Title = _('Fixed Assets Maintenance Schedule');
 $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetMaintenance';
 
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
 
@@ -79,5 +79,5 @@ while ($myrow=DB_fetch_array($Result)) {
 
 echo '</table><br /><br />';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

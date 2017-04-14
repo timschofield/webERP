@@ -1,12 +1,12 @@
 <?php
 /* $Id: Suppliers.php 7088 2015-01-20 08:02:37Z exsonqu $ */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Supplier Maintenance');
-/* webERP manual links before header.inc */
+/* webERP manual links before header.php */
 $ViewTopic= 'AccountsPayable';
 $BookMark = 'NewSupplier';
-include('includes/header.inc');
+include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.inc');
 include('includes/CountriesArray.php');
@@ -1133,5 +1133,5 @@ else {
 		</form>';
 } // end of main ifs
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

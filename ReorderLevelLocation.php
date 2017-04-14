@@ -9,10 +9,10 @@ KL RICARD MODIFICATIONS:
 
 // ReorderLevelLocation.php - Report of reorder level by category
 
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title=_('Reorder Level Location Reporting');
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . _('Inventory Reorder Level Location Report') . '</p>';
 
@@ -228,5 +228,5 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
           </form>';
 
 } /*end of else not submit */
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

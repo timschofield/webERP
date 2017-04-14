@@ -10,11 +10,11 @@ This is cleared against the cost of the contract as originally costed - when the
 include('includes/DefineSuppTransClass.php');
 
 /* Session started here for password checking and authorisation level check */
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('Contract Charges or Credits');
 
-include('includes/header.inc');
+include('includes/header.php');
 
 if (!isset($_SESSION['SuppTrans'])){
 	prnMsg(_('Contract charges or credits are entered against supplier invoices or credit notes respectively. To enter supplier transactions the supplier must first be selected from the supplier selection screen, then the link to enter a supplier invoice or credit note must be clicked on'),'info');
@@ -185,5 +185,5 @@ echo '<div class="centre"><input type="submit" name="AddContractChgToInvoice" va
 
 echo '</div>
       </form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

@@ -1,5 +1,5 @@
 <?php
-/* $Id: api_session.inc 6944 2014-10-27 07:15:34Z daintree $*/
+/* $Id: api_session.php 6944 2014-10-27 07:15:34Z daintree $*/
 
 if (!isset($PathPrefix)) {
 	$PathPrefix='';
@@ -42,7 +42,7 @@ if (isset($_SESSION['HTTPS_Only']) AND $_SESSION['HTTPS_Only']==1){
 }
 
 // Now check that the user as logged in has access to the page being called. The $PageSecurity
-// value must be set in the script before header.inc is included. $SecurityGroups is an array of
+// value must be set in the script before header.php is included. $SecurityGroups is an array of
 // arrays defining access for each group of users. These definitions can be modified by a system admin under setup
 
 

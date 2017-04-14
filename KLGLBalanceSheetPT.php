@@ -5,7 +5,7 @@
 /*Through deviousness and cunning, this system allows shows the balance sheets as at the end of any period selected - so first off need to show the input of criteria screen while the user is selecting the period end of the balance date meanwhile the system is posting any unposted transactions */
 
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('Balance Sheet for PT. Bumi Biru');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/AccountSectionsDef.inc'); // This loads the $Sections variable
@@ -13,7 +13,7 @@ include('includes/AccountSectionsDef.inc'); // This loads the $Sections variable
 if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'])){
 
 	/*Show a form to allow input of criteria for TB to show */
-	include('includes/header.inc');
+	include('includes/header.php');
 	echo '<div class="centre"><p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="'
 		. _('Print') . '" alt="" />' . ' ' . _('Balance Sheet') . '</p></div>';
 	echo '<div class="page_help_text">'
@@ -98,14 +98,14 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 	$AccumProfitResult = DB_query($SQL);
 	if (DB_error_no() !=0) {
 		$Title = _('Balance Sheet') . ' - ' . _('Problem Report') . '....';
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg( _('The accumulated profits brought forward could not be calculated by the SQL because') . ' - ' . DB_error_msg() );
 		echo '<br />
 				<a href="' .$RootPath .'/index.php">'. _('Back to the menu'). '</a>';
 		if ($debug==1){
 			echo '<br />'. $SQL;
 		}
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -137,19 +137,19 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 
 	if (DB_error_no() !=0) {
 		$Title = _('Balance Sheet') . ' - ' . _('Problem Report') . '....';
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg( _('No general ledger accounts were returned by the SQL because') . ' - ' . DB_error_msg() );
 		echo '<br /><a href="' .$RootPath .'/index.php">'. _('Back to the menu'). '</a>';
 		if ($debug==1){
 			echo '<br />'. $SQL;
 		}
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
     $ListCount = DB_num_rows($AccountsResult); // UldisN
 
-	include('includes/PDFBalanceSheetPageHeader.inc');
+	include('includes/PDFBalanceSheetPageheader.php');
 
 	$k=0; //row colour counter
 	$Section='';
@@ -293,7 +293,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 			$YPos -= $line_height;
 		}
 		if ($YPos < ($Bottom_Margin)){
-			include('includes/PDFBalanceSheetPageHeader.inc');
+			include('includes/PDFBalanceSheetPageheader.php');
 		}
 	}//end of loop
 
@@ -335,10 +335,10 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 
 	if ($ListCount == 0) {   //UldisN
 		$Title = _('Print Balance Sheet Error');
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg( _('There were no entries to print out for the selections specified') );
 		echo '<br /><a href="'. $RootPath.'/index.php?' . SID . '">'. _('Back to the menu'). '</a>';
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	} else {
 	    $pdf->OutputD($_SESSION['DatabaseName'] . '_GL_Balance_Sheet_' . date('Y-m-d') . '.pdf');
@@ -346,7 +346,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 	}
 	exit;
 } else {
-	include('includes/header.inc');
+	include('includes/header.php');
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type="hidden" name="BalancePeriodEnd" value="' . $_POST['BalancePeriodEnd'] . '" />';
@@ -744,5 +744,5 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 }
 
 echo '</form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

@@ -2,11 +2,11 @@
 /* $Id: DailyBankTransactions.php 4556 2011-04-26 11:03:36Z daintree $*/
 /* Allows you to view all bank transactions for a selected date range, and the inquiry can be filtered by matched or unmatched transactions, or all transactions can be chosen. */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Daily Bank Transactions');// Screen identification.
 $ViewTopic = 'GeneralLedger';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'DailyBankTransactions';// Anchor's id in the manual's html document.
-include('includes/header.inc');
+include('includes/header.php');
 
 if (!isset($_POST['Show'])) {
 	$SQL = "SELECT 	bankaccountname,
@@ -41,7 +41,7 @@ if (!isset($_POST['Show'])) {
 		echo '</select></td>
 				</tr></table>';
 		prnMsg( _('Bank Accounts have not yet been defined. You must first') . ' <a href="' . $RootPath . '/BankAccounts.php">' . _('define the bank accounts') . '</a> ' . _('and general ledger accounts to be affected'),'warn');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	} else {
 		while ($myrow=DB_fetch_array($AccountsResults)){
@@ -257,5 +257,5 @@ if (!isset($_POST['Show'])) {
 			'</div>
 		</form>';
 }
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

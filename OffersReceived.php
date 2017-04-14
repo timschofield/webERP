@@ -2,9 +2,9 @@
 
 /*$Id: OffersReceived.php 4500 2011-02-27 09:18:42Z daintree $ */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Supplier Offers');
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 
 if (isset($_POST['supplierid'])) {
@@ -243,7 +243,7 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 		$Recipients = GetMailList('OffersReceivedResultRecipients');
 		if (sizeOf($Recipients) == 0) {
 			prnMsg( _('There are no members of the Offers Received Result Recipients email group'), 'warn');
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 		}
 		array_push($Recipients,$Email);
@@ -286,7 +286,7 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 		$Recipients = GetMailList('OffersReceivedResultRecipients');
 		if (sizeOf($Recipients) == 0) {
 			prnMsg( _('There are no members of the Offers Received Result Recipients email group'), 'warn');
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 		}
 		array_push($Recipients,$Email);
@@ -307,6 +307,6 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 	}
 	prnMsg(_('All offers have been processed, and emails sent where appropriate'), 'success');
 }
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

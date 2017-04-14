@@ -2,11 +2,11 @@
 /* $Id: SuppWhereAlloc.php 7449 2016-01-14 10:08:51Z exsonqu $*/
 /* Suppliers Where allocated */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Supplier How Paid Inquiry');
 $ViewTopic = 'APInquiries';
 $BookMark = 'WhereAllocated';
-include('includes/header.inc');
+include('includes/header.php');
 
 if(isset($_GET['TransNo']) AND isset($_GET['TransType'])) {
 	$_POST['TransNo'] = (int)$_GET['TransNo'];
@@ -196,5 +196,5 @@ if(isset($Printer)) {
 				'/images/printer.png" /> ', _('Print'), '</button>', // "Print" button.
 		'</div>';
 }
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

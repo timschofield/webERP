@@ -2,9 +2,9 @@
 
 /* $Id: GLTransInquiry.php 6351 2013-10-12 16:40:02Z rchacon $*/
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('General Ledger Transaction Inquiry KL');
-include('includes/header.inc');
+include('includes/header.php');
 
 $MenuURL = '<div><a href="'. $RootPath . '/index.php?&amp;Application=GL">' . _('General Ledger Menu') . '</a></div>';
 
@@ -199,5 +199,5 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

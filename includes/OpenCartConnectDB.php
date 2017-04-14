@@ -38,7 +38,7 @@ function DB_query_oc($SQL, $ErrorMessage = '', $DebugMessage = '', $Transaction 
 
 	if (DB_error_no($db_oc) != 0 and $TrapErrors == true) {
 		if ($TrapErrors) {
-			require_once($PathPrefix . 'includes/header.inc');
+			require_once($PathPrefix . 'includes/header.php');
 		}
 		prnMsg($ErrorMessage . '<br />' . DB_error_msg($db_oc), 'error', _('Database Error') . ' ' . DB_error_no($db_oc));
 		if ($Debug == 1) {
@@ -54,7 +54,7 @@ function DB_query_oc($SQL, $ErrorMessage = '', $DebugMessage = '', $Transaction 
 			}
 		}
 		if ($TrapErrors) {
-			include($PathPrefix . 'includes/footer.inc');
+			include($PathPrefix . 'includes/footer.php');
 			exit;
 		}
 	}

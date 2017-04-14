@@ -5,12 +5,12 @@ KL RICARD MODIFICATIONS:
 - management of the extra KL fileds in stockmaster
 ***************************************************************************************/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Item Maintenance');
-/* webERP manual links before header.inc */
+/* webERP manual links before header.php */
 $ViewTopic= 'Inventory';
 $BookMark = 'InventoryAddingItems';
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 
 /*If this form is called with the StockID then it is assumed that the stock item is to be modified */
@@ -1576,5 +1576,5 @@ if ($New==1) {
 echo '</div>
     </div>
 	</form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

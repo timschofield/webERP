@@ -1,8 +1,8 @@
 <?php
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('Kapal-Laut. Sends an email to team to prepare an OUTLET packaging transfer');
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLEmails.php');
 
@@ -10,7 +10,7 @@ include('includes/KLEmails.php');
 if (!isset($_GET['Shop'])){
 	echo '<br />';
 	prnMsg( _('This page must be given the shop code.'), 'error');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -31,6 +31,6 @@ prnMsg("Updated date of email for packaging transfer to shop to today");
 
 DB_Txn_Commit();
 
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

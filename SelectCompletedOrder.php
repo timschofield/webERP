@@ -2,11 +2,11 @@
 
 /* $Id: SelectCompletedOrder.php 7637 2016-09-25 10:38:47Z exsonqu $*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('Search All Sales Orders');
 
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />
      ' . ' ' . _('Search Sales Orders') . '</p>';
@@ -619,6 +619,6 @@ If (isset($SalesOrdersResult)) {
 
 echo '</div>
       </form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

@@ -13,9 +13,9 @@ $Version_adds= 1.1;
 
 /** Error reporting */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title=_('Label Templates Maintainance');
-include('includes/header.inc');
+include('includes/header.php');
 
 $debug=false;
 include('includes/DefineLabelClass.php');
@@ -115,7 +115,7 @@ if ($showList) {
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p>';
 	showLabelsList($allLabels->label);
 }
-include('includes/footer.inc');
+include('includes/footer.php');
 exit();
 
 /*! \brief getData - Gets the input data from the user's submit

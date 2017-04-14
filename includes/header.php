@@ -1,5 +1,5 @@
 <?php
-/* $Id: header.inc 7324 2015-06-20 14:49:56Z rchacon $ */
+/* $Id: header.php 7324 2015-06-20 14:49:56Z rchacon $ */
 
 	// Titles and screen header
 	// Needs the file config.php loaded where the variables are defined for

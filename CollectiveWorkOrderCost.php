@@ -1,8 +1,8 @@
 <?php
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Search Work Orders');
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>
 	<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
@@ -74,12 +74,12 @@ if (isset($_POST['Submit'])) {//users have selected the WO to calculate and subm
 					</tr></table>';	
 			} else {
 				prnMsg(_('There are no data available'),'error');
-				include('includes/footer.inc');
+				include('includes/footer.php');
 				exit;
 			}
 		}//end of the work orders are not empty
 		echo '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Select Other Work Orders') . '</a>';
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 
 }
@@ -111,7 +111,7 @@ if (isset($SelectedWO) AND $SelectedWO!='') {
 	if (!is_numeric($SelectedWO)){
 		  prnMsg(_('The work order number entered MUST be numeric'),'warn');
 		  unset ($SelectedWO);
-		  include('includes/footer.inc');
+		  include('includes/footer.php');
 		  exit;
 	} else {
 		echo _('Work Order Number') . ' - ' . $SelectedWO;
@@ -515,5 +515,5 @@ if (!isset($StockID)) {
           </form>';
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

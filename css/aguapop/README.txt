@@ -4,9 +4,9 @@ Have fun!
 Fred Schuettler
 
 
-The 'footer.inc.NEW' file must be used with this theme to make the 'aguapop' theme look right.
-Just copy it to: ~/webERP/includes/ and then rename the existing footer.inc as a backup before renaming
-this 'footer.inc.NEW' to 'footer.inc'. 
+The 'footer.php.NEW' file must be used with this theme to make the 'aguapop' theme look right.
+Just copy it to: ~/webERP/includes/ and then rename the existing footer.php as a backup before renaming
+this 'footer.php.NEW' to 'footer.php'. 
 
 It will not adversely affect any of the existing themes, but it most definately will be required. 
  

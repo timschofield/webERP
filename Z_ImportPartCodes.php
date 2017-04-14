@@ -2,9 +2,9 @@
 /* $Id: Z_ImportPartCodes.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Import Stock Items');
-include('includes/header.inc');
+include('includes/header.php');
 include('xmlrpc/lib/xmlrpc.inc');
 include('api/api_errorcodes.php');
 
@@ -88,6 +88,6 @@ if (isset($_POST['update'])) {
 	}
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

@@ -1,12 +1,12 @@
 <?php
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('Petty Cash Expense Management Report');
 $ViewTopic = 'PettyCash';
 $BookMark = 'PcReportExpense';
 
 include ('includes/SQL_CommonFunctions.inc');
-include  ('includes/header.inc');
+include  ('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('PC Expense Report')
 . '" alt="" />' . ' ' . $Title . '</p>';
@@ -173,6 +173,6 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
     echo '</div>
           </form>';
 }
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

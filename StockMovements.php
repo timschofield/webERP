@@ -2,12 +2,12 @@
 
 /* $Id: StockMovements.php 7329 2015-07-28 01:00:01Z tehonu $*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Stock Movements');
-/* webERP manual links before header.inc */
+/* webERP manual links before header.php */
 $ViewTopic= "Inventory";
 $BookMark = "InventoryMovement";
-include('includes/header.inc');
+include('includes/header.php');
 
 if (isset($_GET['StockID'])){
 	$StockID = trim(mb_strtoupper($_GET['StockID']));
@@ -225,6 +225,6 @@ echo '</div>
       </div>
       </form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

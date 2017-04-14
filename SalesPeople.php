@@ -6,7 +6,7 @@ KL RICARD MODIFICATIONS:
 - Simplified fields not used in KL (or anyway in webERP)
 *****************************************************************************************/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('SPG Maintenance');
 $ViewTopic = 'SalesPeople';
 $BookMark = 'SalesPeople';
@@ -16,7 +16,7 @@ if(isset($_GET['SelectedSalesPerson'])) {
 if(isset($_GET['delete'])) {
 	$BookMark = 'SalespeopleDelete';
 }// For Delete's ERROR Message Report.
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/KLEmails.php');
 
 if (isset($_GET['SelectedSalesPerson'])){
@@ -369,5 +369,5 @@ if (! isset($_GET['delete'])) {
 
 } //end if record deleted no point displaying form to add record
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

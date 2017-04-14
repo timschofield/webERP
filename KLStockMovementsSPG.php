@@ -1,11 +1,11 @@
 <?php
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Stock Movements for SPG');
-/* webERP manual links before header.inc */
+/* webERP manual links before header.php */
 $ViewTopic= "Inventory";
 $BookMark = "InventoryMovement";
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLDefines.php');
 
@@ -166,6 +166,6 @@ if ($StockID != ''){
 			</div>
 			</form>';
 }
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

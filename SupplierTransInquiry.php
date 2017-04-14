@@ -2,9 +2,9 @@
 
 /* $Id: SupplierTransInquiry.php 7423 2015-12-24 10:12:57Z exsonqu $*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Supplier Transactions Inquiry');
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Search') .
@@ -213,5 +213,5 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 
  echo '</table>';
 }
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

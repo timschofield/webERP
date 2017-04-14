@@ -8,11 +8,11 @@ KL RICARD MODIFICATIONS:
 
 /* Inventory Transfer - Bulk Dispatch */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Inventory Location Transfer Shipment');
 $BookMark = "LocationTransfers";
 $ViewTopic = "Inventory";
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 
 include('includes/KLEmails.php');
@@ -47,7 +47,7 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 			if (count($myrow) != 2){
 				prnMsg (_('File contains') . ' '. count($myrow) . ' ' . _('columns, but only 2 columns are expected. The comma separated file should have just two columns the first for the item code and the second for the quantity to transfer'),'error');
 				fclose($FileHandle);
-				include('includes/footer.inc');
+				include('includes/footer.php');
 				exit;
 			}
 
@@ -233,7 +233,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 
 	prnMsg( _('The inventory transfer records have been created successfully'),'success');
 	echo '<p><a href="'.$RootPath.'/PDFStockLocTransfer.php?TransferNo=' . $_POST['Trf_ID'] . '">' .  _('Print the Transfer Docket'). '</a></p>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 
 } else {
 	//Get next Inventory Transfer Shipment Reference Number
@@ -369,6 +369,6 @@ if(isset($_POST['Submit']) AND $InputError==False){
 		</div>
 		</div>
 		</form>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 }
 ?>

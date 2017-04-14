@@ -4,11 +4,11 @@
 
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Specify Dispatched Controlled Items');
 
-/* Session started in header.inc for password checking and authorisation level check */
-include('includes/header.inc');
+/* Session started in header.php for password checking and authorisation level check */
+include('includes/header.php');
 
 
 if (empty($_GET['identifier'])) {
@@ -29,7 +29,7 @@ if (isset($_GET['LineNo'])){
 			<br />';
 	prnMsg( _('This page can only be opened if a line item on a sales order to be invoiced has been selected') . '. ' . _('Please do that first'),'error');
 	echo '</div>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -40,7 +40,7 @@ if (!isset($_SESSION['Items'.$identifier]) OR !isset($_SESSION['ProcessingOrder'
 			<br />';
 	prnMsg( _('This page can only be opened if a sales order and line item has been selected Please do that first'),'error');
 	echo '</div>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -54,7 +54,7 @@ if ( $LineItem->Controlled != 1 ){
 	echo '<div class="centre"><a href="' . $RootPath . '/ConfirmDispatch_Invoice.php">' .  _('Back to the Sales Order'). '</a></div>';
 	echo '<br />';
 	prnMsg( _('The line item must be defined as controlled to require input of the batch numbers or serial numbers being sold'),'error');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -81,6 +81,6 @@ include ('includes/InputSerialItems.php');
 of the item selected for dispatch */
 $_SESSION['Items'.$identifier]->LineItems[$LineNo]->QtyDispatched = $TotalQuantity;
 
-include('includes/footer.inc');
+include('includes/footer.php');
 exit;
 ?>

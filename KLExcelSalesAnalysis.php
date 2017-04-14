@@ -1,7 +1,7 @@
 <?php
 require_once ('Classes/PHPExcel.php');
 
-include('includes/session.inc');
+include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
@@ -294,9 +294,9 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 
 		}else{
 			$Title = _('Excel file for Sales Analysis');
-			include('includes/header.inc');
+			include('includes/header.php');
 			prnMsg('No items selected to analyse');
-			include('includes/footer.inc');
+			include('includes/footer.php');
 		}
 	}
 } // End of function submit()
@@ -308,7 +308,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 // the page is called.
 	$Title = _('Excel file for Sales Analysis');
 
-	include('includes/header.inc');
+	include('includes/header.php');
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
           <div>
@@ -367,7 +367,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 		<br />';
 	echo '</div>
          </form>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 
 } // End of function display()
 

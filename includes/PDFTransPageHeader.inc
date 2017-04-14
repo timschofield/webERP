@@ -1,5 +1,5 @@
 <?php
-/* $Id: PDFTransPageHeader.inc 6826 2014-08-17 21:53:13Z rchacon $ */
+/* $Id: PDFTransPageheader.php 6826 2014-08-17 21:53:13Z rchacon $ */
 
 /*	Please note that addTextWrap() prints a font-size-height further down than
 	addText() and other functions. Use addText() instead of addTextWrap() to

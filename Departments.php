@@ -1,11 +1,11 @@
 <?php
 /* $Id: Departments.php 4567 2011-05-15 04:34:49Z daintree $*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('Departments');
 
-include('includes/header.inc');
+include('includes/header.php');
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' .
 		_('Departments') . '" alt="" />' . ' ' . $Title . '</p>';
 
@@ -262,5 +262,5 @@ if (! isset($_GET['delete'])) {
 
 } //end if record deleted no point displaying form to add record
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

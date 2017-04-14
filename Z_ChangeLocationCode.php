@@ -2,11 +2,11 @@
 /* $Id: Z_ChangeLocationCode.php 5296 2012-04-29 15:28:19Z vvs2012 $*/
 /* Utility to change a location code. */
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('UTILITY PAGE Change A Location Code');// Screen identificator.
 $ViewTopic = 'SpecialUtilities';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'Z_ChangeLocationCode';// Anchor's id in the manual's html document.
-include('includes/header.inc');
+include('includes/header.php');
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/maintenance.png" title="',// Icon image.
 	_('Change A Location Code'), '" /> ',// Icon title.
@@ -278,5 +278,5 @@ echo '<br />
 	</div>
 	</form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

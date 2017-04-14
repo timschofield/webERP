@@ -9,11 +9,11 @@ KL RICARD MODIFICATIONS:
 - change the stock code also in KL tables using this field in webERP and OpenCart
 ***************************************************************************************/
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('UTILITY PAGE Change A Stock Code');// Screen identificator.
 $ViewTopic = 'SpecialUtilities'; // Filename in ManualContents.php's TOC.
 $BookMark = 'Z_ChangeStockCode'; // Anchor's id in the manual's html document.
-include('includes/header.inc');
+include('includes/header.php');
 echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 	'/images/inventory.png" title="' . 
 	_('Change An Inventory Item Code') . '" /> ' .// Icon title.
@@ -270,7 +270,7 @@ echo '<br />
 	</div>
 	</form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 
 function ChangeFieldInOpenCartTable($TableName, $FieldName, $OldValue, $NewValue, $db_oc){
 	/* Used in Z_ scripts to change one field across the table.

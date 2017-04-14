@@ -2,9 +2,9 @@
 
 /* $Id: SalesByTypePeriodInquiry.php 4261 2010-12-22 15:56:50Z tim_schofield $*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Sales Report');
-include('includes/header.inc');
+include('includes/header.php');
 
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Sales Report') . '" alt="" />' . ' ' . _('Sales Report') . '</p>';
@@ -585,5 +585,5 @@ if (isset($_POST['ShowSales'])){
 	echo '</table>';
 
 } //end of if user hit show sales
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

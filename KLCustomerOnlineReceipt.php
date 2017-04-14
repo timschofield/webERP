@@ -1,7 +1,7 @@
 <?php
 
 include('includes/DefineReceiptClass.php');
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('Online Customer Receipt Entry');
 
@@ -14,7 +14,7 @@ if ($_GET['Type']=='GL') {
 	$BookMark = 'CustomerReceipts';
 }
 
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 
 $msg='';
@@ -72,7 +72,7 @@ if (!isset($_GET['Delete']) AND isset($_SESSION['ReceiptBatch'])){
 		unset($result);
 	} elseif (DB_num_rows($result)==0 AND !$BankAccountEmpty){
 		prnMsg( _('The bank account number') . ' ' . $_POST['BankAccount'] . ' ' . _('is not set up as a bank account'),'error');
-		include ('includes/footer.inc');
+		include ('includes/footer.php');
 		exit;
 	}
 
@@ -239,7 +239,7 @@ if (isset($_POST['CommitBatch'])){
 
 	if ($_SESSION['CompanyRecord']==0){
 		prnMsg(_('The company has not yet been set up properly') . ' - ' . _('this information is needed to process the batch') . '. ' . _('Processing has been cancelled'),'error');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -585,7 +585,7 @@ if (isset($_POST['CommitBatch'])){
 		</p>';
 
 	unset($_SESSION['ReceiptBatch']);
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 
 } /* End of commit batch */
@@ -811,7 +811,7 @@ if (DB_num_rows($AccountsResults)==0){
 		</table>
 		<p />';
 	prnMsg(_('Bank Accounts have not yet been defined') . '. ' . _('You must first') . ' ' . '<a href="' . $RootPath . '/BankAccounts.php">' . _('define the bank accounts') . '</a>' . _('and general ledger accounts to be affected'),'info');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	 exit;
 } else {
 	echo '<option value=""></option>';
@@ -1248,5 +1248,5 @@ if (isset($_SESSION['ReceiptBatch']->Items) AND count($_SESSION['ReceiptBatch']-
 }
 echo '</div>';
 echo '</form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

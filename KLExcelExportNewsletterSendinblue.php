@@ -1,7 +1,7 @@
 <?php
 require_once ('Classes/PHPExcel.php');
 
-include('includes/session.inc');
+include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
@@ -107,9 +107,9 @@ function submit(&$db_oc, $oc_tableprefix, $MarkExported) {
 
 		}else{
 			$Title = _('Excel file for Sendinblue: Export Newsletter Subscribers');
-			include('includes/header.inc');
+			include('includes/header.php');
 			prnMsg('No Newsletter Subscribers Data to export to Sendinblue');
-			include('includes/footer.inc');
+			include('includes/footer.php');
 		}
 	}
 } // End of function submit()
@@ -121,7 +121,7 @@ function display(&$db_oc)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY
 // the page is called.
 	$Title = _('Excel file for Sendinblue: Export Newsletter from OpenCart');
 
-	include('includes/header.inc');
+	include('includes/header.php');
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
           <div>
@@ -154,7 +154,7 @@ function display(&$db_oc)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY
 		<br />';
 	echo '</div>
          </form>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 
 } // End of function display()
 

@@ -72,7 +72,7 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 
 	if(DB_error_no() != 0 AND $TrapErrors==true) {
 		if($TrapErrors) {
-			require_once($PathPrefix . 'includes/header.inc');
+			require_once($PathPrefix . 'includes/header.php');
 		}
 		prnMsg($ErrorMessage . '<br />' . DB_error_msg(),'error', _('Database Error'). ' ' .DB_error_no());
 		if($debug==1) {
@@ -88,7 +88,7 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 			}
 		}
 		if($TrapErrors) {
-			include($PathPrefix . 'includes/footer.inc');
+			include($PathPrefix . 'includes/footer.php');
 			exit;
 		}
 	} elseif(isset($_SESSION['MonthsAuditTrail']) and (DB_error_no()==0 AND $_SESSION['MonthsAuditTrail']>0) AND (DB_affected_rows($result)>0)) {

@@ -1,5 +1,5 @@
 <?php
-/*	$Id: PDFQuotationPortraitPageHeader.inc 6822 2014-08-15 20:24:57Z rchacon $*/
+/*	$Id: PDFQuotationPortraitPageheader.php 6822 2014-08-15 20:24:57Z rchacon $*/
 
 /*	Please note that addTextWrap prints a font-size-height further down than
 	addText and other functions.*/

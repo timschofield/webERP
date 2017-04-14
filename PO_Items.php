@@ -5,10 +5,10 @@
 include('includes/DefinePOClass.php');
 include('includes/SQL_CommonFunctions.inc');
 
-/* Session started in header.inc for password checking
+/* Session started in header.php for password checking
  * and authorisation level check
  */
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('Purchase Order Items');
 
@@ -23,10 +23,10 @@ if (!isset($_SESSION['PO'.$identifier])){
 	exit;
 }
 
-/* webERP manual links before header.inc */
+/* webERP manual links before header.php */
 $ViewTopic= 'PurchaseOrdering';
 $BookMark = 'PurchaseOrdering';
-include('includes/header.inc');
+include('includes/header.php');
 
 if (!isset($_POST['Commit'])) {
 	echo '<a href="'.$RootPath.'/PO_Header.php?identifier=' . $identifier. '">' ._('Back To Purchase Order Header') . '</a><br />';
@@ -397,7 +397,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		}
 
 		unset($_SESSION['PO'.$identifier]); /*Clear the PO data to allow a newy to be input*/
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	} /*end if there were no input errors trapped */
 } /* end of the code to do transfer the PO object to the database  - user hit the place PO*/
@@ -457,7 +457,7 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 			if ($debug==1){
 				prnMsg (_('The SQL used to validate the code entered was') . ' ' . $sql,'error');
 			}
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 		}
 		if (DB_num_rows($GLValidResult) == 0) { /*The GLCode entered does not exist */
@@ -685,7 +685,7 @@ if (isset($_POST['NewItem'])
 					if ($debug==1){
 						echo '<br />' . $sql;
 					}
-					include('includes/footer.inc');
+					include('includes/footer.php');
 					exit;
 				}
 			} /* end of if not already on the order */
@@ -1267,5 +1267,5 @@ if (isset($SearchResult)) {
 
 echo '</div>
       </form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

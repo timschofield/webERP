@@ -98,7 +98,7 @@ for ($i=0;$i<count($Recipients); $i++) {
 }
 
 $AllowCronJobToBeRun = true;
-include('includes/session.inc');
+include('includes/session.php');
 
 include ('includes/ConstructSQLForUserDefinedSalesReport.inc');
 include ('includes/PDFSalesAnalysis.inc');

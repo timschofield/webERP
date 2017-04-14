@@ -2,7 +2,7 @@
 
 /* $Id: GLTagProfit_Loss.php 7385 2015-11-11 08:03:20Z tehonu $*/
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('Income and Expenditure by Tag');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/AccountSectionsDef.inc'); // This loads the $Sections variable
@@ -17,7 +17,7 @@ if (isset($_POST['FromPeriod']) AND ($_POST['FromPeriod'] > $_POST['ToPeriod']))
 
 if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST['SelectADifferentPeriod'])){
 
-	include('includes/header.inc');
+	include('includes/header.php');
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -151,9 +151,9 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 	$NumberOfMonths = $_POST['ToPeriod'] - $_POST['FromPeriod'] + 1;
 
 	if ($NumberOfMonths > 12){
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg(_('A period up to 12 months in duration can be specified') . ' - ' . _('the system automatically shows a comparative for the same period from the previous year') . ' - ' . _('it cannot do this if a period of more than 12 months is specified') . '. ' . _('Please select an alternative period range'),'error');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -193,28 +193,28 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 
 	if (DB_error_no() != 0) {
 		$Title = _('Income and Expenditure') . ' - ' . _('Problem Report') . '....';
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg( _('No general ledger accounts were returned by the SQL because') . ' - ' . DB_error_msg() );
 		echo '<br />
 				<a href="' .$RootPath .'/index.php">' .  _('Back to the menu'). '</a>';
 		if ($debug == 1){
 			echo '<br />' .  $SQL;
 		}
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 	if (DB_num_rows($AccountsResult)==0){
 		$Title = _('Print Income and Expenditure Error');
-		include('includes/header.inc');
+		include('includes/header.php');
 		echo '<br />';
 		prnMsg( _('There were no entries to print out for the selections specified'),'info');
 		echo '<br />
 				<a href="'. $RootPath.'/index.php">' .  _('Back to the menu'). '</a>';
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
-	include('includes/PDFTagProfitAndLossPageHeader.inc');
+	include('includes/PDFTagProfitAndLossPageheader.php');
 
 	$Section = '';
 	$SectionPrdActual = 0;
@@ -229,7 +229,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 
 		// Print heading if at end of page
 		if ($YPos < ($Bottom_Margin)){
-			include('includes/PDFTagProfitAndLossPageHeader.inc');
+			include('includes/PDFTagProfitAndLossPageheader.php');
 		}
 
 		if ($myrow['groupname'] != $ActGrp){
@@ -257,7 +257,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 						$Level--;
 // Print heading if at end of page
 						if ($YPos < ($Bottom_Margin + (2*$line_height))){
-							include('includes/PDFTagProfitAndLossPageHeader.inc');
+							include('includes/PDFTagProfitAndLossPageheader.php');
 						}
 					} //end of loop
 					//still need to print out the group total for the same level
@@ -282,7 +282,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 
 		// Print heading if at end of page
 		if ($YPos < ($Bottom_Margin +(2 * $line_height))){
-			include('includes/PDFTagProfitAndLossPageHeader.inc');
+			include('includes/PDFTagProfitAndLossPageheader.php');
 		}
 
 		if ($myrow['sectioninaccounts'] != $Section){
@@ -400,7 +400,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 				$Level--;
 				// Print heading if at end of page
 				if ($YPos < ($Bottom_Margin + (2*$line_height))){
-					include('includes/PDFTagProfitAndLossPageHeader.inc');
+					include('includes/PDFTagProfitAndLossPageheader.php');
 				}
 			}
 			//still need to print out the group total for the same level
@@ -423,7 +423,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 	}
 	// Print heading if at end of page
 	if ($YPos < ($Bottom_Margin + (2*$line_height))){
-		include('includes/PDFTagProfitAndLossPageHeader.inc');
+		include('includes/PDFTagProfitAndLossPageheader.php');
 	}
 	if ($Section != ''){
 
@@ -466,7 +466,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 
 } else {
 
-	include('includes/header.inc');
+	include('includes/header.php');
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
@@ -478,7 +478,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 	if ($NumberOfMonths >12){
 		echo '<br />';
 		prnMsg(_('A period up to 12 months in duration can be specified') . ' - ' . _('the system automatically shows a comparative for the same period from the previous year') . ' - ' . _('it cannot do this if a period of more than 12 months is specified') . '. ' . _('Please select an alternative period range'),'error');
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -941,6 +941,6 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 }
 echo '</div>';
 echo '</form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

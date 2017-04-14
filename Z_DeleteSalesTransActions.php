@@ -2,9 +2,9 @@
 /* $Id: Z_DeleteSalesTransActions.php 6941 2014-10-26 23:18:08Z daintree $*/
 /*Script to Delete all sales transactions*/
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('Delete Sales Transactions');
-include('includes/header.inc');
+include('includes/header.php');
 
 if (isset($_POST['ProcessDeletions'])){
 
@@ -180,5 +180,5 @@ echo '<input type="submit" name="ProcessDeletions" value="' . _('Process') . '" 
 echo '</div>
       </form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

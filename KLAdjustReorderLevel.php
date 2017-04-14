@@ -3,11 +3,11 @@
 define("VERSIONFILE", "3.02"); 
 define("NUMBER_OF_TESTS", 20); 
 
-/* Session started in session.inc for password checking and authorisation level check
-config.php is in turn included in session.inc*/
-include ('includes/session.inc');
+/* Session started in session.php for password checking and authorisation level check
+config.php is in turn included in session.php*/
+include ('includes/session.php');
 $Title = _('Kapal-Laut Reorder Level Adjustments '. VERSIONFILE);
-include ('includes/header.inc');
+include ('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
 include ('includes/KLGeneralFunctions.php');
@@ -26,6 +26,6 @@ DailyReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db, $EmailTex
 
 prnMsg("Performed ". NUMBER_OF_TESTS . " RL adjustement strategies",'success');
 time_finish($begintime);
-include ('includes/footer.inc');
+include ('includes/footer.php');
 
 ?>

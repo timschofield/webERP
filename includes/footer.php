@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: footer.inc 7726 2017-01-13 23:02:10Z daintree $*/
+/* $Id: footer.php 7726 2017-01-13 23:02:10Z daintree $*/
 
 echo '</div>'; // BodyWrapDiv
 echo '</div>'; // BodyDiv

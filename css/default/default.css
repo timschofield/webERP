@@ -542,7 +542,7 @@ textarea.texterror {
 /* END Style for all. ********************************************************/
 
 
-/* If you want to use a cascading style sheet for a small device width, uncomment line "<meta name="viewport" content="width=device-width, initial-scale=1" />" on includes/header.inc and use the following sections. */
+/* If you want to use a cascading style sheet for a small device width, uncomment line "<meta name="viewport" content="width=device-width, initial-scale=1" />" on includes/header.php and use the following sections. */
 
 @media only screen and (max-device-width:767px) {
 	/* Style for new browser in a device with a rendering width less than 768px. */

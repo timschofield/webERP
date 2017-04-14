@@ -22,16 +22,16 @@ KL RICARD MODIFICATIONS:
 $_GET['ReportID'] = 2;
 $AllowCronJobToBeRun = true;
 $DatabaseName = 'kurakura_kl_erp';
-include('includes/session.inc');
+include('includes/session.php');
 /*The company database to use */
 
 /*The people to receive the emailed report */
 $Recipients = GetMailList('SalesAnalysisReportRecipients');
 if (sizeOf($Recipients) == 0) {
 	$Title = _('Inventory Valuation') . ' - ' . _('Problem Report');
-      	include('includes/header.inc');
+      	include('includes/header.php');
 	prnMsg( _('There are no members of the Sales Analysis Report Recipients email group'), 'warn');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 include ('includes/ConstructSQLForUserDefinedSalesReport.inc');

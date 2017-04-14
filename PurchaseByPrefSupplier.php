@@ -2,9 +2,9 @@
 
 /* $Id: PrefSupplierOrdering.php 5785 2012-12-29 04:47:42Z daintree $ */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title=_('Preferred Supplier Purchasing');
-include('includes/header.inc');
+include('includes/header.php');
 
 if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
 	include('includes/SQL_CommonFunctions.inc');
@@ -397,13 +397,13 @@ if (isset($_POST['Supplier']) AND isset($_POST['ShowItems']) AND $_POST['Supplie
 
 	if (DB_error_no() !=0) {
 		$Title = _('Supplier Ordering') . ' - ' . _('Problem Report') . '....';
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg(_('The supplier inventory quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
 		  echo '<br />' . $SQL;
 		}
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	} else {
 		//head up a new table
@@ -445,13 +445,13 @@ if (isset($_POST['Supplier']) AND isset($_POST['ShowItems']) AND $_POST['Supplie
 	
 			if (DB_error_no() !=0) {
 		 		$Title = _('Preferred supplier purchasing') . ' - ' . _('Problem Report') . '....';
-		  		include('includes/header.inc');
+		  		include('includes/header.php');
 		   		prnMsg( _('The sales quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 		   		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 		   		if ($debug==1){
 		      			echo '<br />'. $SQL;
 		   		}
-		   		include('includes/footer.inc');
+		   		include('includes/footer.php');
 		   		exit;
 			}
 	
@@ -469,13 +469,13 @@ if (isset($_POST['Supplier']) AND isset($_POST['ShowItems']) AND $_POST['Supplie
 	
 			if (DB_error_no() !=0) {
 		 		$Title = _('Preferred supplier purchasing') . ' - ' . _('Problem Report') . '....';
-		  		include('includes/header.inc');
+		  		include('includes/header.php');
 		   		prnMsg( _('The sales order demand quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 		   		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 		   		if ($debug==1){
 		      			echo '<br />'.$SQL;
 		   		}
-		   		include('includes/footer.inc');
+		   		include('includes/footer.php');
 		   		exit;
 			}
 	
@@ -498,13 +498,13 @@ if (isset($_POST['Supplier']) AND isset($_POST['ShowItems']) AND $_POST['Supplie
 	
 			if (DB_error_no() !=0) {
 		 		$Title = _('Preferred supplier purchasing') . ' - ' . _('Problem Report') . '....';
-		  		include('includes/header.inc');
+		  		include('includes/header.php');
 		   		prnMsg( _('The sales order demand quantities from parent assemblies could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 		   		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 		   		if ($debug==1){
 		      			echo '<br />'.$SQL;
 		   		}
-		   		include('includes/footer.inc');
+		   		include('includes/footer.php');
 		   		exit;
 			}
 	
@@ -529,13 +529,13 @@ if (isset($_POST['Supplier']) AND isset($_POST['ShowItems']) AND $_POST['Supplie
 			$OnOrdResult = DB_query($SQL, '', '', false, false);
 			if (DB_error_no() !=0) {
 		 		$Title = _('Preferred supplier purchasing') . ' - ' . _('Problem Report') . '....';
-		  		include('includes/header.inc');
+		  		include('includes/header.php');
 		   		prnMsg( _('The purchase order quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 		   		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 		   		if ($debug==1){
 		      			echo '<br />'. $SQL;
 		   		}
-		   		include('includes/footer.inc');
+		   		include('includes/footer.php');
 		   		exit;
 			}
 	
@@ -570,6 +570,6 @@ if (isset($_POST['Supplier']) AND isset($_POST['ShowItems']) AND $_POST['Supplie
 echo '</div>
 	  </form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 
 ?>

@@ -4,13 +4,13 @@
 
 include('includes/DefineJournalClass.php');
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Journal Entry');
 
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLJournals';
 
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 
 if (isset($_GET['NewJournal'])
@@ -128,7 +128,7 @@ if (isset($_POST['CommitBatch']) AND $_POST['CommitBatch']==_('Accept and Proces
 			<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?NewJournal=Yes">' . _('Enter Another General Ledger Journal') . '</a>';
 	/*And post the journal too */
 	include ('includes/GLPostings.inc');
-	include ('includes/footer.inc');
+	include ('includes/footer.php');
 	exit;
 
 } elseif (isset($_GET['Delete'])){
@@ -465,5 +465,5 @@ if (abs($_SESSION['JournalDetail']->JournalTotal)<0.001 AND $_SESSION['JournalDe
 
 echo '</div>
 	</form>';
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

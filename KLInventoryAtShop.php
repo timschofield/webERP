@@ -2,7 +2,7 @@
 
 /* $Id: InventoryAtShop.php . Variation of Inventoryvaluation for inventory taking at shops */
 
-include('includes/session.inc');
+include('includes/session.php');
 include('includes/KLGeneralFunctions.php');
 
 if (isset($_POST['PrintPDF'])){
@@ -52,22 +52,22 @@ if (isset($_POST['PrintPDF'])){
 
 	if (DB_error_no() !=0) {
 	  $Title = _('KL Inventory At Shops') . ' - ' . _('Problem Report');
-	  include('includes/header.inc');
+	  include('includes/header.php');
 	   prnMsg( _('The KL inventory at Shops could not be retrieved by the SQL because') . ' '  . DB_error_msg(),'error');
 	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-	   include('includes/footer.inc');
+	   include('includes/footer.php');
 	   exit;
 	}
 	if (DB_num_rows($InventoryResult)==0){
 		$Title = _('Print KL Inventory At Shops Error');
-		include('includes/header.inc');
+		include('includes/header.php');
 		prnMsg(_('There were no items to print out for the location specified'),'info');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
-	include ('includes/KLPDFInventoryAtShopPageHeader.inc');
+	include ('includes/KLPDFInventoryAtShopPageheader.php');
 
 	$Tot_Val=0;
 	$Category = '';
@@ -93,7 +93,7 @@ if (isset($_POST['PrintPDF'])){
 		$CatTot_Qty += $InventoryValn['qtyonhand'];
 
 		if ($YPos < $Bottom_Margin + $line_height){
-		   include('includes/KLPDFInventoryAtShopPageHeader.inc');
+		   include('includes/KLPDFInventoryAtShopPageheader.php');
 		}
 
 	} /*end inventory valn while loop */
@@ -114,7 +114,7 @@ if (isset($_POST['PrintPDF'])){
 } else { /*The option to print PDF was not hit */
 
 	$Title=_('KL Inventory At Shops Reporting');
-	include('includes/header.inc');
+	include('includes/header.php');
 
 	echo '<p class="page_title_text">
 				<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . $Title . '
@@ -172,7 +172,7 @@ if (isset($_POST['PrintPDF'])){
         echo '</div>
               </form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 
 } /*end of else not PrintPDF */
 ?>

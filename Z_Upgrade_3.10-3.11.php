@@ -1,9 +1,9 @@
 <?php
 /* $Id: Z_Upgrade_3.10-3.11.php 6943 2014-10-27 07:06:42Z daintree $*/
 //$PageSecurity = 15;
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Upgrade webERP 3.10 - 3.11');
-include('includes/header.inc');
+include('includes/header.php');
 
 
 if (empty($_POST['DoUpgrade'])){
@@ -94,5 +94,5 @@ if ($_POST['DoUpgrade'] == _('Perform Upgrade')){
 
 } /*Dont do upgrade */
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

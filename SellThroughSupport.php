@@ -1,11 +1,11 @@
 <?php
 /* $Id: SellThroughSupport.php 5785 2012-12-29 04:47:42Z daintree $*/
 
-include ('includes/session.inc');
+include ('includes/session.php');
 
 $Title = _('Sell Through Support');
 
-include ('includes/header.inc');
+include ('includes/header.php');
 
 if (isset($_GET['SupplierID']) AND $_GET['SupplierID']!='') {
     $SupplierID = trim(mb_strtoupper($_GET['SupplierID']));
@@ -209,7 +209,7 @@ if (isset($_POST['SearchSupplier'])) {
 				<input type="submit" name="SearchSupplier" value="' . _('Find Suppliers Now') . '" />
 			</div>
 		</form>';
-	include ('includes/footer.inc');
+	include ('includes/footer.php');
 	exit;
 }
 
@@ -485,5 +485,5 @@ if (isset($SupplierID)) { //not selecting a supplier
 		</form>';
 }
 
-include ('includes/footer.inc');
+include ('includes/footer.php');
 ?>

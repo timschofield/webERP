@@ -4,7 +4,7 @@
 
 $Version_adds= '1.2';
 
-include('includes/session.inc');
+include('includes/session.php');
 require_once('includes/DefineLabelClass.php');
 
 $MsgErr=null;
@@ -74,7 +74,7 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['PDFTest']) ) {
  */
 
 $Title = _('Print Price Labels');
-include('includes/header.inc');
+include('includes/header.php');
 
 if ($MsgErr!=null) {
 	prnMsg($MsgErr,'warn');
@@ -82,7 +82,7 @@ if ($MsgErr!=null) {
 
 showLabelOptions();
 
-include('includes/footer.inc');
+include('includes/footer.php');
 exit();
 
 function showLabelOptions() {

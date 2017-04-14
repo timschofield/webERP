@@ -6,11 +6,11 @@
  */
 /* $Id: CopyBOM.php 7691 2016-12-02 07:56:18Z exsonqu $*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('Copy a BOM to New Item Code');
 
-include('includes/header.inc');
+include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.inc');
 
@@ -209,6 +209,6 @@ if(isset($_POST['Submit'])) {
           </div>
           </form>';
 
-	include('includes/footer.inc');
+	include('includes/footer.php');
 }
 ?>

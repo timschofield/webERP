@@ -2,11 +2,11 @@
 
 /* $Id: BOMs.php 7709 2016-12-20 15:57:10Z rchacon $*/
 
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('Multi-Level Bill Of Materials Maintenance');
 
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 
 function display_children($Parent, $Level, &$BOMTree) {
@@ -42,7 +42,7 @@ function display_children($Parent, $Level, &$BOMTree) {
 			} else {
 				prnMsg(_('The component and the parent is the same'),'error');
 				echo $row['component'] . '<br/>';
-				include('includes/footer.inc');
+				include('includes/footer.php');
 				exit;
 			}
 		}
@@ -835,7 +835,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		if (DB_num_rows($result)==0){
 			prnMsg( _('There are no work centres set up yet') . '. ' . _('Please use the link below to set up work centres') . '.','warn');
 			echo '<a href="' . $RootPath . '/WorkCentres.php">' . _('Work Centre Maintenance') . '</a></td></tr></table><br />';
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 		}
 
@@ -1084,7 +1084,7 @@ function arrayUnique($array, $preserveKeys = false)
 	return $arrayRewrite;
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 function GetDigitals($Sequence) {
 	$SQLNumber = filter_number_format($Sequence);
 	return strlen(substr(strrchr($SQLNumber, "."),1));

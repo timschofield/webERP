@@ -4,10 +4,10 @@
 /* Set internal character encoding to UTF-8 */
 mb_internal_encoding('UTF-8');
 
-/* This file is included in session.inc or PDFStarter.php or a report script that does not use PDFStarter.php
+/* This file is included in session.php or PDFStarter.php or a report script that does not use PDFStarter.php
 to check for the existence of gettext function and setup the necessary environment to allow for automatic translation
 
-Set language - defined in config.php or user variable when logging in (session.inc)
+Set language - defined in config.php or user variable when logging in (session.php)
 NB this language must also exist in the locale on the web-server
 normally the lower case two character language code underscore uppercase
 2 character country code does the trick  except for en !!*/

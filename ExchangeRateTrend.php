@@ -2,11 +2,11 @@
 /* $Id: ExchangeRateTrend.php 7677 2016-11-23 16:05:02Z rchacon $*/
 /* This script shows the trend in exchange rates as retrieved from ECB. */
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('View Currency Trend');
 $ViewTopic= 'Currencies';
 $BookMark = 'ExchangeRateTrend';
-include('includes/header.inc');
+include('includes/header.php');
 
 $FunctionalCurrency = $_SESSION['CompanyRecord']['currencydefault'];
 
@@ -76,5 +76,5 @@ if ( isset($_GET['CurrencyToShow']) ){
 		</tr>
 		</table>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

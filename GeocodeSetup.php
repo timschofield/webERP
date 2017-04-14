@@ -2,9 +2,9 @@
 
 /* $Id: GeocodeSetup.php 6941 2014-10-26 23:18:08Z daintree $*/
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Geocode Maintenance');
-include('includes/header.inc');
+include('includes/header.php');
 
 if (isset($_GET['SelectedParam'])){
 	$SelectedParam = $_GET['SelectedParam'];
@@ -280,5 +280,5 @@ echo '<div class="centre"><a href="' . $RootPath . '/geocode.php">' . _('Run Geo
 echo '<a href="' . $RootPath . '/geo_displaymap_customers.php">' . _('Display Map of Customer Branches') . '</a><br />';
 echo '<a href="' . $RootPath . '/geo_displaymap_suppliers.php">' . _('Display Map of Suppliers') . '</a></div>';
 } //end if record deleted no point displaying form to add record
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

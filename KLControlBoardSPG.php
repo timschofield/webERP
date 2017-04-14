@@ -1,11 +1,11 @@
 <?php
 define("VERSIONFILE", "2.10"); // 
 
-/* Session started in session.inc for password checking and authorisation level check
-config.php is in turn included in session.inc*/
-include ('includes/session.inc');
+/* Session started in session.php for password checking and authorisation level check
+config.php is in turn included in session.php*/
+include ('includes/session.php');
 $Title = _('Kapal-Laut SPG Control Board '. VERSIONFILE);
-include ('includes/header.inc');
+include ('includes/header.php');
 include('includes/KLGeneralFunctions.php');
 include ('includes/KLRetailCustomer.php');
 
@@ -22,7 +22,7 @@ RetailCustomerDataQualitySPG($_SESSION['SalesmanLogin'], 15, $db);
 
 prnMsg("Performed 4 SPG control board tests",'success');
 
-include ('includes/footer.inc');
+include ('includes/footer.php');
 
 /******************************************************************************************************/
 /******************************************************************************************************/

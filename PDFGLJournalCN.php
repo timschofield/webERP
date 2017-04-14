@@ -2,7 +2,7 @@
 
 /* $Revision: 1.5 $2012.2CQZ二次修改 */
 
-include('includes/session.inc');
+include('includes/session.php');
 if (isset($_POST['JournalNo'])) {
 	$JournalNo=$_POST['JournalNo'];
 	$TypeID=$_POST['Type'];
@@ -143,10 +143,10 @@ $pdf->SetFont('javiergb', '', 10);
 
 if ($LineCount == 0) {   //UldisN
 	$title = _('GRN Error');
-	include('includes/header.inc');
+	include('includes/header.php');
 	prnMsg(_('There were no GRN to print'),'warn');
 	echo '<br /><a href="'.$rootpath.'/index.php">'. _('Back to the menu').'</a>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 } else {
     $pdf->OutputD($_SESSION['DatabaseName'] . '_GRN_' . date('Y-m-d').'.pdf');//UldisN

@@ -2,7 +2,7 @@
 
 /* $Id: PDFProdSpec.php 1 2014-09-15 06:31:08Z agaluski $ */
 
-include('includes/session.inc');
+include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 
 if (isset($_GET['KeyValue']))  {
@@ -15,7 +15,7 @@ if (isset($_GET['KeyValue']))  {
 //Get Out if we have no product specification
 If (!isset($SelectedProdSpec) OR $SelectedProdSpec==''){
         $Title = _('Select Product Specification To Print');
-        include('includes/header.inc');
+        include('includes/header.php');
 		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print')  . '" alt="" />' . ' ' . $Title . '</p>';
         echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">
 		<div>
@@ -57,7 +57,7 @@ If (!isset($SelectedProdSpec) OR $SelectedProdSpec==''){
 		<input type="submit" name="PickSpec" value="' . _('Submit') . '" />
 		</div>
 		</form>';
-    include('includes/footer.inc');
+    include('includes/footer.php');
     exit();
 }
 
@@ -89,7 +89,7 @@ $result=DB_query($sql,$ErrMsg);
 //If there are no rows, there's a problem.
 if (DB_num_rows($result)==0){
 	$Title = _('Print Product Specification Error');
-	include('includes/header.inc');
+	include('includes/header.php');
 	 echo '<div class="centre">
 			<br />
 			<br />
@@ -109,7 +109,7 @@ if (DB_num_rows($result)==0){
 			<br />
 			<br />
 			<br />';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 $PaperSize = 'Letter';
@@ -147,7 +147,7 @@ while ($myrow=DB_fetch_array($result)){
 	}
 	$TrailerPrinted=1;
 	if ($HeaderPrinted==0) {
-		include('includes/PDFProdSpecHeader.inc');
+		include('includes/PDFProdSpecheader.php');
 		$HeaderPrinted=1;
 	}
 
@@ -181,7 +181,7 @@ while ($myrow=DB_fetch_array($result)){
 		if ($YPos < ($Bottom_Margin + 90)){ // Begins new page
 			$PrintTrailer=0;
 			$PageNumber++;
-			include ('includes/PDFProdSpecHeader.inc');
+			include ('includes/PDFProdSpecheader.php');
 		}
 		$LeftOvers = $pdf->addTextWrap($XPos,$YPos,500,$FontSize,$SectionTitle,'center');
 		$YPos -= $line_height;
@@ -243,7 +243,7 @@ while ($myrow=DB_fetch_array($result)){
 		$pdf->line($XPos+1, $YPos+$RectHeight,$XPos+506, $YPos+$RectHeight);
 		$PrintTrailer=0;
 		$PageNumber++;
-		include ('includes/PDFProdSpecHeader.inc');
+		include ('includes/PDFProdSpecheader.php');
 	}
 	//echo 'PrintTrailer'.$PrintTrailer.' '.$PrevTrailer.'<br>' ;
 } //while loop
@@ -261,7 +261,7 @@ if ($SectionTrailer>'') {
 }
 if ($YPos < ($Bottom_Margin + 85)){ // Begins new page
 	$PageNumber++;
-	include ('includes/PDFProdSpecHeader.inc');
+	include ('includes/PDFProdSpecheader.php');
 }
 $Disclaimer= _('The information provided on this datasheet should only be used as a guideline. Actual lot to lot values will vary.');
 $FontSize=8;

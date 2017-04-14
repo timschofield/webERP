@@ -2,9 +2,9 @@
 define("VERSIONFILE", "1.12");
 define("NUMBER_OF_TESTS", 28); 
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('Kapal-Laut Retail Customer Analysis '. VERSIONFILE);
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLCountriesForRetail.php');
 include('includes/KLGeneralFunctions.php');
@@ -97,6 +97,6 @@ if ($KL_SystemAdmin){
 prnMsg("Performed ". $NumberOfTestExecuted . " Retail Customers Analysis",'success');
 time_finish($begintime);
 
-include ('includes/footer.inc');
+include ('includes/footer.php');
 
 ?>

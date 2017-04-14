@@ -2,9 +2,9 @@
 
 /* $Id: Z_RePostGLFromPeriod.php 7506 2016-05-06 03:25:37Z exsonqu $*/
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('Recalculation of GL Balances in Chart Details Table');
-include('includes/header.inc');
+include('includes/header.php');
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<div>';
@@ -60,5 +60,5 @@ if (!isset($_POST['FromPeriod'])){
 
 	prnMsg(_('All general ledger postings have been reposted from period') . ' ' . $_POST['FromPeriod'],'success');
 }
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

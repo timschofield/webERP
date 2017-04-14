@@ -1,8 +1,8 @@
 <?php
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('WO items can be produced with available stock');
-include('includes/header.inc');
+include('includes/header.php');
 
 if (isset($_POST['submit'])) {
     submit($db, $RootPath, $_POST['Location']);
@@ -250,5 +250,5 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 
 } // End of function display()
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

@@ -7,9 +7,9 @@
 // If Date Type is Order, the main file is purchorderdetails
 // If Date Type is Delivery, the main file is grns
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Purchase Order Report');
-include('includes/header.inc');
+include('includes/header.php');
 
 # Sets default date range for current month
 if (!isset($_POST['FromDate'])){
@@ -1660,5 +1660,5 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 } // End of function display()
 
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

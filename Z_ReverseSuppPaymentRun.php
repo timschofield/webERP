@@ -5,9 +5,9 @@
 /* Script to delete all supplier payments entered or created from a payment run on a specified day
  */
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('Reverse and Delete Supplier Payments');
-include('includes/header.inc');
+include('includes/header.php');
 
 
 /*Only do deletions if user hits the button */
@@ -89,5 +89,5 @@ echo '<input type="submit" name="RevPayts" value="' . _('Reverse Supplier Paymen
 echo '</div>
       </form>';
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

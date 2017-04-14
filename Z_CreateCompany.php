@@ -3,11 +3,11 @@
 /*Script to insert a dummy sales order if one is not already set up - at least one order is needed for the sales order pages to work.
 Also inserts a blank company record if one is not already set up */
 
-include ('includes/session.inc');
+include ('includes/session.php');
 
 $Title = _('UTILITY PAGE That sets up a new blank company record if not already existing');
 
-include('includes/header.inc');
+include('includes/header.php');
 
 $sql = "SELECT COUNT(coycode) FROM companies";
 $Result = DB_query($sql);
@@ -18,7 +18,7 @@ if ($myrow[0]==0){
 	$Result = DB_query($sql);
 } else {
 	prnMsg(_('An existing company record is set up already. No alterations have been made'),'error');
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -96,5 +96,5 @@ if ($myrow[0]==0){
 
 prnMsg(_('Company record is now available for modification by clicking') . '<br /><br /><a href="' . $RootPath . '/CompanyPreferences.php">' . _('this link') . '</a>','success');
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

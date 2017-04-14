@@ -1,7 +1,7 @@
 <?php
 /* $Id: PDFPriceLabelsbyTCPDF.php  */
 
-include('includes/session.inc');
+include('includes/session.php');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 
@@ -10,7 +10,7 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 	AND mb_strlen($_POST['StockCategory'])>=1){
 
 	$Title = _('Print Labels');
-	include('includes/header.inc');
+	include('includes/header.php');
 	
 	if ($_POST['LabelID'] == 'T570'){
 		$SQLPrice = "prices.price, ";
@@ -109,13 +109,13 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 		if ($debug==1){
 			prnMsg(_('For debugging purposes the SQL used was:') . $SQL,'error');
 		}
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 	if (DB_num_rows($LabelsResult)==0){
 		prnMsg(_('There were no price labels to print out for the category specified'),'warn');
 		echo '<br /><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' .  _('Back') . '</a>';
-		include('includes/footer.inc');
+		include('includes/footer.php');
 		exit;
 	}
 
@@ -190,7 +190,7 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 			<input type="submit" name="PrintLabels" value="'. _('Print Labels'). '" />
 		</div>
 		</form>';
-	include('includes/footer.inc');
+	include('includes/footer.php');
 	exit;
 }
 
@@ -412,7 +412,7 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 } else { /*The option to print PDF was not hit */
 
 	$Title= _('KL Print Labels');
-	include('includes/header.inc');
+	include('includes/header.php');
 
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' . _('Price Labels') . '" alt="" />
          ' . ' ' . _('Print Price Labels') . '</p>';
@@ -507,7 +507,7 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 				</div>
 				</form>';
 	}
-	include('includes/footer.inc');
+	include('includes/footer.php');
 
 } /*end of else not PrintPDF */
 

@@ -1,8 +1,8 @@
 <?php
 
-include('includes/session.inc');
+include('includes/session.php');
 $Title = _('Location Types Maintenance');
-include('includes/header.inc');
+include('includes/header.php');
 
 if (isset($_POST['SelectedCode'])){
 	$SelectedCode = mb_strtoupper($_POST['SelectedCode']);
@@ -248,5 +248,5 @@ if (! isset($_GET['delete'])) {
 
 } // end if user wish to delete
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

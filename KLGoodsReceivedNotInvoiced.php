@@ -1,10 +1,10 @@
 <?php
 
-/* Session started in session.inc for password checking and authorisation level check config.php is in turn included in session.inc*/
+/* Session started in session.php for password checking and authorisation level check config.php is in turn included in session.php*/
 
-include ('includes/session.inc');
+include ('includes/session.php');
 $Title = _('Goods Received But Not Invoiced Yet');
-include ('includes/header.inc');
+include ('includes/header.php');
 
 $SQL = "SELECT grns.supplierid,
 				purchorderdetails.orderno,
@@ -140,6 +140,6 @@ if (DB_num_rows($result) != 0){
 			</form>';
 }
 
-include ('includes/footer.inc');
+include ('includes/footer.php');
 
 ?>
