@@ -1,14 +1,14 @@
 <?php
 require_once ('Classes/PHPExcel.php');
 
-include('includes/session.inc');
+include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
-/*
+
 if (!isset($_POST['FromDate'])){
-	$_POST['FromDate'] = Date($_SESSION['DefaultDateFormat']);
+	$_POST['FromDate'] = Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,1,1,Date('Y')));
 }
 
 if (!isset($_POST['ToDate'])){
@@ -16,15 +16,14 @@ if (!isset($_POST['ToDate'])){
 }
 
 if (isset($_POST['submit'])) {
-    submit($db, $_POST['Categories'], $_POST['FromDate'], $_POST['ToDate'], $_POST['CodeDetail']);
+    submit($db, $_POST['FromDate'], $_POST['ToDate']);
 } else {
     display($db);
 }
-*/
-submit($db);
+
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
+function submit(&$db, $FromDate, $ToDate) {
 
 	//initialise no input errors
 	$InputError = 0;
@@ -33,21 +32,15 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 
 	if ($InputError == 0){
 
-		if (Date('m') > $_SESSION['YearEnd']){
-			/*Dates in SQL format */
-			$DefaultFromDate = Date ('Y-m-d', Mktime(0,0,0,$_SESSION['YearEnd'] + 2,0,Date('Y')));
-			$FromDate = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,$_SESSION['YearEnd'] + 2,0,Date('Y')));
-		} else {
-			$DefaultFromDate = Date ('Y-m-d', Mktime(0,0,0,$_SESSION['YearEnd'] + 2,0,Date('Y')-1));
-			$FromDate = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,$_SESSION['YearEnd'] + 2,0,Date('Y')-1));
-		}
-		$DefaultToDate = Date('Y-m-d');
-		$StartThisYear=GetPeriod($FromDate, $db);
-		$Now=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);	
-		$StartLastYear=$StartThisYear-12;
-		$FinishLastYear=$StartThisYear-1;
+		$DefaultFromDate = FormatDateForSQL($FromDate);
+		$DefaultToDate = FormatDateForSQL($ToDate);
+
+		$StartCurrentYearPeriod=GetPeriod($FromDate, $db);
+		$CurrentPeriod=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);	
+
+		$StartLastYearPeriod=$StartCurrentYearPeriod-12;
+		$FinishLastYearPeriod=$StartCurrentYearPeriod-1;
 		
-//		if (DB_num_rows($result) != 0){
 		if (TRUE){
 			
 			// Set value binder
@@ -64,7 +57,10 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 										 ->setDescription("Financial Analysis")
 										 ->setKeywords("")
 										 ->setCategory("");
-			// Rename worksheet
+
+			///////////////////////////////////////////////////////////////////
+			// worksheet SALES ANALYSIS
+			///////////////////////////////////////////////////////////////////
 			$objPHPExcel->setActiveSheetIndex(0);
 			$objPHPExcel->getActiveSheet()->setTitle('Sales Analysis');
 
@@ -76,6 +72,9 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 			$objPHPExcel->getActiveSheet()->getStyle('I')->getNumberFormat()->setFormatCode('0.0%');
 	
 			// Add title data
+			$objPHPExcel->getActiveSheet()->setCellValue('C1', 'Period');
+			$objPHPExcel->getActiveSheet()->setCellValue('D1', $FromDate . ' to ' . $ToDate);
+			
 			$objPHPExcel->getActiveSheet()->setCellValue('C2', 'Account');
 			$objPHPExcel->getActiveSheet()->setCellValue('D2', 'Last Year');
 			$objPHPExcel->getActiveSheet()->setCellValue('E2', '');
@@ -85,43 +84,43 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 			$objPHPExcel->getActiveSheet()->setCellValue('I2', '');
 
 			$objPHPExcel->getActiveSheet()->setCellValue('C3', 'Income CC PT');
-			$objPHPExcel->getActiveSheet()->setCellValue('D3', -MovementAccountsBetweenPeriods(GL_INCOME_CC_PT, $StartLastYear,$FinishLastYear,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('D3', -MovementAccountsBetweenPeriods(GL_INCOME_CC_PT, $StartLastYearPeriod,$FinishLastYearPeriod,$db));
 			$objPHPExcel->getActiveSheet()->setCellValue('E3', '=D3/$D$8');
-			$objPHPExcel->getActiveSheet()->setCellValue('F3', -MovementAccountsBetweenPeriods(GL_INCOME_CC_PT, $StartThisYear,$Now,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('F3', -MovementAccountsBetweenPeriods(GL_INCOME_CC_PT, $StartCurrentYearPeriod,$CurrentPeriod,$db));
 			$objPHPExcel->getActiveSheet()->setCellValue('G3', '=F3/$F$8');
-			$objPHPExcel->getActiveSheet()->setCellValue('H3', -MovementAccountsBetweenPeriods(GL_INCOME_CC_PT, $Now,$Now,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('H3', -MovementAccountsBetweenPeriods(GL_INCOME_CC_PT, $CurrentPeriod,$CurrentPeriod,$db));
 			$objPHPExcel->getActiveSheet()->setCellValue('I3', '=H3/$H$8');
 
 			$objPHPExcel->getActiveSheet()->setCellValue('C4', 'Income Cash PT');
-			$objPHPExcel->getActiveSheet()->setCellValue('D4', -MovementAccountsBetweenPeriods(GL_INCOME_CASH_PT, $StartLastYear,$FinishLastYear,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('D4', -MovementAccountsBetweenPeriods(GL_INCOME_CASH_PT, $StartLastYearPeriod,$FinishLastYearPeriod,$db));
 			$objPHPExcel->getActiveSheet()->setCellValue('E4', '=D4/$D$8');
-			$objPHPExcel->getActiveSheet()->setCellValue('F4', -MovementAccountsBetweenPeriods(GL_INCOME_CASH_PT, $StartThisYear,$Now,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('F4', -MovementAccountsBetweenPeriods(GL_INCOME_CASH_PT, $StartCurrentYearPeriod,$CurrentPeriod,$db));
 			$objPHPExcel->getActiveSheet()->setCellValue('G4', '=F4/$F$8');
-			$objPHPExcel->getActiveSheet()->setCellValue('H4', -MovementAccountsBetweenPeriods(GL_INCOME_CASH_PT, $Now,$Now,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('H4', -MovementAccountsBetweenPeriods(GL_INCOME_CASH_PT, $CurrentPeriod,$CurrentPeriod,$db));
 			$objPHPExcel->getActiveSheet()->setCellValue('I4', '=H4/$H$8');
 
 			$objPHPExcel->getActiveSheet()->setCellValue('C5', 'Income Cash');
-			$objPHPExcel->getActiveSheet()->setCellValue('D5', -MovementAccountsBetweenPeriods(GL_INCOME_CASH, $StartLastYear,$FinishLastYear,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('D5', -MovementAccountsBetweenPeriods(GL_INCOME_CASH, $StartLastYearPeriod,$FinishLastYearPeriod,$db));
 			$objPHPExcel->getActiveSheet()->setCellValue('E5', '=D5/$D$8');
-			$objPHPExcel->getActiveSheet()->setCellValue('F5', -MovementAccountsBetweenPeriods(GL_INCOME_CASH, $StartThisYear,$Now,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('F5', -MovementAccountsBetweenPeriods(GL_INCOME_CASH, $StartCurrentYearPeriod,$CurrentPeriod,$db));
 			$objPHPExcel->getActiveSheet()->setCellValue('G5', '=F5/$F$8');
-			$objPHPExcel->getActiveSheet()->setCellValue('H5', -MovementAccountsBetweenPeriods(GL_INCOME_CASH, $Now,$Now,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('H5', -MovementAccountsBetweenPeriods(GL_INCOME_CASH, $CurrentPeriod,$CurrentPeriod,$db));
 			$objPHPExcel->getActiveSheet()->setCellValue('I5', '=H5/$H$8');
 
 			$objPHPExcel->getActiveSheet()->setCellValue('C6', 'Income Others PT');
-			$objPHPExcel->getActiveSheet()->setCellValue('D6', -MovementAccountsBetweenPeriods(GL_INCOME_OTHERS_PT, $StartLastYear,$FinishLastYear,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('D6', -MovementAccountsBetweenPeriods(GL_INCOME_OTHERS_PT, $StartLastYearPeriod,$FinishLastYearPeriod,$db));
 			$objPHPExcel->getActiveSheet()->setCellValue('E6', '=D6/$D$8');
-			$objPHPExcel->getActiveSheet()->setCellValue('F6', -MovementAccountsBetweenPeriods(GL_INCOME_OTHERS_PT, $StartThisYear,$Now,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('F6', -MovementAccountsBetweenPeriods(GL_INCOME_OTHERS_PT, $StartCurrentYearPeriod,$CurrentPeriod,$db));
 			$objPHPExcel->getActiveSheet()->setCellValue('G6', '=F6/$F$8');
-			$objPHPExcel->getActiveSheet()->setCellValue('H6', -MovementAccountsBetweenPeriods(GL_INCOME_OTHERS_PT, $Now,$Now,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('H6', -MovementAccountsBetweenPeriods(GL_INCOME_OTHERS_PT, $CurrentPeriod,$CurrentPeriod,$db));
 			$objPHPExcel->getActiveSheet()->setCellValue('I6', '=H6/$H$8');
 			
 			$objPHPExcel->getActiveSheet()->setCellValue('C7', 'Income Others');
-			$objPHPExcel->getActiveSheet()->setCellValue('D7', -MovementAccountsBetweenPeriods(GL_INCOME_OTHERS, $StartLastYear,$FinishLastYear,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('D7', -MovementAccountsBetweenPeriods(GL_INCOME_OTHERS, $StartLastYearPeriod,$FinishLastYearPeriod,$db));
 			$objPHPExcel->getActiveSheet()->setCellValue('E7', '=D7/$D$8');
-			$objPHPExcel->getActiveSheet()->setCellValue('F7', -MovementAccountsBetweenPeriods(GL_INCOME_OTHERS, $StartThisYear,$Now,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('F7', -MovementAccountsBetweenPeriods(GL_INCOME_OTHERS, $StartCurrentYearPeriod,$CurrentPeriod,$db));
 			$objPHPExcel->getActiveSheet()->setCellValue('G7', '=F7/$F$8');
-			$objPHPExcel->getActiveSheet()->setCellValue('H7', -MovementAccountsBetweenPeriods(GL_INCOME_OTHERS, $Now,$Now,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('H7', -MovementAccountsBetweenPeriods(GL_INCOME_OTHERS, $CurrentPeriod,$CurrentPeriod,$db));
 			$objPHPExcel->getActiveSheet()->setCellValue('I7', '=H7/$H$8');
 
 			$objPHPExcel->getActiveSheet()->setCellValue('C8', 'TOTAL INCOME');
@@ -145,27 +144,42 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 			$objPHPExcel->getActiveSheet()->setCellValue('H11', '=H5+H7');
 			$objPHPExcel->getActiveSheet()->setCellValue('I11', '=H11/$H$8');
 
-			// Freeze panes
-			$objPHPExcel->getActiveSheet()->freezePane('D3');
+			// Auto Size columns
+			foreach(range('A','C') as $columnID) {
+				$objPHPExcel->getActiveSheet()->getColumnDimension($columnID)
+					->setAutoSize(true);
+			}
 
-			// New worksheet
+			///////////////////////////////////////////////////////////////////
+			// worksheet Cash PT BALANCE
+			///////////////////////////////////////////////////////////////////
+			
 			$objPHPExcel->createSheet();
 			$objPHPExcel->setActiveSheetIndex(1);
 			$objPHPExcel->getActiveSheet()->setTitle('Cash PT Balance');
 			$objPHPExcel->getActiveSheet()->getStyle('B')->getNumberFormat()->setFormatCode('#,###');
 
-			$objPHPExcel->getActiveSheet()->setCellValue('A1', 'INCOME CASH PT');
-			$objPHPExcel->getActiveSheet()->setCellValue('A2', 'Income from Retail Cash PT');
-			$objPHPExcel->getActiveSheet()->setCellValue('B2', -MovementAccountsBetweenPeriods(GL_INCOME_CASH_PT, $StartThisYear,$Now,$db));
-			$objPHPExcel->getActiveSheet()->setCellValue('A3', 'Cash from Danamon to Kantor Cash');
-			$objPHPExcel->getActiveSheet()->setCellValue('B3', -MovementsFromDanamonToCashKantor($DefaultFromDate, $DefaultToDate, $db));
-			$objPHPExcel->getActiveSheet()->setCellValue('A4', 'EXPENSES CASH PT');
-			$objPHPExcel->getActiveSheet()->setCellValue('A5', 'Expenses paid cash for Accounts PT');
-			$objPHPExcel->getActiveSheet()->setCellValue('B5', ExpensesPaidCashForAccountsPT($DefaultFromDate, $DefaultToDate, $db));
-			$objPHPExcel->getActiveSheet()->setCellValue('A7', 'BALANCE CASH PT');
-			$objPHPExcel->getActiveSheet()->setCellValue('B7', '=B2+B3-B5');
-			
+			$objPHPExcel->getActiveSheet()->setCellValue('A1', 'CASH PT BALANCE ANALYSIS');
+			$objPHPExcel->getActiveSheet()->setCellValue('C1', 'Period');
+			$objPHPExcel->getActiveSheet()->setCellValue('D1', $FromDate . ' to ' . $ToDate);
 
+			$objPHPExcel->getActiveSheet()->setCellValue('A3', 'Income from Retail Cash PT');
+			$objPHPExcel->getActiveSheet()->setCellValue('B3', -MovementAccountsBetweenPeriods(GL_INCOME_CASH_PT, $StartCurrentYearPeriod,$CurrentPeriod,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('A4', 'Cash from Danamon to Kantor Cash');
+			$objPHPExcel->getActiveSheet()->setCellValue('B4', -MovementsFromDanamonToCashKantor($DefaultFromDate, $DefaultToDate, $db));
+			$objPHPExcel->getActiveSheet()->setCellValue('A5', 'TOTAL CASH AVAILABLE');
+			$objPHPExcel->getActiveSheet()->setCellValue('B5', '=B3+B4');
+			$objPHPExcel->getActiveSheet()->setCellValue('A7', 'Expenses paid cash for Accounts PT');
+			$objPHPExcel->getActiveSheet()->setCellValue('B7', -ExpensesPaidCashForAccountsPT($DefaultFromDate, $DefaultToDate, $db));
+			$objPHPExcel->getActiveSheet()->setCellValue('A9', 'BALANCE CASH PT');
+			$objPHPExcel->getActiveSheet()->setCellValue('B9', '=B5-B7');
+
+			// Auto Size columns
+			foreach(range('A','B') as $columnID) {
+				$objPHPExcel->getActiveSheet()->getColumnDimension($columnID)
+					->setAutoSize(true);
+			}
+					
 			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 			$objPHPExcel->setActiveSheetIndex(0);
 
@@ -188,9 +202,9 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 
 		}else{
 			$Title = _('Excel file for Financial Analysis');
-			include('includes/header.inc');
+			include('includes/header.php');
 			prnMsg('No info selected to analyse');
-			include('includes/footer.inc');
+			include('includes/footer.php');
 		}
 	}
 } // End of function submit()
@@ -200,9 +214,9 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 {
 // Display form fields. This function is called the first time
 // the page is called.
-/*	$Title = _('Excel file for Sales Analysis');
+	$Title = _('Excel file for Financial Analysis');
 
-	include('includes/header.inc');
+	include('includes/header.php');
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
           <div>
@@ -210,37 +224,9 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Excel file for Sales Analysis') . '" alt="" />' . ' ' . _('Excel file for Sales Analysis') . '
+			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Excel file for Financial Analysis') . '" alt="" />' . ' ' . _('Excel file for Financial Analysis') . '
 		</p>';
-
-	echo '<table class="selection">
-			<tr>
-				<td>' . _('Select Inventory Categories') . ':</td>
-				<td><select autofocus="autofocus" required="required" minlength="1" size="12" name="Categories[]"multiple="multiple">';
-	$SQL = 'SELECT categoryid, categorydescription 
-			FROM stockcategory 
-			ORDER BY categorydescription';
-	$CatResult = DB_query($SQL);
-	while ($MyRow = DB_fetch_array($CatResult)) {
-		if (isset($_POST['Categories']) AND in_array($MyRow['categoryid'], $_POST['Categories'])) {
-			echo '<option selected="selected" value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] .'</option>';
-		} else {
-			echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
-		}
-	}
-	echo '</select>
-			</td>
-		</tr>';
-
-	echo '<tr>
-			<td>' . _('Item Codes detailed as') . ':</td>
-			<td><select name="CodeDetail">
-				<option selected="selected" value="CodeFull">' . _('Full Item Code') . '</option>
-				<option value="CodeFullWithRings">' . _('Full Item Code + Rings Grouped') . '</option>
-				<option value="Code6">' . _('Basic Item Code (6 Char)') . '</option>
-			</select></td>
-		</tr>';
-	
+	echo '<table>';	
 	echo '<tr>
 			<td>' . _('From') . ':</td>
 			<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="FromDate" size="10" maxlength="10" value="' . $_POST['FromDate'] . '" /></td>
@@ -255,14 +241,14 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	echo '<tr><td>&nbsp;</td></tr>
 		<tr>
 			<td>&nbsp;</td>
-			<td><input type="submit" name="submit" value="' . _('Create Sales Analysis Excel File') . '" /></td>
+			<td><input type="submit" name="submit" value="' . _('Create Financial Analysis Excel File') . '" /></td>
 		</tr>
 		</table>
 		<br />';
 	echo '</div>
          </form>';
-	include('includes/footer.inc');
-*/
+	include('includes/footer.php');
+
 } // End of function display()
 
 function MovementAccountsBetweenPeriods($AccountList, $PeriodFrom, $PeriodTo, $db){
