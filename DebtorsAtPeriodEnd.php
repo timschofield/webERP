@@ -74,7 +74,7 @@ if (isset($_POST['PrintPDF'])
 		exit;
 	}
 
-	include ('includes/PDFDebtorBalsPageheader.php');
+	include ('includes/PDFDebtorBalsPageHeader.inc');
 
 	$TotBal=0;
 
@@ -99,7 +99,7 @@ if (isset($_POST['PrintPDF'])
 
 			$YPos -=$line_height;
 			if ($YPos < $Bottom_Margin + $line_height){
-				include('includes/PDFDebtorBalsPageheader.php');
+				include('includes/PDFDebtorBalsPageHeader.inc');
 			}
 		}
 	} /*end customer aged analysis while loop */
@@ -107,7 +107,7 @@ if (isset($_POST['PrintPDF'])
 	$YPos -=$line_height;
 	if ($YPos < $Bottom_Margin + (2*$line_height)){
 		$PageNumber++;
-		include('includes/PDFDebtorBalsPageheader.php');
+		include('includes/PDFDebtorBalsPageHeader.inc');
 	}
 
 	$DisplayTotBalance = locale_number_format($TotBal,$_SESSION['CompanyRecord']['decimalplaces']);

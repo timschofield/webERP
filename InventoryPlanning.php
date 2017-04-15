@@ -113,7 +113,7 @@ if (isset($_POST['PrintPDF'])) {
 	$Period_4_Name = GetMonthText(mktime(0,0,0,Date('m')-4,Date('d'),Date('Y')));
 	$Period_5_Name = GetMonthText(mktime(0,0,0,Date('m')-5,Date('d'),Date('Y')));
 
-	include ('includes/PDFInventoryPlanPageheader.php');
+	include ('includes/PDFInventoryPlanPageHeader.inc');
 
 	$Category = '';
 
@@ -324,7 +324,7 @@ if (isset($_POST['PrintPDF'])) {
 
 		if ($YPos < $Bottom_Margin + $line_height){
 		   $PageNumber++;
-		   include('includes/PDFInventoryPlanPageheader.php');
+		   include('includes/PDFInventoryPlanPageHeader.inc');
 		}
 
 	} /*end inventory valn while loop */

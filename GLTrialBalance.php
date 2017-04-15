@@ -184,7 +184,7 @@ if ((! isset($_POST['FromPeriod'])
 		exit;
 	}
 
-	include('includes/PDFTrialBalancePageheader.php');
+	include('includes/PDFTrialBalancePageHeader.inc');
 
 	$j = 1;
 	$Level = 1;
@@ -213,7 +213,7 @@ if ((! isset($_POST['FromPeriod'])
 
 				// Print heading if at end of page
 				if ($YPos < ($Bottom_Margin+ (2 * $line_height))) {
-					include('includes/PDFTrialBalancePageheader.php');
+					include('includes/PDFTrialBalancePageHeader.inc');
 				}
 				if ($myrow['parentgroupname']==$ActGrp){
 					$Level++;
@@ -339,7 +339,7 @@ if ((! isset($_POST['FromPeriod'])
 
 		// Print heading if at end of page
 		if ($YPos < ($Bottom_Margin)){
-			include('includes/PDFTrialBalancePageheader.php');
+			include('includes/PDFTrialBalancePageHeader.inc');
 		}
 
 		// Print total for each account

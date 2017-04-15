@@ -1,5 +1,5 @@
 <?php
-/* $Id: PDFStockNegativesheader.php 3719 2010-09-08 21:28:59Z tim_schofield $*/
+/* $Id: PDFStockNegativesHeader.inc 3719 2010-09-08 21:28:59Z tim_schofield $*/
 
 /*PDF page header for inventory check report */
 if ($PageNumber>1){

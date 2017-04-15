@@ -143,7 +143,7 @@ $ListCount = 0;
 
 if (DB_num_rows($result)>0){
 	/*Yes there are line items to start the ball rolling with a page header */
-	include('includes/PDFQuotationPortraitPageheader.php');
+	include('includes/PDFQuotationPortraitPageHeader.inc');
 
 	$QuotationTotal = 0;
 	$QuotationTotalEx = 0;
@@ -159,7 +159,7 @@ if (DB_num_rows($result)>0){
 			OR (mb_strlen($myrow2['narrative']) >1 AND $YPos-$line_height <= 62)
 			OR $YPos-$line_height <= 50){
 		/* We reached the end of the page so finsih off the page and start a newy */
-			include('includes/PDFQuotationPortraitPageheader.php');
+			include('includes/PDFQuotationPortraitPageHeader.inc');
 		} //end if need a new page headed up
 
 		$DisplayQty = locale_number_format($myrow2['quantity'],$myrow2['decimalplaces']);
@@ -215,7 +215,7 @@ if (DB_num_rows($result)>0){
 		while(mb_strlen($LeftOvers) > 1) {
 			$YPos -= $FontSize2;
 			if ($YPos < ($Bottom_Margin)) {// Begins new page.
-				include('includes/PDFQuotationPortraitPageheader.php');
+				include('includes/PDFQuotationPortraitPageHeader.inc');
 			}
 			$LeftOvers = $pdf->addTextWrap(120, $YPos, $Width2, $FontSize2, $LeftOvers);
 		}
@@ -230,7 +230,7 @@ if (DB_num_rows($result)>0){
 		OR (mb_strlen($myrow['comments']) >1 AND $YPos-$line_height <= 62)
 		OR $YPos-$line_height <= 50){
 	/* We reached the end of the page so finsih off the page and start a newy */
-		include('includes/PDFQuotationPortraitPageheader.php');
+		include('includes/PDFQuotationPortraitPageHeader.inc');
 	} //end if need a new page headed up
 
 	$FontSize = 10;
@@ -252,7 +252,7 @@ if (DB_num_rows($result)>0){
 	while(mb_strlen($LeftOvers) > 1) {
 		$YPos -= $FontSize;
 		if ($YPos < ($Bottom_Margin)) {// Begins new page.
-			include ('includes/PDFQuotationPageheader.php');
+			include ('includes/PDFQuotationPageHeader.inc');
 		}
 		$LeftOvers = $pdf->addTextWrap(40, $YPos, $Width2, $FontSize, $LeftOvers);
 	}

@@ -238,7 +238,7 @@ $YPos -= $line_height;
 
 if ($YPos < $Bottom_Margin + $line_height){
 	$PageNumber++;
-	include('PDFPaymentRunPageheader.php');
+	include('PDFPaymentRunPageHeader.inc');
 }
 
 ?>

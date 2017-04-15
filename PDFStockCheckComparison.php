@@ -220,7 +220,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 	$LocationName = $FirstRow['locationname'];
 	DB_data_seek($CheckedItems,0);
 
-	include ('includes/PDFStockComparisonPageheader.php');
+	include ('includes/PDFStockComparisonPageHeader.inc');
 
 	$Location = '';
 	$Category = '';
@@ -302,7 +302,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 
 				if ($YPos < $Bottom_Margin + $line_height){
 		 			$PageNumber++;
-		   			include('includes/PDFStockComparisonPageheader.php');
+		   			include('includes/PDFStockComparisonPageHeader.inc');
 				}
 			} // end of loop printing count information
 			$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 375-$Left_Margin, $FontSize, _('Total for') . ': ' . $CheckItemRow['stockid'], 'right');
@@ -314,7 +314,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 
 		if ($YPos < $Bottom_Margin + $line_height){
 		   $PageNumber++;
-		   include('includes/PDFStockComparisonPageheader.php');
+		   include('includes/PDFStockComparisonPageHeader.inc');
 		}
 
 	} /*end STOCK comparison while loop */

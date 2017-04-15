@@ -1,5 +1,5 @@
 <?php
-/*	$Id: PDFQuotationPageheader.php 7551 2016-06-06 15:28:31Z rchacon $*/
+/*	$Id: PDFQuotationPageHeader.inc 7551 2016-06-06 15:28:31Z rchacon $*/
 /* pdf-php by R&OS code to set up a new sales order page */
 
 /*	Please note that addTextWrap prints a font-size-height further down than

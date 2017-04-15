@@ -62,7 +62,7 @@ $pdf->addInfo('Subject',_('Orders from') . ' ' . $_POST['FromDate'] . ' ' . _('t
 $line_height=12;
 $PageNumber = 1;
 $TotalDiffs = 0;
-include ('includes/PDFWeeklyOrdersPageheader.php');
+include ('includes/PDFWeeklyOrdersPageHeader.inc');
 $Col1=2;
 $Col2=40;
 $Col3=160;
@@ -123,7 +123,7 @@ while ($myrow=DB_fetch_array($Result)){
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+$Col10,$YPos,$Col11-$Col10-5,$FontSize,$Status, 'left');
 	if ($YPos - (2 *$line_height) < $Bottom_Margin){
 		$PageNumber++;
-		include ('includes/PDFWeeklyOrdersPageheader.php');
+		include ('includes/PDFWeeklyOrdersPageHeader.inc');
 	} /*end of new page header  */
 	$YPos -= $line_height;
 	$TotalSalesValue += $SalesValue;
@@ -142,7 +142,7 @@ $LeftOvers = $pdf->addTextWrap($Left_Margin+$Col8,$YPos,$Col9-$Col8-5,$FontSize,
 $LeftOvers = $pdf->addTextWrap($Left_Margin+$Col9,$YPos,$Col10-$Col9-5,$FontSize,locale_number_format($TotalGP,2), 'right');
 if ($YPos - (2 *$line_height) < $Bottom_Margin){
 	$PageNumber++;
-	include ('includes/PDFWeeklyOrdersPageheader.php');
+	include ('includes/PDFWeeklyOrdersPageHeader.inc');
 } /*end of new page header  */
 
 $YPos -= $line_height;

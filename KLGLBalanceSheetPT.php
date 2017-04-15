@@ -149,7 +149,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 
     $ListCount = DB_num_rows($AccountsResult); // UldisN
 
-	include('includes/PDFBalanceSheetPageheader.php');
+	include('includes/PDFBalanceSheetPageHeader.inc');
 
 	$k=0; //row colour counter
 	$Section='';
@@ -293,7 +293,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 			$YPos -= $line_height;
 		}
 		if ($YPos < ($Bottom_Margin)){
-			include('includes/PDFBalanceSheetPageheader.php');
+			include('includes/PDFBalanceSheetPageHeader.inc');
 		}
 	}//end of loop
 

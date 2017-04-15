@@ -1,5 +1,5 @@
 <?php
-/* $Id: PDFStatementPageheader.php 7598 2016-08-20 04:00:54Z rchacon $*/
+/* $Id: PDFStatementPageHeader.inc 7598 2016-08-20 04:00:54Z rchacon $*/
 /* PDFlib code to set up a new page */
 
 $Perforation = $Page_Width - $Right_Margin - 160;

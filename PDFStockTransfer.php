@@ -64,7 +64,7 @@ $pdf->addInfo('Title', _('Stock Transfer Form') );
 $PageNumber=1;
 $line_height=12;
 
-include('includes/PDFStockTransferheader.php');
+include('includes/PDFStockTransferHeader.inc');
 
 /*Print out the category totals */
 
@@ -113,7 +113,7 @@ while ($myrow=DB_fetch_array($result)) {
 	$YPos=$YPos-$line_height;
 
 	if ($YPos < $Bottom_Margin + $line_height){
-	   include('includes/PDFStockTransferheader.php');
+	   include('includes/PDFStockTransferHeader.inc');
 	}
 
 	$SQL = "SELECT stockmaster.controlled
@@ -138,13 +138,13 @@ while ($myrow=DB_fetch_array($result)) {
 			$YPos=$YPos-$line_height;
 			
 			if ($YPos < $Bottom_Margin + $line_height){
-				include('includes/PDFStockTransferheader.php');
+				include('includes/PDFStockTransferHeader.inc');
 			} //while SerialStockMoves
 		}
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+40,$YPos-10,300-$Left_Margin,$FontSize, ' ');
 		$YPos=$YPos-$line_height;
 		if ($YPos < $Bottom_Margin + $line_height){
-			include('includes/PDFStockTransferheader.php');
+			include('includes/PDFStockTransferHeader.inc');
 		} //controlled item*/
 	}
 

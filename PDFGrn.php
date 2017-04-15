@@ -81,7 +81,7 @@ if ($NoOfGRNs >0){
 	$SupplierRef = DB_fetch_array($GRNResult);
 	$SupplierRef = $SupplierRef['supplierref'];
 	DB_data_seek($GRNResult,0);
-	include ('includes/PDFGrnheader.php'); //head up the page
+	include ('includes/PDFGrnHeader.inc'); //head up the page
 
 	$FooterPrintedInPage= 0;
 	$YPos=$FormDesign->Data->y;
@@ -122,10 +122,10 @@ if ($NoOfGRNs >0){
 
 		if ($YPos >= $FormDesign->LineAboveFooter->starty){
 			/* We reached the end of the page so finsih off the page and start a newy */
-			//$PageNumber++;	// $PageNumber++ available in PDFGrnheader.php
+			//$PageNumber++;	// $PageNumber++ available in PDFGrnHeader.inc
 			$FooterPrintedInPage= 0;	//Set FooterPrintedInPage value zero print footer in new page
 			$YPos=$FormDesign->Data->y;
-			include ('includes/PDFGrnheader.php');
+			include ('includes/PDFGrnHeader.inc');
 		} //end if need a new page headed up
 
 		$SQL = "SELECT stockmaster.controlled
@@ -151,7 +151,7 @@ if ($NoOfGRNs >0){
 				if ($YPos >= $FormDesign->LineAboveFooter->starty){
 					$FooterPrintedInPage= 0;
 					$YPos=$FormDesign->Data->y;
-					include ('includes/PDFGrnheader.php');
+					include ('includes/PDFGrnHeader.inc');
 				} //end if need a new page headed up
 			} //while SerialStockMoves
 			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column2->x,$Page_Height-$YPos,$FormDesign->Data->Column2->Length,$FormDesign->Data->Column2->FontSize, ' ');
@@ -159,7 +159,7 @@ if ($NoOfGRNs >0){
 			if ($YPos >= $FormDesign->LineAboveFooter->starty){
 				$FooterPrintedInPage= 0;
 				$YPos=$FormDesign->Data->y;
-				include ('includes/PDFGrnheader.php');
+				include ('includes/PDFGrnHeader.inc');
 			} //end if need a new page headed up
 		} //controlled item*/
 

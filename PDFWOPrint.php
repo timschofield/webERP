@@ -328,7 +328,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 	}
 	if ($SelectedWO == 'Preview' or $i > -1) {
 		/*Yes there are line items to start the ball rolling with a page header */
-		include('includes/PDFWOPageheader.php');
+		include('includes/PDFWOPageHeader.inc');
 		$YPos = $Page_Height - $FormDesign->Data->y;
 		$i=0;
 		while ((isset($SelectedWO) AND $SelectedWO == 'Preview') OR (count($WOLine) > $i )) {
@@ -357,7 +357,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 			if ($YPos - (2*$line_height) <= $Page_Height - $FormDesign->Comments->y) {
 				$PageNumber++;
 				$YPos = $Page_Height - $FormDesign->Data->y;
-				include('includes/PDFWOPageheader.php');
+				include('includes/PDFWOPageHeader.inc');
 			}
 
 			/*display already issued and available qty and lots where applicable*/
@@ -390,7 +390,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 				if ($YPos - (2*$line_height) <= $Page_Height - $FormDesign->Comments->y) {
 					$PageNumber++;
 					$YPos = $Page_Height - $FormDesign->Data->y;
-					include('includes/PDFWOPageheader.php');
+					include('includes/PDFWOPageHeader.inc');
 				}
 			}
 
@@ -423,7 +423,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 						if ($YPos - (2*$line_height) <= $Page_Height - $FormDesign->Comments->y) {
 							$PageNumber++;
 							$YPos = $Page_Height - $FormDesign->Data->y;
-							include('includes/PDFWOPageheader.php');
+							include('includes/PDFWOPageHeader.inc');
 						}
 						//echo $CurLot . ' ' . $CurQty . '<br>';
 					}
@@ -437,13 +437,13 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 			if ($YPos - (2*$line_height) <= $Page_Height - $FormDesign->Comments->y) {
 				$PageNumber++;
 				$YPos = $Page_Height - $FormDesign->Data->y;
-				include('includes/PDFWOPageheader.php');
+				include('includes/PDFWOPageHeader.inc');
 			}
 		} //end while there are line items to print out
 
 		if ($YPos - (2*$line_height) <= $Page_Height - $FormDesign->Comments->y) { // need to ensure space for totals
 			$PageNumber++;
-			include('includes/PDFWOPageheader.php');
+			include('includes/PDFWOPageHeader.inc');
 		} //end if need a new page headed up
 	} /*end if there are order details to show on the order - or its a preview*/
 	if($FooterPrintedInPage == 0){
@@ -460,7 +460,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		if ($YPos - $line_height <= $Bottom_Margin)  {
 			$PageNumber++;
 			$YPos = $Page_Height - $FormDesign->Headings->Column1->y;
-			include('includes/PDFWOPageheader.php');
+			include('includes/PDFWOPageHeader.inc');
 		}
 		$LeftOvers = $pdf->addTextWrap($FormDesign->Comments->x, $YPos,$FormDesign->Comments->Length,$FormDesign->Comments->FontSize, $LeftOvers, 'left');
 	}

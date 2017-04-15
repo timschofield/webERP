@@ -187,7 +187,7 @@ while ($myrow=DB_fetch_array($result)){
 	}
 	$TrailerPrinted=1;
 	if ($HeaderPrinted==0) {
-		include('includes/PDFCOAheader.php');
+		include('includes/PDFCOAHeader.inc');
 		$HeaderPrinted=1;
 	}
 
@@ -221,7 +221,7 @@ while ($myrow=DB_fetch_array($result)){
 		if ($YPos < ($Bottom_Margin + 90)){ // Begins new page
 			$PrintTrailer=0;
 			$PageNumber++;
-			include ('includes/PDFCOAheader.php');
+			include ('includes/PDFCOAHeader.inc');
 		}
 		$LeftOvers = $pdf->addTextWrap($XPos,$YPos,500,$FontSize,$SectionTitle,'center');
 		$YPos -= $line_height;
@@ -277,7 +277,7 @@ while ($myrow=DB_fetch_array($result)){
 		$pdf->line($XPos+1, $YPos+$RectHeight,$XPos+506, $YPos+$RectHeight);
 		$PrintTrailer=0;
 		$PageNumber++;
-		include ('includes/PDFCOAheader.php');
+		include ('includes/PDFCOAHeader.inc');
 	}
 	//echo 'PrintTrailer'.$PrintTrailer.' '.$PrevTrailer.'<br>' ;
 } //while loop
@@ -295,7 +295,7 @@ if ($SectionTrailer>'') {
 }
 if ($YPos < ($Bottom_Margin + 85)){ // Begins new page
 	$PageNumber++;
-	include ('includes/PDFCOAheader.php');
+	include ('includes/PDFCOAHeader.inc');
 }
 
 $FontSize=8;

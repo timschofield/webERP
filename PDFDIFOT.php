@@ -216,7 +216,7 @@ $line_height=12;
 $PageNumber = 1;
 $TotalDiffs = 0;
 
-include ('includes/PDFDIFOTPageheader.php');
+include ('includes/PDFDIFOTPageHeader.inc');
 
 while ($myrow=DB_fetch_array($Result)){
 
@@ -240,7 +240,7 @@ while ($myrow=DB_fetch_array($Result)){
 			if ($YPos - (2 *$line_height) < $Bottom_Margin){
 		  /*Then set up a new page */
 			  $PageNumber++;
-		  include ('includes/PDFDIFOTPageheader.php');
+		  include ('includes/PDFDIFOTPageHeader.inc');
 			} /*end of new page header  */
 	  }
 } /* end of while there are delivery differences to print */

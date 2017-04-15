@@ -81,7 +81,7 @@ If (isset($_POST['PrintPDF']) AND DB_num_rows($GRNsResult)>0){
 	$line_height=12;
 	$Left_Margin=30;
 
-	include ('includes/PDFOstdgGRNsPageheader.php');
+	include ('includes/PDFOstdgGRNsPageHeader.inc');
 
 	$Tot_Val=0;
 	$Supplier = '';
@@ -93,7 +93,7 @@ If (isset($_POST['PrintPDF']) AND DB_num_rows($GRNsResult)>0){
 			if ($Supplier!=''){ /*Then it's NOT the first time round */
 				/* need to print the total of previous supplier */
                if ($YPos < $Bottom_Margin + $line_height * 5){
-                  include('includes/PDFOstdgGRNsPageheader.php');
+                  include('includes/PDFOstdgGRNsPageHeader.inc');
                }
 				$YPos -= (2*$line_height);
 				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,_('Total for') . ' ' . $Supplier . ' - ' . $SupplierName);
@@ -135,7 +135,7 @@ If (isset($_POST['PrintPDF']) AND DB_num_rows($GRNsResult)>0){
 		$SuppTot_Val += $LineValue;
 
 		if ($YPos < $Bottom_Margin + $line_height){
-		   include('includes/PDFOstdgGRNsPageheader.php');
+		   include('includes/PDFOstdgGRNsPageHeader.inc');
 		}
 
 	} /*end while loop */

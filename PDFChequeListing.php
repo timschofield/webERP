@@ -129,7 +129,7 @@ $line_height=12;
 $PageNumber = 1;
 $TotalCheques = 0;
 
-include ('includes/PDFChequeListingPageheader.php');
+include ('includes/PDFChequeListingPageHeader.inc');
 
 while ($myrow=DB_fetch_array($Result)){
 
@@ -178,7 +178,7 @@ while ($myrow=DB_fetch_array($Result)){
 		if ($YPos - (2 *$line_height) < $Bottom_Margin){
 		  		/*Then set up a new page */
 			  		$PageNumber++;
-		  		include ('includes/PDFChequeListingPageheader.php');
+		  		include ('includes/PDFChequeListingPageHeader.inc');
 	  		} /*end of new page header  */
 	}
 	DB_free_result($GLTransResult);
@@ -189,7 +189,7 @@ while ($myrow=DB_fetch_array($Result)){
 	if ($YPos - (2 *$line_height) < $Bottom_Margin){
 		  /*Then set up a new page */
 		  $PageNumber++;
-		  include ('includes/PDFChequeListingPageheader.php');
+		  include ('includes/PDFChequeListingPageHeader.inc');
 	  } /*end of new page header  */
 } /* end of while there are customer receipts in the batch to print */
 

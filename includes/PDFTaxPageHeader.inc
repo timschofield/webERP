@@ -1,5 +1,5 @@
 <?php
-/* $Id: PDFTaxPageheader.php 6847 2014-08-28 05:26:07Z rchacon $*/
+/* $Id: PDFTaxPageHeader.inc 6847 2014-08-28 05:26:07Z rchacon $*/
 
 /*	Please note that addTextWrap() YPos is a font-size-height further down than
 	addText() and other functions. Use addText() instead of addTextWrap() to

@@ -214,7 +214,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 		exit;
 	}
 
-	include('includes/PDFTagProfitAndLossPageheader.php');
+	include('includes/PDFTagProfitAndLossPageHeader.inc');
 
 	$Section = '';
 	$SectionPrdActual = 0;
@@ -229,7 +229,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 
 		// Print heading if at end of page
 		if ($YPos < ($Bottom_Margin)){
-			include('includes/PDFTagProfitAndLossPageheader.php');
+			include('includes/PDFTagProfitAndLossPageHeader.inc');
 		}
 
 		if ($myrow['groupname'] != $ActGrp){
@@ -257,7 +257,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 						$Level--;
 // Print heading if at end of page
 						if ($YPos < ($Bottom_Margin + (2*$line_height))){
-							include('includes/PDFTagProfitAndLossPageheader.php');
+							include('includes/PDFTagProfitAndLossPageHeader.inc');
 						}
 					} //end of loop
 					//still need to print out the group total for the same level
@@ -282,7 +282,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 
 		// Print heading if at end of page
 		if ($YPos < ($Bottom_Margin +(2 * $line_height))){
-			include('includes/PDFTagProfitAndLossPageheader.php');
+			include('includes/PDFTagProfitAndLossPageHeader.inc');
 		}
 
 		if ($myrow['sectioninaccounts'] != $Section){
@@ -400,7 +400,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 				$Level--;
 				// Print heading if at end of page
 				if ($YPos < ($Bottom_Margin + (2*$line_height))){
-					include('includes/PDFTagProfitAndLossPageheader.php');
+					include('includes/PDFTagProfitAndLossPageHeader.inc');
 				}
 			}
 			//still need to print out the group total for the same level
@@ -423,7 +423,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 	}
 	// Print heading if at end of page
 	if ($YPos < ($Bottom_Margin + (2*$line_height))){
-		include('includes/PDFTagProfitAndLossPageheader.php');
+		include('includes/PDFTagProfitAndLossPageHeader.inc');
 	}
 	if ($Section != ''){
 

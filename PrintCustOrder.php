@@ -196,7 +196,7 @@ if (DB_num_rows($result)>0){
 	$FontSize=12;
 	$line_height=16;
 
-	include('includes/PDFOrderPageheader.php');
+	include('includes/PDFOrderPageHeader.inc');
 
 	while ($myrow2=DB_fetch_array($result)){
 
@@ -214,7 +214,7 @@ if (DB_num_rows($result)>0){
 	   /* We reached the end of the page so finsih off the page and start a newy */
 
 	      $PageNumber++;
-	      include ('includes/PDFOrderPageheader.php');
+	      include ('includes/PDFOrderPageHeader.inc');
 
 	   } //end if need a new page headed up
 

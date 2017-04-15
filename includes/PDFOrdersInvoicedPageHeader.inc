@@ -1,5 +1,5 @@
 <?php
-/* $Id: PDFOrdersInvoicedPageheader.php 5766 2012-12-19 06:45:03Z daintree $*/
+/* $Id: PDFOrdersInvoicedPageHeader.inc 5766 2012-12-19 06:45:03Z daintree $*/
 if ($PageNumber>1){
 	$pdf->newPage();
 }

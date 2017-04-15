@@ -229,7 +229,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 	}
 	if ($OrderNo == 'Preview' or DB_num_rows($result) > 0) {
 		/*Yes there are line items to start the ball rolling with a page header */
-		include('includes/PO_PDFOrderPageheader.php');
+		include('includes/PO_PDFOrderPageHeader.inc');
 		$YPos = $Page_Height - $FormDesign->Data->y;
 		$OrderTotal = 0;
 		while ((isset($OrderNo) AND $OrderNo == 'Preview') OR (isset($result) AND !is_bool($result) AND $POLine = DB_fetch_array($result))) {
@@ -282,7 +282,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 					/* We reached the end of the page so finsih off the page and start a newy */
 					$PageNumber++;
 					$YPos = $Page_Height - $FormDesign->Data->y;
-					include('includes/PO_PDFOrderPageheader.php');
+					include('includes/PO_PDFOrderPageHeader.inc');
 				} //end if we reached the end of page
 				$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column2->x, $YPos, $FormDesign->Data->Column2->Length, $FormDesign->Data->Column2->FontSize, $LeftOvers, 'left');
 			} //end if need a new page headed up
@@ -299,7 +299,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 				/* We reached the end of the page so finsih off the page and start a newy */
 				$PageNumber++;
 				$YPos = $Page_Height - $FormDesign->Data->y;
-				include('includes/PO_PDFOrderPageheader.php');
+				include('includes/PO_PDFOrderPageHeader.inc');
 			} //end if need a new page headed up
 
 			/*increment a line down for the next line item */
@@ -312,7 +312,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		} //end while there are line items to print out
 		if ($YPos - $line_height <= $Bottom_Margin) { // need to ensure space for totals
 			$PageNumber++;
-			include('includes/PO_PDFOrderPageheader.php');
+			include('includes/PO_PDFOrderPageHeader.inc');
 		} //end if need a new page headed up
 		if ($_POST['ShowAmounts'] == 'Yes') {
 			$DisplayOrderTotal = locale_number_format($OrderTotal, $POHeader['currdecimalplaces']);

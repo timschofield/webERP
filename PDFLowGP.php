@@ -76,7 +76,7 @@ if (isset($_POST['PrintPDF'])) {
 		exit;
 	}
 
-	include ('includes/PDFLowGPPageheader.php');
+	include ('includes/PDFLowGPPageHeader.inc');
 	$Tot_Val=0;
 	$Category = '';
 	$CatTot_Val=0;
@@ -100,7 +100,7 @@ if (isset($_POST['PrintPDF'])) {
 		$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayGPPercent . '%', 'right');
 
 		if ($YPos < $Bottom_Margin + $line_height){
-			include('includes/PDFLowGPPageheader.php');
+			include('includes/PDFLowGPPageHeader.inc');
 		}
 
 	} /*end low GP items while loop */

@@ -116,7 +116,7 @@ if (isset($_POST['PrintPDF'])
 		exit;
 	}
 
-	include ('includes/PDFAgedSuppliersPageheader.php');
+	include ('includes/PDFAgedSuppliersPageHeader.inc');
 	$TotBal = 0;
 	$TotDue = 0;
 	$TotCurr = 0;
@@ -151,7 +151,7 @@ if (isset($_POST['PrintPDF'])
 
 		$YPos -=$line_height;
 		if ($YPos < $Bottom_Margin + $line_height){
-			  include('includes/PDFAgedSuppliersPageheader.php');
+			  include('includes/PDFAgedSuppliersPageHeader.inc');
 		}
 
 		if ($_POST['DetailedReport']=='Yes'){
@@ -225,7 +225,7 @@ if (isset($_POST['PrintPDF'])
 				$YPos -=$line_height;
 				if ($YPos < $Bottom_Margin + $line_height){
 				$PageNumber++;
-				include('includes/PDFAgedSuppliersPageheader.php');
+				include('includes/PDFAgedSuppliersPageHeader.inc');
 				$FontSize=6;
 				}
 			} /*end while there are detail transactions to show */
@@ -238,7 +238,7 @@ if (isset($_POST['PrintPDF'])
 	$YPos -=$line_height;
 	if ($YPos < $Bottom_Margin + (2*$line_height)){
 		$PageNumber++;
-		include('includes/PDFAgedSuppliersPageheader.php');
+		include('includes/PDFAgedSuppliersPageHeader.inc');
 	} elseif ($_POST['DetailedReport']=='Yes') {
 		//dont do a line if the totals have to go on a new page
 		$pdf->line($Page_Width-$Right_Margin, $YPos+10 ,220, $YPos+10);

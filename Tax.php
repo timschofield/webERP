@@ -66,7 +66,7 @@ if(isset($_POST['TaxAuthority']) AND
 	$SalesNet = 0;
 	$SalesTax = 0;
 	if($_POST['DetailOrSummary']=='Detail') {
-		include('includes/PDFTaxPageheader.php');
+		include('includes/PDFTaxPageHeader.inc');
 		PageHeaderDetail();
 
 		$FontSize = 10;
@@ -87,7 +87,7 @@ if(isset($_POST['TaxAuthority']) AND
 				locale_number_format($DebtorTransRow['tax'],$_SESSION['CompanyRecord']['decimalplaces']), 'right');
 			$YPos -= $FontSize;// End-of-line line-feed.
 			if($YPos < $Bottom_Margin + $FontSize) {
-				include('includes/PDFTaxPageheader.php');
+				include('includes/PDFTaxPageHeader.inc');
 				PageHeaderDetail();
 			}
 			$SalesCount ++;// Counts sales transactions.
@@ -98,7 +98,7 @@ if(isset($_POST['TaxAuthority']) AND
 		// Prints out the sales totals:
 		$FontSize = 10;
 		if($YPos < $Bottom_Margin + $FontSize*4) {
-			include('includes/PDFTaxPageheader.php');
+			include('includes/PDFTaxPageHeader.inc');
 			PageHeaderDetail();
 		}
 		$YPos -= $FontSize;
@@ -200,7 +200,7 @@ if(isset($_POST['TaxAuthority']) AND
 				locale_number_format($SuppTransRow['taxamt'],$_SESSION['CompanyRecord']['decimalplaces']),'right');
 			$YPos -= $FontSize;// End-of-line line-feed.
 			if($YPos < $Bottom_Margin + $FontSize) {
-				include('includes/PDFTaxPageheader.php');
+				include('includes/PDFTaxPageHeader.inc');
 				PageHeaderDetail();
 			}
 			$PurchasesCount ++;// Counts purchases transactions.
@@ -211,7 +211,7 @@ if(isset($_POST['TaxAuthority']) AND
 		// Print out the purchases totals:
 		$FontSize = 10;
 		if($YPos < $Bottom_Margin + $FontSize*4) {
-			include('includes/PDFTaxPageheader.php');
+			include('includes/PDFTaxPageHeader.inc');
 			PageHeaderDetail();
 		}
 		$YPos -= $FontSize;
@@ -236,7 +236,7 @@ if(isset($_POST['TaxAuthority']) AND
 
 	/*OK and now the summary */
 
-	include('includes/PDFTaxPageheader.php');
+	include('includes/PDFTaxPageHeader.inc');
 	PageHeaderSummary();
 
 	$FontSize = 10;

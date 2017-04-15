@@ -162,7 +162,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 
     $ListCount = DB_num_rows($AccountsResult); // UldisN
 
-	include('includes/PDFBalanceSheetPageheader.php');
+	include('includes/PDFBalanceSheetPageHeader.inc');
 
 	$k=0; //row colour counter
 	$Section='';
@@ -201,7 +201,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
         				$LYGroupTotal[$Level]=0;
         				$Level--;
                         if ($YPos < $Bottom_Margin){
-                            include('includes/PDFBalanceSheetPageheader.php');
+                            include('includes/PDFBalanceSheetPageHeader.inc');
                         }
         			}
         			$YPos -= $line_height;
@@ -213,7 +213,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
         			$LYGroupTotal[$Level]=0;
         			$YPos -= $line_height;
                     if ($YPos < $Bottom_Margin){
-                        include('includes/PDFBalanceSheetPageheader.php');
+                        include('includes/PDFBalanceSheetPageHeader.inc');
                     }
         		}
         }
@@ -228,7 +228,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,100,$FontSize,locale_number_format($SectionBalanceLY,$_SESSION['CompanyRecord']['decimalplaces']),'right');
 				$YPos -= (2 * $line_height);
 				if ($YPos < $Bottom_Margin){
-					include('includes/PDFBalanceSheetPageheader.php');
+					include('includes/PDFBalanceSheetPageHeader.inc');
 				}
 			}
 			$SectionBalanceLY = 0;
@@ -240,14 +240,14 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$Sections[$myrow['sectioninaccounts']]);
 				$YPos -= (2 * $line_height);
                 if ($YPos < $Bottom_Margin){
-                    include('includes/PDFBalanceSheetPageheader.php');
+                    include('includes/PDFBalanceSheetPageHeader.inc');
                 }
 			}
 		}
 
 		if ($myrow['groupname']!= $ActGrp){
 			if ($YPos < $Bottom_Margin + $line_height){
-			   include('includes/PDFBalanceSheetPageheader.php');
+			   include('includes/PDFBalanceSheetPageHeader.inc');
 			}
 			$FontSize =8;
 			$pdf->setFont('','B');
@@ -287,7 +287,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 			}
 		}
 		if ($YPos < ($Bottom_Margin)){
-			include('includes/PDFBalanceSheetPageheader.php');
+			include('includes/PDFBalanceSheetPageHeader.inc');
 		}
 	}//end of loop
 

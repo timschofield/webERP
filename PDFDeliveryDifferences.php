@@ -217,7 +217,7 @@ $line_height=12;
 $PageNumber = 1;
 $TotalDiffs = 0;
 
-include ('includes/PDFDeliveryDifferencesPageheader.php');
+include ('includes/PDFDeliveryDifferencesPageHeader.inc');
 
 while ($myrow=DB_fetch_array($Result)){
 
@@ -236,7 +236,7 @@ while ($myrow=DB_fetch_array($Result)){
 	  if ($YPos - (2 *$line_height) < $Bottom_Margin){
 		  /*Then set up a new page */
 			  $PageNumber++;
-		  include ('includes/PDFDeliveryDifferencesPageheader.php');
+		  include ('includes/PDFDeliveryDifferencesPageHeader.inc');
 	  } /*end of new page header  */
 } /* end of while there are delivery differences to print */
 

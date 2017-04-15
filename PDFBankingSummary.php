@@ -144,7 +144,7 @@ if (isset($_POST['BatchNo']) and $_POST['BatchNo']!='') {
 	$PageNumber = 0;
 	$TotalBanked = 0;
 
-	include ('includes/PDFBankingSummaryPageheader.php');
+	include ('includes/PDFBankingSummaryPageHeader.inc');
 
 	while ($myrow=DB_fetch_array($CustRecs)){
 
@@ -158,7 +158,7 @@ if (isset($_POST['BatchNo']) and $_POST['BatchNo']!='') {
 
 		if ($YPos - (2 *$line_height) < $Bottom_Margin){
 			/*Then set up a new page */
-			include ('includes/PDFBankingSummaryPageheader.php');
+			include ('includes/PDFBankingSummaryPageHeader.inc');
 		} /*end of new page header  */
 	} /* end of while there are customer receipts in the batch to print */
 
@@ -172,7 +172,7 @@ if (isset($_POST['BatchNo']) and $_POST['BatchNo']!='') {
 
 		if ($YPos - (2 *$line_height) < $Bottom_Margin){
 			/*Then set up a new page */
-			include ('includes/PDFBankingSummaryPageheader.php');
+			include ('includes/PDFBankingSummaryPageHeader.inc');
 		} /*end of new page header  */
 	} /* end of while there are GL receipts in the batch to print */
 

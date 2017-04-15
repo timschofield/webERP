@@ -67,7 +67,7 @@ if (isset($_POST['PrintPDF'])){
 		exit;
 	}
 
-	include ('includes/KLPDFInventoryAtShopPageheader.php');
+	include ('includes/KLPDFInventoryAtShopPageHeader.inc');
 
 	$Tot_Val=0;
 	$Category = '';
@@ -93,7 +93,7 @@ if (isset($_POST['PrintPDF'])){
 		$CatTot_Qty += $InventoryValn['qtyonhand'];
 
 		if ($YPos < $Bottom_Margin + $line_height){
-		   include('includes/KLPDFInventoryAtShopPageheader.php');
+		   include('includes/KLPDFInventoryAtShopPageHeader.inc');
 		}
 
 	} /*end inventory valn while loop */

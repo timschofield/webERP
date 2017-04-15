@@ -31,7 +31,7 @@ $pdf->addInfo('Subject',_('Sales Analysis Report') . ' ' . $ReportSpec['reporthe
 $PageNumber = 0;
 $line_height=12;
 
-include ('includes/PDFSalesAnalPageheader.php');
+include ('includes/PDFSalesAnalPageHeader.inc');
 
 $GrpData1='';
 $GrpData2='';
@@ -231,7 +231,7 @@ While ($myrow = DB_fetch_array($result)){
 		if ($myrow['col1']!=$GrpData1){ /*Need a new heading for Level 1 */
 			$NewHeading = 1;
 			if ($ReportSpec['newpageafter1']==1){
-				include ('includes/PDFSalesAnalPageheader.php');
+				include ('includes/PDFSalesAnalPageHeader.inc');
 			}
 			$GroupHeadingText = mb_substr($myrow['col1'] . ' - ' . $myrow['col2'],0,50);
 			$LeftOvers = $pdf->addTextWrap(15,$Ypos,205,$FontSize,$GroupHeadingText);
@@ -245,7 +245,7 @@ While ($myrow = DB_fetch_array($result)){
 			/*Need a new heading for Level 2 */
 			$NewHeading = 1;
 			if ($ReportSpec['newpageafter2']==1){
-				include ('includes/PDFSalesAnalPageheader.php');
+				include ('includes/PDFSalesAnalPageHeader.inc');
 			}
 			$GroupHeadingText = mb_substr($myrow['col3'] . ' - ' . $myrow['col4'],0,46);
 			$LeftOvers = $pdf->addTextWrap(30,$Ypos,190,$FontSize,$GroupHeadingText);
@@ -258,7 +258,7 @@ While ($myrow = DB_fetch_array($result)){
 			/*Need a new heading for Level 3 */
 
 			if ($ReportSpec['newpageafter3']==1){
-				include ('includes/PDFSalesAnalPageheader.php');
+				include ('includes/PDFSalesAnalPageHeader.inc');
 			}
 			$GroupHeadingText = mb_substr($myrow['col5'] . ' - ' . $myrow['col6'],0,46);
 			$LeftOvers = $pdf->addTextWrap(30,$Ypos,190,$FontSize,$GroupHeadingText);
@@ -296,7 +296,7 @@ While ($myrow = DB_fetch_array($result)){
 		$Ypos -=$line_height;
 
 		if ($Ypos - (2*$line_height) < $Bottom_Margin){
-			include ('includes/PDFSalesAnalPageheader.php');
+			include ('includes/PDFSalesAnalPageHeader.inc');
 		}//end if need a new page headed up
 		$GrpData1 = $myrow['col1'];
 		$GrpData2 = $myrow['col3'];

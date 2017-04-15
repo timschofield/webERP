@@ -287,7 +287,7 @@ if (isset($PrintPDF) AND isset($FromTransNo) AND isset($InvOrCredit)){
 				$FontSize = 10;
 				$PageNumber = 1;
 
-				include('includes/PDFTransPageheader.php');
+				include('includes/PDFTransPageHeader.inc');
 				$FirstPage = False;
 				while ($myrow2=DB_fetch_array($result)) {
 
@@ -329,7 +329,7 @@ if (isset($PrintPDF) AND isset($FromTransNo) AND isset($InvOrCredit)){
 								/* head up a new invoice/credit note page */
 								/* draw the vertical column lines right to the bottom */
 								PrintLinesToBottom ();
-	   		        				include ('includes/PDFTransPageheader.php');
+	   		        				include ('includes/PDFTransPageHeader.inc');
 			   				} //end if need a new page headed up
 
 			   				/* increment a line down for the next line item */
@@ -344,7 +344,7 @@ if (isset($PrintPDF) AND isset($FromTransNo) AND isset($InvOrCredit)){
 						/* head up a new invoice/credit note page */
 						/*draw the vertical column lines right to the bottom */
 						PrintLinesToBottom ();
-						include ('includes/PDFTransPageheader.php');
+						include ('includes/PDFTransPageHeader.inc');
 					} //end if need a new page headed up
 
 				} //end while there invoice are line items to print out
@@ -355,7 +355,7 @@ if (isset($PrintPDF) AND isset($FromTransNo) AND isset($InvOrCredit)){
 			/* check to see enough space left to print the 4 lines for the totals/footer */
 			if (($YPos-$Bottom_Margin)<(2*$line_height)) {
 				PrintLinesToBottom ();
-				include ('includes/PDFTransPageheader.php');
+				include ('includes/PDFTransPageHeader.inc');
 			}
 			/* Print a column vertical line  with enough space for the footer */
 			/* draw the vertical column lines to 4 lines shy of the bottom to leave space for invoice footer info ie totals etc */

@@ -266,7 +266,7 @@ if (DB_error_no()!=0){
 	exit;
 }
 
-include ('includes/PDFOrdersInvoicedPageheader.php');
+include ('includes/PDFOrdersInvoicedPageHeader.inc');
 
 $OrderNo =0; /*initialise */
 $AccumTotalInv =0;
@@ -306,7 +306,7 @@ while ($myrow=DB_fetch_array($Result)){
 		if ($YPos - (2 *$line_height) < $Bottom_Margin){
 			/*Then set up a new page */
 			$PageNumber++;
-			include ('includes/PDFOrdersInvoicedPageheader.php');
+			include ('includes/PDFOrdersInvoicedPageHeader.inc');
 		} /*end of new page header  */
 	}
 
@@ -354,7 +354,7 @@ while ($myrow=DB_fetch_array($Result)){
 	if ($YPos - (2 *$line_height) < $Bottom_Margin){
 		/*Then set up a new page */
 		$PageNumber++;
-		include ('includes/PDFOrdersInvoicedPageheader.php');
+		include ('includes/PDFOrdersInvoicedPageHeader.inc');
 	} /*end of new page header  */
 
 
@@ -401,7 +401,7 @@ while ($myrow=DB_fetch_array($Result)){
 		 	if ($YPos - (2 *$line_height) < $Bottom_Margin){
 				/*Then set up a new page */
 				$PageNumber++;
-				include ('includes/PDFOrdersInvoicedPageheader.php');
+				include ('includes/PDFOrdersInvoicedPageHeader.inc');
 			} /*end of new page header  */
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+450,$YPos,100,$FontSize,$LeftOvers, 'center');
 		}
@@ -410,7 +410,7 @@ while ($myrow=DB_fetch_array($Result)){
 		 if ($YPos - (2 *$line_height) < $Bottom_Margin){
 			/*Then set up a new page */
 			$PageNumber++;
-			include ('includes/PDFOrdersInvoicedPageheader.php');
+			include ('includes/PDFOrdersInvoicedPageHeader.inc');
 		} /*end of new page header  */
 		$AccumOrderTotal += $ValueInvoiced;
 		$AccumTotalInv += $ValueInvoiced;
@@ -421,7 +421,7 @@ while ($myrow=DB_fetch_array($Result)){
 	 if ($YPos - (2 *$line_height) < $Bottom_Margin){
 		/*Then set up a new page */
 			$PageNumber++;
-		 include ('includes/PDFOrdersInvoicedPageheader.php');
+		 include ('includes/PDFOrdersInvoicedPageHeader.inc');
 	 } /*end of new page header  */
 } /* end of while there are invoiced orders to print */
 

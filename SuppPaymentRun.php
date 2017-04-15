@@ -35,7 +35,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
   /*Now figure out the invoice less credits due for the Supplier range under review */
 
-	include ('includes/PDFPaymentRunPageheader.php');
+	include ('includes/PDFPaymentRunPageHeader.inc');
 
 	$sql = "SELECT suppliers.supplierid,
 					currencies.decimalplaces AS currdecimalplaces,
@@ -199,7 +199,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 			$YPos -=$line_height;
 			if ($YPos < $Bottom_Margin + $line_height){
 				$PageNumber++;
-				include('includes/PDFPaymentRunPageheader.php');
+				include('includes/PDFPaymentRunPageHeader.inc');
 			}
 		} /*end while there are detail transactions to show */
 	} /* end while there are suppliers to retrieve transactions for */

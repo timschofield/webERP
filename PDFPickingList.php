@@ -274,7 +274,7 @@ for ($i=0;$i<sizeof($OrdersToPick);$i++){
 		OR (isset($LineResult)
 		AND DB_num_rows($LineResult)>0)){
 		/*Yes there are line items to start the ball rolling with a page header */
-		include('includes/PDFPickingListheader.php');
+		include('includes/PDFPickingListHeader.inc');
 		if (isset($_POST['TransDate']) or (isset($_GET['TransNo']) and $_GET['TransNo'] != 'Preview')) {
 			$LinesToShow=DB_num_rows($LineResult);
 			$PickingListNo = GetNextTransNo(19, $db);
@@ -332,7 +332,7 @@ for ($i=0;$i<sizeof($OrdersToPick);$i++){
 			if ($Page_Height-$YPos-$line_height <= 50){
 			/* We reached the end of the page so finish off the page and start a new */
 				$PageNumber++;
-				include ('includes/PDFPickingListheader.php');
+				include ('includes/PDFPickingListHeader.inc');
 			} //end if need a new page headed up
 			else{
 				/*increment a line down for the next line item */

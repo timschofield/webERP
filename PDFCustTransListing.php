@@ -106,7 +106,7 @@ $line_height=12;
 $PageNumber = 1;
 $TotalAmount = 0;
 
-include ('includes/PDFCustTransListingPageheader.php');
+include ('includes/PDFCustTransListingPageHeader.inc');
 
 while ($myrow=DB_fetch_array($result)){
 
@@ -127,7 +127,7 @@ while ($myrow=DB_fetch_array($result)){
 	  if ($YPos - (2 *$line_height) < $Bottom_Margin){
 		  /*Then set up a new page */
 			  $PageNumber++;
-		  include ('includes/PDFCustTransListingPageheader.php');
+		  include ('includes/PDFCustTransListingPageHeader.inc');
 	  } /*end of new page header  */
 } /* end of while there are customer receipts in the batch to print */
 

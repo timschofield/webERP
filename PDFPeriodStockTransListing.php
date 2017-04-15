@@ -182,7 +182,7 @@ switch ($_POST['TransType']) {
 		break;
 }
 
-include ('includes/PDFPeriodStockTransListingPageheader.php');
+include ('includes/PDFPeriodStockTransListingPageHeader.inc');
 
 while ($myrow=DB_fetch_array($result)){
 
@@ -198,7 +198,7 @@ while ($myrow=DB_fetch_array($result)){
 	  if ($YPos - (2 *$line_height) < $Bottom_Margin){
 		  /*Then set up a new page */
 			  $PageNumber++;
-		  include ('includes/PDFPeriodStockTransListingPageheader.php');
+		  include ('includes/PDFPeriodStockTransListingPageHeader.inc');
 	  } /*end of new page header  */
 } /* end of while there are customer receipts in the batch to print */
 

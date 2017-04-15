@@ -104,7 +104,7 @@ $line_height=12;
 $PageNumber = 1;
 $TotalCheques = 0;
 
-include ('includes/PDFSuppTransListingPageheader.php');
+include ('includes/PDFSuppTransListingPageHeader.inc');
 
 while ($myrow=DB_fetch_array($result)){
     $CurrDecimalPlaces = $myrow['currdecimalplaces'];
@@ -121,7 +121,7 @@ while ($myrow=DB_fetch_array($result)){
 	  if ($YPos - (2 *$line_height) < $Bottom_Margin){
 		/*Then set up a new page */
 		$PageNumber++;
-		include ('includes/PDFChequeListingPageheader.php');
+		include ('includes/PDFChequeListingPageHeader.inc');
 	  } /*end of new page header  */
 } /* end of while there are customer receipts in the batch to print */
 

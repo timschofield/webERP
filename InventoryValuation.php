@@ -94,7 +94,7 @@ if (isset($_POST['PrintPDF'])){
 		exit;
 	}
 
-	include ('includes/PDFInventoryValnPageheader.php');
+	include ('includes/PDFInventoryValnPageHeader.inc');
 
 	$Tot_Val=0;
 	$Category = '';
@@ -111,7 +111,7 @@ if (isset($_POST['PrintPDF'])){
 				if ($_POST['DetailedReport']=='Yes'){
 					$YPos -= (2*$line_height);
 					if ($YPos < $Bottom_Margin + (3*$line_height)){
-		 				  include('includes/PDFInventoryValnPageheader.php');
+		 				  include('includes/PDFInventoryValnPageHeader.inc');
 					}
 					$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,_('Total for') . ' ' . $Category . ' - ' . $CategoryName);
 				}
@@ -156,7 +156,7 @@ if (isset($_POST['PrintPDF'])){
 		$CatTot_Qty += $InventoryValn['qtyonhand'];
 
 		if ($YPos < $Bottom_Margin + $line_height){
-		   include('includes/PDFInventoryValnPageheader.php');
+		   include('includes/PDFInventoryValnPageHeader.inc');
 		}
 
 	} /*end inventory valn while loop */
@@ -182,7 +182,7 @@ if (isset($_POST['PrintPDF'])){
 	$YPos -= (2*$line_height);
 
 	if ($YPos < $Bottom_Margin + $line_height){
-		   include('includes/PDFInventoryValnPageheader.php');
+		   include('includes/PDFInventoryValnPageHeader.inc');
 	}
 /*Print out the grand totals */
 	$LeftOvers = $pdf->addTextWrap(80,$YPos,260-$Left_Margin,$FontSize,_('Grand Total Value'), 'right');

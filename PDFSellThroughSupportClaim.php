@@ -91,7 +91,7 @@ if (isset($_POST['PrintPDF'])) {
 		exit;
 	}
 
-	include ('includes/PDFSellThroughSupportClaimPageheader.php');
+	include ('includes/PDFSellThroughSupportClaimPageHeader.inc');
 	$SupplierClaimTotal=0;
 	$Supplier = '';
 	$FontSize=8;
@@ -102,7 +102,7 @@ if (isset($_POST['PrintPDF'])) {
 			if ($SupplierClaimTotal > 0) {
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+2,$YPos,30,$FontSize,$Supplier . ' ' . _('Total Claim:') . ' (' . $CurrCode . ')');
 				$LeftOvers = $pdf->addTextWrap(440,$YPos,60,$FontSize, locale_number_format($SupplierClaimTotal,$CurrDecimalPlaces), 'right');
-				include('includes/PDFSellThroughClaimPageheader.php');
+				include('includes/PDFSellThroughClaimPageHeader.inc');
 			}
 		}
 		if ($SellThroRow['suppname']!=$Supplier){
@@ -131,7 +131,7 @@ if (isset($_POST['PrintPDF'])) {
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+480,$YPos,60,$FontSize,locale_number_format($ClaimAmount,$CurrDecimalPlaces), 'right');
 
 		if ($YPos < $Bottom_Margin + $line_height){
-			include('includes/PDFSellThroughSupportClaimPageheader.php');
+			include('includes/PDFSellThroughSupportClaimPageHeader.inc');
 		}
 
 	} /*end sell through support claims while loop */

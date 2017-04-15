@@ -1,5 +1,5 @@
 <?php
-/* $Id: PDFBankingSummaryPageheader.php 3242 2009-12-16 22:06:53Z tim_schofield $*/
+/* $Id: PDFBankingSummaryPageHeader.inc 3242 2009-12-16 22:06:53Z tim_schofield $*/
 $PageNumber++;
 if ($PageNumber>1){
 	$pdf->newPage();

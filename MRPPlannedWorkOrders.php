@@ -205,7 +205,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 				if ($YPos < $Bottom_Margin + $line_height){
 				   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
 							   $Right_Margin,$_POST['Consolidation'],$ReportDate);
-				  // include('includes/MRPPlannedWorkOrdersPageheader.php');
+				  // include('includes/MRPPlannedWorkOrdersPageHeader.inc');
 				}
 
 		} /*end while loop */
@@ -224,7 +224,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 		if ($YPos < $Bottom_Margin + $line_height){
 			   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
 						   $Right_Margin,$_POST['Consolidation'],$ReportDate);
-			  // include('includes/MRPPlannedWorkOrdersPageheader.php');
+			  // include('includes/MRPPlannedWorkOrdersPageHeader.inc');
 		}
 		/*Print out the grand totals */
 		$pdf->addTextWrap($Left_Margin,$YPos,120,$FontSize,_('Number of Work Orders: '), 'left');

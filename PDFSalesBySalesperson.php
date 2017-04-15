@@ -66,7 +66,7 @@ $pdf->addInfo('Subject',_('Orders from') . ' ' . $_POST['FromDate'] . ' ' . _('t
 $line_height=12;
 $PageNumber = 1;
 $TotalDiffs = 0;
-include ('includes/PDFWeeklyOrdersPageheader.php');
+include ('includes/PDFWeeklyOrdersPageHeader.inc');
 $Col1=2;
 $Col2=40;
 $Col3=160;
@@ -116,7 +116,7 @@ while ($myrow=DB_fetch_array($Result)){
 
 	if ($Salesman > '' and $Salesman <> $myrow['salesmanname']){
 		$PageNumber++;
-		include ('includes/PDFWeeklyOrdersPageheader.php');
+		include ('includes/PDFWeeklyOrdersPageHeader.inc');
 	} /*end of new page header  */
 	$Salesman = $myrow['salesmanname'];
 	
@@ -131,7 +131,7 @@ while ($myrow=DB_fetch_array($Result)){
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+$Col9,$YPos,$Col10-$Col9-5,$FontSize,$myrow['salesmanname'], 'left');
 	if ($YPos - (2 *$line_height) < $Bottom_Margin){
 		$PageNumber++;
-		include ('includes/PDFWeeklyOrdersPageheader.php');
+		include ('includes/PDFWeeklyOrdersPageHeader.inc');
 	} /*end of new page header  */
 	$YPos -= $line_height;
 

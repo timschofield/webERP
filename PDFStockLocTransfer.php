@@ -91,7 +91,7 @@ If (DB_num_rows($result)==0){
 
 $TransferRow = DB_fetch_array($result);
 
-include ('includes/PDFStockLocTransferheader.php');
+include ('includes/PDFStockLocTransferHeader.inc');
 $line_height=30;
 $FontSize=10;
 
@@ -108,7 +108,7 @@ do {
 
 	if ($YPos < $Bottom_Margin + $line_height) {
 		$PageNumber++;
-		include('includes/PDFStockLocTransferheader.php');
+		include('includes/PDFStockLocTransferHeader.inc');
 	}
 
 } while ($TransferRow = DB_fetch_array($result));

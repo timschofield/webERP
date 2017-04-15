@@ -205,7 +205,7 @@ if ((!isset($_POST['FromPeriod'])
 		exit;
 	}
 
-	include('includes/PDFProfitAndLossPageheader.php');
+	include('includes/PDFProfitAndLossPageHeader.inc');
 
 	$Section = '';
 	$SectionPrdActual = 0;
@@ -230,7 +230,7 @@ if ((!isset($_POST['FromPeriod'])
 
 		// Print heading if at end of page
 		if ($YPos < ($Bottom_Margin)){
-			include('includes/PDFProfitAndLossPageheader.php');
+			include('includes/PDFProfitAndLossPageHeader.inc');
 		}
 
 		if ($myrow['groupname'] != $ActGrp){
@@ -262,7 +262,7 @@ if ((!isset($_POST['FromPeriod'])
 						$Level--;
 // Print heading if at end of page
 						if ($YPos < ($Bottom_Margin + (2*$line_height))){
-							include('includes/PDFProfitAndLossPageheader.php');
+							include('includes/PDFProfitAndLossPageHeader.inc');
 						}
 					} //end of loop
 					//still need to print out the group total for the same level
@@ -293,7 +293,7 @@ if ((!isset($_POST['FromPeriod'])
 
 		// Print heading if at end of page
 		if ($YPos < ($Bottom_Margin +(2 * $line_height))){
-			include('includes/PDFProfitAndLossPageheader.php');
+			include('includes/PDFProfitAndLossPageHeader.inc');
 		}
 
 		if ($myrow['sectioninaccounts'] != $Section){
@@ -459,7 +459,7 @@ if ((!isset($_POST['FromPeriod'])
 				$Level--;
 				// Print heading if at end of page
 				if ($YPos < ($Bottom_Margin + (2*$line_height))){
-					include('includes/PDFProfitAndLossPageheader.php');
+					include('includes/PDFProfitAndLossPageHeader.inc');
 				}
 			}
 			//still need to print out the group total for the same level
@@ -488,7 +488,7 @@ if ((!isset($_POST['FromPeriod'])
 	}
 	// Print heading if at end of page
 	if ($YPos < ($Bottom_Margin + (2*$line_height))){
-		include('includes/PDFProfitAndLossPageheader.php');
+		include('includes/PDFProfitAndLossPageHeader.inc');
 	}
 	if ($Section != ''){
 

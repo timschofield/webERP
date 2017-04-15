@@ -250,7 +250,7 @@ if(isset($_POST['PrintPDF'])) {
 	}
 
 
-	include('includes/PDFCustomerListPageheader.php');
+	include('includes/PDFCustomerListPageHeader.inc');
 
 	$Area ='';
 	$SalesPerson='';
@@ -295,7 +295,7 @@ if(isset($_POST['PrintPDF'])) {
 				$FontSize=10;
 				$YPos -=$line_height;
 				if($YPos < ($Bottom_Margin + 80)) {
-					include('includes/PDFCustomerListPageheader.php');
+					include('includes/PDFCustomerListPageHeader.inc');
 				}
 				$pdf->setFont('','B');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,_('Customers in') . ' ' . $Customers['areadescription']);
@@ -309,7 +309,7 @@ if(isset($_POST['PrintPDF'])) {
 				$FontSize=10;
 				$YPos -=($line_height);
 				if($YPos < ($Bottom_Margin + 80)) {
-					include('includes/PDFCustomerListPageheader.php');
+					include('includes/PDFCustomerListPageHeader.inc');
 				}
 				$pdf->setFont('','B');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,300-$Left_Margin,$FontSize,$Customers['salesmanname']);
@@ -354,7 +354,7 @@ if(isset($_POST['PrintPDF'])) {
 
 			$YPos -=40;
 			if($YPos < ($Bottom_Margin +30)) {
-				include('includes/PDFCustomerListPageheader.php');
+				include('includes/PDFCustomerListPageHeader.inc');
 			}
 		} /*end if $PrintThisCustomer == true */
 	} /*end while loop */

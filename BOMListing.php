@@ -57,7 +57,7 @@ If (isset($_POST['PrintPDF'])
 	   exit;
 	}
 
-	include ('includes/PDFBOMListingPageheader.php');
+	include ('includes/PDFBOMListingPageHeader.inc');
 
 	$ParentPart = '';
 
@@ -92,7 +92,7 @@ If (isset($_POST['PrintPDF'])
 		$LeftOvers = $pdf->addTextWrap(480,$YPos,60,$FontSize,$DisplayQuantity,'right');
 
 		if ($YPos < $Bottom_Margin + $line_height){
-		   include('includes/PDFBOMListingPageheader.php');
+		   include('includes/PDFBOMListingPageHeader.inc');
 		}
 
 	} /*end BOM Listing while loop */

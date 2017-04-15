@@ -276,7 +276,7 @@ if (DB_error_no()!=0){
 	exit;
 }
 
-include ('includes/PDFOrderStatusPageheader.php');
+include ('includes/PDFOrderStatusPageHeader.inc');
 
 $OrderNo =0; /*initialise */
 
@@ -307,7 +307,7 @@ while ($myrow=DB_fetch_array($Result)){
 		if ($YPos - (2 *$line_height) < $Bottom_Margin){
 			/*Then set up a new page */
 			$PageNumber++;
-			include ('includes/PDFOrderStatusPageheader.php');
+			include ('includes/PDFOrderStatusPageHeader.inc');
 			$OrderNo=0;
 		} /*end of new page header  */
 		$YPos -= $line_height;
@@ -357,7 +357,7 @@ while ($myrow=DB_fetch_array($Result)){
 	 if ($YPos - (2 *$line_height) < $Bottom_Margin){
 		/*Then set up a new page */
 		$PageNumber++;
-		include ('includes/PDFOrderStatusPageheader.php');
+		include ('includes/PDFOrderStatusPageHeader.inc');
 		$OrderNo=0;
 	 } /*end of new page header  */
 } /* end of while there are delivery differences to print */

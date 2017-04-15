@@ -97,7 +97,7 @@ while ($counter<=$LineCount) {
 		/* We reached the end of the page so finsih off the page and start a newy */
 		$PageNumber++;
 		$YPos=$FormDesign->Data->y;
-		include ('includes/PDFGrnheader.php');
+		include ('includes/PDFGrnHeader.inc');
 	} //end if need a new page headed up
 }
 

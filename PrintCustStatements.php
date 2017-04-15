@@ -219,7 +219,7 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 					$pdf->newPage();
 		      		}
 
-		      		include('includes/PDFStatementPageheader.php');
+		      		include('includes/PDFStatementPageHeader.inc');
 
 				$Cust_Name = $StmtHeader['name'];
 				$Cust_No = $StmtHeader['debtorno'];
@@ -261,7 +261,7 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 
 								$PageNumber++;
 								$pdf->newPage();
-								include ('includes/PDFStatementPageheader.php');
+								include ('includes/PDFStatementPageHeader.inc');
 							} //end if need a new page headed up
 
 							/*increment a line down for the next line item */
@@ -277,7 +277,7 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 					if ($YPos-(2 * $line_height) <= $Bottom_Margin){
 						$PageNumber++;
 						$pdf->newPage();
-						include ('includes/PDFStatementPageheader.php');
+						include ('includes/PDFStatementPageHeader.inc');
 					}
 				/*Now the same again for outstanding transactions */
 
@@ -318,7 +318,7 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 
 						$PageNumber++;
 						$pdf->newPage();
-						include ('includes/PDFStatementPageheader.php');
+						include ('includes/PDFStatementPageHeader.inc');
 					} //end if need a new page headed up
 
 					/*increment a line down for the next line item */
@@ -336,7 +336,7 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 			/* head up a new statement page */
 				$PageNumber++;
 				$pdf->newPage();
-				include ('includes/PDFStatementPageheader.php');
+				include ('includes/PDFStatementPageHeader.inc');
 			}
 				/*Now figure out the aged analysis for the customer under review */
 
