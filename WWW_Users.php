@@ -729,7 +729,7 @@ foreach($ModuleList as $ModuleName) {
 
 // Turn off/on dashboard after Login:
 echo '<tr>
-		<td><label for="ShowDashboard">', _('Display Dashboard after Login'), ':</label></td>
+		<td><label for="ShowDashboard">', _('Display dashboard'), ':</label></td>
 		<td><select id="ShowDashboard" name="ShowDashboard">';
 if($_POST['ShowDashboard']==0) {
 	echo '<option selected="selected" value="0">', _('No'), '</option>',
@@ -738,7 +738,9 @@ if($_POST['ShowDashboard']==0) {
 	echo '<option value="0">', _('No'), '</option>',
  		 '<option selected="selected" value="1">', _('Yes'), '</option>';
 }
-echo '</select></td>
+echo '</select>',
+		(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Show dashboard page after Login') : ''), // If the parameter $_SESSION['ShowFieldHelp'] is not set OR is TRUE, shows this field help text.
+		'</td>
 	</tr>';
 // Turn off/on page help:
 echo '<tr>

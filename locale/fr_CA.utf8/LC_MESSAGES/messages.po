@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-13 11:01-0600\n"
+"POT-Creation-Date: 2017-04-15 14:11-0600\n"
 "PO-Revision-Date: 2015-02-06 10:12-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: french <none>\n"
@@ -375,8 +375,8 @@ msgstr "Pertes et profits"
 #: TestPlanResults.php:928 UserGLAccounts.php:187 UserGLAccounts.php:196
 #: UserSettings.php:209 UserSettings.php:212 UserSettings.php:224
 #: UserSettings.php:227 WWW_Users.php:549 WWW_Users.php:551 WWW_Users.php:720
-#: WWW_Users.php:723 WWW_Users.php:736 WWW_Users.php:739 WWW_Users.php:749
-#: WWW_Users.php:752 WWW_Users.php:764 WWW_Users.php:767
+#: WWW_Users.php:723 WWW_Users.php:736 WWW_Users.php:739 WWW_Users.php:751
+#: WWW_Users.php:754 WWW_Users.php:766 WWW_Users.php:769
 #: reportwriter/languages/en_US/reports.php:114
 msgid "Yes"
 msgstr "Oui"
@@ -446,8 +446,8 @@ msgstr "Oui"
 #: TestPlanResults.php:927 UserGLAccounts.php:189 UserGLAccounts.php:199
 #: UserSettings.php:208 UserSettings.php:211 UserSettings.php:223
 #: UserSettings.php:226 WWW_Users.php:548 WWW_Users.php:552 WWW_Users.php:719
-#: WWW_Users.php:722 WWW_Users.php:735 WWW_Users.php:738 WWW_Users.php:748
-#: WWW_Users.php:751 WWW_Users.php:763 WWW_Users.php:766
+#: WWW_Users.php:722 WWW_Users.php:735 WWW_Users.php:738 WWW_Users.php:750
+#: WWW_Users.php:753 WWW_Users.php:765 WWW_Users.php:768
 #: includes/PDFLowGPPageHeader.inc:44
 #: reportwriter/languages/en_US/reports.php:82
 msgid "No"
@@ -717,7 +717,7 @@ msgstr ""
 #: StockCategories.php:653 SupplierContacts.php:284 SuppLoginSetup.php:291
 #: TaxAuthorities.php:327 TaxCategories.php:244 TaxProvinces.php:234
 #: TestPlanResults.php:967 UnitsOfMeasure.php:241 WorkCentres.php:289
-#: WWW_Users.php:835
+#: WWW_Users.php:837
 msgid "Enter Information"
 msgstr "Valider"
 
@@ -14512,9 +14512,9 @@ msgstr "Annonce pour la période"
 msgid "Run Report"
 msgstr "Exécuter un rapport"
 
-#: GLAccounts.php:10
-msgid "Without setting up"
-msgstr ""
+#: GLAccounts.php:10 GLCashFlowsIndirect.php:15
+msgid "Not set up"
+msgstr "Non configuré"
 
 #: GLAccounts.php:11 GLAccounts.php:272 GLCashFlowsIndirect.php:16
 msgid "No effect on cash flow"
@@ -14953,10 +14953,6 @@ msgstr "Impossible de récupérer les enregistrements ChartDetail parce"
 #: GLBudgets.php:277 Z_UpdateChartDetailsBFwd.php:88
 msgid "Could not update the chartdetails record because"
 msgstr "Impossible de mettre à jour l'enregistrement parce chartdetails"
-
-#: GLCashFlowsIndirect.php:15
-msgid "Not set up"
-msgstr ""
 
 #: GLCashFlowsIndirect.php:17
 msgid "Operating activities"
@@ -16457,7 +16453,7 @@ msgstr ""
 msgid "View any open tenders without an offer"
 msgstr ""
 
-#: index.php:38 WWW_Users.php:820
+#: index.php:38 WWW_Users.php:822
 msgid "Account Status"
 msgstr "Statut du Compte"
 
@@ -39149,23 +39145,23 @@ msgid "If you leave the password boxes empty your password will not change"
 msgstr ""
 "Si vous laissez le mot de passe vide, votre mot de passe ne changera pas"
 
-#: UserSettings.php:205 WWW_Users.php:745
+#: UserSettings.php:205 WWW_Users.php:747
 msgid "Display page help"
 msgstr ""
 
-#: UserSettings.php:215 WWW_Users.php:755
+#: UserSettings.php:215 WWW_Users.php:757
 msgid "Show page help when available"
 msgstr ""
 
-#: UserSettings.php:220 WWW_Users.php:760
+#: UserSettings.php:220 WWW_Users.php:762
 msgid "Display field help"
 msgstr ""
 
-#: UserSettings.php:230 WWW_Users.php:770
+#: UserSettings.php:230 WWW_Users.php:772
 msgid "Show field help when available"
 msgstr ""
 
-#: UserSettings.php:238 WWW_Users.php:778
+#: UserSettings.php:238 WWW_Users.php:780
 msgid "PDF Language Support"
 msgstr "Prise en charge linguistique PDF"
 
@@ -40699,22 +40695,26 @@ msgid "Not a salesperson only login"
 msgstr "Pas une seule connexion vendeur"
 
 #: WWW_Users.php:732
-msgid "Display Dashboard after Login"
+msgid "Display dashboard"
 msgstr ""
 
-#: WWW_Users.php:793
+#: WWW_Users.php:742
+msgid "Show dashboard page after Login"
+msgstr ""
+
+#: WWW_Users.php:795
 msgid "Allowed Department for Internal Requests"
 msgstr ""
 
-#: WWW_Users.php:803 WWW_Users.php:805
+#: WWW_Users.php:805 WWW_Users.php:807
 msgid "Any Internal Department"
 msgstr ""
 
-#: WWW_Users.php:823 WWW_Users.php:827
+#: WWW_Users.php:825 WWW_Users.php:829
 msgid "Open"
 msgstr "Actif"
 
-#: WWW_Users.php:824 WWW_Users.php:826
+#: WWW_Users.php:826 WWW_Users.php:828
 msgid "Blocked"
 msgstr "Bloqu"
 

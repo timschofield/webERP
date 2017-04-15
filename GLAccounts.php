@@ -7,7 +7,7 @@
 function CashFlowsActivityName($Activity) {
 	// Converts the cash flow activity number to an activity text.
 	switch($Activity) {
-		case -1: return '<b>' . _('Without setting up') . '</b>';
+		case -1: return '<b>' . _('Not set up') . '</b>';
 		case 0: return _('No effect on cash flow');
 		case 1: return _('Operating activity');
 		case 2: return _('Investing activity');

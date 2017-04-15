@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-13 11:01-0600\n"
+"POT-Creation-Date: 2017-04-15 14:11-0600\n"
 "PO-Revision-Date: 2014-02-10 22:09+0530\n"
 "Last-Translator: Rajesh Kokil <rajeshkokil@hotmail.com>\n"
 "Language-Team: MARATHI LANGUAGE TEAM AT KITS <rajeshkokil@hotmail.com>\n"
@@ -362,8 +362,8 @@ msgstr "नफा, तोटा"
 #: TestPlanResults.php:928 UserGLAccounts.php:187 UserGLAccounts.php:196
 #: UserSettings.php:209 UserSettings.php:212 UserSettings.php:224
 #: UserSettings.php:227 WWW_Users.php:549 WWW_Users.php:551 WWW_Users.php:720
-#: WWW_Users.php:723 WWW_Users.php:736 WWW_Users.php:739 WWW_Users.php:749
-#: WWW_Users.php:752 WWW_Users.php:764 WWW_Users.php:767
+#: WWW_Users.php:723 WWW_Users.php:736 WWW_Users.php:739 WWW_Users.php:751
+#: WWW_Users.php:754 WWW_Users.php:766 WWW_Users.php:769
 #: reportwriter/languages/en_US/reports.php:114
 msgid "Yes"
 msgstr "होय"
@@ -433,8 +433,8 @@ msgstr "होय"
 #: TestPlanResults.php:927 UserGLAccounts.php:189 UserGLAccounts.php:199
 #: UserSettings.php:208 UserSettings.php:211 UserSettings.php:223
 #: UserSettings.php:226 WWW_Users.php:548 WWW_Users.php:552 WWW_Users.php:719
-#: WWW_Users.php:722 WWW_Users.php:735 WWW_Users.php:738 WWW_Users.php:748
-#: WWW_Users.php:751 WWW_Users.php:763 WWW_Users.php:766
+#: WWW_Users.php:722 WWW_Users.php:735 WWW_Users.php:738 WWW_Users.php:750
+#: WWW_Users.php:753 WWW_Users.php:765 WWW_Users.php:768
 #: includes/PDFLowGPPageHeader.inc:44
 #: reportwriter/languages/en_US/reports.php:82
 msgid "No"
@@ -708,7 +708,7 @@ msgstr ""
 #: StockCategories.php:653 SupplierContacts.php:284 SuppLoginSetup.php:291
 #: TaxAuthorities.php:327 TaxCategories.php:244 TaxProvinces.php:234
 #: TestPlanResults.php:967 UnitsOfMeasure.php:241 WorkCentres.php:289
-#: WWW_Users.php:835
+#: WWW_Users.php:837
 msgid "Enter Information"
 msgstr "माहिती प्रविष्ट करा"
 
@@ -14143,8 +14143,8 @@ msgstr "कालावधीसाठी सूची"
 msgid "Run Report"
 msgstr "चालवा अहवाल"
 
-#: GLAccounts.php:10
-msgid "Without setting up"
+#: GLAccounts.php:10 GLCashFlowsIndirect.php:15
+msgid "Not set up"
 msgstr ""
 
 #: GLAccounts.php:11 GLAccounts.php:272 GLCashFlowsIndirect.php:16
@@ -14563,10 +14563,6 @@ msgstr "ChartDetail रेकॉर्ड परत मिळवू शकलो
 #: GLBudgets.php:277 Z_UpdateChartDetailsBFwd.php:88
 msgid "Could not update the chartdetails record because"
 msgstr "Chartdetails रेकॉर्ड अद्यतनित करणे शक्य नाही कारण"
-
-#: GLCashFlowsIndirect.php:15
-msgid "Not set up"
-msgstr ""
 
 #: GLCashFlowsIndirect.php:17
 msgid "Operating activities"
@@ -16043,7 +16039,7 @@ msgstr "एक नवीन ऑफर तयार"
 msgid "View any open tenders without an offer"
 msgstr "ऑफर न खुले निविदा पहा"
 
-#: index.php:38 WWW_Users.php:820
+#: index.php:38 WWW_Users.php:822
 msgid "Account Status"
 msgstr "खाते स्थिती"
 
@@ -37924,23 +37920,23 @@ msgstr "पासवर्ड पुष्टी"
 msgid "If you leave the password boxes empty your password will not change"
 msgstr "आपण आपला संकेतशब्द बदलणार नाही रिकामा पासवर्ड बॉक्स सोडल्यास"
 
-#: UserSettings.php:205 WWW_Users.php:745
+#: UserSettings.php:205 WWW_Users.php:747
 msgid "Display page help"
 msgstr ""
 
-#: UserSettings.php:215 WWW_Users.php:755
+#: UserSettings.php:215 WWW_Users.php:757
 msgid "Show page help when available"
 msgstr ""
 
-#: UserSettings.php:220 WWW_Users.php:760
+#: UserSettings.php:220 WWW_Users.php:762
 msgid "Display field help"
 msgstr ""
 
-#: UserSettings.php:230 WWW_Users.php:770
+#: UserSettings.php:230 WWW_Users.php:772
 msgid "Show field help when available"
 msgstr ""
 
-#: UserSettings.php:238 WWW_Users.php:778
+#: UserSettings.php:238 WWW_Users.php:780
 msgid "PDF Language Support"
 msgstr "पीडीएफ भाषा समर्थन"
 
@@ -39389,22 +39385,26 @@ msgid "Not a salesperson only login"
 msgstr "नाही salesperson फक्त लॉगिन"
 
 #: WWW_Users.php:732
-msgid "Display Dashboard after Login"
+msgid "Display dashboard"
 msgstr ""
 
-#: WWW_Users.php:793
+#: WWW_Users.php:742
+msgid "Show dashboard page after Login"
+msgstr ""
+
+#: WWW_Users.php:795
 msgid "Allowed Department for Internal Requests"
 msgstr "अंतर्गत विनंत्या साठी विभाग अनुमत"
 
-#: WWW_Users.php:803 WWW_Users.php:805
+#: WWW_Users.php:805 WWW_Users.php:807
 msgid "Any Internal Department"
 msgstr "कोणतीही अंतर्गत विभाग"
 
-#: WWW_Users.php:823 WWW_Users.php:827
+#: WWW_Users.php:825 WWW_Users.php:829
 msgid "Open"
 msgstr "उघडा"
 
-#: WWW_Users.php:824 WWW_Users.php:826
+#: WWW_Users.php:826 WWW_Users.php:828
 msgid "Blocked"
 msgstr "अवरोधित"
 
