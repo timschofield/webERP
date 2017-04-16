@@ -176,7 +176,7 @@ function submit(&$db, $TabToShow) {
 			$objWriter->save('php://output');
 
 		}else{
-			$Title = _('Excel file for petty Cash Expenses Analysis');
+			$Title = _('Excel file for Petty Cash Expenses Analysis');
 			include('includes/header.php');
 			prnMsg('No data to analyse');
 			include('includes/footer.php');

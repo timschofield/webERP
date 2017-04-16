@@ -17,16 +17,19 @@
 */
 
 include('includes/DefineSuppAllocsClass.php');
+
 include('includes/session.php');
 $Title = _('Supplier Payment') . '/' . _('Credit Note Allocations');
 $ViewTopic = 'ARTransactions';// Filename in ManualContents.php's TOC./* RChacon: To do ManualAPInquiries.html from ManualARInquiries.html */
-$BookMark = 'SupplierAllocations';// Anchor's id in the manual's html document.
+$BookMark = 'SupplierAllocations';
 include('includes/header.php');
 
-include('includes/SQL_CommonFunctions.inc');
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+	'/images/transactions.png" title="', // Icon image.
+	_('Supplier Allocations'), '" /> ', // Icon title.
+	_('Supplier Allocations'), '</p>';// Page title.
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' .
-	_('Supplier Allocations') . '" alt="" />' . ' ' . _('Supplier Allocations') . '</p>';
+include('includes/SQL_CommonFunctions.inc');
 
 if (isset($_POST['UpdateDatabase']) OR isset($_POST['RefreshAllocTotal'])) {
 
@@ -197,19 +200,19 @@ if (isset($_POST['UpdateDatabase'])){
 		      $_SESSION['Alloc']->TransDate = FormatDateForSQL($_SESSION['Alloc']->TransDate);
 
 		      $SQL = "INSERT INTO gltrans (type,
-											typeno,
-											trandate,
-											periodno,
-											account,
-											narrative,
-											amount)
-							VALUES ('" . $_SESSION['Alloc']->TransType . "',
-								'" . $_SESSION['Alloc']->TransNo . "',
-								'" . $_SESSION['Alloc']->TransDate . "',
-								'" . $PeriodNo . "',
-								'" . $_SESSION['CompanyRecord']['purchasesexchangediffact'] . "',
-								'". _('Exch diff') . "',
-								'" . $MovtInDiffOnExch . "')";
+							typeno,
+							trandate,
+							periodno,
+							account,
+							narrative,
+							amount)
+						VALUES ('" . $_SESSION['Alloc']->TransType . "',
+							'" . $_SESSION['Alloc']->TransNo . "',
+							'" . $_SESSION['Alloc']->TransDate . "',
+							'" . $PeriodNo . "',
+							'" . $_SESSION['CompanyRecord']['purchasesexchangediffact'] . "',
+							'". _('Exchange difference') . "',
+							'" . $MovtInDiffOnExch . "')";
 
 		      $ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL entry for the difference on exchange arising out of this allocation could not be inserted because');
 		      $DbgMsg = _('The following SQL to insert the GLTrans record was used');
@@ -218,19 +221,19 @@ if (isset($_POST['UpdateDatabase'])){
 
 
 		      $SQL = "INSERT INTO gltrans (type,
-											typeno,
-											trandate,
-											periodno,
-											account,
-											narrative,
-											amount)
-							VALUES ('" . $_SESSION['Alloc']->TransType . "',
-								'" . $_SESSION['Alloc']->TransNo . "',
-								'" . $_SESSION['Alloc']->TransDate . "',
-								'" . $PeriodNo . "',
-								'" . $_SESSION['CompanyRecord']['creditorsact'] . "',
-								'" . _('Exch Diff') . "',
-								'" . -$MovtInDiffOnExch . "')";
+							typeno,
+							trandate,
+							periodno,
+							account,
+							narrative,
+							amount)
+						VALUES ('" . $_SESSION['Alloc']->TransType . "',
+							'" . $_SESSION['Alloc']->TransNo . "',
+							'" . $_SESSION['Alloc']->TransDate . "',
+							'" . $PeriodNo . "',
+							'" . $_SESSION['CompanyRecord']['creditorsact'] . "',
+							'" . _('Exchange difference') . "',
+							'" . -$MovtInDiffOnExch . "')";
 
 		      $ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ' : ' .
 		      			 _('The GL entry for the difference on exchange arising out of this allocation could not be inserted because');
