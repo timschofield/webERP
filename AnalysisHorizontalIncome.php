@@ -2,6 +2,7 @@
 /* $Id: AnalysisHorizontalIncome.php 7349 2015-09-14 14:43:19Z rchacon $*/
 /* Shows the horizontal analysis of the statement of comprehensive income. */
 
+// BEGIN: Functions division ---------------------------------------------------
 function RelativeChange($selected_period, $previous_period) {
 	// Calculates the relative change between selected and previous periods. Uses percent with locale number format.
 	if($previous_period<>0) {
@@ -10,13 +11,16 @@ function RelativeChange($selected_period, $previous_period) {
 		return _('N/A');
 	}
 }
+// END: Functions division -----------------------------------------------------
 
+// BEGIN: Procedure division ---------------------------------------------------
 include ('includes/session.php');
-$Title = _('Horizontal Analysis of Statement of Comprehensive Income');// Screen identification.
-$ViewTopic= 'GeneralLedger';// Filename's id in ManualContents.php's TOC.
-$BookMark = 'AnalysisHorizontalIncome';// Anchor's id in the manual's html document.
+$Title = _('Horizontal Analysis of Statement of Comprehensive Income');
+$ViewTopic= 'GeneralLedger';
+$BookMark = 'AnalysisHorizontalIncome';
+
 include('includes/SQL_CommonFunctions.inc');
-include('includes/AccountSectionsDef.php');// This loads the $Sections variable
+include('includes/AccountSectionsDef.php');// This loads the $Sections variable.
 
 if(isset($_POST['FromPeriod']) and ($_POST['FromPeriod'] > $_POST['ToPeriod'])) {
 	prnMsg(_('The selected period from is actually after the period to') . '! ' . _('Please reselect the reporting period'),'error');
