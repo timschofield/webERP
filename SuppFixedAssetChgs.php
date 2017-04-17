@@ -1,5 +1,4 @@
 <?php
-
 /* $Id: SuppFixedAssetChgs.php 4473 2011-01-23 04:08:53Z daintree $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
@@ -10,12 +9,9 @@ include('includes/DefineSuppTransClass.php');
 
 /* Session started here for password checking and authorisation level check */
 include('includes/session.php');
-
 $Title = _('Fixed Asset Charges or Credits');
-
 $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetInvoices';
-
 include('includes/header.php');
 
 if (!isset($_SESSION['SuppTrans'])){
@@ -119,11 +115,11 @@ prnMsg(_('If you know the code enter it in the Asset ID input box, otherwise sel
 echo '<br /><table class="selection">';
 
 echo '<tr>
-		<td>' . _('Enter Asset ID') . ':</td>
-		<td><input type="text" class="integer" pattern="[^-]{1,5}" name="AssetID" title="'._('The Asset ID should be positive integer').'" size="7" maxlength="6" placeholder="'._('Postive integer').'" value="' .  $_POST['AssetID'] . '" /> <a href="FixedAssetItems.php" target="_blank">' .  _('New Fixed Asset') . '</a></td>
-	</tr>';
-echo '<tr>
-		<td><b>' . _('OR') .' </b>' .  _('Select from list') . ':</td>
+		<td>', _('Enter Asset ID'), ':</td>
+		<td><input class="integer" maxlength="6" name="AssetID" pattern="[^-]{1,5}" placeholder="', _('Positive integer'), '" size="7" title="', _('The Asset ID should be positive integer'), '" type="text" value="',  $_POST['AssetID'], '" /> <a href="FixedAssetItems.php" target="_blank">', _('New Fixed Asset'), '</a></td>
+	</tr>
+	<tr>
+		<td><b>', _('OR'), ' </b>', _('Select from list'), ':</td>
 		<td><select name="AssetSelection">';
 
 $sql = "SELECT assetid,
