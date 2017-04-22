@@ -111,10 +111,10 @@ if ($ProcessSection01){
 	}
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager){
-		DailySalesRecords(10, '2016-01-01', $db);
+		DailySalesRecords(10, '2016-07-01', $db);
 		$NumberOfTestExecuted++;
-		DailySalesRecordsByShops(10, '2015-06-01', $db);
-		$NumberOfTestExecuted++;
+//		DailySalesRecordsByShops(10, '2015-06-01', $db);
+//		$NumberOfTestExecuted++;
 	}
 }
 
@@ -191,7 +191,7 @@ if ($ProcessSection02){
 	if ($KL_SystemAdmin 
 		OR $KL_OperationalManager
 		OR $KL_BusinessDevelopmentManager){
-		InsuficientStockForShopPackaging( 'SHPACK', 21, 100, 30, true, $RootPath, $db);
+		InsuficientStockForShopPackaging( 'SHPACK', 21, 95, 30, true, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		InsuficientStockForShopPackaging( 'ZAPON', 21, 60, 30, true, $RootPath, $db);
 		$NumberOfTestExecuted++;

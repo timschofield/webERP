@@ -57,7 +57,6 @@ if ($KL_SystemAdmin){
 prnMsg("START OF PENDING FOR KL INTRANET ",'success');
 		NotDiscountedItemsWithDiscount($RootPath, $db);
 		GoodsReceivedNotInvoicedControl(1000000, $periodnow, $db);
-		FlaggedAsObsoleteButStockAvailable($RootPath, $db);
 prnMsg("END OF PENDING FOR KL INTRANET ",'success');
 
 //	phpinfo();
@@ -103,8 +102,9 @@ if ($ProcessSection01){
 		OR $KL_ShopManager
 		OR $KL_ShopSupportLeader
 		OR $KL_OperationalManager){
-		SplittedPaymentsBySPG(15, 2, $db);
-		$NumberOfTestExecuted++;
+// POS does not allow splitted payments so no reason for this control check.
+//		SplittedPaymentsBySPG(15, 2, $db);
+//		$NumberOfTestExecuted++;
 	}
 
 
@@ -127,8 +127,8 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		WrongStandardCost("Hong Kong"  , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		WrongStandardCost("Catalonia"  , "", STANDARD_COST_FACTOR_FOREIGN, 0.10, "SHOWLINK", $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		WrongStandardCost("Catalonia"  , "", STANDARD_COST_FACTOR_FOREIGN, 0.10, "SHOWLINK", $RootPath, $db);
+//		$NumberOfTestExecuted++;
 		WrongStandardCost("Philippines", "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		WrongStandardCost("India"      , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath, $db);
@@ -144,8 +144,8 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		WrongStandardCost("Hong Kong"  , "", STANDARD_COST_FACTOR_FOREIGN, 0.05, "SHOWONLY", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		WrongStandardCost("Catalonia"  , "", STANDARD_COST_FACTOR_FOREIGN, 0.10, "SHOWONLY", $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		WrongStandardCost("Catalonia"  , "", STANDARD_COST_FACTOR_FOREIGN, 0.10, "SHOWONLY", $RootPath, $db);
+//		$NumberOfTestExecuted++;
 		WrongStandardCost("Philippines", "", STANDARD_COST_FACTOR_FOREIGN, 0.05, "SHOWONLY", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		WrongStandardCost("India", "", STANDARD_COST_FACTOR_FOREIGN, 0.05, "SHOWONLY", $RootPath, $db);
@@ -168,11 +168,11 @@ if ($ProcessSection01){
 		
 		over_or_below_limit("DISC20 Items in AR", "BELOW", 50, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		over_or_below_limit("DISC80 Items in AR", "BELOW", 15, $RootPath, $db);
+		over_or_below_limit("DISC80 Items in AR", "BELOW", 20, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		over_or_below_limit("DISC20 Items in UB", "BELOW", 50, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		over_or_below_limit("DISC80 Items in UB", "BELOW", 15, $RootPath, $db);
+		over_or_below_limit("DISC80 Items in UB", "BELOW", 20, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -689,13 +689,13 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_SystemAdmin){
-		InsuficientStockForShopPackaging('SHPACK', 21, 100, 30, false, $RootPath, $db); // Works for both regular and outlet shop packaging
+/*	if ($KL_SystemAdmin){
+		InsuficientStockForShopPackaging('SHPACK', 21, 95, 30, false, $RootPath, $db); // Works for both regular and outlet shop packaging
 		$NumberOfTestExecuted++;
 	}
-
+*/
 	if ($KL_PurchasingTeam){
-		InsuficientStockForShopPackaging('SHPACK', 21, 100, 30, true, $RootPath, $db); // Works for both regular and outlet shop packaging
+		InsuficientStockForShopPackaging('SHPACK', 21, 95, 30, true, $RootPath, $db); // Works for both regular and outlet shop packaging
 		$NumberOfTestExecuted++;
 	}
 
