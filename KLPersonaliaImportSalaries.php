@@ -74,7 +74,7 @@ function submit(&$db, $DateOfFile, $SelectedFile, $SalaryType) {
 	if ($SalaryType == "MONTHLY"){
 		if($PeriodNow != ($PeriodDateOfFile + 1)){
 			prnMsg("The month selected by the user and the Excel file should be last month","warn");
-			$InputError = TRUE;
+//			$InputError = TRUE;
 		}
 	}
 	

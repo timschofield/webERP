@@ -38,7 +38,7 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType, &$db) {
 	if ($SalaryType == "MONTHLY"){
 		if($PeriodNow != ($PeriodExportDate + 1)){
 			$InputErrorMessage = "The month selected to export PDF Monthly Salary Slips should be last month";
-			$InputError = TRUE;
+//			$InputError = TRUE;
 		}
 	}
 	
