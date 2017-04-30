@@ -267,7 +267,7 @@ if ($ProcessSection01){
 	if ($KL_SystemAdmin){
 		GoodsReceivedNotInvoicedControl(1000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		CustomersDebtControl(100000, $periodnow, $db);
+		CustomersDebtControl(10, $periodnow, $db);
 		$NumberOfTestExecuted++;
 	}
 
