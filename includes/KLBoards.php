@@ -209,7 +209,10 @@ function RegularTransfersToShopNotReceived($PreparationTime, $LimitTime, $RootPa
 				FROM loctransfers 
 				WHERE  recqty < shipqty
 					AND shipdate <= '". $StartDate ." " . $PreparationTime . "'
-					AND recloc LIKE 'TOK%'
+					AND   (recloc IN " . LIST_SHOPS_KAPAL_LAUT . "
+						OR recloc IN " . LIST_SHOPS_BLINK . "
+						OR recloc IN " . LIST_SHOPS_OUTLET . "
+						OR recloc IN " . LIST_ONLINE_SHOPS . ")
 				ORDER BY reference";
 		$result = DB_query($SQL);
 
@@ -6856,7 +6859,7 @@ Updated 3 index in loctransfers
 			// Deactivated on 2014/08/15 by request of Ike and Laia
 			// Only active for Ubud and Sanur area.
 			/* UB, MF, PU are sister shops */
-			if ($TableResult[$i]['loccode'] == 'TOKUB'){
+/*			if ($TableResult[$i]['loccode'] == 'TOKUB'){
 				MarkSisterShopInArray($TableResult, $numshops, "TOKMF");
 				MarkSisterShopInArray($TableResult, $numshops, "TOKPU");
 			}
@@ -6868,7 +6871,7 @@ Updated 3 index in loctransfers
 				MarkSisterShopInArray($TableResult, $numshops, "TOKUB");
 				MarkSisterShopInArray($TableResult, $numshops, "TOKMF");
 			}
-			
+*/			
 			/* 66, SE, OB are sister shops */
 /*			if ($TableResult[$i]['loccode'] == 'TOK66'){
 				MarkSisterShopInArray($TableResult, $numshops, "TOKSE");
@@ -6893,7 +6896,7 @@ Updated 3 index in loctransfers
 */
 			/* SA, SU, SS are sister shops */
 // DEACTIVATED SU in 20/05/2015
-			if ($TableResult[$i]['loccode'] == 'TOKSA'){
+/*			if ($TableResult[$i]['loccode'] == 'TOKSA'){
 //				MarkSisterShopInArray($TableResult, $numshops, "TOKSU");
 				MarkSisterShopInArray($TableResult, $numshops, "TOKSS");
 			}
@@ -6905,7 +6908,7 @@ Updated 3 index in loctransfers
 				MarkSisterShopInArray($TableResult, $numshops, "TOKSA");
 //				MarkSisterShopInArray($TableResult, $numshops, "TOKSU");
 			}
-		}
+*/		}
 		$i++;
 	}
 	

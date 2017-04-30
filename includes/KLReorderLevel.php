@@ -985,21 +985,12 @@ function MaxRLCorrectionSomeModels($stockid, $loccode, $NewRL){
 	//
 	// MAX correction for some models, depending on the shops
 	//
-	if (isPlasticBag($stockid)){
+/*	if (isPlasticBag($stockid)){
 		if ($loccode == "TOKKS"){
 			$CurrentNewRL	= min($NewRL, 2);
 		}
-		if ($loccode == "TOKBW"){
-			$CurrentNewRL	= min($NewRL, 2);
-		}
-		if ($loccode == "TOKJC"){
-			$CurrentNewRL	= min($NewRL, 2);
-		}
-		if ($loccode == "TOKUB"){
-			$CurrentNewRL	= min($NewRL, 2);
-		}
 	}
-	// END of MAX Corrections of New RL
+*/	// END of MAX Corrections of New RL
 	return $CurrentNewRL;
 }
 
