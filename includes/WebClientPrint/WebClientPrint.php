@@ -29,27 +29,11 @@ WebClientPrint::$webClientPrintAbsoluteUrl = Utils::getRoot(). $RootPath .'/incl
 //$CachePath = Utils::getRoot() . $RootPath .'/includes/WebClientPrint/wcpcache/';
 //$CachePath = realpath($_SERVER["DOCUMENT_ROOT"]) . $RootPath .'/includes/WebClientPrint/wcpcache/';
 //$CachePath = '/home4/kurakura/public_html/bumibiru.com/TEST/weberp/includes/WebClientPrint/wcpcache/';
-if(strpos($_SERVER['HTTP_HOST'],"bumibiru")){
-	if (strpos($_SERVER['PHP_SELF'],"TEST")){
-		$CachePath = '/home4/kurakura/public_html/bumibiru.com/TEST/weberp/includes/WebClientPrint/wcpcache/';
-	}else{
-		$CachePath = '/home4/kurakura/public_html/bumibiru.com/weberp/includes/WebClientPrint/wcpcache/';
-	}
-}else if(strpos($_SERVER['HTTP_HOST'],"adu")){
-	if (strpos($_SERVER['PHP_SELF'],"TEST")){
-		$CachePath = '/home4/kurakura/public_html/ptadu.com/TEST/weberp/includes/WebClientPrint/wcpcache/';
-	}else{
-		$CachePath = '/home4/kurakura/public_html/ptadu.com/weberp/includes/WebClientPrint/wcpcache/';
-	}
+if (strpos($_SERVER['PHP_SELF'],"TEST")){
+	$CachePath = '/home4/kurakura/public_html/bumibiru.com/TEST/weberp/includes/WebClientPrint/wcpcache/';
 }else{
-	if (strpos($_SERVER['PHP_SELF'],"TEST")){
-		$CachePath = '/home4/kurakura/public_html/mertabali.com/TEST/weberp/includes/WebClientPrint/wcpcache/';
-	}else{
-		$CachePath = '/home4/kurakura/public_html/mertabali.com/weberp/includes/WebClientPrint/wcpcache/';
-	}
+	$CachePath = '/home4/kurakura/public_html/bumibiru.com/weberp/includes/WebClientPrint/wcpcache/';
 }
-
-
 WebClientPrint::$wcpCacheFolder = $CachePath;
 //===================
 

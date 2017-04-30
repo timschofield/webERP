@@ -85,12 +85,7 @@ if(isset($ForceConfigReload) AND $ForceConfigReload==true OR !isset($_SESSION['C
 		$_SESSION['CompanyRecord']['coyname'] = "PT. Bumi Biru";
 	}
 	if(strpos($_SERVER['HTTP_HOST'],"adu")){
-//		$_SESSION['CompanyRecord']['coyname'] = "PT. ADU";
-// TEMPORARY FIX UNTIL THE ISSUE WITH SSL HAS BEEN FIXED:
-		$_SESSION['CompanyRecord']['coyname'] = "PT. Bumi Biru";
-	}
-	if(strpos($_SERVER['HTTP_HOST'],"mertabali")){
-		$_SESSION['CompanyRecord']['coyname'] = "PT. Bumi Biru";
+		$_SESSION['CompanyRecord']['coyname'] = "PT. ADU";
 	}
 
 	/*Now read in smtp email settings - not needed in a properly set up server environment - but helps for those who can't control their server .. I think! */
