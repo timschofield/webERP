@@ -399,7 +399,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 		_('Statement of Financial Position') . '" /> ' .// Icon title.
 		_('Balance Sheet') . '<br />' .// Page title, reporting statement.
 //		_('Statement of Financial Position') . '<br />' .// Page title, reporting statement.
-		stripslashes($_SESSION['CompanyRecord']['coyname']) . '<br />' .// Page title, reporting entity.
+//		stripslashes($_SESSION['CompanyRecord']['coyname']) . '<br />' .// Page title, reporting entity.
 		_('as at') . ' ' . $BalanceDate . '<br />' .// Page title, reporting period.
 		_('All amounts stated in').': '. _($CurrencyName[$_SESSION['CompanyRecord']['currencydefault']]).'</p>';// Page title, reporting presentation currency and level of rounding used.
 

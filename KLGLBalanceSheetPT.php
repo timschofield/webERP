@@ -401,7 +401,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 			<tr>
 				<th colspan="6">
 					<div class="centre"><font size="4" color="blue"><b>' .
-		_('Balance Sheet as at') . ' ' . $BalanceDate .'</b></font>
+		_('Balance Sheet PT. Bumi Biru as at') . ' ' . $BalanceDate .'</b></font>
 					</div>
 				</th>
 			</tr>';

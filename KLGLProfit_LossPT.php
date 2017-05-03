@@ -620,7 +620,8 @@ if ((!isset($_POST['FromPeriod'])
 		_('Statement of Comprehensive Income') . '" /> ' .// Icon title.
 		_('Profit and Loss Statement') . '<br />' .// Page title, reporting statement.
 //		_('Statement of Comprehensive Income') . '<br />' .// Page title, reporting statement.
-		stripslashes($_SESSION['CompanyRecord']['coyname']) . '<br />' .// Page title, reporting entity.
+//		stripslashes($_SESSION['CompanyRecord']['coyname']) . '<br />' .// Page title, reporting entity.
+		_('PT. Bumi Biru') . '<br />' .// Page title, reporting statement.
 		_('For') . ' ' . $NumberOfMonths . ' ' . _('months to') . ' ' . $PeriodToDate . '<br />' .// Page title, reporting period.
 //		_('From') . ' ' . $PeriodFromDate? . ' ' . _('to') . ' ' . $PeriodToDate . '<br />' .// Page title, reporting period. ???
 		_('All amounts stated in').': '. _($CurrencyName[$_SESSION['CompanyRecord']['currencydefault']]).'</p>';// Page title, reporting presentation currency and level of rounding used.
