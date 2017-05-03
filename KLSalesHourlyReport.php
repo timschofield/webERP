@@ -166,9 +166,27 @@ function HourlySales($numDays, $RootPath, $db){
 
 	$result = DB_query($SQL);
 	$showHeader = TRUE;
+	$GrandTotal = 0;
+	
 	if (DB_num_rows($result) != 0){
 		$k = 0; //row colour counter
 		$i = 1;
+		$Total09 = 0;
+		$Total10 = 0;
+		$Total11 = 0;
+		$Total12 = 0;
+		$Total13 = 0;
+		$Total14 = 0;
+		$Total15 = 0;
+		$Total16 = 0;
+		$Total17 = 0;
+		$Total18 = 0;
+		$Total19 = 0;
+		$Total20 = 0;
+		$Total21 = 0;
+		$Total22 = 0;
+		$Total23 = 0;
+		
 		while ($myrow = DB_fetch_array($result)) {
 			if ($showHeader){
 				echo '<p class="page_title_text" align="center"><strong>' .'Hourly sales and value for the last ' . $numDays . ' days</strong></p>';
@@ -216,79 +234,95 @@ function HourlySales($numDays, $RootPath, $db){
 						$myrow['sales21'] +
 						$myrow['sales22'] +
 						$myrow['sales23'] ;
-						
+			$GrandTotal += $TotalSales;
+			
 			if ($myrow['sales09'] != 0){
 				$Sales09 = locale_number_format_zero_blank($myrow['sales09']/$TotalSales*100,0).'%';
+				$Total09 += $myrow['sales09'];
 			}else{
 				$Sales09 = '';
 			}		
 			if ($myrow['sales10'] != 0){
 				$Sales10 = locale_number_format_zero_blank($myrow['sales10']/$TotalSales*100,0).'%';
+				$Total10 += $myrow['sales10'];
 			}else{
 				$Sales10 = '';
 			}		
 			if ($myrow['sales11'] != 0){
 				$Sales11 = locale_number_format_zero_blank($myrow['sales11']/$TotalSales*100,0).'%';
+				$Total11 += $myrow['sales11'];
 			}else{
 				$Sales11 = '';
 			}		
 			if ($myrow['sales12'] != 0){
 				$Sales12 = locale_number_format_zero_blank($myrow['sales12']/$TotalSales*100,0).'%';
+				$Total12 += $myrow['sales12'];
 			}else{
 				$Sales12 = '';
 			}		
 			if ($myrow['sales13'] != 0){
 				$Sales13 = locale_number_format_zero_blank($myrow['sales13']/$TotalSales*100,0).'%';
+				$Total13 += $myrow['sales13'];
 			}else{
 				$Sales13 = '';
 			}		
 			if ($myrow['sales14'] != 0){
 				$Sales14 = locale_number_format_zero_blank($myrow['sales14']/$TotalSales*100,0).'%';
+				$Total14 += $myrow['sales14'];
 			}else{
 				$Sales14 = '';
 			}		
 			if ($myrow['sales15'] != 0){
 				$Sales15 = locale_number_format_zero_blank($myrow['sales15']/$TotalSales*100,0).'%';
+				$Total15 += $myrow['sales15'];
 			}else{
 				$Sales15 = '';
 			}		
 			if ($myrow['sales16'] != 0){
 				$Sales16 = locale_number_format_zero_blank($myrow['sales16']/$TotalSales*100,0).'%';
+				$Total16 += $myrow['sales16'];
 			}else{
 				$Sales16 = '';
 			}		
 			if ($myrow['sales17'] != 0){
 				$Sales17 = locale_number_format_zero_blank($myrow['sales17']/$TotalSales*100,0).'%';
+				$Total17 += $myrow['sales17'];
 			}else{
 				$Sales17 = '';
 			}		
 			if ($myrow['sales18'] != 0){
 				$Sales18 = locale_number_format_zero_blank($myrow['sales18']/$TotalSales*100,0).'%';
+				$Total18 += $myrow['sales18'];
 			}else{
 				$Sales18 = '';
 			}		
 			if ($myrow['sales19'] != 0){
 				$Sales19 = locale_number_format_zero_blank($myrow['sales19']/$TotalSales*100,0).'%';
+				$Total19 += $myrow['sales19'];
 			}else{
 				$Sales19 = '';
 			}		
 			if ($myrow['sales20'] != 0){
 				$Sales20 = locale_number_format_zero_blank($myrow['sales20']/$TotalSales*100,0).'%';
+				$Total20 += $myrow['sales20'];
 			}else{
 				$Sales20 = '';
 			}		
 			if ($myrow['sales21'] != 0){
 				$Sales21 = locale_number_format_zero_blank($myrow['sales21']/$TotalSales*100,0).'%';
+				$Total21 += $myrow['sales21'];
 			}else{
 				$Sales21 = '';
 			}		
 			if ($myrow['sales22'] != 0){
 				$Sales22 = locale_number_format_zero_blank($myrow['sales22']/$TotalSales*100,0).'%';
+				$Total22 += $myrow['sales22'];
 			}else{
 				$Sales22 = '';
 			}		
 			if ($myrow['sales23'] != 0){
 				$Sales23 = locale_number_format_zero_blank($myrow['sales23']/$TotalSales*100,0).'%';
+				$Total23 += $myrow['sales23'];
 			}else{
 				$Sales23 = '';
 			}		
@@ -317,7 +351,7 @@ function HourlySales($numDays, $RootPath, $db){
 					</tr>', 
 					$myrow['zone'],
 					$myrow['debtorno'],
-					'Hourly sales',
+					'Sales',
 					$myrow['firstsale'],
 					$Sales09,
 					$Sales10,
@@ -337,7 +371,7 @@ function HourlySales($numDays, $RootPath, $db){
 					$myrow['lastsale']
 					);
 
-			$k = StartSameColourRow($k);
+/*			$k = StartSameColourRow($k);
 			printf('<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -380,9 +414,97 @@ function HourlySales($numDays, $RootPath, $db){
 					locale_number_format_zero_blank($myrow['sales23']/$numDays,0),
 					''
 					);
-					
+*/					
 					$i++;
 		}
+		$k = StartEvenOrOddRow($k);
+		printf('<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td>%s</td>
+				</tr>', 
+				'TOTALS',
+				'',
+				'',
+				'',
+				locale_number_format_zero_blank($Total09/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank($Total10/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank($Total11/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank($Total12/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank($Total13/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank($Total14/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank($Total15/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank($Total16/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank($Total17/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank($Total18/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank($Total19/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank($Total20/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank($Total21/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank($Total22/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank($Total23/$GrandTotal*100,0).'%',
+				''
+				);
+
+		$k = StartEvenOrOddRow($k);
+		printf('<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td>%s</td>
+				</tr>', 
+				'CUMULATIVE',
+				'',
+				'',
+				'',
+				locale_number_format_zero_blank($Total09/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank(($Total09+$Total10)/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank(($Total09+$Total10+$Total11)/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank(($Total09+$Total10+$Total11+$Total12)/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank(($Total09+$Total10+$Total11+$Total12+$Total13)/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank(($Total09+$Total10+$Total11+$Total12+$Total13+$Total14)/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank(($Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15)/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank(($Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15+$Total16)/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank(($Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15+$Total16+$Total17)/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank(($Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15+$Total16+$Total17+$Total18)/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank(($Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15+$Total16+$Total17+$Total18+$Total19)/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank(($Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15+$Total16+$Total17+$Total18+$Total19+$Total20)/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank(($Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15+$Total16+$Total17+$Total18+$Total19+$Total20+$Total21)/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank(($Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15+$Total16+$Total17+$Total18+$Total19+$Total20+$Total21+$Total22)/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank(($Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15+$Total16+$Total17+$Total18+$Total19+$Total20+$Total21+$Total22+$Total23)/$GrandTotal*100,0).'%',
+				''
+				);
+				
 		if (!$showHeader){
 			echo '</table>
 				</div>';
@@ -609,11 +731,11 @@ function HourlyPerformance($numDays, $RootPath, $db){
 					'',
 					'',
 					'',
-					locale_number_format_zero_blank($TotalSales/$TotalSalesFull*100,0).'%',
+					'',
 					locale_number_format_zero_blank($ValueSales/$ValueSalesFull*100,0).'%',
 					'',
 					'',
-					locale_number_format_zero_blank($TotalSalesToday/($TotalSales/$numDays)*100,0).'%',
+					'',
 					locale_number_format_zero_blank($ValueSalesToday/($ValueSales/$numDays)*100,0).'%'
 					);
 			$k = StartEvenOrOddRow($k);
