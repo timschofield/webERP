@@ -4161,17 +4161,18 @@ function SplittedpaymentsBySPG($maxdays, $maxsplitted, $db){
 	$totalreturned = 0;
 	$total = 0;
 
-	$SQL = "SELECT salesperson, 
-				COUNT(klpaidcash + klpaidcreditcard) AS splitted, 
-				SUM(klpaidcash + klpaidcreditcard) AS amount
-		FROM salesorders
-		WHERE orddate >= '". $StartDate. "'
-			AND debtorno LIKE 'RETAIL%'
-			AND klpaidcash > 0
-			AND klpaidcreditcard > 0
-		GROUP BY salesperson
-		HAVING COUNT(klpaidcash + klpaidcreditcard) >= '" . $maxsplitted . "'
-		ORDER BY salesperson";
+	$SQL = "SELECT salesorders.salesperson, 
+				COUNT(salesorders.klpaidcash + salesorders.klpaidcreditcard) AS splitted, 
+				SUM(salesorders.klpaidcash + salesorders.klpaidcreditcard) AS amount
+		FROM salesorders, debtorsmaster
+		WHERE salesorders.debtorno = debtorsmaster.debtorno
+			AND salesorders.orddate >= '". $StartDate. "'
+			AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_RETAIL . ")
+			AND salesorders.klpaidcash > 0
+			AND salesorders.klpaidcreditcard > 0
+		GROUP BY salesorders.salesperson
+		HAVING COUNT(salesorders.klpaidcash + salesorders.klpaidcreditcard) >= '" . $maxsplitted . "'
+		ORDER BY salesorders.salesperson";
 
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){

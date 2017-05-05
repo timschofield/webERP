@@ -12,10 +12,11 @@ include('includes/OpenCartConnectDB.php');
 
 if (!isset($_POST['FromDate'])){
 	$sql = "SELECT 	salesorders.orddate
-			FROM salesorders
-			WHERE salesorders.contactemail != ''
+			FROM salesorders, debtorsmaster
+			WHERE salesorders.debtorno = debtorsmaster.debtorno
+				AND salesorders.contactemail != ''
 				AND salesorders.klexported = 'N'
-				AND salesorders.debtorno NOT LIKE 'RETAIL%' 
+				AND debtorsmaster.typeid NOT IN (". CUSTOMER_TYPE_RETAIL . ")
 			ORDER BY salesorders.orddate ASC";
 	$result = DB_query($sql,$ErrMsg);
 	if (DB_num_rows($result) != 0){
@@ -88,7 +89,7 @@ function submit(&$db, $CountriesForRetail, $TypeCustomers, $MarkExported, $FromD
 				WHERE  salesorders.debtorno = debtorsmaster.debtorno
 					AND debtorsmaster.currcode = currencies.currabrev
 					AND salesorders.contactemail != ''
-					AND salesorders.debtorno NOT LIKE 'RETAIL%' " . 
+					AND debtorsmaster.typeid NOT IN (". CUSTOMER_TYPE_RETAIL . ") ".
 					$SqlCustomers . "
 					AND salesorders.klexported = 'N'
 					AND salesorders.orddate >= '" . $FromDate . "'
@@ -188,13 +189,14 @@ function submit(&$db, $CountriesForRetail, $TypeCustomers, $MarkExported, $FromD
 			$objWriter->save('php://output');
 
 			if ($MarkExported == "Y"){
-				$sql = "UPDATE salesorders 
+				$sql = "UPDATE salesorders, debtorsmaster
 						SET klexported = 'Y' 
-						WHERE klexported = 'N' 
+						WHERE salesorders.debtorno = debtorsmaster.debtorno
+							AND salesorders.klexported = 'N' 
 							AND salesorders.orddate >= '" . $FromDate . "'
 							AND salesorders.orddate <= '" . $ToDate . "'
-							AND salesorders.debtorno NOT LIKE 'RETAIL%' " . 
-							$SqlCustomers;
+							AND debtorsmaster.typeid NOT IN (". CUSTOMER_TYPE_RETAIL . ")" .
+						$SqlCustomers;
 				$resultUpdate = DB_query($sql,'','',true);
 			}
 			DB_Txn_Commit();

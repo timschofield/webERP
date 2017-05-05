@@ -583,7 +583,6 @@ function HourlyPerformance($numDays, $RootPath, $db){
 					AND salesorders.orddate = '". $Today ."') AS valuesalestoday
 			FROM debtorsmaster
 			WHERE debtorsmaster.typeid IN (". CUSTOMER_TYPE_RETAIL . ")
-				AND debtorsmaster.debtorno LIKE 'RETAIL%'
 			ORDER BY (SELECT SUM(klpaidcash+klpaidcreditcard+klreturnedgoods+klvouchers)
 				FROM salesorders
 				WHERE salesorders.debtorno = debtorsmaster.debtorno

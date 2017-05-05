@@ -166,17 +166,18 @@ function SPGTypePayments($SPG, $maxdays, $db){
 
 	$SQL = "SELECT salesorders.salesperson AS reportunit, 
 				salesman.salesmanname AS reportname,
-				SUM(klpaidcash) AS cashshop, 
-				SUM(klpaidcreditcard) AS creditshop, 
-				SUM(klreturnedgoods) AS returnedgoodsshop,
-				SUM(klvouchers) AS vouchersshop,
-				SUM(klpaidcash+klpaidcreditcard+klreturnedgoods+klvouchers) AS totalshop
-		FROM salesorders, salesman
+				SUM(salesorders.klpaidcash) AS cashshop, 
+				SUM(salesorders.klpaidcreditcard) AS creditshop, 
+				SUM(salesorders.klreturnedgoods) AS returnedgoodsshop,
+				SUM(salesorders.klvouchers) AS vouchersshop,
+				SUM(salesorders.klpaidcash+salesorders.klpaidcreditcard+salesorders.klreturnedgoods+salesorders.klvouchers) AS totalshop
+		FROM salesorders, salesman, debtorsmaster
 		WHERE salesorders.salesperson = salesman.salesmancode
+			AND salesorders.debtorno = debtorsmaster.debtorno
+			AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_RETAIL . ")
 			AND salesman.salesmancode = '" . $SPG . "'
-			AND orddate >= '". $StartDate. "'
-			AND salesorders.debtorno LIKE 'RETAIL%'";
-	
+			AND salesorders.orddate >= '". $StartDate. "'";
+			
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Distribution Cash / Credit Card during the last ') . $maxdays . _(' days by SPG') .'</strong></p>';

@@ -874,15 +874,15 @@ function RetailTypePayments($typereport, $maxdays, $db){
 	if ($typereport == "Shop"){
 		$SQL = "SELECT salesorders.debtorno AS reportunit,
 					debtorsmaster.name AS reportname,
-					SUM(klpaidcash) AS cashshop, 
-					SUM(klpaidcreditcard) AS creditshop, 
-					SUM(klreturnedgoods) AS returnedgoodsshop,
-					SUM(klvouchers) AS vouchersshop,
-					SUM(klpaidcash+klpaidcreditcard+klreturnedgoods+klvouchers) AS totalshop
+					SUM(salesorders.klpaidcash) AS cashshop, 
+					SUM(salesorders.klpaidcreditcard) AS creditshop, 
+					SUM(salesorders.klreturnedgoods) AS returnedgoodsshop,
+					SUM(salesorders.klvouchers) AS vouchersshop,
+					SUM(salesorders.klpaidcash+salesorders.klpaidcreditcard+salesorders.klreturnedgoods+salesorders.klvouchers) AS totalshop
 			FROM salesorders, debtorsmaster
 			WHERE salesorders.debtorno = debtorsmaster.debtorno
-				AND orddate >= '". $StartDate. "'
-				AND salesorders.debtorno LIKE 'RETAIL%'
+				AND salesorders.orddate >= '". $StartDate. "'
+				AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_RETAIL . ")
 			GROUP BY salesorders.debtorno
 			ORDER BY salesorders.debtorno";
 	}else{
@@ -893,10 +893,11 @@ function RetailTypePayments($typereport, $maxdays, $db){
 					SUM(klreturnedgoods) AS returnedgoodsshop,
 					SUM(klvouchers) AS vouchersshop,
 					SUM(klpaidcash+klpaidcreditcard+klreturnedgoods+klvouchers) AS totalshop
-			FROM salesorders, salesman
-			WHERE salesorders.salesperson = salesman.salesmancode
+			FROM salesorders, salesman, debtorsmaster
+			WHERE salesorders.debtorno = debtorsmaster.debtorno
+				AND salesorders.salesperson = salesman.salesmancode
 				AND orddate >= '". $StartDate. "'
-				AND salesorders.debtorno LIKE 'RETAIL%'
+				AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_RETAIL . ")
 			GROUP BY salesorders.salesperson
 			ORDER BY salesorders.salesperson";
 	}
@@ -1040,9 +1041,11 @@ function DailySalesRecords($Days, $FromDate, $db){
 	$SQL = "SELECT salesorders.orddate,
 				SUM(salesorderdetails.qtyinvoiced * (salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent))) AS sales
 			FROM salesorders
-				INNER JOIN salesorderdetails ON
-						salesorders.orderno=salesorderdetails.orderno
-			WHERE salesorders.debtorno LIKE 'RETAIL%'
+			INNER JOIN salesorderdetails ON
+				salesorders.orderno=salesorderdetails.orderno
+			INNER JOIN debtorsmaster ON 
+				salesorders.debtorno = debtorsmaster.debtorno
+			WHERE debtorsmaster.typeid IN (". CUSTOMER_TYPE_RETAIL . ")
 				AND salesorders.orddate >= '" . $FromDate . "'
 			GROUP BY salesorders.orddate
 			ORDER BY SUM(salesorderdetails.qtyinvoiced * (salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent))) DESC
@@ -1085,9 +1088,11 @@ function DailySalesRecordsByShops($Days, $FromDate, $db){
 				salesorders.debtorno,
 				SUM(salesorderdetails.qtyinvoiced * (salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent))) AS sales
 			FROM salesorders
-				INNER JOIN salesorderdetails ON
-						salesorders.orderno=salesorderdetails.orderno
-			WHERE salesorders.debtorno LIKE 'RETAIL%'
+			INNER JOIN salesorderdetails ON
+				salesorders.orderno=salesorderdetails.orderno
+			INNER JOIN debtorsmaster ON 
+				salesorders.debtorno = debtorsmaster.debtorno
+			WHERE debtorsmaster.typeid IN (". CUSTOMER_TYPE_RETAIL . ")
 				AND salesorders.orddate >= '" . $FromDate . "'
 			GROUP BY salesorders.orddate,salesorders.debtorno
 			ORDER BY SUM(salesorderdetails.qtyinvoiced * (salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent))) DESC
