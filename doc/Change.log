@@ -1,5 +1,6 @@
 webERP Change Log
 
+7/5/17 Andy Couling/Janb: Fixes to MRP scripts SQL to get table names per forum post http://www.weberp.org/forum/showthread.php?tid=2448
 13/4/17 RChacon: Rename includes/footer.inc, includes/header.inc and includes/session.inc to includes/footer.php, includes/header.php and includes/session.php.
 09/4/17 RChacon: In UserSettings.php, add options to turn off/on page help and field help. In WWW_Users.php, improve code and documentation.
 30/3/17 RChacon: In ManualContents.php, fix checkbox showing and do some improvements.

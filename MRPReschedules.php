@@ -1,13 +1,11 @@
 <?php
-
 /*$Id$ */
-
 // MRPReschedules.php - Report of purchase orders and work orders that MRP determines should be
 // rescheduled.
 
 include('includes/session.php');
 
-$sql="SHOW TABLES WHERE Tables_in_" . $_SESSION['DatabaseName'] . "='mrprequirements'";
+$sql = "SELECT TABLE_NAME FROM information_schema.tables WHERE TABLE_SCHEMA = '" . $_SESSION['DatabaseName'] . "' AND TABLE_NAME = 'mrprequirements'";
 $result=DB_query($sql);
 if (DB_num_rows($result)==0) {
 	$Title='MRP error';

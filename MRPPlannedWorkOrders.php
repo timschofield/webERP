@@ -1,12 +1,11 @@
 <?php
 /* $Id$*/
-
 // MRPPlannedWorkOrders.php - Report of manufactured parts that MRP has determined should have
 // work orders created for them
 
 include('includes/session.php');
 
-$sql="SHOW TABLES WHERE Tables_in_" . $_SESSION['DatabaseName'] . "='mrprequirements'";
+$sql = "SELECT TABLE_NAME FROM information_schema.tables WHERE TABLE_SCHEMA = '" . $_SESSION['DatabaseName'] . "' AND TABLE_NAME = 'mrprequirements'";
 $result=DB_query($sql);
 if (DB_num_rows($result)==0) {
 	$Title=_('MRP error');
