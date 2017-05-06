@@ -6,6 +6,7 @@ config.php is in turn included in session.php*/
 include ('includes/session.php');
 $Title = _('Kapal-Laut SPG Control Board '. VERSIONFILE);
 include ('includes/header.php');
+include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 include ('includes/KLRetailCustomer.php');
 
