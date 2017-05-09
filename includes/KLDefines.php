@@ -80,7 +80,7 @@ define("LIST_STOCK_CATEGORIES_GENERAL",    "('TESTGE','STABGE','NOPOGE')");
 /* Defines about LOCATIONS*/
 define("CODE_KANTOR",      "'KANTO'");
 define("CODE_ONLINE_SHOP", "'TOKWS'");
-define("ZONES_OF_SHOPS",   "('KUTA','SANUR','UBUD')"); 
+define("ZONES_OF_SHOPS",   "('KUTA','SANUR','SEMINYAK','UBUD')"); 
 
 define("LIST_ALL_SHOPS",           "('TOK66','TOKSA','TOKKS','TOKSE','TOKUB','TOKMF','TOKPU','TOKSU','TOKOB','TOKSS','TOKPA','TOKKA','TOKMU','TOKPS','TOKAR','TOKSB','TOKPB','TOKBU','TOKM2','TOKU2','TOKU3','TOKO2')"); // NOT includes the shop online
 define("LIST_SHOPS_KAPAL_LAUT",    "('TOK66','TOKSA','TOKKS','TOKSE','TOKMF','TOKPU','TOKOB','TOKSS','TOKPA','TOKKA','TOKM2','TOKSU','TOKU2')"); // NOT includes the shop online
