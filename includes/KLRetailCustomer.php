@@ -109,7 +109,7 @@ function RetailCustomerAnalysisBySex($NumDays, $ListShops, $db){
 			
 }
 
-function RetailCustomerAnalysisByCountry($NumDays, $TypeOfShops, $MinimCustomersToShow, $CountriesForRetail, $db){
+function RetailCustomerAnalysisByCountry($NumDays, $TypeOfShops, $ShopArea, $MinimCustomersToShow, $CountriesForRetail, $db){
 	$Yesterday  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 	$StartDate  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 
@@ -126,44 +126,58 @@ function RetailCustomerAnalysisByCountry($NumDays, $TypeOfShops, $MinimCustomers
 		$WhereListShops = " AND salesorders.fromstkloc IN " . LIST_SHOPS_OUTLET . " ";
 		$NameOfShops = "OUTLET";
 	}
+
+	if ($ShopArea == 'ALL'){
+		$WhereShopArea = " ";
+		$NameOfArea = "ALL Zones";
+	}else{
+		$WhereShopArea = " AND locations.zone ='" . $ShopArea . "' ";
+		$NameOfArea = $ShopArea . " Zone";
+	}
 	
 	// Get the total of sales 
 	$SQL = "SELECT COUNT(*)
-			FROM salesorders
-			WHERE salesorders.orddate >= '". $StartDate . "'
+			FROM salesorders, locations
+			WHERE salesorders.fromstkloc = locations.loccode
+				AND salesorders.orddate >= '". $StartDate . "'
 				AND salesorders.orddate <= '". $Yesterday . "'".
-				$WhereListShops;
+				$WhereListShops .
+				$WhereShopArea;
 	$result = DB_query($SQL);
 	$myrow = DB_fetch_array($result);
 	$NumberSales = $myrow[0];
 
 	// Get the total of cases 
 	$SQL = "SELECT COUNT(klretailcustomers.country)
-			FROM klretailcustomers, salesorders
-			WHERE klretailcustomers.orderno = salesorders.orderno
+			FROM klretailcustomers, salesorders, locations
+			WHERE salesorders.fromstkloc = locations.loccode
+				AND klretailcustomers.orderno = salesorders.orderno
 				AND salesorders.orddate >= '". $StartDate . "'
 				AND salesorders.orddate <= '". $Yesterday . "'
 				AND klretailcustomers.country != '0'".
-				$WhereListShops;
+				$WhereListShops . 
+				$WhereShopArea;
 	$result = DB_query($SQL);
 	$myrow = DB_fetch_array($result);
 	$NumberCases = $myrow[0];
 	
 	// Get the result of customers per country 
 	$SQL = "SELECT klretailcustomers.country, COUNT(klretailcustomers.country) AS numberofcustomers
-			FROM klretailcustomers, salesorders
-			WHERE klretailcustomers.orderno = salesorders.orderno
+			FROM klretailcustomers, salesorders, locations
+			WHERE salesorders.fromstkloc = locations.loccode
+				AND klretailcustomers.orderno = salesorders.orderno
 				AND salesorders.orddate >= '". $StartDate . "'
 				AND salesorders.orddate <= '". $Yesterday . "'
 				AND klretailcustomers.country != '0'".
-				$WhereListShops ."
+				$WhereListShops . 
+				$WhereShopArea . "
 			GROUP BY klretailcustomers.country 
 			ORDER BY COUNT(klretailcustomers.country) DESC,
 				klretailcustomers.country ASC"	;
 	$result = DB_query($SQL);
 	
 	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Retail Customers By Country during the last ') . locale_number_format($NumDays,0) . ' days in ' . $NameOfShops . ' shops</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . _('Retail Customers By Country during the last ') . locale_number_format($NumDays,0) . ' days in ' . $NameOfShops . ' shops  for ' . $NameOfArea . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>

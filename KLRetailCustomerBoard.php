@@ -40,7 +40,7 @@ if ($KL_SystemAdmin
 }
 
 if ($KL_SystemAdmin){
-	RetailCustomerAnalysisByCountry(365, "ALL", 50, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(365, "ALL", "ALL", 100, $CountriesForRetail, $db);
 	$NumberOfTestExecuted++;
 }
 
@@ -50,17 +50,22 @@ if ($KL_SystemAdmin
 	OR $KL_ShopManager 
 	OR $KL_SalesDirector){
 
-	RetailCustomerAnalysisByCountry(90, "ALL", 20, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(60, "ALL", "ALL", 30, $CountriesForRetail, $db);
 	$NumberOfTestExecuted++;
-	RetailCustomerAnalysisByCountry(60, "ALL", 20, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(60, "KAPAL-LAUT", "ALL", 20, $CountriesForRetail, $db);
 	$NumberOfTestExecuted++;
-	RetailCustomerAnalysisByCountry(30, "ALL", 20, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(60, "BLINK", "ALL", 20, $CountriesForRetail, $db);
 	$NumberOfTestExecuted++;
-	RetailCustomerAnalysisByCountry(30, "KAPAL-LAUT", 10, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(60, "OUTLET", "ALL", 10, $CountriesForRetail, $db);
 	$NumberOfTestExecuted++;
-	RetailCustomerAnalysisByCountry(30, "BLINK", 10, $CountriesForRetail, $db);
+	
+	RetailCustomerAnalysisByCountry(60, "ALL", "KUTA", 10, $CountriesForRetail, $db);
 	$NumberOfTestExecuted++;
-	RetailCustomerAnalysisByCountry(30, "OUTLET", 10, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(60, "ALL", "SEMINYAK", 10, $CountriesForRetail, $db);
+	$NumberOfTestExecuted++;
+	RetailCustomerAnalysisByCountry(60, "ALL", "SANUR", 10, $CountriesForRetail, $db);
+	$NumberOfTestExecuted++;
+	RetailCustomerAnalysisByCountry(60, "ALL", "UBUD", 10, $CountriesForRetail, $db);
 	$NumberOfTestExecuted++;
 }
 

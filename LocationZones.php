@@ -30,9 +30,9 @@ if (isset($_POST['submit'])) {
 	//first off validate inputs sensible
 	$i=1;
 
-	if (mb_strlen($_POST['code']) > 6) {
+	if (mb_strlen($_POST['code']) > 10) {
 		$InputError = 1;
-		prnMsg(_('The zone code must be six characters or less long'),'error');
+		prnMsg(_('The zone code must be 10 characters or less long'),'error');
 		$Errors[$i] = 'LocationZone';
 		$i++;
 	} elseif ($_POST['code']=='') {
@@ -230,7 +230,7 @@ if (! isset($_GET['delete'])) {
 				</tr>
 				<tr>
 					<td>' . _('Type Code') . ':</td>
-					<td><input type="text" ' . (in_array('LocationZone',$Errors) ? 'class="inputerror"' : '' ) .' size="7" maxlength="6" name="code" /></td>
+					<td><input type="text" ' . (in_array('LocationZone',$Errors) ? 'class="inputerror"' : '' ) .' size="11" maxlength="10" name="code" /></td>
 				</tr>';
 	}
 
