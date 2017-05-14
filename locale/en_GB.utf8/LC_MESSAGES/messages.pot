@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-17 08:51-0600\n"
+"POT-Creation-Date: 2017-05-14 17:52-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -990,7 +990,7 @@ msgstr ""
 #: InventoryQuantities.php:155 InventoryValuation.php:217 Locations.php:12
 #: MRP.php:542 MRPCalendar.php:21 MRPCreateDemands.php:193
 #: MRPDemandTypes.php:17 MRPDemands.php:27 MRPPlannedPurchaseOrders.php:264
-#: MRPPlannedWorkOrders.php:246 MRPPlannedWorkOrders.php:320 PricesByCost.php:8
+#: MRPPlannedWorkOrders.php:245 MRPPlannedWorkOrders.php:319 PricesByCost.php:8
 #: ReorderLevel.php:194 ReorderLevelLocation.php:12 SelectProduct.php:91
 #: StockDispatch.php:321 StockMovements.php:22 StockQties_csv.php:8
 #: StockQuantityByDate.php:10 StockReorderLevel.php:20
@@ -1005,7 +1005,7 @@ msgstr ""
 msgid "The stock held could not be retrieved because"
 msgstr ""
 
-#: AgedControlledInventory.php:42 MRPReschedules.php:126 MRPShortages.php:261
+#: AgedControlledInventory.php:42 MRPReschedules.php:124 MRPShortages.php:260
 #: StockClone.php:53 Stocks.php:63 reportwriter/languages/en_US/reports.php:103
 msgid "Stock"
 msgstr ""
@@ -1027,8 +1027,8 @@ msgstr ""
 #: InternalStockRequestInquiry.php:406 InventoryPlanning.php:419
 #: InventoryQuantities.php:246 InventoryValuation.php:197 Labels.php:290
 #: MRPDemandTypes.php:113 MRPDemands.php:92 MRPDemands.php:295
-#: MRPPlannedWorkOrders.php:257 MRPReport.php:563 MRPReport.php:777
-#: MRPReschedules.php:192 MRPShortages.php:350 MaintenanceTasks.php:95
+#: MRPPlannedWorkOrders.php:256 MRPReport.php:563 MRPReport.php:777
+#: MRPReschedules.php:190 MRPShortages.php:349 MaintenanceTasks.php:95
 #: MaintenanceUserSchedule.php:50 MaterialsNotUsed.php:35 NoSalesItems.php:194
 #: PDFCOA.php:64 PDFOrderStatus.php:337 PDFOrdersInvoiced.php:335
 #: PDFSalesBySalesperson.php:86 PDFWeeklyOrders.php:82 PO_Items.php:716
@@ -1140,9 +1140,9 @@ msgstr ""
 #: InventoryPlanningPrefSupplier.php:241 InventoryPlanningPrefSupplier.php:268
 #: InventoryPlanningPrefSupplier.php:301 InventoryQuantities.php:84
 #: InventoryValuation.php:64 MRPPlannedPurchaseOrders.php:113
-#: MRPPlannedWorkOrders.php:105 MRPReport.php:146 MRPReport.php:535
-#: MRPReschedules.php:45 MRPReschedules.php:57 MRPShortages.php:155
-#: MRPShortages.php:167 MailInventoryValuation.php:22
+#: MRPPlannedWorkOrders.php:104 MRPReport.php:146 MRPReport.php:535
+#: MRPReschedules.php:43 MRPReschedules.php:55 MRPShortages.php:154
+#: MRPShortages.php:166 MailInventoryValuation.php:22
 #: MailInventoryValuation.php:120 MailSalesReport.php:23
 #: MailSalesReport_csv.php:30 OutstandingGRNs.php:46 OutstandingGRNs.php:59
 #: PDFCustomerList.php:20 PDFCustomerList.php:232 PDFCustomerList.php:244
@@ -1182,10 +1182,10 @@ msgstr ""
 #: InventoryQuantities.php:87 InventoryQuantities.php:98
 #: InventoryValuation.php:67 InventoryValuation.php:92
 #: MRPPlannedPurchaseOrders.php:116 MRPPlannedPurchaseOrders.php:127
-#: MRPPlannedWorkOrders.php:108 MRPPlannedWorkOrders.php:119
-#: MRPPlannedWorkOrders.php:310 MRPReport.php:38 MRPReport.php:49
-#: MRPReport.php:149 MRPReschedules.php:48 MRPReschedules.php:60
-#: MRPShortages.php:158 MRPShortages.php:170 MailInventoryValuation.php:123
+#: MRPPlannedWorkOrders.php:107 MRPPlannedWorkOrders.php:118
+#: MRPPlannedWorkOrders.php:309 MRPReport.php:38 MRPReport.php:49
+#: MRPReport.php:149 MRPReschedules.php:46 MRPReschedules.php:58
+#: MRPShortages.php:157 MRPShortages.php:169 MailInventoryValuation.php:123
 #: MailInventoryValuation.php:219 MailInventoryValuation.php:243
 #: MailInventoryValuation.php:251 OutstandingGRNs.php:49 OutstandingGRNs.php:62
 #: PDFCustomerList.php:235 PDFCustomerList.php:247 PDFFGLabel.php:217
@@ -1347,7 +1347,7 @@ msgstr ""
 #: DebtorsAtPeriodEnd.php:168 InventoryPlanning.php:521
 #: InventoryPlanningPrefSupplier.php:437 InventoryQuantities.php:210
 #: InventoryValuation.php:273 MRPPlannedPurchaseOrders.php:293
-#: MRPPlannedWorkOrders.php:347 MRPReschedules.php:153 MRPShortages.php:303
+#: MRPPlannedWorkOrders.php:346 MRPReschedules.php:151 MRPShortages.php:302
 #: OutstandingGRNs.php:280 PDFCustomerList.php:421 PDFLowGP.php:146
 #: PDFPriceList.php:351 PDFRemittanceAdvice.php:175
 #: PDFStockCheckComparison.php:373 PrintCustTrans.php:564
@@ -1838,7 +1838,7 @@ msgstr ""
 #: InternalStockRequestInquiry.php:107 InternalStockRequestInquiry.php:136
 #: InternalStockRequestInquiry.php:138 InventoryQuantities.php:168
 #: InventoryQuantities.php:194 InventoryQuantities.php:196 MRP.php:619
-#: MRPReport.php:551 MRPReport.php:553 MRPReschedules.php:145
+#: MRPReport.php:551 MRPReport.php:553 MRPReschedules.php:143
 #: NoSalesItems.php:22 NoSalesItems.php:50 NoSalesItems.php:70
 #: NoSalesItems.php:72 PDFPeriodStockTransListing.php:58 PDFPriceList.php:225
 #: PDFPriceList.php:324 POReport.php:1600 PO_Items.php:1131
@@ -1900,7 +1900,7 @@ msgstr ""
 #: CustomerAllocations.php:376 CustomerInquiry.php:250 CustomerPurchases.php:82
 #: CustomerTransInquiry.php:21 CustomerTransInquiry.php:98
 #: DailyBankTransactions.php:153 GLAccountInquiry.php:190
-#: GLAccountReport.php:345 GLJournal.php:266 MRPReschedules.php:194
+#: GLAccountReport.php:345 GLJournal.php:266 MRPReschedules.php:192
 #: ProductSpecs.php:388 QATests.php:257 QATests.php:395
 #: SalesByTypePeriodInquiry.php:356 SelectCustomer.php:405
 #: ShipmentCosting.php:536 ShipmentCosting.php:613 StockLocMovements.php:90
@@ -1950,7 +1950,7 @@ msgstr ""
 #: CustItem.php:297 CustomerBranches.php:408 CustomerReceipt.php:1232
 #: GLCodesInquiry.php:26 InternalStockRequest.php:563
 #: InternalStockRequest.php:633 InternalStockRequestInquiry.php:266
-#: MRPDemands.php:91 MRPPlannedWorkOrders.php:256 MRPReport.php:776
+#: MRPDemands.php:91 MRPPlannedWorkOrders.php:255 MRPReport.php:776
 #: MaterialsNotUsed.php:34 NoSalesItems.php:193 PDFOrderStatus.php:336
 #: PDFOrdersInvoiced.php:334 PO_Header.php:561 PO_Items.php:1193
 #: PO_SelectOSPurchOrder.php:309 PO_SelectPurchOrder.php:213
@@ -2042,9 +2042,9 @@ msgstr ""
 #: InternalStockRequestFulfill.php:323 InternalStockRequestFulfill.php:324
 #: InternalStockRequestInquiry.php:407 InventoryPlanningPrefSupplier.php:78
 #: InventoryQuantities.php:248 MRPDemands.php:297 MRPDemands.php:395
-#: MRPPlannedPurchaseOrders.php:340 MRPPlannedWorkOrders.php:260
-#: MRPPlannedWorkOrders.php:394 MRPReport.php:440 MRPReport.php:446
-#: MRPReschedules.php:195 OffersReceived.php:108 OffersReceived.php:218
+#: MRPPlannedPurchaseOrders.php:340 MRPPlannedWorkOrders.php:259
+#: MRPPlannedWorkOrders.php:393 MRPReport.php:440 MRPReport.php:446
+#: MRPReschedules.php:193 OffersReceived.php:108 OffersReceived.php:218
 #: OffersReceived.php:278 OrderDetails.php:189 PDFOrdersInvoiced.php:380
 #: PDFSalesBySalesperson.php:87 PDFWeeklyOrders.php:83 POReport.php:770
 #: POReport.php:1463 PO_SelectOSPurchOrder.php:586 PrintCustTrans.php:859
@@ -2103,20 +2103,20 @@ msgid "Only Show Shortages"
 msgstr ""
 
 #: BOMExtendedQty.php:278 BOMIndented.php:268 BOMIndentedReverse.php:246
-#: MRPPlannedPurchaseOrders.php:279 MRPPlannedWorkOrders.php:335
-#: MRPReschedules.php:136 MRPShortages.php:293
+#: MRPPlannedPurchaseOrders.php:279 MRPPlannedWorkOrders.php:334
+#: MRPReschedules.php:134 MRPShortages.php:292
 msgid "Print Option"
 msgstr ""
 
 #: BOMExtendedQty.php:280 BOMIndented.php:270 BOMIndentedReverse.php:248
-#: MRPPlannedPurchaseOrders.php:281 MRPPlannedWorkOrders.php:337
-#: MRPReschedules.php:138 MRPShortages.php:295
+#: MRPPlannedPurchaseOrders.php:281 MRPPlannedWorkOrders.php:336
+#: MRPReschedules.php:136 MRPShortages.php:294
 msgid "Print With Alternating Highlighted Lines"
 msgstr ""
 
 #: BOMExtendedQty.php:281 BOMIndented.php:271 BOMIndentedReverse.php:249
-#: MRPPlannedPurchaseOrders.php:282 MRPPlannedWorkOrders.php:338
-#: MRPReschedules.php:139 MRPShortages.php:296
+#: MRPPlannedPurchaseOrders.php:282 MRPPlannedWorkOrders.php:337
+#: MRPReschedules.php:137 MRPShortages.php:295
 msgid "Plain Print"
 msgstr ""
 
@@ -2127,8 +2127,8 @@ msgstr ""
 #: BOMExtendedQty.php:316 BOMIndented.php:305 BOMIndentedReverse.php:283
 #: GLAccountReport.php:331 InventoryPlanningPrefSupplier.php:58
 #: InventoryQuantities.php:234 MRPPlannedPurchaseOrders.php:319
-#: MRPPlannedWorkOrders.php:373 MRPReport.php:844 MRPReschedules.php:180
-#: MRPShortages.php:334 PDFOrderStatus.php:323 PDFPriceList.php:395
+#: MRPPlannedWorkOrders.php:372 MRPReport.php:844 MRPReschedules.php:178
+#: MRPShortages.php:333 PDFOrderStatus.php:323 PDFPriceList.php:395
 #: PDFReceipt.php:34 PO_Header.php:848 PO_PDFPurchOrder.php:64
 #: PO_SelectOSPurchOrder.php:646 PrintWOItemSlip.php:142 ReorderLevel.php:283
 #: StockDispatch.php:479 SuppPriceList.php:289
@@ -2164,8 +2164,8 @@ msgstr ""
 #: BOMExtendedQty.php:317 BOMIndented.php:306 BOMIndentedReverse.php:284
 #: FixedAssetRegister.php:367 GLAccountReport.php:331
 #: InventoryPlanningPrefSupplier.php:58 InventoryQuantities.php:235
-#: MRPPlannedPurchaseOrders.php:320 MRPPlannedWorkOrders.php:374
-#: MRPReport.php:845 MRPReschedules.php:181 MRPShortages.php:335
+#: MRPPlannedPurchaseOrders.php:320 MRPPlannedWorkOrders.php:373
+#: MRPReport.php:845 MRPReschedules.php:179 MRPShortages.php:334
 #: PDFPriceList.php:385 PDFReceipt.php:34 PDFRemittanceAdvice.php:218
 #: PrintCustOrder.php:175 PrintCustTransPortrait.php:813
 #: PrintCustTransPortrait.php:1035 PrintCustTransPortrait.php:1091
@@ -2246,8 +2246,8 @@ msgstr ""
 #: BOMExtendedQty.php:331 BOMIndented.php:313 BOMIndentedReverse.php:291
 #: InventoryQuantities.php:245 MRPDemands.php:294 MRPDemands.php:371
 #: MRPDemands.php:381 MRPPlannedPurchaseOrders.php:337
-#: MRPPlannedWorkOrders.php:391 MRPReschedules.php:191 MRPShortages.php:280
-#: MRPShortages.php:349 POReport.php:493 POReport.php:502 POReport.php:521
+#: MRPPlannedWorkOrders.php:390 MRPReschedules.php:189 MRPShortages.php:279
+#: MRPShortages.php:348 POReport.php:493 POReport.php:502 POReport.php:521
 #: POReport.php:541 POReport.php:630 POReport.php:733 POReport.php:1277
 #: POReport.php:1286 POReport.php:1300 POReport.php:1315 POReport.php:1368
 #: POReport.php:1433 POReport.php:1539 POReport.php:1624 POReport.php:1637
@@ -2256,7 +2256,7 @@ msgid "Part Number"
 msgstr ""
 
 #: BOMExtendedQty.php:332 BOMIndented.php:314 BOMIndentedReverse.php:292
-#: MRPShortages.php:351
+#: MRPShortages.php:350
 msgid "M/B"
 msgstr ""
 
@@ -2266,7 +2266,7 @@ msgstr ""
 msgid "Part Description"
 msgstr ""
 
-#: BOMExtendedQty.php:338 MRPShortages.php:356
+#: BOMExtendedQty.php:338 MRPShortages.php:355
 msgid "Shortage"
 msgstr ""
 
@@ -2517,7 +2517,7 @@ msgstr ""
 #: BOMInquiry.php:200 ContractBOM.php:244 ContractCosting.php:83
 #: ContractCosting.php:89 ContractCosting.php:153 ContractOtherReqts.php:99
 #: Contracts.php:1008 Contracts.php:1043 InventoryValuation.php:197
-#: MRPPlannedWorkOrders.php:261 MRPShortages.php:352 SpecialOrder.php:727
+#: MRPPlannedWorkOrders.php:260 MRPShortages.php:351 SpecialOrder.php:727
 #: StockAdjustments.php:450
 msgid "Unit Cost"
 msgstr ""
@@ -9766,7 +9766,7 @@ msgid "Click"
 msgstr ""
 
 #: Customers.php:425 Customers.php:434 MRPPlannedPurchaseOrders.php:17
-#: MRPPlannedWorkOrders.php:16 MRPReschedules.php:17 MRPShortages.php:17
+#: MRPPlannedWorkOrders.php:15 MRPReschedules.php:15 MRPShortages.php:16
 #: OffersReceived.php:259 OffersReceived.php:261 PO_Header.php:462
 #: SelectCustomer.php:488 includes/ConnectDB_mysql.inc:25
 #: includes/ConnectDB_mysqli.inc:30
@@ -10137,8 +10137,8 @@ msgstr ""
 
 #: Dashboard.php:61 Dashboard.php:338 EmailConfirmation.php:221
 #: EmailConfirmation.php:351 MRPDemands.php:298 MRPDemands.php:399
-#: MRPPlannedPurchaseOrders.php:338 MRPPlannedWorkOrders.php:259
-#: MRPPlannedWorkOrders.php:392 MRPReport.php:441 MRPReport.php:447
+#: MRPPlannedPurchaseOrders.php:338 MRPPlannedWorkOrders.php:258
+#: MRPPlannedWorkOrders.php:391 MRPReport.php:441 MRPReport.php:447
 #: OrderDetails.php:195 SelectOrderItems.php:1353 SelectOrderItems.php:1794
 #: SupplierTransInquiry.php:114
 msgid "Due Date"
@@ -10207,7 +10207,7 @@ msgstr ""
 msgid "Cust Order"
 msgstr ""
 
-#: Dashboard.php:612 FTP_RadioBeacon.php:54 MRPReschedules.php:196
+#: Dashboard.php:612 FTP_RadioBeacon.php:54 MRPReschedules.php:194
 #: PDFSalesBySalesperson.php:84 PDFWeeklyOrders.php:80 POReport.php:542
 #: POReport.php:631 POReport.php:1316 POReport.php:1369 POReport.php:1528
 #: PO_SelectOSPurchOrder.php:592 PO_SelectPurchOrder.php:436
@@ -13712,8 +13712,8 @@ msgstr ""
 
 #: GLJournal.php:311 GLJournal.php:413 GLTagProfit_Loss.php:106
 #: ImportBankTransAnalysis.php:303 MRPPlannedPurchaseOrders.php:273
-#: MRPPlannedPurchaseOrders.php:323 MRPPlannedWorkOrders.php:329
-#: MRPPlannedWorkOrders.php:377 PcExpenses.php:334 StockAdjustments.php:503
+#: MRPPlannedPurchaseOrders.php:323 MRPPlannedWorkOrders.php:328
+#: MRPPlannedWorkOrders.php:376 PcExpenses.php:334 StockAdjustments.php:503
 #: Suppliers.php:795 Suppliers.php:1046 SystemParameters.php:523
 #: SystemParameters.php:1115 SystemParameters.php:1121
 #: SystemParameters.php:1127 SystemParameters.php:1133
@@ -15531,7 +15531,7 @@ msgstr ""
 msgid "Use this report to display the quantity of Inventory items in different categories."
 msgstr ""
 
-#: InventoryQuantities.php:166 MRPReschedules.php:143
+#: InventoryQuantities.php:166 MRPReschedules.php:141
 msgid "Selection"
 msgstr ""
 
@@ -16314,16 +16314,16 @@ msgid "Distribution Period"
 msgstr ""
 
 #: MRPCreateDemands.php:259 MRPPlannedPurchaseOrders.php:274
-#: MRPPlannedPurchaseOrders.php:325 MRPPlannedWorkOrders.php:330
-#: MRPPlannedWorkOrders.php:379 RecurringSalesOrders.php:450
+#: MRPPlannedPurchaseOrders.php:325 MRPPlannedWorkOrders.php:329
+#: MRPPlannedWorkOrders.php:378 RecurringSalesOrders.php:450
 #: RecurringSalesOrders.php:452 SalesByTypePeriodInquiry.php:93
 #: SystemParameters.php:960 SystemParameters.php:962
 msgid "Weekly"
 msgstr ""
 
 #: MRPCreateDemands.php:260 MRPPlannedPurchaseOrders.php:275
-#: MRPPlannedPurchaseOrders.php:327 MRPPlannedWorkOrders.php:331
-#: MRPPlannedWorkOrders.php:381 RecurringSalesOrders.php:460
+#: MRPPlannedPurchaseOrders.php:327 MRPPlannedWorkOrders.php:330
+#: MRPPlannedWorkOrders.php:380 RecurringSalesOrders.php:460
 #: RecurringSalesOrders.php:462 SalesByTypePeriodInquiry.php:101
 #: SystemParameters.php:965 SystemParameters.php:967
 msgid "Monthly"
@@ -16473,18 +16473,18 @@ msgstr ""
 msgid "Or Delete Record"
 msgstr ""
 
-#: MRPPlannedPurchaseOrders.php:13 MRPPlannedWorkOrders.php:12
-#: MRPShortages.php:13
+#: MRPPlannedPurchaseOrders.php:13 MRPPlannedWorkOrders.php:11
+#: MRPShortages.php:12
 msgid "MRP error"
 msgstr ""
 
-#: MRPPlannedPurchaseOrders.php:16 MRPPlannedWorkOrders.php:15
-#: MRPReschedules.php:16 MRPShortages.php:16
+#: MRPPlannedPurchaseOrders.php:16 MRPPlannedWorkOrders.php:14
+#: MRPReschedules.php:14 MRPShortages.php:15
 msgid "The MRP calculation must be run before you can run this report"
 msgstr ""
 
-#: MRPPlannedPurchaseOrders.php:17 MRPPlannedWorkOrders.php:16
-#: MRPReschedules.php:17 MRPShortages.php:17
+#: MRPPlannedPurchaseOrders.php:17 MRPPlannedWorkOrders.php:15
+#: MRPReschedules.php:15 MRPShortages.php:16
 msgid "To run the MRP calculation click"
 msgstr ""
 
@@ -16513,12 +16513,12 @@ msgid "There were no items with planned purchase orders"
 msgstr ""
 
 #: MRPPlannedPurchaseOrders.php:160 MRPPlannedPurchaseOrders.php:222
-#: MRPPlannedWorkOrders.php:163 MRPPlannedWorkOrders.php:215
+#: MRPPlannedWorkOrders.php:162 MRPPlannedWorkOrders.php:214
 msgid "Unit Cost: "
 msgstr ""
 
 #: MRPPlannedPurchaseOrders.php:164 MRPPlannedPurchaseOrders.php:226
-#: MRPPlannedWorkOrders.php:168 MRPPlannedWorkOrders.php:219
+#: MRPPlannedWorkOrders.php:167 MRPPlannedWorkOrders.php:218
 msgid "M/B: "
 msgstr ""
 
@@ -16538,7 +16538,7 @@ msgstr ""
 msgid "Number of Purchase Orders: "
 msgstr ""
 
-#: MRPPlannedPurchaseOrders.php:252 MRPPlannedWorkOrders.php:232
+#: MRPPlannedPurchaseOrders.php:252 MRPPlannedWorkOrders.php:231
 msgid "Total Extended Cost:"
 msgstr ""
 
@@ -16547,91 +16547,91 @@ msgid "MRP Planned Purchase Orders Reporting"
 msgstr ""
 
 #: MRPPlannedPurchaseOrders.php:271 MRPPlannedPurchaseOrders.php:329
-#: MRPPlannedWorkOrders.php:252 MRPPlannedWorkOrders.php:327
-#: MRPPlannedWorkOrders.php:383
+#: MRPPlannedWorkOrders.php:251 MRPPlannedWorkOrders.php:326
+#: MRPPlannedWorkOrders.php:382
 msgid "Consolidation"
 msgstr ""
 
-#: MRPPlannedPurchaseOrders.php:286 MRPPlannedWorkOrders.php:342
+#: MRPPlannedPurchaseOrders.php:286 MRPPlannedWorkOrders.php:341
 msgid "Cut Off Date"
 msgstr ""
 
-#: MRPPlannedPurchaseOrders.php:339 MRPPlannedWorkOrders.php:258
-#: MRPPlannedWorkOrders.php:393 MRPReport.php:448 MRPReschedules.php:197
+#: MRPPlannedPurchaseOrders.php:339 MRPPlannedWorkOrders.php:257
+#: MRPPlannedWorkOrders.php:392 MRPReport.php:448 MRPReschedules.php:195
 msgid "MRP Date"
 msgstr ""
 
-#: MRPPlannedPurchaseOrders.php:341 MRPPlannedWorkOrders.php:262
-#: MRPPlannedWorkOrders.php:395
+#: MRPPlannedPurchaseOrders.php:341 MRPPlannedWorkOrders.php:261
+#: MRPPlannedWorkOrders.php:394
 msgid "Ext. Cost"
 msgstr ""
 
-#: MRPPlannedPurchaseOrders.php:343 MRPPlannedWorkOrders.php:397
+#: MRPPlannedPurchaseOrders.php:343 MRPPlannedWorkOrders.php:396
 msgid "Source Type"
 msgstr ""
 
-#: MRPPlannedPurchaseOrders.php:344 MRPPlannedWorkOrders.php:398
+#: MRPPlannedPurchaseOrders.php:344 MRPPlannedWorkOrders.php:397
 msgid "Source Order"
 msgstr ""
 
-#: MRPPlannedPurchaseOrders.php:346 MRPPlannedWorkOrders.php:400
+#: MRPPlannedPurchaseOrders.php:346 MRPPlannedWorkOrders.php:399
 msgid "Consolidation Count"
 msgstr ""
 
-#: MRPPlannedWorkOrders.php:27
+#: MRPPlannedWorkOrders.php:26
 msgid "Through"
 msgstr ""
 
-#: MRPPlannedWorkOrders.php:105 MRPPlannedWorkOrders.php:116
-#: MRPPlannedWorkOrders.php:129
+#: MRPPlannedWorkOrders.php:104 MRPPlannedWorkOrders.php:115
+#: MRPPlannedWorkOrders.php:128
 msgid "MRP Planned Work Orders"
 msgstr ""
 
-#: MRPPlannedWorkOrders.php:107
+#: MRPPlannedWorkOrders.php:106
 msgid "The MRP planned work orders could not be retrieved by the SQL because"
 msgstr ""
 
-#: MRPPlannedWorkOrders.php:118 ReorderLevel.php:181
+#: MRPPlannedWorkOrders.php:117 ReorderLevel.php:181
 msgid "There were no items with demand greater than supply"
 msgstr ""
 
-#: MRPPlannedWorkOrders.php:128 MRPPlannedWorkOrders.php:371
+#: MRPPlannedWorkOrders.php:127 MRPPlannedWorkOrders.php:370
 msgid "MRP Planned Work Orders Report"
 msgstr ""
 
-#: MRPPlannedWorkOrders.php:230
+#: MRPPlannedWorkOrders.php:229
 msgid "Number of Work Orders: "
 msgstr ""
 
-#: MRPPlannedWorkOrders.php:243
+#: MRPPlannedWorkOrders.php:242
 msgid "Review/Convert MRP Planned Work Orders"
 msgstr ""
 
-#: MRPPlannedWorkOrders.php:253
+#: MRPPlannedWorkOrders.php:252
 msgid "Cutoff Date"
 msgstr ""
 
-#: MRPPlannedWorkOrders.php:263
+#: MRPPlannedWorkOrders.php:262
 msgid "Consolidations"
 msgstr ""
 
-#: MRPPlannedWorkOrders.php:282
+#: MRPPlannedWorkOrders.php:281
 msgid "Convert"
 msgstr ""
 
-#: MRPPlannedWorkOrders.php:303
+#: MRPPlannedWorkOrders.php:302
 msgid "Number of Work Orders"
 msgstr ""
 
-#: MRPPlannedWorkOrders.php:304
+#: MRPPlannedWorkOrders.php:303
 msgid "Total Extended Cost"
 msgstr ""
 
-#: MRPPlannedWorkOrders.php:317
+#: MRPPlannedWorkOrders.php:316
 msgid "MRP Planned Work Orders Reporting"
 msgstr ""
 
-#: MRPPlannedWorkOrders.php:347
+#: MRPPlannedWorkOrders.php:346
 msgid "Review"
 msgstr ""
 
@@ -16724,7 +16724,7 @@ msgstr ""
 msgid "Where Required"
 msgstr ""
 
-#: MRPReport.php:443 MRPReschedules.php:193
+#: MRPReport.php:443 MRPReschedules.php:191
 msgid "Order No."
 msgstr ""
 
@@ -16745,137 +16745,137 @@ msgstr ""
 msgid "No stock items were returned by this search please re-enter alternative criteria to try again"
 msgstr ""
 
-#: MRPReschedules.php:24 MRPReschedules.php:179
+#: MRPReschedules.php:22 MRPReschedules.php:177
 msgid "MRP Reschedule Report"
 msgstr ""
 
-#: MRPReschedules.php:25 MRPReschedules.php:45 MRPReschedules.php:57
+#: MRPReschedules.php:23 MRPReschedules.php:43 MRPReschedules.php:55
 msgid "MRP Reschedules"
 msgstr ""
 
-#: MRPReschedules.php:47
+#: MRPReschedules.php:45
 msgid "The MRP reschedules could not be retrieved by the SQL because"
 msgstr ""
 
-#: MRPReschedules.php:59
+#: MRPReschedules.php:57
 msgid "No MRP reschedule retrieved"
 msgstr ""
 
-#: MRPReschedules.php:121
+#: MRPReschedules.php:119
 msgid "MRP Reschedule Reporting"
 msgstr ""
 
-#: MRPReschedules.php:146
+#: MRPReschedules.php:144
 msgid "Work Orders Only"
 msgstr ""
 
-#: MRPReschedules.php:147
+#: MRPReschedules.php:145
 msgid "Purchase Orders Only"
 msgstr ""
 
-#: MRPReschedules.php:183
+#: MRPReschedules.php:181
 msgid "Selection:"
 msgstr ""
 
-#: MRPShortages.php:26 MRPShortages.php:329
+#: MRPShortages.php:25 MRPShortages.php:328
 msgid "MRP Shortages Report"
 msgstr ""
 
-#: MRPShortages.php:27 includes/MainMenuLinksArray.php:310
+#: MRPShortages.php:26 includes/MainMenuLinksArray.php:310
 msgid "MRP Shortages"
 msgstr ""
 
-#: MRPShortages.php:29 MRPShortages.php:331
+#: MRPShortages.php:28 MRPShortages.php:330
 msgid "MRP Excess Report"
 msgstr ""
 
-#: MRPShortages.php:30
+#: MRPShortages.php:29
 msgid "MRP Excess"
 msgstr ""
 
-#: MRPShortages.php:44
+#: MRPShortages.php:43
 msgid "Create of demandtotal failed because"
 msgstr ""
 
-#: MRPShortages.php:59
+#: MRPShortages.php:58
 msgid "Create of supplytotal failed because"
 msgstr ""
 
-#: MRPShortages.php:155 MRPShortages.php:167
+#: MRPShortages.php:154 MRPShortages.php:166
 msgid "MRP Shortages and Excesses"
 msgstr ""
 
-#: MRPShortages.php:157
+#: MRPShortages.php:156
 msgid "The MRP shortages and excesses could not be retrieved by the SQL because"
 msgstr ""
 
-#: MRPShortages.php:169
+#: MRPShortages.php:168
 msgid "No MRP shortages - Excess retrieved"
 msgstr ""
 
-#: MRPShortages.php:239
+#: MRPShortages.php:238
 msgid "Number of Parts: "
 msgstr ""
 
-#: MRPShortages.php:242
+#: MRPShortages.php:241
 msgid "Total Extended Shortage:"
 msgstr ""
 
-#: MRPShortages.php:244
+#: MRPShortages.php:243
 msgid "Total Extended Excess:"
 msgstr ""
 
-#: MRPShortages.php:257
+#: MRPShortages.php:256
 msgid "MRP Shortages - Excess Reporting"
 msgstr ""
 
-#: MRPShortages.php:267 PDFDIFOT.php:49 PDFDeliveryDifferences.php:40
+#: MRPShortages.php:266 PDFDIFOT.php:49 PDFDeliveryDifferences.php:40
 #: PDFOrderStatus.php:45 PDFOrdersInvoiced.php:49
 msgid "Inventory Category"
 msgstr ""
 
-#: MRPShortages.php:268
+#: MRPShortages.php:267
 msgid "All Stock Categories"
 msgstr ""
 
-#: MRPShortages.php:277 reportwriter/languages/en_US/reports.php:101
+#: MRPShortages.php:276 reportwriter/languages/en_US/reports.php:101
 msgid "Sort"
 msgstr ""
 
-#: MRPShortages.php:279
+#: MRPShortages.php:278
 msgid "Extended Shortage Dollars"
 msgstr ""
 
-#: MRPShortages.php:285
+#: MRPShortages.php:284
 msgid "Shortage-Excess Option"
 msgstr ""
 
-#: MRPShortages.php:287
+#: MRPShortages.php:286
 msgid "Report MRP Shortages"
 msgstr ""
 
-#: MRPShortages.php:288
+#: MRPShortages.php:287
 msgid "Report MRP Excesses"
 msgstr ""
 
-#: MRPShortages.php:353
+#: MRPShortages.php:352
 msgid "Supply"
 msgstr ""
 
-#: MRPShortages.php:354 PurchaseByPrefSupplier.php:416 StockLocStatus.php:180
+#: MRPShortages.php:353 PurchaseByPrefSupplier.php:416 StockLocStatus.php:180
 #: StockStatus.php:89 StockStatus.php:97
 msgid "Demand"
 msgstr ""
 
-#: MRPShortages.php:357
+#: MRPShortages.php:356
 msgid "Ext. Shortage"
 msgstr ""
 
-#: MRPShortages.php:359
+#: MRPShortages.php:358
 msgid "Excess"
 msgstr ""
 
-#: MRPShortages.php:360
+#: MRPShortages.php:359
 msgid "Ext. Excess"
 msgstr ""
 
@@ -38321,7 +38321,7 @@ msgid "Cannot open the configuration file: "
 msgstr ""
 
 #: Z_MakeNewCompany.php:212
-msgid "The company details and parameters should now be set up for the new company. NB: Only a single user \"demo\" is defined with the password \"weberp\" in the new company database. A new system administrator user should be defined for the new company and this account deleted immediately."
+msgid "The company details and parameters should now be set up for the new company. NB: Only a single user \"admin\" is defined with the password \"weberp\" in the new company database. A new system administrator user should be defined for the new company and this account deleted immediately."
 msgstr ""
 
 #: Z_MakeNewCompany.php:212
