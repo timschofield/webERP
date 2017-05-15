@@ -3774,6 +3774,7 @@ function PurchasingOrdersDeliveryControl($reason, $maxdays, $RootPath, $db){
 		$TotalValueOrderUSD = 0;
 		$TotalValueOrderTHB = 0;
 		$TotalValueAllOrders = 0;
+		$TotalValueAllPayments = 0;
 		$AcumIDR = 0;
 		$AcumUSD = 0;
 		$AcumTHB = 0;
@@ -3818,6 +3819,7 @@ function PurchasingOrdersDeliveryControl($reason, $maxdays, $RootPath, $db){
 				}else{
 					$PaymentOrderIDR = $ValueOrderIDR - $SupplierBalanceIDR;
 					$AcumIDR = $AcumIDR + $PaymentOrderIDR; 
+					$TotalValueAllPayments = $TotalValueAllPayments + $PaymentOrderIDR; 
 				}
 			}elseif	($myrow['currcode'] == 'USD'){
 				$ValueOrderUSD = $myrow['ordervalue'];
@@ -3832,6 +3834,7 @@ function PurchasingOrdersDeliveryControl($reason, $maxdays, $RootPath, $db){
 				}else{
 					$PaymentOrderUSD = $ValueOrderUSD - $SupplierBalanceUSD;
 					$AcumUSD = $AcumUSD + $PaymentOrderUSD; 
+					$TotalValueAllPayments = $TotalValueAllPayments + ($PaymentOrderUSD/$myrow['exchangerate']); 
 				}
 			}elseif	($myrow['currcode'] == 'THB'){
 				$ValueOrderTHB = $myrow['ordervalue'];
@@ -3846,6 +3849,7 @@ function PurchasingOrdersDeliveryControl($reason, $maxdays, $RootPath, $db){
 				}else{
 					$PaymentOrderTHB = $ValueOrderTHB - $SupplierBalanceTHB;
 					$AcumTHB = $AcumTHB + $PaymentOrderTHB; 
+					$TotalValueAllPayments = $TotalValueAllPayments + ($PaymentOrderTHB/$myrow['exchangerate']); 
 				}
 			}
 			
@@ -3922,7 +3926,7 @@ function PurchasingOrdersDeliveryControl($reason, $maxdays, $RootPath, $db){
 					'', 
 					'', 
 					'', 
-					'', 
+					locale_number_format_zero_blank($TotalValueAllPayments,0),
 					'', 
 					'' 
 					);
