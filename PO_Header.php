@@ -179,6 +179,10 @@ if (isset($_GET['NewOrder']) AND isset($_GET['StockID']) AND isset($_GET['Select
 	/* set the SupplierID we got */
 	$_SESSION['PO' . $identifier]->SupplierID = $_GET['SelectedSupplier'];
 	$_SESSION['PO' . $identifier]->DeliveryDate = date($_SESSION['DefaultDateFormat']);
+	$_SESSION['PO' . $identifier]->KLPaymentDate = date($_SESSION['DefaultDateFormat']);
+	$_SESSION['PO' . $identifier]->KLShipmentDate = date($_SESSION['DefaultDateFormat']);
+	$_SESSION['PO' . $identifier]->KLShipmentAWB = '';
+	$_SESSION['PO' . $identifier]->KLArrivalDate = date($_SESSION['DefaultDateFormat']);
 	$_SESSION['PO' . $identifier]->Initiator = $_SESSION['UserID'];
 	$_SESSION['RequireSupplierSelection'] = 0;
 	$_POST['Select'] = $_GET['SelectedSupplier'];
@@ -212,6 +216,10 @@ if (isset($_POST['EnterLines']) OR isset($_POST['AllowRePrint'])) {
 	$_SESSION['PO' . $identifier]->RequisitionNo = $_POST['Requisition'];
 	$_SESSION['PO' . $identifier]->Version = $_POST['Version'];
 	$_SESSION['PO' . $identifier]->DeliveryDate = $_POST['DeliveryDate'];
+	$_SESSION['PO' . $identifier]->KLPaymentDate = $_POST['KLPaymentDate'];
+	$_SESSION['PO' . $identifier]->KLShipmentDate = $_POST['KLShipmentDate'];
+	$_SESSION['PO' . $identifier]->KLShipmentAWB = $_POST['KLShipmentAWB'];
+	$_SESSION['PO' . $identifier]->KLArrivalDate = $_POST['KLArrivalDate'];
 	$_SESSION['PO' . $identifier]->Revised = $_POST['Revised'];
 	$_SESSION['PO' . $identifier]->ExRate = filter_number_format($_POST['ExRate']);
 	$_SESSION['PO' . $identifier]->Comments = $_POST['Comments'];
@@ -387,6 +395,18 @@ if ((!isset($_POST['SearchSuppliers']) or $_POST['SearchSuppliers'] == '') AND (
 	$_POST['SuppDelAdd6'] = $_SESSION['PO' . $identifier]->SuppDelAdd6;
 	if(!isset($_POST['DeliveryDate'])){
 		$_POST['DeliveryDate'] = $_SESSION['PO' . $identifier]->DeliveryDate;
+	}
+	if(!isset($_POST['KLPaymentDate'])){
+		$_POST['KLPaymentDate'] = $_SESSION['PO' . $identifier]->KLPaymentDate;
+	}
+	if(!isset($_POST['KLShipmentDate'])){
+		$_POST['KLShipmentDate'] = $_SESSION['PO' . $identifier]->KLShipmentDate;
+	}
+	if(!isset($_POST['KLShipmentAWB'])){
+		$_POST['KLShipmentAWB'] = $_SESSION['PO' . $identifier]->KLShipmentAWB;
+	}
+	if(!isset($_POST['KLArrivalDate'])){
+		$_POST['KLArrivalDate'] = $_SESSION['PO' . $identifier]->KLArrivalDate;
 	}
 
 }
@@ -708,6 +728,10 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 		$_POST['Requisition'] = $_SESSION['PO' . $identifier]->RequisitionNo;
 		$_POST['Version'] = $_SESSION['PO' . $identifier]->Version;
 		$_POST['DeliveryDate'] = $_SESSION['PO' . $identifier]->DeliveryDate;
+		$_POST['KLPaymentDate'] = $_SESSION['PO' . $identifier]->KLPaymentDate;
+		$_POST['KLShipmentDate'] = $_SESSION['PO' . $identifier]->KLShipmentDate;
+		$_POST['KLShipmentAWB'] = $_SESSION['PO' . $identifier]->KLShipmentAWB;
+		$_POST['KLArrivalDate'] = $_SESSION['PO' . $identifier]->KLArrivalDate;
 		$_POST['Revised'] = $_SESSION['PO' . $identifier]->Revised;
 		$_POST['ExRate'] = $_SESSION['PO' . $identifier]->ExRate;
 		$_POST['Comments'] = $_SESSION['PO' . $identifier]->Comments;
@@ -751,6 +775,18 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 	if (!isset($_POST['DeliveryDate'])) {
 		$_POST['DeliveryDate'] = date($_SESSION['DefaultDateFormat']);
 	}
+	if (!isset($_POST['KLPaymentDate'])) {
+		$_POST['KLPaymentDate'] = date($_SESSION['DefaultDateFormat']);
+	}
+	if (!isset($_POST['KLShipmentDate'])) {
+		$_POST['KLShipmentDate'] = date($_SESSION['DefaultDateFormat']);
+	}
+	if (!isset($_POST['KLShipmentAWB'])) {
+		$_POST['KLShipmentAWB'] = '';
+	}
+	if (!isset($_POST['KLArrivalDate'])) {
+		$_POST['KLArrivalDate'] = date($_SESSION['DefaultDateFormat']);
+	}
 
 	echo '<tr>
 			<td>' . _('Version') . ' #' . ':</td>
@@ -763,7 +799,25 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 		<tr>
 			<td>' . _('Delivery Date') . ':</td>
 			<td><input type="text" required="required" autofocus="autofocus" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="DeliveryDate" size="11" value="' . $_POST['DeliveryDate'] . '" /></td>
-		</tr>';
+		</tr>
+		<tr>
+			<td>' . _('Payment Date') . ':</td>
+			<td><input type="text" required="required" autofocus="autofocus" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="KLPaymentDate" size="11" value="' . $_POST['KLPaymentDate'] . '" /></td>
+		</tr>
+		<tr>
+			<td>' . _('Shipment Date') . ':</td>
+			<td><input type="text" required="required" autofocus="autofocus" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="KLShipmentDate" size="11" value="' . $_POST['KLShipmentDate'] . '" /></td>
+		</tr>
+		<tr>
+			<td>' . _('Shipment AWB') . ':</td>
+			<td><input type="text" name="KLShipmentAWB" size="51" maxlength="50" title="' . _('Enter AWB tracking number') . '" value="' . $_POST['KLShipmentAWB'] . '" /></td>
+		</tr>		
+		<tr>
+			<td>' . _('Arrival Date') . ':</td>
+			<td><input type="text" required="required" autofocus="autofocus" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="KLArrivalDate" size="11" value="' . $_POST['KLArrivalDate'] . '" /></td>
+		</tr>
+		
+		';
 
 	if (!isset($_POST['Initiator'])) {
 		$_POST['Initiator'] = $_SESSION['UserID'];
@@ -777,14 +831,14 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 	echo '<tr>
 			<td>' . _('Initiated By') . ':</td>
 			<td><input type="hidden" name="Initiator" size="11" maxlength="10" value="' . $_POST['Initiator'] . '" />' . $_POST['InitiatorName'] . '</td>
-		</tr>
-		<tr>
+		</tr>';
+/*	echo '<tr>
 			<td>' . _('Requisition Ref') . ':</td>
 			<td><input type="text" name="Requisition" size="16" maxlength="15" title="' . _('Enter our purchase requisition reference if needed') . '" value="' . $_POST['Requisition'] . '" /></td>
-		</tr>
-		<tr>
+		</tr>';
+*/	echo '<tr>
 			<td>' . _('Date Printed') . ':</td>
-			<td>';
+		<td>';
 
 	if (isset($_SESSION['PO' . $identifier]->DatePurchaseOrderPrinted) AND mb_strlen($_SESSION['PO' . $identifier]->DatePurchaseOrderPrinted) > 6) {
 		echo ConvertSQLDate($_SESSION['PO' . $identifier]->DatePurchaseOrderPrinted);

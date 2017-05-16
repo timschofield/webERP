@@ -3692,7 +3692,7 @@ function OldPurchasingOrdersStillActive($maxdays, $RootPath, $db){
 	}
 }
 
-function PurchasingOrdersDeliveryControl($reason, $maxdays, $RootPath, $db){
+function PurchasingOrdersDeliveryControl($reason, $TypeOfDate, $maxdays, $RootPath, $db){
 
 	if ($reason == "Delayed"){
 		$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
@@ -3701,13 +3701,45 @@ function PurchasingOrdersDeliveryControl($reason, $maxdays, $RootPath, $db){
 		$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',+$maxdays));
 		$EndDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-30));
 	}
+	
+	if ($TypeOfDate == "Delivery"){
+		$DateField = "deliverydate";
+		if ($reason == "Delayed"){
+			$TitleWarning = 'Purchase Orders with supplier delivery date expired';
+		}else{
+			$TitleWarning = 'Purchase Orders to be delivered by supplier in the next ' . $maxdays . ' days';
+		}
+	}else if ($TypeOfDate == "Payment"){
+		$DateField = "paymentdate";
+		if ($reason == "Delayed"){
+			$TitleWarning = 'Purchase Orders with payment date expired';
+		}else{
+			$TitleWarning = 'Purchase Orders to be paid in the next ' . $maxdays . ' days';
+		}
+	}else if ($TypeOfDate == "Shipment"){
+		$DateField = "shipmentdate";
+		if ($reason == "Delayed"){
+			$TitleWarning = 'Purchase Orders with shipment date expired';
+		}else{
+			$TitleWarning = 'Purchase Orders to be shipped by supplier in the next ' . $maxdays . ' days';
+		}
+	}else if ($TypeOfDate == "Arrival"){
+		$DateField = "arrivaldate";
+		if ($reason == "Delayed"){
+			$TitleWarning = 'Purchase Orders with arrival date expired';
+		}else{
+			$TitleWarning = 'Purchase Orders to arrive to us in the next ' . $maxdays . ' days';
+		}
+	}else{
+		return;
+	}
+	
 	$SQL = "SELECT purchorders.orderno,
 				purchorders.supplierno,
 				purchorders.orddate,
-				purchorders.deliverydate,
+				purchorders." . $DateField ." AS reportdate,
 				purchorders.status,
 				purchorders.initiator,
-				purchorders.requisitionno,
 				purchorders.allowprint,
 				suppliers.currcode,
 				currencies.rate AS exchangerate,
@@ -3720,28 +3752,23 @@ function PurchasingOrdersDeliveryControl($reason, $maxdays, $RootPath, $db){
 			INNER JOIN currencies
 				ON suppliers.currcode=currencies.currabrev
 			WHERE purchorderdetails.completed=0
-				AND purchorders.deliverydate <  '". $StartDate ."'		
-				AND purchorders.deliverydate >= '". $EndDate ."'		
+				AND purchorders." . $DateField ." <  '". $StartDate ."'		
+				AND purchorders." . $DateField ." >= '". $EndDate ."'		
 				AND purchorders.status IN ('Authorised', 'Printed', 'Pending')	
 			GROUP BY purchorders.orderno ASC,
 				purchorders.supplierno,
 				purchorders.orddate,
 				purchorders.status,
 				purchorders.initiator,
-				purchorders.requisitionno,
 				purchorders.allowprint,
 				suppliers.currcode,
 				currencies.decimalplaces
-			ORDER BY purchorders.deliverydate ASC,
+			ORDER BY purchorders." . $DateField ." ASC,
 				purchorders.orderno ASC";
-	
+
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		if ($reason == "Delayed"){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Purchase Orders with delivery date expired') . '</strong></p>';
-		}else{
-			echo '<p class="page_title_text" align="center"><strong>' . _('Purchase Orders to be delivered in the next ') . $maxdays . ' days' .'</strong></p>';
-		}
+		echo '<p class="page_title_text" align="center"><strong>' . $TitleWarning . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
@@ -3754,7 +3781,7 @@ function PurchasingOrdersDeliveryControl($reason, $maxdays, $RootPath, $db){
 							<th class="ascending">' . _('#') . '</th>
 							<th class="ascending">' . _('PO') . '</th>
 							<th class="ascending">' . _('Supplier') . '</th>
-							<th class="ascending">' . _('Delivery Date') . '</th>
+							<th class="ascending">' . $TypeOfDate . '</th>
 							<th class="ascending">' . _('IDR') . '</th>
 							<th class="ascending">' . _('USD') . '</th>
 							<th class="ascending">' . _('THB') . '</th>
@@ -3873,7 +3900,7 @@ function PurchasingOrdersDeliveryControl($reason, $maxdays, $RootPath, $db){
 					$i, 
 					$CodeLink, 
 					$myrow['supplierno'],
-					ConvertSQLDate($myrow['deliverydate']), 
+					ConvertSQLDate($myrow['reportdate']), 
 					locale_number_format_zero_blank($ValueOrderIDR,0),
 					locale_number_format_zero_blank($ValueOrderUSD,0),
 					locale_number_format_zero_blank($ValueOrderTHB,0),

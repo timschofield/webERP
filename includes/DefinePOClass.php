@@ -49,6 +49,10 @@ Class PurchOrder {
 	var $PaymentTerms;
 	var $Contact;
 	var $Port;
+	var $KLPaymentDate;
+	var $KLShipmentDate;
+	var $KLShipmentAWB;
+	var $KLArrivalDate;
 
 	function PurchOrder(){
 	/*Constructor function initialises a new purchase order object */

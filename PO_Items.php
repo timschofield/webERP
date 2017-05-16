@@ -159,6 +159,10 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 											status,
 											stat_comment,
 											deliverydate,
+											paymentdate,
+											shipmentdate,
+											shipmentawb,
+											arrivaldate,
 											paymentterms,
 											allowprint)
 							VALUES(	'" . $_SESSION['PO'.$identifier]->OrderNo . "',
@@ -191,6 +195,10 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 									'" . $_SESSION['PO'.$identifier]->Status . "',
 									'" . htmlspecialchars($StatusComment,ENT_QUOTES,'UTF-8') . "',
 									'" . FormatDateForSQL($_SESSION['PO'.$identifier]->DeliveryDate) . "',
+									'" . FormatDateForSQL($_SESSION['PO'.$identifier]->KLPaymentDate) . "',
+									'" . FormatDateForSQL($_SESSION['PO'.$identifier]->KLShipmentDate) . "',
+									'" . $_SESSION['PO'.$identifier]->KLShipmentAWB . "',
+									'" . FormatDateForSQL($_SESSION['PO'.$identifier]->KLArrivalDate) . "',
 									'" . $_SESSION['PO'.$identifier]->PaymentTerms. "',
 									'" . $_SESSION['PO'.$identifier]->AllowPrintPO . "' )";
 
@@ -267,6 +275,10 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 										version= '" .  $_SESSION['PO'.$identifier]->Version . "',
 										deliveryby='" . $_SESSION['PO'.$identifier]->DeliveryBy . "',
 										deliverydate='" . FormatDateForSQL($_SESSION['PO'.$identifier]->DeliveryDate) . "',
+										paymentdate='" . FormatDateForSQL($_SESSION['PO'.$identifier]->KLPaymentDate) . "',
+										shipmentdate='" . FormatDateForSQL($_SESSION['PO'.$identifier]->KLShipmentDate) . "',
+										shipmentawb='" . $_SESSION['PO'.$identifier]->KLShipmentAWB . "',
+										arrivaldate='" . FormatDateForSQL($_SESSION['PO'.$identifier]->KLArrivalDate) . "',
 										revised= '" . Date('Y-m-d') . "',
 										intostocklocation='" . $_SESSION['PO'.$identifier]->Location . "',
 										deladd1='" . $_SESSION['PO'.$identifier]->DelAdd1 . "',

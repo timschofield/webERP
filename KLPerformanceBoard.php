@@ -213,13 +213,19 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin){
-		PurchasingOrdersDeliveryControl("Delayed", 0, $RootPath, $db);
+		PurchasingOrdersDeliveryControl("Delayed", "Delivery", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PurchasingOrdersDeliveryControl("Coming Soon", 30, $RootPath, $db);
+		PurchasingOrdersDeliveryControl("Coming Soon", "Delivery", 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PurchasingOrdersDeliveryControl("Coming Soon", 60, $RootPath, $db);
+		PurchasingOrdersDeliveryControl("Delayed", "Payment", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PurchasingOrdersDeliveryControl("Coming Soon", 90, $RootPath, $db);
+		PurchasingOrdersDeliveryControl("Coming Soon", "Payment", 30, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		PurchasingOrdersDeliveryControl("Coming Soon", "Payment", 60, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		PurchasingOrdersDeliveryControl("Delayed", "Arrival", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		PurchasingOrdersDeliveryControl("Coming Soon", "Arrival", 30, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 

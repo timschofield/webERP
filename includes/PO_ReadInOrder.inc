@@ -45,6 +45,10 @@
 								purchorders.status,
 								purchorders.stat_comment,
 								purchorders.deliverydate,
+								purchorders.paymentdate,
+								purchorders.shipmentdate,
+								purchorders.shipmentawb,
+								purchorders.arrivaldate,
 								purchorders.deliveryby,
 								purchorders.port,
 								suppliers.currcode,
@@ -101,6 +105,10 @@
 			$_SESSION['PO'.$identifier]->Status = $myrow['status'];
 			$_SESSION['PO'.$identifier]->StatusComments = html_entity_decode($myrow['stat_comment'],ENT_QUOTES,'UTF-8');
 			$_SESSION['PO'.$identifier]->DeliveryDate = ConvertSQLDate($myrow['deliverydate']);
+			$_SESSION['PO'.$identifier]->KLPaymentDate = ConvertSQLDate($myrow['paymentdate']);
+			$_SESSION['PO'.$identifier]->KLShipmentDate = ConvertSQLDate($myrow['shipmentdate']);
+			$_SESSION['PO'.$identifier]->KLShipmentAWB = $myrow['shipmentawb'];
+			$_SESSION['PO'.$identifier]->KLArrivalDate = ConvertSQLDate($myrow['arrivaldate']);
 			$_SESSION['ExistingOrder'] = $_SESSION['PO'.$identifier]->OrderNo;
 			$_SESSION['PO'.$identifier]->PaymentTerms= $myrow['paymentterms'];
 

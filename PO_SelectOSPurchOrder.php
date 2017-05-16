@@ -411,6 +411,9 @@ else {
 							suppliers.suppname,
 							purchorders.orddate,
 							purchorders.deliverydate,
+							purchorders.paymentdate,
+							purchorders.shipmentdate,
+							purchorders.arrivaldate,
 							purchorders.status,
 							purchorders.initiator,
 							purchorders.requisitionno,
@@ -449,6 +452,9 @@ else {
 							suppliers.suppname,
 							purchorders.orddate,
 							purchorders.deliverydate,
+							purchorders.paymentdate,
+							purchorders.shipmentdate,
+							purchorders.arrivaldate,
 							purchorders.status,
 							purchorders.initiator,
 							purchorders.requisitionno,
@@ -504,6 +510,9 @@ else {
 							suppliers.suppname,
 							purchorders.orddate,
 							purchorders.deliverydate,
+							purchorders.paymentdate,
+							purchorders.shipmentdate,
+							purchorders.arrivaldate,
 							purchorders.status,
 							purchorders.initiator,
 							purchorders.requisitionno,
@@ -541,6 +550,9 @@ else {
 							suppliers.suppname,
 							purchorders.orddate,
 							purchorders.deliverydate,
+							purchorders.paymentdate,
+							purchorders.shipmentdate,
+							purchorders.arrivaldate,
 							purchorders.status,
 							purchorders.initiator,
 							purchorders.requisitionno,
@@ -591,6 +603,9 @@ else {
 			<th class="ascending">' . _('Order #') . '</th>
 			<th class="ascending">' . _('Order Date') . '</th>
 			<th class="ascending">' . _('Delivery Date') . '</th>
+			<th class="ascending">' . _('Payment Date') . '</th>
+			<th class="ascending">' . _('Shipment Date') . '</th>
+			<th class="ascending">' . _('Arrival Date') . '</th>
 			<th class="ascending">' . _('Initiated by') . '</th>
 			<th class="ascending">' . _('Supplier') . '</th>
 			' . $BalHead . '
@@ -663,6 +678,9 @@ else {
 		echo '<td><a href="' . $ModifyPage . '">' . $myrow['orderno'] . '</a></td>
 			<td>' . $FormatedOrderDate . '</td>
 			<td>' . $FormatedDeliveryDate . '</td>
+			<td>' . ConvertSQLDate($myrow['paymentdate']) . '</td>
+			<td>' . ConvertSQLDate($myrow['shipmentdate']) . '</td>
+			<td>' . ConvertSQLDate($myrow['arrivaldate']) . '</td>
 			<td>' . $InitiatorName . '</td>
 			<td>' . $myrow['suppname'] . '</td>
 			' . $BalRow . '
