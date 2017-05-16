@@ -321,6 +321,8 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111111125",         0,   15000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
+		BalanceAccountControl("111111126",         0,   15000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin 
@@ -338,7 +340,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111121101PT",  1000000,  100000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111121110PT",   100000,  200000000, $periodnow, $db);
+		BalanceAccountControl("111121110PT",   100000,  250000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111121111PT", 11000000,  110000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
@@ -899,13 +901,21 @@ if ($ProcessSection02){
 		WrongItemsOnWorkOrders($RootPath, $db);
 		$NumberOfTestExecuted++;
 	
-		PurchasingOrdersDeliveryControl("Delayed", 0, $RootPath, $db);
+		PurchasingOrdersDeliveryControl("Delayed", "Delivery", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PurchasingOrdersDeliveryControl("Coming Soon", 30, $RootPath, $db);
+		PurchasingOrdersDeliveryControl("Coming Soon", "Delivery", 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PurchasingOrdersDeliveryControl("Coming Soon", 60, $RootPath, $db);
+		PurchasingOrdersDeliveryControl("Delayed", "Payment", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PurchasingOrdersDeliveryControl("Coming Soon", 90, $RootPath, $db);
+		PurchasingOrdersDeliveryControl("Coming Soon", "Payment", 30, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		PurchasingOrdersDeliveryControl("Delayed", "Shipment", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		PurchasingOrdersDeliveryControl("Coming Soon", "Shipment", 30, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		PurchasingOrdersDeliveryControl("Delayed", "Arrival", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		PurchasingOrdersDeliveryControl("Coming Soon", "Arrival", 30, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
