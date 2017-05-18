@@ -1,5 +1,6 @@
 webERP Change Log
 
+18/5/17 Phil: remove changes in Andrew's PO_Items.php script that increased dp for purchase price to 5 - for some low value currencies this would be inappropriate, better to use the currency decimal places + 2 as per Ricard's idea
 16/5/17 Andrew Couling: SQL correction in PO_Items.php. Line 1094.
 7/5/17 Andy Couling/Janb: Fixes to MRP scripts SQL to get table names per forum post http://www.weberp.org/forum/showthread.php?tid=2448
 13/4/17 RChacon: Rename includes/footer.inc, includes/header.inc and includes/session.inc to includes/footer.php, includes/header.php and includes/session.php.

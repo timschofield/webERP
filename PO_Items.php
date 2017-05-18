@@ -735,12 +735,12 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 			$DisplayLineTotal = locale_number_format($LineTotal,$_SESSION['PO'.$identifier]->CurrDecimalPlaces);
 			// Note if the price is greater than 1 use 2 decimal place, if the price is a fraction of 1, use 4 decimal places
 			// This should help display where item-price is a fraction
-			if ($POLine->Price > 100000) {
+			if ($POLine->Price > 1) {
 				$DisplayPrice = locale_number_format($POLine->Price,$_SESSION['PO'.$identifier]->CurrDecimalPlaces);
 				$SuppPrice = locale_number_format(round(($POLine->Price *$POLine->ConversionFactor),$_SESSION['PO'.$identifier]->CurrDecimalPlaces),$_SESSION['PO'.$identifier]->CurrDecimalPlaces);
 			} else {
-				$DisplayPrice = locale_number_format($POLine->Price,5);
-				$SuppPrice = locale_number_format(round(($POLine->Price *$POLine->ConversionFactor),5),5);
+				$DisplayPrice = locale_number_format($POLine->Price,($_SESSION['PO'.$identifier]->CurrDecimalPlaces + 2));
+				$SuppPrice = locale_number_format(round(($POLine->Price *$POLine->ConversionFactor),($_SESSION['PO'.$identifier]->CurrDecimalPlaces+2)),($_SESSION['PO'.$identifier]->CurrDecimalPlaces+2));
 			}
 
 			if ($k==1){
