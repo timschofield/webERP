@@ -50,22 +50,24 @@ if ($KL_SystemAdmin
 	OR $KL_ShopManager 
 	OR $KL_SalesDirector){
 
-	RetailCustomerAnalysisByCountry(60, "ALL", "ALL", 30, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(90, "ALL", "ALL", 30, $CountriesForRetail, $db);
 	$NumberOfTestExecuted++;
-	RetailCustomerAnalysisByCountry(60, "KAPAL-LAUT", "ALL", 20, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(90, "KAPAL-LAUT", "ALL", 20, $CountriesForRetail, $db);
 	$NumberOfTestExecuted++;
-	RetailCustomerAnalysisByCountry(60, "BLINK", "ALL", 20, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(90, "BLINK", "ALL", 20, $CountriesForRetail, $db);
 	$NumberOfTestExecuted++;
-	RetailCustomerAnalysisByCountry(60, "OUTLET", "ALL", 10, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(90, "OUTLET", "ALL", 10, $CountriesForRetail, $db);
 	$NumberOfTestExecuted++;
 	
-	RetailCustomerAnalysisByCountry(60, "ALL", "KUTA", 10, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(90, "ALL", "CANGGU", 10, $CountriesForRetail, $db);
 	$NumberOfTestExecuted++;
-	RetailCustomerAnalysisByCountry(60, "ALL", "SEMINYAK", 10, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(90, "ALL", "KUTA", 10, $CountriesForRetail, $db);
 	$NumberOfTestExecuted++;
-	RetailCustomerAnalysisByCountry(60, "ALL", "SANUR", 10, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(90, "ALL", "SEMINYAK", 10, $CountriesForRetail, $db);
 	$NumberOfTestExecuted++;
-	RetailCustomerAnalysisByCountry(60, "ALL", "UBUD", 10, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(90, "ALL", "SANUR", 10, $CountriesForRetail, $db);
+	$NumberOfTestExecuted++;
+	RetailCustomerAnalysisByCountry(90, "ALL", "UBUD", 10, $CountriesForRetail, $db);
 	$NumberOfTestExecuted++;
 }
 
@@ -75,19 +77,21 @@ if ($KL_SystemAdmin
 	OR $KL_ShopManager 
 	OR $KL_SalesDirector){
 
-	RetailCustomerAnalysisByAge(60, "ALL", $db);
-	$NumberOfTestExecuted++;
 	RetailCustomerAnalysisByAge(90, "ALL", $db);
 	$NumberOfTestExecuted++;
-	RetailCustomerAnalysisByAge(60, "ALL", $db);
+	RetailCustomerAnalysisByAge(365, "ALL", $db);
 	$NumberOfTestExecuted++;
-	RetailCustomerAnalysisByAge(30, "ALL", $db);
+	RetailCustomerAnalysisByAge(90, "KAPAL-LAUT", $db);
 	$NumberOfTestExecuted++;
-	RetailCustomerAnalysisByAge(30, "KAPAL-LAUT", $db);
+	RetailCustomerAnalysisByAge(365, "KAPAL-LAUT", $db);
 	$NumberOfTestExecuted++;
-	RetailCustomerAnalysisByAge(30, "BLINK", $db);
+	RetailCustomerAnalysisByAge(90, "BLINK", $db);
 	$NumberOfTestExecuted++;
-	RetailCustomerAnalysisByAge(30, "OUTLET", $db);
+	RetailCustomerAnalysisByAge(365, "BLINK", $db);
+	$NumberOfTestExecuted++;
+	RetailCustomerAnalysisByAge(90, "OUTLET", $db);
+	$NumberOfTestExecuted++;
+	RetailCustomerAnalysisByAge(365, "OUTLET", $db);
 	$NumberOfTestExecuted++;
 
 	EmailHarvested(30, "ALL", $db);
