@@ -4483,9 +4483,14 @@ function GoodsJustArrived($kind, $location, $numdays, $RootPath, $db){
 	}
 	$SQL = "SELECT stockmoves.stockid, 
 					stockmaster.description,
+					stockmaster.categoryid,
 					stockmoves.trandate, 
 					stockmoves.qty AS qtyarrived,
-					stockmoves.newqoh AS qtytotal
+					(SELECT SUM(l.quantity)
+						FROM locstock l
+						WHERE l.stockid = stockmaster.stockid
+							AND l.loccode NOT IN " . LIST_SERVICE_LOCATIONS . "
+							AND l.loccode NOT IN " . LIST_SAMPLE_LOCATIONS . ") AS qtytotal
 			FROM stockmoves, stockmaster, stockcategory
 			WHERE stockmoves.stockid = stockmaster.stockid
 				AND stockmaster.categoryid = stockcategory.categoryid
@@ -4512,6 +4517,7 @@ function GoodsJustArrived($kind, $location, $numdays, $RootPath, $db){
 							<th class="ascending">' . _('#') . '</th>
 							<th class="ascending">' . _('Date') . '</th>
 							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Category') . '</th>
 							<th class="ascending">' . _('Description') . '</th>
 							<th class="ascending">' . _('Received') . '</th>
 							<th class="ascending">' . _('QOH') . '</th>
@@ -4526,12 +4532,14 @@ function GoodsJustArrived($kind, $location, $numdays, $RootPath, $db){
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
+					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>', 
 					$i, 
 					ConvertSQLDate($myrow['trandate']),
 					$CodeLink, 
+					$myrow['categoryid'], 
 					$myrow['description'], 
 					locale_number_format($myrow['qtyarrived'],0),
 					locale_number_format($myrow['qtytotal'],0)

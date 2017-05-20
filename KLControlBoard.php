@@ -388,16 +388,16 @@ if ($ProcessSection01){
 	***************************************************************************************/
 
 	if ($KL_SystemAdmin){
-		
-		ItemsNeedingAutomaticTranslation($RootPath, $db);
-		$NumberOfTestExecuted++;
+
+//		ItemsNeedingAutomaticTranslation($RootPath, $db);
+//		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_PurchasingTeam
 		OR $KL_BusinessDevelopmentManager){
 		
-		ItemsNeedingTranslationRevision($RootPath, $db);
-		$NumberOfTestExecuted++;
+//		ItemsNeedingTranslationRevision($RootPath, $db);
+//		$NumberOfTestExecuted++;
 	}
 
 	/*
