@@ -58,6 +58,7 @@ TRUNCATE kurakura_kl_test_erp.`klfreeexchanges`;
 TRUNCATE kurakura_kl_test_erp.`klmovetodiscount20`;
 TRUNCATE kurakura_kl_test_erp.`klmovetodiscount50`;
 TRUNCATE kurakura_kl_test_erp.`klmovetodiscount80`;
+TRUNCATE kurakura_kl_test_erp.`klpostatus`;
 TRUNCATE kurakura_kl_test_erp.`klretailcustomers`;
 TRUNCATE kurakura_kl_test_erp.`klrevisedemaildomains`;
 TRUNCATE kurakura_kl_test_erp.`labelfields`;
@@ -232,6 +233,7 @@ INSERT INTO kurakura_kl_test_erp.klfreeexchanges SELECT * FROM kurakura_kl_erp.k
 INSERT INTO kurakura_kl_test_erp.klmovetodiscount20 SELECT * FROM kurakura_kl_erp.klmovetodiscount20;
 INSERT INTO kurakura_kl_test_erp.klmovetodiscount50 SELECT * FROM kurakura_kl_erp.klmovetodiscount50;
 INSERT INTO kurakura_kl_test_erp.klmovetodiscount80 SELECT * FROM kurakura_kl_erp.klmovetodiscount80;
+INSERT INTO kurakura_kl_test_erp.klpostatus SELECT * FROM kurakura_kl_erp.klpostatus;
 INSERT INTO kurakura_kl_test_erp.klretailcustomers SELECT * FROM kurakura_kl_erp.klretailcustomers WHERE date_added >= "20160101";
 INSERT INTO kurakura_kl_test_erp.klrevisedemaildomains SELECT * FROM kurakura_kl_erp.klrevisedemaildomains;
 INSERT INTO kurakura_kl_test_erp.labelfields SELECT * FROM kurakura_kl_erp.labelfields;

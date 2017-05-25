@@ -49,6 +49,7 @@ Class PurchOrder {
 	var $PaymentTerms;
 	var $Contact;
 	var $Port;
+	var $KLStatus;
 	var $KLPaymentDate;
 	var $KLShipmentDate;
 	var $KLShipmentAWB;
