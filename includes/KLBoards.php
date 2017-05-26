@@ -4892,6 +4892,8 @@ function TopSalesNotInEnoughShops($starttopitems, $endtopitems, $maxdays, $minsh
 
 function GoodsJustArrived($kind, $location, $numdays, $RootPath, $db){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$numdays));
+	$ShopsKL = NumberOfShops("SHOPKL", $db);
+	$ShopsBL = NumberOfShops("SHOPBL", $db);
 	if ($kind == "PO"){
 		$type = 25;
 	}elseif ($kind == "WO"){
@@ -4937,18 +4939,55 @@ function GoodsJustArrived($kind, $location, $numdays, $RootPath, $db){
 							<th class="ascending">' . _('Description') . '</th>
 							<th class="ascending">' . _('Received') . '</th>
 							<th class="ascending">' . _('QOH') . '</th>
-							<th class="ascending">' . _('RL 1') . '</th>
-							<th class="ascending">' . _('RL 2') . '</th>
-							<th class="ascending">' . _('RL 3') . '</th>
-							<th class="ascending">' . _('RL 4') . '</th>
-							<th class="ascending">' . _('RL 5') . '</th>
+							<th class="ascending">' . _('RL=?') . '</th>
+							<th class="ascending">' . _('RL=1') . '</th>
+							<th class="ascending">' . _('RL=2') . '</th>
+							<th class="ascending">' . _('RL=3') . '</th>
+							<th class="ascending">' . _('RL=4') . '</th>
+							<th class="ascending">' . _('RL=5') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
 			$k = StartEvenOrOddRow($k);
-			$CodeLink = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+			$ManualLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . 'Manual' . '</a>';
+			
+			// count to how many shops do we need to set the RL
+			if($myrow['categoryid']== 'STABKL'){
+				$TypeOfShop = 'SHOPKL';
+				$ShopsToSetRL = $ShopsKL;
+			}elseif($myrow['categoryid']== 'STABBL'){
+				$TypeOfShop = 'SHOPBL';
+				$ShopsToSetRL = $ShopsBL;
+			}else{
+				$ShopsToSetRL = 0;
+			}
+
+			// set the links to nil, and just set some if we have enough QOH
+			$LinkRL1 = '';
+			$LinkRL2 = '';
+			$LinkRL3 = '';
+			$LinkRL4 = '';
+			$LinkRL5 = '';
+			if($ShopsToSetRL != 0){
+				if ($myrow['qtytotal'] >= $ShopsToSetRL){
+					$LinkRL1 = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&RL=1' . '">' . 'RL=1' . '</a>';
+				}
+				if ($myrow['qtytotal'] >= $ShopsToSetRL * 2){
+					$LinkRL2 = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&RL=2' . '">' . 'RL=2' . '</a>';
+				}
+				if ($myrow['qtytotal'] >= $ShopsToSetRL * 3){
+					$LinkRL3 = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&RL=3' . '">' . 'RL=3' . '</a>';
+				}
+				if ($myrow['qtytotal'] >= $ShopsToSetRL * 4){
+					$LinkRL4 = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&RL=4' . '">' . 'RL=4' . '</a>';
+				}
+				if ($myrow['qtytotal'] >= $ShopsToSetRL * 5){
+					$LinkRL5 = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&RL=5' . '">' . 'RL=5' . '</a>';
+				}
+			}
+
 			printf('<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -4956,14 +4995,26 @@ function GoodsJustArrived($kind, $location, $numdays, $RootPath, $db){
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
 					</tr>', 
 					$i, 
 					ConvertSQLDate($myrow['trandate']),
-					$CodeLink, 
+					$myrow['stockid'], 
 					$myrow['categoryid'], 
 					$myrow['description'], 
 					locale_number_format($myrow['qtyarrived'],0),
-					locale_number_format($myrow['qtytotal'],0)
+					locale_number_format($myrow['qtytotal'],0),
+					$ManualLink,
+					$LinkRL1,
+					$LinkRL2,
+					$LinkRL3,
+					$LinkRL4,
+					$LinkRL5
 					);
 			$i++;
 		}

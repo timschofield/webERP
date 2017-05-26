@@ -12,6 +12,7 @@ include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLPrices.php');
 include('includes/KLEmails.php');
+include('includes/KLReorderLevel.php');
 
 include('includes/OpenCartGeneralFunctions.php');
 include('includes/OpenCartConnectDB.php');
