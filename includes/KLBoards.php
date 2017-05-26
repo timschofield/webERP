@@ -9829,8 +9829,10 @@ function ItemsinSetUp($Check, $Category, $RootPath, $db){
 				$i++;
 			}
 		}
-		echo '</table>
-				</div>';
+		if(!$ShowHeader){
+			echo '</table>
+					</div>';
+		}
 	}
 }
 
