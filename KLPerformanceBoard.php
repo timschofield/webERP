@@ -219,6 +219,8 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 		POStatusControl("ON PRODUCTION", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		POStatusControl("STILL NOT FULLY PAID", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		POStatusControl("FINISHED NOT PAID NOT SHIPPED", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		POStatusControl("PAID WAITING TO CLOSE", 0, $RootPath, $db);

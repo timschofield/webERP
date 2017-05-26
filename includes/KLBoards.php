@@ -4102,6 +4102,12 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 		$FieldName = "Delivery Date";
 		$TitleWarning = 'Purchase Orders on Production by supplier';
 		$SQLFilterKLStatus = " AND purchorders.klstatus = '2000' ";
+	}else if ($TypeOfCode == "STILL NOT FULLY PAID"){
+		$DateField = "paymentdate";
+		$FieldName = "Payment Date";
+		$TitleWarning = 'Purchase Orders still not fully paid';
+		$SQLFilterKLStatus = " AND purchorders.klstatus >= '2000' 
+							   AND purchorders.klstatus < '4000' ";
 	}else if ($TypeOfCode == "FINISHED NOT PAID NOT SHIPPED"){
 		$DateField = "deliverydate";
 		$FieldName = "Delivery Date";
@@ -4336,8 +4342,7 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 			}
 			$i++;
 		}
-//		if ($reason != "Delayed"){
-		if (FALSE){
+		if ($TypeOfCode == "STILL NOT FULLY PAID"){
 			$k = StartEvenOrOddRow($k);
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -4409,7 +4414,7 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 					'' 
 					);
 
-			$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
+/*			$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 			$SQL = "SELECT SUM(amount) AS cogs
 					FROM  gltrans 
 					WHERE   trandate >= '". $StartDate ."'		
@@ -4487,7 +4492,7 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 					'', 
 					'' 
 					);
-			
+*/			
 		}
 		echo '</table>
 				</div>';
