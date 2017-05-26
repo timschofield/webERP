@@ -203,7 +203,7 @@ INSERT INTO kurakura_kl_test_erp.custitem SELECT * FROM kurakura_kl_erp.custitem
 INSERT INTO kurakura_kl_test_erp.custnotes SELECT * FROM kurakura_kl_erp.custnotes;
 INSERT INTO kurakura_kl_test_erp.debtorsmaster SELECT * FROM kurakura_kl_erp.debtorsmaster;
 INSERT INTO kurakura_kl_test_erp.debtortrans SELECT * FROM kurakura_kl_erp.debtortrans WHERE trandate >= "20160101";
-INSERT INTO kurakura_kl_test_erp.debtortranstaxes SELECT * FROM kurakura_kl_erp.debtortranstaxes WHERE debtortransid = 248580;
+INSERT INTO kurakura_kl_test_erp.debtortranstaxes SELECT * FROM kurakura_kl_erp.debtortranstaxes WHERE debtortransid >= 248580;
 INSERT INTO kurakura_kl_test_erp.debtortype SELECT * FROM kurakura_kl_erp.debtortype;
 INSERT INTO kurakura_kl_test_erp.debtortypenotes SELECT * FROM kurakura_kl_erp.debtortypenotes;
 INSERT INTO kurakura_kl_test_erp.deliverynotes SELECT * FROM kurakura_kl_erp.deliverynotes;

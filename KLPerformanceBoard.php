@@ -38,6 +38,8 @@ if (!isset($_GET['Section'])){
 * TEST AND PLAY AREA      
 ***************************************************************************************/
 if ($KL_SystemAdmin){
+
+
 } 
 
 
@@ -213,7 +215,28 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin){
-		PurchasingOrdersDeliveryControl("Delayed", "Delivery", 0, $RootPath, $db);
+		POStatusControl("IN NEGOTIAION WITH SUPPLIER", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		POStatusControl("ON PRODUCTION", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		POStatusControl("FINISHED NOT PAID NOT SHIPPED", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		POStatusControl("PAID WAITING TO CLOSE", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		POStatusControl("PAID NOT SHIPPED", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		POStatusControl("PAID NOT RECEIVED IN CARGO AGENT", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		POStatusControl("PAID BY CARGO AGENT BUT NOT SHIPPED", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		POStatusControl("RECEIVED BY CARGO AGENT BUT NOT SHIPPED", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		POStatusControl("SHIPPED IN TRANSIT", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		POStatusControl("RECEIVED IN KANTOR", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+
+/*		PurchasingOrdersDeliveryControl("Delayed", "Delivery", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		PurchasingOrdersDeliveryControl("Coming Soon", "Delivery", 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -227,7 +250,7 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 		PurchasingOrdersDeliveryControl("Coming Soon", "Arrival", 30, $RootPath, $db);
 		$NumberOfTestExecuted++;
-	}
+*/	}
 
 //	RetailTypePayments("Shop",180, $db);
 //	NumberOfTestExecuted++;
