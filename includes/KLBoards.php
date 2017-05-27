@@ -4956,7 +4956,6 @@ function GoodsJustArrived($kind, $location, $numdays, $RootPath, $db){
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
 			$k = StartEvenOrOddRow($k);
-			$ManualLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . 'Manual' . '</a>';
 			
 			// count to how many shops do we need to set the RL
 			if($myrow['categoryid']== 'STABKL'){
@@ -4968,6 +4967,13 @@ function GoodsJustArrived($kind, $location, $numdays, $RootPath, $db){
 			}else{
 				$ShopsToSetRL = 0;
 			}
+
+			if(ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_SETUP)){
+				$ManualLink = '';
+			}else{
+				$ManualLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . 'Manual' . '</a>';
+			}
+
 
 			// set the links to nil, and just set some if we have enough QOH
 			$LinkRL1 = '';
