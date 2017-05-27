@@ -43,6 +43,7 @@
 								purchorders.initiator,
 								purchorders.version,
 								purchorders.status,
+								purchorders.klstatus,
 								purchorders.stat_comment,
 								purchorders.deliverydate,
 								purchorders.paymentdate,
@@ -103,6 +104,7 @@
 			$_SESSION['PO'.$identifier]->Port = $myrow['port'];
 			$_SESSION['PO'.$identifier]->DeliveryBy = $myrow['deliveryby'];
 			$_SESSION['PO'.$identifier]->Status = $myrow['status'];
+			$_SESSION['PO'.$identifier]->KLStatus = $myrow['klstatus'];
 			$_SESSION['PO'.$identifier]->StatusComments = html_entity_decode($myrow['stat_comment'],ENT_QUOTES,'UTF-8');
 			$_SESSION['PO'.$identifier]->DeliveryDate = ConvertSQLDate($myrow['deliverydate']);
 			$_SESSION['PO'.$identifier]->KLPaymentDate = ConvertSQLDate($myrow['paymentdate']);

@@ -12,6 +12,7 @@ include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLPrices.php');
 include('includes/KLEmails.php');
+include('includes/KLReorderLevel.php');
 
 include('includes/OpenCartGeneralFunctions.php');
 include('includes/OpenCartConnectDB.php');
@@ -388,16 +389,16 @@ if ($ProcessSection01){
 	***************************************************************************************/
 
 	if ($KL_SystemAdmin){
-		
-		ItemsNeedingAutomaticTranslation($RootPath, $db);
-		$NumberOfTestExecuted++;
+
+//		ItemsNeedingAutomaticTranslation($RootPath, $db);
+//		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_PurchasingTeam
 		OR $KL_BusinessDevelopmentManager){
 		
-		ItemsNeedingTranslationRevision($RootPath, $db);
-		$NumberOfTestExecuted++;
+//		ItemsNeedingTranslationRevision($RootPath, $db);
+//		$NumberOfTestExecuted++;
 	}
 
 	/*
@@ -900,7 +901,30 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 		WrongItemsOnWorkOrders($RootPath, $db);
 		$NumberOfTestExecuted++;
-	
+
+		POStatusControl("IN NEGOTIAION WITH SUPPLIER", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		POStatusControl("ON PRODUCTION", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		POStatusControl("FINISHED NOT PAID NOT SHIPPED", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		POStatusControl("PAID WAITING TO CLOSE", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		POStatusControl("PAID NOT SHIPPED", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		POStatusControl("PAID NOT RECEIVED IN CARGO AGENT", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		POStatusControl("PAID BY CARGO AGENT BUT NOT SHIPPED", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		POStatusControl("RECEIVED BY CARGO AGENT BUT NOT SHIPPED", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		POStatusControl("SHIPPED IN TRANSIT", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		POStatusControl("RECEIVED IN KANTOR", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+
+
+/*		
 		PurchasingOrdersDeliveryControl("Delayed", "Delivery", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		PurchasingOrdersDeliveryControl("Coming Soon", "Delivery", 60, $RootPath, $db);
@@ -917,6 +941,7 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 		PurchasingOrdersDeliveryControl("Coming Soon", "Arrival", 30, $RootPath, $db);
 		$NumberOfTestExecuted++;
+*/
 	}
 
 

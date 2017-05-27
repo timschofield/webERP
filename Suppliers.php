@@ -775,7 +775,7 @@ if (!isset($SupplierID)) {
 			<td>' . _('Bank Account No') . ':</td>
 			<td><input type="text" placeholder="'._('Less than 30 characters').'" name="BankAct" size="31" maxlength="30" /></td></tr>';
 
-	$result=DB_query("SELECT terms, termsindicator FROM paymentterms");
+	$result=DB_query("SELECT terms, termsindicator FROM paymentterms ORDER BY terms");
 
 	echo '<tr>
 			<td>' . _('Payment Terms') . ':</td>
@@ -1022,7 +1022,7 @@ else {
 			<td><input type="text" name="BankAct" size="31" maxlength="30" value="' . $_POST['BankAct'] . '" /></td>
 		</tr>';
 
-	$result=DB_query("SELECT terms, termsindicator FROM paymentterms");
+	$result=DB_query("SELECT terms, termsindicator FROM paymentterms ORDER BY terms");
 
 	echo '<tr>
 			<td>' . _('Payment Terms') . ':</td>

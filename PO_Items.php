@@ -157,6 +157,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 											revised,
 											deliveryby,
 											status,
+											klstatus,
 											stat_comment,
 											deliverydate,
 											paymentdate,
@@ -193,6 +194,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 									'" . Date('Y-m-d') . "',
 									'" . $_SESSION['PO'.$identifier]->DeliveryBy . "',
 									'" . $_SESSION['PO'.$identifier]->Status . "',
+									'" . $_SESSION['PO'.$identifier]->KLStatus . "',
 									'" . htmlspecialchars($StatusComment,ENT_QUOTES,'UTF-8') . "',
 									'" . FormatDateForSQL($_SESSION['PO'.$identifier]->DeliveryDate) . "',
 									'" . FormatDateForSQL($_SESSION['PO'.$identifier]->KLPaymentDate) . "',
@@ -300,6 +302,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 										paymentterms='" . $_SESSION['PO'.$identifier]->PaymentTerms . "',
 										allowprint='" . $_SESSION['PO'.$identifier]->AllowPrintPO . "',
 										status = '" . $_SESSION['PO'.$identifier]->Status . "',
+										klstatus = '" . $_SESSION['PO'.$identifier]->KLStatus . "',
 										stat_comment = '" . htmlspecialchars($_SESSION['PO'.$identifier]->StatusComments,ENT_QUOTES,'UTF-8') . "'
 										WHERE orderno = '" . $_SESSION['PO'.$identifier]->OrderNo ."'";
 

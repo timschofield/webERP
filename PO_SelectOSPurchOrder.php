@@ -362,6 +362,7 @@ else {
 						purchorders.deliverydate,
 						purchorders.initiator,
 						purchorders.status,
+						klpostatus.description AS klstatusdescription,
 						purchorders.requisitionno,
 						purchorders.allowprint,
 						suppliers.currcode,
@@ -375,9 +376,12 @@ else {
 				AND userid='" . $_SESSION['UserID'] . "' AND canview = 1
 				INNER JOIN suppliers
 				ON purchorders.supplierno = suppliers.supplierid
+				INNER JOIN klpostatus
+				ON klpostatus.code=purchorders.klstatus
 				INNER JOIN currencies
 				ON suppliers.currcode=currencies.currabrev
 				WHERE purchorderdetails.completed=0
+				AND suppliers.paymentterms = klpostatus.paymentterm
 				AND purchorders.orderno='" . $OrderNumber . "'
 				GROUP BY purchorders.orderno ASC,
 					suppliers.suppname,
@@ -415,6 +419,7 @@ else {
 							purchorders.shipmentdate,
 							purchorders.arrivaldate,
 							purchorders.status,
+							klpostatus.description AS klstatusdescription,
 							purchorders.initiator,
 							purchorders.requisitionno,
 							purchorders.allowprint,
@@ -426,10 +431,13 @@ else {
 						ON purchorders.orderno = purchorderdetails.orderno
 						INNER JOIN suppliers
 						ON  purchorders.supplierno = suppliers.supplierid
+						INNER JOIN klpostatus
+						ON klpostatus.code=purchorders.klstatus
 						INNER JOIN currencies
 						ON suppliers.currcode=currencies.currabrev
 						INNER JOIN locationusers ON locationusers.loccode=purchorders.intostocklocation AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 						WHERE purchorderdetails.completed=0
+						AND suppliers.paymentterms = klpostatus.paymentterm
 						AND orddate>='" . $DateFrom . "'
 						AND orddate<='" . $DateTo . "'
 						AND purchorderdetails.itemcode='" . $SelectedStockItem . "'
@@ -456,6 +464,7 @@ else {
 							purchorders.shipmentdate,
 							purchorders.arrivaldate,
 							purchorders.status,
+							klpostatus.description AS klstatusdescription,
 							purchorders.initiator,
 							purchorders.requisitionno,
 							purchorders.allowprint,
@@ -467,10 +476,13 @@ else {
 						ON purchorders.orderno = purchorderdetails.orderno
 						INNER JOIN suppliers
 						ON  purchorders.supplierno = suppliers.supplierid
+						INNER JOIN klpostatus
+						ON klpostatus.code=purchorders.klstatus
 						INNER JOIN currencies
 						ON suppliers.currcode=currencies.currabrev
 						INNER JOIN locationusers ON locationusers.loccode=purchorders.intostocklocation AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 						WHERE purchorderdetails.completed=0
+						AND suppliers.paymentterms = klpostatus.paymentterm
 						AND orddate>='" . $DateFrom . "'
 						AND orddate<='" . $DateTo . "'
 						AND purchorders.supplierno='" . $SelectedSupplier . "'
@@ -514,6 +526,7 @@ else {
 							purchorders.shipmentdate,
 							purchorders.arrivaldate,
 							purchorders.status,
+							klpostatus.description AS klstatusdescription,
 							purchorders.initiator,
 							purchorders.requisitionno,
 							purchorders.allowprint,
@@ -525,10 +538,13 @@ else {
 						ON purchorders.orderno = purchorderdetails.orderno
 						INNER JOIN suppliers
 						ON  purchorders.supplierno = suppliers.supplierid
+						INNER JOIN klpostatus
+						ON klpostatus.code=purchorders.klstatus
 						INNER JOIN currencies
 						ON suppliers.currcode=currencies.currabrev
 						INNER JOIN locationusers ON locationusers.loccode=purchorders.intostocklocation AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 						WHERE purchorderdetails.completed=0
+						AND suppliers.paymentterms = klpostatus.paymentterm
 						AND orddate>='" . $DateFrom . "'
 						AND orddate<='" . $DateTo . "'
 						AND purchorderdetails.itemcode='" . $SelectedStockItem . "'
@@ -554,6 +570,8 @@ else {
 							purchorders.shipmentdate,
 							purchorders.arrivaldate,
 							purchorders.status,
+							purchorders.klstatus,
+							klpostatus.description AS klstatusdescription,
 							purchorders.initiator,
 							purchorders.requisitionno,
 							purchorders.allowprint,
@@ -565,10 +583,13 @@ else {
 						ON purchorders.orderno = purchorderdetails.orderno
 						INNER JOIN suppliers
 						ON  purchorders.supplierno = suppliers.supplierid
+						INNER JOIN klpostatus
+						ON klpostatus.code=purchorders.klstatus
 						INNER JOIN currencies
 						ON suppliers.currcode=currencies.currabrev
 						INNER JOIN locationusers ON locationusers.loccode=purchorders.intostocklocation AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 						WHERE purchorderdetails.completed=0
+						AND suppliers.paymentterms = klpostatus.paymentterm
 						AND orddate>='" . $DateFrom . "'
 						AND orddate<='" . $DateTo . "'
 						" . $WhereStockLocation .  
@@ -606,7 +627,6 @@ else {
 			<th class="ascending">' . _('Payment Date') . '</th>
 			<th class="ascending">' . _('Shipment Date') . '</th>
 			<th class="ascending">' . _('Arrival Date') . '</th>
-			<th class="ascending">' . _('Initiated by') . '</th>
 			<th class="ascending">' . _('Supplier') . '</th>
 			' . $BalHead . '
 			<th class="ascending">' . _('Currency') . '</th>';
@@ -614,7 +634,8 @@ else {
 	if (in_array($PricesSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PricesSecurity)) {
 		echo '<th class="ascending">' . _('Order Total') . '</th>';
 	}
-	echo '<th class="ascending">' . _('Status') . '</th>
+	echo '	<th class="ascending">' . _('KL Status') . '</th>
+			<th class="ascending">' . _('Status') . '</th>
 			<th>' . _('Print') . '</th>
 			<th>' . _('Receive') . '</th>
 		</tr>';
@@ -670,10 +691,10 @@ else {
 		$FormatedOrderDate = ConvertSQLDate($myrow['orddate']);
 		$FormatedDeliveryDate = ConvertSQLDate($myrow['deliverydate']);
 		$FormatedOrderValue = locale_number_format($myrow['ordervalue'], $myrow['currdecimalplaces']);
-		$sql = "SELECT realname FROM www_users WHERE userid='" . $myrow['initiator'] . "'";
-		$UserResult = DB_query($sql);
-		$MyUserRow = DB_fetch_array($UserResult);
-		$InitiatorName = $MyUserRow['realname'];
+//		$sql = "SELECT realname FROM www_users WHERE userid='" . $myrow['initiator'] . "'";
+//		$UserResult = DB_query($sql);
+//		$MyUserRow = DB_fetch_array($UserResult);
+//		$InitiatorName = $MyUserRow['realname'];
 
 		echo '<td><a href="' . $ModifyPage . '">' . $myrow['orderno'] . '</a></td>
 			<td>' . $FormatedOrderDate . '</td>
@@ -681,14 +702,14 @@ else {
 			<td>' . ConvertSQLDate($myrow['paymentdate']) . '</td>
 			<td>' . ConvertSQLDate($myrow['shipmentdate']) . '</td>
 			<td>' . ConvertSQLDate($myrow['arrivaldate']) . '</td>
-			<td>' . $InitiatorName . '</td>
 			<td>' . $myrow['suppname'] . '</td>
 			' . $BalRow . '
 			<td>' . $myrow['currcode'] . '</td>';
 		if (in_array($PricesSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PricesSecurity)) {
 			echo '<td class="number">' . $FormatedOrderValue . '</td>';
 		}
-		echo '<td>' . _($myrow['status']) . '</td>
+		echo '  <td>' . $myrow['klstatusdescription'] . '</td>
+				<td>' . $myrow['status'] . '</td>
 				<td>' . $PrintPurchOrder . '</td>
 				<td>' . $ReceiveOrder . '</td>
 			</tr>';

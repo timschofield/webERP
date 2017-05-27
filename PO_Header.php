@@ -65,7 +65,7 @@ if ((isset($_POST['UpdateStatus']) AND $_POST['UpdateStatus'] != '')) {
 	if ($_SESSION['ExistingOrder'] == 0) {
 		prnMsg(_('This is a new order. It must be created before you can change the status'), 'warn');
 		$OKToUpdateStatus = 0;
-	} elseif ($_SESSION['PO' . $identifier]->Status != $_POST['Status']) { //the old status  != new status
+	} elseif ($_SESSION['PO' . $identifier]->Status != $_POST['Status']){ //the old status  != new status
 		$OKToUpdateStatus = 1;
 		$AuthSQL = "SELECT authlevel
 					FROM purchorderauth
@@ -162,6 +162,29 @@ if ((isset($_POST['UpdateStatus']) AND $_POST['UpdateStatus'] != '')) {
 	} //end if there is actually a status change the class Status != the POST['Status']
 } //End if user hit Update Status
 
+
+if ((isset($_POST['UpdateKLStatus']) AND $_POST['UpdateKLStatus'] != '')) {
+
+	if ($_SESSION['ExistingOrder'] == 0) {
+		prnMsg(_('This is a new order. It must be created before you can change the status'), 'warn');
+		$OKToUpdateStatus = 0;
+	} elseif ($_SESSION['PO' . $identifier]->KLStatus != $_POST['KLStatus']){ //the old status  != new status
+		$OKToUpdateStatus = 1;
+
+		if ($OKToUpdateStatus == 1) {
+			$_SESSION['PO' . $identifier]->KLStatus = $_POST['KLStatus'];
+			$SQL = "UPDATE purchorders 
+					SET klstatus='" . $_POST['KLStatus'] . "'
+					WHERE purchorders.orderno ='" . $_SESSION['ExistingOrder'] . "'";
+
+			$ErrMsg = _('The order KL status could not be updated because');
+			$UpdateResult = DB_query($SQL, $ErrMsg);
+
+		} //$OKToUpdateKLStatus == 1
+	} //end if there is actually a status change the class KLStatus != the POST['KLStatus']
+} //End if user hit Update KL Status
+
+
 if (isset($_GET['NewOrder']) AND isset($_GET['StockID']) AND isset($_GET['SelectedSupplier'])) {
 	/*
 	 * initialise a new order
@@ -179,6 +202,7 @@ if (isset($_GET['NewOrder']) AND isset($_GET['StockID']) AND isset($_GET['Select
 	/* set the SupplierID we got */
 	$_SESSION['PO' . $identifier]->SupplierID = $_GET['SelectedSupplier'];
 	$_SESSION['PO' . $identifier]->DeliveryDate = date($_SESSION['DefaultDateFormat']);
+	$_SESSION['PO' . $identifier]->KLStatus = '1000';
 	$_SESSION['PO' . $identifier]->KLPaymentDate = date($_SESSION['DefaultDateFormat']);
 	$_SESSION['PO' . $identifier]->KLShipmentDate = date($_SESSION['DefaultDateFormat']);
 	$_SESSION['PO' . $identifier]->KLShipmentAWB = '';
@@ -216,6 +240,7 @@ if (isset($_POST['EnterLines']) OR isset($_POST['AllowRePrint'])) {
 	$_SESSION['PO' . $identifier]->RequisitionNo = $_POST['Requisition'];
 	$_SESSION['PO' . $identifier]->Version = $_POST['Version'];
 	$_SESSION['PO' . $identifier]->DeliveryDate = $_POST['DeliveryDate'];
+	$_SESSION['PO' . $identifier]->KLStatus = $_POST['KLStatus'];
 	$_SESSION['PO' . $identifier]->KLPaymentDate = $_POST['KLPaymentDate'];
 	$_SESSION['PO' . $identifier]->KLShipmentDate = $_POST['KLShipmentDate'];
 	$_SESSION['PO' . $identifier]->KLShipmentAWB = $_POST['KLShipmentAWB'];
@@ -395,6 +420,9 @@ if ((!isset($_POST['SearchSuppliers']) or $_POST['SearchSuppliers'] == '') AND (
 	$_POST['SuppDelAdd6'] = $_SESSION['PO' . $identifier]->SuppDelAdd6;
 	if(!isset($_POST['DeliveryDate'])){
 		$_POST['DeliveryDate'] = $_SESSION['PO' . $identifier]->DeliveryDate;
+	}
+	if(!isset($_POST['KLStatus'])){
+		$_POST['KLStatus'] = $_SESSION['PO' . $identifier]->KLStatus;
 	}
 	if(!isset($_POST['KLPaymentDate'])){
 		$_POST['KLPaymentDate'] = $_SESSION['PO' . $identifier]->KLPaymentDate;
@@ -728,6 +756,7 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 		$_POST['Requisition'] = $_SESSION['PO' . $identifier]->RequisitionNo;
 		$_POST['Version'] = $_SESSION['PO' . $identifier]->Version;
 		$_POST['DeliveryDate'] = $_SESSION['PO' . $identifier]->DeliveryDate;
+		$_POST['KLStatus'] = $_SESSION['PO' . $identifier]->KLStatus;
 		$_POST['KLPaymentDate'] = $_SESSION['PO' . $identifier]->KLPaymentDate;
 		$_POST['KLShipmentDate'] = $_SESSION['PO' . $identifier]->KLShipmentDate;
 		$_POST['KLShipmentAWB'] = $_SESSION['PO' . $identifier]->KLShipmentAWB;
@@ -774,6 +803,9 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 
 	if (!isset($_POST['DeliveryDate'])) {
 		$_POST['DeliveryDate'] = date($_SESSION['DefaultDateFormat']);
+	}
+	if (!isset($_POST['KLStatus'])) {
+		$_POST['KLStatus'] = '1000';
 	}
 	if (!isset($_POST['KLPaymentDate'])) {
 		$_POST['KLPaymentDate'] = date($_SESSION['DefaultDateFormat']);
@@ -918,8 +950,9 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 				break;
 		}
 		echo '</select></td>
-			</tr>
-			<tr>
+			</tr>';
+			
+		echo '<tr>
 				<td>' . _('Status Comment') . ':</td>
 				<td><input type="text" name="StatusComments" size="50" /></td>
 			</tr>
@@ -932,6 +965,48 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 			</tr>';
 	} //end its not a new order
 
+	echo '</table>';
+	
+	echo '<table class="selection" width="100%">';
+
+	if ($_SESSION['PO' . $identifier]->Status == '') { //then its a new order
+		echo '<tr>
+				<td><input type="hidden" name="KLStatus" value="1000" />' . _('New order') . '</td>
+			</tr>';
+	} else {
+
+// This line should be used to not allow to go back on the status of the orders
+//		AND code >= '" . $_SESSION['PO' . $identifier]->KLStatus . "'
+
+		$SQL = "SELECT code, 
+						description 
+				FROM klpostatus, suppliers
+				WHERE klpostatus.paymentterm = suppliers.paymentterms
+					AND suppliers.supplierid = '" . $_SESSION['PO' . $identifier]->SupplierID . "'
+				ORDER BY code";
+				
+		$result=DB_query($SQL);
+
+		echo '<tr>
+				<td>' . _('KL Status') . ':</td>
+				<td><select name="KLStatus">';
+
+		while ($myrow = DB_fetch_array($result)) {
+			if ($_POST['KLStatus'] == $myrow['code']) {
+			echo '<option selected="selected" value="' . $myrow['code'] . '">' . $myrow['description'] . '</option>';
+			} else {
+			echo '<option value="' . $myrow['code'] . '">' . $myrow['description'] . '</option>';
+			}
+		} //end while loop
+		echo '</select></td>
+			</tr>';
+			
+		echo '<tr>
+				<td><input type="submit" name="UpdateKLStatus" value="' . _('KL Status Update') . '" /></td>
+			</tr>';
+	} //end its not a new order
+	
+	
 	echo '</table></td>
 		</tr>
 		<tr>
