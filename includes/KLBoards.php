@@ -4154,7 +4154,7 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 		$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',+$maxdays));
 		$DateField = "arrivaldate";
 		$FieldName = "Reception Date";
-		$TitleWarning = 'Purchase Orders arriing in the next ' . $maxdays . ' days';
+		$TitleWarning = 'Purchase Orders arriving in the next ' . $maxdays . ' days';
 		$SQLFilterKLStatus = " AND purchorders.klstatus >= '2000' 
 			AND purchorders." . $DateField ." <  '". $StartDate ."'";
 	}else{
@@ -4348,8 +4348,9 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 			}
 			$i++;
 		}
-		if (($TypeOfCode == "STILL NOT FULLY PAID") OR 
-			($TypeOfCode == "ARRIVING IN NEXT DAYS")){
+//		if (($TypeOfCode == "STILL NOT FULLY PAID") OR 
+//			($TypeOfCode == "ARRIVING IN NEXT DAYS")){
+		if (true){
 			$k = StartEvenOrOddRow($k);
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
