@@ -922,6 +922,8 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 		POStatusControl("RECEIVED IN KANTOR", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		POStatusControl("ARRIVING IN NEXT DAYS", 60, $RootPath, $db);
+		$NumberOfTestExecuted++;
 
 
 /*		

@@ -4088,8 +4088,6 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 		$EndDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-30));
 	}
 
-	AND purchorders." . $DateField ." <  '". $StartDate ."'		
-	AND purchorders." . $DateField ." >= '". $EndDate ."'		
 
 */	
 	if ($TypeOfCode == "IN NEGOTIAION WITH SUPPLIER"){
@@ -4152,6 +4150,13 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 		$FieldName = "Reception Date";
 		$TitleWarning = 'Purchase Orders already received in kantor';
 		$SQLFilterKLStatus = " AND purchorders.klstatus = '6000' ";
+	}else if ($TypeOfCode == "ARRIVING IN NEXT DAYS"){
+		$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',+$maxdays));
+		$DateField = "arrivaldate";
+		$FieldName = "Reception Date";
+		$TitleWarning = 'Purchase Orders arriing in the next ' . $maxdays . ' days';
+		$SQLFilterKLStatus = " AND purchorders.klstatus >= '2000' 
+			AND purchorders." . $DateField ." <  '". $StartDate ."'";
 	}else{
 		return;
 	}
@@ -4186,7 +4191,8 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 				currencies.decimalplaces
 			ORDER BY purchorders." . $DateField ." ASC,
 				purchorders.orderno ASC";
-
+//prnMsg($TitleWarning);
+//prnMsg($SQL);
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . $TitleWarning . '</strong></p>';
@@ -4342,7 +4348,8 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 			}
 			$i++;
 		}
-		if ($TypeOfCode == "STILL NOT FULLY PAID"){
+		if (($TypeOfCode == "STILL NOT FULLY PAID") OR 
+			($TypeOfCode == "ARRIVING IN NEXT DAYS")){
 			$k = StartEvenOrOddRow($k);
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -4413,8 +4420,9 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 					'', 
 					'' 
 					);
-
-/*			$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
+		}
+		if ($TypeOfCode == "ARRIVING IN NEXT DAYS"){
+			$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 			$SQL = "SELECT SUM(amount) AS cogs
 					FROM  gltrans 
 					WHERE   trandate >= '". $StartDate ."'		
@@ -4492,7 +4500,7 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 					'', 
 					'' 
 					);
-*/			
+			
 		}
 		echo '</table>
 				</div>';

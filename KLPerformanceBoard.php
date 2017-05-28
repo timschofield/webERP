@@ -233,6 +233,8 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 		POStatusControl("RECEIVED BY CARGO AGENT BUT NOT SHIPPED", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		POStatusControl("ARRIVING IN NEXT DAYS", 60, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		POStatusControl("SHIPPED IN TRANSIT", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		POStatusControl("RECEIVED IN KANTOR", 0, $RootPath, $db);
