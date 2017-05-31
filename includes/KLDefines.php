@@ -119,7 +119,7 @@ define("PAYMENT_BY_CASH", 2);
 define("PAYMENT_BY_CREDITCARD", 3); 
 define("PERCENTAGE_PPN", 10); // %PPN
 define("PERCENTAGE_SALES_CASH_TO_PT", 9.5); // % of cash transactions going to PT cash acccounts
-define("PERCENTAGE_COMPENSATION_HPP_PT", 155.0); // % of HPP to be assigned to PT sales. 100 means NO compensation.
+define("PERCENTAGE_COMPENSATION_HPP_PT", 160.0); // % of HPP to be assigned to PT sales. 100 means NO compensation.
 define("ACCOUNT_COMPENSATION_HPP_PT", "510010050"); 
 define("ACCOUNT_HUTANG_PPH23", "611012005PT"); // GL account for retention of PPH23 in Petty cash
 
@@ -317,6 +317,9 @@ define("OPENCART_DEFAULT_PAYMENT_SYSTEM", 'PayPal');
 
 define("OPENCART_FOREIGN_CURRENCY_SURCHARGE_PERCENT", 1.05); // factor to increase the exchange rate for foreign currency (> 1 = more expensive in foreign) 
 
+/*************************************************************************/
+/*                PAYPAL SETTINGS FOR sales@kapal-laut.com               */
+/*************************************************************************/
 define("WEBERP_GL_PAYPAL_ACCOUNT_AUD",    '111259050');
 define("WEBERP_GL_PAYPAL_COMMISSION_AUD", '700211700');
 
@@ -325,5 +328,22 @@ define("WEBERP_GL_PAYPAL_COMMISSION_EUR", '700211700');
 
 define("WEBERP_GL_PAYPAL_ACCOUNT_USD",    '111259010');
 define("WEBERP_GL_PAYPAL_COMMISSION_USD", '700211700');
+
+/*************************************************************************/
+/*                PAYPAL SETTINGS FOR paypal@kapal-laut.com              */
+/*************************************************************************/
+/*
+
+CAL CANVIAR LES API CREDENTIALS DE OPENCART 
+
+define("WEBERP_GL_PAYPAL_ACCOUNT_AUD",    '111259050PT');
+define("WEBERP_GL_PAYPAL_COMMISSION_AUD", '700211700PT');
+
+define("WEBERP_GL_PAYPAL_ACCOUNT_EUR",    '111259020PT');
+define("WEBERP_GL_PAYPAL_COMMISSION_EUR", '700211700PT');
+
+define("WEBERP_GL_PAYPAL_ACCOUNT_USD",    '111259010PT');
+define("WEBERP_GL_PAYPAL_COMMISSION_USD", '700211700PT');
+*/
 
 ?>
