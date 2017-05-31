@@ -18,6 +18,7 @@ SELECT `accountcode`, `accountname`, `group_`
 FROM chartmaster
 WHERE (accountcode LIKE "%AD" OR accountcode = "350510100");
 
+UPDATE chartmasterPMA SET `group_` =  'Penjualan' WHERE `accountcode` = '410010000AD';
 
 /* ******************************************************************************************/
 /*                               PT                                                         */
@@ -38,4 +39,5 @@ SELECT `accountcode`, `accountname`, `group_`
 FROM chartmaster
 WHERE (accountcode LIKE "%PT" OR accountcode = "350510100");
 
+UPDATE chartmasterPT SET `group_` =  'HPP (COGS)' WHERE `accountcode` = '510010005PT';
 

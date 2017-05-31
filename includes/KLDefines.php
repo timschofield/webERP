@@ -134,6 +134,9 @@ define("ACCOUNT_BANK_MANDIRI_IDR", "111121101PT"); // number of account for Bank
 define("ACCOUNT_BANK_BCA_IDR", "111121110PT"); // number of account for Bank BCA IDR
 define("ACCOUNT_COMISSION_CREDITCARD", "700211300PT"); // number of account used to charge the bank comission
 
+define("PERCENTAGE_CONSIGNMENT_PTADU_TP_PTBB", 50.0); // %of retail price charged by PT.ADU for sales to PT.BB
+
+
 /* Defines about financial Analysis*/
 define("JUTA", 1000000);
 define("GL_INCOME_CC_PT",   "('410000010PT')");

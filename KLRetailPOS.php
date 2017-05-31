@@ -1,6 +1,7 @@
 <?php
 
 /************************************************************************
+v 3.10 Prepare for PT ADU / PT BB accounting
 v 3.01 add fields for returned goods
 v 3.00 read barcode + print receipt
 v 2.15 Do not account returns in debtortrans to avoid balance errors getting large
@@ -898,6 +899,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 			if ($OrderLine->StandardCost !=0){
 
+			// RICARD AROUND HERE CLUSTERING PTADU
+			
 				/*first the cost of sales entry*/
 
 				$AccountCOGS = GetCOGSGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType, $db);
