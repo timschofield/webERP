@@ -165,23 +165,32 @@ if ((isset($_POST['UpdateStatus']) AND $_POST['UpdateStatus'] != '')) {
 
 if ((isset($_POST['UpdateKLStatus']) AND $_POST['UpdateKLStatus'] != '')) {
 
+	$OKToUpdateKLStatus = 1;
 	if ($_SESSION['ExistingOrder'] == 0) {
-		prnMsg(_('This is a new order. It must be created before you can change the status'), 'warn');
-		$OKToUpdateStatus = 0;
-	} elseif ($_SESSION['PO' . $identifier]->KLStatus != $_POST['KLStatus']){ //the old status  != new status
-		$OKToUpdateStatus = 1;
+		prnMsg(_('This is a new order. It must be created before you can change the KL status'), 'warn');
+		$OKToUpdateKLStatus = 0;
+	} 
+	
+	if ($OKToUpdateKLStatus == 1) {
+		$_SESSION['PO'.$identifier]->KLStatus = $_POST['KLStatus'];
+		$_SESSION['PO'.$identifier]->DeliveryDate = $_POST['DeliveryDate'];
+		$_SESSION['PO'.$identifier]->KLPaymentDate = $_POST['KLPaymentDate'];
+		$_SESSION['PO'.$identifier]->KLShipmentDate = $_POST['KLShipmentDate'];
+		$_SESSION['PO'.$identifier]->KLShipmentAWB = $_POST['KLShipmentAWB'];
+		$_SESSION['PO'.$identifier]->KLArrivalDate = $_POST['KLArrivalDate'];
+		$SQL = "UPDATE purchorders 
+				SET klstatus='" . $_POST['KLStatus'] . "',
+					deliverydate='" . FormatDateForSQL($_POST['DeliveryDate']) . "',
+					paymentdate='" . FormatDateForSQL($_POST['KLPaymentDate']) . "',
+					shipmentdate='" . FormatDateForSQL($_POST['KLShipmentDate']) . "',
+					shipmentawb='" . $_POST['KLShipmentAWB'] . "',
+					arrivaldate='" . FormatDateForSQL($_POST['KLArrivalDate']) . "'
+				WHERE purchorders.orderno ='" . $_SESSION['ExistingOrder'] . "'";
 
-		if ($OKToUpdateStatus == 1) {
-			$_SESSION['PO' . $identifier]->KLStatus = $_POST['KLStatus'];
-			$SQL = "UPDATE purchorders 
-					SET klstatus='" . $_POST['KLStatus'] . "'
-					WHERE purchorders.orderno ='" . $_SESSION['ExistingOrder'] . "'";
+		$ErrMsg = _('The order KL status could not be updated because');
+		$UpdateResult = DB_query($SQL, $ErrMsg);
 
-			$ErrMsg = _('The order KL status could not be updated because');
-			$UpdateResult = DB_query($SQL, $ErrMsg);
-
-		} //$OKToUpdateKLStatus == 1
-	} //end if there is actually a status change the class KLStatus != the POST['KLStatus']
+	} //$OKToUpdateKLStatus == 1
 } //End if user hit Update KL Status
 
 
@@ -828,27 +837,6 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 			<td>' . _('Revised') . ':</td>
 			<td><input type="hidden" name="Revised" size="11" maxlength="15" value="' . date($_SESSION['DefaultDateFormat']) . '" />' . date($_SESSION['DefaultDateFormat']) . '</td>
 		</tr>
-		<tr>
-			<td>' . _('Delivery Date') . ':</td>
-			<td><input type="text" required="required" autofocus="autofocus" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="DeliveryDate" size="11" value="' . $_POST['DeliveryDate'] . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Payment Date') . ':</td>
-			<td><input type="text" required="required" autofocus="autofocus" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="KLPaymentDate" size="11" value="' . $_POST['KLPaymentDate'] . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Shipment Date') . ':</td>
-			<td><input type="text" required="required" autofocus="autofocus" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="KLShipmentDate" size="11" value="' . $_POST['KLShipmentDate'] . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Shipment AWB') . ':</td>
-			<td><input type="text" name="KLShipmentAWB" size="51" maxlength="50" title="' . _('Enter AWB tracking number') . '" value="' . $_POST['KLShipmentAWB'] . '" /></td>
-		</tr>		
-		<tr>
-			<td>' . _('Arrival Date') . ':</td>
-			<td><input type="text" required="required" autofocus="autofocus" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="KLArrivalDate" size="11" value="' . $_POST['KLArrivalDate'] . '" /></td>
-		</tr>
-		
 		';
 
 	if (!isset($_POST['Initiator'])) {
@@ -971,7 +959,7 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 
 	if ($_SESSION['PO' . $identifier]->Status == '') { //then its a new order
 		echo '<tr>
-				<td><input type="hidden" name="KLStatus" value="1000" />' . _('New order') . '</td>
+				<td><input type="hidden" name="KLStatus" value="1000" />' . _('Negotiating with supplier') . '</td>
 			</tr>';
 	} else {
 
@@ -1000,7 +988,27 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 		} //end while loop
 		echo '</select></td>
 			</tr>';
-			
+		echo '<tr>
+				<td>' . _('Delivery Date') . ':</td>
+				<td><input type="text" required="required" autofocus="autofocus" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="DeliveryDate" size="11" value="' . $_POST['DeliveryDate'] . '" /></td>
+			</tr>
+			<tr>
+				<td>' . _('Payment Date') . ':</td>
+				<td><input type="text" required="required" autofocus="autofocus" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="KLPaymentDate" size="11" value="' . $_POST['KLPaymentDate'] . '" /></td>
+			</tr>
+			<tr>
+				<td>' . _('Shipment Date') . ':</td>
+				<td><input type="text" required="required" autofocus="autofocus" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="KLShipmentDate" size="11" value="' . $_POST['KLShipmentDate'] . '" /></td>
+			</tr>
+			<tr>
+				<td>' . _('Shipment AWB') . ':</td>
+				<td><input type="text" name="KLShipmentAWB" size="51" maxlength="50" title="' . _('Enter AWB tracking number') . '" value="' . $_POST['KLShipmentAWB'] . '" /></td>
+			</tr>		
+			<tr>
+				<td>' . _('Arrival Date') . ':</td>
+				<td><input type="text" required="required" autofocus="autofocus" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="KLArrivalDate" size="11" value="' . $_POST['KLArrivalDate'] . '" /></td>
+			</tr>';
+	
 		echo '<tr>
 				<td><input type="submit" name="UpdateKLStatus" value="' . _('KL Status Update') . '" /></td>
 			</tr>';

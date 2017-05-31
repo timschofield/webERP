@@ -3692,391 +3692,6 @@ function OldPurchasingOrdersStillActive($maxdays, $RootPath, $db){
 	}
 }
 
-function PurchasingOrdersDeliveryControl($reason, $TypeOfDate, $maxdays, $RootPath, $db){
-
-	if ($reason == "Delayed"){
-		$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
-		$EndDate = "0000-00-00";
-	}else{
-		$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',+$maxdays));
-		$EndDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-30));
-	}
-	
-	if ($TypeOfDate == "Delivery"){
-		$DateField = "deliverydate";
-		if ($reason == "Delayed"){
-			$TitleWarning = 'Purchase Orders with supplier delivery date expired';
-		}else{
-			$TitleWarning = 'Purchase Orders to be delivered by supplier in the next ' . $maxdays . ' days';
-		}
-	}else if ($TypeOfDate == "Payment"){
-		$DateField = "paymentdate";
-		if ($reason == "Delayed"){
-			$TitleWarning = 'Purchase Orders with payment date expired';
-		}else{
-			$TitleWarning = 'Purchase Orders to be paid in the next ' . $maxdays . ' days';
-		}
-	}else if ($TypeOfDate == "Shipment"){
-		$DateField = "shipmentdate";
-		if ($reason == "Delayed"){
-			$TitleWarning = 'Purchase Orders with shipment date expired';
-		}else{
-			$TitleWarning = 'Purchase Orders to be shipped by supplier in the next ' . $maxdays . ' days';
-		}
-	}else if ($TypeOfDate == "Arrival"){
-		$DateField = "arrivaldate";
-		if ($reason == "Delayed"){
-			$TitleWarning = 'Purchase Orders with arrival date expired';
-		}else{
-			$TitleWarning = 'Purchase Orders to arrive to us in the next ' . $maxdays . ' days';
-		}
-	}else{
-		return;
-	}
-	
-	$SQL = "SELECT purchorders.orderno,
-				purchorders.supplierno,
-				purchorders.orddate,
-				purchorders." . $DateField ." AS reportdate,
-				purchorders.status,
-				purchorders.initiator,
-				purchorders.allowprint,
-				suppliers.currcode,
-				currencies.rate AS exchangerate,
-				currencies.decimalplaces AS currdecimalplaces,
-				SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue
-			FROM purchorders INNER JOIN purchorderdetails
-				ON purchorders.orderno = purchorderdetails.orderno
-			INNER JOIN suppliers 
-				ON  purchorders.supplierno = suppliers.supplierid 
-			INNER JOIN currencies
-				ON suppliers.currcode=currencies.currabrev
-			WHERE purchorderdetails.completed=0
-				AND purchorders." . $DateField ." <  '". $StartDate ."'		
-				AND purchorders." . $DateField ." >= '". $EndDate ."'		
-				AND purchorders.status IN ('Authorised', 'Printed', 'Pending')	
-			GROUP BY purchorders.orderno ASC,
-				purchorders.supplierno,
-				purchorders.orddate,
-				purchorders.status,
-				purchorders.initiator,
-				purchorders.allowprint,
-				suppliers.currcode,
-				currencies.decimalplaces
-			ORDER BY purchorders." . $DateField ." ASC,
-				purchorders.orderno ASC";
-
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . $TitleWarning . '</strong></p>';
-		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th colspan="7">' . _('Order') . '</th>
-							<th colspan="3">' . _('Supplier DP') . '</th>
-							<th colspan="3">' . _('Payment Needed') . '</th>
-							<th colspan="3">' . _('Acummulated Payment') . '</th>
-						</tr>
-						<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('PO') . '</th>
-							<th class="ascending">' . _('Supplier') . '</th>
-							<th class="ascending">' . $TypeOfDate . '</th>
-							<th class="ascending">' . _('IDR') . '</th>
-							<th class="ascending">' . _('USD') . '</th>
-							<th class="ascending">' . _('THB') . '</th>
-							<th class="ascending">' . _('IDR') . '</th>
-							<th class="ascending">' . _('USD') . '</th>
-							<th class="ascending">' . _('THB') . '</th>
-							<th class="ascending">' . _('IDR') . '</th>
-							<th class="ascending">' . _('USD') . '</th>
-							<th class="ascending">' . _('THB') . '</th>
-							<th class="ascending">' . _('IDR') . '</th>
-							<th class="ascending">' . _('USD') . '</th>
-							<th class="ascending">' . _('THB') . '</th>
-						</tr>';
-		echo $TableHeader;
-		
-		$TotalValueOrderIDR = 0;
-		$TotalValueOrderUSD = 0;
-		$TotalValueOrderTHB = 0;
-		$TotalValueAllOrders = 0;
-		$TotalValueAllPayments = 0;
-		$AcumIDR = 0;
-		$AcumUSD = 0;
-		$AcumTHB = 0;
-		$Payments = array();
-		
-		$k = 0; //row colour counter
-		$i = 1;
-		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
-			$CodeLink = '<a href="' . $RootPath . '/PO_OrderDetails.php?OrderNo=' . $myrow['orderno'] . '">' . $myrow['orderno'] . '</a>';
-			
-			if (isset($Payments[$myrow['supplierno']])){
-				// we already have info in memory about the supplier
-			}else{
-				// the first time we find this supplier, let's get the balance
-				$SQL = "SELECT SUM(supptrans.ovamount + supptrans.ovgst - supptrans.alloc) AS balance
-						FROM supptrans
-						WHERE supptrans.supplierno = '" . $myrow['supplierno'] . "'";
-				$SupplierResult = DB_query($SQL);
-				$mySupplier=DB_fetch_array($SupplierResult);
-				$Payments[$myrow['supplierno']]['currency'] = $myrow['currcode']; 
-				$Payments[$myrow['supplierno']]['balance'] = -$mySupplier['balance']; 
-			}
-			
-			$ValueOrderIDR = 0;
-			$ValueOrderUSD = 0;
-			$ValueOrderTHB = 0;
-			$PaymentOrderIDR = 0;
-			$PaymentOrderUSD = 0;
-			$PaymentOrderTHB = 0;
-			
-			if ($myrow['currcode'] == 'IDR'){
-				$ValueOrderIDR = $myrow['ordervalue'];
-				$TotalValueOrderIDR += $ValueOrderIDR;
-				$TotalValueAllOrders += $ValueOrderIDR;
-				$SupplierBalanceIDR =  $Payments[$myrow['supplierno']]['balance'];
-				$SupplierBalanceUSD =  0;
-				$SupplierBalanceTHB =  0;
-				if ($SupplierBalanceIDR >= $ValueOrderIDR){
-					// we have enough balance to cover the order, no payment needed
-					$PaymentOrderIDR = 0;
-				}else{
-					$PaymentOrderIDR = $ValueOrderIDR - $SupplierBalanceIDR;
-					$AcumIDR = $AcumIDR + $PaymentOrderIDR; 
-					$TotalValueAllPayments = $TotalValueAllPayments + $PaymentOrderIDR; 
-				}
-			}elseif	($myrow['currcode'] == 'USD'){
-				$ValueOrderUSD = $myrow['ordervalue'];
-				$TotalValueOrderUSD += $ValueOrderUSD;
-				$TotalValueAllOrders += ($ValueOrderUSD/$myrow['exchangerate']*STANDARD_COST_FACTOR_FOREIGN);
-				$SupplierBalanceIDR =  0;
-				$SupplierBalanceUSD =  $Payments[$myrow['supplierno']]['balance'];
-				$SupplierBalanceTHB =  0;
-				if ($SupplierBalanceUSD >= $ValueOrderUSD){
-					// we have enough balance to cover the order, no payment needed
-					$PaymentOrderUSD = 0;
-				}else{
-					$PaymentOrderUSD = $ValueOrderUSD - $SupplierBalanceUSD;
-					$AcumUSD = $AcumUSD + $PaymentOrderUSD; 
-					$TotalValueAllPayments = $TotalValueAllPayments + ($PaymentOrderUSD/$myrow['exchangerate']); 
-				}
-			}elseif	($myrow['currcode'] == 'THB'){
-				$ValueOrderTHB = $myrow['ordervalue'];
-				$TotalValueOrderTHB += $ValueOrderTHB;
-				$TotalValueAllOrders += ($ValueOrderTHB/$myrow['exchangerate']*STANDARD_COST_FACTOR_FOREIGN);
-				$SupplierBalanceIDR =  0;
-				$SupplierBalanceUSD =  0;
-				$SupplierBalanceTHB =  $Payments[$myrow['supplierno']]['balance'];
-				if ($SupplierBalanceTHB >= $ValueOrderTHB){
-					// we have enough balance to cover the order, no payment needed
-					$PaymentOrderTHB = 0;
-				}else{
-					$PaymentOrderTHB = $ValueOrderTHB - $SupplierBalanceTHB;
-					$AcumTHB = $AcumTHB + $PaymentOrderTHB; 
-					$TotalValueAllPayments = $TotalValueAllPayments + ($PaymentOrderTHB/$myrow['exchangerate']); 
-				}
-			}
-			
-			printf('<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					$i, 
-					$CodeLink, 
-					$myrow['supplierno'],
-					ConvertSQLDate($myrow['reportdate']), 
-					locale_number_format_zero_blank($ValueOrderIDR,0),
-					locale_number_format_zero_blank($ValueOrderUSD,0),
-					locale_number_format_zero_blank($ValueOrderTHB,0),
-					locale_number_format_zero_blank($SupplierBalanceIDR,0),
-					locale_number_format_zero_blank($SupplierBalanceUSD,0),
-					locale_number_format_zero_blank($SupplierBalanceTHB,0),
-					locale_number_format_zero_blank($PaymentOrderIDR,0),
-					locale_number_format_zero_blank($PaymentOrderUSD,0),
-					locale_number_format_zero_blank($PaymentOrderTHB,0),
-					locale_number_format_zero_blank($AcumIDR,0),
-					locale_number_format_zero_blank($AcumUSD,0),
-					locale_number_format_zero_blank($AcumTHB,0)
-					);
-			// update the supplier balance after the order 
-			$Payments[$myrow['supplierno']]['balance'] = $Payments[$myrow['supplierno']]['balance'] - $myrow['ordervalue']; 
-			if ($Payments[$myrow['supplierno']]['balance'] < 0){
-				$Payments[$myrow['supplierno']]['balance'] = 0;
-			}
-			$i++;
-		}
-		if ($reason != "Delayed"){
-			$k = StartEvenOrOddRow($k);
-			printf('<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					'', 
-					'', 
-					'TOTAL ORDERS',
-					'', 
-					locale_number_format_zero_blank($TotalValueOrderIDR,0),
-					locale_number_format_zero_blank($TotalValueOrderUSD,0),
-					locale_number_format_zero_blank($TotalValueOrderTHB,0),
-					'', 
-					'', 
-					'', 
-					'', 
-					'', 
-					'', 
-					locale_number_format_zero_blank($TotalValueAllPayments,0),
-					'', 
-					'' 
-					);
-			$k = StartEvenOrOddRow($k);
-			printf('<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					'', 
-					'', 
-					'TOTAL ORDERS @ SC',
-					'IDR', 
-					locale_number_format_zero_blank($TotalValueAllOrders,0),
-					'', 
-					'', 
-					'', 
-					'', 
-					'', 
-					'', 
-					'', 
-					'', 
-					'', 
-					'', 
-					'' 
-					);
-
-			$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
-			$SQL = "SELECT SUM(amount) AS cogs
-					FROM  gltrans 
-					WHERE   trandate >= '". $StartDate ."'		
-						AND (account IN " . GL_COGS_GOODS ."
-							OR account IN " . GL_COGS_OTHERS . ")";
-			$result = DB_query($SQL);
-			$myrow = DB_fetch_array($result);
-			$k = StartEvenOrOddRow($k);
-			printf('<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					'', 
-					'', 
-					'COGS',
-					'IDR', 
-					locale_number_format_zero_blank($myrow['cogs'],0),
-					'', 
-					'', 
-					'', 
-					'', 
-					'', 
-					'', 
-					'', 
-					'', 
-					'', 
-					'', 
-					'' 
-					);
-			$k = StartEvenOrOddRow($k);
-			printf('<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					'', 
-					'', 
-					'DIFFERENCE STOCK',
-					'IDR', 
-					locale_number_format_zero_blank($TotalValueAllOrders-$myrow['cogs'],0),
-					'', 
-					'', 
-					'', 
-					'', 
-					'', 
-					'', 
-					'', 
-					'', 
-					'', 
-					'', 
-					'' 
-					);
-			
-		}
-		echo '</table>
-				</div>';
-	}
-}
 
 function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 
@@ -4093,67 +3708,79 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 	if ($TypeOfCode == "IN NEGOTIAION WITH SUPPLIER"){
 		$DateField = "orddate";
 		$FieldName = "Order Date";
+		$ShipmentAWB = '';
 		$TitleWarning = 'Purchase Orders in Negotiations with supplier';
 		$SQLFilterKLStatus = " AND purchorders.klstatus = '1000' ";
 	}else if ($TypeOfCode == "ON PRODUCTION"){
 		$DateField = "deliverydate";
 		$FieldName = "Delivery Date";
+		$ShipmentAWB = '';
 		$TitleWarning = 'Purchase Orders on Production by supplier';
 		$SQLFilterKLStatus = " AND purchorders.klstatus = '2000' ";
 	}else if ($TypeOfCode == "STILL NOT FULLY PAID"){
 		$DateField = "paymentdate";
 		$FieldName = "Payment Date";
+		$ShipmentAWB = '';
 		$TitleWarning = 'Purchase Orders still not fully paid';
 		$SQLFilterKLStatus = " AND purchorders.klstatus >= '2000' 
 							   AND purchorders.klstatus < '4000' ";
 	}else if ($TypeOfCode == "FINISHED NOT PAID NOT SHIPPED"){
 		$DateField = "deliverydate";
 		$FieldName = "Delivery Date";
+		$ShipmentAWB = '';
 		$TitleWarning = 'Purchase Orders finished by supplier but not paid OR not shipped';
 		$SQLFilterKLStatus = " AND purchorders.klstatus = '3000' ";
 	}else if ($TypeOfCode == "PAID WAITING TO CLOSE"){
 		$DateField = "paymentdate";
 		$FieldName = "Payment Date";
+		$ShipmentAWB = '';
 		$TitleWarning = 'Purchase Orders paid waiting to be closed';
 		$SQLFilterKLStatus = " AND purchorders.klstatus = '4000' 
 							   AND suppliers.paymentterms = 'B1' ";
 	}else if ($TypeOfCode == "PAID NOT SHIPPED"){
 		$DateField = "paymentdate";
 		$FieldName = "Payment Date";
+		$ShipmentAWB = '';
 		$TitleWarning = 'Purchase Orders paid but not shipped by supplier';
 		$SQLFilterKLStatus = " AND purchorders.klstatus = '4000' 
 							   AND suppliers.paymentterms = 'F1' ";
 	}else if ($TypeOfCode == "PAID NOT RECEIVED IN CARGO AGENT"){
 		$DateField = "paymentdate";
 		$FieldName = "Payment Date";
+		$ShipmentAWB = '';
 		$TitleWarning = 'Purchase Orders paid but not received by Cargo Agent';
 		$SQLFilterKLStatus = " AND purchorders.klstatus = '4000' 
 							   AND suppliers.paymentterms = 'T2' ";
 	}else if ($TypeOfCode == "PAID BY CARGO AGENT BUT NOT SHIPPED"){
 		$DateField = "paymentdate";
 		$FieldName = "Payment Date";
-		$TitleWarning = 'Purchase Orders paid but not received by Cargo Agent';
+		$ShipmentAWB = '';
+		$TitleWarning = 'Purchase Orders paid but not shipped by Cargo Agent';
 		$SQLFilterKLStatus = " AND purchorders.klstatus = '4000' 
 							   AND suppliers.paymentterms = 'T2' ";
 	}else if ($TypeOfCode == "RECEIVED BY CARGO AGENT BUT NOT SHIPPED"){
 		$DateField = "paymentdate";
 		$FieldName = "Payment Date";
+		$ShipmentAWB = '';
 		$TitleWarning = 'Purchase Orders waiting to be shipped by Cargo Agent';
 		$SQLFilterKLStatus = " AND purchorders.klstatus = '4500' ";
 	}else if ($TypeOfCode == "SHIPPED IN TRANSIT"){
 		$DateField = "arrivaldate";
 		$FieldName = "Arrival Date";
+		$ShipmentAWB = 'AWB';
 		$TitleWarning = 'Purchase Orders shipped and in transit to kantor';
 		$SQLFilterKLStatus = " AND purchorders.klstatus = '5000' ";
 	}else if ($TypeOfCode == "RECEIVED IN KANTOR"){
 		$DateField = "arrivaldate";
 		$FieldName = "Reception Date";
+		$ShipmentAWB = 'AWB';
 		$TitleWarning = 'Purchase Orders already received in kantor';
 		$SQLFilterKLStatus = " AND purchorders.klstatus = '6000' ";
 	}else if ($TypeOfCode == "ARRIVING IN NEXT DAYS"){
 		$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',+$maxdays));
 		$DateField = "arrivaldate";
 		$FieldName = "Reception Date";
+		$ShipmentAWB = 'AWB';
 		$TitleWarning = 'Purchase Orders arriving in the next ' . $maxdays . ' days';
 		$SQLFilterKLStatus = " AND purchorders.klstatus >= '2000' 
 			AND purchorders." . $DateField ." <  '". $StartDate ."'";
@@ -4165,6 +3792,7 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 				purchorders.supplierno,
 				purchorders.orddate,
 				purchorders." . $DateField ." AS reportdate,
+				purchorders.shipmentawb,
 				purchorders.status,
 				purchorders.initiator,
 				purchorders.allowprint,
@@ -4199,28 +3827,29 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th colspan="7">' . _('Order') . '</th>
+							<th colspan="8">' . _('Order') . '</th>
 							<th colspan="3">' . _('Supplier DP') . '</th>
 							<th colspan="3">' . _('Payment Needed') . '</th>
 							<th colspan="3">' . _('Acummulated Payment') . '</th>
 						</tr>
 						<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('PO') . '</th>
-							<th class="ascending">' . _('Supplier') . '</th>
-							<th class="ascending">' . $FieldName . '</th>
-							<th class="ascending">' . _('IDR') . '</th>
-							<th class="ascending">' . _('USD') . '</th>
-							<th class="ascending">' . _('THB') . '</th>
-							<th class="ascending">' . _('IDR') . '</th>
-							<th class="ascending">' . _('USD') . '</th>
-							<th class="ascending">' . _('THB') . '</th>
-							<th class="ascending">' . _('IDR') . '</th>
-							<th class="ascending">' . _('USD') . '</th>
-							<th class="ascending">' . _('THB') . '</th>
-							<th class="ascending">' . _('IDR') . '</th>
-							<th class="ascending">' . _('USD') . '</th>
-							<th class="ascending">' . _('THB') . '</th>
+							<th>' . _('#') . '</th>
+							<th>' . _('PO') . '</th>
+							<th>' . _('Supplier') . '</th>
+							<th>' . $FieldName . '</th>
+							<th>' . $ShipmentAWB . '</th>
+							<th>' . _('IDR') . '</th>
+							<th>' . _('USD') . '</th>
+							<th>' . _('THB') . '</th>
+							<th>' . _('IDR') . '</th>
+							<th>' . _('USD') . '</th>
+							<th>' . _('THB') . '</th>
+							<th>' . _('IDR') . '</th>
+							<th>' . _('USD') . '</th>
+							<th>' . _('THB') . '</th>
+							<th>' . _('IDR') . '</th>
+							<th>' . _('USD') . '</th>
+							<th>' . _('THB') . '</th>
 						</tr>';
 		echo $TableHeader;
 		
@@ -4311,6 +3940,7 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
+					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -4328,6 +3958,7 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 					$CodeLink, 
 					$myrow['supplierno'],
 					ConvertSQLDate($myrow['reportdate']), 
+					$myrow['shipmentawb'],
 					locale_number_format_zero_blank($ValueOrderIDR,0),
 					locale_number_format_zero_blank($ValueOrderUSD,0),
 					locale_number_format_zero_blank($ValueOrderTHB,0),
@@ -4356,6 +3987,7 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
+					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -4372,6 +4004,7 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 					'', 
 					'', 
 					'TOTAL ORDERS',
+					'', 
 					'', 
 					locale_number_format_zero_blank($TotalValueOrderIDR,0),
 					locale_number_format_zero_blank($TotalValueOrderUSD,0),
@@ -4391,6 +4024,7 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
+					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -4408,6 +4042,7 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 					'', 
 					'TOTAL ORDERS @ SC',
 					'IDR', 
+					'', 
 					locale_number_format_zero_blank($TotalValueAllOrders,0),
 					'', 
 					'', 
@@ -4436,6 +4071,7 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
+					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -4453,6 +4089,7 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 					'', 
 					'COGS',
 					'IDR', 
+					'', 
 					locale_number_format_zero_blank($myrow['cogs'],0),
 					'', 
 					'', 
@@ -4469,6 +4106,7 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 			$k = StartEvenOrOddRow($k);
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
+					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
@@ -4488,6 +4126,7 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 					'', 
 					'DIFFERENCE STOCK',
 					'IDR', 
+					'', 
 					locale_number_format_zero_blank($TotalValueAllOrders-$myrow['cogs'],0),
 					'', 
 					'', 

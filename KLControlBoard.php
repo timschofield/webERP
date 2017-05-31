@@ -52,13 +52,10 @@ if (!isset($_GET['Section'])){
 
 if ($KL_SystemAdmin){
 	// WARNINGS STILL NOT DOCUMENTED ON WIKI
-
-
-
-prnMsg("START OF PENDING FOR KL INTRANET ",'success');
+		prnMsg("START OF PENDING FOR KL INTRANET ",'success');
 		NotDiscountedItemsWithDiscount($RootPath, $db);
 		GoodsReceivedNotInvoicedControl(1000000, $periodnow, $db);
-prnMsg("END OF PENDING FOR KL INTRANET ",'success');
+		prnMsg("END OF PENDING FOR KL INTRANET ",'success');
 
 //	phpinfo();
 //	$NumberOfTestExecuted++;
@@ -924,26 +921,6 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 		POStatusControl("ARRIVING IN NEXT DAYS", 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
-
-
-/*		
-		PurchasingOrdersDeliveryControl("Delayed", "Delivery", 0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		PurchasingOrdersDeliveryControl("Coming Soon", "Delivery", 60, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		PurchasingOrdersDeliveryControl("Delayed", "Payment", 0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		PurchasingOrdersDeliveryControl("Coming Soon", "Payment", 30, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		PurchasingOrdersDeliveryControl("Delayed", "Shipment", 0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		PurchasingOrdersDeliveryControl("Coming Soon", "Shipment", 30, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		PurchasingOrdersDeliveryControl("Delayed", "Arrival", 0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		PurchasingOrdersDeliveryControl("Coming Soon", "Arrival", 30, $RootPath, $db);
-		$NumberOfTestExecuted++;
-*/
 	}
 
 
