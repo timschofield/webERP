@@ -205,7 +205,7 @@ if(!isset($_SESSION['PeriodProfitAccount']) OR $_SESSION['PeriodProfitAccount']=
 		$_SESSION['PeriodProfitAccount'] = $Result['confvalue'];
 	}
 }
-foreach($GLAccounts as $MyRow) {
+while($MyRow = DB_fetch_array($GLAccounts)) {
 	echo			'<option', ($MyRow['accountcode'] == $_SESSION['PeriodProfitAccount'] ? ' selected="selected"' : '' ), ' value="', $MyRow['accountcode'], '">', $MyRow['accountcode'], ' - ', $MyRow['accountname'], '</option>';
 }
 echo				'</select>',
@@ -225,7 +225,8 @@ if(!isset($_SESSION['RetainedEarningsAccount']) OR $_SESSION['RetainedEarningsAc
 		$_SESSION['RetainedEarningsAccount'] = $Result['retainedearnings'];
 	}
 }
-foreach($GLAccounts as $MyRow) {
+DB_data_seek($GLAccounts,0);
+while($MyRow = DB_fetch_array($GLAccounts)) {
 	echo			'<option', ($MyRow['accountcode'] == $_SESSION['RetainedEarningsAccount'] ? ' selected="selected"' : '' ), ' value="', $MyRow['accountcode'], '">', $MyRow['accountcode'], ' - ', $MyRow['accountname'], '</option>';
 }
 echo				'</select>',

@@ -319,7 +319,7 @@ or deletion of the records*/
 	$Result = DB_query($Sql, $ErrMsg);
 
 	$k = 1;// Row colour counter.
-	foreach($Result as $MyRow) {
+	while ($MyRow = DB_fech_array($Result)) {
 		if($k == 1) {
 			echo '<tr class="OddTableRows">';
 			$k = 0;
