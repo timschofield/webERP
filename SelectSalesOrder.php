@@ -2,12 +2,12 @@
 
 /* $Id$*/
 
-include('includes/session.php');
+include('includes/session.inc');
 $Title = _('Search Outstanding Sales Orders');
-/* webERP manual links before header.php */
+/* webERP manual links before header.inc */
 $ViewTopic= "SalesOrders";
 $BookMark = "SelectSalesOrder";
-include('includes/header.php');
+include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 if (isset($_POST['Reset'])) {
 	unset($_POST);
@@ -439,7 +439,7 @@ if (isset($OrderNumber) AND $OrderNumber!='') {
 			<b>' . _('The Order Number entered MUST be numeric') . '</b>
 			<br />';
 		unset ($OrderNumber);
-		include('includes/footer.php');
+		include('includes/footer.inc');
 		exit;
 	} else {
 		echo _('Order Number') . ' - ' . $OrderNumber;
@@ -643,7 +643,7 @@ if (isset($StockItemsResult)
 	//figure out the SQL required from the inputs available
 	if (isset($_POST['Quotations']) AND $_POST['Quotations']=='Orders_Only'){
 		$Quotations = 0;
-	} elseif(isset($_POST['Quotations']) AND $_POST['Quotations'] == 'Quotations_Only') {
+	} elseif(isset($_POST['Quotations']) AND $_POST['Quotations'] == 'Quotes_Only') {
 		$Quotations =1;
 	} elseif(isset($_POST['Quotations']) AND $_POST['Quotations'] == 'Overdue_Only') {
 		$Quotations = "0 AND itemdue<'" . Date('Y-m-d') . "'";
@@ -1028,7 +1028,7 @@ echo '</div>
 
 } //end StockID already selected
 
-include('includes/footer.php');
+include('includes/footer.inc');
 function GetSearchItems ($SQLConstraint='') {
 	global $db;
 	if ($_POST['Keywords'] AND $_POST['StockCode']) {
