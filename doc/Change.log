@@ -1,5 +1,6 @@
 webERP Change Log
 
+18/06/17 Tim (committed by RChacon): Improve jump to enter a GL receipt if 'Type'=='GL' in CustomerReceipt.php.
 18/06/17 RChacon: Add missing images and delete unused images in css/custom/.
 18/06/17 Exson: Fixed a typo in GLPostings.inc.
 18/06/17 Giankocr created a custom theme for webERP, Exson port part of it to webERP.
