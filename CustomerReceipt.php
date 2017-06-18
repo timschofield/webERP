@@ -608,6 +608,7 @@ if (isset($_POST['CommitBatch'])){
 	}
 	echo '">', _('Enter Receipts'), '</a></p>',
 		'</div>';
+
 	unset($_SESSION['ReceiptBatch' . $identifier]);
 	include('includes/footer.php');
 	exit;

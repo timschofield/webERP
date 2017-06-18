@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-17 19:13-0600\n"
-"PO-Revision-Date: 2017-06-17 19:13-0600\n"
+"PO-Revision-Date: 2017-06-17 20:23-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -3558,7 +3558,7 @@ msgstr "La Lista de costo de materiales no tiene elementos"
 
 #: BOMListing.php:121
 msgid "From Inventory Part Code"
-msgstr "Desde Código de Inventario"
+msgstr "Desde el código de inventario"
 
 #: BOMListing.php:122
 msgid ""
@@ -3568,7 +3568,7 @@ msgstr ""
 
 #: BOMListing.php:125
 msgid "To Inventory Part Code"
-msgstr "A Código de Inventario"
+msgstr "Hasta el código de inventario"
 
 #: BOMListing.php:126
 msgid ""
@@ -3586,7 +3586,7 @@ msgstr "Puede mostrarse un máximo de 15 niveles de Lista de Materiales"
 
 #: BOMs.php:43
 msgid "The component and the parent is the same"
-msgstr ""
+msgstr "El componente y el padre es el mismo"
 
 #: BOMs.php:59
 msgid ""
@@ -3695,7 +3695,7 @@ msgstr ""
 
 #: BOMs.php:339
 msgid "The component selected is the same with the parent, it is not allowed"
-msgstr ""
+msgstr "El componente seleccionado es el mismo que el padre, no está permitido"
 
 #: BOMs.php:366
 msgid "Could not update this BOM component because"
@@ -3882,7 +3882,7 @@ msgstr "No se encontraron Materias Primas."
 
 #: BOMs.php:692
 msgid "Print Date"
-msgstr ""
+msgstr "Fecha de impresión"
 
 #: BOMs.php:729
 msgid "Edit the details of the selected component in the fields below"
@@ -3914,11 +3914,11 @@ msgstr ""
 
 #: BOMs.php:797
 msgid "Sequence in BOM"
-msgstr ""
+msgstr "Secuencia en la lista de materiales"
 
 #: BOMs.php:798
 msgid "Number with decimal places is acceptable"
-msgstr ""
+msgstr "Número con decimales es aceptable"
 
 #: BOMs.php:830
 msgid "Work Centre Added"
@@ -3939,6 +3939,7 @@ msgstr "Administrar centros de trabajo"
 #: BOMs.php:859
 msgid "Enter the quantity of this item required for the parent item"
 msgstr ""
+"Introduzca la cantidad necesaria de este artículo para el elemento principal"
 
 #: BOMs.php:887
 msgid "Auto Issue this Component to Work Orders"
@@ -4050,11 +4051,11 @@ msgstr "Buscar Órdenes de Trabajo"
 
 #: CollectiveWorkOrderCost.php:33
 msgid "There are no work orders selected"
-msgstr ""
+msgstr "No hay órdenes de trabajo seleccionadas"
 
 #: CollectiveWorkOrderCost.php:48
 msgid "Failed to retrieve wo cost data"
-msgstr ""
+msgstr "No se pudo recuperar los datos del costo de la orden de trabajo"
 
 #: CollectiveWorkOrderCost.php:52 CollectiveWorkOrderCost.php:452
 #: DiscountCategories.php:222 GoodsReceived.php:121
@@ -4076,15 +4077,15 @@ msgstr "Artículo"
 
 #: CollectiveWorkOrderCost.php:54 WorkOrderCosting.php:133
 msgid "Date Issued"
-msgstr "Fecha de Emisión"
+msgstr "Fecha de emisión"
 
 #: CollectiveWorkOrderCost.php:55 WorkOrderCosting.php:134
 msgid "Issued Qty"
-msgstr "Cantidad Emitida"
+msgstr "Cantidad emitida"
 
 #: CollectiveWorkOrderCost.php:56 WorkOrderCosting.php:135
 msgid "Issued Cost"
-msgstr "Costos Emitidos"
+msgstr "Costo emitido"
 
 #: CollectiveWorkOrderCost.php:57 PDFFGLabel.php:202 PDFWOPrint.php:258
 #: PDFWOPrint.php:499 includes/DatabaseTranslations.php:49
@@ -4093,7 +4094,7 @@ msgstr "Orden de trabajo"
 
 #: CollectiveWorkOrderCost.php:84
 msgid "There are no data available"
-msgstr ""
+msgstr "No hay datos disponibles"
 
 #: CollectiveWorkOrderCost.php:89
 msgid "Select Other Work Orders"
@@ -4107,7 +4108,7 @@ msgstr "El número de orden de trabajo DEBE ser numérico"
 #: PDFWOPrint.php:480 SelectWorkOrder.php:44 api/api_xml-rpc.php:2573
 #: api/api_xml-rpc.php:2769 includes/PDFWOPageHeader.inc:10
 msgid "Work Order Number"
-msgstr "Número de Orden de Trabajo"
+msgstr "Número de orden de trabajo"
 
 #: CollectiveWorkOrderCost.php:191 SelectWorkOrder.php:110
 msgid "No items were returned by the SQL because"
@@ -4174,11 +4175,11 @@ msgstr "Fecha inicial desde"
 
 #: CollectiveWorkOrderCost.php:276
 msgid "Start Date To"
-msgstr "Fecha inicial al"
+msgstr "Fecha inicial hasta"
 
 #: CollectiveWorkOrderCost.php:282 SelectWorkOrder.php:175
 msgid "New Work Order"
-msgstr "Nueva Orden de Trabajo"
+msgstr "Nueva orden de trabajo"
 
 #: CollectiveWorkOrderCost.php:296 SelectWorkOrder.php:190
 msgid ""
@@ -4753,7 +4754,7 @@ msgstr "Cantidad despachada no debe ser más que el saldo del pedido"
 
 #: ConfirmDispatch_Invoice.php:252
 msgid "To dispatch quantity is"
-msgstr ""
+msgstr "Para enviar la cantidad es"
 
 #: ConfirmDispatch_Invoice.php:252
 msgid "And the order balance is "
@@ -9572,14 +9573,14 @@ msgstr "Vendedor"
 #: SalesTopCustomersInquiry.php:66 SalesTopItemsInquiry.php:67
 #: StockCategorySalesInquiry.php:58 SuppPriceList.php:309
 msgid "Date From"
-msgstr "Fecha Inicio"
+msgstr "Fecha desde"
 
 #: CustomerBalancesMovement.php:62 InternalStockRequestInquiry.php:165
 #: SalesByTypePeriodInquiry.php:74 SalesCategoryPeriodInquiry.php:68
 #: SalesTopCustomersInquiry.php:70 SalesTopItemsInquiry.php:71
 #: StockCategorySalesInquiry.php:62
 msgid "Date To"
-msgstr "Fecha Final"
+msgstr "Fecha hasta"
 
 #: CustomerBalancesMovement.php:66
 msgid "Create CSV"
@@ -10288,7 +10289,7 @@ msgstr "Número de lote"
 
 #: CustomerReceipt.php:289 CustomerReceipt.php:856
 msgid "Date Banked"
-msgstr "Fecha del Banco"
+msgstr "Fecha del banco"
 
 #: CustomerReceipt.php:291 CustomerReceipt.php:989
 msgid "GL Code"
@@ -33130,7 +33131,7 @@ msgstr ""
 
 #: StockLocTransferReceive.php:423
 msgid "To Location"
-msgstr ""
+msgstr "Hasta la ubicación"
 
 #: StockLocTransferReceive.php:424
 msgid "Stock code"
@@ -51609,7 +51610,7 @@ msgstr "Idioma"
 
 #: install/index.php:878 install/index.php:953
 msgid "Next Step"
-msgstr ""
+msgstr "Siguiente paso"
 
 #: install/index.php:884
 msgid ""
@@ -51634,11 +51635,11 @@ msgstr ""
 
 #: install/index.php:912
 msgid "Host Name"
-msgstr ""
+msgstr "Nombre del servidor"
 
 #: install/index.php:913
 msgid "Enter database host name"
-msgstr ""
+msgstr "Introduzca el nombre del servidor de la base de datos"
 
 #: install/index.php:914
 msgid "Commonly: localhost or 127.0.0.1"
@@ -51658,7 +51659,7 @@ msgstr "Prefijo de base de datos"
 
 #: install/index.php:923
 msgid "Useful with shared hosting"
-msgstr ""
+msgstr "Útil con servidor compartido"
 
 #: install/index.php:924
 msgid "Optional: in the form of prefix_"
@@ -51709,7 +51710,7 @@ msgstr ""
 
 #: install/index.php:1029
 msgid "Chart of Accounts"
-msgstr ""
+msgstr "Catálogo contable"
 
 #: install/index.php:1047
 msgid ""
@@ -52769,7 +52770,7 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:347
 msgid "This Year"
-msgstr ""
+msgstr "Este año"
 
 #: reportwriter/languages/en_US/reports.php:348
 msgid "This Year To Date"
