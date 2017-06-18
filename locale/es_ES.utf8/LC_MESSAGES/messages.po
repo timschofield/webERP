@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-05-14 17:52-0600\n"
-"PO-Revision-Date: 2017-04-28 10:37-0600\n"
+"PO-Revision-Date: 2017-06-17 19:05-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -882,13 +882,15 @@ msgstr "Teléfono"
 
 #: AddCustomerContacts.php:271
 msgid "Send Statement"
-msgstr ""
+msgstr "Enviar estado de cuenta"
 
 #: AddCustomerContacts.php:272
 msgid ""
 "This flag identifies the contact as one who should receive an email "
 "cusstomer statement"
 msgstr ""
+"Este indicador identifica al contacto como quien debe recibir un estado de "
+"cuenta del cliente por correo-e"
 
 #: AddCustomerNotes.php:6 AddCustomerNotes.php:51 SelectCustomer.php:807
 #: SelectCustomer.php:840
@@ -1043,7 +1045,7 @@ msgstr "Sitio web"
 
 #: AgedControlledInventory.php:8
 msgid "Aged Controlled Inventory"
-msgstr ""
+msgstr "Inventario controlado Antiguo"
 
 #: AgedControlledInventory.php:8
 msgid "as-of"
@@ -1066,7 +1068,7 @@ msgstr "Inventario"
 
 #: AgedControlledInventory.php:32
 msgid "The stock held could not be retrieved because"
-msgstr ""
+msgstr "No se pudo recuperar el inventario retenido porque"
 
 #: AgedControlledInventory.php:42 MRPReschedules.php:124 MRPShortages.php:260
 #: StockClone.php:53 Stocks.php:63 reportwriter/languages/en_US/reports.php:103
@@ -1142,7 +1144,7 @@ msgstr "Valor de inventario"
 
 #: AgedControlledInventory.php:48
 msgid "Days Old"
-msgstr ""
+msgstr "Días de antigüedad"
 
 #: AgedControlledInventory.php:91 ConfirmDispatch_Invoice.php:310
 #: ConfirmDispatch_Invoice.php:314 CounterReturns.php:676
@@ -2167,6 +2169,8 @@ msgid ""
 "Enter the item code that you wish to display the extended bill of material "
 "for"
 msgstr ""
+"Introduzca el código de artículo que desea mostrar la lista de materiales "
+"extendida para"
 
 #: BOMExtendedQty.php:267 BOMExtendedQty.php:334 BOMExtendedQty.php:335
 #: BOMExtendedQty.php:336 BOMExtendedQty.php:337 BOMIndented.php:318
@@ -2423,6 +2427,8 @@ msgstr "SQL no pudo obtener la Lista de Materiales Indentada porque"
 #: BOMIndented.php:257
 msgid "Enter the item code of parent item to list the bill of material for"
 msgstr ""
+"Introduzca el código del artículo del elemento principal para listar la "
+"lista de materiales para"
 
 #: BOMIndented.php:260
 msgid "Levels"
@@ -2473,6 +2479,8 @@ msgstr "Lista de Materiales Inversa a PDF"
 #: BOMIndentedReverse.php:243
 msgid "Enter the item code required to list the bill of material for"
 msgstr ""
+"Introduzca el código del artículo requerido para enumerar la lista de "
+"materiales para"
 
 #: BOMIndentedReverse.php:301
 msgid "Component:"
@@ -4472,6 +4480,10 @@ msgid ""
 "the total amount owed by customers to the business. Only balance sheet "
 "accounts are available for this selection."
 msgstr ""
+"Seleccione la cuenta contable que se usará para contabilizar el valor de "
+"moneda local de todas las transacciones de clientes. Esta cuenta siempre "
+"representará el monto total adeudado por los clientes al negocio. Solamente "
+"las cuentas de balance están disponibles para esta selección."
 
 #: CompanyPreferences.php:276
 msgid "Creditors Control GL Account"
@@ -4484,6 +4496,10 @@ msgid ""
 "the total amount owed by the business to suppliers. Only balance sheet "
 "accounts are available for this selection."
 msgstr ""
+"Seleccione la cuenta contable que se usará para contabilizar el valor de la "
+"moneda local de todas las transacciones de proveedores. Esta cuenta siempre "
+"representará el monto total adeudado por la empresa a los proveedores. "
+"Solamente las cuentas de balance están disponibles para esta selección."
 
 #: CompanyPreferences.php:293
 msgid "Payroll Net Pay Clearing GL Account"
@@ -4500,6 +4516,11 @@ msgid ""
 "will represent the value of goods received yet to be invoiced by suppliers. "
 "Only balance sheet accounts are available for this selection."
 msgstr ""
+"Seleccione la cuenta contable que se usará para contabilizar el costo de las "
+"mercancías recibidas hasta que se ingresen las facturas de los proveedores "
+"para las mercancías. Esta cuenta representará el valor de las mercancías "
+"recibidas aún por facturar por los proveedores. Solamente las cuentas de "
+"balance están disponibles para esta selección."
 
 #: CompanyPreferences.php:326
 msgid "Retained Earning Clearing GL Account"
@@ -4511,6 +4532,10 @@ msgid ""
 "accounts to that represents the accumulated retained profits of the "
 "business. Only balance sheet accounts are available for this selection."
 msgstr ""
+"Seleccione la cuenta contable que se usará para compensar las cuentas de "
+"pérdidas y ganancias a la que representa las utilidades retenidas del "
+"negocio. Solamente las cuentas del estado de situación están disponibles "
+"para esta selección."
 
 #: CompanyPreferences.php:343
 msgid "Freight Re-charged GL Account"
@@ -4529,6 +4554,12 @@ msgid ""
 "account. Only profit and loss general ledger accounts are available for this "
 "selection."
 msgstr ""
+"Seleccione la cuenta contable que se usará para contabilizar las diferencias "
+"de tipo de cambio de las cuentas por cobrar a -cuando el tipo de cambio de "
+"las ventas es diferente al tipo de cambio de los ingresos de divisas de los "
+"clientes, el tipo de cambio se calcula automáticamente y se contabiliza en "
+"esta cuenta contable. Solamente cuentas del estado de resultados están "
+"disponibles para esta selección."
 
 #: CompanyPreferences.php:384
 msgid "Purchases Exchange Variances GL Account"
@@ -4543,6 +4574,12 @@ msgid ""
 "this general ledger account. Only profit and loss general ledger accounts "
 "are available for this selection."
 msgstr ""
+"Seleccione la cuenta contable que se usará para contabilizar las diferencias "
+"de cambio en las transacciones de cuentas por pagar a. Las facturas de "
+"proveedores introducidas en una moneda y pagadas en la divisa del proveedor "
+"a un tipo de cambio diferente tienen las diferencias calculadas "
+"automáticamente y contabilizadas en esta cuenta contable. Solamente cuentas "
+"del estado de resultados están disponibles para esta selección."
 
 #: CompanyPreferences.php:401
 msgid "Payment Discount GL Account"
@@ -4554,6 +4591,10 @@ msgid ""
 "payment discounts given to customers at the time of entering a receipt. Only "
 "profit and loss general ledger accounts are available for this selection."
 msgstr ""
+"Seleccione la cuenta contable que se usará para contabilizar el valor de los "
+"descuentos de pago otorgados a los clientes en el momento de introducir un "
+"recibo. Solamente cuentas del estado de resultados están disponibles para "
+"esta selección."
 
 #: CompanyPreferences.php:418
 msgid "Create GL entries for accounts receivable transactions"
@@ -6458,7 +6499,7 @@ msgstr "Volver a la Selección del Contrato"
 #: Contracts.php:126 FixedAssetItems.php:40 Manufacturers.php:41
 #: Manufacturers.php:135 SalesCategories.php:47 StockClone.php:81 Stocks.php:76
 msgid "Only "
-msgstr ""
+msgstr "Solamente"
 
 #: Contracts.php:129 FixedAssetItems.php:43 Manufacturers.php:44
 #: Manufacturers.php:138 SalesCategories.php:50 Stocks.php:79
@@ -6867,6 +6908,9 @@ msgid ""
 "Enter the contract reference. This reference will be used as the item code "
 "so no more than 20 alpha-numeric characters or underscore"
 msgstr ""
+"Introduzca la referencia del contrato. Esta referencia se usará como el "
+"código de artículo por lo que no más de 20 caracteres alfanuméricos o "
+"subrayado"
 
 #: Contracts.php:859 InventoryQuantities.php:237 PricesByCost.php:245
 #: ReorderLevel.php:286 ReorderLevelLocation.php:179
@@ -6930,7 +6974,7 @@ msgstr "Referencia del cliente"
 
 #: Contracts.php:943
 msgid "Enter the reference that the customer uses for this contract"
-msgstr ""
+msgstr "Introduzca la referencia que el cliente usa para este contrato"
 
 #: Contracts.php:955 Currencies.php:311 Currencies.php:500 PO_Header.php:1143
 #: PO_OrderDetails.php:114 SuppPaymentRun.php:297 SupplierCredit.php:291
@@ -6943,6 +6987,8 @@ msgid ""
 "The exchange rate between the customer's currency and the functional "
 "currency of the business must be entered"
 msgstr ""
+"Se debe introducir el tipo de cambio entre la moneda del cliente y la moneda "
+"funcional de la empresa"
 
 #: Contracts.php:963
 msgid "Contract Status"
@@ -8473,10 +8519,12 @@ msgid ""
 "Cannot delete this currency because there are bank accounts that use this "
 "currency"
 msgstr ""
+"No se puede eliminar esta moneda porque hay cuentas bancarias que usan esta "
+"moneda"
 
 #: Currencies.php:273
 msgid "bank accounts that refer to this currency"
-msgstr ""
+msgstr "cuentas bancarias que se refieren a esta moneda"
 
 #: Currencies.php:278
 msgid "The currency definition record has been deleted"
@@ -16746,7 +16794,7 @@ msgstr "Crear otra Requisición"
 
 #: InternalStockRequest.php:140
 msgid "There are no items added to this request"
-msgstr ""
+msgstr "No hay elementos añadidos a esta solicitud"
 
 #: InternalStockRequest.php:143 StockAdjustments.php:123
 #: StockLocTransfer.php:245 StockLocTransferReceive.php:524
@@ -16996,11 +17044,11 @@ msgstr "Se usó el siguiente SQL para agregar las entradas contables"
 
 #: InternalStockRequestFulfill.php:173 InternalStockRequestFulfill.php:192
 msgid "An internal stock request for"
-msgstr ""
+msgstr "Una solicitud interna de inventario para"
 
 #: InternalStockRequestFulfill.php:173 InternalStockRequestFulfill.php:192
 msgid "has been fulfilled from location"
-msgstr ""
+msgstr "se ha cumplido desde la ubicación"
 
 #: InternalStockRequestFulfill.php:173 InternalStockRequestFulfill.php:192
 #: StockAdjustments.php:371 StockLocTransferReceive.php:393
@@ -17019,7 +17067,7 @@ msgstr "en"
 
 #: InternalStockRequestFulfill.php:178
 msgid "Internal Stock Request Fulfillment for"
-msgstr ""
+msgstr "Cumplimiento de solicitud interna de inventario para"
 
 #: InternalStockRequestFulfill.php:192
 msgid ""
@@ -17057,7 +17105,7 @@ msgstr "Despachado"
 
 #: InternalStockRequestInquiry.php:4
 msgid "Internal Stock Request Inquiry"
-msgstr ""
+msgstr "Consulta de solicitud interna de inventario"
 
 #: InternalStockRequestInquiry.php:35 ReorderLevel.php:206
 #: SelectSalesOrder.php:482 StockDispatch.php:349 StockLocMovements.php:19
@@ -17069,6 +17117,8 @@ msgstr "Desde la ubicación de inventario"
 #: InternalStockRequestInquiry.php:96
 msgid "You have no authority to do the internal request inquiry"
 msgstr ""
+"No tiene autorización para realizar la consulta de solicitud interna de "
+"inventario"
 
 #: InternalStockRequestInquiry.php:105
 msgid "Authorisation status"
@@ -17099,11 +17149,11 @@ msgstr ""
 
 #: InternalStockRequestInquiry.php:268
 msgid "Total Applied"
-msgstr ""
+msgstr "Total aplicado"
 
 #: InternalStockRequestInquiry.php:401 InternalStockRequestInquiry.php:415
 msgid "Locations"
-msgstr ""
+msgstr "Ubicaciones"
 
 #: InternalStockRequestInquiry.php:403 InternalStockRequestInquiry.php:417
 msgid "Authorization"
@@ -28826,7 +28876,7 @@ msgstr ""
 
 #: SelectCustomer.php:202
 msgid "Email Customer Statement"
-msgstr ""
+msgstr "Estado de cuenta del cliente por correo-e"
 
 #: SelectCustomer.php:203
 msgid "Order Inquiries"
@@ -28949,7 +28999,7 @@ msgstr "Haga clic para ver el Resultado de la Búsqueda csv"
 
 #: SelectCustomer.php:488
 msgid "You must first setup the geocode parameters"
-msgstr ""
+msgstr "Debe configurar primero los parámetros de geocodificación"
 
 #: SelectCustomer.php:557
 msgid "GeoCode has been updated for CustomerID"
@@ -29075,11 +29125,11 @@ msgstr "Seleccionar Artículos del Pedido"
 
 #: SelectOrderItems.php:59
 msgid "There are no items that can be imported"
-msgstr ""
+msgstr "No hay elementos que se puedan importar"
 
 #: SelectOrderItems.php:61
 msgid "rows have been added to the order"
-msgstr ""
+msgstr "se han añadido filas a la orden"
 
 #: SelectOrderItems.php:175
 msgid ""
@@ -29340,19 +29390,20 @@ msgstr "Buscar Artículos del Pedido"
 
 #: SelectOrderItems.php:1643
 msgid "Raw material flag"
-msgstr ""
+msgstr "Marcador para materia prima"
 
 #: SelectOrderItems.php:1643
 msgid "If checked, Raw material will be shown on search result"
 msgstr ""
+"Si se selecciona, se mostrará la materia prima en el resultado de búsqueda"
 
 #: SelectOrderItems.php:1644
 msgid "Customer Item flag"
-msgstr ""
+msgstr "Marcador para artículo de cliente"
 
 #: SelectOrderItems.php:1644
 msgid "If checked, only items for this customer will show"
-msgstr ""
+msgstr "Si está marcada, solo se mostrarán los artículos para este cliente"
 
 #: SelectOrderItems.php:1653
 msgid "Fixed Asset Disposal"
@@ -29364,15 +29415,16 @@ msgstr ""
 
 #: SelectOrderItems.php:1659
 msgid "Upload items from csv file"
-msgstr ""
+msgstr "Cargar artículos desde un archivo CSV"
 
 #: SelectOrderItems.php:1660
 msgid "Upload File"
-msgstr ""
+msgstr "Cargar archivo"
 
 #: SelectOrderItems.php:1667
 msgid "The csv file should have exactly 2 columns, part code and quantity."
 msgstr ""
+"El archivo CSV debe tener exactamente 2 columnas: código de pieza y cantidad."
 
 #: SelectOrderItems.php:1785
 msgid "Use this screen for the "
@@ -29384,7 +29436,7 @@ msgstr "de los productos que hay que ordenar"
 
 #: SelectOrderItems.php:1802
 msgid "Enter the customer purchase order reference"
-msgstr ""
+msgstr "Introduzca la referencia de la orden de compra del cliente"
 
 #: SelectOrderItems.php:1804
 msgid "Enter the item code ordered"
@@ -29438,7 +29490,7 @@ msgstr "Artículos de Inventario"
 
 #: SelectProduct.php:99
 msgid "Item Type"
-msgstr ""
+msgstr "Tipo de artículo"
 
 #: SelectProduct.php:103
 msgid "Assembly Item"
@@ -29837,11 +29889,11 @@ msgstr ""
 
 #: SelectSalesOrder.php:541
 msgid "Due Date From"
-msgstr ""
+msgstr "Fecha de vencimiento desde"
 
 #: SelectSalesOrder.php:543
 msgid "Due Date To"
-msgstr ""
+msgstr "Fecha de vencimiento hasta"
 
 #: SelectSalesOrder.php:547
 msgid "Add Sales Order"
@@ -29849,11 +29901,11 @@ msgstr "Añadir orden de venta"
 
 #: SelectSalesOrder.php:552
 msgid "Order Date From"
-msgstr ""
+msgstr "Fecha de pedido desde"
 
 #: SelectSalesOrder.php:554
 msgid "Order Date To"
-msgstr ""
+msgstr "Fecha de pedido hasta"
 
 #: SelectSalesOrder.php:852
 msgid "Dispatch Note"
@@ -36065,15 +36117,15 @@ msgstr "La entrega deberá realizarse antes de"
 #: SupplierTenderCreate.php:372 SupplierTenderCreate.php:376
 #: SupplierTenderCreate.php:380
 msgid "The address should not be over 40 characters"
-msgstr ""
+msgstr "No más de 40 caracteres"
 
 #: SupplierTenderCreate.php:384 SupplierTenderCreate.php:388
 msgid "The characters should not be over 20 characters"
-msgstr ""
+msgstr "No más de 20 caracteres"
 
 #: SupplierTenderCreate.php:392
 msgid "The characters should not be over 15 characters"
-msgstr ""
+msgstr "No más de 15 caracteres"
 
 #: SupplierTenderCreate.php:396
 msgid ""
@@ -38600,7 +38652,7 @@ msgstr ""
 
 #: TaxGroups.php:242
 msgid "4 to 40 legal characters"
-msgstr ""
+msgstr "4 a 40 caracteres legales"
 
 #: TaxGroups.php:243
 msgid "Enter Group"
@@ -38767,7 +38819,7 @@ msgstr ""
 
 #: TestPlanResults.php:277
 msgid "Copy Results"
-msgstr ""
+msgstr "Copiar resultados"
 
 #: TestPlanResults.php:300
 msgid "Copy to This Sample"
@@ -38803,7 +38855,7 @@ msgstr ""
 
 #: TestPlanResults.php:474
 msgid "Test Results have been copied to"
-msgstr ""
+msgstr "Los resultados de las pruebas fueron copiados a"
 
 #: TestPlanResults.php:474
 msgid " from "
@@ -38879,7 +38931,7 @@ msgstr "¿Está seguro que desea suprimir esta prueba de esta muestra?"
 
 #: TestPlanResults.php:973
 msgid "Copy These Results"
-msgstr ""
+msgstr "Copiar estos resultados"
 
 #: TestPlanResults.php:976
 msgid "Print COA"
@@ -51794,7 +51846,7 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:20
 msgid " was saved and copied to report: "
-msgstr ""
+msgstr "fue guardado y copiado al informe:"
 
 #: reportwriter/languages/en_US/reports.php:21
 msgid "The report name has been updated!"
@@ -51818,27 +51870,29 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:26
 msgid "Press OK to delete this report."
-msgstr ""
+msgstr "Pulse Aceptar para eliminar este informe."
 
 #: reportwriter/languages/en_US/reports.php:27
 msgid "Press OK to overwrite this report."
-msgstr ""
+msgstr "Pulse Aceptar para sobrescribir este informe."
 
 #: reportwriter/languages/en_US/reports.php:29
 msgid "There are no fields to show!"
-msgstr ""
+msgstr "¡No hay campos para mostrar!"
 
 #: reportwriter/languages/en_US/reports.php:30
 msgid "Enter a name for this form."
-msgstr ""
+msgstr "Introduzca un nombre para este formulario."
 
 #: reportwriter/languages/en_US/reports.php:31
 msgid "Enter a name for this report."
-msgstr ""
+msgstr "Introduzca un nombre para este informe."
 
 #: reportwriter/languages/en_US/reports.php:32
 msgid "(Leave blank to use default report name from import file)"
 msgstr ""
+"(Deje en blanco para usar el nombre de informe predeterminado del archivo de "
+"importación)"
 
 #: reportwriter/languages/en_US/reports.php:33
 msgid "(maximum 30 characters)"
@@ -52396,7 +52450,7 @@ msgstr "Identificación de informe/Formulario"
 
 #: reportwriter/languages/en_US/reports.php:226
 msgid "Report Import"
-msgstr ""
+msgstr "Importar informe"
 
 #: reportwriter/languages/en_US/reports.php:227
 msgid "Sorting Information"
@@ -52416,7 +52470,7 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:231
 msgid "Text to Display"
-msgstr ""
+msgstr "Texto a mostrar"
 
 #: reportwriter/languages/en_US/reports.php:232
 msgid "Text Processing"
@@ -52436,7 +52490,7 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:248
 msgid "Financial Reports"
-msgstr ""
+msgstr "Informes financieros"
 
 #: reportwriter/languages/en_US/reports.php:249
 msgid "Miscellaneous"
@@ -52448,7 +52502,7 @@ msgstr "Cheques bancarios"
 
 #: reportwriter/languages/en_US/reports.php:253
 msgid "Bank Deposit Slips"
-msgstr ""
+msgstr "Colillas de depósito bancario"
 
 #: reportwriter/languages/en_US/reports.php:254
 msgid "Collection Letters"
@@ -52460,11 +52514,11 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:256
 msgid "Customer Quotes"
-msgstr ""
+msgstr "Cotizaciones de clientes"
 
 #: reportwriter/languages/en_US/reports.php:258
 msgid "Invoices and Packing Slips"
-msgstr ""
+msgstr "Facturas y colillas de embalaje"
 
 #: reportwriter/languages/en_US/reports.php:261
 msgid "Sales Receipts"
@@ -52496,7 +52550,7 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:271
 msgid "Image - JPG or PNG"
-msgstr ""
+msgstr "Imagen - JPG o PNG"
 
 #: reportwriter/languages/en_US/reports.php:272
 msgid "Rectangle"
@@ -52524,7 +52578,7 @@ msgstr "Mayúsculas"
 
 #: reportwriter/languages/en_US/reports.php:278
 msgid "Lowercase"
-msgstr ""
+msgstr "Minúscula"
 
 #: reportwriter/languages/en_US/reports.php:279
 msgid "Negate"
@@ -52536,11 +52590,11 @@ msgstr "redondear (2 decimales)"
 
 #: reportwriter/languages/en_US/reports.php:281
 msgid "Convert Dollars"
-msgstr ""
+msgstr "Convertir dólares"
 
 #: reportwriter/languages/en_US/reports.php:282
 msgid "Convert Euros"
-msgstr ""
+msgstr "Convertir euros"
 
 #: reportwriter/languages/en_US/reports.php:283
 msgid "Single Space"
@@ -53027,7 +53081,7 @@ msgstr ""
 
 #: ../webSHOP/Checkout.php:584 ../webSHOP/Checkout.php:598
 msgid "for your reference"
-msgstr ""
+msgstr "para su referencia"
 
 #: ../webSHOP/Checkout.php:591
 msgid ""
@@ -53213,11 +53267,11 @@ msgstr "Por lo menos 3 caracteres"
 
 #: ../webSHOP/CreditCardPayPalPro.php:275
 msgid "First Name"
-msgstr ""
+msgstr "Nombre"
 
 #: ../webSHOP/CreditCardPayPalPro.php:276
 msgid "The first name of the credit card holder"
-msgstr ""
+msgstr "El nombre del titular de la tarjeta de crédito"
 
 #: ../webSHOP/CreditCardPayPalPro.php:277
 msgid "Last Name"
@@ -53225,15 +53279,15 @@ msgstr "Apellido"
 
 #: ../webSHOP/CreditCardPayPalPro.php:278
 msgid "The last name of the credit card holder"
-msgstr ""
+msgstr "El apellido del titular de la tarjeta de crédito"
 
 #: ../webSHOP/CreditCardPayPalPro.php:282
 msgid "The street of the card holder"
-msgstr ""
+msgstr "La calle del titular de la tarjeta de crédito"
 
 #: ../webSHOP/CreditCardPayPalPro.php:284
 msgid "The city of the card holder"
-msgstr ""
+msgstr "La ciudad del titular de la tarjeta de crédito"
 
 #: ../webSHOP/CreditCardPayPalPro.php:287
 msgid "State"
@@ -53253,11 +53307,11 @@ msgstr ""
 
 #: ../webSHOP/CreditCardPayPalPro.php:295
 msgid "The Country of the card holder"
-msgstr ""
+msgstr "El país del titular de la tarjeta de crédito"
 
 #: ../webSHOP/ItemDetails.php:98
 msgid "incl Tax"
-msgstr ""
+msgstr "impuesto incluido"
 
 #: ../webSHOP/ItemDetails.php:102 ../webSHOP/ItemDetails.php:111
 #: ../webSHOP/includes/Functions.php:43 ../webSHOP/includes/Functions.php:52
@@ -53619,7 +53673,7 @@ msgstr "Haga clic para más información"
 
 #: ../webSHOP/includes/Functions.php:50
 msgid "Stock QTY"
-msgstr ""
+msgstr "Cantidad de inventario"
 
 #: ../webSHOP/includes/Functions.php:278
 msgid "Sending the PayPal Request"
