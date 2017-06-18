@@ -63,11 +63,11 @@ if(DB_num_rows($ChartDetailsNotSetUpResult)>0){
 		AND chartdetails.accountcode IS NULL ORDER BY accountcode,periodno";
 	$ErrMsg = _('Failed to retrieve new account code and periods');
 	$NewPeriodResult = DB_query($sql,$ErrMsg);
-	if (DB_num_rows($result)>0){
+	if (DB_num_rows($NewPeriodResult)>0){
 		$NewPeriods = array();
 		while ($NewPeriodsRow = DB_fetch_array($NewPeriodResult)) {
 			if (!isset($NewPeriods[$NewPeriodsRow['accountcode']])) {
-				$NewPeriods[$NewPeriodsRow['accountcode']] = $NewPeriodsRow['period'];
+				$NewPeriods[$NewPeriodsRow['accountcode']] = $NewPeriodsRow['periods'];
 			}
 		}
 		/*Now insert the chartdetails records that do not already exist */
