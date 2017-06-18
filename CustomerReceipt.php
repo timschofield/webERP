@@ -600,9 +600,14 @@ if (isset($_POST['CommitBatch'])){
 	echo '<div class="centre noprint">',
 		'<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . '<a href="' . $RootPath . '/PDFBankingSummary.php?BatchNo=' . $_SESSION['ReceiptBatch' . $identifier]->BatchNo . '">' . _('Print PDF Batch Summary') . '</a></p>';
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/allocation.png" title="' . _('Allocate') . '" alt="" />' . ' ' . '<a href="' . $RootPath . '/CustomerAllocations.php">' . _('Allocate Receipts') . '</a></p>';
-	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/transactions.png" title="', _('Enter Receipts'), '" /> ', '<a href="', $RootPath, '/CustomerReceipt.php?NewReceipt=Yes&Type=Customer">', _('Enter Receipts'), '</a></p>',
+	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/transactions.png" title="', _('Enter Receipts'), '" /> ', '<a href="', $RootPath, '/CustomerReceipt.php?NewReceipt=Yes&Type=';
+	if ($_GET['Type']=='GL') {
+		echo 'GL';
+	} else {
+		echo 'Customer';
+	}
+	echo '">', _('Enter Receipts'), '</a></p>',
 		'</div>';
-
 	unset($_SESSION['ReceiptBatch' . $identifier]);
 	include('includes/footer.php');
 	exit;
