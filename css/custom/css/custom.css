@@ -1,0 +1,45 @@
+﻿
+
+
+/*** HEADER - QUICK MENU ***/
+
+#QuickMenuDiv{
+	float:right; /* to the right side  */
+	z-index: 10;
+	margin-right: 1.05%;
+}
+#QuickMenuDiv ul{
+	list-style:none; /* hide the bullets */
+	margin:0;
+	padding:0;
+
+	-webkit-border-radius:  0 0 6px 6px;
+    -moz-border-radius:     0 0 6px 6px;
+    border-radius:          0 0 6px 6px;
+
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3')";
+	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3');
+}
+#QuickMenuDiv li{
+    display:inline-block; /* items are inline */
+    height:38px;
+}
+/* make sidebar nav vertical */
+@media (min-width: 1098px) {
+  .sidebar-nav .navbar .navbar-collapse {
+    padding: 0;
+    max-height: none;
+  }
+  .sidebar-nav .navbar ul {
+    float: none;
+    display: block;
+  }
+  .sidebar-nav .navbar li {
+    float: none;
+    display: block;
+  }
+  .sidebar-nav .navbar li a {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+}

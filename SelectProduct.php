@@ -425,19 +425,19 @@ if ($Its_A_Kitset_Assembly_Or_Dummy == false) {
 			$StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
 								'&amp;StockID='.urlencode($StockID).
 								'&amp;text='.
-								'&amp;width=100'.
-								'&amp;height=100'.
+								'&amp;width=200'.
+								'&amp;height=200'.
 								'" alt="" />';
 		} else {
 			$StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
 								'&amp;StockID='.urlencode($StockID).
 								'&amp;text='. $StockID .
-								'&amp;width=100'.
-								'&amp;height=100'.
+								'&amp;width=200'.
+								'&amp;height=200'.
 								'" alt="" />';
 		}
 	} else if (file_exists ($imagefile)) {
-		$StockImgLink = '<img src="' . $imagefile . '" height="100" width="100" />';
+		$StockImgLink = '<img src="' . $imagefile . '" height="200" width="200" />';
 	} else {
 		$StockImgLink = _('No Image');
 	}
@@ -828,6 +828,7 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 		$TableHeader = '<tr>
 							<th>' . _('Stock Status') . '</th>
 							<th class="ascending">' . _('Code') . '</th>
+                            				<th>'. _('image').'</th>
 							<th class="ascending">' . _('Description') . '</th>
 							<th>' . _('Total Qty On Hand') . '</th>
 							<th>' . _('Units') . '</th>
@@ -857,9 +858,21 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 			} else {
 				$ItemStatus ='';
 			}
+            $imagefile = reset((glob($_SESSION['part_pics_dir'] . '/' . $StockID . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
+            if (!empty($imagefile)){
+                $StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
+								'&amp;StockID='.urlencode($myrow['stockid']).
+								'&amp;text='. $myrow['stockid'] .
+								'&amp;width=100'.
+								'&amp;height=100'.
+								'" alt="" />';
+            }else{
+                $StockImgLink = '<p>'._('No Image').'</p>';
+            }
 
 			echo '<td>' . $ItemStatus . '</td>
 				<td><input type="submit" name="Select" value="' . $myrow['stockid'] . '" /></td>
+				<td>'.$StockImgLink.'</td>
 				<td title="'. $myrow['longdescription'] . '">' . $myrow['description'] . '</td>
 				<td class="number">' . $qoh . '</td>
 				<td>' . $myrow['units'] . '</td>

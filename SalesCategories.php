@@ -36,7 +36,6 @@ $SupportedImgExt = array('png','jpg','jpeg');
 
 if (isset($SelectedCategory) AND isset($_FILES['CategoryPicture']) AND $_FILES['CategoryPicture']['name'] !='') {
 	$ImgExt = pathinfo($_FILES['CategoryPicture']['name'], PATHINFO_EXTENSION);
-
 	$result    = $_FILES['CategoryPicture']['error'];
  	$UploadTheFile = 'Yes'; //Assume all is well to start off with
  	// Stock is always capatalized so there is no confusion since "cat_" is lowercase
@@ -157,11 +156,9 @@ if (isset($_POST['submit'])  AND isset($EditName) ) { // Creating or updating a 
 			$result = DB_query($sql);
 			prnMsg(_('The sales category') . ' ' . $SelectedCategory . ' ' . _('has been deleted') .
 				' !','success');
-
 			//if( file_exists($_SESSION['part_pics_dir'] . '/SALESCAT_' . $SelectedCategory . '.jpg') ) {
 			//	unlink($_SESSION['part_pics_dir'] . '/SALESCAT_' . $SelectedCategory . '.jpg');
 			//}
-
 			foreach ($SupportedImgExt as $ext) {
 				$file = $_SESSION['part_pics_dir'] . '/SALESCAT_' . $SelectedCategory . '.' . $ext;
 				if (file_exists ($file) ) {
@@ -282,7 +279,6 @@ if (DB_num_rows($result) == 0) {
 			echo '<tr class="OddTableRows">';
 			$k=1;
 		}
-
 		$SupportedImgExt = array('png','jpg','jpeg');
 		$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/SALESCAT_' . $myrow['salescatid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
 		if( extension_loaded('gd') && function_exists('gd_info') && file_exists($imagefile) ) {
@@ -297,7 +293,6 @@ if (DB_num_rows($result) == 0) {
 		} else {
 			$CatImgLink = _('No Image');
 		}
-
 		if ($myrow['active'] == 1){
 			$Active = _('Yes');
 		}else{
@@ -394,7 +389,6 @@ if (isset ($_POST['Active']) && $_POST['Active'] == '1') {
 }
 echo '</select></td>
 	</tr>';
-
 // Image upload only if we have a selected category
 if (isset($SelectedCategory)) {
 	echo '<tr>
@@ -468,7 +462,6 @@ if($result AND DB_num_rows($result)) {
 	echo '<input type="hidden" name="ParentCategory" value="' .
 		(isset($_POST['ParentCategory'])?($_POST['ParentCategory']):('0')) . '" /> ';
 
-
 	echo '<table class="selection">
 		<tr>
 			<th colspan="2">' . _('Add Inventory to this category') . '</th>
@@ -476,7 +469,6 @@ if($result AND DB_num_rows($result)) {
 		<tr>
 			<td>' . _('Select Item') . ':</td>
 			<td><select name="AddStockID">';
-
 	while( $myrow = DB_fetch_array($result) ) {
 		if ( !array_keys( $StockIDs, $myrow['stockid']  ) ) {
 			// Only if the StockID is not already selected

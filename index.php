@@ -59,7 +59,22 @@ if (isset($_GET['Application'])){ /*This is sent by this page (to itself) when t
 }
 
 //=== MainMenuDiv =======================================================================
-echo '<div id="MainMenuDiv"><ul>'; //===HJ===
+echo '<div class="row well sidebar-nav ">';
+echo '<div class="col-md-3">';
+
+
+
+
+
+
+
+
+
+
+
+
+echo '<div id="MainMenuDiv" class= "collapse navbar-collapse navbar-bootsnipp-collapse sidebar-navbar-collapse ">';
+echo '<ul class="nav">'; //===HJ===
 $i=0;
 while ($i < count($ModuleLink)){
 	// This determines if the user has display access to the module see config.php and header.php
@@ -80,14 +95,14 @@ while ($i < count($ModuleLink)){
 	}
 	$i++;
 }
-echo '</ul></div>'; // MainMenuDiv ===HJ===
+echo '</ul></div></div>'; // MainMenuDiv ===HJ===
 
 
 //=== SubMenuDiv (wrapper) ==============================================================================
 echo '<div id="SubMenuDiv">'; //===HJ===
 
 
-echo '<div id="TransactionsDiv"><ul>'; //=== TransactionsDiv ===
+echo '<div id="TransactionsDiv" class="col-md-3"><ul class="list-group-item">'; //=== TransactionsDiv ===
 
 echo '<li class="menu_group_headers">'; //=== SubMenuHeader ===
 if ($_SESSION['Module']=='system') {
@@ -114,7 +129,7 @@ foreach ($MenuItems[$_SESSION['Module']]['Transactions']['Caption'] as $Caption)
 echo '</ul></div>'; //=== TransactionsDiv ===
 
 
-echo '<div id="InquiriesDiv"><ul>'; //=== InquiriesDiv ===
+echo '<div id="InquiriesDiv" class="col-md-3"><ul class="list-group-item">'; //=== InquiriesDiv ===
 
 echo '<li class="menu_group_headers">';
 if ($_SESSION['Module']=='system') {
@@ -142,7 +157,7 @@ echo GetRptLinks($_SESSION['Module']); //=== GetRptLinks() must be modified!!! =
 echo '</ul></div>'; //=== InquiriesDiv ===
 
 
-echo '<div id="MaintenanceDiv"><ul>'; //=== MaintenanceDive ===
+echo '<div id="MaintenanceDiv" class="col-md-3"><ul class="list-group-item">'; //=== MaintenanceDive ===
 
 echo '<li class="menu_group_headers">';
 if ($_SESSION['Module']=='system') {
@@ -166,6 +181,7 @@ foreach ($MenuItems[$_SESSION['Module']]['Maintenance']['Caption'] as $Caption) 
 	$i++;
 }
 echo '</ul></div>'; // MaintenanceDive ===HJ===
+echo '</div>';
 echo '</div>'; // SubMenuDiv ===HJ===
 
 include('includes/footer.php');
