@@ -1,5 +1,6 @@
 webERP Change Log
 
+18/06/17 RChacon: Rename from css/custom/ to from css/WEBootstrap/.
 18/06/17 RChacon: Standardise icon size to 36x36 px in css/custom/ (WEBootstrap).
 18/06/17 RChacon: Delete unused images in css/xenos/.
 18/06/17 Tim (committed by RChacon): Improve jump to enter a GL receipt if 'Type'=='GL' in CustomerReceipt.php.
