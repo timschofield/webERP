@@ -30,12 +30,16 @@ Class Tender {
 	var $contact;
 	var $Suppliers;
 
-	function tender(){
+	function __construct(){
 	/*Constructor function initialises a new purchase tender object */
 		$this->LineItems = array();
 		$this->Suppliers = array();
 		$this->LinesOnTender=0;
 		$this->SuppliersOnTender=0;
+	}
+
+	function Tender(){
+		self::__construct();
 	}
 
 	function EmailSuppliers() {
@@ -235,7 +239,7 @@ Class LineDetails {
 	var $Deleted;
 	var $ExpiryDate;
 
-	function LineDetails ($LineNo,
+	function __construct ($LineNo,
 							$StockItem,
 							$Qty,
 							$ItemDescr,
@@ -253,6 +257,23 @@ Class LineDetails {
 		$this->ExpiryDate = $ExpiryDate;
 		$this->Deleted = False;
 	}
+
+	function LineDetails($LineNo,
+							$StockItem,
+							$Qty,
+							$ItemDescr,
+							$UOM,
+							$DecimalPlaces,
+							$ExpiryDate) {
+		self::__construct($LineNo,
+							$StockItem,
+							$Qty,
+							$ItemDescr,
+							$UOM,
+							$DecimalPlaces,
+							$ExpiryDate);
+	}
+
 }
 
 Class Supplier {
@@ -262,7 +283,7 @@ Class Supplier {
 	var $EmailAddress;
 	var $Responded;
 
-	function Supplier ($SupplierCode,
+	function __construct ($SupplierCode,
 						$SupplierName,
 						$EmailAddress) {
 		$this->SupplierCode = $SupplierCode;
@@ -270,6 +291,16 @@ Class Supplier {
 		$this->EmailAddress = $EmailAddress;
 		$this->Responded = 0;
 	}
+
+	function Supplier ($SupplierCode,
+						$SupplierName,
+						$EmailAddress) {
+		self::__construct($SupplierCode,
+						$SupplierName,
+						$EmailAddress);
+	}
+
+
 }
 
 ?>

@@ -28,12 +28,16 @@ Class SpecialOrder {
 	var $Status;
 	var $AllowPrintPO;
 
-	function SpecialOrder(){
+	function __construct(){
 	/*Constructor function initialises a new special order object */
 		$this->LineItems = array();
 		$this->total=0;
 		$this->LinesOnOrder=0;
 		$this->AllowPrintPO=0;
+	}
+
+	function SpecialOrder() {
+		self::__construct();
 	}
 
 	function add_to_order($LineNo, $Qty, $ItemDescr, $Price, $Cost, $StkCat, $ReqDelDate){
@@ -71,7 +75,7 @@ Class LineDetails {
 	var $ReqDelDate;
 	var $PartCode;
 
-	function LineDetails ($LineNo, $Qty, $ItemDescr, $Price, $Cost, $StkCat, $ReqDelDate){
+	function __construct ($LineNo, $Qty, $ItemDescr, $Price, $Cost, $StkCat, $ReqDelDate){
 
 	/* Constructor function to add a new LineDetail object with passed params */
 		$this->LineNo = $LineNo;
@@ -82,6 +86,11 @@ Class LineDetails {
 		$this->Cost = $Cost;
 		$this->StkCat = $StkCat;
 	}
+
+	function LineDetails ($LineNo, $Qty, $ItemDescr, $Price, $Cost, $StkCat, $ReqDelDate){
+		self::__construct($LineNo, $Qty, $ItemDescr, $Price, $Cost, $StkCat, $ReqDelDate);
+	}
+
 }
 
 ?>

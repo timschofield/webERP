@@ -40,11 +40,17 @@ class SerialItem {
 	var $ExpiryDate;
 
 	//Constructor
-	function SerialItem($BundleRef, $BundleQty, $ExpiryDate='0000-00-00'){
+	function __construct($BundleRef, $BundleQty, $ExpiryDate='0000-00-00'){
 
 		$this->BundleRef = $BundleRef;
 		$this->BundleQty = $BundleQty;
 		$this->ExpiryDate = $ExpiryDate;
 	}
+
+	function SerialItem($BundleRef, $BundleQty, $ExpiryDate='0000-00-00'){
+		self::__construct($BundleRef, $BundleQty, $ExpiryDate='0000-00-00');
+	}
+
+
 }//class SerialItem
 ?>

@@ -15,7 +15,7 @@ class StockAdjustment {
 	var $SerialItems; /*array to hold controlled items*/
 
 	//Constructor
-	function StockAdjustment(){
+	function __construct(){
 		$this->StockID = '';
 		$this->StockLocation = '';
 		$this->Controlled = '';
@@ -27,6 +27,10 @@ class StockAdjustment {
 		$this->SerialItems = array();
 		$this->Quantity = 0;
 		$this->tag=0;
+	}
+
+	function StockAdjustment() {
+		self::__construct();
 	}
 }
 ?>

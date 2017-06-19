@@ -26,7 +26,7 @@ Class Payment {
 	var $Narrative;
 	var $GLItemCounter; /*Counter for the number of GL accounts being posted to by the Payment */
 
-	function Payment(){
+	function __construct(){
 	/*Constructor function initialises a new Payment batch */
 		$this->GLItems = array();
 		$this->GLItemCounter=0;
@@ -39,6 +39,10 @@ Class Payment {
 		$this->Address5 ="";
 		$this->Address6 ="";
 
+	}
+
+	function Payment() {
+		self::__construct;
 	}
 
 	function Add_To_GLAnalysis($Amount,
@@ -79,7 +83,7 @@ Class PaymentGLAnalysis {
 	var $Tag;
 	var $Cheque;
 
-	function PaymentGLAnalysis ($Amt,
+	function __construct ($Amt,
 								$Narr,
 								$id,
 								$GLCode,
@@ -95,6 +99,21 @@ Class PaymentGLAnalysis {
 		$this->ID = $id;
 		$this->Tag = $Tag;
 		$this->Cheque = $Cheque;
+	}
+	function PaymentGLAnalysis($Amt,
+								$Narr,
+								$id,
+								$GLCode,
+								$GLActName,
+								$Tag,
+								$Cheque){
+		self::__construct($Amt,
+								$Narr,
+								$id,
+								$GLCode,
+								$GLActName,
+								$Tag,
+								$Cheque);
 	}
 }
 

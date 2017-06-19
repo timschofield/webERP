@@ -17,7 +17,7 @@ Class Offer {
 	var $version;
 	var $OfferMailText;
 
-	function Offer($Supplier){
+	function __construct($Supplier){
 	/*Constructor function initialises a new purchase offer object */
 		global $db;
 		$this->LineItems = array();
@@ -34,6 +34,9 @@ Class Offer {
 		$this->SupplierName = $myrow['suppname'];
 		$this->EmailAddress = $myrow['email'];
 		$this->CurrCode = $myrow['currcode'];
+	}
+	function Offer ($Supplier) {
+		self::__construct($Supplier);
 	}
 
 	function add_to_offer(	$LineNo,
@@ -198,7 +201,7 @@ Class LineDetails {
 	var $Deleted;
 	var $ExpiryDate;
 
-	function LineDetails ($LineNo,
+	function __construct ($LineNo,
 							$StockItem,
 							$Qty,
 							$ItemDescr,
@@ -217,6 +220,23 @@ Class LineDetails {
 		$this->DecimalPlaces = $DecimalPlaces;
 		$this->ExpiryDate = $ExpiryDate;
 		$this->Deleted = False;
+	}
+	function LineDetails($LineNo,
+							$StockItem,
+							$Qty,
+							$ItemDescr,
+							$Price,
+							$UOM,
+							$DecimalPlaces,
+							$ExpiryDate) {
+		self::__construct($LineNo,
+							$StockItem,
+							$Qty,
+							$ItemDescr,
+							$Price,
+							$UOM,
+							$DecimalPlaces,
+							$ExpiryDate);
 	}
 }
 

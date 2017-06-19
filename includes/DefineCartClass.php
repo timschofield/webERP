@@ -62,7 +62,7 @@ Class Cart {
 	var $BuyerName;
 	var $SpecialInstructions;
 
-	function Cart(){
+	function __construct(){
 	/*Constructor function initialises a new shopping cart */
 		$this->LineItems = array();
 		$this->total=0;
@@ -72,6 +72,10 @@ Class Cart {
 		$this->FreightCost =0;
 		$this->FreightTaxes = array();
 		$this->CurrDecimalPlaces=2; //default
+	}
+
+	function cart() {
+		self::__construct();
 	}
 
 	function add_to_cart($StockID,
@@ -445,7 +449,7 @@ Class LineDetails {
 	Var $NextSerialNo;
 	Var $GPPercent;
 
-	function LineDetails ($LineNumber,
+	function __construct ($LineNumber,
 							$StockItem,
 							$Descr,
 							$LongDescr,
@@ -518,6 +522,60 @@ Class LineDetails {
 		}
 	} //end constructor function for LineDetails
 
+	function LineDetails($LineNumber,
+							$StockItem,
+							$Descr,
+							$LongDescr,
+							$Qty,
+							$Prc,
+							$DiscPercent,
+							$UOM,
+							$Volume,
+							$Weight,
+							$QOHatLoc,
+							$MBflag,
+							$ActDispatchDate,
+							$QtyInvoiced,
+							$DiscCat,
+							$Controlled,
+							$Serialised,
+							$DecimalPlaces,
+							$Narrative,
+							$TaxCategory,
+							$ItemDue,
+							$POLine,
+							$StandardCost,
+							$EOQ,
+							$NextSerialNo,
+							$ExRate ) {
+		self::__construct($LineNumber,
+							$StockItem,
+							$Descr,
+							$LongDescr,
+							$Qty,
+							$Prc,
+							$DiscPercent,
+							$UOM,
+							$Volume,
+							$Weight,
+							$QOHatLoc,
+							$MBflag,
+							$ActDispatchDate,
+							$QtyInvoiced,
+							$DiscCat,
+							$Controlled,
+							$Serialised,
+							$DecimalPlaces,
+							$Narrative,
+							$TaxCategory,
+							$ItemDue,
+							$POLine,
+							$StandardCost,
+							$EOQ,
+							$NextSerialNo,
+							$ExRate );
+	}
+
 }
 
 Class Tax {
@@ -528,7 +586,7 @@ Class Tax {
 	Var $TaxOnTax;
 	var $TaxGLCode;
 
-	function Tax ($TaxCalculationOrder,
+	function __construct ($TaxCalculationOrder,
 			$TaxAuthID,
 			$TaxAuthDescription,
 			$TaxRate,
@@ -541,6 +599,20 @@ Class Tax {
 		$this->TaxRate =  $TaxRate;
 		$this->TaxOnTax = $TaxOnTax;
 		$this->TaxGLCode = $TaxGLCode;
+	}
+	function Tax ($TaxCalculationOrder,
+			$TaxAuthID,
+			$TaxAuthDescription,
+			$TaxRate,
+			$TaxOnTax,
+			$TaxGLCode) {
+
+		self::__construct($TaxCalculationOrder,
+			$TaxAuthID,
+			$TaxAuthDescription,
+			$TaxRate,
+			$TaxOnTax,
+			$TaxGLCode);
 	}
 }
 

@@ -20,11 +20,15 @@ Class Receipt_Batch {
 	var $total;	  /*Total of the batch of receipts in the currency of the company*/
 	var $ItemCounter; /*Counter for the number of customer receipts in the batch */
 
-	function Receipt_Batch(){
+	function __construct(){
 	/*Constructor function initialises a new receipt batch */
 		$this->Items = array();
 		$this->ItemCounter=0;
 		$this->total=0;
+	}
+
+	function Receipt_Batch() {
+		self::__construct();
 	}
 
 	function add_to_batch($Amount, $Customer, $Discount, $Narrative, $GLCode, $PayeeBankDetail, $CustomerName, $tag){
@@ -58,7 +62,7 @@ Class Receipt {
 	var $tag;
 	var $TagName;
 
-	function Receipt ($Amt, $Cust, $Disc, $Narr, $id, $GLCode, $PayeeBankDetail, $CustomerName, $Tag){
+	function __construct ($Amt, $Cust, $Disc, $Narr, $id, $GLCode, $PayeeBankDetail, $CustomerName, $Tag){
 		global $db;
 /* Constructor function to add a new Receipt object with passed params */
 		$this->Amount =$Amt;
@@ -75,6 +79,9 @@ Class Receipt {
 			$TagRow = DB_fetch_array($result);
 			$this->TagName = $TagRow['tagdescription'];
 		}
+	}
+	function Receipt($Amt, $Cust, $Disc, $Narr, $id, $GLCode, $PayeeBankDetail, $CustomerName, $Tag){
+		self::__construct($Amt, $Cust, $Disc, $Narr, $id, $GLCode, $PayeeBankDetail, $CustomerName, $Tag);
 	}
 }
 

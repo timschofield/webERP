@@ -16,11 +16,15 @@ Class Shipment {
 	var $Closed;
 	var $CurrDecimalPlaces;
 
-	function Shipment(){
+	function __construct(){
 	/*Constructor function initialises a new Shipment object */
 		$this->LineItems = array();
 		$this->AccumValue =0;
 		$this->Closed =0;
+	}
+
+	function Shipment() {
+		self::__construct();
 	}
 
 	function Add_To_Shipment($PODetailItem,
@@ -89,7 +93,7 @@ Class LineDetails {
 	var $DecimalPlaces;
 
 
-	function LineDetails ($PODetailItem,
+	function __construct ($PODetailItem,
 							$OrderNo,
 							$StockID,
 							$ItemDescr,
@@ -115,6 +119,32 @@ Class LineDetails {
 		$this->QuantityOrd = $QuantityOrd;
 		$this->StdCostUnit = $StdCostUnit;
 		$this->DecimalPlaces = $DecimalPlaces;
+	}
+
+	function LineDetails($PODetailItem,
+							$OrderNo,
+							$StockID,
+							$ItemDescr,
+							$QtyInvoiced,
+							$UnitPrice,
+							$UOM,
+							$DelDate,
+							$QuantityOrd,
+							$QuantityRecd,
+							$StdCostUnit,
+							$DecimalPlaces=2) {
+			self::__construct($PODetailItem,
+							$OrderNo,
+							$StockID,
+							$ItemDescr,
+							$QtyInvoiced,
+							$UnitPrice,
+							$UOM,
+							$DelDate,
+							$QuantityOrd,
+							$QuantityRecd,
+							$StdCostUnit,
+							$DecimalPlaces=2);
 	}
 }
 

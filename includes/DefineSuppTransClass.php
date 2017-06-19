@@ -38,7 +38,7 @@ Class SuppTrans {
 	var $Hold;
 	var $SupplierRef='';
 
-	function SuppTrans(){
+	function __construct(){
 	/*Constructor function initialises a new Supplier Transaction object */
 		$this->GRNs = array();
 		$this->GLCodes = array();
@@ -46,6 +46,10 @@ Class SuppTrans {
 		$this->Contracts = array();
 		$this->Assets = array();
 		$this->Taxes = array();
+	}
+
+	function SuppTrans() {
+		self::__construct();
 	}
 
 	function GetTaxes () {
@@ -333,7 +337,7 @@ all the info to do the necessary entries without looking up ie additional querie
 	var $GRNBatchNo;
 	var $SupplierRef;
 
-	function GRNs ($GRNNo,
+	function __construct ($GRNNo,
 					$PODetailItem,
 					$ItemCode,
 					$ItemDescription,
@@ -377,6 +381,48 @@ all the info to do the necessary entries without looking up ie additional querie
 		$this->DecimalPlaces = $DecimalPlaces;
 		$this->GRNBatchNo = $GRNBatchNo;
 		$this->SupplierRef = $SupplierRef;
+	}
+
+	function GRNs($GRNNo,
+					$PODetailItem,
+					$ItemCode,
+					$ItemDescription,
+					$QtyRecd,
+					$Prev_QuantityInv,
+					$This_QuantityInv,
+					$OrderPrice,
+					$ChgPrice,
+					$Complete,
+					$StdCostUnit=0,
+					$ShiptRef,
+					$JobRef,
+					$GLCode,
+					$PONo,
+					$AssetID,
+					$Hold=0,
+					$DecimalPlaces=2,
+					$GRNBatchNo,
+					$SupplierRef=''){
+		self::__construct($GRNNo,
+					$PODetailItem,
+					$ItemCode,
+					$ItemDescription,
+					$QtyRecd,
+					$Prev_QuantityInv,
+					$This_QuantityInv,
+					$OrderPrice,
+					$ChgPrice,
+					$Complete,
+					$StdCostUnit=0,
+					$ShiptRef,
+					$JobRef,
+					$GLCode,
+					$PONo,
+					$AssetID,
+					$Hold=0,
+					$DecimalPlaces=2,
+					$GRNBatchNo,
+					$SupplierRef='');
 	}
 
 	function Modify ($PODetailItem,
@@ -424,7 +470,7 @@ Class GLCodes {
 	Var $Tag;
 	Var $TagName;
 
-	function GLCodes ($Counter, $GLCode, $GLActName, $Amount, $Narrative, $Tag=0, $TagName=''){
+	function __construct($Counter, $GLCode, $GLActName, $Amount, $Narrative, $Tag=0, $TagName=''){
 
 		global $db;
 	/* Constructor function to add a new GLCodes object with passed params */
@@ -443,6 +489,12 @@ Class GLCodes {
 			$this->TagName=$TagMyrow['tagdescription'];
 		}
 	}
+
+	function GLCodes($Counter, $GLCode, $GLActName, $Amount, $Narrative, $Tag=0, $TagName=''){
+		self::__construct($Counter, $GLCode, $GLActName, $Amount, $Narrative, $Tag=0, $TagName='');
+	}
+
+
 }
 
 Class Shipment {
@@ -450,11 +502,15 @@ Class Shipment {
 	Var $Counter;
 	Var $ShiptRef;
 	Var $Amount;
-
-	function Shipment ($Counter, $ShiptRef, $Amount){
+	
+	function __construct($Counter, $ShiptRef, $Amount){
 		$this->Counter = $Counter;
 		$this->ShiptRef = $ShiptRef;
 		$this->Amount = $Amount;
+	}
+
+	function Shipment ($Counter, $ShiptRef, $Amount){
+		self::__construct($Counter, $ShiptRef, $Amount);
 	}
 }
 
@@ -466,7 +522,7 @@ Class Asset {
 	Var $CostAct;
 	Var $Amount;
 
-	function Asset ($Counter, $AssetID, $Amount){
+	function __construct($Counter, $AssetID, $Amount){
 		global $db;
 		$this->Counter = $Counter;
 		$this->AssetID = $AssetID;
@@ -481,6 +537,10 @@ Class Asset {
 		$this->Description = $AssetRow['description'];
 		$this->CostAct = $AssetRow['costact'];
 	}
+
+	function Asset ($Counter, $AssetID, $Amount){
+		self::__construct($Counter, $AssetID, $Amount);
+	}
 }
 
 Class Contract {
@@ -491,12 +551,16 @@ Class Contract {
 	Var $Narrative;
 	Var $AniticipatedCost;
 
-	function Contract ($Counter, $ContractRef, $Amount,$Narrative,$AnticipatedCost){
+	function __construct($Counter, $ContractRef, $Amount,$Narrative,$AnticipatedCost){
 		$this->Counter = $Counter;
 		$this->ContractRef = $ContractRef;
 		$this->Amount = $Amount;
 		$this->Narrative = $Narrative;
 		$this->AnticipatedCost = $AnticipatedCost;
+	}
+
+	function Contract ($Counter, $ContractRef, $Amount,$Narrative,$AnticipatedCost){
+		self::__construct($Counter, $AssetID, $Amount,$Narrative,$AnticipatedCost);
 	}
 }
 
@@ -510,7 +574,7 @@ Class Tax {
 	Var $TaxGLCode;
 	Var $TaxOvAmount;
 
-	function Tax ($TaxCalculationOrder,
+	function __construct ($TaxCalculationOrder,
 					$TaxAuthID,
 					$TaxAuthDescription,
 					$TaxRate,
@@ -524,5 +588,20 @@ Class Tax {
 		$this->TaxOnTax = $TaxOnTax;
 		$this->TaxGLCode = $TaxGLCode;
 	}
+
+	function Tax ($TaxCalculationOrder,
+					$TaxAuthID,
+					$TaxAuthDescription,
+					$TaxRate,
+					$TaxOnTax,
+					$TaxGLCode){
+		self::__construct($TaxCalculationOrder,
+					$TaxAuthID,
+					$TaxAuthDescription,
+					$TaxRate,
+					$TaxOnTax,
+					$TaxGLCode);
+	}
+
 }
 ?>
