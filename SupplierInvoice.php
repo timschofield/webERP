@@ -33,7 +33,7 @@ if (!isset($_SESSION['SuppTrans']->SupplierName)) {
 	$myrow = DB_fetch_row($result);
 	$SupplierName=$myrow[0];
 	if (!isset($_SESSION['SuppTrans']->SupplierID)) {
-		$_SESSION['SuppTrans']->SupplierID = $myrow[1];
+		$_SESSION['SuppTrans']->SupplierID = $_GET['SupplierID'];
 	}
 } else {
 	$SupplierName=$_SESSION['SuppTrans']->SupplierName;

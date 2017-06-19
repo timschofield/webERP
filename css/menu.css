@@ -1,0 +1,24 @@
+#menu ul {
+	display:none;
+	position:absolute;
+	list-style:none;
+	padding:0;
+	margin:0;
+	border-top:1px #a81b2f solid;
+}
+#menu ul li a{
+	color:#5d6364;
+	text-decoration:none;
+	display:block;
+	padding:6px 7px;
+	border-bottom:1px solid #d3d9da;
+	border-left:1px solid #d3d9da;
+	border-right:1px solid #d3d9da;
+	font-size:13px;
+}
+#menu li:hover ul {
+	display:block;
+	top:40px;
+	min-width:160px;
+}
+

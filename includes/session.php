@@ -82,6 +82,50 @@ include($PathPrefix . 'includes/LanguageSetup.php');
 $FirstLogin = False;
 
 if(basename($_SERVER['SCRIPT_NAME'])=='Logout.php'){
+	if (isset($_SESSION['Favourites'])) {
+		//retrieve the sql data;
+		$sql = "SELECT href, caption FROM favourites WHERE userid='" . $_SESSION['UserID'] . "'";
+		$ErrMsg = _('Failed to retrieve favorites');
+		$result = DB_query($sql,$ErrMsg);
+		if (DB_num_rows($result)>0) {
+			while ($myrow = DB_fetch_array($result)) {
+				if (!isset($_SESSION['Favourites'][$myrow['href']])) {//The script is removed;
+					$sql[] = "DELECT FROM favourites WHERE href='" . $myrow['href'] . "' AND userid='" . $_SESSION['UserID'] . "'";
+
+				} else {
+					unset($_SESSION['Favourites'][$myrow['href']]);
+				}
+			}
+			if (count($_SESSION['Favourites']) >0) {
+				$sqli = "INSERT INTO favourites(href,caption,userid) VALUES ";
+				$k = 0;
+				foreach ($_SESSION['Favourites'] as $url=>$ttl) {
+					if ($k) {
+						$sqli .=",";
+					}
+					$sqli .= "('" . $url . "', '" . $ttl . "', '" . $_SESSION['UserID'] . "')";
+					$k++;
+				}
+			}
+			foreach ($sql as $sq) {
+				$result = DB_query($sq);
+			}
+			$result = DB_query($sqli);
+		} else {
+		
+			$sqli = "INSERT INTO favourites(href,caption,userid) VALUES ";
+			$k = 0;
+			foreach ($_SESSION['Favourites'] as $url=>$ttl) {
+				if ($k) {
+					$sqli .=",";
+				}
+				$sqli .= "('" . $url . "', '" . $ttl . "','" . $_SESSION['UserID'] . "')";
+				$k++;
+			}
+			$result = DB_query($sqli);
+		}
+}
+
 	header('Location: index.php');
 } elseif (isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true */
 	$_SESSION['AllowedPageSecurityTokens'] = array();

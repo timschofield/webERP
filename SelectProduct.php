@@ -858,7 +858,7 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 			} else {
 				$ItemStatus ='';
 			}
-            $imagefile = reset((glob($_SESSION['part_pics_dir'] . '/' . $StockID . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
+            $imagefile = reset((glob($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
             if (!empty($imagefile)){
                 $StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
 								'&amp;StockID='.urlencode($myrow['stockid']).
