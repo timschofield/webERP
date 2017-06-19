@@ -37,6 +37,8 @@
 	} else {
 		echo '<meta http-equiv="Content-Type" content="application/html; charset=utf-8" />';
 	}
+   
+    echo	'<link href="', $RootPath, '/css/menu.css" rel="stylesheet" type="text/css"  />';
     echo	'<link href="', $RootPath, '/css/print.css" rel="stylesheet" type="text/css" media="print" />',
 			'<link href="', $RootPath, '/css/', $_SESSION['Theme'], '/default.css" rel="stylesheet" type="text/css" media="screen"/>',
 /*			'<meta name="viewport" content="width=device-width, initial-scale=1">',//To tell the small device that the website is a responsive site (keep relationship between CSS pixels and device pixels).*/
