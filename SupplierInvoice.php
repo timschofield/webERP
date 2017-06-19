@@ -32,12 +32,15 @@ if (!isset($_SESSION['SuppTrans']->SupplierName)) {
 	$result = DB_query($sql);
 	$myrow = DB_fetch_row($result);
 	$SupplierName=$myrow[0];
+	if (!isset($_SESSION['SuppTrans']->SupplierID)) {
+		$_SESSION['SuppTrans']->SupplierID = $myrow[1];
+	}
 } else {
 	$SupplierName=$_SESSION['SuppTrans']->SupplierName;
 }
 echo '<p class="page_title_text"><img alt="" src="'.$RootPath . '/css/' . $Theme .
 	'/images/transactions.png" title="' . _('Supplier Invoice') . '" />' . ' ' .
-	_('Enter Supplier Invoice') . ': ' . $SupplierName . '</p>';
+	_('Enter Supplier Invoice') . ': ' . $SupplierName . ' ' . $_SESSION['SuppTrans']->SupplierID . '</p>';
 if (isset($_GET['SupplierID']) AND $_GET['SupplierID']!=''){
 
  /*It must be a new invoice entry - clear any existing invoice details from the SuppTrans object and initiate a newy*/
@@ -649,11 +652,13 @@ if (!isset($_POST['PostInvoice'])){
 	}
 	echo ' <input type="submit" name="FixedAssets" value="' . _('Fixed Assets') . '" />
 		</div>';
+	$CanSubmit = false;//To avoid a empty submit
 
 	$TotalGRNValue = 0;
 
 	if (count( $_SESSION['SuppTrans']->GRNs)>0){   /*if there are any GRNs selected for invoicing then */
 		/*Show all the selected GRNs so far from the SESSION['SuppInv']->GRNs array */
+		$CanSubmit = true;
 
 		echo '<br />
 				<table class="selection">
@@ -699,6 +704,7 @@ if (!isset($_POST['PostInvoice'])){
 	$TotalShiptValue = 0;
 
 	if (count( $_SESSION['SuppTrans']->Shipts) > 0){   /*if there are any Shipment charges on the invoice*/
+		$CanSubmit = true;
 
 		echo '<br />
 				<table class="selection">
@@ -739,6 +745,7 @@ if (!isset($_POST['PostInvoice'])){
 	$TotalAssetValue = 0;
 
 	if (count( $_SESSION['SuppTrans']->Assets) > 0){   /*if there are any fixed assets on the invoice*/
+		$CanSubmit = true;
 
 		echo '<br />
 			<table class="selection">
@@ -779,6 +786,7 @@ if (!isset($_POST['PostInvoice'])){
 	$TotalContractsValue = 0;
 
 	if (count( $_SESSION['SuppTrans']->Contracts) > 0){   /*if there are any contract charges on the invoice*/
+		$CanSubmit = true;
 
 		echo '<br />
 			<table class="selection">
@@ -823,6 +831,7 @@ if (!isset($_POST['PostInvoice'])){
 	if ( $_SESSION['SuppTrans']->GLLink_Creditors == 1){
 
 		if (count($_SESSION['SuppTrans']->GLCodes) > 0){
+			$CanSubmit = true;
 			echo '<br />
 					<table class="selection">
 					<tr>
@@ -957,11 +966,13 @@ if (!isset($_POST['PostInvoice'])){
 				<td><textarea name="Comments" cols="40" rows="2">' . $_SESSION['SuppTrans']->Comments . '</textarea></td>
 			</tr>
 		</table>';
+	if ($CanSubmit) {
 
 	echo '<br />
 			<div class="centre">
 				<input type="submit" name="PostInvoice" value="' . _('Enter Invoice') . '" />
 			</div>';
+	}
 
     echo '</div>
           </form>';
