@@ -1,5 +1,6 @@
 webERP Change Log
 
+19/06/17 Exson: Add a empty submit blocked feature to SupplierInvoice.php to avoid a empty invoice.
 19/06/17 Exson: Make these classes defined php 7 compliant and keep php4 backwards compatibility.
 18/06/17 RChacon: Rename from css/custom/ to from css/WEBootstrap/.
 18/06/17 RChacon: Standardise icon size to 36x36 px in css/custom/ (WEBootstrap).
