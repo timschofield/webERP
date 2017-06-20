@@ -75,6 +75,11 @@ if ($KL_SystemAdmin
 	$NumberOfTestExecuted++;
 	SPGPerformanceByShop("RETAILU3", 30, 60, 90, $db);
 	$NumberOfTestExecuted++;
+	
+	SPGPerformanceByShop("RETAILBB", 30, 60, 90, $db);
+	$NumberOfTestExecuted++;
+	SPGPerformanceByShop("RETAILTB", 30, 60, 90, $db);
+	$NumberOfTestExecuted++;
 
 	//	YearDifferenceSales("SPG", 30, $db);
 	//  $NumberOfTestExecuted++;
