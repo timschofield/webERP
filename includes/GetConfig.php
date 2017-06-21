@@ -115,6 +115,15 @@ if(isset($ForceConfigReload) AND $ForceConfigReload==true OR !isset($_SESSION['C
 		$_SESSION['SMTPSettings']['timeout']=$myrow['timeout'];
 		$_SESSION['SMTPSettings']['auth']=$myrow['auth'];
 	}
+	//Add favorite scripts 
+	$sql = "SELECT href, caption FROM favourites WHERE userid='" . $_SESSION['UserID'] . "'";
+	$result = DB_query($sql);
+	if (DB_num_rows($result)>0) {
+		while ($myrow = DB_fetch_array($result)) {
+			$_SESSION['Favourites'][$myrow['href']] = $myrow['caption'];
+		}
+	}
+
 } //end if force reload or not set already
 
 

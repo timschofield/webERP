@@ -88,9 +88,10 @@ if(basename($_SERVER['SCRIPT_NAME'])=='Logout.php'){
 		$ErrMsg = _('Failed to retrieve favorites');
 		$result = DB_query($sql,$ErrMsg);
 		if (DB_num_rows($result)>0) {
+			$sql = array();
 			while ($myrow = DB_fetch_array($result)) {
 				if (!isset($_SESSION['Favourites'][$myrow['href']])) {//The script is removed;
-					$sql[] = "DELECT FROM favourites WHERE href='" . $myrow['href'] . "' AND userid='" . $_SESSION['UserID'] . "'";
+					$sql[] = "DELETE FROM favourites WHERE href='" . $myrow['href'] . "' AND userid='" . $_SESSION['UserID'] . "'";
 
 				} else {
 					unset($_SESSION['Favourites'][$myrow['href']]);
@@ -110,7 +111,9 @@ if(basename($_SERVER['SCRIPT_NAME'])=='Logout.php'){
 			foreach ($sql as $sq) {
 				$result = DB_query($sq);
 			}
-			$result = DB_query($sqli);
+			if (isset($sqli)) {
+				$result = DB_query($sqli);
+			}
 		} else {
 		
 			$sqli = "INSERT INTO favourites(href,caption,userid) VALUES ";
@@ -122,7 +125,9 @@ if(basename($_SERVER['SCRIPT_NAME'])=='Logout.php'){
 				$sqli .= "('" . $url . "', '" . $ttl . "','" . $_SESSION['UserID'] . "')";
 				$k++;
 			}
-			$result = DB_query($sqli);
+			if ($k) {
+				$result = DB_query($sqli);
+			}
 		}
 }
 
