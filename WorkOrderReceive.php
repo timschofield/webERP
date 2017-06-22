@@ -136,7 +136,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 		}
 	}
 
-	if ($QuantityReceived + $WORow['qtyrecd'] > $WORow['qtyreqd'] *(1+$_SESSION['OverReceiveProportion'])){
+	if ($QuantityReceived + $WORow['qtyrecd'] > $WORow['qtyreqd'] *(1+$_SESSION['OverReceiveProportion']/100)){
 		prnMsg(_('The quantity received is greater than the quantity required even after allowing for the configured allowable over-receive proportion. If this is correct then the work order must be modified first.'),'error');
 		$InputError=true;
 	}
