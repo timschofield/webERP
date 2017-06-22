@@ -1,5 +1,9 @@
 webERP Change Log
 
+21/06/17 RChacon: Add meta viewport for initial-scale=1 (for working css in small devices).
+
+2017-06-20  4.14 release
+
 19/06/17 Exson: Add menu.css to make the main menu workable in header.php. 
 19/06/17 Exson: Fixed the variable not existed error (Reported by Tim). Add a feature to add favorite script under main menu which idea originated from Tim's Kwamoja project.
 19/06/17 Exson: Add a empty submit blocked feature to SupplierInvoice.php to avoid a empty invoice.
