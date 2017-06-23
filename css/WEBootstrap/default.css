@@ -548,21 +548,15 @@ margin-left:-20px;
 	text-align:center;
 	color:#2C2C2C;
 }
-#TransactionsDiv{
-		margin-left:-10px;
-}
-#InquiriesDiv{
-		margin-left:-10px;
+#TransactionsDiv,
+#InquiriesDiv,
+#MaintenanceDiv {
+	margin-left:-10px;
+    margin-top:5px;
 }
 #InquiriesDiv div{ /* default div, used for custom report header */
-
 }
 #InquiriesDiv body{
-
-}
-#MaintenanceDiv{
-	margin-left:-10px;
-}
 .menu_group_item p {
 	color:transparent; /* buttets color */
 	margin:4px 0 0 0;
