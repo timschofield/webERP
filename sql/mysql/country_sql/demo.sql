@@ -1,11 +1,11 @@
 CREATE DATABASE IF NOT EXISTS weberpdemo;
 USE weberpdemo;
 SET FOREIGN_KEY_CHECKS = 0;
--- MySQL dump 10.13  Distrib 5.5.46, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.5.55, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: weberpdemo
 -- ------------------------------------------------------
--- Server version	5.5.46-0ubuntu0.14.04.2
+-- Server version	5.5.55-0ubuntu0.14.04.1
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -159,7 +159,7 @@ CREATE TABLE `banktrans` (
   KEY `ref` (`ref`),
   CONSTRAINT `banktrans_ibfk_1` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `banktrans_ibfk_2` FOREIGN KEY (`bankact`) REFERENCES `bankaccounts` (`accountcode`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -225,6 +225,7 @@ CREATE TABLE `chartmaster` (
   `accountcode` varchar(20) NOT NULL DEFAULT '0',
   `accountname` char(50) NOT NULL DEFAULT '',
   `group_` char(30) NOT NULL DEFAULT '',
+  `cashflowsactivity` tinyint(1) NOT NULL DEFAULT '-1' COMMENT 'Cash flows activity',
   PRIMARY KEY (`accountcode`),
   KEY `AccountName` (`accountname`),
   KEY `Group_` (`group_`),
@@ -434,7 +435,7 @@ CREATE TABLE `custallocns` (
   KEY `TransID_AllocTo` (`transid_allocto`),
   CONSTRAINT `custallocns_ibfk_1` FOREIGN KEY (`transid_allocfrom`) REFERENCES `debtortrans` (`id`),
   CONSTRAINT `custallocns_ibfk_2` FOREIGN KEY (`transid_allocto`) REFERENCES `debtortrans` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -507,8 +508,9 @@ CREATE TABLE `custcontacts` (
   `phoneno` varchar(20) NOT NULL,
   `notes` varchar(255) NOT NULL,
   `email` varchar(55) NOT NULL,
+  `statement` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`contid`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -616,7 +618,7 @@ CREATE TABLE `debtortrans` (
   `type` smallint(6) NOT NULL DEFAULT '0',
   `debtorno` varchar(10) NOT NULL DEFAULT '',
   `branchcode` varchar(10) NOT NULL DEFAULT '',
-  `trandate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `trandate` date NOT NULL DEFAULT '0000-00-00',
   `inputdate` datetime NOT NULL,
   `prd` smallint(6) NOT NULL DEFAULT '0',
   `settled` tinyint(4) NOT NULL DEFAULT '0',
@@ -650,7 +652,7 @@ CREATE TABLE `debtortrans` (
   KEY `salesperson` (`salesperson`),
   CONSTRAINT `debtortrans_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `debtortrans_ibfk_3` FOREIGN KEY (`prd`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1063,7 +1065,7 @@ CREATE TABLE `gltrans` (
   CONSTRAINT `gltrans_ibfk_1` FOREIGN KEY (`account`) REFERENCES `chartmaster` (`accountcode`),
   CONSTRAINT `gltrans_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `gltrans_ibfk_3` FOREIGN KEY (`periodno`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB AUTO_INCREMENT=190 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=198 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1478,6 +1480,7 @@ CREATE TABLE `paymentmethods` (
   `receipttype` int(11) NOT NULL DEFAULT '1',
   `usepreprintedstationery` tinyint(4) NOT NULL DEFAULT '0',
   `opencashdrawer` tinyint(4) NOT NULL DEFAULT '0',
+  `percentdiscount` double NOT NULL DEFAULT '0',
   PRIMARY KEY (`paymentid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1515,7 +1518,8 @@ CREATE TABLE `pcashdetails` (
   `posted` tinyint(4) NOT NULL COMMENT 'has (or has not) been posted into gltrans',
   `notes` text NOT NULL,
   `receipt` text COMMENT 'filename or path to scanned receipt or code of receipt to find physical receipt if tax guys or auditors show up',
-  PRIMARY KEY (`counterindex`)
+  PRIMARY KEY (`counterindex`),
+  UNIQUE KEY `tabcodedate` (`tabcode`,`date`,`codeexpense`,`counterindex`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1791,7 +1795,7 @@ CREATE TABLE `purchorderdetails` (
   KEY `ShiptRef` (`shiptref`),
   KEY `Completed` (`completed`),
   CONSTRAINT `purchorderdetails_ibfk_1` FOREIGN KEY (`orderno`) REFERENCES `purchorders` (`orderno`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1843,7 +1847,7 @@ CREATE TABLE `purchorders` (
   KEY `AllowPrintPO` (`allowprint`),
   CONSTRAINT `purchorders_ibfk_1` FOREIGN KEY (`supplierno`) REFERENCES `suppliers` (`supplierid`),
   CONSTRAINT `purchorders_ibfk_2` FOREIGN KEY (`intostocklocation`) REFERENCES `locations` (`loccode`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2158,7 +2162,7 @@ CREATE TABLE `salesanalysis` (
   `stockid` varchar(20) NOT NULL DEFAULT '',
   `area` varchar(3) NOT NULL,
   `budgetoractual` tinyint(1) NOT NULL DEFAULT '0',
-  `salesperson` char(3) NOT NULL DEFAULT '',
+  `salesperson` varchar(4) NOT NULL DEFAULT '',
   `stkcategory` varchar(6) NOT NULL DEFAULT '',
   `id` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`),
@@ -2172,7 +2176,7 @@ CREATE TABLE `salesanalysis` (
   KEY `BudgetOrActual` (`budgetoractual`),
   KEY `Salesperson` (`salesperson`),
   CONSTRAINT `salesanalysis_ibfk_1` FOREIGN KEY (`periodno`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2744,7 +2748,7 @@ CREATE TABLE `stockmoves` (
   CONSTRAINT `stockmoves_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `stockmoves_ibfk_3` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`),
   CONSTRAINT `stockmoves_ibfk_4` FOREIGN KEY (`prd`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2783,6 +2787,7 @@ CREATE TABLE `stockrequest` (
   `authorised` tinyint(4) NOT NULL DEFAULT '0',
   `closed` tinyint(4) NOT NULL DEFAULT '0',
   `narrative` text NOT NULL,
+  `initiator` varchar(20) NOT NULL DEFAULT '',
   PRIMARY KEY (`dispatchid`),
   KEY `loccode` (`loccode`),
   KEY `departmentid` (`departmentid`),
@@ -2937,7 +2942,7 @@ CREATE TABLE `supplierdiscounts` (
   KEY `effectivefrom` (`effectivefrom`),
   KEY `effectiveto` (`effectiveto`),
   KEY `stockid` (`stockid`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3329,6 +3334,8 @@ CREATE TABLE `workorders` (
   `costissued` double NOT NULL DEFAULT '0',
   `closed` tinyint(4) NOT NULL DEFAULT '0',
   `closecomments` longblob,
+  `reference` varchar(40) NOT NULL DEFAULT '',
+  `remark` text,
   PRIMARY KEY (`wo`),
   KEY `LocCode` (`loccode`),
   KEY `StartDate` (`startdate`),
@@ -3376,6 +3383,8 @@ CREATE TABLE `www_users` (
   `pagesize` varchar(20) NOT NULL DEFAULT 'A4',
   `modulesallowed` varchar(25) NOT NULL,
   `showdashboard` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Display dashboard after login',
+  `showpagehelp` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'Turn off/on page help',
+  `showfieldhelp` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'Turn off/on field help',
   `blocked` tinyint(4) NOT NULL DEFAULT '0',
   `displayrecordsmax` int(11) NOT NULL DEFAULT '0',
   `theme` varchar(30) NOT NULL DEFAULT 'fresh',
@@ -3395,12 +3404,12 @@ CREATE TABLE `www_users` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-05-16 21:37:01
--- MySQL dump 10.13  Distrib 5.5.46, for debian-linux-gnu (x86_64)
+-- Dump completed on 2017-06-18 13:13:14
+-- MySQL dump 10.13  Distrib 5.5.55, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: weberpdemo
 -- ------------------------------------------------------
--- Server version	5.5.46-0ubuntu0.14.04.2
+-- Server version	5.5.55-0ubuntu0.14.04.1
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -3507,6 +3516,7 @@ INSERT INTO `banktrans` VALUES (19,1,5,'1030','Test',0,0.91877986,1.0884,'2014-0
 INSERT INTO `banktrans` VALUES (20,1,6,'1060','ffd',0,1,1,'2014-02-03','Cash',-125,'USD');
 INSERT INTO `banktrans` VALUES (21,2,1,'1010','Act Transfer From 1060 - ',0,1.5199878400973,0.6579,'2014-07-05','Cash',10,'USD');
 INSERT INTO `banktrans` VALUES (22,1,7,'1060','',0,1,1,'2014-07-05','Cash',-10,'USD');
+INSERT INTO `banktrans` VALUES (23,12,5,'1030','Melbourne Counter Sale 1',0,1,1.3224,'2017-01-23','1',-17.429232,'USD');
 
 --
 -- Dumping data for table `bom`
@@ -8362,152 +8372,152 @@ INSERT INTO `chartdetails` VALUES ('9100',46,0,0,0,0);
 -- Dumping data for table `chartmaster`
 --
 
-INSERT INTO `chartmaster` VALUES ('1','Default Sales/Discounts','Sales');
-INSERT INTO `chartmaster` VALUES ('1010','Petty Cash','Current Assets');
-INSERT INTO `chartmaster` VALUES ('1020','Cash on Hand','Current Assets');
-INSERT INTO `chartmaster` VALUES ('1030','Cheque Accounts','Current Assets');
-INSERT INTO `chartmaster` VALUES ('1040','Savings Accounts','Current Assets');
-INSERT INTO `chartmaster` VALUES ('1050','Payroll Accounts','Current Assets');
-INSERT INTO `chartmaster` VALUES ('1060','Special Accounts','Current Assets');
-INSERT INTO `chartmaster` VALUES ('1070','Money Market Investments','Current Assets');
-INSERT INTO `chartmaster` VALUES ('1080','Short-Term Investments (< 90 days)','Current Assets');
-INSERT INTO `chartmaster` VALUES ('1090','Interest Receivable','Current Assets');
-INSERT INTO `chartmaster` VALUES ('1100','Accounts Receivable','Current Assets');
-INSERT INTO `chartmaster` VALUES ('1150','Allowance for Doubtful Accounts','Current Assets');
-INSERT INTO `chartmaster` VALUES ('1200','Notes Receivable','Current Assets');
-INSERT INTO `chartmaster` VALUES ('1250','Income Tax Receivable','Current Assets');
-INSERT INTO `chartmaster` VALUES ('1300','Prepaid Expenses','Current Assets');
-INSERT INTO `chartmaster` VALUES ('1350','Advances','Current Assets');
-INSERT INTO `chartmaster` VALUES ('1400','Supplies Inventory','Current Assets');
-INSERT INTO `chartmaster` VALUES ('1420','Raw Material Inventory','Current Assets');
-INSERT INTO `chartmaster` VALUES ('1440','Work in Progress Inventory','Current Assets');
-INSERT INTO `chartmaster` VALUES ('1460','Finished Goods Inventory','Current Assets');
-INSERT INTO `chartmaster` VALUES ('1500','Land','Fixed Assets');
-INSERT INTO `chartmaster` VALUES ('1550','Bonds','Fixed Assets');
-INSERT INTO `chartmaster` VALUES ('1600','Buildings','Fixed Assets');
-INSERT INTO `chartmaster` VALUES ('1620','Accumulated Depreciation of Buildings','Fixed Assets');
-INSERT INTO `chartmaster` VALUES ('1650','Equipment','Fixed Assets');
-INSERT INTO `chartmaster` VALUES ('1670','Accumulated Depreciation of Equipment','Fixed Assets');
-INSERT INTO `chartmaster` VALUES ('1700','Furniture & Fixtures','Fixed Assets');
-INSERT INTO `chartmaster` VALUES ('1710','Accumulated Depreciation of Furniture & Fixtures','Fixed Assets');
-INSERT INTO `chartmaster` VALUES ('1720','Office Equipment','Fixed Assets');
-INSERT INTO `chartmaster` VALUES ('1730','Accumulated Depreciation of Office Equipment','Fixed Assets');
-INSERT INTO `chartmaster` VALUES ('1740','Software','Fixed Assets');
-INSERT INTO `chartmaster` VALUES ('1750','Accumulated Depreciation of Software','Fixed Assets');
-INSERT INTO `chartmaster` VALUES ('1760','Vehicles','Fixed Assets');
-INSERT INTO `chartmaster` VALUES ('1770','Accumulated Depreciation Vehicles','Fixed Assets');
-INSERT INTO `chartmaster` VALUES ('1780','Other Depreciable Property','Fixed Assets');
-INSERT INTO `chartmaster` VALUES ('1790','Accumulated Depreciation of Other Depreciable Prop','Fixed Assets');
-INSERT INTO `chartmaster` VALUES ('1800','Patents','Fixed Assets');
-INSERT INTO `chartmaster` VALUES ('1850','Goodwill','Fixed Assets');
-INSERT INTO `chartmaster` VALUES ('1900','Future Income Tax Receivable','Current Assets');
-INSERT INTO `chartmaster` VALUES ('2010','Bank Indedebtedness (overdraft)','Liabilities');
-INSERT INTO `chartmaster` VALUES ('2020','Retainers or Advances on Work','Liabilities');
-INSERT INTO `chartmaster` VALUES ('2050','Interest Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES ('2100','Accounts Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES ('2150','Goods Received Suspense','Liabilities');
-INSERT INTO `chartmaster` VALUES ('2200','Short-Term Loan Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES ('2230','Current Portion of Long-Term Debt Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES ('2250','Income Tax Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES ('2300','GST Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES ('2310','GST Recoverable','Liabilities');
-INSERT INTO `chartmaster` VALUES ('2320','PST Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES ('2330','PST Recoverable (commission)','Liabilities');
-INSERT INTO `chartmaster` VALUES ('2340','Payroll Tax Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES ('2350','Withholding Income Tax Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES ('2360','Other Taxes Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES ('2400','Employee Salaries Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES ('2410','Management Salaries Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES ('2420','Director / Partner Fees Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES ('2450','Health Benefits Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES ('2460','Pension Benefits Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES ('2480','Employment Insurance Premiums Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES ('2500','Land Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES ('2550','Long-Term Bank Loan','Liabilities');
-INSERT INTO `chartmaster` VALUES ('2560','Notes Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES ('2600','Building & Equipment Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES ('2700','Furnishing & Fixture Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES ('2720','Office Equipment Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES ('2740','Vehicle Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES ('2760','Other Property Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES ('2800','Shareholder Loans','Liabilities');
-INSERT INTO `chartmaster` VALUES ('2900','Suspense','Liabilities');
-INSERT INTO `chartmaster` VALUES ('3100','Capital Stock','Financed');
-INSERT INTO `chartmaster` VALUES ('3200','Capital Surplus / Dividends','Financed');
-INSERT INTO `chartmaster` VALUES ('3300','Dividend Taxes Payable','Financed');
-INSERT INTO `chartmaster` VALUES ('3400','Dividend Taxes Refundable','Financed');
-INSERT INTO `chartmaster` VALUES ('3500','Retained Earnings','Financed');
-INSERT INTO `chartmaster` VALUES ('4100','Product / Service Sales','Revenue');
-INSERT INTO `chartmaster` VALUES ('4200','Sales Exchange Gains/Losses','Revenue');
-INSERT INTO `chartmaster` VALUES ('4500','Consulting Services','Revenue');
-INSERT INTO `chartmaster` VALUES ('4600','Rentals','Revenue');
-INSERT INTO `chartmaster` VALUES ('4700','Finance Charge Income','Revenue');
-INSERT INTO `chartmaster` VALUES ('4800','Sales Returns & Allowances','Revenue');
-INSERT INTO `chartmaster` VALUES ('4900','Sales Discounts','Revenue');
-INSERT INTO `chartmaster` VALUES ('5000','Cost of Sales','Cost of Goods Sold');
-INSERT INTO `chartmaster` VALUES ('5100','Production Expenses','Cost of Goods Sold');
-INSERT INTO `chartmaster` VALUES ('5200','Purchases Exchange Gains/Losses','Cost of Goods Sold');
-INSERT INTO `chartmaster` VALUES ('5500','Direct Labour Costs','Cost of Goods Sold');
-INSERT INTO `chartmaster` VALUES ('5600','Freight Charges','Outward Freight');
-INSERT INTO `chartmaster` VALUES ('5700','Inventory Adjustment','Cost of Goods Sold');
-INSERT INTO `chartmaster` VALUES ('5800','Purchase Returns & Allowances','Cost of Goods Sold');
-INSERT INTO `chartmaster` VALUES ('5900','Purchase Discounts','Cost of Goods Sold');
-INSERT INTO `chartmaster` VALUES ('6100','Advertising','Marketing Expenses');
-INSERT INTO `chartmaster` VALUES ('6150','Promotion','Promotions');
-INSERT INTO `chartmaster` VALUES ('6200','Communications','Marketing Expenses');
-INSERT INTO `chartmaster` VALUES ('6250','Meeting Expenses','Marketing Expenses');
-INSERT INTO `chartmaster` VALUES ('6300','Travelling Expenses','Marketing Expenses');
-INSERT INTO `chartmaster` VALUES ('6400','Delivery Expenses','Marketing Expenses');
-INSERT INTO `chartmaster` VALUES ('6500','Sales Salaries & Commission','Marketing Expenses');
-INSERT INTO `chartmaster` VALUES ('6550','Sales Salaries & Commission Deductions','Marketing Expenses');
-INSERT INTO `chartmaster` VALUES ('6590','Benefits','Marketing Expenses');
-INSERT INTO `chartmaster` VALUES ('6600','Other Selling Expenses','Marketing Expenses');
-INSERT INTO `chartmaster` VALUES ('6700','Permits, Licenses & License Fees','Marketing Expenses');
-INSERT INTO `chartmaster` VALUES ('6800','Research & Development','Marketing Expenses');
-INSERT INTO `chartmaster` VALUES ('6900','Professional Services','Marketing Expenses');
-INSERT INTO `chartmaster` VALUES ('7020','Support Salaries & Wages','Operating Expenses');
-INSERT INTO `chartmaster` VALUES ('7030','Support Salary & Wage Deductions','Operating Expenses');
-INSERT INTO `chartmaster` VALUES ('7040','Management Salaries','Operating Expenses');
-INSERT INTO `chartmaster` VALUES ('7050','Management Salary deductions','Operating Expenses');
-INSERT INTO `chartmaster` VALUES ('7060','Director / Partner Fees','Operating Expenses');
-INSERT INTO `chartmaster` VALUES ('7070','Director / Partner Deductions','Operating Expenses');
-INSERT INTO `chartmaster` VALUES ('7080','Payroll Tax','Operating Expenses');
-INSERT INTO `chartmaster` VALUES ('7090','Benefits','Operating Expenses');
-INSERT INTO `chartmaster` VALUES ('7100','Training & Education Expenses','Operating Expenses');
-INSERT INTO `chartmaster` VALUES ('7150','Dues & Subscriptions','Operating Expenses');
-INSERT INTO `chartmaster` VALUES ('7200','Accounting Fees','Operating Expenses');
-INSERT INTO `chartmaster` VALUES ('7210','Audit Fees','Operating Expenses');
-INSERT INTO `chartmaster` VALUES ('7220','Banking Fees','Operating Expenses');
-INSERT INTO `chartmaster` VALUES ('7230','Credit Card Fees','Operating Expenses');
-INSERT INTO `chartmaster` VALUES ('7240','Consulting Fees','Operating Expenses');
-INSERT INTO `chartmaster` VALUES ('7260','Legal Fees','Operating Expenses');
-INSERT INTO `chartmaster` VALUES ('7280','Other Professional Fees','Operating Expenses');
-INSERT INTO `chartmaster` VALUES ('7300','Business Tax','Operating Expenses');
-INSERT INTO `chartmaster` VALUES ('7350','Property Tax','Operating Expenses');
-INSERT INTO `chartmaster` VALUES ('7390','Corporation Capital Tax','Operating Expenses');
-INSERT INTO `chartmaster` VALUES ('7400','Office Rent','Operating Expenses');
-INSERT INTO `chartmaster` VALUES ('7450','Equipment Rental','Operating Expenses');
-INSERT INTO `chartmaster` VALUES ('7500','Office Supplies','Operating Expenses');
-INSERT INTO `chartmaster` VALUES ('7550','Office Repair & Maintenance','Operating Expenses');
-INSERT INTO `chartmaster` VALUES ('7600','Automotive Expenses','Operating Expenses');
-INSERT INTO `chartmaster` VALUES ('7610','Communication Expenses','Operating Expenses');
-INSERT INTO `chartmaster` VALUES ('7620','Insurance Expenses','Operating Expenses');
-INSERT INTO `chartmaster` VALUES ('7630','Postage & Courier Expenses','Operating Expenses');
-INSERT INTO `chartmaster` VALUES ('7640','Miscellaneous Expenses','Operating Expenses');
-INSERT INTO `chartmaster` VALUES ('7650','Travel Expenses','Operating Expenses');
-INSERT INTO `chartmaster` VALUES ('7660','Utilities','Operating Expenses');
-INSERT INTO `chartmaster` VALUES ('7700','Ammortization Expenses','Operating Expenses');
-INSERT INTO `chartmaster` VALUES ('7750','Depreciation Expenses','Operating Expenses');
-INSERT INTO `chartmaster` VALUES ('7800','Interest Expense','Operating Expenses');
-INSERT INTO `chartmaster` VALUES ('7900','Bad Debt Expense','Operating Expenses');
-INSERT INTO `chartmaster` VALUES ('8100','Gain on Sale of Assets','Other Revenue and Expenses');
-INSERT INTO `chartmaster` VALUES ('8200','Interest Income','Other Revenue and Expenses');
-INSERT INTO `chartmaster` VALUES ('8300','Recovery on Bad Debt','Other Revenue and Expenses');
-INSERT INTO `chartmaster` VALUES ('8400','Other Revenue','Other Revenue and Expenses');
-INSERT INTO `chartmaster` VALUES ('8500','Loss on Sale of Assets','Other Revenue and Expenses');
-INSERT INTO `chartmaster` VALUES ('8600','Charitable Contributions','Other Revenue and Expenses');
-INSERT INTO `chartmaster` VALUES ('8900','Other Expenses','Other Revenue and Expenses');
-INSERT INTO `chartmaster` VALUES ('9100','Income Tax Provision','Income Tax');
+INSERT INTO `chartmaster` VALUES ('1','Default Sales/Discounts','Sales',-1);
+INSERT INTO `chartmaster` VALUES ('1010','Petty Cash','Current Assets',-1);
+INSERT INTO `chartmaster` VALUES ('1020','Cash on Hand','Current Assets',-1);
+INSERT INTO `chartmaster` VALUES ('1030','Cheque Accounts','Current Assets',-1);
+INSERT INTO `chartmaster` VALUES ('1040','Savings Accounts','Current Assets',-1);
+INSERT INTO `chartmaster` VALUES ('1050','Payroll Accounts','Current Assets',-1);
+INSERT INTO `chartmaster` VALUES ('1060','Special Accounts','Current Assets',-1);
+INSERT INTO `chartmaster` VALUES ('1070','Money Market Investments','Current Assets',-1);
+INSERT INTO `chartmaster` VALUES ('1080','Short-Term Investments (< 90 days)','Current Assets',-1);
+INSERT INTO `chartmaster` VALUES ('1090','Interest Receivable','Current Assets',-1);
+INSERT INTO `chartmaster` VALUES ('1100','Accounts Receivable','Current Assets',-1);
+INSERT INTO `chartmaster` VALUES ('1150','Allowance for Doubtful Accounts','Current Assets',-1);
+INSERT INTO `chartmaster` VALUES ('1200','Notes Receivable','Current Assets',-1);
+INSERT INTO `chartmaster` VALUES ('1250','Income Tax Receivable','Current Assets',-1);
+INSERT INTO `chartmaster` VALUES ('1300','Prepaid Expenses','Current Assets',-1);
+INSERT INTO `chartmaster` VALUES ('1350','Advances','Current Assets',-1);
+INSERT INTO `chartmaster` VALUES ('1400','Supplies Inventory','Current Assets',-1);
+INSERT INTO `chartmaster` VALUES ('1420','Raw Material Inventory','Current Assets',-1);
+INSERT INTO `chartmaster` VALUES ('1440','Work in Progress Inventory','Current Assets',-1);
+INSERT INTO `chartmaster` VALUES ('1460','Finished Goods Inventory','Current Assets',-1);
+INSERT INTO `chartmaster` VALUES ('1500','Land','Fixed Assets',-1);
+INSERT INTO `chartmaster` VALUES ('1550','Bonds','Fixed Assets',-1);
+INSERT INTO `chartmaster` VALUES ('1600','Buildings','Fixed Assets',-1);
+INSERT INTO `chartmaster` VALUES ('1620','Accumulated Depreciation of Buildings','Fixed Assets',-1);
+INSERT INTO `chartmaster` VALUES ('1650','Equipment','Fixed Assets',-1);
+INSERT INTO `chartmaster` VALUES ('1670','Accumulated Depreciation of Equipment','Fixed Assets',-1);
+INSERT INTO `chartmaster` VALUES ('1700','Furniture & Fixtures','Fixed Assets',-1);
+INSERT INTO `chartmaster` VALUES ('1710','Accumulated Depreciation of Furniture & Fixtures','Fixed Assets',-1);
+INSERT INTO `chartmaster` VALUES ('1720','Office Equipment','Fixed Assets',-1);
+INSERT INTO `chartmaster` VALUES ('1730','Accumulated Depreciation of Office Equipment','Fixed Assets',-1);
+INSERT INTO `chartmaster` VALUES ('1740','Software','Fixed Assets',-1);
+INSERT INTO `chartmaster` VALUES ('1750','Accumulated Depreciation of Software','Fixed Assets',-1);
+INSERT INTO `chartmaster` VALUES ('1760','Vehicles','Fixed Assets',-1);
+INSERT INTO `chartmaster` VALUES ('1770','Accumulated Depreciation Vehicles','Fixed Assets',-1);
+INSERT INTO `chartmaster` VALUES ('1780','Other Depreciable Property','Fixed Assets',-1);
+INSERT INTO `chartmaster` VALUES ('1790','Accumulated Depreciation of Other Depreciable Prop','Fixed Assets',-1);
+INSERT INTO `chartmaster` VALUES ('1800','Patents','Fixed Assets',-1);
+INSERT INTO `chartmaster` VALUES ('1850','Goodwill','Fixed Assets',-1);
+INSERT INTO `chartmaster` VALUES ('1900','Future Income Tax Receivable','Current Assets',-1);
+INSERT INTO `chartmaster` VALUES ('2010','Bank Indedebtedness (overdraft)','Liabilities',-1);
+INSERT INTO `chartmaster` VALUES ('2020','Retainers or Advances on Work','Liabilities',-1);
+INSERT INTO `chartmaster` VALUES ('2050','Interest Payable','Liabilities',-1);
+INSERT INTO `chartmaster` VALUES ('2100','Accounts Payable','Liabilities',-1);
+INSERT INTO `chartmaster` VALUES ('2150','Goods Received Suspense','Liabilities',-1);
+INSERT INTO `chartmaster` VALUES ('2200','Short-Term Loan Payable','Liabilities',-1);
+INSERT INTO `chartmaster` VALUES ('2230','Current Portion of Long-Term Debt Payable','Liabilities',-1);
+INSERT INTO `chartmaster` VALUES ('2250','Income Tax Payable','Liabilities',-1);
+INSERT INTO `chartmaster` VALUES ('2300','GST Payable','Liabilities',-1);
+INSERT INTO `chartmaster` VALUES ('2310','GST Recoverable','Liabilities',-1);
+INSERT INTO `chartmaster` VALUES ('2320','PST Payable','Liabilities',-1);
+INSERT INTO `chartmaster` VALUES ('2330','PST Recoverable (commission)','Liabilities',-1);
+INSERT INTO `chartmaster` VALUES ('2340','Payroll Tax Payable','Liabilities',-1);
+INSERT INTO `chartmaster` VALUES ('2350','Withholding Income Tax Payable','Liabilities',-1);
+INSERT INTO `chartmaster` VALUES ('2360','Other Taxes Payable','Liabilities',-1);
+INSERT INTO `chartmaster` VALUES ('2400','Employee Salaries Payable','Liabilities',-1);
+INSERT INTO `chartmaster` VALUES ('2410','Management Salaries Payable','Liabilities',-1);
+INSERT INTO `chartmaster` VALUES ('2420','Director / Partner Fees Payable','Liabilities',-1);
+INSERT INTO `chartmaster` VALUES ('2450','Health Benefits Payable','Liabilities',-1);
+INSERT INTO `chartmaster` VALUES ('2460','Pension Benefits Payable','Liabilities',-1);
+INSERT INTO `chartmaster` VALUES ('2480','Employment Insurance Premiums Payable','Liabilities',-1);
+INSERT INTO `chartmaster` VALUES ('2500','Land Payable','Liabilities',-1);
+INSERT INTO `chartmaster` VALUES ('2550','Long-Term Bank Loan','Liabilities',-1);
+INSERT INTO `chartmaster` VALUES ('2560','Notes Payable','Liabilities',-1);
+INSERT INTO `chartmaster` VALUES ('2600','Building & Equipment Payable','Liabilities',-1);
+INSERT INTO `chartmaster` VALUES ('2700','Furnishing & Fixture Payable','Liabilities',-1);
+INSERT INTO `chartmaster` VALUES ('2720','Office Equipment Payable','Liabilities',-1);
+INSERT INTO `chartmaster` VALUES ('2740','Vehicle Payable','Liabilities',-1);
+INSERT INTO `chartmaster` VALUES ('2760','Other Property Payable','Liabilities',-1);
+INSERT INTO `chartmaster` VALUES ('2800','Shareholder Loans','Liabilities',-1);
+INSERT INTO `chartmaster` VALUES ('2900','Suspense','Liabilities',-1);
+INSERT INTO `chartmaster` VALUES ('3100','Capital Stock','Financed',-1);
+INSERT INTO `chartmaster` VALUES ('3200','Capital Surplus / Dividends','Financed',-1);
+INSERT INTO `chartmaster` VALUES ('3300','Dividend Taxes Payable','Financed',-1);
+INSERT INTO `chartmaster` VALUES ('3400','Dividend Taxes Refundable','Financed',-1);
+INSERT INTO `chartmaster` VALUES ('3500','Retained Earnings','Financed',-1);
+INSERT INTO `chartmaster` VALUES ('4100','Product / Service Sales','Revenue',-1);
+INSERT INTO `chartmaster` VALUES ('4200','Sales Exchange Gains/Losses','Revenue',-1);
+INSERT INTO `chartmaster` VALUES ('4500','Consulting Services','Revenue',-1);
+INSERT INTO `chartmaster` VALUES ('4600','Rentals','Revenue',-1);
+INSERT INTO `chartmaster` VALUES ('4700','Finance Charge Income','Revenue',-1);
+INSERT INTO `chartmaster` VALUES ('4800','Sales Returns & Allowances','Revenue',-1);
+INSERT INTO `chartmaster` VALUES ('4900','Sales Discounts','Revenue',-1);
+INSERT INTO `chartmaster` VALUES ('5000','Cost of Sales','Cost of Goods Sold',-1);
+INSERT INTO `chartmaster` VALUES ('5100','Production Expenses','Cost of Goods Sold',-1);
+INSERT INTO `chartmaster` VALUES ('5200','Purchases Exchange Gains/Losses','Cost of Goods Sold',-1);
+INSERT INTO `chartmaster` VALUES ('5500','Direct Labour Costs','Cost of Goods Sold',-1);
+INSERT INTO `chartmaster` VALUES ('5600','Freight Charges','Outward Freight',-1);
+INSERT INTO `chartmaster` VALUES ('5700','Inventory Adjustment','Cost of Goods Sold',-1);
+INSERT INTO `chartmaster` VALUES ('5800','Purchase Returns & Allowances','Cost of Goods Sold',-1);
+INSERT INTO `chartmaster` VALUES ('5900','Purchase Discounts','Cost of Goods Sold',-1);
+INSERT INTO `chartmaster` VALUES ('6100','Advertising','Marketing Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('6150','Promotion','Promotions',-1);
+INSERT INTO `chartmaster` VALUES ('6200','Communications','Marketing Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('6250','Meeting Expenses','Marketing Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('6300','Travelling Expenses','Marketing Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('6400','Delivery Expenses','Marketing Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('6500','Sales Salaries & Commission','Marketing Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('6550','Sales Salaries & Commission Deductions','Marketing Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('6590','Benefits','Marketing Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('6600','Other Selling Expenses','Marketing Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('6700','Permits, Licenses & License Fees','Marketing Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('6800','Research & Development','Marketing Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('6900','Professional Services','Marketing Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('7020','Support Salaries & Wages','Operating Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('7030','Support Salary & Wage Deductions','Operating Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('7040','Management Salaries','Operating Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('7050','Management Salary deductions','Operating Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('7060','Director / Partner Fees','Operating Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('7070','Director / Partner Deductions','Operating Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('7080','Payroll Tax','Operating Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('7090','Benefits','Operating Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('7100','Training & Education Expenses','Operating Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('7150','Dues & Subscriptions','Operating Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('7200','Accounting Fees','Operating Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('7210','Audit Fees','Operating Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('7220','Banking Fees','Operating Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('7230','Credit Card Fees','Operating Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('7240','Consulting Fees','Operating Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('7260','Legal Fees','Operating Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('7280','Other Professional Fees','Operating Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('7300','Business Tax','Operating Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('7350','Property Tax','Operating Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('7390','Corporation Capital Tax','Operating Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('7400','Office Rent','Operating Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('7450','Equipment Rental','Operating Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('7500','Office Supplies','Operating Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('7550','Office Repair & Maintenance','Operating Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('7600','Automotive Expenses','Operating Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('7610','Communication Expenses','Operating Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('7620','Insurance Expenses','Operating Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('7630','Postage & Courier Expenses','Operating Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('7640','Miscellaneous Expenses','Operating Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('7650','Travel Expenses','Operating Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('7660','Utilities','Operating Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('7700','Ammortization Expenses','Operating Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('7750','Depreciation Expenses','Operating Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('7800','Interest Expense','Operating Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('7900','Bad Debt Expense','Operating Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('8100','Gain on Sale of Assets','Other Revenue and Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('8200','Interest Income','Other Revenue and Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('8300','Recovery on Bad Debt','Other Revenue and Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('8400','Other Revenue','Other Revenue and Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('8500','Loss on Sale of Assets','Other Revenue and Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('8600','Charitable Contributions','Other Revenue and Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('8900','Other Expenses','Other Revenue and Expenses',-1);
+INSERT INTO `chartmaster` VALUES ('9100','Income Tax Provision','Income Tax',-1);
 
 --
 -- Dumping data for table `cogsglpostings`
@@ -8601,7 +8611,7 @@ INSERT INTO `config` VALUES ('RadioBeaconStockLocation','BL');
 INSERT INTO `config` VALUES ('RadioBraconFTP_server','192.168.2.2');
 INSERT INTO `config` VALUES ('RadioBreaconFilePrefix','ORDXX');
 INSERT INTO `config` VALUES ('RadionBeaconFTP_user_pass','Radio Beacon remote ftp server password');
-INSERT INTO `config` VALUES ('reports_dir','companies/weberpdemo/reportwriter');
+INSERT INTO `config` VALUES ('reports_dir','companies/weberpdemo/reports');
 INSERT INTO `config` VALUES ('RequirePickingNote','0');
 INSERT INTO `config` VALUES ('RomalpaClause','Ownership will not pass to the buyer until the goods have been paid for in full.');
 INSERT INTO `config` VALUES ('ShopAboutUs','This web-shop software has been developed by Logic Works Ltd for webERP. For support contact Phil Daintree by rn<a href=\\\"mailto:support@logicworks.co.nz\\\">email</a>rn');
@@ -8650,8 +8660,8 @@ INSERT INTO `config` VALUES ('SmtpSetting','0');
 INSERT INTO `config` VALUES ('SO_AllowSameItemMultipleTimes','1');
 INSERT INTO `config` VALUES ('StandardCostDecimalPlaces','2');
 INSERT INTO `config` VALUES ('TaxAuthorityReferenceName','');
-INSERT INTO `config` VALUES ('UpdateCurrencyRatesDaily','2016-05-16');
-INSERT INTO `config` VALUES ('VersionNumber','4.13');
+INSERT INTO `config` VALUES ('UpdateCurrencyRatesDaily','2017-06-18');
+INSERT INTO `config` VALUES ('VersionNumber','4.14');
 INSERT INTO `config` VALUES ('WeightedAverageCosting','0');
 INSERT INTO `config` VALUES ('WikiApp','DokuWiki');
 INSERT INTO `config` VALUES ('WikiPath','wiki');
@@ -8688,11 +8698,11 @@ INSERT INTO `contracts` VALUES ('Test123','Testing manufact tape','14','14','TOR
 -- Dumping data for table `currencies`
 --
 
-INSERT INTO `currencies` VALUES ('Australian Dollars','AUD','Australia','cents',2,1.3709,0);
-INSERT INTO `currencies` VALUES ('Swiss Francs','CHF','Swizerland','centimes',2,0.9763,0);
-INSERT INTO `currencies` VALUES ('Euro','EUR','Euroland','cents',2,0.8837,1);
-INSERT INTO `currencies` VALUES ('Pounds','GBP','England','Pence',2,0.6971,0);
-INSERT INTO `currencies` VALUES ('Kenyian Shillings','KES','Kenya','none',0,100.6225,0);
+INSERT INTO `currencies` VALUES ('Australian Dollars','AUD','Australia','cents',2,1.3123,0);
+INSERT INTO `currencies` VALUES ('Swiss Francs','CHF','Swizerland','centimes',2,0.9734,0);
+INSERT INTO `currencies` VALUES ('Euro','EUR','Euroland','cents',2,0.8931,1);
+INSERT INTO `currencies` VALUES ('Pounds','GBP','England','Pence',2,0.7806,0);
+INSERT INTO `currencies` VALUES ('Kenyian Shillings','KES','Kenya','none',0,103.55,0);
 INSERT INTO `currencies` VALUES ('US Dollars','USD','United States','Cents',2,1,1);
 
 --
@@ -8700,6 +8710,7 @@ INSERT INTO `currencies` VALUES ('US Dollars','USD','United States','Cents',2,1,
 --
 
 INSERT INTO `custallocns` VALUES (1,109.2500,'2013-06-25',30,34);
+INSERT INTO `custallocns` VALUES (2,13.1800,'2017-01-23',36,37);
 
 --
 -- Dumping data for table `custbranch`
@@ -8728,9 +8739,11 @@ INSERT INTO `custbranch` VALUES ('WEB0000019','WEB0000019','Logic Works Ltd','8 
 -- Dumping data for table `custcontacts`
 --
 
-INSERT INTO `custcontacts` VALUES (2,'ANGRY','Hamish McKay','CEO','12334302','Whisky drinker single malt only','');
-INSERT INTO `custcontacts` VALUES (5,'ANGRY','Bob (Robert) Bruce','Chairman','10292811','','');
-INSERT INTO `custcontacts` VALUES (6,'ANGRY','Billy Wallace','Mover and Shaker','12455778','English Hater','');
+INSERT INTO `custcontacts` VALUES (2,'ANGRY','Hamish McKay','CEO','12334302','Whisky drinker single malt only','',0);
+INSERT INTO `custcontacts` VALUES (5,'ANGRY','Bob (Robert) Bruce','Chairman','10292811','','',0);
+INSERT INTO `custcontacts` VALUES (6,'ANGRY','Billy Wallace','Mover and Shaker','12455778','English Hater','phil@logicworks.co.nz',1);
+INSERT INTO `custcontacts` VALUES (7,'16','Phil Daintree','Chairman','45289514','','phil@logicworks.co.nz',1);
+INSERT INTO `custcontacts` VALUES (8,'16','Philip','','45289514','','phildaintree@gmail.com',1);
 
 --
 -- Dumping data for table `custitem`
@@ -8767,12 +8780,14 @@ INSERT INTO `debtorsmaster` VALUES ('WEB0000019','Logic Works Ltd','8 James Nair
 -- Dumping data for table `debtortrans`
 --
 
-INSERT INTO `debtortrans` VALUES (30,1,12,'16','16','2013-06-23 19:51:00','2013-06-23 19:51:00',19,1,'','',0,1,-109.25,0,0,0,0,-109.25,'web payment',0,0,'',1,'');
-INSERT INTO `debtortrans` VALUES (31,2,12,'16','16','2013-06-24 21:53:00','2013-06-24 21:53:00',19,0,'','',0,1,-14.16,0,0,0,0,0,'web payment',0,0,'',1,'');
-INSERT INTO `debtortrans` VALUES (32,3,12,'16','16','2013-06-24 22:36:00','2013-06-24 22:36:00',19,0,'V78R4D18BB1E','',4,1,-14.16,0,0,0,0,0,'web payment',0,0,'',1,'ERI');
-INSERT INTO `debtortrans` VALUES (33,4,12,'16','16','2013-06-24 22:38:00','2013-06-24 22:38:00',19,0,'V18R4E55E804','',5,1,-8.66,0,0,0,0,0,'web payment',0,0,'',1,'ERI');
-INSERT INTO `debtortrans` VALUES (34,1,10,'16','16','2013-06-26 00:00:00','2013-06-25 21:42:59',19,1,'','DE',1,1,97.24,12.01,0,0,0,109.25,'',1,0,'',1,'ERI');
-INSERT INTO `debtortrans` VALUES (35,2,10,'12','12','2013-09-07 00:00:00','2013-09-06 21:29:53',22,0,'','DE',7,1,5,0.62,0,0,0,0,'',1,0,'',1,'ERI');
+INSERT INTO `debtortrans` VALUES (30,1,12,'16','16','2013-06-23','2013-06-23 19:51:00',19,1,'','',0,1,-109.25,0,0,0,0,-109.25,'web payment',0,0,'',1,'');
+INSERT INTO `debtortrans` VALUES (31,2,12,'16','16','2013-06-24','2013-06-24 21:53:00',19,0,'','',0,1,-14.16,0,0,0,0,0,'web payment',0,0,'',1,'');
+INSERT INTO `debtortrans` VALUES (32,3,12,'16','16','2013-06-24','2013-06-24 22:36:00',19,0,'V78R4D18BB1E','',4,1,-14.16,0,0,0,0,0,'web payment',0,0,'',1,'ERI');
+INSERT INTO `debtortrans` VALUES (33,4,12,'16','16','2013-06-24','2013-06-24 22:38:00',19,0,'V18R4E55E804','',5,1,-8.66,0,0,0,0,0,'web payment',0,0,'',1,'ERI');
+INSERT INTO `debtortrans` VALUES (34,1,10,'16','16','2013-06-26','2013-06-25 21:42:59',19,1,'','DE',1,1,97.24,12.01,0,0,0,109.25,'',1,0,'',1,'ERI');
+INSERT INTO `debtortrans` VALUES (35,2,10,'12','12','2013-09-07','2013-09-06 21:29:53',22,0,'','DE',7,1,5,0.62,0,0,0,0,'',1,0,'',1,'ERI');
+INSERT INTO `debtortrans` VALUES (36,1,11,'ANGRY','ANGRY','2017-01-23','2017-01-23 21:05:42',62,0,'','DE',0,1,-11.73,-1.448655,0,0,0,-13.178655,'',1,0,'',1,'DE');
+INSERT INTO `debtortrans` VALUES (37,5,12,'ANGRY','','2017-01-23','2017-01-23 21:05:42',62,0,'1','',0,1,13.18,0,0,0,0,13.18,'Melbourne Counter Sale',0,0,'',1,'');
 
 --
 -- Dumping data for table `debtortranstaxes`
@@ -8782,6 +8797,8 @@ INSERT INTO `debtortranstaxes` VALUES (34,11,7.14717675);
 INSERT INTO `debtortranstaxes` VALUES (34,12,4.862025);
 INSERT INTO `debtortranstaxes` VALUES (35,11,0.3675);
 INSERT INTO `debtortranstaxes` VALUES (35,12,0.25);
+INSERT INTO `debtortranstaxes` VALUES (36,11,-0.862155);
+INSERT INTO `debtortranstaxes` VALUES (36,12,-0.5865);
 
 --
 -- Dumping data for table `debtortype`
@@ -9217,7 +9234,7 @@ INSERT INTO `gltrans` VALUES (47,10,7,0,'2013-04-29',17,'1460','DUMBLE - BREAD x
 INSERT INTO `gltrans` VALUES (48,10,7,0,'2013-04-29',17,'4100','DUMBLE - BREAD x 1 @ 5.9',-9.14,1,'',0);
 INSERT INTO `gltrans` VALUES (49,10,7,0,'2013-04-29',17,'4900','DUMBLE - BREAD @ 2.5%',0.23,1,'',0);
 INSERT INTO `gltrans` VALUES (50,10,7,0,'2013-04-29',17,'1100','DUMBLE',8.91,1,'',0);
-INSERT INTO `gltrans` VALUES (51,11,1,0,'2013-05-02',18,'5000','ANGRY - TAPE2 x 1 @ 2.5000',-2.5,1,'',0);
+INSERT INTO `gltrans` VALUES (51,11,1,0,'2013-05-02',18,'5000','ANGRY - TAPE2 x 1 @ 2.5000',-2.5000000000000013,1,'',0);
 INSERT INTO `gltrans` VALUES (52,11,1,0,'2013-05-02',18,'1460','ANGRY - TAPE2 x 1 @ 2.5000',2.5,1,'',0);
 INSERT INTO `gltrans` VALUES (53,11,1,0,'2013-05-02',18,'4100','ANGRY - TAPE2 x 1 @ 15.00',15,1,'',0);
 INSERT INTO `gltrans` VALUES (54,11,1,0,'2013-05-02',18,'1100','ANGRY',-16.5,1,'',0);
@@ -9351,10 +9368,18 @@ INSERT INTO `gltrans` VALUES (182,1,7,0,'2014-07-05',32,'1010','',10,1,'',0);
 INSERT INTO `gltrans` VALUES (183,1,7,0,'2014-07-05',32,'1060','',-10,1,'',0);
 INSERT INTO `gltrans` VALUES (184,25,58,0,'2014-07-26',32,'5500','PO: 34 WHYNOT - LABOUR - Labour item - Freddie x 2 @ 75.00',150,1,'',0);
 INSERT INTO `gltrans` VALUES (185,25,58,0,'2014-07-26',32,'2150','PO1406335331: 34 WHYNOT - LABOUR - Labour item - Freddie x 2 @ 75.00',-150,1,'',0);
-INSERT INTO `gltrans` VALUES (186,25,59,0,'2015-12-20',49,'1460','PO: 35 CRUISE - DVD-CASE - 2000 x DVD covers to something else x 2000 @ 1.00',2000,0,'',0);
-INSERT INTO `gltrans` VALUES (187,25,59,0,'2015-12-20',49,'2150','PO1450567661: 35 CRUISE - DVD-CASE - 2000 x DVD covers to something else x 2000 @ 1.00',-2000,0,'',0);
-INSERT INTO `gltrans` VALUES (188,25,10,0,'2015-12-20',49,'1460','GRN Reversal for PO: 35 CRUISE - DVD-CASE-2000 x DVD covers to something else x 2000 @ 1.00',-2000,0,'',0);
-INSERT INTO `gltrans` VALUES (189,25,10,0,'2015-12-20',49,'2150','GRN Reversal PO: 35 CRUISE - DVD-CASE-2000 x DVD covers to something else x 2000 @ 1.00',2000,0,'',0);
+INSERT INTO `gltrans` VALUES (186,25,59,0,'2015-12-20',49,'1460','PO: 35 CRUISE - DVD-CASE - 2000 x DVD covers to something else x 2000 @ 1.00',2000,1,'',0);
+INSERT INTO `gltrans` VALUES (187,25,59,0,'2015-12-20',49,'2150','PO1450567661: 35 CRUISE - DVD-CASE - 2000 x DVD covers to something else x 2000 @ 1.00',-2000,1,'',0);
+INSERT INTO `gltrans` VALUES (188,25,10,0,'2015-12-20',49,'1460','GRN Reversal for PO: 35 CRUISE - DVD-CASE-2000 x DVD covers to something else x 2000 @ 1.00',-2000,1,'',0);
+INSERT INTO `gltrans` VALUES (189,25,10,0,'2015-12-20',49,'2150','GRN Reversal PO: 35 CRUISE - DVD-CASE-2000 x DVD covers to something else x 2000 @ 1.00',2000,1,'',0);
+INSERT INTO `gltrans` VALUES (190,11,1,0,'2017-01-23',62,'5000','ANGRY - BREAD x -3 @ 0.5625',-1.6875,1,'',0);
+INSERT INTO `gltrans` VALUES (191,11,1,0,'2017-01-23',62,'1460','ANGRY - BREAD x -3 @ 0.5625',1.6875,1,'',0);
+INSERT INTO `gltrans` VALUES (192,11,1,0,'2017-01-23',62,'4100','ANGRY - BREAD x -3 @ 3.91',11.73,1,'',0);
+INSERT INTO `gltrans` VALUES (193,11,1,0,'2017-01-23',62,'1100','ANGRY',-13.178655,1,'',0);
+INSERT INTO `gltrans` VALUES (194,11,1,0,'2017-01-23',62,'2300','ANGRY',0.5865,1,'',0);
+INSERT INTO `gltrans` VALUES (195,11,1,0,'2017-01-23',62,'2300','ANGRY',0.862155,1,'',0);
+INSERT INTO `gltrans` VALUES (196,12,5,0,'2017-01-23',62,'1030','Melbourne Counter Return 1',-13.18,1,'',0);
+INSERT INTO `gltrans` VALUES (197,12,5,0,'2017-01-23',62,'1100','Melbourne Counter Return 1',13.18,1,'',0);
 
 --
 -- Dumping data for table `grns`
@@ -9410,7 +9435,7 @@ INSERT INTO `labels` VALUES (1,'Test',210,297,0,0,5,10,0,0);
 --
 
 INSERT INTO `locations` VALUES ('AN','Anaheim',' ','','','','','United States','','','','Brett',1,'',0,'',0,1,'',1);
-INSERT INTO `locations` VALUES ('MEL','Melbourne','1234 Collins Street','Melbourne','Victoria 2345','','2345','Australia','+(61) (3) 5678901','+61 3 56789013','jacko@webdemo.com','Jack Roberts',1,'',0,'',1,1,'',1);
+INSERT INTO `locations` VALUES ('MEL','Melbourne','1234 Collins Street','Melbourne','Victoria 2345','','2345','Australia','+(61) (3) 5678901','+61 3 56789013','jacko@webdemo.com','Jack Roberts',1,'ANGRY',0,'ANGRY',1,1,'',1);
 INSERT INTO `locations` VALUES ('TOR','Toronto','Level 100 ','CN Tower','Toronto','','','','','','','Clive Contrary',1,'',1,'',1,1,'',1);
 
 --
@@ -9460,7 +9485,7 @@ INSERT INTO `locstock` VALUES ('AN','TESTSERIALITEM',0,0,'');
 INSERT INTO `locstock` VALUES ('AN','YEAST',0,0,'');
 INSERT INTO `locstock` VALUES ('MEL','BIGEARS12',0,0,'');
 INSERT INTO `locstock` VALUES ('MEL','BirthdayCakeConstruc',0,0,'');
-INSERT INTO `locstock` VALUES ('MEL','BREAD',0,0,'Y63');
+INSERT INTO `locstock` VALUES ('MEL','BREAD',3,0,'Y63');
 INSERT INTO `locstock` VALUES ('MEL','CUTTING',0,0,'');
 INSERT INTO `locstock` VALUES ('MEL','DR_TUMMY',0,0,'');
 INSERT INTO `locstock` VALUES ('MEL','DVD-CASE',310,0,'4T2');
@@ -9607,9 +9632,9 @@ INSERT INTO `offers` VALUES (1,0,'BINGO','BREAD',5,'each',0.95,'2011-10-24','USD
 -- Dumping data for table `paymentmethods`
 --
 
-INSERT INTO `paymentmethods` VALUES (1,'Cheque',1,1,1,0);
-INSERT INTO `paymentmethods` VALUES (2,'Cash',1,1,0,0);
-INSERT INTO `paymentmethods` VALUES (3,'Direct Credit',1,1,0,0);
+INSERT INTO `paymentmethods` VALUES (1,'Cheque',1,1,1,0,0);
+INSERT INTO `paymentmethods` VALUES (2,'Cash',1,1,0,0,0.25);
+INSERT INTO `paymentmethods` VALUES (3,'Direct Credit',1,1,0,0,0);
 
 --
 -- Dumping data for table `paymentterms`
@@ -9688,6 +9713,20 @@ INSERT INTO `periods` VALUES (47,'2015-10-31');
 INSERT INTO `periods` VALUES (48,'2015-11-30');
 INSERT INTO `periods` VALUES (49,'2015-12-31');
 INSERT INTO `periods` VALUES (50,'2016-01-31');
+INSERT INTO `periods` VALUES (51,'2016-02-29');
+INSERT INTO `periods` VALUES (52,'2016-03-31');
+INSERT INTO `periods` VALUES (53,'2016-04-30');
+INSERT INTO `periods` VALUES (54,'2016-05-31');
+INSERT INTO `periods` VALUES (55,'2016-06-30');
+INSERT INTO `periods` VALUES (56,'2016-07-31');
+INSERT INTO `periods` VALUES (57,'2016-08-31');
+INSERT INTO `periods` VALUES (58,'2016-09-30');
+INSERT INTO `periods` VALUES (59,'2016-10-31');
+INSERT INTO `periods` VALUES (60,'2016-11-30');
+INSERT INTO `periods` VALUES (61,'2016-12-31');
+INSERT INTO `periods` VALUES (62,'2017-01-31');
+INSERT INTO `periods` VALUES (63,'2017-02-28');
+INSERT INTO `periods` VALUES (64,'2017-03-31');
 
 --
 -- Dumping data for table `pickinglistdetails`
@@ -9708,33 +9747,33 @@ INSERT INTO `periods` VALUES (50,'2016-01-31');
 -- Dumping data for table `prices`
 --
 
-INSERT INTO `prices` VALUES ('BIGEARS12','DE','AUD','',4428.0000,'','1999-01-01','0000-00-00');
-INSERT INTO `prices` VALUES ('BirthdayCakeConstruc','DE','AUD','',1476.0000,'','1999-01-01','0000-00-00');
-INSERT INTO `prices` VALUES ('BREAD','DE','AUD','',123.0000,'','1999-01-01','0000-00-00');
-INSERT INTO `prices` VALUES ('CUTTING','DE','USD','',50.0000,'','2013-06-29','0000-00-00');
-INSERT INTO `prices` VALUES ('DR_TUMMY','DE','AUD','',246.0000,'','1999-01-01','0000-00-00');
-INSERT INTO `prices` VALUES ('DVD-CASE','DE','AUD','',124.5000,'','1999-01-01','0000-00-00');
-INSERT INTO `prices` VALUES ('DVD-CASE','DE','GBP','DUMBLE',52.6500,'DUMBLE','1999-01-01','0000-00-00');
-INSERT INTO `prices` VALUES ('DVD-DHWV','DE','AUD','',123.0000,'','1999-01-01','0000-00-00');
-INSERT INTO `prices` VALUES ('DVD-DHWV','DE','USD','',10.5000,'','2013-01-27','0000-00-00');
-INSERT INTO `prices` VALUES ('DVD-LTWP','DE','AUD','',123.0000,'','1999-01-01','0000-00-00');
-INSERT INTO `prices` VALUES ('DVD-LTWP','DE','USD','',7.4900,'','2013-04-27','0000-00-00');
-INSERT INTO `prices` VALUES ('DVD-TOPGUN','DE','AUD','',123.0000,'','1999-01-01','0000-00-00');
-INSERT INTO `prices` VALUES ('DVD-TOPGUN','DE','USD','',12.2500,'','2013-04-27','0000-00-00');
-INSERT INTO `prices` VALUES ('DVD-UNSG','DE','AUD','',123.0000,'','1999-01-01','0000-00-00');
-INSERT INTO `prices` VALUES ('DVD-UNSG2','DE','AUD','',123.0000,'','1999-01-01','0000-00-00');
-INSERT INTO `prices` VALUES ('DVD_ACTION','DE','AUD','',123.0000,'','1999-01-01','0000-00-00');
-INSERT INTO `prices` VALUES ('FLOUR','DE','AUD','',123.0000,'','1999-01-01','0000-00-00');
-INSERT INTO `prices` VALUES ('FUJI990101','DE','AUD','',1353.0000,'','1999-01-01','0000-00-00');
-INSERT INTO `prices` VALUES ('FUJI990102','DE','AUD','',861.0000,'','1999-01-01','0000-00-00');
-INSERT INTO `prices` VALUES ('HIT3042-4','DE','AUD','',1107.0000,'','1999-01-01','0000-00-00');
-INSERT INTO `prices` VALUES ('HIT3043-5','DE','AUD','',1599.0000,'','1999-01-01','0000-00-00');
-INSERT INTO `prices` VALUES ('HIT3043-5','DE','USD','',2300.0000,'','1999-01-01','0000-00-00');
-INSERT INTO `prices` VALUES ('LABOUR','DE','USD','',150.0000,'','2014-07-26','0000-00-00');
-INSERT INTO `prices` VALUES ('SALT','DE','AUD','',123.0000,'','1999-01-01','0000-00-00');
-INSERT INTO `prices` VALUES ('SLICE','DE','AUD','',123.0000,'','1999-01-01','0000-00-00');
-INSERT INTO `prices` VALUES ('TAPE1','DE','USD','',17.5000,'','2013-02-08','0000-00-00');
-INSERT INTO `prices` VALUES ('YEAST','DE','AUD','',123.0000,'','1999-01-01','0000-00-00');
+INSERT INTO `prices` VALUES ('BIGEARS12','DE','AUD','',4428.0000,'','1999-01-01','9999-12-31');
+INSERT INTO `prices` VALUES ('BirthdayCakeConstruc','DE','AUD','',1476.0000,'','1999-01-01','9999-12-31');
+INSERT INTO `prices` VALUES ('BREAD','DE','AUD','',123.0000,'','1999-01-01','9999-12-31');
+INSERT INTO `prices` VALUES ('CUTTING','DE','USD','',50.0000,'','2013-06-29','9999-12-31');
+INSERT INTO `prices` VALUES ('DR_TUMMY','DE','AUD','',246.0000,'','1999-01-01','9999-12-31');
+INSERT INTO `prices` VALUES ('DVD-CASE','DE','AUD','',124.5000,'','1999-01-01','9999-12-31');
+INSERT INTO `prices` VALUES ('DVD-CASE','DE','GBP','DUMBLE',52.6500,'DUMBLE','1999-01-01','9999-12-31');
+INSERT INTO `prices` VALUES ('DVD-DHWV','DE','AUD','',123.0000,'','1999-01-01','9999-12-31');
+INSERT INTO `prices` VALUES ('DVD-DHWV','DE','USD','',10.5000,'','2013-01-27','9999-12-31');
+INSERT INTO `prices` VALUES ('DVD-LTWP','DE','AUD','',123.0000,'','1999-01-01','9999-12-31');
+INSERT INTO `prices` VALUES ('DVD-LTWP','DE','USD','',7.4900,'','2013-04-27','9999-12-31');
+INSERT INTO `prices` VALUES ('DVD-TOPGUN','DE','AUD','',123.0000,'','1999-01-01','9999-12-31');
+INSERT INTO `prices` VALUES ('DVD-TOPGUN','DE','USD','',12.2500,'','2013-04-27','9999-12-31');
+INSERT INTO `prices` VALUES ('DVD-UNSG','DE','AUD','',123.0000,'','1999-01-01','9999-12-31');
+INSERT INTO `prices` VALUES ('DVD-UNSG2','DE','AUD','',123.0000,'','1999-01-01','9999-12-31');
+INSERT INTO `prices` VALUES ('DVD_ACTION','DE','AUD','',123.0000,'','1999-01-01','9999-12-31');
+INSERT INTO `prices` VALUES ('FLOUR','DE','AUD','',123.0000,'','1999-01-01','9999-12-31');
+INSERT INTO `prices` VALUES ('FUJI990101','DE','AUD','',1353.0000,'','1999-01-01','9999-12-31');
+INSERT INTO `prices` VALUES ('FUJI990102','DE','AUD','',861.0000,'','1999-01-01','9999-12-31');
+INSERT INTO `prices` VALUES ('HIT3042-4','DE','AUD','',1107.0000,'','1999-01-01','9999-12-31');
+INSERT INTO `prices` VALUES ('HIT3043-5','DE','AUD','',1599.0000,'','1999-01-01','9999-12-31');
+INSERT INTO `prices` VALUES ('HIT3043-5','DE','USD','',2300.0000,'','1999-01-01','9999-12-31');
+INSERT INTO `prices` VALUES ('LABOUR','DE','USD','',150.0000,'','2014-07-26','9999-12-31');
+INSERT INTO `prices` VALUES ('SALT','DE','AUD','',123.0000,'','1999-01-01','9999-12-31');
+INSERT INTO `prices` VALUES ('SLICE','DE','AUD','',123.0000,'','1999-01-01','9999-12-31');
+INSERT INTO `prices` VALUES ('TAPE1','DE','USD','',17.5000,'','2013-02-08','9999-12-31');
+INSERT INTO `prices` VALUES ('YEAST','DE','AUD','',123.0000,'','1999-01-01','9999-12-31');
 
 --
 -- Dumping data for table `prodspecs`
@@ -9748,6 +9787,7 @@ INSERT INTO `prices` VALUES ('YEAST','DE','AUD','',123.0000,'','1999-01-01','000
 INSERT INTO `purchdata` VALUES ('BINGO','DVD-CASE',1000.5900,'10,000',10000,'Mother load of DVD cases',1,1,'2011-03-26','',1);
 INSERT INTO `purchdata` VALUES ('BINGO','DVD-DHWV',8.5000,'5 pack',5,'5 Pack Die Hard With Vengence',3,1,'2012-03-01','DHWV-5',1);
 INSERT INTO `purchdata` VALUES ('BINGO','HIT3043-5',1235.0000,'',1,'',5,1,'2009-09-18','',1);
+INSERT INTO `purchdata` VALUES ('CRUISE','DR_TUMMY',10.0000,'',1,'',10,1,'2016-10-19','',1);
 INSERT INTO `purchdata` VALUES ('CRUISE','DVD-CASE',1151.2500,'2000 pack',2000,'2000 x DVD covers',50,0,'2011-06-26','coverx2000',1);
 INSERT INTO `purchdata` VALUES ('CRUISE','DVD-UNSG2',200.0000,'10 Pack',10,'',5,1,'2009-09-18','',1);
 INSERT INTO `purchdata` VALUES ('CRUISE','TAPE1',2.5000,'feet',1,'DFR Tape per Keystone spec',20,1,'2013-02-09','DFR-12',10);
@@ -9780,6 +9820,8 @@ INSERT INTO `purchorderdetails` VALUES (11,32,'DVD-CASE','2014-01-13','webERP De
 INSERT INTO `purchorderdetails` VALUES (12,33,'DVD-CASE','2014-01-14','webERP Demo DVD Case','1460',3,1.5,2,1,100,100,0,'',0,'10,000','',0,1);
 INSERT INTO `purchorderdetails` VALUES (13,34,'LABOUR','2014-07-26','Labour item - Freddie','5500',0,5.9,0,75,2,2,0,'0',0,'each','',0,1);
 INSERT INTO `purchorderdetails` VALUES (14,35,'DVD-CASE','2016-02-08','2000 x DVD covers to something else','1460',0,0.575625,0,1,2000,0,0,'0',0,'2000 pack','coverx2000',0,2000);
+INSERT INTO `purchorderdetails` VALUES (15,36,'DVD-DHWV','2016-10-22','DHWV-5  5 Pack Die Hard With Vengence','1460',0,8.5,0,0,0,0,0,'',0,'5 pack','DHWV-5',0,5);
+INSERT INTO `purchorderdetails` VALUES (16,37,'DR_TUMMY','2016-10-30','  ','1460',0,10,0,0,51,0,0,'',0,'','',0,1);
 
 --
 -- Dumping data for table `purchorders`
@@ -9798,6 +9840,8 @@ INSERT INTO `purchorders` VALUES (32,'BINGO','','2014-01-13 00:00:00',1,NULL,1,'
 INSERT INTO `purchorders` VALUES (33,'BINGO','','2014-01-14 00:00:00',1,NULL,1,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','2345','Australia','+(61) (3) 56789','Box 3499','Gardenier','San Fransisco','California 54424','','US','','','Jack Roberts',0.00,'2014-01-14','','','2014-01-14','Completed','14/01/2014 - Order Completed on entry of GRN<br />14/01/2014 - Order Created and Authorised by <a href=\"mailto:admin@weberp.org\">Demonstration user</a><br /><br />','30','');
 INSERT INTO `purchorders` VALUES (34,'WHYNOT','','2014-07-26 00:00:00',1.0884,NULL,1,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','2345','Australia','+(61) (3) 5678901','Well I will ','If I','Want ','To','','','','12323','Jack Roberts',1.00,'2014-07-26','','1','2014-07-26','Completed','26/07/2014 - Order Completed on entry of GRN<br />26/07/2014 - Order Created and Authorised by <a href=\"mailto:admin@weberp.org\">Demonstration user</a><br /><br />','20','');
 INSERT INTO `purchorders` VALUES (35,'CRUISE','','2015-12-20 00:00:00',0.6715,NULL,1,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','2345','Australia','+(61) (3) 5678901','Box 2001','Ft Lauderdale, Florida','','','','','Barry Toad','','Jack Roberts',1.00,'2015-12-20','','1','2015-12-20','Printed','20/12/2015 GRN Reversed for 2000 x DVD covers to something else by Demonstration user<br />20/12/2015 - Order Completed on entry of GRN<br />20/12/2015 - Order Created and Authorised by <a href=\"mailto:admin@weberp.org\">Demonstration user</a><br /><br />','30','');
+INSERT INTO `purchorders` VALUES (36,'BINGO',NULL,'2016-10-19 00:00:00',1,NULL,0,'admin',NULL,'MEL','Melbourne','1234 Collins Street','Melbourne','Victoria 2345','','2345 Australia','+(61) (3) 5678901','Box 3499','Gardenier','San Fransisco','California 54424','','US','','','',1.00,'2016-10-19','','1','2016-10-19','Pending','19/10/2016 - Order Created by  <a href=\"mailto:admin@weberp.org\">Demonstration user</a> - Auto created from sales orders<br />','30','');
+INSERT INTO `purchorders` VALUES (37,'CRUISE',NULL,'2016-10-20 00:00:00',0.8147,NULL,1,'admin',NULL,'MEL','Melbourne','1234 Collins Street','Melbourne','Victoria 2345','','2345 Australia','+(61) (3) 5678901','Box 2001','Ft Lauderdale, Florida','','','','','','','',1.00,'2016-10-20','','1','2016-10-20','Authorised','20/10/2016 - Order Created and Authorized by <a href=\"mailto:admin@weberp.org\">Demonstration user</a> - Auto created from sales orders<br />','30','');
 
 --
 -- Dumping data for table `qasamples`
@@ -12667,6 +12711,7 @@ INSERT INTO `reports` VALUES (141,'Work Order Dump','rpt','man','1','Letter:216:
 INSERT INTO `salesanalysis` VALUES ('DE',19,94.5,20.88,'16','16',9,0,'DVD-DHWV','TR',1,'ERI','DVD',1);
 INSERT INTO `salesanalysis` VALUES ('DE',19,2.74,0,'16','16',1,0,'PAYTSURCHARGE','TR',1,'ERI','ZPAYT',2);
 INSERT INTO `salesanalysis` VALUES ('DE',22,5,1.13,'12','12',2,0,'BREAD','TR',1,'ERI','FOOD',3);
+INSERT INTO `salesanalysis` VALUES ('DE',62,-11.73,-1.6875,'ANGRY','ANGRY',-3,0,'BREAD','TR',1,'DE','FOOD',4);
 
 --
 -- Dumping data for table `salescat`
@@ -12677,7 +12722,7 @@ INSERT INTO `salescat` VALUES (3,1,'Action',1);
 INSERT INTO `salescat` VALUES (4,3,'Gibson',1);
 INSERT INTO `salescat` VALUES (5,3,'Willis',1);
 INSERT INTO `salescat` VALUES (6,3,'Cruise',1);
-INSERT INTO `salescat` VALUES (7,0,'Air Conditioning',1);
+INSERT INTO `salescat` VALUES (7,0,'Test2',1);
 INSERT INTO `salescat` VALUES (8,0,'Test',1);
 
 --
@@ -12726,17 +12771,23 @@ INSERT INTO `salesman` VALUES ('PHO','Phone Contact','','',5.5,10001,2.95,1);
 INSERT INTO `salesorderdetails` VALUES (0,1,'DVD-DHWV',9,10.5,9,0,0,'2013-06-26 00:00:00',1,NULL,'2013-06-23','');
 INSERT INTO `salesorderdetails` VALUES (0,7,'BREAD',2,2.5,2,0,0,'2013-09-07 00:00:00',1,'','2013-09-06','');
 INSERT INTO `salesorderdetails` VALUES (0,8,'CUTTING',0,50,2,0,0,'0000-00-00 00:00:00',0,'','2014-08-02','0');
+INSERT INTO `salesorderdetails` VALUES (0,11,'DR_TUMMY',0,16.5,50,0,0,'0000-00-00 00:00:00',0,'','2016-10-19','');
 INSERT INTO `salesorderdetails` VALUES (1,1,'PAYTSURCHARGE',1,2.7405,1,0,0,'2013-06-26 00:00:00',1,NULL,'2013-06-23','');
 INSERT INTO `salesorderdetails` VALUES (1,8,'DR_TUMMY',0,0,1,0,0,'0000-00-00 00:00:00',0,'','2014-08-02','0');
+INSERT INTO `salesorderdetails` VALUES (1,11,'DVD-LTWP',0,7.49,2,0,0,'0000-00-00 00:00:00',0,'','2016-10-19','0');
+INSERT INTO `salesorderdetails` VALUES (1,12,'BREAD',0,4.6728971962617,1,0,0,'2014-03-07 00:00:00',0,'','2014-03-07',NULL);
+INSERT INTO `salesorderdetails` VALUES (2,11,'DVD-TOPGUN',0,12.25,2,0,0,'0000-00-00 00:00:00',0,'','2016-10-19','0');
 
 --
 -- Dumping data for table `salesorders`
 --
 
-INSERT INTO `salesorders` VALUES (1,'16','16','',NULL,' Inv 1','2013-06-23','DE',1,'34 Marram Way','Peka Peka','RD1 Waiakane','5134','','New Zealand','64275567890','phil@logicworks.co.nz','Phil Daintree',1,0,'TOR','2013-06-23','2013-06-23',0,'0000-00-00',0,'2013-06-23',0,'ERI');
+INSERT INTO `salesorders` VALUES (1,'16','16','',NULL,' Inv 1','2013-06-23','DE',1,'34 Marram Way','Peka Peka','RD1 Waiakane','5134','','New Zealand','64275567890','phil@logicworks.co.nz','Phil Daintree',1,0,'TOR','2013-06-23','2013-06-23',0,'0000-00-00',0,'2013-06-23',1,'ERI');
 INSERT INTO `salesorders` VALUES (7,'12','12','',NULL,' Inv 2','2013-09-06','DE',1,'123 Alexander Road','Roundhay','Leeds','3211','','United Kingdom','212234566','angus@angry.com','Angus Routledge &amp; Co',1,0,'TOR','2013-09-07','2013-09-07',0,'0000-00-00',0,'2013-09-07',0,'ERI');
-INSERT INTO `salesorders` VALUES (8,'12','12','',NULL,'','2014-08-02','DE',1,'123 Alexander Road','Roundhay','Leeds','3211','','United Kingdom','212234566','angus@angry.com','Angus Routledge & Co',1,0,'TOR','2014-08-04','2014-08-04',0,'0000-00-00',0,'2014-08-04',0,'ERI');
+INSERT INTO `salesorders` VALUES (8,'12','12','',NULL,'','2014-08-02','DE',1,'123 Alexander Road','Roundhay','Leeds','3211','','United Kingdom','212234566','angus@angry.com','Angus Routledge & Co',1,0,'TOR','2014-08-04','2014-08-04',0,'0000-00-00',0,'2014-08-04',1,'ERI');
 INSERT INTO `salesorders` VALUES (10,'WEB0000018','WEB0000018','',NULL,'','2014-08-31','DE',1,'34 Marram Way','Peka Peka, RD1 Waikanae','','Kapiti','5134','New Zealand','04 528 9514','phil@logicworks.co.nz','Phil Daintree',1,0,'TOR','2014-08-31','2014-08-31',0,'0000-00-00',1,'2014-08-31',0,'ERI');
+INSERT INTO `salesorders` VALUES (11,'ANGRY','ANGRYFL','',NULL,'','2016-10-19','DE',1,'1821 Sunnyside','Ft Lauderdale','Florida','42554','','United States','2445 2232 524','wendy@angry.com','Angus Rouledge - Florida',1,0,'TOR','2016-10-19','2016-10-19',0,'0000-00-00',0,'2016-10-19',1,'PHO');
+INSERT INTO `salesorders` VALUES (12,'ANGRY','ANGRY','POS-00001 102',NULL,NULL,'2014-03-07','DE',1,'','','',NULL,'','',NULL,NULL,'Angus Rouledge - Toronto',1,0,'MEL','2014-03-07','2014-03-07',1,'2014-03-07',0,'0000-00-00',0,'');
 
 --
 -- Dumping data for table `salestypes`
@@ -12820,6 +12871,7 @@ INSERT INTO `scripts` VALUES ('EDIMessageFormat.php',10,'Specifies the EDI messa
 INSERT INTO `scripts` VALUES ('EDIProcessOrders.php',11,'Processes incoming EDI orders into sales orders');
 INSERT INTO `scripts` VALUES ('EDISendInvoices.php',15,'Processes invoiced EDI customer invoices into EDI messages and sends using the customers preferred method either ftp or email attachments.');
 INSERT INTO `scripts` VALUES ('EmailConfirmation.php',2,'');
+INSERT INTO `scripts` VALUES ('EmailCustStatements.php',2,'Email Customer Statements');
 INSERT INTO `scripts` VALUES ('EmailCustTrans.php',2,'Emails selected invoice or credit to the customer');
 INSERT INTO `scripts` VALUES ('ExchangeRateTrend.php',2,'Shows the trend in exchange rates as retrieved from ECB');
 INSERT INTO `scripts` VALUES ('Factors.php',5,'Defines supplier factor companies');
@@ -12844,8 +12896,11 @@ INSERT INTO `scripts` VALUES ('GLAccountCSV.php',8,'Produces a CSV of the GL tra
 INSERT INTO `scripts` VALUES ('GLAccountInquiry.php',8,'Shows the general ledger transactions for a specified account over a specified range of periods');
 INSERT INTO `scripts` VALUES ('GLAccountReport.php',8,'Produces a report of the GL transactions for a particular account');
 INSERT INTO `scripts` VALUES ('GLAccounts.php',10,'Defines the general ledger accounts');
+INSERT INTO `scripts` VALUES ('GLAccountUsers.php',15,'Maintenance of users allowed to a GL Account');
 INSERT INTO `scripts` VALUES ('GLBalanceSheet.php',8,'Shows the balance sheet for the company as at a specified date');
 INSERT INTO `scripts` VALUES ('GLBudgets.php',10,'Defines GL Budgets');
+INSERT INTO `scripts` VALUES ('GLCashFlowsIndirect.php',8,'Shows a statement of cash flows for the period using the indirect method');
+INSERT INTO `scripts` VALUES ('GLCashFlowsSetup.php',8,'Setups the statement of cash flows sections');
 INSERT INTO `scripts` VALUES ('GLCodesInquiry.php',8,'Shows the list of general ledger codes defined with account names and groupings');
 INSERT INTO `scripts` VALUES ('GLJournal.php',10,'Entry of general ledger journals, periods are calculated based on the date entered here');
 INSERT INTO `scripts` VALUES ('GLJournalInquiry.php',15,'General Ledger Journal Inquiry');
@@ -12866,6 +12921,7 @@ INSERT INTO `scripts` VALUES ('InternalStockCategoriesByRole.php',15,'Maintains 
 INSERT INTO `scripts` VALUES ('InternalStockRequest.php',1,'Create an internal stock request');
 INSERT INTO `scripts` VALUES ('InternalStockRequestAuthorisation.php',1,'Authorise internal stock requests');
 INSERT INTO `scripts` VALUES ('InternalStockRequestFulfill.php',1,'Fulfill an internal stock request');
+INSERT INTO `scripts` VALUES ('InternalStockRequestInquiry.php',1,'Internal Stock Request inquiry');
 INSERT INTO `scripts` VALUES ('InventoryPlanning.php',2,'Creates a pdf report showing the last 4 months use of items including as a component of assemblies together with stock quantity on hand, current demand for the item and current quantity on sales order.');
 INSERT INTO `scripts` VALUES ('InventoryPlanningPrefSupplier.php',2,'Produces a report showing the inventory to be ordered by supplier');
 INSERT INTO `scripts` VALUES ('InventoryPlanningPrefSupplier_CSV.php',2,'Inventory planning spreadsheet');
@@ -12904,12 +12960,15 @@ INSERT INTO `scripts` VALUES ('PaymentMethods.php',15,'');
 INSERT INTO `scripts` VALUES ('Payments.php',5,'Entry of bank account payments either against an AP account or a general ledger payment - if the AP-GL link in company preferences is set');
 INSERT INTO `scripts` VALUES ('PaymentTerms.php',10,'Defines the payment terms records, these can be expressed as either a number of days credit or a day in the following month. All customers and suppliers must have a corresponding payment term recorded against their account');
 INSERT INTO `scripts` VALUES ('PcAnalysis.php',15,'Creates an Excel with details of PC expnese for 24 months');
+INSERT INTO `scripts` VALUES ('PcAssignCashTabToTab.php',12,'Assign cash from one tab to another');
 INSERT INTO `scripts` VALUES ('PcAssignCashToTab.php',6,'');
 INSERT INTO `scripts` VALUES ('PcAuthorizeExpenses.php',6,'');
 INSERT INTO `scripts` VALUES ('PcClaimExpensesFromTab.php',6,'');
 INSERT INTO `scripts` VALUES ('PcExpenses.php',15,'');
 INSERT INTO `scripts` VALUES ('PcExpensesTypeTab.php',15,'');
+INSERT INTO `scripts` VALUES ('PcReportExpense.php',15,'');
 INSERT INTO `scripts` VALUES ('PcReportTab.php',6,'');
+INSERT INTO `scripts` VALUES ('PcTabExpensesList.php',15,'Creates excel with all movements of tab between dates');
 INSERT INTO `scripts` VALUES ('PcTabs.php',15,'');
 INSERT INTO `scripts` VALUES ('PcTypeTabs.php',15,'');
 INSERT INTO `scripts` VALUES ('PDFBankingSummary.php',3,'Creates a pdf showing the amounts entered as receipts on a specified date together with references for the purposes of banking');
@@ -12921,6 +12980,7 @@ INSERT INTO `scripts` VALUES ('PDFDeliveryDifferences.php',3,'Creates a pdf repo
 INSERT INTO `scripts` VALUES ('PDFDIFOT.php',3,'Produces a pdf showing the delivery in full on time performance');
 INSERT INTO `scripts` VALUES ('PDFFGLabel.php',11,'Produces FG Labels');
 INSERT INTO `scripts` VALUES ('PDFGLJournal.php',15,'General Ledger Journal Print');
+INSERT INTO `scripts` VALUES ('PDFGLJournalCN.php',1,'Print GL Journal Chinese version');
 INSERT INTO `scripts` VALUES ('PDFGrn.php',2,'Produces a GRN report on the receipt of stock');
 INSERT INTO `scripts` VALUES ('PDFLowGP.php',2,'Creates a pdf report showing the low gross profit sales made in the selected date range. The percentage of gp deemed acceptable can also be entered');
 INSERT INTO `scripts` VALUES ('PDFOrdersInvoiced.php',3,'Produces a pdf of orders invoiced based on selected criteria');
@@ -12969,6 +13029,7 @@ INSERT INTO `scripts` VALUES ('PrintSalesOrder_generic.php',2,'');
 INSERT INTO `scripts` VALUES ('PrintWOItemSlip.php',4,'PDF WO Item production Slip ');
 INSERT INTO `scripts` VALUES ('ProductSpecs.php',16,'Product Specification Maintenance');
 INSERT INTO `scripts` VALUES ('PurchaseByPrefSupplier.php',2,'Purchase ordering by preferred supplier');
+INSERT INTO `scripts` VALUES ('PurchasesReport.php',2,'Shows a report of purchases from suppliers for the range of selected dates');
 INSERT INTO `scripts` VALUES ('PurchData.php',4,'Entry of supplier purchasing data, the suppliers part reference and the suppliers currency cost of the item');
 INSERT INTO `scripts` VALUES ('QATests.php',16,'Quality Test Maintenance');
 INSERT INTO `scripts` VALUES ('RecurringSalesOrders.php',1,'');
@@ -13052,6 +13113,7 @@ INSERT INTO `scripts` VALUES ('SupplierAllocations.php',5,'Entry of allocations 
 INSERT INTO `scripts` VALUES ('SupplierBalsAtPeriodEnd.php',2,'');
 INSERT INTO `scripts` VALUES ('SupplierContacts.php',5,'Entry of supplier contacts and contact details including email addresses');
 INSERT INTO `scripts` VALUES ('SupplierCredit.php',5,'Entry of supplier credit notes (debit notes)');
+INSERT INTO `scripts` VALUES ('SupplierGRNAndInvoiceInquiry.php',5,'Supplier\'s delivery note and grn relationship inquiry');
 INSERT INTO `scripts` VALUES ('SupplierInquiry.php',2,'Inquiry showing invoices, credit notes and payments made to suppliers together with the amounts outstanding');
 INSERT INTO `scripts` VALUES ('SupplierInvoice.php',5,'Entry of supplier invoices');
 INSERT INTO `scripts` VALUES ('SupplierPriceList.php',4,'Maintain Supplier Price Lists');
@@ -13115,6 +13177,7 @@ INSERT INTO `scripts` VALUES ('Z_DeleteInvoice.php',15,'Utility to reverse a cus
 INSERT INTO `scripts` VALUES ('Z_DeleteOldPrices.php',15,'Deletes all old prices');
 INSERT INTO `scripts` VALUES ('Z_DeleteSalesTransActions.php',15,'Utility to delete all sales transactions, sales analysis the lot! Extreme care required!!!');
 INSERT INTO `scripts` VALUES ('Z_DescribeTable.php',11,'');
+INSERT INTO `scripts` VALUES ('Z_GLAccountUsersCopyAuthority.php',15,'Utility to copy authority of GL accounts from one user to another');
 INSERT INTO `scripts` VALUES ('Z_ImportChartOfAccounts.php',11,'');
 INSERT INTO `scripts` VALUES ('Z_ImportDebtors.php',15,'Import debtors by csv file');
 INSERT INTO `scripts` VALUES ('Z_ImportFixedAssets.php',15,'Allow fixed assets to be imported from a csv');
@@ -13253,6 +13316,7 @@ INSERT INTO `securitytokens` VALUES (14,'Unknown');
 INSERT INTO `securitytokens` VALUES (15,'User Management and System Administration');
 INSERT INTO `securitytokens` VALUES (16,'QA');
 INSERT INTO `securitytokens` VALUES (18,'Cost authority');
+INSERT INTO `securitytokens` VALUES (19,'Internal stock request fully access authority');
 
 --
 -- Dumping data for table `sellthroughsupport`
@@ -13293,7 +13357,7 @@ INSERT INTO `stockcategory` VALUES ('FOOD','Food','F','1460','5700','5700','5200
 INSERT INTO `stockcategory` VALUES ('TAPE','Tape','F','1460','5700','5700','5800','5800','1440',1);
 INSERT INTO `stockcategory` VALUES ('ZFR','Freight','D','1460','5600','5600','5600','5600','1440',1);
 INSERT INTO `stockcategory` VALUES ('ZLAB','Labour','L','5500','5700','5700','5900','5500','1440',1);
-INSERT INTO `stockcategory` VALUES ('ZPAYT','Payment Surcharge','F','1010','1','1','1','1','1010',1);
+INSERT INTO `stockcategory` VALUES ('ZPAYT','Payment Surcharge','D','1010','1','1','1','1','1010',1);
 
 --
 -- Dumping data for table `stockcatproperties`
@@ -13437,6 +13501,7 @@ INSERT INTO `stockmoves` VALUES (33,'DVD-CASE',25,57,'MEL','2014-01-14','','',''
 INSERT INTO `stockmoves` VALUES (34,'LABOUR',25,58,'MEL','2014-07-26','','','',5.42080,32,'WHYNOT (Why not add a new supplier) - 34',2,0,75,1,2,0,NULL);
 INSERT INTO `stockmoves` VALUES (35,'DVD-CASE',25,59,'MEL','2015-12-20','admin','','',0.85722,49,'CRUISE (Cruise Company Inc) - 35',2000,0,1,1,2310,0,NULL);
 INSERT INTO `stockmoves` VALUES (36,'DVD-CASE',25,10,'MEL','2015-12-20','admin','','',0.00000,49,'Reversal - CRUISE - 35',-2000,0,1,1,310,0,NULL);
+INSERT INTO `stockmoves` VALUES (37,'BREAD',11,1,'MEL','2017-01-23','admin','ANGRY','ANGRY',3.91000,62,'',3,0,0.5625,1,3,0,'');
 
 --
 -- Dumping data for table `stockmovestaxes`
@@ -13448,13 +13513,15 @@ INSERT INTO `stockmovestaxes` VALUES (28,11,0.07,1,2);
 INSERT INTO `stockmovestaxes` VALUES (28,12,0.05,0,1);
 INSERT INTO `stockmovestaxes` VALUES (29,11,0.07,1,2);
 INSERT INTO `stockmovestaxes` VALUES (29,12,0.05,0,1);
+INSERT INTO `stockmovestaxes` VALUES (37,11,0.07,1,2);
+INSERT INTO `stockmovestaxes` VALUES (37,12,0.05,0,1);
 
 --
 -- Dumping data for table `stockrequest`
 --
 
-INSERT INTO `stockrequest` VALUES (1,'MEL',1,'2012-09-19',0,0,'');
-INSERT INTO `stockrequest` VALUES (2,'MEL',2,'2014-02-08',1,0,'');
+INSERT INTO `stockrequest` VALUES (1,'MEL',1,'2012-09-19',0,0,'','');
+INSERT INTO `stockrequest` VALUES (2,'MEL',2,'2014-02-08',1,0,'','');
 
 --
 -- Dumping data for table `stockrequestitems`
@@ -13578,12 +13645,12 @@ INSERT INTO `systypes` VALUES (1,'Payment - GL',7);
 INSERT INTO `systypes` VALUES (2,'Receipt - GL',1);
 INSERT INTO `systypes` VALUES (3,'Standing Journal',0);
 INSERT INTO `systypes` VALUES (10,'Sales Invoice',2);
-INSERT INTO `systypes` VALUES (11,'Credit Note',0);
-INSERT INTO `systypes` VALUES (12,'Receipt',4);
+INSERT INTO `systypes` VALUES (11,'Credit Note',1);
+INSERT INTO `systypes` VALUES (12,'Receipt',5);
 INSERT INTO `systypes` VALUES (15,'Journal - Debtors',0);
-INSERT INTO `systypes` VALUES (16,'Location Transfer',27);
+INSERT INTO `systypes` VALUES (16,'Location Transfer',28);
 INSERT INTO `systypes` VALUES (17,'Stock Adjustment',28);
-INSERT INTO `systypes` VALUES (18,'Purchase Order',35);
+INSERT INTO `systypes` VALUES (18,'Purchase Order',37);
 INSERT INTO `systypes` VALUES (19,'Picking List',0);
 INSERT INTO `systypes` VALUES (20,'Purchase Invoice',45);
 INSERT INTO `systypes` VALUES (21,'Debit Note',8);
@@ -13593,14 +13660,14 @@ INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',59);
 INSERT INTO `systypes` VALUES (26,'Work Order Receipt',8);
 INSERT INTO `systypes` VALUES (28,'Work Order Issue',17);
 INSERT INTO `systypes` VALUES (29,'Work Order Variance',1);
-INSERT INTO `systypes` VALUES (30,'Sales Order',10);
+INSERT INTO `systypes` VALUES (30,'Sales Order',12);
 INSERT INTO `systypes` VALUES (31,'Shipment Close',28);
 INSERT INTO `systypes` VALUES (32,'Contract Close',6);
 INSERT INTO `systypes` VALUES (35,'Cost Update',26);
 INSERT INTO `systypes` VALUES (36,'Exchange Difference',1);
 INSERT INTO `systypes` VALUES (37,'Tenders',0);
 INSERT INTO `systypes` VALUES (38,'Stock Requests',2);
-INSERT INTO `systypes` VALUES (40,'Work Order',36);
+INSERT INTO `systypes` VALUES (40,'Work Order',37);
 INSERT INTO `systypes` VALUES (41,'Asset Addition',1);
 INSERT INTO `systypes` VALUES (42,'Asset Category Change',1);
 INSERT INTO `systypes` VALUES (43,'Delete w/down asset',1);
@@ -13718,6 +13785,7 @@ INSERT INTO `woitems` VALUES (30,'TAPE2',50,0,2.5,'',NULL);
 INSERT INTO `woitems` VALUES (31,'TAPE2',100,90,2.5,'',NULL);
 INSERT INTO `woitems` VALUES (32,'Test123',1,0,396.9,'',NULL);
 INSERT INTO `woitems` VALUES (34,'DR_TUMMY',1,0,0,'',NULL);
+INSERT INTO `woitems` VALUES (37,'DR_TUMMY',50,0,0,'',NULL);
 
 --
 -- Dumping data for table `worequirements`
@@ -13746,15 +13814,16 @@ INSERT INTO `workcentres` VALUES ('MEL','MEL','Default for MEL',1,0,'1',0);
 -- Dumping data for table `workorders`
 --
 
-INSERT INTO `workorders` VALUES (28,'MEL','2012-12-16','2012-12-16',0,0,NULL);
-INSERT INTO `workorders` VALUES (29,'MEL','2013-02-06','2013-02-06',0,0,NULL);
-INSERT INTO `workorders` VALUES (30,'AN','2013-02-27','2013-02-08',0,0,NULL);
-INSERT INTO `workorders` VALUES (31,'AN','2013-02-09','2013-02-09',225,0,NULL);
-INSERT INTO `workorders` VALUES (32,'TOR','2013-07-21','2013-06-21',32.5,0,NULL);
-INSERT INTO `workorders` VALUES (33,'MEL','2014-08-02','2014-08-02',0,0,NULL);
-INSERT INTO `workorders` VALUES (34,'MEL','2014-08-02','2014-08-02',0,0,NULL);
-INSERT INTO `workorders` VALUES (35,'MEL','2014-08-30','2014-08-30',0,0,NULL);
-INSERT INTO `workorders` VALUES (36,'MEL','2014-08-30','2014-08-30',0,0,NULL);
+INSERT INTO `workorders` VALUES (28,'MEL','2012-12-16','2012-12-16',0,0,NULL,'',NULL);
+INSERT INTO `workorders` VALUES (29,'MEL','2013-02-06','2013-02-06',0,0,NULL,'',NULL);
+INSERT INTO `workorders` VALUES (30,'AN','2013-02-27','2013-02-08',0,0,NULL,'',NULL);
+INSERT INTO `workorders` VALUES (31,'AN','2013-02-09','2013-02-09',225,0,NULL,'',NULL);
+INSERT INTO `workorders` VALUES (32,'TOR','2013-07-21','2013-06-21',32.5,0,NULL,'',NULL);
+INSERT INTO `workorders` VALUES (33,'MEL','2014-08-02','2014-08-02',0,0,NULL,'',NULL);
+INSERT INTO `workorders` VALUES (34,'MEL','2014-08-02','2014-08-02',0,0,NULL,'',NULL);
+INSERT INTO `workorders` VALUES (35,'MEL','2014-08-30','2014-08-30',0,0,NULL,'',NULL);
+INSERT INTO `workorders` VALUES (36,'MEL','2014-08-30','2014-08-30',0,0,NULL,'',NULL);
+INSERT INTO `workorders` VALUES (37,'MEL','2016-10-19','2016-10-19',0,0,NULL,'',NULL);
 
 --
 -- Dumping data for table `woserialnos`
@@ -13765,7 +13834,7 @@ INSERT INTO `workorders` VALUES (36,'MEL','2014-08-30','2014-08-30',0,0,NULL);
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('admin','$2y$10$Q8HLC/2rQaB5NcCcK6V6ZOQG3chIsx16mKtZRoSaUsU9okMBDbUwG','Demonstration user','','','','','admin@weberp.org','MEL',8,1,'2016-05-16 21:28:23','','A4','1,1,1,1,1,1,1,1,1,1,1,',0,0,50,'xenos','en_US.utf8',0,0);
+INSERT INTO `www_users` VALUES ('admin','$2y$10$Q8HLC/2rQaB5NcCcK6V6ZOQG3chIsx16mKtZRoSaUsU9okMBDbUwG','Demonstration user','','','','','admin@weberp.org','MEL',8,1,'2017-06-18 13:09:02','','A4','1,1,1,1,1,1,1,1,1,1,1,',0,1,1,0,50,'fluid','en_GB.utf8',0,0);
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -13773,5 +13842,5 @@ INSERT INTO `www_users` VALUES ('admin','$2y$10$Q8HLC/2rQaB5NcCcK6V6ZOQG3chIsx16
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-05-16 21:37:02
+-- Dump completed on 2017-06-18 13:13:14
 SET FOREIGN_KEY_CHECKS = 1;

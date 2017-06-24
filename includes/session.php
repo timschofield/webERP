@@ -115,7 +115,7 @@ if(basename($_SERVER['SCRIPT_NAME'])=='Logout.php'){
 				$result = DB_query($sqli);
 			}
 		} else {
-		
+
 			$sqli = "INSERT INTO favourites(href,caption,userid) VALUES ";
 			$k = 0;
 			foreach ($_SESSION['Favourites'] as $url=>$ttl) {
@@ -129,7 +129,7 @@ if(basename($_SERVER['SCRIPT_NAME'])=='Logout.php'){
 				$result = DB_query($sqli);
 			}
 		}
-}
+	}
 
 	header('Location: index.php');
 } elseif (isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true */
