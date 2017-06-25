@@ -58,23 +58,17 @@ if (isset($_GET['Application'])){ /*This is sent by this page (to itself) when t
 	$_SESSION['Module'] = $_GET['Application'];
 }
 
-//=== MainMenuDiv =======================================================================
+// BEGIN MainMenuDiv ===========================================================
+// Option 1:
 echo '<div class="row well sidebar-nav ">';
 echo '<div class="col-md-3">';
-
-
-
-
-
-
-
-
-
-
-
-
 echo '<div id="MainMenuDiv" class= "collapse navbar-collapse navbar-bootsnipp-collapse sidebar-navbar-collapse ">';
 echo '<ul class="nav">'; //===HJ===
+/*
+// Option 2:
+echo '<div id="MainMenuDiv" class="col-xs-12 col-sm-6 col-md-4 col-lg-3"><ul class="nav">';
+*/
+
 $i=0;
 while ($i < count($ModuleLink)){
 	// This determines if the user has display access to the module see config.php and header.php
@@ -101,8 +95,8 @@ echo '</ul></div></div>'; // MainMenuDiv ===HJ===
 //=== SubMenuDiv (wrapper) ==============================================================================
 echo '<div id="SubMenuDiv">'; //===HJ===
 
-
-echo '<div id="TransactionsDiv" class="col-xs-12 col-sm-6 col-md-4 col-lg-3"><ul class="list-group-item">'; //=== TransactionsDiv ===
+// BEGIN TransactionsDiv =======================================================
+echo '<div id="TransactionsDiv" class="col-xs-12 col-sm-6 col-md-4 col-lg-3"><ul class="list-group-item">';
 
 echo '<li class="menu_group_headers">'; //=== SubMenuHeader ===
 if ($_SESSION['Module']=='system') {
@@ -126,7 +120,8 @@ foreach ($MenuItems[$_SESSION['Module']]['Transactions']['Caption'] as $Caption)
 	}
 	$i++;
 }
-echo '</ul></div>'; //=== TransactionsDiv ===
+echo '</ul></div>';
+// END TransactionsDiv =========================================================
 
 
 echo '<div id="InquiriesDiv" class="col-xs-12 col-sm-6 col-md-4 col-lg-3"><ul class="list-group-item">'; //=== InquiriesDiv ===

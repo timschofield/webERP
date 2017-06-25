@@ -502,3 +502,22 @@ li {
 	/* Class selector for page title. */
 }
 /* END Style for all. ********************************************************/
+
+
+/* If you want to use a cascading style sheet for a small device width, uncomment line "<meta name="viewport" content="width=device-width, initial-scale=1" />" on includes/header.inc and use the following sections. */
+
+@media only screen and (max-device-width:767px) {
+	/* Style for new browser in a device with a rendering width less than 768px (xs - Extra small devices - Phones). */
+}
+
+@media only screen and (min-device-width:768px) and (max-device-width:991px) {
+	/* Style for new browser in a device with a rendering width between 768px and 992px (sm - Small devices - Tablets). */
+}
+
+@media only screen and (min-device-width:992px) and (max-device-width:1199px) {
+	/* Style for new browser in a device with a rendering width between 992px and 1200px (md - Medium devices - Desktops). */
+}
+
+@media only screen and (min-device-width:1200px) {
+	/* Style for new browser in a device with a rendering width greater than 1200px (lg - Large devices - Larger desktops). */
+}

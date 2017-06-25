@@ -1,5 +1,6 @@
 webERP Change Log
 
+24/06/22 RChacon: Add style sections for device rendering width ranges for no responsive themes.
 23/06/22 RChacon: Fix class for TransactionsDiv, InquiriesDiv and MaintenanceDiv. Fix bootstrap copy.
 22/06/22 Exson: Fixed the Over Receive Portion bug in WorkOrderReceive.php.
 21/06/17 RChacon: Add meta viewport for initial-scale=1 for working css in small devices.
