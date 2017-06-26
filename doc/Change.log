@@ -1,5 +1,6 @@
 webERP Change Log
 
+25/06/22 RChacon: Merge css/WEBootstrap/css/custom.css into css/WEBootstrap/default.css to preserve bootstrap as original.
 24/06/22 RChacon: Add style sections for device rendering width ranges for no responsive themes.
 23/06/22 RChacon: Fix class for TransactionsDiv, InquiriesDiv and MaintenanceDiv. Fix bootstrap copy.
 22/06/22 Exson: Fixed the Over Receive Portion bug in WorkOrderReceive.php.
