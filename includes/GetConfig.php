@@ -120,14 +120,6 @@ if(isset($ForceConfigReload) AND $ForceConfigReload==true OR !isset($_SESSION['C
 
 	$sql = "SELECT href, caption FROM favourites WHERE userid='" . $_SESSION['UserID'] . "'";
 	$result = DB_query($sql,'','',false,false);
-	if (DB_error_no()!=0) {
-		$result = DB_query("CREATE table favourites (userid varchar(20) NOT NULL DEFAULT '',
-											caption varchar(50) NOT NULL DEFAULT '',
-											href varchar(200) NOT NULL DEFAULT '#',
-											PRIMARY KEY (userid,caption))
-							Engine=InnoDB DEFAULT CHARSET=utf8");
-		$result = DB_query($sql);
-	}
 	if (DB_num_rows($result)>0) {
 		while ($myrow = DB_fetch_array($result)) {
 			$_SESSION['Favourites'][$myrow['href']] = $myrow['caption'];
