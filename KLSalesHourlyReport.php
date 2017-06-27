@@ -5,6 +5,7 @@ include ('includes/session.php');
 $Title = _('Kapal-Laut Sales Hourly Report '. VERSIONFILE);
 include('includes/header.php');
 include('includes/KLDefines.php');
+include('includes/KLCountriesForRetail.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLRetailCustomer.php');
 
@@ -25,24 +26,24 @@ if ($KL_SystemAdmin
 	HourlyPerformance(15,$RootPath, $db);
 	$NumberOfTestExecuted++;
 
-	RetailCustomerAnalysisByCountry(-1, "ALL", "ALL", 1, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(-1, "ALL", "ALL", 0, $CountriesForRetail, $db);
 	$NumberOfTestExecuted++;
-	RetailCustomerAnalysisByCountry(-1, "KAPAL-LAUT", "ALL", 1, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(-1, "KAPAL-LAUT", "ALL", 0, $CountriesForRetail, $db);
 	$NumberOfTestExecuted++;
-	RetailCustomerAnalysisByCountry(-1, "BLINK", "ALL", 1, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(-1, "BLINK", "ALL", 0, $CountriesForRetail, $db);
 	$NumberOfTestExecuted++;
-	RetailCustomerAnalysisByCountry(-1, "OUTLET", "ALL", 1, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(-1, "OUTLET", "ALL", 0, $CountriesForRetail, $db);
 	$NumberOfTestExecuted++;
 	
-	RetailCustomerAnalysisByCountry(-1, "ALL", "CANGGU", 1, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(-1, "ALL", "CANGGU", 0, $CountriesForRetail, $db);
 	$NumberOfTestExecuted++;
-	RetailCustomerAnalysisByCountry(-1, "ALL", "KUTA", 1, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(-1, "ALL", "KUTA", 0, $CountriesForRetail, $db);
 	$NumberOfTestExecuted++;
-	RetailCustomerAnalysisByCountry(-1, "ALL", "SEMINYAK", 1, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(-1, "ALL", "SEMINYAK", 0, $CountriesForRetail, $db);
 	$NumberOfTestExecuted++;
-	RetailCustomerAnalysisByCountry(-1, "ALL", "SANUR", 1, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(-1, "ALL", "SANUR", 0, $CountriesForRetail, $db);
 	$NumberOfTestExecuted++;
-	RetailCustomerAnalysisByCountry(-1, "ALL", "UBUD", 1, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(-1, "ALL", "UBUD", 0, $CountriesForRetail, $db);
 	$NumberOfTestExecuted++;
 
 	RetailCustomerAnalysisBySex(-1, "ALL", $db);

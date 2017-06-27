@@ -7031,16 +7031,10 @@ Updated 3 index in loctransfers
 			// Only active for Ubud and Sanur area.
 			/* UB, MF, PU are sister shops */
 /*			if ($TableResult[$i]['loccode'] == 'TOKUB'){
-				MarkSisterShopInArray($TableResult, $numshops, "TOKMF");
-				MarkSisterShopInArray($TableResult, $numshops, "TOKPU");
-			}
-			if ($TableResult[$i]['loccode'] == 'TOKMF'){
-				MarkSisterShopInArray($TableResult, $numshops, "TOKUB");
 				MarkSisterShopInArray($TableResult, $numshops, "TOKPU");
 			}
 			if ($TableResult[$i]['loccode'] == 'TOKPU'){
 				MarkSisterShopInArray($TableResult, $numshops, "TOKUB");
-				MarkSisterShopInArray($TableResult, $numshops, "TOKMF");
 			}
 */			
 			/* 66, SE, OB are sister shops */

@@ -472,7 +472,6 @@ if ($ProcessSection01){
 		ValueStockLocation("TOKJC",  900, 1100, 0, 0, $db);
 		ValueStockLocation("TOKBW",  650,  800, 0, 0, $db);
 		ValueStockLocation("TOKUB", 1000, 1200, 0, 0, $db);
-		ValueStockLocation("TOKMF", 1300, 1500, 0, 0, $db);
 		ValueStockLocation("TOKSE", 1000, 1200, 0, 0, $db);
 		ValueStockLocation("SASPG",   10,   30, 0, 0, $db);
 	*/
@@ -489,8 +488,6 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		ItemsWithStockKantorButRLZeroAt("TOKSS", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsWithStockKantorButRLZeroAt("TOKMF", $RootPath, $db);
-		$NumberOfTestExecuted++;
 		ItemsWithStockKantorButRLZeroAt("TOKPU", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		ItemsWithStockKantorButRLZeroAt("TOKPA", $RootPath, $db);
@@ -502,8 +499,6 @@ if ($ProcessSection01){
 		CategoryItemsNotInShop("TESTKL", "TOKPU", 10, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("TESTKL", "TOKKA", 10, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("TESTKL", "TOKMF", 10, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("TESTKL", "TOKSU", 10, $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -519,8 +514,6 @@ if ($ProcessSection01){
 		CategoryItemsNotInShop("STABKL", "TOKPU", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("STABKL", "TOKKA", 15, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("STABKL", "TOKMF", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("STABKL", "TOKSU", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -546,8 +539,6 @@ if ($ProcessSection01){
 		CategoryItemsNotInShop("NOPOKL", "TOKPU", 10, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("NOPOKL", "TOKKA", 10, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("NOPOKL", "TOKMF", 10, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("NOPOKL", "TOKSU", 10, $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -807,7 +798,6 @@ if ($ProcessSection02){
 		ItemsNotTopSalesInShop(1, 900, 60, "TOKJC", $RootPath, $db);
 
 		ItemsNotTopSalesInShop(1, 600, 60, "TOKUB", $RootPath, $db);
-		ItemsNotTopSalesInShop(1, 700, 60, "TOKMF", $RootPath, $db);
 		ItemsNotTopSalesInShop(1, 700, 60, "TOKMU", $RootPath, $db);
 		ItemsNotTopSalesInShop(1, 800, 60, "TOKPU", $RootPath, $db);
 
