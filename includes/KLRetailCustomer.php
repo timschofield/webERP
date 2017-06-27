@@ -5,8 +5,16 @@
 /******************************************************************************************************/
 
 function RetailCustomerAnalysisBySex($NumDays, $ListShops, $db){
-	$Yesterday  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
-	$StartDate  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
+	if ($NumDays == -1){
+		// today only
+		$Yesterday  = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
+		$StartDate  = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
+		$Title = _('Retail Customers By Sex during today ');
+	}else{
+		$Yesterday  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
+		$StartDate  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
+		$Title = 'Retail Customers By Sex during the last ' . locale_number_format($NumDays,0) . ' days ' ;
+	}
 
 	if ($ListShops == 'ALL'){
 		$WhereListShops = " ";
@@ -49,9 +57,9 @@ function RetailCustomerAnalysisBySex($NumDays, $ListShops, $db){
 	$NumberMales = $myrow[0];
 
 	if ($ListShops == 'ALL'){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Retail Customers By Sex during the last ') . locale_number_format($NumDays,0) . ' days</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . $Title . '</strong></p>';
 	}else{
-		echo '<p class="page_title_text" align="center"><strong>' . _('Retail Customers By Sex during the last ') . locale_number_format($NumDays,0) . ' days in shop ' . $ListShops . '</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . $Title . ' in shop ' . $ListShops . '</strong></p>';
 	}
 	echo '<div>';
 	echo '<table class="selection">';
@@ -110,8 +118,14 @@ function RetailCustomerAnalysisBySex($NumDays, $ListShops, $db){
 }
 
 function RetailCustomerAnalysisByCountry($NumDays, $TypeOfShops, $ShopArea, $MinimCustomersToShow, $CountriesForRetail, $db){
-	$Yesterday  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
-	$StartDate  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
+	if ($NumDays == -1){
+		// today only
+		$Yesterday  = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
+		$StartDate  = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
+	}else{
+		$Yesterday  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
+		$StartDate  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
+	}
 
 	if ($TypeOfShops == 'ALL'){
 		$WhereListShops = " ";
@@ -177,7 +191,11 @@ function RetailCustomerAnalysisByCountry($NumDays, $TypeOfShops, $ShopArea, $Min
 	$result = DB_query($SQL);
 	
 	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Retail Customers By Country during the last ') . locale_number_format($NumDays,0) . ' days in ' . $NameOfShops . ' shops  for ' . $NameOfArea . '</strong></p>';
+		if ($NumDays == -1){
+			echo '<p class="page_title_text" align="center"><strong>' . _('Retail Customers By Country during today in ') . $NameOfShops . ' shops  for ' . $NameOfArea . '</strong></p>';
+		}else{
+			echo '<p class="page_title_text" align="center"><strong>' . _('Retail Customers By Country during the last ') . locale_number_format($NumDays,0) . ' days in ' . $NameOfShops . ' shops  for ' . $NameOfArea . '</strong></p>';
+		}
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
@@ -241,8 +259,14 @@ function RetailCustomerAnalysisByCountry($NumDays, $TypeOfShops, $ShopArea, $Min
 }
 
 function EmailHarvested($NumDays, $TypeOfShops, $db){
-	$Yesterday  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
-	$StartDate  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
+	if ($NumDays == -1){
+		// today only
+		$Yesterday  = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
+		$StartDate  = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
+	}else{
+		$Yesterday  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
+		$StartDate  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
+	}
 
 	if ($TypeOfShops == 'ALL'){
 		$WhereListShops = " ";
@@ -317,8 +341,14 @@ function EmailHarvested($NumDays, $TypeOfShops, $db){
 }
 
 function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops, $CountriesForRetail, $db){
-	$Yesterday  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
-	$StartDate  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
+	if ($NumDays == -1){
+		// today only
+		$Yesterday  = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
+		$StartDate  = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
+	}else{
+		$Yesterday  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
+		$StartDate  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
+	}
 
 	if ($TypeOfShops == 'ALL'){
 		$WhereListShops = " ";
@@ -458,8 +488,12 @@ function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops, $CountriesForRetail
 	$result = DB_query($SQL);
 	$myrow = DB_fetch_array($result);
 	$NumberCases08 = $myrow[0];
-	
-	echo '<p class="page_title_text" align="center"><strong>' . _('Retail Customers By Age during the last ') . locale_number_format($NumDays,0) . ' days in ' . $NameOfShops . ' shops</strong></p>';
+
+	if ($NumDays == -1){
+		echo '<p class="page_title_text" align="center"><strong>' . _('Retail Customers By Age during today in ') . $NameOfShops . ' shops</strong></p>';
+	}else{
+		echo '<p class="page_title_text" align="center"><strong>' . _('Retail Customers By Age during the last ') . locale_number_format($NumDays,0) . ' days in ' . $NameOfShops . ' shops</strong></p>';
+	}
 	echo '<div>';
 	echo '<table class="selection">';
 	$TableHeader = '<tr>
@@ -575,8 +609,14 @@ function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops, $CountriesForRetail
 }
 
 function RetailCustomerDataQualitySPG($SPG, $NumDays, $db){
-	$Yesterday  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
-	$StartDate  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
+	if ($NumDays == -1){
+		// today only
+		$Yesterday  = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
+		$StartDate  = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
+	}else{
+		$Yesterday  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
+		$StartDate  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
+	}
 
 	if ($SPG != "ALL"){
 		$WhereSPG = " AND salesman.salesmancode = " . $SPG . " ";

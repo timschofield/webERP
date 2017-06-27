@@ -6,6 +6,7 @@ $Title = _('Kapal-Laut Sales Hourly Report '. VERSIONFILE);
 include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
+include('includes/KLRetailCustomer.php');
 
 /* ASSIGN users to groups */
 include ('includes/KLRoles.inc');
@@ -23,8 +24,36 @@ if ($KL_SystemAdmin
 	OR $KL_SalesDirector){
 	HourlyPerformance(15,$RootPath, $db);
 	$NumberOfTestExecuted++;
+
+	RetailCustomerAnalysisByCountry(-1, "ALL", "ALL", 1, $CountriesForRetail, $db);
+	$NumberOfTestExecuted++;
+	RetailCustomerAnalysisByCountry(-1, "KAPAL-LAUT", "ALL", 1, $CountriesForRetail, $db);
+	$NumberOfTestExecuted++;
+	RetailCustomerAnalysisByCountry(-1, "BLINK", "ALL", 1, $CountriesForRetail, $db);
+	$NumberOfTestExecuted++;
+	RetailCustomerAnalysisByCountry(-1, "OUTLET", "ALL", 1, $CountriesForRetail, $db);
+	$NumberOfTestExecuted++;
+	
+	RetailCustomerAnalysisByCountry(-1, "ALL", "CANGGU", 1, $CountriesForRetail, $db);
+	$NumberOfTestExecuted++;
+	RetailCustomerAnalysisByCountry(-1, "ALL", "KUTA", 1, $CountriesForRetail, $db);
+	$NumberOfTestExecuted++;
+	RetailCustomerAnalysisByCountry(-1, "ALL", "SEMINYAK", 1, $CountriesForRetail, $db);
+	$NumberOfTestExecuted++;
+	RetailCustomerAnalysisByCountry(-1, "ALL", "SANUR", 1, $CountriesForRetail, $db);
+	$NumberOfTestExecuted++;
+	RetailCustomerAnalysisByCountry(-1, "ALL", "UBUD", 1, $CountriesForRetail, $db);
+	$NumberOfTestExecuted++;
+
+	RetailCustomerAnalysisBySex(-1, "ALL", $db);
+	$NumberOfTestExecuted++;
+
+	RetailCustomerAnalysisByAge(-1, "ALL", $db);
+	$NumberOfTestExecuted++;
+
 	HourlySales(30,$RootPath, $db);
 	$NumberOfTestExecuted++;
+	
 }
 
 
