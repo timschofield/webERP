@@ -1,5 +1,9 @@
 webERP Change Log
 
+30/06/17 Exson: Fixed the argument count error in SupplierInvoice.php.
+
+2017-06-26 4.14.1 release
+
 25/06/22 RChacon: Merge css/WEBootstrap/css/custom.css into css/WEBootstrap/default.css to preserve bootstrap as original.
 24/06/22 RChacon: Add style sections for device rendering width ranges for no responsive themes.
 23/06/22 RChacon: Fix class for TransactionsDiv, InquiriesDiv and MaintenanceDiv. Fix bootstrap copy.
