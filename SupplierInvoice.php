@@ -452,6 +452,7 @@ if (isset($_GET['ReceivePO']) AND $_GET['ReceivePO']!=''){
 								grns.qtyrecd,
 								grns.quantityinv,
 								grns.stdcostunit,
+								grns.supplierref,
 								purchorderdetails.glcode,
 								purchorderdetails.shiptref,
 								purchorderdetails.jobref,
@@ -490,7 +491,8 @@ if (isset($_GET['ReceivePO']) AND $_GET['ReceivePO']!=''){
 																$myrow['assetid'],
 																0,
 																$myrow['decimalplaces'],
-																$myrow['grnbatch']);
+																$myrow['grnbatch'],
+																$myrow['supplierref']);
 				}
 			} //end if the order has no controlled items on it
 		} //only allow auto receiving of all lines if the PO is authorised
