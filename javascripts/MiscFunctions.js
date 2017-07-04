@@ -399,4 +399,28 @@ function AddAmount(t, Target, d) {
 		if(d) document.getElementById(d).required="";
 	}
 }
+function update1(s) {
+	var ss=s.split(';');
+	var sss=ss.map((a)=>document.getElementById(a).value);
+	var ttl = sss.reduce((a,b)=>parseFloat(a)+parseFloat(b)); 
+	document.getElementById('ttl').value = ttl;
+}
+function payVerify(b,a) {
+	var s=document.getElementById('update');
+	var s=s.getAttribute('data-ids');
+	update1(s);	
+	var cs=document.getElementById('Amount').getAttribute('class');
+	if (parseFloat(document.getElementById(b).value) < parseFloat(parseFloat(document.getElementById(a).value))){
+		if (cs.indexOf('error') == -1) {
+			document.getElementById('Amount').className="error" + ' ' + cs;
+		}
+		event.preventDefault();
+	} else {
+		if (cs.indexOf('error') != -1) {
+			document.getElementById('Amount').className="number";
+		}
+		return true;
+	}
+}
+
 window.onload=initial;
