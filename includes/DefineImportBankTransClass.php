@@ -60,7 +60,7 @@ class BankTrans {
 		$this->BankTransID = 0;
 	}
 	function BankTrans($ValueDate, $Amount) {
-		self::__construct(($ValueDate, $Amount);
+		self::__construct($ValueDate, $Amount);
 	}
 
 	function Add_To_GLAnalysis($Amount, $Narrative, $GLCode, $GLAccountName, $Tag){

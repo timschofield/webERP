@@ -1,5 +1,6 @@
 webERP Change Log
 
+04/07/17 PaulT: DefineImportBankTransClass.php - Remove extra (
 30/06/17 Exson: Fixed the argument count error in SupplierInvoice.php.
 
 2017-06-26 4.14.1 release
