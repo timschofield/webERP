@@ -637,18 +637,21 @@ function HourlyPerformance($numDays, $RootPath, $db){
 	
 	if (DB_num_rows($result) != 0){
 		$k = 0; //row colour counter
+		$i = 0; // row counter
 		while ($myrow = DB_fetch_array($result)) {
 			if ($showHeader){
 				echo '<p class="page_title_text" align="center"><strong>' .'Hourly Sales Performance until '. $Now .'</strong></p>';
 				echo '<div>';
 				echo '<table class="selection">';
 				$TableHeader = '<tr>
+									<th class="ascending">#</th>
 									<th class="ascending">' . _('Shop') . '</th>
 									<th class="ascending" colspan=2>' . 'Last ' . $numDays . ' days</th>
 									<th class="ascending" colspan=2>' . 'Last ' . $numDays . ' days until ' . $Now . '</th>
 									<th class="ascending" colspan=4>' . 'Today' . '</th>
 								</tr>
 								<tr>
+									<th class="ascending">#</th>
 									<th class="ascending">' . _('Name') . '</th>
 									<th class="ascending">' . _('# Sales') . '</th>
 									<th class="ascending">' . _('Value Sales') . '</th>
@@ -663,7 +666,9 @@ function HourlyPerformance($numDays, $RootPath, $db){
 				$showHeader = FALSE;
 			}
 			$k = StartEvenOrOddRow($k);
-			printf('<td>%s</td>
+			$i++;
+			printf('<td class="number">%s</td>
+					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -673,6 +678,7 @@ function HourlyPerformance($numDays, $RootPath, $db){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>', 
+					locale_number_format_zero_blank($i,0),
 					$myrow['debtorno'],
 					locale_number_format_zero_blank($myrow['totalsalesfull']/$numDays,0),
 					locale_number_format_zero_blank($myrow['valuesalesfull']/$numDays,0),
@@ -726,7 +732,8 @@ function HourlyPerformance($numDays, $RootPath, $db){
 		}
 		if (!$showHeader){
 			$k = StartEvenOrOddRow($k);
-			printf('<td>%s</td>
+			printf('<td class="number">%s</td>
+					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -736,6 +743,7 @@ function HourlyPerformance($numDays, $RootPath, $db){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>', 
+					'',
 					'TOTALS',
 					locale_number_format_zero_blank($TotalSalesFull/$numDays,0),
 					locale_number_format_zero_blank($ValueSalesFull/$numDays,0),
@@ -747,7 +755,8 @@ function HourlyPerformance($numDays, $RootPath, $db){
 					locale_number_format_zero_blank($ValueSalesToday,0)
 					);
 			$k = StartEvenOrOddRow($k);
-			printf('<td>%s</td>
+			printf('<td class="number">%s</td>
+					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -757,6 +766,7 @@ function HourlyPerformance($numDays, $RootPath, $db){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>', 
+					'',
 					'',
 					'',
 					'',
@@ -768,7 +778,8 @@ function HourlyPerformance($numDays, $RootPath, $db){
 					locale_number_format_zero_blank($ValueSalesToday/($ValueSales/$numDays)*100,0).'%'
 					);
 			$k = StartEvenOrOddRow($k);
-			printf('<td>%s</td>
+			printf('<td class="number">%s</td>
+					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -778,6 +789,7 @@ function HourlyPerformance($numDays, $RootPath, $db){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>', 
+					'',
 					'Today Forecast',
 					'',
 					'',
