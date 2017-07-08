@@ -2905,13 +2905,9 @@ function CustomersDebtControl($AcceptedDifference, $period, $db){
 					debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc
 				)/currencies.rate AS balance
 			FROM debtorsmaster,
-				paymentterms,
-				holdreasons,
 				currencies,
 				debtortrans
-			WHERE debtorsmaster.paymentterms = paymentterms.termsindicator
-				AND debtorsmaster.currcode = currencies.currabrev
-				AND debtorsmaster.holdreason = holdreasons.reasoncode
+			WHERE debtorsmaster.currcode = currencies.currabrev
 				AND debtorsmaster.debtorno = debtortrans.debtorno
 				AND debtorsmaster.currcode = 'IDR' ";
 	$result = DB_query($SQL);
@@ -2922,13 +2918,9 @@ function CustomersDebtControl($AcceptedDifference, $period, $db){
 					debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc
 				)/currencies.rate AS balance
 			FROM debtorsmaster,
-				paymentterms,
-				holdreasons,
 				currencies,
 				debtortrans
-			WHERE debtorsmaster.paymentterms = paymentterms.termsindicator
-				AND debtorsmaster.currcode = currencies.currabrev
-				AND debtorsmaster.holdreason = holdreasons.reasoncode
+			WHERE debtorsmaster.currcode = currencies.currabrev
 				AND debtorsmaster.debtorno = debtortrans.debtorno
 				AND debtorsmaster.currcode = 'USD' ";
 	$result = DB_query($SQL);
@@ -2939,13 +2931,9 @@ function CustomersDebtControl($AcceptedDifference, $period, $db){
 					debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc
 				)/currencies.rate AS balance
 			FROM debtorsmaster,
-				paymentterms,
-				holdreasons,
 				currencies,
 				debtortrans
-			WHERE debtorsmaster.paymentterms = paymentterms.termsindicator
-				AND debtorsmaster.currcode = currencies.currabrev
-				AND debtorsmaster.holdreason = holdreasons.reasoncode
+			WHERE debtorsmaster.currcode = currencies.currabrev
 				AND debtorsmaster.debtorno = debtortrans.debtorno
 				AND debtorsmaster.currcode = 'AUD' ";
 	$result = DB_query($SQL);
@@ -2956,13 +2944,9 @@ function CustomersDebtControl($AcceptedDifference, $period, $db){
 					debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc
 				)/currencies.rate AS balance
 			FROM debtorsmaster,
-				paymentterms,
-				holdreasons,
 				currencies,
 				debtortrans
-			WHERE debtorsmaster.paymentterms = paymentterms.termsindicator
-				AND debtorsmaster.currcode = currencies.currabrev
-				AND debtorsmaster.holdreason = holdreasons.reasoncode
+			WHERE debtorsmaster.currcode = currencies.currabrev
 				AND debtorsmaster.debtorno = debtortrans.debtorno
 				AND debtorsmaster.currcode = 'EUR' ";
 	$result = DB_query($SQL);
