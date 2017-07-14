@@ -54,7 +54,6 @@ if ($KL_SystemAdmin){
 	// WARNINGS STILL NOT DOCUMENTED ON WIKI
 		prnMsg("START OF PENDING FOR KL INTRANET ",'success');
 		NotDiscountedItemsWithDiscount($RootPath, $db);
-		GoodsReceivedNotInvoicedControl(1000000, $periodnow, $db);
 		prnMsg("END OF PENDING FOR KL INTRANET ",'success');
 
 //	phpinfo();
