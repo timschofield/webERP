@@ -578,7 +578,7 @@ if(isset($_POST['SupplierID'])) {
 				<td><input alt="', $_SESSION['DefaultDateFormat'], '" class="date" name="EffectiveFrom0" size="11" type="text" value="', date( $_SESSION['DefaultDateFormat']), '" /></td>
 				<td><input maxlength="50" name="SupplierPartNo0" size="20" type="text" value="" /></td>
 				<td><input class="number" name="MinOrderQty0" size="11" type="text" value="1" /></td>
-				<td><button name="Insert" type="submit" style="width:100%;text-align:left"><img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/tick.png" width="15" /></button></td>
+				<td><button name="Insert" type="submit" style="width:100%;text-align:left"><img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/tick.svg" width="15" /></button></td>
 			</tr>';
 	}
 
@@ -610,7 +610,7 @@ if(isset($_POST['SupplierID'])) {
 		echo '<td><input class="date" size="11" name="EffectiveFrom'. $RowCounter. '" type="text" value="' . ConvertSQLDate($MyRow['effectivefrom']) . '" alt="' . $_SESSION['DefaultDateFormat'] . '" /></td>
 				<td><input maxlength="50" name="SupplierPartNo'. $RowCounter. '" size="20" type="text" value="' . $MyRow['suppliers_partno'] . '" /></td>
 				<td><input class="number" name="MinOrderQty'. $RowCounter. '" size="11" type="text" value="' . $MyRow['minorderqty'] . '" /></td>
-				<td><button type="submit" style="width:100%;text-align:left" name="Update'.$RowCounter.'"><img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/tick.png" width="15" /></button></td>
+				<td><button type="submit" style="width:100%;text-align:left" name="Update'.$RowCounter.'"><img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/tick.svg" width="15" /></button></td>
 			</tr>';
 		$RowCounter++;
 	}

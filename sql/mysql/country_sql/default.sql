@@ -7014,7 +7014,7 @@ INSERT INTO `scripts` VALUES ('SalesAnalReptCols.php',2,'Entry of the definition
 INSERT INTO `scripts` VALUES ('SalesAnalRepts.php',2,'Entry of the definition of a sales analysis report headers');
 INSERT INTO `scripts` VALUES ('SalesAnalysis_UserDefined.php',2,'Creates a pdf of a selected user defined sales analysis report');
 INSERT INTO `scripts` VALUES ('SalesByTypePeriodInquiry.php',2,'Shows sales for a selected date range by sales type/price list');
-INSERT INTO `scripts` VALUES ('SalesCategories.php',11,'');
+INSERT INTO `scripts` VALUES ('SalesCategories.php',11,'Sales Category Maintenance');
 INSERT INTO `scripts` VALUES ('SalesCategoryDescriptions.php',15,'Maintain translations for sales categories');
 INSERT INTO `scripts` VALUES ('SalesCategoryPeriodInquiry.php',2,'Shows sales for a selected date range by stock category');
 INSERT INTO `scripts` VALUES ('SalesGLPostings.php',10,'Defines the general ledger accounts used to post sales to based on product categories and sales areas');

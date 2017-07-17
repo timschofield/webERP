@@ -1,11 +1,11 @@
 <?php
-
 /* $Id$ */
+/* Sales Category Maintenance */
 
 include('includes/session.php');
-
 $Title = _('Sales Category Maintenance');
-
+$ViewTopic = 'Inventory';
+$BookMark = 'SalesCategories';
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
@@ -559,7 +559,7 @@ if($result ) {
 				<td>' . $myrow['manufacturers_name'] . '</td>
 				<td>';
 			if ($myrow['featured']==1){
-				echo '<img src="css/' . $Theme . '/images/tick.png"></td>
+				echo '<img src="css/' . $Theme . '/images/tick.svg"></td>
 				<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?RemoveFeature=Yes&amp;ParentCategory='.$ParentCategory.'&amp;StockID='.$myrow['stockid'].'">' .  _('Cancel Feature') . '</a></td>';
 			} else {
 				echo '</td>
