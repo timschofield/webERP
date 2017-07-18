@@ -1,5 +1,6 @@
 webERP Change Log
 
+18/7/17 Exson: Add QR code for item issue and fg collection for WO in PDFWOPrint.php
 17/07/17 RChacon: Fix call to image tick.svg.
 15/7/17  Phil: Utility script to remove all purchase back orders
 10/07/17 Exson: Fixed the wrong price bug and GP not updated correctly in SelectOrderItems.php. Report by Robert from MHHK forum.
