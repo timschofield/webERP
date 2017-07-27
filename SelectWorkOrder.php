@@ -357,11 +357,11 @@ if (!isset($StockID)) {
 			}
 
 			$ModifyPage = $RootPath . '/WorkOrderEntry.php?WO=' . $myrow['wo'];
-			$Status_WO = $RootPath . '/WorkOrderStatus.php?WO=' .$myrow['wo'] . '&amp;StockID=' . $myrow['stockid'];
-			$Receive_WO = $RootPath . '/WorkOrderReceive.php?WO=' .$myrow['wo'] . '&amp;StockID=' . $myrow['stockid'];
-			$Issue_WO = $RootPath . '/WorkOrderIssue.php?WO=' .$myrow['wo'] . '&amp;StockID=' . $myrow['stockid'];
+			$Status_WO = $RootPath . '/WorkOrderStatus.php?WO=' .$myrow['wo'] . '&amp;StockID=' . urlencode($myrow['stockid']);
+			$Receive_WO = $RootPath . '/WorkOrderReceive.php?WO=' .$myrow['wo'] . '&amp;StockID=' . urlencode($myrow['stockid']);
+			$Issue_WO = $RootPath . '/WorkOrderIssue.php?WO=' .$myrow['wo'] . '&amp;StockID=' . urlencode($myrow['stockid']);
 			$Costing_WO =$RootPath . '/WorkOrderCosting.php?WO=' .$myrow['wo'];
-			$Printing_WO =$RootPath . '/PDFWOPrint.php?WO=' .$myrow['wo'] . '&amp;StockID=' . $myrow['stockid'];
+			$Printing_WO =$RootPath . '/PDFWOPrint.php?WO=' .$myrow['wo'] . '&amp;StockID=' . urlencode($myrow['stockid']);
 
 			$FormatedRequiredByDate = ConvertSQLDate($myrow['requiredby']);
 			$FormatedStartDate = ConvertSQLDate($myrow['startdate']);
@@ -389,7 +389,7 @@ if (!isset($StockID)) {
 					$Costing_WO,
 					$Printing_WO,
 					$myrow['loccode'],
-					$myrow['stockid'],
+					urlencode($myrow['stockid']),
 					$myrow['description'],
 					locale_number_format($myrow['qtyreqd'],$myrow['decimalplaces']),
 					locale_number_format($myrow['qtyrecd'],$myrow['decimalplaces']),
