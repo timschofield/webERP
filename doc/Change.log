@@ -1,4 +1,5 @@
 webERP Change Log
+10/8/17 PaulT: CounterSales.php and StockAdjustments.php: Apply fixes posted by Tim in weberp forums.
 27/7/17 Exson: Fixed the search failure problem due to stock id code in SelectWorkOrder.php.
 18/7/17 Exson: Add QR code for item issue and fg collection for WO in PDFWOPrint.php
 17/07/17 RChacon: Fix call to image tick.svg.

@@ -1970,7 +1970,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 					VALUES (12,
 						'" . $ReceiptNumber . "',
 						'" . $_POST['BankAccount'] . "',
-						'" . $_SESSION['Items'.$identifier]->LocationName . ' ' . _('Counter Sale') . ' ' . $InvoiceNo . "',
+						'" . mb_substr($_SESSION['Items'.$identifier]->LocationName . ' ' . _('Counter Sale') . ' ' . $InvoiceNo, 0, 50) . "',
 						'" . $ExRate . "',
 						'" . $BankAccountExRate . "',
 						'" . $DefaultDispatchDate . "',
