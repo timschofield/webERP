@@ -1039,8 +1039,14 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 
 	}//end of testing for negative stocks
 
-
-	if ($InputError == false) { //all good so let's get on with the processing
+	if ($InputError == true ) { //allow the error to be fixed and then resubmit buttone needs to show
+		echo '<br />
+				<div class="centre">
+					<input type="submit" name="Recalculate" value="' . _('Re-Calculate') . '" />
+					<input type="submit" name="ProcessSale" value="' . _('Process The Sale') . '" />
+				</div>
+				<hr />';
+	} else { //all good so let's get on with the processing
 
 	/* Now Get the area where the sale is to from the branches table */
 

@@ -79,7 +79,8 @@
 			unset($_SESSION['Favourites'][$_POST['ScriptName']]);
 		}
 		if (isset($_SESSION['Favourites']) AND count($_SESSION['Favourites'])>0) {
-					echo '<ul>';
+					echo '<br />
+							<ul>';
 					foreach ($_SESSION['Favourites'] as $url=>$ttl) {
 						echo '<li><a href="' . $url . '">' . _($ttl) . '<a></li>';
 
