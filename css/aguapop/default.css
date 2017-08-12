@@ -316,6 +316,7 @@ li {
 	margin-top:7px;
 }
 #QuickMenuDiv ul{
+	margin-top:10px;
 	list-style:none;
 	float:right;
 }
