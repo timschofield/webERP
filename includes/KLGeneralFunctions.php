@@ -118,6 +118,8 @@ function TypeOfItem($stockid){
 		$Type = "Necklace";
 	}elseif (isPlasticBag($stockid)){
 		$Type = "Bag";
+	}elseif (isBag($stockid)){
+		$Type = "Bag";
 	}elseif (isTali($stockid)){
 		$Type = "Tali";
 	}else{
