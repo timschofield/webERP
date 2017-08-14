@@ -80,8 +80,8 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 								OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_TEST . "
 								OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_STABLE . "
 								OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING . "
-								OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_DISCOUNT . "
-								OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_DISCOUNT . "
+								OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . "
+								OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . "
 								OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_CONSIGNMENT . "
 								OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_PROMOTIONAL_ITEMS . ")";
 	}else{
@@ -326,7 +326,7 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 					return;
 				}
 				// define prices for discounted items
-				if (ItemInList($_POST['Category' . $i], LIST_STOCK_CATEGORIES_DISCOUNT)){
+				if (ItemInList($_POST['Category' . $i], LIST_STOCK_CATEGORIES_OUTLET)){
 					$ResultDiscount = DB_query("SELECT MAX(discountrate) AS discount
 									FROM discountmatrix
 								WHERE salestype='" . RETAIL_PRICE_LIST . "'
@@ -353,7 +353,7 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 
 				// print depending on each type of label
 				if ($_POST['LabelID'] == 'T570'){
-					if  (ItemInList($_POST['Category' . $i], LIST_STOCK_CATEGORIES_DISCOUNT)){
+					if  (ItemInList($_POST['Category' . $i], LIST_STOCK_CATEGORIES_OUTLET)){
 						// print the previous price 
 						$pdf->SetXY($PriceXPosition,$PreviousPriceYPosition);
 						$pdf->SetFont($PriceFont, $PriceFontStyle, $PriceFontSize);

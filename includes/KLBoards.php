@@ -2673,7 +2673,7 @@ function ItemsInCategoryWithStockKantorButReorderLevelTokoZero($CategoryId, $Roo
 		}else{
 			$WhereLocation = " AND locstock.loccode IN  " . LIST_SHOPS_OUTLET . " ";
 		}
-	}elseif (ItemInList($CategoryId, LIST_STOCK_CATEGORIES_DISCOUNT)){
+	}elseif (ItemInList($CategoryId, LIST_STOCK_CATEGORIES_OUTLET)){
 		if (LIST_SHOPS_OUTLET == "('')"){
 			// no shops with discount, so this report has NO sense.
 			return;
@@ -2718,7 +2718,7 @@ function ItemsInCategoryWithStockKantorButReorderLevelTokoZero($CategoryId, $Roo
 	if (DB_num_rows($result) != 0){
 		if (ItemInList($CategoryId, LIST_STOCK_CATEGORIES_OUTLET)){
 			echo '<p class="page_title_text" align="center"><strong>' . $CategoryId ._(' Items with stock available at Kantor but RL zero for ') . LIST_SHOPS_OUTLET . '</strong></p>';
-		}elseif (ItemInList($CategoryId, LIST_STOCK_CATEGORIES_DISCOUNT)){
+		}elseif (ItemInList($CategoryId, LIST_STOCK_CATEGORIES_OUTLET)){
 			echo '<p class="page_title_text" align="center"><strong>' . $CategoryId ._(' Items with stock available at Kantor but RL zero for ') . LIST_SHOPS_OUTLET . '</strong></p>';
 		}else{
 			echo '<p class="page_title_text" align="center"><strong>' . $CategoryId ._(' Items with stock available at Kantor but RL zero for all toko KL') . '</strong></p>';
@@ -3145,7 +3145,7 @@ function SamplesNotLongerNeeded($RootPath, $db){
 			WHERE locstock.stockid = stockmaster.stockid
 				AND loccode = 'SAMPR'
 				AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING ." 
-					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_DISCOUNT ."
+					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET ."
 					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET .")
 				AND quantity > 0
 			ORDER BY locstock.stockid";
@@ -3594,7 +3594,7 @@ function NotDiscountedItemsWithDiscount($RootPath, $db){
 					description
 			FROM  stockmaster 
 			WHERE   categoryid NOT IN " . LIST_STOCK_CATEGORIES_PROMOTIONAL_ITEMS ."
-				AND categoryid NOT IN " . LIST_STOCK_CATEGORIES_DISCOUNT ."
+				AND categoryid NOT IN " . LIST_STOCK_CATEGORIES_OUTLET ."
 				AND categoryid NOT IN " . LIST_STOCK_CATEGORIES_OLD ."
 				AND discountcategory !=  ''
 				AND discontinued = 0";
@@ -4531,6 +4531,7 @@ function GoodsJustArrived($kind, $location, $numdays, $RootPath, $db){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$numdays));
 	$ShopsKL = NumberOfShops("SHOPKL", $db);
 	$ShopsBL = NumberOfShops("SHOPBL", $db);
+	$ShopsOU = NumberOfShops("SHOPOU", $db);
 	if ($kind == "PO"){
 		$type = 25;
 	}elseif ($kind == "WO"){
@@ -4596,16 +4597,23 @@ function GoodsJustArrived($kind, $location, $numdays, $RootPath, $db){
 			}elseif($myrow['categoryid']== 'STABBL'){
 				$TypeOfShop = 'SHOPBL';
 				$ShopsToSetRL = $ShopsBL;
+			}elseif(($myrow['categoryid']== 'DISC20') 
+					OR ($myrow['categoryid']== 'DISC50') 
+					OR ($myrow['categoryid']== 'DISC80')){
+				$TypeOfShop = 'SHOPOU';
+				$ShopsToSetRL = $ShopsOU;
 			}else{
 				$ShopsToSetRL = 0;
 			}
 
-			if(ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_SETUP)){
-				$ManualLink = '';
-			}else{
+			if ((ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_TEST)) 
+				OR (ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_STABLE))
+				OR (ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING))
+				OR (ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_OUTLET))) {
 				$ManualLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . 'Manual' . '</a>';
+			}else{
+				$ManualLink = '';
 			}
-
 
 			// set the links to nil, and just set some if we have enough QOH
 			$LinkRL1 = '';
@@ -5624,7 +5632,7 @@ function ItemsWithStockLocationButNoStockAvailable($Location, $NameLocation, $Mi
 			WHERE locstock.stockid = stockmaster.stockid
 				AND stockmaster.discontinued = 0
 				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING ."
-				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_DISCOUNT ."
+				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_OUTLET ."
 				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_OUTLET ."
 				AND locstock.loccode = '" . $Location . "'
 				AND locstock.quantity > 0
@@ -5693,7 +5701,7 @@ function WrongItemsOnWorkOrders($RootPath, $db){
 				AND woitems.wo = workorders.wo
 				AND workorders.closed = 0
 				AND (  stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING ."
-					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_DISCOUNT ."
+					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET ."
 					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET ."
 					OR stockmaster.discontinued = 1)
 			ORDER BY woitems.wo,
@@ -5756,7 +5764,7 @@ function WrongItemsOnPurchaseOrders($RootPath, $db){
 				AND purchorderdetails.completed = 0
 				AND purchorders.status NOT IN ('Cancelled', 'Rejected')
 				AND (  stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING ."
-					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_DISCOUNT ."
+					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET ."
 					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET ."
 					OR stockmaster.discontinued = 1)
 			ORDER BY purchorderdetails.orderno,
@@ -5995,7 +6003,7 @@ function GoodsToBeProduced($CategoryComponent, $ParentCategory, $RootPath, $db){
 /* EXPLAIN SQL 2014-05-30 */
 	/* Check if there is any	component at kantor ready to be transformed into sellable goods */
 	if ($ParentCategory == "DISCOUNT"){
-		$WhereParentCategory = " AND stP.categoryid IN " . LIST_STOCK_CATEGORIES_DISCOUNT . " ";
+		$WhereParentCategory = " AND stP.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . " ";
 	}else{
 		$WhereParentCategory = " ";
 	}
@@ -6169,7 +6177,7 @@ function ActiveItemsWithoutPicture($RootPath, $db){
 2014-05-30 Fixed adding a new index disontinued+Stockid
 2015-05-19 TAke out some exceptions 
 			AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_PROMOTIONAL_ITEMS . "
-			AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_DISCOUNT . "
+			AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_OUTLET . "
 			AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SHOP_DISPLAYS . "
 
 */
@@ -6183,7 +6191,7 @@ function ActiveItemsWithoutPicture($RootPath, $db){
 				OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_TEST . "
 				OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_STABLE . "
 				OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING . "
-				OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_DISCOUNT . "
+				OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . "
 				OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_CONSIGNMENT . "
 				OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_PROMOTIONAL_ITEMS . "
 				OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_SHOP_DISPLAYS . "

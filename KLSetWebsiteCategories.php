@@ -52,7 +52,7 @@ $SQL = "SELECT stockmaster.stockid,
 							FROM salescatprod
 							WHERE stockmaster.stockid = salescatprod.stockid
 								AND salescatprod.salescatid NOT IN (" . WEBERP_OUTLET_CATEGORIES. ")))
-					AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_DISCOUNT . "))
+					AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . "))
 		ORDER BY stockmaster.stockid";
 $result = DB_query($SQL);
 if (DB_num_rows($result) != 0){
@@ -557,7 +557,7 @@ function ItemFeaturedAsTopSale($StockID, $Category, $DaysTopSales, $db){
 	}
 	// si està a DISCOUNT, OUTLET or NO MORE BUYING llavors, not featured
 	if (   ItemInList($Category, LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING)
-		OR ItemInList($Category, LIST_STOCK_CATEGORIES_DISCOUNT)
+		OR ItemInList($Category, LIST_STOCK_CATEGORIES_OUTLET)
 		OR ItemInList($Category, LIST_STOCK_CATEGORIES_OUTLET)){
 		$Featured = FALSE;
 	}
