@@ -27814,7 +27814,7 @@ msgid "Modify Customer Details"
 msgstr "得意先詳細修正"
 
 #: SelectCustomer.php:217
-msgid "Add/Modify/Delete Customer Branches"
+msgid "Add/Edit/Delete Customer Branches"
 msgstr "得意先支店追加/変更/削除"
 
 #: SelectCustomer.php:219
@@ -28866,7 +28866,7 @@ msgid "Modify Or Delete Supplier Details"
 msgstr "仕入先詳細の変更又は削除"
 
 #: SelectSupplier.php:193
-msgid "Add/Modify/Delete Supplier Contacts"
+msgid "Add/Edit/Delete Supplier Contacts"
 msgstr "仕入先連絡先の追加/修正/削除"
 
 #: SelectSupplier.php:195

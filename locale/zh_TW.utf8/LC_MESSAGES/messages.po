@@ -27982,7 +27982,7 @@ msgid "Modify Customer Details"
 msgstr "修改客戶資料"
 
 #: SelectCustomer.php:217
-msgid "Add/Modify/Delete Customer Branches"
+msgid "Add/Edit/Delete Customer Branches"
 msgstr "新增/編輯/刪除 客戶分公司"
 
 #: SelectCustomer.php:219
@@ -29042,7 +29042,7 @@ msgid "Modify Or Delete Supplier Details"
 msgstr "修改或刪除供應商資料"
 
 #: SelectSupplier.php:193
-msgid "Add/Modify/Delete Supplier Contacts"
+msgid "Add/Edit/Delete Supplier Contacts"
 msgstr "新增 / 修改 / 刪除 供應商聯繫資料"
 
 #: SelectSupplier.php:195

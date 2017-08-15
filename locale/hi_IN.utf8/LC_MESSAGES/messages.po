@@ -28324,7 +28324,7 @@ msgid "Modify Customer Details"
 msgstr "संशोधित ग्राहक विवरण"
 
 #: SelectCustomer.php:217
-msgid "Add/Modify/Delete Customer Branches"
+msgid "Add/Edit/Delete Customer Branches"
 msgstr "जोड़ें / / ग्राहक शाखाओं हटाएँ संशोधित"
 
 #: SelectCustomer.php:219
@@ -29405,7 +29405,7 @@ msgid "Modify Or Delete Supplier Details"
 msgstr "संशोधित करें या हटाएँ प्रदायक विवरण"
 
 #: SelectSupplier.php:193
-msgid "Add/Modify/Delete Supplier Contacts"
+msgid "Add/Edit/Delete Supplier Contacts"
 msgstr "जोड़ें / / प्रदायक संपर्क हटाएँ संशोधित"
 
 #: SelectSupplier.php:195

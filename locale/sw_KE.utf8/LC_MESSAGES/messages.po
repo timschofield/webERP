@@ -28631,7 +28631,7 @@ msgid "Modify Customer Details"
 msgstr "Wateja kurekebisha Details"
 
 #: SelectCustomer.php:217
-msgid "Add/Modify/Delete Customer Branches"
+msgid "Add/Edit/Delete Customer Branches"
 msgstr "Kuongeza / Modify / Delete Matawi Wateja"
 
 #: SelectCustomer.php:219
@@ -29724,7 +29724,7 @@ msgid "Modify Or Delete Supplier Details"
 msgstr "Kurekebisha au kufuta Details Supplier"
 
 #: SelectSupplier.php:193
-msgid "Add/Modify/Delete Supplier Contacts"
+msgid "Add/Edit/Delete Supplier Contacts"
 msgstr "Kuongeza / Modify / Delete Mawasiliano Supplier"
 
 #: SelectSupplier.php:195

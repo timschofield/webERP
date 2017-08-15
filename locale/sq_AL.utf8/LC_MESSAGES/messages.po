@@ -28905,7 +28905,7 @@ msgid "Modify Customer Details"
 msgstr "Customer Details Modifiko"
 
 #: SelectCustomer.php:217
-msgid "Add/Modify/Delete Customer Branches"
+msgid "Add/Edit/Delete Customer Branches"
 msgstr "Shto / Ndrysho / Fshij Degët Customer"
 
 #: SelectCustomer.php:219
@@ -30003,7 +30003,7 @@ msgid "Modify Or Delete Supplier Details"
 msgstr "Ose modifikoni Delete Details Furnizuesi"
 
 #: SelectSupplier.php:193
-msgid "Add/Modify/Delete Supplier Contacts"
+msgid "Add/Edit/Delete Supplier Contacts"
 msgstr "Shto / Ndrysho / Fshij Kontakte Furnizuesi"
 
 #: SelectSupplier.php:195

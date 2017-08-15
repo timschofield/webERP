@@ -28400,7 +28400,7 @@ msgid "Modify Customer Details"
 msgstr "ändra kunddetaljer"
 
 #: SelectCustomer.php:217
-msgid "Add/Modify/Delete Customer Branches"
+msgid "Add/Edit/Delete Customer Branches"
 msgstr "Lägg till/ändra/Ta bort leveransplatser"
 
 #: SelectCustomer.php:219
@@ -29481,7 +29481,7 @@ msgid "Modify Or Delete Supplier Details"
 msgstr "ändra eller ta bort leverantörsinformation"
 
 #: SelectSupplier.php:193
-msgid "Add/Modify/Delete Supplier Contacts"
+msgid "Add/Edit/Delete Supplier Contacts"
 msgstr "Leverantörskontakter"
 
 #: SelectSupplier.php:195

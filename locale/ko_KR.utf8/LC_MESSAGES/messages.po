@@ -28494,7 +28494,7 @@ msgid "Modify Customer Details"
 msgstr "고객 정보를 수정"
 
 #: SelectCustomer.php:217
-msgid "Add/Modify/Delete Customer Branches"
+msgid "Add/Edit/Delete Customer Branches"
 msgstr "수정은 고객 지점 / 삭제 / 추가"
 
 #: SelectCustomer.php:219
@@ -29582,7 +29582,7 @@ msgid "Modify Or Delete Supplier Details"
 msgstr "수정 또는 공급 업체의 상세 정보를 삭제"
 
 #: SelectSupplier.php:193
-msgid "Add/Modify/Delete Supplier Contacts"
+msgid "Add/Edit/Delete Supplier Contacts"
 msgstr "수정은 공급 업체 연락처 / 삭제 / 추가"
 
 #: SelectSupplier.php:195

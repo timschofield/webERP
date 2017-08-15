@@ -28454,7 +28454,7 @@ msgid "Modify Customer Details"
 msgstr "Zmiana Danych Klienta"
 
 #: SelectCustomer.php:217
-msgid "Add/Modify/Delete Customer Branches"
+msgid "Add/Edit/Delete Customer Branches"
 msgstr "Dodaj/Zmień/Usuń Oddział Klienta"
 
 #: SelectCustomer.php:219
@@ -29541,7 +29541,7 @@ msgid "Modify Or Delete Supplier Details"
 msgstr "Zmień lub Usuń Dane Dostawcy"
 
 #: SelectSupplier.php:193
-msgid "Add/Modify/Delete Supplier Contacts"
+msgid "Add/Edit/Delete Supplier Contacts"
 msgstr "Dodaj/Zmień/Usuń Dane Kontaktowe Dostawcy"
 
 #: SelectSupplier.php:195

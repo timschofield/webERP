@@ -29340,7 +29340,7 @@ msgid "Modify Customer Details"
 msgstr "Τροποποίηση Στοιχεία Πελάτη"
 
 #: SelectCustomer.php:217
-msgid "Add/Modify/Delete Customer Branches"
+msgid "Add/Edit/Delete Customer Branches"
 msgstr "Προσθήκη / Τροποποίηση / Διαγραφή Υποκαταστήματα πελατών"
 
 #: SelectCustomer.php:219
@@ -30447,7 +30447,7 @@ msgid "Modify Or Delete Supplier Details"
 msgstr "Τροποποιήσει ή να διαγράψει στοιχεία προμηθευτή"
 
 #: SelectSupplier.php:193
-msgid "Add/Modify/Delete Supplier Contacts"
+msgid "Add/Edit/Delete Supplier Contacts"
 msgstr "Προσθήκη / Τροποποίηση / Διαγραφή Επαφές Προμηθευτή"
 
 #: SelectSupplier.php:195

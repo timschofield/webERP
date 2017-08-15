@@ -28488,7 +28488,7 @@ msgid "Modify Customer Details"
 msgstr "Změnit detaily zákazníka"
 
 #: SelectCustomer.php:217
-msgid "Add/Modify/Delete Customer Branches"
+msgid "Add/Edit/Delete Customer Branches"
 msgstr "Přidat / Upravit / Odstranit zákazníka Pobočky"
 
 #: SelectCustomer.php:219
@@ -29576,7 +29576,7 @@ msgid "Modify Or Delete Supplier Details"
 msgstr "Upravit nebo smazat Dodavatel Podrobnosti"
 
 #: SelectSupplier.php:193
-msgid "Add/Modify/Delete Supplier Contacts"
+msgid "Add/Edit/Delete Supplier Contacts"
 msgstr "Přidat / Upravit / Odstranit Dodavatel Kontakty"
 
 #: SelectSupplier.php:195
