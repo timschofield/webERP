@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-08-12 12:01+1200\n"
-"PO-Revision-Date: 2017-06-25 08:15-0600\n"
+"PO-Revision-Date: 2017-08-15 09:41-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -4210,7 +4210,7 @@ msgstr "Orden de trabajo"
 
 #: CollectiveWorkOrderCost.php:84
 msgid "There are no data available"
-msgstr ""
+msgstr "No hay datos disponibles"
 
 #: CollectiveWorkOrderCost.php:89
 msgid "Select Other Work Orders"
@@ -15446,8 +15446,8 @@ msgstr ""
 "El estado de flujos de efectivo, también conocido como el sucesor de la "
 "antiguo origen y aplicación de fondos, informa cómo los cambios en las "
 "cuentas del balance y los ingresos afectan el efectivo y equivalentes de "
-"efectivo, y divide el análisis en actividades de explotación, de inversión "
-"yde  financiamiento."
+"efectivo, y divide el análisis en actividades de explotación, de inversión y "
+"de  financiamiento."
 
 #: GLCashFlowsIndirect.php:759
 msgid ""
@@ -15457,7 +15457,7 @@ msgid ""
 msgstr ""
 "El propósito del estado de flujos de efectivo es mostrar de dónde la empresa "
 "obtuvo su dinero y cómo se gastó durante el período que se informa para un "
-"rando de períodos seleccionables por el usuario."
+"rango de períodos seleccionables por el usuario."
 
 #: GLCashFlowsIndirect.php:760
 msgid ""
@@ -50651,7 +50651,7 @@ msgstr ""
 msgid ""
 "Returns an array of stock codes matching the criteria send, or an array of "
 "error codes"
-msgstr ""
+msgstr "¡No hay campos para mostrar!"
 "Devuelve una matriz de códigos de existencia que coinciden con los criterios "
 "de envío, o una matriz de códigos de error"
 
@@ -51129,7 +51129,7 @@ msgstr ""
 
 #: api/api_xml-rpc.php:1479
 msgid "This function returns a list of stock location ids."
-msgstr ""
+msgstr "Arriba"
 "Esta función devuelve una lista de identificadores de localización de "
 "existencias."
 
@@ -52230,7 +52230,7 @@ msgstr ""
 
 #: install/index.php:1065
 msgid "WebERPDemo site and data will be installed"
-msgstr ""
+msgstr "Este año"
 
 #: install/index.php:1070
 msgid "Administrator account settings"
