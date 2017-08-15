@@ -76,6 +76,19 @@ function HourlySales($numDays, $RootPath, $db){
 				WHERE salesorders.debtorno = debtorsmaster.debtorno
 					AND salesorders.orddate >= '". $InitialDate ."'
 					AND salesorders.orddate <= '". $Yesterday ."'
+					AND salesorders.ordtime < '08:00:00') AS sales07,
+				(SELECT SUM(klpaidcash+klpaidcreditcard+klreturnedgoods+klvouchers)
+				FROM salesorders
+				WHERE salesorders.debtorno = debtorsmaster.debtorno
+					AND salesorders.orddate >= '". $InitialDate ."'
+					AND salesorders.orddate <= '". $Yesterday ."'
+					AND salesorders.ordtime >= '08:00:00'
+					AND salesorders.ordtime < '09:00:00') AS sales08,
+				(SELECT SUM(klpaidcash+klpaidcreditcard+klreturnedgoods+klvouchers)
+				FROM salesorders
+				WHERE salesorders.debtorno = debtorsmaster.debtorno
+					AND salesorders.orddate >= '". $InitialDate ."'
+					AND salesorders.orddate <= '". $Yesterday ."'
 					AND salesorders.ordtime >= '09:00:00'
 					AND salesorders.ordtime < '10:00:00') AS sales09,
 				(SELECT SUM(klpaidcash+klpaidcreditcard+klreturnedgoods+klvouchers)
@@ -201,6 +214,8 @@ function HourlySales($numDays, $RootPath, $db){
 	if (DB_num_rows($result) != 0){
 		$k = 0; //row colour counter
 		$i = 1;
+		$Total07 = 0;
+		$Total08 = 0;
 		$Total09 = 0;
 		$Total10 = 0;
 		$Total11 = 0;
@@ -229,6 +244,8 @@ function HourlySales($numDays, $RootPath, $db){
 									<th class="ascending">' . _('Shop') . '</th>
 									<th class="ascending">' . _('Type') . '</th>
 									<th class="ascending">' . _('First Sale') . '</th>
+									<th class="ascending">' . _('00-08') . '</th>
+									<th class="ascending">' . _('08-09') . '</th>
 									<th class="ascending">' . _('09-10') . '</th>
 									<th class="ascending">' . _('10-11') . '</th>
 									<th class="ascending">' . _('11-12') . '</th>
@@ -249,7 +266,9 @@ function HourlySales($numDays, $RootPath, $db){
 				echo $TableHeader;
 				$showHeader = FALSE;
 			}
-			$TotalSales = $myrow['sales09'] +
+			$TotalSales = $myrow['sales07'] +
+						$myrow['sales08'] +
+						$myrow['sales09'] +
 						$myrow['sales10'] +
 						$myrow['sales11'] +
 						$myrow['sales12'] +
@@ -266,6 +285,18 @@ function HourlySales($numDays, $RootPath, $db){
 						$myrow['sales23'] ;
 			$GrandTotal += $TotalSales;
 			
+			if ($myrow['sales07'] != 0){
+				$Sales07 = locale_number_format_zero_blank($myrow['sales07']/$TotalSales*100,0).'%';
+				$Total07 += $myrow['sales07'];
+			}else{
+				$Sales07 = '';
+			}		
+			if ($myrow['sales08'] != 0){
+				$Sales08 = locale_number_format_zero_blank($myrow['sales08']/$TotalSales*100,0).'%';
+				$Total08 += $myrow['sales08'];
+			}else{
+				$Sales08 = '';
+			}		
 			if ($myrow['sales09'] != 0){
 				$Sales09 = locale_number_format_zero_blank($myrow['sales09']/$TotalSales*100,0).'%';
 				$Total09 += $myrow['sales09'];
@@ -377,12 +408,16 @@ function HourlySales($numDays, $RootPath, $db){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
 					<td>%s</td>
 					</tr>', 
 					$myrow['zone'],
 					$myrow['debtorno'],
 					'Sales',
 					$myrow['firstsale'],
+					$Sales07,
+					$Sales08,
 					$Sales09,
 					$Sales10,
 					$Sales11,
@@ -467,12 +502,16 @@ function HourlySales($numDays, $RootPath, $db){
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
 				<td>%s</td>
 				</tr>', 
 				'TOTALS',
 				'',
 				'',
 				'',
+				locale_number_format_zero_blank($Total07/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank($Total08/$GrandTotal*100,0).'%',
 				locale_number_format_zero_blank($Total09/$GrandTotal*100,0).'%',
 				locale_number_format_zero_blank($Total10/$GrandTotal*100,0).'%',
 				locale_number_format_zero_blank($Total11/$GrandTotal*100,0).'%',
@@ -511,27 +550,31 @@ function HourlySales($numDays, $RootPath, $db){
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
 				<td>%s</td>
 				</tr>', 
 				'CUMULATIVE',
 				'',
 				'',
 				'',
-				locale_number_format_zero_blank($Total09/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank(($Total09+$Total10)/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank(($Total09+$Total10+$Total11)/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank(($Total09+$Total10+$Total11+$Total12)/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank(($Total09+$Total10+$Total11+$Total12+$Total13)/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank(($Total09+$Total10+$Total11+$Total12+$Total13+$Total14)/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank(($Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15)/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank(($Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15+$Total16)/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank(($Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15+$Total16+$Total17)/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank(($Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15+$Total16+$Total17+$Total18)/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank(($Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15+$Total16+$Total17+$Total18+$Total19)/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank(($Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15+$Total16+$Total17+$Total18+$Total19+$Total20)/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank(($Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15+$Total16+$Total17+$Total18+$Total19+$Total20+$Total21)/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank(($Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15+$Total16+$Total17+$Total18+$Total19+$Total20+$Total21+$Total22)/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank(($Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15+$Total16+$Total17+$Total18+$Total19+$Total20+$Total21+$Total22+$Total23)/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank($Total07/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank(($Total07+$Total08)/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank(($Total07+$Total08+$Total09)/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank(($Total07+$Total08+$Total09+$Total10)/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank(($Total07+$Total08+$Total09+$Total10+$Total11)/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank(($Total07+$Total08+$Total09+$Total10+$Total11+$Total12)/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank(($Total07+$Total08+$Total09+$Total10+$Total11+$Total12+$Total13)/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank(($Total07+$Total08+$Total09+$Total10+$Total11+$Total12+$Total13+$Total14)/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank(($Total07+$Total08+$Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15)/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank(($Total07+$Total08+$Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15+$Total16)/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank(($Total07+$Total08+$Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15+$Total16+$Total17)/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank(($Total07+$Total08+$Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15+$Total16+$Total17+$Total18)/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank(($Total07+$Total08+$Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15+$Total16+$Total17+$Total18+$Total19)/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank(($Total07+$Total08+$Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15+$Total16+$Total17+$Total18+$Total19+$Total20)/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank(($Total07+$Total08+$Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15+$Total16+$Total17+$Total18+$Total19+$Total20+$Total21)/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank(($Total07+$Total08+$Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15+$Total16+$Total17+$Total18+$Total19+$Total20+$Total21+$Total22)/$GrandTotal*100,0).'%',
+				locale_number_format_zero_blank(($Total07+$Total08+$Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15+$Total16+$Total17+$Total18+$Total19+$Total20+$Total21+$Total22+$Total23)/$GrandTotal*100,0).'%',
 				''
 				);
 				
