@@ -118,7 +118,7 @@ define("PAYMENT_BY_CASH", 2);
 define("PAYMENT_BY_CREDITCARD", 3); 
 define("PERCENTAGE_PPN", 10); // %PPN
 define("PERCENTAGE_SALES_CASH_TO_PT", 10.0); // % of cash transactions going to PT cash acccounts
-define("PERCENTAGE_COMPENSATION_HPP_PT", 130.0); // % of HPP to be assigned to PT sales. 100 means NO compensation.
+define("PERCENTAGE_COMPENSATION_HPP_PT", 140.0); // % of HPP to be assigned to PT sales. 100 means NO compensation.
 define("ACCOUNT_COMPENSATION_HPP_PT", "510010050"); 
 define("ACCOUNT_HUTANG_PPH23", "611012005PT"); // GL account for retention of PPH23 in Petty cash
 
@@ -133,7 +133,7 @@ define("ACCOUNT_BANK_MANDIRI_IDR", "111121101PT"); // number of account for Bank
 define("ACCOUNT_BANK_BCA_IDR", "111121110PT"); // number of account for Bank BCA IDR
 define("ACCOUNT_COMISSION_CREDITCARD", "700211300PT"); // number of account used to charge the bank comission
 
-define("PERCENTAGE_CONSIGNMENT_PTADU_TP_PTBB", 50.0); // %of retail price charged by PT.ADU for sales to PT.BB
+define("PERCENTAGE_CONSIGNMENT_PTADU_TP_PTBB", 60.0); // %of retail price charged by PT.ADU for sales to PT.BB
 
 
 /* Defines about financial Analysis*/

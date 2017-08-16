@@ -113,7 +113,7 @@ if ($ProcessSection01){
 	}
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager){
-		DailySalesRecords(10, '2016-07-01', $db);
+		DailySalesRecords(10, '2017-06-30', $db);
 		$NumberOfTestExecuted++;
 //		DailySalesRecordsByShops(10, '2015-06-01', $db);
 //		$NumberOfTestExecuted++;
