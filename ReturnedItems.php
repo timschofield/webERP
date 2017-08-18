@@ -148,9 +148,9 @@ or deletion of the records*/
 				<th class="ascending">' . _('Item Code') . '</th>
 				<th class="ascending">' . _('Reason') . '</th>
 				<th class="ascending">' . _('Order Return') . '</th>
-				<th class="ascending">' . _('Date Return') . '</th>
+				<th class="ascending">' . _('Date of Return') . '</th>
 				<th class="ascending">' . _('Original Invoice') . '</th>
-				<th class="ascending">' . _('Date Invoice') . '</th>
+				<th class="ascending">' . _('Date Original Invoice') . '</th>
 		</tr>';
 
 $k=0; //row colour counter
@@ -292,7 +292,7 @@ if (! isset($_GET['delete'])) {
 		$_POST['oldinvoice']='';
 	}
 	echo '<tr>
-			<td>' . _('Old Invoice') . ':</td>
+			<td>' . _('Original Invoice') . ':</td>
 			<td><input type="text" name="oldinvoice" value="' . $_POST['oldinvoice'] . '" /></td>
 		</tr>';	
 
@@ -300,7 +300,7 @@ if (! isset($_GET['delete'])) {
 		$_POST['oldinvoicedate']=Date($_SESSION['DefaultDateFormat']);
 	}
 	echo '<tr>
-			<td>' . _('Date Of Return') . ':</td>
+			<td>' . _('Date Of Original Invoice') . ':</td>
 			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="oldinvoicedate" size="10" required="required" autofocus="autofocus" maxlength="10" value="' . $_POST['oldinvoicedate']. '" /></td>
 		</tr>';
 		
