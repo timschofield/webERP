@@ -7,6 +7,7 @@ $Title = _('Goods Received But Not Invoiced Yet');
 include ('includes/header.php');
 
 $SQL = "SELECT grns.supplierid,
+				grns.deliverydate,
 				purchorderdetails.orderno,
 				grns.itemcode,
 				grns.qtyrecd,
@@ -44,6 +45,7 @@ if (DB_num_rows($result) != 0){
 						<th>' . _('Supplier') . '</th>
 						<th>' . _('PO#') . '</th>
 						<th>' . _('Item Code') . '</th>
+						<th>' . _('Date') . '</th>
 						<th>' . _('Qty Received') . '</th>
 						<th>' . _('Qty Invoiced') . '</th>
 						<th>' . _('Qty Pending') . '</th>
@@ -77,6 +79,7 @@ if (DB_num_rows($result) != 0){
 		printf('<td>%s</td>
 				<td class="number">%s</td>
 				<td>%s</td>
+				<td>%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
@@ -94,6 +97,7 @@ if (DB_num_rows($result) != 0){
 				$myrow['supplierid'], 
 				$myrow['orderno'], 
 				$myrow['itemcode'], 
+				ConvertSQLDate($myrow['deliverydate']), 
 				$myrow['qtyrecd'], 
 				$myrow['quantityinv'], 
 				$QtyPending, 
@@ -116,7 +120,7 @@ if (DB_num_rows($result) != 0){
 			$i++;
 		}
 	}
-	printf('<td colspan="9">%s</td>
+	printf('<td colspan="10">%s</td>
 			<td>%s</td>
 			<td class="number">%s</td>
 			<td>%s</td>
