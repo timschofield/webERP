@@ -551,8 +551,9 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("NOPOKL", "TOKSE", 10, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("NOPOKL", "TOKOB", 10, $RootPath, $db);
-		$NumberOfTestExecuted++;
+// Do not report OB Requested by laia 2017-08-28
+//		CategoryItemsNotInShop("NOPOKL", "TOKOB", 10, $RootPath, $db);
+//		$NumberOfTestExecuted++;
 
 		
 		CategoryItemsNotInShop("TESTBL", "TOKBU", 6, $RootPath, $db);
