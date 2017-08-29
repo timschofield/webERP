@@ -124,8 +124,6 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		WrongStandardCost("Hong Kong"  , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath, $db);
 		$NumberOfTestExecuted++;
-//		WrongStandardCost("Catalonia"  , "", STANDARD_COST_FACTOR_FOREIGN, 0.10, "SHOWLINK", $RootPath, $db);
-//		$NumberOfTestExecuted++;
 		WrongStandardCost("Philippines", "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		WrongStandardCost("India"      , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath, $db);
@@ -141,8 +139,6 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		WrongStandardCost("Hong Kong"  , "", STANDARD_COST_FACTOR_FOREIGN, 0.05, "SHOWONLY", $RootPath, $db);
 		$NumberOfTestExecuted++;
-//		WrongStandardCost("Catalonia"  , "", STANDARD_COST_FACTOR_FOREIGN, 0.10, "SHOWONLY", $RootPath, $db);
-//		$NumberOfTestExecuted++;
 		WrongStandardCost("Philippines", "", STANDARD_COST_FACTOR_FOREIGN, 0.05, "SHOWONLY", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		WrongStandardCost("India", "", STANDARD_COST_FACTOR_FOREIGN, 0.05, "SHOWONLY", $RootPath, $db);
@@ -152,14 +148,6 @@ if ($ProcessSection01){
 	* RETAIL PRICE         
 	***************************************************************************************/
 
-	/*
-	if (($KL_SystemAdmin)){
-		over_or_below_limit("Items changing price", "OVER", 0, $RootPath, $db);
-		over_or_below_limit("Items moving to 20% discount", "OVER", 0, $RootPath, $db);
-		over_or_below_limit("Items moving to 50% discount", "OVER", 0, $RootPath, $db);
-		over_or_below_limit("Items moving to 80% discount", "OVER", 0, $RootPath, $db);
-	}
-	*/
 	if ($KL_BusinessDevelopmentManager
 		OR $KL_SystemAdmin){
 		
@@ -217,16 +205,6 @@ if ($ProcessSection01){
 		OR $KL_PurchasingTeam 
 		OR $KL_ShopSupportLeader){
 		
-/*		DiscountedItemsOnNotOutletShops("DISC20", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		DiscountedItemsOnNotOutletShops("DISC50", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		DiscountedItemsOnNotOutletShops("DISC80", $RootPath, $db);
-		$NumberOfTestExecuted++;
-
-		NotDiscountedItemsOnOutLetShops($RootPath, $db);
-		$NumberOfTestExecuted++;
-*/
 		ItemsInWrongShops("KAPAL-LAUT", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		ItemsInWrongShops("BLINK", $RootPath, $db);
@@ -244,8 +222,6 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		DiscountedItemsWithWrongDiscount("DISC50", "50", $RootPath, $db);
 		$NumberOfTestExecuted++;
-	//	DiscountedItemsWithWrongDiscount("DISC80", "80", $RootPath, $db);
-	//	$NumberOfTestExecuted++;
 		NotDiscountedItemsWithDiscount($RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
@@ -264,7 +240,7 @@ if ($ProcessSection01){
 	if ($KL_SystemAdmin){
 		GoodsReceivedNotInvoicedControl(1000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		CustomersDebtControl(10, $periodnow, $db);
+		CustomersDebtControl(1000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -320,6 +296,8 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111111126",         0,   15000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
+		BalanceAccountControl("111111127",         0,   15000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin 
@@ -337,7 +315,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111121101PT",  1000000,  100000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111121110PT",   100000,  250000000, $periodnow, $db);
+		BalanceAccountControl("111121110PT",   100000,  300000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111121111PT", 11000000,  110000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
@@ -348,7 +326,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111121105PT",500000000, 1500000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111200",   40000000,  100000000, $periodnow, $db);
+		BalanceAccountControl("111111200",   50000000,  100000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111111209",          0,   25000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
@@ -356,21 +334,21 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111520000",         -1,          1, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111512000",   50000000,  150000000, $periodnow, $db);
+		BalanceAccountControl("111512000",   50000000,  200000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111513000",   -1000000,    1000000, $periodnow, $db);
+		BalanceAccountControl("111513000",   -5000000,    5000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111800000",  200000000,  300000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111900000",   25000000,   35000000, $periodnow, $db);
+		BalanceAccountControl("111900000",   30000000,   50000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111311100",  -10000000,   10000000, $periodnow, $db);
+		BalanceAccountControl("111311100",  -20000000,          0, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111499000",         -1,          1, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("211021400",  -50000000,          0, $periodnow, $db);
+		BalanceAccountControl("211021400", -100000000,          0, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("211021500",  200000000,  500000000, $periodnow, $db);
+		BalanceAccountControl("211021500",  500000000, 1000000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("612011215",         -1,          1, $periodnow, $db);
 		$NumberOfTestExecuted++;
@@ -479,21 +457,6 @@ if ($ProcessSection01){
 	if ($KL_BusinessDevelopmentManager){
 		ItemsWithStockKantorButReorderLevelTokoZero($RootPath, $db);
 		$NumberOfTestExecuted++;
-/*		ItemsWithStockKantorButRLZeroAt("TOKSU", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ItemsWithStockKantorButRLZeroAt("TOKUB", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ItemsWithStockKantorButRLZeroAt("TOKSA", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ItemsWithStockKantorButRLZeroAt("TOKSS", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ItemsWithStockKantorButRLZeroAt("TOKPU", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ItemsWithStockKantorButRLZeroAt("TOKPA", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ItemsWithStockKantorButRLZeroAt("TOKKA", $RootPath, $db);
-		$NumberOfTestExecuted++;
-*/
 
 		CategoryItemsNotInShop("TESTKL", "TOKPU", 10, $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -563,17 +526,21 @@ if ($ProcessSection01){
 		CategoryItemsNotInShop("TESTBL", "TOKSB", 6, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-		CategoryItemsNotInShop("STABBL", "TOKBU", 10, $RootPath, $db);
+		CategoryItemsNotInShop("STABBL", "TOKBU", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("STABBL", "TOKPS", 10, $RootPath, $db);
+		CategoryItemsNotInShop("STABBL", "TOKPS", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("STABBL", "TOKSB", 10, $RootPath, $db);
+		CategoryItemsNotInShop("STABBL", "TOKSB", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("STABBL", "TOKPB", 10, $RootPath, $db);
+		CategoryItemsNotInShop("STABBL", "TOKPB", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("STABBL", "TOKMU", 10, $RootPath, $db);
+		CategoryItemsNotInShop("STABBL", "TOKMU", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("STABBL", "TOKU3", 10, $RootPath, $db);
+		CategoryItemsNotInShop("STABBL", "TOKU3", 15, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABBL", "TOKBB", 15, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABBL", "TOKTB", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 		CategoryItemsNotInShop("NOPOBL", "TOKBU", 6, $RootPath, $db);
@@ -599,12 +566,6 @@ if ($ProcessSection01){
 		CategoryItemsNotInShop("DISC80", "TOKUB", 2, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-	//	ItemsInCategoryWithStockKantorButReorderLevelTokoZero("DISC20", $RootPath, $db);
-	//	$NumberOfTestExecuted++;
-	//	ItemsInCategoryWithStockKantorButReorderLevelTokoZero("DISC50", $RootPath, $db);
-	//	$NumberOfTestExecuted++;
-	//	ItemsInCategoryWithStockKantorButReorderLevelTokoZero("DISC80", $RootPath, $db);
-	//	$NumberOfTestExecuted++;
 	}
 
 
