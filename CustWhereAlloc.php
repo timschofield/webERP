@@ -66,7 +66,8 @@ if(isset($_POST['ShowResults']) AND $_POST['TransNo']!='') {
 	$sql = "SELECT debtortrans.id,
 				ovamount+ovgst AS totamt,
 				currencies.decimalplaces AS currdecimalplaces,
-				debtorsmaster.currcode
+				debtorsmaster.currcode,
+				debtortrans.rate
 			FROM debtortrans INNER JOIN debtorsmaster
 			ON debtortrans.debtorno=debtorsmaster.debtorno
 			INNER JOIN currencies
@@ -78,9 +79,12 @@ if(isset($_POST['ShowResults']) AND $_POST['TransNo']!='') {
 			$sql .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 	}
 	$result = DB_query($sql );
-
-	if(DB_num_rows($result) > 0) {
-		$myrow = DB_fetch_array($result);
+	$GrandTotal = 0;
+	$Rows = DB_num_rows($result);
+	if($Rows>=1) {
+		while($myrow = DB_fetch_array($result)) {
+		$GrandTotal +=$myrow['totamt'];
+		$Rate = $myrow['rate'];
 		$AllocToID = $myrow['id'];
 		$CurrCode = $myrow['currcode'];
 		$CurrDecimalPlaces = $myrow['currdecimalplaces'];
@@ -97,8 +101,15 @@ if(isset($_POST['ShowResults']) AND $_POST['TransNo']!='') {
 		if($_POST['TransType']==12 OR $_POST['TransType'] == 11) {
 
 			$TitleInfo = ($_POST['TransType'] == 12)?_('Receipt'):_('Credit Note');
-			$sql .= "ON debtortrans.id = custallocns.transid_allocto
-				WHERE custallocns.transid_allocfrom = '" . $AllocToID . "'";
+			if($myrow['totamt']<0) {
+				$sql .= "ON debtortrans.id = custallocns.transid_allocto
+					WHERE custallocns.transid_allocfrom = '" . $AllocToID . "'";
+			} else {
+				$sql .= "ON debtortrans.id = custallocns.transid_allocfrom
+					WHERE custallocns.transid_allocto = '" . $AllocToID . "'";
+		
+			}
+
 		} else {
 			$TitleInfo = _('invoice');
 			$sql .= "ON debtortrans.id = custallocns.transid_allocfrom
@@ -189,6 +200,31 @@ if(isset($_POST['ShowResults']) AND $_POST['TransNo']!='') {
 			</div>';
 		} // end if there are allocations against the transaction
 	} //got the ID of the transaction to find allocations for
+} //end of while loop;
+if ($Rows>1) {
+	echo '<div class="centre"><b>' . _('Transaction Total'). '</b> ' .locale_number_format($GrandTotal,$CurrDecimalPlaces) . '</div>';
+}
+if ($_POST['TransType']== 12) {
+	//retrieve transaction to see if there are any transaction fee,
+	$sql = "SELECT account,
+						amount
+					FROM gltrans LEFT JOIN bankaccounts ON account=accountcode
+					WHERE type=12 AND typeno='".$_POST['TransNo']."' AND account !='". $_SESSION['CompanyRecord']['debtorsact'] ."' AND accountcode IS NULL";
+	$ErrMsg = _('Failed to retrieve charge data');
+	$result = DB_query($sql,$ErrMsg);
+	if (DB_num_rows($result)>0) {
+		while ($myrow = DB_fetch_array($result)){
+			echo '<div class="centre">
+							<strong>'._('GL Account') .' ' . $myrow['account'] . '</strong> '. _('Amount') . locale_number_format($myrow['amount'],$CurrDecimalPlaces).'<br/> '. _('To local currency'). ' ' . locale_number_format($myrow['amount']*$Rate,$CurrDecimalPlaces).' ' . _('at rate') . ' ' . $Rate .
+				
+					'</div>';
+					$GrandTotal += $myrow['amount'] * $Rate;
+		}
+		echo '<div class="centre">
+					<strong>' . _('Grand Total') . '</strong>' . ' ' . locale_number_format($GrandTotal,$CurrDecimalPlaces).'
+		</div>';
+	}
+}
 }
 echo '</div>';
 echo '</form>';
