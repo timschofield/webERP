@@ -1249,22 +1249,6 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 			<td><input type="tel" name="SuppTel" pattern="[0-9+\-\s()]*" size="31" maxlength="30" value="' . $_SESSION['PO' . $identifier]->SuppTel . '" /></td>
 		</tr>';
 
-	$result = DB_query("SELECT terms, termsindicator FROM paymentterms");
-
-	echo '<tr>
-			<td>' . _('Payment Terms') . ':</td>
-			<td><select name="PaymentTerms">';
-
-	while ($myrow = DB_fetch_array($result)) {
-		if ($myrow['termsindicator'] == $_SESSION['PO' . $identifier]->PaymentTerms) {
-			echo '<option selected="selected" value="' . $myrow['termsindicator'] . '">' . $myrow['terms'] . '</option>';
-		} else {
-			echo '<option value="' . $myrow['termsindicator'] . '">' . $myrow['terms'] . '</option>';
-		} //end while loop
-	}
-	DB_data_seek($result, 0);
-	echo '</select></td></tr>';
-
 	$result = DB_query("SELECT loccode,
 							locationname
 						FROM locations WHERE loccode='" . $_SESSION['PO' . $identifier]->Port . "'");

@@ -3555,16 +3555,6 @@ function OldPurchasingOrdersStillActive($maxdays, $RootPath, $db){
 
 function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 
-/*	if ($reason == "Delayed"){
-		$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
-		$EndDate = "0000-00-00";
-	}else{
-		$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',+$maxdays));
-		$EndDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-30));
-	}
-
-
-*/	
 	if ($TypeOfCode == "IN NEGOTIAION WITH SUPPLIER"){
 		$DateField = "orddate";
 		$FieldName = "Order Date";
@@ -3617,7 +3607,7 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 		$ShipmentAWB = '';
 		$TitleWarning = 'Purchase Orders paid but not shipped by Cargo Agent';
 		$SQLFilterKLStatus = " AND purchorders.klstatus = '4000' 
-							   AND suppliers.paymentterms = 'T2' ";
+							   AND suppliers.paymentterms = 'T1' ";
 	}else if ($TypeOfCode == "RECEIVED BY CARGO AGENT BUT NOT SHIPPED"){
 		$DateField = "paymentdate";
 		$FieldName = "Payment Date";
