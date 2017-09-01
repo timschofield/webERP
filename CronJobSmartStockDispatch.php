@@ -283,6 +283,11 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 		
 		$EmailText = $EmailText . "# Models in this transfer = " . locale_number_format($NumModelsInThisStockDispatch,0) . "\n" . 
 								  "# Pieces in this transfer = " . locale_number_format($NumPcsInThisStockDispatch,0) . "\n";
+
+		$YPos -=(3 * $line_height);
+		$pdf->addTextWrap(50,$YPos,500,9,"# Models in this transfer = " . locale_number_format($NumModelsInThisStockDispatch,0), 'left');
+		$YPos -=(1 * $line_height);
+		$pdf->addTextWrap(50,$YPos,500,9,"# Pieces in this transfer = " . locale_number_format($NumPcsInThisStockDispatch,0), 'left');
 		
 		//add prepared by
 		$pdf->addTextWrap(50,$YPos-50,100,9,_('Prepared By :'), 'left');
