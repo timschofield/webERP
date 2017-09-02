@@ -21,7 +21,8 @@ $DaysSalesForOrder = 2;
 $StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$DaysSalesForOrder));
 
 $SQL = "SELECT locations.loccode,
-				locations.smartdispatchmaxmodels
+				locations.smartdispatchmaxmodels,
+				locations.smartdispatchminmodels
 		FROM locations
 		WHERE locations.smartdispatchfrom = 'KANTO'
 		ORDER BY locations.priority ASC,
@@ -35,9 +36,9 @@ $result = DB_query($SQL);
 if (DB_num_rows($result) != 0){
 	while ($myrow = DB_fetch_array($result)) {
 		// From KANTO to Shop, send the items needed to fill the RL
-		$EmailText  = KLStockDispatch('KANTO', $myrow['loccode'], "All", $ReportType, $DispatchPercent, $myrow['smartdispatchmaxmodels'], $RootPath, $db, $EmailText);
+		$EmailText  = KLStockDispatch('KANTO', $myrow['loccode'], "All", $ReportType, $DispatchPercent, $myrow['smartdispatchmaxmodels'], $myrow['smartdispatchminmodels'], $RootPath, $db, $EmailText);
 		// From Shop to KANTO, return the overstock
-		$EmailText  = KLStockDispatch($myrow['loccode'], 'KANTO', "OverFrom", $ReportType, $DispatchPercent, $myrow['smartdispatchmaxmodels'], $RootPath, $db, $EmailText);
+		$EmailText  = KLStockDispatch($myrow['loccode'], 'KANTO', "OverFrom", $ReportType, $DispatchPercent, $myrow['smartdispatchmaxmodels'], $myrow['smartdispatchminmodels'], $RootPath, $db, $EmailText);
 	}
 }
 
@@ -46,7 +47,7 @@ $EmailSubject  = "KL webERP Cron Job: Daily Stock Dispatch";
 SendEmailFromCron($EmailAddress, $EmailSubject, $EmailText, '');
 
 /****************************************************************************************/
-function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $DispatchPercent, $MaxModelsPerDispatch, $RootPath, $db, $EmailText){
+function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $DispatchPercent, $MaxModelsPerDispatch, $MinModelsPerDispatch, $RootPath, $db, $EmailText){
 
 	$EmailText = $EmailText .  "\n" . "Smart Stock Dispatch from " . $FromLocCode . " to " . $ToLocCode . "\n" . "Strategy " . $Strategy . "\n";
 
@@ -129,6 +130,10 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 		$EmailText = $EmailText . "SQL = " .  $sql . "\n";
 	}elseif (DB_num_rows($result) ==0) {
 		$EmailText = $EmailText . "No Items for this transfer" . "\n";
+	}elseif (($Strategy == 'All') AND (DB_num_rows($result) < $MinModelsPerDispatch)) {
+		$EmailText = $EmailText . "Less than " . $MinModelsPerDispatch . " Items for this transfer with Strategy All" . "\n";
+//	}elseif (($Strategy == 'OverFrom') AND (DB_num_rows($result) < $MinModelsPerDispatch)) {
+//		$EmailText = $EmailText . "Less than " . $MinModelsPerDispatch . " Items for this transfer with starategy OverFrom" . "\n";
 	}else{
 		// OK, let's create the PDF
 

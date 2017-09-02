@@ -80,6 +80,7 @@ if(isset($_POST['submit'])) {
 									priority = '" . $_POST['Priority'] . "',
 									smartdispatchfrom = '" . $_POST['SmartDispatchFrom'] . "',
 									smartdispatchmaxmodels = '" . $_POST['SmartDispatchMaxModels'] . "',
+									smartdispatchminmodels = '" . $_POST['SmartDispatchMinModels'] . "',
 									klyearlyrent = '" . $_POST['KLyearlyRent'] . "',
 									klposcashaccount = '" . $_POST['KLPOSCashAccount'] . "',
 									klpostag = '" . $_POST['KLPOSTag'] . "',
@@ -120,6 +121,7 @@ if(isset($_POST['submit'])) {
 		unset($_POST['Priority']);
 		unset($_POST['SmartDispatchFrom']);
 		unset($_POST['SmartDispatchMaxModels']);
+		unset($_POST['SmartDispatchMinModels']);
 		unset($_POST['KLyearlyRent']);
 		unset($_POST['KLPOSCashAccount']);
 		unset($_POST['KLPOSTag']);
@@ -164,6 +166,7 @@ if(isset($_POST['submit'])) {
 										priority,
 										smartdispatchfrom,
 										smartdispatchmaxmodels,
+										smartdispatchminmodels,
 										klyearlyrent,
 										klposcashaccount,
 										klpostag,
@@ -195,6 +198,7 @@ if(isset($_POST['submit'])) {
 								'" . $_POST['Prority'] . "',
 								'" . $_POST['SmartDispatchFrom'] . "',
 								'" . $_POST['SmartDispatchMaxModels'] . "',
+								'" . $_POST['SmartDispatchMinModels'] . "',
 								'" . $_POST['KLyearlyRent'] . "',
 								'" . $_POST['KLPOSCashAccount'] . "',
 								'" . $_POST['KLPOSTag'] . "',
@@ -269,6 +273,7 @@ if(isset($_POST['submit'])) {
 		unset($_POST['Priority']);
 		unset($_POST['SmartDispatchFrom']);
 		unset($_POST['SmartDispatchMaxModels']);
+		unset($_POST['SmartDispatchMinModels']);
 		unset($_POST['KLyearlyRent']);
 		unset($_POST['KLPOSCashAccount']);
 		unset($_POST['KLPOSTag']);
@@ -451,6 +456,7 @@ or deletion of the records*/
 				priority,
 				smartdispatchfrom,
 				smartdispatchmaxmodels,
+				smartdispatchminmodels,
 				klposcashaccount,
 				klpostag,
 				glaccountcode,
@@ -478,6 +484,7 @@ or deletion of the records*/
 			<th class="ascending">', _('Stock Ready Sell'), '</th>
 			<th class="ascending">', _('ST From'), '</th>
 			<th class="ascending">', _('ST Max'), '</th>
+			<th class="ascending">', _('ST Min'), '</th>
 			<th class="ascending">', _('POS Cash GL'), '</th>
 			<th class="ascending">', _('POS Tag'), '</th>
 			<th class="noprint" colspan="2">&nbsp;</th>
@@ -505,6 +512,7 @@ while ($myrow = DB_fetch_array($result)) {
 			<td>%s</td>
 			<td>%s</td>
 			<td class="number">%s</td>
+			<td class="number">%s</td>
 			<td>%s</td>
 			<td class="number">%s</td>
 			<td class="noprint"><a href="%sSelectedLocation=%s">' . _('Edit') . '</a></td>
@@ -518,6 +526,7 @@ while ($myrow = DB_fetch_array($result)) {
 			$ReadyToSell,
 			$myrow['smartdispatchfrom'],
 			$myrow['smartdispatchmaxmodels'],
+			$myrow['smartdispatchminmodels'],
 			$myrow['klposcashaccount'],
 			$myrow['klpostag'],
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $myrow['loccode'],
@@ -564,6 +573,7 @@ if(!isset($_GET['delete'])) {
 					priority,
 					smartdispatchfrom,
 					smartdispatchmaxmodels,
+					smartdispatchminmodels,
 					klyearlyrent,
 					klposcashaccount,
 					klpostag,
@@ -602,6 +612,7 @@ if(!isset($_GET['delete'])) {
 		$_POST['Priority'] = $myrow['priority'];
 		$_POST['SmartDispatchFrom'] = $myrow['smartdispatchfrom'];
 		$_POST['SmartDispatchMaxModels'] = $myrow['smartdispatchmaxmodels'];
+		$_POST['SmartDispatchMinModels'] = $myrow['smartdispatchminmodels'];
 		$_POST['KLyearlyRent'] = $myrow['klyearlyrent'];
 		$_POST['KLPOSCashAccount'] = $myrow['klposcashaccount'];
 		$_POST['KLPOSTag'] = $myrow['klpostag'];
@@ -775,6 +786,10 @@ if(!isset($_GET['delete'])) {
 	echo '<tr>
 			<td>' . _('KL Smart Transfers # max models') . ':</td>
 			<td><input type="text" name="SmartDispatchMaxModels" class="number" title="' . _('Enter the maximum number of models to be included in KL Smart Transfers') . '" name="MaxModels" value="' . $_POST['SmartDispatchMaxModels'] . '" size="5" maxlength="5" /></td>
+		</tr>';
+	echo '<tr>
+			<td>' . _('KL Smart Transfers # min models') . ':</td>
+			<td><input type="text" name="SmartDispatchMinModels" class="number" title="' . _('Enter the minimum number of models to be included in KL Smart Transfers') . '" name="MinModels" value="' . $_POST['SmartDispatchMinModels'] . '" size="5" maxlength="5" /></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('KL Yearly Rent IDR (Shops Only)') . ':</td>
