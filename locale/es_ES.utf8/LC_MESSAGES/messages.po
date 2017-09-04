@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-08-15 10:37-0600\n"
-"PO-Revision-Date: 2017-08-15 10:31-0600\n"
+"PO-Revision-Date: 2017-08-15 10:58-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -3875,7 +3875,7 @@ msgstr "No se encontraron Materias Primas."
 
 #: BOMs.php:692
 msgid "Print Date"
-msgstr ""
+msgstr "Imprimir fecha"
 
 #: BOMs.php:729
 msgid "Edit the details of the selected component in the fields below"
@@ -16882,7 +16882,7 @@ msgstr "Se usó el siguiente SQL para agregar las entradas contables"
 
 #: InternalStockRequestFulfill.php:173 InternalStockRequestFulfill.php:192
 msgid "An internal stock request for"
-msgstr ""
+msgstr "Una solicitud interna de inventario para"
 
 #: InternalStockRequestFulfill.php:173 InternalStockRequestFulfill.php:192
 msgid "has been fulfilled from location"
@@ -29490,7 +29490,7 @@ msgstr "Artículos de Inventario"
 
 #: SelectProduct.php:99
 msgid "Item Type"
-msgstr ""
+msgstr "Tipo de artículo"
 
 #: SelectProduct.php:103
 msgid "Assembly Item"
@@ -29677,7 +29677,7 @@ msgstr ""
 
 #: SelectProduct.php:831
 msgid "image"
-msgstr ""
+msgstr "imagen"
 
 #: SelectQASamples.php:5
 msgid "Select QA Samples"
@@ -44444,7 +44444,7 @@ msgstr ""
 
 #: Z_UpdateSalesAnalysisWithLatestCustomerData.php:43
 msgid "and branch code"
-msgstr ""
+msgstr "y código de sucursal"
 
 #: Z_UpdateSalesAnalysisWithLatestCustomerData.php:47
 msgid ""
@@ -52402,7 +52402,7 @@ msgstr "Seleccionar imagen almacenada"
 
 #: reportwriter/languages/en_US/reports.php:208
 msgid "Image  Dimensions (mm)"
-msgstr ""
+msgstr "Dimensiones de la imagen (mm)"
 
 #: reportwriter/languages/en_US/reports.php:209
 msgid "Line Attributes"
@@ -52572,7 +52572,7 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:271
 msgid "Image - JPG or PNG"
-msgstr ""
+msgstr "Imagen - JPG o PNG"
 
 #: reportwriter/languages/en_US/reports.php:272
 msgid "Rectangle"
@@ -52865,7 +52865,7 @@ msgstr ""
 
 #: ../webSHOP/Checkout.php:108
 msgid "and the message"
-msgstr ""
+msgstr "y el mensaje"
 
 #: ../webSHOP/Checkout.php:108
 msgid "was returned from"
@@ -53355,7 +53355,7 @@ msgstr ""
 
 #: ../webSHOP/ItemDetails.php:98
 msgid "incl Tax"
-msgstr ""
+msgstr "impuesto incluido"
 
 #: ../webSHOP/ItemDetails.php:102 ../webSHOP/ItemDetails.php:111
 #: ../webSHOP/includes/Functions.php:43 ../webSHOP/includes/Functions.php:52
