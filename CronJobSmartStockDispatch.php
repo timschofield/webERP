@@ -50,6 +50,7 @@ SendEmailFromCron($EmailAddress, $EmailSubject, $EmailText, '');
 function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $DispatchPercent, $MaxModelsPerDispatch, $MinModelsPerDispatch, $RootPath, $db, $EmailText){
 
 	$EmailText = $EmailText .  "\n" . "Smart Stock Dispatch from " . $FromLocCode . " to " . $ToLocCode . "\n" . "Strategy " . $Strategy . "\n";
+	$EmailText = $EmailText .  "Min Models to create transfer: " . $MinModelsPerDispatch . "\n" . " Max Models to be included: " . $MaxModelsPerDispatch . "\n";
 
 	// from location
 	$ErrMsg = _('Could not retrieve location name from the database');
@@ -125,6 +126,8 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 
 	$result = DB_query($sql,'','',false,true);
 
+	$EmailText = $EmailText .  "DB_num_rows: " . DB_num_rows($result) . "\n";
+
 	if (DB_error_no() !=0) {
 		$EmailText = $EmailText . "Smart Stock Dispatch ERROR " .  _('The Stock Dispatch report could not be retrieved by the SQL because') . ' '  . DB_error_msg() . "\n";
 		$EmailText = $EmailText . "SQL = " .  $sql . "\n";
@@ -132,8 +135,8 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 		$EmailText = $EmailText . "No Items for this transfer" . "\n";
 	}elseif (($Strategy == 'All') AND (DB_num_rows($result) < $MinModelsPerDispatch)) {
 		$EmailText = $EmailText . "Less than " . $MinModelsPerDispatch . " Items for this transfer with Strategy All" . "\n";
-//	}elseif (($Strategy == 'OverFrom') AND (DB_num_rows($result) < $MinModelsPerDispatch)) {
-//		$EmailText = $EmailText . "Less than " . $MinModelsPerDispatch . " Items for this transfer with starategy OverFrom" . "\n";
+	}elseif (($Strategy == 'OverFrom') AND (DB_num_rows($result) < $MinModelsPerDispatch)) {
+		$EmailText = $EmailText . "Less than " . $MinModelsPerDispatch . " Items for this transfer with starategy OverFrom" . "\n";
 	}else{
 		// OK, let's create the PDF
 
