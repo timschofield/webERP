@@ -1,5 +1,6 @@
 webERP Change Log
 
+17/09/06 RChacon: Fix currency translation in PO_AuthorisationLevels.php.
 17/09/06 Exson: Fixed the bug that invoice cannot be issued by same transaction multiple times in SuppTrans.php.
 17/08/30 Exson: Fixed the bug that can not display correctly while the same debtors has more than one transaction and make GL account which is not AR account or bank account transaction showing on too.  
 17/08/30 Exson: Fixed the default shipper does not work in CustomerBranches.php reported by Steven.

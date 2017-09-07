@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-08-15 10:37-0600\n"
-"PO-Revision-Date: 2017-08-15 10:58-0600\n"
+"PO-Revision-Date: 2017-09-06 21:28-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -22829,7 +22829,7 @@ msgstr "Fecha del último día"
 
 #: PO_AuthorisationLevels.php:7
 msgid "Purchase Order Authorisation Maintenance"
-msgstr "Administrar la Autorización de Orden de Compra"
+msgstr "Administrar la autorización de orden de compra"
 
 #: PO_AuthorisationLevels.php:53
 msgid "There already exists an entry for this user/currency combination"
@@ -22850,7 +22850,7 @@ msgstr "No se pudieron obtener los detalles de autenticación porque"
 
 #: PO_AuthorisationLevels.php:127
 msgid "Create Order"
-msgstr "Crear Pedido"
+msgstr "Crear pedido"
 
 #: PO_AuthorisationLevels.php:128
 msgid "Can Release"

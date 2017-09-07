@@ -3,11 +3,15 @@
 /* $Id$*/
 
 include('includes/session.php');
-
 $Title = _('Purchase Order Authorisation Maintenance');
+$ViewTopic = '';
+$BookMark = 'PO_AuthorisationLevels';
 include('includes/header.php');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+	'/images/group_add.png" title="', // Icon image.
+	$Title, '" /> ', // Icon title.
+	$Title, '</p>';// Page title.
 
 
 /*Note: If CanCreate==0 then this means the user can create orders
@@ -127,6 +131,7 @@ echo '<table class="selection">
 		<th>' . _('Create Order') . '</th>
 		<th>' . _('Can Release') . '<br />' .  _('Invoices') . '</th>
 		<th>' . _('Authority Level') . '</th>
+		<th colspan="2">&nbsp;</th>
     </tr>';
 
 while ($myrow=DB_fetch_array($Result)) {
@@ -143,7 +148,7 @@ while ($myrow=DB_fetch_array($Result)) {
 	echo '<tr>
 			<td>' . $myrow['userid'] . '</td>
 			<td>' . $myrow['realname'] . '</td>
-			<td>' . $myrow['currency'] . '</td>
+			<td>', _($myrow['currency']), '</td>
 			<td>' . $DisplayCanCreate . '</td>
 			<td>' . $DisplayOffHold . '</td>
 			<td class="number">' . locale_number_format($myrow['authlevel'],$myrow['decimalplaces']) . '</td>
