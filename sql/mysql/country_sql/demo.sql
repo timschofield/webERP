@@ -1,11 +1,11 @@
 CREATE DATABASE IF NOT EXISTS weberpdemo;
 USE weberpdemo;
 SET FOREIGN_KEY_CHECKS = 0;
--- MySQL dump 10.13  Distrib 5.5.55, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.5.57, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: weberpdemo
 -- ------------------------------------------------------
--- Server version	5.5.55-0ubuntu0.14.04.1
+-- Server version	5.5.57-0ubuntu0.14.04.1
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -867,6 +867,20 @@ CREATE TABLE `factorcompanies` (
   `email` varchar(55) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `factor_name` (`coyname`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `favourites`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `favourites` (
+  `userid` varchar(20) NOT NULL DEFAULT '',
+  `caption` varchar(50) NOT NULL DEFAULT '',
+  `href` varchar(200) NOT NULL DEFAULT '#',
+  PRIMARY KEY (`userid`,`caption`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -3404,12 +3418,12 @@ CREATE TABLE `www_users` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-06-18 13:13:14
--- MySQL dump 10.13  Distrib 5.5.55, for debian-linux-gnu (x86_64)
+-- Dump completed on 2017-08-12 12:08:32
+-- MySQL dump 10.13  Distrib 5.5.57, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: weberpdemo
 -- ------------------------------------------------------
--- Server version	5.5.55-0ubuntu0.14.04.1
+-- Server version	5.5.57-0ubuntu0.14.04.1
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -8660,8 +8674,8 @@ INSERT INTO `config` VALUES ('SmtpSetting','0');
 INSERT INTO `config` VALUES ('SO_AllowSameItemMultipleTimes','1');
 INSERT INTO `config` VALUES ('StandardCostDecimalPlaces','2');
 INSERT INTO `config` VALUES ('TaxAuthorityReferenceName','');
-INSERT INTO `config` VALUES ('UpdateCurrencyRatesDaily','2017-06-18');
-INSERT INTO `config` VALUES ('VersionNumber','4.14');
+INSERT INTO `config` VALUES ('UpdateCurrencyRatesDaily','2017-07-15');
+INSERT INTO `config` VALUES ('VersionNumber','4.14.1');
 INSERT INTO `config` VALUES ('WeightedAverageCosting','0');
 INSERT INTO `config` VALUES ('WikiApp','DokuWiki');
 INSERT INTO `config` VALUES ('WikiPath','wiki');
@@ -8698,11 +8712,11 @@ INSERT INTO `contracts` VALUES ('Test123','Testing manufact tape','14','14','TOR
 -- Dumping data for table `currencies`
 --
 
-INSERT INTO `currencies` VALUES ('Australian Dollars','AUD','Australia','cents',2,1.3123,0);
-INSERT INTO `currencies` VALUES ('Swiss Francs','CHF','Swizerland','centimes',2,0.9734,0);
-INSERT INTO `currencies` VALUES ('Euro','EUR','Euroland','cents',2,0.8931,1);
-INSERT INTO `currencies` VALUES ('Pounds','GBP','England','Pence',2,0.7806,0);
-INSERT INTO `currencies` VALUES ('Kenyian Shillings','KES','Kenya','none',0,103.55,0);
+INSERT INTO `currencies` VALUES ('Australian Dollars','AUD','Australia','cents',2,1.2769,0);
+INSERT INTO `currencies` VALUES ('Swiss Francs','CHF','Swizerland','centimes',2,0.9634,0);
+INSERT INTO `currencies` VALUES ('Euro','EUR','Euroland','cents',2,0.872,1);
+INSERT INTO `currencies` VALUES ('Pounds','GBP','England','Pence',2,0.7638,0);
+INSERT INTO `currencies` VALUES ('Kenyian Shillings','KES','Kenya','none',0,104,0);
 INSERT INTO `currencies` VALUES ('US Dollars','USD','United States','Cents',2,1,1);
 
 --
@@ -8989,6 +9003,11 @@ INSERT INTO `edi_orders_segs` VALUES (95,'UNT',50,1);
 
 --
 -- Dumping data for table `factorcompanies`
+--
+
+
+--
+-- Dumping data for table `favourites`
 --
 
 
@@ -13200,6 +13219,7 @@ INSERT INTO `scripts` VALUES ('Z_poEditLangRemaining.php',15,'');
 INSERT INTO `scripts` VALUES ('Z_poRebuildDefault.php',15,'');
 INSERT INTO `scripts` VALUES ('Z_PriceChanges.php',15,'Utility to make bulk pricing alterations to selected sales type price lists or selected customer prices only');
 INSERT INTO `scripts` VALUES ('Z_ReApplyCostToSA.php',15,'Utility to allow the sales analysis table to be updated with the latest cost information - the sales analysis takes the cost at the time the sale was made to reconcile with the enteries made in the gl.');
+INSERT INTO `scripts` VALUES ('Z_RemovePurchaseBackOrders.php',1,'Removes all purchase order back orders');
 INSERT INTO `scripts` VALUES ('Z_RePostGLFromPeriod.php',15,'Utility to repost all general ledger transaction commencing from a specified period. This can take some time in busy environments. Normally GL transactions are posted automatically each time a trial balance or profit and loss account is run');
 INSERT INTO `scripts` VALUES ('Z_ReverseSuppPaymentRun.php',15,'Utility to reverse an entire Supplier payment run');
 INSERT INTO `scripts` VALUES ('Z_SalesIntegrityCheck.php',15,'');
@@ -13834,7 +13854,7 @@ INSERT INTO `workorders` VALUES (37,'MEL','2016-10-19','2016-10-19',0,0,NULL,'',
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('admin','$2y$10$Q8HLC/2rQaB5NcCcK6V6ZOQG3chIsx16mKtZRoSaUsU9okMBDbUwG','Demonstration user','','','','','admin@weberp.org','MEL',8,1,'2017-06-18 13:09:02','','A4','1,1,1,1,1,1,1,1,1,1,1,',0,1,1,0,50,'fluid','en_GB.utf8',0,0);
+INSERT INTO `www_users` VALUES ('admin','$2y$10$Q8HLC/2rQaB5NcCcK6V6ZOQG3chIsx16mKtZRoSaUsU9okMBDbUwG','Demonstration user','','','','','admin@weberp.org','MEL',8,1,'2017-07-15 13:03:11','','A4','1,1,1,1,1,1,1,1,1,1,1,',0,1,1,0,50,'fluid','en_GB.utf8',0,0);
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -13842,5 +13862,5 @@ INSERT INTO `www_users` VALUES ('admin','$2y$10$Q8HLC/2rQaB5NcCcK6V6ZOQG3chIsx16
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-06-18 13:13:14
+-- Dump completed on 2017-08-12 12:08:33
 SET FOREIGN_KEY_CHECKS = 1;
