@@ -1,5 +1,6 @@
 webERP Change Log
 
+8/9/17 PaulT: Z_ChangeLocationCode.php: Add missing locationusers table update, reported by Paul Becker in forums.
 8/9/17 Phil: Fix portrait invoice email now has narrative of correct invocie number!
 8/9/17 Andrew Couling: Petty cash improvements to tax taken from Tim's work
 6/9/17 RChacon: Fix currency translation in PO_AuthorisationLevels.php.
