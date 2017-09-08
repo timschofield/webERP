@@ -11,4 +11,15 @@ ALTER TABLE pctabs ADD COLUMN authorizerexpenses VARCHAR(20) NOT NULL AFTER auth
 UPDATE pctabs SET authorizerexpenses=authorizer
 ALTER TABLE pcashdetails ADD COLUMN tag INT(11) NOT NULL DEFAULT 0 AFTER tabcode;
 INSERT INTO `scripts` (`script` ,`pagesecurity` ,`description`) VALUES ('PcAuthorizeCash.php',  '6',  'Authorisation of assigned cash');
-
+CREATE TABLE `pcashdetailtaxes` (
+	`counterindex` INT(20) NOT NULL AUTO_INCREMENT,
+	`pccashdetail` INT(20) NOT NULL DEFAULT 0,
+	`calculationorder` TINYINT(4) NOT NULL DEFAULT 0,
+	`description` VARCHAR(40) NOT NULL DEFAULT '',
+	`taxauthid` TINYINT(4) NOT NULL DEFAULT '0',
+	`purchtaxglaccount` VARCHAR(20) NOT NULL DEFAULT '',
+	`taxontax` TINYINT(4) NOT NULL DEFAULT 0,
+	`taxrate` DOUBLE NOT NULL DEFAULT 0.0,
+	`amount` DOUBLE NOT NULL DEFAULT 0.0,
+	PRIMARY KEY(counterindex)
+);
