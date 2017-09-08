@@ -517,7 +517,6 @@ if(isset($PrintPDF)
 
 	if(isset($_GET['Email'])) { //email the invoice to address supplied
 		include ('includes/htmlMimeMail.php');
-		$FromTransNo--; //reverse the increment to retain the correct transaction number
 		$FileName = $_SESSION['reports_dir'] . '/' . $_SESSION['DatabaseName'] . '_' . $InvOrCredit . '_' . $_GET['FromTransNo'] . '.pdf';
 		$pdf->Output($FileName,'F');
 		$mail = new htmlMimeMail();
