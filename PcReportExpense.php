@@ -8,7 +8,7 @@ $BookMark = 'PcReportExpense';
 include ('includes/SQL_CommonFunctions.inc');
 include  ('includes/header.php');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('PC Expense Report')
+echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_add.png" title="' . _('PC Expense Report')
 . '" alt="" />' . ' ' . $Title . '</p>';
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
@@ -36,7 +36,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	/*Show a form to allow input of criteria for Expenses to show */
 	echo '<table class="selection">
 		<tr>
-			<td>' . _('Code Of Petty Cash Expense') . ':</td>
+			<td>' . _('Expense Code') . ':</td>
 			<td><select name="SelectedExpense">';
 
 	$SQL = "SELECT DISTINCT(pctabexpenses.codeexpense)
@@ -47,19 +47,19 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 					"' OR pctabs.assigner ='" . $_SESSION['UserID'] . "' )
 			ORDER BY pctabexpenses.codeexpense";
 
-	$result = DB_query($SQL);
+	$Result = DB_query($SQL);
 
-	while ($myrow = DB_fetch_array($result)) {
-		if (isset($_POST['SelectedExpense']) and $myrow['codeexpense']==$_POST['SelectedExpense']) {
+	while ($MyRow = DB_fetch_array($Result)) {
+		if (isset($_POST['SelectedExpense']) and $MyRow['codeexpense']==$_POST['SelectedExpense']) {
 			echo '<option selected="selected" value="';
 		} else {
 			echo '<option value="';
 		}
-		echo $myrow['codeexpense'] . '">' . $myrow['codeexpense'] . '</option>';
+		echo $MyRow['codeexpense'] . '">' . $MyRow['codeexpense'] . '</option>';
 
 	} //end while loop get type of tab
 
-	DB_free_result($result);
+	DB_free_result($Result);
 
 
 	echo '</select></td>
@@ -92,81 +92,124 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 
 	echo '<tr>
 			<td>' . _('Expense Code') . ':</td>
-			<td style="width:200px">' . $SelectedExpense . '</td>'  .
-			'<td>' . _('From') . ':</td>
+			<td>' . $SelectedExpense . '</td>
+			</tr>
+		<tr>
+			<td>' . _('From') . ':</td>
 			<td>' . $_POST['FromDate'] . '</td>
 		</tr>
 		<tr>
-			<td></td>
-			<td></td>' .
-			'<td>' . _('To') . ':</td>
+			<td>' . _('To') . ':</td>
 			<td>' . $_POST['ToDate'] . '</td>
 		</tr>';
 
 	echo '</table>';
 
-	$SQL = "SELECT pcashdetails.date,
+	$SQL = "SELECT pcashdetails.counterindex,
 					pcashdetails.tabcode,
+					pcashdetails.tag,
+					pcashdetails.date,
+					pcashdetails.codeexpense,
 					pcashdetails.amount,
+					pcashdetails.authorized,
+					pcashdetails.posted,
 					pcashdetails.notes,
 					pcashdetails.receipt,
-					pcashdetails.authorized,
 					pctabs.currency,
 					currencies.decimalplaces
 			FROM pcashdetails, pctabs, currencies
 			WHERE pcashdetails.tabcode = pctabs.tabcode
 				AND pctabs.currency = currencies.currabrev
-				AND codeexpense='".$SelectedExpense."'
-				AND date >='" . $SQL_FromDate . "'
-				AND date <= '" . $SQL_ToDate . "'
+				AND pcashdetails.codeexpense='".$SelectedExpense."'
+				AND pcashdetails.date >='" . $SQL_FromDate . "'
+				AND pcashdetails.date <= '" . $SQL_ToDate . "'
 				AND (pctabs.authorizer='" . $_SESSION['UserID'] .
 					"' OR pctabs.usercode ='" . $_SESSION['UserID'].
 					"' OR pctabs.assigner ='" . $_SESSION['UserID'] . "')
-			ORDER BY date, counterindex ASC";
+			ORDER BY pcashdetails.date, pcashdetails.counterindex ASC";
 
-	$TabDetail = DB_query($SQL,
+	$Result = DB_query($SQL,
 						_('No Petty Cash movements for this expense code were returned by the SQL because'),
 						_('The SQL that failed was:'));
 
 	echo '<br /><table class="selection">
 		<tr>
-			<th>' . _('Date') . '</th>
+			<th>' . _('Date of Expense') . '</th>
 			<th>' . _('Tab') . '</th>
-			<th>' . _('Amount') . '</th>
 			<th>' . _('Currency') . '</th>
+			<th>' . _('Gross Amount') . '</th>
+			<th>', _('Total Tax'), '</th>
+			<th>', _('Tax Group'), '</th>
+			<th>', _('Tag'), '</th>
 			<th>' . _('Notes') . '</th>
 			<th>' . _('Receipt') . '</th>
-			<th>' . _('Authorised') . '</th>
+			<th>' . _('Date Authorised') . '</th>
 		</tr>';
 
 	$k=0; //row colour counter
 
-	while ($myrow = DB_fetch_array($TabDetail)) {
-		if ($k==1){
+	while ($MyRow = DB_fetch_array($Result)) {
+		$CurrDecimalPlaces = $MyRow['decimalplaces'];
+		if ($k == 1) {
 			echo '<tr class="EvenTableRows">';
-			$k=0;
+			$k = 0;
 		} else {
 			echo '<tr class="OddTableRows">';
-			$k=1;
+			$k = 1;
 		}
-
-		printf("<td>%s</td>
-				<td>%s</td>
-				<td class='number'>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				</tr>",
-				ConvertSQLDate($myrow['date']),
-				$myrow['tabcode'],
-				locale_number_format($myrow['amount'],$myrow['decimalplaces']),
-				$myrow['currency'],
-				$myrow['notes'],
-				$myrow['receipt'],
-				ConvertSQLDate($myrow['authorized'])
-				);
-	}
+		$TaxesDescription = '';
+		$TaxesTaxAmount = '';
+		$TaxSQL = "SELECT counterindex,
+							pccashdetail,
+							calculationorder,
+							description,
+							taxauthid,
+							purchtaxglaccount,
+							taxontax,
+							taxrate,
+							amount
+						FROM pcashdetailtaxes
+						WHERE pccashdetail='" . $MyRow['counterindex'] . "'";
+		$TaxResult = DB_query($TaxSQL);
+		while ($MyTaxRow = DB_fetch_array($TaxResult)) {
+			$TaxesDescription .= $MyTaxRow['description'] . '<br />';
+			$TaxesTaxAmount .= locale_number_format($MyTaxRow['amount'], $CurrDecimalPlaces) . '<br />';
+		}
+		$TagSQL = "SELECT tagdescription FROM tags WHERE tagref='" . $MyRow['tag'] . "'";
+		$TagResult = DB_query($TagSQL);
+		$TagRow = DB_fetch_array($TagResult);
+		if ($MyRow['tag'] == 0) {
+			$TagRow['tagdescription'] = _('None');
+		}
+		$TagTo = $MyRow['tag'];
+		$TagDescription = $TagTo . ' - ' . $TagRow['tagdescription'];
+		
+		if ($MyRow['authorized'] == '0000-00-00') {
+				$AuthorisedDate = _('Unauthorised');
+		} else {
+			$AuthorisedDate = ConvertSQLDate($MyRow['authorized']);
+		}
+			
+		/*
+		if ($MyRow['posted'] == 0) {
+			$Posted = _('No');
+		} else {
+			$Posted = _('Yes');
+		}
+		*/
+		
+		echo '<td>', ConvertSQLDate($MyRow['date']), '</td>
+			<td>', $MyRow['tabcode'], '</td>
+			<td>', $MyRow['currency'], '</td>
+			<td class="number">', locale_number_format($MyRow['amount'], $CurrDecimalPlaces), '</td>
+			<td class="number">', $TaxesTaxAmount, '</td>
+			<td>', $TaxesDescription, '</td>
+			<td>', $TagDescription, '</td>
+			<td>', $MyRow['notes'], '</td>
+			<td>', $MyRow['receipt'], '</td>
+			<td>', $AuthorisedDate, '</td>
+		</tr>';
+	} //end of looping
 
 	echo '</table>';
 	echo '<br /><div class="centre"><input type="submit" name="SelectDifferentDate" value="' . _('Select A Different Date') . '" /></div>';
