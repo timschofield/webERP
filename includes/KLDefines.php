@@ -118,7 +118,7 @@ define("PAYMENT_BY_CASH", 2);
 define("PAYMENT_BY_CREDITCARD", 3); 
 define("PERCENTAGE_PPN", 10); // %PPN
 define("PERCENTAGE_SALES_CASH_TO_PT", 10.0); // % of cash transactions going to PT cash acccounts
-define("PERCENTAGE_COMPENSATION_HPP_PT", 180.0); // % of HPP to be assigned to PT sales. 100 means NO compensation.
+define("PERCENTAGE_COMPENSATION_HPP_PT", 190.0); // % of HPP to be assigned to PT sales. 100 means NO compensation.
 define("ACCOUNT_COMPENSATION_HPP_PT", "510010050"); 
 define("ACCOUNT_HUTANG_PPH23", "611012005PT"); // GL account for retention of PPH23 in Petty cash
 
