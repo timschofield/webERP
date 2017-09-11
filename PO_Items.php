@@ -872,7 +872,7 @@ if (isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])){ 
 						AND purchdata.supplierno='" . $_SESSION['PO'.$identifier]->SupplierID . "'
 						AND stockmaster.description " . LIKE . " '" . $SearchString ."'
 						GROUP BY stockmaster.stockid
-						ORDER BY stockmaster.stockid";
+						ORDER BY stockmaster.stockid ";
 			} else { // not just supplier purchdata items
 				$sql = "SELECT stockmaster.stockid,
 							stockmaster.description,
