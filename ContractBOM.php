@@ -268,7 +268,7 @@ if (count($_SESSION['Contract'.$identifier]->ContractBOM)>0){
 			  <td>' . $ContractComponent->UOM . '</td>
 			  <td class="number">' . locale_number_format($ContractComponent->ItemCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			  <td class="number">' . $DisplayLineTotal . '</td>
-			  <td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier. '&amp;Delete=' . $ContractComponent->ComponentID . '" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this item from the contract BOM?') . ',' . _('Confirm Deletion') . '\');">' . _('Delete') . '</a></td></tr>';
+			  <td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier. '&amp;Delete=' . $ContractComponent->ComponentID . '" onclick=\'return confirm("' . _('Are you sure you wish to delete this item from the contract BOM?') . '");\'>' . _('Delete') . '</a></td></tr>';
 		$TotalCost += $LineTotal;
 	}
 

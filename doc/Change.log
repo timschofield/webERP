@@ -1,5 +1,6 @@
 webERP Change Log
 
+11/9/17 Andy Couling: Fixed the onclick delete confirmation box call in ContractBOM.php, was 'MakeConfirm'.
 11/9/17 Andy Couling: Code consistency in PO_Items.php. http://www.weberp.org/forum/showthread.php?tid=4355
 8/9/17 PaulT: Z_ChangeLocationCode.php: Add missing locationusers table update, reported by Paul Becker in forums.
 8/9/17 Phil: Fix portrait invoice email now has narrative of correct invocie number!
