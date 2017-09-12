@@ -11,7 +11,7 @@ $EmailText  = "KL webERP: Smart Stock Dispatch " . "\n";
 
 /* Parameters */
 $ReportType = "Batch"; // ONLY FOR REAL ENVIRONMENT
-// $ReportType = "ReportOnly"; // ONLY FOR TESTS
+//$ReportType = "ReportOnly"; // ONLY FOR TESTS
 
 $DispatchPercent = 0;
 $_SESSION['DefaultPageSize'] = 'A4';
@@ -49,9 +49,13 @@ SendEmailFromCron($EmailAddress, $EmailSubject, $EmailText, '');
 /****************************************************************************************/
 function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $DispatchPercent, $MaxModelsPerDispatch, $MinModelsPerDispatch, $RootPath, $db, $EmailText){
 
-	$EmailText = $EmailText .  "\n" . "Smart Stock Dispatch from " . $FromLocCode . " to " . $ToLocCode . "\n" . "Strategy " . $Strategy . "\n";
-	$EmailText = $EmailText .  "Min Models to create transfer: " . $MinModelsPerDispatch . "\n" . " Max Models to be included: " . $MaxModelsPerDispatch . "\n";
-
+	$EmailText = $EmailText .  "\n" . 
+				"Smart Stock Dispatch from " . $FromLocCode . " to " . $ToLocCode . "\n" . 
+				"Strategy " . $Strategy . "\n";
+	$EmailText = $EmailText .  
+				"Min Models to create transfer: " . $MinModelsPerDispatch . "\n" . 
+				"Max Models to be included: " . $MaxModelsPerDispatch . "\n";
+				
 	// from location
 	$ErrMsg = _('Could not retrieve location name from the database');
 	$sqlfrom="SELECT locationname FROM `locations` WHERE loccode='" . $FromLocCode . "'";
@@ -126,7 +130,7 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 
 	$result = DB_query($sql,'','',false,true);
 
-	$EmailText = $EmailText .  "DB_num_rows: " . DB_num_rows($result) . "\n";
+	$EmailText = $EmailText .  "Models candidates to be included in transfer: " . DB_num_rows($result) . "\n";
 
 	if (DB_error_no() !=0) {
 		$EmailText = $EmailText . "Smart Stock Dispatch ERROR " .  _('The Stock Dispatch report could not be retrieved by the SQL because') . ' '  . DB_error_msg() . "\n";
@@ -219,60 +223,69 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 			}
 
 			// ONLY add to transfer if there's QTY and we have a picture for it. If no picture, no send!
-			if (($ShipQty>0) AND (file_exists($_SESSION['part_pics_dir'] . '/' .$myrow['stockid'].'.jpg'))){
-				$NumModelsInThisStockDispatch++;
-				$NumPcsInThisStockDispatch = $NumPcsInThisStockDispatch + $ShipQty;
-				$YPos -=(2 * $line_height);
-				// Parameters for addTextWrap are defined in /includes/class.pdf.php
-				// 1) X position 2) Y position 3) Width
-				// 4) Height 5) Text 6) Alignment 7) Border 8) Fill - True to use SetFillColor
-				// and False to set to transparent
-				$fill = False;
-			
-				$pdf->addTextWrap(50,$YPos,70,$FontSize,$myrow['stockid'],'',0,$fill);
-				$pdf->Image($_SESSION['part_pics_dir'] . '/'.$myrow['stockid'].'.jpg',135,$Page_Height-$Top_Margin-$YPos+10,45,35);
-				$pdf->addTextWrap(180,$YPos,200,$FontSize,$myrow['description'],'',0,$fill);
-				$pdf->addTextWrap(355,$YPos,40,$FontSize,locale_number_format($myrow['fromquantity'] - $InTransitQuantityAtFrom,$myrow['decimalplaces']),'right',0,$fill);
-				$pdf->addTextWrap(405,$YPos,40,$FontSize,locale_number_format($myrow['quantity'] + $InTransitQuantityAtTo,$myrow['decimalplaces']),'right',0,$fill);
-				$pdf->addTextWrap(450,$YPos,40,11,locale_number_format($ShipQty,$myrow['decimalplaces']),'right',0,$fill);
-				$pdf->addTextWrap(510,$YPos,40,$FontSize,'_________','right',0,$fill);
+			if ($ShipQty>0){
+				if (file_exists($_SESSION['part_pics_dir'] . '/' .$myrow['stockid'].'.jpg')){
+					$NumModelsInThisStockDispatch++;
+					$NumPcsInThisStockDispatch = $NumPcsInThisStockDispatch + $ShipQty;
+					$YPos -=(2 * $line_height);
+					// Parameters for addTextWrap are defined in /includes/class.pdf.php
+					// 1) X position 2) Y position 3) Width
+					// 4) Height 5) Text 6) Alignment 7) Border 8) Fill - True to use SetFillColor
+					// and False to set to transparent
+					$fill = False;
+				
+					$pdf->addTextWrap(50,$YPos,70,$FontSize,$myrow['stockid'],'',0,$fill);
+					$pdf->Image($_SESSION['part_pics_dir'] . '/'.$myrow['stockid'].'.jpg',135,$Page_Height-$Top_Margin-$YPos+10,45,35);
+					$pdf->addTextWrap(180,$YPos,200,$FontSize,$myrow['description'],'',0,$fill);
+					$pdf->addTextWrap(355,$YPos,40,$FontSize,locale_number_format($myrow['fromquantity'] - $InTransitQuantityAtFrom,$myrow['decimalplaces']),'right',0,$fill);
+					$pdf->addTextWrap(405,$YPos,40,$FontSize,locale_number_format($myrow['quantity'] + $InTransitQuantityAtTo,$myrow['decimalplaces']),'right',0,$fill);
+					$pdf->addTextWrap(450,$YPos,40,11,locale_number_format($ShipQty,$myrow['decimalplaces']),'right',0,$fill);
+					$pdf->addTextWrap(510,$YPos,40,$FontSize,'_________','right',0,$fill);
 
-				// looking for price info  
-				$DefaultPrice = GetPrice($myrow['stockid'],$ToCustomer, $ToBranch, $ShipQty, false);
-				if ($myrow['discountcategory'] != "")
-				{
-					$DiscountLine = ' -> ' . _('Discount Category') . ':' . $myrow['discountcategory'];
+					// looking for price info  
+					$DefaultPrice = GetPrice($myrow['stockid'],$ToCustomer, $ToBranch, $ShipQty, false);
+					if ($myrow['discountcategory'] != "")
+					{
+						$DiscountLine = ' -> ' . _('Discount Category') . ':' . $myrow['discountcategory'];
+					}else{
+						$DiscountLine = '';
+					}
+					if ($DefaultPrice != 0){
+						$PriceLine = $ToPriceList . ":" . locale_number_format($DefaultPrice,$ToDecimalPlaces) . " " . $ToCurrency . $DiscountLine;
+						$pdf->addTextWrap(180,$YPos - 0.5 * $line_height,200,$FontSize,$PriceLine,'',0,$fill);
+					}
+
+					if ($YPos < $Bottom_Margin + $line_height + 200){
+						PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,$Right_Margin,$Trf_ID,$FromLocation,$ToLocation,$CategoryDescription);
+					}
+
+					if ($ReportType == 'Batch') {
+						// Create loctransfers records for each record
+						$sql2 = "INSERT INTO loctransfers (reference,
+															stockid,
+															shipqty,
+															shipdate,
+															shiploc,
+															recloc)
+														VALUES ('" . $Trf_ID . "',
+															'" . $myrow['stockid'] . "',
+															'" . $ShipQty . "',
+															'" . $Now . "',
+															'" . $FromLocCode  ."',
+															'" . $ToLocCode . "')";
+						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to enter Location Transfer record for'). ' '.$myrow['stockid'];
+						$resultLocShip = DB_query($sql2, $ErrMsg);
+					}
+					$EmailText = $EmailText . str_pad($ShipQty, 3, " ") . " x " . $myrow['stockid'] . "\n";
+
 				}else{
-					$DiscountLine = '';
+					$EmailText = $EmailText .  $myrow['stockid'] . " rejected because model has no picture " . "\n";
 				}
-				if ($DefaultPrice != 0){
-					$PriceLine = $ToPriceList . ":" . locale_number_format($DefaultPrice,$ToDecimalPlaces) . " " . $ToCurrency . $DiscountLine;
-					$pdf->addTextWrap(180,$YPos - 0.5 * $line_height,200,$FontSize,$PriceLine,'',0,$fill);
-				}
-
-				if ($YPos < $Bottom_Margin + $line_height + 200){
-					PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,$Right_Margin,$Trf_ID,$FromLocation,$ToLocation,$CategoryDescription);
-				}
-
-				if ($ReportType == 'Batch') {
-					// Create loctransfers records for each record
-					$sql2 = "INSERT INTO loctransfers (reference,
-														stockid,
-														shipqty,
-														shipdate,
-														shiploc,
-														recloc)
-													VALUES ('" . $Trf_ID . "',
-														'" . $myrow['stockid'] . "',
-														'" . $ShipQty . "',
-														'" . $Now . "',
-														'" . $FromLocCode  ."',
-														'" . $ToLocCode . "')";
-					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to enter Location Transfer record for'). ' '.$myrow['stockid'];
-					$resultLocShip = DB_query($sql2, $ErrMsg);
-				}
-				$EmailText = $EmailText . str_pad($ShipQty, 3, " ") . " x " . $myrow['stockid'] . "\n";
-
+			}else{
+				$EmailText = $EmailText .  $myrow['stockid'] . " rejected because Qty Available to be Shipped at " . $FromLocCode . " = " . $AvailableShipQtyAtFrom . "\n" . 
+							"                          Qty Needed at " . $ToLocCode . " = " . $NeededQtyAtTo . "\n" . 
+							"                          Theoretical Qty to be shipped  = " . $ShipQty . "\n";
+				
 			}
 		} /*end while loop  */
 

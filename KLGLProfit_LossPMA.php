@@ -994,7 +994,7 @@ if ((!isset($_POST['FromPeriod'])
 					echo '<tr class="OddTableRows">';
 					$k++;
 				}
-				$ActEnquiryURL = '<a href="' . $RootPath . '/KLGLAccountInquiryCV.php?Period=' . $_POST['ToPeriod'] . '&amp;Account=' . $myrow['accountcode'] . '&amp;Show=Yes">' . $myrow['accountcode'] . '</a>';
+				$ActEnquiryURL = '<a href="' . $RootPath . '/KLGLAccountInquiryPMA.php?Period=' . $_POST['ToPeriod'] . '&amp;Account=' . $myrow['accountcode'] . '&amp;Show=Yes">' . $myrow['accountcode'] . '</a>';
 				if ($Section ==1){
 					 printf('<td>%s</td>
 							<td>%s</td>
