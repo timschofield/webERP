@@ -6504,20 +6504,6 @@ function over_or_below_limit($Request, $Sign, $Limit, $RootPath, $db){
 					AND stockmaster.categoryid = 'DISC80'
 					AND locstock.reorderlevel > 0
 					AND locstock.loccode ='TOKAR'";
-	}elseif ($Request =="DISC20 Items in UB"){
-		$SQL = "SELECT COUNT(*)
-				FROM stockmaster,locstock
-				WHERE stockmaster.stockid = locstock.stockid
-					AND stockmaster.categoryid = 'DISC20'
-					AND locstock.reorderlevel > 0
-					AND locstock.loccode ='TOKUB'";
-	}elseif ($Request =="DISC80 Items in UB"){
-		$SQL = "SELECT COUNT(*)
-				FROM stockmaster,locstock
-				WHERE stockmaster.stockid = locstock.stockid
-					AND stockmaster.categoryid = 'DISC80'
-					AND locstock.reorderlevel > 0
-					AND locstock.loccode ='TOKUB'";
 	}
 	
 	$result = DB_query($SQL);
@@ -6823,7 +6809,7 @@ Updated 3 index in loctransfers
 							AND loctransfers.shipqty != loctransfers.recqty
 							AND loctransfers.stockid = 'PKSB02-S') AS ot_shopping_s
 			FROM locations
-			WHERE locations.loccode IN " . LIST_SHOPS_KAPAL_LAUT . 
+			WHERE locations.typeloc = 'SHOPKL' " .  
 			$OrderBy;
 
 	$result = DB_query($SQL);
@@ -6884,54 +6870,7 @@ Updated 3 index in loctransfers
 			($TableResult[$i]['qty_shopping_s'] < $TableResult[$i]['rl_shopping_s'])) 
 		{
 			$TableResult[$i]['show'] = TRUE;
-			
-			// Deactivated on 2014/08/15 by request of Ike and Laia
-			// Only active for Ubud and Sanur area.
-			/* UB, MF, PU are sister shops */
-/*			if ($TableResult[$i]['loccode'] == 'TOKUB'){
-				MarkSisterShopInArray($TableResult, $numshops, "TOKPU");
-			}
-			if ($TableResult[$i]['loccode'] == 'TOKPU'){
-				MarkSisterShopInArray($TableResult, $numshops, "TOKUB");
-			}
-*/			
-			/* 66, SE, OB are sister shops */
-/*			if ($TableResult[$i]['loccode'] == 'TOK66'){
-				MarkSisterShopInArray($TableResult, $numshops, "TOKSE");
-				MarkSisterShopInArray($TableResult, $numshops, "TOKOB");
-			}
-			if ($TableResult[$i]['loccode'] == 'TOKSE'){
-				MarkSisterShopInArray($TableResult, $numshops, "TOK66");
-				MarkSisterShopInArray($TableResult, $numshops, "TOKOB");
-			}
-			if ($TableResult[$i]['loccode'] == 'TOKOB'){
-				MarkSisterShopInArray($TableResult, $numshops, "TOK66");
-				MarkSisterShopInArray($TableResult, $numshops, "TOKSE");
-			}
-*/
-			/* KS, BW are sister shops */
-/*			if ($TableResult[$i]['loccode'] == 'TOKKS'){
-				MarkSisterShopInArray($TableResult, $numshops, "TOKBW");
-			}
-			if ($TableResult[$i]['loccode'] == 'TOKBW'){
-				MarkSisterShopInArray($TableResult, $numshops, "TOKKS");
-			}
-*/
-			/* SA, SU, SS are sister shops */
-// DEACTIVATED SU in 20/05/2015
-/*			if ($TableResult[$i]['loccode'] == 'TOKSA'){
-//				MarkSisterShopInArray($TableResult, $numshops, "TOKSU");
-				MarkSisterShopInArray($TableResult, $numshops, "TOKSS");
-			}
-//			if ($TableResult[$i]['loccode'] == 'TOKSU'){
-//				MarkSisterShopInArray($TableResult, $numshops, "TOKSA");
-//				MarkSisterShopInArray($TableResult, $numshops, "TOKSS");
-//			}
-			if ($TableResult[$i]['loccode'] == 'TOKSS'){
-				MarkSisterShopInArray($TableResult, $numshops, "TOKSA");
-//				MarkSisterShopInArray($TableResult, $numshops, "TOKSU");
-			}
-*/		}
+		}
 		$i++;
 	}
 	
@@ -7171,7 +7110,7 @@ function OutletPackagingToBeRefilled($ShowAll, $RootPath, $db){
 							AND loctransfers.shipqty != loctransfers.recqty
 							AND loctransfers.stockid = 'PKSB03') AS ot_shopping_m
 			FROM locations
-			WHERE locations.loccode IN " . LIST_SHOPS_OUTLET . 
+			WHERE locations.typeloc = 'SHOPOU' " .  
 			$OrderBy;
 
 	$result = DB_query($SQL);
@@ -7410,7 +7349,7 @@ Updated 3 index in loctransfers
 							AND loctransfers.shipqty != loctransfers.recqty
 							AND loctransfers.stockid = 'PKSB04-S') AS ot_shopping_s
 			FROM locations
-			WHERE locations.loccode IN " . LIST_SHOPS_BLINK . 
+			WHERE locations.typeloc = 'SHOPBL' " .  
 			$OrderBy;
 
 	$result = DB_query($SQL);
