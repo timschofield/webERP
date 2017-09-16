@@ -546,13 +546,13 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 
 
-		CategoryItemsNotInShop("DISC20", "TOKAR", 2, $RootPath, $db);
+		CategoryItemsNotInShop("DISC20", "TOKAR", 1, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		
-		CategoryItemsNotInShop("DISC50", "TOKAR", 2, $RootPath, $db);
+		CategoryItemsNotInShop("DISC50", "TOKAR", 1, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-		CategoryItemsNotInShop("DISC80", "TOKAR", 2, $RootPath, $db);
+		CategoryItemsNotInShop("DISC80", "TOKAR", 1, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 	}
