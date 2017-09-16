@@ -49,6 +49,8 @@ SendEmailFromCron($EmailAddress, $EmailSubject, $EmailText, '');
 /****************************************************************************************/
 function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $DispatchPercent, $MaxModelsPerDispatch, $MinModelsPerDispatch, $RootPath, $db, $EmailText){
 
+	$TableResult = array();
+
 	$EmailText = $EmailText .  "\n" . 
 				"Smart Stock Dispatch from " . $FromLocCode . " to " . $ToLocCode . "\n" . 
 				"Strategy " . $Strategy . "\n";
@@ -227,6 +229,7 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 				if (file_exists($_SESSION['part_pics_dir'] . '/' .$myrow['stockid'].'.jpg')){
 					$NumModelsInThisStockDispatch++;
 					$NumPcsInThisStockDispatch = $NumPcsInThisStockDispatch + $ShipQty;
+					
 					$YPos -=(2 * $line_height);
 					// Parameters for addTextWrap are defined in /includes/class.pdf.php
 					// 1) X position 2) Y position 3) Width
@@ -276,16 +279,24 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to enter Location Transfer record for'). ' '.$myrow['stockid'];
 						$resultLocShip = DB_query($sql2, $ErrMsg);
 					}
-					$EmailText = $EmailText . str_pad($ShipQty, 3, " ") . " x " . $myrow['stockid'] . "\n";
+					
+					$TableResult[$NumModelsInThisStockDispatch]['stockid'] = $myrow['stockid'];
+					$TableResult[$NumModelsInThisStockDispatch]['description'] = $myrow['description'];
+					$TableResult[$NumModelsInThisStockDispatch]['fromquantity'] = $myrow['fromquantity'] - $InTransitQuantityAtFrom;
+					$TableResult[$NumModelsInThisStockDispatch]['quantity'] = $myrow['quantity'] + $InTransitQuantityAtTo;
+					$TableResult[$NumModelsInThisStockDispatch]['shipqty'] = $ShipQty;
+					$TableResult[$NumModelsInThisStockDispatch]['decimalplaces'] = $myrow['decimalplaces'];
+					$TableResult[$NumModelsInThisStockDispatch]['price'] = $DefaultPrice;
+					$TableResult[$NumModelsInThisStockDispatch]['discountcategory'] = $myrow['discountcategory'];
+					
+					$EmailText = $EmailText . $myrow['stockid'] . " x " . str_pad($ShipQty, 3, " ") . "\n";
 
 				}else{
-					$EmailText = $EmailText .  $myrow['stockid'] . " rejected because model has no picture " . "\n";
+					$EmailText = $EmailText .  $myrow['stockid'] . " rejected no picture " . "\n";
 				}
 			}else{
-				$EmailText = $EmailText .  $myrow['stockid'] . " rejected because Qty Available to be Shipped at " . $FromLocCode . " = " . $AvailableShipQtyAtFrom . "\n" . 
-							"                          Qty Needed at " . $ToLocCode . " = " . $NeededQtyAtTo . "\n" . 
-							"                          Theoretical Qty to be shipped  = " . $ShipQty . "\n";
-				
+				$EmailText = $EmailText .  $myrow['stockid'] . " rejected Qty@" . $FromLocCode . " = " . $AvailableShipQtyAtFrom . 
+							" Qty@" . $ToLocCode . " = " . $NeededQtyAtTo . " Shipped = " . $ShipQty . "\n";
 			}
 		} /*end while loop  */
 
