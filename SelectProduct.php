@@ -858,26 +858,30 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 			} else {
 				$ItemStatus ='';
 			}
-            $imagefile = reset((glob($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
-            if (!empty($imagefile)){
-                $StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
-								'&amp;StockID='.urlencode($myrow['stockid']).
-								'&amp;text='. $myrow['stockid'] .
-								'&amp;width=100'.
-								'&amp;height=100'.
-								'" alt="" />';
-            }else{
-                $StockImgLink = '<p>'._('No Image').'</p>';
-            }
+
+			$SupportedImgExt = array('png','jpg','jpeg');
+			$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
+			if(extension_loaded('gd') && function_exists('gd_info') && file_exists ($imagefile) ) {
+				$StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
+				'&amp;StockID='.urlencode($myrow['stockid']).
+				'&amp;text='. //$myrow['stockid'] .
+				'&amp;width=100'.
+				'&amp;height=100'.
+				'" alt="" />';
+			} else if(file_exists ($imagefile)) {
+				$StockImgLink = '<img src="' . $imagefile . '" height="100" width="100" />';
+			} else {
+				$StockImgLink = '<p>'._('No Image').'</p>';
+			}
 
 			echo '<td>' . $ItemStatus . '</td>
-				<td><input type="submit" name="Select" value="' . $myrow['stockid'] . '" /></td>
-				<td>'.$StockImgLink.'</td>
-				<td title="'. $myrow['longdescription'] . '">' . $myrow['description'] . '</td>
-				<td class="number">' . $qoh . '</td>
-				<td>' . $myrow['units'] . '</td>
-				<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=' . urlencode($myrow['stockid']).'">' . _('View') . '</a></td>
-				</tr>';
+			<td><input type="submit" name="Select" value="' . $myrow['stockid'] . '" /></td>
+			<td>'.$StockImgLink.'</td>
+			<td title="'. $myrow['longdescription'] . '">' . $myrow['description'] . '</td>
+			<td class="number">' . $qoh . '</td>
+			<td>' . $myrow['units'] . '</td>
+			<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=' . urlencode($myrow['stockid']).'">' . _('View') . '</a></td>
+			</tr>';
 /*
 			$j++;
 
