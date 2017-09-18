@@ -1041,7 +1041,7 @@ if (isset($_SESSION['CustomerRecord' . $identifier])
 		AND isset($_SESSION['ReceiptBatch' . $identifier])){
 /*a customer is selected  */
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . $_SESSION['CustomerRecord']['name'] . ' - (' . _('All amounts stated in') . ' ' . $_SESSION['CustomerRecord']['currency'] . ')' . _('Terms') . ': ' . $_SESSION['CustomerRecord']['terms'] . '<br/>' . _('Credit Limit') . ': ' . locale_number_format($_SESSION['CustomerRecord']['creditlimit'],0) . '  ' . _('Credit Status') . ': ' . $_SESSION['CustomerRecord']['reasondescription'];
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . $_SESSION['CustomerRecord' . $identifier]['name'] . ' - (' . _('All amounts stated in') . ' ' . $_SESSION['CustomerRecord' . $identifier]['currency'] . ')' . _('Terms') . ': ' . $_SESSION['CustomerRecord' . $identifier]['terms'] . '<br/>' . _('Credit Limit') . ': ' . locale_number_format($_SESSION['CustomerRecord'.$identifier]['creditlimit'],0) . '  ' . _('Credit Status') . ': ' . $_SESSION['CustomerRecord'.$identifier]['reasondescription'];
 
 	if ($_SESSION['CustomerRecord' . $identifier]['dissallowinvoices']!=0){
 	   echo '<br />
