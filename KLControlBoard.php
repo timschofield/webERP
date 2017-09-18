@@ -810,7 +810,8 @@ if ($ProcessSection02){
 	}
 	*/
 
-	if ($KL_SystemAdmin){
+	if ($KL_SystemAdmin 
+		OR $KL_ShopManagerOnline){
 	//	NewCustomers(2, $RootPath, $db);
 	//	$NumberOfTestExecuted++;
 		OnlineCustomersNoOrderPlaced($RootPath, $db);
@@ -824,6 +825,7 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin 
+		OR $KL_ShopManagerOnline
 		OR $KL_OperationalManager
 		OR $KL_ShopSupportTeam){ 
 		OutstandingOrders("Online", "Order", $RootPath, $db);
@@ -832,11 +834,12 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_SystemAdmin){
+	if ($KL_SystemAdmin
+		OR $KL_ShopManagerOnline){
 		OnlineOrdersFollowUp("KL-WEBSITE", 10, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		OnlineOrdersFollowUp("LAZADA", 10, $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		OnlineOrdersFollowUp("LAZADA", 10, $RootPath, $db);
+//		$NumberOfTestExecuted++;
 	}
 	/***************************************************************************************
 	* Other tests     

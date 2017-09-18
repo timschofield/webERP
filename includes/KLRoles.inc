@@ -12,6 +12,7 @@ $KL_ShopSupportTeam = FALSE;
 $KL_ShopSupportLeader = FALSE;
 $KL_SalesDirector = FALSE;
 $KL_ShopManager = FALSE;
+$KL_ShopManagerOnline = FALSE;
 $KL_SPGSeniorOrSupport = FALSE;
 $KL_SPGJunior = FALSE;
 $KL_PettyCash = FALSE;
@@ -38,6 +39,9 @@ if ($_SESSION['AccessLevel'] == 8){ // webERP System Administration
 	$KL_SalesDirector = TRUE;
 }else if ($_SESSION['AccessLevel'] == 31){ // Shop Manager
 	$KL_ShopManager = TRUE;
+}else if ($_SESSION['AccessLevel'] == 34){ // Shop Manager + Online
+	$KL_ShopManager = TRUE;
+	$KL_ShopManagerOnline = TRUE;
 }else if ($_SESSION['AccessLevel'] == 17){ // Sales Team SPG
 	$KL_SPGSeniorOrSupport = TRUE;
 }else if ($_SESSION['AccessLevel'] == 22){ // Sales Team SPG Support
