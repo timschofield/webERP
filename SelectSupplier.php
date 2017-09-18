@@ -16,6 +16,16 @@ if (!isset($_SESSION['SupplierID'])) {
 if (isset($_GET['SupplierID'])) {
 	$_SESSION['SupplierID']=$_GET['SupplierID'];
 }
+if (isset($_POST['Select'])) { /*User has hit the button selecting a supplier */
+	$_SESSION['SupplierID'] = $_POST['Select'];
+	unset($_POST['Select']);
+	unset($_POST['Keywords']);
+	unset($_POST['SupplierCode']);
+	unset($_POST['Search']);
+	unset($_POST['Go']);
+	unset($_POST['Next']);
+	unset($_POST['Previous']);
+}
 // only get geocode information if integration is on, and supplier has been selected
 if ($_SESSION['geocode_integration'] == 1 AND isset($_SESSION['SupplierID'])) {
 	$sql = "SELECT * FROM geocode_param WHERE 1";
@@ -39,7 +49,7 @@ if ($_SESSION['geocode_integration'] == 1 AND isset($_SESSION['SupplierID'])) {
 	$map_height = $myrow['map_height'];
 	$map_width = $myrow['map_width'];
 	$map_host = $myrow['map_host'];
-	echo '<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=' . $api_key . '"';
+	echo '<script src="https://maps.google.com/maps?file=api&amp;v=2&amp;key=' . $api_key . '"';
 	echo ' type="text/javascript"></script>';
 	echo ' <script type="text/javascript">';
 	echo 'function load() {
@@ -66,16 +76,6 @@ if (!isset($_POST['PageOffset'])) {
 	if ($_POST['PageOffset'] == 0) {
 		$_POST['PageOffset'] = 1;
 	}
-}
-if (isset($_POST['Select'])) { /*User has hit the button selecting a supplier */
-	$_SESSION['SupplierID'] = $_POST['Select'];
-	unset($_POST['Select']);
-	unset($_POST['Keywords']);
-	unset($_POST['SupplierCode']);
-	unset($_POST['Search']);
-	unset($_POST['Go']);
-	unset($_POST['Next']);
-	unset($_POST['Previous']);
 }
 if (isset($_POST['Search'])
 	OR isset($_POST['Go'])

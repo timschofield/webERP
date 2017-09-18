@@ -422,29 +422,22 @@ if (isset($_POST['submit'])) {
 			if ($map_host=="") {
 			echo '<div class="warn">' . _('Warning - Geocode Integration is enabled, but no hosts are setup.  Go to Geocode Setup') . '</div>';
 			} else {
-			$address = $_POST['Address1'] . ', ' . $_POST['Address2'] . ', ' . $_POST['Address3'] . ', ' . $_POST['Address4'] . ', ' . $_POST['Address5']. ', ' . $_POST['Address6'];
+				$address = urlencode($_POST['Address1'] . ', ' . $_POST['Address2'] . ', ' . $_POST['Address3'] . ', ' . $_POST['Address4'] . ', ' . $_POST['Address5'] . ', ' . $_POST['Address6']);
+				$base_url = "http://" . MAPS_HOST . "/maps/api/geocode/xml?address=";
+				$request_url = $base_url . $address . ',&sensor=true';
 
-			$base_url = 'http://' . MAPS_HOST . '/maps/geo?output=xml' . '&key=' . KEY;
-			$request_url = $base_url . '&q=' . urlencode($address);
-
-			$xml = simplexml_load_string(utf8_encode(file_get_contents($request_url))) or prnMsg(_('Goole map url not loading'),'warn');
+				$xml = simplexml_load_string(utf8_encode(file_get_contents($request_url))) or die("url not loading");
 //			$xml = simplexml_load_file($request_url) or die("url not loading");
 
 			$coordinates = $xml->Response->Placemark->Point->coordinates;
-			$coordinatesSplit = explode(',', $coordinates);
-			// Format: Longitude, Latitude, Altitude
-			$latitude = $coordinatesSplit[1];
-			$longitude = $coordinatesSplit[0];
 
-			$status = $xml->Response->Status->code;
-			if (strcmp($status, '200') == 0) {
+			$status = $xml->status;
+			if (strcmp($status, 'OK') == 0) {
 			// Successful geocode
 				$geocode_pending = false;
-				$coordinates = $xml->Response->Placemark->Point->coordinates;
-				$coordinatesSplit = explode(",", $coordinates);
 				// Format: Longitude, Latitude, Altitude
-				$latitude = $coordinatesSplit[1];
-				$longitude = $coordinatesSplit[0];
+				$latitude = $xml->result->geometry->location->lat;
+				$longitude = $xml->result->geometry->location->lng;
 			} else {
 			// failure to geocode
 				$geocode_pending = false;
