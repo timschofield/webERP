@@ -9599,6 +9599,14 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 			$i++;
 		}
 		if ($typereport == "Shop"){
+			$percent = ($TotalDateD-$TotalDateC)/$TotalDateC * 100;
+			$trend = " ";
+			if ($percent > 0){
+				$trend = "Improving ". locale_number_format($percent,0) . "%";
+			}
+			if ($percent < 0){
+				$trend = "Degrading ". locale_number_format($percent,0) . "%";
+			}
 			printf('<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -9623,7 +9631,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 					locale_number_format($TotalDateE,0),
 					locale_number_format($TotalDateF,0),
 					locale_number_format($TotalDateMTD,0),
-					"",
+					$trend,
 					locale_number_format($TotalForecast,0),
 					""
 					);
