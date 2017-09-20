@@ -8884,7 +8884,7 @@ id	select_type	table	type	possible_keys	key	key_len	ref	rows	Extra
 			WHERE stockmaster.stockid = locstock.stockid
 				AND locstock.loccode = locations.loccode
 				AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_SHOP_PACKAGING . "
-				AND locations.typeloc IN " . LIST_SHOPS_BY_TYPE . "
+				AND locations.typeloc NOT IN " . LIST_SHOPS_BY_TYPE . "
 				AND locstock.loccode NOT IN " . LIST_GUDANG_FOR_PACKAGING . "
 				AND ( locstock.quantity > 0 OR locstock.reorderlevel > 0 )
 			ORDER BY stockmaster.stockid";
