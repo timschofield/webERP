@@ -144,27 +144,7 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 	}elseif (($Strategy == 'OverFrom') AND (DB_num_rows($result) < $MinModelsPerDispatch)) {
 		$EmailText = $EmailText . "Less than " . $MinModelsPerDispatch . " Items for this transfer with starategy OverFrom" . "\n";
 	}else{
-		// OK, let's create the PDF
-
-		include('includes/PDFStarter.php');
-
-		$pdf->addInfo('Title',_('KL Stock Dispatch Report'));
-		$pdf->addInfo('Subject',_('Items to dispatch to another location to cover reorder level'));
-		$FontSize=9;
-		$PageNumber=1;
-		$line_height=19;
-		$Xpos = $Left_Margin+1;
-
-		// Create Transfer Number
-		if(!isset($Trf_ID) and $ReportType == 'Batch') {
-			$Trf_ID = GetNextTransNo(16,$db);
-			$EmailText = $EmailText . "Transfer # " . $Trf_ID . "\n";
-		}
-
-		PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
-					$Page_Width,$Right_Margin,$Trf_ID,$FromLocation,$ToLocation,$CategoryDescription);
-
-		$FontSize=8;
+		// Let's do the calculation for the available items for transfer and load them into TableResult array
 		$Now = Date('Y-m-d H-i-s');
 		$NumModelsInThisStockDispatch = 0;
 		$NumPcsInThisStockDispatch = 0;
@@ -229,56 +209,9 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 				if (file_exists($_SESSION['part_pics_dir'] . '/' .$myrow['stockid'].'.jpg')){
 					$NumModelsInThisStockDispatch++;
 					$NumPcsInThisStockDispatch = $NumPcsInThisStockDispatch + $ShipQty;
-					
-					$YPos -=(2 * $line_height);
-					// Parameters for addTextWrap are defined in /includes/class.pdf.php
-					// 1) X position 2) Y position 3) Width
-					// 4) Height 5) Text 6) Alignment 7) Border 8) Fill - True to use SetFillColor
-					// and False to set to transparent
-					$fill = False;
-				
-					$pdf->addTextWrap(50,$YPos,70,$FontSize,$myrow['stockid'],'',0,$fill);
-					$pdf->Image($_SESSION['part_pics_dir'] . '/'.$myrow['stockid'].'.jpg',135,$Page_Height-$Top_Margin-$YPos+10,45,35);
-					$pdf->addTextWrap(180,$YPos,200,$FontSize,$myrow['description'],'',0,$fill);
-					$pdf->addTextWrap(355,$YPos,40,$FontSize,locale_number_format($myrow['fromquantity'] - $InTransitQuantityAtFrom,$myrow['decimalplaces']),'right',0,$fill);
-					$pdf->addTextWrap(405,$YPos,40,$FontSize,locale_number_format($myrow['quantity'] + $InTransitQuantityAtTo,$myrow['decimalplaces']),'right',0,$fill);
-					$pdf->addTextWrap(450,$YPos,40,11,locale_number_format($ShipQty,$myrow['decimalplaces']),'right',0,$fill);
-					$pdf->addTextWrap(510,$YPos,40,$FontSize,'_________','right',0,$fill);
 
 					// looking for price info  
 					$DefaultPrice = GetPrice($myrow['stockid'],$ToCustomer, $ToBranch, $ShipQty, false);
-					if ($myrow['discountcategory'] != "")
-					{
-						$DiscountLine = ' -> ' . _('Discount Category') . ':' . $myrow['discountcategory'];
-					}else{
-						$DiscountLine = '';
-					}
-					if ($DefaultPrice != 0){
-						$PriceLine = $ToPriceList . ":" . locale_number_format($DefaultPrice,$ToDecimalPlaces) . " " . $ToCurrency . $DiscountLine;
-						$pdf->addTextWrap(180,$YPos - 0.5 * $line_height,200,$FontSize,$PriceLine,'',0,$fill);
-					}
-
-					if ($YPos < $Bottom_Margin + $line_height + 200){
-						PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,$Right_Margin,$Trf_ID,$FromLocation,$ToLocation,$CategoryDescription);
-					}
-
-					if ($ReportType == 'Batch') {
-						// Create loctransfers records for each record
-						$sql2 = "INSERT INTO loctransfers (reference,
-															stockid,
-															shipqty,
-															shipdate,
-															shiploc,
-															recloc)
-														VALUES ('" . $Trf_ID . "',
-															'" . $myrow['stockid'] . "',
-															'" . $ShipQty . "',
-															'" . $Now . "',
-															'" . $FromLocCode  ."',
-															'" . $ToLocCode . "')";
-						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to enter Location Transfer record for'). ' '.$myrow['stockid'];
-						$resultLocShip = DB_query($sql2, $ErrMsg);
-					}
 					
 					$TableResult[$NumModelsInThisStockDispatch]['stockid'] = $myrow['stockid'];
 					$TableResult[$NumModelsInThisStockDispatch]['description'] = $myrow['description'];
@@ -300,98 +233,183 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 			}
 		} /*end while loop  */
 
-		// if we reached the maximum of models allowed per dispatch, we warn the user
-		if ($NumModelsInThisStockDispatch == $MaxModelsPerDispatch){
-			$ModelsSkipped = 0;
-			while ($myrow = DB_fetch_array($result,$db)){
-				$ModelsSkipped++;
+		if ($NumModelsInThisStockDispatch > 0){
+			// There are some models to be dispatched
+			if ($NumModelsInThisStockDispatch >= $MinModelsPerDispatch){
+				// Enough models available for transfer
+				// OK, let's create the PDF and the transfer records
+				include('includes/PDFStarter.php');
+				$pdf->addInfo('Title',_('KL Stock Dispatch Report'));
+				$pdf->addInfo('Subject',_('Items to dispatch to another location to cover reorder level'));
+				$FontSize=9;
+				$PageNumber=1;
+				$line_height=19;
+				$Xpos = $Left_Margin+1;
+
+				// Create Transfer Number
+				if(!isset($Trf_ID) and $ReportType == 'Batch') {
+					$Trf_ID = GetNextTransNo(16,$db);
+					$EmailText = $EmailText . "Transfer # " . $Trf_ID . "\n";
+				}
+
+				PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
+							$Page_Width,$Right_Margin,$Trf_ID,$FromLocCode,$FromLocation,$ToLocCode,$ToLocation,$CategoryDescription);
+
+				$FontSize=8;
+				$ModelInTransfer = 0;
+				while ($ModelInTransfer < $NumModelsInThisStockDispatch){
+					$ModelInTransfer++;
+					
+					$YPos -=(2 * $line_height);
+					$fill = False;
+				
+					$pdf->addTextWrap(50,$YPos,70,$FontSize,$TableResult[$ModelInTransfer]['stockid'],'',0,$fill);
+					$pdf->Image($_SESSION['part_pics_dir'] . '/'.$TableResult[$ModelInTransfer]['stockid'].'.jpg',135,$Page_Height-$Top_Margin-$YPos+10,45,35);
+					$pdf->addTextWrap(180,$YPos,200,$FontSize,$TableResult[$ModelInTransfer]['description'],'',0,$fill);
+					$pdf->addTextWrap(355,$YPos,40,$FontSize,locale_number_format($TableResult[$ModelInTransfer]['fromquantity'],$TableResult[$ModelInTransfer]['decimalplaces']),'right',0,$fill);
+					$pdf->addTextWrap(405,$YPos,40,$FontSize,locale_number_format($TableResult[$ModelInTransfer]['quantity'],$TableResult[$ModelInTransfer]['decimalplaces']),'right',0,$fill);
+					$pdf->addTextWrap(450,$YPos,40,11,locale_number_format($TableResult[$ModelInTransfer]['shipqty'],$TableResult[$ModelInTransfer]['decimalplaces']),'right',0,$fill);
+					$pdf->addTextWrap(510,$YPos,50,$FontSize,'___________','right',0,$fill);
+
+					if ($TableResult[$ModelInTransfer]['discountcategory'] != "")
+					{
+						$DiscountLine = ' -> ' . _('Discount Category') . ':' . $TableResult[$ModelInTransfer]['discountcategory'];
+					}else{
+						$DiscountLine = '';
+					}
+					if ($DefaultPrice != 0){
+						$PriceLine = $ToPriceList . ":" . locale_number_format($TableResult[$ModelInTransfer]['price'],$ToDecimalPlaces) . " " . $ToCurrency . $DiscountLine;
+						$pdf->addTextWrap(180,$YPos - 0.5 * $line_height,200,$FontSize,$PriceLine,'',0,$fill);
+					}
+
+					if ($YPos < $Bottom_Margin + $line_height + 200){
+						PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,$Right_Margin,$Trf_ID,$FromLocCode,$FromLocation,$ToLocCode,$ToLocation,$CategoryDescription);
+					}
+
+					if ($ReportType == 'Batch') {
+						// Create loctransfers records for each record
+						$sql2 = "INSERT INTO loctransfers (reference,
+															stockid,
+															shipqty,
+															shipdate,
+															shiploc,
+															recloc)
+														VALUES ('" . $Trf_ID . "',
+															'" . $TableResult[$ModelInTransfer]['stockid'] . "',
+															'" . $TableResult[$ModelInTransfer]['shipqty'] . "',
+															'" . $Now . "',
+															'" . $FromLocCode  ."',
+															'" . $ToLocCode . "')";
+						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to enter Location Transfer record for'). ' '.$TableResult[$ModelInTransfer]['stockid'];
+						$resultLocShip = DB_query($sql2, $ErrMsg);
+					}
+				}
+
+				// if we reached the maximum of models allowed per dispatch, we warn the user
+				if ($NumModelsInThisStockDispatch == $MaxModelsPerDispatch){
+					$ModelsSkipped = 0;
+					while ($myrow = DB_fetch_array($result,$db)){
+						$ModelsSkipped++;
+					}
+					$YPos -=(2 * $line_height);
+					$WarningMaxModels = "Reached the maximum of " . $MaxModelsPerDispatch . " models per transfer.";
+					$WarningModelsSkipped = "Skipped " . $ModelsSkipped . " models for next transfers.";
+					$pdf->addTextWrap(50,$YPos,500,9,$WarningMaxModels, 'left');
+					$EmailText = $EmailText . $WarningMaxModels . "\n" . $WarningModelsSkipped . "\n";
+				}
+				
+				$EmailText = $EmailText . "# Models in this transfer = " . locale_number_format($NumModelsInThisStockDispatch,0) . "\n" . 
+										  "# Pieces in this transfer = " . locale_number_format($NumPcsInThisStockDispatch,0) . "\n";
+
+				$YPos -=(3 * $line_height);
+				$pdf->addTextWrap(50,$YPos,500,9,"# Pieces in this transfer = " . locale_number_format($NumPcsInThisStockDispatch,0), 'left');
+				
+				//add prepared by
+				$pdf->addTextWrap(50,$YPos-50,100,9,_('Prepared By :'), 'left');
+				$pdf->addTextWrap(50,$YPos-70,100,$FontSize,_('Name'), 'left');
+				$pdf->addTextWrap(90,$YPos-70,200,$FontSize,':__________________','left',0,$fill);
+				$pdf->addTextWrap(50,$YPos-90,100,$FontSize,_('Date'), 'left');
+				$pdf->addTextWrap(90,$YPos-90,200,$FontSize,':__________________','left',0,$fill);
+				$pdf->addTextWrap(50,$YPos-110,100,$FontSize,_('Hour'), 'left');
+				$pdf->addTextWrap(90,$YPos-110,200,$FontSize,':__________________','left',0,$fill);
+				$pdf->addTextWrap(50,$YPos-150,100,$FontSize,_('Signature'), 'left');
+				$pdf->addTextWrap(90,$YPos-150,200,$FontSize,':__________________','left',0,$fill);
+
+				//add shipped by
+				$pdf->addTextWrap(240,$YPos-50,100,9,_('Shipped By :'), 'left');
+				$pdf->addTextWrap(240,$YPos-70,100,$FontSize,_('Name'), 'left');
+				$pdf->addTextWrap(280,$YPos-70,200,$FontSize,':__________________','left',0,$fill);
+				$pdf->addTextWrap(240,$YPos-90,100,$FontSize,_('Date'), 'left');
+				$pdf->addTextWrap(280,$YPos-90,200,$FontSize,':__________________','left',0,$fill);
+				$pdf->addTextWrap(240,$YPos-110,100,$FontSize,_('Hour'), 'left');
+				$pdf->addTextWrap(280,$YPos-110,200,$FontSize,':__________________','left',0,$fill);
+				$pdf->addTextWrap(240,$YPos-150,100,$FontSize,_('Signature'), 'left');
+				$pdf->addTextWrap(280,$YPos-150,200,$FontSize,':__________________','left',0,$fill);
+
+				//add received by
+				$pdf->addTextWrap(440,$YPos-50,100,9,_('Received By :'), 'left');
+				$pdf->addTextWrap(440,$YPos-70,100,$FontSize,_('Name'), 'left');
+				$pdf->addTextWrap(480,$YPos-70,200,$FontSize,':__________________','left',0,$fill);
+				$pdf->addTextWrap(440,$YPos-90,100,$FontSize,_('Date'), 'left');
+				$pdf->addTextWrap(480,$YPos-90,200,$FontSize,':__________________','left',0,$fill);
+				$pdf->addTextWrap(440,$YPos-110,100,$FontSize,_('Hour'), 'left');
+				$pdf->addTextWrap(480,$YPos-110,200,$FontSize,':__________________','left',0,$fill);
+				$pdf->addTextWrap(440,$YPos-150,100,$FontSize,_('Signature'), 'left');
+				$pdf->addTextWrap(480,$YPos-150,200,$FontSize,':__________________','left',0,$fill);
+
+				if ($YPos < $Bottom_Margin + $line_height){
+					   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
+								   $Right_Margin,$Trf_ID,$FromLocCode,$FromLocation,$ToLocCode,$ToLocation,$CategoryDescription);
+				}
+				/*Print out the grand totals */
+
+				$Subject  = 'Transfer-' . Date('Y-m-d') .  '-' . $FromLocCode . '-' . $ToLocCode;
+				$FileName = $Subject . '.pdf';
+				$Text = 'Please prepare this transfer ASAP';
+				$Text = $Text . "\n---\r\n"; // \r is needed for signature separating
+				$Text = $Text . 'Email sent by webERP KL CRON JOB at '.date('d/M/Y H:i:s').'';
+				
+				$pdf->Output($_SESSION['reports_dir'] . '/' . $FileName, 'F');
+				$pdf-> __destruct();
+
+				$mail = new htmlMimeMail();
+				$attachment = $mail->getFile($_SESSION['reports_dir'] . '/' . $FileName);
+				$mail->setText($Text);
+				$mail->setSubject($Subject);
+				$mail->addAttachment($attachment, $FileName, 'application/pdf');
+				$mail->setFrom('webmaster@kapal-laut.com', 'webERP Cron Job');
+				// if we are preparing real transfers (Batch), send to team, otherwise send to test user.
+				if ($ReportType == 'Batch'){
+					$result = $mail->send(array('kl-shopsupport@kapal-laut.com'));
+				}else{
+					$result = $mail->send(array('ricard@kapal-laut.com'));
+				}
+				if($result){
+					$EmailText = $EmailText . date('d/M/Y H:i:s') . " Email Sent " . $FileName . "\n";
+				}else{
+					$EmailText = $EmailText . date('d/M/Y H:i:s') . " Email FAILED " . $FileName . "\n";
+				}
+				sleep(2);
+				// End of preparation of PDF, email and transfer records 
+			}else{
+				// NOT Enough models available for transfer
+				if ($Strategy == 'All'){
+					$EmailText = $EmailText . "Less than " . $MinModelsPerDispatch . " Items for this transfer with Strategy All" . "\n";
+				}else{
+					$EmailText = $EmailText . "Less than " . $MinModelsPerDispatch . " Items for this transfer with Strategy OverFrom" . "\n";
+				}
 			}
-			$YPos -=(2 * $line_height);
-			$WarningMaxModels = "Reached the maximum of " . $MaxModelsPerDispatch . " models per transfer.";
-			$WarningModelsSkipped = "Skipped " . $ModelsSkipped . " models for next transfers.";
-			$pdf->addTextWrap(50,$YPos,500,9,$WarningMaxModels, 'left');
-			$EmailText = $EmailText . $WarningMaxModels . "\n" . $WarningModelsSkipped . "\n";
-		}
-		
-		$EmailText = $EmailText . "# Models in this transfer = " . locale_number_format($NumModelsInThisStockDispatch,0) . "\n" . 
-								  "# Pieces in this transfer = " . locale_number_format($NumPcsInThisStockDispatch,0) . "\n";
-
-		$YPos -=(3 * $line_height);
-		$pdf->addTextWrap(50,$YPos,500,9,"# Pieces in this transfer = " . locale_number_format($NumPcsInThisStockDispatch,0), 'left');
-		
-		//add prepared by
-		$pdf->addTextWrap(50,$YPos-50,100,9,_('Prepared By :'), 'left');
-		$pdf->addTextWrap(50,$YPos-70,100,$FontSize,_('Name'), 'left');
-		$pdf->addTextWrap(90,$YPos-70,200,$FontSize,':__________________','left',0,$fill);
-		$pdf->addTextWrap(50,$YPos-90,100,$FontSize,_('Date'), 'left');
-		$pdf->addTextWrap(90,$YPos-90,200,$FontSize,':__________________','left',0,$fill);
-		$pdf->addTextWrap(50,$YPos-110,100,$FontSize,_('Hour'), 'left');
-		$pdf->addTextWrap(90,$YPos-110,200,$FontSize,':__________________','left',0,$fill);
-		$pdf->addTextWrap(50,$YPos-150,100,$FontSize,_('Signature'), 'left');
-		$pdf->addTextWrap(90,$YPos-150,200,$FontSize,':__________________','left',0,$fill);
-
-		//add shipped by
-		$pdf->addTextWrap(240,$YPos-50,100,9,_('Shipped By :'), 'left');
-		$pdf->addTextWrap(240,$YPos-70,100,$FontSize,_('Name'), 'left');
-		$pdf->addTextWrap(280,$YPos-70,200,$FontSize,':__________________','left',0,$fill);
-		$pdf->addTextWrap(240,$YPos-90,100,$FontSize,_('Date'), 'left');
-		$pdf->addTextWrap(280,$YPos-90,200,$FontSize,':__________________','left',0,$fill);
-		$pdf->addTextWrap(240,$YPos-110,100,$FontSize,_('Hour'), 'left');
-		$pdf->addTextWrap(280,$YPos-110,200,$FontSize,':__________________','left',0,$fill);
-		$pdf->addTextWrap(240,$YPos-150,100,$FontSize,_('Signature'), 'left');
-		$pdf->addTextWrap(280,$YPos-150,200,$FontSize,':__________________','left',0,$fill);
-
-		//add received by
-		$pdf->addTextWrap(440,$YPos-50,100,9,_('Received By :'), 'left');
-		$pdf->addTextWrap(440,$YPos-70,100,$FontSize,_('Name'), 'left');
-		$pdf->addTextWrap(480,$YPos-70,200,$FontSize,':__________________','left',0,$fill);
-		$pdf->addTextWrap(440,$YPos-90,100,$FontSize,_('Date'), 'left');
-		$pdf->addTextWrap(480,$YPos-90,200,$FontSize,':__________________','left',0,$fill);
-		$pdf->addTextWrap(440,$YPos-110,100,$FontSize,_('Hour'), 'left');
-		$pdf->addTextWrap(480,$YPos-110,200,$FontSize,':__________________','left',0,$fill);
-		$pdf->addTextWrap(440,$YPos-150,100,$FontSize,_('Signature'), 'left');
-		$pdf->addTextWrap(480,$YPos-150,200,$FontSize,':__________________','left',0,$fill);
-
-		if ($YPos < $Bottom_Margin + $line_height){
-			   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
-						   $Right_Margin,$Trf_ID,$FromLocation,$ToLocation,$CategoryDescription);
-		}
-		/*Print out the grand totals */
-
-		$Subject  = 'Transfer-' . Date('Y-m-d') .  '-' . $FromLocCode . '-' . $ToLocCode;
-		$FileName = $Subject . '.pdf';
-		$Text = 'Please prepare this transfer ASAP';
-		$Text = $Text . "\n---\r\n"; // \r is needed for signature separating
-		$Text = $Text . 'Email sent by webERP KL CRON JOB at '.date('d/M/Y H:i:s').'';
-		
-		$pdf->Output($_SESSION['reports_dir'] . '/' . $FileName, 'F');
-		$pdf-> __destruct();
-
-		$mail = new htmlMimeMail();
-		$attachment = $mail->getFile($_SESSION['reports_dir'] . '/' . $FileName);
-		$mail->setText($Text);
-		$mail->setSubject($Subject);
-		$mail->addAttachment($attachment, $FileName, 'application/pdf');
-		$mail->setFrom('webmaster@kapal-laut.com', 'webERP Cron Job');
-		// if we are preparing real transfers (Batch), send to team, otherwise send to test user.
-		if ($ReportType == 'Batch'){
-			$result = $mail->send(array('kl-shopsupport@kapal-laut.com'));
 		}else{
-			$result = $mail->send(array('ricard@kapal-laut.com'));
+			// No models to be dispatched
+			$EmailText = $EmailText . "No Items available for this transfer" . "\n";
 		}
-		if($result){
-			$EmailText = $EmailText . date('d/M/Y H:i:s') . " Email Sent " . $FileName . "\n";
-		}else{
-			$EmailText = $EmailText . date('d/M/Y H:i:s') . " Email FAILED " . $FileName . "\n";
-		}
-		sleep(2);
 	}
 	return $EmailText;
 }
 
 
 function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
-					 $Page_Width,$Right_Margin,$Trf_ID,$FromLocation,$ToLocation,$CategoryDescription) {
+					 $Page_Width,$Right_Margin,$Trf_ID,$FromLocCode,$FromLocation,$ToLocCode,$ToLocation,$CategoryDescription) {
 
 
 	/*PDF page header for Stock Dispatch report */
@@ -436,17 +454,18 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 	/*set up the headings */
 	$Xpos = $Left_Margin+1;
 
+	$FontSize=8;
+
 	$pdf->addTextWrap(50,$YPos,100,$FontSize,_('Item Code'), 'left');
 	$pdf->addTextWrap(135,$YPos,170,$FontSize,_('Image/Description'), 'left');
-	$pdf->addTextWrap(360,$YPos,40,$FontSize,_('From'), 'right');
-	$pdf->addTextWrap(405,$YPos,40,$FontSize,_('To'), 'right');
+	$pdf->addTextWrap(362,$YPos,40,$FontSize,_('Qty@'), 'right');
+	$pdf->addTextWrap(413,$YPos,40,$FontSize,_('Qty@'), 'right');
 	$pdf->addTextWrap(460,$YPos,40,$FontSize,_('Shipped'), 'right');
 	$pdf->addTextWrap(510,$YPos,40,$FontSize,_('Received'), 'right');
 	$YPos -= $line_height;
-	$pdf->addTextWrap(370,$YPos,40,$FontSize,_('Available'), 'right');
-	$pdf->addTextWrap(420,$YPos,40,$FontSize,_('Available'), 'right');
+	$pdf->addTextWrap(365,$YPos,40,$FontSize,$FromLocCode,'right');
+	$pdf->addTextWrap(415,$YPos,40,$FontSize,$ToLocCode,'right');
 
-	$FontSize=8;
 	$PageNumber++;
 } // End of PrintHeader() function
 
