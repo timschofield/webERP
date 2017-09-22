@@ -50,7 +50,8 @@ if ($StockID != ''){
 			FROM locstock INNER JOIN locations
 			ON locstock.loccode=locations.loccode
 			WHERE locstock.stockid = '" . $StockID . "'
-				AND locstock.loccode IN ". LIST_LOCATIONS_SPG_STOCK_STATUS ."
+				AND  (locations.stockreadytosell= '1'
+					OR locations.loccode = 'KANTO')
 			ORDER BY locations.locationname";
 
 	$ErrMsg = _('The stock held at each location cannot be retrieved because');

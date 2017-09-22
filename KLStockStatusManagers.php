@@ -37,8 +37,8 @@ if ($StockID != ''){
 			FROM locstock INNER JOIN locations
 			ON locstock.loccode=locations.loccode
 			WHERE locstock.stockid LIKE '" . $StockID . "%'
-				AND  (locstock.loccode IN ". LIST_LOCATIONS_SPG_STOCK_STATUS ."
-					OR locstock.loccode IN ". LIST_CONSIGNMENT_LOCATIONS .")
+				AND  (locations.stockreadytosell= '1'
+					OR locations.loccode = 'KANTO')
 			GROUP BY locations.locationname
 			ORDER BY locations.locationname";
 
