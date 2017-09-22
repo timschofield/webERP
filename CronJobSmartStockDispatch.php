@@ -51,13 +51,6 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 
 	$TableResult = array();
 
-	$EmailText = $EmailText .  "\n" . 
-				"Smart Stock Dispatch from " . $FromLocCode . " to " . $ToLocCode . "\n" . 
-				"Strategy " . $Strategy . "\n";
-	$EmailText = $EmailText .  
-				"Min Models to create transfer: " . $MinModelsPerDispatch . "\n" . 
-				"Max Models to be included: " . $MaxModelsPerDispatch . "\n";
-				
 	// from location
 	$ErrMsg = _('Could not retrieve location name from the database');
 	$sqlfrom="SELECT locationname FROM `locations` WHERE loccode='" . $FromLocCode . "'";
@@ -132,20 +125,21 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 
 	$result = DB_query($sql,'','',false,true);
 
-	$EmailText = $EmailText .  "Models candidates to be included in transfer: " . DB_num_rows($result) . "\n";
+	$EmailText = $EmailText .  "\n" . 
+				"Smart Stock Dispatch from " . $FromLocCode . " to " . $ToLocCode . "\n" . 
+				"Strategy " . $Strategy . "\n";
+	$EmailText = $EmailText .  
+				"Min Models to create transfer: " . $MinModelsPerDispatch . "\n" . 
+				"Max Models to be included: " . $MaxModelsPerDispatch . "\n";
 
 	if (DB_error_no() !=0) {
 		$EmailText = $EmailText . "Smart Stock Dispatch ERROR " .  _('The Stock Dispatch report could not be retrieved by the SQL because') . ' '  . DB_error_msg() . "\n";
 		$EmailText = $EmailText . "SQL = " .  $sql . "\n";
-	}elseif (DB_num_rows($result) ==0) {
-		$EmailText = $EmailText . "No Items for this transfer" . "\n";
-	}elseif (($Strategy == 'All') AND (DB_num_rows($result) < $MinModelsPerDispatch)) {
-		$EmailText = $EmailText . "Less than " . $MinModelsPerDispatch . " Items for this transfer with Strategy All" . "\n";
-	}elseif (($Strategy == 'OverFrom') AND (DB_num_rows($result) < $MinModelsPerDispatch)) {
-		$EmailText = $EmailText . "Less than " . $MinModelsPerDispatch . " Items for this transfer with starategy OverFrom" . "\n";
 	}else{
 		// Let's do the calculation for the available items for transfer and load them into TableResult array
 		$Now = Date('Y-m-d H-i-s');
+		$EmailText = $EmailText .  
+				"Models candidates to be included in transfer: " . DB_num_rows($result) . "\n";
 		$NumModelsInThisStockDispatch = 0;
 		$NumPcsInThisStockDispatch = 0;
 		while (($myrow = DB_fetch_array($result,$db)) AND ($NumModelsInThisStockDispatch < $MaxModelsPerDispatch)){
@@ -222,13 +216,13 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 					$TableResult[$NumModelsInThisStockDispatch]['price'] = $DefaultPrice;
 					$TableResult[$NumModelsInThisStockDispatch]['discountcategory'] = $myrow['discountcategory'];
 					
-					$EmailText = $EmailText . $myrow['stockid'] . " x " . str_pad($ShipQty, 3, " ") . "\n";
+					$EmailText = $EmailText . $myrow['stockid'] . " x " . $ShipQty . "\n";
 
 				}else{
-					$EmailText = $EmailText .  $myrow['stockid'] . " rejected no picture " . "\n";
+					$EmailText = $EmailText .  str_pad($myrow['stockid'],12," ") . " rejected no picture " . "\n";
 				}
 			}else{
-				$EmailText = $EmailText .  $myrow['stockid'] . " rejected Qty@" . $FromLocCode . " = " . $AvailableShipQtyAtFrom . 
+				$EmailText = $EmailText .  str_pad($myrow['stockid'],12," ") . " rejected Qty@" . $FromLocCode . " = " . $AvailableShipQtyAtFrom . 
 							" Qty@" . $ToLocCode . " = " . $NeededQtyAtTo . " Shipped = " . $ShipQty . "\n";
 			}
 		} /*end while loop  */
