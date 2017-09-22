@@ -7663,7 +7663,7 @@ function PackagingStatusForKapalLaut($RootPath, $db){
 							AND loctransfers.shipqty != loctransfers.recqty
 							AND loctransfers.stockid = 'PKSB02-S') AS ot_shopping_s
 			FROM locations
-			WHERE locations.loccode IN " . LIST_SHOPS_KAPAL_LAUT . "
+			WHERE locations.typeloc = 'SHOPKL'
 				OR locations.loccode IN " . LIST_GUDANG_FOR_PACKAGING . "
 			ORDER BY locations.loccode";
 
@@ -7859,7 +7859,7 @@ function PackagingStatusForOutlet($RootPath, $db){
 							AND loctransfers.shipqty != loctransfers.recqty
 							AND loctransfers.stockid = 'PKSB03') AS ot_shopping_m
 			FROM locations
-			WHERE locations.loccode IN " . LIST_SHOPS_OUTLET . "
+			WHERE locations.typeloc = 'SHOPOU'
 				OR locations.loccode IN " . LIST_GUDANG_FOR_PACKAGING . "
 			ORDER BY locations.loccode";
 
@@ -8031,7 +8031,7 @@ function PackagingStatusForBlink($RootPath, $db){
 							AND loctransfers.shipqty != loctransfers.recqty
 							AND loctransfers.stockid = 'PKSB04-S') AS ot_shopping_s
 			FROM locations
-			WHERE locations.loccode IN " . LIST_SHOPS_BLINK . "
+			WHERE locations.typeloc = 'SHOPBL'
 				OR locations.loccode IN " . LIST_GUDANG_FOR_PACKAGING . "
 			ORDER BY locations.loccode";
 
@@ -8229,7 +8229,7 @@ function PackagingUsageForKapalLaut($NumDays, $RootPath, $db){
 							AND packagingused.stockid = 'PKSB02-S'
 							AND packagingused.date >= '". $FromDate ."') AS sales_shopping_s
 			FROM locations
-			WHERE locations.loccode IN " . LIST_SHOPS_KAPAL_LAUT . "
+			WHERE locations.typeloc = 'SHOPKL'
 				OR locations.loccode IN " . LIST_GUDANG_FOR_PACKAGING . "
 			ORDER BY locations.loccode";
 
@@ -8521,7 +8521,7 @@ function PackagingUsageForBlink($NumDays, $RootPath, $db){
 							AND packagingused.stockid = 'PKSB04-S'
 							AND packagingused.date >= '". $FromDate ."') AS sales_shopping_s
 			FROM locations
-			WHERE locations.loccode IN " . LIST_SHOPS_BLINK . "
+			WHERE locations.typeloc = 'SHOPBL'
 				OR locations.loccode IN " . LIST_GUDANG_FOR_PACKAGING . "
 			ORDER BY locations.loccode";
 
@@ -8734,7 +8734,7 @@ function PackagingUsageForOutlet($NumDays, $RootPath, $db){
 							AND packagingused.stockid = 'PKSB03'
 							AND packagingused.date >= '". $FromDate ."') AS sales_shopping_m
 			FROM locations
-			WHERE locations.loccode IN " . LIST_SHOPS_OUTLET . "
+			WHERE locations.typeloc = 'SHOPOU'
 				OR locations.loccode IN " . LIST_GUDANG_FOR_PACKAGING . "
 			ORDER BY locations.loccode";
 
