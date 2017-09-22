@@ -894,7 +894,7 @@ function FinishedStockDistributionByShopAndCategory($db){
 						AND m2.categoryid =  'DISC80'
 						AND l2.reorderlevel != 0) AS modelsDISC80
 			FROM locations
-			WHERE locations.loccode IN " . LIST_ALL_SHOPS . "
+			WHERE locations.typeloc IN " . LIST_SHOPS_BY_TYPE . "
 			ORDER BY locations.locationname";
 						
 	$result = DB_query($SQL);
@@ -1016,7 +1016,7 @@ function ActiveTransfersByLocation($RootPath, $db){
 				WHERE  recqty < shipqty
 					AND loctransfers.recloc = locations.loccode) as transferin
 			FROM locations
-			WHERE locations.loccode IN " . LIST_ALL_SHOPS . "
+			WHERE locations.typeloc IN " . LIST_SHOPS_BY_TYPE . "
 				OR locations.loccode = " . CODE_ONLINE_SHOP . "
 			ORDER BY (SELECT SUM(shipqty-recqty)
 				FROM loctransfers
@@ -1245,7 +1245,7 @@ function ListPriorityLocations($db){
 				priority,
 				smartdispatchmaxmodels
 		FROM locations
-		WHERE locations.loccode IN " . LIST_ALL_SHOPS . "
+		WHERE locations.typeloc IN " . LIST_SHOPS_BY_TYPE . "
 			OR locations.loccode = " . CODE_ONLINE_SHOP . "
 		ORDER BY locationname ASC";
 	$result = DB_query($SQL);
@@ -2609,9 +2609,10 @@ No pending transfer regarding this item
 				AND stockmaster.klmovingdiscount50 = 0
 				AND stockmaster.klmovingdiscount80 = 0
 				AND (SELECT SUM(locstock.reorderlevel)
-					FROM locstock
+					FROM locstock, locations
 					WHERE locstock.stockid = stockmaster.stockid
-						AND locstock.loccode IN " . LIST_ALL_SHOPS . ") = 0
+						AND locstock.loccode = locations.loccode
+						AND locations.loccode IN " . LIST_SHOPS_BY_TYPE . ") = 0
 				AND (SELECT SUM(locstock.quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
@@ -2671,17 +2672,10 @@ function ItemsInCategoryWithStockKantorButReorderLevelTokoZero($CategoryId, $Roo
 			// no shops with outlet, so this report has NO sense.
 			return;
 		}else{
-			$WhereLocation = " AND locstock.loccode IN  " . LIST_SHOPS_OUTLET . " ";
-		}
-	}elseif (ItemInList($CategoryId, LIST_STOCK_CATEGORIES_OUTLET)){
-		if (LIST_SHOPS_OUTLET == "('')"){
-			// no shops with discount, so this report has NO sense.
-			return;
-		}else{
-			$WhereLocation = " AND locstock.loccode IN  " . LIST_SHOPS_OUTLET . " ";
+			$WhereLocation = " AND locations.typeloc = 'SHOPOU' ";
 		}
 	}else{
-		$WhereLocation = " AND locstock.loccode IN " . LIST_ALL_SHOPS . " ";
+		$WhereLocation = " AND locations.typeloc IN " . LIST_SHOPS_BY_TYPE . " ";
 	}
 
 	$SQL = "SELECT stockid,
@@ -2698,8 +2692,9 @@ function ItemsInCategoryWithStockKantorButReorderLevelTokoZero($CategoryId, $Roo
 				AND stockmaster.klmovingdiscount50 = 0
 				AND stockmaster.klmovingdiscount80 = 0
 				AND (SELECT SUM(locstock.reorderlevel)
-					FROM locstock
-					WHERE locstock.stockid = stockmaster.stockid ".
+					FROM locstock, locations
+					WHERE locstock.stockid = stockmaster.stockid 
+						AND locstock.loccode = locations.loccode ".
 						$WhereLocation . " ) = 0
 				AND (SELECT SUM(locstock.quantity)
 					FROM locstock

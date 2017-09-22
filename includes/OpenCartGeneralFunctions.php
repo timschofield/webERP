@@ -306,10 +306,11 @@ function GetTotalFromOrder($Concept, $OrderId, $db_oc, $oc_tableprefix){
 }
 
 function GetOnlineQOH($StockId, $db){
-	$SQL = "SELECT SUM(quantity)
-			FROM locstock
-			WHERE stockid = '" . $StockId . "'
-			AND loccode IN ('" . str_replace(',', "','", LOCATIONS_WITH_STOCK_FOR_ONLINE_SHOP) . "')";
+	$SQL = "SELECT SUM(locstock.quantity)
+			FROM locstock, locations
+			WHERE locstock.loccode = locations.loccode
+				AND locstock.stockid = '" . $StockId . "'
+				AND locations.stockavailableforonline = '1'";
 	$ErrMsg =_('Could not get the QOH available in webERP for OpenCart because');
 	$result = DB_query($SQL,$ErrMsg);
 	if(DB_num_rows($result) != 0){

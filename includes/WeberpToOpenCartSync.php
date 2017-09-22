@@ -667,9 +667,10 @@ function SyncProductQOH($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefi
 
 	/* Look for the late modifications of prices table in webERP */
 	$SQL = "SELECT DISTINCT(locstock.stockid)
-			FROM locstock, salescatprod
+			FROM locstock, salescatprod, locations
 			WHERE locstock.stockid = salescatprod.stockid
-				AND locstock.loccode IN ('" . str_replace(',', "','", LOCATIONS_WITH_STOCK_FOR_ONLINE_SHOP) . "')
+				AND locstock.loccode = locations.loccode
+				AND locations.stockavailableforonline = '1'
 				AND (locstock.date_created >= '" . $LastTimeRun . "'
 					OR locstock.date_updated >= '" . $LastTimeRun . "')
 			ORDER BY locstock.stockid";
@@ -1245,10 +1246,11 @@ function ActivateCategoryDependingOnQOH($ShowMessages, $LastTimeRun, $db, $db_oc
 				salescatname,
 				active,
 				(SELECT SUM(locstock.quantity)
-					FROM salescatprod,locstock
+					FROM salescatprod,locstock,locations
 					WHERE salescat.salescatid = salescatprod.salescatid
 						AND salescatprod.stockid = locstock.stockid
-						AND locstock.loccode IN ('" . str_replace(',', "','", LOCATIONS_WITH_STOCK_FOR_ONLINE_SHOP) . "')
+						AND locstock.loccode = locations.loccode
+						AND locations.stockavailableforonline = '1'
 				) as qoh
 			FROM salescat
 			WHERE active = 1
