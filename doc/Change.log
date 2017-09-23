@@ -1,5 +1,6 @@
 webERP Change Log
 
+17/09/20 Exson: Fixed the bug to make GRN reverse workable. 
 17/09/19 Exson: Fixed customer information missing in CustomerReceipt.php. Reported by Steven Fu.
 18/9/2017 Tim (committed by Andy): Geocode bug fixes. http://www.weberp.org/forum/showthread.php?tid=4380
 17/9/17 VortecCPI: SelectProduct.php made image dispay code match that used in WorkOrderEntry.php

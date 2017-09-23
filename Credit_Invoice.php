@@ -397,10 +397,20 @@ foreach($_SESSION['CreditItems' . $identifier]->LineItems as $LnItm) {
 			}
 			$i++;
 			if($Tax->TaxOnTax ==1) {
-				$TaxTotals[$Tax->TaxAuthID] +=($Tax->TaxRate *($LineTotal + $TaxLineTotal));
+				if (!isset($TaxTotals[$Tax->TaxAuthID])) {
+					$TaxTotals[$Tax->TaxAuthID] =($Tax->TaxRate *($LineTotal + $TaxLineTotal));
+
+				} else {
+					$TaxTotals[$Tax->TaxAuthID] +=($Tax->TaxRate *($LineTotal + $TaxLineTotal));
+				}
 				$TaxLineTotal +=($Tax->TaxRate *($LineTotal + $TaxLineTotal));
 			} else {
-				$TaxTotals[$Tax->TaxAuthID] +=($Tax->TaxRate * $LineTotal);
+				if (!isset($TaxTotals[$Tax->TaxAuthID])) {
+					$TaxTotals[$Tax->TaxAuthID] =($Tax->TaxRate * $LineTotal);
+				} else {
+
+					$TaxTotals[$Tax->TaxAuthID] +=($Tax->TaxRate * $LineTotal);
+				}
 				$TaxLineTotal +=($Tax->TaxRate * $LineTotal);
 			}
 			$TaxGLCodes[$Tax->TaxAuthID] = $Tax->TaxGLCode;
