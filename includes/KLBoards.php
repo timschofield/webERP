@@ -9765,25 +9765,55 @@ function SPGPerformanceByShop($Shop, $NumDaysA, $NumDaysB, $NumDaysC, $db){
 	}
 }
 
-function QualityIssuesByItem($numdays, $RootPath, $db){
+function QualityIssuesByItem($typereport, $numdays, $RootPath, $db){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$numdays+1));
 
-	$SQL = "SELECT itemcodes, count(*) AS incidences
-			FROM returneditems
-			WHERE (reasonid = 4 OR reasonid = 5)
-				AND oldinvoicedate > '". $StartDate . "'
-			GROUP BY itemcodes";
-						
+	if ($typereport == "Item"){
+		$SQL = "SELECT itemcodes AS item, 
+					COUNT(*) AS incidences,
+					(SELECT COUNT(*)
+						FROM salesorderdetails
+						WHERE salesorderdetails.stkcode = returneditems.itemcodes
+							AND salesorderdetails.itemdue > '". $StartDate . "') AS qtysold
+				FROM returneditems
+				WHERE (reasonid = 4 OR reasonid = 5)
+					AND oldinvoicedate > '". $StartDate . "'
+				GROUP BY itemcodes";
+	}else{
+		$SQL = "SELECT SUBSTRING(returneditems.itemcodes,1,2) AS item, 
+						COUNT(*) AS incidences,
+						(SELECT COUNT(*)
+						FROM salesorderdetails
+						WHERE SUBSTRING(salesorderdetails.stkcode,1,2) = SUBSTRING(returneditems.itemcodes,1,2)
+							AND salesorderdetails.itemdue > '". $StartDate . "') AS qtysold
+				FROM returneditems
+				WHERE (returneditems.reasonid = 4 OR returneditems.reasonid = 5)
+					AND returneditems.oldinvoicedate > '". $StartDate . "'
+				GROUP BY SUBSTRING(returneditems.itemcodes,1,2)";
+	}					
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Items with Customer Quality Issues on the last ') . $numdays . ' days</strong></p>';
+		if ($typereport == "Item"){
+			echo '<p class="page_title_text" align="center"><strong>' . _('Items with Customer Quality Issues on the last ') . $numdays . ' days</strong></p>';
+			$TableHeader = '<tr>
+								<th class="ascending">' . _('#') . '</th>
+								<th class="ascending">' . _('Code') . '</th>
+								<th class="ascending">' . _('Incidences') . '</th>
+								<th class="ascending">' . _('Qty Sold') . '</th>
+								<th class="ascending">' . _('%Incidences') . '</th>
+							</tr>';
+		}else{
+			echo '<p class="page_title_text" align="center"><strong>' . _('Families with Customer Quality Issues on the last ') . $numdays . ' days</strong></p>';
+			$TableHeader = '<tr>
+								<th class="ascending">' . _('#') . '</th>
+								<th class="ascending">' . _('Family') . '</th>
+								<th class="ascending">' . _('Incidences') . '</th>
+								<th class="ascending">' . _('Qty Sold') . '</th>
+								<th class="ascending">' . _('%Incidences') . '</th>
+							</tr>';
+		}
 		echo '<div>';
 		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Incidences') . '</th>
-						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
 		$i = 1;
@@ -9792,10 +9822,14 @@ function QualityIssuesByItem($numdays, $RootPath, $db){
 			printf('<td class="number">%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
 					</tr>', 
 					$i, 
-					$myrow['itemcodes'],
-					locale_number_format($myrow['incidences'],0)
+					$myrow['item'],
+					locale_number_format($myrow['incidences'],0),
+					locale_number_format($myrow['qtysold'],0),
+					locale_number_format($myrow['incidences']/$myrow['qtysold']*100,1).'%'
 					);
 			$i++;
 		}
