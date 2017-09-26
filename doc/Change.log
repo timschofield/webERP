@@ -1,5 +1,6 @@
 webERP Change Log
 
+17/09/26 Exson: Fixed the vendor price bug to ensure only the effective price showed by suppliers in SelectProduct.php.
 17/09/20 Exson: Fixed the bug to make GRN reverse workable. 
 17/09/19 Exson: Fixed customer information missing in CustomerReceipt.php. Reported by Steven Fu.
 18/9/2017 Tim (committed by Andy): Geocode bug fixes. http://www.weberp.org/forum/showthread.php?tid=4380

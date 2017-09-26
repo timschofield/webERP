@@ -338,12 +338,13 @@ if (($myrow['mbflag'] == 'B' OR ($myrow['mbflag'] == 'M'))
 									purchdata.minorderqty,
 									purchdata.preferred,
 									currencies.decimalplaces,
-									MAX(purchdata.effectivefrom)
+									purchdata.effectivefrom
 								FROM purchdata INNER JOIN suppliers
 								ON purchdata.supplierno=suppliers.supplierid
 								INNER JOIN currencies
 								ON suppliers.currcode=currencies.currabrev
 								WHERE purchdata.stockid = '" . $StockID . "'
+								AND purchdata.effectivefrom=(SELECT max(a.effectivefrom) FROM purchdata a WHERE purchdata.supplierno=a.supplierno and a.stockid=purchdata.stockid)
 								GROUP BY suppliers.suppname,
 									suppliers.currcode,
 									suppliers.supplierid,
