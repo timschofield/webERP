@@ -9768,50 +9768,70 @@ function SPGPerformanceByShop($Shop, $NumDaysA, $NumDaysB, $NumDaysC, $db){
 function QualityIssuesByItem($typereport, $numdays, $RootPath, $db){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$numdays+1));
 
-	if ($typereport == "Item"){
+	if ($typereport == "QualityIssuesByItem"){
 		$SQL = "SELECT itemcodes AS item, 
 					COUNT(*) AS incidences,
-					(SELECT COUNT(*)
+					(SELECT SUM(salesorderdetails.qtyinvoiced)
 						FROM salesorderdetails
 						WHERE salesorderdetails.stkcode = returneditems.itemcodes
-							AND salesorderdetails.itemdue > '". $StartDate . "') AS qtysold
+							AND salesorderdetails.completed = 1
+							AND salesorderdetails.itemdue >= '". $StartDate . "') AS qtysold
 				FROM returneditems
 				WHERE (reasonid = 4 OR reasonid = 5)
-					AND oldinvoicedate > '". $StartDate . "'
+					AND oldinvoicedate >= '". $StartDate . "'
 				GROUP BY itemcodes";
-	}else{
+		$TitleReport = 'Customer Quality Issues by items on the last ' . $numdays . ' days';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Incidences') . '</th>
+							<th class="ascending">' . _('Qty Sold') . '</th>
+							<th class="ascending">' . _('%Incidences') . '</th>
+						</tr>';
+	}elseif ($typereport == "QualityIssuesByFamily"){
 		$SQL = "SELECT SUBSTRING(returneditems.itemcodes,1,2) AS item, 
 						COUNT(*) AS incidences,
-						(SELECT COUNT(*)
+						(SELECT SUM(salesorderdetails.qtyinvoiced)
 						FROM salesorderdetails
 						WHERE SUBSTRING(salesorderdetails.stkcode,1,2) = SUBSTRING(returneditems.itemcodes,1,2)
+							AND salesorderdetails.completed = 1
 							AND salesorderdetails.itemdue > '". $StartDate . "') AS qtysold
 				FROM returneditems
 				WHERE (returneditems.reasonid = 4 OR returneditems.reasonid = 5)
-					AND returneditems.oldinvoicedate > '". $StartDate . "'
+					AND returneditems.oldinvoicedate >= '". $StartDate . "'
 				GROUP BY SUBSTRING(returneditems.itemcodes,1,2)";
+		$TitleReport = 'Customer Quality Issues by Families of items on the last ' . $numdays . ' days';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Family') . '</th>
+							<th class="ascending">' . _('Incidences') . '</th>
+							<th class="ascending">' . _('Qty Sold') . '</th>
+							<th class="ascending">' . _('%Incidences') . '</th>
+						</tr>';
+	}elseif ($typereport == "ChangeOfMindByFamily"){
+		$SQL = "SELECT SUBSTRING(returneditems.itemcodes,1,2) AS item, 
+						COUNT(*) AS incidences,
+						(SELECT SUM(salesorderdetails.qtyinvoiced)
+						FROM salesorderdetails
+						WHERE SUBSTRING(salesorderdetails.stkcode,1,2) = SUBSTRING(returneditems.itemcodes,1,2)
+							AND salesorderdetails.completed = 1
+							AND salesorderdetails.itemdue > '". $StartDate . "') AS qtysold
+				FROM returneditems
+				WHERE (returneditems.reasonid = 1 OR returneditems.reasonid = 2 OR returneditems.reasonid = 3)
+					AND returneditems.oldinvoicedate >= '". $StartDate . "'
+				GROUP BY SUBSTRING(returneditems.itemcodes,1,2)";
+		$TitleReport = 'Change Of Mind by Families of items on the last ' . $numdays . ' days';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Family') . '</th>
+							<th class="ascending">' . _('Incidences') . '</th>
+							<th class="ascending">' . _('Qty Sold') . '</th>
+							<th class="ascending">' . _('%Incidences') . '</th>
+						</tr>';
 	}					
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		if ($typereport == "Item"){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Items with Customer Quality Issues on the last ') . $numdays . ' days</strong></p>';
-			$TableHeader = '<tr>
-								<th class="ascending">' . _('#') . '</th>
-								<th class="ascending">' . _('Code') . '</th>
-								<th class="ascending">' . _('Incidences') . '</th>
-								<th class="ascending">' . _('Qty Sold') . '</th>
-								<th class="ascending">' . _('%Incidences') . '</th>
-							</tr>';
-		}else{
-			echo '<p class="page_title_text" align="center"><strong>' . _('Families with Customer Quality Issues on the last ') . $numdays . ' days</strong></p>';
-			$TableHeader = '<tr>
-								<th class="ascending">' . _('#') . '</th>
-								<th class="ascending">' . _('Family') . '</th>
-								<th class="ascending">' . _('Incidences') . '</th>
-								<th class="ascending">' . _('Qty Sold') . '</th>
-								<th class="ascending">' . _('%Incidences') . '</th>
-							</tr>';
-		}
+		echo '<p class="page_title_text" align="center"><strong>' . $TitleReport . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		echo $TableHeader;

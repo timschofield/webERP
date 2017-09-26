@@ -210,9 +210,11 @@ if ($ProcessSection02){
 
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager){
-		QualityIssuesByItem("Item", 90, $RootPath, $db);
+		QualityIssuesByItem("QualityIssuesByItem", 90, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		QualityIssuesByItem("Family", 90, $RootPath, $db);
+		QualityIssuesByItem("QualityIssuesByFamily", 90, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		QualityIssuesByItem("ChangeOfMindByFamily", 90, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
