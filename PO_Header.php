@@ -643,18 +643,20 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 						stockmaster.description,
 						stockmaster.units ,
 						stockmaster.decimalplaces,
-						purchdata.price,
-						purchdata.suppliersuom,
-						purchdata.suppliers_partno,
-						purchdata.conversionfactor,
-						purchdata.leadtime,
+						b.price,
+						b.suppliersuom,
+						b.suppliers_partno,
+						b.conversionfactor,
+						b.leadtime,
 						stockcategory.stockact
 				FROM stockmaster INNER JOIN stockcategory
 					ON stockmaster.categoryid=stockcategory.categoryid
-				LEFT JOIN purchdata
-					ON stockmaster.stockid = purchdata.stockid
+				LEFT JOIN (SELECT purchdata.price,purchdata.leadtime,purchdata.supplierno,purchdata.stockid,purchdata.suppliersuom,purchdata.suppliers_partno,purchdata.conversionfactor,purchdata.effectivefrom FROM purchdata INNER JOIN (SELECT max(a.effectivefrom) as eff,a.supplierno,a.stockid from purchdata a   GROUP BY a.stockid,a.supplierno) as c ON purchdata.supplierno=c.supplierno AND purchdata.stockid=c.stockid AND purchdata.effectivefrom=c.eff)  as b
+
+					ON stockmaster.stockid = b.stockid
+					AND b.effectivefrom <= '" . Date('Y-m-d') . "'
 				WHERE stockmaster.stockid='" . $Purch_Item . "'
-				AND purchdata.supplierno ='" . $_GET['SelectedSupplier'] . "'";
+				AND b.supplierno ='" . $_GET['SelectedSupplier'] . "'";
 		$result = DB_query($sql);
 		$PurchItemRow = DB_fetch_array($result);
 

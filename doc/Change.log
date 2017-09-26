@@ -1,5 +1,6 @@
 webERP Change Log
 
+17/09/26 Exson: Fixed the wrong price retrieved bug in PO_Header.php.
 17/09/26 Exson: Fixed the vendor price bug to ensure only the effective price showed by suppliers in SelectProduct.php.
 17/09/20 Exson: Fixed the bug to make GRN reverse workable. 
 17/09/19 Exson: Fixed customer information missing in CustomerReceipt.php. Reported by Steven Fu.
