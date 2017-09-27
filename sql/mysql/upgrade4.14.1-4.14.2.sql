@@ -23,3 +23,8 @@ CREATE TABLE `pcashdetailtaxes` (
 	`amount` DOUBLE NOT NULL DEFAULT 0.0,
 	PRIMARY KEY(counterindex)
 );
+
+ALTER TABLE `custbranch` CHANGE `lat` `lat` FLOAT(12,8) NOT NULL DEFAULT '0.00000000';
+ALTER TABLE `custbranch` CHANGE `lng` `lng` FLOAT(12,8) NOT NULL DEFAULT '0.00000000'
+
+
