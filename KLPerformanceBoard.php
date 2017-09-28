@@ -208,16 +208,6 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_SystemAdmin 
-		OR $KL_BusinessDevelopmentManager){
-		QualityIssuesByItem("QualityIssuesByItem", 90, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		QualityIssuesByItem("QualityIssuesByFamily", 90, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		QualityIssuesByItem("ChangeOfMindByFamily", 90, $RootPath, $db);
-		$NumberOfTestExecuted++;
-	}
-
 	if ($KL_SystemAdmin
 		OR $KL_OperationalManager){
 		POStatusControl("IN NEGOTIAION WITH SUPPLIER", 0, $RootPath, $db);
