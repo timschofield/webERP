@@ -8,11 +8,6 @@ $ViewTopic = 'AccountsReceivable';
 $BookMark = 'SelectCustomer';
 include('includes/header.php');
 
-echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
-	'/images/customer.png" title="',// Icon image.
-	_('Customer'), '" /> ',// Icon title.
-	_('Customers'), '</p>';// Page title.
-
 include('includes/SQL_CommonFunctions.inc');
 
 if(isset($_GET['Select'])) {
@@ -147,7 +142,25 @@ if(isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR iss
 	}
 }// end of if search
 
+$TableHead =
+	'<table cellpadding="4" width="90%" class="selection">
+		<thead>
+			<tr>
+				<th style="width:33%">' .
+					'<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/reports.png" title="' . _('Inquiries and Reports') . '" />' .
+					_('Customer Inquiries') . '</th>
+				<th style="width:33%">' .
+					'<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . _('Transactions') . '" />' .
+					_('Customer Transactions') . '</th>
+				<th style="width:33%">' .
+					'<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Maintenance') . '" />' .
+					_('Customer Maintenance') . '</th>
+			</tr>
+		</thead>
+		<tbody>';
+
 if($_SESSION['CustomerID'] != '' AND !isset($_POST['Search']) AND !isset($_POST['CSV'])) {
+	// A customer is selected
 	if(!isset($_SESSION['BranchCode'])) {
 		// !isset($_SESSION['BranchCode'])
 		$SQL = "SELECT debtorsmaster.name,
@@ -179,20 +192,11 @@ if($_SESSION['CustomerID'] != '' AND !isset($_POST['Search']) AND !isset($_POST[
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 		'/images/customer.png" title="',// Icon image.
 		_('Customer'), '" /> ',// Icon title.
-		_('Customer'), ' : ', $_SESSION['CustomerID'], ' - ', $CustomerName, ' - ', $PhoneNo, _(' has been selected'), '</p>';// Page title.
-
-	echo '<div class="page_help_text">', _('Select a menu option to operate using this customer'), '.</div>
-		<br />
-		<table cellpadding="4" width="90%" class="selection">
-		<thead>
-			<tr>
-				<th style="width:33%">', _('Customer Inquiries'), '</th>
-				<th style="width:33%">', _('Customer Transactions'), '</th>
-				<th style="width:33%">', _('Customer Maintenance'), '</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
+		_('Customer'), ': ', $_SESSION['CustomerID'], ' - ', $CustomerName, ' - ', $PhoneNo, /*_(' has been selected'), */'</p>',// Page title.
+		'<div class="page_help_text">', _('Select a menu option to operate using this customer'), '.</div>',// Page help text.
+		'<br />',
+		$TableHead,
+			'<tr>
 				<td valign="top" class="select">';
 	// Customer inquiries options:
 	echo '<a href="', $RootPath, '/CustomerInquiry.php?CustomerID=', urlencode($_SESSION['CustomerID']), '">' . _('Customer Transaction Inquiries') . '</a><br />';
@@ -225,26 +229,22 @@ if($_SESSION['CustomerID'] != '' AND !isset($_POST['Search']) AND !isset($_POST[
 		<tbody>
 		</table>';
 } else {
-	echo '<table cellpadding="4" width="90%" class="selection">
-		<thead>
-			<tr>
-				<th style="width:33%">', _('Customer Inquiries'), '</th>
-				<th style="width:33%">', _('Customer Transactions'), '</th>
-				<th style="width:33%">', _('Customer Maintenance'), '</th>
-			</tr>
-		</thead>
-		<tbody>';
-	echo '<tr>
-			<td class="select"></td>
-			<td class="select"></td>
-			<td class="select">';
+	// Customer is not selected yet
+	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+		'/images/customer.png" title="', // Icon image.
+		_('Customers'), '" /> ', // Icon title.
+		_('Customers'), '</p>',// Page title.
+		'<br />',
+		$TableHead,
+		'<tr>',
+			'<td class="select"></td>',// Customer inquiries options.
+			'<td class="select"></td>',// Customer transactions options.
+			'<td class="select">';
 	if(!isset($_SESSION['SalesmanLogin']) OR $_SESSION['SalesmanLogin'] == '') {
-		echo '<a href="', $RootPath, '/Customers.php">' . _('Add a New Customer') . '</a><br />';
+		echo '<a href="', $RootPath, '/Customers.php">', _('Add a New Customer'), '</a><br />';
 	}
-	echo '</td>
-			</tr>
-		<tbody>
-		</table>';
+	echo '</td>',// Item maintenance options.
+		'</tr><tbody></table>';
 }
 
 // Search for customers:

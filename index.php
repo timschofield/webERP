@@ -102,7 +102,7 @@ echo '<li class="menu_group_headers">'; //=== SubMenuHeader ===
 if ($_SESSION['Module']=='system') {
 	$Header='<img src="' . $RootPath . '/css/' . $Theme . '/images/company.png" title="' . _('General Setup Options') . '" alt="' . _('General Setup Options') . '" /><b>' . _('General Setup Options') . '</b>';
 } else {
-	$Header='<img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . _('Transactions') . '" alt="' . _('Transactions') . '" /><b>' .  _('Transactions') . '</b>';
+	$Header='<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . _('Transactions') . '" /><b>' . _('Transactions') . '</b>';
 }
 echo $Header;
 echo '</li>'; // SubMenuHeader
@@ -130,7 +130,7 @@ echo '<li class="menu_group_headers">';
 if ($_SESSION['Module']=='system') {
 	$Header='<img src="' . $RootPath . '/css/' . $Theme . '/images/ar.png" title="' . _('Receivables/Payables Setup') . '" alt="' . _('Receivables/Payables Setup') . '" /><b>' . _('Receivables/Payables Setup') . '</b>';
 } else {
-	$Header='<img src="' . $RootPath . '/css/' . $Theme . '/images/reports.png" title="' . _('Inquiries and Reports') . '" alt="' . _('Inquiries and Reports') . '" /><b>' .  _('Inquiries and Reports') . '</b>';
+	$Header='<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/reports.png" title="' . _('Inquiries and Reports') . '" /><b>' . _('Inquiries and Reports') . '</b>';
 }
 echo $Header;
 echo '</li>';
@@ -158,7 +158,8 @@ echo '<li class="menu_group_headers">';
 if ($_SESSION['Module']=='system') {
 	$Header='<img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . _('Inventory Setup') . '" alt="' . _('Inventory Setup') . '" /><b>' . _('Inventory Setup') . '</b>';
 } else {
-	$Header='<img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Maintenance') . '" alt="' . _('Maintenance') . '" /><b>' .  _('Maintenance') . '</b>';
+	$Header='<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Maintenance') . '" /><b>' .  _('Maintenance') . '</b>';
+
 }
 echo $Header;
 echo '</li>';

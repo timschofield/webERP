@@ -10,9 +10,6 @@ include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.inc');
 
-if (!isset($_SESSION['SupplierID'])) {
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Suppliers') . '</p>';
-}
 if (isset($_GET['SupplierID'])) {
 	$_SESSION['SupplierID']=$_GET['SupplierID'];
 }
@@ -148,7 +145,24 @@ if (isset($_POST['Search'])
         }
 } //end of if search
 
+$TableHead =
+	'<table cellpadding="4" width="90%" class="selection">
+		<thead>
+			<tr>
+				<th style="width:33%">' .
+					'<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/reports.png" title="' . _('Inquiries and Reports') . '" />' .
+					_('Supplier Inquiries') . '</th>
+				<th style="width:33%">' .
+					'<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . _('Transactions') . '" />' .
+					_('Supplier Transactions') . '</th>
+				<th style="width:33%">' .
+					'<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Maintenance') . '" />' .
+					_('Supplier Maintenance') . '</th>
+			</tr>
+		</thead>
+		<tbody>';
 if (isset($_SESSION['SupplierID'])) {
+	// A supplier is selected
 	$SupplierName = '';
 	$SQL = "SELECT suppliers.suppname
 			FROM suppliers
@@ -158,16 +172,17 @@ if (isset($_SESSION['SupplierID'])) {
 		$myrow = DB_fetch_row($SupplierNameResult);
 		$SupplierName = $myrow[0];
 	}
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . _('Supplier') . '" alt="" />' . ' ' . _('Supplier') . ' : <b>' . $_SESSION['SupplierID'] . ' - ' . $SupplierName . '</b> ' . _('has been selected') . '.</p>';
-	echo '<div class="page_help_text">' . _('Select a menu option to operate using this supplier.') . '</div>';
-	echo '<br />
-		<table width="90%" cellpadding="4">
-		<tr>
-			<th style="width:33%">' . _('Supplier Inquiries') . '</th>
-			<th style="width:33%">' . _('Supplier Transactions') . '</th>
-			<th style="width:33%">' . _('Supplier Maintenance') . '</th>
-		</tr>';
-	echo '<tr><td valign="top" class="select">'; /* Inquiry Options */
+
+	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+		'/images/supplier.png" title="', // Icon image.
+		_('Supplier'), '" /> ', // Icon title.
+		_('Supplier'), ': ', $_SESSION['SupplierID'], ' - ', $SupplierName, /*' ', _('has been selected'), */'</p>',// Page title.
+		'<div class="page_help_text">', _('Select a menu option to operate using this supplier.'), '</div>',// Page help text.
+		'<br />',
+		$TableHead,
+			'<tr>
+				<td valign="top" class="select">';
+	// Supplier inquiries options:
 	echo '<a href="' . $RootPath . '/SupplierInquiry.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . _('Supplier Account Inquiry') . '</a>
 		<br />
 		<a href="' . $RootPath . '/SupplierGRNAndInvoiceInquiry.php?SelectedSupplier=' . $_SESSION['SupplierID'] . '&amp;SupplierName='.urlencode($SupplierName).'">' . _('Supplier Delivery Note AND GRN inquiry') . '</a>
@@ -197,24 +212,20 @@ if (isset($_SESSION['SupplierID'])) {
 		<br /><a href="' . $RootPath . '/SuppLoginSetup.php">' . _('Supplier Login Configuration') . '</a>
 		</td>
 		</tr>
-		</table>';
+		<tbody></table>';
 } else {
 	// Supplier is not selected yet
-	echo '<br />';
-	echo '<table width="90%" cellpadding="4">
-		<tr>
-			<th style="width:33%">' . _('Supplier Inquiries') . '</th>
-			<th style="width:33%">' . _('Supplier Transactions') . '</th>
-			<th style="width:33%">' . _('Supplier Maintenance') . '</th>
-		</tr>';
-	echo '<tr>
-			<td valign="top" class="select"></td>
-			<td valign="top" class="select"></td>
-			<td valign="top" class="select">'; /* Supplier Maintenance */
-	echo '<a href="' . $RootPath . '/Suppliers.php">' . _('Add a New Supplier') . '</a><br />';
-	echo '</td>
-		</tr>
-		</table>';
+	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+		'/images/supplier.png" title="', // Icon image.
+		_('Suppliers'), '" /> ', // Icon title.
+		_('Suppliers'), '</p>',// Page title.
+		'<br />',
+		$TableHead,
+		'<tr>',
+			'<td class="select"></td>',// Supplier inquiries options.
+			'<td class="select"></td>',// Supplier transactions options.
+			'<td class="select"><a href="', $RootPath, '/Suppliers.php">', _('Add a New Supplier'), '</a></td>',// Supplier Maintenance options.
+		'</tr><tbody></table>';
 }
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<div>';

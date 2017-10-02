@@ -8,11 +8,10 @@ $CostSecurity = 18; //don't show cost info unless security token 18 available to
 
 include ('includes/session.php');
 $Title = _('Search Inventory Items');
-/* webERP manual links before header.php */
 $ViewTopic= 'Inventory';
 $BookMark = 'SelectingInventory';
-
 include ('includes/header.php');
+
 include ('includes/SQL_CommonFunctions.inc');
 
 if (isset($_GET['StockID'])) {
@@ -20,7 +19,7 @@ if (isset($_GET['StockID'])) {
 	$_GET['StockID'] = trim(mb_strtoupper($_GET['StockID']));
 	$_POST['Select'] = trim(mb_strtoupper($_GET['StockID']));
 }
-echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . _('Inventory Items') . '" alt="" />' . ' ' . _('Inventory Items') . '</p>';
+
 if (isset($_GET['NewSearch']) or isset($_POST['Next']) or isset($_POST['Previous']) or isset($_POST['Go'])) {
 	unset($StockID);
 	unset($_SESSION['SelectedStockItem']);
@@ -50,6 +49,22 @@ if (DB_num_rows($result1) == 0) {
 }
 // end of showing search facilities
 /* displays item options if there is one and only one selected */
+$TableHead =
+	'<table cellpadding="4" width="90%" class="selection">
+		<thead>
+			<tr>
+				<th style="width:33%">' .
+					'<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/reports.png" title="' . _('Inquiries and Reports') . '" />' .
+					_('Item Inquiries') . '</th>
+				<th style="width:33%">' .
+					'<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . _('Transactions') . '" />' .
+					_('Item Transactions') . '</th>
+				<th style="width:33%">' .
+					'<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Maintenance') . '" />' .
+					_('Item Maintenance') . '</th>
+			</tr>
+		</thead>
+		<tbody>';
 if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['SelectedStockItem']))) {
 	if (isset($_POST['Select'])) {
 		$_SESSION['SelectedStockItem'] = $_POST['Select'];
@@ -86,13 +101,18 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 	} else {
 		$ItemStatus = '';
 	}
+/*	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+		'/images/inventory.png" title="', // Icon image.
+		_('Inventory Item'), '" /> ', // Icon title.
+		'<b title="', $myrow['longdescription'], '">',
+		_('Inventory Item'), ': ', $StockID, ' - ', $myrow['description'], '</b> ', $ItemStatus, '</p>';// Page title.*/
+	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+		'/images/inventory.png" title="', // Icon image.
+		_('Inventory Item'), '" /> ', // Icon title.
+		_('Inventory Item'), ': ', $StockID, ' - ', $myrow['description'], ' ', $ItemStatus, '</p>';// Page title.
+
 	echo '<table width="90%">
-			<tr>
-				<th colspan="3"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b title="' . $myrow['longdescription'] . '">' . ' ' . $StockID . ' - ' . $myrow['description'] . '</b> ' . $ItemStatus . '</th>
-			</tr>';
-
-
-	echo '<tr>
+		<tr>
 			<td style="width:40%" valign="top">
 			<table>'; //nested table
 	echo '<tr><th class="number">' . _('Category') . ':</th> <td colspan="6" class="select">' . $myrow['categorydescription'] , '</td></tr>';
@@ -205,7 +225,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 	$PropertiesResult = DB_query($sql);
 	$PropertyCounter = 0;
 	$PropertyWidth = array();
-	while ($PropertyRow = DB_fetch_array($PropertiesResult)) {
+	while($PropertyRow = DB_fetch_array($PropertiesResult)) {
 		$PropValResult = DB_query("SELECT value
 									FROM stockitemproperties
 									WHERE stockid='" . $StockID . "'
@@ -234,289 +254,284 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 				}
 			break;
 		} //end switch
-	echo '</td></tr>';
-	$PropertyCounter++;
-} //end loop round properties for the item category
-echo '</table></td>'; //end of Item Category Property mod
-echo '<td style="width:15%; vertical-align:top">
-			<table>'; //nested table to show QOH/orders
-$QOH = 0;
-switch ($myrow['mbflag']) {
-	case 'A':
-	case 'D':
-	case 'K':
-		$QOH = _('N/A');
-		$QOO = _('N/A');
-	break;
-	case 'M':
-	case 'B':
-		$QOHResult = DB_query("SELECT sum(quantity)
-						FROM locstock
-						WHERE stockid = '" . $StockID . "'");
-		$QOHRow = DB_fetch_row($QOHResult);
-		$QOH = locale_number_format($QOHRow[0], $myrow['decimalplaces']);
+		echo '</td></tr>';
+		$PropertyCounter++;
+	} //end loop round properties for the item category
+	echo '</table></td>'; //end of Item Category Property mod
+	echo '<td style="width:15%; vertical-align:top">
+				<table>'; //nested table to show QOH/orders
+	$QOH = 0;
+	switch ($myrow['mbflag']) {
+		case 'A':
+		case 'D':
+		case 'K':
+			$QOH = _('N/A');
+			$QOO = _('N/A');
+		break;
+		case 'M':
+		case 'B':
+			$QOHResult = DB_query("SELECT sum(quantity)
+							FROM locstock
+							WHERE stockid = '" . $StockID . "'");
+			$QOHRow = DB_fetch_row($QOHResult);
+			$QOH = locale_number_format($QOHRow[0], $myrow['decimalplaces']);
 
-		// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
-		$QOO = GetQuantityOnOrderDueToPurchaseOrders($StockID, '');
-		// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
-		$QOO += GetQuantityOnOrderDueToWorkOrders($StockID, '');
+			// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
+			$QOO = GetQuantityOnOrderDueToPurchaseOrders($StockID, '');
+			// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
+			$QOO += GetQuantityOnOrderDueToWorkOrders($StockID, '');
 
-		$QOO = locale_number_format($QOO, $myrow['decimalplaces']);
-	break;
-}
-$Demand = 0;
-$DemResult = DB_query("SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS dem
-						FROM salesorderdetails INNER JOIN salesorders
-						ON salesorders.orderno = salesorderdetails.orderno
-						INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
-						WHERE salesorderdetails.completed=0
-						AND salesorders.quotation=0
-						AND salesorderdetails.stkcode='" . $StockID . "'");
-$DemRow = DB_fetch_row($DemResult);
-$Demand = $DemRow[0];
-$DemAsComponentResult = DB_query("SELECT  SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
-									FROM salesorderdetails INNER JOIN salesorders
-									ON salesorders.orderno = salesorderdetails.orderno
-									INNER JOIN bom ON salesorderdetails.stkcode=bom.parent
-									INNER JOIN stockmaster ON stockmaster.stockid=bom.parent
-									INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
-									WHERE salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
-									AND bom.component='" . $StockID . "'
-									AND stockmaster.mbflag='A'
-									AND salesorders.quotation=0");
-$DemAsComponentRow = DB_fetch_row($DemAsComponentResult);
-$Demand+= $DemAsComponentRow[0];
-//Also the demand for the item as a component of works orders
-$sql = "SELECT SUM(qtypu*(woitems.qtyreqd - woitems.qtyrecd)) AS woqtydemo
-		FROM woitems INNER JOIN worequirements
-		ON woitems.stockid=worequirements.parentstockid
-		INNER JOIN workorders
-		ON woitems.wo=workorders.wo
-		AND woitems.wo=worequirements.wo
-		INNER JOIN locationusers ON locationusers.loccode=workorders.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
-		WHERE  worequirements.stockid='" . $StockID . "'
-		AND workorders.closed=0";
-$ErrMsg = _('The workorder component demand for this product cannot be retrieved because');
-$DemandResult = DB_query($sql, $ErrMsg);
-if (DB_num_rows($DemandResult) == 1) {
-	$DemandRow = DB_fetch_row($DemandResult);
-	$Demand+= $DemandRow[0];
-}
-echo '<tr>
-		<th class="number" style="width:15%">' . _('Quantity On Hand') . ':</th>
-		<td style="width:17%; text-align:right" class="select">' . $QOH . '</td>
-	</tr>
-	<tr>
-		<th class="number" style="width:15%">' . _('Quantity Demand') . ':</th>
-		<td style="width:17%; text-align:right" class="select">' . locale_number_format($Demand, $myrow['decimalplaces']) . '</td>
-	</tr>
-	<tr>
-		<th class="number" style="width:15%">' . _('Quantity On Order') . ':</th>
-		<td style="width:17%; text-align:right" class="select">' . $QOO . '</td>
-	</tr>
-	</table>'; //end of nested table
-echo '</td>'; //end cell of master table
-
-if (($myrow['mbflag'] == 'B' OR ($myrow['mbflag'] == 'M'))
-	AND (in_array($SuppliersSecurity, $_SESSION['AllowedPageSecurityTokens']))){
-
-	echo '<td style="width:50%" valign="top"><table>
-			<tr><th style="width:20%">' . _('Supplier') . '</th>
-				<th stlye="width:15%">' . _('Code') . '</th>
-				<th style="width:15%">' . _('Cost') . '</th>
-				<th style="width:5%">' . _('Curr') . '</th>
-				<th style="width:10%">' . _('Lead Time') . '</th>
-				<th style="width:10%">' . _('Min Order Qty') . '</th>
-				<th style="width:5%">' . _('Prefer') . '</th></tr>';
-	$SuppResult = DB_query("SELECT suppliers.suppname,
-									suppliers.currcode,
-									suppliers.supplierid,
-									purchdata.price,
-									purchdata.suppliers_partno,
-									purchdata.leadtime,
-									purchdata.conversionfactor,
-									purchdata.minorderqty,
-									purchdata.preferred,
-									currencies.decimalplaces,
-									purchdata.effectivefrom
-								FROM purchdata INNER JOIN suppliers
-								ON purchdata.supplierno=suppliers.supplierid
-								INNER JOIN currencies
-								ON suppliers.currcode=currencies.currabrev
-								WHERE purchdata.stockid = '" . $StockID . "'
-								AND purchdata.effectivefrom=(SELECT max(a.effectivefrom) FROM purchdata a WHERE purchdata.supplierno=a.supplierno and a.stockid=purchdata.stockid)
-								GROUP BY suppliers.suppname,
-									suppliers.currcode,
-									suppliers.supplierid,
-									purchdata.price,
-									purchdata.suppliers_partno,
-									purchdata.leadtime,
-									purchdata.conversionfactor,
-									purchdata.minorderqty,
-									purchdata.preferred,
-									currencies.decimalplaces
-							ORDER BY purchdata.preferred DESC");
-
-	while ($SuppRow = DB_fetch_array($SuppResult)) {
-		echo '<tr>
-				<td class="select">' . $SuppRow['suppname'] . '</td>
-				<td class="select">' . $SuppRow['suppliers_partno'] . '</td>
-				<td class="select" style="text-align:right">' . locale_number_format($SuppRow['price'] / $SuppRow['conversionfactor'], $SuppRow['decimalplaces']) . '</td>
-				<td class="select">' . $SuppRow['currcode'] . '</td>
-				<td class="select" style="text-align:right">' . $SuppRow['leadtime'] . '</td>
-				<td class="select" style="text-align:right">' . $SuppRow['minorderqty'] . '</td>';
-
-		if ($SuppRow['preferred']==1) { //then this is the preferred supplier
-			echo '<td class="select">' . _('Yes') . '</td>';
-		} else {
-			echo '<td class="select">' . _('No') . '</td>';
-		}
-		echo '<td class="select"><a href="' . $RootPath . '/PO_Header.php?NewOrder=Yes&amp;SelectedSupplier=' .
-			$SuppRow['supplierid'] . '&amp;StockID=' . urlencode($StockID) . '&amp;Quantity='.$SuppRow['minorderqty'].'&amp;LeadTime='.$SuppRow['leadtime'] . '">' . _('Order') . ' </a></td>';
-		echo '</tr>';
+			$QOO = locale_number_format($QOO, $myrow['decimalplaces']);
+		break;
 	}
-	echo '</table>';
-	DB_data_seek($result, 0);
-}
-echo '</td>
-	</tr>
-	</table>
-	<br />'; // end first item details table
-echo '<table width="90%">
-		<tr>
-			<th style="width:33%">' . _('Item Inquiries') . '</th>
-			<th style="width:33%">' . _('Item Transactions') . '</th>
-			<th style="width:33%">' . _('Item Maintenance') . '</th>
+	$Demand = 0;
+	$DemResult = DB_query("SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS dem
+							FROM salesorderdetails INNER JOIN salesorders
+							ON salesorders.orderno = salesorderdetails.orderno
+							INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
+							WHERE salesorderdetails.completed=0
+							AND salesorders.quotation=0
+							AND salesorderdetails.stkcode='" . $StockID . "'");
+	$DemRow = DB_fetch_row($DemResult);
+	$Demand = $DemRow[0];
+	$DemAsComponentResult = DB_query("SELECT  SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
+										FROM salesorderdetails INNER JOIN salesorders
+										ON salesorders.orderno = salesorderdetails.orderno
+										INNER JOIN bom ON salesorderdetails.stkcode=bom.parent
+										INNER JOIN stockmaster ON stockmaster.stockid=bom.parent
+										INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
+										WHERE salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
+										AND bom.component='" . $StockID . "'
+										AND stockmaster.mbflag='A'
+										AND salesorders.quotation=0");
+	$DemAsComponentRow = DB_fetch_row($DemAsComponentResult);
+	$Demand+= $DemAsComponentRow[0];
+	//Also the demand for the item as a component of works orders
+	$sql = "SELECT SUM(qtypu*(woitems.qtyreqd - woitems.qtyrecd)) AS woqtydemo
+			FROM woitems INNER JOIN worequirements
+			ON woitems.stockid=worequirements.parentstockid
+			INNER JOIN workorders
+			ON woitems.wo=workorders.wo
+			AND woitems.wo=worequirements.wo
+			INNER JOIN locationusers ON locationusers.loccode=workorders.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
+			WHERE  worequirements.stockid='" . $StockID . "'
+			AND workorders.closed=0";
+	$ErrMsg = _('The workorder component demand for this product cannot be retrieved because');
+	$DemandResult = DB_query($sql, $ErrMsg);
+	if (DB_num_rows($DemandResult) == 1) {
+		$DemandRow = DB_fetch_row($DemandResult);
+		$Demand+= $DemandRow[0];
+	}
+	echo '<tr>
+			<th class="number" style="width:15%">' . _('Quantity On Hand') . ':</th>
+			<td style="width:17%; text-align:right" class="select">' . $QOH . '</td>
 		</tr>
 		<tr>
-			<td valign="top" class="select">';
-/*Stock Inquiry Options */
-echo '<a href="' . $RootPath . '/StockMovements.php?StockID=' . urlencode($StockID) . '">' . _('Show Stock Movements') . '</a><br />';
-if ($Its_A_Kitset_Assembly_Or_Dummy == False) {
-	echo '<a href="' . $RootPath . '/StockStatus.php?StockID=' . urlencode($StockID) . '">' . _('Show Stock Status') . '</a><br />';
-	echo '<a href="' . $RootPath . '/StockUsage.php?StockID=' . urlencode($StockID) . '">' . _('Show Stock Usage') . '</a><br />';
-}
-echo '<a href="' . $RootPath . '/SelectSalesOrder.php?SelectedStockItem=' . urlencode($StockID) . '">' . _('Search Outstanding Sales Orders') . '</a><br />';
-echo '<a href="' . $RootPath . '/SelectCompletedOrder.php?SelectedStockItem=' . urlencode($StockID) . '">' . _('Search Completed Sales Orders') . '</a><br />';
-if ($Its_A_Kitset_Assembly_Or_Dummy == False) {
-	echo '<a href="' . $RootPath . '/PO_SelectOSPurchOrder.php?SelectedStockItem=' . urlencode($StockID) . '">' . _('Search Outstanding Purchase Orders') . '</a><br />';
-	echo '<a href="' . $RootPath . '/PO_SelectPurchOrder.php?SelectedStockItem=' . urlencode($StockID) . '">' . _('Search All Purchase Orders') . '</a><br />';
+			<th class="number" style="width:15%">' . _('Quantity Demand') . ':</th>
+			<td style="width:17%; text-align:right" class="select">' . locale_number_format($Demand, $myrow['decimalplaces']) . '</td>
+		</tr>
+		<tr>
+			<th class="number" style="width:15%">' . _('Quantity On Order') . ':</th>
+			<td style="width:17%; text-align:right" class="select">' . $QOO . '</td>
+		</tr>
+		</table>'; //end of nested table
+	echo '</td>'; //end cell of master table
 
-	$SupportedImgExt = array('png','jpg','jpeg');
-	$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/' . $StockID . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
-	echo '<a href="' . $RootPath . '/' . $imagefile . '" target="_blank">' . _('Show Part Picture (if available)') . '</a><br />';
-}
-if ($Its_A_Dummy == False) {
-	echo '<a href="' . $RootPath . '/BOMInquiry.php?StockID=' . urlencode($StockID) . '">' . _('View Costed Bill Of Material') . '</a><br />';
-	echo '<a href="' . $RootPath . '/WhereUsedInquiry.php?StockID=' . urlencode($StockID) . '">' . _('Where This Item Is Used') . '</a><br />';
-}
-if ($Its_A_Labour_Item == True) {
-	echo '<a href="' . $RootPath . '/WhereUsedInquiry.php?StockID=' . urlencode($StockID) . '">' . _('Where This Labour Item Is Used') . '</a><br />';
-}
-wikiLink('Product', $StockID);
-echo '</td><td valign="top" class="select">';
-/* Stock Transactions */
-if ($Its_A_Kitset_Assembly_Or_Dummy == false) {
-	echo '<a href="' . $RootPath . '/StockAdjustments.php?StockID=' . urlencode($StockID) . '">' . _('Quantity Adjustments') . '</a><br />';
-	echo '<a href="' . $RootPath . '/StockTransfers.php?StockID=' . urlencode($StockID) . '&amp;NewTransfer=true">' . _('Location Transfers') . '</a><br />';
+	if (($myrow['mbflag'] == 'B' OR ($myrow['mbflag'] == 'M'))
+		AND (in_array($SuppliersSecurity, $_SESSION['AllowedPageSecurityTokens']))){
 
-	//show the item image if it has been uploaded
-	if ( extension_loaded ('gd') && function_exists ('gd_info') && file_exists ($imagefile) ) {
-		if ($_SESSION['ShowStockidOnImages'] == '0'){
-			$StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
-								'&amp;StockID='.urlencode($StockID).
-								'&amp;text='.
-								'&amp;width=200'.
-								'&amp;height=200'.
-								'" alt="" />';
-		} else {
-			$StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
-								'&amp;StockID='.urlencode($StockID).
-								'&amp;text='. $StockID .
-								'&amp;width=200'.
-								'&amp;height=200'.
-								'" alt="" />';
-		}
-	} else if (file_exists ($imagefile)) {
-		$StockImgLink = '<img src="' . $imagefile . '" height="200" width="200" />';
-	} else {
-		$StockImgLink = _('No Image');
-	}
-
-	echo '<div class="centre">' . $StockImgLink . '</div>';
-
-	if (($myrow['mbflag'] == 'B')
-		AND (in_array($SuppliersSecurity, $_SESSION['AllowedPageSecurityTokens']))
-		AND $myrow['discontinued']==0){
-		echo '<br />';
+		echo '<td style="width:50%" valign="top"><table>
+				<tr><th style="width:20%">' . _('Supplier') . '</th>
+					<th stlye="width:15%">' . _('Code') . '</th>
+					<th style="width:15%">' . _('Cost') . '</th>
+					<th style="width:5%">' . _('Curr') . '</th>
+					<th style="width:10%">' . _('Lead Time') . '</th>
+					<th style="width:10%">' . _('Min Order Qty') . '</th>
+					<th style="width:5%">' . _('Prefer') . '</th></tr>';
 		$SuppResult = DB_query("SELECT suppliers.suppname,
+										suppliers.currcode,
 										suppliers.supplierid,
-										purchdata.preferred,
+										purchdata.price,
+										purchdata.suppliers_partno,
+										purchdata.leadtime,
+										purchdata.conversionfactor,
 										purchdata.minorderqty,
-										purchdata.leadtime
+										purchdata.preferred,
+										currencies.decimalplaces,
+										purchdata.effectivefrom
 									FROM purchdata INNER JOIN suppliers
 									ON purchdata.supplierno=suppliers.supplierid
-									WHERE purchdata.stockid='" . $StockID . "'
-									ORDER BY purchdata.effectivefrom DESC");
-		$LastSupplierShown = "";
+									INNER JOIN currencies
+									ON suppliers.currcode=currencies.currabrev
+									WHERE purchdata.stockid = '" . $StockID . "'
+									AND purchdata.effectivefrom=(SELECT max(a.effectivefrom) FROM purchdata a WHERE purchdata.supplierno=a.supplierno and a.stockid=purchdata.stockid)
+									GROUP BY suppliers.suppname,
+										suppliers.currcode,
+										suppliers.supplierid,
+										purchdata.price,
+										purchdata.suppliers_partno,
+										purchdata.leadtime,
+										purchdata.conversionfactor,
+										purchdata.minorderqty,
+										purchdata.preferred,
+										currencies.decimalplaces
+								ORDER BY purchdata.preferred DESC");
+
 		while ($SuppRow = DB_fetch_array($SuppResult)) {
-			if ($LastSupplierShown != $SuppRow['supplierid']){
-				if (($myrow['eoq'] < $SuppRow['minorderqty'])) {
-					$EOQ = $SuppRow['minorderqty'];
-				} else {
-					$EOQ = $myrow['eoq'];
-				}
-				echo '<a href="' . $RootPath . '/PO_Header.php?NewOrder=Yes' . '&amp;SelectedSupplier=' . $SuppRow['supplierid'] . '&amp;StockID=' . urlencode($StockID) . '&amp;Quantity='.$EOQ.'&amp;LeadTime='.$SuppRow['leadtime'].'">' .  _('Purchase this Item from') . ' ' . $SuppRow['suppname'] . '</a>
-				<br />';
-				$LastSupplierShown = $SuppRow['supplierid'];
+			echo '<tr>
+					<td class="select">' . $SuppRow['suppname'] . '</td>
+					<td class="select">' . $SuppRow['suppliers_partno'] . '</td>
+					<td class="select" style="text-align:right">' . locale_number_format($SuppRow['price'] / $SuppRow['conversionfactor'], $SuppRow['decimalplaces']) . '</td>
+					<td class="select">' . $SuppRow['currcode'] . '</td>
+					<td class="select" style="text-align:right">' . $SuppRow['leadtime'] . '</td>
+					<td class="select" style="text-align:right">' . $SuppRow['minorderqty'] . '</td>';
+
+			if ($SuppRow['preferred']==1) { //then this is the preferred supplier
+				echo '<td class="select">' . _('Yes') . '</td>';
+			} else {
+				echo '<td class="select">' . _('No') . '</td>';
 			}
-			/**/
-		} /* end of while */
-	} /* end of $myrow['mbflag'] == 'B' */
-} /* end of ($Its_A_Kitset_Assembly_Or_Dummy == False) */
-echo '</td><td valign="top" class="select">';
-/* Stock Maintenance Options */
-echo '<a href="' . $RootPath . '/Stocks.php?">' . _('Insert New Item') . '</a><br />';
-echo '<a href="' . $RootPath . '/Stocks.php?StockID=' . urlencode($StockID) . '">' . _('Modify Item Details') . '</a><br />';
-if ($Its_A_Kitset_Assembly_Or_Dummy == False) {
-	echo '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . urlencode($StockID) . '">' . _('Maintain Reorder Levels') . '</a><br />';
-	echo '<a href="' . $RootPath . '/StockCostUpdate.php?StockID=' . urlencode($StockID) . '">' . _('Maintain Standard Cost') . '</a><br />';
-	echo '<a href="' . $RootPath . '/PurchData.php?StockID=' . urlencode($StockID) . '">' . _('Maintain Purchasing Data') . '</a><br />';
-	echo '<a href="' . $RootPath . '/CustItem.php?StockID=' . urlencode($StockID) . '">' . _('Maintain Customer Item Data') . '</a><br />';
-}
-if ($Its_A_Labour_Item == True) {
-	echo '<a href="' . $RootPath . '/StockCostUpdate.php?StockID=' . urlencode($StockID) . '">' . _('Maintain Standard Cost') . '</a><br />';
-}
-if (!$Its_A_Kitset) {
-	echo '<a href="' . $RootPath . '/Prices.php?Item=' . urlencode($StockID) . '">' . _('Maintain Pricing') . '</a><br />';
-	if (isset($_SESSION['CustomerID'])
-		AND $_SESSION['CustomerID'] != ''
-		AND mb_strlen($_SESSION['CustomerID']) > 0) {
-		echo '<a href="' . $RootPath . '/Prices_Customer.php?Item=' . urlencode($StockID) . '">' . _('Special Prices for customer') . ' - ' . $_SESSION['CustomerID'] . '</a><br />';
+			echo '<td class="select"><a href="' . $RootPath . '/PO_Header.php?NewOrder=Yes&amp;SelectedSupplier=' .
+				$SuppRow['supplierid'] . '&amp;StockID=' . urlencode($StockID) . '&amp;Quantity='.$SuppRow['minorderqty'].'&amp;LeadTime='.$SuppRow['leadtime'] . '">' . _('Order') . ' </a></td>';
+			echo '</tr>';
+		}
+		echo '</table>';
+		DB_data_seek($result, 0);
 	}
-	echo '<a href="' . $RootPath . '/DiscountCategories.php?StockID=' . urlencode($StockID) . '">' . _('Maintain Discount Category') . '</a><br />';
-    echo '<a href="' . $RootPath . '/StockClone.php?OldStockID=' . urlencode($StockID) . '">' . _('Clone This Item') . '</a><br />';
-	echo '<a href="' . $RootPath . '/RelatedItemsUpdate.php?Item=' . urlencode($StockID) . '">' . _('Maintain Related Items') . '</a><br />';
-	echo '<a href="' . $RootPath . '/PriceMatrix.php?StockID=' . urlencode($StockID) . '">' . _('Maintain Price Matrix') . '</a><br />';
-}
-echo '</td></tr></table>';
+	echo '</td>
+		</tr>
+		</table>',// End first item details table
+		'<div class="page_help_text">', _('Select a menu option to operate using this inventory item.'), '</div>',// Page help text.
+		'<br />',
+		$TableHead,
+			'<tr>
+				<td valign="top" class="select">';
+	/*Stock Inquiry Options */
+	echo '<a href="' . $RootPath . '/StockMovements.php?StockID=' . urlencode($StockID) . '">' . _('Show Stock Movements') . '</a><br />';
+	if ($Its_A_Kitset_Assembly_Or_Dummy == False) {
+		echo '<a href="' . $RootPath . '/StockStatus.php?StockID=' . urlencode($StockID) . '">' . _('Show Stock Status') . '</a><br />';
+		echo '<a href="' . $RootPath . '/StockUsage.php?StockID=' . urlencode($StockID) . '">' . _('Show Stock Usage') . '</a><br />';
+	}
+	echo '<a href="' . $RootPath . '/SelectSalesOrder.php?SelectedStockItem=' . urlencode($StockID) . '">' . _('Search Outstanding Sales Orders') . '</a><br />';
+	echo '<a href="' . $RootPath . '/SelectCompletedOrder.php?SelectedStockItem=' . urlencode($StockID) . '">' . _('Search Completed Sales Orders') . '</a><br />';
+	if ($Its_A_Kitset_Assembly_Or_Dummy == False) {
+		echo '<a href="' . $RootPath . '/PO_SelectOSPurchOrder.php?SelectedStockItem=' . urlencode($StockID) . '">' . _('Search Outstanding Purchase Orders') . '</a><br />';
+		echo '<a href="' . $RootPath . '/PO_SelectPurchOrder.php?SelectedStockItem=' . urlencode($StockID) . '">' . _('Search All Purchase Orders') . '</a><br />';
+
+		$SupportedImgExt = array('png','jpg','jpeg');
+		$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/' . $StockID . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
+		echo '<a href="' . $RootPath . '/' . $imagefile . '" target="_blank">' . _('Show Part Picture (if available)') . '</a><br />';
+	}
+	if ($Its_A_Dummy == False) {
+		echo '<a href="' . $RootPath . '/BOMInquiry.php?StockID=' . urlencode($StockID) . '">' . _('View Costed Bill Of Material') . '</a><br />';
+		echo '<a href="' . $RootPath . '/WhereUsedInquiry.php?StockID=' . urlencode($StockID) . '">' . _('Where This Item Is Used') . '</a><br />';
+	}
+	if ($Its_A_Labour_Item == True) {
+		echo '<a href="' . $RootPath . '/WhereUsedInquiry.php?StockID=' . urlencode($StockID) . '">' . _('Where This Labour Item Is Used') . '</a><br />';
+	}
+	wikiLink('Product', $StockID);
+	echo '</td><td valign="top" class="select">';
+	/* Stock Transactions */
+	if ($Its_A_Kitset_Assembly_Or_Dummy == false) {
+		echo '<a href="' . $RootPath . '/StockAdjustments.php?StockID=' . urlencode($StockID) . '">' . _('Quantity Adjustments') . '</a><br />';
+		echo '<a href="' . $RootPath . '/StockTransfers.php?StockID=' . urlencode($StockID) . '&amp;NewTransfer=true">' . _('Location Transfers') . '</a><br />';
+
+		//show the item image if it has been uploaded
+		if ( extension_loaded ('gd') && function_exists ('gd_info') && file_exists ($imagefile) ) {
+			if ($_SESSION['ShowStockidOnImages'] == '0'){
+				$StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
+									'&amp;StockID='.urlencode($StockID).
+									'&amp;text='.
+									'&amp;width=200'.
+									'&amp;height=200'.
+									'" alt="" />';
+			} else {
+				$StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
+									'&amp;StockID='.urlencode($StockID).
+									'&amp;text='. $StockID .
+									'&amp;width=200'.
+									'&amp;height=200'.
+									'" alt="" />';
+			}
+		} else if (file_exists ($imagefile)) {
+			$StockImgLink = '<img src="' . $imagefile . '" height="200" width="200" />';
+		} else {
+			$StockImgLink = _('No Image');
+		}
+
+		echo '<div class="centre">' . $StockImgLink . '</div>';
+
+		if (($myrow['mbflag'] == 'B')
+			AND (in_array($SuppliersSecurity, $_SESSION['AllowedPageSecurityTokens']))
+			AND $myrow['discontinued']==0){
+			echo '<br />';
+			$SuppResult = DB_query("SELECT suppliers.suppname,
+											suppliers.supplierid,
+											purchdata.preferred,
+											purchdata.minorderqty,
+											purchdata.leadtime
+										FROM purchdata INNER JOIN suppliers
+										ON purchdata.supplierno=suppliers.supplierid
+										WHERE purchdata.stockid='" . $StockID . "'
+										ORDER BY purchdata.effectivefrom DESC");
+			$LastSupplierShown = "";
+			while ($SuppRow = DB_fetch_array($SuppResult)) {
+				if ($LastSupplierShown != $SuppRow['supplierid']){
+					if (($myrow['eoq'] < $SuppRow['minorderqty'])) {
+						$EOQ = $SuppRow['minorderqty'];
+					} else {
+						$EOQ = $myrow['eoq'];
+					}
+					echo '<a href="' . $RootPath . '/PO_Header.php?NewOrder=Yes' . '&amp;SelectedSupplier=' . $SuppRow['supplierid'] . '&amp;StockID=' . urlencode($StockID) . '&amp;Quantity='.$EOQ.'&amp;LeadTime='.$SuppRow['leadtime'].'">' .  _('Purchase this Item from') . ' ' . $SuppRow['suppname'] . '</a>
+					<br />';
+					$LastSupplierShown = $SuppRow['supplierid'];
+				}
+				/**/
+			} /* end of while */
+		} /* end of $myrow['mbflag'] == 'B' */
+	} /* end of ($Its_A_Kitset_Assembly_Or_Dummy == False) */
+	echo '</td><td valign="top" class="select">';
+	/* Stock Maintenance Options */
+	echo '<a href="' . $RootPath . '/Stocks.php?">' . _('Insert New Item') . '</a><br />';
+	echo '<a href="' . $RootPath . '/Stocks.php?StockID=' . urlencode($StockID) . '">' . _('Modify Item Details') . '</a><br />';
+	if ($Its_A_Kitset_Assembly_Or_Dummy == False) {
+		echo '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . urlencode($StockID) . '">' . _('Maintain Reorder Levels') . '</a><br />';
+		echo '<a href="' . $RootPath . '/StockCostUpdate.php?StockID=' . urlencode($StockID) . '">' . _('Maintain Standard Cost') . '</a><br />';
+		echo '<a href="' . $RootPath . '/PurchData.php?StockID=' . urlencode($StockID) . '">' . _('Maintain Purchasing Data') . '</a><br />';
+		echo '<a href="' . $RootPath . '/CustItem.php?StockID=' . urlencode($StockID) . '">' . _('Maintain Customer Item Data') . '</a><br />';
+	}
+	if ($Its_A_Labour_Item == True) {
+		echo '<a href="' . $RootPath . '/StockCostUpdate.php?StockID=' . urlencode($StockID) . '">' . _('Maintain Standard Cost') . '</a><br />';
+	}
+	if (!$Its_A_Kitset) {
+		echo '<a href="' . $RootPath . '/Prices.php?Item=' . urlencode($StockID) . '">' . _('Maintain Pricing') . '</a><br />';
+		if (isset($_SESSION['CustomerID'])
+			AND $_SESSION['CustomerID'] != ''
+			AND mb_strlen($_SESSION['CustomerID']) > 0) {
+			echo '<a href="' . $RootPath . '/Prices_Customer.php?Item=' . urlencode($StockID) . '">' . _('Special Prices for customer') . ' - ' . $_SESSION['CustomerID'] . '</a><br />';
+		}
+		echo '<a href="' . $RootPath . '/DiscountCategories.php?StockID=' . urlencode($StockID) . '">' . _('Maintain Discount Category') . '</a><br />';
+	    echo '<a href="' . $RootPath . '/StockClone.php?OldStockID=' . urlencode($StockID) . '">' . _('Clone This Item') . '</a><br />';
+		echo '<a href="' . $RootPath . '/RelatedItemsUpdate.php?Item=' . urlencode($StockID) . '">' . _('Maintain Related Items') . '</a><br />';
+		echo '<a href="' . $RootPath . '/PriceMatrix.php?StockID=' . urlencode($StockID) . '">' . _('Maintain Price Matrix') . '</a><br />';
+	}
+	echo '</td></tr><tbody></table>';
 } else {
 	// options (links) to pages. This requires stock id also to be passed.
-	echo '<table width="90%" cellpadding="4">';
-	echo '<tr>
-		<th style="width:33%">' . _('Item Inquiries') . '</th>
-		<th style="width:33%">' . _('Item Transactions') . '</th>
-		<th style="width:33%">' . _('Item Maintenance') . '</th>
-	</tr>';
-	echo '<tr><td class="select">';
-	/*Stock Inquiry Options */
-	echo '</td><td class="select">';
-	/* Stock Transactions */
-	echo '</td><td class="select">';
-	/*Stock Maintenance Options */
-	echo '<a href="' . $RootPath . '/Stocks.php?">' . _('Insert New Item') . '</a><br />';
-	echo '</td></tr></table>';
-} // end displaying item options if there is one and only one record
+
+	// Inventory Item is not selected yet
+	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+		'/images/inventory.png" title="', // Icon image.
+		_('Inventory Items'), '" /> ', // Icon title.
+		_('Inventory Items'), '</p>',// Page title.
+		'<br />',
+		$TableHead,
+		'<tr>',
+			'<td class="select"></td>',// Item inquiries options.
+			'<td class="select"></td>',// Item transactions options.
+			'<td class="select"><a href="', $RootPath, '/Stocks.php?">', _('Insert New Item'), '</a></td>',// Stock Maintenance Options.
+		'</tr><tbody></table>';
+}// end displaying item options if there is one and only one record
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -572,7 +587,7 @@ echo '<div class="centre"><input type="submit" name="Search" value="' . _('Searc
 echo '</div>
       </form>';
 // query for list of record(s)
-if(isset($_POST['Go']) OR isset($_POST['Next']) OR isset($_POST['Previous'])) {
+if (isset($_POST['Go']) OR isset($_POST['Next']) OR isset($_POST['Previous'])) {
 	$_POST['Search']='Search';
 }
 if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR isset($_POST['Previous'])) {
@@ -862,14 +877,14 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 
 			$SupportedImgExt = array('png','jpg','jpeg');
 			$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
-			if(extension_loaded('gd') && function_exists('gd_info') && file_exists ($imagefile) ) {
+			if (extension_loaded('gd') && function_exists('gd_info') && file_exists ($imagefile) ) {
 				$StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
 				'&amp;StockID='.urlencode($myrow['stockid']).
 				'&amp;text='. //$myrow['stockid'] .
 				'&amp;width=100'.
 				'&amp;height=100'.
 				'" alt="" />';
-			} else if(file_exists ($imagefile)) {
+			} else if (file_exists ($imagefile)) {
 				$StockImgLink = '<img src="' . $imagefile . '" height="100" width="100" />';
 			} else {
 				$StockImgLink = '<p>'._('No Image').'</p>';
