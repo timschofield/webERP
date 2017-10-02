@@ -192,8 +192,8 @@ if($_SESSION['CustomerID'] != '' AND !isset($_POST['Search']) AND !isset($_POST[
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 		'/images/customer.png" title="',// Icon image.
 		_('Customer'), '" /> ',// Icon title.
-		_('Customer'), ': ', $_SESSION['CustomerID'], ' - ', $CustomerName, ' - ', $PhoneNo, /*_(' has been selected'), */'</p>',// Page title.
-		'<div class="page_help_text">', _('Select a menu option to operate using this customer'), '.</div>',// Page help text.
+		_('Customer'), ': ', $_SESSION['CustomerID'], ' - ', $CustomerName, ' - ', $PhoneNo, '</p>',// Page title.
+		'<div class="page_help_text">', _('Select a menu option to operate using this customer.'), '</div>',// Page help text.
 		'<br />',
 		$TableHead,
 			'<tr>

@@ -176,7 +176,7 @@ if (isset($_SESSION['SupplierID'])) {
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 		'/images/supplier.png" title="', // Icon image.
 		_('Supplier'), '" /> ', // Icon title.
-		_('Supplier'), ': ', $_SESSION['SupplierID'], ' - ', $SupplierName, /*' ', _('has been selected'), */'</p>',// Page title.
+		_('Supplier'), ': ', $_SESSION['SupplierID'], ' - ', $SupplierName, '</p>',// Page title.
 		'<div class="page_help_text">', _('Select a menu option to operate using this supplier.'), '</div>',// Page help text.
 		'<br />',
 		$TableHead,
