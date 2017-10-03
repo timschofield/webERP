@@ -8,7 +8,7 @@ if (isset($_GET['SelectedSupplier'])) {
 	$_POST['supplierid']=$_GET['SelectedSupplier'];
 }
 
-if (isset($_POST['PrintPDF'])) {
+if (isset($_POST['PrintPDF']) OR isset($_POST['View'])) {
 
 	include('includes/PDFStarter.php');
 
@@ -155,7 +155,7 @@ if (isset($_POST['PrintPDF'])) {
 		include('includes/footer.php');
 		exit;
 	}
-
+	if (!isset($_POST['View'])) {
 	PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
 	            $Page_Width,$Right_Margin,$SupplierName,$Categoryname,$CurrCode,$CurrentOrAllPrices);
 
@@ -201,6 +201,46 @@ if (isset($_POST['PrintPDF'])) {
 
 
 	$pdf->OutputD( $_SESSION['DatabaseName'] . '_SupplierPriceList_' . Date('Y-m-d') . '.pdf');
+	} else {
+		$Title = _('View supplier price');
+		include('includes/header.inc');
+		echo '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUTOES,'UTF-8').'">'._('return').'</a>';
+		echo '<p class="page_title_text">'. _('Supplier Price List for').' : '.$CurrentOrAllPrices . '<br/>'
+			._('Supplier').'   : '.$SupplierName.' <br/>'._('Category').' : '.$Categoryname.
+			'</p>';
+
+		echo '<table class="selection">
+			<tr><th class="ascending">' . _('Code') . '</th>
+				<th>' . _('Description') . '</th>
+				<th>' . _('Conv Factor') . '</th>
+				<th>' . _('Price') . '</th>
+				<th class="ascending">' . _('Date From') . '</th>
+				<th>' . _('Supp Code') . '</th>
+			</tr>';
+		$k = 0; 
+		while ($myrow = DB_fetch_array($result,$db)){
+			echo '<tr';
+			if ($k==0) {
+				echo ' class="OddTableRows">';
+				$k =1;
+			} else {
+				echo ' class="EvenTableRows">';
+				$k = 0;
+			}
+			echo '<td class="ascending">' . $myrow['stockid'] . '</td>
+				<td>' . $myrow['description'] . '</td>
+				<td>' . $myrow['conversionfactor'] . '</td>
+				<td>' . $myrow['price'] . '</td>
+				<td class="ascending">' . ConvertSQLDate($myrow['dateprice']) . '</td>
+				<td>' . $myrow['suppliers_partno'] . '</td>
+				</tr>';
+
+		}
+		echo '</table>';
+		include('includes/footer.inc');
+
+
+	}
 
 
 } else { /*The option to print PDF was not hit so display form */
