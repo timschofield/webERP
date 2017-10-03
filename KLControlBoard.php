@@ -429,6 +429,8 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		GoodsJustTransferred("SERSU", "KANTO", 2, 50, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		GoodsJustTransferred("SERSW", "KANTO", 2, 50, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		GoodsJustTransferred("SERDE", "KANTO", 2, 50, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		GoodsJustTransferred("SERVI", "KANTO", 2, 50, $RootPath, $db);
@@ -573,6 +575,8 @@ if ($ProcessSection01){
 		ValueStockLocation("SERDE",    0,  150, 0, 0, $db);
 		$NumberOfTestExecuted++;
 		ValueStockLocation("SERSU",    0,  300, 0, 0, $db);
+		$NumberOfTestExecuted++;
+		ValueStockLocation("SERSW",    0,  300, 0, 0, $db);
 		$NumberOfTestExecuted++;
 		OvestockAtSamples(1, $RootPath, $db);
 		$NumberOfTestExecuted++;
