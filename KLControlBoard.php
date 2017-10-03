@@ -52,10 +52,8 @@ if (!isset($_GET['Section'])){
 
 if ($KL_SystemAdmin){
 	// WARNINGS STILL NOT DOCUMENTED ON WIKI
-		prnMsg("START OF PENDING FOR KL INTRANET ",'success');
-		NotDiscountedItemsWithDiscount($RootPath, $db);
-		prnMsg("END OF PENDING FOR KL INTRANET ",'success');
-
+//	prnMsg("START OF PENDING FOR KL INTRANET ",'success');
+//	prnMsg("END OF PENDING FOR KL INTRANET ",'success');
 //	phpinfo();
 //	$NumberOfTestExecuted++;
 }
