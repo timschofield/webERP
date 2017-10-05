@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-10-02 10:21-0600\n"
-"PO-Revision-Date: 2017-10-02 10:27-0600\n"
+"PO-Revision-Date: 2017-10-05 12:52-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -15685,11 +15685,11 @@ msgstr ""
 #: GLProfit_Loss.php:51 GLTagProfit_Loss.php:41 Z_RePostGLFromPeriod.php:18
 #: Z_UpdateChartDetailsBFwd.php:24
 msgid "Select Period From"
-msgstr "Seleccionar Período Desde"
+msgstr "Seleccionar el período desde"
 
 #: GLProfit_Loss.php:91 GLTagProfit_Loss.php:81 Z_UpdateChartDetailsBFwd.php:42
 msgid "Select Period To"
-msgstr "Seleccionar Período Hasta"
+msgstr "Seleccionar el período hasta"
 
 #: GLProfit_Loss.php:199
 msgid "Print Profit and Loss Error"
@@ -15845,11 +15845,11 @@ msgstr "Imprimir balance de comprobación"
 
 #: GLTrialBalance.php:55 SalesGraph.php:42
 msgid "Select Period From:"
-msgstr "Seleccionar Período desde:"
+msgstr "Seleccionar el período desde:"
 
 #: GLTrialBalance.php:91 SalesGraph.php:78
 msgid "Select Period To:"
-msgstr "Hata Período:"
+msgstr "Seleccionar el período hasta:"
 
 #: GLTrialBalance.php:110
 msgid "Show Trial Balance"

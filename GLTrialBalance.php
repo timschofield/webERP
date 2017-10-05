@@ -52,7 +52,7 @@ if ((! isset($_POST['FromPeriod'])
 	/*Show a form to allow input of criteria for TB to show */
 	echo '<table class="selection">
 			<tr>
-				<td>' . _('Select Period From:') . '</td>
+				<td>' . _('Select Period From') . ':</td>
 				<td><select name="FromPeriod">';
 	$NextYear = date('Y-m-d',strtotime('+1 Year'));
 	$sql = "SELECT periodno,
@@ -88,7 +88,7 @@ if ((! isset($_POST['FromPeriod'])
 	}
 
 	echo '<tr>
-			<td>' . _('Select Period To:')  . '</td>
+			<td>' . _('Select Period To')  . ':</td>
 			<td><select name="ToPeriod">';
 
 	$RetResult = DB_data_seek($Periods,0);

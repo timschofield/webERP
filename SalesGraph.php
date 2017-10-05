@@ -39,7 +39,7 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<table class="selection">
-			<tr><td>' . _('Select Period From:') . '</td>
+			<tr><td>' . _('Select Period From') . ':</td>
 			<td><select name="FromPeriod">';
 
 	if (Date('m') > $_SESSION['YearEnd']){
@@ -75,7 +75,7 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	}
 
 	echo '<tr>
-			<td>' . _('Select Period To:')  . '</td>
+			<td>' . _('Select Period To')  . ':</td>
 			<td><select name="ToPeriod">';
 
 	$RetResult = DB_data_seek($Periods,0);
