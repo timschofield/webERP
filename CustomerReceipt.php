@@ -106,6 +106,9 @@ if (!isset($_GET['Delete']) AND isset($_SESSION['ReceiptBatch' . $identifier])){
 			prnMsg(_('The functional exchange rate entered should be numeric'),'warn');
 		}
 	}
+	if (!isset($_POST['ReceiptType'])) {
+		$_POST['ReceiptType'] = '';
+	}
 	$_SESSION['ReceiptBatch' . $identifier]->ReceiptType = $_POST['ReceiptType'];
 
 	if (!isset($_POST['Currency'])){
@@ -183,7 +186,9 @@ if (isset($_POST['Process'])){ //user hit submit a new entry to the receipt batc
 		$_POST['CustomerName']='';
 	}
 	if ($_POST['Discount']==0 AND $ReceiptTypes[$_SESSION['ReceiptBatch' . $identifier]->ReceiptType]['percentdiscount']>0){
-		$_POST['Discount'] = $_POST['Amount']*$ReceiptTypes[$_SESSION['ReceiptBatch' . $identifier]->ReceiptType]['percentdiscount'];
+		if (isset($_GET['Type']) AND $_GET['Type'] == 'Customer') {
+			$_POST['Discount'] = $_POST['Amount']*$ReceiptTypes[$_SESSION['ReceiptBatch' . $identifier]->ReceiptType]['percentdiscount'];
+		}
 	}
 
 	if ($_POST['GLCode'] == '' AND $_GET['Type']=='GL') {
@@ -265,10 +270,11 @@ if (isset($_POST['CommitBatch'])){
 		$BankAccounts[$i]= $Act[0];
 		$i++;
 	}
-
-	$_SESSION['ReceiptBatch' . $identifier]->BatchNo = GetNextTransNo(12,$db);
+	
 	/*Start a transaction to do the whole lot inside */
 	$result = DB_Txn_Begin();
+	$_SESSION['ReceiptBatch' . $identifier]->BatchNo = GetNextTransNo(12,$db);
+
 
 	$BatchReceiptsTotal = 0; //in functional currency
 	$BatchDiscount = 0; //in functional currency
@@ -290,7 +296,7 @@ if (isset($_POST['CommitBatch'])){
 				<th>', _('Customer Name'), '</th>
 				<th class="text">', _('GL Code'), '</th>
 				<th class="number">', _('Amount of Receipt'), '</th>';
-	if($ReceiptItem->GLCode =='') {
+	if(isset($ReceiptItem) AND $ReceiptItem->GLCode =='') {
 		echo '<th class="noprint">&nbsp;</th>';
 	}
 	echo '</tr>
@@ -587,9 +593,9 @@ if (isset($_POST['CommitBatch'])){
 			$ErrMsg = _('Cannot insert a GL transaction for the payment discount debit');
 			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		} //end if there is some discount
-		EnsureGLEntriesBalance(12,$_SESSION['ReceiptBatch' . $identifier]->BatchNo,$db);
-	} //end if there is GL work to be done - ie config is to link to GL
 
+	} //end if there is GL work to be done - ie config is to link to GL
+	EnsureGLEntriesBalance(12,$_SESSION['ReceiptBatch' . $identifier]->BatchNo,$db);
 
 	$ErrMsg = _('Cannot commit the changes');
 	$DbgMsg = _('The SQL that failed was');
@@ -976,8 +982,14 @@ echo '<tr>
 if (isset($_SESSION['ReceiptBatch' . $identifier])){
 	/* Now show the entries made so far */
 	if (!$BankAccountEmpty) {
+		if (!isset($ReceiptTypes[$_SESSION['ReceiptBatch' . $identifier]->ReceiptType]['paymentname'])) {
+			$PaymentTypeString = '';
+		} else {
+			$PaymentTypeString = $ReceiptTypes[$_SESSION['ReceiptBatch' . $identifier]->ReceiptType]['paymentname'];
+
+		}
 		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Banked') . '" alt="" />
-             ' . ' ' . $ReceiptTypes[$_SESSION['ReceiptBatch' . $identifier]->ReceiptType]['paymentname'] . ' - ' . _('Banked into the') . " " .
+             ' . ' ' . $PaymentTypeString . ' - ' . _('Banked into the') . " " .
 				$_SESSION['ReceiptBatch' . $identifier]->BankAccountName . ' ' . _('on') . ' ' . $_SESSION['ReceiptBatch' . $identifier]->DateBanked . '</p>';
 	}
 

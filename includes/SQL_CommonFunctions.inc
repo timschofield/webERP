@@ -346,6 +346,7 @@ function EnsureGLEntriesBalance ($TransType, $TransTypeNo, $db) {
 	if (abs($Difference)!=0){
 		if (abs($Difference)>0.1){
 			prnMsg(_('The general ledger entries created do not balance. See your system administrator'),'error');
+			DB_Txn_Rollback();
 		} else {
 			$result = DB_query("SELECT counterindex,
 										MAX(amount)
