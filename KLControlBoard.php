@@ -580,6 +580,8 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		SamplesNotLongerNeeded($RootPath, $db);
 		$NumberOfTestExecuted++;
+		GoodsToBeProduced("COMPON", "ONLYDISCOUNT", $RootPath, $db);
+		$NumberOfTestExecuted++;
 		GoodsToBeProduced("COMPON", "DISCOUNT", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		GoodsToBeProduced("COMPON", "ALL", $RootPath, $db);

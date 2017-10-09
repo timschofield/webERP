@@ -3628,6 +3628,7 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 		$ShipmentAWB = 'AWB';
 		$TitleWarning = 'Purchase Orders arriving in the next ' . $maxdays . ' days';
 		$SQLFilterKLStatus = " AND purchorders.klstatus >= '2000' 
+			AND purchorders.klstatus < '6000'
 			AND purchorders." . $DateField ." <  '". $StartDate ."'";
 	}else{
 		return;
@@ -5863,10 +5864,22 @@ function ObsoleteComponentsInActiveBOM($RootPath, $db){
 function GoodsToBeProduced($CategoryComponent, $ParentCategory, $RootPath, $db){
 /* EXPLAIN SQL 2014-05-30 */
 	/* Check if there is any	component at kantor ready to be transformed into sellable goods */
-	if ($ParentCategory == "DISCOUNT"){
+	if ($ParentCategory == "ONLYDISCOUNT"){
 		$WhereParentCategory = " AND stP.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . " ";
+		$OnlyDiscountExists = " AND NOT EXISTS(
+											SELECT bom.component
+											FROM bom,stockmaster AS stP, stockmaster AS stC
+											WHERE bom.parent = stP.stockid
+												AND bom.component = stC.stockid 
+												AND s.stockid = bom.component
+												AND stP.categoryid NOT IN " . LIST_STOCK_CATEGORIES_OUTLET . "
+												AND stP.discontinued = 0)";
+	}elseif ($ParentCategory == "DISCOUNT"){
+		$WhereParentCategory = " AND stP.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . " ";
+		$OnlyDiscountExists = " ";
 	}else{
 		$WhereParentCategory = " ";
+		$OnlyDiscountExists = " ";
 	}
 	
 	$SQL = "SELECT s.stockid,
@@ -5890,14 +5903,17 @@ function GoodsToBeProduced($CategoryComponent, $ParentCategory, $RootPath, $db){
 					AND bom.component = stC.stockid 
 					AND s.stockid = bom.component " .
 					$WhereParentCategory . "
-					AND stP.discontinued = 0)";
+					AND stP.discontinued = 0)" .
+			$OnlyDiscountExists;
 
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		if ($ParentCategory == "DISCOUNT"){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Components '). $CategoryComponent . _(' ready to WO in kantor for items Discount') . '</strong></p>';
+		if ($ParentCategory == "ONLYDISCOUNT"){
+			echo '<p class="page_title_text" align="center"><strong>' . _('Components '). $CategoryComponent . _(' ready to WO in kantor used ONLY for Discount items') . '</strong></p>';
+		}elseif ($ParentCategory == "DISCOUNT"){
+			echo '<p class="page_title_text" align="center"><strong>' . _('Components '). $CategoryComponent . _(' ready to WO in kantor used for Discount items') . '</strong></p>';
 		}else{
-			echo '<p class="page_title_text" align="center"><strong>' . _('Components '). $CategoryComponent . _(' ready to WO in kantor for all items') . '</strong></p>';
+			echo '<p class="page_title_text" align="center"><strong>' . _('Components '). $CategoryComponent . _(' ready to WO in kantor for any items') . '</strong></p>';
 		}
 		echo '<div>';
 		echo '<table class="selection">';
