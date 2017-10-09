@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-10-02 10:21-0600\n"
-"PO-Revision-Date: 2017-10-05 12:52-0600\n"
+"PO-Revision-Date: 2017-10-09 17:00-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -1139,7 +1139,7 @@ msgstr "Valor de inventario"
 
 #: AgedControlledInventory.php:48
 msgid "Days Old"
-msgstr ""
+msgstr "Días de antigüedad"
 
 #: AgedControlledInventory.php:91 ConfirmDispatch_Invoice.php:310
 #: ConfirmDispatch_Invoice.php:314 CounterReturns.php:676
@@ -15872,7 +15872,7 @@ msgstr "El SQL que falló fue:"
 
 #: GLTrialBalance.php:443 includes/PDFTrialBalancePageHeader.inc:23
 msgid "Trial Balance for the month of "
-msgstr "Balance de Comprobación para el mes de "
+msgstr "Balance de comprobación para el mes de "
 
 #: GLTrialBalance.php:444
 msgid " AND for the "
@@ -22305,7 +22305,7 @@ msgstr ""
 
 #: PDFQALabel.php:20
 msgid "QA Label"
-msgstr ""
+msgstr "Etiqueta de aseguramiento de la calidad"
 
 #: PDFQuotation.php:12 PDFQuotationPortrait.php:12
 msgid "Select Quotation To Print"
@@ -48074,7 +48074,7 @@ msgstr "Ganancias y Pérdidas para el "
 #: includes/PDFTagProfitAndLossPageHeader.inc:21
 #: includes/PDFTrialBalancePageHeader.inc:23
 msgid " months to "
-msgstr " meses hasta el mes "
+msgstr " meses hasta "
 
 #: includes/PDFProfitAndLossPageHeader.inc:21
 #: includes/PDFTagProfitAndLossPageHeader.inc:21
@@ -51824,7 +51824,7 @@ msgstr ""
 
 #: install/index.php:1029
 msgid "Chart of Accounts"
-msgstr ""
+msgstr "Catálogo contable"
 
 #: install/index.php:1047
 msgid ""
@@ -52090,7 +52090,7 @@ msgstr "Color"
 
 #: reportwriter/languages/en_US/reports.php:62
 msgid "Custom Color (Range 0-255)"
-msgstr ""
+msgstr "Color personalizado (Rango 0-255)"
 
 #: reportwriter/languages/en_US/reports.php:63
 msgid "Custom"
@@ -52500,7 +52500,7 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:210
 msgid "Line Width (pts)"
-msgstr ""
+msgstr "Ancho de línea (pts)"
 
 #: reportwriter/languages/en_US/reports.php:211
 msgid ""
