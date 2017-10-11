@@ -28,10 +28,10 @@ if (isset($Errors)) {
 
 $Errors = array();
 
-echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
-	'/images/currency.png" title="' .// Icon image.
-	_('Currencies') . '" /> ' .// Icon title.
-	_('Currencies Maintenance') . '</p>';// Page title.
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+	'/images/currency.png" title="', // Icon image.
+	_('Currencies'), '" /> ', // Icon title.
+	_('Currencies Maintenance'), '</p>';// Page title.
 
 if (isset($_POST['submit'])) {
 
@@ -196,7 +196,7 @@ if (isset($_POST['submit'])) {
 											'" . FormatDateForSQL($PostingDate) . "',
 											'" . $PeriodNo . "',
 											'" . $_SESSION['CompanyRecord']['exchangediffact'] . "',
-											'" . $myrowBankAccount['bankaccountname'] . ' ' . _('currency rate adjustment to') . ' ' . locale_number_format($NewRate,8) . ' ' . $SelectedCurrency . '/' . $_SESSION['CompanyRecord']['currencydefault']. "',
+											'" . $myrowBankAccount['bankaccountname'] . ' ' . _('currency rate adjustment to') . ' ' . locale_number_format($NewRate, 'Variable') . ' ' . $SelectedCurrency . '/' . $_SESSION['CompanyRecord']['currencydefault']. "',
 											'" . (-$DifferenceToAdjust) . "')";
 
 				$ErrMsg = _('Cannot insert a GL entry for the exchange difference because');
@@ -214,11 +214,11 @@ if (isset($_POST['submit'])) {
 											'" . FormatDateForSQL($PostingDate) . "',
 											'" . $PeriodNo . "',
 											'" . $myrowBankAccount['accountcode'] . "',
-											'" . $myrowBankAccount['bankaccountname'] . ' ' . _('currency rate adjustment to') . ' ' . locale_number_format($NewRate,8) . ' ' . $SelectedCurrency . '/' . $_SESSION['CompanyRecord']['currencydefault']. "',
+											'" . $myrowBankAccount['bankaccountname'] . ' ' . _('currency rate adjustment to') . ' ' . locale_number_format($NewRate, 'Variable') . ' ' . $SelectedCurrency . '/' . $_SESSION['CompanyRecord']['currencydefault']. "',
 											'" . ($DifferenceToAdjust) . "')";
 
 				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-				prnMsg(_('Bank Account') . ' ' . $myrowBankAccount['bankaccountname'] . ' ' . _('Currency Rate difference of') . ' ' . locale_number_format($DifferenceToAdjust,$_SESSION['CompanyRecord']['decimalplaces']) . ' ' . _('has been posted'),'success');
+				prnMsg(_('Bank Account') . ' ' . $myrowBankAccount['bankaccountname'] . ' ' . _('Currency Rate difference of') . ' ' . locale_number_format($DifferenceToAdjust, $_SESSION['CompanyRecord']['decimalplaces']) . ' ' . _('has been posted'),'success');
 			}
 		}
 	}
@@ -364,11 +364,11 @@ or deletion of the records*/
 					$CurrencyName[$myrow['currabrev']],
 					$myrow['country'],
 					$myrow['hundredsname'],
-					locale_number_format($myrow['decimalplaces'],0),
+					locale_number_format($myrow['decimalplaces'], 0),
 					$ShowInWebText,
-					locale_number_format($myrow['rate'],8),
-					locale_number_format(1/$myrow['rate'],2),
-					locale_number_format(GetCurrencyRate($myrow['currabrev'],$CurrencyRatesArray),8),
+					locale_number_format($myrow['rate'], 'Variable'),
+					locale_number_format(1/$myrow['rate'], 2),
+					locale_number_format(GetCurrencyRate($myrow['currabrev'],$CurrencyRatesArray), 8),
 					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 					$myrow['currabrev'],
 					_('Edit'),
@@ -442,8 +442,8 @@ if (!isset($_GET['delete'])) {
 		$_POST['Abbreviation'] = $myrow['currabrev'];
 		$_POST['Country']  = $myrow['country'];
 		$_POST['HundredsName']  = $myrow['hundredsname'];
-		$_POST['ExchangeRate']  = locale_number_format($myrow['rate'],8);
-		$_POST['DecimalPlaces']  = locale_number_format($myrow['decimalplaces'],0);
+		$_POST['ExchangeRate']  = locale_number_format($myrow['rate'], 'Variable');
+		$_POST['DecimalPlaces']  = locale_number_format($myrow['decimalplaces'], 0);
 		$_POST['webcart']  = $myrow['webcart'];
 
 		echo '<input type="hidden" name="SelectedCurrency" value="' . $SelectedCurrency . '" />';
@@ -502,10 +502,10 @@ if (!isset($_GET['delete'])) {
 		$_POST['ExchangeRate'] = 1;
 	}
 	if ($_POST['Abbreviation'] != $FunctionalCurrency) {
-		echo '<td><input type="text" class="number" name="ExchangeRate" size="10" required="required" minlength="1" maxlength="10" value="' . $_POST['ExchangeRate'] . '" /></td>';
+		echo '<td><input class="number" maxlength="16" minlength="1" name="ExchangeRate" required="required" size="16" type="text" value="', $_POST['ExchangeRate'], '" /></td>';
 	} else {
-		echo '<td>' . $_POST['ExchangeRate'] . '</td>';
-		echo '<input type="hidden" class="number" name="ExchangeRate" value="' . $_POST['ExchangeRate'] . '" />';
+		echo '<td>', $_POST['ExchangeRate'], '</td>',
+			 '<input class="number" name="ExchangeRate" type="hidden" value="', $_POST['ExchangeRate'], '" />';
 	}
 	echo '</tr>';
 	if (!isset($_POST['webcart'])) {
