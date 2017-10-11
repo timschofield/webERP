@@ -43,8 +43,12 @@
 			'<link href="', $RootPath, '/css/', $_SESSION['Theme'], '/default.css" rel="stylesheet" type="text/css" media="screen"/>',
 			'<meta name="viewport" content="width=device-width, initial-scale=1">',//To tell the small device that the website is a responsive site (keep relationship between CSS pixels and device pixels).
 			'<script type="text/javascript" src="', $RootPath, '/javascripts/MiscFunctions.js"></script>',
-			'<title>', $Title, '</title>',
-		'</head>',
+			'<title>', $Title, '</title>';
+	// If it is set the $_SESSION['ShowPageHelp'] parameter AND it is FALSE, hides the page help text:
+	if(isset($_SESSION['ShowPageHelp']) AND !$_SESSION['ShowPageHelp']) {
+		echo '<style>.page_help_text, DIV.page_help_text {display:none;}</style>';
+	}
+	echo '</head>',
 
 		'<body>',
 			'<div id="CanvasDiv">',

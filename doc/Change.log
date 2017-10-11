@@ -1,5 +1,7 @@
 webERP Change Log
 
+17/10/11 RChacon: If it is set the $_SESSION['ShowPageHelp'] parameter AND it is FALSE, hides the page help text (simplifies code using css
+).
 17/10/11 RChacon: Set decimals variable for exchange rate in Currencies.php.
 17/10/11 RChacon: Improve currency showing and set decimals variable for exchange rate in Payments.php.
 17/10/11 Exson: Fix the indian_number_format bug in MiscFunctions.php.

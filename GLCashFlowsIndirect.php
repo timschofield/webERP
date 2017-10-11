@@ -470,7 +470,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 					INNER JOIN chartdetails ON chartmaster.accountcode=chartdetails.accountcode
 					INNER JOIN accountgroups ON chartmaster.group_=accountgroups.groupname
 				WHERE accountgroups.pandl=1";
-		$Result = DB_query($Sql); 
+		$Result = DB_query($Sql);
 		$MyRow1 = DB_fetch_array($Result);
 		echo	colDebitCredit($MyRow1['ActualProfit']),
 				colDebitCredit($MyRow1['LastProfit']),
@@ -753,14 +753,14 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 		'/images/reports.png" title="', // Icon image.
 		$Title, '" /> ', // Icon title.
 		$Title, '</p>';// Page title.
-	if(!isset($_SESSION['ShowPageHelp']) OR $_SESSION['ShowPageHelp']) {// If it is not set the $_SESSION['ShowPageHelp'] parameter OR it is TRUE, shows the page help text:
-		echo '<div class="page_help_text">',
-			_('The statement of cash flows, also known as the successor of the old source and application of funds statement, reports how changes in balance sheet accounts and income affect cash and cash equivalents, and breaks the analysis down to operating, investing and financing activities.'), '<br />',
-			_('The purpose of the statement of cash flows is to show where the company got their money from and how it was spent during the period being reported for a user selectable range of periods.'), '<br />',
-			_('The statement of cash flows represents a period of time. This contrasts with the statement of financial position, which represents a single moment in time.'), '<br />',
-			_('webERP is an "accrual" based system (not a "cash based" system). Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.'),
-			'</div>';
-	}
+
+	echo '<div class="page_help_text">',
+		_('The statement of cash flows, also known as the successor of the old source and application of funds statement, reports how changes in balance sheet accounts and income affect cash and cash equivalents, and breaks the analysis down to operating, investing and financing activities.'), '<br />',
+		_('The purpose of the statement of cash flows is to show where the company got their money from and how it was spent during the period being reported for a user selectable range of periods.'), '<br />',
+		_('The statement of cash flows represents a period of time. This contrasts with the statement of financial position, which represents a single moment in time.'), '<br />',
+		_('webERP is an "accrual" based system (not a "cash based" system). Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.'),
+		'</div>';
+
 	// Shows a form to allow input of criteria for the report to generate:
 	echo '<br />',
 		'<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',

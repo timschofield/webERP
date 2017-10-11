@@ -145,14 +145,12 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/maintenance.png" title="', // Icon image.
 	$Title, '" /> ', // Icon title.
 	$Title, '</p>';// Page title.
-	// BEGIN menu.
-if(!isset($page_help) OR $page_help) {
-	// If it is not set the $page_help parameter OR it is TRUE, shows the page help text:
-	echo '<div class="page_help_text">',
-		_('The statement of cash flows, using direct and indirect methods, is partitioned into three sections: operating activities, investing activities and financing activities.'), '<br />',
-		_('You must classify all accounts in any of those three sections of the cash flow statement, or as no effect on cash flow, or as cash or cash equivalent.'),
-		 '</div>';
-}
+
+echo '<div class="page_help_text">',
+	_('The statement of cash flows, using direct and indirect methods, is partitioned into three sections: operating activities, investing activities and financing activities.'), '<br />',
+	_('You must classify all accounts in any of those three sections of the cash flow statement, or as no effect on cash flow, or as cash or cash equivalent.'),
+	 '</div>';
+
 // Show a form to allow input of the action for the script to do:
 echo '<br />',
 	'<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
