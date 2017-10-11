@@ -1,5 +1,6 @@
 webERP Change Log
 
+17/10/11 Exson: Fix the indian_number_format bug in MiscFunctions.php.
 17/10/09 Exson: Fixed the non-balance bug in CustomerReceipt.php. And fixed the non rollback problem when there is a non-balance existed. Fixed error noises. 
 17/10/03 Exson: Add html view to SuppPriceList.php.
 01/10/26 RChacon: Standardise and add icons for usability.
