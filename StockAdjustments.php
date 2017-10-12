@@ -467,13 +467,15 @@ echo '</select></td></tr>';
 if (isset($_SESSION['Adjustment' . $identifier]) AND !isset($_SESSION['Adjustment' . $identifier]->Narrative)) {
 	$_SESSION['Adjustment' . $identifier]->Narrative = '';
 	$Narrative ='';
+} elseif(isset($_SESSION['Adjustment'.$identifier]->Narrative)) {
+	$Narrative = $_SESSION['Adjustment'.$identifier]->Narrative;
 } else {
 	$Narrative ='';
 }
 
 echo '<tr>
 		<td>' .  _('Comments On Why').':</td>
-		<td><input type="text" name="Narrative" size="32" maxlength="30" value="' . $Narrative . '" /></td>
+		<td><input type="text" name="Narrative" size="32" onchange="submit()" maxlength="100" value="' . $Narrative . '" /></td>
 	</tr>';
 
 echo '<tr><td>' . _('Adjustment Quantity').':</td>';
