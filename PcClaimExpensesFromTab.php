@@ -257,7 +257,7 @@ if (!isset($SelectedTabs)) {
 				<th>', _('Date of Expense'), '</th>
 				<th>', _('Expense Code'), '</th>
 				<th>', _('Gross Amount'), '</th>
-				<th>', _('Total Tax'), '</th>
+				<th>', _('Tax'), '</th>
 				<th>', _('Tax Group'), '</th>
 				<th>', _('Tag'), '</th>
 				<th>', _('Notes'), '</th>
