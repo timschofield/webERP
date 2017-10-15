@@ -262,7 +262,7 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 				$AuthorisedDate = ConvertSQLDate($MyRow['authorized']);
 			}
 			
-			if (($MyRow['authorized'] == '0000-00-00') and ($Description['0'] == 'ASSIGNCASH')) {
+			if (($MyRow['authorized'] == '0000-00-00') and ($ExpenseCodeDes == 'ASSIGNCASH')) {
 				// only cash assignations NOT authorized can be modified or deleted
 				echo '<td>', ConvertSQLDate($MyRow['date']), '</td>
 					<td>', $ExpenseCodeDes, '</td>
@@ -271,7 +271,7 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 					<td>', $MyRow['receipt'], '</td>
 					<td>', $AuthorisedDate, '</td>
 					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?SelectedIndex=', $MyRow['counterindex'], '&amp;SelectedTabs=', $SelectedTabs, '&amp;Days=', $Days, '&amp;edit=yes">', _('Edit'), '</a></td>
-					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?SelectedIndex=', $MyRow['counterindex'], '&amp;SelectedTabs=', $SelectedTabs, '&amp;Days=', $Days, '&amp;delete=yes" onclick="return confirm(\'', _('Are you sure you wish to delete this code and the expense it may have set up?'), '\', \'Confirm Delete\', this);">', _('Delete'), '</a></td>
+					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?SelectedIndex=', $MyRow['counterindex'], '&amp;SelectedTabs=', $SelectedTabs, '&amp;Days=', $Days, '&amp;delete=yes" onclick=\'return confirm("' . _('Are you sure you wish to delete this assigned cash?') . '");\'>' . _('Delete') . '</a></td>
 				</tr>';
 			} else {
 				echo '<td>', ConvertSQLDate($MyRow['date']), '</td>
