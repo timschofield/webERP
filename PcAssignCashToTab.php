@@ -1,4 +1,6 @@
 <?php
+/* $Id$*/
+
 include('includes/session.php');
 $Title = _('Assignment of Cash to Petty Cash Tab');
 /* webERP manual links before header.php */

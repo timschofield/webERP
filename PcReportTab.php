@@ -1,6 +1,5 @@
 <?php
-/* $Id$ */
-/*  */
+/* $Id$*/
 
 include ('includes/session.php');
 $Title = _('Petty Cash Management Report');

@@ -1,4 +1,6 @@
 <?php
+/* $Id$*/
+
 include('includes/session.php');
 $Title = _('Authorisation of Petty Cash Expenses');
 /* webERP manual links before header.php */

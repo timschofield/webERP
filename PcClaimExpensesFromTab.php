@@ -1,4 +1,6 @@
 <?php
+/* $Id$*/
+
 include('includes/session.php');
 $Title = _('Claim Petty Cash Expenses From Tab');
 /* webERP manual links before header.php */
