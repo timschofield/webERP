@@ -1,4 +1,5 @@
 webERP Change Log
+15/10/17 Andy Couling: New Expenses/Update Expense table header in PcClaimExpensesFromTab.php
 15/10/17 Andy Couling: Fixed the edit/delete cash assignment functionality in PcAssignCashToTab.php
 15/10/17 Andy Couling: Table header labels corrected in PcClaimExpensesFromTab.php and PcAuthorizeExpenses.php.
 15/10/17 Andy Couling: Fixed expense deletion dialogue box in PcClaimExpensesFromTab.php.

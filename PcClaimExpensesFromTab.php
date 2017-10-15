@@ -330,7 +330,7 @@ if (!isset($SelectedTabs)) {
 							<td>', $MyRow['receipt'], '</td>
 							<td>', $AuthorisedDate, '</td>
 							<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedIndex=', $MyRow['counterindex'], '&SelectedTabs=' . $SelectedTabs . '&amp;Days=' . $Days . '&amp;edit=yes">' . _('Edit') . '</a></td>
-							<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedIndex=', $MyRow['counterindex'], '&amp;SelectedTabs=' . $SelectedTabs . '&amp;Days=' . $Days . '&amp;Delete=yes" onclick=\'return confirm("' . _('Are you sure you wish to delete this code and the expenses it may have set up?') . '");\'>' . _('Delete') . '</a></td>
+							<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedIndex=', $MyRow['counterindex'], '&amp;SelectedTabs=' . $SelectedTabs . '&amp;Days=' . $Days . '&amp;Delete=yes" onclick=\'return confirm("' . _('Are you sure you wish to delete this expense?') . '");\'>' . _('Delete') . '</a></td>
 						</tr>';
 				} else {
 					echo '<td>', ConvertSQLDate($MyRow['date']), '</td>
@@ -392,16 +392,25 @@ if (!isset($SelectedTabs)) {
 		if (!isset($_POST['Date'])) {
 			$_POST['Date'] = Date($_SESSION['DefaultDateFormat']);
 		}
-		echo '<table class="selection">
-				<tr>
-					<td>', _('Date of Expense'), ':</td>
-					<td>
-						<input type="text" class="date" alt="', $_SESSION['DefaultDateFormat'], '" name="Date" size="10" required="required" maxlength="10" value="', $_POST['Date'], '" />
-					</td>
-				</tr>
-				<tr>
-					<td>', _('Code of Expense'), ':</td>
-					<td>
+		echo '<table class="selection">';
+		if (isset($_GET['SelectedIndex'])) {
+			echo '<tr>
+					<th colspan="2"><h3>', _('Update Expense'), '</h3></th>
+				</tr>';
+		} else {
+			echo '<tr>
+					<th colspan="2"><h3>', _('New Expense'), '</h3></th>
+				</tr>';
+		}
+		echo '<tr>
+				<td>', _('Date of Expense'), ':</td>
+				<td>
+					<input type="text" class="date" alt="', $_SESSION['DefaultDateFormat'], '" name="Date" size="10" required="required" maxlength="10" value="', $_POST['Date'], '" />
+				</td>
+			</tr>
+			<tr>
+				<td>', _('Code of Expense'), ':</td>
+				<td>
 						<select required="required" name="SelectedExpense">';
 		DB_free_result($Result);
 		$SQL = "SELECT pcexpenses.codeexpense,
