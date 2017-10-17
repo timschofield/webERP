@@ -1,5 +1,6 @@
 webERP Change Log
 
+17/10/17 Andy Couling: Removed reference to css class 'toplink' in CustomerInquiry.php and CustomerAccount.php.
 17/10/17 Phil: Fix InventoryPlanning.php and includes/PDFInventoryPlanPageHeader.inc to display categories selected and fix month headings displayed
 15/10/17 Andy Couling: New Expenses/Update Expense table header in PcClaimExpensesFromTab.php
 15/10/17 Andy Couling: Fixed the edit/delete cash assignment functionality in PcAssignCashToTab.php
@@ -7,8 +8,7 @@ webERP Change Log
 15/10/17 Andy Couling: Fixed expense deletion dialogue box in PcClaimExpensesFromTab.php.
 15/10/17 Andy Couling: Missing $Id comments added to Petty Cash scripts.
 17/10/12 Exson: Fixed the bug that Narrative information will loss when add or remove controlled items lot no in StockAdjustments.php.
-17/10/11 RChacon: If it is set the $_SESSION['ShowPageHelp'] parameter AND it is FALSE, hides the page help text (simplifies code using css
-).
+17/10/11 RChacon: If it is set the $_SESSION['ShowPageHelp'] parameter AND it is FALSE, hides the page help text (simplifies code using css).
 17/10/11 RChacon: Set decimals variable for exchange rate in Currencies.php.
 17/10/11 RChacon: Improve currency showing and set decimals variable for exchange rate in Payments.php.
 17/10/11 Exson: Fix the indian_number_format bug in MiscFunctions.php.

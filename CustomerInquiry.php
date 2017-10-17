@@ -154,7 +154,7 @@ if ($NIL_BALANCE == True) {
 	$CustomerRecord['overdue2'] = 0;
 }
 
-echo '<div class="toplink">
+echo '<div class="noprint center">
 		<a href="', $RootPath, '/SelectCustomer.php">', _('Back to Customer Screen'), '</a>
 	</div>';
 

@@ -212,7 +212,7 @@ $CustomerResult = DB_query($SQL, $ErrMsg);
 
 $CustomerRecord = DB_fetch_array($CustomerResult);
 
-echo '<div class="noprint toplink">
+echo '<div class="noprint centre">
 		<a href="', $RootPath, '/SelectCustomer.php">', _('Back to Customer Screen'), '</a>
 	</div>';
 
