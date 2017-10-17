@@ -1,4 +1,6 @@
 webERP Change Log
+
+17/10/17 Phil: Fix InventoryPlanning.php and includes/PDFInventoryPlanPageHeader.inc to display categories selected and fix month headings displayed
 15/10/17 Andy Couling: New Expenses/Update Expense table header in PcClaimExpensesFromTab.php
 15/10/17 Andy Couling: Fixed the edit/delete cash assignment functionality in PcAssignCashToTab.php
 15/10/17 Andy Couling: Table header labels corrected in PcClaimExpensesFromTab.php and PcAuthorizeExpenses.php.
@@ -10,13 +12,13 @@ webERP Change Log
 17/10/11 RChacon: Set decimals variable for exchange rate in Currencies.php.
 17/10/11 RChacon: Improve currency showing and set decimals variable for exchange rate in Payments.php.
 17/10/11 Exson: Fix the indian_number_format bug in MiscFunctions.php.
-17/10/09 Exson: Fixed the non-balance bug in CustomerReceipt.php. And fixed the non rollback problem when there is a non-balance existed. Fixed error noises. 
+17/10/09 Exson: Fixed the non-balance bug in CustomerReceipt.php. And fixed the non rollback problem when there is a non-balance existed. Fixed error noises.
 17/10/03 Exson: Add html view to SuppPriceList.php.
 01/10/26 RChacon: Standardise and add icons for usability.
 27/09/26 RChacon: Increases accuracy in coordinates.
 17/09/26 Exson: Fixed the wrong price retrieved bug in PO_Header.php.
 17/09/26 Exson: Fixed the vendor price bug to ensure only the effective price showed by suppliers in SelectProduct.php.
-17/09/20 Exson: Fixed the bug to make GRN reverse workable. 
+17/09/20 Exson: Fixed the bug to make GRN reverse workable.
 17/09/19 Exson: Fixed customer information missing in CustomerReceipt.php. Reported by Steven Fu.
 18/9/2017 Tim (committed by Andy): Geocode bug fixes. http://www.weberp.org/forum/showthread.php?tid=4380
 17/9/17 VortecCPI: SelectProduct.php made image dispay code match that used in WorkOrderEntry.php

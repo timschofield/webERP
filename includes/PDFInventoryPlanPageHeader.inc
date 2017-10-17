@@ -16,19 +16,18 @@ $YPos -=$line_height;
 
 $FontSize=10;
 
-if (isset($_POST['SupplierID']) and $_POST['SupplierID']=="0"){ //no supplier selected its a stock category report
-	$ReportTitle = _('Inventory Planning for Categories Between') . ' ' . $_POST['FromCriteria'] . ' ' . _('and') . ' ' . $_POST['ToCriteria'];
-} else { //supplier selected its just planning for products from the supplier
-	$ReportTitle = _('Inventory Planning for Products Category') . ' ' . $_POST['FromCriteria'];
+$ReportTitle = _('Inventory Planning for Product Categories');
+foreach ($_POST['Categories'] as $Category) {
+	$ReportTitle .= ' ' . $Category;
 }
 
 if ($_POST['Location']=='All'){
 
-	$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos,450,$FontSize, $ReportTitle . ' ' . _('for all stock locations'));
+	$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos,600,$FontSize, $ReportTitle . ' ' . _('for all stock locations'));
 
 } else {
 
-	$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos,450,$FontSize, $ReportTitle . ' ' . _('for stock at') . ' ' . $_POST['Location']);
+	$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos,600,$FontSize, $ReportTitle . ' ' . _('for stock at') . ' ' . $_POST['Location']);
 
 }
 
