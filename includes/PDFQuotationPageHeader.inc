@@ -52,7 +52,7 @@ $pdf->addText($XPos, $YPos-$FontSize*6, $FontSize, $_SESSION['CompanyRecord']['e
 $XPos = 46;
 $YPos = 566;
 $FontSize=14;
-$myrow = array_map(html_entity_decode, $myrow);
+$myrow = array_map('html_entity_decode', $myrow);
 $line_height = 15;
 $pdf->addText($XPos, $YPos, $FontSize, _('Delivery To').':' );
 $pdf->addText($XPos, $YPos-$line_height*1, $FontSize, $myrow['deliverto']);
