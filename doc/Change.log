@@ -1,5 +1,6 @@
 webERP Change Log
 
+17/10/21 Exson: Change header to meta data to avoid header do not work in some server environment in SelectCompletedOrder.php and SelectGLAccount.php
 17/10/17 Andy Couling: Removed reference to css class 'toplink' in CustomerInquiry.php and CustomerAccount.php.
 17/10/17 Phil: Fix InventoryPlanning.php and includes/PDFInventoryPlanPageHeader.inc to display categories selected and fix month headings displayed
 15/10/17 Andy Couling: New Expenses/Update Expense table header in PcClaimExpensesFromTab.php
