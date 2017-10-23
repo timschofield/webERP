@@ -176,6 +176,12 @@ if (isset($_GET['ModifyOrderNumber'])
 			include('includes/footer.php');
 			exit;
 		}
+		if ($CustomerLogin == 1 AND $_SESSION['CustomerID'] != $myrow['debtorno']) {
+			echo '<p class="bad">' . _('This transaction is addressed to another customer and cannot be displayed for privacy reasons') . '. ' . _('Please select only transactions relevant to your company').'</p>';
+			include('includes/footer.inc');
+			exit;
+
+		}
 		$_SESSION['Items'.$identifier]->OrderNo = $_GET['ModifyOrderNumber'];
 		$_SESSION['Items'.$identifier]->DebtorNo = $myrow['debtorno'];
 		$_SESSION['Items'.$identifier]->CreditAvailable = GetCreditAvailable($_SESSION['Items'.$identifier]->DebtorNo,$db);
@@ -1418,6 +1424,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			} else {
 				echo '<td class="number">' . locale_number_format($OrderLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
 				echo '<input name="Price_' . $OrderLine->LineNumber . '" type="hidden" value="' . locale_number_format($OrderLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '" /></td>';
+				echo '<input class="number" maxlength="4" name="Discount_' . $OrderLine->LineNumber . '" required="required" size="5" title="' . _('Enter the discount percentage to apply to the price for this item') . '" type="hidden" value="' . locale_number_format(($OrderLine->DiscountPercent * 100),2) . '" />';
+				echo '<input class="number" maxlength="40" name="GPPercent_' . $OrderLine->LineNumber . '" required="required" size="4" value="' . locale_number_format($OrderLine->GPPercent,2) . '" title="' . _('Enter a gross profit percentage to use as the basis to calculate the price to charge the customer for this line item') . '" type="hidden" />';
 			}
 
 			if ($_SESSION['Items'.$identifier]->Some_Already_Delivered($OrderLine->LineNumber)){

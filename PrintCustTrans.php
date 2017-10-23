@@ -224,6 +224,14 @@ if (isset($PrintPDF) AND isset($FromTransNo) AND isset($InvOrCredit)){
 			exit;
 		}
 		if (DB_num_rows($result)==1) {
+			if (count($_SESSION['AllowedPageSecurityTokens'])==2
+                    			 AND in_array(1, $_SESSION['AllowedPageSecurityTokens'])
+                     			 AND $myrow['debtorno'] != $_SESSION['CustomerID']){
+
+					echo '<p class="bad">' . _('This transaction is addressed to another customer and cannot be displayed for privacy reasons') . '. ' . _('Please select only transactions relevant to your company').'</p>';
+					exit;
+				}
+
 			$myrow = DB_fetch_array($result);
 			$ExchRate = $myrow['rate'];
 
@@ -704,9 +712,9 @@ if (isset($PrintPDF) AND isset($FromTransNo) AND isset($InvOrCredit)){
 
 				$myrow = DB_fetch_array($result);
 				/* Then there's an invoice (or credit note) to print. So print out the invoice header and GST Number from the company record */
-				if (count($_SESSION['AllowedPageSecurityTokens'])==1
-                     AND in_array(1, $_SESSION['AllowedPageSecurityTokens'])
-                     AND $myrow['debtorno'] != $_SESSION['CustomerID']){
+				if (count($_SESSION['AllowedPageSecurityTokens'])==2
+                     			AND in_array(1, $_SESSION['AllowedPageSecurityTokens'])
+                     			AND $myrow['debtorno'] != $_SESSION['CustomerID']){
 
 					echo '<p class="bad">' . _('This transaction is addressed to another customer and cannot be displayed for privacy reasons') . '. ' . _('Please select only transactions relevant to your company');
 					exit;
