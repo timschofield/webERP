@@ -224,6 +224,12 @@ if (isset($PrintPDF) AND isset($FromTransNo) AND isset($InvOrCredit)){
 			exit;
 		}
 		if (DB_num_rows($result)==1) {
+			$myrow = DB_fetch_array($result);
+			if ($_SESSION['SalesmanLogin']!='' AND $_SESSION['SalesmanLogin']!=$myrow['salesman']){
+					prnMsg(_('Your account is set up to see only a specific salespersons orders. You are not authorised to view transaction for this order'),'error');
+					include('includes/footer.inc');
+					exit;
+			}
 			if (count($_SESSION['AllowedPageSecurityTokens'])==2
                     			 AND in_array(1, $_SESSION['AllowedPageSecurityTokens'])
                      			 AND $myrow['debtorno'] != $_SESSION['CustomerID']){
@@ -232,7 +238,6 @@ if (isset($PrintPDF) AND isset($FromTransNo) AND isset($InvOrCredit)){
 					exit;
 				}
 
-			$myrow = DB_fetch_array($result);
 			$ExchRate = $myrow['rate'];
 
 			//Change the language to the customer's language
@@ -711,6 +716,11 @@ if (isset($PrintPDF) AND isset($FromTransNo) AND isset($InvOrCredit)){
 			} elseif (DB_num_rows($result)==1) {
 
 				$myrow = DB_fetch_array($result);
+				if ($_SESSION['SalesmanLogin']!='' AND $_SESSION['SalesmanLogin']!=$myrow['salesman']){
+					prnMsg(_('Your account is set up to see only a specific salespersons orders. You are not authorised to see transaction for this order'),'error');
+					include('includes/footer.inc');
+					exit;
+				}
 				/* Then there's an invoice (or credit note) to print. So print out the invoice header and GST Number from the company record */
 				if (count($_SESSION['AllowedPageSecurityTokens'])==2
                      			AND in_array(1, $_SESSION['AllowedPageSecurityTokens'])
