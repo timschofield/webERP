@@ -5627,7 +5627,6 @@ function WrongItemsOnPurchaseOrders($RootPath, $db){
 				AND purchorders.status NOT IN ('Cancelled', 'Rejected')
 				AND (  stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING ."
 					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET ."
-					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET ."
 					OR stockmaster.discontinued = 1)
 			ORDER BY purchorderdetails.orderno,
 					purchorderdetails.itemcode";
