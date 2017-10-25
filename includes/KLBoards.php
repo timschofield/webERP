@@ -3186,12 +3186,15 @@ function ValueStockLocation($location, $minpcs, $maxpcs, $minvalue, $maxvalue, $
 	$maxvalue = $optimalvalue * (1 + $varvalue);
 */	
 	$SQL = "SELECT 
+				locations.locationname,
 				SUM(locstock.quantity) AS qtyonhand,
 				SUM(locstock.quantity *(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost)) AS valuetotal
 			FROM stockmaster,
 				stockcategory,
+				locations,
 				locstock
 			WHERE stockmaster.stockid=locstock.stockid
+				AND locations.loccode = '" . $location . "'
 				AND stockmaster.categoryid=stockcategory.categoryid
 				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SHOP_DISPLAYS . "
 				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SHOP_CONSUMABLES . "
@@ -3202,21 +3205,13 @@ function ValueStockLocation($location, $minpcs, $maxpcs, $minvalue, $maxvalue, $
 	$myrow = DB_fetch_array($result);
 	
 	if ($myrow['qtyonhand'] < $minpcs){
-		$text = "Number of items at " . $location . " is BELOW the minimum. Stock on hand = " . locale_number_format($myrow['qtyonhand'],0) . " pcs. Minimum = " . locale_number_format($minpcs,0) . " pcs";
+		$text = "Number of items at " . $myrow['locationname'] . " is BELOW the minimum. QOH = " . locale_number_format($myrow['qtyonhand'],0) . " pcs. Minimum = " . locale_number_format($minpcs,0) . " pcs";
 		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
 	}
-/*	if ($myrow['valuetotal'] < $minvalue){
-		prnMsg("Cost value of items at " . $location . " is BELOW the minimum. Value on hand = " . locale_number_format($myrow['valuetotal'],0) . " IDR. Minimum = " . locale_number_format($minvalue,0) . " IDR","warn");
-	}
-*/
 	if ($myrow['qtyonhand'] > $maxpcs){
-		$text = "Number of items at " . $location . " is OVER the maximum. Stock on hand = " . locale_number_format($myrow['qtyonhand'],0) . " pcs. Maximum = " . locale_number_format($maxpcs,0) . " pcs";
+		$text = "Number of items at " . $myrow['locationname'] . " is OVER the maximum. QOH = " . locale_number_format($myrow['qtyonhand'],0) . " pcs. Maximum = " . locale_number_format($maxpcs,0) . " pcs";
 		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
 	}
-/*	if ($myrow['valuetotal'] > $maxvalue){
-		prnMsg("Cost value of items at " . $location . " is OVER the maximum. Value on hand = " . locale_number_format($myrow['valuetotal'],0) . " IDR. Maximum = " . locale_number_format($maxvalue,0) . " IDR","warn");
-	}
-*/
 }
 
 function ItemsOnSpecialRequest($RootPath, $db){
@@ -5563,7 +5558,6 @@ function WrongItemsOnWorkOrders($RootPath, $db){
 				AND woitems.wo = workorders.wo
 				AND workorders.closed = 0
 				AND (  stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING ."
-					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET ."
 					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET ."
 					OR stockmaster.discontinued = 1)
 			ORDER BY woitems.wo,
