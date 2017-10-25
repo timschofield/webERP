@@ -127,6 +127,7 @@ if (isset($PrintPDF) AND isset($FromTransNo) AND isset($InvOrCredit)){
 							custbranch.brpostaddr5,
 							custbranch.brpostaddr6,
 							salesman.salesmanname,
+							salesman.salesmancode,
 							debtortrans.debtorno,
 							debtortrans.branchcode,
 							currencies.decimalplaces
@@ -188,6 +189,7 @@ if (isset($PrintPDF) AND isset($FromTransNo) AND isset($InvOrCredit)){
 							custbranch.brpostaddr5,
 							custbranch.brpostaddr6,
 							salesman.salesmanname,
+							salesman.salesmancode,
 							debtortrans.debtorno,
 							debtortrans.branchcode,
 							paymentterms.terms,
@@ -639,6 +641,7 @@ if (isset($PrintPDF) AND isset($FromTransNo) AND isset($InvOrCredit)){
 								custbranch.braddress5,
 								custbranch.braddress6,
 								salesman.salesmanname,
+								salesman.salesmancode,
 								debtortrans.debtorno,
 								currencies.decimalplaces
 							FROM debtortrans INNER JOIN debtorsmaster
@@ -687,6 +690,7 @@ if (isset($PrintPDF) AND isset($FromTransNo) AND isset($InvOrCredit)){
 								custbranch.braddress5,
 								custbranch.braddress6,
 								salesman.salesmanname,
+								salesman.salesmancode,
 								debtortrans.debtorno,
 								currencies.decimalplaces
 							FROM debtortrans INNER JOIN debtorsmaster
