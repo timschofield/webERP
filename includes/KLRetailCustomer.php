@@ -131,13 +131,13 @@ function RetailCustomerAnalysisByCountry($NumDays, $TypeOfShops, $ShopArea, $Min
 		$WhereListShops = " ";
 		$NameOfShops = "ALL";
 	}elseif ($TypeOfShops == 'KAPAL-LAUT'){
-		$WhereListShops = " AND salesorders.fromstkloc IN " . LIST_SHOPS_KAPAL_LAUT . " ";
+		$WhereListShops = " AND locations.typeloc = 'SHOPKL' ";
 		$NameOfShops = "KAPAL-LAUT";
 	}elseif ($TypeOfShops == 'BLINK'){
-		$WhereListShops = " AND salesorders.fromstkloc IN " . LIST_SHOPS_BLINK . " ";
+		$WhereListShops = " AND locations.typeloc = 'SHOPBL' ";
 		$NameOfShops = "BLINK";
 	}elseif ($TypeOfShops == 'OUTLET'){
-		$WhereListShops = " AND salesorders.fromstkloc IN " . LIST_SHOPS_OUTLET . " ";
+		$WhereListShops = " AND locations.typeloc = 'SHOPOU' ";
 		$NameOfShops = "OUTLET";
 	}
 
@@ -272,20 +272,21 @@ function EmailHarvested($NumDays, $TypeOfShops, $db){
 		$WhereListShops = " ";
 		$NameOfShops = "ALL";
 	}elseif ($TypeOfShops == 'KAPAL-LAUT'){
-		$WhereListShops = " AND salesorders.fromstkloc IN " . LIST_SHOPS_KAPAL_LAUT . " ";
+		$WhereListShops = " AND locations.typeloc = 'SHOPKL' ";
 		$NameOfShops = "KAPAL-LAUT";
 	}elseif ($TypeOfShops == 'BLINK'){
-		$WhereListShops = " AND salesorders.fromstkloc IN " . LIST_SHOPS_BLINK . " ";
+		$WhereListShops = " AND locations.typeloc = 'SHOPBL' ";
 		$NameOfShops = "BLINK";
 	}elseif ($TypeOfShops == 'OUTLET'){
-		$WhereListShops = " AND salesorders.fromstkloc IN " . LIST_SHOPS_OUTLET . " ";
+		$WhereListShops = " AND locations.typeloc = 'SHOPOU' ";
 		$NameOfShops = "OUTLET";
 	}
 	
 	// Get the total of sales 
 	$SQL = "SELECT COUNT(*)
-			FROM salesorders
-			WHERE salesorders.orddate >= '". $StartDate . "'
+			FROM salesorders, locations
+			WHERE salesorders.fromstkloc = locations.loccode
+				AND salesorders.orddate >= '". $StartDate . "'
 				AND salesorders.orddate <= '". $Yesterday . "'".
 				$WhereListShops;
 	$result = DB_query($SQL);
@@ -294,8 +295,9 @@ function EmailHarvested($NumDays, $TypeOfShops, $db){
 	
 	// Get the result of emails harvested 
 	$SQL = "SELECT COUNT(*)
-			FROM klretailcustomers, salesorders
-			WHERE klretailcustomers.orderno = salesorders.orderno
+			FROM klretailcustomers, salesorders, locations
+			WHERE salesorders.fromstkloc = locations.loccode
+				AND klretailcustomers.orderno = salesorders.orderno
 				AND salesorders.orddate >= '". $StartDate . "'
 				AND salesorders.orddate <= '". $Yesterday . "'
 				AND klretailcustomers.email != ''".
@@ -354,20 +356,21 @@ function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops, $CountriesForRetail
 		$WhereListShops = " ";
 		$NameOfShops = "ALL";
 	}elseif ($TypeOfShops == 'KAPAL-LAUT'){
-		$WhereListShops = " AND salesorders.fromstkloc IN " . LIST_SHOPS_KAPAL_LAUT . " ";
+		$WhereListShops = " AND locations.typeloc = 'SHOPKL' ";
 		$NameOfShops = "KAPAL-LAUT";
 	}elseif ($TypeOfShops == 'BLINK'){
-		$WhereListShops = " AND salesorders.fromstkloc IN " . LIST_SHOPS_BLINK . " ";
+		$WhereListShops = " AND locations.typeloc = 'SHOPBL' ";
 		$NameOfShops = "BLINK";
 	}elseif ($TypeOfShops == 'OUTLET'){
-		$WhereListShops = " AND salesorders.fromstkloc IN " . LIST_SHOPS_OUTLET . " ";
+		$WhereListShops = " AND locations.typeloc = 'SHOPOU' ";
 		$NameOfShops = "OUTLET";
 	}
 	
 	// Get the total of sales 
 	$SQL = "SELECT COUNT(*)
-			FROM salesorders
-			WHERE salesorders.orddate >= '". $StartDate . "'
+			FROM salesorders, locations
+			WHERE salesorders.fromstkloc = locations.loccode
+				AND salesorders.orddate >= '". $StartDate . "'
 				AND salesorders.orddate <= '". $Yesterday . "'".
 				$WhereListShops;
 	$result = DB_query($SQL);
@@ -376,8 +379,9 @@ function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops, $CountriesForRetail
 
 	// Get the total of cases 
 	$SQL = "SELECT COUNT(klretailcustomers.age)
-			FROM klretailcustomers, salesorders
-			WHERE klretailcustomers.orderno = salesorders.orderno
+			FROM klretailcustomers, salesorders, locations
+			WHERE salesorders.fromstkloc = locations.loccode
+				AND klretailcustomers.orderno = salesorders.orderno
 				AND salesorders.orddate >= '". $StartDate . "'
 				AND salesorders.orddate <= '". $Yesterday . "'
 				AND klretailcustomers.age != 0".
@@ -388,8 +392,9 @@ function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops, $CountriesForRetail
 	
 	// Get the cases for AGE_STEP_01
 	$SQL = "SELECT COUNT(klretailcustomers.age)
-			FROM klretailcustomers, salesorders
-			WHERE klretailcustomers.orderno = salesorders.orderno
+			FROM klretailcustomers, salesorders, locations
+			WHERE salesorders.fromstkloc = locations.loccode
+				AND klretailcustomers.orderno = salesorders.orderno
 				AND salesorders.orddate >= '". $StartDate . "'
 				AND salesorders.orddate <= '". $Yesterday . "'
 				AND klretailcustomers.age != 0
@@ -401,8 +406,9 @@ function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops, $CountriesForRetail
 
 	// Get the cases for AGE_STEP_02
 	$SQL = "SELECT COUNT(klretailcustomers.age)
-			FROM klretailcustomers, salesorders
-			WHERE klretailcustomers.orderno = salesorders.orderno
+			FROM klretailcustomers, salesorders, locations
+			WHERE salesorders.fromstkloc = locations.loccode
+				AND klretailcustomers.orderno = salesorders.orderno
 				AND salesorders.orddate >= '". $StartDate . "'
 				AND salesorders.orddate <= '". $Yesterday . "'
 				AND klretailcustomers.age > ". AGE_STEP_01 . "
@@ -414,8 +420,9 @@ function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops, $CountriesForRetail
 
 	// Get the cases for AGE_STEP_03
 	$SQL = "SELECT COUNT(klretailcustomers.age)
-			FROM klretailcustomers, salesorders
-			WHERE klretailcustomers.orderno = salesorders.orderno
+			FROM klretailcustomers, salesorders, locations
+			WHERE salesorders.fromstkloc = locations.loccode
+				AND klretailcustomers.orderno = salesorders.orderno
 				AND salesorders.orddate >= '". $StartDate . "'
 				AND salesorders.orddate <= '". $Yesterday . "'
 				AND klretailcustomers.age > ". AGE_STEP_02 . "
@@ -427,8 +434,9 @@ function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops, $CountriesForRetail
 
 	// Get the cases for AGE_STEP_04
 	$SQL = "SELECT COUNT(klretailcustomers.age)
-			FROM klretailcustomers, salesorders
-			WHERE klretailcustomers.orderno = salesorders.orderno
+			FROM klretailcustomers, salesorders, locations
+			WHERE salesorders.fromstkloc = locations.loccode
+				AND klretailcustomers.orderno = salesorders.orderno
 				AND salesorders.orddate >= '". $StartDate . "'
 				AND salesorders.orddate <= '". $Yesterday . "'
 				AND klretailcustomers.age > ". AGE_STEP_03 . "
@@ -440,8 +448,9 @@ function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops, $CountriesForRetail
 
 	// Get the cases for AGE_STEP_05
 	$SQL = "SELECT COUNT(klretailcustomers.age)
-			FROM klretailcustomers, salesorders
-			WHERE klretailcustomers.orderno = salesorders.orderno
+			FROM klretailcustomers, salesorders, locations
+			WHERE salesorders.fromstkloc = locations.loccode
+				AND klretailcustomers.orderno = salesorders.orderno
 				AND salesorders.orddate >= '". $StartDate . "'
 				AND salesorders.orddate <= '". $Yesterday . "'
 				AND klretailcustomers.age > ". AGE_STEP_04 . "
@@ -453,8 +462,9 @@ function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops, $CountriesForRetail
 	
 	// Get the cases for AGE_STEP_06
 	$SQL = "SELECT COUNT(klretailcustomers.age)
-			FROM klretailcustomers, salesorders
-			WHERE klretailcustomers.orderno = salesorders.orderno
+			FROM klretailcustomers, salesorders, locations
+			WHERE salesorders.fromstkloc = locations.loccode
+				AND klretailcustomers.orderno = salesorders.orderno
 				AND salesorders.orddate >= '". $StartDate . "'
 				AND salesorders.orddate <= '". $Yesterday . "'
 				AND klretailcustomers.age > ". AGE_STEP_05 . "
@@ -466,8 +476,9 @@ function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops, $CountriesForRetail
 	
 	// Get the cases for AGE_STEP_07
 	$SQL = "SELECT COUNT(klretailcustomers.age)
-			FROM klretailcustomers, salesorders
-			WHERE klretailcustomers.orderno = salesorders.orderno
+			FROM klretailcustomers, salesorders, locations
+			WHERE salesorders.fromstkloc = locations.loccode
+				AND klretailcustomers.orderno = salesorders.orderno
 				AND salesorders.orddate >= '". $StartDate . "'
 				AND salesorders.orddate <= '". $Yesterday . "'
 				AND klretailcustomers.age > ". AGE_STEP_06 . "
@@ -479,8 +490,9 @@ function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops, $CountriesForRetail
 
 	// Get the cases for over AGE_STEP_07
 	$SQL = "SELECT COUNT(klretailcustomers.age)
-			FROM klretailcustomers, salesorders
-			WHERE klretailcustomers.orderno = salesorders.orderno
+			FROM klretailcustomers, salesorders, locations
+			WHERE salesorders.fromstkloc = locations.loccode
+				AND klretailcustomers.orderno = salesorders.orderno
 				AND salesorders.orddate >= '". $StartDate . "'
 				AND salesorders.orddate <= '". $Yesterday . "'
 				AND klretailcustomers.age > ". AGE_STEP_07 .

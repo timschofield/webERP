@@ -981,7 +981,6 @@ function MaxRLCorrectionSomeModels($stockid, $loccode, $NewRL){
 		}
 	}
 */
-
 	//
 	// MAX correction for some models, depending on the shops
 	//

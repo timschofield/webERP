@@ -202,18 +202,19 @@ function RegularTransfersToShopNotReceived($PreparationTime, $LimitTime, $RootPa
 	$StartTime = Date('H:i:s');
 
 	if ($StartTime >= $LimitTime){
-		$SQL = "SELECT DISTINCT reference,
-						shipdate,
-						shiploc,
-						recloc
-				FROM loctransfers 
-				WHERE  recqty < shipqty
-					AND shipdate <= '". $StartDate ." " . $PreparationTime . "'
-					AND   (recloc IN " . LIST_SHOPS_KAPAL_LAUT . "
-						OR recloc IN " . LIST_SHOPS_BLINK . "
-						OR recloc IN " . LIST_SHOPS_OUTLET . "
-						OR recloc IN " . LIST_ONLINE_SHOPS . ")
-				ORDER BY reference";
+		$SQL = "SELECT DISTINCT loctransfers.reference,
+						loctransfers.shipdate,
+						loctransfers.shiploc,
+						loctransfers.recloc
+				FROM loctransfers,locations
+				WHERE  loctransfers.recloc = locations.loccode
+					AND loctransfers.recqty < loctransfers.shipqty
+					AND loctransfers.shipdate <= '". $StartDate ." " . $PreparationTime . "'
+					AND   (locations.typeloc = 'SHOPKL'
+						OR locations.typeloc = 'SHOPBL'
+						OR locations.typeloc = 'SHOPOU'
+						OR locations.typeloc = 'ONLINE')
+				ORDER BY loctransfers.reference";
 		$result = DB_query($SQL);
 
 		if (DB_num_rows($result) != 0){
@@ -3266,19 +3267,19 @@ function ItemsInWrongShops($TypeItem, $RootPath, $db){
 
 	if ($TypeItem == "KAPAL-LAUT"){
 		$Message = 'KL items on wrong shops';
-		$Condition = " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . "
-					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . ")
-				AND locstock.loccode IN " . LIST_SHOPS_KAPAL_LAUT . " ";
+		$Condition =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . "
+							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . ")
+						AND locations.typeloc = 'SHOPKL' ";
 	}elseif ($TypeItem == "BLINK"){
 		$Message = 'BLINK items on wrong shops';
-		$Condition = " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . "
-					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . ")
-				AND locstock.loccode IN " . LIST_SHOPS_BLINK . " ";
+		$Condition =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . "
+							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . ")
+						AND locations.typeloc = 'SHOPBL' ";
 	}elseif ($TypeItem == "OUTLET"){
 		$Message = 'DISCOUNT items on wrong shops';
-		$Condition = " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . "
-					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . ")
-				AND locstock.loccode IN " . LIST_SHOPS_OUTLET . " ";
+		$Condition =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . "
+							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . ")
+						AND locations.typeloc = 'SHOPOU' ";
 	}else{
 		//error_
 		return;
@@ -3289,9 +3290,10 @@ function ItemsInWrongShops($TypeItem, $RootPath, $db){
 					locstock.loccode,
 					locstock.quantity,
 					locstock.reorderlevel
-			FROM stockmaster, locstock
-			WHERE stockmaster.stockid = locstock.stockid " .
-				$Condition . "
+			FROM stockmaster, locstock, locations
+			WHERE stockmaster.stockid = locstock.stockid 
+				AND locstock.loccode = locations.loccode
+				" .	$Condition . "
 				AND ( locstock.quantity > 0 OR locstock.reorderlevel > 0 )
 			ORDER BY stockmaster.stockid";
 // EXPLAIN SQL 2014-05-31
@@ -6596,11 +6598,12 @@ function ItemsNoSalesInLocation($location, $maxdays, $QOHAvailable, $RootPath, $
 					stockmaster.units, 
 					locstock.quantity,
 					(SELECT SUM(loc2.quantity)
-							FROM locstock AS loc2
+							FROM locstock AS loc2, locations as locations2
 							WHERE loc2.stockid = stockmaster.stockid
-							AND (loc2.loccode IN " . LIST_SHOPS_KAPAL_LAUT . "
-								OR loc2.loccode IN " . LIST_SHOPS_BLINK . "
-								OR loc2.loccode IN " . LIST_SHOPS_OUTLET . "
+							AND locations2.loccode = loc2.loccode
+							AND (locations2.typeloc = 'SHOPKL'
+								OR locations2.typeloc = 'SHOPBL'
+								OR locations2.typeloc = 'SHOPOU'
 								OR loc2.loccode =  " . CODE_KANTOR . ") ) AS qtyavailable,
 					locstock.reorderlevel,
 					locstock.loccode,
@@ -6613,11 +6616,12 @@ function ItemsNoSalesInLocation($location, $maxdays, $QOHAvailable, $RootPath, $
 					AND (locstock.quantity > 0)
 					AND (locstock.reorderlevel > 0)
 					AND  (SELECT SUM(loc2.quantity)
-							FROM locstock AS loc2
+							FROM locstock AS loc2, locations as locations2
 							WHERE loc2.stockid = stockmaster.stockid
-							AND (loc2.loccode IN " . LIST_SHOPS_KAPAL_LAUT . "
-								OR loc2.loccode IN " . LIST_SHOPS_BLINK . "
-								OR loc2.loccode IN " . LIST_SHOPS_OUTLET . "
+							AND locations2.loccode = loc2.loccode
+							AND (locations2.typeloc = 'SHOPKL'
+								OR locations2.typeloc = 'SHOPBL'
+								OR locations2.typeloc = 'SHOPOU'
 								OR loc2.loccode = " . CODE_KANTOR . ") ) <= ". $QOHAvailable ."
 					AND NOT EXISTS (SELECT * 
 									FROM 	salesorderdetails, salesorders
