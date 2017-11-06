@@ -51,6 +51,7 @@ if (!isset($_GET['Section'])){
 ***************************************************************************************/
 
 if ($KL_SystemAdmin){
+	TransferWithWrongInformation(365, $RootPath, $db);
 	// WARNINGS STILL NOT DOCUMENTED ON WIKI
 //	prnMsg("START OF PENDING FOR KL INTRANET ",'success');
 //	prnMsg("END OF PENDING FOR KL INTRANET ",'success');
@@ -884,7 +885,14 @@ if ($ProcessSection02){
 		OR $KL_SalesDirector){
 		RegularTransfersToShopNotReceived('08:00:00','15:00:00', $RootPath, $db);
 		$NumberOfTestExecuted++;
-		
+	}
+
+	if ($KL_SystemAdmin 
+		OR $KL_ShopSupportLeader){
+		RegularTransfersToShopNotReceived('08:00:00','15:00:00', $RootPath, $db);
+		$NumberOfTestExecuted++;
+		TransferWithWrongInformation(15, $RootPath, $db);
+		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_ShopSupportTeam){ 

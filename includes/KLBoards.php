@@ -1241,6 +1241,72 @@ function RecentlyClosedTransferStatus($maxdays, $RootPath, $db){
 	}
 }
 
+function TransferWithWrongInformation($maxdays, $RootPath, $db){
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays+1));
+	$SQL = "SELECT reference,
+					stockid,
+					recdate,
+					(SELECT locationname
+						FROM locations
+						WHERE locations.loccode = shiploc) AS locfrom,
+					(SELECT locationname
+						FROM locations
+						WHERE locations.loccode = recloc) AS locto,
+					shipqty AS shippedqty,
+					recqty AS receivedqty
+			FROM loctransfers
+			WHERE  shipdate >= '" . $StartDate . "'
+				AND recdate > '2000'
+				AND shipqty != recqty
+			ORDER BY recdate ASC, reference ASC, stockid ASC";
+			
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . _('Transfers With Wrong Information during the last ') . $maxdays  . ' days</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Reception Date') . '</th>
+							<th class="ascending">' . _('Transfer') . '</th>
+							<th class="ascending">' . _('From') . '</th>
+							<th class="ascending">' . _('To') . '</th>
+							<th class="ascending">' . _('Item') . '</th>
+							<th class="ascending">' . _('Shipped Qty') . '</th>
+							<th class="ascending">' . _('Received Qty') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			$CodeLink = '<a href="' . $RootPath . '/StockLocTransferReceive.php?Trf_ID=' . $myrow['reference'] . '">' . $myrow['reference'] . '</a>';
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$i, 
+					ConvertSQLDateTime($myrow['recdate']), 
+					$CodeLink, 
+					$myrow['locfrom'], 
+					$myrow['locto'], 
+					$myrow['stockid'], 
+					locale_number_format($myrow['shippedqty'],0),
+					locale_number_format($myrow['receivedqty'],0)
+					);
+			$i++;
+		}
+		echo '</table>
+				</div>
+				</form>';
+	}
+}
+
 function ListPriorityLocations($db){
 	$SQL="SELECT locationname,
 				priority,
