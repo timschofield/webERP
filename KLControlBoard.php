@@ -51,7 +51,6 @@ if (!isset($_GET['Section'])){
 ***************************************************************************************/
 
 if ($KL_SystemAdmin){
-	TransferWithWrongInformation(365, $RootPath, $db);
 	// WARNINGS STILL NOT DOCUMENTED ON WIKI
 //	prnMsg("START OF PENDING FOR KL INTRANET ",'success');
 //	prnMsg("END OF PENDING FOR KL INTRANET ",'success');
