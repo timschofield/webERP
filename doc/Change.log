@@ -1,5 +1,6 @@
 webERP Change Log
 
+17/11/07 Exson: Remove cost updating for WAC method in BOMs.php.
 17/10/25 Exson: Fixed the salesman authority problem in PrintCustTrans.php.
 17/10/23 Exson: Prevent sales man from viewing other sales' sales orders in PrintCustTrans.php.
 17/10/23 Exson: Prevent customer from modifying or viewing other customer's order in SelectOrderItems.php and PrintCustTrans.php.
