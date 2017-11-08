@@ -753,7 +753,8 @@ function KLPrintReceiptCustomerFooter($identifier, $OrderNo){
 	$TextToPrint .= $CharacterFontA . $Emphasized . $CenteredJustified . $NewLine;
 	$TextToPrint .= "Follow us on" . $NewLine ;
 	$TextToPrint .= "Facebook: KapalLautBali" . $NewLine ;
-	$TextToPrint .= "Twitter: @KapalLautBali" . $NewLine ;
+//	$TextToPrint .= "Twitter: @KapalLautBali" . $NewLine ;
+	$TextToPrint .= "Instagram: @KapalLautBali" . $NewLine ;
 
 	$TextToPrint .= KLPrintReceiptTestWarning("INVOICE");
 

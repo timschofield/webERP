@@ -66,6 +66,8 @@ if ($KL_SystemAdmin
 	OR $KL_ShopSupportTeam 
 	OR $KL_ShopSupportLeader 
 	OR $KL_SalesDirector 
+	OR $KL_ShopManager
+	OR $KL_ShopManagerOnline
 	OR $KL_PettyCash 
 	OR $KL_SPGSeniorOrSupport 
 	OR $KL_SPGJunior){
@@ -297,11 +299,9 @@ if ($ProcessSection01){
 	if ($KL_SystemAdmin 
 		OR $KL_PurchasingTeam
 		OR $KL_AdministrationTeam){
-
 		BalanceAccountControl("111111100",          -1,          1, $periodnow, $db);
 		$NumberOfTestExecuted++;
 	}
-
 	
 	if ($KL_AdministrationTeam){
 		// Bank Mandiri or  BCA has enough funds to be transferred to Danamon
@@ -775,7 +775,6 @@ if ($ProcessSection02){
 
 	if ($KL_OperationalManager
 		OR $KL_ShopSupportLeader){
-		
 	//	WrongGiftItem("ONLINE-VIP-PACK", "Retail", "OVER",  500000, 1, $RootPath, $db);
 	//	WrongGiftItem("ONLINE-VIP-PACK", "Retail", "BELOW", 500000, 1, $RootPath, $db);
 	//	WrongGiftItem("GIFT-ALAR01", "Retail", "OVER",  1000000, 3, $RootPath, $db);
@@ -792,18 +791,20 @@ if ($ProcessSection02){
 
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager
-		OR $KL_OperationalManager){
-		OutstandingOrders("Wholesale", "Order", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		OutstandingOrders("Wholesale", "Quotation", $RootPath, $db);
-		$NumberOfTestExecuted++;
-	}
-
-	if ($KL_ShopSupportLeader
+		OR $KL_OperationalManager
+		OR $KL_ShopSupportLeader
 		OR $KL_ShopSupportTeam){
 		OutstandingOrders("Wholesale", "Order", $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
+
+	if ($KL_SystemAdmin 
+		OR $KL_BusinessDevelopmentManager
+		OR $KL_OperationalManager){
+		OutstandingOrders("Wholesale", "Quotation", $RootPath, $db);
+		$NumberOfTestExecuted++;
+	}
+
 	
 	/*
 	if ($KL_SystemAdmin 

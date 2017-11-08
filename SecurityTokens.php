@@ -159,7 +159,7 @@ if(isset($_POST['Action']) and $_POST['Action']=='edit') {
 		</tfoot><tbody>',
 		'<tr>
 			<td><label for="TokenId">', _('Token ID'), '</label></td>
-			<td><input autofocus="autofocus" class="number" id="TokenId" maxlength="4" name="TokenId" required="required" size="6" type="text" value="';
+			<td><input autofocus="autofocus" class="number" id="TokenId" maxlength="6" name="TokenId" required="required" size="6" type="text" value="';
 }
 echo			$_POST['TokenId'], '" /></td>
 		</tr>
