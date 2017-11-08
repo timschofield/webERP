@@ -888,8 +888,6 @@ if ($ProcessSection02){
 
 	if ($KL_SystemAdmin 
 		OR $KL_ShopSupportLeader){
-		RegularTransfersToShopNotReceived('08:00:00','15:00:00', $RootPath, $db);
-		$NumberOfTestExecuted++;
 		TransferWithWrongInformation(15, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}

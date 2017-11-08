@@ -76,6 +76,18 @@ if ($KL_BusinessDevelopmentManager){
 }	
 													
 if ($KL_SystemAdmin OR $KL_BusinessDevelopmentManager){
+	$TextPricingControlBoard01 = _('KL Pricing Control Board Section 01');
+	$LinkPricingControlBoard01 = "/KLControlBoardPrices.php?Section=01";
+	$TextPricingControlBoard02 = _('KL Pricing Control Board Section 02');
+	$LinkPricingControlBoard02 = "/KLControlBoardPrices.php?Section=02";
+} else {
+	$TextPricingControlBoard01 = _('KL Pricing Control Board');
+	$LinkPricingControlBoard01 = '/KLControlBoardPrices.php';
+	$TextPricingControlBoard02 = '';
+	$LinkPricingControlBoard02 = '';
+}	
+
+if ($KL_SystemAdmin OR $KL_BusinessDevelopmentManager){
 	$TextPerformanceBoard01 = _('KL Performance Board Section 01');
 	$LinkPerformanceBoard01 = "/KLPerformanceBoard.php?Section=01";
 	$TextPerformanceBoard02 = _('KL Performance Board Section 02');
@@ -109,7 +121,8 @@ $MenuItems['orders']['Reports']['Caption'] = array( _('Sales Order Inquiry'),
 													_('Sales With Low Gross Profit Report'),
 													$TextControlBoard01,
 													$TextControlBoard02,
-													_('KL Control Board for Pricing'),
+													$TextPricingControlBoard01,
+													$TextPricingControlBoard02,
 													_('KL SPG Control Board'),
 													_('KL SPG End Of Shift Report'),
 													$TextPerformanceBoard01,
@@ -143,7 +156,8 @@ $MenuItems['orders']['Reports']['URL'] = array( '/SelectCompletedOrder.php',
 												'/PDFLowGP.php',
 												$LinkControlBoard01,
 												$LinkControlBoard02,
-												'/KLControlBoardPrices.php',
+												$LinkPricingControlBoard01,
+												$LinkPricingControlBoard02,
 												'/KLControlBoardSPG.php',
 												'/KLRetailEndOfShift.php',
 												$LinkPerformanceBoard01,
