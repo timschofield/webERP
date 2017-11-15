@@ -753,11 +753,13 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 		POStatusControl("ON PRODUCTION", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		POStatusControl("FINISHED NOT PAID NOT SHIPPED", 0, $RootPath, $db);
+		POStatusControl("STILL NOT FULLY PAID", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		POStatusControl("PAID WAITING TO CLOSE", 0, $RootPath, $db);
+		POStatusControl("PAID BUT NOT RECEIVED IN KANTOR", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		POStatusControl("PAID NOT SHIPPED", 0, $RootPath, $db);
+		POStatusControl("RECEIVED IN KANTOR BUT NOT PAID", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		POStatusControl("PAID NOT SHIPPED BY SUPPLIER", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		POStatusControl("PAID NOT RECEIVED IN CARGO AGENT", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;

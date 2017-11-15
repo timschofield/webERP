@@ -3630,33 +3630,38 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 		$FieldName = "Payment Date";
 		$ShipmentAWB = '';
 		$TitleWarning = 'Purchase Orders still not fully paid';
-		$SQLFilterKLStatus = " AND purchorders.klstatus >= '2000' 
-							   AND purchorders.klstatus < '4000' ";
-	}else if ($TypeOfCode == "FINISHED NOT PAID NOT SHIPPED"){
-		$DateField = "deliverydate";
-		$FieldName = "Delivery Date";
-		$ShipmentAWB = '';
-		$TitleWarning = 'Purchase Orders finished by supplier but not paid OR not shipped';
-		$SQLFilterKLStatus = " AND purchorders.klstatus = '3000' ";
-	}else if ($TypeOfCode == "PAID WAITING TO CLOSE"){
+		$SQLFilterKLStatus = " AND purchorders.klstatus > '1000'
+							   AND (   (purchorders.klstatus < '4000' AND suppliers.paymentterms = 'B1') 
+									OR (purchorders.klstatus < '7000' AND suppliers.paymentterms = 'B2')
+									OR (purchorders.klstatus < '4000' AND suppliers.paymentterms = 'F1')
+									OR (purchorders.klstatus < '4000' AND suppliers.paymentterms = 'T1')
+									OR (purchorders.klstatus < '4000' AND suppliers.paymentterms = 'T2')) ";
+	}else if ($TypeOfCode == "PAID BUT NOT RECEIVED IN KANTOR"){
 		$DateField = "paymentdate";
 		$FieldName = "Payment Date";
 		$ShipmentAWB = '';
-		$TitleWarning = 'Purchase Orders paid waiting to be closed';
+		$TitleWarning = 'Bali Purchase Orders paid but not delivered in kantor';
 		$SQLFilterKLStatus = " AND purchorders.klstatus = '4000' 
 							   AND suppliers.paymentterms = 'B1' ";
-	}else if ($TypeOfCode == "PAID NOT SHIPPED"){
+	}else if ($TypeOfCode == "RECEIVED IN KANTOR BUT NOT PAID"){
 		$DateField = "paymentdate";
 		$FieldName = "Payment Date";
 		$ShipmentAWB = '';
-		$TitleWarning = 'Purchase Orders paid but not shipped by supplier';
+		$TitleWarning = 'Bali Purchase Orders delivered in kantor but not paid yet';
+		$SQLFilterKLStatus = " AND purchorders.klstatus = '6000' 
+							   AND suppliers.paymentterms = 'B2' ";
+	}else if ($TypeOfCode == "PAID NOT SHIPPED BY SUPPLIER"){
+		$DateField = "paymentdate";
+		$FieldName = "Payment Date";
+		$ShipmentAWB = '';
+		$TitleWarning = 'Purchase Orders paid but not shipped directly by supplier (No Cargo Agent)';
 		$SQLFilterKLStatus = " AND purchorders.klstatus = '4000' 
 							   AND suppliers.paymentterms = 'F1' ";
 	}else if ($TypeOfCode == "PAID NOT RECEIVED IN CARGO AGENT"){
 		$DateField = "paymentdate";
 		$FieldName = "Payment Date";
 		$ShipmentAWB = '';
-		$TitleWarning = 'Purchase Orders paid but not received by Cargo Agent';
+		$TitleWarning = 'Purchase Orders already paid but not received by Cargo Agent';
 		$SQLFilterKLStatus = " AND purchorders.klstatus = '4000' 
 							   AND suppliers.paymentterms = 'T2' ";
 	}else if ($TypeOfCode == "PAID BY CARGO AGENT BUT NOT SHIPPED"){
@@ -3671,7 +3676,8 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 		$FieldName = "Payment Date";
 		$ShipmentAWB = '';
 		$TitleWarning = 'Purchase Orders waiting to be shipped by Cargo Agent';
-		$SQLFilterKLStatus = " AND purchorders.klstatus = '4500' ";
+		$SQLFilterKLStatus = " AND purchorders.klstatus = '4500'
+							   AND suppliers.paymentterms = 'T2' ";
 	}else if ($TypeOfCode == "SHIPPED IN TRANSIT"){
 		$DateField = "arrivaldate";
 		$FieldName = "Arrival Date";

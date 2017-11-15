@@ -218,11 +218,11 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 		POStatusControl("STILL NOT FULLY PAID", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		POStatusControl("FINISHED NOT PAID NOT SHIPPED", 0, $RootPath, $db);
+		POStatusControl("PAID BUT NOT RECEIVED IN KANTOR", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		POStatusControl("PAID WAITING TO CLOSE", 0, $RootPath, $db);
+		POStatusControl("RECEIVED IN KANTOR BUT NOT PAID", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		POStatusControl("PAID NOT SHIPPED", 0, $RootPath, $db);
+		POStatusControl("PAID NOT SHIPPED BY SUPPLIER", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		POStatusControl("PAID NOT RECEIVED IN CARGO AGENT", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -230,11 +230,11 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 		POStatusControl("RECEIVED BY CARGO AGENT BUT NOT SHIPPED", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		POStatusControl("ARRIVING IN NEXT DAYS", 60, $RootPath, $db);
-		$NumberOfTestExecuted++;
 		POStatusControl("SHIPPED IN TRANSIT", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		POStatusControl("RECEIVED IN KANTOR", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		POStatusControl("ARRIVING IN NEXT DAYS", 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 /*		PurchasingOrdersDeliveryControl("Delayed", "Delivery", 0, $RootPath, $db);
