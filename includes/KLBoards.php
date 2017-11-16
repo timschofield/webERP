@@ -3634,63 +3634,76 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 		$SQLFilterKLStatus = " AND purchorders.klstatus > '1000'
 							   AND (   (purchorders.klstatus < '4000' AND suppliers.paymentterms = 'B1') 
 									OR (purchorders.klstatus < '7000' AND suppliers.paymentterms = 'B2')
-									OR (purchorders.klstatus < '4000' AND suppliers.paymentterms = 'F1')
-									OR (purchorders.klstatus < '4000' AND suppliers.paymentterms = 'T1')
-									OR (purchorders.klstatus < '4000' AND suppliers.paymentterms = 'T2')) ";
-	}else if ($TypeOfCode == "PAID BUT NOT RECEIVED IN KANTOR"){
+									OR (purchorders.klstatus < '4000' AND suppliers.paymentterms = 'O1')
+									OR (purchorders.klstatus < '4000' AND suppliers.paymentterms = 'O2')
+									OR (purchorders.klstatus < '4000' AND suppliers.paymentterms = 'O3')
+									OR (purchorders.klstatus < '4000' AND suppliers.paymentterms = 'O4')
+									OR (purchorders.klstatus < '4000' AND suppliers.paymentterms = 'O5')) ";
+	}else if ($TypeOfCode == "BALI PAID BUT NOT RECEIVED IN KANTOR"){
 		$DateField = "paymentdate";
 		$FieldName = "Payment Date";
 		$ShipmentAWB = '';
 		$TitleWarning = 'Bali Purchase Orders paid but not delivered in kantor';
-		$SQLFilterKLStatus = " AND purchorders.klstatus = '4000' 
-							   AND suppliers.paymentterms = 'B1' ";
-	}else if ($TypeOfCode == "RECEIVED IN KANTOR BUT NOT PAID"){
+		$SQLFilterKLStatus = " AND (purchorders.klstatus = '4000' AND suppliers.paymentterms = 'B1') ";
+	}else if ($TypeOfCode == "BALI RECEIVED IN KANTOR BUT NOT PAID"){
 		$DateField = "paymentdate";
 		$FieldName = "Payment Date";
 		$ShipmentAWB = '';
 		$TitleWarning = 'Bali Purchase Orders delivered in kantor but not paid yet';
-		$SQLFilterKLStatus = " AND purchorders.klstatus = '6000' 
-							   AND suppliers.paymentterms = 'B2' ";
+		$SQLFilterKLStatus = " AND (purchorders.klstatus = '6000' AND suppliers.paymentterms = 'B2') ";
 	}else if ($TypeOfCode == "PAID NOT SHIPPED BY SUPPLIER"){
 		$DateField = "paymentdate";
 		$FieldName = "Payment Date";
 		$ShipmentAWB = '';
-		$TitleWarning = 'Purchase Orders paid but not shipped directly by supplier (No Cargo Agent)';
-		$SQLFilterKLStatus = " AND purchorders.klstatus = '4000' 
-							   AND suppliers.paymentterms = 'F1' ";
+		$TitleWarning = 'Overseas Purchase Orders paid but not shipped directly by supplier';
+		$SQLFilterKLStatus = " AND (   (purchorders.klstatus = '4000' AND suppliers.paymentterms = 'O1')
+									OR (purchorders.klstatus = '4000' AND suppliers.paymentterms = 'O3')) ";
 	}else if ($TypeOfCode == "PAID NOT RECEIVED IN CARGO AGENT"){
 		$DateField = "paymentdate";
 		$FieldName = "Payment Date";
 		$ShipmentAWB = '';
-		$TitleWarning = 'Purchase Orders already paid but not received by Cargo Agent';
-		$SQLFilterKLStatus = " AND purchorders.klstatus = '4000' 
-							   AND suppliers.paymentterms = 'T2' ";
-	}else if ($TypeOfCode == "PAID BY CARGO AGENT BUT NOT SHIPPED"){
+		$TitleWarning = 'Overseas Purchase Orders paid to supplier but not received by Cargo Agent';
+		$SQLFilterKLStatus = " AND (   (purchorders.klstatus = '4000' AND suppliers.paymentterms = 'O2')
+									OR (purchorders.klstatus = '4000' AND suppliers.paymentterms = 'O4')
+									OR (purchorders.klstatus = '4000' AND suppliers.paymentterms = 'O5')) ";
+	}else if ($TypeOfCode == "IN CARGO AGENT BUT NOT SHIPPED"){
 		$DateField = "paymentdate";
 		$FieldName = "Payment Date";
 		$ShipmentAWB = '';
-		$TitleWarning = 'Purchase Orders paid but not shipped by Cargo Agent';
-		$SQLFilterKLStatus = " AND purchorders.klstatus = '4000' 
-							   AND suppliers.paymentterms = 'T1' ";
-	}else if ($TypeOfCode == "RECEIVED BY CARGO AGENT BUT NOT SHIPPED"){
-		$DateField = "paymentdate";
-		$FieldName = "Payment Date";
-		$ShipmentAWB = '';
-		$TitleWarning = 'Purchase Orders waiting to be shipped by Cargo Agent';
-		$SQLFilterKLStatus = " AND purchorders.klstatus = '4500'
-							   AND suppliers.paymentterms = 'T2' ";
+		$TitleWarning = 'Overseas Purchase Orders waiting to be shipped by Cargo Agent';
+		$SQLFilterKLStatus = " AND (   (purchorders.klstatus = '4500' AND suppliers.paymentterms = 'O2')
+									OR (purchorders.klstatus = '4500' AND suppliers.paymentterms = 'O4')
+									OR (purchorders.klstatus = '4500' AND suppliers.paymentterms = 'O5')) ";
 	}else if ($TypeOfCode == "SHIPPED IN TRANSIT"){
 		$DateField = "arrivaldate";
 		$FieldName = "Arrival Date";
 		$ShipmentAWB = 'AWB';
-		$TitleWarning = 'Purchase Orders shipped and in transit to kantor';
-		$SQLFilterKLStatus = " AND purchorders.klstatus = '5000' ";
+		$TitleWarning = 'Overseas Purchase Orders shipped and in transit to Customs';
+		$SQLFilterKLStatus = " AND (   (purchorders.klstatus = '5000' AND suppliers.paymentterms = 'O1')
+									OR (purchorders.klstatus = '5000' AND suppliers.paymentterms = 'O2')
+									OR (purchorders.klstatus = '5000' AND suppliers.paymentterms = 'O3')
+									OR (purchorders.klstatus = '5000' AND suppliers.paymentterms = 'O4')
+									OR (purchorders.klstatus = '5000' AND suppliers.paymentterms = 'O5')) ";
+	}else if ($TypeOfCode == "CUSTOMS CLEARANCE"){
+		$DateField = "arrivaldate";
+		$FieldName = "Arrival Date";
+		$ShipmentAWB = 'AWB';
+		$TitleWarning = 'Overseas Purchase Orders in Customs Clearance';
+		$SQLFilterKLStatus = " AND (   (purchorders.klstatus = '5500' AND suppliers.paymentterms = 'O1')
+									OR (purchorders.klstatus = '5500' AND suppliers.paymentterms = 'O2')
+									OR (purchorders.klstatus = '5500' AND suppliers.paymentterms = 'O3')
+									OR (purchorders.klstatus = '5500' AND suppliers.paymentterms = 'O4')
+									OR (purchorders.klstatus = '5500' AND suppliers.paymentterms = 'O5')) ";
 	}else if ($TypeOfCode == "RECEIVED IN KANTOR"){
 		$DateField = "arrivaldate";
 		$FieldName = "Reception Date";
 		$ShipmentAWB = 'AWB';
-		$TitleWarning = 'Purchase Orders already received in kantor';
-		$SQLFilterKLStatus = " AND purchorders.klstatus = '6000' ";
+		$TitleWarning = 'Overseas Purchase Orders already received in kantor';
+		$SQLFilterKLStatus = " AND (   (purchorders.klstatus = '6000' AND suppliers.paymentterms = 'O1')
+									OR (purchorders.klstatus = '6000' AND suppliers.paymentterms = 'O2')
+									OR (purchorders.klstatus = '6000' AND suppliers.paymentterms = 'O3')
+									OR (purchorders.klstatus = '6000' AND suppliers.paymentterms = 'O4')
+									OR (purchorders.klstatus = '6000' AND suppliers.paymentterms = 'O5')) ";
 	}else if ($TypeOfCode == "ARRIVING IN NEXT DAYS"){
 		$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',+$maxdays));
 		$DateField = "arrivaldate";
