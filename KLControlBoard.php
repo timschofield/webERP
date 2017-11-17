@@ -752,6 +752,8 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 		POStatusControl("ON PRODUCTION", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		POStatusControl("FINISHED BUT NOT PAID", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		POStatusControl("STILL NOT FULLY PAID", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		POStatusControl("BALI PAID BUT NOT RECEIVED IN KANTOR", 0, $RootPath, $db);

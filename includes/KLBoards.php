@@ -3626,6 +3626,12 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 		$ShipmentAWB = '';
 		$TitleWarning = 'Purchase Orders on Production by supplier';
 		$SQLFilterKLStatus = " AND purchorders.klstatus = '2000' ";
+	}else if ($TypeOfCode == "FINISHED BUT NOT PAID"){
+		$DateField = "deliverydate";
+		$FieldName = "Delivery Date";
+		$ShipmentAWB = '';
+		$TitleWarning = 'Purchase Orders finished by supplier but not fully paid';
+		$SQLFilterKLStatus = " AND purchorders.klstatus = '3000' ";
 	}else if ($TypeOfCode == "STILL NOT FULLY PAID"){
 		$DateField = "paymentdate";
 		$FieldName = "Payment Date";
