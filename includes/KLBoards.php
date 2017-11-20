@@ -3579,7 +3579,7 @@ function OldPurchasingOrdersStillActive($maxdays, $RootPath, $db){
 			ORDER BY orderno";
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Purchase Orders older than ') . $maxdays . _(' days and still not closed') . '</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . _('POs older than ') . $maxdays . _(' days and still not closed') . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
@@ -3618,25 +3618,25 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 		$DateField = "orddate";
 		$FieldName = "Order Date";
 		$ShipmentAWB = '';
-		$TitleWarning = 'Purchase Orders in Negotiations with supplier';
+		$TitleWarning = 'POs in Negotiations with supplier';
 		$SQLFilterKLStatus = " AND purchorders.klstatus = '1000' ";
 	}else if ($TypeOfCode == "ON PRODUCTION"){
 		$DateField = "deliverydate";
 		$FieldName = "Delivery Date";
 		$ShipmentAWB = '';
-		$TitleWarning = 'Purchase Orders on Production by supplier';
+		$TitleWarning = 'POs on Production by supplier';
 		$SQLFilterKLStatus = " AND purchorders.klstatus = '2000' ";
 	}else if ($TypeOfCode == "FINISHED BUT NOT PAID"){
 		$DateField = "deliverydate";
 		$FieldName = "Delivery Date";
 		$ShipmentAWB = '';
-		$TitleWarning = 'Purchase Orders finished by supplier but not fully paid';
+		$TitleWarning = 'POs finished by supplier but not fully paid';
 		$SQLFilterKLStatus = " AND purchorders.klstatus = '3000' ";
 	}else if ($TypeOfCode == "STILL NOT FULLY PAID"){
 		$DateField = "paymentdate";
 		$FieldName = "Payment Date";
 		$ShipmentAWB = '';
-		$TitleWarning = 'Purchase Orders still not fully paid';
+		$TitleWarning = 'POs still not fully paid';
 		$SQLFilterKLStatus = " AND purchorders.klstatus > '1000'
 							   AND (   (purchorders.klstatus < '4000' AND suppliers.paymentterms = 'B1') 
 									OR (purchorders.klstatus < '7000' AND suppliers.paymentterms = 'B2')
@@ -3649,26 +3649,26 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 		$DateField = "paymentdate";
 		$FieldName = "Payment Date";
 		$ShipmentAWB = '';
-		$TitleWarning = 'Bali Purchase Orders paid but not delivered in kantor';
+		$TitleWarning = 'Bali POs paid but not delivered in kantor';
 		$SQLFilterKLStatus = " AND (purchorders.klstatus = '4000' AND suppliers.paymentterms = 'B1') ";
 	}else if ($TypeOfCode == "BALI RECEIVED IN KANTOR BUT NOT PAID"){
 		$DateField = "paymentdate";
 		$FieldName = "Payment Date";
 		$ShipmentAWB = '';
-		$TitleWarning = 'Bali Purchase Orders delivered in kantor but not paid yet';
+		$TitleWarning = 'Bali POs delivered in kantor but not paid yet';
 		$SQLFilterKLStatus = " AND (purchorders.klstatus = '6000' AND suppliers.paymentterms = 'B2') ";
 	}else if ($TypeOfCode == "PAID NOT SHIPPED BY SUPPLIER"){
 		$DateField = "paymentdate";
 		$FieldName = "Payment Date";
 		$ShipmentAWB = '';
-		$TitleWarning = 'Overseas Purchase Orders paid but not shipped directly by supplier';
+		$TitleWarning = 'Overseas POs paid but not shipped directly by supplier';
 		$SQLFilterKLStatus = " AND (   (purchorders.klstatus = '4000' AND suppliers.paymentterms = 'O1')
 									OR (purchorders.klstatus = '4000' AND suppliers.paymentterms = 'O3')) ";
 	}else if ($TypeOfCode == "PAID NOT RECEIVED IN CARGO AGENT"){
 		$DateField = "paymentdate";
 		$FieldName = "Payment Date";
 		$ShipmentAWB = '';
-		$TitleWarning = 'Overseas Purchase Orders paid to supplier but not received by Cargo Agent';
+		$TitleWarning = 'Overseas POs paid to supplier but not received by Cargo Agent';
 		$SQLFilterKLStatus = " AND (   (purchorders.klstatus = '4000' AND suppliers.paymentterms = 'O2')
 									OR (purchorders.klstatus = '4000' AND suppliers.paymentterms = 'O4')
 									OR (purchorders.klstatus = '4000' AND suppliers.paymentterms = 'O5')) ";
@@ -3676,7 +3676,7 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 		$DateField = "paymentdate";
 		$FieldName = "Payment Date";
 		$ShipmentAWB = '';
-		$TitleWarning = 'Overseas Purchase Orders waiting to be shipped by Cargo Agent';
+		$TitleWarning = 'Overseas POs waiting to be shipped by Cargo Agent';
 		$SQLFilterKLStatus = " AND (   (purchorders.klstatus = '4500' AND suppliers.paymentterms = 'O2')
 									OR (purchorders.klstatus = '4500' AND suppliers.paymentterms = 'O4')
 									OR (purchorders.klstatus = '4500' AND suppliers.paymentterms = 'O5')) ";
@@ -3684,7 +3684,7 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 		$DateField = "arrivaldate";
 		$FieldName = "Arrival Date";
 		$ShipmentAWB = 'AWB';
-		$TitleWarning = 'Overseas Purchase Orders shipped and in transit to Customs';
+		$TitleWarning = 'Overseas POs shipped and in transit to Customs';
 		$SQLFilterKLStatus = " AND (   (purchorders.klstatus = '5000' AND suppliers.paymentterms = 'O1')
 									OR (purchorders.klstatus = '5000' AND suppliers.paymentterms = 'O2')
 									OR (purchorders.klstatus = '5000' AND suppliers.paymentterms = 'O3')
@@ -3694,7 +3694,7 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 		$DateField = "arrivaldate";
 		$FieldName = "Arrival Date";
 		$ShipmentAWB = 'AWB';
-		$TitleWarning = 'Overseas Purchase Orders in Customs Clearance';
+		$TitleWarning = 'Overseas POs in Customs Clearance';
 		$SQLFilterKLStatus = " AND (   (purchorders.klstatus = '5500' AND suppliers.paymentterms = 'O1')
 									OR (purchorders.klstatus = '5500' AND suppliers.paymentterms = 'O2')
 									OR (purchorders.klstatus = '5500' AND suppliers.paymentterms = 'O3')
@@ -3704,7 +3704,7 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 		$DateField = "arrivaldate";
 		$FieldName = "Reception Date";
 		$ShipmentAWB = 'AWB';
-		$TitleWarning = 'Overseas Purchase Orders already received in kantor';
+		$TitleWarning = 'Overseas POs already received in kantor';
 		$SQLFilterKLStatus = " AND (   (purchorders.klstatus = '6000' AND suppliers.paymentterms = 'O1')
 									OR (purchorders.klstatus = '6000' AND suppliers.paymentterms = 'O2')
 									OR (purchorders.klstatus = '6000' AND suppliers.paymentterms = 'O3')
@@ -3715,7 +3715,7 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 		$DateField = "arrivaldate";
 		$FieldName = "Reception Date";
 		$ShipmentAWB = 'AWB';
-		$TitleWarning = 'Purchase Orders arriving in the next ' . $maxdays . ' days';
+		$TitleWarning = 'POs arriving in the next ' . $maxdays . ' days';
 		$SQLFilterKLStatus = " AND purchorders.klstatus >= '2000' 
 			AND purchorders.klstatus < '6000'
 			AND purchorders." . $DateField ." <  '". $StartDate ."'";
@@ -5727,7 +5727,7 @@ function WrongItemsOnPurchaseOrders($RootPath, $db){
 		while ($myrow = DB_fetch_array($result)) {
 			if (TRUE){
 				if ($showHeader){
-					echo '<p class="page_title_text" align="center"><strong>' .'Wrong items (No More Purchasing, Discount or Obsolete) in Active Purchase Orders' . '</strong></p>';
+					echo '<p class="page_title_text" align="center"><strong>' .'Wrong items (No More Purchasing, Discount or Obsolete) in Active POs' . '</strong></p>';
 					echo '<div>';
 					echo '<table class="selection">';
 					$TableHeader = '<tr>
