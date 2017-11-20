@@ -740,7 +740,6 @@ if ($ProcessSection02){
 
 	if ($KL_BusinessDevelopmentManager
 		OR $KL_PurchasingTeam){
-		
 		OldPurchasingOrdersStillActive(90, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		WrongItemsOnPurchaseOrders($RootPath, $db);
@@ -748,14 +747,15 @@ if ($ProcessSection02){
 		WrongItemsOnWorkOrders($RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
-	
-	if ($KL_BusinessDevelopmentManager
-		OR $KL_PurchasingTeam){
+
+	if ($KL_BusinessDevelopmentManager){
 		POStatusControl("IN NEGOTIAION WITH SUPPLIER", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		POStatusControl("ON PRODUCTION", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		POStatusControl("FINISHED BUT NOT PAID", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		POStatusControl("STILL NOT FULLY PAID", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		POStatusControl("BALI PAID BUT NOT RECEIVED IN KANTOR", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -778,6 +778,7 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_PurchasingTeam){
+
 		POStatusControl("IN NEGOTIAION WITH SUPPLIER", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		POStatusControl("ON PRODUCTION", 0, $RootPath, $db);
@@ -801,6 +802,7 @@ if ($ProcessSection02){
 		POStatusControl("RECEIVED IN KANTOR", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
+	
 
 	if ($KL_OperationalManager
 		OR $KL_ShopSupportLeader){
