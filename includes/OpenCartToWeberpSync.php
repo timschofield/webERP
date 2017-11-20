@@ -391,6 +391,8 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db,
 						$CouponStockId = OPENCART_GIFT_250K_CODE;
 					}else if (strpos(strtoupper($CouponCode),OPENCART_GIFT_300K_CODE) !== false){
 						$CouponStockId = OPENCART_GIFT_300K_CODE;
+					}else if (strpos(strtoupper($CouponCode),"WH-") !== false){
+						$CouponStockId = OPENCART_WHOLESALE_DISCOUNT;
 					}else{
 						$CouponStockId = OPENCART_ONLINE_COUPON_CODE;
 					}
