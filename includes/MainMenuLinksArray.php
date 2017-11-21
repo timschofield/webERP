@@ -92,11 +92,15 @@ if ($KL_SystemAdmin OR $KL_BusinessDevelopmentManager){
 	$LinkPerformanceBoard01 = "/KLPerformanceBoard.php?Section=01";
 	$TextPerformanceBoard02 = _('KL Performance Board Section 02');
 	$LinkPerformanceBoard02 = "/KLPerformanceBoard.php?Section=02";
+	$TextPerformanceBoard03 = _('KL Performance Board Section 03');
+	$LinkPerformanceBoard03 = "/KLPerformanceBoard.php?Section=03";
 } else {
 	$TextPerformanceBoard01 = _('KL Performance Board');
 	$LinkPerformanceBoard01 = '/KLPerformanceBoard.php';
 	$TextPerformanceBoard02 = '';
 	$LinkPerformanceBoard02 = '';
+	$TextPerformanceBoard03 = '';
+	$LinkPerformanceBoard03 = '';
 }	
 
 $MenuItems['orders']['Reports']['Caption'] = array( _('Sales Order Inquiry'),
@@ -127,6 +131,7 @@ $MenuItems['orders']['Reports']['Caption'] = array( _('Sales Order Inquiry'),
 													_('KL SPG End Of Shift Report'),
 													$TextPerformanceBoard01,
 													$TextPerformanceBoard02,
+													$TextPerformanceBoard03,
 													_('KL SPG Performance Report'),
 													_('KL Quality and Returns Report'),
 													_('KL Retail Customer Analysis'),
@@ -162,6 +167,7 @@ $MenuItems['orders']['Reports']['URL'] = array( '/SelectCompletedOrder.php',
 												'/KLRetailEndOfShift.php',
 												$LinkPerformanceBoard01,
 												$LinkPerformanceBoard02,
+												$LinkPerformanceBoard03,
 												'/KLSPGPerformance.php',
 												'/KLQualityReturnsPerformance.php',
 												'/KLRetailCustomerBoard.php',

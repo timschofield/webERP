@@ -3664,22 +3664,32 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 		$TitleWarning = 'Overseas POs paid but not shipped directly by supplier';
 		$SQLFilterKLStatus = " AND (   (purchorders.klstatus = '4000' AND suppliers.paymentterms = 'O1')
 									OR (purchorders.klstatus = '4000' AND suppliers.paymentterms = 'O3')) ";
-	}else if ($TypeOfCode == "PAID NOT RECEIVED IN CARGO AGENT"){
+	}else if ($TypeOfCode == "PAID NOT RECEIVED IN AYE CARGO"){
 		$DateField = "paymentdate";
 		$FieldName = "Payment Date";
 		$ShipmentAWB = '';
-		$TitleWarning = 'Overseas POs paid to supplier but not received by Cargo Agent';
+		$TitleWarning = 'Overseas POs paid to supplier but not received by Aye Cargo';
 		$SQLFilterKLStatus = " AND (   (purchorders.klstatus = '4000' AND suppliers.paymentterms = 'O2')
-									OR (purchorders.klstatus = '4000' AND suppliers.paymentterms = 'O4')
 									OR (purchorders.klstatus = '4000' AND suppliers.paymentterms = 'O5')) ";
-	}else if ($TypeOfCode == "IN CARGO AGENT BUT NOT SHIPPED"){
+	}else if ($TypeOfCode == "PAID NOT RECEIVED IN WANGFOONG CARGO"){
 		$DateField = "paymentdate";
 		$FieldName = "Payment Date";
 		$ShipmentAWB = '';
-		$TitleWarning = 'Overseas POs waiting to be shipped by Cargo Agent';
+		$TitleWarning = 'Overseas POs paid to supplier but not received by Wangfoong Cargo';
+		$SQLFilterKLStatus = " AND (purchorders.klstatus = '4000' AND suppliers.paymentterms = 'O4') ";
+	}else if ($TypeOfCode == "IN AYE CARGO BUT NOT SHIPPED"){
+		$DateField = "paymentdate";
+		$FieldName = "Payment Date";
+		$ShipmentAWB = '';
+		$TitleWarning = 'Overseas POs waiting to be shipped by Aye Cargo';
 		$SQLFilterKLStatus = " AND (   (purchorders.klstatus = '4500' AND suppliers.paymentterms = 'O2')
-									OR (purchorders.klstatus = '4500' AND suppliers.paymentterms = 'O4')
 									OR (purchorders.klstatus = '4500' AND suppliers.paymentterms = 'O5')) ";
+	}else if ($TypeOfCode == "IN WANGFOONG CARGO BUT NOT SHIPPED"){
+		$DateField = "paymentdate";
+		$FieldName = "Payment Date";
+		$ShipmentAWB = '';
+		$TitleWarning = 'Overseas POs waiting to be shipped by Wangfoong Cargo';
+		$SQLFilterKLStatus = " AND (purchorders.klstatus = '4500' AND suppliers.paymentterms = 'O4') ";
 	}else if ($TypeOfCode == "SHIPPED IN TRANSIT"){
 		$DateField = "arrivaldate";
 		$FieldName = "Arrival Date";
@@ -9869,5 +9879,78 @@ function SPGPerformanceByShop($Shop, $NumDaysA, $NumDaysB, $NumDaysC, $db){
 				</div>';
 	}
 }
+/*
+function PurchaseOrdersProcessTime($NumDays, $RootPath, $db){
+
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
+	
+	$SQL = "SELECT suppliers.address6, 
+				AVG(datediff(purchorders.deliverydate,purchorders.orddate)) AS productiondays,
+				AVG(datediff(purchorders.paymentdate,purchorders.deliverydate)) AS paymentdays,
+				AVG(datediff(purchorders.shipmentdate,purchorders.paymentdate)) AS shipmentdays,
+				AVG(datediff(purchorders.arrivaldate,purchorders.shipmentdate)) AS transitdays,
+				MIN(datediff(purchorders.arrivaldate,purchorders.orddate)) AS mintotaldays,
+				MAX(datediff(purchorders.arrivaldate,purchorders.orddate)) AS maxtotaldays,
+				AVG(datediff(purchorders.arrivaldate,purchorders.orddate)) AS avgtotaldays
+			FROM purchorders, suppliers
+			WHERE purchorders.supplierno = suppliers.supplierid
+				AND purchorders.arrivaldate >= '" . $StartDate. "'
+				AND purchorders.status = 'Completed'
+				AND purchorders.klstatus != '1000'
+				AND purchorders.arrivaldate != purchorders.orddate
+			GROUP BY address6";
+	
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . _('PO Process time arrived during the last ') . $maxdays . " days" . ' </strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('DOB Category') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('Total Qty') . '</th>
+							<th class="ascending">' . _('QOH') . '</th>
+							<th class="ascending">' . _('Sold Qty') . '</th>
+							<th class="ascending">' . _('% Sold') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+			$DaysInCategory = DateDiff(Date($_SESSION['DefaultDateFormat']), ConvertSQLDate($StartDate), 'd');
+			if (($myrow['sold'] + $myrow['qoh']) != 0){
+				$ActualSales = ($myrow['sold'] / ($myrow['sold'] + $myrow['qoh'])) * 100;
+			}else{
+				$ActualSales = 0 ;
+			}
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$i, 
+					ConvertSQLDate($myrow['lastcategoryupdate']), 
+					$CodeLink, 
+					$myrow['description'], 
+					locale_number_format($myrow['qoh']  + $myrow['sold'],0),
+					locale_number_format($myrow['qoh'],0),
+					locale_number_format($myrow['sold'],0),
+					locale_number_format($ActualSales,0)
+					);
+			$i++;
+		}
+		echo '</table>
+				</div>';
+	}
+}
+*/
 
 ?>

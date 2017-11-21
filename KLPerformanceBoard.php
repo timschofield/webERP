@@ -1,5 +1,5 @@
 <?php
-define("VERSIONFILE", "3.00");
+define("VERSIONFILE", "3.10");
 
 /* Session started in session.php for password checking and authorisation level check config.php is in turn included in session.php*/
 
@@ -21,16 +21,20 @@ $periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 $ShowSectionInfo = FALSE;
 $ProcessSection01 = FALSE;
 $ProcessSection02 = FALSE;
+$ProcessSection03 = FALSE;
 
 if (!isset($_GET['Section'])){
 	$ProcessSection01 = TRUE;
 	$ProcessSection02 = TRUE;
+	$ProcessSection03 = TRUE;
 }else{
 	$ShowSectionInfo = TRUE;
 	if ($_GET['Section'] == '01'){
 		$ProcessSection01 = TRUE;
 	}elseif($_GET['Section'] == '02'){
 		$ProcessSection02 = TRUE;
+	}elseif($_GET['Section'] == '03'){
+		$ProcessSection03 = TRUE;
 	}
 }
 
@@ -39,6 +43,12 @@ if (!isset($_GET['Section'])){
 ***************************************************************************************/
 if ($KL_SystemAdmin){
 
+	if ($KL_SystemAdmin 
+		OR $KL_OperationalManager
+		OR $KL_BusinessDevelopmentManager){
+//		PurchaseOrdersProcessTime(60, $RootPath, $db);
+		$NumberOfTestExecuted++;
+	}
 
 } 
 
@@ -49,7 +59,7 @@ if ($KL_SystemAdmin){
 
 if ($ProcessSection01){
 	if($ShowSectionInfo){
-		prnMsg("Performing Control Panel Section 01",'info');
+		prnMsg("Sales Performance Board Section 01.",'info');
 	}
 
 	if ($KL_SystemAdmin 
@@ -126,7 +136,7 @@ if ($ProcessSection01){
 
 if ($ProcessSection02){
 	if($ShowSectionInfo){
-		prnMsg("Performing Control Panel Section 02",'info');
+		prnMsg("Transfers, Purchasing Performance Board Section 02.",'info');
 	}
 
 	if ($KL_SystemAdmin){
@@ -163,10 +173,78 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 		FinishedStockDistribution("FORSALE", "STOCKCATEGORY", $db);
 		$NumberOfTestExecuted++;
-		FinishedStockDistribution("DISPLAYS", "LOCATION", $db);
+	}
+
+	if ($KL_SystemAdmin){
+		GoodsToBeProduced("COMPON", "ONLYDISCOUNT", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		GoodsToBeProduced("COMPON", "DISCOUNT", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		GoodsToBeProduced("COMPON", "ALL", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ComponentsToObsolete(false, 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
+	if ($KL_OperationalManager){
+		POStatusControl("IN NEGOTIAION WITH SUPPLIER", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		POStatusControl("ON PRODUCTION", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+	}
+
+	if ($KL_SystemAdmin OR
+		$KL_OperationalManager){
+		POStatusControl("FINISHED BUT NOT PAID", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+	}
+
+	if ($KL_SystemAdmin){
+		POStatusControl("STILL NOT FULLY PAID", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+	}
+	
+	if ($KL_SystemAdmin OR
+		$KL_OperationalManager){
+		POStatusControl("BALI PAID BUT NOT RECEIVED IN KANTOR", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		POStatusControl("BALI RECEIVED IN KANTOR BUT NOT PAID", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		POStatusControl("PAID NOT SHIPPED BY SUPPLIER", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		POStatusControl("PAID NOT RECEIVED IN AYE CARGO", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		POStatusControl("PAID NOT RECEIVED IN WANGFOONG CARGO", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		POStatusControl("IN AYE CARGO BUT NOT SHIPPED", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		POStatusControl("IN WANGFOONG CARGO BUT NOT SHIPPED", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		POStatusControl("SHIPPED IN TRANSIT", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		POStatusControl("CUSTOMS CLEARANCE", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		POStatusControl("RECEIVED IN KANTOR", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+	}
+	
+	if ($KL_SystemAdmin){
+		POStatusControl("ARRIVING IN NEXT DAYS", 60, $RootPath, $db);
+		$NumberOfTestExecuted++;
+	}
+	
+//	RetailTypePayments("Shop",180, $db);
+//	NumberOfTestExecuted++;
+}
+
+/***************************************************************************************
+* SECTION 3
+***************************************************************************************/
+
+if ($ProcessSection03){
+	if($ShowSectionInfo){
+		prnMsg("Packaging, Displays, Petty Cash Performance Board Section 03.",'info');
+	}
 
 	if ($KL_SystemAdmin){
 		PackagingStatusForKapalLaut($RootPath, $db);
@@ -199,97 +277,15 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_SystemAdmin){
-		GoodsToBeProduced("COMPON", "ONLYDISCOUNT", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		GoodsToBeProduced("COMPON", "DISCOUNT", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		GoodsToBeProduced("COMPON", "ALL", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ComponentsToObsolete(false, 0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-	}
-
-	if ($KL_SystemAdmin){
-		POStatusControl("FINISHED BUT NOT PAID", 0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		POStatusControl("STILL NOT FULLY PAID", 0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		POStatusControl("BALI PAID BUT NOT RECEIVED IN KANTOR", 0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		POStatusControl("BALI RECEIVED IN KANTOR BUT NOT PAID", 0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		POStatusControl("PAID NOT SHIPPED BY SUPPLIER", 0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		POStatusControl("PAID NOT RECEIVED IN CARGO AGENT", 0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		POStatusControl("IN CARGO AGENT BUT NOT SHIPPED", 0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		POStatusControl("SHIPPED IN TRANSIT", 0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		POStatusControl("CUSTOMS CLEARANCE", 0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		POStatusControl("RECEIVED IN KANTOR", 0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		POStatusControl("ARRIVING IN NEXT DAYS", 60, $RootPath, $db);
-		$NumberOfTestExecuted++;
-
-	}
-
-	if ($KL_OperationalManager){
-		POStatusControl("IN NEGOTIAION WITH SUPPLIER", 0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		POStatusControl("ON PRODUCTION", 0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		POStatusControl("FINISHED BUT NOT PAID", 0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		POStatusControl("BALI PAID BUT NOT RECEIVED IN KANTOR", 0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		POStatusControl("BALI RECEIVED IN KANTOR BUT NOT PAID", 0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		POStatusControl("PAID NOT SHIPPED BY SUPPLIER", 0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		POStatusControl("PAID NOT RECEIVED IN CARGO AGENT", 0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		POStatusControl("IN CARGO AGENT BUT NOT SHIPPED", 0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		POStatusControl("SHIPPED IN TRANSIT", 0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		POStatusControl("CUSTOMS CLEARANCE", 0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		POStatusControl("RECEIVED IN KANTOR", 0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-
-/*		PurchasingOrdersDeliveryControl("Delayed", "Delivery", 0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		PurchasingOrdersDeliveryControl("Coming Soon", "Delivery", 60, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		PurchasingOrdersDeliveryControl("Delayed", "Payment", 0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		PurchasingOrdersDeliveryControl("Coming Soon", "Payment", 30, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		PurchasingOrdersDeliveryControl("Coming Soon", "Payment", 60, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		PurchasingOrdersDeliveryControl("Delayed", "Arrival", 0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		PurchasingOrdersDeliveryControl("Coming Soon", "Arrival", 30, $RootPath, $db);
-		$NumberOfTestExecuted++;
-*/	}
-
-
-//	RetailTypePayments("Shop",180, $db);
-//	NumberOfTestExecuted++;
-
 	if ($KL_SystemAdmin 
 		OR $KL_OperationalManager
 		OR $KL_ShopManager
 		OR $KL_SalesDirector
-		OR $KL_BusinessDevelopmentManager){	
-		RetailTypePayments("SPG",180, $db);
-		$NumberOfTestExecuted++;
-		RetailTypePayments("SPG",  15, $db);
+		OR $KL_BusinessDevelopmentManager){
+		FinishedStockDistribution("DISPLAYS", "LOCATION", $db);
 		$NumberOfTestExecuted++;
 	}
+
 	if ($KL_SystemAdmin){
 		PettyCashStatus("IDR", $db);
 		$NumberOfTestExecuted++;
@@ -912,126 +908,6 @@ function YearDifferenceSales($typereport, $NumDaysA, $db){
 					$Rent
 					);
 		}
-		echo '</table>
-				</div>';
-	}
-}
-
-function RetailTypePayments($typereport, $maxdays, $db){
-	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
-	$totalcash = 0;
-	$totalcredit = 0;
-	$totalreturned = 0;
-	$totalvouchers = 0;
-	$total = 0;
-
-	if ($typereport == "Shop"){
-		$SQL = "SELECT salesorders.debtorno AS reportunit,
-					debtorsmaster.name AS reportname,
-					SUM(salesorders.klpaidcash) AS cashshop, 
-					SUM(salesorders.klpaidcreditcard) AS creditshop, 
-					SUM(salesorders.klreturnedgoods) AS returnedgoodsshop,
-					SUM(salesorders.klvouchers) AS vouchersshop,
-					SUM(salesorders.klpaidcash+salesorders.klpaidcreditcard+salesorders.klreturnedgoods+salesorders.klvouchers) AS totalshop
-			FROM salesorders, debtorsmaster
-			WHERE salesorders.debtorno = debtorsmaster.debtorno
-				AND salesorders.orddate >= '". $StartDate. "'
-				AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_RETAIL . ")
-			GROUP BY salesorders.debtorno
-			ORDER BY salesorders.debtorno";
-	}else{
-		$SQL = "SELECT salesorders.salesperson AS reportunit, 
-					salesman.salesmanname AS reportname,
-					SUM(klpaidcash) AS cashshop, 
-					SUM(klpaidcreditcard) AS creditshop, 
-					SUM(klreturnedgoods) AS returnedgoodsshop,
-					SUM(klvouchers) AS vouchersshop,
-					SUM(klpaidcash+klpaidcreditcard+klreturnedgoods+klvouchers) AS totalshop
-			FROM salesorders, salesman, debtorsmaster
-			WHERE salesorders.debtorno = debtorsmaster.debtorno
-				AND salesorders.salesperson = salesman.salesmancode
-				AND orddate >= '". $StartDate. "'
-				AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_RETAIL . ")
-			GROUP BY salesorders.salesperson
-			ORDER BY salesorders.salesperson";
-	}
-	
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Distribution Cash / Credit Card during the last ') . $maxdays . _(' days by ') .$typereport .'</strong></p>';
-		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . $typereport . '</th>
-							<th class="ascending">' . _('Name') . '</th>
-							<th class="ascending">' . _('% Cash') . '</th>
-							<th class="ascending">' . _('% Credit') . '</th>
-							<th class="ascending">' . _('% Returns') . '</th>
-							<th class="ascending">' . _('% Vouchers') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
-		$i = 1;
-		while ($myrow = DB_fetch_array($result)) {
-			if ($myrow['totalshop'] != 0){
-				$k = StartEvenOrOddRow($k);
-				
-				$percentcash = locale_number_format(($myrow['cashshop']/$myrow['totalshop'])*100,1);
-				$percentcredit = locale_number_format(($myrow['creditshop']/$myrow['totalshop'])*100,1);
-				$percentreturns = locale_number_format(($myrow['returnedgoodsshop']/$myrow['totalshop'])*100,1);
-				$percentvouchers = locale_number_format(($myrow['vouchersshop']/$myrow['totalshop'])*100,1);
-				
-				$totalcash = $totalcash + $myrow['cashshop'];
-				$totalcredit = $totalcredit + $myrow['creditshop'];
-				$totalreturned = $totalreturned + $myrow['returnedgoodsshop'];
-				$totalvouchers = $totalvouchers + $myrow['vouchersshop'];
-				$total = $total + $myrow['totalshop'];
-				
-				printf('<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						</tr>', 
-						$myrow['reportunit'],
-						$myrow['reportname'],
-						$percentcash, 
-						$percentcredit, 
-						$percentreturns, 
-						$percentvouchers
-						);
-				$i++;
-			}
-		}
-
-		$percentcash = locale_number_format(($totalcash/$total)*100,1);
-		$percentcredit = locale_number_format(($totalcredit/$total)*100,1);
-		$percentreturns = locale_number_format(($totalreturned/$total)*100,1);
-		$percentvouchers = locale_number_format(($totalvouchers/$total)*100,1);
-		
-		if ($k == 1) {
-			echo '<tr class="EvenTableRows">';
-			$k = 0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k = 1;
-		}
-		printf('<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				"",
-				"Average",
-				$percentcash, 
-				$percentcredit, 
-				$percentreturns, 
-				$percentvouchers
-				);
-		
 		echo '</table>
 				</div>';
 	}
