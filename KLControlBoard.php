@@ -788,7 +788,7 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_BusinessDevelopmentManager){
-		POStatusControl("ARRIVING IN NEXT DAYS", 60, $RootPath, $db);
+		POStatusControl("ARRIVING IN NEXT DAYS", 75, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 

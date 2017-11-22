@@ -43,13 +43,6 @@ if (!isset($_GET['Section'])){
 ***************************************************************************************/
 if ($KL_SystemAdmin){
 
-	if ($KL_SystemAdmin 
-		OR $KL_OperationalManager
-		OR $KL_BusinessDevelopmentManager){
-//		PurchaseOrdersProcessTime(60, $RootPath, $db);
-		$NumberOfTestExecuted++;
-	}
-
 } 
 
 
@@ -186,6 +179,13 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 
+	if ($KL_SystemAdmin 
+		OR $KL_OperationalManager
+		OR $KL_BusinessDevelopmentManager){
+		PurchaseOrdersProcessTime(90, $RootPath, $db);
+		$NumberOfTestExecuted++;
+	}
+
 	if ($KL_OperationalManager){
 		POStatusControl("IN NEGOTIAION WITH SUPPLIER", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -229,7 +229,7 @@ if ($ProcessSection02){
 	}
 	
 	if ($KL_SystemAdmin){
-		POStatusControl("ARRIVING IN NEXT DAYS", 60, $RootPath, $db);
+		POStatusControl("ARRIVING IN NEXT DAYS", 75, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 	

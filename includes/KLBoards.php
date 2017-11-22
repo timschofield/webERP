@@ -3616,13 +3616,13 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 
 	if ($TypeOfCode == "IN NEGOTIAION WITH SUPPLIER"){
 		$DateField = "orddate";
-		$FieldName = "Order Date";
+		$FieldName = "Planned Order Date";
 		$ShipmentAWB = '';
 		$TitleWarning = 'POs in Negotiations with supplier';
 		$SQLFilterKLStatus = " AND purchorders.klstatus = '1000' ";
 	}else if ($TypeOfCode == "ON PRODUCTION"){
 		$DateField = "deliverydate";
-		$FieldName = "Delivery Date";
+		$FieldName = "Planned Delivery";
 		$ShipmentAWB = '';
 		$TitleWarning = 'POs on Production by supplier';
 		$SQLFilterKLStatus = " AND purchorders.klstatus = '2000' ";
@@ -3634,7 +3634,7 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 		$SQLFilterKLStatus = " AND purchorders.klstatus = '3000' ";
 	}else if ($TypeOfCode == "STILL NOT FULLY PAID"){
 		$DateField = "paymentdate";
-		$FieldName = "Payment Date";
+		$FieldName = "Planned Payment";
 		$ShipmentAWB = '';
 		$TitleWarning = 'POs still not fully paid';
 		$SQLFilterKLStatus = " AND purchorders.klstatus > '1000'
@@ -3653,7 +3653,7 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 		$SQLFilterKLStatus = " AND (purchorders.klstatus = '4000' AND suppliers.paymentterms = 'B1') ";
 	}else if ($TypeOfCode == "BALI RECEIVED IN KANTOR BUT NOT PAID"){
 		$DateField = "paymentdate";
-		$FieldName = "Payment Date";
+		$FieldName = "Planned Payment";
 		$ShipmentAWB = '';
 		$TitleWarning = 'Bali POs delivered in kantor but not paid yet';
 		$SQLFilterKLStatus = " AND (purchorders.klstatus = '6000' AND suppliers.paymentterms = 'B2') ";
@@ -3692,7 +3692,7 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 		$SQLFilterKLStatus = " AND (purchorders.klstatus = '4500' AND suppliers.paymentterms = 'O4') ";
 	}else if ($TypeOfCode == "SHIPPED IN TRANSIT"){
 		$DateField = "arrivaldate";
-		$FieldName = "Arrival Date";
+		$FieldName = "Planned Arrival";
 		$ShipmentAWB = 'AWB';
 		$TitleWarning = 'Overseas POs shipped and in transit to Customs';
 		$SQLFilterKLStatus = " AND (   (purchorders.klstatus = '5000' AND suppliers.paymentterms = 'O1')
@@ -3702,7 +3702,7 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 									OR (purchorders.klstatus = '5000' AND suppliers.paymentterms = 'O5')) ";
 	}else if ($TypeOfCode == "CUSTOMS CLEARANCE"){
 		$DateField = "arrivaldate";
-		$FieldName = "Arrival Date";
+		$FieldName = "Planned Arrival";
 		$ShipmentAWB = 'AWB';
 		$TitleWarning = 'Overseas POs in Customs Clearance';
 		$SQLFilterKLStatus = " AND (   (purchorders.klstatus = '5500' AND suppliers.paymentterms = 'O1')
@@ -3723,7 +3723,7 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 	}else if ($TypeOfCode == "ARRIVING IN NEXT DAYS"){
 		$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',+$maxdays));
 		$DateField = "arrivaldate";
-		$FieldName = "Reception Date";
+		$FieldName = "Planned Reception";
 		$ShipmentAWB = 'AWB';
 		$TitleWarning = 'POs arriving in the next ' . $maxdays . ' days';
 		$SQLFilterKLStatus = " AND purchorders.klstatus >= '2000' 
@@ -3924,9 +3924,10 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 			}
 			$i++;
 		}
-//		if (($TypeOfCode == "STILL NOT FULLY PAID") OR 
-//			($TypeOfCode == "ARRIVING IN NEXT DAYS")){
-		if (true){
+		if (($TypeOfCode == "FINISHED BUT NOT PAID") OR 
+			($TypeOfCode == "STILL NOT FULLY PAID") OR 
+			($TypeOfCode == "ARRIVING IN NEXT DAYS")){
+
 			$k = StartEvenOrOddRow($k);
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -4073,6 +4074,44 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 					'IDR', 
 					'', 
 					locale_number_format_zero_blank($TotalValueAllOrders-$myrow['cogs'],0),
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'' 
+					);
+
+			$k = StartEvenOrOddRow($k);
+			printf('<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					'', 
+					'', 
+					'MONTHLY STOCK CHANGE',
+					'IDR', 
+					'', 
+					locale_number_format_zero_blank(($TotalValueAllOrders-$myrow['cogs'])/$maxdays*30,0),
 					'', 
 					'', 
 					'', 
@@ -9879,12 +9918,13 @@ function SPGPerformanceByShop($Shop, $NumDaysA, $NumDaysB, $NumDaysC, $db){
 				</div>';
 	}
 }
-/*
+
 function PurchaseOrdersProcessTime($NumDays, $RootPath, $db){
 
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 	
 	$SQL = "SELECT suppliers.address6, 
+				COUNT(purchorders.orderno) AS numorders,
 				AVG(datediff(purchorders.deliverydate,purchorders.orddate)) AS productiondays,
 				AVG(datediff(purchorders.paymentdate,purchorders.deliverydate)) AS paymentdays,
 				AVG(datediff(purchorders.shipmentdate,purchorders.paymentdate)) AS shipmentdays,
@@ -9898,59 +9938,168 @@ function PurchaseOrdersProcessTime($NumDays, $RootPath, $db){
 				AND purchorders.status = 'Completed'
 				AND purchorders.klstatus != '1000'
 				AND purchorders.arrivaldate != purchorders.orddate
+				AND suppliers.address6 != 'Indonesia'
 			GROUP BY address6";
 	
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('PO Process time arrived during the last ') . $maxdays . " days" . ' </strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . _('Process time (in days) for POs arrived during the last ') . $NumDays . " days" . ' </strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('DOB Category') . '</th>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Description') . '</th>
-							<th class="ascending">' . _('Total Qty') . '</th>
-							<th class="ascending">' . _('QOH') . '</th>
-							<th class="ascending">' . _('Sold Qty') . '</th>
-							<th class="ascending">' . _('% Sold') . '</th>
+							<th class="ascending">' . _('Country') . '</th>
+							<th class="ascending">' . _('#POs') . '</th>
+							<th class="ascending">' . _('Production') . '</th>
+							<th class="ascending">' . _('Payment') . '</th>
+							<th class="ascending">' . _('Pre-Shipment') . '</th>
+							<th class="ascending">' . _('Transit+Customs') . '</th>
+							<th class="ascending">' . _('Min Days') . '</th>
+							<th class="ascending">' . _('Max Days') . '</th>
+							<th class="ascending">' . _('Average Days') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
 			$k = StartEvenOrOddRow($k);
-			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
-			$DaysInCategory = DateDiff(Date($_SESSION['DefaultDateFormat']), ConvertSQLDate($StartDate), 'd');
-			if (($myrow['sold'] + $myrow['qoh']) != 0){
-				$ActualSales = ($myrow['sold'] / ($myrow['sold'] + $myrow['qoh'])) * 100;
-			}else{
-				$ActualSales = 0 ;
-			}
-			printf('<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
+			if ($myrow['productiondays'] < 0) {$myrow['productiondays'] = 0;}
+			if ($myrow['paymentdays'] < 0) {$myrow['paymentdays'] = 0;}
+			if ($myrow['shipmentdays'] < 0) {$myrow['shipmentdays'] = 0;}
+			if ($myrow['transitdays'] < 0) {$myrow['transitdays'] = 0;}
+			if ($myrow['mintotaldays'] < 0) {$myrow['mintotaldays'] = 0;}
+			if ($myrow['maxtotaldays'] < 0) {$myrow['maxtotaldays'] = 0;}
+			if ($myrow['avgtotaldays'] < 0) {$myrow['avgtotaldays'] = 0;}
+
+			printf('<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>', 
-					$i, 
-					ConvertSQLDate($myrow['lastcategoryupdate']), 
-					$CodeLink, 
-					$myrow['description'], 
-					locale_number_format($myrow['qoh']  + $myrow['sold'],0),
-					locale_number_format($myrow['qoh'],0),
-					locale_number_format($myrow['sold'],0),
-					locale_number_format($ActualSales,0)
+					$myrow['address6'], 
+					locale_number_format($myrow['numorders'],0),
+					locale_number_format($myrow['productiondays'],0),
+					locale_number_format($myrow['paymentdays'],0),
+					locale_number_format($myrow['shipmentdays'],0),
+					locale_number_format($myrow['transitdays'],0),
+					locale_number_format($myrow['mintotaldays'],0),
+					locale_number_format($myrow['maxtotaldays'],0),
+					locale_number_format($myrow['avgtotaldays'],0)
 					);
 			$i++;
 		}
+	}
+	// Total Overseas PO's
+	$SQL = "SELECT COUNT(purchorders.orderno) AS numorders,
+				AVG(datediff(purchorders.deliverydate,purchorders.orddate)) AS productiondays,
+				AVG(datediff(purchorders.paymentdate,purchorders.deliverydate)) AS paymentdays,
+				AVG(datediff(purchorders.shipmentdate,purchorders.paymentdate)) AS shipmentdays,
+				AVG(datediff(purchorders.arrivaldate,purchorders.shipmentdate)) AS transitdays,
+				MIN(datediff(purchorders.arrivaldate,purchorders.orddate)) AS mintotaldays,
+				MAX(datediff(purchorders.arrivaldate,purchorders.orddate)) AS maxtotaldays,
+				AVG(datediff(purchorders.arrivaldate,purchorders.orddate)) AS avgtotaldays
+			FROM purchorders, suppliers
+			WHERE purchorders.supplierno = suppliers.supplierid
+				AND purchorders.arrivaldate >= '" . $StartDate. "'
+				AND purchorders.status = 'Completed'
+				AND purchorders.klstatus != '1000'
+				AND purchorders.arrivaldate != purchorders.orddate
+				AND suppliers.address6 != 'Indonesia'";
+	
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			if ($myrow['productiondays'] < 0) {$myrow['productiondays'] = 0;}
+			if ($myrow['paymentdays'] < 0) {$myrow['paymentdays'] = 0;}
+			if ($myrow['shipmentdays'] < 0) {$myrow['shipmentdays'] = 0;}
+			if ($myrow['transitdays'] < 0) {$myrow['transitdays'] = 0;}
+			if ($myrow['mintotaldays'] < 0) {$myrow['mintotaldays'] = 0;}
+			if ($myrow['maxtotaldays'] < 0) {$myrow['maxtotaldays'] = 0;}
+			if ($myrow['avgtotaldays'] < 0) {$myrow['avgtotaldays'] = 0;}
+
+			printf('<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					'OVERSEAS', 
+					locale_number_format($myrow['numorders'],0),
+					locale_number_format($myrow['productiondays'],0),
+					locale_number_format($myrow['paymentdays'],0),
+					locale_number_format($myrow['shipmentdays'],0),
+					locale_number_format($myrow['transitdays'],0),
+					locale_number_format($myrow['mintotaldays'],0),
+					locale_number_format($myrow['maxtotaldays'],0),
+					locale_number_format($myrow['avgtotaldays'],0)
+					);
+			$i++;
+		}
+	}
+	// INDONESIAN PO's
+	$SQL = "SELECT COUNT(purchorders.orderno) AS numorders,
+				AVG(datediff(purchorders.deliverydate,purchorders.orddate)) AS productiondays,
+				AVG(datediff(purchorders.paymentdate,purchorders.deliverydate)) AS paymentdays,
+				AVG(datediff(purchorders.shipmentdate,purchorders.paymentdate)) AS shipmentdays,
+				AVG(datediff(purchorders.arrivaldate,purchorders.shipmentdate)) AS transitdays,
+				MIN(datediff(purchorders.arrivaldate,purchorders.orddate)) AS mintotaldays,
+				MAX(datediff(purchorders.arrivaldate,purchorders.orddate)) AS maxtotaldays,
+				AVG(datediff(purchorders.arrivaldate,purchorders.orddate)) AS avgtotaldays
+			FROM purchorders, suppliers
+			WHERE purchorders.supplierno = suppliers.supplierid
+				AND purchorders.arrivaldate >= '" . $StartDate. "'
+				AND purchorders.status = 'Completed'
+				AND purchorders.klstatus != '1000'
+				AND purchorders.arrivaldate != purchorders.orddate
+				AND suppliers.address6 = 'Indonesia'";
+	
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			if ($myrow['productiondays'] < 0) {$myrow['productiondays'] = 0;}
+			if ($myrow['paymentdays'] < 0) {$myrow['paymentdays'] = 0;}
+			if ($myrow['shipmentdays'] < 0) {$myrow['shipmentdays'] = 0;}
+			if ($myrow['transitdays'] < 0) {$myrow['transitdays'] = 0;}
+			if ($myrow['mintotaldays'] < 0) {$myrow['mintotaldays'] = 0;}
+			if ($myrow['maxtotaldays'] < 0) {$myrow['maxtotaldays'] = 0;}
+			if ($myrow['avgtotaldays'] < 0) {$myrow['avgtotaldays'] = 0;}
+
+			printf('<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					'Indonesia', 
+					locale_number_format($myrow['numorders'],0),
+					locale_number_format($myrow['productiondays'],0),
+					locale_number_format($myrow['paymentdays'],0),
+					locale_number_format($myrow['shipmentdays'],0),
+					locale_number_format($myrow['transitdays'],0),
+					locale_number_format($myrow['mintotaldays'],0),
+					locale_number_format($myrow['maxtotaldays'],0),
+					locale_number_format($myrow['avgtotaldays'],0)
+					);
+			$i++;
+		}
+
 		echo '</table>
 				</div>';
 	}
 }
-*/
 
 ?>
