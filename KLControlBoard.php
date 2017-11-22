@@ -751,13 +751,13 @@ if ($ProcessSection02){
 	if ($KL_BusinessDevelopmentManager){
 		PurchaseOrdersProcessTime(90, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PurchaseOrdersWrongPlannedDates($RootPath, $db);
-		$NumberOfTestExecuted++;
 	}
 	
 	
 	if ($KL_BusinessDevelopmentManager OR 
 		$KL_PurchasingTeam){
+		PurchaseOrdersWrongPlannedDates($RootPath, $db);
+		$NumberOfTestExecuted++;
 		POStatusControl("IN NEGOTIAION WITH SUPPLIER", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		POStatusControl("ON PRODUCTION", 0, $RootPath, $db);

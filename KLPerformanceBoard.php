@@ -193,10 +193,6 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 		POStatusControl("ON PRODUCTION", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-	}
-
-	if ($KL_SystemAdmin OR
-		$KL_OperationalManager){
 		POStatusControl("FINISHED BUT NOT PAID", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}

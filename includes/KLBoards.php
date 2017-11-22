@@ -3924,7 +3924,8 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 			}
 			$i++;
 		}
-		if (($TypeOfCode == "FINISHED BUT NOT PAID") OR 
+		if (($TypeOfCode == "ON PRODUCTION") OR 
+			($TypeOfCode == "FINISHED BUT NOT PAID") OR 
 			($TypeOfCode == "STILL NOT FULLY PAID") OR 
 			($TypeOfCode == "ARRIVING IN NEXT DAYS")){
 
@@ -10179,7 +10180,7 @@ function PurchaseOrdersWrongPlannedDates($RootPath, $db){
 		while ($myrow = DB_fetch_array($result)) {
 			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/PO_Header.php?ModifyOrderNumber=' . $myrow['orderno'] . '">' . $myrow['orderno'] . '</a>';
-			$OrderDate = substr($myrow['orddate'],0,10);
+			$OrderDate = ConvertSQLDate(substr($myrow['orddate'],0,10));
 			if ($myrow['deliverydate'] == '0000-00-00'){
 				$myrow['deliverydate'] = '';
 			} else {
