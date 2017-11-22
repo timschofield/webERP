@@ -3812,7 +3812,7 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
 			$k = StartEvenOrOddRow($k);
-			$CodeLink = '<a href="' . $RootPath . '/PO_OrderDetails.php?OrderNo=' . $myrow['orderno'] . '">' . $myrow['orderno'] . '</a>';
+			$CodeLink = '<a href="' . $RootPath . '/PO_Header.php?ModifyOrderNumber=' . $myrow['orderno'] . '">' . $myrow['orderno'] . '</a>';
 			
 			if (isset($Payments[$myrow['supplierno']])){
 				// we already have info in memory about the supplier
@@ -10097,6 +10097,131 @@ function PurchaseOrdersProcessTime($NumDays, $RootPath, $db){
 			$i++;
 		}
 
+		echo '</table>
+				</div>';
+	}
+}
+
+function PurchaseOrdersWrongPlannedDates($RootPath, $db){
+	$Today = date('Y-m-d');
+
+	$SQL = "SELECT purchorders.orderno, 
+				purchorders.supplierno,
+				klpostatus.description,
+				purchorders.orddate,
+				purchorders.deliverydate,
+				purchorders.paymentdate,
+				purchorders.shipmentdate,
+				purchorders.arrivaldate,
+				SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue,
+				suppliers.currcode
+			FROM purchorders, suppliers, klpostatus, purchorderdetails
+			WHERE purchorders.supplierno = suppliers.supplierid
+				AND purchorders.orderno = purchorderdetails.orderno
+				AND klpostatus.paymentterm = suppliers.paymentterms
+				AND klpostatus.code = purchorders.klstatus
+				AND purchorderdetails.completed = 0
+				AND purchorders.status IN ('Authorised', 'Printed', 'Pending')
+				AND (   (purchorders.klstatus <= '1000' 
+						AND (purchorders.orddate < '" . $Today ."'))
+					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus <= '2000' 
+						AND (purchorders.deliverydate < '" . $Today ."'))
+					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '4000' AND suppliers.paymentterms = 'B1'
+						AND (purchorders.paymentdate < '" . $Today ."'))
+					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '7000' AND suppliers.paymentterms = 'B2'
+						AND (purchorders.paymentdate < '" . $Today ."'))
+					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '4000' AND suppliers.paymentterms = 'O1'
+						AND (purchorders.paymentdate < '" . $Today ."'))
+					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '4000' AND suppliers.paymentterms = 'O2'
+						AND (purchorders.paymentdate < '" . $Today ."'))
+					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '4000' AND suppliers.paymentterms = 'O3'
+						AND (purchorders.paymentdate < '" . $Today ."'))
+					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '4000' AND suppliers.paymentterms = 'O4'
+						AND (purchorders.paymentdate < '" . $Today ."'))
+					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '4000' AND suppliers.paymentterms = 'O5'
+						AND (purchorders.arrivaldate < '" . $Today ."'))
+					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '5000' AND suppliers.paymentterms = 'O1'
+						AND (purchorders.shipmentdate < '" . $Today ."'))
+					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '5000' AND suppliers.paymentterms = 'O2'
+						AND (purchorders.shipmentdate < '" . $Today ."'))
+					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '5000' AND suppliers.paymentterms = 'O3'
+						AND (purchorders.shipmentdate < '" . $Today ."'))
+					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '5000' AND suppliers.paymentterms = 'O4'
+						AND (purchorders.shipmentdate < '" . $Today ."'))
+					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '5000' AND suppliers.paymentterms = 'O5'
+						AND (purchorders.shipmentdate < '" . $Today ."'))
+					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '6000' 
+						AND (purchorders.arrivaldate < '" . $Today ."'))
+					)
+				AND purchorders.arrivaldate != purchorders.orddate
+			GROUP BY purchorders.orderno
+			ORDER BY purchorders.orderno";
+
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . _('POs with wrong planned dates OR wrong status') . ' </strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#PO') . '</th>
+							<th class="ascending">' . _('Supplier') . '</th>
+							<th class="ascending">' . _('Order value') . '</th>
+							<th class="ascending">' . _('KL Status') . '</th>
+							<th class="ascending">' . _('Order') . '</th>
+							<th class="ascending">' . _('Delivery') . '</th>
+							<th class="ascending">' . _('Payment') . '</th>
+							<th class="ascending">' . _('Shipment') . '</th>
+							<th class="ascending">' . _('Arrival') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			$CodeLink = '<a href="' . $RootPath . '/PO_Header.php?ModifyOrderNumber=' . $myrow['orderno'] . '">' . $myrow['orderno'] . '</a>';
+			$OrderDate = substr($myrow['orddate'],0,10);
+			if ($myrow['deliverydate'] == '0000-00-00'){
+				$myrow['deliverydate'] = '';
+			} else {
+				$myrow['deliverydate'] = ConvertSQLDate($myrow['deliverydate']);
+			}
+			if ($myrow['paymentdate'] == '0000-00-00'){
+				$myrow['paymentdate'] = '';
+			} else {
+				$myrow['paymentdate'] = ConvertSQLDate($myrow['paymentdate']);
+			}
+			if ($myrow['shipmentdate'] == '0000-00-00'){
+				$myrow['shipmentdate'] = '';
+			} else {
+				$myrow['shipmentdate'] = ConvertSQLDate($myrow['shipmentdate']);
+			}
+			if ($myrow['arrivaldate'] == '0000-00-00'){
+				$myrow['arrivaldate'] = '';
+			} else {
+				$myrow['arrivaldate'] = ConvertSQLDate($myrow['arrivaldate']);
+			}
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					</tr>', 
+					$CodeLink, 
+					$myrow['supplierno'], 
+					locale_number_format($myrow['ordervalue'],0) . ' ' . $myrow['currcode'] ,
+					$myrow['description'], 
+					$OrderDate, 
+					$myrow['deliverydate'], 
+					$myrow['paymentdate'], 
+					$myrow['shipmentdate'], 
+					$myrow['arrivaldate']
+					);
+			$i++;
+		}
 		echo '</table>
 				</div>';
 	}

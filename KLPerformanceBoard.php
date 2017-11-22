@@ -42,7 +42,6 @@ if (!isset($_GET['Section'])){
 * TEST AND PLAY AREA      
 ***************************************************************************************/
 if ($KL_SystemAdmin){
-
 } 
 
 
@@ -184,9 +183,12 @@ if ($ProcessSection02){
 		OR $KL_BusinessDevelopmentManager){
 		PurchaseOrdersProcessTime(90, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		PurchaseOrdersWrongPlannedDates($RootPath, $db);
+		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_OperationalManager){
+	if ($KL_SystemAdmin OR
+		$KL_OperationalManager){
 		POStatusControl("IN NEGOTIAION WITH SUPPLIER", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		POStatusControl("ON PRODUCTION", 0, $RootPath, $db);
