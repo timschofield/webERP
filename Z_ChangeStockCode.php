@@ -223,6 +223,7 @@ if (isset($_POST['ProcessStockChange'])){
 		ChangeFieldInTable("klmovetodiscount80", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
 		ChangeFieldInTable("relateditems", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
 		ChangeFieldInTable("relateditems", "related", $_POST['OldStockID'], $_POST['NewStockID'], $db);
+		ChangeFieldInTable("klsalesperformance", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
 
 		include ('includes/OpenCartConnectDB.php');
 		ChangeFieldInOpenCartTable( $oc_tableprefix."product", "model", $_POST['OldStockID'], $_POST['NewStockID'], $db_oc);
