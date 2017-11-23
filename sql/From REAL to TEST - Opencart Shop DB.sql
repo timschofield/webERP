@@ -34,11 +34,11 @@ UPDATE oc_setting
 SET `value` = 'data/KL/WHITE-background.jpg'
 WHERE `group` = 'templatemela'
 	AND `key` = 'templatemela_custom_pattern';		
-
+/*
 UPDATE oc_setting SET `value` = '1'
 WHERE `group` = 'templatemela'
 	AND `key` = 'templatemela_showcontrolpanel';	
-	
+	*/
 UPDATE oc_setting
 SET `value` = 'http://www.bumibiru.com/TEST/shop/captainkapal/'
 WHERE `group` = 'config'
