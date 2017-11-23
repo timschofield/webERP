@@ -3,11 +3,11 @@
 
 include ('includes/session.php');
 $Title = _('Petty Cash Management Report');
+/* webERP manual links before header.php */
 $ViewTopic = 'PettyCash';
 $BookMark = 'PcReportTab';
 
 include ('includes/SQL_CommonFunctions.inc');
-
 
 if (isset($_POST['SelectedTabs'])){
 	$SelectedTabs = mb_strtoupper($_POST['SelectedTabs']);
@@ -41,21 +41,19 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 			<td><select name="SelectedTabs">';
 
 	$SQL = "SELECT tabcode
-		FROM pctabs
-		WHERE ( authorizer = '" . $_SESSION['UserID'] .
-			"' OR usercode = '" . $_SESSION['UserID'].
-			"' OR assigner = '" . $_SESSION['UserID'] . "' )
-		ORDER BY tabcode";
+				FROM pctabs
+				WHERE ( authorizer = '" . $_SESSION['UserID'] .
+					"' OR usercode = '" . $_SESSION['UserID'].
+					"' OR assigner = '" . $_SESSION['UserID'] . "' )
+				ORDER BY tabcode";
 	$Result = DB_query($SQL);
 
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['SelectedTabs']) and $MyRow['tabcode'] == $_POST['SelectedTabs']) {
-			echo '<option selected="selected" value="';
+			echo '<option selected="selected" value="', $MyRow['tabcode'], '">', $MyRow['tabcode'], '</option>';
 		} else {
-			echo '<option value="';
+			echo '<option value="', $MyRow['tabcode'], '">', $MyRow['tabcode'], '</option>';
 		}
-		echo $MyRow['tabcode'] . '">' . $MyRow['tabcode'] . '</option>';
-
 	} //end while loop get type of tab
 
 	DB_free_result($Result);
@@ -100,8 +98,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 					amount,
 					authorized,
 					posted,
-					notes,
-					receipt
+					notes
 			FROM pcashdetails
 			WHERE tabcode = '" . $SelectedTabs . "'
 			AND date >= '" . $SQLFromDate . "' AND date <= '" . $SQLToDate . "'
@@ -219,11 +216,10 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,70,$FontSize,_('Date of Expense'));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,100,$FontSize,_('Expense Code'));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+160,$YPos,100,$FontSize,_('Gross Amount'));
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+210,$YPos,100,$FontSize,_('Total Tax'));
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+245,$YPos,100,$FontSize,_('Tax Group'));
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+285,$YPos,100,$FontSize,_('Tag'));
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+330,$YPos,100,$FontSize,_('Note'));
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+395,$YPos,100,$FontSize,_('Receipt'));
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+210,$YPos,100,$FontSize,_('Tax'));
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+255,$YPos,100,$FontSize,_('Tax Group'));
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+320,$YPos,100,$FontSize,_('Tag'));
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+380,$YPos,100,$FontSize,_('Notes'));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+465,$YPos,100,$FontSize,_('Date Authorised'));
 	$YPos -= (2 * $line_height);
 
@@ -264,8 +260,18 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 		$TaxResult = DB_query($TaxSQL);
 		
 		while ($MyTaxRow = DB_fetch_array($TaxResult)) {
-				$TaxesDescription .= $MyTaxRow['description'];
-				$TaxesTaxAmount .= locale_number_format($MyTaxRow['amount'], $CurrDecimalPlaces);
+				$TaxesDescription .= $MyTaxRow['description'] . "\n"; //Line breaks not working !?
+				$TaxesTaxAmount .= locale_number_format($MyTaxRow['amount'], $CurrDecimalPlaces) . "\n"; //Line breaks not working !?
+		}
+		
+		//Generate download link for expense receipt, or show text if no receipt file is found.
+		$ReceiptSupportedExt = array('png','jpg','jpeg','pdf','doc','docx','xls','xlsx'); //Supported file extensions
+		$ReceiptFileDir = $PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/expenses_receipts/' . mb_strtolower($SelectedTabs); //Receipts upload directory
+		$ReceiptFilePath = reset(glob($ReceiptFileDir . '/' . $MyRow['counterindex'] . '.{' . implode(',', $ReceiptSupportedExt) . '}', GLOB_BRACE)); //Find the relevant receipt file for the expense. There should only be one (file type), but limit to one result just in case.
+		if (empty($ReceiptFilePath)) { //If no receipt file for the expenses is found
+			$ReceiptText = _('No attachment');
+		} else {
+			$ReceiptText = '<a href="' . $ReceiptFilePath . '" download="ExpenseReceipt-' . mb_strtolower($SelectedTabs) . '-[' . $MyRow['date'] . ']-[' . $MyRow['counterindex'] . ']">' . _('Download attachment') . '</a>';
 		}
 		
 		if ($MyRow['authorized'] == '0000-00-00') {
@@ -279,10 +285,9 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,130,$FontSize,$Description[0]);
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+160,$YPos,50,$FontSize,locale_number_format($MyRow['amount'], $CurrDecimalPlaces),'right');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+210,$YPos,50,$FontSize,$TaxesTaxAmount);
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+245,$YPos,50,$FontSize,$TaxesDescription);
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+285,$YPos,50,$FontSize,$TagDescription);
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+330,$YPos,60,$FontSize,$MyRow['notes']);
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+395,$YPos,65,$FontSize,$MyRow['receipt']);
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+255,$YPos,50,$FontSize,$TaxesDescription);
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+320,$YPos,50,$FontSize,$TagDescription);
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+380,$YPos,60,$FontSize,$MyRow['notes']);
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+465,$YPos,70,$FontSize,$AuthorisedDate);
 		$YPos -= $line_height;
 
@@ -445,8 +450,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 					amount,
 					authorized,
 					posted,
-					notes,
-					receipt
+					notes
 			FROM pcashdetails
 			WHERE tabcode = '" . $SelectedTabs . "'
 				AND date >= '" . $SQLFromDate . "'
@@ -462,11 +466,11 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 			<th>' . _('Date of Expense') . '</th>
 			<th>' . _('Expense Code') . '</th>
 			<th>' . _('Gross Amount') . '</th>
-			<th>' . _('Total Tax') . '</th>
+			<th>' . _('Tax') . '</th>
 			<th>' . _('Tax Group') . '</th>
 			<th>' . _('Tag') . '</th>
 			<th>' . _('Notes') . '</th>
-			<th>' . _('Receipt') . '</th>
+			<th>' . _('Receipt Attachment') . '</th>
 			<th>' . _('Date Authorised') . '</th>
 		</tr>';
 
@@ -510,6 +514,16 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 			$TaxesTaxAmount .= locale_number_format($MyTaxRow['amount'], $CurrDecimalPlaces) . '<br />';
 		}
 		
+		//Generate download link for expense receipt, or show text if no receipt file is found.
+		$ReceiptSupportedExt = array('png','jpg','jpeg','pdf','doc','docx','xls','xlsx'); //Supported file extensions
+		$ReceiptFileDir = $PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/expenses_receipts/' . mb_strtolower($SelectedTabs); //Receipts upload directory
+		$ReceiptFilePath = reset(glob($ReceiptFileDir . '/' . $MyRow['counterindex'] . '.{' . implode(',', $ReceiptSupportedExt) . '}', GLOB_BRACE)); //Find the relevant receipt file for the expense. There should only be one (file type), but limit to one result just in case.
+		if (empty($ReceiptFilePath)) { //If no receipt file for the expenses is found
+			$ReceiptText = _('No attachment');
+		} else {
+			$ReceiptText = '<a href="' . $ReceiptFilePath . '" download="ExpenseReceipt-' . mb_strtolower($SelectedTabs) . '-[' . $MyRow['date'] . ']-[' . $MyRow['counterindex'] . ']">' . _('Download attachment') . '</a>';
+		}
+		
 		if ($MyRow['authorized'] == '0000-00-00') {
 					$AuthorisedDate = _('Unauthorised');
 				} else {
@@ -535,7 +549,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 				<td>', $TaxesDescription, '</td>
 				<td>', $TagDescription, '</td>
 				<td>', $MyRow['notes'], '</td>
-				<td>', $MyRow['receipt'], '</td>
+				<td>', $ReceiptText, '</td>
 				<td>', $AuthorisedDate, '</td>
 			</tr>';
 	}

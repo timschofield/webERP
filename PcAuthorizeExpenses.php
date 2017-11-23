@@ -55,14 +55,17 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	if (!isset($Days)) {
 		$Days = 30;
 	}
-	echo '<input type="hidden" name="SelectedTabs" value="', $SelectedTabs, '" />';
+	
+	//Limit expenses history to X days
 	echo '<table class="selection">
 			<tr>
-				<th colspan="9">', _('Detail of Tab Movements For Last '), ':
+				<td>', _('Detail of Tab Movements For Last '), ':
+					<input type="hidden" name="SelectedTabs" value="', $SelectedTabs, '" />
 					<input type="text" class="number" name="Days" value="', $Days, '" maxlength="3" size="4" />', _('Days'), '
 					<input type="submit" name="Go" value="', _('Go'), '" />
-				</th>
-			</tr>';
+				</td>
+			</tr>
+		</table>';
 	$SQL = "SELECT pcashdetails.counterindex,
 				pcashdetails.tabcode,
 				pcashdetails.tag,
@@ -72,7 +75,6 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 				pcashdetails.authorized,
 				pcashdetails.posted,
 				pcashdetails.notes,
-				pcashdetails.receipt,
 				pctabs.glaccountassignment,
 				pctabs.glaccountpcash,
 				pctabs.usercode,
@@ -87,17 +89,18 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 				AND pcashdetails.codeexpense<>'ASSIGNCASH'
 			ORDER BY pcashdetails.date, pcashdetails.counterindex ASC";
 	$Result = DB_query($SQL);
-	echo '<tr>
-			<th>', _('Date of Expense'), '</th>
-			<th>', _('Expense Code'), '</th>
-			<th>', _('Gross Amount'), '</th>
-			<th>', _('Tax'), '</th>
-			<th>', _('Tax Group'), '</th>
-			<th>', _('Tag'), '</th>
-			<th>', _('Notes'), '</th>
-			<th>', _('Receipt'), '</th>
-			<th>', _('Date Authorised'), '</th>
-		</tr>';
+	echo '<table class="selection">
+			<tr>
+				<th>', _('Date of Expense'), '</th>
+				<th>', _('Expense Code'), '</th>
+				<th>', _('Gross Amount'), '</th>
+				<th>', _('Tax'), '</th>
+				<th>', _('Tax Group'), '</th>
+				<th>', _('Tag'), '</th>
+				<th>', _('Notes'), '</th>
+				<th>', _('Receipt Attachment'), '</th>
+				<th>', _('Date Authorised'), '</th>
+			</tr>';
 	$k = 0; //row colour counter
 	while ($MyRow = DB_fetch_array($Result)) {
 		$CurrDecimalPlaces = $MyRow['decimalplaces'];
@@ -120,13 +123,13 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			$NetAmount = ($MyRow['amount'] - $TaxTotalRow['totaltax']) / $MyRow['rate'];
 		}
 		if ($MyRow['codeexpense'] == 'ASSIGNCASH') {
-			$type = 2;
+			$Type = 2;
 			$AccountFrom = $MyRow['glaccountassignment'];
 			$AccountTo = $MyRow['glaccountpcash'];
 			$TagTo = 0;
 			$TagDescription = '0 - ' . _('None');
 		} else {
-			$type = 1;
+			$Type = 1;
 			$NetAmount = -$NetAmount;
 			$AccountFrom = $MyRow['glaccountpcash'];
 			$SQLAccExp = "SELECT glaccount,
@@ -141,9 +144,9 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 		}
 		if (isset($_POST['Submit']) and $_POST['Submit'] == _('Update') and isset($_POST[$MyRow['counterindex']])) {
 			//get typeno
-			$typeno = GetNextTransNo($type,$db);
+			$TypeNo = GetNextTransNo($Type,$db);
 			//build narrative
-			$Narrative = _('PettyCash') . ' - ' . $MyRow['tabcode'] . ' - ' . $MyRow['codeexpense'] . ' - ' . DB_escape_string($MyRow['notes']) . ' - ' . $MyRow['receipt'];
+			$Narrative = _('PettyCash') . ' - ' . $MyRow['tabcode'] . ' - ' . $MyRow['codeexpense'] . ' - ' . DB_escape_string($MyRow['notes']);
 			//insert to gltrans
 			DB_Txn_Begin();
 			$SQLFrom = "INSERT INTO `gltrans` (`counterindex`,
@@ -159,8 +162,8 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 											`jobref`,
 											`tag`)
 									VALUES (NULL,
-											'" . $type . "',
-											'" . $typeno . "',
+											'" . $Type . "',
+											'" . $TypeNo . "',
 											0,
 											'" . $MyRow['date'] . "',
 											'" . $PeriodNo . "',
@@ -184,8 +187,8 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 										`jobref`,
 										`tag`)
 								VALUES (NULL,
-										'" . $type . "',
-										'" . $typeno . "',
+										'" . $Type . "',
+										'" . $TypeNo . "',
 										0,
 										'" . $MyRow['date'] . "',
 										'" . $PeriodNo . "',
@@ -222,8 +225,8 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 												`jobref`,
 												`tag`)
 										VALUES (NULL,
-												'" . $type . "',
-												'" . $typeno . "',
+												'" . $Type . "',
+												'" . $TypeNo . "',
 												0,
 												'" . $MyRow['date'] . "',
 												'" . $PeriodNo . "',
@@ -283,14 +286,6 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			$k = 1;
 		}
 		
-		/* 
-		if ($MyRow['posted'] == 0) {
-			$Posted = _('No');
-		} else {
-			$Posted = _('Yes');
-		}
-		*/
-		
 		$SQLDes = "SELECT description
 						FROM pcexpenses
 						WHERE codeexpense='" . $MyRow['codeexpense'] . "'";
@@ -320,7 +315,19 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			$TaxesDescription .= $MyTaxRow['description'] . '<br />';
 			$TaxesTaxAmount .= locale_number_format($MyTaxRow['amount'], $CurrDecimalPlaces) . '<br />';
 		}
-							
+		
+		//Generate download link for expense receipt, or show text if no receipt file is found.
+		$ReceiptSupportedExt = array('png','jpg','jpeg','pdf','doc','docx','xls','xlsx'); //Supported file extensions
+		$ReceiptFileDir = $PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/expenses_receipts/' . mb_strtolower($SelectedTabs); //Receipts upload directory
+		$ReceiptFilePathMatched = reset(glob($ReceiptFileDir . '/' . $MyRow['counterindex'] . '.{' . implode(',', $ReceiptSupportedExt) . '}', GLOB_BRACE)); //Find the relevant receipt file for the expense. There should only be one (file type), but limit to one result just in case.
+		if (!empty($ReceiptFilePathMatched)) { //If no receipt file for the expenses is found
+			$ReceiptText = '<a href="' . $ReceiptFilePathMatched . '" download="ExpenseReceipt-' . mb_strtolower($SelectedTabs) . '-[' . $MyRow['date'] . ']-[' . $MyRow['counterindex'] . ']">' . _('Download attachment') . '</a>';
+		} elseif ($ExpenseCodeDes == 'ASSIGNCASH') {
+			$ReceiptText = '';
+		} else {
+			$ReceiptText = _('No attachment');
+		}
+		
 		echo '<td>', ConvertSQLDate($MyRow['date']), '</td>
 			<td>', $ExpenseCodeDes, '</td>
 			<td class="number">', locale_number_format($MyRow['amount'], $CurrDecimalPlaces), '</td>
@@ -328,7 +335,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			<td>', $TaxesDescription, '</td>
 			<td>', $TagDescription, '</td>
 			<td>', $MyRow['notes'], '</td>
-			<td>', $MyRow['receipt'], '</td>';
+			<td>', $ReceiptText, '</td>';
 		if (isset($_POST[$MyRow['counterindex']])) {
 			echo '<td>' . ConvertSQLDate(Date('Y-m-d'));
 		} else {

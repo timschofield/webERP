@@ -36,16 +36,16 @@ if (isset($_POST['submit'])) {
 		prnMsg(_('The Expense type  code cannot be an empty string or spaces'), 'error');
 	} elseif (mb_strlen($_POST['CodeExpense']) > 20) {
 		$InputError = 1;
-		prnMsg(_('The Expense code must be twenty characters or less long'), 'error');
+		prnMsg(_('The expense code must be twenty characters or less long'), 'error');
 	} elseif (ContainsIllegalCharacters($_POST['CodeExpense'])) {
 		$InputError = 1;
-		prnMsg(_('The Expense code cannot contain any of the following characters " \' - &amp;'), 'error');
+		prnMsg(_('The expense code cannot contain any of the following characters ') . '" \' - &amp;', 'error');
 	} elseif (ContainsIllegalCharacters($_POST['Description'])) {
 		$InputError = 1;
-		prnMsg(_('The Expense description cannot contain any of the following characters " \' - &amp;'), 'error');
+		prnMsg(_('The expense description cannot contain any of the following characters ') . '" \' - &amp;', 'error');
 	} elseif (mb_strlen($_POST['Description']) > 50) {
 		$InputError = 1;
-		prnMsg(_('The tab code must be Fifty characters or less long'), 'error');
+		prnMsg(_('The tab code must be fifty characters or less long'), 'error');
 	} elseif (mb_strlen($_POST['Description']) == 0) {
 		$InputError = 1;
 		echo prnMsg(_('The tab code description must be entered'), 'error');
@@ -139,7 +139,7 @@ if (!isset($SelectedExpense)) {
 	$Result = DB_query($SQL);
 	echo '<table class="selection">
 			<tr>
-				<th>', _('Code Of Expense'), '</th>
+				<th>', _('Expense Code'), '</th>
 				<th>', _('Description'), '</th>
 				<th>', _('Account Code'), '</th>
 				<th>', _('Account Description'), '</th>
@@ -213,14 +213,14 @@ if (!isset($_GET['delete'])) {
 		// We dont allow the user to change an existing type code
 		echo '<table class="selection">
 				<tr>
-					<td>', _('Code Of Expense'), ':</td>
+					<td>', _('Expense Code'), ':</td>
 					<td>', $_POST['CodeExpense'], '</td>
 				</tr>';
 	} else {
 		// This is a new type so the user may volunteer a type code
 		echo '<table class="selection">
 				<tr>
-					<td>', _('Code Of Expense'), ':</td>
+					<td>', _('Expense Code'), ':</td>
 					<td><input type="text" name="CodeExpense" autofocus="autofocus" required="required" maxlength="20" /></td>
 				</tr>';
 	}

@@ -29,7 +29,6 @@ if (isset($_POST['Cancel'])) {
 	unset($Days);
 	unset($_POST['Amount']);
 	unset($_POST['Notes']);
-	unset($_POST['Receipt']);
 }
 
 if (isset($_POST['Process'])) {
@@ -117,8 +116,7 @@ if (isset($_POST['submit'])) {
 					amount,
 					authorized,
 					posted,
-					notes,
-					receipt)
+					notes)
 			VALUES (NULL,
 					'" . $_POST['SelectedTabs'] . "',
 					'" . FormatDateForSQL($_POST['Date']) . "',
@@ -127,9 +125,8 @@ if (isset($_POST['submit'])) {
 					'0000-00-00',
 					'0',
 					'" . $_POST['Notes'] . "',
-					'" . $_POST['Receipt'] . "'
-				),
-				(NULL,
+					),
+					(NULL,
 					'" . $SelectedTabsTo . "',
 					'" . FormatDateForSQL($_POST['Date']) . "',
 					'ASSIGNCASH',
@@ -137,7 +134,7 @@ if (isset($_POST['submit'])) {
 					'0000-00-00',
 					'0',
 					'" . $_POST['Notes'] . "',
-					'" . $_POST['Receipt'] . "')";
+					)";
 		$msg = _('Assignment of cash from PC Tab ') . ' ' . $SelectedTabs .  ' ' . _('to ') . $SelectedTabsTo . ' ' . _('has been created');
 	}
 
@@ -148,7 +145,6 @@ if (isset($_POST['submit'])) {
 		unset($_POST['SelectedExpense']);
 		unset($_POST['Amount']);
 		unset($_POST['Notes']);
-		unset($_POST['Receipt']);
 		unset($_POST['SelectedTabs']);
 		unset($_POST['Date']);
 	}
@@ -235,7 +231,6 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 			unset($_POST['Amount']);
 			unset($_POST['Date']);
 			unset($_POST['Notes']);
-			unset($_POST['Receipt']);
 		}
 
 		if(!isset ($Days)){
@@ -259,8 +254,7 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 						amount,
 						authorized,
 						posted,
-						notes,
-						receipt
+						notes
 				FROM pcashdetails
 				WHERE tabcode='" . $SelectedTabs . "'
 				AND date >= DATE_SUB(CURDATE(), INTERVAL " . $Days . " DAY)
@@ -269,22 +263,28 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 
 		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
 			<div>
-				<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-				<table class="selection">
+				<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+				
+		//Limit expenses history to X days		
+		echo '<table class="selection">
 				<tr>
-					<th colspan="8">' . _('Detail of Tab Movements For Last') .':
+					<td>' . _('Detail of Tab Movements For Last') .':
 						<input type="hidden" name="SelectedTabs" value="' . $SelectedTabs . '" />
 						<input type="text" class="number" name="Days" value="' . $Days  . '" maxlength="3" size="4" /> ' . _('Days') . '
-						<input type="submit" name="Go" value="' . _('Go') . '" /></th>
+						<input type="submit" name="Go" value="' . _('Go') . '" />
+					</td>
 				</tr>
-				<tr>
-					<th>' . _('Date') . '</th>
-					<th>' . _('Expense Code') . '</th>
-					<th>' . _('Amount') . '</th>
-					<th>' . _('Notes') . '</th>
-					<th>' . _('Receipt') . '</th>
-					<th>' . _('Date Authorised') . '</th>
-				</tr>';
+			</table>';
+			
+		echo '<table class="selection">
+			<tr>
+				<th>' . _('Date') . '</th>
+				<th>' . _('Expense Code') . '</th>
+				<th>' . _('Amount') . '</th>
+				<th>' . _('Notes') . '</th>
+				<th>' . _('Receipt Attachment') . '</th>
+				<th>' . _('Date Authorised') . '</th>
+			</tr>';
 
 		$k = 0; //row colour counter
 
@@ -309,6 +309,18 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 				$ExpenseCodeDes = $MyRow['codeexpense'] . ' - ' . $Description[0];
 		}
 		
+		//Generate download link for expense receipt, or show text if no receipt file is found.
+		$ReceiptSupportedExt = array('png','jpg','jpeg','pdf','doc','docx','xls','xlsx'); //Supported file extensions
+		$ReceiptFileDir = $PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/expenses_receipts/' . mb_strtolower($SelectedTabs); //Receipts upload directory
+		$ReceiptFilePathMatched = reset(glob($ReceiptFileDir . '/' . $MyRow['counterindex'] . '.{' . implode(',', $ReceiptSupportedExt) . '}', GLOB_BRACE)); //Find the relevant receipt file for the expense. There should only be one (file type), but limit to one result just in case.
+		if (!empty($ReceiptFilePathMatched)) { //If no receipt file for the expenses is found
+			$ReceiptText = '<a href="' . $ReceiptFilePathMatched . '" download="ExpenseReceipt-' . mb_strtolower($SelectedTabs) . '-[' . $MyRow['date'] . ']-[' . $MyRow['counterindex'] . ']">' . _('Download attachment') . '</a>';
+		} elseif ($ExpenseCodeDes == 'ASSIGNCASH') {
+			$ReceiptText = '';
+		} else {
+			$ReceiptText = _('No attachment');
+		}
+		
 		if ($MyRow['authorized'] == '0000-00-00') {
 				$AuthorisedDate = _('Unauthorised');
 		} else {
@@ -321,7 +333,7 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 				<td>', $ExpenseCodeDes, '</td>
 				<td class="number">' . locale_number_format($MyRow['amount'],$CurrDecimalPlaces) . '</td>
 				<td>' . $MyRow['notes'] . '</td>
-				<td>' . $MyRow['receipt'] . '</td>
+				<td>' . $ReceiptText . '</td>
 				<td>' . $AuthorisedDate . '</td>
 				</tr>';
 		}else{
@@ -329,7 +341,7 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 				<td>', $ExpenseCodeDes, '</td>
 				<td class="number">' . locale_number_format($MyRow['amount'],$CurrDecimalPlaces) . '</td>
 				<td>' . $MyRow['notes'] . '</td>
-				<td>' . $MyRow['receipt'] . '</td>
+				<td>' . $ReceiptText . '</td>
 				<td>' . $AuthorisedDate . '</td>
 				</tr>';
 		}
@@ -416,16 +428,8 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 				<td><input type="text" name="Notes" size="50" maxlength="49" value="' . $_POST['Notes'] . '" /></td>
 			</tr>';
 
-		if (!isset($_POST['Receipt'])) {
-			$_POST['Receipt'] = '';
-		}
-
-		echo '<tr>
-				<td>' . _('Receipt') . ':</td>
-				<td><input type="text" name="Receipt" size="50" maxlength="49" value="' . $_POST['Receipt'] . '" /></td>
-			</tr>
-			</table>
-			<input type="hidden" name="CurrentAmount" value="' . $SelectedTab['0']. '" />
+		echo '</table>'; // close main table
+		echo '<input type="hidden" name="CurrentAmount" value="' . $SelectedTab['0']. '" />
 			<input type="hidden" name="SelectedTabs" value="' . $SelectedTabs . '" />
 			<input type="hidden" name="Days" value="' . $Days . '" />
 			<input type="hidden" name="SelectedTabsTo" value="' . $SelectedTabsTo[1] . '" />

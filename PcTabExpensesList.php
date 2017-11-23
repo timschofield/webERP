@@ -115,12 +115,11 @@ function submit(&$db, $TabToShow, $FromDate, $ToDate) {
 			$objPHPExcel->getActiveSheet()->setCellValue('B10', 'Expense Code');
 			$objPHPExcel->getActiveSheet()->setCellValue('C10', 'Gross Amount');
 			$objPHPExcel->getActiveSheet()->setCellValue('D10', 'Balance');
-			$objPHPExcel->getActiveSheet()->setCellValue('E10', 'Total Tax');
+			$objPHPExcel->getActiveSheet()->setCellValue('E10', 'Tax');
 			$objPHPExcel->getActiveSheet()->setCellValue('F10', 'Tax Group');
 			$objPHPExcel->getActiveSheet()->setCellValue('G10', 'Tag');
 			$objPHPExcel->getActiveSheet()->setCellValue('H10', 'Notes');
-			$objPHPExcel->getActiveSheet()->setCellValue('I10', 'Receipt');
-			$objPHPExcel->getActiveSheet()->setCellValue('J10', 'Date Authorized');
+			$objPHPExcel->getActiveSheet()->setCellValue('I10', 'Date Authorized');
 
 			$objPHPExcel->getActiveSheet()->setCellValue('B11', 'Previous Balance');
 			$objPHPExcel->getActiveSheet()->setCellValue('D11', $MyPreviousBalance['previous']);
@@ -167,7 +166,17 @@ function submit(&$db, $TabToShow, $FromDate, $ToDate) {
 					$TaxesDescription .= $MyTaxRow['description'];
 					$TaxesTaxAmount .= locale_number_format($MyTaxRow['amount'], $CurrDecimalPlaces);
 				}
-
+				
+				//Generate download link for expense receipt, or show text if no receipt file is found.
+				$ReceiptSupportedExt = array('png','jpg','jpeg','pdf','doc','docx','xls','xlsx'); //Supported file extensions
+				$ReceiptFileDir = $PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/expenses_receipts/' . mb_strtolower($TabToShow); //Receipts upload directory
+				$ReceiptFilePath = reset(glob($ReceiptFileDir . '/' . $MyRow['counterindex'] . '.{' . implode(',', $ReceiptSupportedExt) . '}', GLOB_BRACE)); //Find the relevant receipt file for the expense. There should only be one (file type), but limit to one result just in case.
+				if (empty($ReceiptFilePath)) { //If no receipt file for the expenses is found
+					$ReceiptText = _('No attachment');
+				} else {
+					$ReceiptText = '<a href="' . $ReceiptFilePath . '" download="ExpenseReceipt-' . mb_strtolower($TabToShow) . '-[' . $MyRow['date'] . ']-[' . $MyRow['counterindex'] . ']">' . _('Download attachment') . '</a>';
+				}
+		
 				if ($MyRow['authorized'] == '0000-00-00') {
 					$AuthorisedDate = _('Unauthorised');
 				} else {
@@ -182,8 +191,7 @@ function submit(&$db, $TabToShow, $FromDate, $ToDate) {
 				$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, $TaxesDescription);
 				$objPHPExcel->getActiveSheet()->setCellValue('G'.$i, $TagDescription);
 				$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, $MyRow['notes']);
-				$objPHPExcel->getActiveSheet()->setCellValue('I'.$i, $MyRow['receipt']);
-				$objPHPExcel->getActiveSheet()->setCellValue('J'.$i, $AuthorisedDate);
+				$objPHPExcel->getActiveSheet()->setCellValue('I'.$i, $AuthorisedDate);
 
 				$i++;
 			}

@@ -55,14 +55,17 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	if (!isset($Days)) {
 		$Days = 30;
 	}
-	echo '<input type="hidden" name="SelectedTabs" value="', $SelectedTabs, '" />';
+	
+	//Limit expenses history to X days	
 	echo '<table class="selection">
 			<tr>
-				<th colspan="6">', _('Detail of Tab Movements For Last '), ':
+				<td>', _('Detail of Tab Movements For Last '), ':
+					<input type="hidden" name="SelectedTabs" value="', $SelectedTabs, '" />
 					<input type="text" class="number" name="Days" value="', $Days, '" maxlength="3" size="4" />', _('Days'), '
 					<input type="submit" name="Go" value="', _('Go'), '" />
-				</th>
-			</tr>';
+				</td>
+			</tr>
+		</table>';
 	$SQL = "SELECT pcashdetails.counterindex,
 				pcashdetails.tabcode,
 				pcashdetails.date,
@@ -71,7 +74,6 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 				pcashdetails.authorized,
 				pcashdetails.posted,
 				pcashdetails.notes,
-				pcashdetails.receipt,
 				pctabs.glaccountassignment,
 				pctabs.glaccountpcash,
 				pctabs.usercode,
@@ -86,14 +88,14 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 				AND pcashdetails.codeexpense='ASSIGNCASH'
 			ORDER BY pcashdetails.date, pcashdetails.counterindex ASC";
 	$Result = DB_query($SQL);
-	echo '<tr>
-			<th>', _('Date'), '</th>
-			<th>', _('Expense Code'), '</th>
-			<th>', _('Amount'), '</th>
-			<th>', _('Notes'), '</th>
-			<th>', _('Receipt'), '</th>
-			<th>', _('Date Authorised'), '</th>
-		</tr>';
+	echo '<table class="selection">
+			<tr>
+				<th>', _('Date'), '</th>
+				<th>', _('Expense Code'), '</th>
+				<th>', _('Amount'), '</th>
+				<th>', _('Notes'), '</th>
+				<th>', _('Date Authorised'), '</th>
+			</tr>';
 	$k = 0; //row colour counter
 	$CurrDecimalPlaces = 2;
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -127,7 +129,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			//get typeno
 			$typeno = GetNextTransNo($type,$db);
 			//build narrative
-			$Narrative = _('PettyCash') . ' - ' . $MyRow['tabcode'] . ' - ' . $MyRow['codeexpense'] . ' - ' . DB_escape_string($MyRow['notes']) . ' - ' . $MyRow['receipt'];
+			$Narrative = _('PettyCash') . ' - ' . $MyRow['tabcode'] . ' - ' . $MyRow['codeexpense'] . ' - ' . DB_escape_string($MyRow['notes']);
 			//insert to gltrans
 			DB_Txn_Begin();
 			$SQLFrom = "INSERT INTO `gltrans` (`counterindex`,
@@ -229,19 +231,10 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			$k = 1;
 		}
 		
-		/*
-		if ($MyRow['posted'] == 0) {
-			$Posted = _('No');
-		} else {
-			$Posted = _('Yes');
-		}
-		*/
-		
 		echo '<td>', ConvertSQLDate($MyRow['date']), '</td>
 			<td>', $MyRow['codeexpense'], '</td>
 			<td class="number">', locale_number_format($MyRow['amount'], $CurrDecimalPlaces), '</td>
-			<td>', $MyRow['notes'], '</td>
-			<td>', $MyRow['receipt'], '</td>';
+			<td>', $MyRow['notes'], '</td>';
 		if (isset($_POST[$MyRow['counterindex']])) {
 			echo '<td>' . ConvertSQLDate(Date('Y-m-d'));
 		} else {

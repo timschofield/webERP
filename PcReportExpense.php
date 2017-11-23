@@ -3,6 +3,7 @@
 
 include ('includes/session.php');
 $Title = _('Petty Cash Expense Management Report');
+/* webERP manual links before header.php */
 $ViewTopic = 'PettyCash';
 $BookMark = 'PcReportExpense';
 
@@ -115,7 +116,6 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 					pcashdetails.authorized,
 					pcashdetails.posted,
 					pcashdetails.notes,
-					pcashdetails.receipt,
 					pctabs.currency,
 					currencies.decimalplaces
 			FROM pcashdetails, pctabs, currencies
@@ -139,11 +139,10 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 			<th>' . _('Tab') . '</th>
 			<th>' . _('Currency') . '</th>
 			<th>' . _('Gross Amount') . '</th>
-			<th>', _('Total Tax'), '</th>
+			<th>', _('Tax'), '</th>
 			<th>', _('Tax Group'), '</th>
 			<th>', _('Tag'), '</th>
 			<th>' . _('Notes') . '</th>
-			<th>' . _('Receipt') . '</th>
 			<th>' . _('Date Authorised') . '</th>
 		</tr>';
 
@@ -186,7 +185,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 		$TagDescription = $TagTo . ' - ' . $TagRow['tagdescription'];
 		
 		if ($MyRow['authorized'] == '0000-00-00') {
-				$AuthorisedDate = _('Unauthorised');
+			$AuthorisedDate = _('Unauthorised');
 		} else {
 			$AuthorisedDate = ConvertSQLDate($MyRow['authorized']);
 		}
@@ -207,7 +206,6 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 			<td>', $TaxesDescription, '</td>
 			<td>', $TagDescription, '</td>
 			<td>', $MyRow['notes'], '</td>
-			<td>', $MyRow['receipt'], '</td>
 			<td>', $AuthorisedDate, '</td>
 		</tr>';
 	} //end of looping
