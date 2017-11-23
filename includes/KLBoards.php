@@ -895,7 +895,7 @@ function FinishedStockDistributionByShopAndCategory($db){
 						AND m2.categoryid =  'DISC80'
 						AND l2.reorderlevel != 0) AS modelsDISC80
 			FROM locations
-			WHERE locations.typeloc IN " . LIST_SHOPS_BY_TYPE . "
+			WHERE locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . "
 			ORDER BY locations.locationname";
 						
 	$result = DB_query($SQL);
@@ -1017,8 +1017,7 @@ function ActiveTransfersByLocation($RootPath, $db){
 				WHERE  recqty < shipqty
 					AND loctransfers.recloc = locations.loccode) as transferin
 			FROM locations
-			WHERE locations.typeloc IN " . LIST_SHOPS_BY_TYPE . "
-				OR locations.loccode = " . CODE_ONLINE_SHOP . "
+			WHERE locations.typeloc IN " . ALL_SHOPS_LIST_BY_TYPE . "
 			ORDER BY (SELECT SUM(shipqty-recqty)
 				FROM loctransfers
 				WHERE  recqty < shipqty
@@ -1309,12 +1308,15 @@ function TransferWithWrongInformation($maxdays, $RootPath, $db){
 
 function ListPriorityLocations($db){
 	$SQL="SELECT locationname,
+				zone,
 				priority,
+				stockavailableforonline,
+				smartdispatchminmodels,
 				smartdispatchmaxmodels
 		FROM locations
-		WHERE locations.typeloc IN " . LIST_SHOPS_BY_TYPE . "
-			OR locations.loccode = " . CODE_ONLINE_SHOP . "
+		WHERE locations.typeloc IN " . ALL_SHOPS_LIST_BY_TYPE . "
 		ORDER BY locationname ASC";
+
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Priority Assigned to Shops. 1-Maximum 10-Minimum') . '</strong></p>';
@@ -1322,20 +1324,34 @@ function ListPriorityLocations($db){
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
 							<th class="ascending">' . _('Location') . '</th>
+							<th class="ascending">' . _('Zone') . '</th>
 							<th class="ascending">' . _('Priority') . '</th>
-							<th class="ascending">' . _('MAX Models Daily Transfer') . '</th>
+							<th class="ascending">' . _('Stock Online?') . '</th>
+							<th class="ascending">' . _('Min Daily Tr') . '</th>
+							<th class="ascending">' . _('Max Daily Tr') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
 			$k = StartEvenOrOddRow($k);
+			if ($myrow['stockavailableforonline'] ==  1){
+				$StockOnline = "Yes";
+			}else{
+				$StockOnline = "No";
+			}
 			printf('<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>', 
 					$myrow['locationname'],
+					$myrow['zone'],
 					$myrow['priority'],
+					$StockOnline,
+					$myrow['smartdispatchminmodels'],
 					$myrow['smartdispatchmaxmodels']
 					);
 			$i++;
@@ -2680,7 +2696,7 @@ No pending transfer regarding this item
 					FROM locstock, locations
 					WHERE locstock.stockid = stockmaster.stockid
 						AND locstock.loccode = locations.loccode
-						AND locations.loccode IN " . LIST_SHOPS_BY_TYPE . ") = 0
+						AND locations.loccode IN " . BALI_SHOPS_LIST_BY_TYPE . ") = 0
 				AND (SELECT SUM(locstock.quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
@@ -2743,7 +2759,7 @@ function ItemsInCategoryWithStockKantorButReorderLevelTokoZero($CategoryId, $Roo
 			$WhereLocation = " AND locations.typeloc = 'SHOPOU' ";
 		}
 	}else{
-		$WhereLocation = " AND locations.typeloc IN " . LIST_SHOPS_BY_TYPE . " ";
+		$WhereLocation = " AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . " ";
 	}
 
 	$SQL = "SELECT stockid,
@@ -9034,7 +9050,7 @@ id	select_type	table	type	possible_keys	key	key_len	ref	rows	Extra
 			WHERE stockmaster.stockid = locstock.stockid
 				AND locstock.loccode = locations.loccode
 				AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_SHOP_PACKAGING . "
-				AND locations.typeloc NOT IN " . LIST_SHOPS_BY_TYPE . "
+				AND locations.typeloc NOT IN " . BALI_SHOPS_LIST_BY_TYPE . "
 				AND locstock.loccode NOT IN " . LIST_GUDANG_FOR_PACKAGING . "
 				AND ( locstock.quantity > 0 OR locstock.reorderlevel > 0 )
 			ORDER BY stockmaster.stockid";

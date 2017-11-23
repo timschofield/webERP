@@ -81,7 +81,8 @@ define("CODE_KANTOR",      "'KANTO'");
 define("CODE_ONLINE_SHOP", "'TOKWS'");
 define("ZONES_OF_KANTOR",   "('OFFICE')"); 
 
-define("LIST_SHOPS_BY_TYPE",       "('SHOPKL','SHOPBL','SHOPOU')");
+define("BALI_SHOPS_LIST_BY_TYPE",  "('SHOPKL','SHOPBL','SHOPOU')");
+define("ALL_SHOPS_LIST_BY_TYPE",   "('SHOPKL','SHOPBL','SHOPOU','ONLINE')");
 define("LIST_ALL_SHOPS",           "('TOK66','TOKSA','TOKKS','TOKSE','TOKPU','TOKSU','TOKOB','TOKSS','TOKPA','TOKKA','TOKMU','TOKPS','TOKAR','TOKSB','TOKPB','TOKBU','TOKM2','TOKU2','TOKU3','TOKO2','TOKBB','TOKTB')"); // NOT includes the shop online
 define("LIST_SHOPS_KAPAL_LAUT",    "('TOK66','TOKSA','TOKKS','TOKSE','TOKPU','TOKOB','TOKSS','TOKPA','TOKKA','TOKM2','TOKSU','TOKU2')"); // NOT includes the shop online
 define("LIST_SHOPS_OUTLET",        "('TOKAR')"); 
