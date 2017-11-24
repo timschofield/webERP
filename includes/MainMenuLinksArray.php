@@ -75,7 +75,8 @@ if ($KL_BusinessDevelopmentManager){
 	$LinkControlBoard02 = '';
 }	
 													
-if ($KL_SystemAdmin OR $KL_BusinessDevelopmentManager){
+//if ($KL_SystemAdmin OR $KL_BusinessDevelopmentManager){
+if (false){
 	$TextPricingControlBoard01 = _('KL Pricing Control Board Section 01');
 	$LinkPricingControlBoard01 = "/KLControlBoardPrices.php?Section=01";
 	$TextPricingControlBoard02 = _('KL Pricing Control Board Section 02');
