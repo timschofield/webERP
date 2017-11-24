@@ -94,134 +94,6 @@ function NumberOfShops($ShopType, $db){
 	}
 }
 
-function AdjustNoSales($location, $maxdays, $maxmanualchanges, $topitems, $topitemsdays, $ShowMessages, $updateDB, $RootPath, $db){
-	/* No Sales during last maxdays, 
-		with stock at the shop
-		with RL > at the shop
-	*/
-
-	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$maxdays));
-	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$topitemsdays));
-	
-	$SQL = "SELECT 	stockmaster.stockid,
-					stockmaster.description,
-					stockmaster.categoryid,
-					stockmaster.units, 
-					locstock.quantity,
-					locstock.reorderlevel,
-					locstock.loccode,
-					locations.locationname 
-			FROM 	stockmaster,locstock,locations
-			WHERE 	stockmaster.stockid = locstock.stockid
-					AND stockmaster.categoryid != 'SHDISP'
-					AND (locstock.loccode = locations.loccode)
-					AND locstock.loccode = '" . $location . "'
-					AND (locstock.quantity > 0)
-					AND (locstock.reorderlevel > 0)
-					AND NOT EXISTS (SELECT * 
-									FROM 	salesorderdetails, salesorders
-									WHERE 	stockmaster.stockid = salesorderdetails.stkcode
-											AND (salesorders.fromstkloc = locstock.loccode)
-											AND (salesorderdetails.orderno = salesorders.orderno)
-											AND salesorderdetails.actualdispatchdate > '" . $FromDate . "')
-					AND NOT EXISTS (SELECT * 
-									FROM 	stockmoves
-									WHERE 	stockmoves.loccode = locstock.loccode 
-											AND stockmoves.stockid = stockmaster.stockid
-											AND stockmoves.trandate >= '" . $FromDate . "')
-					AND EXISTS (SELECT * 
-								FROM 	stockmoves
-								WHERE 	stockmoves.loccode = locstock.loccode 
-										AND stockmoves.stockid = stockmaster.stockid
-										AND stockmoves.trandate < '" . $FromDate . "'
-										AND stockmoves.qty >0) 
-					ORDER BY stockmaster.stockid";
-	
-	$result = DB_query($SQL);		
-	
-	if (DB_num_rows($result) != 0){
-		if ($ShowMessages){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Items with NO sales on last ') . $maxdays . ' days in ' . $location . ' </strong></p>';
-			echo '<div>';
-			echo '<table class="selection">';
-			$TableHeader = '<tr>
-								<th>' . _('#') . '</th>
-								<th>' . _('Code') . '</th>
-								<th>' . _('Description') . '</th>
-								<th>' . _('Category') . '</th>
-								<th>' . _('QOH') . '</th>
-								<th>' . _('Old RL') . '</th>
-								<th>' . _('New RL') . '</th>
-								<th>' . _('Notes') . '</th>
-							</tr>';
-			echo $TableHeader;
-		}
-		$k = 0; //row colour counter
-		$i = 1;
-		while ($myrow = DB_fetch_array($result)) {
-			$newRL = 0;
-			$notes = "";
-			// Check if belongs to a special category
-			// comented on change of category structure 2014-05-06
-/*			if ($myrow['categoryid'] == "KLPRGE"){
-				$newRL = $myrow['reorderlevel'];
-				$notes = "KLPRGE - Tali. RL Not changed";
-			}
-*/			// check if RING and we have sold on the same location same model, other sizes, then should be RL = 1.
-			if (isRing($myrow['stockid'])){
-				// get the model code and see if the location has sold of different sizes, so we need to keep all sizes at the shop
-				// even if no sales.
-				$RingModel = CodeModelRing($myrow['stockid']);
-				$SalesModel = SalesOfItemByLocation($RingModel, $location, $maxdays, $db);
-				if ($SalesModel != 0){
-					// sales for some size, so we want to keep it in stock (just 1, in case there were 2 or more)...
-					$newRL = 1;
-					$notes = $SalesModel . " sold other sizes.";
-				}
-			}
-			if (isTopSalesItem($myrow['stockid'], $myrow['categoryid'], $topitems, $topitemsdays, $db)){
-				$newRL = $myrow['reorderlevel'];
-				$notes = "Top ". $topitems . " sales.";
-			}
-/* KL RICARD COMMENTED ON 2014-06-10
-			// if manually reseted, not change it
-			$lastManualModification = isReorderLevelManuallyChanged($myrow['stockid'], $location, $maxmanualchanges, $db);
-			if ($lastManualModification != '0000-00-00'){
-				$newRL = $myrow['reorderlevel'];
-				$notes = "Manually changed on ". ConvertSQLDate($lastManualModification);
-			}
-*/			if ($ShowMessages){
-				$k = StartEvenOrOddRow($k);
-				$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
-				printf('<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						</tr>', 
-						$i, 
-						$CodeLink, 
-						$myrow['description'], 
-						$myrow['categoryid'], 
-						locale_number_format($myrow['quantity'],0),
-						locale_number_format($myrow['reorderlevel'],0),
-						locale_number_format($newRL,0),
-						$notes
-						);
-				$i++;
-			}
-			SetReorderLevel("AdjustNoSales", $myrow['stockid'],$location, $myrow['reorderlevel'], $newRL, $updateDB, $db);
-		}
-		if ($ShowMessages){
-			echo '</table>
-					</div>';
-		}
-	}
-}
-
 function isReorderLevelManuallyChanged($stockid, $loccode, $maxmanualchanges, $db){
 	if ($maxmanualchanges == 0){
 		return '0000-00-00';
@@ -922,11 +794,8 @@ function SetRLForLowSalesHighRL($ShopType, $maxdays, $oldRL, $maxRL, $minavailab
 				$newRL = $myrow['reorderlevel'];
 				$notes = "Discounted or outlet item. RL Not changed";
 			}
-/*			if (isTopSalesItem($myrow['stockid'], $myrow['categoryid'], $topitems, $topitemsdays, $db)){
-				$newRL = $myrow['reorderlevel'];
-				$notes = "Top ". $topitems . " sales.";
-			}
-*/			// if manually reseted, not change it
+
+			// if manually reseted, not change it
 			$lastManualModification = isReorderLevelManuallyChanged($myrow['stockid'], $location, $maxmanualchanges, $db);
 			if ($lastManualModification != '0000-00-00'){
 				$newRL = $myrow['reorderlevel'];

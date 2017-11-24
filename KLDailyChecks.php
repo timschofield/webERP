@@ -67,6 +67,7 @@ function KL_DailyMaintenanceDatabase($ShowMessages, $db, $EmailText = ''){
 	SetObsoleteForCategoryWithoutStock("NOPOKL", $ShowMessages, $db);
 	SetObsoleteForCategoryWithoutStock("NOPOBL", $ShowMessages, $db);
 	SetObsoleteForCategoryWithoutStock("NOPOGE", $ShowMessages, $db);
+	SetTopSalesRanking($ShowMessages, $db);
 	SetRLZeroForObsolete($ShowMessages, $db);
 	SetRLZeroForLocations($ShowMessages, $db);
 	SetEndDatePriceToObsolete($ShowMessages, $db);
@@ -453,6 +454,87 @@ function PurgeAuditTrailTable($ShowMessages, $db){
 	if ($ShowMessages) prnMsg("Purge old Audit Trail table","info");
 }
 
+function SetTopSalesRanking($ShowMessages, $db){
+
+	$sql = "TRUNCATE klsalesperformance";
+	$ErrMsg =_('Could not set TRUNCATE klsalesperformance because');
+	$result = DB_query($sql,$ErrMsg);
+	if ($ShowMessages) prnMsg("Truncated klsaleseprformace table","info");
+	
+	SetTopSalesByGroup(TRUE,  "KAPAL-LAUT", 60, $ShowMessages, $db);
+	SetTopSalesByGroup(FALSE, "KAPAL-LAUT", 30, $ShowMessages, $db);
+	SetTopSalesByGroup(FALSE, "KAPAL-LAUT", 90, $ShowMessages, $db);
+	SetTopSalesByGroup(TRUE,  "BLINK", 60, $ShowMessages, $db);
+	SetTopSalesByGroup(FALSE, "BLINK", 30, $ShowMessages, $db);
+	SetTopSalesByGroup(FALSE, "BLINK", 90, $ShowMessages, $db);
+	SetTopSalesByGroup(TRUE,  "OUTLET", 60, $ShowMessages, $db);
+	SetTopSalesByGroup(FALSE, "OUTLET", 30, $ShowMessages, $db);
+	SetTopSalesByGroup(FALSE, "OUTLET", 90, $ShowMessages, $db);
+	SetTopSalesByGroup(TRUE,  "GENERAL", 60, $ShowMessages, $db);
+	SetTopSalesByGroup(FALSE, "GENERAL", 30, $ShowMessages, $db);
+	SetTopSalesByGroup(FALSE, "GENERAL", 90, $ShowMessages, $db);
+	
+}
+
+function SetTopSalesByGroup($InsertNeeded, $Group, $NumDays, $ShowMessages, $db){
+
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
+
+	if ($Group == "KAPAL-LAUT"){
+		$ListCategories = LIST_STOCK_CATEGORIES_KAPAL_LAUT;
+	}elseif ($Group == "BLINK"){
+		$ListCategories = LIST_STOCK_CATEGORIES_BLINK;
+	}elseif ($Group == "OUTLET"){
+		$ListCategories = LIST_STOCK_CATEGORIES_OUTLET;
+	}elseif ($Group == "GENERAL"){
+		$ListCategories = LIST_STOCK_CATEGORIES_GENERAL;
+	}else{
+		return;
+	}
+	
+	$SQL="SELECT salesorderdetails.stkcode,
+				SUM(salesorderdetails.qtyinvoiced * salesorderdetails.unitprice) AS valuesales
+			FROM salesorderdetails, stockmaster
+			WHERE salesorderdetails.stkcode = stockmaster.stockid
+				AND salesorderdetails.actualdispatchdate >= '" . $StartDate . "'
+				AND stockmaster.categoryid IN " . $ListCategories . "
+			GROUP BY salesorderdetails.stkcode
+			ORDER BY SUM(salesorderdetails.qtyinvoiced * salesorderdetails.unitprice) DESC";
+	$ErrMsg =_('Could not sort items by top sales because');
+	$result = DB_query($SQL,$ErrMsg);
+
+	$position = 1;
+	if (DB_num_rows($result) != 0){
+		while ($myrow = DB_fetch_array($result)) {
+			if ($InsertNeeded){
+				$SQLOp="INSERT INTO klsalesperformance
+										(
+										stockid,
+										topsales". $NumDays.",
+										valuesales". $NumDays."
+										)
+									VALUES (
+										'" . $myrow['stkcode'] . "',
+										'" . $position . "',
+										'" . $myrow['valuesales'] . "'
+										)";
+				$ErrMsg =_('Could not insert items by top sales because');
+			}else{
+				$SQLOp="UPDATE klsalesperformance
+						SET topsales". $NumDays." = '" . $position . "',
+							valuesales". $NumDays." = '" . $myrow['valuesales'] . "'
+						WHERE stockid = '" . $myrow['stkcode'] . "'";
+				$ErrMsg =_('Could not update items by top sales because');
+				
+			}
+			$resultOp = DB_query($SQLOp,$ErrMsg);
+			
+			$position++;
+		}
+	}
+
+	if ($ShowMessages) prnMsg("Top Sales Ranking for " . $Group . " items for last " . $NumDays . " days","info");
+}
 
 
 ?>

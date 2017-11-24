@@ -84,7 +84,7 @@ function submit(&$db, $ListCategories, $DaysTopSales) {
 				$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $myrow['categoryid']);
 				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, ConvertSQLDate($myrow['lastcategoryupdate']));
 				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, $myrow['qoh']);
-				$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, positionTopSalesItem($myrow['stockid'],$myrow['categoryid'], 99999, $DaysTopSales, $db));
+				$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, positionTopSalesItem($myrow['stockid'], $DaysTopSales, $db));
 //				$objPHPExcel->getActiveSheet()->setCellValue('G'.$i, round($myrow['totalinvoiced'],0));
 //				$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, round($myrow['valuesales'],0));
 				$objPHPExcel->getActiveSheet()->setCellValue('I'.$i, round($myrow['standardcost'],0));
@@ -174,9 +174,12 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 
 	//View number of days for Top Sales Calculations
 	echo '<tr>
-			<td>' . _('# Days for Top Sales Ranking') . ': </td>
-			<td><input class="integer" required="required" pattern="(?!^0*$)(\d+)" title="'._('The input must be positive integer').'" tabindex="3" type="text" name="DaysTopSales" size="8" maxlength="8" value="60" /></td>
-		 </tr>';
+			<td>' . _('# Days for Top Sales Ranking') . ':</td>
+			<td><select name="DaysTopSales">';
+		echo '<option value="30">' . _('30 days') . '</option>';
+		echo '<option selected="selected" value="60">' . _('60 days') . '</option>';
+		echo '<option value="90">' . _('90 days') . '</option>';
+	echo '</select></td></tr>';
 
 	echo '</table>
 		<table>';

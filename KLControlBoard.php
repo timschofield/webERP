@@ -371,17 +371,6 @@ if ($ProcessSection01){
 //		$NumberOfTestExecuted++;
 	}
 
-	/*
-	if ($KL_BusinessDevelopmentManager
-		OR $KL_OperationalManager
-		OR $KL_ShopSupportTeam){
-		ItemsWithStockLocationButNoStockAvailable("WABOM", "WaterBom", 15, 600, $RootPath, $db);
-		ItemsWithStockLocationButNoStockAvailable("WHAYA", "Ayana", 15, 600, $RootPath, $db);
-		ItemsWithStockLocationButNoStockAvailable("WHINT", "InterContinental", 15, 600, $RootPath, $db);
-		InsuficientStockForItems("STABKL", "TM-", "Tali Mie", 20, 40, $RootPath, $db);
-	}
-	*/
-
 	if ($KL_BusinessDevelopmentManager
 		OR $KL_PurchasingTeam){
 		ItemsinSetUp("ReadyToTest", "SETKL", $RootPath, $db);
@@ -436,12 +425,7 @@ if ($ProcessSection01){
 		GoodsJustTransferred("SERVI", "KANTO", 2, 50, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		
-	/*	InsuficientStockForTopSalesItems("STABKL", "10-Silver",90, 100, 150, $RootPath, $db);
-		InsuficientStockForTopSalesItems("STAINL", "20-Stainless Steel", 90, 100, 150, $RootPath, $db);
-		InsuficientStockForTopSalesItems("STABBL", "30-Fashion Jewellery", 90, 100, 150, $RootPath, $db);
-		InsuficientStockForTopSalesItems("ACCESO", "40-Accessories", 90, 100, 150, $RootPath, $db);
-		InsuficientStockForTopSalesItems("CONSIG", "50-Consignment", 60, 100, 30, $RootPath, $db);
-		ValueStockLocation("TOK66", 1000, 1200, 0, 0, $db);
+	/*	ValueStockLocation("TOK66", 1000, 1200, 0, 0, $db);
 		ValueStockLocation("TOKSA", 1000, 1400, 0, 0, $db);
 		ValueStockLocation("TOKKS",  650,  750, 0, 0, $db);
 		ValueStockLocation("TOKJC",  900, 1100, 0, 0, $db);
