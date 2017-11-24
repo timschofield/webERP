@@ -195,8 +195,8 @@ TRUNCATE kurakura_kl_test_erp.`lastcostrollup`;
 INSERT INTO kurakura_kl_test_erp.levels SELECT * FROM kurakura_kl_erp.levels;
 TRUNCATE kurakura_kl_test_erp.`levels`;
 
-INSERT INTO kurakura_kl_test_erp.locations SELECT * FROM kurakura_kl_erp.locations;
 TRUNCATE kurakura_kl_test_erp.`locations`;
+INSERT INTO kurakura_kl_test_erp.locations SELECT * FROM kurakura_kl_erp.locations;
 
 TRUNCATE kurakura_kl_test_erp.`locationtypes`;
 INSERT INTO kurakura_kl_test_erp.locationtypes SELECT * FROM kurakura_kl_erp.locationtypes;
