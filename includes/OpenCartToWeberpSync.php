@@ -333,11 +333,11 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db,
 					$ItemsOrder++;
 					// we need to register the coupon use
 					$CouponCode = GetTotalTitleFromOrder("coupon", $myrow['order_id'], $db_oc, $oc_tableprefix);
-					if (strpos(strtoupper($CouponCode),"VBE") !== false){
+					if (strpos(strtoupper($CouponCode),"VBE-") !== false){
 						$CouponStockId = OPENCART_VIP_ELITE_CODE;
-					}else if (strpos(strtoupper($CouponCode),"VBG") !== false){
+					}else if (strpos(strtoupper($CouponCode),"VBG-") !== false){
 						$CouponStockId = OPENCART_VIP_GOLD_CODE;
-					}else if (strpos(strtoupper($CouponCode),"VBS") !== false){
+					}else if (strpos(strtoupper($CouponCode),"VBS-") !== false){
 						$CouponStockId = OPENCART_VIP_SILVER_CODE;
 					}else if (strpos(strtoupper($CouponCode),"RF-") !== false){
 						$CouponStockId = OPENCART_CUSTOMER_REFUND_CODE;  // Customer refunds
