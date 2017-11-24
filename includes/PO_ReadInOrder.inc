@@ -46,9 +46,11 @@
 								purchorders.klstatus,
 								purchorders.stat_comment,
 								purchorders.deliverydate,
+								purchorders.agreeddeliverydate,
 								purchorders.paymentdate,
 								purchorders.shipmentdate,
 								purchorders.shipmentawb,
+								purchorders.customsdate,
 								purchorders.arrivaldate,
 								purchorders.deliveryby,
 								purchorders.port,
@@ -107,9 +109,11 @@
 			$_SESSION['PO'.$identifier]->KLStatus = $myrow['klstatus'];
 			$_SESSION['PO'.$identifier]->StatusComments = html_entity_decode($myrow['stat_comment'],ENT_QUOTES,'UTF-8');
 			$_SESSION['PO'.$identifier]->DeliveryDate = ConvertSQLDate($myrow['deliverydate']);
+			$_SESSION['PO'.$identifier]->KLAgreedDeliveryDate = ConvertSQLDate($myrow['agreeddeliverydate']);
 			$_SESSION['PO'.$identifier]->KLPaymentDate = ConvertSQLDate($myrow['paymentdate']);
 			$_SESSION['PO'.$identifier]->KLShipmentDate = ConvertSQLDate($myrow['shipmentdate']);
 			$_SESSION['PO'.$identifier]->KLShipmentAWB = $myrow['shipmentawb'];
+			$_SESSION['PO'.$identifier]->KLCustomsDate = ConvertSQLDate($myrow['customsdate']);
 			$_SESSION['PO'.$identifier]->KLArrivalDate = ConvertSQLDate($myrow['arrivaldate']);
 			$_SESSION['ExistingOrder'] = $_SESSION['PO'.$identifier]->OrderNo;
 			$_SESSION['PO'.$identifier]->PaymentTerms= $myrow['paymentterms'];

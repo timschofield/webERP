@@ -50,9 +50,11 @@ Class PurchOrder {
 	var $Contact;
 	var $Port;
 	var $KLStatus;
+	var $KLAgreedDeliveryDate;
 	var $KLPaymentDate;
 	var $KLShipmentDate;
 	var $KLShipmentAWB;
+	var $KLCustomsDate;
 	var $KLArrivalDate;
 
 	function PurchOrder(){
