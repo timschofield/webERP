@@ -1029,6 +1029,73 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $RootPath, $db){
 	}
 }
 
+function ItemsCancelledInTransfers($maxdays, $RootPath, $db){
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
+	$SQL = "SELECT loctransfers.reference,
+					loctransfers.shipdate,
+					loctransfers.shiploc,
+					loctransfers.recloc,
+					loctransfers.stockid,
+					loctransfercancellations.cancelqty,
+					loctransfercancellations.canceldate,
+					loctransfercancellations.canceluserid
+			FROM loctransfers 
+			INNER JOIN loctransfercancellations
+				ON loctransfers.reference = loctransfercancellations.reference 
+					AND loctransfers.stockid = loctransfercancellations.stockid
+			WHERE loctransfercancellations.canceldate >= '". $StartDate ."'
+			ORDER BY loctransfers.stockid";
+			
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . _('Items cancelled in Transfers during the last ') . $maxdays . _(' days ') . '</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Transfer') . '</th>
+							<th class="ascending">' . _('Date') . '</th>
+							<th class="ascending">' . _('From') . '</th>
+							<th class="ascending">' . _('To') . '</th>
+							<th class="ascending">' . _('Cancel Qty') . '</th>
+							<th class="ascending">' . _('Cancel Date') . '</th>
+							<th class="ascending">' . _('Cancelled By') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+			$TransferLink = '<a href="' . $RootPath . '/StockLocTransferReceive.php?Trf_ID=' . $myrow['reference'] . '">' . $myrow['reference'] . '</a>';
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					</tr>', 
+					$i, 
+					$CodeLink,
+					$TransferLink, 
+					ConvertSQLDateTime($myrow['shipdate']), 
+					$myrow['shiploc'], 
+					$myrow['recloc'],
+					locale_number_format($myrow['cancelqty'],0),
+					ConvertSQLDateTime($myrow['canceldate']), 
+					$myrow['canceluserid']
+					);
+			$i++;
+		}
+		echo '</table>
+				</div>';
+	}
+}
+
 function ItemsInWrongShops($TypeItem, $RootPath, $db){
 
 	if ($TypeItem == "KAPAL-LAUT"){
@@ -1249,6 +1316,65 @@ function OvestockAtSamples($maxallowedsamples, $RootPath, $db){
 	}
 }
 
+function RegularTransfersToShopNotReceived($PreparationTime, $LimitTime, $RootPath, $db){
+
+	$StartDate = Date('Y-m-d');
+	$StartTime = Date('H:i:s');
+
+	if ($StartTime >= $LimitTime){
+		$SQL = "SELECT DISTINCT loctransfers.reference,
+						loctransfers.shipdate,
+						loctransfers.shiploc,
+						loctransfers.recloc
+				FROM loctransfers,locations
+				WHERE  loctransfers.recloc = locations.loccode
+					AND loctransfers.recqty < loctransfers.shipqty
+					AND loctransfers.shipdate <= '". $StartDate ." " . $PreparationTime . "'
+					AND   (locations.typeloc = 'SHOPKL'
+						OR locations.typeloc = 'SHOPBL'
+						OR locations.typeloc = 'SHOPOU'
+						OR locations.typeloc = 'ONLINE')
+				ORDER BY loctransfers.reference";
+		$result = DB_query($SQL);
+
+		if (DB_num_rows($result) != 0){
+			echo '<p class="page_title_text" align="center"><strong>' . 'Transfers to Shops prepared before ' . Date($_SESSION['DefaultDateFormat']) . 
+																		' at ' . $PreparationTime . ' but not received by SPG before ' . $LimitTime . '</strong></p>';
+			echo '<div>';
+			echo '<table class="selection">';
+			$TableHeader = '<tr>
+								<th class="ascending">' . _('#') . '</th>
+								<th class="ascending">' . _('Transfer') . '</th>
+								<th class="ascending">' . _('Date') . '</th>
+								<th class="ascending">' . _('From') . '</th>
+								<th class="ascending">' . _('To') . '</th>
+							</tr>';
+			echo $TableHeader;
+			$k = 0; //row colour counter
+			$i = 1;
+			while ($myrow = DB_fetch_array($result)) {
+				$k = StartEvenOrOddRow($k);
+				$CodeLink = '<a href="' . $RootPath . '/StockLocTransferReceive.php?Trf_ID=' . $myrow['reference'] . '">' . $myrow['reference'] . '</a>';
+				printf('<td class="number">%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						</tr>', 
+						$i, 
+						$CodeLink, 
+						ConvertSQLDateTime($myrow['shipdate']), 
+						$myrow['shiploc'], 
+						$myrow['recloc'] 
+						);
+				$i++;
+			}
+			echo '</table>
+					</div>';
+		}
+	}
+}
+
 function SamplesNotLongerNeeded($RootPath, $db){
 
 	$SQL = "SELECT locstock.stockid, 
@@ -1294,6 +1420,122 @@ function SamplesNotLongerNeeded($RootPath, $db){
 		}
 		echo '</table>
 				</div>';
+	}
+}
+
+function SPGNotReportingSalesInDays($maxdays, $db){
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
+
+	$SQL = "SELECT salesman.salesmancode,
+				salesman.salesmanname,
+				www_users.defaultlocation,
+				(SELECT orddate
+					FROM salesorders
+					WHERE salesorders.salesperson = salesman.salesmancode
+					ORDER BY orddate DESC
+					LIMIT 1) AS lastsale
+		FROM salesman, www_users
+		WHERE www_users.salesman = salesman.salesmancode
+			AND salesman.current = 1	
+			AND salesman.salesmancode != '999'
+			AND www_users.fullaccess = '17'
+			AND www_users.blocked = 0
+			AND NOT EXISTS (SELECT *
+							FROM salesorders
+							WHERE orddate >= '". $StartDate. "'
+								AND salesorders.salesperson = salesman.salesmancode)
+		ORDER BY salesman.salesmancode";
+//	prnMsg($SQL);			
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . _('Senior or Support SPG with more than ') . $maxdays . _(' days not reporting ANY sales.') .'</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' .  _('SPG') . '</th>
+							<th class="ascending">' . _('Name') . '</th>
+							<th class="ascending">' . _('Shop') . '</th>
+							<th class="ascending">' . _('Last Sale') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			if (isset($myrow['lastsale'])){
+				$Day = ConvertSQLDate($myrow['lastsale']);
+			}else{
+				$Day = "No sale yet";
+			}
+			printf('<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					</tr>', 
+					$myrow['salesmancode'],
+					$myrow['salesmanname'],
+					$myrow['defaultlocation'],
+					$Day
+					);
+			$i++;
+		}
+		echo '</table>
+				</div>
+				</form>';
+	}
+}
+
+function UsersNotLoggingIn($maxdays, $type, $db){
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays-1)) ;
+	
+	if ($type=='SPGSUPPORT'){
+		$WhereType = " AND fullaccess = 22";
+	}else{
+		$WhereType = " AND fullaccess != 22";
+	}
+	
+	$SQL = "SELECT userid,
+				realname,
+				lastvisitdate
+			FROM www_users
+			WHERE lastvisitdate IS NOT NULL
+				AND DATE(lastvisitdate) < '" . $StartDate . "'
+				AND userid NOT LIKE '999%'
+				AND userid <> 'TestUser'" . $WhereType;
+			
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		if ($type=='SPGSUPPORT'){
+			echo '<p class="page_title_text" align="center"><strong>' . _('SPG Support webERP users not logging in for more than ') . $maxdays . _(' days.') .'</strong></p>';
+		}else{
+			echo '<p class="page_title_text" align="center"><strong>' . _('Regular webERP users not logging in for more than ') . $maxdays . _(' days.') .'</strong></p>';
+		}
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' .  _('User ID') . '</th>
+							<th class="ascending">' . _('Name') . '</th>
+							<th class="ascending">' . _('Last Login') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			
+			printf('<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					</tr>', 
+					$myrow['userid'],
+					$myrow['realname'],
+					ConvertSQLDate($myrow['lastvisitdate'])
+					);
+			$i++;
+		}
+		echo '</table>
+				</div>
+				</form>';
 	}
 }
 

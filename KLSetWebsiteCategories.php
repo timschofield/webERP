@@ -553,7 +553,7 @@ include ('includes/footer.php');
 function ItemFeaturedAsTopSale($StockID, $Category, $DaysTopSales, $db){
 	$Featured = FALSE;
 	// si és Top Sales, llavors FEATURED
-	if (positionTopSalesItem($StockID, $DaysTopSales, $db) <= FEATURED_IN_WEBSITE_AS_TOP_SALES){
+	if (PositionTopSalesItem($StockID, $DaysTopSales, $db) <= FEATURED_IN_WEBSITE_AS_TOP_SALES){
 		$Featured = TRUE;
 	}
 	// si està a DISCOUNT, OUTLET or NO MORE BUYING llavors, not featured

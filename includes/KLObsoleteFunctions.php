@@ -390,7 +390,7 @@ function ItemsWithStockLocationButNoStockAvailable($Location, $NameLocation, $Mi
 		$k = 0; //row colour counter
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$PositionTopSales = positionTopSalesItem($myrow['stockid'], 60, $db);
+			$PositionTopSales = PositionTopSalesItem($myrow['stockid'], 60, $db);
 			if($PositionTopSales <= $MaxTopSalesItems){
 				if ($showHeader){
 					echo '<p class="page_title_text" align="center"><strong>' . $MaxTopSalesItems ._(' Top Sales Items (Exclude No More Purchasing, Discount) with stock at ') . $NameLocation . ' but KL Stock Available (Toko + Kantor) <= ' . $MinAvailable . '</strong></p>';
@@ -508,6 +508,81 @@ function OvestockAtShops($kind, $RootPath, $db){
 		}
 		echo '</table>
 				</div>';
+	}
+}
+
+function SPGBelowMinimumSales($Shop, $NumDaysA, $MinimumSales,$db){
+	$Yesterday  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
+	$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA));
+
+	$SQL = "SELECT salesmancode,
+				salesmanname,
+				(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					FROM salesorderdetails, salesorders
+					WHERE salesorderdetails.orderno = salesorders.orderno
+						AND salesorderdetails.completed = 1
+						AND salesorders.orddate >= '". $StartDateA . "'
+						AND salesorders.orddate <= '". $Yesterday . "'
+						AND salesorders.fromstkloc = '". $Shop . "'
+						AND salesorders.salesperson = salesman.salesmancode) AS salesA
+			FROM salesman
+			WHERE salesman.current = 1
+			AND (SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					FROM salesorderdetails, salesorders
+					WHERE salesorderdetails.orderno = salesorders.orderno
+						AND salesorderdetails.completed = 1
+						AND salesorders.orddate >= '". $StartDateA . "'
+						AND salesorders.orddate <= '". $Yesterday . "'
+						AND salesorders.fromstkloc = '". $Shop . "'
+						AND salesorders.salesperson = salesman.salesmancode) <= ". $MinimumSales ."
+			ORDER BY (SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					FROM salesorderdetails, salesorders
+					WHERE salesorderdetails.orderno = salesorders.orderno
+						AND salesorderdetails.completed = 1
+						AND salesorders.orddate >= '". $StartDateA . "'
+						AND salesorders.orddate <= '". $Yesterday . "'
+						AND salesorders.fromstkloc = '". $Shop . "'
+						AND salesorders.salesperson = salesman.salesmancode) ASC";
+//prnMsg($SQL);
+	
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . _('SPG with daily sales below minimum of ') . locale_number_format($MinimumSales,0) . "/day during the last " . $NumDaysA . " days in ". $Shop .'</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Name') . '</th>
+							<th class="ascending">' . _('Sales ') . locale_number_format($NumDaysA,0) . _(' days') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+
+			$Code = $myrow['salesmancode'];
+			$Name = $myrow['salesmanname'];
+			
+			$dailyA = locale_number_format(($myrow['salesA']/$NumDaysA),0);
+			
+			printf('<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$i,
+					$Code,
+					$Name,
+					$dailyA
+					);
+			$i++;
+		}
+		
+		echo '</table>
+				</div>
+				</form>';
 	}
 }
 			
