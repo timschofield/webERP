@@ -40,6 +40,7 @@ $SQL = "SELECT stockmaster.stockid,
 			   stockmaster.categoryid	
 		FROM stockmaster, stockcategory
 		WHERE stockmaster.categoryid = stockcategory.categoryid
+			AND SUBSTR(stockmaster.stockid, -2, 2) != '-D'
 			AND stockcategory.stocktype = 'F'
 			AND stockmaster.categoryid IN " . CATEGORIES_AVAILABLE_WEBSITE ."
 			AND stockmaster.discontinued = 0
@@ -570,6 +571,7 @@ function ItemFeaturedAsTopSale($StockID, $Category, $DaysTopSales, $db){
 
 function ItemExcludedFromWebsite($StockID, $Category){
 	if ((substr($StockID, 0,3) == "TM-")
+		OR (substr($StockID, -2,2) == "-D")
 		OR (substr($StockID, 0,4) == "GOTA")
 		OR (substr($StockID, 0,4) == "BSBE")
 		OR (substr($StockID, 0,4) == "KLBE")){
