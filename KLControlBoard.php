@@ -424,15 +424,6 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		GoodsJustTransferred("SERVI", "KANTO", 2, 50, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		
-	/*	ValueStockLocation("TOK66", 1000, 1200, 0, 0, $db);
-		ValueStockLocation("TOKSA", 1000, 1400, 0, 0, $db);
-		ValueStockLocation("TOKKS",  650,  750, 0, 0, $db);
-		ValueStockLocation("TOKJC",  900, 1100, 0, 0, $db);
-		ValueStockLocation("TOKBW",  650,  800, 0, 0, $db);
-		ValueStockLocation("TOKSE", 1000, 1200, 0, 0, $db);
-		ValueStockLocation("SASPG",   10,   30, 0, 0, $db);
-	*/
 	}
 
 	if ($KL_BusinessDevelopmentManager){
@@ -955,5 +946,390 @@ prnMsg("Performed ". $NumberOfTestExecuted . " control tests",'success');
 time_finish($begintime);
 
 include ('includes/footer.php');
+
+
+/********************************************************************************************
+FUNCTIONS ONLY USED IN CONTROL BOARD
+*********************************************************************************************/
+
+function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $RootPath, $db){
+	
+	$Message = $Category . _(' items NOT in ') . $Shop . ' with QOH >= ' . $MinQOH .' (excluding Change of Price, Move to Discount, Service, Shop online and Return to Supplier)';
+	
+	$SQL = "SELECT stockmaster.stockid,
+					stockmaster.description,
+					locstock.loccode,
+					(SELECT SUM(l.quantity)
+						FROM locstock l
+						WHERE l.stockid = stockmaster.stockid
+							AND l.loccode NOT IN " . LIST_SERVICE_LOCATIONS . "
+							AND l.loccode NOT IN " . LIST_SAMPLE_LOCATIONS . ") AS qoh,
+					locstock.reorderlevel
+			FROM stockmaster, locstock
+			WHERE stockmaster.stockid = locstock.stockid
+				AND stockmaster.categoryid = '" . $Category . "'
+				AND stockmaster.discontinued = 0
+				AND stockmaster.klchangingprice = 0
+				AND stockmaster.klmovingdiscount20 = 0
+				AND stockmaster.klmovingdiscount50 = 0
+				AND stockmaster.klmovingdiscount80 = 0
+				AND locstock.loccode = '" . $Shop . "'
+				AND locstock.quantity = 0 
+				AND locstock.reorderlevel = 0
+				AND ((SELECT l.reorderlevel
+						FROM locstock l
+						WHERE l.stockid = stockmaster.stockid
+							AND l.loccode = 'KASPE') = 0)
+				AND ((SELECT SUM(l.quantity)
+						FROM locstock l
+						WHERE l.stockid = stockmaster.stockid
+							AND l.loccode NOT IN " . LIST_SERVICE_LOCATIONS . "
+							AND l.loccode NOT IN " . LIST_SAMPLE_LOCATIONS . ") >= ". $MinQOH .")
+				AND ((SELECT SUM(l.reorderlevel)
+						FROM locstock l
+						WHERE l.stockid = stockmaster.stockid
+							AND l.loccode IN " . LIST_ONLINE_SHOPS . ") = 0)
+			ORDER BY stockmaster.stockid";
+
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . $Message . '</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('QOH') . '</th>
+							<th class="ascending">' . _('Reorder Level') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+			$CodeLinkRL = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . $myrow['reorderlevel'] . '</a>';
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$i, 
+					$CodeLink, 
+					$myrow['description'], 
+					$myrow['qoh'], 
+					$CodeLinkRL 
+					);
+			$i++;
+		}
+		echo '</table>
+				</div>';
+	}
+}
+
+function ItemsInWrongShops($TypeItem, $RootPath, $db){
+
+	if ($TypeItem == "KAPAL-LAUT"){
+		$Message = 'KL items on wrong shops';
+		$Condition =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . "
+							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . ")
+						AND locations.typeloc = 'SHOPKL' ";
+	}elseif ($TypeItem == "BLINK"){
+		$Message = 'BLINK items on wrong shops';
+		$Condition =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . "
+							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . ")
+						AND locations.typeloc = 'SHOPBL' ";
+	}elseif ($TypeItem == "OUTLET"){
+		$Message = 'DISCOUNT items on wrong shops';
+		$Condition =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . "
+							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . ")
+						AND locations.typeloc = 'SHOPOU' ";
+	}else{
+		//error_
+		return;
+	}
+	
+	$SQL = "SELECT stockmaster.stockid,
+					stockmaster.description,
+					locstock.loccode,
+					locstock.quantity,
+					locstock.reorderlevel
+			FROM stockmaster, locstock, locations
+			WHERE stockmaster.stockid = locstock.stockid 
+				AND locstock.loccode = locations.loccode
+				" .	$Condition . "
+				AND ( locstock.quantity > 0 OR locstock.reorderlevel > 0 )
+			ORDER BY stockmaster.stockid";
+// EXPLAIN SQL 2014-05-31
+//	prnMsg($SQL);
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . $Message . '</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('Shop') . '</th>
+							<th class="ascending">' . _('Quantity') . '</th>
+							<th class="ascending">' . _('Reorder Level') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+			$CodeLinkRL = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . $myrow['reorderlevel'] . '</a>';
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$i, 
+					$CodeLink, 
+					$myrow['description'], 
+					$myrow['loccode'], 
+					$myrow['quantity'], 
+					$CodeLinkRL 
+					);
+			$i++;
+		}
+		echo '</table>
+				</div>';
+	}
+}
+
+function ItemsOnSpecialRequest($RootPath, $db){
+	$SQL = "SELECT stockmaster.stockid,
+					stockmaster.description,
+					locstock.quantity,
+					locstock.reorderlevel
+			FROM stockmaster, locstock
+			WHERE stockmaster.stockid = locstock.stockid
+				AND locstock.loccode = 'KASPE'
+				AND (locstock.quantity > 0 
+					OR locstock.reorderlevel > 0)
+			ORDER BY stockmaster.stockid";
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . _('Items on Special Kantor Request') . '</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('Quantity') . '</th>
+							<th class="ascending">' . _('Reorder Level') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$i, 
+					$CodeLink, 
+					$myrow['description'], 
+					$myrow['quantity'], 
+					$myrow['reorderlevel'] 
+					);
+			$i++;
+		}
+		echo '</table>
+				</div>';
+	}
+}
+
+function ItemsShouldBeInWebsite($db){
+	$SQL = "SELECT stockid, description
+			FROM stockmaster
+			WHERE categoryid IN " . CATEGORIES_AVAILABLE_WEBSITE ."
+				AND discontinued = 0
+				AND stockid NOT LIKE '%-D'
+				AND stockid != 'WKPC01'
+				AND stockid NOT LIKE 'KLBE%'
+				AND stockid NOT LIKE 'GOTA%'
+				AND stockid NOT LIKE 'TM-%'
+				AND NOT EXISTS (SELECT *
+								FROM salescatprod
+								WHERE salescatprod.stockid = stockmaster.stockid)";
+	$result = DB_query($SQL);
+	$showHeader = TRUE;
+	if (DB_num_rows($result) != 0){
+		while ($myrow = DB_fetch_array($result)) {
+			if(file_exists($_SESSION['part_pics_dir'] . '/' .$myrow['stockid'].'.jpg') ) {
+				if($showHeader){
+					echo '<p class="page_title_text" align="center"><strong>' . _('Items with picture but not available in Online Shop') . '</strong></p>';
+					echo '<div>';
+					echo '<table class="selection">';
+					$TableHeader = '<tr>
+										<th class="ascending">' . _('#') . '</th>
+										<th class="ascending">' . _('Code') . '</th>
+										<th class="ascending">' . _('Description') . '</th>
+									</tr>';
+					echo $TableHeader;
+					$k = 0; //row colour counter
+					$i = 1;
+					$showHeader = FALSE;
+				}
+				$k = StartEvenOrOddRow($k);
+				printf('<td class="number">%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						</tr>', 
+						$i, 
+						$myrow['stockid'], 
+						$myrow['description'] 
+						);
+				$i++;
+			}			
+		}
+		if (!$showHeader){
+			echo '</table>
+					</div>';
+		}
+	}
+}
+
+function OvestockAtSamples($maxallowedsamples, $RootPath, $db){
+
+	$SQL = "SELECT locstock.stockid, 
+					stockmaster.description, 
+					quantity AS qty
+			FROM locstock, stockmaster
+			WHERE locstock.stockid = stockmaster.stockid
+				AND loccode = 'SAMPR'
+				AND quantity > '". $maxallowedsamples."'
+			ORDER BY locstock.stockid";
+
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . _('Overstock of samples') . '</strong></p>';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('Qty of samples') . '</th>
+						</tr>';
+		echo '<div>';
+		echo '<table class="selection">';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+		printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$i, 
+					$CodeLink, 
+					$myrow['description'], 
+					locale_number_format($myrow['qty'],0)
+					);
+			$i++;
+		}
+		echo '</table>
+				</div>';
+	}
+}
+
+function SamplesNotLongerNeeded($RootPath, $db){
+
+	$SQL = "SELECT locstock.stockid, 
+					stockmaster.description, 
+					quantity AS qty
+			FROM locstock, stockmaster
+			WHERE locstock.stockid = stockmaster.stockid
+				AND loccode = 'SAMPR'
+				AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING ." 
+					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET ."
+					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET .")
+				AND quantity > 0
+			ORDER BY locstock.stockid";
+
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . _('Samples Not Longer Needed (No More Buy, Discount, Outlet)') . '</strong></p>';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('Qty of samples') . '</th>
+						</tr>';
+		echo '<div>';
+		echo '<table class="selection">';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+		printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$i, 
+					$CodeLink, 
+					$myrow['description'], 
+					locale_number_format($myrow['qty'],0)
+					);
+			$i++;
+		}
+		echo '</table>
+				</div>';
+	}
+}
+
+function ValueStockLocation($location, $minpcs, $maxpcs, $minvalue, $maxvalue, $db){
+/*	$minpcs = $optimalpcs * (1 - $varpcs);
+	$maxpcs = $optimalpcs * (1 + $varpcs);
+	$minvalue = $optimalvalue * (1 - $varvalue);
+	$maxvalue = $optimalvalue * (1 + $varvalue);
+*/	
+	$SQL = "SELECT 
+				locations.locationname,
+				SUM(locstock.quantity) AS qtyonhand,
+				SUM(locstock.quantity *(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost)) AS valuetotal
+			FROM stockmaster,
+				stockcategory,
+				locations,
+				locstock
+			WHERE stockmaster.stockid=locstock.stockid
+				AND locations.loccode = '" . $location . "'
+				AND stockmaster.categoryid=stockcategory.categoryid
+				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SHOP_DISPLAYS . "
+				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SHOP_CONSUMABLES . "
+				AND locstock.quantity!=0
+				AND locstock.loccode = '" . $location . "'";
+				
+	$result = DB_query($SQL);
+	$myrow = DB_fetch_array($result);
+	
+	if ($myrow['qtyonhand'] < $minpcs){
+		$text = "Number of items at " . $myrow['locationname'] . " is BELOW the minimum. QOH = " . locale_number_format($myrow['qtyonhand'],0) . " pcs. Minimum = " . locale_number_format($minpcs,0) . " pcs";
+		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+	}
+	if ($myrow['qtyonhand'] > $maxpcs){
+		$text = "Number of items at " . $myrow['locationname'] . " is OVER the maximum. QOH = " . locale_number_format($myrow['qtyonhand'],0) . " pcs. Maximum = " . locale_number_format($maxpcs,0) . " pcs";
+		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+	}
+}
 
 ?>

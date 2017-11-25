@@ -2,25 +2,6 @@
 
 /* This file contains obsolete functions that can be useful someday for some reason */
 
-function isTopSalesItem($stockid, $topitems, $TopItemsDays, $db){
-
-	$TopSalesField = GetTopSalesField($TopItemsDays);
-
-	$SQL="SELECT ". $TopSalesField." AS topsalesposition
-		  FROM klsalesperformance
-		  WHERE stockid = '" . $stockid . "'";
-	$result = DB_query($SQL);
-	$istopsales = false;
-	if (DB_num_rows($result) != 0){
-		if ($myrow = DB_fetch_array($result)) {
-			if ($myrow['topsalesposition'] <= $topitems){
-				$istopsales = true;
-			}
-		}
-	}
-	return $istopsales;
-}
-
 function AdjustNoSales($location, $maxdays, $maxmanualchanges, $topitems, $TopItemsDays, $ShowMessages, $updateDB, $RootPath, $db){
 	/* No Sales during last maxdays, 
 		with stock at the shop
@@ -149,197 +130,6 @@ function AdjustNoSales($location, $maxdays, $maxmanualchanges, $topitems, $TopIt
 	}
 }
 
-function ItemsNotTopSalesInShop($starttopitems, $endtopitems, $maxdays, $codeshop, $RootPath, $db){
-	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
-	if (ItemInList($Location, LIST_SHOPS_KAPAL_LAUT)){
-		$FilterCategory = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . " ";
-	}else if (ItemInList($Location, LIST_SHOPS_BLINK)){
-		$FilterCategory = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . " ";
-	}else if (ItemInList($Location, LIST_SHOPS_OUTLET)){
-		$FilterCategory = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . " ";
-	}
-	$SQL = "SELECT salesorderdetails.stkcode,
-				stockmaster.description,
-				stockmaster.categoryid,
-				SUM(salesorderdetails.qtyinvoiced) AS totalinvoiced,
-				stockmaster.units,
-				(SELECT sum(quantity)
-					FROM locstock
-					WHERE locstock.stockid = salesorderdetails.stkcode
-						AND locstock.loccode = '". $codeshop ."') AS qoh,
-				(SELECT sum(quantity)
-					FROM locstock
-					WHERE locstock.stockid = salesorderdetails.stkcode) AS qohtotal,
-				(SELECT sum(reorderlevel)
-					FROM locstock
-					WHERE locstock.stockid = salesorderdetails.stkcode
-						AND locstock.loccode = '". $codeshop ."') AS rl
-			FROM salesorderdetails, salesorders, stockmaster
-			WHERE salesorderdetails.orderno = salesorders.orderno " . 
-			$FilterCategory . 
-			" AND stockmaster.discontinued = 0
-				AND salesorderdetails.stkcode = stockmaster.stockid
-				AND salesorderdetails.actualdispatchdate >= '" . $StartDate . "'
-			GROUP BY salesorderdetails.stkcode
-			ORDER BY totalinvoiced DESC
-			LIMIT " . ($endtopitems - 1) . ", 99999999";			
-	$result = DB_query($SQL);
-	$showHeader = TRUE;
-	if (DB_num_rows($result) != 0){
-		$k = 0; //row colour counter
-		$i = $endtopitems;
-		while ($myrow = DB_fetch_array($result)) {
-			if ($myrow['rl'] > 0){
-				if($showHeader){
-					echo '<p class="page_title_text" align="center"><strong>' . 'Items NOT ' . $endtopitems . ' top sales available in ' . $codeshop . ' shop. ' . '</strong></p>';
-					echo '<div>';
-					echo '<table class="selection">';
-					$TableHeader = '<tr>
-										<th class="ascending">' . _('#') . '</th>
-										<th class="ascending">' . _('Code') . '</th>
-										<th class="ascending">' . _('Description') . '</th>
-										<th class="ascending">' . _('Category') . '</th>
-										<th class="ascending">' . _('QOH Total') . '</th>
-										<th class="ascending">' . _('RL') . '</th>
-										<th class="ascending">' . _('QOH') . '</th>
-									</tr>';
-					echo $TableHeader;
-					$showHeader = FALSE;
-				}
-				$k = StartEvenOrOddRow($k);
-				$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stkcode'] . '">' . $myrow['stkcode'] . '</a>';
-				printf('<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						</tr>', 
-						$i, 
-						$CodeLink, 
-						$myrow['description'], 
-						$myrow['categoryid'], 
-						$myrow['qohtotal'],
-						$myrow['rl'],
-						$myrow['qoh']
-						);
-			}
-			$i++;
-		}
-		if (!$showHeader){
-			echo '</table>
-				</div>';
-		}
-	}
-}
-
-function TopSalesNotInEnoughShops($starttopitems, $endtopitems, $maxdays, $minshops, $categories, $RootPath, $db){
-	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
-	$SQL = "SELECT salesorderdetails.stkcode,
-				stockmaster.description,
-				stockmaster.categoryid,
-				SUM(salesorderdetails.qtyinvoiced) AS totalinvoiced,
-				stockmaster.units,
-				(SELECT sum(quantity)
-					FROM locstock
-					WHERE locstock.stockid = salesorderdetails.stkcode
-						AND (locstock.loccode IN " . LIST_ALL_SHOPS . " 
-							OR locstock.loccode = " . CODE_KANTOR . ")) AS qoh,
-				(SELECT count(loccode)
-					FROM locstock
-					WHERE locstock.stockid = salesorderdetails.stkcode
-						AND locstock.reorderlevel > 0
-						AND locstock.loccode IN " . LIST_ALL_SHOPS . ") AS availableshops
-			FROM salesorderdetails, salesorders, stockmaster
-			WHERE salesorderdetails.orderno = salesorders.orderno ";
-	if ($categories == "DISC20"){
-		$SQL = $SQL . " AND stockmaster.categoryid = 'DISC20'";
-	}		
-	if ($categories == "DISC50"){
-		$SQL = $SQL . " AND stockmaster.categoryid = 'DISC50'";
-	}		
-	if ($categories == "DISC80"){
-		$SQL = $SQL . " AND stockmaster.categoryid = 'DISC80'";
-	}		
-	if ($categories == "TEST"){
-		$SQL = $SQL . " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_TEST . "";
-	}		
-	if ($categories == "STABLE"){
-		$SQL = $SQL . " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_STABLE . "";
-	}		
-	$SQL = $SQL . " AND stockmaster.discontinued = 0
-					AND stockmaster.klchangingprice = 0
-					AND stockmaster.klmovingdiscount20 = 0
-					AND stockmaster.klmovingdiscount50 = 0
-					AND stockmaster.klmovingdiscount80 = 0
-				AND salesorderdetails.stkcode = stockmaster.stockid
-				AND salesorderdetails.actualdispatchdate >= '" . $StartDate . "'
-			GROUP BY salesorderdetails.stkcode
-			ORDER BY totalinvoiced DESC
-			LIMIT " . ($starttopitems - 1) . "," . ($endtopitems - $starttopitems + 1);			
-	$result = DB_query($SQL);
-	$showHeader = TRUE;
-	if (DB_num_rows($result) != 0){
-		$k = 0; //row colour counter
-		$i = $starttopitems;
-		while ($myrow = DB_fetch_array($result)) {
-			if (($myrow['availableshops'] < $minshops) && ($myrow['qoh'] > $myrow['availableshops'])){
-				if($showHeader){
-					if ($categories == "DISC20"){
-						echo '<p class="page_title_text" align="center"><strong>' . $endtopitems . ' Top sales items 20% Discount available in less than ' . $minshops . ' shops. ' . '</strong></p>';
-					}		
-					if ($categories == "DISC50"){
-						echo '<p class="page_title_text" align="center"><strong>' . $endtopitems . ' Top sales items 50% Discount available in less than ' . $minshops . ' shops. ' . '</strong></p>';
-					}		
-					if ($categories == "DISC80"){
-						echo '<p class="page_title_text" align="center"><strong>' . $endtopitems . ' Top sales items 80% Discount available in less than ' . $minshops . ' shops. ' . '</strong></p>';
-					}		
-					if ($categories == "STABLE"){
-						echo '<p class="page_title_text" align="center"><strong>' . $endtopitems . ' Top sales items NOT DISCOUNTED OR CHANGING PRICE available in less than ' . $minshops . ' shops. ' . '</strong></p>';
-					}		
-					echo '<div>';
-					echo '<table class="selection">';
-					$TableHeader = '<tr>
-										<th class="ascending">' . _('#') . '</th>
-										<th class="ascending">' . _('Code') . '</th>
-										<th class="ascending">' . _('Description') . '</th>
-										<th class="ascending">' . _('Category') . '</th>
-										<th class="ascending">' . _('Sold ') . $maxdays . ' days' . '</th>
-										<th class="ascending">' . _('QOH') . '</th>
-										<th class="ascending">' . _('# Toko') . '</th>
-									</tr>';
-					echo $TableHeader;
-					$showHeader = FALSE;
-				}
-				$k = StartEvenOrOddRow($k);
-				$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stkcode'] . '">' . $myrow['stkcode'] . '</a>';
-				printf('<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						</tr>', 
-						$i, 
-						$CodeLink, 
-						$myrow['description'], 
-						$myrow['categoryid'], 
-						$myrow['totalinvoiced'], 
-						$myrow['qoh'], 
-						$myrow['availableshops'] 
-						);
-			}
-			$i++;
-		}
-		if (!$showHeader){
-			echo '</table>
-				</div>';
-		}
-	}
-}
-
 function InsuficientStockForTopSalesItems($StockCat, $StockCatDescription, $DaysTopSales, $PercentageOfTopItems, $DaysMinimumStock, $RootPath, $db){
 
 /* Examples of use in Control Boards
@@ -457,6 +247,110 @@ function InsuficientStockForTopSalesItems($StockCat, $StockCatDescription, $Days
 	}
 }
 
+function isTopSalesItem($stockid, $topitems, $TopItemsDays, $db){
+
+	$TopSalesField = GetTopSalesField($TopItemsDays);
+
+	$SQL="SELECT ". $TopSalesField." AS topsalesposition
+		  FROM klsalesperformance
+		  WHERE stockid = '" . $stockid . "'";
+	$result = DB_query($SQL);
+	$istopsales = false;
+	if (DB_num_rows($result) != 0){
+		if ($myrow = DB_fetch_array($result)) {
+			if ($myrow['topsalesposition'] <= $topitems){
+				$istopsales = true;
+			}
+		}
+	}
+	return $istopsales;
+}
+
+function ItemsNotTopSalesInShop($starttopitems, $endtopitems, $maxdays, $codeshop, $RootPath, $db){
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
+	if (ItemInList($Location, LIST_SHOPS_KAPAL_LAUT)){
+		$FilterCategory = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . " ";
+	}else if (ItemInList($Location, LIST_SHOPS_BLINK)){
+		$FilterCategory = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . " ";
+	}else if (ItemInList($Location, LIST_SHOPS_OUTLET)){
+		$FilterCategory = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . " ";
+	}
+	$SQL = "SELECT salesorderdetails.stkcode,
+				stockmaster.description,
+				stockmaster.categoryid,
+				SUM(salesorderdetails.qtyinvoiced) AS totalinvoiced,
+				stockmaster.units,
+				(SELECT sum(quantity)
+					FROM locstock
+					WHERE locstock.stockid = salesorderdetails.stkcode
+						AND locstock.loccode = '". $codeshop ."') AS qoh,
+				(SELECT sum(quantity)
+					FROM locstock
+					WHERE locstock.stockid = salesorderdetails.stkcode) AS qohtotal,
+				(SELECT sum(reorderlevel)
+					FROM locstock
+					WHERE locstock.stockid = salesorderdetails.stkcode
+						AND locstock.loccode = '". $codeshop ."') AS rl
+			FROM salesorderdetails, salesorders, stockmaster
+			WHERE salesorderdetails.orderno = salesorders.orderno " . 
+			$FilterCategory . 
+			" AND stockmaster.discontinued = 0
+				AND salesorderdetails.stkcode = stockmaster.stockid
+				AND salesorderdetails.actualdispatchdate >= '" . $StartDate . "'
+			GROUP BY salesorderdetails.stkcode
+			ORDER BY totalinvoiced DESC
+			LIMIT " . ($endtopitems - 1) . ", 99999999";			
+	$result = DB_query($SQL);
+	$showHeader = TRUE;
+	if (DB_num_rows($result) != 0){
+		$k = 0; //row colour counter
+		$i = $endtopitems;
+		while ($myrow = DB_fetch_array($result)) {
+			if ($myrow['rl'] > 0){
+				if($showHeader){
+					echo '<p class="page_title_text" align="center"><strong>' . 'Items NOT ' . $endtopitems . ' top sales available in ' . $codeshop . ' shop. ' . '</strong></p>';
+					echo '<div>';
+					echo '<table class="selection">';
+					$TableHeader = '<tr>
+										<th class="ascending">' . _('#') . '</th>
+										<th class="ascending">' . _('Code') . '</th>
+										<th class="ascending">' . _('Description') . '</th>
+										<th class="ascending">' . _('Category') . '</th>
+										<th class="ascending">' . _('QOH Total') . '</th>
+										<th class="ascending">' . _('RL') . '</th>
+										<th class="ascending">' . _('QOH') . '</th>
+									</tr>';
+					echo $TableHeader;
+					$showHeader = FALSE;
+				}
+				$k = StartEvenOrOddRow($k);
+				$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stkcode'] . '">' . $myrow['stkcode'] . '</a>';
+				printf('<td class="number">%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						</tr>', 
+						$i, 
+						$CodeLink, 
+						$myrow['description'], 
+						$myrow['categoryid'], 
+						$myrow['qohtotal'],
+						$myrow['rl'],
+						$myrow['qoh']
+						);
+			}
+			$i++;
+		}
+		if (!$showHeader){
+			echo '</table>
+				</div>';
+		}
+	}
+}
+
 function ItemsWithStockLocationButNoStockAvailable($Location, $NameLocation, $MinAvailable, $MaxTopSalesItems, $RootPath, $db){
 	/*  EXPLAIN SQL 2014-05-30
 		Examples of usage in control boards
@@ -532,6 +426,193 @@ function ItemsWithStockLocationButNoStockAvailable($Location, $NameLocation, $Mi
 		if (!$showHeader){
 			echo '</table>
 					</div>';
+		}
+	}
+}
+
+function OvestockAtShops($kind, $RootPath, $db){
+
+	if($kind == "OVERSTOCK"){			
+		$SQL = "SELECT locstock.loccode, 
+						locstock.stockid, 
+						stockmaster.description, 
+						quantity - reorderlevel AS qty
+				FROM locstock, stockmaster
+				WHERE locstock.stockid = stockmaster.stockid
+					AND loccode IN " . LIST_ALL_SHOPS . "
+					AND reorderlevel < quantity
+					AND NOT EXISTS (SELECT *
+									FROM loctransfers 
+									WHERE  recqty < shipqty
+										AND loctransfers.stockid =  stockmaster.stockid)
+				ORDER BY locstock.loccode, stockmaster.categoryid, locstock.stockid";
+	}else{
+		$SQL = "SELECT locstock.loccode, 
+					locstock.stockid, 
+					stockmaster.description, 
+					stockmaster.categoryid, 
+					reorderlevel - quantity AS qty
+				FROM locstock, stockmaster
+				WHERE locstock.stockid = stockmaster.stockid
+					AND locstock.reorderlevel > 0
+					AND locstock.quantity = 0
+					AND loccode IN " . LIST_ALL_SHOPS . "
+					AND NOT EXISTS (SELECT *
+										FROM loctransfers 
+										WHERE  recqty < shipqty
+											AND loctransfers.stockid =  locstock.stockid)
+				ORDER BY locstock.loccode, stockmaster.categoryid, locstock.stockid";
+	}
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		if($kind == "OVERSTOCK"){			
+			echo '<p class="page_title_text" align="center"><strong>' . _('Overstock of items at shops') . '</strong></p>';
+			$TableHeader = '<tr>
+								<th class="ascending">' . _('#') . '</th>
+								<th class="ascending">' . _('Shop') . '</th>
+								<th class="ascending">' . _('Code') . '</th>
+								<th class="ascending">' . _('Description') . '</th>
+								<th class="ascending">' . _('Overstock') . '</th>
+							</tr>';
+		}else{
+			echo '<p class="page_title_text" align="center"><strong>' . _('Items needed at shops. (No overstock - No transfer)') . '</strong></p>';
+			$TableHeader = '<tr>
+								<th class="ascending">' . _('#') . '</th>
+								<th class="ascending">' . _('Shop') . '</th>
+								<th class="ascending">' . _('Code') . '</th>
+								<th class="ascending">' . _('Description') . '</th>
+								<th class="ascending">' . _('Need') . '</th>
+							</tr>';
+		}
+		echo '<div>';
+		echo '<table class="selection">';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$i, 
+					$myrow['loccode'], 
+					$CodeLink, 
+					$myrow['description'], 
+					locale_number_format($myrow['qty'],0)
+					);
+			$i++;
+		}
+		echo '</table>
+				</div>';
+	}
+}
+			
+function TopSalesNotInEnoughShops($starttopitems, $endtopitems, $maxdays, $minshops, $categories, $RootPath, $db){
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
+	$SQL = "SELECT salesorderdetails.stkcode,
+				stockmaster.description,
+				stockmaster.categoryid,
+				SUM(salesorderdetails.qtyinvoiced) AS totalinvoiced,
+				stockmaster.units,
+				(SELECT sum(quantity)
+					FROM locstock
+					WHERE locstock.stockid = salesorderdetails.stkcode
+						AND (locstock.loccode IN " . LIST_ALL_SHOPS . " 
+							OR locstock.loccode = " . CODE_KANTOR . ")) AS qoh,
+				(SELECT count(loccode)
+					FROM locstock
+					WHERE locstock.stockid = salesorderdetails.stkcode
+						AND locstock.reorderlevel > 0
+						AND locstock.loccode IN " . LIST_ALL_SHOPS . ") AS availableshops
+			FROM salesorderdetails, salesorders, stockmaster
+			WHERE salesorderdetails.orderno = salesorders.orderno ";
+	if ($categories == "DISC20"){
+		$SQL = $SQL . " AND stockmaster.categoryid = 'DISC20'";
+	}		
+	if ($categories == "DISC50"){
+		$SQL = $SQL . " AND stockmaster.categoryid = 'DISC50'";
+	}		
+	if ($categories == "DISC80"){
+		$SQL = $SQL . " AND stockmaster.categoryid = 'DISC80'";
+	}		
+	if ($categories == "TEST"){
+		$SQL = $SQL . " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_TEST . "";
+	}		
+	if ($categories == "STABLE"){
+		$SQL = $SQL . " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_STABLE . "";
+	}		
+	$SQL = $SQL . " AND stockmaster.discontinued = 0
+					AND stockmaster.klchangingprice = 0
+					AND stockmaster.klmovingdiscount20 = 0
+					AND stockmaster.klmovingdiscount50 = 0
+					AND stockmaster.klmovingdiscount80 = 0
+				AND salesorderdetails.stkcode = stockmaster.stockid
+				AND salesorderdetails.actualdispatchdate >= '" . $StartDate . "'
+			GROUP BY salesorderdetails.stkcode
+			ORDER BY totalinvoiced DESC
+			LIMIT " . ($starttopitems - 1) . "," . ($endtopitems - $starttopitems + 1);			
+	$result = DB_query($SQL);
+	$showHeader = TRUE;
+	if (DB_num_rows($result) != 0){
+		$k = 0; //row colour counter
+		$i = $starttopitems;
+		while ($myrow = DB_fetch_array($result)) {
+			if (($myrow['availableshops'] < $minshops) && ($myrow['qoh'] > $myrow['availableshops'])){
+				if($showHeader){
+					if ($categories == "DISC20"){
+						echo '<p class="page_title_text" align="center"><strong>' . $endtopitems . ' Top sales items 20% Discount available in less than ' . $minshops . ' shops. ' . '</strong></p>';
+					}		
+					if ($categories == "DISC50"){
+						echo '<p class="page_title_text" align="center"><strong>' . $endtopitems . ' Top sales items 50% Discount available in less than ' . $minshops . ' shops. ' . '</strong></p>';
+					}		
+					if ($categories == "DISC80"){
+						echo '<p class="page_title_text" align="center"><strong>' . $endtopitems . ' Top sales items 80% Discount available in less than ' . $minshops . ' shops. ' . '</strong></p>';
+					}		
+					if ($categories == "STABLE"){
+						echo '<p class="page_title_text" align="center"><strong>' . $endtopitems . ' Top sales items NOT DISCOUNTED OR CHANGING PRICE available in less than ' . $minshops . ' shops. ' . '</strong></p>';
+					}		
+					echo '<div>';
+					echo '<table class="selection">';
+					$TableHeader = '<tr>
+										<th class="ascending">' . _('#') . '</th>
+										<th class="ascending">' . _('Code') . '</th>
+										<th class="ascending">' . _('Description') . '</th>
+										<th class="ascending">' . _('Category') . '</th>
+										<th class="ascending">' . _('Sold ') . $maxdays . ' days' . '</th>
+										<th class="ascending">' . _('QOH') . '</th>
+										<th class="ascending">' . _('# Toko') . '</th>
+									</tr>';
+					echo $TableHeader;
+					$showHeader = FALSE;
+				}
+				$k = StartEvenOrOddRow($k);
+				$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stkcode'] . '">' . $myrow['stkcode'] . '</a>';
+				printf('<td class="number">%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						</tr>', 
+						$i, 
+						$CodeLink, 
+						$myrow['description'], 
+						$myrow['categoryid'], 
+						$myrow['totalinvoiced'], 
+						$myrow['qoh'], 
+						$myrow['availableshops'] 
+						);
+			}
+			$i++;
+		}
+		if (!$showHeader){
+			echo '</table>
+				</div>';
 		}
 	}
 }
