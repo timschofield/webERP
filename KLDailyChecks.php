@@ -83,6 +83,7 @@ function KL_DailyMaintenanceDatabase($ShowMessages, $db, $EmailText = ''){
 	BlockInactiveUsers(22, 30, $ShowMessages, $db); // 22 = SPG-Support
 	PurgeKLTable("kladjustrl","adjustdate", $ShowMessages, $db);
 	PurgeKLTable("klchangeprice","endprocessdate", $ShowMessages, $db);
+	PurgeKLTable("klmovetodiscount20","endprocessdate", $ShowMessages, $db);
 	PurgeKLTable("klmovetodiscount50","endprocessdate", $ShowMessages, $db);
 	PurgeKLTable("klmovetodiscount80","endprocessdate", $ShowMessages, $db);
 	PurgeAuditTrailTable($ShowMessages, $db);
