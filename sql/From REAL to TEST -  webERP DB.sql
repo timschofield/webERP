@@ -177,6 +177,9 @@ INSERT INTO kurakura_kl_test_erp.klmovetodiscount80 SELECT * FROM kurakura_kl_er
 TRUNCATE kurakura_kl_test_erp.`klretailcustomers`;
 INSERT INTO kurakura_kl_test_erp.klretailcustomers SELECT * FROM kurakura_kl_erp.klretailcustomers WHERE date_added >= "2017-01-01";
 
+TRUNCATE kurakura_kl_test_erp.`klretailpartners`;
+INSERT INTO kurakura_kl_test_erp.klretailpartners SELECT * FROM kurakura_kl_erp.klretailpartners;
+
 TRUNCATE kurakura_kl_test_erp.`klrevisedemaildomains`;
 INSERT INTO kurakura_kl_test_erp.klrevisedemaildomains SELECT * FROM kurakura_kl_erp.klrevisedemaildomains;
 

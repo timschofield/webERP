@@ -701,13 +701,16 @@ function KLPrintReceiptHeader($identifier, $OrderNo){
 		$TextToPrint .=  DoubleJustified($CodeSide, $SubTotalSide, $LineLenghtCharA, " ");
 	}
 
-	$Goods = $Total / ((100 + PERCENTAGE_PPN) / 100);
-	$PPN = $Total-$Goods;
 	
 	$TextToPrint .= $NewLine . $NewLine . $RightJustified . $EmphasizedDoubleHeightDoubleWidth;
 	$TextToPrint .= 'Total: Rp. ' . number_format($Total) . $CharacterFontA. $NewLine;
-	$TextToPrint .= 'Goods: Rp. ' . number_format($Goods) . $NewLine;
-	$TextToPrint .= 'PPN 10%: Rp.  ' . number_format($PPN) . $NewLine;
+
+	if ($_SESSION['PPN'] > 0){
+		$Goods = $Total / ((100 + $_SESSION['PPN']) / 100);
+		$PPN = $Total-$Goods;
+		$TextToPrint .= 'Goods: Rp. ' . number_format($Goods) . $NewLine;
+		$TextToPrint .= 'PPN ' . number_format($_SESSION['PPN']) . '%: Rp.  ' . number_format($PPN) . $NewLine;
+	}
 	
 	return $TextToPrint;
 }
@@ -735,10 +738,12 @@ function KLPrintReceiptCustomerFooter($identifier, $OrderNo){
 	$TextToPrint .= "This invoice is the only valid proof of purchase. Keep it. ";
 	$TextToPrint .= "No refund. Exchange within 7 days with this original invoice, packaging and goods in perfect and unused conditions. We reserve the right to refuse any exchange. ";
 	$TextToPrint .= "For more information on our catalog, promotions, shop locations, job opportunities, news and warranty terms and conditions check our website. ";
-	$TextToPrint .= "PT.Bumi Biru Jl. Kesambi No 1 Kerobokan, Bali NPWP:31.780.967.1-906.000" . $NewLine;
+	if ($_SESSION['PartnerCode'] == 'PTBB'){
+		$TextToPrint .= "PT.Bumi Biru Jl. Kesambi No 1 Kerobokan, Bali NPWP:31.780.967.1-906.000";
+	}
 	
 	// website
-	$TextToPrint .= $NewLine . $EmphasizedDoubleHeightDoubleWidth . $CenteredJustified;
+	$TextToPrint .= $NewLine . $NewLine . $EmphasizedDoubleHeightDoubleWidth . $CenteredJustified;
 	if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_KAPAL_LAUT)){
 		$TextToPrint .= "www.kapal-laut.com" . $NewLine;
 	}else if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_BLINK)){

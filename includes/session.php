@@ -256,6 +256,11 @@ if ($KL_SPGSeniorOrSupport OR $KL_SPGJunior){
 					debtorsmaster.salestype,
 					debtorsmaster.currcode,
 					debtorsmaster.customerpoline,
+					klretailpartners.partnercode,
+					klretailpartners.partnername,
+					klretailpartners.ppn,
+					klretailpartners.cashsalesreported,
+					klretailpartners.hppcompensation,
 					custbranch.brname,
 					custbranch.braddress1,
 					custbranch.specialinstructions,
@@ -266,6 +271,7 @@ if ($KL_SPGSeniorOrSupport OR $KL_SPGJunior){
 					paymentterms.terms
 			 FROM locations,
 					debtorsmaster,
+					klretailpartners,
 					holdreasons,
 					salestypes,
 					paymentterms,
@@ -274,6 +280,7 @@ if ($KL_SPGSeniorOrSupport OR $KL_SPGJunior){
 				AND debtorsmaster.holdreason=holdreasons.reasoncode
 				AND debtorsmaster.paymentterms=paymentterms.termsindicator
 				AND debtorsmaster.debtorno = locations.cashsalecustomer
+				AND locations.partnercode = klretailpartners.partnercode
 				AND custbranch.debtorno = locations.cashsalecustomer
 				AND custbranch.branchcode = locations.cashsalebranch
 				AND loccode='" . $_SESSION['UserStockLocation'] ."'";
@@ -314,6 +321,13 @@ if ($KL_SPGSeniorOrSupport OR $KL_SPGJunior){
 		$_SESSION['taxgroupid'] = $myrow['taxgroupid'];
 		$_SESSION['ShopAddress1'] = $myrow['deladd1'];
 		$_SESSION['ShopAddress1'] = $myrow['deladd1'];
+		
+		$_SESSION['PartnerCode'] = $myrow['partnercode'];
+		$_SESSION['PartnerName'] = $myrow['partnername'];
+		$_SESSION['PPN'] = $myrow['ppn'];
+		$_SESSION['CashSalesReported'] = $myrow['cashsalesreported'];
+		$_SESSION['HPPCompensation'] = $myrow['hppcompensation'];
+		
 	}
 }
 /* END KL RICARD */
