@@ -261,6 +261,11 @@ if ($KL_SPGSeniorOrSupport OR $KL_SPGJunior){
 					klretailpartners.ppn,
 					klretailpartners.cashsalesreported,
 					klretailpartners.hppcompensation,
+					klretailpartners.accounthppcompensation,
+					klretailpartners.accountbankdanamon,
+					klretailpartners.accountbankmandiri,
+					klretailpartners.accountbankbca,
+					klretailpartners.accountcomissioncreditcard,
 					custbranch.brname,
 					custbranch.braddress1,
 					custbranch.specialinstructions,
@@ -319,14 +324,17 @@ if ($KL_SPGSeniorOrSupport OR $KL_SPGJunior){
 		$_SESSION['braddress1'] = $myrow['braddress1'];
 		$_SESSION['specialinstructions'] = $myrow['specialinstructions'];
 		$_SESSION['taxgroupid'] = $myrow['taxgroupid'];
-		$_SESSION['ShopAddress1'] = $myrow['deladd1'];
-		$_SESSION['ShopAddress1'] = $myrow['deladd1'];
 		
 		$_SESSION['PartnerCode'] = $myrow['partnercode'];
 		$_SESSION['PartnerName'] = $myrow['partnername'];
 		$_SESSION['PPN'] = $myrow['ppn'];
 		$_SESSION['CashSalesReported'] = $myrow['cashsalesreported'];
 		$_SESSION['HPPCompensation'] = $myrow['hppcompensation'];
+		$_SESSION['AccountHPPCompensation'] = $myrow['accounthppcompensation'];
+		$_SESSION['AccountBankDanamon'] = $myrow['accountbankdanamon'];
+		$_SESSION['AccountBankMandiri'] = $myrow['accountbankmandiri'];
+		$_SESSION['AccountBankBCA'] = $myrow['accountbankbca'];
+		$_SESSION['AccountComissionCreditCard'] = $myrow['accountcomissioncreditcard'];
 		
 	}
 }
