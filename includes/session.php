@@ -261,6 +261,11 @@ if ($KL_SPGSeniorOrSupport OR $KL_SPGJunior){
 					klretailpartners.ppn,
 					klretailpartners.cashsalesreported,
 					klretailpartners.hppcompensation,
+					klretailpartners.accounthppcompensation,
+					klretailpartners.accountbankdanamon,
+					klretailpartners.accountbankmandiri,
+					klretailpartners.accountbankbca,
+					klretailpartners.accountcomissioncreditcard,
 					custbranch.brname,
 					custbranch.braddress1,
 					custbranch.specialinstructions,
@@ -294,7 +299,13 @@ if ($KL_SPGSeniorOrSupport OR $KL_SPGJunior){
 		$myrow = DB_fetch_array($result); //get the only row returned
 
 		if ($myrow['cashsalecustomer']=='' OR $myrow['cashsalebranch']==''){
-			prnMsg(_('To use this script it is first necessary to define a cash sales customer for the location that is your default location. The default cash sale customer is defined under set up ->Inventory Locations Maintenance. The customer should be entered using the customer code and a valid branch code of the customer entered.'),'error');
+			prnMsg(_('To use this script it is first necessary to define a cash sales customer for the location that is your default location.'),'error');
+			include('includes/footer.php');
+			exit;
+		}
+
+		if ($myrow['partnercode']=='NORETAIL'){
+			prnMsg(_('To use this script it is first necessary to define a retail partner for the location that is your default location. '),'error');
 			include('includes/footer.php');
 			exit;
 		}
@@ -319,14 +330,17 @@ if ($KL_SPGSeniorOrSupport OR $KL_SPGJunior){
 		$_SESSION['braddress1'] = $myrow['braddress1'];
 		$_SESSION['specialinstructions'] = $myrow['specialinstructions'];
 		$_SESSION['taxgroupid'] = $myrow['taxgroupid'];
-		$_SESSION['ShopAddress1'] = $myrow['deladd1'];
-		$_SESSION['ShopAddress1'] = $myrow['deladd1'];
 		
 		$_SESSION['PartnerCode'] = $myrow['partnercode'];
 		$_SESSION['PartnerName'] = $myrow['partnername'];
 		$_SESSION['PPN'] = $myrow['ppn'];
 		$_SESSION['CashSalesReported'] = $myrow['cashsalesreported'];
 		$_SESSION['HPPCompensation'] = $myrow['hppcompensation'];
+		$_SESSION['AccountHPPCompensation'] = $myrow['accounthppcompensation'];
+		$_SESSION['AccountBankDanamon'] = $myrow['accountbankdanamon'];
+		$_SESSION['AccountBankMandiri'] = $myrow['accountbankmandiri'];
+		$_SESSION['AccountBankBCA'] = $myrow['accountbankbca'];
+		$_SESSION['AccountComissionCreditCard'] = $myrow['accountcomissioncreditcard'];
 		
 	}
 }
