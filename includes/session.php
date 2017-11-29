@@ -299,7 +299,13 @@ if ($KL_SPGSeniorOrSupport OR $KL_SPGJunior){
 		$myrow = DB_fetch_array($result); //get the only row returned
 
 		if ($myrow['cashsalecustomer']=='' OR $myrow['cashsalebranch']==''){
-			prnMsg(_('To use this script it is first necessary to define a cash sales customer for the location that is your default location. The default cash sale customer is defined under set up ->Inventory Locations Maintenance. The customer should be entered using the customer code and a valid branch code of the customer entered.'),'error');
+			prnMsg(_('To use this script it is first necessary to define a cash sales customer for the location that is your default location.'),'error');
+			include('includes/footer.php');
+			exit;
+		}
+
+		if ($myrow['partnercode']=='NORETAIL'){
+			prnMsg(_('To use this script it is first necessary to define a retail partner for the location that is your default location. '),'error');
 			include('includes/footer.php');
 			exit;
 		}
