@@ -16,6 +16,12 @@ define("ACCOUNT_BANK_DANAMON_IDR", "111121105PT"); // number of account for Bank
 define("ACCOUNT_BANK_MANDIRI_IDR", "111121101PT"); // number of account for Bank Mandiri IDR
 define("ACCOUNT_BANK_BCA_IDR", "111121110PT"); // number of account for Bank BCA IDR
 define("ACCOUNT_COMISSION_CREDITCARD", "700211300PT"); // number of account used to charge the bank comission
+define("COMISSION_CC_DANAMON",     1.80); // % of Credit card comission paid to Danamon
+define("COMISSION_AMEX_DANAMON",   3.00); // % of Credit card comission paid to American Express by Danamon
+define("COMISSION_CC_MANDIRI",     1.80); // % of Credit card comission paid to Mandiri
+define("COMISSION_CC_BCA",         1.80); // % of Credit card comission paid to BCA
+define("COMISSION_AMEX_BCA",       3.00); // % of Credit card comission paid to American Express by BCA
+define("PERCENTAGE_CONSIGNMENT_PTADU_TP_PTBB", 60.0); // %of retail price charged by PT.ADU for sales to PT.BB
 
 
 /**********************************/
@@ -142,14 +148,8 @@ define("PAYMENT_BY_CREDITCARD", 3);
 
 define("ACCOUNT_HUTANG_PPH23", "611012005PT"); // GL account for retention of PPH23 in Petty cash
 
-define("COMISSION_CC_DANAMON",     1.80); // % of Credit card comission paid to Danamon
-define("COMISSION_AMEX_DANAMON",   3.00); // % of Credit card comission paid to American Express by Danamon
-define("COMISSION_CC_MANDIRI",     1.80); // % of Credit card comission paid to Mandiri
-define("COMISSION_CC_BCA",         1.80); // % of Credit card comission paid to BCA
-define("COMISSION_AMEX_BCA",       3.00); // % of Credit card comission paid to American Express by BCA
 
 
-define("PERCENTAGE_CONSIGNMENT_PTADU_TP_PTBB", 60.0); // %of retail price charged by PT.ADU for sales to PT.BB
 
 
 /* Defines about financial Analysis*/
