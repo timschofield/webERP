@@ -1,33 +1,5 @@
 <?php
 
-/**********************************/
-/*         TO BE DELETED          */
-/**********************************/
-define("PERCENTAGE_PPN", 10); // TABLE %PPN
-
-/**********************************/
-/*          IN TABLE              */
-/**********************************/
-
-define("PERCENTAGE_SALES_CASH_TO_PT", 14.0); // TABLE % of cash transactions going to PT cash acccounts
-define("PERCENTAGE_COMPENSATION_HPP_PT", 220.0); // TABLE % of HPP to be assigned to PT sales. 100 means NO compensation.
-define("ACCOUNT_COMPENSATION_HPP_PT", "510010050"); 
-define("ACCOUNT_BANK_DANAMON_IDR", "111121105PT"); // number of account for Bank Danamon IDR
-define("ACCOUNT_BANK_MANDIRI_IDR", "111121101PT"); // number of account for Bank Mandiri IDR
-define("ACCOUNT_BANK_BCA_IDR", "111121110PT"); // number of account for Bank BCA IDR
-define("ACCOUNT_COMISSION_CREDITCARD", "700211300PT"); // number of account used to charge the bank comission
-define("COMISSION_CC_DANAMON",     1.80); // % of Credit card comission paid to Danamon
-define("COMISSION_AMEX_DANAMON",   3.00); // % of Credit card comission paid to American Express by Danamon
-define("COMISSION_CC_MANDIRI",     1.80); // % of Credit card comission paid to Mandiri
-define("COMISSION_CC_BCA",         1.80); // % of Credit card comission paid to BCA
-define("COMISSION_AMEX_BCA",       3.00); // % of Credit card comission paid to American Express by BCA
-define("PERCENTAGE_CONSIGNMENT_PTADU_TP_PTBB", 60.0); // %of retail price charged by PT.ADU for sales to PT.BB
-
-
-/**********************************/
-/*                OK              */
-/**********************************/
-
 define("CURRENCY_CODE", 'IDR');
 define("CUSTOMER_TYPE_RETAIL", '2');
 define("CUSTOMER_TYPE_CONSIGNMENT", '6');

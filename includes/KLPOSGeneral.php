@@ -16,19 +16,19 @@ function zerofill($mStretch, $iLength = 2){
 function KapalLautRetailAreaSelection($PaymentMethod){
 	if($PaymentMethod == PAYMENT_BY_CASH){
 		// Cash
-		// Needs to be splitted into Cash PT and Cash normal
+		// Needs to be splitted into Cash PT and Cash others
 		// We produce a random number between 0 and 100, to separate them.
 		$CashDraw = mt_rand(1,10000)/100;
-		if ($CashDraw <= PERCENTAGE_SALES_CASH_TO_PT){
-			// PERCENTAGE_SALES_CASH_TO_PT% of cash invoices go to PT
-			$Area = "REC";
+		if ($CashDraw <= $_SESSION['CashSalesReported']){
+			// $_SESSION['CashSalesReported'] is % of cash invoices go to Cash reported by partner
+			$Area = $_SESSION['AreaSalesCash'];
 		}else{
-			// 100 - PERCENTAGE_SALES_CASH_TO_PT% of cash invoices go cash others
-			$Area = "REZ";
+			// 100 - $_SESSION['CashSalesReported'] is % of cash invoices go Cash others
+			$Area = $_SESSION['AreaSalesCashOthers'];
 		}
 	}elseif($PaymentMethod == PAYMENT_BY_CREDITCARD){
 		// Credit Card
-		$Area = "RER";
+		$Area = $_SESSION['AreaSalesCreditCard'];
 	}else{
 		$Area = "";	
 		prnMsg(_('Error calculating customer area from payment method. Seek help from the administrator.'),'error');

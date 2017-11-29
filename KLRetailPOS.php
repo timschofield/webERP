@@ -526,13 +526,13 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 
 		// Get the Customer invoice number depending on Area
-		if ($Area == "REZ"){
+		if ($Area == $_SESSION['AreaSalesCashOthers']){
 			// Cash sales
 			$_SESSION['Items'.$identifier]->CustRef = substr($_SESSION['UserStockLocation'],3,2)."-".zerofill(GetNextTransNo(9002, $db),7) ."-C";
-		}elseif ($Area == "REC"){
+		}elseif ($Area == $_SESSION['AreaSalesCash']){
 			// Cash sales PT
 			$_SESSION['Items'.$identifier]->CustRef = substr($_SESSION['UserStockLocation'],3,2)."-".zerofill(GetNextTransNo(9001, $db),7) ."-B";
-		}elseif ($Area == "RER"){
+		}elseif ($Area == $_SESSION['AreaSalesCreditCard']){
 			// Credit Card Sales PT
 			$_SESSION['Items'.$identifier]->CustRef = substr($_SESSION['UserStockLocation'],3,2)."-".zerofill(GetNextTransNo(9000, $db),7) ."-A";
 		}else{
@@ -904,13 +904,13 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 				/*first the cost of sales entry*/
 
 				$AccountCOGS = GetCOGSGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType, $db);
-				if ($Area == "REZ"){
+				if ($Area == $_SESSION['AreaSalesCashOthers']){
 					// No PT sales do not have COGS corrections
 					$StandardCost = round($OrderLine->StandardCost,0);
 					$Compensation = 0;
 				}else{
 					// PT Sales have some COGS corrections and adjustments
-					$StandardCost = round($OrderLine->StandardCost * (PERCENTAGE_COMPENSATION_HPP_PT / 100),0);
+					$StandardCost = round($OrderLine->StandardCost * ($_SESSION['HPPCompensation'] / 100),0);
 					$Compensation = $StandardCost - $OrderLine->StandardCost;
 				}
 				$SQL = "INSERT INTO gltrans (	type,
@@ -948,7 +948,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 													'" . $InvoiceNo . "',
 													'" . Date('Y-m-d') . "',
 													'" . $PeriodNo . "',
-													'" . ACCOUNT_COMPENSATION_HPP_PT . "',
+													'" . $_SESSION['AccountHPPCompensation'] . "',
 													'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . round($Compensation,0) . "',
 													'" . -$Compensation * $OrderLine->Quantity . "',
 													'" . $Tag . "')";
@@ -1188,12 +1188,12 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		
 		if ($_POST['AmountPaidCCDanamon']!=0){
 			// si han pagat CREDITCARD DANAMON, tot o en part
-			$CreditCardNetPayment = ($_POST['AmountPaidCCDanamon']*(100- COMISSION_CC_DANAMON)/100);
-			$CreditCardBankComissions = ($_POST['AmountPaidCCDanamon']*(COMISSION_CC_DANAMON)/100);
+			$CreditCardNetPayment = ($_POST['AmountPaidCCDanamon']*(100- $_SESSION['ComissionCCDanamon'])/100);
+			$CreditCardBankComissions = ($_POST['AmountPaidCCDanamon']*($_SESSION['ComissionCCDanamon'])/100);
 
 			$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CREDITCARD,
 								$PeriodNo,
-								ACCOUNT_BANK_DANAMON_IDR,
+								$_SESSION['AccountBankDanamon'],
 								$Area,
 								$InvoiceNo,
 								$_SESSION['Items'.$identifier]->CustRef,
@@ -1202,13 +1202,13 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								$CreditCardBankComissions,
 								$CreditCardNetPayment,
 								$Tag,
-								ACCOUNT_COMISSION_CREDITCARD,
+								$_SESSION['AccountComissionCreditCard'],
 								$ExRate);
 
 			$ReceiptNumber = AccountDebtorPayment($ReceiptNumber,
 								PAYMENT_BY_CREDITCARD,
 								$PeriodNo,
-								ACCOUNT_BANK_DANAMON_IDR,
+								$_SESSION['AccountBankDanamon'],
 								$Area,
 								$InvoiceNo,
 								$_SESSION['Items'.$identifier]->CustRef,
@@ -1224,12 +1224,12 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 		if ($_POST['AmountPaidAmexBCA']!=0){
 			// si han pagat AMEX DANAMON, tot o en part
-			$CreditCardNetPayment = ($_POST['AmountPaidAmexBCA']*(100- COMISSION_AMEX_BCA)/100);
-			$CreditCardBankComissions = ($_POST['AmountPaidAmexBCA']*(COMISSION_AMEX_BCA)/100);
+			$CreditCardNetPayment = ($_POST['AmountPaidAmexBCA']*(100- $_SESSION['ComissionAmexBCA'])/100);
+			$CreditCardBankComissions = ($_POST['AmountPaidAmexBCA']*($_SESSION['ComissionAmexBCA'])/100);
 			
 			$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CREDITCARD,
 								$PeriodNo,
-								ACCOUNT_BANK_BCA_IDR,
+								$_SESSION['AccountBankBCA'],
 								$Area,
 								$InvoiceNo,
 								$_SESSION['Items'.$identifier]->CustRef,
@@ -1238,13 +1238,13 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								$CreditCardBankComissions,
 								$CreditCardNetPayment,
 								$Tag,
-								ACCOUNT_COMISSION_CREDITCARD,
+								$_SESSION['AccountComissionCreditCard'],
 								$ExRate);
 
 			$ReceiptNumber = AccountDebtorPayment($ReceiptNumber,
 								PAYMENT_BY_CREDITCARD,
 								$PeriodNo,
-								ACCOUNT_BANK_BCA_IDR,
+								$_SESSION['AccountBankBCA'],
 								$Area,
 								$InvoiceNo,
 								$_SESSION['Items'.$identifier]->CustRef,
@@ -1260,12 +1260,12 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 		if ($_POST['AmountPaidCCMandiri']!=0){
 			// si han pagat CREDITCARD MANDIRI, tot o en part
-			$CreditCardNetPayment = ($_POST['AmountPaidCCMandiri']*(100- COMISSION_CC_MANDIRI)/100);
-			$CreditCardBankComissions = ($_POST['AmountPaidCCMandiri']*(COMISSION_CC_MANDIRI)/100);
+			$CreditCardNetPayment = ($_POST['AmountPaidCCMandiri']*(100- $_SESSION['ComissionCCMandiri'])/100);
+			$CreditCardBankComissions = ($_POST['AmountPaidCCMandiri']*($_SESSION['ComissionCCMandiri'])/100);
 
 			$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CREDITCARD,
 								$PeriodNo,
-								ACCOUNT_BANK_MANDIRI_IDR,
+								$_SESSION['AccountBankMandiri'],
 								$Area,
 								$InvoiceNo,
 								$_SESSION['Items'.$identifier]->CustRef,
@@ -1274,13 +1274,13 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								$CreditCardBankComissions,
 								$CreditCardNetPayment,
 								$Tag,
-								ACCOUNT_COMISSION_CREDITCARD,
+								$_SESSION['AccountComissionCreditCard'],
 								$ExRate);
 			
 			$ReceiptNumber = AccountDebtorPayment($ReceiptNumber,
 								PAYMENT_BY_CREDITCARD,
 								$PeriodNo,
-								ACCOUNT_BANK_MANDIRI_IDR,
+								$_SESSION['AccountBankMandiri'],
 								$Area,
 								$InvoiceNo,
 								$_SESSION['Items'.$identifier]->CustRef,
@@ -1296,12 +1296,12 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		
 		if ($_POST['AmountPaidCCBCA']!=0){
 			// si han pagat CREDITCARD BCA, tot o en part
-			$CreditCardNetPayment = ($_POST['AmountPaidCCBCA']*(100- COMISSION_CC_BCA)/100);
-			$CreditCardBankComissions = ($_POST['AmountPaidCCBCA']*(COMISSION_CC_BCA)/100);
+			$CreditCardNetPayment = ($_POST['AmountPaidCCBCA']*(100- $_SESSION['ComissionCCBCA'])/100);
+			$CreditCardBankComissions = ($_POST['AmountPaidCCBCA']*($_SESSION['ComissionCCBCA'])/100);
 			
 			$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CREDITCARD,
 								$PeriodNo,
-								ACCOUNT_BANK_BCA_IDR,
+								$_SESSION['AccountBankBCA'],
 								$Area,
 								$InvoiceNo,
 								$_SESSION['Items'.$identifier]->CustRef,
@@ -1310,13 +1310,13 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								$CreditCardBankComissions,
 								$CreditCardNetPayment,
 								$Tag,
-								ACCOUNT_COMISSION_CREDITCARD,
+								$_SESSION['AccountComissionCreditCard'],
 								$ExRate);
 
 			$ReceiptNumber = AccountDebtorPayment($ReceiptNumber,
 								PAYMENT_BY_CREDITCARD,
 								$PeriodNo,
-								ACCOUNT_BANK_BCA_IDR,
+								$_SESSION['AccountBankBCA'],
 								$Area,
 								$InvoiceNo,
 								$_SESSION['Items'.$identifier]->CustRef,

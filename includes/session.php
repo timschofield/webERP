@@ -259,6 +259,9 @@ if ($KL_SPGSeniorOrSupport OR $KL_SPGJunior){
 					klretailpartners.partnercode,
 					klretailpartners.partnername,
 					klretailpartners.ppn,
+					klretailpartners.areasalescreditcard,
+					klretailpartners.areasalescash,
+					klretailpartners.areasalescashothers,
 					klretailpartners.cashsalesreported,
 					klretailpartners.hppcompensation,
 					klretailpartners.accounthppcompensation,
@@ -266,6 +269,12 @@ if ($KL_SPGSeniorOrSupport OR $KL_SPGJunior){
 					klretailpartners.accountbankmandiri,
 					klretailpartners.accountbankbca,
 					klretailpartners.accountcomissioncreditcard,
+					klretailpartners.comissionccdanamon,
+					klretailpartners.comissionamexdanamon,
+					klretailpartners.comissionccmandiri,
+					klretailpartners.comissionccbca,
+					klretailpartners.comissionamexbca,
+					klretailpartners.percentconsignmentptadu,
 					custbranch.brname,
 					custbranch.braddress1,
 					custbranch.specialinstructions,
@@ -334,6 +343,9 @@ if ($KL_SPGSeniorOrSupport OR $KL_SPGJunior){
 		$_SESSION['PartnerCode'] = $myrow['partnercode'];
 		$_SESSION['PartnerName'] = $myrow['partnername'];
 		$_SESSION['PPN'] = $myrow['ppn'];
+		$_SESSION['AreaSalesCreditCard'] = $myrow['areasalescreditcard'];
+		$_SESSION['AreaSalesCash'] = $myrow['areasalescash'];
+		$_SESSION['AreaSalesCashOthers'] = $myrow['areasalescashothers'];
 		$_SESSION['CashSalesReported'] = $myrow['cashsalesreported'];
 		$_SESSION['HPPCompensation'] = $myrow['hppcompensation'];
 		$_SESSION['AccountHPPCompensation'] = $myrow['accounthppcompensation'];
@@ -341,6 +353,12 @@ if ($KL_SPGSeniorOrSupport OR $KL_SPGJunior){
 		$_SESSION['AccountBankMandiri'] = $myrow['accountbankmandiri'];
 		$_SESSION['AccountBankBCA'] = $myrow['accountbankbca'];
 		$_SESSION['AccountComissionCreditCard'] = $myrow['accountcomissioncreditcard'];
+		$_SESSION['ComissionCCDanamon'] = $myrow['comissionccdanamon'];
+		$_SESSION['ComissionAmexDanamon'] = $myrow['comissionamexdanamon'];
+		$_SESSION['ComissionCCMandiri'] = $myrow['comissionccmandiri'];
+		$_SESSION['ComissionCCBCA'] = $myrow['comissionccbca'];
+		$_SESSION['ComissionAmexBCA'] = $myrow['comissionamexbca'];
+		$_SESSION['PercentConsignmentPTADU'] = $myrow['percentconsignmentptadu'];
 		
 	}
 }
