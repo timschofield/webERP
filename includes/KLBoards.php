@@ -4,6 +4,176 @@
 			FUNCTIONS RELATED CONTROL, PERFORMANCE OR OTHER KL BOARDS
 **************************************************************************************************/
 
+function ActiveTransfersByLocation($RootPath, $db){
+	$TotalTransferIn = 0;
+	$TotalTransferOut = 0;
+	$TotalPcsIn = 0;
+	$TotalPcsOut = 0;
+	
+	$SQL = "SELECT locations.locationname,
+			(SELECT SUM(shipqty-recqty)
+				FROM loctransfers
+				WHERE  recqty < shipqty
+					AND loctransfers.shiploc = locations.loccode) as qtyout,
+			(SELECT SUM(shipqty-recqty)
+				FROM loctransfers
+				WHERE  recqty < shipqty
+					AND loctransfers.recloc = locations.loccode) as qtyin,
+			(SELECT COUNT(DISTINCT(reference))
+				FROM loctransfers
+				WHERE  recqty < shipqty
+					AND loctransfers.shiploc = locations.loccode) as transferout,
+			(SELECT COUNT(DISTINCT(reference))
+				FROM loctransfers
+				WHERE  recqty < shipqty
+					AND loctransfers.recloc = locations.loccode) as transferin
+			FROM locations
+			WHERE locations.typeloc IN " . ALL_SHOPS_LIST_BY_TYPE . "
+			ORDER BY (SELECT SUM(shipqty-recqty)
+				FROM loctransfers
+				WHERE  recqty < shipqty
+					AND (loctransfers.shiploc = locations.loccode OR loctransfers.recloc = locations.loccode)) DESC";
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . _('Pending Goods to be transferred by shop') . '</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Shop') . '</th>
+							<th class="ascending">' . _('Transfer OUT') . '</th>
+							<th class="ascending">' . _('Transfer IN') . '</th>
+							<th class="ascending">' . _('Transfer Total') . '</th>
+							<th class="ascending">' . _('Pcs OUT') . '</th>
+							<th class="ascending">' . _('Pcs IN') . '</th>
+							<th class="ascending">' . _('Pcs Total') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$TotalTransferIn = $TotalTransferIn + $myrow['transferin'];
+			$TotalTransferOut = $TotalTransferOut + $myrow['transferout'];
+			$TotalPcsIn = $TotalPcsIn + $myrow['qtyin'];
+			$TotalPcsOut = $TotalPcsOut + $myrow['qtyout'];
+
+			$k = StartEvenOrOddRow($k);
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$i, 
+					$myrow['locationname'], 
+					locale_number_format($myrow['transferout'],0),
+					locale_number_format($myrow['transferin'],0),
+					locale_number_format($myrow['transferout']+$myrow['transferin'],0),
+					locale_number_format($myrow['qtyout'],0),
+					locale_number_format($myrow['qtyin'],0),
+					locale_number_format($myrow['qtyout']+$myrow['qtyin'],0)
+					);
+			$i++;
+		}
+		printf('<td class="number">%s</td>
+				<td>%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'', 
+				'Total', 
+				locale_number_format($TotalTransferOut,0),
+				locale_number_format($TotalTransferIn,0),
+				locale_number_format($TotalTransferOut+$TotalTransferIn,0),
+				locale_number_format($TotalPcsOut,0),
+				locale_number_format($TotalPcsIn,0),
+				locale_number_format($TotalPcsOut+$TotalPcsIn,0)
+				);
+		
+		echo '</table>
+				</div>
+				</form>';
+	}
+}
+
+function ActiveTransferStatus($RootPath, $db){
+	$SQL = "SELECT reference,
+					shipdate,
+					(SELECT locationname
+						FROM locations
+						WHERE locations.loccode = shiploc)AS locfrom,
+					(SELECT locationname
+						FROM locations
+						WHERE locations.loccode = recloc)AS locto,
+					SUM(shipqty-recqty) AS pendingqty
+			FROM loctransfers
+			WHERE  recqty < shipqty
+			GROUP BY reference
+			ORDER BY shipdate ASC, reference ASC";
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . _('List of Active Transfers') . '</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Date') . '</th>
+							<th class="ascending">' . _('Transfer') . '</th>
+							<th class="ascending">' . _('From') . '</th>
+							<th class="ascending">' . _('To') . '</th>
+							<th class="ascending">' . _('Qty') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		$total = 0;
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			$CodeLink = '<a href="' . $RootPath . '/StockLocTransferReceive.php?Trf_ID=' . $myrow['reference'] . '">' . $myrow['reference'] . '</a>';
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$i, 
+					ConvertSQLDateTime($myrow['shipdate']), 
+					$CodeLink, 
+					$myrow['locfrom'], 
+					$myrow['locto'], 
+					locale_number_format($myrow['pendingqty'],0)
+					);
+			$i++;
+			$total = $total + $myrow['pendingqty'];
+		}
+		printf('<td class="number">%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'', 
+				'', 
+				'', 
+				'', 
+				'Total', 
+				locale_number_format($total,0)
+				);
+		echo '</table>
+				</div>
+				</form>';
+	}
+}
+
 function ErrorsInTransfers($maxdays, $RootPath, $db){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 	$SQL = "SELECT DISTINCT(loctransfers.reference),
@@ -119,113 +289,6 @@ function ErrorsInTransfers($maxdays, $RootPath, $db){
 		echo '</table>
 				</div>';
 	}
-}
-
-function GetTopSalesField($TopItemsDays){
-	// selects the field to be used in queries of Top Sales depending on the days
-	
-	if ($TopItemsDays == 30){
-		$TopSalesField = "topsales30";
-	}elseif ($TopItemsDays == 60){
-		$TopSalesField = "topsales60";
-	}elseif ($TopItemsDays == 90){
-		$TopSalesField = "topsales90";
-	}else{
-		$TopSalesField = "topsales60"; // if wrong input assumes 60.
-	}
-	return $TopSalesField;
-}
-
-function PositionTopSalesItem($stockid, $TopItemsDays, $db){
-
-	$TopSalesField = GetTopSalesField($TopItemsDays);
-	$SQL="SELECT ". $TopSalesField." AS topsalesposition
-		  FROM klsalesperformance
-		  WHERE stockid = '" . $stockid . "'";
-	$result = DB_query($SQL);
-	$TopSalesPosition = 999999;
-	if (DB_num_rows($result) != 0){
-		if ($myrow = DB_fetch_array($result)) {
-			$TopSalesPosition = $myrow['topsalesposition'];
-		}
-	}
-	return $TopSalesPosition;
-}
-
-function TransfersDelayed($maxdays, $RootPath, $db){
-	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
-	$SQL = "SELECT DISTINCT reference,
-					shipdate,
-					shiploc,
-					recloc
-			FROM loctransfers 
-			WHERE  recqty < shipqty
-				AND shipdate <= '". $StartDate ."'
-			ORDER BY reference";
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Transfers delayed more than ') . $maxdays . _(' days ') . '</strong></p>';
-		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Transfer') . '</th>
-							<th class="ascending">' . _('Date') . '</th>
-							<th class="ascending">' . _('From') . '</th>
-							<th class="ascending">' . _('To') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
-		$i = 1;
-		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
-			$CodeLink = '<a href="' . $RootPath . '/StockLocTransferReceive.php?Trf_ID=' . $myrow['reference'] . '">' . $myrow['reference'] . '</a>';
-			printf('<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					</tr>', 
-					$i, 
-					$CodeLink, 
-					ConvertSQLDate($myrow['shipdate']), 
-					$myrow['shiploc'], 
-					$myrow['recloc'] 
-					);
-			$i++;
-		}
-		echo '</table>
-				</div>';
-	}
-}
-
-
-
-
-
-
-
-
-
-
-
-function SalesOfItemByLocation($stockid, $location, $maxdays, $db){
-	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
-	$SQL = "SELECT COUNT(qtyinvoiced) AS sales
-			FROM salesorderdetails, salesorders
-			WHERE salesorderdetails.orderno = salesorders.orderno
-				AND salesorderdetails.completed = 1
-				AND salesorders.orddate >= '". $StartDate . "'
-				AND salesorders.fromstkloc = '". $location . "'
-				AND salesorderdetails.stkcode LIKE '". $stockid . "%'";
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		$myrow = DB_fetch_array($result);
-		$sales = $myrow['sales'];
-	}else{
-		$sales = 999;
-	}
-	return $sales;
 }
 
 function FinishedStockDistribution($kind, $byreport, $db){
@@ -636,183 +699,153 @@ function FinishedStockDistributionByShopAndCategory($db){
 	}
 }
 
-
-
-/*
-*************************************************************************************************
-			FUNCTIONS RELATED MAINTAIN DATABASE BOARDS
-*************************************************************************************************
-*/
-
-
-function ActiveTransfersByLocation($RootPath, $db){
-	$TotalTransferIn = 0;
-	$TotalTransferOut = 0;
-	$TotalPcsIn = 0;
-	$TotalPcsOut = 0;
+function GetTopSalesField($TopItemsDays){
+	// selects the field to be used in queries of Top Sales depending on the days
 	
-	$SQL = "SELECT locations.locationname,
-			(SELECT SUM(shipqty-recqty)
-				FROM loctransfers
-				WHERE  recqty < shipqty
-					AND loctransfers.shiploc = locations.loccode) as qtyout,
-			(SELECT SUM(shipqty-recqty)
-				FROM loctransfers
-				WHERE  recqty < shipqty
-					AND loctransfers.recloc = locations.loccode) as qtyin,
-			(SELECT COUNT(DISTINCT(reference))
-				FROM loctransfers
-				WHERE  recqty < shipqty
-					AND loctransfers.shiploc = locations.loccode) as transferout,
-			(SELECT COUNT(DISTINCT(reference))
-				FROM loctransfers
-				WHERE  recqty < shipqty
-					AND loctransfers.recloc = locations.loccode) as transferin
-			FROM locations
-			WHERE locations.typeloc IN " . ALL_SHOPS_LIST_BY_TYPE . "
-			ORDER BY (SELECT SUM(shipqty-recqty)
-				FROM loctransfers
-				WHERE  recqty < shipqty
-					AND (loctransfers.shiploc = locations.loccode OR loctransfers.recloc = locations.loccode)) DESC";
+	if ($TopItemsDays == 30){
+		$TopSalesField = "topsales30";
+	}elseif ($TopItemsDays == 60){
+		$TopSalesField = "topsales60";
+	}elseif ($TopItemsDays == 90){
+		$TopSalesField = "topsales90";
+	}else{
+		$TopSalesField = "topsales60"; // if wrong input assumes 60.
+	}
+	return $TopSalesField;
+}
+
+function ItemsWithoutRetailPrice($stockcat, $factorRetail, $RootPath, $db){
+	/* Check if there is any item without retail price */
+	$today = date('Y-m-d');
+	$SQL = "SELECT stockmaster.stockid, 
+				stockmaster.description,
+				(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS stdcost
+			FROM stockmaster, stockcategory					
+			WHERE stockmaster.categoryid = stockcategory.categoryid					
+				AND stockmaster.discontinued = 0					
+				AND stockmaster.klchangingprice = 0
+				AND stockmaster.klmovingdiscount20 = 0
+				AND stockmaster.klmovingdiscount50 = 0
+				AND stockmaster.klmovingdiscount80 = 0
+				AND stockcategory.stocktype ='F' 		
+				AND stockmaster.categoryid = '". $stockcat ."'
+				AND NOT EXISTS (SELECT * 					
+								FROM prices	
+								WHERE stockmaster.stockid = prices.stockid	
+									AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
+									AND prices.currabrev = '". CURRENCY_CODE ."'
+									AND prices.startdate <= '". $today. "' 
+									AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00'))";
+
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Pending Goods to be transferred by shop') . '</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . $stockcat . _(' Items without active retail price') . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
 							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Shop') . '</th>
-							<th class="ascending">' . _('Transfer OUT') . '</th>
-							<th class="ascending">' . _('Transfer IN') . '</th>
-							<th class="ascending">' . _('Transfer Total') . '</th>
-							<th class="ascending">' . _('Pcs OUT') . '</th>
-							<th class="ascending">' . _('Pcs IN') . '</th>
-							<th class="ascending">' . _('Pcs Total') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('Std Cost') . '</th>
+							<th class="ascending">' . _('Recommended Retail') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$TotalTransferIn = $TotalTransferIn + $myrow['transferin'];
-			$TotalTransferOut = $TotalTransferOut + $myrow['transferout'];
-			$TotalPcsIn = $TotalPcsIn + $myrow['qtyin'];
-			$TotalPcsOut = $TotalPcsOut + $myrow['qtyout'];
-
 			$k = StartEvenOrOddRow($k);
+			$NewPrice = correction_for_low_end_prices(round_price($myrow['stdcost'] * $factorRetail, "UP"));
+			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+			$PriceLink = '<a href="' . $RootPath . '/Prices.php?Item=' . $myrow['stockid'] . '">' . locale_number_format($myrow['stdcost'],0) . '</a>';
+			$NewPriceLink = '<a href="' . $RootPath . '/KLChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $NewPrice .  '&Action=New">' . locale_number_format($NewPrice,0) . '</a>';
 			printf('<td class="number">%s</td>
 					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
+					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>', 
 					$i, 
-					$myrow['locationname'], 
-					locale_number_format($myrow['transferout'],0),
-					locale_number_format($myrow['transferin'],0),
-					locale_number_format($myrow['transferout']+$myrow['transferin'],0),
-					locale_number_format($myrow['qtyout'],0),
-					locale_number_format($myrow['qtyin'],0),
-					locale_number_format($myrow['qtyout']+$myrow['qtyin'],0)
+					$CodeLink, 
+					$myrow['description'],
+					$PriceLink,
+					$NewPriceLink
 					);
 			$i++;
 		}
-		printf('<td class="number">%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				'', 
-				'Total', 
-				locale_number_format($TotalTransferOut,0),
-				locale_number_format($TotalTransferIn,0),
-				locale_number_format($TotalTransferOut+$TotalTransferIn,0),
-				locale_number_format($TotalPcsOut,0),
-				locale_number_format($TotalPcsIn,0),
-				locale_number_format($TotalPcsOut+$TotalPcsIn,0)
-				);
-		
 		echo '</table>
-				</div>
-				</form>';
+				</div>';
 	}
 }
 
-function ActiveTransferStatus($RootPath, $db){
-	$SQL = "SELECT reference,
-					shipdate,
-					(SELECT locationname
-						FROM locations
-						WHERE locations.loccode = shiploc)AS locfrom,
-					(SELECT locationname
-						FROM locations
-						WHERE locations.loccode = recloc)AS locto,
-					SUM(shipqty-recqty) AS pendingqty
-			FROM loctransfers
-			WHERE  recqty < shipqty
-			GROUP BY reference
-			ORDER BY shipdate ASC, reference ASC";
+function ListPriorityLocations($db){
+	$SQL="SELECT locationname,
+				zone,
+				priority,
+				stockavailableforonline,
+				smartdispatchminmodels,
+				smartdispatchmaxmodels
+		FROM locations
+		WHERE locations.typeloc IN " . ALL_SHOPS_LIST_BY_TYPE . "
+		ORDER BY locationname ASC";
+
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('List of Active Transfers') . '</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . _('Priority Assigned to Shops. 1-Maximum 10-Minimum') . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Date') . '</th>
-							<th class="ascending">' . _('Transfer') . '</th>
-							<th class="ascending">' . _('From') . '</th>
-							<th class="ascending">' . _('To') . '</th>
-							<th class="ascending">' . _('Qty') . '</th>
+							<th class="ascending">' . _('Location') . '</th>
+							<th class="ascending">' . _('Zone') . '</th>
+							<th class="ascending">' . _('Priority') . '</th>
+							<th class="ascending">' . _('Stock Online?') . '</th>
+							<th class="ascending">' . _('Min Daily Tr') . '</th>
+							<th class="ascending">' . _('Max Daily Tr') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
 		$i = 1;
-		$total = 0;
 		while ($myrow = DB_fetch_array($result)) {
 			$k = StartEvenOrOddRow($k);
-			$CodeLink = '<a href="' . $RootPath . '/StockLocTransferReceive.php?Trf_ID=' . $myrow['reference'] . '">' . $myrow['reference'] . '</a>';
-			printf('<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
+			if ($myrow['stockavailableforonline'] ==  1){
+				$StockOnline = "Yes";
+			}else{
+				$StockOnline = "No";
+			}
+			printf('<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
 					</tr>', 
-					$i, 
-					ConvertSQLDateTime($myrow['shipdate']), 
-					$CodeLink, 
-					$myrow['locfrom'], 
-					$myrow['locto'], 
-					locale_number_format($myrow['pendingqty'],0)
+					$myrow['locationname'],
+					$myrow['zone'],
+					$myrow['priority'],
+					$StockOnline,
+					$myrow['smartdispatchminmodels'],
+					$myrow['smartdispatchmaxmodels']
 					);
 			$i++;
-			$total = $total + $myrow['pendingqty'];
 		}
-		printf('<td class="number">%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				'', 
-				'', 
-				'', 
-				'', 
-				'Total', 
-				locale_number_format($total,0)
-				);
 		echo '</table>
-				</div>
-				</form>';
+				</div>';
 	}
+}
+
+function PositionTopSalesItem($stockid, $TopItemsDays, $db){
+
+	$TopSalesField = GetTopSalesField($TopItemsDays);
+	$SQL="SELECT ". $TopSalesField." AS topsalesposition
+		  FROM klsalesperformance
+		  WHERE stockid = '" . $stockid . "'";
+	$result = DB_query($SQL);
+	$TopSalesPosition = 999999;
+	if (DB_num_rows($result) != 0){
+		if ($myrow = DB_fetch_array($result)) {
+			$TopSalesPosition = $myrow['topsalesposition'];
+		}
+	}
+	return $TopSalesPosition;
 }
 
 function RecentlyClosedTransferStatus($maxdays, $RootPath, $db){
@@ -892,39 +925,27 @@ function RecentlyClosedTransferStatus($maxdays, $RootPath, $db){
 	}
 }
 
-function TransferWithWrongInformation($maxdays, $RootPath, $db){
-	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays+1));
-	$SQL = "SELECT reference,
-					stockid,
-					recdate,
-					(SELECT locationname
-						FROM locations
-						WHERE locations.loccode = shiploc) AS locfrom,
-					(SELECT locationname
-						FROM locations
-						WHERE locations.loccode = recloc) AS locto,
-					shipqty AS shippedqty,
-					recqty AS receivedqty
-			FROM loctransfers
-			WHERE  shipdate >= '" . $StartDate . "'
-				AND recdate > '2000'
-				AND shipqty != recqty
-			ORDER BY recdate ASC, reference ASC, stockid ASC";
-			
+function TransfersDelayed($maxdays, $RootPath, $db){
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
+	$SQL = "SELECT DISTINCT reference,
+					shipdate,
+					shiploc,
+					recloc
+			FROM loctransfers 
+			WHERE  recqty < shipqty
+				AND shipdate <= '". $StartDate ."'
+			ORDER BY reference";
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Transfers With Wrong Information during the last ') . $maxdays  . ' days</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . _('Transfers delayed more than ') . $maxdays . _(' days ') . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
 							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Reception Date') . '</th>
 							<th class="ascending">' . _('Transfer') . '</th>
+							<th class="ascending">' . _('Date') . '</th>
 							<th class="ascending">' . _('From') . '</th>
 							<th class="ascending">' . _('To') . '</th>
-							<th class="ascending">' . _('Item') . '</th>
-							<th class="ascending">' . _('Shipped Qty') . '</th>
-							<th class="ascending">' . _('Received Qty') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -937,496 +958,12 @@ function TransferWithWrongInformation($maxdays, $RootPath, $db){
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					$i, 
-					ConvertSQLDateTime($myrow['recdate']), 
-					$CodeLink, 
-					$myrow['locfrom'], 
-					$myrow['locto'], 
-					$myrow['stockid'], 
-					locale_number_format($myrow['shippedqty'],0),
-					locale_number_format($myrow['receivedqty'],0)
-					);
-			$i++;
-		}
-		echo '</table>
-				</div>
-				</form>';
-	}
-}
-
-function ListPriorityLocations($db){
-	$SQL="SELECT locationname,
-				zone,
-				priority,
-				stockavailableforonline,
-				smartdispatchminmodels,
-				smartdispatchmaxmodels
-		FROM locations
-		WHERE locations.typeloc IN " . ALL_SHOPS_LIST_BY_TYPE . "
-		ORDER BY locationname ASC";
-
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Priority Assigned to Shops. 1-Maximum 10-Minimum') . '</strong></p>';
-		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('Location') . '</th>
-							<th class="ascending">' . _('Zone') . '</th>
-							<th class="ascending">' . _('Priority') . '</th>
-							<th class="ascending">' . _('Stock Online?') . '</th>
-							<th class="ascending">' . _('Min Daily Tr') . '</th>
-							<th class="ascending">' . _('Max Daily Tr') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
-		$i = 1;
-		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
-			if ($myrow['stockavailableforonline'] ==  1){
-				$StockOnline = "Yes";
-			}else{
-				$StockOnline = "No";
-			}
-			printf('<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					$myrow['locationname'],
-					$myrow['zone'],
-					$myrow['priority'],
-					$StockOnline,
-					$myrow['smartdispatchminmodels'],
-					$myrow['smartdispatchmaxmodels']
-					);
-			$i++;
-		}
-		echo '</table>
-				</div>';
-	}
-}
-
-function CheckNegativeStock($RootPath, $db){
-	/* Check if there is any negative stock */
-
-	$SQL = "SELECT stockmaster.stockid,			
-				   stockmaster.description,			
-				   stockmaster.decimalplaces,			
-				   locations.locationname,			
-				   locstock.quantity			
-			FROM stockmaster INNER JOIN locstock 			
-			ON stockmaster.stockid=locstock.stockid			
-			INNER JOIN locations 			
-			ON locstock.loccode = locations.loccode			
-			WHERE locstock.quantity < 0			
-			ORDER BY stockmaster.stockid";
-				
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Items with Negative Stock') . '</strong></p>';
-		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Description') . '</th>
-							<th class="ascending">' . _('Location') . '</th>
-							<th class="ascending">' . _('Quantity') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
-		$i = 1;
-		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
-			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
-			printf('<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
 					</tr>', 
 					$i, 
 					$CodeLink, 
-					$myrow['description'], 
-					$myrow['locationname'], 
-					locale_number_format($myrow['quantity'],$myrow['decimalplaces'])
-					);
-			$i++;
-		}
-		echo '</table>
-				</div>';
-	}
-}
-
-function ItemsInKLProcessAndRLNotZero($RootPath, $db){
-	/* Check if there is any item in any KL process and RL is not zero... */
-
-	$SQL = "SELECT stockmaster.stockid,			
-				   stockmaster.description,			
-				   locstock.loccode,			
-				   locations.locationname,			
-				   locstock.reorderlevel,
-					stockmaster.klmovingdiscount20,		
-					stockmaster.klmovingdiscount50,		
-					stockmaster.klmovingdiscount80,		
-					stockmaster.klchangingprice   
-			FROM stockmaster INNER JOIN locstock 			
-			ON stockmaster.stockid=locstock.stockid			
-			INNER JOIN locations 			
-			ON locstock.loccode = locations.loccode			
-			WHERE locstock.reorderlevel != 0
-				AND (stockmaster.klmovingdiscount20 != 0
-					OR  stockmaster.klmovingdiscount50 != 0
-					OR  stockmaster.klmovingdiscount80 != 0
-					OR stockmaster.klchangingprice != 0 ) 			
-			ORDER BY stockmaster.stockid,
-					locstock.loccode";
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Items with in KL process and RL not zero') . '</strong></p>';
-		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Location') . '</th>
-							<th class="ascending">' . _('RL') . '</th>
-							<th class="ascending">' . _('Changing Price') . '</th>
-							<th class="ascending">' . _('MoveTo 20% Disc') . '</th>
-							<th class="ascending">' . _('MoveTo 50% Disc') . '</th>
-							<th class="ascending">' . _('MoveTo 80% Disc') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
-		$i = 1;
-		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
-			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
-			if ($myrow['klchangingprice'] == 1){
-				$ItemChangingPrice = "Yes";
-			}else{
-				$ItemChangingPrice = "";
-			}
-			if ($myrow['klmovingdiscount20'] == 1){
-				$ItemMovingToDiscount20 = "Yes";
-			}else{
-				$ItemMovingToDiscount20 = "";
-			}
-			if ($myrow['klmovingdiscount50'] == 1){
-				$ItemMovingToDiscount50 = "Yes";
-			}else{
-				$ItemMovingToDiscount50 = "";
-			}
-			if ($myrow['klmovingdiscount80'] == 1){
-				$ItemMovingToDiscount80 = "Yes";
-			}else{
-				$ItemMovingToDiscount80 = "";
-			}
-			printf('<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					</tr>', 
-					$i, 
-					$CodeLink, 
-					$myrow['locationname'], 
-					locale_number_format($myrow['reorderlevel'],0),
-					$ItemChangingPrice,
-					$ItemMovingToDiscount20,
-					$ItemMovingToDiscount50,
-					$ItemMovingToDiscount80
-					);
-			$i++;
-		}
-		echo '</table>
-				</div>';
-	}
-}
-
-function FlaggedAsObsoleteButStockAvailable($RootPath, $db){
-	/* Check if there is any item flagged as obsolete BUT with some stock available */
-	$SQL = "SELECT stockmaster.stockid, 
-				stockmaster.description
-			FROM stockmaster
-			WHERE discontinued = 1 
-				AND (SELECT SUM(quantity)
-					FROM locstock
-					WHERE stockmaster.stockid = locstock.stockid) > 0";
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Obsolete Items with available Stock') . '</strong></p>';
-		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Description') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
-		$i = 1;
-		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
-			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
-			printf('<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					</tr>', 
-					$i, 
-					$CodeLink, 
-					$myrow['description'] 
-					);
-			$i++;
-		}
-		echo '</table>
-				</div>';
-	}
-}
-
-function ItemsWithoutWeightOrVolume($RootPath, $db){
-	$SQL = "SELECT stockmaster.stockid,
-				   stockmaster.description,
-				   stockmaster.grossweight,
-				   stockmaster.netweight,
-				   stockmaster.volume,
-				   stockmaster.longdescription,	
-				   stockmaster.categoryid	
-			FROM stockmaster, stockcategory
-			WHERE stockmaster.categoryid = stockcategory.categoryid
-				AND stockcategory.stocktype = 'F'
-				AND stockmaster.categoryid IN " . CATEGORIES_AVAILABLE_WEBSITE ."
-				AND stockmaster.discontinued = 0
-				AND (stockmaster.grossweight < 0.00001 
-					OR stockmaster.volume < 0.00001
-					OR stockmaster.grossweight <= stockmaster.netweight)
-			ORDER BY stockmaster.stockid";
-
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Online Shop items with no gross weight, no volume or Net > Gross Weight') . '</strong></p>';
-		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Description') . '</th>
-							<th class="ascending">' . _('Net Weight Kg') . '</th>
-							<th class="ascending">' . _('Gross Weight Kg') . '</th>
-							<th class="ascending">' . _('Volume m3') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
-		$i = 1;
-		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
-			$CodeLink = '<a href="' . $RootPath . '/Stocks.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
-			printf('<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					$i, 
-					$CodeLink, 
-					$myrow['description'], 
-					locale_number_format($myrow['netweight'],5), 
-					locale_number_format($myrow['grossweight'],5), 
-					locale_number_format($myrow['volume'],5)
-					);
-			$i++;
-		}
-		echo '</table>
-				</div>';
-	}
-}
-
-function ItemsWithoutStandardCost($RootPath, $db){
-	/* Check if there is any item without standard cost */
-	$SQL = "SELECT stockmaster.stockid,
-				stockmaster.description, 
-				(SELECT SUM(quantity) 
-					FROM locstock 
-					WHERE locstock.stockid = stockmaster.stockid) AS availablestock
-			FROM stockmaster,stockcategory
-			WHERE stockmaster.categoryid = stockcategory.categoryid
-				AND stockcategory.stocktype != 'D'
-				AND (materialcost + labourcost + overheadcost) = 0
-				AND discontinued = 0";
-// EXPLAIN SQL 2014-05-31
-//	prnMsg($SQL);
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Items without standard cost') . '</strong></p>';
-		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Description') . '</th>
-							<th class="ascending">' . _('QOH') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
-		$i = 1;
-		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
-			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
-			printf('<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					$i, 
-					$CodeLink, 
-					$myrow['description'], 
-					locale_number_format($myrow['availablestock'],0)
-					);
-			$i++;
-		}
-		echo '</table>
-				</div>';
-	}
-}
-
-function PricesNotUpdatedinXDays($numDays, $percentageIncrease, $RootPath, $db){
-	
-	$InitialDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$numDays));
-	$today = date('Y-m-d');
-
-	$SQL = "SELECT stockmaster.stockid, 
-				stockmaster.description,
-				(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS stdcost,
-				prices.price,
-				prices.startdate
-			FROM prices, stockmaster
-			WHERE stockmaster.stockid = prices.stockid	
-				AND ( stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_TEST . "
-					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_STABLE . "
-					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING . ")
-				AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
-				AND prices.currabrev = '". CURRENCY_CODE ."'
-				AND prices.startdate <= '". $InitialDate. "' 
-				AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')
-				AND stockmaster.discontinued = 0					
-				AND stockmaster.klchangingprice = 0
-				AND stockmaster.klmovingdiscount20 = 0
-				AND stockmaster.klmovingdiscount50 = 0
-				AND stockmaster.klmovingdiscount80 = 0
-			ORDER BY stockmaster.stockid";
-
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . 'Prices not updated during the last ' . $numDays . ' days. Recommended increase '. $percentageIncrease . '%</strong></p>';
-		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Description') . '</th>
-							<th class="ascending">' . _('Std Cost') . '</th>
-							<th class="ascending">' . _('Date Price') . '</th>
-							<th class="ascending">' . _('Current Price') . '</th>
-							<th class="ascending">' . _('Recommended Price') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
-		$i = 1;
-		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
-			$NewPrice = correction_for_low_end_prices(round_price($myrow['price'] * (1 + $percentageIncrease/100), "UP"));
-			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
-		//	$PriceLink = '<a href="' . $RootPath . '/Prices.php?Item=' . $myrow['stockid'] . '">' . locale_number_format($myrow['price'],0) . '</a>';
-			$NewPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $NewPrice .  '">' . locale_number_format($NewPrice,0) . '</a>';
-			printf('<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					$i, 
-					$CodeLink, 
-					$myrow['description'],
-					locale_number_format($myrow['stdcost'],0),
-					ConvertSQLDate($myrow['startdate']), 
-					locale_number_format($myrow['price'],0),
-					$NewPriceLink
-					);
-			$i++;
-		}
-		echo '</table>
-				</div>';
-	}
-}
-
-function ItemsWithoutRetailPrice($stockcat, $factorRetail, $RootPath, $db){
-	/* Check if there is any item without retail price */
-	$today = date('Y-m-d');
-	$SQL = "SELECT stockmaster.stockid, 
-				stockmaster.description,
-				(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS stdcost
-			FROM stockmaster, stockcategory					
-			WHERE stockmaster.categoryid = stockcategory.categoryid					
-				AND stockmaster.discontinued = 0					
-				AND stockmaster.klchangingprice = 0
-				AND stockmaster.klmovingdiscount20 = 0
-				AND stockmaster.klmovingdiscount50 = 0
-				AND stockmaster.klmovingdiscount80 = 0
-				AND stockcategory.stocktype ='F' 		
-				AND stockmaster.categoryid = '". $stockcat ."'
-				AND NOT EXISTS (SELECT * 					
-								FROM prices	
-								WHERE stockmaster.stockid = prices.stockid	
-									AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
-									AND prices.currabrev = '". CURRENCY_CODE ."'
-									AND prices.startdate <= '". $today. "' 
-									AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00'))";
-
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . $stockcat . _(' Items without active retail price') . '</strong></p>';
-		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Description') . '</th>
-							<th class="ascending">' . _('Std Cost') . '</th>
-							<th class="ascending">' . _('Recommended Retail') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
-		$i = 1;
-		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
-			$NewPrice = correction_for_low_end_prices(round_price($myrow['stdcost'] * $factorRetail, "UP"));
-			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
-			$PriceLink = '<a href="' . $RootPath . '/Prices.php?Item=' . $myrow['stockid'] . '">' . locale_number_format($myrow['stdcost'],0) . '</a>';
-			$NewPriceLink = '<a href="' . $RootPath . '/KLChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $NewPrice .  '&Action=New">' . locale_number_format($NewPrice,0) . '</a>';
-			printf('<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					$i, 
-					$CodeLink, 
-					$myrow['description'],
-					$PriceLink,
-					$NewPriceLink
+					ConvertSQLDate($myrow['shipdate']), 
+					$myrow['shiploc'], 
+					$myrow['recloc'] 
 					);
 			$i++;
 		}
@@ -1437,97 +974,25 @@ function ItemsWithoutRetailPrice($stockcat, $factorRetail, $RootPath, $db){
 
 
 
-function OutstandingOrders($customertype, $ordertype, $RootPath, $db){
-	/* Check if there are outstanding orders for retail customers */
 
-	if ($customertype == "Retail"){
-		$whereclause = " AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_RETAIL . ")";
-		$namefield = " debtorsmaster.name ";
-		$Titletext = "Outstanding Retail";
-	}elseif ($customertype == "Consignment"){
-		$whereclause = " AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_CONSIGNMENT . ")";
-		$namefield = " debtorsmaster.name ";
-		$Titletext = "Outstanding Consignment";
-	}elseif ($customertype == "Wholesale"){
-		$whereclause = " AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_WHOLESALE . ")";
-		$namefield = " debtorsmaster.name ";
-		$Titletext = "Outstanding Wholesale";
-	}elseif ($customertype == "Online"){
-		$whereclause = " AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_ONLINE . ")";
-		$namefield = " salesorders.deliverto AS name ";
-		$Titletext = "Outstanding Online";
-	}else{
-		$namefield = " debtorsmaster.name ";
-		$whereclause = " ";
-		$Titletext = _('Outstanding');
-	}
-	
-	if ($ordertype == "Quotation"){
-		$whereclause = $whereclause . " AND salesorders.quotation = 1 ";
-		$Titletext = $Titletext . " Quotations";
-	}elseif  ($ordertype == "Order"){
-		$whereclause = $whereclause . " AND salesorders.quotation = 0 ";
-		$Titletext = $Titletext . " Orders";
-	}else{
-		$Titletext = _(' Orders and Quotations');
-	}
-	
-	$SQL = "SELECT salesorders.orderno,	
-				debtorsmaster.debtorno, "
-			   . $namefield . ",
-				salesorders.orddate,
-				SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)/currencies.rate) AS ordervalue
-			FROM salesorders INNER JOIN salesorderdetails 	
-				ON salesorders.orderno = salesorderdetails.orderno
-				INNER JOIN debtorsmaster 
-				ON salesorders.debtorno = debtorsmaster.debtorno
-				INNER JOIN currencies
-				ON debtorsmaster.currcode = currencies.currabrev
-			WHERE salesorderdetails.completed= 0	"
-			. $whereclause .
-			" GROUP BY salesorders.orderno,	
-				debtorsmaster.name,
-				salesorders.orddate
-			ORDER BY salesorders.orderno";
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . $Titletext . '</strong></p>';
-		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Order') . '</th>
-							<th class="ascending">' . _('Customer') . '</th>
-							<th class="ascending">' . _('Name') . '</th>
-							<th class="ascending">' . _('Order Date') . '</th>
-							<th class="ascending">' . _('Total Value') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
-		$i = 1;
-		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
-			$CodeLink = '<a href="' . $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . $myrow['orderno'] . '">' . $myrow['orderno'] . '</a>';
-			printf('<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					$i, 
-					$CodeLink, 
-					$myrow['debtorno'], 
-					$myrow['name'], 
-					ConvertSQLDate($myrow['orddate']), 
-					locale_number_format($myrow['ordervalue'],0)
-					);
-			$i++;
-		}
-		echo '</table>
-				</div>';
-	}
-}
+
+
+
+
+
+
+
+
+
+
+/*
+*************************************************************************************************
+			FUNCTIONS RELATED MAINTAIN DATABASE BOARDS
+*************************************************************************************************
+*/
+
+
+
 
 function OnlineOrdersFollowUp($Source, $numDays, $RootPath, $db){
 

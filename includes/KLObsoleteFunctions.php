@@ -130,6 +130,56 @@ function AdjustNoSales($location, $maxdays, $maxmanualchanges, $topitems, $TopIt
 	}
 }
 
+function DailySalesRecordsByShops($Days, $FromDate, $db){
+
+	$SQL = "SELECT salesorders.orddate,
+				salesorders.debtorno,
+				SUM(salesorderdetails.qtyinvoiced * (salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent))) AS sales
+			FROM salesorders
+			INNER JOIN salesorderdetails ON
+				salesorders.orderno=salesorderdetails.orderno
+			INNER JOIN debtorsmaster ON 
+				salesorders.debtorno = debtorsmaster.debtorno
+			WHERE debtorsmaster.typeid IN (". CUSTOMER_TYPE_RETAIL . ")
+				AND salesorders.orddate >= '" . $FromDate . "'
+			GROUP BY salesorders.orddate,salesorders.debtorno
+			ORDER BY SUM(salesorderdetails.qtyinvoiced * (salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent))) DESC
+			LIMIT ". $Days . "";
+
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . _('Top ') . $Days . _(' retail sales days by shop since '). ConvertSQLDate($FromDate) .'</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' .  _('#') . '</th>
+							<th class="ascending">' .  _('Date') . '</th>
+							<th class="ascending">' .  _('Shop') . '</th>
+							<th class="ascending">' . _('Sales') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while (($myrow = DB_fetch_array($result)) AND ($i <= $Days)) {
+			$k = StartEvenOrOddRow($k);
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					locale_number_format($i,0),
+					ConvertSQLDate($myrow['orddate']),
+					$myrow['debtorno'],
+					locale_number_format($myrow['sales'],0)
+					);
+			$i++;
+		}
+		echo '</table>
+				</div>
+				</form>';
+	}
+}
+
 function InsuficientStockForTopSalesItems($StockCat, $StockCatDescription, $DaysTopSales, $PercentageOfTopItems, $DaysMinimumStock, $RootPath, $db){
 
 /* Examples of use in Control Boards
@@ -509,6 +559,97 @@ function OvestockAtShops($kind, $RootPath, $db){
 		echo '</table>
 				</div>';
 	}
+}
+
+function PricesNotUpdatedinXDays($numDays, $percentageIncrease, $RootPath, $db){
+	
+	$InitialDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$numDays));
+	$today = date('Y-m-d');
+
+	$SQL = "SELECT stockmaster.stockid, 
+				stockmaster.description,
+				(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS stdcost,
+				prices.price,
+				prices.startdate
+			FROM prices, stockmaster
+			WHERE stockmaster.stockid = prices.stockid	
+				AND ( stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_TEST . "
+					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_STABLE . "
+					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING . ")
+				AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
+				AND prices.currabrev = '". CURRENCY_CODE ."'
+				AND prices.startdate <= '". $InitialDate. "' 
+				AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')
+				AND stockmaster.discontinued = 0					
+				AND stockmaster.klchangingprice = 0
+				AND stockmaster.klmovingdiscount20 = 0
+				AND stockmaster.klmovingdiscount50 = 0
+				AND stockmaster.klmovingdiscount80 = 0
+			ORDER BY stockmaster.stockid";
+
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . 'Prices not updated during the last ' . $numDays . ' days. Recommended increase '. $percentageIncrease . '%</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('Std Cost') . '</th>
+							<th class="ascending">' . _('Date Price') . '</th>
+							<th class="ascending">' . _('Current Price') . '</th>
+							<th class="ascending">' . _('Recommended Price') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			$NewPrice = correction_for_low_end_prices(round_price($myrow['price'] * (1 + $percentageIncrease/100), "UP"));
+			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+		//	$PriceLink = '<a href="' . $RootPath . '/Prices.php?Item=' . $myrow['stockid'] . '">' . locale_number_format($myrow['price'],0) . '</a>';
+			$NewPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $NewPrice .  '">' . locale_number_format($NewPrice,0) . '</a>';
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$i, 
+					$CodeLink, 
+					$myrow['description'],
+					locale_number_format($myrow['stdcost'],0),
+					ConvertSQLDate($myrow['startdate']), 
+					locale_number_format($myrow['price'],0),
+					$NewPriceLink
+					);
+			$i++;
+		}
+		echo '</table>
+				</div>';
+	}
+}
+
+function SalesOfItemByLocation($stockid, $location, $maxdays, $db){
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
+	$SQL = "SELECT COUNT(qtyinvoiced) AS sales
+			FROM salesorderdetails, salesorders
+			WHERE salesorderdetails.orderno = salesorders.orderno
+				AND salesorderdetails.completed = 1
+				AND salesorders.orddate >= '". $StartDate . "'
+				AND salesorders.fromstkloc = '". $location . "'
+				AND salesorderdetails.stkcode LIKE '". $stockid . "%'";
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		$myrow = DB_fetch_array($result);
+		$sales = $myrow['sales'];
+	}else{
+		$sales = 999;
+	}
+	return $sales;
 }
 
 function SPGBelowMinimumSales($Shop, $NumDaysA, $MinimumSales,$db){

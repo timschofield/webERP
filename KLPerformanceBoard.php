@@ -68,8 +68,6 @@ if ($ProcessSection01){
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_ShopManager
 		OR $KL_SalesDirector){
-	//	AverageSales("Shop", 365, 90, 30, 15, 7, 1, 30, "LastYear", "All", $db);
-	//	$NumberOfTestExecuted++;
 		YearDifferenceSales("Shop",  15, $db);
 		$NumberOfTestExecuted++;
 		YearDifferenceSales("Shop",  30, $db);
@@ -115,10 +113,8 @@ if ($ProcessSection01){
 	}
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager){
-		DailySalesRecords(10, '2017-06-30', $db);
+		DailySalesRecords(10, 365, $db);
 		$NumberOfTestExecuted++;
-//		DailySalesRecordsByShops(10, '2015-06-01', $db);
-//		$NumberOfTestExecuted++;
 	}
 }
 
@@ -532,6 +528,90 @@ function AverageCustomerBehaviourByValueInvoice($typereport, $NumDaysA, $db){
 	}
 }
 
+function DailySalesRecords($Days, $NumDays, $db){
+
+	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
+
+	$SQL = "SELECT salesorders.orddate,
+				SUM(salesorderdetails.qtyinvoiced * (salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent))) AS sales
+			FROM salesorders
+			INNER JOIN salesorderdetails ON
+				salesorders.orderno=salesorderdetails.orderno
+			INNER JOIN debtorsmaster ON 
+				salesorders.debtorno = debtorsmaster.debtorno
+			WHERE debtorsmaster.typeid IN (". CUSTOMER_TYPE_RETAIL . ")
+				AND salesorders.orddate >= '" . $FromDate . "'
+			GROUP BY salesorders.orddate
+			ORDER BY SUM(salesorderdetails.qtyinvoiced * (salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent))) DESC
+			LIMIT ". $Days . "";
+
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . _('Top and bottom ') . $Days . _(' retail sales days since '). ConvertSQLDate($FromDate) .'</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' .  _('#') . '</th>
+							<th class="ascending">' .  _('Date') . '</th>
+							<th class="ascending">' . _('Sales') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while (($myrow = DB_fetch_array($result)) AND ($i <= $Days)) {
+			$k = StartEvenOrOddRow($k);
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					locale_number_format($i,0),
+					ConvertSQLDate($myrow['orddate']),
+					locale_number_format($myrow['sales'],0)
+					);
+			$i++;
+		}
+	}
+
+	$SQL = "SELECT salesorders.orddate,
+				SUM(salesorderdetails.qtyinvoiced * (salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent))) AS sales
+			FROM salesorders
+			INNER JOIN salesorderdetails ON
+				salesorders.orderno=salesorderdetails.orderno
+			INNER JOIN debtorsmaster ON 
+				salesorders.debtorno = debtorsmaster.debtorno
+			WHERE debtorsmaster.typeid IN (". CUSTOMER_TYPE_RETAIL . ")
+				AND salesorders.orddate >= '" . $FromDate . "'
+			GROUP BY salesorders.orddate
+			ORDER BY SUM(salesorderdetails.qtyinvoiced * (salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent))) ASC
+			LIMIT ". $Days . "";
+
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		$TableHeader = '<tr>
+							<th class="ascending"></th>
+							<th class="ascending"></th>
+							<th class="ascending"></th>
+						</tr>';
+		echo $TableHeader;
+		$i = 1;
+		while (($myrow = DB_fetch_array($result)) AND ($i <= $Days)) {
+			$k = StartEvenOrOddRow($k);
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					locale_number_format($i,0),
+					ConvertSQLDate($myrow['orddate']),
+					locale_number_format($myrow['sales'],0)
+					);
+			$i++;
+		}
+		echo '</table>
+				</div>
+				</form>';
+	}
+}
+
 function GeneralCustomerBehaviour($NumDaysA, $db){
 	$YesterdayA  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 	$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-1));
@@ -653,6 +733,59 @@ function GeneralCustomerBehaviour($NumDaysA, $db){
 					);
 			$i++;
 		}
+		echo '</table>
+				</div>';
+	}
+}
+
+function PettyCashStatus($currency, $db){
+
+	$SQL = "SELECT pcashdetails.tabcode, 	
+				SUM(pcashdetails.amount) as amount
+			FROM pcashdetails,pctabs	
+			WHERE pcashdetails.tabcode = pctabs.tabcode	
+				AND pctabs.currency = '". $currency ."'
+				AND pcashdetails.authorized != '0000-00-00'
+			GROUP BY pcashdetails.tabcode
+			HAVING ( SUM(pcashdetails.amount) <= -0.01
+					OR SUM(pcashdetails.amount) >= 0.01)";
+
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . _('Petty Cash Authorized Status for '). $currency . ' accounts'  . '</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('PC Tab Code') . '</th>
+							<th class="ascending">' . _('Amount') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		$total = 0;
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$i, 
+					$myrow['tabcode'], 
+					locale_number_format($myrow['amount'],0)
+					);
+			$i++;
+			$total = $total + $myrow['amount'];
+		}
+		printf('<td class="number">%s</td>
+				<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'', 
+				'Total', 
+				locale_number_format($total,0)
+				);
+		
 		echo '</table>
 				</div>';
 	}
@@ -908,191 +1041,6 @@ function YearDifferenceSales($typereport, $NumDaysA, $db){
 		}
 		echo '</table>
 				</div>';
-	}
-}
-
-function PettyCashStatus($currency, $db){
-
-	$SQL = "SELECT pcashdetails.tabcode, 	
-				SUM(pcashdetails.amount) as amount
-			FROM pcashdetails,pctabs	
-			WHERE pcashdetails.tabcode = pctabs.tabcode	
-				AND pctabs.currency = '". $currency ."'
-				AND pcashdetails.authorized != '0000-00-00'
-			GROUP BY pcashdetails.tabcode
-			HAVING ( SUM(pcashdetails.amount) <= -0.01
-					OR SUM(pcashdetails.amount) >= 0.01)";
-
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Petty Cash Authorized Status for '). $currency . ' accounts'  . '</strong></p>';
-		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('PC Tab Code') . '</th>
-							<th class="ascending">' . _('Amount') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
-		$i = 1;
-		$total = 0;
-		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
-			printf('<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					$i, 
-					$myrow['tabcode'], 
-					locale_number_format($myrow['amount'],0)
-					);
-			$i++;
-			$total = $total + $myrow['amount'];
-		}
-		printf('<td class="number">%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				'', 
-				'Total', 
-				locale_number_format($total,0)
-				);
-		
-		echo '</table>
-				</div>';
-	}
-}
-
-function DailySalesRecords($Days, $FromDate, $db){
-
-	$SQL = "SELECT salesorders.orddate,
-				SUM(salesorderdetails.qtyinvoiced * (salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent))) AS sales
-			FROM salesorders
-			INNER JOIN salesorderdetails ON
-				salesorders.orderno=salesorderdetails.orderno
-			INNER JOIN debtorsmaster ON 
-				salesorders.debtorno = debtorsmaster.debtorno
-			WHERE debtorsmaster.typeid IN (". CUSTOMER_TYPE_RETAIL . ")
-				AND salesorders.orddate >= '" . $FromDate . "'
-			GROUP BY salesorders.orddate
-			ORDER BY SUM(salesorderdetails.qtyinvoiced * (salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent))) DESC
-			LIMIT ". $Days . "";
-
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Top and bottom ') . $Days . _(' retail sales days since '). ConvertSQLDate($FromDate) .'</strong></p>';
-		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' .  _('#') . '</th>
-							<th class="ascending">' .  _('Date') . '</th>
-							<th class="ascending">' . _('Sales') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
-		$i = 1;
-		while (($myrow = DB_fetch_array($result)) AND ($i <= $Days)) {
-			$k = StartEvenOrOddRow($k);
-			printf('<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					locale_number_format($i,0),
-					ConvertSQLDate($myrow['orddate']),
-					locale_number_format($myrow['sales'],0)
-					);
-			$i++;
-		}
-	}
-
-	$SQL = "SELECT salesorders.orddate,
-				SUM(salesorderdetails.qtyinvoiced * (salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent))) AS sales
-			FROM salesorders
-			INNER JOIN salesorderdetails ON
-				salesorders.orderno=salesorderdetails.orderno
-			INNER JOIN debtorsmaster ON 
-				salesorders.debtorno = debtorsmaster.debtorno
-			WHERE debtorsmaster.typeid IN (". CUSTOMER_TYPE_RETAIL . ")
-				AND salesorders.orddate >= '" . $FromDate . "'
-			GROUP BY salesorders.orddate
-			ORDER BY SUM(salesorderdetails.qtyinvoiced * (salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent))) ASC
-			LIMIT ". $Days . "";
-
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		$TableHeader = '<tr>
-							<th class="ascending"></th>
-							<th class="ascending"></th>
-							<th class="ascending"></th>
-						</tr>';
-		echo $TableHeader;
-		$i = 1;
-		while (($myrow = DB_fetch_array($result)) AND ($i <= $Days)) {
-			$k = StartEvenOrOddRow($k);
-			printf('<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					locale_number_format($i,0),
-					ConvertSQLDate($myrow['orddate']),
-					locale_number_format($myrow['sales'],0)
-					);
-			$i++;
-		}
-		echo '</table>
-				</div>
-				</form>';
-	}
-}
-
-function DailySalesRecordsByShops($Days, $FromDate, $db){
-
-	$SQL = "SELECT salesorders.orddate,
-				salesorders.debtorno,
-				SUM(salesorderdetails.qtyinvoiced * (salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent))) AS sales
-			FROM salesorders
-			INNER JOIN salesorderdetails ON
-				salesorders.orderno=salesorderdetails.orderno
-			INNER JOIN debtorsmaster ON 
-				salesorders.debtorno = debtorsmaster.debtorno
-			WHERE debtorsmaster.typeid IN (". CUSTOMER_TYPE_RETAIL . ")
-				AND salesorders.orddate >= '" . $FromDate . "'
-			GROUP BY salesorders.orddate,salesorders.debtorno
-			ORDER BY SUM(salesorderdetails.qtyinvoiced * (salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent))) DESC
-			LIMIT ". $Days . "";
-
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Top ') . $Days . _(' retail sales days by shop since '). ConvertSQLDate($FromDate) .'</strong></p>';
-		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' .  _('#') . '</th>
-							<th class="ascending">' .  _('Date') . '</th>
-							<th class="ascending">' .  _('Shop') . '</th>
-							<th class="ascending">' . _('Sales') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
-		$i = 1;
-		while (($myrow = DB_fetch_array($result)) AND ($i <= $Days)) {
-			$k = StartEvenOrOddRow($k);
-			printf('<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					locale_number_format($i,0),
-					ConvertSQLDate($myrow['orddate']),
-					$myrow['debtorno'],
-					locale_number_format($myrow['sales'],0)
-					);
-			$i++;
-		}
-		echo '</table>
-				</div>
-				</form>';
 	}
 }
 

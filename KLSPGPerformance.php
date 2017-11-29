@@ -81,8 +81,6 @@ if ($KL_SystemAdmin
 
 	//	YearDifferenceSales("SPG", 30, $db);
 	//  $NumberOfTestExecuted++;
-	//	YearDifferenceSales("SPG", 90, $db);
-	//	$NumberOfTestExecuted++;
 
 }
 
