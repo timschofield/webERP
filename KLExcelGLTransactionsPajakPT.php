@@ -36,6 +36,17 @@ function submit(&$db, $FromDate, $ToDate) {
 		prnMsg(_('Invalid To Date'),'error');
 	}
 
+	$sqlSettings =  "SELECT klretailpartners.accountcomissioncreditcard
+					 FROM klretailpartners
+					 WHERE klretailpartners.partnercode = 'PTBB'";
+	$resultSettings = DB_query($sqlSettings);
+	if (DB_num_rows($resultSettings)==0) {
+		$InputError = 1;
+		prnMsg(_('Invalid Retail partner Settings'),'error');
+	} else {
+		$myrowSettings = DB_fetch_array($resultSettings); //get the only row returned
+	}
+
 	if ($InputError == 0){
 
 		// Create new PHPExcel object
@@ -80,7 +91,7 @@ function submit(&$db, $FromDate, $ToDate) {
 					AND chartmasterPT.group_ = accountgroups.groupname
 					AND (accountgroups.pandl = 1)
 					AND accountgroups.groupname NOT IN ('Penjualan', 'HPP (COGS)') 
-					AND gltrans.account != '" . ACCOUNT_COMISSION_CREDITCARD . "' ".
+					AND gltrans.account != '" . $myrowSettings['accountcomissioncreditcard'] . "' ".
 					$WhereFrom .
 					$WhereTo . " 
 				ORDER BY accountgroups.groupname ASC, 
@@ -116,7 +127,7 @@ function submit(&$db, $FromDate, $ToDate) {
 					AND chartmasterPT.group_ = accountgroups.groupname
 					AND (accountgroups.pandl = 1)
 					AND ( accountgroups.groupname IN ('Penjualan', 'HPP (COGS)') 
-						OR gltrans.account = '" . ACCOUNT_COMISSION_CREDITCARD . "') ".
+						OR gltrans.account = '" . $myrowSettings['accountcomissioncreditcard'] . "') ".
 					$WhereFrom .
 					$WhereTo . " 
 				GROUP BY accountgroups.groupname,
