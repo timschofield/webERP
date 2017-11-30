@@ -252,6 +252,7 @@ if ($KL_SPGSeniorOrSupport OR $KL_SPGJunior){
 					locations.klposcashaccount,
 					locations.klpostag,
 					locations.taxprovinceid,
+					locations.typeloc,
 					debtorsmaster.name,
 					debtorsmaster.salestype,
 					debtorsmaster.currcode,
@@ -275,6 +276,9 @@ if ($KL_SPGSeniorOrSupport OR $KL_SPGJunior){
 					klretailpartners.comissionccbca,
 					klretailpartners.comissionamexbca,
 					klretailpartners.percentconsignmentptadu,
+					klretailpartners.counterinvoicea,
+					klretailpartners.counterinvoiceb,
+					klretailpartners.counterinvoicec,
 					custbranch.brname,
 					custbranch.braddress1,
 					custbranch.specialinstructions,
@@ -339,6 +343,7 @@ if ($KL_SPGSeniorOrSupport OR $KL_SPGJunior){
 		$_SESSION['braddress1'] = $myrow['braddress1'];
 		$_SESSION['specialinstructions'] = $myrow['specialinstructions'];
 		$_SESSION['taxgroupid'] = $myrow['taxgroupid'];
+		$_SESSION['TypeLoc'] = $myrow['typeloc'];
 		
 		$_SESSION['PartnerCode'] = $myrow['partnercode'];
 		$_SESSION['PartnerName'] = $myrow['partnername'];
@@ -359,6 +364,9 @@ if ($KL_SPGSeniorOrSupport OR $KL_SPGJunior){
 		$_SESSION['ComissionCCBCA'] = $myrow['comissionccbca'];
 		$_SESSION['ComissionAmexBCA'] = $myrow['comissionamexbca'];
 		$_SESSION['PercentConsignmentPTADU'] = $myrow['percentconsignmentptadu'];
+		$_SESSION['CounterInvoiceA'] = $myrow['counterinvoicea'];
+		$_SESSION['CounterInvoiceB'] = $myrow['counterinvoiceb'];
+		$_SESSION['CounterInvoiceC'] = $myrow['counterinvoicec'];
 		
 	}
 }

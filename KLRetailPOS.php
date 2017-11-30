@@ -528,13 +528,13 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		// Get the Customer invoice number depending on Area
 		if ($Area == $_SESSION['AreaSalesCashOthers']){
 			// Cash sales
-			$_SESSION['Items'.$identifier]->CustRef = substr($_SESSION['UserStockLocation'],3,2)."-".zerofill(GetNextTransNo(9002, $db),7) ."-C";
+			$_SESSION['Items'.$identifier]->CustRef = substr($_SESSION['UserStockLocation'],3,2)."-".zerofill(GetNextTransNo($_SESSION['CounterInvoiceC'], $db),7) ."-C";
 		}elseif ($Area == $_SESSION['AreaSalesCash']){
 			// Cash sales PT
-			$_SESSION['Items'.$identifier]->CustRef = substr($_SESSION['UserStockLocation'],3,2)."-".zerofill(GetNextTransNo(9001, $db),7) ."-B";
+			$_SESSION['Items'.$identifier]->CustRef = substr($_SESSION['UserStockLocation'],3,2)."-".zerofill(GetNextTransNo($_SESSION['CounterInvoiceB'], $db),7) ."-B";
 		}elseif ($Area == $_SESSION['AreaSalesCreditCard']){
 			// Credit Card Sales PT
-			$_SESSION['Items'.$identifier]->CustRef = substr($_SESSION['UserStockLocation'],3,2)."-".zerofill(GetNextTransNo(9000, $db),7) ."-A";
+			$_SESSION['Items'.$identifier]->CustRef = substr($_SESSION['UserStockLocation'],3,2)."-".zerofill(GetNextTransNo($_SESSION['CounterInvoiceA'], $db),7) ."-A";
 		}else{
 			/*The area is wrong for any reason */
 			prnMsg('ERROR POS0050: The area ' . $Area . ' is not defined. Please call the office inmediately', 'error');
@@ -1564,7 +1564,6 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 /*******************************
  * end of Invoice Processing
  * ******************************/
-
 
 /* Now show the stock item selection search stuff below */
 if (!isset($_POST['ProcessSale'])){
