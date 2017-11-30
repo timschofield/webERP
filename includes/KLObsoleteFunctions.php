@@ -180,6 +180,202 @@ function DailySalesRecordsByShops($Days, $FromDate, $db){
 	}
 }
 
+function GoodSellingItemsInCategory($CategoryId, $days, $minsales, $RootPath, $db){
+/* EXPLAIN SQL 2014-05-21 */
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$days));
+
+	//				AND lastcategoryupdate <= '" . $StartDate. "'
+	
+	$SQL = "SELECT stockmaster.stockid, 
+				stockmaster.description,
+				(SELECT SUM(quantity)
+					FROM locstock
+					WHERE locstock.stockid = stockmaster.stockid
+				) AS qoh,
+				(SELECT SUM(qtyinvoiced)
+					FROM salesorderdetails, salesorders
+					WHERE salesorderdetails.stkcode = stockmaster.stockid
+						AND salesorderdetails.orderno = salesorders.orderno
+						AND salesorders.orddate >= '". $StartDate ."'
+				) as sold				
+			FROM stockmaster			
+			WHERE categoryid = '" . $CategoryId . "'
+				AND stockmaster.klchangingprice = 0
+				AND stockmaster.klmovingdiscount20 = 0
+				AND stockmaster.klmovingdiscount50 = 0
+				AND stockmaster.klmovingdiscount80 = 0
+				AND (SELECT SUM(quantity)
+					FROM locstock
+					WHERE locstock.stockid = stockmaster.stockid
+				) > 0
+				AND ((SELECT SUM(qtyinvoiced)
+					FROM salesorderdetails, salesorders
+					WHERE salesorderdetails.stkcode = stockmaster.stockid
+						AND salesorderdetails.orderno = salesorders.orderno
+						AND salesorders.orddate >= '". $StartDate ."') >= ". $minsales .")
+			ORDER BY stockmaster.stockid ASC";
+	
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . _('Items in category ') . $CategoryId . " with more than " . $minsales . " pcs sold in the last " . $days . " days.(GOOD ITEMS)" . ' </strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('QOH') . '</th>
+							<th class="ascending">' . _('Sold '). $days . ' Days' . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$i, 
+					$CodeLink, 
+					$myrow['description'], 
+					locale_number_format($myrow['qoh'],0),
+					locale_number_format($myrow['sold'],0)
+					);
+			$i++;
+		}
+		echo '</table>
+				</div>';
+	}
+}
+
+function ImagesShouldNotBeInOpencartCatalog($RootPath, $db, $db_oc, $oc_tableprefix){
+
+	$ShowHeader = TRUE;
+	$k = 0; //row colour counter
+	$i= 0;
+	// get all images in part_pics folder
+	$suffix = ".jpg";
+	$imagefiles = getDirectoryTree(ABSOLUTE_PATH_OPENCART_IMAGES, 'jpg');
+	foreach ($imagefiles as $file) {
+		$StockId = substr($file, 0, strpos($file, $suffix));
+		if (strpos($StockId, '.1') > 0){
+			$StockId = substr($file, 0, strpos($StockId, '.1'));
+		}
+		if (strpos($StockId, '.2') > 0){
+			$StockId = substr($file, 0, strpos($StockId, '.2'));
+		}
+		if (strpos($StockId, '.3') > 0){
+			$StockId = substr($file, 0, strpos($StockId, '.3'));
+		}
+		if (strpos($StockId, '.4') > 0){
+			$StockId = substr($file, 0, strpos($StockId, '.4'));
+		}
+		if (strpos($StockId, '.5') > 0){
+			$StockId = substr($file, 0, strpos($StockId, '.5'));
+		}
+		$ProductId = GetOpenCartProductId($StockId, $db_oc, $oc_tableprefix);
+		if ($ProductId == 0){
+			if ($ShowHeader){
+				echo '<p class="page_title_text" align="center"><strong>' . _('Opencart Images without product in OpenCart') .'</strong></p>';
+				echo '<div>';
+				echo '<table class="selection">';
+				$TableHeader = '<tr>
+									<th class="ascending">' . _('File') . '</th>
+								</tr>';
+				echo $TableHeader;
+				$ShowHeader = FALSE;
+			}
+			$k = StartEvenOrOddRow($k);
+			printf('<td>%s</td>
+					</tr>', 
+					ABSOLUTE_PATH_OPENCART_IMAGES.$file
+					);
+//			unlink(ABSOLUTE_PATH_OPENCART_IMAGES.$file);
+		}
+	}
+	if (!$ShowHeader){
+		echo '</table>
+				</div>';
+	}
+}
+
+function InsuficientStockForItems($Category, $ItemCode, $ItemDescription, $MinimumStock, $OptimalStock, $RootPath, $db){
+
+	if($Category == "ALL"){
+		$SQLCategory = " ";
+	}else{
+		$SQLCategory = " AND stockmaster.categoryid = '" . $Category . "' ";
+	}
+/* EXPLAIN SQL 2014-05-21 */	
+	$SQL = "SELECT 	stockmaster.stockid,
+					stockmaster.description,
+					(SELECT SUM(locstock.quantity)
+						FROM locstock
+						WHERE locstock.stockid = stockmaster.stockid
+						AND (loccode IN " . LIST_ALL_SHOPS . "
+							OR loccode = " . CODE_KANTOR . ")) AS qoh
+			FROM stockmaster
+			WHERE stockmaster.stockid LIKE '" . $ItemCode . "%'
+				AND stockmaster.discontinued = 0".
+				$SQLCategory . "
+				AND (SELECT SUM(locstock.quantity)
+						FROM locstock
+						WHERE locstock.stockid = stockmaster.stockid
+						AND (loccode IN " . LIST_ALL_SHOPS . "
+							OR loccode = " . CODE_KANTOR . ")) < " . $MinimumStock . "
+			ORDER BY stockmaster.stockid";
+	
+	$result = DB_query($SQL);		
+	$showHeader = TRUE;
+	if (DB_num_rows($result) != 0){
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$QtyNeeded = $OptimalStock - $myrow['qoh'];
+			if ($QtyNeeded > 0){
+				if ($showHeader){
+					echo '<p class="page_title_text" align="center"><strong>' . $ItemDescription . ' Items with QOH (kantor+toko) < ' . $MinimumStock . ' pcs.</strong></p>';
+					echo '<div>';
+					echo '<table class="selection">';
+					$TableHeader = '<tr>
+										<th class="ascending">' . _('#') . '</th>
+										<th class="ascending">' . _('Code') . '</th>
+										<th class="ascending">' . _('Description') . '</th>
+										<th class="ascending">' . _('QOH') . '</th>
+										<th class="ascending">' . _('Needed') . '</th>
+									</tr>';
+					echo $TableHeader;
+					$showHeader = FALSE;
+				}
+
+				$k = StartEvenOrOddRow($k);
+				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+				printf('<td class="number">%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						</tr>', 
+						$i, 
+						$CodeLink, 
+						$myrow['description'], 
+						locale_number_format($myrow['qoh'],0),
+						locale_number_format($QtyNeeded,0)
+						);
+			}
+			$i++;
+		}
+		if (!$showHeader){
+			echo '</table>
+				</div>';
+		}
+	}
+}
+
 function InsuficientStockForTopSalesItems($StockCat, $StockCatDescription, $DaysTopSales, $PercentageOfTopItems, $DaysMinimumStock, $RootPath, $db){
 
 /* Examples of use in Control Boards
@@ -316,6 +512,218 @@ function isTopSalesItem($stockid, $topitems, $TopItemsDays, $db){
 	return $istopsales;
 }
 
+function ItemsInCategoryWithStockKantorButReorderLevelTokoZero($CategoryId, $RootPath, $db){
+	if (ItemInList($CategoryId, LIST_STOCK_CATEGORIES_OUTLET)){
+		if (LIST_SHOPS_OUTLET == "('')"){
+			// no shops with outlet, so this report has NO sense.
+			return;
+		}else{
+			$WhereLocation = " AND locations.typeloc = 'SHOPOU' ";
+		}
+	}else{
+		$WhereLocation = " AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . " ";
+	}
+
+	$SQL = "SELECT stockid,
+			stockmaster.categoryid,
+			stockmaster.description,
+			(SELECT SUM(locstock.quantity)
+				FROM locstock
+				WHERE locstock.stockid = stockmaster.stockid
+				AND (locstock.loccode = " . CODE_KANTOR . " ))AS QtyKantor
+			FROM stockmaster, stockcategory
+			WHERE stockmaster.categoryid = stockcategory.categoryid
+				AND stockmaster.klchangingprice = 0
+				AND stockmaster.klmovingdiscount20 = 0
+				AND stockmaster.klmovingdiscount50 = 0
+				AND stockmaster.klmovingdiscount80 = 0
+				AND (SELECT SUM(locstock.reorderlevel)
+					FROM locstock, locations
+					WHERE locstock.stockid = stockmaster.stockid 
+						AND locstock.loccode = locations.loccode ".
+						$WhereLocation . " ) = 0
+				AND (SELECT SUM(locstock.quantity)
+					FROM locstock
+					WHERE locstock.stockid = stockmaster.stockid
+						AND locstock.loccode = " . CODE_KANTOR . ") > 0
+				AND NOT EXISTS (SELECT *
+						FROM loctransfers 
+						WHERE  recqty < shipqty
+							AND loctransfers.stockid =  stockmaster.stockid)
+				AND discontinued = 0
+				AND stockcategory.stocktype = 'F'
+				AND stockmaster.categoryid = '" . $CategoryId . "'
+			ORDER BY stockid";
+
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		if (ItemInList($CategoryId, LIST_STOCK_CATEGORIES_OUTLET)){
+			echo '<p class="page_title_text" align="center"><strong>' . $CategoryId ._(' Items with stock available at Kantor but RL zero for ') . LIST_SHOPS_OUTLET . '</strong></p>';
+		}elseif (ItemInList($CategoryId, LIST_STOCK_CATEGORIES_OUTLET)){
+			echo '<p class="page_title_text" align="center"><strong>' . $CategoryId ._(' Items with stock available at Kantor but RL zero for ') . LIST_SHOPS_OUTLET . '</strong></p>';
+		}else{
+			echo '<p class="page_title_text" align="center"><strong>' . $CategoryId ._(' Items with stock available at Kantor but RL zero for all toko KL') . '</strong></p>';
+		}
+		
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Category') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('QOH Kantor') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$i, 
+					$CodeLink, 
+					$myrow['categoryid'], 
+					$myrow['description'], 
+					locale_number_format($myrow['QtyKantor'],0)
+					);
+			$i++;
+		}
+		echo '</table>
+				</div>';
+	}
+}
+
+function ItemsNeedingAutomaticTranslation($RootPath, $db){
+	$SQL = "SELECT COUNT(stockdescriptiontranslations.stockid)
+			FROM stockmaster, stockdescriptiontranslations
+			WHERE stockmaster.stockid = stockdescriptiontranslations.stockid
+				AND stockmaster.discontinued = 0
+				AND LENGTH(stockmaster.description) > 2
+				AND (descriptiontranslation = ''
+					OR longdescriptiontranslation = '')";
+	$result = DB_query($SQL);
+	$myrow = DB_fetch_array($result);
+	if ($myrow[0] > 0){
+		$text = locale_number_format($myrow[0],0) . " items need Automatic Description Translation";
+		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+	}
+}
+
+function ItemsNeedingTranslationRevision($RootPath, $db){
+	$SQL = "SELECT COUNT(stockdescriptiontranslations.stockid)
+			FROM stockmaster, stockdescriptiontranslations
+			WHERE stockmaster.stockid = stockdescriptiontranslations.stockid
+				AND stockmaster.discontinued = 0
+				AND needsrevision = '1'";
+	$result = DB_query($SQL);
+	$myrow = DB_fetch_array($result);
+	if ($myrow[0] > 0){
+		$text = locale_number_format($myrow[0],0) . " items need Translation Revision";
+		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+	}
+}
+
+function ItemsNoSalesInLocation($location, $maxdays, $QOHAvailable, $RootPath, $db){
+/* EXPLAIN SQL 2014-05-20	*/
+	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$maxdays));
+	
+	$SQL = "SELECT 	stockmaster.stockid,
+					stockmaster.description,
+					stockmaster.categoryid,
+					stockmaster.units, 
+					locstock.quantity,
+					(SELECT SUM(loc2.quantity)
+							FROM locstock AS loc2, locations as locations2
+							WHERE loc2.stockid = stockmaster.stockid
+							AND locations2.loccode = loc2.loccode
+							AND (locations2.typeloc = 'SHOPKL'
+								OR locations2.typeloc = 'SHOPBL'
+								OR locations2.typeloc = 'SHOPOU'
+								OR loc2.loccode =  " . CODE_KANTOR . ") ) AS qtyavailable,
+					locstock.reorderlevel,
+					locstock.loccode,
+					locations.locationname 
+			FROM 	stockmaster,locstock,locations
+			WHERE 	stockmaster.stockid = locstock.stockid
+					AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SHOP_DISPLAYS . "
+					AND (locstock.loccode = locations.loccode)
+					AND locstock.loccode = '" . $location . "'
+					AND (locstock.quantity > 0)
+					AND (locstock.reorderlevel > 0)
+					AND  (SELECT SUM(loc2.quantity)
+							FROM locstock AS loc2, locations as locations2
+							WHERE loc2.stockid = stockmaster.stockid
+							AND locations2.loccode = loc2.loccode
+							AND (locations2.typeloc = 'SHOPKL'
+								OR locations2.typeloc = 'SHOPBL'
+								OR locations2.typeloc = 'SHOPOU'
+								OR loc2.loccode = " . CODE_KANTOR . ") ) <= ". $QOHAvailable ."
+					AND NOT EXISTS (SELECT * 
+									FROM 	salesorderdetails, salesorders
+									WHERE 	stockmaster.stockid = salesorderdetails.stkcode
+											AND (salesorders.fromstkloc = locstock.loccode)
+											AND (salesorderdetails.orderno = salesorders.orderno)
+											AND salesorderdetails.actualdispatchdate > '" . $FromDate . "')
+					AND NOT EXISTS (SELECT * 
+									FROM 	stockmoves
+									WHERE 	stockmoves.loccode = locstock.loccode 
+											AND stockmoves.stockid = stockmaster.stockid
+											AND stockmoves.trandate >= '" . $FromDate . "')
+					AND EXISTS (SELECT * 
+								FROM 	stockmoves
+								WHERE 	stockmoves.loccode = locstock.loccode 
+										AND stockmoves.stockid = stockmaster.stockid
+										AND stockmoves.trandate < '" . $FromDate . "'
+										AND stockmoves.qty >0) 
+					ORDER BY stockmaster.stockid";
+	
+	$result = DB_query($SQL);		
+	
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . _('Items with NO sales on last ') . $maxdays . ' days in ' . $location . ' with stock <= ' . $QOHAvailable . ' at shops or kantor</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('Category') . '</th>
+							<th class="ascending">' . _('QOH ') . $location . '</th>
+							<th class="ascending">' . _('QOH Shops+Kantor') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$i, 
+					$CodeLink, 
+					$myrow['description'], 
+					$myrow['categoryid'], 
+					locale_number_format($myrow['quantity'],0),
+					locale_number_format($myrow['qtyavailable'],0)
+					);
+			$i++;
+		}
+		echo '</table>
+				</div>';
+	}
+}
+
 function ItemsNotTopSalesInShop($starttopitems, $endtopitems, $maxdays, $codeshop, $RootPath, $db){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 	if (ItemInList($Location, LIST_SHOPS_KAPAL_LAUT)){
@@ -401,6 +809,93 @@ function ItemsNotTopSalesInShop($starttopitems, $endtopitems, $maxdays, $codesho
 	}
 }
 
+function ItemsWithStockKantorButRLZeroAt($Location, $RootPath, $db){
+/*
+items with stock kantor > 0 
+RL is zero at $Location
+No pending transfer regarding this item
+*/
+/* 2013-04-16 excluding items in change price process */
+/* 2013-05-27 excluding items in consignment clothing */
+
+	if (ItemInList($Location, LIST_SHOPS_KAPAL_LAUT)){
+		$FilterCategory = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . " ";
+		$MessageCategory = " KL Categories ";
+	}else if (ItemInList($Location, LIST_SHOPS_BLINK)){
+		$FilterCategory = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . " ";
+		$MessageCategory = " BLINK Categories ";
+	}else if (ItemInList($Location, LIST_SHOPS_OUTLET)){
+		$FilterCategory = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . " ";
+		$MessageCategory = " DISCOUNT Categories ";
+	}
+	
+	$SQL = "SELECT stockid,
+			stockmaster.categoryid,
+			stockmaster.description,
+			(SELECT SUM(locstock.quantity)
+				FROM locstock
+				WHERE locstock.stockid = stockmaster.stockid
+				AND (locstock.loccode = " . CODE_KANTOR . " ))AS QtyKantor
+			FROM stockmaster, stockcategory
+			WHERE stockmaster.categoryid = stockcategory.categoryid
+				AND discontinued = 0
+				AND stockcategory.stocktype = 'F'
+				AND stockmaster.klmovingdiscount20 = 0
+				AND stockmaster.klmovingdiscount50 = 0
+				AND stockmaster.klmovingdiscount80 = 0
+				AND stockmaster.klchangingprice = 0 " .
+				$FilterCategory . "
+				AND (SELECT SUM(locstock.reorderlevel)
+					FROM locstock
+					WHERE locstock.stockid = stockmaster.stockid
+						AND locstock.loccode = '". $Location ."') = 0
+				AND (SELECT SUM(locstock.quantity)
+					FROM locstock
+					WHERE locstock.stockid = stockmaster.stockid
+						AND locstock.loccode = " . CODE_KANTOR . ") > 0
+				AND NOT EXISTS (SELECT *
+						FROM loctransfers 
+						WHERE  recqty < shipqty
+							AND loctransfers.stockid =  stockmaster.stockid)
+			ORDER BY stockid";
+
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . $MessageCategory . _(' Items with stock available (but NO changing price or category) at Kantor but RL = 0 at ') . $Location . '</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Category') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('QOH Kantor') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$i, 
+					$CodeLink, 
+					$myrow['categoryid'], 
+					$myrow['description'], 
+					locale_number_format($myrow['QtyKantor'],0)
+					);
+			$i++;
+		}
+		echo '</table>
+				</div>';
+	}
+}
+
 function ItemsWithStockLocationButNoStockAvailable($Location, $NameLocation, $MinAvailable, $MaxTopSalesItems, $RootPath, $db){
 	/*  EXPLAIN SQL 2014-05-30
 		Examples of usage in control boards
@@ -480,6 +975,75 @@ function ItemsWithStockLocationButNoStockAvailable($Location, $NameLocation, $Mi
 	}
 }
 
+function MarkSisterShopInArray(&$TableResult, $numshops, $SisterShop){
+	$sistershop = 1;
+	while ($sistershop <= $numshops){
+		if ($TableResult[$sistershop]['loccode'] ==  $SisterShop){
+			$TableResult[$sistershop]['show'] = TRUE;
+		}
+		$sistershop++;
+	}
+}
+
+function NewCustomers($NumDays, $RootPath, $db){
+/* EXPLAIN SQL 2014-05-20	*/
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
+
+	$SQL = "SELECT 	debtorsmaster.debtorno,
+					debtorsmaster.name,
+					debtorsmaster.address6,
+					debtorsmaster.currcode,
+					debtorsmaster.clientsince,
+					debtortype.typename
+			FROM debtorsmaster, debtortype
+			WHERE debtorsmaster.typeid = debtortype.typeid
+				AND debtorsmaster.clientsince > '".$StartDate."'
+			ORDER BY debtorsmaster.clientsince";
+
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . _('New customers registered during the last ') . $NumDays . ' days.' . '</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Customer') . '</th>
+							<th class="ascending">' . _('Name') . '</th>
+							<th class="ascending">' . _('Country') . '</th>
+							<th class="ascending">' . _('Currency ') . '</th>
+							<th class="ascending">' . _('Registered on') . '</th>
+							<th class="ascending">' . _('Type') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			$CodeLink = '<a href="' . $RootPath . '/Customers.php?DebtorNo=' . $myrow['debtorno'] . '">' . $myrow['debtorno'] . '</a>';
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					</tr>', 
+					$i, 
+					$CodeLink, 
+					$myrow['name'], 
+					$myrow['address6'], 
+					$myrow['currcode'], 
+					ConvertSQLDateTime($myrow['clientsince']), 
+					$myrow['typename']				
+					);
+			$i++;
+		}
+		echo '</table>
+				</div>';
+	}
+
+}
+
 function OvestockAtShops($kind, $RootPath, $db){
 
 	if($kind == "OVERSTOCK"){			
@@ -553,6 +1117,113 @@ function OvestockAtShops($kind, $RootPath, $db){
 					$CodeLink, 
 					$myrow['description'], 
 					locale_number_format($myrow['qty'],0)
+					);
+			$i++;
+		}
+		echo '</table>
+				</div>';
+	}
+}
+
+function PerformanceItemsInCategory($ReportType, $CategoryId, $maxdays, $percentsales, $TextTitle, $RootPath, $db){
+
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
+	
+	if ($ReportType == "GOOD"){
+		$Sign = ">=";
+	}else{
+		$Sign = "<=";
+	}
+
+	$SQL = "SELECT stockmaster.stockid, 
+				stockmaster.description,
+				stockmaster.lastcategoryupdate,
+					(SELECT SUM(quantity)
+					FROM locstock
+					WHERE locstock.stockid = stockmaster.stockid
+				) AS qoh,
+					(SELECT SUM(qtyinvoiced)
+					FROM salesorderdetails
+					WHERE salesorderdetails.stkcode = stockmaster.stockid
+					AND salesorderdetails.itemdue >= '" . $StartDate . "'
+				) as sold				
+			FROM stockmaster			
+			WHERE categoryid = '" . $CategoryId . "'
+				AND lastcategoryupdate ". $Sign . " '" . $StartDate. "'
+				AND klchangingprice = 0
+				AND klmovingdiscount20 = 0
+				AND klmovingdiscount50 = 0
+				AND klmovingdiscount80 = 0
+				AND (SELECT SUM(quantity)
+					FROM locstock
+					WHERE locstock.stockid = stockmaster.stockid
+				) > 0
+				AND (((SELECT SUM(qtyinvoiced)
+					FROM salesorderdetails
+					WHERE salesorderdetails.stkcode = stockmaster.stockid) /
+					((SELECT SUM(qtyinvoiced)
+					FROM salesorderdetails
+					WHERE salesorderdetails.stkcode = stockmaster.stockid) +
+					(SELECT SUM(quantity)
+					FROM locstock
+					WHERE locstock.stockid = stockmaster.stockid)))	". $Sign . " ('" . $percentsales ."' / 100)";
+
+	if ($ReportType == "GOOD"){
+		$SQL = $SQL . ")";
+	}else{
+		$SQL = $SQL . " OR ((SELECT SUM(qtyinvoiced)
+								FROM salesorderdetails
+								WHERE salesorderdetails.stkcode = stockmaster.stockid) IS NULL))";
+	}
+	$SQL = $SQL . " ORDER BY stockmaster.lastcategoryupdate ASC, stockmaster.stockid ASC";
+	
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		if ($ReportType == "GOOD"){
+			echo '<p class="page_title_text" align="center"><strong>' . _('Items in category ') . $CategoryId . " for less than " . $maxdays . " days with more than " . $percentsales . "% of sold stock (" . $TextTitle . " Items)." . ' </strong></p>';
+		}else{
+			echo '<p class="page_title_text" align="center"><strong>' . _('Items in category ') . $CategoryId . " for more than " . $maxdays . " days with less than " . $percentsales . "% of sold stock (" . $TextTitle . " Items).". ' </strong></p>';
+		}echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('DOB Category') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('Total Qty') . '</th>
+							<th class="ascending">' . _('QOH') . '</th>
+							<th class="ascending">' . _('Sold Qty') . '</th>
+							<th class="ascending">' . _('% Sold') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+			$DaysInCategory = DateDiff(Date($_SESSION['DefaultDateFormat']), ConvertSQLDate($StartDate), 'd');
+			if (($myrow['sold'] + $myrow['qoh']) != 0){
+				$ActualSales = ($myrow['sold'] / ($myrow['sold'] + $myrow['qoh'])) * 100;
+			}else{
+				$ActualSales = 0 ;
+			}
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$i, 
+					ConvertSQLDate($myrow['lastcategoryupdate']), 
+					$CodeLink, 
+					$myrow['description'], 
+					locale_number_format($myrow['qoh']  + $myrow['sold'],0),
+					locale_number_format($myrow['qoh'],0),
+					locale_number_format($myrow['sold'],0),
+					locale_number_format($ActualSales,0)
 					);
 			$i++;
 		}
@@ -726,7 +1397,105 @@ function SPGBelowMinimumSales($Shop, $NumDaysA, $MinimumSales,$db){
 				</form>';
 	}
 }
-			
+
+function SplittedpaymentsBySPG($maxdays, $maxsplitted, $db){
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
+	$totalcash = 0;
+	$totalcredit = 0;
+	$totalreturned = 0;
+	$total = 0;
+
+	$SQL = "SELECT salesorders.salesperson, 
+				COUNT(salesorders.klpaidcash + salesorders.klpaidcreditcard) AS splitted, 
+				SUM(salesorders.klpaidcash + salesorders.klpaidcreditcard) AS amount
+		FROM salesorders, debtorsmaster
+		WHERE salesorders.debtorno = debtorsmaster.debtorno
+			AND salesorders.orddate >= '". $StartDate. "'
+			AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_RETAIL . ")
+			AND salesorders.klpaidcash > 0
+			AND salesorders.klpaidcreditcard > 0
+		GROUP BY salesorders.salesperson
+		HAVING COUNT(salesorders.klpaidcash + salesorders.klpaidcreditcard) >= '" . $maxsplitted . "'
+		ORDER BY salesorders.salesperson";
+
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . _('SPG with ') . $maxsplitted . _(' or more splitted payments during the last ') . $maxdays . _(' days.') .'</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th>' .  _('SPG') . '</th>
+							<th>' . _('Splitted') . '</th>
+							<th>' . _('Amount') . '</th>
+							<th>' . _('Date') . '</th>
+							<th>' . _('Order') . '</th>
+							<th>' . _('Yellow#') . '</th>
+							<th>' . _('Cash') . '</th>
+							<th>' . _('Credit Card') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			printf('<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					</tr>', 
+					$myrow['salesperson'],
+					locale_number_format($myrow['splitted'],0),
+					locale_number_format($myrow['amount'],0),
+					'',
+					'',
+					'',
+					'',
+					''
+					);
+			$SQLDetails = "SELECT orderno,
+								customerref,
+								klpaidcash, 
+								klpaidcreditcard,
+								orddate								
+						FROM salesorders
+						WHERE orddate >= '". $StartDate. "'
+							AND salesperson = '". $myrow['salesperson']. "'
+							AND klpaidcash > 0
+							AND klpaidcreditcard > 0
+						ORDER BY orderno";
+			$resultdetails = DB_query($SQLDetails);
+			while ($myrowdetails = DB_fetch_array($resultdetails)) {
+				$k = StartEvenOrOddRow($k);
+				printf('<td>%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						</tr>', 
+						'',
+						'',
+						'',
+						ConvertSQLDate($myrowdetails['orddate']),
+						$myrowdetails['orderno'],
+						$myrowdetails['customerref'],
+						locale_number_format($myrowdetails['klpaidcash'],0),
+						locale_number_format($myrowdetails['klpaidcreditcard'],0)
+						);
+			}
+			$i++;
+		}
+		echo '</table>
+				</div>';
+	}
+}
+
 function TopSalesNotInEnoughShops($starttopitems, $endtopitems, $maxdays, $minshops, $categories, $RootPath, $db){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 	$SQL = "SELECT salesorderdetails.stkcode,
@@ -833,5 +1602,105 @@ function TopSalesNotInEnoughShops($starttopitems, $endtopitems, $maxdays, $minsh
 	}
 }
 
+function WrongGiftItem($stockid, $customertype, $ErrorType, $OrderValue, $numDays, $RootPath, $db){
+
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$numDays));
+
+	if ($customertype == "Retail"){
+		$whereclause = " AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_RETAIL . ") ";
+		$Titletext = "Retail";
+	}elseif ($customertype == "Consignment"){
+		$whereclause = " AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_CONSIGNMENT . ") ";
+		$Titletext = "Consignment";
+	}elseif ($customertype == "Wholesale"){
+		$whereclause = " AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_WHOLESALE . ") ";
+		$Titletext = "Wholesale";
+	}elseif ($customertype == "Online"){
+		$whereclause = " AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_ONLINE . ") ";
+		$Titletext = "Online";
+	}else{
+		$whereclause = " ";
+	}
+	
+	if ($ErrorType == "OVER"){
+		$Titletext .= _(' Orders over ') . locale_number_format($OrderValue,0). _(' without GIFT ') . $stockid . _(' during the last ') . $numDays . ' days';
+		$Sign = " >= ";
+		$Not = "NOT";
+	}else{
+		$Titletext .= _(' Orders below ') . locale_number_format($OrderValue,0). _(' with GIFT ') . $stockid . _(' during the last ') . $numDays . ' days';
+		$Sign = " < ";
+		$Not = "";
+	}
+	
+	$SQL = "SELECT salesorders.orderno,	
+				debtorsmaster.name,
+				salesorders.customerref,
+				salesorders.orddate,
+				salesman.salesmanname,
+				SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)/currencies.rate) AS ordervalue
+			FROM salesorders 
+				INNER JOIN salesorderdetails 	
+					ON salesorders.orderno = salesorderdetails.orderno
+				INNER JOIN debtorsmaster 
+					ON salesorders.debtorno = debtorsmaster.debtorno
+				INNER JOIN salesman
+					ON salesorders.salesperson = salesman.salesmancode
+				INNER JOIN currencies
+					ON debtorsmaster.currcode = currencies.currabrev
+			WHERE salesorderdetails.completed= 1 " 
+			. $whereclause .
+			" GROUP BY salesorders.orderno,	
+				debtorsmaster.name,
+				salesorders.customerref,
+				salesorders.orddate " .
+			" HAVING salesorders.orddate >= '" . $StartDate . "'" . 
+				" AND SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)/currencies.rate)" . $Sign . $OrderValue .
+				" AND " . $Not . " EXISTS (SELECT * 
+								FROM salesorderdetails AS so2 
+								WHERE salesorders.orderno = so2.orderno 
+								AND so2.stkcode LIKE '" . $stockid . "' )". 
+			" ORDER BY salesorders.orderno";
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . $Titletext . '</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('webERP Order') . '</th>
+							<th class="ascending">' . _('Yellow Order') . '</th>
+							<th class="ascending">' . _('Customer') . '</th>
+							<th class="ascending">' . _('SPG') . '</th>
+							<th class="ascending">' . _('Order Date') . '</th>
+							<th class="ascending">' . _('Total Value') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			$CodeLink = '<a href="' . $RootPath . '/OrderDetails.php?OrderNumber=' . $myrow['orderno'] . '">' . $myrow['orderno'] . '</a>';
+			printf('<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$i, 
+					$CodeLink, 
+					$myrow['customerref'], 
+					$myrow['name'], 
+					$myrow['salesmanname'], 
+					ConvertSQLDate($myrow['orddate']), 
+					locale_number_format($myrow['ordervalue'],0)
+					);
+			$i++;
+		}
+		echo '</table>
+				</div>';
+	}
+}
 
 ?>

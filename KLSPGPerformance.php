@@ -100,6 +100,260 @@ time_finish($begintime);
 
 include ('includes/footer.php');
 
+/********************************************************************************************
+FUNCTIONS ONLY USED IN SPG PERFORMANCE BOARD
+*********************************************************************************************/
+
+function RetailTypePayments($typereport, $maxdays, $db){
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
+	$totalcash = 0;
+	$totalcredit = 0;
+	$totalreturned = 0;
+	$totalvouchers = 0;
+	$total = 0;
+
+	if ($typereport == "Shop"){
+		$SQL = "SELECT salesorders.debtorno AS reportunit,
+					debtorsmaster.name AS reportname,
+					SUM(salesorders.klpaidcash) AS cashshop, 
+					SUM(salesorders.klpaidcreditcard) AS creditshop, 
+					SUM(salesorders.klreturnedgoods) AS returnedgoodsshop,
+					SUM(salesorders.klvouchers) AS vouchersshop,
+					SUM(salesorders.klpaidcash+salesorders.klpaidcreditcard+salesorders.klreturnedgoods+salesorders.klvouchers) AS totalshop
+			FROM salesorders, debtorsmaster
+			WHERE salesorders.debtorno = debtorsmaster.debtorno
+				AND salesorders.orddate >= '". $StartDate. "'
+				AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_RETAIL . ")
+			GROUP BY salesorders.debtorno
+			ORDER BY salesorders.debtorno";
+	}else{
+		$SQL = "SELECT salesorders.salesperson AS reportunit, 
+					salesman.salesmanname AS reportname,
+					SUM(klpaidcash) AS cashshop, 
+					SUM(klpaidcreditcard) AS creditshop, 
+					SUM(klreturnedgoods) AS returnedgoodsshop,
+					SUM(klvouchers) AS vouchersshop,
+					SUM(klpaidcash+klpaidcreditcard+klreturnedgoods+klvouchers) AS totalshop
+			FROM salesorders, salesman, debtorsmaster
+			WHERE salesorders.debtorno = debtorsmaster.debtorno
+				AND salesorders.salesperson = salesman.salesmancode
+				AND orddate >= '". $StartDate. "'
+				AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_RETAIL . ")
+			GROUP BY salesorders.salesperson
+			ORDER BY salesorders.salesperson";
+	}
+	
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . _('Distribution Cash / Credit Card during the last ') . $maxdays . _(' days by ') .$typereport .'</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . $typereport . '</th>
+							<th class="ascending">' . _('Name') . '</th>
+							<th class="ascending">' . _('% Cash') . '</th>
+							<th class="ascending">' . _('% Credit') . '</th>
+							<th class="ascending">' . _('% Returns') . '</th>
+							<th class="ascending">' . _('% Vouchers') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			if ($myrow['totalshop'] != 0){
+				$k = StartEvenOrOddRow($k);
+				
+				$percentcash = locale_number_format(($myrow['cashshop']/$myrow['totalshop'])*100,1);
+				$percentcredit = locale_number_format(($myrow['creditshop']/$myrow['totalshop'])*100,1);
+				$percentreturns = locale_number_format(($myrow['returnedgoodsshop']/$myrow['totalshop'])*100,1);
+				$percentvouchers = locale_number_format(($myrow['vouchersshop']/$myrow['totalshop'])*100,1);
+				
+				$totalcash = $totalcash + $myrow['cashshop'];
+				$totalcredit = $totalcredit + $myrow['creditshop'];
+				$totalreturned = $totalreturned + $myrow['returnedgoodsshop'];
+				$totalvouchers = $totalvouchers + $myrow['vouchersshop'];
+				$total = $total + $myrow['totalshop'];
+				
+				printf('<td>%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						</tr>', 
+						$myrow['reportunit'],
+						$myrow['reportname'],
+						$percentcash, 
+						$percentcredit, 
+						$percentreturns, 
+						$percentvouchers
+						);
+				$i++;
+			}
+		}
+
+		$percentcash = locale_number_format(($totalcash/$total)*100,1);
+		$percentcredit = locale_number_format(($totalcredit/$total)*100,1);
+		$percentreturns = locale_number_format(($totalreturned/$total)*100,1);
+		$percentvouchers = locale_number_format(($totalvouchers/$total)*100,1);
+		
+		if ($k == 1) {
+			echo '<tr class="EvenTableRows">';
+			$k = 0;
+		} else {
+			echo '<tr class="OddTableRows">';
+			$k = 1;
+		}
+		printf('<td>%s</td>
+				<td>%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				"",
+				"Average",
+				$percentcash, 
+				$percentcredit, 
+				$percentreturns, 
+				$percentvouchers
+				);
+		
+		echo '</table>
+				</div>';
+	}
+}
+
+function SPGPerformanceByShop($Shop, $NumDaysA, $NumDaysB, $NumDaysC, $db){
+
+	$YesterdayA  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
+	$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA));
+
+	$YesterdayB = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-1));
+	$StartDateB = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysB));
+
+	$YesterdayC = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysB-1));
+	$StartDateC = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysC));
+
+	$SQL = "SELECT salesmancode,
+				salesmanname,
+				securityroles.secrolename,
+				(SELECT COUNT(DISTINCT(salesorders.orddate))
+					FROM salesorderdetails, salesorders
+					WHERE salesorderdetails.orderno = salesorders.orderno
+						AND salesorderdetails.completed = 1
+						AND salesorders.debtorno = '" . $Shop . "'
+						AND salesorders.orddate >= '". $StartDateA . "'
+						AND salesorders.orddate <= '". $YesterdayA . "'
+						AND salesorders.salesperson = salesman.salesmancode) AS daysA,
+				(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					FROM salesorderdetails, salesorders
+					WHERE salesorderdetails.orderno = salesorders.orderno
+						AND salesorderdetails.completed = 1
+						AND salesorders.debtorno = '" . $Shop . "'
+						AND salesorders.orddate >= '". $StartDateA . "'
+						AND salesorders.orddate <= '". $YesterdayA . "'
+						AND salesorders.salesperson = salesman.salesmancode) AS salesA,
+				(SELECT COUNT(DISTINCT(salesorders.orddate))
+					FROM salesorderdetails, salesorders
+					WHERE salesorderdetails.orderno = salesorders.orderno
+						AND salesorderdetails.completed = 1
+						AND salesorders.debtorno = '" . $Shop . "'
+						AND salesorders.orddate >= '". $StartDateB . "'
+						AND salesorders.orddate <= '". $YesterdayB . "'
+						AND salesorders.salesperson = salesman.salesmancode) AS daysB,
+				(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					FROM salesorderdetails, salesorders
+					WHERE salesorderdetails.orderno = salesorders.orderno
+						AND salesorderdetails.completed = 1
+						AND salesorders.debtorno = '" . $Shop . "'
+						AND salesorders.orddate >= '". $StartDateB . "'
+						AND salesorders.orddate <= '". $YesterdayB . "'
+						AND salesorders.salesperson = salesman.salesmancode) AS salesB,
+				(SELECT COUNT(DISTINCT(salesorders.orddate))
+					FROM salesorderdetails, salesorders
+					WHERE salesorderdetails.orderno = salesorders.orderno
+						AND salesorderdetails.completed = 1
+						AND salesorders.debtorno = '" . $Shop . "'
+						AND salesorders.orddate >= '". $StartDateC . "'
+						AND salesorders.orddate <= '". $YesterdayC . "'
+						AND salesorders.salesperson = salesman.salesmancode) AS daysC,
+				(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					FROM salesorderdetails, salesorders
+					WHERE salesorderdetails.orderno = salesorders.orderno
+						AND salesorderdetails.completed = 1
+						AND salesorders.debtorno = '" . $Shop . "'
+						AND salesorders.orddate >= '". $StartDateC . "'
+						AND salesorders.orddate <= '". $YesterdayC . "'
+						AND salesorders.salesperson = salesman.salesmancode) AS salesC
+			FROM salesman, www_users, securityroles
+			WHERE www_users.salesman = salesman.salesmancode
+				AND www_users.fullaccess = securityroles.secroleid
+				AND www_users.customerid = '" . $Shop . "'
+				AND ((SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					FROM salesorderdetails, salesorders
+					WHERE salesorderdetails.orderno = salesorders.orderno
+						AND salesorderdetails.completed = 1
+						AND salesorders.debtorno = '" . $Shop . "'
+						AND salesorders.orddate >= '". $StartDateA . "'
+						AND salesorders.orddate <= '". $YesterdayA . "'
+						AND salesorders.salesperson = salesman.salesmancode) > 0)
+			ORDER BY salesman.salesmancode";
+				
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . _('SPG Performance in ') . $Shop . " during the last " . $NumDaysA . " days and ". ($NumDaysB - $NumDaysA) . " previous days". '</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th colspan="3">' . _('SPG') . '</th>
+							<th colspan="2">' . $NumDaysA . ' last days' . '</th>
+							<th colspan="2">' . $NumDaysA . '-' . $NumDaysB . ' previous days' . '</th>
+							<th colspan="2">' . $NumDaysB . '-' . $NumDaysC . ' previous days' . '</th>
+						</tr>';
+		echo $TableHeader;
+		$TableHeader = '<tr>
+							<th>' . _('Code') . '</th>
+							<th>' . _('Name') . '</th>
+							<th>' . _('Role') . '</th>
+							<th>' . _('Days') . '</th>
+							<th>' . _('Avg Daily Sales') . '</th>
+							<th>' . _('Days') . '</th>
+							<th>' . _('Avg Daily Sales') . '</th>
+							<th>' . _('Days') . '</th>
+							<th>' . _('Avg Daily Sales') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			
+			printf('<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$myrow['salesmancode'],
+					$myrow['salesmanname'],
+					$myrow['secrolename'],
+					locale_number_format_zero_blank($myrow['daysA'],0),
+					locale_number_format_zero_blank($myrow['salesA']/$myrow['daysA'],0),
+					locale_number_format_zero_blank($myrow['daysB'],0),
+					locale_number_format_zero_blank($myrow['salesB']/$myrow['daysB'],0),
+					locale_number_format_zero_blank($myrow['daysC'],0),
+					locale_number_format_zero_blank($myrow['salesC']/$myrow['daysC'],0)
+					);
+		}
+		echo '</table>
+				</div>';
+	}
+}
+
 function SPGPerformanceWeekly($db){
 
 	$YesterdayA  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
@@ -375,126 +629,6 @@ function SPGPerformanceWeekly($db){
 					);
 			$lastshop = $myrow['loccode'];
 		}
-		echo '</table>
-				</div>';
-	}
-}
-
-function RetailTypePayments($typereport, $maxdays, $db){
-	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
-	$totalcash = 0;
-	$totalcredit = 0;
-	$totalreturned = 0;
-	$totalvouchers = 0;
-	$total = 0;
-
-	if ($typereport == "Shop"){
-		$SQL = "SELECT salesorders.debtorno AS reportunit,
-					debtorsmaster.name AS reportname,
-					SUM(salesorders.klpaidcash) AS cashshop, 
-					SUM(salesorders.klpaidcreditcard) AS creditshop, 
-					SUM(salesorders.klreturnedgoods) AS returnedgoodsshop,
-					SUM(salesorders.klvouchers) AS vouchersshop,
-					SUM(salesorders.klpaidcash+salesorders.klpaidcreditcard+salesorders.klreturnedgoods+salesorders.klvouchers) AS totalshop
-			FROM salesorders, debtorsmaster
-			WHERE salesorders.debtorno = debtorsmaster.debtorno
-				AND salesorders.orddate >= '". $StartDate. "'
-				AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_RETAIL . ")
-			GROUP BY salesorders.debtorno
-			ORDER BY salesorders.debtorno";
-	}else{
-		$SQL = "SELECT salesorders.salesperson AS reportunit, 
-					salesman.salesmanname AS reportname,
-					SUM(klpaidcash) AS cashshop, 
-					SUM(klpaidcreditcard) AS creditshop, 
-					SUM(klreturnedgoods) AS returnedgoodsshop,
-					SUM(klvouchers) AS vouchersshop,
-					SUM(klpaidcash+klpaidcreditcard+klreturnedgoods+klvouchers) AS totalshop
-			FROM salesorders, salesman, debtorsmaster
-			WHERE salesorders.debtorno = debtorsmaster.debtorno
-				AND salesorders.salesperson = salesman.salesmancode
-				AND orddate >= '". $StartDate. "'
-				AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_RETAIL . ")
-			GROUP BY salesorders.salesperson
-			ORDER BY salesorders.salesperson";
-	}
-	
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Distribution Cash / Credit Card during the last ') . $maxdays . _(' days by ') .$typereport .'</strong></p>';
-		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . $typereport . '</th>
-							<th class="ascending">' . _('Name') . '</th>
-							<th class="ascending">' . _('% Cash') . '</th>
-							<th class="ascending">' . _('% Credit') . '</th>
-							<th class="ascending">' . _('% Returns') . '</th>
-							<th class="ascending">' . _('% Vouchers') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
-		$i = 1;
-		while ($myrow = DB_fetch_array($result)) {
-			if ($myrow['totalshop'] != 0){
-				$k = StartEvenOrOddRow($k);
-				
-				$percentcash = locale_number_format(($myrow['cashshop']/$myrow['totalshop'])*100,1);
-				$percentcredit = locale_number_format(($myrow['creditshop']/$myrow['totalshop'])*100,1);
-				$percentreturns = locale_number_format(($myrow['returnedgoodsshop']/$myrow['totalshop'])*100,1);
-				$percentvouchers = locale_number_format(($myrow['vouchersshop']/$myrow['totalshop'])*100,1);
-				
-				$totalcash = $totalcash + $myrow['cashshop'];
-				$totalcredit = $totalcredit + $myrow['creditshop'];
-				$totalreturned = $totalreturned + $myrow['returnedgoodsshop'];
-				$totalvouchers = $totalvouchers + $myrow['vouchersshop'];
-				$total = $total + $myrow['totalshop'];
-				
-				printf('<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						</tr>', 
-						$myrow['reportunit'],
-						$myrow['reportname'],
-						$percentcash, 
-						$percentcredit, 
-						$percentreturns, 
-						$percentvouchers
-						);
-				$i++;
-			}
-		}
-
-		$percentcash = locale_number_format(($totalcash/$total)*100,1);
-		$percentcredit = locale_number_format(($totalcredit/$total)*100,1);
-		$percentreturns = locale_number_format(($totalreturned/$total)*100,1);
-		$percentvouchers = locale_number_format(($totalvouchers/$total)*100,1);
-		
-		if ($k == 1) {
-			echo '<tr class="EvenTableRows">';
-			$k = 0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k = 1;
-		}
-		printf('<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				"",
-				"Average",
-				$percentcash, 
-				$percentcredit, 
-				$percentreturns, 
-				$percentvouchers
-				);
-		
 		echo '</table>
 				</div>';
 	}

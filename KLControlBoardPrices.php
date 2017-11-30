@@ -185,9 +185,438 @@ if ($ProcessSection02){
 }
 
 prnMsg("Performed ". $NumberOfTestExecuted . " pricing control tests",'success');
-
 time_finish($begintime);
-
 include ('includes/footer.php');
+
+/********************************************************************************************
+FUNCTIONS ONLY USED IN PRICING CONTROL BOARD
+*********************************************************************************************/
+
+function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQoh, $TopSales, $DaysTopSales, $RootPath, $db){
+	$today = date('Y-m-d');
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$DaysTopSales));
+	$FactorTolerance = 1 + $Tolerance;
+
+	$SQL = "SELECT stockmaster.stockid, 
+				stockmaster.description,
+				stockmaster.categoryid,
+				(SELECT SUM(quantity)
+					FROM locstock
+					WHERE stockmaster.stockid = locstock.stockid) AS qoh,
+				(SELECT price 					
+					FROM prices	
+					WHERE stockmaster.stockid = prices.stockid	
+						AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
+						AND prices.currabrev = '". CURRENCY_CODE ."'
+						AND prices.startdate <= '". $today. "' 
+						AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')
+					LIMIT 1) AS retailprice,
+				(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS standardcost
+			FROM stockmaster				
+			WHERE stockmaster.categoryid = '". $Stockcat ."'					
+				AND stockmaster.discontinued = 0
+				AND stockmaster.klchangingprice = 0
+				AND stockmaster.klmovingdiscount20 = 0
+				AND stockmaster.klmovingdiscount50 = 0
+				AND stockmaster.klmovingdiscount80 = 0
+				AND stockmaster.lastcategoryupdate <= '". $StartDate."'
+				AND ((SELECT SUM(quantity)
+					FROM locstock
+					WHERE stockmaster.stockid = locstock.stockid) >= " . $MinQoh . ")
+				AND ((SELECT price 					
+					FROM prices	
+					WHERE stockmaster.stockid = prices.stockid	
+						AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
+						AND prices.currabrev = '". CURRENCY_CODE ."'
+						AND prices.startdate <= '". $today. "' 
+						AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')
+					LIMIT 1) < ((stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) * ". $FactorMax ." / ". $FactorTolerance ."))";
+
+	$result = DB_query($SQL);
+	$ShowHeader = TRUE;
+	if (DB_num_rows($result) != 0){
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$PositionTopSales = PositionTopSalesItem($myrow['stockid'], $DaysTopSales, $db);
+			if ($PositionTopSales < $TopSales){
+				if ($ShowHeader){
+					echo '<p class="page_title_text" align="center"><strong>' .  $Stockcat . ' Items TOO CHEAP: ' . ' TOP '.locale_number_format($TopSales,0) . ' sales. Price BELOW ' . $FactorMax . _(' x standard cost. Tolerance ') . locale_number_format($Tolerance * 100,0) . '%. QOH >= ' .  locale_number_format($MinQoh,0).  '</strong></p>';
+					echo '<div>';
+					echo '<table class="selection">';
+					$TableHeader = '<tr>
+										<th class="ascending">' . _('#') . '</th>
+										<th class="ascending">' . _('Code') . '</th>
+										<th class="ascending">' . _('Description') . '</th>
+										<th class="ascending">' . _('TopSales') . '</th>
+										<th class="ascending">' . _('QOH') . '</th>
+										<th class="ascending">' . _('Std Cost') . '</th>
+										<th class="ascending">' . _('Minimum Price') . '</th>
+										<th class="ascending">' . _('Current Price') . '</th>
+										<th class="ascending">' . _('Optimum Price') . '</th>
+										<th class="ascending">' . _('Recommended Retail') . '</th>
+										<th class="ascending">' . _('% Increase') . '</th>
+										<th class="ascending">' . _('Income Increase') . '</th>
+									</tr>';
+					echo $TableHeader;
+					$ShowHeader = FALSE;
+				}
+				$k = StartEvenOrOddRow($k);
+				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+				$MaxPrice = $myrow['standardcost'] * $FactorMax;
+				$MinPrice = $myrow['standardcost'] * $FactorMin;
+				$RecommendedPrice = correction_for_low_end_prices(round_price($MaxPrice, "UP"));
+				$Increase = locale_number_format(($RecommendedPrice-$myrow['retailprice'])/$myrow['retailprice']*100,1).'%';
+				$NewPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $RecommendedPrice .  '">' . locale_number_format($RecommendedPrice,0) . '</a>';
+				$IncomeIncrease = $myrow['qoh'] * ($RecommendedPrice-$myrow['retailprice']);
+				
+				printf('<td class="number">%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						</tr>', 
+						$i, 
+						$CodeLink, 
+						$myrow['description'], 
+						locale_number_format($PositionTopSales,0),
+						locale_number_format($myrow['qoh'],0),
+						locale_number_format($myrow['standardcost'],0),
+						locale_number_format($MinPrice,0),
+						locale_number_format($myrow['retailprice'],0),
+						locale_number_format($MaxPrice,0),
+						$NewPriceLink,
+						$Increase,
+						locale_number_format($IncomeIncrease,0)
+						);
+				$i++;
+			}
+		}
+	}
+	if (!$ShowHeader){
+		echo '</table>
+				</div>';
+	}
+	
+}
+
+function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQoh, $TopSales, $DaysTopSales, $RootPath, $db){
+	$today = date('Y-m-d');
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$DaysTopSales));
+	$FactorTolerance = 1 - $Tolerance;
+
+	$SQL = "SELECT stockmaster.stockid, 
+				stockmaster.description,
+				stockmaster.categoryid,
+				(SELECT SUM(quantity)
+					FROM locstock
+					WHERE stockmaster.stockid = locstock.stockid) AS qoh,
+				(SELECT price 					
+					FROM prices	
+					WHERE stockmaster.stockid = prices.stockid	
+						AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
+						AND prices.currabrev = '". CURRENCY_CODE ."'
+						AND prices.startdate <= '". $StartDate. "' 
+						AND prices.startdate <= '". $today. "' 
+						AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')
+					LIMIT 1) AS retailprice,
+				(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS standardcost
+			FROM stockmaster				
+			WHERE stockmaster.categoryid = '". $Stockcat ."'					
+				AND stockmaster.discontinued = 0
+				AND stockmaster.klchangingprice = 0
+				AND stockmaster.klmovingdiscount20 = 0
+				AND stockmaster.klmovingdiscount50 = 0
+				AND stockmaster.klmovingdiscount80 = 0
+				AND stockmaster.lastcategoryupdate <= '". $StartDate."'
+				AND ((SELECT SUM(quantity)
+					FROM locstock
+					WHERE stockmaster.stockid = locstock.stockid) >= " . $MinQoh . ")
+				AND ((SELECT price 					
+					FROM prices	
+					WHERE stockmaster.stockid = prices.stockid	
+						AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
+						AND prices.currabrev = '". CURRENCY_CODE ."'
+						AND prices.startdate <= '". $StartDate. "' 
+						AND prices.startdate <= '". $today. "' 
+						AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')
+					LIMIT 1) > ((stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) * ". $FactorMax ." / ". $FactorTolerance ."))";
+
+	$result = DB_query($SQL);
+	$ShowHeader = TRUE;
+	if (DB_num_rows($result) != 0){
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$PositionTopSales = PositionTopSalesItem($myrow['stockid'], $DaysTopSales, $db);
+			if ($PositionTopSales > $TopSales){
+				if ($ShowHeader){
+					echo '<p class="page_title_text" align="center"><strong>' .  $Stockcat . ' Items TOO EXPENSIVE: ' . ' NO TOP '.locale_number_format($TopSales,0) . ' sales. Retail Price OVER ' . $FactorMax . _(' x standard cost. Tolerance ') . locale_number_format($Tolerance * 100,0) . '%. QOH >= ' .  locale_number_format($MinQoh,0).  '</strong></p>';
+					echo '<div>';
+					echo '<table class="selection">';
+					$TableHeader = '<tr>
+										<th class="ascending">' . _('#') . '</th>
+										<th class="ascending">' . _('Code') . '</th>
+										<th class="ascending">' . _('Description') . '</th>
+										<th class="ascending">' . _('TopSales') . '</th>
+										<th class="ascending">' . _('QOH') . '</th>
+										<th class="ascending">' . _('Std Cost') . '</th>
+										<th class="ascending">' . _('Minimum Price') . '</th>
+										<th class="ascending">' . _('Current Price') . '</th>
+										<th class="ascending">' . _('Optimum Price') . '</th>
+										<th class="ascending">' . _('Recommended Retail') . '</th>
+										<th class="ascending">' . _('% Decrease') . '</th>
+										<th class="ascending">' . _('Income Decrease') . '</th>
+									</tr>';
+					echo $TableHeader;
+					$ShowHeader = FALSE;
+				}
+				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+				$MaxPrice = $myrow['standardcost'] * $FactorMax;
+				$MinPrice = $myrow['standardcost'] * $FactorMin;
+				$RecommendedPrice = correction_for_low_end_prices(round_price($MaxPrice, "DOWN"));
+				$Decrease = locale_number_format(($RecommendedPrice-$myrow['retailprice'])/$myrow['retailprice']*100,1).'%';
+				$NewPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $RecommendedPrice .  '">' . locale_number_format($RecommendedPrice,0) . '</a>';
+				$IncomeDecrease = $myrow['qoh'] * ($RecommendedPrice-$myrow['retailprice']);
+				if ($RecommendedPrice < $myrow['retailprice']){
+					$k = StartEvenOrOddRow($k);
+					printf('<td class="number">%s</td>
+							<td>%s</td>
+							<td>%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td>%s</td>
+							<td class="number">%s</td>
+							</tr>', 
+							$i, 
+							$CodeLink, 
+							$myrow['description'], 
+							locale_number_format($PositionTopSales,0),
+							locale_number_format($myrow['qoh'],0),
+							locale_number_format($myrow['standardcost'],0),
+							locale_number_format($MinPrice,0),
+							locale_number_format($myrow['retailprice'],0),
+							locale_number_format($MaxPrice,0),
+							$NewPriceLink,
+							$Decrease,
+							locale_number_format($IncomeDecrease,0)
+							);
+					$i++;
+				}
+			}
+		}
+	}
+	if (!$ShowHeader){
+		echo '</table>
+				</div>';
+	}
+}
+
+function PriceBelowStandard($Stockcat, $Factor, $Tolerance, $MinQoh, $RootPath, $db){
+	$today = date('Y-m-d');
+	$FactorTolerance = 1 + $Tolerance;
+
+	$SQL = "SELECT stockmaster.stockid, 
+				stockmaster.description,
+				stockmaster.categoryid,
+				(SELECT SUM(quantity)
+					FROM locstock
+					WHERE stockmaster.stockid = locstock.stockid) AS qoh,
+				(SELECT price 					
+					FROM prices	
+					WHERE stockmaster.stockid = prices.stockid	
+						AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
+						AND prices.currabrev = '". CURRENCY_CODE ."'
+						AND prices.startdate <= '". $today. "' 
+						AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')
+					LIMIT 1) AS retailprice,
+				(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS standardcost
+			FROM stockmaster				
+			WHERE stockmaster.categoryid = '". $Stockcat ."'					
+				AND stockmaster.discontinued = 0
+				AND stockmaster.klchangingprice = 0
+				AND stockmaster.klmovingdiscount20 = 0
+				AND stockmaster.klmovingdiscount50 = 0
+				AND stockmaster.klmovingdiscount80 = 0
+				AND ((SELECT SUM(quantity)
+					FROM locstock
+					WHERE stockmaster.stockid = locstock.stockid) >= " . $MinQoh . ")
+				AND ((SELECT price 					
+					FROM prices	
+					WHERE stockmaster.stockid = prices.stockid	
+						AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
+						AND prices.currabrev = '". CURRENCY_CODE ."'
+						AND prices.startdate <= '". $today. "' 
+						AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')
+					LIMIT 1) < ((stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) * ". $Factor ." / ". $FactorTolerance ."))
+				AND NOT EXISTS (SELECT * 					
+					FROM prices	
+					WHERE stockmaster.stockid = prices.stockid	
+						AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
+						AND prices.currabrev = '". CURRENCY_CODE ."'
+						AND prices.startdate > '". $today. "')";
+
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . $Stockcat . _(' Items with retail price below minimum. ') . $Factor . _(' x standard cost. Tolerance -') . locale_number_format($Tolerance * 100,0) . '%. QOH >= ' .  locale_number_format($MinQoh,0). '</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('TopSales') . '</th>
+							<th class="ascending">' . _('QOH') . '</th>
+							<th class="ascending">' . _('Std Cost') . '</th>
+							<th class="ascending">' . _('Current Price') . '</th>
+							<th class="ascending">' . _('Minimum Price') . '</th>
+							<th class="ascending">' . _('Recommended Retail') . '</th>
+							<th class="ascending">' . _('% Increase') . '</th>
+							<th class="ascending">' . _('Income Increase') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+			$NewPrice = $myrow['standardcost'] * $Factor;
+			$RecommendedPrice = correction_for_low_end_prices(round_price($NewPrice, "UP"));
+			$Increase = locale_number_format(($RecommendedPrice-$myrow['retailprice'])/$myrow['retailprice']*100,1).'%';
+			$PositionTopSales = PositionTopSalesItem($myrow['stockid'], 60, $db);
+			$NewPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $RecommendedPrice .  '">' . locale_number_format($RecommendedPrice,0) . '</a>';
+			$IncomeIncrease = $myrow['qoh'] * ($RecommendedPrice-$myrow['retailprice']);
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$i, 
+					$CodeLink, 
+					$myrow['description'], 
+					locale_number_format($PositionTopSales,0),
+					locale_number_format($myrow['qoh'],0),
+					locale_number_format($myrow['standardcost'],0),
+					locale_number_format($myrow['retailprice'],0),
+					locale_number_format($NewPrice,0),
+					$NewPriceLink,
+					$Increase,
+					locale_number_format($IncomeIncrease,0)
+					);
+			$i++;
+		}
+		echo '</table>
+				</div>';
+	}
+}
+
+function PriceWrongRounding($RootPath, $db){
+	$today = date('Y-m-d');
+
+	$SQL = "SELECT stockmaster.stockid, 
+				stockmaster.description,
+				stockmaster.categoryid,
+				(SELECT SUM(quantity)
+					FROM locstock
+					WHERE stockmaster.stockid = locstock.stockid) AS qoh,
+				(SELECT price 					
+					FROM prices	
+					WHERE stockmaster.stockid = prices.stockid	
+						AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
+						AND prices.currabrev = '". CURRENCY_CODE ."'
+						AND prices.startdate <= '". $today. "' 
+						AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')
+					LIMIT 1) AS retailprice,
+				(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS standardcost
+			FROM stockmaster				
+			WHERE stockmaster.discontinued = 0
+				AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_TEST . "
+					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_STABLE . "
+					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING . ")
+				AND stockmaster.klchangingprice = 0
+				AND stockmaster.klmovingdiscount20 = 0
+				AND stockmaster.klmovingdiscount50 = 0
+				AND stockmaster.klmovingdiscount80 = 0
+			ORDER BY stockmaster.stockid";
+
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		$k = 0; //row colour counter
+		$i = 1;
+		$ShowHeader = TRUE;
+		while ($myrow = DB_fetch_array($result)) {
+			$RoundedDown = round_price($myrow['retailprice'], "DOWN");
+			$RoundedUp = round_price($myrow['retailprice'], "UP");
+			
+			if($myrow['retailprice'] != $RoundedUp){
+				if($ShowHeader){
+					echo '<p class="page_title_text" align="center"><strong>' . _('Items with WRONG rounding retail price.') . '</strong></p>';
+					echo '<div>';
+					echo '<table class="selection">';
+					$TableHeader = '<tr>
+										<th class="ascending">' . _('#') . '</th>
+										<th class="ascending">' . _('Code') . '</th>
+										<th class="ascending">' . _('Description') . '</th>
+										<th class="ascending">' . _('Top Sales') . '</th>
+										<th class="ascending">' . _('QOH') . '</th>
+										<th class="ascending">' . _('Rounded Down') . '</th>
+										<th class="ascending">' . _('Current Price') . '</th>
+										<th class="ascending">' . _('Rounded Up') . '</th>
+									</tr>';
+					echo $TableHeader;
+					$ShowHeader = FALSE;
+				}
+				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+				$DownPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $RoundedDown .  '">' . locale_number_format($RoundedDown,0) . '</a>';
+				$UpPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $RoundedUp .  '">' . locale_number_format($RoundedUp,0) . '</a>';
+				$PositionTopSales = PositionTopSalesItem($myrow['stockid'], 60, $db);
+				$k = StartEvenOrOddRow($k);
+				printf('<td class="number">%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						</tr>', 
+						$i, 
+						$CodeLink, 
+						$myrow['description'], 
+						$PositionTopSales,
+						locale_number_format($myrow['qoh'],0),
+						$DownPriceLink,
+						locale_number_format($myrow['retailprice'],0),
+						$UpPriceLink
+						);
+				$i++;
+			}
+		}
+		if(!$ShowHeader){
+			echo '</table>
+					</div>';
+		}
+	}
+}
+
 
 ?>
