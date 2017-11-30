@@ -6,7 +6,7 @@
 
 
 // If the shop is using KAPAL-LAUT packaging, show it!
-if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_KAPAL_LAUT)){
+if ($_SESSION['TypeLoc'] == "SHOPKL"){
 
 	if (!isset($_POST['PackagingBox01L'])){
 		$_POST['PackagingBox01L'] =0;
@@ -78,7 +78,7 @@ if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_KAPAL_LAUT)){
 }
 
 // If the shop is using BLINK packaging, show it!
-if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_BLINK)){
+if ($_SESSION['TypeLoc'] == "SHOPBL"){
 
 	if (!isset($_POST['BlinkShoppingBag04L'])){
 		$_POST['BlinkShoppingBag04L'] =0;
@@ -141,7 +141,7 @@ if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_BLINK)){
 }
 
 // If the shop is using OUTLET packaging, show it!
-if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_OUTLET)){
+if ($_SESSION['TypeLoc'] == "SHOPOU"){
 
 	if (!isset($_POST['OutletPouchBag02L'])){
 		$_POST['OutletPouchBag02L'] =0;
