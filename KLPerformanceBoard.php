@@ -240,6 +240,15 @@ if ($ProcessSection03){
 		prnMsg("Packaging, Displays, Petty Cash Performance Board Section 03.",'info');
 	}
 
+	if ($KL_SystemAdmin 
+		OR $KL_OperationalManager
+		OR $KL_BusinessDevelopmentManager){
+		InsuficientStockForShopPackaging( 'SHPACK', 21, 85, 30, true, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		InsuficientStockForShopPackaging( 'ZAPON', 21, 60, 30, true, $RootPath, $db);
+		$NumberOfTestExecuted++;
+	}
+
 	if ($KL_SystemAdmin){
 		PackagingStatusForKapalLaut($RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -262,15 +271,6 @@ if ($ProcessSection03){
 		$NumberOfTestExecuted++;
 	}
 	
-	if ($KL_SystemAdmin 
-		OR $KL_OperationalManager
-		OR $KL_BusinessDevelopmentManager){
-		InsuficientStockForShopPackaging( 'SHPACK', 21, 95, 30, true, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		InsuficientStockForShopPackaging( 'ZAPON', 21, 60, 30, true, $RootPath, $db);
-		$NumberOfTestExecuted++;
-	}
-
 	if ($KL_SystemAdmin 
 		OR $KL_OperationalManager
 		OR $KL_ShopManager
