@@ -599,11 +599,11 @@ function KLPrintNameOfShop(){
 	include('includes/wcpESCPOSCommands.php');
 	
 	// name of shop
-	if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_KAPAL_LAUT)){
+	if ($_SESSION['TypeLoc'] == "SHOPKL"){
 		$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth . "Kapal-Laut" . $NewLine . $Emphasized . "Your Essential Jewellery" . $NewLine;
-	}else if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_BLINK)){
+	}else if ($_SESSION['TypeLoc'] == "SHOPBL"){
 		$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth . "Blink by Kapal-Laut" . $NewLine;
-	}else if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_OUTLET)){
+	}else if ($_SESSION['TypeLoc'] == "SHOPOU"){
 		$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth . "OUTLET by Kapal-Laut" . $NewLine;
 	}else{
 		$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth . "SHOP NAME NOT FOUND" . $NewLine;
@@ -672,7 +672,7 @@ function KLPrintReceiptHeader($identifier, $OrderNo){
 			$CodeSide .= " " . "Beads";
 		}elseif (isBrooche($OrderLine->StockID)){
 			$CodeSide .= " " . "Brooche";
-		}elseif (isEarring($OrderLine->StockID)  OR isEarcuff($OrderLine->StockID)) {
+		}elseif (isEarring($OrderLine->StockID) OR isEarcuff($OrderLine->StockID)) {
 			$CodeSide .= " " . "Earrings";
 		}elseif (isBracelet($OrderLine->StockID)){
 			$CodeSide .= " " . "Bracelet";
@@ -744,11 +744,11 @@ function KLPrintReceiptCustomerFooter($identifier, $OrderNo){
 	
 	// website
 	$TextToPrint .= $NewLine . $NewLine . $EmphasizedDoubleHeightDoubleWidth . $CenteredJustified;
-	if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_KAPAL_LAUT)){
+	if ($_SESSION['TypeLoc'] == "SHOPKL"){
 		$TextToPrint .= "www.kapal-laut.com" . $NewLine;
-	}else if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_BLINK)){
+	}else if ($_SESSION['TypeLoc'] == "SHOPBL"){
 		$TextToPrint .= "blink.kapal-laut.com" . $NewLine;
-	}else if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_OUTLET)){
+	}else if ($_SESSION['TypeLoc'] == "SHOPOU"){
 		$TextToPrint .= "outlet.kapal-laut.com" . $NewLine;
 	}else{
 		$TextToPrint .= "SHOP NAME NOT FOUND" . $NewLine;
@@ -803,7 +803,7 @@ function KLPrintReceiptShopFooter($identifier, $OrderNo){
 	$TextToPrint .= "Packaging included";
 	$TextToPrint .= $CharacterFontA. $NewLine;
 
-	if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_KAPAL_LAUT)){
+	if ($_SESSION['TypeLoc'] == "SHOPKL"){
 		if ($_POST['PackagingBox01L'] != 0){
 			$TextToPrint .= "KL Box-L: ". $_POST['PackagingBox01L'] . " boxes";
 			$TextToPrint .= $NewLine;
@@ -841,7 +841,7 @@ function KLPrintReceiptShopFooter($identifier, $OrderNo){
 			$TextToPrint .= $NewLine;
 		}
 	}
-	if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_BLINK)){
+	if ($_SESSION['TypeLoc'] == "SHOPBL"){
 		if ($_POST['BlinkPouchBag03L'] != 0){
 			$TextToPrint .= "Blink Pouchbag-L: ". $_POST['BlinkPouchBag03L'] . " pouches";
 			$TextToPrint .= $NewLine;
@@ -867,7 +867,7 @@ function KLPrintReceiptShopFooter($identifier, $OrderNo){
 			$TextToPrint .= $NewLine;
 		}
 	}
-	if (ItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_OUTLET)){
+	if ($_SESSION['TypeLoc'] == "SHOPOU"){
 		if ($_POST['OutletPouchBag02L'] != 0){
 			$TextToPrint .= "Outlet Pouchbag-L: ". $_POST['OutletPouchBag02L'] . " pouches";
 			$TextToPrint .= $NewLine;
