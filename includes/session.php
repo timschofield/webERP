@@ -259,6 +259,8 @@ if ($KL_SPGSeniorOrSupport OR $KL_SPGJunior){
 					debtorsmaster.customerpoline,
 					klretailpartners.partnercode,
 					klretailpartners.partnername,
+					klretailpartners.partneraddress,
+					klretailpartners.partnernpwp,
 					klretailpartners.ppn,
 					klretailpartners.areasalescreditcard,
 					klretailpartners.areasalescash,
@@ -349,6 +351,8 @@ if ($KL_SPGSeniorOrSupport OR $KL_SPGJunior){
 		
 		$_SESSION['PartnerCode'] = $myrow['partnercode'];
 		$_SESSION['PartnerName'] = $myrow['partnername'];
+		$_SESSION['PartnerAddress'] = $myrow['partneraddress'];
+		$_SESSION['PartnerNPWP'] = $myrow['partnernpwp'];
 		$_SESSION['PPN'] = $myrow['ppn'];
 		$_SESSION['AreaSalesCreditCard'] = $myrow['areasalescreditcard'];
 		$_SESSION['AreaSalesCash'] = $myrow['areasalescash'];
