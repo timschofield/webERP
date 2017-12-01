@@ -38,7 +38,6 @@ function KapalLautRetailAreaSelection($PaymentMethod){
 	return $Area;
 }
 
-
 function AdjustPackagingMovement($StockId, $QtyDelivered, $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db){
 
 	if ($QtyDelivered != 0){
@@ -257,6 +256,7 @@ function RecordRetailCustomerInformation($OrderNo, $FirstName, $LastName, $Count
 		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 	}
 }
+
 
 function AccountPaymentRetail($PaymentMethod,
 							$PeriodNo,
@@ -738,10 +738,16 @@ function KLPrintReceiptCustomerFooter($identifier, $OrderNo){
 	$TextToPrint .= "This invoice is the only valid proof of purchase. Keep it. ";
 	$TextToPrint .= "No refund. Exchange within 7 days with this original invoice, packaging and goods in perfect and unused conditions. We reserve the right to refuse any exchange. ";
 	$TextToPrint .= "For more information on our catalog, promotions, shop locations, job opportunities, news and warranty terms and conditions check our website. ";
-	if ($_SESSION['PartnerCode'] == 'PTBB'){
-		$TextToPrint .= "PT.Bumi Biru Jl. Kesambi No 1 Kerobokan, Bali NPWP:31.780.967.1-906.000";
+	if ((isset($_SESSION['PartnerName'])) AND ($_SESSION['PartnerName'] != '')){
+		$TextToPrint .= $_SESSION['PartnerName'];
 	}
-	
+	if ((isset($_SESSION['PartnerAddress'])) AND ($_SESSION['PartnerAddress'] != '')){
+		$TextToPrint .= " " . $_SESSION['PartnerAddress'];
+	}
+	if ((isset($_SESSION['PartnerNPWP'])) AND ($_SESSION['PartnerNPWP'] != '')){
+		$TextToPrint .= " NPWP:" . $_SESSION['PartnerNPWP'];
+	}
+
 	// website
 	$TextToPrint .= $NewLine . $NewLine . $EmphasizedDoubleHeightDoubleWidth . $CenteredJustified;
 	if ($_SESSION['TypeLoc'] == "SHOPKL"){
