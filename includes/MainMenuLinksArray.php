@@ -710,6 +710,7 @@ $MenuItems['Personalia']['Maintenance']['URL'] = array('/SalesPeople.php',
 
 $MenuItems['system']['Transactions']['Caption'] = array(_('Company Preferences'),
 														_('System Parameters'),
+														_('KL Retail Partners'),
 														_('Maintain Security Tokens'),
 														_('Access Permissions Maintenance'),
 														_('Page Security Settings'),
@@ -729,6 +730,7 @@ $MenuItems['system']['Transactions']['Caption'] = array(_('Company Preferences')
 
 $MenuItems['system']['Transactions']['URL'] = array('/CompanyPreferences.php',
 													'/SystemParameters.php',
+													'/KLRetailPartners.php',
 													'/SecurityTokens.php',
 													'/WWW_Access.php',
 													'/PageSecurity.php',
