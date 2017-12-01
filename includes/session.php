@@ -369,6 +369,7 @@ if ($KL_SPGSeniorOrSupport OR $KL_SPGJunior){
 		$_SESSION['ComissionCCMandiri'] = $myrow['comissionccmandiri'];
 		$_SESSION['ComissionCCBCA'] = $myrow['comissionccbca'];
 		$_SESSION['ComissionAmexBCA'] = $myrow['comissionamexbca'];
+		$_SESSION['PercentConsignmentTADU'] = $myrow['percentconsignmentptadu'];
 		$_SESSION['AccountConsignmentSalesPTADU'] = $myrow['accountconsignmentsalesptadu'];
 		$_SESSION['AccountConsignmentCOGSPartner'] = $myrow['accountconsignmentcogspartner'];
 		$_SESSION['CounterInvoiceA'] = $myrow['counterinvoicea'];
