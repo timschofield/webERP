@@ -1,6 +1,7 @@
 webERP Change Log
 
-2/12/17 Phil: Purchases report - also deleted id non-exsitent in css committed changes suggested by VortecCPI http://www.weberp.org/forum/showthread.php?tid=7943 
+2/12/17 Phil committed Tim Schofield's fix for javascript date picker for US date formats
+2/12/17 Phil/Paul Becker: Purchases report - also deleted id non-exsitent in css committed changes suggested by VortecCPI http://www.weberp.org/forum/showthread.php?tid=7943 
 23/11/2017 Andy Couling: Added Petty Cash receipt file upload to directory functionality.
 7/11/17 Exson: Remove cost updating for WAC method in BOMs.php.
 25/10/17 Exson: Fixed the salesman authority problem in PrintCustTrans.php.

@@ -249,8 +249,8 @@ function convertDate(dS, dF) {
 			break;
 		case "m/d/Y":
 			dA = dS.split("/");
-			m = parseInt(dA[0], 10);
-			d = parseInt(dA[1], 10)-1;
+			m = parseInt(dA[0], 10)-1;
+			d = parseInt(dA[1], 10);
 			y = parseInt(dA[2], 10);
 			break;
 		case "Y-m-d":
