@@ -1,11 +1,12 @@
 webERP Change Log
 
+2/12/17 Phil: Purchases report - also deleted id non-exsitent in css committed changes suggested by VortecCPI http://www.weberp.org/forum/showthread.php?tid=7943 
 23/11/2017 Andy Couling: Added Petty Cash receipt file upload to directory functionality.
-17/11/07 Exson: Remove cost updating for WAC method in BOMs.php.
-17/10/25 Exson: Fixed the salesman authority problem in PrintCustTrans.php.
-17/10/23 Exson: Prevent sales man from viewing other sales' sales orders in PrintCustTrans.php.
-17/10/23 Exson: Prevent customer from modifying or viewing other customer's order in SelectOrderItems.php and PrintCustTrans.php.
-17/10/21 Exson: Change header to meta data to avoid header do not work in some server environment in SelectCompletedOrder.php and SelectGLAccount.php
+7/11/17 Exson: Remove cost updating for WAC method in BOMs.php.
+25/10/17 Exson: Fixed the salesman authority problem in PrintCustTrans.php.
+23/10/17 Exson: Prevent sales man from viewing other sales' sales orders in PrintCustTrans.php.
+23/10/17 Exson: Prevent customer from modifying or viewing other customer's order in SelectOrderItems.php and PrintCustTrans.php.
+21/10/18 Exson: Change header to meta data to avoid header do not work in some server environment in SelectCompletedOrder.php and SelectGLAccount.php
 17/10/17 Andy Couling: Removed reference to css class 'toplink' in CustomerInquiry.php and CustomerAccount.php.
 17/10/17 Phil: Fix InventoryPlanning.php and includes/PDFInventoryPlanPageHeader.inc to display categories selected and fix month headings displayed
 15/10/17 Andy Couling: New Expenses/Update Expense table header in PcClaimExpensesFromTab.php
@@ -13,19 +14,19 @@ webERP Change Log
 15/10/17 Andy Couling: Table header labels corrected in PcClaimExpensesFromTab.php and PcAuthorizeExpenses.php.
 15/10/17 Andy Couling: Fixed expense deletion dialogue box in PcClaimExpensesFromTab.php.
 15/10/17 Andy Couling: Missing $Id comments added to Petty Cash scripts.
-17/10/12 Exson: Fixed the bug that Narrative information will loss when add or remove controlled items lot no in StockAdjustments.php.
-17/10/11 RChacon: If it is set the $_SESSION['ShowPageHelp'] parameter AND it is FALSE, hides the page help text (simplifies code using css).
-17/10/11 RChacon: Set decimals variable for exchange rate in Currencies.php.
-17/10/11 RChacon: Improve currency showing and set decimals variable for exchange rate in Payments.php.
-17/10/11 Exson: Fix the indian_number_format bug in MiscFunctions.php.
-17/10/09 Exson: Fixed the non-balance bug in CustomerReceipt.php. And fixed the non rollback problem when there is a non-balance existed. Fixed error noises.
-17/10/03 Exson: Add html view to SuppPriceList.php.
-01/10/26 RChacon: Standardise and add icons for usability.
-27/09/26 RChacon: Increases accuracy in coordinates.
-17/09/26 Exson: Fixed the wrong price retrieved bug in PO_Header.php.
-17/09/26 Exson: Fixed the vendor price bug to ensure only the effective price showed by suppliers in SelectProduct.php.
-17/09/20 Exson: Fixed the bug to make GRN reverse workable.
-17/09/19 Exson: Fixed customer information missing in CustomerReceipt.php. Reported by Steven Fu.
+10/10/12 Exson: Fixed the bug that Narrative information will loss when add or remove controlled items lot no in StockAdjustments.php.
+10/10/17 RChacon: If it is set the $_SESSION['ShowPageHelp'] parameter AND it is FALSE, hides the page help text (simplifies code using css).
+10/10/17 RChacon: Set decimals variable for exchange rate in Currencies.php.
+10/10/17 RChacon: Improve currency showing and set decimals variable for exchange rate in Payments.php.
+10/10/17 Exson: Fix the indian_number_format bug in MiscFunctions.php.
+9/10/17 Exson: Fixed the non-balance bug in CustomerReceipt.php. And fixed the non rollback problem when there is a non-balance existed. Fixed error noises.
+3/10/17 Exson: Add html view to SuppPriceList.php.
+20/9/17 RChacon: Standardise and add icons for usability.
+20/9/17 RChacon: Increases accuracy in coordinates.
+20/9/17 Exson: Fixed the wrong price retrieved bug in PO_Header.php.
+20/9/17 Exson: Fixed the vendor price bug to ensure only the effective price showed by suppliers in SelectProduct.php.
+20/9/17 Exson: Fixed the bug to make GRN reverse workable.
+19/9/17 Exson:  customer information missing in CustomerReceipt.php. Reported by Steven Fu.
 18/9/2017 Tim (committed by Andy): Geocode bug fixes. http://www.weberp.org/forum/showthread.php?tid=4380
 17/9/17 VortecCPI: SelectProduct.php made image dispay code match that used in WorkOrderEntry.php
 11/9/17 Andy Couling: Fixed the onclick delete confirmation box call in ContractBOM.php, was 'MakeConfirm'.

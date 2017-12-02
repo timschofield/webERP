@@ -61,8 +61,8 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 	$TotalGlAmount = 0;
 	$TotalGlTax = 0;
 	$k = 1;// Row colour counter.
-	$PeriodFrom = ConvertSQLDate($_POST['PeriodFrom']);
-	$PeriodTo = ConvertSQLDate($_POST['PeriodTo']);
+	$PeriodFrom = FormatDateForSQL($_POST['PeriodFrom']);
+	$PeriodTo = FormatDateForSQL($_POST['PeriodTo']);
 	if($_POST['ShowDetails']) {// Parameters: PeriodFrom, PeriodTo, ShowDetails=on.
 		echo		'<th>', _('Date'), '</th>
 					<th>', _('Purchase Invoice'), '</th>
@@ -278,8 +278,8 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 			</tr>',
 			// Show the budget for the period:
 			'<tr>',
-			 	'<td><label for="ShowDetails">', _('Show details'), '</label></td>
-			 	<td><input',($_POST['ShowDetails'] ? ' checked="checked"' : ''), ' id="ShowDetails" name="ShowDetails" type="checkbox">', // "Checked" if ShowDetails is set AND it is TRUE.
+			 	'<td><label>', _('Show details'), '</label></td>
+			 	<td><input', (isset($_POST['ShowDetails']) ? ' checked="checked"' : ''), ' name="ShowDetails" type="checkbox">', // "Checked" if ShowDetails is set AND it is TRUE.
 			 		(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Check this box to show purchase invoices') : ''), // If it is not set the $_SESSION['ShowFieldHelp'] parameter OR it is TRUE, shows the page help text.
 		 		'</td>
 			</tr>',
