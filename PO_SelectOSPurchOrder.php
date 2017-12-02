@@ -74,17 +74,15 @@ if (isset($_POST['SearchParts'])) {
 		$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
 
 		$SQL = "SELECT stockmaster.stockid,
+					stockmaster.decimalplaces,
 					stockmaster.description,
-					SUM(locstock.quantity) AS qoh,
 					stockmaster.units,
 					SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS qord
-				FROM stockmaster INNER JOIN locstock
-					ON stockmaster.stockid = locstock.stockid
-					INNER JOIN purchorderdetails
+				FROM stockmaster INNER JOIN purchorderdetails
 						ON stockmaster.stockid=purchorderdetails.itemcode
 					INNER JOIN purchorders on purchorders.orderno=purchorderdetails.orderno
-					INNER JOIN locationusers ON locationusers.loccode=purchorders.intostocklocation AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 				WHERE purchorderdetails.completed=0
+				AND purchorders.status NOT IN ('Completed','Cancelled','Rejected')
 				AND stockmaster.description " . LIKE . " '" . $SearchString . "'
 				" . $WhereStockCat . "
 				GROUP BY stockmaster.stockid,
@@ -96,17 +94,15 @@ if (isset($_POST['SearchParts'])) {
 	} elseif ($_POST['StockCode']) {
 
 		$SQL = "SELECT stockmaster.stockid,
+					stockmaster.decimalplaces,
 					stockmaster.description,
-					SUM(locstock.quantity) AS qoh,
 					SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS qord,
 					stockmaster.units
-				FROM stockmaster INNER JOIN locstock
-				ON stockmaster.stockid = locstock.stockid
-				INNER JOIN purchorderdetails
+				FROM stockmaster INNER JOIN purchorderdetails
 				ON stockmaster.stockid=purchorderdetails.itemcode
 				INNER JOIN purchorders on purchorders.orderno=purchorderdetails.orderno
-				INNER JOIN locationusers ON locationusers.loccode=purchorders.intostocklocation AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 				WHERE purchorderdetails.completed=0
+				AND purchorders.status NOT IN ('Completed','Cancelled','Rejected') 
 				AND stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%'
 				" . $WhereStockCat . "
 				GROUP BY stockmaster.stockid,
@@ -116,17 +112,15 @@ if (isset($_POST['SearchParts'])) {
 
 	} elseif (!$_POST['StockCode'] AND !$_POST['Keywords']) {
 		$SQL = "SELECT stockmaster.stockid,
+					stockmaster.decimalplaces,
 					stockmaster.description,
-					SUM(locstock.quantity) AS qoh,
 					stockmaster.units,
 					SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS qord
-				FROM stockmaster INNER JOIN locstock
-				ON stockmaster.stockid = locstock.stockid
-				INNER JOIN purchorderdetails
+				FROM stockmaster INNER JOIN purchorderdetails 
 				ON stockmaster.stockid=purchorderdetails.itemcode
 				INNER JOIN purchorders on purchorders.orderno=purchorderdetails.orderno
-				INNER JOIN locationusers ON locationusers.loccode=purchorders.intostocklocation AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 				WHERE purchorderdetails.completed=0
+				AND purchorders.status NOT IN ('Completed','Cancelled','Rejected') 
 				" . $WhereStockCat . "
 				GROUP BY stockmaster.stockid,
 					stockmaster.description,
@@ -217,11 +211,9 @@ if (!isset($OrderNumber) or $OrderNumber == '') {
 				} else {
 					echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 				}
-
 			}
 
 		}
-
 	}
 	echo '</select> ' . _('Order Status:') . ' <select name="Status">';
 	if (!isset($_POST['Status']) OR $_POST['Status'] == 'Pending_Authorised') {
@@ -314,8 +306,27 @@ if (isset($StockItemsResult)) {
 		</tr>';
 
 	$k = 0; //row colour counter
+	$StocksStr = '(';
+	$q = 0;
+	while ($myrow = DB_fetch_array($StockItemsResult)){
+		if ($q>0) {
+			$StockStr .=',';
+		}
+		$StockStr .="'".$myrow['stockid']."'";
+
+	}
+	$StockStr .=')';
+	$QOHSQL = "SELECT stockid, sum(quantity) FROM locstock INNER JOIN locationusers ON locationusers.loccode=locationusers.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' GROUP BY stockid";
+	$ErrMsg = _('Failed to retrieve qoh');
+	$QOHResult = DB_query($QOHSQL,$ErrMsg);
+	$QOH = array();
+	while ($myrow=DB_fetch_array($QOHResult)){
+		$QOH[$myrow['stockid']] = $myrow[1];
+	}
+	DB_data_seek($StockItemsResult,0);
 
 	while ($myrow = DB_fetch_array($StockItemsResult)) {
+		$myrow['qoh'] = $QOH[$myrow['stockid']];
 		if ($k == 1) {
 			echo '<tr class="EvenTableRows">';
 			$k = 0;
@@ -332,8 +343,8 @@ if (isset($StockItemsResult)) {
 				<td>%s</td></tr>',
 				$myrow['stockid'],
 				$myrow['description'],
-				$myrow['qoh'],
-				$myrow['qord'],
+				locale_number_format($myrow['qoh'],$myrow['decimalplaces']),
+				locale_number_format($myrow['qord'],$myrow['decimalplaces']),
 				$myrow['units']);
 	} //end of while loop through search items
 
