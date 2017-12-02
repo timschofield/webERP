@@ -367,7 +367,8 @@ $MenuItems['GL']['Transactions']['URL'] = array('/Payments.php?NewPayment=Yes',
 												'/BankMatching.php?Type=Receipts',
 												'/GLJournal.php?NewJournal=Yes');
 
-$MenuItems['GL']['Reports']['Caption'] = array(	_('Bank Account Reconciliation Statement'),
+$MenuItems['GL']['Reports']['Caption'] = array(	_('Bank Account Balances'),
+												_('Bank Account Reconciliation Statement'),
 												_('Cheque Payments Listing'),
 												_('Daily Bank Transactions'),
 												_('Account Inquiry'),
@@ -383,7 +384,8 @@ $MenuItems['GL']['Reports']['Caption'] = array(	_('Bank Account Reconciliation S
 												_('Tag Reports'),
 												_('Tax Reports'));
 
-$MenuItems['GL']['Reports']['URL'] = array(	'/BankReconciliation.php',
+$MenuItems['GL']['Reports']['URL'] = array( '/BankAccountBalances.php',
+											'/BankReconciliation.php',
 											'/PDFChequeListing.php',
 											'/DailyBankTransactions.php',
 											'/SelectGLAccount.php',
