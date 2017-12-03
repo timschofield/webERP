@@ -894,55 +894,6 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 			$ErrMsg = _('Sales analysis record could not be added or updated because');
 			$DbgMsg = _('The following SQL to insert the sales analysis record was used');
 			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-
-			// CLUSTERING PTADU
-			if (($_SESSION['PercentConsignmentTADU'] > 0) AND ($_SESSION['PercentConsignmentTADU'] < 100)){
-				// It is a sales on consignment by PT ADU So we need to report clustering
-				$ConsignmentPrice = $_SESSION['PercentConsignmentTADU'] / 100 * $OrderLine->Price * (1 - $OrderLine->DiscountPercent);
-				$SQL = "INSERT INTO gltrans (	type,
-												typeno,
-												trandate,
-												periodno,
-												account,
-												narrative,
-												amount,
-												tag)
-										VALUES ( 10,
-												'" . $InvoiceNo . "',
-												'" . Date('Y-m-d') . "',
-												'" . $PeriodNo . "',
-												'" . $_SESSION['AccountConsignmentCOGSPartner'] . "',
-												'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . $ConsignmentPrice . "',
-												'" . $ConsignmentPrice * $OrderLine->Quantity . "',
-												'" . $Tag . "')";
-
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The Consignment COGS could not be inserted because');
-				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-
-				$SQL = "INSERT INTO gltrans (	type,
-												typeno,
-												trandate,
-												periodno,
-												account,
-												narrative,
-												amount,
-												tag)
-										VALUES ( 10,
-												'" . $InvoiceNo . "',
-												'" . Date('Y-m-d') . "',
-												'" . $PeriodNo . "',
-												'" . $_SESSION['AccountConsignmentSalesPTADU'] . "',
-												'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . $ConsignmentPrice . "',
-												'" . -$ConsignmentPrice * $OrderLine->Quantity . "',
-												'" . $Tag . "')";
-
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The Consignment Sales could not be inserted because');
-				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-				
-			}
-
 			
 			if ($OrderLine->StandardCost !=0){
 				/*first the cost of sales entry*/
@@ -955,7 +906,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 				}else{
 					// PT Sales have some COGS corrections and adjustments
 					$StandardCost = round($OrderLine->StandardCost * ($_SESSION['HPPCompensation'] / 100),0);
-					$Compensation = $StandardCost - $OrderLine->StandardCost;
+					$Compensation = round($StandardCost - $OrderLine->StandardCost,0);
 				}
 				$SQL = "INSERT INTO gltrans (	type,
 												typeno,
@@ -1025,7 +976,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The stock side of the cost of sales StockGLCode GL posting could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
 				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-			} /* end of if GL and stock integrated and standard cost !=0 */
+			} /* end of if standard cost !=0 */
 
 			if ($OrderLine->Price !=0){
 
@@ -1077,7 +1028,86 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 					$DbgMsg = _('The following SQL to insert the GLTrans record was used');
 					$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 				} /*end of if discount !=0 */
-			} /*end of if sales integrated with debtors */
+			} /*end of if price != 0 */
+			
+			// CLUSTERING PTADU
+			if (($_SESSION['PercentConsignmentTADU'] > 0) AND ($_SESSION['PercentConsignmentTADU'] < 100)){
+				// It is a sales on consignment by PT ADU So we need to report clustering
+				$RetailPrice = round($OrderLine->Price * (1 - $OrderLine->DiscountPercent) / $ExRate,0);
+				$ConsignmentPrice = round($_SESSION['PercentConsignmentTADU'] / 100 * $RetailPrice,0);
+				
+				// report the COGS for retail partner from PT ADU
+				$SQL = "INSERT INTO gltrans (	type,
+												typeno,
+												trandate,
+												periodno,
+												account,
+												narrative,
+												amount,
+												tag)
+										VALUES ( 10,
+												'" . $InvoiceNo . "',
+												'" . Date('Y-m-d') . "',
+												'" . $PeriodNo . "',
+												'" . $_SESSION['AccountConsignmentCOGSPartner'] . "',
+												'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . $ConsignmentPrice . "',
+												'" . $ConsignmentPrice * $OrderLine->Quantity . "',
+												'" . $Tag . "')";
+
+				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The Consignment COGS could not be inserted because');
+				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
+				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+
+				// report the sales for PT ADU to retail partner
+				$SQL = "INSERT INTO gltrans (	type,
+												typeno,
+												trandate,
+												periodno,
+												account,
+												narrative,
+												amount,
+												tag)
+										VALUES ( 10,
+												'" . $InvoiceNo . "',
+												'" . Date('Y-m-d') . "',
+												'" . $PeriodNo . "',
+												'" . $_SESSION['AccountConsignmentSalesPTADU'] . "',
+												'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . $ConsignmentPrice . "',
+												'" . -$ConsignmentPrice * $OrderLine->Quantity . "',
+												'" . $Tag . "')";
+
+				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The Consignment Sales could not be inserted because');
+				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
+				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				
+				// record the consignment for later invoice to partner
+				$SQL = "INSERT INTO klconsignment (	saledate,
+												partnercode,
+												invoice,
+												debtorno,
+												stockid,
+												qty,
+												retailprice,
+												consignmentprice,
+												cogsadu,
+												standardcost,
+												invoicedtopartner)
+										VALUES ('" . Date('Y-m-d') . "',
+												'" . $_SESSION['PartnerCode']  . "',
+												'" . $_SESSION['Items'.$identifier]->CustRef  . "',
+												'" . $_SESSION['Items'.$identifier]->DebtorNo  . "',
+												'" . $OrderLine->StockID  . "',
+												'" . $OrderLine->Quantity  . "',
+												'" . $RetailPrice  . "',
+												'" . $ConsignmentPrice  . "',
+												'" . $StandardCost  . "',
+												'" . ($StandardCost - $Compensation) . "',
+												'0')";
+
+				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The Consignment Sales Details could not be inserted because');
+				$DbgMsg = _('The following SQL to insert the klconsignment record was used');
+				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+			} /* End of clustering */
 		} /*end of OrderLine loop */
 
 		/*Post debtors transaction to GL debit debtors, credit freight re-charged and credit sales */
