@@ -895,12 +895,56 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 			$DbgMsg = _('The following SQL to insert the sales analysis record was used');
 			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-			/* If GLLink_Stock then insert GLTrans to credit stock and debit cost of sales at standard cost*/
+			// CLUSTERING PTADU
+			if (($_SESSION['PercentConsignmentTADU'] > 0) AND ($_SESSION['PercentConsignmentTADU'] < 100)){
+				// It is a sales on consignment by PT ADU So we need to report clustering
+				$ConsignmentPrice = $_SESSION['PercentConsignmentTADU'] / 100 * $OrderLine->Price * (1 - $OrderLine->DiscountPercent);
+				$SQL = "INSERT INTO gltrans (	type,
+												typeno,
+												trandate,
+												periodno,
+												account,
+												narrative,
+												amount,
+												tag)
+										VALUES ( 10,
+												'" . $InvoiceNo . "',
+												'" . Date('Y-m-d') . "',
+												'" . $PeriodNo . "',
+												'" . $_SESSION['AccountConsignmentCOGSPartner'] . "',
+												'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . $ConsignmentPrice . "',
+												'" . $ConsignmentPrice * $OrderLine->Quantity . "',
+												'" . $Tag . "')";
 
-			if ($OrderLine->StandardCost !=0){
+				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The Consignment COGS could not be inserted because');
+				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
+				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-			// RICARD AROUND HERE CLUSTERING PTADU
+				$SQL = "INSERT INTO gltrans (	type,
+												typeno,
+												trandate,
+												periodno,
+												account,
+												narrative,
+												amount,
+												tag)
+										VALUES ( 10,
+												'" . $InvoiceNo . "',
+												'" . Date('Y-m-d') . "',
+												'" . $PeriodNo . "',
+												'" . $_SESSION['AccountConsignmentSalesPTADU'] . "',
+												'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . $ConsignmentPrice . "',
+												'" . -$ConsignmentPrice * $OrderLine->Quantity . "',
+												'" . $Tag . "')";
+
+				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The Consignment Sales could not be inserted because');
+				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
+				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				
+			}
+
 			
+			if ($OrderLine->StandardCost !=0){
 				/*first the cost of sales entry*/
 
 				$AccountCOGS = GetCOGSGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType, $db);
