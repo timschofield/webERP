@@ -68,6 +68,8 @@ if ($ProcessSection01){
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_ShopManager
 		OR $KL_SalesDirector){
+		YearDifferenceSales("Shop",   7, $db);
+		$NumberOfTestExecuted++;
 		YearDifferenceSales("Shop",  15, $db);
 		$NumberOfTestExecuted++;
 		YearDifferenceSales("Shop",  30, $db);
@@ -95,10 +97,10 @@ if ($ProcessSection01){
 	if ($KL_SystemAdmin
 		OR $KL_OperationalManager
 		OR $KL_SalesDirector){
-		AverageCustomerBehaviourByValueInvoice("Shop", 90, $db);
-		$NumberOfTestExecuted++;
-		AverageCustomerBehaviourByValueInvoice("Shop", 365, $db);
-		$NumberOfTestExecuted++;
+//		AverageCustomerBehaviourByValueInvoice("Shop", 90, $db);
+//		$NumberOfTestExecuted++;
+//		AverageCustomerBehaviourByValueInvoice("Shop", 365, $db);
+//		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin 
@@ -108,8 +110,8 @@ if ($ProcessSection01){
 		OR $KL_BusinessDevelopmentManager){
 		GeneralCustomerBehaviour(30, $db);
 		$NumberOfTestExecuted++;
-		GeneralCustomerBehaviour(90, $db);
-		$NumberOfTestExecuted++;
+//		GeneralCustomerBehaviour(90, $db);
+//		$NumberOfTestExecuted++;
 	}
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager){
