@@ -133,9 +133,11 @@ if(basename($_SERVER['SCRIPT_NAME'])=='Logout.php'){
 
 	header('Location: index.php');
 } elseif (isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true */
-	$_SESSION['AllowedPageSecurityTokens'] = array();
-	$_SESSION['DatabaseName'] = $DefaultDatabase;
-	$_SESSION['CompanyName'] = $DefaultDatabase;
+	if (!isset($_SESSION['DatabaseName'])){
+		$_SESSION['AllowedPageSecurityTokens'] = array();
+		$_SESSION['DatabaseName'] = $DefaultDatabase;
+		$_SESSION['CompanyName'] = $DefaultDatabase;
+	}
 	include_once ($PathPrefix . 'includes/ConnectDB_' . $DBType . '.inc');
 	include($PathPrefix . 'includes/GetConfig.php');
 } else {

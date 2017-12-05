@@ -56,7 +56,7 @@ function CryptPass( $Password ) {
     }
     return $hash;
  }
- 
+
  function VerifyPass($Password,$Hash) {
      if(PHP_VERSION_ID < 50500) {
          return (crypt($Password,$Hash)==$Hash);

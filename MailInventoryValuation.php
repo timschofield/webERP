@@ -244,7 +244,7 @@ if ($ListCount == 0) {
 			include('includes/footer.php');
 			exit;
 
-	}else{
+	} else {
 			$Title = _('Print Inventory Valuation Error');
 			include('includes/header.php');
 			prnMsg(_('There are errors lead to mails not sent'),'error');
