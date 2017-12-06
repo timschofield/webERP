@@ -1,6 +1,6 @@
 webERP Change Log
 
-
+6/12/17 RChacon: Order by transaction date and add link to debtors in Dashboard.php script.
 3/12/17 Phil commited Tim's BankAccountBalances.php script
 2/12/17 Exson: Fixed the outstanding quantity is not right in PO_SelectOSPurchOrder.php.
 2/12/17 Phil committed Tim Schofield's fix for javascript date picker for US date formats

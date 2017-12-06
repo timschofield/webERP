@@ -183,7 +183,8 @@ if(in_array($DebtorSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($
 			$TotDue += ($AgedAnalysis['due']-$AgedAnalysis['overdue1']);
 			$TotOD1 += ($AgedAnalysis['overdue1']-$AgedAnalysis['overdue2']);
 			$TotOD2 += $AgedAnalysis['overdue2'];
-			echo '<td class="text" colspan="4"><b>', $AgedAnalysis['debtorno'], ' - ', $AgedAnalysis['name'], '</b></td>
+			echo '	<td class="text" colspan="4"><a href="CustomerInquiry.php?CustomerID=', $AgedAnalysis['debtorno'],'"><b>',
+						$AgedAnalysis['debtorno'], ' - ', $AgedAnalysis['name'], '</b></a></td>
 					<td class="number"><b>', $DisplayBalance, '</b></td>
 					<td class="number"><b>', $DisplayCurrent, '</b></td>
 					<td class="number" style="color:orange;"><b>', $DisplayDue, '</b></td>
@@ -233,7 +234,8 @@ if(in_array($DebtorSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($
 						AND debtorsmaster.paymentterms = paymentterms.termsindicator
 						AND debtorsmaster.debtorno = debtortrans.debtorno
 						AND debtortrans.debtorno = '" . $AgedAnalysis['debtorno'] . "'
-						AND ABS(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc)>0.004";
+						AND ABS(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc)>0.004
+					ORDER BY debtortrans.trandate";
 
 			if($_SESSION['SalesmanLogin'] != '') {
 				$Sql .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
