@@ -87,6 +87,7 @@ if(isset($_POST['submit'])) {
 									zone = '" . $_POST['Zone'] . "',
 									typeloc = '" . $_POST['TypeLoc'] . "',
 									partnercode = '" . $_POST['PartnerCode'] . "',
+									onlinepartnercode = '" . $_POST['OnlinePartnerCode'] . "',
 									rlfactorforpackaging = '" . $_POST['RLFactorForPackaging'] . "',
 									rldaysforpackaging = '" . $_POST['RLDaysForPackaging'] . "',
 									usedforwo = '" . $_POST['UsedForWO'] . "',
@@ -130,6 +131,7 @@ if(isset($_POST['submit'])) {
 		unset($_POST['Zone']);
 		unset($_POST['TypeLoc']);
 		unset($_POST['PartnerCode']);
+		unset($_POST['OnlinePartnerCode']);
 		unset($_POST['RLFactorForPackaging']);
 		unset($_POST['RLDaysForPackaging']);
 		unset($_POST['UsedForWO']);
@@ -177,6 +179,7 @@ if(isset($_POST['submit'])) {
 										zone,
 										typeloc,
 										partnercode,
+										onlinepartnercode,
 										rlfactorforpackaging,
 										rldaysforpackaging,
 										usedforwo,
@@ -211,6 +214,7 @@ if(isset($_POST['submit'])) {
 								'" . $_POST['Zone'] . "',
 								'" . $_POST['TypeLoc'] . "',
 								'" . $_POST['PartnerCode'] . "',
+								'" . $_POST['OnlinePartnerCode'] . "',
 								'" . $_POST['RLFactorForPackaging'] . "',
 								'" . $_POST['RLDaysForPackaging'] . "',
 								'" . $_POST['UsedForWO'] . "',
@@ -288,6 +292,7 @@ if(isset($_POST['submit'])) {
 		unset($_POST['Zone']);
 		unset($_POST['TypeLoc']);
 		unset($_POST['PartnerCode']);
+		unset($_POST['OnlinePartnerCode']);
 		unset($_POST['RLFactorForPackaging']);
 		unset($_POST['RLDaysForPackaging']);
 		unset($_POST['UsedForWO']);
@@ -474,6 +479,7 @@ or deletion of the records*/
 				zone,
 				typeloc,
 				partnercode,
+				onlinepartnercode,
 				stockreadytosell,
 				stockavailableforonline,
 				managed
@@ -493,9 +499,10 @@ or deletion of the records*/
 			<th class="ascending">', _('Priority'), '</th>
 			<th class="ascending">', _('Zone'), '</th>
 			<th class="ascending">', _('Type'), '</th>
-			<th class="ascending">', _('Partner'), '</th>
+			<th class="ascending">', _('Retail Partner'), '</th>
 			<th class="ascending">', _('Stock Ready Sell'), '</th>
-			<th class="ascending">', _('Available Online'), '</th>
+			<th class="ascending">', _('Online Partner'), '</th>
+			<th class="ascending">', _('Stock for Online?'), '</th>
 			<th class="ascending">', _('ST From'), '</th>
 			<th class="ascending">', _('ST Max'), '</th>
 			<th class="ascending">', _('ST Min'), '</th>
@@ -518,6 +525,16 @@ while ($myrow = DB_fetch_array($result)) {
 	} else {
 		$ReadyToSell = _('No');
 	}
+	if($myrow['partnercode'] == 'NORETAIL') {
+		$PartnerCode = '';
+	}else{
+		$PartnerCode = $myrow['partnercode'];
+	}
+	if($myrow['onlinepartnercode'] == 'NOONLINE') {
+		$OnlinePartnerCode = '';
+	}else{
+		$OnlinePartnerCode = $myrow['onlinepartnercode'];
+	}
 	if($myrow['stockavailableforonline'] == 1) {
 		$AvailableForOnline = _('Yes');
 	} else {
@@ -526,6 +543,7 @@ while ($myrow = DB_fetch_array($result)) {
 	printf('<td>%s</td>
 			<td>%s</td>
 			<td class="number">%s</td>
+			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
@@ -544,8 +562,9 @@ while ($myrow = DB_fetch_array($result)) {
 			$myrow['priority'],
 			$myrow['zone'],
 			$myrow['typeloc'],
-			$myrow['partnercode'],
+			$PartnerCode,
 			$ReadyToSell,
+			$OnlinePartnerCode,
 			$AvailableForOnline,
 			$myrow['smartdispatchfrom'],
 			$myrow['smartdispatchmaxmodels'],
@@ -603,6 +622,7 @@ if(!isset($_GET['delete'])) {
 					zone,
 					typeloc,
 					partnercode,
+					onlinepartnercode,
 					rlfactorforpackaging,
 					rldaysforpackaging,
 					usedforwo,
@@ -644,6 +664,7 @@ if(!isset($_GET['delete'])) {
 		$_POST['Zone'] = $myrow['zone'];
 		$_POST['TypeLoc'] = $myrow['typeloc'];
 		$_POST['PartnerCode'] = $myrow['partnercode'];
+		$_POST['OnlinePartnerCode'] = $myrow['onlinepartnercode'];
 		$_POST['RLFactorForPackaging'] = $myrow['rlfactorforpackaging'];
 		$_POST['RLDaysForPackaging'] = $myrow['rldaysforpackaging'];
 		$_POST['UsedForWO'] = $myrow['usedforwo'];
@@ -878,6 +899,22 @@ if(!isset($_GET['delete'])) {
 			echo '<option selected="selected" value="' . $myrow['partnercode'] . '">' . $myrow['partnername'] . '</option>';
 		} else {
 			echo '<option value="' . $myrow['partnercode'] . '">' . $myrow['partnername'] . '</option>';
+		}
+	}
+	echo '</select></td>
+		</tr>';
+
+	// Online Partner:
+	echo '<tr>
+		<td>' . _('KL Online Partner') . ':' . '</td>
+		<td><select name="OnlinePartnerCode">';
+
+	$TypesResult = DB_query("SELECT onlinepartnercode, onlinepartnername FROM klonlinepartners ORDER BY onlinepartnername");
+	while ($myrow=DB_fetch_array($TypesResult)) {
+		if($_POST['OnlinePartnerCode']==$myrow['onlinepartnercode']) {
+			echo '<option selected="selected" value="' . $myrow['onlinepartnercode'] . '">' . $myrow['onlinepartnername'] . '</option>';
+		} else {
+			echo '<option value="' . $myrow['onlinepartnercode'] . '">' . $myrow['onlinepartnername'] . '</option>';
 		}
 	}
 	echo '</select></td>
