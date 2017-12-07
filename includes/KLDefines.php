@@ -307,33 +307,4 @@ define("OPENCART_DEFAULT_PAYMENT_SYSTEM", 'PayPal');
 
 define("OPENCART_FOREIGN_CURRENCY_SURCHARGE_PERCENT", 1.05); // factor to increase the exchange rate for foreign currency (> 1 = more expensive in foreign) 
 
-/*************************************************************************/
-/*                PAYPAL SETTINGS FOR sales@kapal-laut.com               */
-/*************************************************************************/
-define("WEBERP_GL_PAYPAL_ACCOUNT_AUD",    '111259050');
-define("WEBERP_GL_PAYPAL_COMMISSION_AUD", '700211700');
-
-define("WEBERP_GL_PAYPAL_ACCOUNT_EUR",    '111259020');
-define("WEBERP_GL_PAYPAL_COMMISSION_EUR", '700211700');
-
-define("WEBERP_GL_PAYPAL_ACCOUNT_USD",    '111259010');
-define("WEBERP_GL_PAYPAL_COMMISSION_USD", '700211700');
-
-/*************************************************************************/
-/*                PAYPAL SETTINGS FOR paypal@kapal-laut.com              */
-/*************************************************************************/
-/*
-
-CAL CANVIAR LES API CREDENTIALS DE OPENCART 
-
-define("WEBERP_GL_PAYPAL_ACCOUNT_AUD",    '111259050PT');
-define("WEBERP_GL_PAYPAL_COMMISSION_AUD", '700211700PT');
-
-define("WEBERP_GL_PAYPAL_ACCOUNT_EUR",    '111259020PT');
-define("WEBERP_GL_PAYPAL_COMMISSION_EUR", '700211700PT');
-
-define("WEBERP_GL_PAYPAL_ACCOUNT_USD",    '111259010PT');
-define("WEBERP_GL_PAYPAL_COMMISSION_USD", '700211700PT');
-*/
-
 ?>

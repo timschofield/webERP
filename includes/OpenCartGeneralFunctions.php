@@ -209,25 +209,53 @@ function GetWeberpCustomerIdFromCurrency($Currency, $db){
 }
 
 function GetWeberpGLAccountFromCurrency($Currency, $db){
-	if($Currency == "AUD"){
-		return WEBERP_GL_PAYPAL_ACCOUNT_AUD;
-	}else	if($Currency == "EUR"){
-		return WEBERP_GL_PAYPAL_ACCOUNT_EUR;
-	}else	if($Currency == "USD"){
-		return WEBERP_GL_PAYPAL_ACCOUNT_USD;
+	$SQL = "SELECT accountpaypalaud,
+					accountpaypalusd,
+					accountpaypaleur
+			FROM locations, klonlinepartners
+			WHERE locations.onlinepartnercode = klonlinepartners.onlinepartnercode
+				AND locations.loccode = '" . OPENCART_DEFAULT_LOCATION . "'";
+	$ErrMsg ='Could not get the PayPal GL Account for ' . $Currency . ' in webERP because';
+	$result = DB_query($SQL,$ErrMsg);
+	if(DB_num_rows($result) != 0){
+		$myrow = DB_fetch_array($result);
+		if($Currency == "AUD"){
+			$GLAccount = $myrow['accountpaypalaud'];
+		}elseif($Currency == "USD"){
+			$GLAccount = $myrow['accountpaypalusd'];
+		}elseif($Currency == "EUR"){
+			$GLAccount = $myrow['accountpaypaleur'];
+		}
+	}else{
+		$GLAccount = '';
 	}
 	// in Paypal there is no IDR yet, so we pay by bank trasnfer and record payment manually in webERP
+	return $GLAccount;
 }
 
 function GetWeberpGLCommissionAccountFromCurrency($Currency, $db){
-	if($Currency == "AUD"){
-		return WEBERP_GL_PAYPAL_COMMISSION_AUD;
-	}else	if($Currency == "EUR"){
-		return WEBERP_GL_PAYPAL_COMMISSION_EUR;
-	}else	if($Currency == "USD"){
-		return WEBERP_GL_PAYPAL_COMMISSION_USD;
+	$SQL = "SELECT accountpaypalcomissionaud,
+					accountpaypalcomissionusd,
+					accountpaypalcomissioneur
+			FROM locations, klonlinepartners
+			WHERE locations.onlinepartnercode = klonlinepartners.onlinepartnercode
+				AND locations.loccode = '" . OPENCART_DEFAULT_LOCATION . "'";
+	$ErrMsg ='Could not get the PayPal Comission GL Account for ' . $Currency . ' in webERP because';
+	$result = DB_query($SQL,$ErrMsg);
+	if(DB_num_rows($result) != 0){
+		$myrow = DB_fetch_array($result);
+		if($Currency == "AUD"){
+			$GLAccount = $myrow['accountpaypalcomissionaud'];
+		}elseif($Currency == "USD"){
+			$GLAccount = $myrow['accountpaypalcomissionusd'];
+		}elseif($Currency == "EUR"){
+			$GLAccount = $myrow['accountpaypalcomissioneur'];
+		}
+	}else{
+		$GLAccount = '';
 	}
 	// in Paypal there is no IDR yet, so we pay by bank trasnfer and record payment manually in webERP
+	return $GLAccount;
 }
 
 function GetWeberpOrderNo($CustomerId, $OrderId, $db){
