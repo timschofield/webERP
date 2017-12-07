@@ -625,8 +625,8 @@ function SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeR
 			$Rate = GetWeberpCurrencyRate($CurrencyOrder, $db);
 			$AmountPaid = $myrow['paypaltotal'];
 			$TransactionID = $myrow['transaction_id'];
-			$GLAccount = GetWeberpGLAccountFromCurrency($CurrencyPayment, $db);
-			$GLCommissionAccount = GetWeberpGLCommissionAccountFromCurrency($CurrencyPayment, $db);
+			$GLAccount = GetWeberpGLAccountFromCurrency(OPENCART_DEFAULT_LOCATION, $CurrencyPayment, $db);
+			$GLCommissionAccount = GetWeberpGLCommissionAccountFromCurrency(OPENCART_DEFAULT_LOCATION, $CurrencyPayment, $db);
 			$PayPalResponseArray = GetPaypalReturnDataInArray($myrow['debug_data']);
 			$Commission = urldecode($PayPalResponseArray['PAYMENTINFO_0_FEEAMT']);
 			$WebERPDateOrder = date('Y-m-d H:i:s', strtotime( $myrow['created'] . -$TimeDifference . ' hours'));

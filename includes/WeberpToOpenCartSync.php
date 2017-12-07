@@ -1651,11 +1651,7 @@ function SyncCurrencies($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefi
 			$DecimalPlaces = $myrow['decimalplaces'];
 			if ($myrow['rate'] != 1){
 				// foreign currencies
-				$Rate = ($myrow['rate'] * OPENCART_FOREIGN_CURRENCY_SURCHARGE_PERCENT);
-/*				prnMsg('Original rate: ' . $myrow['rate']);
-				prnMsg('Factor: ' . OPENCART_FOREIGN_CURRENCY_SURCHARGE_PERCENT);
-				prnMsg('Final rate: ' . $Rate);
-*/
+				$Rate = ($myrow['rate'] * GetWeberpForeignCurrencySurchargeFactor(OPENCART_DEFAULT_LOCATION, $db));
 			}else{
 				// functional currency
 				$Rate = 1;

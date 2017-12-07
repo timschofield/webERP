@@ -208,13 +208,30 @@ function GetWeberpCustomerIdFromCurrency($Currency, $db){
 	return WEBERP_ONLINE_CUSTOMER_CODE_PREFIX . $Currency;
 }
 
-function GetWeberpGLAccountFromCurrency($Currency, $db){
+function GetWeberpForeignCurrencySurchargeFactor($Location, $db){
+	$SQL = "SELECT foreigncurrencysurchargefactor
+			FROM locations, klonlinepartners
+			WHERE locations.onlinepartnercode = klonlinepartners.onlinepartnercode
+				AND locations.loccode = '" . $Location . "'";
+	$ErrMsg ='Could not get the online Foreign Currency Surcharge factor in webERP because';
+	$result = DB_query($SQL,$ErrMsg);
+	if(DB_num_rows($result) != 0){
+		$myrow = DB_fetch_array($result);
+		$Factor = $myrow['foreigncurrencysurchargefactor'];
+	}else{
+		$Factor = 1;
+	}
+	return $Factor;
+}
+
+
+function GetWeberpGLAccountFromCurrency($Location, $Currency, $db){
 	$SQL = "SELECT accountpaypalaud,
 					accountpaypalusd,
 					accountpaypaleur
 			FROM locations, klonlinepartners
 			WHERE locations.onlinepartnercode = klonlinepartners.onlinepartnercode
-				AND locations.loccode = '" . OPENCART_DEFAULT_LOCATION . "'";
+				AND locations.loccode = '" . $Location . "'";
 	$ErrMsg ='Could not get the PayPal GL Account for ' . $Currency . ' in webERP because';
 	$result = DB_query($SQL,$ErrMsg);
 	if(DB_num_rows($result) != 0){
@@ -233,13 +250,13 @@ function GetWeberpGLAccountFromCurrency($Currency, $db){
 	return $GLAccount;
 }
 
-function GetWeberpGLCommissionAccountFromCurrency($Currency, $db){
+function GetWeberpGLCommissionAccountFromCurrency($Location, $Currency, $db){
 	$SQL = "SELECT accountpaypalcomissionaud,
 					accountpaypalcomissionusd,
 					accountpaypalcomissioneur
 			FROM locations, klonlinepartners
 			WHERE locations.onlinepartnercode = klonlinepartners.onlinepartnercode
-				AND locations.loccode = '" . OPENCART_DEFAULT_LOCATION . "'";
+				AND locations.loccode = '" . $Location . "'";
 	$ErrMsg ='Could not get the PayPal Comission GL Account for ' . $Currency . ' in webERP because';
 	$result = DB_query($SQL,$ErrMsg);
 	if(DB_num_rows($result) != 0){

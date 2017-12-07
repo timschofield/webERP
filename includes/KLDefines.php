@@ -305,6 +305,4 @@ define("OPENCART_WHOLESALE_DISCOUNT", 'WHOLESALE-DISCOUNT');
 
 define("OPENCART_DEFAULT_PAYMENT_SYSTEM", 'PayPal');
 
-define("OPENCART_FOREIGN_CURRENCY_SURCHARGE_PERCENT", 1.05); // factor to increase the exchange rate for foreign currency (> 1 = more expensive in foreign) 
-
 ?>
