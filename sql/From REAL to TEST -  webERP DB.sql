@@ -525,23 +525,23 @@ INSERT INTO kurakura_kl_test_erp.woserialnos SELECT * FROM kurakura_kl_erp.woser
 TRUNCATE kurakura_kl_test_erp.`www_users`;
 INSERT INTO kurakura_kl_test_erp.www_users SELECT * FROM kurakura_kl_erp.www_users;
 
-UPDATE  `config` SET  `confvalue` =  'companies/kurakura_kl_test_erp/part_pics' WHERE  `confname` =  'part_pics_dir';
-UPDATE  `config` SET  `confvalue` =  'companies/kurakura_kl_test_erp/reports' WHERE  `confname` =  'reports_dir';
-UPDATE  `config` SET  `confvalue` =  'companies/kurakura_kl_test_erp/logs' WHERE  `confname` =  'LogPath';
+UPDATE  kurakura_kl_test_erp.`config` SET  `confvalue` =  'companies/kurakura_kl_test_erp/part_pics' WHERE  `confname` =  'part_pics_dir';
+UPDATE  kurakura_kl_test_erp.`config` SET  `confvalue` =  'companies/kurakura_kl_test_erp/reports' WHERE  `confname` =  'reports_dir';
+UPDATE  kurakura_kl_test_erp.`config` SET  `confvalue` =  'companies/kurakura_kl_test_erp/logs' WHERE  `confname` =  'LogPath';
 
-UPDATE  `config` SET  `confvalue` =  'TEST SHOP' WHERE  `confname` =  'ShopName';
-UPDATE  `config` SET  `confvalue` =  'TEST SHOP' WHERE  `confname` =  'ShopTitle';
+UPDATE  kurakura_kl_test_erp.`config` SET  `confvalue` =  'TEST SHOP' WHERE  `confname` =  'ShopName';
+UPDATE  kurakura_kl_test_erp.`config` SET  `confvalue` =  'TEST SHOP' WHERE  `confname` =  'ShopTitle';
 
-UPDATE  `config` SET  `confvalue` =  '' WHERE  `confname` =  'InventoryManagerEmail';
-UPDATE  `config` SET  `confvalue` =  '' WHERE  `confname` =  'FactoryManagerEmail';
-UPDATE  `config` SET  `confvalue` =  '' WHERE  `confname` =  'PurchasingManagerEmail';
+UPDATE  kurakura_kl_test_erp.`config` SET  `confvalue` =  '' WHERE  `confname` =  'InventoryManagerEmail';
+UPDATE  kurakura_kl_test_erp.`config` SET  `confvalue` =  '' WHERE  `confname` =  'FactoryManagerEmail';
+UPDATE  kurakura_kl_test_erp.`config` SET  `confvalue` =  '' WHERE  `confname` =  'PurchasingManagerEmail';
 
-UPDATE  `config` SET  `confvalue` =  'test' WHERE  `confname` =  'ShopMode';
-UPDATE  `config` SET  `confvalue` =  '1372497542' WHERE  `confname` =  'ShopPayPalPassword';
-UPDATE  `config` SET  `confvalue` =  'AKh80SD3d.pLz9oyaerqiR90yzDdARP3knOWMSTyjcbBNEns94xTl6WW' WHERE  `confname` =  'ShopPayPalSignature';
-UPDATE  `config` SET  `confvalue` =  'testmerchant_api1.kapal-laut.com' WHERE  `confname` =  'ShopPayPalUser';
+UPDATE  kurakura_kl_test_erp.`config` SET  `confvalue` =  'test' WHERE  `confname` =  'ShopMode';
+UPDATE  kurakura_kl_test_erp.`config` SET  `confvalue` =  '1372497542' WHERE  `confname` =  'ShopPayPalPassword';
+UPDATE  kurakura_kl_test_erp.`config` SET  `confvalue` =  'AKh80SD3d.pLz9oyaerqiR90yzDdARP3knOWMSTyjcbBNEns94xTl6WW' WHERE  `confname` =  'ShopPayPalSignature';
+UPDATE  kurakura_kl_test_erp.`config` SET  `confvalue` =  'testmerchant_api1.kapal-laut.com' WHERE  `confname` =  'ShopPayPalUser';
 
-UPDATE www_users SET theme = "gel";
-UPDATE www_users SET blocked = 0 WHERE userid LIKE "999%";
+UPDATE kurakura_kl_test_erp.www_users SET theme = "gel";
+UPDATE kurakura_kl_test_erp.www_users SET blocked = 0 WHERE userid LIKE "999%";
 
 SET FOREIGN_KEY_CHECKS=1;
