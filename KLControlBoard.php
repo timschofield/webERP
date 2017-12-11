@@ -599,7 +599,7 @@ if ($ProcessSection01){
 	}
 
 	if ($KL_PurchasingTeam){
-		InsuficientStockForShopPackaging('SHPACK', 21, 70, 30, true, $RootPath, $db); // Works for both regular and outlet shop packaging
+		InsuficientStockForShopPackaging('SHPACK', 15, 70, 30, true, $RootPath, $db); // Works for both regular and outlet shop packaging
 		$NumberOfTestExecuted++;
 	}
 
