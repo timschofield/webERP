@@ -90,7 +90,7 @@ class htmlMimeMail
 * if supplied.
 */
 
-	function htmlMimeMail()
+	function __construct()
 	{
 		/**
         * Initialise some variables.
