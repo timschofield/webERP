@@ -23,6 +23,8 @@ if ($KL_SystemAdmin
 	OR $KL_BusinessDevelopmentManager 
 	OR $KL_ShopManager 
 	OR $KL_SalesDirector){
+	HourlyPerformance( 7,$RootPath, $db);
+	$NumberOfTestExecuted++;
 	HourlyPerformance(15,$RootPath, $db);
 	$NumberOfTestExecuted++;
 
