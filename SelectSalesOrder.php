@@ -286,6 +286,7 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 		  									  suppdeladdress5,
 		  									  suppdeladdress6,
 		  									  supptel,
+		  									  contact,
 		  									  version,
 		  									  revised,
 		  									  deliveryby,
@@ -300,12 +301,12 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 		  										'" . $SuppRow['rate'] . "',
 		  										'" . $_SESSION['UserID'] . "',
 		  										'" . $_SESSION['UserStockLocation'] . "',
-		  										'" . $DelAddRow['locationname'] . "',
 		  										'" . $DelAddRow['deladd1'] . "',
 		  										'" . $DelAddRow['deladd2'] . "',
 		  										'" . $DelAddRow['deladd3'] . "',
 		  										'" . $DelAddRow['deladd4'] . "',
-		  										'" . $DelAddRow['deladd5'] . ' ' . $DelAddRow['deladd6'] . "',
+		  										'" . $DelAddRow['deladd5'] . "',
+		  										'" . $DelAddRow['deladd6'] . "',
 		  										'" . $DelAddRow['tel'] . "',
 		  										'" . $SuppRow['address1'] . "',
 		  										'" . $SuppRow['address2'] . "',
@@ -314,6 +315,7 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 		  										'" . $SuppRow['address5'] . "',
 		  										'" . $SuppRow['address6'] . "',
 		  										'" . $SuppRow['telephone'] . "',
+		  										'" . $DelAddRow['contact'] . "',
 		  										'1.0',
 		  										'" . Date('Y-m-d') . "',
 		  										'" . $_SESSION['Default_Shipper'] . "',
@@ -345,7 +347,7 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 		      						     '" . FormatDateForSQL($DeliveryDate) . "',
 		      						     '" . $ItemRow['suppliers_partno']  . '  ' . $ItemRow['supplierdescription']  . "',
 		      						     '" . $ItemRow['stockact'] . "',
-		      						     '" . $ItemRow['price'] . "',
+		      						     '" . $ItemRow['price']/$ItemRow['conversionfactor'] . "',
 		      						     '" . $ItemRow['orderqty'] . "',
 		      						     '" . $ItemRow['suppliersuom'] . "',
 		      						     '" . $ItemRow['suppliers_partno'] . "',
@@ -354,7 +356,7 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 				$DbgMsg =_('The SQL statement used to insert the purchase order detail record and failed was');
 
 				$result =DB_query($sql,$ErrMsg,$DbgMsg,true);
-				$Order_Value  += ($ItemRow['price']*$ItemRow['orderqty']);
+				$Order_Value  += ($ItemRow['price']*$ItemRow['orderqty']/$ItemRow['conversionfactor']);
 			} /* end of the loop round the items on the sales order  that we wish to place purchase orders for */
 
 
