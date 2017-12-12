@@ -162,6 +162,12 @@ INSERT INTO kurakura_kl_test_erp.kladjustrl SELECT * FROM kurakura_kl_erp.kladju
 TRUNCATE kurakura_kl_test_erp.`klchangeprice`;
 INSERT INTO kurakura_kl_test_erp.klchangeprice SELECT * FROM kurakura_kl_erp.klchangeprice;
 
+TRUNCATE kurakura_kl_test_erp.`kladjustrl`;
+INSERT INTO kurakura_kl_test_erp.kladjustrl SELECT * FROM kurakura_kl_erp.kladjustrl;
+
+TRUNCATE kurakura_kl_test_erp.`klconsignment`;
+INSERT INTO kurakura_kl_test_erp.klconsignment SELECT * FROM kurakura_kl_erp.klconsignment;
+
 TRUNCATE kurakura_kl_test_erp.`klfreeexchanges`;
 INSERT INTO kurakura_kl_test_erp.klfreeexchanges SELECT * FROM kurakura_kl_erp.klfreeexchanges;
 
@@ -173,6 +179,12 @@ INSERT INTO kurakura_kl_test_erp.klmovetodiscount50 SELECT * FROM kurakura_kl_er
 
 TRUNCATE kurakura_kl_test_erp.`klmovetodiscount80`;
 INSERT INTO kurakura_kl_test_erp.klmovetodiscount80 SELECT * FROM kurakura_kl_erp.klmovetodiscount80;
+
+TRUNCATE kurakura_kl_test_erp.`klonlinepartners`;
+INSERT INTO kurakura_kl_test_erp.klonlinepartners SELECT * FROM kurakura_kl_erp.klonlinepartners;
+
+TRUNCATE kurakura_kl_test_erp.`klpostatus`;
+INSERT INTO kurakura_kl_test_erp.klpostatus SELECT * FROM kurakura_kl_erp.klpostatus;
 
 TRUNCATE kurakura_kl_test_erp.`klretailcustomers`;
 INSERT INTO kurakura_kl_test_erp.klretailcustomers SELECT * FROM kurakura_kl_erp.klretailcustomers WHERE date_added >= "2017-01-01";

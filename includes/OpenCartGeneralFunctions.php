@@ -528,6 +528,16 @@ function UpdateSettingValueOpenCart($SettingId, $Value, $db_oc, $oc_tableprefix)
 	$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
 }
 
+function UpdateSettingValueOpenCartByGroupAndKey($Group, $Key, $Value, $db_oc, $oc_tableprefix){
+	$DbgMsg = _('The SQL statement that failed was');
+	$UpdateErrMsg = _('The SQL to update setting value in Opencart failed');
+	$sqlUpdate = "UPDATE " . $oc_tableprefix . "setting
+					SET	value = '" . $Value . "'
+				WHERE `group` = '" . $Group . "'
+					AND `key` = '" . $Key . "'";
+	$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
+}
+
 function CreateMetaDescription($Group, $Item){
 	$MetaDescription = $_SESSION['ShopName'] . ' ' . $Group . ' ' . $Item;
 	return $MetaDescription;

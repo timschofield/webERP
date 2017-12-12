@@ -59,7 +59,7 @@ if(isset($_POST['submit'])) {
 		} else {
 			$_POST['Managed'] = 0;
 		}
-
+		
 		$sql = "UPDATE locations SET loccode='" . $_POST['LocCode'] . "',
 									locationname='" . $_POST['LocationName'] . "',
 									deladd1='" . $_POST['DelAdd1'] . "',
@@ -102,7 +102,10 @@ if(isset($_POST['submit'])) {
 
 		$result = DB_query($sql,$ErrMsg,$DbgMsg);
 
+		UpdateOnlinePartnerPaypalSettingsInOpenCart($_POST['TypeLoc'], $_POST['OnlinePartnerCode'], $db);
+		
 		prnMsg(_('The location record has been updated'),'success');
+
 		unset($_POST['LocCode']);
 		unset($_POST['LocationName']);
 		unset($_POST['DelAdd1']);
@@ -226,6 +229,8 @@ if(isset($_POST['submit'])) {
 		$ErrMsg = _('An error occurred inserting the new location record because');
 		$DbgMsg = _('The SQL used to insert the location record was');
 		$result = DB_query($sql,$ErrMsg,$DbgMsg);
+
+		UpdateOnlinePartnerPaypalSettingsInOpenCart($_POST['TypeLoc'], $_POST['OnlinePartnerCode'], $db);
 
 		prnMsg(_('The new location record has been added'),'success');
 
@@ -1012,4 +1017,28 @@ if(!isset($_GET['delete'])) {
 }//end if record deleted no point displaying form to add record
 
 include('includes/footer.php');
+
+function UpdateOnlinePartnerPaypalSettingsInOpenCart($NewLocationType, $NewOnlinePartnerCode, $db){
+	if ($NewLocationType == 'ONLINE'){
+		// we are modifying an ONLINE Location
+		if ($NewOnlinePartnerCode != 'NOONLINE'){
+			// In the online location, the online partner can not be NOONLINE
+			include ('includes/OpenCartConnectDB.php');
+			$sql = "SELECT klonlinepartners.paypalusername,
+						klonlinepartners.paypalpassword,
+						klonlinepartners.paypalsignature
+					FROM klonlinepartners
+					WHERE klonlinepartners.onlinepartnercode='" . $NewOnlinePartnerCode . "'";
+			$result = DB_query($sql);
+			$myrow = DB_fetch_row($result);
+		
+			UpdateSettingValueOpenCartByGroupAndKey('pp_express', 'pp_express_username', $myrow['paypalusername'], $db_oc, $oc_tableprefix);
+			UpdateSettingValueOpenCartByGroupAndKey('pp_express', 'pp_express_password', $myrow['paypalpassword'], $db_oc, $oc_tableprefix);
+			UpdateSettingValueOpenCartByGroupAndKey('pp_express', 'pp_express_signature', $myrow['paypalsignature'], $db_oc, $oc_tableprefix);
+		}
+	}
+}
+
+
+
 ?>
