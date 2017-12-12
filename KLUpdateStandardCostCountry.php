@@ -12,8 +12,9 @@ include ('includes/KLGeneralFunctions.php');
 	WrongStandardCost("Thailand"   , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "UPDATEALL", $RootPath, $db);
 	WrongStandardCost("China"      , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "UPDATEALL", $RootPath, $db);
 	WrongStandardCost("Hong Kong"  , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "UPDATEALL", $RootPath, $db);
-	WrongStandardCost("Catalonia"  , "", STANDARD_COST_FACTOR_FOREIGN, 0.10, "UPDATEALL", $RootPath, $db);
+//	WrongStandardCost("Catalonia"  , "", STANDARD_COST_FACTOR_FOREIGN, 0.10, "UPDATEALL", $RootPath, $db);
 	WrongStandardCost("Philippines", "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "UPDATEALL", $RootPath, $db);
+	WrongStandardCost("India"      , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "UPDATEALL", $RootPath, $db);
 
 include('includes/footer.php');
 
