@@ -270,7 +270,7 @@ if (isset($_POST['CommitBatch'])){
 		$BankAccounts[$i]= $Act[0];
 		$i++;
 	}
-	
+
 	/*Start a transaction to do the whole lot inside */
 	$result = DB_Txn_Begin();
 	$_SESSION['ReceiptBatch' . $identifier]->BatchNo = GetNextTransNo(12,$db);
@@ -1018,7 +1018,7 @@ if (isset($_SESSION['ReceiptBatch' . $identifier])){
 				<td>' . $ReceiptItem->GLCode.' - '.$myrow['accountname'] . '</td>
 				<td>' .  stripslashes($ReceiptItem->Narrative) . '</td>
 				<td>' .  $ReceiptItem->TagName . '</td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=' . $ReceiptItem->ID . '&Type=' . $_GET['Type']. '">' . _('Delete') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=' . $ReceiptItem->ID . '&Type=' . $_GET['Type'] . '&identifier=' . $identifier . '">' . _('Delete') . '</a></td>
 			</tr>';
 		$BatchTotal= $BatchTotal + $ReceiptItem->Amount;
 	}
