@@ -1,5 +1,6 @@
 webERP Change Log
 
+11/13/17 PaulT: PDFQALabel.php: Overlapping in the PDF when printing non-controlled items. (Reported in forums by Paul Becker)
 11/13/17 PaulT: CustomerReceipt.php: Add identifier to URL for delete link. (Reported in forums by Paul Becker)
 11/13/17 PaulT: QATests.php: Correct wrong attribute name in two option tags. (Reported in forums by Paul Becker)
 11/12/17 PaulT: PHP 7 constructor compatibility change to phplot.php. (Reported in forums by rjonesbsink)

@@ -91,6 +91,9 @@ if ($NoOfGRNs >0){
 
 		} //controlled item*/
 		else {
+			if ($PageNumber>1){
+				$pdf->newPage();
+			}
 			$pdf->addJpegFromFile($_SESSION['LogoFile'] ,$FormDesign->logo->x,$Page_Height-$FormDesign->logo->y,$FormDesign->logo->width,$FormDesign->logo->height);
 			$LeftOvers = $pdf->addText($FormDesign->ItemNbr->x,$Page_Height-$FormDesign->ItemNbr->y,$FormDesign->ItemNbr->FontSize,'Item: ' . $myrow['itemcode']);
 			$LeftOvers = $pdf->addText($FormDesign->ItemDesc->x,$Page_Height-$FormDesign->ItemDesc->y,$FormDesign->ItemDesc->FontSize,'Description: ' . $myrow['itemdescription']);
@@ -99,9 +102,6 @@ if ($NoOfGRNs >0){
 			//$LeftOvers = $pdf->addText($FormDesign->Lot->x,$Page_Height-$FormDesign->Lot->y,$FormDesign->Lot->FontSize,'Lot: ' . $myrow['serialno']);
 			$LeftOvers = $pdf->addText($FormDesign->ReceiptDate->x,$Page_Height-$FormDesign->ReceiptDate->y,$FormDesign->ReceiptDate->FontSize,'Receipt Date: ' . $myrow['deliverydate']);
 			$LeftOvers = $pdf->addText($FormDesign->OrderNumber->x,$Page_Height-$FormDesign->OrderNumber->y,$FormDesign->OrderNumber->FontSize,'P/O: ' . $myrow['orderno']);
-			if ($PageNumber>1){
-				$pdf->newPage();
-			}
 			$PageNumber++;
 		} //else not controlled
 	} //end of loop around GRNs to print
