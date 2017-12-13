@@ -70,11 +70,11 @@ echo '</select></td>';
 echo '</tr>
 	  <tr>
 		<td>' . _('From Sample Date') . ': </td>
-		<td><input name="FromDate" size="10" class="date" value="' . $_POST['FromDate'] . '"/></td>
+		<td><input name="FromDate" size="10" class="date" value="' . $_POST['FromDate'] . '" alt="' . $_SESSION['DefaultDateFormat'] . '" /></td>
 	</tr>
 	<tr>
 		<td> ' . _('To Sample Date') . ':</td>
-		<td> <input name="ToDate" size="10" class="date" value="' . $_POST['ToDate'] . '"/></td>
+		<td> <input name="ToDate" size="10" class="date" value="' . $_POST['ToDate'] . '" alt="' . $_SESSION['DefaultDateFormat'] . '" /></td>
 	</tr>
 	</table>
 	</div>
