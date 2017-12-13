@@ -1,5 +1,6 @@
 webERP Change Log
 
+11/13/17 PaulT: QATests.php: Correct wrong attribute name in two option tags. (Reported in forums by Paul Becker)
 11/12/17 PaulT: PHP 7 constructor compatibility change to phplot.php. (Reported in forums by rjonesbsink)
 11/12/17 Paul Becker: (forums) SelectSalesOrder.php: Consistent delivery address and correct a unit conversion issue.
 11/12/17 PaulT: PHP 7 constructor compatibility change to htmlMimeMail.php and mimePart.php

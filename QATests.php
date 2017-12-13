@@ -259,7 +259,7 @@ Analysis or left blank') . '" size="20" maxlength="20" value="' . $_POST['GroupB
 	if ($_POST['Type']==0){
 		echo '<option selected="selected" value="0">' . _('Text Box') . '</option>';
 	} else {
-		echo '<option Type="0">' . _('Text Box') . '</option>';
+		echo '<option value="0">' . _('Text Box') . '</option>';
 	}
 	if ($_POST['Type']==1){
 		echo '<option selected="selected" value="1">' . _('Select Box') . '</option>';
@@ -269,7 +269,7 @@ Analysis or left blank') . '" size="20" maxlength="20" value="' . $_POST['GroupB
 	if ($_POST['Type']==2){
 		echo '<option selected="selected" value="2">' . _('Check Box') . '</option>';
 	} else {
-		echo '<option Type="2">' . _('Check Box') . '</option>';
+		echo '<option value="2">' . _('Check Box') . '</option>';
 	}
 	if ($_POST['Type']==3){
 		echo '<option selected="selected" value="3">' . _('Date Box') . '</option>';
