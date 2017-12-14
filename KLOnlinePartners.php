@@ -38,6 +38,7 @@ if(isset($_POST['submit'])) {
 		$sql = "UPDATE klonlinepartners 
 				SET onlinepartnername ='" . $_POST['OnlinePartnerName'] . "',
 					paypalaccount ='" . $_POST['PayPalAccount'] . "',
+					paypaltest ='" . $_POST['PayPalTest'] . "',
 					paypalusername ='" . $_POST['PayPalUsername'] . "',
 					paypalpassword ='" . $_POST['PayPalPassword'] . "',
 					paypalsignature ='" . $_POST['PayPalSignature'] . "',
@@ -61,6 +62,7 @@ if(isset($_POST['submit'])) {
 		unset($_POST['OnlinePartnerCode']);
 		unset($_POST['OnlinePartnerName']);
 		unset($_POST['PayPalAccount']);
+		unset($_POST['PayPalTest']);
 		unset($_POST['PayPalUsername']);
 		unset($_POST['PayPalPassword']);
 		unset($_POST['PayPalSignature']);
@@ -80,6 +82,7 @@ if(isset($_POST['submit'])) {
 								(onlinepartnercode,
 								onlinepartnername,
 								paypalaccount,
+								paypaltest,
 								paypalusername,
 								paypalpassword,
 								paypalsignature,
@@ -93,6 +96,7 @@ if(isset($_POST['submit'])) {
 						VALUES ('" . $_POST['OnlinePartnerCode'] . "',
 								'" . $_POST['OnlinePartnerName'] . "',
 								'" . $_POST['PayPalAccount'] ."',
+								'" . $_POST['PayPalTest'] ."',
 								'" . $_POST['PayPalUsername'] ."',
 								'" . $_POST['PayPalPassword'] . "',
 								'" . $_POST['PayPalSignature'] . "',
@@ -114,6 +118,7 @@ if(isset($_POST['submit'])) {
 		unset($_POST['OnlinePartnerCode']);
 		unset($_POST['OnlinePartnerName']);
 		unset($_POST['PayPalAccount']);
+		unset($_POST['PayPalTest']);
 		unset($_POST['PayPalUsername']);
 		unset($_POST['PayPalPassword']);
 		unset($_POST['PayPalSignature']);
@@ -157,6 +162,7 @@ or deletion of the records*/
 	$sql = "SELECT onlinepartnercode,
 				onlinepartnername,
 				paypalaccount,
+				paypaltest,
 				foreigncurrencysurchargefactor
 			FROM klonlinepartners
 			ORDER BY onlinepartnername";
@@ -171,6 +177,7 @@ or deletion of the records*/
 			<th class="ascending">', _('Code'), '</th>
 			<th class="ascending">', _('Name'), '</th>
 			<th class="ascending">', _('PayPal Account'), '</th>
+			<th class="ascending">', _('Test?'), '</th>
 			<th class="ascending">', _('Foreign Factor'), '</th>
 			<th class="noprint" colspan="2">&nbsp;</th>
 		</tr>';
@@ -184,8 +191,14 @@ while ($myrow = DB_fetch_array($result)) {
 		echo '<tr class="OddTableRows">';
 		$k=1;
 	}
+	if($myrow['paypaltest'] == 1) {
+		$PayPalTest = _('Yes');
+	} else {
+		$PayPalTest = _('No');
+	}
 
 	printf('<td>%s</td>
+			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
 			<td class="number">%s</td>
@@ -195,6 +208,7 @@ while ($myrow = DB_fetch_array($result)) {
 			$myrow['onlinepartnercode'],
 			$myrow['onlinepartnername'],
 			$myrow['paypalaccount'],
+			$PayPalTest,
 			locale_number_format($myrow['foreigncurrencysurchargefactor'],2),
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $myrow['onlinepartnercode'],
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $myrow['onlinepartnercode']);
@@ -223,6 +237,7 @@ if(!isset($_GET['delete'])) {
 		$sql = "SELECT onlinepartnercode,
 					onlinepartnername,
 					paypalaccount,
+					paypaltest,
 					paypalusername,
 					paypalpassword,
 					paypalsignature,
@@ -242,6 +257,7 @@ if(!isset($_GET['delete'])) {
 		$_POST['OnlinePartnerCode'] = $myrow['onlinepartnercode'];
 		$_POST['OnlinePartnerName'] = $myrow['onlinepartnername'];
 		$_POST['PayPalAccount'] = $myrow['paypalaccount'];
+		$_POST['PayPalTest'] = $myrow['paypaltest'];
 		$_POST['PayPalUsername'] = $myrow['paypalusername'];
 		$_POST['PayPalPassword'] = $myrow['paypalpassword'];
 		$_POST['PayPalSignature'] = $myrow['paypalsignature'];
@@ -282,6 +298,9 @@ if(!isset($_GET['delete'])) {
 	if(!isset($_POST['PayPalAccount'])) {
 		$_POST['PayPalAccount'] = ' ';
 	}
+	if(!isset($_POST['PayPalTest'])) {
+		$_POST['PayPalTest'] = 1;
+	}
 	if(!isset($_POST['PayPalUsername'])) {
 		$_POST['PayPalUsername'] = '';
 	}
@@ -320,8 +339,22 @@ if(!isset($_GET['delete'])) {
 		<tr>
 			<td>' . _('PayPal Account') . ':' . '</td>
 			<td><input type="text" name="PayPalAccount" value="' . $_POST['PayPalAccount'] . '" size="51" maxlength="50" /></td>
-		</tr>
-		<tr>
+		</tr>';
+	echo '<tr>
+			<td>' . _('Test ACcount?') . ':</td>
+			<td><select name="PayPalTest">';
+	if($_POST['PayPalTest']==1) {
+		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
+	} else {
+		echo '<option value="1">' . _('Yes') . '</option>';
+	}
+	if($_POST['PayPalTest']==0) {
+		echo '<option selected="selected" value="0">' . _('No') . '</option>';
+	} else {
+		echo '<option value="0">' . _('No') . '</option>';
+	}
+	echo '</select></td></tr>';
+	echo '<tr>
 			<td>' . _('PayPal Username') . ':' . '</td>
 			<td><input type="text" name="PayPalUsername" value="' . $_POST['PayPalUsername'] . '" size="51" maxlength="50" /></td>
 		</tr>

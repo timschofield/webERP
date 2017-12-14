@@ -40,6 +40,6 @@ WHERE `group` = 'templatemela'
 	AND `key` = 'templatemela_showcontrolpanel';	
 	*/
 UPDATE oc_setting
-SET `value` = 'http://www.bumibiru.com/TEST/shop/captainkapal/'
+SET `value` = 'http://www.kapal-laut.com/TEST/shop/captainkapal/'
 WHERE `group` = 'config'
 	AND `key` = 'entry_admin_foldername';	

@@ -535,6 +535,7 @@ function UpdateSettingValueOpenCartByGroupAndKey($Group, $Key, $Value, $db_oc, $
 					SET	value = '" . $Value . "'
 				WHERE `group` = '" . $Group . "'
 					AND `key` = '" . $Key . "'";
+
 	$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
 }
 

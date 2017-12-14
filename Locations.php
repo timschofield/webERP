@@ -13,6 +13,7 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	_('Location Maintenance'), '</p>';// Page title.
 
 include('includes/CountriesArray.php');
+include ('includes/OpenCartGeneralFunctions.php');
 
 if(isset($_GET['SelectedLocation'])) {
 	$SelectedLocation = $_GET['SelectedLocation'];
@@ -959,7 +960,7 @@ if(!isset($_GET['delete'])) {
 			<td><input type="text" name="RLDaysForPackaging" class="number" title="' . _('Set Reorder Level as needs of pacjaking for a number of days') . '" value="' . $_POST['RLDaysForPackaging'] . '" size="2" maxlength="2" /></td>
 		</tr>';
 
-		echo '<tr>
+	echo '<tr>
 			<td>' . _('Allow internal requests?') . ':</td>
 			<td><select name="InternalRequest">';
 	if($_POST['InternalRequest']==1) {
@@ -1026,15 +1027,18 @@ function UpdateOnlinePartnerPaypalSettingsInOpenCart($NewLocationType, $NewOnlin
 			include ('includes/OpenCartConnectDB.php');
 			$sql = "SELECT klonlinepartners.paypalusername,
 						klonlinepartners.paypalpassword,
-						klonlinepartners.paypalsignature
+						klonlinepartners.paypalsignature,
+						klonlinepartners.paypaltest
 					FROM klonlinepartners
 					WHERE klonlinepartners.onlinepartnercode='" . $NewOnlinePartnerCode . "'";
 			$result = DB_query($sql);
-			$myrow = DB_fetch_row($result);
+			$myrow = DB_fetch_array($result);
 		
 			UpdateSettingValueOpenCartByGroupAndKey('pp_express', 'pp_express_username', $myrow['paypalusername'], $db_oc, $oc_tableprefix);
 			UpdateSettingValueOpenCartByGroupAndKey('pp_express', 'pp_express_password', $myrow['paypalpassword'], $db_oc, $oc_tableprefix);
 			UpdateSettingValueOpenCartByGroupAndKey('pp_express', 'pp_express_signature', $myrow['paypalsignature'], $db_oc, $oc_tableprefix);
+			UpdateSettingValueOpenCartByGroupAndKey('pp_express', 'pp_express_test', $myrow['paypaltest'], $db_oc, $oc_tableprefix);
+			prnMsg('Updated KL Online Partner ' . $NewOnlinePartnerCode . ' in OpenCart', 'success');
 		}
 	}
 }
