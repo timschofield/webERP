@@ -312,7 +312,7 @@ $Disclaimer=$myrow[0];
 $LeftOvers = $pdf->addTextWrap($XPos+5,$YPos,500,$FontSize,$Disclaimer);
 while (mb_strlen($LeftOvers) > 1) {
 	$YPos -= $line_height;
-	$LeftOvers = $pdf->addTextWrap($XPos+5,$YPos,445,$FontSize, $LeftOvers, 'left');
+	$LeftOvers = $pdf->addTextWrap($XPos+5,$YPos,500,$FontSize, $LeftOvers, 'left');
 }
 
 $pdf->OutputI($_SESSION['DatabaseName'] . 'COA' . date('Y-m-d') . '.pdf');

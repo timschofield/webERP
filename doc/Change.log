@@ -1,5 +1,6 @@
 webERP Change Log
 
+11/13/17 PaulT: PDFCOA.php, PDFProdSpec: Minor value adjust to correct inconsistent footer wrap. (Reported in forums by Paul Becker)
 11/13/17 PaulT: HistoricalTestResults.php, SelectQASamples.php, TestPlanResults.php: Fix date inputs to work with the date picker. (Reported in forums by briantmg)
 11/13/17 PaulT: PDFQALabel.php: Overlapping in the PDF when printing non-controlled items. (Reported in forums by Paul Becker)
 11/13/17 PaulT: CustomerReceipt.php: Add identifier to URL for delete link. (Reported in forums by Paul Becker)
