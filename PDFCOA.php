@@ -88,6 +88,7 @@ if (isset($SelectedCOA)) {
 					type,
 					testvalue,
 					sampledate,
+					prodspeckey,
 					groupby
 				FROM qasamples INNER JOIN sampleresults
 				ON sampleresults.sampleid=qasamples.sampleid
@@ -108,6 +109,7 @@ if (isset($SelectedCOA)) {
 					type,
 					testvalue,
 					sampledate,
+					prodspeckey,
 					groupby
 				FROM qasamples INNER JOIN sampleresults
 				ON sampleresults.sampleid=qasamples.sampleid
