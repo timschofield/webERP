@@ -2413,13 +2413,8 @@ function ItemsOnSpecialRequest($RootPath, $db){
 function ItemsShouldBeInWebsite($db){
 	$SQL = "SELECT stockid, description
 			FROM stockmaster
-			WHERE categoryid IN " . CATEGORIES_AVAILABLE_WEBSITE ."
-				AND discontinued = 0
-				AND stockid NOT LIKE '%-D'
-				AND stockid != 'WKPC01'
-				AND stockid NOT LIKE 'KLBE%'
-				AND stockid NOT LIKE 'GOTA%'
-				AND stockid NOT LIKE 'TM-%'
+			WHERE categoryid IN " . CATEGORIES_AVAILABLE_WEBSITE .
+				SQLForWebsiteStockidExceptions(). "
 				AND NOT EXISTS (SELECT *
 								FROM salescatprod
 								WHERE salescatprod.stockid = stockmaster.stockid)";
@@ -2602,8 +2597,8 @@ function ItemsWithoutWeightOrVolume($RootPath, $db){
 			FROM stockmaster, stockcategory
 			WHERE stockmaster.categoryid = stockcategory.categoryid
 				AND stockcategory.stocktype = 'F'
-				AND stockmaster.categoryid IN " . CATEGORIES_AVAILABLE_WEBSITE ."
-				AND stockmaster.discontinued = 0
+				AND stockmaster.categoryid IN " . CATEGORIES_AVAILABLE_WEBSITE .
+				SQLForWebsiteStockidExceptions() . "
 				AND (stockmaster.grossweight < 0.00001 
 					OR stockmaster.volume < 0.00001
 					OR stockmaster.grossweight <= stockmaster.netweight)

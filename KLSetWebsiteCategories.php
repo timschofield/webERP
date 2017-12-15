@@ -40,10 +40,9 @@ $SQL = "SELECT stockmaster.stockid,
 			   stockmaster.categoryid	
 		FROM stockmaster, stockcategory
 		WHERE stockmaster.categoryid = stockcategory.categoryid
-			AND SUBSTR(stockmaster.stockid, -2, 2) != '-D'
 			AND stockcategory.stocktype = 'F'
-			AND stockmaster.categoryid IN " . CATEGORIES_AVAILABLE_WEBSITE ."
-			AND stockmaster.discontinued = 0
+			AND stockmaster.categoryid IN " . CATEGORIES_AVAILABLE_WEBSITE .
+			SQLForWebsiteStockidExceptions() . "
 			AND (((NOT EXISTS (SELECT * 
 								FROM salescatprod
 								WHERE stockmaster.stockid = salescatprod.stockid))

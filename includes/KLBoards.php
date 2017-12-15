@@ -3365,6 +3365,15 @@ function RecentlyClosedTransferStatus($maxdays, $RootPath, $db){
 	}
 }
 
+function SQLForWebsiteStockidExceptions(){
+	return " AND stockmaster.discontinued = 0
+				AND SUBSTR(stockmaster.stockid, -2, 2) != '-D'
+				AND stockmaster.stockid != 'WKPC01'
+				AND stockmaster.stockid NOT LIKE 'KLBE%'
+				AND stockmaster.stockid NOT LIKE 'GOTA%'
+				AND stockmaster.stockid NOT LIKE 'TM-%'";
+}
+
 function TransfersDelayed($maxdays, $RootPath, $db){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 	$SQL = "SELECT DISTINCT reference,
