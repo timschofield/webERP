@@ -1018,7 +1018,10 @@ if (isset($_SESSION['ReceiptBatch' . $identifier])){
 				<td>' . $ReceiptItem->GLCode.' - '.$myrow['accountname'] . '</td>
 				<td>' .  stripslashes($ReceiptItem->Narrative) . '</td>
 				<td>' .  $ReceiptItem->TagName . '</td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=' . $ReceiptItem->ID . '&Type=' . $_GET['Type'] . '&identifier=' . $identifier . '">' . _('Delete') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete='     . urlencode($ReceiptItem->ID)
+                                                                                           . '&Type='       . urlencode($_GET['Type'])
+                                                                                           . '&identifier=' . urlencode($identifier) . '">'
+                                                                                           . _('Delete') . '</a></td>
 			</tr>';
 		$BatchTotal= $BatchTotal + $ReceiptItem->Amount;
 	}
