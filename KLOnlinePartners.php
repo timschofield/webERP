@@ -370,24 +370,24 @@ if(!isset($_GET['delete'])) {
 	echo '<tr>
 		<td>' . _('PayPal AUD GL Account') . ':' . '</td>
 		<td><select name="AccountPayPalAUD">';
-	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountname");
+	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($myrow=DB_fetch_array($GLAccount)) {
 		if($_POST['AccountPayPalAUD']==$myrow['accountcode']) {
-			echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['accountname'] . '</option>';
+			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
-			echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['accountname'] . '</option>';
+			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
 	echo '<tr>
 		<td>' . _('Comission PayPal AUD GL Account') . ':' . '</td>
 		<td><select name="AccountPayPalComissionAUD">';
-	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountname");
+	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($myrow=DB_fetch_array($GLAccount)) {
 		if($_POST['AccountPayPalComissionAUD']==$myrow['accountcode']) {
-			echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['accountname'] . '</option>';
+			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
-			echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['accountname'] . '</option>';
+			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
@@ -395,24 +395,24 @@ if(!isset($_GET['delete'])) {
 	echo '<tr>
 		<td>' . _('PayPal USD GL Account') . ':' . '</td>
 		<td><select name="AccountPayPalUSD">';
-	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountname");
+	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($myrow=DB_fetch_array($GLAccount)) {
 		if($_POST['AccountPayPalUSD']==$myrow['accountcode']) {
-			echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['accountname'] . '</option>';
+			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
-			echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['accountname'] . '</option>';
+			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
 	echo '<tr>
 		<td>' . _('Comission PayPal USD GL Account') . ':' . '</td>
 		<td><select name="AccountPayPalComissionUSD">';
-	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountname");
+	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($myrow=DB_fetch_array($GLAccount)) {
 		if($_POST['AccountPayPalComissionUSD']==$myrow['accountcode']) {
-			echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['accountname'] . '</option>';
+			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
-			echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['accountname'] . '</option>';
+			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
@@ -420,24 +420,24 @@ if(!isset($_GET['delete'])) {
 	echo '<tr>
 		<td>' . _('PayPal EUR GL Account') . ':' . '</td>
 		<td><select name="AccountPayPalEUR">';
-	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountname");
+	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($myrow=DB_fetch_array($GLAccount)) {
 		if($_POST['AccountPayPalEUR']==$myrow['accountcode']) {
-			echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['accountname'] . '</option>';
+			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
-			echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['accountname'] . '</option>';
+			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
 	echo '<tr>
 		<td>' . _('Comission PayPal EUR GL Account') . ':' . '</td>
 		<td><select name="AccountPayPalComissionEUR">';
-	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountname");
+	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($myrow=DB_fetch_array($GLAccount)) {
 		if($_POST['AccountPayPalComissionEUR']==$myrow['accountcode']) {
-			echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['accountname'] . '</option>';
+			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
-			echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['accountname'] . '</option>';
+			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
