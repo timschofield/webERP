@@ -1,6 +1,7 @@
 webERP Change Log
 
-11/14/17 PaulT: MRPPlannedPurchaseOrders.php, MRPPlannedWorkOrders.php: Fix PDF highlighting, PDF position value adjustments, and other minor tweaks. (Reported in forums by Paul Becker)
+11/18/17 PaulT: PDFBOMListingPageHeader.inc, BOMListing.php: Adjust PDF position values, and add UoM. (Reported in forums by Paul Becker)
+11/15/17 PaulT: MRPPlannedPurchaseOrders.php, MRPPlannedWorkOrders.php: Fix PDF highlighting, PDF position value adjustments, and other minor tweaks. (Reported in forums by Paul Becker)
 11/14/17 PaulT: CustomerReceipt.php: Wrap delete link parameter values with urlencode(). (Suggested by Tim in forums)
 11/13/17 PaulT: PDFCOA.php: Add column prodspeckey to queries which is used as a description alternative. (Reported in forums by Paul Becker)
 11/13/17 PaulT: PDFCOA.php, PDFProdSpec: Minor value adjust to correct inconsistent footer wrap. (Reported in forums by Paul Becker)

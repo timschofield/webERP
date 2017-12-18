@@ -22,6 +22,7 @@ If (isset($_POST['PrintPDF'])
 				bom.component,
 				stockmaster.description as compdescription,
 				stockmaster.decimalplaces,
+				stockmaster.units,
 				bom.quantity,
 				bom.loccode,
 				bom.workcentreadded,
@@ -86,10 +87,11 @@ If (isset($_POST['PrintPDF'])
 
 		$DisplayQuantity = locale_number_format($BOMList['quantity'],$BOMList['decimalplaces']);
 		$LeftOvers = $pdf->addTextWrap(320,$YPos,50,$FontSize,ConvertSQLDate($BOMList['eff_frm']),'left');
-		$LeftOvers = $pdf->addTextWrap(370,$YPos,50,$FontSize,ConvertSQLDate($BOMList['eff_to']),'left');
-		$LeftOvers = $pdf->addTextWrap(420,$YPos,20,$FontSize,$BOMList['loccode'],'left');
-		$LeftOvers = $pdf->addTextWrap(440,$YPos,30,$FontSize,$BOMList['workcentreadded'],'left');
+		$LeftOvers = $pdf->addTextWrap(375,$YPos,50,$FontSize,ConvertSQLDate($BOMList['eff_to']),'left');
+		$LeftOvers = $pdf->addTextWrap(430,$YPos,30,$FontSize,$BOMList['loccode'],'left');
+		$LeftOvers = $pdf->addTextWrap(465,$YPos,30,$FontSize,$BOMList['workcentreadded'],'left');
 		$LeftOvers = $pdf->addTextWrap(480,$YPos,60,$FontSize,$DisplayQuantity,'right');
+		$LeftOvers = $pdf->addTextWrap(540,$YPos,20,$FontSize,$BOMList['units'],'left');
 
 		if ($YPos < $Bottom_Margin + $line_height){
 		   include('includes/PDFBOMListingPageHeader.inc');
