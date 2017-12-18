@@ -2,11 +2,11 @@
 
 /* $Revision: 0.01 $ */
 
-if (!file_exists('OpenCart_config.php')){
-	echo '<P>' . _("webERP - Opencart connector can't access the OpenCart_config.php file");
+if (!file_exists('config_OpenCart.php')){
+	echo '<P>' . _("webERP - Opencart connector can't access the config_OpenCart.php file");
 	include ('includes/footer.php');
 } else {
-	include ('OpenCart_config.php');
+	include ('config_OpenCart.php');
 }
 
 if (!isset($mysqlport)){
