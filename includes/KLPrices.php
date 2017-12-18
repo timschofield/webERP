@@ -416,13 +416,14 @@ function SendEmailChangePriceReadyForStep02($db, $EmailText){
 				(SELECT sum(quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
-					AND loccode IN " . LIST_KANTOR_LOCATIONS . ") AS qohkantor,
+					AND locstock.loccode IN " . LIST_KANTOR_LOCATIONS . ") AS qohkantor,
 				(SELECT sum(quantity)
-					FROM locstock
+					FROM locstock,locations
 					WHERE locstock.stockid = stockmaster.stockid
-					AND loccode NOT IN " . LIST_KANTOR_LOCATIONS . "
-					AND loccode NOT IN " . LIST_ALL_SHOPS . "
-					AND loccode NOT IN " . LIST_CONSIGNMENT_LOCATIONS . ") AS qohotherlocs,
+					AND locstock.loccode = locations.loccode
+					AND locstock.loccode NOT IN " . LIST_KANTOR_LOCATIONS . "
+					AND locations.typeloc NOT IN " . BALI_SHOPS_LIST_BY_TYPE . "
+					AND locstock.loccode NOT IN " . LIST_CONSIGNMENT_LOCATIONS . ") AS qohotherlocs,
 				(SELECT sum(quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid) AS qohtotal,
@@ -459,11 +460,12 @@ function SendEmailMoveToDiscountReadyForStep02($TypeDiscount, $db, $EmailText){
 					WHERE locstock.stockid = stockmaster.stockid
 					AND loccode IN " . LIST_KANTOR_LOCATIONS . ") AS qohkantor,
 				(SELECT sum(quantity)
-					FROM locstock
+					FROM locstock,locations
 					WHERE locstock.stockid = stockmaster.stockid
-					AND loccode NOT IN " . LIST_KANTOR_LOCATIONS . "
-					AND loccode NOT IN " . LIST_ALL_SHOPS . "
-					AND loccode NOT IN " . LIST_CONSIGNMENT_LOCATIONS . ") AS qohotherlocs,
+					AND locstock.loccode = locations.loccode
+					AND locstock.loccode NOT IN " . LIST_KANTOR_LOCATIONS . "
+					AND locations.typeloc NOT IN " . BALI_SHOPS_LIST_BY_TYPE . "
+					AND locstock.loccode NOT IN " . LIST_CONSIGNMENT_LOCATIONS . ") AS qohotherlocs,
 				(SELECT sum(quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid) AS qohtotal,

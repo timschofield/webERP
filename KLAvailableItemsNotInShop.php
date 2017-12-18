@@ -61,7 +61,7 @@ if (!(isset($_POST['Search']))) {
 	$SQL="SELECT loccode,
 					locationname
 			FROM locations
-			WHERE loccode IN " . LIST_ALL_SHOPS . "
+			WHERE typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . "
 			ORDER BY locationname";
 	$result1 = DB_query($SQL);
 

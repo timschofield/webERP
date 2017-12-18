@@ -12,9 +12,10 @@ include('includes/KLPrices.php');
 	$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description,
 				(SELECT sum(quantity)
-					FROM locstock
+					FROM locstock,locations
 					WHERE locstock.stockid = stockmaster.stockid
-					AND loccode IN " . LIST_ALL_SHOPS . ") AS qohpos,
+					AND locstock.loccode = locations.loccode
+					AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . ") AS qohpos,
 				(SELECT sum(quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
@@ -24,15 +25,17 @@ include('includes/KLPrices.php');
 					WHERE locstock.stockid = stockmaster.stockid
 					AND loccode IN " . LIST_KANTOR_LOCATIONS . ") AS qohkantor,
 				(SELECT sum(quantity)
-					FROM locstock
+					FROM locstock,locations
 					WHERE locstock.stockid = stockmaster.stockid
-					AND loccode NOT IN " . LIST_KANTOR_LOCATIONS . "
-					AND loccode NOT IN " . LIST_ALL_SHOPS . "
-					AND loccode NOT IN " . LIST_CONSIGNMENT_LOCATIONS . ") AS qohotherlocs,
+					AND locstock.loccode = locations.loccode
+					AND locations.loccode NOT IN " . LIST_KANTOR_LOCATIONS . "
+					AND locations.typeloc NOT IN " . BALI_SHOPS_LIST_BY_TYPE . "
+					AND locations.loccode NOT IN " . LIST_CONSIGNMENT_LOCATIONS . ") AS qohotherlocs,
 				(SELECT SUM(loctransfers.shipqty-loctransfers.recqty) 
-						FROM loctransfers
+						FROM loctransfers,locations
 						WHERE loctransfers.stockid = stockmaster.stockid
-						AND loctransfers.shiploc IN " . LIST_ALL_SHOPS . ") AS intransitfromshops,
+						AND loctransfers.shiploc = locations.loccode
+						AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . ") AS intransitfromshops,
 				(SELECT SUM(loctransfers.shipqty-loctransfers.recqty) 
 						FROM loctransfers
 						WHERE loctransfers.stockid = stockmaster.stockid

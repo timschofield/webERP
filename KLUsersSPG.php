@@ -433,7 +433,7 @@ echo '<tr>
 $sql = "SELECT loccode, 
 				locationname
 		FROM locations 
-		WHERE loccode IN " . LIST_ALL_SHOPS . " 
+		WHERE typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . " 
 		ORDER BY locationname";
 $result = DB_query($sql);
 if ((isset($_POST['DefaultLocation']) AND $_POST['DefaultLocation']=='') OR !isset($_POST['DefaultLocation'])){
