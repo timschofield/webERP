@@ -74,9 +74,9 @@ function DailyReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db, 
 
 	SetRLZeroForNotAvailableItems($ShowMessages, $updateDB, $RootPath, $db);
 
-	$EmailText = AdjustPackaging(60, 'KAPAL-LAUT', $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
-	$EmailText = AdjustPackaging(60, 'OUTLET', $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
-	$EmailText = AdjustPackaging(60, 'BLINK', $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	$EmailText = AdjustPackaging(60, 'SHOPKL', $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	$EmailText = AdjustPackaging(60, 'SHOPBL', $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	$EmailText = AdjustPackaging(60, 'SHOPOU', $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 	
 	return $EmailText;
 }
@@ -999,16 +999,13 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db,
 	return $EmailText;
 }
 
-function AdjustPackaging($DaysSales, $ShopStyle, $ShowMessages, $updateDB, $RootPath, $db, $EmailText){
+function AdjustPackaging($DaysSales, $ShopType, $ShowMessages, $updateDB, $RootPath, $db, $EmailText){
 	
-	if($ShopStyle == 'KAPAL-LAUT'){
-		$ListOfShops = LIST_SHOPS_KAPAL_LAUT;
+	if($ShopType == 'SHOPKL'){
 		$ListOfItems = LIST_ITEMS_KAPAL_LAUT_PACKAGING;
-	}elseif ($ShopStyle == 'BLINK'){
-		$ListOfShops = LIST_SHOPS_BLINK;
+	}elseif ($ShopType == 'SHOPBL'){
 		$ListOfItems = LIST_ITEMS_BLINK_PACKAGING;
-	}elseif ($ShopStyle == 'OUTLET'){
-		$ListOfShops = LIST_SHOPS_OUTLET;
+	}elseif ($ShopType == 'SHOPOU'){
 		$ListOfItems = LIST_ITEMS_OUTLET_PACKAGING;
 	}
 
@@ -1016,25 +1013,26 @@ function AdjustPackaging($DaysSales, $ShopStyle, $ShowMessages, $updateDB, $Root
 		$EmailText = $EmailText . "\n" . "Adjust Packaging" . "\n\n" .
 					"DaysSales = " . $DaysSales . " " .
 					"RootPath = " . $RootPath . "\n" .
-					"List Shops Using Packaging Control = " . CleanListToPrint($ListOfShops) . "\n" .
+					"Type of Shops Using Packaging Control = " . $ShopType . "\n" .
 					"List Items Using Packaging Control = " . CleanListToPrint($ListOfItems) . "\n\n" ;
 	}
-
-	$Shops = ListToArray($ListOfShops,",");
-	$CountShops = count($Shops);
-	$iShop = 0;
 
 	$Items = ListToArray($ListOfItems,",");
 	$CountItem = count($Items);
 
-	while ($iShop < $CountShops){
-		$iItem = 0;
-		while ($iItem < $CountItem){
-			$EmailText = AdjustPackagingItemByShop($Items[$iItem], $Shops[$iShop], $DaysSales, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
-			$iItem++;
+	$SQL = "SELECT locations.loccode
+			FROM locations
+			WHERE locations.typeloc = '" . $ShopType . "'";
+	$resultloc = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		while ($myloc = DB_fetch_array($resultloc)) {
+			$iItem = 0;
+			while ($iItem < $CountItem){
+				$EmailText = AdjustPackagingItemByShop($Items[$iItem], $myloc['loccode'], $DaysSales, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+				$iItem++;
+			}
 		}
-		$iShop++;
-	}
+	}	
 	return $EmailText;
 }
 

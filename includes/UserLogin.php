@@ -218,21 +218,29 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 			if (empty($_SESSION['LogoFile'])) {
 				include('includes/KLDefines.php');
 				include('includes/KLRoles.inc');
-				if (CheckItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_KAPAL_LAUT)){
-					$LogoFile = 'companies/' .  $_SESSION['DatabaseName'] . '/LogoKL.png';
-				} else if (CheckItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_BLINK)){
-					$LogoFile = 'companies/' .  $_SESSION['DatabaseName'] . '/LogoBlink.png';
-				} else if (CheckItemInList($_SESSION['UserStockLocation'], LIST_SHOPS_OUTLET)){
-					$LogoFile = 'companies/' .  $_SESSION['DatabaseName'] . '/LogoOutlet.png';
-				} else {
-					if(strpos($_SERVER['HTTP_HOST'],"bumibiru")){
-						$LogoFile = 'companies/' .  $_SESSION['DatabaseName'] . '/LogoPTBB.png';
-					}elseif(strpos($_SERVER['HTTP_HOST'],"adu")){
-						$LogoFile = 'companies/' .  $_SESSION['DatabaseName'] . '/LogoPTADU.png';
-					}else{
-						$LogoFile = 'companies/' .  $_SESSION['DatabaseName'] . '/LogowebERP.png';
+				$SQL = "SELECT locations.typeloc
+						FROM locations
+						WHERE locations.loccode = '" . $_SESSION['UserStockLocation'] . "' ";
+				$resultloc = DB_query($SQL);
+				if (DB_num_rows($result) != 0){
+					$myloc = DB_fetch_array($resultloc);
+					if ($myloc['typeloc'] == 'SHOPKL'){
+						$LogoFile = 'companies/' .  $_SESSION['DatabaseName'] . '/LogoKL.png';
+					} else if ($myloc['typeloc'] == 'SHOPBL'){
+						$LogoFile = 'companies/' .  $_SESSION['DatabaseName'] . '/LogoBlink.png';
+					} else if ($myloc['typeloc'] == 'SHOPOU'){
+						$LogoFile = 'companies/' .  $_SESSION['DatabaseName'] . '/LogoOutlet.png';
+					} else {
+						if(strpos($_SERVER['HTTP_HOST'],"bumibiru")){
+							$LogoFile = 'companies/' .  $_SESSION['DatabaseName'] . '/LogoPTBB.png';
+						}elseif(strpos($_SERVER['HTTP_HOST'],"adu")){
+							$LogoFile = 'companies/' .  $_SESSION['DatabaseName'] . '/LogoPTADU.png';
+						}else{
+							$LogoFile = 'companies/' .  $_SESSION['DatabaseName'] . '/LogowebERP.png';
+						}
 					}
-				}
+				}	
+
 				if (file_exists($LogoFile)) {
 					$_SESSION['LogoFile'] = $LogoFile;
 				}
