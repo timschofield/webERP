@@ -1,5 +1,6 @@
 webERP Change Log
 
+11/18/17 PaulT: BOMIndented.php, BOMIndentedReverse.php: Adjust PDF position values, and add UoM, remove stray 0-9 string output. (Reported in forums by Paul Becker)
 11/18/17 PaulT: PDFBOMListingPageHeader.inc, BOMListing.php: Adjust PDF position values, and add UoM. (Reported in forums by Paul Becker)
 11/15/17 PaulT: MRPPlannedPurchaseOrders.php, MRPPlannedWorkOrders.php: Fix PDF highlighting, PDF position value adjustments, and other minor tweaks. (Reported in forums by Paul Becker)
 11/14/17 PaulT: CustomerReceipt.php: Wrap delete link parameter values with urlencode(). (Suggested by Tim in forums)
