@@ -147,7 +147,7 @@ function BuildFormList($GroupID) {
 					ORDER BY groupname,
 												reportname";
 			$Result=DB_query($sql,'','',false,true);
-			$FormList = '';
+			$FormList = array();
 			while ($Temp = DB_fetch_array($Result)) $FormList[] = $Temp;
 			foreach ($FormGroups as $index=>$value) {
 				$Group=explode(':',$index); // break into main group and form group array

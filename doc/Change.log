@@ -1,5 +1,6 @@
 webERP Change Log
 
+20/12/17 PaulT: RCFunctions.inc, FormMaker.php: PHP 7.1 array compatibility change.
 19/12/17 PaulT: PDFOrderStatus.php: Remove redundant ConnectDB.inc include reference. (already included by session.php at the top of the file)
 19/12/17 PaulT: Change.log: Correct my Day/Month entry references over the last few days.
 19/12/17 PaulT: Contracts.php: Move work center handling causing a partial form to appear after the footer when no work centers exist.
