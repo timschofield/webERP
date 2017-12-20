@@ -18,7 +18,7 @@ require_once($PathPrefix . 'includes/DateFunctions.inc');
 require('languages/'.$ReportLanguage.'/reports.php'); // include translation before defaults.php
 require('admin/defaults.php'); // load default values
 
-$usrMsg = ''; // setup array for return messages
+$usrMsg = array(); // setup array for return messages
 if (isset($_GET['reportid'])) { // then entered with report id requested, fix variable to show filter form
 	$_POST['todo'] = RPT_BTN_CONT; // fake the code to think the continue button was pressed
 	$_POST['ReportID'] = (int) $_GET['reportid']; // convert Report ID to a POST variable
@@ -240,7 +240,7 @@ function FetchReportDetails($ReportID) {
 
 function RetrieveFields($ReportID, $EntryType) {
 	global $db;
-	$FieldListings = '';
+	$FieldListings = array();
 	$sql= "SELECT *	FROM ".DBRptFields."
 		WHERE reportid = '".$ReportID."' AND entrytype = '".$EntryType."'
 		ORDER BY seqnum";

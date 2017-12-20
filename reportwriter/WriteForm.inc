@@ -567,7 +567,7 @@ function BuildPDF($ReportID, $Prefs) {
 				}
 				// Build the sql
 				$tblField = '';
-				$tblHeading = '';
+				$tblHeading = array();
 				foreach ($SingleObject['params']['Seq'] as $TableField) {
 					$tblField .= $TableField['TblField'].', ';
 					$tblHeading[] = $TableField['TblDesc'];
