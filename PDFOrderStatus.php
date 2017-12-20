@@ -2,7 +2,7 @@
 
 /* $Id$*/
 
-include ('includes/session.php');
+include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 
 $InputError=0;
@@ -86,7 +86,6 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 	include('includes/footer.php');
 	exit;
 } else {
-	include('includes/ConnectDB.inc');
 	include('includes/PDFStarter.php');
 	$pdf->addInfo('Title',_('Order Status Report'));
 	$pdf->addInfo('Subject',_('Orders from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate']);
