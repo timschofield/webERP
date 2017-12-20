@@ -840,6 +840,16 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 	}
 	echo '</p>';
 
+	$sql = "SELECT code, description FROM workcentres INNER JOIN locationusers ON locationusers.loccode=workcentres.location AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
+	$wcresults = DB_query($sql);
+
+	if (DB_num_rows($wcresults)==0){
+		prnMsg( _('There are no work centres set up yet') . '. ' . _('Please use the link below to set up work centres'),'warn');
+		echo '<br /><a href="'.$RootPath.'/WorkCentres.php">' . _('Work Centre Maintenance') . '</a>';
+		include('includes/footer.php');
+		exit;
+	}
+
 	/*Set up form for entry of contract header stuff */
 
 	echo '<table class="selection">
@@ -857,7 +867,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 		</tr>
 		<tr>
 			<td>' . _('Category') . ':</td>
-			<td><select name="CategoryID" >';
+			<td><select name="CategoryID">';
 
 	$sql = "SELECT categoryid, categorydescription FROM stockcategory";
 	$ErrMsg = _('The stock categories could not be retrieved because');
@@ -872,7 +882,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 		}
 	}
 
-	echo '</select><a target="_blank" href="'. $RootPath . '/StockCategories.php">' . _('Add or Modify Contract Categories') . '</a></td></tr>';
+	echo '</select>&nbsp;&nbsp;<a target="_blank" href="'. $RootPath . '/StockCategories.php">' . _('Add or Modify Contract Categories') . '</a></td></tr>';
 
 	$sql = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
 	$ErrMsg = _('The stock locations could not be retrieved because');
@@ -881,7 +891,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 
 	echo '<tr>
 			<td>' . _('Location') . ':</td>
-			<td><select name="LocCode" >';
+			<td><select name="LocCode">';
 	while ($myrow=DB_fetch_array($result)){
 		if (!isset($_SESSION['Contract'.$identifier]->LocCode) or $myrow['loccode']==$_SESSION['Contract'.$identifier]->LocCode){
 			echo '<option selected="selected" value="'. $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
@@ -891,20 +901,11 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 	}
 
 	echo '</select></td></tr>';
-	$sql = "SELECT code, description FROM workcentres INNER JOIN locationusers ON locationusers.loccode=workcentres.location AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
-	$result = DB_query($sql);
-
-	if (DB_num_rows($result)==0){
-		prnMsg( _('There are no work centres set up yet') . '. ' . _('Please use the link below to set up work centres'),'warn');
-		echo '<br /><a href="'.$RootPath.'/WorkCentres.php">' . _('Work Centre Maintenance') . '</a>';
-		include('includes/footer.php');
-		exit;
-	}
 	echo '<tr><td>' . _('Default Work Centre') . ': </td><td>';
 
 	echo '<select name="DefaultWorkCentre">';
 
-	while ($myrow = DB_fetch_array($result)) {
+	while ($myrow = DB_fetch_array($wcresults)) {
 		if (isset($_POST['DefaultWorkCentre']) and $myrow['code']==$_POST['DefaultWorkCentre']) {
 			echo '<option selected="selected" value="'.$myrow['code'] . '">' . $myrow['description'] . '</option>';
 		} else {
@@ -913,6 +914,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 	} //end while loop
 
 	DB_free_result($result);
+	DB_free_result($wcresults);
 
 	echo '</select></td>
 		</tr>
