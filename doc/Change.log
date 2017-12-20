@@ -1,18 +1,19 @@
 webERP Change Log
 
-11/19/17 PaulT: Contracts.php: Move work center handling causing a partial form to appear after the footer when no work centers exist.
-11/19/17 PaulT: Contract_Readin.php: Add customerref field to query to appear in the form when a contract is modified.
-11/18/17 PaulT: ReportCreator.php: PHP 7.1 array compatibility change. (Reported in forums by rjonesbsink)
-11/18/17 PaulT: BOMIndented.php, BOMIndentedReverse.php: Adjust PDF position values, and add UoM, remove stray 0-9 string output. (Reported in forums by Paul Becker)
-11/18/17 PaulT: PDFBOMListingPageHeader.inc, BOMListing.php: Adjust PDF position values, and add UoM. (Reported in forums by Paul Becker)
-11/15/17 PaulT: MRPPlannedPurchaseOrders.php, MRPPlannedWorkOrders.php: Fix PDF highlighting, PDF position value adjustments, and other minor tweaks. (Reported in forums by Paul Becker)
-11/14/17 PaulT: CustomerReceipt.php: Wrap delete link parameter values with urlencode(). (Suggested by Tim in forums)
-11/13/17 PaulT: PDFCOA.php: Add column prodspeckey to queries which is used as a description alternative. (Reported in forums by Paul Becker)
-11/13/17 PaulT: PDFCOA.php, PDFProdSpec: Minor value adjust to correct inconsistent footer wrap. (Reported in forums by Paul Becker)
-11/13/17 PaulT: HistoricalTestResults.php, SelectQASamples.php, TestPlanResults.php: Fix date inputs to work with the date picker. (Reported in forums by briantmg)
-11/13/17 PaulT: PDFQALabel.php: Overlapping in the PDF when printing non-controlled items. (Reported in forums by Paul Becker)
-11/13/17 PaulT: CustomerReceipt.php: Add identifier to URL for delete link. (Reported in forums by Paul Becker)
-11/13/17 PaulT: QATests.php: Correct wrong attribute name in two option tags. (Reported in forums by Paul Becker)
+19/12/17 PaulT: Change.log: Correct my Day/Month entry references over the last few days.
+19/12/17 PaulT: Contracts.php: Move work center handling causing a partial form to appear after the footer when no work centers exist.
+19/12/17 PaulT: Contract_Readin.php: Add customerref field to query to appear in the form when a contract is modified.
+18/12/17 PaulT: ReportCreator.php: PHP 7.1 array compatibility change. (Reported in forums by rjonesbsink)
+18/12/17 PaulT: BOMIndented.php, BOMIndentedReverse.php: Adjust PDF position values, and add UoM, remove stray 0-9 string output. (Reported in forums by Paul Becker)
+18/12/17 PaulT: PDFBOMListingPageHeader.inc, BOMListing.php: Adjust PDF position values, and add UoM. (Reported in forums by Paul Becker)
+15/12/17 PaulT: MRPPlannedPurchaseOrders.php, MRPPlannedWorkOrders.php: Fix PDF highlighting, PDF position value adjustments, and other minor tweaks. (Reported in forums by Paul Becker)
+14/12/17 PaulT: CustomerReceipt.php: Wrap delete link parameter values with urlencode(). (Suggested by Tim in forums)
+13/12/17 PaulT: PDFCOA.php: Add column prodspeckey to queries which is used as a description alternative. (Reported in forums by Paul Becker)
+13/12/17 PaulT: PDFCOA.php, PDFProdSpec: Minor value adjust to correct inconsistent footer wrap. (Reported in forums by Paul Becker)
+13/12/17 PaulT: HistoricalTestResults.php, SelectQASamples.php, TestPlanResults.php: Fix date inputs to work with the date picker. (Reported in forums by briantmg)
+13/12/17 PaulT: PDFQALabel.php: Overlapping in the PDF when printing non-controlled items. (Reported in forums by Paul Becker)
+13/12/17 PaulT: CustomerReceipt.php: Add identifier to URL for delete link. (Reported in forums by Paul Becker)
+13/12/17 PaulT: QATests.php: Correct wrong attribute name in two option tags. (Reported in forums by Paul Becker)
 11/12/17 PaulT: PHP 7 constructor compatibility change to phplot.php. (Reported in forums by rjonesbsink)
 11/12/17 Paul Becker: (forums) SelectSalesOrder.php: Consistent delivery address and correct a unit conversion issue.
 11/12/17 PaulT: PHP 7 constructor compatibility change to htmlMimeMail.php and mimePart.php
