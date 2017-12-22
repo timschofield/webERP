@@ -1,11 +1,11 @@
 CREATE DATABASE IF NOT EXISTS weberpdemo;
 USE weberpdemo;
 SET FOREIGN_KEY_CHECKS = 0;
--- MySQL dump 10.13  Distrib 5.5.57, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.5.58, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: weberpdemo
 -- ------------------------------------------------------
--- Server version	5.5.57-0ubuntu0.14.04.1
+-- Server version	5.5.58-0ubuntu0.14.04.1
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -3418,12 +3418,12 @@ CREATE TABLE `www_users` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-08-12 12:08:32
--- MySQL dump 10.13  Distrib 5.5.57, for debian-linux-gnu (x86_64)
+-- Dump completed on 2017-12-22 18:59:26
+-- MySQL dump 10.13  Distrib 5.5.58, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: weberpdemo
 -- ------------------------------------------------------
--- Server version	5.5.57-0ubuntu0.14.04.1
+-- Server version	5.5.58-0ubuntu0.14.04.1
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -8674,7 +8674,7 @@ INSERT INTO `config` VALUES ('SmtpSetting','0');
 INSERT INTO `config` VALUES ('SO_AllowSameItemMultipleTimes','1');
 INSERT INTO `config` VALUES ('StandardCostDecimalPlaces','2');
 INSERT INTO `config` VALUES ('TaxAuthorityReferenceName','');
-INSERT INTO `config` VALUES ('UpdateCurrencyRatesDaily','2017-07-15');
+INSERT INTO `config` VALUES ('UpdateCurrencyRatesDaily','2017-12-05');
 INSERT INTO `config` VALUES ('VersionNumber','4.14.1');
 INSERT INTO `config` VALUES ('WeightedAverageCosting','0');
 INSERT INTO `config` VALUES ('WikiApp','DokuWiki');
@@ -8712,11 +8712,11 @@ INSERT INTO `contracts` VALUES ('Test123','Testing manufact tape','14','14','TOR
 -- Dumping data for table `currencies`
 --
 
-INSERT INTO `currencies` VALUES ('Australian Dollars','AUD','Australia','cents',2,1.2769,0);
-INSERT INTO `currencies` VALUES ('Swiss Francs','CHF','Swizerland','centimes',2,0.9634,0);
-INSERT INTO `currencies` VALUES ('Euro','EUR','Euroland','cents',2,0.872,1);
-INSERT INTO `currencies` VALUES ('Pounds','GBP','England','Pence',2,0.7638,0);
-INSERT INTO `currencies` VALUES ('Kenyian Shillings','KES','Kenya','none',0,104,0);
+INSERT INTO `currencies` VALUES ('Australian Dollars','AUD','Australia','cents',2,0,0);
+INSERT INTO `currencies` VALUES ('Swiss Francs','CHF','Swizerland','centimes',2,0,0);
+INSERT INTO `currencies` VALUES ('Euro','EUR','Euroland','cents',2,0,1);
+INSERT INTO `currencies` VALUES ('Pounds','GBP','England','Pence',2,0,0);
+INSERT INTO `currencies` VALUES ('Kenyian Shillings','KES','Kenya','none',0,0,0);
 INSERT INTO `currencies` VALUES ('US Dollars','USD','United States','Cents',2,1,1);
 
 --
@@ -8748,6 +8748,8 @@ INSERT INTO `custbranch` VALUES ('SLOW','QUICK','Slow Dog','Hunstman Road','Woof
 INSERT INTO `custbranch` VALUES ('WEB0000017','WEB0000017','Phil Daintree','8 James Nairn Grove','','','Upper Hutt','5018','New Zealand',0.000000,0.000000,1,'TR','ERI',0,'+64(0)275567890','','Phil Daintree','phil@logicworks.co.nz','TOR',2,1,1,0,'8 James Nairn Grove','','','Upper Hutt','5018','New Zealand','','');
 INSERT INTO `custbranch` VALUES ('WEB0000018','WEB0000018','Logic Works Ltd','34 Marram Way','Peka Peka, RD1 Waikanae','','Kapiti','5134','New Zealand',0.000000,0.000000,1,'TR','ERI',0,'04 528 9514','','Phil Daintree','phil@logicworks.co.nz','TOR',2,1,1,0,'34 Marram Way','Peka Peka, RD1 Waikanae','','Kapiti','5134','New Zealand','','');
 INSERT INTO `custbranch` VALUES ('WEB0000019','WEB0000019','Logic Works Ltd','8 James Nairn Grove','James Nairn Grove','Riverstone Terraces','Upper Hutt','5018','New Zealand',0.000000,0.000000,1,'TR','ERI',0,'+6445289514','','Phil Daintree','phil@logicworks.co.nz','TOR',2,1,1,0,'8 James Nairn Grove','James Nairn Grove','Riverstone Terraces','Upper Hutt','5018','New Zealand','','');
+INSERT INTO `custbranch` VALUES ('WEB0000020','WEB0000020','Logic Works Ltd','34 Marram Way','Extra Street address','Peka Peka','Waikanae','5134','New Zealand',0.000000,0.000000,1,'TR','ERI',0,'0275567890','','Phil Daintree','phil@logicworks.co.nz','TOR',2,1,1,0,'34 Marram Way','Extra Street address','Peka Peka','Waikanae','5134','New Zealand','','');
+INSERT INTO `custbranch` VALUES ('WEB0000021','WEB0000021','Logic Works Ltd','34 Marram Way','34 Marram Way again','Peka Peka','Waikanae','5134','New Zealand',0.000000,0.000000,1,'TR','ERI',0,'1234564','','Phil Daintree','phil@logicworks.co.nz','TOR',2,1,1,0,'34 Marram Way','34 Marram Way again','Peka Peka','Waikanae','5134','New Zealand','','');
 
 --
 -- Dumping data for table `custcontacts`
@@ -8789,6 +8791,8 @@ INSERT INTO `debtorsmaster` VALUES ('QUICK','Quick Brown PLC','Fox Street','Jump
 INSERT INTO `debtorsmaster` VALUES ('WEB0000017','Phil Daintree','8 James Nairn Grove','','','Upper Hutt','5018','New Zealand','USD','DE','2013-10-06 09:09:46',1,'CA',0,0,0,NULL,2500,0,'',0,0,'','email','','','','',0,1,'en_GB.utf8');
 INSERT INTO `debtorsmaster` VALUES ('WEB0000018','Logic Works Ltd','34 Marram Way','Peka Peka, RD1 Waikanae','','Kapiti','5134','New Zealand','USD','DE','2014-08-31 12:32:16',1,'CA',0,0,0,NULL,2500,0,'',0,0,'','email','','','','',0,1,'en_GB.utf8');
 INSERT INTO `debtorsmaster` VALUES ('WEB0000019','Logic Works Ltd','8 James Nairn Grove','James Nairn Grove','Riverstone Terraces','Upper Hutt','5018','New Zealand','USD','DE','2015-01-31 11:40:36',1,'CA',0,0,0,NULL,2500,0,'',0,0,'','email','','','','',0,1,'en_GB.utf8');
+INSERT INTO `debtorsmaster` VALUES ('WEB0000020','Logic Works Ltd','34 Marram Way','Extra Street address','Peka Peka','Waikanae','5134','New Zealand','USD','DE','2017-10-25 17:40:29',1,'CA',0,0,0,NULL,2500,0,'',0,0,'','email','','','','51-534-233',0,1,'en_GB.utf8');
+INSERT INTO `debtorsmaster` VALUES ('WEB0000021','Logic Works Ltd','34 Marram Way','34 Marram Way again','Peka Peka','Waikanae','5134','New Zealand','USD','DE','2017-10-25 17:55:52',1,'CA',0,0,0,NULL,2500,0,'',0,0,'','email','','','','tax no',0,1,'en_GB.utf8');
 
 --
 -- Dumping data for table `debtortrans`
@@ -9746,6 +9750,14 @@ INSERT INTO `periods` VALUES (61,'2016-12-31');
 INSERT INTO `periods` VALUES (62,'2017-01-31');
 INSERT INTO `periods` VALUES (63,'2017-02-28');
 INSERT INTO `periods` VALUES (64,'2017-03-31');
+INSERT INTO `periods` VALUES (65,'2017-04-30');
+INSERT INTO `periods` VALUES (66,'2017-05-31');
+INSERT INTO `periods` VALUES (67,'2017-06-30');
+INSERT INTO `periods` VALUES (68,'2017-07-31');
+INSERT INTO `periods` VALUES (69,'2017-08-31');
+INSERT INTO `periods` VALUES (70,'2017-09-30');
+INSERT INTO `periods` VALUES (71,'2017-10-31');
+INSERT INTO `periods` VALUES (72,'2017-11-30');
 
 --
 -- Dumping data for table `pickinglistdetails`
@@ -13694,7 +13706,7 @@ INSERT INTO `systypes` VALUES (43,'Delete w/down asset',1);
 INSERT INTO `systypes` VALUES (44,'Depreciation',1);
 INSERT INTO `systypes` VALUES (49,'Import Fixed Assets',1);
 INSERT INTO `systypes` VALUES (50,'Opening Balance',0);
-INSERT INTO `systypes` VALUES (500,'Auto Debtor Number',19);
+INSERT INTO `systypes` VALUES (500,'Auto Debtor Number',21);
 INSERT INTO `systypes` VALUES (600,'Auto Supplier Number',0);
 
 --
@@ -13854,7 +13866,8 @@ INSERT INTO `workorders` VALUES (37,'MEL','2016-10-19','2016-10-19',0,0,NULL,'',
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('admin','$2y$10$Q8HLC/2rQaB5NcCcK6V6ZOQG3chIsx16mKtZRoSaUsU9okMBDbUwG','Demonstration user','','','','','admin@weberp.org','MEL',8,1,'2017-07-15 13:03:11','','A4','1,1,1,1,1,1,1,1,1,1,1,',0,1,1,0,50,'fluid','en_GB.utf8',0,0);
+INSERT INTO `www_users` VALUES ('admin','$2y$10$Q8HLC/2rQaB5NcCcK6V6ZOQG3chIsx16mKtZRoSaUsU9okMBDbUwG','Demonstration user','','','','','admin@weberp.org','MEL',8,1,'2017-12-05 18:46:18','','A4','1,1,1,1,1,1,1,1,1,1,1,',0,1,1,0,50,'fluid','en_GB.utf8',0,0);
+INSERT INTO `www_users` VALUES ('WEB0000021','$2y$10$aTt/treAhiVVd0mPw1Ums.GcOxBtX/3cIsD1RL//0iT3QUYjvIDlS','Phil Daintree','WEB0000021','','','1234564','phil@logicworks.co.nz','TOR',7,0,NULL,'WEB0000021','A4','1,0,0,0,0,0,0,0,0,0,0',0,1,1,0,30,'','en_GB.utf8',0,0);
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -13862,5 +13875,5 @@ INSERT INTO `www_users` VALUES ('admin','$2y$10$Q8HLC/2rQaB5NcCcK6V6ZOQG3chIsx16
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-08-12 12:08:33
+-- Dump completed on 2017-12-22 18:59:26
 SET FOREIGN_KEY_CHECKS = 1;
