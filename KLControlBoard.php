@@ -305,7 +305,7 @@ if ($ProcessSection01){
 	
 	if ($KL_AdministrationTeam){
 		// Bank Mandiri or  BCA has enough funds to be transferred to Danamon
-		BalanceAccountControl("111121100PT",  1000000,   50000000, $periodnow, $db);
+		BalanceAccountControl(ACCOUNT_PTBB_MANDIRI_GIRO,  1000000,   50000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111121101PT",  1000000,  100000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
@@ -3314,12 +3314,10 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 			}else{
 				$EmailLink = ConvertSQLDate($myrow['klemailremindbanktransfer']);
 			}
-			$BankCodeMandiri = "111121100PT";
 			$PaymentLinkText = 'Apply Payment';
 			$PaymentValue = $myrow['ordervalue']+$myrow['freightcost'];
-			$PaymentMandiri = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&Bank=' . $BankCodeMandiri . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentLinkText .'</a>';
-			$BankCodeiPayMu = "111121120PT";
-			$PaymentiPayMu = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&Bank=' . $BankCodeiPayMu . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentLinkText .'</a>';
+			$PaymentMandiri = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&Bank=' . ACCOUNT_PTBB_MANDIRI_GIRO . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentLinkText .'</a>';
+			$PaymentiPayMu = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&Bank=' . ACCOUNT_PTBB_IPAYMU . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentLinkText .'</a>';
 			
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
