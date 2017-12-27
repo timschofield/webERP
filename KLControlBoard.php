@@ -1098,6 +1098,30 @@ function BalanceAccountControl($account, $min, $max, $period, $db){
 function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $RootPath, $db){
 	
 	$Message = $Category . _(' items NOT in ') . $Shop . ' with QOH >= ' . $MinQOH .' (excluding Change of Price, Move to Discount, Service, Shop online and Return to Supplier)';
+
+	$ShopsKL = NumberOfShops("SHOPKL", $db);
+	$ShopsBL = NumberOfShops("SHOPBL", $db);
+	$ShopsOU = NumberOfShops("SHOPOU", $db);
+
+	// count to how many shops do we need to set the RL
+	if(($Category == 'TESTKL')
+			OR ($Category == 'STABKL') 
+			OR ($Category == 'NOPOKL')){
+		$TypeOfShop = 'SHOPKL';
+		$ShopsToSetRL = $ShopsKL;
+	}elseif(($Category == 'TESTBL')
+			OR ($Category == 'STABBL') 
+			OR ($Category == 'NOPOBL')){
+		$TypeOfShop = 'SHOPBL';
+		$ShopsToSetRL = $ShopsBL;
+	}elseif(($Category == 'DISC20') 
+			OR ($Category == 'DISC50') 
+			OR ($Category == 'DISC80')){
+		$TypeOfShop = 'SHOPOU';
+		$ShopsToSetRL = $ShopsOU;
+	}else{
+		$ShopsToSetRL = 0;
+	}
 	
 	$SQL = "SELECT stockmaster.stockid,
 					stockmaster.description,
@@ -1144,26 +1168,75 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $RootPath, $db){
 							<th class="ascending">' . _('Code') . '</th>
 							<th class="ascending">' . _('Description') . '</th>
 							<th class="ascending">' . _('QOH') . '</th>
-							<th class="ascending">' . _('Reorder Level') . '</th>
+							<th class="ascending">' . _('RL=?') . '</th>
+							<th class="ascending">' . _('RL=1') . '</th>
+							<th class="ascending">' . _('RL=2') . '</th>
+							<th class="ascending">' . _('RL=3') . '</th>
+							<th class="ascending">' . _('RL=4') . '</th>
+							<th class="ascending">' . _('RL=5') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
 			$k = StartEvenOrOddRow($k);
+
+			if ((ItemInList($Category , LIST_STOCK_CATEGORIES_TEST)) 
+				OR (ItemInList($Category , LIST_STOCK_CATEGORIES_STABLE))
+				OR (ItemInList($Category , LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING))
+				OR (ItemInList($Category , LIST_STOCK_CATEGORIES_OUTLET))) {
+				$ManualLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . 'Manual' . '</a>';
+			}else{
+				$ManualLink = '';
+			}
+
+			// set the links to nil, and just set some if we have enough QOH
+			$LinkRL1 = '';
+			$LinkRL2 = '';
+			$LinkRL3 = '';
+			$LinkRL4 = '';
+			$LinkRL5 = '';
+			if($ShopsToSetRL != 0){
+				if ($myrow['qoh'] >= $ShopsToSetRL){
+					$LinkRL1 = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&RL=1' . '">' . 'RL=1' . '</a>';
+				}
+				if ($myrow['qoh'] >= $ShopsToSetRL * 2){
+					$LinkRL2 = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&RL=2' . '">' . 'RL=2' . '</a>';
+				}
+				if ($myrow['qoh'] >= $ShopsToSetRL * 3){
+					$LinkRL3 = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&RL=3' . '">' . 'RL=3' . '</a>';
+				}
+				if ($myrow['qoh'] >= $ShopsToSetRL * 4){
+					$LinkRL4 = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&RL=4' . '">' . 'RL=4' . '</a>';
+				}
+				if ($myrow['qoh'] >= $ShopsToSetRL * 5){
+					$LinkRL5 = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&RL=5' . '">' . 'RL=5' . '</a>';
+				}
+			}
+
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
-			$CodeLinkRL = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . $myrow['reorderlevel'] . '</a>';
+
 			printf('<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
 					</tr>', 
 					$i, 
 					$CodeLink, 
 					$myrow['description'], 
 					$myrow['qoh'], 
-					$CodeLinkRL 
+					$ManualLink,
+					$LinkRL1,
+					$LinkRL2,
+					$LinkRL3,
+					$LinkRL4,
+					$LinkRL5
 					);
 			$i++;
 		}
