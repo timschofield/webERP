@@ -314,7 +314,45 @@ if ($ProcessSection01){
 	}
 	
 	if ($KL_SystemAdmin){
-		BalanceAccountControl("111121105PT",500000000, 1500000000, $periodnow, $db);
+		BalanceListAccountControl("('111111101', 
+									'111111102', 
+									'111111103', 
+									'111111109', 
+									'111111110', 
+									'111111111', 
+									'111111112', 
+									'111111113', 
+									'111111114', 
+									'111111115', 
+									'111111116', 
+									'111111117', 
+									'111111118', 
+									'111111119', 
+									'111111120', 
+									'111111121', 
+									'111111122', 
+									'111111123', 
+									'111111124', 
+									'111111125', 
+									'111111126', 
+									'111111127')", "Total Cash @ shops",         0, 22 * 5000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
+
+		BalanceListAccountControl("('111121105AD', 
+									'111203010AD')", "Total Cash PT.ADU",  500000000, 1500000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
+
+		BalanceListAccountControl("('" . ACCOUNT_PTBB_MANDIRI_GIRO . "', 
+									'111121101PT', 
+									'111121105PT', 
+									'111121110PT', 
+									'111121111PT', 
+									'111121120PT', 
+									'111121130PT', 
+									'111203010PT')", "Total Cash PT.BB", 1500000000, 2500000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
+		
+		BalanceAccountControl("111121105PT",800000000, 2000000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111111200",   50000000,  100000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
@@ -1091,6 +1129,26 @@ function BalanceAccountControl($account, $min, $max, $period, $db){
 	}
 	if ($myrow['saldo'] > $max){
 		$text = "Account " . $account . " - " . $myrow['accountname'] . " is OVER the maximum. Balance = " . locale_number_format($myrow['saldo'],0) . " Maximum = " . locale_number_format($max,0);
+		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+	}
+}
+
+function BalanceListAccountControl($accountlist, $description, $min, $max, $period, $db){
+	$SQL = "SELECT SUM(bfwd + actual) as saldo
+			FROM chartdetails, chartmaster
+			WHERE chartdetails.accountcode = chartmaster.accountcode
+				AND chartdetails.accountcode IN " . $accountlist . "
+				AND chartdetails.period = ". $period . "";
+				
+	$result = DB_query($SQL);
+	$myrow = DB_fetch_array($result);
+	
+	if ($myrow['saldo'] < $min){
+		$text = $description  . " is BELOW the minimum. Balance = " . locale_number_format($myrow['saldo'],0) . " Minimum = " . locale_number_format($min,0);
+		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+	}
+	if ($myrow['saldo'] > $max){
+		$text = $description . " - " . $myrow['accountname'] . " is OVER the maximum. Balance = " . locale_number_format($myrow['saldo'],0) . " Maximum = " . locale_number_format($max,0);
 		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
 	}
 }
