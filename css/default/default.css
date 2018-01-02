@@ -159,15 +159,15 @@ div.error {
 }
 
 div.warn {
-background-color:#f5dbfd;
-color:maroon;
-border:1px solid maroon;
+	background-color:#f5dbfd;
+	color:maroon;
+	border:1px solid maroon;
 }
 
 div.success {
-background-color:#b9ecb4;
-color:darkgreen;
-border:1px solid darkgreen;
+	background-color:#b9ecb4;
+	color:darkgreen;
+	border:1px solid darkgreen;
 }
 
 div.info {
@@ -176,40 +176,40 @@ div.info {
 	border:1px solid navy;
 }
 
-DIV.page_help_text {
+div.page_help_text {
 	background:lightgrey url(images/help.png) top left no-repeat;
-	BORDER:#a52a2a 1px solid;
+	border:#a52a2a 1px solid;
 	padding-top:2px;
 	padding-bottom:2px;
-	PADDING-LEFT:10px;
-	Z-INDEX:1;
+	padding-left:10px;
+	z-index:1;
 	width:80%;
-	FLOAT:none;
-	VISIBILITY:visible;
-	MARGIN:0 auto;
-	POSITION:static;
+	float:none;
+	visibility:visible;
+	margin:0 auto;
+	position:static;
 	font-family:Arial, Verdana, Helvetica, sans-serif;
 	font-weight:normal;
 	color:black;
-	TEXT-ALIGN:center;
+	text-align:center;
 }
 
-DIV.system_check {
-	BORDER:#a52a2a 1px solid;
-	PADDING-LEFT:3px;
-	Z-INDEX:1;
+div.system_check {
+	border:#a52a2a 1px solid;
+	padding-left:3px;
+	z-index:1;
 	width:40%;
-	FLOAT:none;
-	VISIBILITY:visible;
-	MARGIN:0 auto;
-	POSITION:static;
+	float:none;
+	visibility:visible;
+	margin:0 auto;
+	position:static;
 	background:lightgray;
 	font-family:Arial, Verdana, Helvetica, sans-serif;
 	padding-top:1px;
 	padding-bottom:1px;
 	font-weight:normal;
 	color:black;
-	TEXT-ALIGN:left;
+	text-align:left;
 }
 
 .dpTbl { /* date picker background */
@@ -249,16 +249,6 @@ DIV.system_check {
 	border:0px 0px 2px 2px #222 solid;
 	margin:0 auto;
 }
-
-/* Table type is used for UI tables type 2 */
-/*.table2 {
-width:90%;
-background:#eee;
-border:0px 0px 2px 2px #222 solid;
-margin:0 auto;
-}
-
-*/
 
 .tableheader {
 	font-weight:normal;
@@ -369,12 +359,13 @@ textarea.texterror {
 
 #BodyDiv {
 	clear:both;
+	text-align:center;
 }
 
 #BodyWrapDiv {
 	background:#CCCCCC;
 	/*border:thin solid #ccc;*/
-	clear:both;
+	/*clear:both;*/
 }
 
 /*** BODY - MAIN MENU ***/
@@ -425,6 +416,7 @@ textarea.texterror {
 	display:table;
 	float:right;
 	overflow:hidden;
+	text-align:left;
 	width:88.5%;
 }
 
@@ -470,7 +462,7 @@ textarea.texterror {
 .menu_group_item p {
 	color:#00f; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
 	text-indent:-12px; /* this makes the bullet to appear as the li tag previously used */
-	margin:0 0 0 12px; /* One thing that I didnÂ´t like of the li was that it had no left margin applied */
+	margin:0 0 0 12px; /* One thing that I didn't like of the li was that it had no left margin applied */
 }
 
 #InquiriesDiv div { /* header for standard reports/forms, custom reports */

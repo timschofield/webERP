@@ -1,5 +1,6 @@
 webERP Change Log
 
+2/1/18:  PaulT: css/default/default.css: Add text alignment in a couple of styles to match the same use in other CSS to avoid formatting issues when the default theme is used. Also, set several property names to lowercase.
 20/12/17 PaulT: FormMaker.php, ReportMaker.php, WriteForm.inc: A few more PHP 7.1 array compatibility changes.
 20/12/17 PaulT: RCFunctions.inc, FormMaker.php: PHP 7.1 array compatibility change.
 19/12/17 PaulT: PDFOrderStatus.php: Remove redundant ConnectDB.inc include reference. (already included by session.php at the top of the file)
