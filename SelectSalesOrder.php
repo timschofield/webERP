@@ -29,6 +29,13 @@ if (isset($_GET['SelectedCustomer'])) {
 	unset($SelectedCustomer);
 }
 
+if ( isset($_GET['Quotations']) ) {
+	$_POST['Quotations'] = $_GET['Quotations'];
+}
+else {
+	$_POST['Quotations'] = '';
+}
+
 if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders */
 
 	/*Note the button would not have been displayed if the user had no authority to create purchase orders */
@@ -505,15 +512,11 @@ if (!isset($StockID)) {
 		echo '</select></td>
 			<td><select name="Quotations">';
 
-		if (isset($_GET['Quotations']) AND $_GET['Quotations']=='Quotes_Only'){
-			$_POST['Quotations']='Quotes_Only';
-		}
-
-		if (isset($_POST['Quotations']) AND $_POST['Quotations']=='Quotes_Only'){
+		if ( $_POST['Quotations'] == 'Quotes_Only' ){
 			echo '<option selected="selected" value="Quotes_Only">' . _('Quotations Only') . '</option>';
 			echo '<option value="Orders_Only">' . _('Orders Only')  . '</option>';
 			echo '<option value="Overdue_Only">' . _('Overdue Only') . '</option>';
-		} elseif (isset($_POST['Quotations']) AND $_POST['Quotations'] == 'Overdue_Only'){
+		} elseif ( $_POST['Quotations'] == 'Overdue_Only' ){
 			echo '<option selected="selected" value="Overdue_Only">' . _('Overdue Only') . '</option>';
 			echo '<option value="Quotes_Only">' . _('Quotations Only') . '</option>';
 			echo '<option value="Orders_Only">' . _('Orders Only') . '</option>';
@@ -522,6 +525,7 @@ if (!isset($StockID)) {
 			echo '<option value="Quotes_Only">' . _('Quotations Only') . '</option>';
 			echo '<option value="Overdue_Only">' . _('Overdue Only') . '</option>';
 		}
+
 		if (!isset($_POST['DueDateFrom'])) {
 			$_POST['DueDateFrom'] = '';
 		}
@@ -643,15 +647,14 @@ if (isset($StockItemsResult)
 	 }
 
 	//figure out the SQL required from the inputs available
-	if (isset($_POST['Quotations']) AND $_POST['Quotations']=='Orders_Only'){
-		$Quotations = 0;
-	} elseif(isset($_POST['Quotations']) AND $_POST['Quotations'] == 'Quotes_Only') {
-		$Quotations =1;
-	} elseif(isset($_POST['Quotations']) AND $_POST['Quotations'] == 'Overdue_Only') {
+	if( $_POST['Quotations'] == 'Quotes_Only' ) {
+		$Quotations = 1;
+	} elseif( $_POST['Quotations'] == 'Overdue_Only' ) {
 		$Quotations = "0 AND itemdue<'" . Date('Y-m-d') . "'";
 	} else {
 		$Quotations = 0;
 	}
+
 	if (isset($_POST['DueDateFrom']) AND is_date($_POST['DueDateFrom'])) {
 		$DueDateFrom = " AND itemdue>='"  . FormatDateForSQL($_POST['DueDateFrom']) . "' ";
 	} else {
@@ -777,8 +780,7 @@ if (isset($StockItemsResult)
 				$SQL .= " AND salesorders.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 			}
 
-			if (isset($OrderNumber)
-				AND $OrderNumber !='') {
+			if (isset($OrderNumber) AND $OrderNumber !='') {
 
 				$SQL .= "AND salesorders.orderno=". $OrderNumber ."
 				    AND salesorders.quotation=" .$Quotations;
@@ -788,7 +790,6 @@ if (isset($StockItemsResult)
 					AND salesorders.quotation=" . $Quotations;
 
 			} else {
-	      			/* $DateAfterCriteria = FormatDateforSQL($OrdersAfterDate); */
 
 				if (isset($SelectedCustomer)) {
 
@@ -847,7 +848,7 @@ if (isset($StockItemsResult)
 
 		echo '<table cellpadding="2" width="95%" class="selection">';
 
-		if (isset($_POST['Quotations']) AND ($_POST['Quotations']=='Orders_Only' OR $_POST['Quotations'] == 'Overdue_Only')){
+		if ( $_POST['Quotations'] == 'Orders_Only' OR $_POST['Quotations'] == 'Overdue_Only' ){
 			$TableHeader = '<tr>
 								<th class="ascending" >' . _('Modify') . '</th>
 								<th>' . _('Invoice') . '</th>
@@ -1012,13 +1013,16 @@ if (isset($StockItemsResult)
 					</tr>
 				</tfoot>';
 		}
-		echo '<tfoot><tr><td colspan="9" class="number">';
+
+		echo '<tfoot><tr><td colspan="9" class="number"><b>';
+
 		if ($_POST['Quotations']=='Orders_Only'){
-			echo '<b>' . _('Total Order(s) Value in');
+			echo _('Total Order(s) Value in');
 		} else {
-			echo '<b>' . _('Total Quotation(s) Value in');
+			echo _('Total Quotation(s) Value in');
 		}
-		echo ' ' . $_SESSION['CompanyRecord']['currencydefault'] . ' :</b></td>
+
+		echo ' ' . $_SESSION['CompanyRecord']['currencydefault'] . ':</b></td>
 			<td class="number"><b>' . locale_number_format($OrdersTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
 			</tr></tfoot>
 			</table>';
@@ -1031,11 +1035,13 @@ echo '</div>
 } //end StockID already selected
 
 include('includes/footer.php');
+
 function GetSearchItems ($SQLConstraint='') {
-	global $db;
+
 	if ($_POST['Keywords'] AND $_POST['StockCode']) {
 		 echo _('Stock description keywords have been used in preference to the Stock code extract entered');
 	}
+
 	$SQL =  "SELECT stockmaster.stockid,
 				   stockmaster.description,
 				   stockmaster.decimalplaces,
@@ -1045,19 +1051,19 @@ function GetSearchItems ($SQLConstraint='') {
 				ON salesorderdetails.stkcode = stockmaster.stockid AND completed=0
 			INNER JOIN locstock
 			  ON stockmaster.stockid=locstock.stockid";
+
 	if (isset($_POST['StockCat'])
 		AND ((trim($_POST['StockCat']) == '') OR $_POST['StockCat'] == 'All')){
 		 $WhereStockCat = '';
 	} else {
 		 $WhereStockCat = " AND stockmaster.categoryid='" . $_POST['StockCat'] . "' ";
 	}
+
 	if ($_POST['Keywords']) {
 		 //insert wildcard characters in spaces
 		 $SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
 
-		 $SQL .= " WHERE stockmaster.description " . LIKE . " '" . $SearchString . "'
-			  " . $WhereStockCat ;
-
+		 $SQL .= " WHERE stockmaster.description " . LIKE . " '" . $SearchString . "' " . $WhereStockCat;
 
 	 } elseif (isset($_POST['StockCode'])){
 		 $SQL .= " WHERE stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%'" . $WhereStockCat;
@@ -1066,6 +1072,7 @@ function GetSearchItems ($SQLConstraint='') {
 		 $SQL .= " WHERE stockmaster.categoryid='" . $_POST['StockCat'] ."'";
 
 	 }
+
 	$SQL .= $SQLConstraint;
 	$SQL .= " GROUP BY stockmaster.stockid,
 					    stockmaster.description,
@@ -1076,7 +1083,7 @@ function GetSearchItems ($SQLConstraint='') {
 	$ErrMsg =  _('No stock items were returned by the SQL because');
 	$DbgMsg = _('The SQL used to retrieve the searched parts was');
 	$StockItemsResult = DB_query($SQL,$ErrMsg,$DbgMsg);
-	return $StockItemsResult;
 
+	return $StockItemsResult;
 }
 ?>
