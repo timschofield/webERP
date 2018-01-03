@@ -352,6 +352,11 @@ if ($ProcessSection01){
 									'111203010PT')", "Total Cash PT.BB", 2000000000, 3000000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		
+		BalanceListAccountControl("('111259010', 
+									'111259020', 
+									'111259050')", "Total PayPal RL", 0, 20000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
+
 		BalanceAccountControl("111111200",   50000000,  100000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111202010",         -1,          1, $periodnow, $db);
@@ -1142,11 +1147,11 @@ function BalanceListAccountControl($accountlist, $description, $min, $max, $peri
 	$myrow = DB_fetch_array($result);
 	
 	if ($myrow['saldo'] < $min){
-		$text = $description  . " is BELOW the minimum. Balance = " . locale_number_format($myrow['saldo'],0) . " Minimum = " . locale_number_format($min,0);
+		$text = $description . " is BELOW the minimum. Balance = " . locale_number_format($myrow['saldo'],0) . " Minimum = " . locale_number_format($min,0);
 		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
 	}
 	if ($myrow['saldo'] > $max){
-		$text = $description . " - " . $myrow['accountname'] . " is OVER the maximum. Balance = " . locale_number_format($myrow['saldo'],0) . " Maximum = " . locale_number_format($max,0);
+		$text = $description . " is OVER the maximum. Balance = " . locale_number_format($myrow['saldo'],0) . " Maximum = " . locale_number_format($max,0);
 		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
 	}
 }
