@@ -32,7 +32,7 @@ if (isset($_GET['SelectedCustomer'])) {
 if ( isset($_GET['Quotations']) ) {
 	$_POST['Quotations'] = $_GET['Quotations'];
 }
-else {
+else if ( !isset($_POST['Quotations']) ) {
 	$_POST['Quotations'] = '';
 }
 
@@ -677,7 +677,7 @@ if (isset($StockItemsResult)
 	}
 
 	if(!isset($_POST['StockLocation'])) {
-		$_POST['StockLocation'] = '';
+		$_POST['StockLocation'] = $_SESSION['UserStockLocation'];
 	}
 	//Harmonize the ordervalue with SUM function since webERP allowed same items appeared several times in one sales orders. If there is no sum value, this situation not inclued.
 	//We should separate itemdue inquiry from normal inquiry.
