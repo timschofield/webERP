@@ -569,7 +569,7 @@ if ($ProcessSection01){
 	if ($KL_OperationalManager 
 		OR $KL_PurchasingTeam){
 
-		ConsumablesGoodsNotEnoughStock(50, 25, 75, $RootPath, $db);
+		ConsumablesGoodsNotEnoughStock(30, 15, 45, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
