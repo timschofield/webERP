@@ -28,7 +28,7 @@ if ($KL_SystemAdmin
 	HourlyPerformance(15,$RootPath, $db);
 	$NumberOfTestExecuted++;
 
-	RetailCustomerAnalysisByCountry(-1, "ALL", "ALL", 0, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(7, "ALL", "ALL", 9, $CountriesForRetail, $db);
 	$NumberOfTestExecuted++;
 /*	RetailCustomerAnalysisByCountry(-1, "KAPAL-LAUT", "ALL", 0, $CountriesForRetail, $db);
 	$NumberOfTestExecuted++;
@@ -64,7 +64,6 @@ if ($KL_SystemAdmin
 	$NumberOfTestExecuted++;
 	
 }
-
 
 prnMsg("Performed ". $NumberOfTestExecuted . " Sales Hourly Report",'success');
 time_finish($begintime);
