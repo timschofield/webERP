@@ -4,14 +4,13 @@
 // This webERP-style code is based on http://hayageek.com/google-translate-api-tutorial/
 
 function translate_via_google_translator($text,$target,$source=false){
-	$url = 'https://www.googleapis.com/language/translate/v2?key=' . $_SESSION['GoogleTranslatorAPIKey'] . '&q=' . rawurlencode($text);
-	$url .= '&target='.$target;
+	$url = 'https://www.googleapis.com/language/translate/v2?key=' . $_SESSION['GoogleTranslatorAPIKey'] . '&q=' . rawurlencode($text) . '&target=' . $target;
 	if($source){
-		$url .= '&source='.$source;
+		$url .= '&source=' . $source;
 	}
 	$ch = curl_init($url);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	$response = curl_exec($ch);                 
+	$response = curl_exec($ch);
 	curl_close($ch);
 	$obj =json_decode($response,true); //true converts stdClass to associative array.
 	if($obj != null){
@@ -21,13 +20,13 @@ function translate_via_google_translator($text,$target,$source=false){
 		else{
 			$TranslatedText = $obj['data']['translations'][0]['translatedText'];
 	//				if(isset($obj['data']['translations'][0]['detectedSourceLanguage'])) //this is set if only source is not available.
-	//					echo "Detecte Source Languge : ".$obj['data']['translations'][0]['detectedSourceLanguage']."n";     
+	//					echo "Detecte Source Languge : ".$obj['data']['translations'][0]['detectedSourceLanguage']."n";
 		}
 	}
 	else{
-		$TranslatedText = "UNKNOW ERROR";		
+		$TranslatedText = "UNKNOW ERROR";
 	}
 	return $TranslatedText;
-}  
+}
 
 ?>

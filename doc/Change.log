@@ -1,7 +1,9 @@
 webERP Change Log
 
 6/1/18   PaulT: SelectSalesOrder.php: Fix handling to correct table heading value. (Reported in forums by Paul Becker) 
-6/1/18   Phil:  Attempt to avoid XSS attacks by logged in users by parsing out "script>" from all $_POST and $_GET variables - subsequentely changed to strip_tags from all $_POST and $_GETs per Tim's recommendation
+7/1/18   Phil: Update phpxmlrpc to latest from https://github.com/gggeek/phpxmlrpc
+6/1/18   Phil: Attempt to avoid XSS attacks by logged in users by parsing out "script>" from all $_POST and $_GET variables - subsequentely changed to strip_tags from all $_POST and $_GETs per Tim's recommendation
+
 3/1/18:  PaulT: SelectSalesOrder.php: Fix search to retain quote option and set StockLocation to the UserStockLocation to auto-load current Sales Orders.
 2/1/18:  PaulT: SelectSalesOrder.php: Move handling for URL Quotations parameter to top of file to avoid potential page error(s). (Reported in forums by Paul Becker) Handling move reduces code within some conditional checks. This change also includes minor whitespace improvements and removes an unused global reference.
 2/1/18:  PaulT: css/default/default.css: Add text alignment in a couple of styles to match the same use in other CSS to avoid formatting issues when the default theme is used. Also, set several property names to lowercase.
