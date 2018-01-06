@@ -55,13 +55,14 @@ if (isset($_SESSION['DatabaseName'])){
 			if(get_magic_quotes_gpc()) {
 				$_POST['name'] = stripslashes($_POST['name']);
 			}
-			$_POST[$PostVariableName] = DB_escape_string($PostVariableValue);
+
+			$_POST[$PostVariableName] = DB_escape_string(str_replace('script>','',$PostVariableValue));
 		} else {
 			foreach ($PostVariableValue as $PostArrayKey => $PostArrayValue) {
 				if(get_magic_quotes_gpc()) {
 					$PostVariableValue[$PostArrayKey] = stripslashes($value[$PostArrayKey]);
 				}
-				$PostVariableValue[$PostArrayKey] = DB_escape_string($PostArrayValue);
+				$PostVariableValue[$PostArrayKey] = DB_escape_string(str_replace('script>','',$PostArrayValue));
 			}
 		}
 	}
@@ -71,7 +72,7 @@ if (isset($_SESSION['DatabaseName'])){
 	*/
 	foreach ($_GET as $GetKey => $GetValue) {
 		if (gettype($GetValue) != 'array') {
-			$_GET[$GetKey] = DB_escape_string($GetValue);
+			$_GET[$GetKey] = DB_escape_string(str_replace('script>','',$GetValue));
 		}
 	}
 } else { //set SESSION['FormID'] before the a user has even logged in

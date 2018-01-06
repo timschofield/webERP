@@ -1,5 +1,6 @@
 webERP Change Log
 
+6/1/18   Phil: Attempt to avoid XSS attacks by logged in users by parsing out "script>" from all $_POST and $_GET variables.
 3/1/18:  PaulT: SelectSalesOrder.php: Fix search to retain quote option and set StockLocation to the UserStockLocation to auto-load current Sales Orders.
 2/1/18:  PaulT: SelectSalesOrder.php: Move handling for URL Quotations parameter to top of file to avoid potential page error(s). (Reported in forums by Paul Becker) Handling move reduces code within some conditional checks. This change also includes minor whitespace improvements and removes an unused global reference.
 2/1/18:  PaulT: css/default/default.css: Add text alignment in a couple of styles to match the same use in other CSS to avoid formatting issues when the default theme is used. Also, set several property names to lowercase.
@@ -27,7 +28,7 @@ webERP Change Log
 3/12/17 Phil commited Tim's BankAccountBalances.php script
 2/12/17 Exson: Fixed the outstanding quantity is not right in PO_SelectOSPurchOrder.php.
 2/12/17 Phil committed Tim Schofield's fix for javascript date picker for US date formats
-2/12/17 Phil/Paul Becker: Purchases report - also deleted id non-exsitent in css committed changes suggested by VortecCPI http://www.weberp.org/forum/showthread.php?tid=7943 
+2/12/17 Phil/Paul Becker: Purchases report - also deleted id non-exsitent in css committed changes suggested by VortecCPI http://www.weberp.org/forum/showthread.php?tid=7943
 23/11/2017 Andy Couling: Added Petty Cash receipt file upload to directory functionality.
 7/11/17 Exson: Remove cost updating for WAC method in BOMs.php.
 25/10/17 Exson: Fixed the salesman authority problem in PrintCustTrans.php.
