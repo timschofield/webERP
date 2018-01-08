@@ -120,7 +120,7 @@ var $pageY; // y value of bottom of page less bottom margin
 	    //Arial italic 8
 	    $this->SetTextColor(0);
 	    //Page number
-	    $this->Cell(0,10,'Page '.$this->PageNo().'/{nb}',0,0,'C');
+	    $this->Cell(0, 10, 'Page ' . $this->PageNo() . '/' . $this->getNumPages(), 0, 0, 'C');
 	}
 
 	function ReportTable($Data) {

@@ -1,7 +1,9 @@
 webERP Change Log
 
+8/1/18   Paul Becker (PaulT commit): WriteReport.inc: Fix broken page number handling. (Reported in forums: http://www.weberp.org/forum/showthread.php?tid=7955)
+8/1/18   PaulT: Change.log: Update remaining past commit entries (during the past few weeks) to give credit to the right person(s) involved with the change, and when applicable, add the related forum URL for historical reference.
 7/1/18   Phil:  Update phpxmlrpc to latest from https://github.com/gggeek/phpxmlrpc
-6/1/18   PaulT: Update some past commit entries to give credit to the right person(s) involved with the change, and when applicable, add the related forum URL for historical reference.
+6/1/18   PaulT: Change.log: Update some past commit entries to give credit to the right person(s) involved with the change, and when applicable, add the related forum URL for historical reference.
 6/1/18   Paul Becker and Tim (PaulT commit): SelectSalesOrder.php: Fix handling to correct table heading value. (Reported in forums: http://www.weberp.org/forum/showthread.php?tid=8000) 
 6/1/18   Phil:  Attempt to avoid XSS attacks by logged in users by parsing out "script>" from all $_POST and $_GET variables - subsequentely changed to strip_tags from all $_POST and $_GETs per Tim's recommendation
 3/1/18:  Paul Becker (PaulT commit): SelectSalesOrder.php: Fix search to retain quote option and set StockLocation to the UserStockLocation to auto-load current Sales Orders. (Reported in formus: http://www.weberp.org/forum/showthread.php?tid=8000)
