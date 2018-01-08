@@ -218,6 +218,18 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 		$SelectClause = 'qty';
 	}
 
+	$SQL = "SELECT YEAR(`lastdate_in_period`) AS year, MONTHNAME(`lastdate_in_period`) AS month
+			  FROM `periods`
+			 WHERE `periodno`='" . $_POST['FromPeriod'] . "' OR periodno='" . $_POST['ToPeriod'] . "'";
+
+	$result = DB_query($SQL);
+
+	$fromPeriod = DB_fetch_array($result);
+	$_POST['FromPeriod'] = $fromPeriod['month'] . ' ' . $fromPeriod['year'];
+
+	$toPeriod = DB_fetch_array($result);
+	$_POST['ToPeriod'] = $toPeriod['month'] . ' ' . $toPeriod['year'];
+
 	$GraphTitle .= ' ' . _('From Period') . ' ' . $_POST['FromPeriod'] . ' ' . _('to') . ' ' . $_POST['ToPeriod'] . "\n\r";
 
 	if ($_POST['SalesArea']=='All'){
