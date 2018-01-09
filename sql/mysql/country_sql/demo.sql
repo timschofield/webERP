@@ -8581,7 +8581,7 @@ INSERT INTO `config` VALUES ('EDIHeaderMsgId','D:01B:UN:EAN010');
 INSERT INTO `config` VALUES ('EDIReference','WEBERP');
 INSERT INTO `config` VALUES ('EDI_Incoming_Orders','companies/test/EDI_Incoming_Orders');
 INSERT INTO `config` VALUES ('EDI_MsgPending','companies/test/EDI_Pending');
-INSERT INTO `config` VALUES ('EDI_MsgSent','companies/test/EDI__Sent');
+INSERT INTO `config` VALUES ('EDI_MsgSent','companies/test/EDI_Sent');
 INSERT INTO `config` VALUES ('ExchangeRateFeed','Google');
 INSERT INTO `config` VALUES ('Extended_CustomerInfo','1');
 INSERT INTO `config` VALUES ('Extended_SupplierInfo','1');
