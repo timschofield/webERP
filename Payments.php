@@ -58,6 +58,15 @@ if((isset($_POST['UpdateHeader']) AND $_POST['BankAccount']=='')
 echo '<div class="page_help_text">', _('Use this screen to enter payments FROM your bank account.<br />Note: To enter a payment FROM a supplier, first select the Supplier, click Enter a Payment to, or Receipt from the Supplier, and use a negative Payment amount on this form.'), '</div>
 	<br />';
 
+$SQL = "SELECT pagesecurity
+		  FROM scripts
+		 WHERE scripts.script = 'BankAccountBalances.php'";
+$ErrMsg = _('The security for G/L Accounts cannot be retrieved because');
+$DbgMsg = _('The SQL that was used and failed was');
+$Security2Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+$MyUserRow = DB_fetch_array($Security2Result);
+$CashSecurity = $MyUserRow['pagesecurity'];
+echo 'CS: ' . $CashSecurity . '<br>';
 if(isset($_GET['SupplierID'])) {
 	/*The page was called with a supplierID check it is valid and default the inputs for Supplier Name and currency of payment */
 
@@ -167,10 +176,10 @@ if(isset($_POST['FunctionalExRate']) AND $_POST['FunctionalExRate']!='') {
 if(isset($_POST['Paymenttype']) AND $_POST['Paymenttype']!='') {
 	$_SESSION['PaymentDetail'.$identifier]->Paymenttype = $_POST['Paymenttype'];
 	//lets validate the paymenttype here
-	$sql = "SELECT usepreprintedstationery
+	$SQL = "SELECT usepreprintedstationery
 			FROM paymentmethods
 			WHERE paymentname='" . $_SESSION['PaymentDetail'.$identifier]->Paymenttype . "'";
-	$result = DB_query($sql);
+	$result = DB_query($SQL);
 	$myrow = DB_fetch_row($result);
 	if($myrow[0] == 1) {
 		if(empty($_POST['ChequeNum'])) {
@@ -332,10 +341,10 @@ if(isset($_POST['CommitBatch']) AND empty($Errors)) {
 
 	$PeriodNo = GetPeriod($_SESSION['PaymentDetail'.$identifier]->DatePaid,$db);
 
-	$sql = "SELECT usepreprintedstationery
+	$SQL = "SELECT usepreprintedstationery
 			FROM paymentmethods
 			WHERE paymentname='" . $_SESSION['PaymentDetail'.$identifier]->Paymenttype ."'";
-	$result=DB_query($sql);
+	$result=DB_query($SQL);
 	$myrow=DB_fetch_row($result);
 
 	// first time through commit if supplier cheque then print it first
@@ -925,6 +934,16 @@ if($_SESSION['PaymentDetail'.$identifier]->SupplierID!='') {
 
 if($_SESSION['PaymentDetail'.$identifier]->BankAccountName!='') {
 	echo ' ' . _('from the') . ' ' . $_SESSION['PaymentDetail'.$identifier]->BankAccountName;
+
+	if (in_array($CashSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($CashSecurity)) {
+		$CurrBalanceSQL = "SELECT SUM(amount) AS balance FROM banktrans WHERE bankact='" . $_SESSION['PaymentDetail'.$identifier]->Account . "'";
+		$CurrBalanceResult = DB_query($CurrBalanceSQL);
+		$CurrBalanceRow = DB_fetch_array($CurrBalanceResult);
+
+		$DecimalPlacesSQL = "SELECT decimalplaces FROM currencies WHERE currabrev='" . $_SESSION['PaymentDetail'.$identifier]->Account . "'";
+		$DecimalPlacesResult = DB_query($DecimalPlacesSQL);
+		$DecimalPlacesRow = DB_fetch_array($DecimalPlacesResult);
+	}
 }
 
 echo ' ' . _('on') . ' ' . $_SESSION['PaymentDetail'.$identifier]->DatePaid . '</h3></th></tr>';
@@ -966,8 +985,13 @@ if(DB_num_rows($AccountsResults)==0) {
 		}
 		echo 'value="', $myrow['accountcode'], '">', $myrow['bankaccountname'], ' - ', $myrow['currcode'], '</option>';
 	}
-	echo '</select></td>
-		</tr>';
+	echo '</select>';
+
+	if (in_array($CashSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($CashSecurity)) {
+		echo ' (' . locale_number_format($CurrBalanceRow['balance'], $_SESSION['CompanyRecord']['decimalplaces']) . ' ' . _('Balance in account currency') . ')';
+	}
+
+	echo '</td></tr>';
 }
 
 echo '<tr>
@@ -979,7 +1003,6 @@ echo '<tr>
 echo '<tr>
 		<td>', _('Currency'), ':</td>
 		<td>';
-/*$result = DB_query("SELECT currency, currabrev, rate FROM currencies");*/
 $result = DB_query("SELECT currabrev FROM currencies");
 if(DB_num_rows($result) == 0) {
 	prnMsg( _('No currencies are defined yet. Payments cannot be entered until a currency is defined'),'error');
