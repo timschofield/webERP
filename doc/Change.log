@@ -1,6 +1,7 @@
 webERP Change Log
 
-8/1/18   Tim (PaulT commit): PO_Items.php: Fix/improve Supplier checkbox hanlding, and fix a PHP7 compatibility issue. (Reported in forums by Confucius: http://www.weberp.org/forum/showthread.php?tid=7958)
+8/1/18   Paul Becker (PaulT commit): PDFTransPageHeader.inc, PDFTransPageHeaderPortrait.inc: Add additional address fields and/or adds an extra space between some address fields. (Reported in forums: http://www.weberp.org/forum/showthread.php?tid=7942)
+8/1/18   Tim (PaulT commit): PO_Items.php: Fix/improve Supplier checkbox handling, and fix a PHP7 compatibility issue. (Reported in forums by Confucius: http://www.weberp.org/forum/showthread.php?tid=7958)
 8/1/18   Paul Becker/Tim (PaulT commit): SalesGraph.php: Replace period numbers in graph title with month and year. (Reported in forums: http://www.weberp.org/forum/showthread.php?tid=7946)
 7/1/18   Paul Becker (PaulT commit): WriteReport.inc: Fix broken page number handling. (Reported in forums: http://www.weberp.org/forum/showthread.php?tid=7955)
 7/1/18   PaulT: Change.log: Update remaining past commit entries (during the past few weeks) to give credit to the right person(s) involved with the change, and when applicable, add the related forum URL for historical reference.
