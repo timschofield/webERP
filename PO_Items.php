@@ -1149,14 +1149,16 @@ if (!isset($_GET['Edit'])) {
 		$_POST['StockCode']='';
 	}
 
+	if (isset($_POST['SupplierItemsOnly'])) {
+		$Checked = 'checked';
+	} else {
+		$Checked = '';
+	}
+
 	echo '</select></td>
 		<td>' . _('Enter text extracts in the description') . ':</td>
 		<td><input type="text" name="Keywords" size="20" maxlength="25" value="' . $_POST['Keywords'] . '" /></td></tr>
-		<tr><td>' . _('Only items defined as from this Supplier') . ' <input type="checkbox" checked name="SupplierItemsOnly" ';
-	if (isset($_POST['SupplierItemsOnly']) AND $_POST['SupplierItemsOnly']=='on'){
-		echo 'checked';
-	}
-	echo ' /></td>
+		<tr><td>' . _('Only items defined as from this Supplier') . ' <input type="checkbox" ' . $Checked . ' name="SupplierItemsOnly" /></td>
 		<td><b>' . _('OR') . ' </b>' . _('Enter extract of the Stock Code') . ':</td>
 		<td><input type="text" name="StockCode" size="15" maxlength="18" value="' . $_POST['StockCode'] . '" /></td>
 		</tr>
@@ -1213,7 +1215,10 @@ if (isset($SearchResult)) {
 		}
 
 		$SupportedImgExt = array('png','jpg','jpeg');
-		$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
+
+		$imagefilearray = (glob($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
+		$imagefile = reset($imagefilearray);
+
 		if (extension_loaded('gd') && function_exists('gd_info') && file_exists ($imagefile) ) {
 			$ImageSource = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
 			'&amp;StockID='.urlencode($myrow['stockid']).
