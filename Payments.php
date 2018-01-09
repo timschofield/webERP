@@ -66,7 +66,7 @@ $DbgMsg = _('The SQL that was used and failed was');
 $Security2Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 $MyUserRow = DB_fetch_array($Security2Result);
 $CashSecurity = $MyUserRow['pagesecurity'];
-echo 'CS: ' . $CashSecurity . '<br>';
+
 if(isset($_GET['SupplierID'])) {
 	/*The page was called with a supplierID check it is valid and default the inputs for Supplier Name and currency of payment */
 
