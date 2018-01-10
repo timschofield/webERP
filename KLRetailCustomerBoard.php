@@ -63,6 +63,8 @@ if ($KL_SystemAdmin
 	$NumberOfTestExecuted++;
 	RetailCustomerAnalysisByCountry(90, "ALL", "KUTA", 10, $CountriesForRetail, $db);
 	$NumberOfTestExecuted++;
+	RetailCustomerAnalysisByCountry(90, "ALL", "OBEROI", 10, $CountriesForRetail, $db);
+	$NumberOfTestExecuted++;
 	RetailCustomerAnalysisByCountry(90, "ALL", "SEMINYAK", 10, $CountriesForRetail, $db);
 	$NumberOfTestExecuted++;
 	RetailCustomerAnalysisByCountry(90, "ALL", "SANUR", 10, $CountriesForRetail, $db);

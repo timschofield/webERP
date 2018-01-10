@@ -20,11 +20,15 @@ $DaysSalesForOrder = 2;
 /* Selection of shops with smart dispatch from / to KANTO, sorted by priority and sales of the last X days */
 $StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$DaysSalesForOrder));
 
+$DayOfWeek = date('w', strtotime(Date('Y-m-d')));
+
 $SQL = "SELECT locations.loccode,
 				locations.smartdispatchmaxmodels,
 				locations.smartdispatchminmodels
-		FROM locations
-		WHERE locations.smartdispatchfrom = 'KANTO'
+		FROM locations,locationzones
+		WHERE locations.zone = locationzones.code
+			AND locations.smartdispatchfrom = 'KANTO' 
+			AND locationzones.smarttransferonweekday".$DayOfWeek . " = 1 
 		ORDER BY locations.priority ASC,
 			(SELECT COUNT(qtyinvoiced)
 			FROM salesorderdetails, salesorders
@@ -32,6 +36,7 @@ $SQL = "SELECT locations.loccode,
 				AND salesorderdetails.completed = 1
 				AND salesorders.orddate >= '". $StartDate . "'
 				AND salesorders.fromstkloc = locations.loccode) DESC";
+
 $result = DB_query($SQL);
 if (DB_num_rows($result) != 0){
 	while ($myrow = DB_fetch_array($result)) {
