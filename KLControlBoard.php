@@ -973,7 +973,7 @@ function ActiveItemsNoSales($maxdays, $group, $RootPath, $db){
 					stockmaster.categoryid,
 					stockmaster.lastcategoryupdate,
 					stockmaster.units, 
-					(SELECT SUM(quantity)
+					(SELECT SUM(locstock.quantity)
 						FROM locstock
 						WHERE locstock.stockid = stockmaster.stockid) AS quantity
 			FROM 	stockmaster, stockcategory
@@ -1560,7 +1560,7 @@ function FlaggedAsObsoleteButStockAvailable($RootPath, $db){
 				stockmaster.description
 			FROM stockmaster
 			WHERE discontinued = 1 
-				AND (SELECT SUM(quantity)
+				AND (SELECT SUM(locstock.quantity)
 					FROM locstock
 					WHERE stockmaster.stockid = locstock.stockid) > 0";
 	$result = DB_query($SQL);
@@ -1961,37 +1961,40 @@ function ItemsChangingPriceDelayed($NumDays, $RootPath, $db){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 	$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description,
-				(SELECT sum(quantity)
+				(SELECT SUM(locstock.quantity)
+					FROM locstock,locations
+					WHERE locstock.stockid = stockmaster.stockid
+						AND locstock.loccode = locations.loccode
+						AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . ") AS qohpos,
+				(SELECT SUM(locstock.quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
-					AND loccode IN " . LIST_ALL_SHOPS . ") AS qohpos,
-				(SELECT sum(quantity)
+						AND locstock.loccode IN " . LIST_CONSIGNMENT_LOCATIONS . ") AS qohconsignment,
+				(SELECT SUM(locstock.quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
-					AND loccode IN " . LIST_CONSIGNMENT_LOCATIONS . ") AS qohconsignment,
-				(SELECT sum(quantity)
-					FROM locstock
+						AND locstock.loccode IN " . LIST_KANTOR_LOCATIONS . ") AS qohkantor,
+				(SELECT SUM(locstock.quantity)
+					FROM locstock,locations
 					WHERE locstock.stockid = stockmaster.stockid
-					AND loccode IN " . LIST_KANTOR_LOCATIONS . ") AS qohkantor,
-				(SELECT sum(quantity)
-					FROM locstock
-					WHERE locstock.stockid = stockmaster.stockid
-					AND loccode NOT IN " . LIST_KANTOR_LOCATIONS . "
-					AND loccode NOT IN " . LIST_ALL_SHOPS . "
-					AND loccode NOT IN " . LIST_CONSIGNMENT_LOCATIONS . ") AS qohotherlocs,
+						AND locstock.loccode = locations.loccode
+						AND locstock.loccode NOT IN " . LIST_KANTOR_LOCATIONS . "
+						AND locations.typeloc NOT IN " . BALI_SHOPS_LIST_BY_TYPE . "
+						AND loccode NOT IN " . LIST_CONSIGNMENT_LOCATIONS . ") AS qohotherlocs,
 				(SELECT SUM(loctransfers.shipqty-loctransfers.recqty) 
-						FROM loctransfers
-						WHERE loctransfers.stockid = stockmaster.stockid
-						AND loctransfers.shiploc IN " . LIST_ALL_SHOPS . ") AS intransitfromshops,
+					FROM loctransfers,locations
+					WHERE loctransfers.stockid = stockmaster.stockid
+						AND loctransfers.shiploc = locations.loccode
+						AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . ") AS intransitfromshops,
 				(SELECT SUM(loctransfers.shipqty-loctransfers.recqty) 
-						FROM loctransfers
-						WHERE loctransfers.stockid = stockmaster.stockid
+					FROM loctransfers
+					WHERE loctransfers.stockid = stockmaster.stockid
 						AND loctransfers.shiploc IN " . LIST_CONSIGNMENT_LOCATIONS . ") AS intransitfromconsignment,
 				(SELECT SUM(loctransfers.shipqty-loctransfers.recqty) 
-						FROM loctransfers
-						WHERE loctransfers.stockid = stockmaster.stockid
+					FROM loctransfers
+					WHERE loctransfers.stockid = stockmaster.stockid
 						AND loctransfers.shiploc IN " . LIST_KANTOR_LOCATIONS . ") AS intransitfromkantor,
-				(SELECT sum(quantity)
+				(SELECT SUM(locstock.quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid) AS qohtotal,
 				klchangeprice.counterpricechange,
@@ -2070,7 +2073,7 @@ function ItemsInCategoryForMoreThanDays($maxdays, $group, $RootPath, $db){
 					stockmaster.categoryid,
 					stockmaster.lastcategoryupdate,
 					stockmaster.units, 
-					(SELECT SUM(quantity)
+					(SELECT SUM(locstock.quantity)
 						FROM locstock
 						WHERE locstock.stockid = stockmaster.stockid) AS quantity
 			FROM 	stockmaster
@@ -2401,28 +2404,31 @@ function ItemsMovingToDiscountDelayed($TypeDiscount, $NumDays, $RootPath, $db){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 	$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description,
-				(SELECT sum(quantity)
+				(SELECT SUM(locstock.quantity)
+					FROM locstock,locations
+					WHERE locstock.stockid = stockmaster.stockid
+					AND locstock.loccode = locations.loccode
+					AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . ") AS qohpos,
+				(SELECT SUM(locstock.quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
-					AND loccode IN " . LIST_ALL_SHOPS . ") AS qohpos,
-				(SELECT sum(quantity)
+					AND locstock.loccode IN " . LIST_CONSIGNMENT_LOCATIONS . ") AS qohconsignment,
+				(SELECT SUM(locstock.quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
-					AND loccode IN " . LIST_CONSIGNMENT_LOCATIONS . ") AS qohconsignment,
-				(SELECT sum(quantity)
-					FROM locstock
+					AND locstock.loccode IN " . LIST_KANTOR_LOCATIONS . ") AS qohkantor,
+				(SELECT SUM(locstock.quantity)
+					FROM locstock,locations
 					WHERE locstock.stockid = stockmaster.stockid
-					AND loccode IN " . LIST_KANTOR_LOCATIONS . ") AS qohkantor,
-				(SELECT sum(quantity)
-					FROM locstock
-					WHERE locstock.stockid = stockmaster.stockid
-					AND loccode NOT IN " . LIST_KANTOR_LOCATIONS . "
-					AND loccode NOT IN " . LIST_ALL_SHOPS . "
-					AND loccode NOT IN " . LIST_CONSIGNMENT_LOCATIONS . ") AS qohotherlocs,
+					AND locstock.loccode = locations.loccode
+					AND locstock.loccode NOT IN " . LIST_KANTOR_LOCATIONS . "
+					AND locations.typeloc NOT IN " . BALI_SHOPS_LIST_BY_TYPE . "
+					AND locstock.loccode NOT IN " . LIST_CONSIGNMENT_LOCATIONS . ") AS qohotherlocs,
 				(SELECT SUM(loctransfers.shipqty-loctransfers.recqty) 
-						FROM loctransfers
+						FROM loctransfers,locations
 						WHERE loctransfers.stockid = stockmaster.stockid
-						AND loctransfers.shiploc IN " . LIST_ALL_SHOPS . ") AS intransitfromshops,
+						AND loctransfers.shiploc = locations.loccode
+						AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . ") AS intransitfromshops,
 				(SELECT SUM(loctransfers.shipqty-loctransfers.recqty) 
 						FROM loctransfers
 						WHERE loctransfers.stockid = stockmaster.stockid
@@ -2431,7 +2437,7 @@ function ItemsMovingToDiscountDelayed($TypeDiscount, $NumDays, $RootPath, $db){
 						FROM loctransfers
 						WHERE loctransfers.stockid = stockmaster.stockid
 						AND loctransfers.shiploc IN " . LIST_KANTOR_LOCATIONS . ") AS intransitfromkantor,
-				(SELECT sum(quantity)
+				(SELECT SUM(locstock.quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid) AS qohtotal,
 				klmovetodiscount".$TypeDiscount.".countermovediscount,
@@ -2679,7 +2685,7 @@ function ItemsWithoutStandardCost($RootPath, $db){
 	/* Check if there is any item without standard cost */
 	$SQL = "SELECT stockmaster.stockid,
 				stockmaster.description, 
-				(SELECT SUM(quantity) 
+				(SELECT SUM(locstock.quantity) 
 					FROM locstock 
 					WHERE locstock.stockid = stockmaster.stockid) AS availablestock
 			FROM stockmaster,stockcategory

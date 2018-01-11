@@ -83,7 +83,6 @@ define("ZONES_OF_KANTOR",   "('OFFICE')");
 
 define("BALI_SHOPS_LIST_BY_TYPE",  "('SHOPKL','SHOPBL','SHOPOU')");
 define("ALL_SHOPS_LIST_BY_TYPE",   "('SHOPKL','SHOPBL','SHOPOU','ONLINE')");
-define("LIST_ALL_SHOPS",           "('TOK66','TOKSA','TOKKS','TOKSE','TOKPU','TOKSU','TOKOB','TOKSS','TOKPA','TOKKA','TOKMU','TOKPS','TOKAR','TOKSB','TOKPB','TOKBU','TOKM2','TOKU2','TOKU3','TOKO2','TOKBB','TOKTB')"); // NOT includes the shop online
 
 define("LIST_ONLINE_SHOPS", "('TOKWS')");
 
