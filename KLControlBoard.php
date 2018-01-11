@@ -1980,7 +1980,7 @@ function ItemsChangingPriceDelayed($NumDays, $RootPath, $db){
 						AND locstock.loccode = locations.loccode
 						AND locstock.loccode NOT IN " . LIST_KANTOR_LOCATIONS . "
 						AND locations.typeloc NOT IN " . BALI_SHOPS_LIST_BY_TYPE . "
-						AND loccode NOT IN " . LIST_CONSIGNMENT_LOCATIONS . ") AS qohotherlocs,
+						AND locstock.loccode NOT IN " . LIST_CONSIGNMENT_LOCATIONS . ") AS qohotherlocs,
 				(SELECT SUM(loctransfers.shipqty-loctransfers.recqty) 
 					FROM loctransfers,locations
 					WHERE loctransfers.stockid = stockmaster.stockid
