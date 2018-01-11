@@ -10,8 +10,8 @@ include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/bank.png" title="', _('Bank Account Balances'), '" alt="" /> ',
 		_('Bank Account Balances'), '
-	</p<
-	table>
+	</p>
+	<table>
 		<tr>
 			<th>', _('Bank Account'), '</th>
 			<th>', _('Account Name'), '</th>
@@ -19,19 +19,18 @@ echo '<p class="page_title_text"><img src="', $RootPath, '/css/', $_SESSION['The
 			<th>', _('Balance in functional currency'), '</th>
 		</tr>';
 
-$SQL = "SELECT bankaccounts.accountcode,
-				currcode,
-				bankaccountname
+$SQL = "SELECT DISTINCT bankaccounts.accountcode,
+						currcode,
+						bankaccountname
 			FROM bankaccounts
 			INNER JOIN bankaccountusers
-				ON bankaccounts.accountcode=bankaccountusers.accountcode
-				AND userid='" . $_SESSION['UserID'] . "'";
+			ON bankaccounts.accountcode=bankaccountusers.accountcode
+			AND userid='" . $_SESSION['UserID'] . "'";
 $Result = DB_query($SQL);
 
 if (DB_num_rows($Result) == 0) {
 	echo _('There are no bank accounts defined that you have authority to see');
 } else {
-	
 	while ($MyBankRow = DB_fetch_array($Result)) {
 		$CurrBalanceSQL = "SELECT SUM(amount) AS balance FROM banktrans WHERE bankact='" . $MyBankRow['accountcode'] . "'";
 		$CurrBalanceResult = DB_query($CurrBalanceSQL);
