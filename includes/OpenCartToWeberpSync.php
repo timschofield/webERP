@@ -457,6 +457,8 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db,
 						$DiscountStockId = OPENCART_ONLINE_ORDER_DISCOUNT40;
 					}else if (strpos(strtoupper($DiscountCode),"50") !== false){
 						$DiscountStockId = OPENCART_ONLINE_ORDER_DISCOUNT50;
+					}else if (strpos(strtoupper($DiscountCode),"60") !== false){
+						$DiscountStockId = OPENCART_ONLINE_ORDER_DISCOUNT60;
 					}else{
 						$DiscountStockId = OPENCART_ONLINE_ORDER_DISCOUNT10;
 					}
