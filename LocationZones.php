@@ -225,37 +225,37 @@ while ($myrow = DB_fetch_array($result)) {
 	if($myrow['smarttransferonweekday0'] == 1) {
 		$TransferOn0 = 'Yes';
 	} else {
-		$TransferOn0 = 'No';
+		$TransferOn0 = '';
 	}
 	if($myrow['smarttransferonweekday1'] == 1) {
 		$TransferOn1 = 'Yes';
 	} else {
-		$TransferOn1 = 'No';
+		$TransferOn1 = '';
 	}
 	if($myrow['smarttransferonweekday2'] == 1) {
 		$TransferOn2 = 'Yes';
 	} else {
-		$TransferOn2 = 'No';
+		$TransferOn2 = '';
 	}
 	if($myrow['smarttransferonweekday3'] == 1) {
 		$TransferOn3 = 'Yes';
 	} else {
-		$TransferOn3 = 'No';
+		$TransferOn3 = '';
 	}
 	if($myrow['smarttransferonweekday4'] == 1) {
 		$TransferOn4 = 'Yes';
 	} else {
-		$TransferOn4 = 'No';
+		$TransferOn4 = '';
 	}
 	if($myrow['smarttransferonweekday5'] == 1) {
 		$TransferOn5 = 'Yes';
 	} else {
-		$TransferOn5 = 'No';
+		$TransferOn5 = '';
 	}
 	if($myrow['smarttransferonweekday6'] == 1) {
 		$TransferOn6 = 'Yes';
 	} else {
-		$TransferOn6 = 'No';
+		$TransferOn6 = '';
 	}
 
 	printf('<td>%s</td>
