@@ -45,6 +45,7 @@ $SQL = "SELECT stockmoves.stockid,
 			price,
 			reference,
 			qty,
+			discountpercent,
 			narrative
 		FROM stockmoves
 		INNER JOIN stockmaster
@@ -99,9 +100,9 @@ else {
 				<td class="number">' . $StockMovesRow['transno'] . '</td>
 				<td>' . $StockMovesRow['locationname'] . '</td>
 				<td>' . $StockMovesRow['branchcode'] . '</td>
-				<td class="number">' . locale_number_format($StockMovesRow['price'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . locale_number_format($StockMovesRow['price'] * (1 - $StockMovesRow['discountpercent']), $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<td class="number">' . locale_number_format(-$StockMovesRow['qty'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<td class="number">' . locale_number_format((-$StockMovesRow['qty'] * $StockMovesRow['price']), $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . locale_number_format((-$StockMovesRow['qty'] * $StockMovesRow['price'] * (1 - $StockMovesRow['discountpercent'])), $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<td class="number">' . $StockMovesRow['reference'] . '</td>
 				<td>' . $StockMovesRow['narrative'] . '</td>
 			</tr>';

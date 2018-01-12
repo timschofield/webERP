@@ -1,5 +1,6 @@
 webERP Change Log
 
+12/1/18  Paul Becker (PaulT commit): CustomerPurchases.php: Fix script to show actual Price and actual Amount of Sale based upon discount. (Reported in forums: http://www.weberp.org/forum/showthread.php?tid=8040)
 9/1/18   PaulT: Payments.php: Remove my debug/test echo line from the previous commit.
 9/1/18   Paul Becker (PaulT commit): Payments.php: Show bank balance at payments. Know that balance display/output is protected by a similar security check manner as protected information at the dashboard. (Reported in forums: http://weberp.org/forum/showthread.php?tid=8017)
 9/1/18   Paul Becker (PaulT commit): Z_MakeNewCompany.php, default.sql, demo.sql: Remove doubled underscore in EDI_Sent reference. (Reported in forums: http://weberp.org/forum/showthread.php?tid=7920)
