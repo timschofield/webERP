@@ -1,6 +1,7 @@
 <?php
 
 /************************************************************************
+v 3.11 Code cleaning
 v 3.10 Prepare for PT ADU / PT BB accounting
 v 3.01 add fields for returned goods
 v 3.00 read barcode + print receipt
@@ -27,7 +28,7 @@ v 1.00 2011-08-10: Shops start using it.
 v 1.00 2011-07-25: Kantor starts using it.
 *********************************************************************/
 
-define("VERSIONFILE", "3.01"); // 
+define("VERSIONFILE", "3.11"); // 
 
 include('includes/DefineCartClass.php');
 include('includes/session.php');
@@ -374,10 +375,10 @@ foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
 			} 
 		}
 		$result = DB_query("SELECT MAX(discountrate) AS discount
-			            FROM discountmatrix
-				    WHERE salestype='" .  $_SESSION['Items'.$identifier]->DefaultSalesType . "'
-				    AND discountcategory ='" . $OrderLine->DiscCat . "'
-				    AND quantitybreak <='" . $QuantityOfDiscCat . "'");
+							FROM discountmatrix
+							WHERE salestype='" .  $_SESSION['Items'.$identifier]->DefaultSalesType . "'
+								AND discountcategory ='" . $OrderLine->DiscCat . "'
+								AND quantitybreak <='" . $QuantityOfDiscCat . "'");
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]!=0){ /* need to update the lines affected */
 			foreach ($_SESSION['Items'.$identifier]->LineItems as $StkItems_2) {
@@ -538,99 +539,98 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		}else{
 			/*The area is wrong for any reason */
 			prnMsg('ERROR POS0050: The area ' . $Area . ' is not defined. Please call the office inmediately', 'error');
+			$result = DB_Txn_Rollback();
 			include('includes/footer.php');
 			exit;
 		}
-		
-		$HeaderSQL = "INSERT INTO salesorders (	orderno,
-												debtorno,
-												branchcode,
-												customerref,
-												comments,
-												orddate,
-												ordtime,
-												ordertype,
-												shipvia,
-												deliverto,
-												deladd1,
-												contactphone,
-												contactemail,
-												fromstkloc,
-												deliverydate,
-												confirmeddate,
-												deliverblind,
-												salesperson,
-												klpaidcash,
-												klpaidcreditcard,
-												klreturnedgoods,
-												klvouchers,
-												area)
-											VALUES (
-												'" . $OrderNo . "',
-												'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
-												'" . $_SESSION['Items'.$identifier]->Branch . "',
-												'". DB_escape_string($_SESSION['Items'.$identifier]->CustRef) ."',
-												'". stripcslashes($_SESSION['Items'.$identifier]->Comments) . "',
-												'" . Date("Y-m-d") . "',
-												'" . Date("H:i:s") . "',
-												'" . $_SESSION['Items'.$identifier]->DefaultSalesType . "',
-												'" . $_SESSION['Items'.$identifier]->ShipVia . "',
-												'". "" . "',
-												'" . _('POS') . "',
-												'" . "" . "',
-												'" . "" . "',
-												'" . $_SESSION['Items'.$identifier]->Location ."',
-												'" . Date('Y-m-d') . "',
-												'" . Date('Y-m-d') . "',
-												0,
-												'" . $_SESSION['SalesmanLogin'] . "',
-												'" . $_POST['AmountPaidCash'] . "',
-												'" . ($_POST['AmountPaidCCDanamon'] 
-													+ $_POST['AmountPaidAmexBCA']
-												    + $_POST['AmountPaidCCMandiri']
-													+ $_POST['AmountPaidCCBCA']) . "',
-												'" . $_POST['AmountReturnedGoods'] . "',
-												'" . $_POST['AmountVouchers'] . "',
-												'" . $Area . "')";
 
-		$DbgMsg = _('Trouble inserting the sales order header. The SQL that failed was');
+		// Process the header of the sales order
+		$HeaderSQL = "INSERT INTO salesorders 
+						(orderno,
+						debtorno,
+						branchcode,
+						customerref,
+						comments,
+						orddate,
+						ordtime,
+						ordertype,
+						shipvia,
+						deliverto,
+						deladd1,
+						contactphone,
+						contactemail,
+						fromstkloc,
+						deliverydate,
+						confirmeddate,
+						deliverblind,
+						salesperson,
+						klpaidcash,
+						klpaidcreditcard,
+						klreturnedgoods,
+						klvouchers,
+						area)
+					VALUES (
+						'" . $OrderNo . "',
+						'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
+						'" . $_SESSION['Items'.$identifier]->Branch . "',
+						'". DB_escape_string($_SESSION['Items'.$identifier]->CustRef) ."',
+						'". stripcslashes($_SESSION['Items'.$identifier]->Comments) . "',
+						'" . Date("Y-m-d") . "',
+						'" . Date("H:i:s") . "',
+						'" . $_SESSION['Items'.$identifier]->DefaultSalesType . "',
+						'" . $_SESSION['Items'.$identifier]->ShipVia . "',
+						'". "" . "',
+						'" . _('POS') . "',
+						'" . "" . "',
+						'" . "" . "',
+						'" . $_SESSION['Items'.$identifier]->Location ."',
+						'" . Date('Y-m-d') . "',
+						'" . Date('Y-m-d') . "',
+						0,
+						'" . $_SESSION['SalesmanLogin'] . "',
+						'" . $_POST['AmountPaidCash'] . "',
+						'" . ($_POST['AmountPaidCCDanamon'] 
+							+ $_POST['AmountPaidAmexBCA']
+							+ $_POST['AmountPaidCCMandiri']
+							+ $_POST['AmountPaidCCBCA']) . "',
+						'" . $_POST['AmountReturnedGoods'] . "',
+						'" . $_POST['AmountVouchers'] . "',
+						'" . $Area . "')";
+		$DbgMsg = _('Problem inserting the sales order header. The SQL that failed was');
 		$ErrMsg = _('The order cannot be added because');
 		$InsertQryResult = DB_query($HeaderSQL,$ErrMsg,$DbgMsg,true);
-		
-		$StartOf_LineItemsSQL = "INSERT INTO salesorderdetails (orderlineno,
-																orderno,
-																stkcode,
-																unitprice,
-																quantity,
-																discountpercent,
-																narrative,
-																itemdue,
-																actualdispatchdate,
-																qtyinvoiced,
-																completed)
-															VALUES (";
 
-		$DbgMsg = _('Trouble inserting a line of a sales order. The SQL that failed was');
+		// Now process all the lines of the order
+		$DbgMsg = _('Problem inserting a line of a sales order. The SQL that failed was');
 		foreach ($_SESSION['Items'.$identifier]->LineItems as $StockItem) {
 
-			$LineItemsSQL = $StartOf_LineItemsSQL .
-											"'".$StockItem->LineNumber . "',
-											'" . $OrderNo . "',
-											'" . $StockItem->StockID . "',
-											'". $StockItem->Price . "',
-											'" . $StockItem->Quantity . "',
-											'" . floatval($StockItem->DiscountPercent) . "',
-											'" . DB_escape_string($StockItem->Narrative) . "',
-											'" . Date('Y-m-d') . "',
-											'" . Date('Y-m-d') . "',
-											'" . $StockItem->Quantity . "',
-											1)";
+			$LineItemsSQL = "INSERT INTO salesorderdetails 
+								(orderlineno,
+								orderno,
+								stkcode,
+								unitprice,
+								quantity,
+								discountpercent,
+								narrative,
+								itemdue,
+								actualdispatchdate,
+								qtyinvoiced,
+								completed)
+							VALUES ('".$StockItem->LineNumber . "',
+								'" . $OrderNo . "',
+								'" . $StockItem->StockID . "',
+								'". $StockItem->Price . "',
+								'" . $StockItem->Quantity . "',
+								'" . floatval($StockItem->DiscountPercent) . "',
+								'" . DB_escape_string($StockItem->Narrative) . "',
+								'" . Date('Y-m-d') . "',
+								'" . Date('Y-m-d') . "',
+								'" . $StockItem->Quantity . "',
+								1)";
 
 			$ErrMsg = _('Unable to add the sales order line');
 			$Ins_LineItemResult = DB_query($LineItemsSQL,$ErrMsg,$DbgMsg,true);
-
 		} /* end inserted line items into sales order details */
-
 		/* End of insertion of new sales order */
 
 		/*Now insert the DebtorTrans */
@@ -677,7 +677,6 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		$ErrMsg =_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The debtor transaction record could not be inserted because');
 		$DbgMsg = _('The following SQL to insert the debtor transaction record was used');
 	 	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-
 		$DebtorTransID = DB_Last_Insert_ID($db,'debtortrans','id');
 
 		/* Insert the tax totals for each tax authority where tax was charged on the invoice */
@@ -741,38 +740,39 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 			}
 
 			$SQL = "INSERT INTO stockmoves (
-											stockid,
-											type,
-											transno,
-											loccode,
-											trandate,
-											userid,
-											debtorno,
-											branchcode,
-											price,
-											prd,
-											reference,
-											qty,
-											discountpercent,
-											standardcost,
-											newqoh,
-											narrative )
-							VALUES ('" . $OrderLine->StockID . "',
-											10,
-											'" . $InvoiceNo . "',
-											'" . $_SESSION['Items'.$identifier]->Location . "',
-											'" . Date('Y-m-d') . "',
-											'" . $_SESSION['UserID'] . "',
-											'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
-											'" . $_SESSION['Items'.$identifier]->Branch . "',
-											'" . $LocalCurrencyPrice . "',
-											'" . $PeriodNo . "',
-											'" . $OrderNo . "',
-											'" . -$OrderLine->Quantity . "',
-											'" . $OrderLine->DiscountPercent . "',
-											'" . $OrderLine->StandardCost . "',
-											'" . ($QtyOnHandPrior - $OrderLine->Quantity) . "',
-											'" . DB_escape_string($OrderLine->Narrative) . "' )";
+						stockid,
+						type,
+						transno,
+						loccode,
+						trandate,
+						userid,
+						debtorno,
+						branchcode,
+						price,
+						prd,
+						reference,
+						qty,
+						discountpercent,
+						standardcost,
+						newqoh,
+						narrative )
+					VALUES (
+						'" . $OrderLine->StockID . "',
+						10,
+						'" . $InvoiceNo . "',
+						'" . $_SESSION['Items'.$identifier]->Location . "',
+						'" . Date('Y-m-d') . "',
+						'" . $_SESSION['UserID'] . "',
+						'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
+						'" . $_SESSION['Items'.$identifier]->Branch . "',
+						'" . $LocalCurrencyPrice . "',
+						'" . $PeriodNo . "',
+						'" . $OrderNo . "',
+						'" . -$OrderLine->Quantity . "',
+						'" . $OrderLine->DiscountPercent . "',
+						'" . $OrderLine->StandardCost . "',
+						'" . ($QtyOnHandPrior - $OrderLine->Quantity) . "',
+						'" . DB_escape_string($OrderLine->Narrative) . "' )";
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('Stock movement records could not be inserted because');
 			$DbgMsg = _('The following SQL to insert the stock movement records was used');
 			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
@@ -783,11 +783,12 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 			/*Insert the taxes that applied to this line */
 			foreach ($OrderLine->Taxes as $Tax) {
 
-				$SQL = "INSERT INTO stockmovestaxes (stkmoveno,
-									taxauthid,
-									taxrate,
-									taxcalculationorder,
-									taxontax)
+				$SQL = "INSERT INTO stockmovestaxes (
+							stkmoveno,
+							taxauthid,
+							taxrate,
+							taxcalculationorder,
+							taxontax)
 						VALUES ('" . $StkMoveNo . "',
 							'" . $Tax->TaxAuthID . "',
 							'" . $Tax->TaxRate . "',
@@ -799,101 +800,18 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 			} //end for each tax for the line
 
 			/*Insert Sales Analysis records */
-
-			$SQL="SELECT COUNT(*),
-					salesanalysis.stockid,
-					salesanalysis.stkcategory,
-					salesanalysis.cust,
-					salesanalysis.custbranch,
-					salesanalysis.area,
-					salesanalysis.periodno,
-					salesanalysis.typeabbrev,
-					salesanalysis.salesperson
-				FROM salesanalysis,
-					custbranch,
-					stockmaster
-				WHERE salesanalysis.stkcategory=stockmaster.categoryid
-				AND salesanalysis.stockid=stockmaster.stockid
-				AND salesanalysis.cust=custbranch.debtorno
-				AND salesanalysis.custbranch=custbranch.branchcode
-				AND salesanalysis.area='" . $Area ."'
-				AND salesanalysis.salesperson=custbranch.salesman
-				AND salesanalysis.typeabbrev ='" . $_SESSION['Items'.$identifier]->DefaultSalesType . "'
-				AND salesanalysis.periodno='" . $PeriodNo . "'
-				AND salesanalysis.cust " . LIKE . " '" . $_SESSION['Items'.$identifier]->DebtorNo . "'
-				AND salesanalysis.custbranch " . LIKE . " '" . $_SESSION['Items'.$identifier]->Branch . "'
-				AND salesanalysis.stockid " . LIKE . " '" . $OrderLine->StockID . "'
-				AND salesanalysis.budgetoractual=1
-				GROUP BY salesanalysis.stockid,
-					salesanalysis.stkcategory,
-					salesanalysis.cust,
-					salesanalysis.custbranch,
-					salesanalysis.area,
-					salesanalysis.periodno,
-					salesanalysis.typeabbrev,
-					salesanalysis.salesperson";
-
-			$ErrMsg = _('The count of existing Sales analysis records could not run because');
-			$DbgMsg = _('SQL to count the no of sales analysis records');
-			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-
-			$myrow = DB_fetch_row($Result);
-
-			if ($myrow[0]>0){  /*Update the existing record that already exists */
-
-				$SQL = "UPDATE salesanalysis
-							SET amt=amt+" . ($OrderLine->Price * $OrderLine->Quantity / $ExRate) . ",
-								cost=cost+" . ($OrderLine->StandardCost * $OrderLine->Quantity) . ",
-								qty=qty +" . $OrderLine->Quantity . ",
-								disc=disc+" . ($OrderLine->DiscountPercent * $OrderLine->Price * $OrderLine->Quantity / $ExRate) . "
-							WHERE salesanalysis.area='" . $myrow[5] . "'
-								AND salesanalysis.salesperson='" . $myrow[8] . "'
-								AND typeabbrev ='" . $_SESSION['Items'.$identifier]->DefaultSalesType . "'
-								AND periodno = '" . $PeriodNo . "'
-								AND cust " . LIKE . " '" . $_SESSION['Items'.$identifier]->DebtorNo . "'
-								AND custbranch " . LIKE . " '" . $_SESSION['Items'.$identifier]->Branch . "'
-								AND stockid " . LIKE . " '" . $OrderLine->StockID . "'
-								AND salesanalysis.stkcategory ='" . $myrow[2] . "'
-								AND budgetoractual=1";
-
-			} else { /* insert a new sales analysis record */
-
-				$SQL = "INSERT INTO salesanalysis (	typeabbrev,
-													periodno,
-													amt,
-													cost,
-													cust,
-													custbranch,
-													qty,
-													disc,
-													stockid,
-													area,
-													budgetoractual,
-													salesperson,
-													stkcategory	)
-					SELECT '" . $_SESSION['Items'.$identifier]->DefaultSalesType . "',
-						'" . $PeriodNo . "',
-						'" . ($OrderLine->Price * $OrderLine->Quantity / $ExRate) . "',
-						'" . ($OrderLine->StandardCost * $OrderLine->Quantity) . "',
-						'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
-						'" . $_SESSION['Items'.$identifier]->Branch . "',
-						'" . $OrderLine->Quantity . "',
-						'" . ($OrderLine->DiscountPercent * $OrderLine->Price * $OrderLine->Quantity / $ExRate) . "',
-						'" . $OrderLine->StockID . "',
-						'" . $Area . "',
-						1,
-						custbranch.salesman,
-						stockmaster.categoryid
-					FROM stockmaster,
-						custbranch
-					WHERE stockmaster.stockid = '" . $OrderLine->StockID . "'
-					AND custbranch.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'
-					AND custbranch.branchcode='" . $_SESSION['Items'.$identifier]->Branch . "'";
-			}
-
-			$ErrMsg = _('Sales analysis record could not be added or updated because');
-			$DbgMsg = _('The following SQL to insert the sales analysis record was used');
-			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+			InsertItemSoldIntoSalesAnalysis($Area,
+											$_SESSION['Items'.$identifier]->DefaultSalesType,
+											$PeriodNo,
+											$_SESSION['Items'.$identifier]->DebtorNo,
+											$_SESSION['Items'.$identifier]->Branch,
+											$OrderLine->StockID,
+											$OrderLine->Price,
+											$OrderLine->Quantity,
+											$ExRate,
+											$OrderLine->StandardCost,
+											$OrderLine->DiscountPercent
+											);
 			
 			if ($OrderLine->StandardCost !=0){
 				/*first the cost of sales entry*/
@@ -1223,8 +1141,6 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 			}
 		}
-		/*Also if GL is linked to debtors need to process the debit to bank and credit to debtors for the payment */
-		/*Need to figure out the cross rate between customer currency and bank account currency */
 
 		if ($_POST['AmountPaidCash']!=0){
 			// si han pagat CASH, tot o en part

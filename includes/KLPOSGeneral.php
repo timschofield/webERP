@@ -192,6 +192,116 @@ function AdjustPackagingMovement($StockId, $QtyDelivered, $InvoiceNo, $PeriodNo,
 	}
 }
 
+function InsertItemSoldIntoSalesAnalysis ($Area,
+										$SalesType,
+										$PeriodNo,
+										$DebtorNo,
+										$DebtorBranch,
+										$StockID,
+										$Price,
+										$Quantity,
+										$ExRate,
+										$StandardCost,
+										$DiscountPercent
+										){
+
+	$SQL="SELECT COUNT(*),
+			salesanalysis.stockid,
+			salesanalysis.stkcategory,
+			salesanalysis.cust,
+			salesanalysis.custbranch,
+			salesanalysis.area,
+			salesanalysis.periodno,
+			salesanalysis.typeabbrev,
+			salesanalysis.salesperson
+		FROM salesanalysis,
+			custbranch,
+			stockmaster
+		WHERE salesanalysis.stkcategory=stockmaster.categoryid
+		AND salesanalysis.stockid=stockmaster.stockid
+		AND salesanalysis.cust=custbranch.debtorno
+		AND salesanalysis.custbranch=custbranch.branchcode
+		AND salesanalysis.area='" . $Area ."'
+		AND salesanalysis.salesperson=custbranch.salesman
+		AND salesanalysis.typeabbrev ='" . $SalesType . "'
+		AND salesanalysis.periodno='" . $PeriodNo . "'
+		AND salesanalysis.cust " . LIKE . " '" . $DebtorNo . "'
+		AND salesanalysis.custbranch " . LIKE . " '" . $DebtorBranch . "'
+		AND salesanalysis.stockid " . LIKE . " '" . $StockID . "'
+		AND salesanalysis.budgetoractual=1
+		GROUP BY salesanalysis.stockid,
+			salesanalysis.stkcategory,
+			salesanalysis.cust,
+			salesanalysis.custbranch,
+			salesanalysis.area,
+			salesanalysis.periodno,
+			salesanalysis.typeabbrev,
+			salesanalysis.salesperson";
+
+	$ErrMsg = _('The count of existing Sales analysis records could not run because');
+	$DbgMsg = _('SQL to count the no of sales analysis records');
+	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+
+	$myrow = DB_fetch_row($Result);
+
+	if ($myrow[0]>0){  /*Update the existing record that already exists */
+
+		$SQL = "UPDATE salesanalysis
+					SET amt=amt+" . ($Price * $Quantity / $ExRate) . ",
+						cost=cost+" . ($StandardCost * $Quantity) . ",
+						qty=qty +" . $Quantity . ",
+						disc=disc+" . ($DiscountPercent * $Price * $Quantity / $ExRate) . "
+					WHERE salesanalysis.area='" . $myrow[5] . "'
+						AND salesanalysis.salesperson='" . $myrow[8] . "'
+						AND typeabbrev ='" . $SalesType . "'
+						AND periodno = '" . $PeriodNo . "'
+						AND cust " . LIKE . " '" . $DebtorNo . "'
+						AND custbranch " . LIKE . " '" . $DebtorBranch . "'
+						AND stockid " . LIKE . " '" . $StockID . "'
+						AND salesanalysis.stkcategory ='" . $myrow[2] . "'
+						AND budgetoractual=1";
+
+	} else { /* insert a new sales analysis record */
+
+		$SQL = "INSERT INTO salesanalysis (	typeabbrev,
+											periodno,
+											amt,
+											cost,
+											cust,
+											custbranch,
+											qty,
+											disc,
+											stockid,
+											area,
+											budgetoractual,
+											salesperson,
+											stkcategory	)
+			SELECT '" . $SalesType . "',
+				'" . $PeriodNo . "',
+				'" . ($Price * $Quantity / $ExRate) . "',
+				'" . ($StandardCost * $Quantity) . "',
+				'" . $DebtorNo . "',
+				'" . $DebtorBranch . "',
+				'" . $Quantity . "',
+				'" . ($DiscountPercent * $Price * $Quantity / $ExRate) . "',
+				'" . $StockID . "',
+				'" . $Area . "',
+				1,
+				custbranch.salesman,
+				stockmaster.categoryid
+			FROM stockmaster,
+				custbranch
+			WHERE stockmaster.stockid = '" . $StockID . "'
+			AND custbranch.debtorno = '" . $DebtorNo . "'
+			AND custbranch.branchcode='" . $DebtorBranch . "'";
+	}
+
+	$ErrMsg = _('Sales analysis record could not be added or updated because');
+	$DbgMsg = _('The following SQL to insert the sales analysis record was used');
+	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	
+}
+
 function RecordRetailCustomerInformation($OrderNo, $FirstName, $LastName, $Country, $DateOfBirth, $Email, $Sex, $db){
 	// If some field is filled, record it.
 	// For some reason, Country = 0 if empty
@@ -585,7 +695,7 @@ function AccountDebtorDiscount($ReceiptNumber,
 
 	return $ReceiptNumber;
 }
-
+	
 /********************************************************************************************************/
 /***                               PRINT POS RECEIPT FUNCTIONS                                        ***/
 /********************************************************************************************************/
