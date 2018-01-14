@@ -2517,7 +2517,7 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 		$ShipmentAWB = 'AWB';
 		$TitleWarning = 'POs arriving in the next ' . $maxdays . ' days';
 		$SQLFilterKLStatus = " AND purchorders.klstatus >= '2000' 
-			AND purchorders.klstatus < '6000'
+			AND purchorders.klstatus <= '6000'
 			AND purchorders." . $DateField1 ." <  '". $StartDate ."'";
 	}else{
 		return;
