@@ -1,5 +1,6 @@
 webERP Change Log
 
+15/1/18  Paul Becker (PaulT commit): CustomerPurchases.php: Adds Units and Discount columns and other minor changes so that it more closely matches output from OrderDetails.php. (Reported in forums: http://www.weberp.org/forum/showthread.php?tid=8040)
 12/1/18  Paul Becker (PaulT commit): CustomerPurchases.php: Fix script to show actual Price and actual Amount of Sale based upon discount. (Reported in forums: http://www.weberp.org/forum/showthread.php?tid=8040)
 9/1/18   PaulT: Payments.php: Remove my debug/test echo line from the previous commit.
 9/1/18   Paul Becker (PaulT commit): Payments.php: Show bank balance at payments. Know that balance display/output is protected by a similar security check manner as protected information at the dashboard. (Reported in forums: http://weberp.org/forum/showthread.php?tid=8017)
