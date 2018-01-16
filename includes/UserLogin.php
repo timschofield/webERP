@@ -216,33 +216,13 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 			 * we are not in session (i.e. before login)
 			 */
 			if (empty($_SESSION['LogoFile'])) {
-				include('includes/KLDefines.php');
-				include('includes/KLRoles.inc');
-				$SQL = "SELECT locations.typeloc
-						FROM locations
-						WHERE locations.loccode = '" . $_SESSION['UserStockLocation'] . "' ";
-				$resultloc = DB_query($SQL);
-				if (DB_num_rows($result) != 0){
-					$myloc = DB_fetch_array($resultloc);
-					if ($myloc['typeloc'] == 'SHOPKL'){
-						$LogoFile = 'companies/' .  $_SESSION['DatabaseName'] . '/LogoKL.png';
-					} else if ($myloc['typeloc'] == 'SHOPBL'){
-						$LogoFile = 'companies/' .  $_SESSION['DatabaseName'] . '/LogoBlink.png';
-					} else if ($myloc['typeloc'] == 'SHOPOU'){
-						$LogoFile = 'companies/' .  $_SESSION['DatabaseName'] . '/LogoOutlet.png';
-					} else {
-						if(strpos($_SERVER['HTTP_HOST'],"bumibiru")){
-							$LogoFile = 'companies/' .  $_SESSION['DatabaseName'] . '/LogoPTBB.png';
-						}elseif(strpos($_SERVER['HTTP_HOST'],"adu")){
-							$LogoFile = 'companies/' .  $_SESSION['DatabaseName'] . '/LogoPTADU.png';
-						}else{
-							$LogoFile = 'companies/' .  $_SESSION['DatabaseName'] . '/LogowebERP.png';
-						}
-					}
-				}	
-
-				if (file_exists($LogoFile)) {
-					$_SESSION['LogoFile'] = $LogoFile;
+				/* find a logo in companies/CompanyDir */
+				if (file_exists($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/LogoKLBlink.png')) {
+					$_SESSION['LogoFile'] = 'companies/' .  $_SESSION['DatabaseName'] . '/LogoKLBlink.png';
+				} elseif (file_exists($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/LogoKLBlink.jpg')) {
+					$_SESSION['LogoFile'] = 'companies/' .  $_SESSION['DatabaseName'] . '/LogoKLBlink.jpg';
+				}else{
+					$_SESSION['LogoFile'] = 'companies/' .  $_SESSION['DatabaseName'] . '/LogoPTADU.jpg';
 				}
 			}
 
