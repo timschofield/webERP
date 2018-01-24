@@ -1694,9 +1694,12 @@ if ($_SESSION['RequireCustomerSelection'] ==1
             echo '<div>';
 			echo '<input name="FormID" type="hidden" value="' . $_SESSION['FormID'] . '" />';
 			echo '<table class="table1">';
-			echo '<tr><td colspan="1"><input name="PreviousList" type="hidden" value="'.strval($Offset-1).'" /><input tabindex="'.strval($j+8).'" type="submit" name="Previous" value="'._('Previous').'" /></td>';
-			echo '<td style="text-align:center" colspan="6"><input name="SelectingOrderItems" type="hidden" value="1" /><input tabindex="'.strval($j+9).'" type="submit" value="'._('Add to Sales Order').'" /></td>';
-			echo '<td colspan="1"><input name="NextList" type="hidden" value="'.strval($Offset+1).'" /><input tabindex="'.strval($j+10).'" name="Next" type="submit" value="'._('Next').'" /></td></tr>';
+			echo '<thead><tr>
+					<td colspan="1"><input name="PreviousList" type="hidden" value="'.strval($Offset-1).'" /><input tabindex="'.strval($j+8).'" type="submit" name="Previous" value="'._('Previous').'" /></td>
+					<td class="centre" colspan="6"><input name="SelectingOrderItems" type="hidden" value="1" /><input tabindex="'.strval($j+9).'" type="submit" value="'._('Add to Sales Order').'" /></td>
+					<td colspan="1"><input name="NextList" type="hidden" value="'.strval($Offset+1).'" /><input tabindex="'.strval($j+10).'" name="Next" type="submit" value="'._('Next').'" /></td>
+				</tr></thead>';
+			echo '<tbody>';
 			echo '<tr>
 					<th class="ascending" >' . _('Code') . '</th>
 		   			<th class="ascending" >' . _('Description') . '</th>
@@ -1789,11 +1792,12 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	#end of page full new headings if
 			}
 	#end of while loop
-			echo '<tr>
+			echo '</tbody>';
+			echo '<tfoot><tr>
 					<td><input name="PreviousList" type="hidden" value="'. strval($Offset-1).'" /><input tabindex="'. strval($j+7).'" type="submit" name="Previous" value="'._('Previous').'" /></td>
-					<td style="text-align:center" colspan="6"><input name="SelectingOrderItems" type="hidden" value="1" /><input tabindex="'. strval($j+8).'" type="submit" value="'._('Add to Sales Order').'" /></td>
+					<td class="centre" colspan="6"><input name="SelectingOrderItems" type="hidden" value="1" /><input tabindex="'. strval($j+8).'" type="submit" value="'._('Add to Sales Order').'" /></td>
 					<td><input name="NextList" type="hidden" value="'.strval($Offset+1).'" /><input tabindex="'.strval($j+9).'" name="Next" type="submit" value="'._('Next').'" /></td>
-				</tr>
+				</tr></tfoot>
 				</table>
 				</div>';
 
