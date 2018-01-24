@@ -1351,7 +1351,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
         echo '<div class="page_help_text">' . _('Quantity (required) - Enter the number of units ordered.  Price (required) - Enter the unit price.  Discount (optional) - Enter a percentage discount.  GP% (optional) - Enter a percentage Gross Profit (GP) to add to the unit cost.  Due Date (optional) - Enter a date for delivery.') . '</div><br />';
 		echo '<br />
 				<table width="90%" cellpadding="2">
-				<tr style="background-color:#800000">';
+				<tr class="tableheader">';
 /*		if($_SESSION['Items'.$identifier]->DefaultPOLine == 1){*/
 		if($ShowPOLine) {
 			echo '<th>' . _('PO Line') . '</th>';
@@ -1471,7 +1471,6 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		echo '<tr class="EvenTableRows">
 				<td class="number" colspan="6"><b>' . _('TOTAL Excl Tax/Freight') . '</b></td>
 				<td colspan="' . $varColSpan . '" class="number"><b>' . $DisplayTotal . '</b></td>
-				<td colspan="2">' . $ShowDiscountGP . '&nbsp;</td>
 			</tr>
 			</table>';
 
