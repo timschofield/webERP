@@ -1,5 +1,6 @@
 webERP Change Log
 
+24/1/18  Andy Couling (PaulT commit): SupplierInvoice.php, CounterSales.php: Replace two other hard-coded styles with existing CSS class. (Reported in forums: http://www.weberp.org/forum/showthread.php?tid=8057)
 24/1/18  Paul Becker/PaulT (PaulT commit): SelectOrderItems.php: Paul B. Remove stray value output / PaulT. Replace hard-coded style with existing CSS class. (Reported in forums: http://www.weberp.org/forum/showthread.php?tid=8057)
 15/1/18  Paul Becker (PaulT commit): CustomerPurchases.php: Adds Units and Discount columns and other minor changes so that it more closely matches output from OrderDetails.php. (Reported in forums: http://www.weberp.org/forum/showthread.php?tid=8040)
 12/1/18  Paul Becker (PaulT commit): CustomerPurchases.php: Fix script to show actual Price and actual Amount of Sale based upon discount. (Reported in forums: http://www.weberp.org/forum/showthread.php?tid=8040)

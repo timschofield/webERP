@@ -667,7 +667,7 @@ if (!isset($_POST['PostInvoice'])){
 			<tr>
 				<th colspan="6">' . _('Purchase Order Charges') . '</th>
 			</tr>';
-		$tableheader = '<tr style="background-color:#800000">
+		$tableheader = '<tr style="tableheader">
 							<th>' . _('Seq') . ' #</th>
 							<th>' . _('GRN Batch') . '</th>
 							<th>' . _('Supplier Ref') . '</th>

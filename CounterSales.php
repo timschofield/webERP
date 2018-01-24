@@ -743,7 +743,7 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 ){ /*only show order line
 
 	echo '<br />
 		<table width="90%" cellpadding="2">
-		<tr style="background-color:#800000">';
+		<tr style="tableheader">';
 	echo '<th>' . _('Item Code') . '</th>
    	      <th>' . _('Item Description') . '</th>
 	      <th>' . _('Quantity') . '</th>
