@@ -83,12 +83,13 @@ if (isset($_POST['PrintPDF'])) {
 		$OnOrderSQL = "SELECT SUM(quantityord-quantityrecd) AS quantityonorder
 								FROM purchorders
 								LEFT JOIN purchorderdetails
-								ON purchorders.orderno=purchorderdetails.orderno
-								WHERE purchorders.status !='Cancelled'
-								AND purchorders.status !='Rejected'
-								AND purchorders.status !='Pending'
-								AND purchorderdetails.itemcode='".$myrow['stockid']."'
-								      AND purchorders.intostocklocation='".$myrow['loccode']."'";
+									ON purchorders.orderno=purchorderdetails.orderno
+								WHERE purchorders.status != 'Cancelled'
+									AND purchorders.status != 'Rejected'
+									AND purchorders.status != 'Pending'
+									AND purchorders.status != 'Completed'
+									AND purchorderdetails.itemcode='".$myrow['stockid']."'
+									AND purchorders.intostocklocation='".$myrow['loccode']."'";
 		$OnOrderResult = DB_query($OnOrderSQL);
 		$OnOrderRow = DB_fetch_array($OnOrderResult);
 		// Parameters for addTextWrap are defined in /includes/class.pdf.php

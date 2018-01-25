@@ -1,5 +1,6 @@
 webERP Change Log
 
+24/1/18  Briantmg (PaulT commit): ReorderLevel.php: Exclude completed orders from on order counts. (Reported in forums by briantmg: http://www.weberp.org/forum/showthread.php?tid=8060)
 24/1/18  Paul Becker/PaulT (PaulT commit): SelectOrderItems.php: Paul B. Fix stock table columns NOT sorting on this page / PaulT. Use existing CSS to replace two style attributes. (Reported in forums: http://www.weberp.org/forum/showthread.php?tid=8057&pid=13987#pid13987)
 24/1/18  Andy Couling (PaulT commit): SupplierInvoice.php, CounterSales.php: Replace two other hard-coded styles with existing CSS class. (Reported in forums: http://www.weberp.org/forum/showthread.php?tid=8057)
 24/1/18  Paul Becker/PaulT (PaulT commit): SelectOrderItems.php: Paul B. Remove stray value output / PaulT. Replace hard-coded style with existing CSS class. (Reported in forums: http://www.weberp.org/forum/showthread.php?tid=8057)
