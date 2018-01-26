@@ -74,12 +74,14 @@ if (isset($_POST['ProcessStockChange'])){
 										barcode,
 										discountcategory,
 										taxcatid,
-										decimalplaces,
-										shrinkfactor,
-										pansize,
-										netweight,
+										serialised,
 										perishable,
-										nextserialno)
+										decimalplaces,
+										pansize,
+										shrinkfactor,
+										nextserialno,
+										netweight,
+										lastcostupdate)
 				SELECT '" . $_POST['NewStockID'] . "',
 					categoryid,
 					description,
@@ -100,12 +102,14 @@ if (isset($_POST['ProcessStockChange'])){
 					barcode,
 					discountcategory,
 					taxcatid,
-					decimalplaces,
-					shrinkfactor,
-					pansize,
-					netweight,
+					serialised,
 					perishable,
-					nextserialno
+					decimalplaces,
+					pansize,
+					shrinkfactor,
+					nextserialno,
+					netweight,
+					lastcostupdate
 				FROM stockmaster
 				WHERE stockid='" . $_POST['OldStockID'] . "'";
 
@@ -158,7 +162,7 @@ if (isset($_POST['ProcessStockChange'])){
 		ChangeFieldInTable("stockdescriptiontranslations", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);// Updates the translated item titles (StockTitles)
 		ChangeFieldInTable("custitem", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
 		ChangeFieldInTable("pricematrix", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-/*		ChangeFieldInTable("Stockdescriptions", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);// Updates the translated item descriptions (StockDescriptions)*/
+		ChangeFieldInTable("pickreqdetails", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
 
 		echo '<br />' . _('Changing any image files');
 		$SupportedImgExt = array('png','jpg','jpeg');

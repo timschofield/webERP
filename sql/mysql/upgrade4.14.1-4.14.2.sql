@@ -23,7 +23,7 @@ CREATE TABLE `pcashdetailtaxes` (
 	`taxrate` DOUBLE NOT NULL DEFAULT 0.0,
 	`amount` DOUBLE NOT NULL DEFAULT 0.0,
 	PRIMARY KEY(counterindex)
-);
+) Engine=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE `custbranch` CHANGE `lat` `lat` FLOAT(12,8) NOT NULL DEFAULT '0.00000000';
 ALTER TABLE `custbranch` CHANGE `lng` `lng` FLOAT(12,8) NOT NULL DEFAULT '0.00000000';
@@ -31,6 +31,93 @@ ALTER TABLE `custbranch` CHANGE `lng` `lng` FLOAT(12,8) NOT NULL DEFAULT '0.0000
 ALTER TABLE pcashdetails MODIFY receipt text COMMENT 'Column redundant. Replaced by receipt file upload. Nov 2017.';
 INSERT INTO `scripts` (`script` ,`pagesecurity` ,`description`) VALUES ('BankAccountBalances.php',  '1',  'Shows bank accounts authorised for with balances');
 
+ALTER TABLE `stockserialitems` ADD `createdate` DATETIME NULL DEFAULT CURRENT_TIMESTAMP, ADD INDEX ( `createdate` );
+UPDATE stockserialitems SET createdate = NULL;
+
+UPDATE stockserialitems as stockserialitems SET createdate = 
+(SELECT  trandate FROM (select trandate, stockserialitems.serialno, stockserialitems.stockid FROM stockserialitems 
+LEFT JOIN stockserialmoves ON stockserialitems.serialno=stockserialmoves.serialno 
+LEFT JOIN stockmoves ON stockserialmoves.stockmoveno=stockmoves.stkmoveno 
+GROUP BY stockserialitems.stockid, stockserialitems.serialno 
+ORDER BY trandate) AS ssi
+WHERE ssi.serialno=stockserialitems.serialno
+AND ssi.stockid=stockserialitems.stockid);
+
+INSERT INTO `scripts` ( `script` , `pagesecurity` , `description` ) VALUES ('GeneratePickingList.php', '11', 'Generate Picking List');
+INSERT INTO `scripts` ( `script` , `pagesecurity` , `description` ) VALUES ('PickingLists.php', '11', 'Picking List Maintenance');
+INSERT INTO `scripts` ( `script` , `pagesecurity` , `description` ) VALUES ('PickingListsControlled.php', '11', 'Picking List Maintenance - Controlled');
+INSERT INTO `scripts` ( `script` , `pagesecurity` , `description` ) VALUES ('SelectPickingLists.php', '11', 'Picking List Lists');
+INSERT INTO `scripts` ( `script` , `pagesecurity` , `description` ) VALUES ('PDFAck.php', '15', '');
+INSERT INTO `scripts` ( `script` , `pagesecurity` , `description` ) VALUES ('PDFShipLabel.php', '15', '');
+
+ALTER TABLE `salesorders` ADD `internalcomment` BLOB NULL DEFAULT NULL;
+
+INSERT INTO `config`(`confname`, `confvalue`) VALUES ('MaxSerialItemsIssued','50');
+
+CREATE TABLE IF NOT EXISTS pickreq (
+	`prid` int not null auto_increment,
+	`initiator` varchar(20) not null default '',
+	`shippedby` varchar(20) not null default '',
+	`initdate` date not null default '0000-00-00',
+	`requestdate` date not null default '0000-00-00',
+	`shipdate` date not null default '0000-00-00',
+	`status` varchar(12) not null default '',
+	`comments` text default null,
+	`closed` tinyint not null default '0',
+	`loccode` varchar(5) not null default '',
+	`orderno` int not null default '1',
+	`consignment` varchar(15) NOT NULL DEFAULT '',
+	`packages` int(11) NOT NULL DEFAULT '1' COMMENT 'number of cartons',
+	PRIMARY KEY (`prid`),
+	key (`orderno`),
+	key (`requestdate`),
+	key (`shipdate`),
+	key (`status`),
+	key (`closed`),
+	CONSTRAINT FOREIGN KEY(`loccode`) REFERENCES `locations`(`loccode`),
+	constraint foreign key (`orderno`) REFERENCES salesorders(`orderno`)
+) Engine=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS pickreqdetails (
+	`detailno` int not null auto_increment,
+	`prid` int not null default '1',
+	`orderlineno` int not null default '0',
+	`stockid` varchar(20) not null default '',
+	`qtyexpected` double not null default '0',
+	`qtypicked` double not null default '0',
+	`invoicedqty` double not null default '0',
+	`shipqty` double not null default '0',
+	PRIMARY KEY (`detailno`),
+	key (`prid`),
+	constraint foreign key (`stockid`) REFERENCES stockmaster(`stockid`),
+	constraint foreign key (`prid`) REFERENCES pickreq(`prid`)
+) Engine=InnoDB DEFAULT CHARSET=utf8; 
+
+CREATE TABLE IF NOT EXISTS pickserialdetails (
+	`serialmoveid` int not null auto_increment,
+	`detailno` int not null default '1',
+	`stockid` varchar(20) not null default '',
+	`serialno` varchar(30) not null default '',
+	`moveqty` double not null default '0',
+	PRIMARY KEY (`serialmoveid`),
+	key (`detailno`),
+	key (`stockid`,`serialno`),
+	key (`serialno`),
+	CONSTRAINT FOREIGN KEY (`detailno`) REFERENCES pickreqdetails (`detailno`),
+	CONSTRAINT FOREIGN KEY (`stockid`,`serialno`) REFERENCES `stockserialitems`(`stockid`,`serialno`)
+) Engine=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO pickreq (prid, initdate, requestdate, shipdate, orderno, closed, loccode ) 
+     SELECT pickinglists.pickinglistno, dateprinted, pickinglistdate, deliverynotedate, pickinglists.orderno, IF(qtyexpected = qtypicked, 1, 0), fromstkloc 
+       FROM pickinglists
+           JOIN pickinglistdetails ON pickinglists.pickinglistno = pickinglistdetails.pickinglistno
+           JOIN salesorders ON pickinglists.orderno = salesorders.orderno;
+
+INSERT INTO pickreqdetails (prid, orderlineno, stockid, qtyexpected, qtypicked, invoicedqty, shipqty ) 
+     SELECT pickinglistdetails.pickinglistno, pickinglistdetails.orderlineno, stkcode, qtyexpected, qtypicked, qtypicked, qtypicked
+       FROM pickinglistdetails
+           JOIN pickinglists ON pickinglistdetails.pickinglistno = pickinglists.pickinglistno
+           JOIN salesorderdetails ON salesorderdetails.orderno = pickinglists.orderno;
 
 UPDATE config SET confvalue='4.15' WHERE confname='VersionNumber';
 

@@ -72,6 +72,13 @@ $StockID = $LineItem->StockID;
 $RecvQty = $LineItem->Quantity-$LineItem->QtyInv;
 $ItemMustExist = true;  /*Can only invoice valid batches/serial numbered items that exist */
 $LocationOut = $_SESSION['Items'.$identifier]->Location;
+
+if ($_SESSION['RequirePickingNote'] == 1) {
+	$OrderstoPick = $_SESSION['Items'.$identifier]->OrderNo;
+} else {
+	unset($OrderstoPick);
+}
+
 $InOutModifier=1;
 $ShowExisting=true;
 

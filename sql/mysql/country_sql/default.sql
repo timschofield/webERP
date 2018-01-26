@@ -1660,6 +1660,80 @@ CREATE TABLE `pickinglists` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `pickreq` (pick request)
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE pickreq (
+  `prid` int not null auto_increment,
+  `initiator` varchar(20) not null default '',
+  `shippedby` varchar(20) not null default '',
+  `initdate` date not null default '0000-00-00',
+  `requestdate` date not null default '0000-00-00',
+  `shipdate` date not null default '0000-00-00',
+  `status` varchar(12) not null default '',
+  `comments` text default null,
+  `closed` tinyint not null default '0',
+  `loccode` varchar(5) not null default '',
+  `orderno` int not null default '1',
+  `consignment` varchar(15) NOT NULL DEFAULT '',
+  `packages` int(11) NOT NULL DEFAULT '1' COMMENT 'number of cartons',
+  PRIMARY KEY (`prid`),
+  key (`orderno`),
+  key (`requestdate`),
+  key (`shipdate`),
+  key (`status`),
+  key (`closed`),
+  CONSTRAINT FOREIGN KEY(`loccode`) REFERENCES `locations`(`loccode`),
+  constraint foreign key (`orderno`) REFERENCES salesorders(`orderno`)
+) Engine=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pickreqdetails`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE pickreqdetails (
+  `detailno` int not null auto_increment,
+  `prid` int not null default '1',
+  `orderlineno` int not null default '0',
+  `stockid` varchar(20) not null default '',
+  `qtyexpected` double not null default '0',
+  `qtypicked` double not null default '0',
+  `invoicedqty` double not null default '0',
+  `shipqty` double not null default '0',
+  PRIMARY KEY (`detailno`),
+  key (`prid`),
+  constraint foreign key (`stockid`) REFERENCES stockmaster(`stockid`),
+  constraint foreign key (`prid`) REFERENCES pickreq(`prid`)
+) Engine=InnoDB DEFAULT CHARSET=utf8; 
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pickserialdetails`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE pickserialdetails (
+  `serialmoveid` int not null auto_increment,
+  `detailno` int not null default '1',
+  `stockid` varchar(20) not null default '',
+  `serialno` varchar(30) not null default '',
+  `moveqty` double not null default '0',
+  PRIMARY KEY (`serialmoveid`),
+  key (`detailno`),
+  key (`stockid`,`serialno`),
+  key (`serialno`),
+  CONSTRAINT FOREIGN KEY (`detailno`) REFERENCES pickreqdetails (`detailno`),
+  CONSTRAINT FOREIGN KEY (`stockid`,`serialno`) REFERENCES `stockserialitems`(`stockid`,`serialno`)
+) Engine=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `pricematrix`
 --
 
@@ -2846,10 +2920,12 @@ CREATE TABLE `stockserialitems` (
   `expirationdate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `quantity` double NOT NULL DEFAULT '0',
   `qualitytext` text NOT NULL,
+  `createdate` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`stockid`,`serialno`,`loccode`),
   KEY `StockID` (`stockid`),
   KEY `LocCode` (`loccode`),
   KEY `serialno` (`serialno`),
+  KEY `createdate` (`createdate`),
   CONSTRAINT `stockserialitems_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
   CONSTRAINT `stockserialitems_ibfk_2` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

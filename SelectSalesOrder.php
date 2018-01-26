@@ -2,6 +2,8 @@
 
 /* $Id$*/
 
+$PricesSecurity = 12;
+
 include('includes/session.php');
 $Title = _('Search Outstanding Sales Orders');
 /* webERP manual links before header.php */
@@ -63,15 +65,16 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 						stockmaster.volume,
 						stockcategory.stockact,
 						SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS orderqty
-				FROM purchdata INNER JOIN salesorderdetails ON
-				purchdata.stockid = salesorderdetails.stkcode
-				INNER JOIN stockmaster  ON
-				purchdata.stockid = stockmaster.stockid
-				INNER JOIN stockcategory ON
-				stockmaster.categoryid = stockcategory.categoryid
+				FROM purchdata
+				INNER JOIN salesorderdetails
+					ON purchdata.stockid = salesorderdetails.stkcode
+				INNER JOIN stockmaster
+					ON purchdata.stockid = stockmaster.stockid
+				INNER JOIN stockcategory
+					ON stockmaster.categoryid = stockcategory.categoryid
 				WHERE purchdata.preferred=1
-				AND purchdata.effectivefrom <='" . Date('Y-m-d') . "'
-				AND (" . $OrdersToPlacePOFor . ")
+					AND purchdata.effectivefrom <= CURRENT_DATE
+					AND (" . $OrdersToPlacePOFor . ")
 				GROUP BY purchdata.supplierno,
 					purchdata.stockid,
 					purchdata.price,
@@ -108,23 +111,24 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 						stockmaster.volume,
 						stockcategory.stockact,
 						SUM(bom.quantity *(salesorderdetails.quantity-salesorderdetails.qtyinvoiced)) AS orderqty
-				FROM purchdata INNER JOIN bom
-				ON purchdata.stockid=bom.component
-				INNER JOIN salesorderdetails ON
-				bom.parent=salesorderdetails.stkcode
-				INNER JOIN stockmaster ON
-				purchdata.stockid = stockmaster.stockid
+				FROM purchdata
+				INNER JOIN bom
+					ON purchdata.stockid=bom.component
+				INNER JOIN salesorderdetails
+					ON bom.parent=salesorderdetails.stkcode
+				INNER JOIN stockmaster
+					ON purchdata.stockid = stockmaster.stockid
 				INNER JOIN stockmaster AS stockmaster2
-				ON stockmaster2.stockid=salesorderdetails.stkcode
-				INNER JOIN stockcategory ON
-				stockmaster.categoryid = stockcategory.categoryid
+					ON stockmaster2.stockid=salesorderdetails.stkcode
+				INNER JOIN stockcategory
+					ON stockmaster.categoryid = stockcategory.categoryid
 				WHERE purchdata.preferred=1
-				AND stockmaster2.mbflag='A'
-				AND bom.loccode ='" . $_SESSION['UserStockLocation'] . "'
-				AND purchdata.effectivefrom <='" . Date('Y-m-d') . "'
-				AND bom.effectiveafter <='" . Date('Y-m-d') . "'
-				AND bom.effectiveto > '" . Date('Y-m-d') . "'
-				AND (" . $OrdersToPlacePOFor . ")
+					AND stockmaster2.mbflag='A'
+					AND bom.loccode ='" . $_SESSION['UserStockLocation'] . "'
+					AND purchdata.effectivefrom <= CURRENT_DATE
+					AND bom.effectiveafter <= CURRENT_DATE
+					AND bom.effectiveto > CURRENT_DATE
+					AND (" . $OrdersToPlacePOFor . ")
 				GROUP BY purchdata.supplierno,
 					purchdata.stockid,
 					purchdata.price,
@@ -181,7 +185,10 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 							tel,
 							contact
 						FROM locations
-						INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
+						INNER JOIN locationusers
+							ON locationusers.loccode=locations.loccode
+							AND locationusers.userid='" .  $_SESSION['UserID'] . "'
+							AND locationusers.canupd=1
 						WHERE locations.loccode = '" .$_SESSION['UserStockLocation']  . "'";
 			$ErrMsg = _('The delivery address for the order could not be obtained from the user default stock location');
 			$DelAddResult = DB_query($sql,$ErrMsg);
@@ -304,7 +311,7 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 		  									  allowprint)
 		  									VALUES(	'" . $PO_OrderNo . "',
 		  										'" . $SupplierID . "',
-		  										'" . Date('Y-m-d') . "',
+		  										CURRENT_DATE,
 		  										'" . $SuppRow['rate'] . "',
 		  										'" . $_SESSION['UserID'] . "',
 		  										'" . $_SESSION['UserStockLocation'] . "',
@@ -322,13 +329,13 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 		  										'" . $SuppRow['address5'] . "',
 		  										'" . $SuppRow['address6'] . "',
 		  										'" . $SuppRow['telephone'] . "',
-		  										'" . $DelAddRow['contact'] . "',
+		  										'" . $SuppRow['contact'] . "',
 		  										'1.0',
-		  										'" . Date('Y-m-d') . "',
+		  										CURRENT_DATE,
 		  										'" . $_SESSION['Default_Shipper'] . "',
 		  										'Pending',
 		  										'" . $StatusComment . "',
-		  										'" . Date('Y-m-d') . "',
+		  										CURRENT_DATE,
 		  										'" . $SuppRow['paymentterms'] . "',
 		  										0)";
 
@@ -491,8 +498,13 @@ if (!isset($StockID)) {
 				<td>' . _('From Stock Location') . ':</td>
 				<td><select name="StockLocation"> ';
 
-		$sql = "SELECT locations.loccode, locationname, canview FROM locations
-					INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
+		$sql = "SELECT locationname,
+						locations.loccode
+				FROM locations
+				INNER JOIN locationusers
+					ON locationusers.loccode=locations.loccode
+					AND locationusers.userid='" .  $_SESSION['UserID'] . "'
+					AND locationusers.canview=1";
 		$resultStkLocs = DB_query($sql);
 
 		while ($myrow=DB_fetch_array($resultStkLocs)){
@@ -543,24 +555,33 @@ if (!isset($StockID)) {
 		}
 
 
-		echo '</select> </td>
-			<td>' . _('Due Date From') . '</td>
-			<td><input type="text" class="date" name="DueDateFrom" value="' . $_POST['DueDateFrom'] . '" alt="' . $_SESSION['DefaultDateFormat'] . '" size="10" /></td>
-			<td>' . _('Due Date To') . '</td>
-			<td><input type="text" class="date" name="DueDateTo" value="' . $_POST['DueDateTo'] . '" alt="' . $_SESSION['DefaultDateFormat'] . '" size="10" /></td>
-				<td><input type="submit" name="SearchOrders" value="' . _('Search') . '" /></td>
-				<td><input type="submit" name="Reset" value="' . _('Reset') . '" /></td>
-				<td><a href="' . $RootPath . '/SelectOrderItems.php?NewOrder=Yes">' . _('Add Sales Order') . '</a></td>
+		echo '</select>
+				</td>
 			</tr>
 			<tr>
 				<td>' . _('Customer Ref') . '</td>
 				<td><input type="text" name="CustomerRef" value="' . $_POST['CustomerRef'] . '" size="12" /></td>
+			</tr>
+			<tr>
+				<td>' . _('Due Date From') . '</td>
+				<td><input type="text" class="date" name="DueDateFrom" value="' . $_POST['DueDateFrom'] . '" alt="' . $_SESSION['DefaultDateFormat'] . '" size="10" /></td>
+				<td>' . _('Due Date To') . '</td>
+				<td><input type="text" class="date" name="DueDateTo" value="' . $_POST['DueDateTo'] . '" alt="' . $_SESSION['DefaultDateFormat'] . '" size="10" /></td>
+			</tr>
+			<tr>
 				<td>' . _('Order Date From') . '</td>
 				<td><input type="text" name="OrderDateFrom" value="' . $_POST['OrderDateFrom'] . '" size="10" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" /></td>
 				<td>' . _('Order Date To') . '</td>
 				<td><input type="text" name="OrderDateTo" value="' . $_POST['OrderDateTo'] . '" size="10" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" /></td>
 			</tr>
-			</table>';
+			<tr>
+				<td>&nbsp;</td>
+				<td><input type="submit" name="SearchOrders" value="' . _('Search') . '" /></td>
+				<td><input type="submit" name="Reset" value="' . _('Reset') . '" /></td>
+				<td><a href="' . $RootPath . '/SelectOrderItems.php?NewOrder=Yes">' . _('Add Sales Order') . '</a></td>
+				<td>&nbsp;</td>
+			</tr>
+		</table>';
 	}
 
 	$SQL="SELECT categoryid,
@@ -569,6 +590,13 @@ if (!isset($StockID)) {
 		ORDER BY categorydescription";
 
 	$result1 = DB_query($SQL);
+
+	if (!isset($_POST['Keywords'])) {
+		$_POST['Keywords'] = '';
+	}
+	if (!isset($_POST['StockCode'])) {
+		$_POST['StockCode'] = '';
+	}
 
 	echo '<br />
 		<table class="selection">
@@ -581,7 +609,11 @@ if (!isset($StockID)) {
 		echo '<option value="All">' . _('All') . '</option>';
 
 	while ($myrow1 = DB_fetch_array($result1)) {
-		echo '<option value="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
+		if (isset($_POST['StockCat']) and $_POST['StockCat'] == $myrow1['categoryid']) {
+			echo '<option selected="selected" value="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
+		} else {
+			echo '<option value="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
+		}
 	}
 
 	echo '</select></td>
@@ -591,7 +623,7 @@ if (!isset($StockID)) {
       	<tr>
 			<td></td>
       		<td><b>' . _('OR') . ' </b>' . _('Enter extract of the Stock Code') . ':</td>
-      		<td><input type="text" name="StockCode" size="15" maxlength="18" /></td>
+      		<td><input type="text" name="StockCode" size="15" maxlength="18"  value="' . $_POST['StockCode'] . '" /></td>
       	</tr>
       </table>';
 	echo '<br />
@@ -654,7 +686,7 @@ if (isset($StockItemsResult)
 		$Quotations = 1;
 	}
 	elseif( $_POST['Quotations'] == 'Overdue_Only' ) {
-		$Quotations = "0 AND itemdue<'" . Date('Y-m-d') . "'";
+		$Quotations = "0 AND itemdue < CURRENT_DATE";
 	}
 	else {
 		$_POST['Quotations'] = 'Orders_Only';
@@ -685,6 +717,13 @@ if (isset($StockItemsResult)
 	if(!isset($_POST['StockLocation'])) {
 		$_POST['StockLocation'] = $_SESSION['UserStockLocation'];
 	}
+
+	if ($_SESSION['SalesmanLogin'] != '') {
+		$SalesMan = '=\'' . $_SESSION['SalesmanLogin'] . '\'';
+	} else {
+		$SalesMan = ' LIKE \'%\'';
+	}
+
 	//Harmonize the ordervalue with SUM function since webERP allowed same items appeared several times in one sales orders. If there is no sum value, this situation not inclued.
 	//We should separate itemdue inquiry from normal inquiry.
 	if (($Quotations === 0 OR $Quotations === 1)
@@ -700,17 +739,22 @@ if (isset($StockItemsResult)
 					salesorders.deliverto,
 					salesorders.printedpackingslip,
 					salesorders.poplaced,
-					SUM(salesorderdetails.unitprice*(salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*(1-salesorderdetails.discountpercent)/currencies.rate) AS ordervalue
-				FROM salesorders INNER JOIN salesorderdetails
+					SUM(salesorderdetails.unitprice*(salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*(1-salesorderdetails.discountpercent)/currencies.rate) AS ordervalue,
+					pickreq.prid
+				FROM salesorders
+				INNER JOIN salesorderdetails
 					ON salesorders.orderno = salesorderdetails.orderno
-					INNER JOIN debtorsmaster
+				INNER JOIN debtorsmaster
 					ON salesorders.debtorno = debtorsmaster.debtorno
-					INNER JOIN custbranch
+				INNER JOIN custbranch
 					ON debtorsmaster.debtorno = custbranch.debtorno
 					AND salesorders.branchcode = custbranch.branchcode
-					INNER JOIN currencies
+				INNER JOIN currencies
 					ON debtorsmaster.currcode = currencies.currabrev
-					WHERE salesorderdetails.completed=0 ";
+				LEFT OUTER JOIN pickreq
+					ON pickreq.orderno=salesorders.orderno
+					AND pickreq.closed=0
+				WHERE salesorderdetails.completed=0 ";
 			$SQL .= $OrderDateFrom . $OrderDateTo;
 		} else {
 			if ($Quotations !==0 AND $Quotations !==1) {//overdue inquiry only
@@ -723,7 +767,7 @@ if (isset($StockItemsResult)
 						salesorders.deliverto,
 						salesorders.printedpackingslip,
 						salesorders.poplaced,
-						SUM(CASE WHEN itemdue<'" . Date('Y-m-d') . "'
+						SUM(CASE WHEN itemdue < CURRENT_DATE
 						     THEN salesorderdetails.unitprice*(salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*(1-salesorderdetails.discountpercent)/currencies.rate
 						     ELSE 0 END) as ordervalue";
 			} elseif (isset($DueDateFrom) AND is_date($DueDateFrom) AND (!isset($DueDateTo) OR !is_date($DueDateTo))) {
@@ -853,12 +897,22 @@ if (isset($StockItemsResult)
 		$AuthRow=DB_fetch_array($AuthResult);
 
 		echo '<table cellpadding="2" width="95%" class="selection">';
+		if (is_null($AuthRow['cancreate']) or !isset($AuthRow)) {
+			$AuthRow['cancreate'] = 1;
+		}
 
+		$PrintPickLabel = '';
+		if ($_SESSION['RequirePickingNote'] == 1) {
+			$PrintPickLabel = '<th>' . _('Pick Lists') . '</th>';
+		}
 		if ( $_POST['Quotations'] == 'Orders_Only' OR $_POST['Quotations'] == 'Overdue_Only' ){
 			$TableHeader = '<tr>
 								<th class="ascending" >' . _('Modify') . '</th>
+								<th>' . _('Acknowledge') . '</th>
+								' . $PrintPickLabel . '
 								<th>' . _('Invoice') . '</th>
 								<th>' . _('Dispatch Note') . '</th>
+								<th>' . _('Labels') . '</th>
 								<th class="ascending" >' . _('Customer') . '</th>
 								<th class="ascending" >' . _('Branch') . '</th>
 								<th class="ascending" >' . _('Cust Order') . ' #</th>
@@ -874,7 +928,7 @@ if (isset($StockItemsResult)
 			}
 		} else {  /* displaying only quotations */
 			$TableHeader = '<tr>
-								<th>' . _('Modify') . '</th>
+								<th class="ascending">' . _('Modify') . '</th>
 								<th>' . _('Print Quote') . '</th>
 								<th class="ascending" >' . _('Customer') . '</th>
 								<th class="ascending" >' . _('Branch') . '</th>
@@ -888,8 +942,6 @@ if (isset($StockItemsResult)
 
 		echo $TableHeader;
 
-		$i = 1;
-		  $j = 1;
 		$k=0; //row colour counter
 		$OrdersTotal =0;
 
@@ -906,6 +958,18 @@ if (isset($StockItemsResult)
 
 			$ModifyPage = $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . $myrow['orderno'];
 			$Confirm_Invoice = $RootPath . '/ConfirmDispatch_Invoice.php?OrderNumber=' .$myrow['orderno'];
+			$PrintPickList = '';
+			$PrintPickLabel = '';
+			$PrintDummyFlag = '<input type="hidden" name="dummy" value="%s" />';
+			if ($_SESSION['RequirePickingNote'] == 1) {
+				$PrintPickList = $RootPath . '/GeneratePickingList.php?TransNo=' . $myrow['orderno'];
+				if (isset($myrow['prid']) and $myrow['prid'] > '') {
+					$PrintPickLabel = '<td><a href="' . $RootPath . '/GeneratePickingList.php?TransNo=' . $myrow['orderno'] . '">' . str_pad($myrow['prid'], 10, '0', STR_PAD_LEFT) . '</a></td>';
+				} else {
+					$PrintPickLabel = '<td><a href="' . $RootPath . '/GeneratePickingList.php?TransNo=' . $myrow['orderno'] . '">' . _('Pick') . '</a></td>';
+				}
+				$PrintDummyFlag = '';
+			}
 
 			if ($_SESSION['PackNoteFormat']==1){ /*Laser printed A4 default */
 				$PrintDispatchNote = $RootPath . '/PrintCustOrder_generic.php?TransNo=' . $myrow['orderno'];
@@ -922,6 +986,12 @@ if (isset($StockItemsResult)
 			} else {
 				$CustomerRef = '';
 			}
+			$OrdersTotal += $myrow['ordervalue'];
+			$PrintAck = $RootPath . '/PDFAck.php?AcknowledgementNo=' . $myrow['orderno'];
+
+			if (!isset($PricesSecurity) or !in_array($PricesSecurity, $_SESSION['AllowedPageSecurityTokens'])) {
+				$FormatedOrderValue = '---------';
+			}
 
 			if ($myrow['printedpackingslip']==0) {
 			  $PrintText = _('Print');
@@ -929,38 +999,34 @@ if (isset($StockItemsResult)
 			  $PrintText = _('Reprint');
 			}
 
+			$PrintLabels = $RootPath . '/PDFShipLabel.php?Type=Sales&ORD=' . $myrow['orderno'];
+
 			if ($_POST['Quotations']=='Orders_Only' OR $_POST['Quotations']=='Overdue_Only'){
 
 			 /*Check authority to create POs if user has authority then show the check boxes to select sales orders to place POs for otherwise don't provide this option */
 				if ($AuthRow['cancreate']==0 AND $myrow['poplaced']==0){ //cancreate==0 if the user can create POs and not already placed
-					printf('<td><a href="%s">%s</a></td>
-							<td><a href="%s">' . _('Invoice') . '</a></td>
-		 				<td><a target="_blank" href="%s">' . $PrintText . ' <img src="' .$RootPath.'/css/'.$Theme.'/images/pdf.png" title="' . _('Click for PDF') . '" alt="" /></a></td>
-		 				<td>%s</td>
-		 				<td>%s</td>
-		 				<td>%s</td>
-		 				<td>%s</td>
-		 				<td>%s</td>
-		 				<td>%s</td>
-		 				<td class="number">%s</td>
-		 				<td><input type="checkbox" name="PlacePO_[]" value="%s"/></td>
-		 				</tr>',
-		 				$ModifyPage,
-		 				$myrow['orderno'],
-						$Confirm_Invoice,
-		 				$PrintDispatchNote,
-		 				$myrow['name'],
-		 				$myrow['brname'],
-		 				$CustomerRef,
-		 				$FormatedOrderDate,
-		 				$FormatedDelDate,
-		 				html_entity_decode($myrow['deliverto'],ENT_QUOTES,'UTF-8'),
-		 				$FormatedOrderValue,
-						$myrow['orderno']);
+					echo '<td><a href="' . $ModifyPage . '">' . $myrow['orderno'] . '</a></td>
+							<td><a href="' . $PrintAck . '">' . _('Acknowledge') . '</a>' . $PrintDummyFlag . '</td>
+							' . $PrintPickLabel . '
+							<td><a href="' . $Confirm_Invoice . '">' . _('Invoice') . '</a></td>
+			 				<td><a target="_blank" href="' . $PrintDispatchNote . '">' . $PrintText . ' <img src="' .$RootPath.'/css/'.$Theme.'/images/pdf.png" title="' . _('Click for PDF') . '" alt="" /></a></td>
+							<td><a href="' . $PrintLabels . '">' . _('Labels') . '</a></td>
+			 				<td>' . $myrow['name'] . '</td>
+			 				<td>' . $myrow['brname'] . '</td>
+			 				<td>' . $CustomerRef . '</td>
+			 				<td>' . $FormatedOrderDate . '</td>
+			 				<td>' . $FormatedDelDate . '</td>
+			 				<td>' . html_entity_decode($myrow['deliverto'],ENT_QUOTES,'UTF-8') . '</td>
+			 				<td class="number">' . $FormatedOrderValue . '</td>
+			 				<td class="centre"><input type="checkbox" name="PlacePO_[]" value="' . $myrow['orderno'] . '"/></td>
+			 			</tr>';
 				} else {  /*User is not authorised to create POs so don't even show the option */
 					printf('<td><a href="%s">%s</a></td>
+							<td><a href="%s">' . _('Acknowledge') . '</a></td>
+							' . $PrintPickLabel . '
 							<td><a href="%s">' . _('Invoice') . '</a></td>
 							<td><a target="_blank" href="%s">' . $PrintText . ' <img src="' .$RootPath . '/css/' . $Theme .'/images/pdf.png" title="' . _('Click for PDF') . '" alt="" /></a></td>
+							<td><a href="%s">' . _('Labels') . '</a></td>
 							<td>%s</td>
 							<td>%s</td>
 							<td>%s</td>
@@ -968,11 +1034,14 @@ if (isset($StockItemsResult)
 							<td>%s</td>
 							<td>%s</td>
 							<td class="number">%s</td>
+							<td></td>
 							</tr>',
 							$ModifyPage,
 							$myrow['orderno'],
+							$PrintAck,
 							$Confirm_Invoice,
 							$PrintDispatchNote,
+							$PrintLabels,
 							$myrow['name'],
 							$myrow['brname'],
 							$myrow['customerref'],
@@ -1005,33 +1074,30 @@ if (isset($StockItemsResult)
 						html_entity_decode($myrow['deliverto'],ENT_QUOTES,'UTF-8'),
 						$FormatedOrderValue);
 			}
-			$i++;
-			$OrdersTotal += $myrow['ordervalue'];
-		//end of page full new headings if
 		}//end while loop through orders to display
 
-		if ($_POST['Quotations']=='Orders_Only'
-			AND $AuthRow['cancreate']==0){ //cancreate==0 means can create POs
-
-			echo '<tfoot>
-					<tr>
-						<td colspan="11" class="number"><input type="submit" name="PlacePO" value="' . _('Place') . " " . _('PO') . '" onclick="return confirm(\'' . _('This will create purchase orders for all the items on the checked sales orders above, based on the preferred supplier purchasing data held in the system. Are You Absolutely Sure?') . '\');" /></td>
-					</tr>
-				</tfoot>';
-		}
-
-		echo '<tfoot><tr><td colspan="9" class="number"><b>';
+		echo '<tr><td colspan="12" class="number"><b>';
 
 		if ($_POST['Quotations']=='Orders_Only'){
 			echo _('Total Order(s) Value in');
 		} else {
 			echo _('Total Quotation(s) Value in');
 		}
+		if (!isset($PricesSecurity) or !in_array($PricesSecurity, $_SESSION['AllowedPageSecurityTokens'])) {
+			$OrdersTotal = '---------';
+		}
 
 		echo ' ' . $_SESSION['CompanyRecord']['currencydefault'] . ':</b></td>
-			<td class="number"><b>' . locale_number_format($OrdersTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
-			</tr></tfoot>
-			</table>';
+			<td class="number"><b>' . locale_number_format($OrdersTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>';
+
+		if ($_POST['Quotations']=='Orders_Only' AND $AuthRow['cancreate']==0){ //cancreate==0 means can create POs
+			echo '<td>
+					<input type="submit" name="PlacePO" value="' . _('Place') . " " . _('PO') . '" onclick="return confirm(\'' . _('This will create purchase orders for all the items on the checked sales orders above, based on the preferred supplier purchasing data held in the system. Are You Absolutely Sure?') . '\');" />
+				</td>';
+		}
+
+		echo '</tr>
+		</table>';
 	} //end if there are some orders to show
 }
 

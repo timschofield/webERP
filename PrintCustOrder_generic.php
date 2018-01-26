@@ -61,13 +61,17 @@ $sql = "SELECT salesorders.debtorno,
 			salesorders.datepackingslipprinted,
 			locations.locationname,
 			salesorders.fromstkloc
-		FROM salesorders INNER JOIN debtorsmaster
-		ON salesorders.debtorno=debtorsmaster.debtorno
+		FROM salesorders
+		INNER JOIN debtorsmaster
+			ON salesorders.debtorno=debtorsmaster.debtorno
 		INNER JOIN shippers
-		ON salesorders.shipvia=shippers.shipper_id
+			ON salesorders.shipvia=shippers.shipper_id
 		INNER JOIN locations
-		ON salesorders.fromstkloc=locations.loccode
-		INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
+			ON salesorders.fromstkloc=locations.loccode
+		INNER JOIN locationusers
+			ON locationusers.loccode=locations.loccode
+			AND locationusers.userid='" .  $_SESSION['UserID'] . "'
+			AND locationusers.canview=1
 		WHERE salesorders.orderno='" . $_GET['TransNo'] . "'";
 
 if ($_SESSION['SalesmanLogin'] != '') {
@@ -113,9 +117,9 @@ if (DB_num_rows($result)==0){
                 prnMsg( _('The packing slip for order number') . ' ' . $_GET['TransNo'] . ' ' .
                         _('has previously been printed') . '. ' . _('It was printed on'). ' ' . ConvertSQLDate($myrow['datepackingslipprinted']) .
                         '<br />' . _('This check is there to ensure that duplicate packing slips are not produced and dispatched more than once to the customer'), 'warn' );
-              echo '<p><a href="' . $RootPath . '/PrintCustOrder.php?TransNo=' . $_GET['TransNo'] . '&Reprint=OK">'
+              echo '<p><a href="' . $RootPath . '/PrintCustOrder.php?TransNo=' . urlencode($_GET['TransNo']) . '&Reprint=OK">'
                 . _('Do a Re-Print') . ' (' . _('On Pre-Printed Stationery') . ') ' . _('Even Though Previously Printed') . '</a><p>' .
-                '<a href="' . $RootPath. '/PrintCustOrder_generic.php?TransNo=' . $_GET['TransNo'] . '&Reprint=OK">' .  _('Do a Re-Print') . ' (' . _('Plain paper') . ' - ' . _('A4') . ' ' . _('landscape') . ') ' . _('Even Though Previously Printed'). '</a>';
+                '<a href="' . $RootPath. '/PrintCustOrder_generic.php?TransNo=' . urlencode($_GET['TransNo']) . '&Reprint=OK">' .  _('Do a Re-Print') . ' (' . _('Plain paper') . ' - ' . _('A4') . ' ' . _('landscape') . ') ' . _('Even Though Previously Printed'). '</a>';
 
                 echo '<br /><br /><br />';
                 echo  _('Or select another Order Number to Print');
@@ -170,13 +174,29 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 					salesorderdetails.narrative,
 					stockmaster.mbflag,
 					stockmaster.decimalplaces,
+					stockmaster.controlled,
+					stockmaster.serialised,
+					pickreqdetails.qtypicked,
+					pickreqdetails.detailno,
+					custitem.cust_part,
+					custitem.cust_description,
 					locstock.bin
-				FROM salesorderdetails INNER JOIN stockmaster
-				ON salesorderdetails.stkcode=stockmaster.stockid
+				FROM salesorderdetails
+				INNER JOIN stockmaster
+					ON salesorderdetails.stkcode=stockmaster.stockid
 				INNER JOIN locstock
-				ON stockmaster.stockid = locstock.stockid
+					ON stockmaster.stockid = locstock.stockid
+				LEFT OUTER JOIN pickreq
+					ON pickreq.orderno=salesorderdetails.orderno
+					AND pickreq.closed=0
+				LEFT OUTER JOIN pickreqdetails
+					ON pickreqdetails.prid=pickreq.prid
+					AND pickreqdetails.orderlineno=salesorderdetails.orderlineno
+				LEFT OUTER JOIN custitem
+					ON custitem.debtorno='" . $myrow['debtorno'] . "'
+					AND custitem.stockid=salesorderdetails.stkcode
 				WHERE locstock.loccode = '" . $myrow['fromstkloc'] . "'
-				AND salesorderdetails.orderno='" . $_GET['TransNo'] . "'";
+					AND salesorderdetails.orderno='" . $_GET['TransNo'] . "'";
 	$result=DB_query($sql, $ErrMsg);
 
 	if (DB_num_rows($result)>0){
@@ -189,7 +209,11 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 
 			$DisplayQty = locale_number_format($myrow2['quantity'],$myrow2['decimalplaces']);
 			$DisplayPrevDel = locale_number_format($myrow2['qtyinvoiced'],$myrow2['decimalplaces']);
-			$DisplayQtySupplied = locale_number_format($myrow2['quantity'] - $myrow2['qtyinvoiced'],$myrow2['decimalplaces']);
+			if ($myrow2['qtypicked'] > 0) {
+				$DisplayQtySupplied = locale_number_format($myrow2['qtypicked'], $myrow2['decimalplaces']);
+			} else {
+				$DisplayQtySupplied = locale_number_format($myrow2['quantity'] - $myrow2['qtyinvoiced'],$myrow2['decimalplaces']);
+			}
 
 			$LeftOvers = $pdf->addTextWrap($XPos,$YPos,127,$FontSize,$myrow2['stkcode']);
 			$LeftOvers = $pdf->addTextWrap(147,$YPos,255,$FontSize,$myrow2['description']);
@@ -207,17 +231,31 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 				/*increment a line down for the next line item */
 				$YPos -= ($line_height);
 			}
+			if ($myrow2['cust_part'] > '') {
+				$LeftOvers = $pdf->addTextWrap($XPos, $YPos, 127, $FontSize, $myrow2['cust_part'], 'right');
+				$LeftOvers = $pdf->addTextWrap(147, $YPos, 255, $FontSize, $myrow2['cust_description']);
+				if ($YPos - $line_height <= 50) {
+					/* We reached the end of the page so finsih off the page and start a newy */
+					$PageNumber++;
+					include('includes/PDFOrderPageHeader_generic.php');
+				} //end if need a new page headed up
+				else {
+					/*increment a line down for the next line item */
+					$YPos -= ($line_height);
+				}
+			}
 			if ($myrow2['mbflag']=='A'){
 				/*Then its an assembly item - need to explode into it's components for packing list purposes */
 				$sql = "SELECT bom.component,
 								bom.quantity,
 								stockmaster.description,
 								stockmaster.decimalplaces
-						FROM bom INNER JOIN stockmaster
-						ON bom.component=stockmaster.stockid
+						FROM bom
+						INNER JOIN stockmaster
+							ON bom.component=stockmaster.stockid
 						WHERE bom.parent='" . $myrow2['stkcode'] . "'
-                        AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-                        AND bom.effectiveto > '" . date('Y-m-d') . "'";
+							AND bom.effectiveafter <= CURRENT_DATE
+							AND bom.effectiveto > CURRENT_DATE";
 				$ErrMsg = _('Could not retrieve the components of the ordered assembly item');
 				$AssemblyResult = DB_query($sql,$ErrMsg);
 				$LeftOvers = $pdf->addTextWrap($XPos,$YPos,150,$FontSize, _('Assembly Components:-'));
@@ -239,6 +277,31 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 					}
 				} //loop around all the components of the assembly
 			}
+			if ($myrow2['controlled'] == '1') {
+				$ControlLabel = _('Lot') . ':';
+				if ($myrow2['serialised'] == 1) {
+					$ControlLabel = _('Serial') . ':';
+				}
+				$sersql = "SELECT serialno,
+									moveqty
+							FROM pickserialdetails
+							WHERE pickserialdetails.detailno='" . $myrow2['detailno'] . "'";
+				$serresult = DB_query($sersql, $ErrMsg);
+				while ($myser = DB_fetch_array($serresult)) {
+					$LeftOvers = $pdf->addTextWrap($XPos, $YPos, 127, $FontSize, $ControlLabel, 'right');
+					$LeftOvers = $pdf->addTextWrap(147, $YPos, 255, $FontSize, $myser['serialno'], 'left');
+					$LeftOvers = $pdf->addTextWrap(147, $YPos, 255, $FontSize, $myser['moveqty'], 'right');
+					if ($YPos - $line_height <= 50) {
+						/* We reached the end of the page so finsih off the page and start a newy */
+						$PageNumber++;
+						include('includes/PDFOrderPageHeader_generic.php');
+					} //end if need a new page headed up
+					else {
+						/*increment a line down for the next line item */
+						$YPos -= ($line_height);
+					}
+				} //while loop on myser
+			} //controlled
 		} //end while there are line items to print out
 
 	} /*end if there are order details to show on the order*/
@@ -259,8 +322,9 @@ if ($ListCount == 0) {
 } else {
     	$pdf->OutputD($_SESSION['DatabaseName'] . '_PackingSlip_' . date('Y-m-d') . '.pdf');
     	$pdf->__destruct();
-	$sql = "UPDATE salesorders SET printedpackingslip=1,
-									datepackingslipprinted='" . Date('Y-m-d') . "'
+	$sql = "UPDATE salesorders
+				SET printedpackingslip=1,
+					datepackingslipprinted=CURRENT_DATE
 				WHERE salesorders.orderno='" . $_GET['TransNo'] . "'";
 	$result = DB_query($sql);
 }

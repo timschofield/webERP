@@ -44,6 +44,9 @@ if (isset($_POST['submit'])) {
 		$_POST['X_QuickEntries'] < 1 OR $_POST['X_QuickEntries'] > 99 ) {
 		$InputError = 1;
 		prnMsg(_('No less than 1 and more than 99 Quick entries allowed'),'error');
+	} elseif (!is_numeric($_POST['X_MaxSerialItemsIssued']) or $_POST['X_MaxSerialItemsIssued'] < 1) {
+		$InputError = 1;
+		prnMsg(_('The maximum number of serial numbers issued must be numeric and greater than zero'), 'error');
 	} elseif (mb_strlen($_POST['X_FreightChargeAppliesIfLessThan']) > 12 OR !is_numeric($_POST['X_FreightChargeAppliesIfLessThan']) ) {
 		$InputError = 1;
 		prnMsg(_('Freight Charge Applies If Less Than must be a number'),'error');
@@ -156,7 +159,9 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['QuickEntries'] != $_POST['X_QuickEntries'] ) {
 			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_QuickEntries']."' WHERE confname = 'QuickEntries'";
 		}
-
+		if ($_SESSION['MaxSerialItemsIssued'] != $_POST['X_MaxSerialItemsIssued']) {
+			$sql[] = "UPDATE config SET confvalue = '" . $_POST['X_MaxSerialItemsIssued'] . "' WHERE confname = 'MaxSerialItemsIssued'";
+		}
 		if ($_SESSION['WorkingDaysWeek'] != $_POST['X_WorkingDaysWeek'] ) {
 			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_WorkingDaysWeek']."' WHERE confname = 'WorkingDaysWeek'";
 		}
@@ -490,6 +495,11 @@ echo '<tr style="outline: 1px solid"><td>' . _('Romalpa Clause') . ':</td>
 echo '<tr style="outline: 1px solid"><td>' . _('Quick Entries') . ':</td>
 	<td><input type="text" class="integer" required="required" pattern="[1-9][\d]{0,1}" name="X_QuickEntries" value="' . $_SESSION['QuickEntries'] . '" size="3" maxlength="2" /></td>
 	<td>' . _('This parameter defines the layout of the sales order entry screen. The number of fields available for quick entries. Any number from 1 to 99 can be entered.') . '</td></tr>';
+
+// MaxSerialItemsIssued
+echo '<tr style="outline: 1px solid"><td>' . _('Maximum number of serial numbered items that can be issued') . ':</td>
+	<td><input type="text" class="integer" name="X_MaxSerialItemsIssued" value="' . $_SESSION['MaxSerialItemsIssued'] . '" size="3" required="required" maxlength="10" /></td>
+	<td>' . _('This parameter defines the Maximum number of serial numbered items that can be issued. It should be an integer greater than zero.') . '</td></tr>';
 
 // Frequently Ordered Items
 echo '<tr style="outline: 1px solid"><td>' . _('Frequently Ordered Items') . ':</td>

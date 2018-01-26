@@ -32,20 +32,22 @@ $ModuleList = array(_('Sales'),
 $MenuItems['orders']['Transactions']['Caption'] = array(_('New Sales Order or Quotation'),
 														_('Enter Counter Sales'),
 														_('Enter Counter Returns'),
-														_('Print Picking Lists'),
+														_('Generate/Print Picking Lists'),
 														_('Outstanding Sales Orders/Quotations'),
 														_('Special Order'),
 														_('Recurring Order Template'),
-														_('Process Recurring Orders'));
+														_('Process Recurring Orders'),
+														_('Maintain Picking Lists'));
 
 $MenuItems['orders']['Transactions']['URL'] = array('/SelectOrderItems.php?NewOrder=Yes',
 													'/CounterSales.php',
 													'/CounterReturns.php',
-													'/PDFPickingList.php',
+													'/GeneratePickingList.php',
 													'/SelectSalesOrder.php',
 													'/SpecialOrder.php',
 													'/SelectRecurringSalesOrder.php',
-													'/RecurringSalesOrdersProcess.php');
+													'/RecurringSalesOrdersProcess.php',
+													'/SelectPickingLists.php');
 
 $MenuItems['orders']['Reports']['Caption'] = array( _('Sales Order Inquiry'),
 													_('Print Price Lists'),
@@ -99,6 +101,7 @@ $MenuItems['AR']['Transactions']['Caption'] = array(_('Select Order to Invoice')
 													_('Create A Credit Note'),
 													_('Enter Receipts'),
 													_('Allocate Receipts or Credit Notes'));
+
 $MenuItems['AR']['Transactions']['URL'] = array('/SelectSalesOrder.php',
 												'/SelectCreditItems.php?NewCredit=Yes',
 												'/CustomerReceipt.php?NewReceipt=Yes&amp;Type=Customer',
@@ -134,11 +137,13 @@ $MenuItems['AR']['Reports']['URL'] = array(	'/CustWhereAlloc.php',
 
 $MenuItems['AR']['Maintenance']['Caption'] = array(	_('Add Customer'),
 													_('Select Customer'));
+
 $MenuItems['AR']['Maintenance']['URL'] = array(	'/Customers.php',
 												'/SelectCustomer.php');
 
 $MenuItems['AP']['Transactions']['Caption'] = array(_('Select Supplier'),
 													_('Supplier Allocations'));
+
 $MenuItems['AP']['Transactions']['URL'] = array('/SelectSupplier.php',
 												'/SupplierAllocations.php');
 
@@ -163,6 +168,7 @@ $MenuItems['AP']['Reports']['URL'] = array( '/SuppWhereAlloc.php',
 $MenuItems['AP']['Maintenance']['Caption'] = array(	_('Add Supplier'),
 													_('Select Supplier'),
 													_('Maintain Factor Companies'));
+
 $MenuItems['AP']['Maintenance']['URL'] = array(	'/Suppliers.php',
 												'/SelectSupplier.php',
 												'/Factors.php');
@@ -176,6 +182,7 @@ $MenuItems['PO']['Transactions']['Caption'] = array(_('New Purchase Order'),
 													_('Orders to Authorise'),
 													_('Shipment Entry'),
 													_('Select A Shipment'));
+
 $MenuItems['PO']['Transactions']['URL'] = array(	'/PO_Header.php?NewOrder=Yes',
 													'/PO_SelectOSPurchOrder.php',
 													'/PurchaseByPrefSupplier.php',
@@ -297,6 +304,7 @@ $MenuItems['manuf']['Transactions']['Caption'] = array(	_('Work Order Entry'),
 $MenuItems['manuf']['Transactions']['URL'] = array(	'/WorkOrderEntry.php',
 													'/SelectWorkOrder.php',
 													'/SelectQASamples.php');
+
 $MenuItems['manuf']['Reports']['Caption'] = array(	_('Select A Work Order'),
 													_('Costed Bill Of Material Inquiry'),
 													_('Where Used Inquiry'),
@@ -461,10 +469,10 @@ $MenuItems['PC']['Transactions']['URL'] = array('/PcAssignCashToTab.php',
 												'/PcAuthorizeExpenses.php',
 												'/PcAuthorizeCash.php');
 
-$MenuItems['PC']['Reports']['Caption'] = array(_('PC Tab General Report'),
-											   _('PC Expense General Report'),
-											   _('PC Tab Expenses List'),
-											   _('PC Expenses Analysis'));
+$MenuItems['PC']['Reports']['Caption'] = array(	_('PC Tab General Report'),
+												_('PC Expense General Report'),
+												_('PC Tab Expenses List'),
+												_('PC Expenses Analysis'));
 
 $MenuItems['PC']['Reports']['URL'] = array('/PcReportTab.php',
 										   '/PcReportExpense.php',
@@ -499,7 +507,7 @@ $MenuItems['system']['Transactions']['Caption'] = array(_('Company Preferences')
 														_('Form Designer'),
 														_('Web-Store Configuration'),
 														_('SMTP Server Details'),
-												       	_('Mailing Group Maintenance'));
+														_('Mailing Group Maintenance'));
 
 $MenuItems['system']['Transactions']['URL'] = array('/CompanyPreferences.php',
 													'/SystemParameters.php',
@@ -519,7 +527,7 @@ $MenuItems['system']['Transactions']['URL'] = array('/CompanyPreferences.php',
 													'/FormDesigner.php',
 													'/ShopParameters.php',
 													'/SMTPServer.php',
-											       	'/MailingGroupMaintenance.php');
+													'/MailingGroupMaintenance.php');
 
 $MenuItems['system']['Reports']['Caption'] = array(	_('Sales Types'),
 													_('Customer Types'),

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form name="Shipping Label">
+	<PaperSize name="Paper size">A6_Landscape</PaperSize>
+	<LineHeight name="Line height">22</LineHeight>
+	<logo type="image" name="Logo" id="Logo">
+		<x>20</x>
+		<y>40</y>
+		<width>0</width>
+		<height>35</height>
+	</logo>
+	<CompanyAddress type="ElementArray" name="Company address">
+		<CompanyLabel name="CompanyLabel" type="SimpleText">
+			<FontSize>8</FontSize>
+			<x>20</x>
+			<y>38</y>
+		</CompanyLabel>
+		<CompanyName name="CompanyName" type="SimpleText">
+			<FontSize>8</FontSize>
+			<x>20</x>
+			<y>50</y>
+		</CompanyName>
+		<Address type="SimpleText" name="Line 1" id="Address">
+			<FontSize>8</FontSize>
+			<x>20</x>
+			<y>62</y>
+		</Address>
+	</CompanyAddress>
+	<LabelLine name="LabelLine" id="LabelLine" type="Line">
+		<startx>20</startx>
+		<starty>114</starty>
+		<endx>412</endx>
+		<endy>114</endy>
+	</LabelLine>
+	<DeliveryAddress type="ElementArray" name="DeliveryAddress">
+		<DelLabel name="DelLabel" type="SimpleText">
+			<FontSize>8</FontSize>
+			<x>251</x>
+			<y>38</y>
+		</DelLabel>
+		<DelName name="DelName" type="SimpleText">
+			<FontSize>8</FontSize>
+			<x>251</x>
+			<y>50</y>
+		</DelName>
+		<DelAddress type="SimpleText" name="DelAddress" id="DelAddress">
+			<FontSize>8</FontSize>
+			<x>251</x>
+			<y>62</y>
+		</DelAddress>
+	</DeliveryAddress>
+	<PONbr type="SimpleText" name="Order Number" id="PONbr">
+		<FontSize>20</FontSize>
+		<x>20</x>
+		<y>120</y>
+	</PONbr>
+	<ItemNbr type="SimpleText" name="Item Number" id="ItemNbr">
+		<FontSize>20</FontSize>
+		<x>20</x>
+		<y>138</y>
+	</ItemNbr>
+	<CustItem type="SimpleText" name="Customer Item" id="CustItem">
+		<FontSize>20</FontSize>
+		<x>20</x>
+		<y>156</y>
+	</CustItem>
+</form>
