@@ -36,6 +36,7 @@ if( !ini_get('safe_mode') ){
 	ini_set('max_execution_time',$MaximumExecutionTime);
 }
 session_write_close(); //in case a previous session is not closed
+ini_set('session.cookie_httponly',1);
 session_start();
 
 include($PathPrefix . 'includes/ConnectDB.inc');
@@ -56,13 +57,13 @@ if (isset($_SESSION['DatabaseName'])){
 				$_POST['name'] = stripslashes($_POST['name']);
 			}
 
-			$_POST[$PostVariableName] = DB_escape_string(strip_tags($PostVariableValue));
+			$_POST[$PostVariableName] = DB_escape_string(htmlspecialchars($PostVariableValue));
 		} else {
 			foreach ($PostVariableValue as $PostArrayKey => $PostArrayValue) {
 				if(get_magic_quotes_gpc()) {
 					$PostVariableValue[$PostArrayKey] = stripslashes($value[$PostArrayKey]);
 				}
-				$PostVariableValue[$PostArrayKey] = DB_escape_string(strip_tags($PostArrayValue));
+				$PostVariableValue[$PostArrayKey] = DB_escape_string(htmlspecialchars($PostArrayValue));
 			}
 		}
 	}
@@ -72,7 +73,7 @@ if (isset($_SESSION['DatabaseName'])){
 	*/
 	foreach ($_GET as $GetKey => $GetValue) {
 		if (gettype($GetValue) != 'array') {
-			$_GET[$GetKey] = DB_escape_string(strip_tags($GetValue));
+			$_GET[$GetKey] = DB_escape_string(htmlspecialchars($GetValue));
 		}
 	}
 } else { //set SESSION['FormID'] before the a user has even logged in
