@@ -151,6 +151,7 @@ Function GetCreditAvailable($DebtorNo,&$db) {
 }
 
 function ItemCostUpdateGL($db, $StockID, $NewCost, $OldCost, $QOH) {
+
 	if ($_SESSION['CompanyRecord']['gllink_stock']==1
 		AND $QOH!=0
 		AND (abs($NewCost - $OldCost) > pow(10,-($_SESSION['StandardCostDecimalPlaces']+1)))){
@@ -220,16 +221,16 @@ function BomMaterialCost($Parent, $db) {
 	$result = DB_query($SQL);
 	$MyRow = DB_fetch_row($result);
 	$MaterialCost = $MyRow[0];
-	$Result = DB_Txn_Begin();
-	if (abs($MaterialCost-$OldCost)>0) {
+	if (abs($QOH*($MaterialCost-$OldCost))>0) {
 		ItemCostUpdateGL($db, $Parent, $MaterialCost, $OldCost, $QOH);
 	}
-	$Result = DB_Txn_Commit();
 	return $MaterialCost;
 }
 
 /*Iterates through the levels of the bom, recalculating each bom it meets*/
 function UpdateCost($db, $Item) {
+	//update the items cost itself first;
+	BomMaterialCost(strtoupper($Item),$db);
 	$SQL = "SELECT parent FROM bom where component = '" . $Item . "'";
 	$Result = DB_query($SQL);
 	while ($MyRow=DB_fetch_array($Result)){
