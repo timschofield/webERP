@@ -395,7 +395,7 @@ function indian_number_format($Number,$DecimalPlaces){
 			if ($i==0) {
 				$FirstPart .= intval($ExplodedUnits[$i]).','; // creates each of the 2's group and adds a comma to the end
 			} else {
-				$FirstPart .= $ExplodedUnits[$i].','; 
+				$FirstPart .= $ExplodedUnits[$i].',';
 
 			}
 		}
@@ -445,7 +445,7 @@ function GetMailList($MailGroup){
 	return $ToList;
 }
 
-function ChangeFieldInTable($TableName, $FieldName, $OldValue, $NewValue, $db){
+function ChangeFieldInTable($TableName, $FieldName, $OldValue, $NewValue){
 	/* Used in Z_ scripts to change one field across the table.
 	*/
 	echo '<br />' . _('Changing') . ' ' . $TableName . ' ' . _('records');
