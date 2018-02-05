@@ -42,7 +42,7 @@ WHERE (accountcode LIKE "%PT" OR accountcode = "350510100");
 UPDATE chartmasterPT SET `group_` =  'HPP (COGS)' WHERE `accountcode` = '510010005PT';
 
 /* ******************************************************************************************/
-/*                               IKE DIAN                                                   */
+/*                              IKE DIAN                                                    */
 /* ******************************************************************************************/
 
 CREATE TABLE IF NOT EXISTS `chartmasterID` (
@@ -56,10 +56,10 @@ CREATE TABLE IF NOT EXISTS `chartmasterID` (
 
 TRUNCATE `chartmasterID`;
 
-INSERT INTO `chartmasterPT` (`accountcode`, `accountname`, `group_`) 
+INSERT INTO `chartmasterID` (`accountcode`, `accountname`, `group_`) 
 SELECT `accountcode`, `accountname`, `group_`
 FROM chartmaster
 WHERE (accountcode LIKE "%ID" OR accountcode = "350510100");
 
-UPDATE chartmasterPT SET `group_` =  'HPP (COGS)' WHERE `accountcode` = '510010005ID';
+UPDATE chartmasterID SET `group_` =  'HPP (COGS)' WHERE `accountcode` = '510010005ID';
 

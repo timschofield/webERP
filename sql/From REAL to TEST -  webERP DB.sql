@@ -33,6 +33,9 @@ INSERT INTO kurakura_kl_test_erp.chartdetails SELECT * FROM kurakura_kl_erp.char
 TRUNCATE kurakura_kl_test_erp.`chartmaster`;
 INSERT INTO kurakura_kl_test_erp.chartmaster SELECT * FROM kurakura_kl_erp.chartmaster;
 
+TRUNCATE kurakura_kl_test_erp.`chartmasterIK`;
+INSERT INTO kurakura_kl_test_erp.chartmasterIK SELECT * FROM kurakura_kl_erp.chartmasterIK;
+
 TRUNCATE kurakura_kl_test_erp.`chartmasterPMA`;
 INSERT INTO kurakura_kl_test_erp.chartmasterPMA SELECT * FROM kurakura_kl_erp.chartmasterPMA;
 
