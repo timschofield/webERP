@@ -24,9 +24,9 @@ function DailyReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db, 
 	$EmailText = SetRLForTopSalesItems("SHOPKL", 101, 250, 60, ($Shops * 4), ($Shops * 5), 3, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 	$EmailText = SetRLForTopSalesItems("SHOPKL", 101, 250, 60, ($Shops * 3), ($Shops * 4), 2, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 
-	SetRLForLowSalesHighRL("SHOPKL",  30, 6, 5, ($Shops * 6), $ShowMessages, $updateDB, $RootPath, $db);
-	SetRLForLowSalesHighRL("SHOPKL",  40, 5, 4, ($Shops * 5), $ShowMessages, $updateDB, $RootPath, $db);
-	SetRLForLowSalesHighRL("SHOPKL",  50, 4, 3, ($Shops * 4), $ShowMessages, $updateDB, $RootPath, $db);
+	$EmailText = SetRLForLowSalesHighRL("SHOPKL",  30, 6, 5, ($Shops * 6), $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	$EmailText = SetRLForLowSalesHighRL("SHOPKL",  40, 5, 4, ($Shops * 5), $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	$EmailText = SetRLForLowSalesHighRL("SHOPKL",  50, 4, 3, ($Shops * 4), $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 	
 	// For BLINK SHOPS
 	$Shops = NumberOfShops("SHOPBL", $db);
@@ -48,9 +48,9 @@ function DailyReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db, 
 	$EmailText = SetRLForTopSalesItems("SHOPBL", 101, 200, 60, ($Shops * 4), ($Shops * 5), 3, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 	$EmailText = SetRLForTopSalesItems("SHOPBL", 101, 200, 60, ($Shops * 3), ($Shops * 4), 2, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 
-	SetRLForLowSalesHighRL("SHOPBL",  30, 6, 5, ($Shops * 6), $ShowMessages, $updateDB, $RootPath, $db);
-	SetRLForLowSalesHighRL("SHOPBL",  40, 5, 4, ($Shops * 5), $ShowMessages, $updateDB, $RootPath, $db);
-	SetRLForLowSalesHighRL("SHOPBL",  50, 4, 3, ($Shops * 4), $ShowMessages, $updateDB, $RootPath, $db);
+	$EmailText = SetRLForLowSalesHighRL("SHOPBL",  30, 6, 5, ($Shops * 6), $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	$EmailText = SetRLForLowSalesHighRL("SHOPBL",  40, 5, 4, ($Shops * 5), $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	$EmailText = SetRLForLowSalesHighRL("SHOPBL",  50, 4, 3, ($Shops * 4), $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 
 	// for OUTLET SHOPS
 	$Shops = NumberOfShops("SHOPOU", $db);
@@ -68,11 +68,10 @@ function DailyReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db, 
 	$EmailText = SetRLForTopSalesItems("SHOPOU",  51, 100, 60, ($Shops * 5), ($Shops * 6), 4, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 	$EmailText = SetRLForTopSalesItems("SHOPOU",  51, 100, 60, ($Shops * 4), ($Shops * 5), 3, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 	
-	
 	// These functions does not need to be segregated by type of shop, as it only takes care of shops with RL > 0
-	RebalancingBetweenShops(60, $ShowMessages, $updateDB, $RootPath, $db);
+	$EmailText = RebalancingBetweenShops(60, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 
-	SetRLZeroForNotAvailableItems($ShowMessages, $updateDB, $RootPath, $db);
+	$EmailText = SetRLZeroForNotAvailableItems($ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 
 	$EmailText = AdjustPackaging(60, 'SHOPKL', $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 	$EmailText = AdjustPackaging(60, 'SHOPBL', $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
@@ -118,7 +117,7 @@ function isReorderLevelManuallyChanged($stockid, $loccode, $maxmanualchanges, $d
 
 }
 
-function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, $db){
+function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, $db, $EmailText){
 	/* 
 		items 
 		that some stock is needed at some shops, 
@@ -127,6 +126,10 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 		and there is no transfer alive for this item 
 		
 	*/
+	if ($EmailText!=''){
+		$EmailText = $EmailText . "\n" . "Rebalancing stock between shops." . "\n\n";
+	}
+
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 	$SQL = "SELECT stockmaster.stockid,
 					stockmaster.categoryid,
@@ -268,6 +271,14 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 									);
 								$PrintLine = FALSE;
 							}
+							if ($EmailText!=''){
+								$EmailText = $EmailText . "\n" . $myrow['stockid'] . " @" . 
+																$mydistribution['loccode'] ." " . 
+																locale_number_format($mydistribution['oldrl'],0) ." Needed at:" . 
+																$myrow['locationneeded'] ." " . 
+																$strategy ." " . 
+																"\n";
+							}
 						}
 					}else{
 						$location = "";
@@ -301,6 +312,15 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 						);
 				}
 			}
+			if ($EmailText!=''){
+				$EmailText = $EmailText . "\n" . $myrow['stockid'] . " " . 
+												$myrow['categoryid'] . " " . 
+												$rebalancinglocationfrom ." " . 
+												"---" . " " . 
+												$myrow['locationneeded'] ." " . 
+												$strategy ." " . 
+												"\n";
+			}
 			$i++;
 		}
 		if ($ShowMessages){
@@ -308,6 +328,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 					</div>';
 		}
 	}
+	return $EmailText;
 }
 
 function WorstLocationForItem($stockid, $stockcat, $kind, $maxdays, $db){
@@ -404,9 +425,13 @@ function ActiveLocationsForItem($stockid, $db){
 	return $qty;
 }
 
-function SetRLZeroForNotAvailableItems($ShowMessages, $updateDB, $RootPath, $db){
+function SetRLZeroForNotAvailableItems($ShowMessages, $updateDB, $RootPath, $db, $EmailText){
 	/* On 17/12/2013 we take out the SHOP consumables to avoid problems with the shop packagings */
 	/* On 21/12/2013 we take out the SHOP packaging to avoid problems with the shop packagings */
+
+	if ($EmailText!=''){
+		$EmailText = $EmailText . "Set RL = 0 for not available items." . "\n\n";
+	}
 	
 	$SQL = "SELECT locstock.stockid,
 					stockmaster.description,
@@ -463,6 +488,9 @@ function SetRLZeroForNotAvailableItems($ShowMessages, $updateDB, $RootPath, $db)
 						);
 				$i++;
 			}
+			if ($EmailText!=''){
+				$EmailText = $EmailText . $myrow['stockid'] . "\n";
+			}
 			SetReorderLevel("NotAvailable", $myrow['stockid'],"SHOPS", 999999, 0, $updateDB, $db);
 		}
 		if ($ShowMessages){
@@ -470,6 +498,7 @@ function SetRLZeroForNotAvailableItems($ShowMessages, $updateDB, $RootPath, $db)
 					</div>';
 		}
 	}
+	return $EmailText;
 }
 
 function SetRLForTopSalesItems($ShopType, $starttopitems, $endtopitems, $daystopitems, $minstockavailable, $maxstockavailable, $NewRL, $ShowMessages, $updateDB, $RootPath, $db, $EmailText){
@@ -713,12 +742,15 @@ function SetRLForLowSalesItems( $starttopitems, $endtopitems, $daystopitems, $Ne
 	}
 }
 
-function SetRLForLowSalesHighRL($ShopType, $maxdays, $oldRL, $maxRL, $minavailablestock, $ShowMessages, $updateDB, $RootPath, $db){
+function SetRLForLowSalesHighRL($ShopType, $maxdays, $oldRL, $maxRL, $minavailablestock, $ShowMessages, $updateDB, $RootPath, $db, $EmailText){
 	/* No Sales during last maxdays, 
 		with stock at the shop
 		with RL >= oldRL at the shop
 		with less than minavailablestock at shops or office
 	*/
+	if ($EmailText!=''){
+		$EmailText = $EmailText . "\n" . "SetRLForLowSalesHighRL for " . $ShopType . " MaxRL = " . $maxRL . " MinAvailableStock = " . $minavailablestock . "\n\n";
+	}
 
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$maxdays));
 	
@@ -832,6 +864,9 @@ function SetRLForLowSalesHighRL($ShopType, $maxdays, $oldRL, $maxRL, $minavailab
 						$notes
 						);
 			}
+			if ($EmailText!=''){
+				$EmailText = $EmailText .  $myrow['stockid'] . " " . $myrow['loccode'] . " OldRL = " . locale_number_format($myrow['reorderlevel'],0) . " NewRL = " . locale_number_format($newRL,0) . " " . $notes . "\n";
+			}
 			$i++;
 		}
 		if ($ShowMessages){
@@ -839,6 +874,7 @@ function SetRLForLowSalesHighRL($ShopType, $maxdays, $oldRL, $maxRL, $minavailab
 					</div>';
 		}
 	}
+	return $EmailText;
 }
 
 function MaxRLCorrectionSomeModels($stockid, $loccode, $NewRL){
