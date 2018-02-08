@@ -272,12 +272,12 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 								$PrintLine = FALSE;
 							}
 							if ($EmailText!=''){
-								$EmailText = $EmailText . "\n" . $myrow['stockid'] . " @" . 
-																$mydistribution['loccode'] ." " . 
-																locale_number_format($mydistribution['oldrl'],0) ." Needed at:" . 
-																$myrow['locationneeded'] ." " . 
-																$strategy ." " . 
-																"\n";
+								$EmailText = $EmailText . $myrow['stockid'] . " @" . 
+														$mydistribution['loccode'] ." " . 
+														locale_number_format($mydistribution['oldrl'],0) ." Needed at:" . 
+														$myrow['locationneeded'] ." " . 
+														$strategy ." " . 
+														"\n";
 							}
 						}
 					}else{
@@ -313,13 +313,13 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 				}
 			}
 			if ($EmailText!=''){
-				$EmailText = $EmailText . "\n" . $myrow['stockid'] . " " . 
-												$myrow['categoryid'] . " " . 
-												$rebalancinglocationfrom ." " . 
-												"---" . " " . 
-												$myrow['locationneeded'] ." " . 
-												$strategy ." " . 
-												"\n";
+				$EmailText = $EmailText . $myrow['stockid'] . " " . 
+										$myrow['categoryid'] . " " . 
+										$rebalancinglocationfrom ." " . 
+										"---" . " " . 
+										$myrow['locationneeded'] ." " . 
+										$strategy ." " . 
+										"\n";
 			}
 			$i++;
 		}
