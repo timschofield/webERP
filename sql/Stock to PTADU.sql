@@ -37,3 +37,30 @@ INSERT INTO `stockcategory` (`categoryid`, `categorydescription`, `stocktype`, `
 ('DISC8A', '42AD-Discount 80 Goods', 'F', '111519100AD', '510500000AD', '510500000AD', '510500000AD', '510500000AD', '111513000AD', 1, 5),
 ('COMPOA', '80AD-Components', 'M', '111512000AD', '510500000AD', '510500000AD', '510500000AD', '510500000AD', '111513000AD', 1, 5),
 ('SHPACA', '90AD-Shop Packaging', 'F', '111800100AD', '510500000AD', '510500000AD', '510500000AD', '510500000AD', '111513000AD', 1, 5);
+
+
+
+/* QTY RECEIVED BY ITEM FROM PO XXX */
+SELECT purchorderdetails.itemcode,
+	SUM(purchorderdetails.quantityrecd) AS qtyreceivedptadu,
+	(SELECT SUM(locstock.quantity)
+		FROM locstock
+		WHERE locstock.stockid = purchorderdetails.itemcode) AS qoh
+FROM purchorderdetails
+WHERE purchorderdetails.orderno >= 2750
+GROUP BY purchorderdetails.itemcode
+ORDER BY purchorderdetails.itemcode;
+
+
+/* QTY RECEIVED BY ITEM FROM WO XXX */
+SELECT woitems.stockid,
+	SUM(woitems.qtyrecd) AS qtyproducedptadu,
+	(SELECT SUM(locstock.quantity)
+		FROM locstock
+		WHERE locstock.stockid = woitems.stockid) AS qoh
+FROM workorders, woitems
+WHERE workorders.wo = woitems.wo
+	AND workorders.closed = 1
+	AND workorders.wo > 3500
+GROUP BY woitems.stockid
+ORDER BY woitems.stockid
