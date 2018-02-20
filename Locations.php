@@ -1039,6 +1039,8 @@ function UpdateOnlinePartnerPaypalSettingsInOpenCart($NewLocationType, $NewOnlin
 			UpdateSettingValueOpenCartByGroupAndKey('pp_express', 'pp_express_signature', $myrow['paypalsignature'], $db_oc, $oc_tableprefix);
 			UpdateSettingValueOpenCartByGroupAndKey('pp_express', 'pp_express_test', $myrow['paypaltest'], $db_oc, $oc_tableprefix);
 			prnMsg('Updated KL Online Partner ' . $NewOnlinePartnerCode . ' in OpenCart', 'success');
+		}else{
+			prnMsg('The ONLINE location should have a valid KL Online Partner', 'error');
 		}
 	}
 }
