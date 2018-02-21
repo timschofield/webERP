@@ -40,12 +40,12 @@ FROM chartmaster
 WHERE (accountcode LIKE "%PT" OR accountcode = "350510100");
 
 UPDATE chartmasterPT SET `group_` =  'HPP (COGS)' WHERE `accountcode` = '510010005PT';
-UPDATE chartmasterPT SET `group_` =  'Penjualan' WHERE `accountcode` = '410010000PT';
+UPDATE chartmasterPT SET `group_` =  'Penjualan' WHERE `accountcode` = '410010010PT';
 /* ******************************************************************************************/
-/*                              IKE DIAN                                                    */
+/*                              PERORANGAN IKE DIAN (POIK)                                  */
 /* ******************************************************************************************/
 
-CREATE TABLE IF NOT EXISTS `chartmasterID` (
+CREATE TABLE IF NOT EXISTS `chartmasterIK` (
   `accountcode` varchar(20) NOT NULL DEFAULT '0',
   `accountname` char(50) NOT NULL DEFAULT '',
   `group_` char(30) NOT NULL DEFAULT '',
@@ -54,12 +54,12 @@ CREATE TABLE IF NOT EXISTS `chartmasterID` (
   KEY `Group_` (`group_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-TRUNCATE `chartmasterID`;
+TRUNCATE `chartmasterIK`;
 
-INSERT INTO `chartmasterID` (`accountcode`, `accountname`, `group_`) 
+INSERT INTO `chartmasterIK` (`accountcode`, `accountname`, `group_`) 
 SELECT `accountcode`, `accountname`, `group_`
 FROM chartmaster
-WHERE (accountcode LIKE "%ID" OR accountcode = "350510100");
+WHERE (accountcode LIKE "%IK" OR accountcode = "350510100");
 
-UPDATE chartmasterID SET `group_` =  'HPP (COGS)' WHERE `accountcode` = '510010005ID';
+UPDATE chartmasterIK SET `group_` =  'HPP (COGS)' WHERE `accountcode` = '510010005IK';
 

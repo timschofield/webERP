@@ -143,51 +143,30 @@ function AdjustPackagingMovement($StockId, $QtyDelivered, $InvoiceNo, $PeriodNo,
 		/* Now account for the cost of sale and loss of stock */
 		if ($StandardCost !=0){
 			/*first the cost of sales entry*/
-				$AccountCOGL = GetCOGSGLAccount($Area, $StockId, $_SESSION['Items'.$identifier]->DefaultSalesType, $db);
-				$SQL = "INSERT INTO gltrans (type,
-											typeno,
-											trandate,
-											periodno,
-											account,
-											narrative,
-											amount,
-											tag)
-									VALUES ( 10,
-											'" . $InvoiceNo . "',
-											'" . Date('Y-m-d') . "',
-											'" . $PeriodNo . "',
-											'" . $AccountCOGL . "',
-											'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $StockId . " x " . $QtyDelivered . " @ " . $StandardCost . "',
-											'" . $StandardCost * $QtyDelivered . "',
-											'" . $Tag . "')";
-
-			$ErrMsg = _('ERROR: Contact the office!!!  -> AdjustPackagingMovement-0060');
-			$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+			$AccountCOGL = GetCOGSGLAccount($Area, $StockId, $_SESSION['Items'.$identifier]->DefaultSalesType, $db);
+			InsertIntoGLTrans("10", 
+							$InvoiceNo, 
+							Date('Y-m-d'),
+							$PeriodNo,
+							$AccountCOGL,
+							$StockId . " x " . $QtyDelivered . " @ " . round($StandardCost),
+							round($StandardCost * $QtyDelivered),
+							$Tag,
+							'ERROR-POS-00101'
+							);
 
 			/*now the stock entry*/
 			$StockGLCode = GetStockGLCode($StockId,$db);
-			$SQL = "INSERT INTO gltrans (	type,
-											typeno,
-											trandate,
-											periodno,
-											account,
-											narrative,
-											amount,
-											tag
-											)
-									VALUES ( 10,
-										'" . $InvoiceNo . "',
-										'" . Date('Y-m-d') . "',
-										'" . $PeriodNo . "',
-										'" . $StockGLCode['stockact'] . "',
-										'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $StockId . " x " . $QtyDelivered . " @ " . $StandardCost . "',
-										'" . (-$StandardCost * $QtyDelivered) . "',
-										'" . $Tag . "')";
-
-			$ErrMsg = _('ERROR: Contact the office!!!  -> AdjustPackagingMovement-0070');
-			$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+			InsertIntoGLTrans("10", 
+							$InvoiceNo, 
+							Date('Y-m-d'),
+							$PeriodNo,
+							$StockGLCode['stockact'],
+							$StockId . " x " . $QtyDelivered . " @ " . round($StandardCost),
+							round(-$StandardCost * $QtyDelivered),
+							$Tag,
+							'ERROR-POS-00102'
+							);
 		} /* end of if GL and stock integrated and standard cost !=0 */
 	}
 }
@@ -400,69 +379,42 @@ function AccountPaymentRetail($PaymentMethod,
 					' (' . $InvoiceNo . 
 					') SPG:'. $_SESSION['SalesmanLogin'];
 	}
-	
-	$SQL="INSERT INTO gltrans (type,
-			typeno,
-			trandate,
-			periodno,
-			account,
-			narrative,
-			amount,
-			tag)
-		VALUES (12,
-			'" . $ReceiptNumber . "',
-			'" . Date('Y-m-d') . "',
-			'" . $PeriodNo . "',
-			'" . $BankAccount . "',
-			'" . $Description . "',
-			'" . $NetPayment/$ExRate . "',
-			'" . $Tag . "')";
-	$DbgMsg = _('The SQL that failed to insert the NET GL transaction for the bank account debit was');
-	$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
-	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+
+	InsertIntoGLTrans("12", 
+					$ReceiptNumber, 
+					Date('Y-m-d'),
+					$PeriodNo,
+					$BankAccount,
+					$Description,
+					round($NetPayment/$ExRate),
+					$Tag,
+					'ERROR-POS-00103'
+					);
 
 	// $BankCommision va a la compte $GLAccountBankCommission per comissió de CC
 	if ($PaymentMethod == PAYMENT_BY_CREDITCARD){
-		$SQL="INSERT INTO gltrans (type,
-				typeno,
-				trandate,
-				periodno,
-				account,
-				narrative,
-				amount,
-				tag)
-			VALUES (12,
-				'" . $ReceiptNumber . "',
-				'" . Date('Y-m-d') . "',
-				'" . $PeriodNo . "',
-				'" . $GLAccountBankCommission . "',
-				'" . $Description . "',
-				'" . $BankCommision/$ExRate . "',
-				'" . $Tag . "')";
-		$DbgMsg = _('The SQL that failed to insert the bank Commission GL transaction for the bank account debit was');
-		$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
-		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		InsertIntoGLTrans("12", 
+						$ReceiptNumber, 
+						Date('Y-m-d'),
+						$PeriodNo,
+						$GLAccountBankCommission,
+						$Description,
+						round($BankCommision/$ExRate),
+						$Tag,
+						'ERROR-POS-00104'
+						);
 	}
 	/* Now Credit Debtors account with receipt */
-	$SQL="INSERT INTO gltrans ( type,
-			typeno,
-			trandate,
-			periodno,
-			account,
-			narrative,
-			amount,
-			tag)
-	VALUES (12,
-		'" . $ReceiptNumber . "',
-		'" . Date('Y-m-d') . "',
-		'" . $PeriodNo . "',
-		'" . $_SESSION['CompanyRecord']['debtorsact'] . "',
-		'" . $Description . "',
-		'" . -($AmountPaid/$ExRate) . "',
-		'" . $Tag . "')";
-	$DbgMsg = _('The SQL that failed to insert the GL transaction for the debtors account credit was');
-	$ErrMsg = _('Cannot insert a GL transaction for the debtors account credit');
-	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	InsertIntoGLTrans("12", 
+					$ReceiptNumber, 
+					Date('Y-m-d'),
+					$PeriodNo,
+					$_SESSION['CompanyRecord']['debtorsact'],
+					$Description,
+					round(-$AmountPaid/$ExRate),
+					$Tag,
+					'ERROR-POS-00105'
+					);
 	return $ReceiptNumber;
 }
 
@@ -489,27 +441,17 @@ function AccountDiscountOnOrderRetail($TypeDiscount,
 	$Description = $CustomerReference  . 
 					' (' . $InvoiceNo . 
 					') ' . $TypeDiscount;
-	
-	$SQL="INSERT INTO gltrans (type,
-			typeno,
-			trandate,
-			periodno,
-			account,
-			narrative,
-			amount,
-			tag)
-		VALUES (10,
-			'" . $ReceiptNumber . "',
-			'" . Date('Y-m-d') . "',
-			'" . $PeriodNo . "',
-			'" . $BankAccount . "',
-			'" . $Description . "',
-			'" . $NetPayment/$ExRate . "',
-			'" . $Tag . "')";
-	$DbgMsg = _('The SQL that failed to insert the NET GL transaction for the bank account debit was');
-	$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
-	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
+	InsertIntoGLTrans("10", 
+					$ReceiptNumber, 
+					Date('Y-m-d'),
+					$PeriodNo,
+					$BankAccount,
+					$Description,
+					round($NetPayment/$ExRate),
+					$Tag,
+					'ERROR-POS-00106'
+					);
 	return $ReceiptNumber;
 }
 
@@ -879,9 +821,7 @@ function KLPrintReceiptCustomerFooter($identifier, $OrderNo){
 	$TextToPrint .= $CharacterFontA . $Emphasized . $CenteredJustified . $NewLine;
 	$TextToPrint .= "Follow us on" . $NewLine ;
 	$TextToPrint .= "Facebook: KapalLautBali" . $NewLine ;
-//	$TextToPrint .= "Twitter: @KapalLautBali" . $NewLine ;
 	$TextToPrint .= "Instagram: @KapalLautBali" . $NewLine ;
-
 	$TextToPrint .= KLPrintReceiptTestWarning("INVOICE");
 
 	$TextToPrint .= $NewLine;
@@ -889,7 +829,6 @@ function KLPrintReceiptCustomerFooter($identifier, $OrderNo){
 	$TextToPrint .= $CutPaper;
 	
 	return $TextToPrint;
-
 }
 
 function KLPrintReceiptShopFooter($identifier, $OrderNo){
@@ -1022,5 +961,28 @@ function DoubleJustified($left, $right, $lenght, $fillchar){
 	return str_pad($left, $lenght - strlen($right), $fillchar) . $right . $NewLine;
 }
 
+function InsertIntoGLTrans($Type, $Typeno, $Trandate, $Period, $Account, $Narrative, $Amount, $Tag, $ErrCode){
+	$SQL = "INSERT INTO gltrans 
+				(type,
+				typeno,
+				trandate,
+				periodno,
+				account,
+				narrative,
+				amount,
+				tag)
+			VALUES 
+				('" . $Type . "',
+				'" . $Typeno . "',
+				'" . $Trandate . "',
+				'" . $Period . "',
+				'" . $Account . "',
+				'" . $Narrative . "',
+				'" . $Amount . "',
+				'" . $Tag . "')";
+	$ErrMsg = 'CRITICAL ERROR! WRITE THIS CODE AND CALL THE OFFICE IMMEDIATELY: '. $ErrCode;		
+	$DbgMsg = 'SQL to insert GLTrans record: ';
+	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+}
 
 ?>

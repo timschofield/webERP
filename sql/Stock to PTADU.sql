@@ -17,6 +17,86 @@ INSERT INTO `chartmaster` (`accountcode`, `accountname`, `group_`, `cashflowsact
 ('111800100AD', 'Persediaan Shop Packaging PT ADU', 'Persediaan', -1, 0);
 
 
+INSERT INTO `glaccountusers` (`accountcode`, `userid`, `canview`, `canupd`) VALUES
+('111512000AD', 'Ricard', 1, 1),
+('111513000AD', 'Ricard', 1, 1),
+('111515000AD', 'Ricard', 1, 1),
+('111516000AD', 'Ricard', 1, 1),
+('111517000AD', 'Ricard', 1, 1),
+('111518000AD', 'Ricard', 1, 1),
+('111518900AD', 'Ricard', 1, 1),
+('111519000AD', 'Ricard', 1, 1),
+('111519100AD', 'Ricard', 1, 1),
+('111520000AD', 'Ricard', 1, 1),
+('111530000AD', 'Ricard', 1, 1),
+('111800000AD', 'Ricard', 1, 1),
+('111800100AD', 'Ricard', 1, 1),
+('111900000AD', 'Ricard', 1, 1);
+
+INSERT INTO `glaccountusers` (`accountcode`, `userid`, `canview`, `canupd`) VALUES
+('111512000AD', 'Revi', 1, 1),
+('111513000AD', 'Revi', 1, 1),
+('111515000AD', 'Revi', 1, 1),
+('111516000AD', 'Revi', 1, 1),
+('111517000AD', 'Revi', 1, 1),
+('111518000AD', 'Revi', 1, 1),
+('111518900AD', 'Revi', 1, 1),
+('111519000AD', 'Revi', 1, 1),
+('111519100AD', 'Revi', 1, 1),
+('111520000AD', 'Revi', 1, 1),
+('111530000AD', 'Revi', 1, 1),
+('111800000AD', 'Revi', 1, 1),
+('111800100AD', 'Revi', 1, 1),
+('111900000AD', 'Revi', 1, 1);
+
+INSERT INTO `glaccountusers` (`accountcode`, `userid`, `canview`, `canupd`) VALUES
+('111512000AD', 'Ike1', 1, 1),
+('111513000AD', 'Ike1', 1, 1),
+('111515000AD', 'Ike1', 1, 1),
+('111516000AD', 'Ike1', 1, 1),
+('111517000AD', 'Ike1', 1, 1),
+('111518000AD', 'Ike1', 1, 1),
+('111518900AD', 'Ike1', 1, 1),
+('111519000AD', 'Ike1', 1, 1),
+('111519100AD', 'Ike1', 1, 1),
+('111520000AD', 'Ike1', 1, 1),
+('111530000AD', 'Ike1', 1, 1),
+('111800000AD', 'Ike1', 1, 1),
+('111800100AD', 'Ike1', 1, 1),
+('111900000AD', 'Ike1', 1, 1);
+
+INSERT INTO `glaccountusers` (`accountcode`, `userid`, `canview`, `canupd`) VALUES
+('111512000AD', 'Febri', 1, 1),
+('111513000AD', 'Febri', 1, 1),
+('111515000AD', 'Febri', 1, 1),
+('111516000AD', 'Febri', 1, 1),
+('111517000AD', 'Febri', 1, 1),
+('111518000AD', 'Febri', 1, 1),
+('111518900AD', 'Febri', 1, 1),
+('111519000AD', 'Febri', 1, 1),
+('111519100AD', 'Febri', 1, 1),
+('111520000AD', 'Febri', 1, 1),
+('111530000AD', 'Febri', 1, 1),
+('111800000AD', 'Febri', 1, 1),
+('111800100AD', 'Febri', 1, 1),
+('111900000AD', 'Febri', 1, 1);
+
+INSERT INTO `glaccountusers` (`accountcode`, `userid`, `canview`, `canupd`) VALUES
+('111512000AD', 'Laia', 1, 1),
+('111513000AD', 'Laia', 1, 1),
+('111515000AD', 'Laia', 1, 1),
+('111516000AD', 'Laia', 1, 1),
+('111517000AD', 'Laia', 1, 1),
+('111518000AD', 'Laia', 1, 1),
+('111518900AD', 'Laia', 1, 1),
+('111519000AD', 'Laia', 1, 1),
+('111519100AD', 'Laia', 1, 1),
+('111520000AD', 'Laia', 1, 1),
+('111530000AD', 'Laia', 1, 1),
+('111800000AD', 'Laia', 1, 1),
+('111800100AD', 'Laia', 1, 1),
+('111900000AD', 'Laia', 1, 1);
+
 /* STOCK CATEGORIES */
 
 INSERT INTO `stockcategory` (`categoryid`, `categorydescription`, `stocktype`, `stockact`, `adjglact`, `issueglact`, `purchpricevaract`, `materialuseagevarac`, `wipact`, `defaulttaxcatid`, `klprioritytransfers`) VALUES
@@ -38,7 +118,14 @@ INSERT INTO `stockcategory` (`categoryid`, `categorydescription`, `stocktype`, `
 ('COMPOA', '80AD-Components', 'M', '111512000AD', '510500000AD', '510500000AD', '510500000AD', '510500000AD', '111513000AD', 1, 5),
 ('SHPACA', '90AD-Shop Packaging', 'F', '111800100AD', '510500000AD', '510500000AD', '510500000AD', '510500000AD', '111513000AD', 1, 5);
 
-
+INSERT INTO `cogsglpostings` (`area`, `stkcat`, `glcode`, `salestype`) VALUES
+('AN', 'SHPACA', '510010100AD', 'AN'),
+('REC', 'SHPACA', '510010100AD', 'AN'),
+('RER', 'SHPACA', '510010100AD', 'AN'),
+('REZ', 'SHPACA', '510010100AD', 'AN'),
+('RIC', 'SHPACA', '510010100AD', 'AN'),
+('RIR', 'SHPACA', '510010100AD', 'AN'),
+('RIZ', 'SHPACA', '510010100AD', 'AN');
 
 /* QTY RECEIVED BY ITEM FROM PO XXX */
 SELECT purchorderdetails.itemcode,

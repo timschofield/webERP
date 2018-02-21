@@ -813,148 +813,6 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 											$OrderLine->DiscountPercent
 											);
 			
-			if ($OrderLine->StandardCost !=0){
-				/*first the cost of sales entry*/
-
-				$AccountCOGS = GetCOGSGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType, $db);
-				if ($Area == $_SESSION['AreaSalesCashOthers']){
-					// No PT sales do not have COGS corrections
-					$StandardCost = round($OrderLine->StandardCost,0);
-					$Compensation = 0;
-				}else{
-					// PT Sales have some COGS corrections and adjustments
-					$StandardCost = round($OrderLine->StandardCost * ($_SESSION['HPPCompensation'] / 100),0);
-					$Compensation = round($StandardCost - $OrderLine->StandardCost,0);
-				}
-				$SQL = "INSERT INTO gltrans 
-							(type,
-							typeno,
-							trandate,
-							periodno,
-							account,
-							narrative,
-							amount,
-							tag)
-						VALUES 
-							( 10,
-							'" . $InvoiceNo . "',
-							'" . Date('Y-m-d') . "',
-							'" . $PeriodNo . "',
-							'" . $AccountCOGS . "',
-							'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . $StandardCost . "',
-							'" . $StandardCost * $OrderLine->Quantity . "',
-							'" . $Tag . "')";
-
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The cost of COGSGLAccount GL posting could not be inserted because');
-				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-				
-				// Compensation COGS for PT sales
-				if(abs($Compensation) > 1){
-					$SQL = "INSERT INTO gltrans 
-								(type,
-								typeno,
-								trandate,
-								periodno,
-								account,
-								narrative,
-								amount,
-								tag)
-							VALUES 
-								( 10,
-								'" . $InvoiceNo . "',
-								'" . Date('Y-m-d') . "',
-								'" . $PeriodNo . "',
-								'" . $_SESSION['AccountHPPCompensation'] . "',
-								'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . round($Compensation,0) . "',
-								'" . -$Compensation * $OrderLine->Quantity . "',
-								'" . $Tag . "')";
-
-					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The compensation of PT sales could not be inserted because');
-					$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-					$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-				}
-
-				/*now the stock entry*/
-				$StockGLCode = GetStockGLCode($OrderLine->StockID,$db);
-				$SQL = "INSERT INTO gltrans 
-							(type,
-							typeno,
-							trandate,
-							periodno,
-							account,
-							narrative,
-							amount,
-							tag	)
-						VALUES 
-							( 10,
-							'" . $InvoiceNo . "',
-							'" . Date('Y-m-d') . "',
-							'" . $PeriodNo . "',
-							'" . $StockGLCode['stockact'] . "',
-							'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . round($OrderLine->StandardCost) . "',
-							'" . (-round($OrderLine->StandardCost) * $OrderLine->Quantity) . "',
-							'" . $Tag . "')";
-
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The stock side of the cost of sales StockGLCode GL posting could not be inserted because');
-				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-			} /* end of if standard cost !=0 */
-
-			if ($OrderLine->Price !=0){
-
-				//Post sales transaction to GL credit sales
-				$SalesGLAccounts = GetSalesGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType, $db);
-				$SQL = "INSERT INTO gltrans 
-							(type,
-							typeno,
-							trandate,
-							periodno,
-							account,
-							narrative,
-							amount,
-							tag)
-						VALUES 
-							( 10,
-							'" . $InvoiceNo . "',
-							'" . Date('Y-m-d') . "',
-							'" . $PeriodNo . "',
-							'" . $SalesGLAccounts['salesglcode'] . "',
-							'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . round($OrderLine->Price) . "',
-							'" . (-$OrderLine->Price * $OrderLine->Quantity/$ExRate) . "',
-							'" . $Tag . "')";
-
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The sales SalesGLAccounts GL posting could not be inserted because');
-				$DbgMsg = '<br />' ._('The following SQL to insert the GLTrans record was used');
-				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-
-				if ($OrderLine->DiscountPercent !=0){
-
-					$SQL = "INSERT INTO gltrans 
-								(type,
-								typeno,
-								trandate,
-								periodno,
-								account,
-								narrative,
-								amount,
-								tag)
-							VALUES 
-								( 10,
-								'" . $InvoiceNo . "',
-								'" . Date('Y-m-d') . "',
-								'" . $PeriodNo . "',
-								'" . $SalesGLAccounts['discountglcode'] . "',
-								'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $OrderLine->StockID . " @ " . ($OrderLine->DiscountPercent * 100) . "%',
-								'" . ($OrderLine->Price * $OrderLine->Quantity * $OrderLine->DiscountPercent/$ExRate) . "',
-								'" . $Tag . "')";
-
-					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The sales discount GL posting could not be inserted because');
-					$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-					$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-				} /*end of if discount !=0 */
-			} /*end of if price != 0 */
-			
 			// HARDCODED UNTIL END OF PTBB STOCK
 			// GET THE stock category to decide how we do the consignment accounting 
 			$SQL="SELECT stockmaster.categoryid
@@ -964,7 +822,164 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 			$Result = DB_query($SQL, $ErrMsg);
 			$myStockCat = DB_fetch_array($Result);
 			$StockCategory = $myStockCat['categoryid'];
-prnMsg($_SESSION['PartnerCode'] . "  " . $StockCategory);	
+
+			if ($OrderLine->StandardCost !=0){
+				/*first the cost of sales entry*/
+
+//				GET THE $$AccountCOGS depending on item category, retail partner, etc
+//				$AccountCOGS = GetCOGSGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType, $db);
+				if (($StockCategory == "SETKL") OR
+					($StockCategory == "SETBL") OR
+					($StockCategory == "SETGE") OR
+					($StockCategory == "TESTKL") OR
+					($StockCategory == "TESTBL") OR
+					($StockCategory == "TESTGE") OR
+					($StockCategory == "STABKL") OR
+					($StockCategory == "STABBL") OR
+					($StockCategory == "STABGE") OR
+					($StockCategory == "NOPOKL") OR
+					($StockCategory == "NOPOBL") OR
+					($StockCategory == "NOPOGE") OR
+					($StockCategory == "DISC20") OR
+					($StockCategory == "DISC50") OR
+					($StockCategory == "DISC80") OR
+					($StockCategory == "COMPON")){
+					// IT IS A PTBB ITEM
+					if ($_SESSION['PartnerCode'] == "PTBB"){
+						// PTBB sells its own items
+						$AccountCOGS = GetCOGSGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType, $db);
+					}else{
+						// IT IS A CONSIGNMENT RETAIL SALE TO POIK OR OTHER RETAIL PARTNER, so COGS should go to HPP-(COGS) PTBB
+						$AccountCOGS = "510010000PT";
+					}
+				}
+				if (($StockCategory == "SHPACK")){
+					// IT IS A PTBB PACKAGING ITEM
+					if ($_SESSION['PartnerCode'] == "PTBB"){
+						// PTBB sells its own items
+						$AccountCOGS = GetCOGSGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType, $db);
+					}else{
+						// IT IS A CONSIGNMENT RETAIL SALE TO POIK OR OTHER RETAIL PARTNER, so COGS should go to HPP-(COGS) PTBB
+						$AccountCOGS = "510010100PT";
+					}
+				}
+				if (($_SESSION['PercentConsignmentTADU'] > 0) AND ($_SESSION['PercentConsignmentTADU'] < 100) AND 
+					(($StockCategory == "SETKLA") OR
+					($StockCategory == "SETBLA") OR
+					($StockCategory == "SETGEA") OR
+					($StockCategory == "TESTKA") OR
+					($StockCategory == "TESTBA") OR
+					($StockCategory == "TESTGA") OR
+					($StockCategory == "STABKA") OR
+					($StockCategory == "STABBA") OR
+					($StockCategory == "STABGA") OR
+					($StockCategory == "NOPOKA") OR
+					($StockCategory == "NOPOBA") OR
+					($StockCategory == "NOPOGA") OR
+					($StockCategory == "DISC2A") OR
+					($StockCategory == "DISC5A") OR
+					($StockCategory == "DISC8A") OR
+					($StockCategory == "COMPOA"))){
+						// IT IS A PTADU ITEM
+					if ($_SESSION['PartnerCode'] == "PTBB"){
+						// PTBB sells PTADU items so COGS should go to PTADU
+						$AccountCOGS = "510010000AD";
+					}elseif ($_SESSION['PartnerCode'] == "POIK"){
+						// POIK sells PTADU items
+						$AccountCOGS = "510010000AD";
+					}
+				}
+				if (($_SESSION['PercentConsignmentTADU'] > 0) AND ($_SESSION['PercentConsignmentTADU'] < 100) AND 
+					($StockCategory == "SHPACA")){
+						// IT IS A PTADU PACKAGING ITEM
+					if ($_SESSION['PartnerCode'] == "PTBB"){
+						// PTBB sells PTADU items so COGS should go to PTADU
+						$AccountCOGS = "510010100AD";
+					}elseif ($_SESSION['PartnerCode'] == "POIK"){
+						// POIK sells PTADU items
+						$AccountCOGS = "510010100AD";
+					}
+				}
+//prnMsg($_SESSION['PartnerCode'] . " " . $StockCategory . " " . $AccountCOGS );
+// END OF $AccountCOGS CALCULATION FOR RETAIL AND CONSIGNMENT
+				
+				if ($Area == $_SESSION['AreaSalesCashOthers']){
+					// No PT sales do not have COGS corrections
+					$StandardCost = round($OrderLine->StandardCost,0);
+					$Compensation = 0;
+				}else{
+					// PT Sales have some COGS corrections and adjustments
+					$StandardCost = round($OrderLine->StandardCost * ($_SESSION['HPPCompensation'] / 100),0);
+					$Compensation = round($StandardCost - $OrderLine->StandardCost,0);
+				}
+				
+				InsertIntoGLTrans("10", 
+								$InvoiceNo, 
+								Date('Y-m-d'),
+								$PeriodNo,
+								$AccountCOGS,
+								$OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . $StandardCost,
+								round($StandardCost * $OrderLine->Quantity),
+								$Tag,
+								'ERROR-POS-00001'
+								);
+				
+				// Compensation COGS for PT sales
+				if(abs($Compensation) > 1){
+					InsertIntoGLTrans("10", 
+									$InvoiceNo, 
+									Date('Y-m-d'),
+									$PeriodNo,
+									$_SESSION['AccountHPPCompensation'],
+									$OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . round($Compensation,0) ,
+									round(-$Compensation * $OrderLine->Quantity),
+									$Tag,
+									'ERROR-POS-00002'
+									);
+				}
+
+				/*now the stock entry*/
+				$StockGLCode = GetStockGLCode($OrderLine->StockID,$db);
+				InsertIntoGLTrans("10", 
+								$InvoiceNo, 
+								Date('Y-m-d'),
+								$PeriodNo,
+								$StockGLCode['stockact'],
+								$OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . round($OrderLine->StandardCost),
+								round(-($OrderLine->StandardCost) * $OrderLine->Quantity),
+								$Tag,
+								'ERROR-POS-00003'
+								);
+			} /* end of if standard cost !=0 */
+
+			if ($OrderLine->Price !=0){
+
+				//Post sales transaction to GL credit sales
+				$SalesGLAccounts = GetSalesGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType, $db);
+				InsertIntoGLTrans("10", 
+								$InvoiceNo, 
+								Date('Y-m-d'),
+								$PeriodNo,
+								$SalesGLAccounts['salesglcode'],
+								$_SESSION['Items'.$identifier]->CustRef . " " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . round($OrderLine->Price),
+								round(-$OrderLine->Price * $OrderLine->Quantity/$ExRate),
+								$Tag,
+								'ERROR-POS-00004'
+								);
+
+				if ($OrderLine->DiscountPercent !=0){
+					InsertIntoGLTrans("10", 
+									$InvoiceNo, 
+									Date('Y-m-d'),
+									$PeriodNo,
+									$SalesGLAccounts['discountglcode'],
+									$_SESSION['Items'.$identifier]->CustRef . " " . $OrderLine->StockID . " @ " . ($OrderLine->DiscountPercent * 100) . "%",
+									round($OrderLine->Price * $OrderLine->Quantity * $OrderLine->DiscountPercent/$ExRate),
+									$Tag,
+									'ERROR-POS-00005'
+									);
+				} /*end of if discount !=0 */
+			} /*end of if price != 0 */
 	
 			// CLUSTERING POIK - PTBB HARDCODED UNTIL END OF PTBB STOCK
 			if ($_SESSION['PartnerCode'] == "POIK"){
@@ -989,48 +1004,28 @@ prnMsg($_SESSION['PartnerCode'] . "  " . $StockCategory);
 					$RetailPrice = round($OrderLine->Price * (1 - $OrderLine->DiscountPercent) / $ExRate,0);
 					$ConsignmentPrice = round(60 / 100 * $RetailPrice,0);
 					// report the COGS for retail partner from PT BB
-					$SQL = "INSERT INTO gltrans (	type,
-													typeno,
-													trandate,
-													periodno,
-													account,
-													narrative,
-													amount,
-													tag)
-											VALUES ( 10,
-													'" . $InvoiceNo . "',
-													'" . Date('Y-m-d') . "',
-													'" . $PeriodNo . "',
-													'" . $_SESSION['AccountConsignmentCOGSPartner'] . "',
-													'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . $ConsignmentPrice . "',
-													'" . $ConsignmentPrice * $OrderLine->Quantity . "',
-													'" . $Tag . "')";
-
-					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The Consignment COGS could not be inserted because');
-					$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-					$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+					InsertIntoGLTrans("10", 
+									$InvoiceNo, 
+									Date('Y-m-d'),
+									$PeriodNo,
+									$_SESSION['AccountConsignmentCOGSPartner'],
+									$_SESSION['Items'.$identifier]->CustRef . " " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . $ConsignmentPrice,
+									round($ConsignmentPrice * $OrderLine->Quantity),
+									$Tag,
+									'ERROR-POS-00006'
+									);
 
 					// report the sales for PT BB to retail partner
-					$SQL = "INSERT INTO gltrans (	type,
-													typeno,
-													trandate,
-													periodno,
-													account,
-													narrative,
-													amount,
-													tag)
-											VALUES ( 10,
-													'" . $InvoiceNo . "',
-													'" . Date('Y-m-d') . "',
-													'" . $PeriodNo . "',
-													'" . '410010000PT' . "',
-													'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . $ConsignmentPrice . "',
-													'" . -$ConsignmentPrice * $OrderLine->Quantity . "',
-													'" . $Tag . "')";
-
-					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The Consignment Sales could not be inserted because');
-					$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-					$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+					InsertIntoGLTrans("10", 
+									$InvoiceNo, 
+									Date('Y-m-d'),
+									$PeriodNo,
+									'410010010PT',
+									$_SESSION['Items'.$identifier]->CustRef . " " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . $ConsignmentPrice,
+									round(-$ConsignmentPrice * $OrderLine->Quantity),
+									$Tag,
+									'ERROR-POS-00007'
+									);
 					
 					// record the consignment for later invoice to partner
 					$SQL = "INSERT INTO klconsignment (	saledate,
@@ -1089,52 +1084,28 @@ prnMsg($_SESSION['PartnerCode'] . "  " . $StockCategory);
 				$ConsignmentPrice = round($_SESSION['PercentConsignmentTADU'] / 100 * $RetailPrice,0);
 				
 				// report the COGS for retail partner from PT ADU
-				$SQL = "INSERT INTO gltrans 
-							(type,
-							typeno,
-							trandate,
-							periodno,
-							account,
-							narrative,
-							amount,
-							tag)
-						VALUES 
-							(10,
-							'" . $InvoiceNo . "',
-							'" . Date('Y-m-d') . "',
-							'" . $PeriodNo . "',
-							'" . $_SESSION['AccountConsignmentCOGSPartner'] . "',
-							'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . $ConsignmentPrice . "',
-							'" . $ConsignmentPrice * $OrderLine->Quantity . "',
-							'" . $Tag . "')";
-
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The Consignment COGS could not be inserted because');
-				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				InsertIntoGLTrans("10", 
+								$InvoiceNo, 
+								Date('Y-m-d'),
+								$PeriodNo,
+								$_SESSION['AccountConsignmentCOGSPartner'],
+								$_SESSION['Items'.$identifier]->CustRef . " " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . $ConsignmentPrice,
+								round($ConsignmentPrice * $OrderLine->Quantity),
+								$Tag,
+								'ERROR-POS-00008'
+								);
 
 				// report the sales for PT ADU to retail partner
-				$SQL = "INSERT INTO gltrans 
-							(type,
-							typeno,
-							trandate,
-							periodno,
-							account,
-							narrative,
-							amount,
-							tag)
-						VALUES 
-							(10,
-							'" . $InvoiceNo . "',
-							'" . Date('Y-m-d') . "',
-							'" . $PeriodNo . "',
-							'" . $_SESSION['AccountConsignmentSalesPTADU'] . "',
-							'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . $ConsignmentPrice . "',
-							'" . -$ConsignmentPrice * $OrderLine->Quantity . "',
-							'" . $Tag . "')";
-
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The Consignment Sales could not be inserted because');
-				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				InsertIntoGLTrans("10", 
+								$InvoiceNo, 
+								Date('Y-m-d'),
+								$PeriodNo,
+								$_SESSION['AccountConsignmentSalesPTADU'],
+								$_SESSION['Items'.$identifier]->CustRef . " " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . $ConsignmentPrice,
+								round(-$ConsignmentPrice * $OrderLine->Quantity),
+								$Tag,
+								'ERROR-POS-00009'
+								);
 				
 				// record the consignment for later invoice to partner
 				$SQL = "INSERT INTO klconsignment 
@@ -1172,32 +1143,19 @@ prnMsg($_SESSION['PartnerCode'] . "  " . $StockCategory);
 
 		/*Post debtors transaction to GL debit debtors, credit freight re-charged and credit sales */
 		if (($_SESSION['Items'.$identifier]->total + $_POST['TaxTotal']) !=0) {
-			$DescriptionText = $_SESSION['Items'.$identifier]->CustRef  . 
-								' (' . $InvoiceNo . 
-								') SPG:'. $_SESSION['SalesmanLogin'];
-
-			$SQL = "INSERT INTO gltrans 
-						(type,
-						typeno,
-						trandate,
-						periodno,
-						account,
-						narrative,
-						amount,
-						tag )
-					VALUES 
-						(10,
-						'" . $InvoiceNo . "',
-						'" . Date('Y-m-d') . "',
-						'" . $PeriodNo . "',
-						'" . $_SESSION['CompanyRecord']['debtorsact'] . "',
-						'" . $DescriptionText . "',
-						'" . (($_SESSION['Items'.$identifier]->total + $_POST['TaxTotal'] - $_POST['AmountVouchers'] - $_POST['AmountReturnedGoods'])/$ExRate) . "',
-						'" . $Tag . "')";
-
-			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The total debtor GL posting could not be inserted because');
-			$DbgMsg = _('The following SQL to insert the total debtors control GLTrans record was used');
-			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+			$DescriptionText = $_SESSION['Items'.$identifier]->CustRef . 
+							' (' . $InvoiceNo . 
+							') SPG:'. $_SESSION['SalesmanLogin'];
+			InsertIntoGLTrans("10", 
+							$InvoiceNo, 
+							Date('Y-m-d'),
+							$PeriodNo,
+							$_SESSION['CompanyRecord']['debtorsact'],
+							$DescriptionText,
+							round(($_SESSION['Items'.$identifier]->total + $_POST['TaxTotal'] - $_POST['AmountVouchers'] - $_POST['AmountReturnedGoods'])/$ExRate),
+							$Tag,
+							'ERROR-POS-00010'
+							);
 		}
 
 		if ($_POST['AmountVouchers']!=0){
@@ -1263,28 +1221,16 @@ prnMsg($_SESSION['PartnerCode'] . "  " . $StockCategory);
 
 		foreach ( $_SESSION['Items'.$identifier]->TaxTotals as $TaxAuthID => $TaxAmount){
 			if ($TaxAmount !=0 ){
-				$SQL = "INSERT INTO gltrans 
-							(type,
-							typeno,
-							trandate,
-							periodno,
-							account,
-							narrative,
-							amount,
-							tag )
-						VALUES 
-							(10,
-							'" . $InvoiceNo . "',
-							'" . Date('Y-m-d') . "',
-							'" . $PeriodNo . "',
-							'" . $_SESSION['Items'.$identifier]->TaxGLCodes[$TaxAuthID] . "',
-							'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
-							'" . (-$TaxAmount/$ExRate) . "',
-							'" . $Tag . "')";
-
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The tax GL posting could not be inserted because');
-				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				InsertIntoGLTrans("10", 
+								$InvoiceNo, 
+								Date('Y-m-d'),
+								$PeriodNo,
+								$_SESSION['Items'.$identifier]->TaxGLCodes[$TaxAuthID],
+								$_SESSION['Items'.$identifier]->DebtorNo,
+								round(-$TaxAmount/$ExRate),
+								$Tag,
+								'ERROR-POS-00011'
+								);
 			}
 		}
 
