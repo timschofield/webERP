@@ -40,7 +40,7 @@ FROM chartmaster
 WHERE (accountcode LIKE "%PT" OR accountcode = "350510100");
 
 UPDATE chartmasterPT SET `group_` =  'HPP (COGS)' WHERE `accountcode` = '510010005PT';
-
+UPDATE chartmasterPT SET `group_` =  'Penjualan' WHERE `accountcode` = '410010000PT';
 /* ******************************************************************************************/
 /*                              IKE DIAN                                                    */
 /* ******************************************************************************************/
