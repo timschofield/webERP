@@ -2,6 +2,7 @@
 
 /* GLA CCOUNTS IN CHARTMESTER */
 
+/* ALREADY DONE 
 INSERT INTO `chartmaster` (`accountcode`, `accountname`, `group_`, `cashflowsactivity`, `controlled`) VALUES
 ('111512000AD', 'Persediaan Bahan Produksi (Components) PT ADU', 'Persediaan', -1, 0),
 ('111513000AD', 'Persediaan Barang Dalam Process (WIP) PT ADU', 'Persediaan', -1, 0),
@@ -15,8 +16,6 @@ INSERT INTO `chartmaster` (`accountcode`, `accountname`, `group_`, `cashflowsact
 ('111530000AD', 'Persediaan Barang (Promotion Goods) PT ADU', 'Persediaan', -1, 0),
 ('111800000AD', 'Persediaan Shop Display PT ADU', 'Persediaan', -1, 0),
 ('111800100AD', 'Persediaan Shop Packaging PT ADU', 'Persediaan', -1, 0);
-
-
 INSERT INTO `glaccountusers` (`accountcode`, `userid`, `canview`, `canupd`) VALUES
 ('111512000AD', 'Ricard', 1, 1),
 ('111513000AD', 'Ricard', 1, 1),
@@ -32,7 +31,6 @@ INSERT INTO `glaccountusers` (`accountcode`, `userid`, `canview`, `canupd`) VALU
 ('111800000AD', 'Ricard', 1, 1),
 ('111800100AD', 'Ricard', 1, 1),
 ('111900000AD', 'Ricard', 1, 1);
-
 INSERT INTO `glaccountusers` (`accountcode`, `userid`, `canview`, `canupd`) VALUES
 ('111512000AD', 'Revi', 1, 1),
 ('111513000AD', 'Revi', 1, 1),
@@ -48,7 +46,6 @@ INSERT INTO `glaccountusers` (`accountcode`, `userid`, `canview`, `canupd`) VALU
 ('111800000AD', 'Revi', 1, 1),
 ('111800100AD', 'Revi', 1, 1),
 ('111900000AD', 'Revi', 1, 1);
-
 INSERT INTO `glaccountusers` (`accountcode`, `userid`, `canview`, `canupd`) VALUES
 ('111512000AD', 'Ike1', 1, 1),
 ('111513000AD', 'Ike1', 1, 1),
@@ -64,7 +61,6 @@ INSERT INTO `glaccountusers` (`accountcode`, `userid`, `canview`, `canupd`) VALU
 ('111800000AD', 'Ike1', 1, 1),
 ('111800100AD', 'Ike1', 1, 1),
 ('111900000AD', 'Ike1', 1, 1);
-
 INSERT INTO `glaccountusers` (`accountcode`, `userid`, `canview`, `canupd`) VALUES
 ('111512000AD', 'Febri', 1, 1),
 ('111513000AD', 'Febri', 1, 1),
@@ -80,7 +76,6 @@ INSERT INTO `glaccountusers` (`accountcode`, `userid`, `canview`, `canupd`) VALU
 ('111800000AD', 'Febri', 1, 1),
 ('111800100AD', 'Febri', 1, 1),
 ('111900000AD', 'Febri', 1, 1);
-
 INSERT INTO `glaccountusers` (`accountcode`, `userid`, `canview`, `canupd`) VALUES
 ('111512000AD', 'Laia', 1, 1),
 ('111513000AD', 'Laia', 1, 1),
@@ -96,6 +91,7 @@ INSERT INTO `glaccountusers` (`accountcode`, `userid`, `canview`, `canupd`) VALU
 ('111800000AD', 'Laia', 1, 1),
 ('111800100AD', 'Laia', 1, 1),
 ('111900000AD', 'Laia', 1, 1);
+*/
 
 /* STOCK CATEGORIES */
 

@@ -950,6 +950,14 @@ if ($ProcessSection02){
 		PettyCashBalance('User', $db);
 		$NumberOfTestExecuted++;
 	}
+	
+	if ($KL_SystemAdmin){
+		StockToPTADU("PO",$db);
+		$NumberOfTestExecuted++;
+		StockToPTADU("WO",$db);
+		$NumberOfTestExecuted++;
+	}
+
 }
 prnMsg("Performed ". $NumberOfTestExecuted . " control tests",'success');
 
@@ -4373,6 +4381,124 @@ function WrongItemsOnWorkOrders($RootPath, $db){
 			echo '</table>
 				</div>';
 		}
+	}
+}
+
+function StockToPTADU($Kind, $db){
+	
+	if($Kind == "PO"){
+		$SQL = "SELECT purchorderdetails.itemcode,
+					stockmaster.categoryid,
+					SUM(purchorderdetails.quantityrecd) AS qtyreceivedptadu,
+					(SELECT SUM(locstock.quantity)
+						FROM locstock
+						WHERE locstock.stockid = purchorderdetails.itemcode) AS qoh
+				FROM purchorderdetails, stockmaster
+				WHERE purchorderdetails.itemcode = stockmaster.stockid
+					AND stockmaster.categoryid IN ('SETKL','SETBL','SETGE','TESTKL','TESTBL','TESTGE', 'STABKL','STABBL','STABGE','NOPOKL','NOPOBL','NOPOGE','DISC20','DISC50','DISC80','COMPON')
+					AND purchorderdetails.orderno >= 2750
+				GROUP BY purchorderdetails.itemcode
+				HAVING qtyreceivedptadu >= qoh / 1.2
+				ORDER BY purchorderdetails.itemcode";
+	}elseif($Kind == "WO"){
+		$SQL = "SELECT woitems.stockid AS itemcode,
+					stockmaster.categoryid,
+					SUM(woitems.qtyrecd) AS qtyreceivedptadu,
+					(SELECT SUM(locstock.quantity)
+						FROM locstock
+						WHERE locstock.stockid = woitems.stockid) AS qoh
+				FROM workorders, woitems, stockmaster
+				WHERE woitems.stockid = stockmaster.stockid
+					AND stockmaster.categoryid IN ('SETKL','SETBL','SETGE','TESTKL','TESTBL','TESTGE', 'STABKL','STABBL','STABGE','NOPOKL','NOPOBL','NOPOGE','DISC20','DISC50','DISC80','COMPON')
+					AND workorders.wo = woitems.wo
+					AND workorders.closed = 1
+					AND workorders.wo > 3500
+				GROUP BY woitems.stockid
+				HAVING qtyreceivedptadu >= qoh / 1.2
+				ORDER BY woitems.stockid";
+	}
+			
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		if($Kind == "PO"){
+			echo '<p class="page_title_text" align="center"><strong>' . 'PO items to move to PTADU stock categories' .'</strong></p>';
+		}elseif($Kind == "WO"){
+			echo '<p class="page_title_text" align="center"><strong>' . 'WO items to move to PTADU stock categories' .'</strong></p>';
+		}
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . 'Stock ID' . '</th>
+							<th class="ascending">' . 'Category BB' . '</th>
+							<th class="ascending">' . 'Category ADU' . '</th>
+							<th class="ascending">' . 'Qty ADU' . '</th>
+							<th class="ascending">' . 'QOH BB+ADU' . '</th>
+							<th class="ascending">' . 'Action' . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			if ($myrow['categoryid'] == "SETKL"){
+				$NewCategory = "SETKLA";
+			}elseif ($myrow['categoryid'] == "SETBL"){
+				$NewCategory = "SETBLA";
+			}elseif ($myrow['categoryid'] == "SETGE"){
+				$NewCategory = "SETGEA";
+			}elseif ($myrow['categoryid'] == "TESTKL"){
+				$NewCategory = "TESTKA";
+			}elseif ($myrow['categoryid'] == "TESTBL"){
+				$NewCategory = "TESTBA";
+			}elseif ($myrow['categoryid'] == "TESTGE"){
+				$NewCategory = "TESTGA";
+			}elseif ($myrow['categoryid'] == "STABKL"){
+				$NewCategory = "STABKA";
+			}elseif ($myrow['categoryid'] == "STABBL"){
+				$NewCategory = "STABBA";
+			}elseif ($myrow['categoryid'] == "STABGE"){
+				$NewCategory = "STABGA";
+			}elseif ($myrow['categoryid'] == "NOPOKL"){
+				$NewCategory = "NOPOKA";
+			}elseif ($myrow['categoryid'] == "NOPOBL"){
+				$NewCategory = "NOPOBA";
+			}elseif ($myrow['categoryid'] == "NOPOGE"){
+				$NewCategory = "NOPOGA";
+			}elseif ($myrow['categoryid'] == "DISC20"){
+				$NewCategory = "DISC2A";
+			}elseif ($myrow['categoryid'] == "DISC50"){
+				$NewCategory = "DISC5A";
+			}elseif ($myrow['categoryid'] == "DISC80"){
+				$NewCategory = "DISC8A";
+			}elseif ($myrow['categoryid'] == "COMPON"){
+				$NewCategory = "COMPOA";
+			}
+			
+			if ($myrow['qtyreceivedptadu'] >= $myrow['qoh']){
+				$Action = "Change Category";
+			}else{
+				$Action = "";
+			}
+			
+			printf('<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					</tr>', 
+					$myrow['itemcode'],
+					$myrow['categoryid'],
+					$NewCategory,
+					locale_number_format($myrow['qtyreceivedptadu'],0),
+					locale_number_format($myrow['qoh'],0),
+					$Action
+					);
+			$i++;
+		}
+		echo '</table>
+			</div>
+			</form>';
 	}
 }
 
