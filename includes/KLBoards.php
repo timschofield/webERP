@@ -2721,7 +2721,8 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 			}
 			$i++;
 		}
-		if (($TypeOfCode == "ON PRODUCTION") OR 
+		if (($TypeOfCode == "IN NEGOTIAION WITH SUPPLIER") OR
+			($TypeOfCode == "ON PRODUCTION") OR 
 			($TypeOfCode == "FINISHED BUT NOT PAID") OR 
 			($TypeOfCode == "STILL NOT FULLY PAID") OR 
 			($TypeOfCode == "ARRIVING IN NEXT DAYS")){

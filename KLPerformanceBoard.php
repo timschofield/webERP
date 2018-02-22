@@ -68,8 +68,8 @@ if ($ProcessSection01){
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_ShopManager
 		OR $KL_SalesDirector){
-		YearDifferenceSales("Shop",   7, $db);
-		$NumberOfTestExecuted++;
+//		YearDifferenceSales("Shop",   7, $db);
+//		$NumberOfTestExecuted++;
 		YearDifferenceSales("Shop",  15, $db);
 		$NumberOfTestExecuted++;
 		YearDifferenceSales("Shop",  30, $db);
@@ -81,8 +81,8 @@ if ($ProcessSection01){
 	}
 
 	if ($KL_SystemAdmin){
-		AverageCustomerBehaviourByValueInvoice("Shop", 15, $db);
-		$NumberOfTestExecuted++;
+//		AverageCustomerBehaviourByValueInvoice("Shop", 15, $db);
+//		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin 
@@ -245,7 +245,7 @@ if ($ProcessSection03){
 	if ($KL_SystemAdmin 
 		OR $KL_OperationalManager
 		OR $KL_BusinessDevelopmentManager){
-		InsuficientStockForShopPackaging('SHPACK', 15, 70, 30, true, $RootPath, $db);
+		InsuficientStockForShopPackaging('SHPACK', 15, 75, 30, true, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		InsuficientStockForShopPackaging('ZAPON', 15, 60, 30, true, $RootPath, $db);
 		$NumberOfTestExecuted++;

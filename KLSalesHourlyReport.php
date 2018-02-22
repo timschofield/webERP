@@ -55,13 +55,13 @@ if ($KL_SystemAdmin
 
 	RetailCustomerAnalysisByAge(-1, "ALL", $db);
 	$NumberOfTestExecuted++;
-*/
+
 	HourlySales( 7,$RootPath, $db);
 	$NumberOfTestExecuted++;
 	
 	HourlySales(15,$RootPath, $db);
 	$NumberOfTestExecuted++;
-	
+*/	
 	HourlySales(30,$RootPath, $db);
 	$NumberOfTestExecuted++;
 	
