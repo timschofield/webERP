@@ -2,7 +2,7 @@
 /* $Id: Stocks.php 7494 2016-04-25 09:53:53Z daintree $ */
 /**************************************************************************************
 KL RICARD MODIFICATIONS:
-- management of the extra KL fileds in stockmaster
+- management of the extra KL fields in stockmaster
 ***************************************************************************************/
 
 include('includes/session.php');
@@ -551,7 +551,7 @@ if (isset($_POST['submit'])) {
 												'" . GetPeriod(Date($_SESSION['DefaultDateFormat']),$db,true) . "',
 												'" . $NewStockAct . "',
 												'" . $StockID . ' ' . _('Change stock category') . "',
-												'" . ($UnitCost* $StockQtyRow[0]) . "')";
+												'" . ($UnitCost * $StockQtyRow[0]) . "')";
 					$ErrMsg =  _('The stock cost journal could not be inserted because');
 					$DbgMsg = _('The SQL that was used to create the stock cost journal and failed was');
 					$result = DB_query($SQL, $ErrMsg, $DbgMsg,true);
@@ -568,7 +568,7 @@ if (isset($_POST['submit'])) {
 												'" . GetPeriod(Date($_SESSION['DefaultDateFormat']),$db,true) . "',
 												'" . $OldStockAccount . "',
 												'" . $StockID . ' ' . _('Change stock category') . "',
-												'" . (-$UnitCost* $StockQtyRow[0]) . "')";
+												'" . (-$UnitCost * $StockQtyRow[0]) . "')";
 					$result = DB_query($SQL, $ErrMsg, $DbgMsg,true);
 
 				} /* end if the stock category changed and forced a change in stock cost account */
