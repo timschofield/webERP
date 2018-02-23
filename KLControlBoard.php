@@ -952,10 +952,10 @@ if ($ProcessSection02){
 	}
 	
 	if ($KL_SystemAdmin){
-		StockToPTADU("PO",$db);
-		$NumberOfTestExecuted++;
-		StockToPTADU("WO",$db);
-		$NumberOfTestExecuted++;
+//		StockToPTADU("PO", $RootPath, $db);
+//		$NumberOfTestExecuted++;
+//		StockToPTADU("WO", $RootPath, $db);
+//		$NumberOfTestExecuted++;
 	}
 
 }
@@ -4384,7 +4384,7 @@ function WrongItemsOnWorkOrders($RootPath, $db){
 	}
 }
 
-function StockToPTADU($Kind, $db){
+function StockToPTADU($Kind, $RootPath, $db){
 	
 	if($Kind == "PO"){
 		$SQL = "SELECT purchorderdetails.itemcode,
@@ -4475,7 +4475,7 @@ function StockToPTADU($Kind, $db){
 			}
 			
 			if ($myrow['qtyreceivedptadu'] >= $myrow['qoh']){
-				$Action = "Change Category";
+				$Action = '<a href="' . $RootPath . '/KLUpdateStockCategory.php?StockId=' . $myrow['itemcode'] . '&OldCat=' . $myrow['categoryid'] . '&NewCat=' . $NewCategory .'">' . 'Change Category' . '</a>';
 			}else{
 				$Action = "";
 			}
