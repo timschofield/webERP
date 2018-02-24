@@ -147,3 +147,14 @@ WHERE workorders.wo = woitems.wo
 	AND workorders.wo > 3500
 GROUP BY woitems.stockid
 ORDER BY woitems.stockid
+
+/* REPORT TO PRINT AS INVOICE*/
+SELECT stockid,
+	SUM(qty) AS qty,
+	ROUND(AVG(consignmentprice),0) AS price
+FROM klconsignment
+WHERE companycode = 'CASH'
+	AND invoicedtopartner = '0000-00-00'
+	AND saledate <= '2018-12-31'
+GROUP BY stockid
+ORDER BY stockid

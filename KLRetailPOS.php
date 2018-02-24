@@ -1,6 +1,7 @@
 <?php
 
 /************************************************************************
+v 4.00 PTADU/PTBB/POIK clustering ready
 v 3.11 Code cleaning
 v 3.10 Prepare for PT ADU / PT BB accounting
 v 3.01 add fields for returned goods
@@ -28,7 +29,15 @@ v 1.00 2011-08-10: Shops start using it.
 v 1.00 2011-07-25: Kantor starts using it.
 *********************************************************************/
 
-define("VERSIONFILE", "3.11"); // 
+// POIK HARDCODED SETTINGS UNTIL END OF PTBB STOCK 
+//$AccountCOGSforPOIK = "510010000PT";
+$AccountCOGSforPOIK = "510010000";
+$AccountSalesFromConsignerToPOIK = '410010010';
+$AccountCOGSbyADU = "510010000AD"; // when retail partner sells PTADU items COGS should go to PTADU
+$CompanyConsignmentPOIK = "CASH";
+// END OF POIK HARDCODED SETTINGS UNTIL END OF PTBB STOCK 
+
+define("VERSIONFILE", "4.00"); // 
 
 include('includes/DefineCartClass.php');
 include('includes/session.php');
@@ -849,18 +858,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						// PTBB sells its own items
 						$AccountCOGS = GetCOGSGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType, $db);
 					}else{
-						// IT IS A CONSIGNMENT RETAIL SALE TO POIK OR OTHER RETAIL PARTNER, so COGS should go to HPP-(COGS) PTBB
-						$AccountCOGS = "510010000PT";
-					}
-				}
-				if (($StockCategory == "SHPACK")){
-					// IT IS A PTBB PACKAGING ITEM
-					if ($_SESSION['PartnerCode'] == "PTBB"){
-						// PTBB sells its own items
-						$AccountCOGS = GetCOGSGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType, $db);
-					}else{
-						// IT IS A CONSIGNMENT RETAIL SALE TO POIK OR OTHER RETAIL PARTNER, so COGS should go to HPP-(COGS) PTBB
-						$AccountCOGS = "510010100PT";
+						// IT IS A CONSIGNMENT RETAIL SALE TO POIK OR OTHER RETAIL PARTNER, so COGS should go to HPP-(COGS) PTBB OR CASH HPP
+						$AccountCOGS = $AccountCOGSforPOIK;
 					}
 				}
 				if (($_SESSION['PercentConsignmentTADU'] > 0) AND ($_SESSION['PercentConsignmentTADU'] < 100) AND 
@@ -883,21 +882,10 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						// IT IS A PTADU ITEM
 					if ($_SESSION['PartnerCode'] == "PTBB"){
 						// PTBB sells PTADU items so COGS should go to PTADU
-						$AccountCOGS = "510010000AD";
+						$AccountCOGS = $AccountCOGSbyADU;
 					}elseif ($_SESSION['PartnerCode'] == "POIK"){
 						// POIK sells PTADU items
-						$AccountCOGS = "510010000AD";
-					}
-				}
-				if (($_SESSION['PercentConsignmentTADU'] > 0) AND ($_SESSION['PercentConsignmentTADU'] < 100) AND 
-					($StockCategory == "SHPACA")){
-						// IT IS A PTADU PACKAGING ITEM
-					if ($_SESSION['PartnerCode'] == "PTBB"){
-						// PTBB sells PTADU items so COGS should go to PTADU
-						$AccountCOGS = "510010100AD";
-					}elseif ($_SESSION['PartnerCode'] == "POIK"){
-						// POIK sells PTADU items
-						$AccountCOGS = "510010100AD";
+						$AccountCOGS = $AccountCOGSbyADU;
 					}
 				}
 //prnMsg($_SESSION['PartnerCode'] . " " . $StockCategory . " " . $AccountCOGS );
@@ -998,8 +986,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 					($StockCategory == "DISC20") OR
 					($StockCategory == "DISC50") OR
 					($StockCategory == "DISC80") OR
-					($StockCategory == "COMPON") OR
-					($StockCategory == "SHPACK")){
+					($StockCategory == "COMPON")){
 					// it is a PTBB item
 					$RetailPrice = round($OrderLine->Price * (1 - $OrderLine->DiscountPercent) / $ExRate,0);
 					$ConsignmentPrice = round(60 / 100 * $RetailPrice,0);
@@ -1015,12 +1002,12 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 									'ERROR-POS-00006'
 									);
 
-					// report the sales for PT BB to retail partner
+					// report the sales from consigner to retail partner POIK
 					InsertIntoGLTrans("10", 
 									$InvoiceNo, 
 									Date('Y-m-d'),
 									$PeriodNo,
-									'410010010PT',
+									$AccountSalesFromConsignerToPOIK,
 									$_SESSION['Items'.$identifier]->CustRef . " " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . $ConsignmentPrice,
 									round(-$ConsignmentPrice * $OrderLine->Quantity),
 									$Tag,
@@ -1042,7 +1029,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 													invoicedtopartner)
 											VALUES ('" . Date('Y-m-d') . "',
 													'" . $_SESSION['PartnerCode']  . "',
-													'PTBB',
+													'" . $CompanyConsignmentPOIK  . "',
 													'" . $_SESSION['Items'.$identifier]->CustRef  . "',
 													'" . $_SESSION['Items'.$identifier]->DebtorNo  . "',
 													'" . $OrderLine->StockID  . "',
@@ -1051,7 +1038,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 													'" . $ConsignmentPrice  . "',
 													'" . $StandardCost  . "',
 													'" . ($StandardCost - $Compensation) . "',
-													'0')";
+													'0000-00-00')";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The Consignment Sales Details could not be inserted because');
 					$DbgMsg = _('The following SQL to insert the klconsignment record was used');
@@ -1133,7 +1120,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 							'" . $ConsignmentPrice  . "',
 							'" . $StandardCost  . "',
 							'" . ($StandardCost - $Compensation) . "',
-							'0')";
+							'0000-00-00')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The Consignment Sales Details could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the klconsignment record was used');

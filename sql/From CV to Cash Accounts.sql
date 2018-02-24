@@ -95,3 +95,22 @@ UPDATE gltrans SET account = "XXXX" WHERE account = "XXXX";
 UPDATE gltrans SET account = "XXXX" WHERE account = "XXXX";
 UPDATE gltrans SET account = "XXXX" WHERE account = "XXXX";
 
+/* MIXED IDR AND USD BUT OBSOLETE BANK ACCOUNTS AND CASH */
+
+UPDATE banktrans SET bankact = "111209010" WHERE bankact = "111209011";
+DELETE FROM bankaccountusers WHERE accountcode = "111209011";
+DELETE FROM bankaccounts WHERE accountcode = "111209011";
+UPDATE gltrans SET account = "111209010" WHERE account = "111209011";
+
+UPDATE banktrans SET bankact = "111209010" WHERE bankact = "111209012";
+DELETE FROM bankaccountusers WHERE accountcode = "111209012";
+DELETE FROM bankaccounts WHERE accountcode = "111209012";
+UPDATE gltrans SET account = "111209010" WHERE account = "111209012";
+
+UPDATE banktrans SET bankact = "111209010" WHERE bankact = "111131101";
+DELETE FROM bankaccountusers WHERE accountcode = "111131101";
+DELETE FROM bankaccounts WHERE accountcode = "111131101";
+UPDATE gltrans SET account = "111209010" WHERE account = "111131101";
+
+
+
