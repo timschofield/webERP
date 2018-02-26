@@ -419,7 +419,7 @@ if(isset($SupplierID) AND $SupplierID != '' AND !isset($_POST['SearchSupplier'])
         echo '</form>';
 		include ('includes/footer.php');
 		exit;
-	};
+	}
 }
 
 if(isset($_POST['SearchSupplier'])) {

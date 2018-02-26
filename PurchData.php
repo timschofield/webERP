@@ -392,7 +392,7 @@ if (isset($SupplierID) AND $SupplierID != '' AND !isset($_POST['SearchSupplier']
 			</form>';
         include ('includes/footer.php');
         exit;
-    };
+    }
 }
 
 if ($Edit == true) {

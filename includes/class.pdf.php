@@ -144,7 +144,7 @@ if (!class_exists('Cpdf', false)) {
 			$ns=0;
             $cw = $this->GetStringWidth($s, '', '', 0, true);
 			while($i<$nb) {
-				/*$c=$s{$i};*/
+
 				$c=mb_substr($s, $i, 1, 'UTF-8');
 				if($c===' ' AND $i>0) {
 					$sep=$i;

@@ -136,7 +136,7 @@ if (isset($_POST['submit'])) {
 				$ReceiptExistingFiles = glob($ReceiptFileDir . '/' . $SelectedIndex . '.{' . implode(',', $ReceiptSupportedExt) . '}', GLOB_BRACE); //Find all existing receipt files for the expense, in case more than 1 file type is currently in the receipts directory
 				foreach($ReceiptExistingFiles as $ReceiptExistingFile) { // Overwrite existing files, and delete all other file types. 
 					unlink($ReceiptExistingFile);
-				};
+				}
 				move_uploaded_file($UploadTempName, $ReceiptFilePath); //Move the uploaded file from the temp directory to the receipts directory.
 			}
 		} 
@@ -241,7 +241,7 @@ if (isset($_POST['submit'])) {
 				$ReceiptExistingFiles = glob($ReceiptFileDir . '/' . $SelectedIndex . '.{' . implode(',', $ReceiptSupportedExt) . '}', GLOB_BRACE); //Find all existing receipt files for the expense, in case more than 1 file type is currently in the receipts directory
 				foreach($ReceiptExistingFiles as $ReceiptExistingFile) { // Overwrite existing files, and delete all other file types. 
 					unlink($ReceiptExistingFile);
-				};
+				}
 				move_uploaded_file($UploadTempName, $ReceiptFilePath); //Move the uploaded file from the temp directory to the receipts directory.
 			}
 		} 
@@ -268,7 +268,7 @@ if (isset($_POST['submit'])) {
 	$ReceiptExistingFiles = glob($ReceiptFileDir . '/' . $SelectedIndex . '.{' . implode(',', $ReceiptSupportedExt) . '}', GLOB_BRACE); //Find all existing receipt files for the expense, in case more than 1 file type is currently in the receipts directory
 	foreach($ReceiptExistingFiles as $ReceiptExistingFile) {
 		unlink($ReceiptExistingFile);
-	};
+	}
 	unset($_GET['delete']);
 } //end of get delete
 if (!isset($SelectedTabs)) {

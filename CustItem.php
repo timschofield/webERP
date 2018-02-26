@@ -229,7 +229,7 @@ if (isset($DebtorNo) AND $DebtorNo != '' AND !isset($_POST['Searchcustomer'])) {
 			</form>';
         include ('includes/footer.php');
         exit;
-    };
+    }
 }
 
 if ($Edit == true) {

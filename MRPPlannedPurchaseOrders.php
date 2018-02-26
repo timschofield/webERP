@@ -333,7 +333,7 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 		$displayconsolidation = _('Weekly');
 	} else {
 		$displayconsolidation = _('Monthly');
-	};
+	}
 	$pdf->addTextWrap($Left_Margin,$YPos,65,$FontSize,_('Consolidation').':');
 	$pdf->addTextWrap(110,$YPos,40,$FontSize,$displayconsolidation);
 

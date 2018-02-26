@@ -1,6 +1,7 @@
 webERP Change Log
 
-27/1/17  PaulT: MiscFunctions.php, Z_ChangeStockCode.php, Z_ChangeGLAccountCode.php: Remove unused $db parameter from function ChangeFieldInTable().
+27/1/18  Paul Becker (PaulT commit): Remove stray ; appearing after if, else, and foreach blocks. (Reported in forums: http://www.weberp.org/forum/showthread.php?tid=8064)
+27/1/18  PaulT: MiscFunctions.php, Z_ChangeStockCode.php, Z_ChangeGLAccountCode.php: Remove unused $db parameter from function ChangeFieldInTable().
 26/1/18  Andrew Galuski/Tim (PaulT merge/commit): New picking list feature for regular and controlled/serialized stock. This feature improves (and replaces) the current pick list handling. (Reported in forums by HDeriauFF: http://www.weberp.org/forum/showthread.php?tid=7988)
 26/1/18  Exson: Add single quotation escape and charset in htmlspecialchars() in session.inc 
 26/1/18  Exson: Use htmlspecialchars() to encode html special characters to html entity and set the cookie available only httponly in session.inc

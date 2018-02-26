@@ -139,7 +139,7 @@ class XmlElement {
   var $attributes;
   var $content;
   var $children;
-};
+}
 
 function GetECBCurrencyRates () {
 /* See http://www.ecb.int/stats/exchange/eurofxref/html/index.en.html

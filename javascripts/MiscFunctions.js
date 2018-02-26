@@ -59,7 +59,7 @@ function rLocaleNumber() {
 	} else {
 		this.setCustomValidity('The number format is wrong');
 		return false;
-	};
+	}
 }
 
 function assignComboToInput(c, i) {

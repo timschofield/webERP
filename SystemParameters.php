@@ -1243,7 +1243,7 @@ echo '<tr style="outline: 1px solid">
 		} elseif ($_SESSION['QualityLogSamples'] == 1){
 			echo '<option select="selected" value="1">' . _('Yes') . '</option>';
 			echo '<option value="0">' . _('No') . '</option>';
-		};
+		}
 
 echo '</select>
          </td>
