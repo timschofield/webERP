@@ -1888,7 +1888,6 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 include('includes/footer.php');
 
 function GetCustBranchDetails($identifier) {
-		global $db;
 		$sql = "SELECT custbranch.brname,
 						custbranch.branchcode,
 						custbranch.braddress1,

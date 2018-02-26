@@ -63,7 +63,6 @@ Class Receipt {
 	var $TagName;
 
 	function __construct ($Amt, $Cust, $Disc, $Narr, $id, $GLCode, $PayeeBankDetail, $CustomerName, $Tag){
-		global $db;
 /* Constructor function to add a new Receipt object with passed params */
 		$this->Amount =$Amt;
 		$this->Customer = $Cust;

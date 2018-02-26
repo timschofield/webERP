@@ -1359,7 +1359,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 		$DbgMsg = _('The following SQL to insert the debtor transaction record was used');
 	 	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-		$DebtorTransID = DB_Last_Insert_ID($db,'debtortrans','id');
+		$DebtorTransID = DB_Last_Insert_ID('debtortrans','id');
 
 	/* Insert the tax totals for each tax authority where tax was charged on the invoice */
 		foreach ($_SESSION['Items'.$identifier]->TaxTotals AS $TaxAuthID => $TaxAmount) {
@@ -1584,7 +1584,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 		/*Get the ID of the StockMove... */
-			$StkMoveNo = DB_Last_Insert_ID($db,'stockmoves','stkmoveno');
+			$StkMoveNo = DB_Last_Insert_ID('stockmoves','stkmoveno');
 
 		/*Insert the taxes that applied to this line */
 			foreach ($OrderLine->Taxes as $Tax) {
@@ -2021,7 +2021,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 			$ErrMsg = _('Cannot insert a receipt transaction against the customer because') ;
 			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-			$ReceiptDebtorTransID = DB_Last_Insert_ID($db,'debtortrans','id');
+			$ReceiptDebtorTransID = DB_Last_Insert_ID('debtortrans','id');
 
 			$SQL = "UPDATE debtorsmaster SET lastpaiddate = '" . $DefaultDispatchDate . "',
 											lastpaid='" . filter_number_format($_POST['AmountPaid']) . "'

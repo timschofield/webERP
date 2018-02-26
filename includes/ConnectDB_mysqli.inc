@@ -15,8 +15,6 @@ if(!isset($mysqlport)) {
 global $db;	// Make sure it IS global, regardless of our context
 
 $db = mysqli_connect($host , $DBUser, $DBPassword,$_SESSION['DatabaseName'], $mysqlport);
-//$result=DB_query('SET sql_mode = ANSI');
-
 
 //this statement sets the charset to be used for sending data to and from the db server
 //if not set, both mysqli server and mysqli client/library may assume otherwise
@@ -48,7 +46,6 @@ if(isset($DatabaseName)) {
 	if(!mysqli_select_db($db,$_SESSION['DatabaseName'])) {
 		echo '<br />' . _('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');
 		echo '<br /><a href="index.php">' . _('Back to login page') . '</A>';
-
 		unset ($_SESSION['DatabaseName']);
 		exit;
 	}
@@ -63,7 +60,6 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 	global $db;
 
 	$result = mysqli_query($db, $SQL);
-
 	$_SESSION['LastInsertId'] = mysqli_insert_id($db);
 
 	if($DebugMessage == '') {
@@ -111,6 +107,7 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 			}
 		}
 	}
+
 	return $result;
 }
 
@@ -146,7 +143,6 @@ function DB_num_rows($ResultIndex) {
 function DB_affected_rows($ResultIndex) {
 	global $db;
 	return mysqli_affected_rows($db);
-
 }
 
 function DB_error_no() {
@@ -159,7 +155,7 @@ function DB_error_msg() {
 	return mysqli_error($db);
 }
 
-function DB_Last_Insert_ID($Conn='', $Table, $FieldName) {
+function DB_Last_Insert_ID($Table, $FieldName) {
 //	return mysqli_insert_id($Conn);
 	if(isset($_SESSION['LastInsertId'])) {
 		$Last_Insert_ID = $_SESSION['LastInsertId'];
@@ -175,33 +171,31 @@ function DB_escape_string($String) {
 	return mysqli_real_escape_string($db, $String);
 }
 
-function DB_show_tables($Conn='') {
-	global $db;
+function DB_show_tables() {
 	$Result = DB_query('SHOW TABLES');
 	return $Result;
 }
 
-function DB_show_fields($TableName, $Conn='') {
+function DB_show_fields($TableName) {
 	$Result = DB_query("DESCRIBE $TableName");
 	return $Result;
 }
 
-function interval($val, $Inter) {
-		global $dbtype;
+function interval( $val, $Inter ) {
 		return "\n".'interval ' . $val . ' ' . $Inter . "\n";
 }
 
 function DB_Maintenance() {
 	prnMsg(_('The system has just run the regular database administration and optimisation routine.'),'info');
 
-	$TablesResult = DB_query("SHOW TABLES");
+	$TablesResult = DB_show_tables();
 	while ($myrow = DB_fetch_row($TablesResult)) {
 		$Result = DB_query('OPTIMIZE TABLE ' . $myrow[0]);
 	}
 
 	$Result = DB_query("UPDATE config
-				SET confvalue='" . Date('Y-m-d') . "'
-				WHERE confname='DB_Maintenance_LastRun'");
+				SET confvalue = CURRENT_DATE
+				WHERE confname = 'DB_Maintenance_LastRun'");
 }
 
 function DB_Txn_Begin() {

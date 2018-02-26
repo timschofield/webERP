@@ -131,7 +131,7 @@ include ( $PathPrefix . 'includes/footer.php');
 
 // Begin functions
 function BuildFormList($GroupID) {
-	global $db, $ReportGroups, $FormGroups;
+	global $ReportGroups, $FormGroups;
 
 	$OutputString = '';
 	if ($GroupID=='') { // then fetchthe complete form list for all groups
@@ -180,7 +180,6 @@ function BuildFormList($GroupID) {
 }
 
 function FetchReportDetails($ReportID) {
-	global $db;
 	$sql= "SELECT reportname,
 					reporttype,
 					groupname,
@@ -217,7 +216,6 @@ function FetchReportDetails($ReportID) {
 }
 
 function RetrieveFields($ReportID, $EntryType) {
-	global $db;
 	$FieldListings = array();
 	$sql= "SELECT *	FROM ".DBRptFields."
 			WHERE reportid = '".$ReportID."'
@@ -229,7 +227,7 @@ function RetrieveFields($ReportID, $EntryType) {
 }
 
 function BuildCriteria($FieldListings) {
-	global $db, $CritChoices;
+	global $CritChoices;
 	$SeqNum = $FieldListings['seqnum'];
 	$CriteriaString = '<tr><td>'.$FieldListings['displaydesc'].'</td>'; // add the description
 	// retrieve the dropdown based on the params field (dropdown type)

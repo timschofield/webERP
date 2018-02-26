@@ -277,7 +277,7 @@ if (isset($_POST['submit'])) {
 			$result = DB_query($sql, $ErrMsg, $DbgMsg);
 
 			if (DB_error_no() ==0) {
-				$NewAssetID = DB_Last_Insert_ID($db,'fixedassets', 'assetid');
+				$NewAssetID = DB_Last_Insert_ID('fixedassets', 'assetid');
 				prnMsg( _('The new asset has been added to the database with an asset code of:') . ' ' . $NewAssetID,'success');
 				unset($_POST['LongDescription']);
 				unset($_POST['Description']);

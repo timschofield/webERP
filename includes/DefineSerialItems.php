@@ -2,8 +2,6 @@
 /* $Id$*/
 
 function ValidBundleRef ($StockID, $LocCode, $BundleRef){
-	global $db;
-
 	$SQL = "SELECT quantity
 				FROM stockserialitems
 				WHERE stockid='" . $StockID . "'
@@ -18,8 +16,6 @@ function ValidBundleRef ($StockID, $LocCode, $BundleRef){
 	}
 }
 function GetExpiryDate ($StockID, $LocCode, $BundleRef){
-	global $db;
-
 	$SQL = "SELECT expirationdate
 				FROM stockserialitems
 				WHERE stockid = '" . $StockID . "'

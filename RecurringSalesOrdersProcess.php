@@ -367,7 +367,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 			/*Get the ID of the StockMove... */
-			$StkMoveNo = DB_Last_Insert_ID($db,'stockmoves','stkmoveno');
+			$StkMoveNo = DB_Last_Insert_ID('stockmoves','stkmoveno');
 
 			/*Insert the taxes that applied to this line */
 			foreach ($LineTaxes[$LineCounter] as $Tax) {
@@ -683,7 +683,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 		$DbgMsg = _('The following SQL to insert the debtor transaction record was used');
 		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-		$DebtorTransID = DB_Last_Insert_ID($db,'debtortrans','id');
+		$DebtorTransID = DB_Last_Insert_ID('debtortrans','id');
 
 
 		$SQL = "INSERT INTO debtortranstaxes (debtortransid,

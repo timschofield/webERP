@@ -11,7 +11,6 @@ include('includes/SQL_CommonFunctions.inc');
 
 function display_children($Parent, $Level, &$BOMTree) {
 
-	global $db;
 	global $i;
 
 	// retrive all children of parent

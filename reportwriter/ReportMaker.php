@@ -176,8 +176,6 @@ include ( $PathPrefix . 'includes/footer.php');
 
 // Begin functions
 function GetReports($Default) {
-
-	global $db;
 	$DropDownString = '';
 	if ($Default) {
 		$Def=1;
@@ -219,7 +217,6 @@ function build_dropdown_list($arraylist) {
 }
 
 function FetchReportDetails($ReportID) {
-	global $db;
 	$sql= "SELECT *	FROM ".DBReports." WHERE id = '".$ReportID."'";
 	$Result=DB_query($sql,'','',false,true);
 	$myrow=DB_fetch_assoc($Result);
@@ -239,7 +236,6 @@ function FetchReportDetails($ReportID) {
 }
 
 function RetrieveFields($ReportID, $EntryType) {
-	global $db;
 	$FieldListings = array();
 	$sql= "SELECT *	FROM ".DBRptFields."
 		WHERE reportid = '".$ReportID."' AND entrytype = '".$EntryType."'
@@ -255,7 +251,6 @@ function ChangeSequence($ReportID,
 						$SeqNum,
 						$EntryType,
 						$UpDown) {
-	global $db;
 	// find the id of the row to move
 	$sql = "SELECT id FROM ".DBRptFields."
 		WHERE reportid = '".$ReportID."'
@@ -282,7 +277,7 @@ function ChangeSequence($ReportID,
 }
 
 function BuildCriteria($FieldListings) {
-	global $db, $CritChoices;
+	global $CritChoices;
 	$SeqNum = $FieldListings['seqnum'];
 	$CriteriaString = '<tr><td>'.$FieldListings['displaydesc'].'</td>'; // add the description
 	// retrieve the dropdown based on the params field (dropdown type)
@@ -336,7 +331,6 @@ function BuildFieldList($FieldListings) {
 }
 
 function ReadPostData($ReportID, $Prefs) {
-	global $db;
 	// check for page setup form entry to look at check boxes and save as new defaults, return
 	if (isset($_POST['PageForm'])) {
 		$success = SavePrefs($ReportID);
@@ -407,7 +401,6 @@ function ReadPostData($ReportID, $Prefs) {
 }
 
 function SaveFilters($ReportID, $EntryType, $Params) {
-	global $db;
 	$sql = "UPDATE ".DBRptFields." SET params='".$Params."' WHERE reportid ='".$ReportID."' AND entrytype='".$EntryType."'";
 	$Result=DB_query($sql,'','',false,true);
 	return true;
@@ -415,7 +408,6 @@ function SaveFilters($ReportID, $EntryType, $Params) {
 
 function SaveDefSettings($ReportID, $EntryType, $SeqNum) {
 	// This function sets all the params for a given entrytype to 0 and sets just the new default seqnum to 1
-	global $db;
 	$sql = "UPDATE ".DBRptFields." SET params='0' WHERE reportid='".$ReportID."' AND entrytype='".$EntryType."';";
 	$Result=DB_query($sql,'','',false,true);
 	$sql = "UPDATE ".DBRptFields." SET params='1'
@@ -425,7 +417,6 @@ function SaveDefSettings($ReportID, $EntryType, $SeqNum) {
 }
 
 function SavePrefs($ReportID) {
-	global $db;
 	// the checkboxes to false if not checked
 	if (!isset($_POST['CoyNameShow'])) $_POST['CoyNameShow'] = '0';
 	if (!isset($_POST['Title1Show'])) $_POST['Title1Show'] = '0';
@@ -492,7 +483,7 @@ function SavePrefs($ReportID) {
 }
 
 function SaveNewReport($ReportID, $AllowOverwrite) {
-	global $db, $Prefs;
+	global $Prefs;
 	// input error check reportname, blank duplicate, bad characters, etc.
 	// Delete any special characters from ReportName
 	if ($_POST['ReportName']=='') { // no report name was entered, error and reload form
@@ -538,7 +529,7 @@ function SaveNewReport($ReportID, $AllowOverwrite) {
 	$sql = "INSERT INTO ".DBReports." SELECT * FROM ".DBReports." WHERE id=0;";
 	$Result=DB_query($sql,'','',false,true);
 	// Fetch the id entered
-	$ReportID = DB_Last_Insert_ID($db,'reports','id');
+	$ReportID = DB_Last_Insert_ID('reports','id');
 	// Restore original report ID from 0
 	$sql = "UPDATE ".DBReports." SET id='".$OrigID."' WHERE id=0;";
 	$Result=DB_query($sql,'','',false,true);

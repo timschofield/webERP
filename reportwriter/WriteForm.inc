@@ -299,7 +299,6 @@ class PDF extends PDF_Language {
 } // end class
 
 function BuildPDF($ReportID, $Prefs) {
-	global $db;
 	global $FieldListings, $FieldValues;
 	// first fetch all the fields we need to display
 	$FieldListings = '';

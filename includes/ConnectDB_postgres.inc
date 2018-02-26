@@ -48,7 +48,7 @@ function DB_query ($SQL,
 	if($DebugMessage == '') {
 		$DebugMessage = _('The SQL that failed was:');
 	}
-	//if(DB_error_no($Conn) != 0) {
+
 	if( !$result AND $TrapErrors) {
 		if($TrapErrors) {
 			require_once($PathPrefix . 'includes/header.php');
@@ -60,7 +60,7 @@ function DB_query ($SQL,
 		if($Transaction) {
 			$SQL = 'rollback';
 			$Result = DB_query($SQL);
-			if(DB_error_no($Conn) !=0) {
+			if(DB_error_no() !=0) {
 				prnMsg('<br />' . _('Error Rolling Back Transaction!!'), '', _('DB DEBUG:') );
 			}
 		}
@@ -109,10 +109,11 @@ function DB_error_no() {
 }
 
 function DB_error_msg() {
+	global $db;
 	return pg_last_error($db);
 }
 
-function DB_Last_Insert_ID(&$Conn, $table, $fieldname) {
+function DB_Last_Insert_ID($table, $fieldname) {
 	$tempres = DB_query ("SELECT currval('".$table."_".$fieldname."_seq') FROM ".$table);
 	$Res = pg_fetch_result( $tempres, 0, 0 );
 	DB_free_result($tempres);
@@ -124,14 +125,13 @@ function DB_escape_string($String) {
 }
 
 function INTERVAL( $val, $Inter ) {
-	global $dbtype;
 	return "\n(CAST( (" . $val . ") as text ) || ' ". $Inter ."')::interval\n";
 }
-function DB_show_tables(&$Conn) {
+function DB_show_tables() {
 	$Result =DB_query("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'");
 	return $Result;
 }
-function DB_show_fields($TableName,&$Conn) {
+function DB_show_fields($TableName) {
 	$Result = DB_query("SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_name='" . $TableName . "'");
 	if(DB_num_rows($Result)==1) {
 		$Result = DB_query("SELECT column_name FROM information_schema.columns WHERE table_name ='$TableName'");
@@ -145,8 +145,8 @@ function DB_Maintenance() {
 	$Result = DB_query('VACUUM ANALYZE');
 
 	$Result = DB_query("UPDATE config
-				SET confvalue='" . Date('Y-m-d') . "'
-				WHERE confname='DB_Maintenance_LastRun'");
+				SET confvalue = CURRENT_DATE
+				WHERE confname = 'DB_Maintenance_LastRun'");
 }
 
 ?>

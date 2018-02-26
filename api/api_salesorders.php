@@ -970,7 +970,7 @@ $SOH_DateFields = array ('orddate',
 				$Result = api_DB_query($SQL,'','',true);
 			}
 			/*Get the ID of the StockMove... */
-			$StkMoveNo = DB_Last_Insert_ID($db,'stockmoves','stkmoveno');
+			$StkMoveNo = DB_Last_Insert_ID('stockmoves','stkmoveno');
 			/*Insert the taxes that applied to this line */
 			foreach ($LineTaxes[$LineCounter] as $Tax) {
 
@@ -1263,7 +1263,7 @@ $SOH_DateFields = array ('orddate',
 
 		$Result = api_DB_query($SQL,'','',true);
 
-		$DebtorTransID = DB_Last_Insert_ID($db,'debtortrans','id');
+		$DebtorTransID = DB_Last_Insert_ID('debtortrans','id');
 
 		/*for each Tax - need to insert into debtortranstaxes */
 		foreach ($TaxTotals AS $TaxAuthID => $Tax) {

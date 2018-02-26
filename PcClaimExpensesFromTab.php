@@ -165,7 +165,7 @@ if (isset($_POST['submit'])) {
 										)";
 		$Msg = _('The expense claim on tab') . ' ' . $_POST['SelectedTabs'] . ' ' . _('has been created');
 		$Result = DB_query($SQL);
-		$SelectedIndex = DB_Last_Insert_ID($db, 'pcashdetails', 'counterindex');
+		$SelectedIndex = DB_Last_Insert_ID('pcashdetails', 'counterindex');
 		foreach ($_POST as $Index => $Value) {
 			if (substr($Index, 0, 5) == 'index') {
 				$Index = $Value;

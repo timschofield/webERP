@@ -658,7 +658,7 @@ if(isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 	$DbgMsg = _('The following SQL to insert the customer credit note was used');
 	$Result = DB_query($SQL,$ErrMsg, $DbgMsg, true);
 
-	$CreditTransID = DB_Last_Insert_ID($db,'debtortrans','id');
+	$CreditTransID = DB_Last_Insert_ID('debtortrans','id');
 
 	/* Insert the tax totals for each tax authority where tax was charged on the invoice */
 	foreach($TaxTotals AS $TaxAuthID => $TaxAmount) {
@@ -958,7 +958,7 @@ if(isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 				$DbgMsg = _('The following SQL to insert the stock movement records was used');
 				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-				$StkMoveNo = DB_Last_Insert_ID($db,'stockmoves','stkmoveno');
+				$StkMoveNo = DB_Last_Insert_ID('stockmoves','stkmoveno');
 				/*Insert the StockSerialMovements and update the StockSerialItems  for controlled items*/
 				//echo "<div align="left"><pre>"; var_dump($CreditLine); echo "</pre> </div>";
 				if($CreditLine->Controlled ==1) {
@@ -1060,7 +1060,7 @@ if(isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 				$DbgMsg = _('The following SQL to insert the stock movement records was used');
 				$Result = DB_query($SQL,$ErrMsg, $DbgMsg, true);
 				/*Get the ID of the StockMove... */
-				$StkMoveNo = DB_Last_Insert_ID($db,'stockmoves','stkmoveno');
+				$StkMoveNo = DB_Last_Insert_ID('stockmoves','stkmoveno');
 
 				$SQL = "INSERT INTO stockmoves(stockid,
 												type,
@@ -1145,7 +1145,7 @@ if(isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 
 				$Result = DB_query($SQL,$ErrMsg, $DbgMsg, true);
 				/*Get the ID of the StockMove... */
-				$StkMoveNo = DB_Last_Insert_ID($db,'stockmoves','stkmoveno');
+				$StkMoveNo = DB_Last_Insert_ID('stockmoves','stkmoveno');
 			}
 
 			/*Insert the taxes that applied to this line */

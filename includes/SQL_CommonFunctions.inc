@@ -369,9 +369,6 @@ function EnsureGLEntriesBalance ($TransType, $TransTypeNo, $db) {
 	If location is NOT empty, returns the QOO for that specific location.
 */
 function GetQuantityOnOrderDueToPurchaseOrders($StockID, $Location){
-
-	global $db;
-
 	if ($Location == ""){
 		// All locations to be considered
 		$WhereLocation = "";
@@ -414,9 +411,6 @@ function GetQuantityOnOrderDueToPurchaseOrders($StockID, $Location){
 	If location is NOT empty, returns the QOO for that specific location.
 */
 function GetQuantityOnOrderDueToWorkOrders($StockID, $Location){
-
-	global $db;
-
 	if ($Location == ''){
 		// All locations to be considered
 		$WhereLocation = '';
@@ -482,7 +476,7 @@ function CreateQASample ($ProdSpecKey, $LotKey, $Identifier, $Comments, $Cert, $
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The create of the qasamples record failed');
 			$DbgMsg = _('The following SQL to create the qasamples was used');
 			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
-			$SampleID=DB_Last_Insert_ID($db,'qasamples','sampleid');
+			$SampleID=DB_Last_Insert_ID('qasamples','sampleid');
 			$SQL = "INSERT INTO sampleresults (sampleid,
 											testid,
 											defaultvalue,

@@ -90,7 +90,7 @@ if(isset($_POST['submit'])) {
 			$ErrMsg = _('Could not add tax province');
 			$result = DB_query($sql, $ErrMsg);
 
-			$TaxProvinceID = DB_Last_Insert_ID($db, 'taxprovinces', 'taxprovinceid');
+			$TaxProvinceID = DB_Last_Insert_ID('taxprovinces', 'taxprovinceid');
 			$sql = "INSERT INTO taxauthrates (taxauthority, dispatchtaxprovince, taxcatid)
 					SELECT taxauthorities.taxid, '" . $TaxProvinceID . "', taxcategories.taxcatid
 					FROM taxauthorities CROSS JOIN taxcategories";

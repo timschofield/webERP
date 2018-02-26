@@ -164,9 +164,7 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" maxlength="10" size="11" vaue="' . $_POST['FromDate'] .'" /></td> 
 		<td>' . _('Date To') . '</td>
 		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
-		<td><input type="submit" name="Search"  value="' ._('Search') . '" /></td></tr></table>	
-		
-		';
+		<td><input type="submit" name="Search"  value="' ._('Search') . '" /></td></tr></table>';
 	if (!isset($_POST['ShowDetails'])) {
 		$_POST['ShowDetails'] = 1;
 	}
@@ -324,8 +322,7 @@ if(isset($StockItemsResult)){
 			FROM stockrequest INNER JOIN stockrequestitems ON stockrequest.dispatchid=stockrequestitems.dispatchid 
 			INNER JOIN departments ON stockrequest.departmentid=departments.departmentid 
 			INNER JOIN locations ON locations.loccode=stockrequest.loccode 
-			INNER JOIN stockmaster ON stockrequestitems.stockid=stockmaster.stockid
-			"; 
+			INNER JOIN stockmaster ON stockrequestitems.stockid=stockmaster.stockid";
 	} else {
 		$SQL = "SELECT stockrequest.dispatchid,
 					stockrequest.loccode,
@@ -338,7 +335,7 @@ if(isset($StockItemsResult)){
 					narrative,
 					initiator
 					FROM stockrequest INNER JOIN departments ON stockrequest.departmentid=departments.departmentid
-				        INNER JOIN locations ON locations.loccode=stockrequest.loccode	";
+					INNER JOIN locations ON locations.loccode=stockrequest.loccode";
 	}
 	//lets add the condition selected by users
 	if (isset($_POST['RequestNo']) AND $_POST['RequestNo'] !== '') {
@@ -489,23 +486,12 @@ if(isset($StockItemsResult)){
 	} else {
 		prnMsg(_('There are no stock request available'),'warn');
 	}	
-
-
-
-
-
-
-
-				
-			
-
 }
 		
 include('includes/footer.php');
 exit;
 
 function GetSearchItems ($SQLConstraint='') {
-	global $db;
 	if ($_POST['Keywords'] AND $_POST['StockCode']) {
 		 echo _('Stock description keywords have been used in preference to the Stock code extract entered');
 	}

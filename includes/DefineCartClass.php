@@ -155,7 +155,6 @@ Class Cart {
 				being retrieved from the DB - dont want to add them again - would return
 				errors anyway */
 
-				global $db;
 				$sql = "INSERT INTO salesorderdetails (orderlineno,
 														orderno,
 														stkcode,
@@ -203,7 +202,6 @@ Class Cart {
 		$this->LineItems[$UpdateLineNumber]->POLine = $POLine;
 		$this->LineItems[$UpdateLineNumber]->GPPercent = $GPPercent;
 		if ($UpdateDB=='Yes'){
-			global $db;
 			$result = DB_query("UPDATE salesorderdetails SET quantity=" . $Qty . ",
 															unitprice=" . $Price . ",
 															discountpercent=" . $Disc . ",
@@ -223,7 +221,6 @@ Class Cart {
 			return;
 		}
 		if ($UpdateDB=='Yes'){
-			global $db;
 			if ($this->Some_Already_Delivered($LineNumber)==0){
 				/* nothing has been delivered, delete it. */
 				$result = DB_query("DELETE FROM salesorderdetails
@@ -295,9 +292,6 @@ Class Cart {
 	}
 
 	function GetExistingTaxes($LineNumber, $stkmoveno){
-
-		global $db;
-
 		/*Gets the Taxes and rates applicable to this line from the TaxGroup of the branch and TaxCategory of the item
 		and the taxprovince of the dispatch location */
 
@@ -328,9 +322,6 @@ Class Cart {
 	} //end method GetExistingTaxes
 
 	function GetTaxes($LineNumber){
-
-		global $db;
-
 		/*Gets the Taxes and rates applicable to this line from the TaxGroup of the branch and TaxCategory of the item
 		and the taxprovince of the dispatch location */
 
@@ -369,9 +360,6 @@ Class Cart {
 	} //end method GetTaxes
 
 	function GetFreightTaxes () {
-
-		global $db;
-
 		/*Gets the Taxes and rates applicable to the freight based on the tax group of the branch combined with the tax category for this particular freight
 		and SESSION['FreightTaxCategory'] the taxprovince of the dispatch location */
 

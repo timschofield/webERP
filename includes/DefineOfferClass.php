@@ -19,7 +19,6 @@ Class Offer {
 
 	function __construct($Supplier){
 	/*Constructor function initialises a new purchase offer object */
-		global $db;
 		$this->LineItems = array();
 		$this->total=0;
 		$this->LinesOnOffer=0;

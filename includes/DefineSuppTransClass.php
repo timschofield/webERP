@@ -53,9 +53,6 @@ Class SuppTrans {
 	}
 
 	function GetTaxes () {
-
-		global $db;
-
 		/*Gets the Taxes and rates applicable to the tax group of the supplier
 		and SESSION['DefaultTaxCategory'] and the taxprovince of the location that the user is setup to use*/
 
@@ -471,8 +468,6 @@ Class GLCodes {
 	Var $TagName;
 
 	function __construct($Counter, $GLCode, $GLActName, $Amount, $Narrative, $Tag=0, $TagName=''){
-
-		global $db;
 	/* Constructor function to add a new GLCodes object with passed params */
 		$this->Counter = $Counter;
 		$this->GLCode = $GLCode;
@@ -523,7 +518,6 @@ Class Asset {
 	Var $Amount;
 
 	function __construct($Counter, $AssetID, $Amount){
-		global $db;
 		$this->Counter = $Counter;
 		$this->AssetID = $AssetID;
 		$this->Amount = $Amount;

@@ -370,7 +370,7 @@ if (isset($_POST['CloseContract']) AND $_SESSION['Contract'.$identifier]->Status
 				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
 				/*Get the ID of the StockMove... */
-				$StkMoveNo = DB_Last_Insert_ID($db,'stockmoves','stkmoveno');
+				$StkMoveNo = DB_Last_Insert_ID('stockmoves','stkmoveno');
 
 				/* If GLLink_Stock then insert GLTrans to debit the GL Code  and credit GRN Suspense account at standard cost*/
 				if ($_SESSION['CompanyRecord']['gllink_stock']==1 AND ($OtherReqtsBudget+$ContractBOMBudget)!=0){

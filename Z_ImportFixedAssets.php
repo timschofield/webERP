@@ -219,7 +219,7 @@ if ($_FILES['SelectedAssetFile']['name']) { //start file processing
 			if (DB_error_no() ==0) { //the insert of the new code worked so bang in the fixedassettrans records too
 
 
-				$AssetID = DB_Last_Insert_ID($db, 'fixedassets','assetid');
+				$AssetID = DB_Last_Insert_ID('fixedassets','assetid');
 				$sql = "INSERT INTO fixedassettrans ( assetid,
 												transtype,
 												transno,

@@ -257,7 +257,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 		$DbgMsg = _('The following SQL to insert the stock movement records was used');
 		$Result=DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-		$StkMoveNo = DB_Last_Insert_ID($db,'stockmoves','stkmoveno');
+		$StkMoveNo = DB_Last_Insert_ID('stockmoves','stkmoveno');
 
 		if ($Controlled==true){
 			while ($SerialStockMoves = DB_fetch_array($GetStockMoveResult)){

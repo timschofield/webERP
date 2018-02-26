@@ -266,8 +266,6 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 include('includes/footer.php');
 
 function IsBankAccount($Account) {
-	global $db;
-
 	$sql ="SELECT accountcode FROM bankaccounts WHERE accountcode='" . $Account . "'";
 	$result = DB_query($sql);
 	if (DB_num_rows($result)==0) {

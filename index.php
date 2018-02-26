@@ -189,7 +189,7 @@ in the acssociative array $ReportGroups[]. It will fetch the reports belonging s
 specified to create a list of links for insertion into a table to choose a report. Two table sections will
 be generated, one for standard reports and the other for custom reports.
 */
-	global $db, $RootPath, $ReportList;
+	global $RootPath, $ReportList;
 	require_once('reportwriter/languages/en_US/reports.php');
 	require_once('reportwriter/admin/defaults.php');
 	$GroupID=$ReportList[$GroupID];

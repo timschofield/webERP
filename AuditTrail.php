@@ -29,7 +29,7 @@ if (isset($_POST['ContainingText'])){
 }
 
 // Get list of tables
-$TableResult = DB_show_tables($db);
+$TableResult = DB_show_tables();
 
 // Get list of users
 $UserResult = DB_query("SELECT userid FROM www_users ORDER BY userid");

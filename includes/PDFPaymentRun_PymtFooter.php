@@ -65,7 +65,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 		exit;
 	}
 
-	$PaymentTransID = DB_Last_Insert_ID($db,'supptrans','id');
+	$PaymentTransID = DB_Last_Insert_ID('supptrans','id');
 
 	/*Do the inserts for the allocation record against the payment for this charge */
 

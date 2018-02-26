@@ -146,7 +146,7 @@ switch ($_GET['action']) {
 					$sql = "INSERT INTO ".DBReports." (reportname, reporttype, groupname, defaultreport)
 						VALUES ('".addslashes($_POST['ReportName'])."', '".$Type."', '".$GroupName."', '1')";
 					$Result=DB_query($sql,'','',false,true);
-					$ReportID = DB_Last_Insert_ID($db,DBReports,'id');
+					$ReportID = DB_Last_Insert_ID(DBReports,'id');
 					// Set some default report information: date display default choices to 'ALL'
 					if ($Type<>'frm') { // set the truncate long descriptions default
 						$sql = "INSERT INTO ".DBRptFields." (reportid, entrytype, params, displaydesc)
@@ -168,7 +168,7 @@ switch ($_GET['action']) {
 					$sql = "INSERT INTO ".DBReports." SELECT * FROM ".DBReports." WHERE id = 0;";
 					$Result=DB_query($sql,'','',false,true);
 					// Fetch the id entered
-					$ReportID = DB_Last_Insert_ID($db,DBReports,'id');
+					$ReportID = DB_Last_Insert_ID(DBReports,'id');
 					// Restore original report ID from 0
 					$sql = "UPDATE ".DBReports." SET id=".$OrigID." WHERE id=0;";
 					$Result=DB_query($sql,'','',false,true);

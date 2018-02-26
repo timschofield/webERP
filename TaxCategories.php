@@ -88,7 +88,7 @@ if(isset($_POST['submit'])) {
 			$ErrMsg = _('The new tax category could not be added');
 			$result = DB_query($sql,$ErrMsg,true);
 
-			$LastTaxCatID = DB_Last_Insert_ID($db, 'taxcategories','taxcatid');
+			$LastTaxCatID = DB_Last_Insert_ID('taxcategories','taxcatid');
 
 			$sql = "INSERT INTO taxauthrates (taxauthority,
 					dispatchtaxprovince,

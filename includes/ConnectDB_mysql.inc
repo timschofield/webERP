@@ -4,19 +4,16 @@
 
 define('LIKE', 'LIKE');
 
-global $db;// Make sure it IS global, regardless of our context
 if(!isset($mysqlport)) {
 	$mysqlport = 3306;
 }
+global $db;// Make sure it IS global, regardless of our context
+
 $db = mysql_connect($host . ':' . $mysqlport, $DBUser, $DBPassword);
 
 //this statement sets the charset to be used for sending data to and from the db server
 //if not set, both mysql server and mysql client/library may assume otherwise
 mysql_set_charset('utf8', $db);
-
-//$varabc = mysql_client_encoding($db);
-//printf("client encoding is %s\n", $varabc);
-
 
 if(!$db) {
 	echo '<br />' . _('The configuration in the file config.php for the database user name and password do not provide the information required to connect to the database server');
@@ -29,7 +26,6 @@ if(!$db) {
 
 /* Update to allow RecurringSalesOrdersProcess.php to run via cron */
 if(isset($DatabaseName)) {
-
 	if(! mysql_select_db($_SESSION['DatabaseName'],$db)) {
 		echo '<br />' . _('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');
 		echo '<br /><a href="index.php">' . _('Back to login page') . '</A>';
@@ -44,8 +40,6 @@ if(isset($DatabaseName)) {
 		exit;
 	}
 }
-
-require_once($PathPrefix . 'includes/MiscFunctions.php');
 
 //DB wrapper functions to change only once for whole application
 
@@ -74,7 +68,7 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 			$SQL = 'rollback';
 			$Result = DB_query($SQL);
 			if(DB_error_no() != 0) {
-				prnMsg(_('Error Rolling Back Transaction'), '', _('Database Rollback Error') );
+				prnMsg(_('Error Rolling Back Transaction'), 'error', _('Database Rollback Error') );
 			}
 		}
 		if($TrapErrors) {
@@ -103,7 +97,6 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 	}
 
 	return $result;
-
 }
 
 function DB_fetch_row($ResultIndex) {
@@ -147,7 +140,7 @@ function DB_error_msg() {
 	return mysql_error($db);
 }
 
-function DB_Last_Insert_ID(&$Conn='',$table, $fieldname) {
+function DB_Last_Insert_ID($table, $fieldname) {
 //	return mysql_insert_id($db);
 	if (isset($_SESSION['LastInsertId'])) {
 		$Last_Insert_ID = $_SESSION['LastInsertId'];
@@ -162,58 +155,58 @@ function DB_escape_string($String) {
 	return mysql_real_escape_string($String);
 }
 
-function DB_show_tables(&$Conn='') {
+function DB_show_tables() {
 	$Result = DB_query('SHOW TABLES');
 	return $Result;
 }
 
-function DB_show_fields($TableName, &$Conn='') {
+function DB_show_fields($TableName) {
 	$Result = DB_query("DESCRIBE $TableName");
 	return $Result;
 }
 
 function interval( $val, $Inter ) {
-	global $DBType;
-	return "\n".'interval ' . $val . ' '. $Inter."\n";
+	return "\n".'interval ' . $val . ' ' . $Inter . "\n";
 }
 
 function DB_Maintenance() {
 	prnMsg(_('The system has just run the regular database administration and optimisation routine.'),'info');
-	$TablesResult = DB_query('SHOW TABLES');
+
+	$TablesResult = DB_show_tables();
 	while ($myrow = DB_fetch_row($TablesResult)) {
 		$Result = DB_query('OPTIMIZE TABLE ' . $myrow[0]);
 	}
 
 	$Result = DB_query("UPDATE config
-				SET confvalue='" . Date('Y-m-d') . "'
-				WHERE confname='DB_Maintenance_LastRun'");
+				SET confvalue = CURRENT_DATE
+				WHERE confname = 'DB_Maintenance_LastRun'");
 }
 
 function DB_Txn_Begin() {
 	global $db;
-	mysql_query("SET autocommit=0",$db);
-	mysql_query("START TRANSACTION",$db);
+	mysql_query('SET autocommit=0',$db);
+	mysql_query('START TRANSACTION',$db);
 }
 
 function DB_Txn_Commit() {
 	global $db;
-	mysql_query("COMMIT",$db);
-	mysql_query("SET autocommit=1",$db);
+	mysql_query('COMMIT',$db);
+	mysql_query('SET autocommit=1',$db);
 }
 
 function DB_Txn_Rollback() {
 	global $db;
-  mysql_query("ROLLBACK",$db);
+	mysql_query('ROLLBACK',$db);
 }
 
 function DB_IgnoreForeignKeys() {
 	global $db;
-	mysql_query("SET FOREIGN_KEY_CHECKS=0",$db);
+	mysql_query('SET FOREIGN_KEY_CHECKS=0',$db);
 }
 
 function DB_ReinstateForeignKeys() {
 	global $db;
-	mysql_query("SET FOREIGN_KEY_CHECKS=1",$db);
+	mysql_query('SET FOREIGN_KEY_CHECKS=1',$db);
 }
 
 ?>
