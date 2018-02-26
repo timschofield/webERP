@@ -1,5 +1,6 @@
 webERP Change Log
 
+6/2/18   geo_displaymap_customers.php, geo_displaymap_suppliers.php: Fix a few PHP short-tags, and move some javascript from PHP output to fix 'missing tag' validation complaints.
 6/2/18   MRPPlannedPurchasekOrders.php, MRPPlannedWorkOrders.php: PaulT: Add missing table cell to work orders to match recent change to planned purchase orders and replace 'where clause joins' with table join in both files. Paul B/PaulT: Apply consistent code formatting between both files. (Some consistency matters reported in forums: http://www.weberp.org/forum/showthread.php?tid=8061)
 5/2/18   PaulT: SalesGraph.php: Rework previous 7908 implementation that caused graphing to break. (Reported broken in forums by Paul Becker: http://www.weberp.org/forum/showthread.php?tid=8071)
 4/2/18   PaulT: InternalStockRequestInquiry.php: Restore ONE space to previous 7936 commit.

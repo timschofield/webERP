@@ -31,12 +31,12 @@ $Map_Host = $myrow['map_host'];
     }
 </style>
 
-<?
+<?php
 echo '<script src="http://' . $Map_Host . '/maps/api/js?key=' . $Api_Key . '&sensor=false"';
-echo ' type="text/javascript"></script>';
-echo ' <script type="text/javascript">';
-echo "    //<![CDATA[ "; ?>
-?>
+echo ' type="text/javascript"></script>';?>
+<script type="text/javascript">
+//<![CDATA[
+
 
 var customIcons = {
 4: {
@@ -49,7 +49,7 @@ icon: 'http://labs.google.com/ridefinder/images/mm_20_red.png'
 
 function load() {
 var map = new google.maps.Map(document.getElementById("map"), {
-<? echo 'center:new google.maps.LatLng(' . $Center_Lat . ', ' . $Center_Long . '),'; ?>
+<?php echo 'center:new google.maps.LatLng(' . $Center_Lat . ', ' . $Center_Long . '),'; ?>
 zoom: 4,
 mapTypeId: 'roadmap'
 });
@@ -111,10 +111,10 @@ function doNothing() {}
 
 <body onload="load()" onunload="GUnload()">
     <p>
-    <? echo '<div class="centre" id="map" style="width: ' . $Map_Width . 'px; height: ' . $Map_Height . 'px"></div>'; ?>
+    <?php echo '<div class="centre" id="map" style="width: ' . $Map_Width . 'px; height: ' . $Map_Height . 'px"></div>'; ?>
     </p>
 </body>
-<?
+<?php
 echo '<div class="centre"><a href="' . $RootPath . '/GeocodeSetup.php">' . _('Go to Geocode Setup') . '</a></div></p>';
 include ('includes/footer.php');
 ?>
