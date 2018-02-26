@@ -1,5 +1,6 @@
 webERP Change Log
 
+2/4/18   Paul Becker (PaulT commit): MRPPlannedPurchaseOrders.php: Add capability to review planned purchase orders and add a new link to convert to a new PO. (Reported in forums: http://www.weberp.org/forum/showthread.php?tid=8061)
 2/4/18   Paul Becker (PaulT commit): PrintCustOrder.php, PrintCustOrder_generic.php, PDFOrderPageHeader_generic.inc: Add units, volume, and weight info, date/signature lines, sales order details narrative, plus other minor PDF formatting. (Reported in forums: http://www.weberp.org/forum/showthread.php?tid=8048)
 2/4/18   PaulT: Remove unused $db parameter from DB_fetch_array() and DB_Query() functions. Also, rename several DB_Query names to match function definition name: DB_query.
 2/2/18   PaulT: Dashboard.php: Replace due date handling with existing function.
