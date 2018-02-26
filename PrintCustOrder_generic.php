@@ -6,12 +6,14 @@
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 
-
 //Get Out if we have no order number to work with
-If (!isset($_GET['TransNo']) OR $_GET['TransNo']==""){
+If (!isset($_GET['TransNo']) OR $_GET['TransNo']==''){
 	$Title = _('Select Order To Print');
 	include('includes/header.php');
-	echo '<div class="centre"><br /><br /><br />';
+	echo '<div class="centre">
+         <br />
+         <br />
+         <br />';
 	prnMsg( _('Select an Order Number to Print before calling this page') , 'error');
 	echo '<br />
 			<br />
@@ -20,7 +22,7 @@ If (!isset($_GET['TransNo']) OR $_GET['TransNo']==""){
 			<tr>
 			<td class="menu_group_item">
             <ul>
-			    <li><a href="'. $RootPath . '/SelectSalesOrder.php?">' . _('Outstanding Sales Orders') . '</a></li>
+			    <li><a href="'. $RootPath . '/SelectSalesOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
 			    <li><a href="'. $RootPath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
             </ul>
 			</td>
@@ -31,7 +33,7 @@ If (!isset($_GET['TransNo']) OR $_GET['TransNo']==""){
 			<br />
 			<br />';
 	include('includes/footer.php');
-	exit();
+	exit;
 }
 
 /*retrieve the order details from the database to print */
@@ -101,7 +103,6 @@ if (DB_num_rows($result)==0){
 			<br />
 			<br />
 			<br />';
-
 	include('includes/footer.php');
 	exit();
 } elseif (DB_num_rows($result)==1){ /*There is only one order header returned - thats good! */
@@ -143,12 +144,12 @@ if (DB_num_rows($result)==0){
 
 /*retrieve the order details from the database to print */
 
-/* Then there's an order to print and its not been printed already (or its been flagged for reprinting)
+/* Then there's an order to print and it has not been printed already (or its been flagged for reprinting)
 LETS GO */
 
 $PaperSize = 'A4_Landscape';
 include('includes/PDFStarter.php');
-//$pdf->selectFont('./fonts/Helvetica.afm');
+
 $pdf->addInfo('Title', _('Customer Laser Packing Slip') );
 $pdf->addInfo('Subject', _('Laser Packing slip for order') . ' ' . $_GET['TransNo']);
 $FontSize=12;
@@ -174,6 +175,9 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 					salesorderdetails.narrative,
 					stockmaster.mbflag,
 					stockmaster.decimalplaces,
+					stockmaster.grossweight,
+					stockmaster.volume,
+					stockmaster.units,
 					stockmaster.controlled,
 					stockmaster.serialised,
 					pickreqdetails.qtypicked,
@@ -206,24 +210,47 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 		while ($myrow2=DB_fetch_array($result)){
 
             $ListCount ++;
+			$Volume += $myrow2['quantity'] * $myrow2['volume'];
+			$Weight += $myrow2['quantity'] * $myrow2['grossweight'];
 
 			$DisplayQty = locale_number_format($myrow2['quantity'],$myrow2['decimalplaces']);
 			$DisplayPrevDel = locale_number_format($myrow2['qtyinvoiced'],$myrow2['decimalplaces']);
+
 			if ($myrow2['qtypicked'] > 0) {
 				$DisplayQtySupplied = locale_number_format($myrow2['qtypicked'], $myrow2['decimalplaces']);
 			} else {
 				$DisplayQtySupplied = locale_number_format($myrow2['quantity'] - $myrow2['qtyinvoiced'],$myrow2['decimalplaces']);
 			}
 
-			$LeftOvers = $pdf->addTextWrap($XPos,$YPos,127,$FontSize,$myrow2['stkcode']);
-			$LeftOvers = $pdf->addTextWrap(147,$YPos,255,$FontSize,$myrow2['description']);
+			$LeftOvers = $pdf->addTextWrap($XPos,$YPos,127,$FontSize,$myrow2['stkcode'],'left');
+			$LeftOvers = $pdf->addTextWrap(147,$YPos,255,$FontSize,$myrow2['description'],'left');
 			$LeftOvers = $pdf->addTextWrap(400,$YPos,85,$FontSize,$DisplayQty,'right');
-			$LeftOvers = $pdf->addTextWrap(487,$YPos,70,$FontSize,$myrow2['bin'],'left');
-			$LeftOvers = $pdf->addTextWrap(573,$YPos,85,$FontSize,$DisplayQtySupplied,'right');
-			$LeftOvers = $pdf->addTextWrap(672,$YPos,85,$FontSize,$DisplayPrevDel,'right');
+			$LeftOvers = $pdf->addTextWrap(487,$YPos,85,$FontSize,$myrow2['units'],'left');
+			$LeftOvers = $pdf->addTextWrap(527,$YPos,70,$FontSize,$myrow2['bin'],'left');
+			$LeftOvers = $pdf->addTextWrap(593,$YPos,85,$FontSize,$DisplayQtySupplied,'right');
+			$LeftOvers = $pdf->addTextWrap(692,$YPos,85,$FontSize,$DisplayPrevDel,'right');
+
+			if ($_SESSION['AllowOrderLineItemNarrative'] == 1) {
+				// Prints salesorderdetails.narrative:
+				$FontSize2 = $FontSize*0.8;// Font size to print salesorderdetails.narrative.
+				$Width2 = $Page_Width-$Right_Margin-145;// Width to print salesorderdetails.narrative.
+				$LeftOvers = trim($myrow2['narrative']);
+				//**********
+				$LeftOvers = str_replace('\n', ' ', $LeftOvers);// Replaces line feed character.
+				$LeftOvers = str_replace('\r', '', $LeftOvers);// Delete carriage return character
+				$LeftOvers = str_replace('\t', '', $LeftOvers);// Delete tabulator character
+				//**********
+				while (mb_strlen($LeftOvers) > 1) {
+					$YPos -= $FontSize2;
+					if ($YPos < ($Bottom_Margin)) {// Begins new page.
+						include ('includes/PDFOrderPageHeader_generic.inc');
+					}
+					$LeftOvers = $pdf->addTextWrap(147, $YPos, $Width2, $FontSize2, $LeftOvers);
+				}
+			}
 
 			if ($YPos-$line_height <= 50){
-			/* We reached the end of the page so finsih off the page and start a newy */
+			/* We reached the end of the page so finish off the page and start a newy */
 				$PageNumber++;
 				include ('includes/PDFOrderPageHeader_generic.inc');
 			} //end if need a new page headed up
@@ -231,11 +258,12 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 				/*increment a line down for the next line item */
 				$YPos -= ($line_height);
 			}
+
 			if ($myrow2['cust_part'] > '') {
 				$LeftOvers = $pdf->addTextWrap($XPos, $YPos, 127, $FontSize, $myrow2['cust_part'], 'right');
 				$LeftOvers = $pdf->addTextWrap(147, $YPos, 255, $FontSize, $myrow2['cust_description']);
 				if ($YPos - $line_height <= 50) {
-					/* We reached the end of the page so finsih off the page and start a newy */
+					/* We reached the end of the page so finish off the page and start a newy */
 					$PageNumber++;
 					include('includes/PDFOrderPageHeader_generic.php');
 				} //end if need a new page headed up
@@ -244,6 +272,7 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 					$YPos -= ($line_height);
 				}
 			}
+
 			if ($myrow2['mbflag']=='A'){
 				/*Then its an assembly item - need to explode into it's components for packing list purposes */
 				$sql = "SELECT bom.component,
@@ -277,6 +306,7 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 					}
 				} //loop around all the components of the assembly
 			}
+
 			if ($myrow2['controlled'] == '1') {
 				$ControlLabel = _('Lot') . ':';
 				if ($myrow2['serialised'] == 1) {
@@ -306,7 +336,19 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 
 	} /*end if there are order details to show on the order*/
 
+	if ( $Copy != 'Customer' ) {
+		$LeftOvers = $pdf->addTextWrap(375,20,150,$FontSize,'Accepted/Received By:','left');
+		$pdf->line(500,20,650,20);
+		$LeftOvers = $pdf->addTextWrap(675,20,50,$FontSize,'Date:','left');
+		$pdf->line(710,20,785,20);
+	}
+
+	$LeftOvers = $pdf->addTextWrap(17,20,100,$FontSize,'Volume: ' . round($Volume) . ' GA','left');
+	$LeftOvers = $pdf->addTextWrap(147,20,200,$FontSize,'Weight: ' . round($Weight) . ' LB (approximate)','left');
+
 	$Copy='Customer';
+	$Volume = 0;
+	$Weight = 0;
 
 } /*end for loop to print the whole lot twice */
 

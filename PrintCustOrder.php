@@ -19,7 +19,8 @@ If (!isset($_GET['TransNo']) OR $_GET['TransNo']==''){
           <br />
           <br />
           <table class="table_index">
-                 <tr><td class="menu_group_item">
+			<tr>
+			<td class="menu_group_item">
                  <ul>
 					<li><a href="'. $RootPath . '/SelectSalesOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
 					<li><a href="'. $RootPath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
@@ -37,6 +38,7 @@ If (!isset($_GET['TransNo']) OR $_GET['TransNo']==''){
 
 /*retrieve the order details from the database to print */
 $ErrMsg = _('There was a problem retrieving the order header details for Order Number') . ' ' . $_GET['TransNo'] . ' ' . _('from the database');
+
 $sql = "SELECT salesorders.customerref,
 			salesorders.comments,
 			salesorders.orddate,
@@ -85,10 +87,21 @@ if (DB_num_rows($result)==0){
         include('includes/header.php');
         echo '<div class="centre"><br /><br /><br />';
 	prnMsg( _('Unable to Locate Order Number') . ' : ' . $_GET['TransNo'] . ' ', 'error');
-        echo '<br /><br /><br /><table class="table_index"><tr><td class="menu_group_item">
+        echo '<br />
+			<br />
+			<br />
+			<table class="table_index">
+			<tr>
+			<td class="menu_group_item">
                 <li><a href="'. $RootPath . '/SelectSalesOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
                 <li><a href="'. $RootPath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
-                </td></tr></table></div><br /><br /><br />';
+			</td>
+			</tr>
+			</table>
+			</div>
+			<br />
+			<br />
+			<br />';
         include('includes/footer.php');
         exit();
 } elseif (DB_num_rows($result)==1){ /*There is only one order header returned - thats good! */
@@ -139,7 +152,8 @@ $sql = "SELECT salesorderdetails.stkcode,
 			salesorderdetails.quantity,
 			salesorderdetails.qtyinvoiced,
 			salesorderdetails.unitprice,
-			stockmaster.decimalplaces
+			stockmaster.decimalplaces,
+			stockmaster.units
 		FROM salesorderdetails INNER JOIN stockmaster
 			ON salesorderdetails.stkcode=stockmaster.stockid
 		 WHERE salesorderdetails.orderno='" . $_GET['TransNo'] . "'";
@@ -204,9 +218,10 @@ if (DB_num_rows($result)>0){
 		$DisplayPrevDel = locale_number_format($myrow2['qtyinvoiced'],$myrow2['decimalplaces']);
 		$DisplayQtySupplied = locale_number_format($myrow2['quantity'] - $myrow2['qtyinvoiced'],$myrow2['decimalplaces']);
 
-		$LeftOvers = $pdf->addTextWrap(13,$YPos,135,$FontSize,$myrow2['stkcode']);
-		$LeftOvers = $pdf->addTextWrap(148,$YPos,239,$FontSize,$myrow2['description']);
+		$LeftOvers = $pdf->addTextWrap(13,$YPos,135,$FontSize,$myrow2['stkcode'],'left');
+		$LeftOvers = $pdf->addTextWrap(148,$YPos,239,$FontSize,$myrow2['description'],'left');
 		$LeftOvers = $pdf->addTextWrap(387,$YPos,90,$FontSize,$DisplayQty,'right');
+		$LeftOvers = $pdf->addTextWrap(475,$YPos,20,$FontSize,$myrow2['units'],'left');
 		$LeftOvers = $pdf->addTextWrap(505,$YPos,90,$FontSize,$DisplayQtySupplied,'right');
 		$LeftOvers = $pdf->addTextWrap(604,$YPos,90,$FontSize,$DisplayPrevDel,'right');
 
