@@ -1,5 +1,6 @@
 webERP Change Log
 
+7/2/18   Paul Becker (PaulT commit): Z_SalesIntegrityCheck.php: Fix that the does not take into account discountpercent so it shows an issue where non exists. (Reported in forums: http://www.weberp.org/forum/showthread.php?tid=8084) 
 7/2/18   Tim (PaulT commit) UserSettings.php: Fix the 'Maximum Number of Records to Display' from populating with the session default at page load instead of the user's setting. Applied Tim's improved handling. (Reported in forums by Paul Becker: http://www.weberp.org/forum/showthread.php?tid=8081) 
 6/2/18   geo_displaymap_customers.php, geo_displaymap_suppliers.php: Fix a few PHP short-tags, and move some javascript from PHP output to fix 'missing tag' validation complaints.
 6/2/18   MRPPlannedPurchasekOrders.php, MRPPlannedWorkOrders.php: PaulT: Add missing table cell to work orders to match recent change to planned purchase orders and replace 'where clause joins' with table join in both files. Paul B/PaulT: Apply consistent code formatting between both files. (Some consistency matters reported in forums: http://www.weberp.org/forum/showthread.php?tid=8061)

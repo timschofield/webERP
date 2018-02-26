@@ -142,7 +142,7 @@ while ($myrow = DB_fetch_array($Result)) {
 			echo ', <div style="color:red">' . _('Has no Sales Order') . '</div>';
 	}
 
-	$sumsql = "SELECT SUM( qtyinvoiced * unitprice ) AS InvoiceTotal
+	$sumsql = "SELECT ROUND(SUM(qtyinvoiced * unitprice * (1 - discountpercent)), 3) AS InvoiceTotal
 				FROM salesorderdetails
 				WHERE orderno = '" . $myrow['orderno'] . "'";
 	$sumresult = DB_query($sumsql);
