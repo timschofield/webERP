@@ -106,10 +106,6 @@ echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-If (!isset($_POST['DisplayRecordsMax']) OR $_POST['DisplayRecordsMax']=='') {
-	$_POST['DisplayRecordsMax'] = $_SESSION['DefaultDisplayRecordsMax'];
-}
-
 echo '<table class="selection">
 		<tr>
 			<td>', _('User ID'), ':</td>
@@ -120,7 +116,7 @@ echo '<table class="selection">
 			<td>', $_SESSION['UsersRealName'], '<input name="RealName" type="hidden" value="', $_SESSION['UsersRealName'], '" /></td></tr>
 		<tr>
 			<td>', _('Maximum Number of Records to Display'), ':</td>
-			<td><input class="integer" maxlength="3" name="DisplayRecordsMax" required="required" size="3" title="', _('The input must be positive integer'), '" type="text" value="', $_POST['DisplayRecordsMax'], '" /></td>
+			<td><input class="integer" maxlength="3" name="DisplayRecordsMax" required="required" size="3" title="', _('The input must be positive integer'), '" type="text" value="', $_SESSION['DisplayRecordsMax'], '" /></td>
 		</tr>';
 
 // Select language:
