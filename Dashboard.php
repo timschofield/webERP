@@ -260,31 +260,8 @@ if(in_array($DebtorSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($
 				$DisplayOverdue1 = locale_number_format($DetailTrans['overdue1']-$DetailTrans['overdue2'], $CurrDecimalPlaces);
 				$DisplayOverdue2 = locale_number_format($DetailTrans['overdue2'], $CurrDecimalPlaces);
 
-				if($DetailTrans['daysbeforedue'] > 0) {
-					$AddDays=$DetailTrans['daysbeforedue'] . ' days';
-					if(function_exists('date_add')) {
-						$DisplayDueDate = date_add(date_create($DetailTrans['trandate']), date_interval_create_from_date_string($AddDays));
-					} else {
-				 		$DisplayDueDate = strtotime($AddDays,strtotime($DetailTrans['trandate']));
-					}
+				$DisplayDueDate = CalcDueDate($DisplayTranDate, $DetailTrans['dayinfollowingmonth'], $DetailTrans['daysbeforedue']);
 
-				} else {
-					$AddDays=(intval($DetailTrans['dayinfollowingmonth']) - 1) . ' days';
-					if(function_exists('date_add')) {
-						$DisplayDueDate = date_create($DetailTrans['trandate']);
-						$DisplayDueDate->modify('first day of next month');
-						$DisplayDueDate = date_add($DisplayDueDate, date_interval_create_from_date_string($AddDays));
-					} else {
-						$DisplayDueDate = strtotime('first day of next month',strtotime($DetailTrans['trandate']));
-						$DisplayDueDate = strtotime($DisplayDueDate,strtotime($AddDays));
-					}
-
-				}
-				if(function_exists('date_add')) {
-					$DisplayDueDate=date_format($DisplayDueDate,$_SESSION['DefaultDateFormat']);
-				} else {
-					$DisplayDueDate = Date($_SESSION['DefaultDateFormat'],$DisplayDueDate);
-				}
 				if($k == 1) {
 					echo '<tr class="EvenTableRows">';
 					$k = 0;
@@ -292,7 +269,7 @@ if(in_array($DebtorSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($
 					echo '<tr class="OddTableRows">';
 					$k = 1;
 				}
-				echo '<td style="text-align:center">', _($DetailTrans['typename']), '</td>',// Should it be left (text field) ?
+				echo '<td class="centre">', _($DetailTrans['typename']), '</td>',// Should it be left (text field) ?
 						'<td class="number">', $DetailTrans['transno'], '</td>
 						<td class="centre">', $DisplayTranDate, '</td>
 						<td class="centre">', $DisplayDueDate, '</td>

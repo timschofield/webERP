@@ -1,5 +1,6 @@
 webERP Change Log
 
+2/2/18   PaulT: Dashboard.php: Replace due date handling with existing function.
 2/2/18   PaulT: PrintCustTrans.php, PDFTransPageHeader.inc, PrintCustTransPortrait.php, PDFTransPageHeaderPortrait.inc: Add missing stock lot/serial info to landscape output to be consistent with portrait output (reported by HDeriauFF), add Due Date info to invoices (reported by Paul Becker), and (PaulT) add security checks to portrait file, layout improvements, change PDF initialization handling, and more. (A summary of all changes in this commit can be viewed here: http://www.weberp.org/forum/showthread.php?tid=8065&pid=14115#pid14115) 
 31/1/18  PaulT: Add a 'warning' case to getMsg(), as there is mixed use of 'warn' and 'warning' usage with prnMsg() calls. The 'warning' (before this change) defaults to an 'info' style message.
 27/1/18  PaulT: Remove unused $db parameter from DB_query(), DB_error_no(), DB_error_msg() and other DB-related function calls.
