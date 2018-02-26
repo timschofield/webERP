@@ -78,7 +78,7 @@ if (isset($_POST['PrintPDF'])
 
 	$TotBal=0;
 
-	while ($DebtorBalances = DB_fetch_array($CustomerResult,$db)){
+	while ($DebtorBalances = DB_fetch_array($CustomerResult)){
 
 		$Balance = $DebtorBalances['balance'] - $DebtorBalances['afterdatetrans'] + $DebtorBalances['afterdatediffonexch'] ;
 		$FXBalance = $DebtorBalances['fxbalance'] - $DebtorBalances['fxafterdatetrans'];
@@ -153,7 +153,7 @@ if (isset($_POST['PrintPDF'])
 		$sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
 		$Periods = DB_query($sql,_('Could not retrieve period data because'),_('The SQL that failed to get the period data was'));
 
-		while ($myrow = DB_fetch_array($Periods,$db)){
+		while ($myrow = DB_fetch_array($Periods)){
 
 			echo '<option value="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
 

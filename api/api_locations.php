@@ -152,7 +152,7 @@
 			$sql = "INSERT INTO locations (" . mb_substr($FieldNames,0,-2) . ")
 						VALUES ('" . mb_substr($FieldValues,0,-2) . "') ";
 
-			$result = DB_Query($sql, $db);
+			$result = DB_query($sql);
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
@@ -214,7 +214,7 @@
 		}
 		$sql = mb_substr($sql,0,-2)." WHERE loccode='".$Location['loccode']."'";
 		if (sizeof($Errors)==0) {
-			$result = DB_Query($sql, $db);
+			$result = DB_query($sql);
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {

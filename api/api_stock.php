@@ -258,7 +258,7 @@
 
 	function GetCategoryGLCode($CategoryID, $field, $db) {
 		$sql='SELECT '.$field." FROM stockcategory WHERE categoryid='".$CategoryID."'";
-		$result = DB_Query($sql, $db);
+		$result = DB_query($sql);
 		$myrow = DB_fetch_row($result);
 		return $myrow[0];
 	}
@@ -369,8 +369,8 @@
 			$locsql = "INSERT INTO locstock (loccode,stockid)
 				SELECT locations.loccode,'" . $StockItemDetails['stockid'] . "' FROM locations";
 			DB_Txn_Begin();
-			$stockresult = DB_Query($stocksql, $db);
-			$locresult = DB_Query($locsql, $db);
+			$stockresult = DB_query($stocksql);
+			$locresult = DB_query($locsql);
 			DB_Txn_Commit();
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
@@ -483,7 +483,7 @@
 		}
 		$sql = mb_substr($sql,0,-2)." WHERE stockid='".$StockItemDetails['stockid']."'";
 		if (sizeof($Errors)==0) {
-			$result = DB_Query($sql, $db);
+			$result = DB_query($sql);
 			echo DB_error_no();
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
@@ -510,7 +510,7 @@
 			return $Errors;
 		}
 		$sql="SELECT * FROM stockmaster WHERE stockid='".$StockID."'";
-		$result = DB_Query($sql, $db);
+		$result = DB_query($sql);
 		if (sizeof($Errors)==0) {
 			$Errors[0]=0;
 			$Errors[1]=DB_fetch_array($result);
@@ -533,7 +533,7 @@
 		$sql="SELECT stockid
 			  FROM stockmaster
 			  WHERE " . $Field ." LIKE '%".$Criteria."%'";
-		$result = DB_Query($sql, $db);
+		$result = DB_query($sql);
 		$i=0;
 		$StockItemList = array();
 		while ($myrow=DB_fetch_array($result)) {
@@ -591,7 +591,7 @@
 			return $Errors;
 		}
 		$sql="SELECT reorderlevel, loccode FROM locstock WHERE stockid='".$StockID."'";
-		$result = DB_Query($sql, $db);
+		$result = DB_query($sql);
 		if (sizeof($Errors)==0) {
 			$i=0;
 			while ($myrow=DB_fetch_array($result)) {
@@ -621,7 +621,7 @@
 		$sql="UPDATE locstock SET reorderlevel='".$ReorderLevel."'
                      WHERE stockid='".$StockID."'
                      AND loccode='".$Location."'";
-		$result = DB_Query($sql, $db);
+		$result = DB_query($sql);
 		if (sizeof($Errors)==0) {
 			return 0;
 		} else {
@@ -644,7 +644,7 @@
              FROM salesorderdetails
              WHERE stkcode='".$StockID."'
              AND completed=0";
-		$result = DB_Query($sql, $db);
+		$result = DB_query($sql);
 		if (sizeof($Errors)==0) {
 			$Errors[0]=0;
 			$Errors[1]=DB_fetch_array($result);
@@ -669,7 +669,7 @@
               FROM purchorderdetails
               WHERE itemcode='".$StockID."'
               AND completed=0";
-		$result = DB_Query($sql, $db);
+		$result = DB_query($sql);
 		if (sizeof($Errors)==0) {
 			$Errors[0]=0;
 			$Errors[1]=DB_fetch_array($result);
@@ -696,7 +696,7 @@
 				 WHERE stockid='".$StockID."'
 				 and typeabbrev='".$SalesType."'
 				 and currabrev='".$Currency."'";
-		$result = DB_Query($sql, $db);
+		$result = DB_query($sql);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]==0) {
 			$sql="INSERT INTO prices VALUES('". $StockID."',
@@ -711,7 +711,7 @@
 				    AND typeabbrev='".$SalesType."'
 				    AND currabrev='".$Currency."'";
 		}
-		$result = DB_Query($sql, $db);
+		$result = DB_query($sql);
 		$Errors[0] = 0;
 		return $Errors;
 	}
@@ -735,7 +735,7 @@
 				 AND currabrev='".$Currency. "'
 				 AND startdate<='". Date('Y-m-d') . "'
 				 AND (enddate>'" . Date('Y-m-d') . "' OR enddate='0000-00-00')";
-		$result = DB_Query($sql, $db);
+		$result = DB_query($sql);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]==0) {
 			$Errors[0] = NoPricesSetup;
@@ -748,7 +748,7 @@
 							 AND startdate<='". Date('Y-m-d') . "'
 							 AND (enddate>'" . Date('Y-m-d') . "' OR enddate='0000-00-00')";
 		}
-		$result = DB_Query($sql, $db);
+		$result = DB_query($sql);
 		$myrow = DB_fetch_row($result);
 		$Errors[0]=0;
 		$Errors[1]=$myrow;
@@ -770,7 +770,7 @@
 				ON taxauthrates.taxcatid=stockmaster.taxcatid
 				WHERE stockid='". $StockID . "'
                 AND taxauthority='". $TaxAuth . "'";
-		$result = DB_Query($sql, $db);
+		$result = DB_query($sql);
 		$myrow = DB_fetch_row($result);
 		$Errors[0]=0;
 		$Errors[1]=$myrow;
@@ -886,7 +886,7 @@
 										WHERE stockmoves.type=25) as t
 				ON stockserialitems.stockid=t.stockid and stockserialitems.serialno=t.serialno
 			WHERE stockid='".$StockID."' AND loccode='".$Location."'";
-		$result = DB_Query($sql, $db);
+		$result = DB_query($sql);
 		if (sizeof($Errors)==0) {
 			$i=0;
 			while ($myrow=DB_fetch_array($result)) {

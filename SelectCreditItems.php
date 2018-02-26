@@ -1454,7 +1454,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 				 	$DbgMsg = _('The SQL that failed was');
 					$AssResult = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-					while ($AssParts = DB_fetch_array($AssResult,$db)){
+					while ($AssParts = DB_fetch_array($AssResult)){
 
 						$StandardCost += $AssParts['standard'] * $AssParts['quantity'];
 

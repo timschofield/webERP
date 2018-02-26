@@ -348,7 +348,7 @@
 		$sql = 'INSERT INTO custbranch ('.mb_substr($FieldNames,0,-2).') '.
 		  'VALUES ('.mb_substr($FieldValues,0,-2).') ';
 		if (sizeof($Errors)==0) {
-			$result = DB_Query($sql, $db);
+			$result = DB_query($sql);
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
@@ -471,7 +471,7 @@
 		$sql = mb_substr($sql,0,-2)." WHERE debtorno='".$BranchDetails['debtorno']."'
                                    AND branchcode='".$BranchDetails['branchcode']."'";
 		if (sizeof($Errors)==0) {
-			$result = DB_Query($sql, $db);
+			$result = DB_query($sql);
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
@@ -527,7 +527,7 @@
 		$sql="SELECT * FROM custbranch
                      WHERE debtorno='".$DebtorNumber."'
                      AND branchcode='".$BranchCode."'";
-		$result = api_DB_Query($sql, $db);
+		$result = api_DB_query($sql);
 		if (DB_error_no() != 0 ) {
 			$Errors[0] = DatabaseUpdateFailed;
 		} else {

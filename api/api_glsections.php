@@ -45,7 +45,7 @@
 		if (sizeof($Errors)==0) {
 			$sql = "INSERT INTO accountsection ('" . mb_substr($FieldNames,0,-2) . "')
 					VALUES ('" . mb_substr($FieldValues,0,-2) . "')";
-			$result = DB_Query($sql, $db);
+			$result = DB_query($sql);
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {

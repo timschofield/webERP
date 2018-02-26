@@ -161,7 +161,7 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['View'])) {
 
 	$FontSize=8;
 	$code='';
-	while ($myrow = DB_fetch_array($result,$db)){
+	while ($myrow = DB_fetch_array($result)){
 		$YPos -=$line_height;
 
 		$PriceDated=ConvertSQLDate($myrow[4]);
@@ -218,7 +218,7 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['View'])) {
 				<th>' . _('Supp Code') . '</th>
 			</tr>';
 		$k = 0; 
-		while ($myrow = DB_fetch_array($result,$db)){
+		while ($myrow = DB_fetch_array($result)){
 			echo '<tr';
 			if ($k==0) {
 				echo ' class="OddTableRows">';

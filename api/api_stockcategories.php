@@ -66,7 +66,7 @@
 		$sql = "INSERT INTO stockcategory ('" . mb_substr($FieldNames,0,-2) . "')
 				VALUES ('" . mb_substr($FieldValues,0,-2) . "') ";
 		if (sizeof($Errors)==0) {
-			$result = DB_Query($sql, $db);
+			$result = DB_query($sql);
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
@@ -107,7 +107,7 @@
 		}
 		$sql = mb_substr($sql,0,-2)." WHERE categoryid='" . $CategoryDetails['categoryid'] . "'";
 		if (sizeof($Errors)==0) {
-			$result = DB_Query($sql, $db);
+			$result = DB_query($sql);
 			echo DB_error_no();
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
@@ -134,7 +134,7 @@
 			return $Errors;
 		}
 		$sql="SELECT * FROM stockcategory WHERE categoryid='".$Categoryid."'";
-		$result = DB_Query($sql, $db);
+		$result = DB_query($sql);
 		if (sizeof($Errors)==0) {
 			return DB_fetch_array($result);
 		} else {
@@ -156,7 +156,7 @@
 					categorydescription
 			FROM stockcategory
 			WHERE " . $Field ." " . LIKE  . " '%".$Criteria."%'";
-		$result = DB_Query($sql, $db);
+		$result = DB_query($sql);
 		$i=0;
 		$CategoryList = array();
 		while ($myrow=DB_fetch_array($result)) {
@@ -183,7 +183,7 @@
 			      ON stockitemproperties.stockid=stockmaster.stockid
 			      WHERE stockitemproperties.value like '".$Label."'
 				AND stockcatproperties.categoryid='".$Category."'";
-		$result = DB_Query($sql, $db);
+		$result = DB_query($sql);
 		$i=0;
 		$ItemList = array();
 		$ItemList[0]=0;
@@ -205,7 +205,7 @@
 		$sql="SELECT value FROM stockitemproperties
 		               WHERE stockid='".$StockID."'
 		               AND stkcatpropid='".$Property . "'";
-		$result = DB_Query($sql, $db);
+		$result = DB_query($sql);
 		$myrow=DB_fetch_array($result);
 		$Errors[0]=0;
 		$Errors[1]=$myrow[0];

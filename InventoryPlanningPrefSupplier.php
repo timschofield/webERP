@@ -201,7 +201,7 @@ if (isset($_POST['PrintPDF'])){
 	$Period_3 = $CurrentPeriod -3;
 	$Period_4 = $CurrentPeriod -4;
 
-	while ($InventoryPlan = DB_fetch_array($InventoryResult,$db)){
+	while ($InventoryPlan = DB_fetch_array($InventoryResult)){
 
 		if ($SupplierID!=$InventoryPlan['supplierno']){
 			$FontSize=10;

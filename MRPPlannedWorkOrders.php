@@ -148,7 +148,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 		$TotalPartCost = 0;
 		$Total_ExtCost = 0;
 
-		while ($myrow = DB_fetch_array($result,$db)){
+		while ($myrow = DB_fetch_array($result)){
 				$YPos -=$line_height;
 
 				// Print information on part break
@@ -265,7 +265,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 		$Total_ExtCost = 0;
 		$j=1; //row ID
 		$k=0; //row colour counter
-		while ($myrow = DB_fetch_array($result,$db)){
+		while ($myrow = DB_fetch_array($result)){
 
 			// Alternate row color
 			if ($k==1){

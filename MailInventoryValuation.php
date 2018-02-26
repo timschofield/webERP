@@ -134,7 +134,7 @@ include ('includes/PDFInventoryValnPageHeader.inc');
 $Tot_Val=0;
 $Category = '';
 $CatTot_Val=0;
-While ($InventoryValn = DB_fetch_array($InventoryResult,$db)){
+While ($InventoryValn = DB_fetch_array($InventoryResult)){
 
 	if ($Category!=$InventoryValn['categoryid']){
 		$FontSize=10;

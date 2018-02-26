@@ -86,7 +86,7 @@
 			$sql = "INSERT INTO purchdata (".mb_substr($FieldNames,0,-2).")
 					VALUES ('" . mb_substr($FieldValues,0,-2). "') ";
 			DB_Txn_Begin();
-			$result = DB_Query($sql, $db);
+			$result = DB_query($sql);
 			DB_Txn_Commit();
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
@@ -135,7 +135,7 @@
 		$sql = mb_substr($sql,0,-2) . " WHERE stockid='" . $PurchDataDetails['stockid'] ."'
 								AND supplierno='" . $PurchDataDetails['supplierno'] ."'";
 		if (sizeof($Errors)==0) {
-			$result = DB_Query($sql, $db);
+			$result = DB_query($sql);
 			echo DB_error_no();
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;

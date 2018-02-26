@@ -75,7 +75,7 @@ if (isset($_POST['PrintPDF'])) {
 
 	$ListCount = 0; // UldisN
 
-	while ($myrow = DB_fetch_array($result,$db)){
+	while ($myrow = DB_fetch_array($result)){
 		$YPos -=(2 * $line_height);
 
 		$ListCount ++;
@@ -123,7 +123,7 @@ if (isset($_POST['PrintPDF'])) {
 						 AND locstock.stockid ='" . $myrow['stockid'] .
 						 "' AND locstock.loccode !='" . $myrow['loccode'] . "'";
 		$OtherResult = DB_query($sql2,'','',false,true);
-		while ($myrow2 = DB_fetch_array($OtherResult,$db)){
+		while ($myrow2 = DB_fetch_array($OtherResult)){
 			$YPos -=$line_height;
 
 			// Parameters for addTextWrap are defined in /includes/class.pdf.php

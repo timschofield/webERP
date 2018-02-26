@@ -62,7 +62,7 @@ If (isset($_POST['PrintPDF'])
 
 	$ParentPart = '';
 
-	while ($BOMList = DB_fetch_array($BOMResult,$db)){
+	while ($BOMList = DB_fetch_array($BOMResult)){
 
 		if ($ParentPart!=$BOMList['parent']){
 

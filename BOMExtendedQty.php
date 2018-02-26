@@ -202,7 +202,7 @@ if (isset($_POST['PrintPDF'])) {
 					   stockmaster.mbflag";
 	$result = DB_query($sql);
 	$ListCount = DB_num_rows($result);
-	while ($myrow = DB_fetch_array($result,$db)){
+	while ($myrow = DB_fetch_array($result)){
 
 		// Parameters for addTextWrap are defined in /includes/class.pdf.php
 		// 1) X position 2) Y position 3) Width

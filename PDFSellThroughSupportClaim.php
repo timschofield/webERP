@@ -95,7 +95,7 @@ if (isset($_POST['PrintPDF'])) {
 	$SupplierClaimTotal=0;
 	$Supplier = '';
 	$FontSize=8;
-	while ($SellThroRow = DB_fetch_array($ClaimsResult,$db)){
+	while ($SellThroRow = DB_fetch_array($ClaimsResult)){
 
 		$YPos -=$line_height;
 		if ($SellThroRow['suppname']!=$Supplier){

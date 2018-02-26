@@ -206,7 +206,7 @@
 		$sql = 'INSERT INTO suppliers ('.mb_substr($FieldNames,0,-2).') '.
 		  'VALUES ('.mb_substr($FieldValues,0,-2).') ';
 		if (sizeof($Errors)==0) {
-			$result = DB_Query($sql, $db);
+			$result = DB_query($sql);
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
@@ -294,7 +294,7 @@
 		}
 		$sql = mb_substr($sql,0,-2)." WHERE supplierid='".$SupplierDetails['supplierid']."'";
 		if (sizeof($Errors)==0) {
-			$result = DB_Query($sql, $db);
+			$result = DB_query($sql);
 			echo DB_error_no();
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
@@ -321,7 +321,7 @@
 			return $Errors;
 		}
 		$sql="SELECT * FROM suppliers WHERE supplierid='".$SupplierID."'";
-		$result = DB_Query($sql, $db);
+		$result = DB_query($sql);
 		if (sizeof($Errors)==0) {
 			return DB_fetch_array($result);
 		} else {
@@ -342,7 +342,7 @@
 		$sql='SELECT supplierid
 			FROM suppliers
 			WHERE '.$Field." LIKE '%".$Criteria."%' ORDER BY supplierid";
-		$result = DB_Query($sql, $db);
+		$result = DB_query($sql);
 		$i=0;
 		$SupplierList = array();
 		while ($myrow=DB_fetch_array($result)) {

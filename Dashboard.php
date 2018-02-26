@@ -163,7 +163,7 @@ if(in_array($DebtorSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($
 		exit;
 	}
 
-	while($AgedAnalysis = DB_fetch_array($CustomerResult,$db)) {
+	while($AgedAnalysis = DB_fetch_array($CustomerResult)) {
 		if($k == 1) {
 			echo '<tr class="EvenTableRows">';
 			$k = 0;

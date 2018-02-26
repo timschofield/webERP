@@ -287,7 +287,7 @@ if(isset($_POST['PrintPDF'])
  	$ListCount = DB_num_rows($CustomerResult);
 	$CurrDecimalPlaces =2; //by default
 
-	while ($AgedAnalysis = DB_fetch_array($CustomerResult,$db)) {
+	while ($AgedAnalysis = DB_fetch_array($CustomerResult)) {
 		$CurrDecimalPlaces = $AgedAnalysis['decimalplaces'];
 		$DisplayDue = locale_number_format($AgedAnalysis['due']-$AgedAnalysis['overdue1'],$CurrDecimalPlaces);
 		$DisplayCurrent = locale_number_format($AgedAnalysis['balance']-$AgedAnalysis['due'],$CurrDecimalPlaces);

@@ -148,7 +148,7 @@ if (isset($_POST['PrintPDF'])) {
 
 	$FontSize=8;
 	$Now = Date('Y-m-d H-i-s');
-	while ($myrow = DB_fetch_array($result,$db)){
+	while ($myrow = DB_fetch_array($result)){
 		// Check if there is any stock in transit already sent from FROM LOCATION
 		$InTransitQuantityAtFrom = 0;
 		if ($_SESSION['ProhibitNegativeStock']==1){

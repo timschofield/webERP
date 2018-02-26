@@ -62,7 +62,7 @@ $sql = "SELECT chartmaster.accountcode,
 		INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canview=1
 		ORDER BY chartmaster.accountcode";
 $Account = DB_query($sql);
-while($myrow=DB_fetch_array($Account,$db)) {
+while($myrow=DB_fetch_array($Account)) {
 	if($myrow['accountcode'] == $SelectedAccount) {
 		if(!is_null($myrow['bankact'])) {
 			$BankAccount = true;
@@ -104,7 +104,7 @@ echo '<tr>
 
 $sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
 $Periods = DB_query($sql);
-while($myrow=DB_fetch_array($Periods,$db)) {
+while($myrow=DB_fetch_array($Periods)) {
 	if(isset($FirstPeriodSelected) AND $myrow['periodno'] >= $FirstPeriodSelected AND $myrow['periodno'] <= $LastPeriodSelected) {
 		echo '<option selected="selected" value="' . $myrow['periodno'] . '">' . _(MonthAndYearFromSQLDate($myrow['lastdate_in_period'])) . '</option>';
 	} else {

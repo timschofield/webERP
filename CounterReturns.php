@@ -420,7 +420,7 @@ if ($_SESSION['Items' . $identifier]->DefaultCurrency != $_SESSION['CompanyRecor
 				$KitResult = DB_query($sql,$ErrMsg,$DbgMsg);
 
 				$ParentQty = $NewItemQty;
-				while ($KitParts = DB_fetch_array($KitResult,$db)) {
+				while ($KitParts = DB_fetch_array($KitResult)) {
 					$NewItem = $KitParts['component'];
 					$NewItemQty = $KitParts['quantity'] * $ParentQty;
 					$NewPOLine = 0;
@@ -533,7 +533,7 @@ if (isset($_POST['Recalculate'])) {
 				$KitResult = DB_query($sql,$ErrMsg);
 
 				$ParentQty = $NewItemQty;
-				while ($KitParts = DB_fetch_array($KitResult,$db)){
+				while ($KitParts = DB_fetch_array($KitResult)){
 					$NewItem = $KitParts['component'];
 					$NewItemQty = $KitParts['quantity'] * $ParentQty;
 					$NewPOLine = 0;
@@ -582,7 +582,7 @@ Now figure out if the item is a kit set - the field MBFlag='K'
 			$KitResult = DB_query($sql,$ErrMsg);
 
 			$ParentQty = $NewItemQty;
-			while ($KitParts = DB_fetch_array($KitResult,$db)){
+			while ($KitParts = DB_fetch_array($KitResult)){
 				$NewItem = $KitParts['component'];
 				$NewItemQty = $KitParts['quantity'] * $ParentQty;
 				$NewPOLine = 0;
@@ -633,7 +633,7 @@ if (isset($NewItemArray) AND isset($_POST['SelectingReturnItems'])){
 					$KitResult = DB_query($sql,$ErrMsg);
 
 					$ParentQty = $NewItemQty;
-					while ($KitParts = DB_fetch_array($KitResult,$db)){
+					while ($KitParts = DB_fetch_array($KitResult)){
 						$NewItem = $KitParts['component'];
 						$NewItemQty = $KitParts['quantity'] * $ParentQty;
 						$NewItemDue = date($_SESSION['DefaultDateFormat']);
@@ -1020,7 +1020,7 @@ if (isset($_POST['ProcessReturn']) AND $_POST['ProcessReturn'] != ''){
 				$DbgMsg = _('The SQL that failed was');
 				$AssResult = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-				while ($AssParts = DB_fetch_array($AssResult,$db)){
+				while ($AssParts = DB_fetch_array($AssResult)){
 
 					$StandardCost += ($AssParts['standard'] * $AssParts['quantity']) ;
 					/* Need to get the current location quantity

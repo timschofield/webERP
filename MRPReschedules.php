@@ -68,7 +68,7 @@ if (isset($_POST['PrintPDF'])) {
 	$Tot_Val=0;
 	$fill = false;
 	$pdf->SetFillColor(224,235,255);
-	While ($myrow = DB_fetch_array($result,$db)){
+	While ($myrow = DB_fetch_array($result)){
 
 		$YPos -=$line_height;
 		$FontSize=8;

@@ -41,7 +41,7 @@ $sql = "SELECT chartmaster.accountcode,
 		ORDER BY chartmaster.accountcode";
 $AccountsResult = DB_query($sql);
 $i=0;
-while ($myrow=DB_fetch_array($AccountsResult,$db)){
+while ($myrow=DB_fetch_array($AccountsResult)){
 	if(isset($_POST['Account'][$i]) AND $myrow['accountcode'] == $_POST['Account'][$i]){
 		echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' ' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
 		$i++;
@@ -57,7 +57,7 @@ $sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC"
 $Periods = DB_query($sql);
 $id=0;
 
-while ($myrow=DB_fetch_array($Periods,$db)){
+while ($myrow=DB_fetch_array($Periods)){
 	if (isset($SelectedPeriod[$id]) and $myrow['periodno'] == $SelectedPeriod[$id]){
 		echo '<option selected="selected" value="' . $myrow['periodno'] . '">' . _(MonthAndYearFromSQLDate($myrow['lastdate_in_period'])) . '</option>';
 		$id++;

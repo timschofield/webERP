@@ -65,7 +65,7 @@ if (isset($_POST['TaxAuthority']) and isset($_POST['PrintPDF']) and isset($_POST
 		$YPos -= $FontSize;
 		$YPos -= $FontSize;
 		$FontSize = 8;
-		while ($DebtorTransRow = DB_fetch_array($DebtorTransResult,$db)) {
+		while ($DebtorTransRow = DB_fetch_array($DebtorTransResult)) {
 			$pdf->addText($Left_Margin, $YPos, $FontSize, ConvertSQLDate($DebtorTransRow['trandate']));
 			$pdf->addText(82, $YPos, $FontSize, _($DebtorTransRow['typename']));
 			$pdf->addTextWrap(140, $YPos - $FontSize, 40, $FontSize, $DebtorTransRow['transno'], 'right');

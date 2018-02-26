@@ -23,7 +23,7 @@ if (!isset($_POST['FromPeriod'])){
                 FROM periods ORDER BY periodno";
 	$Periods = DB_query($sql);
 
-	while ($myrow=DB_fetch_array($Periods,$db)){
+	while ($myrow=DB_fetch_array($Periods)){
 		echo '<option value="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
 	}
 

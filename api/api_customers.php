@@ -361,7 +361,7 @@
 		$sql = 'INSERT INTO debtorsmaster ('.mb_substr($FieldNames,0,-2).') '.
 		  'VALUES ('.mb_substr($FieldValues,0,-2).') ';
 		if (sizeof($Errors)==0) {
-			$result = DB_Query($sql, $db);
+			$result = DB_query($sql);
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
@@ -487,7 +487,7 @@
 		}
 		$sql = mb_substr($sql,0,-2)." WHERE debtorno='".$CustomerDetails['debtorno']."'";
 		if (sizeof($Errors)==0) {
-			$result = DB_Query($sql, $db);
+			$result = DB_query($sql);
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
@@ -513,7 +513,7 @@
 			return $Errors;
 		}
 		$sql="SELECT * FROM debtorsmaster WHERE debtorno='".$DebtorNumber."'";
-		$result = DB_Query($sql, $db);
+		$result = DB_query($sql);
 		$Errors[0] = 0; // None found.
 		$Errors[1] = DB_fetch_array($result);
 
@@ -533,7 +533,7 @@
 		$sql='SELECT debtorno
 			FROM debtorsmaster
 			WHERE '.$Field." LIKE '%".$Criteria."%'";
-		$result = DB_Query($sql, $db);
+		$result = DB_query($sql);
 		$DebtorList = array(0);	    // First element: no errors
 		while ($myrow=DB_fetch_array($result)) {
 			$DebtorList[]=$myrow[0];

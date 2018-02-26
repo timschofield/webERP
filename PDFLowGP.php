@@ -80,7 +80,7 @@ if (isset($_POST['PrintPDF'])) {
 	$Tot_Val=0;
 	$Category = '';
 	$CatTot_Val=0;
-	while ($LowGPItems = DB_fetch_array($LowGPSalesResult,$db)){
+	while ($LowGPItems = DB_fetch_array($LowGPSalesResult)){
 
 		$YPos -=$line_height;
 		$FontSize=8;

@@ -181,7 +181,7 @@ if (isset($_POST['PrintPDF'])) {
 	$Partctr = 0;
 	$fill = false;
 	$pdf->SetFillColor(224,235,255);  // Defines color to make alternating lines highlighted
-	while ($myrow = DB_fetch_array($result,$db)){
+	while ($myrow = DB_fetch_array($result)){
 
 	if ($_POST['ReportType'] == 'Shortage'){
 		$LineToPrint = ($myrow['demand'] > $myrow['supply']);

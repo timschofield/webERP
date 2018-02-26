@@ -244,9 +244,9 @@
 				'VALUES ('.mb_substr($ItemFieldValues,0,-2).') ';
 			$systypessql = 'UPDATE systypes set typeno='.GetNextTransactionNo(40, $db).' where typeid=40';
 			DB_Txn_Begin();
-			$woresult = DB_Query($wosql, $db);
-			$itemresult = DB_Query($itemsql, $db);
-			$systyperesult = DB_Query($systypessql, $db);
+			$woresult = DB_query($wosql);
+			$itemresult = DB_query($itemsql);
+			$systyperesult = DB_query($systypessql);
 			DB_Txn_Commit();
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
@@ -355,7 +355,7 @@
 			DB_query($systypessql);
 			DB_query($costsql);
 			if ($Batch!='') {
-				DB_Query($batchsql, $db);
+				DB_query($batchsql);
 			}
 			DB_Txn_Commit();
 			if (DB_error_no() != 0) {
@@ -475,7 +475,7 @@
 		$sql="SELECT wo
 			  FROM woitems
 			  WHERE " . $Field ." " . LIKE  . " '%".$Criteria."%'";
-		$result = DB_Query($sql, $db);
+		$result = DB_query($sql);
 		$i=0;
 		$WOList = array();
 		while ($myrow=DB_fetch_array($result)) {

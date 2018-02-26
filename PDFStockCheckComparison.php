@@ -225,7 +225,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 	$Location = '';
 	$Category = '';
 
-	While ($CheckItemRow = DB_fetch_array($CheckedItems,$db)){
+	While ($CheckItemRow = DB_fetch_array($CheckedItems)){
 
 		if ($Location!=$CheckItemRow['loccode']){
 			$FontSize=14;
@@ -294,7 +294,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 			}
 		} elseif (DB_num_rows($Counts)>0) {
 			$TotalCount =0;
-			while ($CountRow=DB_fetch_array($Counts,$db)){
+			while ($CountRow=DB_fetch_array($Counts)){
 				$LeftOvers = $pdf->addTextWrap(375, $YPos, 60, $FontSize, locale_number_format(($CountRow['qtycounted']),$CheckItemRow['decimalplaces']), 'right');
 				$LeftOvers = $pdf->addTextWrap(440, $YPos, 100, $FontSize, $CountRow['reference'], 'left');
 				$TotalCount += $CountRow['qtycounted'];

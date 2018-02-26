@@ -152,7 +152,7 @@ If (isset($_POST['PrintPDF'])){
 
 	$Category = '';
 
-	While ($InventoryCheckRow = DB_fetch_array($InventoryResult,$db)){
+	While ($InventoryCheckRow = DB_fetch_array($InventoryResult)){
 
 		if ($Category!=$InventoryCheckRow['categoryid']){
 			$FontSize=12;

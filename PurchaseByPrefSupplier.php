@@ -425,7 +425,7 @@ if (isset($_POST['Supplier']) AND isset($_POST['ShowItems']) AND $_POST['Supplie
 
 		$i=0;
 
-		while ($ItemRow = DB_fetch_array($ItemsResult,$db)){
+		while ($ItemRow = DB_fetch_array($ItemsResult)){
 
 
 			$SQL = "SELECT SUM(CASE WHEN (trandate>='" . Date('Y-m-d',mktime(0,0,0, date('m')-2, date('d'), date('Y'))) . "' AND
