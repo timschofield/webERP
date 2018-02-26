@@ -209,4 +209,16 @@ function DB_ReinstateForeignKeys() {
 	mysql_query('SET FOREIGN_KEY_CHECKS=1',$db);
 }
 
+function DB_table_exists($TableName) {
+	global $db;
+
+	$SQL = "SELECT TABLE_NAME FROM information_schema.tables WHERE TABLE_SCHEMA = '" . $_SESSION['DatabaseName'] . "' AND TABLE_NAME = '" . $TableName . "'";
+	$Result = DB_query($SQL);
+
+	if (DB_num_rows($Result) > 0) {
+		return True;
+	} else {
+		return False;
+	}
+}
 ?>
