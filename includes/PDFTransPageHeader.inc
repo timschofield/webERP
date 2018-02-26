@@ -20,6 +20,9 @@ if ($InvOrCredit=='Invoice') {
 	$pdf->addText($Page_Width - 200, $YPos, $FontSize, _('CREDIT NOTE') . ' ');
 }
 
+$FontSize = 10;
+$pdf->addTextWrap($Page_Width-$Left_Margin-42, $YPos+5, 72, $FontSize, _('Page') . ' ' . $PageNumber);
+
 $XPos = $Page_Width - 265;
 $YPos -= 111;
 /*draw a nice curved corner box around the billing details */
@@ -42,8 +45,6 @@ $pdf->line($XPos+235, $YPos+5,$XPos+235, $YPos+100);
 
 $YPos = $Page_Height - $Top_Margin - 10;
 
-$FontSize = 10;
-
 $pdf->addText($Page_Width-268, $YPos-13, $FontSize, _('Number'));
 $pdf->addText($Page_Width-180, $YPos-13, $FontSize, $FromTransNo);
 $pdf->addText($Page_Width-268, $YPos-26, $FontSize, _('Customer Code'));
@@ -64,9 +65,6 @@ if ($InvOrCredit=='Invoice') {
 	$pdf->addText($Page_Width-180, $YPos-91, $FontSize, $myrow['locationname']);
 }
 
-
-$pdf->addText($Page_Width-268, $YPos-108, $FontSize, _('Page'));
-$pdf->addText($Page_Width-180, $YPos-108, $FontSize, $PageNumber);
 
 /*End of the text in the right side box */
 
@@ -160,6 +158,10 @@ $YPos -= ($line_height*2);
 
 include($PathPrefix . 'includes/CurrenciesArray.php'); // To get the currency name from the currency code.
 $pdf->addText($Left_Margin, $YPos-8, $FontSize, _('All amounts stated in') . ': ' . $myrow['currcode'] . ' ' . $CurrencyName[$myrow['currcode']]);
+
+if ($InvOrCredit=='Invoice') {
+	$pdf->addText($Page_Width-$Left_Margin-88, $YPos-8, $FontSize, _('Due Date') . ': ' . $DisplayDueDate);
+}
 
 /*draw a box with nice round corner for entering line items */
 /*90 degree arc at top right of box 0 degrees starts a bottom */
