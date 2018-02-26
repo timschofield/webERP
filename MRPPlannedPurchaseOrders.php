@@ -146,7 +146,7 @@ if (isset($_POST['PrintPDF'])) {
 	$totalpartcost = 0;
 	$Total_Extcost = 0;
 
-	while ($myrow = DB_fetch_array($result,$db)){
+	while ($myrow = DB_fetch_array($result)){
 			$YPos -=$line_height;
 
 			// Print information on part break
@@ -370,21 +370,21 @@ function GetPartInfo(&$db,$part) {
 			ORDER BY orddate DESC LIMIT 1";
 	$result = DB_query($sql);
 	if (DB_num_rows($result)>0) {
-		$myrow = DB_fetch_array($result,$db);
+		$myrow = DB_fetch_array($result);
 		$PartInfo[] = ConvertSQLDate($myrow['maxdate']);
 		$OrderNo= $myrow['orderno'];
 		$sql = "SELECT supplierno
 				FROM purchorders
 				WHERE purchorders.orderno = '" .$OrderNo. "'";
 		$result = DB_query($sql);
-		$myrow = DB_fetch_array($result,$db);
+		$myrow = DB_fetch_array($result);
 		$PartInfo[] = $myrow['supplierno'];
 		$sql = "SELECT supplierno
 				FROM purchdata
 				WHERE stockid = '" . $part . "'
 				AND preferred='1'";
 		$result = DB_query($sql);
-		$myrow = DB_fetch_array($result,$db);
+		$myrow = DB_fetch_array($result);
 		$PartInfo[] = $myrow['supplierno'];
 		return $PartInfo;
 	} else {

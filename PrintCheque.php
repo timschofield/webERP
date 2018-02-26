@@ -25,7 +25,7 @@ $result = DB_query("SELECT hundredsname,
                            decimalplaces,
                            currency
                     FROM currencies
-                    WHERE currabrev='" . $_SESSION['PaymentDetail' . $identifier]->Currency . "'",$db);
+                    WHERE currabrev='" . $_SESSION['PaymentDetail' . $identifier]->Currency . "'");
 
 If (DB_num_rows($result) == 0){
 	include ('includes/header.php');

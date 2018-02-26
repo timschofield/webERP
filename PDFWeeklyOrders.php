@@ -44,9 +44,9 @@ $sql= "SELECT salesorders.orderno,
 		 AND salesorders.quotation=0
 		 ORDER BY salesorders.orderno";
 
-$Result=DB_query($sql,$db,'','',false,false); //dont trap errors here
+$Result=DB_query($sql,'','',false,false); //dont trap errors here
 
-if (DB_error_no($db)!=0){
+if (DB_error_no()!=0){
 	include('includes/header.php');
 	echo '<br />' . _('An error occurred getting the orders details');
 	if ($debug==1){
@@ -169,8 +169,8 @@ $sql = "SELECT 	trandate,
 			AND trandate>='" . $_POST['FromDate']  . "'
 			AND trandate<='" . $_POST['ToDate']  . "'";
 
-$ErrMsg = _('The sales data could not be retrieved because') . ' - ' . DB_error_msg($db);
-$SalesResult = DB_query($sql, $db,$ErrMsg);
+$ErrMsg = _('The sales data could not be retrieved because') . ' - ' . DB_error_msg();
+$SalesResult = DB_query($sql, $ErrMsg);
 while ($DaySalesRow=DB_fetch_array($SalesResult)) {
 	$TotalSalesValue += $DaySalesRow['salesvalue'];
 	$TotalSalesCost += $DaySalesRow['cost'];

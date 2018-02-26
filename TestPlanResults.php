@@ -116,7 +116,7 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 
 			$ErrMsg = _('No stock items were returned by the SQL because');
 			$DbgMsg = _('The SQL used to retrieve the searched parts was');
-			$StockItemsResult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
+			$StockItemsResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 		}
 
 		if (true or !isset($LotNumber) or $LotNumber == "") { //revisit later, right now always show all inputs
@@ -134,7 +134,7 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 					categorydescription
 				FROM stockcategory
 				ORDER BY categorydescription";
-		$result1 = DB_query($SQL, $db);
+		$result1 = DB_query($SQL);
 		echo '
 				<table class="selection">
 				<tr>
@@ -269,7 +269,7 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 				} //no stock item selected
 			} //end no sample id selected
 			$ErrMsg = _('No QA samples were returned by the SQL because');
-			$SampleResult = DB_query($SQL, $db, $ErrMsg);
+			$SampleResult = DB_query($SQL, $ErrMsg);
 			if (DB_num_rows($SampleResult) > 0) {
 
 				echo '<table cellpadding="2" width="90%" class="selection">';
@@ -354,12 +354,12 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 		$msg = _('Test Results have been copied to sample') . ' ' . $_POST['CopyToSampleID']  . ' from sample' . ' ' . $SelectedSampleID ;
 		$ErrMsg = _('The insert of the test results failed because');
 		$DbgMsg = _('The SQL that was used and failed was');
-		$result = DB_query($sql,$db,$ErrMsg, $DbgMsg);
+		$result = DB_query($sql,$ErrMsg, $DbgMsg);
 
 		while ($myrow = DB_fetch_array($result)) {
 			$result2 = DB_query("SELECT count(testid) FROM prodspecs
 						WHERE testid = '".$myrow['testid']."'
-						AND keyval='".$myrow['prodspeckey']."'",	$db);
+						AND keyval='".$myrow['prodspeckey']."'");
 			$myrow2 = DB_fetch_row($result2);;
 			if($myrow2[0]>0) {
 				$ManuallyAdded=0;
@@ -368,7 +368,7 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 			}
 			$result2 = DB_query("SELECT resultid, targetvalue,rangemin, rangemax FROM sampleresults
 						WHERE testid = '".$myrow['testid']."'
-						AND sampleid='".$_POST['CopyToSampleID']."'",	$db);
+						AND sampleid='".$_POST['CopyToSampleID']."'");
 			$myrow2 = DB_fetch_array($result2);;
 			$IsInSpec=1;
 			$CompareVal='yes';
@@ -433,7 +433,7 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 					$msg = _('Test Results have been overwritten to sample') . ' ' . $_POST['CopyToSampleID']  . _(' from sample') . ' ' . $SelectedSampleID  . _(' for test ') . $myrow['testid'];
 					$ErrMsg = _('The insert of the test results failed because');
 					$DbgMsg = _('The SQL that was used and failed was');
-					$updresult = DB_query($updsql,$db,$ErrMsg, $DbgMsg);
+					$updresult = DB_query($updsql,$ErrMsg, $DbgMsg);
 					prnMsg($msg , 'success');
 				} else {
 					$msg = _('Test Results have NOT BEEN overwritten for Result ID ') . $myrow2[0];
@@ -474,7 +474,7 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 				$msg = _('Test Results have been copied to') . ' ' . $_POST['CopyToSampleID']  . _(' from ') . ' ' . $SelectedSampleID  . _(' for ') . $myrow['testid'];
 				$ErrMsg = _('The insert of the test results failed because');
 				$DbgMsg = _('The SQL that was used and failed was');
-				$insresult = DB_query($inssql,$db,$ErrMsg, $DbgMsg);
+				$insresult = DB_query($inssql,$ErrMsg, $DbgMsg);
 				prnMsg($msg , 'success');
 			}
 		} //while loop on myrow
@@ -498,7 +498,7 @@ if (isset($_GET['ListTests'])) {
 			AND sampleresults.sampleid='".$SelectedSampleID."'
 			WHERE qatests.active='1'
 			AND sampleresults.sampleid IS NULL";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -620,7 +620,7 @@ if (isset($_POST['AddTests'])) {
 			$msg = _('A Sample Result record has been added for Test ID') . ' ' . $_POST['AddTestID' .$i]  . ' for ' . ' ' . $KeyValue ;
 			$ErrMsg = _('The insert of the Sample Result failed because');
 			$DbgMsg = _('The SQL that was used and failed was');
-			$result = DB_query($sql,$db,$ErrMsg, $DbgMsg);
+			$result = DB_query($sql,$ErrMsg, $DbgMsg);
 			prnMsg($msg , 'success');
 		} //if on
 	} //for
@@ -673,14 +673,14 @@ if (isset($_POST['submit'])) {
 		$msg = _('Sample Results were updated for Result ID') . ' ' . $_POST['ResultID' .$i] ;
 		$ErrMsg = _('The updated of the sampleresults failed because');
 		$DbgMsg = _('The SQL that was used and failed was');
-		$result = DB_query($sql,$db,$ErrMsg, $DbgMsg);
+		$result = DB_query($sql,$ErrMsg, $DbgMsg);
 		prnMsg($msg , 'success');
 	} //for
 	//check to see all values are in spec or at least entered
 	$result = DB_query("SELECT count(sampleid) FROM sampleresults
 						WHERE sampleid = '".$SelectedSampleID."'
 						AND showoncert='1'
-						AND testvalue=''",	$db);
+						AND testvalue=''");
 	$myrow = DB_fetch_row($result);;
 	if($myrow[0]>0) {
 		$sql = "UPDATE qasamples SET identifier='" . $_POST['Identifier'] . "',
@@ -690,21 +690,21 @@ if (isset($_POST['submit'])) {
 		$msg = _('Test Results have not all been entered.  This Lot is not able to be used for a a Certificate of Analysis');
 		$ErrMsg = _('The update of the QA Sample failed because');
 		$DbgMsg = _('The SQL that was used and failed was');
-		$result = DB_query($sql,$db,$ErrMsg, $DbgMsg);
+		$result = DB_query($sql,$ErrMsg, $DbgMsg);
 		prnMsg($msg , 'error');
 	}
 }
 if (isset($_GET['Delete'])) {
 	$sql= "SELECT COUNT(*) FROM sampleresults WHERE sampleresults.resultid='".$_GET['ResultID']."'
 											AND sampleresults.manuallyadded='1'";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]==0) {
 		prnMsg(_('Cannot delete this Result ID because it is a part of the Product Specification'),'error');
 	} else {
 		$sql="DELETE FROM sampleresults WHERE resultid='". $_GET['ResultID']."'";
 		$ErrMsg = _('The sample results could not be deleted because');
-		$result = DB_query($sql,$db,$ErrMsg);
+		$result = DB_query($sql,$ErrMsg);
 
 		prnMsg(_('Result QA Sample') . ' ' . $_GET['ResultID'] . _('has been deleted from the database'),'success');
 		unset($_GET['ResultID']);
@@ -740,7 +740,7 @@ $sql = "SELECT prodspeckey,
 		LEFT OUTER JOIN stockmaster on stockmaster.stockid=qasamples.prodspeckey
 		WHERE sampleid='".$SelectedSampleID."'";
 
-$result = DB_query($sql, $db);
+$result = DB_query($sql);
 $myrow = DB_fetch_array($result);
 
 if ($myrow['cert']==1){
@@ -796,7 +796,7 @@ $sql = "SELECT sampleid,
 		AND sampleresults.showontestplan='1'
 		ORDER BY groupby, name";
 
-$result = DB_query($sql, $db);
+$result = DB_query($sql);
 
 echo '<table cellpadding="2" width="90%" class="selection">';
 $TableHeader = '<tr>
@@ -820,7 +820,7 @@ $techsql = "SELECT userid,
 					WHERE blocked='0'
 					AND tokenid='16'";
 
-$techresult = DB_query($techsql, $db);
+$techresult = DB_query($techsql);
 
 
 while ($myrow = DB_fetch_array($result)) {

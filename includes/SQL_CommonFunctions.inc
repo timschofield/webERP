@@ -453,13 +453,13 @@ function GetQuantityOnOrderDueToWorkOrders($StockID, $Location){
 function CreateQASample ($ProdSpecKey, $LotKey, $Identifier, $Comments, $Cert, $DuplicateOK, $db) {
 	$result = DB_query("SELECT COUNT(testid) FROM prodspecs
 							WHERE keyval='" . $ProdSpecKey . "'
-							AND active='1'",	$db);
+							AND active='1'");
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
 		if ($DuplicateOK==0) {
 			$result = DB_query("SELECT COUNT(sampleid) FROM qasamples
 								WHERE prodspeckey='" . $ProdSpecKey . "'
-								AND lotkey='" . $LotKey ."'",	$db);
+								AND lotkey='" . $LotKey ."'");
 			$myrow2 = DB_fetch_row($result);
 		} else {
 			$myrow2[0]=0;
@@ -481,7 +481,7 @@ function CreateQASample ($ProdSpecKey, $LotKey, $Identifier, $Comments, $Cert, $
 										'" . date('Y-m-d') . "')";
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The create of the qasamples record failed');
 			$DbgMsg = _('The following SQL to create the qasamples was used');
-			$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 			$SampleID=DB_Last_Insert_ID($db,'qasamples','sampleid');
 			$SQL = "INSERT INTO sampleresults (sampleid,
 											testid,
@@ -503,7 +503,7 @@ function CreateQASample ($ProdSpecKey, $LotKey, $Identifier, $Comments, $Cert, $
 											AND prodspecs.active='1'";
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The create of the sampleresults record failed');
 			$DbgMsg = _('The following SQL to create the sampleresults was used');
-			$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
 		} //$myrow2[0]=0
 	} //$myrow[0]>0

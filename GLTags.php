@@ -15,7 +15,7 @@ if (isset($_GET['SelectedTag'])) {
 		//first off test there are no transactions created with this tag
 		$Result = DB_query("SELECT counterindex
 							FROM gltrans
-							WHERE tag='" . $_GET['SelectedTag'] . "'",$db);
+							WHERE tag='" . $_GET['SelectedTag'] . "'");
 		if (DB_num_rows($Result)>0){
 			prnMsg(_('This tag cannot be deleted since there are already general ledger transactions created using it.'),'error');
 		} else	{
@@ -30,7 +30,7 @@ if (isset($_GET['SelectedTag'])) {
 				WHERE tagref='".$_GET['SelectedTag']."'";
 
 		$result= DB_query($sql);
-		$myrow = DB_fetch_array($result,$db);
+		$myrow = DB_fetch_array($result);
 		$ref=$myrow['tagref'];
 		$Description = $myrow['tagdescription'];
 	}
@@ -89,7 +89,7 @@ $sql="SELECT tagref,
 
 $result= DB_query($sql);
 
-while ($myrow = DB_fetch_array($result,$db)){
+while ($myrow = DB_fetch_array($result)){
 	echo '<tr>
 			<td>' . $myrow['tagref'] . '</td>
 			<td>' . $myrow['tagdescription'] . '</td>

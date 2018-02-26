@@ -416,7 +416,7 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 				$CustomerResult = DB_query($SQL);
 
 			/*there should be only one record returned ?? */
-				$AgedAnalysis = DB_fetch_array($CustomerResult,$db);
+				$AgedAnalysis = DB_fetch_array($CustomerResult);
 
 
 			/*Now print out the footer and totals */

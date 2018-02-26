@@ -167,7 +167,7 @@ if (isset($_POST['PrintPDF'])) {
               FROM stockmaster
               WHERE stockid = " . "'" . $_POST['Part'] . "'";
 	$result = DB_query($sql);
-	$myrow = DB_fetch_array($result,$db);
+	$myrow = DB_fetch_array($result);
 	$assembly = $_POST['Part'];
 	$assemblydesc = $myrow['description'];
 
@@ -190,7 +190,7 @@ if (isset($_POST['PrintPDF'])) {
 
 	$ListCount = DB_num_rows($result);
 
-	while ($myrow = DB_fetch_array($result,$db)){
+	while ($myrow = DB_fetch_array($result)){
 
 		$YPos -=$line_height;
 		$FontSize=8;

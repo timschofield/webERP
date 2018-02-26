@@ -93,7 +93,7 @@ if (isset($_POST['submit'])) {
 				FROM pctabs
 				WHERE tabcode IN ('" . $SelectedTabs . "','" . $SelectedTabsTo . "')";
 
-	$ResultLimit = DB_query($SQLLimit,$db);
+	$ResultLimit = DB_query($SQLLimit);
 	while ($LimitRow = DB_fetch_array($ResultLimit)){
 		if ($LimitRow['tabcode'] == $SelectedTabs) {
 			if (($_POST['CurrentAmount'] + $_POST['Amount']) > $LimitRow['tablimit']){
@@ -140,7 +140,7 @@ if (isset($_POST['submit'])) {
 
 	if ( $InputError != 1) {
 		//run the SQL from either of the above possibilites
-		$Result = DB_query($SQL,$db);
+		$Result = DB_query($SQL);
 		prnMsg($msg,'success');
 		unset($_POST['SelectedExpense']);
 		unset($_POST['Amount']);
@@ -165,7 +165,7 @@ if (!isset($SelectedTabs)){
 			WHERE assigner = '" . $_SESSION['UserID'] . "'
 			ORDER BY tabcode";
 
-	$Result = DB_query($SQL,$db);
+	$Result = DB_query($SQL);
 
     echo '<br /><table class="selection">'; //Main table
 
@@ -242,7 +242,7 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 					FROM currencies,pctabs
 					WHERE currencies.currabrev = pctabs.currency
 						AND tabcode = '" . $SelectedTabs . "'";
-		$Result = DB_query($SQLDecimalPlaces,$db);
+		$Result = DB_query($SQLDecimalPlaces);
 		$MyRow = DB_fetch_array($Result);
 		$CurrDecimalPlaces = $MyRow['decimalplaces'];
 
@@ -259,7 +259,7 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 				WHERE tabcode='" . $SelectedTabs . "'
 				AND date >= DATE_SUB(CURDATE(), INTERVAL " . $Days . " DAY)
 				ORDER BY date, counterindex ASC";
-		$Result = DB_query($SQL,$db);
+		$Result = DB_query($SQL);
 
 		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
 			<div>
@@ -301,7 +301,7 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 					FROM pcexpenses
 					WHERE codeexpense='" . $MyRow['codeexpense'] . "'";
 
-		$ResultDes = DB_query($SQLDes,$db);
+		$ResultDes = DB_query($SQLDes);
 		$Description = DB_fetch_array($ResultDes);
 		if (!isset($Description[0])) {
 				$ExpenseCodeDes = 'ASSIGNCASH';
@@ -354,7 +354,7 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 					WHERE tabcode IN ('" . $SelectedTabs . "','" . $SelectedTabsTo . "')
 					GROUP BY tabcode";
 
-		$ResultAmount = DB_query($SQLAmount,$db);
+		$ResultAmount = DB_query($SQLAmount);
 		if (DB_num_rows($ResultAmount) > 0) {
 			while ($AmountRow = DB_fetch_array($ResultAmount)) {
 				if (is_null($AmountRow['amt'])) {

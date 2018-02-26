@@ -400,7 +400,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		AND ! isset($_POST['submit'])) {
 
 	/* It could still be the second time the page has been run and a record has been selected	for modification - SelectedParent will exist because it was sent with the new call. if		its the first time the page has been displayed with no parameters then none of the above		are true and the list of components will be displayed with links to delete or edit each.		These will call the same page again and allow update/input or deletion of the records*/
-		//DisplayBOMItems($SelectedParent, $db);
+		//DisplayBOMItems($SelectedParent);
 
 	} //BOM editing/insertion ifs
 
@@ -409,7 +409,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		$SelectedParent = $_GET['ReSelect'];
 	}
 
-	//DisplayBOMItems($SelectedParent, $db);
+	//DisplayBOMItems($SelectedParent);
 	$sql = "SELECT stockmaster.description,
 					stockmaster.mbflag
 			FROM stockmaster

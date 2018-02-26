@@ -198,7 +198,7 @@ if (!(isset($_POST['Search']))) {
 				$QOHResult = DB_query("SELECT sum(quantity)
 								FROM locstock
 								INNER JOIN locationusers ON locationusers.loccode=locstock.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
-								WHERE stockid = '" . DB_escape_string($myrow['stkcode']) . "'", $db);
+								WHERE stockid = '" . DB_escape_string($myrow['stkcode']) . "'");
 				$QOHRow = DB_fetch_row($QOHResult);
 				$QOH = $QOHRow[0];
 

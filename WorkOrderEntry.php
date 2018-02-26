@@ -386,7 +386,7 @@ if(isset($NewItem) AND isset($_POST['WO'])) {
 			unset($NewItem);
 		}
 	} else {
-		DB_txn_begin($db);
+		DB_txn_begin();
 		foreach ($NewItem as $ItemDetail) {
 				$Itm = $ItemDetail['item'];
 				if($ItemDetail['qty']>0) {
@@ -397,8 +397,8 @@ if(isset($NewItem) AND isset($_POST['WO'])) {
 										eoq,
 										controlled
 									FROM stockmaster
-									WHERE stockid='" . $Itm . "'",
-								$db);
+									WHERE stockid='" . $Itm . "'");
+
 		if(DB_num_rows($CheckItemResult)==1) {
 			$CheckItemRow = DB_fetch_array($CheckItemResult);
 			if($CheckItemRow['controlled']==1 AND $_SESSION['DefineControlledOnWOEntry']==1) { //need to add serial nos or batches to determine quantity
@@ -437,8 +437,8 @@ if(isset($NewItem) AND isset($_POST['WO'])) {
 									WHERE bom.parent='" . $Itm . "'
 										AND bom.loccode=(SELECT loccode FROM workorders WHERE wo='" . $_POST['WO'] . "')
 										AND bom.effectiveafter<='" . Date('Y-m-d') . "'
-										AND bom.effectiveto>='" . Date('Y-m-d') . "'",
-							 $db);
+										AND bom.effectiveto>='" . Date('Y-m-d') . "'");
+
 
 			$CostRow = DB_fetch_array($CostResult);
 			if(is_null($CostRow['cost'])) {
@@ -472,11 +472,11 @@ if(isset($NewItem) AND isset($_POST['WO'])) {
 			WoRealRequirements($db, $_POST['WO'], $CostRow['loccode'], $Itm);
 		} //end if there were no input errors
 		else {
-			DB_txn_rollback($db);
+			DB_txn_rollback();
 			}
 	}//end of foreach loop;
 
-		DB_txn_commit($db);
+		DB_txn_commit();
 		unset($NewItem);
 	}
 } //adding a new item to the work order

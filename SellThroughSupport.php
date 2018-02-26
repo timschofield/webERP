@@ -223,7 +223,7 @@ if (isset($SupplierID)) { /* Then display all the sell through support for the s
 									decimalplaces
 							FROM suppliers INNER JOIN currencies
 							ON suppliers.currcode=currencies.currabrev
-							WHERE supplierid='" . $SupplierID . "'",$db);
+							WHERE supplierid='" . $SupplierID . "'");
 	$SuppRow = DB_fetch_array($SuppResult);
 
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . ' ' . _('For Supplier') . ' - ' . $SupplierID . ' - ' . $SuppRow['suppname'] . '</p><br />';
