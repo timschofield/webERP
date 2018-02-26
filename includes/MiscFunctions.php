@@ -31,6 +31,7 @@ function getMsg($Msg,$Type='info',$Prefix=''){
 			}
 			break;
 		case 'warn':
+		case 'warning':
 			$Class = 'warn';
 			$Prefix = $Prefix ? $Prefix : _('WARNING') . ' ' . _('Message Report');
 			if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity']>1) {
