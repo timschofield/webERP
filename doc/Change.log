@@ -1,5 +1,6 @@
 webERP Change Log
 
+2/4/18   PaulT: InternalStockRequestInquiry.php: Restore ONE space to previous 7936 commit.
 2/4/18   PaulT: Remove unused $db and $conn parameters from DB_Last_Insert_ID() and (where present) from DB_show_tables(), and DB_show_fields(). Also, remove any unused 'global $db' references across the code base.
 2/4/18   Paul Becker (PaulT commit): MRPPlannedPurchaseOrders.php: Add capability to review planned purchase orders and add a new link to convert to a new PO. (Reported in forums: http://www.weberp.org/forum/showthread.php?tid=8061)
 2/4/18   Paul Becker (PaulT commit): PrintCustOrder.php, PrintCustOrder_generic.php, PDFOrderPageHeader_generic.inc: Add units, volume, and weight info, date/signature lines, sales order details narrative, plus other minor PDF formatting. (Reported in forums: http://www.weberp.org/forum/showthread.php?tid=8048)

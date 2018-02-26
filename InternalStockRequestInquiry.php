@@ -335,7 +335,7 @@ if(isset($StockItemsResult)){
 					narrative,
 					initiator
 					FROM stockrequest INNER JOIN departments ON stockrequest.departmentid=departments.departmentid
-					INNER JOIN locations ON locations.loccode=stockrequest.loccode";
+					INNER JOIN locations ON locations.loccode=stockrequest.loccode ";
 	}
 	//lets add the condition selected by users
 	if (isset($_POST['RequestNo']) AND $_POST['RequestNo'] !== '') {
