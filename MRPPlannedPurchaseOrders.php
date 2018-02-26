@@ -5,19 +5,19 @@
 
 include('includes/session.php');
 
-//Maybe not ANSI SQL??
 $sql = "SELECT TABLE_NAME FROM information_schema.tables WHERE TABLE_SCHEMA = '" . $_SESSION['DatabaseName'] . "' AND TABLE_NAME = 'mrprequirements'";
-
 $result=DB_query($sql);
+
 if (DB_num_rows($result)==0) {
 	$Title=_('MRP error');
 	include('includes/header.php');
 	echo '<br />';
 	prnMsg( _('The MRP calculation must be run before you can run this report') . '<br />' .
-			_('To run the MRP calculation click').' ' . '<a href="' . $RootPath .'/MRP.php">' . _('here') . '</a>', 'error');
+			_('To run the MRP calculation click') . ' ' . '<a href="' . $RootPath . '/MRP.php">' . _('here') . '</a>', 'error');
 	include('includes/footer.php');
 	exit;
 }
+
 if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 
 	$WhereDate = ' ';
@@ -25,8 +25,9 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 	if (Is_Date($_POST['cutoffdate'])) {
 		$FormatDate = FormatDateForSQL($_POST['cutoffdate']);
 		$WhereDate = " AND duedate <= '" . $FormatDate . "' ";
-		$ReportDate = _(' Through  ') . Format_Date($_POST['cutoffdate']);
+		$ReportDate = ' ' . _('Through') . ' ' . $_POST['cutoffdate'];
 	}
+
 	if ($_POST['Consolidation'] == 'None') {
 		$sql = "SELECT mrpplannedorders.*,
 					   stockmaster.stockid,
@@ -34,11 +35,11 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 					   stockmaster.mbflag,
 					   stockmaster.decimalplaces,
 					   stockmaster.actualcost,
-					   (stockmaster.materialcost + stockmaster.labourcost +
-						stockmaster.overheadcost ) as computedcost
-				FROM mrpplannedorders, stockmaster
-				WHERE mrpplannedorders.part = stockmaster.stockid " . $WhereDate . "
-				 AND stockmaster.mbflag IN ('B','P')
+					(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost ) as computedcost
+				FROM mrpplannedorders
+				INNER JOIN stockmaster
+					ON mrpplannedorders.part = stockmaster.stockid
+				WHERE stockmaster.mbflag IN ('B','P') " . $WhereDate . "
 				ORDER BY mrpplannedorders.part,mrpplannedorders.duedate";
 	} elseif ($_POST['Consolidation'] == 'Weekly') {
 		$sql = "SELECT mrpplannedorders.part,
@@ -52,11 +53,11 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 					   stockmaster.mbflag,
 					   stockmaster.decimalplaces,
 					   stockmaster.actualcost,
-					   (stockmaster.materialcost + stockmaster.labourcost +
-						stockmaster.overheadcost ) as computedcost
-				FROM mrpplannedorders, stockmaster
-				WHERE mrpplannedorders.part = stockmaster.stockid " . $WhereDate . "
-				AND stockmaster.mbflag IN ('B','P')
+					(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost ) as computedcost
+				FROM mrpplannedorders
+				INNER JOIN stockmaster
+					ON mrpplannedorders.part = stockmaster.stockid
+				WHERE stockmaster.mbflag IN ('B','P') " . $WhereDate . "
 				GROUP BY mrpplannedorders.part,
 						 weekindex,
 						 stockmaster.stockid,
@@ -81,11 +82,11 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 					   stockmaster.mbflag,
 					   stockmaster.decimalplaces,
 					   stockmaster.actualcost,
-					   (stockmaster.materialcost + stockmaster.labourcost +
-						stockmaster.overheadcost ) as computedcost
-				FROM mrpplannedorders, stockmaster
-				WHERE mrpplannedorders.part = stockmaster.stockid  " . $WhereDate . "
-				AND stockmaster.mbflag IN ('B','P')
+					(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost ) as computedcost
+				FROM mrpplannedorders
+				INNER JOIN stockmaster
+					ON mrpplannedorders.part = stockmaster.stockid
+				WHERE stockmaster.mbflag IN ('B','P') " . $WhereDate . "
 				GROUP BY mrpplannedorders.part,
 						 yearmonth,
 						 stockmaster.stockid,
@@ -97,7 +98,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 					   stockmaster.labourcost,
 					   stockmaster.overheadcost,
 					   computedcost
-				ORDER BY mrpplannedorders.part,yearmonth ";
+				ORDER BY mrpplannedorders.part,yearmonth";
 	}
 	$result = DB_query($sql,'','',false,true);
 
@@ -125,12 +126,13 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 	if (isset($_POST['PrintPDF'])) { // Print planned purchase orders
 
 		include('includes/PDFStarter.php');
+
 		$pdf->addInfo('Title',_('MRP Planned Purchase Orders Report'));
 		$pdf->addInfo('Subject',_('MRP Planned Purchase Orders'));
+
 		$FontSize=9;
 		$PageNumber=1;
 		$line_height=12;
-
 		$Xpos = $Left_Margin+1;
 
 	PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
@@ -188,16 +190,13 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 			}
 
 			// Parameters for addTextWrap are defined in /includes/class.pdf.php
-			// 1) X position 2) Y position 3) Width
-			// 4) Height 5) Text 6) Alignment 7) Border 8) Fill - True to use SetFillColor
-			// and False to set to transparent
 			$FormatedSupDueDate = ConvertSQLDate($myrow['duedate']);
 			$FormatedSupMRPDate = ConvertSQLDate($myrow['mrpdate']);
 			$extcost = $myrow['supplyquantity'] * $myrow['computedcost'];
 			$pdf->addTextWrap($Left_Margin,$YPos,110,$FontSize,$myrow['part'],'',0,$fill);
 			$pdf->addTextWrap(150,$YPos,50,$FontSize,$FormatedSupDueDate,'right',0,$fill);
 			$pdf->addTextWrap(200,$YPos,60,$FontSize,$FormatedSupMRPDate,'right',0,$fill);
-			$pdf->addTextWrap(260,$YPos,50,$FontSize,locale_number_format($myrow['supplyquantity'],$myrow['decimalplaces']),'right',0,$fill);
+			$pdf->addTextWrap(260,$YPos,50,$FontSize,locale_number_format($myrow['supplyquantity'], $myrow['decimalplaces']),'right',0,$fill);
 			$pdf->addTextWrap(310,$YPos,60,$FontSize,locale_number_format($extcost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$fill);
 
 			if ($_POST['Consolidation'] == 'None'){
@@ -285,7 +284,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 				</th>
 			</tr>
 			<tr>
-				<th>&nbsp;</th>
+				<th></th>
 				<th>' . _('Code') . '</th>
 				<th>' . _('Description') . '</th>
 				<th>' . _('MRP Date') . '</th>
@@ -301,8 +300,8 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 		$Total_ExtCost = 0;
 		$j=1; //row ID
 		$k=0; //row colour counter
-		while ($myrow = DB_fetch_array($result)){
 
+		while ($myrow = DB_fetch_array($result)){
 			// Alternate row color
 			if ($k==1){
 				echo '<tr class="EvenTableRows">';
@@ -327,7 +326,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 				echo '<td class="number">' . $myrow['consolidatedcount'] . '</td>';
 			}
 			else {
-				echo '<td>&nbsp;</td>'; // Last cell blank when Consolidation is None.
+				echo '<td></td>'; // Empty cell when Consolidation is None.
 			}
 			echo '</tr>';
 
@@ -383,7 +382,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
               <tr>
                   <td>' . _('Cut Off Date') . ':</td>
 				<td>
-					<input type ="text" required="required" class="date" alt="'.$_SESSION['DefaultDateFormat'] . '" name="cutoffdate" size="10" value="'.date($_SESSION['DefaultDateFormat']).'" />
+					<input type ="text" required="required" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="cutoffdate" autofocus="autofocus" size="10" value="' . date($_SESSION['DefaultDateFormat']) . '" />
 				</td>
              </tr>
              </table>
