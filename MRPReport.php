@@ -31,7 +31,6 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 	$result = DB_query($sql,'','',False,False);
 	if (DB_error_no() !=0) {
 		$errors = 1;
-		$holddb = $db;
 		$Title = _('Print MRP Report Error');
 		include('includes/header.php');
 		prnMsg(_('The MRP calculation must be run before this report will have any output. MRP requires set up of many parameters, including, EOQ, lead times, minimums, bills of materials, demand types, master schedule etc'),'error');
@@ -42,7 +41,6 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 
 	if (DB_num_rows($result) == 0) {
 		$errors = 1;
-		$holddb = $db;
 		$Title = _('Print MRP Report Warning');
 		include('includes/header.php');
 		prnMsg(_('The MRP calculation must be run before this report will have any output. MRP requires set up of many parameters, including, EOQ, lead times, minimums, bills of materials, demand types, master schedule, etc'), 'warn');
@@ -82,7 +80,6 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 	$result = DB_query($sql,'','',false,true);
 	if (DB_error_no() !=0) {
 		$errors = 1;
-		$holddb = $db;
 	}
 	$Supplies = array();
 	$WeeklySup = array();
@@ -116,7 +113,6 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 	$result = DB_query($sql,'','',false,true);
 	if (DB_error_no() !=0) {
 		$errors = 1;
-		$holddb = $db;
 	}
 
 	// Fields for Order Due weekly buckets based on planned orders
@@ -145,7 +141,7 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 	if (isset($errors)) {
 		$Title = _('MRP Report') . ' - ' . _('Problem Report');
 		include('includes/header.php');
-		prnMsg( _('The MRP Report could not be retrieved by the SQL because') . ' '  . DB_error_msg($holddb),'error');
+		prnMsg( _('The MRP Report could not be retrieved by the SQL because') . ' '  . DB_error_msg(),'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
 			echo '<br />' . $sql;

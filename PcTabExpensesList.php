@@ -7,13 +7,13 @@ include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 
 if (isset($_POST['submit'])) {
-    submit($db, $_POST['Tabs'], $_POST['FromDate'], $_POST['ToDate']);
+    submit($_POST['Tabs'], $_POST['FromDate'], $_POST['ToDate']);
 } else {
-    display($db);
+    display();
 }
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit(&$db, $TabToShow, $FromDate, $ToDate) {
+function submit($TabToShow, $FromDate, $ToDate) {
 
 	//initialise no input errors
 	$InputError = 0;
@@ -237,7 +237,7 @@ function submit(&$db, $TabToShow, $FromDate, $ToDate) {
 } // End of function submit()
 
 
-function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
+function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 {
 // Display form fields. This function is called the first time
 // the page is called.

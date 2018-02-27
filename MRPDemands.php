@@ -3,9 +3,8 @@
 /* $Id$*/
 
 // Add, Edit, Delete, and List MRP demand records. Table is mrpdemands.
-// Have separate functions for each routine. Use pass-by-reference - (&$db,&$StockID) -
-// to pass values of $db and $StockID to functions. - when just used $db as variable,
-// got error: Catchable fatal error: Object of class mysqli could not be converted to string
+// Have separate functions for each routine. Use pass-by-reference - (&$StockID) -
+// to pass value of $StockID to functions.
 
 include('includes/session.php');
 $Title = _('MRP Demands');
@@ -27,22 +26,22 @@ echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/i
 	_('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (isset($_POST['Search'])) {
-	search($db,$StockID);
+	search($StockID);
 } elseif (isset($_POST['submit'])) {
-	submit($db,$StockID,$DemandID);
+	submit($StockID,$DemandID);
 } elseif (isset($_GET['delete'])) {
-	delete($db,$DemandID,'',$StockID);
+	delete($DemandID,'',$StockID);
 } elseif (isset($_POST['deletesome'])) {
-	delete($db,'',$_POST['MRPDemandtype'],$StockID);
+	delete('',$_POST['MRPDemandtype'],$StockID);
 } elseif (isset($_GET['listall'])) {
-	listall($db,'','');
+	listall('','');
 } elseif (isset($_POST['listsome'])) {
-	listall($db,$StockID,$_POST['MRPDemandtype']);
+	listall($StockID,$_POST['MRPDemandtype']);
 } else {
-	display($db,$StockID,$DemandID);
+	display($StockID,$DemandID);
 }
 
-function search(&$db,&$StockID) { //####SEARCH_SEARCH_SEARCH_SEARCH_SEARCH_SEARCH_SEARCH_#####
+function search(&$StockID) { //####SEARCH_SEARCH_SEARCH_SEARCH_SEARCH_SEARCH_SEARCH_#####
 
 // Search by partial part number or description. Display the part number and description from
 // the stockmaster so user can select one. If the user clicks on a part number
@@ -111,14 +110,14 @@ function search(&$db,&$StockID) { //####SEARCH_SEARCH_SEARCH_SEARCH_SEARCH_SEARC
 } else {
 	prnMsg(_('No record found in search'),'error');
 	unset ($StockID);
-	display($db,$StockID,$DemandID);
+	display($StockID,$DemandID);
 }
 
 
 } // End of function search()
 
 
-function submit(&$db,&$StockID,&$DemandID)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
+function submit(&$StockID,&$DemandID)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
 {
 // In this section if hit submit button. Do edit checks. If all checks pass, see if record already
 // exists for StockID/Duedate/MRPDemandtype combo; that means do an Update, otherwise, do INSERT.
@@ -218,11 +217,11 @@ function submit(&$db,&$StockID,&$DemandID)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SU
 		unset ($DemandID);
 	} // End of else where DB_num_rows showed there was a valid stockmaster record
 
-	display($db,$StockID,$DemandID);
+	display($StockID,$DemandID);
 } // End of function submit()
 
 
-function delete(&$db,$DemandID,$DemandType,$StockID) { //####DELETE_DELETE_DELETE_DELETE_DELETE_DELETE_####
+function delete($DemandID,$DemandType,$StockID) { //####DELETE_DELETE_DELETE_DELETE_DELETE_DELETE_####
 
 // If wanted to have a Confirm routine before did actually deletion, could check if
 // deletion = "yes"; if it did, display link that redirects back to this page
@@ -247,12 +246,12 @@ function delete(&$db,$DemandID,$DemandType,$StockID) { //####DELETE_DELETE_DELET
 	}
 	unset ($DemandID);
 	unset ($StockID);
-	display($db,$stockID,$DemandID);
+	display($stockID,$DemandID);
 
 } // End of function delete()
 
 
-function listall(&$db,$part,$DemandType)  {//####LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_####
+function listall($part,$DemandType)  {//####LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_####
 
 // List all mrpdemands records, with anchors to Edit or Delete records if hit List All anchor
 // Lists some in hit List Selection submit button, and uses part number if it is entered or
@@ -312,12 +311,12 @@ function listall(&$db,$part,$DemandType)  {//####LISTALL_LISTALL_LISTALL_LISTALL
     echo '</div>';
 	echo '</form><br/><br/><br/><br/>';
 	unset ($StockID);
-	display($db,$StockID,$DemandID);
+	display($StockID,$DemandID);
 
 } // End of function listall()
 
 
-function display(&$db,&$StockID,&$DemandID) { //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
+function display(&$StockID,&$DemandID) { //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 
 // Display Seach fields at top and Entry form below that. This function is called the first time
 // the page is called, and is also invoked at the end of all of the other functions.

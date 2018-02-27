@@ -5,13 +5,13 @@ $Title = _('WO items can be produced with available stock');
 include('includes/header.php');
 
 if (isset($_POST['submit'])) {
-    submit($db, $RootPath, $_POST['Location']);
+    submit($RootPath, $_POST['Location']);
 } else {
-    display($db);
+    display();
 }
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit(&$db, $RootPath, $Location) {
+function submit($RootPath, $Location) {
 
 	$WhereLocation 	= " AND workorders.loccode = '". $Location ."' ";
 	
@@ -200,7 +200,7 @@ function submit(&$db, $RootPath, $Location) {
 } // End of function submit()
 
 
-function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
+function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 {
 // Display form fields. This function is called the first time
 // the page is called.

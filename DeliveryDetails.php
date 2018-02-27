@@ -130,8 +130,7 @@ if(isset($_POST['Update'])
 																		$_SESSION['Items'.$identifier]->totalVolume,
 																		$_SESSION['Items'.$identifier]->totalWeight,
 																		$_SESSION['Items'.$identifier]->Location,
-																		$_SESSION['Items'.$identifier]->DefaultCurrency,
-																		$db);
+																		$_SESSION['Items'.$identifier]->DefaultCurrency);
 			if( !empty($BestShipper) ) {
 				$_POST['FreightCost'] = round($_POST['FreightCost'],2);
 				$_POST['ShipVia'] = $BestShipper;

@@ -489,7 +489,7 @@ if (isset($_POST['submit'])) {
 		flush();
 		$result = DB_query($sql);
 		while ($myrow=DB_fetch_array($result)) {
-			LevelNetting($db,$myrow['part'],$myrow['eoq'],$myrow['pansize'],$myrow['shrinkfactor'], $myrow['leadtime']);
+			LevelNetting($myrow['part'],$myrow['eoq'],$myrow['pansize'],$myrow['shrinkfactor'], $myrow['leadtime']);
 		}  //end of while loop
 	} // end of for
 	echo '<br />' . _('End time') . ': ' . date('h:i:s') . '<br />';
@@ -666,7 +666,7 @@ if (isset($_POST['submit'])) {
 
 
 
-function LevelNetting(&$db,$Part,$eoq,$PanSize,$ShrinkFactor,$LeadTime) {
+function LevelNetting($Part,$eoq,$PanSize,$ShrinkFactor,$LeadTime) {
 		// Create an array of mrprequirements and an array of mrpsupplies, then read through
 		// them seeing if all requirements are covered by supplies. Create a planned order
 		// for any unmet requirements. Change dates if necessary for the supplies.
@@ -860,7 +860,7 @@ function LevelNetting(&$db,$Part,$eoq,$PanSize,$ShrinkFactor,$LeadTime) {
 			$result = DB_query($sql);
 			$myrow = DB_fetch_row($result);
 			if ($myrow[0] > 0) {
-				CreateLowerLevelRequirement($db,$Requirement['part'],$NewDate,
+				CreateLowerLevelRequirement($Requirement['part'],$NewDate,
 				  $PlannedQty,$Requirement['mrpdemandtype'],$Requirement['orderno'],
 				  $Requirement['whererequired']);
 			}
@@ -881,8 +881,7 @@ function LevelNetting(&$db,$Part,$eoq,$PanSize,$ShrinkFactor,$LeadTime) {
 
 } // End of LevelNetting -------------------------------------------------------
 
-function CreateLowerLevelRequirement(&$db,
-									$TopPart,
+function CreateLowerLevelRequirement($TopPart,
 									$TopDate,
 									$TopQuantity,
 									$TopMRPDemandType,

@@ -146,7 +146,7 @@ if(basename($_SERVER['SCRIPT_NAME'])=='Logout.php'){
 	include $PathPrefix . 'includes/UserLogin.php';	/* Login checking and setup */
 
 	if (isset($_POST['UserNameEntryField']) AND isset($_POST['Password'])) {
-		$rc = userLogin($_POST['UserNameEntryField'], $_POST['Password'], $SysAdminEmail, $db);
+		$rc = userLogin($_POST['UserNameEntryField'], $_POST['Password'], $SysAdminEmail);
 		$FirstLogin = true;
 	} elseif (empty($_SESSION['DatabaseName'])) {
 		$rc = UL_SHOWLOGIN;

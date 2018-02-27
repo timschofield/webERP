@@ -13,8 +13,7 @@ Function CalcFreightCost ($TotalValue,
 							$TotalVolume,
 							$TotalWeight,
 							$FromLocation,
-							$Currency,
-							$db){
+							$Currency){
 
 	$CalcFreightCost =9999999999;
 	$CalcBestShipper ='';

@@ -22,16 +22,16 @@ echo '<p class="page_title_text">
 	</p>';
 
 if (isset($_POST['submit'])) {
-	submit($db,$ChangeDate);
+	submit($ChangeDate);
 } elseif (isset($_POST['update'])) {
-	update($db,$ChangeDate);
+	update($ChangeDate);
 } elseif (isset($_POST['ListAll'])) {
-	ShowDays($db);
+	ShowDays();
 } else {
-	ShowInputForm($db,$ChangeDate);
+	ShowInputForm($ChangeDate);
 }
 
-function submit(&$db,&$ChangeDate)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
+function submit(&$ChangeDate)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
 {
 
 	//initialize no input errors
@@ -70,7 +70,7 @@ function submit(&$db,&$ChangeDate)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUB
 	}
 
 	 if ($InputError == 1) {
-		ShowInputForm($db,$ChangeDate);
+		ShowInputForm($ChangeDate);
 		return;
 	 }
 
@@ -135,12 +135,12 @@ function submit(&$db,&$ChangeDate)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUB
 		   $resultupdate = DB_query($sql,$ErrMsg);
 	}
 	prnMsg(_('The MRP Calendar has been created'),'success');
-	ShowInputForm($db,$ChangeDate);
+	ShowInputForm($ChangeDate);
 
 } // End of function submit()
 
 
-function update(&$db,&$ChangeDate)  //####UPDATE_UPDATE_UPDATE_UPDATE_UPDATE_UPDATE_UPDATE_####
+function update(&$ChangeDate)  //####UPDATE_UPDATE_UPDATE_UPDATE_UPDATE_UPDATE_UPDATE_####
 {
 // Change manufacturing flag for a date. The value "1" means the date is a manufacturing date.
 // After change the flag, re-calculate the daynumber for all dates.
@@ -158,7 +158,7 @@ function update(&$db,&$ChangeDate)  //####UPDATE_UPDATE_UPDATE_UPDATE_UPDATE_UPD
 	}
 
 	 if ($InputError == 1) {
-		ShowInputForm($db,$ChangeDate);
+		ShowInputForm($ChangeDate);
 		return;
 	 }
 
@@ -175,7 +175,7 @@ function update(&$db,&$ChangeDate)  //####UPDATE_UPDATE_UPDATE_UPDATE_UPDATE_UPD
 	$resultupdate = DB_query($sql,$ErrMsg);
 	prnMsg(_('The MRP calendar record for') . ' ' . $ChangeDate  . ' ' . _('has been updated'),'success');
 	unset ($ChangeDate);
-	ShowInputForm($db,$ChangeDate);
+	ShowInputForm($ChangeDate);
 
 	// Have to update daynumber any time change a date from or to a manufacturing date
 	// Update daynumber. Set it so non-manufacturing days will have the same daynumber as a valid
@@ -197,7 +197,7 @@ function update(&$db,&$ChangeDate)  //####UPDATE_UPDATE_UPDATE_UPDATE_UPDATE_UPD
 } // End of function update()
 
 
-function ShowDays(&$db)  {//####LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_####
+function ShowDays()  {//####LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_####
 
 // List all records in date range
 	$FromDate = FormatDateForSQL($_POST['FromDate']);
@@ -238,12 +238,12 @@ function ShowDays(&$db)  {//####LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_
 	echo '</table>';
 	echo '<br /><br />';
 	unset ($ChangeDate);
-	ShowInputForm($db,$ChangeDate);
+	ShowInputForm($ChangeDate);
 
 } // End of function ShowDays()
 
 
-function ShowInputForm(&$db,&$ChangeDate)  {//####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
+function ShowInputForm(&$ChangeDate)  {//####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 
 // Display form fields. This function is called the first time
 // the page is called, and is also invoked at the end of all of the other functions.

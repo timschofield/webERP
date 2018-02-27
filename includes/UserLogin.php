@@ -17,7 +17,7 @@ define('UL_MAINTENANCE', 5);
  *	See define() statements above.
  */
 
-function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
+function userLogin($Name, $Password, $SysAdminEmail = '') {
 
 	global $debug;
 	global $PathPrefix;

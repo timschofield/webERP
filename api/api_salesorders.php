@@ -1316,7 +1316,7 @@ $SOH_DateFields = array ('orddate',
 		$FirstPeriod = $myrow[1];
 
 		/* If the period number doesn't exist */
-		if (!PeriodExists($TransDate, $db)) {
+		if (!PeriodExists($TransDate)) {
 			/* if the transaction is after the last period */
 			if ($TransDate > $LastPeriodEnd) {
 
@@ -1329,14 +1329,14 @@ $SOH_DateFields = array ('orddate',
 						$LastPeriodEnd = mktime(0,0,0,2, 0, Date('Y', $LastPeriodEnd)+1);
 					}
 					$LastPeriod++;
-					CreatePeriod($LastPeriod, $LastPeriodEnd, $db);
+					CreatePeriod($LastPeriod, $LastPeriodEnd);
 				}
 			} else {
 			/* The transaction is before the first period */
 				$PeriodEnd = mktime(0,0,0,Date('m', $TransDate), 0, Date('Y', $TransDate));
 				$Period = $FirstPeriod - 1;
 				while ($FirstPeriodEnd > $PeriodEnd) {
-					CreatePeriod($Period, $FirstPeriodEnd, $db);
+					CreatePeriod($Period, $FirstPeriodEnd);
 					$Period--;
 					if (Date('m', $FirstPeriodEnd)>0) {
 						$FirstPeriodEnd = mktime(0,0,0,Date('m', $FirstPeriodEnd), 0, Date('Y', $FirstPeriodEnd));
@@ -1345,7 +1345,7 @@ $SOH_DateFields = array ('orddate',
 					}
 				}
 			}
-		} else if (!PeriodExists(mktime(0,0,0,Date('m',$TransDate)+1,Date('d',$TransDate),Date('Y',$TransDate)), $db)) {
+		} else if (!PeriodExists(mktime(0,0,0,Date('m',$TransDate)+1,Date('d',$TransDate),Date('Y',$TransDate)))) {
 			/* Make sure the following months period exists */
 			$sql = "SELECT MAX(lastdate_in_period), MAX(periodno) from periods";
 			$result = DB_query($sql);
@@ -1353,7 +1353,7 @@ $SOH_DateFields = array ('orddate',
 			$Date_Array = explode('-', $myrow[0]);
 			$LastPeriodEnd = mktime(0,0,0,$Date_Array[1]+2,0,(int)$Date_Array[0]);
 			$LastPeriod = $myrow[1];
-			CreatePeriod($LastPeriod+1, $LastPeriodEnd, $db);
+			CreatePeriod($LastPeriod+1, $LastPeriodEnd);
 		}
 
 		/* Now return the period number of the transaction */

@@ -514,8 +514,7 @@ if (!isset($_SESSION['Items'.$identifier]->FreightCost) or $_SESSION['Items'.$id
 														$_SESSION['Items'.$identifier]->totalVolume,
 														$_SESSION['Items'.$identifier]->totalWeight,
 														$_SESSION['Items'.$identifier]->Location,
-														$_SESSION['Items'.$identifier]->DefaultCurrency,
-														$db);
+														$_SESSION['Items'.$identifier]->DefaultCurrency);
 		$_SESSION['Items'.$identifier]->ShipVia = $BestShipper;
 	}
 	if (isset($FreightCost) and is_numeric($FreightCost)) {
