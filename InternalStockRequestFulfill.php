@@ -365,10 +365,10 @@ if (isset($_POST['Location'])) {
 			echo '<tr>
 					<td>' . $LineRow['description'] . '</td>
 					<td class="number">' . locale_number_format($LineRow['quantity']-$LineRow['qtydelivered'],$LineRow['decimalplaces']) . '</td>
-					<td class="number"><input type="text" class="number" name="'. $LineRow['dispatchid'] . 'Qty' . $LineRow['dispatchitemsid'] . '" value="'.locale_number_format($LineRow['quantity']-$LineRow['qtydelivered'],$LineRow['decimalplaces']).'" /></td>
+					<td class="number"><input type="text" class="number" name="'. $LineRow['dispatchid'] . 'Qty' . $LineRow['dispatchitemsid'] . '" value="'.locale_number_format($LineRow['quantity']-$LineRow['qtydelivered'],$LineRow['decimalplaces']).'" size="11" maxlength="10" /></td>
 					<td>' . $LineRow['uom'] . '</td>';
 					if ($LineRow['controlled'] == 1) {
-						echo '<td class="number"><input type="text" class="number" name="'. $LineRow['dispatchid'] . 'Ser' . $LineRow['dispatchitemsid'] .'" /></td>';
+						echo '<td class="number"><input type="text" name="'. $LineRow['dispatchid'] . 'Ser' . $LineRow['dispatchitemsid'] .'" size="21" maxlength="30" /></td>';
 					} else {
 						echo '<td>' . _('Stock item is not controlled') . '</td>';
 					}
