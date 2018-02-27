@@ -1,5 +1,6 @@
 webERP Change Log
 
+17/2/18  PaulT: MaintenanceUserSchedule.php: Fix closing tag mismatch.
 17/2/18  PaulT: GLJournalInquiry.php: Add missing = to value attribute.
 17/02/18 Exson: Fixed the DB_escape_string bug for Array in session.inc and destroy cookie while users log out in Logout.php
 16/2/18  Paul Becker (PaulT commit): header.php: Add link to the Dashboard in the AppInfoUserDiv. (Forum contribution: http://www.weberp.org/forum/showthread.php?tid=8100)
