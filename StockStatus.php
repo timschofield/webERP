@@ -102,17 +102,8 @@ if ($Its_A_KitSet_Assembly_Or_Dummy == True){
 }
 echo $TableHeader;
 $j = 1;
-$k=0; //row colour counter
 
 while ($myrow=DB_fetch_array($LocStockResult)) {
-
-	if ($k==1){
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k=1;
-	}
 
 	$sql = "SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS dem
 			FROM salesorderdetails INNER JOIN salesorders
@@ -217,7 +208,8 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 				<td> ' . $myrow['bin'] . '</td>';
 		}
 
-		printf('<td class="number">%s</td>
+		printf('<tr class="striped_row">
+				<td class="number">%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
@@ -333,7 +325,6 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 					</tr>';
 
 	  $j = 0;
-	  $k = 0; //row colour counter
 
 	  foreach($PriceHistory as $PreviousPrice) {
 		$j--;
@@ -342,15 +333,8 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 			echo $TableHeader;
 		}
 
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k=1;
-		}
-
-			printf('<td>%s</td>
+		printf('<tr class="striped_row">
+				<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s%%</td>

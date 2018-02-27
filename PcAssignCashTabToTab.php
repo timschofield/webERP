@@ -286,16 +286,7 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 				<th>' . _('Date Authorised') . '</th>
 			</tr>';
 
-		$k = 0; //row colour counter
-
 	while ($MyRow = DB_fetch_array($Result)) {
-		if ($k == 1){
-			echo '<tr class="EvenTableRows">';
-			$k = 0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k = 1;
-		}
 
 		$SQLDes="SELECT description
 					FROM pcexpenses
@@ -329,7 +320,8 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 
 		if (($MyRow['authorized'] == '0000-00-00') AND ($Description['0'] == 'ASSIGNCASH')){
 			// only cash assignations NOT authorized can be modified or deleted
-			echo '<td>' . ConvertSQLDate($MyRow['date']) . '</td>
+			echo '<tr class="striped_row">
+				<td>' . ConvertSQLDate($MyRow['date']) . '</td>
 				<td>', $ExpenseCodeDes, '</td>
 				<td class="number">' . locale_number_format($MyRow['amount'],$CurrDecimalPlaces) . '</td>
 				<td>' . $MyRow['notes'] . '</td>
@@ -337,7 +329,8 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 				<td>' . $AuthorisedDate . '</td>
 				</tr>';
 		}else{
-			echo '<td>' . ConvertSQLDate($MyRow['date']) . '</td>
+			echo '<tr class="striped_row">
+				<td>' . ConvertSQLDate($MyRow['date']) . '</td>
 				<td>', $ExpenseCodeDes, '</td>
 				<td class="number">' . locale_number_format($MyRow['amount'],$CurrDecimalPlaces) . '</td>
 				<td>' . $MyRow['notes'] . '</td>
@@ -375,7 +368,7 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 
 
 		echo '<tr>
-				<td colspan="2" style="text-align:right"><b>' . _('Current balance') . ':</b></td>
+				<td colspan="2" class="number"><b>' . _('Current balance') . ':</b></td>
 				<td>' . locale_number_format($SelectedTab['0'],$CurrDecimalPlaces) . '</td></tr>
 				<input type="hidden" name="CurrentAmount" value="' . $SelectedTab[0] . '" />
 				<input type="hidden" name="SelectedTabs" value="' . $SelectedTab[1] . '" />

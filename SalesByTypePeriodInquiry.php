@@ -378,15 +378,10 @@ if (isset($_POST['ShowSales'])){
 
 	$PeriodHeadingDone = false;
 	$LastPeriodHeading = 'First Run Through';
-	$k=0;
+
 	while ($SalesRow=DB_fetch_array($SalesResult)) {
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k=1;
-		}
+		echo '<tr class="striped_row">';
+
 		switch ($_POST['DisplayData']){
 			case 'Daily':
 				if ($LastPeriodHeading != ConvertSQLDate($SalesRow['trandate'])) {
@@ -400,13 +395,10 @@ if (isset($_POST['ShowSales'])){
 							<td class="number">' . locale_number_format($PrdTotalCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 							<td class="number">' . locale_number_format($PrdTotalGP,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 						</tr>';
-						if ($k==1){
-							echo '<tr class="EvenTableRows"><td colspan="8"><hr /></td></tr>';
-							echo '<tr class="OddTableRows">';
-						} else {
-							echo '<tr class="OddTableRows"><td colspan="8"><hr /></td></tr>';
-							echo '<tr class="EvenTableRows">';
-						}
+
+						echo '<tr class="striped_row"><td colspan="8"><hr /></td></tr>';
+						echo '<tr class="striped_row">';
+
 						$PrdTotalOrders =0;
 						$PrdTotalSales=0;
 						$PrdTotalRefunds=0;
@@ -435,13 +427,10 @@ if (isset($_POST['ShowSales'])){
 							<td class="number">' . locale_number_format($PrdTotalCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 							<td class="number">' . locale_number_format($PrdTotalGP,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 						</tr>';
-						if ($k==1){
-							echo '<tr class="EvenTableRows"><td colspan="8"><hr /></td></tr>';
-							echo '<tr class="OddTableRows">';
-						} else {
-							echo '<tr class="OddTableRows"><td colspan="8"><hr /></td></tr>';
-							echo '<tr class="EvenTableRows">';
-						}
+
+						echo '<tr class="striped_row"><td colspan="8"><hr /></td></tr>';
+						echo '<tr class="striped_row">';
+
 						$PrdTotalOrders =0;
 						$PrdTotalSales=0;
 						$PrdTotalRefunds=0;
@@ -470,13 +459,10 @@ if (isset($_POST['ShowSales'])){
 							<td class="number">' . locale_number_format($PrdTotalCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 							<td class="number">' . locale_number_format($PrdTotalGP,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 						</tr>';
-						if ($k==1){
-							echo '<tr class="EvenTableRows"><td colspan="8"><hr /></td></tr>';
-							echo '<tr class="OddTableRows">';
-						} else {
-							echo '<tr class="OddTableRows"><td colspan="8"><hr /></td></tr>';
-							echo '<tr class="EvenTableRows">';
-						}
+
+						echo '<tr class="striped_row"><td colspan="8"><hr /></td></tr>';
+						echo '<tr class="striped_row">';
+
 						$PrdTotalOrders =0;
 						$PrdTotalSales=0;
 						$PrdTotalRefunds=0;
@@ -505,13 +491,10 @@ if (isset($_POST['ShowSales'])){
 							<td class="number">' . locale_number_format($PrdTotalCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 							<td class="number">' . locale_number_format($PrdTotalGP,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 						</tr>';
-						if ($k==1){
-							echo '<tr class="EvenTableRows"><td colspan="8"><hr /></td></tr>';
-							echo '<tr class="OddTableRows">';
-						} else {
-							echo '<tr class="OddTableRows"><td colspan="8"><hr /></td></tr>';
-							echo '<tr class="EvenTableRows">';
-						}
+
+						echo '<tr class="striped_row"><td colspan="8"><hr /></td></tr>';
+						echo '<tr class="striped_row">';
+
 						$PrdTotalOrders =0;
 						$PrdTotalSales=0;
 						$PrdTotalRefunds=0;
@@ -528,7 +511,12 @@ if (isset($_POST['ShowSales'])){
 					echo '<td></td>';
 				}
 				break;
-		}
+		} // end switch
+
+		// This apparently completes the "double-row" that appears within each
+		// case. The last portion of each case does a PeriodHeadingDone check.
+		// The output from the PeriodHeadingDone area is the first column to go
+		// with these below to make 8 columns.
 		echo '<td>' . $SalesRow['tpe'] . '</td>
 				<td class="number">' . $SalesRow['nooforders'] . '</td>
 				<td class="number">' . locale_number_format($SalesRow['salesvalue'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
@@ -550,15 +538,10 @@ if (isset($_POST['ShowSales'])){
 		$CumulativeTotalNetSales += ($SalesRow['salesvalue']+$SalesRow['returnvalue']);
 		$CumulativeTotalCost += $SalesRow['cost'];
 		$CumulativeTotalGP += ($SalesRow['salesvalue']+$SalesRow['returnvalue']-$SalesRow['cost']);
-	}
-	if ($k==1){
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k=1;
-	}
-	echo '<td colspan="2" class="number">' . _('Total') . ' ' . $LastPeriodHeading . '</td>
+	} // end loop
+
+	echo '<tr class="striped_row">
+		<td colspan="2" class="number">' . _('Total') . ' ' . $LastPeriodHeading . '</td>
 		<td class="number">' . $PrdTotalOrders . '</td>
 		<td class="number">' . locale_number_format($PrdTotalSales,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 		<td class="number">' . locale_number_format($PrdTotalRefunds,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
@@ -566,13 +549,10 @@ if (isset($_POST['ShowSales'])){
 		<td class="number">' . locale_number_format($PrdTotalCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 		<td class="number">' . locale_number_format($PrdTotalGP,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 	</tr>';
-	if ($k==1){
-		echo '<tr class="EvenTableRows"><td colspan="8"><hr /></td></tr>';
-		echo '<tr class="OddTableRows">';
-	} else {
-		echo '<tr class="OddTableRows"><td colspan="8"><hr /></td></tr>';
-		echo '<tr class="EvenTableRows">';
-	}
+
+	echo '<tr class="striped_row"><td colspan="8"><hr /></td></tr>';
+	echo '<tr class="striped_row">';
+
 	echo '<td colspan="2" class="number">' . _('GRAND Total') . '</td>
 		<td class="number">' . $CumulativeTotalOrders . '</td>
 		<td class="number">' . locale_number_format($CumulativeTotalSales,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>

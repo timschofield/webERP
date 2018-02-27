@@ -151,27 +151,17 @@ if (isset($_POST['ShowUsage'])){
 					</tr>';
 	echo $tableheader;
 
-	$j = 1;
-	$k=0; //row colour counter
-
 	$TotalUsage = 0;
 	$PeriodsCounter =0;
 
 	while ($myrow=DB_fetch_array($MovtsResult)) {
 
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k++;
-		}
-
 		$DisplayDate = MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
 
 		$TotalUsage += $myrow['qtyused'];
 		$PeriodsCounter++;
-		printf('<td>%s</td>
+		printf('<tr class="striped_row">
+				<td>%s</td>
 				<td class="number">%s</td>
 				</tr>',
 				$DisplayDate,

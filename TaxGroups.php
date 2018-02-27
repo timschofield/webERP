@@ -177,16 +177,9 @@ if(!isset($SelectedGroup)) {
 					<th colspan="2" >&nbsp;</th>
 				</tr>';
 
-		$j = 1;
 		while($myrow = DB_fetch_array($result)) {
-			if ($j==1) {
-			    echo '<tr class="OddTableRows">';
-			    $j=0;
-			} else {
-			    echo '<tr class="EvenTableRows">';
-			    $j++;
-			}
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td><a href="%s&amp;SelectedGroup=%s">' . _('Edit') . '</a></td>
 					<td><a href="%s&amp;SelectedGroup=%s&amp;Delete=1&amp;GroupID=%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this tax group?') . '\');">' . _('Delete') . '</a></td>
@@ -290,21 +283,15 @@ if(isset($SelectedGroup)) {
 					<th>' . _('Order') . '</th>
 					<th>' . _('Tax on Prior Taxes') . '</th>
 				</tr>';
-		$j = 1;
+
 		for ($i=1;$i < count($TaxAuthRow)+1;$i++) {
 
 			if($TaxAuthRow[$i]['calculationorder']==0) {
 				$TaxAuthRow[$i]['calculationorder'] = $i;
 			}
 
-			if ($j==1) {
-			    echo '<tr class="OddTableRows">';
-			    $j=0;
-			} else {
-			    echo '<tr class="EvenTableRows">';
-			    $j++;
-			}
-			echo '<td>' . $TaxAuthRow[$i]['taxname'] . '</td>
+			echo '<tr class="striped_row">
+				<td>' . $TaxAuthRow[$i]['taxname'] . '</td>
 				<td><input type="text" class="integer" pattern="(?!^0*$)(\d+)" title="'._('The input must be positive integer and less than 10').'" name="CalcOrder_' . $TaxAuthRow[$i]['taxauthid'] . '" value="' . $TaxAuthRow[$i]['calculationorder'] . '" size="1" maxlength="1" style="width: 90%" /></td>
 				<td><select name="TaxOnTax_' . $TaxAuthRow[$i]['taxauthid'] . '" style="width: 100%">';
 			if($TaxAuthRow[$i]['taxontax']==1) {
@@ -348,25 +335,17 @@ if(isset($SelectedGroup)) {
 			'</div>';
 	}
 
-	$j = 1;
 	while($AvailRow = DB_fetch_array($Result)) {
 
 		$TaxAuthUsedPointer = array_search($AvailRow['taxid'],$TaxAuthsUsed);
 
-		if ($j==1) {
-		    echo '<tr class="OddTableRows">';
-		    $j=0;
-		} else {
-		    echo '<tr class="EvenTableRows">';
-		    $j++;
-		}
 		if($TaxAuthUsedPointer) {
 			if($TaxAuthRow[$TaxAuthUsedPointer]['taxontax'] ==1) {
 				$TaxOnTax = _('Yes');
 			} else {
 				$TaxOnTax = _('No');
 			}
-			printf('
+			printf('<tr class="striped_row">
 				<td class="number">%s</td>
 				<td>%s</td>
 				<td class="number">%s</td>
@@ -374,7 +353,8 @@ if(isset($SelectedGroup)) {
 				<td class="centre"><a href="%sSelectedGroup=%s&amp;remove=1&amp;TaxAuthority=%s" onclick="return confirm(\'' .
 					_('Are you sure you wish to remove this tax authority from the group?') . '\');">' . _('Remove') . '</a></td>
 				<td class="number">&nbsp;</td>
-				<td>&nbsp;</td>',
+				<td>&nbsp;</td>
+				</tr>',
 				$AvailRow['taxid'],
 				$AvailRow['taxname'],
 				$TaxAuthRow[$TaxAuthUsedPointer]['calculationorder'],
@@ -385,7 +365,7 @@ if(isset($SelectedGroup)) {
 				);
 
 		} else {
-			printf('
+			printf('<tr class="striped_row">
 				<td class="number">&nbsp;</td>
 				<td>&nbsp;</td>
 				<td class="number">&nbsp;</td>
@@ -393,14 +373,14 @@ if(isset($SelectedGroup)) {
 				<td class="centre"><a href="%sSelectedGroup=%s&amp;add=1&amp;TaxAuthority=%s">' .
 					_('Add') . '</a></td>
 				<td class="number">%s</td>
-				<td>%s</td>',
+				<td>%s</td>
+				</tr>',
 				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')  . '?',
 				$SelectedGroup,
 				$AvailRow['taxid'],
 				$AvailRow['taxid'],
 				$AvailRow['taxname']);
 		}
-		echo '</tr>';
 	}
 	echo '</table>';
 }

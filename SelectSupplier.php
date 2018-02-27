@@ -301,20 +301,14 @@ if (isset($_POST['Search'])) {
 			<th class="ascending">' . _('Email') . '</th>
 			<th class="ascending">' . _('URL') . '</th>
 		</tr>';
-	$k = 0; //row counter to determine background colour
+
 	$RowIndex = 0;
 	if (DB_num_rows($result) <> 0) {
 		DB_data_seek($result, ($_POST['PageOffset'] - 1) * $_SESSION['DisplayRecordsMax']);
 	}
 	while (($myrow = DB_fetch_array($result)) AND ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
-		if ($k == 1) {
-			echo '<tr class="EvenTableRows">';
-			$k = 0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k = 1;
-		}
-		echo '<td><input type="submit" name="Select" value="'.$myrow['supplierid'].'" /></td>
+		echo '<tr class="striped_row">
+				<td><input type="submit" name="Select" value="'.$myrow['supplierid'].'" /></td>
 				<td>' . $myrow['suppname'] . '</td>
 				<td>' . $myrow['currcode'] . '</td>
 				<td>' . $myrow['address1'] . '</td>

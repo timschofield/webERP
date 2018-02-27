@@ -128,30 +128,25 @@ if(isset($_POST['ShowStatus']) AND Is_Date($_POST['OnHandDate'])) {
 		$NumRows = DB_num_rows($LocStockResult);
 
 		$j = 1;
-		$k=0; //row colour counter
 
 		while ($LocQtyRow=DB_fetch_array($LocStockResult)) {
 
-			if ($k==1){
-				echo '<tr class="OddTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="EvenTableRows">';
-				$k=1;
-			}
-
 			if($NumRows == 0){
-				printf('<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?%s">%s</a></td>
+				printf('<tr class="striped_row">
+						<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?%s">%s</a></td>
 						<td>%s</td>
-						<td class="number">%s</td></tr>',
+						<td class="number">%s</td>
+						</tr>',
 						'StockID=' . mb_strtoupper($myrows['stockid']),
 						mb_strtoupper($myrows['stockid']),
 						$myrows['description'],
 						0);
 			} else {
-				printf('<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?%s">%s</a></td>
+				printf('<tr class="striped_row">
+					<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?%s">%s</a></td>
 					<td>%s</td>
-					<td class="number">%s</td></tr>',
+					<td class="number">%s</td>
+					</tr>',
 					'StockID=' . mb_strtoupper($myrows['stockid']),
 					mb_strtoupper($myrows['stockid']),
 					$myrows['description'],

@@ -323,7 +323,6 @@ $TaxTotal =0;
 
 /*show the line items on the invoice with the quantity to credit and price being available for modification */
 
-$k=0; //row colour counter
 $j=0; //row counter
 $tabindex=1;// Tab order of an element when the "tab" button is used for navigating.
 
@@ -336,17 +335,9 @@ foreach($_SESSION['CreditItems' . $identifier]->LineItems as $LnItm) {
 
 	if(!isset($_POST['ProcessCredit'])) {
 
-		if($k==1) {
-			$RowClass='EvenTableRows';
-			$k=0;
-		} else {
-			$RowClass='OddTableRows';
-			$k=1;
-		}
-
 		$j++;
 // Use of htmlspecialchars to convert ampersand, double_quote, single_quote, less_than, and greater_than to html entities to to preserve their meanings.
-		echo '<tr class="'.$RowClass.'">
+		echo '<tr class="striped_row">
 			<td>' . $LnItm->StockID . '</td>
 			<td title="'. htmlspecialchars($LnItm->LongDescription) . '">' . $LnItm->ItemDescription . '</td>
 			<td class="number">' . locale_number_format($LnItm->Quantity,$LnItm->DecimalPlaces) . '</td>

@@ -196,24 +196,18 @@ if (isset($StockItemsResult)) {
 	echo $TableHeader;
 
 	$j = 1;
-	$k=0; //row colour counter
 
 	while ($myrow=DB_fetch_array($StockItemsResult)) {
 
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k=1;
-		}
 /*
 Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand     Orders Ostdg	Units	 */
-		printf('<td><input type="submit" name="SelectedStockItem" value="%s" /></td>
+		printf('<tr class="striped_row">
+				<td><input type="submit" name="SelectedStockItem" value="%s" /></td>
 				<td>%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
-				<td>%s</td></tr>',
+				<td>%s</td>
+				</tr>',
 				$myrow['stockid'],
 				$myrow['description'],
 				locale_number_format($myrow['qoh'],$myrow['decimalplaces']),
@@ -300,17 +294,8 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 		echo $TableHeader;
 
 		$j = 1;
-		$k=0; //row colour counter
+
 		while ($myrow=DB_fetch_array($ShipmentsResult)) {
-
-
-			if ($k==1){ /*alternate bgcolour of row for highlighting */
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k++;
-			}
 
 			$URL_Modify_Shipment = $RootPath . '/Shipments.php?SelectedShipment=' . $myrow['shiptref'];
 			$URL_View_Shipment = $RootPath . '/ShipmentCosting.php?SelectedShipment=' . $myrow['shiptref'];
@@ -322,7 +307,8 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 
 				$URL_Close_Shipment = $URL_View_Shipment . '&amp;Close=Yes';
 
-				printf('<td>%s</td>
+				printf('<tr class="striped_row">
+					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -341,7 +327,8 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 					$URL_Close_Shipment);
 
 			} else {
-				printf('<td>%s</td>
+				printf('<tr class="striped_row">
+						<td>%s</td>
 						<td>%s</td>
 						<td>%s</td>
 						<td>%s</td>

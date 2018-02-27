@@ -224,7 +224,6 @@ if (!isset($SelectedFreightCost) AND isset($LocationFrom) AND isset($ShipperID))
 
 	echo $TableHeader;
 
-	$k = 0; //row counter to determine background colour
 	$PageFullCounter=0;
 
 	while ($myrow = DB_fetch_row($result)) {
@@ -234,15 +233,9 @@ if (!isset($SelectedFreightCost) AND isset($LocationFrom) AND isset($ShipperID))
 				echo $TableHeader;
 
 		}
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k=1;
-		}
 
-		printf('<td>%s</td>
+		printf('<tr class="striped_row">
+			<td>%s</td>
 			<td>%s</td>
 			<td class="number">%s</td>
 			<td class="number">%s</td>

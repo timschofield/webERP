@@ -167,7 +167,7 @@ If (isset($_POST['PrintPDF']) AND DB_num_rows($GRNsResult)>0){
 	$Title=_('Outstanding GRNs Report');
 	include('includes/header.php');
 
-	echo '<p class="page_title_text" align="center"><strong>' . _('Goods Received but not invoiced Yet') . '</strong></p>';
+	echo '<p class="page_title_text"><strong>' . _('Goods Received but not invoiced Yet') . '</strong></p>';
 
 	echo '<div class="page_help_text">' . _('Shows the list of goods received not yet invoiced, both in supplier currency and home currency. When run for all suppliers, the total in home curency should match the GL Account for Goods received not invoiced.') . '</div>';
 
@@ -189,20 +189,13 @@ If (isset($_POST['PrintPDF']) AND DB_num_rows($GRNsResult)>0){
 						<th>' . '' . '</th>
 					</tr>';
 	echo $TableHeader;
-	$k = 0; //row colour counter
 	$i = 1;
 	$TotalHomeCurrency = 0;
 	while ($GRNs = DB_fetch_array($GRNsResult) ){
-		if ($k == 1) {
-			echo '<tr class="EvenTableRows">';
-			$k = 0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k = 1;
-		}
 		$QtyPending = $GRNs['qtyrecd'] - $GRNs['quantityinv'];
 		$TotalHomeCurrency = $TotalHomeCurrency + ($QtyPending * $GRNs['stdcostunit']);
-		printf('<td>%s</td>
+		printf('<tr class="striped_row">
+				<td>%s</td>
 				<td>%s</td>
 				<td class="number">%s</td>
 				<td>%s</td>
@@ -257,7 +250,7 @@ If (isset($_POST['PrintPDF']) AND DB_num_rows($GRNsResult)>0){
 	$Title=_('Outstanding GRNs Report');
 	include('includes/header.php');
 
-	echo '<p class="page_title_text" align="center"><strong>' . $Title . '</strong></p>';
+	echo '<p class="page_title_text"><strong>' . $Title . '</strong></p>';
 
 	echo '<div class="page_help_text">' . _('Shows the list of goods received not yet invoiced, both in supplier currency and home currency. When run for all suppliers the total in home curency should match the GL Account for Goods received not invoiced.') . '</div>';
 

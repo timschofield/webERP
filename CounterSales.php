@@ -765,7 +765,7 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 ){ /*only show order line
 	$TaxTotals = array();
 	$TaxGLCodes = array();
 	$TaxTotal =0;
-	$k =0;  //row colour counter
+
 	foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
 
 		$SubTotal = round($OrderLine->Quantity * $OrderLine->Price * (1 - $OrderLine->DiscountPercent),$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
@@ -776,12 +776,8 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 ){ /*only show order line
 		if ($OrderLine->QOHatLoc < $OrderLine->Quantity AND ($OrderLine->MBflag=='B' OR $OrderLine->MBflag=='M')) {
 			/*There is a stock deficiency in the stock location selected */
 			$RowStarter = '<tr style="background-color:#EEAABB">';
-		} elseif ($k==1){
-			$RowStarter = '<tr class="OddTableRows">';
-			$k=0;
 		} else {
-			$RowStarter = '<tr class="EvenTableRows">';
-			$k=1;
+			$RowStarter = '<tr class="striped_row">';
 		}
 
 		echo $RowStarter;
@@ -848,7 +844,7 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 ){ /*only show order line
 
 	} /* end of loop around items */
 
-	echo '<tr class="EvenTableRows">';
+	echo '<tr class="striped_row">';
 	if (in_array($_SESSION['PageSecurityArray']['OrderEntryDiscountPricing'], $_SESSION['AllowedPageSecurityTokens'])){
 		echo '<td colspan="8" class="number"><b>' . _('Total') . '</b></td>';
 	} else {
@@ -2119,7 +2115,6 @@ if (!isset($_POST['ProcessSale'])){
 			echo $TableHeader;
 			$i = 0;
 			$j = 1;
-			$k = 0; //row colour counter
 
 			while ($myrow=DB_fetch_array($result2)) {
 	// This code needs sorting out, but until then :
@@ -2158,17 +2153,10 @@ if (!isset($_POST['ProcessSale'])){
 				// Get the QOO due to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
 				$QOO += GetQuantityOnOrderDueToWorkOrders($myrow['stockid'], '');
 
-				if ($k==1){
-						echo '<tr class="EvenTableRows">';
-						$k=0;
-				} else {
-						echo '<tr class="OddTableRows">';
-						$k=1;
-				}
-
 				$Available = $QOH - $DemandQty + $QOO;
 
-				printf('<td>%s</td>
+				printf('<tr class="striped_row">
+						<td>%s</td>
 						<td>%s</td>
 						<td>%s</td>
 						<td class="number">%s</td>
@@ -2194,7 +2182,7 @@ if (!isset($_POST['ProcessSale'])){
 	#end of page full new headings if
 			}
 	#end of while loop for Frequently Ordered Items
-			echo '<td style="text-align:center" colspan="8"><input type="hidden" name="SelectingOrderItems" value="1" /><input tabindex="'.strval($j+8).'" type="submit" value="'._('Add to Sale').'" /></td>';
+			echo '<td class="centre" colspan="8"><input type="hidden" name="SelectingOrderItems" value="1" /><input tabindex="'.strval($j+8).'" type="submit" value="'._('Add to Sale').'" /></td>';
 			echo '</table>';
 		} //end of if Frequently Ordered Items > 0
 		if (isset($msg)){
@@ -2238,8 +2226,8 @@ if (!isset($_POST['ProcessSale'])){
         echo '" /></td>
 			</tr>
 			<tr>
-				<td style="text-align:center" colspan="1"><input tabindex="4" type="submit" name="Search" value="' . _('Search Now') . '" /></td>
-				<td style="text-align:center" colspan="1"><input tabindex="5" type="submit" name="QuickEntry" value="' . _('Use Quick Entry') . '" /></td>
+				<td class="centre" colspan="1"><input tabindex="4" type="submit" name="Search" value="' . _('Search Now') . '" /></td>
+				<td class="centre" colspan="1"><input tabindex="5" type="submit" name="QuickEntry" value="' . _('Use Quick Entry') . '" /></td>
 			</tr>
 		</table>
 		<br />
@@ -2258,7 +2246,7 @@ if (!isset($_POST['ProcessSale'])){
 			echo '<table class="table1">';
 			echo '<tr>
 					<td><input type="hidden" name="PreviousList" value="'.strval($Offset-1).'" /><input tabindex="'.strval($j+7).'" type="submit" name="Previous" value="'._('Prev').'" /></td>
-					<td style="text-align:center" colspan="6"><input type="hidden" name="SelectingOrderItems" value="1" /><input tabindex="'.strval($j+8).'" type="submit" value="'._('Add to Sale').'" /></td>
+					<td class="centre" colspan="6"><input type="hidden" name="SelectingOrderItems" value="1" /><input tabindex="'.strval($j+8).'" type="submit" value="'._('Add to Sale').'" /></td>
 					<td><input type="hidden" name="NextList" value="'.strval($Offset+1).'" /><input tabindex="'.strval($j+9).'" type="submit" name="Next" value="'._('Next').'" /></td>
 				</tr>
 				<tr>
@@ -2272,7 +2260,6 @@ if (!isset($_POST['ProcessSale'])){
 		   			<th>' . _('Quantity') . '</th>
 		   		</tr>';
 			$i=0;
-			$k=0; //row colour counter
 
 			while ($myrow=DB_fetch_array($SearchResult)) {
 
@@ -2309,17 +2296,10 @@ if (!isset($_POST['ProcessSale'])){
 				// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
 				$QOO += GetQuantityOnOrderDueToWorkOrders($myrow['stockid'], '');
 
-				if ($k==1){
-					echo '<tr class="EvenTableRows">';
-					$k=0;
-				} else {
-					echo '<tr class="OddTableRows">';
-					$k=1;
-				}
-
 				$Available = $QOH - $DemandQty + $QOO;
 
-				printf('<td>%s</td>
+				printf('<tr class="striped_row">
+						<td>%s</td>
 						<td>%s</td>
 						<td>%s</td>
 						<td class="number">%s</td>
@@ -2352,7 +2332,7 @@ if (!isset($_POST['ProcessSale'])){
 				</tr>
 				<tr>
 					<td><input type="hidden" name="previous" value="' . strval($Offset-1) . '" /><input tabindex="' . strval($j+7) . '" type="submit" name="Prev" value="' . _('Prev') . '" /></td>
-					<td style="text-align:center" colspan="6"><input type="hidden" name="SelectingOrderItems" value="1" /><input tabindex="'.strval($j+8).'" type="submit" value="'._('Add to Sale').'" /></td>
+					<td class="centre" colspan="6"><input type="hidden" name="SelectingOrderItems" value="1" /><input tabindex="'.strval($j+8).'" type="submit" value="'._('Add to Sale').'" /></td>
 					<td><input type="hidden" name="NextList" value="'.strval($Offset+1).'" /><input tabindex="'.strval($j+9).'" type="submit" name="Next" value="'._('Next').'" /></td>
 				</tr>
 				</table>

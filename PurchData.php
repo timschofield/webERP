@@ -281,17 +281,8 @@ if ($Edit == false) {
 						</tr>';
 		echo $TableHeader;
 		$CountPreferreds = 0;
-		$k = 0; //row colour counter
+
 		while ($myrow = DB_fetch_array($PurchDataResult)) {
-			if ($myrow['preferred'] == 1) {
-				echo '<tr class="EvenTableRows">';
-			} elseif ($k == 1) {
-				echo '<tr class="EvenTableRows">';
-				$k = 0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k++;
-			}
 			if ($myrow['preferred'] == 1) {
 				$DisplayPreferred = _('Yes');
 				$CountPreferreds++;
@@ -299,7 +290,8 @@ if ($Edit == false) {
 				$DisplayPreferred = _('No');
 			}
 			$UPriceDecimalPlaces = max($myrow['currdecimalplaces'],$_SESSION['StandardCostDecimalPlaces']);
-            printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
@@ -474,16 +466,10 @@ if (isset($SuppliersResult)) {
 						<th class="ascending">' . _('Address 3') . '</th>
 					</tr>';
     echo $TableHeader;
-	$k = 0;
+
     while ($myrow = DB_fetch_array($SuppliersResult)) {
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k++;
-		}
-       printf('<td><input type="submit" name="SupplierID" value="%s" /></td>
+		printf('<tr class="striped_row">
+				<td><input type="submit" name="SupplierID" value="%s" /></td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
@@ -702,17 +688,11 @@ if (!isset($SuppliersResult)) {
 					<th class="ascending">' . _('Effective From') . '</th>
 					<th class="ascending">' . _('Effective To') . '</th>
 				</tr>';
-	    $k = 0;
+
 	    $i = 0; //DiscountCounter
 	    while ($myrow = DB_fetch_array($DiscountsResult)) {
-			if ($k==1){
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k++;
-			}
-			printf('<input type="hidden" name="DiscountID%s" value="%s" />
+			printf('<tr class="striped_row">
+					<input type="hidden" name="DiscountID%s" value="%s" />
 					<td><input type="text" name="DiscountNarrative%s" value="%s" maxlength="20" size="20" /></td>
 					<td><input type="text" class="number" name="DiscountAmount%s" value="%s" maxlength="10" size="11" /></td>
 					<td><input type="text" class="number" name="DiscountPercent%s" value="%s" maxlength="5" size="6" /></td>

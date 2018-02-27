@@ -164,19 +164,11 @@ echo '<tr>
 		<th>' . _('Discount Rate') . ' %' . '</th>
 	</tr>';
 
-$k=0; //row colour counter
-
 while ($myrow = DB_fetch_array($result)) {
-	if ($k==1){
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k=1;
-	}
 	$DeleteURL = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=yes&amp;SalesType=' . $myrow['salestype'] . '&amp;DiscountCategory=' . $myrow['discountcategory'] . '&amp;QuantityBreak=' . $myrow['quantitybreak'];
 
-	printf('<td>%s</td>
+	printf('<tr class="striped_row">
+			<td>%s</td>
 			<td>%s</td>
 			<td class="number">%s</td>
 			<td class="number">%s</td>

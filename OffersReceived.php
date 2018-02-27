@@ -115,17 +115,12 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 				<th>' . _('Reject') . '</th>
 				<th>' . _('Defer') . '</th>
 			</tr>';
-	$k=0;
+
 	echo 'The result has rows '.DB_num_rows($result) . '<br/>';
+
 	while ($myrow=DB_fetch_array($result)) {
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k++;
-		}
-		echo '<td>' . $myrow['offerid'] . '</td>
+		echo '<tr class="striped_row">
+			<td>' . $myrow['offerid'] . '</td>
 			<td>' . $myrow['suppname'] . '</td>
 			<td>' . $myrow['description'] . '</td>
 			<td class="number">' . locale_number_format($myrow['quantity'],$myrow['decimalplaces']) . '</td>

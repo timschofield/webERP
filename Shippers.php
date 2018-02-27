@@ -129,20 +129,13 @@ or deletion of the records*/
 	echo '<table class="selection">
 		<tr><th>' .  _('Shipper ID'). '</th><th>' .  _('Shipper Name'). '</th></tr>';
 
-	$k=0; //row colour counter
-
 	while ($myrow = DB_fetch_array($result)) {
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k=1;
-		}
-		printf('<td>%s</td>
+		printf('<tr class="striped_row">
+			<td>%s</td>
 			<td>%s</td>
 			<td><a href="%sSelectedShipper=%s">' .  _('Edit') . '</a></td>
-			<td><a href="%sSelectedShipper=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this shipper?') . '\');">' .  _('Delete'). '</a></td></tr>',
+			<td><a href="%sSelectedShipper=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this shipper?') . '\');">' .  _('Delete'). '</a></td>
+			</tr>',
 			$myrow[0],
 			$myrow[1],
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' ,

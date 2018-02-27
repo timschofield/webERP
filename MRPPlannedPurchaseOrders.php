@@ -299,21 +299,13 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 		$TotalPartCost = 0;
 		$Total_ExtCost = 0;
 		$j=1; //row ID
-		$k=0; //row colour counter
 
 		while ($myrow = DB_fetch_array($result)){
-			// Alternate row color
-			if ($k==1){
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k++;
-			}
 
 			list($lastdate,$lastsupplier,$preferredsupplier,$conversionfactor) = GetPartInfo($myrow['part']);
 
-			echo '<td><a href="' . $RootPath . '/PO_Header.php?NewOrder=Yes&amp;SelectedSupplier=' . urlencode($preferredsupplier) . '&amp;StockID=' . urlencode($myrow['part']) . '&amp;Quantity=' . urlencode($myrow['supplyquantity']/$conversionfactor) . '">' . _('Convert') . '</a></td>
+			echo '<tr class="striped_row">
+				<td><a href="' . $RootPath . '/PO_Header.php?NewOrder=Yes&amp;SelectedSupplier=' . urlencode($preferredsupplier) . '&amp;StockID=' . urlencode($myrow['part']) . '&amp;Quantity=' . urlencode($myrow['supplyquantity']/$conversionfactor) . '">' . _('Convert') . '</a></td>
 				<td>' . '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . urlencode($myrow['part']) . '">' . $myrow['part'] . '</a>' .  '<input type="hidden" name="' . $j . '_part" value="' . $myrow['part']. '" /></td>
 				<td>' . $myrow['description'] . '</td>
 				<td>' . ConvertSQLDate($myrow['mrpdate']) . '</td>

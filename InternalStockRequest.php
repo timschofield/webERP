@@ -279,17 +279,10 @@ echo '<br />
 		<th>' .  _('UOM'). '</th>
 	</tr>';
 
-$k=0;
 if (isset($_SESSION['Request']->LineItems)) {
 	foreach ($_SESSION['Request']->LineItems as $LineItems) {
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k++;
-		}
-		echo '<td>' . $LineItems->LineNumber . '</td>
+		echo '<tr class="striped_row">
+				<td>' . $LineItems->LineNumber . '</td>
 				<td>' . $LineItems->StockID . '</td>
 				<td>' . $LineItems->ItemDescription . '</td>
 				<td class="number">' . locale_number_format($LineItems->Quantity, $LineItems->DecimalPlaces) . '</td>
@@ -567,19 +560,11 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 				<th>' . _('Stock Status') . '</th>
 			</tr>';
 		$j = 1;
-		$k = 0; //row counter to determine background colour
 		$RowIndex = 0;
 		if (DB_num_rows($searchresult) <> 0) {
 			DB_data_seek($searchresult, ($_POST['PageOffset'] - 1) * $_SESSION['DisplayRecordsMax']);
 		}
 		while (($myrow = DB_fetch_array($searchresult)) AND ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
-			if ($k == 1) {
-				echo '<tr class="EvenTableRows">';
-				$k = 0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k++;
-			}
 			if ($myrow['mbflag'] == 'D') {
 				$qoh = _('N/A');
 			} else {
@@ -591,7 +576,8 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 				$ItemStatus ='';
 			}
 
-			echo '<td><input type="submit" name="Select" value="' . $myrow['stockid'] . '" /></td>
+			echo '<tr class="striped_row">
+					<td><input type="submit" name="Select" value="' . $myrow['stockid'] . '" /></td>
 					<td>' . $myrow['description'] . '</td>
 					<td class="number">' . $qoh . '</td>
 					<td>' . $myrow['units'] . '</td>
@@ -622,7 +608,7 @@ if (isset($SearchResult)) {
 			<td>
 				<input type="hidden" name="Previous" value="'.($Offset-1).'" />
 				<input tabindex="'.($j+8).'" type="submit" name="Prev" value="'._('Prev').'" /></td>
-				<td style="text-align:center" colspan="6">
+				<td class="centre" colspan="6">
 				<input type="hidden" name="order_items" value="1" />
 				<input tabindex="'.($j+9).'" type="submit" value="'._('Add to Requisition').'" /></td>
 			<td>
@@ -641,7 +627,6 @@ if (isset($SearchResult)) {
 			</tr>';
 	$ImageSource = _('No Image');
 
-	$k=0; //row colour counter
 	$i=0;
 	while ($myrow=DB_fetch_array($SearchResult)) {
 		if ($myrow['decimalplaces']=='') {
@@ -715,16 +700,10 @@ if (isset($SearchResult)) {
 			$WoQty = 0;
 		}
 
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k=1;
-		}
 		$OnOrder = $PurchQty + $WoQty;
 		$Available = $QOH - $DemandQty + $OnOrder;
-		echo '<td>' . $myrow['stockid'] . '</td>
+		echo '<tr class="striped_row">
+				<td>' . $myrow['stockid'] . '</td>
 				<td>' . $myrow['description'] . '</td>
 				<td>' . $myrow['stockunits'] . '</td>
 				<td class="number">' . locale_number_format($QOH,$DecimalPlaces) . '</td>
@@ -744,7 +723,7 @@ if (isset($SearchResult)) {
 	echo '<tr>
 			<td><input type="hidden" name="Previous" value="'.($Offset-1).'" />
 				<input tabindex="'.($j+7).'" type="submit" name="Prev" value="'._('Prev').'" /></td>
-			<td style="text-align:center" colspan="6"><input type="hidden" name="order_items" value="1" />
+			<td class="centre" colspan="6"><input type="hidden" name="order_items" value="1" />
 				<input tabindex="'.($j+8).'" type="submit" value="'._('Add to Requisition').'" /></td>
 			<td><input type="hidden" name="NextList" value="'.($Offset+1).'" />
 				<input tabindex="'.($j+9).'" type="submit" name="Next" value="'._('Next').'" /></td>\

@@ -63,7 +63,7 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 
 	echo'<p class="page_title_text"><strong>' . _('Location : ') . '' . $Location['locationname'] . ' </strong></p>';
 	echo'<p class="page_title_text"><strong>' . _('Number Of Days Sales : ') . '' . locale_number_format($_POST['NumberOfDays'],0) . '' . _(' Days ') . ' </strong></p>';
-	$k=0; //row colour counter
+
 	echo '<form action="ReorderLevelLocation.php" method="post" id="Update">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -80,14 +80,6 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 
 	$i=1;
 	while ($myrow=DB_fetch_array($result))	{
-
-		if ($k==1){
-			echo '<tr class="EvenTableRows"><td>';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows"><td>';
-			$k=1;
-		}
 
 		//variable for update data
 
@@ -117,7 +109,8 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 		$TotQtyResult = DB_query($SqlOH);
 		$TotQtyRow = DB_fetch_array($TotQtyResult);
 
-		echo $myrow['stockid'] . '</td>
+		echo '<tr class="striped_row">
+			<td>' . $myrow['stockid'] . '</td>
 			<td>' . $myrow['description'] . '</td>
 			<td class="number">' . locale_number_format($SalesRow['qtyinvoiced'],$myrow['decimalplaces']) . '</td>
 			<td class="number">' . locale_number_format($TotQtyRow['qty'],$myrow['decimalplaces']) . '</td>
@@ -136,7 +129,7 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 		$i++;
 	} //end of looping
 	echo'<tr>
-			<td style="text-align:center" colspan="7">
+			<td class="centre" colspan="7">
 				<input type="submit" name="submit" value="' . _('Update') . '" />
 			</td>
 		</tr>

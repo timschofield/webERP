@@ -114,22 +114,15 @@ if (!isset($Id)) {
 			<th>' . _('Priority') . '</th>
 		</tr>';
 
-	$k=0; //row colour counter
-
 	while ($myrow = DB_fetch_array($result)) {
-		if ($k==1){
-			echo '<tr class="OddTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="EvenTableRows">';
-			$k=1;
-		}
-		printf('<td>%s</td>
+		printf('<tr class="striped_row">
+				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td><a href="%sId=%s&amp;DebtorType=%s">' .  _('Edit') . '</a></td>
-				<td><a href="%sId=%s&amp;DebtorType=%s&amp;delete=1">' .  _('Delete') . '</a></td></tr>',
+				<td><a href="%sId=%s&amp;DebtorType=%s&amp;delete=1">' .  _('Delete') . '</a></td>
+				</tr>',
 				$myrow['date'],
 				$myrow['note'],
 				$myrow['href'],

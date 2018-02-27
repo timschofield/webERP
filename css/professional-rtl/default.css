@@ -83,11 +83,12 @@ td.select {
 	text-align:right;
 	cursor:pointer;
 }
-.EvenTableRows {
-	background-color: #CCCCCC;
+tr.striped_row:nth-of-type(even) {
+	background-color:#CCCCCC;
 }
-.OddTableRows {
-	background-color: #EEEEEE;
+
+tr.striped_row:nth-of-type(odd) {
+	background-color:#EEEEEE;
 }
 
 th { /* table heading */

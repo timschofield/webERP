@@ -160,7 +160,7 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 					<th class="ascending">' . _('Price Proposed') . '</th>
 					<th class="ascending">' . _('List Price') . '</th>
 				<tr>';
-		$k = 0; //row colour counter
+
 		echo '<form action="' .htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'" method="post" id="update">';
         echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -173,13 +173,6 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 		$PriceCounter =0;
 		while ($myrow = DB_fetch_array($result)) {
 
-			if ($k == 1) {
-				echo '<tr class="EvenTableRows">';
-				$k = 0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k = 1;
-			}
 			//get cost
 			if ($myrow['cost'] == '') {
 				$Cost = 0;
@@ -206,7 +199,8 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 			} else {
 				$EndDateDisplay = ConvertSQLDate($myrow['enddate']);
 			}
-			echo '   <td>' . $myrow['stockid'] . '</td>
+			echo '<tr class="striped_row">
+					<td>' . $myrow['stockid'] . '</td>
 					<td>' . $myrow['description'] . '</td>
 					<td>' . $myrow['customer'] . '</td>
 					<td>' . $myrow['branch'] . '</td>
@@ -220,8 +214,8 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 			$PriceCounter++;
 		} //end of looping
 		echo '<tr>
-			<td style="text-align:right" colspan="4"><input type="submit" name="submit" value="' . _('Update') . '" onclick="return confirm(\'' . _('If the prices above do not have a commencement date as today, this will create new prices with commencement date of today at the entered figures and update the existing prices with historical start dates to have an end date of yesterday. Are You Sure?') . '\');" /></td>
-			<td style="text-align:left" colspan="3"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '"><input type="submit" value="' . _('Back') . '" /></a></td>
+			<td class="number" colspan="4"><input type="submit" name="submit" value="' . _('Update') . '" onclick="return confirm(\'' . _('If the prices above do not have a commencement date as today, this will create new prices with commencement date of today at the entered figures and update the existing prices with historical start dates to have an end date of yesterday. Are You Sure?') . '\');" /></td>
+			<td class="text" colspan="3"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '"><input type="submit" value="' . _('Back') . '" /></a></td>
 			 </tr>
              </div>
              </form>';

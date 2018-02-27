@@ -164,16 +164,10 @@ if (isset($_POST['SearchSupplier'])) {
 						<th>' . _('Address 3') . '</th>
 					</tr>';
     echo $TableHeader;
-	$k = 0;
+
     while ($myrow = DB_fetch_array($SuppliersResult)) {
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k++;
-		}
-       printf('<td><input type="submit" name="SupplierID" value="%s" /></td>
+       printf('<tr class="striped_row">
+				<td><input type="submit" name="SupplierID" value="%s" /></td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
@@ -268,15 +262,8 @@ if (isset($SupplierID) AND $Edit == false) {
 						</tr>';
 
 		echo $TableHeader;
-		$k = 0; //row colour counter
+
 		while ($myrow = DB_fetch_array($Result)) {
-			if ($k == 1) {
-				echo '<tr class="EvenTableRows">';
-				$k = 0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k++;
-			}
 			if ($myrow['categoryid']=='') {
 				$ItemDescription = $myrow['stockid'] . ' - ' . $myrow['description'];
 			} else {
@@ -288,7 +275,8 @@ if (isset($SupplierID) AND $Edit == false) {
 				$Customer = $myrow['debtorno'] . ' - ' . $myrow['name'];
 			}
 
-            printf('<td>%s</td>
+            printf('<tr class="striped_row">
+					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>

@@ -310,16 +310,10 @@ if (empty($FactorID) AND !isset($_POST['Create']) AND !isset($_POST['Amend'])) {
 					email
 			FROM factorcompanies";
 	$result=DB_query($sql);
-	$j=1;
+
 	while ($myrow = DB_fetch_array($result)) {
-		if ($j==1) {
-			echo '<tr class="OddTableRows">';
-			$j=0;
-		} else {
-			echo '<tr class="EvenTableRows">';
-			$j++;
-		}
-		echo '<td>' . $myrow['id'] . '</td>
+		echo '<tr class="striped_row">
+			<td>' . $myrow['id'] . '</td>
 			<td>' . $myrow['coyname'] . '</td>
 			<td>' . $myrow['address1'] . '</td>
 			<td>' . $myrow['address2'] . '</td>

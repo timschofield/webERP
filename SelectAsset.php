@@ -267,20 +267,13 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 				</tr>';
 		echo $tableheader;
 		$j = 1;
-		$k = 0; //row counter to determine background colour
 		$RowIndex = 0;
 		if (DB_num_rows($SearchResult) <> 0) {
 			DB_data_seek($SearchResult, ($_POST['PageOffset'] - 1) * $_SESSION['DisplayRecordsMax']);
 		}
 		while (($myrow = DB_fetch_array($SearchResult)) AND ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
-			if ($k == 1) {
-				echo '<tr class="EvenTableRows">';
-				$k = 0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k++;
-			}
-			echo '<td><input type="submit" name="Select" value="' . $myrow['assetid'] .'" /></td>
+			echo '<tr class="striped_row">
+				<td><input type="submit" name="Select" value="' . $myrow['assetid'] .'" /></td>
 				<td>' . $myrow['description'] . '</td>
 				<td>' . $myrow['locationdescription'] . '</td>
 				<td>' . ConvertSQLDate($myrow['datepurchased']) . '</td>

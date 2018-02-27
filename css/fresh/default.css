@@ -124,11 +124,13 @@ textarea{
 }
 textarea:hover{
 }
-.EvenTableRows {
-	background-color: #72824D;
+
+tr.striped_row:nth-of-type(even) {
+	background-color:#72824D;
 }
-.OddTableRows {
-	background-color: #CAF17C;
+
+tr.striped_row:nth-of-type(odd) {
+	background-color:#CAF17C;
 }
 
 div.error {
@@ -169,9 +171,6 @@ div.page_help_text {
 }
 
 /*** calendar picker ***/
-#calendar{
-
-}
 .dpTbl {
 	border: solid navy 1px;
 }

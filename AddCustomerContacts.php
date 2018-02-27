@@ -139,24 +139,17 @@ if (!isset($Id)) {
 			<th class="noprint" colspan="2">&nbsp;</th>
 		</tr>';
 
-	$k=0; //row colour counter
-
 	while ($myrow = DB_fetch_array($result)) {
-		if ($k==1){
-			echo '<tr class="OddTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="EvenTableRows">';
-			$k=1;
-		}
-		printf('<td class="text">%s</td>
+		printf('<tr class="striped_row">
+				<td class="text">%s</td>
 				<td class="text">%s</td>
 				<td class="text">%s</td>
 				<td class="text"><a href="mailto:%s">%s</a></td>
 				<td class="text">%s</td>
 				<td class="text">%s</td>
 				<td class="noprint"><a href="%sId=%s&amp;DebtorNo=%s">' . _('Edit') . '</a></td>
-				<td class="noprint"><a href="%sId=%s&amp;DebtorNo=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this contact?') . '\');">' . _('Delete'). '</a></td></tr>',
+				<td class="noprint"><a href="%sId=%s&amp;DebtorNo=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this contact?') . '\');">' . _('Delete'). '</a></td>
+				</tr>',
 				$myrow['contactname'],
 				$myrow['role'],
 				$myrow['phoneno'],

@@ -523,7 +523,7 @@ if(isset($_SESSION['Transfer'])) {
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Dispatch') .
 		'" alt="" />' . ' ' . $Title . '</p>';
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?'. SID . '" method="post">';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -548,17 +548,11 @@ if(isset($_SESSION['Transfer'])) {
 					</tr>';
 
 	echo $tableheader;
-	$k=0;
-	foreach ($_SESSION['Transfer']->TransferItem AS $TrfLine) {
-		if($k==1) {
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k++;
-		}
 
-		echo '<td>' . $TrfLine->StockID . '</td>
+	foreach ($_SESSION['Transfer']->TransferItem AS $TrfLine) {
+
+		echo '<tr class="striped_row">
+			<td>' . $TrfLine->StockID . '</td>
 			<td>' . $TrfLine->ItemDescription . '</td>';
 
 		echo '<td class="number">' . locale_number_format($TrfLine->ShipQty, $TrfLine->DecimalPlaces) . '</td>';
@@ -663,17 +657,11 @@ if(isset($_SESSION['Transfer'])) {
 			<th>' .  _('Transfer Ref'). '</th>
 			<th>' .  _('Transfer From'). '</th>
 			<th>' .  _('Dispatch Date'). '</th></tr>';
-		$k=0;
+
 		while ($myrow=DB_fetch_array($TrfResult)) {
 
-			if($k==1) {
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k++;
-			}
-			echo '<td class="number">' . $myrow['reference'] . '</td>
+			echo '<tr class="striped_row">
+					<td class="number">' . $myrow['reference'] . '</td>
 					<td>' . $myrow['trffromloc'] . '</td>
 					<td>' . ConvertSQLDateTime($myrow['shipdate']) . '</td>
 					<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Trf_ID=' . $myrow['reference'] . '">' .  _('Receive'). '</a></td>

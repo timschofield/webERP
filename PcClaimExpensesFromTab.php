@@ -378,15 +378,8 @@ if (!isset($SelectedTabs)) {
 					<th>', _('Receipt Attachment'), '</th>
 					<th>', _('Date Authorised'), '</th>
 				</tr>';
-		$k = 0; //row colour counter
+
 		while ($MyRow = DB_fetch_array($Result)) {
-			if ($k == 1) {
-				echo '<tr class="EvenTableRows">';
-				$k = 0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k = 1;
-			}
 			$SQLDes = "SELECT description
 						FROM pcexpenses
 						WHERE codeexpense='" . $MyRow['codeexpense'] . "'";
@@ -448,7 +441,8 @@ if (!isset($SelectedTabs)) {
 			}
 			if (($MyRow['authorized'] == '0000-00-00') and ($ExpenseCodeDes != 'ASSIGNCASH')) {
 				// only movements NOT authorised can be modified or deleted
-				echo '<td>', ConvertSQLDate($MyRow['date']), '</td>
+				echo '<tr class="striped_row">
+						<td>', ConvertSQLDate($MyRow['date']), '</td>
 						<td>', $ExpenseCodeDes, '</td>
 						<td class="number">', locale_number_format($MyRow['amount'], $CurrDecimalPlaces), '</td>
 						<td class="number">', $TaxesTaxAmount, '</td>
@@ -461,7 +455,8 @@ if (!isset($SelectedTabs)) {
 						<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedIndex=', $MyRow['counterindex'], '&amp;SelectedTabs=' . $SelectedTabs . '&amp;Days=' . $Days . '&amp;delete=yes" onclick=\'return confirm("' . _('Are you sure you wish to delete this expense?') . '");\'>' . _('Delete') . '</a></td>
 					</tr>';
 			} else {
-				echo '<td>', ConvertSQLDate($MyRow['date']), '</td>
+				echo '<tr class="striped_row">
+						<td>', ConvertSQLDate($MyRow['date']), '</td>
 						<td>', $ExpenseCodeDes, '</td>
 						<td class="number">', locale_number_format($MyRow['amount'], $CurrDecimalPlaces), '</td>
 						<td class="number">', $TaxesTaxAmount, '</td>

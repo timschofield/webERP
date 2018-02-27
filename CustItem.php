@@ -149,16 +149,10 @@ if ($Edit == false) {
 
 						</tr>';
 		echo $TableHeader;
-		$k = 0; //row colour counter
+
 		while ($myrow = DB_fetch_array($custitemResult)) {
-			if ($k == 1) {
-				echo '<tr class="EvenTableRows">';
-				$k = 0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k++;
-			}
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
@@ -302,16 +296,10 @@ if (isset($debtorsmasterResult) AND DB_num_rows($debtorsmasterResult) > 0) {
 						<th class="ascending">' . _('Address 3') . '</th>
 					</tr>';
     echo $TableHeader;
-	$k = 0;
+
     while ($myrow = DB_fetch_array($debtorsmasterResult)) {
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k++;
-		}
-       printf('<td><input type="submit" name="DebtorNo" value="%s" /></td>
+		printf('<tr class="striped_row">
+				<td><input type="submit" name="DebtorNo" value="%s" /></td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>

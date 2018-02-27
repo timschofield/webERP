@@ -116,23 +116,15 @@ $tableheader = '<tr>
 echo $tableheader;
 
 $j = 1;
-$k=0; //row colour counter
 
 while ($myrow=DB_fetch_array($MovtsResult)) {
-
-	if ($k==1){
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k=1;
-	}
 
 	$DisplayTranDate = ConvertSQLDate($myrow['trandate']);
 
 	if ($myrow['type']==10){ /*its a sales invoice allow link to show invoice it was sold on*/
 
-		printf('<td><a target="_blank" href="%s/PrintCustTrans.php?FromTransNo=%s&amp;InvOrCredit=Invoice">%s</a></td>
+		printf('<tr class="striped_row">
+				<td><a target="_blank" href="%s/PrintCustTrans.php?FromTransNo=%s&amp;InvOrCredit=Invoice">%s</a></td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
@@ -160,7 +152,8 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 
 	} elseif ($myrow['type']==11){
 
-		printf('<td><a target="_blank" href="%s/PrintCustTrans.php?FromTransNo=%s&amp;InvOrCredit=Credit">%s</a></td>
+		printf('<tr class="striped_row">
+				<td><a target="_blank" href="%s/PrintCustTrans.php?FromTransNo=%s&amp;InvOrCredit=Credit">%s</a></td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
@@ -187,7 +180,8 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 				locale_number_format($myrow['newqoh'],$myrow['decimalplaces']));
 	} else {
 
-		printf('<td>%s</td>
+		printf('<tr class="striped_row">
+				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>

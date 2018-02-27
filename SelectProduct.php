@@ -342,7 +342,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 
 		echo '<td style="width:50%" valign="top"><table>
 				<tr><th style="width:20%">' . _('Supplier') . '</th>
-					<th stlye="width:15%">' . _('Code') . '</th>
+					<th style="width:15%">' . _('Code') . '</th>
 					<th style="width:15%">' . _('Cost') . '</th>
 					<th style="width:5%">' . _('Curr') . '</th>
 					<th style="width:10%">' . _('Lead Time') . '</th>
@@ -851,19 +851,11 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 						</tr>';
 		echo $TableHeader;
 		$j = 1;
-		$k = 0; //row counter to determine background colour
 		$RowIndex = 0;
 		if (DB_num_rows($SearchResult) <> 0) {
 			DB_data_seek($SearchResult, ($_POST['PageOffset'] - 1) * $_SESSION['DisplayRecordsMax']);
 		}
 		while (($myrow = DB_fetch_array($SearchResult)) AND ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
-			if ($k == 1) {
-				echo '<tr class="EvenTableRows">';
-				$k = 0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k++;
-			}
 			if ($myrow['mbflag'] == 'D') {
 				$qoh = _('N/A');
 			} else {
@@ -890,7 +882,8 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 				$StockImgLink = '<p>'._('No Image').'</p>';
 			}
 
-			echo '<td>' . $ItemStatus . '</td>
+			echo '<tr class="striped_row">
+				<td>' . $ItemStatus . '</td>
 			<td><input type="submit" name="Select" value="' . $myrow['stockid'] . '" /></td>
 			<td>'.$StockImgLink.'</td>
 			<td title="'. $myrow['longdescription'] . '">' . $myrow['description'] . '</td>

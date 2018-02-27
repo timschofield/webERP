@@ -262,7 +262,6 @@ echo '<br /><table class="selection">
 		</tr>
 	</thead><tbody>';
 
-$k = 0; //row colour counter
 $OutstandingOrSettled = '';
 if ($_SESSION['InvoicePortraitFormat'] == 1) { //Invoice/credits in portrait
 	$PrintCustomerTransactionScript = 'PrintCustTransPortrait.php';
@@ -279,20 +278,11 @@ foreach ($Transactions as $MyRow) {
 		$OutstandingOrSettled='Outstanding';
 	}
 
-	if ($k == 1) {
-		echo '<tr class="EvenTableRows">';
-		$k = 0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k = 1;
-	}
-
-
 	$FormatedTranDate = ConvertSQLDate($MyRow['trandate']);
 
-
 	if ($MyRow['type']==10) { //its an invoice
-		echo '<td>', _($MyRow['typename']), '</td>
+		echo '<tr class="striped_row">
+			<td>', _($MyRow['typename']), '</td>
 			<td class="number">', $MyRow['transno'], '</td>
 			<td>', ConvertSQLDate($MyRow['trandate']), '</td>
 			<td>', $MyRow['branchcode'], '</td>
@@ -316,7 +306,8 @@ foreach ($Transactions as $MyRow) {
 		</tr>';
 
 	} elseif ($MyRow['type'] == 11) {
-		echo '<td>', _($MyRow['typename']), '</td>
+		echo '<tr class="striped_row">
+				<td>', _($MyRow['typename']), '</td>
 				<td class="number">', $MyRow['transno'], '</td>
 				<td>', ConvertSQLDate($MyRow['trandate']), '</td>
 				<td>', $MyRow['branchcode'], '</td>
@@ -345,7 +336,8 @@ foreach ($Transactions as $MyRow) {
 		/* Show transactions where:
 		 * - Is receipt
 		 */
-		echo '<td>', _($MyRow['typename']), '</td>
+		echo '<tr class="striped_row">
+				<td>', _($MyRow['typename']), '</td>
 				<td class="number">', $MyRow['transno'], '</td>
 				<td>', ConvertSQLDate($MyRow['trandate']), '</td>
 				<td>', $MyRow['branchcode'], '</td>
@@ -369,7 +361,8 @@ foreach ($Transactions as $MyRow) {
 		* - Is a negative receipt
 		* - User cannot view GL transactions
 		*/
-		echo '<td>', _($MyRow['typename']), '</td>
+		echo '<tr class="striped_row">
+				<td>', _($MyRow['typename']), '</td>
 				<td class="number">', $MyRow['transno'], '</td>
 				<td>', ConvertSQLDate($MyRow['trandate']), '</td>
 				<td>', $MyRow['branchcode'], '</td>

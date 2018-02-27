@@ -408,7 +408,6 @@ if(isset($result)) {
 						<th class="ascending">' . _('Email') . '</th>
 					</tr>
 				</thead>';
-		$k = 0;// row counter to determine background colour
 		$RowIndex = 0;
 	}// end if NOT producing a CSV file
 	if(DB_num_rows($result) <> 0) {
@@ -426,14 +425,8 @@ if(isset($result)) {
 		$i = 0;// counter for input controls
 		echo '<tbody>';
 		while (($myrow = DB_fetch_array($result)) AND ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
-			if($k == 1) {
-				echo '<tr class="EvenTableRows">';
-				$k = 0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k = 1;
-			}
-			echo '<td><button type="submit" name="SubmitCustomerSelection[', htmlspecialchars($myrow['debtorno'], ENT_QUOTES, 'UTF-8', false), ']" value="', htmlspecialchars($myrow['branchcode'], ENT_QUOTES, 'UTF-8', false), '" >', $myrow['debtorno'], ' ', $myrow['branchcode'], '</button></td>
+			echo '<tr class="striped_row">
+				<td><button type="submit" name="SubmitCustomerSelection[', htmlspecialchars($myrow['debtorno'], ENT_QUOTES, 'UTF-8', false), ']" value="', htmlspecialchars($myrow['branchcode'], ENT_QUOTES, 'UTF-8', false), '" >', $myrow['debtorno'], ' ', $myrow['branchcode'], '</button></td>
 				<td class="text">', htmlspecialchars($myrow['name'], ENT_QUOTES, 'UTF-8', false), '</td>
 				<td class="text">', htmlspecialchars($myrow['brname'], ENT_QUOTES, 'UTF-8', false), '</td>
 				<td class="text">', $myrow['contactname'], '</td>
@@ -579,7 +572,7 @@ if(isset($_SESSION['CustomerID']) AND $_SESSION['CustomerID'] != '') {
 				</thead>
 				<tbody>
 					<tr>
-						<td><div class="center" id="map" style="height:', $map_height . 'px; margin: 0 auto; width:', $map_width, 'px;"></div></td>
+						<td><div class="centre" id="map" style="height:', $map_height . 'px; margin: 0 auto; width:', $map_width, 'px;"></div></td>
 					</tr>
 				</tbody>
 				</table>';
@@ -740,17 +733,10 @@ function initMap() {
 						</tr>
 					</tfoot>
 					<tbody>';
-			$k = 0;// row colour counter
+
 			while ($myrow = DB_fetch_array($result)) {
-				if($k == 1) {
-					echo '<tr class="OddTableRows">';
-					$k = 0;
-				}// $k == 1
-				else {
-					echo '<tr class="EvenTableRows">';
-					$k = 1;
-				}
-				echo '<td>' , $myrow[2] , '</td>
+				echo '<tr class="striped_row">
+					<td>' , $myrow[2] , '</td>
 					<td>' , $myrow[3] , '</td>
 					<td>' , $myrow[4] , '</td>
 					<td><a href="mailto:' , $myrow[6] , '">' , $myrow[6] . '</a></td>
@@ -775,7 +761,7 @@ function initMap() {
 				$result2 = DB_query($SQL);
 				$BranchContact = DB_fetch_row($result2);
 
-				echo '<tr class="EvenTableRows">
+				echo '<tr class="striped_row">
 						<td>' . $BranchContact[2] . '</td>
 						<td>' . _('Branch Contact') . ' ' . $BranchContact[0] . '</td>
 						<td>' . $BranchContact[3] . '</td>
@@ -815,17 +801,10 @@ function initMap() {
 					<th>' . _('Delete') . '</th>
 					<th> <a href="AddCustomerNotes.php?DebtorNo=', urlencode($_SESSION['CustomerID']), '">' . ' ' . _('Add New Note') . '</a> </th>
 				</tr>';
-			$k = 0;// row colour counter
+
 			while ($myrow = DB_fetch_array($result)) {
-				if($k == 1) {
-					echo '<tr class="OddTableRows">';
-					$k = 0;
-				}// $k == 1
-				else {
-					echo '<tr class="EvenTableRows">';
-					$k = 1;
-				}
-				echo '<td>' . ConvertSQLDate($myrow['date']) . '</td>
+				echo '<tr class="striped_row">
+					<td>' . ConvertSQLDate($myrow['date']) . '</td>
 					<td>' . $myrow['note'] . '</td>
 					<td><a href="' . $myrow['href'] . '">' . $myrow['href'] . '</a></td>
 					<td>' . $myrow['priority'] . '</td>
@@ -857,16 +836,10 @@ function initMap() {
 					<th>' . _('Delete') . '</th>
 					<th><a href="AddCustomerTypeNotes.php?DebtorType=' . $CustomerType . '">' . _('Add New Group Note') . '</a></th>
 				</tr>';
-			$k = 0;// row colour counter
+
 			while ($myrow = DB_fetch_array($result)) {
-				if($k == 1) {
-					echo '<tr class="OddTableRows">';
-					$k = 0;
-				} else {
-					echo '<tr class="EvenTableRows">';
-					$k = 1;
-				}
-				echo '<td>' . $myrow[4] . '</td>
+				echo '<tr class="striped_row">
+					<td>' . $myrow[4] . '</td>
 					<td>' . $myrow[3] . '</td>
 					<td>' . $myrow[2] . '</td>
 					<td>' . $myrow[5] . '</td>

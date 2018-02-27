@@ -104,7 +104,7 @@ if (!isset($_POST['Show'])) {
 			</tr>';
 
 		$LastJournal = 0;
-		$i = 0;
+
 		while ($myrow = DB_fetch_array($result)){
 
 			if ($myrow['tag']==0) {
@@ -112,21 +112,17 @@ if (!isset($_POST['Show'])) {
 			}
 
 			if ($myrow['typeno']!=$LastJournal) {
-				if ($i == 0) {
-					$RowClass = 'class="OddTableRows"';
-					$i = 1;
-				} else {
-					$RowClass = 'class="EvenTableRows"';
-					$i = 0;
-				}
 
-				echo '<tr ' . $RowClass . '><td colspan="8"></td></tr><tr>
-					<tr ' . $RowClass . '>
+				echo '<tr>
+						<td colspan="8"></td>
+					</tr>
+					<tr>
 					<td>' .  ConvertSQLDate($myrow['trandate']) . '</td>
 					<td class="number">' . $myrow['typeno'] . '</td>';
 
 			} else {
-				echo '<tr ' . $RowClass . '><td colspan="2"></td>';
+				echo '<tr>
+						<td colspan="2"></td>';
 			}
 
 			// if user is allowed to see the account we show it, other wise we show "OTHERS ACCOUNTS"
@@ -157,8 +153,6 @@ if (!isset($_POST['Show'])) {
 				} else {
 					echo '<td class="number"><a href="PDFGLJournal.php?JournalNo='.$myrow['typeno'].'">' . _('Print')  . '</a></td></tr>';
 				}
-
-
 
 				$LastJournal = $myrow['typeno'];
 			} else {

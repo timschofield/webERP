@@ -168,18 +168,10 @@ if (isset($_POST['process'])OR isset($SelectedRole)) {
 			<th>' . _('Description') . '</th>
 		</tr>';
 
-$k=0; //row colour counter
-
 while ($myrow = DB_fetch_array($result)) {
-	if ($k==1){
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k=1;
-	}
 
-	printf('<td>%s</td>
+	printf('<tr class="striped_row">
+			<td>%s</td>
 			<td>%s</td>
 			<td><a href="%s?SelectedType=%s&amp;delete=yes&amp;SelectedRole=' . $SelectedRole . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this internal stock category code?') . '\');">' . _('Delete') . '</a></td>
 			</tr>',

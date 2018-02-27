@@ -634,19 +634,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			</tr>';
 
 		$j = 1;
-		$k = 0; //row counter to determine background colour
 		$LastCustomer='';
 		while ($myrow=DB_fetch_array($result_CustSelect)) {
 
-			if ($k==1){
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k=1;
-			}
-
-			echo '	<td>' . htmlspecialchars($myrow['name'], ENT_QUOTES, 'UTF-8', false) . '</td>
+			echo '<tr class="striped_row">
+					<td>' . htmlspecialchars($myrow['name'], ENT_QUOTES, 'UTF-8', false) . '</td>
 					<td><input tabindex="'.strval($j+5).'" type="submit" name="SubmitCustomerSelection' . $j .'" value="' . htmlspecialchars($myrow['brname'], ENT_QUOTES, 'UTF-8', false). '" />
 					<input name="SelectedCustomer' . $j .'" type="hidden" value="'.$myrow['debtorno'].'" />
 					<input name="SelectedBranch' . $j .'" type="hidden" value="'. $myrow['branchcode'].'" /></td>
@@ -1375,7 +1367,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		$_SESSION['Items'.$identifier]->total = 0;
 		$_SESSION['Items'.$identifier]->totalVolume = 0;
 		$_SESSION['Items'.$identifier]->totalWeight = 0;
-		$k =0;  //row colour counter
+
 		foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
 
 			$LineTotal = $OrderLine->Quantity * $OrderLine->Price * (1 - $OrderLine->DiscountPercent);
@@ -1387,12 +1379,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			if ($OrderLine->QOHatLoc < $OrderLine->Quantity AND ($OrderLine->MBflag=='B' OR $OrderLine->MBflag=='M')) {
 				/*There is a stock deficiency in the stock location selected */
 				$RowStarter = '<tr style="background-color:#EEAABB">'; //rows show red where stock deficiency
-			} elseif ($k==1){
-				$RowStarter = '<tr class="OddTableRows">';
-				$k=0;
 			} else {
-				$RowStarter = '<tr class="EvenTableRows">';
-				$k=1;
+				$RowStarter = '<tr class="striped_row">';
 			}
 
 			echo $RowStarter;
@@ -1445,9 +1433,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo '<td rowspan="2"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier . '&amp;Delete=' . $OrderLine->LineNumber . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">' . $RemTxt . '</a></td></tr>';
 
 			if ($_SESSION['AllowOrderLineItemNarrative'] == 1){
-				echo $RowStarter;
 				$varColSpan=8+$ShowPOLine+$ShowDiscountGP;
-				echo '<td colspan="' . $varColSpan . '">' . _('Narrative') . ':<textarea name="Narrative_' . $OrderLine->LineNumber . '" cols="100%" rows="1" title="' . _('Enter any narrative to describe to the customer the nature of the charge for this line') . '" >' . stripslashes(AddCarriageReturns($OrderLine->Narrative)) . '</textarea><br /></td>
+				echo $RowStarter .
+						'<td colspan="' . $varColSpan . '">' . _('Narrative') . ':<textarea name="Narrative_' . $OrderLine->LineNumber . '" cols="100%" rows="1" title="' . _('Enter any narrative to describe to the customer the nature of the charge for this line') . '" >' . stripslashes(AddCarriageReturns($OrderLine->Narrative)) . '</textarea><br /></td>
 					</tr>';
 			} else {
 				echo '<tr>
@@ -1468,7 +1456,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			$ColSpanNumber = 1;
 		}*/
 		$varColSpan=1+$ShowPOLine+$ShowDiscountGP;
-		echo '<tr class="EvenTableRows">
+		echo '<tr class="striped_row">
 				<td class="number" colspan="6"><b>' . _('TOTAL Excl Tax/Freight') . '</b></td>
 				<td colspan="' . $varColSpan . '" class="number"><b>' . $DisplayTotal . '</b></td>
 			</tr>
@@ -1477,7 +1465,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		$DisplayVolume = locale_number_format($_SESSION['Items'.$identifier]->totalVolume,2);
 		$DisplayWeight = locale_number_format($_SESSION['Items'.$identifier]->totalWeight,2);
 		echo '<table>
-					<tr class="EvenTableRows"><td>' . _('Total Weight') . ':</td>
+					<tr class="striped_row"><td>' . _('Total Weight') . ':</td>
 						 <td>' . $DisplayWeight . '</td>
 						 <td>' . _('Total Volume') . ':</td>
 						 <td>' . $DisplayVolume . '</td>
@@ -1538,7 +1526,6 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					</tr>';
 			$i=0;
 			$j=1;
-			$k=0; //row colour counter
 
 			while ($myrow=DB_fetch_array($result2)) {
 // This code needs sorting out, but until then :
@@ -1576,18 +1563,12 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
 				$WoQty = GetQuantityOnOrderDueToWorkOrders($myrow['stockid'], '');
 
-				if ($k==1){
-					echo '<tr class="EvenTableRows">';
-					$k=0;
-				} else {
-					echo '<tr class="OddTableRows">';
-					$k=1;
-				}
 				$OnOrder = $PurchQty + $WoQty;
 
 				$Available = $QOH - $DemandQty + $OnOrder;
 
-				printf('<td>%s</td>
+				printf('<tr class="striped_row">
+						<td>%s</td>
 						<td title="%s">%s</td>
 						<td>%s</td>
 						<td class="number">%s</td>
@@ -1614,7 +1595,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 #end of page full new headings if
 			}
 #end of while loop for Frequently Ordered Items
-			echo '<td style="text-align:center" colspan="8"><input name="SelectingOrderItems" type="hidden" value="1" /><input tabindex="'.strval($j+8).'" type="submit" value="'._('Add to Sales Order').'" /></td></tr>';
+			echo '<td class="centre" colspan="8"><input name="SelectingOrderItems" type="hidden" value="1" /><input tabindex="'.strval($j+8).'" type="submit" value="'._('Add to Sales Order').'" /></td></tr>';
 			echo '</table>';
 		} //end of if Frequently Ordered Items > 0
 		echo '<br /><div class="centre">' . $msg;
@@ -1665,12 +1646,12 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			</tr>';
 
 		echo '<tr>
-			<td style="text-align:center" colspan="1"><input tabindex="4" type="submit" name="Search" value="' . _('Search Now') . '" /></td>
-			<td style="text-align:center" colspan="1"><input tabindex="5" type="submit" name="QuickEntry" value="' .  _('Use Quick Entry') . '" /></td>';
+			<td class="centre" colspan="1"><input tabindex="4" type="submit" name="Search" value="' . _('Search Now') . '" /></td>
+			<td class="centre" colspan="1"><input tabindex="5" type="submit" name="QuickEntry" value="' .  _('Use Quick Entry') . '" /></td>';
 
 		if (in_array($_SESSION['PageSecurityArray']['ConfirmDispatch_Invoice.php'], $_SESSION['AllowedPageSecurityTokens'])){ //not a customer entry of own order
-			echo '<td style="text-align:center" colspan="1"><input tabindex="6" type="submit" name="ChangeCustomer" value="' . _('Change Customer') . '" /></td>
-			<td style="text-align:center" colspan="1"><input tabindex="7" type="submit" name="SelectAsset" value="' . _('Fixed Asset Disposal') . '" /></td>';
+			echo '<td class="centre" colspan="1"><input tabindex="6" type="submit" name="ChangeCustomer" value="' . _('Change Customer') . '" /></td>
+			<td class="centre" colspan="1"><input tabindex="7" type="submit" name="SelectAsset" value="' . _('Fixed Asset Disposal') . '" /></td>';
 		}
 		echo '<tr>
 				<td colspan="10">
@@ -1713,7 +1694,6 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		   		</tr>';
 			$ImageSource = _('No Image');
 			$i=0;
-			$k=0; //row colour counter
 
 			while ($myrow=DB_fetch_array($SearchResult)) {
 
@@ -1752,17 +1732,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
 				$WoQty = GetQuantityOnOrderDueToWorkOrders($myrow['stockid'], '');
 
-				if ($k==1){
-					echo '<tr class="EvenTableRows">';
-					$k=0;
-				} else {
-					echo '<tr class="OddTableRows">';
-					$k=1;
-				}
 				$OnOrder = $PurchQty + $WoQty;
 				$Available = $QOH - $DemandQty + $OnOrder;
 
-				printf('<td>%s</td>
+				printf('<tr class="striped_row">
+						<td>%s</td>
 						<td title="%s">%s</td>
 						<td>%s</td>
 						<td>%s</td>

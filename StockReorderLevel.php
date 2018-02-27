@@ -61,17 +61,8 @@ $TableHeader = '<tbody><tr>
 				</tr>';
 
 echo $TableHeader;
-$k=0; //row colour counter
 
 while ($myrow=DB_fetch_array($LocStockResult)) {
-
-	if ($k==1){
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k=1;
-	}
 
 	if (isset($_POST['UpdateData'])
 		AND $_POST['Old_' . $myrow['loccode']]!= filter_number_format($_POST[$myrow['loccode']])
@@ -91,9 +82,11 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 	} else {
 		$UpdateCode='<input type="hidden" name="%s">%s<input type="hidden" name="Old_%s" value="%s" />';
 	}
-	printf('<td>%s</td>
+	printf('<tr class="striped_row">
+			<td>%s</td>
 			<td class="number">%s</td>
-			<td class="number">' . $UpdateCode . '</td></tr>',
+			<td class="number">' . $UpdateCode . '</td>
+			</tr>',
 			$myrow['locationname'],
 			locale_number_format($myrow['quantity'],$myrow['decimalplaces']),
 			$myrow['loccode'],

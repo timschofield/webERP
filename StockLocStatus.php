@@ -181,7 +181,6 @@ if(isset($_POST['ShowStatus'])) {
 				<th class="number">', _('Available'), '</th>
 				<th class="number">', _('On Order'), '</th>
 			</tr>';
-	$k=0; //row colour counter
 
 	while($myrow=DB_fetch_array($LocStockResult)) {
 
@@ -252,23 +251,15 @@ if(isset($_POST['ShowStatus'])) {
 
 			if(($_POST['BelowReorderQuantity']=='NotZero') AND (($myrow['quantity']-$DemandQty)>0)) {
 
-				if($k==1) {
-					echo '<tr class="OddTableRows">';
-					$k=0;
-				} else {
-					echo '<tr class="EvenTableRows">';
-					$k=1;
-				}
-				$tr = ($myrow['serialised'] or $myrow['controlled'])?'':'<tr>';
-				printf('<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=%s">%s</a></td>
+				printf('<tr class="striped_row">
+					<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=%s">%s</a></td>
 					<td class="text">%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number"><a target="_blank" href="' . $RootPath . '/SelectProduct.php?StockID=%s">%s</a></td>
-					<td class="number">%s</td>
-					' . $tr,
+					<td class="number">%s</td>',
 					mb_strtoupper($myrow['stockid']),
 					mb_strtoupper($myrow['stockid']),
 					$myrow['description'],
@@ -287,14 +278,8 @@ if(isset($_POST['ShowStatus'])) {
 					echo '<td><a target="_blank" href="' . $RootPath . '/StockSerialItems.php?Location=' . $myrow['loccode'] . '&StockID=' . $StockID . '">' . _('Batches') . '</a></td></tr>';
 				}
 			} else if($_POST['BelowReorderQuantity']!='NotZero') {
-				if($k==1) {
-					echo '<tr class="OddTableRows">';
-					$k=0;
-				} else {
-					echo '<tr class="EvenTableRows">';
-					$k=1;
-				}
-				printf('<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=%s">%s</a></td>
+				printf('<tr class="striped_row">
+						<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=%s">%s</a></td>
     					<td>%s</td>
     					<td class="number">%s</td>
     					<td>%s</td>

@@ -75,7 +75,7 @@ if( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 		$CreditTotal = 0;
 		$DebitTotal = 0;
 		$AnalysisCompleted = 'Not Yet';
-		$j = 1;// Row counter to determine background colour.
+
 		while( $TransRow = DB_fetch_array($TransResult) ) {
 			$TranDate = ConvertSQLDate($TransRow['trandate']);
 			$DetailResult = false;
@@ -145,15 +145,8 @@ if( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 						$TransRow['narrative'] = '&nbsp;';
 					}
 
-					if ($j==1) {
-					    echo '<tr class="OddTableRows">';
-					    $j=0;
-					} else {
-					    echo '<tr class="EvenTableRows">';
-					    $j++;
-					}
-
-					echo '	<td>' . MonthAndYearFromSQLDate($TransRow['lastdate_in_period']) . '</td>
+					echo '<tr class="striped_row">
+							<td>' . MonthAndYearFromSQLDate($TransRow['lastdate_in_period']) . '</td>
 							<td>' . $TranDate . '</td>';
 
 					if ($URL == ""){
@@ -192,14 +185,8 @@ if( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 						}
 					}
 
-					if ($j==1) {
-					    echo '<tr class="OddTableRows">';
-					    $j=0;
-					} else {
-					    echo '<tr class="EvenTableRows">';
-					    $j++;
-					}
-					echo '	<td>' . MonthAndYearFromSQLDate($TransRow['lastdate_in_period']) . '</td>
+					echo '<tr class="striped_row">
+							<td>' . MonthAndYearFromSQLDate($TransRow['lastdate_in_period']) . '</td>
 							<td>' . $TranDate . '</td>
 							<td><a href="' . $URL . $DetailRow['otherpartycode'] . $FromDate . '">' .
 								$TransRow['accountname'] . ' - ' . $DetailRow['otherparty'] . '</a></td>

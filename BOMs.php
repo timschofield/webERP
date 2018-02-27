@@ -671,25 +671,20 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 					</tr>';
 	echo $TableHeader;
 	if(count($BOMTree) == 0) {
-		echo '<tr class="OddTableRows">
+		echo '<tr class="striped_row">
 				<td colspan="8">' . _('No materials found.') . '</td>
 			</tr>';
 	} else {
 		$UltimateParent = $SelectedParent;
-		$k = 0;
 		$RowCounter = 1;
 		$BOMTree = arrayUnique($BOMTree);
 		foreach($BOMTree as $BOMItem){
 			$Level = $BOMItem['Level'];
 			$Parent = $BOMItem['Parent'];
 			$Component = $BOMItem['Component'];
-			if ($k==1){
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			}else {
-				echo '<tr class="OddTableRows">';
-				$k++;
-			}
+
+			echo '<tr class="striped_row">';
+
 			DisplayBOMItems($UltimateParent, $Parent, $Component, $Level, $db);
 		}
 	}
@@ -1025,22 +1020,16 @@ if (!isset($SelectedParent)) {
 		echo $TableHeader;
 
 		$j = 1;
-		$k=0; //row colour counter
+
 		while ($myrow=DB_fetch_array($result)) {
-			if ($k==1){
-				echo '<tr class="EvenTableRows">';;
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';;
-				$k++;
-			}
 			if ($myrow['mbflag']=='A' OR $myrow['mbflag']=='K' OR $myrow['mbflag']=='G'){
 				$StockOnHand = _('N/A');
 			} else {
 				$StockOnHand = locale_number_format($myrow['totalonhand'],$myrow['decimalplaces']);
 			}
 			$tab = $j+3;
-			printf('<td><input tabindex="' . $tab . '" type="submit" name="Select" value="%s" /></td>
+			printf('<tr class="striped_row">
+					<td><input tabindex="' . $tab . '" type="submit" name="Select" value="%s" /></td>
 					<td>%s</td>
 					<td class="number noprint">%s</td>
 					<td>%s</td>

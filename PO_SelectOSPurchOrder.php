@@ -305,7 +305,6 @@ if (isset($StockItemsResult)) {
 			<th class="ascending">' . _('Units') . '</th>
 		</tr>';
 
-	$k = 0; //row colour counter
 	$StocksStr = '(';
 	$q = 0;
 	while ($myrow = DB_fetch_array($StockItemsResult)){
@@ -327,16 +326,9 @@ if (isset($StockItemsResult)) {
 
 	while ($myrow = DB_fetch_array($StockItemsResult)) {
 		$myrow['qoh'] = $QOH[$myrow['stockid']];
-		if ($k == 1) {
-			echo '<tr class="EvenTableRows">';
-			$k = 0;
-		} //$k == 1
-		else {
-			echo '<tr class="OddTableRows">';
-			$k = 1;
-		}
 
-		printf('<td><input type="submit" name="SelectedStockItem" value="%s"</td>
+		printf('<tr class="striped_row">
+				<td><input type="submit" name="SelectedStockItem" value="%s"</td>
 				<td>%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
@@ -615,7 +607,7 @@ else {
 			<th>' . _('Receive') . '</th>
 		</tr>';
 	$j = 1;
-	$k = 0; //row colour counter
+
 	while ($myrow = DB_fetch_array($PurchOrdersResult)) {
 		$Bal = '';
 		if (isset($_POST['PODetails'])) {
@@ -633,16 +625,6 @@ else {
 			$BalRow = '<td width="250" style="word-break:break-all">' . $Bal . '</td>';
 		} else {
 			$BalRow = '';
-		}
-
-		if ($k == 1) {
-			/*alternate bgcolour of row for highlighting */
-			echo '<tr class="EvenTableRows">';
-			$k = 0;
-		} //$k == 1
-		else {
-			echo '<tr class="OddTableRows">';
-			$k++;
 		}
 
 		$ModifyPage = $RootPath . '/PO_Header.php?ModifyOrderNumber=' . $myrow['orderno'];
@@ -671,7 +653,8 @@ else {
 		$MyUserRow = DB_fetch_array($UserResult);
 		$InitiatorName = $MyUserRow['realname'];
 
-		echo '<td><a href="' . $ModifyPage . '">' . $myrow['orderno'] . '</a></td>
+		echo '<tr class="striped_row">
+			<td><a href="' . $ModifyPage . '">' . $myrow['orderno'] . '</a></td>
 			<td>' . $FormatedOrderDate . '</td>
 			<td>' . $FormatedDeliveryDate . '</td>
 			<td>' . $InitiatorName . '</td>

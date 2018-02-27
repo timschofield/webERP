@@ -100,22 +100,13 @@ $tableheader = '<tr>
 echo $tableheader;
 
 $j = 1;
-$k=0; //row colour counter
 
 while ($myrow=DB_fetch_array($MovtsResult)) {
 
-	if ($k==1){
-		echo '<tr class="OddTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="EvenTableRows">';
-		$k=1;
-	}
-
 	$DisplayTranDate = ConvertSQLDate($myrow['trandate']);
 
-
-		printf('<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=%s">%s</a></td>
+	printf('<tr class="striped_row">
+			<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=%s">%s</a></td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>

@@ -277,21 +277,14 @@ if(isset($searchresult) AND !isset($_POST['Select'])) {
 				<th>' . _('Units') . '</th>
 			</tr>';
 		$j = 1;
-		$k = 0; //row counter to determine background colour
 		$RowIndex = 0;
 		if(DB_num_rows($searchresult) <> 0) {
 			DB_data_seek($searchresult, ($_POST['PageOffset'] - 1) * $_SESSION['DisplayRecordsMax']);
 		}
 		while(($MyRow = DB_fetch_array($searchresult)) AND ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
-			if($k == 1) {
-				echo '<tr class="EvenTableRows">';
-				$k = 0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k++;
-			}
 
-			echo '<td><input type="submit" name="Select" value="' . $MyRow['stockid'] . '" /></td>
+			echo '<tr class="striped_row">
+				<td><input type="submit" name="Select" value="' . $MyRow['stockid'] . '" /></td>
 				<td>' . $MyRow['description'] . '</td>
 				<td>' . $MyRow['units'] . '</td>
 				</tr>';
@@ -471,16 +464,9 @@ if(isset($SuppliersResult)) {
 				<th>' . _('Address 3') . '</th>
 			</tr>';
 
-	$k = 0;
 	while($MyRow = DB_fetch_array($SuppliersResult)) {
-		if($k == 1){
-			echo '<tr class="EvenTableRows">';
-			$k = 0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k = 1;
-		}
-		echo	'<td><input name="SupplierID" type="submit" value="', $MyRow['supplierid'], '" /></td>
+		echo '<tr class="striped_row">
+				<td><input name="SupplierID" type="submit" value="', $MyRow['supplierid'], '" /></td>
 				<td>', $MyRow['suppname'], '</td>
 				<td>', $MyRow['currcode'], '</td>
 				<td>', $MyRow['address1'], '</td>
@@ -534,7 +520,7 @@ if(isset($_POST['SupplierID'])) {
 
 	echo '<table class="selection">
 			<tr>
-				<th colspan="12" style="text-align: right">' . _('Find new Item Code') .
+				<th colspan="12" class="number">' . _('Find new Item Code') .
 					'<button type="submit" name="StockSearch"><img width="15" src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" alt="" /></button></th>
 			</tr>';
 	echo '<tr>

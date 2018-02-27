@@ -209,20 +209,10 @@ function GetUsers ($GroupId,$GroupName) {
 		<th colspan="3"><?php echo _('Available Users'); ?></th>
 	</tr>
 <?php
-	$k = 0;
 	while($myrow=DB_fetch_array($result)){
-		if($k==0){
 ?>
-			<tr class="EvenTableRows">
+		<tr class="striped_row">
 <?php
-			$k = 1;
-		}else{
-?>
-			<tr class="OddTableRows">
-<?php
-			$k = 0;
-		}
-	
 		if(in_array($myrow['userid'],$UsersAssigned)){
 ?>
 			<td><?php echo $myrow['userid']; ?></td>

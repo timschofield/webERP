@@ -286,19 +286,10 @@ or deletion of the records*/
 			<th>' . _('Report Title') . '</th>
           </tr>';
 
-$k=0; //row colour counter
-
 while ($myrow = DB_fetch_array($result)) {
-	if ($k==1){
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k++;
-	}
 
-
-	printf('<td>%s</td>
+	printf('<tr class="striped_row">
+			<td>%s</td>
 			<td>%s</td>
 			<td><a href="%s&amp;SelectedReport=%s">' . _('Design') . '</a></td>
 			<td><a href="%s/SalesAnalReptCols.php?ReportID=%s">' . _('Define Columns') . '</a></td>

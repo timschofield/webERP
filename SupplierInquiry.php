@@ -222,7 +222,6 @@ $AuthResult = DB_query($AuthSQL);
 $AuthRow = DB_fetch_array($AuthResult);
 
 $j = 1;
-$k = 0;// Row colour counter.
 
 while($MyRow = DB_fetch_array($TransResult)) {
 	if($MyRow['hold'] == 0 AND $MyRow['settled'] == 0) {
@@ -236,14 +235,9 @@ while($MyRow = DB_fetch_array($TransResult)) {
 	// Comment: All table-row (tag tr) must have 10 table-datacells (tag td).
 
 	if($MyRow['hold'] == 1) {
-		echo '<tr bgcolor="#DD99BB">';
-/*		echo '<tr class="Highlight">';*/
-	} elseif($k == 1) {
-		echo '<tr class="EvenTableRows">';
-		$k = 0;
+		echo '<tr style="backgroud-color:#DD99BB">';
 	} else {
-		echo '<tr class="OddTableRows">';
-		$k = 1;
+		echo '<tr class="striped_row">';
 	}
 
 	// Prints first 8 columns that are in common (columns 1-8):

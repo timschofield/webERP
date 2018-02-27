@@ -217,17 +217,10 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['View'])) {
 				<th class="ascending">' . _('Date From') . '</th>
 				<th>' . _('Supp Code') . '</th>
 			</tr>';
-		$k = 0; 
+
 		while ($myrow = DB_fetch_array($result)){
-			echo '<tr';
-			if ($k==0) {
-				echo ' class="OddTableRows">';
-				$k =1;
-			} else {
-				echo ' class="EvenTableRows">';
-				$k = 0;
-			}
-			echo '<td class="ascending">' . $myrow['stockid'] . '</td>
+			echo '<tr class="striped_row">
+				<td class="ascending">' . $myrow['stockid'] . '</td>
 				<td>' . $myrow['description'] . '</td>
 				<td>' . $myrow['conversionfactor'] . '</td>
 				<td>' . $myrow['price'] . '</td>

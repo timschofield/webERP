@@ -40,9 +40,6 @@ img{ /* icon on page title, etc */
 	vertical-align:middle;
 }
 
-p{ /* some text need to be centered */
-/*text-align:center;*/
-}
 p.good {
 	font-weight: bold;
 	color: green;
@@ -148,15 +145,14 @@ textarea:hover{
 	background:#9ffffb;
 }
 
-.EvenTableRows {
-	background-color: gainsboro;
-}
-.OddTableRows {
-	background-color: whitesmoke;
+tr.striped_row:nth-of-type(even) {
+	background-color:gainsboro;
 }
 
-div{ /* some input/buttons need to be centered */
+tr.striped_row:nth-of-type(odd) {
+	background-color:whitesmoke;
 }
+
 div.error {
 	background-color: mistyrose;
 	width: 98%;

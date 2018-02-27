@@ -71,17 +71,10 @@ $TableHeader = '<tr>
 echo $TableHeader;
 
 $j=1;
-$k=0; //row colour counter
   while ($myrow = DB_fetch_array($Result)) {
-	if ($k == 1){
-		echo '<tr class="EvenTableRows">';
-		$k = 0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k++;
-	}
 
-	echo '<td>' . $myrow['supplierno'] . '</td>
+	echo '<tr class="striped_row">
+		<td>' . $myrow['supplierno'] . '</td>
 		<td>' . $myrow['suppreference'] . '</td>
 		<td>' . ConvertSQLDate($myrow['trandate']) . '</td>
 		<td class="number">' . locale_number_format($myrow['alloc'],$myrow['currdecimalplaces']) . '</td>

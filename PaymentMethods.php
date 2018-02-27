@@ -212,18 +212,10 @@ if (isset($_POST['submit'])) {
 			<th colspan="2">&nbsp;</th>
 		</tr>';
 
-	$k=0; //row colour counter
 	while ($myrow = DB_fetch_array($result)) {
 
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k++;
-		}
-
-		echo '<td>' . $myrow['paymentname'] . '</td>
+		echo '<tr class="striped_row">
+				<td>' . $myrow['paymentname'] . '</td>
 				<td class="centre">' . ($myrow['paymenttype'] ? _('Yes') : _('No')) . '</td>
 				<td class="centre">' . ($myrow['receipttype'] ? _('Yes') : _('No')) . '</td>
 				<td class="centre">' . ($myrow['usepreprintedstationery'] ? _('Yes') : _('No')) . '</td>
@@ -239,7 +231,7 @@ if (isset($_POST['submit'])) {
 
 
 if (isset($SelectedPaymentID)) {
-	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID .'">' . _('Review Payment Methods') . '</a></div>';
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Review Payment Methods') . '</a></div>';
 }
 
 echo '<br />';

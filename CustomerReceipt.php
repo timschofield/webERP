@@ -279,7 +279,6 @@ if (isset($_POST['CommitBatch'])){
 	$BatchReceiptsTotal = 0; //in functional currency
 	$BatchDiscount = 0; //in functional currency
 	$BatchDebtorTotal = 0; //in functional currency
-	$k=0; //Table row counter for row styles
 	$CustomerReceiptCounter=1; //Count lines of customer receipts in this batch
 
 	echo '<br />
@@ -304,19 +303,12 @@ if (isset($_POST['CommitBatch'])){
 
 	foreach ($_SESSION['ReceiptBatch' . $identifier]->Items as $ReceiptItem) {
 
-		if ($k==1){
-			echo '<tr class="OddTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="EvenTableRows">';
-			$k=1;
-		}
-
 		$SQL = "SELECT accountname FROM chartmaster WHERE accountcode='" . $ReceiptItem->GLCode . "'";
 		$Result=DB_query($SQL);
 		$myrow=DB_fetch_array($Result);
 
-		echo '<td>' . $_SESSION['ReceiptBatch' . $identifier]->BatchNo . '</td>
+		echo '<tr class="striped_row">
+			<td>' . $_SESSION['ReceiptBatch' . $identifier]->BatchNo . '</td>
 			<td>' . $_SESSION['ReceiptBatch' . $identifier]->DateBanked . '</td>
 			<td>' . $ReceiptItem->CustomerName . '</td>
 			<td class="text">' . $ReceiptItem->GLCode . ' - ' . $myrow['accountname'] . '</td>
@@ -1249,18 +1241,11 @@ if (((isset($_SESSION['CustomerRecord' . $identifier])
 						</tr>';
 		echo $TableHeader;
 		$j = 1;
-		$k = 0; //row counter to determine background colour
 
 		while ($myrow=DB_fetch_array($CustomerSearchResult)) {
 
-			if ($k==1){
-				echo '<tr class="OddTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="EvenTableRows">';
-				$k=1;
-			}
-			printf('<td><input tabindex="'. strval(12+$j).'" type="submit" name="Select" value="%s" /></td>
+			printf('<tr class="striped_row">
+					<td><input tabindex="'. strval(12+$j).'" type="submit" name="Select" value="%s" /></td>
 					<td>%s</td>
 					</tr>',
 					$myrow['debtorno'],

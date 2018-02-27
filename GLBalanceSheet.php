@@ -164,7 +164,6 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 
 	include('includes/PDFBalanceSheetPageHeader.inc');
 
-	$k=0; //row colour counter
 	$Section='';
 	$SectionBalance = 0;
 	$SectionBalanceLY = 0;
@@ -331,7 +330,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 		$Title = _('Print Balance Sheet Error');
 		include('includes/header.php');
 		prnMsg( _('There were no entries to print out for the selections specified') );
-		echo '<br /><a href="'. $RootPath.'/index.php?' . SID . '">' .  _('Back to the menu'). '</a>';
+		echo '<br /><a href="'. $RootPath.'/index.php">' .  _('Back to the menu'). '</a>';
 		include('includes/footer.php');
 		exit;
 	} else {
@@ -421,7 +420,6 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 	}
 /* echo '<thead>' . $TableHeader . '<thead><tbody>';// thead used in conjunction with tbody enable scrolling of the table body independently of the header and footer. Also, when printing a large table that spans multiple pages, these elements can enable the table header to be printed at the top of each page. */
 
-	$k=0; //row colour counter
 	$Section='';
 	$SectionBalance = 0;
 	$SectionBalanceLY = 0;
@@ -579,17 +577,11 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 
 		if ($_POST['Detail']=='Detailed'){
 			if (isset($_POST['ShowZeroBalances']) OR (!isset($_POST['ShowZeroBalances']) AND (round($AccountBalance,$_SESSION['CompanyRecord']['decimalplaces']) <> 0 OR round($LYAccountBalance,$_SESSION['CompanyRecord']['decimalplaces']) <> 0))){
-	  			if ($k==1){
-	  				echo '<tr class="OddTableRows">';
-	  				$k=0;
-	  			} else {
-	  				echo '<tr class="EvenTableRows">';
-	  				$k++;
-	  			}
 
 	  			$ActEnquiryURL = '<a href="' . $RootPath . '/GLAccountInquiry.php?Period=' . $_POST['BalancePeriodEnd'] . '&amp;Account=' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . '</a>';
 
-	  			printf('<td>%s</td>
+	  			printf('<tr class="striped_row">
+						<td>%s</td>
 	  					<td>%s</td>
 	  					<td class="number">%s</td>
 	  					<td></td>

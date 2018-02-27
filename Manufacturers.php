@@ -229,15 +229,7 @@ or deletion of the records*/
 			<th>' . _('Brands Image') . '</th>
 		</tr>';
 
-$k=0; //row colour counter
 while ($myrow = DB_fetch_array($result)) {
-	if ($k==1){
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k=1;
-	}
 
 	$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/BRAND-' . $myrow['manufacturers_id'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
 	if (extension_loaded('gd') && function_exists('gd_info') && file_exists($imagefile)){
@@ -253,7 +245,8 @@ while ($myrow = DB_fetch_array($result)) {
 		$BrandImgLink = _('No Image');
 	}
 
-	printf('<td>%s</td>
+	printf('<tr class="striped_row">
+			<td>%s</td>
 			<td>%s</td>
 			<td><a target="_blank" href="%s">%s</a></td>
 			<td>%s</td>

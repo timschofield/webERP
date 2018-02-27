@@ -791,21 +791,13 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 		echo $TableHeader;
 
 		$j = 1;
-		$k = 0; //row counter to determine background colour
+
 		$LastCustomer='';
 		while ($myrow=DB_fetch_array($result_CustSelect)) {
-
-			if ($k==1){
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k=1;
-			}
 			if ($LastCustomer != $myrow['name']) {
-				echo '<td>' .  $myrow['name']  . '</td>';
+				echo '<tr class="striped_row"><td>' .  $myrow['name']  . '</td>';
 			} else {
-				echo '<td></td>';
+				echo '<tr class="striped_row"><td></td>';
 			}
 			echo '<td><input type="submit" name="Submit'.$j.'" value="' . $myrow['brname'] . '" /></td>
 					<input type="hidden" name="SelectedCustomer'.$j.'" value="'. $myrow['debtorno'] . '" />

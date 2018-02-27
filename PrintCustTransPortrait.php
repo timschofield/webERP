@@ -980,19 +980,8 @@ if(isset($PrintPDF)
 							</tr>';
 
 					$LineCounter =17;
-					$k=0;	//row colour counter
 
 					while($myrow2=DB_fetch_array($result)) {
-
-						if($k==1) {
-							$RowStarter = '<tr class="EvenTableRows">';
-							$k=0;
-						} else {
-							$RowStarter = '<tr class="OddTableRows">';
-							$k=1;
-						}
-
-						echo $RowStarter;
 
 						$DisplayPrice =locale_number_format($myrow2['fxprice'],$myrow['decimalplaces']);
 						$DisplayQty = locale_number_format($myrow2['quantity'],$myrow2['decimalplaces']);
@@ -1004,7 +993,8 @@ if(isset($PrintPDF)
 							$DisplayDiscount = locale_number_format($myrow2['discountpercent']*100,2) . '%';
 						}
 
-						printf ('<td>%s</td>
+						printf ('<tr class="striped_row">
+								<td>%s</td>
 								<td>%s</td>
 								<td class="number">%s</td>
 								<td class="number">%s</td>
@@ -1021,8 +1011,8 @@ if(isset($PrintPDF)
 								$DisplayNet);
 
 						if(mb_strlen($myrow2['narrative'])>1) {
-							echo $RowStarter .
-								'<td></td>
+							echo '<tr class="striped_row">
+								<td></td>
 								<td colspan="6">' . $myrow2['narrative'] . '</td>
 								</tr>';
 							$LineCounter++;

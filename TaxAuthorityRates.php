@@ -83,16 +83,9 @@ if(DB_num_rows($TaxRatesResult)>0) {
 			<th class="ascending">' . _('Tax Rate') . '</th>
 		</tr>';
 
-	$j = 1;
 	while($myrow = DB_fetch_array($TaxRatesResult)) {
-		if ($j==1) {
-		    echo '<tr class="OddTableRows">';
-		    $j=0;
-		} else {
-		    echo '<tr class="EvenTableRows">';
-		    $j++;
-		}
-		printf('<td>%s</td>
+		printf('<tr class="striped_row">
+				<td>%s</td>
 				<td>%s</td>
 				<td><input class="number" maxlength="5" name="%s" required="required" size="5" title="' . _('Input must be numeric') . '" type="text" value="%s" /></td>
 				</tr>',

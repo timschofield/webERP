@@ -302,16 +302,10 @@ if (!isset($SelectedSampleID)) {
 						</tr>';
 		echo $TableHeader;
 		$j = 1;
-		$k = 0; //row colour counter
+
 		while ($myrow = DB_fetch_array($StockItemsResult)) {
-			if ($k == 1) {
-				echo '<tr class="EvenTableRows">';
-				$k = 0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k = 1;
-			}
-			echo '<td><input type="submit" name="SelectedStockItem" value="' . $myrow['stockid'] . '"</td>
+			echo '<tr class="striped_row">
+				<td><input type="submit" name="SelectedStockItem" value="' . $myrow['stockid'] . '"</td>
 				<td>' . $myrow['description'] . '</td>
 				<td class="number">' . locale_number_format($myrow['qoh'],$myrow['decimalplaces']) . '</td>
 				<td>' . $myrow['units'] . '</td>
@@ -404,15 +398,8 @@ if (!isset($SelectedSampleID)) {
 							</tr>';
 			echo $TableHeader;
 			$j = 1;
-			$k = 0; //row colour counter
+
 			while ($myrow = DB_fetch_array($SampleResult)) {
-				if ($k == 1) { /*alternate bgcolour of row for highlighting */
-					echo '<tr class="EvenTableRows">';
-					$k = 0;
-				} else {
-					echo '<tr class="OddTableRows">';
-					$k++;
-				}
 				$ModifySampleID = $RootPath . '/TestPlanResults.php?SelectedSampleID=' . $myrow['sampleid'];
 				$Edit = '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedSampleID=' . $myrow['sampleid'] .'">' . _('Edit') .'</a>';
 				$Delete = '<a href="' .htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')  .'?delete=yes&amp;SelectedSampleID=' . $myrow['sampleid'].'" onclick="return confirm(\'' . _('Are you sure you wish to delete this Sample ID ?') . '\');">' . _('Delete').'</a>';
@@ -426,7 +413,8 @@ if (!isset($SelectedSampleID)) {
 					$CertAllowed=_('No');
 				}
 
-				echo '<td><a href="' . $ModifySampleID . '">' . str_pad($myrow['sampleid'],10,'0',STR_PAD_LEFT) . '</a></td>
+				echo '<tr class="striped_row">
+						<td><a href="' . $ModifySampleID . '">' . str_pad($myrow['sampleid'],10,'0',STR_PAD_LEFT) . '</a></td>
 						<td>' . $myrow['prodspeckey'] . '</td>
 						<td>' . $myrow['description'] . '</td>
 						<td>' . $myrow['lotkey'] . '</td>

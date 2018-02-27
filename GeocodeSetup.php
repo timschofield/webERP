@@ -152,18 +152,10 @@ or deletion of the records*/
 			<th>' .  _('Map host') . '</th>
 		</tr>';
 
-	$k=0; //row colour counter
 	while ($myrow=DB_fetch_row($result)) {
 
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k=1;
-		}
-
-	printf('<td>%s</td>
+		printf('<tr class="striped_row">
+			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>

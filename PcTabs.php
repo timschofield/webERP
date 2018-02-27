@@ -189,19 +189,13 @@ if (!isset($SelectedTab)) {
 					<th>', _('Default Tag'), '</th>
 					<th>', _('Tax Group'), '</th>
 				</tr>';
-		$k = 0; //row colour counter
+
 		while ($MyRow = DB_fetch_array($Result)) {
-			if ($k == 1) {
-				echo '<tr class="EvenTableRows">';
-				$k = 0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k = 1;
-			}
 			$TagSQL = "SELECT tagdescription FROM tags WHERE tagref='" . $MyRow['defaulttag'] . "'";
 			$TagResult = DB_query($TagSQL);
 			$TagRow = DB_fetch_array($TagResult);
-			echo '<td>', $MyRow['tabcode'], '</td>
+			echo '<tr class="striped_row">
+					<td>', $MyRow['tabcode'], '</td>
 					<td>', $MyRow['usercode'], '</td>
 					<td>', $MyRow['typetabdescription'], '</td>
 					<td>', $MyRow['currabrev'], '</td>

@@ -394,16 +394,8 @@ echo '<table class="selection" width="85%">
 
 $DebitTotal=0;
 $CreditTotal=0;
-$j=0;
 
 foreach ($_SESSION['JournalDetail']->GLEntries as $JournalItem) {
-		if ($j==1) {
-			echo '<tr class="OddTableRows">';
-			$j=0;
-		} else {
-			echo '<tr class="EvenTableRows">';
-			$j++;
-		}
 	$sql="SELECT tagdescription
 			FROM tags
 			WHERE tagref='".$JournalItem->tag . "'";
@@ -414,7 +406,8 @@ foreach ($_SESSION['JournalDetail']->GLEntries as $JournalItem) {
 	} else {
 		$TagDescription=$myrow[0];
 	}
-	echo '<td>' . $JournalItem->tag . ' - ' . $TagDescription . '</td>
+	echo '<tr class="striped_row">
+		<td>' . $JournalItem->tag . ' - ' . $TagDescription . '</td>
 		<td>' . $JournalItem->GLCode . ' - ' . $JournalItem->GLActName . '</td>';
 	if ($JournalItem->Amount>0) {
 		echo '<td class="number">' . locale_number_format($JournalItem->Amount,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
@@ -432,13 +425,13 @@ foreach ($_SESSION['JournalDetail']->GLEntries as $JournalItem) {
 	</tr>';
 }
 
-echo '<tr class="EvenTableRows"><td></td>
+echo '<tr class="striped_row"><td></td>
 		<td class="number"><b>' . _('Total') .  '</b></td>
 		<td class="number"><b>' . locale_number_format($DebitTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
 		<td class="number"><b>' . locale_number_format($CreditTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
 	</tr>';
 if ($DebitTotal!=$CreditTotal) {
-	echo '<tr><td align="center" style="background-color: #fddbdb"><b>' . _('Required to balance') .' - </b>' .
+	echo '<tr><td class="centre" style="background-color: #fddbdb"><b>' . _('Required to balance') .' - </b>' .
 		locale_number_format(abs($DebitTotal-$CreditTotal),$_SESSION['CompanyRecord']['decimalplaces']);
 }
 if ($DebitTotal>$CreditTotal) {

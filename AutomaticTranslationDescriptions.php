@@ -34,7 +34,7 @@ $SQL = "SELECT stockmaster.stockid,
 $result = DB_query($SQL);
 
 if(DB_num_rows($result) != 0) {
-	echo '<p class="page_title_text" align="center"><strong>' . _('Description Automatic Translation for empty translations') . '</strong></p>';
+	echo '<p class="page_title_text"><strong>' . _('Description Automatic Translation for empty translations') . '</strong></p>';
 	echo '<div>';
 	echo '<table class="selection">';
 	$TableHeader = '<tr>
@@ -45,7 +45,6 @@ if(DB_num_rows($result) != 0) {
 						<th>' . _('Translated') . '</th>
 					</tr>';
 	echo $TableHeader;
-	$k = 0; //row colour counter
 	$i = 0;
 	while ($myrow = DB_fetch_array($result)) {
 
@@ -59,15 +58,9 @@ if(DB_num_rows($result) != 0) {
 					"WHERE stockid='" . $myrow['stockid'] . "' AND (language_id='" . $myrow['language_id'] . "')";
 			$update = DB_query($sql, $ErrMsg, $DbgMsg, true);
 
-			if ($k==1){
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k++;
-			}
 			$i++;
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -90,15 +83,9 @@ if(DB_num_rows($result) != 0) {
 					"WHERE stockid='" . $myrow['stockid'] . "' AND (language_id='" . $myrow['language_id'] . "')";
 			$update = DB_query($sql, $ErrMsg, $DbgMsg, true);
 
-			if ($k==1){
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k++;
-			}
 			$i++;
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>

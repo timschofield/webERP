@@ -158,11 +158,12 @@ select{
 	font-family:Arial, Verdana, Helvetica, sans-serif;
 	font-size:100%;
 }
-.EvenTableRows{
-	background-color:#ccc;
+tr.striped_row:nth-of-type(even) {
+	background-color:#CCCCCC;
 }
-.OddTableRows{
-	background-color:#eee;
+
+tr.striped_row:nth-of-type(odd) {
+	background-color:#EEEEEE;
 }
 
 div.error{

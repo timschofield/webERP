@@ -217,7 +217,6 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 	$ParentGroups=array();
 	$ParentGroups[$Level]='';
 
-	$k=0;// Row colour counter.
 	$DrawTotalLine = '<tr>
 		<td colspan="2">&nbsp;</td>
 		<td><hr /></td>
@@ -374,14 +373,8 @@ if((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST
 
 		if($_POST['Detail']=='Detailed') {
 			if(isset($_POST['ShowZeroBalances']) OR (!isset($_POST['ShowZeroBalances']) AND ($AccountTotal <> 0 OR $AccountTotalLY <> 0))) {
-				if($k==1) {
-					echo '<tr class="EvenTableRows">';
-					$k=0;
-				} else {
-					echo '<tr class="OddTableRows">';
-					$k=1;
-				}
-				echo	'<td class="text"><a href="', $RootPath, '/GLAccountInquiry.php?Period=', $_POST['ToPeriod'], '&amp;Account=', $myrow['accountcode'], '&amp;Show=Yes">', $myrow['accountcode'], '</a></td>';
+				echo '<tr class="striped_row">
+							<td class="text"><a href="', $RootPath, '/GLAccountInquiry.php?Period=', $_POST['ToPeriod'], '&amp;Account=', $myrow['accountcode'], '&amp;Show=Yes">', $myrow['accountcode'], '</a></td>';
 // --->
 				if($Section ==1) {
 					echo '	<td class="text">', htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false), '</td>

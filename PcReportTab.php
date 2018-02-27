@@ -474,16 +474,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 			<th>' . _('Date Authorised') . '</th>
 		</tr>';
 
-	$k = 0; //row colour counter
-
 	while ($MyRow = DB_fetch_array($TabDetail)) {
-		if ($k == 1){
-			echo '<tr class="EvenTableRows">';
-			$k = 0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k = 1;
-		}
 		
 		$TagSQL = "SELECT tagdescription FROM tags WHERE tagref='" . $MyRow['tag'] . "'";
 		$TagResult = DB_query($TagSQL);
@@ -542,7 +533,8 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 				$ExpenseCodeDes = $MyRow['codeexpense'] . ' - ' . $Description[0];
 		}
 		
-		echo '<td>', ConvertSQLDate($MyRow['date']), '</td>
+		echo '<tr class="striped_row">
+				<td>', ConvertSQLDate($MyRow['date']), '</td>
 				<td>', $ExpenseCodeDes, '</td>
 				<td class="number">', locale_number_format($MyRow['amount'], $CurrDecimalPlaces), '</td>
 				<td class="number">', $TaxesTaxAmount, '</td>
@@ -566,7 +558,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 		$Amount[0] = 0;
 	}
 
-	echo '<tr><td colspan="2" style="text-align:right">' . _('Balance at') . ' ' .$_POST['ToDate'] . ':</td>
+	echo '<tr><td colspan="2" class="number">' . _('Balance at') . ' ' .$_POST['ToDate'] . ':</td>
 				<td>' . locale_number_format($Amount[0],$_SESSION['CompanyRecord']['decimalplaces']) . ' </td><td>' . $Tabs['currency'] . '</td></tr>';
 
 	echo '</table>';

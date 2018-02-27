@@ -726,7 +726,6 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 			</tr>';
 
 	$_SESSION['PO'.$identifier]->Total = 0;
-	$k = 0;  //row colour counter
 
 	foreach ($_SESSION['PO'.$identifier]->LineItems as $POLine) {
 
@@ -743,15 +742,8 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 				$SuppPrice = locale_number_format(round(($POLine->Price *$POLine->ConversionFactor),($_SESSION['PO'.$identifier]->CurrDecimalPlaces+2)),($_SESSION['PO'.$identifier]->CurrDecimalPlaces+2));
 			}
 
-			if ($k==1){
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k=1;
-			}
-
-			echo '<td>' . $POLine->StockID  . '</td>
+			echo '<tr class="striped_row">
+				<td>' . $POLine->StockID  . '</td>
                 <td><input type="text" name="ItemDescription' . $POLine->LineNo.'" size="30" value="' . stripslashes($POLine->ItemDescription) . '" /></td>
 				<td class="number">' . locale_number_format($POLine->Quantity,$POLine->DecimalPlaces) . '</td>
 				<td>' . $POLine->Units . '</td>
@@ -1180,7 +1172,7 @@ if (isset($SearchResult)) {
 		$PageBar .= '<input type="submit" name="Prev" value="'._('Prev').'" />';
 	else
 		$PageBar .= '<input type="submit" name="Prev" value="'._('Prev').'" disabled="disabled"/>';
-	$PageBar .= '</td><td style="text-align:center" colspan="4"><input type="submit" value="'._('Order some').'" name="NewItem"/></td><td>';
+	$PageBar .= '</td><td class="centre" colspan="4"><input type="submit" value="'._('Order some').'" name="NewItem"/></td><td>';
 	if($Offset<$ListPageMax)
 		$PageBar .= '<input type="submit" name="Next" value="'._('Next').'" />';
 	else
@@ -1202,17 +1194,8 @@ if (isset($SearchResult)) {
 	echo $TableHeader;
 
 	$j = 1;
-	$k=0; //row colour counter
 
 	while ($myrow=DB_fetch_array($SearchResult)) {
-
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k=1;
-		}
 
 		$SupportedImgExt = array('png','jpg','jpeg');
 
@@ -1249,7 +1232,8 @@ if (isset($SearchResult)) {
 			$OrderUnits=$myrow['units'];
 			$ConversionFactor =1;
 		}
-		echo '<td>' . $myrow['stockid']  . '</td>
+		echo '<tr class="striped_row">
+			<td>' . $myrow['stockid']  . '</td>
 			<td>' . $myrow['description']  . '</td>
 			<td>' . $myrow['units']  . '</td>
 			<td class="number">' . $ConversionFactor  . '</td>

@@ -100,24 +100,16 @@ SUM(recurrsalesorderdetails.unitprice*recurrsalesorderdetails.quantity*(1-recurr
 	echo $tableheader;
 
 	$j = 1;
-	$k=0; //row colour counter
+
 	while ($myrow=DB_fetch_array($SalesOrdersResult)) {
-
-
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';;
-			$k++;
-		}
 
 		$ModifyPage = $RootPath . '/RecurringSalesOrders.php?ModifyRecurringSalesOrder=' . $myrow['recurrorderno'];
 		$FormatedLastRecurrence = ConvertSQLDate($myrow['lastrecurrence']);
 		$FormatedStopDate = ConvertSQLDate($myrow['stopdate']);
 		$FormatedOrderValue = locale_number_format($myrow['ordervalue'],$myrow['currdecimalplaces']);
 
-		printf('<td><a href="%s">%s</a></td>
+		printf('<tr class="striped_row">
+				<td><a href="%s">%s</a></td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>

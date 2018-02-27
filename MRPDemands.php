@@ -94,17 +94,11 @@ function search(&$db,&$StockID) { //####SEARCH_SEARCH_SEARCH_SEARCH_SEARCH_SEARC
 		echo $TableHeader;
 
 		$j = 1;
-		$k = 0; //row colour counter
+
 		while ($myrow=DB_fetch_array($result)) {
-			if ($k==1){
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k++;
-			}
 			$tabindex=$j+4;
-			echo '<td><input tabindex="' . $tabindex . '" type="submit" name="StockID" value="' . $myrow['stockid'] .'" /></td>
+			echo '<tr class="striped_row">
+				<td><input tabindex="' . $tabindex . '" type="submit" name="StockID" value="' . $myrow['stockid'] .'" /></td>
 				<td>' . $myrow['description'] . '</td>
 				</tr>';
 			$j++;

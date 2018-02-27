@@ -547,7 +547,6 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 
 
 	$j = 1;
-	$k=0; //row colour counter
 	$Section='';
 	$SectionPrdActual= 0;
 	$SectionPrdLY 	 = 0;
@@ -753,18 +752,11 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 
 		if ($_POST['Detail']==_('Detailed')){
 
-			if ($k==1){
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k++;
-			}
-
 			$ActEnquiryURL = '<a href="' . $RootPath . '/GLAccountInquiry.php?Period=' . $_POST['ToPeriod'] . '&amp;Account=' . $myrow['account'] . '&amp;Show=Yes">' . $myrow['account'] . '</a>';
 
 			if ($Section ==4){
-				 printf('<td>%s</td>
+				 printf('<tr class="striped_row">
+						<td>%s</td>
 						<td>%s</td>
 						<td></td>
 						<td class="number">%s</td>
@@ -773,7 +765,8 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 						htmlspecialchars($myrow['accountname'], ENT_QUOTES,'UTF-8', false),
 						locale_number_format(-$AccountPeriodActual,$_SESSION['CompanyRecord']['decimalplaces']));
 			} else {
-				printf('<td>%s</td>
+				printf('<tr class="striped_row">
+						<td>%s</td>
 						<td>%s</td>
 						<td class="number">%s</td>
 						</tr>',

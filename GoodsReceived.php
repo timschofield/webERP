@@ -143,19 +143,9 @@ if (!isset($_POST['ProcessGoodsReceived'])) {
 	$_SESSION['PO'.$identifier]->Total = 0;
 }
 
-$k=0; //row colour counter
-
 if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_POST['ProcessGoodsReceived'])){
 
 	foreach ($_SESSION['PO'.$identifier]->LineItems as $LnItm) {
-
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k=1;
-		}
 
 	/*  if ($LnItm->ReceiveQty==0){   /*If no quantities yet input default the balance to be received
 			$LnItm->ReceiveQty = $LnItm->QuantityOrd - $LnItm->QtyReceived;
@@ -190,7 +180,8 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_POST['ProcessGo
 			$ImageLink = $LnItm->StockID;
 		}
 
-		echo '<td>' . $ImageLink . '</td>
+		echo '<tr class="striped_row">
+			<td>' . $ImageLink . '</td>
 			<td>' . $LnItm->Suppliers_PartNo . '</td>
 			<td>' . $LnItm->ItemDescription . '</td>
 			<td class="number">' . $DisplaySupplierQtyOrd . '</td>

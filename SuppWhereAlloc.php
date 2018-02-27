@@ -142,18 +142,9 @@ if(isset($_POST['ShowResults']) AND $_POST['TransNo']!='') {
 				<tbody>';
 
 			$RowCounter = 1;
-			$k = 0; //row colour counter
 			$AllocsTotal = 0;
 
 			while($myrow=DB_fetch_array($TransResult)) {
-				if($k==1) {
-					echo '<tr class="EvenTableRows">';
-					$k=0;
-				} else {
-					echo '<tr class="OddTableRows">';
-					$k++;
-				}
-
 				if($myrow['type']==21) {
 					$TransType = _('Debit Note');
 				} elseif($myrow['type'] == 20) {
@@ -161,7 +152,8 @@ if(isset($_POST['ShowResults']) AND $_POST['TransNo']!='') {
 				} else {
 					$TransType = _('Payment');
 				}
-				echo '	<td class="centre">', ConvertSQLDate($myrow['trandate']), '</td>
+				echo '<tr class="striped_row">
+						<td class="centre">', ConvertSQLDate($myrow['trandate']), '</td>
 						<td class="text">' . $TransType . '</td>
 						<td class="number">' . $myrow['transno'] . '</td>
 						<td class="text">' . $myrow['suppreference'] . '</td>

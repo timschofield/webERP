@@ -229,7 +229,6 @@ if(isset($_POST['Show'])) {
 	$PeriodNo = -9999;
 	$ShowIntegrityReport = False;
 	$j = 1;
-	$k = 0; //row colour counter
 	$IntegrityReport='';
 	while($myrow=DB_fetch_array($TransResult)) {
 		if($myrow['periodno']!=$PeriodNo) {
@@ -271,13 +270,6 @@ if(isset($_POST['Show'])) {
 			$PeriodTotal = 0;
 		}
 
-		if($k==1) {
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k++;
-		}
 		$BankRef = '';
 		$OrgAmt = '';
 		$Currency = '';
@@ -333,7 +325,8 @@ if(isset($_POST['Show'])) {
 		}
 		$RunningTotal += $myrow['amount'];
 		$PeriodTotal += $myrow['amount'];
-		echo	'<td class="text">', _($myrow['typename']), '</td>
+		echo	'<tr class="striped_row">
+				<td class="text">', _($myrow['typename']), '</td>
 				<td class="number"><a href="', $URL_to_TransDetail, '">', $myrow['typeno'], '</a></td>
 				<td class="centre">', $FormatedTranDate, '</td>
 				<td class="text">', $myrow['narrative'], '</td>

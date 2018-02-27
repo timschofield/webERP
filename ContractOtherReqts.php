@@ -101,22 +101,15 @@ if (count($_SESSION['Contract'.$identifier]->ContractReqts)>0){
 		</tr>';
 
 	$_SESSION['Contract'.$identifier]->total = 0;
-	$k = 0;  //row colour counter
+
 	$TotalCost =0;
 	foreach ($_SESSION['Contract'.$identifier]->ContractReqts as $ContractReqtID => $ContractComponent) {
 
 		$LineTotal = $ContractComponent->Quantity * $ContractComponent->CostPerUnit;
 		$DisplayLineTotal = locale_number_format($LineTotal,$_SESSION['CompanyRecord']['decimalplaces']);
 
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k=1;
-		}
-
-		echo '<td><textarea name="Requirement' . $ContractReqtID . '" cols="30" rows="3" required="required" title="' . _('Enter a description of this requirement for the contract') . '" >' . $ContractComponent->Requirement . '</textarea></td>
+		echo '<tr class="striped_row">
+				<td><textarea name="Requirement' . $ContractReqtID . '" cols="30" rows="3" required="required" title="' . _('Enter a description of this requirement for the contract') . '" >' . $ContractComponent->Requirement . '</textarea></td>
 			  <td><input type="text" class="number" required="required" title="' . _('Enter the quantity of this requirement for the contract') . '" name="Qty' . $ContractReqtID . '" size="11" value="' . locale_number_format($ContractComponent->Quantity,'Variable')  . '" /></td>
 			  <td><input type="text" class="number" name="CostPerUnit' . $ContractReqtID . '" size="11" required="required" value="' . locale_number_format($ContractComponent->CostPerUnit,$_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>
 			  <td class="number">' . $DisplayLineTotal . '</td>

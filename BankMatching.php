@@ -285,7 +285,6 @@ if ($InputError !=1
 				<th colspan="3">' . _('Clear') . ' / ' . _('Unclear') . '</th>
 			</tr>';
 
-	$k = 0; //row colour counter
 	$i = 1; //no of rows counter
 
 	while ($myrow=DB_fetch_array($PaymentsResult)) {
@@ -294,7 +293,7 @@ if ($InputError !=1
 		$Outstanding = $myrow['amt']- $myrow['amountcleared'];
 		if (ABS($Outstanding)<0.009){ /*the payment is cleared dont show the check box*/
 
-			printf('<tr style="background-color:#CCCEEE">
+			printf('<tr class="striped_row">
 						<td>%s</td>
 						<td>%s</td>
 						<td>%s</td>
@@ -314,14 +313,8 @@ if ($InputError !=1
 						$myrow['banktransid']);
 
 		} else{
-			if ($k==1){
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k=1;
-			}
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>

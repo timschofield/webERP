@@ -435,17 +435,11 @@ if (!isset($_SESSION['tender'.$identifier])
 			<th class="ascending">' . _('Quantity') . '</th>
 			<th>' . _('UOM') . '</th>
 		</tr>';
-	$k=0;
+
 	foreach ($_SESSION['tender'.$identifier]->LineItems as $LineItems) {
 		if ($LineItems->Deleted==False) {
-			if ($k==1){
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k=1;
-			}
-			echo '<td>' . $LineItems->StockID . '</td>
+			echo '<tr class="striped_row">
+					<td>' . $LineItems->StockID . '</td>
 					<td>' . $LineItems->ItemDescription . '</td>
 					<td class="number">' . locale_number_format($LineItems->Quantity,$LineItems->DecimalPlaces) . '</td>
 					<td>' . $LineItems->Units . '</td>
@@ -623,7 +617,6 @@ if (isset($_POST['SearchSupplier'])) {
 			<th class="assending">' . _('Address 4') . '</th>
 		</tr>';
 	$j = 1;
-	$k = 0; //row counter to determine background colour
 	$RowIndex = 0;
 	if (DB_num_rows($result) <> 0) {
 		DB_data_seek($result, ($_POST['PageOffset'] - 1) * $_SESSION['DisplayRecordsMax']);
@@ -631,14 +624,8 @@ if (isset($_POST['SearchSupplier'])) {
 		prnMsg(_('There are no suppliers data returned, one reason maybe no email addresses set for those suppliers'),'warn');
 	}
 	while (($myrow = DB_fetch_array($result)) and ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
-		if ($k == 1) {
-			echo '<tr class="EvenTableRows">';
-			$k = 0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k = 1;
-		}
-		echo '<td><input type="submit" name="SelectedSupplier" value="'.$myrow['supplierid'].'" /></td>
+		echo '<tr class="striped_row">
+			<td><input type="submit" name="SelectedSupplier" value="'.$myrow['supplierid'].'" /></td>
 			<td>' . $myrow['suppname'] . '</td>
 			<td>' . $myrow['currcode'] . '</td>
 			<td>' . $myrow['address1'] . '</td>
@@ -857,17 +844,8 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 			</tr>';
 
 		$i = 0;
-		$k = 0; //row colour counter
 		$PartsDisplayed=0;
 		while ($myrow=DB_fetch_array($SearchResult)) {
-
-			if ($k==1){
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k=1;
-			}
 
 			$SupportedImgExt = array('png','jpg','jpeg');
 			$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
@@ -884,7 +862,8 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 				$ImageSource = _('No Image');
  			}
 
-			echo '<td>' . $myrow['stockid'] . '</td>
+			echo '<tr class="striped_row">
+					<td>' . $myrow['stockid'] . '</td>
 					<td>' . $myrow['description'] . '</td>
 					<td>' . $myrow['units'] . '</td>
 					<td>' . $ImageSource . '</td>

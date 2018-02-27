@@ -230,17 +230,11 @@ if (isset($_POST['ShowSales'])){
 	$CumulativeTotalNetSales = 0;
 	$CumulativeTotalQuantity = 0;
 	$i=1;
-	$k=0;
-	while ($SalesRow=DB_fetch_array($SalesResult)) {
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k=1;
-		}
 
-		echo '<td>' . $i . '</td>
+	while ($SalesRow=DB_fetch_array($SalesResult)) {
+
+		echo '<tr class="striped_row">
+				<td>' . $i . '</td>
 				<td>' . $SalesRow['stockid'] . ' - ' . $SalesRow['description'] . '</td>
 				<td>' . $SalesRow['categorydescription'] . '</td>
 				<td class="number">' . locale_number_format($SalesRow['salesvalue'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
@@ -257,13 +251,10 @@ if (isset($_POST['ShowSales'])){
 
 	} //loop around category sales for the period
 
-	if ($k==1){
-		echo '<tr class="EvenTableRows"><td colspan="8"><hr /></td></tr>';
-		echo '<tr class="OddTableRows">';
-	} else {
-		echo '<tr class="OddTableRows"><td colspan="8"><hr /></td></tr>';
-		echo '<tr class="EvenTableRows">';
-	}
+
+	echo '<tr class="striped_row"><td colspan="8"><hr /></td></tr>';
+	echo '<tr class="striped_row">';
+
 	echo '<td class="number" colspan="3">' . _('GRAND Total') . '</td>
 		<td class="number">' . locale_number_format($CumulativeTotalSales,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 		<td class="number">' . locale_number_format($CumulativeTotalRefunds,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>

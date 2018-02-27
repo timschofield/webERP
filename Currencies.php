@@ -314,7 +314,6 @@ or deletion of the records*/
 			<th colspan="3">' . _('Maintenance')  . '</th>
 		</tr>';
 
-	$k=0; //row colour counter
 	/*Get published currency rates from Eurpoean Central Bank */
 	if ($_SESSION['UpdateCurrencyRatesDaily'] != '0') {
 		$CurrencyRatesArray = GetECBCurrencyRates();
@@ -325,12 +324,8 @@ or deletion of the records*/
 	while ($myrow = DB_fetch_array($result)) {
 		if ($myrow['currabrev']==$FunctionalCurrency){
 			echo '<tr style="background-color:#FFbbbb">';
-		} elseif ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
 		} else {
-			echo  '<tr class="OddTableRows">';
-			$k++;
+			echo  '<tr class="striped_row">';
 		}
 		// Lets show the country flag
 		$ImageFile = 'flags/' . mb_strtoupper($myrow['currabrev']) . '.gif';

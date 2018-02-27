@@ -170,18 +170,10 @@ if (isset($_POST['Submit'])) {
 				<th>' . _('Authoriser') . '</th>
 			</tr>';
 
-	$k=0; //row colour counter
 	while ($myrow = DB_fetch_array($result)) {
 
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k++;
-		}
-
-		echo '<td>' . $myrow['description'] . '</td>
+		echo '<tr class="striped_row">
+				<td>' . $myrow['description'] . '</td>
 				<td>' . $myrow['authoriser'] . '</td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedDepartmentID=' . $myrow['departmentid'] . '">' . _('Edit') . '</a></td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedDepartmentID=' . $myrow['departmentid'] . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this department?') . '\');">'  . _('Delete')  . '</a></td>

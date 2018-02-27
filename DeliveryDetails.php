@@ -887,7 +887,6 @@ if(in_array(2,$_SESSION['AllowedPageSecurityTokens'])) {
 	$_SESSION['Items'.$identifier]->total = 0;
 	$_SESSION['Items'.$identifier]->totalVolume = 0;
 	$_SESSION['Items'.$identifier]->totalWeight = 0;
-	$k = 0;//row colour counter
 
 	foreach ($_SESSION['Items'.$identifier]->LineItems as $StockItem) {
 
@@ -898,15 +897,8 @@ if(in_array(2,$_SESSION['AllowedPageSecurityTokens'])) {
 		$DisplayDiscount = locale_number_format(($StockItem->DiscountPercent * 100),2);
 
 
-		if($k==1) {
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k=1;
-		}
-
-		echo '<td>' . $StockItem->StockID . '</td>
+		echo '<tr class="striped_row">
+			<td>' . $StockItem->StockID . '</td>
 			<td title="' . $StockItem->LongDescription . '">' . $StockItem->ItemDescription . '</td>
 			<td class="number">' . $DisplayQuantity . '</td>
 			<td>' . $StockItem->Units . '</td>
@@ -921,7 +913,7 @@ if(in_array(2,$_SESSION['AllowedPageSecurityTokens'])) {
 	}
 
 	$DisplayTotal = number_format($_SESSION['Items'.$identifier]->total,2);
-	echo '<tr class="EvenTableRows">
+	echo '<tr class="striped_row">
 			<td colspan="6" class="number"><b>' .  _('TOTAL Excl Tax/Freight')  . '</b></td>
 			<td class="number">' . $DisplayTotal . '</td>
 		</tr>
@@ -931,7 +923,7 @@ if(in_array(2,$_SESSION['AllowedPageSecurityTokens'])) {
 	$DisplayWeight = locale_number_format($_SESSION['Items'.$identifier]->totalWeight,2);
 	echo '<br />
 		<table>
-		<tr class="EvenTableRows">
+		<tr class="striped_row">
 			<td>' .  _('Total Weight') .':</td>
 			<td class="number">' . $DisplayWeight . '</td>
 			<td>' .  _('Total Volume') .':</td>
@@ -956,7 +948,7 @@ if(in_array(2,$_SESSION['AllowedPageSecurityTokens'])) {
 	$_SESSION['Items'.$identifier]->total = 0;
 	$_SESSION['Items'.$identifier]->totalVolume = 0;
 	$_SESSION['Items'.$identifier]->totalWeight = 0;
-	$k=0;// row colour counter
+
 	foreach ($_SESSION['Items'.$identifier]->LineItems as $StockItem) {
 
 		$LineTotal = $StockItem->Quantity * $StockItem->Price * (1 - $StockItem->DiscountPercent);
@@ -964,14 +956,8 @@ if(in_array(2,$_SESSION['AllowedPageSecurityTokens'])) {
 		$DisplayPrice = locale_number_format($StockItem->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
 		$DisplayQuantity = locale_number_format($StockItem->Quantity,$StockItem->DecimalPlaces);
 
-		if($k==1) {
-			echo '<tr class="OddTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="EvenTableRows">';
-			$k=1;
-		}
-		echo '<td>' . $StockItem->ItemDescription  . '</td>
+		echo '<tr class="striped_row">
+				<td>' . $StockItem->ItemDescription  . '</td>
 				<td class="number">' . $DisplayQuantity . '</td>
 				<td>' . $StockItem->Units . '</td>
 				<td class="number">' . $DisplayPrice . '</td>

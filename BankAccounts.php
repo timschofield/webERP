@@ -205,15 +205,7 @@ if (!isset($SelectedBankAccount)) {
 				<th>' . _('Default for Invoices') . '</th>
 			</tr>';
 
-	$k=0; //row colour counter
 	while ($myrow = DB_fetch_array($result)) {
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k++;
-		}
 		if ($myrow['invoice']==0) {
 			$DefaultBankAccount=_('No');
 		} elseif ($myrow['invoice']==1) {
@@ -221,6 +213,7 @@ if (!isset($SelectedBankAccount)) {
 		} elseif ($myrow['invoice']==2) {
 			$DefaultBankAccount=_('Currency Default');
 		}
+
 		switch ($myrow['importformat']) {
 			case 'MT940-ING':
 				$ImportFormat = 'ING MT940';
@@ -232,7 +225,8 @@ if (!isset($SelectedBankAccount)) {
 				$ImportFormat ='';
 		}
 
-		printf('<td>%s<br />%s</td>
+		printf('<tr class="striped_row">
+				<td>%s<br />%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>

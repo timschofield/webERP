@@ -513,19 +513,11 @@ If (isset($StockItemsResult)) {
 	echo $TableHeadings;
 
 	$j = 1;
-	$k=0; //row colour counter
 
 	while ($myrow=DB_fetch_array($StockItemsResult)) {
 
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k++;
-		}
-
-		printf('<td><input type="submit" name="SelectedStockItem" value="%s" /></td>
+		printf('<tr class="striped_row">
+				<td><input type="submit" name="SelectedStockItem" value="%s" /></td>
 				<td>%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
@@ -574,24 +566,16 @@ If (isset($SalesOrdersResult)) {
 	echo $tableheader;
 
 	$j = 1;
-	$k=0; //row colour counter
+
 	while ($myrow=DB_fetch_array($SalesOrdersResult)) {
-
-
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k=1;
-		}
 
 		$ViewPage = $RootPath . '/OrderDetails.php?OrderNumber=' . $myrow['orderno'];
 		$FormatedDelDate = ConvertSQLDate($myrow['deliverydate']);
 		$FormatedOrderDate = ConvertSQLDate($myrow['orddate']);
 		$FormatedOrderValue = locale_number_format($myrow['ordervalue'],$myrow['currdecimalplaces']);
 
-		printf('<td><a href="%s">%s</a></td>
+		printf('<tr class="striped_row">
+				<td><a href="%s">%s</a></td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>

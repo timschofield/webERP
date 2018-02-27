@@ -218,10 +218,11 @@ if (DB_num_rows($result) == 0) {
 		} else {
 			$EndDateDisplay = ConvertSQLDate($myrow['enddate']);
 		}
-		printf('<tr class="EvenTableRows">
+		printf('<tr class="striped_row">
 				<td class="number">%s</td>
 				<td class="date">%s</td>
-				<td class="date">%s</td></tr>',
+				<td class="date">%s</td>
+				</tr>',
 				locale_number_format($myrow['price'],$CurrDecimalPlaces),
 				ConvertSQLDate($myrow['startdate']),
 				$EndDateDisplay);

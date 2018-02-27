@@ -360,22 +360,15 @@ if(!isset($SelectedUser)) {
 				FROM www_users";
 	$Result = DB_query($Sql);
 
-	$k = 1;// Row colour counter.
 	while ($MyRow = DB_fetch_array($Result)) {
-		if($k == 1) {
-			echo '<tr class="OddTableRows">';
-			$k = 0;
-		} else {
-			echo '<tr class="EvenTableRows">';
-			$k = 1;
-		}
 		if($MyRow[8] == '') {
 			$LastVisitDate = _('No login record');
 		} else {
 			$LastVisitDate = ConvertSQLDate($MyRow[8]);
 		}
 		/*The SecurityHeadings array is defined in config.php */
-		echo	'<td class="text">', $MyRow['userid'], '</td>
+		echo '<tr class="striped_row">
+				<td class="text">', $MyRow['userid'], '</td>
 				<td class="text">', $MyRow['realname'], '</td>
 				<td class="text">', $MyRow['phone'], ' </td>
 				<td class="text">', $MyRow['email'], '</td>

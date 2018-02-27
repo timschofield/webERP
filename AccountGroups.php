@@ -290,16 +290,7 @@ if(!isset($_GET['SelectedAccountGroup']) AND !isset($_POST['SelectedAccountGroup
 				<th class="noprint" colspan="2">&nbsp;</th>
 			</tr>';
 
-	$k=0; //row colour counter
 	while($myrow = DB_fetch_array($result)) {
-
-		if($k==1) {
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k++;
-		}
 
 		switch ($myrow['pandl']) {
 		case -1:
@@ -313,7 +304,8 @@ if(!isset($_GET['SelectedAccountGroup']) AND !isset($_POST['SelectedAccountGroup
 			break;
 		} //end of switch statement
 
-		echo '<td>' . htmlspecialchars($myrow['groupname'], ENT_QUOTES,'UTF-8') . '</td>
+		echo '<tr class="striped_row">
+			<td>' . htmlspecialchars($myrow['groupname'], ENT_QUOTES,'UTF-8') . '</td>
 			<td>' . $myrow['sectionname'] . '</td>
 			<td class="number">' . $myrow['sequenceintb'] . '</td>
 			<td>' . $PandLText . '</td>

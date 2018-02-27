@@ -169,15 +169,9 @@ if(isset($_POST['submit'])) {
 				<th colspan="2">&nbsp;</th>
 			</tr>';
 
-	$j = 1;
 	while($myrow = DB_fetch_row($result)) {
-		if ($j==1) {
-		    echo '<tr class="OddTableRows">';
-		    $j=0;
-		} else {
-		    echo '<tr class="EvenTableRows">';
-		    $j++;
-		}
+		echo '<tr class="striped_row">';
+
 		if($myrow[1]!='Freight') {
 			// Uses gettext() to translate 'Exempt' and 'Handling':
 			echo '<td>' . _($myrow[1]) . '</td>

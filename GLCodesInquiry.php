@@ -28,20 +28,13 @@ echo '<table cellpadding="2">
 		</tr>';
 
 $j = 1;
-$k=0; //row colour counter
 $ActGrp ='';
 
 while ($myrow=DB_fetch_array($AccountsResult)) {
-       if ($k==1){
-              echo '<tr class="EvenTableRows">';
-              $k=0;
-       } else {
-              echo '<tr class="OddTableRows">';
-              $k++;
-       }
 
        if ($myrow['group_']== $ActGrp){
-              printf('<td></td>
+              printf('<tr class="striped_row">
+					<td></td>
 	      		      <td>%s</td>
 			          <td>%s</td>
 			          </tr>',
@@ -49,7 +42,8 @@ while ($myrow=DB_fetch_array($AccountsResult)) {
 			  htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false));
        } else {
               $ActGrp = $myrow['group_'];
-              printf('<td><b>%s</b></td>
+              printf('<tr class="striped_row">
+					<td><b>%s</b></td>
 	      		      <td>%s</td>
 			          <td>%s</td>
 			          </tr>',

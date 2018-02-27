@@ -781,25 +781,18 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 						</tr>';
 		echo $tableheader;
 		$j = 1;
-		$k = 0; //row counter to determine background colour
 		$RowIndex = 0;
 		if (DB_num_rows($searchresult) <> 0) {
 			DB_data_seek($searchresult, ($_POST['PageOffset'] - 1) * $_SESSION['DisplayRecordsMax']);
 		}
 		while (($myrow = DB_fetch_array($searchresult)) AND ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
-			if ($k == 1) {
-				echo '<tr class="EvenTableRows">';
-				$k = 0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k++;
-			}
 			if ($myrow['mbflag'] == 'D') {
 				$qoh = 'N/A';
 			} else {
 				$qoh = locale_number_format($myrow['qoh'], $myrow['decimalplaces']);
 			}
-			echo '<td><input type="submit" name="Select" value="'.$myrow['stockid']. '" /></td>
+			echo '<tr class="striped_row">
+				<td><input type="submit" name="Select" value="'.$myrow['stockid']. '" /></td>
 				<td>' . $myrow['description'] . '</td>
 				<td class="number">' . $qoh . '</td>
 				<td>' . $myrow['units'] . '</td>

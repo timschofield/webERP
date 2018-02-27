@@ -400,16 +400,9 @@ or deletion of the records*/
 			<th class="ascending">' . _('Show on Test Plan') . '</th>
 			<th class="ascending">' . _('Active') . '</th>
 		</tr>';
-	$k=0;
+
 	while ($myrow=DB_fetch_array($result)) {
 
-	if ($k==1){
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k++;
-	}
 	if ($myrow['active'] == 1) {
 		$ActiveText = _('Yes');
 	} else {
@@ -452,7 +445,8 @@ or deletion of the records*/
 			$TypeDisp='Range';
 			break;
 	} //end switch
-	printf('<td class="number">%s</td>
+	printf('<tr class="striped_row">
+			<td class="number">%s</td>
 			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>

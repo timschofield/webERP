@@ -221,19 +221,11 @@ if (isset($_POST['SelectChoice'])) {
 			<th>' .  _('Discount Category')  . '</th>
 			<th>' .  _('Item')  . '</th></tr>';
 
-		$k=0; //row colour counter
-
 		while ($myrow = DB_fetch_array($result)) {
-			if ($k==1){
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k=1;
-			}
 			$DeleteURL = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=yes&amp;StockID=' . $myrow['stockid'] . '&amp;DiscountCategory=' . $myrow['discountcategory'];
 
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td>%s - %s</td>
 					<td><a href="%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this discount category?') . '\');">' .  _('Delete')  . '</a></td>
 					</tr>',

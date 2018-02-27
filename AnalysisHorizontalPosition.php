@@ -179,7 +179,6 @@ if(! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 	$GroupTotal = array(0);
 	$GroupTotalLY = array(0);
 
-	$k=0;// Row colour counter.
 	$DrawTotalLine = '<tr>
 		<td colspan="2">&nbsp;</td>
 		<td><hr /></td>
@@ -280,14 +279,8 @@ if(! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 
 		if($_POST['Detail']=='Detailed') {
 			if(isset($_POST['ShowZeroBalances']) OR (!isset($_POST['ShowZeroBalances']) AND (round($AccountBalance,$_SESSION['CompanyRecord']['decimalplaces']) <> 0 OR round($AccountBalanceLY,$_SESSION['CompanyRecord']['decimalplaces']) <> 0))) {
-	  			if($k==1) {
-	  				echo '<tr class="OddTableRows">';
-	  				$k=0;
-	  			} else {
-	  				echo '<tr class="EvenTableRows">';
-	  				$k=1;
-	  			}
-				echo	'<td class="text"><a href="', $RootPath, '/GLAccountInquiry.php?Period=', $_POST['BalancePeriodEnd'], '&amp;Account=', $myrow['accountcode'], '">', $myrow['accountcode'], '</a></td>
+				echo '<tr class="striped_row">
+						<td class="text"><a href="', $RootPath, '/GLAccountInquiry.php?Period=', $_POST['BalancePeriodEnd'], '&amp;Account=', $myrow['accountcode'], '">', $myrow['accountcode'], '</a></td>
 						<td class="text">', htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false), '</td>
 						<td class="number">', locale_number_format($AccountBalance,$_SESSION['CompanyRecord']['decimalplaces']), '</td>
 						<td class="number">', locale_number_format($AccountBalanceLY,$_SESSION['CompanyRecord']['decimalplaces']), '</td>

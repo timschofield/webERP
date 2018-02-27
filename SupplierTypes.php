@@ -154,18 +154,10 @@ if (!isset($SelectedType)){
 		<th class="ascending" >' . _('Type Name') . '</th>
 		</tr>';
 
-$k=0; //row colour counter
-
 while ($myrow = DB_fetch_row($result)) {
-	if ($k==1){
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k=1;
-	}
 
-	printf('<td>%s</td>
+	printf('<tr class="striped_row">
+			<td>%s</td>
 			<td>%s</td>
 			<td><a href="%sSelectedType=%s">' . _('Edit') . '</a></td>
 			<td><a href="%sSelectedType=%s&amp;delete=yes" onclick="return confirm(\'' .

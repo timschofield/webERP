@@ -146,17 +146,8 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 			<th>' . _('Date Authorised') . '</th>
 		</tr>';
 
-	$k=0; //row colour counter
-
 	while ($MyRow = DB_fetch_array($Result)) {
 		$CurrDecimalPlaces = $MyRow['decimalplaces'];
-		if ($k == 1) {
-			echo '<tr class="EvenTableRows">';
-			$k = 0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k = 1;
-		}
 		$TaxesDescription = '';
 		$TaxesTaxAmount = '';
 		$TaxSQL = "SELECT counterindex,
@@ -198,7 +189,8 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 		}
 		*/
 		
-		echo '<td>', ConvertSQLDate($MyRow['date']), '</td>
+		echo '<tr class="striped_row">
+			<td>', ConvertSQLDate($MyRow['date']), '</td>
 			<td>', $MyRow['tabcode'], '</td>
 			<td>', $MyRow['currency'], '</td>
 			<td class="number">', locale_number_format($MyRow['amount'], $CurrDecimalPlaces), '</td>

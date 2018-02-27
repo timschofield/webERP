@@ -63,33 +63,19 @@ echo '<tr>
 	<th>' . _('Revised?') . '</th>
 </tr>';
 
-$k=0; //row colour counter
 $i=1;
 while($myrow=DB_fetch_array($result)) {
 
-	if($k==1) {
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k=1;
-	}
-
-	echo '<td>' . $myrow['stockid'] . '</td>
+	echo '<tr class="striped_row">
+		<td>' . $myrow['stockid'] . '</td>
 		<td>' . $_SESSION['Language']. '</td>
 		<td>' . $myrow['description'] . '</td>
 		<td>' . nl2br($myrow['longdescription']) . '</td>
-		<td>&nbsp;</td></tr>';// nl2br: Inserts HTML line breaks before all newlines in a string.
+		<td>&nbsp;</td>
+		</tr>';// nl2br: Inserts HTML line breaks before all newlines in a string.
 
-	if($k==1) {
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k=1;
-	}
-
-	echo '<td>&nbsp;</td>
+	echo '<tr class="striped_row">
+		<td>&nbsp;</td>
 		<td>' . $myrow['language_id'] . '</td>';
 
 	echo '<td><input class="text" maxlength="50" name="DescriptionTranslation' . $i .'" size="52" type="text" value="'. $myrow['descriptiontranslation'] .'" /></td>

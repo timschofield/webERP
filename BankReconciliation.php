@@ -176,7 +176,7 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 
 
 	echo '<table class="selection">
-			<tr class="EvenTableRows">
+			<tr class="striped_row">
 				<td colspan="6"><b>' . $CurrencyRow['bankaccountname'] . ' ' . _('Balance as at') . ' ' . Date($_SESSION['DefaultDateFormat']);
 
 	if ($_SESSION['CompanyRecord']['currencydefault']!=$CurrencyRow['currcode']){
@@ -220,19 +220,11 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 	echo $TableHeader;
 
 	$j = 1;
-	$k=0; //row colour counter
 	$TotalUnpresentedCheques =0;
 
 	while ($myrow=DB_fetch_array($UPChequesResult)) {
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k++;
-		}
-
-		printf('<td>%s</td>
+		printf('<tr class="striped_row">
+				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
@@ -259,7 +251,7 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 	echo '<tr>
              <td><br /></td>
           </tr>
-			<tr class="EvenTableRows">
+			<tr class="striped_row">
 				<td colspan="6">' . _('Total of all unpresented cheques') . '</td>
 				<td class="number">' . locale_number_format($TotalUnpresentedCheques,$CurrencyRow['currdecimalplaces']) . '</td>
 			</tr>';
@@ -297,19 +289,11 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 	echo  $TableHeader;
 
 	$j = 1;
-	$k=0; //row colour counter
 	$TotalUnclearedDeposits =0;
 
 	while ($myrow=DB_fetch_array($UPChequesResult)) {
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k++;
-		}
-
-		printf('<td>%s</td>
+		printf('<tr class="striped_row">
+				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
@@ -335,7 +319,7 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 	echo '<tr>
             <td><br /></td>
 		</tr>
-		<tr class="EvenTableRows">
+		<tr class="striped_row">
 			<td colspan="6">' . _('Total of all uncleared deposits') . '</td>
 			<td class="number">' . locale_number_format($TotalUnclearedDeposits,$CurrencyRow['currdecimalplaces']) . '</td>
 		</tr>';
@@ -343,7 +327,7 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 	echo '<tr>
             <td><br /></td>
 		</tr>
-		<tr class="EvenTableRows">
+		<tr class="striped_row">
 			<td colspan="6"><b>' . _('Bank statement balance should be') . ' (' . $CurrencyRow['currcode'] . ')</b></td>
 			<td class="number">' . locale_number_format($FXStatementBalance,$CurrencyRow['currdecimalplaces']) . '</td>
 		</tr>';

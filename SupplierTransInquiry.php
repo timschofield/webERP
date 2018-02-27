@@ -119,19 +119,11 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 	echo $tableheader;
 
 	$RowCounter = 1;
-	$k = 0; //row colour counter
 
 	while ($myrow=DB_fetch_array($TransResult)) {
 
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="EvenTableRows">';;
-			$k++;
-		}
-
-		printf ('<td>%s</td>
+		printf ('<tr class="striped_row">
+				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>

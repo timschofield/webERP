@@ -152,16 +152,10 @@ if(!isset($SelectedTaxAuthID)) {
 				<th class="ascending" >' . _('Bank Swift') . '</th>
 				<th colspan="4">&nbsp;</th>
 			</tr>';
-	$j = 1;
+
 	while($myrow = DB_fetch_row($result)) {
-		if ($j==1) {
-		    echo '<tr class="OddTableRows">';
-		    $j=0;
-		} else {
-		    echo '<tr class="EvenTableRows">';
-		    $j++;
-		}
-		printf('<td class="number">%s</td>
+		printf('<tr class="striped_row">
+				<td class="number">%s</td>
 				<td>%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>

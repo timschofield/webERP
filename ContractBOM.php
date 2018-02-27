@@ -246,7 +246,7 @@ if (count($_SESSION['Contract'.$identifier]->ContractBOM)>0){
 		</tr>';
 
 	$_SESSION['Contract'.$identifier]->total = 0;
-	$k = 0;  //row colour counter
+
 	$TotalCost =0;
 	foreach ($_SESSION['Contract'.$identifier]->ContractBOM as $ContractComponent) {
 
@@ -254,21 +254,15 @@ if (count($_SESSION['Contract'.$identifier]->ContractBOM)>0){
 
 		$DisplayLineTotal = locale_number_format($LineTotal,$_SESSION['CompanyRecord']['decimalplaces']);
 
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k=1;
-		}
-
-		echo '<td>' . $ContractComponent->StockID . '</td>
+		echo '<tr class="striped_row">
+				<td>' . $ContractComponent->StockID . '</td>
 			  <td>' . $ContractComponent->ItemDescription . '</td>
 			  <td><input type="text" class="number" required="required" title="' . _('Enter the quantity of this component required to complete the contract') . '" name="Qty' . $ContractComponent->ComponentID . '" size="11" value="' . locale_number_format($ContractComponent->Quantity,$ContractComponent->DecimalPlaces)  . '" /></td>
 			  <td>' . $ContractComponent->UOM . '</td>
 			  <td class="number">' . locale_number_format($ContractComponent->ItemCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			  <td class="number">' . $DisplayLineTotal . '</td>
-			  <td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier. '&amp;Delete=' . $ContractComponent->ComponentID . '" onclick=\'return confirm("' . _('Are you sure you wish to delete this item from the contract BOM?') . '");\'>' . _('Delete') . '</a></td></tr>';
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier. '&amp;Delete=' . $ContractComponent->ComponentID . '" onclick=\'return confirm("' . _('Are you sure you wish to delete this item from the contract BOM?') . '");\'>' . _('Delete') . '</a></td>
+			</tr>';
 		$TotalCost += $LineTotal;
 	}
 
@@ -357,17 +351,8 @@ if (isset($SearchResult)) {
 					</tr>';
 	echo $TableHeader;
 
-	$k=0; //row colour counter
 	$i=0;
 	while ($myrow=DB_fetch_array($SearchResult)) {
-
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k=1;
-		}
 
 		$SupportedImgExt = array('png','jpg','jpeg');
 		$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
@@ -384,7 +369,8 @@ if (isset($SearchResult)) {
 			$ImageSource = _('No Image');
 		}
 
-		echo '<td>' . $myrow['stockid'] . '</td>
+		echo '<tr class="striped_row">
+				<td>' . $myrow['stockid'] . '</td>
 				<td>' . $myrow['description'] . '</td>
 				<td>' . $myrow['units'] . '</td>
 				<td>' . $ImageSource . '</td>

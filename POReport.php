@@ -553,18 +553,13 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 						</tr>';
 
 				$linectr = 0;
-				$k = 0;
+
 				while ($myrow = DB_fetch_array($result)) {
-					if ($k==1){
-						echo '<tr class="EvenTableRows">';
-						$k=0;
-					} else {
-						echo '<tr class="OddTableRows">';
-						$k++;
-					}
 					$linectr++;
+
 				   // Detail for both DateType of Order
-					printf('<td><a href="'. $RootPath . '/PO_OrderDetails.php?OrderNo=%s">%s</a></td>
+					printf('<tr class="striped_row">
+							<td><a href="'. $RootPath . '/PO_OrderDetails.php?OrderNo=%s">%s</a></td>
 							<td>%s</td>
 							<td>%s</td>
 							<td>%s</td>
@@ -642,19 +637,14 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 						</tr>';
 
 				$linectr = 0;
-				$k = 0;
+
 				while ($myrow = DB_fetch_array($result)) {
-					if ($k==1){
-						echo '<tr class="EvenTableRows">';
-						$k=0;
-					} else {
-						echo '<tr class="OddTableRows">';
-						$k++;
-					}
 					$linectr++;
+
 				   // Detail for both DateType of Ship
 				   // In sql, had to alias grns.qtyrecd as quantityord so could use same name here
-					printf('<td>%s</td>
+					printf('<tr class="striped_row">
+							<td>%s</td>
 							<td>%s</td>
 							<td>%s</td>
 							<td>%s</td>
@@ -774,20 +764,15 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 
 				$suppname = ' ';
 				$linectr = 0;
-				$k=0;
+
 			while ($myrow = DB_fetch_array($result)) {
 				$linectr++;
 				if ($summarytype == 'orderno') {
 					$suppname = $myrow['suppname'];
 				}
-					if ($k==1){
-						echo '<tr class="EvenTableRows">';
-						$k=0;
-					} else {
-						echo '<tr class="OddTableRows">';
-						$k++;
-					}
-				printf('<td>%s</td>
+
+				printf('<tr class="striped_row">
+						<td>%s</td>
 						<td>%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>

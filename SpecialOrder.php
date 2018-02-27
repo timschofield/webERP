@@ -151,19 +151,11 @@ if (!isset($_SESSION['SPL'.$identifier]->BranchCode)){
 		echo $TableHeader;
 
 		$j = 1;
-		$k = 0; //row counter to determine background colour
 
 		while ($myrow=DB_fetch_array($BranchResult)) {
 
-			if ($k==1){
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k++;
-			}
-
-			printf('<td><input type="submit" name="SelectBranch" value="%s" /></td>
+			printf('<tr class="striped_row">
+					<td><input type="submit" name="SelectBranch" value="%s" /></td>
 					<td>%s</td>
 					</tr>',
 				$myrow['branchcode'],
@@ -635,7 +627,7 @@ if (count($_SESSION['SPL'.$identifier]->LineItems)>0){
 		</tr>';
 
 	$_SESSION['SPL'.$identifier]->total = 0;
-	$k = 0;  //row colour counter
+
 	foreach ($_SESSION['SPL'.$identifier]->LineItems as $SPLLine) {
 
 		$LineTotal = $SPLLine->Quantity * $SPLLine->Price;
@@ -648,14 +640,8 @@ if (count($_SESSION['SPL'.$identifier]->LineItems)>0){
 		$DisplayPrice = locale_number_format($SPLLine->Price,$_SESSION['SPL'.$identifier]->CustCurrDecimalPlaces);
 		$DisplayQuantity = locale_number_format($SPLLine->Quantity,'Variable');
 
-		if ($k==1){
-				echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-				echo '<tr class="OddTableRows">';
-			$k=1;
-		}
-		echo '<td>' . $SPLLine->ItemDescription . '</td>
+		echo '<tr class="striped_row">
+			<td>' . $SPLLine->ItemDescription . '</td>
 			<td>' . $SPLLine->ReqDelDate . '</td>
 			<td class="number">' . $DisplayQuantity . '</td>
 			<td class="number">' . $DisplayCost . '</td>

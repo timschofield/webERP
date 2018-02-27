@@ -180,18 +180,10 @@ if(!isset($_GET['SelectedSectionID']) AND !isset($_POST['SelectedSectionID'])) {
 				<th class="noprint" colspan="2">&nbsp;</th>
 			</tr>';
 
-	$k=0; //row colour counter
 	while ($myrow = DB_fetch_array($result)) {
 
-		if($k==1) {
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k++;
-		}
-
-		echo	'<td class="number">', $myrow['sectionid'], '</td>
+		echo '<tr class="striped_row">
+				<td class="number">', $myrow['sectionid'], '</td>
 				<td class="text">', $myrow['sectionname'], '</td>
 				<td class="noprint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'].'?SelectedSectionID='.urlencode($myrow['sectionid']), ENT_QUOTES, 'UTF-8'), '">', _('Edit'), '</a></td>
 				<td class="noprint">';

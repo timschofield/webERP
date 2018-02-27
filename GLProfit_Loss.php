@@ -649,7 +649,6 @@ if ((!isset($_POST['FromPeriod'])
 /* echo '<thead>' . $TableHeader . '<thead><tbody>';// thead used in conjunction with tbody enable scrolling of the table body independently of the header and footer. Also, when printing a large table that spans multiple pages, these elements can enable the table header to be printed at the top of each page. */
 
 	$j = 1;
-	$k=0; //row colour counter
 	$Section='';
 	$SectionPrdActual= 0;
 	$SectionPrdLY 	 = 0;
@@ -986,16 +985,10 @@ if ((!isset($_POST['FromPeriod'])
 		if ($_POST['Detail']=='Detailed'){
 
 			if (isset($_POST['ShowZeroBalances']) OR (!isset($_POST['ShowZeroBalances']) AND ($AccountPeriodActual <> 0 OR $AccountPeriodBudget <> 0 OR $AccountPeriodLY <> 0))){
-				if ($k==1){
-					echo '<tr class="EvenTableRows">';
-					$k=0;
-				} else {
-					echo '<tr class="OddTableRows">';
-					$k++;
-				}
 				$ActEnquiryURL = '<a href="' . $RootPath . '/GLAccountInquiry.php?Period=' . $_POST['ToPeriod'] . '&amp;Account=' . $myrow['accountcode'] . '&amp;Show=Yes">' . $myrow['accountcode'] . '</a>';
 				if ($Section ==1){
-					 printf('<td>%s</td>
+					 printf('<tr class="striped_row">
+							<td>%s</td>
 							<td>%s</td>
 							<td></td>
 							<td class="number">%s</td>
@@ -1010,7 +1003,8 @@ if ((!isset($_POST['FromPeriod'])
 							locale_number_format(-$AccountPeriodBudget,$_SESSION['CompanyRecord']['decimalplaces']),
 							locale_number_format(-$AccountPeriodLY,$_SESSION['CompanyRecord']['decimalplaces']));
 				} else {
-					printf('<td>%s</td>
+					printf('<tr class="striped_row">
+							<td>%s</td>
 							<td>%s</td>
 							<td class="number">%s</td>
 							<td></td>

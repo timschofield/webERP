@@ -153,7 +153,6 @@ or deletion of the records*/
 			<th>' .  _('Disallow Invoices')  . '</th>
         </tr>';
 
-	$k=0; //row colour counter
 	while ($myrow=DB_fetch_array($result)) {
 
 		if ($myrow['dissallowinvoices']==0) {
@@ -161,15 +160,9 @@ or deletion of the records*/
 		} else {
 			$DissallowText = '<b>' .  _('NO INVOICING')  . '</b>';
 		}
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k=1;
-		}
 
-	printf('<td>%s</td>
+		printf('<tr class="striped_row">
+			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
 			<td><a href="%s?SelectedReason=%s">' . _('Edit') . '</a></td>

@@ -220,19 +220,11 @@ if (!isset($StockID)) {
 				<th class="ascending">' . _('On Hand') . '</th>
 				<th>' . _('Units') . '</th>
 			</tr>';
-		$k=0; //row colour counter
 
 		while ($myrow=DB_fetch_array($StockItemsResult)) {
 
-			if ($k==1){
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k++;
-			}
-
-			printf('<td><input type="submit" name="SelectedStockItem" value="%s" /></td>
+			printf('<tr class="striped_row">
+					<td><input type="submit" name="SelectedStockItem" value="%s" /></td>
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
@@ -345,16 +337,7 @@ if (!isset($StockID)) {
 					<th class="ascending">' . _('Required Date') . '</th>
 				</tr>';
 
-		$k=0; //row colour counter
 		while ($myrow=DB_fetch_array($WorkOrdersResult)) {
-
-			if ($k==1){
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k++;
-			}
 
 			$ModifyPage = $RootPath . '/WorkOrderEntry.php?WO=' . $myrow['wo'];
 			$Status_WO = $RootPath . '/WorkOrderStatus.php?WO=' .$myrow['wo'] . '&amp;StockID=' . urlencode($myrow['stockid']);
@@ -367,7 +350,8 @@ if (!isset($StockID)) {
 			$FormatedStartDate = ConvertSQLDate($myrow['startdate']);
 
 
-			printf('<td><a href="%s">%s</a></td>
+			printf('<tr class="striped_row">
+					<td><a href="%s">%s</a></td>
 					<td><a href="%s">' . _('Status') . '</a></td>
 					<td><a href="%s">' . _('Issue To') . '</a></td>
 					<td><a href="%s">' . _('Receive') . '</a></td>

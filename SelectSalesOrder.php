@@ -643,19 +643,10 @@ if (isset($StockItemsResult)
 			<th>' . _('Units') . '</th>
 		</tr>';
 
-	$k=0; //row colour counter
-
 	while ($myrow=DB_fetch_array($StockItemsResult)) {
 
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k++;
-		}
-
-		printf('<td><input type="submit" name="SelectedStockItem" value="%s" /></td>
+		printf('<tr class="striped_row">
+				<td><input type="submit" name="SelectedStockItem" value="%s" /></td>
 				<td>%s</td>
 				<td class="number">%s</td>
 				<td>%s</td>
@@ -942,19 +933,9 @@ if (isset($StockItemsResult)
 
 		echo $TableHeader;
 
-		$k=0; //row colour counter
 		$OrdersTotal =0;
 
 		while ($myrow=DB_fetch_array($SalesOrdersResult)) {
-
-
-			if ($k==1){
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k++;
-			}
 
 			$ModifyPage = $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . $myrow['orderno'];
 			$Confirm_Invoice = $RootPath . '/ConfirmDispatch_Invoice.php?OrderNumber=' .$myrow['orderno'];
@@ -1005,7 +986,8 @@ if (isset($StockItemsResult)
 
 			 /*Check authority to create POs if user has authority then show the check boxes to select sales orders to place POs for otherwise don't provide this option */
 				if ($AuthRow['cancreate']==0 AND $myrow['poplaced']==0){ //cancreate==0 if the user can create POs and not already placed
-					echo '<td><a href="' . $ModifyPage . '">' . $myrow['orderno'] . '</a></td>
+					echo '<tr class="striped_row">
+							<td><a href="' . $ModifyPage . '">' . $myrow['orderno'] . '</a></td>
 							<td><a href="' . $PrintAck . '">' . _('Acknowledge') . '</a>' . $PrintDummyFlag . '</td>
 							' . $PrintPickLabel . '
 							<td><a href="' . $Confirm_Invoice . '">' . _('Invoice') . '</a></td>
@@ -1021,7 +1003,8 @@ if (isset($StockItemsResult)
 			 				<td class="centre"><input type="checkbox" name="PlacePO_[]" value="' . $myrow['orderno'] . '"/></td>
 			 			</tr>';
 				} else {  /*User is not authorised to create POs so don't even show the option */
-					printf('<td><a href="%s">%s</a></td>
+					printf('<tr class="striped_row">
+							<td><a href="%s">%s</a></td>
 							<td><a href="%s">' . _('Acknowledge') . '</a></td>
 							' . $PrintPickLabel . '
 							<td><a href="%s">' . _('Invoice') . '</a></td>
@@ -1052,7 +1035,8 @@ if (isset($StockItemsResult)
 				}
 
 			} else { /*must be quotes only */
-				printf('<td><a href="%s">%s</a></td>
+				printf('<tr class="striped_row">
+						<td><a href="%s">%s</a></td>
 						<td><a target="_blank" href="%s">' . _('Landscape') . '</a>&nbsp;&nbsp;<a target="_blank" href="%s">' . _('Portrait') . '</a></td>
 						<td>%s</td>
 						<td>%s</td>

@@ -159,7 +159,7 @@ if (!(isset($_POST['Search']))) {
 
 	$result = DB_query($SQL);
 
-	echo '<p class="page_title_text" align="center"><strong>' . _('Top Sales Items List') . '</strong></p>';
+	echo '<p class="page_title_text"><strong>' . _('Top Sales Items List') . '</strong></p>';
 	echo '<form action="PDFTopItems.php"  method="GET">';
     echo '<div>';
     echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -181,7 +181,7 @@ if (!(isset($_POST['Search']))) {
 			<input type="hidden" value="' . filter_number_format($_POST['NumberOfDays']) . '" name="NumberOfDays" />
 			<input type="hidden" value="' . $_POST['Customers'] . '" name="Customers" />
 			<input type="hidden" value="' . filter_number_format($_POST['NumberOfTopItems']) . '" name="NumberOfTopItems" />';
-	$k = 0; //row colour counter
+
 	$i = 1;
 	while ($myrow = DB_fetch_array($result)) {
 		$QOH = 0;
@@ -219,17 +219,11 @@ if (!(isset($_POST['Search']))) {
 			$DaysOfStock = 0;
 		}
 		if ($DaysOfStock < $_POST['MaxDaysOfStock']){
-			if ($k == 1) {
-				echo '<tr class="EvenTableRows">';
-				$k = 0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k = 1;
-			}
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stkcode'] . '">' . $myrow['stkcode'] . '</a>';
 			$QOH = is_numeric($QOH)?locale_number_format($QOH,$myrow['decimalplaces']):$QOH;
 			$QOO = is_numeric($QOO)?locale_number_format($QOO,$myrow['decimalplaces']):$QOO;
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>

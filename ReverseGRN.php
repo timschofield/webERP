@@ -412,15 +412,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 
 			/* show the GRNs outstanding to be invoiced that could be reversed */
 			$RowCounter =0;
-			$k=0;
 			while ($myrow=DB_fetch_array($result)) {
-				if ($k==1){
-					echo '<tr class="EvenTableRows">';
-					$k=0;
-				} else {
-					echo '<tr class="OddTableRows">';
-					$k=1;
-				}
 
 				$DisplayQtyRecd = locale_number_format($myrow['qtyrecd'],'Variable');
 				$DisplayQtyInv = locale_number_format($myrow['quantityinv'],'Variable');
@@ -428,7 +420,8 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 				$DisplayDateDel = ConvertSQLDate($myrow['deliverydate']);
 				$LinkToRevGRN = '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?GRNNo=' . $myrow['grnno'] . '">' . _('Reverse') . '</a>';
 
-				printf('<td>%s</td>
+				printf('<tr class="striped_row">
+						<td>%s</td>
 						<td>%s</td>
 						<td>%s</td>
 						<td>%s</td>

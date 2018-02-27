@@ -39,18 +39,11 @@ echo '<tr>
 		<th>' .  _('ETA'). '</th></tr>';
 
 $j = 1;
-$k = 0; //row colour counter
 
 while ($myrow=DB_fetch_array($ShiptsResult)) {
-       if ($k==1){
-              echo '<tr class="OddTableRows">';
-              $k=0;
-       } else {
-              echo '<tr class="EvenTableRows">';
-              $k=1;
-       }
 
-       echo '<td><a href="'.$RootPath.'/Shipments.php?' . SID . 'SelectedShipment='.$myrow['shiptref'].'">' . $myrow['shiptref'] . '</a></td>
+       echo '<tr class="striped_row">
+			<td><a href="'.$RootPath.'/Shipments.php?SelectedShipment='.$myrow['shiptref'].'">' . $myrow['shiptref'] . '</a></td>
        		<td>' . $myrow['vessel'] . '</td>
 		<td>' . ConvertSQLDate($myrow['eta']) . '</td>
 		</tr>';

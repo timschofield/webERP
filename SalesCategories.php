@@ -269,16 +269,7 @@ if (DB_num_rows($result) == 0) {
 			<th>' . _('Active?') . '</th>
 		</tr>';
 
-	$k=0; //row colour counter
-
 	while ($myrow = DB_fetch_array($result)) {
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k=1;
-		}
 		$SupportedImgExt = array('png','jpg','jpeg');
 		$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/SALESCAT_' . $myrow['salescatid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
 		if( extension_loaded('gd') && function_exists('gd_info') && file_exists($imagefile) ) {
@@ -299,7 +290,8 @@ if (DB_num_rows($result) == 0) {
 			$Active = _('No');
 		}
 
-		printf('<td>%s</td>
+		printf('<tr class="striped_row">
+				<td>%s</td>
 				<td>%s</td>
 				<td><a href="%sParentCategory=%s">' . _('Select') . '</td>
 				<td><a href="%sSelectedCategory=%s&amp;ParentCategory=%s">' . _('Edit') . '</td>
@@ -543,18 +535,10 @@ if($result ) {
 				<th class="ascending">' . _('Featured') . '</th>
 			</tr>';
 
-		$k=0; //row colour counter
-
 		while( $myrow = DB_fetch_array($result) ) {
-			if ($k==1){
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k=1;
-			}
 
-			echo '<td>' . $myrow['stockid'] . '</td>
+			echo '<tr class="striped_row">
+				<td>' . $myrow['stockid'] . '</td>
 				<td>' . $myrow['description'] . '</td>
 				<td>' . $myrow['manufacturers_name'] . '</td>
 				<td>';

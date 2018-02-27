@@ -213,23 +213,17 @@ or deletion of the records*/
 			<th>' . _('Comm Rate 2') . '</th>
 			<th>' . _('Current') . '</th>
 		</tr>';
-	$k=0;
+
 	while ($myrow=DB_fetch_array($result)) {
 
-	if ($k==1){
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k++;
-	}
 	if ($myrow[7] == 1) {
 		$ActiveText = _('Yes');
 	} else {
 		$ActiveText = _('No');
 	}
 
-	printf('<td>%s</td>
+		printf('<tr class="striped_row">
+			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>

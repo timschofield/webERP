@@ -461,7 +461,7 @@ if (isset($_POST['AllocTrans'])){
 							<th class="ascending">' . _('Yet to') . '<br />' . _('Allocate') . '</th>
 							<th class="ascending">' . _('This') . '<br />' . _('Allocation') . '</th>
 						</tr>';
-		$k = 0;
+
 		$Counter = 0;
 		$RowCounter = 0;
 		$TotalAllocated = 0;
@@ -470,13 +470,6 @@ if (isset($_POST['AllocTrans'])){
 
 	    /*Alternate the background colour for each potential allocation line */
 
-	    if ($k == 1){
-		    echo '<tr class="EvenTableRows">';
-		    $k = 0;
-	    } else {
-		    echo '<tr class="OddTableRows">';
-		    $k = 1;
-	    }
 	    $RowCounter++;
 
 	    if ($RowCounter == 15){
@@ -487,7 +480,8 @@ if (isset($_POST['AllocTrans'])){
 
 	    $YetToAlloc = ($AllocnItem->TransAmount - $AllocnItem->PrevAlloc);
 
-	    echo '<td>' . $AllocnItem->TransType . '</td>
+	    echo '<tr class="striped_row">
+			<td>' . $AllocnItem->TransType . '</td>
 			<td class="number">' . $AllocnItem->TypeNo . '</td>
 			<td>' . $AllocnItem->TransDate . '</td>
 			<td>' . $AllocnItem->SuppRef . '</td>
@@ -579,17 +573,11 @@ if (isset($_POST['AllocTrans'])){
   /* set up table of TransType - Supplier - Trans No - Date - Total - Left to alloc  */
 
   $RowCounter = 0;
-  $k = 0; //row colour counter
-  while ($myrow = DB_fetch_array($result)) {
-	if ($k == 1){
-		echo '<tr class="EvenTableRows">';
-		$k = 0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k = 1;
-	}
 
-	printf('<td>%s</td>
+  while ($myrow = DB_fetch_array($result)) {
+
+	printf('<tr class="striped_row">
+			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
@@ -654,18 +642,11 @@ if (isset($_POST['AllocTrans'])){
 
   /* set up table of Tran Type - Supplier - Trans No - Date - Total - Left to alloc  */
 
-  $k = 0; //row colour counter
   $RowCounter = 0;
   while ($myrow = DB_fetch_array($result)) {
-	if ($k == 1){
-		echo '<tr class="EvenTableRows">';
-		$k = 0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k = 1;
-	}
 
-	printf('<td>%s</td>
+	printf('<tr class="striped_row">
+			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>

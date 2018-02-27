@@ -415,15 +415,7 @@ or deletion of the records*/
 			<th class="noprint" colspan="2">&nbsp;</th>
 		</tr>';
 
-$k=0;//row colour counter
 while ($myrow = DB_fetch_array($result)) {
-	if($k==1) {
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k=1;
-	}
 /* warehouse management not implemented ... yet
 	if($myrow['managed'] == 1) {
 		$myrow['managed'] = _('Yes');
@@ -431,7 +423,8 @@ while ($myrow = DB_fetch_array($result)) {
 		$myrow['managed'] = _('No');
 	}
 */
-	printf('<td>%s</td>
+	printf('<tr class="striped_row">
+			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
 			<td class="number">%s</td>

@@ -144,11 +144,11 @@ textarea {
 textarea:hover {
 }
 
-.EvenTableRows {
+tr.striped_row:nth-of-type(even) {
 	background-color:#CCCCCC;
 }
 
-.OddTableRows {
+tr.striped_row:nth-of-type(odd) {
 	background-color:#EEEEEE;
 }
 
@@ -192,24 +192,6 @@ div.page_help_text {
 	font-weight:normal;
 	color:black;
 	text-align:center;
-}
-
-div.system_check {
-	border:#a52a2a 1px solid;
-	padding-left:3px;
-	z-index:1;
-	width:40%;
-	float:none;
-	visibility:visible;
-	margin:0 auto;
-	position:static;
-	background:lightgray;
-	font-family:Arial, Verdana, Helvetica, sans-serif;
-	padding-top:1px;
-	padding-bottom:1px;
-	font-weight:normal;
-	color:black;
-	text-align:left;
 }
 
 .dpTbl { /* date picker background */

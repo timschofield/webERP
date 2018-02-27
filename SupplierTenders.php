@@ -330,17 +330,13 @@ if (isset($_POST['TenderType']) and $_POST['TenderType']!=3 and isset($_SESSION[
 				<th class="assending">' . _('Line Total').' ('.$Currency.')</th>
 				<th class="assending">' . _('Expiry Date') . '</th>
 			</tr>';
-	$k=0;
+
 	foreach ($_SESSION['offer'.$identifier]->LineItems as $LineItems) {
 		if ($LineItems->Deleted==False) {
 			if ($LineItems->ExpiryDate < date('Y-m-d')) {
 				echo '<tr style="background-color:#F7A9A9">';
-			} elseif ($k==1){
-				echo '<tr class="EvenTableRows">';
-				$k=0;
 			} else {
-				echo '<tr class="OddTableRows">';
-				$k=1;
+				echo '<tr class="striped_row">';
 			}
 
 			echo '<input type="hidden" name="StockID'.$LineItems->LineNo.'" value="'.$LineItems->StockID.'" />';
@@ -693,17 +689,8 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 		echo $TableHeader;
 
 		$i = 0;
-		$k = 0; //row colour counter
 		$PartsDisplayed=0;
 		while ($myrow=DB_fetch_array($SearchResult)) {
-
-			if ($k==1){
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k=1;
-			}
 
 			$SupportedImgExt = array('png','jpg','jpeg');
 			$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
@@ -740,7 +727,8 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 			} else {
 				$UOM=$myrow['units'];
 			}
-			echo '<td>' . $myrow['stockid'] . '</td>
+			echo '<tr class="striped_row">
+					<td>' . $myrow['stockid'] . '</td>
 					<td>' . $myrow['description'] . '</td>
 					<td>' . $UOM . '</td>
 					<td>' . $ImageSource . '</td>

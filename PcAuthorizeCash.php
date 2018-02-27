@@ -96,7 +96,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 				<th>', _('Notes'), '</th>
 				<th>', _('Date Authorised'), '</th>
 			</tr>';
-	$k = 0; //row colour counter
+
 	$CurrDecimalPlaces = 2;
 	while ($MyRow = DB_fetch_array($Result)) {
 		$CurrDecimalPlaces = $MyRow['decimalplaces'];
@@ -223,15 +223,9 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			unset($SelectedTabs);
 			unset($_POST['SelectedTabs']);
 		}
-		if ($k == 1) {
-			echo '<tr class="EvenTableRows">';
-			$k = 0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k = 1;
-		}
 		
-		echo '<td>', ConvertSQLDate($MyRow['date']), '</td>
+		echo '<tr class="striped_row">
+			<td>', ConvertSQLDate($MyRow['date']), '</td>
 			<td>', $MyRow['codeexpense'], '</td>
 			<td class="number">', locale_number_format($MyRow['amount'], $CurrDecimalPlaces), '</td>
 			<td>', $MyRow['notes'], '</td>';

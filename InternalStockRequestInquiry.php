@@ -267,19 +267,10 @@ if(isset($StockItemsResult)){
 			<th>' . _('Units') . '</th>
 		</tr>';
 
-	$k=0; //row colour counter
-
 	while ($myrow=DB_fetch_array($StockItemsResult)) {
 
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k++;
-		}
-
-		printf('<td><input type="submit" name="SelectedStockItem" value="%s" /></td>
+		printf('<tr class="striped_row">
+				<td><input type="submit" name="SelectedStockItem" value="%s" /></td>
 				<td>%s</td>
 				<td class="number">%s</td>
 				<td>%s</td>
@@ -422,13 +413,6 @@ if(isset($StockItemsResult)){
 		$i = 0;
 		//There are items without details AND with it
 		while ($myrow = DB_fetch_array($result)) {
-			if ($i == 0) {
-				$Html .= "<tr class=\"EvenTableRows\">";
-				$i = 1;
-			} elseif ($i == 1) {
-				$Html .= "<tr class=\"OddTableRows\">";
-				$i = 0;
-			}
 			if ($myrow['authorised'] == 0) {
 				$Auth = _('No');
 			} else {
@@ -448,7 +432,8 @@ if(isset($StockItemsResult)){
 			}
 			if (isset($ID) AND ($ID != $myrow['dispatchid'])) {
 				$ID = $myrow['dispatchid'];
-				$Html .= '<td>' . $myrow['dispatchid'] . '</td>
+				$Html .= '<tr class="striped_row">
+						<td>' . $myrow['dispatchid'] . '</td>
 						<td>' . $myrow['locationname'] . '</td>
 						<td>' . $myrow['description'] . '</td>
 						<td>' . $Auth . '</td>
@@ -460,7 +445,8 @@ if(isset($StockItemsResult)){
 						<td>' . $Comp . '</td>';
 
 			} elseif (isset($ID) AND ($ID == $myrow['dispatchid'])) {
-				$Html .= '<td></td>
+				$Html .= '<tr class="striped_row">
+						<td></td>
 						<td></td>
 						<td></td>
 						<td></td>
@@ -471,7 +457,8 @@ if(isset($StockItemsResult)){
 						<td>' . $myrow['uom'] . '</td>
 						<td>' . $Comp . '</td>';
 			} elseif(!isset($ID)) {
-					$Html .= '<td>' . $myrow['dispatchid'] . '</td>
+					$Html .= '<tr class="striped_row">
+						<td>' . $myrow['dispatchid'] . '</td>
 						<td>' . $myrow['locationname'] . '</td>
 						<td>' . $myrow['description'] . '</td>
 						<td>' . $Auth . '</td>

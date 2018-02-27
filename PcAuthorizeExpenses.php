@@ -101,7 +101,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 				<th>', _('Receipt Attachment'), '</th>
 				<th>', _('Date Authorised'), '</th>
 			</tr>';
-	$k = 0; //row colour counter
+
 	while ($MyRow = DB_fetch_array($Result)) {
 		$CurrDecimalPlaces = $MyRow['decimalplaces'];
 		//update database if update pressed
@@ -278,13 +278,6 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			unset($SelectedTabs);
 			unset($_POST['SelectedTabs']);
 		}
-		if ($k == 1) {
-			echo '<tr class="EvenTableRows">';
-			$k = 0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k = 1;
-		}
 		
 		$SQLDes = "SELECT description
 						FROM pcexpenses
@@ -328,7 +321,8 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			$ReceiptText = _('No attachment');
 		}
 		
-		echo '<td>', ConvertSQLDate($MyRow['date']), '</td>
+		echo '<tr class="striped_row">
+			<td>', ConvertSQLDate($MyRow['date']), '</td>
 			<td>', $ExpenseCodeDes, '</td>
 			<td class="number">', locale_number_format($MyRow['amount'], $CurrDecimalPlaces), '</td>
 			<td class="number">', $TaxesTaxAmount, '</td>
@@ -343,7 +337,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			if (($MyRow['authorized'] != '0000-00-00')) {
 				echo '<td>', ConvertSQLDate($MyRow['authorized']);
 			} else {
-				echo '<td align="right"><input type="checkbox" name="', $MyRow['counterindex'], '" />';
+				echo '<td class="number"><input type="checkbox" name="', $MyRow['counterindex'], '" />';
 			}
 		}
 		echo '<input type="hidden" name="SelectedIndex" value="', $MyRow['counterindex'], '" />

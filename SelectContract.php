@@ -152,15 +152,9 @@ $TableHeader = '<tr>
 echo $TableHeader;
 
 $j = 1;
-$k=0; //row colour counter
+
 while ($myrow=DB_fetch_array($ContractsResult)) {
-	if ($k==1){
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k++;
-	}
+	echo '<tr class="striped_row">';
 
 	$ModifyPage = $RootPath . '/Contracts.php?ModifyContractRef=' . $myrow['contractref'];
 	$OrderModifyPage = $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . $myrow['orderno'];

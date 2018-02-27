@@ -67,7 +67,6 @@ if(in_array($DebtorSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($
 			</tr>
 		</thead><tbody>';
 	$j = 1;
-	$k = 0;// Row colour counter.
 	$TotBal = 0;
 	$TotCurr = 0;
 	$TotDue = 0;
@@ -164,13 +163,6 @@ if(in_array($DebtorSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($
 	}
 
 	while($AgedAnalysis = DB_fetch_array($CustomerResult)) {
-		if($k == 1) {
-			echo '<tr class="EvenTableRows">';
-			$k = 0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k = 1;
-		}
 		$CurrDecimalPlaces = $AgedAnalysis['decimalplaces'];
 		$DisplayDue = locale_number_format($AgedAnalysis['due']-$AgedAnalysis['overdue1'],$CurrDecimalPlaces);
 		$DisplayCurrent = locale_number_format($AgedAnalysis['balance']-$AgedAnalysis['due'],$CurrDecimalPlaces);
@@ -183,7 +175,8 @@ if(in_array($DebtorSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($
 			$TotDue += ($AgedAnalysis['due']-$AgedAnalysis['overdue1']);
 			$TotOD1 += ($AgedAnalysis['overdue1']-$AgedAnalysis['overdue2']);
 			$TotOD2 += $AgedAnalysis['overdue2'];
-			echo '	<td class="text" colspan="4"><a href="CustomerInquiry.php?CustomerID=', $AgedAnalysis['debtorno'],'"><b>',
+			echo '<tr class="striped_row">
+					<td class="text" colspan="4"><a href="CustomerInquiry.php?CustomerID=', $AgedAnalysis['debtorno'],'"><b>',
 						$AgedAnalysis['debtorno'], ' - ', $AgedAnalysis['name'], '</b></a></td>
 					<td class="number"><b>', $DisplayBalance, '</b></td>
 					<td class="number"><b>', $DisplayCurrent, '</b></td>
@@ -262,14 +255,8 @@ if(in_array($DebtorSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($
 
 				$DisplayDueDate = CalcDueDate($DisplayTranDate, $DetailTrans['dayinfollowingmonth'], $DetailTrans['daysbeforedue']);
 
-				if($k == 1) {
-					echo '<tr class="EvenTableRows">';
-					$k = 0;
-				} else {
-					echo '<tr class="OddTableRows">';
-					$k = 1;
-				}
-				echo '<td class="centre">', _($DetailTrans['typename']), '</td>',// Should it be left (text field) ?
+				echo '<tr class="striped_row">
+						<td class="centre">', _($DetailTrans['typename']), '</td>',// Should it be left (text field) ?
 						'<td class="number">', $DetailTrans['transno'], '</td>
 						<td class="centre">', $DisplayTranDate, '</td>
 						<td class="centre">', $DisplayDueDate, '</td>
@@ -284,14 +271,8 @@ if(in_array($DebtorSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($
 	} //end customer aged analysis while loop
 
 	// Print totals of 'Overdue Customer Balances':
-	if($k == 1) {
-		echo '<tr class="EvenTableRows">';
-		$k = 0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k = 1;
-	}
-	echo '<td class="text"><b>', _('Totals'), '</b></td>
+	echo '<tr class="striped_row">
+			<td class="text"><b>', _('Totals'), '</b></td>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
@@ -385,32 +366,18 @@ if(in_array($PayeeSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($P
 		unset($Allocs);
 		$Allocs = array();
 		$AllocCounter =0;
-		$k = 0; //row colour counter
 
 		while($DetailTrans = DB_fetch_array($TransResult)) {
 			if($DetailTrans['supplierid'] != $SupplierID) { /*Need to head up for a new suppliers details */
-				if($k == 1) {
-					echo '<tr class="EvenTableRows">';
-					$k = 0;
-				} else {
-					echo '<tr class="OddTableRows">';
-					$k = 1;
-				}
 				$SupplierID = $DetailTrans['supplierid'];
 				$SupplierName = $DetailTrans['suppname'];
 				//$AccumBalance = 0;
 				$AccumDiffOnExch = 0;
-				echo '<td class="text" colspan="5"><b>', $DetailTrans['supplierid'], ' - ', $DetailTrans['suppname'], ' - ', $DetailTrans['terms'], '</b></td>
+				echo '<tr class="striped_row">
+						<td class="text" colspan="5"><b>', $DetailTrans['supplierid'], ' - ', $DetailTrans['suppname'], ' - ', $DetailTrans['terms'], '</b></td>
 					</tr>';
 			}
 
-			if($k == 1) {
-				echo '<tr class="EvenTableRows">';
-				$k = 0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k = 1;
-			}
 			$DisplayFormat = '';
 			if((time()-(60*60*24)) > strtotime($DetailTrans['duedate'])) {
 				$DisplayFormat = ' style="color:red;"';
@@ -418,14 +385,16 @@ if(in_array($PayeeSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($P
 			$DislayTranDate = ConvertSQLDate($DetailTrans['trandate']);
 			$AccumBalance += $DetailTrans['balance'];
 			if($DetailTrans['type'] == 20) {// If Purchase Invoice:
-				echo '<td style="text-align:center">', _($DetailTrans['typename']), '</td>
+				echo '<tr class="striped_row">
+						<td class="centre">', _($DetailTrans['typename']), '</td>
 						<td class="centre">', $DislayTranDate, '</td>
 						<td class="text"><a href="', $RootPath, '/Payments.php?&SupplierID=', $SupplierID, '&amp;Amount=', $DetailTrans['balance'], '&amp;BankTransRef=', $DetailTrans['suppreference'], '">', $DetailTrans['suppreference'], '</a></td>
 						<td class="number"', $DisplayFormat, '>', locale_number_format($DetailTrans['balance'], $CurrDecimalPlaces), '</td>
 						<td class="centre"', $DisplayFormat, '>', ConvertSQLDate($DetailTrans['duedate']), '</td>
 					</tr>';
 			} else {// If NOT Purchase Invoice (Creditors Payment):
-				echo '<td style="text-align:center">', _($DetailTrans['typename']), '</td>
+				echo '<tr class="striped_row">
+						<td class="centre">', _($DetailTrans['typename']), '</td>
 						<td class="centre">', $DislayTranDate, '</td>
 						<td class="text"><a href="', $RootPath, '/SupplierAllocations.php?AllocTrans=', $DetailTrans['id'], '">', $DetailTrans['suppreference'], '</a></td>
 						<td class="number"', $DisplayFormat, '>', locale_number_format($DetailTrans['balance'], $CurrDecimalPlaces), '</td>
@@ -435,14 +404,8 @@ if(in_array($PayeeSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($P
 		} /*end while there are detail transactions to show */
 	} /* end while there are suppliers to retrieve transactions for */
 
-	if($k == 1) {
-		echo '<tr class="EvenTableRows">';
-		$k = 0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k = 1;
-	}
-	echo '<td class="number">', _('Grand Total Payments Due'), '</td>
+	echo '<tr class="striped_row">
+			<td class="number">', _('Grand Total Payments Due'), '</td>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
 			<td class="number"><b>', locale_number_format($AccumBalance, $CurrDecimalPlaces), '</b></td>
@@ -479,16 +442,7 @@ if(in_array($CashSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($Ca
 	$DbgMsg = _('The SQL used to retrieve the bank account details was') . '<br />' . $Sql;
 	$result1 = DB_query($Sql,$ErrMsg,$DbgMsg);
 
-	$k = 0; //row colour counter
-
 	while($myrow = DB_fetch_array($result1)) {
-		if($k == 1) {
-			echo '<tr class="EvenTableRows">';
-			$k = 0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k = 1;
-		}
 		/*Is the account a balance sheet or a profit and loss account */
 		$result = DB_query("SELECT pandl
 						FROM accountgroups
@@ -569,7 +523,8 @@ if(in_array($CashSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($Ca
 			$PeriodTotal += $myrow2['amount'];
 		}
 		$DisplayBalance=locale_number_format(($RunningTotal),$_SESSION['CompanyRecord']['decimalplaces']);
-		echo	'<td class="text">', $myrow['accountcode'], ' - ', $myrow['accountname'], '</td>
+		echo '<tr class="striped_row">
+				<td class="text">', $myrow['accountcode'], ' - ', $myrow['accountname'], '</td>
 				<td class="text">', $myrow['bankaccountname'], '</td>
 				<td class="number">', $DisplayBalance, '</td>
 			</tr>';
@@ -630,7 +585,6 @@ if(in_array($OrderSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($O
 
 	/*show a table of the orders returned by the SQL */
 	if(DB_num_rows($SalesOrdersResult)>0) {
-		$k = 0; //row colour counter
 		$OrdersTotal = 0;
 		$FontColor = '';
 
@@ -641,14 +595,9 @@ if(in_array($OrderSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($O
 			if(DateDiff(Date($_SESSION['DefaultDateFormat']), $OrderDate, 'd') > 5) {
 				$FontColor = ' style="color:green; font-weight:bold"';
 			}
-			if($k == 1) {
-				echo '<tr class="EvenTableRows">';
-				$k = 0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k = 1;
-			}
-			echo	'<td class="number"><a href="', $RootPath, '/OrderDetails.php?OrderNumber=', $MyRow['orderno'], '" target="_blank">', $MyRow['orderno'], '</a></td>
+
+			echo '<tr class="striped_row">
+					<td class="number"><a href="', $RootPath, '/OrderDetails.php?OrderNumber=', $MyRow['orderno'], '" target="_blank">', $MyRow['orderno'], '</a></td>
 					<td class="text"', $FontColor, '>', $MyRow['name'], '</td>
 					<td class="text"', $FontColor, '>', $MyRow['brname'], '</td>
 					<td class="number"', $FontColor, '>', $MyRow['customerref'], '</td>

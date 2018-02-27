@@ -373,7 +373,6 @@ $TaxTotal =0;
 
 /*show the line items on the order with the quantity being dispatched available for modification */
 
-$k=0; //row colour counter
 $j=0; //used for tabindex
 
 foreach ($_SESSION['Items'.$identifier]->LineItems as $LnItm) {
@@ -382,12 +381,8 @@ foreach ($_SESSION['Items'.$identifier]->LineItems as $LnItm) {
 	if ($LnItm->QOHatLoc < $LnItm->Quantity and ($LnItm->MBflag == 'B' or $LnItm->MBflag == 'M')) {
 		/*There is a stock deficiency in the stock location selected */
 		$RowStarter = '<tr style="background:#FF0000;color:#FFC0CB">'; //rows show red where stock deficiency
-	} elseif ($k == 1) {
-		$RowStarter = '<tr class="OddTableRows">';
-		$k = 0;
 	} else {
-		$RowStarter = '<tr class="EvenTableRows">';
-		$k = 1;
+		$RowStarter = '<tr class="striped_row">';
 	}
 
 	if (sizeOf($LnItm->SerialItems) > 0) {

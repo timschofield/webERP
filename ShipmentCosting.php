@@ -159,19 +159,10 @@ if (DB_num_rows($LineItemsResult) > 0) {
 
 	/*show the line items on the shipment with the value invoiced and shipt cost */
 
-	$k=0; //row colour counter
 		$TotalShiptVariance = 0;
 	$RowCounter =0;
 
 	while ($myrow=DB_fetch_array($LineItemsResult)) {
-
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k=1;
-		}
 
 				$sql = "SELECT SUM(shipmentcharges.value) AS invoicedcharges
 						 FROM shipmentcharges
@@ -472,7 +463,8 @@ if (DB_num_rows($LineItemsResult) > 0) {
 
 /*  Item / Qty Inv/  FX price/ Local Val/ Portion of chgs/ Shipt Cost/ Std Cost/ Variance/ Var % */
 
-	echo '<td>' . $myrow['itemcode'] . ' - ' . $myrow['itemdescription'] . '</td>
+	echo '<tr class="striped_row">
+			<td>' . $myrow['itemcode'] . ' - ' . $myrow['itemdescription'] . '</td>
 			<td class="number">' . locale_number_format($myrow['totqtyinvoiced'],'Variable') . '</td>
 			<td class="number">' . locale_number_format($myrow['totqtyrecd'],'Variable') . '</td>
 			<td class="number">' . locale_number_format($ItemCharges,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
@@ -480,7 +472,8 @@ if (DB_num_rows($LineItemsResult) > 0) {
 			<td class="number">' . locale_number_format($ItemShipmentCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			<td class="number">' . locale_number_format($StdCostUnit,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			<td class="number">' . locale_number_format($Variance,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-			<td class="number">' . $VariancePercentage . '%</td></tr>';
+			<td class="number">' . $VariancePercentage . '%</td>
+		</tr>';
 	}
 }
 echo '<tr>
@@ -544,22 +537,13 @@ echo  $TableHeader;
 
 /*show the line items on the shipment with the value invoiced and shipt cost */
 
-$k=0; //row colour counter
 $RowCounter =0;
 $TotalItemShipmentChgs =0;
 
 while ($myrow=DB_fetch_array($ChargesResult)) {
 
-
-	if ($k==1){
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k=1;
-	}
-
-	echo '<td>' . $myrow['suppname'] . '</td>
+	echo '<tr class="striped_row">
+		<td>' . $myrow['suppname'] . '</td>
 		<td>' .$myrow['typename'] . '</td>
 		<td>' . $myrow['suppreference'] . '</td>
 		<td>' . ConvertSQLDate($myrow['trandate']) . '</td>
@@ -620,21 +604,13 @@ echo  $TableHeader;
 
 /*show the line items on the shipment with the value invoiced and shipt cost */
 
-$k=0; //row colour counter
 $RowCounter =0;
 $TotalGeneralShipmentChgs =0;
 
 while ($myrow=DB_fetch_array($ChargesResult)) {
 
-	if ($k==1){
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k=1;
-	}
-
-	echo '<td>' . $myrow['suppname'] . '</td>
+	echo '<tr class="striped_row">
+		<td>' . $myrow['suppname'] . '</td>
 		<td>' .$myrow['typename'] . '</td>
 		<td>' . $myrow['suppreference'] . '</td>
 		<td>' . ConvertSQLDate($myrow['trandate']) . '</td>

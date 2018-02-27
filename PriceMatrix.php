@@ -269,21 +269,13 @@ echo '<tr>
 		<th>' . _('Sell Price') . '</th>
 	</tr>';
 
-$k=0; //row colour counter
-
 while ($myrow = DB_fetch_array($result)) {
-	if ($k==1){
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k=1;
-	}
 	$DeleteURL = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=yes&amp;SalesType=' . $myrow['salestype'] . '&amp;StockID=' . $myrow['stockid'] . '&amp;QuantityBreak=' . $myrow['quantitybreak'].'&amp;Price=' . $myrow['price'] . '&amp;currabrev=' . $myrow['currabrev'].'&amp;StartDate='.$myrow['startdate'].'&amp;EndDate='.$myrow['enddate'];
 	$EditURL = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Edit=yes&amp;StockID=' . $myrow['stockid'] . '&amp;TypeAbbrev=' . $myrow['salestype'] . '&amp;CurrAbrev=' . $myrow['currabrev'] . '&amp;Price=' . locale_number_format($myrow['price'], $myrow['currdecimalplaces']) . '&amp;StartDate=' . $myrow['startdate'] . '&amp;EndDate=' . $myrow['enddate'].'&amp;QuantityBreak=' . $myrow['quantitybreak'];
 
     if (in_array(5, $_SESSION['AllowedPageSecurityTokens'])){
-	    printf('<td>%s</td>
+	    printf('<tr class="striped_row">
+			<td>%s</td>
 		    	<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
@@ -301,7 +293,8 @@ while ($myrow = DB_fetch_array($result)) {
 			$DeleteURL,
 			$EditURL);
     }else {
-	    printf('<td>%s</td>
+	    printf('<tr class="striped_row">
+			<td>%s</td>
 		    	<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>

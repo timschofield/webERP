@@ -56,20 +56,14 @@ if (isset($_POST['Submit'])) {//users have selected the WO to calculate and subm
 						<th class="ascending">' . _('Issued Cost') . '</th>
 						<th class="ascending">' . _('Work Order') . '</th>
 					</tr>';
-				$i = 0;
+
 				$TotalCost = 0;
 				while ($myrow = DB_fetch_array($result)){
-					if ($i==0) {
-						echo '<tr class="EvenTableRows">';
-						$i = 1;
-					} else {
-						echo '<tr class="OddTableRows">';
-						$i = 0;
-					}
 					$IssuedQty = - $myrow['qty'];
 					$IssuedCost = $IssuedQty * $myrow['standardcost'];
 					$TotalCost += $IssuedCost;
-					echo '<td>' . $myrow['stockid'] . '</td>
+					echo '<tr class="striped_row">
+						<td>' . $myrow['stockid'] . '</td>
 						<td>' . $myrow['description'] . '</td>
 						<td>' . $myrow['trandate'] . '</td>
 						<td class="number">' . locale_number_format($IssuedQty,$myrow['decimalplaces']) . '</td>
@@ -277,7 +271,7 @@ if (!isset($StockID)) {
 			</td>
 				</tr>
 				</table>';
-		echo '<div class="center">
+		echo '<div class="centre">
 			<input type="submit" name="SearchOrders" value="' . _('Search') . '" />
 			&nbsp;&nbsp;<a href="' . $RootPath . '/WorkOrderEntry.php">' . _('New Work Order') . '</a>
 			</div>
@@ -326,19 +320,11 @@ if (!isset($StockID)) {
 				<th class="ascending">' . _('On Hand') . '</th>
 				<th>' . _('Units') . '</th>
 			</tr>';
-		$k=0; //row colour counter
 
 		while ($myrow=DB_fetch_array($StockItemsResult)) {
 
-			if ($k==1){
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k++;
-			}
-
-			printf('<td><input type="submit" name="SelectedStockItem" value="%s" /></td>
+			printf('<tr class="striped_row">
+					<td><input type="submit" name="SelectedStockItem" value="%s" /></td>
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
@@ -457,16 +443,7 @@ if (!isset($StockID)) {
 					<th class="ascending">' . _('Required Date') . '</th>
 				</tr>';
 
-		$k=0; //row colour counter
 		while ($myrow=DB_fetch_array($WorkOrdersResult)) {
-
-			if ($k==1){
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k++;
-			}
 
 			$ModifyPage = $RootPath . '/WorkOrderEntry.php?WO=' . $myrow['wo'];
 			$Status_WO = $RootPath . '/WorkOrderStatus.php?WO=' .$myrow['wo'] . '&amp;StockID=' . $myrow['stockid'];
@@ -479,7 +456,8 @@ if (!isset($StockID)) {
 			$FormatedStartDate = ConvertSQLDate($myrow['startdate']);
 
 
-			printf('<td><input type="checkbox" name="WO_%s" /></td>
+			printf('<tr class="striped_row">
+					<td><input type="checkbox" name="WO_%s" /></td>
 					<td><a href="%s">%s</a></td>
 					<td><a href="%s">' . _('Status') . '</a></td>
 					<td><a href="%s">' . _('Issue To') . '</a></td>
@@ -513,7 +491,7 @@ if (!isset($StockID)) {
 		//end of while loop
 
 		echo '</table>
-			<div class="center">
+			<div class="centre">
 				<input type="submit" value="' . _('Submit') . '" name="Submit" />
 			</form>';
       }

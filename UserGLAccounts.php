@@ -171,16 +171,9 @@ if(!isset($SelectedUser)) {// If is NOT set a user for GL accounts.
 		WHERE glaccountusers.userid='" . $SelectedUser . "'
 		ORDER BY chartmaster.accountcode ASC");
 	if(DB_num_rows($Result)>0) {// If the user has access permissions to one or more GL accounts:
-		$k = 0; //row colour counter
 		while ($MyRow = DB_fetch_array($Result)) {
-			if($k == 1) {
-				echo '<tr class="EvenTableRows">';
-				$k = 0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k = 1;
-			}
-			echo '<td class="text">', $MyRow['accountcode'], '</td>
+			echo '<tr class="striped_row">
+				<td class="text">', $MyRow['accountcode'], '</td>
 				<td class="text">', $MyRow['accountname'], '</td>
 				<td class="centre">';
 			if($MyRow['canview'] == 1) {

@@ -193,7 +193,6 @@ echo '<table class="selection" cellpadding="0">
 			<td>' . _('Reqd Date'). '</td>
 		</tr>';
 
-$k =0;  //row colour counter
 $OrderTotal=0;
 $RecdTotal=0;
 
@@ -213,13 +212,7 @@ while ($myrow=DB_fetch_array($LineItemsResult)) {
 	  	AND Date1GreaterThanDate2(Date($_SESSION['DefaultDateFormat']), $DisplayReqdDate)){
     	 	echo '<tr class="OsRow">';
 	} else {
-    		if ($k==1){
-    			echo '<tr class="EvenTableRows">';
-    			$k=0;
-    		} else {
-    			echo '<tr class="OddTableRows">';
-    			$k=1;
-		}
+		echo '<tr class="striped_row">';
 	}
 
 	printf ('<td>%s</td>

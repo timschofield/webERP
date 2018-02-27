@@ -114,22 +114,16 @@ if (isset($_POST['Search'])
 	echo $TableHeader;
 
 	$j = 1;
-	$k = 0; //row colour counter
+
 	while ($myrow=DB_fetch_array($result)) {
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k++;
-		}
 		if ($myrow['mbflag']=='A' OR $myrow['mbflag']=='K'){
 			$StockOnHand = 'N/A';
 		} else {
 			$StockOnHand = locale_number_format($myrow['totalonhand'],2);
 		}
 		$tabindex=$j+4;
-		printf('<td><input tabindex="' .$tabindex . '" type="submit" name="StockID" value="%s" /></td>
+		printf('<tr class="striped_row">
+				<td><input tabindex="' .$tabindex . '" type="submit" name="StockID" value="%s" /></td>
 		        <td>%s</td>
 				<td class="number">%s</td>
 				<td>%s</td>
@@ -203,24 +197,16 @@ if (isset($StockID) and $StockID!=""){
 		echo $TableHeader;
 
 		$j = 1;
-		$k=0; //row colour counter
 
 		$TotalCost = 0;
 
 		while ($myrow=DB_fetch_array($BOMResult)) {
 
-			if ($k==1){
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k++;
-			}
-
 			$ComponentLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['component'] . '">' . $myrow['component'] . '</a>';
 
 			/* Component Code  Description  Quantity Std Cost  Total Cost */
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>

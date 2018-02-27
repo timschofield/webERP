@@ -42,7 +42,7 @@ echo '<table class="selection">
 	
 	</tr>
 	</table>';
-echo '<div class="center">
+echo '<div class="centre">
 		<input type="submit" name="Submit" value="' . _('Submit') . '" />
 	</div>';
 if (isset($_POST['Submit'])) {
@@ -74,16 +74,10 @@ if (isset($_POST['Submit'])) {
 				<th>' . _('PO No') . '</th>
 				<th>' . _('Invoice No') . '</th>
 			</tr>';
-		$k = 0;
+
 		while ($myrow = DB_fetch_array($result)){
-			if ($k == 0) {
-				echo '<tr class="EvenTableRows">';
-				$k = 1;
-			} else{
-				echo '<tr class="OddTableRows">';
-				$k = 0;
-			}
-				echo '<td class="ascending">' . $myrow['supplierref'] . '</td>
+			echo '<tr class="striped_row">
+				<td class="ascending">' . $myrow['supplierref'] . '</td>
 					<td class="ascending"><a href="' . $RootPath .'/PDFGrn.php?GRNNo=' . $myrow['grnbatch'] . '&amp;PONo=' . $myrow['orderno'] . '">' . $myrow['grnbatch']. '</td>
 					<td class="ascending">' . $myrow['orderno'] . '</td>
 					<td class="ascending">' . $myrow['suppinv'] . '</td>

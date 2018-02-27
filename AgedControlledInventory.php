@@ -43,7 +43,6 @@ $NumRows = DB_num_rows($LocStockResult);
 
 $TotalQty=0;
 $TotalVal=0;
-$k=0; //row colour counter
 
 echo '<table>
 		<tr>
@@ -58,14 +57,6 @@ echo '<table>
 
 while ($LocQtyRow=DB_fetch_array($LocStockResult)) {
 
-	if ($k==1){
-		echo '<tr class="OddTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="EvenTableRows">';
-		$k=1;
-	}
-
 	$DaysOld=floor(($Today - strtotime($LocQtyRow['createdate']))/(60*60*24));
 	$TotalQty +=$LocQtyRow['quantity'];
 	$DispVal =  '-----------';
@@ -75,7 +66,8 @@ while ($LocQtyRow=DB_fetch_array($LocStockResult)) {
 		$TotalVal +=($LocQtyRow['quantity'] *$LocQtyRow['cost']);
 	}
 
-	printf('<td>%s</td>
+	printf('<tr class="striped_row">
+			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
 			<td class="number">%s</td>
@@ -93,20 +85,15 @@ while ($LocQtyRow=DB_fetch_array($LocStockResult)) {
 		);
 } //while
 
-if ($k==1){
-	echo '<tfoot><tr class="OddTableRows">';
-	$k=0;
-} else {
-	echo '<tfoot><tr class="EvenTableRows">';
-	$k=1;
-}
-
-echo '<td colspan="3"><b>' . _('Total') . '</b></td>
+echo '<tfoot>
+			<tr class="striped_row">
+				<td colspan="3"><b>' . _('Total') . '</b></td>
       <td class="number"><b>' . locale_number_format($TotalQty,2) . '</b></td>
       <td class="number"><b>' . locale_number_format($TotalVal,2) . '</b></td>
       <td colspan="2"></td>
-      </tr></tfoot>';
-echo '</table>';
+			</tr>
+		</tfoot>
+	</table>';
 
 include('includes/footer.php');
 ?>

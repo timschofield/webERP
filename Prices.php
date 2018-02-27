@@ -227,22 +227,15 @@ if (DB_num_rows($result) > 0) {
 	}
 	echo	'</tr>';
 
-	$k=0; //row colour counter
 	while ($myrow = DB_fetch_array($result)) {
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k=1;
-		}
 		if ($myrow['enddate']=='9999-12-31'){
 			$EndDateDisplay = _('No End Date');
 		} else {
 			$EndDateDisplay = ConvertSQLDate($myrow['enddate']);
 		}
 
-		echo   '<td>' . $CurrencyName[$myrow['currabrev']] . '</td>
+		echo '<tr class="striped_row">
+				<td>' . $CurrencyName[$myrow['currabrev']] . '</td>
 				<td>' .  $myrow['sales_type'] . '</td>
 				<td class="number">' . locale_number_format($myrow['price'], $myrow['currdecimalplaces']+2) . '</td>
 				<td>' . ConvertSQLDate($myrow['startdate']) . '</td>

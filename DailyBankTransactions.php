@@ -166,33 +166,21 @@ if (!isset($_POST['Show'])) {
 		$LocalCurrTotal =0;
 		$Balance = 0;
 		$j = 0;
-		$k = 0;
 		while ($myrow = DB_fetch_array($result)){
 
 			if ($j == 0) {
 				if (ABS($myrow['prebalance'])>0.0001) {
-						if ($k == 0) {
-							echo '<tr class="OddTableRows">';
-							$k = 1;
-						} else {
-							echo '<tr class="EvenTableRows">';
-							$k = 0;
-						}
 					$Balance += $myrow['prebalance'];
-					echo '<td colspan="6" style="font-weight:bold">' . _('Previous Balance') . '</td>
+					echo '<tr class="striped_row">
+							<td colspan="6" style="font-weight:bold">' . _('Previous Balance') . '</td>
 						<td class="number">' . locale_number_format($myrow['prebalance'],$BankDetailRow['decimalplaces']) . '</td>
-						<td colspan="5"></td></tr>';
+							<td colspan="5"></td>
+						</tr>';
 					$j++;
 
 				}
 			}
-			if ($k == 0) {
-				echo '<tr class="OddTableRows">';
-				$k = 1;
-			} else {
-				echo '<tr class="EvenTableRows">';
-				$k = 0;
-			}
+
 			//check the GL narrative
 			if ($myrow['type'] == 2) {
 				$myrow['typeid'] = 1;
@@ -217,7 +205,7 @@ if (!isset($_POST['Show'])) {
 				$Matched=_('No');
 			}
 
-			echo '
+			echo '<tr class="striped_row">
 					<td class="centre">' .  ConvertSQLDate($myrow['transdate']) . '</td>
 					<td>' . _($myrow['typename']) . '</td>
 					<td class="number"><a href="' . $RootPath . '/GLTransInquiry.php?TypeID=' . $myrow['typeid'] . '&amp;TransNo=' . $myrow['transno'] . '">' . $myrow['transno'] . '</a></td>
@@ -232,13 +220,12 @@ if (!isset($_POST['Show'])) {
 					<td>' . $GLNarrative . '</td>
 				</tr>';
 		}
-		if ($k == 0 ) {
-			echo '<tr class="OddTableRows">';
-		} else {
-			echo '<tr class="EvenTableRows">';
-		}
 
-		echo '<td colspan="6" style="font-weight:bold;">' . _('Account Balance') . '</td><td class="number" style="font-weight:bold;">' .locale_number_format($Balance,$BankDetailRow['decimalplaces']) . '</td><td colspan="5"></td></tr>
+		echo '<tr class="striped_row">
+				<td colspan="6" style="font-weight:bold;">' . _('Account Balance') . '</td>
+				<td class="number" style="font-weight:bold;">' .locale_number_format($Balance,$BankDetailRow['decimalplaces']) . '</td>
+				<td colspan="5"></td>
+			</tr>
 		</tbody></table>';
 		echo '</div>';// div id="Report".
 	} //end if no bank trans in the range to show

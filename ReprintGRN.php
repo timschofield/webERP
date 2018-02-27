@@ -23,7 +23,7 @@ echo '<table class="selection">
 			<td>' . '<input type="text" name="PONumber" class="number" size="7" value="'.$_POST['PONumber'].'" /></td>
 		</tr>
 		<tr>
-			<td colspan="2" style="text-align: center"><input type="submit" name="Show" value="' . _('Show GRNs') . '" /></td>
+			<td colspan="2" class="centre"><input type="submit" name="Show" value="' . _('Show GRNs') . '" /></td>
 		</tr>
 	</table>
     <br />
@@ -75,7 +75,7 @@ if (isset($_POST['Show'])) {
 		include('includes/footer.php');
 		exit;
 	}
-	$k=0;
+
 	echo '<br />
 			<table class="selection">
 			<tr>
@@ -94,14 +94,8 @@ if (isset($_POST['Show'])) {
 			</tr>';
 
 	while ($myrow=DB_fetch_array($result)) {
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k=1;
-		}
-		echo '<td>' . $myrow['suppname'] . '</td>
+		echo '<tr class="striped_row">
+			<td>' . $myrow['suppname'] . '</td>
 			<td class="number">' . $myrow['podetailitem'] . '</td>
 			<td class="number">' . $myrow['grnbatch'] . '</td>
 			<td>' . $myrow['itemcode'] . '</td>

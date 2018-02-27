@@ -149,17 +149,9 @@ if (!isset($SelectedArea)) {
 				<th>' . _('Area Name') . '</th>
 			</tr>';
 
-	$k=0; //row colour counter
-
 	while ($myrow = DB_fetch_array($result)) {
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k++;
-		}
-		echo '<td>' . $myrow['areacode'] . '</td>
+		echo '<tr class="striped_row">
+				<td>' . $myrow['areacode'] . '</td>
 				<td>' . $myrow['areadescription'] . '</td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedArea=' . $myrow['areacode'] . '">' . _('Edit') . '</a></td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedArea=' . $myrow['areacode'] . '&amp;delete=yes">' . _('Delete') . '</a></td>

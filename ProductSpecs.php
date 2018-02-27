@@ -169,17 +169,10 @@ if (isset($_GET['ListTests'])) {
 				<th>' . _('Range Min') . '</th>
 				<th>' . _('Range Max') . '</th>
 			</tr>';
-	$k=0;
+
 	$x=0;
 	while ($myrow=DB_fetch_array($result)) {
 
-	if ($k==1){
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k++;
-	}
 	$x++;
 	$Class='';
 	$RangeMin='';
@@ -211,7 +204,8 @@ if (isset($_GET['ListTests'])) {
 			$RangeMax='<input  class="' .$Class. '" type="text" name="AddRangeMax' .$x.'" />';
 			break;
 	} //end switch
-	printf('<td>%s</td>
+		printf('<tr class="striped_row">
+			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
@@ -395,16 +389,9 @@ or deletion of the records*/
 			<th class="ascending">' . _('Show on Test Plan') . '</th>
 			<th class="ascending">' . _('Active') . '</th>
 		</tr>';
-	$k=0;
+
 	while ($myrow=DB_fetch_array($result)) {
 
-	if ($k==1){
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k++;
-	}
 	if ($myrow['active'] == 1) {
 		$ActiveText = _('Yes');
 	} else {
@@ -450,7 +437,8 @@ or deletion of the records*/
 			break;
 	} //end switch
 
-	printf('<td>%s</td>
+		printf('<tr class="striped_row">
+			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>

@@ -318,16 +318,9 @@ or deletion of the records*/
 	$ErrMsg = _('The chart accounts could not be retrieved because');
 	$Result = DB_query($Sql, $ErrMsg);
 
-	$k = 1;// Row colour counter.
 	while ($MyRow = DB_fetch_array($Result)) {
-		if($k == 1) {
-			echo '<tr class="OddTableRows">';
-			$k = 0;
-		} else {
-			echo '<tr class="EvenTableRows">';
-			$k = 1;
-		}
-		echo	'<td class="text">', $MyRow['accountcode'], '</td>
+		echo '<tr class="striped_row">
+				<td class="text">', $MyRow['accountcode'], '</td>
 				<td class="text">', htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8'), '</td>
 				<td class="text">', $MyRow['group_'], '</td>
 				<td class="text">', $MyRow['acttype'], '</td>

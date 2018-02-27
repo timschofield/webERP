@@ -1132,19 +1132,12 @@ if (!isset($DebtorNo)) {
 				<th colspan="2"><input type="submit" name="AddContact" value="' . _('Add Contact') . '" /></th>
 			</tr>';
 	}
-	$k=0; //row colour counter
 
 	while ($myrow = DB_fetch_array($result)) {
-		if ($k==1){
-			echo '<tr class="OddTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="EvenTableRows">';
-			$k=1;
-		}
 
 		if (isset($_GET['Modify'])) {
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td><a href="mailto:%s">%s</a></td>
@@ -1157,7 +1150,8 @@ if (!isset($DebtorNo)) {
 					$myrow['email'],
 					$myrow['notes']);
 		} else {
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td><a href="mailto:%s">%s</a></td>

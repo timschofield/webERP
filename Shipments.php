@@ -408,7 +408,6 @@ if (count($_SESSION['Shipment']->LineItems)>0){
 
 	/*show the line items on the shipment with the quantity being received for modification */
 
-	$k=0; //row colour counter
 	$RowCounter =0;
 
 	foreach ($_SESSION['Shipment']->LineItems as $LnItm) {
@@ -419,16 +418,8 @@ if (count($_SESSION['Shipment']->LineItems)>0){
 		}
 		$RowCounter++;
 
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k=1;
-		}
-
-
-		echo '<td>' . $LnItm->OrderNo . '</td>
+		echo '<tr class="striped_row">
+			<td>' . $LnItm->OrderNo . '</td>
 			<td>' .  $LnItm->StockID .' - '. $LnItm->ItemDescription. '</td><td class="number">' . locale_number_format($LnItm->QuantityOrd,$LnItm->DecimalPlaces) . '</td>
 			<td>' .  $LnItm->UOM  . '</td>
 			<td class="number">' . locale_number_format($LnItm->QuantityRecd,$LnItm->DecimalPlaces) . '</td>
@@ -493,7 +484,6 @@ if (DB_num_rows($result)>0){
 
 	/*show the PO items that could be added to the shipment */
 
-	$k=0; //row colour counter
 	$RowCounter =0;
 
 	while ($myrow=DB_fetch_array($result)){
@@ -504,15 +494,8 @@ if (DB_num_rows($result)>0){
 		}
 		$RowCounter++;
 
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k=1;
-		}
-
-		echo '<td>' . $myrow['orderno'] . '</td>
+		echo '<tr class="striped_row">
+				<td>' . $myrow['orderno'] . '</td>
 				<td>' . $myrow['itemcode'] . ' - ' . $myrow['itemdescription'] . '</td>
 				<td class="number">' . locale_number_format($myrow['quantityord'],$myrow['decimalplaces']) . '</td>
 				<td>' . $myrow['units'] . '</td>

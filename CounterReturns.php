@@ -682,26 +682,18 @@ if (count($_SESSION['Items' . $identifier]->LineItems)>0){ /*only show return li
 	$TaxTotals = array();
 	$TaxGLCodes = array();
 	$TaxTotal =0;
-	$k =0;  //row colour counter
+
 	foreach ($_SESSION['Items' . $identifier]->LineItems as $ReturnItemLine) {
 
 		$SubTotal = $ReturnItemLine->Quantity * $ReturnItemLine->Price * (1 - $ReturnItemLine->DiscountPercent);
 		$DisplayDiscount = locale_number_format(($ReturnItemLine->DiscountPercent * 100),2);
 		$QtyReturned = $ReturnItemLine->Quantity;
 
-		if ($k==1){
-			$RowStarter = '<tr class="OddTableRows">';
-			$k=0;
-		} else {
-			$RowStarter = '<tr class="EvenTableRows">';
-			$k=1;
-		}
-
-		echo $RowStarter;
 		echo '<input type="hidden" name="POLine_' .	 $ReturnItemLine->LineNumber . '" value="" />';
 		echo '<input type="hidden" name="ItemDue_' .	 $ReturnItemLine->LineNumber . '" value="'.$ReturnItemLine->ItemDue.'" />';
 
-		echo '<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?identifier='.$identifier . '&StockID=' . $ReturnItemLine->StockID . '&DebtorNo=' . $_SESSION['Items' . $identifier]->DebtorNo . '">' . $ReturnItemLine->StockID . '</a></td>
+		echo '<tr class="striped_row">
+				<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?identifier='.$identifier . '&StockID=' . $ReturnItemLine->StockID . '&DebtorNo=' . $_SESSION['Items' . $identifier]->DebtorNo . '">' . $ReturnItemLine->StockID . '</a></td>
 			<td title="' . $ReturnItemLine->LongDescription . '">' . $ReturnItemLine->ItemDescription . '</td>';
 
 		echo '<td><input class="number" tabindex="2" type="text" name="Quantity_' . $ReturnItemLine->LineNumber . '" required="required" size="6" maxlength="6" value="' . locale_number_format($ReturnItemLine->Quantity,$ReturnItemLine->DecimalPlaces) . '" />';
@@ -740,8 +732,8 @@ if (count($_SESSION['Items' . $identifier]->LineItems)>0){ /*only show return li
 		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier . '&Delete=' . $ReturnItemLine->LineNumber . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">' . _('Delete') . '</a></td></tr>';
 
 		if ($_SESSION['AllowOrderLineItemNarrative'] == 1){
-			echo $RowStarter;
-			echo '<td valign="top" colspan="11">' . _('Narrative') . ':<textarea name="Narrative_' . $ReturnItemLine->LineNumber . '" cols="100" rows="1">' . stripslashes(AddCarriageReturns($ReturnItemLine->Narrative)) . '</textarea><br /></td></tr>';
+			echo '<tr class="striped_row">
+					<td valign="top" colspan="11">' . _('Narrative') . ':<textarea name="Narrative_' . $ReturnItemLine->LineNumber . '" cols="100" rows="1">' . stripslashes(AddCarriageReturns($ReturnItemLine->Narrative)) . '</textarea><br /></td></tr>';
 		} else {
 			echo '<input type="hidden" name="Narrative" value="" />';
 		}
@@ -752,7 +744,7 @@ if (count($_SESSION['Items' . $identifier]->LineItems)>0){ /*only show return li
 
 	} /* end of loop around items */
 
-	echo '<tr class="EvenTableRows">';
+	echo '<tr class="striped_row">';
 	echo '<td colspan="7" class="number"><b>' . _('Total') . '</b></td>';
 	echo '<td class="number">' . locale_number_format(($_SESSION['Items' . $identifier]->total),$_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '</td>
 			<td class="number">' . locale_number_format($TaxTotal,$_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '</td>
@@ -1655,12 +1647,12 @@ if (!isset($_POST['ProcessReturn'])){
 		<td><b><?php echo _('Enter partial Description'); ?>:</b>
 		<input tabindex="2" type="text" name="Keywords" <?php isset($SearchResult)? '': 'autofocus="autofocus"' ?> size="20" maxlength="25" value="<?php if (isset($_POST['Keywords'])) echo $_POST['Keywords']; ?>" /></td>
 
-		<td align="right"><b><?php echo _('OR'); ?> </b><b><?php echo _('Enter extract of the Stock Code'); ?>:</b>
+		<td class="number"><b><?php echo _('OR'); ?> </b><b><?php echo _('Enter extract of the Stock Code'); ?>:</b>
 		<input tabindex="3" type="text" name="StockCode" size="15" maxlength="18" value="<?php if (isset($_POST['StockCode'])) echo $_POST['StockCode']; ?>" /></td>
 
 		</tr><tr>
-		<td style="text-align:center" colspan="1"><input tabindex="4" type="submit" name="Search" value="<?php echo _('Search Now'); ?>" /></td>
-		<td style="text-align:center" colspan="1"><input tabindex="5" type="submit" name="QuickEntry" value="<?php echo _('Use Quick Entry'); ?>" /></td>
+		<td class="centre" colspan="1"><input tabindex="4" type="submit" name="Search" value="<?php echo _('Search Now'); ?>" /></td>
+		<td class="centre" colspan="1"><input tabindex="5" type="submit" name="QuickEntry" value="<?php echo _('Use Quick Entry'); ?>" /></td>
 
 		<?php
 
@@ -1680,7 +1672,7 @@ if (!isset($_POST['ProcessReturn'])){
 			echo '<table class="table1">';
 			echo '<tr>
 					<td><input type="hidden" name="previous" value="'.strval($Offset-1).'" /><input tabindex="'.strval($j+7).'" type="submit" name="Prev" value="'._('Prev').'" /></td>
-					<td style="text-align:center" colspan="6"><input type="hidden" name="SelectingReturnItems" value="1" /><input tabindex="'.strval($j+8).'" type="submit" value="'._('Return Item(s)').'" /></td>
+					<td class="centre" colspan="6"><input type="hidden" name="SelectingReturnItems" value="1" /><input tabindex="'.strval($j+8).'" type="submit" value="'._('Return Item(s)').'" /></td>
 					<td><input type="hidden" name="NextList" value="'.strval($Offset+1).'" /><input tabindex="'.strval($j+9).'" type="submit" name="Next" value="'._('Next').'" /></td>
 				</tr>';
 			$TableHeader = '<tr>
@@ -1694,7 +1686,6 @@ if (!isset($_POST['ProcessReturn'])){
 					   			<th>' . _('Quantity') . '</th></tr>';
 			echo $TableHeader;
 			$i=0;
-			$k=0; //row colour counter
 
 			while ($myrow=DB_fetch_array($SearchResult)) {
 
@@ -1731,17 +1722,10 @@ if (!isset($_POST['ProcessReturn'])){
 				// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
 				$QOO += GetQuantityOnOrderDueToWorkOrders($myrow['stockid'], '');
 
-				if ($k==1){
-					echo '<tr class="EvenTableRows">';
-					$k=0;
-				} else {
-					echo '<tr class="OddTableRows">';
-					$k=1;
-				}
-
 				$Available = $QOH - $DemandQty + $QOO;
 
-				printf('<td>%s</td>
+				printf('<tr class="striped_row">
+						<td>%s</td>
 						<td title="%s">%s</td>
 						<td>%s</td>
 						<td class="number">%s</td>
@@ -1774,7 +1758,7 @@ if (!isset($_POST['ProcessReturn'])){
 				<tr>
 					<td><input type="hidden" name="previous" value="'.strval($Offset-1).'" />
 						<input tabindex="'.strval($j+7).'" type="submit" name="Prev" value="'._('Prev').'" /></td>
-					<td style="text-align:center" colspan="6"><input type="hidden" name="SelectingReturnItems" value="1" />
+					<td class="centre" colspan="6"><input type="hidden" name="SelectingReturnItems" value="1" />
 						<input tabindex="'.strval($j+8).'" type="submit" value="'._('Add to Sale').'" /></td>
 					<td><input type="hidden" name="NextList" value="'.strval($Offset+1).'" />
 						<input tabindex="'.strval($j+9).'" type="submit" name="Next" value="'._('Next').'" /></td>
