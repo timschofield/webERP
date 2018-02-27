@@ -131,8 +131,6 @@ if ( isset($_GET['EditControlled']) ) {
 $TotalQuantity = 0; /*Variable to accumulate total quantity received */
 $RowCounter =0;
 
-$k=0;
-
 $StartAddingAt = 0;
 if ($EditControlled){
 	foreach ($LineItem->SerialItems as $Bundle){

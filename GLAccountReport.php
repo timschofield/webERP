@@ -132,9 +132,6 @@ if (isset($_POST['RunReport'])){
 		$PeriodTotal = 0;
 		$PeriodNo = -9999;
 
-		$j = 1;
-		$k=0; //row colour counter
-
 		while ($myrow=DB_fetch_array($TransResult)) {
 
 			if ($myrow['periodno']!=$PeriodNo){
