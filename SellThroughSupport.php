@@ -190,7 +190,6 @@ if (isset($_POST['SearchSupplier'])) {
 			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			<table cellpadding="3" colspan="4" class="selection">
 			<tr>
-				<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 				<td>' . _('Text in the Supplier') . ' <b>' . _('NAME') . '</b>:</td>
 				<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
 				<td><b>' . _('OR') . '</b></td>
