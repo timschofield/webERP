@@ -1,5 +1,6 @@
 webERP Change Log
 
+12/2/18  Tim (PaulT commit): StockMovements.php, StockLocMovements.php: Correct stock movements that have more than one serial number as part of it, then the item will appear multiple times in the movements script with the total quantity in each line. For example, if I enter a quantity adjustment for a controlled item, and assign 3 serial numbers to this movement and then run the inquiries, there will be 3 separate lines with a quantity of 3 against each one.
 11/2/18  PaulT: SellThroughSupport.php: Remove (another) redundant hidden FormID input. (there were two, overlooked the 2nd one earlier)
 11/2/18  PaulT: SellThroughSupport.php: Remove redundant hidden FormID input.
 11/2/18  PaulT: Contracts.php: Move closing form tag outside of condition. Fixes view page source message "Saw a form start tag, but there was already an active form element. Nested forms are not allowed. Ignoring the tag." reported in Firefox.
