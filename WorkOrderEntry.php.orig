@@ -821,17 +821,11 @@ echo '<tr><th>' . _('Output Item') . '</th>
 		  <th>' . _('Balance Remaining') . '</th>
 		  <th>' . _('Next Lot/SN Ref') . '</th>
 		  </tr>';
-$j=0;
+
 if(isset($NumberOfOutputs)) {
 	for ($i=1;$i<=$NumberOfOutputs;$i++) {
-		if($j==1) {
-			echo '<tr class="OddTableRows">';
-			$j=0;
-		} else {
-			echo '<tr class="EvenTableRows">';
-			$j=1;
-		}
-		echo '<td><input type="hidden" name="OutputItem' . $i . '" value="' . $_POST['OutputItem' .$i] . '" />' .
+		echo '<tr class="striped_row">
+			<td><input type="hidden" name="OutputItem' . $i . '" value="' . $_POST['OutputItem' .$i] . '" />' .
 			$_POST['OutputItem' . $i] . ' - ' . $_POST['OutputItemDesc' .$i] . '
 			</td>';
 		echo'<td><textarea style="width:100%" rows="5" cols="20" name="WOComments' . $i . '" >' . $_POST['WOComments' . $i] . '</textarea>
@@ -973,7 +967,6 @@ if(isset($SearchResult)) {
 	   			<th class="ascending">' . _('Description') . '</th>
 	   			<th>' . _('Units') . '</th></tr>';
 		$j = 1;
-		$k=0; //row colour counter
 		$ItemCodes = array();
 		for ($i=1;$i<=$NumberOfOutputs;$i++) {
 			$ItemCodes[] =$_POST['OutputItem'.$i];
@@ -998,16 +991,10 @@ if(isset($SearchResult)) {
 					$ImageSource = _('No Image');
 				}
 
-				if($k==1) {
-					echo '<tr class="EvenTableRows">';
-					$k=0;
-				} else {
-					echo '<tr class="OddTableRows">';
-					$k=1;
-				}
 				if($myrow['controlled']==1 AND $_SESSION['DefineControlledOnWOEntry']==1) { //need to add serial nos or batches to determine quantity
 
-				printf('<td><font size="1">%s</font></td>
+				printf('<tr class="striped_row">
+						<td><font size="1">%s</font></td>
 						<td><font size="1">%s</font></td>
 						<td><font size="1">%s</font></td>
 						<td>%s</td>
@@ -1026,14 +1013,14 @@ if(isset($SearchResult)) {
 						if(!isset($myrow['quantity'])) {
 							$myrow['quantity'] = 0;
 						}
-						printf('<td><font size="1">%s</font></td>
+						printf('<tr class="striped_row">
+						<td><font size="1">%s</font></td>
 						<td><font size="1">%s</font></td>
 						<td><font size="1">%s</font></td>
 						<td>%s</td>
 						<td><font size="1"><a href="%s">'
 						. _('Add to Work Order') . '</a></font></td>
 						<td><input type="text" name="Qty_%s" value="%s" size="10" /><input type="hidden" value="%s" name="Item_%s" /></td>
-
 						</tr>',
 						$myrow['stockid'],
 						$myrow['description'],
@@ -1052,7 +1039,7 @@ if(isset($SearchResult)) {
 		}//end of while loop
 	} //end if more than 1 row to show
 	echo '</table>';
-	echo '<div class="center">
+	echo '<div class="centre">
 			<input type="submit" name="Add" value="' . _('Add To Work Order') . '" />
 			<input type="hidden" name="WO" value="' . $_POST['WO'] . '" />
 			</div>';

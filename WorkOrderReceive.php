@@ -229,7 +229,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 											AND parentstockid='" . $_POST['StockID'] . "'");
 
 			//Recursively insert real component requirements
-			WoRealRequirements($db, $_POST['WO'], $WORow['loccode'], $_POST['StockID']);
+			WoRealRequirements($_POST['WO'], $WORow['loccode'], $_POST['StockID']);
 
 			//Need to check this against the current standard cost and do a cost update if necessary
 			$sql = "SELECT materialcost+labourcost+overheadcost AS cost,
@@ -572,7 +572,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 							}
 						}//end prefined controlled items or not
 						if ($_SESSION['QualityLogSamples']==1) {
-							CreateQASample($_POST['StockID'],$_POST['SerialNo'.$i], '', 'Created from Work Order', 0, 0,$db);
+							CreateQASample($_POST['StockID'],$_POST['SerialNo'.$i], '', 'Created from Work Order', 0, 0);
 						}
 					} //non blank SerialNo
 				} //end for all of the potential serialised fields received
@@ -678,7 +678,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 						} */
 						}
 						if ($_SESSION['QualityLogSamples']==1) {
-							CreateQASample($_POST['StockID'],$_POST['BatchRef'.$i], '', 'Created from Work Order', 0 ,0,$db);
+							CreateQASample($_POST['StockID'],$_POST['BatchRef'.$i], '', 'Created from Work Order', 0 ,0);
 						}
 					}//non blank BundleRef
 				} //end for all of the potential batch/lot fields received

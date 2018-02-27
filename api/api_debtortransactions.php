@@ -1050,7 +1050,7 @@ function ConvertToSQLDate($DateEntry) {
 
 				$Result = api_DB_query($SQL,'','',true);
 			}
-			EnsureGLEntriesBalance(11,$CreditNoteNo,$db);
+			EnsureGLEntriesBalance(11,$CreditNoteNo);
 
 		} /*end of if Sales and GL integrated */
 

@@ -224,7 +224,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 				exit;
 			}
 		}
-		EnsureGLEntriesBalance(22,$SuppPaymentNo,$db);
+		EnsureGLEntriesBalance(22,$SuppPaymentNo);
 	} /*end if GL linked to creditors */
 
 

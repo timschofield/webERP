@@ -434,7 +434,7 @@ if (isset($_GET['ReceivePO']) AND $_GET['ReceivePO']!=''){
 				$result=DB_query($sql);
 
 				if ($_SESSION['PO'.$identifier]->GLLink==1) {
-					EnsureGLEntriesBalance(25, $GRN,$db);
+					EnsureGLEntriesBalance(25, $GRN);
 				}
 
 				$Result = DB_Txn_Commit();
@@ -1486,7 +1486,7 @@ then do the updates and inserts to process the invoice entered */
 			$DbgMsg = _('The following SQL to insert the GL transaction was used');
 			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
 
-			EnsureGLEntriesBalance(20, $InvoiceNo, $db);
+			EnsureGLEntriesBalance(20, $InvoiceNo);
 		} /*Thats the end of the GL postings */
 
 	/*Now insert the invoice into the SuppTrans table*/

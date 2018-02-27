@@ -1,5 +1,6 @@
 webERP Change Log
 
+10/2/18  PaulT: Remove $db parameter from WoRealRequirements(), EnsureGLEntriesBalance(), and CreateQASample() functions.
 10/2/18  PaulT: Remove $db parameter from BomMaterialCost(), GetTaxRate(), GetTaxes(), GetCreditAvailable(), ItemCostUpdateGL(), and UpdateCost() functions.
 10/2/18  PaulT: Remove $db parameter from all GetStockGLCode() functions.
 10/2/18  PaulT: Remove variables left behind from 7944 commit.

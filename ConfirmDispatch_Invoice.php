@@ -1737,7 +1737,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 
 	DB_Txn_Commit();
-	EnsureGLEntriesBalance(10, $InvoiceNo,$db);
+	EnsureGLEntriesBalance(10, $InvoiceNo);
 // *************************************************************************
 //   E N D   O F   I N V O I C E   S Q L   P R O C E S S I N G
 // *************************************************************************

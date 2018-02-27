@@ -247,7 +247,7 @@ function UpdateCost($Item) {
 }
 
 /* Accepts work order information and iterates through the bom, inserting real components (dissolving phantom assemblies) */
-function WoRealRequirements($db, $WO, $LocCode, $StockID, $Qty=1, $ParentID='') {
+function WoRealRequirements($WO, $LocCode, $StockID, $Qty=1, $ParentID='') {
 
 	// remember, 'G' is for ghost (phantom part type)
 
@@ -330,13 +330,13 @@ function WoRealRequirements($db, $WO, $LocCode, $StockID, $Qty=1, $ParentID='') 
 			AND stockmaster.mbflag='G'";
 	$result = DB_query($sql);
 	while ($MyRow=DB_fetch_array($result)) {
-		WoRealRequirements($db, $WO, $LocCode, $MyRow['component'], $MyRow['quantity'], $ParentID);
+		WoRealRequirements($WO, $LocCode, $MyRow['component'], $MyRow['quantity'], $ParentID);
 	}
 
 }
 
 /*Ensures general ledger entries balance for a given transaction */
-function EnsureGLEntriesBalance ($TransType, $TransTypeNo, $db) {
+function EnsureGLEntriesBalance ($TransType, $TransTypeNo) {
 
 	$result = DB_query("SELECT SUM(amount)
 						FROM gltrans
@@ -444,7 +444,7 @@ function GetQuantityOnOrderDueToWorkOrders($StockID, $Location){
 }
 
 /*Creates sample and testresults */
-function CreateQASample ($ProdSpecKey, $LotKey, $Identifier, $Comments, $Cert, $DuplicateOK, $db) {
+function CreateQASample ($ProdSpecKey, $LotKey, $Identifier, $Comments, $Cert, $DuplicateOK) {
 	$result = DB_query("SELECT COUNT(testid) FROM prodspecs
 							WHERE keyval='" . $ProdSpecKey . "'
 							AND active='1'");

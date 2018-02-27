@@ -587,7 +587,7 @@ if (isset($_POST['CommitBatch'])){
 		} //end if there is some discount
 
 	} //end if there is GL work to be done - ie config is to link to GL
-	EnsureGLEntriesBalance(12,$_SESSION['ReceiptBatch' . $identifier]->BatchNo,$db);
+	EnsureGLEntriesBalance(12,$_SESSION['ReceiptBatch' . $identifier]->BatchNo);
 
 	$ErrMsg = _('Cannot commit the changes');
 	$DbgMsg = _('The SQL that failed was');

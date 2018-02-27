@@ -1219,7 +1219,7 @@ $SOH_DateFields = array ('orddate',
 
 				$Result = api_DB_query($SQL,'','',true);
 			}
-			EnsureGLEntriesBalance(10,$InvoiceNo,$db);
+			EnsureGLEntriesBalance(10,$InvoiceNo);
 
 		} /*end of if Sales and GL integrated */
 

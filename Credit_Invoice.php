@@ -1502,7 +1502,7 @@ if(isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 			}
 		}
 
-		EnsureGLEntriesBalance(11,$CreditNo,$db);
+		EnsureGLEntriesBalance(11,$CreditNo);
 
 	} /*end of if Sales and GL integrated */
 

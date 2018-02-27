@@ -1431,7 +1431,7 @@ if (isset($_POST['ProcessReturn']) AND $_POST['ProcessReturn'] != ''){
 				}
 			}
 
-			EnsureGLEntriesBalance(11,$CreditNoteNo,$db);
+			EnsureGLEntriesBalance(11,$CreditNoteNo);
 
 			/*Also if GL is linked to debtors need to process the debit to bank and credit to debtors for the payment */
 			/*Need to figure out the cross rate between customer currency and bank account currency */
@@ -1476,7 +1476,7 @@ if (isset($_POST['ProcessReturn']) AND $_POST['ProcessReturn'] != ''){
 				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 			}//amount paid was not zero
 
-			EnsureGLEntriesBalance(12,$PaymentNumber,$db);
+			EnsureGLEntriesBalance(12,$PaymentNumber);
 
 		} /*end of if Sales and GL integrated */
 

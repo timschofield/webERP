@@ -379,7 +379,7 @@ if(isset($NewItem) AND isset($_POST['WO'])) {
 			$result = DB_query($SQL,$ErrMsg);
 
 			//Recursively insert real component requirements - see includes/SQL_CommonFunctions.in for function WoRealRequirements
-			WoRealRequirements($db, $_POST['WO'], $CostRow['loccode'], $NewItem);
+			WoRealRequirements($_POST['WO'], $CostRow['loccode'], $NewItem);
 
 			$result = DB_Txn_Commit();
 
@@ -469,7 +469,7 @@ if(isset($NewItem) AND isset($_POST['WO'])) {
 			$ErrMsg = _('The work order item could not be added');
 			$result = DB_query($SQL,$ErrMsg);
 			//Recursively insert real component requirements - see includes/SQL_CommonFunctions.in for function WoRealRequirements
-			WoRealRequirements($db, $_POST['WO'], $CostRow['loccode'], $Itm);
+			WoRealRequirements($_POST['WO'], $CostRow['loccode'], $Itm);
 		} //end if there were no input errors
 		else {
 			DB_txn_rollback();
