@@ -12,7 +12,7 @@ if (DB_num_rows($result)==0) {
 	include('includes/header.php');
 	echo '<br />';
 	prnMsg( _('The MRP calculation must be run before you can run this report') . '<br />' .
-			_('To run the MRP calculation click').' ' . '<a href='.$RootPath .'/MRP.php?' . SID .'>' . _('here') . '</a>', 'error');
+			_('To run the MRP calculation click').' ' . '<a href="'.$RootPath .'/MRP.php">' . _('here') . '</a>', 'error');
 	include('includes/footer.php');
 	exit;
 }
@@ -55,7 +55,7 @@ if (isset($_POST['PrintPDF'])) {
 	  $Title = _('MRP Reschedules') . ' - ' . _('Problem Report');
 	  include('includes/header.php');
 	   prnMsg( _('No MRP reschedule retrieved'), 'warn');
-	   echo '<br /><a href="' .$RootPath .'/index.php?' . SID . '">' . _('Back to the menu') . '</a>';
+	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
 		echo '<br />' . $sql;
 	   }

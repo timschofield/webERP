@@ -12,7 +12,7 @@ include ('includes/session.php');
 
 if (isset($_POST['cancel'])) {
 
-	header ('Location:' . $RootPath . '/Z_poAdmin.php?' . SID);
+	header ('Location:' . $RootPath . '/Z_poAdmin.php');
 	exit;
 
 }
@@ -50,7 +50,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewLanguage'])) {
 
 		echo '<div class="centre">';
 		echo '<br />';
-		echo '<form method="post" action=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . '>';
+		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
@@ -87,7 +87,7 @@ echo '<br />';
 prnMsg (_('This utility will create a new language and a new language translation file for it from the system default') . '<br /><br />' .
 		_('If the language already exists then you cannot recreate it'), 'info', _('PLEASE NOTE'));
 echo '<br /></div>';
-echo '<form method="post" action=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . '>';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<table><tr>';

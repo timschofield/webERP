@@ -30,9 +30,6 @@ $Title = _('Supplier Credit Note');
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 
-//this is available from the menu on this page already
-//echo "<a href='" . $RootPath . '/SelectSupplier.php?' . SID . "'>" . _('Back to Suppliers') . '</a><br />';
-
 if (isset($_GET['New'])) {
 	unset($_SESSION['SuppTrans']);
 }

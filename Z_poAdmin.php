@@ -25,13 +25,13 @@ if (!function_exists('gettext')){
 if (!is_writable('./locale/' . $_SESSION['Language'])) {
 	prnMsg(_('You do not have write access to the required files please contact your system administrator'),'error');
 } else {
-	echo '<p><a href="' . $RootPath . '/Z_poRebuildDefault.php?' . SID . '">' .   _('Rebuild the System Default Language File') . '</a>';
-	echo '<p><a href="' . $RootPath . '/Z_poAddLanguage.php?' . SID . '">' . _('Add a New Language to the System')  . '</a>';
-	echo '<p><a href="' . $RootPath . '/Z_poEditLangHeader.php?' . SID . '">' .  _('Edit a Language File Header') . '</a>';
-	echo '<p><a href="' . $RootPath . '/Z_poEditLangModule.php?' . SID . '">' .  _('Edit a Language File Module') . '</a>';
-	echo '<p><a href="' . $RootPath . '/Z_poEditLangRemaining.php?' . SID . '">' .  _('Edit Remaining Strings For This Language') . '</a>';
-	echo '<p><a href="' . $RootPath . '/locale/'.$_SESSION['Language'].'/LC_MESSAGES/messages.po' . SID . '">' .  _('Download messages.po file') . '</a>';
-	echo '<p><a href="' . $RootPath . '/locale/'.$_SESSION['Language'].'/LC_MESSAGES/messages.mo' . SID . '">' .  _('Download messages.mo file') . '</a>';
+	echo '<p><a href="' . $RootPath . '/Z_poRebuildDefault.php">' .   _('Rebuild the System Default Language File') . '</a>';
+	echo '<p><a href="' . $RootPath . '/Z_poAddLanguage.php">' . _('Add a New Language to the System')  . '</a>';
+	echo '<p><a href="' . $RootPath . '/Z_poEditLangHeader.php">' .  _('Edit a Language File Header') . '</a>';
+	echo '<p><a href="' . $RootPath . '/Z_poEditLangModule.php">' .  _('Edit a Language File Module') . '</a>';
+	echo '<p><a href="' . $RootPath . '/Z_poEditLangRemaining.php">' .  _('Edit Remaining Strings For This Language') . '</a>';
+	echo '<p><a href="' . $RootPath . '/locale/'.$_SESSION['Language'].'/LC_MESSAGES/messages.po">' .  _('Download messages.po file') . '</a>';
+	echo '<p><a href="' . $RootPath . '/locale/'.$_SESSION['Language'].'/LC_MESSAGES/messages.mo">' .  _('Download messages.mo file') . '</a>';
 }
 
 include('includes/footer.php');

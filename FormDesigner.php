@@ -147,25 +147,25 @@ if (isset($_POST['preview']) or isset($_POST['save'])) {
 		$FormDesign->asXML(sys_get_temp_dir().'/'.$_POST['FormName']);
 		switch ($_POST['FormName']) {
 			case 'PurchaseOrder.xml':
-				echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/PO_PDFPurchOrder.php?' . SID .'OrderNo=Preview">';
+				echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/PO_PDFPurchOrder.php?OrderNo=Preview">';
 				break;
 			case 'GoodsReceived.xml':
-				echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/PDFGrn.php?' . SID .'GRNNo=Preview&PONo=1">';
+				echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/PDFGrn.php?GRNNo=Preview&PONo=1">';
 				break;
 			case 'PickingList.xml':
-				echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/PDFPickingList.php?' . SID .'TransNo=Preview">';
+				echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/PDFPickingList.php?TransNo=Preview">';
 				break;
 			case 'QALabel.xml':
-				echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/PDFQALabel.php?' . SID .'GRNNo=Preview&PONo=1">';
+				echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/PDFQALabel.php?GRNNo=Preview&PONo=1">';
 				break;
 			case 'WOPaperwork.xml':
-				echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/PDFWOPrint.php?' . SID .'WO=Preview">';
+				echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/PDFWOPrint.php?WO=Preview">';
 				break;
 			case 'FGLabel.xml':
-				echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/PDFFGLabel.php?' . SID .'WO=Preview">';
+				echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/PDFFGLabel.php?WO=Preview">';
 				break;
 			case 'ShippingLabel.xml':
-				echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/PDFShipLabel.php?' . SID .'ORD=Preview">';
+				echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/PDFShipLabel.php?ORD=Preview">';
 				break;
 		}
 	} else {
@@ -183,7 +183,7 @@ if (isset($_POST['preview']) or isset($_POST['save'])) {
  * drop down list of possible forms */
 if (empty($_POST['FormName'])) {
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
-	echo '<form method="post" id="ChooseForm" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . '">';
+	echo '<form method="post" id="ChooseForm" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table><tr>';
@@ -219,7 +219,7 @@ echo '<div class="page_help_text">' .
 	_('All coordinates are measured from the lower left corner of the sheet to the top left corner of the element.') . '</div><br />';
 
 $Papers=array('A4_Landscape', 'A4_Portrait', 'A5_Landscape', 'A5_Portrait', 'A6_Landscape', 'A3_Landscape', 'A3_Portrait', 'Letter_Portrait', 'Letter_Landscape', 'Legal_Portrait', 'Legal_Landscape'); // Possible paper sizes/orientations
-echo '<form method="post" id="Form" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . '">';
+echo '<form method="post" id="Form" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<input name="FormName" type="hidden" value="'.$_POST['FormName'].'" />';

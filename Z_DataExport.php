@@ -69,7 +69,7 @@ if ( isset($_POST['pricelist']) ) {
 		$Title = _('Price List Export Problem ....');
 		include('includes/header.php');
 		prnMsg( _('The Price List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
-		echo '<br /><a href="' .$RootPath .'/index.php?' . SID . '">' .   _('Back to the menu'). '</a>';
+		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
 		if ($debug==1){
 			echo '<br />' .  $SQL;
 		}
@@ -344,7 +344,7 @@ if ( isset($_POST['pricelist']) ) {
 		$Title = _('Security Token List Export Problem ....');
 		include('includes/header.php');
 		prnMsg( _('The Security Token List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
-		echo '<br /><a href="' .$RootPath .'/index.php?' . SID . '">' .   _('Back to the menu'). '</a>';
+		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
 		if ($debug==1){
 			echo '<br />' .  $SQL;
 		}
@@ -416,7 +416,7 @@ if ( isset($_POST['pricelist']) ) {
 		$Title = _('Security Group List Export Problem ....');
 		include('includes/header.php');
 		prnMsg( _('The Security Group List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
-		echo '<br /><a href="' .$RootPath .'/index.php?' . SID . '">' .   _('Back to the menu'). '</a>';
+		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
 		if ($debug==1){
 			echo '<br />' .  $SQL;
 		}

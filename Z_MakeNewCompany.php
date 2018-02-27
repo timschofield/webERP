@@ -9,7 +9,7 @@ include ('includes/SQL_CommonFunctions.inc');
 
 if (isset($_POST['EnterCompanyDetails'])) {
 
-	header ('Location:' . $RootPath . '/CompanyPreferences.php?' . SID);
+	header ('Location:' . $RootPath . '/CompanyPreferences.php');
 	exit;
 }
 $Title = _('Make New Company Database Utility');
@@ -31,7 +31,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 		prnMsg(_('Company database must not contain spaces, \& or " or \''),'error');
 	} else {
 		$_POST['NewDatabase'] = strtolower($_POST['NewDatabase']);
-		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . '">';
+		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
         echo '<div class="centre">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		/* check for directory existence */
@@ -229,7 +229,7 @@ echo '<br />';
 prnMsg (_('This utility will create a new company') . '<br /><br />' .
 		_('If the company name already exists then you cannot recreate it'), 'info', _('PLEASE NOTE'));
 echo '<br /></div>';
-echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . '" enctype="multipart/form-data">';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" enctype="multipart/form-data">';
 echo '<div class="centre">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
