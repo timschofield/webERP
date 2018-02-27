@@ -11,6 +11,10 @@ for controlled items - used in:
 */
 
 //we start with a batch or serial no header and need to display something for verification...
+if (!isset($_SESSION['DatabaseName'])){
+	die;
+}
+
 global $tableheader;
 
 if (isset($_GET['LineNo'])){
