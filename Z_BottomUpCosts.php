@@ -28,7 +28,7 @@ if (isset($Run)) { //start bom processing
 	$result = DB_query($sql,$ErrMsg,$DbgMsg);
 
 	while ($item = DB_fetch_array($result)) {
-		$inputerror=UpdateCost($db, $item['component']);
+		$inputerror=UpdateCost($item['component']);
 		if ($inputerror==0) {
 			prnMsg( _('Component') .' ' . $item['component']  . ' '. _('has been processed'),'success');
 		} else {

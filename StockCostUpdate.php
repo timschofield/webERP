@@ -65,7 +65,7 @@ if (isset($_POST['UpdateData'])){
 	} elseif (abs($NewCost - $OldCost) > pow(10,-($_SESSION['StandardCostDecimalPlaces']+1))){
 
 		$Result = DB_Txn_Begin();
-		ItemCostUpdateGL($db, $StockID, $NewCost, $OldCost, $_POST['QOH']);
+		ItemCostUpdateGL($StockID, $NewCost, $OldCost, $_POST['QOH']);
 
 		$SQL = "UPDATE stockmaster SET	materialcost='" . filter_number_format($_POST['MaterialCost']) . "',
 										labourcost='" . filter_number_format($_POST['LabourCost']) . "',
@@ -79,7 +79,7 @@ if (isset($_POST['UpdateData'])){
 		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 		$Result = DB_Txn_Commit();
-		UpdateCost($db, $StockID); //Update any affected BOMs
+		UpdateCost($StockID); //Update any affected BOMs
 
 	}
 }

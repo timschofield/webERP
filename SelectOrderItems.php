@@ -184,7 +184,7 @@ if (isset($_GET['ModifyOrderNumber'])
 		}
 		$_SESSION['Items'.$identifier]->OrderNo = $_GET['ModifyOrderNumber'];
 		$_SESSION['Items'.$identifier]->DebtorNo = $myrow['debtorno'];
-		$_SESSION['Items'.$identifier]->CreditAvailable = GetCreditAvailable($_SESSION['Items'.$identifier]->DebtorNo,$db);
+		$_SESSION['Items'.$identifier]->CreditAvailable = GetCreditAvailable($_SESSION['Items'.$identifier]->DebtorNo);
 /*CustomerID defined in header.php */
 		$_SESSION['Items'.$identifier]->Branch = $myrow['branchcode'];
 		$_SESSION['Items'.$identifier]->CustomerName = $myrow['name'];
@@ -504,7 +504,7 @@ if (isset($SelectedCustomer)) {
 		  prnMsg($_SESSION['Items'.$identifier]->SpecialInstructions,'warn');
 
 		if ($_SESSION['CheckCreditLimits'] > 0){  /*Check credit limits is 1 for warn and 2 for prohibit sales */
-			$_SESSION['Items'.$identifier]->CreditAvailable = GetCreditAvailable($_SESSION['Items'.$identifier]->DebtorNo,$db);
+			$_SESSION['Items'.$identifier]->CreditAvailable = GetCreditAvailable($_SESSION['Items'.$identifier]->DebtorNo);
 
 			if ($_SESSION['CheckCreditLimits']==1 AND $_SESSION['Items'.$identifier]->CreditAvailable <=0){
 				prnMsg(_('The') . ' ' . htmlspecialchars($myrow[0], ENT_QUOTES, 'UTF-8', false) . ' ' . _('account is currently at or over their credit limit'),'warn');

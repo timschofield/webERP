@@ -1,5 +1,6 @@
 webERP Change Log
 
+10/2/18  PaulT: Remove $db parameter from BomMaterialCost(), GetTaxRate(), GetTaxes(), GetCreditAvailable(), ItemCostUpdateGL(), and UpdateCost() functions.
 10/2/18  PaulT: Remove $db parameter from all GetStockGLCode() functions.
 10/2/18  PaulT: Remove variables left behind from 7944 commit.
 9/2/18   PaulT: MRPReschedules.php, MRPShortages.php: Use DB_table_exists() from commit 7943 to replace table check query.

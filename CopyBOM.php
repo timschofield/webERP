@@ -154,7 +154,7 @@ if(isset($_POST['Submit'])) {
 
 		$result = DB_Txn_Commit();
 
-		UpdateCost($db, $NewStockID);
+		UpdateCost($NewStockID);
 
 		header('Location: BOMs.php?Select='.$NewStockID);
 		ob_end_flush();
