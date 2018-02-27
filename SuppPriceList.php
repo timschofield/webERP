@@ -210,31 +210,33 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['View'])) {
 			'</p>';
 
 		echo '<table class="selection">
-			<tr><th class="ascending">' . _('Code') . '</th>
+			<thead>
+				<tr>
+					<th class="ascending">' . _('Code') . '</th>
 				<th>' . _('Description') . '</th>
 				<th>' . _('Conv Factor') . '</th>
 				<th>' . _('Price') . '</th>
 				<th class="ascending">' . _('Date From') . '</th>
 				<th>' . _('Supp Code') . '</th>
-			</tr>';
+				</tr>
+			</thead>
+			<tbody>';
 
 		while ($myrow = DB_fetch_array($result)){
 			echo '<tr class="striped_row">
-				<td class="ascending">' . $myrow['stockid'] . '</td>
+				<td>' . $myrow['stockid'] . '</td>
 				<td>' . $myrow['description'] . '</td>
 				<td>' . $myrow['conversionfactor'] . '</td>
 				<td>' . $myrow['price'] . '</td>
-				<td class="ascending">' . ConvertSQLDate($myrow['dateprice']) . '</td>
+				<td>' . ConvertSQLDate($myrow['dateprice']) . '</td>
 				<td>' . $myrow['suppliers_partno'] . '</td>
 				</tr>';
 
 		}
-		echo '</table>';
+
+		echo '</tbody></table>';
 		include('includes/footer.inc');
-
-
 	}
-
 
 } else { /*The option to print PDF was not hit so display form */
 

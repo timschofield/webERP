@@ -143,23 +143,24 @@ $sql = "SELECT stockmaster.stockid,
 $result = DB_query($sql);
 
 if (DB_num_rows($result) > 0) {
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<div>';
-	echo '<table class="selection">
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
+		<div>
+		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+		<table class="selection">
+		<thead>
 			<tr>
-				<th colspan="3">
-				<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />' .
+				<th colspan="3">' .
 				_('Related Items To') . ':
 				<input type="text" required="required" autofocus="autofocus" name="Item" size="22" value="' . $Item . '" maxlength="20" />
 				<input type="submit" name="NewPart" value="' . _('List Related Items') . '" /></th>
-			</tr>';
-
-	echo '<tbody>
+			</tr>
 			<tr>
 				<th class="ascending">' . _('Code') . '</th>
 				<th class="ascending">' . _('Description') . '</th>
 				<th>' . _('Delete') . '</th>
-			</tr>';
+			</tr>
+		</thead>
+		<tbody>';
 
 	while ($myrow = DB_fetch_array($result)) {
 

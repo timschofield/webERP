@@ -555,16 +555,16 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 	<input type="submit" value="' . _('Reset') . '" /></div>';
 
 	if (isset($result_SuppSelect)) {
-		echo '<br /><table cellpadding="3" class="selection">';
-
-		echo '<tr>
+		echo '<br /><table cellpadding="3" class="selection">
+			<thead>
+				<tr>
 				<th class="ascending">' . _('Code') . '</th>
 				<th class="ascending">' . _('Supplier Name') . '</th>
 				<th class="ascending">' . _('Address') . '</th>
 				<th class="ascending">' . _('Currency') . '</th>
-			</tr>';
-
-		$j = 1;
+				</tr>
+			</thead>
+			<tbody>';
 
 		while ($myrow = DB_fetch_array($result_SuppSelect)) {
 
@@ -584,7 +584,7 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 			//end of page full new headings if
 		} //end of while loop
 
-		echo '</table>';
+		echo '</tbody></table>';
 
 	}
 	//end if results to show
@@ -757,7 +757,7 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 		</tr>
 		<tr>
 			<td>' . _('Delivery Date') . ':</td>
-			<td><input type="text" required="required" autofocus="autofocus" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="DeliveryDate" size="11" value="' . $_POST['DeliveryDate'] . '" /></td>
+			<td><input type="text" required="required" autofocus="autofocus" class="date" name="DeliveryDate" size="11" value="' . $_POST['DeliveryDate'] . '" /></td>
 		</tr>';
 
 	if (!isset($_POST['Initiator'])) {

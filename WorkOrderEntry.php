@@ -781,7 +781,7 @@ if(!isset($_POST['StartDate'])) {
 
 echo '<tr>
 		<td class="label">' . _('Start Date') . ':</td>
-		<td><input type="text" name="StartDate" size="12" maxlength="12" value="' . $_POST['StartDate'] .'" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" /></td>
+		<td><input type="text" name="StartDate" size="12" maxlength="12" value="' . $_POST['StartDate'] .'" class="date" /></td>
 	</tr>';
 
 if(!isset($_POST['RequiredBy'])) {
@@ -790,7 +790,7 @@ if(!isset($_POST['RequiredBy'])) {
 
 echo '<tr>
 		<td class="label">' . _('Required By') . ':</td>
-		<td><input type="text" name="RequiredBy" size="12" maxlength="12" value="' . $_POST['RequiredBy'] .'" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" /></td>
+		<td><input type="text" name="RequiredBy" size="12" maxlength="12" value="' . $_POST['RequiredBy'] .'" class="date" /></td>
 	</tr>';
 if(!isset($_POST['Ref'])) {
 	$_POST['Ref'] = '';
@@ -960,12 +960,17 @@ if(isset($SearchResult)) {
 			$PageBar .= '<input type="submit" name="Next" value="'._('Next').'" disabled="disabled"/>';
 		$PageBar .= '</td></tr>';
 
-		echo '<br /><table cellpadding="2" class="selection">';
+		echo '<br /><table cellpadding="2" class="selection">
+			<thead>';
 		echo $PageBar;
 		echo '<tr>
 				<th class="ascending">' . _('Code') . '</th>
 	   			<th class="ascending">' . _('Description') . '</th>
-	   			<th>' . _('Units') . '</th></tr>';
+	   			<th>' . _('Units') . '</th>
+			</tr>
+			</thead>
+			<tbody>';
+
 		$j = 1;
 		$ItemCodes = array();
 		for ($i=1;$i<=$NumberOfOutputs;$i++) {
@@ -1038,7 +1043,7 @@ if(isset($SearchResult)) {
 			} //end if not already on work order
 		}//end of while loop
 	} //end if more than 1 row to show
-	echo '</table>';
+	echo '</tbody></table>';
 	echo '<div class="centre">
 			<input type="submit" name="Add" value="' . _('Add To Work Order') . '" />
 			<input type="hidden" name="WO" value="' . $_POST['WO'] . '" />

@@ -214,12 +214,15 @@ if (!isset($StockID)) {
 
 		echo '<br />
 			<table cellpadding="2" class="selection">
+			<thead>
 			<tr>
 				<th class="ascending">' . _('Code') . '</th>
 				<th class="ascending">' . _('Description') . '</th>
 				<th class="ascending">' . _('On Hand') . '</th>
 				<th>' . _('Units') . '</th>
-			</tr>';
+				</tr>
+			</thead>
+			<tbody>';
 
 		while ($myrow=DB_fetch_array($StockItemsResult)) {
 
@@ -235,7 +238,7 @@ if (!isset($StockID)) {
 					$myrow['units']);
 
 		}//end of while loop
-		echo '</table>';
+		echo '</tbody></table>';
 	}
 	//end if stock search results to show
 	  else {
@@ -321,6 +324,7 @@ if (!isset($StockID)) {
 		if (DB_num_rows($WorkOrdersResult)>0) {
 			echo '<br />
 				<table cellpadding="2" width="95%" class="selection">
+				<thead>
 				<tr>
 					<th>' . _('Modify') . '</th>
 					<th class="ascending">' . _('Status') . '</th>
@@ -335,7 +339,9 @@ if (!isset($StockID)) {
 					<th class="ascending">' . _('Quantity Outstanding') . '</th>
 					<th class="ascending">' . _('Start Date')  . '</th>
 					<th class="ascending">' . _('Required Date') . '</th>
-				</tr>';
+					</tr>
+				</thead>
+				<tbody>';
 
 		while ($myrow=DB_fetch_array($WorkOrdersResult)) {
 
@@ -380,11 +386,10 @@ if (!isset($StockID)) {
 					locale_number_format($myrow['qtyreqd']-$myrow['qtyrecd'],$myrow['decimalplaces']),
 					$FormatedStartDate,
 					$FormatedRequiredByDate);
-		//end of page full new headings if
 		}
 		//end of while loop
 
-		echo '</table>';
+			echo '</tbody></table>';
       }
 	}
 

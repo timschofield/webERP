@@ -56,11 +56,11 @@ if (!isset($_POST['RunReport'])){
 				</tr>
 				<tr>
 					<td>' . _('Date From') . ':</td>
-					<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m') - $_SESSION['NumberOfMonthMustBeShown'], Date('d'), Date('Y'))) . '" /></td>
+					<td><input type="text" class="date" name="FromDate" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m') - $_SESSION['NumberOfMonthMustBeShown'], Date('d'), Date('Y'))) . '" /></td>
 				</tr>
 				<tr>
 					<td>' . _('Date To') . ':</td>
-					<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
+					<td><input type="text" class="date" name="ToDate" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
 				</tr>
 				<tr>
 					<td>' . _('Create CSV') . ':</td>
@@ -111,13 +111,16 @@ $LocalTotal =0;
 if (!isset($_POST['CreateCSV'])){
 
 	echo '<table>
+		<thead>
 			<tr>
 				<th class="ascending">' . _('Customer') . ' </th>
 				<th class="ascending">' . _('Opening Balance') . '</th>
 				<th class="ascending">' . _('Debits') . '</th>
 				<th class="ascending">' . _('Credits') . '</th>
 				<th class="ascending">' . _('Balance') . '</th>
-			</tr>';
+			</tr>
+		</thead>
+		<tbody>';
 } else {
 	$CSVFile = '"' . _('Customer') . '","' . _('Opening Balance') . '","' . _('Debits') . '", "' . _('Credits') . '","' . _('Balance') . '"' . "\n";
 }
@@ -185,7 +188,7 @@ while ($myrow=DB_fetch_array($result)){
 }
 
 if (!isset($_POST['CreateCSV'])){
-	echo '</table>';
+	echo '</tbody></table>';
 }
 if ($_POST['Customer']==''){ //if there could be several customers being reported
 	if (!isset($_POST['CreateCSV'])){

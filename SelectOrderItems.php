@@ -623,15 +623,17 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					<input name="FormID" type="hidden" value="' . $_SESSION['FormID'] . '" />
 					<input name="JustSelectedACustomer" type="hidden" value="Yes" />
 					<br />
-					<table class="selection">';
-
-		echo '<tr>
+			<table class="selection">
+			<thead>
+				<tr>
 				<th class="ascending" >' . _('Customer') . '</th>
 				<th class="ascending" >' . _('Branch') . '</th>
 				<th class="ascending" >' . _('Contact') . '</th>
 				<th>' . _('Phone') . '</th>
 				<th>' . _('Fax') . '</th>
-			</tr>';
+				</tr>
+			</thead>
+			<tbody>';
 
 		$j = 1;
 		$LastCustomer='';
@@ -648,10 +650,10 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				</tr>';
 			$LastCustomer=$myrow['name'];
 			$j++;
-//end of page full new headings if
 		}
 //end of while loop
-        echo '</table>
+		echo '</tbody>
+			</table>
 			</div>';
 	}//end if results to show
 	echo '</form>';
@@ -1428,7 +1430,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$_SESSION['Items'.$identifier]->LineItems[$OrderLine->LineNumber]->ItemDue= $LineDueDate;
 			}
 
-			echo '<td><input alt="' . $_SESSION['DefaultDateFormat'] . '" class="date" maxlength="10" name="ItemDue_' . $OrderLine->LineNumber . '" size="10" type="text" value="' . $LineDueDate . '" /></td>';
+			echo '<td><input class="date" maxlength="10" name="ItemDue_' . $OrderLine->LineNumber . '" size="10" type="text" value="' . $LineDueDate . '" /></td>';
 
 			echo '<td rowspan="2"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier . '&amp;Delete=' . $OrderLine->LineNumber . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">' . $RemTxt . '</a></td></tr>';
 
@@ -1514,6 +1516,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					'.</div>
 					<br />
 					<table class="table1">
+					<thead>
 					<tr>
 						<th class="ascending" >' . _('Code') . '</th>
 						<th class="ascending" >' . _('Description') . '</th>
@@ -1523,7 +1526,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						<th class="ascending" >' . _('On Order') . '</th>
 						<th class="ascending" >' . _('Available') . '</th>
 						<th class="ascending" >' . _('Quantity') . '</th>
-					</tr>';
+						</tr>
+					</thead>
+					<tbody>';
 			$i=0;
 			$j=1;
 
@@ -1595,8 +1600,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 #end of page full new headings if
 			}
 #end of while loop for Frequently Ordered Items
-			echo '<td class="centre" colspan="8"><input name="SelectingOrderItems" type="hidden" value="1" /><input tabindex="'.strval($j+8).'" type="submit" value="'._('Add to Sales Order').'" /></td></tr>';
-			echo '</table>';
+			echo '</tbody>
+				<tr>
+					<td class="centre" colspan="8"><input name="SelectingOrderItems" type="hidden" value="1" /><input tabindex="'.strval($j+8).'" type="submit" value="'._('Add to Sales Order').'" /></td>
+				</tr>
+				</table>';
 		} //end of if Frequently Ordered Items > 0
 		echo '<br /><div class="centre">' . $msg;
 		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ';
@@ -1660,8 +1668,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						' . _('Upload items from csv file') . '<input tabindex="5" type="file" name="CSVFile" />
 						<input tabindex="5" type="submit" name="UploadFile" value="' . _('Upload File') . '" />
 					</div>
-				</td>';
-        echo '</tr>
+				</td>
+			</tr>
 			</table>
 			<br />
 			</div>';
@@ -1671,17 +1679,17 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo '<div class="page_help_text">' . _('Select an item by entering the quantity required.  Click Order when ready.') . '</div>';
 			echo '<br />';
 			$j = 1;
-			//echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier . '" method="post" name="orderform">';
+
             echo '<div>';
 			echo '<input name="FormID" type="hidden" value="' . $_SESSION['FormID'] . '" />';
 			echo '<table class="table1">';
-			echo '<thead><tr>
+			echo '<thead>
+					<tr>
 					<td colspan="1"><input name="PreviousList" type="hidden" value="'.strval($Offset-1).'" /><input tabindex="'.strval($j+8).'" type="submit" name="Previous" value="'._('Previous').'" /></td>
 					<td class="centre" colspan="6"><input name="SelectingOrderItems" type="hidden" value="1" /><input tabindex="'.strval($j+9).'" type="submit" value="'._('Add to Sales Order').'" /></td>
 					<td colspan="1"><input name="NextList" type="hidden" value="'.strval($Offset+1).'" /><input tabindex="'.strval($j+10).'" name="Next" type="submit" value="'._('Next').'" /></td>
-				</tr></thead>';
-			echo '<tbody>';
-			echo '<tr>
+					</tr>
+					<tr>
 					<th class="ascending" >' . _('Code') . '</th>
 		   			<th class="ascending" >' . _('Description') . '</th>
 					<th class="ascending" >' . _('Customer Item') . '</th>
@@ -1691,7 +1699,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		   			<th class="ascending" >' . _('On Order') . '</th>
 		   			<th class="ascending" >' . _('Available') . '</th>
 		   			<th>' . _('Quantity') . '</th>
-		   		</tr>';
+					</tr>
+				</thead>
+				<tbody>';
 			$ImageSource = _('No Image');
 			$i=0;
 
@@ -1767,16 +1777,16 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			}
 	#end of while loop
 			echo '</tbody>';
-			echo '<tfoot><tr>
+			echo '<tfoot>
+					<tr>
 					<td><input name="PreviousList" type="hidden" value="'. strval($Offset-1).'" /><input tabindex="'. strval($j+7).'" type="submit" name="Previous" value="'._('Previous').'" /></td>
 					<td class="centre" colspan="6"><input name="SelectingOrderItems" type="hidden" value="1" /><input tabindex="'. strval($j+8).'" type="submit" value="'._('Add to Sales Order').'" /></td>
 					<td><input name="NextList" type="hidden" value="'.strval($Offset+1).'" /><input tabindex="'.strval($j+9).'" name="Next" type="submit" value="'._('Next').'" /></td>
-				</tr></tfoot>
-				</table>
-				</div>';
+					</tr>
+				</tfoot>
+				</table>';
 
 		}#end if SearchResults to show
-        echo '</form>';
 	} /*end of PartSearch options to be displayed */
 	   elseif( isset($_POST['QuickEntry'])) { /* show the quick entry form variable */
 		  /*FORM VARIABLES TO POST TO THE ORDER  WITH PART CODE AND QUANTITY */
@@ -1802,7 +1812,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				echo '<td><input type="text" name="part_' . $i . '" size="21" maxlength="20" title="' . _('Enter the item code ordered') . '" /></td>
 						<td><input class="number" type="text" name="qty_' . $i . '" size="6" maxlength="6" title="' . _('Enter the quantity of the item ordered by the customer') . '" /></td>
 						<td><input type="text" class="date" name="itemdue_' . $i . '" size="25" maxlength="25"
-                        alt="'.$_SESSION['DefaultDateFormat'].'" value="' . $DefaultDeliveryDate . '" title="' . _('Enter the date that the customer requires delivery by') . '" /></td>
+                        value="' . $DefaultDeliveryDate . '" title="' . _('Enter the date that the customer requires delivery by') . '" /></td>
                       </tr>';
 	   		}
 			echo '</table>
@@ -1810,9 +1820,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					<div class="centre">
 						<input type="submit" name="QuickEntry" value="' . _('Quick Entry') . '" />
 						<input type="submit" name="PartSearch" value="' . _('Search Parts') . '" />
-					</div>
-					</div>
-                  </form>';
+					</div>';
 	  	} elseif (isset($_POST['SelectAsset'])){
 
 			echo '<div class="page_help_text"><b>' . _('Use this screen to select an asset to dispose of to this customer') . '</b></div>
@@ -1840,16 +1848,29 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				<div class="centre">
 					<input type="submit" name="AssetDisposalEntered" value="' . _('Add Asset To Order') . '" />
 					<input type="submit" name="PartSearch" value="' . _('Search Parts') . '" />
-				</div>
-				</form>';
+			</div>';
 
 		} //end of if it is a Quick Entry screen/part search or asset selection form to display
 
+	echo '</div></form>';
+
+	/* Know that the closing tag pair above was extracted from three mutually
+	 * exclusive functions above:
+	 *
+	 *      if ((!isset($_POST['QuickEntry'])
+	 *                AND !isset($_POST['SelectAsset']))){
+	 *      }
+	 *      else if( isset($_POST['QuickEntry'])) {
+	 *      } elseif (isset($_POST['SelectAsset'])){
+	 *
+	 * To have them in ONE place to ease tag matching.
+	 * As of Feb 20, 2018 there are three forms in this file.
+	 */
+
 		if ($_SESSION['Items'.$identifier]->ItemsOrdered >=1){
-			echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier .
-				'" method="post" name="deleteform">';
-            		echo '<div>';
-			echo '<input name="FormID" type="hidden" value="' . $_SESSION['FormID'] . '" />
+		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier . '" method="post" name="deleteform">
+			<div>
+			<input name="FormID" type="hidden" value="' . $_SESSION['FormID'] . '" />
 				<br />
 				<div class="centre">
 					<input name="CancelOrder" type="submit" value="' . _('Cancel Whole Order') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel this entire order?') . '\');" />
@@ -1857,7 +1878,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
                 </div>
 				</form>';
 		}
-	}#end of else not selecting a customer
+}#end of else not selecting a customer
 
 include('includes/footer.php');
 

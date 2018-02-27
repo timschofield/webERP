@@ -710,8 +710,9 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 		echo  ' ' . _('Purchase Order') .' '. $_SESSION['PO'.$identifier]->OrderNo ;
 	}
 	echo '<br /><b>' . _(' Order Summary') . '</b></p>';
-	echo '<table cellpadding="2" class="selection">';
-	echo '<tr>
+	echo '<table cellpadding="2" class="selection">
+		<thead>
+			<tr>
 			<th class="ascending">' . _('Item Code') . '</th>
 			<th class="ascending">' . _('Description') . '</th>
 			<th class="ascending">' . _('Quantity Our Units') . '</th>
@@ -723,7 +724,9 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 			<th class="ascending">' . _('Order Price') . '<br />' . _('Supp Units') . ' ('.$_SESSION['PO'.$identifier]->CurrCode.  ')</th>
 			<th class="ascending">' . _('Sub-Total') .' ('.$_SESSION['PO'.$identifier]->CurrCode.  ')</th>
 			<th class="ascending">' . _('Deliver By')  . '</th>
-			</tr>';
+			</tr>
+		</thead>
+		<tbody>';
 
 	$_SESSION['PO'.$identifier]->Total = 0;
 
@@ -753,7 +756,7 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 				<td>' . $POLine->SuppliersUnit . '</td>
 				<td><input type="text" class="number" name="SuppPrice' . $POLine->LineNo . '" size="10" value="' . $SuppPrice .'" /></td>
 				<td class="number">' . $DisplayLineTotal . '</td>
-				<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'].'" name="ReqDelDate' . $POLine->LineNo.'" size="10" value="' .$POLine->ReqDelDate .'" /></td>';
+				<td><input type="text" class="date" name="ReqDelDate' . $POLine->LineNo.'" size="10" value="' .$POLine->ReqDelDate .'" /></td>';
 			if ($POLine->QtyReceived !=0 AND $POLine->Completed!=1){
 				echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier .'&amp;Complete=' . $POLine->LineNo . '">' . _('Complete') . '</a></td>';
 			} elseif ($POLine->QtyReceived ==0) {
@@ -765,14 +768,18 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 	}
 
 	$DisplayTotal = locale_number_format($_SESSION['PO'.$identifier]->Total,$_SESSION['PO'.$identifier]->CurrDecimalPlaces);
-	echo '<tr><td colspan="9" class="number">' . _('TOTAL') . _(' excluding Tax') . '</td>
+	echo '</tbody>
+		<tfoot>
+			<tr>
+				<td colspan="9" class="number">' . _('TOTAL') . _(' excluding Tax') . '</td>
 						<td class="number"><b>' . $DisplayTotal . '</b></td>
-			</tr></table>';
-	echo '<br />
+			</tr>
+		</tfoot>
+		</table>
+		<br />
 			<div class="centre">
-			<input type="submit" name="UpdateLines" value="' . _('Update Order Lines') . '" />';
-
-	echo '&nbsp;<input type="submit" name="Commit" value="' . _('Process Order') . '" />
+			<input type="submit" name="UpdateLines" value="' . _('Update Order Lines') . '" />
+			&nbsp;<input type="submit" name="Commit" value="' . _('Process Order') . '" />
 			</div>';
 
 } /*Only display the order line items if there are any !! */
@@ -829,7 +836,7 @@ if (isset($_POST['NonStockOrder'])) {
 		</tr>
 		<tr>
 			<td>' . _('Delivery Date') . '</td>
-			<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ReqDelDate" size="11" value="'.$_SESSION['PO'.$identifier]->DeliveryDate .'" /></td>
+			<td><input type="text" class="date" name="ReqDelDate" size="11" value="'.$_SESSION['PO'.$identifier]->DeliveryDate .'" /></td>
 		</tr>
 		</table>
 		<div class="centre">

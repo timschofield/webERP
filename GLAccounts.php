@@ -297,6 +297,7 @@ or deletion of the records*/
 
 	echo '<br />
 		<table class="selection">
+		<thead>
 			<tr>
 				<th class="ascending">', _('Account Code'), '</th>
 				<th class="ascending">', _('Account Name'), '</th>
@@ -304,7 +305,9 @@ or deletion of the records*/
 				<th class="ascending">', _('P/L or B/S'), '</th>
 				<th class="ascending">', _('Cash Flows Activity'), '</th>
 				<th class="noprint" colspan="2">&nbsp;</th>
-			</tr>';
+			</tr>
+		</thead>
+		<tbody>';
 
 	$Sql = "SELECT
 				accountcode,
@@ -330,7 +333,7 @@ or deletion of the records*/
 			</tr>';
 	}// END foreach($Result as $MyRow).
 
-	echo '</table>';
+	echo '</tbody></table>';
 } //END IF selected ACCOUNT
 
 //end of ifs and buts!

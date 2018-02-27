@@ -184,10 +184,13 @@ or deletion of the records*/
 	$result = DB_query($sql);
 
 	echo '<br /><table class="selection">';
-	echo '<tr>
+	echo '<thead>
+			<tr>
 			<th class="ascending">' . _('Type ID') . '</th>
 			<th class="ascending">' . _('Type Name') . '</th>
-		</tr>';
+			</tr>
+		</thead>
+		<tbody>';
 
 while ($myrow = DB_fetch_row($result)) {
 
@@ -205,7 +208,7 @@ while ($myrow = DB_fetch_row($result)) {
 		$myrow[0]);
 	}
 	//END WHILE LIST LOOP
-	echo '</table>';
+	echo '</tbody></table>';
 }
 
 //end of ifs and buts!

@@ -840,18 +840,21 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 				<br />
 				</div>';
 		}
-		echo '<table id="ItemSearchTable" class="selection">';
-		$TableHeader = '<tr>
+		echo '<table id="ItemSearchTable" class="selection">
+			<thead>
+				<tr>
 							<th>' . _('Stock Status') . '</th>
 							<th class="ascending">' . _('Code') . '</th>
                             				<th>'. _('image').'</th>
 							<th class="ascending">' . _('Description') . '</th>
 							<th>' . _('Total Qty On Hand') . '</th>
 							<th>' . _('Units') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$j = 1;
+				</tr>
+			</thead>
+			<tbody>';
+
 		$RowIndex = 0;
+
 		if (DB_num_rows($SearchResult) <> 0) {
 			DB_data_seek($SearchResult, ($_POST['PageOffset'] - 1) * $_SESSION['DisplayRecordsMax']);
 		}
@@ -891,19 +894,11 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 			<td>' . $myrow['units'] . '</td>
 			<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=' . urlencode($myrow['stockid']).'">' . _('View') . '</a></td>
 			</tr>';
-/*
-			$j++;
 
-			if ($j == 20 AND ($RowIndex + 1 != $_SESSION['DisplayRecordsMax'])) {
-				$j = 1;
-				echo $TableHeader;
-			}
-			*/
 			$RowIndex = $RowIndex + 1;
-			//end of page full new headings if
 		}
 		//end of while loop
-		echo '</table>
+		echo '</tbody></table>
               </div>
               </form>
               <br />';

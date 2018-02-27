@@ -101,19 +101,20 @@ if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice'){
 			<img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('General Ledger') . '" alt="" />' . ' ' . _('General Ledger Analysis of Credit Note From') . ' ' . $_SESSION['SuppTrans']->SupplierName;
 }
 echo '</p>
-	<table class="selection">';
-
-$TableHeader = '<tr>
+	<table class="selection">
+	<thead>
+		<tr>
 					<th class="ascending">' . _('Account') . '</th>
 					<th class="ascending">' . _('Name') . '</th>
 					<th class="ascending">' . _('Amount') . '<br />(' . $_SESSION['SuppTrans']->CurrCode . ')</th>
 					<th>' . _('Narrative') . '</th>
 					<th class="ascending">' . _('Tag') . '</th>
 					<th colspan="2">&nbsp;</th>
-				</tr>';
-echo $TableHeader;
+		</tr>
+	</thead>
+	<tbody>';
+
 $TotalGLValue=0;
-$i=0;
 
 foreach ( $_SESSION['SuppTrans']->GLCodes AS $EnteredGLCode){
 
@@ -128,19 +129,16 @@ foreach ( $_SESSION['SuppTrans']->GLCodes AS $EnteredGLCode){
 		</tr>';
 
 	$TotalGLValue += $EnteredGLCode->Amount;
-
-	$i++;
-	if ($i>15){
-		$i = 0;
-		echo $TableHeader;
-	}
 }
 
-echo '<tr>
+echo '</tbody>
+	<tfoot>
+		<tr>
 		<td colspan="2" class="number">' . _('Total') . ':</td>
 		<td class="number">' . locale_number_format($TotalGLValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
 		<td colspan="4">&nbsp;</td>
 	</tr>
+	</tfoot>
 	</table>';
 
 if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice'){

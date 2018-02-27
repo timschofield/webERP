@@ -166,9 +166,12 @@ if (isset($_POST['Submit'])) {
 	$result = DB_query($sql,$ErrMsg);
 
 	echo '<table class="selection">
+		<thead>
 			<tr>
 				<th class="ascending">' . _('Units of Measure') . '</th>
-			</tr>';
+			</tr>
+		</thead>
+		<tbody>';
 
 	while ($myrow = DB_fetch_row($result)) {
 
@@ -179,7 +182,7 @@ if (isset($_POST['Submit'])) {
 			</tr>';
 
 	} //END WHILE LIST LOOP
-	echo '</table><br />';
+	echo '</tbody></table><br />';
 } //end of ifs and buts!
 
 

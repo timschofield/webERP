@@ -385,8 +385,9 @@ or deletion of the records*/
 			ORDER BY name";
 	$result = DB_query($sql);
 
-	echo '<table class="selection">';
-	echo '<tr>
+	echo '<table class="selection">
+		<thead>
+			<tr>
 			<th class="ascending">' . _('Test ID') . '</th>
 			<th class="ascending">' . _('Name') . '</th>
 			<th class="ascending">' . _('Method') . '</th>
@@ -399,7 +400,9 @@ or deletion of the records*/
 			<th class="ascending">' . _('Show on Spec') . '</th>
 			<th class="ascending">' . _('Show on Test Plan') . '</th>
 			<th class="ascending">' . _('Active') . '</th>
-		</tr>';
+			</tr>
+		</thead>
+		<tbody>';
 
 	while ($myrow=DB_fetch_array($result)) {
 
@@ -428,6 +431,7 @@ or deletion of the records*/
 	} else {
 		$ShowOnTestPlanText = _('No');
 	}
+
 	switch ($myrow['type']) {
 	 	case 0; //textbox
 	 		$TypeDisp='Text Box';
@@ -445,6 +449,7 @@ or deletion of the records*/
 			$TypeDisp='Range';
 			break;
 	} //end switch
+
 	printf('<tr class="striped_row">
 			<td class="number">%s</td>
 			<td>%s</td>
@@ -479,7 +484,7 @@ or deletion of the records*/
 			$myrow['testid']);
 
 	} //END WHILE LIST LOOP
-	echo '</table><br />';
+	echo '</tbody></table><br />';
 } //end of ifs and buts!
 include('includes/footer.php');
 ?>

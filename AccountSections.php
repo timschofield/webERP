@@ -166,7 +166,7 @@ if(!isset($_GET['SelectedSectionID']) AND !isset($_POST['SelectedSectionID'])) {
 
 	$ErrMsg = _('Could not get account group sections because');
 	$result = DB_query($sql,$ErrMsg);
-/*	echo '<div id="Report">';// Division to identify the report block.*/
+
 	echo '<p class="page_title_text"><img alt="" class="noprint" src="', $RootPath, '/css/', $Theme,
 		'/images/maintenance.png" title="', // Icon image.
 		_('Account Sections'), '" /> ', // Icon title.
@@ -174,11 +174,14 @@ if(!isset($_GET['SelectedSectionID']) AND !isset($_POST['SelectedSectionID'])) {
 
 	echo '<br />
 	<table class="selection">
+		<thead>
 			<tr>
 				<th class="ascending">', _('Section Number'), '</th>
 				<th class="ascending">', _('Section Description'), '</th>
 				<th class="noprint" colspan="2">&nbsp;</th>
-			</tr>';
+			</tr>
+		</thead>
+		<tbody>';
 
 	while ($myrow = DB_fetch_array($result)) {
 
@@ -195,8 +198,8 @@ if(!isset($_GET['SelectedSectionID']) AND !isset($_POST['SelectedSectionID'])) {
 		echo '</td>
 			</tr>';
 	} //END WHILE LIST LOOP
-	echo '</table>';
-/*	echo '</div>';// End div id="Report".*/
+	echo '</tbody>
+		</table>';
 } //end of ifs and buts!
 
 

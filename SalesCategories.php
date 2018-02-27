@@ -524,8 +524,9 @@ $result = DB_query($sql);
 
 if($result ) {
 	if( DB_num_rows($result)) {
-		echo '<table class="selection">';
-		echo '<tr>
+		echo '<table class="selection">
+			<thead>
+				<tr>
 				<th colspan="4">' . _('Inventory items for') . ' ' . $CategoryPath . '</th>
 			</tr>
 			<tr>
@@ -533,7 +534,9 @@ if($result ) {
 				<th class="ascending">' . _('Description') . '</th>
 				<th class="ascending">' . _('Brand') . '</th>
 				<th class="ascending">' . _('Featured') . '</th>
-			</tr>';
+				</tr>
+			</thead>
+			<tbody>';
 
 		while( $myrow = DB_fetch_array($result) ) {
 
@@ -552,7 +555,7 @@ if($result ) {
 			echo '<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?ParentCategory='.$ParentCategory.'&amp;DelStockID='.$myrow['stockid'].'">' .  _('Remove') . '</a></td>
 			</tr>';
 		}
-		echo '</table>';
+		echo '</tbody></table>';
 	} else {
 		prnMsg(_('No Inventory items in this category'));
 	}

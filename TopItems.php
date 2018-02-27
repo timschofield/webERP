@@ -160,11 +160,17 @@ if (!(isset($_POST['Search']))) {
 	$result = DB_query($SQL);
 
 	echo '<p class="page_title_text"><strong>' . _('Top Sales Items List') . '</strong></p>';
-	echo '<form action="PDFTopItems.php"  method="GET">';
-    echo '<div>';
-    echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table class="selection">';
-	$TableHeader = '<tr>
+	echo '<form action="PDFTopItems.php"  method="GET">
+		<div>
+		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+		<input type="hidden" value="' . $_POST['Location'] . '" name="Location" />
+		<input type="hidden" value="' . $_POST['Sequence'] . '" name="Sequence" />
+		<input type="hidden" value="' . filter_number_format($_POST['NumberOfDays']) . '" name="NumberOfDays" />
+		<input type="hidden" value="' . $_POST['Customers'] . '" name="Customers" />
+		<input type="hidden" value="' . filter_number_format($_POST['NumberOfTopItems']) . '" name="NumberOfTopItems" />
+		<table class="selection">
+		<thead>
+			<tr>
 						<th>' . _('#') . '</th>
 						<th class="ascending">' . _('Code') . '</th>
 						<th class="ascending">' . _('Description') . '</th>
@@ -174,13 +180,9 @@ if (!(isset($_POST['Search']))) {
 						<th class="ascending">' . _('On Hand') . '</th>
 						<th class="ascending">' . _('On Order') . '</th>
 						<th class="ascending">' . _('Stock (Days)') . '</th>
-					</tr>';
-	echo $TableHeader;
-	echo '<input type="hidden" value="' . $_POST['Location'] . '" name="Location" />
-			<input type="hidden" value="' . $_POST['Sequence'] . '" name="Sequence" />
-			<input type="hidden" value="' . filter_number_format($_POST['NumberOfDays']) . '" name="NumberOfDays" />
-			<input type="hidden" value="' . $_POST['Customers'] . '" name="Customers" />
-			<input type="hidden" value="' . filter_number_format($_POST['NumberOfTopItems']) . '" name="NumberOfTopItems" />';
+			</tr>
+		</thead>
+		<tbody>';
 
 	$i = 1;
 	while ($myrow = DB_fetch_array($result)) {
@@ -246,7 +248,7 @@ if (!(isset($_POST['Search']))) {
 		}
 		$i++;
 	}
-	echo '</table>';
+	echo '</tbody></table>';
 	echo '<br />
 			<div class="centre">
 				<input type="submit" name="PrintPDF" value="' . _('Print To PDF') . '" />

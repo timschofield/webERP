@@ -68,23 +68,26 @@ if (isset($_POST['Submit'])) {
 	$result = DB_query($sql,$ErrMsg);
 	if (DB_num_rows($result)>0) {
 		echo '<table class="selection">
+			<thead>
 			<tr>
-				<th>' . _('Supplier Delivery Note') . '</th>
-				<th>' . _('GRN Batch No') . '</th>
-				<th>' . _('PO No') . '</th>
-				<th>' . _('Invoice No') . '</th>
-			</tr>';
+					<th class="ascending">' . _('Supplier Delivery Note') . '</th>
+					<th class="ascending">' . _('GRN Batch No') . '</th>
+					<th class="ascending">' . _('PO No') . '</th>
+					<th class="ascending">' . _('Invoice No') . '</th>
+				</tr>
+			</thead>
+			<tbody>';
 
 		while ($myrow = DB_fetch_array($result)){
 			echo '<tr class="striped_row">
-				<td class="ascending">' . $myrow['supplierref'] . '</td>
-					<td class="ascending"><a href="' . $RootPath .'/PDFGrn.php?GRNNo=' . $myrow['grnbatch'] . '&amp;PONo=' . $myrow['orderno'] . '">' . $myrow['grnbatch']. '</td>
-					<td class="ascending">' . $myrow['orderno'] . '</td>
-					<td class="ascending">' . $myrow['suppinv'] . '</td>
+				<td>' . $myrow['supplierref'] . '</td>
+				<td><a href="' . $RootPath .'/PDFGrn.php?GRNNo=' . $myrow['grnbatch'] . '&amp;PONo=' . $myrow['orderno'] . '">' . $myrow['grnbatch']. '</td>
+				<td>' . $myrow['orderno'] . '</td>
+				<td>' . $myrow['suppinv'] . '</td>
 				</tr>';
 
 		}
-		echo '</table><br/>';
+		echo '</tbody></table><br/>';
 
 	}
 

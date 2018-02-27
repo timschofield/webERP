@@ -290,68 +290,96 @@ function changeDate() {
 }
 
 function SortSelect() {
-	selElem=this;
-	var tmpArray = new Array();
-	columnText=selElem.innerHTML;
-	parentElem=selElem.parentNode;
-	table=parentElem.parentNode;
-	row = table.rows[0];
-	for(var j = 0, col; col = row.cells[j]; j++) {
-		if(row.cells[j].innerHTML==columnText) {
-			columnNumber=j;
-			if(selElem.className=="ascending") {
-				selElem.className='descending';
-				direction="a";
+	selElem = this;
+	var e = [], o = [];
+	th = localStorage.Theme;
+	columnText = selElem.innerHTML;
+	TableHeader = selElem.parentNode;
+	TableBodyElements = TableHeader.parentNode.parentNode.getElementsByTagName('tbody');
+	table = TableBodyElements[0];
+	i = TableHeader;
+
+	for (var t = 0, n; n = i.cells[t]; t++) {
+		if (i.cells[t].innerHTML == columnText) {
+			columnNumber = t;
+			s = getComputedStyle(i.cells[t], null);
+			if (s.cursor == "s-resize") {
+				i.cells[t].style.cursor = "n-resize";
+				i.cells[t].className = 'descending';
+				direction = "a";
+/*
+				i.cells[t].style.backgroundImage = "url('css/" + th + "/images/descending.png')";
+				i.cells[t].style.backgroundPosition = "right center";
+				i.cells[t].style.backgroundRepeat = "no-repeat";
+				i.cells[t].style.backgroundSize = "12px";
+*/
 			} else {
-				selElem.className='ascending';
-				direction="d";
+				i.cells[t].style.cursor = "s-resize";
+				i.cells[t].className = 'ascending';
+				direction = "d";
+/*
+				i.cells[t].style.backgroundImage = "url('css/" + th + "/images/ascending.png')";
+				i.cells[t].style.backgroundPosition = "right center";
+				i.cells[t].style.backgroundRepeat = "no-repeat";
+				i.cells[t].style.backgroundSize = "12px";
+*/
+			}
 			}
 		}
-	}
-	for(var i = 1, row; row = table.rows[i]; i++) {
-		var rowArray = new Array();
-		for(var j = 0, col; col = row.cells[j]; j++) {
-			if(row.cells[j].tagName == 'TD' ) {
-				rowArray[j]=row.cells[j].innerHTML;
-				columnClass=row.cells[columnNumber].className;
+
+	for (var r = 0, i; i = table.rows[r]; r++) {
+		o = [];
+		for (var t = 0, n; n = i.cells[t]; t++) {
+			if (i.cells[t].tagName == "TD") {
+				o[t] = i.cells[t].innerHTML;
+				columnClass = i.cells[columnNumber].className;
 			}
 		}
-		tmpArray[i]=rowArray;
+		e[r] = o;
 	}
-	tmpArray.sort(
-		function(a,b) {
-			if(direction=="a") {
-				if(columnClass=="number") {
-					return parseFloat(a[columnNumber].replace(/[,.]/g, '')) - parseFloat(b[columnNumber].replace(/[,.]/g, ''));
-				} else if(columnClass=="date") {
-					da=new Date(a[columnNumber]);
-					db=new Date(b[columnNumber]);
-					return da>db;
+
+	e.sort(function (e, t) {
+		if (direction == "a") {
+			if (columnClass == "number") {
+				return parseFloat(e[columnNumber].replace(/[,.]/g, '')) - parseFloat(t[columnNumber].replace(/[,.]/g, ''));
+			} else if (columnClass == "date") {
+				if (e[columnNumber] !== undefined) {
+					da = new Date(convertDate(e[columnNumber], localStorage.DateFormat));
 				} else {
-					return a[columnNumber].localeCompare(b[columnNumber])
+					da = new Date(e[columnNumber]);
 				}
+				db = new Date(convertDate(t[columnNumber], localStorage.DateFormat));
+				return da > db;
 			} else {
-				if(columnClass=="number") {
-					return parseFloat(b[columnNumber].replace(/[,.]/g, '')) - parseFloat(a[columnNumber].replace(/[,.]/g, ''));
-				} else if(columnClass=="date") {
-					da=new Date(a[columnNumber]);
-					db=new Date(b[columnNumber]);
-					return da<=db;
+				return e[columnNumber].localeCompare(t[columnNumber]);
+	}
+		} else {
+			if (columnClass == "number") {
+				return parseFloat(t[columnNumber].replace(/[,.]/g, '')) - parseFloat(e[columnNumber].replace(/[,.]/g, ''));
+			} else if (columnClass == "date") {
+				if (e[columnNumber] !== undefined) {
+					da = new Date(convertDate(e[columnNumber], localStorage.DateFormat));
 				} else {
-					return b[columnNumber].localeCompare(a[columnNumber])
+					da = new Date(e[columnNumber]);
 				}
+				db = new Date(convertDate(t[columnNumber], localStorage.DateFormat));
+				return da <= db;
+			} else {
+				return t[columnNumber].localeCompare(e[columnNumber]);
 			}
 		}
-	);
-	for(var i = 0, row; row = table.rows[i+1]; i++) {
-		var rowArray = new Array();
-		rowArray=tmpArray[i];
-		for(var j = 0, col; col = row.cells[j]; j++) {
-			if(row.cells[j].tagName == 'TD' ) {
-				row.cells[j].innerHTML=rowArray[j];
+	});
+
+	for (var r = 0, i; i = table.rows[r]; r++) {
+		o = [];
+		o = e[r];
+		for (var t = 0, n; n = i.cells[t]; t++) {
+			if (i.cells[t].tagName == "TD") {
+				i.cells[t].innerHTML = o[t];
 			}
 		}
 	}
+
 	return;
 }
 

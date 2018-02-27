@@ -202,6 +202,7 @@ if (isset($_POST['submit'])) {
 	$result = DB_query($sql,$ErrMsg);
 
 	echo '<table class="selection">
+		<thead>
 		<tr>
 			<th class="ascending">' . _('Payment Method') . '</th>
 			<th class="ascending">' . _('Use For Payments') . '</th>
@@ -210,7 +211,9 @@ if (isset($_POST['submit'])) {
 			<th class="ascending">' . _('Open POS Cash Drawer for Sale') . '</th>
 			<th class="ascending">' . _('Payment discount') . ' %</th>
 			<th colspan="2">&nbsp;</th>
-		</tr>';
+			</tr>
+		</thead>
+		<tbody>';
 
 	while ($myrow = DB_fetch_array($result)) {
 
@@ -226,7 +229,7 @@ if (isset($_POST['submit'])) {
 			</tr>';
 
 	} //END WHILE LIST LOOP
-	echo '</table><br />';
+	echo '</tbody></table><br />';
 } //end of ifs and buts!
 
 

@@ -397,6 +397,7 @@ if (!isset($SelectedBranch)){
 			_('Customer'), '" /> ',// Icon title.
 			_('Branches defined for'), ' ', $DebtorNo, ' - ', $myrow[0], '</p>';// Page title.
 		echo '<table class="selection">
+			<thead>
 			<tr>
 				<th class="ascending">' . _('Code') . '</th>
 				<th class="ascending">' . _('Name') . '</th>
@@ -408,7 +409,9 @@ if (!isset($SelectedBranch)){
 				<th class="ascending">' . _('Email') . '</th>
 				<th class="ascending">' . _('Tax Group') . '</th>
 				<th class="ascending">' . _('Enabled?') . '</th>
-			</tr>';
+				</tr>
+			</thead>
+			<tbody>';
 
 		do {
 
@@ -453,7 +456,8 @@ if (!isset($SelectedBranch)){
 		} while ($myrow = DB_fetch_row($result));
 		//END WHILE LIST LOOP
 
-		echo '</table>
+		echo '</tbody>
+			</table>
 			<br />
 			<table class="selection">
 			<tr>

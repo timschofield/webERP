@@ -82,14 +82,15 @@ $LocStockResult = DB_query($sql, $ErrMsg, $DbgMsg);
 
 echo '<br />
 		<table class="selection"><tbody>';
+	echo '<thead>';
 
 if ($Its_A_KitSet_Assembly_Or_Dummy == True){
-	$TableHeader = '<tr>
+	echo '<tr>
 						<th class="ascending">' . _('Location') . '</th>
 						<th class="ascending">' . _('Demand') . '</th>
 					</tr>';
 } else {
-	$TableHeader = '<tr>
+	echo '<tr>
 						<th class="ascending">' . _('Location') . '</th>
 						<th class="ascending">' . _('Bin Location') . '</th>
 						<th class="ascending">' . _('Quantity On Hand') . '</th>
@@ -100,8 +101,9 @@ if ($Its_A_KitSet_Assembly_Or_Dummy == True){
 						<th class="ascending">' . _('On Order') . '</th>
 					</tr>';
 }
-echo $TableHeader;
-$j = 1;
+
+echo '</thead>
+		<tbody>';
 
 while ($myrow=DB_fetch_array($LocStockResult)) {
 
@@ -235,7 +237,8 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 	} else {
 	/* It must be a dummy, assembly or kitset part */
 
-		printf('<td>%s</td>
+		printf('<tr class="striped_row">
+				<td>%s</td>
 				<td class="number">%s</td>
 				</tr>',
 				$myrow['locationname'],
@@ -244,7 +247,8 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 //end of page full new headings if
 }
 //end of while loop
-echo '</tbody><tr>
+echo '</tbody>
+	<tr>
 		<td></td>
 		<td><input type="submit" name="UpdateBinLocations" value="' . _('Update Bins') . '" /></td>
 	</tr>
@@ -303,7 +307,8 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 	  }
 	  $qty += $myrow['qty'];
 	  $FromDate = $myrow['trandate'];
-	}
+	} //end of while loop
+
 	if (isset($qty)) {
 		$DateRange = ConvertSQLDate($FromDate);
 		if ($FromDate != $ToDate) {
@@ -311,27 +316,24 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 		}
 		$PriceHistory[] = array($DateRange, $qty, $LastPrice, $LastDiscount);
 	}
+
 	if (isset($PriceHistory)) {
 	  echo '<br />
 			<table class="selection">
+			<thead>
 			<tr>
 				<th colspan="4"><font color="navy" size="2">' . _('Pricing history for sales of') . ' ' . $StockID . ' ' . _('to') . ' ' . $DebtorNo . '</font></th>
-			</tr><tbody>';
-	  $TableHeader = '<tr>
+				</tr>
+				<tr>
 						<th class="ascending">' . _('Date Range') . '</th>
 						<th class="ascending">' . _('Quantity') . '</th>
 						<th class="ascending">' . _('Price') . '</th>
 						<th class="ascending">' . _('Discount') . '</th>
-					</tr>';
-
-	  $j = 0;
+				</tr>
+			</thead>
+			<tbody>';
 
 	  foreach($PriceHistory as $PreviousPrice) {
-		$j--;
-		if ($j < 0 ){
-			$j = 11;
-			echo $TableHeader;
-		}
 
 		printf('<tr class="striped_row">
 				<td>%s</td>
@@ -343,10 +345,9 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 					locale_number_format($PreviousPrice[1],$DecimalPlaces),
 					locale_number_format($PreviousPrice[2],$_SESSION['CompanyRecord']['decimalplaces']),
 					locale_number_format($PreviousPrice[3]*100,2));
-	  }
+		} // end foreach
 	 echo '</tbody></table>';
 	 }
-	//end of while loop
 	else {
 	  echo '<p>' . _('No history of sales of') . ' ' . $StockID . ' ' . _('to') . ' ' . $DebtorNo;
 	}

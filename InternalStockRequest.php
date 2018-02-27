@@ -238,7 +238,7 @@ echo '</select></td>
 	</tr>
 	<tr>
 		<td>', _('Date when required'), ':</td>
-		<td><input type="text" class="date" alt="', $_SESSION['DefaultDateFormat'], '" name="DispatchDate" maxlength="10" size="11" value="', $_SESSION['Request']->DispatchDate, '" /></td>
+		<td><input type="text" class="date" name="DispatchDate" maxlength="10" size="11" value="', $_SESSION['Request']->DispatchDate, '" /></td>
 	</tr>
 	<tr>
 		<td>',  _('Narrative'), ':</td>
@@ -262,6 +262,7 @@ echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8
 	<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />
 	<br />
 	<table class="selection">
+	<thead>
 	<tr>
 		<th colspan="7"><h4>', _('Details of Items Requested'), '</h4></th>
 	</tr>
@@ -271,7 +272,9 @@ echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8
 		<th class="ascending">',  _('Item Description'), '</th>
 		<th class="ascending">',  _('Quantity Required'), '</th>
 		<th>',  _('UOM'), '</th>
-	</tr>';
+		</tr>
+	</thead>
+	<tbody>';
 
 if (isset($_SESSION['Request']->LineItems)) {
 	foreach ($_SESSION['Request']->LineItems as $LineItems) {
@@ -287,7 +290,8 @@ if (isset($_SESSION['Request']->LineItems)) {
 	}
 }
 
-echo '</table>
+echo '</tbody>
+	</table>
 	<br />
 	<div class="centre">
 		<input type="submit" name="Submit" value="', _('Submit'), '" />
@@ -535,8 +539,6 @@ if (isset($SearchResult)) {
 					<input type="hidden" name="NextList" value="', ($Offset + 1), '" />
 					<input tabindex="', ($j+10), '" type="submit" name="Next" value="', _('Next'), '" /></td>
 			</tr>
-		</thead>
-		<tbody>
 			<tr>
 				<th class="ascending">', _('Code'), '</th>
 				<th class="ascending">', _('Description'), '</th>
@@ -546,7 +548,10 @@ if (isset($SearchResult)) {
 				<th class="ascending">', _('On Order'), '</th>
 				<th class="ascending">', _('Available'), '</th>
 				<th class="ascending">', _('Quantity'), '</th>
-			</tr>';
+			</tr>
+		</thead>
+		<tbody>';
+
 	$ImageSource = _('No Image');
 
 	$i=0;

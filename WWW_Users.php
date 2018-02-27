@@ -326,6 +326,7 @@ if(!isset($SelectedUser)) {
 /* If its the first time the page has been displayed with no parameters then none of the above are true and the list of Users will be displayed with links to delete or edit each. These will call the same page again and allow update/input or deletion of the records*/
 
 	echo '<table class="selection">
+		<thead>
 			<tr>
 				<th class="ascending">', _('User Login'), '</th>
 				<th class="ascending">', _('Full Name'), '</th>
@@ -341,7 +342,9 @@ if(!isset($SelectedUser)) {
 				<th class="ascending">', _('Theme'), '</th>
 				<th class="ascending">', _('Language'), '</th>
 				<th class="noprint" colspan="2">&nbsp;</th>
-			</tr>';
+			</tr>
+		</thead>
+		<tbody>';
 
 	$Sql = "SELECT userid,
 					realname,
@@ -385,7 +388,7 @@ if(!isset($SelectedUser)) {
 				<td class="noprint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?', '&amp;SelectedUser=', $MyRow['userid'], '&amp;delete=1" onclick="return confirm(\'', _('Are you sure you wish to delete this user?'), '\');">', _('Delete'), '</a></td>
 			</tr>';
 	}// END foreach($Result as $MyRow).
-	echo '</table>
+	echo '</tbody></table>
 		<br />';
 } //end of ifs and buts!
 

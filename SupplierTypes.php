@@ -148,11 +148,14 @@ if (!isset($SelectedType)){
 	$sql = "SELECT typeid, typename FROM suppliertype";
 	$result = DB_query($sql);
 
-	echo '<table class="selection">';
-	echo '<tr>
+	echo '<table class="selection">
+		<thead>
+			<tr>
 		<th class="ascending" >' . _('Type ID') . '</th>
 		<th class="ascending" >' . _('Type Name') . '</th>
-		</tr>';
+			</tr>
+		</thead>
+		<tbody>';
 
 while ($myrow = DB_fetch_row($result)) {
 
@@ -171,7 +174,7 @@ while ($myrow = DB_fetch_row($result)) {
 		$myrow[0]);
 	}
 	//END WHILE LIST LOOP
-	echo '</table>';
+	echo '</tbody></table>';
 }
 
 //end of ifs and buts!

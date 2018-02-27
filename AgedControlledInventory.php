@@ -45,6 +45,7 @@ $TotalQty=0;
 $TotalVal=0;
 
 echo '<table>
+		<thead>
 		<tr>
 			<th class="ascending">', _('Stock'), '</th>
 			<th class="ascending">', _('Description'), '</th>
@@ -54,7 +55,9 @@ echo '<table>
 			<th class="ascending">', _('Inventory Value'), '</th>
 			<th class="ascending">', _('Date'), '</th>
 			<th class="ascending">', _('Days Old'), '</th>
-		</tr>';
+			</tr>
+		</thead>
+		<tbody>';
 
 while ($LocQtyRow=DB_fetch_array($LocStockResult)) {
 
@@ -88,7 +91,8 @@ while ($LocQtyRow=DB_fetch_array($LocStockResult)) {
 		);
 } //while
 
-echo '<tfoot>
+echo '</tbody>
+		<tfoot>
 			<tr class="striped_row">
 				<td colspan="3"><b>', _('Total'), '</b></td>
 				<td class="number"><b>', locale_number_format($TotalQty,2), '</b></td>

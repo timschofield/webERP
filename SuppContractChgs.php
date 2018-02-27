@@ -73,14 +73,16 @@ echo  $_SESSION['SuppTrans']->SuppReference . ' ' ._('From') . ' ' . $_SESSION['
 
 echo '</p></div>';
 
-echo '<table class="selection">';
-$TableHeader = '<tr>
+echo '<table class="selection">
+	<thead>
+		<tr>
 					<th class="ascending">' . _('Contract') . '</th>
 					<th class="ascending">' . _('Amount') . '</th>
 					<th class="ascending">' . _('Narrative') . '</th>
 					<th class="ascending">' . _('Anticipated') . '</th>
-				</tr>';
-echo $TableHeader;
+		</tr>
+	</thead>
+	<tbody>';
 
 $TotalContractsValue = 0;
 
@@ -103,7 +105,9 @@ foreach ($_SESSION['SuppTrans']->Contracts as $EnteredContract){
 
 }
 
-echo '</table><table class="selection"><tr>
+echo '</tbody></table>
+	<table class="selection">
+		<tr>
 		<td class="number">' . _('Total') . ':</td>
 		<td class="number">' . locale_number_format($TotalContractsValue,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 	</tr>

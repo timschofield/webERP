@@ -49,13 +49,17 @@ if (isset($_POST['Submit'])) {//users have selected the WO to calculate and subm
 		       	$result = DB_query($sql,$ErrMsg);
 			if (DB_num_rows($result)>0) {
 				echo '<table class="selection">
-					<tr><th class="ascending">' . _('Item') . '</th>
+					<thead>
+						<tr>
+							<th class="ascending">' . _('Item') . '</th>
 						<th>' . _('Description') . '</th>
 						<th class="ascending">' . _('Date Issued') . '</th>
 						<th class="ascending">' . _('Issued Qty') . '</th>
 						<th class="ascending">' . _('Issued Cost') . '</th>
 						<th class="ascending">' . _('Work Order') . '</th>
-					</tr>';
+						</tr>
+					</thead>
+					<tbody>';
 
 				$TotalCost = 0;
 				while ($myrow = DB_fetch_array($result)){
@@ -71,9 +75,14 @@ if (isset($_POST['Submit'])) {//users have selected the WO to calculate and subm
 						<td>' . $myrow['reference'] . '</td>
 					       </tr>';
 				}
-				echo '<tr><td colspan="4"><b>' . _('Total Cost') . '</b></td>
+				echo '</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="4"><b>' . _('Total Cost') . '</b></td>
 					<td colspan="2"><b>' .locale_number_format($TotalCost,2) . '</b></td>
-					</tr></table>';
+						</tr>
+					</tfoot>
+				</table>';
 			} else {
 				prnMsg(_('There are no data available'),'error');
 				include('includes/footer.php');
@@ -265,9 +274,9 @@ if (!isset($StockID)) {
 			</td>
 			</tr>
 			<tr>
-			<td colspan="2">' . _('Start Date From') . ':<input type="text" name="DateFrom" value="' . $_POST['DateFrom'] . '" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" />
+			<td colspan="2">' . _('Start Date From') . ':<input type="text" name="DateFrom" value="' . $_POST['DateFrom'] . '" class="date" />
 
-			' . _('Start Date To') . ':<input type="text" name="DateTo" value="' . $_POST['DateTo'] . '" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" />
+			' . _('Start Date To') . ':<input type="text" name="DateTo" value="' . $_POST['DateTo'] . '" class="date" />
 			</td>
 				</tr>
 				</table>';
@@ -314,12 +323,15 @@ if (!isset($StockID)) {
 
 		echo '<br />
 			<table cellpadding="2" class="selection">
+			<thead>
 			<tr>
 				<th class="ascending">' . _('Code') . '</th>
 				<th class="ascending">' . _('Description') . '</th>
 				<th class="ascending">' . _('On Hand') . '</th>
 				<th>' . _('Units') . '</th>
-			</tr>';
+				</tr>
+			</thead>
+			<tbody>';
 
 		while ($myrow=DB_fetch_array($StockItemsResult)) {
 
@@ -335,7 +347,8 @@ if (!isset($StockID)) {
 					$myrow['units']);
 
 		}//end of while loop
-		echo '</table>';
+		echo '</tbody>
+			</table>';
 	}
 	//end if stock search results to show
 	  else {
@@ -427,6 +440,7 @@ if (!isset($StockID)) {
 				<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" id="wos">
 				<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 				<table cellpadding="2" width="95%" class="selection">
+				<thead>
 				<tr>
 					<th>' . _('Select') . '</th>
 					<th>' . _('Modify') . '</th>
@@ -441,7 +455,9 @@ if (!isset($StockID)) {
 					<th class="ascending">' . _('Quantity Outstanding') . '</th>
 					<th class="ascending">' . _('Start Date')  . '</th>
 					<th class="ascending">' . _('Required Date') . '</th>
-				</tr>';
+					</tr>
+				</thead>
+				<tbody>';
 
 		while ($myrow=DB_fetch_array($WorkOrdersResult)) {
 
@@ -490,7 +506,8 @@ if (!isset($StockID)) {
 		}
 		//end of while loop
 
-		echo '</table>
+		echo '</tbody>
+			</table>
 			<div class="centre">
 				<input type="submit" value="' . _('Submit') . '" name="Submit" />
 			</form>';

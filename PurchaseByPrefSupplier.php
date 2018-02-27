@@ -408,6 +408,7 @@ if (isset($_POST['Supplier']) AND isset($_POST['ShowItems']) AND $_POST['Supplie
 	} else {
 		//head up a new table
 		echo '<table>
+			<thead>
 				<tr>
 					<th class="ascending">' . _('Item Code') . '</th>
 					<th class="ascending">' . _('Item Description') . '</th>
@@ -421,7 +422,9 @@ if (isset($_POST['Supplier']) AND isset($_POST['ShowItems']) AND $_POST['Supplie
 					<th class="ascending">' . _('Week') . '<br />' ._('2') . '</th>
 					<th class="ascending">' . _('Last') . '<br />' ._('Week') . '</th>
 					<th>' . _('Order Qty') . '</th>
-				</tr>';
+				</tr>
+			</thead>
+			<tbody>';
 
 		$i=0;
 
@@ -559,11 +562,14 @@ if (isset($_POST['Supplier']) AND isset($_POST['ShowItems']) AND $_POST['Supplie
 				</tr>';
 			$i++;
 		} /*end preferred supplier items while loop */
-		echo '<tr>
+
+		echo '</tbody>
+			<tfoot>
+				<tr>
 				<td colspan="7"><input type="submit" name="CreatePO" value="' . _('Create Purchase Order') . '" onclick="return confirm(\'' . _('Clicking this button will create a purchase order for all the quantities in the grid above for immediate delivery. Are you sure?') . '\');"/></td>
 			</tr>
+			</tfoot>
 			</table>';
-
 	}
 }
 

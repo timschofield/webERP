@@ -161,10 +161,13 @@ or deletion of the records*/
 	$result = DB_query($sql,$ErrMsg);
 
 	echo '<table class="selection">
+		<thead>
 			<tr>
 				<th class="ascending">' . _('Tax Province') . '</th>
 				<th colspan="2">&nbsp;</th>
-			</tr>';
+			</tr>
+		</thead>
+		<tbody>';
 
 	while($myrow = DB_fetch_row($result)) {
 		echo '<tr class="striped_row">
@@ -174,7 +177,7 @@ or deletion of the records*/
 			</tr>';
 
 	} //END WHILE LIST LOOP
-	echo '</table><br />';
+	echo '</tbody></table><br />';
 } //end of ifs and buts!
 
 

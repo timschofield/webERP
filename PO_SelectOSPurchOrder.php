@@ -251,9 +251,9 @@ if (!isset($OrderNumber) or $OrderNumber == '') {
 	$Checked = (isset($_POST['PODetails']))?'checked="checked"':'';
 	echo '</select>
 		' . _('Orders Between') . ':&nbsp;
-			<input type="text" name="DateFrom" value="' . ConvertSQLDate($DateFrom) . '"  class="date" size="10" alt="' . $_SESSION['DefaultDateFormat'] . '"  />
+			<input type="text" name="DateFrom" value="' . ConvertSQLDate($DateFrom) . '"  class="date" size="10" />
 		' . _('and') . ':&nbsp;
-			<input type="text" name="DateTo" value="' . ConvertSQLDate($DateTo) . '"  class="date" size="10" alt="' . $_SESSION['DefaultDateFormat'] . '"  />
+			<input type="text" name="DateTo" value="' . ConvertSQLDate($DateTo) . '"  class="date" size="10" />
 		<input type="submit" name="SearchOrders" value="' . _('Search Purchase Orders') . '" />
 		</td>
 		</tr>
@@ -302,13 +302,16 @@ echo '<br />';
 
 if (isset($StockItemsResult)) {
 	echo '<table cellpadding="2" class="selection">
+		<thead>
 		<tr>
 			<th class="ascending">' . _('Code') . '</th>
 			<th class="ascending">' . _('Description') . '</th>
 			<th class="ascending">' . _('On Hand') . '</th>
 			<th class="ascending">' . _('Orders') . '<br />' . _('Outstanding') . '</th>
 			<th class="ascending">' . _('Units') . '</th>
-		</tr>';
+		</tr>
+		</thead>
+		<tbody>';
 
 	$StocksStr = '(';
 	$q = 0;
@@ -345,7 +348,7 @@ if (isset($StockItemsResult)) {
 				$myrow['units']);
 	} //end of while loop through search items
 
-	echo '</table>';
+	echo '</tbody></table>';
 
 } //end if stock search results to show
 else {
@@ -589,7 +592,8 @@ else {
 	if (DB_num_rows($PurchOrdersResult) > 0) {
 	/*show a table of the orders returned by the SQL */
 
-	echo '<table cellpadding="2" width="97%" class="selection">';
+		echo '<table cellpadding="2" width="97%" class="selection">
+			<thead>';
 
 	if (isset($_POST['PODetails'])) {
 		$BalHead = '<th class="ascending">' . _('Balance') .' (' . _('Stock ID') . '--' . _('Quantity') . ' )</th>';
@@ -611,8 +615,9 @@ else {
 	echo '<th class="ascending">' . _('Status') . '</th>
 			<th>' . _('Print') . '</th>
 			<th>' . _('Receive') . '</th>
-		</tr>';
-	$j = 1;
+			</tr>
+		</thead>
+		<tbody>';
 
 	while ($myrow = DB_fetch_array($PurchOrdersResult)) {
 		$Bal = '';
@@ -676,7 +681,7 @@ else {
 			</tr>';
 	} //end of while loop around purchase orders retrieved
 
-	echo '</table>';
+		echo '</tbody></table>';
 	}
 }
 echo '</div>

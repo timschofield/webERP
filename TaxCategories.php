@@ -164,10 +164,13 @@ if(isset($_POST['submit'])) {
 	$result = DB_query($sql,$ErrMsg);
 
 	echo '<table class="selection">
+		<thead>
 			<tr>
 				<th class="ascending">' . _('Tax Category') . '</th>
 				<th colspan="2">&nbsp;</th>
-			</tr>';
+			</tr>
+		</thead>
+		<tbody>';
 
 	while($myrow = DB_fetch_row($result)) {
 		echo '<tr class="striped_row">';
@@ -184,7 +187,7 @@ if(isset($_POST['submit'])) {
 		echo '</tr>';
 	} //END WHILE LIST LOOP
 
-	echo '</table><br />';
+	echo '</tbody></table><br />';
 } //end of ifs and buts!
 
 

@@ -139,16 +139,17 @@ if ($Edit == false) {
 		$NoCustItemData=1;
     } else if ($StockID != '') {
 
-        echo '<table cellpadding="2" class="selection">';
-        $TableHeader = '<tr>
+		echo '<table cellpadding="2" class="selection">
+			<thead>
+				<tr>
 							<th class="ascending">' . _('Customer') . '</th>
 							<th>' . _('Customer Unit') . '</th>
 							<th>' . _('Conversion Factor') . '</th>
 							<th class="ascending">' . _('Customer Item') . '</th>
 							<th class="ascending">' . _('Customer Description') . '</th>
-
-						</tr>';
-		echo $TableHeader;
+				</tr>
+			</thead>
+			<tbody>';
 
 		while ($myrow = DB_fetch_array($custitemResult)) {
 			printf('<tr class="striped_row">
@@ -172,7 +173,8 @@ if ($Edit == false) {
 					$StockID,
 					$myrow['debtorno']);
         } //end of while loop
-        echo '</table><br/>';
+        echo '</tbody>
+			</table><br/>';
     } // end of there are rows to show
     echo '<br/>';
 } /* Only show the existing records if one is not being edited */
@@ -285,17 +287,19 @@ if (isset($debtorsmasterResult) AND DB_num_rows($debtorsmasterResult) > 0) {
 		$StockUOM = 'each';
 	}
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post">
-			<table cellpadding="2" colspan="7" class="selection">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-    $TableHeader = '<tr>
+			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+			<table cellpadding="2" colspan="7" class="selection">
+			<thead>
+				<tr>
 						<th class="ascending">' . _('Code') . '</th>
 	                	<th class="ascending">' . _('Customer Name') . '</th>
 						<th class="ascending">' . _('Currency') . '</th>
 						<th class="ascending">' . _('Address 1') . '</th>
 						<th class="ascending">' . _('Address 2') . '</th>
 						<th class="ascending">' . _('Address 3') . '</th>
-					</tr>';
-    echo $TableHeader;
+				</tr>
+			</thead>
+			<tbody>';
 
     while ($myrow = DB_fetch_array($debtorsmasterResult)) {
 		printf('<tr class="striped_row">
@@ -318,7 +322,8 @@ if (isset($debtorsmasterResult) AND DB_num_rows($debtorsmasterResult) > 0) {
 
     }
     //end of while loop
-    echo '</table>
+    echo '</tbody>
+		</table>
 			<br/>
 			</form>';
 }

@@ -159,6 +159,7 @@ if (isset($_GET['ListTests'])) {
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<table class="selection">
+		<thead>
 			<tr>
 				<th class="ascending">' . _('Add') . '</th>
 				<th class="ascending">' . _('Name') . '</th>
@@ -168,7 +169,9 @@ if (isset($_GET['ListTests'])) {
 				<th>' . _('Target Value') . '</th>
 				<th>' . _('Range Min') . '</th>
 				<th>' . _('Range Max') . '</th>
-			</tr>';
+			</tr>
+		</thead>
+		<tbody>';
 
 	$x=0;
 	while ($myrow=DB_fetch_array($result)) {
@@ -225,12 +228,15 @@ if (isset($_GET['ListTests'])) {
 
 	} //END WHILE LIST LOOP
 
-	echo '</table><br /></div>
+	echo '</tbody>
+		</table><br />
 			<div class="centre">
 				<input type="hidden" name="KeyValue" value="' . $KeyValue . '" />
 				<input type="hidden" name="AddTestsCounter" value="' . $x . '" />
 				<input type="submit" name="AddTests" value="' . _('Add') . '" />
-		</div></form>';
+		</div>
+		</div>
+		</form>';
 	include('includes/footer.php');
 	exit;
 }  //ListTests
@@ -375,6 +381,7 @@ or deletion of the records*/
 	$result = DB_query($sql);
 
 	echo '<table class="selection">
+		<thead>
 		<tr>
 			<th class="ascending">' . _('Name') . '</th>
 			<th class="ascending">' . _('Method') . '</th>
@@ -388,7 +395,9 @@ or deletion of the records*/
 			<th class="ascending">' . _('Show on Spec') . '</th>
 			<th class="ascending">' . _('Show on Test Plan') . '</th>
 			<th class="ascending">' . _('Active') . '</th>
-		</tr>';
+			</tr>
+		</thead>
+		<tbody>';
 
 	while ($myrow=DB_fetch_array($result)) {
 
@@ -473,7 +482,7 @@ or deletion of the records*/
 			$KeyValue);
 
 	} //END WHILE LIST LOOP
-	echo '</table><br />';
+	echo '</tbody></table><br />';
 } //end of ifs and buts!
 
 if (isset($SelectedQATest)) {

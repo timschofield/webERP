@@ -791,8 +791,9 @@ function initMap() {
 		$result = DB_query($SQL);
 		if(DB_num_rows($result) <> 0) {
 			echo '<br /><div class="centre"><img src="' . $RootPath . '/css/' . $Theme . '/images/note_add.png" title="' . _('Customer Notes') . '" alt="" />' . ' ' . _('Customer Notes') . '</div><br />';
-			echo '<table style="width: 45%;">';
-			echo '<tr>
+			echo '<table style="width: 45%;">
+				<thead>
+					<tr>
 					<th class="ascending">' . _('Date') . '</th>
 					<th>' . _('Note') . '</th>
 					<th>' . _('Hyperlink') . '</th>
@@ -800,7 +801,9 @@ function initMap() {
 					<th>' . _('Edit') . '</th>
 					<th>' . _('Delete') . '</th>
 					<th> <a href="AddCustomerNotes.php?DebtorNo=', urlencode($_SESSION['CustomerID']), '">' . ' ' . _('Add New Note') . '</a> </th>
-				</tr>';
+					</tr>
+				</thead>
+				<tbody>';
 
 			while ($myrow = DB_fetch_array($result)) {
 				echo '<tr class="striped_row">
@@ -812,7 +815,7 @@ function initMap() {
 					<td><a href="AddCustomerNotes.php?Id=' . $myrow['noteid'] . '&amp;DebtorNo=' . $myrow['debtorno'] . '&amp;delete=1">' . _('Delete') . '</a></td>
 					</tr>';
 			}// END WHILE LIST LOOP
-			echo '</table>';
+			echo '</tbody></table>';
 		}// end if there are customer notes to display
 		else {
 			if($_SESSION['CustomerID'] != '') {
@@ -826,8 +829,9 @@ function initMap() {
 		$result = DB_query($SQL);
 		if(DB_num_rows($result) <> 0) {
 			echo '<br /><div class="centre"><img src="' . $RootPath . '/css/' . $Theme . '/images/folder_add.png" title="' . _('Customer Type (Group) Notes') . '" alt="" />' . ' ' . _('Customer Type (Group) Notes for:' . '<b> ' . $CustomerTypeName . '</b>') . '</div><br />';
-			echo '<table style="width: 45%;">';
-			echo '<tr>
+			echo '<table style="width: 45%;">
+				<thead>
+					<tr>
 				 	<th class="ascending">' . _('Date') . '</th>
 					<th>' . _('Note') . '</th>
 					<th>' . _('File Link / Reference / URL') . '</th>
@@ -835,7 +839,9 @@ function initMap() {
 					<th>' . _('Edit') . '</th>
 					<th>' . _('Delete') . '</th>
 					<th><a href="AddCustomerTypeNotes.php?DebtorType=' . $CustomerType . '">' . _('Add New Group Note') . '</a></th>
-				</tr>';
+					</tr>
+				</thead>
+				<tbody>';
 
 			while ($myrow = DB_fetch_array($result)) {
 				echo '<tr class="striped_row">
@@ -847,7 +853,7 @@ function initMap() {
 					<td><a href="AddCustomerTypeNotes.php?Id=' . $myrow[0] . '&amp;DebtorType=' . $myrow[1] . '&amp;delete=1">' . _('Delete') . '</a></td>
 					</tr>';
 			}// END WHILE LIST LOOP
-			echo '</table>';
+			echo '</tbody></table>';
 		}// end if there are customer group notes to display
 		else {
 			if($_SESSION['CustomerID'] != '') {

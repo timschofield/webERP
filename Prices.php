@@ -206,18 +206,18 @@ $sql = "SELECT
 $result = DB_query($sql);
 require_once('includes/CurrenciesArray.php');
 if (DB_num_rows($result) > 0) {
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<div>';
-	echo '<table class="selection">
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
+		<div>
+		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+		<table class="selection">
+		<thead>
 			<tr>
-				<th colspan="7">
-				<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />' .
+				<th colspan="7">' .
 				_('Pricing for part') . ':
 				<input type="text" required="required" autofocus="autofocus" name="Item" size="22" value="' . $Item . '" maxlength="20" />
 				<input type="submit" name="NewPart" value="' . _('Review Prices') . '" /></th>
-			</tr>';
-
-	echo '<tbody><tr><th class="ascending">' . _('Currency') . '</th>
+			</tr>
+			<tr><th class="ascending">' . _('Currency') . '</th>
 				<th class="ascending">' . _('Sales Type') . '</th>
 				<th class="ascending">' . _('Price') . '</th>
 				<th class="ascending">' . _('Start Date') . ' </th>
@@ -225,7 +225,9 @@ if (DB_num_rows($result) > 0) {
 	if (in_array(5, $_SESSION['AllowedPageSecurityTokens'])) { // If is allow to modify prices.
 		echo   '<th colspan="2">' . _('Maintenance') . '</th>';
 	}
-	echo	'</tr>';
+	echo '</tr>
+		</thead>
+		<tbody>';
 
 	while ($myrow = DB_fetch_array($result)) {
 		if ($myrow['enddate']=='9999-12-31'){
@@ -250,8 +252,9 @@ if (DB_num_rows($result) > 0) {
 
 	}
 	//END WHILE LIST LOOP
-	echo '</tbody></table><br />';
-	echo '</div>
+	echo '</tbody>
+		</table><br />
+		</div>
 		  </form>';
 } else {
 	prnMsg(_('There are no prices set up for this part'),'warn');
@@ -320,9 +323,9 @@ if (!isset($_POST['EndDate'])){
 	$_POST['EndDate'] = '';
 }
 echo '<tr><td>' . _('Price Effective From Date')  . ':</td>
-			<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="StartDate" required="required" size="10" maxlength="10" title="' . _('Enter the date from which this price should take effect.') . '" value="' . $_POST['StartDate'] . '" /></td></tr>';
+			<td><input type="text" class="date" name="StartDate" required="required" size="10" maxlength="10" title="' . _('Enter the date from which this price should take effect.') . '" value="' . $_POST['StartDate'] . '" /></td></tr>';
 echo '<tr><td>' . _('Price Effective To Date')  . ':</td>
-			<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="EndDate" size="10" maxlength="10" title="' . _('Enter the date to which this price should be in effect to, or leave empty if the price should continue indefinitely') . '" value="' . $_POST['EndDate'] . '" />';
+			<td><input type="text" class="date" name="EndDate" size="10" maxlength="10" title="' . _('Enter the date to which this price should be in effect to, or leave empty if the price should continue indefinitely') . '" value="' . $_POST['EndDate'] . '" />';
 echo '<input type="hidden" name="Item" value="' . $Item.'" /></td></tr>';
 echo '<tr><td>' . _('Price') . ':</td>
           <td>

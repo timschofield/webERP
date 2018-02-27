@@ -67,6 +67,7 @@ if (isset($StockID)) {
 	} else {
 
 		echo '<table width="97%" class="selection">
+			<thead>
 				<tr>
 					<th class="ascending">' . _('Used By') . '</th>
 					<th class="ascending">' . _('Status') . '</th>
@@ -75,7 +76,9 @@ if (isset($StockID)) {
 					<th class="ascending">' . _('Quantity Required') . '</th>
 					<th class="ascending">' . _('Effective After') . '</th>
 					<th class="ascending">' . _('Effective To') . '</th>
-				</tr>';
+				</tr>
+			</thead>
+			<tbody>';
 
 		while ($myrow=DB_fetch_array($result)) {
 
@@ -96,7 +99,7 @@ if (isset($StockID)) {
 
 			//end of page full new headings if
 		}
-		echo '</table>';
+		echo '</tbody></table>';
 	}
 } // StockID is set
 echo '</form>';

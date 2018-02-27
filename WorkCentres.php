@@ -125,6 +125,7 @@ or deletion of the records*/
 
 	$result = DB_query($sql);
 	echo '<table class="selection">
+		<thead>
 			<tr>
 				<th class="ascending">', _('WC Code'), '</th>
 				<th class="ascending">', _('Description'), '</th>
@@ -132,7 +133,9 @@ or deletion of the records*/
 				<th class="ascending">', _('Overhead GL Account'), '</th>
 				<th class="ascending">', _('Overhead Per Hour'), '</th>
 				<th colspan="2">&nbsp;</th>
-			</tr>';
+			</tr>
+		</thead>
+		<tbody>';
 
 	while ($myrow = DB_fetch_array($result)) {
 
@@ -157,7 +160,7 @@ or deletion of the records*/
 	}
 
 	//END WHILE LIST LOOP
-	echo '</table>';
+	echo '</tbody></table>';
 }
 
 //end of ifs and buts!

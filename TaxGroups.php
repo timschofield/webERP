@@ -171,11 +171,14 @@ if(!isset($SelectedGroup)) {
 		echo '</div>';
 	} else {
 		echo '<table class="selection">
+			<thead>
 				<tr>
 					<th class="ascending" >' . _('Group No') . '</th>
 					<th class="ascending" >' . _('Tax Group') . '</th>
 					<th colspan="2" >&nbsp;</th>
-				</tr>';
+				</tr>
+			</thead>
+			<tbody>';
 
 		while($myrow = DB_fetch_array($result)) {
 			printf('<tr class="striped_row">
@@ -193,7 +196,7 @@ if(!isset($SelectedGroup)) {
 					urlencode($myrow['taxgroupdescription']));
 
 		} //END WHILE LIST LOOP
-		echo '</table>';
+		echo '</tbody></table>';
 	}
 } //end of ifs and buts!
 

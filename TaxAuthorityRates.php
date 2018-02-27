@@ -77,11 +77,14 @@ if(DB_num_rows($TaxRatesResult)>0) {
 	echo '<div class="centre"><h1>' . $myrow[0] . '</h1></div>';// TaxAuthorityRates table title.
 
 	echo '<table class="selection">
+		<thead>
 		<tr>
 			<th class="ascending">' . _('Deliveries From') . '<br />' . _('Tax Province') . '</th>
 			<th class="ascending">' . _('Tax Category') . '</th>
 			<th class="ascending">' . _('Tax Rate') . '</th>
-		</tr>';
+			</tr>
+		</thead>
+		<tbody>';
 
 	while($myrow = DB_fetch_array($TaxRatesResult)) {
 		printf('<tr class="striped_row">
@@ -97,7 +100,7 @@ if(DB_num_rows($TaxRatesResult)>0) {
 			$myrow['dispatchtaxprovince'] . '_' . $myrow['taxcatid'],
 			locale_number_format($myrow['taxrate']*100,2));
 	}// End of while loop.
-	echo '</table><br />
+	echo '</tbody></table><br />
 		<div class="centre">
 		<input type="submit" name="UpdateRates" value="' . _('Update Rates') . '" />';
 	//end if tax taxcatid/rates to show

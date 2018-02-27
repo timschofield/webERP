@@ -564,15 +564,15 @@ if (!isset($StockID)) {
 			</tr>
 			<tr>
 				<td>' . _('Due Date From') . '</td>
-				<td><input type="text" class="date" name="DueDateFrom" value="' . $_POST['DueDateFrom'] . '" alt="' . $_SESSION['DefaultDateFormat'] . '" size="10" /></td>
+				<td><input type="text" class="date" name="DueDateFrom" value="' . $_POST['DueDateFrom'] . '" size="10" /></td>
 				<td>' . _('Due Date To') . '</td>
-				<td><input type="text" class="date" name="DueDateTo" value="' . $_POST['DueDateTo'] . '" alt="' . $_SESSION['DefaultDateFormat'] . '" size="10" /></td>
+				<td><input type="text" class="date" name="DueDateTo" value="' . $_POST['DueDateTo'] . '" size="10" /></td>
 			</tr>
 			<tr>
 				<td>' . _('Order Date From') . '</td>
-				<td><input type="text" name="OrderDateFrom" value="' . $_POST['OrderDateFrom'] . '" size="10" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" /></td>
+				<td><input type="text" name="OrderDateFrom" value="' . $_POST['OrderDateFrom'] . '" size="10" class="date" /></td>
 				<td>' . _('Order Date To') . '</td>
-				<td><input type="text" name="OrderDateTo" value="' . $_POST['OrderDateTo'] . '" size="10" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" /></td>
+				<td><input type="text" name="OrderDateTo" value="' . $_POST['OrderDateTo'] . '" size="10" class="date" /></td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
@@ -635,13 +635,16 @@ if (!isset($StockID)) {
 if (isset($StockItemsResult)
 	AND DB_num_rows($StockItemsResult)>1) {
 
-	echo '<table cellpadding="2" class="selection">';
-	echo '<tr>
+	echo '<table cellpadding="2" class="selection">
+		<thead>
+			<tr>
 			<th class="ascending" >' . _('Code') . '</th>
 			<th class="ascending" >' . _('Description') . '</th>
 			<th class="ascending" >' . _('On Hand') . '</th>
 			<th>' . _('Units') . '</th>
-		</tr>';
+			</tr>
+		</thead>
+		<tbody>';
 
 	while ($myrow=DB_fetch_array($StockItemsResult)) {
 
@@ -659,7 +662,7 @@ if (isset($StockItemsResult)
 	}
 //end of while loop
 
-	echo '</table>';
+	echo '</tbody></table>';
 
 }
 //end if stock search results to show
@@ -896,8 +899,11 @@ if (isset($StockItemsResult)
 		if ($_SESSION['RequirePickingNote'] == 1) {
 			$PrintPickLabel = '<th>' . _('Pick Lists') . '</th>';
 		}
+
+		echo '<thead>';
+
 		if ( $_POST['Quotations'] == 'Orders_Only' OR $_POST['Quotations'] == 'Overdue_Only' ){
-			$TableHeader = '<tr>
+			echo '<tr>
 								<th class="ascending" >' . _('Modify') . '</th>
 								<th>' . _('Acknowledge') . '</th>
 								' . $PrintPickLabel . '
@@ -913,12 +919,12 @@ if (isset($StockItemsResult)
 								<th class="ascending" >' . _('Order Total') . '<br />' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>';
 
 			if ($AuthRow['cancreate']==0){ //If cancreate==0 then this means the user can create orders hmmm!!
-				$TableHeader .= '<th>' . _('Place PO') . '</th></tr>';
-			} else {
-				$TableHeader .= '</tr>';
+				echo '<th>' . _('Place PO') . '</th>';
 			}
+
+			echo '</tr>';
 		} else {  /* displaying only quotations */
-			$TableHeader = '<tr>
+			echo '<tr>
 								<th class="ascending">' . _('Modify') . '</th>
 								<th>' . _('Print Quote') . '</th>
 								<th class="ascending" >' . _('Customer') . '</th>
@@ -931,7 +937,8 @@ if (isset($StockItemsResult)
 							</tr>';
 		}
 
-		echo $TableHeader;
+		echo '</thead>
+			<tbody>';
 
 		$OrdersTotal =0;
 
@@ -1060,7 +1067,10 @@ if (isset($StockItemsResult)
 			}
 		}//end while loop through orders to display
 
-		echo '<tr><td colspan="12" class="number"><b>';
+		echo '</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="12" class="number"><b>';
 
 		if ($_POST['Quotations']=='Orders_Only'){
 			echo _('Total Order(s) Value in');
@@ -1081,6 +1091,7 @@ if (isset($StockItemsResult)
 		}
 
 		echo '</tr>
+			</tfoot>
 		</table>';
 	} //end if there are some orders to show
 }

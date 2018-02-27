@@ -259,6 +259,7 @@ or deletion of the records*/
 
 	echo '<br />
 		<table class="selection">
+		<thead>
 			<tr>
 				<th class="ascending">' . _('Code') . '</th>
 				<th class="ascending">' . _('Category Description') . '</th>' . '
@@ -271,7 +272,9 @@ or deletion of the records*/
 				<th class="ascending">' . _('Usage Var GL') . '</th>
 				<th class="ascending">' . _('WIP GL') . '</th>
 				<th colspan="2">' . _('Maintenance') . '</th>
-			</tr>';
+			</tr>
+		</thead>
+		<tbody>';
 
 	while ($myrow = DB_fetch_array($result)) {
 		printf('<tr class="striped_row">
@@ -304,7 +307,7 @@ or deletion of the records*/
 				$myrow['categoryid']);
 	}
 	//END WHILE LIST LOOP
-	echo '</table>';
+	echo '</tbody></table>';
 }
 
 //end of ifs and buts!

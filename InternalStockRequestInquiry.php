@@ -161,9 +161,9 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 		$_POST['FromDate'] = '';
 	}
 	echo '<td>' . _('Date From') . '</td>
-		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" maxlength="10" size="11" vaue="' . $_POST['FromDate'] .'" /></td> 
+		<td><input type="text" class="date" name="FromDate" maxlength="10" size="11" vaue="' . $_POST['FromDate'] .'" /></td>
 		<td>' . _('Date To') . '</td>
-		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
+		<td><input type="text" class="date" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
 		<td><input type="submit" name="Search"  value="' ._('Search') . '" /></td></tr></table>';
 	if (!isset($_POST['ShowDetails'])) {
 		$_POST['ShowDetails'] = 1;
@@ -258,14 +258,17 @@ if(isset($StockItemsResult)){
 
 	if (isset($StockItemsResult)
 	AND DB_num_rows($StockItemsResult)>1) {
-	echo '<a href="' . $RootPath . '/InternalStockRequestInquiry.php">' . _('Return') . '</a>';
-	echo '<table cellpadding="2" class="selection">';
-	echo '<tr>
+	echo '<a href="' . $RootPath . '/InternalStockRequestInquiry.php">' . _('Return') . '</a>
+		<table cellpadding="2" class="selection">
+		<thead>
+			<tr>
 			<th class="ascending" >' . _('Code') . '</th>
 			<th class="ascending" >' . _('Description') . '</th>
 			<th class="ascending" >' . _('Total Applied') . '</th>
 			<th>' . _('Units') . '</th>
-		</tr>';
+			</tr>
+		</thead>
+		<tbody>';
 
 	while ($myrow=DB_fetch_array($StockItemsResult)) {
 
@@ -283,7 +286,8 @@ if(isset($StockItemsResult)){
 	}
 //end of while loop
 
-	echo '</table>';
+	echo '</tbody>
+		</table>';
 
 }
 	

@@ -171,21 +171,23 @@ if (DB_num_rows($GRNResults)==0){
 
 
 /*Set up a table to show the GRNs outstanding for selection */
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-echo '<div>';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-
-echo '<br />
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+	<div>
+	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+	<br />
 	<table class="selection">
 	<tr>
-		<th colspan="10"><h3>' . _('Show Goods Received Since') . ':&nbsp;</h3>';
-echo '<input type="text" name="Show_Since" maxlength="11" size="12" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" value="' . $_POST['Show_Since'] . '" />
+			<th colspan="10"><h3>' . _('Show Goods Received Since') . ':&nbsp;</h3>
+			<input type="text" name="Show_Since" maxlength="11" size="12" class="date" value="' . $_POST['Show_Since'] . '" />
 		<input type="submit" name="FindGRNs" value="' . _('Display GRNs') . '" />
 		<h3> ' . _('From') . ' ' . $_SESSION['SuppTrans']->SupplierName . '</h3></th>
-	</tr></table><table class="selection">';
+		</tr>
+	</table>';
 
 if (DB_num_rows($GRNResults)>0){
-	$TableHeader = '<tr>
+	echo '<table class="selection">
+		<thead>
+			<tr>
 						<th class="ascending">' . _('GRN') . '</th>
 						<th class="ascending">' . _('Order') . '</th>
 						<th class="ascending">' . _('Item Code') . '</th>
@@ -196,11 +198,10 @@ if (DB_num_rows($GRNResults)>0){
 						<th class="ascending">' . _('Qty Yet') . '<br />' . _('invoice') . '</th>
 						<th class="ascending">' . _('Price') . '<br />' . $_SESSION['SuppTrans']->CurrCode . '</th>
 						<th class="ascending">' . _('Line Value') . '<br />' . _('In') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
-					</tr>';
+			</tr>
+		</thead>
+		<tbody>';
 
-	echo $TableHeader;
-
-	$i=0;
 	while ($myrow=DB_fetch_array($GRNResults)){
 
 		$GRNAlreadyOnCredit = False;
@@ -239,15 +240,10 @@ if (DB_num_rows($GRNResults)>0){
 					<td class="number">' . $DisplayPrice . '</td>
 					<td class="number">' . locale_number_format($Price*($myrow['qtyrecd'] - $myrow['quantityinv']),$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
 	              	</tr>';
-			$i++;
-			if ($i>15){
-				$i=0;
-				echo $TableHeader;
-			}
-		}
 	}
+	} // end loop.
 
-	echo '</table>';
+	echo '</tbody></table>';
 
 	if (isset($_POST['GRNNo']) AND $_POST['GRNNo']!=''){
 
@@ -345,9 +341,7 @@ if (DB_num_rows($GRNResults)>0){
 		echo '<input type="hidden" name="GRNBatchNo" value="' . $myrow['grnbatch'] . '" />';
 	}
 } //end if there were GRNs to select
-else {
-    echo '</table>';
-}
+
 echo '</div>
       </form>';
 include('includes/footer.php');

@@ -281,6 +281,7 @@ if(!isset($_GET['SelectedAccountGroup']) AND !isset($_POST['SelectedAccountGroup
 	echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" />' . ' ' . $Title . '</p><br />';
 
 	echo '<table class="selection">
+			<thead>
 			<tr>
 				<th class="ascending">' . _('Group Name') . '</th>
 				<th class="ascending">' . _('Section') . '</th>
@@ -288,7 +289,9 @@ if(!isset($_GET['SelectedAccountGroup']) AND !isset($_POST['SelectedAccountGroup
 				<th class="ascending">' . _('Profit and Loss') . '</th>
 				<th class="ascending">' . _('Parent Group') . '</th>
 				<th class="noprint" colspan="2">&nbsp;</th>
-			</tr>';
+				</tr>
+			</thead>
+			<tbody>';
 
 	while($myrow = DB_fetch_array($result)) {
 
@@ -314,7 +317,8 @@ if(!isset($_GET['SelectedAccountGroup']) AND !isset($_POST['SelectedAccountGroup
 		echo '<td class="noprint"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedAccountGroup=' . urlencode($myrow['groupname']), ENT_QUOTES,'UTF-8') . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this account group?') . '\');">' . _('Delete')  . '</a></td></tr>';
 
 	} //END WHILE LIST LOOP
-	echo '</table>';
+	echo '</tbody>
+		</table>';
 } //end of ifs and buts!
 
 

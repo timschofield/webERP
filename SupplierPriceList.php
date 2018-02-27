@@ -270,13 +270,16 @@ if(isset($searchresult) AND !isset($_POST['Select'])) {
 //			echo '<input type="hidden" name=Search value="Search" />';
 			echo '<br /></div>';
 		}
-		echo '<table class="selection">';
-		echo'<tr>
+		echo '<table class="selection">
+			<thead>
+				<tr>
 				<th class="ascending">' . _('Code') . '</th>
 				<th class="ascending">' . _('Description') . '</th>
 				<th>' . _('Units') . '</th>
-			</tr>';
-		$j = 1;
+				</tr>
+			</thead>
+			<tbody>';
+
 		$RowIndex = 0;
 		if(DB_num_rows($searchresult) <> 0) {
 			DB_data_seek($searchresult, ($_POST['PageOffset'] - 1) * $_SESSION['DisplayRecordsMax']);
@@ -288,11 +291,12 @@ if(isset($searchresult) AND !isset($_POST['Select'])) {
 				<td>' . $MyRow['description'] . '</td>
 				<td>' . $MyRow['units'] . '</td>
 				</tr>';
+
 			$RowIndex = $RowIndex + 1;
-			//end of page full new headings if
 		}
+
 		//end of while loop
-		echo '</table>
+		echo '</tbody></table>
               <br />
               </div>
               </form>';
@@ -561,7 +565,7 @@ if(isset($_POST['SupplierID'])) {
 				<td><input maxlength="50" name="SupplierDescription0" size="30" type="text" value="" /></td>
 				<td><input class="number" name="LeadTime0" size="11" type="text" value="1" /></td>
 				<td><input name="Preferred0" type="checkbox" /></td>
-				<td><input alt="', $_SESSION['DefaultDateFormat'], '" class="date" name="EffectiveFrom0" size="11" type="text" value="', date( $_SESSION['DefaultDateFormat']), '" /></td>
+				<td><input class="date" name="EffectiveFrom0" size="11" type="text" value="', date( $_SESSION['DefaultDateFormat']), '" /></td>
 				<td><input maxlength="50" name="SupplierPartNo0" size="20" type="text" value="" /></td>
 				<td><input class="number" name="MinOrderQty0" size="11" type="text" value="1" /></td>
 				<td><button name="Insert" type="submit" style="width:100%;text-align:left"><img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/tick.svg" width="15" /></button></td>
@@ -593,7 +597,7 @@ if(isset($_POST['SupplierID'])) {
 		} else {
 			echo '<td><input name="Preferred'. $RowCounter. '" type="checkbox" /></td>';
 		}
-		echo '<td><input class="date" size="11" name="EffectiveFrom'. $RowCounter. '" type="text" value="' . ConvertSQLDate($MyRow['effectivefrom']) . '" alt="' . $_SESSION['DefaultDateFormat'] . '" /></td>
+		echo '<td><input class="date" size="11" name="EffectiveFrom'. $RowCounter. '" type="text" value="' . ConvertSQLDate($MyRow['effectivefrom']) . '" /></td>
 				<td><input maxlength="50" name="SupplierPartNo'. $RowCounter. '" size="20" type="text" value="' . $MyRow['suppliers_partno'] . '" /></td>
 				<td><input class="number" name="MinOrderQty'. $RowCounter. '" size="11" type="text" value="' . $MyRow['minorderqty'] . '" /></td>
 				<td><button type="submit" style="width:100%;text-align:left" name="Update'.$RowCounter.'"><img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/tick.svg" width="15" /></button></td>

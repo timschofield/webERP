@@ -68,13 +68,15 @@ if ($_SESSION['SuppTrans']->InvoiceOrCredit=='Invoice'){
 }
 echo $_SESSION['SuppTrans']->SuppReference . ' ' ._('From') . ' ' . $_SESSION['SuppTrans']->SupplierName;
 echo '</p></div>';
-echo '<table class="selection">';
-$TableHeader = '<tr>
+echo '<table class="selection">
+	<thead>
+		<tr>
 					<th class="ascending">' . _('Asset ID') . '</th>
 					<th class="ascending">' . _('Description') . '</th>
 					<th class="ascending">' . _('Amount') . '</th>
-				</tr>';
-echo $TableHeader;
+		</tr>
+	</thead>
+	<tbody>';
 
 $TotalAssetValue = 0;
 
@@ -89,11 +91,13 @@ foreach ($_SESSION['SuppTrans']->Assets as $EnteredAsset){
 
 }
 
-echo '</table><table class="selection"><tr>
+echo '</tbody></table>
+	<table class="selection">
+		<tr>
 	<td class="number"><h4>' . _('Total') . ':</h4></td>
 	<td class="number"><h4>' . locale_number_format($TotalAssetValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</h4></td>
-</tr>
-</table><br />';
+		</tr>
+	</table><br />';
 
 if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice'){
 	echo '<div class="centre"><a href="' . $RootPath . '/SupplierInvoice.php">' . _('Back to Invoice Entry') . '</a></div>';

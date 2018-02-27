@@ -252,7 +252,7 @@ if (!isset($_SESSION['tender'.$identifier])
 		</tr>
 		<tr>
 			<td>' . _('Delivery Must Be Made Before') . '</td>
-			<td><input type="text" class="date" required="required" alt="' . $_SESSION['DefaultDateFormat'] . '" name="RequiredByDate" autofocus="autofocus" size="11" value="' . ConvertSQLDate($_SESSION['tender'.$identifier]->RequiredByDate) . '" /></td>
+			<td><input type="text" class="date" required="required" name="RequiredByDate" autofocus="autofocus" size="11" value="' . ConvertSQLDate($_SESSION['tender'.$identifier]->RequiredByDate) . '" /></td>
 		</tr>';
 
 	if (!isset($_POST['StkLocation']) or $_POST['StkLocation']==''){
@@ -425,8 +425,9 @@ if (!isset($_SESSION['tender'.$identifier])
 	echo '</table></td>';
 	/* Item Details
 	 */
-	echo '<td valign="top"><table class="selection">';
-	echo '<tr>
+	echo '<td valign="top"><table class="selection">
+		<thead>
+			<tr>
 			<th colspan="6"><h3>' . _('Items in Tender') . '</h3></th>
 		</tr>
 		<tr>
@@ -434,7 +435,9 @@ if (!isset($_SESSION['tender'.$identifier])
 			<th class="ascending">' . _('Description') . '</th>
 			<th class="ascending">' . _('Quantity') . '</th>
 			<th>' . _('UOM') . '</th>
-		</tr>';
+			</tr>
+		</thead>
+		<tbody>';
 
 	foreach ($_SESSION['tender'.$identifier]->LineItems as $LineItems) {
 		if ($LineItems->Deleted==False) {
@@ -447,15 +450,15 @@ if (!isset($_SESSION['tender'.$identifier])
 				</tr>';
 		}
 	}
-	echo '</table>
+	echo '</tbody></table>
 		</td>
 		</tr>
 		</table>
 		<br />
 		<div class="centre">
 			<input type="submit" name="Suppliers" value="' . _('Select Suppliers') . '" />
-			<input type="submit" name="Items" value="' . _('Select Item Details') . '" />
-		';
+			<input type="submit" name="Items" value="' . _('Select Item Details') . '" />';
+
 	if ($_SESSION['tender'.$identifier]->LinesOnTender > 0
 		and $_SESSION['tender'.$identifier]->SuppliersOnTender > 0) {
 		echo '<input type="submit" name="Close" value="' . _('Close This Tender') . '" />';

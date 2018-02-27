@@ -54,14 +54,17 @@ echo '<div>
 	<table class="selection">';
 
 /* Create the table for the purchase order header */
-echo '<tr>
+echo '<thead>
+		<tr>
 		<th class="ascending">' . _('Order Number') . '</th>
 		<th class="ascending">' . _('Supplier') . '</th>
 		<th class="ascending">' . _('Date Ordered') . '</th>
 		<th class="ascending">' . _('Initiator') . '</th>
 		<th class="ascending">' . _('Delivery Date') . '</th>
 		<th class="ascending">' . _('Status') . '</th>
-	</tr>';
+		</tr>
+	</thead>
+	<tbody>';
 
 while ($myrow=DB_fetch_array($result)) {
 
@@ -109,13 +112,16 @@ while ($myrow=DB_fetch_array($result)) {
 				<td></td>
 				<td colspan="5" align="left">
 					<table class="selection" align="left">
+					<thead>
 					<tr>
 						<th class="ascending">' . _('Product') . '</th>
 						<th class="ascending">' . _('Quantity Ordered') . '</th>
 						<th class="ascending">' . _('Currency') . '</th>
 						<th class="ascending">' . _('Price') . '</th>
 						<th class="ascending">' . _('Line Total') . '</th>
-					</tr>';
+						</tr>
+					</thead>
+					<tbody>';
 
 		while ($LineRow=DB_fetch_array($LineResult)) {
 			if ($LineRow['decimalplaces']!=NULL){
@@ -131,13 +137,14 @@ while ($myrow=DB_fetch_array($result)) {
 					<td class="number">' . locale_number_format($LineRow['unitprice']*$LineRow['quantityord'],$myrow['currdecimalplaces']) . '</td>
 				</tr>';
 		} // end while order line detail
-		echo '</table>
+		echo '</tbody></table>
 			</td>
 			</tr>';
 	}
 } //end while header loop
-echo '</table>';
-echo '<br />
+echo '</tbody>
+	</table>
+		<br />
 		<div class="centre">
 			<input type="submit" name="UpdateAll" value="' . _('Update'). '" />
 		</div>

@@ -46,19 +46,21 @@ $DbgMsg = _('The SQL that failed was');
 
 $LocStockResult = DB_query($sql, $ErrMsg, $DbgMsg);
 
-echo '<table class="selection">';
-echo '<tr>
+echo '<table class="selection">
+	<thead>
+		<tr>
 		<th colspan="3">' . _('Stock Code') . ':<input  type="text" data-type="no-illegal-chars" title="'._('The stock id should not contains illegal characters and blank or percentage mark is not allowed').'" required="required" name="StockID" size="21" value="' . $StockID . '" maxlength="20" /><input type="submit" name="Show" value="' . _('Show Re-Order Levels') . '" /></th>
-	</tr>';
-echo '<tr>
+		</tr>
+		<tr>
 		<th colspan="3"><h3><b>' . $StockID . ' - ' . $myrow[0] . '</b>  (' . _('In Units of') . ' ' . $myrow[1] . ')</h3></th>
-	</tr>';
-
-$TableHeader = '<tbody><tr>
+		</tr>
+		<tr>
 					<th class="ascending">' . _('Location') . '</th>
 					<th class="ascending">' . _('Quantity On Hand') . '</th>
 					<th class="ascending">' . _('Re-Order Level') . '</th>
-				</tr>';
+		</tr>
+	</thead>
+	<tbody>';
 
 echo $TableHeader;
 
@@ -94,7 +96,6 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 			$myrow['loccode'],
 			$myrow['reorderlevel']);
 
-//end of page full new headings if
 }
 //end of while loop
 

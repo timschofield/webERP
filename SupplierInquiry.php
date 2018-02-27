@@ -159,7 +159,7 @@ echo '<br />
 		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<div>
         <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo _('Show all transactions after') . ': '  . '<input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="TransAfterDate" value="' . $_POST['TransAfterDate'] . '" maxlength="10" size="10" />
+echo _('Show all transactions after') . ': '  . '<input type="text" class="date" name="TransAfterDate" value="' . $_POST['TransAfterDate'] . '" maxlength="10" size="10" />
 	    <input class="noprint" name="Refresh Inquiry" type="submit" value="' . _('Refresh Inquiry') . '" />
     </div>
 	</form>
@@ -200,6 +200,7 @@ if(DB_num_rows($TransResult) == 0) {
 /*show a table of the transactions returned by the SQL */
 
 echo '<table class="selection"><thead>
+	<thead>
 	<tr>
 		<th class="ascending">' . _('Date') . '</th>
 		<th class="ascending">' . _('Type') . '</th>
@@ -212,7 +213,8 @@ echo '<table class="selection"><thead>
 		<th class="noprint">' . _('More Info') . '</th>
 		<th class="noprint">' . _('More Info') . '</th>
 	</tr>
-	</thead><tbody>';
+	</thead>
+	<tbody>';
 
 $AuthSQL = "SELECT offhold
 			FROM purchorderauth

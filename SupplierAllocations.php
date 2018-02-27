@@ -451,8 +451,9 @@ if (isset($_POST['AllocTrans'])){
 
     /*Now display the potential and existing allocations put into the array above */
 
-		echo '<table class="selection">';
-	  	$TableHeader = '<tr>
+		echo '<table class="selection">
+			<thead>
+				<tr>
 							<th class="ascending">' . _('Type') . '</th>
 				 			<th class="ascending">' . _('Trans') . '<br />' . _('Number') . '</th>
 							<th class="ascending">' . _('Trans')  . '<br />' . _('Date') . '</th>
@@ -460,23 +461,14 @@ if (isset($_POST['AllocTrans'])){
 							<th class="ascending">' . _('Total') . '<br />' . _('Amount')  . '</th>
 							<th class="ascending">' . _('Yet to') . '<br />' . _('Allocate') . '</th>
 							<th class="ascending">' . _('This') . '<br />' . _('Allocation') . '</th>
-						</tr>';
+				</tr>
+			</thead>
+			<tbody>';
 
 		$Counter = 0;
-		$RowCounter = 0;
 		$TotalAllocated = 0;
 
 		foreach ($_SESSION['Alloc']->Allocs as $AllocnItem) {
-
-	    /*Alternate the background colour for each potential allocation line */
-
-	    $RowCounter++;
-
-	    if ($RowCounter == 15){
-		/*Set up another row of headings to ensure always a heading on the screen of potential allocns*/
-			echo $TableHeader;
-			$RowCounter = 1;
-	    }
 
 	    $YetToAlloc = ($AllocnItem->TransAmount - $AllocnItem->PrevAlloc);
 
@@ -498,15 +490,17 @@ if (isset($_POST['AllocTrans'])){
 	    $Counter++;
    }
 
-   echo '<tr>
+   echo '</tbody>
+		<tfoot>
+			<tr>
 			<td colspan="5" class="number"><b><u>' . _('Total Allocated') . ':</u></b></td>
 			<td class="number"><b><u>' .  locale_number_format($TotalAllocated,$_SESSION['Alloc']->CurrDecimalPlaces) . '</u></b></td>
-		</tr>';
-
-   echo '<tr>
+			</tr>
+			<tr>
 			<td colspan="5" class="number"><b>' . _('Left to allocate') . '</b></td>
 			<td class="number"><b>' . locale_number_format(-$_SESSION['Alloc']->TransAmt - $TotalAllocated,$_SESSION['Alloc']->CurrDecimalPlaces) . '</b></td>
 		</tr>
+		</tfoot>
 		</table>';
 
    echo '<div class="centre">

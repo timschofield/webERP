@@ -419,14 +419,16 @@ if(in_array($CashSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($Ca
 	include('includes/GLPostings.inc');
 	echo '<br />
 		<h2>', _('Bank and Credit Card Balances'), '</h2>
-		<table class="selection">',
-/*		'<thead>',*/ // Need to update the sorting javascript.
-			'<tr>
+		<table class="selection">
+		<thead>
+			<tr>
 				<th class="ascending">', _('GL Account'), '</th>
 				<th class="ascending">', _('Account Name'), '</th>
 				<th class="ascending">', _('Balance'), '</th>
-			</tr>'
-/*,		'</thead><tbody>'*/;// Need to update the sorting javascript.
+			</tr>
+		</thead>
+		<tbody>';
+
 	$FirstPeriodSelected = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
 	$LastPeriodSelected = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
 	$SelectedPeriod=$LastPeriodSelected;
@@ -529,8 +531,8 @@ if(in_array($CashSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($Ca
 				<td class="number">', $DisplayBalance, '</td>
 			</tr>';
 	} //each bank account
-	echo /*'</tbody>',*/// Need to update the sorting javascript.
-		'</table>';
+	echo '</tbody>
+		</table>';
 } //CashSecurity
 
 if(in_array($OrderSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($OrderSecurity)) {

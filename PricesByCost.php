@@ -147,7 +147,17 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 	echo '<div class="page_help_text">' . _('Items in') . ' ' . $CategoryText . ' ' . _('With Prices') . ' ' . $Comparator . '' . $_POST['Margin'] . ' ' . _('times') . ' ' . _('Cost in Price List') . ' ' . $SalesTypeRow['sales_type'] . '</div><br /><br />';
 
 	if ($numrow > 0) { //the number of prices returned from the main prices query is
+		echo '<form action="' .htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'" method="post" id="update">';
+        echo '<div>';
+		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+		echo'<input type="hidden" value="' . $_POST['StockCat'] . '" name="StockCat" />
+			<input type="hidden" value="' . $_POST['Margin'] . '" name="Margin" />
+			<input type="hidden" value="' . $_POST['CurrCode'] . '" name="CurrCode" />
+			<input type="hidden" value="' . $_POST['Comparator'] . '" name="Comparator" />
+			<input type="hidden" value="' . $_POST['SalesType'] . '" name="SalesType" />';
+
 		echo '<table class="selection">
+			<thead>
 				<tr>
 					<th class="ascending">' . _('Code') . '</th>
 					<th class="ascending">' . _('Description') . '</th>
@@ -159,16 +169,9 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 					<th class="ascending">' . _('GP %') . '</th>
 					<th class="ascending">' . _('Price Proposed') . '</th>
 					<th class="ascending">' . _('List Price') . '</th>
-				<tr>';
-
-		echo '<form action="' .htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'" method="post" id="update">';
-        echo '<div>';
-		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-		echo'<input type="hidden" value="' . $_POST['StockCat'] . '" name="StockCat" />
-			<input type="hidden" value="' . $_POST['Margin'] . '" name="Margin" />
-			<input type="hidden" value="' . $_POST['CurrCode'] . '" name="CurrCode" />
-			<input type="hidden" value="' . $_POST['Comparator'] . '" name="Comparator" />
-			<input type="hidden" value="' . $_POST['SalesType'] . '" name="SalesType" />';
+				<tr>
+			</thead>
+			<tbody>';
 
 		$PriceCounter =0;
 		while ($myrow = DB_fetch_array($result)) {
@@ -213,10 +216,15 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 				</tr> ';
 			$PriceCounter++;
 		} //end of looping
-		echo '<tr>
+
+		echo '</tbody>
+			<tfoot>
+				<tr>
 			<td class="number" colspan="4"><input type="submit" name="submit" value="' . _('Update') . '" onclick="return confirm(\'' . _('If the prices above do not have a commencement date as today, this will create new prices with commencement date of today at the entered figures and update the existing prices with historical start dates to have an end date of yesterday. Are You Sure?') . '\');" /></td>
 			<td class="text" colspan="3"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '"><input type="submit" value="' . _('Back') . '" /></a></td>
 			 </tr>
+			</tfoot>
+			</table>
              </div>
              </form>';
 	} else {

@@ -130,12 +130,12 @@ if (!isset($_POST['AfterDate']) OR !Is_Date($_POST['AfterDate'])){
 // Change to allow input of FROM DATE and then TO DATE, instead of previous back-to-front method, add datepicker
 echo '<tr>
 		<td>' . _('Show') . ' ' . $TypeName . ' ' . _('from') . ':</td>
-		<td><input tabindex="3" type="text" name="AfterDate" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" size="12" maxlength="10" required="required" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" value="' . $_POST['AfterDate'] . '" /></td>
+		<td><input tabindex="3" type="text" name="AfterDate" class="date" size="12" maxlength="10" required="required" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" value="' . $_POST['AfterDate'] . '" /></td>
 	</tr>';
 
 echo '<tr>
         <td>' . _('to') . ':</td>
-		<td><input tabindex="2" type="text" name="BeforeDate" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" size="12" maxlength="10" required="required" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" value="' . $_POST['BeforeDate'] . '" /></td>
+		<td><input tabindex="2" type="text" name="BeforeDate" class="date" size="12" maxlength="10" required="required" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" value="' . $_POST['BeforeDate'] . '" /></td>
 	</tr>';
 echo '<tr>
 		<td colspan="3">' . _('Choose outstanding') . ' ' . $TypeName . ' ' . _('only or all') . ' ' . $TypeName . ' ' . _('in the date range') . ':</td>
@@ -275,6 +275,7 @@ if ($InputError !=1
 	$PaymentsResult = DB_query($sql, $ErrMsg);
 
 	echo '<table cellpadding="2" class="selection">
+			<thead>
 			<tr>
 				<th class="ascending">' .  _('Cheque No') . '</th>
 				<th class="ascending">' . _('Ref') . '</th>
@@ -283,7 +284,9 @@ if ($InputError !=1
 				<th class="ascending">' . _('Amount') . '</th>
 				<th class="ascending">' . _('Outstanding') . '</th>
 				<th colspan="3">' . _('Clear') . ' / ' . _('Unclear') . '</th>
-			</tr>';
+				</tr>
+			</thead>
+			<tbody>';
 
 	$i = 1; //no of rows counter
 
@@ -336,7 +339,8 @@ if ($InputError !=1
 		$i++;
 	}
 	//end of while loop
-	echo '</table>
+	echo '</tbody>
+		</table>
 			<br />
 			<div class="centre">
 				<input type="hidden" name="RowCounter" value="' . $i . '" />

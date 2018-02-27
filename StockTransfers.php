@@ -45,10 +45,13 @@ if(isset($_POST['CheckCode'])) {
 	$DbgMsg=_('The SQL to get the stock description was');
 	$result = DB_query($sql,$ErrMsg,$DbgMsg);
 	echo '<table class="selection">
+		<thead>
 			<tr>
 				<th class="ascending">' . _('Stock Code') . '</th>
 				<th class="ascending">' . _('Stock Description') . '</th>
-			</tr>';
+			</tr>
+		</thead>
+		<tbody>';
 	while($myrow = DB_fetch_array($result)) {
 		echo '<tr>
 				<td>' . $myrow['stockid'] . '</td>
@@ -58,7 +61,7 @@ if(isset($_POST['CheckCode'])) {
 			</tr>';
 
 	}
-	echo '</table>';
+	echo '</tbody></table>';
 	include('includes/footer.php');
 	exit;
 }

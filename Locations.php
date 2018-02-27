@@ -406,6 +406,7 @@ or deletion of the records*/
 	}
 
 	echo '<table class="selection">
+		<thead>
 		<tr>
 			<th class="ascending">', _('Location Code'), '</th>
 			<th class="ascending">', _('Location Name'), '</th>
@@ -413,7 +414,9 @@ or deletion of the records*/
 			<th class="ascending">', _('GL Account Code'), '</th>
 			<th class="ascending">', _('Allow Invoicing'), '</th>
 			<th class="noprint" colspan="2">&nbsp;</th>
-		</tr>';
+			</tr>
+		</thead>
+		<tbody>';
 
 while ($myrow = DB_fetch_array($result)) {
 /* warehouse management not implemented ... yet
@@ -441,7 +444,7 @@ while ($myrow = DB_fetch_array($result)) {
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $myrow['loccode']);
 	}
 	//END WHILE LIST LOOP
-	echo '</table>';
+	echo '</tbody></table>';
 }
 
 //end of ifs and buts!

@@ -288,8 +288,9 @@ if (isset($_POST['Search'])) {
 	echo '<br />
 		<br />
 		<br />
-		<table cellpadding="2">';
-	echo '<tr>
+		<table cellpadding="2">
+		<thead>
+			<tr>
 	  		<th class="ascending">' . _('Code') . '</th>
 			<th class="ascending">' . _('Supplier Name') . '</th>
 			<th class="ascending">' . _('Currency') . '</th>
@@ -300,7 +301,9 @@ if (isset($_POST['Search'])) {
 			<th class="ascending">' . _('Telephone') . '</th>
 			<th class="ascending">' . _('Email') . '</th>
 			<th class="ascending">' . _('URL') . '</th>
-		</tr>';
+			</tr>
+		</thead>
+		<tbody>';
 
 	$RowIndex = 0;
 	if (DB_num_rows($result) <> 0) {
@@ -323,7 +326,7 @@ if (isset($_POST['Search'])) {
 		//end of page full new headings if
 	}
 	//end of while loop
-	echo '</table>';
+	echo '</tbody></table>';
 }
 //end if results to show
 if (isset($ListPageMax) and $ListPageMax > 1) {

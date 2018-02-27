@@ -144,12 +144,14 @@ if (isset($_POST['ShowUsage'])){
 		exit;
 	}
 
-	echo '<table class="selection">';
-	$tableheader = '<tr>
+	echo '<table class="selection">
+		<thead>
+			<tr>
 						<th class="ascending">' . _('Month') . '</th>
 						<th class="ascending">' . _('Usage') . '</th>
-					</tr>';
-	echo $tableheader;
+			</tr>
+		</thead>
+		<tbody>';
 
 	$TotalUsage = 0;
 	$PeriodsCounter =0;
@@ -166,11 +168,10 @@ if (isset($_POST['ShowUsage'])){
 				</tr>',
 				$DisplayDate,
 				locale_number_format($myrow['qtyused'],$DecimalPlaces));
+	} //end of while loop
 
-	//end of page full new headings if
-	}
-	//end of while loop
-		echo '</table>';
+	echo '</tbody></table>';
+
 	if ($TotalUsage>0 AND $PeriodsCounter>0){
 		echo '<table class="selection"><tr>
 				<th colspan="2">' . _('Average Usage per month is') . ' ' . locale_number_format($TotalUsage/$PeriodsCounter) . '</th>
