@@ -1,5 +1,6 @@
 webERP Change Log
 
+17/2/18  PaulT: Labels.php: Remove extra closing </td></tr> tag pair.
 17/2/18  PaulT: FixedAssetLocations.php: Move closing condition brace to cover entire table output to avoid a stray closing table tag output if the condition is not met. Also, replace some style attributes with equivalent CSS.
 17/2/18  PaulT: MaintenanceUserSchedule.php: Fix closing tag mismatch.
 17/2/18  PaulT: GLJournalInquiry.php: Add missing = to value attribute.

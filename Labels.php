@@ -522,7 +522,7 @@ echo '<tr>
 		<td>' . _('Column Width') . ' - (Cw):</td>
 		<td><input type="text" name="ColumnWidth" size="4" maxlength="4" value="' . $_POST['ColumnWidth'] . '" /></td>
 	</tr>
-	</table></td></tr>
+	</table>
 	</td></tr>
 	</table>';
 
