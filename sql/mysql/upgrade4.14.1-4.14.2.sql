@@ -119,5 +119,7 @@ INSERT INTO pickreqdetails (prid, orderlineno, stockid, qtyexpected, qtypicked, 
            JOIN pickinglists ON pickinglistdetails.pickinglistno = pickinglists.pickinglistno
            JOIN salesorderdetails ON salesorderdetails.orderno = pickinglists.orderno;
 
+INSERT INTO `scripts` ( `script` , `pagesecurity` , `description` ) VALUES ('Z_ChangeSalesmanCode.php', '15', '');
+
 UPDATE config SET confvalue='4.15' WHERE confname='VersionNumber';
 
