@@ -1,5 +1,6 @@
 webERP Change Log
 
+16/2/18  Paul Becker (PaulT commit): header.php: Add link to the Dashboard in the AppInfoUserDiv. (Forum contribution: http://www.weberp.org/forum/showthread.php?tid=8100)
 16/2/18  PaulT: Remove unused $db parameter from many functions within the /api area.
 16/2/18  PaulT: upgrade4.14.1-4.14.2.sql: Add SQL update to support commit 7961.
 16/2/18  Paul Becker (PaulT commit): AgedControlledInventory.php: Add UOM to output. (Reported in forums: http://www.weberp.org/forum/showthread.php?tid=8091&pid=14286#pid14286)
