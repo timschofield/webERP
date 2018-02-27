@@ -1,5 +1,6 @@
 webERP Change Log
 
+19/2/18  PaulT: Stocks.php: Fix navigation bar handling to avoid stockid loss and also disable navigation submit when at the first (or last) item. Change also adds a closing table tag, removes an extra double quote from two attributes, and a minor message layout improvement.
 17/2/18  PaulT: PO_SelectOSPurchOrder.php: Derived from Tim's code: add default current dates. (there may not yet be any purchorders records) / PaulT: do not show the order list table when there are no records to show. (avoids a table heading output without any associated row data)
 17/2/18  Tim (PaulT commit): MiscFunctions.js: Set the calendar click and change handlers to reference the localStorage DateFormat instead of the element's "alt" attribute value. (Know that this update requires the localStorage change applied with commit 7973)
 17/2/18  PaulT: header.php: Set the DOCTYPE to html5 declaration format, update the meta tag with Content-Type info, and add localStorage with DateFormat and Theme for upcoming changes to table column sorting and calendar handling improvements.

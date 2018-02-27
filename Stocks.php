@@ -21,18 +21,39 @@ if (isset($_GET['StockID'])){
 
 $ItemDescriptionLanguagesArray = explode(',',$_SESSION['ItemDescriptionLanguages']);//WARNING: if the last character is a ",", there are n+1 languages.
 
+$hasNext = true;
+$hasPrev = true;
+
 if (isset($_POST['NextItem'])){
 	$Result = DB_query("SELECT stockid FROM stockmaster WHERE stockid>'" . $StockID . "' ORDER BY stockid ASC LIMIT 1");
+
+	// Only change the StockID if we find a row.
+	// If not, the StockID is 'clobbered' with null and causes form havoc.
+	if ( DB_num_rows( $Result ) > 0 ) {
 	$NextItemRow = DB_fetch_row($Result);
 	$StockID = $NextItemRow[0];
+	}
+	else {
+		$hasNext = false;
+	}
+
 	foreach ($ItemDescriptionLanguagesArray as $LanguageId) {
 		unset($_POST['Description_' . str_replace('.','_',$LanguageId)]);
 	}
 }
 if (isset($_POST['PreviousItem'])){
 	$Result = DB_query("SELECT stockid FROM stockmaster WHERE stockid<'" . $StockID . "' ORDER BY stockid DESC LIMIT 1");
+
+	// Only change the StockID if we find a row.
+	// If not, the StockID is 'clobbered' with null and causes form havoc.
+	if ( DB_num_rows( $Result ) > 0 ) {
 	$PreviousItemRow = DB_fetch_row($Result);
 	$StockID = $PreviousItemRow[0];
+	}
+	else {
+		$hasPrev = false;
+	}
+
 	foreach ($ItemDescriptionLanguagesArray as $LanguageId) {
 		unset($_POST['Description_' . str_replace('.','_',$LanguageId)]);
 	}
@@ -893,18 +914,21 @@ if (isset($_POST['submit'])) {
 
 
 echo '<form name="ItemForm" enctype="multipart/form-data" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-echo '<div>';
-if (isset($StockID)){
+echo '<div>
+	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+	<input type="hidden" name="New" value="'.$New.'" />';
+
+if (isset($StockID) && $StockID != '' && $InputError == 0){
 	echo '<table width="100%">
 			<tr>
-				<td width="5%"><input style="background:url(css/previous.png);width:26px;height:43px;" type="submit" name="PreviousItem" value="" /></td>
+				<td width="5%"><input style="background:url(css/previous.png);width:26px;height:43px;" type="submit" name="PreviousItem" value="" ' . ($hasPrev ? '' : 'disabled') . ' /></td>
 				<td width="90%"></td>
-				<td width="5%"><input style="background:url(css/next.png);width:26px;height:43px;" type="submit" name="NextItem" value="" /></td>
-			</tr>';
+				<td width="5%"><input style="background:url(css/next.png);width:26px;height:43px;" type="submit" name="NextItem" value="" ' . ($hasNext ? '' : 'disabled') . ' /></td>
+			</tr>
+		</table>';
 }
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-	<input type="hidden" name="New" value="'.$New.'" />
-	<table class="selection">';
+
+echo '<table class="selection">';
 
 if (!isset($StockID) OR $StockID=='' or isset($_POST['UpdateCategories'])) {
 
@@ -915,7 +939,7 @@ if (!isset($StockID) OR $StockID=='' or isset($_POST['UpdateCategories'])) {
 	if ($New==1) {
 		echo '<tr>
 				<td>' .  _('Item Code'). ':</td>
-				<td><input type="text" ' . (in_array('StockID',$Errors) ?  'class="inputerror"' : '' ) .'" data-type="no-illegal-chars" autofocus="autofocus" required="required"  value="'.$StockID.'" name="StockID" size="20" maxlength="20"  title ="'._('Input the stock code, the following characters are prohibited:') . ' \' &quot; + . &amp; \\ &gt; &lt;" placeholder="'._('alpha-numeric only').'" /></td>
+				<td><input type="text" ' . (in_array('StockID',$Errors) ?  'class="inputerror"' : '' ) . ' data-type="no-illegal-chars" autofocus="autofocus" required="required"  value="'.$StockID.'" name="StockID" size="20" maxlength="20"  title ="'._('Input the stock code, the following characters are prohibited:') . ' \' &quot; + . &amp; \\ &gt; &lt;" placeholder="'._('alpha-numeric only').'" /></td>
 			</tr>';
 	} else {
 		echo '<tr>
@@ -1040,7 +1064,7 @@ foreach ($ItemDescriptionLanguagesArray as $LanguageId) {
 		}
 		echo '<tr>
 				<td>' . $LanguagesArray[$LanguageId]['LanguageName'] . ' ' . _('Long Description') . ':</td>
-				<td><textarea name="'. $PostVariableName . '"" cols="40" rows="3">' . stripslashes(AddCarriageReturns($_POST[$PostVariableName])) . '</textarea></td>
+				<td><textarea name="'. $PostVariableName . '" cols="40" rows="3">' . stripslashes(AddCarriageReturns($_POST[$PostVariableName])) . '</textarea></td>
 			</tr>';
 	}
 }
@@ -1451,10 +1475,9 @@ if ($New==1) {
 
 	echo '<input type="submit" name="submit" value="' . _('Update') . '" />';
 	echo '<input type="submit" name="UpdateCategories" style="visibility:hidden;width:1px" value="' . _('Categories') . '" />';
-	echo '<br />';
-	prnMsg( _('Only click the Delete button if you are sure you wish to delete the item!') .  _('Checks will be made to ensure that there are no stock movements, sales analysis records, sales order items or purchase order items for the item') . '. ' . _('No deletions will be allowed if they exist'), 'warn', _('WARNING'));
+	echo '<br /><br />';
+	prnMsg( _('Only click the Delete button if you are sure you wish to delete the item!') . '<br />' . _('Checks will be made to ensure that there are no stock movements, sales analysis records, sales order items or purchase order items for the item') . '. ' . _('No deletions will be allowed if they exist') . '.', 'warn', _('WARNING'));
 	echo '<br />
-		<br />
 		<input type="submit" name="delete" value="' . _('Delete This Item') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');" />';
 }
 
