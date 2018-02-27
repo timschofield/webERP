@@ -1,5 +1,5 @@
 <?php
-/* $Id: header.php 7744 2017-03-29 15:43:41Z rchacon $ */
+/* $Id$ */
 
 	// Titles and screen header
 	// Needs the file config.php loaded where the variables are defined for
@@ -14,36 +14,25 @@
 
 	$ViewTopic = isset($ViewTopic) ? '?ViewTopic=' . $ViewTopic : '';
 	$BookMark = isset($BookMark) ? '#' . $BookMark : '';
-	$StrictXHTML=False;
 
-	if (!headers_sent()){
-		if ($StrictXHTML) {
-			header('Content-type: application/xhtml+xml; charset=utf-8');
-		} else {
-			header('Content-type: text/html; charset=utf-8');
-		}
-	}
-	if($Title == _('Copy a BOM to New Item Code')){//solve the cannot modify heaer information in CopyBOM.php scritps
+	if(isset($Title) && $Title == _('Copy a BOM to New Item Code')){//solve the cannot modify header information in CopyBOM.php scripts
 		ob_start();
 	}
-	echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">',
-		'<html xmlns="http://www.w3.org/1999/xhtml">',
-		'<head>',
-			'<link rel="icon" href="', $RootPath, '/favicon.ico" />',
-			'<link rel="shortcut icon" href="', $RootPath, '/favicon.ico" />';
 
-	if ($StrictXHTML) {
-		echo '<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />';
-	} else {
-		echo '<meta http-equiv="Content-Type" content="application/html; charset=utf-8" />';
-	}
+	echo '<!DOCTYPE html>';
 
-	echo '<link href="', $RootPath, '/css/menu.css" rel="stylesheet" type="text/css"  />',
-		'<link href="', $RootPath, '/css/print.css" rel="stylesheet" type="text/css" media="print" />',
-			'<link href="', $RootPath, '/css/', $_SESSION['Theme'], '/default.css" rel="stylesheet" type="text/css" media="screen"/>',
-			'<meta name="viewport" content="width=device-width, initial-scale=1">',//To tell the small device that the website is a responsive site (keep relationship between CSS pixels and device pixels).
-			'<script type="text/javascript" src="', $RootPath, '/javascripts/MiscFunctions.js"></script>',
-			'<title>', $Title, '</title>';
+	echo '<head>
+			<meta http-equiv="Content-Type" content="application/html; charset=utf-8; cache-control: no-cache, no-store, must-revalidate; Pragma: no-cache" />
+			<title>', $Title, '</title>
+			<link rel="icon" href="', $RootPath, '/favicon.ico" />
+			<link href="', $RootPath, '/css/menu.css" rel="stylesheet" type="text/css" />
+			<link href="', $RootPath, '/css/print.css" rel="stylesheet" type="text/css" media="print" />
+			<link href="', $RootPath, '/css/', $_SESSION['Theme'], '/default.css" rel="stylesheet" type="text/css" media="screen"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1">
+			<script defer="defer" src="', $RootPath, '/javascripts/MiscFunctions.js"></script>
+			<script>
+				localStorage.setItem("DateFormat", "', $_SESSION['DefaultDateFormat'], '");
+				localStorage.setItem("Theme", "', $_SESSION['Theme'], '");
 
 	// If it is set the $_SESSION['ShowPageHelp'] parameter AND it is FALSE, hides the page help text:
 	if(isset($_SESSION['ShowPageHelp']) AND !$_SESSION['ShowPageHelp']) {
