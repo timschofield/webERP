@@ -1,5 +1,6 @@
 webERP Change Log
 
+9/2/18   Paul Becker (PaulT commit): StockLocMovements.php, StockMovements.php: Add serial number column to output. (Reported in forums: http://www.weberp.org/forum/showthread.php?tid=8088)
 9/2/18   Paul Becker (PaulT commit): InternalStockRequestFulfill.php: Add controlled stock handling within this script. (Reported in forums: http://www.weberp.org/forum/showthread.php?tid=8086)
 9/2/18   Tim/PaulT: MRPPlannedPurchaseOrders.php, MRPPlannedWorkOrders.php: Fix conversion factor matter noted by Tim, use DB_table_exists() from commit 7943 to replace table check query, and minor rework to 'missing cell' handling from commit 7939.
 9/2/18   PaulT: Replace old method of table row alternating color handing with improved CSS. Also, this change removes some empty/unused properties from a few css file and removes old URL 'SID' references in files already modified for this commit. Due to SVN issues with TestPlanResults.php, this one file will be committed later.

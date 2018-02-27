@@ -71,10 +71,12 @@ $sql = "SELECT stockmoves.stockid,
         		stockmoves.price,
         		stockmoves.discountpercent,
         		stockmoves.newqoh,
-        		stockmaster.decimalplaces
+        		stockmaster.decimalplaces,
+			stockserialmoves.serialno
         	FROM stockmoves
         	INNER JOIN systypes ON stockmoves.type=systypes.typeid
         	INNER JOIN stockmaster ON stockmoves.stockid=stockmaster.stockid
+        	LEFT JOIN stockserialmoves ON stockmoves.stkmoveno=stockserialmoves.stockmoveno
         	WHERE  stockmoves.loccode='" . $_POST['StockLocation'] . "'
         	AND stockmoves.trandate >= '". $SQLAfterDate . "'
         	AND stockmoves.trandate <= '" . $SQLBeforeDate . "'
@@ -96,6 +98,7 @@ $tableheader = '<tr>
             		<th>' . _('Price') . '</th>
             		<th>' . _('Discount') . '</th>
             		<th>' . _('Quantity on Hand') . '</th>
+            		<th>' . _('Serial No.') . '</th>
            		</tr>';
 echo $tableheader;
 
@@ -116,6 +119,7 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
+			<td class="number">%s</td>
 				</tr>',
 				mb_strtoupper($myrow['stockid']),
 				mb_strtoupper($myrow['stockid']),
@@ -128,7 +132,8 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 				$myrow['reference'],
 				locale_number_format($myrow['price'],$_SESSION['CompanyRecord']['decimalplaces']),
 				locale_number_format($myrow['discountpercent']*100,2),
-				locale_number_format($myrow['newqoh'],$myrow['decimalplaces']));
+			locale_number_format($myrow['newqoh'],$myrow['decimalplaces']),
+			$myrow['serialno']);
 	$j++;
 	If ($j == 16){
 		$j=1;
