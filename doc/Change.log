@@ -1,6 +1,7 @@
 webERP Change Log
 
-13/2/18  Paul Becker (PaulT commit): Minor change to remove number from input field committed with 7946, and add attributes on two input fields. (Reported in forums: http://www.weberp.org/forum/showthread.php?tid=8089&pid=14266#pid14266)
+16/2/18  Paul Becker (PaulT commit): Z_ChangeSalesmanCode.php: New script to change a salesman code. (Forum contribution: http://www.weberp.org/forum/showthread.php?tid=8094)
+13/2/18  Paul Becker (PaulT commit): InternalStockRequestFulfill.php: Minor change to remove number from input field committed with 7946, and add attributes on two input fields. (Reported in forums: http://www.weberp.org/forum/showthread.php?tid=8089&pid=14266#pid14266)
 12/2/18  PaulT: Remove $db parameter from PeriodExists(), CreatePeriod(), CalcFreightCost(), CheckForRecursiveBOM(), DisplayBOMItems() and a few other functions.
 12/2/18  PaulT: InternalStockRequest.php: Address a few issues reported by Paul B: Fix Previous/Next handling, table sorting, wrong on-order quantities, and apply the user's display records max. Change also removes unused code and other minor improvements. (Reported in forums: http://www.weberp.org/forum/showthread.php?tid=8089)
 12/2/18  Tim (PaulT commit): StockMovements.php, StockLocMovements.php: Correct stock movements that have more than one serial number as part of it, then the item will appear multiple times in the movements script with the total quantity in each line. For example, if I enter a quantity adjustment for a controlled item, and assign 3 serial numbers to this movement and then run the inquiries, there will be 3 separate lines with a quantity of 3 against each one.
