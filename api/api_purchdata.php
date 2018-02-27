@@ -1,9 +1,9 @@
 <?php
 /* $Id$*/
 
-	function VerifyPurchDataLineExists($SupplierID, $StockID, $i, $Errors, $db) {
-		if (VerifyStockCodeExists($StockID, $i, $Errors, $db)!=0 and
-			VerifySupplierNoExists($SupplierID, $i, $Errors, $db)!=0) {
+	function VerifyPurchDataLineExists($SupplierID, $StockID, $i, $Errors) {
+		if (VerifyStockCodeExists($StockID, $i, $Errors)!=0 and
+			VerifySupplierNoExists($SupplierID, $i, $Errors)!=0) {
 				$Errors[$i] = StockSupplierLineDoesntExist;
 		}
 	}
@@ -56,8 +56,8 @@
 		foreach ($PurchDataDetails as $key => $value) {
 			$PurchDataDetails[$key] = DB_escape_string($value);
 		}
-		$Errors=VerifyStockCodeExists($PurchDataDetails['stockid'], sizeof($Errors), $Errors, $db);
-		$Errors=VerifySupplierNoExists($PurchDataDetails['supplierno'], sizeof($Errors), $Errors, $db);
+		$Errors=VerifyStockCodeExists($PurchDataDetails['stockid'], sizeof($Errors), $Errors);
+		$Errors=VerifySupplierNoExists($PurchDataDetails['supplierno'], sizeof($Errors), $Errors);
 		if (isset($StockItemDetails['price'])){
 			$Errors=VerifyUnitPrice($PurchDataDetails['price'], sizeof($Errors), $Errors);
 		}
@@ -107,9 +107,9 @@
 		foreach ($PurchDataDetails as $key => $value) {
 			$PurchDataDetails[$key] = DB_escape_string($value);
 		}
-		$Errors=VerifyPurchDataLineExists($PurchDataDetails['supplierno'], $PurchDataDetails['stockid'], sizeof($Errors), $Errors, $db);
-		$Errors=VerifyStockCodeExists($PurchDataDetails['stockid'], sizeof($Errors), $Errors, $db);
-		$Errors=VerifySupplierNoExists($PurchDataDetails['supplierno'], sizeof($Errors), $Errors, $db);
+		$Errors=VerifyPurchDataLineExists($PurchDataDetails['supplierno'], $PurchDataDetails['stockid'], sizeof($Errors), $Errors);
+		$Errors=VerifyStockCodeExists($PurchDataDetails['stockid'], sizeof($Errors), $Errors);
+		$Errors=VerifySupplierNoExists($PurchDataDetails['supplierno'], sizeof($Errors), $Errors);
 		if (isset($StockItemDetails['price'])){
 			$Errors=VerifyUnitPrice($PurchDataDetails['price'], sizeof($Errors), $Errors);
 		}

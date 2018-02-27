@@ -2,7 +2,7 @@
 /* $Id$*/
 
 /* Check that the account code doesn't already exist'*/
-	function VerifyAccountCode($AccountCode, $i, $Errors, $db) {
+	function VerifyAccountCode($AccountCode, $i, $Errors) {
 		$Searchsql = "SELECT count(accountcode)
 				FROM chartmaster
 				WHERE accountcode='".$AccountCode."'";
@@ -15,7 +15,7 @@
 	}
 
 /* Check that the account code already exists'*/
-	function VerifyAccountCodeExists($AccountCode, $i, $Errors, $db) {
+	function VerifyAccountCodeExists($AccountCode, $i, $Errors) {
 		$Searchsql = "SELECT count(accountcode)
 				FROM chartmaster
 				WHERE accountcode='".$AccountCode."'";
@@ -36,7 +36,7 @@
 	}
 
 /* Check that the account group exists*/
-	function VerifyAccountGroupExists($AccountGroup, $i, $Errors, $db) {
+	function VerifyAccountGroupExists($AccountGroup, $i, $Errors) {
 		$Searchsql = "SELECT count(groupname)
 				FROM accountgroups
 				WHERE groupname='".$AccountGroup."'";
@@ -58,11 +58,11 @@
 		foreach ($AccountDetails as $key => $value) {
 			$AccountDetails[$key] = DB_escape_string($value);
 		}
-		$Errors=VerifyAccountCode($AccountDetails['accountcode'], sizeof($Errors), $Errors, $db);
+		$Errors=VerifyAccountCode($AccountDetails['accountcode'], sizeof($Errors), $Errors);
 		if (isset($AccountDetails['accountname'])){
 			$Errors=VerifyAccountName($AccountDetails['accountname'], sizeof($Errors), $Errors);
 		}
-		$Errors=VerifyAccountGroupExists($AccountDetails['group_'], sizeof($Errors), $Errors, $db);
+		$Errors=VerifyAccountGroupExists($AccountDetails['group_'], sizeof($Errors), $Errors);
 		$FieldNames='';
 		$FieldValues='';
 		foreach ($AccountDetails as $key => $value) {

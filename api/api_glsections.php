@@ -2,7 +2,7 @@
 /* $Id$*/
 
 /* Check that the account section doesn't already exist'*/
-	function VerifyAccountSection($AccountSection, $i, $Errors, $db) {
+	function VerifyAccountSection($AccountSection, $i, $Errors) {
 		$Searchsql = "SELECT count(sectionid)
 				FROM accountsection
 				WHERE sectionid='".$AccountSection."'";
@@ -32,7 +32,7 @@
 		foreach ($AccountSectionDetails as $key => $value) {
 			$AccountSectionDetails[$key] = DB_escape_string($value);
 		}
-		$Errors=VerifyAccountSection($AccountSectionDetails['sectionname'], sizeof($Errors), $Errors, $db);
+		$Errors=VerifyAccountSection($AccountSectionDetails['sectionname'], sizeof($Errors), $Errors);
 		if (isset($AccountSectionDetails['accountname'])){
 			$Errors=VerifySectionName($AccountSectionDetails['sectionname'], sizeof($Errors), $Errors);
 		}

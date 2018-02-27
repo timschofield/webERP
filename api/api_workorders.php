@@ -2,7 +2,7 @@
 /* $Id$*/
 
 /* Check that the stock code exists*/
-	function VerifyWorkOrderExists($WorkOrder, $i, $Errors, $db) {
+	function VerifyWorkOrderExists($WorkOrder, $i, $Errors) {
 		$Searchsql = "SELECT count(wo)
 				FROM workorders
 				WHERE wo='".$WorkOrder."'";
@@ -15,7 +15,7 @@
 	}
 
 /* Check that the stock location is set up in the weberp database */
-	function VerifyStockLocation($location, $i, $Errors, $db) {
+	function VerifyStockLocation($location, $i, $Errors) {
 		$Searchsql = "SELECT COUNT(loccode)
 					 FROM locations
 					  WHERE loccode='" . $location . "'";
@@ -43,7 +43,7 @@
 		return $Errors;
 	}
 
-	function VerifyRequiredByDate($RequiredByDate, $i, $Errors, $db) {
+	function VerifyRequiredByDate($RequiredByDate, $i, $Errors) {
 		$sql="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
 		$result=DB_query($sql);
 		$myrow=DB_fetch_array($result);
@@ -76,7 +76,7 @@
 		return $Errors;
 	}
 
-	function VerifyStartDate($StartDate, $i, $Errors, $db) {
+	function VerifyStartDate($StartDate, $i, $Errors) {
 		$sql="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
 		$result=DB_query($sql);
 		$myrow=DB_fetch_array($result);
@@ -144,7 +144,7 @@
 		return $Errors;
 	}
 
-	function VerifyBatch($batch, $stockid, $location, $i, $Errors, $db) {
+	function VerifyBatch($batch, $stockid, $location, $i, $Errors) {
 		$sql="SELECT controlled, serialised FROM stockmaster WHERE stockid='".$stockid."'";
 		$result=DB_query($sql);
 		$myrow=DB_fetch_row($result);
@@ -182,22 +182,22 @@
 		foreach ($WorkOrderDetails as $key => $value) {
 			$WorkOrderDetails[$key] = DB_escape_string($value);
 		}
-		$WorkOrder['wo']=GetNextTransactionNo(40, $db);
+		$WorkOrder['wo']=GetNextTransactionNo(40);
 		$WorkOrderItem['wo']=$WorkOrder['wo'];
 		if (isset($WorkOrderDetails['loccode'])){
-			$Errors=VerifyFromStockLocation($WorkOrderDetails['loccode'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyFromStockLocation($WorkOrderDetails['loccode'], sizeof($Errors), $Errors);
 			$WorkOrder['loccode']=$WorkOrderDetails['loccode'];
 		}
 		if (isset($WorkOrderDetails['requiredby'])){
-//			$Errors=VerifyRequiredByDate($WorkOrderDetails['requiredby'], sizeof($Errors), $Errors, $db);
+//			$Errors=VerifyRequiredByDate($WorkOrderDetails['requiredby'], sizeof($Errors), $Errors);
 			$WorkOrder['requiredby']=$WorkOrderDetails['requiredby'];
 		}
 		if (isset($WorkOrderDetails['startdate'])){
-//			$Errors=VerifyStartDate($WorkOrderDetails['startdate'], sizeof($Errors), $Errors, $db);
+//			$Errors=VerifyStartDate($WorkOrderDetails['startdate'], sizeof($Errors), $Errors);
 			$WorkOrder['startdate']=$WorkOrderDetails['startdate'];
 		}
 		if (isset($WorkOrderDetails['costissued'])){
-			$Errors=VerifyCostIssued($WorkOrderDetails['costissued'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyCostIssued($WorkOrderDetails['costissued'], sizeof($Errors), $Errors);
 			$WorkOrder['costissued']=$WorkOrderDetails['costissued'];
 		}
 		if (isset($WorkOrderDetails['closed'])){
@@ -205,7 +205,7 @@
 			$WorkOrder['closed']=$WorkOrderDetails['closed'];
 		}
 		if (isset($WorkOrderDetails['stockid'])){
-			$Errors=VerifyStockCodeExists($WorkOrderDetails['stockid'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyStockCodeExists($WorkOrderDetails['stockid'], sizeof($Errors), $Errors);
 			$WorkOrderItem['stockid']=$WorkOrderDetails['stockid'];
 		}
 		if (isset($WorkOrderDetails['qtyreqd'])){
@@ -242,7 +242,7 @@
 				'VALUES ('.mb_substr($WOFieldValues,0,-2).') ';
 			$itemsql = 'INSERT INTO woitems ('.mb_substr($ItemFieldNames,0,-2).') '.
 				'VALUES ('.mb_substr($ItemFieldValues,0,-2).') ';
-			$systypessql = 'UPDATE systypes set typeno='.GetNextTransactionNo(40, $db).' where typeid=40';
+			$systypessql = 'UPDATE systypes set typeno='.GetNextTransactionNo(40).' where typeid=40';
 			DB_Txn_Begin();
 			$woresult = DB_query($wosql);
 			$itemresult = DB_query($itemsql);
@@ -265,13 +265,13 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors, $db);
-		$Errors = VerifyWorkOrderExists($WONumber, sizeof($Errors), $Errors, $db);
-		$Errors = VerifyStockLocation($Location, sizeof($Errors), $Errors, $db);
+		$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors);
+		$Errors = VerifyWorkOrderExists($WONumber, sizeof($Errors), $Errors);
+		$Errors = VerifyStockLocation($Location, sizeof($Errors), $Errors);
 		$Errors = VerifyIssuedQuantity($Quantity, sizeof($Errors), $Errors);
-//		$Errors = VerifyTransactionDate($TranDate, sizeof($Errors), $Errors, $db);
+//		$Errors = VerifyTransactionDate($TranDate, sizeof($Errors), $Errors);
 		if ($Batch!='') {
-			VerifyBatch($Batch, $StockID, $Location, sizeof($Errors), $Errors, $db);
+			VerifyBatch($Batch, $StockID, $Location, sizeof($Errors), $Errors);
 		}
 		if (sizeof($Errors)!=0) {
 			return $Errors;
@@ -283,10 +283,10 @@
 			}
 			$newqoh = $Quantity + $balance;
 			$itemdetails = GetStockItem($StockID, $user, $password);
-			$wipglact=GetCategoryGLCode($itemdetails[1]['categoryid'], 'wipact', $db);
-			$stockact=GetCategoryGLCode($itemdetails[1]['categoryid'], 'stockact', $db);
+			$wipglact=GetCategoryGLCode($itemdetails[1]['categoryid'], 'wipact');
+			$stockact=GetCategoryGLCode($itemdetails[1]['categoryid'], 'stockact');
 			$cost=$itemdetails[1]['materialcost']+$itemdetails[1]['labourcost']+$itemdetails[1]['overheadcost'];
-			$TransactionNo=GetNextTransactionNo(28, $db);
+			$TransactionNo=GetNextTransactionNo(28);
 
 			$stockmovesql="INSERT INTO stockmoves (stockid,
                                                    type,
@@ -304,7 +304,7 @@
                                                 '" .$TransactionNo. "',
                                                 '".$Location."',
                                                 '" .$TranDate."',
-                                                '".GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db). "',
+                                                '".GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors). "',
                                                 '".$WONumber."',
                                                 '".$Quantity."',
                                                 '".$newqoh."',
@@ -323,7 +323,7 @@
 									      VALUES (28,
 						                                              '".$TransactionNo. "',
 						                                              '".$TranDate."',
-						                                              '".GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db)."',
+						                                              '".GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors)."',
 						                                              '".$wipglact."',
 						                                              '".$cost*-$Quantity."',
 						                                              '".$StockID.' x '.$Quantity.' @ '.$cost."')";
@@ -337,7 +337,7 @@
 						                          VALUES (28,
 						                                        '".$TransactionNo."',
 						                                        '".$TranDate."',
-						                                        '".GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db)."',
+						                                        '".GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors)."',
 						                                        '".$stockact."',
 						                                        '".$cost*$Quantity."',
 						                                        '".$StockID.' x '.$Quantity.' @ '.$cost."')";
@@ -374,9 +374,9 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors, $db);
-		$Errors = VerifyWorkOrderExists($WONumber, sizeof($Errors), $Errors, $db);
-		$Errors = VerifyStockLocation($Location, sizeof($Errors), $Errors, $db);
+		$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors);
+		$Errors = VerifyWorkOrderExists($WONumber, sizeof($Errors), $Errors);
+		$Errors = VerifyStockLocation($Location, sizeof($Errors), $Errors);
 		$Errors = VerifyReceivedQuantity($Quantity, sizeof($Errors), $Errors);
 //		$Errors = VerifyTransactionDate($TranDate, sizeof($Errors), $Errors);
 		if (sizeof($Errors)!=0) {
@@ -389,13 +389,13 @@
 				$balance=$balance+$balances[$i]['quantity'];
 			}
 			$newqoh = $Quantity + $balance;
-			$wipglact=GetCategoryGLCode($itemdetails['categoryid'], 'wipact', $db);
-			$stockact=GetCategoryGLCode($itemdetails['categoryid'], 'stockact', $db);
+			$wipglact=GetCategoryGLCode($itemdetails['categoryid'], 'wipact');
+			$stockact=GetCategoryGLCode($itemdetails['categoryid'], 'stockact');
 			$costsql="SELECT costissued FROM workorders WHERE wo='".$WONumber . "'";
 			$costresult=DB_query($costsql);
 			$myrow=DB_fetch_row($costresult);
 			$cost=$myrow[0];
-			$TransactionNo=GetNextTransactionNo(26, $db);
+			$TransactionNo=GetNextTransactionNo(26);
 			$stockmovesql="INSERT INTO stockmoves (stockid,
                                                    type,
                                                    transno,
@@ -412,7 +412,7 @@
                                                 '".$TransactionNo."',
                                                 '".$Location."',
                                                 '".$TranDate."',
-                                                '".GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db)."',
+                                                '".GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors)."',
                                                 '".$WONumber."',
                                                 '".$Quantity."',
                                                 '".$newqoh."',
@@ -431,7 +431,7 @@
                                 		VALUES (26,
                                                '".$TransactionNo."',
                                                '".$TranDate. "',
-                                               '" .GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db)."',
+                                               '" .GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors)."',
                                                '".$wipglact."',
                                                '".$cost*$Quantity. "',
                                                '".$StockID.' x '.$Quantity.' @ '.$cost."')";
@@ -445,7 +445,7 @@
                                     	VALUES (26,
                                                '".$TransactionNo."',
                                                '".$TranDate."',
-                                               '".GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db)."',
+                                               '".GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors)."',
                                                '".$stockact.','.$cost*-$Quantity. "',
                                                '".$StockID.' x '.$Quantity.' @ '.$cost."')";
 			$systypessql = "UPDATE systypes set typeno='".$TransactionNo."' where typeid=26";

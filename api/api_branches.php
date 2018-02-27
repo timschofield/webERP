@@ -2,7 +2,7 @@
 /* $Id$*/
 
 /* Check that the debtor number exists*/
-	function VerifyBranchDebtorExists($DebtorNumber, $i, $Errors, $db) {
+	function VerifyBranchDebtorExists($DebtorNumber, $i, $Errors) {
 		$Searchsql = "SELECT count(debtorno)
 				FROM debtorsmaster
 				WHERE debtorno='".$DebtorNumber."'";
@@ -16,7 +16,7 @@
 
 /* Verify that the branch number is valid, and doesn't already
    exist.*/
-	function VerifyBranchNo($DebtorNumber, $BranchNumber, $i, $Errors, $db) {
+	function VerifyBranchNo($DebtorNumber, $BranchNumber, $i, $Errors) {
 		if ((mb_strlen($BranchNumber)<1) or (mb_strlen($BranchNumber)>10)) {
 			$Errors[$i] = IncorrectBranchNumberLength;
 		}
@@ -33,7 +33,7 @@
 	}
 
 /* Verify that the branch number exists.*/
-	function VerifyBranchNoExists($DebtorNumber, $BranchNumber, $i, $Errors, $db) {
+	function VerifyBranchNoExists($DebtorNumber, $BranchNumber, $i, $Errors) {
 		if ((mb_strlen($BranchNumber)<1) or (mb_strlen($BranchNumber)>10)) {
 			$Errors[$i] = IncorrectBranchNumberLength;
 		}
@@ -91,7 +91,7 @@
 	}
 
 /* Check that the area code is set up in the weberp database */
-	function VerifyAreaCode($AreaCode , $i, $Errors, $db) {
+	function VerifyAreaCode($AreaCode , $i, $Errors) {
 		$Searchsql = "SELECT COUNT(areacode)
 					  FROM areas
 					  WHERE areacode='".$AreaCode."'";
@@ -104,7 +104,7 @@
 	}
 
 /* Check that the salesman is set up in the weberp database */
-	function VerifySalesmanCode($SalesmanCode , $i, $Errors, $db) {
+	function VerifySalesmanCode($SalesmanCode , $i, $Errors) {
 		$Searchsql = "SELECT COUNT(salesmancode)
 					  FROM salesman
 					  WHERE salesmancode='".$SalesmanCode."'";
@@ -165,7 +165,7 @@
 	}
 
 /* Check that the default location is set up in the weberp database */
-	function VerifyDefaultLocation($DefaultLocation , $i, $Errors, $db) {
+	function VerifyDefaultLocation($DefaultLocation , $i, $Errors) {
 		$Searchsql = "SELECT COUNT(loccode)
 					  FROM locations
 					  WHERE loccode='".$DefaultLocation."'";
@@ -178,7 +178,7 @@
 	}
 
 /* Check that the tax group id is set up in the weberp database */
-	function VerifyTaxGroupId($TaxGroupId , $i, $Errors, $db) {
+	function VerifyTaxGroupId($TaxGroupId , $i, $Errors) {
 		$Searchsql = "SELECT COUNT(taxgroupid)
 					  FROM taxgroups
 					  WHERE taxgroupid='".$TaxGroupId."'";
@@ -191,7 +191,7 @@
 	}
 
 /* Check that the default shipper is set up in the weberp database */
-	function VerifyDefaultShipVia($DefaultShipVia , $i, $Errors, $db) {
+	function VerifyDefaultShipVia($DefaultShipVia , $i, $Errors) {
 		$Searchsql = "SELECT COUNT(shipper_id)
 					 FROM shippers
 					  WHERE shipper_id='".$DefaultShipVia."'";
@@ -245,26 +245,26 @@
 		foreach ($BranchDetails as $key => $value) {
 			$BranchDetails[$key] = DB_escape_string($value);
 		}
-		$Errors=VerifyBranchDebtorExists($BranchDetails['debtorno'], sizeof($Errors), $Errors, $db);
-		$Errors=VerifyBranchNo($BranchDetails['debtorno'], $BranchDetails['branchcode'], sizeof($Errors), $Errors, $db);
-		$Errors=VerifyBranchName($BranchDetails['brname'], sizeof($Errors), $Errors, $db);
+		$Errors=VerifyBranchDebtorExists($BranchDetails['debtorno'], sizeof($Errors), $Errors);
+		$Errors=VerifyBranchNo($BranchDetails['debtorno'], $BranchDetails['branchcode'], sizeof($Errors), $Errors);
+		$Errors=VerifyBranchName($BranchDetails['brname'], sizeof($Errors), $Errors);
 		if (isset($BranchDetails['address1'])){
-			$Errors=VerifyBranchAddressLine($BranchDetails['address1'], 40, sizeof($Errors), $Errors, $db);
+			$Errors=VerifyBranchAddressLine($BranchDetails['address1'], 40, sizeof($Errors), $Errors);
 		}
 		if (isset($BranchDetails['address2'])){
-			$Errors=VerifyBranchAddressLine($BranchDetails['address2'], 40, sizeof($Errors), $Errors, $db);
+			$Errors=VerifyBranchAddressLine($BranchDetails['address2'], 40, sizeof($Errors), $Errors);
 		}
 		if (isset($BranchDetails['address3'])){
-			$Errors=VerifyBranchAddressLine($BranchDetails['address3'], 40, sizeof($Errors), $Errors, $db);
+			$Errors=VerifyBranchAddressLine($BranchDetails['address3'], 40, sizeof($Errors), $Errors);
 		}
 		if (isset($BranchDetails['address4'])){
-			$Errors=VerifyBranchAddressLine($BranchDetails['address4'], 50, sizeof($Errors), $Errors, $db);
+			$Errors=VerifyBranchAddressLine($BranchDetails['address4'], 50, sizeof($Errors), $Errors);
 		}
 		if (isset($BranchDetails['address5'])){
-			$Errors=VerifyBranchAddressLine($BranchDetails['address5'], 20, sizeof($Errors), $Errors, $db);
+			$Errors=VerifyBranchAddressLine($BranchDetails['address5'], 20, sizeof($Errors), $Errors);
 		}
 		if (isset($BranchDetails['address6'])){
-			$Errors=VerifyBranchAddressLine($BranchDetails['address6'], 15, sizeof($Errors), $Errors, $db);
+			$Errors=VerifyBranchAddressLine($BranchDetails['address6'], 15, sizeof($Errors), $Errors);
 		}
 		if (isset($BranchDetails['lat'])){
 			$Errors=VerifyLatitude($BranchDetails['lat'], sizeof($Errors), $Errors);
@@ -276,10 +276,10 @@
 			$Errors=VerifyEstDeliveryDays($BranchDetails['estdeliverydays'], sizeof($Errors), $Errors);
 		}
 		if (isset($BranchDetails['area'])){
-			$Errors=VerifyAreaCode($BranchDetails['area'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyAreaCode($BranchDetails['area'], sizeof($Errors), $Errors);
 		}
 		if (isset($BranchDetails['salesman'])){
-			$Errors=VerifySalesmanCode($BranchDetails['salesman'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifySalesmanCode($BranchDetails['salesman'], sizeof($Errors), $Errors);
 		}
 		if (isset($BranchDetails['fwddate'])){
 			$Errors=VerifyFwdDate($BranchDetails['fwddate'], sizeof($Errors), $Errors);
@@ -297,13 +297,13 @@
 			$Errors=VerifyEmailAddress($BranchDetails['email'], sizeof($Errors), $Errors);
 		}
 		if (isset($BranchDetails['defaultlocation'])){
-			$Errors=VerifyDefaultLocation($BranchDetails['defaultlocation'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyDefaultLocation($BranchDetails['defaultlocation'], sizeof($Errors), $Errors);
 		}
 		if (isset($BranchDetails['taxgroupid'])){
-			$Errors=VerifyTaxGroupId($BranchDetails['taxgroupid'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyTaxGroupId($BranchDetails['taxgroupid'], sizeof($Errors), $Errors);
 		}
 		if (isset($BranchDetails['defaultshipvia'])){
-			$Errors=VerifyDefaultShipVia($BranchDetails['defaultshipvia'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyDefaultShipVia($BranchDetails['defaultshipvia'], sizeof($Errors), $Errors);
 		}
 		if (isset($BranchDetails['deliverblind'])){
 			$Errors=VerifyDeliverBlind($BranchDetails['deliverblind'], sizeof($Errors), $Errors);
@@ -312,22 +312,22 @@
 			$Errors=VerifyDisableTrans($BranchDetails['disabletrans'], sizeof($Errors), $Errors);
 		}
 		if (isset($BranchDetails['brpostaddr1'])){
-			$Errors=VerifyBranchAddressLine($BranchDetails['brpostaddr1'], 40, sizeof($Errors), $Errors, $db);
+			$Errors=VerifyBranchAddressLine($BranchDetails['brpostaddr1'], 40, sizeof($Errors), $Errors);
 		}
 		if (isset($BranchDetails['brpostaddr2'])){
-			$Errors=VerifyBranchAddressLine($BranchDetails['brpostaddr2'], 40, sizeof($Errors), $Errors, $db);
+			$Errors=VerifyBranchAddressLine($BranchDetails['brpostaddr2'], 40, sizeof($Errors), $Errors);
 		}
 		if (isset($BranchDetails['brpostaddr3'])){
-			$Errors=VerifyBranchAddressLine($BranchDetails['brpostaddr3'], 30, sizeof($Errors), $Errors, $db);
+			$Errors=VerifyBranchAddressLine($BranchDetails['brpostaddr3'], 30, sizeof($Errors), $Errors);
 		}
 		if (isset($BranchDetails['brpostaddr4'])){
-			$Errors=VerifyBranchAddressLine($BranchDetails['brpostaddr4'], 20, sizeof($Errors), $Errors, $db);
+			$Errors=VerifyBranchAddressLine($BranchDetails['brpostaddr4'], 20, sizeof($Errors), $Errors);
 		}
 		if (isset($BranchDetails['brpostaddr5'])){
-			$Errors=VerifyBranchAddressLine($BranchDetails['brpostaddr5'], 20, sizeof($Errors), $Errors, $db);
+			$Errors=VerifyBranchAddressLine($BranchDetails['brpostaddr5'], 20, sizeof($Errors), $Errors);
 		}
 		if (isset($BranchDetails['brpostaddr6'])){
-			$Errors=VerifyBranchAddressLine($BranchDetails['brpostaddr6'], 15, sizeof($Errors), $Errors, $db);
+			$Errors=VerifyBranchAddressLine($BranchDetails['brpostaddr6'], 15, sizeof($Errors), $Errors);
 		}
 		if (isset($BranchDetails['specialinstructions'])){
 			$Errors=VerifySpecialInstructions($BranchDetails['specialinstructions'], sizeof($Errors), $Errors);
@@ -369,25 +369,25 @@
 		foreach ($BranchDetails as $key => $value) {
 			$BranchDetails[$key] = DB_escape_string($value);
 		}
-		$Errors=VerifyBranchNoExists($BranchDetails['debtorno'], $BranchDetails['branchcode'], sizeof($Errors), $Errors, $db);
-		$Errors=VerifyBranchName($BranchDetails['brname'], sizeof($Errors), $Errors, $db);
+		$Errors=VerifyBranchNoExists($BranchDetails['debtorno'], $BranchDetails['branchcode'], sizeof($Errors), $Errors);
+		$Errors=VerifyBranchName($BranchDetails['brname'], sizeof($Errors), $Errors);
 		if (isset($BranchDetails['address1'])){
-			$Errors=VerifyBranchAddressLine($BranchDetails['address1'], 40, sizeof($Errors), $Errors, $db);
+			$Errors=VerifyBranchAddressLine($BranchDetails['address1'], 40, sizeof($Errors), $Errors);
 		}
 		if (isset($BranchDetails['address2'])){
-			$Errors=VerifyBranchAddressLine($BranchDetails['address2'], 40, sizeof($Errors), $Errors, $db);
+			$Errors=VerifyBranchAddressLine($BranchDetails['address2'], 40, sizeof($Errors), $Errors);
 		}
 		if (isset($BranchDetails['address3'])){
-			$Errors=VerifyBranchAddressLine($BranchDetails['address3'], 40, sizeof($Errors), $Errors, $db);
+			$Errors=VerifyBranchAddressLine($BranchDetails['address3'], 40, sizeof($Errors), $Errors);
 		}
 		if (isset($BranchDetails['address4'])){
-			$Errors=VerifyBranchAddressLine($BranchDetails['address4'], 50, sizeof($Errors), $Errors, $db);
+			$Errors=VerifyBranchAddressLine($BranchDetails['address4'], 50, sizeof($Errors), $Errors);
 		}
 		if (isset($BranchDetails['address5'])){
-			$Errors=VerifyBranchAddressLine($BranchDetails['address5'], 20, sizeof($Errors), $Errors, $db);
+			$Errors=VerifyBranchAddressLine($BranchDetails['address5'], 20, sizeof($Errors), $Errors);
 		}
 		if (isset($BranchDetails['address6'])){
-			$Errors=VerifyBranchAddressLine($BranchDetails['address6'], 15, sizeof($Errors), $Errors, $db);
+			$Errors=VerifyBranchAddressLine($BranchDetails['address6'], 15, sizeof($Errors), $Errors);
 		}
 		if (isset($BranchDetails['lat'])){
 			$Errors=VerifyLatitude($BranchDetails['lat'], sizeof($Errors), $Errors);
@@ -399,10 +399,10 @@
 			$Errors=VerifyEstDeliveryDays($BranchDetails['estdeliverydays'], sizeof($Errors), $Errors);
 		}
 		if (isset($BranchDetails['area'])){
-			$Errors=VerifyAreaCode($BranchDetails['area'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyAreaCode($BranchDetails['area'], sizeof($Errors), $Errors);
 		}
 		if (isset($BranchDetails['salesman'])){
-			$Errors=VerifySalesmanCode($BranchDetails['salesman'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifySalesmanCode($BranchDetails['salesman'], sizeof($Errors), $Errors);
 		}
 		if (isset($BranchDetails['fwddate'])){
 			$Errors=VerifyFwdDate($BranchDetails['fwddate'], sizeof($Errors), $Errors);
@@ -420,13 +420,13 @@
 			$Errors=VerifyEmailAddress($BranchDetails['email'], sizeof($Errors), $Errors);
 		}
 		if (isset($BranchDetails['defaultlocation'])){
-			$Errors=VerifyDefaultLocation($BranchDetails['defaultlocation'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyDefaultLocation($BranchDetails['defaultlocation'], sizeof($Errors), $Errors);
 		}
 		if (isset($BranchDetails['taxgroupid'])){
-			$Errors=VerifyTaxGroupId($BranchDetails['taxgroupid'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyTaxGroupId($BranchDetails['taxgroupid'], sizeof($Errors), $Errors);
 		}
 		if (isset($BranchDetails['defaultshipvia'])){
-			$Errors=VerifyDefaultShipVia($BranchDetails['defaultshipvia'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyDefaultShipVia($BranchDetails['defaultshipvia'], sizeof($Errors), $Errors);
 		}
 		if (isset($BranchDetails['deliverblind'])){
 			$Errors=VerifyDeliverBlind($BranchDetails['deliverblind'], sizeof($Errors), $Errors);
@@ -435,22 +435,22 @@
 			$Errors=VerifyDisableTrans($BranchDetails['disabletrans'], sizeof($Errors), $Errors);
 		}
 		if (isset($BranchDetails['brpostaddr1'])){
-			$Errors=VerifyBranchAddressLine($BranchDetails['brpostaddr1'], 40, sizeof($Errors), $Errors, $db);
+			$Errors=VerifyBranchAddressLine($BranchDetails['brpostaddr1'], 40, sizeof($Errors), $Errors);
 		}
 		if (isset($BranchDetails['brpostaddr2'])){
-			$Errors=VerifyBranchAddressLine($BranchDetails['brpostaddr2'], 40, sizeof($Errors), $Errors, $db);
+			$Errors=VerifyBranchAddressLine($BranchDetails['brpostaddr2'], 40, sizeof($Errors), $Errors);
 		}
 		if (isset($BranchDetails['brpostaddr3'])){
-			$Errors=VerifyBranchAddressLine($BranchDetails['brpostaddr3'], 30, sizeof($Errors), $Errors, $db);
+			$Errors=VerifyBranchAddressLine($BranchDetails['brpostaddr3'], 30, sizeof($Errors), $Errors);
 		}
 		if (isset($BranchDetails['brpostaddr4'])){
-			$Errors=VerifyBranchAddressLine($BranchDetails['brpostaddr4'], 20, sizeof($Errors), $Errors, $db);
+			$Errors=VerifyBranchAddressLine($BranchDetails['brpostaddr4'], 20, sizeof($Errors), $Errors);
 		}
 		if (isset($BranchDetails['brpostaddr5'])){
-			$Errors=VerifyBranchAddressLine($BranchDetails['brpostaddr5'], 20, sizeof($Errors), $Errors, $db);
+			$Errors=VerifyBranchAddressLine($BranchDetails['brpostaddr5'], 20, sizeof($Errors), $Errors);
 		}
 		if (isset($BranchDetails['brpostaddr6'])){
-			$Errors=VerifyBranchAddressLine($BranchDetails['brpostaddr6'], 15, sizeof($Errors), $Errors, $db);
+			$Errors=VerifyBranchAddressLine($BranchDetails['brpostaddr6'], 15, sizeof($Errors), $Errors);
 		}
 		if (isset($BranchDetails['specialinstructions'])){
 			$Errors=VerifySpecialInstructions($BranchDetails['specialinstructions'], sizeof($Errors), $Errors);
@@ -520,7 +520,7 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$Errors = VerifyBranchNoExists($DebtorNumber, $BranchCode, sizeof($Errors), $Errors, $db);
+		$Errors = VerifyBranchNoExists($DebtorNumber, $BranchCode, sizeof($Errors), $Errors);
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}

@@ -1,7 +1,7 @@
 <?php
 
 /* Check that the stock code*/
-	function VerifyStockCode($StockCode, $i, $Errors, $db) {
+	function VerifyStockCode($StockCode, $i, $Errors) {
 		$Searchsql = "SELECT count(stockid)
     				  FROM stockmaster
 	    			  WHERE stockid='".$StockCode."'";
@@ -14,7 +14,7 @@
 	}
 
 /* Check that the stock code exists*/
-	function VerifyStockCodeExists($StockCode, $i, $Errors, $db) {
+	function VerifyStockCodeExists($StockCode, $i, $Errors) {
 		$Searchsql = "SELECT count(stockid)
 				      FROM stockmaster
 				      WHERE stockid='".$StockCode."'";
@@ -27,7 +27,7 @@
 	}
 
 /* Verify the category exists */
-	function VerifyStockCategoryExists($StockCategory, $i, $Errors, $db) {
+	function VerifyStockCategoryExists($StockCategory, $i, $Errors) {
 		$Searchsql = "SELECT count(categoryid)
 				      FROM stockcategory
 				      WHERE categoryid='".$StockCategory."'";
@@ -74,7 +74,7 @@
 /* Check that the last current cost date is a valid date. The date
  * must be in the same format as the date format specified in the
  * target webERP company */
-	function VerifyLastCurCostDate($CurCostDate, $i, $Errors, $db) {
+	function VerifyLastCurCostDate($CurCostDate, $i, $Errors) {
 		$sql="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
 		$result=DB_query($sql);
 		$myrow=DB_fetch_array($result);
@@ -212,7 +212,7 @@
 	}
 
 /* Check that the tax category exists*/
-	function VerifyTaxCatExists($TaxCat, $i, $Errors, $db) {
+	function VerifyTaxCatExists($TaxCat, $i, $Errors) {
 		$Searchsql = "SELECT count(taxcatid)
 				      FROM taxcategories
 				      WHERE taxcatid='".$TaxCat."'";
@@ -256,7 +256,7 @@
 		return $Errors;
 	}
 
-	function GetCategoryGLCode($CategoryID, $field, $db) {
+	function GetCategoryGLCode($CategoryID, $field) {
 		$sql='SELECT '.$field." FROM stockcategory WHERE categoryid='".$CategoryID."'";
 		$result = DB_query($sql);
 		$myrow = DB_fetch_row($result);
@@ -288,11 +288,11 @@
 		foreach ($StockItemDetails as $key => $value) {
 			$StockItemDetails[$key] = DB_escape_string($value);
 		}
-		$Errors=VerifyStockCode($StockItemDetails['stockid'], sizeof($Errors), $Errors, $db);
+		$Errors=VerifyStockCode($StockItemDetails['stockid'], sizeof($Errors), $Errors);
 		$Errors=VerifyStockDescription($StockItemDetails['decription'], sizeof($Errors), $Errors);
 		$Errors=VerifyStockLongDescription($StockItemDetails['longdescription'], sizeof($Errors), $Errors);
 		if (isset($StockItemDetails['categoryid'])){
-			$Errors=VerifyStockCategoryExists($StockItemDetails['categoryid'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyStockCategoryExists($StockItemDetails['categoryid'], sizeof($Errors), $Errors);
 		}
 		if (isset($StockItemDetails['units'])){
 			$Errors=VerifyUnits($StockItemDetails['units'], sizeof($Errors), $Errors);
@@ -301,7 +301,7 @@
 			$Errors=VerifyMBFlag($StockItemDetails['mbflag'], sizeof($Errors), $Errors);
 		}
 		if (isset($StockItemDetails['lastcurcostdate'])){
-			$Errors=VerifyLastCurCostDate($StockItemDetails['lastcurcostdate'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyLastCurCostDate($StockItemDetails['lastcurcostdate'], sizeof($Errors), $Errors);
 		}
 		if (isset($StockItemDetails['actualcost'])){
 			$Errors=VerifyActualCost($StockItemDetails['actualcost'], sizeof($Errors), $Errors);
@@ -343,7 +343,7 @@
 			$Errors=VerifyDiscountCategory($StockItemDetails['discountcategory'], sizeof($Errors), $Errors);
 		}
 		if (isset($StockItemDetails['taxcatid'])){
-			$Errors=VerifyTaxCatExists($StockItemDetails['taxcatid'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyTaxCatExists($StockItemDetails['taxcatid'], sizeof($Errors), $Errors);
 		}
 		if (isset($StockItemDetails['serialised'])){
 			$Errors=VerifySerialised($StockItemDetails['serialised'], sizeof($Errors), $Errors);
@@ -401,7 +401,7 @@
 		foreach ($StockItemDetails as $key => $value) {
 			$StockItemDetails[$key] = DB_escape_string($value);
 		}
-		$Errors=VerifyStockCodeExists($StockItemDetails['stockid'], sizeof($Errors), $Errors, $db);
+		$Errors=VerifyStockCodeExists($StockItemDetails['stockid'], sizeof($Errors), $Errors);
 		if (in_array(StockCodeDoesntExist, $Errors)) {
 			return $Errors;
 		}
@@ -412,7 +412,7 @@
 			$Errors=VerifyStockLongDescription($StockItemDetails['longdescription'], sizeof($Errors), $Errors);
 		}
 		if (isset($StockItemDetails['categoryid'])){
-			$Errors=VerifyStockCategoryExists($StockItemDetails['categoryid'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyStockCategoryExists($StockItemDetails['categoryid'], sizeof($Errors), $Errors);
 		}
 		if (isset($StockItemDetails['units'])){
 			$Errors=VerifyUnits($StockItemDetails['units'], sizeof($Errors), $Errors);
@@ -421,7 +421,7 @@
 			$Errors=VerifyMBFlag($StockItemDetails['mbflag'], sizeof($Errors), $Errors);
 		}
 		if (isset($StockItemDetails['lastcurcostdate'])){
-			$Errors=VerifyLastCurCostDate($StockItemDetails['lascurcostdate'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyLastCurCostDate($StockItemDetails['lascurcostdate'], sizeof($Errors), $Errors);
 		}
 		if (isset($StockItemDetails['actualcost'])){
 			$Errors=VerifyActualCost($StockItemDetails['actualcost'], sizeof($Errors), $Errors);
@@ -463,7 +463,7 @@
 			$Errors=VerifyDiscountCategory($StockItemDetails['discountcategory'], sizeof($Errors), $Errors);
 		}
 		if (isset($StockItemDetails['taxcatid'])){
-			$Errors=VerifyTaxCatExists($StockItemDetails['taxcatid'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyTaxCatExists($StockItemDetails['taxcatid'], sizeof($Errors), $Errors);
 		}
 		if (isset($StockItemDetails['serialised'])){
 			$Errors=VerifySerialised($StockItemDetails['serialised'], sizeof($Errors), $Errors);
@@ -505,7 +505,7 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors, $db);
+		$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors);
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
@@ -556,7 +556,7 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors, $db);
+		$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors);
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
@@ -586,7 +586,7 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors, $db);
+		$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors);
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
@@ -614,7 +614,7 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors, $db);
+		$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors);
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
@@ -636,7 +636,7 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors, $db);
+		$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors);
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
@@ -661,7 +661,7 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors, $db);
+		$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors);
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
@@ -686,9 +686,9 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors, $db);
-		$Errors = VerifyCurrencyCode($Currency, sizeof($Errors), $Errors, $db);
-		$Errors = VerifySalesType($SalesType, sizeof($Errors), $Errors, $db);
+		$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors);
+		$Errors = VerifyCurrencyCode($Currency, sizeof($Errors), $Errors);
+		$Errors = VerifySalesType($SalesType, sizeof($Errors), $Errors);
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
@@ -723,9 +723,9 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors, $db);
-		$Errors = VerifyCurrencyCode($Currency, sizeof($Errors), $Errors, $db);
-		$Errors = VerifySalesType($SalesType, sizeof($Errors), $Errors, $db);
+		$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors);
+		$Errors = VerifyCurrencyCode($Currency, sizeof($Errors), $Errors);
+		$Errors = VerifySalesType($SalesType, sizeof($Errors), $Errors);
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
@@ -762,7 +762,7 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors, $db);
+		$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors);
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
@@ -784,7 +784,7 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors, $db);
+		$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors);
 		$balances=GetStockBalance($StockID, $user, $password);
 		$balance=0;
 		for ($i=0; $i<sizeof($balances); $i++) {
@@ -792,8 +792,8 @@
 		}
 		$newqoh = $Quantity + $balance;
 		$itemdetails = GetStockItem($StockID, $user, $password);
-		$adjglact=GetCategoryGLCode($itemdetails[1]['categoryid'], 'adjglact', $db);
-		$stockact=GetCategoryGLCode($itemdetails[1]['categoryid'], 'stockact', $db);
+		$adjglact=GetCategoryGLCode($itemdetails[1]['categoryid'], 'adjglact');
+		$stockact=GetCategoryGLCode($itemdetails[1]['categoryid'], 'stockact');
 
 		$stockmovesql="INSERT INTO stockmoves (stockid,
                                                type,
@@ -806,10 +806,10 @@
                                                newqoh)
                                VALUES ('" . $StockID . "',
                                        '17',
-                                       '" .GetNextTransactionNo(17, $db)."',
+                                       '" .GetNextTransactionNo(17)."',
                                        '".$Location."',
                                        '".$TranDate."',
-                                       '".GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db)."',
+                                       '".GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors)."',
                                        'api adjustment',
                                        '" .$Quantity."',
                                        '" .$newqoh."')";
@@ -824,9 +824,9 @@
                                             amount,
                                             narrative)
                                     VALUES ('17',
-                                           '" . GetNextTransactionNo(17, $db)."',
+                                           '" . GetNextTransactionNo(17)."',
                                            '" . $TranDate. "',
-                                           '".GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db). "',
+                                           '".GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors). "',
                                            '" .$adjglact."',
                                            '".$itemdetails['materialcost']*-$Quantity. "',
                                            '" .$StockID.' x '.$Quantity.' @ '.$itemdetails['materialcost']."')";
@@ -838,13 +838,13 @@
                                             amount,
                                             narrative)
 						VALUES ('17',
-                        '" .GetNextTransactionNo(17, $db)."',
+                        '" .GetNextTransactionNo(17)."',
                         '" .$TranDate."',
-                        '" .GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db). "',
+                        '" .GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors). "',
                         '" .$stockact."',
                         '" .$itemdetails['materialcost']*$Quantity. "',
                         '" .$StockID.' x '.$Quantity.' @ '.$itemdetails['materialcost']."')";
-		$systypessql = "UPDATE systypes set typeno='".GetNextTransactionNo(17, $db)."' where typeid='17'";
+		$systypessql = "UPDATE systypes set typeno='".GetNextTransactionNo(17)."' where typeid='17'";
 
 		DB_Txn_Begin();
 		DB_query($stockmovesql);
@@ -868,8 +868,8 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors, $db);
-		$Errors = VerifyStockLocation($Location, sizeof($Errors), $Errors, $db);
+		$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors);
+		$Errors = VerifyStockLocation($Location, sizeof($Errors), $Errors);
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}

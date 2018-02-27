@@ -8,7 +8,7 @@
 /* Verify that the Location code is valid, and doesn't already
    exist.*/
 
-	function VerifyLocationCode($LocationCode, $i, $Errors, $db) {
+	function VerifyLocationCode($LocationCode, $i, $Errors) {
 		if ((mb_strlen($LocationCode)<1) or (mb_strlen($LocationCode)>5)) {
 			$Errors[$i] = IncorrectLocationCodeLength;
 		}
@@ -24,7 +24,7 @@
 	}
 
 /* Check that the Location Code exists*/
-	function VerifyLocationExists($LocationCode, $i, $Errors, $db) {
+	function VerifyLocationExists($LocationCode, $i, $Errors) {
 		$Searchsql = "SELECT count(loccode)
 						FROM locations
 						WHERE loccode='".$LocationCode."'";
@@ -45,7 +45,7 @@
 	}
 
 /* Check that the tax province id is set up in the weberp database */
-	function VerifyTaxProvinceId($TaxProvinceId , $i, $Errors, $db) {
+	function VerifyTaxProvinceId($TaxProvinceId , $i, $Errors) {
 		$Searchsql = "SELECT COUNT(taxprovinceid)
 						FROM taxprovinces
 						WHERE taxprovinceid='".$TaxProvinceId."'";
@@ -109,9 +109,9 @@
 		foreach ($Location as $key => $value) {
 			$Location[$key] = DB_escape_string($value);
 		}
-		$Errors=VerifyLocationCode($Location['loccode'], sizeof($Errors), $Errors, $db);
-		$Errors=VerifyLocationName($Location['locationname'], sizeof($Errors), $Errors, $db);
-		$Errors=VerifyTaxProvinceId($Location['taxprovinceid'], sizeof($Errors), $Errors, $db);
+		$Errors=VerifyLocationCode($Location['loccode'], sizeof($Errors), $Errors);
+		$Errors=VerifyLocationName($Location['locationname'], sizeof($Errors), $Errors);
+		$Errors=VerifyTaxProvinceId($Location['taxprovinceid'], sizeof($Errors), $Errors);
 		if (isset($Location['deladd1'])){
 			$Errors=VerifyAddressLine($Location['deladd1'], 40, sizeof($Errors), $Errors);
 		}
@@ -175,9 +175,9 @@
 		foreach ($Location as $key => $value) {
 			$Location[$key] = DB_escape_string($value);
 		}
-		$Errors=VerifyLocationExists($Location['loccode'], sizeof($Errors), $Errors, $db);
-		$Errors=VerifyLocationName($Location['locationname'], sizeof($Errors), $Errors, $db);
-		$Errors=VerifyTaxProvinceId($Location['taxprovinceid'], sizeof($Errors), $Errors, $db);
+		$Errors=VerifyLocationExists($Location['loccode'], sizeof($Errors), $Errors);
+		$Errors=VerifyLocationName($Location['locationname'], sizeof($Errors), $Errors);
+		$Errors=VerifyTaxProvinceId($Location['taxprovinceid'], sizeof($Errors), $Errors);
 		if (isset($Location['deladd1'])){
 			$Errors=VerifyAddressLine($Location['deladd1'], 40, sizeof($Errors), $Errors);
 		}

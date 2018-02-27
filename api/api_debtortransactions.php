@@ -3,7 +3,7 @@
 
 /* Check that the transaction number is unique
  * for this type of transaction*/
-	function VerifyTransNo($TransNo, $Type, $i, $Errors, $db) {
+	function VerifyTransNo($TransNo, $Type, $i, $Errors) {
 		$Searchsql = "SELECT count(transno)
 				FROM debtortrans
 				WHERE type='".$Type."' and transno='".$TransNo . "'";
@@ -48,7 +48,7 @@ function ConvertToSQLDate($DateEntry) {
 /* Check that the transaction date is a valid date. The date
  * must be in the same format as the date format specified in the
  * target webERP company */
-	function VerifyTransactionDate($TranDate, $i, $Errors, $db) {
+	function VerifyTransactionDate($TranDate, $i, $Errors) {
 		$sql="SELECT confvalue FROM config WHERE confname='" . DefaultDateFormat ."'";
 		$result=DB_query($sql);
 		$myrow=DB_fetch_array($result);
@@ -84,7 +84,7 @@ function ConvertToSQLDate($DateEntry) {
 /* Find the period number from the transaction date */
 /* Why use this function over GetPeriod we already have this function included in DateFunctions.inc
  * This function doesn't create periods if required so there is the danger of not being able to insert transactions*/
-	function GetPeriodFromTransactionDate($TranDate, $i, $Errors, $db) {
+	function GetPeriodFromTransactionDate($TranDate, $i, $Errors) {
 		$sql="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
 		$result=DB_query($sql);
 		$myrow=DB_fetch_array($result);
@@ -248,7 +248,7 @@ function ConvertToSQLDate($DateEntry) {
  * This function also in SQL_CommonFunctions...better to use it from there as it covers all cases
  * and not limited to stk='any'!!
  *
-	function GetSalesGLCode($salesarea, $partnumber, $db) {
+	function GetSalesGLCode($salesarea, $partnumber) {
 		$sql="SELECT salesglcode FROM salesglpostings
 			WHERE stkcat='any'";
 		$result=DB_query($sql);
@@ -503,8 +503,8 @@ function ConvertToSQLDate($DateEntry) {
 		}
 
 
-		$Errors=VerifyDebtorExists($Header['debtorno'], sizeof($Errors), $Errors, $db);
-		$Errors=VerifyBranchNoExists($Header['debtorno'],$Header['branchcode'], sizeof($Errors), $Errors, $db);
+		$Errors=VerifyDebtorExists($Header['debtorno'], sizeof($Errors), $Errors);
+		$Errors=VerifyBranchNoExists($Header['debtorno'],$Header['branchcode'], sizeof($Errors), $Errors);
 		/*Does not deal with serialised/lot track items - for use by POS */
 		/*Get Company Defaults */
 		$ReadCoyResult = api_DB_query("SELECT debtorsact,
@@ -549,7 +549,7 @@ function ConvertToSQLDate($DateEntry) {
 	/*Start an SQL transaction */
 		$result = DB_Txn_Begin();
 	/*Now Get the next credit note number - function in SQL_CommonFunctions*/
-		$CreditNoteNo = GetNextTransNo(11, $db);
+		$CreditNoteNo = GetNextTransNo(11);
 		$PeriodNo = GetCurrentPeriod($db);
 
 		$TotalFXNetCredit = 0;
@@ -928,7 +928,7 @@ function ConvertToSQLDate($DateEntry) {
 										'" . $CreditNoteNo . "',
 										'" . $Header['trandate'] . "',
 										'" . $PeriodNo . "',
-										'" . GetCOGSGLAccount($CN_Header['area'], $CN_Line['stockid'], $Header['tpe'], $db) . "',
+										'" . GetCOGSGLAccount($CN_Header['area'], $CN_Line['stockid'], $Header['tpe']) . "',
 										'" . $Header['debtorno'] . " - " . $CN_Line['stockid'] . " x " . $CN_Line['qty'] . " @ " . $StandardCost . "',
 										'" . ($StandardCost * $CN_Line['qty']) . "')";
 
@@ -959,7 +959,7 @@ function ConvertToSQLDate($DateEntry) {
 			if ($CompanyRecord['gllink_debtors']==1 AND $CN_Line['price'] !=0){
 
 				//Post sales transaction to GL credit sales
-				$SalesGLAccounts = GetSalesGLAccount($CN_Header['area'], $CN_Line['stockid'], $Header['tpe'], $db);
+				$SalesGLAccounts = GetSalesGLAccount($CN_Header['area'], $CN_Line['stockid'], $Header['tpe']);
 
 				$SQL = "INSERT INTO gltrans (type,
 											typeno,
@@ -1189,16 +1189,16 @@ function ConvertToSQLDate($DateEntry) {
 			$InvoiceDetails[$key] = DB_escape_string($value);
 		}
 		$PartCode=$InvoiceDetails['partcode'];
-		$Errors=VerifyStockCodeExists($PartCode, sizeof($Errors), $Errors, $db );
+		$Errors=VerifyStockCodeExists($PartCode, sizeof($Errors), $Errors );
 		unset($InvoiceDetails['partcode']);
 		$SalesArea=$InvoiceDetails['salesarea'];
 		unset($InvoiceDetails['salesarea']);
-		$InvoiceDetails['transno']=GetNextTransactionNo(10, $db);
+		$InvoiceDetails['transno']=GetNextTransactionNo(10);
 		$InvoiceDetails['type'] = 10;
-		$Errors=VerifyDebtorExists($InvoiceDetails['debtorno'], sizeof($Errors), $Errors, $db);
-		$Errors=VerifyBranchNoExists($InvoiceDetails['debtorno'],$InvoiceDetails['branchcode'], sizeof($Errors), $Errors, $db);
-		$Errors=VerifyTransNO($InvoiceDetails['transno'], 10, sizeof($Errors), $Errors, $db);
-		$Errors=VerifyTransactionDate($InvoiceDetails['trandate'], sizeof($Errors), $Errors, $db);
+		$Errors=VerifyDebtorExists($InvoiceDetails['debtorno'], sizeof($Errors), $Errors);
+		$Errors=VerifyBranchNoExists($InvoiceDetails['debtorno'],$InvoiceDetails['branchcode'], sizeof($Errors), $Errors);
+		$Errors=VerifyTransNO($InvoiceDetails['transno'], 10, sizeof($Errors), $Errors);
+		$Errors=VerifyTransactionDate($InvoiceDetails['trandate'], sizeof($Errors), $Errors);
 		if (isset($InvoiceDetails['settled'])){
 			$Errors=VerifySettled($InvoiceDetails['settled'], sizeof($Errors), $Errors);
 		}
@@ -1247,7 +1247,7 @@ function ConvertToSQLDate($DateEntry) {
 		$FieldNames='';
 		$FieldValues='';
 		$InvoiceDetails['trandate']=ConvertToSQLDate($InvoiceDetails['trandate']);
-		$InvoiceDetails['prd']=GetPeriodFromTransactionDate($InvoiceDetails['trandate'], sizeof($Errors), $Errors, $db);
+		$InvoiceDetails['prd']=GetPeriodFromTransactionDate($InvoiceDetails['trandate'], sizeof($Errors), $Errors);
 		foreach ($InvoiceDetails as $key => $value) {
 			$FieldNames.=$key.', ';
 			$FieldValues.='"'.$value.'", ';
@@ -1257,13 +1257,13 @@ function ConvertToSQLDate($DateEntry) {
 			$sql = "INSERT INTO debtortrans (" . mb_substr($FieldNames,0,-2) .")
 									VALUES ('" . mb_substr($FieldValues,0,-2) ."') ";
 			$result = DB_query($sql);
-			$sql = "UPDATE systypes SET typeno='" . GetNextTransactionNo(10, $db) . "' WHERE typeid=10";
+			$sql = "UPDATE systypes SET typeno='" . GetNextTransactionNo(10) . "' WHERE typeid=10";
 			$result = DB_query($sql);
-			$SalesGLCode=GetSalesGLCode($SalesArea, $PartCode, $db);
+			$SalesGLCode=GetSalesGLCode($SalesArea, $PartCode);
 			$DebtorsGLCode=GetDebtorsGLCode($db);
 			$sql="INSERT INTO gltrans VALUES(null,
 											10,
-											'" . GetNextTransactionNo(10, $db) . "',
+											'" . GetNextTransactionNo(10) . "',
 											0,
 											'" . $InvoiceDetails['trandate'] ."',
 											'" . $InvoiceDetails['prd'] . "',
@@ -1276,7 +1276,7 @@ function ConvertToSQLDate($DateEntry) {
 			$result = api_DB_query($sql);
 			$sql="INSERT INTO gltrans VALUES(null,
 											10,
-											'" . GetNextTransactionNo(10, $db) . "',
+											'" . GetNextTransactionNo(10) . "',
 											0,
 											'" . $InvoiceDetails['trandate'] ."',
 											'" . $InvoiceDetails['prd'] . "',
@@ -1319,7 +1319,7 @@ function ConvertToSQLDate($DateEntry) {
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$Errors=VerifyDebtorExists($AllocDetails['debtorno'], sizeof($Errors), $Errors, $db);
+		$Errors=VerifyDebtorExists($AllocDetails['debtorno'], sizeof($Errors), $Errors);
 		/*Get the outstanding amount to allocate (all amounts in FX) from the transaction*/
 
 		if ($AllocDetails['type'] !='11' AND $AllocDetails['type'] !=12){
@@ -1487,16 +1487,16 @@ function ConvertToSQLDate($DateEntry) {
 			$CreditDetails[$key] = DB_escape_string($value);
 		}
 		$PartCode=$CreditDetails['partcode'];
-		$Errors=VerifyStockCodeExists($PartCode, sizeof($Errors), $Errors, $db );
+		$Errors=VerifyStockCodeExists($PartCode, sizeof($Errors), $Errors );
 		unset($CreditDetails['partcode']);
 		$SalesArea=$CreditDetails['salesarea'];
 		unset($CreditDetails['salesarea']);
-		$CreditDetails['transno']=GetNextTransactionNo(11, $db);
+		$CreditDetails['transno']=GetNextTransactionNo(11);
 		$CreditDetails['type'] = 10;
-		$Errors=VerifyDebtorExists($CreditDetails['debtorno'], sizeof($Errors), $Errors, $db);
-		$Errors=VerifyBranchNoExists($CreditDetails['debtorno'],$CreditDetails['branchcode'], sizeof($Errors), $Errors, $db);
-		$Errors=VerifyTransNO($CreditDetails['transno'], 10, sizeof($Errors), $Errors, $db);
-		$Errors=VerifyTransactionDate($CreditDetails['trandate'], sizeof($Errors), $Errors, $db);
+		$Errors=VerifyDebtorExists($CreditDetails['debtorno'], sizeof($Errors), $Errors);
+		$Errors=VerifyBranchNoExists($CreditDetails['debtorno'],$CreditDetails['branchcode'], sizeof($Errors), $Errors);
+		$Errors=VerifyTransNO($CreditDetails['transno'], 10, sizeof($Errors), $Errors);
+		$Errors=VerifyTransactionDate($CreditDetails['trandate'], sizeof($Errors), $Errors);
 		if (isset($CreditDetails['settled'])){
 			$Errors=VerifySettled($CreditDetails['settled'], sizeof($Errors), $Errors);
 		}
@@ -1545,7 +1545,7 @@ function ConvertToSQLDate($DateEntry) {
 		$FieldNames='';
 		$FieldValues='';
 		$CreditDetails['trandate']=ConvertToSQLDate($CreditDetails['trandate']);
-		$CreditDetails['prd']=GetPeriodFromTransactionDate($CreditDetails['trandate'], sizeof($Errors), $Errors, $db);
+		$CreditDetails['prd']=GetPeriodFromTransactionDate($CreditDetails['trandate'], sizeof($Errors), $Errors);
 		foreach ($CreditDetails as $key => $value) {
 			$FieldNames.=$key.', ';
 			$FieldValues.='"'.$value.'", ';
@@ -1555,13 +1555,13 @@ function ConvertToSQLDate($DateEntry) {
 			$sql = "INSERT INTO debtortrans (" . mb_substr($FieldNames,0,-2) . ")
 						VALUES ('".mb_substr($FieldValues,0,-2) ."') ";
 			$result = DB_query($sql);
-			$sql = "UPDATE systypes SET typeno='" . GetNextTransactionNo(11, $db) ."' WHERE typeid=10";
+			$sql = "UPDATE systypes SET typeno='" . GetNextTransactionNo(11) ."' WHERE typeid=10";
 			$result = DB_query($sql);
-			$SalesGLCode=GetSalesGLCode($SalesArea, $PartCode, $db);
+			$SalesGLCode=GetSalesGLCode($SalesArea, $PartCode);
 			$DebtorsGLCode=GetDebtorsGLCode($db);
 			$sql="INSERT INTO gltrans VALUES(null,
 											10,
-											'" . GetNextTransactionNo(11, $db). "',
+											'" . GetNextTransactionNo(11). "',
 											0,
 											'" . $CreditDetails['trandate'] . "',
 											'" . $CreditDetails['prd'] . "',
@@ -1573,7 +1573,7 @@ function ConvertToSQLDate($DateEntry) {
 			$result = DB_query($sql);
 			$sql="INSERT INTO gltrans VALUES(null,
 											10,
-											'" . GetNextTransactionNo(11, $db) . "',
+											'" . GetNextTransactionNo(11) . "',
 											0,
 											'" . $CreditDetails['trandate'] ."',
 											'" . $CreditDetails['prd'] . "',

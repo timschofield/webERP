@@ -3,7 +3,7 @@
 
 /* Verify that the supplier number is valid, and doesn't already
    exist.*/
-	function VerifySupplierNo($SupplierNumber, $i, $Errors, $db) {
+	function VerifySupplierNo($SupplierNumber, $i, $Errors) {
 		if ((mb_strlen($SupplierNumber)<1) or (mb_strlen($SupplierNumber)>10)) {
 			$Errors[$i] = IncorrectDebtorNumberLength;
 		}
@@ -20,7 +20,7 @@
 
 /* Verify that the supplier number is valid, and already
    exists.*/
-	function VerifySupplierNoExists($SupplierNumber, $i, $Errors, $db) {
+	function VerifySupplierNoExists($SupplierNumber, $i, $Errors) {
 		if ((mb_strlen($SupplierNumber)<1) or (mb_strlen($SupplierNumber)>10)) {
 			$Errors[$i] = IncorrectDebtorNumberLength;
 		}
@@ -46,7 +46,7 @@
 /* Check that the supplier since date is a valid date. The date
  * must be in the same format as the date format specified in the
  * target webERP company */
-	function VerifySupplierSinceDate($suppliersincedate, $i, $Errors, $db) {
+	function VerifySupplierSinceDate($suppliersincedate, $i, $Errors) {
 		$sql="SELECT confvalue FROM config where confname='DefaultDateFormat'";
 		$result=DB_query($sql);
 		$myrow=DB_fetch_array($result);
@@ -108,7 +108,7 @@
 	}
 
 /* Check that the factor company is set up in the weberp database */
-	function VerifyFactorCompany($factorco , $i, $Errors, $db) {
+	function VerifyFactorCompany($factorco , $i, $Errors) {
 		$Searchsql = "SELECT COUNT(id)
 					 FROM factorcompanies
 					  WHERE id='".$factorco."'";
@@ -135,7 +135,7 @@
 		foreach ($SupplierDetails as $key => $value) {
 			$SupplierDetails[$key] = DB_escape_string($value);
 		}
-		$Errors=VerifySupplierNo($SupplierDetails['supplierid'], sizeof($Errors), $Errors, $db);
+		$Errors=VerifySupplierNo($SupplierDetails['supplierid'], sizeof($Errors), $Errors);
 		$Errors=VerifySupplierName($SupplierDetails['suppname'], sizeof($Errors), $Errors);
 		if (isset($SupplierDetails['address1'])){
 			$Errors=VerifyAddressLine($SupplierDetails['address1'], 40, sizeof($Errors), $Errors);
@@ -162,13 +162,13 @@
 			$Errors=VerifyLongitude($SupplierDetails['lng'], sizeof($Errors), $Errors);
 		}
 		if (isset($SupplierDetails['currcode'])){
-			$Errors=VerifyCurrencyCode($SupplierDetails['currcode'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyCurrencyCode($SupplierDetails['currcode'], sizeof($Errors), $Errors);
 		}
 		if (isset($SupplierDetails['suppliersince'])){
-			$Errors=VerifySupplierSince($SupplierDetails['suppliersince'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifySupplierSince($SupplierDetails['suppliersince'], sizeof($Errors), $Errors);
 		}
 		if (isset($SupplierDetails['paymentterms'])){
-			$Errors=VerifyPaymentTerms($SupplierDetails['paymentterms'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyPaymentTerms($SupplierDetails['paymentterms'], sizeof($Errors), $Errors);
 		}
 		if (isset($SupplierDetails['lastpaid'])){
 			$Errors=VerifyLastPaid($SupplierDetails['lastpaid'], sizeof($Errors), $Errors);
@@ -189,10 +189,10 @@
 			$Errors=VerifyRemittance($SupplierDetails['remittance'], sizeof($Errors), $Errors);
 		}
 		if (isset($SupplierDetails['taxgroupid'])){
-			$Errors=VerifyTaxGroupId($SupplierDetails['taxgroupid'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyTaxGroupId($SupplierDetails['taxgroupid'], sizeof($Errors), $Errors);
 		}
 		if (isset($SupplierDetails['factorcompanyid'])){
-			$Errors=VerifyFactorCompany($SupplierDetails['factorcompanyid'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyFactorCompany($SupplierDetails['factorcompanyid'], sizeof($Errors), $Errors);
 		}
 		if (isset($CustomerDetails['taxref'])){
 			$Errors=VerifyTaxRef($CustomerDetails['taxref'], sizeof($Errors), $Errors);
@@ -226,7 +226,7 @@
 		foreach ($SupplierDetails as $key => $value) {
 			$SupplierDetails[$key] = DB_escape_string($value);
 		}
-		$Errors=VerifySupplierNoExists($SupplierDetails['supplierid'], sizeof($Errors), $Errors, $db);
+		$Errors=VerifySupplierNoExists($SupplierDetails['supplierid'], sizeof($Errors), $Errors);
 		$Errors=VerifySupplierName($SupplierDetails['suppname'], sizeof($Errors), $Errors);
 		if (isset($SupplierDetails['address1'])){
 			$Errors=VerifyAddressLine($SupplierDetails['address1'], 40, sizeof($Errors), $Errors);
@@ -253,13 +253,13 @@
 			$Errors=VerifyLongitude($SupplierDetails['lng'], sizeof($Errors), $Errors);
 		}
 		if (isset($SupplierDetails['currcode'])){
-			$Errors=VerifyCurrencyCode($SupplierDetails['currcode'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyCurrencyCode($SupplierDetails['currcode'], sizeof($Errors), $Errors);
 		}
 		if (isset($SupplierDetails['suppliersince'])){
-			$Errors=VerifySupplierSince($SupplierDetails['suppliersince'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifySupplierSince($SupplierDetails['suppliersince'], sizeof($Errors), $Errors);
 		}
 		if (isset($SupplierDetails['paymentterms'])){
-			$Errors=VerifyPaymentTerms($SupplierDetails['paymentterms'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyPaymentTerms($SupplierDetails['paymentterms'], sizeof($Errors), $Errors);
 		}
 		if (isset($SupplierDetails['lastpaid'])){
 			$Errors=VerifyLastPaid($SupplierDetails['lastpaid'], sizeof($Errors), $Errors);
@@ -280,10 +280,10 @@
 			$Errors=VerifyRemittance($SupplierDetails['remittance'], sizeof($Errors), $Errors);
 		}
 		if (isset($SupplierDetails['taxgroupid'])){
-			$Errors=VerifyTaxGroupId($SupplierDetails['taxgroupid'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyTaxGroupId($SupplierDetails['taxgroupid'], sizeof($Errors), $Errors);
 		}
 		if (isset($SupplierDetails['factorcompanyid'])){
-			$Errors=VerifyFactorCompany($SupplierDetails['factorcompanyid'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyFactorCompany($SupplierDetails['factorcompanyid'], sizeof($Errors), $Errors);
 		}
 		if (isset($CustomerDetails['taxref'])){
 			$Errors=VerifyTaxRef($CustomerDetails['taxref'], sizeof($Errors), $Errors);
@@ -316,7 +316,7 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$Errors = VerifySupplierNoExists($SupplierID, sizeof($Errors), $Errors, $db);
+		$Errors = VerifySupplierNoExists($SupplierID, sizeof($Errors), $Errors);
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}

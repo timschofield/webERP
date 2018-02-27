@@ -2,7 +2,7 @@
 /* $Id$*/
 
 /* Check that the account group doesn't already exist'*/
-	function VerifyAccountGroup($AccountGroup, $i, $Errors, $db) {
+	function VerifyAccountGroup($AccountGroup, $i, $Errors) {
 		$Searchsql = "SELECT count(groupname)
 				FROM accountgroups
 				WHERE groupname='".$AccountGroup."'";
@@ -15,7 +15,7 @@
 	}
 
 /* Check that the account sectiont already exists'*/
-	function VerifyAccountSectionExists($AccountSection, $i, $Errors, $db) {
+	function VerifyAccountSectionExists($AccountSection, $i, $Errors) {
 		$Searchsql = "SELECT count(sectionid)
 				FROM accountsection
 				WHERE sectionid='".$AccountSection."'";
@@ -44,7 +44,7 @@
 	}
 
 /* Check that the parent group exists*/
-	function VerifyParentGroupExists($AccountGroup, $i, $Errors, $db) {
+	function VerifyParentGroupExists($AccountGroup, $i, $Errors) {
 		$Searchsql = "SELECT count(groupname)
 				FROM accountgroups
 				WHERE groupname='".$AccountGroup."'";
@@ -66,12 +66,12 @@
 		foreach ($AccountGroupDetails as $key => $value) {
 			$AccountGroupDetails[$key] = DB_escape_string($value);
 		}
-		$Errors=VerifyAccountGroup($AccountGroupDetails['groupname'], sizeof($Errors), $Errors, $db);
-		$Errors=VerifyAccountSectionExists($AccountGroupDetails['sectioninaccounts'], sizeof($Errors), $Errors, $db);
+		$Errors=VerifyAccountGroup($AccountGroupDetails['groupname'], sizeof($Errors), $Errors);
+		$Errors=VerifyAccountSectionExists($AccountGroupDetails['sectioninaccounts'], sizeof($Errors), $Errors);
 		if (isset($AccountGroupDetails['pandl'])){
 			$Errors=VerifyPandL($AccountGroupDetails['pandl'], sizeof($Errors), $Errors);
 		}
-		$Errors=VerifyParentGroupExists($AccountGroupDetails['parentgroupname'], sizeof($Errors), $Errors, $db);
+		$Errors=VerifyParentGroupExists($AccountGroupDetails['parentgroupname'], sizeof($Errors), $Errors);
 		$FieldNames='';
 		$FieldValues='';
 		foreach ($AccountGroupDetails as $key => $value) {

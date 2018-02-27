@@ -2,7 +2,7 @@
 /* $Id$*/
 
 /* Check that the area code is set up in the weberp database */
-	function VerifyAreaCodeDoesntExist($AreaCode , $i, $Errors, $db) {
+	function VerifyAreaCodeDoesntExist($AreaCode , $i, $Errors) {
 		$Searchsql = "SELECT COUNT(areacode)
 					 FROM areas
 					  WHERE areacode='".$AreaCode."'";
@@ -70,7 +70,7 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$Errors= VerifyAreaCodeDoesntExist($AreaDetails['areacode'], 0, $Errors, $db);
+		$Errors= VerifyAreaCodeDoesntExist($AreaDetails['areacode'], 0, $Errors);
 		if (sizeof($Errors>0)) {
 //			return $Errors;
 		}

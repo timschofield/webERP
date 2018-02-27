@@ -9,7 +9,7 @@
 	}
 
 /* Verify the category doesnt exist */
-	function VerifyStockCategoryAlreadyExists($StockCategory, $i, $Errors, $db) {
+	function VerifyStockCategoryAlreadyExists($StockCategory, $i, $Errors) {
 		$Searchsql = "SELECT count(categoryid)
 				      FROM stockcategory
 				      WHERE categoryid='".$StockCategory."'";
@@ -48,15 +48,15 @@
 		foreach ($CategoryDetails as $key => $value) {
 			$CategoryDetails[$key] = DB_escape_string($value);
 		}
-		$Errors=VerifyStockCategoryAlreadyExists($CategoryDetails['categoryid'], sizeof($Errors), $Errors, $db);
+		$Errors=VerifyStockCategoryAlreadyExists($CategoryDetails['categoryid'], sizeof($Errors), $Errors);
 		$Errors=VerifyCategoryID($CategoryDetails['categoryid'], sizeof($Errors), $Errors);
 		$Errors=VerifyCategoryDescription($CategoryDetails['categorydescription'], sizeof($Errors), $Errors);
 		$Errors=VerifyStockType($CategoryDetails['stocktype'], sizeof($Errors), $Errors);
-		$Errors=VerifyAccountCodeExists($CategoryDetails['stockact'], sizeof($Errors), $Errors, $db);
-		$Errors=VerifyAccountCodeExists($CategoryDetails['adjglact'], sizeof($Errors), $Errors, $db);
-		$Errors=VerifyAccountCodeExists($CategoryDetails['purchpricevaract'], sizeof($Errors), $Errors, $db);
-		$Errors=VerifyAccountCodeExists($CategoryDetails['materialuseagevarac'], sizeof($Errors), $Errors, $db);
-		$Errors=VerifyAccountCodeExists($CategoryDetails['wipact'], sizeof($Errors), $Errors, $db);
+		$Errors=VerifyAccountCodeExists($CategoryDetails['stockact'], sizeof($Errors), $Errors);
+		$Errors=VerifyAccountCodeExists($CategoryDetails['adjglact'], sizeof($Errors), $Errors);
+		$Errors=VerifyAccountCodeExists($CategoryDetails['purchpricevaract'], sizeof($Errors), $Errors);
+		$Errors=VerifyAccountCodeExists($CategoryDetails['materialuseagevarac'], sizeof($Errors), $Errors);
+		$Errors=VerifyAccountCodeExists($CategoryDetails['wipact'], sizeof($Errors), $Errors);
 		$FieldNames='';
 		$FieldValues='';
 		foreach ($CategoryDetails as $key => $value) {
@@ -86,15 +86,15 @@
 		foreach ($CategoryDetails as $key => $value) {
 			$CategoryDetails[$key] = DB_escape_string($value);
 		}
-		$Errors=VerifyStockCategoryExists($CategoryDetails['categoryid'], sizeof($Errors), $Errors, $db);
+		$Errors=VerifyStockCategoryExists($CategoryDetails['categoryid'], sizeof($Errors), $Errors);
 		$Errors=VerifyCategoryID($CategoryDetails['categoryid'], sizeof($Errors), $Errors);
 		$Errors=VerifyCategoryDescription($CategoryDetails['categorydescription'], sizeof($Errors), $Errors);
 		$Errors=VerifyStockType($CategoryDetails['stocktype'], sizeof($Errors), $Errors);
-		$Errors=VerifyAccountCodeExists($CategoryDetails['stockact'], sizeof($Errors), $Errors, $db);
-		$Errors=VerifyAccountCodeExists($CategoryDetails['adjglact'], sizeof($Errors), $Errors, $db);
-		$Errors=VerifyAccountCodeExists($CategoryDetails['purchpricevaract'], sizeof($Errors), $Errors, $db);
-		$Errors=VerifyAccountCodeExists($CategoryDetails['materialuseagevarac'], sizeof($Errors), $Errors, $db);
-		$Errors=VerifyAccountCodeExists($CategoryDetails['wipact'], sizeof($Errors), $Errors, $db);
+		$Errors=VerifyAccountCodeExists($CategoryDetails['stockact'], sizeof($Errors), $Errors);
+		$Errors=VerifyAccountCodeExists($CategoryDetails['adjglact'], sizeof($Errors), $Errors);
+		$Errors=VerifyAccountCodeExists($CategoryDetails['purchpricevaract'], sizeof($Errors), $Errors);
+		$Errors=VerifyAccountCodeExists($CategoryDetails['materialuseagevarac'], sizeof($Errors), $Errors);
+		$Errors=VerifyAccountCodeExists($CategoryDetails['wipact'], sizeof($Errors), $Errors);
 		$FieldNames='';
 		$FieldValues='';
 		foreach ($CategoryDetails as $key => $value) {
@@ -129,7 +129,7 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$Errors=VerifyStockCategoryExists($Categoryid, sizeof($Errors), $Errors, $db);
+		$Errors=VerifyStockCategoryExists($Categoryid, sizeof($Errors), $Errors);
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}

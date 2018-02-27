@@ -3,7 +3,7 @@
 
 /* Verify that the debtor number is valid, and doesn't already
    exist.*/
-	function VerifyDebtorNo($DebtorNumber, $i, $Errors, $db) {
+	function VerifyDebtorNo($DebtorNumber, $i, $Errors) {
 		if ((mb_strlen($DebtorNumber)<1) or (mb_strlen($DebtorNumber)>10)) {
 			$Errors[$i] = IncorrectDebtorNumberLength;
 		}
@@ -19,7 +19,7 @@
 	}
 
 /* Check that the debtor number exists*/
-	function VerifyDebtorExists($DebtorNumber, $i, $Errors, $db) {
+	function VerifyDebtorExists($DebtorNumber, $i, $Errors) {
 		$Searchsql = "SELECT count(debtorno)
 				     FROM debtorsmaster
 				     WHERE debtorno='".$DebtorNumber."'";
@@ -48,7 +48,7 @@
 	}
 
 /* Check that the currency code is set up in the weberp database */
-	function VerifyCurrencyCode($CurrCode, $i, $Errors, $db) {
+	function VerifyCurrencyCode($CurrCode, $i, $Errors) {
 		$Searchsql = "SELECT COUNT(currabrev)
 					  FROM currencies
 					  WHERE currabrev='".$CurrCode."'";
@@ -61,7 +61,7 @@
 	}
 
 /* Check that the sales type is set up in the weberp database */
-	function VerifySalesType($SalesType, $i, $Errors, $db) {
+	function VerifySalesType($SalesType, $i, $Errors) {
 		$Searchsql = "SELECT COUNT(typeabbrev)
 					 FROM salestypes
 					  WHERE typeabbrev='".$SalesType."'";
@@ -82,7 +82,7 @@
 	}
 
 /* Check that the hold reason is set up in the weberp database */
-	function VerifyHoldReason($HoldReason , $i, $Errors, $db) {
+	function VerifyHoldReason($HoldReason , $i, $Errors) {
 		$Searchsql = "SELECT COUNT(reasoncode)
 					 FROM holdreasons
 					  WHERE reasoncode='".$HoldReason."'";
@@ -95,7 +95,7 @@
 	}
 
 /* Check that the payment terms are set up in the weberp database */
-	function VerifyPaymentTerms($PaymentTerms , $i, $Errors, $db) {
+	function VerifyPaymentTerms($PaymentTerms , $i, $Errors) {
 		$Searchsql = "SELECT COUNT(termsindicator)
 					 FROM paymentterms
 					  WHERE termsindicator='".$PaymentTerms."'";
@@ -229,7 +229,7 @@
 	}
 
 /* Check that the customer type is set up in the weberp database */
-	function VerifyCustomerType($debtortype , $i, $Errors, $db) {
+	function VerifyCustomerType($debtortype , $i, $Errors) {
 		$Searchsql = "SELECT COUNT(typeid)
 					 FROM debtortype
 					  WHERE typeid='".$debtortype."'";
@@ -266,7 +266,7 @@
 		$autonumberresult=DB_query($autonumbersql);
 		$autonumber=DB_fetch_row($autonumberresult);
 		if ($autonumber[0]==0) {
-			$Errors=VerifyDebtorNo($CustomerDetails['debtorno'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyDebtorNo($CustomerDetails['debtorno'], sizeof($Errors), $Errors);
 		} else {
 			$CustomerDetails['debtorno']='';
 		}
@@ -290,19 +290,19 @@
 			$Errors=VerifyAddressLine($CustomerDetails['address6'], 15, sizeof($Errors), $Errors);
 		}
 		if (isset($CustomerDetails['currcode'])){
-			$Errors=VerifyCurrencyCode($CustomerDetails['currcode'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyCurrencyCode($CustomerDetails['currcode'], sizeof($Errors), $Errors);
 		}
 		if (isset($CustomerDetails['salestype'])){
-			$Errors=VerifySalesType($CustomerDetails['salestype'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifySalesType($CustomerDetails['salestype'], sizeof($Errors), $Errors);
 		}
 		if (isset($CustomerDetails['clientsince'])){
 			$Errors=VerifyClientSince($CustomerDetails['clientsince'], sizeof($Errors), $Errors);
 		}
 		if (isset($CustomerDetails['holdreason'])){
-			$Errors=VerifyHoldReason($CustomerDetails['holdreason'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyHoldReason($CustomerDetails['holdreason'], sizeof($Errors), $Errors);
 		}
 		if (isset($CustomerDetails['paymentterms'])){
-			$Errors=VerifyPaymentTerms($CustomerDetails['paymentterms'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyPaymentTerms($CustomerDetails['paymentterms'], sizeof($Errors), $Errors);
 		}
 		if (isset($CustomerDetails['discount'])){
 			$Errors=VerifyDiscount($CustomerDetails['discount'], sizeof($Errors), $Errors);
@@ -350,7 +350,7 @@
 			$Errors=VerifyCustomerPOLine($CustomerDetails['customerpoline'], sizeof($Errors), $Errors);
 		}
 		if (isset($CustomerDetails['typeid'])){
-			$Errors=VerifyCustomerType($CustomerDetails['typeid'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyCustomerType($CustomerDetails['typeid'], sizeof($Errors), $Errors);
 		}
 		$FieldNames='';
 		$FieldValues='';
@@ -393,7 +393,7 @@
 			$Errors[sizeof($Errors)] = NoDebtorNumber;
 			return $Errors;
 		}
-		$Errors=VerifyDebtorExists($CustomerDetails['debtorno'], sizeof($Errors), $Errors, $db);
+		$Errors=VerifyDebtorExists($CustomerDetails['debtorno'], sizeof($Errors), $Errors);
 		if (in_array(DebtorDoesntExist, $Errors)) {
 			return $Errors;
 		}
@@ -419,19 +419,19 @@
 			$Errors=VerifyAddressLine($CustomerDetails['address6'], 15, sizeof($Errors), $Errors);
 		}
 		if (isset($CustomerDetails['currcode'])){
-			$Errors=VerifyCurrencyCode($CustomerDetails['currcode'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyCurrencyCode($CustomerDetails['currcode'], sizeof($Errors), $Errors);
 		}
 		if (isset($CustomerDetails['salestype'])){
-			$Errors=VerifySalesType($CustomerDetails['salestype'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifySalesType($CustomerDetails['salestype'], sizeof($Errors), $Errors);
 		}
 		if (isset($CustomerDetails['clientsince'])){
 			$Errors=VerifyClientSince($CustomerDetails['clientsince'], sizeof($Errors), $Errors);
 		}
 		if (isset($CustomerDetails['holdreason'])){
-			$Errors=VerifyHoldReason($CustomerDetails['holdreason'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyHoldReason($CustomerDetails['holdreason'], sizeof($Errors), $Errors);
 		}
 		if (isset($CustomerDetails['paymentterms'])){
-			$Errors=VerifyPaymentTerms($CustomerDetails['paymentterms'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyPaymentTerms($CustomerDetails['paymentterms'], sizeof($Errors), $Errors);
 		}
 		if (isset($CustomerDetails['discount'])){
 			$Errors=VerifyDiscount($CustomerDetails['discount'], sizeof($Errors), $Errors);
@@ -479,7 +479,7 @@
 			$Errors=VerifyCustomerPOLine($CustomerDetails['customerpoline'], sizeof($Errors), $Errors);
 		}
 		if (isset($CustomerDetails['typeid'])){
-			$Errors=VerifyCustomerType($CustomerDetails['typeid'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyCustomerType($CustomerDetails['typeid'], sizeof($Errors), $Errors);
 		}
 		$sql='UPDATE debtorsmaster SET ';
 		foreach ($CustomerDetails as $key => $value) {
@@ -508,7 +508,7 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$Errors = VerifyDebtorExists($DebtorNumber, sizeof($Errors), $Errors, $db);
+		$Errors = VerifyDebtorExists($DebtorNumber, sizeof($Errors), $Errors);
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}

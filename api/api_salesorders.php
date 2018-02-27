@@ -38,7 +38,7 @@ $SOH_DateFields = array ('orddate',
 /* Check that the order date is a valid date. The date
  * must be in the same format as the date format specified in the
  * target webERP company */
-	function VerifyOrderDate($orddate, $i, $Errors, $db) {
+	function VerifyOrderDate($orddate, $i, $Errors) {
 		$sql="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
 		$result=api_DB_query($sql);
 		$myrow=DB_fetch_array($result);
@@ -72,7 +72,7 @@ $SOH_DateFields = array ('orddate',
 	}
 
 /* Check that the order type is set up in the weberp database */
-	function VerifyOrderType($ordertype, $i, $Errors, $db) {
+	function VerifyOrderType($ordertype, $i, $Errors) {
 		$Searchsql = "SELECT COUNT(typeabbrev)
 					 FROM salestypes
 					 WHERE typeabbrev='" . $ordertype."'";
@@ -101,7 +101,7 @@ $SOH_DateFields = array ('orddate',
 	}
 
 /* Check that the from stock location is set up in the weberp database */
-	function VerifyFromStockLocation($FromStockLocn, $i, $Errors, $db) {
+	function VerifyFromStockLocation($FromStockLocn, $i, $Errors) {
 		$Searchsql = "SELECT COUNT(loccode)
 					 FROM locations
 					  WHERE loccode='". $FromStockLocn."'";
@@ -116,7 +116,7 @@ $SOH_DateFields = array ('orddate',
 /* Check that the delivery date is a valid date. The date
  * must be in the same format as the date format specified in the
  * target webERP company */
-	function VerifyDeliveryDate($DeliveryDate, $i, $Errors, $db) {
+	function VerifyDeliveryDate($DeliveryDate, $i, $Errors) {
 		$sql="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
 		$result=api_DB_query($sql);
 		$myrow=DB_fetch_array($result);
@@ -158,7 +158,7 @@ $SOH_DateFields = array ('orddate',
 	}
 
 /* Fetch the next line number */
-	function GetOrderLineNumber($OrderNo, $i, $Errors, $db) {
+	function GetOrderLineNumber($OrderNo, $i, $Errors) {
 		$linesql = "SELECT MAX(orderlineno)
 					FROM salesorderdetails
 					 WHERE orderno='" . $OrderNo . "'";
@@ -171,7 +171,7 @@ $SOH_DateFields = array ('orddate',
 	}
 
 /* Check that the order header already exists */
-	function VerifyOrderHeaderExists($OrderNo, $i, $Errors, $db) {
+	function VerifyOrderHeaderExists($OrderNo, $i, $Errors) {
 		$Searchsql = "SELECT COUNT(orderno)
 					 FROM salesorders
 					  WHERE orderno='".$OrderNo."'";
@@ -226,7 +226,7 @@ $SOH_DateFields = array ('orddate',
 /* Check that the item due date is a valid date. The date
  * must be in the same format as the date format specified in the
  * target webERP company */
-	function VerifyItemDueDate($ItemDue, $i, $Errors, $db) {
+	function VerifyItemDueDate($ItemDue, $i, $Errors) {
 		$sql="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
 		$result=api_DB_query($sql);
 		$myrow=DB_fetch_array($result);
@@ -272,8 +272,8 @@ $SOH_DateFields = array ('orddate',
 		foreach ($OrderHeader as $key => $value) {
 			$OrderHeader[$key] = DB_escape_string($value);
 		}
-		$Errors=VerifyDebtorExists($OrderHeader['debtorno'], sizeof($Errors), $Errors, $db);
-		$Errors=VerifyBranchNoExists($OrderHeader['debtorno'],$OrderHeader['branchcode'], sizeof($Errors), $Errors, $db);
+		$Errors=VerifyDebtorExists($OrderHeader['debtorno'], sizeof($Errors), $Errors);
+		$Errors=VerifyBranchNoExists($OrderHeader['debtorno'],$OrderHeader['branchcode'], sizeof($Errors), $Errors);
 		if (isset($OrderHeader['customerref'])){
 			$Errors=VerifyCustomerRef($OrderHeader['customerref'], sizeof($Errors), $Errors);
 		}
@@ -284,13 +284,13 @@ $SOH_DateFields = array ('orddate',
 			$Errors=VerifyComments($OrderHeader['comments'], sizeof($Errors), $Errors);
 		}
 		if (isset($OrderHeader['orddate'])){
-			$Errors=VerifyOrderDate($OrderHeader['orddate'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyOrderDate($OrderHeader['orddate'], sizeof($Errors), $Errors);
 		}
 		if (isset($OrderHeader['ordertype'])){
-			$Errors=VerifyOrderType($OrderHeader['ordertype'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyOrderType($OrderHeader['ordertype'], sizeof($Errors), $Errors);
 		}
 		if (isset($OrderHeader['shipvia'])){
-			$Errors=VerifyShipVia($OrderHeader['shipvia'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyShipVia($OrderHeader['shipvia'], sizeof($Errors), $Errors);
 		}
 		if (isset($OrderHeader['deladd1'])){
 			$Errors=VerifyAddressLine($OrderHeader['deladd1'], 40, sizeof($Errors), $Errors);
@@ -326,10 +326,10 @@ $SOH_DateFields = array ('orddate',
 			$Errors=VerifyFreightCost($OrderHeader['freightcost'], sizeof($Errors), $Errors);
 		}
 		if (isset($OrderHeader['fromstkloc'])){
-			$Errors=VerifyFromStockLocation($OrderHeader['fromstkloc'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyFromStockLocation($OrderHeader['fromstkloc'], sizeof($Errors), $Errors);
 		}
 		if (isset($OrderHeader['deliverydate'])){
-			$Errors=VerifyDeliveryDate($OrderHeader['deliverydate'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyDeliveryDate($OrderHeader['deliverydate'], sizeof($Errors), $Errors);
 		}
 		if (isset($OrderHeader['quotation'])){
 			$Errors=VerifyQuotation($OrderHeader['quotation'], sizeof($Errors), $Errors);
@@ -374,9 +374,9 @@ $SOH_DateFields = array ('orddate',
 		foreach ($OrderHeader as $key => $value) {
 			$OrderHeader[$key] = DB_escape_string($value);
 		}
-		$Errors=VerifyOrderHeaderExists($OrderHeader['orderno'], sizeof($Errors), $Errors, $db);
-		$Errors=VerifyDebtorExists($OrderHeader['debtorno'], sizeof($Errors), $Errors, $db);
-		$Errors=VerifyBranchNoExists($OrderHeader['debtorno'],$OrderHeader['branchcode'], sizeof($Errors), $Errors, $db);
+		$Errors=VerifyOrderHeaderExists($OrderHeader['orderno'], sizeof($Errors), $Errors);
+		$Errors=VerifyDebtorExists($OrderHeader['debtorno'], sizeof($Errors), $Errors);
+		$Errors=VerifyBranchNoExists($OrderHeader['debtorno'],$OrderHeader['branchcode'], sizeof($Errors), $Errors);
 		if (isset($OrderHeader['customerref'])){
 			$Errors=VerifyCustomerRef($OrderHeader['customerref'], sizeof($Errors), $Errors);
 		}
@@ -387,13 +387,13 @@ $SOH_DateFields = array ('orddate',
 			$Errors=VerifyComments($OrderHeader['comments'], sizeof($Errors), $Errors);
 		}
 		if (isset($OrderHeader['orddate'])){
-			$Errors=VerifyOrderDate($OrderHeader['orddate'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyOrderDate($OrderHeader['orddate'], sizeof($Errors), $Errors);
 		}
 		if (isset($OrderHeader['ordertype'])){
-			$Errors=VerifyOrderType($OrderHeader['ordertype'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyOrderType($OrderHeader['ordertype'], sizeof($Errors), $Errors);
 		}
 		if (isset($OrderHeader['shipvia'])){
-			$Errors=VerifyShipVia($OrderHeader['shipvia'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyShipVia($OrderHeader['shipvia'], sizeof($Errors), $Errors);
 		}
 		if (isset($OrderHeader['deladd1'])){
 			$Errors=VerifyAddressLine($OrderHeader['deladd1'], 40, sizeof($Errors), $Errors);
@@ -429,10 +429,10 @@ $SOH_DateFields = array ('orddate',
 			$Errors=VerifyFreightCost($OrderHeader['freightcost'], sizeof($Errors), $Errors);
 		}
 		if (isset($OrderHeader['fromstkloc'])){
-			$Errors=VerifyFromStockLocation($OrderHeader['fromstkloc'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyFromStockLocation($OrderHeader['fromstkloc'], sizeof($Errors), $Errors);
 		}
 		if (isset($OrderHeader['deliverydate'])){
-			$Errors=VerifyDeliveryDate($OrderHeader['deliverydate'], sizeof($Errors), $Errors, $db);
+			$Errors=VerifyDeliveryDate($OrderHeader['deliverydate'], sizeof($Errors), $Errors);
 		}
 		if (isset($OrderHeader['quotation'])){
 			$Errors=VerifyQuotation($OrderHeader['quotation'], sizeof($Errors), $Errors);
@@ -472,9 +472,9 @@ $SOH_DateFields = array ('orddate',
 		foreach ($OrderLine as $key => $value) {
 			$OrderLine[$key] = DB_escape_string($value);
 		}
-		$OrderLine['orderlineno'] = GetOrderLineNumber($OrderLine['orderno'], sizeof($Errors), $Errors, $db);
-		$Errors=VerifyOrderHeaderExists($OrderLine['orderno'], sizeof($Errors), $Errors, $db);
-		$Errors=VerifyStockCodeExists($OrderLine['stkcode'], sizeof($Errors), $Errors, $db);
+		$OrderLine['orderlineno'] = GetOrderLineNumber($OrderLine['orderno'], sizeof($Errors), $Errors);
+		$Errors=VerifyOrderHeaderExists($OrderLine['orderno'], sizeof($Errors), $Errors);
+		$Errors=VerifyStockCodeExists($OrderLine['stkcode'], sizeof($Errors), $Errors);
 		if (isset($OrderLine['unitprice'])){
 			$Errors=VerifyUnitPrice($OrderLine['unitprice'], sizeof($Errors), $Errors);
 		}
@@ -537,8 +537,8 @@ $SOH_DateFields = array ('orddate',
 		foreach ($OrderLine as $key => $value) {
 			$OrderLine[$key] = DB_escape_string($value);
 		}
-		$Errors=VerifyOrderHeaderExists($OrderLine['orderno'], sizeof($Errors), $Errors, $db);
-		$Errors=VerifyStockCodeExists($OrderLine['stkcode'], sizeof($Errors), $Errors, $db);
+		$Errors=VerifyOrderHeaderExists($OrderLine['orderno'], sizeof($Errors), $Errors);
+		$Errors=VerifyStockCodeExists($OrderLine['stkcode'], sizeof($Errors), $Errors);
 		if (isset($OrderLine['unitprice'])){
 			$Errors=VerifyUnitPrice($OrderLine['unitprice'], sizeof($Errors), $Errors);
 		}
@@ -596,7 +596,7 @@ $SOH_DateFields = array ('orddate',
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$Errors=VerifyOrderHeaderExists($OrderNo, sizeof($Errors), $Errors, $db);
+		$Errors=VerifyOrderHeaderExists($OrderNo, sizeof($Errors), $Errors);
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
@@ -621,7 +621,7 @@ $SOH_DateFields = array ('orddate',
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$Errors=VerifyOrderHeaderExists($OrderNo, sizeof($Errors), $Errors, $db);
+		$Errors=VerifyOrderHeaderExists($OrderNo, sizeof($Errors), $Errors);
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
@@ -643,7 +643,7 @@ $SOH_DateFields = array ('orddate',
 			$Errors[]=NoAuthorisation;
 			return $Errors;
 		}
-		$Errors=VerifyOrderHeaderExists($OrderNo, sizeof($Errors), $Errors, $db);
+		$Errors=VerifyOrderHeaderExists($OrderNo, sizeof($Errors), $Errors);
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
@@ -721,7 +721,7 @@ $SOH_DateFields = array ('orddate',
 	/*Start an SQL transaction */
 		$result = DB_Txn_Begin();
 	/*Now Get the next invoice number - function in SQL_CommonFunctions*/
-		$InvoiceNo = GetNextTransNo(10, $db);
+		$InvoiceNo = GetNextTransNo(10);
 		$PeriodNo = GetCurrentPeriod($db);
 
 		$TaxTotals =array();
@@ -1097,7 +1097,7 @@ $SOH_DateFields = array ('orddate',
 										'" . $InvoiceNo . "',
 										'" . $OrderHeader['orddate'] . "',
 										'" . $PeriodNo . "',
-										'" . GetCOGSGLAccount($OrderHeader['area'], $OrderLineRow['stkcode'], $OrderHeader['ordertype'], $db) . "',
+										'" . GetCOGSGLAccount($OrderHeader['area'], $OrderLineRow['stkcode'], $OrderHeader['ordertype']) . "',
 										'" . $OrderHeader['debtorno'] . " - " . $OrderLineRow['stkcode'] . " x " . $OrderLineRow['quantity'] . " @ " . $StandardCost . "',
 										'" . ($StandardCost * $OrderLineRow['quantity']) . "')";
 
@@ -1128,7 +1128,7 @@ $SOH_DateFields = array ('orddate',
 			if ($CompanyRecord['gllink_debtors']==1 AND $OrderLineRow['unitprice'] !=0){
 
 				//Post sales transaction to GL credit sales
-				$SalesGLAccounts = GetSalesGLAccount($OrderHeader['area'], $OrderLineRow['stkcode'], $OrderHeader['ordertype'], $db);
+				$SalesGLAccounts = GetSalesGLAccount($OrderHeader['area'], $OrderLineRow['stkcode'], $OrderHeader['ordertype']);
 
 				$SQL = "INSERT INTO gltrans (type,
 											typeno,
