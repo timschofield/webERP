@@ -1766,7 +1766,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 		/*now the stock entry*/
-				$StockGLCode = GetStockGLCode($OrderLine->StockID,$db);
+				$StockGLCode = GetStockGLCode($OrderLine->StockID);
 
 				$SQL = "INSERT INTO gltrans (type,
 											typeno,

@@ -1350,7 +1350,7 @@ if(isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 									'" . $_SESSION['CreditItems' . $identifier]->DebtorNo . " - " . $CreditLine->StockID . " x " . $CreditLine->QtyDispatched . " @ " . $CreditLine->StandardCost . "',
 									'" . round($CreditLine->StandardCost * $CreditLine->QtyDispatched,$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 				} else {
-					$StockGLCode = GetStockGLCode($CreditLine->StockID, $db);
+					$StockGLCode = GetStockGLCode($CreditLine->StockID);
 					$SQL = "INSERT INTO gltrans(type,
 												typeno,
 												trandate,

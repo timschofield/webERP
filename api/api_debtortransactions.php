@@ -935,7 +935,7 @@ function ConvertToSQLDate($DateEntry) {
 				$Result = api_DB_query($SQL,'','',true);
 
 /*now the stock entry - this is set to the cost act in the case of a fixed asset disposal */
-				$StockGLCode = GetStockGLCode($CN_Line['stockid'],$db);
+				$StockGLCode = GetStockGLCode($CN_Line['stockid']);
 
 				$SQL = "INSERT INTO gltrans (type,
 											typeno,

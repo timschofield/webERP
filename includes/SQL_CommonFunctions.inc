@@ -31,7 +31,7 @@ etc
 }
 
 
-Function GetStockGLCode ($StockID, &$db){
+Function GetStockGLCode ($StockID){
 
 /*Gets the GL Codes relevant to the stock item account from the stock category record */
 	$QuerySQL = "SELECT stockact,
@@ -158,7 +158,7 @@ function ItemCostUpdateGL($db, $StockID, $NewCost, $OldCost, $QOH) {
 
 		$CostUpdateNo = GetNextTransNo(35, $db);
 		$PeriodNo = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
-		$StockGLCode = GetStockGLCode($StockID,$db);
+		$StockGLCode = GetStockGLCode($StockID);
 
 		$ValueOfChange = $QOH * ($NewCost - $OldCost);
 

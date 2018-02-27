@@ -1313,7 +1313,7 @@ if (isset($_POST['ProcessReturn']) AND $_POST['ProcessReturn'] != ''){
 				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 		/*now the stock entry*/
-				$StockGLCode = GetStockGLCode($ReturnItemLine->StockID,$db);
+				$StockGLCode = GetStockGLCode($ReturnItemLine->StockID);
 
 				$SQL = "INSERT INTO gltrans (type,
 											typeno,

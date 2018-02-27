@@ -1427,7 +1427,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 /*now the stock entry - this is set to the cost act in the case of a fixed asset disposal */
-				$StockGLCode = GetStockGLCode($OrderLine->StockID,$db);
+				$StockGLCode = GetStockGLCode($OrderLine->StockID);
 
 				$SQL = "INSERT INTO gltrans (type,
 											typeno,

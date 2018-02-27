@@ -860,7 +860,7 @@ then do the updates and inserts to process the credit note entered */
 						if (mb_strlen($EnteredGRN->ItemCode)>0 OR $EnteredGRN->ItemCode != ''){ /*so it is a stock item */
 
 							/*need to get the stock category record for this stock item - this is function in SQL_CommonFunctions.inc */
-							$StockGLCode = GetStockGLCode($EnteredGRN->ItemCode,$db);
+							$StockGLCode = GetStockGLCode($EnteredGRN->ItemCode);
 
 							/*We have stock item and a purchase price variance need to see whether we are using Standard or WeightedAverageCosting */
 

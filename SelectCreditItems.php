@@ -1838,7 +1838,7 @@ then debit the expense account the stock is to written off to */
 				    } else {
 
 /*the goods are coming back into stock so debit the stock account*/
-					$StockGLCode = GetStockGLCode($CreditLine->StockID, $db);
+					$StockGLCode = GetStockGLCode($CreditLine->StockID);
 					$SQL = "INSERT INTO gltrans (type,
 												typeno,
 												trandate,

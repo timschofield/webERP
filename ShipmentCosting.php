@@ -217,7 +217,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 
 
 			if ($_SESSION['CompanyRecord']['gllink_stock']==1){
-				  $StockGLCodes = GetStockGLCode($myrow['itemcode'],$db);
+				  $StockGLCodes = GetStockGLCode($myrow['itemcode']);
 			}
 
 			/*GL journals depend on the costing method used currently:

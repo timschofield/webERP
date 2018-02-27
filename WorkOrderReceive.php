@@ -208,7 +208,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 		}
 
 		$SQLReceivedDate = FormatDateForSQL($_POST['ReceivedDate']);
-		$StockGLCode = GetStockGLCode($_POST['StockID'],$db);
+		$StockGLCode = GetStockGLCode($_POST['StockID']);
 
 	//Recalculate the standard for the item if there were no items previously received against the work order
 		if ($WORow['qtyrecd']==0){

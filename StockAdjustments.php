@@ -319,7 +319,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 
 		if ($_SESSION['CompanyRecord']['gllink_stock']==1 AND $_SESSION['Adjustment' . $identifier]->StandardCost > 0){
 
-			$StockGLCodes = GetStockGLCode($_SESSION['Adjustment' . $identifier]->StockID,$db);
+			$StockGLCodes = GetStockGLCode($_SESSION['Adjustment' . $identifier]->StockID);
 
 			$SQL = "INSERT INTO gltrans (type,
 										typeno,

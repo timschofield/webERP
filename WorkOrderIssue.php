@@ -168,7 +168,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 
 		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db); //backdate
 		$SQLIssuedDate = FormatDateForSQL($_POST['IssuedDate']);
-		$StockGLCode = GetStockGLCode($_POST['IssueItem'],$db);
+		$StockGLCode = GetStockGLCode($_POST['IssueItem']);
 
 
 		if ($IssueItemRow['mbflag']=='M' OR $IssueItemRow['mbflag']=='B'){
@@ -491,7 +491,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 				$_POST['IssueItem'] = $itm['item'];
 				$QuantityIssued = $itm['qty'];
 				$IssueItemRow['mbflag'] = $itm['mbflag'];
-				$StockGLCode = GetStockGLCode($_POST['IssueItem'],$db);
+				$StockGLCode = GetStockGLCode($_POST['IssueItem']);
 				$IssueItemRow['cost'] = $itm['cost'];
 				if ($IssueItemRow['mbflag']=='M' OR $IssueItemRow['mbflag']=='B'){
 					/* Need to get the current location quantity will need it later for the stock movement */
