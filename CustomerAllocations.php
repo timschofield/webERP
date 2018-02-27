@@ -544,6 +544,11 @@ if (isset($_POST['AllocTrans'])) {
 
 	$result = DB_query($SQL);
 	$NoOfUnallocatedTrans = DB_num_rows($result);
+
+	if ($NoOfUnallocatedTrans == 0) {
+		prnMsg(_('There are no allocations to be done'),'info');
+	}
+	else {
 	$CurrentTransaction = 1;
 	$CurrentDebtor = '';
 	echo '<table class="selection">';
@@ -598,17 +603,16 @@ if (isset($_POST['AllocTrans'])) {
 	if (!isset($Balance)) {
 		$Balance=0;
 	}
-	if ($NoOfUnallocatedTrans == 0) {
-		prnMsg(_('There are no allocations to be done'),'info');
-	} else {
+
 		echo '<tr class="striped_row">
 				<td colspan="7" class="number"><b>' . locale_number_format($Balance,$CurrDecimalPlaces)  . '</b></td>
 				<td><b>' . $CurrCode . '</b></td>
 				<td><b>' . _('Balance') . '</b></td>
-			</tr>';
+			</tr>
+		</table>';
 	}
-	echo '</table>
-		<br />';
+
+	echo '<br />';
 }
 
 include('includes/footer.php');

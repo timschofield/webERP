@@ -1,5 +1,6 @@
 webERP Change Log
 
+17/2/18  PaulT: CustomerAllocations.php: Minor code shuffle to fix view page source message "Start tag 'div' seen in 'table'" reported in Firefox.
 17/2/18  PaulT: Customers.php, ShopParameters.php: Fix view page source message "No space between attributes" reported in Firefox. 
 17/2/18  PaulT: Labels.php: Remove extra closing </td></tr> tag pair.
 17/2/18  PaulT: FixedAssetLocations.php: Move closing condition brace to cover entire table output to avoid a stray closing table tag output if the condition is not met. Also, replace some style attributes with equivalent CSS.
