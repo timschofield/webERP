@@ -1,5 +1,6 @@
 webERP Change Log
 
+9/2/18   PaulT: MRPReschedules.php, MRPShortages.php: Use DB_table_exists() from commit 7943 to replace table check query.
 9/2/18   PaulT: Remove the last of the remaining URL 'SID' references.
 9/2/18   Paul Becker (PaulT commit): StockLocMovements.php, StockMovements.php: Add serial number column to output. (Reported in forums: http://www.weberp.org/forum/showthread.php?tid=8088)
 9/2/18   Paul Becker (PaulT commit): InternalStockRequestFulfill.php: Add controlled stock handling within this script. (Reported in forums: http://www.weberp.org/forum/showthread.php?tid=8086)

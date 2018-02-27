@@ -4,11 +4,7 @@
 
 include('includes/session.php');
 
-//ANSI SQL???
-$sql = "SELECT TABLE_NAME FROM information_schema.tables WHERE TABLE_SCHEMA = '" . $_SESSION['DatabaseName'] . "' AND TABLE_NAME = 'mrprequirements'";
-
-$result=DB_query($sql);
-if (DB_num_rows($result)==0) {
+if ( !DB_table_exists('mrprequirements') ) {
 	$Title=_('MRP error');
 	include('includes/header.php');
 	echo '<br />';
