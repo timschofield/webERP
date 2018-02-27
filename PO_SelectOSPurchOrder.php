@@ -156,8 +156,13 @@ if (!isset($OrderNumber) or $OrderNumber == '') {
 						FROM purchorders";
 		$DateResult = DB_query($DateSQL);
 		$DateRow = DB_fetch_array($DateResult);
+		if ($DateRow['fromdate'] != null) {
 		$DateFrom = $DateRow['fromdate'];
 		$DateTo = $DateRow['todate'];
+	} else {
+			$DateFrom = date('Y-m-d');
+			$DateTo = date('Y-m-d');
+		}
 	} else {
 		$DateFrom = FormatDateForSQL($_POST['DateFrom']);
 		$DateTo = FormatDateForSQL($_POST['DateTo']);
@@ -581,6 +586,7 @@ else {
 	$ErrMsg = _('No orders were returned by the SQL because');
 	$PurchOrdersResult = DB_query($SQL, $ErrMsg);
 
+	if (DB_num_rows($PurchOrdersResult) > 0) {
 	/*show a table of the orders returned by the SQL */
 
 	echo '<table cellpadding="2" width="97%" class="selection">';
@@ -671,6 +677,7 @@ else {
 	} //end of while loop around purchase orders retrieved
 
 	echo '</table>';
+	}
 }
 echo '</div>
       </form>';
