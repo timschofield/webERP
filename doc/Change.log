@@ -1,5 +1,6 @@
 webERP Change Log
 
+11/2/18  PaulT: Contracts.php: Move closing form tag outside of condition. Fixes view page source message "Saw a form start tag, but there was already an active form element. Nested forms are not allowed. Ignoring the tag." reported in Firefox.
 10/2/18  PaulT: Remove $db parameter from WoRealRequirements(), EnsureGLEntriesBalance(), and CreateQASample() functions.
 10/2/18  PaulT: Remove $db parameter from BomMaterialCost(), GetTaxRate(), GetTaxes(), GetCreditAvailable(), ItemCostUpdateGL(), and UpdateCost() functions.
 10/2/18  PaulT: Remove $db parameter from all GetStockGLCode() functions.

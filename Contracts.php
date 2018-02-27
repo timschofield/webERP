@@ -812,8 +812,10 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 		}
 //end of while loop
 
-		echo '</table></form>';
+		echo '</table>';
 	}//end if results to show
+
+	echo '</form>';
 
 //end if RequireCustomerSelection
 } else { /*A customer is already selected so get into the contract setup proper */
