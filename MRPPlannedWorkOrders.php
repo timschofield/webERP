@@ -5,10 +5,7 @@
 
 include('includes/session.php');
 
-$sql = "SELECT TABLE_NAME FROM information_schema.tables WHERE TABLE_SCHEMA = '" . $_SESSION['DatabaseName'] . "' AND TABLE_NAME = 'mrprequirements'";
-$result=DB_query($sql);
-
-if (DB_num_rows($result)==0) {
+if ( !DB_table_exists('mrprequirements') ) {
 	$Title=_('MRP error');
 	include('includes/header.php');
 	echo '<br />';
@@ -259,9 +256,11 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 				<th>' . _('Due Date') . '</th>
 				<th>' . _('Quantity') . '</th>
 				<th>' . _('Unit Cost') . '</th>
-				<th>' . _('Ext. Cost') . '</th>
-				<th>' . _('Consolidations') . '</th>
-			</tr>';
+				<th>' . _('Ext. Cost') . '</th>';
+			if ($_POST['Consolidation'] != 'None') {
+				echo '<th>' . _('Consolidations') . '</th>';
+			}
+		echo '</tr>';
 
 		$TotalPartQty = 0;
 		$TotalPartCost = 0;
@@ -280,11 +279,8 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 				<td class="number">' . locale_number_format($myrow['computedcost'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<td class="number">' . locale_number_format($myrow['supplyquantity'] * $myrow['computedcost'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>';
 
-			if ($_POST['Consolidation']!='None') {
+			if ($_POST['Consolidation'] != 'None') {
 				echo '<td class="number">' . $myrow['consolidatedcount'] . '</td>';
-			}
-			else {
-				echo '<td></td>'; // Empty cell when Consolidation is None.
 			}
 			echo '</tr>';
 
@@ -296,13 +292,13 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 		// Print out the grand totals
 		echo '<tr>
 				<td colspan="3" class="number">' . _('Number of Work Orders') .': ' . ($j-1) . '</td>
-				<td colspan="4" class="number">' . _('Total Extended Cost') . ': ' . locale_number_format($Total_ExtCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td colspan="5" class="number">' . _('Total Extended Cost') . ': ' . locale_number_format($Total_ExtCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			</tr>
 			</table>
 			</div>
               </form>';
 
-		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+		echo '<br /><a class="noprint" href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">', _('Select different criteria.'), '</a>';
 		include('includes/footer.php');
 
 	} // end Review planned work orders

@@ -1,5 +1,6 @@
 webERP Change Log
 
+9/2/18   Tim/PaulT: MRPPlannedPurchaseOrders.php, MRPPlannedWorkOrders.php: Fix conversion factor matter noted by Tim, use DB_table_exists() from commit 7943 to replace table check query, and minor rework to 'missing cell' handling from commit 7939.
 9/2/18   PaulT: Replace old method of table row alternating color handing with improved CSS. Also, this change removes some empty/unused properties from a few css file and removes old URL 'SID' references in files already modified for this commit. Due to SVN issues with TestPlanResults.php, this one file will be committed later.
 9/2/18   Tim (PaulT commit): ConnectDB_xxxx.inc files: Add function DB_table_exists() function to all DB support files, by Tim suggestion. Note that this function will be used in other files in a future commit.
 7/2/18   Paul Becker (PaulT commit): Z_SalesIntegrityCheck.php: Fix that the does not take into account discountpercent so it shows an issue where non exists. (Reported in forums: http://www.weberp.org/forum/showthread.php?tid=8084) 
