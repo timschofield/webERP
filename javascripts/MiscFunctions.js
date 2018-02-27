@@ -282,11 +282,11 @@ iF.focus();
 }
 
 function clickDate() {
-	Calendar(this.name, this.alt);
+	Calendar(this.name, localStorage.DateFormat);
 }
 
 function changeDate() {
-	isDate(this.value, this.alt);
+	isDate(this.value, localStorage.DateFormat);
 }
 
 function SortSelect() {
@@ -368,8 +368,8 @@ function initial() {
 	var ds=document.getElementsByTagName("input");
 	for(i=0;i<ds.length;i++) {
 		if(ds[i].className=="date") {
-			ds[i].onclick=clickDate;
-			ds[i].onchange=changeDate;
+			ds[i].onclick = clickDate;
+			ds[i].onchange = changeDate;
 		}
 		if(ds[i].getAttribute("data-type") == 'no-illegal-chars') ds[i].pattern="(?!^ +$)[^?\'\u0022+.&\\\\><]*";
 		if(ds[i].className=="number") ds[i].onkeypress=rTN;
