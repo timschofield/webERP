@@ -238,7 +238,7 @@ echo '<tr>
 // Shop Customer
 echo '<tr>
 		<td>' . _('Default Web Shop Customer Acount') . ':</td>
-	   <td><input type="text"size="12" maxlength="10" required="required" name="X_ShopDebtorNo" value="' . $_SESSION['ShopDebtorNo'] . '" /></td>
+	   <td><input type="text" size="12" maxlength="10" required="required" name="X_ShopDebtorNo" value="' . $_SESSION['ShopDebtorNo'] . '" /></td>
 		<td>' . _('Select the customer account that is to be used for the web-store sales') . '</td>
 	</tr>';
 // Shop Customer Branch

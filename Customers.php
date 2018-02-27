@@ -457,7 +457,7 @@ if (!isset($DebtorNo)) {
 	if ($_SESSION['AutoDebtorNo']==0)  {
 		echo '<tr>
 				<td>' . _('Customer Code') . ':</td>
-				<td><input type="text" data-type="no-illegal-chars" tabindex="1"  name="DebtorNo"  required="required" autofocus="autofocus"title ="'._('Up to 10 characters for the customer code. The following characters are prohibited:') . ' \' &quot; + . &amp; \\ &gt; &lt;" placeholder="'._('alpha-numeric').'" size="11" maxlength="10" /></td></tr>';
+				<td><input type="text" data-type="no-illegal-chars" tabindex="1"  name="DebtorNo"  required="required" autofocus="autofocus" title ="'._('Up to 10 characters for the customer code. The following characters are prohibited:') . ' \' &quot; + . &amp; \\ &gt; &lt;" placeholder="'._('alpha-numeric').'" size="11" maxlength="10" /></td></tr>';
 	}
 
 	echo '<tr>
