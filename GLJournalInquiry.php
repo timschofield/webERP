@@ -63,7 +63,7 @@ if (!isset($_POST['Show'])) {
 		</tr>';
 
 	echo '</table>';
-	echo '<br /><div class="centre"><input type="submit" name="Show" value"' . _('Show transactions'). '" /></div>';
+	echo '<br /><div class="centre"><input type="submit" name="Show" value="' . _('Show transactions'). '" /></div>';
 	echo '</form>';
 } else {
 
