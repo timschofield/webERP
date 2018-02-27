@@ -63,7 +63,8 @@ if (isset($_SESSION['DatabaseName'])){
 				if(get_magic_quotes_gpc()) {
 					$PostVariableValue[$PostArrayKey] = stripslashes($value[$PostArrayKey]);
 				}
-				$PostVariableValue[$PostArrayKey] = DB_escape_string(htmlspecialchars($PostArrayValue,ENT_QUOTES,'UTF-8'));
+			 	$_POST[$PostVariableName][$PostArrayKey] = DB_escape_string(htmlspecialchars($PostArrayValue,ENT_QUOTES,'UTF-8'));
+
 			}
 		}
 	}

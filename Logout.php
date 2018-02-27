@@ -9,4 +9,6 @@ include('includes/session.php');
 // Cleanup
 session_unset();
 session_destroy();
+setcookie('PHPSESSID',"",time()-3600,'/');
+
 ?>
