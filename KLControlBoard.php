@@ -952,10 +952,10 @@ if ($ProcessSection02){
 	}
 	
 	if ($KL_SystemAdmin){
-//		StockToPTADU("PO", $RootPath, $db);
-//		$NumberOfTestExecuted++;
-//		StockToPTADU("WO", $RootPath, $db);
-//		$NumberOfTestExecuted++;
+		StockToPTADU("PO", 1.2, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		StockToPTADU("WO", 1.2, $RootPath, $db);
+		$NumberOfTestExecuted++;
 	}
 
 }
@@ -4384,7 +4384,7 @@ function WrongItemsOnWorkOrders($RootPath, $db){
 	}
 }
 
-function StockToPTADU($Kind, $RootPath, $db){
+function StockToPTADU($Kind, $FactorNearStock, $RootPath, $db){
 	
 	if($Kind == "PO"){
 		$SQL = "SELECT purchorderdetails.itemcode,
@@ -4396,9 +4396,12 @@ function StockToPTADU($Kind, $RootPath, $db){
 				FROM purchorderdetails, stockmaster
 				WHERE purchorderdetails.itemcode = stockmaster.stockid
 					AND stockmaster.categoryid IN ('SETKL','SETBL','SETGE','TESTKL','TESTBL','TESTGE', 'STABKL','STABBL','STABGE','NOPOKL','NOPOBL','NOPOGE','DISC20','DISC50','DISC80','COMPON')
-					AND purchorderdetails.orderno >= 2750
+					AND purchorderdetails.completed = 1
+					AND (purchorderdetails.orderno = 2808
+						OR purchorderdetails.orderno = 2809
+						OR purchorderdetails.orderno >= 2817)
 				GROUP BY purchorderdetails.itemcode
-				HAVING qtyreceivedptadu >= qoh / 1.2
+				HAVING qtyreceivedptadu * " . $FactorNearStock. " >= qoh 
 				ORDER BY purchorderdetails.itemcode";
 	}elseif($Kind == "WO"){
 		$SQL = "SELECT woitems.stockid AS itemcode,
@@ -4412,9 +4415,9 @@ function StockToPTADU($Kind, $RootPath, $db){
 					AND stockmaster.categoryid IN ('SETKL','SETBL','SETGE','TESTKL','TESTBL','TESTGE', 'STABKL','STABBL','STABGE','NOPOKL','NOPOBL','NOPOGE','DISC20','DISC50','DISC80','COMPON')
 					AND workorders.wo = woitems.wo
 					AND workorders.closed = 1
-					AND workorders.wo > 3500
+					AND workorders.wo >= 3590
 				GROUP BY woitems.stockid
-				HAVING qtyreceivedptadu >= qoh / 1.2
+				HAVING qtyreceivedptadu * " . $FactorNearStock. " >= qoh
 				ORDER BY woitems.stockid";
 	}
 			
@@ -4440,6 +4443,9 @@ function StockToPTADU($Kind, $RootPath, $db){
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
 			$k = StartEvenOrOddRow($k);
+
+			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['itemcode'] . '">' . $myrow['itemcode'] . '</a>';
+
 			if ($myrow['categoryid'] == "SETKL"){
 				$NewCategory = "SETKLA";
 			}elseif ($myrow['categoryid'] == "SETBL"){
@@ -4487,7 +4493,7 @@ function StockToPTADU($Kind, $RootPath, $db){
 					<td class="number">%s</td>
 					<td>%s</td>
 					</tr>', 
-					$myrow['itemcode'],
+					$CodeLink,
 					$myrow['categoryid'],
 					$NewCategory,
 					locale_number_format($myrow['qtyreceivedptadu'],0),
