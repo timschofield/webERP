@@ -952,10 +952,10 @@ if ($ProcessSection02){
 	}
 	
 	if ($KL_SystemAdmin){
-//		StockToPTADU("PO", $RootPath, $db);
-//		$NumberOfTestExecuted++;
-//		StockToPTADU("WO", $RootPath, $db);
-//		$NumberOfTestExecuted++;
+		StockToPTADU("PO", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		StockToPTADU("WO", $RootPath, $db);
+		$NumberOfTestExecuted++;
 	}
 
 }
@@ -4396,7 +4396,7 @@ function StockToPTADU($Kind, $RootPath, $db){
 				FROM purchorderdetails, stockmaster
 				WHERE purchorderdetails.itemcode = stockmaster.stockid
 					AND stockmaster.categoryid IN ('SETKL','SETBL','SETGE','TESTKL','TESTBL','TESTGE', 'STABKL','STABBL','STABGE','NOPOKL','NOPOBL','NOPOGE','DISC20','DISC50','DISC80','COMPON')
-					AND purchorderdetails.orderno >= 2750
+					AND purchorderdetails.orderno >= 2817
 				GROUP BY purchorderdetails.itemcode
 				HAVING qtyreceivedptadu >= qoh / 1.2
 				ORDER BY purchorderdetails.itemcode";
@@ -4412,7 +4412,7 @@ function StockToPTADU($Kind, $RootPath, $db){
 					AND stockmaster.categoryid IN ('SETKL','SETBL','SETGE','TESTKL','TESTBL','TESTGE', 'STABKL','STABBL','STABGE','NOPOKL','NOPOBL','NOPOGE','DISC20','DISC50','DISC80','COMPON')
 					AND workorders.wo = woitems.wo
 					AND workorders.closed = 1
-					AND workorders.wo > 3500
+					AND workorders.wo > 3587
 				GROUP BY woitems.stockid
 				HAVING qtyreceivedptadu >= qoh / 1.2
 				ORDER BY woitems.stockid";
