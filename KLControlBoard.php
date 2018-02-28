@@ -4459,14 +4459,10 @@ function StockToPTADU($Kind, $FactorNearStock, $RootPath, $db){
 				FROM purchorderdetails, stockmaster
 				WHERE purchorderdetails.itemcode = stockmaster.stockid
 					AND stockmaster.categoryid IN ('SETKL','SETBL','SETGE','TESTKL','TESTBL','TESTGE', 'STABKL','STABBL','STABGE','NOPOKL','NOPOBL','NOPOGE','DISC20','DISC50','DISC80','COMPON')
-<<<<<<< HEAD
-					AND purchorderdetails.orderno >= 2817
-=======
 					AND purchorderdetails.completed = 1
 					AND (purchorderdetails.orderno = 2808
 						OR purchorderdetails.orderno = 2809
 						OR purchorderdetails.orderno >= 2817)
->>>>>>> ac761e38e3d820d088a14b2bcf602f6a032a509e
 				GROUP BY purchorderdetails.itemcode
 				HAVING qtyreceivedptadu * " . $FactorNearStock. " >= qoh 
 				ORDER BY purchorderdetails.itemcode";
@@ -4482,11 +4478,7 @@ function StockToPTADU($Kind, $FactorNearStock, $RootPath, $db){
 					AND stockmaster.categoryid IN ('SETKL','SETBL','SETGE','TESTKL','TESTBL','TESTGE', 'STABKL','STABBL','STABGE','NOPOKL','NOPOBL','NOPOGE','DISC20','DISC50','DISC80','COMPON')
 					AND workorders.wo = woitems.wo
 					AND workorders.closed = 1
-<<<<<<< HEAD
 					AND workorders.wo > 3587
-=======
-					AND workorders.wo >= 3590
->>>>>>> ac761e38e3d820d088a14b2bcf602f6a032a509e
 				GROUP BY woitems.stockid
 				HAVING qtyreceivedptadu * " . $FactorNearStock. " >= qoh
 				ORDER BY woitems.stockid";
