@@ -216,7 +216,11 @@ if ($ProcessSection01){
 
 		DiscountedItemsWithWrongDiscount("DISC20", "20", $RootPath, $db);
 		$NumberOfTestExecuted++;
+		DiscountedItemsWithWrongDiscount("DISC2A", "20", $RootPath, $db);
+		$NumberOfTestExecuted++;
 		DiscountedItemsWithWrongDiscount("DISC50", "50", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		DiscountedItemsWithWrongDiscount("DISC5A", "50", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		NotDiscountedItemsWithDiscount($RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -556,11 +560,15 @@ if ($ProcessSection01){
 
 		CategoryItemsNotInShop("DISC20", "TOKAR", 1, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		
+		CategoryItemsNotInShop("DISC2A", "TOKAR", 1, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("DISC50", "TOKAR", 1, $RootPath, $db);
 		$NumberOfTestExecuted++;
-
+		CategoryItemsNotInShop("DISC5A", "TOKAR", 1, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("DISC80", "TOKAR", 1, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("DISC8A", "TOKAR", 1, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 	}
@@ -674,60 +682,106 @@ if ($ProcessSection02){
 
 		ItemsInCategoryForMoreThanDays( 120, "SETKL", $RootPath, $db);
 		$NumberOfTestExecuted++;
+		ItemsInCategoryForMoreThanDays( 120, "SETKLA", $RootPath, $db);
+		$NumberOfTestExecuted++;
 		ItemsInCategoryForMoreThanDays( 120, "SETBL", $RootPath, $db);
 		$NumberOfTestExecuted++;
+		ItemsInCategoryForMoreThanDays( 120, "SETBLA", $RootPath, $db);
+		$NumberOfTestExecuted++;
 		ItemsInCategoryForMoreThanDays( 120, "SETGE", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsInCategoryForMoreThanDays( 120, "SETGEA", $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 
 		ActiveItemsNoSales( 30, "TESTKL", $RootPath, $db);
 		$NumberOfTestExecuted++;
+		ActiveItemsNoSales( 30, "TESTKA", $RootPath, $db);
+		$NumberOfTestExecuted++;
 		ItemsInCategoryForMoreThanDays( 60, "TESTKL", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsInCategoryForMoreThanDays( 60, "TESTKA", $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 		ActiveItemsNoSales( 30, "TESTBL", $RootPath, $db);
 		$NumberOfTestExecuted++;
+		ActiveItemsNoSales( 30, "TESTBA", $RootPath, $db);
+		$NumberOfTestExecuted++;
 		ItemsInCategoryForMoreThanDays( 60, "TESTBL", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsInCategoryForMoreThanDays( 60, "TESTBA", $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 		ActiveItemsNoSales( 30, "TESTGE", $RootPath, $db);
 		$NumberOfTestExecuted++;
+		ActiveItemsNoSales( 30, "TESTGA", $RootPath, $db);
+		$NumberOfTestExecuted++;
 		ItemsInCategoryForMoreThanDays( 60, "TESTGE", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsInCategoryForMoreThanDays( 60, "TESTGA", $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 		ActiveItemsNoSales( 30, "STABKL", $RootPath, $db);
 		$NumberOfTestExecuted++;
+		ActiveItemsNoSales( 30, "STABKA", $RootPath, $db);
+		$NumberOfTestExecuted++;
 		ActiveItemsNoSales( 30, "STABBL", $RootPath, $db);
 		$NumberOfTestExecuted++;
+		ActiveItemsNoSales( 30, "STABBA", $RootPath, $db);
+		$NumberOfTestExecuted++;
 		ActiveItemsNoSales( 30, "STABGE", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ActiveItemsNoSales( 30, "STABGA", $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 		ActiveItemsNoSales( 30, "NOPOKL", $RootPath, $db);
 		$NumberOfTestExecuted++;
+		ActiveItemsNoSales( 30, "NOPOKA", $RootPath, $db);
+		$NumberOfTestExecuted++;
 		ItemsInCategoryForMoreThanDays( 90, "NOPOKL", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsInCategoryForMoreThanDays( 90, "NOPOKA", $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 		ActiveItemsNoSales( 30, "NOPOBL", $RootPath, $db);
 		$NumberOfTestExecuted++;
+		ActiveItemsNoSales( 30, "NOPOBA", $RootPath, $db);
+		$NumberOfTestExecuted++;
 		ItemsInCategoryForMoreThanDays( 90, "NOPOBL", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsInCategoryForMoreThanDays( 90, "NOPOBA", $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 		ActiveItemsNoSales( 30, "NOPOGE", $RootPath, $db);
 		$NumberOfTestExecuted++;
+		ActiveItemsNoSales( 30, "NOPOGA", $RootPath, $db);
+		$NumberOfTestExecuted++;
 		ItemsInCategoryForMoreThanDays( 90, "NOPOGE", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsInCategoryForMoreThanDays( 90, "NOPOGA", $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 		ActiveItemsNoSales( 30, "DISC20", $RootPath, $db);
 		$NumberOfTestExecuted++;
+		ActiveItemsNoSales( 30, "DISC2A", $RootPath, $db);
+		$NumberOfTestExecuted++;
 		ItemsInCategoryForMoreThanDays( 90, "DISC20", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsInCategoryForMoreThanDays( 90, "DISC2A", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		
 		ActiveItemsNoSales( 60, "DISC50", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsInCategoryForMoreThanDays( 365, "DISC50", $RootPath, $db);
+		ActiveItemsNoSales( 60, "DISC5A", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsInCategoryForMoreThanDays( 180, "DISC50", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsInCategoryForMoreThanDays( 180, "DISC5A", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		
 		ActiveItemsNoSales( 90, "DISC80", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ActiveItemsNoSales( 90, "DISC8A", $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -1181,18 +1235,27 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $RootPath, $db){
 
 	// count to how many shops do we need to set the RL
 	if(($Category == 'TESTKL')
-			OR ($Category == 'STABKL') 
-			OR ($Category == 'NOPOKL')){
+		OR ($Category == 'TESTKA') 
+		OR ($Category == 'STABKL') 
+		OR ($Category == 'STABKA') 
+		OR ($Category == 'NOPOKL') 
+		OR ($Category == 'NOPOKA')){
 		$TypeOfShop = 'SHOPKL';
 		$ShopsToSetRL = $ShopsKL;
 	}elseif(($Category == 'TESTBL')
+			OR ($Category == 'TESTBA') 
 			OR ($Category == 'STABBL') 
-			OR ($Category == 'NOPOBL')){
+			OR ($Category == 'STABBA') 
+			OR ($Category == 'NOPOBL') 
+			OR ($Category == 'NOPOBA')){
 		$TypeOfShop = 'SHOPBL';
 		$ShopsToSetRL = $ShopsBL;
 	}elseif(($Category == 'DISC20') 
+			OR ($Category == 'DISC2A') 
 			OR ($Category == 'DISC50') 
-			OR ($Category == 'DISC80')){
+			OR ($Category == 'DISC5A') 
+			OR ($Category == 'DISC80') 
+			OR ($Category == 'DISC8A')){
 		$TypeOfShop = 'SHOPOU';
 		$ShopsToSetRL = $ShopsOU;
 	}else{

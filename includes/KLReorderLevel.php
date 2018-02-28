@@ -824,7 +824,8 @@ function SetRLForLowSalesHighRL($ShopType, $maxdays, $oldRL, $maxRL, $minavailab
 				$notes = "KLPRGE - Tali. RL Not changed";
 			}
 */
-			if(($myrow['categoryid'] == 'DISC20') OR($myrow['categoryid'] == 'DISC50') OR ($myrow['categoryid'] == 'DISC80')){
+			if(($myrow['categoryid'] == 'DISC20') OR($myrow['categoryid'] == 'DISC50') OR ($myrow['categoryid'] == 'DISC80')
+				OR ($myrow['categoryid'] == 'DISC2A') OR($myrow['categoryid'] == 'DISC5A') OR ($myrow['categoryid'] == 'DISC8A')){
 				$newRL = $myrow['reorderlevel'];
 				$notes = "Discounted or outlet item. RL Not changed";
 			}
