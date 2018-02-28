@@ -1,5 +1,5 @@
 <?php
-/* $Id$*/
+/* $Id: PO_SelectPurchOrder.php 7944 2018-02-09 18:22:45Z turbopt $*/
 
 include ('includes/session.php');
 $Title = _('Search Purchase Orders');
@@ -208,41 +208,29 @@ echo '</select></td>
 	<br />';
 
 if (isset($StockItemsResult)) {
-	echo '<table class="selection">';
-	$TableHeader = '<tr>
-						<th class="ascending">' . _('Code') . '</th>
-						<th class="ascending">' . _('Description') . '</th>
-						<th class="ascending">' . _('On Hand') . '</th>
-						<th class="ascending">' . _('Orders') . '<br />' . _('Outstanding') . '</th>
-						<th class="ascending">' . _('Units') . '</th>
-					</tr>';
-	echo $TableHeader;
-	$j = 1;
-	$k = 0; //row colour counter
+	echo '<table class="selection">
+		<thead>
+			<tr>
+				<th class="ascending">' . _('Code') . '</th>
+				<th class="ascending">' . _('Description') . '</th>
+				<th class="ascending">' . _('On Hand') . '</th>
+				<th class="ascending">' . _('Orders') . '<br />' . _('Outstanding') . '</th>
+				<th class="ascending">' . _('Units') . '</th>
+			</tr>
+		</thead>
+		<tbody>';
+
 	while ($myrow = DB_fetch_array($StockItemsResult)) {
-		if ($k == 1) {
-			echo '<tr class="EvenTableRows">';
-			$k = 0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k = 1;
-		}
-		echo '<td><input type="submit" name="SelectedStockItem" value="' . $myrow['stockid'] . '"</td>
+		echo '<tr class="striped_row">
+			<td><input type="submit" name="SelectedStockItem" value="' . $myrow['stockid'] . '"</td>
 			<td>' . $myrow['description'] . '</td>
 			<td class="number">' . locale_number_format($myrow['qoh'],$myrow['decimalplaces']) . '</td>
 			<td class="number">' . locale_number_format($myrow['qord'],$myrow['decimalplaces']) . '</td>
 			<td>' . $myrow['units'] . '</td>
 			</tr>';
-		$j++;
-		if ($j == 12) {
-			$j = 1;
-			echo $TableHeader;
-		}
-		//end of page full new headings if
-
 	}
 	//end of while loop
-	echo '</table>';
+	echo '</tbody></table>';
 }
 //end if stock search results to show
 else {
@@ -427,35 +415,30 @@ else {
 
 	if (DB_num_rows($PurchOrdersResult) > 0) {
 		/*show a table of the orders returned by the SQL */
-		echo '<table cellpadding="2" width="90%" class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('View') . '</th>
-							<th class="ascending">' . _('Supplier') . '</th>
-							<th class="ascending">' . _('Currency') . '</th>
-							<th class="ascending">' . _('Requisition') . '</th>
-							<th class="ascending">' . _('Order Date') . '</th>
-							<th class="ascending">' . _('Delivery Date') . '</th>
-							<th class="ascending">' . _('Initiator') . '</th>
-							<th class="ascending">' . _('Order Total') . '</th>
-							<th class="ascending">' . _('Status') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$j = 1;
-		$k = 0; //row colour counter
+		echo '<table cellpadding="2" width="90%" class="selection">
+			<thead>
+				<tr>
+					<th class="ascending">' . _('View') . '</th>
+					<th class="ascending">' . _('Supplier') . '</th>
+					<th class="ascending">' . _('Currency') . '</th>
+					<th class="ascending">' . _('Requisition') . '</th>
+					<th class="ascending">' . _('Order Date') . '</th>
+					<th class="ascending">' . _('Delivery Date') . '</th>
+					<th class="ascending">' . _('Initiator') . '</th>
+					<th class="ascending">' . _('Order Total') . '</th>
+					<th class="ascending">' . _('Status') . '</th>
+				</tr>
+			</thead>
+			</tbody>';
+
 		while ($myrow = DB_fetch_array($PurchOrdersResult)) {
-			if ($k == 1) { /*alternate bgcolour of row for highlighting */
-				echo '<tr class="EvenTableRows">';
-				$k = 0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k++;
-			}
 			$ViewPurchOrder = $RootPath . '/PO_OrderDetails.php?OrderNo=' . $myrow['orderno'];
 			$FormatedOrderDate = ConvertSQLDate($myrow['orddate']);
 			$FormatedDeliveryDate = ConvertSQLDate($myrow['deliverydate']);
 			$FormatedOrderValue = locale_number_format($myrow['ordervalue'], $myrow['currdecimalplaces']);
 
-			echo '<td><a href="' . $ViewPurchOrder . '">' . $myrow['orderno'] . '</a></td>
+			echo '<tr class="striped_row">
+					<td><a href="' . $ViewPurchOrder . '">' . $myrow['orderno'] . '</a></td>
 					<td>' . $myrow['suppname'] . '</td>
 					<td>' . $myrow['currcode'] . '</td>
 					<td>' . $myrow['requisitionno'] . '</td>
@@ -466,16 +449,9 @@ else {
 					<td>' . _($myrow['status']) .  '</td>
 					</tr>';
 				//$myrow['status'] is a string which has gettext translations from PO_Header.php script
-
-			$j++;
-			if ($j == 12) {
-				$j = 1;
-				echo $TableHeader;
-			}
-			//end of page full new headings if
 		}
 		//end of while loop
-		echo '</table>';
+		echo '</tbody></table>';
 	} // end if purchase orders to show
 }
 echo '</div>
