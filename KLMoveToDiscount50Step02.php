@@ -93,7 +93,7 @@ include('includes/KLPrices.php');
 				AND ($myrow['intransitfromconsignment'] == 0)
 				AND ($myrow['intransitfromshops'] == 0)
 				){
-				if ($myrow['categoryid']== "DISC50"){
+				if (($myrow['categoryid']== "DISC50") OR ($myrow['categoryid']== "DISC5A")){
 					// already changed the category, so now it's time to see if labels have been printed and finish the process
 					$NewDiscountCategory = $myrow['discountcategory'];
 					$NewLabelsPrinted = '<a href="' . $RootPath . '/KLChangeToDiscount50.php?Item=' . $myrow['stockid'] . '&Discount='. $myrow['discountcategory'] . '&Action=Finish">' . ('Printed') . '</a>';

@@ -952,84 +952,84 @@ function FinishedStockDistributionByShopAndCategory($db){
 						stockmaster as m2
 					WHERE l2.loccode = locations.loccode
 						AND m2.stockid = l2.stockid 
-						AND m2.categoryid =  'TESTKL'
+						AND (m2.categoryid = 'TESTKL' OR m2.categoryid = 'TESTKA')
 						AND l2.reorderlevel != 0) AS modelsTESTKL,
 				(SELECT COUNT(l2.reorderlevel)
 					FROM locstock AS l2,
 						stockmaster as m2
 					WHERE l2.loccode = locations.loccode
 						AND m2.stockid = l2.stockid 
-						AND m2.categoryid =  'STABKL'
+						AND (m2.categoryid = 'STABKL' OR m2.categoryid = 'STABKA')
 						AND l2.reorderlevel != 0) AS modelsSTABKL,
 				(SELECT COUNT(l2.reorderlevel)
 					FROM locstock AS l2,
 						stockmaster as m2
 					WHERE l2.loccode = locations.loccode
 						AND m2.stockid = l2.stockid 
-						AND m2.categoryid =  'NOPOKL'
+						AND (m2.categoryid = 'NOPOKL' OR m2.categoryid = 'NOPOKA')
 						AND l2.reorderlevel != 0) AS modelsNOPOKL,
 				(SELECT COUNT(l2.reorderlevel)
 					FROM locstock AS l2,
 						stockmaster as m2
 					WHERE l2.loccode = locations.loccode
 						AND m2.stockid = l2.stockid 
-						AND m2.categoryid =  'TESTBL'
+						AND (m2.categoryid = 'TESTBL' OR m2.categoryid = 'TESTBA')
 						AND l2.reorderlevel != 0) AS modelsTESTBL,
 				(SELECT COUNT(l2.reorderlevel)
 					FROM locstock AS l2,
 						stockmaster as m2
 					WHERE l2.loccode = locations.loccode
 						AND m2.stockid = l2.stockid 
-						AND m2.categoryid =  'STABBL'
+						AND (m2.categoryid = 'STABBL' OR m2.categoryid = 'STABBA')
 						AND l2.reorderlevel != 0) AS modelsSTABBL,
 				(SELECT COUNT(l2.reorderlevel)
 					FROM locstock AS l2,
 						stockmaster as m2
 					WHERE l2.loccode = locations.loccode
 						AND m2.stockid = l2.stockid 
-						AND m2.categoryid =  'NOPOBL'
+						AND (m2.categoryid = 'NOPOBL' OR m2.categoryid = 'NOPOBA')
 						AND l2.reorderlevel != 0) AS modelsNOPOBL,
 				(SELECT COUNT(l2.reorderlevel)
 					FROM locstock AS l2,
 						stockmaster as m2
 					WHERE l2.loccode = locations.loccode
 						AND m2.stockid = l2.stockid 
-						AND m2.categoryid =  'TESTGE'
+						AND (m2.categoryid = 'TESTGE' OR m2.categoryid = 'TESTGA')
 						AND l2.reorderlevel != 0) AS modelsTESTGE,
 				(SELECT COUNT(l2.reorderlevel)
 					FROM locstock AS l2,
 						stockmaster as m2
 					WHERE l2.loccode = locations.loccode
 						AND m2.stockid = l2.stockid 
-						AND m2.categoryid =  'STABGE'
+						AND (m2.categoryid = 'STABGE' OR m2.categoryid = 'STABGA')
 						AND l2.reorderlevel != 0) AS modelsSTABGE,
 				(SELECT COUNT(l2.reorderlevel)
 					FROM locstock AS l2,
 						stockmaster as m2
 					WHERE l2.loccode = locations.loccode
 						AND m2.stockid = l2.stockid 
-						AND m2.categoryid =  'NOPOGE'
+						AND (m2.categoryid = 'NOPOGE' OR m2.categoryid = 'NOPOGA')
 						AND l2.reorderlevel != 0) AS modelsNOPOGE,
 				(SELECT COUNT(l2.reorderlevel)
 					FROM locstock AS l2,
 						stockmaster as m2
 					WHERE l2.loccode = locations.loccode
 						AND m2.stockid = l2.stockid 
-						AND m2.categoryid =  'DISC20'
+						AND (m2.categoryid = 'DISC20' OR m2.categoryid = 'DISC2A')
 						AND l2.reorderlevel != 0) AS modelsDISC20,
 				(SELECT COUNT(l2.reorderlevel)
 					FROM locstock AS l2,
 						stockmaster as m2
 					WHERE l2.loccode = locations.loccode
 						AND m2.stockid = l2.stockid 
-						AND m2.categoryid =  'DISC50'
+						AND (m2.categoryid = 'DISC50' OR m2.categoryid = 'DISC5A')
 						AND l2.reorderlevel != 0) AS modelsDISC50,
 				(SELECT COUNT(l2.reorderlevel)
 					FROM locstock AS l2,
 						stockmaster as m2
 					WHERE l2.loccode = locations.loccode
 						AND m2.stockid = l2.stockid 
-						AND m2.categoryid =  'DISC80'
+						AND (m2.categoryid = 'DISC80' OR m2.categoryid = 'DISC8A')
 						AND l2.reorderlevel != 0) AS modelsDISC80
 			FROM locations
 			WHERE locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . "
