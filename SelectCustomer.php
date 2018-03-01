@@ -433,7 +433,7 @@ if(isset($result)) {
 				<td class="text">', $myrow['typename'], '</td>
 				<td class="text">', $myrow['phoneno'], '</td>
 				<td class="text">', $myrow['faxno'], '</td>
-				<td class="text">', $myrow['email'], '</td>
+				<td><a href="mailto://'.$myrow['email'].'">' . $myrow['email']. '</a></td>
 			</tr>';
 			$i++;
 			$RowIndex++;
