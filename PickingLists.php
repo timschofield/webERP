@@ -310,17 +310,9 @@ echo '<table width="90%" cellpadding="2" class="selection">
 
 /*show the line items on the order with the quantity being dispatched available for modification */
 
-$k = 0; //row colour counter
 $j = 0;
 foreach ($_SESSION['Items' . $identifier]->LineItems as $LnItm) {
 	++$j;
-	if ($k == 1) {
-		$RowStarter = '<tr class="EvenTableRows">';
-		$k = 0;
-	} else {
-		$RowStarter = '<tr class="OddTableRows">';
-		$k = 1;
-	}
 
 	if (sizeOf($LnItm->SerialItems) > 0) {
 		$_SESSION['Items' . $identifier]->LineItems[$LnItm->LineNumber]->QtyDispatched = 0; //initialise QtyDispatched
@@ -334,8 +326,8 @@ foreach ($_SESSION['Items' . $identifier]->LineItems as $LnItm) {
 		}
 	}
 
-	echo $RowStarter;
-	echo '<td>' . $LnItm->StockID . '</td>
+	echo '<tr class="striped_row">
+		<td>' . $LnItm->StockID . '</td>
 		<td title="' . $LnItm->LongDescription . '">' . $LnItm->ItemDescription . '</td>
 		<td class="number">' . locale_number_format($LnItm->Quantity, $LnItm->DecimalPlaces) . '</td>
 		<td>' . $LnItm->Units . '</td>
@@ -373,7 +365,9 @@ foreach ($_SESSION['Items' . $identifier]->LineItems as $LnItm) {
 
 	if (mb_strlen($LnItm->Narrative) > 1) {
 		$Narrative = str_replace('\r\n', '<br />', $LnItm->Narrative);
-		echo $RowStarter . '<td colspan="6">' . stripslashes($Narrative) . '</td></tr>';
+		echo '<tr class="striped_row">
+				<td colspan="6">' . stripslashes($Narrative) . '</td>
+			</tr>';
 	}
 } //end foreach ($line)
 
