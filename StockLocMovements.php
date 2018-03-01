@@ -1,5 +1,9 @@
 <?php
+<<<<<<< HEAD
 /* $Id: StockLocMovements.php 7957 2018-02-12 21:53:28Z turbopt $*/
+=======
+/* $Id$*/
+>>>>>>> parent of d496ef8e... Update StockLocMovements.php
 
 include('includes/session.php');
 
@@ -16,6 +20,7 @@ echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8
 	<table>
 		<tr>
 			<td>', _('From Stock Location'), ':<select required="required" name="StockLocation">';
+<<<<<<< HEAD
 
 $SQL = "SELECT locationname,
 				locations.loccode
@@ -33,6 +38,25 @@ if (!isset($_POST['StockLocation'])) {
 }
 
 $ResultStkLocs = DB_query($SQL);
+=======
+
+$SQL = "SELECT locationname,
+				locations.loccode
+		FROM locations
+		INNER JOIN locationusers
+			ON locationusers.loccode=locations.loccode
+			AND locationusers.userid='" . $_SESSION['UserID'] . "'
+			AND locationusers.canview=1
+		ORDER BY locationname";
+
+echo '<option selected="selected" value="All">', _('All Locations'), '</option>';
+
+if (!isset($_POST['StockLocation'])) {
+	$_POST['StockLocation'] = 'All';
+}
+
+$resultStkLocs = DB_query($sql);
+>>>>>>> parent of d496ef8e... Update StockLocMovements.php
 
 while ($MyRow = DB_fetch_array($ResultStkLocs)) {
 	if (isset($_POST['StockLocation']) and $_POST['StockLocation'] != 'All') {
@@ -42,8 +66,13 @@ while ($MyRow = DB_fetch_array($ResultStkLocs)) {
 			echo '<option value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
 		}
 	} elseif ($MyRow['loccode'] == $_SESSION['UserStockLocation']) {
+<<<<<<< HEAD
 		echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 		$_POST['StockLocation']=$MyRow['loccode'];
+=======
+		 echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+		 $_POST['StockLocation']=$myrow['loccode'];
+>>>>>>> parent of d496ef8e... Update StockLocMovements.php
 	} else {
 		echo '<option value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
 	}
@@ -52,7 +81,11 @@ while ($MyRow = DB_fetch_array($ResultStkLocs)) {
 echo '</select>';
 
 if (!isset($_POST['BeforeDate']) or !Is_date($_POST['BeforeDate'])) {
+<<<<<<< HEAD
 	$_POST['BeforeDate'] = Date($_SESSION['DefaultDateFormat']);
+=======
+   $_POST['BeforeDate'] = Date($_SESSION['DefaultDateFormat']);
+>>>>>>> parent of d496ef8e... Update StockLocMovements.php
 }
 if (!isset($_POST['AfterDate']) or !Is_date($_POST['AfterDate'])) {
 	$_POST['AfterDate'] = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m') - 1, Date('d'), Date('y')));
@@ -60,12 +93,21 @@ if (!isset($_POST['AfterDate']) or !Is_date($_POST['AfterDate'])) {
 echo ' ', _('Show Movements before'), ': <input type="text" class="date" alt="', $_SESSION['DefaultDateFormat'], '" name="BeforeDate" size="12" required="required" maxlength="12" value="', $_POST['BeforeDate'], '" />',
 	' ', _('But after'), ': <input type="text" class="date" alt="', $_SESSION['DefaultDateFormat'], '" name="AfterDate" size="12" required="required" maxlength="12" value="', $_POST['AfterDate'], '" />',
 	'</td>
+<<<<<<< HEAD
 	 </tr>
 	 </table>
 	<div class="centre">
 		<input type="submit" name="ShowMoves" value="', _('Show Stock Movements'), '" />
 	</div>
 	<br />';
+=======
+     </tr>
+     </table>
+	<div class="centre">
+		<input type="submit" name="ShowMoves" value="', _('Show Stock Movements'), '" />
+     </div>
+     <br />';
+>>>>>>> parent of d496ef8e... Update StockLocMovements.php
 
 if ($_POST['StockLocation'] == 'All') {
 	$_POST['StockLocation'] = '%%';
@@ -74,6 +116,7 @@ if ($_POST['StockLocation'] == 'All') {
 $SQLBeforeDate = FormatDateForSQL($_POST['BeforeDate']);
 $SQLAfterDate = FormatDateForSQL($_POST['AfterDate']);
 
+<<<<<<< HEAD
 $SQL = "SELECT stockmoves.stockid,
 				stockmoves.stkmoveno,
 				systypes.typename,
@@ -91,15 +134,40 @@ $SQL = "SELECT stockmoves.stockid,
 				stockmaster.serialised,
 				stockmaster.decimalplaces
 			FROM stockmoves
+=======
+$sql = "SELECT stockmoves.stockid,
+				stockmoves.stkmoveno,
+        		systypes.typename,
+        		stockmoves.type,
+        		stockmoves.transno,
+        		stockmoves.trandate,
+        		stockmoves.debtorno,
+        		stockmoves.branchcode,
+        		stockmoves.qty,
+        		stockmoves.reference,
+        		stockmoves.price,
+        		stockmoves.discountpercent,
+        		stockmoves.newqoh,
+				stockmaster.controlled,
+				stockmaster.serialised,
+				stockmaster.decimalplaces
+        	FROM stockmoves
+>>>>>>> parent of d496ef8e... Update StockLocMovements.php
 			INNER JOIN systypes
 				ON stockmoves.type=systypes.typeid
 			INNER JOIN stockmaster
 				ON stockmoves.stockid=stockmaster.stockid
 			WHERE  stockmoves.loccode " . LIKE . " '" . $_POST['StockLocation'] . "'
 				AND stockmoves.trandate >= '" . $SQLAfterDate . "'
+<<<<<<< HEAD
 				AND stockmoves.trandate <= '" . $SQLBeforeDate . "'
 				AND hidemovt=0
 			ORDER BY stkmoveno DESC";
+=======
+        	AND stockmoves.trandate <= '" . $SQLBeforeDate . "'
+        	AND hidemovt=0
+        	ORDER BY stkmoveno DESC";
+>>>>>>> parent of d496ef8e... Update StockLocMovements.php
 $ErrMsg = _('The stock movements for the selected criteria could not be retrieved because');
 $MovtsResult = DB_query($SQL, $ErrMsg);
 
@@ -117,6 +185,7 @@ if (DB_num_rows($MovtsResult) > 0) {
 				<th>', _('Discount'), '</th>
 				<th>', _('Quantity on Hand'), '</th>
 				<th>', _('Serial No.'), '</th>
+<<<<<<< HEAD
 			</tr>';
 
 	while ($MyRow = DB_fetch_array($MovtsResult)) {
@@ -148,6 +217,39 @@ if (DB_num_rows($MovtsResult) > 0) {
 				<td class="number">', locale_number_format($MyRow['newqoh'], $MyRow['decimalplaces']), '</td>
 				<td>', $SerialText, '</td>
 			</tr>';
+=======
+           		</tr>';
+
+	while ($MyRow = DB_fetch_array($MovtsResult)) {
+
+	$DisplayTranDate = ConvertSQLDate($myrow['trandate']);
+
+		$SerialSQL = "SELECT serialno, moveqty FROM stockserialmoves WHERE stockmoveno='" . $MyRow['stkmoveno'] . "'";
+		$SerialResult = DB_query($SerialSQL);
+
+		$SerialText = '';
+		while ($SerialRow = DB_fetch_array($SerialResult)) {
+			if ($MyRow['serialised'] == 1) {
+				$SerialText .= $SerialRow['serialno'] . '<br />';
+			} else {
+				$SerialText .= $SerialRow['serialno'] . ' Qty- ' . $SerialRow['moveqty'] . '<br />';
+			}
+	}
+
+		echo '<tr class="striped_row">
+				<td><a target="_blank" href="', $RootPath, '/StockStatus.php?StockID=', mb_strtoupper(urlencode($MyRow['stockid'])), '">', mb_strtoupper($MyRow['stockid']), '</a></td>
+				<td>', $MyRow['typename'], '</td>
+				<td>', $MyRow['transno'], '</td>
+				<td>', $DisplayTranDate, '</td>
+				<td>', $MyRow['debtorno'], '</td>
+				<td class="number">', locale_number_format($MyRow['qty'], $MyRow['decimalplaces']), '</td>
+				<td>', $MyRow['reference'], '</td>
+				<td class="number">', locale_number_format($MyRow['price'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+				<td class="number">', locale_number_format($MyRow['discountpercent'] * 100, 2), '%</td>
+				<td class="number">', locale_number_format($MyRow['newqoh'], $MyRow['decimalplaces']), '</td>
+				<td>', $SerialText, '</td>
+			</tr>';
+>>>>>>> parent of d496ef8e... Update StockLocMovements.php
 	}
 	//end of while loop
 	echo '</table>';
@@ -156,4 +258,8 @@ echo '</form>';
 
 include ('includes/footer.php');
 
+<<<<<<< HEAD
 ?>
+=======
+?>
+>>>>>>> parent of d496ef8e... Update StockLocMovements.php
