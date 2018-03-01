@@ -45,7 +45,7 @@ if(isset($ForceConfigReload) AND $ForceConfigReload==true OR !isset($_SESSION['C
 	$result = DB_query("SELECT decimalplaces FROM currencies",'','',false,false);
 	if (DB_error_no()!=0) { //then decimalplaces not already a field in currencies
 		$result = DB_query("ALTER TABLE `currencies`
-							ADD COLUMN `decimalplaces` tinyint(3) NOT NULL DEFAULT 2 AFTER `hundredsname`",$db);
+							ADD COLUMN `decimalplaces` tinyint(3) NOT NULL DEFAULT 2 AFTER `hundredsname`");
 	}
 /* Also reads all the company data set up in the company record and returns an array */
 
