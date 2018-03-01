@@ -1,5 +1,5 @@
 <?php
-/* $Id$*/
+/* $Id: MRPPlannedPurchaseOrders.php 7945 2018-02-09 19:48:22Z turbopt $*/
 // MRPPlannedPurchaseOrders.php - Report of purchase parts that MRP has determined should have
 // purchase orders created for them
 
@@ -27,11 +27,11 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 
 	if ($_POST['Consolidation'] == 'None') {
 		$sql = "SELECT mrpplannedorders.*,
-					   stockmaster.stockid,
-					   stockmaster.description,
-					   stockmaster.mbflag,
-					   stockmaster.decimalplaces,
-					   stockmaster.actualcost,
+					stockmaster.stockid,
+					stockmaster.description,
+					stockmaster.mbflag,
+					stockmaster.decimalplaces,
+					stockmaster.actualcost,
 					(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost ) as computedcost
 				FROM mrpplannedorders
 				INNER JOIN stockmaster
@@ -40,75 +40,75 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 				ORDER BY mrpplannedorders.part,mrpplannedorders.duedate";
 	} elseif ($_POST['Consolidation'] == 'Weekly') {
 		$sql = "SELECT mrpplannedorders.part,
-					   SUM(mrpplannedorders.supplyquantity) as supplyquantity,
-					   TRUNCATE(((TO_DAYS(duedate) - TO_DAYS(CURRENT_DATE)) / 7),0) AS weekindex,
-					   MIN(mrpplannedorders.duedate) as duedate,
-					   MIN(mrpplannedorders.mrpdate) as mrpdate,
-					   COUNT(*) AS consolidatedcount,
-					   stockmaster.stockid,
-					   stockmaster.description,
-					   stockmaster.mbflag,
-					   stockmaster.decimalplaces,
-					   stockmaster.actualcost,
+					SUM(mrpplannedorders.supplyquantity) as supplyquantity,
+					TRUNCATE(((TO_DAYS(duedate) - TO_DAYS(CURRENT_DATE)) / 7),0) AS weekindex,
+					MIN(mrpplannedorders.duedate) as duedate,
+					MIN(mrpplannedorders.mrpdate) as mrpdate,
+					COUNT(*) AS consolidatedcount,
+					stockmaster.stockid,
+					stockmaster.description,
+					stockmaster.mbflag,
+					stockmaster.decimalplaces,
+					stockmaster.actualcost,
 					(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost ) as computedcost
 				FROM mrpplannedorders
 				INNER JOIN stockmaster
 					ON mrpplannedorders.part = stockmaster.stockid
 				WHERE stockmaster.mbflag IN ('B','P') " . $WhereDate . "
 				GROUP BY mrpplannedorders.part,
-						 weekindex,
-						 stockmaster.stockid,
-						 stockmaster.description,
-						 stockmaster.mbflag,
-						 stockmaster.decimalplaces,
-						 stockmaster.actualcost,
-					   stockmaster.materialcost,
-					   stockmaster.labourcost,
-					   stockmaster.overheadcost,
-					   computedcost
+					weekindex,
+					stockmaster.stockid,
+					stockmaster.description,
+					stockmaster.mbflag,
+					stockmaster.decimalplaces,
+					stockmaster.actualcost,
+					stockmaster.materialcost,
+					stockmaster.labourcost,
+					stockmaster.overheadcost,
+					computedcost
 				ORDER BY mrpplannedorders.part,weekindex";
 	} else {  // This else consolidates by month
 		$sql = "SELECT mrpplannedorders.part,
-					   SUM(mrpplannedorders.supplyquantity) as supplyquantity,
-					   EXTRACT(YEAR_MONTH from duedate) AS yearmonth,
-					   MIN(mrpplannedorders.duedate) as duedate,
-					   MIN(mrpplannedorders.mrpdate) as mrpdate,
-					   COUNT(*) AS consolidatedcount,
-					   stockmaster.stockid,
-					   stockmaster.description,
-					   stockmaster.mbflag,
-					   stockmaster.decimalplaces,
-					   stockmaster.actualcost,
+					SUM(mrpplannedorders.supplyquantity) as supplyquantity,
+					EXTRACT(YEAR_MONTH from duedate) AS yearmonth,
+					MIN(mrpplannedorders.duedate) as duedate,
+					MIN(mrpplannedorders.mrpdate) as mrpdate,
+					COUNT(*) AS consolidatedcount,
+					stockmaster.stockid,
+					stockmaster.description,
+					stockmaster.mbflag,
+					stockmaster.decimalplaces,
+					stockmaster.actualcost,
 					(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost ) as computedcost
 				FROM mrpplannedorders
 				INNER JOIN stockmaster
 					ON mrpplannedorders.part = stockmaster.stockid
 				WHERE stockmaster.mbflag IN ('B','P') " . $WhereDate . "
 				GROUP BY mrpplannedorders.part,
-						 yearmonth,
-						 stockmaster.stockid,
-						 stockmaster.description,
-						 stockmaster.mbflag,
-						 stockmaster.decimalplaces,
-						 stockmaster.actualcost,
-					   stockmaster.materialcost,
-					   stockmaster.labourcost,
-					   stockmaster.overheadcost,
-					   computedcost
+					yearmonth,
+					stockmaster.stockid,
+					stockmaster.description,
+					stockmaster.mbflag,
+					stockmaster.decimalplaces,
+					stockmaster.actualcost,
+					stockmaster.materialcost,
+					stockmaster.labourcost,
+					stockmaster.overheadcost,
+					computedcost
 				ORDER BY mrpplannedorders.part,yearmonth";
 	}
 	$result = DB_query($sql,'','',false,true);
 
 	if (DB_error_no() !=0) {
-	  $Title = _('MRP Planned Purchase Orders') . ' - ' . _('Problem Report');
-	  include('includes/header.php');
-	   prnMsg( _('The MRP planned purchase orders could not be retrieved by the SQL because') . ' '  . DB_error_msg(),'error');
-	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-	   if ($debug==1){
-		  echo '<br />' . $sql;
-	   }
-	   include('includes/footer.php');
-	   exit;
+		$Title = _('MRP Planned Purchase Orders') . ' - ' . _('Problem Report');
+		include('includes/header.php');
+		prnMsg( _('The MRP planned purchase orders could not be retrieved by the SQL because') . ' '  . DB_error_msg(),'error');
+		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
+		if ($debug==1){
+			echo '<br />' . $sql;
+		}
+		include('includes/footer.php');
+		exit;
 	}
 
 	if (DB_num_rows($result)==0){ //then there is nothing to print
@@ -132,37 +132,37 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 		$line_height=12;
 		$Xpos = $Left_Margin+1;
 
-	PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
-				$Page_Width,$Right_Margin,$_POST['Consolidation'],$ReportDate);
+		PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
+					$Page_Width,$Right_Margin,$_POST['Consolidation'],$ReportDate);
 
-	$Partctr = 0;
-	$fill = false;
-	$pdf->SetFillColor(224,235,255);  // Defines color to make alternating lines highlighted
-	$FontSize=8;
-	$holdpart = ' ';
-	$holddescription = ' ';
-	$holdmbflag = ' ';
-	$holdcost = ' ';
-	$holddecimalplaces = 0;
-	$totalpartqty = 0;
-	$totalpartcost = 0;
-	$Total_Extcost = 0;
+		$Partctr = 0;
+		$fill = false;
+		$pdf->SetFillColor(224,235,255);  // Defines color to make alternating lines highlighted
+		$FontSize=8;
+		$HoldPart = ' ';
+		$HoldDescription = ' ';
+		$HoldMBFlag = ' ';
+		$HoldCost = ' ';
+		$HoldDecimalPlaces = 0;
+		$TotalPartQty = 0;
+		$TotalPartCost = 0;
+		$Total_ExtCost = 0;
 
-	while ($myrow = DB_fetch_array($result)){
+		while ($myrow = DB_fetch_array($result)){
 			$YPos -=$line_height;
 
 			// Print information on part break
-			if ($Partctr > 0 AND $holdpart != $myrow['part']) {
-				$pdf->addTextWrap(50,$YPos,130,$FontSize,$holddescription,'',0,$fill);
+			if ($Partctr > 0 AND $HoldPart != $myrow['part']) {
+				$pdf->addTextWrap(50,$YPos,130,$FontSize,$HoldDescription,'',0,$fill);
 				$pdf->addTextWrap(180,$YPos,50,$FontSize,_('Unit Cost: '),'center',0,$fill);
-				$pdf->addTextWrap(220,$YPos,40,$FontSize,locale_number_format($holdcost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$fill);
-				$pdf->addTextWrap(260,$YPos,50,$FontSize,locale_number_format($totalpartqty,	$holddecimalplaces),'right',0,$fill);
-				$pdf->addTextWrap(310,$YPos,60,$FontSize,locale_number_format($totalpartcost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$fill);
+				$pdf->addTextWrap(220,$YPos,40,$FontSize,locale_number_format($HoldCost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$fill);
+				$pdf->addTextWrap(260,$YPos,50,$FontSize,locale_number_format($TotalPartQty, $HoldDecimalPlaces),'right',0,$fill);
+				$pdf->addTextWrap(310,$YPos,60,$FontSize,locale_number_format($TotalPartCost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$fill);
 				$pdf->addTextWrap(370,$YPos,30,$FontSize,_('M/B: '),'right',0,$fill);
-				$pdf->addTextWrap(400,$YPos,15,$FontSize,$holdmbflag,'right',0,$fill);
+				$pdf->addTextWrap(400,$YPos,15,$FontSize,$HoldMBFlag,'right',0,$fill);
 
 				// Get and print supplier info for part
-				list($lastdate,$lastsupplier,$preferredsupplier) = GetPartInfo($holdpart);
+				list($lastdate,$lastsupplier,$preferredsupplier) = GetPartInfo($HoldPart);
 				$displaydate = $lastdate;
 
 				if (!Is_Date($lastdate)) {
@@ -176,8 +176,8 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 				$pdf->addTextWrap(250,$YPos,60,$FontSize,$lastsupplier,'left',0,$fill);
 				$pdf->addTextWrap(310,$YPos,120,$FontSize,_('Preferred Supplier: '),'left',0,$fill);
 				$pdf->addTextWrap(430,$YPos,60,$FontSize,$preferredsupplier,'left',0,$fill);
-				$totalpartcost = 0;
-				$totalpartqty = 0;
+				$TotalPartCost = 0;
+				$TotalPartQty = 0;
 				$YPos -= (2*$line_height);
 
 				// Use to alternate between lines with transparent and painted background
@@ -189,12 +189,12 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 			// Parameters for addTextWrap are defined in /includes/class.pdf.php
 			$FormatedSupDueDate = ConvertSQLDate($myrow['duedate']);
 			$FormatedSupMRPDate = ConvertSQLDate($myrow['mrpdate']);
-			$extcost = $myrow['supplyquantity'] * $myrow['computedcost'];
+			$ExtCost = $myrow['supplyquantity'] * $myrow['computedcost'];
 			$pdf->addTextWrap($Left_Margin,$YPos,110,$FontSize,$myrow['part'],'',0,$fill);
 			$pdf->addTextWrap(150,$YPos,50,$FontSize,$FormatedSupDueDate,'right',0,$fill);
 			$pdf->addTextWrap(200,$YPos,60,$FontSize,$FormatedSupMRPDate,'right',0,$fill);
 			$pdf->addTextWrap(260,$YPos,50,$FontSize,locale_number_format($myrow['supplyquantity'], $myrow['decimalplaces']),'right',0,$fill);
-			$pdf->addTextWrap(310,$YPos,60,$FontSize,locale_number_format($extcost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$fill);
+			$pdf->addTextWrap(310,$YPos,60,$FontSize,locale_number_format($ExtCost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$fill);
 
 			if ($_POST['Consolidation'] == 'None'){
 				$pdf->addTextWrap(370,$YPos,80,$FontSize,$myrow['ordertype'],'right',0,$fill);
@@ -203,65 +203,65 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 				$pdf->addTextWrap(370,$YPos,100,$FontSize,$myrow['consolidatedcount'],'right',0,$fill);
 			}
 
-			$holddescription = $myrow['description'];
-			$holdpart = $myrow['part'];
-			$holdmbflag = $myrow['mbflag'];
-			$holdcost = $myrow['computedcost'];
-			$holddecimalplaces = $myrow['decimalplaces'];
-			$totalpartcost += $extcost;
-			$totalpartqty += $myrow['supplyquantity'];
+			$HoldDescription = $myrow['description'];
+			$HoldPart = $myrow['part'];
+			$HoldMBFlag = $myrow['mbflag'];
+			$HoldCost = $myrow['computedcost'];
+			$HoldDecimalPlaces = $myrow['decimalplaces'];
+			$TotalPartCost += $ExtCost;
+			$TotalPartQty += $myrow['supplyquantity'];
 
-			$Total_Extcost += $extcost;
+			$Total_ExtCost += $ExtCost;
 			$Partctr++;
 
 			if ($YPos < $Bottom_Margin + $line_height){
-			   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
-						   $Right_Margin,$_POST['Consolidation'],$ReportDate);
+				PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
+							$Right_Margin,$_POST['Consolidation'],$ReportDate);
 			}
-	} /*end while loop */
+		} /*end while loop */
 
-	// Print summary information for last part
-	$YPos -=$line_height;
-	$pdf->addTextWrap(50,$YPos,130,$FontSize,$holddescription,'',0,$fill);
-	$pdf->addTextWrap(180,$YPos,50,$FontSize,_('Unit Cost: '),'center',0,$fill);
-	$pdf->addTextWrap(220,$YPos,40,$FontSize,locale_number_format($holdcost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$fill);
-	$pdf->addTextWrap(260,$YPos,50,$FontSize,locale_number_format($totalpartqty,$holddecimalplaces),'right',0,$fill);
-	$pdf->addTextWrap(310,$YPos,60,$FontSize,locale_number_format($totalpartcost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$fill);
-	$pdf->addTextWrap(370,$YPos,30,$FontSize,_('M/B: '),'right',0,$fill);
-	$pdf->addTextWrap(400,$YPos,15,$FontSize,$holdmbflag,'right',0,$fill);
+		// Print summary information for last part
+		$YPos -=$line_height;
+		$pdf->addTextWrap(50,$YPos,130,$FontSize,$HoldDescription,'',0,$fill);
+		$pdf->addTextWrap(180,$YPos,50,$FontSize,_('Unit Cost: '),'center',0,$fill);
+		$pdf->addTextWrap(220,$YPos,40,$FontSize,locale_number_format($HoldCost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$fill);
+		$pdf->addTextWrap(260,$YPos,50,$FontSize,locale_number_format($TotalPartQty,$HoldDecimalPlaces),'right',0,$fill);
+		$pdf->addTextWrap(310,$YPos,60,$FontSize,locale_number_format($TotalPartCost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$fill);
+		$pdf->addTextWrap(370,$YPos,30,$FontSize,_('M/B: '),'right',0,$fill);
+		$pdf->addTextWrap(400,$YPos,15,$FontSize,$HoldMBFlag,'right',0,$fill);
 
-	// Get and print supplier info for part
-		list($lastdate,$lastsupplier,$preferredsupplier) = GetPartInfo($holdpart);
-	$displaydate = $lastdate;
+		// Get and print supplier info for part
+		list($lastdate,$lastsupplier,$preferredsupplier) = GetPartInfo($HoldPart);
+		$displaydate = $lastdate;
 
-	if (!Is_Date($lastdate)) {
-		$displaydate = ' ';
-	}
+		if (!Is_Date($lastdate)) {
+			$displaydate = ' ';
+		}
 
-	$YPos -= $line_height;
-	$pdf->addTextWrap(50,$YPos,80,$FontSize,_('Last Purchase Date: '),'left',0,$fill);
-	$pdf->addTextWrap(130,$YPos,60,$FontSize,$displaydate,'left',0,$fill);
-	$pdf->addTextWrap(190,$YPos,60,$FontSize,_('Supplier: '),'left',0,$fill);
-	$pdf->addTextWrap(250,$YPos,60,$FontSize,$lastsupplier,'left',0,$fill);
-	$pdf->addTextWrap(310,$YPos,120,$FontSize,_('Preferred Supplier: '),'left',0,$fill);
-	$pdf->addTextWrap(430,$YPos,60,$FontSize,$preferredsupplier,'left',0,$fill);
-	$FontSize =8;
-	$YPos -= (2*$line_height);
+		$YPos -= $line_height;
+		$pdf->addTextWrap(50,$YPos,80,$FontSize,_('Last Purchase Date: '),'left',0,$fill);
+		$pdf->addTextWrap(130,$YPos,60,$FontSize,$displaydate,'left',0,$fill);
+		$pdf->addTextWrap(190,$YPos,60,$FontSize,_('Supplier: '),'left',0,$fill);
+		$pdf->addTextWrap(250,$YPos,60,$FontSize,$lastsupplier,'left',0,$fill);
+		$pdf->addTextWrap(310,$YPos,120,$FontSize,_('Preferred Supplier: '),'left',0,$fill);
+		$pdf->addTextWrap(430,$YPos,60,$FontSize,$preferredsupplier,'left',0,$fill);
+		$FontSize =8;
+		$YPos -= (2*$line_height);
 
-	if ($YPos < $Bottom_Margin + $line_height){
-		   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
-					   $Right_Margin,$_POST['Consolidation'],$ReportDate);
-	}
+		if ($YPos < $Bottom_Margin + $line_height){
+			PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
+						$Right_Margin,$_POST['Consolidation'],$ReportDate);
+		}
 
-	/*Print out the grand totals */
-	$pdf->addTextWrap($Left_Margin,$YPos,120,$FontSize,_('Number of Purchase Orders: '), 'left');
-	$pdf->addTextWrap(150,$YPos,30,$FontSize,$Partctr, 'left');
-	$pdf->addTextWrap(200,$YPos,100,$FontSize,_('Total Extended Cost:'), 'right');
-	$DisplayTotalVal = locale_number_format($Total_Extcost,$_SESSION['CompanyRecord']['decimalplaces']);
-	$pdf->addTextWrap(310,$YPos,60,$FontSize,$DisplayTotalVal, 'right');
+		/*Print out the grand totals */
+		$pdf->addTextWrap($Left_Margin,$YPos,120,$FontSize,_('Number of Purchase Orders: '), 'left');
+		$pdf->addTextWrap(150,$YPos,30,$FontSize,$Partctr, 'left');
+		$pdf->addTextWrap(200,$YPos,100,$FontSize,_('Total Extended Cost:'), 'right');
+		$DisplayTotalVal = locale_number_format($Total_ExtCost,$_SESSION['CompanyRecord']['decimalplaces']);
+		$pdf->addTextWrap(310,$YPos,60,$FontSize,$DisplayTotalVal, 'right');
 
-	$pdf->OutputD($_SESSION['DatabaseName'] . '_MRP_Planned_Purchase_Orders_' . Date('Y-m-d') . '.pdf');
-	$pdf->__destruct();
+		$pdf->OutputD($_SESSION['DatabaseName'] . '_MRP_Planned_Purchase_Orders_' . Date('Y-m-d') . '.pdf');
+		$pdf->__destruct();
 
 	} else { // Review planned purchase orders
 
@@ -349,36 +349,36 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			<table class="selection">
 			<tr>
-                  <td>' . _('Consolidation') . ':</td>
+				<td>' . _('Consolidation') . ':</td>
 				<td>
 					<select required="required" name="Consolidation">
-                      <option selected="selected" value="None">' . _('None') . '</option>
-                      <option value="Weekly">' . _('Weekly') . '</option>
-                      <option value="Monthly">' . _('Monthly') . '</option>
+						<option selected="selected" value="None">' . _('None') . '</option>
+						<option value="Weekly">' . _('Weekly') . '</option>
+						<option value="Monthly">' . _('Monthly') . '</option>
 					</select>
 				</td>
-              </tr>
-              <tr>
-                  <td>' . _('Print Option') . ':</td>
+			</tr>
+			<tr>
+				<td>' . _('Print Option') . ':</td>
 				<td>
 					<select name="Fill">
-                      <option selected="selected" value="yes">' . _('Print With Alternating Highlighted Lines') . '</option>
-                      <option value="no">' . _('Plain Print') . '</option>
+						<option selected="selected" value="yes">' . _('Print With Alternating Highlighted Lines') . '</option>
+						<option value="no">' . _('Plain Print') . '</option>
 					</select>
 				</td>
-              </tr>
-              <tr>
-                  <td>' . _('Cut Off Date') . ':</td>
+			</tr>
+			<tr>
+				<td>' . _('Cut Off Date') . ':</td>
 				<td>
 					<input type ="text" required="required" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="cutoffdate" autofocus="autofocus" size="10" value="' . date($_SESSION['DefaultDateFormat']) . '" />
 				</td>
-             </tr>
-             </table>
-             <div class="centre">
+			</tr>
+			</table>
+			<div class="centre">
 				<input type="submit" name="Review" value="' . _('Review') . '" /> <input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
-             </div>
-          </div>
-          </form>';
+			</div>
+		</div>
+		</form>';
 
 	include('includes/footer.php');
 
