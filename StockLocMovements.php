@@ -1,6 +1,9 @@
 <?php
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* $Id$*/
+=======
+>>>>>>> parent of 01188779... Update StockLocMovements.php
 =======
 >>>>>>> parent of 01188779... Update StockLocMovements.php
 
@@ -46,6 +49,7 @@ echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8
 if (isset($_POST['ResetPart'])) {
 	unset($SelectedStockItem);
 }
+<<<<<<< HEAD
 
 if (isset($OrderNumber) and $OrderNumber != '') {
 	if (!is_numeric($OrderNumber)) {
@@ -166,12 +170,134 @@ if (isset($_POST['SearchParts'])) {
 	$StockItemsResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 }
 
+=======
+
+if (isset($OrderNumber) and $OrderNumber != '') {
+	if (!is_numeric($OrderNumber)) {
+		prnMsg(_('The Order Number entered') . ' <u>' . _('MUST') . '</u> ' . _('be numeric'), 'error');
+		unset($OrderNumber);
+	} else {
+		echo _('Order Number') . ' - ' . $OrderNumber;
+	}
+}
+
+if (isset($PickList) and $PickList != '') {
+	if (!is_numeric($PickList)) {
+		prnMsg(_('The Pick List entered') . ' <u>' . _('MUST') . '</u> ' . _('be numeric'), 'error');
+		unset($PickList);
+	} else {
+		echo _('Pick List') . ' - ' . $PickList;
+	}
+}
+
+if (isset($_POST['SearchParts'])) {
+	if ($_POST['Keywords'] and $_POST['StockCode']) {
+		prnMsg(_('Stock description keywords have been used in preference to the Stock code extract entered'), 'info');
+	}
+	if ($_POST['Keywords']) {
+		//insert wildcard characters in spaces
+		$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
+		$SQL = "SELECT stockmaster.stockid,
+				stockmaster.description,
+				stockmaster.decimalplaces,
+				SUM(locstock.quantity) as qoh,
+				stockmaster.units,
+				(SELECT SUM(qtypicked)
+					FROM pickreqdetails
+					INNER JOIN pickreq ON pickreq.prid = pickreqdetails.prid
+					INNER JOIN locationusers ON locationusers.loccode = pickreq.loccode
+						AND locationusers.userid='" . $_SESSION['UserID'] . "'
+						AND locationusers.canview =1
+					WHERE pickreq.closed=0
+						AND stockmaster.stockid = pickreqdetails.stockid) AS qpicked
+			FROM stockmaster INNER JOIN locstock
+				ON stockmaster.stockid = locstock.stockid
+			INNER JOIN locationusers ON locationusers.loccode = locstock.loccode
+				AND locationusers.userid='" . $_SESSION['UserID'] . "'
+				AND locationusers.canview=1
+			WHERE stockmaster.description " . LIKE . " '" . $SearchString . "'
+				AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+			GROUP BY stockmaster.stockid,
+				stockmaster.description,
+				stockmaster.decimalplaces,
+				stockmaster.units
+			ORDER BY stockmaster.stockid";
+	} elseif ($_POST['StockCode']) {
+		$SQL = "SELECT stockmaster.stockid,
+				stockmaster.description,
+				stockmaster.decimalplaces,
+				SUM(locstock.quantity) AS qoh,
+				(SELECT SUM(qtypicked)
+					FROM pickreqdetails
+					INNER JOIN pickreq
+						ON pickreq.prid = pickreqdetails.prid
+					INNER JOIN locationusers
+						ON locationusers.loccode = pickreq.loccode
+						AND locationusers.userid='" . $_SESSION['UserID'] . "'
+						AND locationusers.canview =1
+					WHERE pickreq.closed=0
+						AND stockmaster.stockid = pickreqdetails.stockid) AS qpicked,
+				stockmaster.units
+			FROM stockmaster
+			INNER JOIN locstock
+				ON stockmaster.stockid = locstock.stockid
+			INNER JOIN locationusers
+				ON locationusers.loccode = locstock.loccode
+				AND locationusers.userid='" . $_SESSION['UserID'] . "'
+				AND locationusers.canview=1
+			WHERE stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%'
+				AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+			GROUP BY stockmaster.stockid,
+				stockmaster.description,
+				stockmaster.decimalplaces,
+				stockmaster.units
+			ORDER BY stockmaster.stockid";
+	} elseif (!$_POST['StockCode'] and !$_POST['Keywords']) {
+		$SQL = "SELECT stockmaster.stockid,
+				stockmaster.description,
+				stockmaster.decimalplaces,
+				SUM(locstock.quantity) AS qoh,
+				stockmaster.units,
+				(SELECT SUM(qtypicked)
+					FROM pickreqdetails
+					INNER JOIN pickreq
+						ON pickreq.prid = pickreqdetails.prid
+					INNER JOIN locationusers
+						ON locationusers.loccode = pickreq.loccode
+						AND locationusers.userid='" . $_SESSION['UserID'] . "'
+						AND locationusers.canview =1
+					WHERE pickreq.closed=0
+						AND stockmaster.stockid = pickreqdetails.stockid) AS qpicked
+				FROM stockmaster
+				INNER JOIN locstock
+					ON stockmaster.stockid = locstock.stockid
+				INNER JOIN locationusers
+					ON locationusers.loccode = locstock.loccode
+					AND locationusers.userid='" . $_SESSION['UserID'] . "'
+					AND locationusers.canview =1
+				WHERE stockmaster.categoryid='" . $_POST['StockCat'] . "'
+				GROUP BY stockmaster.stockid,
+					stockmaster.description,
+					stockmaster.decimalplaces,
+					stockmaster.units
+				ORDER BY stockmaster.stockid";
+	}
+
+	$ErrMsg = _('No stock items were returned by the SQL because');
+	$DbgMsg = _('The SQL used to retrieve the searched parts was');
+	$StockItemsResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+}
+
+>>>>>>> parent of 01188779... Update StockLocMovements.php
 if (true or !isset($OrderNumber) or $OrderNumber == "") { //revisit later, right now always show all inputs
 	echo '<table class="selection">
 			<tr>';
 	if (isset($SelectedStockItem) and $SelectedStockItem != '') {
 		echo '<td>', _('For the part'), ': <b>', $SelectedStockItem, '</b>', ' ', _('and'), '<input type="hidden" name="SelectedStockItem" value="', $SelectedStockItem, '" /></td>';
 	}
+<<<<<<< HEAD
+>>>>>>> parent of 01188779... Update StockLocMovements.php
+=======
 >>>>>>> parent of 01188779... Update StockLocMovements.php
 
 	echo '<td>', _('Sales Order'), ':</td><td><input name="OrderNumber" autofocus="autofocus" maxlength="8" size="9" value="', $OrderNumber, '"/></td>';
@@ -200,15 +326,19 @@ if (true or !isset($OrderNumber) or $OrderNumber == "") { //revisit later, right
 			echo '<option value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	} elseif ($MyRow['loccode'] == $_SESSION['UserStockLocation']) {
 		 echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		 $_POST['StockLocation']=$myrow['loccode'];
 =======
+=======
+>>>>>>> parent of 01188779... Update StockLocMovements.php
 	}
 	echo '</select></td><td>', _('Pick List Status'), ':</td><td><select name="Status">';
 
 	if ($_POST['Status'] == 'New') {
 		echo '<option selected="selected" value="New">', _('New'), '</option>';
+<<<<<<< HEAD
 	} else {
 		echo '<option value="New">', _('New'), '</option>';
 	}
@@ -228,6 +358,26 @@ if (true or !isset($OrderNumber) or $OrderNumber == "") { //revisit later, right
 	} else {
 		echo '<option value="Invoiced">', _('Invoiced'), '</option>';
 	}
+=======
+	} else {
+		echo '<option value="New">', _('New'), '</option>';
+	}
+	if ($_POST['Status'] == 'Picked') {
+		echo '<option selected="selected" value="Picked">', _('Picked'), '</option>';
+	} else {
+		echo '<option value="Picked">', _('Picked'), '</option>';
+	}
+	if ($_POST['Status'] == 'Shipped') {
+		echo '<option selected="selected" value="Shipped">', _('Shipped'), '</option>';
+	} else {
+		echo '<option value="Shipped">', _('Shipped'), '</option>';
+	}
+	if ($_POST['Status'] == 'Invoiced') {
+		echo '<option selected="selected" value="Invoiced">', _('Invoiced'), '</option>';
+	} else {
+		echo '<option value="Invoiced">', _('Invoiced'), '</option>';
+	}
+>>>>>>> parent of 01188779... Update StockLocMovements.php
 	if ($_POST['Status'] == 'Cancelled') {
 		echo '<option selected="selected" value="Cancelled">', _('Cancelled'), '</option>';
 	} else {
@@ -254,6 +404,7 @@ echo '<table class="selection">
 echo '<tr>
 		<td>', _('Select a stock category'), ':</td><td><select name="StockCat">';
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 if (!isset($_POST['BeforeDate']) or !Is_date($_POST['BeforeDate'])) {
    $_POST['BeforeDate'] = Date($_SESSION['DefaultDateFormat']);
@@ -331,6 +482,16 @@ while ($MyRow1 = DB_fetch_array($Result1)) {
 	}
 }
 
+=======
+while ($MyRow1 = DB_fetch_array($Result1)) {
+	if (isset($_POST['StockCat']) and $MyRow1['categoryid'] == $_POST['StockCat']) {
+		echo '<option selected="selected" value="', $MyRow1['categoryid'], '">', $MyRow1['categorydescription'], '</option>';
+	} else {
+		echo '<option value="', $MyRow1['categoryid'], '">', $MyRow1['categorydescription'], '</option>';
+	}
+}
+
+>>>>>>> parent of 01188779... Update StockLocMovements.php
 echo '</select></td>
 		<td>', _('Enter text extracts in the'), ' <b>', _('description'), '</b>:</td>
 		<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
@@ -493,6 +654,7 @@ else {
 							ORDER BY pickreq.requestdate, pickreq.prid";
 			} //no stock item selected
 		} //no customer selected
+<<<<<<< HEAD
 
 	} //end not order number selected
 	$ErrMsg = _('No pick lists were returned by the SQL because');
@@ -526,6 +688,36 @@ else {
 
 		while ($MyRow = DB_fetch_array($PickReqResult)) {
 
+=======
+
+	} //end not order number selected
+	$ErrMsg = _('No pick lists were returned by the SQL because');
+	$PickReqResult = DB_query($SQL, $ErrMsg);
+
+	if (DB_num_rows($PickReqResult) > 0) {
+		/*show a table of the pick lists returned by the SQL */
+		echo '<table cellpadding="2" width="90%" class="selection">
+				<thead>
+					<tr>
+						<th class="ascending">', _('Modify'), '</th>
+						<th class="ascending">', _('Picking List'), '</th>
+						<th class="ascending">', _('Packing List'), '</th>
+						<th class="ascending">', _('Labels'), '</th>
+						<th class="ascending">', _('Order'), '</th>
+						<th class="ascending">', _('Customer'), '</th>
+						<th class="ascending">', _('Request Date'), '</th>
+						<th class="ascending">', _('Ship Date'), '</th>
+						<th class="ascending">', _('Shipped By'), '</th>
+						<th class="ascending">', _('Initiated On'), '</th>
+						<th class="ascending">', _('Initiated By'), '</th>
+					</tr>
+				</thead>';
+
+		echo '<tbody>';
+
+		while ($MyRow = DB_fetch_array($PickReqResult)) {
+
+>>>>>>> parent of 01188779... Update StockLocMovements.php
 			$ModifyPickList = $RootPath . '/PickingLists.php?Prid=' . $MyRow['prid'];
 			$PrintPickList = $RootPath . '/GeneratePickingList.php?TransNo=' . $MyRow['orderno'];
 
@@ -537,7 +729,10 @@ else {
 				$PrintDispatchNote = $RootPath . '/PrintCustOrder.php?TransNo=' . $MyRow['orderno'];
 			}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	}
+=======
+>>>>>>> parent of 01188779... Update StockLocMovements.php
 =======
 >>>>>>> parent of 01188779... Update StockLocMovements.php
 
@@ -586,8 +781,11 @@ if ($_POST['Status'] == 'New') {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ?>
 =======
+=======
+>>>>>>> parent of 01188779... Update StockLocMovements.php
 include('includes/footer.php');
 ?>
 >>>>>>> parent of 01188779... Update StockLocMovements.php
