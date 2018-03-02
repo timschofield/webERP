@@ -379,7 +379,7 @@ if (isset($PrintPDF)
 									/* head up a new invoice/credit note page */
 									/*draw the vertical column lines right to the bottom */
 									PrintLinesToBottom ();
-									include ('includes/PDFTransPageHeaderPortrait.inc');
+									include ('includes/PDFTransPageHeader.inc');
 								} //end if need a new page headed up
 							}
 						} else {
@@ -390,7 +390,7 @@ if (isset($PrintPDF)
 									/* head up a new invoice/credit note page */
 									/*draw the vertical column lines right to the bottom */
 									PrintLinesToBottom ();
-									include ('includes/PDFTransPageHeaderPortrait.inc');
+									include ('includes/PDFTransPageHeader.inc');
 								} //end if need a new page headed up
 							}
 						}

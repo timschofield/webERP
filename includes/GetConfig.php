@@ -4,7 +4,6 @@
 /* $Id$*/
 
 if(isset($ForceConfigReload) AND $ForceConfigReload==true OR !isset($_SESSION['CompanyDefaultsLoaded'])) {
-	global  $db;		// It is global, we may not be.
 	$sql = "SELECT confname, confvalue FROM config";
 	$ErrMsg = _('Could not get the configuration parameters from the database because');
 	$ConfigResult = DB_query($sql,$ErrMsg);
@@ -45,7 +44,7 @@ if(isset($ForceConfigReload) AND $ForceConfigReload==true OR !isset($_SESSION['C
 	$result = DB_query("SELECT decimalplaces FROM currencies",'','',false,false);
 	if (DB_error_no()!=0) { //then decimalplaces not already a field in currencies
 		$result = DB_query("ALTER TABLE `currencies`
-							ADD COLUMN `decimalplaces` tinyint(3) NOT NULL DEFAULT 2 AFTER `hundredsname`",$db);
+							ADD COLUMN `decimalplaces` tinyint(3) NOT NULL DEFAULT 2 AFTER `hundredsname`");
 	}
 /* Also reads all the company data set up in the company record and returns an array */
 

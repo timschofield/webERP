@@ -33,10 +33,15 @@
 			<script>
 				localStorage.setItem("DateFormat", "', $_SESSION['DefaultDateFormat'], '");
 				localStorage.setItem("Theme", "', $_SESSION['Theme'], '");
+			</script>';
 
 	// If it is set the $_SESSION['ShowPageHelp'] parameter AND it is FALSE, hides the page help text:
 	if(isset($_SESSION['ShowPageHelp']) AND !$_SESSION['ShowPageHelp']) {
-		echo '<style>.page_help_text, DIV.page_help_text {display:none;}</style>';
+		echo '<style>
+			.page_help_text, div.page_help_text {
+				display:none;
+			}
+		</style>';
 	}
 
 	echo '</head>',
