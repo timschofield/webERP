@@ -88,13 +88,7 @@
 
 <p>The supervisor (authorizer) gives money cash to an employee to be used as petty cash. In script PcAssignCashToTab.php we record this fact.<br></p>
 
-<p>Supervisor can select only the tabs he/she is supervisor. Must specify amount, date. There are 2 additional fields:</p>
-
-<ul>
-    <li>Notes: For any further detail needed to remember</li>
-
-    <li>Receipt: In case the company has a physical receipt, or any proof, the code, number, etc of this receipt, to help solving disputes later on</li>
-</ul>
+<p>The supervisor can select only the tabs he/she is supervisor of. They must specify amount and date. There is also a field for notes, where any further detail can be added.</p>
 
 <p>At this stage no tranasction is posted in gltrans table, only at pcashdetails we write down: "Supervisor gives to user X (tab really), Y dollars on date D".<br></p>
 

@@ -76,7 +76,7 @@ if (isset($_POST['submit'])) {
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
 
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_add.png" title="' . 
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_add.png" title="' .
 		_('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	/* actions to take once the user has clicked the submit button
@@ -116,6 +116,7 @@ if (isset($_POST['submit'])) {
 					amount,
 					authorized,
 					posted,
+					purpose,
 					notes)
 			VALUES (NULL,
 					'" . $_POST['SelectedTabs'] . "',
@@ -124,7 +125,8 @@ if (isset($_POST['submit'])) {
 					'" . filter_number_format($_POST['Amount']) . "',
 					'0000-00-00',
 					'0',
-					'" . $_POST['Notes'] . "',
+					NULL,
+					'" . $_POST['Notes'] . "'
 					),
 					(NULL,
 					'" . $SelectedTabsTo . "',
@@ -133,7 +135,8 @@ if (isset($_POST['submit'])) {
 					'" . filter_number_format(-$_POST['Amount']) . "',
 					'0000-00-00',
 					'0',
-					'" . $_POST['Notes'] . "',
+					NULL,
+					'" . $_POST['Notes'] . "'
 					)";
 		$msg = _('Assignment of cash from PC Tab ') . ' ' . $SelectedTabs .  ' ' . _('to ') . $SelectedTabsTo . ' ' . _('has been created');
 	}
@@ -153,7 +156,7 @@ if (isset($_POST['submit'])) {
 
 if (!isset($SelectedTabs)){
 
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_add.png" title="' . 
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_add.png" title="' .
 		_('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
@@ -209,11 +212,11 @@ if (!isset($SelectedTabs)){
 if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 
 	if (!isset($_POST['submit'])) {
-		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_add.png" title="' . 
+		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_add.png" title="' .
 			_('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 	}
 	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Select another pair of tabs') . '</a></div>';
-	
+
 	echo '<br /><table class="selection">';
 	echo '	<tr>
 				<td>' . _('Petty cash tab to assign cash from') . ':</td>
@@ -224,7 +227,7 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 				<td>' . $SelectedTabsTo . '</td>
 			</tr>';
 	echo '</table>';
-	
+
 	if (! isset($_GET['edit']) OR isset ($_POST['GO'])){
 
 		if (isset($_POST['Cancel'])) {
@@ -254,6 +257,7 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 						amount,
 						authorized,
 						posted,
+						purpose,
 						notes
 				FROM pcashdetails
 				WHERE tabcode='" . $SelectedTabs . "'
@@ -264,8 +268,8 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
 			<div>
 				<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-				
-		//Limit expenses history to X days		
+
+		//Limit expenses history to X days
 		echo '<table class="selection">
 				<tr>
 					<td>' . _('Detail of Tab Movements For Last') .':
@@ -275,16 +279,20 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 					</td>
 				</tr>
 			</table>';
-			
+
 		echo '<table class="selection">
-			<tr>
-				<th>' . _('Date') . '</th>
-				<th>' . _('Expense Code') . '</th>
-				<th>' . _('Amount') . '</th>
-				<th>' . _('Notes') . '</th>
-				<th>' . _('Receipt Attachment') . '</th>
-				<th>' . _('Date Authorised') . '</th>
-			</tr>';
+				<thead>
+					<tr>
+						<th class="ascending">' . _('Date') . '</th>
+						<th class="ascending">' . _('Expense Code') . '</th>
+						<th class="ascending">' . _('Amount') . '</th>
+						<th>' . _('Business Purpose') . '</th>
+						<th>' . _('Notes') . '</th>
+						<th>' . _('Receipt Attachment') . '</th>
+						<th class="ascending">' . _('Date Authorised') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
 
@@ -299,19 +307,28 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 		} else {
 				$ExpenseCodeDes = $MyRow['codeexpense'] . ' - ' . $Description[0];
 		}
-		
+
 		//Generate download link for expense receipt, or show text if no receipt file is found.
 		$ReceiptSupportedExt = array('png','jpg','jpeg','pdf','doc','docx','xls','xlsx'); //Supported file extensions
-		$ReceiptFileDir = $PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/expenses_receipts/' . mb_strtolower($SelectedTabs); //Receipts upload directory
-		$ReceiptFilePathMatched = reset(glob($ReceiptFileDir . '/' . $MyRow['counterindex'] . '.{' . implode(',', $ReceiptSupportedExt) . '}', GLOB_BRACE)); //Find the relevant receipt file for the expense. There should only be one (file type), but limit to one result just in case.
-		if (!empty($ReceiptFilePathMatched)) { //If no receipt file for the expenses is found
-			$ReceiptText = '<a href="' . $ReceiptFilePathMatched . '" download="ExpenseReceipt-' . mb_strtolower($SelectedTabs) . '-[' . $MyRow['date'] . ']-[' . $MyRow['counterindex'] . ']">' . _('Download attachment') . '</a>';
-		} elseif ($ExpenseCodeDes == 'ASSIGNCASH') {
-			$ReceiptText = '';
-		} else {
-			$ReceiptText = _('No attachment');
-		}
-		
+		$ReceiptDir = $PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/expenses_receipts/'; //Receipts upload directory
+		$ReceiptSQL = "SELECT hashfile,
+								extension
+								FROM pcreceipts
+								WHERE pccashdetail='" . $MyRow['counterindex'] . "'";
+		$ReceiptResult = DB_query($ReceiptSQL);
+		$ReceiptRow = DB_fetch_array($ReceiptResult);
+			if (DB_num_rows($ReceiptResult) > 0) { //If receipt exists in database
+				$ReceiptHash = $ReceiptRow['hashfile'];
+				$ReceiptExt = $ReceiptRow['extension'];
+				$ReceiptFileName = $ReceiptHash . '.' . $ReceiptExt;
+				$ReceiptPath = $ReceiptDir . $ReceiptFileName;
+				$ReceiptText = '<a href="' . $ReceiptPath . '" download="ExpenseReceipt-' . mb_strtolower($SelectedTabs) . '-[' . $MyRow['date'] . ']-[' . $MyRow['counterindex'] . ']">' . _('Download attachment') . '</a>';
+			} elseif ($ExpenseCodeDes == 'ASSIGNCASH') {
+				$ReceiptText = '';
+			} else {
+				$ReceiptText = _('No attachment');
+			}
+
 		if ($MyRow['authorized'] == '0000-00-00') {
 				$AuthorisedDate = _('Unauthorised');
 		} else {
@@ -324,6 +341,7 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 				<td>' . ConvertSQLDate($MyRow['date']) . '</td>
 				<td>', $ExpenseCodeDes, '</td>
 				<td class="number">' . locale_number_format($MyRow['amount'],$CurrDecimalPlaces) . '</td>
+				<td>' . $MyRow['purpose'] . '</td>
 				<td>' . $MyRow['notes'] . '</td>
 				<td>' . $ReceiptText . '</td>
 				<td>' . $AuthorisedDate . '</td>
@@ -333,6 +351,7 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 				<td>' . ConvertSQLDate($MyRow['date']) . '</td>
 				<td>', $ExpenseCodeDes, '</td>
 				<td class="number">' . locale_number_format($MyRow['amount'],$CurrDecimalPlaces) . '</td>
+				<td>' . $MyRow['purpose'] . '</td>
 				<td>' . $MyRow['notes'] . '</td>
 				<td>' . $ReceiptText . '</td>
 				<td>' . $AuthorisedDate . '</td>
@@ -367,14 +386,17 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 
 
 
-		echo '<tr>
-				<td colspan="2" class="number"><b>' . _('Current balance') . ':</b></td>
-				<td>' . locale_number_format($SelectedTab['0'],$CurrDecimalPlaces) . '</td></tr>
-				<input type="hidden" name="CurrentAmount" value="' . $SelectedTab[0] . '" />
-				<input type="hidden" name="SelectedTabs" value="' . $SelectedTab[1] . '" />
-				<input type="hidden" name="SelectedTabsTo" value="' . $SelectedTabsTo[1] . '" />
-				<input type="hidden" name="SelectedTabsToAmt" value="' . $SelectedTabsTo[0] . '" />';
-
+		echo '</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="2" class="number"><b>' . _('Current balance') . ':</b></td>
+					<td>' . locale_number_format($SelectedTab['0'],$CurrDecimalPlaces) . '</td>
+				</tr>
+			</tfoot>
+			<input type="hidden" name="CurrentAmount" value="' . $SelectedTab[0] . '" />
+			<input type="hidden" name="SelectedTabs" value="' . $SelectedTab[1] . '" />
+			<input type="hidden" name="SelectedTabsTo" value="' . $SelectedTabsTo[1] . '" />
+			<input type="hidden" name="SelectedTabsToAmt" value="' . $SelectedTabsTo[0] . '" />';
 
 		echo '</table>';
         echo '</div>
@@ -411,7 +433,7 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 				<td>' . _('Amount') . ':</td>
 				<td><input type="text" class="number" name="Amount" size="12" maxlength="11" value="' . locale_number_format($_POST['Amount'],$CurrDecimalPlaces) . '" /></td>
 			</tr>';
-
+		
 		if (!isset($_POST['Notes'])) {
 			$_POST['Notes'] = '';
 		}
