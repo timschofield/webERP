@@ -50,16 +50,17 @@ function submit($TabToShow, $FromDate, $ToDate) {
 						amount,
 						authorized,
 						posted,
+						purpose,
 						notes,
 						receipt
 				FROM  pcashdetails
 				WHERE pcashdetails.tabcode = '" . $TabToShow . "'
 					AND pcashdetails.date >= '" . FormatDateForSQL($FromDate) . "'
 					AND pcashdetails.date <= '" . FormatDateForSQL($ToDate) . "'
-				ORDER BY pcashdetails.date, 
+				ORDER BY pcashdetails.date,
 					pcashdetails.counterindex";
 		$Result = DB_query($SQL);
-		
+
 		if (DB_num_rows($Result) != 0){
 
 			// Create new PHPExcel object
@@ -73,16 +74,16 @@ function submit($TabToShow, $FromDate, $ToDate) {
 										 ->setDescription("PC Tab Expenses List")
 										 ->setKeywords("")
 										 ->setCategory("");
-			
+
 			// Formatting
-			
+
 			$objPHPExcel->getActiveSheet()->getStyle('A')->getAlignment()->setWrapText(true);
 			$objPHPExcel->getActiveSheet()->getStyle('A')->getNumberFormat()->setFormatCode('dd/mm/yyyy');
 			$objPHPExcel->getActiveSheet()->getStyle('B5')->getNumberFormat()->setFormatCode('#,##0.00');
 			$objPHPExcel->getActiveSheet()->getStyle('C:E')->getNumberFormat()->setFormatCode('#,##0.00');
 			$objPHPExcel->getActiveSheet()->getStyle('E1:E2')->getNumberFormat()->setFormatCode('dd/mm/yyyy');
-			$objPHPExcel->getActiveSheet()->getStyle('I')->getNumberFormat()->setFormatCode('dd/mm/yyyy');
-			$objPHPExcel->getActiveSheet()->getStyle('A:I')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+			$objPHPExcel->getActiveSheet()->getStyle('J')->getNumberFormat()->setFormatCode('dd/mm/yyyy');
+			$objPHPExcel->getActiveSheet()->getStyle('A:J')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
 			$objPHPExcel->getActiveSheet()->getStyle('10')->getFont()->setBold(true);
 			$objPHPExcel->getActiveSheet()->getStyle('A1:A8')->getFont()->setBold(true);
 			$objPHPExcel->getActiveSheet()->getStyle('D1:D2')->getFont()->setBold(true);
@@ -110,7 +111,7 @@ function submit($TabToShow, $FromDate, $ToDate) {
 			$objPHPExcel->getActiveSheet()->setCellValue('E1', $FromDate);
 			$objPHPExcel->getActiveSheet()->setCellValue('D2', 'To');
 			$objPHPExcel->getActiveSheet()->setCellValue('E2', $ToDate);
-			
+
 			$objPHPExcel->getActiveSheet()->setCellValue('A10', 'Date');
 			$objPHPExcel->getActiveSheet()->setCellValue('B10', 'Expense Code');
 			$objPHPExcel->getActiveSheet()->setCellValue('C10', 'Gross Amount');
@@ -118,16 +119,18 @@ function submit($TabToShow, $FromDate, $ToDate) {
 			$objPHPExcel->getActiveSheet()->setCellValue('E10', 'Tax');
 			$objPHPExcel->getActiveSheet()->setCellValue('F10', 'Tax Group');
 			$objPHPExcel->getActiveSheet()->setCellValue('G10', 'Tag');
-			$objPHPExcel->getActiveSheet()->setCellValue('H10', 'Notes');
-			$objPHPExcel->getActiveSheet()->setCellValue('I10', 'Date Authorized');
+			$objPHPExcel->getActiveSheet()->setCellValue('H10', 'Business Purpose');
+			$objPHPExcel->getActiveSheet()->setCellValue('I10', 'Notes');
+			$objPHPExcel->getActiveSheet()->setCellValue('J10', 'Receipt Attachment');
+			$objPHPExcel->getActiveSheet()->setCellValue('K10', 'Date Authorized');
 
 			$objPHPExcel->getActiveSheet()->setCellValue('B11', 'Previous Balance');
 			$objPHPExcel->getActiveSheet()->setCellValue('D11', $MyPreviousBalance['previous']);
-			
+
 			// Add data
 			$i = 12;
 			while ($MyRow = DB_fetch_array($Result)) {
-				
+
 				$SQLDes = "SELECT description
 							FROM pcexpenses
 							WHERE codeexpense = '" . $MyRow['codeexpense'] . "'";
@@ -138,7 +141,7 @@ function submit($TabToShow, $FromDate, $ToDate) {
 				} else {
 						$ExpenseCodeDes = $MyRow['codeexpense'] . ' - ' . $Description[0];
 				}
-		
+
 				$TagSQL = "SELECT tagdescription FROM tags WHERE tagref='" . $MyRow['tag'] . "'";
 				$TagResult = DB_query($TagSQL);
 				$TagRow = DB_fetch_array($TagResult);
@@ -147,7 +150,7 @@ function submit($TabToShow, $FromDate, $ToDate) {
 				}
 				$TagTo = $MyRow['tag'];
 				$TagDescription = $TagTo . ' - ' . $TagRow['tagdescription'];
-			
+
 				$TaxesDescription = '';
 				$TaxesTaxAmount = '';
 				$TaxSQL = "SELECT counterindex,
@@ -166,22 +169,34 @@ function submit($TabToShow, $FromDate, $ToDate) {
 					$TaxesDescription .= $MyTaxRow['description'];
 					$TaxesTaxAmount .= locale_number_format($MyTaxRow['amount'], $CurrDecimalPlaces);
 				}
-				
+
 				//Generate download link for expense receipt, or show text if no receipt file is found.
 				$ReceiptSupportedExt = array('png','jpg','jpeg','pdf','doc','docx','xls','xlsx'); //Supported file extensions
-				$ReceiptFileDir = $PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/expenses_receipts/' . mb_strtolower($TabToShow); //Receipts upload directory
-				$ReceiptFilePath = reset(glob($ReceiptFileDir . '/' . $MyRow['counterindex'] . '.{' . implode(',', $ReceiptSupportedExt) . '}', GLOB_BRACE)); //Find the relevant receipt file for the expense. There should only be one (file type), but limit to one result just in case.
-				if (empty($ReceiptFilePath)) { //If no receipt file for the expenses is found
-					$ReceiptText = _('No attachment');
+				$ReceiptDir = $PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/expenses_receipts/'; //Receipts upload directory
+				$ReceiptSQL = "SELECT hashfile,
+										extension
+										FROM pcreceipts
+										WHERE pccashdetail='" . $MyRow['counterindex'] . "'";
+				$ReceiptResult = DB_query($ReceiptSQL);
+				$ReceiptRow = DB_fetch_array($ReceiptResult);
+				if (DB_num_rows($ReceiptResult) > 0) { //If receipt exists in database
+					$ReceiptHash = $ReceiptRow['hashfile'];
+					$ReceiptExt = $ReceiptRow['extension'];
+					$ReceiptFileName = $ReceiptHash . '.' . $ReceiptExt;
+					$ReceiptPath = $ReceiptDir . $ReceiptFileName;
+					$ReceiptText = _('Open Attachment');
+					$ReceiptURL = htmlspecialchars($_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/' . $ReceiptPath, ENT_QUOTES, 'UTF-8');
+				} elseif ($ExpenseCodeDes == 'ASSIGNCASH') {
+				$ReceiptText = '';
 				} else {
-					$ReceiptText = '<a href="' . $ReceiptFilePath . '" download="ExpenseReceipt-' . mb_strtolower($TabToShow) . '-[' . $MyRow['date'] . ']-[' . $MyRow['counterindex'] . ']">' . _('Download attachment') . '</a>';
+				$ReceiptText = _('No attachment');
 				}
-		
+
 				if ($MyRow['authorized'] == '0000-00-00') {
 					$AuthorisedDate = _('Unauthorised');
 				} else {
 					$AuthorisedDate = ConvertSQLDate($MyRow['authorized']);
-				}				
+				}
 
 				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, ConvertSQLDate($MyRow['date']));
 				$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $ExpenseCodeDes);
@@ -190,21 +205,27 @@ function submit($TabToShow, $FromDate, $ToDate) {
 				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, $TaxesTaxAmount);
 				$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, $TaxesDescription);
 				$objPHPExcel->getActiveSheet()->setCellValue('G'.$i, $TagDescription);
-				$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, $MyRow['notes']);
-				$objPHPExcel->getActiveSheet()->setCellValue('I'.$i, $AuthorisedDate);
+				$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, $MyRow['purpose']);
+				$objPHPExcel->getActiveSheet()->setCellValue('I'.$i, $MyRow['notes']);
+				$objPHPExcel->getActiveSheet()->setCellValue('J'.$i, $ReceiptText);
+				if (isset($ReceiptURL)) {
+					$objPHPExcel->getActiveSheet()->getCell('J'.$i)->getHyperlink()->setUrl($ReceiptURL);
+					$objPHPExcel->getActiveSheet()->getStyle('J'.$i)->applyFromArray(array( 'font' => array( 'color' => ['rgb' => '0000FF'], 'underline' => 'single' )));
+				}
+				$objPHPExcel->getActiveSheet()->setCellValue('K'.$i, $AuthorisedDate);
 
 				$i++;
 			}
 
 			// Freeze panes
 			$objPHPExcel->getActiveSheet()->freezePane('A11');
-			
+
 			// Auto Size columns
-			foreach(range('A','I') as $columnID) {
+			foreach(range('A','K') as $columnID) {
 				$objPHPExcel->getActiveSheet()->getColumnDimension($columnID)
 					->setAutoSize(true);
 			}
-			
+
 			// Rename worksheet
 			$objPHPExcel->getActiveSheet()->setTitle($TabToShow);
 			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
@@ -255,7 +276,7 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 	echo '<p class="page_title_text">
 			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . _('Excel file for Petty Cash Tab Expenses List') . '" alt="" />' . ' ' . _('Excel file for Petty Cash Tab Expenses List') . '
 		</p>';
-
+		
 	# Sets default date range for current month
 	if (!isset($_POST['FromDate'])){
 		$_POST['FromDate'] = Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,Date('m'),1,Date('Y')));
@@ -270,7 +291,7 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 		<td><select name="Tabs">';
 
 	$SQL = "SELECT tabcode
-			FROM pctabs 
+			FROM pctabs
 			ORDER BY tabcode";
 	$CatResult = DB_query($SQL);
 
@@ -303,7 +324,7 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 
 function beginning_of_month($Date){
 	$Date2 = explode("-",$Date);
-	$M = $Date2[1]; 
+	$M = $Date2[1];
 	$Y = $Date2[0];
 	$FirstOfMonth = $Y . '-' . $M . '-01';
 	return $FirstOfMonth;

@@ -121,5 +121,20 @@ INSERT INTO pickreqdetails (prid, orderlineno, stockid, qtyexpected, qtypicked, 
 
 INSERT INTO `scripts` ( `script` , `pagesecurity` , `description` ) VALUES ('Z_ChangeSalesmanCode.php', '15', '');
 
+CREATE TABLE `pcreceipts` (
+	`counterindex` INT(20) NOT NULL AUTO_INCREMENT,
+	`pccashdetail` INT(20) NOT NULL DEFAULT 0 COMMENT 'Expenses record identity',
+	`hashfile` VARCHAR(32) NOT NULL DEFAULT '' COMMENT 'MD5 hash of uploaded receipt file',
+	`type` varchar(80) NOT NULL DEFAULT '' COMMENT 'Mime type of uploaded receipt file',
+	`extension` varchar(4) NOT NULL DEFAULT '' COMMENT 'File extension of uploaded receipt',
+	`size` int(20) NOT NULL DEFAULT 0 COMMENT 'File size of uploaded receipt',
+	PRIMARY KEY (`counterindex`),
+	CONSTRAINT `pcreceipts_ibfk_1` FOREIGN KEY (`pccashdetail`) REFERENCES `pcashdetails` (`counterindex`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE pcashdetails ADD COLUMN purpose text NULL AFTER posted;
+
+
 UPDATE config SET confvalue='4.15' WHERE confname='VersionNumber';
+
 
