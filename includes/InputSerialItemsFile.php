@@ -197,7 +197,7 @@ if ($invalid_imports>0 AND !$_SESSION['CurImportFile']['Processed']){
 	foreach($LineItem->SerialItems as $SItem){
 		echo '<tr>
 				<td>' . $SItem->BundleRef . '</td>
-				<td class="number">' . locale_number_format($Bundle->BundleQty, $LineItem->DecimalPlaces) . '</td>
+				<td class="number">' . locale_number_format($SItem->BundleQty, $LineItem->DecimalPlaces) . '</td>
 			</tr>';
 		$i++;
 		if ($i == 100) {
