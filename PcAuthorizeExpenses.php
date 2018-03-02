@@ -1,5 +1,5 @@
 <?php
-/* $Id$*/
+/* $Id: PcAuthorizeExpenses.php 7944 2018-02-09 18:22:45Z turbopt $*/
 
 include('includes/session.php');
 $Title = _('Authorisation of Petty Cash Expenses');
@@ -39,15 +39,15 @@ if (isset($_POST['Go'])) {
 echo '<p class="page_title_text">
 			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', _('Petty Cash'), '" alt="" />', _('Authorisation of Petty Cash Expenses'), '
 		</p>';
-		
-		
+
+
 if (isset($SelectedTabs)) {
 	echo '<br /><table class="selection">';
 	echo '<tr>
 			<td>' . _('Petty Cash Tab') . ':</td>
 			<td>' . $SelectedTabs . '</td>
 		  </tr>';
-	echo '</table>';	
+	echo '</table>';
 }
 if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) or isset($_POST['GO'])) {
 	echo '<form method="post" action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">';
@@ -55,7 +55,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	if (!isset($Days)) {
 		$Days = 30;
 	}
-	
+
 	//Limit expenses history to X days
 	echo '<table class="selection">
 			<tr>
@@ -74,6 +74,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 				pcashdetails.amount,
 				pcashdetails.authorized,
 				pcashdetails.posted,
+				pcashdetails.purpose,
 				pcashdetails.notes,
 				pctabs.glaccountassignment,
 				pctabs.glaccountpcash,
@@ -90,17 +91,21 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			ORDER BY pcashdetails.date, pcashdetails.counterindex ASC";
 	$Result = DB_query($SQL);
 	echo '<table class="selection">
-			<tr>
-				<th>', _('Date of Expense'), '</th>
-				<th>', _('Expense Code'), '</th>
-				<th>', _('Gross Amount'), '</th>
-				<th>', _('Tax'), '</th>
-				<th>', _('Tax Group'), '</th>
-				<th>', _('Tag'), '</th>
-				<th>', _('Notes'), '</th>
-				<th>', _('Receipt Attachment'), '</th>
-				<th>', _('Date Authorised'), '</th>
-			</tr>';
+			<thead>
+				<tr>
+					<th class="ascending">', _('Date of Expense'), '</th>
+					<th class="ascending">', _('Expense Code'), '</th>
+					<th class="ascending">', _('Gross Amount'), '</th>
+					<th>', _('Tax'), '</th>
+					<th>', _('Tax Group'), '</th>
+					<th>', _('Tag'), '</th>
+					<th>', _('Business Purpose'), '</th>
+					<th>', _('Notes'), '</th>
+					<th>', _('Receipt Attachment'), '</th>
+					<th class="ascending">', _('Date Authorised'), '</th>
+				</tr>
+			</thead>
+			<tbody>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
 		$CurrDecimalPlaces = $MyRow['decimalplaces'];
@@ -250,7 +255,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 												transdate,
 												banktranstype,
 												amount,
-												currcode										
+												currcode
 											) VALUES (
 												'" . $ReceiptTransNo . "',
 												2,
@@ -278,7 +283,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			unset($SelectedTabs);
 			unset($_POST['SelectedTabs']);
 		}
-		
+
 		$SQLDes = "SELECT description
 						FROM pcexpenses
 						WHERE codeexpense='" . $MyRow['codeexpense'] . "'";
@@ -289,7 +294,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 		} else {
 				$ExpenseCodeDes = $MyRow['codeexpense'] . ' - ' . $Description[0];
 		}
-		
+
 		$TaxesDescription = '';
 		$TaxesTaxAmount = '';
 		$TaxSQL = "SELECT counterindex,
@@ -308,19 +313,28 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			$TaxesDescription .= $MyTaxRow['description'] . '<br />';
 			$TaxesTaxAmount .= locale_number_format($MyTaxRow['amount'], $CurrDecimalPlaces) . '<br />';
 		}
-		
+
 		//Generate download link for expense receipt, or show text if no receipt file is found.
-		$ReceiptSupportedExt = array('png','jpg','jpeg','pdf','doc','docx','xls','xlsx'); //Supported file extensions
-		$ReceiptFileDir = $PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/expenses_receipts/' . mb_strtolower($SelectedTabs); //Receipts upload directory
-		$ReceiptFilePathMatched = reset(glob($ReceiptFileDir . '/' . $MyRow['counterindex'] . '.{' . implode(',', $ReceiptSupportedExt) . '}', GLOB_BRACE)); //Find the relevant receipt file for the expense. There should only be one (file type), but limit to one result just in case.
-		if (!empty($ReceiptFilePathMatched)) { //If no receipt file for the expenses is found
-			$ReceiptText = '<a href="' . $ReceiptFilePathMatched . '" download="ExpenseReceipt-' . mb_strtolower($SelectedTabs) . '-[' . $MyRow['date'] . ']-[' . $MyRow['counterindex'] . ']">' . _('Download attachment') . '</a>';
-		} elseif ($ExpenseCodeDes == 'ASSIGNCASH') {
-			$ReceiptText = '';
-		} else {
-			$ReceiptText = _('No attachment');
-		}
-		
+			$ReceiptSupportedExt = array('png','jpg','jpeg','pdf','doc','docx','xls','xlsx'); //Supported file extensions
+			$ReceiptDir = $PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/expenses_receipts/'; //Receipts upload directory
+			$ReceiptSQL = "SELECT hashfile,
+									extension
+									FROM pcreceipts
+									WHERE pccashdetail='" . $MyRow['counterindex'] . "'";
+			$ReceiptResult = DB_query($ReceiptSQL);
+			$ReceiptRow = DB_fetch_array($ReceiptResult);
+			if (DB_num_rows($ReceiptResult) > 0) { //If receipt exists in database
+				$ReceiptHash = $ReceiptRow['hashfile'];
+				$ReceiptExt = $ReceiptRow['extension'];
+				$ReceiptFileName = $ReceiptHash . '.' . $ReceiptExt;
+				$ReceiptPath = $ReceiptDir . $ReceiptFileName;
+				$ReceiptText = '<a href="' . $ReceiptPath . '" download="ExpenseReceipt-' . mb_strtolower($SelectedTabs) . '-[' . $MyRow['date'] . ']-[' . $MyRow['counterindex'] . ']">' . _('Download attachment') . '</a>';
+			} elseif ($ExpenseCodeDes == 'ASSIGNCASH') {
+				$ReceiptText = '';
+			} else {
+				$ReceiptText = _('No attachment');
+			}
+
 		echo '<tr class="striped_row">
 			<td>', ConvertSQLDate($MyRow['date']), '</td>
 			<td>', $ExpenseCodeDes, '</td>
@@ -328,6 +342,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			<td class="number">', $TaxesTaxAmount, '</td>
 			<td>', $TaxesDescription, '</td>
 			<td>', $TagDescription, '</td>
+			<td>', $MyRow['purpose'], '</td>
 			<td>', $MyRow['notes'], '</td>
 			<td>', $ReceiptText, '</td>';
 		if (isset($_POST[$MyRow['counterindex']])) {
@@ -353,10 +368,13 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	if (!isset($Amount['0'])) {
 		$Amount['0'] = 0;
 	}
-	echo '<tr>
-			<td colspan="2" class="number">', _('Current balance'), ':</td>
-			<td class="number">', locale_number_format($Amount['0'], $CurrDecimalPlaces), '</td>
-		</tr>';
+	echo '</tbody>
+		<tfoot>
+			<tr>
+				<td colspan="2" class="number">', _('Current balance'), ':</td>
+				<td class="number">', locale_number_format($Amount['0'], $CurrDecimalPlaces), '</td>
+			</tr>
+		</tfoot>';
 	// Do the postings
 	include('includes/GLPostings.inc');
 	echo '</table>';

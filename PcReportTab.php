@@ -1,5 +1,5 @@
 <?php
-/* $Id$*/
+/* $Id: PcReportTab.php 7944 2018-02-09 18:22:45Z turbopt $*/
 
 include ('includes/session.php');
 $Title = _('Petty Cash Management Report');
@@ -98,6 +98,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 					amount,
 					authorized,
 					posted,
+					purpose,
 					notes
 			FROM pcashdetails
 			WHERE tabcode = '" . $SelectedTabs . "'
@@ -105,7 +106,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 			ORDER BY date, counterindex ASC";
 
 	$TabDetail = DB_query($SQL);
-	
+
 	$SQLDecimalPlaces = "SELECT decimalplaces
 					FROM currencies,pctabs
 					WHERE currencies.currabrev = pctabs.currency
@@ -160,7 +161,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	$TabBalance = DB_query($SQLBalance);
 
 	$Balance = DB_fetch_array($TabBalance);
-	
+
 	if( !isset($Balance['0'])){
 		$Balance['0'] = 0;
 	}
@@ -185,12 +186,12 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Currency '));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+100,$YPos,20,$FontSize,': ');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+110,$YPos,70,$FontSize,$Tabs['currency']);
-	
+
 	$YPos -= $line_height;
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Cash Assigner'));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+100,$YPos,20,$FontSize,': ');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+110,$YPos,70,$FontSize,$Tabs['assigner']);
-	
+
 	$YPos -= $line_height;
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Authoriser - Cash'));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+100,$YPos,20,$FontSize,': ');
@@ -200,7 +201,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,80,$FontSize,_('Authoriser - Expenses'));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+100,$YPos,20,$FontSize,': ');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+110,$YPos,70,$FontSize,$Tabs['authorizer']);
-	
+
 	$YPos -= $line_height;
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,50,$FontSize,_('Balance before '));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+55,$YPos,70,$FontSize,$_POST['FromDate']);
@@ -234,7 +235,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 		if (!isset($Description['0'])){
 			$Description['0']='ASSIGNCASH';
 		}
-		
+
 		$TagSQL = "SELECT tagdescription FROM tags WHERE tagref='" . $MyRow['tag'] . "'";
 		$TagResult = DB_query($TagSQL);
 		$TagRow = DB_fetch_array($TagResult);
@@ -243,7 +244,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 		}
 		$TagTo = $MyRow['tag'];
 		$TagDescription = $TagTo . ' - ' . $TagRow['tagdescription'];
-				
+
 		$TaxesDescription = '';
 		$TaxesTaxAmount = '';
 		$TaxSQL = "SELECT counterindex,
@@ -258,20 +259,10 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 							FROM pcashdetailtaxes
 							WHERE pccashdetail='" . $MyRow['counterindex'] . "'";
 		$TaxResult = DB_query($TaxSQL);
-		
+
 		while ($MyTaxRow = DB_fetch_array($TaxResult)) {
 				$TaxesDescription .= $MyTaxRow['description'] . "\n"; //Line breaks not working !?
 				$TaxesTaxAmount .= locale_number_format($MyTaxRow['amount'], $CurrDecimalPlaces) . "\n"; //Line breaks not working !?
-		}
-		
-		//Generate download link for expense receipt, or show text if no receipt file is found.
-		$ReceiptSupportedExt = array('png','jpg','jpeg','pdf','doc','docx','xls','xlsx'); //Supported file extensions
-		$ReceiptFileDir = $PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/expenses_receipts/' . mb_strtolower($SelectedTabs); //Receipts upload directory
-		$ReceiptFilePath = reset(glob($ReceiptFileDir . '/' . $MyRow['counterindex'] . '.{' . implode(',', $ReceiptSupportedExt) . '}', GLOB_BRACE)); //Find the relevant receipt file for the expense. There should only be one (file type), but limit to one result just in case.
-		if (empty($ReceiptFilePath)) { //If no receipt file for the expenses is found
-			$ReceiptText = _('No attachment');
-		} else {
-			$ReceiptText = '<a href="' . $ReceiptFilePath . '" download="ExpenseReceipt-' . mb_strtolower($SelectedTabs) . '-[' . $MyRow['date'] . ']-[' . $MyRow['counterindex'] . ']">' . _('Download attachment') . '</a>';
 		}
 		
 		if ($MyRow['authorized'] == '0000-00-00') {
@@ -353,7 +344,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 						 _('The SQL that failed was:'));
 
 	$Tabs = DB_fetch_array($TabResult);
-	
+
 	$SQLDecimalPlaces = "SELECT decimalplaces
 					FROM currencies,pctabs
 					WHERE currencies.currabrev = pctabs.currency
@@ -361,7 +352,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 		$Result = DB_query($SQLDecimalPlaces);
 		$MyRow = DB_fetch_array($Result);
 		$CurrDecimalPlaces = $MyRow['decimalplaces'];
-	
+
 	echo '<br /><table class="selection">';
 
 	echo '<tr>
@@ -369,8 +360,8 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 			  <td></td>
 			  <td>' . '' . $SelectedTabs . '</td>
 		  </tr>';
-	
-	echo '<tr>		  
+
+	echo '<tr>
 			  <td>' . _('From') . ':</td>
 			  <td></td>
 			  <td>' . '' . $_POST['FromDate'] . '</td>
@@ -380,9 +371,9 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 			  <td>' . _('User') . ':</td>
 			  <td></td>
 			  <td>' . '' . $Tabs['usercode'] . '</td>
-		  </tr>';	  
-	
-	echo '<tr>		  
+		  </tr>';
+
+	echo '<tr>
 			  <td>' . _('To') . ':</td>
 			  <td></td>
 			  <td>' . '' . $_POST['ToDate'] . '</td>
@@ -450,6 +441,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 					amount,
 					authorized,
 					posted,
+					purpose,
 					notes
 			FROM pcashdetails
 			WHERE tabcode = '" . $SelectedTabs . "'
@@ -461,21 +453,26 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 						_('No Petty Cash movements for this tab were returned by the SQL because'),
 						_('The SQL that failed was:'));
 
-	echo '<br /><table class="selection">
-		<tr>
-			<th>' . _('Date of Expense') . '</th>
-			<th>' . _('Expense Code') . '</th>
-			<th>' . _('Gross Amount') . '</th>
-			<th>' . _('Tax') . '</th>
-			<th>' . _('Tax Group') . '</th>
-			<th>' . _('Tag') . '</th>
-			<th>' . _('Notes') . '</th>
-			<th>' . _('Receipt Attachment') . '</th>
-			<th>' . _('Date Authorised') . '</th>
-		</tr>';
+	echo '<br />
+		<table class="selection">
+			<thead>
+				<tr>
+					<th class="ascending">' . _('Date of Expense') . '</th>
+					<th class="ascending">' . _('Expense Code') . '</th>
+					<th class="ascending">' . _('Gross Amount') . '</th>
+					<th>' . _('Tax') . '</th>
+					<th>' . _('Tax Group') . '</th>
+					<th>' . _('Tag') . '</th>
+					<th>' . _('Business Purpose') . '</th>
+					<th>' . _('Notes') . '</th>
+					<th>' . _('Receipt Attachment') . '</th>
+					<th class="ascending">' . _('Date Authorised') . '</th>
+				</tr>
+			</thead>
+			</tbody>';
 
 	while ($MyRow = DB_fetch_array($TabDetail)) {
-		
+
 		$TagSQL = "SELECT tagdescription FROM tags WHERE tagref='" . $MyRow['tag'] . "'";
 		$TagResult = DB_query($TagSQL);
 		$TagRow = DB_fetch_array($TagResult);
@@ -484,7 +481,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 		}
 		$TagTo = $MyRow['tag'];
 		$TagDescription = $TagTo . ' - ' . $TagRow['tagdescription'];
-		
+
 		$TaxesDescription = '';
 		$TaxesTaxAmount = '';
 		$TaxSQL = "SELECT counterindex,
@@ -499,28 +496,37 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 						FROM pcashdetailtaxes
 						WHERE pccashdetail='" . $MyRow['counterindex'] . "'";
 		$TaxResult = DB_query($TaxSQL);
-		
+
 		while ($MyTaxRow = DB_fetch_array($TaxResult)) {
 			$TaxesDescription .= $MyTaxRow['description'] . '<br />';
 			$TaxesTaxAmount .= locale_number_format($MyTaxRow['amount'], $CurrDecimalPlaces) . '<br />';
 		}
-		
+
 		//Generate download link for expense receipt, or show text if no receipt file is found.
 		$ReceiptSupportedExt = array('png','jpg','jpeg','pdf','doc','docx','xls','xlsx'); //Supported file extensions
-		$ReceiptFileDir = $PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/expenses_receipts/' . mb_strtolower($SelectedTabs); //Receipts upload directory
-		$ReceiptFilePath = reset(glob($ReceiptFileDir . '/' . $MyRow['counterindex'] . '.{' . implode(',', $ReceiptSupportedExt) . '}', GLOB_BRACE)); //Find the relevant receipt file for the expense. There should only be one (file type), but limit to one result just in case.
-		if (empty($ReceiptFilePath)) { //If no receipt file for the expenses is found
-			$ReceiptText = _('No attachment');
+		$ReceiptDir = $PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/expenses_receipts/'; //Receipts upload directory
+		$ReceiptSQL = "SELECT hashfile,
+								extension
+								FROM pcreceipts
+								WHERE pccashdetail='" . $MyRow['counterindex'] . "'";
+		$ReceiptResult = DB_query($ReceiptSQL);
+		$ReceiptRow = DB_fetch_array($ReceiptResult);
+		if (DB_num_rows($ReceiptResult) > 0) { //If receipt exists in database
+			$ReceiptHash = $ReceiptRow['hashfile'];
+			$ReceiptExt = $ReceiptRow['extension'];
+			$ReceiptFileName = $ReceiptHash . '.' . $ReceiptExt;
+			$ReceiptPath = $ReceiptDir . $ReceiptFileName;
+			$ReceiptText = '<a href="' . $ReceiptPath . '" download="ExpenseReceipt-' . mb_strtolower($SelectedTabs) . '-[' . $MyRow['date'] . ']-[' . $MyRow['counterindex'] . ']">' . _('Download attachment') . '</a>';
 		} else {
-			$ReceiptText = '<a href="' . $ReceiptFilePath . '" download="ExpenseReceipt-' . mb_strtolower($SelectedTabs) . '-[' . $MyRow['date'] . ']-[' . $MyRow['counterindex'] . ']">' . _('Download attachment') . '</a>';
+			$ReceiptText = _('No attachment');
 		}
-		
+
 		if ($MyRow['authorized'] == '0000-00-00') {
 					$AuthorisedDate = _('Unauthorised');
 				} else {
 					$AuthorisedDate = ConvertSQLDate($MyRow['authorized']);
 				}
-				
+
 		$SQLDes = "SELECT description
 					FROM pcexpenses
 					WHERE codeexpense = '" . $MyRow['codeexpense'] . "'";
@@ -532,7 +538,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 		} else {
 				$ExpenseCodeDes = $MyRow['codeexpense'] . ' - ' . $Description[0];
 		}
-		
+
 		echo '<tr class="striped_row">
 				<td>', ConvertSQLDate($MyRow['date']), '</td>
 				<td>', $ExpenseCodeDes, '</td>
@@ -540,6 +546,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 				<td class="number">', $TaxesTaxAmount, '</td>
 				<td>', $TaxesDescription, '</td>
 				<td>', $TagDescription, '</td>
+				<td>', $MyRow['purpose'], '</td>
 				<td>', $MyRow['notes'], '</td>
 				<td>', $ReceiptText, '</td>
 				<td>', $AuthorisedDate, '</td>
@@ -558,8 +565,14 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 		$Amount[0] = 0;
 	}
 
-	echo '<tr><td colspan="2" class="number">' . _('Balance at') . ' ' .$_POST['ToDate'] . ':</td>
-				<td>' . locale_number_format($Amount[0],$_SESSION['CompanyRecord']['decimalplaces']) . ' </td><td>' . $Tabs['currency'] . '</td></tr>';
+	echo '</tbody>
+		<tfoot>
+			<tr>
+				<td colspan="2" class="number">' . _('Balance at') . ' ' .$_POST['ToDate'] . ':</td>
+				<td>' . locale_number_format($Amount[0],$_SESSION['CompanyRecord']['decimalplaces']) . ' </td>
+				<td>' . $Tabs['currency'] . '</td>
+			</tr>
+		</tfoot>';
 
 	echo '</table>';
 	echo '<br /><div class="centre"><input type="submit" name="SelectDifferentDate" value="' . _('Select A Different Date') . '" /></div>';
