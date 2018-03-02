@@ -1,5 +1,5 @@
 <?php
-/* $Id$*/
+/* $Id: StockLocMovements.php 7957 2018-02-12 21:53:28Z turbopt $*/
 
 include('includes/session.php');
 
@@ -32,7 +32,7 @@ if (!isset($_POST['StockLocation'])) {
 	$_POST['StockLocation'] = 'All';
 }
 
-$resultStkLocs = DB_query($sql);
+$ResultStkLocs = DB_query($SQL);
 
 while ($MyRow = DB_fetch_array($ResultStkLocs)) {
 	if (isset($_POST['StockLocation']) and $_POST['StockLocation'] != 'All') {
@@ -42,8 +42,8 @@ while ($MyRow = DB_fetch_array($ResultStkLocs)) {
 			echo '<option value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
 		}
 	} elseif ($MyRow['loccode'] == $_SESSION['UserStockLocation']) {
-		 echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
-		 $_POST['StockLocation']=$myrow['loccode'];
+		echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+		$_POST['StockLocation']=$MyRow['loccode'];
 	} else {
 		echo '<option value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
 	}
@@ -52,7 +52,7 @@ while ($MyRow = DB_fetch_array($ResultStkLocs)) {
 echo '</select>';
 
 if (!isset($_POST['BeforeDate']) or !Is_date($_POST['BeforeDate'])) {
-   $_POST['BeforeDate'] = Date($_SESSION['DefaultDateFormat']);
+	$_POST['BeforeDate'] = Date($_SESSION['DefaultDateFormat']);
 }
 if (!isset($_POST['AfterDate']) or !Is_date($_POST['AfterDate'])) {
 	$_POST['AfterDate'] = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m') - 1, Date('d'), Date('y')));
@@ -60,12 +60,12 @@ if (!isset($_POST['AfterDate']) or !Is_date($_POST['AfterDate'])) {
 echo ' ', _('Show Movements before'), ': <input type="text" class="date" alt="', $_SESSION['DefaultDateFormat'], '" name="BeforeDate" size="12" required="required" maxlength="12" value="', $_POST['BeforeDate'], '" />',
 	' ', _('But after'), ': <input type="text" class="date" alt="', $_SESSION['DefaultDateFormat'], '" name="AfterDate" size="12" required="required" maxlength="12" value="', $_POST['AfterDate'], '" />',
 	'</td>
-     </tr>
-     </table>
+	 </tr>
+	 </table>
 	<div class="centre">
 		<input type="submit" name="ShowMoves" value="', _('Show Stock Movements'), '" />
-     </div>
-     <br />';
+	</div>
+	<br />';
 
 if ($_POST['StockLocation'] == 'All') {
 	$_POST['StockLocation'] = '%%';
@@ -74,32 +74,32 @@ if ($_POST['StockLocation'] == 'All') {
 $SQLBeforeDate = FormatDateForSQL($_POST['BeforeDate']);
 $SQLAfterDate = FormatDateForSQL($_POST['AfterDate']);
 
-$sql = "SELECT stockmoves.stockid,
+$SQL = "SELECT stockmoves.stockid,
 				stockmoves.stkmoveno,
-        		systypes.typename,
-        		stockmoves.type,
-        		stockmoves.transno,
-        		stockmoves.trandate,
-        		stockmoves.debtorno,
-        		stockmoves.branchcode,
-        		stockmoves.qty,
-        		stockmoves.reference,
-        		stockmoves.price,
-        		stockmoves.discountpercent,
-        		stockmoves.newqoh,
+				systypes.typename,
+				stockmoves.type,
+				stockmoves.transno,
+				stockmoves.trandate,
+				stockmoves.debtorno,
+				stockmoves.branchcode,
+				stockmoves.qty,
+				stockmoves.reference,
+				stockmoves.price,
+				stockmoves.discountpercent,
+				stockmoves.newqoh,
 				stockmaster.controlled,
 				stockmaster.serialised,
 				stockmaster.decimalplaces
-        	FROM stockmoves
+			FROM stockmoves
 			INNER JOIN systypes
 				ON stockmoves.type=systypes.typeid
 			INNER JOIN stockmaster
 				ON stockmoves.stockid=stockmaster.stockid
 			WHERE  stockmoves.loccode " . LIKE . " '" . $_POST['StockLocation'] . "'
 				AND stockmoves.trandate >= '" . $SQLAfterDate . "'
-        	AND stockmoves.trandate <= '" . $SQLBeforeDate . "'
-        	AND hidemovt=0
-        	ORDER BY stkmoveno DESC";
+				AND stockmoves.trandate <= '" . $SQLBeforeDate . "'
+				AND hidemovt=0
+			ORDER BY stkmoveno DESC";
 $ErrMsg = _('The stock movements for the selected criteria could not be retrieved because');
 $MovtsResult = DB_query($SQL, $ErrMsg);
 
@@ -117,11 +117,11 @@ if (DB_num_rows($MovtsResult) > 0) {
 				<th>', _('Discount'), '</th>
 				<th>', _('Quantity on Hand'), '</th>
 				<th>', _('Serial No.'), '</th>
-           		</tr>';
+			</tr>';
 
 	while ($MyRow = DB_fetch_array($MovtsResult)) {
 
-	$DisplayTranDate = ConvertSQLDate($myrow['trandate']);
+		$DisplayTranDate = ConvertSQLDate($MyRow['trandate']);
 
 		$SerialSQL = "SELECT serialno, moveqty FROM stockserialmoves WHERE stockmoveno='" . $MyRow['stkmoveno'] . "'";
 		$SerialResult = DB_query($SerialSQL);
@@ -133,7 +133,7 @@ if (DB_num_rows($MovtsResult) > 0) {
 			} else {
 				$SerialText .= $SerialRow['serialno'] . ' Qty- ' . $SerialRow['moveqty'] . '<br />';
 			}
-	}
+		}
 
 		echo '<tr class="striped_row">
 				<td><a target="_blank" href="', $RootPath, '/StockStatus.php?StockID=', mb_strtoupper(urlencode($MyRow['stockid'])), '">', mb_strtoupper($MyRow['stockid']), '</a></td>

@@ -1,6 +1,6 @@
 <?php
 
-/* $Id$*/
+/* $Id: StockMovements.php 7957 2018-02-12 21:53:28Z turbopt $*/
 
 include('includes/session.php');
 $Title = _('Stock Movements');
@@ -34,10 +34,10 @@ echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')
 	<div>
 	<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
-if (!isset($_POST['BeforeDate']) OR !Is_Date($_POST['BeforeDate'])){
+if (!isset($_POST['BeforeDate']) OR !Is_date($_POST['BeforeDate'])){
    $_POST['BeforeDate'] = Date($_SESSION['DefaultDateFormat']);
 }
-if (!isset($_POST['AfterDate']) OR !Is_Date($_POST['AfterDate'])){
+if (!isset($_POST['AfterDate']) OR !Is_date($_POST['AfterDate'])){
    $_POST['AfterDate'] = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')-3,Date('d'),Date('y')));
 }
 
@@ -57,20 +57,20 @@ $SQL = "SELECT locations.loccode,
 				AND locationusers.canview=1
 		ORDER BY locationname";
 
-$resultStkLocs = DB_query($sql);
+$resultStkLocs = DB_query($SQL);
 
 while ($myrow=DB_fetch_array($resultStkLocs)){
 	if (isset($_POST['StockLocation']) AND $_POST['StockLocation']!='All'){
 		if ($myrow['loccode'] == $_POST['StockLocation']){
-		     echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+			echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		} else {
-		     echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		}
 	} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
-		 echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
-		 $_POST['StockLocation']=$myrow['loccode'];
+		echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+		$_POST['StockLocation']=$myrow['loccode'];
 	} else {
-		 echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 	}
 }
 
@@ -87,7 +87,7 @@ echo '<tr>
 $SQLBeforeDate = FormatDateForSQL($_POST['BeforeDate']);
 $SQLAfterDate = FormatDateForSQL($_POST['AfterDate']);
 
-$sql = "SELECT stockmoves.stockid,
+$SQL = "SELECT stockmoves.stockid,
 				systypes.typename,
 				stockmoves.stkmoveno,
 				stockmoves.type,
@@ -111,30 +111,30 @@ $sql = "SELECT stockmoves.stockid,
 			ON stockmoves.stockid=stockmaster.stockid
 		WHERE  stockmoves.loccode='" . $_POST['StockLocation'] . "'
 			AND stockmoves.trandate >= '" . $SQLAfterDate . "'
-		AND stockmoves.stockid = '" . $StockID . "'
-		AND stockmoves.trandate <= '" . $SQLBeforeDate . "'
-		AND hidemovt=0
+			AND stockmoves.stockid = '" . $StockID . "'
+			AND stockmoves.trandate <= '" . $SQLBeforeDate . "'
+			AND hidemovt=0
 		ORDER BY stkmoveno DESC";
 
 $ErrMsg = _('The stock movements for the selected criteria could not be retrieved because') . ' - ';
 $DbgMsg = _('The SQL that failed was') . ' ';
 
-$MovtsResult = DB_query($sql, $ErrMsg, $DbgMsg);
+$MovtsResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 if (DB_num_rows($MovtsResult) > 0) {
 	$myrow = DB_fetch_array($MovtsResult);
 
 	echo '<tr>
-					<th>' . _('Type') . '</th>
-					<th>' . _('Number') . '</th>
-					<th>' . _('Date') . '</th>
-					<th>' . _('User ID') . '</th>
-					<th>' . _('Customer') . '</th>
-					<th>' . _('Branch') . '</th>
-					<th>' . _('Quantity') . '</th>
-					<th>' . _('Reference') . '</th>
-					<th>' . _('Price') . '</th>
-					<th>' . _('Discount') . '</th>
+		<th>' . _('Type') . '</th>
+		<th>' . _('Number') . '</th>
+		<th>' . _('Date') . '</th>
+		<th>' . _('User ID') . '</th>
+		<th>' . _('Customer') . '</th>
+		<th>' . _('Branch') . '</th>
+		<th>' . _('Quantity') . '</th>
+		<th>' . _('Reference') . '</th>
+		<th>' . _('Price') . '</th>
+		<th>' . _('Discount') . '</th>
 		<th>' . _('New Qty') . '</th>';
 	if ($myrow['controlled'] == 1) {
 		echo '<th>', _('Serial No.'), '</th>';
@@ -145,7 +145,7 @@ if (DB_num_rows($MovtsResult) > 0) {
 
 	while ($myrow = DB_fetch_array($MovtsResult)) {
 
-	$DisplayTranDate = ConvertSQLDate($myrow['trandate']);
+		$DisplayTranDate = ConvertSQLDate($myrow['trandate']);
 
 		$SerialSQL = "SELECT serialno, moveqty FROM stockserialmoves WHERE stockmoveno='" . $myrow['stkmoveno'] . "'";
 		$SerialResult = DB_query($SerialSQL);
@@ -179,7 +179,7 @@ if (DB_num_rows($MovtsResult) > 0) {
 			}
 			echo '</tr>';
 
-	} elseif ($myrow['type']==11){
+		} elseif ($myrow['type']==11){
 
 			echo '<tr class="striped_row">
 					<td><a target="_blank" href="', $RootPath, '/PrintCustTrans.php?FromTransNo=', urlencode($myrow['transno']), '&amp;InvOrCredit=Credit">', $myrow['typename'], '</a></td>
@@ -198,7 +198,7 @@ if (DB_num_rows($MovtsResult) > 0) {
 			}
 			echo '</tr>';
 
-	} else {
+		} else {
 
 			echo '<tr class="striped_row">
 					<td>', $myrow['typename'], '</td>
@@ -230,8 +230,8 @@ echo '</table>
 			<br /><a href="', $RootPath, '/SelectSalesOrder.php?SelectedStockItem=', urlencode($StockID), '&amp;StockLocation=', urlencode($_POST['StockLocation']), '">', _('Search Outstanding Sales Orders'), '</a>
 			<br /><a href="', $RootPath, '/SelectCompletedOrder.php?SelectedStockItem=', urlencode($StockID), '">', _('Search Completed Sales Orders'), '</a>
 		</div>
-      </div>
-      </form>';
+	</div>
+	</form>';
 
 include('includes/footer.php');
 

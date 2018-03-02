@@ -280,17 +280,9 @@ if (isset($StockItemsResult)) {
 			</thead>';
 	echo '<tbody>';
 
-	$k = 0; //row colour counter
-
 	while ($MyRow = DB_fetch_array($StockItemsResult)) {
-		if ($k == 1) {
-			echo '<tr class="EvenTableRows">';
-			$k = 0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k = 1;
-		}
-		echo '<td><input type="submit" name="SelectedStockItem" value="', $MyRow['stockid'], '"</td>
+		echo '<tr class="striped_row">
+				<td><input type="submit" name="SelectedStockItem" value="', $MyRow['stockid'], '"</td>
 				<td>', $MyRow['description'], '</td>
 				<td class="number">', locale_number_format($MyRow['qoh'], $MyRow['decimalplaces']), '</td>
 				<td class="number">', locale_number_format($MyRow['qpicked'], $MyRow['decimalplaces']), '</td>
@@ -442,18 +434,9 @@ else {
 					</tr>
 				</thead>';
 
-		$k = 0; //row colour counter
 		echo '<tbody>';
 
 		while ($MyRow = DB_fetch_array($PickReqResult)) {
-			if ($k == 1) {
-				/*alternate bgcolour of row for highlighting */
-				echo '<tr class="EvenTableRows">';
-				$k = 0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				++$k;
-			}
 
 			$ModifyPickList = $RootPath . '/PickingLists.php?Prid=' . $MyRow['prid'];
 			$PrintPickList = $RootPath . '/GeneratePickingList.php?TransNo=' . $MyRow['orderno'];
@@ -483,7 +466,8 @@ else {
 				$Confirm_Invoice = '<td><a href="' . $RootPath . '/ConfirmDispatch_Invoice.php?OrderNumber=' . $MyRow['orderno'] . '">' . _('Invoice Order') . '</a></td>';
 			}
 
-			echo '<td><a href="', $ModifyPickList, '">', str_pad($MyRow['prid'], 10, '0', STR_PAD_LEFT), '</a></td>
+			echo '<tr class="striped_row">
+					<td><a href="', $ModifyPickList, '">', str_pad($MyRow['prid'], 10, '0', STR_PAD_LEFT), '</a></td>
 					<td><a href="', $PrintPickList, '">Print <img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/pdf.png" title="', _('Click for PDF'), '" alt="" /></a></td>
 					<td><a target="_blank" href="', $PrintDispatchNote, '">', $PrintText, ' <img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/pdf.png" title="', _('Click for PDF'), '" alt="" /></a></td>
 					<td><a target="_blank" href="', $PrintLabels . '">' . _('Labels') . '</a></td>
