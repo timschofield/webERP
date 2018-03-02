@@ -1,5 +1,5 @@
 <?php
-/* $Id$*/
+/* $Id: PcAssignCashToTab.php 7944 2018-02-09 18:22:45Z turbopt $*/
 
 include('includes/session.php');
 $Title = _('Assignment of Cash to Petty Cash Tab');
@@ -91,6 +91,7 @@ if (isset($_POST['submit'])) {
 					amount,
 					authorized,
 					posted,
+					purpose,
 					notes)
 			VALUES (NULL,
 					'" . $_POST['SelectedTabs'] . "',
@@ -99,7 +100,8 @@ if (isset($_POST['submit'])) {
 					'" . filter_number_format($_POST['Amount']) . "',
 					'0000-00-00',
 					'0',
-					'" . $_POST['Notes'] . "',
+					NULL,
+					'" . $_POST['Notes'] . "'
 					)";
 		$Msg = _('Assignment of cash to PC Tab ') . ' ' . $_POST['SelectedTabs'] . ' ' . _('has been created');
 	}
@@ -170,14 +172,14 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 	echo '<div class="centre">
 			<a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">', _('Select another tab'), '</a>
 		</div>';
-		
+
 	echo '<br /><table class="selection">';
 	echo '	<tr>
 				<td>' . _('Petty Cash Tab') . ':</td>
 				<td>' . $SelectedTabs . '</td>
 			</tr>';
 	echo '</table>';
-	
+
 	if (!isset($_GET['edit']) or isset($_POST['GO'])) {
 		if (isset($_POST['Cancel'])) {
 			unset($_POST['Amount']);
@@ -203,6 +205,7 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 						amount,
 						authorized,
 						posted,
+						purpose,
 						notes
 					FROM pcashdetails
 					WHERE tabcode='" . $SelectedTabs . "'
@@ -212,7 +215,7 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 		$Result = DB_query($SQL);
 		echo '<form method="post" action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">';
 		echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
-		
+
 		//Limit expenses history to X days
 		echo '<table class="selection">
 				<tr>
@@ -223,19 +226,23 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 					</td>
 				</tr>
 			</table>';
-				
-		echo '<table class="selection">		
-				<tr>
-					<th>', _('Date'), '</th>
-					<th>', _('Expense Code'), '</th>
-					<th>', _('Amount'), '</th>
-					<th>', _('Notes'), '</th>
-					<th>', _('Receipt Attachment'), '</th>
-					<th>', _('Date Authorised'), '</th>
-				</tr>';
+
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="ascending">', _('Date'), '</th>
+						<th class="ascending">', _('Expense Code'), '</th>
+						<th class="ascending">', _('Amount'), '</th>
+						<th>', _('Business Purpose'), '</th>
+						<th>', _('Notes'), '</th>
+						<th>', _('Receipt Attachment'), '</th>
+						<th class="ascending">', _('Date Authorised'), '</th>
+					</tr>
+				</thead>
+				<tbody>';
 
 		while ($MyRow = DB_fetch_array($Result)) {
-			
+
 			$SQLdes = "SELECT description
 					FROM pcexpenses
 					WHERE codeexpense='" . $MyRow['codeexpense'] . "'";
@@ -246,31 +253,41 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 			} else {
 					$ExpenseCodeDes = $MyRow['codeexpense'] . ' - ' . $Description[0];
 			}
-			
+
 			if ($MyRow['authorized'] == '0000-00-00') {
 				$AuthorisedDate = _('Unauthorised');
 			} else {
 				$AuthorisedDate = ConvertSQLDate($MyRow['authorized']);
 			}
-			
+
 			//Generate download link for expense receipt, or show text if no receipt file is found.
 			$ReceiptSupportedExt = array('png','jpg','jpeg','pdf','doc','docx','xls','xlsx'); //Supported file extensions
-			$ReceiptFileDir = $PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/expenses_receipts/' . mb_strtolower($SelectedTabs); //Receipts upload directory
-			$ReceiptFilePathMatched = reset(glob($ReceiptFileDir . '/' . $MyRow['counterindex'] . '.{' . implode(',', $ReceiptSupportedExt) . '}', GLOB_BRACE)); //Find the relevant receipt file for the expense. There should only be one (file type), but limit to one result just in case.
-			if (!empty($ReceiptFilePathMatched)) { //If no receipt file for the expenses is found
-				$ReceiptText = '<a href="' . $ReceiptFilePathMatched . '" download="ExpenseReceipt-' . mb_strtolower($SelectedTabs) . '-[' . $MyRow['date'] . ']-[' . $MyRow['counterindex'] . ']">' . _('Download attachment') . '</a>';
+			$ReceiptDir = $PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/expenses_receipts/'; //Receipts upload directory
+			$ReceiptSQL = "SELECT hashfile,
+									extension
+									FROM pcreceipts
+									WHERE pccashdetail='" . $MyRow['counterindex'] . "'";
+			$ReceiptResult = DB_query($ReceiptSQL);
+			$ReceiptRow = DB_fetch_array($ReceiptResult);
+			if (DB_num_rows($ReceiptResult) > 0) { //If receipt exists in database
+				$ReceiptHash = $ReceiptRow['hashfile'];
+				$ReceiptExt = $ReceiptRow['extension'];
+				$ReceiptFileName = $ReceiptHash . '.' . $ReceiptExt;
+				$ReceiptPath = $ReceiptDir . $ReceiptFileName;
+				$ReceiptText = '<a href="' . $ReceiptPath . '" download="ExpenseReceipt-' . mb_strtolower($SelectedTabs) . '-[' . $MyRow['date'] . ']-[' . $MyRow['counterindex'] . ']">' . _('Download attachment') . '</a>';
 			} elseif ($ExpenseCodeDes == 'ASSIGNCASH') {
 				$ReceiptText = '';
 			} else {
 				$ReceiptText = _('No attachment');
 			}
-			
+
 			if (($MyRow['authorized'] == '0000-00-00') and ($ExpenseCodeDes == 'ASSIGNCASH')) {
 				// only cash assignations NOT authorized can be modified or deleted
 				echo '<tr class="striped_row">
 					<td>', ConvertSQLDate($MyRow['date']), '</td>
 					<td>', $ExpenseCodeDes, '</td>
 					<td class="number">', locale_number_format($MyRow['amount'], $CurrDecimalPlaces), '</td>
+					<td>', $MyRow['purpose'], '</td>
 					<td>', $MyRow['notes'], '</td>
 					<td>', $ReceiptText, '</td>
 					<td>', $AuthorisedDate, '</td>
@@ -282,6 +299,7 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 					<td>', ConvertSQLDate($MyRow['date']), '</td>
 					<td>', $ExpenseCodeDes, '</td>
 					<td class="number">', locale_number_format($MyRow['amount'], $CurrDecimalPlaces), '</td>
+					<td>', $MyRow['purpose'], '</td>
 					<td>', $MyRow['notes'], '</td>
 					<td>', $ReceiptText, '</td>
 					<td>', $AuthorisedDate, '</td>
@@ -297,10 +315,13 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 		if (!isset($Amount['0'])) {
 			$Amount['0'] = 0;
 		}
-		echo '<tr>
-				<td colspan="2" class="number">', _('Current balance'), ':</td>
-				<td class="number">', locale_number_format($Amount['0'], $CurrDecimalPlaces), '</td>
-			</tr>';
+		echo '</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="2" class="number">', _('Current balance'), ':</td>
+					<td class="number">', locale_number_format($Amount['0'], $CurrDecimalPlaces), '</td>
+				</tr>
+			</tfoot>';
 		echo '</table>
 			</form>';
 	}
@@ -327,7 +348,8 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 							amount,
 							authorized,
 							posted,
-							notes,
+							purpose,
+							notes
 						FROM pcashdetails
 						WHERE counterindex='" . $SelectedIndex . "'";
 			$Result = DB_query($SQL);

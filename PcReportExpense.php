@@ -115,6 +115,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 					pcashdetails.amount,
 					pcashdetails.authorized,
 					pcashdetails.posted,
+					pcashdetails.purpose,
 					pcashdetails.notes,
 					pctabs.currency,
 					currencies.decimalplaces
@@ -133,18 +134,24 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 						_('No Petty Cash movements for this expense code were returned by the SQL because'),
 						_('The SQL that failed was:'));
 
-	echo '<br /><table class="selection">
-		<tr>
-			<th>' . _('Date of Expense') . '</th>
-			<th>' . _('Tab') . '</th>
-			<th>' . _('Currency') . '</th>
-			<th>' . _('Gross Amount') . '</th>
-			<th>', _('Tax'), '</th>
-			<th>', _('Tax Group'), '</th>
-			<th>', _('Tag'), '</th>
-			<th>' . _('Notes') . '</th>
-			<th>' . _('Date Authorised') . '</th>
-		</tr>';
+	echo '<br />
+		<table class="selection">
+			<thead>
+				<tr>
+					<th class="ascending">' . _('Date of Expense') . '</th>
+					<th class="ascending">' . _('Tab') . '</th>
+					<th>' . _('Currency') . '</th>
+					<th class="ascending">' . _('Gross Amount') . '</th>
+					<th>', _('Tax'), '</th>
+					<th>', _('Tax Group'), '</th>
+					<th>', _('Tag'), '</th>
+					<th>' . _('Business Purpose') . '</th>
+					<th>' . _('Notes') . '</th>
+					<th>' . _('Receipt Attachment') . '</th>
+					<th class="ascending">' . _('Date Authorised') . '</th>
+				</tr>
+			</thead>
+			<tbody>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
 		$CurrDecimalPlaces = $MyRow['decimalplaces'];
@@ -174,21 +181,32 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 		}
 		$TagTo = $MyRow['tag'];
 		$TagDescription = $TagTo . ' - ' . $TagRow['tagdescription'];
-		
+
+		//Generate download link for expense receipt, or show text if no receipt file is found.
+		$ReceiptSupportedExt = array('png','jpg','jpeg','pdf','doc','docx','xls','xlsx'); //Supported file extensions
+		$ReceiptDir = $PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/expenses_receipts/'; //Receipts upload directory
+		$ReceiptSQL = "SELECT hashfile,
+								extension
+								FROM pcreceipts
+								WHERE pccashdetail='" . $MyRow['counterindex'] . "'";
+		$ReceiptResult = DB_query($ReceiptSQL);
+		$ReceiptRow = DB_fetch_array($ReceiptResult);
+		if (DB_num_rows($ReceiptResult) > 0) { //If receipt exists in database
+			$ReceiptHash = $ReceiptRow['hashfile'];
+			$ReceiptExt = $ReceiptRow['extension'];
+			$ReceiptFileName = $ReceiptHash . '.' . $ReceiptExt;
+			$ReceiptPath = $ReceiptDir . $ReceiptFileName;
+			$ReceiptText = '<a href="' . $ReceiptPath . '" download="ExpenseReceipt-' . mb_strtolower($SelectedTabs) . '-[' . $MyRow['date'] . ']-[' . $MyRow['counterindex'] . ']">' . _('Download attachment') . '</a>';
+		} else {
+			$ReceiptText = _('No attachment');
+		}
+				
 		if ($MyRow['authorized'] == '0000-00-00') {
 			$AuthorisedDate = _('Unauthorised');
 		} else {
 			$AuthorisedDate = ConvertSQLDate($MyRow['authorized']);
 		}
-			
-		/*
-		if ($MyRow['posted'] == 0) {
-			$Posted = _('No');
-		} else {
-			$Posted = _('Yes');
-		}
-		*/
-		
+
 		echo '<tr class="striped_row">
 			<td>', ConvertSQLDate($MyRow['date']), '</td>
 			<td>', $MyRow['tabcode'], '</td>
@@ -197,11 +215,14 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 			<td class="number">', $TaxesTaxAmount, '</td>
 			<td>', $TaxesDescription, '</td>
 			<td>', $TagDescription, '</td>
+			<td>', $MyRow['purpose'], '</td>
 			<td>', $MyRow['notes'], '</td>
+			<td>', $ReceiptText, '</td>
 			<td>', $AuthorisedDate, '</td>
 		</tr>';
 	} //end of looping
 
+	echo '</tbody>';
 	echo '</table>';
 	echo '<br /><div class="centre"><input type="submit" name="SelectDifferentDate" value="' . _('Select A Different Date') . '" /></div>';
     echo '</div>
