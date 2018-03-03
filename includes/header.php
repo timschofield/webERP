@@ -1,9 +1,8 @@
 <?php
-
 	// Titles and screen header
 	// Needs the file config.php loaded where the variables are defined for
 	// $RootPath
-	// $Title - should be defined in the page this file is included with
+	// $Title - should be defined in the page before this file is included
 	if (!isset($RootPath)){
 		$RootPath = dirname(htmlspecialchars($_SERVER['PHP_SELF']));
 		if ($RootPath == '/' OR $RootPath == "\\") {
@@ -37,10 +36,10 @@
 	// If it is set the $_SESSION['ShowPageHelp'] parameter AND it is FALSE, hides the page help text:
 	if(isset($_SESSION['ShowPageHelp']) AND !$_SESSION['ShowPageHelp']) {
 		echo '<style>
-			.page_help_text, div.page_help_text {
-				display:none;
-			}
-		</style>';
+				.page_help_text, div.page_help_text {
+					display:none;
+				}
+			</style>';
 	}
 
 	echo '</head>',
@@ -52,17 +51,16 @@
 
 	if (isset($Title)) {
 		echo '<div id="AppInfoDiv">', //===HJ===
-			'<div id="AppInfoCompanyDiv">',
-				'<img alt="', _('Company'), '" src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/company.png" title="', _('Company'), '" />&nbsp;', stripslashes($_SESSION['CompanyRecord']['coyname']),
-			'</div>',
-			'<div id="AppInfoUserDiv">',
-				'<a href="', $RootPath, '/UserSettings.php">&nbsp;<img alt="', _('User'), '" src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/user.png" title="', _('User'), '" />&nbsp;', stripslashes($_SESSION['UsersRealName']), '</a>',
-				' | <a href="', $RootPath, '/Dashboard.php">', _('Dashboard'), '</a>',
+				'<div id="AppInfoCompanyDiv">',
+					'<img alt="', _('Company'), '" src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/company.png" title="', _('Company'), '" />&nbsp;', stripslashes($_SESSION['CompanyRecord']['coyname']),
 				'</div>',
-			'<div id="AppInfoModuleDiv">';
-				// Make the title text a class, can be set to display:none is some themes
-				echo $Title;
-		echo '</div>',
+				'<div id="AppInfoUserDiv">',
+					'<a href="', $RootPath, '/UserSettings.php">&nbsp;<img alt="', _('User'), '" src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/user.png" title="', _('User'), '" />&nbsp;', stripslashes($_SESSION['UsersRealName']), '</a>',
+				'</div>',
+				'<div id="AppInfoModuleDiv">',
+					// Make the title text a class, can be set to display:none in some themes
+					$Title,
+				'</div>',
 			'</div>'; // AppInfoDiv
 
 		echo '<div id="QuickMenuDiv">
@@ -71,35 +69,29 @@
 
 		if (isset($_POST['AddToMenu'])) {
 			if (!isset($_SESSION['Favourites'][$_POST['ScriptName']])) {
-					$_SESSION['Favourites'][$_POST['ScriptName']] = $_POST['Title'];
-				}
+				$_SESSION['Favourites'][$_POST['ScriptName']] = $_POST['Title'];
+			}
 		}
+
 		if (isset($_POST['DelFromMenu'])) {
 			unset($_SESSION['Favourites'][$_POST['ScriptName']]);
 		}
+
 		if (isset($_SESSION['Favourites']) AND count($_SESSION['Favourites'])>0) {
-					echo '<ul>';
-					foreach ($_SESSION['Favourites'] as $url=>$ttl) {
+			echo '<ul>';
+			foreach ($_SESSION['Favourites'] as $url=>$ttl) {
 				echo '<li><a href="', $url, '">', _($ttl), '<a></li>';
 			}
 			echo '</ul>';
 		}
+
 		echo '</li>'; //take off inline formatting, use CSS instead ===HJ===
 
 		if (count($_SESSION['AllowedPageSecurityTokens'])>1){
+			echo '<li><a href="', $RootPath, '/Dashboard.php">', _('Dashboard'), '</a></li>';
 			echo '<li><a href="', $RootPath, '/SelectCustomer.php">', _('Customers'), '</a></li>';
 			echo '<li><a href="', $RootPath, '/SelectProduct.php">', _('Items'), '</a></li>';
 			echo '<li><a href="', $RootPath, '/SelectSupplier.php">', _('Suppliers'), '</a></li>';
-/*			$DefaultManualLink = '<li><a rel="external" accesskey="8" href="' .  $RootPath . '/doc/Manual/ManualContents.php'. $ViewTopic . $BookMark. '">' . _('Manual') . '</a></li>';
-			if (mb_substr($_SESSION['Language'],0,2) != 'en'){
-				if (file_exists('locale/'.$_SESSION['Language'].'/Manual/ManualContents.php')){
-					echo '<li><a target="_blank" href="'.$RootPath.'/locale/'.$_SESSION['Language'].'/Manual/ManualContents.php'. $ViewTopic . $BookMark. '">' . _('Manual') . '</a></li>';
-				} else {
-					echo $DefaultManualLink;
-				}
-			} else {
-					echo $DefaultManualLink;
-			}*/
 			echo '<li><a href="', $RootPath, '/ManualContents.php', $ViewTopic, $BookMark, '" rel="external" accesskey="8">', _('Manual'), '</a></li>';
 		}
 
@@ -107,9 +99,8 @@
 
 		echo '</ul></div>'; // QuickMenuDiv
 	}
-	echo		'</div>',// Close HeaderWrapDiv
+	echo '</div>',// Close HeaderWrapDiv
 			'</div>',// Close Headerdiv
 			'<div id="BodyDiv">',
 				'<div id="BodyWrapDiv">';
-
 ?>
