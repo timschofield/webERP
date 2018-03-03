@@ -158,3 +158,11 @@ WHERE companycode = 'CASH'
 	AND saledate <= '2018-12-31'
 GROUP BY stockid
 ORDER BY stockid
+
+/* MODIFICAR COMPNESATION PER AJUSTAR STOCK PTBB */
+SELECT * 
+FROM `gltrans` 
+WHERE (`account` = "510010000PT" 
+		OR `account` = "510010050") 
+	AND `trandate` >= "2018-01-01" 
+ORDER BY counterindex
