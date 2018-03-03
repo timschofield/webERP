@@ -1,5 +1,4 @@
 <?php
-/* $Id: SuppWhereAlloc.php 7449 2016-01-14 10:08:51Z exsonqu $*/
 /* Suppliers Where allocated */
 
 include('includes/session.php');

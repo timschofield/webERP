@@ -1,5 +1,4 @@
 <?php
-/* $Id: DefineImportBankTransClass.php 3242 2009-12-16 22:06:53Z tim_schofield $*/
 
 class BankStatement {
 	var $ReportCreated;

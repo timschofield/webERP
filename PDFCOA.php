@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: PDFCOA.php 1 2014-09-15 06:31:08Z agaluski $ */
 
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');

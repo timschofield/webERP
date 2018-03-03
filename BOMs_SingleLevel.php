@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: BOMs.php 6942 2014-10-27 02:48:29Z daintree $*/
 
 include('includes/session.inc');
 

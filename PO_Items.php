@@ -1,6 +1,5 @@
 <?php
 
-/* $Id PO_Items.php 4183 2010-12-14 09:30:20Z daintree $ */
 
 include('includes/DefinePOClass.php');
 include('includes/SQL_CommonFunctions.inc');

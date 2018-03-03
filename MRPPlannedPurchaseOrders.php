@@ -1,5 +1,4 @@
 <?php
-/* $Id: MRPPlannedPurchaseOrders.php 7945 2018-02-09 19:48:22Z turbopt $*/
 // MRPPlannedPurchaseOrders.php - Report of purchase parts that MRP has determined should have
 // purchase orders created for them
 

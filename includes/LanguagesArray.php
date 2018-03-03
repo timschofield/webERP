@@ -1,5 +1,4 @@
 <?php
-/* $Id: LanguagesArray.php 7083 2015-01-17 17:17:01Z rchacon $*/
 /* Script to define a set of parameters that defines the user's language, decimal separator and thousands separator. */
 
 $LanguagesArray = array();

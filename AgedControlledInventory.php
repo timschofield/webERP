@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: AgedControlledInventory.php 1 2014-08-08 04:47:42Z agaluski $ */
 
 include('includes/session.php');
 $PricesSecurity = 12;//don't show pricing info unless security token 12 available to user

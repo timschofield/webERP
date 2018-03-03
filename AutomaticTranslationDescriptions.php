@@ -1,5 +1,4 @@
 <?php
-/* $Id: AutomaticTranslationDescriptions.php 7037 2014-12-22 14:45:20Z tehonu $ */
 
 include ('includes/session.php');
 $Title = _('Translate Item Descriptions');

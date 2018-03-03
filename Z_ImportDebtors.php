@@ -1,5 +1,4 @@
 <?php
-/* $Id: Z_ImportDebtors.php 6067 2013-07-10 02:04:22Z tehonu $*/
 /* Import debtors by csv file */
 
 include('includes/session.php');

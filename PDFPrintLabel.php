@@ -1,5 +1,4 @@
 <?php
-/* $Id: PDFPriceLabels.php 5228 2012-04-06 02:48:00Z vvs2012 $*/
 
 include('includes/session.php');
 include('includes/barcodepack/class.code128.php');

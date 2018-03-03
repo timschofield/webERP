@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: MaintenanceTasks.php 5231 2012-04-07 18:10:09Z daitnree $*/
 
 include('includes/session.php');
 

@@ -1,5 +1,4 @@
 <?php
-/* $Id: Z_GLAccountUsersCopyAuthority.php 7392 2015-11-16 07:30:11Z tehonu $*/
 /* Utility to copy authority of GL accounts from one user to another */
 
 include('includes/session.php');

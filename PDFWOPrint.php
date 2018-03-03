@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: PDFWOPrint.php 6146 $*/
 
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');

@@ -1,5 +1,4 @@
 <?php
-/* $Id: CustomerAccount.php 7004 2014-11-24 15:56:19Z rchacon $*/
 /* Shows customer account/statement on screen rather than PDF. */
 
 include('includes/session.php');

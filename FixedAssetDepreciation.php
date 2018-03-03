@@ -1,5 +1,4 @@
 <?php
-/* $Id: FixedAssetDepreciation.php 4213 2010-12-22 14:33:20Z tim_schofield $*/
 
 include('includes/session.php');
 $Title = _('Depreciation Journal Entry');

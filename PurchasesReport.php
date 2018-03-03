@@ -1,5 +1,4 @@
 <?php
-/* $Id: PurchasesReport.php 7672 2016-11-27 10:42:50Z rchacon $ */
 /* Shows a report of purchases from suppliers for the range of selected dates. */
 /* This program is under the GNU General Public License, last version. Rafael E. Chacón, 2016-12-18. */
 /* This creative work is under the CC BY-NC-SA, later version. Rafael E. Chacón, 2016-12-18. */
