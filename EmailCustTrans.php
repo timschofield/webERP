@@ -1,6 +1,5 @@
 <?php
 
-/* $Id$*/
 
 include('includes/session.php');
 include('includes/header.php');

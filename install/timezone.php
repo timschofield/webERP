@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 
 if (isset($_SESSION['timezone']) && mb_strlen($_SESSION['timezone']) > 0 ) {
     $ltz = $_SESSION['timezone'];

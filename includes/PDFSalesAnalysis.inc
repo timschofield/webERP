@@ -1,6 +1,5 @@
 <?php
 
-/* $Id$*/
 
 include ('includes/class.pdf.php');
 

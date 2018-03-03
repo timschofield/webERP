@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 
 function ValidBundleRef ($StockID, $LocCode, $BundleRef){
 	$SQL = "SELECT quantity

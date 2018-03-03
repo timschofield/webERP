@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* Shows to which invoices a receipt was allocated to */
 
 include('includes/session.php');

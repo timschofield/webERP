@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* Creates a pdf comparing the quantites entered as counted at a given range of locations against the quantity stored as on hand as at the time a stock check was initiated. */
 
 include('includes/session.php');

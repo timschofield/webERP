@@ -1,5 +1,4 @@
 <?php
-/* $Id$ */
 /* Sales Category Maintenance */
 
 include('includes/session.php');

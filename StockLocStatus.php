@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* Shows the stock on hand together with outstanding sales orders and outstanding purchase orders by stock location for all items in the selected stock category */
 
 include('includes/session.php');

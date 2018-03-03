@@ -1,6 +1,5 @@
 <?php
 
-/* $Id$*/
 
 /* Definition of the cart class
 this class can hold all the information for:

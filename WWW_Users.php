@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* Entry of users and security settings of users */
 
 if(isset($_POST['UserID']) AND isset($_POST['ID'])) {

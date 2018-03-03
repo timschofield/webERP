@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 
 	function VerifyCategoryID($CategoryID, $i, $Errors) {
 		if (mb_strlen($CategoryID)>6 or $CategoryID=='') {

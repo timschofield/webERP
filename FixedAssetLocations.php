@@ -1,6 +1,5 @@
 <?php
 
-/* $Id$ */
 
 include('includes/session.php');
 $Title = _('Fixed Asset Locations');

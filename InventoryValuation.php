@@ -1,6 +1,5 @@
 <?php
 
-/* $Id$ */
 
 include('includes/session.php');
 if (isset($_POST['PrintPDF']) OR isset($_POST['CSV'])){

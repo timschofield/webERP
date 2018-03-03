@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* Allows a new language po file to be created */
 
 /* Steve Kitchen/Kaill */

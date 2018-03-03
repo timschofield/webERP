@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 
 /*Functions to get the GL codes to post the transaction to */
 include('includes/GetSalesTransGLCodes.inc');

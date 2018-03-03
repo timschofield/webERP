@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* This script is for maintenance of the system parameters. */
 
 include('includes/session.php');

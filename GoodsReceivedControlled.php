@@ -1,6 +1,5 @@
 <?php
 
-/* $Id$*/
 include('includes/DefinePOClass.php');
 include('includes/DefineSerialItems.php');
 

@@ -1,5 +1,4 @@
 <?php
-/* $Id$ */
 
 /*	Form Designer notes:
 	- All measurements are in PostScript points (72 points = 25,4 mm).

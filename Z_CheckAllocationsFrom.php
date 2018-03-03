@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 
 include ('includes/session.php');
 $Title = _('Identify Allocation Stuff Ups');

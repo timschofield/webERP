@@ -4,7 +4,6 @@
 	 * Suren Naidu 18/08/2005
 	 *
 	 */
-/* $Id$*/
 
 	$PageNumber++;
 	if ($PageNumber>1){

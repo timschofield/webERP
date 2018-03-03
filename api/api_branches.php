@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 
 /* Check that the debtor number exists*/
 	function VerifyBranchDebtorExists($DebtorNumber, $i, $Errors) {

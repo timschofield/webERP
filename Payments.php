@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* Entry of bank account payments either against an AP account or a general ledger payment - if the AP-GL link in company preferences is set */
 
 include('includes/DefinePaymentClass.php');

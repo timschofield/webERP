@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /*	Script to print a price list by inventory category */
 /*	Output column sizes:
 		* stockmaster.stockid, varchar(20), len = 20chr

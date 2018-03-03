@@ -1,6 +1,5 @@
 <?php
 
-/* $Id$ */
 
 /*This page is very largely the same as the SupplierInvoice.php script
 the same result could have been acheived by using if statements in that script and just having the one

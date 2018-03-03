@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 
 /*  ******************************************  */
 /** STANDARD MESSAGE HANDLING & FORMATTING **/

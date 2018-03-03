@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* This script is an utility to show debtors balances in total by currency. */
 
 include ('includes/session.php');

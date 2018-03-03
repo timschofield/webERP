@@ -1,6 +1,5 @@
 <?php
 
-/* $Id$*/
 
 $UpdateSecurity =10;
 

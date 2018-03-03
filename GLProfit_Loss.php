@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* Shows the profit and loss of the company for the range of periods entered. */
 
 include ('includes/session.php');

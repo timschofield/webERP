@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 
 $PageSecurity=0;
 

@@ -1,7 +1,6 @@
 <?php
 
 /*  Performs login checks and $_SESSION initialisation */
-/* $Id$*/
 
 define('UL_OK',  0);		/* User verified, session initialised */
 define('UL_NOTVALID', 1);	/* User/password do not agree */

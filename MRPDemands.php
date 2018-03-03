@@ -1,6 +1,5 @@
 <?php
 
-/* $Id$*/
 
 // Add, Edit, Delete, and List MRP demand records. Table is mrpdemands.
 // Have separate functions for each routine. Use pass-by-reference - (&$StockID) -

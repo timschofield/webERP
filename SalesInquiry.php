@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /*  */
 // SalesInquiry.php
 // Inquiry on Sales Orders - If Date Type is Order Date, salesorderdetails is the main table

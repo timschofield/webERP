@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* Inventory Transfer - Receive */
 
 include('includes/DefineSerialItems.php');

@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 // MRPCreateDemands.php - Create mrpdemands based on sales order history
 
 include('includes/session.php');

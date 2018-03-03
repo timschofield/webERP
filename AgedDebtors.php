@@ -1,5 +1,4 @@
 <?php
- /* $Id$ */
  /* Lists customer account balances in detail or summary in selected currency */
 
 include('includes/session.php');

@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 
 /*EDI configuration variables definition */
 

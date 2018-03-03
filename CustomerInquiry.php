@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* Shows the customers account transactions with balances outstanding, links available to drill down to invoice/credit note or email invoices/credit notes. */
 
 include('includes/session.php');

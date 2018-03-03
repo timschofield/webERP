@@ -1,5 +1,4 @@
 <?php
-/* $Id$ */
 /* Database abstraction for mysqli */
 
 /* PeterMoulding.com

@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 //  Validates user and sets up $_SESSION environment for API users.
 function  LoginAPI($databasename, $user, $password) {
 	global  $PathPrefix;		// For included files

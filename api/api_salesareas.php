@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 
 /* Check that the area code is set up in the weberp database */
 	function VerifyAreaCodeDoesntExist($AreaCode , $i, $Errors) {

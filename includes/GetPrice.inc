@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 function GetPrice ($StockID, $DebtorNo, $BranchCode, $OrderLineQty=1, $ReportZeroPrice=1){
 	$Price = 0;
 

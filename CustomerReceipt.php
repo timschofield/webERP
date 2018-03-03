@@ -1,5 +1,4 @@
 <?php
-/* $Id$ */
 /* Entry of both customer receipts against accounts receivable and also general ledger or nominal receipts */
 
 include('includes/DefineReceiptClass.php');
