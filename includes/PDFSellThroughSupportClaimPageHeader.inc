@@ -1,5 +1,4 @@
 <?php
-/* $Id: PDFSellThroughSupportPageHeader.inc 3686 2010-08-07 16:27:37Z tim_schofield $*/
 /*PDF page header for inventory valuation report */
 if ($PageNumber>1){
 	$pdf->newPage();

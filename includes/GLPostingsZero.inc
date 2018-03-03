@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: GLPostings.inc 6945 2014-10-27 07:20:48Z daintree $*/
 
 /* This file contains the code to post GL transactions.
 
