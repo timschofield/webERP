@@ -1,5 +1,4 @@
 <?php
-/* $Id: AnalysisHorizontalIncome.php 7349 2015-09-14 14:43:19Z rchacon $*/
 /* Shows the horizontal analysis of the statement of comprehensive income. */
 
 // BEGIN: Functions division ---------------------------------------------------

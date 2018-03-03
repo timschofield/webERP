@@ -1,5 +1,4 @@
 <?php
-/* $Id: SelectQASamples.php 1 2014-09-08 10:42:50Z agaluski $*/
 
 include('includes/session.php');
 $Title = _('Select QA Samples');

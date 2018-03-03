@@ -1,5 +1,4 @@
 <?php
-/* $Id: MainMenuLinksArray.php 6190 2013-08-12 02:12:02Z rchacon $*/
 /* webERP menus with Captions and URLs. */
 
 $ModuleLink = array('orders', 'AR', 'PO', 'AP', 'stock', 'manuf',  'GL', 'FA', 'PC', 'system', 'Utilities');

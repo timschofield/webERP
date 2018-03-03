@@ -1,5 +1,4 @@
 <?php
-/* $Id: WorkOrderCosting.php 7944 2018-02-09 18:22:45Z turbopt $*/
 
 include('includes/session.php');
 $Title = _('Work Order Costing');

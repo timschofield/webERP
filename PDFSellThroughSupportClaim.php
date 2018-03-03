@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: PDFSellThroughSupportClaim.php 5788 2013-01-02 03:22:38Z daintree $*/
 
 include('includes/session.php');
 $Title = _('Sell Through Support Claims Report');

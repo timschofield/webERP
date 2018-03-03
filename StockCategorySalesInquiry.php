@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: StockCategorySalesInquiry.php 4261 2010-12-22 15:56:50Z  $*/
 
 include('includes/session.php');
 $Title = _('Sales By Category By Item Inquiry');

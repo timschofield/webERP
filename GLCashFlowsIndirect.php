@@ -1,5 +1,4 @@
 <?php
-/* $Id: GLCashFlowsIndirect.php 7672 2016-11-17 10:42:50Z rchacon $ */
 /* Shows a statement of cash flows for the period using the indirect method. */
 /* This program is under the GNU General Public License, last version. Rafael E. Chacón, 2016-10-08. */
 /* This creative work is under the CC BY-NC-SA, later version. Rafael E. Chacón, 2016-10-08. */

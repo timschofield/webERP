@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: EDIMessageFormat.php 7944 2018-02-09 18:22:45Z turbopt $*/
 
 include('includes/session.php');
 $Title = _('EDI Message Format');

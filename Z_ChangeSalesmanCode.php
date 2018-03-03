@@ -1,5 +1,4 @@
 <?php
-/* $Id: Z_ChangeSalesmanCode.php 7751 2017-04-13 16:34:26Z rchacon $*/
 /* This script is an utility to change a salesman code. */
 
 include ('includes/session.php');

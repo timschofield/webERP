@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: SuppTransGLAnalysis.php 4578 2011-05-28 11:01:00Z daintree $*/
 
 /*The ImportBankTransClass contains the structure ofinformation about the transactions
 An array of class BankTrans objects - containing details of the bank transactions has an array of

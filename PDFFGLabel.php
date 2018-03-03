@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: PDFFGLabel.php agaluski $*/
 
 include('includes/session.php');
 

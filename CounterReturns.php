@@ -1,5 +1,4 @@
 <?php
-/* $Id: CounterReturns.php 4469 2011-01-15 02:28:37Z daintree $*/
 
 include('includes/DefineCartClass.php');
 

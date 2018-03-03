@@ -1,7 +1,6 @@
 <?php
 
 
-/* $Id: GLAccountCSV.php 4492 2011-02-18 09:56:52Z daintree $ */
 
 include ('includes/session.php');
 $Title = _('General Ledger Account Report');

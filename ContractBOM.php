@@ -1,5 +1,4 @@
 <?php
-/* $Id: ContractBOM.php 4553 2011-04-18 00:09:23Z daintree $*/
 
 include('includes/DefineContractClass.php');
 

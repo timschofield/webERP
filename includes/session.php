@@ -1,5 +1,4 @@
 <?php
-/* $Id: session.php 7734 2017-02-25 04:58:10Z daintree $*/
 
 if (!isset($PathPrefix)) {
 	$PathPrefix='';

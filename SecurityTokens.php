@@ -1,5 +1,4 @@
 <?php
-/* $Id: SecurityTokens.php 4424 2010-12-22 16:27:45Z tim_schofield $ */
 /* Administration of security tokens */
 
 include('includes/session.php');

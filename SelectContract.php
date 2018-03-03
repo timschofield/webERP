@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: SelectContract.php 3692 2010-08-15 09:22:08Z daintree $*/
 
 include('includes/session.php');
 $Title = _('Select Contract');

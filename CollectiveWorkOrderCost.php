@@ -1,5 +1,4 @@
 <?php
-/* $Id: CollectiveWorkOrderCost.php 6946 2016-05-06 07:30:11Z  exsonqu $*/
 /* Multiple work orders cost review */
 
 include('includes/session.php');

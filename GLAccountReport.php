@@ -1,5 +1,4 @@
 <?php
-/* $Id: GLAccountReport.php 4618 2011-07-02 23:04:59Z daintree $*/
 
 include ('includes/session.php');
 

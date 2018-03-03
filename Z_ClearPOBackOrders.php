@@ -1,5 +1,4 @@
 <?php
-/* $Id: Z_ClearPOBackOrders.php 4466 2011-01-13 09:33:59Z daintree $*/
 $PageSecurity =15;
 include ('includes/session.php');
 $Title = _('UTILITY PAGE To Clear purchase orders with quantity on back order');

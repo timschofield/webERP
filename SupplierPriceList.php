@@ -1,5 +1,4 @@
 <?php
-/* $Id: SupplierPriceList.php 6941 2014-10-26 23:18:08Z daintree $*/
 /* Maintain Supplier Price Lists */
 
 include('includes/session.php');

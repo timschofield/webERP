@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: StockMovements.php 7957 2018-02-12 21:53:28Z turbopt $*/
 
 include('includes/session.php');
 $Title = _('Stock Movements');
