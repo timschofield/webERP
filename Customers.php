@@ -1,6 +1,5 @@
 <?php
 
-/* $Id$ */
 
 include('includes/session.php');
 include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.

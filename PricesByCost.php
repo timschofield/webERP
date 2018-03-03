@@ -1,5 +1,4 @@
 <?php
-/* $Id$ */
 
 include ('includes/session.php');
 $Title = _('Update of Prices By A Multiple Of Cost');

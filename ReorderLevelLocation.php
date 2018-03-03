@@ -1,6 +1,5 @@
 <?php
 
-/* $Id$*/
 
 // ReorderLevelLocation.php - Report of reorder level by category
 

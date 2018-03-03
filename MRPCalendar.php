@@ -1,6 +1,5 @@
 <?php
 
-/* $Id$ */
 
 // MRPCalendar.php
 // Maintains the calendar of valid manufacturing dates for MRP

@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 
 /*Class to hold stock transfer records */
 

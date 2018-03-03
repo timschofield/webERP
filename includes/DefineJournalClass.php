@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* definition of the Journal class */
 
 Class Journal {

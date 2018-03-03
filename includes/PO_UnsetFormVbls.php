@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /*PO_UnsetFormVariable on the purchase order line items */
                     unset($_POST['StockID']);
                     unset($_POST['Qty']);

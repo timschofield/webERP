@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 //$PageSecurity = 15;
 include('includes/session.php');
 $Title = _('Upgrade webERP to version 3.10.5');

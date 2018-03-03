@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 
 /* Check that the account section doesn't already exist'*/
 	function VerifyAccountSection($AccountSection, $i, $Errors) {

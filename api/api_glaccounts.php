@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 
 /* Check that the account code doesn't already exist'*/
 	function VerifyAccountCode($AccountCode, $i, $Errors) {

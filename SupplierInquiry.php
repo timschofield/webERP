@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* Inquiry showing invoices, credit notes and payments made to suppliers together with the amounts outstanding. */
 
 include('includes/session.php');

@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 
 /* This function returns the default currency code in webERP.
  */

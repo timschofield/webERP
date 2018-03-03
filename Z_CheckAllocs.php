@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /*This page adds the total of allocation records and compares this to the recorded allocation total in DebtorTrans table */
 
 include('includes/session.php');

@@ -1,5 +1,4 @@
 <?php
-/* $Id$ */
 
      /* -----------------------------------------------------------------------------------------------
 	This class was an extension to the FPDF class to use the syntax of the R&OS pdf.php class,

@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* This is where the details specific to the recurring order are entered and the template committed to the database once the Process button is hit */
 
 include('includes/DefineCartClass.php');

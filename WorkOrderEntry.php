@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* Entry of new work orders */
 
 include('includes/session.php');

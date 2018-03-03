@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* Defines the sections in the general ledger reports */
 
 include('includes/session.php');

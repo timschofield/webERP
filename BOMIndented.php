@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* Shows the bill of material indented for each level */
 
 // BOMIndented.php - Indented Bill of Materials

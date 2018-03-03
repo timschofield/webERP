@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 
 include('includes/session.php');
 $Title = _('Customer Type (Group) Notes');

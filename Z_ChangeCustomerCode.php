@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* This script is an utility to change a customer code. */
 
 include ('includes/session.php');

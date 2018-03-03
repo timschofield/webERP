@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 
 /* This function returns a list of the tax group id's
  * currently setup on webERP

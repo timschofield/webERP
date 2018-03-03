@@ -1,6 +1,5 @@
 <?php
 
-/* $Id$*/
 
 /* Session started in header.php for password checking and authorisation level check */
 include('includes/session.php');

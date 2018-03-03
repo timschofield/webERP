@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 // Display demo user name and password within login form if $AllowDemoMode is true
 
 //include ('LanguageSetup.php');

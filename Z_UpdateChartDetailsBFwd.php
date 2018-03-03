@@ -1,6 +1,5 @@
 <?php
 
-/* $Id$*/
 
 include ('includes/session.php');
 $Title = _('Recalculation of Brought Forward Balances in Chart Details Table');
