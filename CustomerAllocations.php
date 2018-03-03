@@ -1,6 +1,4 @@
 <?php
-/*	$Id$*/
-
 /*	Call this page with:
 	1. A TransID to show the make up and to modify existing allocations.
 	2. A DebtorNo to show all outstanding receipts or credits yet to be allocated.
