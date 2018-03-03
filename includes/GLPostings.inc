@@ -1,6 +1,5 @@
 <?php
 
-/* $Id$*/
 
 /* This file contains the code to post GL transactions.
 

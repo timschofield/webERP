@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /*PDF page header for Top Items report */
 if ($PageNumber>1){
 	$pdf->newPage();
