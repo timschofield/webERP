@@ -57,6 +57,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, &$d
 				ORDER BY klconsignment.stockid";
 
 		$result = DB_query($SQL);
+
 		if (DB_num_rows($result) != 0){
 			// Let's start the real PDF creation 
 			require_once('includes/tcpdf/tcpdf.php');
@@ -80,9 +81,10 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, &$d
 			$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 			
 			$FontType = 'helvetica';
-			$FontBigSize = 12;
-			$FontNormalSize = 10;
-			$FontSmallSize = 8;
+			$FontSizeXL = 16;
+			$FontSizeL = 12;
+			$FontSizeM = 10;
+			$FontSizeS = 8;
 			
 			$pdf->AddPage();
 			// https://tcpdf.org/examples/example_005/
@@ -90,53 +92,60 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, &$d
 
 			// Invoice header
 			// Company From Information
+			$WidthColumn1 = 0;
 			if ($CompanyFrom == 'PTADU'){
-				$pdf->SetFont($FontType, 'B', $FontBigSize);
-				$pdf->MultiCell(0, 0, 'PT. Angin Utara Dingin', 0, 'L', 0, 1, '', '', true);
-				$pdf->SetFont($FontType, '', $FontSmallSize);
-				$pdf->MultiCell(0, 0, 'Jl. Kesambi 1-B, Kerobokan - Bali - Indonesia', 0, 'L', 0, 1, '', '', true);
-				$pdf->MultiCell(0, 0, 'Ph. +62', 0, 'L', 0, 1, '', '', true);
+				$pdf->SetFont($FontType, 'B', $FontSizeXL);
+				$pdf->MultiCell($WidthColumn1, 0, 'PT. Angin Dingin Utara', 0, 'C', 0, 1, '', '', true);
+				$pdf->SetFont($FontType, '', $FontSizeS);
+				$pdf->MultiCell($WidthColumn1, 0, 'Jl. Raya Kesambi No. 1B, Kerobokan Kuta Utara, Badung - Bali', 0, 'C', 0, 1, '', '', true);
+				$pdf->MultiCell($WidthColumn1, 0, 'Ph. +62 812 381 6795', 0, 'C', 0, 1, '', '', true);
 			}elseif ($CompanyFrom == 'CASH'){
-				$pdf->SetFont($FontType, 'B', $FontBigSize);
-				$pdf->MultiCell(0, 0, '', 0, 'L', 0, 1, '', '', true);
-				$pdf->SetFont($FontType, '', $FontSmallSize);
-				$pdf->MultiCell(0, 0, '', 0, 'L', 0, 1, '', '', true);
-				$pdf->MultiCell(0, 0, '', 0, 'L', 0, 1, '', '', true);
+				$pdf->SetFont($FontType, 'B', $FontSizeL);
+				$pdf->MultiCell($WidthColumn1, 0, 'CASH', 0, 'C', 0, 1, '', '', true);
 			}
-			
-			$pdf->SetFont($FontType, '', $FontNormalSize);
+
+			if ($DraftOrInvoice == 'DRAFT'){
+				$pdf->ln(6);
+				$pdf->SetFont($FontType, '', $FontSizeL);
+				$pdf->MultiCell($WidthColumn1, 0, 'This is a DRAFT INVOICE', 0, 'C', 0, 1, '', '', true);
+			}
+
 			// Company To header
 			$SQLCompanyTo = "SELECT partnername,
 								partneraddress,
 								partnernpwp,
-								ppn
+								ppn,
+								daysinvoicedue
 							FROM klretailpartners
 							WHERE partnercode = '" . $CompanyTo . "'";
 			$resultCompanyTo = DB_query($SQLCompanyTo);
 			$myCompanyTo= DB_fetch_array($resultCompanyTo);
 			
-			$WidthColumn1 = 90;
+			$pdf->ln(6);
+			$WidthColumn1 = 28;
 			$WidthColumn2 = 0;
-			$pdf->MultiCell($WidthColumn1, 0, 'Invoice to:', 0, 'R', 0, 0, '', '', true);
+			$pdf->SetFont($FontType, '', $FontSizeM);
+			$pdf->MultiCell($WidthColumn1, 0, 'Invoice to:', 0, 'L', 0, 0, '', '', true);
 			$pdf->MultiCell($WidthColumn2, 0, $myCompanyTo['partnername'], 0, 'L', 0, 1, '', '', true);
-			$pdf->MultiCell($WidthColumn1, 0, 'Address:', 0, 'R', 0, 0, '', '', true);
+			$pdf->MultiCell($WidthColumn1, 0, 'Address:', 0, 'L', 0, 0, '', '', true);
 			$pdf->MultiCell($WidthColumn2, 0, $myCompanyTo['partneraddress'], 0, 'L', 0, 1, '', '', true);
-			$pdf->MultiCell($WidthColumn1, 0, 'NPWP:', 0, 'R', 0, 0, '', '', true);
+			$pdf->MultiCell($WidthColumn1, 0, 'NPWP:', 0, '', 0, 0, '', '', true);
 			$pdf->MultiCell($WidthColumn2, 0, $myCompanyTo['partnernpwp'], 0, 'L', 0, 1, '', '', true);
-			
-			$pdf->ln(2);
-			$pdf->MultiCell($WidthColumn1, 0, 'Invoice number:', 0, 'R', 0, 0, '', '', true);
+			$pdf->MultiCell($WidthColumn1, 0, 'Invoice number:', 0, 'L', 0, 0, '', '', true);
 			$pdf->MultiCell($WidthColumn2, 0, $InvoiceNumber, 0, 'L', 0, 1, '', '', true);
-			$pdf->MultiCell($WidthColumn1, 0, 'Invoice date:', 0, 'R', 0, 0, '', '', true);
+			$pdf->MultiCell($WidthColumn1, 0, 'Invoice date:', 0, 'L', 0, 0, '', '', true);
 			$pdf->MultiCell($WidthColumn2, 0, ConvertSQLDate($EndDate), 0, 'L', 0, 1, '', '', true);
+			$pdf->MultiCell($WidthColumn1, 0, 'Due date:', 0, 'L', 0, 0, '', '', true);
+			$pdf->MultiCell($WidthColumn2, 0, DateAdd(ConvertSQLDate($EndDate),'d',+$myCompanyTo['daysinvoicedue']), 0, 'L', 0, 1, '', '', true);
 
 			// Line header
-			$pdf->ln(2);
+			$pdf->ln(8);
+			$pdf->SetFont($FontType, '', $FontSizeM);
 			$WidthColumn1 = 10;
-			$WidthColumn2 = 35;
-			$WidthColumn3 = 70;
-			$WidthColumn4 = 10;
-			$WidthColumn5 = 20;
+			$WidthColumn2 = 30;
+			$WidthColumn3 = 75;
+			$WidthColumn4 = 12;
+			$WidthColumn5 = 25;
 			$WidthColumn6 = 0;
 			$pdf->MultiCell($WidthColumn1, 0, '#', 1, 'C', 0, 0, '', '', true);
 			$pdf->MultiCell($WidthColumn2, 0, 'Code', 1, 'C', 0, 0, '', '', true);
@@ -144,10 +153,10 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, &$d
 			$pdf->MultiCell($WidthColumn4, 0, 'Qty', 1, 'C', 0, 0, '', '', true);
 			$pdf->MultiCell($WidthColumn5, 0, 'Unit Price', 1, 'C', 0, 0, '', '', true);
 			$pdf->MultiCell($WidthColumn6, 0, 'Total', 1, 'C', 0, 1, '', '', true);
-			$pdf->SetFont($FontType, '', $FontSmallSize);
 
 			$TotalInvoice = 0;
 			$LineNum = 0;
+			$pdf->SetFont($FontType, '', $FontSizeS);
 			
 			while ($myrow = DB_fetch_array($result)) {
 
@@ -163,23 +172,61 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, &$d
 				$pdf->MultiCell($WidthColumn6, 0, locale_number_format($TotalLine), 1, 'R', 0, 1, '', '', true);
 			}
 
+			// TOTALS
+			$pdf->SetFont($FontType, 'B', $FontSizeM);
+			$pdf->MultiCell($WidthColumn1+
+							$WidthColumn2+
+							$WidthColumn3+
+							$WidthColumn4+
+							$WidthColumn5, 0, 'Total:', 1, 'R', 0, 0, '', '', true);
+			$pdf->MultiCell($WidthColumn6, 0, locale_number_format($TotalInvoice), 1, 'R', 0, 1, '', '', true);
+			
+			if ($myCompanyTo['ppn'] != 0){
+				$pdf->SetFont($FontType, '', $FontSizeM);
+				$TotalGoods = $TotalInvoice / ((100 + $myCompanyTo['ppn']) / 100);
+				$TotalPPN = $TotalInvoice - $TotalGoods;
+				$pdf->MultiCell($WidthColumn1+
+								$WidthColumn2+
+								$WidthColumn3+
+								$WidthColumn4+
+								$WidthColumn5, 0, 'Total Goods:', 1, 'R', 0, 0, '', '', true);
+				$pdf->MultiCell($WidthColumn6, 0, locale_number_format($TotalGoods), 1, 'R', 0, 1, '', '', true);
+				$pdf->MultiCell($WidthColumn1+
+								$WidthColumn2+
+								$WidthColumn3+
+								$WidthColumn4+
+								$WidthColumn5, 0, 'PPN:', 1, 'R', 0, 0, '', '', true);
+				$pdf->MultiCell($WidthColumn6, 0, locale_number_format($TotalPPN), 1, 'R', 0, 1, '', '', true);
+			}
 			// payment details
 			$pdf->ln(5);
-			$pdf->MultiCell($WidthColumn4, 0, 'Pembayaran lewat bank transfer ke bank ' . 
-												$myrow['bankcode'] . 
-												' rekening nomor ' . 
-												$myrow['bankaccount'], 0, 'L', 0, 1, '', '', true);
-			
-			// footer
-			$pdf->ln(5);
-			$TextMenerima = 'Saya telah menerima gaji sebesar jumlah tertera di atas pada tanggal: ';
-			$pdf->MultiCell($WidthColumn4, 0, $TextMenerima . $myrow['paymentday'], 0, 'L', 0, 1, '', '', true);
+			$pdf->SetFont($FontType, '', $FontSizeM);
+			if ($CompanyFrom == 'PTADU'){
+				$WidthColumn1 = 33;
+				$WidthColumn2 = 60;
+				$pdf->MultiCell($WidthColumn1 + $WidthColumn2, 0, 'Payment due by bank transfer', 0, 'L', 0, 1, '', '', true);
+				$pdf->MultiCell($WidthColumn1, 0, 'Bank name:', 0, 'L', 0, 0, '', '', true);
+				$pdf->MultiCell($WidthColumn2, 0, 'Bank Danamon Indonesia', 0, 'L', 0, 1, '', '', true);
+				$pdf->MultiCell($WidthColumn1, 0, 'Account number:', 0, 'L', 0, 0, '', '', true);
+				$pdf->MultiCell($WidthColumn2, 0, '3617556887', 0, 'L', 0, 1, '', '', true);
+				$pdf->MultiCell($WidthColumn1, 0, 'Beneficiary name:', 0, 'L', 0, 0, '', '', true);
+				$pdf->MultiCell($WidthColumn2, 0, 'PT. Angin Dingin Utara', 0, 'L', 0, 1, '', '', true);
+			}elseif ($CompanyFrom == 'CASH'){
+				$WidthColumn1 = 0;
+				$pdf->MultiCell($WidthColumn1, 0, 'Payment by Cash', 0, 'L', 0, 1, '', '', true);
+			}
 
-			$pdf->ln(40);
-			$pdf->MultiCell($WidthColumn4, 0, 'Tanda tangan: ' . $myrow['fullname'], 0, 'l', 0, 1, '', '', true);
-		
-			// update copy counter
-			$CopiesPrinted++;
+			if ($DraftOrInvoice == 'INVOICE'){
+				$SQL = "UPDATE klconsignment
+						SET invoicedtopartner = '". $EndDate ."'
+						WHERE companycode = '" . $CompanyFrom . "'
+							AND partnercode = '" . $CompanyTo . "'
+							AND invoicedtopartner = '0000-00-00'
+							AND saledate <= '" . $EndDate . "'";
+				$ErrMsg = 'CRITICAL ERROR! WRITE THIS CODE AND CALL THE OFFICE IMMEDIATELY: ERROR-CONSIGNMENT-00001';		
+				$DbgMsg = 'SQL to update klconsignment record: ';
+				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+			}
 			
 			// download the pdf file
 			$FileName= $PageTitle . '.pdf';
@@ -253,11 +300,11 @@ function display($Title, &$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DI
 			<td>' . 'Draft or Invoice' . ':</td>
 			<td><select name="DraftOrInvoice">';
 	if($_POST['DraftOrInvoice']=="DRAFT") {
-		echo '<option selected="selected" value="Draft">' . 'Draft' . '</option>';
+		echo '<option selected="selected" value="DRAFT">' . 'Draft' . '</option>';
 		echo '<option value="INVOICE">' . 'Invoice' . '</option>';
 	} else {
 		echo '<option selected="selected" value="INVOICE">' . 'Invoice' . '</option>';
-		echo '<option value="Draft">' . 'Draft' . '</option>';
+		echo '<option value="DRAFT">' . 'Draft' . '</option>';
 	}
 	echo '</select></td></tr>';	
 
