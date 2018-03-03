@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* Selection of items. All item maintenance, transactions and inquiries start with this script. */
 
 $PricesSecurity = 12;//don't show pricing info unless security token 12 available to user

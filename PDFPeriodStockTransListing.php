@@ -1,5 +1,4 @@
 <?php
-/* $Id: PDFPeriodStockTransListing.php 4307 2010-12-22 16:06:03Z tim_schofield $*/
 
 include('includes/SQL_CommonFunctions.inc');
 include ('includes/session.php');

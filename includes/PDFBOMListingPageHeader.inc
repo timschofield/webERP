@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /*PDF page header for inventory valuation report */
 
 $PageNumber++;

@@ -1,5 +1,4 @@
 <?php
-/* $Id: PDFWOPageHeader.inc */
 
 if ($PageNumber>1){
 	$pdf->newPage();

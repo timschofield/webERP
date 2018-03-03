@@ -1,5 +1,4 @@
 <?php
-/* $Id: Z_ChangeSupplierCode.php 4466 2011-01-13 09:33:59Z daintree $*/
 /* This script is an utility to change a supplier code. */
 
 include ('includes/session.php');

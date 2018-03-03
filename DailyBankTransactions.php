@@ -1,5 +1,4 @@
 <?php
-/* $Id: DailyBankTransactions.php 4556 2011-04-26 11:03:36Z daintree $*/
 /* Allows you to view all bank transactions for a selected date range, and the inquiry can be filtered by matched or unmatched transactions, or all transactions can be chosen. */
 
 include('includes/session.php');

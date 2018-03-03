@@ -4,7 +4,6 @@
  *
  * Script to duplicate BoMs.
  */
-/* $Id$*/
 
 include('includes/session.php');
 

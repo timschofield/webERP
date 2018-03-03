@@ -1,5 +1,4 @@
 <?php
-/* $Id: CustomerPurchases.php 7090 2015-01-20 13:43:08Z daintree $*/
 /* This script is to view the items purchased by a customer. */
 
 include('includes/session.php');

@@ -1,5 +1,4 @@
 <?php
-/* $Id: PcAssignCashTabToTab.php 7751 2017-04-13 16:34:26Z rchacon $*/
 
 include('includes/session.php');
 $Title = _('Assignment of Cash from Tab to Tab');

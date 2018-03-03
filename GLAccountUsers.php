@@ -1,5 +1,4 @@
 <?php
-/* $Id: GLAccountUsers.php 7385 2015-11-11 05:10:46Z tehonu $*/
 /* Maintenance of GL Accounts allowed for a user. */
 
 include('includes/session.php');

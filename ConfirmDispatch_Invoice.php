@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* Creates sales invoices from entered sales orders based on the quantities dispatched that can be modified */
 
 /* Session started in session.php for password checking and authorisation level check */

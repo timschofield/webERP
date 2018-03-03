@@ -1,5 +1,4 @@
 <?php
-/* $Id: Z_ChangeLocationCode.php 5296 2012-04-29 15:28:19Z vvs2012 $*/
 /* Utility to change a location code. */
 
 include ('includes/session.php');

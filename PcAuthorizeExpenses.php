@@ -1,5 +1,4 @@
 <?php
-/* $Id: PcAuthorizeExpenses.php 7944 2018-02-09 18:22:45Z turbopt $*/
 
 include('includes/session.php');
 $Title = _('Authorisation of Petty Cash Expenses');

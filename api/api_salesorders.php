@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 
 
 // InsertSalesOrderHeader and ModifySalesOrderHeader have date fields

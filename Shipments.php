@@ -1,6 +1,5 @@
 <?php
 
-/* $Id$*/
 
 include('includes/DefineShiptClass.php');
 include('includes/session.php');

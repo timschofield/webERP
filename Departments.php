@@ -1,5 +1,4 @@
 <?php
-/* $Id: Departments.php 4567 2011-05-15 04:34:49Z daintree $*/
 
 include('includes/session.php');
 

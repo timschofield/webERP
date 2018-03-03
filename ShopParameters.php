@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: ShopParameters.php 5797 2013-01-26 22:31:34Z daintree $*/
 
 include('includes/session.php');
 

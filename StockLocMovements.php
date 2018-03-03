@@ -1,5 +1,4 @@
 <?php
-/* $Id: StockLocMovements.php 7957 2018-02-12 21:53:28Z turbopt $*/
 
 include('includes/session.php');
 

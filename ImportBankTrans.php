@@ -1,5 +1,4 @@
 <?php
-/* $Id: ImportBankTrans.php 4213 2010-12-22 14:33:20Z tim_schofield $*/
 /* This script imports bank transactions. */
 
 include('includes/DefineImportBankTransClass.php');

@@ -1,5 +1,4 @@
 <?php
-/* $Id: RevisionTranslations.php 7040 2014-12-27 15:15:29Z tehonu $*/
 /* This script is to review the item description translations. */
 
 include('includes/session.php');

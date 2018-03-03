@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: Z_ImportGLTransactions.php 6030 2013-06-18 07:17:20Z daintree $*/
 
 include('includes/session.php');
 $Title = _('Import General Ledger Transactions');

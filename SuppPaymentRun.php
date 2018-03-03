@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 
 Class Allocation {
 	Var $TransID;

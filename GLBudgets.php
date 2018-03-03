@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');

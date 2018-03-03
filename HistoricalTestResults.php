@@ -1,5 +1,4 @@
 <?php
-/* $Id: HsitoricalTestResults.php 1 2014-09-08 10:42:50Z agaluski $*/
 
 include('includes/session.php');
 $Title = _('Historical Test Results');

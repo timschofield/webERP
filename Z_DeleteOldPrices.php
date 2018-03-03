@@ -1,5 +1,4 @@
 <?php
-/* $Id: Z_DeleteOldPrices.php 5296 2012-04-29 15:28:19Z vvs2012 $*/
 
 include ('includes/session.php');
 $Title = _('UTILITY PAGE To Delete All Old Prices');

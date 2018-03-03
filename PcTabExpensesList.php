@@ -1,5 +1,4 @@
 <?php
-/* $Id: PcTabExpensesList.php 7751 2017-04-13 16:34:26Z rchacon $*/
 
 require_once ('Classes/PHPExcel.php');
 

@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* Inventory Transfer - Bulk Dispatch */
 
 include('includes/session.php');

@@ -1,6 +1,5 @@
 <?php
 
-/*$Id: PageSecurity.php 4500 2011-02-27 09:18:42Z daintree $ */
 
 include('includes/session.php');
 $Title = _('Page Security Levels');

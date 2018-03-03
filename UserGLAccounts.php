@@ -1,5 +1,4 @@
 <?php
-/* $Id: UserGLAccounts.php 7427 2015-12-27 19:59:10Z rchacon $*/
 /* Maintenance of GL Accounts allowed for a user. */
 
 include('includes/session.php');

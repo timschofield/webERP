@@ -1,5 +1,4 @@
 <?php
-/* $Id: SelectAsset.php 4443 2010-12-23 15:30:30Z tim_schofield $*/
 
 include ('includes/session.php');
 $Title = _('Select an Asset');

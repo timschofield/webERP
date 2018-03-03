@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /*Script to Delete all sales transactions*/
 
 include ('includes/session.php');

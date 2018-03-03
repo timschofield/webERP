@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* Script to make stock locations for all parts that do not have stock location records set up*/
 
 include ('includes/session.php');

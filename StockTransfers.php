@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* Entry of point to point stock location transfers of a single part. */
 
 include('includes/DefineSerialItems.php');

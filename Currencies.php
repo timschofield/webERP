@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* This script defines the currencies available. Each customer and supplier must be defined as transacting in one of the currencies defined here. */
 
 include('includes/session.php');

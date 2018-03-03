@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* Shows the general ledger transactions for a specified account over a specified range of periods */
 
 include ('includes/session.php');

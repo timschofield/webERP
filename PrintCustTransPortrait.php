@@ -1,5 +1,4 @@
 <?php
-/* $Id$ */
 /*  Print Invoices or Credit Notes (Portrait Mode) */
 
 include('includes/session.php');

@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* This script shows the trend in exchange rates as retrieved from ECB. */
 
 include('includes/session.php');

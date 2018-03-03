@@ -1,5 +1,4 @@
 <?php
-/* $Id: Z_ImportCustbranch.php 6068 2015-03-26 16:04:22Z exson $*/
 
 include('includes/session.php');
 $Title = _('Import Debtors And branches');

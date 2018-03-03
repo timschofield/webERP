@@ -1,6 +1,5 @@
 <?php
 
-/* $Id$*/
 
 //$PageSecurity = 2;
 include ('includes/session.php');

@@ -1,6 +1,5 @@
 <?php
 
-/* $Id$*/
 
 $Title = _('Geocoded Supplier Report');
 

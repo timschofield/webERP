@@ -1,6 +1,5 @@
 <?php
 
-/* $Id$*/
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the credit note
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also

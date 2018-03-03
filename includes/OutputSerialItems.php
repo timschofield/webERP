@@ -1,5 +1,4 @@
 <?php
-/* $Id OutputSerialItems.php 4501 2011-03-03 09:13:12Z daintree $*/
 /*Input Serial Items - used for inputing serial numbers or batch/roll/bundle references
 for controlled items - used in:
 - ConfirmDispatchControlledInvoice.php

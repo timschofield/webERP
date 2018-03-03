@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: NoSalesItems.php 2012-05-12 $*/
 
 include ('includes/session.php');
 $Title = _('No Sales Items Searching');

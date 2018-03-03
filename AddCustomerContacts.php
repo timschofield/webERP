@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* Adds customer contacts */
 
 include('includes/session.php');

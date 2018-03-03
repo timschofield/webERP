@@ -1,6 +1,5 @@
 <?php
 
-/* $Id$*/
 
 /*SelectOrderItems_IntoCart.inc
 

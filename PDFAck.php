@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: PDFAcknowledgementPortrait.php 4491 2011-02-15 06:31:08Z daintree $ */
 
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');

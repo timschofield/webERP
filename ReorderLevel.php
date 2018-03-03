@@ -1,6 +1,5 @@
 <?php
 
-/* $Id$*/
 
 // ReorderLevel.php - Report of parts with quantity below reorder level
 // Shows if there are other locations that have quantities for the parts that are short

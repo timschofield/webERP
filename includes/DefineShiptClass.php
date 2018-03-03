@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* Definition of the Shipment class to hold all the information for a shipment*/
 
 Class Shipment {

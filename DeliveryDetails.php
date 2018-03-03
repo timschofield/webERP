@@ -1,5 +1,4 @@
 <?php
-/* $Id$ */
 /* Used during order entry to allow the entry of delivery addresses other than the defaulted branch delivery address and information about carrier/shipping method etc. */
 
 /*

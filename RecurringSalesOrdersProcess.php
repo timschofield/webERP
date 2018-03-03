@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 
 /*need to allow this script to run from Cron or windows scheduler */
 //$AllowAnyone = true;
