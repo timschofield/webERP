@@ -1,7 +1,5 @@
 WEB-ERP Installation
 
-/* $Id$*/
-
 Upgrading
 
 As from version 4.01 an automated database upgrade mechanism has been built in. Just copy the extract the scripts and copy:

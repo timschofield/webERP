@@ -1,6 +1,4 @@
 <?php
-/*	$Id$*/
-
 /*	This page can be called with...
 
 	1. A SuppTrans TransNo and Type
