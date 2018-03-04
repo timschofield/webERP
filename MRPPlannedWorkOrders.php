@@ -335,7 +335,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
              <tr>
                  <td>' . _('Cut Off Date') . ':</td>
 				<td>
-					<input type ="text" required="required" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="cutoffdate" autofocus="autofocus" size="10" value="' . date($_SESSION['DefaultDateFormat']) . '" />
+					<input type="text" required="required" class="date" name="cutoffdate" autofocus="autofocus" maxlength="10" size="11" value="' . date($_SESSION['DefaultDateFormat']) . '" />
 				</td>
 	     </tr>
              </table>

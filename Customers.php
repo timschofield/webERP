@@ -544,7 +544,7 @@ if (!isset($DebtorNo)) {
 	$DateString = Date($_SESSION['DefaultDateFormat']);
 	echo '<tr>
 			<td>' . _('Customer Since') . ' (' . $_SESSION['DefaultDateFormat'] . '):</td>
-			<td><input tabindex="10" type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ClientSince" value="' . $DateString . '" size="12" maxlength="10" /></td>
+			<td><input tabindex="10" type="text" class="date" name="ClientSince" value="' . $DateString . '" size="11" maxlength="10" /></td>
 		</tr>';
 
 	echo '</table></td>
@@ -915,7 +915,7 @@ if (!isset($DebtorNo)) {
 			</tr>
 			<tr>
 				<td>' . _('Customer Since') . ' (' . $_SESSION['DefaultDateFormat'] . '):</td>
-				<td><input ' . (in_array('ClientSince',$Errors) ?  'class="inputerror"' : '' ) .' type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ClientSince" size="11" maxlength="10" value="' . $_POST['ClientSince'] . '" /></td>
+				<td><input ' . (in_array('ClientSince',$Errors) ?  'class="inputerror"' : '' ) .' type="text" class="date" name="ClientSince" size="11" maxlength="10" value="' . $_POST['ClientSince'] . '" /></td>
 			</tr>
 			</table></td>
 			<td><table class="selection">';

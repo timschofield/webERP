@@ -305,7 +305,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 	echo '<tr>
 			<td>' . _('Payments Due To') . ':</td>
-            <td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="AmountsDueBy" maxlength="11" size="12" value="' . $DefaultDate . '" /></td>
+            <td><input type="text" class="date" name="AmountsDueBy" maxlength="10" size="11" value="' . $DefaultDate . '" /></td>
           </tr>';
 
 	$SQL = "SELECT bankaccountname, accountcode FROM bankaccounts";

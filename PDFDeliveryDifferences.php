@@ -29,11 +29,11 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 	echo '<table class="selection">
 			<tr>
 			<td>' . _('Enter the date from which variances between orders and deliveries are to be listed') . ':</td>
-			<td><input type="text" required="required" autofocus="autofocus" class="date" alt="' . $_SESSION['DefaultDateFormat']. '" name="FromDate" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')-1,0,Date('y'))) . '" /></td>
+			<td><input type="text" required="required" autofocus="autofocus" class="date" name="FromDate" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')-1,0,Date('y'))) . '" /></td>
 			</tr>';
 	echo '<tr>
 			<td>' . _('Enter the date to which variances between orders and deliveries are to be listed') . ':</td>
-			<td><input type="text" required="required" class="date" alt="' . $_SESSION['DefaultDateFormat']. '"  name="ToDate" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
+			<td><input type="text" required="required" class="date" name="ToDate" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
 			</tr>';
 	echo '<tr>
 			<td>' . _('Inventory Category') . '</td>

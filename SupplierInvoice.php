@@ -636,7 +636,7 @@ if (!isset($_POST['PostInvoice'])){
 		$_SESSION['SuppTrans']->TranDate= Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m'),Date('d')-1,Date('y')));
 	}
 	echo '<td>' . _('Invoice Date') . ' (' . _('in format') . ' ' . $_SESSION['DefaultDateFormat'] . ') :</td>
-		<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" size="11" maxlength="10" name="TranDate" value="' . $_SESSION['SuppTrans']->TranDate . '" /></td>
+		<td><input type="text" class="date" size="11" maxlength="10" name="TranDate" value="' . $_SESSION['SuppTrans']->TranDate . '" /></td>
 		<td>' . _('Exchange Rate') . ':</td>
 		<td><input class="number" maxlength="12" name="ExRate" size="14" type="text" value="' . locale_number_format($_SESSION['SuppTrans']->ExRate,10) . '" /></td>
 	</tr>

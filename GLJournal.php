@@ -261,7 +261,7 @@ echo '<table>
         <td colspan="5"><table class="selection">
 						<tr>
 							<td>' . _('Date to Process Journal') . ':</td>
-							<td><input type="text" required="required" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="JournalProcessDate" maxlength="10" size="11" value="' . $_SESSION['JournalDetail']->JnlDate . '" /></td>
+							<td><input type="text" required="required" class="date" name="JournalProcessDate" maxlength="10" size="11" value="' . $_SESSION['JournalDetail']->JnlDate . '" /></td>
 							<td>' . _('Type') . ':</td>
 							<td><select name="JournalType">';
 

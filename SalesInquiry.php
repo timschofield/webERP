@@ -1102,9 +1102,9 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 
 	echo '<tr>
 			<td>' . _('Date Range') . ':</td>
-			<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="FromDate" size="10" maxlength="10" value="' . $_POST['FromDate'] . '" /></td>
+			<td><input type="text" class="date" name="FromDate" size="11" maxlength="10" value="' . $_POST['FromDate'] . '" /></td>
 			<td>' . _('To') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" size="10" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
+			<td><input type="text" class="date" name="ToDate" size="11" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
 		</tr>';
 	if(!isset($_POST['PartNumber'])) {
 		$_POST['PartNumber']='';

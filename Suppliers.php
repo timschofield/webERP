@@ -753,7 +753,7 @@ if (!isset($SupplierID)) {
 	$DateString = Date($_SESSION['DefaultDateFormat']);
 	echo '<tr>
 			<td>' . _('Supplier Since') . ' (' . $_SESSION['DefaultDateFormat'] . '):</td>
-			<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="SupplierSince" value="' . $DateString . '" size="12" maxlength="10" /></td>
+			<td><input type="text" class="date" name="SupplierSince" value="' . $DateString . '" size="11" maxlength="10" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Bank Particulars') . ':</td>
@@ -999,7 +999,7 @@ else {
 		</tr>
 		<tr>
 			<td>' . _('Supplier Since') . ' (' . $_SESSION['DefaultDateFormat'] .'):</td>
-			<td><input '.(in_array('SupplierSince',$Errors) ? 'class="inputerror"' : '').' size="12" maxlength="10" type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="SupplierSince" value="' . $_POST['SupplierSince'] . '" /></td>
+			<td><input '.(in_array('SupplierSince',$Errors) ? 'class="inputerror"' : '').' size="11" maxlength="10" type="text" class="date" name="SupplierSince" value="' . $_POST['SupplierSince'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Bank Particulars') . ':</td>
