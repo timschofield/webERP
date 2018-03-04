@@ -58,8 +58,8 @@ if (!isset($_POST['Show'])) {
 	}
 
 	echo '<tr><td>' . _('Journals Dated Between') . ':</td>
-		<td>' . _('From') . ':'. '<input type="text" name="FromTransDate" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" maxlength="10" size="11" value="' . ConvertSQLDate($FromDate) . '" /></td>
-		<td>' . _('To') . ':'. '<input type="text" name="ToTransDate" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" maxlength="10" size="11" value="' . ConvertSQLDate($ToDate) . '" /></td>
+		<td>' . _('From') . ':'. '<input type="text" name="FromTransDate" class="date" maxlength="10" size="11" value="' . ConvertSQLDate($FromDate) . '" /></td>
+		<td>' . _('To') . ':'. '<input type="text" name="ToTransDate" class="date" maxlength="10" size="11" value="' . ConvertSQLDate($ToDate) . '" /></td>
 		</tr>';
 
 	echo '</table>';

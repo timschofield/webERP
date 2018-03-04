@@ -995,7 +995,7 @@ if(DB_num_rows($AccountsResults)==0) {
 
 echo '<tr>
 		<td>', _('Date'), ':</td>
-		<td><input alt="', $_SESSION['DefaultDateFormat'], '" class="date" maxlength="10" name="DatePaid" onchange="isDate(this, this.value, ', "'", $_SESSION['DefaultDateFormat'], "'", ')" required="required" size="10" type="text" value="', $_SESSION['PaymentDetail'.$identifier]->DatePaid, '" /></td>
+		<td><input class="date" maxlength="10" name="DatePaid" onchange="isDate(this, this.value, ', "'", $_SESSION['DefaultDateFormat'], "'", ')" required="required" size="11" type="text" value="', $_SESSION['PaymentDetail'.$identifier]->DatePaid, '" /></td>
 	</tr>';
 
 // Currency of payment:

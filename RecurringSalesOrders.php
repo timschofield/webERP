@@ -417,7 +417,7 @@ if (!isset($_POST['StartDate'])){
 if ($NewRecurringOrder=='Yes'){
 	echo '<tr>
 	<td>' .  _('Start Date') .':</td>
-	<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="StartDate" size="11" maxlength="10" value="' . $_POST['StartDate'] .'" /></td></tr>';
+	<td><input type="text" class="date" name="StartDate" size="11" maxlength="10" value="' . $_POST['StartDate'] .'" /></td></tr>';
 } else {
 	echo '<tr>
 	<td>' .  _('Last Recurrence') . ':</td>
@@ -431,7 +431,7 @@ if (!isset($_POST['StopDate'])){
 
 echo '<tr>
 	<td>' .  _('Finish Date') .':</td>
-	<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="StopDate" size="11" maxlength="10" value="' . $_POST['StopDate'] .'" /></td></tr>';
+	<td><input type="text" class="date" name="StopDate" size="11" maxlength="10" value="' . $_POST['StopDate'] .'" /></td></tr>';
 
 echo '<tr>
 	<td>' .  _('Frequency of Recurrence') .':</td>
