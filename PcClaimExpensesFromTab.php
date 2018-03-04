@@ -156,7 +156,7 @@ if (isset($_POST['submit'])) {
 													extension='" . $ReceiptExt . "',
 													size=" . $UploadSize . "
 												WHERE pccashdetail='" . $SelectedIndex . "'";
-					$ReceiptResult = DB_query($ReceiptSQL);					
+					$ReceiptResult = DB_query($ReceiptSQL);
 				} else { //If expenses record does not already have an uploaded receipt
 					if (!file_exists($ReceiptDir)) { //Create the receipts directory if it doesn't already exist
 					mkdir($ReceiptDir, 0775, true);
@@ -622,7 +622,7 @@ if (!isset($SelectedTabs)) {
 		echo '<tr>
 				<td>', _('Date of Expense'), ':</td>
 				<td>
-					<input type="text" class="date" alt="', $_SESSION['DefaultDateFormat'], '" name="Date" size="10" required="required" maxlength="10" value="', $_POST['Date'], '" />
+					<input type="text" class="date" name="Date" size="11" required="required" maxlength="10" value="', $_POST['Date'], '" />
 				</td>
 			</tr>
 			<tr>
@@ -758,7 +758,7 @@ if (!isset($SelectedTabs)) {
 				<input type="file" name="Receipt" id="Receipt" accept="' . implode(',', $ReceiptSupportedExtDotPrefix) . '" title="', _('Accepted file types'), ': ', implode(', ', $ReceiptSupportedExt), '" />
 				</td>
 			</tr>';
-			
+
 		if (!isset($_POST['Purpose'])) {
 			$_POST['Purpose'] = '';
 		}

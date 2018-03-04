@@ -357,7 +357,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
     echo '<input type="hidden" name="SuppName" value="' . $_POST['SuppName'] . '" />';
 	echo '<table class="selection"><tr>';
 	echo '<td>' . _('Show all goods received after') . ': </td>
-			<td><input type="text" class="date" alt="'. $_SESSION['DefaultDateFormat'].'" name="RecdAfterDate" value="' . $_POST['RecdAfterDate'] . '" maxlength="10" size="10" /></td>
+			<td><input type="text" class="date" name="RecdAfterDate" value="' . $_POST['RecdAfterDate'] . '" maxlength="10" size="11" /></td>
 		</tr>
 		</table>
 		<br />

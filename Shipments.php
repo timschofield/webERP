@@ -320,9 +320,9 @@ if (isset($_SESSION['Shipment']->ETA)){
 
 echo '<tr><td>' .  _('Expected Arrival Date (ETA)'). ': </td>';
 if (isset($_SESSION['Shipment']->ETA)) {
-	echo '<td><input type="text" name="ETA" class="date" alt="'.$_SESSION['DefaultDateFormat'].'"  maxlength="10" size="10" value="' . $ETA . '" /></td>';
+	echo '<td><input type="text" name="ETA" class="date"  maxlength="10" size="11" value="' . $ETA . '" /></td>';
 } else {
-	echo '<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ETA" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>';
+	echo '<td><input type="text" class="date" name="ETA" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>';
 }
 echo '<td>' .  _('Into').' ';
 

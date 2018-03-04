@@ -1,6 +1,6 @@
 <?php
 
-//The scripts used to provide a Price break matrix for those users who like selling product in quantity break at different constant price. 
+//The scripts used to provide a Price break matrix for those users who like selling product in quantity break at different constant price.
 
 include('includes/session.php');
 $Title = _('Price break matrix Maintenance');
@@ -47,7 +47,7 @@ if (isset($_POST['submit'])) {
 			prnMsg(_('The end date is expected to be after the start date, enter an end date after the start date for this price'),'error');
 		}
 	}
-	
+
 
 	if(Is_Date($_POST['EndDate'])){
 		$SQLEndDate = FormatDateForSQL($_POST['EndDate']);
@@ -73,7 +73,7 @@ if (isset($_POST['submit'])) {
 	if (isset($_POST['OldTypeAbbrev']) AND isset($_POST['OldCurrAbrev']) AND mb_strlen($StockID)>1 AND $InputError !=1){
 
 		/* Update existing prices */
-		$sql = "UPDATE pricematrix SET 
+		$sql = "UPDATE pricematrix SET
 					salestype='" . $_POST['SalesType'] . "',
 					currabrev='" . $_POST['CurrAbrev'] . "',
 					price='" . filter_number_format($_POST['Price']) . "',
@@ -124,7 +124,7 @@ if (isset($_POST['submit'])) {
 		unset($_POST['StartDate']);
 		unset($_POST['EndDate']);
 		unset($SQLEndDate);
-		unset($SQLStartDate); 
+		unset($SQLStartDate);
 	}
 } elseif (isset($_GET['Delete']) and $_GET['Delete']=='yes') {
 /*the link to delete a selected record was clicked instead of the submit button */
@@ -158,7 +158,7 @@ if (isset($_GET['Edit'])){
 	$_POST['StartDate'] = ConvertSQLDate($_GET['StartDate']);
 	$_POST['EndDate'] = ConvertSQLDate($_GET['EndDate']);
        	$_POST['QuantityBreak'] = $_GET['QuantityBreak'];
-}	
+}
 $SQL = "SELECT currabrev FROM currencies";
 $result = DB_query($SQL);
 require_once('includes/CurrenciesArray.php');
@@ -217,9 +217,9 @@ if (!isset($_POST['Price'])) {
 	$_POST['Price'] = 0;
 }
 echo '<tr><td>'. _('Price Effective From Date') . ':</td>
-	<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="StartDate" required="required" size="10" maxlength="10" title="' . _('Enter the date from which this price should take effect.') . '" value="' . $_POST['StartDate'] . '" /></td></tr>';
+	<td><input type="text" class="date" name="StartDate" required="required" size="11" maxlength="10" title="' . _('Enter the date from which this price should take effect.') . '" value="' . $_POST['StartDate'] . '" /></td></tr>';
 echo '<tr><td>' . _('Price Effective To Date') . ':</td>
-			<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="EndDate" size="10" maxlength="10" title="' . _('Enter the date to which this price should be in effect to, or leave empty if the price should continue indefinitely') . '" value="' . $_POST['EndDate'] . '" />';
+			<td><input type="text" class="date" name="EndDate" size="11" maxlength="10" title="' . _('Enter the date to which this price should be in effect to, or leave empty if the price should continue indefinitely') . '" value="' . $_POST['EndDate'] . '" />';
 
 
 echo '<tr>
@@ -252,7 +252,7 @@ $sql = "SELECT sales_type,
 		INNER JOIN currencies
 		ON pricematrix.currabrev=currencies.currabrev
 		WHERE pricematrix.stockid='" . $StockID . "'
-		ORDER BY pricematrix.currabrev, 
+		ORDER BY pricematrix.currabrev,
 			salestype,
 			stockid,
 			quantitybreak";
@@ -377,7 +377,7 @@ function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $QuantityBrea
 			$Price = $myrow['price'];
 		} // end of loop around all prices
 
-		
+
 
 } // end function ReSequenceEffectiveDates
 

@@ -411,7 +411,7 @@ if(isset($_POST['PrintPDF'])) {
 	$DefaultActivitySince = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')-6,0,Date('y')));
 	echo '<tr>
 			<td>' . _('Activity Since'). ':</td>
-			<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'"  name="ActivitySince" size="10" maxlength="10" value="' . $DefaultActivitySince . '" /></td>
+			<td><input type="text" class="date" name="ActivitySince" size="11" maxlength="10" value="' . $DefaultActivitySince . '" /></td>
 		</tr>';
 
 	echo '</table>

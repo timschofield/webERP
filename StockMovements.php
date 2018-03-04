@@ -77,8 +77,8 @@ echo '</select></th>
 	</tr>';
 echo '<tr>
 		<th colspan="12">', _('Show Movements between'), ':
-			<input type="text" name="AfterDate" class="date" alt="', $_SESSION['DefaultDateFormat'], '" size="12" required="required" maxlength="12" value="', $_POST['AfterDate'], '" /> ' . _('and') . ':
-			<input type="text" name="BeforeDate" class="date" alt="', $_SESSION['DefaultDateFormat'], '" size="12" required="required" maxlength="12" value="', $_POST['BeforeDate'], '" />
+			<input type="text" name="AfterDate" class="date" size="11" required="required" maxlength="10" value="', $_POST['AfterDate'], '" /> ' . _('and') . ':
+			<input type="text" name="BeforeDate" class="date" size="11" required="required" maxlength="10" value="', $_POST['BeforeDate'], '" />
 			<input type="submit" name="ShowMoves" value="', _('Show Stock Movements'), '" />
 		</th>
 	</tr>';

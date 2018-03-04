@@ -67,11 +67,11 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 		</tr>
 		<tr>
 			<td>' . _('From Date') . ':' . '</td>
-			<td><input tabindex="2" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" /></td>
+			<td><input tabindex="2" class="date" type="text" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('To Date') . ':' . '</td>
-			<td><input tabindex="3" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
+			<td><input tabindex="3" class="date" type="text" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
 		</tr>
 		</table>
 		<br />
@@ -199,7 +199,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 		} else {
 			$ReceiptText = _('No attachment');
 		}
-				
+
 		if ($MyRow['authorized'] == '0000-00-00') {
 			$AuthorisedDate = _('Unauthorised');
 		} else {

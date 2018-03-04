@@ -185,7 +185,7 @@ echo '<tr>
 
 echo '<div class="centre"><form onSubmit="return VerifyForm(this);" action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post" class="noPrint">
 		<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
-echo _('Show all transactions after'), ':<input type="text" required="required" class="date" alt="', $_SESSION['DefaultDateFormat'], '" id="datepicker" name="TransAfterDate" value="', $_POST['TransAfterDate'], '" minlength="0" maxlength="10" size="12" />';
+echo _('Show all transactions after'), ':<input type="text" required="required" class="date" name="TransAfterDate" value="', $_POST['TransAfterDate'], '" maxlength="10" size="11" />';
 
 echo '<select name="Status">';
 if ($_POST['Status'] == '') {

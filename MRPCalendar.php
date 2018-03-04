@@ -261,9 +261,9 @@ function ShowInputForm(&$ChangeDate)  {//####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DIS
 
 	echo '<tr>
 			<td>' . _('From Date') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] .'" name="FromDate" required="required" autofocus="autofocus" size="10" maxlength="10" value="' . $_POST['FromDate'] . '" /></td></tr>
+			<td><input type="text" class="date" name="FromDate" required="required" autofocus="autofocus" size="11" maxlength="10" value="' . $_POST['FromDate'] . '" /></td></tr>
 			<tr><td>' . _('To Date') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] .'" name="ToDate" required="required" size="10" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
+			<td><input type="text" class="date" name="ToDate" required="required" size="11" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
 		</tr>
 		<tr><td></td></tr>
 		<tr><td></td></tr>
@@ -310,7 +310,7 @@ function ShowInputForm(&$ChangeDate)  {//####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DIS
 		<table class="selection">
 		<tr>
 			<td>' . _('Change Date Status') . ':</td>
-			<td><input type="text" name="ChangeDate" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" size="12" maxlength="12" value="' . $_POST['ChangeDate'] . '" /></td>
+			<td><input type="text" name="ChangeDate" class="date" size="11" maxlength="10" value="' . $_POST['ChangeDate'] . '" /></td>
 			<td><input type="submit" name="update" value="' . _('Update') . '" /></td>
 		</tr>
 		</table>
