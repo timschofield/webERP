@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* definition of the Debtor Receipt/Credit note allocation class */
 
 Class Allocation {

@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 // MRPCreateDemands.php - Create mrpdemands based on sales order history
 
 include('includes/session.php');
@@ -247,11 +246,11 @@ if (!isset($_POST['DistDate'])) {
 }
 echo '<tr>
 		<td>' . _('From Sales Date') . ':</td>
-		<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="FromDate" size="10" value="' . $_POST['FromDate'] . '" />&nbsp;&nbsp;&nbsp;'. _('To Sales Date') . ':<input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ToDate" size="10" value="' . $_POST['ToDate'] . '" /></td>
+		<td><input type="text" class="date" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" />&nbsp;&nbsp;&nbsp;'. _('To Sales Date') . ':<input type="text" class="date" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Start Date For Distribution') . ':</td>
-		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] .'" name="DistDate" size="10" value="' . $_POST['DistDate'] . '" /></td>
+		<td><input type="text" class="date" name="DistDate" maxlength="10" size="11" value="' . $_POST['DistDate'] . '" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Distribution Period') . ':</td>

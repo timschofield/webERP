@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* Defines the various centres of work within a manufacturing company. Also the overhead and labour rates applicable to the work centre and its standard capacity */
 
 include('includes/session.php');

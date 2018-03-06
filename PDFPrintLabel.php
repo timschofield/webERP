@@ -1,5 +1,4 @@
 <?php
-/* $Id: PDFPriceLabels.php 5228 2012-04-06 02:48:00Z vvs2012 $*/
 
 include('includes/session.php');
 include('includes/barcodepack/class.code128.php');
@@ -210,9 +209,9 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 					}
 					if ($Field['FieldValue'] == 'price'){ //need to format for the number of decimal places
 						$LeftOvers = $pdf->addTextWrap($XPos+$Field['HPos'],$YPos-$LabelDimensions['label_height']+$Field['VPos'],$LabelDimensions['label_width']-$Field['HPos'],$Field['FontSize'],$Value);
-					}elseif ($Field['FieldValue'] == 'logo'){ 
+					}elseif ($Field['FieldValue'] == 'logo'){
 						$pdf->addJpegFromFile($_SESSION['LogoFile'],$XPos+$Field['HPos'],$YPos-$LabelDimensions['label_height']+$Field['VPos'],'', $Field['FontSize']);
-					
+
 					}elseif($Field['Barcode']==1) {
 
 						$BarcodeImage = new code128(str_replace('_','',$Value));
@@ -334,7 +333,7 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 		</tr>
 		<tr>
 			<td>' . _('Effective As At') . ':</td>
-			<td><input type="text" size="11" class="date"	alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" />';
+			<td><input type="text" maxlength="10" size="11" class="date" name="EffectiveDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" />';
         echo '</td></tr>';
 
 		echo'<tr><td>' . _('Number of labels per item') . ':</td>

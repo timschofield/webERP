@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* This script defines the general ledger code for bank accounts and specifies that bank transactions be created for these accounts for the purposes of reconciliation. */
 
 include('includes/session.php');

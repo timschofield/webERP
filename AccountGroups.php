@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* Defines the groupings of general ledger accounts */
 
 include('includes/session.php');

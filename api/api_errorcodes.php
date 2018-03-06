@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 
 /* Define error codes that are returned by api functions*/
 	Define('NoAuthorisation', 1);

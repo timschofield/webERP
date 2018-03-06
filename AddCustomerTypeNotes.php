@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 
 include('includes/session.php');
 $Title = _('Customer Type (Group) Notes');
@@ -202,7 +201,7 @@ if (!isset($_GET['delete'])) {
 		</tr>
 		<tr>
 			<td>' .  _('Date').':</td>
-			<td><input type="text" required="required" name="NoteDate" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" value="'. $_POST['NoteDate']. '" size="10" maxlength="10" /></td>
+			<td><input type="text" required="required" name="NoteDate" class="date" value="'. $_POST['NoteDate']. '" size="11" maxlength="10" /></td>
 		</tr>
 		<tr>
 			<td>' .  _('Priority').':</td>

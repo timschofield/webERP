@@ -1,5 +1,4 @@
 <?php
-/* $Id: Dashboard.php 6843 2014-08-20 06:04:47Z daintree $*/
 /* Display outstanding debtors, creditors, etc */
 
 include('includes/session.php');

@@ -1,5 +1,4 @@
 <?php
-/* $Id: QATests.php 7123 2015-02-04 07:30:11Z daintree $*/
 /* Quality Test Maintenance */
 
 include('includes/session.php');

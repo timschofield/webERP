@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 
 /* Verify that the supplier number is valid, and doesn't already
    exist.*/

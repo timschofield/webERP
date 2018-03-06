@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* Defines the inventory stocking locations or warehouses */
 
 include('includes/session.php');

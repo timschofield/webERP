@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: PDFSalesBySalesperson.php 1 2014-11-11 03:26:23Z agaluski $*/
 $DatabaseName='weberp';
 $AllowAnyone = true;
 

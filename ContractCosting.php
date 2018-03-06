@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: ContractCosting.php 3692 2010-08-15 09:22:08Z daintree $*/
 
 include('includes/DefineContractClass.php');
 include('includes/session.php');

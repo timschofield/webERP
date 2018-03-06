@@ -1,5 +1,4 @@
 <?php
-/* $Id: PcAssignCashTabToTab.php 7751 2017-04-13 16:34:26Z rchacon $*/
 
 include('includes/session.php');
 $Title = _('Assignment of Cash from Tab to Tab');
@@ -421,7 +420,7 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 				</tr>';
 		echo '<tr>
 				<td>' . _('Cash Assignment Date') . ':</td>
-				<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="Date" required="required" autofocus="autofocus" size="10" maxlength="10" value="' . $_POST['Date'] . '" /></td>
+				<td><input type="text" class="date" name="Date" required="required" autofocus="autofocus" size="11" maxlength="10" value="' . $_POST['Date'] . '" /></td>
 			</tr>';
 
 
@@ -433,7 +432,7 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 				<td>' . _('Amount') . ':</td>
 				<td><input type="text" class="number" name="Amount" size="12" maxlength="11" value="' . locale_number_format($_POST['Amount'],$CurrDecimalPlaces) . '" /></td>
 			</tr>';
-		
+
 		if (!isset($_POST['Notes'])) {
 			$_POST['Notes'] = '';
 		}

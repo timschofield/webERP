@@ -1,5 +1,4 @@
 <?php
-/* $Id: ManualContents.php 7745 2017-03-29 23:52:43Z rchacon $ */
 /* Shows the local manual content if available, else shows the manual content in en-GB. */
 /* This program is under the GNU General Public License, last version. */
 /* This creative work is under the CC BY-NC-SA, later version. */

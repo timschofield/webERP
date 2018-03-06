@@ -1,6 +1,5 @@
 <?php
 
-/* $Id$*/
 
 /*Hard coded for currencies with 2 decimal places */
 

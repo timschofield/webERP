@@ -1,6 +1,5 @@
 <?php
 
-/* $Id$*/
 
 include('includes/session.php');
 $Title = _('Customer Notes');
@@ -214,10 +213,10 @@ if (!isset($_GET['delete'])) {
 	echo '<tr>
 			<td>' . _('Date')  . '</td>';
 	if (isset($_POST['NoteDate'])) {
-		echo '<td><input type="text" required name="NoteDate" class="date" alt="' .$_SESSION['DefaultDateFormat']. '" id="datepicker" value="'.ConvertSQLDate($_POST['NoteDate']).'" size="10" maxlength="10" /></td>
+		echo '<td><input type="text" required name="NoteDate" class="date" value="'.ConvertSQLDate($_POST['NoteDate']).'" size="11" maxlength="10" /></td>
 			</tr>';
 	} else {
-		echo '<td><input type="text" required name="NoteDate" class="date" alt="' .$_SESSION['DefaultDateFormat']. '" id="datepicker" size="10" maxlength="10" /></td>
+		echo '<td><input type="text" required name="NoteDate" class="date" size="11" maxlength="10" /></td>
 			</tr>';
 	}
 	echo '<tr>

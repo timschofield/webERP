@@ -1,5 +1,4 @@
 <?php
-/* $Id: HsitoricalTestResults.php 1 2014-09-08 10:42:50Z agaluski $*/
 
 include('includes/session.php');
 $Title = _('Historical Test Results');
@@ -70,11 +69,11 @@ echo '</select></td>';
 echo '</tr>
 	  <tr>
 		<td>' . _('From Sample Date') . ': </td>
-		<td><input name="FromDate" size="10" class="date" value="' . $_POST['FromDate'] . '" alt="' . $_SESSION['DefaultDateFormat'] . '" /></td>
+		<td><input name="FromDate" maxlength="10" size="11" class="date" value="' . $_POST['FromDate'] . '" /></td>
 	</tr>
 	<tr>
 		<td> ' . _('To Sample Date') . ':</td>
-		<td> <input name="ToDate" size="10" class="date" value="' . $_POST['ToDate'] . '" alt="' . $_SESSION['DefaultDateFormat'] . '" /></td>
+		<td> <input name="ToDate" maxlength="10" size="11" class="date" value="' . $_POST['ToDate'] . '" /></td>
 	</tr>
 	</table>
 	</div>

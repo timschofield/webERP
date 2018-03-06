@@ -1,6 +1,5 @@
 <?php
 
-/* $Id$*/
 $PricesSecurity = 12;//don't show pricing info unless security token 12 available to user
 include('includes/session.php');
 

@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: CustomerAllocations.php 6596 2014-03-03 02:32:31Z exsonqu $*/
 
 /*
 Call this page with:

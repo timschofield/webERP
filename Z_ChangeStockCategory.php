@@ -1,5 +1,4 @@
 <?php
-/* $Id$ */
 /* This script is an utility to change a stock category code. */
 
 include ('includes/session.php');

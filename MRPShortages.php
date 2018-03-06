@@ -1,5 +1,4 @@
 <?php
-/*$Id$ */
 // MRPShortages.php - Report of parts with demand greater than supply as determined by MRP
 
 include('includes/session.php');

@@ -1,6 +1,5 @@
 <?php
 
-/* $Id$*/
 
 /*This page shows the serial numbers created for a works order
  * - creating automatically from the last serial number counter in the stockmaster or by manual entry

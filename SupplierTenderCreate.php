@@ -1,5 +1,4 @@
 <?php
-/* $Id: SupplierTenderCreate.php 4821 2012-01-20 13:48:53Z tim_schofield $ */
 
 include('includes/DefineTenderClass.php');
 include('includes/SQL_CommonFunctions.inc');

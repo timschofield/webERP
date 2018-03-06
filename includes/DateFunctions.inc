@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 
 /*
 date validation and parsing functions

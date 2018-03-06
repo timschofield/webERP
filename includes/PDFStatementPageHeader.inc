@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* PDFlib code to set up a new page */
 
 $Perforation = $Page_Width - $Right_Margin - 160;

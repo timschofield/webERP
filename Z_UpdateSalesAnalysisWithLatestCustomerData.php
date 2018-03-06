@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: Z_UpdateSalesAnalysisWithLatestCustomerData.php 5784 2012-12-29 04:00:43Z daintree $*/
 
 include('includes/session.php');
 $Title=_('Apply Current Customer and Branch Data to Sales Analysis');

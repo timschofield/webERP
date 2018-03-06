@@ -1,5 +1,4 @@
 <?php
-/*	$Id$*/
 /*	This script is an utility to change an inventory item code. */
 /*	It uses function ChangeFieldInTable($TableName, $FieldName, $OldValue,
 	$NewValue) from .../includes/MiscFunctions.php.*/

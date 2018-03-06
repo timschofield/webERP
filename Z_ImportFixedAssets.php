@@ -1,5 +1,4 @@
 <?php
-/* $Id:  $*/
 /* Script to import fixed assets into a specified period*/
 
 include('includes/session.php');

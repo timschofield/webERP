@@ -1,7 +1,6 @@
 <?php
 
 
-/* $Id: Manufacturers.php 5498 2012-07-13 08:35:54Z tehonu $*/
 
 include('includes/session.php');
 

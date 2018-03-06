@@ -1,5 +1,4 @@
 <?php
-/* $Id: ReprintGrn.php 4486 2011-02-08 09:20:50Z daintree $*/
 
 include('includes/session.php');
 $Title=_('Reprint a GRN');

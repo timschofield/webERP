@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 
 /* Check that the stock code exists*/
 	function VerifyWorkOrderExists($WorkOrder, $i, $Errors) {

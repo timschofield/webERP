@@ -1,5 +1,4 @@
 <?php
-/* $Id$ */
 /* Entry of both customer receipts against accounts receivable and also general ledger or nominal receipts */
 
 include('includes/DefineReceiptClass.php');
@@ -852,7 +851,7 @@ if (!Is_Date($_SESSION['ReceiptBatch' . $identifier]->DateBanked)){
 
 echo '<tr>
 		<td>' . _('Date Banked') . ':</td>
-		<td><input tabindex="2" type="text" required="required" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="DateBanked" maxlength="10" size="10" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" value="' . $_SESSION['ReceiptBatch' . $identifier]->DateBanked . '" /></td>
+		<td><input tabindex="2" type="text" required="required" class="date" name="DateBanked" maxlength="10" size="11" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" value="' . $_SESSION['ReceiptBatch' . $identifier]->DateBanked . '" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Currency') . ':</td>

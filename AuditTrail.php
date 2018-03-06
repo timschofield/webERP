@@ -1,6 +1,5 @@
 <?php
 
-/* $Id$ */
 
 include('includes/session.php');
 
@@ -41,11 +40,11 @@ echo '<table class="selection">';
 
 echo '<tr>
 		<td>' .  _('From Date') . ' ' . $_SESSION['DefaultDateFormat']  . '</td>
-		<td><input tabindex="1" type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="FromDate" size="11" maxlength="10" autofocus="autofocus" required="required" value="' .$_POST['FromDate']. '" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')"/></td>
+		<td><input tabindex="1" type="text" class="date" name="FromDate" size="11" maxlength="10" autofocus="autofocus" required="required" value="' .$_POST['FromDate']. '" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')"/></td>
 	</tr>
 	<tr>
 		<td>' .  _('To Date') . ' ' . $_SESSION['DefaultDateFormat']  . '</td>
-		<td><input tabindex="2" type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ToDate" size="11" maxlength="10" required="required" value="' . $_POST['ToDate'] . '" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')"/></td>
+		<td><input tabindex="2" type="text" class="date" name="ToDate" size="11" maxlength="10" required="required" value="' . $_POST['ToDate'] . '" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')"/></td>
 	</tr>';
 
 // Show user selections

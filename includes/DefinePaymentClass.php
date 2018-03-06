@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* definition of the Payment class */
 
 Class Payment {

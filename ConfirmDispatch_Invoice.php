@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* Creates sales invoices from entered sales orders based on the quantities dispatched that can be modified */
 
 /* Session started in session.php for password checking and authorisation level check */
@@ -1782,7 +1781,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 	echo '<table class="selection">
 		<tr>
 			<td>' ._('Date On Invoice'). ':</td>
-			<td><input tabindex="'.$j.'" type="text" required="required" maxlength="10" size="15" required="required" name="DispatchDate" value="' . $DefaultDispatchDate . '" id="datepicker" alt="' . $_SESSION['DefaultDateFormat'] . '" class="date" /></td>
+			<td><input tabindex="'.$j.'" type="text" required="required" maxlength="10" size="11" required="required" name="DispatchDate" value="' . $DefaultDispatchDate . '" class="date" /></td>
 		</tr>';
 	$j++;
 	echo '<tr>

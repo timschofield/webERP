@@ -1,5 +1,4 @@
 <?php
-/* $Id:  $*/
 /* definition of the Contract class */
 
 Class Contract {

@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /*Input Serial Items - used for inputing serial numbers or batch/roll/bundle references
 for controlled items - used in:
 - ConfirmDispatchControlledInvoice.php
@@ -108,7 +107,7 @@ if ($EditControlled){
 		if ($LineItem->Serialised==1){
 			echo '<input type="hidden" name="Qty' . $StartAddingAt .'" value="1" /></TR>';
 		} else if ($LineItem->Serialised==0 and $Perishable==1) {
-			echo '<td><input type="text" class="number" name="Qty' . $StartAddingAt .'" size="11" value="'. locale_number_format($Bundle->BundleQty, $LineItem->DecimalPlaces). '" maxlength="10" /></td><td><input type="text" name="ExpiryDate' . $StartAddingAt . '" size="11" value="' . $Bundle->ExpiryDate . '" alt="'.$_SESSION['DefaultDateFormat'].'" maxlength="10" /></td></tr>';
+			echo '<td><input type="text" class="number" name="Qty' . $StartAddingAt .'" size="11" value="'. locale_number_format($Bundle->BundleQty, $LineItem->DecimalPlaces). '" maxlength="10" /></td><td><input type="text" name="ExpiryDate' . $StartAddingAt . '" size="11" value="' . $Bundle->ExpiryDate . '" class="date" maxlength="10" /></td></tr>';
 		} else {
 			echo '<td><input type="text" class="number" name="Qty' . $StartAddingAt .'" size="11" value="'. locale_number_format($Bundle->BundleQty, $LineItem->DecimalPlaces). '" maxlength="10" /></tr>';
 		}
@@ -131,12 +130,12 @@ for ($i=0;$i < 10;$i++){
 				</tr>';
 		} else {
 			echo '<td><input type="hidden" name="Qty' . ($StartAddingAt+$i) .'" value="1" />
-					<input type="text" class="date" name="ExpiryDate' . ($StartAddingAt+$i) .'" size="11" value="" alt="'.$_SESSION['DefaultDateFormat'].'"  maxlength="10" /></td>
+					<input type="text" class="date" name="ExpiryDate' . ($StartAddingAt+$i) .'" size="11" value="" maxlength="10" /></td>
 				</tr>';
 		}
 	} else if ($LineItem->Serialised==0 and $Perishable==1) {
 		echo '<td><input type="text" class="number" name="Qty' . ($StartAddingAt+$i) .'" size="11"  maxlength="10" /></td>
-				<td><input type="text" class="date" name="ExpiryDate' . ($StartAddingAt+$i) .'" size="11" value="" alt="'.$_SESSION['DefaultDateFormat'].'"  maxlength="10" /></td>
+				<td><input type="text" class="date" name="ExpiryDate' . ($StartAddingAt+$i) .'" size="11" value="" maxlength="10" /></td>
 			</tr>';
 	} else {
 		echo '<td><input type="text" class="number" name="Qty' . ($StartAddingAt+$i) .'" size="11"  maxlength="10" /></td></tr>';

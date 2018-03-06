@@ -1,6 +1,5 @@
 <?php
 
-/* $Id$*/
 
 /* Session started in header.php for password checking and authorisation level check */
 include('includes/DefinePOClass.php');
@@ -102,7 +101,7 @@ if (!isset($_POST['ProcessGoodsReceived'])) {
 	echo '<table class="selection">
 			<tr>
 				<td>' .  _('Date Goods/Service Received'). ':</td>
-				<td><input type="text" class="date" alt="'. $_SESSION['DefaultDateFormat'] .'" maxlength="10" size="10" onchange="return isDate(this, this.value, '."'".
+				<td><input type="text" class="date" maxlength="10" size="11" onchange="return isDate(this, this.value, '."'".
 			$_SESSION['DefaultDateFormat']."'".')" name="DefaultReceivedDate" value="' . $_SESSION['PO' . $identifier]->DefaultReceivedDate . '" /></td>
 				<td>' . _("Supplier's Reference") . ':</td>
 				<td><input type="text" name="SupplierReference" value="' . $SupplierReference. '" maxlength="30" size="20"  onchange="ReloadForm(form1.Update)"/></td>

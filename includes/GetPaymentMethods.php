@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 
 $PaytTypes    = array();
 $ReceiptTypes = array();

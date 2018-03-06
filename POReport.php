@@ -1,6 +1,5 @@
 <?php
 
-/* $Id$ */
 
 // POReport.php
 // Inquiry on Purchase Orders
@@ -1516,8 +1515,8 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 		</tr>
 		<tr>
 			<td>' . _('Date Range') . ':</td>
-			<td><input type="text" required="required" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" size="10" maxlength="10" value="' . $_POST['FromDate'] .'" /> ' . _('To') . ':&nbsp;&nbsp;
-        <input type="text" required="required" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" size="10" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
+			<td><input type="text" required="required" class="date" name="FromDate" size="11" maxlength="10" value="' . $_POST['FromDate'] .'" /> ' . _('To') . ':&nbsp;&nbsp;
+        <input type="text" required="required" class="date" name="ToDate" size="11" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Part Number') . ':</td>

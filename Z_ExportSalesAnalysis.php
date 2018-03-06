@@ -1,5 +1,4 @@
 <?php
-/* $Id: Z_ExportSalesAnalysis.php 5785 2012-12-29 04:47:42Z daintree $*/
 
 /* Creates the csv files necessary for Phocas sales analysis and sends to an ftp server*/
 

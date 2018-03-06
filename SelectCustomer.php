@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* Selection of customer - from where all customer related maintenance, transactions and inquiries start */
 
 include('includes/session.php');

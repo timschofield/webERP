@@ -1,5 +1,4 @@
 <?php
-/* $Id: PcTabExpensesList.php 7751 2017-04-13 16:34:26Z rchacon $*/
 
 require_once ('Classes/PHPExcel.php');
 
@@ -276,7 +275,7 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 	echo '<p class="page_title_text">
 			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . _('Excel file for Petty Cash Tab Expenses List') . '" alt="" />' . ' ' . _('Excel file for Petty Cash Tab Expenses List') . '
 		</p>';
-		
+
 	# Sets default date range for current month
 	if (!isset($_POST['FromDate'])){
 		$_POST['FromDate'] = Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,Date('m'),1,Date('Y')));
@@ -304,8 +303,8 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 
 	echo '<tr>
 			<td>' . _('Date Range') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" size="10" maxlength="10" value="' . $_POST['FromDate'] . '" />
-			' . _('To') . ':<input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" size="10" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
+			<td><input type="text" class="date" name="FromDate" size="11" maxlength="10" value="' . $_POST['FromDate'] . '" />
+			' . _('To') . ':<input type="text" class="date" name="ToDate" size="11" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
 		</tr>';
 
 	echo '

@@ -1,6 +1,5 @@
 <?php
 
-/* $Id$*/
 
 $PricesSecurity = 12;
 

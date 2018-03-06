@@ -1,6 +1,5 @@
 <?php
 
-/* $Id SupplierTypes.php 4183 2010-12-14 09:30:20Z daintree $ */
 
 include('includes/session.php');
 $Title = _('Supplier Types') . ' / ' . _('Maintenance');

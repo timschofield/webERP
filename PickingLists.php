@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: PickingLists.php 1 2014-08-29 15:19:14Z agaluski $*/
 
 /* Session started in session.php for password checking and authorisation level check */
 include('includes/DefineCartClass.php');

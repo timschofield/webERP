@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* Defines the details of customer branches such as delivery address and contact details - also sales area, representative etc.*/
 
 include('includes/session.php');

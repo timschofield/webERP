@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 
 if (!isset($PathPrefix)) {
 	$PathPrefix='';

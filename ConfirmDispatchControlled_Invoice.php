@@ -1,6 +1,5 @@
 <?php
 
-/* $Id$*/
 
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');

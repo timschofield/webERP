@@ -1,5 +1,4 @@
 <?php
-/* $Id: StockClone.php 6669 2014-04-05 23:31:54Z rchacon $ */
 
 include('includes/session.php');
 $Title = _('Clone Item');

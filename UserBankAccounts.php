@@ -1,5 +1,4 @@
 <?php
-/* $Id: UserBankAccounts.php 7398 2015-11-24 19:59:10Z tehonu $*/
 /* Maintains table bankaccountusers (Authorized users to work with a bank account in webERP) */
 
 include('includes/session.php');

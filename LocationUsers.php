@@ -1,5 +1,4 @@
 <?php
-/* $Id: LocationUsers.php 6806 2013-09-28 05:10:46Z daintree $*/
 
 include('includes/session.php');
 $Title = _('Inventory Location Authorised Users Maintenance');

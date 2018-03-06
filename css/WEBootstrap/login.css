@@ -7,10 +7,7 @@ by gianko.com.
 ***/
 
 
-/* $Id: login.css 5657 2016-09-10 $*/
-
-
-@import url(http://fonts.googleapis.com/css?family=Raleway);
+@import url('http://fonts.googleapis.com/css?family=Raleway');
 @import url('/css/bootstrap.css');
 
 #login_logo {

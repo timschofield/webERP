@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockTransfers.php');

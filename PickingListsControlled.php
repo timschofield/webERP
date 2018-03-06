@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: PickingListsControlled.php  1 2014-08-29 15:19:14Z agaluski  $*/
 
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');

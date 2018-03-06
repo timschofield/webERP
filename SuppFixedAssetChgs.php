@@ -1,5 +1,4 @@
 <?php
-/* $Id: SuppFixedAssetChgs.php 4473 2011-01-23 04:08:53Z daintree $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of Asset objects called Assets - containing details of all asset additions on a supplier invoice

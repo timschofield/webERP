@@ -1,5 +1,4 @@
 <?php
-/* $Id$ */
 /* Database abstraction for postgres */
 
 define ('LIKE','ILIKE');

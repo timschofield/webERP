@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: InternalStockRequestFulfill.php  $*/
 
 include('includes/session.php');
 

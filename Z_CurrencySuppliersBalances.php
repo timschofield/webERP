@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* This script is an utility to show suppliers balances in total by currency. */
 
 include ('includes/session.php');
