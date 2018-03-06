@@ -107,7 +107,7 @@ if (isset($_POST['ShowUsage'])){
 		$sql = "SELECT periods.periodno,
 				periods.lastdate_in_period,
 				canview,
-				SUM(CASE WHEN (stockmoves.type=10 Or stockmoves.type=11 OR stockmoves.type=28)
+				SUM(CASE WHEN (stockmoves.type=10 OR stockmoves.type=11 OR stockmoves.type=17 OR stockmoves.type=28 OR stockmoves.type=38)
 							AND stockmoves.hidemovt=0
 							AND stockmoves.stockid = '" . $StockID . "'
 						THEN -stockmoves.qty ELSE 0 END) AS qtyused
@@ -121,7 +121,7 @@ if (isset($_POST['ShowUsage'])){
 	} else {
 		$sql = "SELECT periods.periodno,
 				periods.lastdate_in_period,
-				SUM(CASE WHEN (stockmoves.type=10 Or stockmoves.type=11 OR stockmoves.type=28)
+				SUM(CASE WHEN (stockmoves.type=10 OR stockmoves.type=11 OR stockmoves.type=17 OR stockmoves.type=28 OR stockmoves.type=38)
 								AND stockmoves.hidemovt=0
 								AND stockmoves.stockid = '" . $StockID . "'
 								AND stockmoves.loccode='" . $_POST['StockLocation'] . "'
