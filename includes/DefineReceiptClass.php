@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 
 /* definition of the ReceiptBatch class */
 

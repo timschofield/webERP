@@ -1,6 +1,4 @@
 <?php
-/*	$Id$*/
-
 /*	Please note that addTextWrap prints a font-size-height further down than
 	addText and other functions.*/
 

@@ -1,5 +1,4 @@
 <?php
-/*	$Id$*/
 /*	This script runs xgettext on the sources to produce a .pot (Portable Object
 	Template) file, which contains a list of all the translatable strings
 	extracted from the sources. The resultant system default language file
@@ -9,7 +8,6 @@
 
 /* Steve Kitchen */
 
-//$PageSecurity = 15;
 
 include ('includes/session.php');
 $Title = _('Rebuild the System Default Language File');

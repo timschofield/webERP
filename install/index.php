@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 	ini_set('max_execution_time', "600");
 	session_name('weberp_installation');
 	session_start();

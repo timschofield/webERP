@@ -1,5 +1,4 @@
 <?php
-/* $Id: PcAssignCashToTab.php 7944 2018-02-09 18:22:45Z turbopt $*/
 
 include('includes/session.php');
 $Title = _('Assignment of Cash to Petty Cash Tab');
@@ -380,7 +379,7 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 		echo '<tr>
 				<td>', _('Cash Assignment Date'), ':</td>';
 		echo '<td>
-				<input type="text" class="date" alt="', $_SESSION['DefaultDateFormat'], '" name="Date" size="10" required="required" maxlength="10" value="', $_POST['Date'], '" />
+				<input type="text" class="date" name="Date" size="11" required="required" maxlength="10" value="', $_POST['Date'], '" />
 			</td>
 		</tr>';
 		if (!isset($_POST['Amount'])) {

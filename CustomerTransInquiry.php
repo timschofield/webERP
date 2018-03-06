@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 
 include('includes/session.php');
 $Title = _('Customer Transactions Inquiry');
@@ -48,9 +47,9 @@ if (!isset($_POST['ToDate'])){
 	$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
 }
 echo '<td>' . _('From') . ':</td>
-	<td><input alt="'.$_SESSION['DefaultDateFormat'].'" class="date" maxlength="10" name="FromDate" required="required" size="11" tabindex="2" type="text" value="' . $_POST['FromDate'] . '" /></td>
+	<td><input class="date" maxlength="10" name="FromDate" required="required" size="11" tabindex="2" type="text" value="' . $_POST['FromDate'] . '" /></td>
 	<td>' . _('To') . ':</td>
-	<td><input alt="'.$_SESSION['DefaultDateFormat'].'" class="date" maxlength="10" name="ToDate" required="required" size="11" tabindex="3" type="text" value="' . $_POST['ToDate'] . '" /></td>
+	<td><input class="date" maxlength="10" name="ToDate" required="required" size="11" tabindex="3" type="text" value="' . $_POST['ToDate'] . '" /></td>
 	</tr>
 	</table>
 	<br />

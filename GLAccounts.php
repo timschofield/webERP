@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* Defines the general ledger accounts */
 /* To delete, insert, or update an account. */
 

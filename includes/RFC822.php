@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /**
 * RFC 822 Email address list validation Utility
 *

@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: PDFShipLabel.php agaluski $*/
 
 include('includes/session.php');
 

@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* This script displays the bank reconciliation for a selected bank account. */
 
 include('includes/session.php');

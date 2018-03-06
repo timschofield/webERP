@@ -1,6 +1,5 @@
 <?php
 
-/* $Id$ */
 
 function standard_deviation($Data){
 	$Total = 0;

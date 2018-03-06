@@ -1,7 +1,5 @@
 UPGRADING FROM PREVIOUS VERSIONS OF WEBERP
 
-/* $Id$*/
-
 SUMMARY
 
 Normally all that is required is to:

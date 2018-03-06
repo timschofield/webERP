@@ -1,6 +1,5 @@
 <?php
 
-/* $Id$*/
 
 /*Variables required to configure this script must be set in config.php */
 

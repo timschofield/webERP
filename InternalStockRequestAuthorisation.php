@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: InternalStockRequestAuthorisation.php 4576 2011-05-27 10:59:20Z daintree $*/
 
 include('includes/session.php');
 

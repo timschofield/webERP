@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* Allows the user to change system wide defaults for the theme - appearance, the number of records to show in searches and the language to display messages in */
 
 include('includes/session.php');

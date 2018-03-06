@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* Shows the trial balance for the month and the for the period selected together with the budgeted trial balances. */
 
 /*Through deviousness AND cunning, this system allows trial balances for any date range that recalculates the P&L balances

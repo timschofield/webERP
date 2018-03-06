@@ -1,5 +1,4 @@
 <?php
-/* $Id: SMTPServer.php 4469 2011-01-15 02:28:37Z daintree $*/
 /* This script is <create a description for script table>. */
 
 include('includes/session.php');

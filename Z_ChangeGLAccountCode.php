@@ -1,5 +1,4 @@
 <?php
-/* $Id: Z_ChangeGLAccountCode.php 6946 2014-10-27 07:30:11Z daintree $*/
 /* Utility to change a GL account code in all webERP. */
 
 include ('includes/session.php');

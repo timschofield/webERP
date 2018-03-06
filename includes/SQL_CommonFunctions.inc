@@ -1,6 +1,5 @@
 <?php
 
-/* $Id$*/
 
 /* Common SQL Functions */
 

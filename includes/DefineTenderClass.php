@@ -1,5 +1,4 @@
 <?php
-/* $Id: DefineTenderClass.php 4821 2012-01-20 13:48:53Z tim_schofield $ */
 /* Definition of the tender class to hold all the information for a supplier tender
 */
 

@@ -1,5 +1,4 @@
 <?php
-/* $Id$ */
 
 include('includes/DefineSpecialOrderClass.php');
 /* Session started in header.php for password checking and authorisation level check */
@@ -727,7 +726,7 @@ $_POST['ReqDelDate'] = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date('m'
 
 echo '<tr>
 		<td>' . _('Required Delivery Date') . ':</td>
-		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" size="12" maxlength="11" name="ReqDelDate" value="' . $_POST['ReqDelDate'] . '" /></td>
+		<td><input type="text" class="date" size="11" maxlength="10" name="ReqDelDate" value="' . $_POST['ReqDelDate'] . '" /></td>
 	</tr>';
 
 echo '</table>'; /* end of main table */

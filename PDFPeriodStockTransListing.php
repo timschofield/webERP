@@ -1,5 +1,4 @@
 <?php
-/* $Id: PDFPeriodStockTransListing.php 4307 2010-12-22 16:06:03Z tim_schofield $*/
 
 include('includes/SQL_CommonFunctions.inc');
 include ('includes/session.php');
@@ -30,11 +29,11 @@ if (!isset($_POST['FromDate'])){
 		<table class="selection">
 		<tr>
 			<td>' . _('Enter the date from which the transactions are to be listed') . ':</td>
-			<td><input type="text" required="required" autofocus="autofocus" name="FromDate" maxlength="10" size="10" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
+			<td><input type="text" required="required" autofocus="autofocus" name="FromDate" maxlength="10" size="11" class="date" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Enter the date to which the transactions are to be listed') . ':</td>
-			<td><input type="text" required="required" name="ToDate" maxlength="10" size="10" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
+			<td><input type="text" required="required" name="ToDate" maxlength="10" size="11" class="date" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Transaction type') . '</td>

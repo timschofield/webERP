@@ -1,6 +1,5 @@
 <?php
 
-/* $Id$*/
 //$PageSecurity = 3;
 $Title = _('Geocode Generate XML');
 

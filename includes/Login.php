@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 // Display demo user name and password within login form if $AllowDemoMode is true
 
 //include ('LanguageSetup.php');
@@ -113,7 +112,6 @@ if (get_magic_quotes_gpc()){
 	</form>
 	</div>
 	<br />
-	<div style="text-align:center"><a href="https://sourceforge.net/projects/web-erp"><img src="https://sflogo.sourceforge.net/sflogo.php?group_id=70949&amp;type=8" width="80" height="15" alt="Get webERP Accounting &amp; Business Management at SourceForge.net. Fast, secure and Free Open Source software downloads" /></a></div>
 </div>
 </body>
 </html>

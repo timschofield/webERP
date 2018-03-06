@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 
 /* This function returns a list of the payment terms abbreviations
  * currently setup on webERP

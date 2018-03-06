@@ -1,5 +1,4 @@
 <?php
-/* $Id: Z_RebuildSalesAnalysis.php 5784 2012-12-29 04:00:43Z daintree $*/
 /* Script to rebuild sales analysis records from stock movements*/
 $PageSecurity = 15;
 include ('includes/session.php');

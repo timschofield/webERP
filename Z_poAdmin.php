@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* Steve Kitchen */
 /* Up front menu for language file maintenance */
 

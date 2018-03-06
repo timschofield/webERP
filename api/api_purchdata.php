@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 
 	function VerifyPurchDataLineExists($SupplierID, $StockID, $i, $Errors) {
 		if (VerifyStockCodeExists($StockID, $i, $Errors)!=0 and

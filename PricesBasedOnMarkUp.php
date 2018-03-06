@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 
 include('includes/session.php');
 $Title=_('Update Pricing');
@@ -151,11 +150,11 @@ echo '<tr>
 
 echo '<tr>
 		<td>' . _('New Price To Be Effective From') . ':</td>
-		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="PriceStartDate" size="10" maxlength="10" value="' . $_POST['PriceStartDate'] . '" /></td></tr>';
+		<td><input type="text" class="date" name="PriceStartDate" size="11" maxlength="10" value="' . $_POST['PriceStartDate'] . '" /></td></tr>';
 
 echo '<tr>
 		<td>' . _('New Price To Be Effective To (Blank = No End Date)') . ':</td>
-		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="PriceEndDate" size="10" maxlength="10" value="' . $_POST['PriceEndDate'] . '" /></td></tr>';
+		<td><input type="text" class="date" name="PriceEndDate" size="11" maxlength="10" value="' . $_POST['PriceEndDate'] . '" /></td></tr>';
 
 if (!isset($_POST['IncreasePercent'])){
 	$_POST['IncreasePercent']=0;

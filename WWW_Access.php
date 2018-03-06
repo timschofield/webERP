@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* This script is to maintaining access permissions. */
 
 include ('includes/session.php');

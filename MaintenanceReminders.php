@@ -1,5 +1,4 @@
 <?php
-/* $Id: MaintenaceReminders.php 4551 2011-04-16 06:20:56Z daintree $*/
 //this script can be set to run from cron
 $AllowAnyone = true;
 include('includes/session.php');

@@ -1,6 +1,5 @@
 <?php
 
-/* $Id$*/
 
 // BOMExtendedQty.php - Quantity Extended Bill of Materials
 

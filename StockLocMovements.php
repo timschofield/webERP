@@ -1,5 +1,4 @@
 <?php
-/* $Id: StockLocMovements.php 7957 2018-02-12 21:53:28Z turbopt $*/
 
 include('includes/session.php');
 
@@ -57,8 +56,8 @@ if (!isset($_POST['BeforeDate']) or !Is_date($_POST['BeforeDate'])) {
 if (!isset($_POST['AfterDate']) or !Is_date($_POST['AfterDate'])) {
 	$_POST['AfterDate'] = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m') - 1, Date('d'), Date('y')));
 }
-echo ' ', _('Show Movements before'), ': <input type="text" class="date" alt="', $_SESSION['DefaultDateFormat'], '" name="BeforeDate" size="12" required="required" maxlength="12" value="', $_POST['BeforeDate'], '" />',
-	' ', _('But after'), ': <input type="text" class="date" alt="', $_SESSION['DefaultDateFormat'], '" name="AfterDate" size="12" required="required" maxlength="12" value="', $_POST['AfterDate'], '" />',
+echo ' ', _('Show Movements before'), ': <input type="text" class="date" name="BeforeDate" size="11" required="required" maxlength="10" value="', $_POST['BeforeDate'], '" />',
+	' ', _('But after'), ': <input type="text" class="date" name="AfterDate" size="11" required="required" maxlength="10" value="', $_POST['AfterDate'], '" />',
 	'</td>
 	 </tr>
 	 </table>

@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /**
 * Filename.......: class.html.mime.mail.inc
 * Project........: HTML Mime mail class

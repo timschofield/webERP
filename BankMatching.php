@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* This script allows payments and receipts to be matched off against bank statements. */
 
 include('includes/session.php');

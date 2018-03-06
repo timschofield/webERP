@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: Labels.php 4950 2012-02-22 06:26:38Z daintree $*/
 
 include('includes/session.php');
 $Title = _('Label Templates');

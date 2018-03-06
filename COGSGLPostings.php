@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /* Defines the general ledger account to be used for cost of sales entries */
 
 include('includes/session.php');

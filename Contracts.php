@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: Contracts.php 3692 2010-08-15 09:22:08Z daintree $ */
 
 include('includes/DefineContractClass.php');
 include('includes/session.php');
@@ -931,7 +930,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 
 	echo '<tr>
 			<td>' . _('Required Date') . ':</td>
-			<td><input type="text" required="required" class="date" alt="' .$_SESSION['DefaultDateFormat'] . '" name="RequiredDate" size="11" value="' . $_SESSION['Contract'.$identifier]->RequiredDate . '" /></td>
+			<td><input type="text" required="required" class="date" name="RequiredDate" maxlength="10" size="11" value="' . $_SESSION['Contract'.$identifier]->RequiredDate . '" /></td>
 		</tr>';
 
 	echo '<tr>

@@ -1,5 +1,4 @@
 <?php
-/* $Id$ */
 
 include ('includes/session.php');
 $Title = _('Edit Module');// _('Edit a Language File Module')

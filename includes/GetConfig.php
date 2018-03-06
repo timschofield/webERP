@@ -1,7 +1,6 @@
 <?php
 // Systems can temporarily force a reload by setting the variable
 // $ForceConfigReload to true
-/* $Id$*/
 
 if(isset($ForceConfigReload) AND $ForceConfigReload==true OR !isset($_SESSION['CompanyDefaultsLoaded'])) {
 	$sql = "SELECT confname, confvalue FROM config";

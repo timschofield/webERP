@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: SalesByTypePeriodInquiry.php 4261 2010-12-22 15:56:50Z tim_schofield $*/
 
 include('includes/session.php');
 $Title = _('Sales Report');
@@ -68,11 +67,11 @@ if ($_POST['DateRange']=='Custom'){
 	}
 	echo '<tr>
 			<td>' . _('Date From') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" /></td>
+			<td><input type="text" class="date" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" /></td>
 			</tr>';
 	echo '<tr>
 			<td>' . _('Date To') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
+			<td><input type="text" class="date" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
 			</tr>';
 }
 echo '</table>

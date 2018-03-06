@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: PrefSupplierOrdering.php 5785 2012-12-29 04:47:42Z daintree $ */
 
 include('includes/session.php');
 $Title=_('Preferred Supplier Purchasing');

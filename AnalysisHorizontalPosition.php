@@ -1,5 +1,4 @@
 <?php
-/* $Id: AnalysisHorizontalPosition.php 7349 2015-09-14 14:43:19Z rchacon $*/
 /* Shows the horizontal analysis of the statement of financial position. */
 
 function RelativeChange($selected_period, $previous_period) {

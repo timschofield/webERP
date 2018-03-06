@@ -1,6 +1,5 @@
 <?php
 
-/* $Id$*/
 
 /*Through deviousness and cunning, this system allows trial balances for any date range that recalcuates the p & l balances
 and shows the balance sheets as at the end of the period selected - so first off need to show the input of criteria screen

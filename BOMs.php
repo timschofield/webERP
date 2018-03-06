@@ -1,6 +1,5 @@
 <?php
 
-/* $Id$*/
 
 include('includes/session.php');
 
@@ -464,7 +463,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 							WHERE parent='" . $SelectedParent ."'";
 		$ComponentResult = DB_query($ComponentSQL);
 		$ComponentArray = DB_fetch_row($ComponentResult);
-		
+
 		if ($_SESSION['WeightedAverageCosting'] != 1) {//only update the cost for standard cost
 			UpdateCost($ComponentArray[0]);
 		}
@@ -876,11 +875,11 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 		echo '<tr>
 				<td>' . _('Effective After') . ' (' . $_SESSION['DefaultDateFormat'] . '):</td>
-				<td><input ' . (in_array('EffectiveAfter',$Errors) ?  'class="inputerror"' : '' ) . ' tabindex="5" type="text" required="required" name="EffectiveAfter" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" size="11" maxlength="10" value="' . $_POST['EffectiveAfter'] .'" /></td>
+				<td><input ' . (in_array('EffectiveAfter',$Errors) ?  'class="inputerror"' : '' ) . ' tabindex="5" type="text" required="required" name="EffectiveAfter" class="date" size="11" maxlength="10" value="' . $_POST['EffectiveAfter'] .'" /></td>
 			</tr>
 			<tr>
 				<td>' . _('Effective To') . ' (' . $_SESSION['DefaultDateFormat'] . '):</td>
-				<td><input  ' . (in_array('EffectiveTo',$Errors) ?  'class="inputerror"' : '' ) . ' tabindex="6" type="text" name="EffectiveTo" class="date" alt="' .$_SESSION['DefaultDateFormat'] . '" size="11" maxlength="10" value="' . $_POST['EffectiveTo'] .'" /></td>
+				<td><input  ' . (in_array('EffectiveTo',$Errors) ?  'class="inputerror"' : '' ) . ' tabindex="6" type="text" name="EffectiveTo" class="date" size="11" maxlength="10" value="' . $_POST['EffectiveTo'] .'" /></td>
 			</tr>';
 
 		if ($ParentMBflag=='M' OR $ParentMBflag=='G'){

@@ -1,5 +1,4 @@
 <?php
-/* $Id$ */
 /* Definition of the Offer class to hold all the information for a supplier offer
 */
 

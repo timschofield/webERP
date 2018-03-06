@@ -1,6 +1,5 @@
 <?php
 
-/* $Id$*/
 
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
@@ -35,11 +34,11 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 		<table class="selection">
 		<tr>
 			<td>' . _('Enter the date from which orders are to be listed') . ':</td>
-			<td><input type="text" required="required" autofocus="autofocus" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m'),Date('d')-1,Date('y'))) . '" /></td>
+			<td><input type="text" required="required" autofocus="autofocus" class="date" name="FromDate" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m'),Date('d')-1,Date('y'))) . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Enter the date to which orders are to be listed') . ':</td>
-			<td><input type="text" required="required" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
+			<td><input type="text" required="required" class="date" name="ToDate" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Inventory Category') . '</td>

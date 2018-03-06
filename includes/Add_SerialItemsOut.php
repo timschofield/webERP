@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /*ProcessSerialItems.php takes the posted variables and adds to the SerialItems array
  in either the cartclass->LineItems->SerialItems or the POClass->LineItems->SerialItems */
 

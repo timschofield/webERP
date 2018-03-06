@@ -1,5 +1,4 @@
 <?php
-/* $Id: GLCashFlowsSetup.php 7672 2016-11-17 03:27:51Z rchacon $ */
 /* Classifies accounts in any of the three sections of statement of cash flows to assign each account to an activity */
 
 // BEGIN: Procedure division ---------------------------------------------------

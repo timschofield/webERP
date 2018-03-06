@@ -1,6 +1,5 @@
 <?php
 
-/* $Id$*/
 
 // BOMIndented.php - Reverse Indented Bill of Materials - From lowest level component to top level
 // assembly

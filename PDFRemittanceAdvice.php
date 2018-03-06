@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 
 include('includes/session.php');
 
@@ -166,7 +165,7 @@ If ((isset($_POST['PrintPDF']))
 
 	echo '<tr>
 			<td>' . _('Date Of Payment') . ':</td>
-			<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="PaymentDate" maxlength="11" size="12" value="' . $DefaultDate . '" /></td>
+			<td><input type="text" class="date" name="PaymentDate" maxlength="10" size="11" value="' . $DefaultDate . '" /></td>
 		</tr>';
 
 	echo '</table>

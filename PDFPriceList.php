@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 /*	Script to print a price list by inventory category */
 /*	Output column sizes:
 		* stockmaster.stockid, varchar(20), len = 20chr
@@ -343,7 +342,7 @@ If (isset($_POST['PrintPDF'])) {
 		</tr>
 		<tr>
 			<td>' . _('Effective As At') . ':</td>
-			<td><input type="text" required="required" size="11" class="date"	alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
+			<td><input type="text" required="required" maxlength="10" size="11" class="date" name="EffectiveDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
 		</tr>
 		</table>
 		<br />

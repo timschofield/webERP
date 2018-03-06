@@ -1,6 +1,5 @@
 <?php
 
-/* $Id$*/
 
 include('includes/DefineStockAdjustment.php');
 include('includes/DefineSerialItems.php');

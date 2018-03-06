@@ -156,7 +156,7 @@ if (isset($_FILES['PriceListFile']) and $_FILES['PriceListFile']['name']) { //st
 			_('The StockID, SalesType, and CurrencyCode fields must have a corresponding entry in the stockmaster, salestypes, and currencies tables.') . '</div>';
 
 	echo '<br /><input type="hidden" name="MAX_FILE_SIZE" value="1000000" />' .
-			_('Prices effective from') . ':&nbsp;<input type="text" name="StartDate" size="10" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" value="' . date($_SESSION['DefaultDateFormat']) . '" />&nbsp;' .
+			_('Prices effective from') . ':&nbsp;<input type="text" name="StartDate" maxlength="10" size="11" class="date" value="' . date($_SESSION['DefaultDateFormat']) . '" />&nbsp;' .
 			_('Upload file') . ': <input name="PriceListFile" type="file" />
 			<input type="submit" name="submit" value="' . _('Send File') . '" />
 		</div>

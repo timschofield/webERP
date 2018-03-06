@@ -1,4 +1,3 @@
-/* $Id: MiscFunctions.js 7645 2016-10-17 05:34:08Z rchacon $ */
 /* Miscellaneous JavaScript functions. */
 
 function defaultControl(c) {
