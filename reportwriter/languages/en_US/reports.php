@@ -1,4 +1,4 @@
-<?php /* Version 1.0 */
+<?php
 
 /**************************************************************************************
 Locale language file for reports. This file can be broken out for apps that use
@@ -346,4 +346,11 @@ define('RPT_QUARTER',_('This Quarter'));
 define('RPT_QTD',_('This Quarter To Date'));
 define('RPT_YEAR',_('This Year'));
 define('RPT_YTD',_('This Year To Date'));
+define('RPT_YESTERDAY',_('Yesterday'));
+define('RPT_LASTWEEK',_('Last Week'));
+define('RPT_LASTMONTH',_('Last Month'));
+define('RPT_LASTQUARTER',_('Last Quarter'));
+define('RPT_LASTYEAR',_('Last Year'));
+
+
 ?>

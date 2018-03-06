@@ -105,7 +105,12 @@ $DateChoices = array(
 	'h' => RPT_QUARTER,
 	'i' => RPT_QTD,
 	'j' => RPT_YEAR,
-	'k' => RPT_YTD);
+	'k' => RPT_YTD,
+	'l' => RPT_YESTERDAY,
+	'm' => RPT_LASTWEEK,
+	'n' => RPT_LASTMONTH,
+	'o' => RPT_LASTQUARTER,
+	'p' => RPT_LASTYEAR);
 
 /*********************************************************************************************
 Form unique defaults
