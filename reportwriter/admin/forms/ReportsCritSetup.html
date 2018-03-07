@@ -13,11 +13,11 @@
   </table>
   <table width="700" align="center" border="2" cellspacing="1" cellpadding="1">
     <tr bgcolor="#CCCCCC">
-      <td colspan="3"><div align="center"><?php echo RPT_DATEINFO; ?></div></td>
+      <td colspan="4"><div align="center"><?php echo RPT_DATEINFO; ?></div></td>
     </tr>
     <tr>
-      <td width="33%"><?php echo RPT_DATELIST; ?><br /><br /><?php echo RPT_DATEINST; ?></td>
-      <td width="33%">
+      <td width="25%"><?php echo RPT_DATELIST; ?><br /><br /><?php echo RPT_DATEINST; ?></td>
+      <td width="25%">
 	    <?php if (mb_strpos($DateListings['displaydesc'],'a')===false) $Checked = ''; else $Checked = ' checked'; ?>
 		<input type="checkbox" name="DateRange1" value="a"<?php echo $Checked; ?>><?php echo $DateChoices['a']; ?><br />
 	    <?php if (mb_strpos($DateListings['displaydesc'],'b')===false) $Checked = ''; else $Checked = ' checked'; ?>
@@ -31,7 +31,7 @@
 	    <?php if (mb_strpos($DateListings['displaydesc'],'f')===false) $Checked = ''; else $Checked = ' checked'; ?>
 		<input type="checkbox" name="DateRange6" value="f"<?php echo $Checked; ?>><?php echo $DateChoices['f']; ?><br />
 	  </td>
-      <td width="33%">
+      <td width="25%">
 	    <?php if (mb_strpos($DateListings['displaydesc'],'g')===false) $Checked = ''; else $Checked = ' checked'; ?>
 		<input type="checkbox" name="DateRange7" value="g"<?php echo $Checked; ?>><?php echo $DateChoices['g']; ?><br />
 	    <?php if (mb_strpos($DateListings['displaydesc'],'h')===false) $Checked = ''; else $Checked = ' checked'; ?>
@@ -43,10 +43,22 @@
 	    <?php if (mb_strpos($DateListings['displaydesc'],'k')===false) $Checked = ''; else $Checked = ' checked'; ?>
 		<input type="checkbox" name="DateRange11" value="k"<?php echo $Checked; ?>><?php echo $DateChoices['k']; ?><br />
 	  </td>
+      <td width="25%">
+	    <?php if (mb_strpos($DateListings['displaydesc'],'l')===false) $Checked = ''; else $Checked = ' checked'; ?>
+		<input type="checkbox" name="DateRange12" value="l"<?php echo $Checked; ?>><?php echo $DateChoices['l']; ?><br />
+	    <?php if (mb_strpos($DateListings['displaydesc'],'m')===false) $Checked = ''; else $Checked = ' checked'; ?>
+		<input type="checkbox" name="DateRange13" value="m"<?php echo $Checked; ?>><?php echo $DateChoices['m']; ?><br />
+	    <?php if (mb_strpos($DateListings['displaydesc'],'n')===false) $Checked = ''; else $Checked = ' checked'; ?>
+		<input type="checkbox" name="DateRange14" value="n"<?php echo $Checked; ?>><?php echo $DateChoices['n']; ?><br />
+	    <?php if (mb_strpos($DateListings['displaydesc'],'o')===false) $Checked = ''; else $Checked = ' checked'; ?>
+		<input type="checkbox" name="DateRange15" value="o"<?php echo $Checked; ?>><?php echo $DateChoices['o']; ?><br />
+	    <?php if (mb_strpos($DateListings['displaydesc'],'p')===false) $Checked = ''; else $Checked = ' checked'; ?>
+		<input type="checkbox" name="DateRange16" value="p"<?php echo $Checked; ?>><?php echo $DateChoices['p']; ?><br />
+	  </td>
     </tr>
     <tr>
       <td><?php echo RPT_DATEDEF; ?></td>
-      <td colspan="2"><select name="DefDate">
+      <td colspan="3"><select name="DefDate">
 		<?php foreach($DateChoices as $key=>$value) {
 			if ($DateListings['params']==$key) $Selected = ' selected'; else $Selected = '';
 			echo '<option value="'.$key.'"'.$Selected.'>'.$value.'</option>';
@@ -55,7 +67,7 @@
     </tr>
     <tr>
       <td><?php echo RPT_DATEFNAME; ?></td>
-      <td colspan="4">
+      <td colspan="3">
 	    <select name="DateField"><OPTION Value=""><?php echo RPT_SLCTFIELD; ?>
 		<?php echo CreateFieldList($ReportID,$DateListings['fieldname'],''); ?></select>
 	  </td>
@@ -63,7 +75,7 @@
 	<?php if ($Type<>'frm') { ?>
 	   <tr>
 		  <td><?php echo RPT_TRUNC; ?></td>
-		  <td colspan="4"><p>
+		  <td colspan="3"><p>
 			<?php if ($TruncListings['params']=='1') $Checked = ' checked'; else $Checked = ''; ?>
 			  <input type="radio" name="TruncLongDesc" value="1"<?php echo $Checked; ?>><?php echo RPT_YES; ?>
 			<?php if ($TruncListings['params']=='0') $Checked = ' checked'; else $Checked = ''; ?>
@@ -72,7 +84,7 @@
 	<?php } else { ?>
 		<tr>
 		  <td><?php echo 'Form Page Break Field (table.fieldname)'; ?></td>
-		  <td colspan="4">
+		  <td colspan="3">
 			<select name="FormBreakField"><OPTION Value=""><?php echo RPT_SLCTFIELD; ?>
 			<?php echo CreateFieldList($ReportID,$GroupListings['lists'][0]['fieldname'],''); ?></select>
 		  </td>
