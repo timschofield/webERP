@@ -410,29 +410,53 @@ if ($ProcessSection01){
 		OR $KL_PurchasingTeam){
 		ItemsinSetUp("ReadyToTest", "SETKL", $RootPath, $db);
 		$NumberOfTestExecuted++;
+		ItemsinSetUp("ReadyToTest", "SETKLA", $RootPath, $db);
+		$NumberOfTestExecuted++;
 		ItemsinSetUp("ReadyToTest", "SETBL", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsinSetUp("ReadyToTest", "SETBLA", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		ItemsinSetUp("ReadyToTest", "SETGE", $RootPath, $db);
 		$NumberOfTestExecuted++;
+		ItemsinSetUp("ReadyToTest", "SETGEA", $RootPath, $db);
+		$NumberOfTestExecuted++;
 		ItemsinSetUp("NeedDescription", "SETKL", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsinSetUp("NeedDescription", "SETKLA", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		ItemsinSetUp("NeedDescription", "SETBL", $RootPath, $db);
 		$NumberOfTestExecuted++;
+		ItemsinSetUp("NeedDescription", "SETBLA", $RootPath, $db);
+		$NumberOfTestExecuted++;
 		ItemsinSetUp("NeedDescription", "SETGE", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsinSetUp("NeedDescription", "SETGEA", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		//ItemsinSetUp("NeedPrice", $RootPath, $db);
 		//$NumberOfTestExecuted++;
 		ItemsWithoutRetailPrice("SETKL", 4.75, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		ItemsWithoutRetailPrice("SETKLA", 4.75, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		ItemsWithoutRetailPrice("SETBL", 4.75, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsWithoutRetailPrice("SETBLA", 4.75, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		ItemsWithoutRetailPrice("SETGE", 4.75, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		ItemsWithoutRetailPrice("SETGEA", 4.75, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		ItemsinSetUp("WithReorderLevel", "SETKL", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsinSetUp("WithReorderLevel", "SETKLA", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		ItemsinSetUp("WithReorderLevel", "SETBL", $RootPath, $db);
 		$NumberOfTestExecuted++;
+		ItemsinSetUp("WithReorderLevel", "SETBLA", $RootPath, $db);
+		$NumberOfTestExecuted++;
 		ItemsinSetUp("WithReorderLevel", "SETGE", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsinSetUp("WithReorderLevel", "SETGEA", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		ObsoleteComponentsInActiveBOM($RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -467,94 +491,173 @@ if ($ProcessSection01){
 
 		CategoryItemsNotInShop("TESTKL", "TOKPU", 10, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("TESTKA", "TOKPU", 10, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("TESTKL", "TOKKA", 10, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("TESTKA", "TOKKA", 10, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("TESTKL", "TOKSU", 10, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("TESTKA", "TOKSU", 10, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("TESTKL", "TOKSS", 10, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("TESTKA", "TOKSS", 10, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("TESTKL", "TOKPA", 10, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("TESTKA", "TOKPA", 10, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("TESTKL", "TOKSA", 10, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("TESTKA", "TOKSA", 10, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("TESTKL", "TOK66", 10, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("TESTKA", "TOK66", 10, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 		CategoryItemsNotInShop("STABKL", "TOKPU", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABKA", "TOKPU", 15, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("STABKL", "TOKKA", 15, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABKA", "TOKKA", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("STABKL", "TOKSU", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABKA", "TOKSU", 15, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("STABKL", "TOKSS", 15, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABKA", "TOKSS", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("STABKL", "TOKPA", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABKA", "TOKPA", 15, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("STABKL", "TOKSA", 15, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABKA", "TOKSA", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("STABKL", "TOK66", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABKA", "TOK66", 15, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("STABKL", "TOKSE", 15, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABKA", "TOKSE", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("STABKL", "TOKKS", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABKA", "TOKKS", 15, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("STABKL", "TOKOB", 15, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABKA", "TOKOB", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("STABKL", "TOKM2", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABKA", "TOKM2", 15, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("STABKL", "TOKU2", 15, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABKA", "TOKU2", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 		CategoryItemsNotInShop("NOPOKL", "TOKPU", 10, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("NOPOKA", "TOKPU", 10, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("NOPOKL", "TOKKA", 10, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("NOPOKA", "TOKKA", 10, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("NOPOKL", "TOKSU", 10, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("NOPOKA", "TOKSU", 10, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("NOPOKL", "TOKSS", 10, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("NOPOKA", "TOKSS", 10, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("NOPOKL", "TOKPA", 10, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("NOPOKA", "TOKPA", 10, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("NOPOKL", "TOKSA", 10, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("NOPOKA", "TOKSA", 10, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("NOPOKL", "TOK66", 10, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("NOPOKA", "TOK66", 10, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("NOPOKL", "TOKSE", 10, $RootPath, $db);
 		$NumberOfTestExecuted++;
-// Do not report OB Requested by laia 2017-08-28
-//		CategoryItemsNotInShop("NOPOKL", "TOKOB", 10, $RootPath, $db);
-//		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("NOPOKA", "TOKSE", 10, $RootPath, $db);
+		$NumberOfTestExecuted++;
 
 		
 		CategoryItemsNotInShop("TESTBL", "TOKBU", 6, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("TESTBA", "TOKBU", 6, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("TESTBL", "TOKPS", 6, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("TESTBA", "TOKPS", 6, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("TESTBL", "TOKSB", 6, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("TESTBA", "TOKSB", 6, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 		CategoryItemsNotInShop("STABBL", "TOKBU", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABBA", "TOKBU", 15, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("STABBL", "TOKPS", 15, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABBA", "TOKPS", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("STABBL", "TOKSB", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABBA", "TOKSB", 15, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("STABBL", "TOKPB", 15, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABBA", "TOKPB", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("STABBL", "TOKMU", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABBA", "TOKMU", 15, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("STABBL", "TOKU3", 15, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABBA", "TOKU3", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("STABBL", "TOKBB", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABBA", "TOKBB", 15, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("STABBL", "TOKTB", 15, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABBA", "TOKTB", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 		CategoryItemsNotInShop("NOPOBL", "TOKBU", 6, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("NOPOBA", "TOKBU", 6, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("NOPOBL", "TOKPS", 6, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("NOPOBA", "TOKPS", 6, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("NOPOBL", "TOKSB", 6, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("NOPOBA", "TOKSB", 6, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 
@@ -598,9 +701,15 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		GoodsToBeProduced("COMPON", "ONLYDISCOUNT", $RootPath, $db);
 		$NumberOfTestExecuted++;
+		GoodsToBeProduced("COMPOA", "ONLYDISCOUNT", $RootPath, $db);
+		$NumberOfTestExecuted++;
 		GoodsToBeProduced("COMPON", "DISCOUNT", $RootPath, $db);
 		$NumberOfTestExecuted++;
+		GoodsToBeProduced("COMPOA", "DISCOUNT", $RootPath, $db);
+		$NumberOfTestExecuted++;
 		GoodsToBeProduced("COMPON", "ALL", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		GoodsToBeProduced("COMPOA", "ALL", $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -1008,7 +1117,11 @@ if ($ProcessSection02){
 	if ($KL_SystemAdmin){
 		StockToPTADU("PO", 1.2, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		StockToPTADU("PO", 1.0, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		StockToPTADU("WO", 1.2, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		StockToPTADU("WO", 1.0, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -3730,14 +3843,14 @@ function over_or_below_limit($Request, $Sign, $Limit, $RootPath, $db){
 		$SQL = "SELECT COUNT(*)
 				FROM stockmaster,locstock
 				WHERE stockmaster.stockid = locstock.stockid
-					AND stockmaster.categoryid = 'DISC20'
+					AND stockmaster.categoryid LIKE 'DISC2%'
 					AND locstock.reorderlevel > 0
 					AND locstock.loccode ='TOKAR'";
 	}elseif ($Request =="DISC80 Items in AR"){
 		$SQL = "SELECT COUNT(*)
 				FROM stockmaster,locstock
 				WHERE stockmaster.stockid = locstock.stockid
-					AND stockmaster.categoryid = 'DISC80'
+					AND stockmaster.categoryid LIKE 'DISC8%'
 					AND locstock.reorderlevel > 0
 					AND locstock.loccode ='TOKAR'";
 	}
@@ -4460,9 +4573,10 @@ function StockToPTADU($Kind, $FactorNearStock, $RootPath, $db){
 				WHERE purchorderdetails.itemcode = stockmaster.stockid
 					AND stockmaster.categoryid IN ('SETKL','SETBL','SETGE','TESTKL','TESTBL','TESTGE', 'STABKL','STABBL','STABGE','NOPOKL','NOPOBL','NOPOGE','DISC20','DISC50','DISC80','COMPON')
 					AND purchorderdetails.completed = 1
-					AND (purchorderdetails.orderno = 2808
-						OR purchorderdetails.orderno = 2809
-						OR purchorderdetails.orderno >= 2817)
+					AND purchorderdetails.orderno >= 2808
+					AND purchorderdetails.orderno != 2811
+					AND purchorderdetails.orderno != 2816
+					AND purchorderdetails.orderno != 2819
 				GROUP BY purchorderdetails.itemcode
 				HAVING qtyreceivedptadu * " . $FactorNearStock. " >= qoh 
 				ORDER BY purchorderdetails.itemcode";
@@ -4478,7 +4592,7 @@ function StockToPTADU($Kind, $FactorNearStock, $RootPath, $db){
 					AND stockmaster.categoryid IN ('SETKL','SETBL','SETGE','TESTKL','TESTBL','TESTGE', 'STABKL','STABBL','STABGE','NOPOKL','NOPOBL','NOPOGE','DISC20','DISC50','DISC80','COMPON')
 					AND workorders.wo = woitems.wo
 					AND workorders.closed = 1
-					AND workorders.wo > 3587
+					AND workorders.wo > 3614
 				GROUP BY woitems.stockid
 				HAVING qtyreceivedptadu * " . $FactorNearStock. " >= qoh
 				ORDER BY woitems.stockid";
@@ -4486,11 +4600,7 @@ function StockToPTADU($Kind, $FactorNearStock, $RootPath, $db){
 			
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		if($Kind == "PO"){
-			echo '<p class="page_title_text" align="center"><strong>' . 'PO items to move to PTADU stock categories' .'</strong></p>';
-		}elseif($Kind == "WO"){
-			echo '<p class="page_title_text" align="center"><strong>' . 'WO items to move to PTADU stock categories' .'</strong></p>';
-		}
+		echo '<p class="page_title_text" align="center"><strong>' . $Kind . ' items to move to PTADU stock categories with QOH ADU >= ' . $FactorNearStock . ' * QOH Total </strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
