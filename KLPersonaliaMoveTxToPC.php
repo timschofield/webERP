@@ -4,7 +4,6 @@ include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
-include('includes/KLCompanySelection.php');
 
 $Title = _('Move Monthly Salaries Data to Petty Cash');
 include('includes/header.php');
@@ -14,7 +13,7 @@ echo '<p class="page_title_text">
 	</p>';
 
 if (isset($_POST['submit'])) {
-	submit($Title, $Company, $_POST['DateOfFile'], $_POST['PaymentDate'], $_POST['SalaryType'], $db);
+	submit($Title, $_POST['Company'], $_POST['DateOfFile'], $_POST['PaymentDate'], $_POST['SalaryType'], $db);
 } else {
 	display($Title, $db);
 }
@@ -123,50 +122,50 @@ function submit($Title, $Company, $LastDateOfPeriod, $PaymentDate, $SalaryType, 
 				$FixedSalary = $myrow['upahpokok'] +
 								$myrow['tunjanganjabatan'] +
 								$myrow['tunjanganmasakerja'];
-				MoveSalaryTxToPC($myrow['paymentmethod'], "SAL-FIXMONTH", "SAL-FIXMONTH-BLACK", $PaymentDate, $FixedSalary, $myrow['codename'], $db);
+				MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "FIXED", $PaymentDate, $FixedSalary, $myrow['codename'], $db);
 				
 				// Makan
 				$Makan = $myrow['tunjanganmakan'];
-				MoveSalaryTxToPC($myrow['paymentmethod'], "SAL-MAKAN", "SAL-MAKAN-BLACK", $PaymentDate, $Makan, $myrow['codename'], $db);
+				MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "MAKAN", $PaymentDate, $Makan, $myrow['codename'], $db);
 
 				// Bensin
 				$Bensin = $myrow['tunjangantransport'] +
 								$myrow['tunjangankendaraan'];
-				MoveSalaryTxToPC($myrow['paymentmethod'], "SAL-BENSIN", "SAL-BENSIN-BLACK", $PaymentDate, $Bensin, $myrow['codename'], $db);
+				MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "BENSIN", $PaymentDate, $Bensin, $myrow['codename'], $db);
 				
 				//Commissions
 				$Commissions = $myrow['komisitetap'] +
 								$myrow['komisiretail'] +
 								$myrow['komisisupport'] +
 								$myrow['bonuspenjualan'];
-				MoveSalaryTxToPC($myrow['paymentmethod'], "SAL-COMMISSION", "SAL-COMMISSION-BLACK", $PaymentDate, $Commissions, $myrow['codename'], $db);
+				MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "COMMISSIONS", $PaymentDate, $Commissions, $myrow['codename'], $db);
 				
 				//Shifts
 				$Shifts = $myrow['lembur'] +
 								$myrow['potonganabsen'];
-				MoveSalaryTxToPC($myrow['paymentmethod'], "SAL-SHIFTS", "SAL-SHIFTS-BLACK", $PaymentDate, $Shifts, $myrow['codename'], $db);
+				MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "SHIFTS", $PaymentDate, $Shifts, $myrow['codename'], $db);
 				
 				//THR
 				$THR = $myrow['thr'];
-				MoveSalaryTxToPC($myrow['paymentmethod'], "SAL-THR", "SAL-THR-BLACK", $PaymentDate, $THR, $myrow['codename'], $db);
+				MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "THR", $PaymentDate, $THR, $myrow['codename'], $db);
 				
 				//Lain2
 				$Lain2 = $myrow['penerimaanlain'] +
 								$myrow['potonganlain2'];
-				MoveSalaryTxToPC($myrow['paymentmethod'], "SAL-LAINLAIN", "SAL-LAINLAIN-BLACK", $PaymentDate, $Lain2, $myrow['codename'], $db);
+				MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "OTHERS", $PaymentDate, $Lain2, $myrow['codename'], $db);
 				
 				//JHT
 				$JHT = $myrow['potonganjht'] +
 								$myrow['potonganaskes'];
-				MoveSalaryTxToPC($myrow['paymentmethod'], "SAL-DED-JAMSOSTEK", "SAL-LAINLAIN-BLACK", $PaymentDate, $JHT, $myrow['codename'], $db);
+				MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "JAMSOSTEK", $PaymentDate, $JHT, $myrow['codename'], $db);
 
 				//PPH21
 				$PPH21 = $myrow['potonganpph21'];
-				MoveSalaryTxToPC($myrow['paymentmethod'], "SAL-DED-PPH21", "SAL-LAINLAIN-BLACK", $PaymentDate, $PPH21, $myrow['codename'], $db);
+				MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "PPH21", $PaymentDate, $PPH21, $myrow['codename'], $db);
 
 				//Rounding
 				$Rounding = $myrow['bulatan'];
-				MoveSalaryTxToPC($myrow['paymentmethod'], "SAL-ROUNDING", "SAL-ROUNDING", $PaymentDate, $Rounding, $myrow['codename'], $db);
+				MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "ROUND", $PaymentDate, $Rounding, $myrow['codename'], $db);
 
 				$k = StartEvenOrOddRow($k);
 				printf('<td>%s</td>
@@ -197,7 +196,6 @@ function submit($Title, $Company, $LastDateOfPeriod, $PaymentDate, $SalaryType, 
 			echo '</table>
 				</div>
 				</form>';
-
 		}else{
 			include('includes/header.php');
 			prnMsg('No data to Move Monthly Salaries Data to Petty Cash ');
@@ -213,35 +211,42 @@ function submit($Title, $Company, $LastDateOfPeriod, $PaymentDate, $SalaryType, 
 	}
 } // End of function submit()
 
-function MoveSalaryTxToPC($PaymentMethod, $BankExpenseType, $CashExpenseType, $PaymentDate, $Amount, $Receipt, $db){
+function MoveSalaryTxToPC($Company, $PaymentMethod, $Expense, $PaymentDate, $Amount, $Receipt, $db){
 	if ($Amount != 0){
-		if($PaymentMethod == "Cash"){
-			$ExpenseType = $CashExpenseType;
-			$TabCode = "SALARIES-CASH";
+		$SQL = "SELECT pctabcode,
+						pcexpensecode
+				FROM pcsalaries
+				WHERE salariescompany = '" . $Company . "'
+					AND salariespaymentmethod = '" . $PaymentMethod . "'
+					AND salariesexpense = '" . $Expense . "'";
+		$result = DB_query($SQL);
+		if (DB_num_rows($result) != 0){
+			$myrow = DB_fetch_array($result);
+			$TabCode = $myrow['pctabcode'];
+			$ExpenseType = $myrow['pcexpensecode'];
+			$InsertErrMsg = _('The SQL to insert Salary Transaction to Petty Cash failed');
+			$SQL = "INSERT INTO pcashdetails (counterindex, 
+											tabcode, 
+											date, 
+											codeexpense, 
+											amount, 
+											authorized, 
+											posted, 
+											notes, 
+											receipt)
+					VALUES ('',
+							'" . $TabCode . "',
+							'" . $PaymentDate . "',
+							'" . $ExpenseType . "',
+							 " . -$Amount . ",
+							 0,
+							 0,
+							 '',
+							 '" . $Receipt . "')";
+			$resultInsert = DB_query($SQL,$InsertErrMsg,$DbgMsg,true);
 		}else{
-			$ExpenseType = $BankExpenseType;
-			$TabCode = "SALARIES-BANK";
+			prnMsg('ERROR CODE: PERS00001. Can not find the PC info for expense', 'error');
 		}
-		$InsertErrMsg = _('The SQL to insert Salary Transaction to Petty Cash failed');
-		$SQL = "INSERT INTO pcashdetails (counterindex, 
-										tabcode, 
-										date, 
-										codeexpense, 
-										amount, 
-										authorized, 
-										posted, 
-										notes, 
-										receipt)
-				VALUES ('',
-						'" . $TabCode . "',
-						'" . $PaymentDate . "',
-						'" . $ExpenseType . "',
-						 " . -$Amount . ",
-						 0,
-						 0,
-						 '',
-						 '" . $Receipt . "')";
-		$resultInsert = DB_query($SQL,$InsertErrMsg,$DbgMsg,true);
 	}
 }
 
@@ -254,41 +259,11 @@ function display($Title, &$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DI
           <div>
 			<br/>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<input type="hidden" name="Company" value="' . $_GET['Company'] . '" />';
 
 	echo '<table class="selection">';
-
-	echo '<tr><td>' . _('Select Month of the Salaries') . '</td>
-							<td><select name="DateOfFile">';
-							
-	$PeriodNow = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
-	$PeriodsResult = DB_query("SELECT lastdate_in_period, periodno FROM periods ORDER BY periodno");
-	while ($PeriodRow = DB_fetch_row($PeriodsResult)){
-		if ($PeriodRow[1] == ($PeriodNow-1)){
-			echo '<option selected="selected" value="' . $PeriodRow[0] . '">' . MonthAndYearFromSQLDate($PeriodRow[0]) . '</option>';
-		}else{
-			echo '<option value="' . $PeriodRow[0] . '">' . MonthAndYearFromSQLDate($PeriodRow[0]) . '</option>';
-		}
-	}
-	echo '</select></td></tr>';
-
-	// check the type of salary to import
-	if(!isset($_POST['SalaryType'])) {
-		$_POST['SalaryType']='MONTHLY';
-	}
-
-	echo '<tr>
-			<td>' . _('Type Of Salary') . ':</td>
-			<td><select name="SalaryType">';
-	if($_POST['SalaryType']=="MONTHLY") {
-		echo '<option selected="selected" value="MONTHLY">' . _('Monthly Salary') . '</option>';
-		echo '<option value="THRONLY">' . _('THR Only') . '</option>';
-	} else {
-		echo '<option selected="selected" value="THRONLY">' . _('THR Only') . '</option>';
-		echo '<option value="MONTHLY">' . _('Monthly Salary') . '</option>';
-	}
-	echo '</select></td></tr>';	
-
+	
+	include('includes/KLPersonaliaParameterSelection.php');
+	
 	echo '<tr>
 		<td>' . _('Payment date') . ':</td>
 		<td><input type="text" size="11" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="PaymentDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" />';

@@ -3,12 +3,11 @@
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
-include('includes/KLCompanySelection.php');
 
 $Title = _('Export PDF Salary Slips');
 
 if (isset($_POST['submit'])) {
-	submit($Title, $Company, $_POST['DateOfFile'], $_POST['SalaryType'], $db);
+	submit($Title, $_POST['Company'], $_POST['DateOfFile'], $_POST['SalaryType'], $db);
 } else {
 	display($Title, $db);
 }
@@ -190,8 +189,8 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType, &$db) {
 						$pdf->SetFont($FontType, 'B', $FontBigSize);
 						$pdf->MultiCell(0, 0, 'PT. Angin Utara Dingin', 0, 'L', 0, 1, '', '', true);
 						$pdf->SetFont($FontType, '', $FontSmallSize);
-						$pdf->MultiCell(0, 0, 'Jl. Kesambi 1-B, Kerobokan - Bali - Indonesia', 0, 'L', 0, 1, '', '', true);
-						$pdf->MultiCell(0, 0, 'Ph. +62', 0, 'L', 0, 1, '', '', true);
+						$pdf->MultiCell(0, 0, 'Jl. Raya Kesambi No. 1B, Kerobokan Kuta Utara, Badung - Bali', 0, 'L', 0, 1, '', '', true);
+						$pdf->MultiCell(0, 0, 'Ph. +62 812 381 6795', 0, 'L', 0, 1, '', '', true);
 					}				
 					
 					$pdf->SetFont($FontType, '', $FontNormalSize);
@@ -453,7 +452,6 @@ function display($Title, &$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DI
           <div>
 			<br/>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<input type="hidden" name="Company" value="' . $_GET['Company'] . '" />';
 
 	echo '<p class="page_title_text">
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '
@@ -461,40 +459,8 @@ function display($Title, &$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DI
 
 	echo '<table class="selection">';
 
-	echo '<tr><td>' . _('Select Month of the Salaries') . '</td>
-							<td><select name="DateOfFile">';
-							
-	$PeriodNow = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
-	$PeriodsResult = DB_query("SELECT lastdate_in_period, periodno FROM periods ORDER BY periodno");
-	while ($PeriodRow = DB_fetch_row($PeriodsResult)){
-		if ($PeriodRow[1] == ($PeriodNow-1)){
-			echo '<option selected="selected" value="' . $PeriodRow[0] . '">' . MonthAndYearFromSQLDate($PeriodRow[0]) . '</option>';
-		}else{
-			echo '<option value="' . $PeriodRow[0] . '">' . MonthAndYearFromSQLDate($PeriodRow[0]) . '</option>';
-		}
-	}
-	echo '</select></td></tr>';
+	include('includes/KLPersonaliaParameterSelection.php');
 	
-	// check the type of salary to import
-	if(!isset($_POST['SalaryType'])) {
-		$_POST['SalaryType']='MONTHLY';
-	}
-
-	echo '<tr>
-			<td>' . _('Type Of Salary') . ':</td>
-			<td><select name="SalaryType">';
-	if($_POST['SalaryType']=="MONTHLY") {
-		echo '<option selected="selected" value="MONTHLY">' . _('Monthly Salary') . '</option>';
-		echo '<option value="THRONLY">' . _('THR Only') . '</option>';
-	} else {
-		echo '<option selected="selected" value="THRONLY">' . _('THR Only') . '</option>';
-		echo '<option value="MONTHLY">' . _('Monthly Salary') . '</option>';
-	}
-	echo '</select></td></tr>';	
-	
-	echo '</table>';
-
-	echo '<table>';
 	echo '<tr><td>&nbsp;</td></tr>
 		<tr>
 			<td>&nbsp;</td>

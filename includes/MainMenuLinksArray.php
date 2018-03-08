@@ -681,29 +681,19 @@ $MenuItems['PC']['Maintenance']['URL'] = array(	'/PcTypeTabs.php',
 												'/PcExpensesTypeTab.php');
 
 $MenuItems['Personalia']['Transactions']['Caption'] = array(_('Import Monthly Salaries Info from Excel File'),
-															_('Export Info for PPH21 Deduction PT. Bumi Biru'),
-															_('Export Info for PPH21 Deduction PT. ADU'),
-															_('Update PPH21 Deduction PT. Bumi Biru'),
-															_('Update PPH21 Deduction PT. ADU'),
-															_('Export Monthly Salary Slips PT. Bumi Biru'),
-															_('Export Monthly Salary Slips PT. ADU'),
-															_('Export CSV File for Transfer LLG Danamon PT. Bumi Biru'),
-															_('Export CSV File for Transfer LLG Danamon PT. ADU'),
-															_('Move Salaries info to Petty Cash PT. Bumi Biru'),
-															_('Move Salaries info to Petty Cash PT. ADU')
+															_('Export Info for PPH21 Deduction'),
+															_('Update PPH21 Deduction'),
+															_('Export Monthly Salary Slips'),
+															_('Export CSV File for Transfer LLG Danamon'),
+															_('Move Salaries info to Petty Cash')
 															);
 
 $MenuItems['Personalia']['Transactions']['URL'] = array('/KLPersonaliaImportSalaries.php',
-														'/KLPersonaliaExportInfoPPH21.php?Company=PTBB',
-														'/KLPersonaliaExportInfoPPH21.php?Company=PTADU',
-														'/KLPersonaliaDeductionPPH21.php?Company=PTBB',
-														'/KLPersonaliaDeductionPPH21.php?Company=PTADU',
-														'/KLPersonaliaPDFMonthlySalarySlips.php?Company=PTBB',
-														'/KLPersonaliaPDFMonthlySalarySlips.php?Company=PTADU',
-														'/KLPersonaliaCSVDanamonLLG.php?Company=PTBB',
-														'/KLPersonaliaCSVDanamonLLG.php?Company=PTADU',
-														'/KLPersonaliaMoveTxToPC.php?Company=PTBB',
-														'/KLPersonaliaMoveTxToPC.php?Company=PTADU'
+														'/KLPersonaliaExportInfoPPH21.php',
+														'/KLPersonaliaDeductionPPH21.php',
+														'/KLPersonaliaPDFMonthlySalarySlips.php',
+														'/KLPersonaliaCSVDanamonLLG.php',
+														'/KLPersonaliaMoveTxToPC.php'
 														);
 
 $MenuItems['Personalia']['Reports']['Caption'] = array();

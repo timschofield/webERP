@@ -288,6 +288,9 @@ INSERT INTO kurakura_kl_test_erp.pcexpenses SELECT * FROM kurakura_kl_erp.pcexpe
 TRUNCATE kurakura_kl_test_erp.`pctabexpenses`;
 INSERT INTO kurakura_kl_test_erp.pctabexpenses SELECT * FROM kurakura_kl_erp.pctabexpenses;
 
+TRUNCATE kurakura_kl_test_erp.`pcsalaries`;
+INSERT INTO kurakura_kl_test_erp.pcsalaries SELECT * FROM kurakura_kl_erp.pcsalaries;
+
 TRUNCATE kurakura_kl_test_erp.`pctabs`;
 INSERT INTO kurakura_kl_test_erp.pctabs SELECT * FROM kurakura_kl_erp.pctabs;
 

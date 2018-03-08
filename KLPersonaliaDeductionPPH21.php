@@ -4,7 +4,6 @@ include('includes/session.php');
 
 $Title=_('Update of PPH21 Deduction');
 include('includes/header.php');
-include('includes/KLCompanySelection.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
 
@@ -17,7 +16,7 @@ if (isset($_POST['submit'])){
 				$_POST['PotonganPPH21'.$i] = -$_POST['PotonganPPH21'.$i];
 			}
 			$SQLUpdate="UPDATE salariescalculated SET potonganpph21 = '" . filter_number_format($_POST['PotonganPPH21'.$i]) . "' 
-						WHERE company = '" . $Company . "'
+						WHERE company = '" . $_POST['Company'] . "'
 						AND periodno = '" . $_POST['PeriodPPH21'] . "'
 						AND salarytype = '" . $_POST['SalaryType'] . "'
 						AND codename = '" . $_POST['CodeName' . $i] . "'";
@@ -28,8 +27,8 @@ if (isset($_POST['submit'])){
 
 if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 
-	$PeriodPPH21 = GetPeriod(ConvertSQLDate($_POST['MonthOfSalaries']), $db);
-	$PeriodName = MonthAndYearFromSQLDate($_POST['MonthOfSalaries']);
+	$PeriodPPH21 = GetPeriod(ConvertSQLDate($_POST['DateOfFile']), $db);
+	$PeriodName = MonthAndYearFromSQLDate($_POST['DateOfFile']);
 
 	$sql="SELECT codename,
 				fullname,
@@ -37,14 +36,14 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 				potonganpph21
 			FROM salariescalculated
 			WHERE periodno = '" . $PeriodPPH21 . "'
-				AND company = '" . $Company . "'
+				AND company = '" . $_POST['Company'] . "'
 				AND salarytype = '" . $_POST['SalaryType'] . "'
 			ORDER BY zonepph21,
 				fullname";
 
 	$result = DB_query($sql);
 
-//	echo'<p class="page_title_text"><strong>' . _('Company: ') . '' . $Company . ' </strong></p>';
+	echo'<p class="page_title_text"><strong>' . _('Company: ') . '' . $_POST['Company'] . ' </strong></p>';
 	echo'<p class="page_title_text"><strong>' . _('Month: ') . '' . $PeriodName . ' </strong></p>';
 	$k=0; //row colour counter
 	echo '<form action="KLPersonaliaDeductionPPH21.php" method="post" id="Update">';
@@ -74,7 +73,7 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 		//variable for update data
 
 		echo'<input type="hidden" value="' . $_POST['Company'] . '" name="Company" />
-			<input type="hidden" value="' . $_POST['MonthOfSalaries'] . '" name="MonthOfSalaries" />
+			<input type="hidden" value="' . $_POST['DateOfFile'] . '" name="DateOfFile" />
 			<input type="hidden" value="' . $_POST['SalaryType'] . '" name="SalaryType" />
 			<input type="hidden" value="' . $PeriodPPH21 . '" name="PeriodPPH21" />';
 
@@ -103,7 +102,6 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
 		<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<input type="hidden" name="Company" value="' . $_GET['Company'] . '" />';
 
 	echo '<p class="page_title_text">
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '
@@ -111,36 +109,7 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 
 	echo '<table class="selection">';
 
-	echo '<tr><td>' . _('Select Month of the Salaries') . '</td>
-							<td><select name="MonthOfSalaries">';
-							
-	$PeriodNow = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
-	$PeriodsResult = DB_query("SELECT lastdate_in_period, periodno FROM periods ORDER BY periodno");
-	while ($PeriodRow = DB_fetch_row($PeriodsResult)){
-		if ($PeriodRow[1] == ($PeriodNow-1)){
-			echo '<option selected="selected" value="' . $PeriodRow[0] . '">' . MonthAndYearFromSQLDate($PeriodRow[0]) . '</option>';
-		}else{
-			echo '<option value="' . $PeriodRow[0] . '">' . MonthAndYearFromSQLDate($PeriodRow[0]) . '</option>';
-		}
-	}
-	echo '</select></td></tr>';
-
-	// check the type of salary to import
-	if(!isset($_POST['SalaryType'])) {
-		$_POST['SalaryType']='MONTHLY';
-	}
-
-	echo '<tr>
-			<td>' . _('Type Of Salary') . ':</td>
-			<td><select name="SalaryType">';
-	if($_POST['SalaryType']=="MONTHLY") {
-		echo '<option selected="selected" value="MONTHLY">' . _('Monthly Salary') . '</option>';
-		echo '<option value="THRONLY">' . _('THR Only') . '</option>';
-	} else {
-		echo '<option selected="selected" value="THRONLY">' . _('THR Only') . '</option>';
-		echo '<option value="MONTHLY">' . _('Monthly Salary') . '</option>';
-	}
-	echo '</select></td></tr>';	
+	include('includes/KLPersonaliaParameterSelection.php');
 
 	echo '</table>
 			<br />
