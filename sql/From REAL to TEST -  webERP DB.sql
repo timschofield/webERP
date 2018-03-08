@@ -19,7 +19,7 @@ TRUNCATE kurakura_kl_test_erp.`bankaccountusers`;
 INSERT INTO kurakura_kl_test_erp.bankaccountusers SELECT * FROM kurakura_kl_erp.bankaccountusers;
 
 TRUNCATE kurakura_kl_test_erp.`banktrans`;
-INSERT INTO kurakura_kl_test_erp.banktrans SELECT * FROM kurakura_kl_erp.banktrans WHERE transdate >= "2017-01-01";
+INSERT INTO kurakura_kl_test_erp.banktrans SELECT * FROM kurakura_kl_erp.banktrans WHERE transdate >= "2018-01-01";
 
 TRUNCATE kurakura_kl_test_erp.`bom`;
 INSERT INTO kurakura_kl_test_erp.bom SELECT * FROM kurakura_kl_erp.bom;
@@ -28,7 +28,7 @@ TRUNCATE kurakura_kl_test_erp.`buckets`;
 INSERT INTO kurakura_kl_test_erp.buckets SELECT * FROM kurakura_kl_erp.buckets;
 
 TRUNCATE kurakura_kl_test_erp.`chartdetails`;
-INSERT INTO kurakura_kl_test_erp.chartdetails SELECT * FROM kurakura_kl_erp.chartdetails WHERE period >= 94;
+INSERT INTO kurakura_kl_test_erp.chartdetails SELECT * FROM kurakura_kl_erp.chartdetails WHERE period >= 106;
 
 TRUNCATE kurakura_kl_test_erp.`chartmaster`;
 INSERT INTO kurakura_kl_test_erp.chartmaster SELECT * FROM kurakura_kl_erp.chartmaster;
@@ -67,7 +67,7 @@ TRUNCATE kurakura_kl_test_erp.`currencies`;
 INSERT INTO kurakura_kl_test_erp.currencies SELECT * FROM kurakura_kl_erp.currencies;
 
 TRUNCATE kurakura_kl_test_erp.`custallocns`;
-INSERT INTO kurakura_kl_test_erp.custallocns SELECT * FROM kurakura_kl_erp.custallocns WHERE datealloc >= "2017-01-01";
+INSERT INTO kurakura_kl_test_erp.custallocns SELECT * FROM kurakura_kl_erp.custallocns WHERE datealloc >= "2018-01-01";
 
 TRUNCATE kurakura_kl_test_erp.`custbranch`;
 INSERT INTO kurakura_kl_test_erp.custbranch SELECT * FROM kurakura_kl_erp.custbranch;
@@ -85,10 +85,10 @@ TRUNCATE kurakura_kl_test_erp.`debtorsmaster`;
 INSERT INTO kurakura_kl_test_erp.debtorsmaster SELECT * FROM kurakura_kl_erp.debtorsmaster;
 
 TRUNCATE kurakura_kl_test_erp.`debtortrans`;
-INSERT INTO kurakura_kl_test_erp.debtortrans SELECT * FROM kurakura_kl_erp.debtortrans WHERE trandate >= "2017-01-01";
+INSERT INTO kurakura_kl_test_erp.debtortrans SELECT * FROM kurakura_kl_erp.debtortrans WHERE trandate >= "2018-01-01";
 
 TRUNCATE kurakura_kl_test_erp.`debtortranstaxes`;
-INSERT INTO kurakura_kl_test_erp.debtortranstaxes SELECT * FROM kurakura_kl_erp.debtortranstaxes WHERE debtortransid = 248580;
+INSERT INTO kurakura_kl_test_erp.debtortranstaxes SELECT * FROM kurakura_kl_erp.debtortranstaxes WHERE debtortransid = 500000;
 
 TRUNCATE kurakura_kl_test_erp.`debtortype`;
 INSERT INTO kurakura_kl_test_erp.debtortype SELECT * FROM kurakura_kl_erp.debtortype;
@@ -136,7 +136,7 @@ TRUNCATE kurakura_kl_test_erp.`fixedassettasks`;
 INSERT INTO kurakura_kl_test_erp.fixedassettasks SELECT * FROM kurakura_kl_erp.fixedassettasks;
 
 TRUNCATE kurakura_kl_test_erp.`fixedassettrans`;
-INSERT INTO kurakura_kl_test_erp.fixedassettrans SELECT * FROM kurakura_kl_erp.fixedassettrans WHERE transdate >= "2017-01-01";
+INSERT INTO kurakura_kl_test_erp.fixedassettrans SELECT * FROM kurakura_kl_erp.fixedassettrans WHERE transdate >= "2018-01-01";
 
 TRUNCATE kurakura_kl_test_erp.`freightcosts`;
 INSERT INTO kurakura_kl_test_erp.freightcosts SELECT * FROM kurakura_kl_erp.freightcosts;
@@ -148,10 +148,10 @@ TRUNCATE kurakura_kl_test_erp.`glaccountusers`;
 INSERT INTO kurakura_kl_test_erp.glaccountusers SELECT * FROM kurakura_kl_erp.glaccountusers;
 
 TRUNCATE kurakura_kl_test_erp.`gltrans`;
-INSERT INTO kurakura_kl_test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE trandate > "2017-01-01";
+INSERT INTO kurakura_kl_test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE trandate > "2018-01-01";
 
 TRUNCATE kurakura_kl_test_erp.`grns`;
-INSERT INTO kurakura_kl_test_erp.grns SELECT * FROM kurakura_kl_erp.grns WHERE deliverydate >= "2017-01-01";
+INSERT INTO kurakura_kl_test_erp.grns SELECT * FROM kurakura_kl_erp.grns WHERE deliverydate >= "2018-01-01";
 
 TRUNCATE kurakura_kl_test_erp.`holdreasons`;
 INSERT INTO kurakura_kl_test_erp.holdreasons SELECT * FROM kurakura_kl_erp.holdreasons;
@@ -190,7 +190,7 @@ TRUNCATE kurakura_kl_test_erp.`klpostatus`;
 INSERT INTO kurakura_kl_test_erp.klpostatus SELECT * FROM kurakura_kl_erp.klpostatus;
 
 TRUNCATE kurakura_kl_test_erp.`klretailcustomers`;
-INSERT INTO kurakura_kl_test_erp.klretailcustomers SELECT * FROM kurakura_kl_erp.klretailcustomers WHERE date_added >= "2017-01-01";
+INSERT INTO kurakura_kl_test_erp.klretailcustomers SELECT * FROM kurakura_kl_erp.klretailcustomers WHERE date_added >= "2018-01-01";
 
 TRUNCATE kurakura_kl_test_erp.`klretailpartners`;
 INSERT INTO kurakura_kl_test_erp.klretailpartners SELECT * FROM kurakura_kl_erp.klretailpartners;
@@ -232,7 +232,7 @@ TRUNCATE kurakura_kl_test_erp.`loctransfercancellations`;
 INSERT INTO kurakura_kl_test_erp.loctransfercancellations SELECT * FROM kurakura_kl_erp.loctransfercancellations;
 
 TRUNCATE kurakura_kl_test_erp.`loctransfers`;
-INSERT INTO kurakura_kl_test_erp.loctransfers SELECT * FROM kurakura_kl_erp.loctransfers WHERE recdate >= "2017-01-01";
+INSERT INTO kurakura_kl_test_erp.loctransfers SELECT * FROM kurakura_kl_erp.loctransfers WHERE recdate >= "2018-01-01";
 
 TRUNCATE kurakura_kl_test_erp.`mailgroupdetails`;
 INSERT INTO kurakura_kl_test_erp.mailgroupdetails SELECT * FROM kurakura_kl_erp.mailgroupdetails;
@@ -271,7 +271,7 @@ TRUNCATE kurakura_kl_test_erp.`orderdeliverydifferenceslog`;
 INSERT INTO kurakura_kl_test_erp.orderdeliverydifferenceslog SELECT * FROM kurakura_kl_erp.orderdeliverydifferenceslog;
 
 TRUNCATE kurakura_kl_test_erp.`packagingused`;
-INSERT INTO kurakura_kl_test_erp.packagingused SELECT * FROM kurakura_kl_erp.packagingused WHERE date >= "2017-01-01";
+INSERT INTO kurakura_kl_test_erp.packagingused SELECT * FROM kurakura_kl_erp.packagingused WHERE date >= "2018-01-01";
 
 TRUNCATE kurakura_kl_test_erp.`paymentmethods`;
 INSERT INTO kurakura_kl_test_erp.paymentmethods SELECT * FROM kurakura_kl_erp.paymentmethods;
@@ -280,7 +280,7 @@ TRUNCATE kurakura_kl_test_erp.`paymentterms`;
 INSERT INTO kurakura_kl_test_erp.paymentterms SELECT * FROM kurakura_kl_erp.paymentterms;
 
 TRUNCATE kurakura_kl_test_erp.`pcashdetails`;
-INSERT INTO kurakura_kl_test_erp.pcashdetails SELECT * FROM kurakura_kl_erp.pcashdetails WHERE date >= "2017-01-01";
+INSERT INTO kurakura_kl_test_erp.pcashdetails SELECT * FROM kurakura_kl_erp.pcashdetails WHERE date >= "2018-01-01";
 
 TRUNCATE kurakura_kl_test_erp.`pcexpenses`;
 INSERT INTO kurakura_kl_test_erp.pcexpenses SELECT * FROM kurakura_kl_erp.pcexpenses;
@@ -322,10 +322,10 @@ TRUNCATE kurakura_kl_test_erp.`purchorderauth`;
 INSERT INTO kurakura_kl_test_erp.purchorderauth SELECT * FROM kurakura_kl_erp.purchorderauth;
 
 TRUNCATE kurakura_kl_test_erp.`purchorderdetails`;
-INSERT INTO kurakura_kl_test_erp.purchorderdetails SELECT * FROM kurakura_kl_erp.purchorderdetails WHERE deliverydate >= "2017-01-01";
+INSERT INTO kurakura_kl_test_erp.purchorderdetails SELECT * FROM kurakura_kl_erp.purchorderdetails WHERE deliverydate >= "2018-01-01";
 
 TRUNCATE kurakura_kl_test_erp.`purchorders`;
-INSERT INTO kurakura_kl_test_erp.purchorders SELECT * FROM kurakura_kl_erp.purchorders WHERE orddate >= "2017-01-01";
+INSERT INTO kurakura_kl_test_erp.purchorders SELECT * FROM kurakura_kl_erp.purchorders WHERE orddate >= "2018-01-01";
 
 TRUNCATE kurakura_kl_test_erp.`qasamples`;
 INSERT INTO kurakura_kl_test_erp.qasamples SELECT * FROM kurakura_kl_erp.qasamples;
@@ -367,10 +367,10 @@ TRUNCATE kurakura_kl_test_erp.`returneditems`;
 INSERT INTO kurakura_kl_test_erp.returneditems SELECT * FROM kurakura_kl_erp.returneditems;
 
 TRUNCATE kurakura_kl_test_erp.`salariescalculated`;
-INSERT INTO kurakura_kl_test_erp.salariescalculated SELECT * FROM kurakura_kl_erp.salariescalculated WHERE periodno >= 94;
+INSERT INTO kurakura_kl_test_erp.salariescalculated SELECT * FROM kurakura_kl_erp.salariescalculated WHERE periodno >= 106;
 
 TRUNCATE kurakura_kl_test_erp.`salesanalysis`;
-INSERT INTO kurakura_kl_test_erp.salesanalysis SELECT * FROM kurakura_kl_erp.salesanalysis WHERE periodno >= 94;
+INSERT INTO kurakura_kl_test_erp.salesanalysis SELECT * FROM kurakura_kl_erp.salesanalysis WHERE periodno >= 106;
 
 TRUNCATE kurakura_kl_test_erp.`salescat`;
 INSERT INTO kurakura_kl_test_erp.salescat SELECT * FROM kurakura_kl_erp.salescat;
@@ -388,10 +388,10 @@ TRUNCATE kurakura_kl_test_erp.`salesman`;
 INSERT INTO kurakura_kl_test_erp.salesman SELECT * FROM kurakura_kl_erp.salesman;
 
 TRUNCATE kurakura_kl_test_erp.`salesorderdetails`;
-INSERT INTO kurakura_kl_test_erp.salesorderdetails SELECT * FROM kurakura_kl_erp.salesorderdetails WHERE actualdispatchdate >= "2017-01-01";
+INSERT INTO kurakura_kl_test_erp.salesorderdetails SELECT * FROM kurakura_kl_erp.salesorderdetails WHERE actualdispatchdate >= "2018-01-01";
 
 TRUNCATE kurakura_kl_test_erp.`salesorders`;
-INSERT INTO kurakura_kl_test_erp.salesorders SELECT * FROM kurakura_kl_erp.salesorders WHERE orddate >= "2017-01-01";
+INSERT INTO kurakura_kl_test_erp.salesorders SELECT * FROM kurakura_kl_erp.salesorders WHERE orddate >= "2018-01-01";
 
 TRUNCATE kurakura_kl_test_erp.`salestypes`;
 INSERT INTO kurakura_kl_test_erp.salestypes SELECT * FROM kurakura_kl_erp.salestypes;
@@ -445,7 +445,7 @@ TRUNCATE kurakura_kl_test_erp.`stockmaster`;
 INSERT INTO kurakura_kl_test_erp.stockmaster SELECT * FROM kurakura_kl_erp.stockmaster;
 
 TRUNCATE kurakura_kl_test_erp.`stockmoves`;
-INSERT INTO kurakura_kl_test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE trandate >= "2017-01-01";
+INSERT INTO kurakura_kl_test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE trandate >= "2018-01-01";
 
 TRUNCATE kurakura_kl_test_erp.`stockmovestaxes`;
 INSERT INTO kurakura_kl_test_erp.stockmovestaxes SELECT * FROM kurakura_kl_erp.stockmovestaxes WHERE stkmoveno >= 1670146;

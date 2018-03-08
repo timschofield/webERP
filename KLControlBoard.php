@@ -1115,13 +1115,13 @@ if ($ProcessSection02){
 	}
 	
 	if ($KL_SystemAdmin){
-		StockToPTADU("PO", 1.2, $RootPath, $db);
-		$NumberOfTestExecuted++;
 		StockToPTADU("PO", 1.0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		StockToPTADU("WO", 1.2, $RootPath, $db);
+		StockToPTADU("PO", 1.2, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		StockToPTADU("WO", 1.0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		StockToPTADU("WO", 1.2, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -4579,6 +4579,7 @@ function StockToPTADU($Kind, $FactorNearStock, $RootPath, $db){
 					AND purchorderdetails.orderno != 2819
 				GROUP BY purchorderdetails.itemcode
 				HAVING qtyreceivedptadu * " . $FactorNearStock. " >= qoh 
+					AND qtyreceivedptadu > 0
 				ORDER BY purchorderdetails.itemcode";
 	}elseif($Kind == "WO"){
 		$SQL = "SELECT woitems.stockid AS itemcode,
@@ -4595,6 +4596,7 @@ function StockToPTADU($Kind, $FactorNearStock, $RootPath, $db){
 					AND workorders.wo > 3614
 				GROUP BY woitems.stockid
 				HAVING qtyreceivedptadu * " . $FactorNearStock. " >= qoh
+					AND qtyreceivedptadu > 0
 				ORDER BY woitems.stockid";
 	}
 			
