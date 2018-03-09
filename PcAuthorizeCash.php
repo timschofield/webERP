@@ -38,14 +38,14 @@ if (isset($_POST['Go'])) {
 echo '<p class="page_title_text">
 			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', _('Petty Cash'), '" alt="" />', _('Authorisation of Assigned Cash '), '
 		</p>';
-		
+
 if (isset($SelectedTabs)) {
 echo '<br /><table class="selection">';
 echo '	<tr>
 			<td>' . _('Petty Cash Tab') . ':</td>
 			<td>' . $SelectedTabs . '</td>
 		</tr>';
-echo '</table>';	
+echo '</table>';
 }
 
 if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) or isset($_POST['GO'])) {
@@ -54,8 +54,8 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	if (!isset($Days)) {
 		$Days = 30;
 	}
-	
-	//Limit expenses history to X days	
+
+	//Limit expenses history to X days
 	echo '<table class="selection">
 			<tr>
 				<td>', _('Detail of Tab Movements For Last '), ':
@@ -100,7 +100,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	while ($MyRow = DB_fetch_array($Result)) {
 		$CurrDecimalPlaces = $MyRow['decimalplaces'];
 		//update database if update pressed
-		if (isset($_POST['Submit']) and $_POST['Submit'] == _('Update') and isset($_POST[$MyRow['counterindex']])) {
+		if (isset($_POST['Submit']) and $_POST['Submit'] == _('Update') and isset($_POST[$MyRow['counterindex']]) and $MyRow['posted'] == 0) {
 			$PeriodNo = GetPeriod(ConvertSQLDate($MyRow['date']), $db);
 			if ($MyRow['rate'] == 1) { // functional currency
 				$Amount = $MyRow['amount'];
@@ -194,7 +194,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 												transdate,
 												banktranstype,
 												amount,
-												currcode											
+												currcode
 											) VALUES (
 												'" . $ReceiptTransNo . "',
 												1,
@@ -217,12 +217,15 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 					WHERE counterindex = '" . $MyRow['counterindex'] . "'";
 			$Resultupdate = DB_query($SQL, '', '', true);
 			DB_Txn_Commit();
-			prnMsg(_('Assigned cash has been correctly authorised'), 'success');
-			unset($_POST['Submit']);
-			unset($SelectedTabs);
-			unset($_POST['SelectedTabs']);
+			if (DB_error_no() == 0) {
+				prnMsg(_('The cash was successfully authorised and has been posted to the General Ledger'), 'success');
+			} else {
+				prnMsg(_('There was a problem authorising the cash, and the transaction has not been posted'), 'error');
+			}
+		} else if ($MyRow['posted'] == 1) {
+			prnMsg(_('This cash has already been authorised, and cannot be posted again'), 'error');
 		}
-		
+
 		echo '<tr class="striped_row">
 			<td>', ConvertSQLDate($MyRow['date']), '</td>
 			<td>', $MyRow['codeexpense'], '</td>
