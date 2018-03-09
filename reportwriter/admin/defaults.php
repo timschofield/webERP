@@ -38,14 +38,23 @@ $PaperSizes = array (
 	'A3:297:420' => RPT_A3,
 	'A4:210:297' => RPT_A4,
 	'A5:148:210' => RPT_A5,
-	'Legal:216:357' => RPT_LEGAL,
-	'Letter:216:282' => RPT_LETTER);
+	'Legal:216:356' => RPT_LEGAL,
+	'Letter:216:279' => RPT_LETTER);
 
 // Fonts (defaults for FPDF)
 $Fonts = array (
-	'helvetica' => RPT_HELVETICA,
 	'courier' => RPT_COURIER,
-	'times' => RPT_TIMES);
+	'courierB' => RPT_COURIERB,
+	'courierBI' => RPT_COURIERBI,
+	'courierI' => RPT_COURIERI,
+	'helvetica' => RPT_HELVETICA,
+	'helveticaB' => RPT_HELVETICAB,
+	'helveticaBI' => RPT_HELVETICABI,
+	'helveticaI' => RPT_HELVETICAI,
+	'times' => RPT_TIMES,
+	'timesB' => RPT_TIMESB,
+	'timesBI' => RPT_TIMESBI,
+	'timesI' => RPT_TIMESI);
 
 // Available font sizes in units: points
 $FontSizes = array (
@@ -108,9 +117,17 @@ $DateChoices = array(
 	'k' => RPT_YTD,
 	'l' => RPT_YESTERDAY,
 	'm' => RPT_LASTWEEK,
-	'n' => RPT_LASTMONTH,
-	'o' => RPT_LASTQUARTER,
-	'p' => RPT_LASTYEAR);
+	'n' => RPT_LASTWTD,
+	'o' => RPT_LASTMONTH,
+	'p' => RPT_LASTMTD,
+	'q' => RPT_LASTQUARTER,
+	'r' => RPT_LASTQTD,
+	's' => RPT_LASTYEAR,
+	't' => RPT_LASTYTD,
+	'u' => RPT_NEXTWEEK,
+	'v' => RPT_NEXTMONTH,
+	'w' => RPT_NEXTQUARTER,
+	'x' => RPT_NEXTYEAR);
 
 /*********************************************************************************************
 Form unique defaults
