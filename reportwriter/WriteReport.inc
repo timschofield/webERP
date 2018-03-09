@@ -325,10 +325,14 @@ function BuildSQL($Prefs) {
 	$Yesterday = date('Y-m-d', time()-86400);
 	$LastMonth = $ThisMonth-1;
 	$LastYear = $ThisYear-1;
+	$NextMonth = $ThisMonth+1;
+	$NextYear = $ThisYear+1;
 	// Find total number of days in this month:
 	$TotalDays = cal_days_in_month(CAL_GREGORIAN, $ThisMonth, $ThisYear);
-	// Find total number of days in last  month:
+	// Find total number of days in last month:
 	$TotalDaysLast = cal_days_in_month(CAL_GREGORIAN, $LastMonth, $ThisYear);
+	// Find total number of days in next month:
+	$TotalDaysNext = cal_days_in_month(CAL_GREGORIAN, $NextMonth, $ThisYear);
 	// Calculate date range
 	$DateArray=explode(':',$Prefs['DateListings']['params']);
 	switch ($DateArray[0]) { // based on the date choice selected
@@ -384,7 +388,7 @@ function BuildSQL($Prefs) {
 		case "h": // RPT_GROUP_QUARTER
 			$QtrStrt = intval(($ThisMonth-1)/3)*3+1;
 			$QtrEnd = intval(($ThisMonth-1)/3)*3+3;
-			if ( $QtrEnd == 4 OR $QtrEnd == 6 OR $QtrEnd == 9 OR $QtrEnd == 11 ) { $TotalDays=30; }
+			$TotalDays = cal_days_in_month(CAL_GREGORIAN, $QtrEnd, $ThisYear);
 			$qs = date('Y-m-d', mktime(0,0,0, $QtrStrt, 1, $ThisYear));
 			$qe = date('Y-m-d', mktime(0,0,0, $QtrEnd, $TotalDays, $ThisYear));
 			$d = $df.">='".$qs."'";
@@ -437,14 +441,14 @@ function BuildSQL($Prefs) {
 			break;
 		case "p": // RPT_GROUP_LASTMTD
 			$ms = date('Y-m-d', mktime(0,0,0, $LastMonth, 1, $ThisYear));
-			$d = $df.">='".date('Y-m-d', mktime(0,0,0, $ThisMonth, 1, $ThisYear))."'";
+			$d = $df.">='".date('Y-m-d', mktime(0,0,0, $LastMonth, 1, $ThisYear))."'";
 			$d .= " AND ".$df."<='".$Today."'";
 			$fildesc = ' '.RPT_DATERANGE.' '.RPT_FROM.' '.ConvertSQLDate($ms).' '.RPT_TO.' '.ConvertSQLDate($Today).';';
 			break;
 		case "q": // RPT_GROUP_LASTQUARTER
 			$QtrStrt = intval(($ThisMonth-1)/3)*3-2;
 			$QtrEnd = intval(($ThisMonth-1)/3)*3+0;
-			if ( $QtrEnd == 4 OR $QtrEnd == 6 OR $QtrEnd == 9 OR $QtrEnd == 11 ) { $TotalDaysLast=30; }
+			$TotalDays = cal_days_in_month(CAL_GREGORIAN, $QtrEnd, $ThisYear);
 			$qs = date('Y-m-d', mktime(0,0,0, $QtrStrt, 1, $ThisYear));
 			$qe = date('Y-m-d', mktime(0,0,0, $QtrEnd, $TotalDays, $ThisYear));
 			$d = $df.">='".$qs."'";
@@ -470,6 +474,37 @@ function BuildSQL($Prefs) {
 			$d = $df.">='".$ys."'";
 			$d .= " AND ".$df."<='".$Today."'";
 			$fildesc = ' '.RPT_DATERANGE.' '.RPT_FROM.' '.ConvertSQLDate($ys).' '.RPT_TO.' '.ConvertSQLDate($Today).';';
+			break;
+		case "u": // RPT_GROUP_NEXTWEEK
+			$ws = date('Y-m-d', mktime(0,0,0, $ThisMonth, date('j')-date('w')+7, $ThisYear));
+			$we = date('Y-m-d', mktime(0,0,0, $ThisMonth, date('j')-date('w')+13, $ThisYear));
+			$d = $df.">='".$ws."'";
+			$d .= " AND ".$df."<='".$we."'";
+			$fildesc = ' '.RPT_DATERANGE.' '.RPT_FROM.' '.ConvertSQLDate($ws).' '.RPT_TO.' '.ConvertSQLDate($we).';';
+			break;
+		case "v": // RPT_GROUP_NEXTMONTH
+			$ms = date('Y-m-d', mktime(0,0,0, $NextMonth, 1, $ThisYear));
+			$me = date('Y-m-d', mktime(0,0,0, $NextMonth, $TotalDaysNext, $ThisYear));
+			$d = $df.">='".$ms."'";
+			$d .= " AND ".$df."<='".$me."'";
+			$fildesc = ' '.RPT_DATERANGE.' '.RPT_FROM.' '.ConvertSQLDate($ms).' '.RPT_TO.' '.ConvertSQLDate($me).';';
+			break;
+		case "w": // RPT_GROUP_NEXTQUARTER
+			$QtrStrt = intval(($ThisMonth-1)/3)*3+4;
+			$QtrEnd = intval(($ThisMonth-1)/3)*3+6;
+			$TotalDays = cal_days_in_month(CAL_GREGORIAN, $QtrEnd, $ThisYear);
+			$qs = date('Y-m-d', mktime(0,0,0, $QtrStrt, 1, $ThisYear));
+			$qe = date('Y-m-d', mktime(0,0,0, $QtrEnd, $TotalDays, $ThisYear));
+			$d = $df.">='".$qs."'";
+			$d .= " AND ".$df."<='".$qe."'";
+			$fildesc = ' '.RPT_DATERANGE.' '.RPT_FROM.' '.ConvertSQLDate($qs).' '.RPT_TO.' '.ConvertSQLDate($qe).';';
+			break;
+		case "x": // RPT_GROUP_NEXTYEAR
+			$ys = date('Y-m-d', mktime(0,0,0, 1, 1, $NextYear));
+			$ye = date('Y-m-d', mktime(0,0,0, 12, 31, $NextYear));
+			$d = $df.">='".$ys."'";
+			$d .= " AND ".$df."<='".$ye."'";
+			$fildesc = ' '.RPT_DATERANGE.' '.RPT_FROM.' '.ConvertSQLDate($ys).' '.RPT_TO.' '.ConvertSQLDate($ye).';';
 			break;
 	}
 	$strDate = $d;
