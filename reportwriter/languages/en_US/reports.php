@@ -156,6 +156,7 @@ define('RPT_BTN_SAVE',_('Save'));
 define('RPT_BTN_UPDATE',_('Update'));
 
 // Report  Specific
+define('RPT_RPTBASIS',_('Accrual Basis'));
 define('RPT_RPTFILTER',_('Report Filters: '));
 define('RPT_GROUPBY',_('Grouped by:'));
 define('RPT_SORTBY',_('Sorted by:'));
@@ -301,8 +302,17 @@ define('RPT_LANDSCAPE',_('Landscape'));
 
 // Font Names
 define('RPT_COURIER',_('Courier'));
+define('RPT_COURIERB',_('Courier Bold'));
+define('RPT_COURIERBI',_('Courier Bold Italic'));
+define('RPT_COURIERI',_('Courier Italic'));
 define('RPT_HELVETICA',_('Helvetica'));
+define('RPT_HELVETICAB',_('Helvetica Bold'));
+define('RPT_HELVETICABI',_('Helvetica Bold Italic'));
+define('RPT_HELVETICAI',_('Helvetica Italic'));
 define('RPT_TIMES',_('Times'));
+define('RPT_TIMESB',_('Times Bold'));
+define('RPT_TIMESBI',_('Times Bold Italic'));
+define('RPT_TIMESI',_('Times Italic'));
 
 // General Number Definitions
 define('RPT_1',_('1'));
@@ -348,9 +358,15 @@ define('RPT_YEAR',_('This Year'));
 define('RPT_YTD',_('This Year To Date'));
 define('RPT_YESTERDAY',_('Yesterday'));
 define('RPT_LASTWEEK',_('Last Week'));
+define('RPT_LASTWTD',_('Last Week To Date'));
 define('RPT_LASTMONTH',_('Last Month'));
+define('RPT_LASTMTD',_('Last Month To Date'));
 define('RPT_LASTQUARTER',_('Last Quarter'));
+define('RPT_LASTQTD',_('Last Quarter To Date'));
 define('RPT_LASTYEAR',_('Last Year'));
-
-
+define('RPT_LASTYTD',_('Last Year To Date'));
+define('RPT_NEXTWEEK',_('Next Week'));
+define('RPT_NEXTMONTH',_('Next Month'));
+define('RPT_NEXTQUARTER',_('Next Quarter'));
+define('RPT_NEXTYEAR',_('Next Year'));
 ?>
