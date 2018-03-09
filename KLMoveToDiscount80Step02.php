@@ -89,15 +89,15 @@ include('includes/KLPrices.php');
 				AND ($myrow['intransitfromconsignment'] == 0)
 				AND ($myrow['intransitfromshops'] == 0)
 				){
-				if (($myrow['categoryid']== "DISC80") OR ($myrow['categoryid']== "DISC80")){
+				if (($myrow['categoryid']== "DISC80") OR ($myrow['categoryid']== "DISC8A")){
 					// already changed the category, so now it's time to see if labels have been printed and finish the process
 					$NewDiscountCategory = $myrow['discountcategory'];
-					$NewLabelsPrinted = '<a href="' . $RootPath . '/KLChangeToDiscount80.php?Item=' . $myrow['stockid'] . '&Discount='. $myrow['discountcategory'] . '&Action=Finish">' . ('Printed') . '</a>';
+					$NewLabelsPrinted = '<a href="' . $RootPath . '/KLChangeToDiscount.php?Item=' . $myrow['stockid'] . '&Discount='. $myrow['discountcategory']  . '&Category='. $myrow['categoryid'] . '&Action=Finish">' . ('Printed') . '</a>';
 				}else{
 					// the category is still the old one. We still need to change it!
 					// if we have ONLY stock in kantor (or in locations not needing procedure) and NO transit, all the QOH is at kantor
 					// We can apply the new discount category
-					$NewDiscountCategory = '<a href="' . $RootPath . '/KLChangeToDiscount80.php?Item=' . $myrow['stockid'] . '&Discount='. $myrow['discountcategory'] . '&Action=Change">' . $myrow['discountcategory'] . '</a>';
+					$NewDiscountCategory = '<a href="' . $RootPath . '/KLChangeToDiscount.php?Item=' . $myrow['stockid'] . '&Discount='. $myrow['discountcategory']  . '&Category='. $myrow['categoryid'] . '&Action=Change">' . $myrow['discountcategory'] . '</a>';
 					$NewLabelsPrinted = 'Not yet';
 				}
 			}else{

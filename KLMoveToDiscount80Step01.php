@@ -51,7 +51,7 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'DiscountCategory';
 		$i++;
 		prnMsg(_('The Outlet Type must be 80 (so far, only 80% discount available for Outlet Category)'),'error');
-	}elseif ($myrow['categoryid'] == 'DISC80') {
+	}elseif (($myrow['categoryid'] == 'DISC80') OR ($myrow['categoryid'] == 'DISC8A')) {
 		$InputError = 1;
 		$Errors[$i] = 'AlreadyOutlet';
 		$i++;

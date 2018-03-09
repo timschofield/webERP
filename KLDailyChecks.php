@@ -67,6 +67,12 @@ function KL_DailyMaintenanceDatabase($ShowMessages, $db, $EmailText = ''){
 	SetObsoleteForCategoryWithoutStock("NOPOKL", $ShowMessages, $db);
 	SetObsoleteForCategoryWithoutStock("NOPOBL", $ShowMessages, $db);
 	SetObsoleteForCategoryWithoutStock("NOPOGE", $ShowMessages, $db);
+	SetObsoleteForCategoryWithoutStock("DISC2A", $ShowMessages, $db);
+	SetObsoleteForCategoryWithoutStock("DISC5A", $ShowMessages, $db);
+	SetObsoleteForCategoryWithoutStock("DISC8A", $ShowMessages, $db);
+	SetObsoleteForCategoryWithoutStock("NOPOKA", $ShowMessages, $db);
+	SetObsoleteForCategoryWithoutStock("NOPOBA", $ShowMessages, $db);
+	SetObsoleteForCategoryWithoutStock("NOPOGA", $ShowMessages, $db);
 	SetTopSalesRanking($ShowMessages, $db);
 	SetRLZeroForObsolete($ShowMessages, $db);
 	SetRLZeroForLocations($ShowMessages, $db);
