@@ -318,7 +318,7 @@ if(in_array($PayeeSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($P
 			GROUP BY suppliers.supplierid,
 					currencies.decimalplaces
 			HAVING SUM(supptrans.ovamount + supptrans.ovgst - supptrans.alloc) <> 0
-			ORDER BY suppliers.supplierid";
+			ORDER BY supptrans.duedate, suppliers.supplierid";
 	$SuppliersResult = DB_query($Sql);
 
 	while($SuppliersToPay = DB_fetch_array($SuppliersResult)) {
