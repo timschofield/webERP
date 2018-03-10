@@ -545,7 +545,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 	}
 
 
-	$j = 1;
+
 	$Section='';
 	$SectionPrdActual= 0;
 	$SectionPrdLY 	 = 0;
@@ -634,7 +634,6 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 				$GrpPrdActual[$Level] = 0;
 				$ParentGroups[$Level] ='';
 			}
-			$j++;
 		}
 
 		if ($myrow['sectioninaccounts']!= $Section){
@@ -644,7 +643,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 
 					echo '<tr>
 							<td colspan="2"></td>
-	      					<td><hr /></td>
+							<td><hr /></td>
 							<td></td>
 							<td><hr /></td>
 						</tr>';
@@ -701,7 +700,6 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 							<td class="number"><i>%s</i></td>
 							</tr><tr><td colspan="6"> </td></tr>',
 							locale_number_format($PrdGPPercent,1) . '%');
-					$j++;
 				}
 			}
 			$SectionPrdActual =0;
@@ -714,8 +712,6 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 						</tr>',
 						$Sections[$myrow['sectioninaccounts']]);
 			}
-			$j++;
-
 		}
 
 		if ($myrow['groupname']!= $ActGrp){
@@ -773,8 +769,6 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 						htmlspecialchars($myrow['accountname'], ENT_QUOTES,'UTF-8', false),
 						locale_number_format(-$AccountPeriodActual,$_SESSION['CompanyRecord']['decimalplaces']));
 			}
-
-			$j++;
 		}
 	}
 	//end of loop
@@ -839,7 +833,6 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 			$GrpPrdActual[$Level] = 0;
 			$ParentGroups[$Level] ='';
 		}
-		$j++;
 	}
 
 	if ($myrow['sectioninaccounts']!= $Section){
@@ -893,8 +886,6 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 					<td class="number"><i>' . locale_number_format($PrdGPPercent,1) . '%</i></td>
 					<td></td>
 				</tr>';
-
-			$j++;
 		}
 
 		$SectionPrdActual =0;
@@ -906,8 +897,6 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 					<td colspan="6"><h2><b>' . $Sections[$myrow['sectioninaccounts']] . '</b></h2></td>
 				</tr>';
 		}
-		$j++;
-
 	}
 
 	echo '<tr>

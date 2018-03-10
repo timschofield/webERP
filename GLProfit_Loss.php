@@ -647,7 +647,7 @@ if ((!isset($_POST['FromPeriod'])
 	}
 /* echo '<thead>' . $TableHeader . '<thead><tbody>';// thead used in conjunction with tbody enable scrolling of the table body independently of the header and footer. Also, when printing a large table that spans multiple pages, these elements can enable the table header to be printed at the top of each page. */
 
-	$j = 1;
+
 	$Section='';
 	$SectionPrdActual= 0;
 	$SectionPrdLY 	 = 0;
@@ -764,7 +764,6 @@ if ((!isset($_POST['FromPeriod'])
 				$GrpPrdBudget[$Level] = 0;
 				$ParentGroups[$Level] ='';
 			}
-			$j++;
 		}
 
 		if ($myrow['sectioninaccounts']!= $Section){
@@ -774,7 +773,7 @@ if ((!isset($_POST['FromPeriod'])
 
 					echo '<tr>
 							<td colspan="3"></td>
-      						<td><hr /></td>
+							<td><hr /></td>
 							<td></td>
 							<td><hr /></td>
 							<td></td>
@@ -800,7 +799,7 @@ if ((!isset($_POST['FromPeriod'])
 				} else {
 					echo '<tr>
 							<td colspan="2"></td>
-		      				<td><hr /></td>
+							<td><hr /></td>
 							<td></td>
 							<td><hr /></td>
 							<td></td>
@@ -869,7 +868,6 @@ if ((!isset($_POST['FromPeriod'])
 							locale_number_format($PrdGPPercent,1) . '%',
 							locale_number_format($BudgetGPPercent,1) . '%',
 							locale_number_format($LYGPPercent,1). '%');
-					$j++;
 				}
 
 				if (($Section!=1) AND ($Section!=2)){
@@ -939,8 +937,6 @@ if ((!isset($_POST['FromPeriod'])
 					</tr>',
 					$Sections[$myrow['sectioninaccounts']]);
 			}
-			$j++;
-
 		}
 
 
@@ -1018,7 +1014,6 @@ if ((!isset($_POST['FromPeriod'])
 							locale_number_format($AccountPeriodBudget,$_SESSION['CompanyRecord']['decimalplaces']),
 							locale_number_format($AccountPeriodLY,$_SESSION['CompanyRecord']['decimalplaces']));
 				}
-				$j++;
 			}
 		}
 	}
@@ -1117,7 +1112,6 @@ if ((!isset($_POST['FromPeriod'])
 			$GrpPrdBudget[$Level] = 0;
 			$ParentGroups[$Level] ='';
 		}
-		$j++;
 	}
 
 	if ($myrow['sectioninaccounts']!= $Section){
@@ -1221,7 +1215,6 @@ if ((!isset($_POST['FromPeriod'])
 					locale_number_format($PrdGPPercent,1) . '%',
 					locale_number_format($BudgetGPPercent,1) . '%',
 					locale_number_format($LYGPPercent,1). '%');
-			$j++;
 		}
 
 		$SectionPrdLY =0;
@@ -1236,9 +1229,6 @@ if ((!isset($_POST['FromPeriod'])
 				</tr>',
 				$Sections[$myrow['sectioninaccounts']]);
 		}
-
-		$j++;
-
 	}
 
 	echo '<tr>
