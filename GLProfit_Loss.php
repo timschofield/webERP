@@ -984,7 +984,7 @@ if ((!isset($_POST['FromPeriod'])
 		if ($_POST['Detail']=='Detailed'){
 
 			if (isset($_POST['ShowZeroBalances']) OR (!isset($_POST['ShowZeroBalances']) AND ($AccountPeriodActual <> 0 OR $AccountPeriodBudget <> 0 OR $AccountPeriodLY <> 0))){
-				$ActEnquiryURL = '<a href="' . $RootPath . '/GLAccountInquiry.php?Period=' . $_POST['ToPeriod'] . '&amp;Account=' . $myrow['accountcode'] . '&amp;Show=Yes">' . $myrow['accountcode'] . '</a>';
+				$ActEnquiryURL = '<a href="' . $RootPath . '/GLAccountInquiry.php?FromPeriod=' . urlencode($_POST['FromPeriod']) . '&amp;ToPeriod=' . urlencode($_POST['ToPeriod']) . '&amp;Account=' . urlencode($myrow['accountcode']) . '&amp;Show=Yes">' . $myrow['accountcode'] . '</a>';
 				if ($Section ==1){
 					 printf('<tr class="striped_row">
 							<td>%s</td>
