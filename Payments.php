@@ -717,7 +717,7 @@ if(isset($_POST['CommitBatch'])) {
 
 } elseif(isset($_POST['Process']) AND !$BankAccountEmpty) { //user hit submit a new GL Analysis line into the payment
 
-	$ChequeNoSQL="SELECT account FROM gltrans WHERE chequeno='" . $_POST['Cheque'] ."'";
+	$ChequeNoSQL="SELECT account FROM gltrans WHERE chequeno='" . $_POST['Cheque'] ."' LIMIT 1";
 	$ChequeNoResult=DB_query($ChequeNoSQL);
 
 	if(is_numeric($_POST['GLManualCode'])) {
