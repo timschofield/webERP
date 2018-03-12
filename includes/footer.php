@@ -1,6 +1,57 @@
 <?php
+echo '<div id="AlertContainerFoot">';
 
-
+global $Mesages;	
+	
+if (isset($Messages) and count($Messages) > 0) {
+	foreach ($Messages as $Message) {
+		$Prefix = '';
+		switch ($Message[1]) {
+			case 'error':
+				$Class = 'error';
+				$Prefix = $Prefix ? $Prefix : _('ERROR') . ' ' . _('Report');
+				if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity'] > 3) {
+					fwrite($LogFile, date('Y-m-d h-m-s') . ',' . $Type . ',' . $_SESSION['UserID'] . ',' . trim($Msg, ',') . "\n");
+				}
+				echo '<div class="Alert ' . $Class . ' noPrint">
+				<span class="AlertCloseButton">&times;</span>
+				<b>' . $Prefix . '</b> : ' . $Message[0] . '</div>';
+				break;
+			case 'warn':
+			case 'warning':	 
+				$Class = 'warn';
+				$Prefix = $Prefix ? $Prefix : _('WARNING') . ' ' . _('Report');
+				if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity'] > 3) {
+					fwrite($LogFile, date('Y-m-d h-m-s') . ',' . $Type . ',' . $_SESSION['UserID'] . ',' . trim($Msg, ',') . "\n");
+				}
+				echo '<br /><div class="Alert ' . $Class . ' noPrint">
+				<span class="AlertCloseButton">&times;</span>
+				<b>' . $Prefix . '</b> : ' . $Message[0] . '</div>';
+				break;
+			case 'success':
+				$Class = 'success';
+				$Prefix = $Prefix ? $Prefix : _('SUCCESS') . ' ' . _('Report');
+				if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity'] > 3) {
+					fwrite($LogFile, date('Y-m-d h-m-s') . ',' . $Type . ',' . $_SESSION['UserID'] . ',' . trim($Msg, ',') . "\n");
+				}
+				echo '<div class="Alert ' . $Class . ' noPrint">
+				<span class="AlertCloseButton">&times;</span>
+				<b>' . $Prefix . '</b> : ' . $Message[0] . '</div>';
+				break;
+			case 'info':
+			default:
+				$Prefix = $Prefix ? $Prefix : _('INFORMATION') . ' ' . _('Message');
+				$Class = 'info';
+				if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity'] > 2) {
+					fwrite($LogFile, date('Y-m-d h-m-s') . ',' . $Type . ',' . $_SESSION['UserID'] . ',' . trim($Msg, ',') . "\n");
+				}
+				echo '<div class="Alert ' . $Class . ' noPrint">
+				<span class="AlertCloseButton">&times;</span>
+				<b>' . $Prefix . '</b> : ' . $Message[0] . '</div>';
+		}
+	}
+}
+echo '</div>'; // eof AlertContainer div
 echo '</div>'; // BodyWrapDiv
 echo '</div>'; // BodyDiv
 

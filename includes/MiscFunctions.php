@@ -4,11 +4,14 @@
 /** STANDARD MESSAGE HANDLING & FORMATTING **/
 /*  ******************************************  */
 
-function prnMsg($Msg,$Type='info', $Prefix=''){
-
-	echo getMsg($Msg, $Type, $Prefix);
-
-}//prnMsg
+function prnMsg($Msg, $Type = 'info', $Prefix = '') {
+	global $Messages;
+	$Messages[] = array(
+		$Msg,
+		$Type,
+		$Prefix
+	);
+} //prnMsg
 
 function reverse_escape($str) {
   $search=array("\\\\","\\0","\\n","\\r","\Z","\'",'\"');
@@ -16,6 +19,7 @@ function reverse_escape($str) {
   return str_replace($search,$replace,$str);
 }
 
+/*
 function getMsg($Msg,$Type='info',$Prefix=''){
 	$Colour='';
 	if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity']>0) {
@@ -54,6 +58,7 @@ function getMsg($Msg,$Type='info',$Prefix=''){
 	}
 	return '<div class="'.$Class.'"><b>' . $Prefix . '</b> : ' .$Msg . '</div>';
 }//getMsg
+*/
 
 function IsEmailAddress($Email){
 
