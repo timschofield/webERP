@@ -1,5 +1,7 @@
 webERP Change Log
 
+12/3/18 Phil code review Payments.php reinstate Payment->BankTransRef
+12/3/18 Review includes/GLPostings.php
 23/2/18  Tim (PaulT add table tags/commit): Add Tim's improved SortSelect() js function replacement. Change also requires <thead>, <tbody>, and (if needed) <tfoot> tags applied to tables that have sorting. (Forum contribution: http://www.weberp.org/forum/showthread.php?tid=7918) Also, change removes the 'alt' attribute from date inputs (handling replaced by commit 7974) within these modified files.
 23/2/18  PaulT: InventoryPlanning.php, InventoryValuation.php, StockCheck.php: Fix view page source message "No space between attributes" reported in Firefox.
 20/2/18  Exson: sanitize scripts name in footer.inc and forbidden the use of InputSerialItemsSequential.php without login. 

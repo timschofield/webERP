@@ -23,6 +23,7 @@ Class Payment {
 	var $Discount;
 	var $Amount;
 	var $Narrative;
+	var $BankTransRef;
 	var $GLItemCounter; /*Counter for the number of GL accounts being posted to by the Payment */
 
 	function __construct(){
