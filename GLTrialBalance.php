@@ -403,18 +403,18 @@ if ((! isset($_POST['FromPeriod'])
 } else {
 
 	include('includes/header.php');
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
+		<div>
+			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+			<input type="hidden" name="FromPeriod" value="' . $_POST['FromPeriod'] . '" />
+			<input type="hidden" name="ToPeriod" value="' . $_POST['ToPeriod'] . '" />';
 
 	if ($_POST['Period'] != '') {
 		$_POST['FromPeriod'] = ReportPeriod($_POST['Period'], 'From');
 		$_POST['ToPeriod'] = ReportPeriod($_POST['Period'], 'To');
 	}
 
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
-		<div>
-			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-			<input type="hidden" name="FromPeriod" value="' . $_POST['FromPeriod'] . '" />
-			<input type="hidden" name="ToPeriod" value="' . $_POST['ToPeriod'] . '" />
-			<input type="hidden" name="Period" value="' . $_POST['Period'] . '" />';
+	echo '<input type="hidden" name="Period" value="' . $_POST['Period'] . '" />';
 
 	$NumberOfMonths = $_POST['ToPeriod'] - $_POST['FromPeriod'] + 1;
 
