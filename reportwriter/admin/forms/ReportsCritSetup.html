@@ -13,11 +13,11 @@
   </table>
   <table width="700" align="center" border="2" cellspacing="1" cellpadding="1">
     <tr bgcolor="#CCCCCC">
-      <td colspan="5"><div align="center"><?php echo RPT_DATEINFO; ?></div></td>
+      <td colspan="6"><div align="center"><?php echo RPT_DATEINFO; ?></div></td>
     </tr>
     <tr>
-      <td width="40%"><?php echo RPT_DATELIST; ?><br /><br /><?php echo RPT_DATEINST; ?></td>
-      <td width="15%">
+      <td width="20%"><?php echo RPT_DATELIST; ?><br /><br /><?php echo RPT_DATEINST; ?></td>
+      <td width="16%">
 	    <?php if (mb_strpos($DateListings['displaydesc'],'a')===false) $Checked = ''; else $Checked = ' checked'; ?>
 		<input type="checkbox" name="DateRange1" value="a"<?php echo $Checked; ?>><?php echo $DateChoices['a']; ?><br />
 	    <?php if (mb_strpos($DateListings['displaydesc'],'b')===false) $Checked = ''; else $Checked = ' checked'; ?>
@@ -31,7 +31,7 @@
 	    <?php if (mb_strpos($DateListings['displaydesc'],'f')===false) $Checked = ''; else $Checked = ' checked'; ?>
 		<input type="checkbox" name="DateRange6" value="f"<?php echo $Checked; ?>><?php echo $DateChoices['f']; ?><br />
 	  </td>
-      <td width="15%">
+      <td width="16%">
 	    <?php if (mb_strpos($DateListings['displaydesc'],'g')===false) $Checked = ''; else $Checked = ' checked'; ?>
 		<input type="checkbox" name="DateRange7" value="g"<?php echo $Checked; ?>><?php echo $DateChoices['g']; ?><br />
 	    <?php if (mb_strpos($DateListings['displaydesc'],'h')===false) $Checked = ''; else $Checked = ' checked'; ?>
@@ -43,7 +43,7 @@
 	    <?php if (mb_strpos($DateListings['displaydesc'],'k')===false) $Checked = ''; else $Checked = ' checked'; ?>
 		<input type="checkbox" name="DateRange11" value="k"<?php echo $Checked; ?>><?php echo $DateChoices['k']; ?><br />
 	  </td>
-      <td width="15%">
+      <td width="16%">
 	    <?php if (mb_strpos($DateListings['displaydesc'],'l')===false) $Checked = ''; else $Checked = ' checked'; ?>
 		<input type="checkbox" name="DateRange12" value="l"<?php echo $Checked; ?>><?php echo $DateChoices['l']; ?><br />
 	    <?php if (mb_strpos($DateListings['displaydesc'],'m')===false) $Checked = ''; else $Checked = ' checked'; ?>
@@ -55,7 +55,7 @@
 	    <?php if (mb_strpos($DateListings['displaydesc'],'p')===false) $Checked = ''; else $Checked = ' checked'; ?>
 		<input type="checkbox" name="DateRange16" value="p"<?php echo $Checked; ?>><?php echo $DateChoices['p']; ?><br />
 	  </td>
-      <td width="15%">
+      <td width="16%">
 	    <?php if (mb_strpos($DateListings['displaydesc'],'q')===false) $Checked = ''; else $Checked = ' checked'; ?>
 		<input type="checkbox" name="DateRange17" value="q"<?php echo $Checked; ?>><?php echo $DateChoices['q']; ?><br />
 	    <?php if (mb_strpos($DateListings['displaydesc'],'r')===false) $Checked = ''; else $Checked = ' checked'; ?>
@@ -65,10 +65,20 @@
 	    <?php if (mb_strpos($DateListings['displaydesc'],'t')===false) $Checked = ''; else $Checked = ' checked'; ?>
 		<input type="checkbox" name="DateRange20" value="t"<?php echo $Checked; ?>><?php echo $DateChoices['t']; ?><br />
 	  </td>
+      <td width="16%">
+	    <?php if (mb_strpos($DateListings['displaydesc'],'u')===false) $Checked = ''; else $Checked = ' checked'; ?>
+		<input type="checkbox" name="DateRange21" value="u"<?php echo $Checked; ?>><?php echo $DateChoices['u']; ?><br />
+	    <?php if (mb_strpos($DateListings['displaydesc'],'v')===false) $Checked = ''; else $Checked = ' checked'; ?>
+		<input type="checkbox" name="DateRange22" value="v"<?php echo $Checked; ?>><?php echo $DateChoices['v']; ?><br />
+	    <?php if (mb_strpos($DateListings['displaydesc'],'w')===false) $Checked = ''; else $Checked = ' checked'; ?>
+		<input type="checkbox" name="DateRange23" value="w"<?php echo $Checked; ?>><?php echo $DateChoices['w']; ?><br />
+	    <?php if (mb_strpos($DateListings['displaydesc'],'x')===false) $Checked = ''; else $Checked = ' checked'; ?>
+		<input type="checkbox" name="DateRange24" value="x"<?php echo $Checked; ?>><?php echo $DateChoices['x']; ?><br />
+	  </td>
     </tr>
     <tr>
       <td><?php echo RPT_DATEDEF; ?></td>
-      <td colspan="4"><select name="DefDate">
+      <td colspan="5"><select name="DefDate">
 		<?php foreach($DateChoices as $key=>$value) {
 			if ($DateListings['params']==$key) $Selected = ' selected'; else $Selected = '';
 			echo '<option value="'.$key.'"'.$Selected.'>'.$value.'</option>';
@@ -77,7 +87,7 @@
     </tr>
     <tr>
       <td><?php echo RPT_DATEFNAME; ?></td>
-      <td colspan="4">
+      <td colspan="5">
 	    <select name="DateField"><OPTION Value=""><?php echo RPT_SLCTFIELD; ?>
 		<?php echo CreateFieldList($ReportID,$DateListings['fieldname'],''); ?></select>
 	  </td>
@@ -85,7 +95,7 @@
 	<?php if ($Type<>'frm') { ?>
 	   <tr>
 		  <td><?php echo RPT_TRUNC; ?></td>
-		  <td colspan="4"><p>
+		  <td colspan="5"><p>
 			<?php if ($TruncListings['params']=='1') $Checked = ' checked'; else $Checked = ''; ?>
 			  <input type="radio" name="TruncLongDesc" value="1"<?php echo $Checked; ?>><?php echo RPT_YES; ?>
 			<?php if ($TruncListings['params']=='0') $Checked = ' checked'; else $Checked = ''; ?>
@@ -94,7 +104,7 @@
 	<?php } else { ?>
 		<tr>
 		  <td><?php echo 'Form Page Break Field (table.fieldname)'; ?></td>
-		  <td colspan="3">
+		  <td colspan="5">
 			<select name="FormBreakField"><OPTION Value=""><?php echo RPT_SLCTFIELD; ?>
 			<?php echo CreateFieldList($ReportID,$GroupListings['lists'][0]['fieldname'],''); ?></select>
 		  </td>
@@ -102,6 +112,7 @@
 	<?php } // end if ($Type<>'frm') ?>
   </table>
 </form>
+<br />
 <table align="center" border="2" cellspacing="1" cellpadding="1">
 <?php if ($Type<>'frm') { // then show the sort and group information ?>
     <tr bgcolor="#CCCCCC">
@@ -148,7 +159,7 @@
 		foreach ($GroupListings['lists'] as $FieldDetails) { ?>
 			<tr>
 				<form name="CritFieldForm" method="post" action="ReportCreator.php?action=step7">
-	<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
+				<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
 				<input name="ReportID" type="hidden" value="<?php echo $ReportID ?>">
 				<input name="Type" type="hidden" value="<?php echo $Type; ?>">
 				<input name="ReportName" type="hidden" value="<?php echo $reportname; ?>">

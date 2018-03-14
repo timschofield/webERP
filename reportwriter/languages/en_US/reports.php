@@ -192,7 +192,7 @@ define('RPT_CUSTRPT',_('Custom Reports'));
 define('RPT_DATEDEF',_('Default Date Selected'));
 define('RPT_DATEFNAME',_('Date Fieldname (table.fieldname)'));
 define('RPT_DATEINFO',_('Report Date Information'));
-define('RPT_DATEINST',_('Uncheck all boxes for date independent reports; leave Date Fieldname empty'));
+define('RPT_DATEINST',_('For date-independent reports:<br />Uncheck all period range boxes<br />Leave Date Fieldname empty'));
 define('RPT_DATELIST',_('Date Field List<br />(check all that apply)'));
 define('RPT_DEFRPT',_('Default Reports'));
 define('RPT_ENDPOS',_('End Position (mm)'));
