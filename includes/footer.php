@@ -1,8 +1,6 @@
 <?php
-echo '<div id="AlertContainerFoot">';
+echo '<div id="MessageContainerFoot">';
 
-global $Mesages;	
-	
 if (isset($Messages) and count($Messages) > 0) {
 	foreach ($Messages as $Message) {
 		$Prefix = '';
@@ -13,8 +11,8 @@ if (isset($Messages) and count($Messages) > 0) {
 				if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity'] > 3) {
 					fwrite($LogFile, date('Y-m-d h-m-s') . ',' . $Type . ',' . $_SESSION['UserID'] . ',' . trim($Msg, ',') . "\n");
 				}
-				echo '<div class="Alert ' . $Class . ' noPrint">
-				<span class="AlertCloseButton">&times;</span>
+				echo '<div class="Message ' . $Class . ' noPrint">
+				<span class="MessageCloseButton">&times;</span>
 				<b>' . $Prefix . '</b> : ' . $Message[0] . '</div>';
 				break;
 			case 'warn':
@@ -24,8 +22,8 @@ if (isset($Messages) and count($Messages) > 0) {
 				if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity'] > 3) {
 					fwrite($LogFile, date('Y-m-d h-m-s') . ',' . $Type . ',' . $_SESSION['UserID'] . ',' . trim($Msg, ',') . "\n");
 				}
-				echo '<br /><div class="Alert ' . $Class . ' noPrint">
-				<span class="AlertCloseButton">&times;</span>
+				echo '<div class="Message ' . $Class . ' noPrint">
+				<span class="MessageCloseButton">&times;</span>
 				<b>' . $Prefix . '</b> : ' . $Message[0] . '</div>';
 				break;
 			case 'success':
@@ -34,8 +32,8 @@ if (isset($Messages) and count($Messages) > 0) {
 				if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity'] > 3) {
 					fwrite($LogFile, date('Y-m-d h-m-s') . ',' . $Type . ',' . $_SESSION['UserID'] . ',' . trim($Msg, ',') . "\n");
 				}
-				echo '<div class="Alert ' . $Class . ' noPrint">
-				<span class="AlertCloseButton">&times;</span>
+				echo '<div class="Message ' . $Class . ' noPrint">
+				<span class="MessageCloseButton">&times;</span>
 				<b>' . $Prefix . '</b> : ' . $Message[0] . '</div>';
 				break;
 			case 'info':
@@ -45,13 +43,13 @@ if (isset($Messages) and count($Messages) > 0) {
 				if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity'] > 2) {
 					fwrite($LogFile, date('Y-m-d h-m-s') . ',' . $Type . ',' . $_SESSION['UserID'] . ',' . trim($Msg, ',') . "\n");
 				}
-				echo '<div class="Alert ' . $Class . ' noPrint">
-				<span class="AlertCloseButton">&times;</span>
+				echo '<div class="Message ' . $Class . ' noPrint">
+				<span class="MessageCloseButton">&times;</span>
 				<b>' . $Prefix . '</b> : ' . $Message[0] . '</div>';
 		}
 	}
 }
-echo '</div>'; // eof AlertContainer div
+echo '</div>'; // eof MessageContainer div
 echo '</div>'; // BodyWrapDiv
 echo '</div>'; // BodyDiv
 

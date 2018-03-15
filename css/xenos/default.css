@@ -1,4 +1,3 @@
-/* $Id: default.css 7166 2015-02-21 21:18:59Z Khwunchai $*/
 /* Xenos theme by Khwunchai J. */
 /* Xenos is a very clean and classy looking theme design for WebERP. */
 /*	Design guidelines:
@@ -210,30 +209,30 @@ tr.striped_row:nth-of-type(even) {
 tr.striped_row:nth-of-type(odd) {
 	background-color:#CCCCCC;
 }
-div.Alert {
+div.Message {
     border-radius:10px;
     padding:10px 10px 10px 36px;
     margin:5px;
 	opacity: 1;
     transition: opacity 0.6s; /* 600ms to fade out */
 }
-div.Alert.error {
-	background:#ffecec url('images/alert-error.png') no-repeat 10px 50%;
+div.Message.error {
+	background:#ffecec url('images/message-error.png') no-repeat 10px 50%;
     border:1px solid #f5aca6;
 }
-div.Alert.success {
-	background:#e9ffd9 url('images/alert-success.png') no-repeat 10px 50%;
+div.Message.success {
+	background:#e9ffd9 url('images/message-success.png') no-repeat 10px 50%;
     border:1px solid #a6ca8a;
 }
-div.Alert.info {
-	background:#e3f7fc url('images/alert-info.png') no-repeat 10px 50%;
+div.Message.info {
+	background:#e3f7fc url('images/message-info.png') no-repeat 10px 50%;
     border:1px solid #8ed9f6;
 }
-div.Alert.warn {
-	background:#fff8c4 url('images/alert-warning.png') no-repeat 10px 50%;
+div.Message.warn {
+	background:#fff8c4 url('images/message-warning.png') no-repeat 10px 50%;
     border:1px solid #f2c779;
 }
-.AlertCloseButton {
+.MessageCloseButton {
     margin-left: 15px;
     color: #C8C8C8;
     font-weight: bold;
@@ -243,15 +242,11 @@ div.Alert.warn {
 	cursor: pointer;
     transition: 0.3s;
 }
-.AlertCloseButton:hover {
+.MessageCloseButton:hover {
     color: #606060;
 }
-#AlertContainerFoot {
-}
-#AlertContainerHead {
-	width: 35%;
-	margin-left:auto;
-	margin-right:0;
+#MessageContainerFoot {
+	display: none;
 }
 div.page_help_text {
 	background:lightgrey url(images/help.png) top left no-repeat;
@@ -494,9 +489,6 @@ select.selecterror {
 	box-shadow:         1px 1px 2px #C3C3C3;
 	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3')";
 	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3')
-}
-#BodyWrapDiv {
-	position: relative;
 }
 
 /*** BODY - MAIN MENU ***/

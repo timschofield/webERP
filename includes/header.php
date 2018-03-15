@@ -103,5 +103,5 @@
 			'</div>',// Close Headerdiv
 			'<div id="BodyDiv">',
 				'<div id="BodyWrapDiv">',
-					'<div id="AlertContainerHead"></div>';
+					'<div id="MessageContainerHead"></div>';
 ?>

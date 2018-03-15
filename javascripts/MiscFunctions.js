@@ -418,13 +418,16 @@ function initial() {
 	
 	/* Notification messages */
 	
-	/* Move messages from footer to header */
-	document.getElementById('AlertContainerHead').appendChild(
-    document.getElementById('AlertContainerFoot')
+	/* Move messages from footer div into header div */
+	document.getElementById('MessageContainerHead').appendChild(
+    document.getElementById('MessageContainerFoot')
 	);
-  
+	
+	/* Show footer div after it has been moved to header div */
+	document.getElementById('MessageContainerFoot').style["display"] = "block";
+		  
 	/* Close button dynamic styling*/
-	var close = document.getElementsByClassName("AlertCloseButton");
+	var close = document.getElementsByClassName("MessageCloseButton");
 	var i;
 	for (i = 0; i < close.length; i++) {
 		close[i].onclick = function(){
