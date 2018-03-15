@@ -353,7 +353,7 @@ if ($ProcessSection01){
 									'111121111PT', 
 									'111121120PT', 
 									'111121130PT', 
-									'111203010PT')", "Total Cash PT.BB", 2000000000, 3000000000, $periodnow, $db);
+									'111203010PT')", "Total Cash PT.BB", 2000000000, 3500000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		
 		BalanceListAccountControl("('111259010', 
@@ -392,7 +392,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("211021400", -100000000,          1, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("211021500",  500000000, 1000000000, $periodnow, $db);
+		BalanceAccountControl("211021500",  250000000,  500000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("612011215",         -1,          1, $periodnow, $db);
 		$NumberOfTestExecuted++;
