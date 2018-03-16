@@ -135,7 +135,7 @@ if (isset($_POST['submit'])) {
 		$msg = _('The currency definition record has been added');
 	}
 	//run the SQL from either of the above possibilites
-	$ExDiffTransNo = GetNextTransNo(36,$db);
+	$ExDiffTransNo = GetNextTransNo(36);
 	$resultTx = DB_Txn_Begin();
 
 	$result = DB_query($sql);
@@ -154,7 +154,7 @@ if (isset($_POST['submit'])) {
 	if (isset($SelectedCurrency) AND $InputError !=1) {
 		/*Get the current period */
 		$PostingDate = Date($_SESSION['DefaultDateFormat']);
-		$PeriodNo = GetPeriod($PostingDate,$db);
+		$PeriodNo = GetPeriod($PostingDate);
 
 		/* get all the bank accounts denominated on the selected currency */
 		$SQLBankAccounts = "SELECT 	bankaccountname,

@@ -419,9 +419,9 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 
 	$Result = DB_Txn_Begin();
 /*Now Get the next GRN - function in SQL_CommonFunctions*/
-	$GRN = GetNextTransNo(25, $db);
+	$GRN = GetNextTransNo(25);
 
-	$PeriodNo = GetPeriod($_POST['DefaultReceivedDate'], $db);
+	$PeriodNo = GetPeriod($_POST['DefaultReceivedDate']);
 	$_POST['DefaultReceivedDate'] = FormatDateForSQL($_POST['DefaultReceivedDate']);
 	$OrderCompleted = true; //assume all received and completed - now test in case not
 	foreach ($_SESSION['PO'.$identifier]->LineItems as $OrderLine) {

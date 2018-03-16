@@ -48,10 +48,10 @@ if (isset($_POST['PostExchangeDifference']) AND is_numeric(filter_number_format(
 		$ExchangeDifference = ($CalculatedBalance - filter_number_format($_POST['BankStatementBalance']))/$CurrencyRow['rate'];
 
 		include ('includes/SQL_CommonFunctions.inc');
-		$ExDiffTransNo = GetNextTransNo(36,$db);
+		$ExDiffTransNo = GetNextTransNo(36);
 		/*Post the exchange difference to the last day of the month prior to current date*/
 		$PostingDate = Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, Date('m'), 0,Date('Y')));
-		$PeriodNo = GetPeriod($PostingDate,$db);
+		$PeriodNo = GetPeriod($PostingDate);
 		$result = DB_Txn_Begin();
 
 //yet to code the journal
@@ -148,7 +148,7 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 
 /*Get the balance of the bank account concerned */
 
-	$PeriodNo = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
+	$PeriodNo = GetPeriod(date($_SESSION['DefaultDateFormat']));
 
 	$SQL = "SELECT bfwd+actual AS balance
 			FROM chartdetails

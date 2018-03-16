@@ -23,7 +23,7 @@ if(isset($_SESSION['Transfer']) and $_SESSION['Transfer']->TrfID == '') {
 if(isset($_POST['ProcessTransfer'])) {
 /*Ok Time To Post transactions to Inventory Transfers, and Update Posted variable & received Qty's  to LocTransfers */
 
-	$PeriodNo = GetPeriod ($_SESSION['Transfer']->TranDate, $db);
+	$PeriodNo = GetPeriod ($_SESSION['Transfer']->TranDate);
 	$SQLTransferDate = FormatDateForSQL($_SESSION['Transfer']->TranDate);
 
 	$InputError = False; /*Start off hoping for the best */

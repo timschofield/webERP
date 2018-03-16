@@ -176,7 +176,7 @@ if(isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file pr
 		$_POST['typeid']=$filerow[30];
 
 		if($_POST['AutoDebtorNo']== 1) {
-			$_POST['DebtorNo'] = GetNextTransNo(500, $db);
+			$_POST['DebtorNo'] = GetNextTransNo(500);
 		} else {
 			$_POST['DebtorNo'] = mb_strtoupper($_POST['DebtorNo']);
 		}

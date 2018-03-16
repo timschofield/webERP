@@ -252,7 +252,7 @@ if (isset($_POST['CommitBatch'])){
   and add up the non-GL ones for posting to debtors later,
   also add the total discount total receipts*/
 
-	$PeriodNo = GetPeriod($_SESSION['ReceiptBatch' . $identifier]->DateBanked,$db);
+	$PeriodNo = GetPeriod($_SESSION['ReceiptBatch' . $identifier]->DateBanked);
 
 	if ($_SESSION['CompanyRecord']==0){
 		prnMsg(_('The company has not yet been set up properly') . ' - ' . _('this information is needed to process the batch') . '. ' . _('Processing has been cancelled'),'error');
@@ -272,7 +272,7 @@ if (isset($_POST['CommitBatch'])){
 
 	/*Start a transaction to do the whole lot inside */
 	$result = DB_Txn_Begin();
-	$_SESSION['ReceiptBatch' . $identifier]->BatchNo = GetNextTransNo(12,$db);
+	$_SESSION['ReceiptBatch' . $identifier]->BatchNo = GetNextTransNo(12);
 
 
 	$BatchReceiptsTotal = 0; //in functional currency
@@ -393,7 +393,7 @@ if (isset($_POST['CommitBatch'])){
 
 				*/
 
-				$PaymentTransNo = GetNextTransNo( 1, $db);
+				$PaymentTransNo = GetNextTransNo( 1 );
 				$SQL="INSERT INTO banktrans (transno,
 											type,
 											bankact,

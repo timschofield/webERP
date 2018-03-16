@@ -254,7 +254,7 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 		      /*Starting a new purchase order with a different supplier */
 					$result = DB_Txn_Begin();
 
-					$PO_OrderNo =  GetNextTransNo(18, $db); //get the next PO number
+					$PO_OrderNo =  GetNextTransNo(18); //get the next PO number
 
 					$SupplierID = $ItemRow['supplierno'];
 					$Order_Value = 0;

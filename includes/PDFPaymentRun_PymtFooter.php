@@ -127,7 +127,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 	/*If the General Ledger Link is activated */
 	if ($_SESSION['CompanyRecord']['gllink_creditors']==1){
 
-		$PeriodNo = GetPeriod($_POST['AmountsDueBy'],$db);
+		$PeriodNo = GetPeriod($_POST['AmountsDueBy']);
 
 		/*Do the GL trans for the payment CR bank */
 

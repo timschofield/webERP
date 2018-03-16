@@ -22,9 +22,9 @@ function submit($TabToShow) {
 	if ($InputError == 0){
 		// Creation of beginning of SQL query
 		$SQL = "SELECT pcexpenses.codeexpense,";
-		
+
 		// Creation of periods SQL query
-		$PeriodToday=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
+		$PeriodToday=GetPeriod(Date($_SESSION['DefaultDateFormat']));
 		$SQLPeriods = "SELECT periodno,
 						lastdate_in_period
 				FROM periods
@@ -35,7 +35,7 @@ function submit($TabToShow) {
 		$NumPeriod = 0;
 		$LabelsArray = array();
 		while ($MyRow=DB_fetch_array($Periods)){
-		
+
 			$NumPeriod++;
 			$LabelsArray[$NumPeriod] = MonthAndYearFromSQLDate($MyRow['lastdate_in_period']);
 			$SQL = $SQL . "(SELECT SUM(pcashdetails.amount)
@@ -66,14 +66,14 @@ function submit($TabToShow) {
 										 ->setDescription("Petty Cash Expenses Analysis")
 										 ->setKeywords("")
 										 ->setCategory("");
-										 
+
 			// Formatting
-			
+
 			$objPHPExcel->getActiveSheet()->getStyle('C:AB')->getNumberFormat()->setFormatCode('#,##0.00');
 			$objPHPExcel->getActiveSheet()->getStyle('4')->getFont()->setBold(true);
 			$objPHPExcel->getActiveSheet()->getStyle('A2')->getFont()->setBold(true);
 			$objPHPExcel->getActiveSheet()->getStyle('A:B')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-						
+
 			// Add title data
 			$objPHPExcel->setActiveSheetIndex(0);
 			$objPHPExcel->getActiveSheet()->setCellValue('A2', 'Petty Cash Tab(s)');
@@ -108,14 +108,14 @@ function submit($TabToShow) {
  			$objPHPExcel->getActiveSheet()->setCellValue('Z4', $LabelsArray[3]);
  			$objPHPExcel->getActiveSheet()->setCellValue('AA4', $LabelsArray[2]);
  			$objPHPExcel->getActiveSheet()->setCellValue('AB4', $LabelsArray[1]);
- 
+
 			// Add data
 			$i = 5;
 			while ($MyRow = DB_fetch_array($Result)) {
 				$objPHPExcel->setActiveSheetIndex(0);
 				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $MyRow['codeexpense']);
 				$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $MyRow['description']);
-	
+
 				$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, '=SUM(Q'.$i.':AB'.$i.')');
 				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, '=AVERAGE(Q'.$i.':AB'.$i.')');
 
@@ -146,7 +146,7 @@ function submit($TabToShow) {
 
 				$i++;
 			}
-			
+
 			// Freeze panes
 			$objPHPExcel->getActiveSheet()->freezePane('E5');
 
@@ -156,7 +156,7 @@ function submit($TabToShow) {
 					->getColumnDimension($col)
 					->setAutoSize(true);
 }
-					
+
 			// Rename worksheet
 			if ($TabToShow=='All'){
 				$objPHPExcel->getActiveSheet()->setTitle('All Accounts');
@@ -218,7 +218,7 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 		<td><select name="Tabs">';
 
 	$SQL = "SELECT tabcode
-			FROM pctabs 
+			FROM pctabs
 			ORDER BY tabcode";
 	$CatResult = DB_query($SQL);
 
@@ -247,7 +247,7 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 
 function beginning_of_month($Date){
 	$Date2 = explode("-",$Date);
-	$M = $Date2[1]; 
+	$M = $Date2[1];
 	$Y = $Date2[0];
 	$FirstOfMonth = $Y . '-' . $M . '-01';
 	return $FirstOfMonth;

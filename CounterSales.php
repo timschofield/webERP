@@ -1072,9 +1072,9 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 	// *************************************************************************
 		$result = DB_Txn_Begin();
 	/*First add the order to the database - it only exists in the session currently! */
-		$OrderNo = GetNextTransNo(30, $db);
-		$InvoiceNo = GetNextTransNo(10, $db);
-		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
+		$OrderNo = GetNextTransNo(30);
+		$InvoiceNo = GetNextTransNo(10);
+		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 
 		$HeaderSQL = "INSERT INTO salesorders (	orderno,
 												debtorno,
@@ -1200,7 +1200,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 						$WOQuantity = $StockItem->EOQ;
 					}
 
-					$WONo = GetNextTransNo(40,$db);
+					$WONo = GetNextTransNo(40);
 					$ErrMsg = _('Unable to insert a new work order for the sales order item');
 					$InsWOResult = DB_query("INSERT INTO workorders (wo,
 													 loccode,
@@ -1889,7 +1889,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 			/*Need to figure out the cross rate between customer currency and bank account currency */
 
 			if ($_POST['AmountPaid']!=0){
-				$ReceiptNumber = GetNextTransNo(12,$db);
+				$ReceiptNumber = GetNextTransNo(12);
 				$SQL="INSERT INTO gltrans (type,
 											typeno,
 											trandate,
@@ -1933,7 +1933,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 		} /*end of if Sales and GL integrated */
 		if ($_POST['AmountPaid']!=0){
 			if (!isset($ReceiptNumber)){
-				$ReceiptNumber = GetNextTransNo(12,$db);
+				$ReceiptNumber = GetNextTransNo(12);
 			}
 			//Now need to add the receipt banktrans record
 			//First get the account currency that it has been banked into

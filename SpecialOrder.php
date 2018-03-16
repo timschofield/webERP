@@ -382,7 +382,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		$DbgMsg = _('The SQL statement used to insert the purchase order header record and failed was');
  		$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
 
- 		$_SESSION['SPL'.$identifier]->PurchOrderNo = GetNextTransNo(18, $db);
+ 		$_SESSION['SPL'.$identifier]->PurchOrderNo = GetNextTransNo(18);
 
 		/*Insert the purchase order detail records */
 		foreach ($_SESSION['SPL'.$identifier]->LineItems as $SPLLine) {
@@ -494,7 +494,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		$result =DB_query($sql,$ErrMsg,$DbgMsg,true);
 
 		$BranchDetails=DB_fetch_array($result);
-		$SalesOrderNo=GetNextTransNo (30, $db);
+		$SalesOrderNo=GetNextTransNo (30);
 		$HeaderSQL = "INSERT INTO salesorders (orderno,
 											debtorno,
 											branchcode,

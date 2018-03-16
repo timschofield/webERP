@@ -536,7 +536,7 @@ if(isset($_POST['CreateQuotation']) AND !$InputError){
 
 	//start a DB transaction
 	$Result = DB_Txn_Begin();
-	$OrderNo = GetNextTransNo(30, $db);
+	$OrderNo = GetNextTransNo(30);
 	$HeaderSQL = "INSERT INTO salesorders (	orderno,
 											debtorno,
 											branchcode,

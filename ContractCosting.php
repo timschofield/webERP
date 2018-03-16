@@ -234,8 +234,8 @@ if (isset($_POST['CloseContract']) AND $_SESSION['Contract'.$identifier]->Status
 //Compare actual costs to original budgeted contract costs - if actual > budgeted - CR WIP and DR usage variance
 	$Variance =  ($OtherReqtsBudget+$ContractBOMBudget)-($OtherReqtsActual+$ContractBOMActual);
 
-	$ContractCloseNo = GetNextTransNo( 32  ,$db);
-	$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
+	$ContractCloseNo = GetNextTransNo( 32 );
+	$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 
 	DB_Txn_Begin();
 
@@ -311,7 +311,7 @@ if (isset($_POST['CloseContract']) AND $_SESSION['Contract'.$identifier]->Status
 			$myrow=DB_fetch_row($result);
 			if ($myrow[0]==0){ //then the contract wo has not been received (it will only ever be for 1 item)
 
-				$WOReceiptNo = GetNextTransNo(26, $db);
+				$WOReceiptNo = GetNextTransNo(26);
 
 				/* Need to get the current location quantity will need it later for the stock movement */
 				$SQL = "SELECT locstock.quantity

@@ -57,12 +57,12 @@ if (isset($_POST['CommitBatch']) AND $_POST['CommitBatch']==_('Accept and Proces
   A GL entry is created for each GL entry
 */
 
-	$PeriodNo = GetPeriod($_SESSION['JournalDetail']->JnlDate,$db);
+	$PeriodNo = GetPeriod($_SESSION['JournalDetail']->JnlDate);
 
      /*Start a transaction to do the whole lot inside */
 	$result = DB_Txn_Begin();
 
-	$TransNo = GetNextTransNo( 0, $db);
+	$TransNo = GetNextTransNo( 0 );
 
 	foreach ($_SESSION['JournalDetail']->GLEntries as $JournalItem) {
 		$SQL = "INSERT INTO gltrans (type,

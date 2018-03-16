@@ -40,7 +40,7 @@ if(! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 				<td><select required="required" name="BalancePeriodEnd">';
 /*				<td><select required="required" name="ToPeriod">';*/
 
-	$periodno=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
+	$periodno=GetPeriod(Date($_SESSION['DefaultDateFormat']));
 	$sql = "SELECT lastdate_in_period FROM periods WHERE periodno='".$periodno . "'";
 	$result = DB_query($sql);
 	$myrow=DB_fetch_array($result);

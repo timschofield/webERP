@@ -117,7 +117,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 
 	$Result = DB_Txn_Begin();
 
-	$PeriodNo = GetPeriod(ConvertSQLDate($GRN['deliverydate']), $db);
+	$PeriodNo = GetPeriod(ConvertSQLDate($GRN['deliverydate']));
 
 /*Now the SQL to do the update to the PurchOrderDetails */
 

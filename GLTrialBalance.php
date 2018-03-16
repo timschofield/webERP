@@ -46,7 +46,7 @@ if ((! isset($_POST['FromPeriod'])
 		$FromDate = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,$_SESSION['YearEnd'] + 2,0,Date('Y')-1));
 	}
 	/*GetPeriod function creates periods if need be the return value is not used */
-	$NotUsedPeriodNo = GetPeriod($FromDate, $db);
+	$NotUsedPeriodNo = GetPeriod($FromDate);
 
 	/*Show a form to allow input of criteria for TB to show */
 	echo '<table class="selection">
@@ -81,7 +81,7 @@ if ((! isset($_POST['FromPeriod'])
 	echo '</select></td>
 		</tr>';
 	if (!isset($_POST['ToPeriod']) OR $_POST['ToPeriod']==''){
-		$DefaultToPeriod = GetPeriod(date($_SESSION['DefaultDateFormat'],mktime(0,0,0,Date('m')+1,0,Date('Y'))),$db);
+		$DefaultToPeriod = GetPeriod(date($_SESSION['DefaultDateFormat'],mktime(0,0,0,Date('m')+1,0,Date('Y'))));
 	} else {
 		$DefaultToPeriod = $_POST['ToPeriod'];
 	}

@@ -100,7 +100,7 @@ echo ' <input type="submit" name="ShowGraphUsage" value="' . _('Show Graph Of St
 /*HideMovt ==1 if the movement was only created for the purpose of a transaction but is not a physical movement eg. A price credit will create a movement record for the purposes of display on a credit note
 but there is no physical stock movement - it makes sense honest ??? */
 
-$CurrentPeriod = GetPeriod(Date($_SESSION['DefaultDateFormat']),$db);
+$CurrentPeriod = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 
 if (isset($_POST['ShowUsage'])){
 	if($_POST['StockLocation']=='All'){

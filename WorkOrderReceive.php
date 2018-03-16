@@ -198,9 +198,9 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 
 		$Result = DB_Txn_Begin();
 		/*Now Get the next WOReceipt transaction type 26 - function in SQL_CommonFunctions*/
-		$WOReceiptNo = GetNextTransNo(26, $db);
+		$WOReceiptNo = GetNextTransNo(26);
 
-		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
+		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 
 		if (!isset($_POST['ReceivedDate'])){
 			$_POST['ReceivedDate'] = Date($_SESSION['DefaultDateFormat']);
@@ -248,8 +248,8 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 
 				if ($_SESSION['CompanyRecord']['gllink_stock']==1 AND $ItemCostRow['totalqoh']!=0){
 
-					$CostUpdateNo = GetNextTransNo(35, $db);
-					$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
+					$CostUpdateNo = GetNextTransNo(35);
+					$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 
 					$ValueOfChange = $ItemCostRow['totalqoh'] * (($Cost + $ItemCostRow['labourcost'] + $ItemCostRow['overheadcost']) - $ItemCostRow['cost']);
 
@@ -321,7 +321,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 										  AND parentstockid='" .$_POST['StockID'] . "'
 										  AND autoissue=1");
 
-		$WOIssueNo = GetNextTransNo(28,$db);
+		$WOIssueNo = GetNextTransNo(28);
 		while ($AutoIssueCompRow = DB_fetch_array($AutoIssueCompsResult)){
 
 			//Note that only none-controlled items can be auto-issuers so don't worry about serial nos and batches of controlled ones
@@ -458,7 +458,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 		$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The location stock record could not be updated because');
 		$DbgMsg =  _('The following SQL to update the location stock record was used');
 		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
-		$WOReceiptNo = GetNextTransNo(26,$db);
+		$WOReceiptNo = GetNextTransNo(26);
 		/*Insert stock movements - with unit cost */
 
 		$SQL = "INSERT INTO stockmoves (stockid,
