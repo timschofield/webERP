@@ -102,6 +102,5 @@
 	echo '</div>',// Close HeaderWrapDiv
 			'</div>',// Close Headerdiv
 			'<div id="BodyDiv">',
-				'<div id="BodyWrapDiv">',
-					'<div id="MessageContainerHead"></div>';
+				'<div id="BodyWrapDiv">';
 ?>
