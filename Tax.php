@@ -235,7 +235,7 @@ if (isset($_POST['TaxAuthority']) and isset($_POST['PrintPDF']) and isset($_POST
 	if ($_POST['DetailOrSummary'] == 'Detail') {
 		$FontSize = 10;
 		$YPos -= $FontSize; // Jumps additional line.
-		$YPos -= $FontSize; 
+		$YPos -= $FontSize;
 		$pdf->addText($Left_Margin, $YPos + $FontSize, $FontSize, _('Tax on Petty Cash Expenses'));
 		$YPos -= $FontSize;
 		// Prints out lines:
@@ -382,7 +382,7 @@ if (isset($_POST['TaxAuthority']) and isset($_POST['PrintPDF']) and isset($_POST
 	echo '<tr>
 			<td>' . _('Return To') . ':</td>
 			<td><select name="ToPeriod">';
-	$DefaultPeriod = GetPeriod(Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m'), 0, Date('Y'))),$db);
+	$DefaultPeriod = GetPeriod(Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m'), 0, Date('Y'))));
 	$SQL = "SELECT periodno,
 					lastdate_in_period
 				FROM periods";

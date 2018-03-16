@@ -74,7 +74,7 @@ Class Tender {
 		/* Does record exist for this tender
 		 */
 		if ($this->TenderId=='') {
-			$this->TenderId = GetNextTransNo(37, $db);
+			$this->TenderId = GetNextTransNo(37);
 			$HeaderSQL="INSERT INTO tenders (tenderid,
 											location,
 											address1,

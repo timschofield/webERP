@@ -34,8 +34,8 @@ if(isset($SelectedPeriod)) { //If it was called from itself (in other words an i
 	$FirstPeriodSelected = $_GET['FromPeriod'];
 	$LastPeriodSelected = $_GET['ToPeriod'];
 } else { // Otherwise just highlight the current period
-	$FirstPeriodSelected = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
-	$LastPeriodSelected = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
+	$FirstPeriodSelected = GetPeriod(date($_SESSION['DefaultDateFormat']));
+	$LastPeriodSelected = GetPeriod(date($_SESSION['DefaultDateFormat']));
 }
 
 echo '<div class="page_help_text noprint">' . _('Use the keyboard Shift key to select multiple periods') . '</div><br />';

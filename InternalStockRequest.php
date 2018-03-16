@@ -71,7 +71,7 @@ if (isset($_POST['Submit']) AND (!empty($_SESSION['Request']->LineItems))) {
 		$InputError=1;
 	}
 	if ($InputError==0) {
-		$RequestNo = GetNextTransNo(38, $db);
+		$RequestNo = GetNextTransNo(38);
 		$HeaderSQL="INSERT INTO stockrequest (dispatchid,
 											loccode,
 											departmentid,

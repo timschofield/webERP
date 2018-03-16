@@ -135,7 +135,7 @@ if(isset($_GET['SupplierID'])) {
 			$_SESSION['PaymentDetail'.$identifier]->Currency = $myrow['currcode'];
 			$_POST['Currency'] = $_SESSION['PaymentDetail'.$identifier]->Currency;
 		}
-		
+
 		if(isset($_GET['Amount']) AND is_numeric($_GET['Amount'])) {
 			$_SESSION['PaymentDetail'.$identifier]->Amount = filter_number_format($_GET['Amount']);
 		}
@@ -347,7 +347,7 @@ if(isset($_POST['CommitBatch']) AND empty($Errors)) {
 		$i++;
 	}
 
-	$PeriodNo = GetPeriod($_SESSION['PaymentDetail'.$identifier]->DatePaid,$db);
+	$PeriodNo = GetPeriod($_SESSION['PaymentDetail'.$identifier]->DatePaid);
 
 	$SQL = "SELECT usepreprintedstationery
 			FROM paymentmethods
@@ -427,7 +427,7 @@ if(isset($_POST['CommitBatch']) AND empty($Errors)) {
 
 		//its a nominal bank transaction type 1
 
-			$TransNo = GetNextTransNo( 1, $db);
+			$TransNo = GetNextTransNo( 1 );
 			$TransType = 1;
 
 			if($_SESSION['CompanyRecord']['gllink_creditors']==1) { /* then enter GLTrans */
@@ -526,7 +526,7 @@ if(isset($_POST['CommitBatch']) AND empty($Errors)) {
 
 				*/
 
-					$ReceiptTransNo = GetNextTransNo( 2, $db);
+					$ReceiptTransNo = GetNextTransNo( 2 );
 					$SQL = "INSERT INTO banktrans (
 								transno,
 								type,
@@ -572,7 +572,7 @@ if(isset($_POST['CommitBatch']) AND empty($Errors)) {
 			/*Its a supplier payment type 22 */
 			$CreditorTotal = (($_SESSION['PaymentDetail'.$identifier]->Discount + $_SESSION['PaymentDetail'.$identifier]->Amount)/$_SESSION['PaymentDetail'.$identifier]->ExRate)/$_SESSION['PaymentDetail'.$identifier]->FunctionalExRate;
 
-			$TransNo = GetNextTransNo(22, $db);
+			$TransNo = GetNextTransNo(22);
 			$TransType = 22;
 
 			/* Create a SuppTrans entry for the supplier payment */
@@ -1363,7 +1363,7 @@ the fields for entry of receipt amt and disc */
 						AND supplierno='" . $_SESSION['PaymentDetail'.$identifier]->SupplierID . "'
 						AND (supptrans.ovamount+supptrans.ovgst+supptrans.diffonexch-supptrans.alloc)<>0";
 		$Result = DB_query($SQL);
-		
+
 		echo '<table class="selection">
 				<tr>
 					<th class="Ascending">' . _('Date') . '</th>

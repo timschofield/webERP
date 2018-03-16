@@ -1005,7 +1005,7 @@ function PeriodExists($TransDate) {
 
 }
 
-function GetPeriod ($TransDate, &$db, $UseProhibit=true) {
+function GetPeriod ($TransDate, $UseProhibit=true) {
 
 	/* Convert the transaction date into a unix time stamp.*/
 

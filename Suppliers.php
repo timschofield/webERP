@@ -525,7 +525,7 @@ if (isset($_POST['submit'])) {
 		} else { //its a new supplier
 			if ($_SESSION['AutoSupplierNo']== 1) {
 				/* system assigned, sequential, numeric */
-				$SupplierID = GetNextTransNo(600, $db);
+				$SupplierID = GetNextTransNo(600);
 			}
 			$sql = "INSERT INTO suppliers (supplierid,
 										suppname,

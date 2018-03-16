@@ -109,7 +109,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	while ($MyRow = DB_fetch_array($Result)) {
 		$CurrDecimalPlaces = $MyRow['decimalplaces'];
 		//update database if update pressed
-		$PeriodNo = GetPeriod(ConvertSQLDate($MyRow['date']), $db);
+		$PeriodNo = GetPeriod(ConvertSQLDate($MyRow['date']));
 		$TagSQL = "SELECT tagdescription FROM tags WHERE tagref='" . $MyRow['tag'] . "'";
 		$TagResult = DB_query($TagSQL);
 		$TagRow = DB_fetch_array($TagResult);
@@ -148,7 +148,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 		}
 		if (isset($_POST['Submit']) and $_POST['Submit'] == _('Update') and isset($_POST[$MyRow['counterindex']])) {
 			//get typeno
-			$TypeNo = GetNextTransNo($Type,$db);
+			$TypeNo = GetNextTransNo($Type);
 			//build narrative
 			$Narrative = _('PettyCash') . ' - ' . $MyRow['tabcode'] . ' - ' . $MyRow['codeexpense'] . ' - ' . DB_escape_string($MyRow['notes']);
 			//insert to gltrans

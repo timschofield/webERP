@@ -230,7 +230,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 	}
 
 	if(!isset($Trf_ID)){
-		$Trf_ID = GetNextTransNo(16,$db);
+		$Trf_ID = GetNextTransNo(16);
 	}
 
 	if (isset($InputError) and $InputError==true){

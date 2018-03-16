@@ -71,7 +71,7 @@ if(isset($SelectedWO) AND$SelectedWO!='') {
 	}
 
 	// new
-	$_POST['WO'] = GetNextTransNo(40,$db);
+	$_POST['WO'] = GetNextTransNo(40);
 	$SQL = "INSERT INTO workorders (wo,
 									loccode,
 									requiredby,

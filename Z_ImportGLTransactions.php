@@ -55,7 +55,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	}
 
 	//Get the next transaction number
-	$TransNo = GetNextTransNo( $_POST['TransactionType'], $db);
+	$TransNo = GetNextTransNo( $_POST['TransactionType']);
 
 	//Get the exchange rate to use between the transaction currency and the functional currency
 	$sql = "SELECT rate FROM currencies WHERE currabrev='" . $_POST['Currency'] . "'";
@@ -115,7 +115,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		}
 
 		//Find the period number from the date
-		$Period = GetPeriod($myrow[0], $db);
+		$Period = GetPeriod($myrow[0]);
 
 		//All transactions must be in the same period
 		if (isset($PreviousPeriod) and $PreviousPeriod != $Period) {
