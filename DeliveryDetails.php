@@ -336,7 +336,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 
 	$Result = DB_Txn_Begin();
 
-	$OrderNo = GetNextTransNo(30, $db);
+	$OrderNo = GetNextTransNo(30);
 
 	$HeaderSQL = "INSERT INTO salesorders (
 								orderno,
@@ -494,7 +494,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 					$WOQuantity = $StockItem->EOQ;
 				}
 
-				$WONo = GetNextTransNo(40,$db);
+				$WONo = GetNextTransNo(40);
 				$ErrMsg = _('Unable to insert a new work order for the sales order item');
 				$InsWOResult = DB_query("INSERT INTO workorders (wo,
 												 loccode,
@@ -664,7 +664,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 									AND status=1");
 		if(DB_num_rows($ContractResult)==1) {//then it is a contract quotation being changed to an order
 			$ContractRow = DB_fetch_array($ContractResult);
-			$WONo = GetNextTransNo(40,$db);
+			$WONo = GetNextTransNo(40);
 			$ErrMsg = _('Could not update the contract status');
 			$DbgMsg = _('The SQL that failed to update the contract status was');
 			$UpdContractResult=DB_query("UPDATE contracts SET status=2,

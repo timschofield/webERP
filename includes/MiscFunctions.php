@@ -420,4 +420,104 @@ function ChangeFieldInTable($TableName, $FieldName, $OldValue, $NewValue){
 	echo ' ... ' . _('completed');
 }
 
+/* Used in report scripts for standard periods.
+ * Parameter $choice is from the 'Period' combobox value.
+ */
+function ReportPeriodList( $choice ){
+	$periods = array( _('This Month'), _('This Quarter'), _('This Year'),
+					  _('Last Month'), _('Last Quarter'), _('Last Year'),
+					  _('Next Month'), _('Next Quarter'), _('Next Year') );
+
+	$count = count($periods);
+
+	$html = '<select name="Period">
+			<option value=""></option>';
+
+	for ( $x = 0; $x < $count; ++$x ) {
+		if ( !empty($choice) && $choice == $periods[$x] ){
+			$html .= '<option value="' . $periods[$x] . '" selected>' . $periods[$x] . '</option>';
+		}
+		else {
+			$html .= '<option value="' . $periods[$x] . '">' . $periods[$x] . '</option>';
+		}
+	}
+
+	$html .= '</select>';
+
+	return $html;
+}
+
+function ReportPeriod($PeriodName, $FromOrTo){
+	/* Used in report scripts to determine period.
+	*/
+	$ThisMonth = date('m');
+	$ThisYear = date('Y');
+	$LastMonth = $ThisMonth-1;
+	$LastYear = $ThisYear-1;
+	$NextMonth = $ThisMonth+1;
+	$NextYear = $ThisYear+1;
+	// Find total number of days in this month:
+	$TotalDays = cal_days_in_month(CAL_GREGORIAN, $ThisMonth, $ThisYear);
+	// Find total number of days in last month:
+	$TotalDaysLast = cal_days_in_month(CAL_GREGORIAN, $LastMonth, $ThisYear);
+	// Find total number of days in next month:
+	$TotalDaysNext = cal_days_in_month(CAL_GREGORIAN, $NextMonth, $ThisYear);
+	switch ($PeriodName) {
+
+		Case _('This Month'):
+			$ds = date('Y-m-d', mktime(0,0,0, $ThisMonth, 1, $ThisYear));
+			$de = date('Y-m-d', mktime(0,0,0, $ThisMonth, $TotalDays, $ThisYear));
+			break;
+		Case _('This Quarter'):
+			$QtrStrt = intval(($ThisMonth-1)/3)*3+1;
+			$QtrEnd = intval(($ThisMonth-1)/3)*3+3;
+			if ( $QtrEnd == 4 OR $QtrEnd == 6 OR $QtrEnd == 9 OR $QtrEnd == 11 ) { $TotalDays=30; }
+			$ds = date('Y-m-d', mktime(0,0,0, $QtrStrt, 1, $ThisYear));
+			$de = date('Y-m-d', mktime(0,0,0, $QtrEnd, $TotalDays, $ThisYear));
+			break;
+		Case _('This Year'):
+			$ds = date('Y-m-d', mktime(0,0,0, 1, 1, $ThisYear));
+			$de = date('Y-m-d', mktime(0,0,0, 12, 31, $ThisYear));
+			break;
+		Case _('Last Month'):
+			$ds = date('Y-m-d', mktime(0,0,0, $LastMonth, 1, $ThisYear));
+			$de = date('Y-m-d', mktime(0,0,0, $LastMonth, $TotalDaysLast, $ThisYear));
+			break;
+		Case _('Last Quarter'):
+			$QtrStrt = intval(($ThisMonth-1)/3)*3-2;
+			$QtrEnd = intval(($ThisMonth-1)/3)*3+0;
+			if ( $QtrEnd == 4 OR $QtrEnd == 6 OR $QtrEnd == 9 OR $QtrEnd == 11 ) { $TotalDays=30; }
+			$ds = date('Y-m-d', mktime(0,0,0, $QtrStrt, 1, $ThisYear));
+			$de = date('Y-m-d', mktime(0,0,0, $QtrEnd, $TotalDays, $ThisYear));
+			break;
+		Case _('Last Year'):
+			$ds = date('Y-m-d', mktime(0,0,0, 1, 1, $LastYear));
+			$de = date('Y-m-d', mktime(0,0,0, 12, 31, $LastYear));
+			break;
+		Case _('Next Month'):
+			$ds = date('Y-m-d', mktime(0,0,0, $NextMonth, 1, $ThisYear));
+			$de = date('Y-m-d', mktime(0,0,0, $NextMonth, $TotalDaysNext, $ThisYear));
+			break;
+		Case _('Next Quarter'):
+			$QtrStrt = intval(($ThisMonth-1)/3)*3+4;
+			$QtrEnd = intval(($ThisMonth-1)/3)*3+6;
+			if ( $QtrEnd == 4 OR $QtrEnd == 6 OR $QtrEnd == 9 OR $QtrEnd == 11 ) { $TotalDays=30; }
+			$ds = date('Y-m-d', mktime(0,0,0, $QtrStrt, 1, $ThisYear));
+			$de = date('Y-m-d', mktime(0,0,0, $QtrEnd, $TotalDays, $ThisYear));
+			break;
+		Case _('Next Year'):
+			$ds = date('Y-m-d', mktime(0,0,0, 1, 1, $NextYear));
+			$de = date('Y-m-d', mktime(0,0,0, 12, 31, $NextYear));
+			break;
+	}
+
+	if ($FromOrTo == 'From') {
+		$Period = GetPeriod(ConvertSQLDate($ds));
+	} else {
+		$Period = GetPeriod(ConvertSQLDate($de));
+	}
+
+	return $Period;
+}
+
 ?>

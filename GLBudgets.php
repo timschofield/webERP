@@ -90,7 +90,7 @@ echo '<br />
 
 if (isset($SelectedAccount) and $SelectedAccount != '') {
 
-	$CurrentYearEndPeriod = GetPeriod(Date($_SESSION['DefaultDateFormat'],YearEndDate($_SESSION['YearEnd'],0)),$db);
+	$CurrentYearEndPeriod = GetPeriod(Date($_SESSION['DefaultDateFormat'],YearEndDate($_SESSION['YearEnd'],0)));
 
 // If the update button has been hit, then update chartdetails with the budget figures
 // for this year and next.
@@ -119,7 +119,7 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 /* If the periods dont exist then create them */
 	for ($i=1; $i <=36; $i++) {
 		$MonthEnd=mktime(0,0,0,$_SESSION['YearEnd']+1+$i,0,$YearEndYear-2);
-		$period=GetPeriod(Date($_SESSION['DefaultDateFormat'],$MonthEnd),$db, false);
+		$period=GetPeriod(Date($_SESSION['DefaultDateFormat'],$MonthEnd), false);
 		$PeriodEnd[$period]=Date('M Y',$MonthEnd);
 	}
 	include('includes/GLPostings.inc'); //creates chartdetails with correct values

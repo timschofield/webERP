@@ -428,8 +428,8 @@ if(in_array($CashSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($Ca
 		</thead>
 		<tbody>';
 
-	$FirstPeriodSelected = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
-	$LastPeriodSelected = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
+	$FirstPeriodSelected = GetPeriod(date($_SESSION['DefaultDateFormat']));
+	$LastPeriodSelected = GetPeriod(date($_SESSION['DefaultDateFormat']));
 	$SelectedPeriod=$LastPeriodSelected;
 
 	$Sql = "SELECT bankaccounts.accountcode,

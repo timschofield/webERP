@@ -137,7 +137,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 				$SupplierID = $DetailTrans['supplierid'];
 				$SupplierName = $DetailTrans['suppname'];
 				if (isset($_POST['PrintPDFAndProcess'])){
-					$SuppPaymentNo = GetNextTransNo(22, $db);
+					$SuppPaymentNo = GetNextTransNo(22);
 				}
 				$AccumBalance = 0;
 				$AccumDiffOnExch = 0;

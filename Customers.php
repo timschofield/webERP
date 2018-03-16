@@ -210,7 +210,7 @@ if (isset($_POST['submit'])) {
 			if ($_SESSION['AutoDebtorNo'] > 0) {
 				/* system assigned, sequential, numeric */
 				if ($_SESSION['AutoDebtorNo']== 1) {
-					$_POST['DebtorNo'] = GetNextTransNo(500, $db);
+					$_POST['DebtorNo'] = GetNextTransNo(500);
 				}
 			}
 

@@ -667,8 +667,8 @@ then do the updates and inserts to process the credit note entered */
 
 		/*Get the next transaction number for internal purposes and the period to post GL transactions in based on the credit note date*/
 
-		$CreditNoteNo = GetNextTransNo(21, $db);
-		$PeriodNo = GetPeriod($_SESSION['SuppTrans']->TranDate, $db);
+		$CreditNoteNo = GetNextTransNo(21);
+		$PeriodNo = GetPeriod($_SESSION['SuppTrans']->TranDate);
 		$SQLCreditNoteDate = FormatDateForSQL($_SESSION['SuppTrans']->TranDate);
 
 

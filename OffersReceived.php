@@ -173,7 +173,7 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 		$result=DB_query($sql);
 		$myrow=DB_fetch_array($result);
 		$Rate=$myrow['rate'];
-		$OrderNo =  GetNextTransNo(18, $db);
+		$OrderNo =  GetNextTransNo(18);
 		$sql="INSERT INTO purchorders (
 					orderno,
 					supplierno,

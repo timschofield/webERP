@@ -143,7 +143,7 @@ if (isset($_POST['UpdateDatabase'])) {
 
 		if ($MovtInDiffOnExch !=0) {
 			if ($_SESSION['CompanyRecord']['gllink_debtors'] == 1) {
-				$PeriodNo = GetPeriod($_SESSION['Alloc']->TransDate, $db);
+				$PeriodNo = GetPeriod($_SESSION['Alloc']->TransDate);
 				$_SESSION['Alloc']->TransDate = FormatDateForSQL($_SESSION['Alloc']->TransDate);
 
 					$SQL = "INSERT INTO gltrans (

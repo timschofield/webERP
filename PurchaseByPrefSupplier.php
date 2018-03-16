@@ -190,7 +190,7 @@ if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
 		}
 
 		/*Get the order number */
-		$OrderNo = GetNextTransNo(18, $db);
+		$OrderNo = GetNextTransNo(18);
 
 		/*Insert to purchase order header record */
 		$sql = "INSERT INTO purchorders ( orderno,

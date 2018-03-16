@@ -157,7 +157,7 @@ if (!isset($_SESSION['Shipment'])){
 	$_SESSION['Shipment']->SupplierName = $myrow['suppname'];
 	$_SESSION['Shipment']->CurrCode = $myrow['currcode'];
 	$_SESSION['Shipment']->CurrDecimalPlaces = $myrow['currdecimalplaces'];
-	$_SESSION['Shipment']->ShiptRef = GetNextTransNo (31, $db);
+	$_SESSION['Shipment']->ShiptRef = GetNextTransNo (31);
 }
 
 
