@@ -415,6 +415,27 @@ function initial() {
 	for(i=0;i<ds.length;i++) {
 		if(ds[i].className=="ascending") ds[i].onclick=SortSelect;
 	}
+	
+	/* Notification messages */
+	
+	/* Move messages from footer div into header div */
+	document.getElementById('MessageContainerHead').appendChild(
+    document.getElementById('MessageContainerFoot')
+	);
+	
+	/* Show footer div after it has been moved to header div */
+	document.getElementById('MessageContainerFoot').style["display"] = "block";
+		  
+	/* Close button dynamic styling*/
+	var close = document.getElementsByClassName("MessageCloseButton");
+	var i;
+	for (i = 0; i < close.length; i++) {
+		close[i].onclick = function(){
+			var div = this.parentElement;
+			div.style.opacity = "0";
+			setTimeout(function(){ div.style.display = "none"; }, 600);
+		}
+	}
 }
 
 function AddAmount(t, Target, d) {
