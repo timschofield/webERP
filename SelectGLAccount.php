@@ -8,7 +8,7 @@ $BookMark = 'GLAccountInquiry';
 include('includes/header.php');
 
 $msg='';
-unset($result);
+unset($Result);
 
 if (isset($_POST['Search'])){
 
@@ -71,14 +71,16 @@ if (isset($_POST['Search'])){
 					ORDER BY chartmaster.accountcode";
 		}
 		if (isset($SQL) and $SQL!=''){
-			$result = DB_query($SQL);
-			if (DB_num_rows($result) == 1) {
-				$AccountRow = DB_fetch_row($result);
+			$Result = DB_query($SQL);
+			if (DB_num_rows($Result) == 1) {
+				$AccountRow = DB_fetch_row($Result);
 				header('location:' . $RootPath . '/GLAccountInquiry.php?Account=' . $AccountRow[0] . '&Show=Yes');
 				exit;
 			}
 		}
 } //end of if search
+
+$TargetPeriod = GetPeriod(date($_SESSION['DefaultDateFormat']));
 
 if (!isset($AccountID)) {
 
@@ -125,7 +127,7 @@ if (!isset($AccountID)) {
 			<input type="submit" name="reset" value="' . _('Reset') .'" />
 		</div>';
 
-	if (isset($result) and DB_num_rows($result)>0) {
+	if (isset($Result) and DB_num_rows($Result)>0) {
 
 		echo '<br /><table class="selection">';
 
@@ -142,26 +144,28 @@ if (!isset($AccountID)) {
 
 		$j = 1;
 
-		while ($myrow=DB_fetch_array($result)) {
+		while ($MyRow=DB_fetch_array($Result)) {
 
 			printf('<tr>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
-					<td><a href="%s/GLAccountInquiry.php?Account=%s&amp;Show=Yes"><img src="%s/css/%s/images/magnifier.png" title="' . _('Inquiry') . '" alt="' . _('Inquiry') . '" /></td>
+					<td><a href="%s/GLAccountInquiry.php?Account=%s&amp;Show=Yes&FromPeriod=%s&ToPeriod=%s"><img src="%s/css/%s/images/magnifier.png" title="' . _('Inquiry') . '" alt="' . _('Inquiry') . '" /></td>
 					<td><a href="%s/GLAccounts.php?SelectedAccount=%s"><img src="%s/css/%s/images/maintenance.png" title="' . _('Edit') . '" alt="' . _('Edit') . '" /></a>
 					</tr>',
-					htmlspecialchars($myrow['accountcode'],ENT_QUOTES,'UTF-8',false),
-					htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false),
-					$myrow['group_'],
-					$myrow['pl'],
+					htmlspecialchars($MyRow['accountcode'],ENT_QUOTES,'UTF-8',false),
+					htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false),
+					$MyRow['group_'],
+					$MyRow['pl'],
 					$RootPath,
-					$myrow['accountcode'],
+					$MyRow['accountcode'],
+					$TargetPeriod,
+					$TargetPeriod,
 					$RootPath,
 					$Theme,
 					$RootPath,
-					$myrow['accountcode'],
+					$MyRow['accountcode'],
 					$RootPath,
 					$Theme);
 
