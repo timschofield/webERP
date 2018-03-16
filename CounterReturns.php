@@ -895,8 +895,8 @@ if (isset($_POST['ProcessReturn']) AND $_POST['ProcessReturn'] != ''){
 	/*Now Get the next invoice number - GetNextTransNo() function in SQL_CommonFunctions
 	 * GetPeriod() in includes/DateFunctions.inc */
 
-		$CreditNoteNo = GetNextTransNo(11, $db);
-		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
+		$CreditNoteNo = GetNextTransNo(11);
+		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 
 		$ReturnDate = Date('Y-m-d');
 
@@ -1436,7 +1436,7 @@ if (isset($_POST['ProcessReturn']) AND $_POST['ProcessReturn'] != ''){
 			/*Need to figure out the cross rate between customer currency and bank account currency */
 
 			if ($_POST['AmountPaid']!=0){
-				$PaymentNumber = GetNextTransNo(12,$db);
+				$PaymentNumber = GetNextTransNo(12);
 				$SQL="INSERT INTO gltrans (type,
 											typeno,
 											trandate,
@@ -1481,7 +1481,7 @@ if (isset($_POST['ProcessReturn']) AND $_POST['ProcessReturn'] != ''){
 
 		if ($_POST['AmountPaid']!=0){
 			if (!isset($PaymentNumber)){
-				$PaymentNumber = GetNextTransNo(12,$db);
+				$PaymentNumber = GetNextTransNo(12);
 			}
 			//Now need to add the receipt banktrans record
 			//First get the account currency that it has been banked into

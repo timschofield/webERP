@@ -4,7 +4,7 @@
 /* Common SQL Functions */
 
 
-Function GetNextTransNo ($TransType, &$db){
+Function GetNextTransNo ($TransType){
 
 /* SQL to get the next transaction number these are maintained in the table SysTypes - Transaction Types
 Also updates the transaction number
@@ -155,8 +155,8 @@ function ItemCostUpdateGL($StockID, $NewCost, $OldCost, $QOH) {
 		AND $QOH!=0
 		AND (abs($NewCost - $OldCost) > pow(10,-($_SESSION['StandardCostDecimalPlaces']+1)))){
 
-		$CostUpdateNo = GetNextTransNo(35, $db);
-		$PeriodNo = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
+		$CostUpdateNo = GetNextTransNo(35);
+		$PeriodNo = GetPeriod(date($_SESSION['DefaultDateFormat']));
 		$StockGLCode = GetStockGLCode($StockID);
 
 		$ValueOfChange = $QOH * ($NewCost - $OldCost);

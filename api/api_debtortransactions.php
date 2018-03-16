@@ -343,7 +343,7 @@ function ConvertToSQLDate($DateEntry) {
 
 		DB_Txn_Begin();
 
-		$ReceiptNo = GetNextTransNo(12,$db);
+		$ReceiptNo = GetNextTransNo(12);
 		$PeriodNo = GetCurrentPeriod($db);
 /*now enter the BankTrans entry */
 

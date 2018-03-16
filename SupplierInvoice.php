@@ -153,7 +153,7 @@ if (isset($_GET['ReceivePO']) AND $_GET['ReceivePO']!=''){
 		if ($_SESSION['PO'.$identifier]->Status == 'Authorised'){
 			$Result = DB_Txn_Begin();
 		/*Now Get the next GRN - function in SQL_CommonFunctions*/
-			$GRN = GetNextTransNo(25, $db);
+			$GRN = GetNextTransNo(25);
 			if (!isset($_GET['DeliveryDate'])){
 				$DeliveryDate = date($_SESSION['DefaultDateFormat']);
 			} else {
@@ -162,7 +162,7 @@ if (isset($_GET['ReceivePO']) AND $_GET['ReceivePO']!=''){
 			$_POST['ExRate'] = $_SESSION['SuppTrans']->ExRate;
 			$_POST['TranDate'] = $DeliveryDate;
 
-			$PeriodNo = GetPeriod($DeliveryDate, $db);
+			$PeriodNo = GetPeriod($DeliveryDate);
 
 			$OrderHasControlledItems = false; //assume the best
 			foreach ($_SESSION['PO'.$identifier]->LineItems as $OrderLine) {
@@ -1069,8 +1069,8 @@ then do the updates and inserts to process the invoice entered */
 		$Result = DB_Txn_Begin();
 
 		/*Get the next transaction number for internal purposes and the period to post GL transactions in based on the invoice date*/
-		$InvoiceNo = GetNextTransNo(20, $db);
-		$PeriodNo = GetPeriod( $_SESSION['SuppTrans']->TranDate, $db);
+		$InvoiceNo = GetNextTransNo(20);
+		$PeriodNo = GetPeriod( $_SESSION['SuppTrans']->TranDate);
 		$SQLInvoiceDate = FormatDateForSQL( $_SESSION['SuppTrans']->TranDate);
 
 		if ( $_SESSION['SuppTrans']->GLLink_Creditors == 1){

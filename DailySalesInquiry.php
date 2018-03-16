@@ -14,7 +14,7 @@ echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (!isset($_POST['MonthToShow'])){
-	$_POST['MonthToShow'] = GetPeriod(Date($_SESSION['DefaultDateFormat']),$db);
+	$_POST['MonthToShow'] = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 	$Result = DB_query("SELECT lastdate_in_period FROM periods WHERE periodno='" . $_POST['MonthToShow'] . "'");
 	$myrow = DB_fetch_array($Result);
 	$EndDateSQL = $myrow['lastdate_in_period'];

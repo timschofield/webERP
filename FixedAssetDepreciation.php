@@ -80,8 +80,8 @@ if (Date1GreaterThanDate2($_POST['ProcessDate'],Date($_SESSION['DefaultDateForma
 }
 if (isset($_POST['CommitDepreciation']) AND $InputError==false){
 	$result = DB_Txn_Begin();
-	$TransNo = GetNextTransNo(44, $db);
-	$PeriodNo = GetPeriod($_POST['ProcessDate'],$db);
+	$TransNo = GetNextTransNo(44);
+	$PeriodNo = GetPeriod($_POST['ProcessDate']);
 }
 
 echo '<br /><table>';

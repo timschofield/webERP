@@ -336,7 +336,7 @@ $SOH_DateFields = array ('orddate',
 		$FieldNames='';
 		$FieldValues='';
 		global  $SOH_DateFields;
-		$OrderHeader['orderno'] = GetNextTransNo(30,$db);
+		$OrderHeader['orderno'] = GetNextTransNo(30);
 		foreach ($OrderHeader as $key => $value) {
 			$FieldNames.=$key.', ';
 			if (in_array($key, $SOH_DateFields) ) {

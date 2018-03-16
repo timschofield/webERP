@@ -46,7 +46,7 @@ if ((! isset($_POST['FromPeriod'])
 		$FromDate = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,$_SESSION['YearEnd'] + 2,0,Date('Y')-1));
 	}
 	/*GetPeriod function creates periods if need be the return value is not used */
-	$NotUsedPeriodNo = GetPeriod($FromDate, $db);
+	$NotUsedPeriodNo = GetPeriod($FromDate);
 
 	/*Show a form to allow input of criteria for TB to show */
 	echo '<table class="selection">
@@ -81,7 +81,7 @@ if ((! isset($_POST['FromPeriod'])
 	echo '</select></td>
 		</tr>';
 	if (!isset($_POST['ToPeriod']) OR $_POST['ToPeriod']==''){
-		$DefaultToPeriod = GetPeriod(date($_SESSION['DefaultDateFormat'],mktime(0,0,0,Date('m')+1,0,Date('Y'))),$db);
+		$DefaultToPeriod = GetPeriod(date($_SESSION['DefaultDateFormat'],mktime(0,0,0,Date('m')+1,0,Date('Y'))));
 	} else {
 		$DefaultToPeriod = $_POST['ToPeriod'];
 	}
@@ -100,7 +100,16 @@ if ((! isset($_POST['FromPeriod'])
 			echo '<option value ="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
 		}
 	}
+
+	if ( !isset($_POST['Period']) ) {
+		$_POST['Period'] = '';
+	}
+
 	echo '</select></td>
+		</tr>
+		<tr>
+			<td>' . _('Select Period') . ':</td>
+			<td>' . ReportPeriodList( $_POST['Period'] ) . '</td>
 		</tr>
 		</table>
 		<br />';
@@ -123,6 +132,11 @@ if ((! isset($_POST['FromPeriod'])
 	$PageNumber = 0;
 	$FontSize = 10;
 	$line_height = 12;
+
+	if ($_POST['Period'] != '') {
+		$_POST['FromPeriod'] = ReportPeriod($_POST['Period'], 'From');
+		$_POST['ToPeriod'] = ReportPeriod($_POST['Period'], 'To');
+	}
 
 	$NumberOfMonths = $_POST['ToPeriod'] - $_POST['FromPeriod'] + 1;
 
@@ -185,7 +199,6 @@ if ((! isset($_POST['FromPeriod'])
 
 	include('includes/PDFTrialBalancePageHeader.inc');
 
-	$j = 1;
 	$Level = 1;
 	$ActGrp = '';
 	$ParentGroups = array();
@@ -396,6 +409,13 @@ if ((! isset($_POST['FromPeriod'])
 			<input type="hidden" name="FromPeriod" value="' . $_POST['FromPeriod'] . '" />
 			<input type="hidden" name="ToPeriod" value="' . $_POST['ToPeriod'] . '" />';
 
+	if ($_POST['Period'] != '') {
+		$_POST['FromPeriod'] = ReportPeriod($_POST['Period'], 'From');
+		$_POST['ToPeriod'] = ReportPeriod($_POST['Period'], 'To');
+	}
+
+	echo '<input type="hidden" name="Period" value="' . $_POST['Period'] . '" />';
+
 	$NumberOfMonths = $_POST['ToPeriod'] - $_POST['FromPeriod'] + 1;
 
 	$sql = "SELECT lastdate_in_period
@@ -456,7 +476,6 @@ if ((! isset($_POST['FromPeriod'])
 						<th>' . _('Period Budget')  . '</th>
 					</tr>';
 
-	$j = 1;
 	$ActGrp ='';
 	$ParentGroups = array();
 	$Level =1; //level of nested sub-groups
@@ -529,7 +548,6 @@ if ((! isset($_POST['FromPeriod'])
 						$ParentGroups[$Level]='';
 						$Level--;
 
-						$j++;
 					} while ($Level>0 AND $myrow['groupname']!=$ParentGroups[$Level]);
 
 					if ($Level>0){
@@ -563,7 +581,7 @@ if ((! isset($_POST['FromPeriod'])
 					</tr>',
 					$myrow['groupname']);
 			echo $TableHeader;
-			$j++;
+
 		}
 
 		/*MonthActual, MonthBudget, FirstPrdBFwd, FirstPrdBudgetBFwd, LastPrdBudgetCFwd, LastPrdCFwd */
@@ -627,8 +645,6 @@ if ((! isset($_POST['FromPeriod'])
 				locale_number_format($myrow['monthbudget'],$_SESSION['CompanyRecord']['decimalplaces']),
 				locale_number_format($AccountPeriodActual,$_SESSION['CompanyRecord']['decimalplaces']),
 				locale_number_format($AccountPeriodBudget,$_SESSION['CompanyRecord']['decimalplaces']));
-
-		$j++;
 	}
 	//end of while loop
 
@@ -678,7 +694,6 @@ if ((! isset($_POST['FromPeriod'])
 				$ParentGroups[$Level]='';
 				$Level--;
 
-				$j++;
 			} while (isset($ParentGroups[$Level]) AND ($myrow['groupname']!=$ParentGroups[$Level] AND $Level>0));
 
 			if ($Level >0){

@@ -4,56 +4,20 @@
 /** STANDARD MESSAGE HANDLING & FORMATTING **/
 /*  ******************************************  */
 
-function prnMsg($Msg,$Type='info', $Prefix=''){
-
-	echo getMsg($Msg, $Type, $Prefix);
-
-}//prnMsg
+function prnMsg($Msg, $Type = 'info', $Prefix = '') {
+	global $Messages;
+	$Messages[] = array(
+		$Msg,
+		$Type,
+		$Prefix
+	);
+}
 
 function reverse_escape($str) {
   $search=array("\\\\","\\0","\\n","\\r","\Z","\'",'\"');
   $replace=array("\\","\0","\n","\r","\x1a","'",'"');
   return str_replace($search,$replace,$str);
 }
-
-function getMsg($Msg,$Type='info',$Prefix=''){
-	$Colour='';
-	if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity']>0) {
-		$LogFile=fopen($_SESSION['LogPath'].'/webERP.log', 'a');
-	}
-	switch($Type){
-		case 'error':
-			$Class = 'error';
-			$Prefix = $Prefix ? $Prefix : _('ERROR') . ' ' ._('Message Report');
-			if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity']>0) {
-				fwrite($LogFile, date('Y-m-d H:i:s').','.$Type.','.$_SESSION['UserID'].','.trim(str_replace("<br />", " ", $Msg),',')."\n");
-			}
-			break;
-		case 'warn':
-		case 'warning':
-			$Class = 'warn';
-			$Prefix = $Prefix ? $Prefix : _('WARNING') . ' ' . _('Message Report');
-			if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity']>1) {
-				fwrite($LogFile, date('Y-m-d H:i:s').','.$Type.','.$_SESSION['UserID'].','.trim(str_replace("<br />", " ", $Msg),',')."\n");
-			}
-			break;
-		case 'success':
-			$Class = 'success';
-			$Prefix = $Prefix ? $Prefix : _('SUCCESS') . ' ' . _('Report');
-			if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity']>3) {
-				fwrite($LogFile, date('Y-m-d H:i:s').','.$Type.','.$_SESSION['UserID'].','.trim(str_replace("<br />", " ", $Msg),',')."\n");
-			}
-			break;
-		case 'info':
-		default:
-			$Prefix = $Prefix ? $Prefix : _('INFORMATION') . ' ' ._('Message');
-			$Class = 'info';
-			if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity']>2) {
-				fwrite($LogFile, date('Y-m-d H:i:s').','.$Type.','.$_SESSION['UserID'].','.trim(str_replace("<br />", " ", $Msg),',')."\n");
-			}
-	}
-	return '<div class="'.$Class.'"><b>' . $Prefix . '</b> : ' .$Msg . '</div>';
-}//getMsg
 
 function IsEmailAddress($Email){
 
@@ -454,6 +418,106 @@ function ChangeFieldInTable($TableName, $FieldName, $OldValue, $NewValue){
 	$ErrMsg = _('The SQL to update' . ' ' . $TableName . ' ' . _('records failed'));
 	$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
 	echo ' ... ' . _('completed');
+}
+
+/* Used in report scripts for standard periods.
+ * Parameter $choice is from the 'Period' combobox value.
+ */
+function ReportPeriodList( $choice ){
+	$periods = array( _('This Month'), _('This Quarter'), _('This Year'),
+					  _('Last Month'), _('Last Quarter'), _('Last Year'),
+					  _('Next Month'), _('Next Quarter'), _('Next Year') );
+
+	$count = count($periods);
+
+	$html = '<select name="Period">
+			<option value=""></option>';
+
+	for ( $x = 0; $x < $count; ++$x ) {
+		if ( !empty($choice) && $choice == $periods[$x] ){
+			$html .= '<option value="' . $periods[$x] . '" selected>' . $periods[$x] . '</option>';
+		}
+		else {
+			$html .= '<option value="' . $periods[$x] . '">' . $periods[$x] . '</option>';
+		}
+	}
+
+	$html .= '</select>';
+
+	return $html;
+}
+
+function ReportPeriod($PeriodName, $FromOrTo){
+	/* Used in report scripts to determine period.
+	*/
+	$ThisMonth = date('m');
+	$ThisYear = date('Y');
+	$LastMonth = $ThisMonth-1;
+	$LastYear = $ThisYear-1;
+	$NextMonth = $ThisMonth+1;
+	$NextYear = $ThisYear+1;
+	// Find total number of days in this month:
+	$TotalDays = cal_days_in_month(CAL_GREGORIAN, $ThisMonth, $ThisYear);
+	// Find total number of days in last month:
+	$TotalDaysLast = cal_days_in_month(CAL_GREGORIAN, $LastMonth, $ThisYear);
+	// Find total number of days in next month:
+	$TotalDaysNext = cal_days_in_month(CAL_GREGORIAN, $NextMonth, $ThisYear);
+	switch ($PeriodName) {
+
+		Case _('This Month'):
+			$ds = date('Y-m-d', mktime(0,0,0, $ThisMonth, 1, $ThisYear));
+			$de = date('Y-m-d', mktime(0,0,0, $ThisMonth, $TotalDays, $ThisYear));
+			break;
+		Case _('This Quarter'):
+			$QtrStrt = intval(($ThisMonth-1)/3)*3+1;
+			$QtrEnd = intval(($ThisMonth-1)/3)*3+3;
+			if ( $QtrEnd == 4 OR $QtrEnd == 6 OR $QtrEnd == 9 OR $QtrEnd == 11 ) { $TotalDays=30; }
+			$ds = date('Y-m-d', mktime(0,0,0, $QtrStrt, 1, $ThisYear));
+			$de = date('Y-m-d', mktime(0,0,0, $QtrEnd, $TotalDays, $ThisYear));
+			break;
+		Case _('This Year'):
+			$ds = date('Y-m-d', mktime(0,0,0, 1, 1, $ThisYear));
+			$de = date('Y-m-d', mktime(0,0,0, 12, 31, $ThisYear));
+			break;
+		Case _('Last Month'):
+			$ds = date('Y-m-d', mktime(0,0,0, $LastMonth, 1, $ThisYear));
+			$de = date('Y-m-d', mktime(0,0,0, $LastMonth, $TotalDaysLast, $ThisYear));
+			break;
+		Case _('Last Quarter'):
+			$QtrStrt = intval(($ThisMonth-1)/3)*3-2;
+			$QtrEnd = intval(($ThisMonth-1)/3)*3+0;
+			if ( $QtrEnd == 4 OR $QtrEnd == 6 OR $QtrEnd == 9 OR $QtrEnd == 11 ) { $TotalDays=30; }
+			$ds = date('Y-m-d', mktime(0,0,0, $QtrStrt, 1, $ThisYear));
+			$de = date('Y-m-d', mktime(0,0,0, $QtrEnd, $TotalDays, $ThisYear));
+			break;
+		Case _('Last Year'):
+			$ds = date('Y-m-d', mktime(0,0,0, 1, 1, $LastYear));
+			$de = date('Y-m-d', mktime(0,0,0, 12, 31, $LastYear));
+			break;
+		Case _('Next Month'):
+			$ds = date('Y-m-d', mktime(0,0,0, $NextMonth, 1, $ThisYear));
+			$de = date('Y-m-d', mktime(0,0,0, $NextMonth, $TotalDaysNext, $ThisYear));
+			break;
+		Case _('Next Quarter'):
+			$QtrStrt = intval(($ThisMonth-1)/3)*3+4;
+			$QtrEnd = intval(($ThisMonth-1)/3)*3+6;
+			if ( $QtrEnd == 4 OR $QtrEnd == 6 OR $QtrEnd == 9 OR $QtrEnd == 11 ) { $TotalDays=30; }
+			$ds = date('Y-m-d', mktime(0,0,0, $QtrStrt, 1, $ThisYear));
+			$de = date('Y-m-d', mktime(0,0,0, $QtrEnd, $TotalDays, $ThisYear));
+			break;
+		Case _('Next Year'):
+			$ds = date('Y-m-d', mktime(0,0,0, 1, 1, $NextYear));
+			$de = date('Y-m-d', mktime(0,0,0, 12, 31, $NextYear));
+			break;
+	}
+
+	if ($FromOrTo == 'From') {
+		$Period = GetPeriod(ConvertSQLDate($ds));
+	} else {
+		$Period = GetPeriod(ConvertSQLDate($de));
+	}
+
+	return $Period;
 }
 
 ?>

@@ -101,7 +101,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 		$CurrDecimalPlaces = $MyRow['decimalplaces'];
 		//update database if update pressed
 		if (isset($_POST['Submit']) and $_POST['Submit'] == _('Update') and isset($_POST[$MyRow['counterindex']]) and $MyRow['posted'] == 0) {
-			$PeriodNo = GetPeriod(ConvertSQLDate($MyRow['date']), $db);
+			$PeriodNo = GetPeriod(ConvertSQLDate($MyRow['date']));
 			if ($MyRow['rate'] == 1) { // functional currency
 				$Amount = $MyRow['amount'];
 			} else { // other currencies
@@ -126,7 +126,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 				$TagTo = $MyRowAccExp['tag'];
 			}
 			//get typeno
-			$typeno = GetNextTransNo($type,$db);
+			$typeno = GetNextTransNo($type);
 			//build narrative
 			$Narrative = _('PettyCash') . ' - ' . $MyRow['tabcode'] . ' - ' . $MyRow['codeexpense'] . ' - ' . DB_escape_string($MyRow['notes']);
 			//insert to gltrans
@@ -184,7 +184,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			$ResultTo = DB_Query($SQLTo, '', '', true);
 			if ($MyRow['codeexpense'] == 'ASSIGNCASH') {
 				// if it's a cash assignation we need to updated banktrans table as well.
-				$ReceiptTransNo = GetNextTransNo(2, $db);
+				$ReceiptTransNo = GetNextTransNo(2);
 				$SQLBank = "INSERT INTO banktrans (transno,
 												type,
 												bankact,

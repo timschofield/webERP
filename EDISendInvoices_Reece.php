@@ -198,7 +198,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 			}
 			DB_data_seek($MessageLinesResult,0);
 
-			$EDITransNo = GetNextTransNo(99,$db);
+			$EDITransNo = GetNextTransNo(99);
 			$fp = fopen('EDI_INV_' . $TransNo . '.txt', 'w');
 
 			while ($LineDetails = DB_fetch_array($MessageLinesResult)){

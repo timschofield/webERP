@@ -190,8 +190,8 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 
 /*All inputs must be sensible so make the stock movement records and update the locations stocks */
 
-		$AdjustmentNumber = GetNextTransNo(17,$db);
-		$PeriodNo = GetPeriod (Date($_SESSION['DefaultDateFormat']), $db);
+		$AdjustmentNumber = GetNextTransNo(17);
+		$PeriodNo = GetPeriod (Date($_SESSION['DefaultDateFormat']));
 		$SQLAdjustmentDate = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
 
 		$Result = DB_Txn_Begin();

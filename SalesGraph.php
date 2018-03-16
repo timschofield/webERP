@@ -68,7 +68,7 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 
 	echo '</select></td></tr>';
 	if (!isset($_POST['ToPeriod']) OR $_POST['ToPeriod']==''){
-		$DefaultToPeriod = GetPeriod(DateAdd(ConvertSQLDate($DefaultFromDate),'m',11),$db);
+		$DefaultToPeriod = GetPeriod(DateAdd(ConvertSQLDate($DefaultFromDate),'m',11));
 	} else {
 		$DefaultToPeriod = $_POST['ToPeriod'];
 	}
@@ -208,10 +208,10 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	$GraphTitle ='';
 	if ($_POST['GraphValue']=='Net') {
 		$GraphTitle = _('Sales Value');
-		$SelectClause = 'amt';
+		$SelectClause = 'amt - disc';
 	} elseif ($_POST['GraphValue']=='GP'){
 		$GraphTitle = _('Gross Profit');
-		$SelectClause = '(amt - cost)';
+		$SelectClause = '(amt - disc - cost)';
 	} else {
 		$GraphTitle = _('Unit Sales');
 		$SelectClause = 'qty';

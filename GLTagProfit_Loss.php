@@ -32,7 +32,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 		$DefaultFromDate = Date ('Y-m-d', Mktime(0,0,0,$_SESSION['YearEnd'] + 2,0,Date('Y')-1));
 		$FromDate = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,$_SESSION['YearEnd'] + 2,0,Date('Y')-1));
 	}
-	$period=GetPeriod($FromDate, $db);
+	$period=GetPeriod($FromDate);
 
 	/*Show a form to allow input of criteria for profit and loss to show */
 	echo '<table class="selection">

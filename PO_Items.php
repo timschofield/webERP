@@ -125,7 +125,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		if ($_SESSION['ExistingOrder']==0){ /*its a new order to be inserted */
 
 			/*Get the order number */
-			$_SESSION['PO'.$identifier]->OrderNo =  GetNextTransNo(18, $db);
+			$_SESSION['PO'.$identifier]->OrderNo =  GetNextTransNo(18);
 
 			/*Insert to purchase order header record */
 			$sql = "INSERT INTO purchorders ( orderno,

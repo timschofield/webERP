@@ -174,7 +174,7 @@ if (isset($_POST['ProcessBankTrans'])){
 				$_SESSION['Trans'][$i]->GLTotal == $_SESSION['Trans'][$i]->Amount){
 				/*A Debtor or Supplier is entered or there is GL analysis for the bank trans
 				 */
-				$PeriodNo = GetPeriod($_SESSION['Trans'][$i]->ValueDate,$db);
+				$PeriodNo = GetPeriod($_SESSION['Trans'][$i]->ValueDate);
 				$InsertBankTrans = true;
 			} elseif ($_SESSION['Trans'][$i]->BankTransID!=0) {
 				//Update the banktrans to show it has cleared the bank
@@ -192,7 +192,7 @@ if (isset($_POST['ProcessBankTrans'])){
 
 				if ($_SESSION['Trans'][$i]->DebtorNo!='') {
 					$TransType = 12;
-					$TransNo = GetNextTransNo(12,$db); //debtors receipt
+					$TransNo = GetNextTransNo(12); //debtors receipt
 					/* First insert the debtortrans record */
 					$result = DB_query("INSERT INTO debtortrans (transno,
 																type,
@@ -266,7 +266,7 @@ if (isset($_POST['ProcessBankTrans'])){
 
 				} elseif ($_SESSION['Trans'][$i]->GLTotal == $_SESSION['Trans'][$i]->Amount){
 					$TransType=2; //gl receipt
-					$TransNo = GetNextTransNo(2,$db);
+					$TransNo = GetNextTransNo(2);
 					foreach ($_SESSION['Trans'][$i]->GLEntries as $GLAnalysis){
 						/*Credit each analysis account */
 						$result = DB_query("INSERT INTO gltrans (type,
@@ -310,7 +310,7 @@ if (isset($_POST['ProcessBankTrans'])){
 			} else { //its a payment
 				if ($_SESSION['Trans'][$i]->SupplierID!='') { //its a supplier payment
 					$TransType = 22;
-					$TransNo = GetNextTransNo(22,$db);
+					$TransNo = GetNextTransNo(22);
 					$result = DB_query("INSERT INTO supptrans (transno,
 																type,
 																supplierno,
@@ -384,7 +384,7 @@ if (isset($_POST['ProcessBankTrans'])){
 				} elseif($_SESSION['Trans'][$i]->GLTotal == $_SESSION['Trans'][$i]->Amount){
 					//its a GL payment
 					$TransType = 1; //gl payment
-					$TransNo = GetNextTransNo(1,$db);
+					$TransNo = GetNextTransNo(1);
 					foreach ($_SESSION['Trans'][$i]->GLEntries as $GLAnalysis){
 						/*Debit each analysis account  note payments are recorded as negative so need negative negative to make a debit (positive)*/
 						$result = DB_query("INSERT INTO gltrans (type,

@@ -41,9 +41,9 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 			exit;
 		}
 
-		$PeriodNo = GetPeriod (Date($_SESSION['DefaultDateFormat']), $db);
+		$PeriodNo = GetPeriod (Date($_SESSION['DefaultDateFormat']));
 		$SQLAdjustmentDate = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
-		$AdjustmentNumber = GetNextTransNo(17,$db);
+		$AdjustmentNumber = GetNextTransNo(17);
 
 		while ($myrow = DB_fetch_array($StockChecks)){
 

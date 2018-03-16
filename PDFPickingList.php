@@ -276,7 +276,7 @@ for ($i=0;$i<sizeof($OrdersToPick);$i++){
 		include('includes/PDFPickingListHeader.inc');
 		if (isset($_POST['TransDate']) or (isset($_GET['TransNo']) and $_GET['TransNo'] != 'Preview')) {
 			$LinesToShow=DB_num_rows($LineResult);
-			$PickingListNo = GetNextTransNo(19, $db);
+			$PickingListNo = GetNextTransNo(19);
 			$sql="INSERT INTO pickinglists
 				VALUES (
 				'" . $PickingListNo ."',
