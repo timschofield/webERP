@@ -4,56 +4,20 @@
 /** STANDARD MESSAGE HANDLING & FORMATTING **/
 /*  ******************************************  */
 
-function prnMsg($Msg,$Type='info', $Prefix=''){
-
-	echo getMsg($Msg, $Type, $Prefix);
-
-}//prnMsg
+function prnMsg($Msg, $Type = 'info', $Prefix = '') {
+	global $Messages;
+	$Messages[] = array(
+		$Msg,
+		$Type,
+		$Prefix
+	);
+}
 
 function reverse_escape($str) {
   $search=array("\\\\","\\0","\\n","\\r","\Z","\'",'\"');
   $replace=array("\\","\0","\n","\r","\x1a","'",'"');
   return str_replace($search,$replace,$str);
 }
-
-function getMsg($Msg,$Type='info',$Prefix=''){
-	$Colour='';
-	if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity']>0) {
-		$LogFile=fopen($_SESSION['LogPath'].'/webERP.log', 'a');
-	}
-	switch($Type){
-		case 'error':
-			$Class = 'error';
-			$Prefix = $Prefix ? $Prefix : _('ERROR') . ' ' ._('Message Report');
-			if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity']>0) {
-				fwrite($LogFile, date('Y-m-d H:i:s').','.$Type.','.$_SESSION['UserID'].','.trim(str_replace("<br />", " ", $Msg),',')."\n");
-			}
-			break;
-		case 'warn':
-		case 'warning':
-			$Class = 'warn';
-			$Prefix = $Prefix ? $Prefix : _('WARNING') . ' ' . _('Message Report');
-			if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity']>1) {
-				fwrite($LogFile, date('Y-m-d H:i:s').','.$Type.','.$_SESSION['UserID'].','.trim(str_replace("<br />", " ", $Msg),',')."\n");
-			}
-			break;
-		case 'success':
-			$Class = 'success';
-			$Prefix = $Prefix ? $Prefix : _('SUCCESS') . ' ' . _('Report');
-			if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity']>3) {
-				fwrite($LogFile, date('Y-m-d H:i:s').','.$Type.','.$_SESSION['UserID'].','.trim(str_replace("<br />", " ", $Msg),',')."\n");
-			}
-			break;
-		case 'info':
-		default:
-			$Prefix = $Prefix ? $Prefix : _('INFORMATION') . ' ' ._('Message');
-			$Class = 'info';
-			if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity']>2) {
-				fwrite($LogFile, date('Y-m-d H:i:s').','.$Type.','.$_SESSION['UserID'].','.trim(str_replace("<br />", " ", $Msg),',')."\n");
-			}
-	}
-	return '<div class="'.$Class.'"><b>' . $Prefix . '</b> : ' .$Msg . '</div>';
-}//getMsg
 
 function IsEmailAddress($Email){
 
