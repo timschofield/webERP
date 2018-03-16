@@ -26,6 +26,10 @@ if(isset($_POST['Period'])) {
 	$SelectedPeriod = array($_GET['Period']);
 }
 
+if(isset($_GET['Show'])) {
+	$_POST['Show'] = $_GET['Show'];
+}
+
 /* Get the start and periods, depending on how this script was called*/
 if(isset($SelectedPeriod)) { //If it was called from itself (in other words an inquiry was run and we wish to leave the periods selected unchanged
 	$FirstPeriodSelected = min($SelectedPeriod);
@@ -33,6 +37,8 @@ if(isset($SelectedPeriod)) { //If it was called from itself (in other words an i
 } elseif(isset($_GET['FromPeriod'])) { //If it was called from the Trial Balance/P&L or Balance sheet
 	$FirstPeriodSelected = $_GET['FromPeriod'];
 	$LastPeriodSelected = $_GET['ToPeriod'];
+	$SelectedPeriod[0] = $_GET['FromPeriod'];
+	$SelectedPeriod[1] = $_GET['ToPeriod'];
 } else { // Otherwise just highlight the current period
 	$FirstPeriodSelected = GetPeriod(date($_SESSION['DefaultDateFormat']));
 	$LastPeriodSelected = GetPeriod(date($_SESSION['DefaultDateFormat']));
