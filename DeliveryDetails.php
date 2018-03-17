@@ -503,7 +503,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 								 VALUES ('" . $WONo . "',
 										'" . $_SESSION['DefaultFactoryLocation'] . "',
 										'" . Date('Y-m-d') . "',
-										'" . Date('Y-m-d'). "')",
+										'" . FormatDateForSQL($StockItem->ItemDue) . "')",
 										$ErrMsg,
 										$DbgMsg,
 										true);
