@@ -51,9 +51,6 @@ if (!isset($_GET['Section'])){
 ***************************************************************************************/
 
 if ($KL_SystemAdmin){
-	// WARNINGS STILL NOT DOCUMENTED ON WIKI
-//	prnMsg("START OF PENDING FOR KL INTRANET ",'success');
-//	prnMsg("END OF PENDING FOR KL INTRANET ",'success');
 //	phpinfo();
 //	$NumberOfTestExecuted++;
 }
@@ -408,31 +405,31 @@ if ($ProcessSection01){
 
 	if ($KL_BusinessDevelopmentManager
 		OR $KL_PurchasingTeam){
-		ItemsinSetUp("ReadyToTest", "SETKL", $RootPath, $db);
+		ItemsInSetup("ReadyToTest", "SETKL", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsinSetUp("ReadyToTest", "SETKLA", $RootPath, $db);
+		ItemsInSetup("ReadyToTest", "SETKLA", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsinSetUp("ReadyToTest", "SETBL", $RootPath, $db);
+		ItemsInSetup("ReadyToTest", "SETBL", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsinSetUp("ReadyToTest", "SETBLA", $RootPath, $db);
+		ItemsInSetup("ReadyToTest", "SETBLA", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsinSetUp("ReadyToTest", "SETGE", $RootPath, $db);
+		ItemsInSetup("ReadyToTest", "SETGE", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsinSetUp("ReadyToTest", "SETGEA", $RootPath, $db);
+		ItemsInSetup("ReadyToTest", "SETGEA", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsinSetUp("NeedDescription", "SETKL", $RootPath, $db);
+		ItemsInSetup("NeedDescription", "SETKL", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsinSetUp("NeedDescription", "SETKLA", $RootPath, $db);
+		ItemsInSetup("NeedDescription", "SETKLA", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsinSetUp("NeedDescription", "SETBL", $RootPath, $db);
+		ItemsInSetup("NeedDescription", "SETBL", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsinSetUp("NeedDescription", "SETBLA", $RootPath, $db);
+		ItemsInSetup("NeedDescription", "SETBLA", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsinSetUp("NeedDescription", "SETGE", $RootPath, $db);
+		ItemsInSetup("NeedDescription", "SETGE", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsinSetUp("NeedDescription", "SETGEA", $RootPath, $db);
+		ItemsInSetup("NeedDescription", "SETGEA", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		//ItemsinSetUp("NeedPrice", $RootPath, $db);
+		//ItemsInSetup("NeedPrice", $RootPath, $db);
 		//$NumberOfTestExecuted++;
 		ItemsWithoutRetailPrice("SETKL", 4.75, $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -446,17 +443,17 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		ItemsWithoutRetailPrice("SETGEA", 4.75, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsinSetUp("WithReorderLevel", "SETKL", $RootPath, $db);
+		ItemsInSetup("WithReorderLevel", "SETKL", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsinSetUp("WithReorderLevel", "SETKLA", $RootPath, $db);
+		ItemsInSetup("WithReorderLevel", "SETKLA", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsinSetUp("WithReorderLevel", "SETBL", $RootPath, $db);
+		ItemsInSetup("WithReorderLevel", "SETBL", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsinSetUp("WithReorderLevel", "SETBLA", $RootPath, $db);
+		ItemsInSetup("WithReorderLevel", "SETBLA", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsinSetUp("WithReorderLevel", "SETGE", $RootPath, $db);
+		ItemsInSetup("WithReorderLevel", "SETGE", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsinSetUp("WithReorderLevel", "SETGEA", $RootPath, $db);
+		ItemsInSetup("WithReorderLevel", "SETGEA", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		ObsoleteComponentsInActiveBOM($RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -486,6 +483,12 @@ if ($ProcessSection01){
 	}
 
 	if ($KL_BusinessDevelopmentManager){
+
+		ItemsWithStockLocationButNoStockAvailable("CSLAZ", "Lazada", 15, 9999, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsWithStockLocationButNoStockAvailable("CSZAL", "Zalora", 15, 9999, $RootPath, $db);
+		$NumberOfTestExecuted++;
+	
 		ItemsWithStockKantorButReorderLevelTokoZero($RootPath, $db);
 		$NumberOfTestExecuted++;
 
@@ -1382,6 +1385,7 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $RootPath, $db){
 						FROM locstock l
 						WHERE l.stockid = stockmaster.stockid
 							AND l.loccode NOT IN " . LIST_SERVICE_LOCATIONS . "
+							AND l.loccode NOT IN " . LIST_CONSIGNMENT_LOCATIONS . "
 							AND l.loccode NOT IN " . LIST_SAMPLE_LOCATIONS . ") AS qoh,
 					locstock.reorderlevel
 			FROM stockmaster, locstock
@@ -2400,7 +2404,7 @@ function ItemsInKLProcessAndRLNotZero($RootPath, $db){
 	}
 }
 
-function ItemsinSetUp($Check, $Category, $RootPath, $db){
+function ItemsInSetup($Check, $Category, $RootPath, $db){
 	$today = date('Y-m-d');
 	
 	if ($Check == "ReadyToTest"){
@@ -2775,6 +2779,88 @@ function ItemsShouldBeInWebsite($db){
 						);
 				$i++;
 			}			
+		}
+		if (!$showHeader){
+			echo '</table>
+					</div>';
+		}
+	}
+}
+
+function ItemsWithStockLocationButNoStockAvailable($Location, $NameLocation, $MinAvailable, $MaxTopSalesItems, $RootPath, $db){
+	/*  EXPLAIN SQL 2014-05-30
+		Examples of usage in control boards
+		ItemsWithStockLocationButNoStockAvailable("WABOM", "WaterBom", 15, 600, $RootPath, $db);
+		ItemsWithStockLocationButNoStockAvailable("WHAYA", "Ayana", 15, 600, $RootPath, $db);
+		ItemsWithStockLocationButNoStockAvailable("WHINT", "InterContinental", 15, 600, $RootPath, $db);
+		InsuficientStockForItems("STABKL", "TM-", "Tali Mie", 20, 40, $RootPath, $db);
+		
+		2018-03-18 taken out the condition:		AND locstock.reorderlevel > 0
+
+	*/
+	
+	$SQL = "SELECT locstock.stockid,
+				locstock.quantity,
+				stockmaster.categoryid,
+				(SELECT SUM(l2.quantity)
+					FROM locations, locstock l2
+					WHERE l2.loccode = locations.loccode
+						AND locstock.stockid = l2.stockid
+						AND (locations.typeloc IN " . ALL_SHOPS_LIST_BY_TYPE . "
+							OR l2.loccode = " . CODE_KANTOR . ")
+				) AS available
+			FROM locstock, stockmaster
+			WHERE locstock.stockid = stockmaster.stockid
+				AND stockmaster.discontinued = 0
+				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING ."
+				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_OUTLET ."
+				AND locstock.loccode = '" . $Location . "'
+				AND locstock.quantity > 0
+				AND (SELECT SUM(l2.quantity)
+						FROM locations, locstock l2
+						WHERE l2.loccode = locations.loccode
+							AND locstock.stockid = l2.stockid
+							AND (locations.typeloc IN " . ALL_SHOPS_LIST_BY_TYPE . "
+								OR l2.loccode = " . CODE_KANTOR . ")
+					) <= " . $MinAvailable;
+	$result = DB_query($SQL);
+	$showHeader = TRUE;
+	if (DB_num_rows($result) != 0){
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$PositionTopSales = PositionTopSalesItem($myrow['stockid'], 60, $db);
+			if($PositionTopSales <= $MaxTopSalesItems){
+				if ($showHeader){
+					echo '<p class="page_title_text" align="center"><strong>' . $MaxTopSalesItems ._(' Top Sales Items (Exclude No More Purchasing, Discount) with stock at ') . $NameLocation . ' but KL Stock Available (Toko + Kantor) <= ' . $MinAvailable . '</strong></p>';
+					echo '<div>';
+					echo '<table class="selection">';
+					$TableHeader = '<tr>
+										<th class="ascending">' . _('#') . '</th>
+										<th class="ascending">' . _('Code') . '</th>
+										<th class="ascending">' . _('TopSale#') . '</th>
+										<th class="ascending">' . _('Qty ') . $Location . '</th>
+										<th class="ascending">' . _('QOH Available') . '</th>
+									</tr>';
+					echo $TableHeader;
+					$showHeader = FALSE;
+				}
+				$k = StartEvenOrOddRow($k);
+				$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+				printf('<td class="number">%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						</tr>', 
+						$i, 
+						$CodeLink, 
+						locale_number_format($PositionTopSales,0),
+						locale_number_format($myrow['quantity'],0),
+						locale_number_format($myrow['available'],0)
+						);
+				$i++;
+			}
 		}
 		if (!$showHeader){
 			echo '</table>
