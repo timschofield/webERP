@@ -353,6 +353,11 @@ if ($ProcessSection01){
 									'111203010PT')", "Total Cash PT.BB", 2000000000, 3500000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		
+		BalanceListAccountControl("('111121100IK', 
+									'111121105IK', 
+									'111121110IK')", "Total Cash POIK", 1000000, 50000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
+
 		BalanceListAccountControl("('111259010', 
 									'111259020', 
 									'111259050')", "Total PayPal RL", 0, 20000000, $periodnow, $db);
