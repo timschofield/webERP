@@ -513,7 +513,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		}else{
 			$PaymentMethod = PAYMENT_BY_CASH;
 		}
-		$Area = KapalLautRetailAreaSelection($PaymentMethod);
+		$Area = KapalLautRetailAreaSelection($PaymentMethod, $identifier);
 		$Tag = $_SESSION['klpostag'];
 			
 		/*company record read in on login with info on GL Links and debtors GL account*/
