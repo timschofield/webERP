@@ -1412,6 +1412,7 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $RootPath, $db){
 						FROM locstock l
 						WHERE l.stockid = stockmaster.stockid
 							AND l.loccode NOT IN " . LIST_SERVICE_LOCATIONS . "
+							AND l.loccode NOT IN " . LIST_CONSIGNMENT_LOCATIONS . "
 							AND l.loccode NOT IN " . LIST_SAMPLE_LOCATIONS . ") >= ". $MinQOH .")
 				AND ((SELECT SUM(l.reorderlevel)
 						FROM locstock l
