@@ -168,9 +168,15 @@ if ($ProcessSection02){
 	if ($KL_SystemAdmin){
 		GoodsToBeProduced("COMPON", "ONLYDISCOUNT", $RootPath, $db);
 		$NumberOfTestExecuted++;
+		GoodsToBeProduced("COMPOA", "ONLYDISCOUNT", $RootPath, $db);
+		$NumberOfTestExecuted++;
 		GoodsToBeProduced("COMPON", "DISCOUNT", $RootPath, $db);
 		$NumberOfTestExecuted++;
+		GoodsToBeProduced("COMPOA", "DISCOUNT", $RootPath, $db);
+		$NumberOfTestExecuted++;
 		GoodsToBeProduced("COMPON", "ALL", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		GoodsToBeProduced("COMPOA", "ALL", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		ComponentsToObsolete(false, 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
