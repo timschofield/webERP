@@ -4694,6 +4694,8 @@ function StockToPTADU($Kind, $FactorNearStock, $RootPath, $db){
 					AND workorders.wo > 3614
 					AND workorders.wo != 3652
 					AND workorders.wo != 3653
+					AND workorders.wo != 3661
+					AND workorders.wo != 3662
 				GROUP BY woitems.stockid
 				HAVING qtyreceivedptadu * " . $FactorNearStock. " >= qoh
 					AND qtyreceivedptadu > 0
