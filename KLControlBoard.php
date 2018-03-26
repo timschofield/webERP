@@ -340,7 +340,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('111121105AD', 
-									'111203010AD')", "Total Cash PT.ADU",  500000000, 2000000000, $periodnow, $db);
+									'111203010AD')", "Total Banks PT.ADU",  500000000, 2000000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('" . ACCOUNT_PTBB_MANDIRI_GIRO . "', 
@@ -350,14 +350,20 @@ if ($ProcessSection01){
 									'111121111PT', 
 									'111121120PT', 
 									'111121130PT', 
-									'111203010PT')", "Total Cash PT.BB", 2000000000, 3500000000, $periodnow, $db);
+									'111203010PT')", "Total Banks PT.BB", 2000000000, 3500000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		
+	}
+	
+	if ($KL_SystemAdmin 
+		OR $KL_OperationalManager
+		OR $KL_AdministrationTeam){
 		BalanceListAccountControl("('111121100IK', 
 									'111121105IK', 
-									'111121110IK')", "Total Cash POIK", 1000000, 50000000, $periodnow, $db);
+									'111121110IK')", "Total Banks POIK", 1000000, 50000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-
+	}
+	
+	if ($KL_SystemAdmin){
 		BalanceListAccountControl("('111259010', 
 									'111259020', 
 									'111259050')", "Total PayPal RL", 0, 20000000, $periodnow, $db);
