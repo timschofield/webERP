@@ -67,7 +67,14 @@ function KapalLautRetailAreaSelection($PaymentMethod, $identifier){
 				} /* end check if all items in order are PTBB or not */
 				if ($AllItemsArePTBB){
 					// consignment sale and all items belong to PTBB and paid cash ==> Others
-					$Area = $_SESSION['AreaSalesCashOthers'];
+					// $Area = $_SESSION['AreaSalesCashOthers'];
+					// Almost everything goes to others 
+					$CashDraw = mt_rand(1,10000)/100;
+					if ($CashDraw <= ($_SESSION['CashSalesReported']/2)){
+						$Area = $_SESSION['AreaSalesCash'];
+					}else{
+						$Area = $_SESSION['AreaSalesCashOthers'];
+					}
 				}else{
 					// some items do not belong to PTBB (so some belong to PTADU) and paid cash ==> Roll the dice
 					$CashDraw = mt_rand(1,10000)/100;
