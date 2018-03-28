@@ -35,12 +35,12 @@ if ($KL_SystemAdmin
 	OR $KL_BusinessDevelopmentManager 
 	OR $KL_ShopManager 
 	OR $KL_SalesDirector){
-	RetailCustomerAnalysisBySex(90, "ALL", $db);
+	RetailCustomerAnalysisBySex(365, "ALL", $db);
 	$NumberOfTestExecuted++;
 }
-
+	
 if ($KL_SystemAdmin){
-	RetailCustomerAnalysisByCountry(365, "ALL", "ALL", 100, $CountriesForRetail, $db);
+	RetailCustomerAnalysisByCountry(365, "ALL", "ALL", 500, $CountriesForRetail, $db);
 	$NumberOfTestExecuted++;
 }
 
