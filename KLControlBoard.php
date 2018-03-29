@@ -392,7 +392,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111800000",  200000000,  300000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111900000",   20000000,   30000000, $periodnow, $db);
+		BalanceAccountControl("111900000",   10000000,   20000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111311100",  -20000000,          0, $periodnow, $db);
 		$NumberOfTestExecuted++;
@@ -4694,8 +4694,12 @@ function StockToPTADU($Kind, $FactorNearStock, $RootPath, $db){
 					AND workorders.wo > 3614
 					AND workorders.wo != 3652
 					AND workorders.wo != 3653
+					AND workorders.wo != 3654
+					AND workorders.wo != 3655
 					AND workorders.wo != 3661
 					AND workorders.wo != 3662
+					AND workorders.wo != 3664
+					AND workorders.wo != 3674
 				GROUP BY woitems.stockid
 				HAVING qtyreceivedptadu * " . $FactorNearStock. " >= qoh
 					AND qtyreceivedptadu > 0
