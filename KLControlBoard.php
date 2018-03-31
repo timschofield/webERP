@@ -764,7 +764,8 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_SystemAdmin){
+	if ($KL_ShopSupportLeader OR 
+		$KL_OperationalManager){
 		PackagingToBeRefilledKapalLaut(false, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		PackagingToBeRefilledBlink(false, $RootPath, $db);
