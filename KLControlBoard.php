@@ -472,6 +472,11 @@ if ($ProcessSection01){
 
 	if ($KL_BusinessDevelopmentManager){
 
+		ItemsInmediateShortage("COMPON", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsInmediateShortage("COMPOA", $RootPath, $db);
+		$NumberOfTestExecuted++;
+
 		GoodsJustArrived("PO", "KANTO", 3, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		GoodsJustArrived("WO", "KANTO", 3, $RootPath, $db);
@@ -2327,6 +2332,133 @@ function ItemsInCategoryForMoreThanDays($maxdays, $group, $RootPath, $db){
 				</div>';
 	}
 }	
+
+function ItemsInmediateShortage($Cat, $RootPath, $db){
+
+	$SQL = "SELECT stm.stockid,
+				COALESCE ((SELECT sum(quantity)
+					FROM locstock
+					WHERE stockid = stm.stockid),0) AS qoh,
+				COALESCE ((SELECT SUM(purchorderdetails.quantityord -purchorderdetails.quantityrecd)
+					FROM purchorders
+						INNER JOIN purchorderdetails
+							ON purchorders.orderno=purchorderdetails.orderno
+					WHERE purchorderdetails.itemcode=stm.stockid
+						AND purchorderdetails.completed = 0
+						AND purchorders.status<>'Cancelled'
+						AND purchorders.status<>'Pending'
+						AND purchorders.status<>'Rejected'
+						AND purchorders.status<>'Completed'),0) AS qtypo,
+				COALESCE ((SELECT SUM(woitems.qtyreqd-woitems.qtyrecd)
+					FROM woitems
+						INNER JOIN workorders
+							ON woitems.wo=workorders.wo
+					WHERE workorders.closed=0
+						AND woitems.stockid=stm.stockid),0) AS qtywo,
+				COALESCE ((SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced)
+					FROM salesorderdetails 
+					INNER JOIN salesorders
+						ON salesorders.orderno = salesorderdetails.orderno
+					WHERE salesorderdetails.completed=0
+					AND salesorders.quotation=0
+					AND salesorderdetails.stkcode=stm.stockid),0) AS directdemand,
+				COALESCE ((SELECT SUM(qtypu*(woitems.qtyreqd - woitems.qtyrecd))
+					FROM woitems INNER JOIN worequirements
+						ON woitems.stockid=worequirements.parentstockid
+					INNER JOIN workorders
+						ON woitems.wo=workorders.wo
+					AND woitems.wo=worequirements.wo
+					WHERE  worequirements.stockid=stm.stockid
+						AND workorders.closed=0),0) AS wodemand
+			FROM stockmaster stm
+			WHERE stm.discontinued = 0
+				AND stm.categoryid = '" . $Cat . "'
+				AND 
+				(COALESCE ((SELECT sum(quantity)
+					FROM locstock
+					WHERE stockid = stm.stockid),0)
+				+ 
+				COALESCE ((SELECT SUM(purchorderdetails.quantityord -purchorderdetails.quantityrecd)
+					FROM purchorders
+						INNER JOIN purchorderdetails
+							ON purchorders.orderno=purchorderdetails.orderno
+					WHERE purchorderdetails.itemcode=stm.stockid
+						AND purchorderdetails.completed = 0
+						AND purchorders.status<>'Cancelled'
+						AND purchorders.status<>'Pending'
+						AND purchorders.status<>'Rejected'
+						AND purchorders.status<>'Completed'),0)
+				+ 
+				COALESCE ((SELECT SUM(woitems.qtyreqd-woitems.qtyrecd)
+					FROM woitems
+						INNER JOIN workorders
+							ON woitems.wo=workorders.wo
+					WHERE workorders.closed=0
+						AND woitems.stockid=stm.stockid),0)
+				) <	(
+				COALESCE ((SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced)
+					FROM salesorderdetails 
+					INNER JOIN salesorders
+						ON salesorders.orderno = salesorderdetails.orderno
+					WHERE salesorderdetails.completed=0
+					AND salesorders.quotation=0
+					AND salesorderdetails.stkcode=stm.stockid),0)
+				+ 
+				COALESCE ((SELECT SUM(qtypu*(woitems.qtyreqd - woitems.qtyrecd))
+					FROM woitems INNER JOIN worequirements
+						ON woitems.stockid=worequirements.parentstockid
+					INNER JOIN workorders
+						ON woitems.wo=workorders.wo
+					AND woitems.wo=worequirements.wo
+					WHERE  worequirements.stockid=stm.stockid
+						AND workorders.closed=0),0)
+				)
+			ORDER BY stm.stockid";
+	
+	$result = DB_query($SQL);		
+	
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . $Cat . ' Items in inmediate shortage stock</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('QOH') . '</th>
+							<th class="ascending">' . _('Qty @ PO') . '</th>
+							<th class="ascending">' . _('Qty @ WO') . '</th>
+							<th class="ascending">' . _('Demand') . '</th>
+							<th class="ascending">' . _('Shortage') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$i, 
+					$CodeLink, 
+					locale_number_format($myrow['qoh'],0), 
+					locale_number_format($myrow['qtypo'],0), 
+					locale_number_format($myrow['qtywo'],0), 
+					locale_number_format($myrow['directdemand']+$myrow['wodemand'],0),
+					locale_number_format($myrow['qoh']+$myrow['qtypo']+$myrow['qtywo']-$myrow['directdemand']-$myrow['wodemand'],0)
+					);
+			$i++;
+		}
+		echo '</table>
+				</div>';
+	}
+}	
+
 
 function ItemsInKLProcessAndRLNotZero($RootPath, $db){
 	/* Check if there is any item in any KL process and RL is not zero... */
