@@ -153,7 +153,7 @@ if(!extension_loaded('mbstring')){
 
 	// Prevent the installation file from running again:
 	if(file_exists('../config.php') or file_exists('../Config.php')){
-		prnMsg(_('It seems that the system has been already installed. If you want to install again, please remove the config.php file first'),'error');
+		echo _('It seems that the system has been already installed. If you want to install again, please remove the config.php file first');
 		exit;
 	}
 	if(isset($_POST['Install'])){//confirm the final install data, the last validation step before we submit the data
