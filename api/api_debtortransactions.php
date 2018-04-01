@@ -257,7 +257,7 @@ function ConvertToSQLDate($DateEntry) {
 */
 
 /* Retrieves the default debtors code for webERP */
-	function GetDebtorsGLCode($db) {
+	function GetDebtorsGLCode() {
 		$sql="SELECT debtorsact FROM companies";
 		$result=DB_query($sql);
 		$myrow=DB_fetch_array($result);
@@ -344,7 +344,7 @@ function ConvertToSQLDate($DateEntry) {
 		DB_Txn_Begin();
 
 		$ReceiptNo = GetNextTransNo(12);
-		$PeriodNo = GetCurrentPeriod($db);
+		$PeriodNo = GetCurrentPeriod();
 /*now enter the BankTrans entry */
 
 		$SQL="INSERT INTO banktrans (type,
@@ -549,7 +549,7 @@ function ConvertToSQLDate($DateEntry) {
 		$result = DB_Txn_Begin();
 	/*Now Get the next credit note number - function in SQL_CommonFunctions*/
 		$CreditNoteNo = GetNextTransNo(11);
-		$PeriodNo = GetCurrentPeriod($db);
+		$PeriodNo = GetCurrentPeriod();
 
 		$TotalFXNetCredit = 0;
 		$TotalFXTax = 0;
@@ -1259,7 +1259,7 @@ function ConvertToSQLDate($DateEntry) {
 			$sql = "UPDATE systypes SET typeno='" . GetNextTransNo(10) . "' WHERE typeid=10";
 			$result = DB_query($sql);
 			$SalesGLCode=GetSalesGLCode($SalesArea, $PartCode);
-			$DebtorsGLCode=GetDebtorsGLCode($db);
+			$DebtorsGLCode=GetDebtorsGLCode();
 			$sql="INSERT INTO gltrans VALUES(null,
 											10,
 											'" . GetNextTransNo(10) . "',
@@ -1557,7 +1557,7 @@ function ConvertToSQLDate($DateEntry) {
 			$sql = "UPDATE systypes SET typeno='" . GetNextTransNo(11) ."' WHERE typeid=10";
 			$result = DB_query($sql);
 			$SalesGLCode=GetSalesGLCode($SalesArea, $PartCode);
-			$DebtorsGLCode=GetDebtorsGLCode($db);
+			$DebtorsGLCode=GetDebtorsGLCode();
 			$sql="INSERT INTO gltrans VALUES(null,
 											10,
 											'" . GetNextTransNo(11). "',
