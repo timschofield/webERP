@@ -1192,7 +1192,6 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								$Tag,
 								'',
 								$ExRate);
-/* DO NOT account it, so retuns will tend to compensate one another. Otherwise, will keep growing
 			$ReceiptNumber = AccountDebtorDiscount($ReceiptNumber,
 								'RETURNED_GOODS',
 								$PeriodNo,
@@ -1204,7 +1203,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								$ExRate,
 								$OrderNo,
 								$_SESSION['Items'.$identifier]->DebtorNo);
-*/		
+		
 		}//amount vouched or discount was not zero
 
 		foreach ( $_SESSION['Items'.$identifier]->TaxTotals as $TaxAuthID => $TaxAmount){
