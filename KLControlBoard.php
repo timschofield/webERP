@@ -1020,7 +1020,7 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 		OnlineQuotationsFollowUp($RootPath, $db);
 		$NumberOfTestExecuted++;
-		OldOnlineQuotations(30, $RootPath, $db);
+		OldOnlineQuotations(10, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	//	OutstandingOrders("Online", "Quotation", $RootPath, $db);
 	//	$NumberOfTestExecuted++;
