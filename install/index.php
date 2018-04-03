@@ -943,7 +943,7 @@ function DbConfig($Language,$MysqlExt = FALSE){//The screen for users to input m
         <?php
         }else{
         ?>
-            <input type="hidden" name="MysqliExt" value="1" />
+            <input type="hidden" name="MysqliExt" value="0" />
         <?php
         }
         ?>
