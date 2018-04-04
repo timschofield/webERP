@@ -11,7 +11,7 @@ ALTER TABLE `pctabs` ADD COLUMN `authorizerexpenses` VARCHAR(20) NOT NULL AFTER 
 UPDATE `pctabs` SET authorizerexpenses=authorizer;
 ALTER TABLE `pcashdetails` ADD COLUMN `tag` INT(11) NOT NULL DEFAULT 0 AFTER `tabcode`;
 INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('PcAuthorizeCash.php', '6', 'Authorisation of assigned cash');
-INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('Z_RemovePurchaseBackOrders.php', '1', 'Removes all purchase order back orders');
+INSERT IGNORE INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('Z_RemovePurchaseBackOrders.php', '1', 'Removes all purchase order back orders');
 CREATE TABLE `pcashdetailtaxes` (
 	`counterindex` INT(20) NOT NULL AUTO_INCREMENT,
 	`pccashdetail` INT(20) NOT NULL DEFAULT 0,
@@ -31,7 +31,7 @@ ALTER TABLE `custbranch` CHANGE `lng` `lng` FLOAT(12,8) NOT NULL DEFAULT '0.0000
 ALTER TABLE pcashdetails MODIFY receipt text COMMENT 'Column redundant. Replaced by receipt file upload. Nov 2017.';
 INSERT INTO `scripts` (`script` ,`pagesecurity` ,`description`) VALUES ('BankAccountBalances.php',  '1',  'Shows bank accounts authorised for with balances');
 
-ALTER TABLE `stockserialitems` ADD `createdate` DATETIME NULL DEFAULT CURRENT_TIMESTAMP, ADD INDEX ( `createdate` );
+ALTER TABLE `stockserialitems` ADD `createdate` timestamp NULL DEFAULT CURRENT_TIMESTAMP, ADD INDEX ( `createdate` );
 UPDATE stockserialitems SET createdate = NULL;
 
 UPDATE stockserialitems as stockserialitems SET createdate = 
@@ -74,6 +74,7 @@ CREATE TABLE IF NOT EXISTS pickreq (
 	key (`shipdate`),
 	key (`status`),
 	key (`closed`),
+	key (`loccode`),
 	CONSTRAINT FOREIGN KEY(`loccode`) REFERENCES `locations`(`loccode`),
 	constraint foreign key (`orderno`) REFERENCES salesorders(`orderno`)
 ) Engine=InnoDB DEFAULT CHARSET=utf8;
@@ -89,6 +90,7 @@ CREATE TABLE IF NOT EXISTS pickreqdetails (
 	`shipqty` double not null default '0',
 	PRIMARY KEY (`detailno`),
 	key (`prid`),
+	key (`stockid`),
 	constraint foreign key (`stockid`) REFERENCES stockmaster(`stockid`),
 	constraint foreign key (`prid`) REFERENCES pickreq(`prid`)
 ) Engine=InnoDB DEFAULT CHARSET=utf8; 
