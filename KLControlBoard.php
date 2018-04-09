@@ -51,6 +51,7 @@ if (!isset($_GET['Section'])){
 ***************************************************************************************/
 
 if ($KL_SystemAdmin){
+//	ItemsNotNeededInOnlineOrderButRequested($RootPath, $db);
 //	phpinfo();
 //	$NumberOfTestExecuted++;
 }
@@ -1033,6 +1034,12 @@ if ($ProcessSection02){
 		OutstandingOrders("Online", "Order", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		OnlineItemsOnProcess($RootPath, $db);
+		$NumberOfTestExecuted++;
+	}
+
+	if ($KL_BusinessDevelopmentManager
+		OR $KL_ShopSupportLeader){ 
+		ItemsNotNeededInOnlineOrderButRequested($RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -2541,6 +2548,52 @@ function ItemsInKLProcessAndRLNotZero($RootPath, $db){
 					$ItemMovingToDiscount20,
 					$ItemMovingToDiscount50,
 					$ItemMovingToDiscount80
+					);
+			$i++;
+		}
+		echo '</table>
+				</div>';
+	}
+}
+
+function ItemsNotNeededInOnlineOrderButRequested($RootPath, $db){
+	
+	$SQL = "SELECT locstock.stockid,
+				locstock.quantity
+			FROM locstock
+			WHERE locstock.loccode = ". CODE_ONLINE_SHOP ."
+				AND locstock.quantity > 0
+				AND NOT EXISTS (SELECT 	salesorderdetails.stkcode
+								FROM salesorderdetails, salesorders
+								WHERE salesorderdetails.orderno = salesorders.orderno
+									AND salesorderdetails.stkcode = locstock.stockid
+									AND salesorders.quotation = 0
+									AND salesorders.fromstkloc = ". CODE_ONLINE_SHOP ."
+									AND salesorderdetails.completed= 0)";
+	$result = DB_query($SQL);
+	
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . "Items Not needed for any Online Shop but with QOH > 0 in Shop Online" . '</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Item Code') . '</th>
+							<th class="ascending">' . _('Quantity') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			$ItemLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$i, 
+					$ItemLink, 
+					locale_number_format($myrow['quantity'],0)
 					);
 			$i++;
 		}
