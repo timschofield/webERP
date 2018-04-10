@@ -1,5 +1,6 @@
 <?php
 
+/* $Id: StockQuantityByDate.php 7751 2017-04-13 16:34:26Z rchacon $ */
 
 include('includes/session.php');
 $Title = _('Stock On Hand By Date');
@@ -64,7 +65,8 @@ if (!isset($_POST['OnHandDate'])){
 }
 
 echo '<td>' . _('On-Hand On Date') . ':</td>
-	<td><input type="text" class="date" name="OnHandDate" size="11" maxlength="10" value="' . $_POST['OnHandDate'] . '" /></td></tr>';
+	<td><input type="text" class="date" name="OnHandDate" size="11" maxlength="10" value="' . $_POST['OnHandDate'] . '" /></td>
+	</tr>';
 echo '<tr>
 		<td colspan="6">
 		<div class="centre">
@@ -80,12 +82,14 @@ $TotalQuantity = 0;
 if(isset($_POST['ShowStatus']) AND Is_Date($_POST['OnHandDate'])) {
         if ($_POST['StockCategory']=='All') {
                  $sql = "SELECT stockid,
+                                 controlled,
                                  description,
                                  decimalplaces
                          FROM stockmaster
                          WHERE (mbflag='M' OR mbflag='B')";
          } else {
                  $sql = "SELECT stockid,
+                                 controlled,
                                  description,
                                  decimalplaces
                          FROM stockmaster
@@ -107,6 +111,7 @@ if(isset($_POST['ShowStatus']) AND Is_Date($_POST['OnHandDate'])) {
 						<th>' . _('Item Code') . '</th>
 						<th>' . _('Description') . '</th>
 						<th>' . _('Quantity On Hand') . '</th>
+						<th>' . _('Controlled') . '</th>
 					</tr>';
 	echo $tableheader;
 
@@ -118,6 +123,7 @@ if(isset($_POST['ShowStatus']) AND Is_Date($_POST['OnHandDate'])) {
 				WHERE stockmoves.trandate <= '". $SQLOnHandDate . "'
 				AND stockid = '" . $myrows['stockid'] . "'
 				AND loccode = '" . $_POST['StockLocation'] ."'
+				AND newqoh > 0
 				ORDER BY stkmoveno DESC LIMIT 1";
 
 		$ErrMsg =  _('The stock held as at') . ' ' . $_POST['OnHandDate'] . ' ' . _('could not be retrieved because');
@@ -125,10 +131,15 @@ if(isset($_POST['ShowStatus']) AND Is_Date($_POST['OnHandDate'])) {
 		$LocStockResult = DB_query($sql, $ErrMsg);
 
 		$NumRows = DB_num_rows($LocStockResult);
-
 		$j = 1;
 
 		while ($LocQtyRow=DB_fetch_array($LocStockResult)) {
+
+			if ($myrows['controlled']==1){
+				$Controlled="Yes";
+			} else {
+				$Controlled="No";
+			}
 
 			if($NumRows == 0){
 				printf('<tr class="striped_row">
@@ -145,11 +156,13 @@ if(isset($_POST['ShowStatus']) AND Is_Date($_POST['OnHandDate'])) {
 					<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?%s">%s</a></td>
 					<td>%s</td>
 					<td class="number">%s</td>
+					<td class="number">%s</td>
 					</tr>',
 					'StockID=' . mb_strtoupper($myrows['stockid']),
 					mb_strtoupper($myrows['stockid']),
 					$myrows['description'],
-					locale_number_format($LocQtyRow['newqoh'],$myrows['decimalplaces']));
+					locale_number_format($LocQtyRow['newqoh'],$myrows['decimalplaces']),
+					$Controlled);
 
 				$TotalQuantity += $LocQtyRow['newqoh'];
 			}
@@ -163,7 +176,10 @@ if(isset($_POST['ShowStatus']) AND Is_Date($_POST['OnHandDate'])) {
 
 	}//end of while loop
 	echo '<tr>
-			<td>' . _('Total Quantity') . ': ' . $TotalQuantity . '</td>
+			<td><b>' . _('Total') . '</b></td>
+			<td></td>
+			<td class="number"><b>' . locale_number_format($TotalQuantity,1) . '</b></td>
+			<td></td>
 		</tr>
 		</table>';
 }
