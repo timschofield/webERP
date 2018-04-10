@@ -1579,7 +1579,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
-						<td><input class="number" ' . ($i==0 ? 'autofocus="autofocus"':'') . ' type="text" required="required" size="6" name="OrderQty%s" value="0" />
+						<td><input class="number" ' . ($j==0 ? 'autofocus="autofocus"':'') . ' type="text" required="required" size="6" name="OrderQty%s" value="0" />
 						<input name="StockID%s" type="hidden" value="%s" />
 						</td>
 						</tr>',
@@ -1591,9 +1591,10 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						locale_number_format($DemandQty, $QOHRow['decimalplaces']),
 						locale_number_format($OnOrder, $QOHRow['decimalplaces']),
 						locale_number_format($Available, $QOHRow['decimalplaces']),
-						strval($j+7),
-						$i,
+						$j,
+						$j,
 						$myrow['stockid']);
+				$j++;
 				$i++;
 #end of page full new headings if
 			}
@@ -1676,7 +1677,6 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo '<br />';
 			echo '<div class="page_help_text">' . _('Select an item by entering the quantity required.  Click Order when ready.') . '</div>';
 			echo '<br />';
-			$j = 1;
 
             echo '<div>';
 			echo '<input name="FormID" type="hidden" value="' . $_SESSION['FormID'] . '" />';
@@ -1765,8 +1765,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						locale_number_format($DemandQty,$QOHRow['decimalplaces']),
 						locale_number_format($OnOrder,$QOHRow['decimalplaces']),
 						locale_number_format($Available,$QOHRow['decimalplaces']),
-						strval($j+7),
-						$i,
+						$j,
+						$j,
 						$myrow['stockid'] );
 				$i++;
 				$j++;
