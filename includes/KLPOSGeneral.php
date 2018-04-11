@@ -22,7 +22,7 @@ function KapalLautRetailAreaSelection($PaymentMethod, $identifier){
 			// all cash sales go to cash PT
 			$Area = $_SESSION['AreaSalesCash'];
 		}else{
-			// Needs to be splitted into Cash PT and Cash others
+			// Needs to be splitted into Cash official and Cash others
 			// We produce a random number between 0 and 100, to separate them.
 			$CashDraw = mt_rand(1,10000)/100;
 			if ($CashDraw <= $_SESSION['CashSalesReported']){
@@ -68,9 +68,9 @@ function KapalLautRetailAreaSelection($PaymentMethod, $identifier){
 				if ($AllItemsArePTBB){
 					// consignment sale and all items belong to PTBB and paid cash ==> Others
 					// $Area = $_SESSION['AreaSalesCashOthers'];
-					// Almost everything goes to others 
+					// Almost everything goes to others, 5% to cash official
 					$CashDraw = mt_rand(1,10000)/100;
-					if ($CashDraw <= ($_SESSION['CashSalesReported']/2)){
+					if ($CashDraw <= (5)){
 						$Area = $_SESSION['AreaSalesCash'];
 					}else{
 						$Area = $_SESSION['AreaSalesCashOthers'];

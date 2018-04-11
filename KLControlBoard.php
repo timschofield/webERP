@@ -1142,13 +1142,9 @@ if ($ProcessSection02){
 	}
 	
 	if ($KL_SystemAdmin){
-		StockToPTADU("PO", 1.0, $RootPath, $db);
+		StockToPTADU("PO", 1.4, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		StockToPTADU("PO", 1.5, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		StockToPTADU("WO", 1.0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		StockToPTADU("WO", 1.5, $RootPath, $db);
+		StockToPTADU("WO", 1.4, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -4909,13 +4905,23 @@ function StockToPTADU($Kind, $FactorNearStock, $RootPath, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
+							<th>' . '' . '</th>
+							<th>' . '' . '</th>
+							<th>' . '' . '</th>
+							<th>' . '' . '</th>
+							<th colspan="2">' . 'QOH Location' . '</th>
+							<th colspan="2">' . 'QOH Company' . '</th>
+							<th>' . '' . '</th>
+						</tr>
+						<tr>
 							<th class="ascending">' . 'Stock ID' . '</th>
 							<th class="ascending">' . 'Category BB' . '</th>
 							<th class="ascending">' . 'Category ADU' . '</th>
-							<th class="ascending">' . 'QOH ADU' . '</th>
-							<th class="ascending">' . 'QOH Kantor' . '</th>
-							<th class="ascending">' . 'QOH Shops' . '</th>
 							<th class="ascending">' . 'QOH Total' . '</th>
+							<th class="ascending">' . 'Kantor' . '</th>
+							<th class="ascending">' . 'Shops' . '</th>
+							<th class="ascending">' . 'ADU' . '</th>
+							<th class="ascending">' . 'BB' . '</th>
 							<th class="ascending">' . 'Action' . '</th>
 						</tr>';
 		echo $TableHeader;
@@ -4960,10 +4966,12 @@ function StockToPTADU($Kind, $FactorNearStock, $RootPath, $db){
 				$NewCategory = "COMPOA";
 			}
 			
-			if ($myrow['qtyreceivedptadu'] >= ($myrow['qoh']-$myrow['qohshops'])){
+			// if there is some ADU qty at shops (so, stock at shops more than BB stock) OR no BB qty left
+			if (($myrow['qohshops'] > ($myrow['qoh']-$myrow['qtyreceivedptadu'])) 
+				OR (($myrow['qoh']-$myrow['qtyreceivedptadu']) <= 0)){
 				$Action = '<a href="' . $RootPath . '/KLUpdateStockCategory.php?StockId=' . $myrow['itemcode'] . '&OldCat=' . $myrow['categoryid'] . '&NewCat=' . $NewCategory .'">' . 'Change Category' . '</a>';
 			}else{
-				$Action = "";
+				$Action = '';
 			}
 			
 			printf('<td>%s</td>
@@ -4973,15 +4981,17 @@ function StockToPTADU($Kind, $FactorNearStock, $RootPath, $db){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
+					<td class="number">%s</td>
 					<td>%s</td>
 					</tr>', 
 					$CodeLink,
 					$myrow['categoryid'],
 					$NewCategory,
-					locale_number_format($myrow['qtyreceivedptadu'],0),
+					locale_number_format($myrow['qoh'],0),
 					locale_number_format($myrow['qoh']-$myrow['qohshops'],0),
 					locale_number_format($myrow['qohshops'],0),
-					locale_number_format($myrow['qoh'],0),
+					locale_number_format($myrow['qtyreceivedptadu'],0),
+					locale_number_format($myrow['qoh']-$myrow['qtyreceivedptadu'],0),
 					$Action
 					);
 			$i++;
