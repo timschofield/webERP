@@ -1144,11 +1144,11 @@ if ($ProcessSection02){
 	if ($KL_SystemAdmin){
 		StockToPTADU("PO", 1.0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		StockToPTADU("PO", 1.2, $RootPath, $db);
+		StockToPTADU("PO", 1.5, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		StockToPTADU("WO", 1.0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		StockToPTADU("WO", 1.2, $RootPath, $db);
+		StockToPTADU("WO", 1.5, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -4852,7 +4852,12 @@ function StockToPTADU($Kind, $FactorNearStock, $RootPath, $db){
 					SUM(purchorderdetails.quantityrecd) AS qtyreceivedptadu,
 					(SELECT SUM(locstock.quantity)
 						FROM locstock
-						WHERE locstock.stockid = purchorderdetails.itemcode) AS qoh
+						WHERE locstock.stockid = purchorderdetails.itemcode) AS qoh,
+					(SELECT SUM(locstock.quantity)
+						FROM locstock,locations
+						WHERE locstock.stockid = stockmaster.stockid
+							AND locstock.loccode = locations.loccode
+							AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . ") AS qohshops
 				FROM purchorderdetails, stockmaster
 				WHERE purchorderdetails.itemcode = stockmaster.stockid
 					AND stockmaster.categoryid IN ('SETKL','SETBL','SETGE','TESTKL','TESTBL','TESTGE', 'STABKL','STABBL','STABGE','NOPOKL','NOPOBL','NOPOGE','DISC20','DISC50','DISC80','COMPON')
@@ -4871,7 +4876,12 @@ function StockToPTADU($Kind, $FactorNearStock, $RootPath, $db){
 					SUM(woitems.qtyrecd) AS qtyreceivedptadu,
 					(SELECT SUM(locstock.quantity)
 						FROM locstock
-						WHERE locstock.stockid = woitems.stockid) AS qoh
+						WHERE locstock.stockid = woitems.stockid) AS qoh,
+					(SELECT SUM(locstock.quantity)
+						FROM locstock,locations
+						WHERE locstock.stockid = woitems.stockid
+							AND locstock.loccode = locations.loccode
+							AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . ") AS qohshops
 				FROM workorders, woitems, stockmaster
 				WHERE woitems.stockid = stockmaster.stockid
 					AND stockmaster.categoryid IN ('SETKL','SETBL','SETGE','TESTKL','TESTBL','TESTGE', 'STABKL','STABBL','STABGE','NOPOKL','NOPOBL','NOPOGE','DISC20','DISC50','DISC80','COMPON')
@@ -4902,8 +4912,10 @@ function StockToPTADU($Kind, $FactorNearStock, $RootPath, $db){
 							<th class="ascending">' . 'Stock ID' . '</th>
 							<th class="ascending">' . 'Category BB' . '</th>
 							<th class="ascending">' . 'Category ADU' . '</th>
-							<th class="ascending">' . 'Qty ADU' . '</th>
-							<th class="ascending">' . 'QOH BB+ADU' . '</th>
+							<th class="ascending">' . 'QOH ADU' . '</th>
+							<th class="ascending">' . 'QOH Kantor' . '</th>
+							<th class="ascending">' . 'QOH Shops' . '</th>
+							<th class="ascending">' . 'QOH Total' . '</th>
 							<th class="ascending">' . 'Action' . '</th>
 						</tr>';
 		echo $TableHeader;
@@ -4948,7 +4960,7 @@ function StockToPTADU($Kind, $FactorNearStock, $RootPath, $db){
 				$NewCategory = "COMPOA";
 			}
 			
-			if ($myrow['qtyreceivedptadu'] >= $myrow['qoh']){
+			if ($myrow['qtyreceivedptadu'] >= ($myrow['qoh']-$myrow['qohshops'])){
 				$Action = '<a href="' . $RootPath . '/KLUpdateStockCategory.php?StockId=' . $myrow['itemcode'] . '&OldCat=' . $myrow['categoryid'] . '&NewCat=' . $NewCategory .'">' . 'Change Category' . '</a>';
 			}else{
 				$Action = "";
@@ -4959,12 +4971,16 @@ function StockToPTADU($Kind, $FactorNearStock, $RootPath, $db){
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
 					<td>%s</td>
 					</tr>', 
 					$CodeLink,
 					$myrow['categoryid'],
 					$NewCategory,
 					locale_number_format($myrow['qtyreceivedptadu'],0),
+					locale_number_format($myrow['qoh']-$myrow['qohshops'],0),
+					locale_number_format($myrow['qohshops'],0),
 					locale_number_format($myrow['qoh'],0),
 					$Action
 					);
