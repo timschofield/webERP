@@ -1142,9 +1142,13 @@ if ($ProcessSection02){
 	}
 	
 	if ($KL_SystemAdmin){
-		StockToPTADU("PO", 1.4, $RootPath, $db);
+		StockToPTADU("PO", 1, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		StockToPTADU("WO", 1.4, $RootPath, $db);
+		StockToPTADU("PO", 99999999, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		StockToPTADU("WO", 1, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		StockToPTADU("WO", 99999999, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -4845,6 +4849,7 @@ function StockToPTADU($Kind, $FactorNearStock, $RootPath, $db){
 	if($Kind == "PO"){
 		$SQL = "SELECT purchorderdetails.itemcode,
 					stockmaster.categoryid,
+					(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS stdcost,
 					SUM(purchorderdetails.quantityrecd) AS qtyreceivedptadu,
 					(SELECT SUM(locstock.quantity)
 						FROM locstock
@@ -4869,6 +4874,7 @@ function StockToPTADU($Kind, $FactorNearStock, $RootPath, $db){
 	}elseif($Kind == "WO"){
 		$SQL = "SELECT woitems.stockid AS itemcode,
 					stockmaster.categoryid,
+					(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS stdcost,
 					SUM(woitems.qtyrecd) AS qtyreceivedptadu,
 					(SELECT SUM(locstock.quantity)
 						FROM locstock
@@ -4883,7 +4889,18 @@ function StockToPTADU($Kind, $FactorNearStock, $RootPath, $db){
 					AND stockmaster.categoryid IN ('SETKL','SETBL','SETGE','TESTKL','TESTBL','TESTGE', 'STABKL','STABBL','STABGE','NOPOKL','NOPOBL','NOPOGE','DISC20','DISC50','DISC80','COMPON')
 					AND workorders.wo = woitems.wo
 					AND workorders.closed = 1
-					AND workorders.wo > 3614
+					AND (workorders.wo > 3614 
+						OR workorders.wo = 3576
+						OR workorders.wo = 3577
+						OR workorders.wo = 3578
+						OR workorders.wo = 3579
+						OR workorders.wo = 3580
+						OR workorders.wo = 3581
+						OR workorders.wo = 3582
+						)
+					AND workorders.wo != 3617
+					AND workorders.wo != 3623
+					AND workorders.wo != 3651
 					AND workorders.wo != 3652
 					AND workorders.wo != 3653
 					AND workorders.wo != 3654
@@ -4893,10 +4910,25 @@ function StockToPTADU($Kind, $FactorNearStock, $RootPath, $db){
 					AND workorders.wo != 3664
 					AND workorders.wo != 3673
 					AND workorders.wo != 3674
+					AND workorders.wo != 3687
+					AND workorders.wo != 3691
+					AND workorders.wo != 3693
+					AND workorders.wo != 3694
+					AND workorders.wo != 3695
 				GROUP BY woitems.stockid
 				HAVING qtyreceivedptadu * " . $FactorNearStock. " >= qoh
 					AND qtyreceivedptadu > 0
 				ORDER BY woitems.stockid";
+
+//					AND workorders.wo != 3619
+//					AND workorders.wo != 3626
+//					AND workorders.wo != 3627
+//					AND workorders.wo != 3629
+//					AND workorders.wo != 3632
+//					AND workorders.wo != 3633
+//					AND workorders.wo != 3646
+//					AND workorders.wo != 3658
+				
 	}
 			
 	$result = DB_query($SQL);
@@ -4909,12 +4941,14 @@ function StockToPTADU($Kind, $FactorNearStock, $RootPath, $db){
 							<th>' . '' . '</th>
 							<th>' . '' . '</th>
 							<th>' . '' . '</th>
+							<th>' . '' . '</th>
 							<th colspan="2">' . 'QOH Location' . '</th>
 							<th colspan="2">' . 'QOH Company' . '</th>
 							<th>' . '' . '</th>
 						</tr>
 						<tr>
 							<th class="ascending">' . 'Stock ID' . '</th>
+							<th class="ascending">' . 'Std Cost' . '</th>
 							<th class="ascending">' . 'Category BB' . '</th>
 							<th class="ascending">' . 'Category ADU' . '</th>
 							<th class="ascending">' . 'QOH Total' . '</th>
@@ -4975,6 +5009,7 @@ function StockToPTADU($Kind, $FactorNearStock, $RootPath, $db){
 			}
 			
 			printf('<td>%s</td>
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
@@ -4985,13 +5020,14 @@ function StockToPTADU($Kind, $FactorNearStock, $RootPath, $db){
 					<td>%s</td>
 					</tr>', 
 					$CodeLink,
+					locale_number_format_zero_blank($myrow['stdcost'],0),
 					$myrow['categoryid'],
 					$NewCategory,
-					locale_number_format($myrow['qoh'],0),
-					locale_number_format($myrow['qoh']-$myrow['qohshops'],0),
-					locale_number_format($myrow['qohshops'],0),
-					locale_number_format($myrow['qtyreceivedptadu'],0),
-					locale_number_format($myrow['qoh']-$myrow['qtyreceivedptadu'],0),
+					locale_number_format_zero_blank($myrow['qoh'],0),
+					locale_number_format_zero_blank($myrow['qoh']-$myrow['qohshops'],0),
+					locale_number_format_zero_blank($myrow['qohshops'],0),
+					locale_number_format_zero_blank($myrow['qtyreceivedptadu'],0),
+					locale_number_format_zero_blank($myrow['qoh']-$myrow['qtyreceivedptadu'],0),
 					$Action
 					);
 			$i++;
