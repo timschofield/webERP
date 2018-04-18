@@ -34,11 +34,11 @@ INSERT INTO `scripts` (`script` ,`pagesecurity` ,`description`) VALUES ('BankAcc
 ALTER TABLE `stockserialitems` ADD `createdate` timestamp NULL DEFAULT CURRENT_TIMESTAMP, ADD INDEX ( `createdate` );
 UPDATE stockserialitems SET createdate = NULL;
 
-UPDATE stockserialitems as stockserialitems SET createdate = 
-(SELECT  trandate FROM (select trandate, stockserialitems.serialno, stockserialitems.stockid FROM stockserialitems 
-LEFT JOIN stockserialmoves ON stockserialitems.serialno=stockserialmoves.serialno 
-LEFT JOIN stockmoves ON stockserialmoves.stockmoveno=stockmoves.stkmoveno 
-GROUP BY stockserialitems.stockid, stockserialitems.serialno 
+UPDATE stockserialitems as stockserialitems SET createdate =
+(SELECT  trandate FROM (select trandate, stockserialitems.serialno, stockserialitems.stockid FROM stockserialitems
+LEFT JOIN stockserialmoves ON stockserialitems.serialno=stockserialmoves.serialno
+LEFT JOIN stockmoves ON stockserialmoves.stockmoveno=stockmoves.stkmoveno
+GROUP BY stockserialitems.stockid, stockserialitems.serialno
 ORDER BY trandate) AS ssi
 WHERE ssi.serialno=stockserialitems.serialno
 AND ssi.stockid=stockserialitems.stockid);
@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS pickreqdetails (
 	key (`stockid`),
 	constraint foreign key (`stockid`) REFERENCES stockmaster(`stockid`),
 	constraint foreign key (`prid`) REFERENCES pickreq(`prid`)
-) Engine=InnoDB DEFAULT CHARSET=utf8; 
+) Engine=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS pickserialdetails (
 	`serialmoveid` int not null auto_increment,
@@ -109,13 +109,13 @@ CREATE TABLE IF NOT EXISTS pickserialdetails (
 	CONSTRAINT FOREIGN KEY (`stockid`,`serialno`) REFERENCES `stockserialitems`(`stockid`,`serialno`)
 ) Engine=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO pickreq (prid, initdate, requestdate, shipdate, orderno, closed, loccode ) 
-     SELECT pickinglists.pickinglistno, dateprinted, pickinglistdate, deliverynotedate, pickinglists.orderno, IF(qtyexpected = qtypicked, 1, 0), fromstkloc 
+INSERT INTO pickreq (prid, initdate, requestdate, shipdate, orderno, closed, loccode )
+     SELECT pickinglists.pickinglistno, dateprinted, pickinglistdate, deliverynotedate, pickinglists.orderno, IF(qtyexpected = qtypicked, 1, 0), fromstkloc
        FROM pickinglists
            JOIN pickinglistdetails ON pickinglists.pickinglistno = pickinglistdetails.pickinglistno
            JOIN salesorders ON pickinglists.orderno = salesorders.orderno;
 
-INSERT INTO pickreqdetails (prid, orderlineno, stockid, qtyexpected, qtypicked, invoicedqty, shipqty ) 
+INSERT INTO pickreqdetails (prid, orderlineno, stockid, qtyexpected, qtypicked, invoicedqty, shipqty )
      SELECT pickinglistdetails.pickinglistno, pickinglistdetails.orderlineno, stkcode, qtyexpected, qtypicked, qtypicked, qtypicked
        FROM pickinglistdetails
            JOIN pickinglists ON pickinglistdetails.pickinglistno = pickinglists.pickinglistno
@@ -135,6 +135,8 @@ CREATE TABLE `pcreceipts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE pcashdetails ADD COLUMN purpose text NULL AFTER posted;
+
+INSERT INTO `scripts` ( `script` , `pagesecurity` , `description` ) VALUES ('GLAccountGraph.php', '8', '');
 
 
 UPDATE config SET confvalue='4.15' WHERE confname='VersionNumber';
