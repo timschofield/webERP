@@ -4897,6 +4897,16 @@ function StockToPTADU($Kind, $FactorNearStock, $RootPath, $db){
 						OR workorders.wo = 3580
 						OR workorders.wo = 3581
 						OR workorders.wo = 3582
+						OR workorders.wo = 3583
+						OR workorders.wo = 3584
+						OR workorders.wo = 3591
+						OR workorders.wo = 3592
+						OR workorders.wo = 3594
+						OR workorders.wo = 3599
+						OR workorders.wo = 3600
+						OR workorders.wo = 3601
+						OR workorders.wo = 3606
+						OR workorders.wo = 3613
 						)
 					AND workorders.wo != 3617
 					AND workorders.wo != 3623
