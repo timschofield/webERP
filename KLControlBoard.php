@@ -477,14 +477,19 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		ItemsInmediateShortage("COMPOA", $RootPath, $db);
 		$NumberOfTestExecuted++;
+	}
 
+	if ($KL_SystemAdmin 
+		OR $KL_BusinessDevelopmentManager){
 		GoodsJustArrived("PO", "KANTO", 3, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		GoodsJustArrived("WO", "KANTO", 3, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		GoodsJustArrived("WO", "SUPBA", 3, $RootPath, $db);
 		$NumberOfTestExecuted++;
-
+	}
+	
+	if ($KL_BusinessDevelopmentManager){
 		GoodsJustTransferred("SAMPR", "KANTO", 2, 50, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		GoodsJustTransferred("SASPG", "KANTO", 2, 50, $RootPath, $db);
