@@ -4852,6 +4852,7 @@ function WrongItemsOnWorkOrders($RootPath, $db){
 function StockToPTADU($Kind, $FactorNearStock, $RootPath, $db){
 	
 	if($Kind == "PO"){
+//					AND purchorderdetails.completed = 1
 		$SQL = "SELECT purchorderdetails.itemcode,
 					stockmaster.categoryid,
 					(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS stdcost,
@@ -4867,7 +4868,6 @@ function StockToPTADU($Kind, $FactorNearStock, $RootPath, $db){
 				FROM purchorderdetails, stockmaster
 				WHERE purchorderdetails.itemcode = stockmaster.stockid
 					AND stockmaster.categoryid IN ('SETKL','SETBL','SETGE','TESTKL','TESTBL','TESTGE', 'STABKL','STABBL','STABGE','NOPOKL','NOPOBL','NOPOGE','DISC20','DISC50','DISC80','COMPON')
-					AND purchorderdetails.completed = 1
 					AND purchorderdetails.orderno >= 2808
 					AND purchorderdetails.orderno != 2811
 					AND purchorderdetails.orderno != 2816
