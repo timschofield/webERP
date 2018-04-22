@@ -1,0 +1,122 @@
+<?php
+
+include ('includes/session.php');
+$Title = _('KL Copy Reorder Level from one Location to another');// Screen identificator.
+include('includes/header.php');
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+	'/images/maintenance.png" title="',// Icon image.
+	$Title, '" /> ',// Icon title.
+	$Title, '</p>';// Page title.
+
+include('includes/SQL_CommonFunctions.inc');
+include('includes/KLGeneralFunctions.php');
+
+if(isset($_POST['ProcessCopyAuthority'])) {
+
+	$InputError =0;
+	
+	if($_POST['FromLocationID']==$_POST['ToLocationID']) {
+		prnMsg(_('Location FROM must be different from location TO'),'error');
+		$InputError =1;
+	}
+	
+	if($InputError ==0) {// no input errors
+		$result = DB_Txn_Begin();
+
+		$sql = "UPDATE locstock SET reorderlevel = 0 WHERE loccode = '" . $_POST['ToLocationID'] . "'";
+		$DbgMsg = _('The SQL statement that failed was');
+		$ErrMsg =_('The SQL to set RL = 0 at location TO failed');
+		$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
+
+		
+		$SQL = "SELECT stockid,
+					reorderlevel
+				FROM locstock
+				WHERE loccode = '". $_POST['FromLocationID'] ."'
+					AND reorderlevel > 0
+				ORDER BY stockid";
+				
+		$result = DB_query($SQL);
+		if (DB_num_rows($result) != 0){
+			echo '<p class="page_title_text" align="center"><strong>' . _('Reorder Levels Assigned to Location ') . $_POST['ToLocationID'] . '</strong></p>';
+			echo '<div>';
+			echo '<table class="selection">';
+			$TableHeader = '<tr>
+								<th class="ascending">' . _('#') . '</th>
+								<th class="ascending">' . _('Item Code') . '</th>
+								<th class="ascending">' . _('Reorder Level') . '</th>
+							</tr>';
+			echo $TableHeader;
+			$k = 0; //row colour counter
+			$i = 1;
+			while ($myrow = DB_fetch_array($result)) {
+				
+				$sql = "UPDATE locstock 
+						SET reorderlevel = '". $myrow['reorderlevel']. "' 
+						WHERE stockid = '" . $myrow['stockid'] . "'
+							AND loccode = '" . $_POST['ToLocationID'] . "'";
+				$DbgMsg = "The SQL statement that failed was";
+				$ErrMsg = "The SQL to set RL to item " . $myrow['stockid'] . " at location '".  $_POST['ToLocationID'] ."' failed";
+				$resultitem = DB_query($sql,$ErrMsg,$DbgMsg,true);
+
+				$k = StartEvenOrOddRow($k);
+				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+				printf('<td class="number">%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						</tr>', 
+						$i, 
+						$CodeLink,
+						locale_number_format($myrow['reorderlevel'],0)
+						);
+				$i++;
+			}
+			echo '</table>
+					</div>';
+		}
+		$result = DB_Txn_Commit();
+
+	}//only do the stuff above if  $InputError==0
+}
+
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">';
+echo '<div class="centre">';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+
+echo '<table>';
+echo ' <tr>
+		<td>' . _('Select Location to copy the Reorder Levels FROM') . ':</td>
+		<td><select name="FromLocationID">';
+$Result = DB_query("SELECT loccode,
+							locationname
+					FROM locations
+					ORDER BY locationname");
+
+echo '<option selected value="">' . _('Not Yet Selected') . '</option>';
+while ($MyRow = DB_fetch_array($Result)) {
+	echo '<option value="';
+	echo $MyRow['loccode'] . '">' . $MyRow['loccode'] . ' - ' . $MyRow['locationname'] . '</option>';
+} //end while loop
+echo '</select></td></tr>';
+
+echo ' <tr>
+		<td>' . _('Select Location to copy the Reorder Levels TO') . ':</td>
+		<td><select name="ToLocationID">';
+$Result = DB_query("SELECT loccode,
+							locationname
+					FROM locations
+					ORDER BY locationname");
+
+echo '<option selected value="">' . _('Not Yet Selected') . '</option>';
+while ($MyRow = DB_fetch_array($Result)) {
+	echo '<option value="';
+	echo $MyRow['loccode'] . '">' . $MyRow['loccode'] . ' - ' . $MyRow['locationname'] . '</option>';
+} //end while loop
+echo '</select></td></tr>';
+echo '</table>';
+echo '<input type="submit" name="ProcessCopyAuthority" value="' . _('Process Copy of Reorder Levels') . '" />
+	</div>
+	</form>';
+
+include('includes/footer.php');
+?>

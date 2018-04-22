@@ -443,7 +443,9 @@ $MenuItems['stock']['Maintenance']['Caption'] = array(	_('Add A New Item'),
 														_('KL Move To 50% Discount Process - Step 02'),
 														_('KL Move To 80% Discount Process - Step 01'),
 														_('KL Move To 80% Discount Process - Step 02'),
-														_('Reorder Level By Category/Location'));
+														_('Reorder Level By Category/Location'),
+														_('KL Set All Reorder Level Zero in Location'),
+														_('KL Copy Reorder Level From Location A to B'));
 
 $MenuItems['stock']['Maintenance']['URL'] = array(	'/Stocks.php',
 													'/SelectProduct.php',
@@ -461,7 +463,9 @@ $MenuItems['stock']['Maintenance']['URL'] = array(	'/Stocks.php',
 													'/KLMoveToDiscount50Step02.php',
 													'/KLMoveToDiscount80Step01.php',
 													'/KLMoveToDiscount80Step02.php',
-													'/ReorderLevelLocation.php');
+													'/ReorderLevelLocation.php',
+													'/KLSetAllRLZero.php',
+													'/KLCopyRLBetweenShops.php');
 
 $MenuItems['manuf']['Transactions']['Caption'] = array(	_('Work Order Entry'),
 														_('Select A Work Order'),
