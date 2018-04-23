@@ -477,19 +477,12 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		ItemsInmediateShortage("COMPOA", $RootPath, $db);
 		$NumberOfTestExecuted++;
-	}
-
-	if ($KL_SystemAdmin 
-		OR $KL_BusinessDevelopmentManager){
 		GoodsJustArrived("PO", "KANTO", 3, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		GoodsJustArrived("WO", "KANTO", 3, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		GoodsJustArrived("WO", "SUPBA", 3, $RootPath, $db);
 		$NumberOfTestExecuted++;
-	}
-	
-	if ($KL_BusinessDevelopmentManager){
 		GoodsJustTransferred("SAMPR", "KANTO", 2, 50, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		GoodsJustTransferred("SASPG", "KANTO", 2, 50, $RootPath, $db);
@@ -1147,13 +1140,13 @@ if ($ProcessSection02){
 	}
 	
 	if ($KL_SystemAdmin){
-		StockToPTADU("PO", 1, $RootPath, $db);
+		StockToPTADU("PO", 1, 3, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		StockToPTADU("PO", 99999999, $RootPath, $db);
+		StockToPTADU("PO", 99999999, 3, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		StockToPTADU("WO", 1, $RootPath, $db);
+		StockToPTADU("WO", 1, 3, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		StockToPTADU("WO", 99999999, $RootPath, $db);
+		StockToPTADU("WO", 99999999, 3, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -4849,7 +4842,7 @@ function WrongItemsOnWorkOrders($RootPath, $db){
 	}
 }
 
-function StockToPTADU($Kind, $FactorNearStock, $RootPath, $db){
+function StockToPTADU($Kind, $FactorNearStock, $LimitToMove, $RootPath, $db){
 	
 	if($Kind == "PO"){
 //					AND purchorderdetails.completed = 1
@@ -5016,8 +5009,7 @@ function StockToPTADU($Kind, $FactorNearStock, $RootPath, $db){
 			}
 			
 			// if there is some ADU qty at shops (so, stock at shops more than BB stock) OR no BB qty left
-			if (($myrow['qohshops'] > ($myrow['qoh']-$myrow['qtyreceivedptadu'])) 
-				OR (($myrow['qoh']-$myrow['qtyreceivedptadu']) <= 0)){
+			if (($myrow['qoh']-$myrow['qtyreceivedptadu']) <= $LimitToMove){
 				$Action = '<a href="' . $RootPath . '/KLUpdateStockCategory.php?StockId=' . $myrow['itemcode'] . '&OldCat=' . $myrow['categoryid'] . '&NewCat=' . $NewCategory .'">' . 'Change Category' . '</a>';
 			}else{
 				$Action = '';
