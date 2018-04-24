@@ -3,6 +3,7 @@
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
+include('includes/KLGeneralFunctions.php');
 
 $Title = _('Print Consignment Invoices');
 
@@ -111,10 +112,10 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, &$d
 			}
 
 			// Company To header
-			$SQLCompanyTo = "SELECT partnername,
-								partneraddress,
-								partnernpwp,
-								ppn,
+			$SQLCompanyTo = "SELECT partnernameinvoice,
+								partneraddressinvoice,
+								partnernpwpinvoice,
+								accountppn,
 								daysinvoicedue
 							FROM klretailpartners
 							WHERE partnercode = '" . $CompanyTo . "'";
@@ -126,11 +127,11 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, &$d
 			$WidthColumn2 = 0;
 			$pdf->SetFont($FontType, '', $FontSizeM);
 			$pdf->MultiCell($WidthColumn1, 0, 'Invoice to:', 0, 'L', 0, 0, '', '', true);
-			$pdf->MultiCell($WidthColumn2, 0, $myCompanyTo['partnername'], 0, 'L', 0, 1, '', '', true);
+			$pdf->MultiCell($WidthColumn2, 0, $myCompanyTo['partnernameinvoice'], 0, 'L', 0, 1, '', '', true);
 			$pdf->MultiCell($WidthColumn1, 0, 'Address:', 0, 'L', 0, 0, '', '', true);
-			$pdf->MultiCell($WidthColumn2, 0, $myCompanyTo['partneraddress'], 0, 'L', 0, 1, '', '', true);
+			$pdf->MultiCell($WidthColumn2, 0, $myCompanyTo['partneraddressinvoice'], 0, 'L', 0, 1, '', '', true);
 			$pdf->MultiCell($WidthColumn1, 0, 'NPWP:', 0, '', 0, 0, '', '', true);
-			$pdf->MultiCell($WidthColumn2, 0, $myCompanyTo['partnernpwp'], 0, 'L', 0, 1, '', '', true);
+			$pdf->MultiCell($WidthColumn2, 0, $myCompanyTo['partnernpwpinvoice'], 0, 'L', 0, 1, '', '', true);
 			$pdf->MultiCell($WidthColumn1, 0, 'Invoice number:', 0, 'L', 0, 0, '', '', true);
 			$pdf->MultiCell($WidthColumn2, 0, $InvoiceNumber, 0, 'L', 0, 1, '', '', true);
 			$pdf->MultiCell($WidthColumn1, 0, 'Invoice date:', 0, 'L', 0, 0, '', '', true);
@@ -181,9 +182,9 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, &$d
 							$WidthColumn5, 0, 'Total:', 1, 'R', 0, 0, '', '', true);
 			$pdf->MultiCell($WidthColumn6, 0, locale_number_format($TotalInvoice), 1, 'R', 0, 1, '', '', true);
 			
-			if ($myCompanyTo['ppn'] != 0){
+			if ($CompanyFrom == 'PTADU'){
 				$pdf->SetFont($FontType, '', $FontSizeM);
-				$TotalGoods = $TotalInvoice / ((100 + $myCompanyTo['ppn']) / 100);
+				$TotalGoods = $TotalInvoice / ((100 + PPN_PERCENT) / 100);
 				$TotalPPN = $TotalInvoice - $TotalGoods;
 				$pdf->MultiCell($WidthColumn1+
 								$WidthColumn2+
@@ -217,6 +218,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, &$d
 			}
 
 			if ($DraftOrInvoice == 'INVOICE'){
+				$rTx = DB_Txn_Begin();
 				$SQL = "UPDATE klconsignment
 						SET invoicedtopartner = '". $EndDate ."'
 						WHERE companycode = '" . $CompanyFrom . "'
@@ -226,6 +228,35 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, &$d
 				$ErrMsg = 'CRITICAL ERROR! WRITE THIS CODE AND CALL THE OFFICE IMMEDIATELY: ERROR-CONSIGNMENT-00001';		
 				$DbgMsg = 'SQL to update klconsignment record: ';
 				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				
+				// account for the PPN crossed
+				if ($CompanyFrom == 'PTADU'){
+					$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
+					$TransNo = GetNextTransNo( 1, $db);
+					InsertIntoGLTrans("1", 
+									$TransNo, 
+									Date('Y-m-d'),
+									$PeriodNo,
+									ACCOUNT_PPN_ADU,
+									"PPN Received " . $InvoiceNumber,
+									-round($TotalPPN),
+									"",
+									'ERROR-CNS-00001'
+									);
+									
+					InsertIntoGLTrans("1", 
+									$TransNo, 
+									Date('Y-m-d'),
+									$PeriodNo,
+									$myCompanyTo['accountppn'],
+									"PPN Invoice " . $InvoiceNumber,
+									round($TotalPPN),
+									"",
+									'ERROR-CNS-00002'
+									);
+					
+				}
+				$rTx = DB_Txn_Commit();
 			}
 			
 			// download the pdf file
@@ -280,13 +311,16 @@ function display($Title, &$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DI
 	echo '<tr>
 			<td>' . 'To' . ':</td>
 			<td><select name="CompanyTo">';
-	$sql="SELECT partnercode, partnername FROM klretailpartners WHERE partnercode != 'NORETAIL' ";
+	$sql="SELECT partnercode, 
+				partnernameinvoice 
+		FROM klretailpartners 
+		WHERE partnercode != 'NORETAIL' ";
 	$PartnerResult= DB_query($sql);
-	While ($myrow = DB_fetch_array($PartnerResult)){
+	while ($myrow = DB_fetch_array($PartnerResult)){
 		if ($_POST['CompanyTo']==$myrow['partnercode']){
-			echo '<option selected="selected" value="' . $myrow['partnercode'] . '">' . $myrow['partnername']  . '</option>';
+			echo '<option selected="selected" value="' . $myrow['partnercode'] . '">' . $myrow['partnernameinvoice']  . '</option>';
 		}else{
-			echo '<option value="' . $myrow['partnercode'] . '">' . $myrow['partnername']  . '</option>';
+			echo '<option value="' . $myrow['partnercode'] . '">' . $myrow['partnernameinvoice']  . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
@@ -307,8 +341,6 @@ function display($Title, &$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DI
 		echo '<option value="DRAFT">' . 'Draft' . '</option>';
 	}
 	echo '</select></td></tr>';	
-
-	
 	echo '</table>';
 
 	echo '<table>';

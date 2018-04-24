@@ -6,6 +6,7 @@ define("CUSTOMER_TYPE_CONSIGNMENT", '6');
 define("CUSTOMER_TYPE_WHOLESALE", '3,4,5');
 define("CUSTOMER_TYPE_ONLINE", '9');
 define("RETAIL_PRICE_LIST", 'RT');
+define("PPN_PERCENT", 10);
 
 /* Defines about prices IDR */
 /* Changed all steps to 5.000 IDR per laia's request on 07/12/2015*/
@@ -114,6 +115,7 @@ define("TRANSFER_LIST_DAYS_FOR_SPG", 7);
 define("PAYMENT_BY_CASH", 2); 
 define("PAYMENT_BY_CREDITCARD", 3); 
 
+define("ACCOUNT_PPN_ADU", "611012030AD"); // GL account for PPN PT.ADU
 
 define("ACCOUNT_HUTANG_PPH23", "611012005PT"); // GL account for retention of PPH23 in Petty cash
 define("ACCOUNT_PTBB_MANDIRI_GIRO", "111121100PT"); 

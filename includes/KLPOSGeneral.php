@@ -1019,28 +1019,5 @@ function DoubleJustified($left, $right, $lenght, $fillchar){
 	return str_pad($left, $lenght - strlen($right), $fillchar) . $right . $NewLine;
 }
 
-function InsertIntoGLTrans($Type, $Typeno, $Trandate, $Period, $Account, $Narrative, $Amount, $Tag, $ErrCode){
-	$SQL = "INSERT INTO gltrans 
-				(type,
-				typeno,
-				trandate,
-				periodno,
-				account,
-				narrative,
-				amount,
-				tag)
-			VALUES 
-				('" . $Type . "',
-				'" . $Typeno . "',
-				'" . $Trandate . "',
-				'" . $Period . "',
-				'" . $Account . "',
-				'" . $Narrative . "',
-				'" . $Amount . "',
-				'" . $Tag . "')";
-	$ErrMsg = 'CRITICAL ERROR! WRITE THIS CODE AND CALL THE OFFICE IMMEDIATELY: '. $ErrCode;		
-	$DbgMsg = 'SQL to insert GLTrans record: ';
-	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-}
 
 ?>

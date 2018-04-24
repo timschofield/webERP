@@ -37,9 +37,13 @@ if(isset($_POST['submit'])) {
 
 		$sql = "UPDATE klretailpartners 
 				SET partnername ='" . $_POST['PartnerName'] . "',
+					partnernameinvoice ='" . $_POST['PartnerNameInvoice'] . "',
 					partneraddress ='" . $_POST['PartnerAddress'] . "',
+					partneraddressinvoice ='" . $_POST['PartnerAddressInvoice'] . "',
 					partnernpwp ='" . $_POST['PartnerNPWP'] . "',
+					partnernpwpinvoice ='" . $_POST['PartnerNPWPInvoice'] . "',
 					ppn ='" . $_POST['PPN'] . "',
+					accountppn ='" . $_POST['AccountPPN'] . "',
 					areasalescreditcard ='" . $_POST['AreaSalesCreditCard'] . "',
 					areasalescash ='" . $_POST['AreaSalesCash'] . "',
 					areasalescashothers ='" . $_POST['AreaSalesCashOthers'] . "',
@@ -73,9 +77,13 @@ if(isset($_POST['submit'])) {
 		unset($SelectedPartner);
 		unset($_POST['PartnerCode']);
 		unset($_POST['PartnerName']);
+		unset($_POST['PartnerNameInvoice']);
 		unset($_POST['PartnerAddress']);
+		unset($_POST['PartnerAddressInvoice']);
 		unset($_POST['PartnerNPWP']);
+		unset($_POST['PartnerNPWPInvoice']);
 		unset($_POST['PPN']);
+		unset($_POST['AccountPPN']);
 		unset($_POST['AreaSalesCreditCard']);
 		unset($_POST['AreaSalesCash']);
 		unset($_POST['AreaSalesCashOthers']);
@@ -105,9 +113,13 @@ if(isset($_POST['submit'])) {
 		$sql = "INSERT INTO klretailpartners 
 								(partnercode,
 								partnername,
+								partnernameinvoice,
 								partneraddress,
+								partneraddressinvoice,
 								partnernpwp,
+								partnernpwpinvoice,
 								ppn,
+								accountppn,
 								areasalescreditcard,
 								areasalescash,
 								areasalescashothers,
@@ -131,9 +143,13 @@ if(isset($_POST['submit'])) {
 								counterinvoicec)
 						VALUES ('" . $_POST['PartnerCode'] . "',
 								'" . $_POST['PartnerName'] . "',
+								'" . $_POST['PartnerNameInvoice'] . "',
 								'" . $_POST['PartnerAddress'] ."',
+								'" . $_POST['PartnerAddressInvoice'] ."',
 								'" . $_POST['PartnerNPWP'] ."',
+								'" . $_POST['PartnerNPWPInvoice'] ."',
 								'" . $_POST['PPN'] . "',
+								'" . $_POST['AccountPPN'] . "',
 								'" . $_POST['AreaSalesCreditCard'] . "',
 								'" . $_POST['AreaSalesCash'] . "',
 								'" . $_POST['AreaSalesCashOthers'] . "',
@@ -165,9 +181,13 @@ if(isset($_POST['submit'])) {
 		unset($SelectedPartner);
 		unset($_POST['PartnerCode']);
 		unset($_POST['PartnerName']);
+		unset($_POST['PartnerNameInvoice']);
 		unset($_POST['PartnerAddress']);
+		unset($_POST['PartnerAddressInvoice']);
 		unset($_POST['PartnerNPWP']);
+		unset($_POST['PartnerNPWPInvoice']);
 		unset($_POST['PPN']);
+		unset($_POST['AccountPPN']);
 		unset($_POST['AreaSalesCreditCard']);
 		unset($_POST['AreaSalesCash']);
 		unset($_POST['AreaSalesCashOthers']);
@@ -295,9 +315,13 @@ if(!isset($_GET['delete'])) {
 
 		$sql = "SELECT partnercode,
 					partnername,
+					partnernameinvoice,
 					partneraddress,
+					partneraddressinvoice,
 					partnernpwp,
+					partnernpwpinvoice,
 					ppn,
+					accountppn,
 					areasalescreditcard,
 					areasalescash,
 					areasalescashothers,
@@ -327,9 +351,13 @@ if(!isset($_GET['delete'])) {
 
 		$_POST['PartnerCode'] = $myrow['partnercode'];
 		$_POST['PartnerName'] = $myrow['partnername'];
+		$_POST['PartnerNameInvoice'] = $myrow['partnernameinvoice'];
 		$_POST['PartnerAddress'] = $myrow['partneraddress'];
+		$_POST['PartnerAddressInvoice'] = $myrow['partneraddressinvoice'];
 		$_POST['PartnerNPWP'] = $myrow['partnernpwp'];
+		$_POST['PartnerNPWPInvoice'] = $myrow['partnernpwpinvoice'];
 		$_POST['PPN'] = $myrow['ppn'];
+		$_POST['AccountPPN'] = $myrow['accountppn'];
 		$_POST['AreaSalesCreditCard'] = $myrow['areasalescreditcard'];
 		$_POST['AreaSalesCash'] = $myrow['areasalescash'];
 		$_POST['AreaSalesCashOthers'] = $myrow['areasalescashothers'];
@@ -378,14 +406,26 @@ if(!isset($_GET['delete'])) {
 	if(!isset($_POST['PartnerName'])) {
 		$_POST['PartnerName'] = '';
 	}
+	if(!isset($_POST['PartnerNameInvoice'])) {
+		$_POST['PartnerNameInvoice'] = '';
+	}
 	if(!isset($_POST['PartnerAddress'])) {
 		$_POST['PartnerAddress'] = ' ';
+	}
+	if(!isset($_POST['PartnerAddressInvoice'])) {
+		$_POST['PartnerAddressInvoice'] = ' ';
 	}
 	if(!isset($_POST['PartnerNPWP'])) {
 		$_POST['PartnerNPWP'] = '';
 	}
+	if(!isset($_POST['PartnerNPWPInvoice'])) {
+		$_POST['PartnerNPWPInvoice'] = '';
+	}
 	if(!isset($_POST['PPN'])) {
 		$_POST['PPN'] = 0;
+	}
+	if(!isset($_POST['AccountPPN'])) {
+		$_POST['AccountPPN'] = '';
 	}
 	if(!isset($_POST['AreaSalesCreditCard'])) {
 		$_POST['AreaSalesCreditCard'] = '';
@@ -452,21 +492,46 @@ if(!isset($_GET['delete'])) {
 	}
 
 	echo '<tr>
-			<td>' . _('Partner Name') . ':' . '</td>
+			<td>' . _('Partner Name in POS Slip') . ':' . '</td>
 			<td><input type="text" name="PartnerName" required="required" value="'. $_POST['PartnerName'] . '" title="' . _('Enter the retail partner name') . '" namesize="51" maxlength="50" /></td>
 		</tr>
 		<tr>
-			<td>' . _('Address') . ':' . '</td>
+			<td>' . _('Partner Name in Consignment Invoice') . ':' . '</td>
+			<td><input type="text" name="PartnerNameInvoice" required="required" value="'. $_POST['PartnerNameInvoice'] . '" title="' . _('Enter the retail partner name') . '" namesize="51" maxlength="50" /></td>
+		</tr>
+		<tr>
+			<td>' . _('Address in POS Slip') . ':' . '</td>
 			<td><input type="text" name="PartnerAddress" value="' . $_POST['PartnerAddress'] . '" size="51" maxlength="100" /></td>
 		</tr>
 		<tr>
-			<td>' . _('NPWP') . ':' . '</td>
+			<td>' . _('Address in Consignment Invoice') . ':' . '</td>
+			<td><input type="text" name="PartnerAddressInvoice" value="' . $_POST['PartnerAddressInvoice'] . '" size="51" maxlength="100" /></td>
+		</tr>
+		<tr>
+			<td>' . _('NPWP in POS Slip') . ':' . '</td>
 			<td><input type="text" name="PartnerNPWP" value="' . $_POST['PartnerNPWP'] . '" size="21" maxlength="20" /></td>
+		</tr>
+		<tr>
+			<td>' . _('NPWP in Consignment Invoice') . ':' . '</td>
+			<td><input type="text" name="PartnerNPWPInvoice" value="' . $_POST['PartnerNPWPInvoice'] . '" size="21" maxlength="20" /></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('% PPN') . ':</td>
 			<td><input type="text" name="PPN" class="number" title="' . _('PPN to apply') . '" value="' . $_POST['PPN'] . '" size="5" maxlength="5" /></td>
 		</tr>';
+
+	echo '<tr>
+		<td>' . _('PPN GL Account') . ':' . '</td>
+		<td><select name="AccountPPN">';
+	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
+	while ($myrow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountPPN']==$myrow['accountcode']) {
+			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		} else {
+			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		}
+	}
+	echo '</select></td></tr>';
 
 	echo '<tr>
 		<td>' . _('Credit Card Sales Area') . ':' . '</td>
