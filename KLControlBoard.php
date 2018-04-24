@@ -1869,15 +1869,20 @@ function GoodsJustArrived($kind, $location, $numdays, $RootPath, $db){
 			$k = StartEvenOrOddRow($k);
 			
 			// count to how many shops do we need to set the RL
-			if($myrow['categoryid']== 'STABKL'){
+			if (($myrow['categoryid']== 'STABKL') 
+				OR ($myrow['categoryid']== 'STABKA')){
 				$TypeOfShop = 'SHOPKL';
 				$ShopsToSetRL = $ShopsKL;
-			}elseif($myrow['categoryid']== 'STABBL'){
+			}elseif (($myrow['categoryid']== 'STABBL') 
+				OR ($myrow['categoryid']== 'STABBA')){
 				$TypeOfShop = 'SHOPBL';
 				$ShopsToSetRL = $ShopsBL;
 			}elseif(($myrow['categoryid']== 'DISC20') 
+					OR ($myrow['categoryid']== 'DISC2A') 
 					OR ($myrow['categoryid']== 'DISC50') 
-					OR ($myrow['categoryid']== 'DISC80')){
+					OR ($myrow['categoryid']== 'DISC5A') 
+					OR ($myrow['categoryid']== 'DISC80') 
+					OR ($myrow['categoryid']== 'DISC8A')){
 				$TypeOfShop = 'SHOPOU';
 				$ShopsToSetRL = $ShopsOU;
 			}else{

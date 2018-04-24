@@ -245,7 +245,7 @@ if ($ProcessSection02){
 
 if ($ProcessSection03){
 	if($ShowSectionInfo){
-		prnMsg("Packaging, Displays, Petty Cash Performance Board Section 03.",'info');
+		prnMsg("Packaging, Displays, Petty Cash, Financial Performance Board Section 03.",'info');
 	}
 
 	if ($KL_SystemAdmin 
@@ -299,6 +299,15 @@ if ($ProcessSection03){
 		$NumberOfTestExecuted++;
 		PettyCashStatus("HKD", $db);
 		$NumberOfTestExecuted++;
+		MovementsFromBankToCashKantor("111121105PT", "PTBB Danamon IDR", "PT.BB", $db);
+		$NumberOfTestExecuted++;
+		ExpensesPaidCashForAccountsPT("PT", "PT.BB", $db);
+		$NumberOfTestExecuted++;
+		MovementsFromBankToCashKantor("111121105AD", "PTADU Danamon IDR", "PT.ADU", $db);
+		$NumberOfTestExecuted++;
+		ExpensesPaidCashForAccountsPT("AD", "PT.ADU", $db);
+		$NumberOfTestExecuted++;
+		
 	}
 }
 
@@ -620,6 +629,30 @@ function DailySalesRecords($Days, $NumDays, $db){
 	}
 }
 
+function ExpensesPaidCashForAccountsPT($AccountSuffix, $Company, $db){
+
+	$Today = date('Y-m-d');
+	$StartDateYTD=FormatDateForSQL(Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,1,1,Date('Y'))));
+
+	$SQL = "SELECT SUM(pcashdetails.amount) 
+			FROM pcashdetails, pctabs, pcexpenses
+			WHERE pcashdetails.date >= '" . $StartDateYTD . "'
+				AND pcashdetails.date <= '" . $Today . "'
+				AND pcashdetails.tabcode = pctabs.tabcode
+				AND pcashdetails.codeexpense = pcexpenses.codeexpense
+				AND pctabs.currency = 'IDR'
+				AND pcashdetails.codeexpense != 'ASSIGNCASH'
+				AND pctabs.tabcode NOT LIKE 'SALARIES%'
+				AND pctabs.tabcode NOT LIKE '%DANAMON'
+				AND pctabs.tabcode NOT LIKE 'CC-BCA%'
+				AND pcexpenses.glaccount LIKE '%".$AccountSuffix."'";
+	$Result = DB_query($SQL);
+	$myrow = DB_fetch_array($Result);
+	$text = "Total expenses paid via Petty Cash for GL accounts " . $Company . " (excluding salaries, Corporate CC) is ". locale_number_format(abs($myrow[0]),0) . " during current year";
+	echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+}
+
+
 function GeneralCustomerBehaviour($NumDaysA, $db){
 	$YesterdayA  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 	$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-1));
@@ -745,6 +778,26 @@ function GeneralCustomerBehaviour($NumDaysA, $db){
 				</div>';
 	}
 }
+
+function MovementsFromBankToCashKantor($Account, $AccountName, $Company, $db){
+
+	$Today = date('Y-m-d');
+	$StartDateYTD=FormatDateForSQL(Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,1,1,Date('Y'))));
+	
+	$SQL = "SELECT SUM(gltrans.amount)
+			FROM gltrans
+			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
+				AND gltrans.trandate <= '" . $Today . "'
+				AND gltrans.account = '" . $Account . "'
+				AND (gltrans.narrative LIKE '%CASH TO CASH%'
+					OR gltrans.narrative LIKE '%BANK TO CASH%'
+					OR gltrans.narrative LIKE '%UANG KECIL%')";
+	$Result = DB_query($SQL);
+	$myrow = DB_fetch_array($Result);
+	$text = "Total transferred from Bank " . $AccountName . " to Cash Kantor for " . $Company . " is ". locale_number_format(abs($myrow[0]),0) . " during current year";
+	echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+}
+
 
 function PackagingStatusForBlink($RootPath, $db){
 
