@@ -496,20 +496,20 @@ if(!isset($_GET['delete'])) {
 			<td><input type="text" name="PartnerName" required="required" value="'. $_POST['PartnerName'] . '" title="' . _('Enter the retail partner name') . '" namesize="51" maxlength="50" /></td>
 		</tr>
 		<tr>
-			<td>' . _('Partner Name in Consignment Invoice') . ':' . '</td>
-			<td><input type="text" name="PartnerNameInvoice" required="required" value="'. $_POST['PartnerNameInvoice'] . '" title="' . _('Enter the retail partner name') . '" namesize="51" maxlength="50" /></td>
-		</tr>
-		<tr>
 			<td>' . _('Address in POS Slip') . ':' . '</td>
 			<td><input type="text" name="PartnerAddress" value="' . $_POST['PartnerAddress'] . '" size="51" maxlength="100" /></td>
 		</tr>
 		<tr>
-			<td>' . _('Address in Consignment Invoice') . ':' . '</td>
-			<td><input type="text" name="PartnerAddressInvoice" value="' . $_POST['PartnerAddressInvoice'] . '" size="51" maxlength="100" /></td>
-		</tr>
-		<tr>
 			<td>' . _('NPWP in POS Slip') . ':' . '</td>
 			<td><input type="text" name="PartnerNPWP" value="' . $_POST['PartnerNPWP'] . '" size="21" maxlength="20" /></td>
+		</tr>
+		<tr>
+			<td>' . _('Partner Name in Consignment Invoice') . ':' . '</td>
+			<td><input type="text" name="PartnerNameInvoice" required="required" value="'. $_POST['PartnerNameInvoice'] . '" title="' . _('Enter the retail partner name') . '" namesize="51" maxlength="50" /></td>
+		</tr>
+		<tr>
+			<td>' . _('Address in Consignment Invoice') . ':' . '</td>
+			<td><input type="text" name="PartnerAddressInvoice" value="' . $_POST['PartnerAddressInvoice'] . '" size="51" maxlength="100" /></td>
 		</tr>
 		<tr>
 			<td>' . _('NPWP in Consignment Invoice') . ':' . '</td>
