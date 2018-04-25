@@ -723,7 +723,16 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 			if ($_SESSION['PO'.$identifier]->GLLink==1 AND $OrderLine->GLCode !=0){
 				/*GLCode is set to 0 when the GLLink is not activated this covers a situation where the GLLink is now active but it wasn't when this PO was entered */
 
+				// Override the GLCode to use the GLCode of the stockcategory, not the PO
+				$SQLGLCode = "SELECT stockcategory.stockact
+						FROM stockcategory, stockmaster
+						WHERE stockcategory.categoryid = stockmaster.categoryid
+							AND stockmaster.stockid = '" . $OrderLine->StockID . "'";
+				$resultGLCode = DB_query($SQLGLCode);		
+				$myrowGLCode = DB_fetch_array($resultGLCode);
+				
 				/*first the debit using the GLCode in the PO detail record entry*/
+//											$OrderLine->GLCode . "','" .
 				$SQL = "INSERT INTO gltrans (type,
 											typeno,
 											trandate,
@@ -736,7 +745,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 											$GRN . "','" .
 											$_POST['DefaultReceivedDate'] . "','" .
 											$PeriodNo . "','" .
-											$OrderLine->GLCode . "','" .
+											$myrowGLCode['stockact'] . "','" .
 											_('PO') . ' ' . $_SESSION['PO'.$identifier]->OrderNo . ': ' . $_SESSION['PO'.$identifier]->SupplierID . ' - ' . $OrderLine->StockID . ' - ' . DB_escape_string($OrderLine->ItemDescription) . ' x ' . $OrderLine->ReceiveQty . " @ " . locale_number_format($CurrentStandardCost,$_SESSION['CompanyRecord']['decimalplaces']) . "','" .
 											$CurrentStandardCost * $OrderLine->ReceiveQty . "')";
 
