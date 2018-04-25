@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-04-24 19:40-0600\n"
-"PO-Revision-Date: 2018-04-24 19:22-0600\n"
+"PO-Revision-Date: 2018-04-24 22:48-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -14560,7 +14560,7 @@ msgstr "Firmado por:"
 
 #: GeneratePickingList.php:496
 msgid "Date : "
-msgstr ""
+msgstr "Fecha :"
 
 #: GeneratePickingList.php:504
 msgid "There are no picking lists to print"
@@ -21152,7 +21152,7 @@ msgstr "Registro de reclamo en Caja Chica"
 
 #: PcClaimExpensesFromTab.php:545
 msgid "Are you sure you wish to delete this expense?"
-msgstr ""
+msgstr "¿Estás seguro de que desea suprimir este gasto?"
 
 #: PcClaimExpensesFromTab.php:615
 msgid "Update Expense"
@@ -21160,7 +21160,7 @@ msgstr ""
 
 #: PcClaimExpensesFromTab.php:619
 msgid "New Expense"
-msgstr ""
+msgstr "Gasto nuevo"
 
 #: PcClaimExpensesFromTab.php:755
 msgid "Attach Receipt"
@@ -21419,11 +21419,11 @@ msgstr ""
 
 #: PcReportTab.php:195 PcTabs.php:184 PcTabs.php:351
 msgid "Authoriser - Cash"
-msgstr ""
+msgstr "Autorizador - Efectivo"
 
 #: PcReportTab.php:200 PcTabs.php:185 PcTabs.php:369
 msgid "Authoriser - Expenses"
-msgstr ""
+msgstr "Autorizador - Gastos"
 
 #: PcReportTab.php:205 PcReportTab.php:405
 msgid "Balance before "
@@ -22894,7 +22894,7 @@ msgstr "Ventas"
 
 #: PDFSalesBySalesperson.php:105 PDFWeeklyOrders.php:102
 msgid "Partial"
-msgstr ""
+msgstr "Parcial"
 
 #: PDFSalesBySalesperson.php:145
 msgid "Please find the Sales By Salesperson report"
@@ -30088,7 +30088,7 @@ msgstr ""
 
 #: SelectPickingLists.php:198 SelectPickingLists.php:200
 msgid "New"
-msgstr ""
+msgstr "Nuevo"
 
 #: SelectPickingLists.php:224
 msgid "Search Pick Lists"
@@ -34786,7 +34786,7 @@ msgstr "Monto no nulo"
 
 #: SuppContractChgs.php:175
 msgid "Anticipated Cost"
-msgstr ""
+msgstr "Costo anticipado"
 
 #: SuppContractChgs.php:187
 msgid "Enter Contract Charge"
@@ -51864,11 +51864,11 @@ msgstr "Gastos de Solicitud en Ficha de la Caja Chica"
 
 #: includes/MainMenuLinksArray.php:115
 msgid "Authorise Expenses"
-msgstr ""
+msgstr "Autorizar gastos"
 
 #: includes/MainMenuLinksArray.php:115
 msgid "Authorise Assigned Cash"
-msgstr ""
+msgstr "Autorizar efectivo asignado"
 
 #: includes/MainMenuLinksArray.php:119
 msgid "PC Tab General Report"
@@ -52073,25 +52073,25 @@ msgstr ""
 #: includes/MiscFunctions.php:436 includes/MiscFunctions.php:507
 #: reportwriter/languages/en_US/reports.php:362
 msgid "Last Month"
-msgstr ""
+msgstr "Mes pasado"
 
 #: includes/MiscFunctions.php:442 includes/MiscFunctions.php:532
 #: reportwriter/languages/en_US/reports.php:369
 msgid "Next Month"
-msgstr ""
+msgstr "Mes próximo"
 
 #: includes/MiscFunctions.php:443 includes/MiscFunctions.php:545
 #: reportwriter/languages/en_US/reports.php:371
 msgid "Next Year"
-msgstr ""
+msgstr "Año próximo"
 
 #: includes/MiscFunctions.php:511 reportwriter/languages/en_US/reports.php:364
 msgid "Last Quarter"
-msgstr ""
+msgstr "Trimestre pasado"
 
 #: includes/MiscFunctions.php:536 reportwriter/languages/en_US/reports.php:370
 msgid "Next Quarter"
-msgstr ""
+msgstr "Trimestre próximo"
 
 #: includes/PDFAckPageHeader.php:40
 msgid "Bill To"
@@ -52816,7 +52816,7 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:67
 msgid "Fields"
-msgstr ""
+msgstr "Campos"
 
 #: reportwriter/languages/en_US/reports.php:68
 msgid "Fifth"
@@ -52997,7 +52997,7 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:148
 msgid "Field Setup"
-msgstr ""
+msgstr "Configuración de campo"
 
 #: reportwriter/languages/en_US/reports.php:149
 msgid "Import"
@@ -53183,7 +53183,7 @@ msgstr "Introducir un campo nuevo"
 
 #: reportwriter/languages/en_US/reports.php:200
 msgid "Field List"
-msgstr ""
+msgstr "Lista de campo"
 
 #: reportwriter/languages/en_US/reports.php:201
 msgid "Fill"
@@ -53337,7 +53337,7 @@ msgstr "Cheques bancarios"
 
 #: reportwriter/languages/en_US/reports.php:254
 msgid "Bank Deposit Slips"
-msgstr ""
+msgstr "Colillas de depôsito bancario"
 
 #: reportwriter/languages/en_US/reports.php:255
 msgid "Collection Letters"
@@ -53649,7 +53649,7 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:360
 msgid "Last Week"
-msgstr ""
+msgstr "Semana pasada"
 
 #: reportwriter/languages/en_US/reports.php:361
 msgid "Last Week To Date"
@@ -53669,7 +53669,7 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:368
 msgid "Next Week"
-msgstr ""
+msgstr "Semana próxima"
 
 #: ../webSHOP/Checkout.php:8 ../webSHOP/Checkout.php:380
 #: ../webSHOP/Checkout.php:519 ../webSHOP/Checkout.php:607
@@ -54253,7 +54253,7 @@ msgstr "Por lo menos 3 caracteres"
 
 #: ../webSHOP/CreditCardPayPalPro.php:275
 msgid "First Name"
-msgstr ""
+msgstr "Nombre"
 
 #: ../webSHOP/CreditCardPayPalPro.php:276
 msgid "The first name of the credit card holder"
