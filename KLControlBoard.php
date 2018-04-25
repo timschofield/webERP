@@ -4572,7 +4572,8 @@ function SuppliersWithoutBasicData($RootPath, $db){
 
 function TransferWithWrongInformation($maxdays, $RootPath, $db){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays+1));
-	$SQL = "SELECT reference,
+	$SQL = "SELECT loctransferid, 
+					reference,
 					stockid,
 					recdate,
 					(SELECT locationname
@@ -4603,13 +4604,30 @@ function TransferWithWrongInformation($maxdays, $RootPath, $db){
 							<th class="ascending">' . _('Item') . '</th>
 							<th class="ascending">' . _('Shipped Qty') . '</th>
 							<th class="ascending">' . _('Received Qty') . '</th>
+							<th class="ascending">' . _('Action') . '</th>
 						</tr>';
 		echo $TableHeader;
+		$resultTx = DB_Txn_Begin();
 		$k = 0; //row colour counter
-		$i = 1;
+		$LastStockid = "";
+		$LastTransfer = "";
 		while ($myrow = DB_fetch_array($result)) {
 			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/StockLocTransferReceive.php?Trf_ID=' . $myrow['reference'] . '">' . $myrow['reference'] . '</a>';
+			if (($myrow['stockid'] != $LastStockid) 
+				AND ($myrow['reference'] != $LastTransfer)){
+				$sql = "UPDATE loctransfers SET shipqty = recqty 
+						WHERE loctransferid = '".$myrow['loctransferid'] . "'";
+				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('Unable to fix the wrong information');
+				$ResultFix = DB_query($sql, $ErrMsg, $DbgMsg, true);
+				$Action = "Fixed"; 
+			}else{
+				$sql = "DELETE FROM loctransfers 
+						WHERE loctransferid = '".$myrow['loctransferid'] . "'";
+				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('Unable to delete the wrong information');
+				$ResultDelete = DB_query($sql, $ErrMsg, $DbgMsg, true);
+				$Action = "Deleted";
+			}
 			printf('<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -4618,18 +4636,22 @@ function TransferWithWrongInformation($maxdays, $RootPath, $db){
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
+					<td>%s</td>
 					</tr>', 
-					$i, 
+					locale_number_format($myrow['loctransferid'],0), 
 					ConvertSQLDateTime($myrow['recdate']), 
 					$CodeLink, 
 					$myrow['locfrom'], 
 					$myrow['locto'], 
 					$myrow['stockid'], 
 					locale_number_format($myrow['shippedqty'],0),
-					locale_number_format($myrow['receivedqty'],0)
+					locale_number_format($myrow['receivedqty'],0),
+					$Action
 					);
-			$i++;
+			$LastStockid = $myrow['stockid'];
+			$LastTransfer = $myrow['reference'];
 		}
+		$resultTx = DB_Txn_Commit();
 		echo '</table>
 				</div>
 				</form>';
