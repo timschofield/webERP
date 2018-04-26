@@ -1140,9 +1140,13 @@ if ($ProcessSection02){
 	}
 	
 	if ($KL_SystemAdmin){
+		GoodsJustArrived("PO", "KANTO", 3, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		StockToPTADU("PO", 1, 3, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		StockToPTADU("PO", 99999999, 3, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		GoodsJustArrived("WO", "KANTO", 3, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		StockToPTADU("WO", 1, 3, $RootPath, $db);
 		$NumberOfTestExecuted++;

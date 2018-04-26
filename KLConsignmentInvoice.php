@@ -156,6 +156,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, &$d
 			$pdf->MultiCell($WidthColumn6, 0, 'Total', 1, 'C', 0, 1, '', '', true);
 
 			$TotalInvoice = 0;
+			$TotalItems = 0;
 			$LineNum = 0;
 			$pdf->SetFont($FontType, '', $FontSizeS);
 			
@@ -164,6 +165,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, &$d
 				$LineNum++;
 				$TotalLine = $myrow['qty'] * $myrow['price'];
 				$TotalInvoice = $TotalInvoice + $TotalLine;
+				$TotalItems = $TotalItems + $myrow['qty'];
 				
 				$pdf->MultiCell($WidthColumn1, 0, locale_number_format($LineNum), 1, 'R', 0, 0, '', '', true);
 				$pdf->MultiCell($WidthColumn2, 0, $myrow['stockid'], 1, 'L', 0, 0, '', '', true);
@@ -177,9 +179,9 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, &$d
 			$pdf->SetFont($FontType, 'B', $FontSizeM);
 			$pdf->MultiCell($WidthColumn1+
 							$WidthColumn2+
-							$WidthColumn3+
-							$WidthColumn4+
-							$WidthColumn5, 0, 'Total:', 1, 'R', 0, 0, '', '', true);
+							$WidthColumn3, 0, 'Total Qty:', 1, 'R', 0, 0, '', '', true);
+			$pdf->MultiCell($WidthColumn4, 0, locale_number_format($TotalItems), 1, 'R', 0, 0, '', '', true);
+			$pdf->MultiCell($WidthColumn5, 0, 'Total:', 1, 'R', 0, 0, '', '', true);
 			$pdf->MultiCell($WidthColumn6, 0, locale_number_format($TotalInvoice), 1, 'R', 0, 1, '', '', true);
 			
 			if ($CompanyFrom == 'PTADU'){
@@ -199,6 +201,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, &$d
 								$WidthColumn5, 0, 'PPN:', 1, 'R', 0, 0, '', '', true);
 				$pdf->MultiCell($WidthColumn6, 0, locale_number_format($TotalPPN), 1, 'R', 0, 1, '', '', true);
 			}
+
 			// payment details
 			$pdf->ln(5);
 			$pdf->SetFont($FontType, '', $FontSizeM);
