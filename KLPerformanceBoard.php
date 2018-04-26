@@ -299,11 +299,14 @@ if ($ProcessSection03){
 		$NumberOfTestExecuted++;
 		PettyCashStatus("HKD", $db);
 		$NumberOfTestExecuted++;
+	}
+
+	if ($KL_SystemAdmin
+		OR $KL_OperationalManager){
 		CashStatusPTADU("2018",         0,$db);
 		$NumberOfTestExecuted++;
 		CashStatusPTBB("2018", 2300000000,$db);
 		$NumberOfTestExecuted++;
-		
 	}
 }
 
@@ -627,7 +630,7 @@ function CashStatusPTADU($Year, $YearlyGoal, $db){
 	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
-			'Pending to reach goal '. $Year, 
+			'Pending to reach goal '. $Year . ' (>0 means withdraw from bank to cash)', 
 			locale_number_format($YearlyGoal-$CurrentBalance,0)
 			);
 
@@ -729,7 +732,7 @@ function CashStatusPTBB($Year, $YearlyGoal, $db){
 	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
-			'Pending to reach goal '. $Year, 
+			'Pending to reach goal '. $Year . ' (>0 means withdraw from bank to cash)', 
 			locale_number_format($YearlyGoal-$CurrentBalance,0)
 			);
 
