@@ -302,7 +302,8 @@ if ($ProcessSection03){
 	}
 
 	if ($KL_SystemAdmin
-		OR $KL_OperationalManager){
+		OR $KL_OperationalManager
+		OR $KL_AdministrationTeam){
 		CashStatusPTADU("2018",         0,$db);
 		$NumberOfTestExecuted++;
 		CashStatusPTBB("2018", 2300000000,$db);
@@ -564,7 +565,7 @@ function CashStatusPTADU($Year, $YearlyGoal, $db){
 					OR gltrans.narrative LIKE '%UANG KECIL%')";
 	$Result = DB_query($SQL);
 	$myrow = DB_fetch_array($Result);
-	$BankToCash = abs($myrow[0]);
+	$BankToCash = -$myrow[0];
 
 	// Expenses ADU Paid by Petty Cash (excluding salaries, Corporate CC)
 	$AccountSuffix = "AD";
@@ -582,7 +583,7 @@ function CashStatusPTADU($Year, $YearlyGoal, $db){
 				AND pcexpenses.glaccount LIKE '%".$AccountSuffix."'";
 	$Result = DB_query($SQL);
 	$myrow = DB_fetch_array($Result);
-	$ExpensesPTPaidCash = abs($myrow[0]);
+	$ExpensesPTPaidCash = -$myrow[0];
 	
 	echo '<p class="page_title_text" align="center"><strong>' . 'Status Cash PT. Angin Dingin Utara ' . $Year . '</strong></p>';
 	echo '<div>';
@@ -652,7 +653,7 @@ function CashStatusPTBB($Year, $YearlyGoal, $db){
 				AND gltrans.account = '" . $Account . "'";
 	$Result = DB_query($SQL);
 	$myrow = DB_fetch_array($Result);
-	$SalesCash = abs($myrow[0]);
+	$SalesCash = -$myrow[0];
 
 	// Cash Danamon IDR PTBB to Cash Kantor
 	$Account = "111121105PT";
@@ -666,7 +667,7 @@ function CashStatusPTBB($Year, $YearlyGoal, $db){
 					OR gltrans.narrative LIKE '%UANG KECIL%')";
 	$Result = DB_query($SQL);
 	$myrow = DB_fetch_array($Result);
-	$BankToCash = abs($myrow[0]);
+	$BankToCash = -$myrow[0];
 
 	// Expenses PT Paid by Petty Cash (excluding salaries, Corporate CC)
 	$AccountSuffix = "PT";
@@ -684,7 +685,7 @@ function CashStatusPTBB($Year, $YearlyGoal, $db){
 				AND pcexpenses.glaccount LIKE '%".$AccountSuffix."'";
 	$Result = DB_query($SQL);
 	$myrow = DB_fetch_array($Result);
-	$ExpensesPTPaidCash = abs($myrow[0]);
+	$ExpensesPTPaidCash = -$myrow[0];
 	
 	echo '<p class="page_title_text" align="center"><strong>' . 'Status Cash PT.Bumi Biru ' . $Year . '</strong></p>';
 	echo '<div>';

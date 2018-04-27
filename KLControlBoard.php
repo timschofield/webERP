@@ -1140,17 +1140,17 @@ if ($ProcessSection02){
 	}
 	
 	if ($KL_SystemAdmin){
-		GoodsJustArrived("PO", "KANTO", 3, $RootPath, $db);
+		GoodsJustArrived("PO", "KANTO", 1, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		StockToPTADU("PO", 1, 3, $RootPath, $db);
+		StockToPTADU("PO", 1, 1, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		StockToPTADU("PO", 99999999, 3, $RootPath, $db);
+		StockToPTADU("PO", 99999999, 2, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		GoodsJustArrived("WO", "KANTO", 3, $RootPath, $db);
+		GoodsJustArrived("WO", "KANTO", 1, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		StockToPTADU("WO", 1, 3, $RootPath, $db);
+		StockToPTADU("WO", 1, 1, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		StockToPTADU("WO", 99999999, 3, $RootPath, $db);
+		StockToPTADU("WO", 99999999, 2, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -4983,6 +4983,7 @@ function StockToPTADU($Kind, $FactorNearStock, $LimitToMove, $RootPath, $db){
 							<th>' . '' . '</th>
 							<th colspan="2">' . 'QOH Location' . '</th>
 							<th colspan="2">' . 'QOH Company' . '</th>
+							<th colspan="2">' . 'Value Company' . '</th>
 							<th>' . '' . '</th>
 						</tr>
 						<tr>
@@ -4993,6 +4994,8 @@ function StockToPTADU($Kind, $FactorNearStock, $LimitToMove, $RootPath, $db){
 							<th class="ascending">' . 'QOH Total' . '</th>
 							<th class="ascending">' . 'Kantor' . '</th>
 							<th class="ascending">' . 'Shops' . '</th>
+							<th class="ascending">' . 'ADU' . '</th>
+							<th class="ascending">' . 'BB' . '</th>
 							<th class="ascending">' . 'ADU' . '</th>
 							<th class="ascending">' . 'BB' . '</th>
 							<th class="ascending">' . 'Action' . '</th>
@@ -5055,6 +5058,8 @@ function StockToPTADU($Kind, $FactorNearStock, $LimitToMove, $RootPath, $db){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
 					<td>%s</td>
 					</tr>', 
 					$CodeLink,
@@ -5066,6 +5071,8 @@ function StockToPTADU($Kind, $FactorNearStock, $LimitToMove, $RootPath, $db){
 					locale_number_format_zero_blank($myrow['qohshops'],0),
 					locale_number_format_zero_blank($myrow['qtyreceivedptadu'],0),
 					locale_number_format_zero_blank($myrow['qoh']-$myrow['qtyreceivedptadu'],0),
+					locale_number_format_zero_blank($myrow['qtyreceivedptadu']*$myrow['stdcost'],0),
+					locale_number_format_zero_blank(($myrow['qoh']-$myrow['qtyreceivedptadu'])*$myrow['stdcost'],0),
 					$Action
 					);
 			$i++;
