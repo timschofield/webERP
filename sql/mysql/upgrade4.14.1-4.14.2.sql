@@ -137,7 +137,7 @@ CREATE TABLE `pcreceipts` (
 ALTER TABLE pcashdetails ADD COLUMN purpose text NULL AFTER posted;
 
 INSERT INTO `scripts` ( `script` , `pagesecurity` , `description` ) VALUES ('GLAccountGraph.php', '8', '');
-
+INSERT INTO `scripts` ( `script` , `pagesecurity` , `description` ) VALUES ('Z_Fix1cAllocations', '9', '');
 
 UPDATE config SET confvalue='4.15' WHERE confname='VersionNumber';
 
