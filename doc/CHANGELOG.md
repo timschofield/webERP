@@ -15,6 +15,8 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 
 | Description | Type | Author | Date | Details | Ref |
 |:------------|:----:|:------:|:----:|:-------:|:---:|
+| Added the latest phpxmlrpc code version 4.3.1 - using the compatibility layer though - see https://github.com/gggeek/phpxmlrpc | Updated| Phil Daintree | 2018-04-28 | [View](https://github.com/webERP-team/webERP/pull/45/commits/756546887bac32f3ce5d2c357b7e79f7366c0391) |  |
+| Added a utility script to fix 1c allocations in AR - a GL journal will be required for the total of debtor balances changed as a result for the control account to remain in balance Z_Fix1cAllocations.php | Added| Phil Daintree | 2018-04-28 | [View](https://github.com/webERP-team/webERP/pull/45/commits/756546887bac32f3ce5d2c357b7e79f7366c0391) |  |
 | Fix the bug of wrong affected scope of bom changing in BOMs.php | Fixed | Exson Qu | 2018-04-26 | [View](http://github.com/webERP-team/webERP/commit/9e8585e91) |  |
 | Rebuild languages files | Changed | Rafael Chacon | 2018-04-24 | [View](http://github.com/webERP-team/webERP/commit/1cdd72b5f) |  |
 | Minor changes to GeneratePickingList.php | Changed | Rafael Chacon | 2018-04-24 | [View](http://github.com/webERP-team/webERP/commit/ccaf2c404) |  |

@@ -882,7 +882,6 @@ invoices can have a zero amount but there must be a quantity to invoice */
 	$ErrMsg =_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The debtor transaction record could not be inserted because');
 	$DbgMsg = _('The following SQL to insert the debtor transaction record was used');
  	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-
 	$DebtorTransID = DB_Last_Insert_ID('debtortrans','id');
 
 /* Insert the tax totals for each tax authority where tax was charged on the invoice */

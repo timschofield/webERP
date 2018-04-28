@@ -1086,7 +1086,7 @@ echo'	<tr>
 	</tr>
 	<tr>
 		<td>' .  _('Customer Reference') .':</td>
-		<td><input type="text" size="25" maxlength="25" name="CustRef" value="' . $_SESSION['Items'.$identifier]->CustRef . '" title="' . _('Enter the customer\'s purchase order reference relevant to this order') . '" /></td>
+		<td><input type="text" size="25"  maxlength="50" name="CustRef" value="' . $_SESSION['Items'.$identifier]->CustRef . '" title="' . _('Enter the customer\'s purchase order reference relevant to this order') . '" /></td>
 	</tr>
 	<tr>
 		<td>' .  _('Comments') .':</td>
