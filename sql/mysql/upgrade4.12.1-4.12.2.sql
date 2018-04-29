@@ -14,5 +14,7 @@ CREATE TABLE IF NOT EXISTS `locationusers` (
 INSERT INTO `locationusers` (`loccode`, `userid`, `canview`, `canupd`) SELECT loccode, userid,1,1 FROM locations, www_users;
 INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('LocationUsers.php', '15', 'Allows users that have permission to access a location to be defined');
 
+ALTER TABLE debtortrans MODIFY reference varchar(50);
+
 -- Update version number:
 UPDATE config SET confvalue='4.12.2' WHERE confname='VersionNumber';
