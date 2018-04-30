@@ -72,7 +72,7 @@ if (isset($_FILES['ChartFile']) and $_FILES['ChartFile']['name']) { //start file
 		}
 
 		//Then check that the account group actually exists
-		$sql = "SELECT COUNT(group_) FROM chartmaster WHERE group_='" . $myrow[2] . "'";
+		$sql = "SELECT COUNT(groupname) FROM accountgroups WHERE groupname='" . $myrow[2] . "'";
 		$result = DB_query($sql);
 		$testrow = DB_fetch_row($result);
 		if ($testrow[0] == 0) {
