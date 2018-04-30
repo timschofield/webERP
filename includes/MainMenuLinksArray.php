@@ -536,7 +536,8 @@ $MenuItems['GL']['Transactions']['Caption'] = array(	_('Bank Account Payments En
 														_('Journal Entry'),
 														_('Bank Account Payments Matching'),
 														_('Bank Account Receipts Matching'),
-														_('KL Consignment Invoices'));
+														_('KL Consignment Invoices'),
+														_('KL Export CSV for Faktur Pajak'));
 
 $MenuItems['GL']['Transactions']['URL'] = array('/Payments.php?NewPayment=Yes',
 												'/CustomerReceipt.php?NewReceipt=Yes&amp;Type=GL',
@@ -544,7 +545,8 @@ $MenuItems['GL']['Transactions']['URL'] = array('/Payments.php?NewPayment=Yes',
 												'/GLJournal.php?NewJournal=Yes',
 												'/BankMatching.php?Type=Payments',
 												'/BankMatching.php?Type=Receipts',
-												'/KLConsignmentInvoice.php');
+												'/KLConsignmentInvoice.php',
+												'/KLConsignmentCSVFakturPajak.php');
 										
 $MenuItems['GL']['Reports']['Caption'] = array( _('Bank Account Reconciliation Statement'),
 												_('Cheque Payments Listing'),
