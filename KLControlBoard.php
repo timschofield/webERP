@@ -1140,14 +1140,14 @@ if ($ProcessSection02){
 	}
 	
 	if ($KL_SystemAdmin){
-		GoodsJustArrived("PO", "KANTO", 1, $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		GoodsJustArrived("PO", "KANTO", 1, $RootPath, $db);
+//		$NumberOfTestExecuted++;
 		StockToPTADU("PO", 1, 1, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		StockToPTADU("PO", 99999999, 2, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		GoodsJustArrived("WO", "KANTO", 1, $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		GoodsJustArrived("WO", "KANTO", 1, $RootPath, $db);
+//		$NumberOfTestExecuted++;
 		StockToPTADU("WO", 1, 1, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		StockToPTADU("WO", 99999999, 2, $RootPath, $db);
@@ -4981,12 +4981,14 @@ function StockToPTADU($Kind, $FactorNearStock, $LimitToMove, $RootPath, $db){
 							<th>' . '' . '</th>
 							<th>' . '' . '</th>
 							<th>' . '' . '</th>
+							<th>' . '' . '</th>
 							<th colspan="2">' . 'QOH Location' . '</th>
 							<th colspan="2">' . 'QOH Company' . '</th>
 							<th colspan="2">' . 'Value Company' . '</th>
 							<th>' . '' . '</th>
 						</tr>
 						<tr>
+							<th class="ascending">' . '#' . '</th>
 							<th class="ascending">' . 'Stock ID' . '</th>
 							<th class="ascending">' . 'Std Cost' . '</th>
 							<th class="ascending">' . 'Category BB' . '</th>
@@ -5003,6 +5005,11 @@ function StockToPTADU($Kind, $FactorNearStock, $LimitToMove, $RootPath, $db){
 		echo $TableHeader;
 		$k = 0; //row colour counter
 		$i = 1;
+		$TotalPcsADU = 0;
+		$TotalPcsBB = 0;
+		$TotalValueADU = 0;
+		$TotalValueBB = 0;
+		
 		while ($myrow = DB_fetch_array($result)) {
 			$k = StartEvenOrOddRow($k);
 
@@ -5048,8 +5055,13 @@ function StockToPTADU($Kind, $FactorNearStock, $LimitToMove, $RootPath, $db){
 			}else{
 				$Action = '';
 			}
-			
-			printf('<td>%s</td>
+			$TotalPcsADU += $myrow['qtyreceivedptadu'];
+			$TotalPcsBB += ($myrow['qoh']-$myrow['qtyreceivedptadu']);
+			$TotalValueADU += $myrow['qtyreceivedptadu']*$myrow['stdcost'];
+			$TotalValueBB += ($myrow['qoh']-$myrow['qtyreceivedptadu'])*$myrow['stdcost'];
+		
+			printf('<td class="number">%s</td>
+					<td>%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -5062,6 +5074,7 @@ function StockToPTADU($Kind, $FactorNearStock, $LimitToMove, $RootPath, $db){
 					<td class="number">%s</td>
 					<td>%s</td>
 					</tr>', 
+					locale_number_format_zero_blank($i,0),
 					$CodeLink,
 					locale_number_format_zero_blank($myrow['stdcost'],0),
 					$myrow['categoryid'],
@@ -5077,6 +5090,34 @@ function StockToPTADU($Kind, $FactorNearStock, $LimitToMove, $RootPath, $db){
 					);
 			$i++;
 		}
+		printf('<td class="number">%s</td>
+				<td>%s</td>
+				<td class="number">%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td>%s</td>
+				</tr>', 
+				locale_number_format_zero_blank($i,0),
+				'TOTAL',
+				'',
+				'',
+				'',
+				'',
+				'',
+				'',
+				locale_number_format_zero_blank($TotalPcsADU,0),
+				locale_number_format_zero_blank($TotalPcsBB,0),
+				locale_number_format_zero_blank($TotalValueADU,0),
+				locale_number_format_zero_blank($TotalValueBB,0),
+				''
+				);
 		echo '</table>
 			</div>
 			</form>';
