@@ -433,11 +433,15 @@ if(in_array($CashSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($Ca
 	$SelectedPeriod=$LastPeriodSelected;
 
 	$Sql = "SELECT bankaccounts.accountcode,
-					bankaccounts.bankaccountcode,
-					chartmaster.accountname,
-					bankaccountname
-			FROM bankaccounts INNER JOIN chartmaster
-			ON bankaccounts.accountcode = chartmaster.accountcode";
+                    bankaccounts.bankaccountcode,
+                    chartmaster.accountname,
+                    bankaccountname
+            FROM bankaccounts
+            INNER JOIN chartmaster
+            ON bankaccounts.accountcode = chartmaster.accountcode
+            INNER JOIN bankaccountusers
+            ON bankaccounts.accountcode=bankaccountusers.accountcode
+            AND userid='" . $_SESSION['UserID'] . "'"; 
 
 	$ErrMsg = _('The bank accounts set up could not be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the bank account details was') . '<br />' . $Sql;
