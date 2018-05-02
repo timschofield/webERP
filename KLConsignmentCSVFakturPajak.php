@@ -6,129 +6,93 @@ include('includes/KLDefines.php');
 
 $Title = _('Export CSV File for Faktur Pajak');
 
+// The default company to Invoice from (PTADU).
+if(!isset($_POST['CompanyFrom'])) {
+	$_POST['CompanyFrom']='PTADU';
+}
+
+// The default company to Invoice to (PTBB).
+if(!isset($_POST['CompanyTo'])) {
+	$_POST['CompanyTo']='PTBB';
+}
+
+// default date to invoice is until Yesterday
+if (!isset($_POST['EndDate'])){
+	$_POST['EndDate'] = DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1); 
+}
+
+// The default draft or Invoice should be draft.
+if(!isset($_POST['NomorSeriFP'])) {
+	$_POST['NomorSeriFP']='0000000000000';
+}
+
+
 if (isset($_POST['submit'])) {
-	submit($Title, $_POST['Company'], $_POST['DateOfFile'], $_POST['SalaryType'], $db);
+	submit($Title, $_POST['CompanyFrom'], $_POST['CompanyTo'], $_POST['EndDate'], $_POST['NomorSeriFP'], $db);
 } else {
 	display($Title, $db);
 }
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit($Title, $Company, $LastDateOfPeriod, $SalaryType, &$db) {
+function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $NomorSeriFP, &$db) {
+
+	$EndDate = FormatDateForSQL($EndDate);
 
 	//initialise no input errors
 	$InputError = FALSE;
 
 	//first off validate inputs sensible
-	$PeriodExportDate = GetPeriod(ConvertSQLDate($LastDateOfPeriod), $db);
-	$Today = date('Y-m-d');
-	$PeriodNow = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
-	$PeriodMonth = MonthAndYearFromSQLDate($LastDateOfPeriod);
-	
-	if ($SalaryType == "MONTHLY"){
-		$PageTitle = _('Export CSV Danamon Monthly Salary for '). ConvertSQLDate($LastDateOfPeriod);
-	}elseif($SalaryType == "THRONLY"){
-		$PageTitle = _('Export CSV Danamon THR Only for '). ConvertSQLDate($LastDateOfPeriod);
-	}else{
-		$InputErrorMessage = "The type of Salary " . $SalaryType . " is not accepted";
-		$InputError = TRUE;
-	}
-
-	// The month selected should be last month for Monthly salaries
-	if ($SalaryType == "MONTHLY"){
-		if($PeriodNow != ($PeriodExportDate + 1)){
-			$InputErrorMessage = "The month selected to export Monthly Salary CSV File for Transfer LLG Danamon should be last month";
-			$InputError = TRUE;
-		}
-	}
-		
-	// The month selected should be current month for THR Only salaries
-	if ($SalaryType == "THRONLY"){
-		if($PeriodNow != ($PeriodExportDate)){
-			$InputErrorMessage = "The month selected to export THR Only CSV File for Transfer LLG Danamon should be current month";
-			$InputError = TRUE;
-		}
-	}
 
 	if(!$InputError){
-		$SQL = "SELECT bankaccount,
-						bankaccountholder,
-						bankcode,
-						fullname,
-						upahpokok,
-						tunjanganmakan,
-						tunjangantransport,
-						tunjanganjabatan,
-						tunjanganmasakerja,
-						tunjangankendaraan,
-						komisitetap,
-						komisiretail,
-						komisisupport,
-						bonuspenjualan,
-						lembur,
-						thr,
-						penerimaanlain,
-						potonganjht,
-						potonganaskes,
-						potonganpph21,
-						potonganabsen,
-						potonganlain2,
-						bulatan
-				FROM salariescalculated
-				WHERE company = '" . $Company . "'
-					AND periodno = '" . $PeriodExportDate . "'
-					AND salarytype = '" . $SalaryType . "'
-					AND paymentmethod = 'Bank'
-				ORDER BY joiningdate,
-					fullname";
+		$SQL = "SELECT klconsignment.stockid,
+						stockmaster.description,
+					SUM(klconsignment.qty) AS qty,
+					ROUND(AVG(klconsignment.consignmentprice),0) AS price
+				FROM klconsignment,stockmaster
+				WHERE klconsignment.stockid = stockmaster.stockid
+					AND companycode = '" . $CompanyFrom . "'
+					AND partnercode = '" . $CompanyTo . "'
+					AND fakturpajakdate = '0000-00-00'
+					AND saledate <= '" . $EndDate . "'
+				GROUP BY klconsignment.stockid
+				ORDER BY klconsignment.stockid";
+
 		$result = DB_query($SQL);
 		if (DB_num_rows($result) != 0){
 			// prepare CSV file
 			header("Content-Type: text/csv");
-			if ($SalaryType == "MONTHLY"){
-				header("Content-Disposition: attachment; filename=GajiTransferDanamon-" . $Today . ".csv");
-			}else{
-				header("Content-Disposition: attachment; filename=THRTransferDanamon-" . $Today . ".csv");
-			}
+			header("Content-Disposition: attachment; filename=FakturPajak-" . $CompanyFrom . "-". $NomorSeriFP . ".csv");
 			$output = fopen("php://output", "w");
 			$Separator = ",";
 			$EOL = "\n";
+			
+			// Prepare Lines for products in the FP
 			$i = 0;
 			while ($myrow = DB_fetch_array($result)) {
-				$ValueTransfer = $myrow['upahpokok'] +
-								$myrow['tunjanganmakan'] +
-								$myrow['tunjangantransport'] +
-								$myrow['tunjanganjabatan'] +
-								$myrow['tunjanganmasakerja'] +
-								$myrow['tunjangankendaraan'] +
-								$myrow['komisitetap'] +
-								$myrow['komisiretail'] +
-								$myrow['komisisupport'] +
-								$myrow['bonuspenjualan'] +
-								$myrow['lembur'] +
-								$myrow['thr'] +
-								$myrow['penerimaanlain'] +
-								$myrow['potonganjht'] +
-								$myrow['potonganaskes'] +
-								$myrow['potonganpph21'] +
-								$myrow['potonganabsen'] +
-								$myrow['potonganlain2'];
 
-				if ($SalaryType == "MONTHLY"){
-					$TextMessage = substr('Gaji' . ' '. $PeriodMonth,0,20);
-				}else{
-					$TextMessage = substr('THR' . ' '. $PeriodMonth,0,20);
-				}
-								
-				$Line = $myrow['bankaccount'] . $Separator . 
-						$ValueTransfer . $Separator . 
-						substr($Company . ' '. $PeriodMonth,0,30) . $Separator . 
-						$TextMessage . $Separator . 
-						$myrow['bankaccountholder'] . $Separator . 
-						"PUSAT" . $Separator . 
-						$myrow['bankcode'] . $Separator . 
-						"PUSAT" . $Separator . 
-						"1" . $Separator . 
-						"Y" . $EOL;
+				$LineType = 'OF';
+				$KodeObjek = $myrow['stockid'];
+				$Nama = $myrow['description'];
+				$HargaSatuan = round($myrow['price'],0);
+				$JumlahBarang = round($myrow['qty'],0);
+				$HargaTotal = $HargaSatuan * $JumlahBarang;
+				$Diskon = 0;
+				$DPP = round($HargaTotal / ((100 + PPN_PERCENT) / 100),0);
+				$PPN = $HargaTotal - $DPP;
+				$TarifPPNBM = 0;
+				$PPNBM = 0;
+				
+				$Line = $LineType . $Separator . 
+						$KodeObjek . $Separator . 
+						$Nama . $Separator . 
+						$HargaSatuan . $Separator . 
+						$JumlahBarang . $Separator . 
+						$HargaTotal . $Separator . 
+						$Diskon . $Separator . 
+						$DPP . $Separator . 
+						$PPN . $Separator . 
+						$TarifPPNBM . $Separator . 
+						$PPNBM . $EOL;
 
 				fwrite($output, $Line);
 				$i++;
@@ -136,7 +100,7 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType, &$db) {
 			fclose($output);
 		}else{
 			include('includes/header.php');
-			prnMsg('No data to export CSV File for Transfer LLG Danamon ');
+			prnMsg('No data to create a Faktur Pajak ');
 			include('includes/footer.php');
 		}
 	}else{
@@ -168,6 +132,10 @@ function display($Title, &$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DI
 	echo '<table class="selection">';
 
 	include('includes/KLConsignmentParameterSelection.php');
+	echo '<tr>
+			<td>' . _('Nomor Seri Faktur Pajak') . ':' . '</td>
+			<td><input type="text" name="NomorSeriFP" value="' . $_POST['NomorSeriFP'] . '" size="14" maxlength="13" /></td>
+		</tr>';
 	
 	echo '<tr><td>&nbsp;</td></tr>
 		<tr>
