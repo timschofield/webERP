@@ -4618,8 +4618,7 @@ function TransferWithWrongInformation($maxdays, $RootPath, $db){
 		while ($myrow = DB_fetch_array($result)) {
 			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/StockLocTransferReceive.php?Trf_ID=' . $myrow['reference'] . '">' . $myrow['reference'] . '</a>';
-			if (($myrow['stockid'] != $LastStockid) 
-				AND ($myrow['reference'] != $LastTransfer)){
+			if (($myrow['stockid'] != $LastStockid) OR ($myrow['reference'] != $LastTransfer)){
 				$sql = "UPDATE loctransfers SET shipqty = recqty 
 						WHERE loctransferid = '".$myrow['loctransferid'] . "'";
 				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('Unable to fix the wrong information');
