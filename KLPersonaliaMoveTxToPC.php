@@ -212,6 +212,9 @@ function submit($Title, $Company, $LastDateOfPeriod, $PaymentDate, $SalaryType, 
 } // End of function submit()
 
 function MoveSalaryTxToPC($Company, $PaymentMethod, $Expense, $PaymentDate, $Amount, $Receipt, $db){
+	if($PaymentMethod != "CASH"){
+		$PaymentMethod = "BANK";
+	}
 	if ($Amount != 0){
 		$SQL = "SELECT pctabcode,
 						pcexpensecode
@@ -245,7 +248,7 @@ function MoveSalaryTxToPC($Company, $PaymentMethod, $Expense, $PaymentDate, $Amo
 							 '" . $Receipt . "')";
 			$resultInsert = DB_query($SQL,$InsertErrMsg,$DbgMsg,true);
 		}else{
-			prnMsg('ERROR CODE: PERS00001. Can not find the PC info for expense', 'error');
+			prnMsg('ERROR CODE: PERS00001. Can not find the PC info for expense: '. $SQL, 'error');
 		}
 	}
 }
