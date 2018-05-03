@@ -39,7 +39,17 @@ if(isset($_POST['submit'])) {
 				SET partnername ='" . $_POST['PartnerName'] . "',
 					partnernameinvoice ='" . $_POST['PartnerNameInvoice'] . "',
 					partneraddress ='" . $_POST['PartnerAddress'] . "',
-					partneraddressinvoice ='" . $_POST['PartnerAddressInvoice'] . "',
+					partneraddressjalan ='" . $_POST['partneraddressjalan'] . "',
+					partneraddressblok ='" . $_POST['partneraddressblok'] . "',
+					partneraddressnomor ='" . $_POST['partneraddressnomor'] . "',
+					partneraddressrt ='" . $_POST['partneraddressrt'] . "',
+					partneraddressrw ='" . $_POST['partneraddressrw'] . "',
+					partneraddresskecamatan ='" . $_POST['partneraddresskecamatan'] . "',
+					partneraddresskelurahan ='" . $_POST['partneraddresskelurahan'] . "',
+					partneraddresskabupaten ='" . $_POST['partneraddresskabupaten'] . "',
+					partneraddresspropinsi ='" . $_POST['partneraddresspropinsi'] . "',
+					partneraddresskodepos ='" . $_POST['partneraddresskodepos'] . "',
+					partnertelepon ='" . $_POST['partnertelepon'] . "',
 					partnernpwp ='" . $_POST['PartnerNPWP'] . "',
 					partnernpwpinvoice ='" . $_POST['PartnerNPWPInvoice'] . "',
 					ppn ='" . $_POST['PPN'] . "',
@@ -79,7 +89,17 @@ if(isset($_POST['submit'])) {
 		unset($_POST['PartnerName']);
 		unset($_POST['PartnerNameInvoice']);
 		unset($_POST['PartnerAddress']);
-		unset($_POST['PartnerAddressInvoice']);
+		unset($_POST['partneraddressjalan']);
+		unset($_POST['partneraddressblok']);
+		unset($_POST['partneraddressnomor']);
+		unset($_POST['partneraddressrt']);
+		unset($_POST['partneraddressrw']);
+		unset($_POST['partneraddresskecamatan']);
+		unset($_POST['partneraddresskelurahan']);
+		unset($_POST['partneraddresskabupaten']);
+		unset($_POST['partneraddresspropinsi']);
+		unset($_POST['partneraddresskodepos']);
+		unset($_POST['partnertelepon']);
 		unset($_POST['PartnerNPWP']);
 		unset($_POST['PartnerNPWPInvoice']);
 		unset($_POST['PPN']);
@@ -115,7 +135,17 @@ if(isset($_POST['submit'])) {
 								partnername,
 								partnernameinvoice,
 								partneraddress,
-								partneraddressinvoice,
+								partneraddressjalan,
+								partneraddressblok,
+								partneraddressnomor,
+								partneraddressrt,
+								partneraddressrw,
+								partneraddresskecamatan,
+								partneraddresskelurahan,
+								partneraddresskabupaten,
+								partneraddresspropinsi,
+								partneraddresskodepos,
+								partnertelepon,
 								partnernpwp,
 								partnernpwpinvoice,
 								ppn,
@@ -145,7 +175,17 @@ if(isset($_POST['submit'])) {
 								'" . $_POST['PartnerName'] . "',
 								'" . $_POST['PartnerNameInvoice'] . "',
 								'" . $_POST['PartnerAddress'] ."',
-								'" . $_POST['PartnerAddressInvoice'] ."',
+								'" . $_POST['partneraddressjalan'] ."',
+								'" . $_POST['partneraddressblok'] ."',
+								'" . $_POST['partneraddressnomor'] ."',
+								'" . $_POST['partneraddressrt'] ."',
+								'" . $_POST['partneraddressrw'] ."',
+								'" . $_POST['partneraddresskecamatan'] ."',
+								'" . $_POST['partneraddresskelurahan'] ."',
+								'" . $_POST['partneraddresskabupaten'] ."',
+								'" . $_POST['partneraddresspropinsi'] ."',
+								'" . $_POST['partneraddresskodepos'] ."',
+								'" . $_POST['partnertelepon'] ."',
 								'" . $_POST['PartnerNPWP'] ."',
 								'" . $_POST['PartnerNPWPInvoice'] ."',
 								'" . $_POST['PPN'] . "',
@@ -183,7 +223,17 @@ if(isset($_POST['submit'])) {
 		unset($_POST['PartnerName']);
 		unset($_POST['PartnerNameInvoice']);
 		unset($_POST['PartnerAddress']);
-		unset($_POST['PartnerAddressInvoice']);
+		unset($_POST['partneraddressjalan']);
+		unset($_POST['partneraddressblok']);
+		unset($_POST['partneraddressnomor']);
+		unset($_POST['partneraddressrt']);
+		unset($_POST['partneraddressrw']);
+		unset($_POST['partneraddresskecamatan']);
+		unset($_POST['partneraddresskelurahan']);
+		unset($_POST['partneraddresskabupaten']);
+		unset($_POST['partneraddresspropinsi']);
+		unset($_POST['partneraddresskodepos']);
+		unset($_POST['partnertelepon']);
 		unset($_POST['PartnerNPWP']);
 		unset($_POST['PartnerNPWPInvoice']);
 		unset($_POST['PPN']);
@@ -317,7 +367,17 @@ if(!isset($_GET['delete'])) {
 					partnername,
 					partnernameinvoice,
 					partneraddress,
-					partneraddressinvoice,
+					partneraddressjalan,
+					partneraddressblok,
+					partneraddressnomor,
+					partneraddressrt,
+					partneraddressrw,
+					partneraddresskecamatan,
+					partneraddresskelurahan,
+					partneraddresskabupaten,
+					partneraddresspropinsi,
+					partneraddresskodepos,
+					partnertelepon,
 					partnernpwp,
 					partnernpwpinvoice,
 					ppn,
@@ -353,7 +413,17 @@ if(!isset($_GET['delete'])) {
 		$_POST['PartnerName'] = $myrow['partnername'];
 		$_POST['PartnerNameInvoice'] = $myrow['partnernameinvoice'];
 		$_POST['PartnerAddress'] = $myrow['partneraddress'];
-		$_POST['PartnerAddressInvoice'] = $myrow['partneraddressinvoice'];
+		$_POST['partneraddressjalan'] = $myrow['partneraddressjalan'];
+		$_POST['partneraddressblok'] = $myrow['partneraddressblok'];
+		$_POST['partneraddressnomor'] = $myrow['partneraddressnomor'];
+		$_POST['partneraddressrt'] = $myrow['partneraddressrtº'];
+		$_POST['partneraddressrw'] = $myrow['partneraddressrw'];
+		$_POST['partneraddresskecamatan'] = $myrow['partneraddresskecamatan'];
+		$_POST['partneraddresskelurahan'] = $myrow['partneraddresskelurahan'];
+		$_POST['partneraddresskabupaten'] = $myrow['partneraddresskabupaten'];
+		$_POST['partneraddresspropinsi'] = $myrow['partneraddresspropinsi'];
+		$_POST['partneraddresskodepos'] = $myrow['partneraddresskodepos'];
+		$_POST['partnertelepon'] = $myrow['partnertelepon'];
 		$_POST['PartnerNPWP'] = $myrow['partnernpwp'];
 		$_POST['PartnerNPWPInvoice'] = $myrow['partnernpwpinvoice'];
 		$_POST['PPN'] = $myrow['ppn'];
@@ -410,10 +480,40 @@ if(!isset($_GET['delete'])) {
 		$_POST['PartnerNameInvoice'] = '';
 	}
 	if(!isset($_POST['PartnerAddress'])) {
-		$_POST['PartnerAddress'] = ' ';
+		$_POST['PartnerAddress'] = '';
 	}
-	if(!isset($_POST['PartnerAddressInvoice'])) {
-		$_POST['PartnerAddressInvoice'] = ' ';
+	if(!isset($_POST['partneraddressjalan'])) {
+		$_POST['partneraddressjalan'] = '';
+	}
+	if(!isset($_POST['partneraddressblok'])) {
+		$_POST['partneraddressblok'] = '';
+	}
+	if(!isset($_POST['partneraddressnomor'])) {
+		$_POST['partneraddressnomor'] = '';
+	}
+	if(!isset($_POST['partneraddressrt'])) {
+		$_POST['partneraddressrt'] = '';
+	}
+	if(!isset($_POST['partneraddressrw'])) {
+		$_POST['partneraddressrw'] = '';
+	}
+	if(!isset($_POST['partneraddresskecamatan'])) {
+		$_POST['partneraddresskecamatan'] = '';
+	}
+	if(!isset($_POST['partneraddresskelurahan'])) {
+		$_POST['partneraddresskelurahan'] = '';
+	}
+	if(!isset($_POST['partneraddresskabupaten'])) {
+		$_POST['partneraddresskabupaten'] = '';
+	}
+	if(!isset($_POST['partneraddresspropinsi'])) {
+		$_POST['partneraddresspropinsi'] = '';
+	}
+	if(!isset($_POST['partneraddresskodepos'])) {
+		$_POST['partneraddresskodepos'] = '';
+	}
+	if(!isset($_POST['partnertelepon'])) {
+		$_POST['partnertelepon'] = '';
 	}
 	if(!isset($_POST['PartnerNPWP'])) {
 		$_POST['PartnerNPWP'] = '';
@@ -504,15 +604,55 @@ if(!isset($_GET['delete'])) {
 			<td><input type="text" name="PartnerNPWP" value="' . $_POST['PartnerNPWP'] . '" size="21" maxlength="20" /></td>
 		</tr>
 		<tr>
-			<td>' . _('Partner Name in Consignment Invoice') . ':' . '</td>
+			<td>' . _('Partner Name in Consignment Invoice/FP') . ':' . '</td>
 			<td><input type="text" name="PartnerNameInvoice" required="required" value="'. $_POST['PartnerNameInvoice'] . '" title="' . _('Enter the retail partner name') . '" namesize="51" maxlength="50" /></td>
 		</tr>
 		<tr>
-			<td>' . _('Address in Consignment Invoice') . ':' . '</td>
-			<td><input type="text" name="PartnerAddressInvoice" value="' . $_POST['PartnerAddressInvoice'] . '" size="51" maxlength="100" /></td>
+			<td>' . _('Jalan in Consignment Invoice/FP') . ':' . '</td>
+			<td><input type="text" name="partneraddressjalan" value="' . $_POST['partneraddressjalan'] . '" size="51" maxlength="100" /></td>
 		</tr>
 		<tr>
-			<td>' . _('NPWP in Consignment Invoice') . ':' . '</td>
+			<td>' . _('Blok in Consignment Invoice/FP') . ':' . '</td>
+			<td><input type="text" name="partneraddressblok" value="' . $_POST['partneraddressblok'] . '" size="21" maxlength="20" /></td>
+		</tr>
+		<tr>
+			<td>' . _('Nomor in Consignment Invoice/FP') . ':' . '</td>
+			<td><input type="text" name="partneraddressnomor" value="' . $_POST['partneraddressnomor'] . '" size="21" maxlength="20" /></td>
+		</tr>
+		<tr>
+			<td>' . _('RT in Consignment Invoice/FP') . ':' . '</td>
+			<td><input type="text" name="partneraddressrt" value="' . $_POST['partneraddressrt'] . '" size="21" maxlength="20" /></td>
+		</tr>
+		<tr>
+			<td>' . _('RW in Consignment Invoice/FP') . ':' . '</td>
+			<td><input type="text" name="partneraddressrw" value="' . $_POST['partneraddressrw'] . '" size="21" maxlength="20" /></td>
+		</tr>
+		<tr>
+			<td>' . _('Kecamatan in Consignment Invoice/FP') . ':' . '</td>
+			<td><input type="text" name="partneraddresskecamatan" value="' . $_POST['partneraddresskecamatan'] . '" size="51" maxlength="50" /></td>
+		</tr>
+		<tr>
+			<td>' . _('Kelurahan in Consignment Invoice/FP') . ':' . '</td>
+			<td><input type="text" name="partneraddresskelurahan" value="' . $_POST['partneraddresskelurahan'] . '" size="51" maxlength="50" /></td>
+		</tr>
+		<tr>
+			<td>' . _('Kabupaten in Consignment Invoice/FP') . ':' . '</td>
+			<td><input type="text" name="partneraddresskabupaten" value="' . $_POST['partneraddresskabupaten'] . '" size="51" maxlength="50" /></td>
+		</tr>
+		<tr>
+			<td>' . _('Propinsi in Consignment Invoice/FP') . ':' . '</td>
+			<td><input type="text" name="partneraddresspropinsi" value="' . $_POST['partneraddresspropinsi'] . '" size="51" maxlength="50" /></td>
+		</tr>
+		<tr>
+			<td>' . _('Kode Pos in Consignment Invoice/FP') . ':' . '</td>
+			<td><input type="text" name="partneraddresskodepos" value="' . $_POST['partneraddresskodepos'] . '" size="11" maxlength="10" /></td>
+		</tr>
+		<tr>
+			<td>' . _('Telepon in Consignment Invoice/FP') . ':' . '</td>
+			<td><input type="text" name="partnertelepon" value="' . $_POST['partnertelepon'] . '" size="21" maxlength="20" /></td>
+		</tr>
+		<tr>
+			<td>' . _('NPWP in Consignment Invoice/FP') . ':' . '</td>
 			<td><input type="text" name="PartnerNPWPInvoice" value="' . $_POST['PartnerNPWPInvoice'] . '" size="21" maxlength="20" /></td>
 		</tr>';
 	echo '<tr>
