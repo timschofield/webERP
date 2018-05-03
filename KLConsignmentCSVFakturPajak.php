@@ -22,21 +22,25 @@ if (!isset($_POST['EndDate'])){
 }
 
 // The default draft or Invoice should be draft.
+if(!isset($_POST['DraftOrInvoice'])) {
+	$_POST['DraftOrInvoice']='DRAFT';
+}
+
 if(!isset($_POST['NomorSeriFP'])) {
 	$_POST['NomorSeriFP']='0000000000000';
 }
 
 
 if (isset($_POST['submit'])) {
-	submit($Title, $_POST['CompanyFrom'], $_POST['CompanyTo'], $_POST['EndDate'], $_POST['NomorSeriFP'], $db);
+	submit($Title, $_POST['CompanyFrom'], $_POST['CompanyTo'], $_POST['EndDate'], $_POST['DraftOrInvoice'], $_POST['NomorSeriFP'], $db);
 } else {
 	display($Title, $db);
 }
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $NomorSeriFP, &$db) {
+function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $NomorSeriFP, &$db) {
 
-	$EndDate = FormatDateForSQL($EndDate);
+	$EndDateSQL = FormatDateForSQL($EndDate);
 
 	//initialise no input errors
 	$InputError = FALSE;
@@ -53,7 +57,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $NomorSeriFP, &$db) 
 					AND companycode = '" . $CompanyFrom . "'
 					AND partnercode = '" . $CompanyTo . "'
 					AND fakturpajakdate = '0000-00-00'
-					AND saledate <= '" . $EndDate . "'
+					AND saledate <= '" . $EndDateSQL . "'
 				GROUP BY klconsignment.stockid
 				ORDER BY klconsignment.stockid";
 
@@ -61,28 +65,41 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $NomorSeriFP, &$db) 
 		if (DB_num_rows($result) != 0){
 			// prepare CSV file
 			header("Content-Type: text/csv");
-			header("Content-Disposition: attachment; filename=FakturPajak-" . $CompanyFrom . "-". $NomorSeriFP . ".csv");
+			header("Content-Disposition: attachment; filename=FakturPajak-" . $CompanyFrom . "-". $CompanyTo . "-". $NomorSeriFP . ".csv");
 			$output = fopen("php://output", "w");
+			$BOL = "";
 			$Separator = ",";
 			$EOL = "\n";
 			
-			// Prepare Lines for products in the FP
+			if ($DraftOrInvoice == 'DRAFT'){
+				$DraftLine = $BOL. 'DRAFT LINE: Remove to TEST or select INVOICE to export Faktur Pajak'. $EOL;
+				fwrite($output, $DraftLine);
+			}
+
+			// Prepare OF Lines for products in the FP, and calculate totals needed in line FK (first one)
 			$i = 0;
+			$JumlahDPP = 0;
+			$JumlahPPN = 0;
+			$OFLines = '';
 			while ($myrow = DB_fetch_array($result)) {
 
 				$LineType = 'OF';
 				$KodeObjek = $myrow['stockid'];
 				$Nama = $myrow['description'];
-				$HargaSatuan = round($myrow['price'],0);
+				$HargaSatuan = round($myrow['price'] / ((100 + PPN_PERCENT) / 100),0);
 				$JumlahBarang = round($myrow['qty'],0);
 				$HargaTotal = $HargaSatuan * $JumlahBarang;
 				$Diskon = 0;
-				$DPP = round($HargaTotal / ((100 + PPN_PERCENT) / 100),0);
-				$PPN = $HargaTotal - $DPP;
+				$DPP = round($JumlahBarang *($HargaSatuan-$Diskon),0);
+				$PPN = round($JumlahBarang *($myrow['price']-$HargaSatuan),0);
 				$TarifPPNBM = 0;
 				$PPNBM = 0;
 				
-				$Line = $LineType . $Separator . 
+				$JumlahDPP += $DPP;
+				$JumlahPPN += $PPN;
+				
+				$Line = $BOL. 
+						$LineType . $Separator . 
 						$KodeObjek . $Separator . 
 						$Nama . $Separator . 
 						$HargaSatuan . $Separator . 
@@ -93,11 +110,174 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $NomorSeriFP, &$db) 
 						$PPN . $Separator . 
 						$TarifPPNBM . $Separator . 
 						$PPNBM . $EOL;
-
-				fwrite($output, $Line);
+				
+				$OFLines .= $Line;
 				$i++;
 			}
+			
+			// Prepare the 1st line (FK) of the file 
+			$LineType = 'FK';
+			$KDJenisTransaksi = '01';
+			$FGPengganti = '0';
+			$NomorFaktur = $NomorSeriFP;
+			$MasaPajak = substr($EndDate,3,2);
+			$TahunPajak = substr($EndDate,-4);
+			$TanggalFaktur = $EndDate;
+			if ($CompanyFrom == "PTADU"){
+				$NPWP = '81.304.529.1-906.000';
+				$Nama = 'PT. ANGIN DINGIN UTARA';
+				$AlamatLengkap = 'JL. RAYA KESAMBI NO 1B KEROBOKAN KUTA UTARA KAB BADUNG BALI';
+			}else{
+				$NPWP = '';
+				$Nama = '';
+				$AlamatLengkap = '';
+			}
+			$JumlahPPNBM = '0';
+			$IDKeteranganTambahan = '';
+			$FGUangMuka = '0';
+			$UangMukaDPP = '0';
+			$UangMukaPPN = '0';
+			$UangMukaPPNBM = '0';
+			$Referensi = $CompanyFrom . '-' . $CompanyTo . '-' . $EndDateSQL;
+			
+			$FKLine = $BOL . 
+					$LineType . $Separator . 
+					$KDJenisTransaksi . $Separator . 
+					$FGPengganti . $Separator . 
+					$NomorFaktur . $Separator . 
+					$MasaPajak . $Separator . 
+					$TahunPajak . $Separator . 
+					$TanggalFaktur . $Separator . 
+					$NPWP . $Separator . 
+					$Nama . $Separator . 
+					$AlamatLengkap . $Separator . 
+					$JumlahDPP . $Separator . 
+					$JumlahPPN . $Separator . 
+					$JumlahPPNBM . $Separator . 
+					$IDKeteranganTambahan . $Separator . 
+					$FGUangMuka . $Separator . 
+					$UangMukaDPP . $Separator . 
+					$UangMukaPPN . $Separator . 
+					$UangMukaPPNBM . $Separator . 
+					$Referensi . $EOL; 
+
+			// Prepare the 2nd line (LT) of the file 
+			$SQLCompanyTo = "SELECT partnernameinvoice,
+								partneraddressjalan,
+								partneraddressblok,
+								partneraddressnomor,
+								partneraddressrt,
+								partneraddressrw,
+								partneraddresskecamatan,
+								partneraddresskelurahan,
+								partneraddresskabupaten,
+								partneraddresspropinsi,
+								partneraddresskodepos,
+								partnertelepon,
+								partnernpwpinvoice,
+								accountppn,
+								daysinvoicedue
+							FROM klretailpartners
+							WHERE partnercode = '" . $CompanyTo . "'";
+			$resultCompanyTo = DB_query($SQLCompanyTo);
+			$myCompanyTo= DB_fetch_array($resultCompanyTo);
+
+			$LineType = 'LT';
+			$NPWP = $myCompanyTo['partnernpwpinvoice'];
+			$Nama = $myCompanyTo['partnernameinvoice'];
+
+			if ($myCompanyTo['partneraddressjalan'] != ''){
+				$Jalan = $myCompanyTo['partneraddressjalan'];
+			} else {
+				$Jalan = '-';
+			}
+			if ($myCompanyTo['partneraddressblok'] != ''){
+				$Blok = $myCompanyTo['partneraddressblok'];
+			} else {
+				$Blok = '-';
+			}
+			if ($myCompanyTo['partneraddressnomor'] != ''){
+				$Nomor = $myCompanyTo['partneraddressnomor'];
+			} else {
+				$Nomor = '-';
+			}
+			if ($myCompanyTo['partneraddressrt'] != ''){
+				$RT = $myCompanyTo['partneraddressrt'];
+			} else {
+				$RT = '0';
+			}
+			if ($myCompanyTo['partneraddressrw'] != ''){
+				$RW = $myCompanyTo['partneraddressrw'];
+			} else {
+				$RW = '0';
+			}
+			if ($myCompanyTo['partneraddresskecamatan'] != ''){
+				$Kecamatan = $myCompanyTo['partneraddresskecamatan'];
+			} else {
+				$Kecamatan = '-';
+			}
+			if ($myCompanyTo['partneraddresskelurahan'] != ''){
+				$Kelurahan = $myCompanyTo['partneraddresskelurahan'];
+			} else {
+				$Kelurahan = '-';
+			}
+			if ($myCompanyTo['partneraddresskabupaten'] != ''){
+				$Kabupaten = $myCompanyTo['partneraddresskabupaten'];
+			} else {
+				$Kabupaten = '-';
+			}
+			if ($myCompanyTo['partneraddresspropinsi'] != ''){
+				$Propinsi = $myCompanyTo['partneraddresspropinsi'];
+			} else {
+				$Propinsi = '-';
+			}
+			if ($myCompanyTo['partneraddresskodepos'] != ''){
+				$KodePos = $myCompanyTo['partneraddresskodepos'];
+			} else {
+				$KodePos = '-';
+			}
+			if ($myCompanyTo['partnertelepon'] != ''){
+				$NomorTelepon = $myCompanyTo['partnertelepon'];
+			} else {
+				$NomorTelepon = '-';
+			}
+
+			$LTLine = $BOL . 
+					$LineType . $Separator . 
+					$NPWP . $Separator . 
+					$Nama . $Separator . 
+					$Jalan . $Separator . 
+					$Blok . $Separator . 
+					$Nomor . $Separator . 
+					$RT . $Separator . 
+					$RW . $Separator . 
+					$Kecamatan . $Separator . 
+					$Kelurahan . $Separator . 
+					$Kabupaten . $Separator . 
+					$Propinsi . $Separator . 
+					$KodePos . $Separator . 
+					$NomorTelepon . $EOL; 
+					
+			if ($DraftOrInvoice == 'INVOICE'){
+				$rTx = DB_Txn_Begin();
+				$SQL = "UPDATE klconsignment
+						SET fakturpajakdate = '". $EndDate ."'
+						WHERE companycode = '" . $CompanyFrom . "'
+							AND partnercode = '" . $CompanyTo . "'
+							AND fakturpajakdate = '0000-00-00'
+							AND saledate <= '" . $EndDate . "'";
+				$ErrMsg = 'CRITICAL ERROR! WRITE THIS CODE AND CALL THE OFFICE IMMEDIATELY: ERROR-CONSIGNMENT-00002';		
+				$DbgMsg = 'SQL to update klconsignment record: ';
+				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				$rTx = DB_Txn_Commit();
+			}
+
+			// Write lines into actual file
+			fwrite($output, $FKLine);
+			fwrite($output, $LTLine);
+			fwrite($output, $OFLines);
 			fclose($output);
+			
 		}else{
 			include('includes/header.php');
 			prnMsg('No data to create a Faktur Pajak ');

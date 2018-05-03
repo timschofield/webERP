@@ -38,6 +38,17 @@
 			<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="EndDate" size="10" maxlength="10" value="' . $_POST['EndDate'] . '" /></td>
 		</tr>';
 	
+	echo '<tr>
+			<td>' . 'Draft or Invoice' . ':</td>
+			<td><select name="DraftOrInvoice">';
+	if($_POST['DraftOrInvoice']=="DRAFT") {
+		echo '<option selected="selected" value="DRAFT">' . 'Draft' . '</option>';
+		echo '<option value="INVOICE">' . 'Invoice' . '</option>';
+	} else {
+		echo '<option selected="selected" value="INVOICE">' . 'Invoice' . '</option>';
+		echo '<option value="DRAFT">' . 'Draft' . '</option>';
+	}
+	echo '</select></td></tr>';	
 
 
 ?>

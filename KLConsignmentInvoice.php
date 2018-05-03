@@ -113,7 +113,17 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, &$d
 
 			// Company To header
 			$SQLCompanyTo = "SELECT partnernameinvoice,
-								partneraddressinvoice,
+								partneraddressjalan,
+								partneraddressblok,
+								partneraddressnomor,
+								partneraddressrt,
+								partneraddressrw,
+								partneraddresskecamatan,
+								partneraddresskelurahan,
+								partneraddresskabupaten,
+								partneraddresspropinsi,
+								partneraddresskodepos,
+								partnertelepon,
 								partnernpwpinvoice,
 								accountppn,
 								daysinvoicedue
@@ -122,6 +132,35 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, &$d
 			$resultCompanyTo = DB_query($SQLCompanyTo);
 			$myCompanyTo= DB_fetch_array($resultCompanyTo);
 			
+			$AddressPartner = $myCompanyTo['partneraddressjalan'];
+			if ($myCompanyTo['partneraddressblok'] != ''){
+				$AddressPartner .= ' ' . $myCompanyTo['partneraddressblok'];
+			}
+			if ($myCompanyTo['partneraddressnomor'] != ''){
+				$AddressPartner .= ' ' . $myCompanyTo['partneraddressnomor'];
+			}
+			if ($myCompanyTo['partneraddressrt'] != ''){
+				$AddressPartner .= ' ' . $myCompanyTo['partneraddressrt'];
+			}
+			if ($myCompanyTo['partneraddressrw'] != ''){
+				$AddressPartner .= ' ' . $myCompanyTo['partneraddressrw'];
+			}
+			if ($myCompanyTo['partneraddresskecamatan'] != ''){
+				$AddressPartner .= ' ' . $myCompanyTo['partneraddresskecamatan'];
+			}
+			if ($myCompanyTo['partneraddresskelurahan'] != ''){
+				$AddressPartner .= ' ' . $myCompanyTo['partneraddresskelurahan'];
+			}
+			if ($myCompanyTo['partneraddresskabupaten'] != ''){
+				$AddressPartner .= ' ' . $myCompanyTo['partneraddresskabupaten'];
+			}
+			if ($myCompanyTo['partneraddresspropinsi'] != ''){
+				$AddressPartner .= ' ' . $myCompanyTo['partneraddresspropinsi'];
+			}
+			if ($myCompanyTo['partneraddresskodepos'] != ''){
+				$AddressPartner .= ' ' . $myCompanyTo['partneraddresskodepos'];
+			}
+			
 			$pdf->ln(6);
 			$WidthColumn1 = 28;
 			$WidthColumn2 = 0;
@@ -129,7 +168,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, &$d
 			$pdf->MultiCell($WidthColumn1, 0, 'Invoice to:', 0, 'L', 0, 0, '', '', true);
 			$pdf->MultiCell($WidthColumn2, 0, $myCompanyTo['partnernameinvoice'], 0, 'L', 0, 1, '', '', true);
 			$pdf->MultiCell($WidthColumn1, 0, 'Address:', 0, 'L', 0, 0, '', '', true);
-			$pdf->MultiCell($WidthColumn2, 0, $myCompanyTo['partneraddressinvoice'], 0, 'L', 0, 1, '', '', true);
+			$pdf->MultiCell($WidthColumn2, 0, $AddressPartner, 0, 'L', 0, 1, '', '', true);
 			$pdf->MultiCell($WidthColumn1, 0, 'NPWP:', 0, '', 0, 0, '', '', true);
 			$pdf->MultiCell($WidthColumn2, 0, $myCompanyTo['partnernpwpinvoice'], 0, 'L', 0, 1, '', '', true);
 			$pdf->MultiCell($WidthColumn1, 0, 'Invoice number:', 0, 'L', 0, 0, '', '', true);
@@ -300,18 +339,6 @@ function display($Title, &$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DI
 	echo '<table class="selection">';
 
 	include('includes/KLConsignmentParameterSelection.php');
-
-	echo '<tr>
-			<td>' . 'Draft or Invoice' . ':</td>
-			<td><select name="DraftOrInvoice">';
-	if($_POST['DraftOrInvoice']=="DRAFT") {
-		echo '<option selected="selected" value="DRAFT">' . 'Draft' . '</option>';
-		echo '<option value="INVOICE">' . 'Invoice' . '</option>';
-	} else {
-		echo '<option selected="selected" value="INVOICE">' . 'Invoice' . '</option>';
-		echo '<option value="DRAFT">' . 'Draft' . '</option>';
-	}
-	echo '</select></td></tr>';	
 
 	echo '<tr><td>&nbsp;</td></tr>
 		<tr>
