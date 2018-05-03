@@ -340,18 +340,6 @@ function display($Title, &$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DI
 
 	include('includes/KLConsignmentParameterSelection.php');
 
-	echo '<tr>
-			<td>' . 'Draft or Invoice' . ':</td>
-			<td><select name="DraftOrInvoice">';
-	if($_POST['DraftOrInvoice']=="DRAFT") {
-		echo '<option selected="selected" value="DRAFT">' . 'Draft' . '</option>';
-		echo '<option value="INVOICE">' . 'Invoice' . '</option>';
-	} else {
-		echo '<option selected="selected" value="INVOICE">' . 'Invoice' . '</option>';
-		echo '<option value="DRAFT">' . 'Draft' . '</option>';
-	}
-	echo '</select></td></tr>';	
-
 	echo '<tr><td>&nbsp;</td></tr>
 		<tr>
 			<td>&nbsp;</td>

@@ -22,19 +22,23 @@ if (!isset($_POST['EndDate'])){
 }
 
 // The default draft or Invoice should be draft.
+if(!isset($_POST['DraftOrInvoice'])) {
+	$_POST['DraftOrInvoice']='DRAFT';
+}
+
 if(!isset($_POST['NomorSeriFP'])) {
 	$_POST['NomorSeriFP']='0000000000000';
 }
 
 
 if (isset($_POST['submit'])) {
-	submit($Title, $_POST['CompanyFrom'], $_POST['CompanyTo'], $_POST['EndDate'], $_POST['NomorSeriFP'], $db);
+	submit($Title, $_POST['CompanyFrom'], $_POST['CompanyTo'], $_POST['EndDate'], $_POST['DraftOrInvoice'], $_POST['NomorSeriFP'], $db);
 } else {
 	display($Title, $db);
 }
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $NomorSeriFP, &$db) {
+function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $NomorSeriFP, &$db) {
 
 	$EndDateSQL = FormatDateForSQL($EndDate);
 
@@ -63,9 +67,15 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $NomorSeriFP, &$db) 
 			header("Content-Type: text/csv");
 			header("Content-Disposition: attachment; filename=FakturPajak-" . $CompanyFrom . "-". $CompanyTo . "-". $NomorSeriFP . ".csv");
 			$output = fopen("php://output", "w");
+			$BOL = "";
 			$Separator = ",";
 			$EOL = "\n";
 			
+			if ($DraftOrInvoice == 'DRAFT'){
+				$DraftLine = $BOL. 'DRAFT LINE: Remove to TEST or select INVOICE to export Faktur Pajak'. $EOL;
+				fwrite($output, $DraftLine);
+			}
+
 			// Prepare OF Lines for products in the FP, and calculate totals needed in line FK (first one)
 			$i = 0;
 			$JumlahDPP = 0;
@@ -88,7 +98,8 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $NomorSeriFP, &$db) 
 				$JumlahDPP += $DPP;
 				$JumlahPPN += $PPN;
 				
-				$Line = $LineType . $Separator . 
+				$Line = $BOL. 
+						$LineType . $Separator . 
 						$KodeObjek . $Separator . 
 						$Nama . $Separator . 
 						$HargaSatuan . $Separator . 
@@ -106,7 +117,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $NomorSeriFP, &$db) 
 			
 			// Prepare the 1st line (FK) of the file 
 			$LineType = 'FK';
-			$KDJenisTransaksi = 'XX';
+			$KDJenisTransaksi = '01';
 			$FGPengganti = '0';
 			$NomorFaktur = $NomorSeriFP;
 			$MasaPajak = substr($EndDate,3,2);
@@ -122,14 +133,15 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $NomorSeriFP, &$db) 
 				$AlamatLengkap = '';
 			}
 			$JumlahPPNBM = '0';
-			$IDKeteranganTambahan = 'XX';
+			$IDKeteranganTambahan = '';
 			$FGUangMuka = '0';
 			$UangMukaDPP = '0';
 			$UangMukaPPN = '0';
 			$UangMukaPPNBM = '0';
 			$Referensi = $CompanyFrom . '-' . $CompanyTo . '-' . $EndDateSQL;
 			
-			$FKLine = $LineType . $Separator . 
+			$FKLine = $BOL . 
+					$LineType . $Separator . 
 					$KDJenisTransaksi . $Separator . 
 					$FGPengganti . $Separator . 
 					$NomorFaktur . $Separator . 
@@ -230,11 +242,13 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $NomorSeriFP, &$db) 
 				$NomorTelepon = '-';
 			}
 
-			$LTLine = $LineType . $Separator . 
+			$LTLine = $BOL . 
+					$LineType . $Separator . 
 					$NPWP . $Separator . 
 					$Nama . $Separator . 
 					$Jalan . $Separator . 
 					$Blok . $Separator . 
+					$Nomor . $Separator . 
 					$RT . $Separator . 
 					$RW . $Separator . 
 					$Kecamatan . $Separator . 
@@ -243,12 +257,27 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $NomorSeriFP, &$db) 
 					$Propinsi . $Separator . 
 					$KodePos . $Separator . 
 					$NomorTelepon . $EOL; 
+					
+			if ($DraftOrInvoice == 'INVOICE'){
+				$rTx = DB_Txn_Begin();
+				$SQL = "UPDATE klconsignment
+						SET fakturpajakdate = '". $EndDate ."'
+						WHERE companycode = '" . $CompanyFrom . "'
+							AND partnercode = '" . $CompanyTo . "'
+							AND fakturpajakdate = '0000-00-00'
+							AND saledate <= '" . $EndDate . "'";
+				$ErrMsg = 'CRITICAL ERROR! WRITE THIS CODE AND CALL THE OFFICE IMMEDIATELY: ERROR-CONSIGNMENT-00002';		
+				$DbgMsg = 'SQL to update klconsignment record: ';
+				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				$rTx = DB_Txn_Commit();
+			}
 
 			// Write lines into actual file
 			fwrite($output, $FKLine);
 			fwrite($output, $LTLine);
 			fwrite($output, $OFLines);
 			fclose($output);
+			
 		}else{
 			include('includes/header.php');
 			prnMsg('No data to create a Faktur Pajak ');
