@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-04-24 19:40-0600\n"
-"PO-Revision-Date: 2018-04-24 22:48-0600\n"
+"PO-Revision-Date: 2018-05-04 09:43-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -2259,7 +2259,7 @@ msgstr ""
 #: BankAccountBalances.php:11 BankAccountBalances.php:12
 #: includes/MainMenuLinksArray.php:95
 msgid "Bank Account Balances"
-msgstr ""
+msgstr "Saldos de cuentas bancarias"
 
 #: BankAccountBalances.php:16 BankMatching.php:99 BankReconciliation.php:112
 #: CounterReturns.php:816 Currencies.php:220 CustomerReceipt.php:823
@@ -2270,11 +2270,11 @@ msgstr "Cuenta bancaria"
 
 #: BankAccountBalances.php:18 Payments.php:997
 msgid "Balance in account currency"
-msgstr ""
+msgstr "Saldo en moneda de la cuenta"
 
 #: BankAccountBalances.php:19
 msgid "Balance in functional currency"
-msgstr ""
+msgstr "Saldo en moneda funcional"
 
 #: BankAccountBalances.php:32
 msgid "There are no bank accounts defined that you have authority to see"
