@@ -1,12 +1,16 @@
 <?php
+/* Search Pick Lists */
 
 include('includes/session.php');
-$Title = _('Search Pick Lists ');
+$Title = _('Search Pick Lists');
+$ViewTopic = 'orders';
+$BookMark = 'SelectPickingLists';
 include('includes/header.php');
 
-echo '<p class="page_title_text">
-		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', _('Pick Lists'), '" alt=""  />', ' ', _('Pick Lists'), '
-	</p>';
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+	'/images/magnifier.png" title="', // Icon image.
+	_('Pick Lists'), '" /> ', // Icon title.
+	_('Pick Lists'), '</p>';// Page title.
 
 if (isset($_GET['SelectedStockItem'])) {
 	$SelectedStockItem = $_GET['SelectedStockItem'];
