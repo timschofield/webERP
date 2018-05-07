@@ -1,5 +1,5 @@
 <?php
-
+/* Generate Picking List */
 
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
