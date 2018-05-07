@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-05-06 09:31-0600\n"
-"PO-Revision-Date: 2018-05-04 09:43-0600\n"
+"PO-Revision-Date: 2018-05-07 08:09-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -1638,7 +1638,7 @@ msgstr "ó"
 #: GLProfit_Loss.php:121 GLTagProfit_Loss.php:111 GLTrialBalance.php:121
 #: SalesGraph.php:103
 msgid "Select Period"
-msgstr ""
+msgstr "Seleccionar el período"
 
 #: AnalysisHorizontalIncome.php:127 AnalysisHorizontalPosition.php:62
 msgid "Detail or summary"
@@ -15276,7 +15276,7 @@ msgstr "Estado de situación"
 #: includes/PDFTagProfitAndLossPageHeader.inc:36 includes/MiscFunctions.php:437
 #: includes/MiscFunctions.php:520 reportwriter/languages/en_US/reports.php:366
 msgid "Last Year"
-msgstr "Último Año"
+msgstr "Año pasado"
 
 #: GLBalanceSheet.php:709
 msgid "Select A Different Balance Date"
@@ -15317,17 +15317,17 @@ msgstr "El SQL que falló al actualizar los presupuestos contables fue"
 #: GLBudgets.php:170 includes/MiscFunctions.php:438
 #: includes/MiscFunctions.php:524
 msgid "Last Financial Year"
-msgstr "Último Ejercicio"
+msgstr "Año fiscal pasado"
 
 #: GLBudgets.php:171 includes/MiscFunctions.php:432
 #: includes/MiscFunctions.php:499
 msgid "This Financial Year"
-msgstr "Este Ejercicio"
+msgstr "Este año fiscal"
 
 #: GLBudgets.php:172 includes/MiscFunctions.php:444
 #: includes/MiscFunctions.php:549
 msgid "Next Financial Year"
-msgstr "Próximo Ejercicio"
+msgstr "Año fiscal próximo"
 
 #: GLBudgets.php:175 GLBudgets.php:176 GLBudgets.php:177
 msgid "Year ended"
@@ -28071,7 +28071,7 @@ msgstr "Esta Semana"
 #: includes/MiscFunctions.php:430 includes/MiscFunctions.php:482
 #: reportwriter/languages/en_US/reports.php:353
 msgid "This Month"
-msgstr "Este Mes"
+msgstr "Este mes"
 
 #: SalesByTypePeriodInquiry.php:56 SalesCategoryPeriodInquiry.php:49
 #: SalesTopCustomersInquiry.php:51 SalesTopItemsInquiry.php:52
@@ -52028,7 +52028,7 @@ msgstr ""
 #: includes/MiscFunctions.php:431 includes/MiscFunctions.php:495
 #: reportwriter/languages/en_US/reports.php:357
 msgid "This Year"
-msgstr ""
+msgstr "Este año"
 
 #: includes/MiscFunctions.php:436 includes/MiscFunctions.php:507
 #: reportwriter/languages/en_US/reports.php:362
@@ -53961,7 +53961,7 @@ msgstr ""
 
 #: ../webSHOP/Checkout.php:634
 msgid "Select Payment Method"
-msgstr ""
+msgstr "Seleccionar el método de pago"
 
 #: ../webSHOP/Checkout.php:635
 msgid "Delivery Address"
