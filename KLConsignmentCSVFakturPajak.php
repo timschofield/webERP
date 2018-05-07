@@ -115,6 +115,27 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 				$i++;
 			}
 			
+			$SQLCompanyTo = "SELECT partnernameinvoice,
+								partneraddressjalan,
+								partneraddressblok,
+								partneraddressnomor,
+								partneraddressrt,
+								partneraddressrw,
+								partneraddresskecamatan,
+								partneraddresskelurahan,
+								partneraddresskabupaten,
+								partneraddresspropinsi,
+								partneraddresskodepos,
+								partnertelepon,
+								partnernpwpinvoice,
+								accountppn,
+								daysinvoicedue
+							FROM klretailpartners
+							WHERE partnercode = '" . $CompanyTo . "'";
+			$resultCompanyTo = DB_query($SQLCompanyTo);
+			$myCompanyTo= DB_fetch_array($resultCompanyTo);
+
+
 			// Prepare the 1st line (FK) of the file 
 			$LineType = 'FK';
 			$KDJenisTransaksi = '01';
@@ -123,14 +144,36 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 			$MasaPajak = substr($EndDate,3,2);
 			$TahunPajak = substr($EndDate,-4);
 			$TanggalFaktur = $EndDate;
-			if ($CompanyFrom == "PTADU"){
-				$NPWP = '81.304.529.1-906.000';
-				$Nama = 'PT. ANGIN DINGIN UTARA';
-				$AlamatLengkap = 'JL. RAYA KESAMBI NO 1B KEROBOKAN KUTA UTARA KAB BADUNG BALI';
-			}else{
-				$NPWP = '';
-				$Nama = '';
-				$AlamatLengkap = '';
+			$CharsToStripFromNPWP = array(".", "-");
+			$NPWP = str_replace($CharsToStripFromNPWP,"",$myCompanyTo['partnernpwpinvoice']); //NPWP number only, no format
+			$Nama = $myCompanyTo['partnernameinvoice'];
+			$AlamatLengkap = $myCompanyTo['partneraddressjalan'];
+			if ($myCompanyTo['partneraddressblok'] != ''){
+				$AlamatLengkap .= ' ' . $myCompanyTo['partneraddressblok'];
+			}
+			if ($myCompanyTo['partneraddressnomor'] != ''){
+				$AlamatLengkap .= ' ' . $myCompanyTo['partneraddressnomor'];
+			}
+			if ($myCompanyTo['partneraddressrt'] != ''){
+				$AlamatLengkap .= ' ' . $myCompanyTo['partneraddressrt'];
+			}
+			if ($myCompanyTo['partneraddressrw'] != ''){
+				$AlamatLengkap .= ' ' . $myCompanyTo['partneraddressrw'];
+			}
+			if ($myCompanyTo['partneraddresskecamatan'] != ''){
+				$AlamatLengkap .= ' ' . $myCompanyTo['partneraddresskecamatan'];
+			}
+			if ($myCompanyTo['partneraddresskelurahan'] != ''){
+				$AlamatLengkap .= ' ' . $myCompanyTo['partneraddresskelurahan'];
+			}
+			if ($myCompanyTo['partneraddresskabupaten'] != ''){
+				$AlamatLengkap .= ' ' . $myCompanyTo['partneraddresskabupaten'];
+			}
+			if ($myCompanyTo['partneraddresspropinsi'] != ''){
+				$AlamatLengkap .= ' ' . $myCompanyTo['partneraddresspropinsi'];
+			}
+			if ($myCompanyTo['partneraddresskodepos'] != ''){
+				$AlamatLengkap .= ' ' . $myCompanyTo['partneraddresskodepos'];
 			}
 			$JumlahPPNBM = '0';
 			$IDKeteranganTambahan = '';
@@ -162,28 +205,10 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 					$Referensi . $EOL; 
 
 			// Prepare the 2nd line (LT) of the file 
-			$SQLCompanyTo = "SELECT partnernameinvoice,
-								partneraddressjalan,
-								partneraddressblok,
-								partneraddressnomor,
-								partneraddressrt,
-								partneraddressrw,
-								partneraddresskecamatan,
-								partneraddresskelurahan,
-								partneraddresskabupaten,
-								partneraddresspropinsi,
-								partneraddresskodepos,
-								partnertelepon,
-								partnernpwpinvoice,
-								accountppn,
-								daysinvoicedue
-							FROM klretailpartners
-							WHERE partnercode = '" . $CompanyTo . "'";
-			$resultCompanyTo = DB_query($SQLCompanyTo);
-			$myCompanyTo= DB_fetch_array($resultCompanyTo);
 
 			$LineType = 'LT';
-			$NPWP = $myCompanyTo['partnernpwpinvoice'];
+			$CharsToStripFromNPWP = array(".", "-");
+			$NPWP = str_replace($CharsToStripFromNPWP,"",$myCompanyTo['partnernpwpinvoice']); //NPWP number only, no format
 			$Nama = $myCompanyTo['partnernameinvoice'];
 
 			if ($myCompanyTo['partneraddressjalan'] != ''){
@@ -273,6 +298,12 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 			}
 
 			// Write lines into actual file
+			$InitialLine1 = $BOL. 'FK,KD_JENIS_TRANSAKSI,FG_PENGGANTI,NOMOR_FAKTUR,MASA_PAJAK,TAHUN_PAJAK,TANGGAL_FAKTUR,NPWP,NAMA,ALAMAT_LENGKAP,JUMLAH_DPP,JUMLAH_PPN,JUMLAH_PPNBM,ID_KETERANGAN_TAMBAHAN,FG_UANG_MUKA,UANG_MUKA_DPP,UANG_MUKA_PPN,UANG_MUKA_PPNBM,REFERENSI' . $EOL;
+			$InitialLine2 = $BOL. 'LT,NPWP,NAMA,JALAN,BLOK,NOMOR,RT,RW,KECAMATAN,KELURAHAN,KABUPATEN,PROPINSI,KODE_POS,NOMOR_TELEPON' . $EOL;
+			$InitialLine3 = $BOL. 'OF,KODE_OBJEK,NAMA,HARGA_SATUAN,JUMLAH_BARANG,HARGA_TOTAL,DISKON,DPP,PPN,TARIF_PPNBM,PPNBM' . $EOL;
+			fwrite($output, $InitialLine1);
+			fwrite($output, $InitialLine2);
+			fwrite($output, $InitialLine3);
 			fwrite($output, $FKLine);
 			fwrite($output, $LTLine);
 			fwrite($output, $OFLines);
