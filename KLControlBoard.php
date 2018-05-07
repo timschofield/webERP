@@ -393,7 +393,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111800000",  200000000,  300000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111900000",   10000000,   20000000, $periodnow, $db);
+		BalanceAccountControl("111900000",   15000000,   25000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111311100",  -20000000,          0, $periodnow, $db);
 		$NumberOfTestExecuted++;
@@ -401,7 +401,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("211021400", -100000000,          1, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("211021500",  250000000,  500000000, $periodnow, $db);
+		BalanceAccountControl("211021500",  250000000,  750000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("612011215",         -1,          1, $periodnow, $db);
 		$NumberOfTestExecuted++;
@@ -5103,7 +5103,7 @@ function StockToPTADU($Kind, $FactorNearStock, $LimitToMove, $RootPath, $db){
 				<td class="number">%s</td>
 				<td>%s</td>
 				</tr>', 
-				locale_number_format_zero_blank($i,0),
+				'',
 				'TOTAL',
 				'',
 				'',
