@@ -98,8 +98,7 @@
 
 <p>webERP looks at the user's default location and then looks up against the location record to find the cash sales debtor account (and branch) to use for counter sales entered. Each location for which counter sales are required must first be set up with the cash sales customer and branch which is to be used for counter sales entered. Note that the default location of the customer branch is ignored - the user's default location (see Setup-&gt;General-&gt;User Maintenance - the script webERP/WWW_Users.php) is used as the location and stock movements are all created from this location against the customer specified in the location record (Setup - &gt; Inventory Setup -&gt; Location Maintenance - the script webERP/Locations.php). To specify the customer and branch to use for counter sales for an inventory location (or warehouse), the customer code and branch code must be entered.</p>
 
-<h3>Counter Returns</h3>
-
+<h3><a id="CounterReturns">Counter Sales Returns</a></h3>
 <p>To produce credit notes in a customer facing situation it was difficult to first create the credit note manually, then enter a negative receipt (payment) against the customer account, then allocate the credit note to the negative receipt (payment). This has all been simplified with this Counter Returns functionality (new script to 4.09.2). This script allows the return of goods or services with the usual stock functionality and the capability to enter a payment to the customer that automatically allocates directly to the credit note.</p>
 
 <!-- Help Begin: SelectSalesOrder -->
