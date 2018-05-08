@@ -1,11 +1,14 @@
 <?php
-
+/* Picking List Maintenance */
 
 /* Session started in session.php for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
+
 include('includes/session.php');
 $Title = _('Picking List Maintenance');
+$ViewTopic = '';
+$BookMark = 'PickingLists';
 
 $ARSecurity = 3;
 

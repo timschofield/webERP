@@ -1,5 +1,5 @@
 <?php
-
+/* Prints a ship label */
 
 include('includes/session.php');
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-24 19:40-0600\n"
+"POT-Creation-Date: 2018-05-06 09:31-0600\n"
 "PO-Revision-Date: 2015-09-18 10:34+0900\n"
 "Last-Translator: Dongbak Cha\n"
 "Language-Team: Korean\n"
@@ -18,7 +18,7 @@ msgstr ""
 "X-Generator: Poedit 1.8.4\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: AccountGroups.php:5 includes/MainMenuLinksArray.php:99
+#: AccountGroups.php:5 includes/MainMenuLinksArray.php:412
 msgid "Account Groups"
 msgstr "계정 그룹"
 
@@ -247,8 +247,8 @@ msgstr "계정 그룹 때문에를 가져올 수 없습니다"
 #: DiscountCategories.php:148 DiscountMatrix.php:15 EDIMessageFormat.php:104
 #: FixedAssetLocations.php:12 FixedAssetRegister.php:16
 #: FixedAssetRegister.php:256 FixedAssetTransfer.php:13 FormDesigner.php:184
-#: GeneratePickingList.php:28 GLAccountGraph.php:41 GLBudgets.php:31
-#: GLJournalInquiry.php:11 GLJournal.php:249 HistoricalTestResults.php:41
+#: GeneratePickingList.php:28 GLBudgets.php:31 GLJournalInquiry.php:11
+#: GLJournal.php:249 HistoricalTestResults.php:41
 #: InternalStockRequestInquiry.php:167 InternalStockRequest.php:303
 #: InventoryPlanning.php:459 InventoryPlanningPrefSupplier.php:385
 #: MaintenanceTasks.php:13 MaintenanceUserSchedule.php:15 MRPReport.php:538
@@ -629,7 +629,7 @@ msgstr ""
 "를 입력"
 
 #: AccountSections.php:5 AccountSections.php:171 AccountSections.php:172
-#: includes/MainMenuLinksArray.php:99
+#: includes/MainMenuLinksArray.php:411
 msgid "Account Sections"
 msgstr "계정 섹션"
 
@@ -919,17 +919,18 @@ msgstr "고객에 대한주의 사항"
 #: BankReconciliation.php:211 BankReconciliation.php:280
 #: ContractCosting.php:176 CustomerAccount.php:251 CustomerAllocations.php:346
 #: CustomerAllocations.php:376 CustomerInquiry.php:251
-#: CustomerTransInquiry.php:99 CustWhereAlloc.php:143 GLAccountReport.php:343
-#: GLTransInquiry.php:46 GoodsReceived.php:129 MRPCalendar.php:218
-#: PaymentAllocations.php:66 Payments.php:1005 Payments.php:1369
-#: PcAssignCashTabToTab.php:285 PcAssignCashToTab.php:232
-#: PcAuthorizeCash.php:92 PDFOrdersInvoiced.php:377 PDFRemittanceAdvice.php:307
-#: PDFWOPrint.php:481 PrintCustTrans.php:949 PrintCustTransPortrait.php:931
-#: PrintWOItemSlip.php:186 PrintWOItemSlip.php:197 PrintWOItemSlip.php:208
-#: PurchasesReport.php:65 ReverseGRN.php:404 SelectCustomer.php:796
-#: SelectCustomer.php:834 ShipmentCosting.php:530 ShipmentCosting.php:598
-#: Shipments.php:478 StockDispatch.php:278 StockDispatch.php:289
-#: StockDispatch.php:300 StockLocMovements.php:111 StockMovements.php:129
+#: CustomerTransInquiry.php:99 CustWhereAlloc.php:143
+#: GeneratePickingList.php:496 GLAccountReport.php:343 GLTransInquiry.php:46
+#: GoodsReceived.php:129 MRPCalendar.php:218 PaymentAllocations.php:66
+#: Payments.php:1005 Payments.php:1369 PcAssignCashTabToTab.php:285
+#: PcAssignCashToTab.php:232 PcAuthorizeCash.php:92 PDFOrdersInvoiced.php:377
+#: PDFRemittanceAdvice.php:307 PDFWOPrint.php:481 PrintCustTrans.php:949
+#: PrintCustTransPortrait.php:931 PrintWOItemSlip.php:186
+#: PrintWOItemSlip.php:197 PrintWOItemSlip.php:208 PurchasesReport.php:65
+#: ReverseGRN.php:404 SelectCustomer.php:796 SelectCustomer.php:834
+#: ShipmentCosting.php:530 ShipmentCosting.php:598 Shipments.php:478
+#: StockDispatch.php:278 StockDispatch.php:289 StockDispatch.php:300
+#: StockLocMovements.php:111 StockMovements.php:129
 #: StockSerialItemResearch.php:81 SupplierAllocations.php:457
 #: SupplierAllocations.php:558 SupplierAllocations.php:627
 #: SupplierInquiry.php:204 SupplierTransInquiry.php:110 SuppWhereAlloc.php:131
@@ -1048,7 +1049,7 @@ msgstr "현재"
 #: StockQties_csv.php:7 StockQuantityByDate.php:7 StockReorderLevel.php:19
 #: StockSerialItemResearch.php:8 StockSerialItems.php:8 StockStatus.php:44
 #: StockTransferControlled.php:13 SuppLoginSetup.php:23 WWW_Users.php:27
-#: includes/MainMenuLinksArray.php:8
+#: includes/MainMenuLinksArray.php:23
 #: reportwriter/languages/en_US/reports.php:244
 msgid "Inventory"
 msgstr "목록"
@@ -1093,7 +1094,7 @@ msgstr "재고"
 #: SecurityTokens.php:106 SecurityTokens.php:166 SelectAsset.php:263
 #: SelectCompletedOrder.php:505 SelectContract.php:146
 #: SelectCreditItems.php:1003 SelectOrderItems.php:1521
-#: SelectOrderItems.php:1692 SelectPickingLists.php:275 SelectProduct.php:558
+#: SelectOrderItems.php:1692 SelectPickingLists.php:279 SelectProduct.php:558
 #: SelectProduct.php:848 SelectQASamples.php:299 SelectQASamples.php:385
 #: SelectSalesOrder.php:641 SelectWorkOrder.php:219 Shipt_Select.php:190
 #: StockClone.php:694 StockCounts.php:141 StockDispatch.php:505
@@ -1141,7 +1142,7 @@ msgstr "남은 수량"
 #: ProductSpecs.php:166 ProductSpecs.php:387 QATests.php:252 QATests.php:394
 #: SelectCompletedOrder.php:509 SelectCreditItems.php:1004
 #: SelectOrderItems.php:1522 SelectOrderItems.php:1694
-#: SelectPickingLists.php:278 SelectProduct.php:158 SelectProduct.php:850
+#: SelectPickingLists.php:282 SelectProduct.php:158 SelectProduct.php:850
 #: SelectQASamples.php:301 SelectSalesOrder.php:643 SelectWorkOrder.php:221
 #: Shipments.php:398 Shipments.php:476 Shipt_Select.php:193
 #: StockLocTransferReceive.php:545 SupplierPriceList.php:277
@@ -1342,7 +1343,7 @@ msgstr "because 검색 할 수 없습니다"
 #: SupplierInquiry.php:77 SupplierInquiry.php:98 SupplierInquiry.php:134
 #: SupplierInquiry.php:189 SupplierPriceList.php:383
 #: SupplierTransInquiry.php:102 SuppPaymentRun.php:113 SuppPaymentRun.php:187
-#: SuppPaymentRun.php:218 WorkOrderCosting.php:448 WorkOrderReceive.php:304
+#: SuppPaymentRun.php:218 WorkOrderCosting.php:406 WorkOrderReceive.php:304
 #: WOSerialNos.php:48 Z_ChangeBranchCode.php:111 Z_ChangeCustomerCode.php:96
 #: Z_ChangeSalesmanCode.php:75 Z_ChangeSupplierCode.php:86
 #: Z_DeleteCreditNote.php:62 Z_DeleteCreditNote.php:72
@@ -1519,7 +1520,7 @@ msgstr "N / A"
 
 #: AnalysisHorizontalIncome.php:17 AnalysisHorizontalIncome.php:39
 #: AnalysisHorizontalIncome.php:168 AnalysisHorizontalIncome.php:169
-#: includes/MainMenuLinksArray.php:95
+#: includes/MainMenuLinksArray.php:390
 msgid "Horizontal Analysis of Statement of Comprehensive Income"
 msgstr ""
 
@@ -1579,7 +1580,7 @@ msgstr ""
 #: CounterReturns.php:1649 CounterSales.php:2222 CustItem.php:215
 #: CustomerReceipt.php:1217 CustomerReceipt.php:1220 DiscountCategories.php:120
 #: DiscountCategories.php:122 DiscountCategories.php:126
-#: DiscountCategories.php:128 FixedAssetTransfer.php:93 GLAccountGraph.php:156
+#: DiscountCategories.php:128 FixedAssetTransfer.php:93
 #: GLCashFlowsIndirect.php:791 GLProfit_Loss.php:112 GLTagProfit_Loss.php:102
 #: GLTrialBalance.php:117 InternalStockRequestInquiry.php:228
 #: InternalStockRequest.php:359 MRPDemands.php:330 MRPDemands.php:333
@@ -1590,7 +1591,7 @@ msgstr ""
 #: SelectCustomer.php:272 SelectCustomer.php:276 SelectCustomer.php:282
 #: SelectCustomer.php:328 SelectGLAccount.php:101 SelectOrderItems.php:603
 #: SelectOrderItems.php:606 SelectOrderItems.php:1645
-#: SelectPickingLists.php:257 SelectProduct.php:568 SelectProduct.php:577
+#: SelectPickingLists.php:261 SelectProduct.php:568 SelectProduct.php:577
 #: SelectQASamples.php:279 SelectSalesOrder.php:624 SelectSupplier.php:243
 #: SelectWorkOrder.php:205 SellThroughSupport.php:194 Shipt_Select.php:173
 #: SuppFixedAssetChgs.php:125 SupplierPriceList.php:53
@@ -1601,9 +1602,9 @@ msgstr ""
 msgid "OR"
 msgstr "또는"
 
-#: AnalysisHorizontalIncome.php:123 GLAccountGraph.php:161
-#: GLCashFlowsIndirect.php:800 GLProfit_Loss.php:121 GLTagProfit_Loss.php:111
-#: GLTrialBalance.php:121 SalesGraph.php:103
+#: AnalysisHorizontalIncome.php:123 GLCashFlowsIndirect.php:800
+#: GLProfit_Loss.php:121 GLTagProfit_Loss.php:111 GLTrialBalance.php:121
+#: SalesGraph.php:103
 msgid "Select Period"
 msgstr ""
 
@@ -1801,23 +1802,23 @@ msgstr ""
 #: PrintCustStatements.php:83 PrintCustStatements.php:532
 #: PrintCustStatements.php:552 PrintCustTrans.php:587
 #: PrintCustTransPortrait.php:573 PurchasesReport.php:214
-#: SelectPickingLists.php:453 SelectSalesOrder.php:984 SuppWhereAlloc.php:187
+#: SelectPickingLists.php:457 SelectSalesOrder.php:984 SuppWhereAlloc.php:187
 #: UserGLAccounts.php:246
 msgid "Print"
 msgstr "인쇄"
 
 #: AnalysisHorizontalIncome.php:534 AnalysisHorizontalIncome.php:535
 #: AnalysisHorizontalPosition.php:351 AnalysisHorizontalPosition.php:352
-#: DailyBankTransactions.php:238 GLAccountGraph.php:30 GLAccountGraph.php:35
-#: GLBalanceSheet.php:708 GLProfit_Loss.php:1317 GLProfit_Loss.php:1318
-#: GLTagProfit_Loss.php:941 GLTrialBalance.php:23 GLTrialBalance.php:748
-#: GLTrialBalance.php:749 SalesGraph.php:18 SalesGraph.php:27 SalesGraph.php:32
+#: DailyBankTransactions.php:238 GLBalanceSheet.php:708 GLProfit_Loss.php:1317
+#: GLProfit_Loss.php:1318 GLTagProfit_Loss.php:941 GLTrialBalance.php:23
+#: GLTrialBalance.php:748 GLTrialBalance.php:749 SalesGraph.php:18
+#: SalesGraph.php:27 SalesGraph.php:32
 msgid "Select A Different Period"
 msgstr "다른 기간을 선택"
 
 #: AnalysisHorizontalPosition.php:14 AnalysisHorizontalPosition.php:27
 #: AnalysisHorizontalPosition.php:99 AnalysisHorizontalPosition.php:100
-#: includes/MainMenuLinksArray.php:95
+#: includes/MainMenuLinksArray.php:389
 msgid "Horizontal Analysis of Statement of Financial Position"
 msgstr ""
 
@@ -2082,7 +2083,7 @@ msgstr "필드 이름"
 msgid "Value"
 msgstr "값"
 
-#: AutomaticTranslationDescriptions.php:4 includes/MainMenuLinksArray.php:139
+#: AutomaticTranslationDescriptions.php:4 includes/MainMenuLinksArray.php:593
 msgid "Translate Item Descriptions"
 msgstr "항목 설명을 번역"
 
@@ -2109,7 +2110,7 @@ msgstr "#"
 #: ReorderLevelLocation.php:71 RevisionTranslations.php:58 SalesPeople.php:206
 #: SelectCompletedOrder.php:504 SelectCreditItems.php:1002
 #: SelectCustomer.php:400 SelectGLAccount.php:135 SelectOrderItems.php:1520
-#: SelectOrderItems.php:1691 SelectPickingLists.php:274 SelectProduct.php:344
+#: SelectOrderItems.php:1691 SelectPickingLists.php:278 SelectProduct.php:344
 #: SelectProduct.php:846 SelectQASamples.php:298 SelectSalesOrder.php:640
 #: SelectSupplier.php:293 SelectWorkOrder.php:218 SellThroughSupport.php:158
 #: Shipt_Select.php:189 SpecialOrder.php:147 StockCategories.php:263
@@ -2204,7 +2205,7 @@ msgid "List of bank account balances"
 msgstr ""
 
 #: BankAccountBalances.php:11 BankAccountBalances.php:12
-#: includes/MainMenuLinksArray.php:95
+#: includes/MainMenuLinksArray.php:377
 msgid "Bank Account Balances"
 msgstr ""
 
@@ -2227,7 +2228,7 @@ msgstr ""
 msgid "There are no bank accounts defined that you have authority to see"
 msgstr ""
 
-#: BankAccounts.php:5 includes/MainMenuLinksArray.php:99
+#: BankAccounts.php:5 includes/MainMenuLinksArray.php:418
 msgid "Bank Accounts"
 msgstr "은행 계정"
 
@@ -2414,7 +2415,7 @@ msgstr "계정 통화"
 msgid "Bank Account Users"
 msgstr "은행 계정의 사용자"
 
-#: BankAccountUsers.php:12 includes/MainMenuLinksArray.php:99
+#: BankAccountUsers.php:12 includes/MainMenuLinksArray.php:419
 msgid "Bank Account Authorised Users"
 msgstr "은행 계좌 롤렉스 사용자"
 
@@ -2607,19 +2608,18 @@ msgstr "부터"
 
 #: BankMatching.php:136 ConfirmDispatchControlled_Invoice.php:67
 #: CounterReturns.php:196 EmailCustTrans.php:64 FixedAssetRegister.php:82
-#: FTP_RadioBeacon.php:273 GLAccountCSV.php:181 GLAccountGraph.php:192
-#: GLAccountReport.php:105 GLCashFlowsIndirect.php:87 Payments.php:937
-#: PcReportTab.php:127 PDFChequeListing.php:116 PDFChequeListing.php:126
-#: PDFChequeListing.php:210 PDFDeliveryDifferences.php:201
-#: PDFDeliveryDifferences.php:214 PDFDeliveryDifferences.php:319
-#: PDFDIFOT.php:200 PDFDIFOT.php:213 PDFDIFOT.php:312 PDFFGLabel.php:207
-#: PDFOrdersInvoiced.php:86 PDFOrdersInvoiced.php:260 PDFOrderStatus.php:90
-#: PDFOrderStatus.php:272 PDFRemittanceAdvice.php:47
-#: PDFSalesBySalesperson.php:64 PDFShipLabel.php:361 PDFWeeklyOrders.php:60
-#: PDFWOPrint.php:535 PickingListsControlled.php:62 PO_PDFPurchOrder.php:357
-#: PricesBasedOnMarkUp.php:218 PricesBasedOnMarkUp.php:357
-#: PrintCustStatements.php:93 PrintCustTrans.php:48 PrintCustTrans.php:49
-#: PrintCustTrans.php:52 PrintCustTransPortrait.php:47
+#: FTP_RadioBeacon.php:273 GLAccountCSV.php:181 GLAccountReport.php:105
+#: GLCashFlowsIndirect.php:87 Payments.php:937 PcReportTab.php:127
+#: PDFChequeListing.php:116 PDFChequeListing.php:126 PDFChequeListing.php:210
+#: PDFDeliveryDifferences.php:201 PDFDeliveryDifferences.php:214
+#: PDFDeliveryDifferences.php:319 PDFDIFOT.php:200 PDFDIFOT.php:213
+#: PDFDIFOT.php:312 PDFFGLabel.php:207 PDFOrdersInvoiced.php:86
+#: PDFOrdersInvoiced.php:260 PDFOrderStatus.php:90 PDFOrderStatus.php:272
+#: PDFRemittanceAdvice.php:47 PDFSalesBySalesperson.php:64 PDFShipLabel.php:361
+#: PDFWeeklyOrders.php:60 PDFWOPrint.php:535 PickingListsControlled.php:62
+#: PO_PDFPurchOrder.php:357 PricesBasedOnMarkUp.php:218
+#: PricesBasedOnMarkUp.php:357 PrintCustStatements.php:93 PrintCustTrans.php:48
+#: PrintCustTrans.php:49 PrintCustTrans.php:52 PrintCustTransPortrait.php:47
 #: PrintCustTransPortrait.php:48 PrintCustTransPortrait.php:51
 #: SalesGraph.php:252 SalesGraph.php:281 SalesGraph.php:285
 #: StockLocTransferReceive.php:392 StockLocTransferReceive.php:536
@@ -2948,7 +2948,7 @@ msgstr ""
 
 #: BankReconciliation.php:344 CounterReturns.php:731 CounterSales.php:831
 #: Customers.php:1187 SelectOrderItems.php:1434 Stocks.php:1480
-#: WorkOrderCosting.php:584 WorkOrderEntry.php:882
+#: WorkOrderCosting.php:542 WorkOrderEntry.php:882
 msgid "Are You Sure?"
 msgstr "확실합니까?"
 
@@ -3224,7 +3224,7 @@ msgstr "구축"
 #: PO_SelectPurchOrder.php:215 PurchaseByPrefSupplier.php:415
 #: ReorderLevelLocation.php:74 ReorderLevelLocation.php:75
 #: SelectCompletedOrder.php:506 SelectOrderItems.php:1523
-#: SelectOrderItems.php:1695 SelectPickingLists.php:276 SelectQASamples.php:300
+#: SelectOrderItems.php:1695 SelectPickingLists.php:280 SelectQASamples.php:300
 #: SelectSalesOrder.php:642 SelectWorkOrder.php:220 Shipt_Select.php:191
 #: TestPlanResults.php:178 TopItems.php:179 includes/PDFTopItemsHeader.inc:53
 msgid "On Hand"
@@ -3369,21 +3369,21 @@ msgstr "키트 또는 어셈블리는 재료의 법안의 건설 사용할 수"
 
 #: BOMInquiry.php:25 BOMs.php:996 BOMs_SingleLevel.php:880 MRPDemands.php:328
 #: PO_SelectOSPurchOrder.php:284 PO_SelectPurchOrder.php:189
-#: SelectPickingLists.php:252 SelectQASamples.php:274 Shipt_Select.php:168
+#: SelectPickingLists.php:256 SelectQASamples.php:274 Shipt_Select.php:168
 #: TestPlanResults.php:152 WorkOrderEntry.php:926 WorkOrderIssue.php:979
 msgid "Enter text extracts in the"
 msgstr "텍스트 추출을 입력"
 
 #: BOMInquiry.php:25 BOMs.php:996 BOMs_SingleLevel.php:880 MRPDemands.php:328
 #: PO_SelectOSPurchOrder.php:284 PO_SelectPurchOrder.php:189
-#: SelectPickingLists.php:252 SelectQASamples.php:274 Shipt_Select.php:168
+#: SelectPickingLists.php:256 SelectQASamples.php:274 Shipt_Select.php:168
 #: TestPlanResults.php:152 WorkOrderEntry.php:926 WorkOrderIssue.php:979
 msgid "description"
 msgstr "기술"
 
 #: BOMInquiry.php:28 BOMs.php:999 BOMs_SingleLevel.php:883 MRPDemands.php:331
 #: PO_SelectOSPurchOrder.php:288 PO_SelectPurchOrder.php:194
-#: SelectPickingLists.php:257 SelectQASamples.php:279 Shipt_Select.php:173
+#: SelectPickingLists.php:261 SelectQASamples.php:279 Shipt_Select.php:173
 #: TestPlanResults.php:157 WorkOrderEntry.php:931 WorkOrderIssue.php:984
 msgid "Enter extract of the"
 msgstr "의 추출물을 입력"
@@ -3396,7 +3396,7 @@ msgstr "의 추출물을 입력"
 #: SalesInquiry.php:768 SalesInquiry.php:779 SalesInquiry.php:799
 #: SalesInquiry.php:825 SalesInquiry.php:844 SalesInquiry.php:954
 #: SalesInquiry.php:1113 SalesInquiry.php:1210 SalesInquiry.php:1228
-#: SelectPickingLists.php:257 SelectProduct.php:568 SelectQASamples.php:279
+#: SelectPickingLists.php:261 SelectProduct.php:568 SelectQASamples.php:279
 #: Shipt_Select.php:173 StockAdjustments.php:140 StockAdjustments.php:431
 #: StockCounts.php:140 StockCounts.php:166 StockCounts.php:212
 #: StockMovements.php:46 StockReorderLevel.php:51 StockStatus.php:61
@@ -3427,7 +3427,7 @@ msgstr "지금 검색"
 #: InternalStockRequestInquiry.php:487 MRPDemands.php:54 MRPReport.php:600
 #: PO_Items.php:850 PO_SelectOSPurchOrder.php:64 PO_SelectPurchOrder.php:47
 #: SelectCompletedOrder.php:97 SelectCreditItems.php:293
-#: SelectPickingLists.php:66 SelectProduct.php:598 SelectQASamples.php:175
+#: SelectPickingLists.php:70 SelectProduct.php:598 SelectQASamples.php:175
 #: SelectSalesOrder.php:1108 SelectWorkOrder.php:50 Shipt_Select.php:60
 #: SupplierPriceList.php:80 SupplierTenderCreate.php:720
 #: SupplierTenders.php:571 TestPlanResults.php:58 WorkOrderEntry.php:111
@@ -3509,7 +3509,7 @@ msgid "to view the costed bill of material for"
 msgstr "위해 물질의 비용이 산정 된 법안을 볼 수 있습니다"
 
 #: BOMListing.php:13 BOMListing.php:14 BOMListing.php:109
-#: includes/MainMenuLinksArray.php:83
+#: includes/MainMenuLinksArray.php:310
 msgid "Bill Of Material Listing"
 msgstr "자료 목록의 빌"
 
@@ -3813,7 +3813,7 @@ msgid "Location"
 msgstr "위치"
 
 #: BOMs.php:663 BOMs_SingleLevel.php:558 WhereUsedInquiry.php:73
-#: includes/MainMenuLinksArray.php:87
+#: includes/MainMenuLinksArray.php:345
 msgid "Work Centre"
 msgstr "작업 센터"
 
@@ -4079,7 +4079,7 @@ msgstr "어떤 항목이 SQL 때문에에 의해 반환되지 않았다"
 
 #: CollectiveWorkOrderCost.php:194 InternalStockRequestInquiry.php:527
 #: PO_SelectOSPurchOrder.php:131 PO_SelectPurchOrder.php:105
-#: SelectCompletedOrder.php:228 SelectPickingLists.php:158
+#: SelectCompletedOrder.php:228 SelectPickingLists.php:162
 #: SelectQASamples.php:234 SelectSalesOrder.php:1150 SelectWorkOrder.php:110
 #: TestPlanResults.php:117
 msgid "The SQL used to retrieve the searched parts was"
@@ -4095,7 +4095,7 @@ msgstr "항목에 대한"
 #: PO_SelectPurchOrder.php:41 PO_SelectPurchOrder.php:115 PrintCheque.php:49
 #: PrintCheque.php:174 SelectCompletedOrder.php:77 SelectCompletedOrder.php:82
 #: SelectCompletedOrder.php:88 SelectCompletedOrder.php:236
-#: SelectContract.php:33 SelectPickingLists.php:166 SelectQASamples.php:247
+#: SelectContract.php:33 SelectPickingLists.php:170 SelectQASamples.php:247
 #: SelectSalesOrder.php:464 SelectSalesOrder.php:468 SelectWorkOrder.php:130
 #: Shipt_Select.php:47 StockClone.php:1079 StockMovements.php:80 Stocks.php:417
 #: Stocks.php:1431 TestPlanResults.php:124
@@ -4153,7 +4153,7 @@ msgstr "특정 항목에 대한 작업 지시를 검색하려면 아래의 항�
 
 #: CollectiveWorkOrderCost.php:301 PO_SelectOSPurchOrder.php:271
 #: PO_SelectPurchOrder.php:180 SelectCompletedOrder.php:467
-#: SelectCreditItems.php:965 SelectPickingLists.php:241 SelectQASamples.php:265
+#: SelectCreditItems.php:965 SelectPickingLists.php:245 SelectQASamples.php:265
 #: SelectSalesOrder.php:606 SelectWorkOrder.php:192 Shipt_Select.php:157
 #: TestPlanResults.php:143 WorkOrderEntry.php:893 WorkOrderIssue.php:960
 msgid "Select a stock category"
@@ -4177,7 +4177,7 @@ msgstr "지금 검색하기 아이템"
 
 #: CollectiveWorkOrderCost.php:319 InternalStockRequestInquiry.php:240
 #: PO_SelectOSPurchOrder.php:296 PO_SelectPurchOrder.php:201
-#: SelectCompletedOrder.php:490 SelectPickingLists.php:264
+#: SelectCompletedOrder.php:490 SelectPickingLists.php:268
 #: SelectQASamples.php:286 SelectSalesOrder.php:630 SelectWorkOrder.php:210
 #: Shipt_Select.php:181 TestPlanResults.php:164
 msgid "Show All"
@@ -4195,7 +4195,7 @@ msgid "Select"
 msgstr "선택"
 
 #: CollectiveWorkOrderCost.php:445 FTP_RadioBeacon.php:48
-#: SelectContract.php:141 SelectContract.php:165 SelectPickingLists.php:423
+#: SelectContract.php:141 SelectContract.php:165 SelectPickingLists.php:427
 #: SelectRecurringSalesOrder.php:89 SelectSalesOrder.php:906
 #: SelectSalesOrder.php:927 SelectWorkOrder.php:328 Shipt_Select.php:316
 #: UserSettings.php:246 Z_poEditLangHeader.php:107 Z_poEditLangModule.php:174
@@ -4226,7 +4226,7 @@ msgstr "로 이슈"
 #: PO_SelectOSPurchOrder.php:642 SelectWorkOrder.php:331
 #: SelectWorkOrder.php:362 StockLocTransferReceive.php:666
 #: WorkOrderCosting.php:102 WorkOrderCosting.php:116
-#: includes/MainMenuLinksArray.php:66
+#: includes/MainMenuLinksArray.php:212
 #, php-format
 msgid "Receive"
 msgstr "수신"
@@ -4284,7 +4284,7 @@ msgstr "W 인쇄 / O"
 msgid "Submit"
 msgstr "제출"
 
-#: CompanyPreferences.php:5 includes/MainMenuLinksArray.php:127
+#: CompanyPreferences.php:5 includes/MainMenuLinksArray.php:491
 msgid "Company Preferences"
 msgstr "기업 환경"
 
@@ -4730,7 +4730,7 @@ msgstr "파견 및 송장 확인"
 #: PickingLists.php:289 PricesByCost.php:163 SalesGraph.php:201
 #: SalesTopCustomersInquiry.php:213 SelectCompletedOrder.php:556
 #: SelectContract.php:147 SelectCreditItems.php:242 SelectCustomer.php:193
-#: SelectCustomer.php:194 SelectOrderItems.php:628 SelectPickingLists.php:428
+#: SelectCustomer.php:194 SelectOrderItems.php:628 SelectPickingLists.php:432
 #: SelectRecurringSalesOrder.php:90 SelectSalesOrder.php:912
 #: SelectSalesOrder.php:929 SellThroughSupport.php:254
 #: StockLocMovements.php:112 StockMovements.php:131
@@ -5248,9 +5248,9 @@ msgstr "분기 기본 캐리어를 업데이트하는 데 사용되는 SQL이었
 #: SupplierInvoice.php:1561 SupplierInvoice.php:1567 SupplierInvoice.php:1586
 #: SupplierInvoice.php:1613 SupplierInvoice.php:1634 SupplierInvoice.php:1654
 #: SupplierInvoice.php:1717 SupplierInvoice.php:1753 SupplierInvoice.php:1824
-#: SupplierInvoice.php:1854 TaxAuthorities.php:138 WorkOrderCosting.php:388
-#: WorkOrderCosting.php:409 WorkOrderCosting.php:428 WorkOrderCosting.php:469
-#: WorkOrderCosting.php:488 WorkOrderCosting.php:511 WorkOrderCosting.php:530
+#: SupplierInvoice.php:1854 TaxAuthorities.php:138 WorkOrderCosting.php:346
+#: WorkOrderCosting.php:367 WorkOrderCosting.php:386 WorkOrderCosting.php:427
+#: WorkOrderCosting.php:446 WorkOrderCosting.php:469 WorkOrderCosting.php:488
 #: WorkOrderIssue.php:197 WorkOrderIssue.php:230 WorkOrderIssue.php:252
 #: WorkOrderIssue.php:267 WorkOrderIssue.php:284 WorkOrderIssue.php:311
 #: WorkOrderIssue.php:327 WorkOrderIssue.php:359 WorkOrderIssue.php:379
@@ -5377,9 +5377,9 @@ msgstr "심각한 오류"
 #: SupplierInvoice.php:1586 SupplierInvoice.php:1613 SupplierInvoice.php:1634
 #: SupplierInvoice.php:1654 SupplierInvoice.php:1717 SupplierInvoice.php:1753
 #: SupplierInvoice.php:1824 SupplierInvoice.php:1854 TaxAuthorities.php:138
-#: WorkOrderCosting.php:388 WorkOrderCosting.php:409 WorkOrderCosting.php:428
-#: WorkOrderCosting.php:469 WorkOrderCosting.php:488 WorkOrderCosting.php:511
-#: WorkOrderCosting.php:530 WorkOrderIssue.php:197 WorkOrderIssue.php:230
+#: WorkOrderCosting.php:346 WorkOrderCosting.php:367 WorkOrderCosting.php:386
+#: WorkOrderCosting.php:427 WorkOrderCosting.php:446 WorkOrderCosting.php:469
+#: WorkOrderCosting.php:488 WorkOrderIssue.php:197 WorkOrderIssue.php:230
 #: WorkOrderIssue.php:252 WorkOrderIssue.php:267 WorkOrderIssue.php:284
 #: WorkOrderIssue.php:311 WorkOrderIssue.php:327 WorkOrderIssue.php:359
 #: WorkOrderIssue.php:379 WorkOrderIssue.php:387 WorkOrderIssue.php:515
@@ -5525,7 +5525,7 @@ msgstr "때문에 조립 부품 위치 재고 수량을 검색 할 수 없습니
 #: MRPReport.php:434 PDFOrdersInvoiced.php:290 PDFOrderStatus.php:290
 #: PDFSalesBySalesperson.php:81 PDFShipLabel.php:316 PDFWeeklyOrders.php:77
 #: SelectCompletedOrder.php:555 SelectContract.php:142 SelectOrderItems.php:714
-#: SelectPickingLists.php:427 SelectProduct.php:394 Shipments.php:395
+#: SelectPickingLists.php:431 SelectProduct.php:394 Shipments.php:395
 #: Shipments.php:473 SuppCreditGRNs.php:191 SuppInvGRNs.php:260
 #: TaxGroups.php:285 api/api_salesorders.php:919
 #: includes/PDFDeliveryDifferencesPageHeader.inc:40
@@ -5688,9 +5688,9 @@ msgstr "판매 GL 게시의 비용 때문에 삽입 할 수 없습니다"
 #: SelectCreditItems.php:1911 SelectCreditItems.php:1939
 #: SelectCreditItems.php:1959 SelectCreditItems.php:1980
 #: SupplierAllocations.php:216 SupplierAllocations.php:239
-#: WorkOrderCosting.php:389 WorkOrderCosting.php:410 WorkOrderCosting.php:429
-#: WorkOrderCosting.php:470 WorkOrderCosting.php:489 WorkOrderCosting.php:512
-#: WorkOrderCosting.php:531 WorkOrderReceive.php:272 WorkOrderReceive.php:291
+#: WorkOrderCosting.php:347 WorkOrderCosting.php:368 WorkOrderCosting.php:387
+#: WorkOrderCosting.php:428 WorkOrderCosting.php:447 WorkOrderCosting.php:470
+#: WorkOrderCosting.php:489 WorkOrderReceive.php:272 WorkOrderReceive.php:291
 #: includes/SQL_CommonFunctions.inc:180 includes/SQL_CommonFunctions.inc:199
 msgid "The following SQL to insert the GLTrans record was used"
 msgstr "GLTrans의 레코드를 삽입 할 수있는 다음과 같은 SQL을 사용 하였다"
@@ -6212,11 +6212,11 @@ msgstr "계약의 상태는 폐쇄로 업데이트 할 수 없기 때문에"
 msgid "The following SQL to change the status of the contract was used"
 msgstr "계약의 상태를 변경하려면 다음 SQL을 사용 하였다"
 
-#: ContractCosting.php:297 WorkOrderCosting.php:539
+#: ContractCosting.php:297 WorkOrderCosting.php:497
 msgid "Could not update the work order to closed because:"
 msgstr "because 폐쇄에 작업 순서를 업데이트 할 수 없습니다 :"
 
-#: ContractCosting.php:298 WorkOrderCosting.php:540
+#: ContractCosting.php:298 WorkOrderCosting.php:498
 msgid "The SQL used to close the work order was:"
 msgstr "작업 순서를 닫 SQL 사용했다 :"
 
@@ -6875,7 +6875,7 @@ msgid "Contract Status"
 msgstr "계약 상태"
 
 #: Contracts.php:962 SuppLoginSetup.php:28 WWW_Users.php:32
-#: includes/MainMenuLinksArray.php:8
+#: includes/MainMenuLinksArray.php:28
 msgid "Setup"
 msgstr "설정"
 
@@ -7721,7 +7721,7 @@ msgstr "용"
 #: SalesInquiry.php:778 SalesInquiry.php:961 SalesInquiry.php:970
 #: SalesInquiry.php:1149 SalesInquiry.php:1209 SalesInquiry.php:1226
 #: SelectCompletedOrder.php:69 SelectCompletedOrder.php:443
-#: SelectPickingLists.php:51 SelectSalesOrder.php:460
+#: SelectPickingLists.php:55 SelectSalesOrder.php:460
 #: includes/PDFAckPageHeader.php:87
 msgid "Order Number"
 msgstr "주문 번호"
@@ -7885,8 +7885,8 @@ msgid "Credit Note amounts stated in"
 msgstr "신용 참고 금액에 명시된"
 
 #: Credit_Invoice.php:302 PDFOrdersInvoiced.php:336 PDFOrderStatus.php:337
-#: ReverseGRN.php:406 SalesInquiry.php:853 SelectPickingLists.php:213
-#: SelectPickingLists.php:215 ShipmentCosting.php:148 ShipmentCosting.php:150
+#: ReverseGRN.php:406 SalesInquiry.php:853 SelectPickingLists.php:217
+#: SelectPickingLists.php:219 ShipmentCosting.php:148 ShipmentCosting.php:150
 #: Shipments.php:400
 msgid "Invoiced"
 msgstr "청구"
@@ -8228,7 +8228,7 @@ msgstr "이 신용 상태의 기록을 삭제하려면 확실합니까?"
 msgid "Show Defined Credit Status Codes"
 msgstr "보기 정의 신용 상태 코드"
 
-#: Currencies.php:5 Currencies.php:33 includes/MainMenuLinksArray.php:127
+#: Currencies.php:5 Currencies.php:33 includes/MainMenuLinksArray.php:497
 msgid "Currencies Maintenance"
 msgstr "통화 유지"
 
@@ -9032,7 +9032,7 @@ msgstr "신용 한도"
 
 #: CustomerAccount.php:232 CustomerInquiry.php:161 CustomerReceipt.php:1050
 #: Customers.php:591 Customers.php:973 Customers.php:979
-#: includes/MainMenuLinksArray.php:131
+#: includes/MainMenuLinksArray.php:534
 msgid "Credit Status"
 msgstr "신용 상태"
 
@@ -9100,8 +9100,8 @@ msgstr "HTML"
 
 #: CustomerAccount.php:298 CustomerAccount.php:323 CustomerInquiry.php:309
 #: CustomerInquiry.php:356 CustomerInquiry.php:396 CustomerInquiry.php:433
-#: CustomerInquiry.php:480 PickingLists.php:638 SelectPickingLists.php:471
-#: SelectPickingLists.php:472 SelectSalesOrder.php:1000
+#: CustomerInquiry.php:480 PickingLists.php:638 SelectPickingLists.php:475
+#: SelectPickingLists.php:476 SelectSalesOrder.php:1000
 #: SelectSalesOrder.php:1017
 #, php-format
 msgid "Click for PDF"
@@ -9357,7 +9357,7 @@ msgid "There are no allocations to be done"
 msgstr "수행해야 할 할당이 없습니다"
 
 #: CustomerBalancesMovement.php:4 CustomerBalancesMovement.php:11
-#: includes/MainMenuLinksArray.php:26
+#: includes/MainMenuLinksArray.php:118
 msgid "Customer Activity and Balances"
 msgstr "고객의 활동과 균형"
 
@@ -10151,7 +10151,7 @@ msgstr "성공적으로 데이터베이스에 입력 된"
 msgid "Print PDF Batch Summary"
 msgstr "인쇄 PDF 배치 요약"
 
-#: CustomerReceipt.php:600 includes/MainMenuLinksArray.php:22
+#: CustomerReceipt.php:600 includes/MainMenuLinksArray.php:101
 msgid "Enter Receipts"
 msgstr "영수증을 입력"
 
@@ -10182,7 +10182,7 @@ msgstr "고객의 세부 사항이 있기 때문에 검색 할 수 없습니다"
 msgid "The bank accounts could not be retrieved because"
 msgstr "은행 계정이 있기 때문에 검색 할 수 없습니다"
 
-#: CustomerReceipt.php:815 includes/MainMenuLinksArray.php:91
+#: CustomerReceipt.php:815 includes/MainMenuLinksArray.php:364
 msgid "Bank Account Receipts Entry"
 msgstr "은행 계좌 영수증 항목"
 
@@ -10635,7 +10635,7 @@ msgstr ""
 #: PO_Header.php:1112 PrintCustTrans.php:506 PrintCustTrans.php:811
 #: PrintCustTransPortrait.php:495 PrintCustTransPortrait.php:793
 #: Suppliers.php:773 Suppliers.php:1020 includes/PO_PDFOrderPageHeader.inc:59
-#: includes/PO_PDFOrderPageHeader.inc:61 includes/MainMenuLinksArray.php:131
+#: includes/PO_PDFOrderPageHeader.inc:61 includes/MainMenuLinksArray.php:535
 msgid "Payment Terms"
 msgstr "지불 조건"
 
@@ -10769,7 +10769,7 @@ msgstr "예 평가"
 msgid "Click to preview the credit"
 msgstr "신용을 미리 클릭"
 
-#: CustomerTypes.php:4 CustomerTypes.php:19 includes/MainMenuLinksArray.php:131
+#: CustomerTypes.php:4 CustomerTypes.php:19 includes/MainMenuLinksArray.php:532
 msgid "Customer Types"
 msgstr "고객 유형"
 
@@ -10964,7 +10964,7 @@ msgstr ""
 msgid "Grand Total"
 msgstr ""
 
-#: DailyBankTransactions.php:5 includes/MainMenuLinksArray.php:95
+#: DailyBankTransactions.php:5 includes/MainMenuLinksArray.php:380
 msgid "Daily Bank Transactions"
 msgstr "매일 은행 거래"
 
@@ -11068,7 +11068,7 @@ msgstr ""
 msgid "Select Another Date"
 msgstr "다른 날짜를 선택"
 
-#: DailySalesInquiry.php:5 includes/MainMenuLinksArray.php:14
+#: DailySalesInquiry.php:5 includes/MainMenuLinksArray.php:55
 msgid "Daily Sales Inquiry"
 msgstr "일일 판매 문의"
 
@@ -11196,7 +11196,7 @@ msgstr "일 동안"
 
 #: Dashboard.php:274 POReport.php:609 POReport.php:694 POReport.php:802
 #: SalesInquiry.php:910 SalesInquiry.php:926 SalesInquiry.php:1038
-#: WorkOrderCosting.php:316
+#: WorkOrderCosting.php:274
 msgid "Totals"
 msgstr "합계"
 
@@ -12803,7 +12803,7 @@ msgstr "주소 (6)"
 msgid "Create New Factor"
 msgstr "새로운 요소 만들기"
 
-#: FixedAssetCategories.php:6 includes/MainMenuLinksArray.php:111
+#: FixedAssetCategories.php:6 includes/MainMenuLinksArray.php:451
 msgid "Fixed Asset Category Maintenance"
 msgstr "고정 자산 카테고리 유지 보수"
 
@@ -13593,7 +13593,7 @@ msgstr "비용 C / FWD"
 msgid "Depn C/Fwd"
 msgstr "Depn C / FWD"
 
-#: FixedAssetTransfer.php:6 includes/MainMenuLinksArray.php:103
+#: FixedAssetTransfer.php:6 includes/MainMenuLinksArray.php:435
 msgid "Change Asset Location"
 msgstr "변경 자산 위치"
 
@@ -13652,7 +13652,7 @@ msgstr "현재 위치"
 msgid "Move To"
 msgstr "에 이동"
 
-#: FormDesigner.php:21 FormDesigner.php:214 includes/MainMenuLinksArray.php:127
+#: FormDesigner.php:21 FormDesigner.php:214 includes/MainMenuLinksArray.php:506
 msgid "Form Designer"
 msgstr "폼 디자이너"
 
@@ -13826,7 +13826,7 @@ msgstr "폼 레이아웃 미리보기"
 msgid "Save the Form Layout"
 msgstr "폼 레이아웃을 저장"
 
-#: FreightCosts.php:5 includes/MainMenuLinksArray.php:131
+#: FreightCosts.php:5 includes/MainMenuLinksArray.php:543
 msgid "Freight Costs Maintenance"
 msgstr "화물 비용 유지 보수"
 
@@ -14107,7 +14107,7 @@ msgid "Enter Another Date"
 msgstr "다른 날짜를 입력"
 
 #: GeneratePickingList.php:203 PDFPickingList.php:203
-#: SelectPickingLists.php:424 includes/PDFPickingListHeader.inc:11
+#: SelectPickingLists.php:428 includes/PDFPickingListHeader.inc:11
 #: includes/DatabaseTranslations.php:32
 msgid "Picking List"
 msgstr "목록 따기"
@@ -14135,10 +14135,6 @@ msgstr "에 대한 항목을 검색 할 수 없습니다"
 #: GeneratePickingList.php:495 PDFWOPrint.php:482
 msgid "Signed for: "
 msgstr "대한 서명 :"
-
-#: GeneratePickingList.php:496
-msgid "Date : "
-msgstr ""
 
 #: GeneratePickingList.php:504
 msgid "There are no picking lists to print"
@@ -14172,7 +14168,7 @@ msgstr "공급 업체 코드 :"
 msgid "Go back to Geocode Setup"
 msgstr "설치를 지오 코딩 돌아 가기"
 
-#: GeocodeSetup.php:5 includes/MainMenuLinksArray.php:127
+#: GeocodeSetup.php:5 includes/MainMenuLinksArray.php:505
 msgid "Geocode Maintenance"
 msgstr "지오 유지 보수"
 
@@ -14393,126 +14389,6 @@ msgstr "C / FWD 균형"
 #: GLAccountCSV.php:268 POReport.php:1485 StockQties_csv.php:44
 msgid "to view the file"
 msgstr "의 파일을 볼 수 있습니다"
-
-#: GLAccountGraph.php:6
-msgid "GL Account Graph"
-msgstr ""
-
-#: GLAccountGraph.php:29 GLTrialBalance.php:22 SalesGraph.php:17
-msgid ""
-"The selected period from is actually after the period to! Please re-select "
-"the reporting period"
-msgstr "에서 선택한 기간에 기간 후에 실제로! 보고 기간을 다시 선택하세요"
-
-#: GLAccountGraph.php:46 GLAccountUsers.php:51 GLBudgets.php:39
-#: GLJournal.php:295 Payments.php:1245
-msgid "Select GL Account"
-msgstr "GL 계정을 선택"
-
-#: GLAccountGraph.php:73 SalesGraph.php:178
-msgid "Graph Type"
-msgstr "그래프 유형"
-
-#: GLAccountGraph.php:75 SalesGraph.php:180
-msgid "Bar Graph"
-msgstr "막대 그래프"
-
-#: GLAccountGraph.php:76 SalesGraph.php:181
-msgid "Stacked Bar Graph"
-msgstr "누적 막대 그래프"
-
-#: GLAccountGraph.php:77 SalesGraph.php:182
-msgid "Line Graph"
-msgstr "선 그래프"
-
-#: GLAccountGraph.php:78 SalesGraph.php:183
-msgid "Line Point Graph"
-msgstr "선 포인트 그래프"
-
-#: GLAccountGraph.php:79 SalesGraph.php:184
-msgid "Area Graph"
-msgstr "영역 그래프"
-
-#: GLAccountGraph.php:80 SalesGraph.php:185
-msgid "Points Graph"
-msgstr "포인트 그래프"
-
-#: GLAccountGraph.php:81 SalesGraph.php:186
-msgid "Pie Graph"
-msgstr "파이 그래프"
-
-#: GLAccountGraph.php:82 SalesGraph.php:187
-msgid "Thin Bar Line Graph"
-msgstr "얇은 바 선 그래프"
-
-#: GLAccountGraph.php:83 SalesGraph.php:188
-msgid "Squared Graph"
-msgstr "제곱 그래프"
-
-#: GLAccountGraph.php:84 SalesGraph.php:189
-msgid "Stacked Area Graph"
-msgstr "스택 영역 그래프"
-
-#: GLAccountGraph.php:90
-msgid "Invert Graph"
-msgstr ""
-
-#: GLAccountGraph.php:95 GLProfit_Loss.php:55 GLTagProfit_Loss.php:45
-#: GLTrialBalance.php:59 SalesGraph.php:41 Z_RePostGLFromPeriod.php:17
-#: Z_UpdateChartDetailsBFwd.php:23
-msgid "Select Period From"
-msgstr "에서 선택 기간"
-
-#: GLAccountGraph.php:133 GLProfit_Loss.php:95 GLTagProfit_Loss.php:85
-#: GLTrialBalance.php:95 SalesGraph.php:77 Z_UpdateChartDetailsBFwd.php:41
-msgid "Select Period To"
-msgstr "를 선택 기간"
-
-#: GLAccountGraph.php:167
-msgid "Show Account Graph"
-msgstr ""
-
-#: GLAccountGraph.php:178
-msgid "GL Account Graph - Actual vs. Budget"
-msgstr ""
-
-#: GLAccountGraph.php:192 SalesAnalReptCols.php:423 SalesGraph.php:252
-msgid "From Period"
-msgstr "시대"
-
-#: GLAccountGraph.php:212 POReport.php:496 POReport.php:746 POReport.php:747
-#: POReport.php:1264 POReport.php:1440 POReport.php:1441 POReport.php:1624
-#: PurchaseByPrefSupplier.php:418 PurchaseByPrefSupplier.php:419
-#: SalesGraph.php:304 SalesInquiry.php:772 SalesInquiry.php:991
-#: SalesInquiry.php:992 SalesInquiry.php:1232 StockUsageGraph.php:10
-#: StockUsage.php:149
-msgid "Month"
-msgstr "달"
-
-#: GLAccountGraph.php:231
-msgid ""
-"The GL Account graph data for the selected criteria could not be retrieved "
-"because"
-msgstr ""
-
-#: GLAccountGraph.php:236
-msgid "There is not GL Account data for the criteria entered to graph"
-msgstr ""
-
-#: GLAccountGraph.php:256 GLBudgets.php:182 SalesAnalReptCols.php:268
-#: SalesAnalReptCols.php:465 SalesAnalReptCols.php:468 SalesGraph.php:351
-msgid "Actual"
-msgstr "실제"
-
-#: GLAccountGraph.php:256 GLBudgets.php:183 SalesAnalReptCols.php:263
-#: SalesAnalReptCols.php:270 SalesAnalReptCols.php:464
-#: SalesAnalReptCols.php:467 SalesGraph.php:351
-msgid "Budget"
-msgstr "예산"
-
-#: GLAccountGraph.php:268
-msgid "Select Different Criteria"
-msgstr ""
 
 #: GLAccountInquiry.php:47
 msgid "Use the keyboard Shift key to select multiple periods"
@@ -14776,7 +14652,7 @@ msgstr "P / L 또는 B / S"
 #: GLBalanceSheet.php:87 GLBalanceSheet.php:88 GLBalanceSheet.php:111
 #: GLBalanceSheet.php:151 GLBalanceSheet.php:398 SelectGLAccount.php:22
 #: SelectGLAccount.php:41 SelectGLAccount.php:62
-#: includes/MainMenuLinksArray.php:95
+#: includes/MainMenuLinksArray.php:386
 msgid "Balance Sheet"
 msgstr "대차 대조표"
 
@@ -14801,13 +14677,17 @@ msgid "Show All Accounts"
 msgstr "모든 계정보기"
 
 #: GLAccountUsers.php:5 GLAccountUsers.php:42 GLAccountUsers.php:43
-#: GLAccountUsers.php:84 includes/MainMenuLinksArray.php:99
+#: GLAccountUsers.php:84 includes/MainMenuLinksArray.php:414
 msgid "GL Account Authorised Users"
 msgstr ""
 
 #: GLAccountUsers.php:45
 msgid "You have not selected any GL Account"
 msgstr ""
+
+#: GLAccountUsers.php:51 GLBudgets.php:39 GLJournal.php:295 Payments.php:1245
+msgid "Select GL Account"
+msgstr "GL 계정을 선택"
 
 #: GLAccountUsers.php:85
 msgid "Authorised Users for"
@@ -14998,6 +14878,16 @@ msgstr "다음 회계 연도"
 #: GLBudgets.php:175 GLBudgets.php:176 GLBudgets.php:177
 msgid "Year ended"
 msgstr "연도 종료"
+
+#: GLBudgets.php:182 SalesAnalReptCols.php:268 SalesAnalReptCols.php:465
+#: SalesAnalReptCols.php:468 SalesGraph.php:351
+msgid "Actual"
+msgstr "실제"
+
+#: GLBudgets.php:183 SalesAnalReptCols.php:263 SalesAnalReptCols.php:270
+#: SalesAnalReptCols.php:464 SalesAnalReptCols.php:467 SalesGraph.php:351
+msgid "Budget"
+msgstr "예산"
 
 #: GLBudgets.php:223
 msgid "Annual Budget"
@@ -15321,7 +15211,7 @@ msgstr "GL 코드 문의"
 msgid "Group"
 msgstr "그룹"
 
-#: GLJournalInquiry.php:4 includes/MainMenuLinksArray.php:95
+#: GLJournalInquiry.php:4 includes/MainMenuLinksArray.php:384
 msgid "General Ledger Journal Inquiry"
 msgstr "원장 저널 문의"
 
@@ -15358,7 +15248,7 @@ msgstr ""
 msgid "Other GL Accounts"
 msgstr ""
 
-#: GLJournal.php:7 includes/MainMenuLinksArray.php:91
+#: GLJournal.php:7 includes/MainMenuLinksArray.php:368
 msgid "Journal Entry"
 msgstr "분개"
 
@@ -15527,6 +15417,17 @@ msgstr ""
 "P & A는, L은 시간의 기간을 나타낸다. 이 시간에 한 순간을 나타내는 대차 대조"
 "표, 대조."
 
+#: GLProfit_Loss.php:55 GLTagProfit_Loss.php:45 GLTrialBalance.php:59
+#: SalesGraph.php:41 Z_RePostGLFromPeriod.php:17
+#: Z_UpdateChartDetailsBFwd.php:23
+msgid "Select Period From"
+msgstr "에서 선택 기간"
+
+#: GLProfit_Loss.php:95 GLTagProfit_Loss.php:85 GLTrialBalance.php:95
+#: SalesGraph.php:77 Z_UpdateChartDetailsBFwd.php:41
+msgid "Select Period To"
+msgstr "를 선택 기간"
+
 #: GLProfit_Loss.php:218
 msgid "Print Profit and Loss Error"
 msgstr "인쇄 손익 오류"
@@ -15558,7 +15459,7 @@ msgstr "순이익 비율"
 msgid "Statement of Comprehensive Income"
 msgstr "포괄 손익 계산서"
 
-#: GLProfit_Loss.php:640 includes/MainMenuLinksArray.php:95
+#: GLProfit_Loss.php:640 includes/MainMenuLinksArray.php:387
 msgid "Profit and Loss Statement"
 msgstr "손익 계산서"
 
@@ -15663,9 +15564,15 @@ msgstr "게시"
 
 #: GLTrialBalance.php:10 GLTrialBalance.php:39 GLTrialBalance.php:140
 #: GLTrialBalance.php:141 GLTrialBalance.php:185 GLTrialBalance.php:466
-#: includes/MainMenuLinksArray.php:95
+#: includes/MainMenuLinksArray.php:385
 msgid "Trial Balance"
 msgstr "시산표"
+
+#: GLTrialBalance.php:22 SalesGraph.php:17
+msgid ""
+"The selected period from is actually after the period to! Please re-select "
+"the reporting period"
+msgstr "에서 선택한 기간에 기간 후에 실제로! 보고 기간을 다시 선택하세요"
 
 #: GLTrialBalance.php:38
 msgid "Print Trial Balance"
@@ -15745,7 +15652,7 @@ msgstr "위로 주문을 구입하려면"
 msgid "Receive controlled item"
 msgstr "제어 항목을 수신"
 
-#: GoodsReceived.php:21 includes/MainMenuLinksArray.php:64
+#: GoodsReceived.php:21 includes/MainMenuLinksArray.php:209
 msgid "Receive Purchase Orders"
 msgstr "구매 주문을 받기"
 
@@ -16141,7 +16048,7 @@ msgstr ""
 "의 수입에서 호출 할 수 있습니다"
 
 #: ImportBankTransAnalysis.php:19 ImportBankTransAnalysis.php:33
-#: ImportBankTrans.php:7 includes/MainMenuLinksArray.php:91
+#: ImportBankTrans.php:7 includes/MainMenuLinksArray.php:365
 msgid "Import Bank Transactions"
 msgstr "수출입 은행 거래"
 
@@ -16611,7 +16518,7 @@ msgstr "이 재고 분류 코드를 삭제하려면 확실합니까?"
 msgid "Select Stock Category Code"
 msgstr "선택 주식 종류 코드"
 
-#: InternalStockRequestAuthorisation.php:6 includes/MainMenuLinksArray.php:67
+#: InternalStockRequestAuthorisation.php:6 includes/MainMenuLinksArray.php:217
 msgid "Authorise Internal Stock Requests"
 msgstr "재고 요청을 Authorise"
 
@@ -16867,7 +16774,7 @@ msgstr ""
 
 #: InternalStockRequestInquiry.php:526 MRPReport.php:716
 #: PO_SelectOSPurchOrder.php:130 PO_SelectPurchOrder.php:104
-#: SelectCompletedOrder.php:227 SelectPickingLists.php:157
+#: SelectCompletedOrder.php:227 SelectPickingLists.php:161
 #: SelectProduct.php:789 SelectQASamples.php:233 SelectSalesOrder.php:1149
 #: SupplierPriceList.php:217 TestPlanResults.php:116
 msgid "No stock items were returned by the SQL because"
@@ -16928,7 +16835,7 @@ msgstr ""
 #: StockLocTransfer.php:244 StockLocTransferReceive.php:523
 #: StockLocTransferReceive.php:611 StockTransfers.php:29 StockTransfers.php:542
 #: StockUsage.php:27 SuppCreditGRNs.php:18 SuppInvGRNs.php:13
-#: includes/MainMenuLinksArray.php:65
+#: includes/MainMenuLinksArray.php:211
 msgid "Dispatch"
 msgstr "급파"
 
@@ -17010,7 +16917,7 @@ msgstr "이전"
 msgid "Add to Requisition"
 msgstr "구매 요구서에 추가"
 
-#: InventoryPlanning.php:34 includes/MainMenuLinksArray.php:71
+#: InventoryPlanning.php:34 includes/MainMenuLinksArray.php:242
 msgid "Inventory Planning Report"
 msgstr "재고 계획 보고서"
 
@@ -17250,7 +17157,7 @@ msgstr "재고 수량 보고서"
 msgid "Parts With Quantities"
 msgstr "수량와 부품"
 
-#: InventoryQuantities.php:83 includes/MainMenuLinksArray.php:71
+#: InventoryQuantities.php:83 includes/MainMenuLinksArray.php:237
 msgid "Inventory Quantities"
 msgstr "재고 수량"
 
@@ -17300,7 +17207,7 @@ msgid "The inventory valuation could not be retrieved by the SQL because"
 msgstr "재고 평가는 SQL 때문에 검색 할 수 없습니다"
 
 #: InventoryValuation.php:79 MailInventoryValuation.php:51
-#: MailInventoryValuation.php:230 includes/MainMenuLinksArray.php:71
+#: MailInventoryValuation.php:230 includes/MainMenuLinksArray.php:240
 msgid "Inventory Valuation Report"
 msgstr "재고 평가 보고서"
 
@@ -17821,7 +17728,7 @@ msgstr ""
 "이러한 재고 위치 허용하거나 해당 항목의 송장을 거부 여부를 표시하려면이 매개 "
 "변수를 사용합니다."
 
-#: LocationUsers.php:4 includes/MainMenuLinksArray.php:135
+#: LocationUsers.php:4 includes/MainMenuLinksArray.php:563
 msgid "Inventory Location Authorised Users Maintenance"
 msgstr "재고 위치 공인 사용자 유지 보수"
 
@@ -17876,7 +17783,7 @@ msgstr "위치 선택"
 msgid "Authorised users for Location"
 msgstr "위치에 대한 공인 사용자"
 
-#: MailingGroupMaintenance.php:3 includes/MainMenuLinksArray.php:127
+#: MailingGroupMaintenance.php:3 includes/MainMenuLinksArray.php:509
 msgid "Mailing Group Maintenance"
 msgstr "그룹의 유지 관리를 메일 링"
 
@@ -18050,7 +17957,7 @@ msgstr "작업 :"
 msgid "Due:"
 msgstr "때문에 :"
 
-#: MaintenanceTasks.php:6 includes/MainMenuLinksArray.php:111
+#: MaintenanceTasks.php:6 includes/MainMenuLinksArray.php:453
 msgid "Fixed Asset Maintenance Tasks"
 msgstr "고정 자산 유지 보수 작업"
 
@@ -18182,7 +18089,7 @@ msgstr ""
 msgid "Go to Top"
 msgstr ""
 
-#: Manufacturers.php:7 includes/MainMenuLinksArray.php:75
+#: Manufacturers.php:7 includes/MainMenuLinksArray.php:285
 msgid "Brands Maintenance"
 msgstr "브랜드 유지 보수"
 
@@ -18504,7 +18411,7 @@ msgstr "수요 유형 삭제"
 msgid "Or Delete Record"
 msgstr "또는 기록 삭제"
 
-#: MRPDemandTypes.php:5 includes/MainMenuLinksArray.php:135
+#: MRPDemandTypes.php:5 includes/MainMenuLinksArray.php:568
 msgid "MRP Demand Types"
 msgstr "MRP 수요 유형"
 
@@ -19074,7 +18981,7 @@ msgstr "선택 :"
 msgid "MRP Shortages Report"
 msgstr "MRP의 부족 보고서"
 
-#: MRPShortages.php:21 includes/MainMenuLinksArray.php:83
+#: MRPShortages.php:21 includes/MainMenuLinksArray.php:317
 msgid "MRP Shortages"
 msgstr "MRP의 부족"
 
@@ -19238,8 +19145,8 @@ msgid "There are no offers outstanding that you are authorised to deal with"
 msgstr "당신이 처리 할 수​​있는 권한이 있는지 뛰어난 어떤 이벤트가 없습니다"
 
 #: OffersReceived.php:40 OffersReceived.php:41 OffersReceived.php:47
-#: SupplierGRNAndInvoiceInquiry.php:11 includes/MainMenuLinksArray.php:40
-#: includes/MainMenuLinksArray.php:48
+#: SupplierGRNAndInvoiceInquiry.php:11 includes/MainMenuLinksArray.php:143
+#: includes/MainMenuLinksArray.php:168
 msgid "Select Supplier"
 msgstr "선택 공급 업체"
 
@@ -19463,7 +19370,7 @@ msgid "No outstanding GRNs valuation details retrieved"
 msgstr "어떤 뛰어난 GRNs 평가 세부 사항은 검색되지"
 
 #: OutstandingGRNs.php:76 OutstandingGRNs.php:166 OutstandingGRNs.php:249
-#: includes/MainMenuLinksArray.php:44
+#: includes/MainMenuLinksArray.php:153
 msgid "Outstanding GRNs Report"
 msgstr "뛰어난 GRNs 보고서"
 
@@ -19606,7 +19513,7 @@ msgstr "지불"
 msgid "Total Payment"
 msgstr "총 지불"
 
-#: PaymentMethods.php:4 includes/MainMenuLinksArray.php:131
+#: PaymentMethods.php:4 includes/MainMenuLinksArray.php:537
 msgid "Payment Methods"
 msgstr "지불 방법"
 
@@ -19725,7 +19632,7 @@ msgstr ""
 msgid "Enter a Payment to, or Receipt from the Supplier"
 msgstr "공급 업체에 지불, 또는 영수증을 입력"
 
-#: Payments.php:15 includes/MainMenuLinksArray.php:91
+#: Payments.php:15 includes/MainMenuLinksArray.php:363
 msgid "Bank Account Payments Entry"
 msgstr "은행 계좌 지급 항목"
 
@@ -20397,7 +20304,7 @@ msgid "You must first select a petty cash tab to authorise"
 msgstr ""
 
 #: PcAuthorizeCash.php:39 PcAuthorizeExpenses.php:39 SuppLoginSetup.php:27
-#: WWW_Users.php:31 includes/MainMenuLinksArray.php:8
+#: WWW_Users.php:31 includes/MainMenuLinksArray.php:27
 #: reportwriter/languages/en_US/reports.php:248
 msgid "Petty Cash"
 msgstr "용돈"
@@ -21506,7 +21413,7 @@ msgstr "DIFOT"
 msgid "Please find herewith delivery differences report from"
 msgstr "배달 차이에서보고 이것과 찾아주세요"
 
-#: PDFDIFOT.php:20 includes/MainMenuLinksArray.php:14
+#: PDFDIFOT.php:20 includes/MainMenuLinksArray.php:63
 msgid "Delivery In Full On Time (DIFOT) Report"
 msgstr "전체에서 시간 (DIFOT) 보고서에 납품"
 
@@ -21739,7 +21646,7 @@ msgid "GRAND TOTAL INVOICED"
 msgstr "GRAND TOTAL 청구"
 
 #: PDFOrderStatus.php:22 PDFOrderStatus.php:29 PDFOrderStatus.php:89
-#: includes/MainMenuLinksArray.php:14
+#: includes/MainMenuLinksArray.php:53
 msgid "Order Status Report"
 msgstr "주문 상태 보고서"
 
@@ -21991,7 +21898,7 @@ msgstr "가격 레이블"
 msgid "Price_Labels"
 msgstr "Price_Labels"
 
-#: PDFPrintLabel.php:272 includes/MainMenuLinksArray.php:71
+#: PDFPrintLabel.php:272 includes/MainMenuLinksArray.php:232
 msgid "Print Price Labels"
 msgstr "인쇄 가격 레이블"
 
@@ -22037,7 +21944,7 @@ msgstr "인쇄 제품 사양 오류"
 msgid "Unable to Locate Specification"
 msgstr "사양을 찾을 수 없습니다"
 
-#: PDFProdSpec.php:103 includes/MainMenuLinksArray.php:87
+#: PDFProdSpec.php:103 includes/MainMenuLinksArray.php:352
 msgid "Product Specifications"
 msgstr "제품 사양"
 
@@ -22200,7 +22107,7 @@ msgstr "총 지불 :"
 msgid "Remittance_Advices"
 msgstr "Remittance_Advices"
 
-#: PDFRemittanceAdvice.php:129 includes/MainMenuLinksArray.php:44
+#: PDFRemittanceAdvice.php:129 includes/MainMenuLinksArray.php:152
 msgid "Remittance Advices"
 msgstr "송금 조언"
 
@@ -22235,7 +22142,7 @@ msgstr "주간 주문 보고서"
 #: PDFSalesBySalesperson.php:87 PDFWeeklyOrders.php:83 ReverseGRN.php:30
 #: SalesByTypePeriodInquiry.php:355 SalesTopCustomersInquiry.php:217
 #: SalesTopItemsInquiry.php:224 SelectSalesOrder.php:426 WWW_Users.php:23
-#: includes/MainMenuLinksArray.php:8
+#: includes/MainMenuLinksArray.php:19
 msgid "Sales"
 msgstr "판매"
 
@@ -22264,7 +22171,7 @@ msgid "Print Weekly Orders Error"
 msgstr "주간 주문 오류를 인쇄"
 
 #: PDFSellThroughSupportClaim.php:5 PDFSellThroughSupportClaim.php:163
-#: includes/MainMenuLinksArray.php:14
+#: includes/MainMenuLinksArray.php:69
 msgid "Sell Through Support Claims Report"
 msgstr "지원 클레임 보고서를 통해 판매"
 
@@ -22615,7 +22522,7 @@ msgstr "무게 / 패키지"
 msgid "LeftOver Qty"
 msgstr "남은 수량"
 
-#: PDFWOPrint.php:760 SelectPickingLists.php:426 SelectPickingLists.php:473
+#: PDFWOPrint.php:760 SelectPickingLists.php:430 SelectPickingLists.php:477
 #: SelectSalesOrder.php:911 SelectSalesOrder.php:1001 SelectSalesOrder.php:1018
 #, php-format
 msgid "Labels"
@@ -22746,17 +22653,17 @@ msgstr ""
 msgid "Select another pick list for processing"
 msgstr ""
 
-#: PickingLists.php:664 SelectPickingLists.php:195
+#: PickingLists.php:664 SelectPickingLists.php:199
 msgid "Pick List Status"
 msgstr ""
 
-#: PickingLists.php:670 PickingLists.php:672 SelectPickingLists.php:203
-#: SelectPickingLists.php:205 SelectPickingLists.php:277
+#: PickingLists.php:670 PickingLists.php:672 SelectPickingLists.php:207
+#: SelectPickingLists.php:209 SelectPickingLists.php:281
 msgid "Picked"
 msgstr ""
 
-#: PickingLists.php:677 PickingLists.php:679 SelectPickingLists.php:208
-#: SelectPickingLists.php:210 StockDispatch.php:508 StockDispatch.php:515
+#: PickingLists.php:677 PickingLists.php:679 SelectPickingLists.php:212
+#: SelectPickingLists.php:214 StockDispatch.php:508 StockDispatch.php:515
 #: includes/PDFStockLocTransferHeader.inc:37
 msgid "Shipped"
 msgstr "배송"
@@ -22765,7 +22672,7 @@ msgstr "배송"
 #: PO_Header.php:838 PO_Header.php:843 PO_Header.php:855
 #: PO_SelectOSPurchOrder.php:240 PO_SelectOSPurchOrder.php:242
 #: PO_SelectPurchOrder.php:155 PO_SelectPurchOrder.php:157
-#: SelectPickingLists.php:218 SelectPickingLists.php:220
+#: SelectPickingLists.php:222 SelectPickingLists.php:224
 msgid "Cancelled"
 msgstr "취소"
 
@@ -23109,7 +23016,7 @@ msgstr "버전"
 msgid "Revised"
 msgstr "수정"
 
-#: PO_Header.php:772 SelectPickingLists.php:433 SpecialOrder.php:599
+#: PO_Header.php:772 SelectPickingLists.php:437 SpecialOrder.php:599
 msgid "Initiated By"
 msgstr "에 의해 시작"
 
@@ -23137,7 +23044,7 @@ msgstr "이제 다시 인쇄"
 msgid "Receive this order"
 msgstr "이 수주"
 
-#: PO_Header.php:822 includes/MainMenuLinksArray.php:52
+#: PO_Header.php:822 includes/MainMenuLinksArray.php:175
 msgid "New Purchase Order"
 msgstr "새로운 구매 주문"
 
@@ -23750,7 +23657,7 @@ msgid "Select a Purchase Order Number to Print before calling this page"
 msgstr "이 페이지를 호출하기 전에 인쇄 할 구매 주문 번호를 선택"
 
 #: PO_PDFPurchOrder.php:19 PO_PDFPurchOrder.php:125
-#: includes/MainMenuLinksArray.php:56
+#: includes/MainMenuLinksArray.php:195
 msgid "Purchase Order Inquiry"
 msgstr "주문 문의 구매"
 
@@ -23870,6 +23777,15 @@ msgstr "가액"
 #: SalesInquiry.php:1211
 msgid "Customer Number"
 msgstr "고객 번호"
+
+#: POReport.php:496 POReport.php:746 POReport.php:747 POReport.php:1264
+#: POReport.php:1440 POReport.php:1441 POReport.php:1624
+#: PurchaseByPrefSupplier.php:418 PurchaseByPrefSupplier.php:419
+#: SalesGraph.php:304 SalesInquiry.php:772 SalesInquiry.php:991
+#: SalesInquiry.php:992 SalesInquiry.php:1232 StockUsageGraph.php:10
+#: StockUsage.php:149
+msgid "Month"
+msgstr "달"
 
 #: POReport.php:512
 msgid "Header Details"
@@ -23994,18 +23910,18 @@ msgid "Search Outstanding Purchase Orders"
 msgstr "뛰어난 구매 주문을 검색"
 
 #: PO_SelectOSPurchOrder.php:45 PO_SelectPurchOrder.php:34
-#: SelectPickingLists.php:48
+#: SelectPickingLists.php:52
 msgid "The Order Number entered"
 msgstr "주문 번호를 입력"
 
 #: PO_SelectOSPurchOrder.php:45 PO_SelectPurchOrder.php:34
-#: SelectPickingLists.php:48 SelectPickingLists.php:57 SelectQASamples.php:157
+#: SelectPickingLists.php:52 SelectPickingLists.php:61 SelectQASamples.php:157
 #: TestPlanResults.php:40
 msgid "MUST"
 msgstr "MUST"
 
 #: PO_SelectOSPurchOrder.php:45 PO_SelectPurchOrder.php:34
-#: SelectPickingLists.php:48 SelectPickingLists.php:57 SelectQASamples.php:157
+#: SelectPickingLists.php:52 SelectPickingLists.php:61 SelectQASamples.php:157
 #: TestPlanResults.php:40
 msgid "be numeric"
 msgstr "숫자 일"
@@ -24019,7 +23935,7 @@ msgid "Add Purchase Order"
 msgstr "구매 추가 주문"
 
 #: PO_SelectOSPurchOrder.php:149 PO_SelectPurchOrder.php:117
-#: SelectPickingLists.php:180 Shipt_Select.php:108
+#: SelectPickingLists.php:184 Shipt_Select.php:108
 msgid "Into Stock Location"
 msgstr "주식 위치에"
 
@@ -24055,7 +23971,7 @@ msgid ""
 msgstr "특정 부분에 대한 구매 주문을 검색하려면 아래의 부품 선택 기능을 사용"
 
 #: PO_SelectOSPurchOrder.php:295 PO_SelectPurchOrder.php:200
-#: SelectCompletedOrder.php:487 SelectPickingLists.php:263
+#: SelectCompletedOrder.php:487 SelectPickingLists.php:267
 #: SelectQASamples.php:285 SelectSalesOrder.php:629 Shipt_Select.php:180
 #: TestPlanResults.php:163
 msgid "Search Parts Now"
@@ -24094,13 +24010,13 @@ msgstr "복사 인쇄하기"
 
 #: PO_SelectPurchOrder.php:8 SelectCompletedOrder.php:507
 #: SupplierCredit.php:200 SupplierCredit.php:294 SupplierInvoice.php:562
-#: SupplierInvoice.php:647 includes/MainMenuLinksArray.php:52
+#: SupplierInvoice.php:647 includes/MainMenuLinksArray.php:176
 #: reportwriter/languages/en_US/reports.php:260
 msgid "Purchase Orders"
 msgstr "구매 주문"
 
 #: PO_SelectPurchOrder.php:115 SelectCompletedOrder.php:236
-#: SelectPickingLists.php:166 SelectQASamples.php:247 TestPlanResults.php:124
+#: SelectPickingLists.php:170 SelectQASamples.php:247 TestPlanResults.php:124
 msgid "For the part"
 msgstr "부분에 대한"
 
@@ -24923,7 +24839,7 @@ msgstr ""
 "데이터베이스에서 문에 대한 고객 정보를 검색하는 동안 문제가 발생했습니다"
 
 #: PrintCustStatements.php:81 PrintCustStatements.php:511
-#: includes/MainMenuLinksArray.php:26
+#: includes/MainMenuLinksArray.php:111
 msgid "Print Statements"
 msgstr "인쇄 문"
 
@@ -25152,7 +25068,7 @@ msgid "Print Invoices or Credit Notes (Landscape Mode)"
 msgstr "인쇄 송장 또는 신용 정보 (가로 모드)"
 
 #: PrintCustTrans.php:591 PrintCustTransPortrait.php:577
-#: includes/MainMenuLinksArray.php:26
+#: includes/MainMenuLinksArray.php:110
 msgid "Print Invoices or Credit Notes"
 msgstr "인쇄 송장 또는 신용 참고"
 
@@ -25502,7 +25418,7 @@ msgstr "더 많은 테스트를 추가"
 msgid "Copy This Specification"
 msgstr "이 사양을 복사"
 
-#: ProductSpecs.php:665 includes/MainMenuLinksArray.php:83
+#: ProductSpecs.php:665 includes/MainMenuLinksArray.php:321
 msgid "Print Product Specification"
 msgstr "인쇄 제품 사양"
 
@@ -25613,7 +25529,7 @@ msgstr ""
 "이 버튼을 클릭하면 즉시 배달은 위의 표에서 모든 수량에 대한 구매 주문을 생성"
 "합니다. 확실합니까?"
 
-#: PurchasesReport.php:14 includes/MainMenuLinksArray.php:56
+#: PurchasesReport.php:14 includes/MainMenuLinksArray.php:198
 msgid "Purchases from Suppliers"
 msgstr ""
 
@@ -26456,7 +26372,7 @@ msgid "At All Locations"
 msgstr "모든 지역에서"
 
 #: ReorderLevelLocation.php:76 ReorderLevel.php:59
-#: includes/MainMenuLinksArray.php:71
+#: includes/MainMenuLinksArray.php:238
 msgid "Reorder Level"
 msgstr "재주문 수준"
 
@@ -26562,7 +26478,7 @@ msgstr "재 인쇄 GRN"
 msgid "Reprint Labels"
 msgstr "재 인쇄 라벨"
 
-#: ReverseGRN.php:8 includes/MainMenuLinksArray.php:67
+#: ReverseGRN.php:8 includes/MainMenuLinksArray.php:214
 msgid "Reverse Goods Received"
 msgstr "역 제품은 수신"
 
@@ -26775,7 +26691,7 @@ msgid "Reverse"
 msgstr "역"
 
 #: RevisionTranslations.php:6 RevisionTranslations.php:12
-#: RevisionTranslations.php:13 includes/MainMenuLinksArray.php:75
+#: RevisionTranslations.php:13 includes/MainMenuLinksArray.php:283
 msgid "Review Translated Descriptions"
 msgstr "검토 번역 설명"
 
@@ -26964,6 +26880,10 @@ msgstr "라인 제목 2"
 #: SalesAnalReptCols.php:405
 msgid "Calculation"
 msgstr "계산"
+
+#: SalesAnalReptCols.php:423 SalesGraph.php:252
+msgid "From Period"
+msgstr "시대"
 
 #: SalesAnalReptCols.php:426 SalesAnalReptCols.php:442
 #: SystemParameters.php:1063
@@ -27398,7 +27318,7 @@ msgstr "WK"
 msgid "Qtr"
 msgstr "QTR"
 
-#: SalesCategories.php:5 includes/MainMenuLinksArray.php:75
+#: SalesCategories.php:5 includes/MainMenuLinksArray.php:284
 msgid "Sales Category Maintenance"
 msgstr "판매 카테고리 유지 보수"
 
@@ -27620,6 +27540,50 @@ msgstr ""
 msgid "For Sales Area/Region:"
 msgstr "판매 지역 / 지역 :"
 
+#: SalesGraph.php:178
+msgid "Graph Type"
+msgstr "그래프 유형"
+
+#: SalesGraph.php:180
+msgid "Bar Graph"
+msgstr "막대 그래프"
+
+#: SalesGraph.php:181
+msgid "Stacked Bar Graph"
+msgstr "누적 막대 그래프"
+
+#: SalesGraph.php:182
+msgid "Line Graph"
+msgstr "선 그래프"
+
+#: SalesGraph.php:183
+msgid "Line Point Graph"
+msgstr "선 포인트 그래프"
+
+#: SalesGraph.php:184
+msgid "Area Graph"
+msgstr "영역 그래프"
+
+#: SalesGraph.php:185
+msgid "Points Graph"
+msgstr "포인트 그래프"
+
+#: SalesGraph.php:186
+msgid "Pie Graph"
+msgstr "파이 그래프"
+
+#: SalesGraph.php:187
+msgid "Thin Bar Line Graph"
+msgstr "얇은 바 선 그래프"
+
+#: SalesGraph.php:188
+msgid "Squared Graph"
+msgstr "제곱 그래프"
+
+#: SalesGraph.php:189
+msgid "Stacked Area Graph"
+msgstr "스택 영역 그래프"
+
 #: SalesGraph.php:199
 msgid "Graph On:"
 msgstr "일에 그래프 :"
@@ -27736,7 +27700,7 @@ msgstr "영역 설명"
 msgid "Order Type"
 msgstr "주문 유형"
 
-#: SalesInquiry.php:1077 SelectCompletedOrder.php:68 SelectPickingLists.php:169
+#: SalesInquiry.php:1077 SelectCompletedOrder.php:68 SelectPickingLists.php:173
 #: Z_SalesIntegrityCheck.php:125 includes/PDFSalesOrder_generic.inc:16
 #: includes/PDFSalesOrder_generic.inc:19 includes/DatabaseTranslations.php:41
 msgid "Sales Order"
@@ -27922,11 +27886,11 @@ msgstr "계급"
 msgid "Top Sales Inquiry"
 msgstr "최고 판매 문의"
 
-#: SalesTopItemsInquiry.php:8 includes/MainMenuLinksArray.php:14
+#: SalesTopItemsInquiry.php:8 includes/MainMenuLinksArray.php:65
 msgid "Top Sales Items Inquiry"
 msgstr "최고 판매 상품 문의"
 
-#: SalesTypes.php:4 includes/MainMenuLinksArray.php:131
+#: SalesTypes.php:4 includes/MainMenuLinksArray.php:531
 msgid "Sales Types"
 msgstr "판매 유형"
 
@@ -28053,7 +28017,7 @@ msgstr "판매 종류 / 가격 목록 설정"
 msgid "Sales Type Name"
 msgstr "판매 유형 이름"
 
-#: SecurityTokens.php:5 includes/MainMenuLinksArray.php:127
+#: SecurityTokens.php:5 includes/MainMenuLinksArray.php:494
 msgid "Maintain Security Tokens"
 msgstr "보안 토큰을 유지"
 
@@ -28110,7 +28074,7 @@ msgstr ""
 "이 토큰을 설명하는 기능을한다 보안 토큰 설명에 액세스하려는 사용자 / 역할을 "
 "허용"
 
-#: SelectAsset.php:4 includes/MainMenuLinksArray.php:103
+#: SelectAsset.php:4 includes/MainMenuLinksArray.php:434
 msgid "Select an Asset"
 msgstr "자산을 선택"
 
@@ -28203,7 +28167,7 @@ msgstr "특정 부분에 대한 판매 오더를 검색하려면 아래의 부�
 msgid "Sales Orders"
 msgstr "판매 주문"
 
-#: SelectContract.php:5 includes/MainMenuLinksArray.php:18
+#: SelectContract.php:5 includes/MainMenuLinksArray.php:92
 msgid "Select Contract"
 msgstr "선택 계약"
 
@@ -28531,7 +28495,7 @@ msgstr "요청 된 고객 이름 때문에 취득 할 수없는"
 msgid "Select a menu option to operate using this customer."
 msgstr "이 고객을 사용하여 작동 할 수있는 메뉴 옵션을 선택합니다"
 
-#: SelectCustomer.php:201 includes/MainMenuLinksArray.php:26
+#: SelectCustomer.php:201 includes/MainMenuLinksArray.php:117
 msgid "Customer Transaction Inquiries"
 msgstr "고객의 거래 문의"
 
@@ -28575,7 +28539,7 @@ msgid ""
 "invoices"
 msgstr ""
 
-#: SelectCustomer.php:212 includes/MainMenuLinksArray.php:22
+#: SelectCustomer.php:212 includes/MainMenuLinksArray.php:102
 msgid "Allocate Receipts or Credit Notes"
 msgstr "영수증 또는 신용 노트를 할당"
 
@@ -29151,66 +29115,62 @@ msgstr "전체 주문 취소"
 msgid "Are you sure you wish to cancel this entire order?"
 msgstr "이 전체 주문을 취소하고자하는 확실하고 있습니까?"
 
-#: SelectPickingLists.php:4
-msgid "Search Pick Lists "
+#: SelectPickingLists.php:5 SelectPickingLists.php:228
+msgid "Search Pick Lists"
 msgstr ""
 
-#: SelectPickingLists.php:8 SelectSalesOrder.php:899
+#: SelectPickingLists.php:12 SelectPickingLists.php:13 SelectSalesOrder.php:899
 msgid "Pick Lists"
 msgstr ""
 
-#: SelectPickingLists.php:57
+#: SelectPickingLists.php:61
 msgid "The Pick List entered"
 msgstr ""
 
-#: SelectPickingLists.php:60 SelectPickingLists.php:170
+#: SelectPickingLists.php:64 SelectPickingLists.php:174
 #: includes/GenPickingListHeader.inc:54
 msgid "Pick List"
 msgstr ""
 
-#: SelectPickingLists.php:198 SelectPickingLists.php:200
+#: SelectPickingLists.php:202 SelectPickingLists.php:204
 msgid "New"
 msgstr ""
 
-#: SelectPickingLists.php:224
-msgid "Search Pick Lists"
-msgstr ""
-
-#: SelectPickingLists.php:237 SelectQASamples.php:262 TestPlanResults.php:141
+#: SelectPickingLists.php:241 SelectQASamples.php:262 TestPlanResults.php:141
 msgid ""
 "To search for Pick Lists for a specific part use the part selection "
 "facilities below"
 msgstr "특정 부분에 대한 선택 목록을 검색하려면 아래의 부품 선택 기능을 사용"
 
-#: SelectPickingLists.php:415
+#: SelectPickingLists.php:419
 msgid "No pick lists were returned by the SQL because"
 msgstr ""
 
-#: SelectPickingLists.php:425
+#: SelectPickingLists.php:429
 msgid "Packing List"
 msgstr ""
 
-#: SelectPickingLists.php:429
+#: SelectPickingLists.php:433
 msgid "Request Date"
 msgstr ""
 
-#: SelectPickingLists.php:430 includes/PDFAckPageHeader.php:99
+#: SelectPickingLists.php:434 includes/PDFAckPageHeader.php:99
 msgid "Ship Date"
 msgstr ""
 
-#: SelectPickingLists.php:431
+#: SelectPickingLists.php:435
 msgid "Shipped By"
 msgstr ""
 
-#: SelectPickingLists.php:432
+#: SelectPickingLists.php:436
 msgid "Initiated On"
 msgstr ""
 
-#: SelectPickingLists.php:455 SelectSalesOrder.php:986
+#: SelectPickingLists.php:459 SelectSalesOrder.php:986
 msgid "Reprint"
 msgstr "재판"
 
-#: SelectPickingLists.php:466
+#: SelectPickingLists.php:470
 msgid "Invoice Order"
 msgstr ""
 
@@ -29742,7 +29702,7 @@ msgstr "검색 / 수정 / 닫기 선적"
 
 #: SelectSupplier.php:196 SuppPriceList.php:15 SuppPriceList.php:151
 #: SuppPriceList.php:242 SuppPriceList.php:244
-#: includes/MainMenuLinksArray.php:56
+#: includes/MainMenuLinksArray.php:197
 msgid "Supplier Price List"
 msgstr "공급 가격 목록"
 
@@ -31342,7 +31302,7 @@ msgstr "재고 조정을 입력"
 msgid "Show Movements"
 msgstr "보기 운동"
 
-#: StockCategories.php:5 includes/MainMenuLinksArray.php:135
+#: StockCategories.php:5 includes/MainMenuLinksArray.php:561
 msgid "Inventory Categories Maintenance"
 msgstr "재고 카테고리 유지 보수"
 
@@ -31604,7 +31564,7 @@ msgstr ""
 "니다."
 
 #: StockCategorySalesInquiry.php:5 StockCategorySalesInquiry.php:8
-#: includes/MainMenuLinksArray.php:14
+#: includes/MainMenuLinksArray.php:58
 msgid "Sales By Category By Item Inquiry"
 msgstr "상품 문의에 의하여 부문별로 판매"
 
@@ -32031,7 +31991,7 @@ msgstr "순 중량 (KGS)"
 
 #: StockClone.php:838 Stocks.php:1190 SupplierTenders.php:124
 #: SupplierTenders.php:527 SupplierTenders.php:530 UnitsOfMeasure.php:170
-#: includes/MainMenuLinksArray.php:135
+#: includes/MainMenuLinksArray.php:566
 msgid "Units of Measure"
 msgstr "측정의 단위"
 
@@ -32118,7 +32078,7 @@ msgstr "재고 비용 업데이트"
 msgid "Non-existent Item"
 msgstr "존재하지 않는 아이템"
 
-#: StockCostUpdate.php:76 WorkOrderCosting.php:447 WorkOrderReceive.php:303
+#: StockCostUpdate.php:76 WorkOrderCosting.php:405 WorkOrderReceive.php:303
 #: Z_UpdateItemCosts.php:92
 msgid "The cost details for the stock item could not be updated because"
 msgstr "주식 항목에 대한 비용 정보는 때문에 업데이트 할 수 없습니다"
@@ -34082,7 +34042,7 @@ msgstr "공급 업체 지불"
 
 #: SupplierAllocations.php:27 SupplierAllocations.php:28
 #: SupplierBalsAtPeriodEnd.php:115 SupplierContacts.php:20
-#: includes/MainMenuLinksArray.php:40
+#: includes/MainMenuLinksArray.php:144
 msgid "Supplier Allocations"
 msgstr "공급 업체 할당"
 
@@ -34394,7 +34354,7 @@ msgstr "당신은 자동으로 출하량이 페이지에 대한 신용 노트의
 #: SupplierCredit.php:223 SupplierCredit.php:298 SupplierInvoice.php:579
 #: SupplierInvoice.php:652 SuppLoginSetup.php:25 SuppTransGLAnalysis.php:97
 #: SuppTransGLAnalysis.php:100 WWW_Users.php:29
-#: includes/MainMenuLinksArray.php:8
+#: includes/MainMenuLinksArray.php:25
 #: reportwriter/languages/en_US/reports.php:246
 msgid "General Ledger"
 msgstr "총계정 원장"
@@ -35827,7 +35787,7 @@ msgid "The GL transactions for this AP transaction are out of balance by"
 msgstr "이 AP 트랜잭션에 대한 트랜잭션 GL 의해 균형 벗어나"
 
 #: SupplierTypes.php:5 SupplierTypes.php:20 SuppPaymentRun.php:239
-#: includes/MainMenuLinksArray.php:131
+#: includes/MainMenuLinksArray.php:533
 msgid "Supplier Types"
 msgstr "공급 유형"
 
@@ -35895,12 +35855,12 @@ msgid "A supplier must first be selected before logins can be defined for it"
 msgstr ""
 "로그인이 그것을 정의 할 수 있습니다 전에 공급 업체를 먼저 선택해야합니다"
 
-#: SuppLoginSetup.php:20 WWW_Users.php:24 includes/MainMenuLinksArray.php:8
+#: SuppLoginSetup.php:20 WWW_Users.php:24 includes/MainMenuLinksArray.php:20
 #: reportwriter/languages/en_US/reports.php:243
 msgid "Receivables"
 msgstr "채권"
 
-#: SuppLoginSetup.php:21 WWW_Users.php:26 includes/MainMenuLinksArray.php:8
+#: SuppLoginSetup.php:21 WWW_Users.php:26 includes/MainMenuLinksArray.php:22
 #: reportwriter/languages/en_US/reports.php:241
 msgid "Payables"
 msgstr "채무"
@@ -35909,12 +35869,12 @@ msgstr "채무"
 msgid "Purchasing"
 msgstr "구매"
 
-#: SuppLoginSetup.php:24 WWW_Users.php:28 includes/MainMenuLinksArray.php:8
+#: SuppLoginSetup.php:24 WWW_Users.php:28 includes/MainMenuLinksArray.php:24
 #: reportwriter/languages/en_US/reports.php:245
 msgid "Manufacturing"
 msgstr "제조"
 
-#: SuppLoginSetup.php:26 WWW_Users.php:30 includes/MainMenuLinksArray.php:8
+#: SuppLoginSetup.php:26 WWW_Users.php:30 includes/MainMenuLinksArray.php:26
 #: reportwriter/languages/en_US/reports.php:247
 msgid "Asset Manager"
 msgstr "자산 관리자"
@@ -36013,7 +35973,7 @@ msgstr "기본 위치"
 msgid "Payment Run - Problem Report"
 msgstr "지급 실행 - 문제 신고"
 
-#: SuppPaymentRun.php:29 includes/MainMenuLinksArray.php:44
+#: SuppPaymentRun.php:29 includes/MainMenuLinksArray.php:151
 msgid "Payment Run Report"
 msgstr "지급 실행 보고서"
 
@@ -36285,7 +36245,7 @@ msgstr ""
 msgid "Debit Note"
 msgstr "직불 참고"
 
-#: SystemParameters.php:5 includes/MainMenuLinksArray.php:127
+#: SystemParameters.php:5 includes/MainMenuLinksArray.php:492
 msgid "System Parameters"
 msgstr "시스템 매개 변수"
 
@@ -37698,19 +37658,19 @@ msgstr "더 이상 15 자"
 
 #: TaxAuthorities.php:330 TaxAuthorityRates.php:116 TaxCategories.php:250
 #: TaxGroups.php:10 TaxGroups.php:11 TaxProvinces.php:240
-#: includes/MainMenuLinksArray.php:127
+#: includes/MainMenuLinksArray.php:499
 msgid "Tax Group Maintenance"
 msgstr "세금 그룹 유지 보수"
 
 #: TaxAuthorities.php:331 TaxAuthorityRates.php:117 TaxCategories.php:251
 #: TaxGroups.php:393 TaxProvinces.php:10 TaxProvinces.php:11
-#: includes/MainMenuLinksArray.php:127
+#: includes/MainMenuLinksArray.php:500
 msgid "Dispatch Tax Province Maintenance"
 msgstr "파견 세금 지방 유지 보수"
 
 #: TaxAuthorities.php:332 TaxAuthorityRates.php:118 TaxCategories.php:10
 #: TaxCategories.php:11 TaxGroups.php:394 TaxProvinces.php:241
-#: includes/MainMenuLinksArray.php:127
+#: includes/MainMenuLinksArray.php:501
 msgid "Tax Category Maintenance"
 msgstr "세금 카테고리 유지 보수"
 
@@ -37857,7 +37817,7 @@ msgid "No illegal characters allowed and cannot be blank"
 msgstr "어떤 잘못된 문자는 허용하지 않고 비워 둘 수 없습니다"
 
 #: TaxCategories.php:249 TaxGroups.php:392 TaxProvinces.php:239
-#: includes/MainMenuLinksArray.php:127
+#: includes/MainMenuLinksArray.php:498
 msgid "Tax Authorities and Rates Maintenance"
 msgstr "세무 당국 및 가격 유지"
 
@@ -38721,7 +38681,7 @@ msgstr "실패"
 msgid "Error number"
 msgstr "오류 번호"
 
-#: UserBankAccounts.php:12 includes/MainMenuLinksArray.php:99
+#: UserBankAccounts.php:12 includes/MainMenuLinksArray.php:420
 msgid "User Authorised Bank Accounts"
 msgstr ""
 
@@ -38767,7 +38727,7 @@ msgid "Are you sure you wish to un-authorise this bank account?"
 msgstr ""
 
 #: UserGLAccounts.php:5 UserGLAccounts.php:39 UserGLAccounts.php:40
-#: UserGLAccounts.php:86 includes/MainMenuLinksArray.php:99
+#: UserGLAccounts.php:86 includes/MainMenuLinksArray.php:415
 msgid "User Authorised GL Accounts"
 msgstr ""
 
@@ -38831,7 +38791,7 @@ msgstr ""
 msgid "Select A Different User"
 msgstr ""
 
-#: UserLocations.php:4 includes/MainMenuLinksArray.php:135
+#: UserLocations.php:4 includes/MainMenuLinksArray.php:564
 msgid "User Authorised Inventory Locations Maintenance"
 msgstr "사용자 공인 재고 위치 유지"
 
@@ -38962,7 +38922,7 @@ msgstr ""
 msgid "PDF Language Support"
 msgstr "PDF 언어 지원"
 
-#: WhereUsedInquiry.php:5 includes/MainMenuLinksArray.php:83
+#: WhereUsedInquiry.php:5 includes/MainMenuLinksArray.php:309
 msgid "Where Used Inquiry"
 msgstr "어디 귀하의 사용"
 
@@ -39199,67 +39159,67 @@ msgstr "사용의 차이"
 msgid "Cost Variance"
 msgstr "비용 차이"
 
-#: WorkOrderCosting.php:205
+#: WorkOrderCosting.php:178
 msgid "Could not retrieve the issues of the item because:"
 msgstr "항목 때문에 문제를 검색 할 수 없습니다 :"
 
-#: WorkOrderCosting.php:288
+#: WorkOrderCosting.php:246
 msgid "Could not get issues that were not required by the BOM because"
 msgstr "BOM 때문에 필요하지 않은 문제를 가져올 수 없습니다"
 
-#: WorkOrderCosting.php:385 WorkOrderCosting.php:406 WorkOrderCosting.php:425
+#: WorkOrderCosting.php:343 WorkOrderCosting.php:364 WorkOrderCosting.php:383
 msgid "share of variance"
 msgstr "분산 공유"
 
-#: WorkOrderCosting.php:388 WorkOrderCosting.php:409
+#: WorkOrderCosting.php:346 WorkOrderCosting.php:367
 msgid ""
 "The GL posting for the work order variance could not be inserted because"
 msgstr "작업 순서의 차이에 대한 GL 게시 때문에 삽입 할 수 없습니다"
 
-#: WorkOrderCosting.php:428
+#: WorkOrderCosting.php:386
 msgid ""
 "The GL posting for the WIP side of the work order variance posting could not "
 "be inserted because"
 msgstr "작업 순서 분산 게시물의 WIP 측의 GL 게시 때문에 삽입 할 수 없습니다"
 
-#: WorkOrderCosting.php:466 WorkOrderCosting.php:485
+#: WorkOrderCosting.php:424 WorkOrderCosting.php:443
 msgid "share of usage variance"
 msgstr "사용 분산 공유"
 
-#: WorkOrderCosting.php:469
+#: WorkOrderCosting.php:427
 msgid ""
 "The GL posting for the material usage variance could not be inserted because"
 msgstr "재료 사용량 변화에 대한 GL 게시 때문에 삽입 할 수 없습니다"
 
-#: WorkOrderCosting.php:488
+#: WorkOrderCosting.php:446
 msgid ""
 "The GL posting for the WIP side of the usage variance posting could not be "
 "inserted because"
 msgstr "사용 분산 게시물의 WIP 측의 GL 게시 때문에 삽입 할 수 없습니다"
 
-#: WorkOrderCosting.php:508 WorkOrderCosting.php:527
+#: WorkOrderCosting.php:466 WorkOrderCosting.php:485
 msgid "share of cost variance"
 msgstr "비용 분산 공유"
 
-#: WorkOrderCosting.php:511
+#: WorkOrderCosting.php:469
 msgid "The GL posting for the cost variance could not be inserted because"
 msgstr "비용 차이에 대한 GL 게시 때문에 삽입 할 수 없습니다"
 
-#: WorkOrderCosting.php:530
+#: WorkOrderCosting.php:488
 msgid ""
 "The GL posting for the WIP side of the cost variance posting could not be "
 "inserted because"
 msgstr "비용 분산 게시물의 WIP 측의 GL 게시 때문에 삽입 할 수 없습니다"
 
-#: WorkOrderCosting.php:543
+#: WorkOrderCosting.php:501
 msgid "Could not delete the predefined work order serial numbers"
 msgstr "미리 정의 된 작업 순서 일련 번호를 삭제할 수 없습니다"
 
-#: WorkOrderCosting.php:544
+#: WorkOrderCosting.php:502
 msgid "The SQL used to delete the predefined serial numbers was:"
 msgstr "미리 정의 된 일련 번호를 삭제하는 데 사용되는 SQL했다 :"
 
-#: WorkOrderCosting.php:549
+#: WorkOrderCosting.php:507
 msgid ""
 "The item cost as calculated from the work order has been applied against the "
 "weighted average cost and the necessary GL journals created to update stock "
@@ -39268,14 +39228,14 @@ msgstr ""
 "작업 명령으로부터 계산 부품 비용은 가중 평균 비용에 대해 적용되었으며 필요한 "
 "GL 저널이 작업 순서를 폐쇄 한 결과 콘텐츠를 업데이트하기 위해 만들어"
 
-#: WorkOrderCosting.php:551
+#: WorkOrderCosting.php:509
 msgid ""
 "The work order has been closed and general ledger entries made for the "
 "variances on the work order"
 msgstr ""
 "작업 순서는 폐쇄되었으며, 일반 회계 원장 항목은 작업 순서에 차이 만들어"
 
-#: WorkOrderCosting.php:555
+#: WorkOrderCosting.php:513
 msgid ""
 "The item costs resulting from the work order have been applied against the "
 "weighted average stock value of the items on the work order, and the work "
@@ -39284,15 +39244,15 @@ msgstr ""
 "작업 순서에 따른 항목의 비용은 작업 순서에있는 항목의 가중 평균 주식 가치에 "
 "대해 적용되었으며, 작업 순서는 닫힌"
 
-#: WorkOrderCosting.php:557
+#: WorkOrderCosting.php:515
 msgid "The work order has been closed"
 msgstr "작업 순서는 닫힌"
 
-#: WorkOrderCosting.php:584
+#: WorkOrderCosting.php:542
 msgid "Close This Work Order"
 msgstr "이 작업 순서를 닫습니다"
 
-#: WorkOrderCosting.php:584
+#: WorkOrderCosting.php:542
 msgid ""
 "Closing the work order takes the variances to the general ledger (if "
 "integrated). The work order will no longer be able to have manufactured "
@@ -39301,7 +39261,7 @@ msgstr ""
 "(통합 된 경우) 작업 순서를 닫으면 일반 회계 원장에 분산됩니다. 작업 순서는 "
 "더 이상 제조 상품이 나에게 발급 자료에 대해 입력받은 수 없습니다."
 
-#: WorkOrderCosting.php:590
+#: WorkOrderCosting.php:548
 msgid ""
 "This work order is closed and cannot accept additional issues of materials "
 "or receipts of manufactured items"
@@ -39309,7 +39269,7 @@ msgstr ""
 "이 작업 순서는 폐쇄되고 제조 항목의 추가 재료의 문제 또는 영수증을 받아 들일 "
 "수 없다"
 
-#: WorkOrderEntry.php:5 includes/MainMenuLinksArray.php:79
+#: WorkOrderEntry.php:5 includes/MainMenuLinksArray.php:299
 msgid "Work Order Entry"
 msgstr "주문 입력 작업"
 
@@ -40132,7 +40092,7 @@ msgid "Back To Work Order"
 msgstr "위로 주문을 해결하려면"
 
 #: WWW_Access.php:5 WWW_Access.php:11 WWW_Access.php:12
-#: includes/MainMenuLinksArray.php:127
+#: includes/MainMenuLinksArray.php:495
 msgid "Access Permissions Maintenance"
 msgstr "액세스 권한 유지 관리"
 
@@ -40214,11 +40174,11 @@ msgstr "사용 가능한 보안 토큰"
 msgid "Are you sure you wish to delete this security token from this role?"
 msgstr "이 역할에서이 보안 토큰을 삭제하려면 확실합니까?"
 
-#: WWW_Users.php:11 includes/MainMenuLinksArray.php:127
+#: WWW_Users.php:11 includes/MainMenuLinksArray.php:493
 msgid "Users Maintenance"
 msgstr "사용자 유지 보수"
 
-#: WWW_Users.php:25 includes/MainMenuLinksArray.php:8
+#: WWW_Users.php:25 includes/MainMenuLinksArray.php:21
 #: reportwriter/languages/en_US/reports.php:242
 #: ../webSHOP/CreditCardPayPalPro.php:90
 #: ../webSHOP/includes/ProcessPayPalPayment.php:8
@@ -40227,7 +40187,7 @@ msgstr "사용자 유지 보수"
 msgid "Purchases"
 msgstr "구매"
 
-#: WWW_Users.php:33 includes/MainMenuLinksArray.php:8
+#: WWW_Users.php:33 includes/MainMenuLinksArray.php:29
 msgid "Utilities"
 msgstr "유틸리티"
 
@@ -40508,7 +40468,7 @@ msgid "UTILITY PAGE To Changes A Customer Branch Code In All Tables"
 msgstr "모든 테이블에 고객의 지점 코드 변화에 유틸리티 페이지"
 
 #: Z_ChangeBranchCode.php:11 Z_ChangeBranchCode.php:12
-#: includes/MainMenuLinksArray.php:139
+#: includes/MainMenuLinksArray.php:586
 msgid "Change A Customer Branch Code"
 msgstr "고객의 지점 코드 변경"
 
@@ -40638,7 +40598,7 @@ msgid "UTILITY PAGE To Changes A Customer Code In All Tables"
 msgstr "모든 테이블에서 고객의 코드 변경하는 유틸리티 페이지"
 
 #: Z_ChangeCustomerCode.php:11 Z_ChangeCustomerCode.php:12
-#: includes/MainMenuLinksArray.php:139
+#: includes/MainMenuLinksArray.php:585
 msgid "Change A Customer Code"
 msgstr "고객 코드를 변경"
 
@@ -40747,7 +40707,7 @@ msgid "UTILITY PAGE Change A GL Account Code"
 msgstr "유틸리티 페이지 변경 GL 계정 코드"
 
 #: Z_ChangeGLAccountCode.php:11 Z_ChangeGLAccountCode.php:12
-#: includes/MainMenuLinksArray.php:139
+#: includes/MainMenuLinksArray.php:587
 msgid "Change A GL Account Code"
 msgstr "GL 계정 코드 변경"
 
@@ -40844,7 +40804,7 @@ msgid "UTILITY PAGE Change A Location Code"
 msgstr "유틸리티 페이지 변경 위치 코드"
 
 #: Z_ChangeLocationCode.php:11 Z_ChangeLocationCode.php:12
-#: includes/MainMenuLinksArray.php:139
+#: includes/MainMenuLinksArray.php:589
 msgid "Change A Location Code"
 msgstr "위치 코드 변경"
 
@@ -41090,7 +41050,7 @@ msgstr "새 위치의 이름"
 msgid "UTILITY PAGE To Change A Salesman Code In All Tables"
 msgstr ""
 
-#: Z_ChangeSalesmanCode.php:13 includes/MainMenuLinksArray.php:139
+#: Z_ChangeSalesmanCode.php:13 includes/MainMenuLinksArray.php:590
 msgid "Change A Salesman Code"
 msgstr ""
 
@@ -41169,7 +41129,7 @@ msgid "UTILITY PAGE Change A Stock Category"
 msgstr "유틸리티 페이지 변경 주식의 종류"
 
 #: Z_ChangeStockCategory.php:11 Z_ChangeStockCategory.php:12
-#: includes/MainMenuLinksArray.php:139
+#: includes/MainMenuLinksArray.php:591
 msgid "Change A Stock Category Code"
 msgstr "주식 범주 코드 변경"
 
@@ -41259,7 +41219,7 @@ msgid "UTILITY PAGE Change A Stock Code"
 msgstr "유틸리티 페이지 변경 주식 코드"
 
 #: Z_ChangeStockCode.php:13 Z_ChangeStockCode.php:14
-#: includes/MainMenuLinksArray.php:139
+#: includes/MainMenuLinksArray.php:588
 msgid "Change An Inventory Item Code"
 msgstr "재고 상품 코드 변경"
 
@@ -41332,7 +41292,7 @@ msgid "UTILITY PAGE To Changes A Supplier Code In All Tables"
 msgstr "모든 테이블에 공급 업체 코드 변경하는 유틸리티 페이지"
 
 #: Z_ChangeSupplierCode.php:11 Z_ChangeSupplierCode.php:12
-#: includes/MainMenuLinksArray.php:139
+#: includes/MainMenuLinksArray.php:592
 msgid "Change A Supplier Code"
 msgstr "공급 업체 코드 변경"
 
@@ -41583,7 +41543,7 @@ msgstr "환율 채무자의 균형"
 msgid "Show Local Currency Total Debtors Balances"
 msgstr "현지 통화 총 채무자의 균형보기"
 
-#: Z_CurrencyDebtorsBalances.php:12 includes/MainMenuLinksArray.php:143
+#: Z_CurrencyDebtorsBalances.php:12 includes/MainMenuLinksArray.php:617
 msgid "Debtors Balances By Currency Totals"
 msgstr "환율 합계함으로써 채무자의 균형"
 
@@ -41603,7 +41563,7 @@ msgstr "통화 공급의 균형"
 msgid "Show Local Currency Total Suppliers Balances"
 msgstr "현지 통화 총 공급의 균형보기"
 
-#: Z_CurrencySuppliersBalances.php:12 includes/MainMenuLinksArray.php:143
+#: Z_CurrencySuppliersBalances.php:12 includes/MainMenuLinksArray.php:618
 msgid "Suppliers Balances By Currency Totals"
 msgstr "환율 합계함으로써 공급자의 균형"
 
@@ -42139,7 +42099,7 @@ msgid "GLAccount - Users Authority Copy Authority"
 msgstr ""
 
 #: Z_GLAccountUsersCopyAuthority.php:12 Z_GLAccountUsersCopyAuthority.php:13
-#: includes/MainMenuLinksArray.php:139
+#: includes/MainMenuLinksArray.php:599
 msgid "Copy Authority of GL Accounts from one user to another"
 msgstr ""
 
@@ -42483,7 +42443,7 @@ msgid "Import Fixed Assets"
 msgstr "가져 오기 고정 자산"
 
 #: Z_ImportFixedAssets.php:10 Z_ImportFixedAssets.php:11
-#: includes/MainMenuLinksArray.php:147
+#: includes/MainMenuLinksArray.php:633
 msgid "Import Fixed Assets from .csv file"
 msgstr ".CSV 파일에서 가져 오기 고정 자산"
 
@@ -43144,7 +43104,7 @@ msgstr "유틸리티 페이지"
 msgid "that helps maintain language files"
 msgstr "그 언어 파일을 유지하는 데 도움이"
 
-#: Z_poAdmin.php:14 Z_poAdmin.php:15 includes/MainMenuLinksArray.php:147
+#: Z_poAdmin.php:14 Z_poAdmin.php:15 includes/MainMenuLinksArray.php:627
 msgid "Maintain Language Files"
 msgstr "언어 파일을 유지"
 
@@ -49583,679 +49543,679 @@ msgstr ""
 msgid "Login"
 msgstr "로그인"
 
-#: includes/MainMenuLinksArray.php:10
+#: includes/MainMenuLinksArray.php:31
 msgid "New Sales Order or Quotation"
 msgstr "새로운 판매 주문 또는 견적"
 
-#: includes/MainMenuLinksArray.php:10
+#: includes/MainMenuLinksArray.php:32
 msgid "Enter Counter Sales"
 msgstr "카운터 판매를 입력"
 
-#: includes/MainMenuLinksArray.php:10
+#: includes/MainMenuLinksArray.php:33
 msgid "Enter Counter Returns"
 msgstr "카운터 반환을 입력"
 
-#: includes/MainMenuLinksArray.php:10
+#: includes/MainMenuLinksArray.php:34
 msgid "Generate/Print Picking Lists"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:10
+#: includes/MainMenuLinksArray.php:35
 msgid "Outstanding Sales Orders/Quotations"
 msgstr "뛰어난 판매 주문 / 견적"
 
-#: includes/MainMenuLinksArray.php:10
+#: includes/MainMenuLinksArray.php:36
 msgid "Special Order"
 msgstr "특별 주문"
 
-#: includes/MainMenuLinksArray.php:10
+#: includes/MainMenuLinksArray.php:37
 msgid "Recurring Order Template"
 msgstr "반복 주문 템플릿"
 
-#: includes/MainMenuLinksArray.php:10
+#: includes/MainMenuLinksArray.php:38
 msgid "Process Recurring Orders"
 msgstr "프로세스 반복 주문"
 
-#: includes/MainMenuLinksArray.php:10
+#: includes/MainMenuLinksArray.php:39
 msgid "Maintain Picking Lists"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:14
+#: includes/MainMenuLinksArray.php:51
 msgid "Sales Order Inquiry"
 msgstr "판매 주문 문의"
 
-#: includes/MainMenuLinksArray.php:14
+#: includes/MainMenuLinksArray.php:52
 msgid "Print Price Lists"
 msgstr "인쇄 가격 목록"
 
-#: includes/MainMenuLinksArray.php:14
+#: includes/MainMenuLinksArray.php:54
 msgid "Orders Invoiced Reports"
 msgstr "주문 인보이스 보고서"
 
-#: includes/MainMenuLinksArray.php:14
+#: includes/MainMenuLinksArray.php:56
 msgid "Sales By Sales Type Inquiry"
 msgstr "판매 유형 문의 매출"
 
-#: includes/MainMenuLinksArray.php:14
+#: includes/MainMenuLinksArray.php:57
 msgid "Sales By Category Inquiry"
 msgstr "카테고리 문의 매출"
 
-#: includes/MainMenuLinksArray.php:14
+#: includes/MainMenuLinksArray.php:59
 msgid "Sales Analysis Reports"
 msgstr "판매 분석 보고서"
 
-#: includes/MainMenuLinksArray.php:14
+#: includes/MainMenuLinksArray.php:60
 msgid "Sales Graphs"
 msgstr "판매 그래프"
 
-#: includes/MainMenuLinksArray.php:14
+#: includes/MainMenuLinksArray.php:61
 msgid "Top Sellers Inquiry"
 msgstr "베스트셀러 문의"
 
-#: includes/MainMenuLinksArray.php:14
+#: includes/MainMenuLinksArray.php:62
 msgid "Order Delivery Differences Report"
 msgstr "주문 배달의 차이는 보고서"
 
-#: includes/MainMenuLinksArray.php:14
+#: includes/MainMenuLinksArray.php:64
 msgid "Sales Order Detail Or Summary Inquiries"
 msgstr "판매 주문 세부 정보 또는 요약 문의"
 
-#: includes/MainMenuLinksArray.php:14
+#: includes/MainMenuLinksArray.php:66
 msgid "Top Customers Inquiry"
 msgstr "최고의 고객 문의"
 
-#: includes/MainMenuLinksArray.php:14
+#: includes/MainMenuLinksArray.php:67
 msgid "Worst Sales Items Report"
 msgstr "최악의 판매 항목 보고서"
 
-#: includes/MainMenuLinksArray.php:14
+#: includes/MainMenuLinksArray.php:68
 msgid "Sales With Low Gross Profit Report"
 msgstr "낮은 총 이익 보고서 판매"
 
-#: includes/MainMenuLinksArray.php:18
+#: includes/MainMenuLinksArray.php:91
 msgid "Create Contract"
 msgstr "계약 만들기"
 
-#: includes/MainMenuLinksArray.php:18
+#: includes/MainMenuLinksArray.php:93
 msgid "Sell Through Support Deals"
 msgstr "지원 상품을 통해 판매"
 
-#: includes/MainMenuLinksArray.php:22
+#: includes/MainMenuLinksArray.php:99
 msgid "Select Order to Invoice"
 msgstr "청구 할 순서를 선택합니다"
 
-#: includes/MainMenuLinksArray.php:22
+#: includes/MainMenuLinksArray.php:100
 msgid "Create A Credit Note"
 msgstr "신용 주 만들기"
 
-#: includes/MainMenuLinksArray.php:26 includes/MainMenuLinksArray.php:44
+#: includes/MainMenuLinksArray.php:109
 msgid "Where Allocated Inquiry"
 msgstr "귀하의 할당 된 경우"
 
-#: includes/MainMenuLinksArray.php:26
+#: includes/MainMenuLinksArray.php:112
 msgid "Aged Customer Balances/Overdues Report"
 msgstr "노인 고객 잔액 / Overdues 보고서"
 
-#: includes/MainMenuLinksArray.php:26
+#: includes/MainMenuLinksArray.php:113
 msgid "Re-Print A Deposit Listing"
 msgstr "다시 인쇄 예금 리스팅을"
 
-#: includes/MainMenuLinksArray.php:26
+#: includes/MainMenuLinksArray.php:114
 msgid "Debtor Balances At A Prior Month End"
 msgstr "이전 달 말에 채무자의 균형"
 
-#: includes/MainMenuLinksArray.php:26
+#: includes/MainMenuLinksArray.php:115
 msgid "Customer Listing By Area/Salesperson"
 msgstr "지역 / 영업 사원으로 고객 목록"
 
-#: includes/MainMenuLinksArray.php:26 includes/MainMenuLinksArray.php:44
+#: includes/MainMenuLinksArray.php:116 includes/MainMenuLinksArray.php:155
 msgid "List Daily Transactions"
 msgstr "매일 거래를 나열"
 
-#: includes/MainMenuLinksArray.php:36
+#: includes/MainMenuLinksArray.php:137
 msgid "Add Customer"
 msgstr "고객 추가"
 
-#: includes/MainMenuLinksArray.php:36
+#: includes/MainMenuLinksArray.php:138
 msgid "Select Customer"
 msgstr "선택 고객"
 
-#: includes/MainMenuLinksArray.php:44
+#: includes/MainMenuLinksArray.php:149
+msgid "Where Allocated Inquiry.php"
+msgstr ""
+
+#: includes/MainMenuLinksArray.php:150
 msgid "Aged Supplier Report"
 msgstr "노인 공급 업체 보고서"
 
-#: includes/MainMenuLinksArray.php:44
+#: includes/MainMenuLinksArray.php:154
 msgid "Supplier Balances At A Prior Month End"
 msgstr "이전 달 말에 공급 저울"
 
-#: includes/MainMenuLinksArray.php:44
+#: includes/MainMenuLinksArray.php:156
 msgid "Supplier Transaction Inquiries"
 msgstr "공급 업체의 거래 문의"
 
-#: includes/MainMenuLinksArray.php:48
+#: includes/MainMenuLinksArray.php:167
 msgid "Add Supplier"
 msgstr "공급 업체 추가"
 
-#: includes/MainMenuLinksArray.php:48
+#: includes/MainMenuLinksArray.php:169
 msgid "Maintain Factor Companies"
 msgstr "팩터 기업 유지"
 
-#: includes/MainMenuLinksArray.php:52
+#: includes/MainMenuLinksArray.php:177
 msgid "Purchase Order Grid Entry"
 msgstr "주문 그리드 항목을 구입"
 
-#: includes/MainMenuLinksArray.php:52
+#: includes/MainMenuLinksArray.php:178
 msgid "Create a New Tender"
 msgstr "새 입찰 만들기"
 
-#: includes/MainMenuLinksArray.php:52
+#: includes/MainMenuLinksArray.php:179
 msgid "Edit Existing Tenders"
 msgstr "기존 입찰을 편집"
 
-#: includes/MainMenuLinksArray.php:52
+#: includes/MainMenuLinksArray.php:180
 msgid "Process Tenders and Offers"
 msgstr "공정 입찰 및 행사"
 
-#: includes/MainMenuLinksArray.php:52
+#: includes/MainMenuLinksArray.php:181
 msgid "Orders to Authorise"
 msgstr "주문 Authorise하기"
 
-#: includes/MainMenuLinksArray.php:52
+#: includes/MainMenuLinksArray.php:182
 msgid "Shipment Entry"
 msgstr "선적 항목"
 
-#: includes/MainMenuLinksArray.php:52
+#: includes/MainMenuLinksArray.php:183
 msgid "Select A Shipment"
 msgstr "출하를 선택"
 
-#: includes/MainMenuLinksArray.php:56
+#: includes/MainMenuLinksArray.php:196
 msgid "Purchase Order Detail Or Summary Inquiries"
 msgstr "주문 세부 정보 또는 요약 문의를 구입"
 
-#: includes/MainMenuLinksArray.php:60
+#: includes/MainMenuLinksArray.php:205
 msgid "Maintain Supplier Price Lists"
 msgstr "공급 업체의 가격 목록을 유지"
 
-#: includes/MainMenuLinksArray.php:64
+#: includes/MainMenuLinksArray.php:210
 msgid "Inventory Location Transfers"
 msgstr "재고 위치 전송"
 
-#: includes/MainMenuLinksArray.php:65 includes/MainMenuLinksArray.php:66
+#: includes/MainMenuLinksArray.php:211 includes/MainMenuLinksArray.php:212
 msgid "Bulk Inventory Transfer"
 msgstr "대량 재고 전송"
 
-#: includes/MainMenuLinksArray.php:67
+#: includes/MainMenuLinksArray.php:213
 msgid "Inventory Adjustments"
 msgstr "재고 조정"
 
-#: includes/MainMenuLinksArray.php:67
+#: includes/MainMenuLinksArray.php:215
 msgid "Enter Stock Counts"
 msgstr "주식 수를 입력"
 
-#: includes/MainMenuLinksArray.php:67
+#: includes/MainMenuLinksArray.php:216
 msgid "Create a New Internal Stock Request"
 msgstr "새 재고 요청 만들기"
 
-#: includes/MainMenuLinksArray.php:67
+#: includes/MainMenuLinksArray.php:218
 msgid "Fulfill Internal Stock Requests"
 msgstr "재고 요청을 수행"
 
-#: includes/MainMenuLinksArray.php:71
+#: includes/MainMenuLinksArray.php:231
 msgid "Serial Item Research Tool"
 msgstr "직렬 항목 연구 도구"
 
-#: includes/MainMenuLinksArray.php:71
+#: includes/MainMenuLinksArray.php:233
 msgid "Reprint GRN"
 msgstr "재 인쇄 GRN"
 
-#: includes/MainMenuLinksArray.php:71
+#: includes/MainMenuLinksArray.php:234
 msgid "Inventory Item Movements"
 msgstr "재고 품목 운동"
 
-#: includes/MainMenuLinksArray.php:71
+#: includes/MainMenuLinksArray.php:235
 msgid "Inventory Item Status"
 msgstr "재고 상품 상태"
 
-#: includes/MainMenuLinksArray.php:71
+#: includes/MainMenuLinksArray.php:236
 msgid "Inventory Item Usage"
 msgstr "재고 항목 사용"
 
-#: includes/MainMenuLinksArray.php:71
+#: includes/MainMenuLinksArray.php:239
 msgid "Stock Dispatch"
 msgstr "주식 파견"
 
-#: includes/MainMenuLinksArray.php:71
+#: includes/MainMenuLinksArray.php:241
 msgid "Mail Inventory Valuation Report"
 msgstr "메일 재고 평가 보고서"
 
-#: includes/MainMenuLinksArray.php:71
+#: includes/MainMenuLinksArray.php:243
 msgid "Inventory Planning Based On Preferred Supplier Data"
 msgstr "우선 공급 업체 데이터를 기반으로 재고 계획"
 
-#: includes/MainMenuLinksArray.php:71
+#: includes/MainMenuLinksArray.php:244
 msgid "Inventory Stock Check Sheets"
 msgstr "재고 재고 확인 시트"
 
-#: includes/MainMenuLinksArray.php:71
+#: includes/MainMenuLinksArray.php:245
 msgid "Make Inventory Quantities CSV"
 msgstr "재고 수량의 CSV 만들기"
 
-#: includes/MainMenuLinksArray.php:71
+#: includes/MainMenuLinksArray.php:246
 msgid "Compare Counts Vs Stock Check Data"
 msgstr "재고 확인 데이터 대 카운트 비교"
 
-#: includes/MainMenuLinksArray.php:71
+#: includes/MainMenuLinksArray.php:247
 msgid "All Inventory Movements By Location/Date"
 msgstr "위치 / 날짜 별 모든 재고 운동"
 
-#: includes/MainMenuLinksArray.php:71
+#: includes/MainMenuLinksArray.php:248
 msgid "List Inventory Status By Location/Category"
 msgstr "위치 / 카테고리 별리스트 재고 상태"
 
-#: includes/MainMenuLinksArray.php:71
+#: includes/MainMenuLinksArray.php:249
 msgid "Historical Stock Quantity By Location/Category"
 msgstr "위치 / 카테고리 별 역사 재고 수량"
 
-#: includes/MainMenuLinksArray.php:71
+#: includes/MainMenuLinksArray.php:250
 msgid "List Negative Stocks"
 msgstr "음의 주식을 나열"
 
-#: includes/MainMenuLinksArray.php:71
+#: includes/MainMenuLinksArray.php:251
 msgid "Period Stock Transaction Listing"
 msgstr "기간 주식 거래 목록"
 
-#: includes/MainMenuLinksArray.php:71
+#: includes/MainMenuLinksArray.php:252
 msgid "Stock Transfer Note"
 msgstr "재고 이전 주"
 
-#: includes/MainMenuLinksArray.php:71
+#: includes/MainMenuLinksArray.php:253
 msgid "Aged Controlled Stock Report"
 msgstr "노인 제어 주식 보고서"
 
-#: includes/MainMenuLinksArray.php:71
+#: includes/MainMenuLinksArray.php:254
 msgid "Internal stock request inquiry"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:75
+#: includes/MainMenuLinksArray.php:281
 msgid "Add A New Item"
 msgstr "새 항목 추가"
 
-#: includes/MainMenuLinksArray.php:75
+#: includes/MainMenuLinksArray.php:282
 msgid "Select An Item"
 msgstr "항목을 선택"
 
-#: includes/MainMenuLinksArray.php:75
+#: includes/MainMenuLinksArray.php:286
 msgid "Add or Update Prices Based On Costs"
 msgstr "추가 또는 업데이트 가격 비용을 기반으로"
 
-#: includes/MainMenuLinksArray.php:75
+#: includes/MainMenuLinksArray.php:287
 msgid "View or Update Prices Based On Costs"
 msgstr "비용을 기준으로보기 또는 업데이트 가격"
 
-#: includes/MainMenuLinksArray.php:75
+#: includes/MainMenuLinksArray.php:288
 msgid "Reorder Level By Category/Location"
 msgstr "카테고리 / 위치 별 레벨 순서 변경"
 
-#: includes/MainMenuLinksArray.php:79 includes/MainMenuLinksArray.php:83
+#: includes/MainMenuLinksArray.php:300 includes/MainMenuLinksArray.php:307
 msgid "Select A Work Order"
 msgstr "작업 순서를 선택"
 
-#: includes/MainMenuLinksArray.php:79
+#: includes/MainMenuLinksArray.php:301
 msgid "QA Samples and Test Results"
 msgstr "품질 보증 샘플 및 테스트 결과"
 
-#: includes/MainMenuLinksArray.php:83
+#: includes/MainMenuLinksArray.php:308
 msgid "Costed Bill Of Material Inquiry"
 msgstr "재료 귀하의 비용이 산정 된 빌"
 
-#: includes/MainMenuLinksArray.php:83
+#: includes/MainMenuLinksArray.php:311
 msgid "Indented Bill Of Material Listing"
 msgstr "재료 목록의 들여 쓰기 빌"
 
-#: includes/MainMenuLinksArray.php:83
+#: includes/MainMenuLinksArray.php:312
 msgid "List Components Required"
 msgstr "목록 구성 요소 필수"
 
-#: includes/MainMenuLinksArray.php:83
+#: includes/MainMenuLinksArray.php:313
 msgid "List Materials Not Used Anywhere"
 msgstr "목록 자료는 임의의 장소에서 사용하지 않음"
 
-#: includes/MainMenuLinksArray.php:83
+#: includes/MainMenuLinksArray.php:314
 msgid "Indented Where Used Listing"
 msgstr "들여 쓰기 사용 목록"
 
-#: includes/MainMenuLinksArray.php:83
+#: includes/MainMenuLinksArray.php:315
 msgid "WO Items ready to produce"
 msgstr "생산 준비 항목 WO"
 
-#: includes/MainMenuLinksArray.php:83
+#: includes/MainMenuLinksArray.php:316
 msgid "MRP"
 msgstr "MRP"
 
-#: includes/MainMenuLinksArray.php:83
+#: includes/MainMenuLinksArray.php:318
 msgid "MRP Suggested Purchase Orders"
 msgstr "MRP 제안 구매 주문"
 
-#: includes/MainMenuLinksArray.php:83
+#: includes/MainMenuLinksArray.php:319
 msgid "MRP Suggested Work Orders"
 msgstr "MRP 제안 작업 지시"
 
-#: includes/MainMenuLinksArray.php:83
+#: includes/MainMenuLinksArray.php:320
 msgid "MRP Reschedules Required"
 msgstr "MRP는 필수을 다시 예약"
 
-#: includes/MainMenuLinksArray.php:83
+#: includes/MainMenuLinksArray.php:322
 msgid "Print Certificate of Analysis"
 msgstr "분석 증명서를 인쇄"
 
-#: includes/MainMenuLinksArray.php:83
+#: includes/MainMenuLinksArray.php:323
 msgid "Historical QA Test Results"
 msgstr "역사 품질 보증 테스트 결과"
 
-#: includes/MainMenuLinksArray.php:83
+#: includes/MainMenuLinksArray.php:324
 msgid "Multiple Work Orders Total Cost Inquiry"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:87
+#: includes/MainMenuLinksArray.php:346
 msgid "Bills Of Material"
 msgstr "자재 명세서 (BOM)"
 
-#: includes/MainMenuLinksArray.php:87
+#: includes/MainMenuLinksArray.php:347
 msgid "Copy a Bill Of Materials Between Items"
 msgstr "항목 사이에 재료의 빌 복사"
 
-#: includes/MainMenuLinksArray.php:87
+#: includes/MainMenuLinksArray.php:348
 msgid "Master Schedule"
 msgstr "마스터 일정"
 
-#: includes/MainMenuLinksArray.php:87
+#: includes/MainMenuLinksArray.php:349
 msgid "Auto Create Master Schedule"
 msgstr "자동 마스터 스케줄 만들기"
 
-#: includes/MainMenuLinksArray.php:87
+#: includes/MainMenuLinksArray.php:350
 msgid "MRP Calculation"
 msgstr "MRP 계산"
 
-#: includes/MainMenuLinksArray.php:87
+#: includes/MainMenuLinksArray.php:351
 msgid "Quality Tests Maintenance"
 msgstr "품질 테스트 유지 보수"
 
-#: includes/MainMenuLinksArray.php:91
+#: includes/MainMenuLinksArray.php:366
 msgid "Bank Account Payments Matching"
 msgstr "은행 계좌 결제 매칭"
 
-#: includes/MainMenuLinksArray.php:91
+#: includes/MainMenuLinksArray.php:367
 msgid "Bank Account Receipts Matching"
 msgstr "은행 계좌 영수증 매칭"
 
-#: includes/MainMenuLinksArray.php:95
+#: includes/MainMenuLinksArray.php:378
 msgid "Bank Account Reconciliation Statement"
 msgstr "은행 계좌 조정 명세서"
 
-#: includes/MainMenuLinksArray.php:95
+#: includes/MainMenuLinksArray.php:379
 msgid "Cheque Payments Listing"
 msgstr "수표 지급 리스팅"
 
-#: includes/MainMenuLinksArray.php:95
+#: includes/MainMenuLinksArray.php:381
 msgid "Account Inquiry"
 msgstr "계정 문의"
 
-#: includes/MainMenuLinksArray.php:95
-msgid "Graph of Account Transactions"
-msgstr ""
-
-#: includes/MainMenuLinksArray.php:95
+#: includes/MainMenuLinksArray.php:382
 msgid "Account Listing"
 msgstr "계정 목록"
 
-#: includes/MainMenuLinksArray.php:95
+#: includes/MainMenuLinksArray.php:383
 msgid "Account Listing to CSV File"
 msgstr "CSV 파일에 계정 목록"
 
-#: includes/MainMenuLinksArray.php:95
+#: includes/MainMenuLinksArray.php:388
 msgid "Statement of Cash Flows"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:95
+#: includes/MainMenuLinksArray.php:391
 msgid "Tag Reports"
 msgstr "태그 보고서"
 
-#: includes/MainMenuLinksArray.php:95
+#: includes/MainMenuLinksArray.php:392
 msgid "Tax Reports"
 msgstr "세금 보고서"
 
-#: includes/MainMenuLinksArray.php:99
+#: includes/MainMenuLinksArray.php:413
 msgid "GL Accounts"
 msgstr "GL 계정"
 
-#: includes/MainMenuLinksArray.php:99
+#: includes/MainMenuLinksArray.php:416
 msgid "GL Budgets"
 msgstr "GL 예산"
 
-#: includes/MainMenuLinksArray.php:99
+#: includes/MainMenuLinksArray.php:417
 msgid "GL Tags"
 msgstr "GL 태그"
 
-#: includes/MainMenuLinksArray.php:103
+#: includes/MainMenuLinksArray.php:433
 msgid "Add a new Asset"
 msgstr "새로운 자산을 추가"
 
-#: includes/MainMenuLinksArray.php:103
+#: includes/MainMenuLinksArray.php:436
 msgid "Depreciation Journal"
 msgstr "감가 상각 저널"
 
-#: includes/MainMenuLinksArray.php:107
+#: includes/MainMenuLinksArray.php:443
 msgid "Asset Register"
 msgstr "자산 등록"
 
-#: includes/MainMenuLinksArray.php:107
+#: includes/MainMenuLinksArray.php:444
 msgid "My Maintenance Schedule"
 msgstr "내 유지 보수 일정"
 
-#: includes/MainMenuLinksArray.php:107
+#: includes/MainMenuLinksArray.php:445
 msgid "Maintenance Reminder Emails"
 msgstr "유지 보수 알림 이메일"
 
-#: includes/MainMenuLinksArray.php:111
+#: includes/MainMenuLinksArray.php:452
 msgid "Add or Maintain Asset Locations"
 msgstr "추가 자산의 위치를​​ 유지"
 
-#: includes/MainMenuLinksArray.php:115
+#: includes/MainMenuLinksArray.php:459
 msgid "Assign Cash to PC Tab"
 msgstr "PC 탭으로 현금을 할당"
 
-#: includes/MainMenuLinksArray.php:115
+#: includes/MainMenuLinksArray.php:460
 msgid "Transfer Assigned Cash Between PC Tabs"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:115
+#: includes/MainMenuLinksArray.php:461
 msgid "Claim Expenses From PC Tab"
 msgstr "PC 탭에서 청구 비용"
 
-#: includes/MainMenuLinksArray.php:115
+#: includes/MainMenuLinksArray.php:462
 msgid "Authorise Expenses"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:115
+#: includes/MainMenuLinksArray.php:463
 msgid "Authorise Assigned Cash"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:119
+#: includes/MainMenuLinksArray.php:471
 msgid "PC Tab General Report"
 msgstr "PC 탭 일반 보고서"
 
-#: includes/MainMenuLinksArray.php:119
+#: includes/MainMenuLinksArray.php:472
 msgid "PC Expense General Report"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:119
+#: includes/MainMenuLinksArray.php:473
 msgid "PC Tab Expenses List"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:119
+#: includes/MainMenuLinksArray.php:474
 msgid "PC Expenses Analysis"
 msgstr "PC의 비용 분석"
 
-#: includes/MainMenuLinksArray.php:123
+#: includes/MainMenuLinksArray.php:481
 msgid "Types of PC Tabs"
 msgstr "PC 탭의 종류"
 
-#: includes/MainMenuLinksArray.php:123
+#: includes/MainMenuLinksArray.php:482
 msgid "PC Tabs"
 msgstr "PC 탭"
 
-#: includes/MainMenuLinksArray.php:123
+#: includes/MainMenuLinksArray.php:483
 msgid "PC Expenses"
 msgstr "PC 경비"
 
-#: includes/MainMenuLinksArray.php:123
+#: includes/MainMenuLinksArray.php:484
 msgid "Expenses for Type of PC Tab"
 msgstr "PC 탭의 종류에 대한 비용"
 
-#: includes/MainMenuLinksArray.php:127
+#: includes/MainMenuLinksArray.php:496
 msgid "Page Security Settings"
 msgstr "페이지 보안 설정"
 
-#: includes/MainMenuLinksArray.php:127
+#: includes/MainMenuLinksArray.php:502
 msgid "List Periods Defined"
 msgstr "목록 기간이 정의"
 
-#: includes/MainMenuLinksArray.php:127
+#: includes/MainMenuLinksArray.php:503
 msgid "Report Builder Tool"
 msgstr "보고서 작성기 도구"
 
-#: includes/MainMenuLinksArray.php:127
+#: includes/MainMenuLinksArray.php:504
 msgid "View Audit Trail"
 msgstr "보기 감사 추적"
 
-#: includes/MainMenuLinksArray.php:127
+#: includes/MainMenuLinksArray.php:507
 msgid "Web-Store Configuration"
 msgstr "웹 스토어 구성"
 
-#: includes/MainMenuLinksArray.php:127
+#: includes/MainMenuLinksArray.php:508
 msgid "SMTP Server Details"
 msgstr "SMTP 서버의 자세한 사항"
 
-#: includes/MainMenuLinksArray.php:131
+#: includes/MainMenuLinksArray.php:536
 msgid "Set Purchase Order Authorisation levels"
 msgstr "구매 주문 허가 수준을 설정"
 
-#: includes/MainMenuLinksArray.php:131
+#: includes/MainMenuLinksArray.php:538
 msgid "Sales People"
 msgstr "판매 사람들"
 
-#: includes/MainMenuLinksArray.php:131
+#: includes/MainMenuLinksArray.php:539
 msgid "Sales Areas"
 msgstr "판매 지역"
 
-#: includes/MainMenuLinksArray.php:131
+#: includes/MainMenuLinksArray.php:540
 msgid "Shippers"
 msgstr "화주"
 
-#: includes/MainMenuLinksArray.php:131
+#: includes/MainMenuLinksArray.php:541
 msgid "Sales GL Interface Postings"
 msgstr "판매 GL 인터페이스 게시물"
 
-#: includes/MainMenuLinksArray.php:131
+#: includes/MainMenuLinksArray.php:542
 msgid "COGS GL Interface Postings"
 msgstr "원가 GL 인터페이스 게시물"
 
-#: includes/MainMenuLinksArray.php:131
+#: includes/MainMenuLinksArray.php:544
 msgid "Discount Matrix"
 msgstr "할인 매트릭스"
 
-#: includes/MainMenuLinksArray.php:135
+#: includes/MainMenuLinksArray.php:562
 msgid "Inventory Locations Maintenance"
 msgstr "재고 위치 유지"
 
-#: includes/MainMenuLinksArray.php:135
+#: includes/MainMenuLinksArray.php:565
 msgid "Discount Category Maintenance"
 msgstr "할인 카테고리 유지 보수"
 
-#: includes/MainMenuLinksArray.php:135
+#: includes/MainMenuLinksArray.php:567
 msgid "MRP Available Production Days"
 msgstr "MRP 가능한 생산 일"
 
-#: includes/MainMenuLinksArray.php:135
+#: includes/MainMenuLinksArray.php:569
 msgid "Maintain Internal Departments"
 msgstr "내부 부서를 유지"
 
-#: includes/MainMenuLinksArray.php:135
+#: includes/MainMenuLinksArray.php:570
 msgid "Maintain Internal Stock Categories to User Roles"
 msgstr "사용자 역할에 대한 재고 카테고리 유지"
 
-#: includes/MainMenuLinksArray.php:135
+#: includes/MainMenuLinksArray.php:571
 msgid "Label Templates Maintenance"
 msgstr "라벨 템플릿 유지 보수"
 
-#: includes/MainMenuLinksArray.php:139
+#: includes/MainMenuLinksArray.php:594
 msgid "Update costs for all BOM items, from the bottom up"
 msgstr "최대 바닥에서 모든 BOM 항목에 대한 업데이트 비용,"
 
-#: includes/MainMenuLinksArray.php:139
+#: includes/MainMenuLinksArray.php:595
 msgid "Re-apply costs to Sales Analysis"
 msgstr "판매 분석에 대한 비용을 다시 적용"
 
-#: includes/MainMenuLinksArray.php:139
+#: includes/MainMenuLinksArray.php:596
 msgid "Delete sales transactions"
 msgstr "판매 트랜잭션 삭제"
 
-#: includes/MainMenuLinksArray.php:139
+#: includes/MainMenuLinksArray.php:597
 msgid "Reverse all supplier payments on a specified date"
 msgstr "지정된 날짜에 모든 공급 업체의 지불을 역"
 
-#: includes/MainMenuLinksArray.php:139
+#: includes/MainMenuLinksArray.php:598
 msgid "Update sales analysis with latest customer data"
 msgstr "최신 고객 데이터를 업데이트 판매 분석"
 
-#: includes/MainMenuLinksArray.php:143
+#: includes/MainMenuLinksArray.php:619
 msgid "Show General Transactions That Do Not Balance"
 msgstr "균형을하지 않음 일반 거래보기"
 
-#: includes/MainMenuLinksArray.php:143
+#: includes/MainMenuLinksArray.php:620
 msgid "List of items without picture"
 msgstr "사진이없는 항목의 목록"
 
-#: includes/MainMenuLinksArray.php:147
+#: includes/MainMenuLinksArray.php:628
 msgid "Make New Company"
 msgstr "새로운 회사를 만들기"
 
-#: includes/MainMenuLinksArray.php:147
+#: includes/MainMenuLinksArray.php:629
 msgid "Data Export Options"
 msgstr "데이터 내보내기 옵션"
 
-#: includes/MainMenuLinksArray.php:147
+#: includes/MainMenuLinksArray.php:630
 msgid "Import Customers from .csv file"
 msgstr ".CSV 파일에서 가져 오기 고객"
 
-#: includes/MainMenuLinksArray.php:147
+#: includes/MainMenuLinksArray.php:631
 msgid "Import Stock Items from .csv file"
 msgstr ".CSV 파일에서 가져 오기 주식 항목"
 
-#: includes/MainMenuLinksArray.php:147
+#: includes/MainMenuLinksArray.php:632
 msgid "Import Price List from .csv file"
 msgstr ".CSV 파일에서 가져 오기 가격 목록"
 
-#: includes/MainMenuLinksArray.php:147
+#: includes/MainMenuLinksArray.php:634
 msgid "Import GL Payments Receipts Or Journals From .csv file"
 msgstr "가져 오기 GL 지불 영수증 또는 .CSV 파일에서 저널"
 
-#: includes/MainMenuLinksArray.php:147
+#: includes/MainMenuLinksArray.php:635
 msgid "Create new company template SQL file and submit to webERP"
 msgstr "새로운 회사 템플릿 SQL 파일을 생성하고 webERP 제출"
 
-#: includes/MainMenuLinksArray.php:147
+#: includes/MainMenuLinksArray.php:636
 msgid "Re-calculate brought forward amounts in GL"
 msgstr "- 계산을 다시 GL에서 금액을 앞으로 가져"
 
-#: includes/MainMenuLinksArray.php:147
+#: includes/MainMenuLinksArray.php:637
 msgid "Re-Post all GL transactions from a specified period"
 msgstr "특정 기간에서 다시 후 모든 GL 거래"
 
-#: includes/MainMenuLinksArray.php:147
+#: includes/MainMenuLinksArray.php:638
 msgid "Purge all old prices"
 msgstr "모든 이전 가격을 제거"
 
-#: includes/MainMenuLinksArray.php:147
+#: includes/MainMenuLinksArray.php:639
 msgid "Remove all purchase back orders"
 msgstr ""
 
