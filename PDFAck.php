@@ -1,5 +1,5 @@
 <?php
-
+/* Prints an acknowledgement */
 
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');

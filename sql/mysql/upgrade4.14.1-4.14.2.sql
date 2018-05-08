@@ -29,13 +29,23 @@ ALTER TABLE `custbranch` CHANGE `lat` `lat` FLOAT(12,8) NOT NULL DEFAULT '0.0000
 ALTER TABLE `custbranch` CHANGE `lng` `lng` FLOAT(12,8) NOT NULL DEFAULT '0.00000000';
 
 ALTER TABLE pcashdetails MODIFY receipt text COMMENT 'Column redundant. Replaced by receipt file upload. Nov 2017.';
-INSERT INTO `scripts` (`script` ,`pagesecurity` ,`description`) VALUES ('BankAccountBalances.php',  '1',  'Shows bank accounts authorised for with balances');
 
-ALTER TABLE `stockserialitems` ADD `createdate` timestamp NULL DEFAULT CURRENT_TIMESTAMP, ADD INDEX ( `createdate` );
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('BankAccountBalances.php', '1', 'Shows bank accounts authorised for with balances');
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('GeneratePickingList.php', '11', 'Generate Picking List');
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('GLAccountGraph.php', '8', 'Shows a graph of GL account transactions');
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('PDFAck.php', '15', 'Prints an acknowledgement');
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('PDFShipLabel.php', '15', 'Prints a ship label');
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('PickingListsControlled.php', '11', 'Picking List Maintenance - Controlled');
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('PickingLists.php', '11', 'Picking List Maintenance');
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('SelectPickingLists.php', '11', 'Search Pick Lists');
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('Z_ChangeSalesmanCode.php', '15', 'Utility to change a salesman code');
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('Z_Fix1cAllocations.php', '9', '');
+
+ALTER TABLE `stockserialitems` ADD `createdate` timestamp NULL DEFAULT CURRENT_TIMESTAMP, ADD INDEX (`createdate`);
 UPDATE stockserialitems SET createdate = NULL;
 
 UPDATE stockserialitems as stockserialitems SET createdate =
-(SELECT  trandate FROM (select trandate, stockserialitems.serialno, stockserialitems.stockid FROM stockserialitems
+(SELECT trandate FROM (select trandate, stockserialitems.serialno, stockserialitems.stockid FROM stockserialitems
 LEFT JOIN stockserialmoves ON stockserialitems.serialno=stockserialmoves.serialno
 LEFT JOIN stockmoves ON stockserialmoves.stockmoveno=stockmoves.stkmoveno
 GROUP BY stockserialitems.stockid, stockserialitems.serialno
@@ -43,12 +53,6 @@ ORDER BY trandate) AS ssi
 WHERE ssi.serialno=stockserialitems.serialno
 AND ssi.stockid=stockserialitems.stockid);
 
-INSERT INTO `scripts` ( `script` , `pagesecurity` , `description` ) VALUES ('GeneratePickingList.php', '11', 'Generate Picking List');
-INSERT INTO `scripts` ( `script` , `pagesecurity` , `description` ) VALUES ('PickingLists.php', '11', 'Picking List Maintenance');
-INSERT INTO `scripts` ( `script` , `pagesecurity` , `description` ) VALUES ('PickingListsControlled.php', '11', 'Picking List Maintenance - Controlled');
-INSERT INTO `scripts` ( `script` , `pagesecurity` , `description` ) VALUES ('SelectPickingLists.php', '11', 'Picking List Lists');
-INSERT INTO `scripts` ( `script` , `pagesecurity` , `description` ) VALUES ('PDFAck.php', '15', '');
-INSERT INTO `scripts` ( `script` , `pagesecurity` , `description` ) VALUES ('PDFShipLabel.php', '15', '');
 
 ALTER TABLE `salesorders` ADD `internalcomment` BLOB NULL DEFAULT NULL;
 
@@ -109,19 +113,17 @@ CREATE TABLE IF NOT EXISTS pickserialdetails (
 	CONSTRAINT FOREIGN KEY (`stockid`,`serialno`) REFERENCES `stockserialitems`(`stockid`,`serialno`)
 ) Engine=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO pickreq (prid, initdate, requestdate, shipdate, orderno, closed, loccode )
-     SELECT pickinglists.pickinglistno, dateprinted, pickinglistdate, deliverynotedate, pickinglists.orderno, IF(qtyexpected = qtypicked, 1, 0), fromstkloc
-       FROM pickinglists
-           JOIN pickinglistdetails ON pickinglists.pickinglistno = pickinglistdetails.pickinglistno
-           JOIN salesorders ON pickinglists.orderno = salesorders.orderno;
+INSERT INTO pickreq (prid, initdate, requestdate, shipdate, orderno, closed, loccode)
+	SELECT pickinglists.pickinglistno, dateprinted, pickinglistdate, deliverynotedate, pickinglists.orderno, IF(qtyexpected = qtypicked, 1, 0), fromstkloc
+		FROM pickinglists
+			JOIN pickinglistdetails ON pickinglists.pickinglistno = pickinglistdetails.pickinglistno
+			JOIN salesorders ON pickinglists.orderno = salesorders.orderno;
 
-INSERT INTO pickreqdetails (prid, orderlineno, stockid, qtyexpected, qtypicked, invoicedqty, shipqty )
-     SELECT pickinglistdetails.pickinglistno, pickinglistdetails.orderlineno, stkcode, qtyexpected, qtypicked, qtypicked, qtypicked
-       FROM pickinglistdetails
-           JOIN pickinglists ON pickinglistdetails.pickinglistno = pickinglists.pickinglistno
-           JOIN salesorderdetails ON salesorderdetails.orderno = pickinglists.orderno;
-
-INSERT INTO `scripts` ( `script` , `pagesecurity` , `description` ) VALUES ('Z_ChangeSalesmanCode.php', '15', '');
+INSERT INTO pickreqdetails (prid, orderlineno, stockid, qtyexpected, qtypicked, invoicedqty, shipqty)
+	SELECT pickinglistdetails.pickinglistno, pickinglistdetails.orderlineno, stkcode, qtyexpected, qtypicked, qtypicked, qtypicked
+		FROM pickinglistdetails
+			JOIN pickinglists ON pickinglistdetails.pickinglistno = pickinglists.pickinglistno
+			JOIN salesorderdetails ON salesorderdetails.orderno = pickinglists.orderno;
 
 CREATE TABLE `pcreceipts` (
 	`counterindex` INT(20) NOT NULL AUTO_INCREMENT,
@@ -136,8 +138,6 @@ CREATE TABLE `pcreceipts` (
 
 ALTER TABLE pcashdetails ADD COLUMN purpose text NULL AFTER posted;
 
-INSERT INTO `scripts` ( `script` , `pagesecurity` , `description` ) VALUES ('GLAccountGraph.php', '8', '');
-INSERT INTO `scripts` ( `script` , `pagesecurity` , `description` ) VALUES ('Z_Fix1cAllocations.php', '9', '');
 
 UPDATE config SET confvalue='4.15' WHERE confname='VersionNumber';
 
