@@ -1,17 +1,23 @@
 <?php
-/* Generate Picking List */
+/* Generate a picking list */
 
 include('includes/session.php');
+/* $Title is set in several parts of this script. */
+$ViewTopic = 'Sales';
+$BookMark = 'GeneratePickingList';
 include('includes/SQL_CommonFunctions.inc');
 
-/* Check that the config variable is set for
- * picking notes and get out if not.
- */
+/* Check that the config variable is set for picking notes and get out if not. */
 if ($_SESSION['RequirePickingNote'] == 0) {
 	$Title = _('Picking Lists Not Enabled');
 	include('includes/header.php');
+	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+		'/images/error.png" title="', // Icon image.
+		$Title, '" /> ', // Icon title.
+		$Title, '</p>';// Page title.
 	echo '<br />';
 	prnMsg(_('The system is not configured for picking lists. A configuration parameter is required where picking slips are required. Please consult your system administrator.'), 'info');
+	/*prnMsg(_('The system is configured to NOT use picking lists. In order for a picking note to occur before an order can be delivered, a configuration parameter must be activated. Please, consult your system administrator.'), 'info');*/
 	include('includes/footer.php');
 	exit;
 }
@@ -20,13 +26,16 @@ if ($_SESSION['RequirePickingNote'] == 0) {
 if ((!isset($_GET['TransNo']) or $_GET['TransNo'] == '') and !isset($_POST['TransDate'])) {
 	$Title = _('Select Picking Lists');
 	include('includes/header.php');
+	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+		'/images/sales.png" title="', // Icon image.
+		_('Search'), '" /> ', // Icon title.
+		$Title, '</p>';// Page title.
 	$SQL = "SELECT locations.loccode,
 			locationname
 		FROM locations
 		INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" . $_SESSION['UserID'] . "' AND locationusers.canupd=1";
 	$Result = DB_query($SQL);
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/sales.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" name="form">
+	echo '<br /><form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" name="form">
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<table class="selection">
 		<tr>

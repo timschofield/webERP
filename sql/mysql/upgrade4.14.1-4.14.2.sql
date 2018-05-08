@@ -1,4 +1,6 @@
 ALTER TABLE `banktrans` ADD `chequeno` VARCHAR(16) NOT NULL DEFAULT '' AFTER `currcode`;
+ALTER TABLE `custbranch` CHANGE `lat` `lat` FLOAT(12,8) NOT NULL DEFAULT '0.00000000';
+ALTER TABLE `custbranch` CHANGE `lng` `lng` FLOAT(12,8) NOT NULL DEFAULT '0.00000000';
 ALTER TABLE `supptrans` ADD `chequeno` VARCHAR(16) NOT NULL DEFAULT '' AFTER `hold`;
 ALTER TABLE `supptrans` ADD `void` TINYINT(1) NOT NULL DEFAULT 0 AFTER `chequeno`;
 ALTER table `supptrans` DROP KEY `TypeTransNo`;
@@ -25,21 +27,7 @@ CREATE TABLE `pcashdetailtaxes` (
 	PRIMARY KEY(counterindex)
 ) Engine=InnoDB DEFAULT CHARSET=utf8;
 
-ALTER TABLE `custbranch` CHANGE `lat` `lat` FLOAT(12,8) NOT NULL DEFAULT '0.00000000';
-ALTER TABLE `custbranch` CHANGE `lng` `lng` FLOAT(12,8) NOT NULL DEFAULT '0.00000000';
-
 ALTER TABLE pcashdetails MODIFY receipt text COMMENT 'Column redundant. Replaced by receipt file upload. Nov 2017.';
-
-INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('BankAccountBalances.php', '1', 'Shows bank accounts authorised for with balances');
-INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('GeneratePickingList.php', '11', 'Generate Picking List');
-INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('GLAccountGraph.php', '8', 'Shows a graph of GL account transactions');
-INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('PDFAck.php', '15', 'Prints an acknowledgement');
-INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('PDFShipLabel.php', '15', 'Prints a ship label');
-INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('PickingListsControlled.php', '11', 'Picking List Maintenance - Controlled');
-INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('PickingLists.php', '11', 'Picking List Maintenance');
-INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('SelectPickingLists.php', '11', 'Search Pick Lists');
-INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('Z_ChangeSalesmanCode.php', '15', 'Utility to change a salesman code');
-INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('Z_Fix1cAllocations.php', '9', '');
 
 ALTER TABLE `stockserialitems` ADD `createdate` timestamp NULL DEFAULT CURRENT_TIMESTAMP, ADD INDEX (`createdate`);
 UPDATE stockserialitems SET createdate = NULL;
@@ -53,10 +41,21 @@ ORDER BY trandate) AS ssi
 WHERE ssi.serialno=stockserialitems.serialno
 AND ssi.stockid=stockserialitems.stockid);
 
-
 ALTER TABLE `salesorders` ADD `internalcomment` BLOB NULL DEFAULT NULL;
 
-INSERT INTO `config`(`confname`, `confvalue`) VALUES ('MaxSerialItemsIssued','50');
+-- BEGIN: INSERT INTO section:
+INSERT INTO `config` (`confname`, `confvalue`) VALUES ('MaxSerialItemsIssued','50');
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('BankAccountBalances.php', '1', 'Shows bank accounts authorised for with balances');
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('GeneratePickingList.php', '11', 'Generate a picking list');
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('GLAccountGraph.php', '8', 'Shows a graph of GL account transactions');
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('PDFAck.php', '15', 'Print an acknowledgement');
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('PDFShipLabel.php', '15', 'Print a ship label');
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('PickingListsControlled.php', '11', 'Picking List Maintenance - Controlled');
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('PickingLists.php', '11', 'Picking List Maintenance');
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('SelectPickingLists.php', '11', 'Select a picking list');
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('Z_ChangeSalesmanCode.php', '15', 'Utility to change a salesman code');
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('Z_Fix1cAllocations.php', '9', '');
+-- END: INSERT INTO section.
 
 CREATE TABLE IF NOT EXISTS pickreq (
 	`prid` int not null auto_increment,
@@ -113,6 +112,7 @@ CREATE TABLE IF NOT EXISTS pickserialdetails (
 	CONSTRAINT FOREIGN KEY (`stockid`,`serialno`) REFERENCES `stockserialitems`(`stockid`,`serialno`)
 ) Engine=InnoDB DEFAULT CHARSET=utf8;
 
+-- TABLE pickinglists (pickinglistno, orderno, pickinglistdate, dateprinted, deliverynotedate)
 INSERT INTO pickreq (prid, initdate, requestdate, shipdate, orderno, closed, loccode)
 	SELECT pickinglists.pickinglistno, dateprinted, pickinglistdate, deliverynotedate, pickinglists.orderno, IF(qtyexpected = qtypicked, 1, 0), fromstkloc
 		FROM pickinglists
