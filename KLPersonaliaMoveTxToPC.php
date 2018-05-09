@@ -138,7 +138,14 @@ function submit($Title, $Company, $LastDateOfPeriod, $PaymentDate, $SalaryType, 
 								$myrow['komisiretail'] +
 								$myrow['komisisupport'] +
 								$myrow['bonuspenjualan'];
-				MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "COMMISSIONS", $PaymentDate, $Commissions, $myrow['codename'], $db);
+				if (($myrow['codename'] == 'Ricard') OR 
+					($myrow['codename'] == 'Laia')){
+					// Bonus paid as commissions to Ricard and Laia for PTADU goes to different GL than karyawan
+					MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "COMM-SHAREHOLDERS", $PaymentDate, $Commissions, $myrow['codename'], $db);
+						
+				}else{
+					MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "COMMISSIONS", $PaymentDate, $Commissions, $myrow['codename'], $db);
+				}
 				
 				//Shifts
 				$Shifts = $myrow['lembur'] +
