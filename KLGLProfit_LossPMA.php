@@ -23,7 +23,7 @@ if ((!isset($_POST['FromPeriod'])
 	echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 		'/images/printer.png" title="' .// Icon image.
 		_('Print Statement of Comprehensive Income') . '" /> ' .// Icon title.
-		_('Print Profit and Loss Report') . '</p>';// Page title.
+		$Title . '</p>';// Page title.
 //		_('Print Statement of Comprehensive Income') . '</p>';// Page title.
 
 	echo '<div class="page_help_text">' . _('Profit and loss statement (P&amp;L), also called an Income Statement, or Statement of Operations, this is the statement that indicates how the revenue (money received from the sale of products and services before expenses are taken out, also known as the "top line") is transformed into the net income (the result after all revenues and expenses have been accounted for, also known as the "bottom line").') .
