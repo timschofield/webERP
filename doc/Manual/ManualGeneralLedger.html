@@ -275,176 +275,171 @@
 </div>
 
 <h2>General Ledger Inquiries and Reports</h2>
-<p>The webERP General Ledger module has the following reports:</p>
-<ul>
-	<li><h3><a id="TrialBalance">Trial Balance</a></h3>
-		<p>The Trial Balance is run from the Reports/Inquiries menu in the General Ledger module. It can be run for any range of periods, including running it over a financial year end. So for instance if the financial year end is 31st December, it is still possible to run it for a 6 month period from October to March. It can also be run for a range of months greater than 1 year. This provides great flexibility in the reporting system.</p>
-		<p>It can be run as a PDF which can be printed, emailed, saved to an archive etc, or can be viewed on screen.</p>
-		<p>Whilst viewing the on screen version, clicking on the account code takes you to the GL Account Inquiry screen for that account, and for the period range selected for the Trial Balance.</p>
-	</li>
-	<li>
-		<h3><a id="GLAccountInquiry">General Ledger Account Inquiry</a></h3>
-		<p>You can view the transactions for individual accounts, for a selected range of periods. To view an inquiry from the main menu, select "Account Inquiry" from the Reports/Inquiries menu in the General Ledger module.</p>
-		<p>You are then taken to an account selection screen, where you can search for an account either by it's code, or by it's description. From the list of possible accounts that you are shown, simply click on the button for the account code that you are interested in.</p>
-		<p>Now you will see a screen with a drop down list of GL codes, with the one you chose as the selected one. You can now choose to filter the inquiry by tag, or to show all transactions. Finally a select box with all defined periods will be shown, and the current month will be highlighted. You can drag across multiple periods to highlight whatever periods you require.</p>
-		<p>Once this is done clicking on Show account transactions will list all the transactions for the chosen account, and will be listed and totalled by period.</p>
-		<p>You can also enter the account inquiry via any of the top level reports, simply by clicking on the account code in those reports.</p>
-		<p>To print the inquiry, simply click the printer icon in the top right of the table, and the inquiry will be printed.</p>
-	</li>
-	<li>
+<p>The webERP General Ledger module has the following inquiries and reports:</p>
 
-<h3><a id="GLAccountGraph">Graph of Account Transactions</a></h3>
-<p>Using this script you can display a graph of General Ledger account transactions.</p>
-
-	</li>
-	<li>
-		<h3><a id="GLAccountReport">General Ledger Account Listing Report</a></h3>
-		<p>Using this option you can produce a pdf report of all transactions for selected accounts, over a selected period. To produce this report, use the "Account Listing" option from the Inquiries/Reports menu on the General Ledger module.</p>
-		<p>You can select a range of accounts, by clicking and dragging within the Accounts select box, and likewise you can select a range of periods by clicking and selecting a range within the periods selection box.</p>
-		<p>The report can also be filtered by individual tag, or all tags can be shown</p>
-	</li>
-	<li>
-		<h3><a id="GLAccountCSV">General Ledger Output to CSV file</a></h3>
-		<p>Using this option you can create a csv file of all transactions for selected accounts, over a selected period. This file can be opened by any spreadsheet package for you to use the data to produce any reports you may want. To produce this report, use the "Account Listing to CSV File" option from the Inquiries/Reports menu on the General Ledger module.</p>
-		<p>You can select a range of accounts, by clicking and dragging within the Accounts select box, and likewise you can select a range of periods by clicking and selecting a range within the periods selection box.</p>
-		<p>The report can also be filtered by individual tag, or all tags can be shown</p>
-	</li>
-	<li>
-		<h3><a id="GLJournalInquiry">General Ledger Journal Inquiry</a></h3>
-		<p>You can produce a list of all general ledgedrs that have been produced within a given date range, and/or a range of journal numbers. To do this, select thje "General Ledger Journal Inquiry" from the Reports/Inquiries menu in the General Ledger module.</p>
-		<p>webERP will tell you the possible journal number range by giving the highest and lowest numbers that it currently has in the system. You can choose any numbers within that range to show in the inquiry.</p>
-		<p>This will produce a table of all journals, with their individual journal lines for the criteria specified. To print this table, just click on the printer icon in the top right hand corner.</p>
-		<p>You can produce a pdf of individual journals, by clicking on the "print" link at the end of the first line of the required journal.</p>
-	</li>
+<!-- BEGIN: To review. -->
+<h3><a id="BankAccountBalances">Bank Account Balances</a></h3>
+<p>This script displays the bank accounts authorised for with balances.</p>
+<!-- END: To review. -->
 
 <!-- BEGIN: To review. -->
 <h3><a id="BankReconciliation">Bank Account Reconciliation Statement</a></h3>
-
 <p>This script displays the bank reconciliation for a selected bank account.</p>
 <!-- END: To review. -->
 
-	<li>
-		<h3><a id="ChequePaymentListing">Cheque Payment Listing</a></h3>
-		<p>The cheque payments listing function allows you to create a PDF summary of all payments made from the bank account you specify, within a date range that you specify.</p>
-		<p>To access this functionality, choose "Cheque Payments Listing" from the Reports/Inquiries menu of the General Ledger Module</p>
-	</li>
-	<li>
-		<h3><a id="DailyBankTransactions">Bank Transactions Inquiry</a></h3>
-		<p>This inquiry allows you to view all bank transactions for a selected date range, and the inquiry can be filtered by matched or unmatched transactions, or all transactions can be chosen.</p>
-		<p>To prnt this inquiry just click on the printer con in the top right hand corner of the table.</p>
-		<p>The inquiry can be selected by choosing "Bank Transactions Inquiry" from the Inquiries/Reports menu in the General Ledger module.</p>
-	</li>
-	<li>
-		<h3><a id="BalanceSheet">Balance Sheet</a></h3>
-		<p>Balance Sheet (or Statement of Financial Position) is a summary of balances. Assets, liabilities and ownership equity is listed as at a period end. It be accessed by choosing the "Balance Sheet" option from the Reports/Inquiries menu in the General Ledger module.</p>
-		<p>The balance sheet has three parts: assets, liabilities and ownership equity. The main categories of assets are listed first and are followed by the liabilities. The difference between the assets and the liabilities is known as equity or the net assets or the net worth or capital of the company and according to the accounting equation, net worth must equal assets minus liabilities.</p>
-		<p>webERP is an "accrual" based system (not a "cash based" system). Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.</p>
-		<p>The report can be run as a pdf file for later printing, emailing, or archiving, or it can be shown on screen. It can be run in summary mode - just showing the totals for each account group, or in detailed mode listing each general ledger account balance for all balance sheet accounts grouped by account group.</p>
-	</li>
-	<li>
-		<h3><a id="ProfitAndLoss">Profit and Loss Statement</a></h3>
-		<p>Profit and Loss statement (P&amp;L), also called an Income Statement, or Statement of Operations can be accessed by choosing the "Profit and Loss Statement" option from the Reports/Inquiries menu in the General Ledger module. This is the statement that indicates how the revenue (money received from the sale of products and services before expenses are taken out, also known as the "top line") is transformed into the net income (the result after all revenues and expenses have been accounted for, also known as the "bottom line").</p>
-		<p>The purpose of the income statement is to show whether the company made or lost money during the period being reported. The P&amp;L is reported for a user selectable range of periods.</p>
-		<p>The Profit and Loss report can be run as a pdf file for later printing, emailing, or archiving, or it can be shown on screen. It can be run in summary mode - just showing the totals for each account group, or in detailed mode listing each general ledger account balance for all profit and loss accounts grouped by account group.</p>
-	</li>
-<!-- ----------------------------------------------------------------------- -->
-	<li>
-		<h3><a id="GLChangesInEquity">Statement of Changes in Equity</a></h3>
-		<p>The statement of changes in equity, often referred to as statement of retained earnings, details the change in owners&apos; equity over an accounting period by presenting the movement in reserves comprising the shareholders&apos; equity.</p>
-		<p>The purpose of the statement of changes in equity is to show the changes in a company&apos;s retained earnings during the period being reported.</p>
-		<p>The changes in equity report can be run as a pdf file for later printing, emailing, or archiving, or it can be shown on screen. It can be run in summary mode - just showing the totals for each account group, or in detailed mode listing each general ledger account balance for all profit and loss accounts grouped by account group.</p>
-	</li>
-<!-- ----------------------------------------------------------------------- -->
-	<li>
-		<h3><a id="GLCashFlows">Statement of Cash Flows</a></h3>
-		<p>The statement of cash flows, also known as the successor of the old source and application of funds statement, reports how changes in balance sheet accounts and income affect cash and cash equivalents, and breaks the analysis down to operating, investing and financing activities (see <a href="ManualContents.php?
-ViewTopic=GeneralLedger#GLCashFlowsSetup">GLCashFlowsSetup</a>).</p>
-		<p>The purpose of the statement of cash flows is to show where the company got their money from and how it was spent during the period being reported for a user selectable range of periods.</p>
-		<p>The statement of cash flows represents a period of time. This contrasts with the statement of financial position, which represents a single moment in time.</p>
-		<p>webERP is an "accrual" based system (not a "cash based" system). Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.</p>
-		<p>It can be generated using either direct method or indirect method. The main difference between them is the cash flows from operating activities, the first section of the statement of cash flows; there is no difference in the investing and financing activities sections.</p>
-			<h4><a id="GLCashFlowsDirect">Statement of Cash Flows using Direct Method</a></h4>
-			<p>The cash flows from operating activities will show lines such as cash from customers and cash paid to suppliers. "<i>Major classes of gross cash receipts and gross cash payments are disclosed</i>" (Reference: IAS 7, paragraph 18).</p>
-			<h4><a id="GLCashFlowsIndirect">Statement of Cash Flows using Indirect Method</a></h4>
-			<p>The cash flows from operating activities will include net income followed by the adjustments needed to convert the total net income to the cash amount from operating activities. "<i>Profit or loss is adjusted for the effects of transactions of a non-cash nature, any deferrals or accruals of past or future operating cash receipts or payments, and items of income or expense associated with investing or financing cash flows</i>" (Reference: IAS 7, paragraph 18).</p>
-			<p>Activities are reported on a net basis (only one line per account).</p>
-			<p>Report parameters:</p>
-			<ul>
-				<li><b>Select period from.</b> Select the beginning of the reporting period. Default: first period of the current fiscal year.</li>
-				<li><b>Select period to.</b> Select the end of the reporting period. Default: current period.</li>
-				<li><b>Show the budget for the period.</b> Check this box to show the budget for the period. Default: off.</li>
-				<li><b>Show accounts with zero balance.</b> Check this box to show all accounts including those with zero balance. Default: off.</li>
-				<li><b>Show cash and cash equivalents accounts.</b> Check this box to show cash and cash equivalents accounts. Use this por validation, not for final report. Default: off.</li>
-			</ul>
-			<p><b>Note 1</b>. The "<i>net profit for the period</i>" is calculated from the accounts of the <i>statement of comprehensive income</i>.</p>
-			<p><b>Note 2</b>. The "<i>dividends</i>" are calculated as "<i>net profit for the period</i>" minus "<i>retained earnings</i>". The "<i>retained earnings</i>" are calculated using the complement method; that is: the changes of retained earnings are equal to the opposite of changes in other <i>statement of financial position</i> accounts. This is done to correct the impact of the "<i>net profit for the period</i>" underreporting before the end of that period; so, if you have differences between dividents in this report and the real dividend payments, check retained earnings related accounts.</p>
-			<p><b>Warning!</b> Although the standard states that "<i>Net profit for the period</i>", "<i>Dividends</i>", and "<i>No effect on cash flow</i>" are part of section "<i>Operating activities</i>", in this report they are shown separately to cover the accountants that use to separate those accounts.</p>
-	</li>
-<!-- ----------------------------------------------------------------------- -->
-	<li>
-		<h3><a id="AnalysisHorizontal">Horizontal analysis</a></h3>
-		<p>The horizontal analysis, also known as trend analysis, is a financial statement analysis technique that shows changes in the amounts of corresponding financial statement items over a period of time. It is a useful tool to evaluate trend situations.</p>
-		<p>The statements for two periods are used in horizontal analysis. The earliest period is used as the base period. The items on the later statement are compared with items on the statement of the base period. The changes are shown both in currency (actual change) and percentage (relative change).</p>
-		<p>The actual change is calculated as <i>selected_period</i> - <i>previous_period</i>.
-		<p>The relative change is calculated as (<i>selected_period</i> - <i>previous_period</i>) / <i>previous_period</i> * 100.
-		<h4><a id="AnalysisHorizontalPosition">Horizontal Analysis of Statement of Financial Position</a></h4>
-		<p>The debit amounts (assets) of the selected and previous statement of financial position are shown as positive numbers; the credit amounts (liabilities and equity) are shown as negative numbers.</p>
-		<p>The sources of funds are shown as positive numbers in the absolute variation column; the applications of funds are shown as negative numbers in the absolute variation column.</p>
-		<p>The increasing items are shown as positive numbers in the relative variation column; the decreasing items are shown as negative numbers in the relative variation column.</p>
-		<h4><a id="AnalysisHorizontalIncome">Horizontal Analysis of Statement of Comprehensive Income</a></h4>
-		<p>The debit amounts (revenues) of the selected and previous statement of comprehensive income are shown as positive numbers; the credit amounts (costs and expenses) are shown as negative numbers.</p>
-		<p>The changes that increases the net profit are shown as positive numbers in the absolute variation column; the changes that decreases the net profit are shown as negative numbers in the absolute variation column.</p>
-		<p>The increasing items are shown as positive numbers in the relative variation column; the decreasing items are shown as negative numbers in the relative variation column.</p>
-		<h4><a id="AnalysisHorizontalChangesInEquity">Horizontal Analysis of Statement of Changes in Equity</a></h4>
-		<p>.</p>
-		<p>The changes that increases the retained earnings are shown as positive numbers in the absolute variation column; the changes that decreases the retained earnings are shown as negative numbers in the absolute variation column.</p>
-		<p>The increasing items are shown as positive numbers in the relative variation column; the decreasing items are shown as negative numbers in the relative variation column.</p>
-		<h4><a id="AnalysisHorizontalCashFlows">Horizontal Analysis of Statement of Cash Flows</a></h4>
-		<p>The source amounts (where the money has come from) of the selected and previous statement of cash flows are shown as positive amounts; the application amounts (where the money has gone) are shown as negative amounts.</p>
-		<p>The changes that increases the cash and cash equivalents are shown as positive numbers in the absolute variation column; the changes that decreases the cash and cash equivalents are shown as negative numbers in the absolute variation column.</p>
-		<p>The increasing items are shown as positive numbers in the relative variation column; the decreasing items are shown as negative numbers in the relative variation column.</p>
-	</li>
-<!-- ----------------------------------------------------------------------- -->
-	<li>
-		<h3><a id="TagReports">Tag Reports</a></h3>
-		<p>An Income an Expenditure report can be produced, filtered by individual tags. So for instance following the example above, if you wished to view the costs associated with a particular vehicle you can run this report selecting the appropriate tag for the vehicle to report on to find the information.</p>
-		<p>As with the Profit And Loss report, this can be produced as an on screen report, or as a pdf.</p>
-		<p>The report can be run by selecting "Tag Reports" from the Reports/Inquiries menu in the General Ledger module.</p>
-	</li>
-	<li>
-		<h3><a id="TaxReports">Tax return reports</a></h3>
-		<p>To print the reports for your VAT/Sales tax/Purchase tax returns, choose the &quot;Tax reports&quot; option from the Reports/Inquiries menu in the General Ledger module.</p>
-		<p>You can choose a report for any of the tax authorities within which you operate and webERP will only print those transactions needed for your report.</p>
-		<p>The report can be run for one month, two months, a quarter, or for six months depending on the requirements for this particular tax authority.</p>
-		<p>You can run a summary report to get just the relevant totals, or a detailed report to list all the transactions within that total.</p>
-		<p>The report will be run as a pdf file for printing, emailing, archiving etc.</P>
-	</li>
-</ul>
+<h3><a id="ChequePaymentListing">Cheque Payment Listing</a></h3>
+<p>The cheque payments listing function allows you to create a PDF summary of all payments made from the bank account you specify, within a date range that you specify.</p>
+<p>To access this functionality, choose "Cheque Payments Listing" from the Reports/Inquiries menu of the General Ledger Module</p>
 
+<h3><a id="DailyBankTransactions">Bank Transactions Inquiry</a></h3>
+<p>This inquiry allows you to view all bank transactions for a selected date range, and the inquiry can be filtered by matched or unmatched transactions, or all transactions can be chosen.</p>
+<p>To prnt this inquiry just click on the printer con in the top right hand corner of the table.</p>
+<p>The inquiry can be selected by choosing "Bank Transactions Inquiry" from the Inquiries/Reports menu in the General Ledger module.</p>
+
+<h3><a id="GLAccountInquiry">General Ledger Account Inquiry</a></h3>
+<p>You can view the transactions for individual accounts, for a selected range of periods. To view an inquiry from the main menu, select "Account Inquiry" from the Reports/Inquiries menu in the General Ledger module.</p>
+<p>You are then taken to an account selection screen, where you can search for an account either by it's code, or by it's description. From the list of possible accounts that you are shown, simply click on the button for the account code that you are interested in.</p>
+<p>Now you will see a screen with a drop down list of GL codes, with the one you chose as the selected one. You can now choose to filter the inquiry by tag, or to show all transactions. Finally a select box with all defined periods will be shown, and the current month will be highlighted. You can drag across multiple periods to highlight whatever periods you require.</p>
+<p>Once this is done clicking on Show account transactions will list all the transactions for the chosen account, and will be listed and totalled by period.</p>
+<p>You can also enter the account inquiry via any of the top level reports, simply by clicking on the account code in those reports.</p>
+<p>To print the inquiry, simply click the printer icon in the top right of the table, and the inquiry will be printed.</p>
+
+<!-- BEGIN: To review. -->
+<h3><a id="GLAccountGraph">Graph of Account Transactions</a></h3>
+<p>Using this script you can display a graph of General Ledger account transactions.</p>
+<!-- END: To review. -->
+
+<h3><a id="GLAccountReport">General Ledger Account Listing Report</a></h3>
+<p>Using this option you can produce a pdf report of all transactions for selected accounts, over a selected period. To produce this report, use the "Account Listing" option from the Inquiries/Reports menu on the General Ledger module.</p>
+<p>You can select a range of accounts, by clicking and dragging within the Accounts select box, and likewise you can select a range of periods by clicking and selecting a range within the periods selection box.</p>
+<p>The report can also be filtered by individual tag, or all tags can be shown</p>
+
+<h3><a id="GLAccountCSV">General Ledger Output to CSV file</a></h3>
+<p>Using this option you can create a csv file of all transactions for selected accounts, over a selected period. This file can be opened by any spreadsheet package for you to use the data to produce any reports you may want. To produce this report, use the "Account Listing to CSV File" option from the Inquiries/Reports menu on the General Ledger module.</p>
+<p>You can select a range of accounts, by clicking and dragging within the Accounts select box, and likewise you can select a range of periods by clicking and selecting a range within the periods selection box.</p>
+<p>The report can also be filtered by individual tag, or all tags can be shown</p>
+
+<h3><a id="GLJournalInquiry">General Ledger Journal Inquiry</a></h3>
+<p>You can produce a list of all general ledgedrs that have been produced within a given date range, and/or a range of journal numbers. To do this, select thje "General Ledger Journal Inquiry" from the Reports/Inquiries menu in the General Ledger module.</p>
+<p>webERP will tell you the possible journal number range by giving the highest and lowest numbers that it currently has in the system. You can choose any numbers within that range to show in the inquiry.</p>
+<p>This will produce a table of all journals, with their individual journal lines for the criteria specified. To print this table, just click on the printer icon in the top right hand corner.</p>
+<p>You can produce a pdf of individual journals, by clicking on the "print" link at the end of the first line of the required journal.</p>
+
+<h3><a id="TrialBalance">Trial Balance</a></h3>
+<p>The Trial Balance is run from the Reports/Inquiries menu in the General Ledger module. It can be run for any range of periods, including running it over a financial year end. So for instance if the financial year end is 31st December, it is still possible to run it for a 6 month period from October to March. It can also be run for a range of months greater than 1 year. This provides great flexibility in the reporting system.</p>
+<p>It can be run as a PDF which can be printed, emailed, saved to an archive etc, or can be viewed on screen.</p>
+<p>Whilst viewing the on screen version, clicking on the account code takes you to the GL Account Inquiry screen for that account, and for the period range selected for the Trial Balance.</p>
+
+<h3><a id="BalanceSheet">Balance Sheet</a></h3>
+<p>Balance Sheet (or Statement of Financial Position) is a summary of balances. Assets, liabilities and ownership equity is listed as at a period end. It be accessed by choosing the "Balance Sheet" option from the Reports/Inquiries menu in the General Ledger module.</p>
+<p>The balance sheet has three parts: assets, liabilities and ownership equity. The main categories of assets are listed first and are followed by the liabilities. The difference between the assets and the liabilities is known as equity or the net assets or the net worth or capital of the company and according to the accounting equation, net worth must equal assets minus liabilities.</p>
+<p>webERP is an "accrual" based system (not a "cash based" system). Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.</p>
+<p>The report can be run as a pdf file for later printing, emailing, or archiving, or it can be shown on screen. It can be run in summary mode - just showing the totals for each account group, or in detailed mode listing each general ledger account balance for all balance sheet accounts grouped by account group.</p>
+
+<h3><a id="ProfitAndLoss">Profit and Loss Statement</a></h3>
+<p>Profit and Loss statement (P&amp;L), also called an Income Statement, or Statement of Operations can be accessed by choosing the "Profit and Loss Statement" option from the Reports/Inquiries menu in the General Ledger module. This is the statement that indicates how the revenue (money received from the sale of products and services before expenses are taken out, also known as the "top line") is transformed into the net income (the result after all revenues and expenses have been accounted for, also known as the "bottom line").</p>
+<p>The purpose of the income statement is to show whether the company made or lost money during the period being reported. The P&amp;L is reported for a user selectable range of periods.</p>
+<p>The Profit and Loss report can be run as a pdf file for later printing, emailing, or archiving, or it can be shown on screen. It can be run in summary mode - just showing the totals for each account group, or in detailed mode listing each general ledger account balance for all profit and loss accounts grouped by account group.</p>
+
+<!-- BEGIN: This script GLChangesInEquity.php is pending. ------------------ -->
+<h3><a id="GLChangesInEquity">Statement of Changes in Equity</a></h3>
+<p>The statement of changes in equity, often referred to as statement of retained earnings, details the change in owners&apos; equity over an accounting period by presenting the movement in reserves comprising the shareholders&apos; equity.</p>
+<p>The purpose of the statement of changes in equity is to show the changes in a company&apos;s retained earnings during the period being reported.</p>
+<p>The changes in equity report can be run as a pdf file for later printing, emailing, or archiving, or it can be shown on screen. It can be run in summary mode - just showing the totals for each account group, or in detailed mode listing each general ledger account balance for all profit and loss accounts grouped by account group.</p>
+<!-- END: This script GLChangesInEquity.php is pending. -------------------- -->
+
+<h3><a id="GLCashFlows">Statement of Cash Flows</a></h3>
+<p>The statement of cash flows, also known as the successor of the old <i>source and application of funds statement</i>, reports how changes in balance sheet accounts and income affect cash and cash equivalents, and breaks the analysis down to operating, investing and financing activities (see <a href="ManualContents.php?
+ViewTopic=GeneralLedger#GLCashFlowsSetup">GLCashFlowsSetup</a>).</p>
+<p>The purpose of the statement of cash flows is to show where the company got their money from and how it was spent during the period being reported for a user selectable range of periods.</p>
+<p>The statement of cash flows represents a period of time. This contrasts with the statement of financial position, which represents a single moment in time.</p>
+<p>webERP is an "accrual" based system (not a "cash based" system). Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.</p>
+<p>It can be generated using either direct method or indirect method. The main difference between them is the cash flows from operating activities, the first section of the statement of cash flows; there is no difference in the investing and financing activities sections.</p>
+
+<!-- BEGIN: This script GLCashFlowsDirect.php is pending. ------------------ -->
+	<h4><a id="GLCashFlowsDirect">Statement of Cash Flows using Direct Method</a></h4>
+	<p>The cash flows from operating activities will show lines such as cash from customers and cash paid to suppliers. "<i>Major classes of gross cash receipts and gross cash payments are disclosed</i>" (Reference: IAS 7, paragraph 18).</p>
+<!-- END: This script GLCashFlowsDirect.php is pending. -------------------- -->
+
+	<h4><a id="GLCashFlowsIndirect">Statement of Cash Flows using Indirect Method</a></h4>
+	<p>The cash flows from operating activities will include net income followed by the adjustments needed to convert the total net income to the cash amount from operating activities. "<i>Profit or loss is adjusted for the effects of transactions of a non-cash nature, any deferrals or accruals of past or future operating cash receipts or payments, and items of income or expense associated with investing or financing cash flows</i>" (Reference: IAS 7, paragraph 18).</p>
+	<p>Activities are reported on a net basis (only one line per account).</p>
+	<p>Report parameters:</p>
+	<ul>
+		<li><b>Select period from.</b> Select the beginning of the reporting period. Default: first period of the current fiscal year.</li>
+		<li><b>Select period to.</b> Select the end of the reporting period. Default: current period.</li>
+		<li><b>Show the budget for the period.</b> Check this box to show the budget for the period. Default: off.</li>
+		<li><b>Show accounts with zero balance.</b> Check this box to show all accounts including those with zero balance. Default: off.</li>
+		<li><b>Show cash and cash equivalents accounts.</b> Check this box to show cash and cash equivalents accounts. Use this por validation, not for final report. Default: off.</li>
+	</ul>
+	<p><b>Note 1</b>. The "<i>net profit for the period</i>" is calculated from the accounts of the <i>statement of comprehensive income</i>.</p>
+	<p><b>Note 2</b>. The "<i>dividends</i>" are calculated as "<i>net profit for the period</i>" minus "<i>retained earnings</i>". The "<i>retained earnings</i>" are calculated using the complement method; that is: the changes of retained earnings are equal to the opposite of changes in other <i>statement of financial position</i> accounts. This is done to correct the impact of the "<i>net profit for the period</i>" underreporting before the end of that period; so, if you have differences between dividents in this report and the real dividend payments, check retained earnings related accounts.</p>
+	<p><b>Warning!</b> Although the standard states that "<i>Net profit for the period</i>", "<i>Dividends</i>", and "<i>No effect on cash flow</i>" are part of section "<i>Operating activities</i>", in this report they are shown separately to cover the accountants that use to separate those accounts.</p>
+
+<!-- BEGIN: This script GLNotes.php is pending. ---------------------------- -->
+<h3><a id="GLNotes">Notes to Financial Statements</a></h3>
+<p>The notes to financial statements are an additional information pertaining to a company's operations. They are considered to be an integral part of the financial statements and are required by the full disclosure principle.</p>
+<p>Because not all relevant financial information can be communicated in the main reporting documents, such as statement of financial position and income statement, they are necessary to show non-numeric data, <i>"comprising a summary of significant accounting policies and other explanatory notes"</i> (Reference: IAS 1, paragraph 10), and details of relevant GL accounts.</p>
+<p>This script helps with the preparation of these notes.</p>
+<!-- END: This script GLNotes.php is pending. ------------------------------ -->
+
+<h3><a id="AnalysisHorizontal">Horizontal analysis</a></h3>
+<p>The horizontal analysis, also known as trend analysis, is a financial statement analysis technique that shows changes in the amounts of corresponding financial statement items over a period of time. It is a useful tool to evaluate trend situations.</p>
+<p>The statements for two periods are used in horizontal analysis. The earliest period is used as the base period. The items on the later statement are compared with items on the statement of the base period. The changes are shown both in currency (actual change) and percentage (relative change).</p>
+<p>The actual change is calculated as <i>selected_period</i> - <i>previous_period</i>.
+<p>The relative change is calculated as (<i>selected_period</i> - <i>previous_period</i>) / <i>previous_period</i> * 100.
+
+	<h4><a id="AnalysisHorizontalPosition">Horizontal Analysis of Statement of Financial Position</a></h4>
+	<p>The debit amounts (assets) of the selected and previous statement of financial position are shown as positive numbers; the credit amounts (liabilities and equity) are shown as negative numbers.</p>
+	<p>The sources of funds are shown as positive numbers in the absolute variation column; the applications of funds are shown as negative numbers in the absolute variation column.</p>
+	<p>The increasing items are shown as positive numbers in the relative variation column; the decreasing items are shown as negative numbers in the relative variation column.</p>
+
+	<h4><a id="AnalysisHorizontalIncome">Horizontal Analysis of Statement of Comprehensive Income</a></h4>
+	<p>The debit amounts (revenues) of the selected and previous statement of comprehensive income are shown as positive numbers; the credit amounts (costs and expenses) are shown as negative numbers.</p>
+	<p>The changes that increases the net profit are shown as positive numbers in the absolute variation column; the changes that decreases the net profit are shown as negative numbers in the absolute variation column.</p>
+	<p>The increasing items are shown as positive numbers in the relative variation column; the decreasing items are shown as negative numbers in the relative variation column.</p>
+
+<!-- BEGIN: This script AnalysisHorizontalChangesInEquity.php is pending. -- -->
+	<h4><a id="AnalysisHorizontalChangesInEquity">Horizontal Analysis of Statement of Changes in Equity</a></h4>
+	<!--p>Meaning of quantity signs...</p-->
+	<p>The changes that increases the retained earnings are shown as positive numbers in the absolute variation column; the changes that decreases the retained earnings are shown as negative numbers in the absolute variation column.</p>
+	<p>The increasing items are shown as positive numbers in the relative variation column; the decreasing items are shown as negative numbers in the relative variation column.</p>
+<!-- END: This script GLNotes.php is pending. ------------------------------ -->
+
+<!-- BEGIN: This script AnalysisHorizontalCashFlows.php is pending. -------- -->
+	<h4><a id="AnalysisHorizontalCashFlows">Horizontal Analysis of Statement of Cash Flows</a></h4>
+	<p>The source amounts (where the money has come from) of the selected and previous statement of cash flows are shown as positive amounts; the application amounts (where the money has gone) are shown as negative amounts.</p>
+	<p>The changes that increases the cash and cash equivalents are shown as positive numbers in the absolute variation column; the changes that decreases the cash and cash equivalents are shown as negative numbers in the absolute variation column.</p>
+	<p>The increasing items are shown as positive numbers in the relative variation column; the decreasing items are shown as negative numbers in the relative variation column.</p>
+<!-- END: This script GLNotes.php is pending. ------------------------------ -->
+
+<h3><a id="TagReports">Tag Reports</a></h3>
+<p>An Income an Expenditure report can be produced, filtered by individual tags. So for instance following the example above, if you wished to view the costs associated with a particular vehicle you can run this report selecting the appropriate tag for the vehicle to report on to find the information.</p>
+<p>As with the Profit And Loss report, this can be produced as an on screen report, or as a pdf.</p>
+<p>The report can be run by selecting "Tag Reports" from the Reports/Inquiries menu in the General Ledger module.</p>
+
+<h3><a id="TaxReports">Tax return reports</a></h3>
+<p>To print the reports for your VAT/Sales tax/Purchase tax returns, choose the &quot;Tax reports&quot; option from the Reports/Inquiries menu in the General Ledger module.</p>
+<p>You can choose a report for any of the tax authorities within which you operate and webERP will only print those transactions needed for your report.</p>
+<p>The report can be run for one month, two months, a quarter, or for six months depending on the requirements for this particular tax authority.</p>
+<p>You can run a summary report to get just the relevant totals, or a detailed report to list all the transactions within that total.</p>
+<p>The report will be run as a pdf file for printing, emailing, archiving etc.</p>
 
 
 <div class="floatright"><a class="minitext" href="#top">⬆ Top</a></div>
 <h2>Maintenance</h2>
 
-<!--h3><a id="BankAccounts">Bank Accounts</a></h3>
-<p>.</p-->
+<h3><a id="AccountSections">Account Sections (maintenance)</a></h3>
+<p>This script allows you to define the sections in the general ledger reports. See: <a href="ManualContents.php?ViewTopic=GeneralLedger#AccountSections">Account Sections</a>.</p>
+<!--p>TO DO: input data description.</p-->
 
-<h3><a id="BankAccountUsers">Bank Account Authorised Users</a></h3>
-<p>This software has methods to assign permissions or access rights to specific users and groups of users. The system controls the ability of the users to view and make changes to the contents of the bank accounts.</p>
-<p>With this script, you can add or remove the access permission for each user that grants or denies his ability to view or update that bank account.</p>
+<h3><a id="AccountGroups">Account Groups (maintenance)</a></h3>
+<p>This script allows you to define the groupings of general ledger accounts. See: <a href="ManualContents.php?ViewTopic=GeneralLedger#AccountGroups">Account Groups</a>.</p>
+<!--p>TO DO: input data description.</p-->
 
-<h3><a id="UserBankAccounts">User Authorised Bank Accounts</a></h3>
-<p>This software has methods to assign permissions or access rights to specific users and groups of users. The system controls the ability of the users to view and make changes to the contents of the bank accounts.</p>
-<p>With this script, you can add or remove the access permission for each bank account that grants or denies the ability of that user to view or update it.</p>
-
-<!--h3><a id="AccountSections">Account Sections</a></h3>
-<p>.</p-->
-
-<!--h3><a id="AccountGroups">Account Groups</a></h3>
-<p>.</p-->
-
-<!--h3><a id="GLAccounts">GL Accounts</a></h3>
-<p>.</p-->
+<h3><a id="GLAccounts">GL Accounts</a> (maintenance)</a></h3>
+<p>This script allows you to define the general ledger accounts. You can delete, insert, or update an account. See: <a href="ManualContents.php?ViewTopic=GeneralLedger#GLAccounts">GL Accounts</a>.</p>
+<!--p>TO DO: input data description.</p-->
 
 <h3><a id="GLAccountUsers">GL Account Authorised Users</a></h3>
 <p>This software has methods to assign permissions or access rights to specific users and groups of users. The system controls the ability of the users to view or make changes to the contents of the GL accounts.</p>
@@ -466,8 +461,28 @@ ViewTopic=SpecialUtilities#Z_GLAccountUsersCopyAuthority">Copy Authority of GL A
 <p>If you need to copy the access rights to general ledger accounts from one user to another, you can use an utility. See: <a href="ManualContents.php?
 ViewTopic=SpecialUtilities#Z_GLAccountUsersCopyAuthority">Copy Authority of GL Accounts from one user to another</a>.</p>
 
-<!--h3><a id="GLBudgets">GL Budgets</a></h3>
-<p>.</p-->
+<h3><a id="GLBudgets">GL Budgets (maintenance)</a></h3>
+<!--p>This software allows you to ...</p-->
+<p>See: <a href="ManualContents.php?ViewTopic=GeneralLedger#GLBudgets">GL Budgets</a>.</p>
+<!--p>TO DO: input data description.</p-->
 
 <h3><a id="GLTagsMaintenance">GL Tags (maintenance)</a></h3>
-<p>This software allows the use of accounting tags to help you track specific units within your organization. You can set up any quantity of accounting tags. In this way, you can group transactions and assign them to cost centres, profit centres, activities centres, divisions, departments, or any units for which you need to produce a statement of comprehensive income for each "<i>tag</i>". See: <a href="#GLTags">GL Tags</a>.</p>-
+<p>This software allows the use of accounting tags to help you track specific units within your organization. You can set up any quantity of accounting tags. In this way, you can group transactions and assign them to cost centres, profit centres, activities centres, divisions, departments, or any units for which you need to produce a statement of comprehensive income for each "<i>tag</i>". See: <a href="#GLTags">GL Tags</a>.</p>
+
+<h3><a id="BankAccounts">Bank Accounts (maintenance)</a></h3>
+<!--p>This software allows you to ...</p-->
+<p>See: <a href="ManualContents.php?ViewTopic=GeneralLedger#BankAccounts">Bank Accounts</a>.</p>
+<!--p>TO DO: input data description.</p-->
+
+<h3><a id="BankAccountUsers">Bank Account Authorised Users</a></h3>
+<p>This software has methods to assign permissions or access rights to specific users and groups of users. The system controls the ability of the users to view and make changes to the contents of the bank accounts.</p>
+<p>With this script, you can add or remove the access permission for each user that grants or denies his ability to view or update that bank account.</p>
+
+<h3><a id="UserBankAccounts">User Authorised Bank Accounts</a></h3>
+<p>This software has methods to assign permissions or access rights to specific users and groups of users. The system controls the ability of the users to view and make changes to the contents of the bank accounts.</p>
+<p>With this script, you can add or remove the access permission for each bank account that grants or denies the ability of that user to view or update it.</p>
+
+
+
+
+
