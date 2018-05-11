@@ -303,6 +303,8 @@ if ($ProcessSection01){
 		OR $KL_AdministrationTeam){
 		BalanceAccountControl("111111100",          -1,          1, $periodnow, $db);
 		$NumberOfTestExecuted++;
+		BalanceAccountControl("111202030",          -1,          1, $periodnow, $db);
+		$NumberOfTestExecuted++;
 	}
 	
 	if ($KL_AdministrationTeam){
@@ -377,6 +379,10 @@ if ($ProcessSection01){
 									'111208040')", "Total Brankas RL", 1000000000, 3000000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 
+		BalanceListAccountControl("('111513000', 
+									'111513000AD')", "Total WIP",   -5000000,    5000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
+
 		BalanceAccountControl("111111200",   50000000,  100000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111202010",         -1,          1, $periodnow, $db);
@@ -388,8 +394,6 @@ if ($ProcessSection01){
 		BalanceAccountControl("111520000",         -1,          1, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111512000",   50000000,  200000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111513000",   -5000000,    5000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111800000",  200000000,  300000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
@@ -1140,20 +1144,15 @@ if ($ProcessSection02){
 	}
 	
 	if ($KL_SystemAdmin){
-//		GoodsJustArrived("PO", "KANTO", 1, $RootPath, $db);
-//		$NumberOfTestExecuted++;
 		StockToPTADU("PO", 1, 1, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		StockToPTADU("PO", 99999999, 2, $RootPath, $db);
-		$NumberOfTestExecuted++;
-//		GoodsJustArrived("WO", "KANTO", 1, $RootPath, $db);
-//		$NumberOfTestExecuted++;
 		StockToPTADU("WO", 1, 1, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		StockToPTADU("PO", 99999999, 2, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		StockToPTADU("WO", 99999999, 2, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
-
 }
 prnMsg("Performed ". $NumberOfTestExecuted . " control tests",'success');
 
