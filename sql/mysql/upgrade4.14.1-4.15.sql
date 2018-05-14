@@ -139,6 +139,6 @@ CREATE TABLE `pcreceipts` (
 ALTER TABLE pcashdetails ADD COLUMN purpose text NULL AFTER posted;
 
 
-UPDATE config SET confvalue='4.15' WHERE confname='VersionNumber';
+UPDATE config SET confvalue='4.15' WHERE confname='4.14.1';
 
 
