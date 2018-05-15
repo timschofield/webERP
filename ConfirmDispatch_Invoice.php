@@ -1322,6 +1322,27 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 /*first the cost of sales entry - GL accounts are retrieved using the function GetCOGSGLAccount from includes/GetSalesTransGLCodes.inc */
 
+/*// WORK IN PROGRESS CONSIGNMENT FOR ONLINE AND WHOLESALE 
+				$AccountCOGSbyADU = "510010000AD"; // when retail partner sells PTADU items COGS should go to PTADU
+				$ItemBelongsTo = ItemBelongsToPT($OrderLine->StockID);
+			
+				if (($ItemBelongsTo == "PTADU"){  // is a PTADU item 
+						AND (($Area == 'OWB') OR ($Area == 'OWS') // AND is a online sale OR a wholesale 
+							OR ($Area == 'WHC') OR ($Area == 'WHZ'))){
+								
+					$AccountCOGS = $AccountCOGSbyADU;
+					
+					look for partner managing the area (PTBB) and look for consignment settings
+					$PercentConsignmentPTADU
+					$AccountConsignmentSalesPTADU
+					$AccountConsignmentCOGSPartner
+					clustering line 1051 to 1129 from KLRetailPOS
+				}else{
+					$AccountCOGS = GetCOGSGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType, $db);
+				}
+*/					
+
+
 				$SQL = "INSERT INTO gltrans (type,
 											typeno,
 											trandate,
