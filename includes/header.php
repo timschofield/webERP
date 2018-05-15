@@ -74,9 +74,9 @@
 			echo '<li><a href="'.$RootPath.'/SelectProduct.php">' . _('Items')     . '</a></li>';
 			echo '<li><a href="'.$RootPath.'/SelectSupplier.php">' . _('Suppliers') . '</a></li>';
 
-			$DefaultManualLink = '<li><a rel="external" accesskey="8" href="' .  $RootPath . '../../wiki/index.php'. '">' . _('KL-Intranet') . '</a></li>';
+			$DefaultManualLink = '<li><a rel="external" accesskey="8" href="' .  $RootPath . '../../wiki/index.php'. '">' . _('Intranet KL') . '</a></li>';
 			echo $DefaultManualLink;
-			$DefaultWebLink = '<li><a rel="external" accesskey="9" href="' .   'http://www.kapal-laut.com'. '">' . _('KL-Website') . '</a></li>';
+			$DefaultWebLink = '<li><a rel="external" accesskey="9" href="' .   'http://www.kapal-laut.com'. '">' . _('Online Shop') . '</a></li>';
 			echo $DefaultWebLink;
 		}
 
