@@ -15,6 +15,11 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 
 | Description | Type | Author | Date | Details | Ref |
 |:------------|:----:|:------:|:----:|:-------:|:---:|
+
+## [v4.15] - 2018-05-20
+
+| Description | Type | Author | Date | Details | Ref |
+|:------------|:----:|:------:|:----:|:-------:|:---:|
 | Fixed bank account and related data visible to an unauthorised user in Dashboard.php | Fixed | Paul Becker | 2018-05-02 |  | [Forum](http://www.weberp.org/forum/showthread.php?tid=8161) |
 | Fix the bug that accountgroup validation used the wrong table and field reported by Laura | Fixed | Exson Qu | 2018-04-30 | [View](https://github.com/webERP-team/webERP/commit/56b66d466e3fdd4d5d55c8e1827a3ab74d69a4b8) |  |
 | Added a utility script to fix 1c allocations in AR - a GL journal will be required for the total of debtor balances changed as a result for the control account to remain in balance Z_Fix1cAllocations.php | Added | Phil Daintree | 2018-04-28 | [View](https://github.com/webERP-team/webERP/pull/45/commits/756546887bac32f3ce5d2c357b7e79f7366c0391) |  |
