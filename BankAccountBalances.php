@@ -1,17 +1,17 @@
 <?php
+/* Shows bank accounts authorised for with balances */
 
 include('includes/session.php');
-
 $Title = _('List of bank account balances');
-/* Manual links before header.php */
 $ViewTopic = 'GeneralLedger';
-$BookMark = '';
+$BookMark = 'BankAccountBalances';
 include('includes/header.php');
 
-echo '<p class="page_title_text"><img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/bank.png" title="', _('Bank Account Balances'), '" alt="" /> ',
-		_('Bank Account Balances'), '
-	</p>
-	<table>
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+	'/images/bank.png" title="', // Icon image.
+	_('Bank Account Balances'), '" /> ', // Icon title.
+	_('Bank Account Balances'), '</p>',// Page title.
+	'<table>
 		<tr>
 			<th>', _('Bank Account'), '</th>
 			<th>', _('Account Name'), '</th>
@@ -35,15 +35,15 @@ if (DB_num_rows($Result) == 0) {
 		$CurrBalanceSQL = "SELECT SUM(amount) AS balance FROM banktrans WHERE bankact='" . $MyBankRow['accountcode'] . "'";
 		$CurrBalanceResult = DB_query($CurrBalanceSQL);
 		$CurrBalanceRow = DB_fetch_array($CurrBalanceResult);
-	
+
 		$FuncBalanceSQL = "SELECT SUM(amount) AS balance FROM gltrans WHERE account='" . $MyBankRow['accountcode'] . "'";
 		$FuncBalanceResult = DB_query($FuncBalanceSQL);
 		$FuncBalanceRow = DB_fetch_array($FuncBalanceResult);
-	
+
 		$DecimalPlacesSQL = "SELECT decimalplaces FROM currencies WHERE currabrev='" . $MyBankRow['currcode'] . "'";
 		$DecimalPlacesResult = DB_query($DecimalPlacesSQL);
 		$DecimalPlacesRow = DB_fetch_array($DecimalPlacesResult);
-	
+
 		echo '<tr class="selection">
 				<td>', $MyBankRow['accountcode'], '</td>
 				<td>', $MyBankRow['bankaccountname'], '</td>
@@ -51,7 +51,7 @@ if (DB_num_rows($Result) == 0) {
 				<td class="number">', locale_number_format($FuncBalanceRow['balance'], $_SESSION['CompanyRecord']['decimalplaces']), ' ', $_SESSION['CompanyRecord']['currencydefault'], '</td>
 			</tr>';
 	}
-	
+
 	echo '</table>';
 }
 include('includes/footer.php');

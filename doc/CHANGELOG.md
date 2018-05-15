@@ -15,8 +15,13 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 
 | Description | Type | Author | Date | Details | Ref |
 |:------------|:----:|:------:|:----:|:-------:|:---:|
-| Added the latest phpxmlrpc code version 4.3.1 - using the compatibility layer though - see https://github.com/gggeek/phpxmlrpc | Updated| Phil Daintree | 2018-04-28 | [View](https://github.com/webERP-team/webERP/pull/45/commits/756546887bac32f3ce5d2c357b7e79f7366c0391) |  |
-| Added a utility script to fix 1c allocations in AR - a GL journal will be required for the total of debtor balances changed as a result for the control account to remain in balance Z_Fix1cAllocations.php | Added| Phil Daintree | 2018-04-28 | [View](https://github.com/webERP-team/webERP/pull/45/commits/756546887bac32f3ce5d2c357b7e79f7366c0391) |  |
+| Fixed bank account and related data visible to an unauthorised user in Dashboard.php | Fixed | Paul Becker | 2018-05-02 |  | [Forum](http://www.weberp.org/forum/showthread.php?tid=8161) |
+| Fix the bug that accountgroup validation used the wrong table and field reported by Laura | Fixed | Exson Qu | 2018-04-30 | [View](https://github.com/webERP-team/webERP/commit/56b66d466e3fdd4d5d55c8e1827a3ab74d69a4b8) |  |
+| Added a utility script to fix 1c allocations in AR - a GL journal will be required for the total of debtor balances changed as a result for the control account to remain in balance Z_Fix1cAllocations.php | Added | Phil Daintree | 2018-04-28 | [View](https://github.com/webERP-team/webERP/pull/45/commits/756546887bac32f3ce5d2c357b7e79f7366c0391) |  |
+| Added the latest phpxmlrpc code version 4.3.1 - using the compatibility layer though - see https://github.com/gggeek/phpxmlrpc | Changed | Phil Daintree | 2018-04-28 | [View](https://github.com/webERP-team/webERP/pull/45/commits/756546887bac32f3ce5d2c357b7e79f7366c0391) |  |
+| Fixed failure to issue invoice for customer reference is more than 20 characters | Fixed | Xiaobotian | 2018-04-27 | [View](https://github.com/webERP-team/webERP/commit/9a7f83ac16e858ac50362cb1e90a74adbdb9f419) |  |
+| Added latest SQL update script to UpgradeDatabase.php | Changed | Deibei | 2018-04-27 | [View](https://github.com/webERP-team/webERP/commit/d02430f20e6c044131828f5e27a82471e79f1723) |  |
+| Change log updated and formatted in tabular markdown | Changed | Andrew Couling | 2018-04-27 | [View](https://github.com/webERP-team/webERP/commit/bcb543774885bad573081c7798140193665b9bd1) |  |
 | Fix the bug of wrong affected scope of bom changing in BOMs.php | Fixed | Exson Qu | 2018-04-26 | [View](http://github.com/webERP-team/webERP/commit/9e8585e91) |  |
 | Rebuild languages files | Changed | Rafael Chacon | 2018-04-24 | [View](http://github.com/webERP-team/webERP/commit/1cdd72b5f) |  |
 | Minor changes to GeneratePickingList.php | Changed | Rafael Chacon | 2018-04-24 | [View](http://github.com/webERP-team/webERP/commit/ccaf2c404) |  |
