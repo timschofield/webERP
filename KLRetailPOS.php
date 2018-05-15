@@ -824,36 +824,14 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 											);
 			
 			// HARDCODED UNTIL END OF PTBB STOCK
-			// GET THE stock category to decide how we do the consignment accounting 
-			$SQL="SELECT stockmaster.categoryid
-						FROM stockmaster
-						WHERE stockmaster.stockid='" . $OrderLine->StockID . "'";
-			$ErrMsg = _('WARNING') . ': ' . _('Could not retrieve stock ID category');
-			$Result = DB_query($SQL, $ErrMsg);
-			$myStockCat = DB_fetch_array($Result);
-			$StockCategory = $myStockCat['categoryid'];
-
+			$ItemBelongsTo = ItemBelongsToPT($OrderLine->StockID);
+			
 			if ($OrderLine->StandardCost !=0){
 				/*first the cost of sales entry*/
 
 //				GET THE $$AccountCOGS depending on item category, retail partner, etc
 //				$AccountCOGS = GetCOGSGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType, $db);
-				if (($StockCategory == "SETKL") OR
-					($StockCategory == "SETBL") OR
-					($StockCategory == "SETGE") OR
-					($StockCategory == "TESTKL") OR
-					($StockCategory == "TESTBL") OR
-					($StockCategory == "TESTGE") OR
-					($StockCategory == "STABKL") OR
-					($StockCategory == "STABBL") OR
-					($StockCategory == "STABGE") OR
-					($StockCategory == "NOPOKL") OR
-					($StockCategory == "NOPOBL") OR
-					($StockCategory == "NOPOGE") OR
-					($StockCategory == "DISC20") OR
-					($StockCategory == "DISC50") OR
-					($StockCategory == "DISC80") OR
-					($StockCategory == "COMPON")){
+				if ($ItemBelongsTo == "PTBB"){
 					// IT IS A PTBB ITEM
 					if ($_SESSION['PartnerCode'] == "PTBB"){
 						// PTBB sells its own items
@@ -863,23 +841,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						$AccountCOGS = $AccountCOGSforPOIK;
 					}
 				}
-				if (($_SESSION['PercentConsignmentTADU'] > 0) AND ($_SESSION['PercentConsignmentTADU'] < 100) AND 
-					(($StockCategory == "SETKLA") OR
-					($StockCategory == "SETBLA") OR
-					($StockCategory == "SETGEA") OR
-					($StockCategory == "TESTKA") OR
-					($StockCategory == "TESTBA") OR
-					($StockCategory == "TESTGA") OR
-					($StockCategory == "STABKA") OR
-					($StockCategory == "STABBA") OR
-					($StockCategory == "STABGA") OR
-					($StockCategory == "NOPOKA") OR
-					($StockCategory == "NOPOBA") OR
-					($StockCategory == "NOPOGA") OR
-					($StockCategory == "DISC2A") OR
-					($StockCategory == "DISC5A") OR
-					($StockCategory == "DISC8A") OR
-					($StockCategory == "COMPOA"))){
+				if (($_SESSION['PercentConsignmentPTADU'] > 0) AND ($_SESSION['PercentConsignmentPTADU'] < 100) AND 
+					($ItemBelongsTo == "PTADU")){
 						// IT IS A PTADU ITEM
 					if ($_SESSION['PartnerCode'] == "PTBB"){
 						// PTBB sells PTADU items so COGS should go to PTADU
@@ -889,7 +852,6 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						$AccountCOGS = $AccountCOGSbyADU;
 					}
 				}
-//prnMsg($_SESSION['PartnerCode'] . " " . $StockCategory . " " . $AccountCOGS );
 // END OF $AccountCOGS CALCULATION FOR RETAIL AND CONSIGNMENT
 				
 				if ($Area == $_SESSION['AreaSalesCashOthers']){
@@ -972,25 +934,10 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 	
 			// CLUSTERING POIK - PTBB HARDCODED UNTIL END OF PTBB STOCK
 			if ($_SESSION['PartnerCode'] == "POIK"){
-				if (($StockCategory == "SETKL") OR
-					($StockCategory == "SETBL") OR
-					($StockCategory == "SETGE") OR
-					($StockCategory == "TESTKL") OR
-					($StockCategory == "TESTBL") OR
-					($StockCategory == "TESTGE") OR
-					($StockCategory == "STABKL") OR
-					($StockCategory == "STABBL") OR
-					($StockCategory == "STABGE") OR
-					($StockCategory == "NOPOKL") OR
-					($StockCategory == "NOPOBL") OR
-					($StockCategory == "NOPOGE") OR
-					($StockCategory == "DISC20") OR
-					($StockCategory == "DISC50") OR
-					($StockCategory == "DISC80") OR
-					($StockCategory == "COMPON")){
+				if ($ItemBelongsTo == "PTBB"){
 					// it is a PTBB item
 					$RetailPrice = round($OrderLine->Price * (1 - $OrderLine->DiscountPercent) / $ExRate,0);
-					$ConsignmentPrice = round(60 / 100 * $RetailPrice,0);
+					$ConsignmentPrice = round($_SESSION['PercentConsignmentPTADU'] / 100 * $RetailPrice,0);
 					// report the COGS for retail partner from PT BB
 					InsertIntoGLTrans("10", 
 									$InvoiceNo, 
@@ -1046,30 +993,16 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 					$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 				}
 			}
-
+//prnMsg("PercentConsignmentPTADU: ". $_SESSION['PercentConsignmentPTADU']);
+//prnMsg("ItemBelongsTo: ". $ItemBelongsTo);
 			// CLUSTERING PTADU
-			if (($_SESSION['PercentConsignmentTADU'] > 0) AND ($_SESSION['PercentConsignmentTADU'] < 100) AND 
-				(($StockCategory == "SETKLA") OR
-					($StockCategory == "SETBLA") OR
-					($StockCategory == "SETGEA") OR
-					($StockCategory == "TESTKA") OR
-					($StockCategory == "TESTBA") OR
-					($StockCategory == "TESTGA") OR
-					($StockCategory == "STABKA") OR
-					($StockCategory == "STABBA") OR
-					($StockCategory == "STABGA") OR
-					($StockCategory == "NOPOKA") OR
-					($StockCategory == "NOPOBA") OR
-					($StockCategory == "NOPOGA") OR
-					($StockCategory == "DISC2A") OR
-					($StockCategory == "DISC5A") OR
-					($StockCategory == "DISC8A") OR
-					($StockCategory == "COMPOA") OR
-					($StockCategory == "SHPACA"))){
+			if (($_SESSION['PercentConsignmentPTADU'] > 0) AND 
+				($_SESSION['PercentConsignmentPTADU'] < 100) AND 
+				($ItemBelongsTo == "PTADU")){
 				// It is a sales on consignment by PT ADU So we need to report clustering
 				
 				$RetailPrice = round($OrderLine->Price * (1 - $OrderLine->DiscountPercent) / $ExRate,0);
-				$ConsignmentPrice = round($_SESSION['PercentConsignmentTADU'] / 100 * $RetailPrice,0);
+				$ConsignmentPrice = round($_SESSION['PercentConsignmentPTADU'] / 100 * $RetailPrice,0);
 				
 				// report the COGS for retail partner from PT ADU
 				InsertIntoGLTrans("10", 

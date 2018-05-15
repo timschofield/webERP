@@ -33,7 +33,7 @@ function KapalLautRetailAreaSelection($PaymentMethod, $identifier){
 			//
 			// TEMPORARY CODE UNTIL END OF PTBB STOCK
 			//
-			if (($_SESSION['PartnerCode'] == "PTBB") AND ($_SESSION['PercentConsignmentTADU'] > 0) AND ($_SESSION['PercentConsignmentTADU'] < 100)){
+			if (($_SESSION['PartnerCode'] == "PTBB") AND ($_SESSION['PercentConsignmentPTADU'] > 0) AND ($_SESSION['PercentConsignmentPTADU'] < 100)){
 				// if it is a PTBB sale in consignment
 				// Until we have mixed stock PTBB and PTADU we do have to count on it.
 				$AllItemsArePTBB = true;

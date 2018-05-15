@@ -69,7 +69,7 @@ if(isset($_POST['submit'])) {
 					comissionccmandiri = '" . $_POST['ComissionCCMandiri'] . "',
 					comissionccbca = '" . $_POST['ComissionCCBCA'] . "',
 					comissionamexbca = '" . $_POST['ComissionAmexBCA'] . "',
-					percentconsignmentptadu = '" . $_POST['PercentConsignmentTADU'] . "',
+					percentconsignmentptadu = '" . $_POST['PercentConsignmentPTADU'] . "',
 					accountconsignmentsalesptadu = '" . $_POST['AccountConsignmentSalesPTADU'] . "',
 					accountconsignmentcogspartner = '" . $_POST['AccountConsignmentCOGSPartner'] . "',
 					counterinvoicea = '" . $_POST['CounterInvoiceA'] . "',
@@ -119,7 +119,7 @@ if(isset($_POST['submit'])) {
 		unset($_POST['ComissionCCMandiri']);
 		unset($_POST['ComissionCCBCA']);
 		unset($_POST['ComissionAmexBCA']);
-		unset($_POST['PercentConsignmentTADU']);
+		unset($_POST['PercentConsignmentPTADU']);
 		unset($_POST['AccountConsignmentSalesPTADU']);
 		unset($_POST['AccountConsignmentCOGSPartner']);
 		unset($_POST['CounterInvoiceA']);
@@ -205,7 +205,7 @@ if(isset($_POST['submit'])) {
 								'" . $_POST['ComissionCCMandiri'] . "',
 								'" . $_POST['ComissionCCBCA'] . "',
 								'" . $_POST['ComissionAmexBCA'] . "',
-								'" . $_POST['PercentConsignmentTADU'] . "',
+								'" . $_POST['PercentConsignmentPTADU'] . "',
 								'" . $_POST['AccountConsignmentSalesPTADU'] . "',
 								'" . $_POST['AccountConsignmentCOGSPartner'] . "',
 								'" . $_POST['CounterInvoiceA'] . "',
@@ -253,7 +253,7 @@ if(isset($_POST['submit'])) {
 		unset($_POST['Priority']);
 		unset($_POST['ComissionCCBCA']);
 		unset($_POST['ComissionAmexBCA']);
-		unset($_POST['PercentConsignmentTADU']);
+		unset($_POST['PercentConsignmentPTADU']);
 		unset($_POST['AccountConsignmentSalesPTADU']);
 		unset($_POST['AccountConsignmentCOGSPartner']);
 		unset($_POST['CounterInvoiceA']);
@@ -443,7 +443,7 @@ if(!isset($_GET['delete'])) {
 		$_POST['ComissionCCMandiri'] = $myrow['comissionccmandiri'];
 		$_POST['ComissionCCBCA'] = $myrow['comissionccbca'];
 		$_POST['ComissionAmexBCA'] = $myrow['comissionamexbca'];
-		$_POST['PercentConsignmentTADU'] = $myrow['percentconsignmentptadu'];
+		$_POST['PercentConsignmentPTADU'] = $myrow['percentconsignmentptadu'];
 		$_POST['AccountConsignmentSalesPTADU'] = $myrow['accountconsignmentsalesptadu'];
 		$_POST['AccountConsignmentCOGSPartner'] = $myrow['accountconsignmentcogspartner'];
 		$_POST['CounterInvoiceA'] = $myrow['counterinvoicea'];
@@ -572,8 +572,8 @@ if(!isset($_GET['delete'])) {
 	if(!isset($_POST['ComissionAmexBCA'])) {
 		$_POST['ComissionAmexBCA'] = 0;
 	}
-	if(!isset($_POST['PercentConsignmentTADU'])) {
-		$_POST['PercentConsignmentTADU'] = 0;
+	if(!isset($_POST['PercentConsignmentPTADU'])) {
+		$_POST['PercentConsignmentPTADU'] = 0;
 	}
 	if(!isset($_POST['AccountConsignmentSalesPTADU'])) {
 		$_POST['AccountConsignmentSalesPTADU'] = '';
@@ -814,7 +814,7 @@ if(!isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>' . _('% Consignment to PT ADU') . ':</td>
-			<td><input type="text" name="PercentConsignmentTADU" class="number" value="' . $_POST['PercentConsignmentTADU'] . '" size="5" maxlength="5" /></td>
+			<td><input type="text" name="PercentConsignmentPTADU" class="number" value="' . $_POST['PercentConsignmentPTADU'] . '" size="5" maxlength="5" /></td>
 		</tr>';
 
 	echo '<tr>
