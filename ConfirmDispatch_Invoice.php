@@ -20,7 +20,7 @@ include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/FreightCalculation.inc');
 include('includes/GetSalesTransGLCodes.inc');
-
+include('includes/KLGeneralFunctions.php');
 
 if(empty($_GET['identifier'])) {
 	/*unique session identifier to ensure that there is no conflict with other order entry sessions on the same machine  */
@@ -1322,26 +1322,104 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 /*first the cost of sales entry - GL accounts are retrieved using the function GetCOGSGLAccount from includes/GetSalesTransGLCodes.inc */
 
-/*// WORK IN PROGRESS CONSIGNMENT FOR ONLINE AND WHOLESALE 
-				$AccountCOGSbyADU = "510010000AD"; // when retail partner sells PTADU items COGS should go to PTADU
+// Begin of Consignment sales for PTADU MODIFICATIONS. Ricard KL
+// CONSIGNMENT FOR ONLINE AND WHOLESALE 
+// AND (($Area == 'OWB') OR ($Area == 'OWS') // AND is a online sale OR a wholesale 
+//	OR ($Area == 'WHC') OR ($Area == 'WHZ'))			
+
 				$ItemBelongsTo = ItemBelongsToPT($OrderLine->StockID);
-			
-				if (($ItemBelongsTo == "PTADU"){  // is a PTADU item 
-						AND (($Area == 'OWB') OR ($Area == 'OWS') // AND is a online sale OR a wholesale 
-							OR ($Area == 'WHC') OR ($Area == 'WHZ'))){
-								
+				if ($ItemBelongsTo == "PTADU"){  // is a PTADU item 
+					$AccountCOGSbyADU = "510010000AD"; // when retail partner sells PTADU items COGS should go to PTADU
 					$AccountCOGS = $AccountCOGSbyADU;
 					
-					look for partner managing the area (PTBB) and look for consignment settings
-					$PercentConsignmentPTADU
-					$AccountConsignmentSalesPTADU
-					$AccountConsignmentCOGSPartner
-					clustering line 1051 to 1129 from KLRetailPOS
+					$sql = "SELECT 	klretailpartners.partnercode,
+									klretailpartners.percentconsignmentptadu,
+									klretailpartners.accountconsignmentsalesptadu,
+									klretailpartners.accountconsignmentcogspartner
+								FROM locations,
+									klretailpartners
+							 WHERE locations.partnercode = klretailpartners.partnercode
+								AND locations.loccode='" . $_SESSION['Items'.$identifier]->Location ."'";
+
+					$result = DB_query($sql);
+					if (DB_num_rows($result)==0) {
+						prnMsg(_('ERROR-INV-00001. The location used as warehouse delivery can not sell PTADU items.'),'error');
+						include('includes/footer.php');
+						exit;
+					}
+					$myrow = DB_fetch_array($result); //get the only row returned
+					if ($myrow['partnercode']=='NORETAIL'){
+						prnMsg(_('ERROR-INV-00002. The location used as warehouse delivery can not sell PTADU items.'),'error');
+						include('includes/footer.php');
+						exit;
+					}
+					$PartnerCode = $myrow['partnercode'];
+					$PercentConsignmentPTADU = $myrow['percentconsignmentptadu'];
+					$AccountConsignmentSalesPTADU = $myrow['accountconsignmentsalesptadu'];
+					$AccountConsignmentCOGSPartner = $myrow['accountconsignmentcogspartner'];
+					$RetailPrice = round($OrderLine->Price * (1 - $OrderLine->DiscountPercent) / $_SESSION['CurrencyRate'],0);
+					$ConsignmentPrice = round($PercentConsignmentPTADU / 100 * $RetailPrice,0);
+					$Tag = "1"; // kantor
+					
+					// report the COGS for retail partner from PT ADU
+					InsertIntoGLTrans("10", 
+									$InvoiceNo, 
+									$DefaultDispatchDate,
+									$PeriodNo,
+									$AccountConsignmentCOGSPartner,
+									$_SESSION['Items'.$identifier]->CustRef . " " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . $ConsignmentPrice,
+									round($ConsignmentPrice * $OrderLine->Quantity),
+									$Tag,
+									'ERROR-INV-00003'
+									);
+
+					// report the sales for PT ADU to retail partner
+					InsertIntoGLTrans("10", 
+									$InvoiceNo, 
+									$DefaultDispatchDate,
+									$PeriodNo,
+									$AccountConsignmentSalesPTADU,
+									$_SESSION['Items'.$identifier]->CustRef . " " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . $ConsignmentPrice,
+									round(-$ConsignmentPrice * $OrderLine->Quantity),
+									$Tag,
+									'ERROR-INV-00004'
+									);
+					
+					// record the consignment for later invoice to partner
+					$SQL = "INSERT INTO klconsignment 
+								(saledate,
+								partnercode,
+								companycode,
+								invoice,
+								debtorno,
+								stockid,
+								qty,
+								retailprice,
+								consignmentprice,
+								cogsadu,
+								standardcost,
+								invoicedtopartner)
+							VALUES 
+								('" . $DefaultDispatchDate . "',
+								'" . $PartnerCode  . "',
+								'PTADU',
+								'" . $_SESSION['Items'.$identifier]->CustRef  . "',
+								'" . $_SESSION['Items'.$identifier]->DebtorNo  . "',
+								'" . $OrderLine->StockID  . "',
+								'" . $OrderLine->Quantity  . "',
+								'" . $RetailPrice  . "',
+								'" . $ConsignmentPrice  . "',
+								'" . round($OrderLine->StandardCost,0)  . "',
+								'" . round($OrderLine->StandardCost,0) . "',
+								'0000-00-00')";
+
+					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The Consignment Sales Details could not be inserted because');
+					$DbgMsg = _('The following SQL to insert the klconsignment record was used');
+					$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 				}else{
 					$AccountCOGS = GetCOGSGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType, $db);
 				}
-*/					
-
+// End of Consignment sales for PTADU MODIFICATIONS
 
 				$SQL = "INSERT INTO gltrans (type,
 											typeno,
@@ -1355,7 +1433,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 										'" . $InvoiceNo . "',
 										'" . $DefaultDispatchDate . "',
 										'" . $PeriodNo . "',
-										'" . GetCOGSGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType, $db) . "',
+										'" . $AccountCOGS . "',
 										'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->QtyDispatched . " @ " . $OrderLine->StandardCost . "',
 										'" . round(($OrderLine->StandardCost * $OrderLine->QtyDispatched),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 
