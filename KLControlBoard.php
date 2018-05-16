@@ -4874,7 +4874,6 @@ function WrongItemsOnWorkOrders($RootPath, $db){
 function StockToPTADU($Kind, $FactorNearStock, $LimitToMove, $RootPath, $db){
 	
 	if($Kind == "PO"){
-//					AND purchorderdetails.completed = 1
 		$SQL = "SELECT purchorderdetails.itemcode,
 					stockmaster.categoryid,
 					(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS stdcost,
@@ -4956,16 +4955,6 @@ function StockToPTADU($Kind, $FactorNearStock, $LimitToMove, $RootPath, $db){
 				HAVING qtyreceivedptadu * " . $FactorNearStock. " >= qoh
 					AND qtyreceivedptadu > 0
 				ORDER BY woitems.stockid";
-
-//					AND workorders.wo != 3619
-//					AND workorders.wo != 3626
-//					AND workorders.wo != 3627
-//					AND workorders.wo != 3629
-//					AND workorders.wo != 3632
-//					AND workorders.wo != 3633
-//					AND workorders.wo != 3646
-//					AND workorders.wo != 3658
-				
 	}
 			
 	$result = DB_query($SQL);
@@ -4974,30 +4963,16 @@ function StockToPTADU($Kind, $FactorNearStock, $LimitToMove, $RootPath, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . '' . '</th>
-							<th>' . '' . '</th>
-							<th>' . '' . '</th>
-							<th>' . '' . '</th>
-							<th>' . '' . '</th>
-							<th>' . '' . '</th>
-							<th colspan="2">' . 'QOH Location' . '</th>
-							<th colspan="2">' . 'QOH Company' . '</th>
-							<th colspan="2">' . 'Value Company' . '</th>
-							<th>' . '' . '</th>
-						</tr>
-						<tr>
 							<th class="ascending">' . '#' . '</th>
 							<th class="ascending">' . 'Stock ID' . '</th>
 							<th class="ascending">' . 'Std Cost' . '</th>
 							<th class="ascending">' . 'Category BB' . '</th>
 							<th class="ascending">' . 'Category ADU' . '</th>
 							<th class="ascending">' . 'QOH Total' . '</th>
-							<th class="ascending">' . 'Kantor' . '</th>
-							<th class="ascending">' . 'Shops' . '</th>
-							<th class="ascending">' . 'ADU' . '</th>
-							<th class="ascending">' . 'BB' . '</th>
-							<th class="ascending">' . 'ADU' . '</th>
-							<th class="ascending">' . 'BB' . '</th>
+							<th class="ascending">' . 'QOH ADU' . '</th>
+							<th class="ascending">' . 'QOH BB' . '</th>
+							<th class="ascending">' . 'Value ADU' . '</th>
+							<th class="ascending">' . 'Value BB' . '</th>
 							<th class="ascending">' . 'Action' . '</th>
 						</tr>';
 		echo $TableHeader;
@@ -5068,8 +5043,6 @@ function StockToPTADU($Kind, $FactorNearStock, $LimitToMove, $RootPath, $db){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
 					<td>%s</td>
 					</tr>', 
 					locale_number_format_zero_blank($i,0),
@@ -5078,8 +5051,6 @@ function StockToPTADU($Kind, $FactorNearStock, $LimitToMove, $RootPath, $db){
 					$myrow['categoryid'],
 					$NewCategory,
 					locale_number_format_zero_blank($myrow['qoh'],0),
-					locale_number_format_zero_blank($myrow['qoh']-$myrow['qohshops'],0),
-					locale_number_format_zero_blank($myrow['qohshops'],0),
 					locale_number_format_zero_blank($myrow['qtyreceivedptadu'],0),
 					locale_number_format_zero_blank($myrow['qoh']-$myrow['qtyreceivedptadu'],0),
 					locale_number_format_zero_blank($myrow['qtyreceivedptadu']*$myrow['stdcost'],0),
@@ -5098,14 +5069,10 @@ function StockToPTADU($Kind, $FactorNearStock, $LimitToMove, $RootPath, $db){
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
 				<td>%s</td>
 				</tr>', 
 				'',
 				'TOTAL',
-				'',
-				'',
 				'',
 				'',
 				'',
