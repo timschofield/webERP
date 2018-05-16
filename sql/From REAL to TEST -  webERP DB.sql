@@ -388,7 +388,8 @@ TRUNCATE kurakura_kl_test_erp.`salesman`;
 INSERT INTO kurakura_kl_test_erp.salesman SELECT * FROM kurakura_kl_erp.salesman;
 
 TRUNCATE kurakura_kl_test_erp.`salesorderdetails`;
-INSERT INTO kurakura_kl_test_erp.salesorderdetails SELECT * FROM kurakura_kl_erp.salesorderdetails WHERE actualdispatchdate >= "2018-01-01";
+INSERT INTO kurakura_kl_test_erp.salesorderdetails SELECT * FROM kurakura_kl_erp.salesorderdetails WHERE actualdispatchdate >= "2018-01-01"
+																									OR actualdispatchdate = "0000-00-00 00:00:00";
 
 TRUNCATE kurakura_kl_test_erp.`salesorders`;
 INSERT INTO kurakura_kl_test_erp.salesorders SELECT * FROM kurakura_kl_erp.salesorders WHERE orddate >= "2018-01-01";
