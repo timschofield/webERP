@@ -86,12 +86,12 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 				$LineType = 'OF';
 				$KodeObjek = $myrow['stockid'];
 				$Nama = $myrow['description'];
-				$HargaSatuan = round($myrow['price'] / ((100 + PPN_PERCENT) / 100),0);
+				$HargaSatuan = round($myrow['price'] / ((100 + PPN_PERCENT) / 100),2);
 				$JumlahBarang = round($myrow['qty'],0);
 				$HargaTotal = $HargaSatuan * $JumlahBarang;
 				$Diskon = 0;
-				$DPP = round($JumlahBarang *($HargaSatuan-$Diskon),0);
-				$PPN = round($JumlahBarang *($myrow['price']-$HargaSatuan),0);
+				$DPP = round($JumlahBarang *($HargaSatuan-$Diskon),2);
+				$PPN = round($JumlahBarang *($myrow['price']-$HargaSatuan),2);
 				$TarifPPNBM = 0;
 				$PPNBM = 0;
 				
@@ -286,11 +286,11 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 			if ($DraftOrInvoice == 'INVOICE'){
 				$rTx = DB_Txn_Begin();
 				$SQL = "UPDATE klconsignment
-						SET fakturpajakdate = '". $EndDate ."'
+						SET fakturpajakdate = '". $EndDateSQL ."'
 						WHERE companycode = '" . $CompanyFrom . "'
 							AND partnercode = '" . $CompanyTo . "'
 							AND fakturpajakdate = '0000-00-00'
-							AND saledate <= '" . $EndDate . "'";
+							AND saledate <= '" . $EndDateSQL . "'";
 				$ErrMsg = 'CRITICAL ERROR! WRITE THIS CODE AND CALL THE OFFICE IMMEDIATELY: ERROR-CONSIGNMENT-00002';		
 				$DbgMsg = 'SQL to update klconsignment record: ';
 				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
