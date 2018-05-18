@@ -1065,7 +1065,7 @@ function AdjustPackaging($DaysSales, $ShopType, $ShowMessages, $updateDB, $RootP
 			FROM locations
 			WHERE locations.typeloc = '" . $ShopType . "'";
 	$resultloc = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
+	if (DB_num_rows($resultloc) != 0){
 		while ($myloc = DB_fetch_array($resultloc)) {
 			$iItem = 0;
 			while ($iItem < $CountItem){
@@ -1115,7 +1115,7 @@ function AdjustPackagingItemByShop($Item, $Shop, $DaysSales, $ShowMessages, $upd
 					' New RL = ' . $NewRL . "\n";
 				$EmailText = $EmailText . $text;
 			}
-			SetReorderLevel("PackagingOptimization", $Item,$Shop, $OldRL, $NewRL, $updateDB, $db);
+			SetReorderLevel("PackagingOptimization", $Item, $Shop, $OldRL, $NewRL, $updateDB, $db);
 		}
 	}
 	return $EmailText;
