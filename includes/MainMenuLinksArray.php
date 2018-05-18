@@ -690,7 +690,8 @@ $MenuItems['Personalia']['Transactions']['Caption'] = array(_('Import Monthly Sa
 															_('Export Info for PPH21 Deduction'),
 															_('Update PPH21 Deduction'),
 															_('Export Monthly Salary Slips'),
-															_('Export CSV File for Transfer LLG Danamon'),
+															_('Export CSV File for Danamon Transfer LLG'),
+															_('Export CSV File for Danamon Transfer Payroll'),
 															_('Move Salaries info to Petty Cash')
 															);
 
@@ -699,6 +700,7 @@ $MenuItems['Personalia']['Transactions']['URL'] = array('/KLPersonaliaImportSala
 														'/KLPersonaliaDeductionPPH21.php',
 														'/KLPersonaliaPDFMonthlySalarySlips.php',
 														'/KLPersonaliaCSVDanamonLLG.php',
+														'/KLPersonaliaCSVDanamonPayroll.php',
 														'/KLPersonaliaMoveTxToPC.php'
 														);
 

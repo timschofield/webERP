@@ -119,8 +119,10 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType, &$db) {
 			$FontNormalSize = 10;
 			$FontSmallSize = 8;
 			
-			$EmployeesByBank = 0;
-			$AmountByBank = 0;
+			$EmployeesByBankTransferLLG = 0;
+			$AmountByBankTransferLLG = 0;
+			$EmployeesByBankTransferPayroll = 0;
+			$AmountByBankTransferPayroll = 0;
 			$EmployeesByCheck = 0;
 			$AmountByCheck = 0;
 			$Check = array();
@@ -155,9 +157,15 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType, &$db) {
 				$TotalBawaPulang = $TotalPenerimaan + $TotalPotongan + $myrow['bulatan'];
 				// set information depending on payment method
 				if ($myrow['paymentmethod'] == 'Bank'){
-					$SalaryCopiesToPrint = 2;
-					$EmployeesByBank++;
-					$AmountByBank += $TotalBawaPulang;
+					if (strtoupper($myrow['bankcode']) == 'DANAMON'){
+						$SalaryCopiesToPrint = 2;
+						$EmployeesByBankTransferPayroll++;
+						$AmountByBankTransferPayroll += $TotalBawaPulang;
+					}else{
+						$SalaryCopiesToPrint = 2;
+						$EmployeesByBankTransferLLG++;
+						$AmountByBankTransferLLG += $TotalBawaPulang;
+					}
 				}elseif ($myrow['paymentmethod'] == 'Check'){
 					$SalaryCopiesToPrint = 2;
 					$EmployeesByCheck++;
@@ -397,8 +405,11 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType, &$db) {
 			$pdf->ln(5);
 			$pdf->MultiCell(0, 0, 'Salary totals for ' . ConvertSQLDate($LastDateOfPeriod), 0, 'L', 0, 1, '', '', true);
 			$pdf->ln(5);
-			$pdf->MultiCell(0, 0, 'Total Employees by Bank Transfer: ' .	locale_number_format($EmployeesByBank), 0, 'L', 0, 1, '', '', true);
-			$pdf->MultiCell(0, 0, 'Total Amount by Bank Transfer: ' .	locale_number_format($AmountByBank), 0, 'L', 0, 1, '', '', true);
+			$pdf->MultiCell(0, 0, 'Total Employees by Bank Danamon Transfer LLG: ' .	locale_number_format($EmployeesByBankTransferLLG), 0, 'L', 0, 1, '', '', true);
+			$pdf->MultiCell(0, 0, 'Total Amount by Bank Danamon Transfer LLG: ' .	locale_number_format($AmountByBankTransferLLG), 0, 'L', 0, 1, '', '', true);
+			$pdf->ln(5);
+			$pdf->MultiCell(0, 0, 'Total Employees by Bank Danamon Transfer Payroll: ' .	locale_number_format($EmployeesByBankTransferPayroll), 0, 'L', 0, 1, '', '', true);
+			$pdf->MultiCell(0, 0, 'Total Amount by Bank Danamon Transfer Payroll: ' .	locale_number_format($AmountByBankTransferPayroll), 0, 'L', 0, 1, '', '', true);
 			$pdf->ln(5);
 			$pdf->MultiCell(0, 0, 'Total Employees by Check : ' .	locale_number_format($EmployeesByCheck), 0, 'L', 0, 1, '', '', true);
 			$pdf->MultiCell(0, 0, 'Total Amount by Check: ' .	locale_number_format($AmountByCheck), 0, 'L', 0, 1, '', '', true);

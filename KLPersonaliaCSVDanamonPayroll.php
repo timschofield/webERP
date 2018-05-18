@@ -4,7 +4,7 @@ include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 
-$Title = _('Export CSV File for Transfer LLG Danamon');
+$Title = _('Export CSV File for Transfer to Danamon Accounts');
 
 if (isset($_POST['submit'])) {
 	submit($Title, $_POST['Company'], $_POST['DateOfFile'], $_POST['SalaryType'], $db);
@@ -25,9 +25,9 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType, &$db) {
 	$PeriodMonth = MonthAndYearFromSQLDate($LastDateOfPeriod);
 	
 	if ($SalaryType == "MONTHLY"){
-		$PageTitle = _('Export CSV Danamon Monthly Salary for '). ConvertSQLDate($LastDateOfPeriod);
+		$PageTitle = _('Export CSV Danamon (between Danamon Payroll Accounts) Monthly Salary for '). ConvertSQLDate($LastDateOfPeriod);
 	}elseif($SalaryType == "THRONLY"){
-		$PageTitle = _('Export CSV Danamon THR Only for '). ConvertSQLDate($LastDateOfPeriod);
+		$PageTitle = _('Export CSV Danamon (between Danamon Payroll Accounts) THR Only for '). ConvertSQLDate($LastDateOfPeriod);
 	}else{
 		$InputErrorMessage = "The type of Salary " . $SalaryType . " is not accepted";
 		$InputError = TRUE;
@@ -36,7 +36,7 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType, &$db) {
 	// The month selected should be last month for Monthly salaries
 	if ($SalaryType == "MONTHLY"){
 		if($PeriodNow != ($PeriodExportDate + 1)){
-			$InputErrorMessage = "The month selected to export Monthly Salary CSV File for Transfer LLG Danamon should be last month";
+			$InputErrorMessage = "The month selected to export Monthly Salary CSV File for Transfer between Danamon Payroll Accounts should be last month";
 			$InputError = TRUE;
 		}
 	}
@@ -44,7 +44,7 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType, &$db) {
 	// The month selected should be current month for THR Only salaries
 	if ($SalaryType == "THRONLY"){
 		if($PeriodNow != ($PeriodExportDate)){
-			$InputErrorMessage = "The month selected to export THR Only CSV File for Transfer LLG Danamon should be current month";
+			$InputErrorMessage = "The month selected to export THR Only CSV File for Transfer between Danamon Payroll Accounts should be current month";
 			$InputError = TRUE;
 		}
 	}
@@ -78,7 +78,7 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType, &$db) {
 					AND periodno = '" . $PeriodExportDate . "'
 					AND salarytype = '" . $SalaryType . "'
 					AND paymentmethod = 'Bank'
-					AND bankcode NOT LIKE '%Danamon%'
+					AND bankcode LIKE '%Danamon%'
 				ORDER BY joiningdate,
 					fullname";
 		$result = DB_query($SQL);
@@ -86,9 +86,9 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType, &$db) {
 			// prepare CSV file
 			header("Content-Type: text/csv");
 			if ($SalaryType == "MONTHLY"){
-				header("Content-Disposition: attachment; filename=GajiTransferDanamon-" . $Today . ".csv");
+				header("Content-Disposition: attachment; filename=GajiTransferDanamonPayroll-" . $Today . ".csv");
 			}else{
-				header("Content-Disposition: attachment; filename=THRTransferDanamon-" . $Today . ".csv");
+				header("Content-Disposition: attachment; filename=THRTransferDanamonpayroll-" . $Today . ".csv");
 			}
 			$output = fopen("php://output", "w");
 			$Separator = ",";
@@ -122,14 +122,8 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType, &$db) {
 								
 				$Line = $myrow['bankaccount'] . $Separator . 
 						$ValueTransfer . $Separator . 
-						substr($Company . ' '. $PeriodMonth,0,30) . $Separator . 
 						$TextMessage . $Separator . 
-						$myrow['bankaccountholder'] . $Separator . 
-						"PUSAT" . $Separator . 
-						$myrow['bankcode'] . $Separator . 
-						"PUSAT" . $Separator . 
-						"1" . $Separator . 
-						"Y" . $EOL;
+						substr($myrow['fullname'],0,30) . $EOL;
 
 				fwrite($output, $Line);
 				$i++;
@@ -137,7 +131,7 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType, &$db) {
 			fclose($output);
 		}else{
 			include('includes/header.php');
-			prnMsg('No data to export CSV File for Transfer LLG Danamon ');
+			prnMsg('No data to export CSV File for Transfer between Danamon Payroll Accounts ');
 			include('includes/footer.php');
 		}
 	}else{
