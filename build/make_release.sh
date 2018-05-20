@@ -1,7 +1,7 @@
 #! /bin/bash
 
 BASE_DIR=/var/www/html/webERP;
-OUTPUT_DIR=/home/paul/Documents/webERP;
+OUTPUT_DIR=/home/user/Documents/webERP;
 MYSQL_USER=root;
 MYSQL_PWD=a;
 
@@ -14,7 +14,6 @@ msgmerge -U -N --backup=off --no-wrap locale/ar_SY.utf8/LC_MESSAGES/messages.po 
 msgmerge -U -N --backup=off --no-wrap locale/cs_CZ.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
 msgmerge -U -N --backup=off --no-wrap locale/de_DE.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
 msgmerge -U -N --backup=off --no-wrap locale/el_GR.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
-msgmerge -U -N --backup=off --no-wrap locale/en_GB.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
 msgmerge -U -N --backup=off --no-wrap locale/en_US.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
 msgmerge -U -N --backup=off --no-wrap locale/es_ES.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
 msgmerge -U -N --backup=off --no-wrap locale/et_EE.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
@@ -52,7 +51,6 @@ msgfmt -o locale/ar_SY.utf8/LC_MESSAGES/messages.mo locale/ar_SY.utf8/LC_MESSAGE
 msgfmt -o locale/cs_CZ.utf8/LC_MESSAGES/messages.mo locale/cs_CZ.utf8/LC_MESSAGES/messages.po
 msgfmt -o locale/de_DE.utf8/LC_MESSAGES/messages.mo locale/de_DE.utf8/LC_MESSAGES/messages.po
 msgfmt -o locale/el_GR.utf8/LC_MESSAGES/messages.mo locale/el_GR.utf8/LC_MESSAGES/messages.po
-msgfmt -o locale/en_GB.utf8/LC_MESSAGES/messages.mo locale/en_GB.utf8/LC_MESSAGES/messages.po
 msgfmt -o locale/en_US.utf8/LC_MESSAGES/messages.mo locale/en_US.utf8/LC_MESSAGES/messages.po
 msgfmt -o locale/es_ES.utf8/LC_MESSAGES/messages.mo locale/es_ES.utf8/LC_MESSAGES/messages.po
 msgfmt -o locale/et_EE.utf8/LC_MESSAGES/messages.mo locale/et_EE.utf8/LC_MESSAGES/messages.po
@@ -88,7 +86,7 @@ mysql -u$MYSQL_USER  -p$MYSQL_PWD < $BASE_DIR/build/TruncateAuditTrail.sql
 
 echo "SET FOREIGN_KEY_CHECKS = 0;" > $BASE_DIR/sql/mysql/country_sql/default.sql
 
-mysqldump -u$MYSQL_USER  -p$MYSQL_PWD  --skip-opt --create-options --skip-set-charset --ignore-table=weberpdemo.mrpsupplies  --ignore-table=weberpdemo.mrpplanedorders --ignore-table=weberpdemo.mrpparameters --ignore-table=weberpdemo.levels --ignore-table=weberpdemo.mrprequirements --ignore-table=weberpdemo.buckets --no-data weberpdemo >> $BASE_DIR/sql/mysql/country_sql/default.sql
+mysqldump -u$MYSQL_USER  -p$MYSQL_PWD  --skip-opt --create-options --skip-set-charset --ignore-table=weberpdemo.mrpsupplies  --ignore-table=weberpdemo.mrpplanedorders --ignore-table=weberpdemo.mrpparameters --ignore-table=weberpdemo.levels --ignore-table=weberpdemo.mrprequirements --ignore-table=weberpdemo.buckets --no-data weberpdemo | sed 's/ AUTO_INCREMENT=[0-9]*//g' >> $BASE_DIR/sql/mysql/country_sql/default.sql
 
 mysqldump -u$MYSQL_USER  -p$MYSQL_PWD --skip-opt --skip-set-charset --quick --no-create-info weberpdemo  \
        accountgroups \
