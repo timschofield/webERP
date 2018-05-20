@@ -1,7 +1,7 @@
 #! /bin/bash
 
-BASE_DIR=/usr/share/nginx/html/webERP;
-OUTPUT_DIR=/home/phil/Documents/webERP;
+BASE_DIR=/var/www/html/webERP;
+OUTPUT_DIR=/home/paul/Documents/webERP;
 MYSQL_USER=root;
 MYSQL_PWD=a;
 
@@ -144,4 +144,4 @@ rm $OUTPUT_DIR/webERP.zip
 
 cd ..
 
-zip -r $OUTPUT_DIR/webERP webERP -x \*.git* \*/config.php \*build*
+zip -r $OUTPUT_DIR/webERP $OUTPUT_DIR/webSHOP webERP -x \*.git* \*/config.php \*build*
