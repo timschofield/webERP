@@ -144,4 +144,4 @@ rm $OUTPUT_DIR/webERP.zip
 
 cd ..
 
-zip -r $OUTPUT_DIR/webERP $OUTPUT_DIR/webSHOP webERP -x \*.git* \*/config.php \*build*
+zip -r $OUTPUT_DIR/webERP webERP webSHOP -x \*.git* \*/config.php \*build*
