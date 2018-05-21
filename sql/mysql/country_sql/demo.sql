@@ -1,15 +1,15 @@
 CREATE DATABASE IF NOT EXISTS weberpdemo;
 USE weberpdemo;
 SET FOREIGN_KEY_CHECKS = 0;
--- MySQL dump 10.13  Distrib 5.5.58, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.15  Distrib 10.0.34-MariaDB, for debian-linux-gnu (i686)
 --
 -- Host: localhost    Database: weberpdemo
 -- ------------------------------------------------------
--- Server version	5.5.58-0ubuntu0.14.04.1
+-- Server version	10.0.34-MariaDB-0ubuntu0.16.04.1
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
@@ -150,6 +150,7 @@ CREATE TABLE `banktrans` (
   `banktranstype` varchar(30) NOT NULL DEFAULT '',
   `amount` double NOT NULL DEFAULT '0',
   `currcode` char(3) NOT NULL DEFAULT '',
+  `chequeno` varchar(16) NOT NULL DEFAULT '',
   PRIMARY KEY (`banktransid`),
   KEY `BankAct` (`bankact`,`ref`),
   KEY `TransDate` (`transdate`),
@@ -454,8 +455,8 @@ CREATE TABLE `custbranch` (
   `braddress4` varchar(50) NOT NULL DEFAULT '',
   `braddress5` varchar(20) NOT NULL DEFAULT '',
   `braddress6` varchar(40) NOT NULL DEFAULT '',
-  `lat` float(10,6) NOT NULL DEFAULT '0.000000',
-  `lng` float(10,6) NOT NULL DEFAULT '0.000000',
+  `lat` float(12,8) NOT NULL DEFAULT '0.00000000',
+  `lng` float(12,8) NOT NULL DEFAULT '0.00000000',
   `estdeliverydays` smallint(6) NOT NULL DEFAULT '1',
   `area` char(3) NOT NULL,
   `salesman` varchar(4) NOT NULL DEFAULT '',
@@ -1525,15 +1526,37 @@ CREATE TABLE `paymentterms` (
 CREATE TABLE `pcashdetails` (
   `counterindex` int(20) NOT NULL AUTO_INCREMENT,
   `tabcode` varchar(20) NOT NULL,
+  `tag` int(11) NOT NULL DEFAULT '0',
   `date` date NOT NULL,
   `codeexpense` varchar(20) NOT NULL,
   `amount` double NOT NULL,
   `authorized` date NOT NULL COMMENT 'date cash assigment was revised and authorized by authorizer from tabs table',
   `posted` tinyint(4) NOT NULL COMMENT 'has (or has not) been posted into gltrans',
+  `purpose` text,
   `notes` text NOT NULL,
-  `receipt` text COMMENT 'filename or path to scanned receipt or code of receipt to find physical receipt if tax guys or auditors show up',
+  `receipt` text COMMENT 'Column redundant. Replaced by receipt file upload. Nov 2017.',
   PRIMARY KEY (`counterindex`),
   UNIQUE KEY `tabcodedate` (`tabcode`,`date`,`codeexpense`,`counterindex`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pcashdetailtaxes`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pcashdetailtaxes` (
+  `counterindex` int(20) NOT NULL AUTO_INCREMENT,
+  `pccashdetail` int(20) NOT NULL DEFAULT '0',
+  `calculationorder` tinyint(4) NOT NULL DEFAULT '0',
+  `description` varchar(40) NOT NULL DEFAULT '',
+  `taxauthid` tinyint(4) NOT NULL DEFAULT '0',
+  `purchtaxglaccount` varchar(20) NOT NULL DEFAULT '',
+  `taxontax` tinyint(4) NOT NULL DEFAULT '0',
+  `taxrate` double NOT NULL DEFAULT '0',
+  `amount` double NOT NULL DEFAULT '0',
+  PRIMARY KEY (`counterindex`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1548,9 +1571,29 @@ CREATE TABLE `pcexpenses` (
   `description` varchar(50) NOT NULL COMMENT 'text description, e.g. meals, train tickets, fuel, etc',
   `glaccount` varchar(20) NOT NULL DEFAULT '0',
   `tag` tinyint(4) NOT NULL DEFAULT '0',
+  `taxcatid` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`codeexpense`),
   KEY `glaccount` (`glaccount`),
   CONSTRAINT `pcexpenses_ibfk_1` FOREIGN KEY (`glaccount`) REFERENCES `chartmaster` (`accountcode`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pcreceipts`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pcreceipts` (
+  `counterindex` int(20) NOT NULL AUTO_INCREMENT,
+  `pccashdetail` int(20) NOT NULL DEFAULT '0' COMMENT 'Expenses record identity',
+  `hashfile` varchar(32) NOT NULL DEFAULT '' COMMENT 'MD5 hash of uploaded receipt file',
+  `type` varchar(80) NOT NULL DEFAULT '' COMMENT 'Mime type of uploaded receipt file',
+  `extension` varchar(4) NOT NULL DEFAULT '' COMMENT 'File extension of uploaded receipt',
+  `size` int(20) NOT NULL DEFAULT '0' COMMENT 'File size of uploaded receipt',
+  PRIMARY KEY (`counterindex`),
+  KEY `pcreceipts_ibfk_1` (`pccashdetail`),
+  CONSTRAINT `pcreceipts_ibfk_1` FOREIGN KEY (`pccashdetail`) REFERENCES `pcashdetails` (`counterindex`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1584,8 +1627,11 @@ CREATE TABLE `pctabs` (
   `tablimit` double NOT NULL,
   `assigner` varchar(100) DEFAULT NULL,
   `authorizer` varchar(100) DEFAULT NULL,
+  `authorizerexpenses` varchar(20) NOT NULL,
   `glaccountassignment` varchar(20) NOT NULL DEFAULT '0',
   `glaccountpcash` varchar(20) NOT NULL DEFAULT '0',
+  `defaulttag` tinyint(4) NOT NULL DEFAULT '0',
+  `taxgroupid` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`tabcode`),
   KEY `usercode` (`usercode`),
   KEY `typetabcode` (`typetabcode`),
@@ -1662,34 +1708,35 @@ CREATE TABLE `pickinglists` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `pickreq` (pick request)
+-- Table structure for table `pickreq`
 --
 
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE pickreq (
-  `prid` int not null auto_increment,
-  `initiator` varchar(20) not null default '',
-  `shippedby` varchar(20) not null default '',
-  `initdate` date not null default '0000-00-00',
-  `requestdate` date not null default '0000-00-00',
-  `shipdate` date not null default '0000-00-00',
-  `status` varchar(12) not null default '',
-  `comments` text default null,
-  `closed` tinyint not null default '0',
-  `loccode` varchar(5) not null default '',
-  `orderno` int not null default '1',
+CREATE TABLE `pickreq` (
+  `prid` int(11) NOT NULL AUTO_INCREMENT,
+  `initiator` varchar(20) NOT NULL DEFAULT '',
+  `shippedby` varchar(20) NOT NULL DEFAULT '',
+  `initdate` date NOT NULL DEFAULT '0000-00-00',
+  `requestdate` date NOT NULL DEFAULT '0000-00-00',
+  `shipdate` date NOT NULL DEFAULT '0000-00-00',
+  `status` varchar(12) NOT NULL DEFAULT '',
+  `comments` text,
+  `closed` tinyint(4) NOT NULL DEFAULT '0',
+  `loccode` varchar(5) NOT NULL DEFAULT '',
+  `orderno` int(11) NOT NULL DEFAULT '1',
   `consignment` varchar(15) NOT NULL DEFAULT '',
   `packages` int(11) NOT NULL DEFAULT '1' COMMENT 'number of cartons',
   PRIMARY KEY (`prid`),
-  key (`orderno`),
-  key (`requestdate`),
-  key (`shipdate`),
-  key (`status`),
-  key (`closed`),
-  CONSTRAINT FOREIGN KEY(`loccode`) REFERENCES `locations`(`loccode`),
-  constraint foreign key (`orderno`) REFERENCES salesorders(`orderno`)
-) Engine=InnoDB DEFAULT CHARSET=utf8;
+  KEY `orderno` (`orderno`),
+  KEY `requestdate` (`requestdate`),
+  KEY `shipdate` (`shipdate`),
+  KEY `status` (`status`),
+  KEY `closed` (`closed`),
+  KEY `loccode` (`loccode`),
+  CONSTRAINT `pickreq_ibfk_1` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`),
+  CONSTRAINT `pickreq_ibfk_2` FOREIGN KEY (`orderno`) REFERENCES `salesorders` (`orderno`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1698,20 +1745,21 @@ CREATE TABLE pickreq (
 
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE pickreqdetails (
-  `detailno` int not null auto_increment,
-  `prid` int not null default '1',
-  `orderlineno` int not null default '0',
-  `stockid` varchar(20) not null default '',
-  `qtyexpected` double not null default '0',
-  `qtypicked` double not null default '0',
-  `invoicedqty` double not null default '0',
-  `shipqty` double not null default '0',
+CREATE TABLE `pickreqdetails` (
+  `detailno` int(11) NOT NULL AUTO_INCREMENT,
+  `prid` int(11) NOT NULL DEFAULT '1',
+  `orderlineno` int(11) NOT NULL DEFAULT '0',
+  `stockid` varchar(20) NOT NULL DEFAULT '',
+  `qtyexpected` double NOT NULL DEFAULT '0',
+  `qtypicked` double NOT NULL DEFAULT '0',
+  `invoicedqty` double NOT NULL DEFAULT '0',
+  `shipqty` double NOT NULL DEFAULT '0',
   PRIMARY KEY (`detailno`),
-  key (`prid`),
-  constraint foreign key (`stockid`) REFERENCES stockmaster(`stockid`),
-  constraint foreign key (`prid`) REFERENCES pickreq(`prid`)
-) Engine=InnoDB DEFAULT CHARSET=utf8; 
+  KEY `prid` (`prid`),
+  KEY `stockid` (`stockid`),
+  CONSTRAINT `pickreqdetails_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
+  CONSTRAINT `pickreqdetails_ibfk_2` FOREIGN KEY (`prid`) REFERENCES `pickreq` (`prid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1720,19 +1768,19 @@ CREATE TABLE pickreqdetails (
 
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE pickserialdetails (
-  `serialmoveid` int not null auto_increment,
-  `detailno` int not null default '1',
-  `stockid` varchar(20) not null default '',
-  `serialno` varchar(30) not null default '',
-  `moveqty` double not null default '0',
+CREATE TABLE `pickserialdetails` (
+  `serialmoveid` int(11) NOT NULL AUTO_INCREMENT,
+  `detailno` int(11) NOT NULL DEFAULT '1',
+  `stockid` varchar(20) NOT NULL DEFAULT '',
+  `serialno` varchar(30) NOT NULL DEFAULT '',
+  `moveqty` double NOT NULL DEFAULT '0',
   PRIMARY KEY (`serialmoveid`),
-  key (`detailno`),
-  key (`stockid`,`serialno`),
-  key (`serialno`),
-  CONSTRAINT FOREIGN KEY (`detailno`) REFERENCES pickreqdetails (`detailno`),
-  CONSTRAINT FOREIGN KEY (`stockid`,`serialno`) REFERENCES `stockserialitems`(`stockid`,`serialno`)
-) Engine=InnoDB DEFAULT CHARSET=utf8;
+  KEY `detailno` (`detailno`),
+  KEY `stockid` (`stockid`,`serialno`),
+  KEY `serialno` (`serialno`),
+  CONSTRAINT `pickserialdetails_ibfk_1` FOREIGN KEY (`detailno`) REFERENCES `pickreqdetails` (`detailno`),
+  CONSTRAINT `pickserialdetails_ibfk_2` FOREIGN KEY (`stockid`, `serialno`) REFERENCES `stockserialitems` (`stockid`, `serialno`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2103,7 +2151,7 @@ CREATE TABLE `reportfields` (
   `params` text,
   PRIMARY KEY (`id`),
   KEY `reportid` (`reportid`)
-) ENGINE=MyISAM AUTO_INCREMENT=1883 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2229,7 +2277,7 @@ CREATE TABLE `reports` (
   `table6criteria` varchar(75) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `name` (`reportname`,`groupname`)
-) ENGINE=MyISAM AUTO_INCREMENT=142 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2421,6 +2469,7 @@ CREATE TABLE `salesorders` (
   `quotedate` date NOT NULL DEFAULT '0000-00-00',
   `poplaced` tinyint(4) NOT NULL DEFAULT '0',
   `salesperson` varchar(4) NOT NULL,
+  `internalcomment` blob,
   PRIMARY KEY (`orderno`),
   KEY `DebtorNo` (`debtorno`),
   KEY `OrdDate` (`orddate`),
@@ -2922,10 +2971,12 @@ CREATE TABLE `stockserialitems` (
   `expirationdate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `quantity` double NOT NULL DEFAULT '0',
   `qualitytext` text NOT NULL,
+  `createdate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`stockid`,`serialno`,`loccode`),
   KEY `StockID` (`stockid`),
   KEY `LocCode` (`loccode`),
   KEY `serialno` (`serialno`),
+  KEY `createdate` (`createdate`),
   CONSTRAINT `stockserialitems_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
   CONSTRAINT `stockserialitems_ibfk_2` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -3115,9 +3166,10 @@ CREATE TABLE `supptrans` (
   `alloc` double NOT NULL DEFAULT '0',
   `transtext` text,
   `hold` tinyint(4) NOT NULL DEFAULT '0',
+  `chequeno` varchar(16) NOT NULL DEFAULT '',
+  `void` tinyint(1) NOT NULL DEFAULT '0',
   `id` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `TypeTransNo` (`transno`,`type`),
   KEY `DueDate` (`duedate`),
   KEY `Hold` (`hold`),
   KEY `SupplierNo` (`supplierno`),
@@ -3127,6 +3179,7 @@ CREATE TABLE `supptrans` (
   KEY `TranDate` (`trandate`),
   KEY `TransNo` (`transno`),
   KEY `Type` (`type`),
+  KEY `TypeTransNo` (`transno`,`type`),
   CONSTRAINT `supptrans_ibfk_1` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `supptrans_ibfk_2` FOREIGN KEY (`supplierno`) REFERENCES `suppliers` (`supplierid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -3488,20 +3541,19 @@ CREATE TABLE `www_users` (
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-12-22 18:59:26
--- MySQL dump 10.13  Distrib 5.5.58, for debian-linux-gnu (x86_64)
+-- Dump completed on 2018-05-20 18:59:07
+-- MySQL dump 10.15  Distrib 10.0.34-MariaDB, for debian-linux-gnu (i686)
 --
 -- Host: localhost    Database: weberpdemo
 -- ------------------------------------------------------
--- Server version	5.5.58-0ubuntu0.14.04.1
+-- Server version	10.0.34-MariaDB-0ubuntu0.16.04.1
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
@@ -3583,28 +3635,28 @@ INSERT INTO `bankaccountusers` VALUES ('1060','admin');
 -- Dumping data for table `banktrans`
 --
 
-INSERT INTO `banktrans` VALUES (1,12,5,'1030','',0,1,0.9953,'2013-05-10','Cash',50,'AUD');
-INSERT INTO `banktrans` VALUES (2,12,12,'1030','web shop receipt 7 3P178942ST690145V',0,1.0378,1.0378,'2013-06-08','PayPalPro web',0,'USD');
-INSERT INTO `banktrans` VALUES (3,12,13,'1030','web shop receipt 7 2E5509873Y0129234',0,1.0378,1.0378,'2013-06-08','PayPalPro web',0,'USD');
-INSERT INTO `banktrans` VALUES (4,12,14,'1040','web shop receipt 7 6CW03791GP8036526',0,1.0378,1.0378,'2013-06-08','PayPal web',0,'USD');
-INSERT INTO `banktrans` VALUES (6,12,17,'1030','web shop receipt 7 ',0,1.0378,1.0378,'2013-06-08','PayPalPro web',0,'USD');
-INSERT INTO `banktrans` VALUES (7,12,18,'1030','',0,0.959969,1.0417,'2013-06-16','Cash',85.9,'USD');
-INSERT INTO `banktrans` VALUES (8,12,19,'1030','web shop receipt 7 B254331D91384',0,1.0814,1.0814,'2013-06-23','SwipeHQ web',0,'USD');
-INSERT INTO `banktrans` VALUES (9,12,20,'1030','web shop receipt 7 B254348421937',0,1.0814,1.0814,'2013-06-23','SwipeHQ web',0,'USD');
-INSERT INTO `banktrans` VALUES (10,12,21,'1040','web shop receipt 7 ',0,1.0814,1.0814,'2013-06-23','PayPal web',0,'USD');
-INSERT INTO `banktrans` VALUES (11,12,1,'1040','web shop receipt 7 7XT5929577922053V',0,1.0814,1.0814,'2013-06-23','PayPal web',39.5722309059,'USD');
-INSERT INTO `banktrans` VALUES (12,12,1,'1030','web shop receipt 16 ',0,1.0814,1.0814,'2013-06-23','PayPalPro web',118.14262747245,'USD');
-INSERT INTO `banktrans` VALUES (13,12,2,'1030','web shop receipt 16 ',0,1.091,1.091,'2013-06-24','PayPalPro web',15.450740227125,'USD');
-INSERT INTO `banktrans` VALUES (14,12,3,'1030','web shop receipt 16 V78R4D18BB1E',0,1.091,1.091,'2013-06-24','PayFlow web',15.450740227125,'USD');
-INSERT INTO `banktrans` VALUES (15,12,4,'1030','web shop receipt 16 V18R4E55E804',0,1.091,1.091,'2013-06-24','PayFlow web',9.447024024585,'USD');
-INSERT INTO `banktrans` VALUES (16,22,9,'1030','',0,1,1.0884,'2013-11-20','Cash',-100,'AUD');
-INSERT INTO `banktrans` VALUES (17,22,10,'1030','',0,1,1,'2013-11-20','Cash',-100,'AUD');
-INSERT INTO `banktrans` VALUES (18,22,11,'1030','',0,1,1.0884,'2013-11-20','Cash',-100,'AUD');
-INSERT INTO `banktrans` VALUES (19,1,5,'1030','Test',0,0.91877986,1.0884,'2014-02-03','Cash',-105.5,'USD');
-INSERT INTO `banktrans` VALUES (20,1,6,'1060','ffd',0,1,1,'2014-02-03','Cash',-125,'USD');
-INSERT INTO `banktrans` VALUES (21,2,1,'1010','Act Transfer From 1060 - ',0,1.5199878400973,0.6579,'2014-07-05','Cash',10,'USD');
-INSERT INTO `banktrans` VALUES (22,1,7,'1060','',0,1,1,'2014-07-05','Cash',-10,'USD');
-INSERT INTO `banktrans` VALUES (23,12,5,'1030','Melbourne Counter Sale 1',0,1,1.3224,'2017-01-23','1',-17.429232,'USD');
+INSERT INTO `banktrans` VALUES (1,12,5,'1030','',0,1,0.9953,'2013-05-10','Cash',50,'AUD','');
+INSERT INTO `banktrans` VALUES (2,12,12,'1030','web shop receipt 7 3P178942ST690145V',0,1.0378,1.0378,'2013-06-08','PayPalPro web',0,'USD','');
+INSERT INTO `banktrans` VALUES (3,12,13,'1030','web shop receipt 7 2E5509873Y0129234',0,1.0378,1.0378,'2013-06-08','PayPalPro web',0,'USD','');
+INSERT INTO `banktrans` VALUES (4,12,14,'1040','web shop receipt 7 6CW03791GP8036526',0,1.0378,1.0378,'2013-06-08','PayPal web',0,'USD','');
+INSERT INTO `banktrans` VALUES (6,12,17,'1030','web shop receipt 7 ',0,1.0378,1.0378,'2013-06-08','PayPalPro web',0,'USD','');
+INSERT INTO `banktrans` VALUES (7,12,18,'1030','',0,0.959969,1.0417,'2013-06-16','Cash',85.9,'USD','');
+INSERT INTO `banktrans` VALUES (8,12,19,'1030','web shop receipt 7 B254331D91384',0,1.0814,1.0814,'2013-06-23','SwipeHQ web',0,'USD','');
+INSERT INTO `banktrans` VALUES (9,12,20,'1030','web shop receipt 7 B254348421937',0,1.0814,1.0814,'2013-06-23','SwipeHQ web',0,'USD','');
+INSERT INTO `banktrans` VALUES (10,12,21,'1040','web shop receipt 7 ',0,1.0814,1.0814,'2013-06-23','PayPal web',0,'USD','');
+INSERT INTO `banktrans` VALUES (11,12,1,'1040','web shop receipt 7 7XT5929577922053V',0,1.0814,1.0814,'2013-06-23','PayPal web',39.5722309059,'USD','');
+INSERT INTO `banktrans` VALUES (12,12,1,'1030','web shop receipt 16 ',0,1.0814,1.0814,'2013-06-23','PayPalPro web',118.14262747245,'USD','');
+INSERT INTO `banktrans` VALUES (13,12,2,'1030','web shop receipt 16 ',0,1.091,1.091,'2013-06-24','PayPalPro web',15.450740227125,'USD','');
+INSERT INTO `banktrans` VALUES (14,12,3,'1030','web shop receipt 16 V78R4D18BB1E',0,1.091,1.091,'2013-06-24','PayFlow web',15.450740227125,'USD','');
+INSERT INTO `banktrans` VALUES (15,12,4,'1030','web shop receipt 16 V18R4E55E804',0,1.091,1.091,'2013-06-24','PayFlow web',9.447024024585,'USD','');
+INSERT INTO `banktrans` VALUES (16,22,9,'1030','',0,1,1.0884,'2013-11-20','Cash',-100,'AUD','');
+INSERT INTO `banktrans` VALUES (17,22,10,'1030','',0,1,1,'2013-11-20','Cash',-100,'AUD','');
+INSERT INTO `banktrans` VALUES (18,22,11,'1030','',0,1,1.0884,'2013-11-20','Cash',-100,'AUD','');
+INSERT INTO `banktrans` VALUES (19,1,5,'1030','Test',0,0.91877986,1.0884,'2014-02-03','Cash',-105.5,'USD','');
+INSERT INTO `banktrans` VALUES (20,1,6,'1060','ffd',0,1,1,'2014-02-03','Cash',-125,'USD','');
+INSERT INTO `banktrans` VALUES (21,2,1,'1010','Act Transfer From 1060 - ',0,1.5199878400973,0.6579,'2014-07-05','Cash',10,'USD','');
+INSERT INTO `banktrans` VALUES (22,1,7,'1060','',0,1,1,'2014-07-05','Cash',-10,'USD','');
+INSERT INTO `banktrans` VALUES (23,12,5,'1030','Melbourne Counter Sale 1',0,1,1.3224,'2017-01-23','1',-17.429232,'USD','');
 
 --
 -- Dumping data for table `bom`
@@ -8673,6 +8725,7 @@ INSERT INTO `config` VALUES ('ItemDescriptionLanguages',',fr_FR.utf8,');
 INSERT INTO `config` VALUES ('LogPath','');
 INSERT INTO `config` VALUES ('LogSeverity','0');
 INSERT INTO `config` VALUES ('MaxImageSize','300');
+INSERT INTO `config` VALUES ('MaxSerialItemsIssued','50');
 INSERT INTO `config` VALUES ('MonthsAuditTrail','1');
 INSERT INTO `config` VALUES ('NumberOfMonthMustBeShown','6');
 INSERT INTO `config` VALUES ('NumberOfPeriodsOfStockUsage','12');
@@ -8749,7 +8802,7 @@ INSERT INTO `config` VALUES ('SO_AllowSameItemMultipleTimes','1');
 INSERT INTO `config` VALUES ('StandardCostDecimalPlaces','2');
 INSERT INTO `config` VALUES ('TaxAuthorityReferenceName','');
 INSERT INTO `config` VALUES ('UpdateCurrencyRatesDaily','2017-12-05');
-INSERT INTO `config` VALUES ('VersionNumber','4.14.1');
+INSERT INTO `config` VALUES ('VersionNumber','4.15');
 INSERT INTO `config` VALUES ('WeightedAverageCosting','0');
 INSERT INTO `config` VALUES ('WikiApp','DokuWiki');
 INSERT INTO `config` VALUES ('WikiPath','wiki');
@@ -8804,26 +8857,26 @@ INSERT INTO `custallocns` VALUES (2,13.1800,'2017-01-23',36,37);
 -- Dumping data for table `custbranch`
 --
 
-INSERT INTO `custbranch` VALUES ('11','11','Angus Routledge &amp; Co','123 Alexander Road','Roundhay','Leeds','3200','','United Kingdom',0.000000,0.000000,1,'TR','ERI',0,'454422111','','Angus McDougall','angus@angry.com','TOR',2,1,1,0,'','','','','','','','');
-INSERT INTO `custbranch` VALUES ('12','12','Angus Routledge &amp; Co','123 Alexander Road','Roundhay','Leeds','3211','','United Kingdom',0.000000,0.000000,1,'TR','ERI',0,'212234566','','Angus McDougall','angus@angry.com','TOR',2,1,1,0,'','','','','','','','');
-INSERT INTO `custbranch` VALUES ('13','13','Angus Routledge &amp; Co','123 Alexander Road','Roundhay','Leeds','LE189','','United Kingdom',0.000000,0.000000,1,'TR','ERI',0,'0291882001','','Angus McDougall','angus@angry.com','TOR',2,1,1,0,'','','','','','','','');
-INSERT INTO `custbranch` VALUES ('14','14','Angus Routledge &amp; Co','123 Alexander Road','Roundhay','Leeds','2113','','United Kingdom',0.000000,0.000000,1,'TR','ERI',0,'12323434355566778899','','Angus McDougall','angus@angry.com','TOR',2,1,1,0,'','','','','','','','');
-INSERT INTO `custbranch` VALUES ('16','16','Logic Works Ltd','34 Marram Way','Peka Peka','RD1 Waiakane','Kapiti','5134','New Zealand',0.000000,0.000000,1,'TR','ERI',0,'64275567890','','Phil Daintree','phil@logicworks.co.nz','TOR',2,1,1,0,'34 Marram Way','Peka Peka','RD1 Waiakane','Kapiti','5134','New Zealand','','');
-INSERT INTO `custbranch` VALUES ('8','8','Angus Routledge &amp; Co','123 Alexander Road','Roundhay','Leeds','43990','','United Kingdom',0.000000,0.000000,1,'TR','ERI',0,'124544665','','Angus McDougall','angus@angry.com','TOR',2,1,1,0,'','','','','','','','');
-INSERT INTO `custbranch` VALUES ('ANGRY','ANGRY','Angus Rouledge - Toronto','P O Box 671','Gowerbridge','Upperton','Toronto ','Canada','United States',0.000000,0.000000,3,'TR','ERI',0,'0422 2245 2213','0422 2245 2215','Granville Thomas','graville@angry.com','TOR',2,1,1,0,'','','','','','','','');
-INSERT INTO `custbranch` VALUES ('ANGRYFL','ANGRY','Angus Rouledge - Florida','1821 Sunnyside','Ft Lauderdale','Florida','42554','','United States',0.000000,0.000000,3,'FL','PHO',0,'2445 2232 524','2445 2232 522','Wendy Blowers','wendy@angry.com','TOR',1,1,1,0,'','','','','','','Watch out can bite!','');
-INSERT INTO `custbranch` VALUES ('DUMBLE','DUMBLE','Dumbledoor McGonagal & Co','Hogwarts castle','Platform 9.75','','','','',0.000000,0.000000,1,'TR','ERI',0,'Owls only','Owls only','Minerva McGonagal','mmgonagal@hogwarts.edu.uk','TOR',3,10,1,0,'','','','','','','','');
-INSERT INTO `custbranch` VALUES ('JOLOMU','JOLOMU','Lorrima Productions Inc','3215 Great Western Highway','Blubberhouses','Yorkshire','England','','',0.000000,0.000000,20,'FL','PHO',0,'+44 812 211456','+44 812 211 554','Jo Lomu','jolomu@lorrima.co.uk','TOR',3,1,1,0,'','','','','','','','');
-INSERT INTO `custbranch` VALUES ('KES','KES','Ken Estoban','','','','','','',0.000000,0.000000,0,'DE','DE',0,'','','','','MEL',1,1,1,0,'','','','','','','','');
-INSERT INTO `custbranch` VALUES ('NEWTEST','NEWTEST','New Customer','','','','','','United States',0.000000,0.000000,0,'123','DE',0,'','','','','AN',1,1,1,0,'','','','','','','','');
-INSERT INTO `custbranch` VALUES ('QUARTER','QUARTER','Quarter Back to Back','1356 Union Drive','Holborn','England','','','',0.000000,0.000000,5,'FL','ERI',0,'123456','1234567','','','TOR',3,1,1,0,'','','','','','','','');
-INSERT INTO `custbranch` VALUES ('QUIC','QUICK','Quick Brown PLC','Fox Street','Jumped Over','The Lazy Dog','','','',0.000000,0.000000,1,'FL','ERI',0,'','','','','TOR',1,1,1,0,'','','','','','','','');
-INSERT INTO `custbranch` VALUES ('SLOW','QUICK','Slow Dog','Hunstman Road','Woofton','','','','',0.000000,0.000000,1,'TR','ERI',0,'','','Staffordshire Terrier','','TOR',2,1,1,0,'','','','','','','','');
-INSERT INTO `custbranch` VALUES ('WEB0000017','WEB0000017','Phil Daintree','8 James Nairn Grove','','','Upper Hutt','5018','New Zealand',0.000000,0.000000,1,'TR','ERI',0,'+64(0)275567890','','Phil Daintree','phil@logicworks.co.nz','TOR',2,1,1,0,'8 James Nairn Grove','','','Upper Hutt','5018','New Zealand','','');
-INSERT INTO `custbranch` VALUES ('WEB0000018','WEB0000018','Logic Works Ltd','34 Marram Way','Peka Peka, RD1 Waikanae','','Kapiti','5134','New Zealand',0.000000,0.000000,1,'TR','ERI',0,'04 528 9514','','Phil Daintree','phil@logicworks.co.nz','TOR',2,1,1,0,'34 Marram Way','Peka Peka, RD1 Waikanae','','Kapiti','5134','New Zealand','','');
-INSERT INTO `custbranch` VALUES ('WEB0000019','WEB0000019','Logic Works Ltd','8 James Nairn Grove','James Nairn Grove','Riverstone Terraces','Upper Hutt','5018','New Zealand',0.000000,0.000000,1,'TR','ERI',0,'+6445289514','','Phil Daintree','phil@logicworks.co.nz','TOR',2,1,1,0,'8 James Nairn Grove','James Nairn Grove','Riverstone Terraces','Upper Hutt','5018','New Zealand','','');
-INSERT INTO `custbranch` VALUES ('WEB0000020','WEB0000020','Logic Works Ltd','34 Marram Way','Extra Street address','Peka Peka','Waikanae','5134','New Zealand',0.000000,0.000000,1,'TR','ERI',0,'0275567890','','Phil Daintree','phil@logicworks.co.nz','TOR',2,1,1,0,'34 Marram Way','Extra Street address','Peka Peka','Waikanae','5134','New Zealand','','');
-INSERT INTO `custbranch` VALUES ('WEB0000021','WEB0000021','Logic Works Ltd','34 Marram Way','34 Marram Way again','Peka Peka','Waikanae','5134','New Zealand',0.000000,0.000000,1,'TR','ERI',0,'1234564','','Phil Daintree','phil@logicworks.co.nz','TOR',2,1,1,0,'34 Marram Way','34 Marram Way again','Peka Peka','Waikanae','5134','New Zealand','','');
+INSERT INTO `custbranch` VALUES ('11','11','Angus Routledge &amp; Co','123 Alexander Road','Roundhay','Leeds','3200','','United Kingdom',0.00000000,0.00000000,1,'TR','ERI',0,'454422111','','Angus McDougall','angus@angry.com','TOR',2,1,1,0,'','','','','','','','');
+INSERT INTO `custbranch` VALUES ('12','12','Angus Routledge &amp; Co','123 Alexander Road','Roundhay','Leeds','3211','','United Kingdom',0.00000000,0.00000000,1,'TR','ERI',0,'212234566','','Angus McDougall','angus@angry.com','TOR',2,1,1,0,'','','','','','','','');
+INSERT INTO `custbranch` VALUES ('13','13','Angus Routledge &amp; Co','123 Alexander Road','Roundhay','Leeds','LE189','','United Kingdom',0.00000000,0.00000000,1,'TR','ERI',0,'0291882001','','Angus McDougall','angus@angry.com','TOR',2,1,1,0,'','','','','','','','');
+INSERT INTO `custbranch` VALUES ('14','14','Angus Routledge &amp; Co','123 Alexander Road','Roundhay','Leeds','2113','','United Kingdom',0.00000000,0.00000000,1,'TR','ERI',0,'12323434355566778899','','Angus McDougall','angus@angry.com','TOR',2,1,1,0,'','','','','','','','');
+INSERT INTO `custbranch` VALUES ('16','16','Logic Works Ltd','34 Marram Way','Peka Peka','RD1 Waiakane','Kapiti','5134','New Zealand',0.00000000,0.00000000,1,'TR','ERI',0,'64275567890','','Phil Daintree','phil@logicworks.co.nz','TOR',2,1,1,0,'34 Marram Way','Peka Peka','RD1 Waiakane','Kapiti','5134','New Zealand','','');
+INSERT INTO `custbranch` VALUES ('8','8','Angus Routledge &amp; Co','123 Alexander Road','Roundhay','Leeds','43990','','United Kingdom',0.00000000,0.00000000,1,'TR','ERI',0,'124544665','','Angus McDougall','angus@angry.com','TOR',2,1,1,0,'','','','','','','','');
+INSERT INTO `custbranch` VALUES ('ANGRY','ANGRY','Angus Rouledge - Toronto','P O Box 671','Gowerbridge','Upperton','Toronto ','Canada','United States',0.00000000,0.00000000,3,'TR','ERI',0,'0422 2245 2213','0422 2245 2215','Granville Thomas','graville@angry.com','TOR',2,1,1,0,'','','','','','','','');
+INSERT INTO `custbranch` VALUES ('ANGRYFL','ANGRY','Angus Rouledge - Florida','1821 Sunnyside','Ft Lauderdale','Florida','42554','','United States',0.00000000,0.00000000,3,'FL','PHO',0,'2445 2232 524','2445 2232 522','Wendy Blowers','wendy@angry.com','TOR',1,1,1,0,'','','','','','','Watch out can bite!','');
+INSERT INTO `custbranch` VALUES ('DUMBLE','DUMBLE','Dumbledoor McGonagal & Co','Hogwarts castle','Platform 9.75','','','','',0.00000000,0.00000000,1,'TR','ERI',0,'Owls only','Owls only','Minerva McGonagal','mmgonagal@hogwarts.edu.uk','TOR',3,10,1,0,'','','','','','','','');
+INSERT INTO `custbranch` VALUES ('JOLOMU','JOLOMU','Lorrima Productions Inc','3215 Great Western Highway','Blubberhouses','Yorkshire','England','','',0.00000000,0.00000000,20,'FL','PHO',0,'+44 812 211456','+44 812 211 554','Jo Lomu','jolomu@lorrima.co.uk','TOR',3,1,1,0,'','','','','','','','');
+INSERT INTO `custbranch` VALUES ('KES','KES','Ken Estoban','','','','','','',0.00000000,0.00000000,0,'DE','DE',0,'','','','','MEL',1,1,1,0,'','','','','','','','');
+INSERT INTO `custbranch` VALUES ('NEWTEST','NEWTEST','New Customer','','','','','','United States',0.00000000,0.00000000,0,'123','DE',0,'','','','','AN',1,1,1,0,'','','','','','','','');
+INSERT INTO `custbranch` VALUES ('QUARTER','QUARTER','Quarter Back to Back','1356 Union Drive','Holborn','England','','','',0.00000000,0.00000000,5,'FL','ERI',0,'123456','1234567','','','TOR',3,1,1,0,'','','','','','','','');
+INSERT INTO `custbranch` VALUES ('QUIC','QUICK','Quick Brown PLC','Fox Street','Jumped Over','The Lazy Dog','','','',0.00000000,0.00000000,1,'FL','ERI',0,'','','','','TOR',1,1,1,0,'','','','','','','','');
+INSERT INTO `custbranch` VALUES ('SLOW','QUICK','Slow Dog','Hunstman Road','Woofton','','','','',0.00000000,0.00000000,1,'TR','ERI',0,'','','Staffordshire Terrier','','TOR',2,1,1,0,'','','','','','','','');
+INSERT INTO `custbranch` VALUES ('WEB0000017','WEB0000017','Phil Daintree','8 James Nairn Grove','','','Upper Hutt','5018','New Zealand',0.00000000,0.00000000,1,'TR','ERI',0,'+64(0)275567890','','Phil Daintree','phil@logicworks.co.nz','TOR',2,1,1,0,'8 James Nairn Grove','','','Upper Hutt','5018','New Zealand','','');
+INSERT INTO `custbranch` VALUES ('WEB0000018','WEB0000018','Logic Works Ltd','34 Marram Way','Peka Peka, RD1 Waikanae','','Kapiti','5134','New Zealand',0.00000000,0.00000000,1,'TR','ERI',0,'04 528 9514','','Phil Daintree','phil@logicworks.co.nz','TOR',2,1,1,0,'34 Marram Way','Peka Peka, RD1 Waikanae','','Kapiti','5134','New Zealand','','');
+INSERT INTO `custbranch` VALUES ('WEB0000019','WEB0000019','Logic Works Ltd','8 James Nairn Grove','James Nairn Grove','Riverstone Terraces','Upper Hutt','5018','New Zealand',0.00000000,0.00000000,1,'TR','ERI',0,'+6445289514','','Phil Daintree','phil@logicworks.co.nz','TOR',2,1,1,0,'8 James Nairn Grove','James Nairn Grove','Riverstone Terraces','Upper Hutt','5018','New Zealand','','');
+INSERT INTO `custbranch` VALUES ('WEB0000020','WEB0000020','Logic Works Ltd','34 Marram Way','Extra Street address','Peka Peka','Waikanae','5134','New Zealand',0.00000000,0.00000000,1,'TR','ERI',0,'0275567890','','Phil Daintree','phil@logicworks.co.nz','TOR',2,1,1,0,'34 Marram Way','Extra Street address','Peka Peka','Waikanae','5134','New Zealand','','');
+INSERT INTO `custbranch` VALUES ('WEB0000021','WEB0000021','Logic Works Ltd','34 Marram Way','34 Marram Way again','Peka Peka','Waikanae','5134','New Zealand',0.00000000,0.00000000,1,'TR','ERI',0,'1234564','','Phil Daintree','phil@logicworks.co.nz','TOR',2,1,1,0,'34 Marram Way','34 Marram Way again','Peka Peka','Waikanae','5134','New Zealand','','');
 
 --
 -- Dumping data for table `custcontacts`
@@ -9748,7 +9801,17 @@ INSERT INTO `paymentterms` VALUES ('CA','Cash Only',1,0);
 
 
 --
+-- Dumping data for table `pcashdetailtaxes`
+--
+
+
+--
 -- Dumping data for table `pcexpenses`
+--
+
+
+--
+-- Dumping data for table `pcreceipts`
 --
 
 
@@ -9761,7 +9824,7 @@ INSERT INTO `paymentterms` VALUES ('CA','Cash Only',1,0);
 -- Dumping data for table `pctabs`
 --
 
-INSERT INTO `pctabs` VALUES ('test','admin','Default','AUD',85,'admin','admin','1030','7610');
+INSERT INTO `pctabs` VALUES ('test','admin','Default','AUD',85,'admin','admin','admin','1030','7610',0,1);
 
 --
 -- Dumping data for table `pctypetabs`
@@ -9840,6 +9903,21 @@ INSERT INTO `periods` VALUES (72,'2017-11-30');
 
 --
 -- Dumping data for table `pickinglists`
+--
+
+
+--
+-- Dumping data for table `pickreq`
+--
+
+
+--
+-- Dumping data for table `pickreqdetails`
+--
+
+
+--
+-- Dumping data for table `pickserialdetails`
 --
 
 
@@ -12887,12 +12965,12 @@ INSERT INTO `salesorderdetails` VALUES (2,11,'DVD-TOPGUN',0,12.25,2,0,0,'0000-00
 -- Dumping data for table `salesorders`
 --
 
-INSERT INTO `salesorders` VALUES (1,'16','16','',NULL,' Inv 1','2013-06-23','DE',1,'34 Marram Way','Peka Peka','RD1 Waiakane','5134','','New Zealand','64275567890','phil@logicworks.co.nz','Phil Daintree',1,0,'TOR','2013-06-23','2013-06-23',0,'0000-00-00',0,'2013-06-23',1,'ERI');
-INSERT INTO `salesorders` VALUES (7,'12','12','',NULL,' Inv 2','2013-09-06','DE',1,'123 Alexander Road','Roundhay','Leeds','3211','','United Kingdom','212234566','angus@angry.com','Angus Routledge &amp; Co',1,0,'TOR','2013-09-07','2013-09-07',0,'0000-00-00',0,'2013-09-07',0,'ERI');
-INSERT INTO `salesorders` VALUES (8,'12','12','',NULL,'','2014-08-02','DE',1,'123 Alexander Road','Roundhay','Leeds','3211','','United Kingdom','212234566','angus@angry.com','Angus Routledge & Co',1,0,'TOR','2014-08-04','2014-08-04',0,'0000-00-00',0,'2014-08-04',1,'ERI');
-INSERT INTO `salesorders` VALUES (10,'WEB0000018','WEB0000018','',NULL,'','2014-08-31','DE',1,'34 Marram Way','Peka Peka, RD1 Waikanae','','Kapiti','5134','New Zealand','04 528 9514','phil@logicworks.co.nz','Phil Daintree',1,0,'TOR','2014-08-31','2014-08-31',0,'0000-00-00',1,'2014-08-31',0,'ERI');
-INSERT INTO `salesorders` VALUES (11,'ANGRY','ANGRYFL','',NULL,'','2016-10-19','DE',1,'1821 Sunnyside','Ft Lauderdale','Florida','42554','','United States','2445 2232 524','wendy@angry.com','Angus Rouledge - Florida',1,0,'TOR','2016-10-19','2016-10-19',0,'0000-00-00',0,'2016-10-19',1,'PHO');
-INSERT INTO `salesorders` VALUES (12,'ANGRY','ANGRY','POS-00001 102',NULL,NULL,'2014-03-07','DE',1,'','','',NULL,'','',NULL,NULL,'Angus Rouledge - Toronto',1,0,'MEL','2014-03-07','2014-03-07',1,'2014-03-07',0,'0000-00-00',0,'');
+INSERT INTO `salesorders` VALUES (1,'16','16','',NULL,' Inv 1','2013-06-23','DE',1,'34 Marram Way','Peka Peka','RD1 Waiakane','5134','','New Zealand','64275567890','phil@logicworks.co.nz','Phil Daintree',1,0,'TOR','2013-06-23','2013-06-23',0,'0000-00-00',0,'2013-06-23',1,'ERI',NULL);
+INSERT INTO `salesorders` VALUES (7,'12','12','',NULL,' Inv 2','2013-09-06','DE',1,'123 Alexander Road','Roundhay','Leeds','3211','','United Kingdom','212234566','angus@angry.com','Angus Routledge &amp; Co',1,0,'TOR','2013-09-07','2013-09-07',0,'0000-00-00',0,'2013-09-07',0,'ERI',NULL);
+INSERT INTO `salesorders` VALUES (8,'12','12','',NULL,'','2014-08-02','DE',1,'123 Alexander Road','Roundhay','Leeds','3211','','United Kingdom','212234566','angus@angry.com','Angus Routledge & Co',1,0,'TOR','2014-08-04','2014-08-04',0,'0000-00-00',0,'2014-08-04',1,'ERI',NULL);
+INSERT INTO `salesorders` VALUES (10,'WEB0000018','WEB0000018','',NULL,'','2014-08-31','DE',1,'34 Marram Way','Peka Peka, RD1 Waikanae','','Kapiti','5134','New Zealand','04 528 9514','phil@logicworks.co.nz','Phil Daintree',1,0,'TOR','2014-08-31','2014-08-31',0,'0000-00-00',1,'2014-08-31',0,'ERI',NULL);
+INSERT INTO `salesorders` VALUES (11,'ANGRY','ANGRYFL','',NULL,'','2016-10-19','DE',1,'1821 Sunnyside','Ft Lauderdale','Florida','42554','','United States','2445 2232 524','wendy@angry.com','Angus Rouledge - Florida',1,0,'TOR','2016-10-19','2016-10-19',0,'0000-00-00',0,'2016-10-19',1,'PHO',NULL);
+INSERT INTO `salesorders` VALUES (12,'ANGRY','ANGRY','POS-00001 102',NULL,NULL,'2014-03-07','DE',1,'','','',NULL,'','',NULL,NULL,'Angus Rouledge - Toronto',1,0,'MEL','2014-03-07','2014-03-07',1,'2014-03-07',0,'0000-00-00',0,'',NULL);
 
 --
 -- Dumping data for table `salestypes`
@@ -12922,6 +13000,7 @@ INSERT INTO `scripts` VALUES ('AnalysisHorizontalPosition.php',8,'Shows the hori
 INSERT INTO `scripts` VALUES ('Areas.php',3,'Defines the sales areas - all customers must belong to a sales area for the purposes of sales analysis');
 INSERT INTO `scripts` VALUES ('AuditTrail.php',15,'Shows the activity with SQL statements and who performed the changes');
 INSERT INTO `scripts` VALUES ('AutomaticTranslationDescriptions.php',15,'Translates via Google Translator all empty translated descriptions');
+INSERT INTO `scripts` VALUES ('BankAccountBalances.php',1,'Shows bank accounts authorised for with balances');
 INSERT INTO `scripts` VALUES ('BankAccounts.php',10,'Defines the general ledger code for bank accounts and specifies that bank transactions be created for these accounts for the purposes of reconciliation');
 INSERT INTO `scripts` VALUES ('BankAccountUsers.php',15,'Maintains table bankaccountusers (Authorized users to work with a bank account in webERP)');
 INSERT INTO `scripts` VALUES ('BankMatching.php',7,'Allows payments and receipts to be matched off against bank statements');
@@ -12990,6 +13069,7 @@ INSERT INTO `scripts` VALUES ('FormDesigner.php',14,'');
 INSERT INTO `scripts` VALUES ('FormMaker.php',1,'Allows running user defined Forms');
 INSERT INTO `scripts` VALUES ('FreightCosts.php',11,'Defines the setup of the freight cost using different shipping methods to different destinations. The system can use this information to calculate applicable freight if the items are defined with the correct kgs and cubic volume');
 INSERT INTO `scripts` VALUES ('FTP_RadioBeacon.php',2,'FTPs sales orders for dispatch to a radio beacon software enabled warehouse dispatching facility');
+INSERT INTO `scripts` VALUES ('GeneratePickingList.php',11,'Generate a picking list');
 INSERT INTO `scripts` VALUES ('geocode.php',3,'');
 INSERT INTO `scripts` VALUES ('GeocodeSetup.php',3,'');
 INSERT INTO `scripts` VALUES ('geocode_genxml_customers.php',3,'');
@@ -12998,6 +13078,7 @@ INSERT INTO `scripts` VALUES ('geo_displaymap_customers.php',3,'');
 INSERT INTO `scripts` VALUES ('geo_displaymap_suppliers.php',3,'');
 INSERT INTO `scripts` VALUES ('GetStockImage.php',1,'');
 INSERT INTO `scripts` VALUES ('GLAccountCSV.php',8,'Produces a CSV of the GL transactions for a particular range of periods and GL account');
+INSERT INTO `scripts` VALUES ('GLAccountGraph.php',8,'Shows a graph of GL account transactions');
 INSERT INTO `scripts` VALUES ('GLAccountInquiry.php',8,'Shows the general ledger transactions for a specified account over a specified range of periods');
 INSERT INTO `scripts` VALUES ('GLAccountReport.php',8,'Produces a report of the GL transactions for a particular account');
 INSERT INTO `scripts` VALUES ('GLAccounts.php',10,'Defines the general ledger accounts');
@@ -13067,6 +13148,7 @@ INSERT INTO `scripts` VALUES ('PaymentTerms.php',10,'Defines the payment terms r
 INSERT INTO `scripts` VALUES ('PcAnalysis.php',15,'Creates an Excel with details of PC expnese for 24 months');
 INSERT INTO `scripts` VALUES ('PcAssignCashTabToTab.php',12,'Assign cash from one tab to another');
 INSERT INTO `scripts` VALUES ('PcAssignCashToTab.php',6,'');
+INSERT INTO `scripts` VALUES ('PcAuthorizeCash.php',6,'Authorisation of assigned cash');
 INSERT INTO `scripts` VALUES ('PcAuthorizeExpenses.php',6,'');
 INSERT INTO `scripts` VALUES ('PcClaimExpensesFromTab.php',6,'');
 INSERT INTO `scripts` VALUES ('PcExpenses.php',15,'');
@@ -13076,6 +13158,7 @@ INSERT INTO `scripts` VALUES ('PcReportTab.php',6,'');
 INSERT INTO `scripts` VALUES ('PcTabExpensesList.php',15,'Creates excel with all movements of tab between dates');
 INSERT INTO `scripts` VALUES ('PcTabs.php',15,'');
 INSERT INTO `scripts` VALUES ('PcTypeTabs.php',15,'');
+INSERT INTO `scripts` VALUES ('PDFAck.php',15,'Print an acknowledgement');
 INSERT INTO `scripts` VALUES ('PDFBankingSummary.php',3,'Creates a pdf showing the amounts entered as receipts on a specified date together with references for the purposes of banking');
 INSERT INTO `scripts` VALUES ('PDFChequeListing.php',3,'Creates a pdf showing all payments that have been made from a specified bank account over a specified period. This can be emailed to an email account defined in config.php - ie a financial controller');
 INSERT INTO `scripts` VALUES ('PDFCOA.php',0,'PDF of COA');
@@ -13101,6 +13184,7 @@ INSERT INTO `scripts` VALUES ('PDFQuotationPortrait.php',2,'Portrait quotation')
 INSERT INTO `scripts` VALUES ('PDFReceipt.php',2,'');
 INSERT INTO `scripts` VALUES ('PDFRemittanceAdvice.php',2,'');
 INSERT INTO `scripts` VALUES ('PDFSellThroughSupportClaim.php',9,'Reports the sell through support claims to be made against all suppliers for a given date range.');
+INSERT INTO `scripts` VALUES ('PDFShipLabel.php',15,'Print a ship label');
 INSERT INTO `scripts` VALUES ('PDFStockCheckComparison.php',2,'Creates a pdf comparing the quantites entered as counted at a given range of locations against the quantity stored as on hand as at the time a stock check was initiated.');
 INSERT INTO `scripts` VALUES ('PDFStockLocTransfer.php',1,'Creates a stock location transfer docket for the selected location transfer reference number');
 INSERT INTO `scripts` VALUES ('PDFStockNegatives.php',1,'Produces a pdf of the negative stocks by location');
@@ -13110,6 +13194,8 @@ INSERT INTO `scripts` VALUES ('PDFTestPlan.php',16,'PDF of Test Plan');
 INSERT INTO `scripts` VALUES ('PDFTopItems.php',2,'Produces a pdf report of the top items sold');
 INSERT INTO `scripts` VALUES ('PDFWOPrint.php',11,'Produces W/O Paperwork');
 INSERT INTO `scripts` VALUES ('PeriodsInquiry.php',2,'Shows a list of all the system defined periods');
+INSERT INTO `scripts` VALUES ('PickingLists.php',11,'Picking List Maintenance');
+INSERT INTO `scripts` VALUES ('PickingListsControlled.php',11,'Picking List Maintenance - Controlled');
 INSERT INTO `scripts` VALUES ('POReport.php',2,'');
 INSERT INTO `scripts` VALUES ('PO_AuthorisationLevels.php',15,'');
 INSERT INTO `scripts` VALUES ('PO_AuthoriseMyOrders.php',4,'');
@@ -13170,6 +13256,7 @@ INSERT INTO `scripts` VALUES ('SelectCreditItems.php',3,'Entry of credit notes f
 INSERT INTO `scripts` VALUES ('SelectCustomer.php',2,'Selection of customer - from where all customer related maintenance, transactions and inquiries start');
 INSERT INTO `scripts` VALUES ('SelectGLAccount.php',8,'Selection of general ledger account from where all general ledger account maintenance, or inquiries are initiated');
 INSERT INTO `scripts` VALUES ('SelectOrderItems.php',1,'Entry of sales order items with both quick entry and part search functions');
+INSERT INTO `scripts` VALUES ('SelectPickingLists.php',11,'Select a picking list');
 INSERT INTO `scripts` VALUES ('SelectProduct.php',2,'Selection of items. All item maintenance, transactions and inquiries start with this script');
 INSERT INTO `scripts` VALUES ('SelectQASamples.php',16,'Select  QA Samples');
 INSERT INTO `scripts` VALUES ('SelectRecurringSalesOrder.php',2,'');
@@ -13264,6 +13351,7 @@ INSERT INTO `scripts` VALUES ('Z_ChangeBranchCode.php',15,'Utility to change the
 INSERT INTO `scripts` VALUES ('Z_ChangeCustomerCode.php',15,'Utility to change a customer code that cascades the change through all the necessary tables');
 INSERT INTO `scripts` VALUES ('Z_ChangeGLAccountCode.php',15,'Script to change a GL account code accross all tables necessary');
 INSERT INTO `scripts` VALUES ('Z_ChangeLocationCode.php',15,'Change a locations code and in all tables where the old code was used to the new code');
+INSERT INTO `scripts` VALUES ('Z_ChangeSalesmanCode.php',15,'Utility to change a salesman code');
 INSERT INTO `scripts` VALUES ('Z_ChangeStockCategory.php',15,'');
 INSERT INTO `scripts` VALUES ('Z_ChangeStockCode.php',15,'Utility to change an item code that cascades the change through all the necessary tables');
 INSERT INTO `scripts` VALUES ('Z_ChangeSupplierCode.php',15,'Script to change a supplier code accross all tables necessary');
@@ -13282,6 +13370,7 @@ INSERT INTO `scripts` VALUES ('Z_DeleteInvoice.php',15,'Utility to reverse a cus
 INSERT INTO `scripts` VALUES ('Z_DeleteOldPrices.php',15,'Deletes all old prices');
 INSERT INTO `scripts` VALUES ('Z_DeleteSalesTransActions.php',15,'Utility to delete all sales transactions, sales analysis the lot! Extreme care required!!!');
 INSERT INTO `scripts` VALUES ('Z_DescribeTable.php',11,'');
+INSERT INTO `scripts` VALUES ('Z_Fix1cAllocations.php',9,'');
 INSERT INTO `scripts` VALUES ('Z_GLAccountUsersCopyAuthority.php',15,'Utility to copy authority of GL accounts from one user to another');
 INSERT INTO `scripts` VALUES ('Z_ImportChartOfAccounts.php',11,'');
 INSERT INTO `scripts` VALUES ('Z_ImportDebtors.php',15,'Import debtors by csv file');
@@ -13642,12 +13731,12 @@ INSERT INTO `stockrequestitems` VALUES (2,2,'HIT3043-5',1,0,0,'each',1);
 -- Dumping data for table `stockserialitems`
 --
 
-INSERT INTO `stockserialitems` VALUES ('HIT3043-5','MEL','5430','2000-00-00 00:00:00',1,'');
-INSERT INTO `stockserialitems` VALUES ('HIT3043-5','MEL','5439','2000-00-00 00:00:00',1,'');
-INSERT INTO `stockserialitems` VALUES ('HIT3043-5','MEL','5441','2000-00-00 00:00:00',1,'');
-INSERT INTO `stockserialitems` VALUES ('HIT3043-5','MEL','5442','2000-00-00 00:00:00',1,'');
-INSERT INTO `stockserialitems` VALUES ('HIT3043-5','MEL','5443','2000-00-00 00:00:00',1,'');
-INSERT INTO `stockserialitems` VALUES ('HIT3043-5','MEL','5449','2000-00-00 00:00:00',1,'');
+INSERT INTO `stockserialitems` VALUES ('HIT3043-5','MEL','5430','2000-00-00 00:00:00',1,'',NULL);
+INSERT INTO `stockserialitems` VALUES ('HIT3043-5','MEL','5439','2000-00-00 00:00:00',1,'',NULL);
+INSERT INTO `stockserialitems` VALUES ('HIT3043-5','MEL','5441','2000-00-00 00:00:00',1,'',NULL);
+INSERT INTO `stockserialitems` VALUES ('HIT3043-5','MEL','5442','2000-00-00 00:00:00',1,'',NULL);
+INSERT INTO `stockserialitems` VALUES ('HIT3043-5','MEL','5443','2000-00-00 00:00:00',1,'',NULL);
+INSERT INTO `stockserialitems` VALUES ('HIT3043-5','MEL','5449','2000-00-00 00:00:00',1,'',NULL);
 
 --
 -- Dumping data for table `stockserialmoves`
@@ -13705,24 +13794,24 @@ INSERT INTO `suppliertype` VALUES (2,'Others');
 -- Dumping data for table `supptrans`
 --
 
-INSERT INTO `supptrans` VALUES (34,20,'CRUISE','123','2013-01-15','2013-01-31','2012-12-16 00:00:00',1,0.6185,10,0,0,10,'',0,1);
-INSERT INTO `supptrans` VALUES (6,22,'CRUISE','Cash','2013-01-01','0000-00-00','2012-12-16 09:17:20',1,0.6185,-10,0,0,-10,'',0,2);
-INSERT INTO `supptrans` VALUES (35,20,'CRUISE','234','2013-01-15','2013-01-31','2012-12-16 00:00:00',1,0.6185,100,0,0,100,'',0,3);
-INSERT INTO `supptrans` VALUES (7,22,'CRUISE','Cash','2013-01-16','0000-00-00','2012-12-16 09:20:11',1,0.6185,-100,0,0,-100,'',0,4);
-INSERT INTO `supptrans` VALUES (36,20,'CRUISE','345','2013-01-16','2013-01-31','2012-12-16 00:00:00',1,0.6185,100,0,9.0667303671351,100,'',0,5);
-INSERT INTO `supptrans` VALUES (8,22,'CRUISE','Cash','2013-01-31','0000-00-00','2012-12-16 09:22:34',1,0.58565765,-100,0,-9.0667303671351,-100,'',0,6);
-INSERT INTO `supptrans` VALUES (37,20,'CRUISE','opninvoice','2013-02-08','2013-03-31','2013-02-09 00:00:00',0,0.6324,95.25,0,0,0,'',0,7);
-INSERT INTO `supptrans` VALUES (38,20,'OTHER','145','2013-10-05','2013-11-22','2013-10-05 00:00:00',0,1.0884,55,6.7925,0,0,'',0,8);
-INSERT INTO `supptrans` VALUES (9,22,'OTHER','Cash','2013-11-20','0000-00-00','2013-11-20 19:57:09',0,1.0884,-100,0,0,0,'',0,9);
-INSERT INTO `supptrans` VALUES (10,22,'OTHER','Cash','2013-11-20','0000-00-00','2013-11-20 19:59:10',0,1,-100,0,0,0,'',0,10);
-INSERT INTO `supptrans` VALUES (11,22,'OTHER','Cash','2013-11-20','0000-00-00','2013-11-20 20:22:30',0,1.0884,-100,0,0,0,'',0,11);
-INSERT INTO `supptrans` VALUES (39,20,'BINGO','aA112','2013-11-30','2013-12-31','2013-12-01 00:00:00',0,1,52.35,5.235,0,0,'',0,12);
-INSERT INTO `supptrans` VALUES (40,20,'BINGO','2100','2014-01-13','2014-02-28','2014-01-13 00:00:00',0,1,50,5,0,0,'',0,13);
-INSERT INTO `supptrans` VALUES (41,20,'BINGO','1223','2014-01-13','2014-02-28','2014-01-13 00:00:00',0,1,1,0.1,0,0,'',0,14);
-INSERT INTO `supptrans` VALUES (42,20,'BINGO','23001','2014-01-13','2014-02-28','2014-01-13 00:00:00',0,1,31,3.1,0,0,'',0,15);
-INSERT INTO `supptrans` VALUES (43,20,'BINGO','tedt555','2014-01-14','2014-02-28','2014-01-14 00:00:00',0,1,1.5,0.15,0,0,'',0,16);
-INSERT INTO `supptrans` VALUES (44,20,'BINGO','2133','2014-01-13','2014-02-28','2014-01-14 00:00:00',0,1,1.5,0.15,0,0,'',0,17);
-INSERT INTO `supptrans` VALUES (45,20,'BINGO','211','2014-01-13','2014-02-28','2014-01-14 00:00:00',0,1,2,0.2,0,0,'',0,18);
+INSERT INTO `supptrans` VALUES (34,20,'CRUISE','123','2013-01-15','2013-01-31','2012-12-16 00:00:00',1,0.6185,10,0,0,10,'',0,'',0,1);
+INSERT INTO `supptrans` VALUES (6,22,'CRUISE','Cash','2013-01-01','0000-00-00','2012-12-16 09:17:20',1,0.6185,-10,0,0,-10,'',0,'',0,2);
+INSERT INTO `supptrans` VALUES (35,20,'CRUISE','234','2013-01-15','2013-01-31','2012-12-16 00:00:00',1,0.6185,100,0,0,100,'',0,'',0,3);
+INSERT INTO `supptrans` VALUES (7,22,'CRUISE','Cash','2013-01-16','0000-00-00','2012-12-16 09:20:11',1,0.6185,-100,0,0,-100,'',0,'',0,4);
+INSERT INTO `supptrans` VALUES (36,20,'CRUISE','345','2013-01-16','2013-01-31','2012-12-16 00:00:00',1,0.6185,100,0,9.0667303671351,100,'',0,'',0,5);
+INSERT INTO `supptrans` VALUES (8,22,'CRUISE','Cash','2013-01-31','0000-00-00','2012-12-16 09:22:34',1,0.58565765,-100,0,-9.0667303671351,-100,'',0,'',0,6);
+INSERT INTO `supptrans` VALUES (37,20,'CRUISE','opninvoice','2013-02-08','2013-03-31','2013-02-09 00:00:00',0,0.6324,95.25,0,0,0,'',0,'',0,7);
+INSERT INTO `supptrans` VALUES (38,20,'OTHER','145','2013-10-05','2013-11-22','2013-10-05 00:00:00',0,1.0884,55,6.7925,0,0,'',0,'',0,8);
+INSERT INTO `supptrans` VALUES (9,22,'OTHER','Cash','2013-11-20','0000-00-00','2013-11-20 19:57:09',0,1.0884,-100,0,0,0,'',0,'',0,9);
+INSERT INTO `supptrans` VALUES (10,22,'OTHER','Cash','2013-11-20','0000-00-00','2013-11-20 19:59:10',0,1,-100,0,0,0,'',0,'',0,10);
+INSERT INTO `supptrans` VALUES (11,22,'OTHER','Cash','2013-11-20','0000-00-00','2013-11-20 20:22:30',0,1.0884,-100,0,0,0,'',0,'',0,11);
+INSERT INTO `supptrans` VALUES (39,20,'BINGO','aA112','2013-11-30','2013-12-31','2013-12-01 00:00:00',0,1,52.35,5.235,0,0,'',0,'',0,12);
+INSERT INTO `supptrans` VALUES (40,20,'BINGO','2100','2014-01-13','2014-02-28','2014-01-13 00:00:00',0,1,50,5,0,0,'',0,'',0,13);
+INSERT INTO `supptrans` VALUES (41,20,'BINGO','1223','2014-01-13','2014-02-28','2014-01-13 00:00:00',0,1,1,0.1,0,0,'',0,'',0,14);
+INSERT INTO `supptrans` VALUES (42,20,'BINGO','23001','2014-01-13','2014-02-28','2014-01-13 00:00:00',0,1,31,3.1,0,0,'',0,'',0,15);
+INSERT INTO `supptrans` VALUES (43,20,'BINGO','tedt555','2014-01-14','2014-02-28','2014-01-14 00:00:00',0,1,1.5,0.15,0,0,'',0,'',0,16);
+INSERT INTO `supptrans` VALUES (44,20,'BINGO','2133','2014-01-13','2014-02-28','2014-01-14 00:00:00',0,1,1.5,0.15,0,0,'',0,'',0,17);
+INSERT INTO `supptrans` VALUES (45,20,'BINGO','211','2014-01-13','2014-02-28','2014-01-14 00:00:00',0,1,2,0.2,0,0,'',0,'',0,18);
 
 --
 -- Dumping data for table `supptranstaxes`
@@ -13940,15 +14029,13 @@ INSERT INTO `workorders` VALUES (37,'MEL','2016-10-19','2016-10-19',0,0,NULL,'',
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('admin','$2y$10$Q8HLC/2rQaB5NcCcK6V6ZOQG3chIsx16mKtZRoSaUsU9okMBDbUwG','Demonstration user','','','','','admin@weberp.org','MEL',8,1,'2017-12-05 18:46:18','','A4','1,1,1,1,1,1,1,1,1,1,1,',0,1,1,0,50,'fluid','en_GB.utf8',0,0);
+INSERT INTO `www_users` VALUES ('admin','$2y$10$SVRX8Q.TR5a7MvDg.8JzFeSYa3tH9mNW1b0Djv2YCax5QhM/zlwZq','Demonstration user','','','','','admin@weberp.org','MEL',8,1,'2017-12-05 18:46:18','','A4','1,1,1,1,1,1,1,1,1,1,1,',0,1,1,0,50,'fluid','en_US.utf8',0,0);
 INSERT INTO `www_users` VALUES ('WEB0000021','$2y$10$aTt/treAhiVVd0mPw1Ums.GcOxBtX/3cIsD1RL//0iT3QUYjvIDlS','Phil Daintree','WEB0000021','','','1234564','phil@logicworks.co.nz','TOR',7,0,NULL,'WEB0000021','A4','1,0,0,0,0,0,0,0,0,0,0',0,1,1,0,30,'','en_GB.utf8',0,0);
-
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-12-22 18:59:26
+-- Dump completed on 2018-05-20 18:59:07
 SET FOREIGN_KEY_CHECKS = 1;
