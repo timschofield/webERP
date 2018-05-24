@@ -477,10 +477,7 @@ function ItemBelongsToPT($StockID){
 	$myStockCat = DB_fetch_array($Result);
 	$StockCategory = $myStockCat['categoryid'];
 	$PT = "PTBB"; // by default it is PTBB
-	if (($StockCategory == "SETKL") OR
-		($StockCategory == "SETBL") OR
-		($StockCategory == "SETGE") OR
-		($StockCategory == "TESTKL") OR
+	if (($StockCategory == "TESTKL") OR
 		($StockCategory == "TESTBL") OR
 		($StockCategory == "TESTGE") OR
 		($StockCategory == "STABKL") OR

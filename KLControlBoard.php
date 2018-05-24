@@ -339,7 +339,7 @@ if ($ProcessSection01){
 									'111111124', 
 									'111111125', 
 									'111111126', 
-									'111111127')", "Total Cash @ shops",         0, 22 * 5000000, $periodnow, $db);
+									'111111127')", "Total Cash @ shops",         0, 22 * 7000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('111121105AD', 
@@ -360,9 +360,12 @@ if ($ProcessSection01){
 	if ($KL_SystemAdmin 
 		OR $KL_OperationalManager
 		OR $KL_AdministrationTeam){
-		BalanceListAccountControl("('111121100IK', 
-									'111121105IK', 
-									'111121110IK')", "Total Banks POIK", 1000000, 50000000, $periodnow, $db);
+		BalanceAccountControl("111121100IK",  1000000,  50000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
+// Bank Danamon IK not opened yet
+//		BalanceAccountControl("111121105IK",  1000000,  50000000, $periodnow, $db);
+//		$NumberOfTestExecuted++;
+		BalanceAccountControl("111121110IK",  1000000,  50000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 	}
 	
@@ -421,53 +424,29 @@ if ($ProcessSection01){
 
 	if ($KL_BusinessDevelopmentManager
 		OR $KL_PurchasingTeam){
-		ItemsInSetup("ReadyToTest", "SETKL", $RootPath, $db);
-		$NumberOfTestExecuted++;
 		ItemsInSetup("ReadyToTest", "SETKLA", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ItemsInSetup("ReadyToTest", "SETBL", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		ItemsInSetup("ReadyToTest", "SETBLA", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsInSetup("ReadyToTest", "SETGE", $RootPath, $db);
-		$NumberOfTestExecuted++;
 		ItemsInSetup("ReadyToTest", "SETGEA", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ItemsInSetup("NeedDescription", "SETKL", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		ItemsInSetup("NeedDescription", "SETKLA", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsInSetup("NeedDescription", "SETBL", $RootPath, $db);
-		$NumberOfTestExecuted++;
 		ItemsInSetup("NeedDescription", "SETBLA", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ItemsInSetup("NeedDescription", "SETGE", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		ItemsInSetup("NeedDescription", "SETGEA", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		//ItemsInSetup("NeedPrice", $RootPath, $db);
 		//$NumberOfTestExecuted++;
-		ItemsWithoutRetailPrice("SETKL", 4.75, $RootPath, $db);
-		$NumberOfTestExecuted++;
 		ItemsWithoutRetailPrice("SETKLA", 4.75, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ItemsWithoutRetailPrice("SETBL", 4.75, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		ItemsWithoutRetailPrice("SETBLA", 4.75, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsWithoutRetailPrice("SETGE", 4.75, $RootPath, $db);
-		$NumberOfTestExecuted++;
 		ItemsWithoutRetailPrice("SETGEA", 4.75, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ItemsInSetup("WithReorderLevel", "SETKL", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		ItemsInSetup("WithReorderLevel", "SETKLA", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsInSetup("WithReorderLevel", "SETBL", $RootPath, $db);
-		$NumberOfTestExecuted++;
 		ItemsInSetup("WithReorderLevel", "SETBLA", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ItemsInSetup("WithReorderLevel", "SETGE", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		ItemsInSetup("WithReorderLevel", "SETGEA", $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -812,15 +791,9 @@ if ($ProcessSection02){
 	if ($KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
 
-		ItemsInCategoryForMoreThanDays( 120, "SETKL", $RootPath, $db);
-		$NumberOfTestExecuted++;
 		ItemsInCategoryForMoreThanDays( 120, "SETKLA", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsInCategoryForMoreThanDays( 120, "SETBL", $RootPath, $db);
-		$NumberOfTestExecuted++;
 		ItemsInCategoryForMoreThanDays( 120, "SETBLA", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ItemsInCategoryForMoreThanDays( 120, "SETGE", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		ItemsInCategoryForMoreThanDays( 120, "SETGEA", $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -4888,7 +4861,7 @@ function StockToPTADU($Kind, $FactorNearStock, $LimitToMove, $RootPath, $db){
 							AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . ") AS qohshops
 				FROM purchorderdetails, stockmaster
 				WHERE purchorderdetails.itemcode = stockmaster.stockid
-					AND stockmaster.categoryid IN ('SETKL','SETBL','SETGE','TESTKL','TESTBL','TESTGE', 'STABKL','STABBL','STABGE','NOPOKL','NOPOBL','NOPOGE','DISC20','DISC50','DISC80','COMPON')
+					AND stockmaster.categoryid IN ('TESTKL','TESTBL','TESTGE', 'STABKL','STABBL','STABGE','NOPOKL','NOPOBL','NOPOGE','DISC20','DISC50','DISC80','COMPON')
 					AND purchorderdetails.orderno >= 2808
 					AND purchorderdetails.orderno != 2811
 					AND purchorderdetails.orderno != 2816
@@ -4912,7 +4885,7 @@ function StockToPTADU($Kind, $FactorNearStock, $LimitToMove, $RootPath, $db){
 							AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . ") AS qohshops
 				FROM workorders, woitems, stockmaster
 				WHERE woitems.stockid = stockmaster.stockid
-					AND stockmaster.categoryid IN ('SETKL','SETBL','SETGE','TESTKL','TESTBL','TESTGE', 'STABKL','STABBL','STABGE','NOPOKL','NOPOBL','NOPOGE','DISC20','DISC50','DISC80','COMPON')
+					AND stockmaster.categoryid IN ('TESTKL','TESTBL','TESTGE', 'STABKL','STABBL','STABGE','NOPOKL','NOPOBL','NOPOGE','DISC20','DISC50','DISC80','COMPON')
 					AND workorders.wo = woitems.wo
 					AND workorders.closed = 1
 					AND (workorders.wo > 3614 
@@ -4988,13 +4961,7 @@ function StockToPTADU($Kind, $FactorNearStock, $LimitToMove, $RootPath, $db){
 
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['itemcode'] . '">' . $myrow['itemcode'] . '</a>';
 
-			if ($myrow['categoryid'] == "SETKL"){
-				$NewCategory = "SETKLA";
-			}elseif ($myrow['categoryid'] == "SETBL"){
-				$NewCategory = "SETBLA";
-			}elseif ($myrow['categoryid'] == "SETGE"){
-				$NewCategory = "SETGEA";
-			}elseif ($myrow['categoryid'] == "TESTKL"){
+			if ($myrow['categoryid'] == "TESTKL"){
 				$NewCategory = "TESTKA";
 			}elseif ($myrow['categoryid'] == "TESTBL"){
 				$NewCategory = "TESTBA";
