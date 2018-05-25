@@ -30,15 +30,18 @@ if(!isset($_POST['NomorSeriFP'])) {
 	$_POST['NomorSeriFP']='0000000000000';
 }
 
+if(!isset($_POST['DecimalDigits'])) {
+	$_POST['DecimalDigits']=2;
+}
 
 if (isset($_POST['submit'])) {
-	submit($Title, $_POST['CompanyFrom'], $_POST['CompanyTo'], $_POST['EndDate'], $_POST['DraftOrInvoice'], $_POST['NomorSeriFP'], $db);
+	submit($Title, $_POST['CompanyFrom'], $_POST['CompanyTo'], $_POST['EndDate'], $_POST['DraftOrInvoice'], $_POST['NomorSeriFP'], $_POST['DecimalDigits'], $db);
 } else {
 	display($Title, $db);
 }
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $NomorSeriFP, &$db) {
+function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $NomorSeriFP, $DecimalDigits, &$db) {
 
 	$EndDateSQL = FormatDateForSQL($EndDate);
 
@@ -86,12 +89,12 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 				$LineType = 'OF';
 				$KodeObjek = $myrow['stockid'];
 				$Nama = $myrow['description'];
-				$HargaSatuan = round($myrow['price'] / ((100 + PPN_PERCENT) / 100),2);
+				$HargaSatuan = round($myrow['price'] / ((100 + PPN_PERCENT) / 100),$DecimalDigits);
 				$JumlahBarang = round($myrow['qty'],0);
 				$HargaTotal = $HargaSatuan * $JumlahBarang;
 				$Diskon = 0;
-				$DPP = round($JumlahBarang *($HargaSatuan-$Diskon),2);
-				$PPN = round($JumlahBarang *($myrow['price']-$HargaSatuan),2);
+				$DPP = round($JumlahBarang *($HargaSatuan-$Diskon),$DecimalDigits);
+				$PPN = round($JumlahBarang *($myrow['price']-$HargaSatuan),$DecimalDigits);
 				$TarifPPNBM = 0;
 				$PPNBM = 0;
 				
@@ -344,9 +347,20 @@ function display($Title, &$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DI
 
 	include('includes/KLConsignmentParameterSelection.php');
 	echo '<tr>
-			<td>' . _('Nomor Seri Faktur Pajak') . ':' . '</td>
+			<td>' . 'Nomor Seri Faktur Pajak' . ':' . '</td>
 			<td><input type="text" name="NomorSeriFP" value="' . $_POST['NomorSeriFP'] . '" size="14" maxlength="13" /></td>
 		</tr>';
+
+	echo '<tr>
+			<td>' . 'Decimal Digits' . ':</td>
+			<td><select name="DecimalDigits">';
+	if($_POST['DecimalDigits']=="0") {
+		echo '<option selected="selected" value="0">' . '0 - For e-Faktur' . '</option>';
+		echo '<option value="2">' . '2 - For Pajak Online' . '</option>';
+	} else {
+		echo '<option selected="selected" value="2">' . '2 - For Pajak Online' . '</option>';
+		echo '<option value="0">' . '0 - For e-Faktur' . '</option>';
+	}
 	
 	echo '<tr><td>&nbsp;</td></tr>
 		<tr>
