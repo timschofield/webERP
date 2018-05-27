@@ -54,7 +54,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 		$SQL = "SELECT klconsignment.stockid,
 						stockmaster.description,
 					SUM(klconsignment.qty) AS qty,
-					ROUND(AVG(klconsignment.consignmentprice),0) AS price
+					SUM(klconsignment.qty * klconsignment.consignmentprice) AS consignmentsale
 				FROM klconsignment,stockmaster
 				WHERE klconsignment.stockid = stockmaster.stockid
 					AND companycode = '" . $CompanyFrom . "'
@@ -89,12 +89,12 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 				$LineType = 'OF';
 				$KodeObjek = $myrow['stockid'];
 				$Nama = $myrow['description'];
-				$HargaSatuan = round($myrow['price'] / ((100 + PPN_PERCENT) / 100),$DecimalDigits);
+				$HargaSatuan = round(($myrow['consignmentsale']/$myrow['qty']) / ((100 + PPN_PERCENT) / 100),$DecimalDigits);
 				$JumlahBarang = round($myrow['qty'],0);
 				$HargaTotal = $HargaSatuan * $JumlahBarang;
 				$Diskon = 0;
 				$DPP = round($JumlahBarang *($HargaSatuan-$Diskon),$DecimalDigits);
-				$PPN = round($JumlahBarang *($myrow['price']-$HargaSatuan),$DecimalDigits);
+				$PPN = round($JumlahBarang *(($myrow['consignmentsale']/$myrow['qty'])-$HargaSatuan),$DecimalDigits);
 				$TarifPPNBM = 0;
 				$PPNBM = 0;
 				

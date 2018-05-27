@@ -47,7 +47,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, &$d
 		$SQL = "SELECT klconsignment.stockid,
 						stockmaster.description,
 					SUM(klconsignment.qty) AS qty,
-					ROUND(AVG(klconsignment.consignmentprice),0) AS price
+					SUM(klconsignment.qty * klconsignment.consignmentprice) AS consignmentsale
 				FROM klconsignment,stockmaster
 				WHERE klconsignment.stockid = stockmaster.stockid
 					AND companycode = '" . $CompanyFrom . "'
@@ -202,7 +202,8 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, &$d
 			while ($myrow = DB_fetch_array($result)) {
 
 				$LineNum++;
-				$TotalLine = $myrow['qty'] * $myrow['price'];
+				$TotalLine = $myrow['consignmentsale'];
+				$AveragePrice = round($TotalLine / $myrow['qty']);
 				$TotalInvoice = $TotalInvoice + $TotalLine;
 				$TotalItems = $TotalItems + $myrow['qty'];
 				
@@ -210,7 +211,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, &$d
 				$pdf->MultiCell($WidthColumn2, 0, $myrow['stockid'], 1, 'L', 0, 0, '', '', true);
 				$pdf->MultiCell($WidthColumn3, 0, $myrow['description'], 1, 'L', 0, 0, '', '', true);
 				$pdf->MultiCell($WidthColumn4, 0, locale_number_format($myrow['qty']), 1, 'R', 0, 0, '', '', true);
-				$pdf->MultiCell($WidthColumn5, 0, locale_number_format($myrow['price']), 1, 'R', 0, 0, '', '', true);
+				$pdf->MultiCell($WidthColumn5, 0, locale_number_format($AveragePrice), 1, 'R', 0, 0, '', '', true);
 				$pdf->MultiCell($WidthColumn6, 0, locale_number_format($TotalLine), 1, 'R', 0, 1, '', '', true);
 			}
 
