@@ -2,6 +2,7 @@
 
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
+include('includes/KLGeneralFunctions.php');
 
 require_once ('Classes/PHPExcel.php');
 
@@ -36,6 +37,29 @@ function submit(&$db, $FromDate, $ToDate) {
 	}
 
 	if ($InputError == 0){
+		// Create new PHPExcel object
+		$objPHPExcel = new PHPExcel();
+
+		// Set document properties
+		$objPHPExcel->getProperties()->setCreator("webERP")
+									 ->setLastModifiedBy("webERP")
+									 ->setTitle("GL Transactions")
+									 ->setSubject("GL Transactions")
+									 ->setDescription("GL Transactions")
+									 ->setKeywords("")
+									 ->setCategory("");
+	
+		// Add title data
+		$objPHPExcel->setActiveSheetIndex(0);
+		$objPHPExcel->getActiveSheet()->setCellValue('A1', 'Group');
+		$objPHPExcel->getActiveSheet()->setCellValue('B1', 'Account Code');
+		$objPHPExcel->getActiveSheet()->setCellValue('C1', 'Account Name');
+		$objPHPExcel->getActiveSheet()->setCellValue('D1', 'Date');
+		$objPHPExcel->getActiveSheet()->setCellValue('E1', 'Amount');
+		$objPHPExcel->getActiveSheet()->setCellValue('F1', 'Description');
+
+
+		// Regular GL accounts (NOT HPP (COGS) OR PENJUALAN))
 		$WhereFrom 	= " AND trandate >= '". FormatDateForSQL($FromDate) ."'";
 		$WhereTo 	= " AND trandate <= '". FormatDateForSQL($ToDate) ."'";
 		$OrderBy		= " ORDER BY accountgroups.groupname ASC, gltrans.account ASC, gltrans.trandate ASC";
@@ -51,38 +75,18 @@ function submit(&$db, $FromDate, $ToDate) {
 					accountgroups
 				WHERE gltrans.account = chartmasterPMA.accountcode
 					AND chartmasterPMA.group_ = accountgroups.groupname
+					AND accountgroups.groupname NOT IN ('Penjualan', 'HPP (COGS)') 
 					AND (accountgroups.pandl = 1)".
 					$WhereFrom .
 					$WhereTo .
 					$OrderBy
 				;
 		
-		$ErrMsg = _('The SQL to find the KL GL Transactions ');
+		$ErrMsg = _('The SQL to find the PTADU GL Transactions ');
 		$result = DB_query($sql,$ErrMsg);
 		if (DB_num_rows($result) != 0){
 
-			// Create new PHPExcel object
-			$objPHPExcel = new PHPExcel();
-
-			// Set document properties
-			$objPHPExcel->getProperties()->setCreator("webERP")
-										 ->setLastModifiedBy("webERP")
-										 ->setTitle("GL Transactions")
-										 ->setSubject("GL Transactions")
-										 ->setDescription("GL Transactions")
-										 ->setKeywords("")
-										 ->setCategory("");
-		
-			// Add title data
-			$objPHPExcel->setActiveSheetIndex(0);
-			$objPHPExcel->getActiveSheet()->setCellValue('A1', 'Group');
-			$objPHPExcel->getActiveSheet()->setCellValue('B1', 'Account Code');
-			$objPHPExcel->getActiveSheet()->setCellValue('C1', 'Account Name');
-			$objPHPExcel->getActiveSheet()->setCellValue('D1', 'Date');
-			$objPHPExcel->getActiveSheet()->setCellValue('E1', 'Amount');
-			$objPHPExcel->getActiveSheet()->setCellValue('F1', 'Description');
-
-			// Add data
+				// Add data
 			$i = 2;
 			while ($myrow = DB_fetch_array($result)) {
 				$objPHPExcel->setActiveSheetIndex(0);
@@ -94,42 +98,89 @@ function submit(&$db, $FromDate, $ToDate) {
 				$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, $myrow['Description']);
 				$i++;
 			}
-			
-			// Freeze panes
-			$objPHPExcel->getActiveSheet()->freezePane('A2');
-		
-			// Auto Size columns
-			foreach(range('A','F') as $columnID) {
-				$objPHPExcel->getActiveSheet()->getColumnDimension($columnID)
-					->setAutoSize(true);
-			}
-			
-			// Rename worksheet
-			$objPHPExcel->getActiveSheet()->setTitle('GL Transactions');
-
-			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
-			$objPHPExcel->setActiveSheetIndex(0);
-
-			// Redirect output to a client’s web browser (Excel2007)
-			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-			$File = 'PT ADU-GL-' . FormatDateForSQL($FromDate). '-' . FormatDateForSQL($ToDate) . '.xlsx';
-			header('Content-Disposition: attachment;filename="' . $File . '"');
-			header('Cache-Control: max-age=0');
-			// If you're serving to IE 9, then the following may be needed
-			header('Cache-Control: max-age=1');
-
-			// If you're serving to IE over SSL, then the following may be needed
-			header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-			header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
-			header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
-			header ('Pragma: public'); // HTTP/1.0
-
-			$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-			$objWriter->save('php://output');
-
-		}else{
-			prnMsg('No GL transactions for the period: ' . $FromDate . ' to ' . $ToDate);
 		}
+
+		// NOW it is time for HPP (COGS) and PENJUALAN)
+		$GroupPenjualan = 'Penjualan';
+		$AccountCodePenjualan = '410010000AD';
+		$AccountNamePenjualan = 'Penjualan';
+		$GroupCOGS = 'HPP (COGS)';
+		$AccountCodeCOGS = '510010000AD';
+		$AccountNameCOGS = 'HPP (COGS)';
+	
+		
+		$sql = "SELECT klconsignment.partnercode,
+					klconsignment.invoicedtopartner AS 'Date', 
+					SUM(klconsignment.qty * klconsignment.consignmentprice) AS 'Penjualan', 
+					SUM(klconsignment.qty * klconsignment.standardcost) AS 'COGS'
+				FROM klconsignment
+				WHERE klconsignment.companycode = 'PTADU' 
+					AND invoicedtopartner >= '". FormatDateForSQL($FromDate) ."'
+					AND invoicedtopartner <= '". FormatDateForSQL($ToDate) ."'
+				GROUP BY klconsignment.partnercode, klconsignment.invoicedtopartner
+				ORDER BY klconsignment.partnercode, klconsignment.invoicedtopartner";
+		
+		$ErrMsg = _('The SQL to find the PTADU GL Penjualan and COGS ');
+		$result = DB_query($sql,$ErrMsg);
+		if (DB_num_rows($result) != 0){
+			
+
+				// Add data
+			while ($myrow = DB_fetch_array($result)) {
+
+				$InvoiceNumber = CreateConsignmentInvoiceNumber('PTADU', $myrow['partnercode'], $myrow['Date']);
+
+				$objPHPExcel->setActiveSheetIndex(0);
+				// write the penjualan
+				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $GroupPenjualan);
+				$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $AccountCodePenjualan);
+				$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $AccountNamePenjualan);
+				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, ConvertSQLDate($myrow['Date']));
+				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, round($myrow['Penjualan'],0));
+				$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, $InvoiceNumber);
+				$i++;
+				// write the COGS
+				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $GroupCOGS);
+				$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $AccountCodeCOGS);
+				$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $AccountNameCOGS);
+				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, ConvertSQLDate($myrow['Date']));
+				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, round($myrow['COGS'],0));
+				$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, $InvoiceNumber);
+				$i++;
+			}
+		}
+
+		// Freeze panes
+		$objPHPExcel->getActiveSheet()->freezePane('A2');
+	
+		// Auto Size columns
+		foreach(range('A','F') as $columnID) {
+			$objPHPExcel->getActiveSheet()->getColumnDimension($columnID)
+				->setAutoSize(true);
+		}
+		
+		// Rename worksheet
+		$objPHPExcel->getActiveSheet()->setTitle('GL Transactions');
+
+		// Set active sheet index to the first sheet, so Excel opens this as the first sheet
+		$objPHPExcel->setActiveSheetIndex(0);
+
+		// Redirect output to a client’s web browser (Excel2007)
+		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+		$File = 'PT ADU-GL-' . FormatDateForSQL($FromDate). '-' . FormatDateForSQL($ToDate) . '.xlsx';
+		header('Content-Disposition: attachment;filename="' . $File . '"');
+		header('Cache-Control: max-age=0');
+		// If you're serving to IE 9, then the following may be needed
+		header('Cache-Control: max-age=1');
+
+		// If you're serving to IE over SSL, then the following may be needed
+		header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+		header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
+		header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+		header ('Pragma: public'); // HTTP/1.0
+
+		$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+		$objWriter->save('php://output');
 	}
 } // End of function submit()
 

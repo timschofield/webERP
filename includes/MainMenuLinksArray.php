@@ -571,6 +571,7 @@ $MenuItems['GL']['Reports']['Caption'] = array( _('Bank Account Reconciliation S
 												_('Horizontal Analysis of Statement of Financial Position'),
 												_('Horizontal Analysis of Statement of Comprehensive Income'),
 												_('KL Excel Financial Analysis'),
+												_('KL Consignment Invoices Issued List'),
 												_('Tag Reports'),
 												_('Tax Reports'));
 
@@ -597,6 +598,7 @@ $MenuItems['GL']['Reports']['URL'] = array(	'/BankReconciliation.php',
 											'/AnalysisHorizontalPosition.php',
 											'/AnalysisHorizontalIncome.php',
 											'/KLExcelFinancialAnalysis.php',
+											'/KLConsignmentInvoiceIssuedList.php',
 											'/GLTagProfit_Loss.php',
 											'/Tax.php');																						
 

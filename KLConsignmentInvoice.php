@@ -37,7 +37,7 @@ if (isset($_POST['submit'])) {
 function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, &$db) {
 
 	$EndDate = FormatDateForSQL($EndDate);
-	$InvoiceNumber = $CompanyFrom . '-' . $CompanyTo . '-' . $EndDate;
+	$InvoiceNumber = CreateConsignmentInvoiceNumber($CompanyFrom, $CompanyTo, $EndDate);
 	$PageTitle = 'Invoice-' . $InvoiceNumber;
 
 	//initialise no input errors

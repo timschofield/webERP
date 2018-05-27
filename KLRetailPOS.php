@@ -1011,7 +1011,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								$PeriodNo,
 								$_SESSION['AccountConsignmentCOGSPartner'],
 								$_SESSION['Items'.$identifier]->CustRef . " " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . $ConsignmentPrice,
-								round($ConsignmentPrice * $OrderLine->Quantity),
+								($ConsignmentPrice * $OrderLine->Quantity),
 								$Tag,
 								'ERROR-POS-00008'
 								);
@@ -1023,7 +1023,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								$PeriodNo,
 								$_SESSION['AccountConsignmentSalesPTADU'],
 								$_SESSION['Items'.$identifier]->CustRef . " " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . $ConsignmentPrice,
-								round(-$ConsignmentPrice * $OrderLine->Quantity),
+								(-$ConsignmentPrice * $OrderLine->Quantity),
 								$Tag,
 								'ERROR-POS-00009'
 								);

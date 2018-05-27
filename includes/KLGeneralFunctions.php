@@ -513,5 +513,9 @@ function ItemBelongsToPT($StockID){
 	return $PT;
 }
 
+function CreateConsignmentInvoiceNumber($CompanyFrom, $CompanyTo, $EndDate){
+	return $CompanyFrom . '-' . $CompanyTo . '-' . $EndDate;
+}
+
 
 ?>
