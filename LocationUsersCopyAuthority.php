@@ -30,8 +30,8 @@ if(isset($_POST['ProcessCopyAuthority'])) {
 		echo ' ... ' . _('completed');
 
 		echo '<br />' . _('Copying the authority to view / update the Locations from user') . ' ' . $_POST['FromUserID'] . ' ' . _('to') . ' ' . $_POST['ToUserID'];
-		$sql = "INSERT INTO locationusers (userid, accountcode, canview, canupd)
-						SELECT '" . $_POST['ToUserID'] . "', accountcode, canview, canupd
+		$sql = "INSERT INTO locationusers (userid, loccode, canview, canupd)
+						SELECT '" . $_POST['ToUserID'] . "', loccode, canview, canupd
 						FROM locationusers
 						WHERE userid = '" . $_POST['FromUserID'] . "'";
 
