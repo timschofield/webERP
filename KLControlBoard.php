@@ -715,29 +715,17 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 
 
-		ActiveItemsNoSales( 30, "TESTKL", $RootPath, $db);
-		$NumberOfTestExecuted++;
 		ActiveItemsNoSales( 30, "TESTKA", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ItemsInCategoryForMoreThanDays( 60, "TESTKL", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		ItemsInCategoryForMoreThanDays( 60, "TESTKA", $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-		ActiveItemsNoSales( 30, "TESTBL", $RootPath, $db);
-		$NumberOfTestExecuted++;
 		ActiveItemsNoSales( 30, "TESTBA", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ItemsInCategoryForMoreThanDays( 60, "TESTBL", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		ItemsInCategoryForMoreThanDays( 60, "TESTBA", $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-		ActiveItemsNoSales( 30, "TESTGE", $RootPath, $db);
-		$NumberOfTestExecuted++;
 		ActiveItemsNoSales( 30, "TESTGA", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ItemsInCategoryForMoreThanDays( 60, "TESTGE", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		ItemsInCategoryForMoreThanDays( 60, "TESTGA", $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -1265,7 +1253,7 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $RootPath, $db){
 
 	// count to how many shops do we need to set the RL
 	if ($Category == 'TESTKA'){
-		$WhereCat = " AND (stockmaster.categoryid = 'TESTKL' OR stockmaster.categoryid = 'TESTKA')";
+		$WhereCat = " AND stockmaster.categoryid = 'TESTKA' ";
 		$TypeOfShop = 'SHOPKL';
 		$TitleCat = "TEST";
 		$ShopsToSetRL = $ShopsKL;
@@ -1280,7 +1268,7 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $RootPath, $db){
 		$TitleCat = "NO MORE PO";
 		$ShopsToSetRL = $ShopsKL;
 	} else if ($Category == 'TESTBA') {
-		$WhereCat = " AND (stockmaster.categoryid = 'TESTBL' OR stockmaster.categoryid = 'TESTBA')";
+		$WhereCat = " AND stockmaster.categoryid = 'TESTBA' ";
 		$TypeOfShop = 'SHOPKL';
 		$TitleCat = "TEST";
 		$ShopsToSetRL = $ShopsKL;
@@ -4800,7 +4788,7 @@ function StockToPTADU($Kind, $FactorNearStock, $LimitToMove, $RootPath, $db){
 							AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . ") AS qohshops
 				FROM purchorderdetails, stockmaster
 				WHERE purchorderdetails.itemcode = stockmaster.stockid
-					AND stockmaster.categoryid IN ('TESTKL','TESTBL','TESTGE', 'STABKL','STABBL','STABGE','NOPOKL','NOPOBL','NOPOGE','DISC20','DISC50','DISC80','COMPON')
+					AND stockmaster.categoryid IN ('STABKL','STABBL','STABGE','NOPOKL','NOPOBL','NOPOGE','DISC20','DISC50','DISC80','COMPON')
 					AND purchorderdetails.orderno >= 2808
 					AND purchorderdetails.orderno != 2811
 					AND purchorderdetails.orderno != 2816
@@ -4824,7 +4812,7 @@ function StockToPTADU($Kind, $FactorNearStock, $LimitToMove, $RootPath, $db){
 							AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . ") AS qohshops
 				FROM workorders, woitems, stockmaster
 				WHERE woitems.stockid = stockmaster.stockid
-					AND stockmaster.categoryid IN ('TESTKL','TESTBL','TESTGE', 'STABKL','STABBL','STABGE','NOPOKL','NOPOBL','NOPOGE','DISC20','DISC50','DISC80','COMPON')
+					AND stockmaster.categoryid IN ('STABKL','STABBL','STABGE','NOPOKL','NOPOBL','NOPOGE','DISC20','DISC50','DISC80','COMPON')
 					AND workorders.wo = woitems.wo
 					AND workorders.closed = 1
 					AND (workorders.wo > 3614 
@@ -4900,13 +4888,7 @@ function StockToPTADU($Kind, $FactorNearStock, $LimitToMove, $RootPath, $db){
 
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['itemcode'] . '">' . $myrow['itemcode'] . '</a>';
 
-			if ($myrow['categoryid'] == "TESTKL"){
-				$NewCategory = "TESTKA";
-			}elseif ($myrow['categoryid'] == "TESTBL"){
-				$NewCategory = "TESTBA";
-			}elseif ($myrow['categoryid'] == "TESTGE"){
-				$NewCategory = "TESTGA";
-			}elseif ($myrow['categoryid'] == "STABKL"){
+			if ($myrow['categoryid'] == "STABKL"){
 				$NewCategory = "STABKA";
 			}elseif ($myrow['categoryid'] == "STABBL"){
 				$NewCategory = "STABBA";
