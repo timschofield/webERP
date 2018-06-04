@@ -779,7 +779,7 @@ function FinishedStockDistribution($kind, $byreport, $db){
 	}else{
 		return false;
 	}
-						
+				
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		if ($kind == "FORSALE"){			
