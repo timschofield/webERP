@@ -297,7 +297,7 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 				// define Logo information
 				if ($_POST['LabelID'] == 'T570'){
 					if (ItemInList($_POST['Category' . $i], LIST_STOCK_CATEGORIES_BLINK)
-						OR $_POST['Category' . $i] == "SETBL"){
+						OR $_POST['Category' . $i] == "SETBLA"){
 						$LogoXPosition = 14.0;
 						$LogoYPosition = 1.0;
 						$LogoHeight = 4.5;
@@ -310,7 +310,7 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 					}
 				}elseif ($_POST['LabelID'] == 'CodeSticker'){
 					if (ItemInList($_POST['Category' . $i], LIST_STOCK_CATEGORIES_BLINK)
-						OR $_POST['Category' . $i] == "SETBL"){
+						OR $_POST['Category' . $i] == "SETBLA"){
 						$LogoXPosition = 18.0;
 						$LogoYPosition = 1.0;
 						$LogoHeight = 6.0;
