@@ -631,8 +631,8 @@ function CashStatusPTADU($Year, $YearlyGoal, $db){
 	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
-			'Pending to reach goal '. $Year . ' (>0 means withdraw from bank to cash)', 
-			locale_number_format($YearlyGoal-$CurrentBalance,0)
+			'Balance Cash Kantor PT ADU at end of '. $Year , 
+			locale_number_format(-$YearlyGoal+$CurrentBalance,0)
 			);
 
 	echo '</table>
@@ -687,6 +687,19 @@ function CashStatusPTBB($Year, $YearlyGoal, $db){
 	$myrow = DB_fetch_array($Result);
 	$ExpensesPTPaidCash = -$myrow[0];
 	
+	// Cash in Kantor to Small Suppliers PTBB
+	$Account = "510010070PT";
+	$SQL = "SELECT SUM(gltrans.amount)
+			FROM gltrans
+			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
+				AND gltrans.trandate <= '" . $Today . "'
+				AND gltrans.account = '" . $Account . "'
+				AND (gltrans.narrative LIKE '%CASH%'
+					OR gltrans.narrative LIKE '%KANTOR%')";
+	$Result = DB_query($SQL);
+	$myrow = DB_fetch_array($Result);
+	$CashToSmallSuppliers = -$myrow[0];
+
 	echo '<p class="page_title_text" align="center"><strong>' . 'Status Cash PT.Bumi Biru ' . $Year . '</strong></p>';
 	echo '<div>';
 	echo '<table class="selection">';
@@ -717,7 +730,13 @@ function CashStatusPTBB($Year, $YearlyGoal, $db){
 			'Expenses PT.BB Paid by Petty Cash (excluding salaries, Corporate CC)', 
 			locale_number_format(-$ExpensesPTPaidCash,0)
 			);
-	$CurrentBalance = $SalesCash+$BankToCash-$ExpensesPTPaidCash;
+	printf('<td>%s</td>
+			<td class="number">%s</td>
+			</tr>', 
+			'Payments to Small Suppliers PTBB paid from Cash Kantor', 
+			locale_number_format(-$CashToSmallSuppliers,0)
+			);
+	$CurrentBalance = $SalesCash+$BankToCash-$ExpensesPTPaidCash-$CashToSmallSuppliers;
 	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
@@ -733,8 +752,8 @@ function CashStatusPTBB($Year, $YearlyGoal, $db){
 	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
-			'Pending to reach goal '. $Year . ' (>0 means withdraw from bank to cash)', 
-			locale_number_format($YearlyGoal-$CurrentBalance,0)
+			'Balance Cash Kantor PTBB at end of '. $Year , 
+			locale_number_format(-$YearlyGoal+$CurrentBalance,0)
 			);
 
 	echo '</table>
