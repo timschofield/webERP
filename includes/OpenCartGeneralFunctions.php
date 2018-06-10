@@ -226,13 +226,15 @@ function GetWeberpForeignCurrencySurchargeFactor($Location, $db){
 
 
 function GetWeberpGLAccountFromCurrency($Location, $Currency, $db){
+// for IDR look for DOKU, other currencies in PayPal
 	$SQL = "SELECT accountpaypalaud,
 					accountpaypalusd,
-					accountpaypaleur
+					accountpaypaleur,
+					accountdokuidr
 			FROM locations, klonlinepartners
 			WHERE locations.onlinepartnercode = klonlinepartners.onlinepartnercode
 				AND locations.loccode = '" . $Location . "'";
-	$ErrMsg ='Could not get the PayPal GL Account for ' . $Currency . ' in webERP because';
+	$ErrMsg ='Could not get the Online Shop GL Account for ' . $Currency . ' in webERP because';
 	$result = DB_query($SQL,$ErrMsg);
 	if(DB_num_rows($result) != 0){
 		$myrow = DB_fetch_array($result);
@@ -242,18 +244,21 @@ function GetWeberpGLAccountFromCurrency($Location, $Currency, $db){
 			$GLAccount = $myrow['accountpaypalusd'];
 		}elseif($Currency == "EUR"){
 			$GLAccount = $myrow['accountpaypaleur'];
+		}elseif($Currency == "IDR"){
+			$GLAccount = $myrow['accountdokuidr'];
 		}
 	}else{
 		$GLAccount = '';
 	}
-	// in Paypal there is no IDR yet, so we pay by bank trasnfer and record payment manually in webERP
 	return $GLAccount;
 }
 
 function GetWeberpGLCommissionAccountFromCurrency($Location, $Currency, $db){
+// for IDR look for DOKU, other currencies in PayPal
 	$SQL = "SELECT accountpaypalcomissionaud,
 					accountpaypalcomissionusd,
-					accountpaypalcomissioneur
+					accountpaypalcomissioneur,
+					accountdokucomissionidr
 			FROM locations, klonlinepartners
 			WHERE locations.onlinepartnercode = klonlinepartners.onlinepartnercode
 				AND locations.loccode = '" . $Location . "'";
@@ -267,11 +272,12 @@ function GetWeberpGLCommissionAccountFromCurrency($Location, $Currency, $db){
 			$GLAccount = $myrow['accountpaypalcomissionusd'];
 		}elseif($Currency == "EUR"){
 			$GLAccount = $myrow['accountpaypalcomissioneur'];
+		}elseif($Currency == "IDR"){
+			$GLAccount = $myrow['accountdokucomissionidr'];
 		}
 	}else{
 		$GLAccount = '';
 	}
-	// in Paypal there is no IDR yet, so we pay by bank trasnfer and record payment manually in webERP
 	return $GLAccount;
 }
 
