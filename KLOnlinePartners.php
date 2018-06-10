@@ -42,6 +42,8 @@ if(isset($_POST['submit'])) {
 					paypalusername ='" . $_POST['PayPalUsername'] . "',
 					paypalpassword ='" . $_POST['PayPalPassword'] . "',
 					paypalsignature ='" . $_POST['PayPalSignature'] . "',
+					accountdokuidr ='" . $_POST['AccountDokuIDR'] . "',
+					accountdokucomissionidr = '" . $_POST['AccountDokuComissionIDR'] . "',
 					accountpaypalaud ='" . $_POST['AccountPayPalAUD'] . "',
 					accountpaypalcomissionaud = '" . $_POST['AccountPayPalComissionAUD'] . "',
 					accountpaypalusd ='" . $_POST['AccountPayPalUSD'] . "',
@@ -66,6 +68,8 @@ if(isset($_POST['submit'])) {
 		unset($_POST['PayPalUsername']);
 		unset($_POST['PayPalPassword']);
 		unset($_POST['PayPalSignature']);
+		unset($_POST['AccountDokuIDR']);
+		unset($_POST['AccountDokuComissionIDR']);
 		unset($_POST['AccountPayPalAUD']);
 		unset($_POST['AccountPayPalComissionAUD']);
 		unset($_POST['AccountPayPalUSD']);
@@ -86,6 +90,8 @@ if(isset($_POST['submit'])) {
 								paypalusername,
 								paypalpassword,
 								paypalsignature,
+								accountdokuidr,
+								accountdokucomissionidr,
 								accountpaypalaud,
 								accountpaypalcomissionaud,
 								accountpaypalusd,
@@ -100,6 +106,8 @@ if(isset($_POST['submit'])) {
 								'" . $_POST['PayPalUsername'] ."',
 								'" . $_POST['PayPalPassword'] . "',
 								'" . $_POST['PayPalSignature'] . "',
+								'" . $_POST['AccountDokuIDR'] . "',
+								'" . $_POST['AccountDokuComissionIDR'] . "',
 								'" . $_POST['AccountPayPalAUD'] . "',
 								'" . $_POST['AccountPayPalComissionAUD'] . "',
 								'" . $_POST['AccountPayPalUSD'] . "',
@@ -122,6 +130,8 @@ if(isset($_POST['submit'])) {
 		unset($_POST['PayPalUsername']);
 		unset($_POST['PayPalPassword']);
 		unset($_POST['PayPalSignature']);
+		unset($_POST['AccountDokuIDR']);
+		unset($_POST['AccountDokuComissionIDR']);
 		unset($_POST['AccountPayPalAUD']);
 		unset($_POST['AccountPayPalComissionAUD']);
 		unset($_POST['AccountPayPalUSD']);
@@ -241,6 +251,8 @@ if(!isset($_GET['delete'])) {
 					paypalusername,
 					paypalpassword,
 					paypalsignature,
+					accountdokuidr,
+					accountdokucomissionidr,
 					accountpaypalaud,
 					accountpaypalcomissionaud,
 					accountpaypalusd,
@@ -261,6 +273,8 @@ if(!isset($_GET['delete'])) {
 		$_POST['PayPalUsername'] = $myrow['paypalusername'];
 		$_POST['PayPalPassword'] = $myrow['paypalpassword'];
 		$_POST['PayPalSignature'] = $myrow['paypalsignature'];
+		$_POST['AccountDokuIDR'] = $myrow['accountdokuidr'];
+		$_POST['AccountDokuComissionIDR'] = $myrow['accountdokucomissionidr'];
 		$_POST['AccountPayPalAUD'] = $myrow['accountpaypalaud'];
 		$_POST['AccountPayPalComissionAUD'] = $myrow['accountpaypalcomissionaud'];
 		$_POST['AccountPayPalUSD'] = $myrow['accountpaypalusd'];
@@ -309,6 +323,12 @@ if(!isset($_GET['delete'])) {
 	}
 	if(!isset($_POST['PayPalSignature'])) {
 		$_POST['PayPalSignature'] = '';
+	}
+	if(!isset($_POST['AccountDokuIDR'])) {
+		$_POST['AccountDokuIDR'] = '';
+	}
+	if(!isset($_POST['AccountDokuComissionIDR'])) {
+		$_POST['AccountDokuComissionIDR'] = '';
 	}
 	if(!isset($_POST['AccountPayPalAUD'])) {
 		$_POST['AccountPayPalAUD'] = '';
@@ -366,6 +386,31 @@ if(!isset($_GET['delete'])) {
 			<td>' . _('PayPal Signature') . ':' . '</td>
 			<td><input type="text" name="PayPalSignature" value="' . $_POST['PayPalSignature'] . '" size="51" maxlength="100" /></td>
 		</tr>';
+
+	echo '<tr>
+		<td>' . _('Doku IDR GL Account') . ':' . '</td>
+		<td><select name="AccountDokuIDR">';
+	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
+	while ($myrow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountDokuIDR']==$myrow['accountcode']) {
+			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		} else {
+			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		}
+	}
+	echo '</select></td></tr>';
+	echo '<tr>
+		<td>' . _('Comission Doku IDR GL Account') . ':' . '</td>
+		<td><select name="AccountDokuComissionIDR">';
+	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
+	while ($myrow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountDokuComissionIDR']==$myrow['accountcode']) {
+			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		} else {
+			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		}
+	}
+	echo '</select></td></tr>';
 
 	echo '<tr>
 		<td>' . _('PayPal AUD GL Account') . ':' . '</td>
