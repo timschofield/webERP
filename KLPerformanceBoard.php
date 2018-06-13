@@ -698,7 +698,7 @@ function CashStatusPTBB($Year, $YearlyGoal, $db){
 					OR gltrans.narrative LIKE '%KANTOR%')";
 	$Result = DB_query($SQL);
 	$myrow = DB_fetch_array($Result);
-	$CashToSmallSuppliers = -$myrow[0];
+	$CashToSmallSuppliers = $myrow[0];
 
 	echo '<p class="page_title_text" align="center"><strong>' . 'Status Cash PT.Bumi Biru ' . $Year . '</strong></p>';
 	echo '<div>';
@@ -727,13 +727,13 @@ function CashStatusPTBB($Year, $YearlyGoal, $db){
 	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
-			'Expenses PT.BB Paid by Petty Cash (excluding salaries, Corporate CC)', 
+			'Expenses PTBB Paid by Petty Cash (excluding salaries, Corporate CC)', 
 			locale_number_format(-$ExpensesPTPaidCash,0)
 			);
 	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
-			'Payments to Small Suppliers PTBB paid from Cash Kantor', 
+			'Expenses PTBB Small Suppliers Paid from Cash Kantor', 
 			locale_number_format(-$CashToSmallSuppliers,0)
 			);
 	$CurrentBalance = $SalesCash+$BankToCash-$ExpensesPTPaidCash-$CashToSmallSuppliers;
