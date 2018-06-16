@@ -44,6 +44,8 @@ if(isset($_POST['submit'])) {
 					paypalsignature ='" . $_POST['PayPalSignature'] . "',
 					accountdokuidr ='" . $_POST['AccountDokuIDR'] . "',
 					accountdokucomissionidr = '" . $_POST['AccountDokuComissionIDR'] . "',
+					comissionflatdoku = '" . $_POST['ComissionFlatDoku'] . "',
+					comissionccdoku = '" . $_POST['ComissionCCDoku'] . "',
 					accountpaypalaud ='" . $_POST['AccountPayPalAUD'] . "',
 					accountpaypalcomissionaud = '" . $_POST['AccountPayPalComissionAUD'] . "',
 					accountpaypalusd ='" . $_POST['AccountPayPalUSD'] . "',
@@ -70,6 +72,8 @@ if(isset($_POST['submit'])) {
 		unset($_POST['PayPalSignature']);
 		unset($_POST['AccountDokuIDR']);
 		unset($_POST['AccountDokuComissionIDR']);
+		unset($_POST['ComissionFlatDoku']);
+		unset($_POST['ComissionCCDoku']);
 		unset($_POST['AccountPayPalAUD']);
 		unset($_POST['AccountPayPalComissionAUD']);
 		unset($_POST['AccountPayPalUSD']);
@@ -92,6 +96,8 @@ if(isset($_POST['submit'])) {
 								paypalsignature,
 								accountdokuidr,
 								accountdokucomissionidr,
+								comissionflatdoku,
+								comissionccdoku,
 								accountpaypalaud,
 								accountpaypalcomissionaud,
 								accountpaypalusd,
@@ -108,6 +114,8 @@ if(isset($_POST['submit'])) {
 								'" . $_POST['PayPalSignature'] . "',
 								'" . $_POST['AccountDokuIDR'] . "',
 								'" . $_POST['AccountDokuComissionIDR'] . "',
+								'" . $_POST['ComissionFlatDoku'] . "',
+								'" . $_POST['ComissionCCDoku'] . "',
 								'" . $_POST['AccountPayPalAUD'] . "',
 								'" . $_POST['AccountPayPalComissionAUD'] . "',
 								'" . $_POST['AccountPayPalUSD'] . "',
@@ -132,6 +140,8 @@ if(isset($_POST['submit'])) {
 		unset($_POST['PayPalSignature']);
 		unset($_POST['AccountDokuIDR']);
 		unset($_POST['AccountDokuComissionIDR']);
+		unset($_POST['ComissionFlatDoku']);
+		unset($_POST['ComissionCCDoku']);
 		unset($_POST['AccountPayPalAUD']);
 		unset($_POST['AccountPayPalComissionAUD']);
 		unset($_POST['AccountPayPalUSD']);
@@ -253,6 +263,8 @@ if(!isset($_GET['delete'])) {
 					paypalsignature,
 					accountdokuidr,
 					accountdokucomissionidr,
+					comissionflatdoku,
+					comissionccdoku,
 					accountpaypalaud,
 					accountpaypalcomissionaud,
 					accountpaypalusd,
@@ -275,6 +287,8 @@ if(!isset($_GET['delete'])) {
 		$_POST['PayPalSignature'] = $myrow['paypalsignature'];
 		$_POST['AccountDokuIDR'] = $myrow['accountdokuidr'];
 		$_POST['AccountDokuComissionIDR'] = $myrow['accountdokucomissionidr'];
+		$_POST['ComissionFlatDoku'] = $myrow['comissionflatdoku'];
+		$_POST['ComissionCCDoku'] = $myrow['comissionccdoku'];
 		$_POST['AccountPayPalAUD'] = $myrow['accountpaypalaud'];
 		$_POST['AccountPayPalComissionAUD'] = $myrow['accountpaypalcomissionaud'];
 		$_POST['AccountPayPalUSD'] = $myrow['accountpaypalusd'];
@@ -329,6 +343,12 @@ if(!isset($_GET['delete'])) {
 	}
 	if(!isset($_POST['AccountDokuComissionIDR'])) {
 		$_POST['AccountDokuComissionIDR'] = '';
+	}
+	if(!isset($_POST['ComissionFlatDoku'])) {
+		$_POST['ComissionFlatDoku'] = 0;
+	}
+	if(!isset($_POST['ComissionCCDoku'])) {
+		$_POST['ComissionCCDoku'] = 0;
 	}
 	if(!isset($_POST['AccountPayPalAUD'])) {
 		$_POST['AccountPayPalAUD'] = '';
@@ -411,6 +431,16 @@ if(!isset($_GET['delete'])) {
 		}
 	}
 	echo '</select></td></tr>';
+
+	echo '<tr>
+			<td>' . _('Flat Fee Commission DOKU for all tx (in IDR)') . ':</td>
+			<td><input type="text" name="ComissionFlatDoku" class="number"  value="' . $_POST['ComissionFlatDoku'] . '" size="20" maxlength="20" /></td>
+		</tr>';
+
+	echo '<tr>
+			<td>' . _('% Fee Commission DOKU for CC only (%))') . ':</td>
+			<td><input type="text" name="ComissionCCDoku" class="number"  value="' . $_POST['ComissionCCDoku'] . '" size="5" maxlength="5" /></td>
+		</tr>';
 
 	echo '<tr>
 		<td>' . _('PayPal AUD GL Account') . ':' . '</td>
