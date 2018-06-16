@@ -14,12 +14,13 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 ## [Unreleased]
 
 | Description | Type | Author | Date | Details | Ref |
-|:------------|:----:|:------:|:----:|:-------:|:---:|
+|:-----------:|:----:|:------:|:----:|:-------:|:---:|
+| DailyBankTransactions.php calculation fix |  | Paul Becker | 2018-06-16 | [View](https://github.com/webERP-team/webERP/commit/7d39e0bfd) |  |
 
 ## [v4.15] - 2018-05-20
 
 | Description | Type | Author | Date | Details | Ref |
-|:------------|:----:|:------:|:----:|:-------:|:---:|
+|:-----------:|:----:|:------:|:----:|:-------:|:---:|
 | Upgrade weberpchina.sql file and modify htmlspecialcharts parameter in footer.php |  | Exson Qu | 2018-05-15 | [View](http://github.com/webERP-team/webERP/commit/62a4571fb) |  |
 | Change module alias from "orders" to "Sales" to standardise in MainMenuLinksArray.php |  | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/30115ebda) |  |
 | Groups the INSERT INTO sentences in SQL upgrade script |  | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/7ad7340cc) |  |
