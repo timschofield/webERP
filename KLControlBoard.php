@@ -861,6 +861,7 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin 
+		OR $KL_BusinessDevelopmentManager
 		OR $KL_OperationalManager){
 		OutstandingOrders("Retail", "Order", $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -895,6 +896,7 @@ if ($ProcessSection02){
 	*/
 
 	if ($KL_SystemAdmin 
+		OR $KL_BusinessDevelopmentManager
 		OR $KL_ShopManagerOnline){
 		OnlineCustomersNoOrderPlaced($RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -907,6 +909,7 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin 
+		OR $KL_BusinessDevelopmentManager
 		OR $KL_ShopManagerOnline
 		OR $KL_OperationalManager
 		OR $KL_ShopSupportTeam){ 
@@ -923,6 +926,7 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin
+		OR $KL_BusinessDevelopmentManager
 		OR $KL_ShopManagerOnline){
 		OnlineOrdersFollowUp("KL-WEBSITE", 10, $RootPath, $db);
 		$NumberOfTestExecuted++;
