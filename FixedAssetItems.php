@@ -100,7 +100,34 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'BarCode';
 		$i++;
 	}
-
+	if (!is_numeric($_POST['Cost'])){
+		$InputError = 1;
+		prnMsg(_('The cost is expected to be numeric'),'error');
+		$Errors[$i] = 'Cost';
+		$i++;
+	}elseif ($_POST['Cost'] < 0){
+		$InputError = 1;
+		prnMsg(_('The cost is expected to be positive'),'error');
+		$Errors[$i] = 'Cost';
+		$i++;
+	}
+	if (!is_numeric($_POST['AccumDepn'])){
+		$InputError = 1;
+		prnMsg(_('The Accumulated Depreciation is expected to be numeric'),'error');
+		$Errors[$i] = 'AccumDepn';
+		$i++;
+	}elseif ($_POST['AccumDepn'] < 0){
+		$InputError = 1;
+		prnMsg(_('The Accumulated Depreciation is expected to be positive'),'error');
+		$Errors[$i] = 'AccumDepn';
+		$i++;
+	}
+	if ($_POST['Cost'] < $_POST['AccumDepn']){
+		$InputError = 1;
+		prnMsg(_('The Accumulated Depreciation can not ne higher then Cost'),'error');
+		$Errors[$i] = 'Cost';
+		$i++;
+	}	
 	if (trim($_POST['AssetCategoryID'])==''){
 		$InputError = 1;
 		prnMsg(_('There are no asset categories defined. All assets must belong to a valid category,'),'error');
@@ -118,7 +145,7 @@ if (isset($_POST['submit'])) {
 		OR filter_number_format($_POST['DepnRate'])<0){
 
 		$InputError = 1;
-		prnMsg(_('The depreciation rate is expected to be a number between 0 and 100'),'error');
+		prnMsg(_('The depreciation rate (yearly loss of value) is expected to be a number between 0 and 100'),'error');
 		$Errors[$i] = 'DepnRate';
 		$i++;
 	}
@@ -251,14 +278,17 @@ if (isset($_POST['submit'])) {
 			$ErrMsg = _('The asset could not be updated because');
 			$DbgMsg = _('The SQL that was used to update the asset and failed was');
 			$result = DB_query($sql,$ErrMsg,$DbgMsg);
-
 			prnMsg( _('Asset') . ' ' . $AssetID . ' ' . _('has been updated'), 'success');
 			echo '<br />';
+			$result = DB_Txn_Commit();
 		} else { //it is a NEW part
 			$sql = "INSERT INTO fixedassets (description,
 											longdescription,
 											assetcategoryid,
 											assetlocation,
+											cost,
+											accumdepn,
+											datepurchased,
 											depntype,
 											depnrate,
 											barcode,
@@ -268,6 +298,9 @@ if (isset($_POST['submit'])) {
 							'" . $_POST['LongDescription'] . "',
 							'" . $_POST['AssetCategoryID'] . "',
 							'" . $_POST['AssetLocation'] . "',
+							'" . filter_number_format($_POST['Cost']). "',
+							'" . filter_number_format($_POST['AccumDepn']). "',
+							'" . FormatDateForSQL($_POST['DatePurchased']). "',
 							'" . $_POST['DepnType'] . "',
 							'" . filter_number_format($_POST['DepnRate']). "',
 							'" . $_POST['BarCode'] . "',
@@ -276,15 +309,64 @@ if (isset($_POST['submit'])) {
 			$DbgMsg = _('The SQL that was used to add the asset failed was');
 			$result = DB_query($sql, $ErrMsg, $DbgMsg);
 
-			if (DB_error_no() ==0) {
+			if (DB_error_no() ==0) { //the insert of the new code worked so bang in the fixedassettrans records too
 				$NewAssetID = DB_Last_Insert_ID($db,'fixedassets', 'assetid');
+				$TransNo = GetNextTransNo(49,$db);
+				$PeriodNo = GetPeriod($_POST['DatePurchased'],$db);
+
+				$sql = "INSERT INTO fixedassettrans ( assetid,
+												transtype,
+												transno,
+												transdate,
+												periodno,
+												inputdate,
+												fixedassettranstype,
+												amount)
+									VALUES ( '" . $NewAssetID . "',
+											'49',
+											'" . $TransNo . "',
+											'" . FormatDateForSQL($_POST['DatePurchased']) . "',
+											'" . $PeriodNo . "',
+											'" . Date('Y-m-d') . "',
+											'cost',
+											'" . filter_number_format($_POST['Cost']) . "')";
+
+				$ErrMsg =  _('The transaction for the cost of the asset could not be added because');
+				$DbgMsg = _('The SQL that was used to add the fixedasset trans record that failed was');
+				$InsResult = DB_query($sql,$ErrMsg,$DbgMsg);
+
+				$sql = "INSERT INTO fixedassettrans ( assetid,
+													transtype,
+													transno,
+													transdate,
+													periodno,
+													inputdate,
+													fixedassettranstype,
+													amount)
+									VALUES ( '" . $NewAssetID . "',
+											'49',
+											'" . $TransNo . "',
+											'" . FormatDateForSQL($_POST['DatePurchased']) . "',
+											'" . $PeriodNo . "',
+											'" . Date('Y-m-d') . "',
+											'depn',
+											'" . filter_number_format($_POST['AccumDepn']) . "')";
+
+				$ErrMsg =  _('The transaction for the cost of the asset could not be added because');
+				$DbgMsg = _('The SQL that was used to add the fixedasset trans record that failed was');
+				$InsResult = DB_query($sql,$ErrMsg,$DbgMsg);
+			}
+			
+			if (DB_error_no() ==0) {
 				prnMsg( _('The new asset has been added to the database with an asset code of:') . ' ' . $NewAssetID,'success');
 				unset($_POST['LongDescription']);
 				unset($_POST['Description']);
 				unset($_POST['BarCode']);
 				unset($_POST['SerialNo']);
+				unset($_POST['Cost']);
+				unset($_POST['AccumDepn']);
+				unset($_POST['DatePurchased']);
 			}//ALL WORKED SO RESET THE FORM VARIABLES
-			$result = DB_Txn_Commit();
 		}
 	} else {
 		echo '<br />' .  "\n";
@@ -324,7 +406,7 @@ if (isset($_POST['submit'])) {
 
 		/*Need to remove cost and accumulate depreciation from cost and accumdepn accounts */
 		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']),$db);
-		$TransNo = GetNextTransNo( 43, $db); /* transaction type is asset deletion - (and remove cost/acc5umdepn from GL) */
+		$TransNo = GetNextTransNo( 43, $db); /* transaction type is asset deletion - (and remove cost/accumdepn from GL) */
 		if ($AssetRow['cost'] > 0){
 			//credit cost for the asset deleted
 			$SQL = "INSERT INTO gltrans (type,
@@ -386,6 +468,9 @@ if (isset($_POST['submit'])) {
 		unset($_POST['Description']);
 		unset($_POST['AssetCategoryID']);
 		unset($_POST['AssetLocation']);
+		unset($_POST['Cost']);
+		unset($_POST['AccumDepn']);
+		unset($_POST['DatePurchased']);
 		unset($_POST['DepnType']);
 		unset($_POST['DepnRate']);
 		unset($_POST['BarCode']);
@@ -415,6 +500,9 @@ if (!isset($AssetID) OR $AssetID=='') {
 	$_POST['AssetCategoryID']  = '';
 	$_POST['SerialNo']  = '';
 	$_POST['AssetLocation']  = '';
+	$_POST['Cost']  = 0;
+	$_POST['AccumDepn']  = 0;
+	$_POST['DatePurchased']=Date($_SESSION['DefaultDateFormat']);
 	$_POST['DepnType']  = '';
 	$_POST['BarCode']  = '';
 	$_POST['DepnRate']  = 0;
@@ -446,6 +534,9 @@ if (!isset($AssetID) OR $AssetID=='') {
 	$_POST['AssetCategoryID']  = $AssetRow['assetcategoryid'];
 	$_POST['SerialNo']  = $AssetRow['serialno'];
 	$_POST['AssetLocation']  = $AssetRow['assetlocation'];
+	$_POST['Cost']  = $AssetRow['cost'];
+	$_POST['AccumDepn']  = $AssetRow['accumdepn'];
+	$_POST['DatePurchased']  = $AssetRow['datepurchased'];
 	$_POST['DepnType']  = $AssetRow['depntype'];
 	$_POST['BarCode']  = $AssetRow['barcode'];
 	$_POST['DepnRate']  = locale_number_format($AssetRow['depnrate'],2);
@@ -561,13 +652,22 @@ if (!isset($_POST['AssetCategoryID'])) {
 	$_POST['AssetCategoryID']=$category;
 }
 
-if (isset($AssetRow) AND ($AssetRow['datepurchased']!='0000-00-00' AND $AssetRow['datepurchased']!='')){
-	echo '<tr>
-			<td>' . _('Date Purchased') . ':</td>
-			<td>' . ConvertSQLDate($AssetRow['datepurchased']) . '</td>
-		</tr>';
-}
 
+echo '<tr>
+		<td>' . _('Date Purchased') . ':</td>
+		<td><input type="text" required="required" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="DatePurchased" maxlength="10" size="11" value="' . $_POST['DatePurchased'] . '" /></td>
+	</tr>';
+
+echo '<tr>
+		<td>' . _('Cost of Purchase') . '</td>
+		<td><input type="text" class="number" name="Cost" maxlength="12" size="10" value="' . locale_number_format($_POST['Cost'],$_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>
+	</tr>';
+	
+echo '<tr>
+		<td>' . _('Accumulated Depreciation (0 at purchase)') . '</td>
+		<td><input type="text" class="number" name="AccumDepn" maxlength="12" size="10" value="' . locale_number_format($_POST['AccumDepn'],$_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>
+	</tr>';
+	
 $sql = "SELECT locationid, locationdescription FROM fixedassetlocations";
 $ErrMsg = _('The asset locations could not be retrieved because');
 $DbgMsg = _('The SQL used to retrieve asset locations and failed was');
@@ -584,12 +684,15 @@ while ($myrow=DB_fetch_array($result)){
 		echo '<option value="' . $myrow['locationid'] .'">' . $myrow['locationdescription'] . '</option>';
 	}
 }
+
+//	<tr>
+//		<td>' . _('Bar Code') . ':</td>
+//		<td><input ' . (in_array('BarCode',$Errors) ?  'class="inputerror"' : '' ) .'  type="text" name="BarCode" size="22" maxlength="20" value="' . $_POST['BarCode'] . '" /></td>
+//	</tr>
+
+	
 echo '</select>
 	<a target="_blank" href="'. $RootPath . '/FixedAssetLocations.php">' . ' ' . _('Add Asset Location') . '</a></td>
-	</tr>
-	<tr>
-		<td>' . _('Bar Code') . ':</td>
-		<td><input ' . (in_array('BarCode',$Errors) ?  'class="inputerror"' : '' ) .'  type="text" name="BarCode" size="22" maxlength="20" value="' . $_POST['BarCode'] . '" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Serial Number') . ':</td>
@@ -618,6 +721,8 @@ echo '</select></td>
 	</tr>
 	</table>';
 
+
+	
 if (isset($AssetRow)){
 	echo '<table>
 		<tr>
@@ -625,11 +730,11 @@ if (isset($AssetRow)){
 		</tr>
 		<tr>
 			<td>' . _('Accumulated Costs') . ':</td>
-			<td class="number">' . locale_number_format($AssetRow['cost'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($_POST['Cost'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 		</tr>
 		<tr>
 			<td>' . _('Accumulated Depreciation') . ':</td>
-			<td class="number">' . locale_number_format($AssetRow['accumdepn'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($_POST['AccumDepn'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 		</tr>';
 	if ($AssetRow['disposaldate'] != '0000-00-00'){
 		echo'<tr>
