@@ -170,6 +170,9 @@ if (!isset($_POST['Show'])) {
 			if ($j == 0) {
 				if (ABS($myrow['prebalance'])>0.0001) {
 					$Balance += $myrow['prebalance'];
+					$AccountCurrTotal += $myrow['prebalance'];
+					$LocalCurrTotal += $myrow['prebalance'];
+
 					echo '<tr class="striped_row">
 							<td colspan="6" style="font-weight:bold">' . _('Previous Balance') . '</td>
 						<td class="number">' . locale_number_format($myrow['prebalance'],$BankDetailRow['decimalplaces']) . '</td>
