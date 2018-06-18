@@ -15,7 +15,8 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 
 | Description | Type | Author | Date | Details | Ref |
 |:-----------:|:----:|:------:|:----:|:-------:|:---:|
-| DailyBankTransactions.php calculation fix |  | Paul Becker | 2018-06-16 | [View](https://github.com/webERP-team/webERP/commit/7d39e0bfd) |  |
+| MRP.php fix reorder qty insert calculation |  | BrianTMG | 2018-06-17 | [View](https://github.com/webERP-team/webERP/commit/ab6308dcf) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8175) |
+| DailyBankTransactions.php calculation fix |  | Paul Becker | 2018-06-16 | [View](https://github.com/webERP-team/webERP/commit/7d39e0bfd) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8178) |
 
 ## [v4.15] - 2018-05-20
 
