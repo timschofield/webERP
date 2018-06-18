@@ -1273,7 +1273,7 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $RootPath, $db){
 		$ShopsToSetRL = $ShopsKL;
 	} else if ($Category == 'TESTBA') {
 		$WhereCat = " AND stockmaster.categoryid = 'TESTBA' ";
-		$TypeOfShop = 'SHOPKL';
+		$TypeOfShop = 'SHOPBL';
 		$TitleCat = "TEST";
 		$ShopsToSetRL = $ShopsKL;
 	} else if ($Category == 'STABBA') {
