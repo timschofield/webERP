@@ -15,6 +15,7 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 
 | Description | Type | Author | Date | Details | Ref |
 |:-----------:|:----:|:------:|:----:|:-------:|:---:|
+| Add Tim's defaultgl column feature |  | Tim Schofield | 2018-06-18 | [View](https://github.com/webERP-team/webERP/pull/67/files) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8169&pid=14931#pid14931) |
 | DailyBankTransactions.php (updated script) |  | Tim Schofield | 2018-06-18 | [View](https://github.com/webERP-team/webERP/commit/ed1e5e0cb) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8179) |
 | MRP.php fix reorder qty insert calculation |  | BrianTMG | 2018-06-17 | [View](https://github.com/webERP-team/webERP/commit/ab6308dcf) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8175) |
 | DailyBankTransactions.php calculation fix |  | Paul Becker | 2018-06-16 | [View](https://github.com/webERP-team/webERP/commit/7d39e0bfd) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8178) |
