@@ -380,7 +380,7 @@ if ($ProcessSection01){
 									'111208010', 
 									'111208020', 
 									'111208030', 
-									'111208040')", "Total Brankas RL", 1000000000, 3000000000, $periodnow, $db);
+									'111208040')", "Total Brankas RL",      0, 2000000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('111513000', 
@@ -409,7 +409,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("211021400", -100000000,          1, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("211021500",  250000000,  750000000, $periodnow, $db);
+		BalanceAccountControl("211021500",  600000000,  900000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("612012015",         -1,          1, $periodnow, $db);
 		$NumberOfTestExecuted++;
@@ -1271,7 +1271,7 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $RootPath, $db){
 		$ShopsToSetRL = $ShopsKL;
 	} else if ($Category == 'TESTBA') {
 		$WhereCat = " AND stockmaster.categoryid = 'TESTBA' ";
-		$TypeOfShop = 'SHOPKL';
+		$TypeOfShop = 'SHOPBL';
 		$TitleCat = "TEST";
 		$ShopsToSetRL = $ShopsKL;
 	} else if ($Category == 'STABBA') {
