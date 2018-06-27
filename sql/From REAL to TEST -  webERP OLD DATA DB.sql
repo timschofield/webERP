@@ -183,6 +183,9 @@ INSERT INTO kurakura_kl_test_erpolddata.klmovetodiscount50 SELECT * FROM kurakur
 TRUNCATE kurakura_kl_test_erpolddata.`klmovetodiscount80`;
 INSERT INTO kurakura_kl_test_erpolddata.klmovetodiscount80 SELECT * FROM kurakura_kl_erpolddata.klmovetodiscount80;
 
+TRUNCATE kurakura_kl_test_erpolddata.`klolddatapurged`;
+INSERT INTO kurakura_kl_test_erpolddata.klolddatapurged SELECT * FROM kurakura_kl_erpolddata.klolddatapurged;
+
 TRUNCATE kurakura_kl_test_erpolddata.`klonlinepartners`;
 INSERT INTO kurakura_kl_test_erpolddata.klonlinepartners SELECT * FROM kurakura_kl_erpolddata.klonlinepartners;
 
