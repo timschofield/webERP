@@ -20,8 +20,30 @@ function Get_SQL_to_PHP_time_difference($db) {
 	return $Offset;
 }
 
+function Get_SQL_OC_to_PHP_time_difference($db) {
+	// Based on http://stackoverflow.com/questions/3108591/calculate-number-of-hours-between-2-dates-in-php
+/*    $NowPHP = new DateTime();
+
+	$SQL = "SELECT NOW()";
+	$result = DB_query_oc($SQL);
+	$Row = DB_fetch_row($result);
+    $NowSQL = new DateTime($Row[0]);
+
+	$diff = $NowSQL->diff($NowPHP);
+	if ($NowSQL < $NowPHP){
+		$Offset = -$diff->h;
+	}elseif ($NowSQL > $NowPHP){
+		$Offset = 24-$diff->h;
+	}else{
+		$Offset = 0;
+	}
+	return $Offset;
+*/
+	return -1; // Bali to JKT (OC DB lives in JKT time)
+}
+
 function GetServerTimeNow($TimeDifference){
-	// webERP DB and OpenCart DB triggers happens on server time, not local time,
+	// webERP DB and OpenCart DB triggers happens on DB time, not local time,
 	// so when checking if a row has been updated or created in webERP or OC, we need to check the timestamp against ServerTime :-)
 	// 4 hours of my life were invested finding it out...
 	$Now = Date('Y-m-d H:i:s');
@@ -36,7 +58,6 @@ function PrintTimeInformation($db) {
 			'webERP time now: ' . date('d/M/Y H:i:s') . "\n\n";
 	return $Text;
 }
-
 
 function CheckLastTimeRun($Script, $db){
 	if ($Script == 'OpenCartToWeberp'){
@@ -59,18 +80,23 @@ function CheckLastTimeRun($Script, $db){
 }
 
 function SetLastTimeRun($Script, $db){
-	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference($db));
 	if ($Script == 'OpenCartToWeberp'){
+		// Updating from OC to webERP: Check the time zone used in OC DB 
+		$ServerNow = GetServerTimeNow(Get_SQL_OC_to_PHP_time_difference($db));
 		$_SESSION['OpenCartToWeberp_LastRun'] = $ServerNow;
 		$sql = "UPDATE config
 				SET confvalue = '" . $ServerNow ."'
 				WHERE confname = 'OpenCartToWeberp_LastRun'";
 	}elseif ($Script == 'WeberpToOpenCartHourly'){
+		// Updating from webERP to OC: Check the time zone used in webERP DB 
+		$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference($db));
 		$_SESSION['WeberpToOpenCartHourly_LastRun'] = $ServerNow;
 		$sql = "UPDATE config
 				SET confvalue = '" . $ServerNow ."'
 				WHERE confname = 'WeberpToOpenCartHourly_LastRun'";
 	}elseif ($Script == 'WeberpToOpenCartDaily'){
+		// Updating from webERP to OC: Check the time zone used in webERP DB 
+		$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference($db));
 		$_SESSION['WeberpToOpenCartDaily_LastRun'] = $ServerNow;
 		$sql = "UPDATE config
 				SET confvalue = '" . $ServerNow ."'
@@ -130,7 +156,6 @@ function DataExistsInWebERP($db, $table, $f1, $v1, $f2 = '', $v2 = ''){
 	return $Exists;
 }
 
-
 function GetLenghtClassId($webERPDimensions, $language_id, $db_oc, $oc_tableprefix){
 	$SQL = "SELECT length_class_id
 			FROM " . $oc_tableprefix . "length_class_description
@@ -189,7 +214,6 @@ function GetOpenCartLanguageId($language, $db_oc, $oc_tableprefix){
 	}
 }
 
-
 function GetWeberpCustomerIdFromEmail($email, $db){
 	$SQL = "SELECT debtorno
 			FROM custbranch
@@ -202,6 +226,38 @@ function GetWeberpCustomerIdFromEmail($email, $db){
 	}else{
 		return '';
 	}
+}
+
+function GetWeberpComissionFlatDOKU($db){
+	$SQL = "SELECT comissionflatdoku
+			FROM locations, klonlinepartners
+			WHERE locations.onlinepartnercode = klonlinepartners.onlinepartnercode
+				AND locations.loccode = " . CODE_ONLINE_SHOP . "";
+	$ErrMsg ='Could not get the Commission Flat DOKU in webERP because';
+	$result = DB_query($SQL,$ErrMsg);
+	if(DB_num_rows($result) != 0){
+		$myrow = DB_fetch_array($result);
+		$Com = $myrow['comissionflatdoku'];
+	}else{
+		$Com = 0;
+	}
+	return $Com;
+}
+
+function GetWeberpComissionCCDOKU($db){
+	$SQL = "SELECT comissionccdoku
+			FROM locations, klonlinepartners
+			WHERE locations.onlinepartnercode = klonlinepartners.onlinepartnercode
+				AND locations.loccode = " . CODE_ONLINE_SHOP . "";
+	$ErrMsg ='Could not get the Commission CC DOKU in webERP because';
+	$result = DB_query($SQL,$ErrMsg);
+	if(DB_num_rows($result) != 0){
+		$myrow = DB_fetch_array($result);
+		$Com = $myrow['comissionccdoku'];
+	}else{
+		$Com = 0;
+	}
+	return $Com;
 }
 
 function GetWeberpCustomerIdFromCurrency($Currency, $db){
@@ -224,17 +280,15 @@ function GetWeberpForeignCurrencySurchargeFactor($Location, $db){
 	return $Factor;
 }
 
-
 function GetWeberpGLAccountFromCurrency($Location, $Currency, $db){
-// for IDR look for DOKU, other currencies in PayPal
-	$SQL = "SELECT accountpaypalaud,
+	$SQL = "SELECT accountdokuidr,
+					accountpaypalaud,
 					accountpaypalusd,
-					accountpaypaleur,
-					accountdokuidr
+					accountpaypaleur
 			FROM locations, klonlinepartners
 			WHERE locations.onlinepartnercode = klonlinepartners.onlinepartnercode
 				AND locations.loccode = '" . $Location . "'";
-	$ErrMsg ='Could not get the Online Shop GL Account for ' . $Currency . ' in webERP because';
+	$ErrMsg ='Could not get the Online account GL Account for ' . $Currency . ' in webERP because';
 	$result = DB_query($SQL,$ErrMsg);
 	if(DB_num_rows($result) != 0){
 		$myrow = DB_fetch_array($result);
@@ -250,15 +304,15 @@ function GetWeberpGLAccountFromCurrency($Location, $Currency, $db){
 	}else{
 		$GLAccount = '';
 	}
+	// in Paypal there is no IDR yet, so we pay by bank trasnfer and record payment manually in webERP
 	return $GLAccount;
 }
 
 function GetWeberpGLCommissionAccountFromCurrency($Location, $Currency, $db){
-// for IDR look for DOKU, other currencies in PayPal
-	$SQL = "SELECT accountpaypalcomissionaud,
+	$SQL = "SELECT accountdokucomissionidr,
+					accountpaypalcomissionaud,
 					accountpaypalcomissionusd,
-					accountpaypalcomissioneur,
-					accountdokucomissionidr
+					accountpaypalcomissioneur
 			FROM locations, klonlinepartners
 			WHERE locations.onlinepartnercode = klonlinepartners.onlinepartnercode
 				AND locations.loccode = '" . $Location . "'";
@@ -278,6 +332,7 @@ function GetWeberpGLCommissionAccountFromCurrency($Location, $Currency, $db){
 	}else{
 		$GLAccount = '';
 	}
+	// in Paypal there is no IDR yet, so we pay by bank trasnfer and record payment manually in webERP
 	return $GLAccount;
 }
 
@@ -296,7 +351,6 @@ function GetWeberpOrderNo($CustomerId, $OrderId, $db){
 		return '';
 	}
 }
-
 
 function GetWeberpCustomerCurrency($CustomerId, $db){
 	$SQL = "SELECT currcode
