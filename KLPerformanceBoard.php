@@ -272,6 +272,9 @@ if ($ProcessSection03){
 		$NumberOfTestExecuted++;
 		PackagingUsageForOutlet(30, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		
+		PackagingUsageByWeeks($RootPath, $db);
+		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin){
@@ -2116,6 +2119,135 @@ function PackagingUsageForKapalLaut($NumDays, $RootPath, $db){
 			echo '</table>
 				</div>';
 		}
+	}
+}
+
+
+function PackagingUsageByWeeks($RootPath, $db){
+
+	$StartWeek1 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -1));
+	$EndWeek1 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -7));
+	$StartWeek2 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -8));
+	$EndWeek2 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -14));
+	$StartWeek3 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -15));
+	$EndWeek3 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -21));
+	$StartWeek4 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -22));
+	$EndWeek4 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -28));
+	$StartWeek5 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -29));
+	$EndWeek5 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -35));
+	$StartWeek6 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -36));
+	$EndWeek6 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -42));
+	$StartWeek7 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -43));
+	$EndWeek7 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -49));
+	$StartWeek8 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -50));
+	$EndWeek8 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -56));
+
+	$SQL = "SELECT stockmaster.stockid,
+					stockmaster.description,
+					(SELECT SUM(packagingused.qty)
+						FROM packagingused
+						WHERE packagingused.stockid = stockmaster.stockid
+							AND packagingused.date <= '". $StartWeek1 ."'
+							AND packagingused.date >= '". $EndWeek1 ."') AS useweek1,
+					(SELECT SUM(packagingused.qty)
+						FROM packagingused
+						WHERE packagingused.stockid = stockmaster.stockid
+							AND packagingused.date <= '". $StartWeek2 ."'
+							AND packagingused.date >= '". $EndWeek2 ."') AS useweek2,
+					(SELECT SUM(packagingused.qty)
+						FROM packagingused
+						WHERE packagingused.stockid = stockmaster.stockid
+							AND packagingused.date <= '". $StartWeek3 ."'
+							AND packagingused.date >= '". $EndWeek3 ."') AS useweek3,
+					(SELECT SUM(packagingused.qty)
+						FROM packagingused
+						WHERE packagingused.stockid = stockmaster.stockid
+							AND packagingused.date <= '". $StartWeek4 ."'
+							AND packagingused.date >= '". $EndWeek4 ."') AS useweek4,
+					(SELECT SUM(packagingused.qty)
+						FROM packagingused
+						WHERE packagingused.stockid = stockmaster.stockid
+							AND packagingused.date <= '". $StartWeek5 ."'
+							AND packagingused.date >= '". $EndWeek5 ."') AS useweek5,
+					(SELECT SUM(packagingused.qty)
+						FROM packagingused
+						WHERE packagingused.stockid = stockmaster.stockid
+							AND packagingused.date <= '". $StartWeek6 ."'
+							AND packagingused.date >= '". $EndWeek6 ."') AS useweek6,
+					(SELECT SUM(packagingused.qty)
+						FROM packagingused
+						WHERE packagingused.stockid = stockmaster.stockid
+							AND packagingused.date <= '". $StartWeek7 ."'
+							AND packagingused.date >= '". $EndWeek7 ."') AS useweek7,
+					(SELECT SUM(packagingused.qty)
+						FROM packagingused
+						WHERE packagingused.stockid = stockmaster.stockid
+							AND packagingused.date <= '". $StartWeek8 ."'
+							AND packagingused.date >= '". $EndWeek8 ."') AS useweek8
+			FROM stockmaster
+			WHERE stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_SHOP_PACKAGING . "
+				AND stockmaster.discontinued = 0
+			ORDER BY stockmaster.stockid";
+	$result = DB_query($SQL);
+	
+	if (DB_num_rows($result) != 0){
+		$k = 0; //row colour counter
+		echo '<p class="page_title_text" align="center"><strong>' . 'Shop Packaging Usage by week'. '</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . ConvertSQLDate($StartWeek1) . '</th>
+							<th class="ascending">' . ConvertSQLDate($StartWeek2) . '</th>
+							<th class="ascending">' . ConvertSQLDate($StartWeek3) . '</th>
+							<th class="ascending">' . ConvertSQLDate($StartWeek4) . '</th>
+							<th class="ascending">' . ConvertSQLDate($StartWeek5) . '</th>
+							<th class="ascending">' . ConvertSQLDate($StartWeek6) . '</th>
+							<th class="ascending">' . ConvertSQLDate($StartWeek7) . '</th>
+							<th class="ascending">' . ConvertSQLDate($StartWeek8) . '</th>
+							<th class="ascending">' . _('Average') . '</th>
+						</tr>';
+		echo $TableHeader;
+
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			$Average = ($myrow['useweek1'] + 
+					$myrow['useweek2'] + 
+					$myrow['useweek3'] + 
+					$myrow['useweek4'] + 
+					$myrow['useweek5'] + 
+					$myrow['useweek6'] + 
+					$myrow['useweek7'] + 
+					$myrow['useweek8']) / 8;
+					
+			printf('<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$myrow['stockid'], 
+					$myrow['description'], 
+					locale_number_format_zero_blank($myrow['useweek1'],0), 
+					locale_number_format_zero_blank($myrow['useweek2'],0), 
+					locale_number_format_zero_blank($myrow['useweek3'],0), 
+					locale_number_format_zero_blank($myrow['useweek4'],0), 
+					locale_number_format_zero_blank($myrow['useweek5'],0), 
+					locale_number_format_zero_blank($myrow['useweek6'],0), 
+					locale_number_format_zero_blank($myrow['useweek7'],0), 
+					locale_number_format_zero_blank($myrow['useweek8'],0), 
+					locale_number_format_zero_blank($Average,0) 
+					);
+		}
+		echo '</table>
+			</div>';
 	}
 }
 
