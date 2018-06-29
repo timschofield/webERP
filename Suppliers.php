@@ -475,6 +475,7 @@ if (isset($_POST['submit'])) {
 							lat='" . $latitude . "',
 							lng='" . $longitude . "',
 							taxref='" . $_POST['TaxRef'] . "',
+							defaultshipper='" . $_POST['DefaultShipper'] . "',
 							defaultgl='" . $_POST['DefaultGL'] . "'
 						WHERE supplierid = '" . $SupplierID . "'";
 			} else {
@@ -504,6 +505,7 @@ if (isset($_POST['submit'])) {
 							lat='" . $latitude . "',
 							lng='" . $longitude . "',
 							taxref='" . $_POST['TaxRef'] . "',
+							defaultshipper='" . $_POST['DefaultShipper'] . "',
 							defaultgl='" . $_POST['DrfaultGL'] . "'
 						WHERE supplierid = '" . $SupplierID . "'";
 			}
@@ -545,6 +547,7 @@ if (isset($_POST['submit'])) {
 										lat,
 										lng,
 										taxref,
+										defaultshipper,
 										defaultgl)
 								 VALUES ('" . $SupplierID . "',
 								 	'" . $_POST['SuppName'] . "',
@@ -571,6 +574,7 @@ if (isset($_POST['submit'])) {
 									'" . $latitude . "',
 									'" . $longitude . "',
 									'" . $_POST['TaxRef'] . "',
+									'" . $_POST['DefaultShipper'] . "',
 									'" . $_POST['DefaultGL'] . "'
 								)";
 
@@ -823,6 +827,27 @@ if (!isset($SupplierID)) {
 				</select></td>
 		</tr>';
 
+	// Default_Shipper
+	$SQL = "SELECT shipper_id, shippername FROM shippers orDER BY shippername";
+	$ErrMsg = _('Could not load shippers');
+	$Result = DB_query($SQL, $ErrMsg);
+	echo '<tr>
+			<td>' . _('Default Shipper') . ':</td>';
+	echo '<td>
+			<select required="required" name="DefaultShipper">';
+
+	while ($MyRow = DB_fetch_array($Result)) {
+		if ($_POST['DefaultShipper'] == $MyRow['shipper_id']) {
+			echo '<option selected="selected" value="' . $MyRow['shipper_id'] . '">' . $MyRow['shippername'] . '</option>';
+		} else {
+			echo '<option value="' . $MyRow['shipper_id'] . '">' . $MyRow['shippername'] . '</option>';
+		}
+	}
+
+	echo '</select>
+			</td>
+		</tr>';
+
 	$Result = DB_query("SELECT accountcode,
 						accountname
 					FROM chartmaster INNER JOIN accountgroups
@@ -867,8 +892,7 @@ if (!isset($SupplierID)) {
 		<div class="centre"><input type="submit" name="submit" value="' . _('Insert New Supplier') . '" /></div>';
 	echo '</div>
 		</form>';
-}
- else {
+} else {
 
 	//SupplierID exists - either passed when calling the form or from the form itself
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
@@ -900,6 +924,7 @@ if (!isset($SupplierID)) {
 				taxgroupid,
 				factorcompanyid,
 				taxref,
+				defaultshipper,
 				defaultgl
 			FROM suppliers
 			WHERE supplierid = '" . $SupplierID . "'";
@@ -930,6 +955,7 @@ if (!isset($SupplierID)) {
 		$_POST['FactorID'] = $MyRow['factorcompanyid'];
 		$_POST['TaxRef'] = $MyRow['taxref'];
 		$_POST['DefaultGL'] = $MyRow['defaultgl'];
+		$_POST['DefaultShipper'] = $MyRow['defaultshipper'];
 
 		echo '<tr><td><input type="hidden" name="SupplierID" value="' . $SupplierID . '" /></td></tr>';
 
@@ -1095,6 +1121,27 @@ if (!isset($SupplierID)) {
 	}
 
 	echo '</select></td>
+		</tr>';
+
+	// Default_Shipper
+	$SQL = "SELECT shipper_id, shippername FROM shippers orDER BY shippername";
+	$ErrMsg = _('Could not load shippers');
+	$Result = DB_query($SQL, $ErrMsg);
+	echo '<tr>
+			<td>' . _('Default Shipper') . ':</td>';
+	echo '<td>
+			<select required="required" name="DefaultShipper">';
+
+	while ($MyRow = DB_fetch_array($Result)) {
+		if ($_POST['DefaultShipper'] == $MyRow['shipper_id']) {
+			echo '<option selected="selected" value="' . $MyRow['shipper_id'] . '">' . $MyRow['shippername'] . '</option>';
+		} else {
+			echo '<option value="' . $MyRow['shipper_id'] . '">' . $MyRow['shippername'] . '</option>';
+		}
+	}
+
+	echo '</select>
+			</td>
 		</tr>';
 
 	$Result = DB_query("SELECT accountcode,
