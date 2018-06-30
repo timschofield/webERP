@@ -229,8 +229,8 @@ if ($ProcessSection01){
 		OR $KL_ShopSupportLeader){
 		ErrorsInTransfers( 7, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ErrorsInTransfers(30, $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		ErrorsInTransfers(30, $RootPath, $db);
+//		$NumberOfTestExecuted++;
 	}
 	
 	/***************************************************************************************
@@ -665,7 +665,8 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_ShopSupportLeader OR 
+	if ($KL_SystemAdmin OR
+		$KL_ShopSupportLeader OR 
 		$KL_OperationalManager){
 		PackagingToBeRefilledKapalLaut(false, $RootPath, $db);
 		$NumberOfTestExecuted++;
