@@ -10,8 +10,15 @@ $Title = _('Purge Old Data');
 
 include('includes/header.php');
 
+if (!isset($_POST['PurgeLoctransfersObsoletes'])){
+	$_POST['PurgeLoctransfersObsoletes'] = 'N';
+}
+
 if (isset($_POST['submit'])) {
-	submit($Title, $_POST['PurgeGltransPeriod'], $_POST['PurgeStockmovesPrd'], $_POST['PurgeLocTransfersRecdate'], $db);
+	submit($Title, 
+			$_POST['PurgeGltransPeriod'], 
+			$_POST['PurgeStockmovesPrd'], 
+			$_POST['PurgeLoctransfersObsoletes'], $db);
 } else {
 	display($Title, $db);
 }
@@ -20,7 +27,7 @@ include('includes/footer.php');
 
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit($Title, $PurgeGltransPeriod, $PurgeStockmovesPrd, $PurgeLocTransfersRecdate, &$db) {
+function submit($Title, $PurgeGltransPeriod, $PurgeStockmovesPrd, $PurgeLoctransfersObsoletes, &$db) {
 	echo '<p class="page_title_text">
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $PageTitle . '" alt="" />' . ' ' . $PageTitle . 
 		'</p>';
@@ -28,6 +35,7 @@ function submit($Title, $PurgeGltransPeriod, $PurgeStockmovesPrd, $PurgeLocTrans
 	PurgetableGltrans($PurgeGltransPeriod);
 	PurgetableStockmoves($PurgeStockmovesPrd);
 	PurgetableStockmovestaxes($PurgeStockmovesPrd);
+	PurgetableLoctransfersObsoletes($PurgeLoctransfersObsoletes);
 
 } // End of function submit()
 
@@ -93,6 +101,14 @@ function display($Title, &$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DI
 	}
 	echo '</select></td></tr>';
 
+	echo '<tr><td>' . _('Purge loctransfers of obsolete items') . ':</td>
+			<td><select name="PurgeLoctransfersObsoletes">
+				<option selected="selected" value="N">' . _('No') . '</option>
+				<option value="Y">' . _('Yes') . '</option>
+				</select>
+			</td>
+		</tr>';
+			
 /*	echo '<tr>
 			<td>' . _('Purge loctransfers table older or equal than') . '</td>
 			<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="PurgeLocTransfersRecdate" size="10" maxlength="10" value="' . ConvertSQLDate($AlreadyPurgedLocTransfersRecdate) . '" /></td>
@@ -248,7 +264,7 @@ function PurgetableGltrans($PurgeToPeriod){
 			}
 		}
 	}else{
-		prnMsg("Nothing to purge");
+		prnMsg("gltrans: Nothing to purge", "warn");
 		$ErrorsFound = TRUE;
 	}
 
@@ -269,7 +285,7 @@ function PurgetableGltrans($PurgeToPeriod){
 	}else{
 		$ErrorsFound = TRUE;
 	}
-	prnMsg('gltrans table now contains '. locale_number_format($EndRecords) . ' records. '. locale_number_format($StartRecords - $EndRecords) . ' records saved');
+	prnMsg('gltrans table now contains '. locale_number_format($EndRecords) . ' records. '. locale_number_format($StartRecords - $EndRecords) . ' records saved', 'success');
 }
 
 function PurgetableStockmoves($PurgeToPeriod){
@@ -305,8 +321,7 @@ function PurgetableStockmoves($PurgeToPeriod){
 	prnMsg("stockmoves table already purged until period: " . $PeriodAlreadyPurged);
 	prnMsg('Purge stockmoves older or equal than period '. $PurgeToPeriod);
 
-//	if ( $PeriodAlreadyPurged < $PurgeToPeriod){
-	if ( TRUE){
+	if ($PeriodAlreadyPurged < $PurgeToPeriod){
 		// select the webERP stockmoves table to be copied into olddata DB
 		$sql = "SELECT stkmoveno,
 						stockid,
@@ -390,7 +405,7 @@ function PurgetableStockmoves($PurgeToPeriod){
 			prnMsg("Updated klolsdatapurged records");
 		}
 	}else{
-		prnMsg("Nothing to purge");
+		prnMsg("stockmoves: Nothing to purge", 'warn');
 		$ErrorsFound = TRUE;
 	}
 
@@ -411,7 +426,7 @@ function PurgetableStockmoves($PurgeToPeriod){
 	}else{
 		$ErrorsFound = TRUE;
 	}
-	prnMsg('stockmoves table now contains '. locale_number_format($EndRecords) . ' records. '. locale_number_format($StartRecords - $EndRecords) . ' records saved');
+	prnMsg('stockmoves table now contains '. locale_number_format($EndRecords) . ' records. '. locale_number_format($StartRecords - $EndRecords) . ' records saved', 'success');
 }
 
 function PurgetableStockmovestaxes(){
@@ -469,7 +484,7 @@ function PurgetableStockmovestaxes(){
 			prnMsg("Deleted stockmoves records in webERP production DB");
 		}
 	}else{
-		prnMsg("Nothing to purge");
+		prnMsg("stockmovestaxes: Nothing to purge", 'warn');
 		$ErrorsFound = TRUE;
 	}
 
@@ -490,7 +505,113 @@ function PurgetableStockmovestaxes(){
 	}else{
 		$ErrorsFound = TRUE;
 	}
-	prnMsg('stockmovestaxes table now contains '. locale_number_format($EndRecords) . ' records. '. locale_number_format($StartRecords - $EndRecords) . ' records saved');
+	prnMsg('stockmovestaxes table now contains '. locale_number_format($EndRecords) . ' records. '. locale_number_format($StartRecords - $EndRecords) . ' records saved', 'success');
+}
+
+function PurgetableLoctransfersObsoletes($PurgeLoctransfersObsoletes){
+	DB_Txn_Begin();
+	$ErrorsFound = FALSE; // hope for the best
+	// count how many records are on loctransfers in webERP production DB
+	$sql = "SELECT COUNT(*) AS startrecords
+			FROM loctransfers";
+
+	$result = DB_query($sql);	
+	if (DB_num_rows($result) != 0){
+		$myrow = DB_fetch_array($result);
+		$StartRecords = $myrow['startrecords'];
+	}else{
+		$ErrorsFound = TRUE;
+	}
+
+	// search for the newest date already purged in olddata database table
+	$PeriodAlreadyPurged = -99;
+	$sql = "SELECT MAX(recdate) AS purgedperiod
+			FROM loctransfers";
+
+	$result = DB_query_od($sql);	
+	if (DB_num_rows($result) != 0){
+		$myrow = DB_fetch_array($result);
+		$PeriodAlreadyPurged = $myrow['purgedperiod'];
+	}else{
+		$ErrorsFound = TRUE;
+	}
+
+	prnMsg('loctransfers table contains '. locale_number_format($StartRecords) . ' records');
+	prnMsg("loctransfers table already purged until : " . $PeriodAlreadyPurged);
+
+	if ($PurgeLoctransfersObsoletes == "Y"){
+		// select the webERP stockmoves table to be copied into olddata DB
+		$sql = "SELECT loctransferid,
+						reference,
+						stockid,
+						shipqty,
+						recqty,
+						shipdate,
+						recdate,
+						shiploc,
+						recloc
+				FROM loctransfers
+				WHERE stockid IN (SELECT stockid FROM stockmaster WHERE discontinued = 1)";
+		$result = DB_query($sql);	
+		$ErrMsg = _('An error occurred in inserting the stockmoves record');
+		$DbgMsg = _('The SQL that was used to insert the stockmoves record was');		
+		if (DB_num_rows($result) != 0){
+			$RecordCounter = 0;
+			while ($myrow = DB_fetch_array($result)) {
+				$sqlInsert = "INSERT INTO loctransfers 
+									( loctransferid,
+									reference,
+									stockid,
+									shipqty,
+									recqty,
+									shipdate,
+									recdate,
+									shiploc,
+									recloc
+								) VALUES (
+								'" . $myrow['loctransferid'] . "',
+								'" . $myrow['reference'] . "',
+								'" . $myrow['stockid'] . "',
+								'" . $myrow['shipqty'] . "',
+								'" . $myrow['recqty'] . "',
+								'" . $myrow['shipdate'] . "',
+								'" . $myrow['recdate'] . "',
+								'" . $myrow['shiploc'] . "',
+								'" . $myrow['recloc'] . "')";
+				$resultInsert = DB_query_od($sqlInsert,$ErrMsg,$DbgMsg);
+				$RecordCounter++;
+			}
+			prnMsg("Copied into OldData DB ". locale_number_format($RecordCounter) . " records of loctransfers table");
+			
+			$sqlDelete = "DELETE FROM loctransfers 
+							WHERE stockid IN (SELECT stockid FROM stockmaster WHERE discontinued = 1)";
+			$resultDelete = DB_query($sqlDelete,$ErrMsg,$DbgMsg);
+			prnMsg("Deleted loctransfers records in webERP production DB");
+
+		}
+	}else{
+		prnMsg("locatransfers: Nothing to purge", 'warn');
+		$ErrorsFound = TRUE;
+	}
+
+	if (!$ErrorsFound){
+		$Result = DB_Txn_Commit();
+	}else{
+		$Result = DB_Txn_Rollback();
+
+	}
+
+	// count how many records are on loctransfers in webERP production DB
+	$sql = "SELECT COUNT(*) AS endrecords
+			FROM loctransfers";
+	$result = DB_query($sql);	
+	if (DB_num_rows($result) != 0){
+		$myrow = DB_fetch_array($result);
+		$EndRecords = $myrow['endrecords'];
+	}else{
+		$ErrorsFound = TRUE;
+	}
+	prnMsg('loctransfers table now contains '. locale_number_format($EndRecords) . ' records. '. locale_number_format($StartRecords - $EndRecords) . ' records saved', 'success');
 }
 
 

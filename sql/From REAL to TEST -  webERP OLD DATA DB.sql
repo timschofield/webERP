@@ -148,7 +148,13 @@ TRUNCATE kurakura_kl_test_erpolddata.`glaccountusers`;
 INSERT INTO kurakura_kl_test_erpolddata.glaccountusers SELECT * FROM kurakura_kl_erpolddata.glaccountusers;
 
 TRUNCATE kurakura_kl_test_erpolddata.`gltrans`;
-INSERT INTO kurakura_kl_test_erpolddata.gltrans SELECT * FROM kurakura_kl_erpolddata.gltrans;
+INSERT INTO kurakura_kl_test_erpolddata.gltrans SELECT * FROM kurakura_kl_erpolddata.gltrans WHERE periodno <= 30;
+INSERT INTO kurakura_kl_test_erpolddata.gltrans SELECT * FROM kurakura_kl_erpolddata.gltrans WHERE periodno > 30 AND periodno <= 60;
+INSERT INTO kurakura_kl_test_erpolddata.gltrans SELECT * FROM kurakura_kl_erpolddata.gltrans WHERE periodno > 60 AND periodno <= 80;
+INSERT INTO kurakura_kl_test_erpolddata.gltrans SELECT * FROM kurakura_kl_erpolddata.gltrans WHERE periodno > 80 AND periodno <= 90;
+INSERT INTO kurakura_kl_test_erpolddata.gltrans SELECT * FROM kurakura_kl_erpolddata.gltrans WHERE periodno > 90 AND periodno <= 100;
+INSERT INTO kurakura_kl_test_erpolddata.gltrans SELECT * FROM kurakura_kl_erpolddata.gltrans WHERE periodno > 100 AND periodno <= 110;
+INSERT INTO kurakura_kl_test_erpolddata.gltrans SELECT * FROM kurakura_kl_erpolddata.gltrans WHERE periodno > 110;
 
 TRUNCATE kurakura_kl_test_erpolddata.`grns`;
 INSERT INTO kurakura_kl_test_erpolddata.grns SELECT * FROM kurakura_kl_erpolddata.grns;
@@ -448,7 +454,13 @@ TRUNCATE kurakura_kl_test_erpolddata.`stockmaster`;
 INSERT INTO kurakura_kl_test_erpolddata.stockmaster SELECT * FROM kurakura_kl_erpolddata.stockmaster;
 
 TRUNCATE kurakura_kl_test_erpolddata.`stockmoves`;
-INSERT INTO kurakura_kl_test_erpolddata.stockmoves SELECT * FROM kurakura_kl_erpolddata.stockmoves;
+INSERT INTO kurakura_kl_test_erpolddata.stockmoves SELECT * FROM kurakura_kl_erpolddata.stockmoves WHERE prd <= 30;
+INSERT INTO kurakura_kl_test_erpolddata.stockmoves SELECT * FROM kurakura_kl_erpolddata.stockmoves WHERE prd > 30 AND prd <= 60;
+INSERT INTO kurakura_kl_test_erpolddata.stockmoves SELECT * FROM kurakura_kl_erpolddata.stockmoves WHERE prd > 60 AND prd <= 80;
+INSERT INTO kurakura_kl_test_erpolddata.stockmoves SELECT * FROM kurakura_kl_erpolddata.stockmoves WHERE prd > 80 AND prd <= 90;
+INSERT INTO kurakura_kl_test_erpolddata.stockmoves SELECT * FROM kurakura_kl_erpolddata.stockmoves WHERE prd > 90 AND prd <= 100;
+INSERT INTO kurakura_kl_test_erpolddata.stockmoves SELECT * FROM kurakura_kl_erpolddata.stockmoves WHERE prd > 100 AND prd <= 110;
+INSERT INTO kurakura_kl_test_erpolddata.stockmoves SELECT * FROM kurakura_kl_erpolddata.stockmoves WHERE prd > 110;
 
 TRUNCATE kurakura_kl_test_erpolddata.`stockmovestaxes`;
 INSERT INTO kurakura_kl_test_erpolddata.stockmovestaxes SELECT * FROM kurakura_kl_erpolddata.stockmovestaxes;
