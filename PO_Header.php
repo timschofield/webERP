@@ -1,9 +1,7 @@
 <?php
 
-
-include('includes/DefinePOClass.php');
-include('includes/session.php');
-
+include ('includes/DefinePOClass.php');
+include ('includes/session.php');
 
 if (isset($_GET['ModifyOrderNumber'])) {
 	$Title = _('Modify Purchase Order') . ' ' . $_GET['ModifyOrderNumber'];
@@ -16,11 +14,11 @@ if (isset($_GET['SupplierID'])) {
 }
 
 /* webERP manual links before header.php */
-$ViewTopic= 'PurchaseOrdering';
+$ViewTopic = 'PurchaseOrdering';
 $BookMark = 'PurchaseOrdering';
 
-include('includes/header.php');
-include('includes/SQL_CommonFunctions.inc');
+include ('includes/header.php');
+include ('includes/SQL_CommonFunctions.inc');
 
 /*If the page is called is called without an identifier being set then
  * it must be either a new order, or the start of a modification of an
@@ -28,7 +26,7 @@ include('includes/SQL_CommonFunctions.inc');
  *
  * The identifier only needs to be unique for this php session, so a
  * unix timestamp will be sufficient.
- */
+*/
 
 if (empty($_GET['identifier'])) {
 	$identifier = date('U');
@@ -40,26 +38,26 @@ if (empty($_GET['identifier'])) {
  * the session variable that holds all the PO data $_SESSION['PO'][$identifier]
  * is unset to allow all new details to be created */
 
-if (isset($_GET['NewOrder']) AND isset($_SESSION['PO' . $identifier])) {
+if (isset($_GET['NewOrder']) and isset($_SESSION['PO' . $identifier])) {
 	unset($_SESSION['PO' . $identifier]);
 	$_SESSION['ExistingOrder'] = 0;
 }
 
-if (isset($_POST['Select']) AND empty($_POST['SupplierContact'])) {
-	$sql = "SELECT contact
+if (isset($_POST['Select']) and empty($_POST['SupplierContact'])) {
+	$SQL = "SELECT contact
 				FROM suppliercontacts
 				WHERE supplierid='" . $_POST['Select'] . "'";
 
-	$SuppCoResult = DB_query($sql);
+	$SuppCoResult = DB_query($SQL);
 	if (DB_num_rows($SuppCoResult) > 0) {
-		$myrow = DB_fetch_row($SuppCoResult);
-		$_POST['SupplierContact'] = $myrow[0];
+		$MyRow = DB_fetch_row($SuppCoResult);
+		$_POST['SupplierContact'] = $MyRow[0];
 	} else {
 		$_POST['SupplierContact'] = '';
 	}
 }
 
-if ((isset($_POST['UpdateStatus']) AND $_POST['UpdateStatus'] != '')) {
+if ((isset($_POST['UpdateStatus']) and $_POST['UpdateStatus'] != '')) {
 
 	if ($_SESSION['ExistingOrder'] == 0) {
 		prnMsg(_('This is a new order. It must be created before you can change the status'), 'warn');
@@ -72,8 +70,8 @@ if ((isset($_POST['UpdateStatus']) AND $_POST['UpdateStatus'] != '')) {
 					AND currabrev='" . $_SESSION['PO' . $identifier]->CurrCode . "'";
 
 		$AuthResult = DB_query($AuthSQL);
-		$myrow = DB_fetch_array($AuthResult);
-		$AuthorityLevel = $myrow['authlevel'];
+		$MyRow = DB_fetch_array($AuthResult);
+		$AuthorityLevel = $MyRow['authlevel'];
 		$OrderTotal = $_SESSION['PO' . $identifier]->Order_Value();
 
 		if ($_POST['StatusComments'] != '') {
@@ -95,8 +93,8 @@ if ((isset($_POST['UpdateStatus']) AND $_POST['UpdateStatus'] != '')) {
 			}
 		}
 
-		if ($_POST['Status'] == 'Rejected' OR $_POST['Status'] == 'Cancelled') {
-			if (!isset($_SESSION['ExistingOrder']) OR $_SESSION['ExistingOrder'] != 0) {
+		if ($_POST['Status'] == 'Rejected' or $_POST['Status'] == 'Cancelled') {
+			if (!isset($_SESSION['ExistingOrder']) or $_SESSION['ExistingOrder'] != 0) {
 				/* need to check that not already dispatched or invoiced by the supplier */
 				if ($_SESSION['PO' . $identifier]->Any_Already_Received() == 1) {
 					$OKToUpdateStatus = 0; //not ok to update the status
@@ -116,8 +114,8 @@ if ((isset($_POST['UpdateStatus']) AND $_POST['UpdateStatus'] != '')) {
 					prnMsg(_('You do not have permission to reject this purchase order') . '.<br />' . _('This order is for') . ' ' . $_SESSION['PO' . $identifier]->CurrCode . ' ' . $OrderTotal . '. ' . _('Your authorisation limit is set at') . ' ' . $_SESSION['PO' . $identifier]->CurrCode . ' ' . $AuthorityLevel . '.<br />' . _('If you think this is a mistake please contact the systems administrator'), 'warn');
 				}
 			} //$OKToUpdateStatus == 1
+			
 		} //$_POST['Status'] == 'Rejected' OR $_POST['Status'] == 'Cancelled'
-
 		if ($_POST['Status'] == 'Pending') {
 
 			if ($_SESSION['PO' . $identifier]->Any_Already_Received() == 1) {
@@ -125,15 +123,15 @@ if ((isset($_POST['UpdateStatus']) AND $_POST['UpdateStatus'] != '')) {
 				prnMsg(_('This order could not have the status changed back to pending because some of it has already been received. Quantities received will need to be returned to change the order back to pending.'), 'warn');
 			}
 
-			if (($AuthorityLevel > $OrderTotal OR $_SESSION['UserID'] == $_SESSION['PO' . $identifier]->Initiator) AND $OKToUpdateStatus == 1) {
+			if (($AuthorityLevel > $OrderTotal or $_SESSION['UserID'] == $_SESSION['PO' . $identifier]->Initiator) and $OKToUpdateStatus == 1) {
 				$_SESSION['PO' . $identifier]->StatusComments = date($_SESSION['DefaultDateFormat']) . ' - ' . _('Order set to pending status by') . $UserChangedStatus . $_POST['StatusComments'] . '<br />' . html_entity_decode($_POST['StatusCommentsComplete'], ENT_QUOTES, 'UTF-8');
 
-			} elseif ($AuthorityLevel < $OrderTotal AND $_SESSION['UserID'] != $_SESSION['PO' . $identifier]->Initiator) {
+			} elseif ($AuthorityLevel < $OrderTotal and $_SESSION['UserID'] != $_SESSION['PO' . $identifier]->Initiator) {
 				$OKToUpdateStatus = 0;
 				prnMsg(_('You do not have permission to change the status of this purchase order') . '.<br />' . _('This order is for') . ' ' . $_SESSION['PO' . $identifier]->CurrCode . ' ' . $OrderTotal . '. ' . _('Your authorisation limit is set at') . ' ' . $_SESSION['PO' . $identifier]->CurrCode . ' ' . $AuthorityLevel . '.<br />' . _('If you think this is a mistake please contact the systems administrator'), 'warn');
 			} //$AuthorityLevel < $OrderTotal AND $_SESSION['UserID'] != $_SESSION['PO' . $identifier]->Initiator
+			
 		} //$_POST['Status'] == 'Pending'
-
 		if ($OKToUpdateStatus == 1) {
 			$_SESSION['PO' . $identifier]->Status = $_POST['Status'];
 			if ($_SESSION['PO' . $identifier]->Status == 'Authorised') {
@@ -150,28 +148,29 @@ if ((isset($_POST['UpdateStatus']) AND $_POST['UpdateStatus'] != '')) {
 			$ErrMsg = _('The order status could not be updated because');
 			$UpdateResult = DB_query($SQL, $ErrMsg);
 
-			if ($_POST['Status']=='Completed' OR $_POST['Status']=='Cancelled' OR $_POST['Status']=='Rejected') {
+			if ($_POST['Status'] == 'Completed' or $_POST['Status'] == 'Cancelled' or $_POST['Status'] == 'Rejected') {
 				$SQL = "UPDATE purchorderdetails SET completed=1 WHERE orderno='" . $_SESSION['ExistingOrder'] . "'";
-				$UpdateResult =DB_query($SQL,$ErrMsg);
-			} else {//To ensure that the purchorderdetails status is correct when it is recovered from a cancelled orders
+				$UpdateResult = DB_query($SQL, $ErrMsg);
+			} else { //To ensure that the purchorderdetails status is correct when it is recovered from a cancelled orders
 				$SQL = "UPDATE purchorderdetails SET completed=0 WHERE orderno='" . $_SESSION['ExistingOrder'] . "'";
-				$UpdateResult = DB_query($SQL,$ErrMsg);
+				$UpdateResult = DB_query($SQL, $ErrMsg);
 			}
 		} //$OKToUpdateStatus == 1
+		
 	} //end if there is actually a status change the class Status != the POST['Status']
+	
 } //End if user hit Update Status
-
-if (isset($_GET['NewOrder']) AND isset($_GET['StockID']) AND isset($_GET['SelectedSupplier'])) {
+if (isset($_GET['NewOrder']) and isset($_GET['StockID']) and isset($_GET['SelectedSupplier'])) {
 	/*
 	 * initialise a new order
-	 */
+	*/
 	$_SESSION['ExistingOrder'] = 0;
 	unset($_SESSION['PO' . $identifier]);
 	/* initialise new class object */
 	$_SESSION['PO' . $identifier] = new PurchOrder;
 	/*
 	 * and fill it with essential data
-	 */
+	*/
 	$_SESSION['PO' . $identifier]->AllowPrintPO = 1;
 	/* Of course 'cos the order aint even started !!*/
 	$_SESSION['PO' . $identifier]->GLLink = $_SESSION['CompanyRecord']['gllink_stock'];
@@ -184,17 +183,16 @@ if (isset($_GET['NewOrder']) AND isset($_GET['StockID']) AND isset($_GET['Select
 
 	/*
 	 * the item (it's item code) that should be purchased
-	 */
+	*/
 	$Purch_Item = $_GET['StockID'];
 
 } //End if it's a new order sent with supplier code and the item to order
-
-if (isset($_POST['EnterLines']) OR isset($_POST['AllowRePrint'])) {
+if (isset($_POST['EnterLines']) or isset($_POST['AllowRePrint'])) {
 	/*User hit the button to enter line items -
 	 *  ensure session variables updated then meta refresh to PO_Items.php*/
 
 	$_SESSION['PO' . $identifier]->Location = $_POST['StkLocation'];
-	$_SESSION['PO' . $identifier]->SupplierContact = isset($_POST['SupplierContact'])?$_POST['SupplierContact']:'';
+	$_SESSION['PO' . $identifier]->SupplierContact = isset($_POST['SupplierContact']) ? $_POST['SupplierContact'] : '';
 	$_SESSION['PO' . $identifier]->DelAdd1 = $_POST['DelAdd1'];
 	$_SESSION['PO' . $identifier]->DelAdd2 = $_POST['DelAdd2'];
 	$_SESSION['PO' . $identifier]->DelAdd3 = $_POST['DelAdd3'];
@@ -223,15 +221,15 @@ if (isset($_POST['EnterLines']) OR isset($_POST['AllowRePrint'])) {
 	$_SESSION['PO' . $identifier]->Tel = $_POST['Tel'];
 	$_SESSION['PO' . $identifier]->Port = $_POST['Port'];
 
-	if (isset($_POST['RePrint']) AND $_POST['RePrint'] == 1) {
+	if (isset($_POST['RePrint']) and $_POST['RePrint'] == 1) {
 		$_SESSION['PO' . $identifier]->AllowPrintPO = 1;
 
-		$sql = "UPDATE purchorders
+		$SQL = "UPDATE purchorders
 				SET purchorders.allowprint='1'
 				WHERE purchorders.orderno='" . $_SESSION['PO' . $identifier]->OrderNo . "'";
 
 		$ErrMsg = _('An error occurred updating the purchase order to allow reprints') . '. ' . _('The error says');
-		$UpdateResult = DB_query($sql, $ErrMsg);
+		$UpdateResult = DB_query($SQL, $ErrMsg);
 	} //end if change to allow reprint
 	else {
 		$_POST['RePrint'] = 0;
@@ -240,11 +238,11 @@ if (isset($_POST['EnterLines']) OR isset($_POST['AllowRePrint'])) {
 		echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/PO_Items.php?identifier=' . $identifier . '">';
 		echo '<p>';
 		prnMsg(_('You should automatically be forwarded to the entry of the purchase order line items page') . '. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' . '<a href="' . $RootPath . '/PO_Items.php?identifier=' . $identifier . '">' . _('click here') . '</a> ' . _('to continue'), 'info');
-		include('includes/footer.php');
+		include ('includes/footer.php');
 		exit;
 	} // end if reprint not allowed
+	
 } //isset($_POST['EnterLines']) OR isset($_POST['AllowRePrint'])
-
 /* end of if isset _POST'EnterLines' */
 
 echo '<span style="float:left"><a href="' . $RootPath . '/PO_SelectOSPurchOrder.php?identifier=' . $identifier . '">' . _('Back to Purchase Orders') . '</a></span>';
@@ -254,9 +252,8 @@ echo '<span style="float:left"><a href="' . $RootPath . '/PO_SelectOSPurchOrder.
  * these details to be modified */
 
 if (isset($_GET['ModifyOrderNumber'])) {
-	include('includes/PO_ReadInOrder.inc');
+	include ('includes/PO_ReadInOrder.inc');
 }
-
 
 if (!isset($_SESSION['PO' . $identifier])) {
 	/* It must be a new order being created
@@ -273,7 +270,7 @@ if (!isset($_SESSION['PO' . $identifier])) {
 	/*Of course cos the order aint even started !!*/
 	$_SESSION['PO' . $identifier]->GLLink = $_SESSION['CompanyRecord']['gllink_stock'];
 
-	if ($_SESSION['PO' . $identifier]->SupplierID == '' OR !isset($_SESSION['PO' . $identifier]->SupplierID)) {
+	if ($_SESSION['PO' . $identifier]->SupplierID == '' or !isset($_SESSION['PO' . $identifier]->SupplierID)) {
 		/* a session variable will have to maintain if a supplier
 		 * has been selected for the order or not the session
 		 * variable supplierID holds the supplier code already
@@ -284,9 +281,8 @@ if (!isset($_SESSION['PO' . $identifier])) {
 	}
 
 } //end if initiating a new PO
-
 if (isset($_POST['ChangeSupplier'])) {
-	if ($_SESSION['PO' . $identifier]->Status == 'Pending' AND $_SESSION['UserID'] == $_SESSION['PO' . $identifier]->Initiator) {
+	if ($_SESSION['PO' . $identifier]->Status == 'Pending' and $_SESSION['UserID'] == $_SESSION['PO' . $identifier]->Initiator) {
 
 		if ($_SESSION['PO' . $identifier]->Any_Already_Received() == 0) {
 
@@ -301,9 +297,8 @@ if (isset($_POST['ChangeSupplier'])) {
 		}
 	}
 } //user hit ChangeSupplier
-
 if (isset($_POST['SearchSuppliers'])) {
-	if (mb_strlen($_POST['Keywords']) > 0 AND mb_strlen($_SESSION['PO' . $identifier]->SupplierID) > 0) {
+	if (mb_strlen($_POST['Keywords']) > 0 and mb_strlen($_SESSION['PO' . $identifier]->SupplierID) > 0) {
 		prnMsg(_('Supplier name keywords have been used in preference to the supplier code extract entered'), 'warn');
 	}
 	if (mb_strlen($_POST['Keywords']) > 0) {
@@ -353,20 +348,19 @@ if (isset($_POST['SearchSuppliers'])) {
 	}
 
 	$ErrMsg = _('The searched supplier records requested cannot be retrieved because');
-	$result_SuppSelect = DB_query($SQL, $ErrMsg);
-	$SuppliersReturned = DB_num_rows($result_SuppSelect);
-	if (DB_num_rows($result_SuppSelect) == 1) {
-		$myrow = DB_fetch_array($result_SuppSelect);
-		$_POST['Select'] = $myrow['supplierid'];
-	} elseif (DB_num_rows($result_SuppSelect) == 0) {
+	$Result_SuppSelect = DB_query($SQL, $ErrMsg);
+	$SuppliersReturned = DB_num_rows($Result_SuppSelect);
+	if (DB_num_rows($Result_SuppSelect) == 1) {
+		$MyRow = DB_fetch_array($Result_SuppSelect);
+		$_POST['Select'] = $MyRow['supplierid'];
+	} elseif (DB_num_rows($Result_SuppSelect) == 0) {
 		prnMsg(_('No supplier records contain the selected text') . ' - ' . _('please alter your search criteria and try again'), 'info');
 	}
 } /*end of if search for supplier codes/names */
 
-
-if ((!isset($_POST['SearchSuppliers']) or $_POST['SearchSuppliers'] == '') AND (isset($_SESSION['PO' . $identifier]->SupplierID) AND $_SESSION['PO' . $identifier]->SupplierID != '')) {
+if ((!isset($_POST['SearchSuppliers']) or $_POST['SearchSuppliers'] == '') and (isset($_SESSION['PO' . $identifier]->SupplierID) and $_SESSION['PO' . $identifier]->SupplierID != '')) {
 	/*	The session variables are set but the form variables could have been lost
-		need to restore the form variables from the session */
+	 need to restore the form variables from the session */
 	$_POST['SupplierID'] = $_SESSION['PO' . $identifier]->SupplierID;
 	$_POST['SupplierName'] = $_SESSION['PO' . $identifier]->SupplierName;
 	$_POST['CurrCode'] = $_SESSION['PO' . $identifier]->CurrCode;
@@ -384,7 +378,7 @@ if ((!isset($_POST['SearchSuppliers']) or $_POST['SearchSuppliers'] == '') AND (
 	$_POST['SuppDelAdd4'] = $_SESSION['PO' . $identifier]->SuppDelAdd4;
 	$_POST['SuppDelAdd5'] = $_SESSION['PO' . $identifier]->SuppDelAdd5;
 	$_POST['SuppDelAdd6'] = $_SESSION['PO' . $identifier]->SuppDelAdd6;
-	if(!isset($_POST['DeliveryDate'])){
+	if (!isset($_POST['DeliveryDate'])) {
 		$_POST['DeliveryDate'] = $_SESSION['PO' . $identifier]->DeliveryDate;
 	}
 
@@ -393,9 +387,9 @@ if ((!isset($_POST['SearchSuppliers']) or $_POST['SearchSuppliers'] == '') AND (
 if (isset($_POST['Select'])) {
 	/* will only be true if page called from supplier selection form or item purchasing data order link
 	 * or set because only one supplier record returned from a search
-	 */
+	*/
 
-	$sql = "SELECT suppliers.suppname,
+	$SQL = "SELECT suppliers.suppname,
 					suppliers.currcode,
 					currencies.rate,
 					currencies.decimalplaces,
@@ -407,38 +401,39 @@ if (isset($_POST['Select'])) {
 					suppliers.address5,
 					suppliers.address6,
 					suppliers.telephone,
-					suppliers.port
+					suppliers.port,
+					suppliers.defaultshipper
 				FROM suppliers INNER JOIN currencies
 				ON suppliers.currcode=currencies.currabrev
 				WHERE supplierid='" . $_POST['Select'] . "'";
 
 	$ErrMsg = _('The supplier record of the supplier selected') . ': ' . $_POST['Select'] . ' ' . _('cannot be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the supplier details and failed was');
-	$result = DB_query($sql, $ErrMsg, $DbgMsg);
-	$myrow = DB_fetch_array($result);
+	$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$MyRow = DB_fetch_array($Result);
 	// added for suppliers lookup fields
-
 	$AuthSql = "SELECT cancreate
 				FROM purchorderauth
 				WHERE userid='" . $_SESSION['UserID'] . "'
-				AND currabrev='" . $myrow['currcode'] . "'";
+				AND currabrev='" . $MyRow['currcode'] . "'";
 
 	$AuthResult = DB_query($AuthSql);
 
 	if (($AuthRow = DB_fetch_array($AuthResult) and $AuthRow['cancreate'] == 0)) {
-		$_POST['SupplierName'] = $myrow['suppname'];
-		$_POST['CurrCode'] = $myrow['currcode'];
-		$_POST['CurrDecimalPlaces'] = $myrow['decimalplaces'];
-		$_POST['ExRate'] = $myrow['rate'];
-		$_POST['PaymentTerms'] = $myrow['paymentterms'];
-		$_POST['SuppDelAdd1'] = $myrow['address1'];
-		$_POST['SuppDelAdd2'] = $myrow['address2'];
-		$_POST['SuppDelAdd3'] = $myrow['address3'];
-		$_POST['SuppDelAdd4'] = $myrow['address4'];
-		$_POST['SuppDelAdd5'] = $myrow['address5'];
-		$_POST['SuppDelAdd6'] = $myrow['address6'];
-		$_POST['SuppTel'] = $myrow['telephone'];
-		$_POST['Port'] = $myrow['port'];
+		$_POST['SupplierName'] = $MyRow['suppname'];
+		$_POST['CurrCode'] = $MyRow['currcode'];
+		$_POST['CurrDecimalPlaces'] = $MyRow['decimalplaces'];
+		$_POST['ExRate'] = $MyRow['rate'];
+		$_POST['PaymentTerms'] = $MyRow['paymentterms'];
+		$_POST['SuppDelAdd1'] = $MyRow['address1'];
+		$_POST['SuppDelAdd2'] = $MyRow['address2'];
+		$_POST['SuppDelAdd3'] = $MyRow['address3'];
+		$_POST['SuppDelAdd4'] = $MyRow['address4'];
+		$_POST['SuppDelAdd5'] = $MyRow['address5'];
+		$_POST['SuppDelAdd6'] = $MyRow['address6'];
+		$_POST['SuppTel'] = $MyRow['telephone'];
+		$_POST['Port'] = $MyRow['port'];
+		$_POST['DeliveryBy'] = $MyRow['defaultshipper'];
 
 		$_SESSION['PO' . $identifier]->SupplierID = $_POST['Select'];
 		$_SESSION['RequireSupplierSelection'] = 0;
@@ -455,22 +450,23 @@ if (isset($_POST['Select'])) {
 		$_SESSION['PO' . $identifier]->SuppDelAdd6 = $_POST['SuppDelAdd6'];
 		$_SESSION['PO' . $identifier]->SuppTel = $_POST['SuppTel'];
 		$_SESSION['PO' . $identifier]->Port = $_POST['Port'];
+		$_SESSION['PO' . $Identifier]->DeliveryBy = $_POST['DeliveryBy'];
 
 	} else {
 
-		prnMsg(_('You do not have the authority to raise Purchase Orders for') . ' ' . $myrow['suppname'] . '. ' . _('Please Consult your system administrator for more information.') . '<br />' . _('You can setup authorisations') . ' ' . '<a href="PO_AuthorisationLevels.php">' . _('here') . '</a>', 'warn');
-		include('includes/footer.php');
+		prnMsg(_('You do not have the authority to raise Purchase Orders for') . ' ' . $MyRow['suppname'] . '. ' . _('Please Consult your system administrator for more information.') . '<br />' . _('You can setup authorisations') . ' ' . '<a href="PO_AuthorisationLevels.php">' . _('here') . '</a>', 'warn');
+		include ('includes/footer.php');
 		exit;
 	}
 
 	// end of added for suppliers lookup fields
-
+	
 } /* isset($_POST['Select'])  will only be true if page called from supplier selection form or item purchasing data order link
-   * or set because only one supplier record returned from a search
-   */
+ * or set because only one supplier record returned from a search
+*/
 else {
 	$_POST['Select'] = $_SESSION['PO' . $identifier]->SupplierID;
-	$sql = "SELECT suppliers.suppname,
+	$SQL = "SELECT suppliers.suppname,
 					suppliers.currcode,
 					currencies.decimalplaces,
 					suppliers.paymentterms,
@@ -481,33 +477,34 @@ else {
 					suppliers.address5,
 					suppliers.address6,
 					suppliers.telephone,
-					suppliers.port
+					suppliers.port,
+					suppliers.defaultshipper
 			FROM suppliers INNER JOIN currencies
 			ON suppliers.currcode=currencies.currabrev
 			WHERE supplierid='" . $_POST['Select'] . "'";
 
 	$ErrMsg = _('The supplier record of the supplier selected') . ': ' . $_POST['Select'] . ' ' . _('cannot be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the supplier details and failed was');
-	$result = DB_query($sql, $ErrMsg, $DbgMsg);
+	$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 
-	$myrow = DB_fetch_array($result);
+	$MyRow = DB_fetch_array($Result);
 
 	// added for suppliers lookup fields
 	if (!isset($_SESSION['PO' . $identifier])) {
-		$_POST['SupplierName'] = $myrow['suppname'];
-		$_POST['CurrCode'] = $myrow['currcode'];
-		$_POST['CurrDecimalPlaces'] = $myrow['decimalplaces'];
-		$_POST['ExRate'] = $myrow['rate'];
-		$_POST['PaymentTerms'] = $myrow['paymentterms'];
-		$_POST['SuppDelAdd1'] = $myrow['address1'];
-		$_POST['SuppDelAdd2'] = $myrow['address2'];
-		$_POST['SuppDelAdd3'] = $myrow['address3'];
-		$_POST['SuppDelAdd4'] = $myrow['address4'];
-		$_POST['SuppDelAdd5'] = $myrow['address5'];
-		$_POST['SuppDelAdd6'] = $myrow['address6'];
-		$_POST['SuppTel'] = $myrow['telephone'];
-		$_POST['Port'] = $myrow['port'];
-
+		$_POST['SupplierName'] = $MyRow['suppname'];
+		$_POST['CurrCode'] = $MyRow['currcode'];
+		$_POST['CurrDecimalPlaces'] = $MyRow['decimalplaces'];
+		$_POST['ExRate'] = $MyRow['rate'];
+		$_POST['PaymentTerms'] = $MyRow['paymentterms'];
+		$_POST['SuppDelAdd1'] = $MyRow['address1'];
+		$_POST['SuppDelAdd2'] = $MyRow['address2'];
+		$_POST['SuppDelAdd3'] = $MyRow['address3'];
+		$_POST['SuppDelAdd4'] = $MyRow['address4'];
+		$_POST['SuppDelAdd5'] = $MyRow['address5'];
+		$_POST['SuppDelAdd6'] = $MyRow['address6'];
+		$_POST['SuppTel'] = $MyRow['telephone'];
+		$_POST['Port'] = $MyRow['port'];
+		$_POST['DeliveryBy'] = $MyRow['defaultshipper'];
 
 		$_SESSION['PO' . $identifier]->SupplierID = $_POST['Select'];
 		$_SESSION['RequireSupplierSelection'] = 0;
@@ -524,12 +521,13 @@ else {
 		$_SESSION['PO' . $identifier]->SuppDelAdd6 = $_POST['SuppDelAdd6'];
 		$_SESSION['PO' . $identifier]->SuppTel = $_POST['SuppTel'];
 		$_SESSION['PO' . $identifier]->Port = $_POST['Port'];
+		$_SESSION['PO' . $Identifier]->DeliveryBy = $_POST['DeliveryBy'];
 		// end of added for suppliers lookup fields
+		
 	}
 } // NOT isset($_POST['Select']) - not called with supplier selection so update variables
-
 // part of step 1
-if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $identifier]->SupplierID) OR $_SESSION['PO' . $identifier]->SupplierID == '') {
+if ($_SESSION['RequireSupplierSelection'] == 1 or !isset($_SESSION['PO' . $identifier]->SupplierID) or $_SESSION['PO' . $identifier]->SupplierID == '') {
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . _('Purchase Order') . '" alt="" />' . ' ' . _('Purchase Order: Select Supplier') . '</p>';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $identifier . '" method="post" id="choosesupplier">';
 	echo '<div>';
@@ -553,7 +551,7 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 	<input type="submit" name="SearchSuppliers" value="' . _('Search Now') . '" />
 	<input type="submit" value="' . _('Reset') . '" /></div>';
 
-	if (isset($result_SuppSelect)) {
+	if (isset($Result_SuppSelect)) {
 		echo '<br /><table cellpadding="3" class="selection">
 			<thead>
 				<tr>
@@ -565,30 +563,30 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 			</thead>
 			<tbody>';
 
-		while ($myrow = DB_fetch_array($result_SuppSelect)) {
+		while ($MyRow = DB_fetch_array($Result_SuppSelect)) {
 
 			echo '<tr class="striped_row">
-				<td><input type="submit" style="width:100%" name="Select" value="' . $myrow['supplierid'] . '" /></td>
-				<td>' . $myrow['suppname'] . '</td><td>';
+				<td><input type="submit" style="width:100%" name="Select" value="' . $MyRow['supplierid'] . '" /></td>
+				<td>' . $MyRow['suppname'] . '</td><td>';
 
-			for ($i = 1; $i <= 6; $i++) {
-				if ($myrow['address' . $i] != '') {
-					echo $myrow['address' . $i] . '<br />';
+			for ($i = 1;$i <= 6;$i++) {
+				if ($MyRow['address' . $i] != '') {
+					echo $MyRow['address' . $i] . '<br />';
 				}
 			}
 			echo '</td>
-					<td>' . $myrow['currcode'] . '</td>
+					<td>' . $MyRow['currcode'] . '</td>
 				</tr>';
 
 			//end of page full new headings if
+			
 		} //end of while loop
-
 		echo '</tbody></table>';
 
 	}
 	//end if results to show
-
 	//end if RequireSupplierSelection
+	
 } else {
 	/* everything below here only do if a supplier is selected */
 
@@ -630,7 +628,7 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 			$Qty = 1;
 		}
 
-		$sql = "SELECT stockmaster.controlled,
+		$SQL = "SELECT stockmaster.controlled,
 						stockmaster.serialised,
 						stockmaster.description,
 						stockmaster.units ,
@@ -649,8 +647,8 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 					AND b.effectivefrom <= '" . Date('Y-m-d') . "'
 				WHERE stockmaster.stockid='" . $Purch_Item . "'
 				AND b.supplierno ='" . $_GET['SelectedSupplier'] . "'";
-		$result = DB_query($sql);
-		$PurchItemRow = DB_fetch_array($result);
+		$Result = DB_query($SQL);
+		$PurchItemRow = DB_fetch_array($Result);
 
 		if (!isset($PurchItemRow['conversionfactor'])) {
 			$PurchItemRow['conversionfactor'] = 1;
@@ -660,33 +658,14 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 			$PurchItemRow['leadtime'] = 1;
 		}
 
-		$_SESSION['PO' . $identifier]->add_to_order(1,
-													$Purch_Item,
-													$PurchItemRow['serialised'],
-													$PurchItemRow['controlled'],
-													$Qty * $PurchItemRow['conversionfactor'],
-													$PurchItemRow['description'],
-													$PurchItemRow['price'] / $PurchItemRow['conversionfactor'],
-													$PurchItemRow['units'],
-													$PurchItemRow['stockact'],
-													$_SESSION['PO' . $identifier]->DeliveryDate, 0,
-													0,
-													'',
-													0,
-													0,
-													'',
-													$PurchItemRow['decimalplaces'],
-													$PurchItemRow['suppliersuom'],
-													$PurchItemRow['conversionfactor'],
-													$PurchItemRow['leadtime'],
-													$PurchItemRow['suppliers_partno']);
+		$_SESSION['PO' . $identifier]->add_to_order(1, $Purch_Item, $PurchItemRow['serialised'], $PurchItemRow['controlled'], $Qty * $PurchItemRow['conversionfactor'], $PurchItemRow['description'], $PurchItemRow['price'] / $PurchItemRow['conversionfactor'], $PurchItemRow['units'], $PurchItemRow['stockact'], $_SESSION['PO' . $identifier]->DeliveryDate, 0, 0, '', 0, 0, '', $PurchItemRow['decimalplaces'], $PurchItemRow['suppliersuom'], $PurchItemRow['conversionfactor'], $PurchItemRow['leadtime'], $PurchItemRow['suppliers_partno']);
 
 		echo '<meta http-equiv="refresh" content="0; url=' . $RootPath . '/PO_Items.php?identifier=' . $identifier . '">';
 	}
 
 	/*Set up form for entry of order header stuff */
 
-	if (!isset($_POST['LookupDeliveryAddress']) and (!isset($_POST['StkLocation']) or $_POST['StkLocation']) AND (isset($_SESSION['PO' . $identifier]->Location) AND $_SESSION['PO' . $identifier]->Location != '')) {
+	if (!isset($_POST['LookupDeliveryAddress']) and (!isset($_POST['StkLocation']) or $_POST['StkLocation']) and (isset($_SESSION['PO' . $identifier]->Location) and $_SESSION['PO' . $identifier]->Location != '')) {
 		/* The session variables are set but the form variables have
 		 * been lost --
 		 * need to restore the form variables from the session */
@@ -707,10 +686,10 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 		$_POST['Comments'] = $_SESSION['PO' . $identifier]->Comments;
 		$_POST['DeliveryBy'] = $_SESSION['PO' . $identifier]->DeliveryBy;
 		$_POST['PaymentTerms'] = $_SESSION['PO' . $identifier]->PaymentTerms;
-		$sql = "SELECT realname FROM www_users WHERE userid='" . $_POST['Initiator'] . "'";
-		$result = DB_query($sql);
-		$myrow = DB_fetch_array($result);
-		$_POST['InitiatorName'] = $myrow['realname'];
+		$SQL = "SELECT realname FROM www_users WHERE userid='" . $_POST['Initiator'] . "'";
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_array($Result);
+		$_POST['InitiatorName'] = $MyRow['realname'];
 	}
 
 	echo '<br />
@@ -733,10 +712,10 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 	}
 	echo '</td></tr>';
 
-	if (isset($_GET['ModifyOrderNumber']) AND $_GET['ModifyOrderNumber'] != '') {
-		$_SESSION['PO' . $identifier]->Version += 1;
+	if (isset($_GET['ModifyOrderNumber']) and $_GET['ModifyOrderNumber'] != '') {
+		$_SESSION['PO' . $identifier]->Version+= 1;
 		$_POST['Version'] = $_SESSION['PO' . $identifier]->Version;
-	} elseif (isset($_SESSION['PO' . $identifier]->Version) AND $_SESSION['PO' . $identifier]->Version != '') {
+	} elseif (isset($_SESSION['PO' . $identifier]->Version) and $_SESSION['PO' . $identifier]->Version != '') {
 		$_POST['Version'] = $_SESSION['PO' . $identifier]->Version;
 	} else {
 		$_POST['Version'] = '1';
@@ -764,7 +743,7 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 		$_POST['InitiatorName'] = $_SESSION['UsersRealName'];
 		$_POST['Requisition'] = '';
 	}
-	if (!isset($_POST['InitiatorName'])){
+	if (!isset($_POST['InitiatorName'])) {
 		$_POST['InitiatorName'] = $_SESSION['UsersRealName'];
 	}
 
@@ -780,7 +759,7 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 			<td>' . _('Date Printed') . ':</td>
 			<td>';
 
-	if (isset($_SESSION['PO' . $identifier]->DatePurchaseOrderPrinted) AND mb_strlen($_SESSION['PO' . $identifier]->DatePurchaseOrderPrinted) > 6) {
+	if (isset($_SESSION['PO' . $identifier]->DatePurchaseOrderPrinted) and mb_strlen($_SESSION['PO' . $identifier]->DatePurchaseOrderPrinted) > 6) {
 		echo ConvertSQLDate($_SESSION['PO' . $identifier]->DatePurchaseOrderPrinted);
 		$Printed = True;
 	} else {
@@ -789,11 +768,11 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 	}
 
 	if (isset($_POST['AllowRePrint'])) {
-		$sql = "UPDATE purchorders SET allowprint=1 WHERE orderno='" . $_SESSION['PO' . $identifier]->OrderNo . "'";
-		$result = DB_query($sql);
+		$SQL = "UPDATE purchorders SET allowprint=1 WHERE orderno='" . $_SESSION['PO' . $identifier]->OrderNo . "'";
+		$Result = DB_query($SQL);
 	}
 
-	if ($_SESSION['PO' . $identifier]->AllowPrintPO == 0 AND empty($_POST['RePrint'])) {
+	if ($_SESSION['PO' . $identifier]->AllowPrintPO == 0 and empty($_POST['RePrint'])) {
 		echo '<tr>
 				<td>' . _('Allow Reprint') . ':</td>
 				<td><select name="RePrint" onchange="ReloadForm(form1.AllowRePrint)">
@@ -805,13 +784,12 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 		echo '<tr>
 				<td colspan="2"><a target="_blank"  href="' . $RootPath . '/PO_PDFPurchOrder.php?OrderNo=' . $_SESSION['ExistingOrder'] . '&amp;identifier=' . $identifier . '">' . _('Reprint Now') . '</a></td></tr>';
 	} //$Printed
-
 	echo '</table></td>';
 	//Set up the next column with a sub-table in it too
 	echo '<td style="width:50%" valign="top">
             <table class="selection" width="100%">';
 
-	if ($_SESSION['ExistingOrder'] != 0 AND $_SESSION['PO' . $identifier]->Status == 'Printed') {
+	if ($_SESSION['ExistingOrder'] != 0 and $_SESSION['PO' . $identifier]->Status == 'Printed') {
 		echo '<tr>
 				<td><a href="' . $RootPath . '/GoodsReceived.php?PONumber=' . $_SESSION['PO' . $identifier]->OrderNo . '&amp;identifier=' . $identifier . '">' . _('Receive this order') . '</a></td>
 			</tr>';
@@ -831,31 +809,31 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 				echo '<option selected="selected" value="Pending">' . _('Pending') . '</option>
 						<option value="Authorised">' . _('Authorised') . '</option>
 						<option value="Rejected">' . _('Rejected') . '</option>';
-				break;
+			break;
 			case 'Authorised':
 				echo '<option value="Pending">' . _('Pending') . '</option>
 						<option selected="selected" value="Authorised">' . _('Authorised') . '</option>
 						<option value="Cancelled">' . _('Cancelled') . '</option>';
-				break;
+			break;
 			case 'Printed':
 				echo '<option value="Pending">' . _('Pending') . '</option>
 						<option selected="selected" value="Printed">' . _('Printed') . '</option>
 						<option value="Cancelled">' . _('Cancelled') . '</option>
 						<option value="Completed">' . _('Completed') . '</option>';
-				break;
+			break;
 			case 'Completed':
 				echo '<option selected="selected" value="Completed">' . _('Completed') . '</option>';
-				break;
+			break;
 			case 'Rejected':
 				echo '<option selected="selected" value="Rejected">' . _('Rejected') . '</option>
 						<option value="Pending">' . _('Pending') . '</option>
 						<option value="Authorised">' . _('Authorised') . '</option>';
-				break;
+			break;
 			case 'Cancelled':
 				echo '<option selected="selected" value="Cancelled">' . _('Cancelled') . '</option>
 						<option value="Authorised">' . _('Authorised') . '</option>
 						<option value="Pending">' . _('Pending') . '</option>';
-				break;
+			break;
 		}
 		echo '</select></td>
 			</tr>
@@ -871,7 +849,6 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 				<td><input type="submit" name="UpdateStatus" value="' . _('Status Update') . '" /></td>
 			</tr>';
 	} //end its not a new order
-
 	echo '</table></td>
 		</tr>
 		<tr>
@@ -887,13 +864,13 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 				<td>' . _('Warehouse') . ':</td>
 				<td><select required="required" name="StkLocation" onchange="ReloadForm(form1.LookupDeliveryAddress)">';
 
-	$sql = "SELECT locations.loccode,
+	$SQL = "SELECT locations.loccode,
 					locationname
-			FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
-	$LocnResult = DB_query($sql);
+			FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" . $_SESSION['UserID'] . "' AND locationusers.canupd=1";
+	$LocnResult = DB_query($SQL);
 
 	while ($LocnRow = DB_fetch_array($LocnResult)) {
-		if (isset($_POST['StkLocation']) AND ($_POST['StkLocation'] == $LocnRow['loccode']) OR (empty($_POST['StkLocation']) AND $LocnRow['loccode'] == $_SESSION['UserStockLocation'])) {
+		if (isset($_POST['StkLocation']) and ($_POST['StkLocation'] == $LocnRow['loccode']) or (empty($_POST['StkLocation']) and $LocnRow['loccode'] == $_SESSION['UserStockLocation'])) {
 			echo '<option selected="selected" value="' . $LocnRow['loccode'] . '">' . $LocnRow['locationname'] . '</option>';
 		} else {
 			echo '<option value="' . $LocnRow['loccode'] . '">' . $LocnRow['locationname'] . '</option>';
@@ -907,10 +884,10 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 	/* If this is the first time
 	 * the form loaded set up defaults */
 
-	if (!isset($_POST['StkLocation']) OR $_POST['StkLocation'] == '') {
+	if (!isset($_POST['StkLocation']) or $_POST['StkLocation'] == '') {
 		$_POST['StkLocation'] = $_SESSION['UserStockLocation'];
 
-		$sql = "SELECT deladd1,
+		$SQL = "SELECT deladd1,
 			 			deladd2,
 						deladd3,
 						deladd4,
@@ -921,7 +898,7 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 					FROM locations
 					WHERE loccode='" . $_POST['StkLocation'] . "'";
 
-		$LocnAddrResult = DB_query($sql);
+		$LocnAddrResult = DB_query($SQL);
 		if (DB_num_rows($LocnAddrResult) == 1) {
 			$LocnRow = DB_fetch_array($LocnAddrResult);
 			$_POST['DelAdd1'] = $LocnRow['deladd1'];
@@ -949,10 +926,9 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 			prnMsg(_('The default stock location set up for this user is not a currently defined stock location') . '. ' . _('Your system administrator needs to amend your user record'), 'error');
 		}
 
-
 	} //end StkLocation was not set
 	elseif (isset($_POST['LookupDeliveryAddress'])) {
-		$sql = "SELECT deladd1,
+		$SQL = "SELECT deladd1,
 						deladd2,
 						deladd3,
 						deladd4,
@@ -963,7 +939,7 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 					FROM locations
 					WHERE loccode='" . $_POST['StkLocation'] . "'";
 
-		$LocnAddrResult = DB_query($sql);
+		$LocnAddrResult = DB_query($SQL);
 		if (DB_num_rows($LocnAddrResult) == 1) {
 			$LocnRow = DB_fetch_array($LocnAddrResult);
 			$_POST['DelAdd1'] = $LocnRow['deladd1'];
@@ -985,12 +961,13 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 			$_SESSION['PO' . $identifier]->Tel = $_POST['Tel'];
 			$_SESSION['PO' . $identifier]->Contact = $_POST['Contact'];
 		} //There was a location record returned
+		
 	} //user clicked  Lookup Delivery Address
-
+	
 
 	echo '<tr>
 			<td>' . _('Delivery Contact') . ':</td>
-			<td><input type="text" name="Contact" size="41"  title="' . _('Enter the name of the contact at the delivery address - normally our warehouse person at that warehouse') .  '" value="' . $_SESSION['PO' . $identifier]->Contact . '" /></td>
+			<td><input type="text" name="Contact" size="41"  title="' . _('Enter the name of the contact at the delivery address - normally our warehouse person at that warehouse') . '" value="' . $_SESSION['PO' . $identifier]->Contact . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Address') . ' 1 :</td>
@@ -1064,11 +1041,11 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 				<td>' . _('Supplier Contact') . ':</td>
 				<td><select name="SupplierContact">';
 
-	$sql = "SELECT contact FROM suppliercontacts WHERE supplierid='" . $_POST['Select'] . "'";
-	$SuppCoResult = DB_query($sql);
+	$SQL = "SELECT contact FROM suppliercontacts WHERE supplierid='" . $_POST['Select'] . "'";
+	$SuppCoResult = DB_query($SQL);
 
 	while ($SuppCoRow = DB_fetch_array($SuppCoResult)) {
-		if ($_POST['SupplierContact'] == $SuppCoRow['contact'] OR ($_POST['SupplierContact'] == '' AND $SuppCoRow['contact'] == $_SESSION['PO' . $identifier]->SupplierContact)) {
+		if ($_POST['SupplierContact'] == $SuppCoRow['contact'] or ($_POST['SupplierContact'] == '' and $SuppCoRow['contact'] == $_SESSION['PO' . $identifier]->SupplierContact)) {
 			echo '<option selected="selected" value="' . $SuppCoRow['contact'] . '">' . $SuppCoRow['contact'] . '</option>';
 		} else {
 			echo '<option value="' . $SuppCoRow['contact'] . '">' . $SuppCoRow['contact'] . '</option>';
@@ -1106,27 +1083,28 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 			<td><input type="tel" name="SuppTel" pattern="[0-9+\-\s()]*" size="31" maxlength="30" value="' . $_SESSION['PO' . $identifier]->SuppTel . '" /></td>
 		</tr>';
 
-	$result = DB_query("SELECT terms, termsindicator FROM paymentterms");
+	$Result = DB_query("SELECT terms, termsindicator FROM paymentterms");
 
 	echo '<tr>
 			<td>' . _('Payment Terms') . ':</td>
 			<td><select name="PaymentTerms">';
 
-	while ($myrow = DB_fetch_array($result)) {
-		if ($myrow['termsindicator'] == $_SESSION['PO' . $identifier]->PaymentTerms) {
-			echo '<option selected="selected" value="' . $myrow['termsindicator'] . '">' . $myrow['terms'] . '</option>';
+	while ($MyRow = DB_fetch_array($Result)) {
+		if ($MyRow['termsindicator'] == $_SESSION['PO' . $identifier]->PaymentTerms) {
+			echo '<option selected="selected" value="' . $MyRow['termsindicator'] . '">' . $MyRow['terms'] . '</option>';
 		} else {
-			echo '<option value="' . $myrow['termsindicator'] . '">' . $myrow['terms'] . '</option>';
+			echo '<option value="' . $MyRow['termsindicator'] . '">' . $MyRow['terms'] . '</option>';
 		} //end while loop
+		
 	}
-	DB_data_seek($result, 0);
+	DB_data_seek($Result, 0);
 	echo '</select></td></tr>';
 
-	$result = DB_query("SELECT loccode,
+	$Result = DB_query("SELECT loccode,
 							locationname
 						FROM locations WHERE loccode='" . $_SESSION['PO' . $identifier]->Port . "'");
-	$myrow = DB_fetch_array($result);
-	$_POST['Port'] = $myrow['locationname'];
+	$MyRow = DB_fetch_array($Result);
+	$_POST['Port'] = $MyRow['locationname'];
 
 	echo '<tr>
 			<td>' . _('Delivery To') . ':</td>
@@ -1173,5 +1151,5 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 
 echo '</div>
       </form>';
-include('includes/footer.php');
+include ('includes/footer.php');
 ?>
