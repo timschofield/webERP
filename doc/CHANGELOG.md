@@ -15,6 +15,8 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 
 | Description | Type | Author | Date | Details | Ref |
 |:-----------:|:----:|:------:|:----:|:-------:|:---:|
+| Relocate tcpdf barcodes directory |  | PaulT | 2018-06-28 | [View](https://github.com/webERP-team/webERP/commit/23fd7ff52) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8173&pid=14904#pid14904) |
+| Fix $Prefix use in footer.php |  | alanmi3383 | 2018-06-28 | [View](https://github.com/webERP-team/webERP/commit/c1093765f) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8173&pid=14897#pid14897) |
 | DailyBankTransactions.php (updated script) |  | Tim Schofield | 2018-06-18 | [View](https://github.com/webERP-team/webERP/commit/ed1e5e0cb) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8179) |
 | MRP.php fix reorder qty insert calculation |  | BrianTMG | 2018-06-17 | [View](https://github.com/webERP-team/webERP/commit/ab6308dcf) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8175) |
 | DailyBankTransactions.php calculation fix |  | Paul Becker | 2018-06-16 | [View](https://github.com/webERP-team/webERP/commit/7d39e0bfd) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8178) |
