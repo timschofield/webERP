@@ -219,6 +219,7 @@ function submit($Title, $Company, $LastDateOfPeriod, $PaymentDate, $SalaryType, 
 } // End of function submit()
 
 function MoveSalaryTxToPC($Company, $PaymentMethod, $Expense, $PaymentDate, $Amount, $Receipt, $db){
+	$PaymentMethod = strtoupper($PaymentMethod);
 	if($PaymentMethod != "CASH"){
 		$PaymentMethod = "BANK";
 	}

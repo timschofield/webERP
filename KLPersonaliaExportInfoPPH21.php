@@ -71,6 +71,7 @@ function submit(&$db, $Company, $LastDateOfPeriod, $SalaryType) {
 				WHERE company = '" . $Company . "'
 					AND periodno = '" . $PeriodExportDate . "'
 					AND salarytype = '" . $SalaryType . "'
+					AND UPPER(paymentmethod) != 'CASH'
 				ORDER BY zonepph21,
 					fullname";
 		$result = DB_query($SQL);

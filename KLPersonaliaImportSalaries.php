@@ -126,8 +126,8 @@ function submit(&$db, $DateOfFile, $SelectedFile, $SalaryType) {
 				$CompanyCode = $worksheet->getCell('D'.$row)->getCalculatedValue();
 				$JoiningDate = ConvertExcelDate($worksheet->getCell('BF'.$row));
 				$Position = $worksheet->getCell('E'.$row)->getCalculatedValue();
-				$PaymentMethod = $worksheet->getCell('F'.$row)->getCalculatedValue();
-				if ($PaymentMethod == "Bank"){
+				$PaymentMethod = strtoupper($worksheet->getCell('F'.$row)->getCalculatedValue());
+				if ($PaymentMethod == "BANK"){
 					$BankCode = $worksheet->getCell('G'.$row)->getCalculatedValue();
 					$BankAccount = $worksheet->getCell('H'.$row)->getCalculatedValue();
 					$BankAccountHolder = $worksheet->getCell('I'.$row)->getCalculatedValue();
@@ -208,7 +208,7 @@ function submit(&$db, $DateOfFile, $SelectedFile, $SalaryType) {
 								$PotonganAbsen +
 								$PotonganLain2;
 				
-				if ($PaymentMethod == "Cash"){
+				if ($PaymentMethod == "CASH"){
 					$Bulatan = AdjustBulatan($TotalBawaPulang, 500);
 				}else{
 					$Bulatan = 0;
