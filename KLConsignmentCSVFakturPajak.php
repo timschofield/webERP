@@ -31,7 +31,7 @@ if(!isset($_POST['NomorSeriFP'])) {
 }
 
 if(!isset($_POST['DecimalDigits'])) {
-	$_POST['DecimalDigits']=2;
+	$_POST['DecimalDigits']=0;
 }
 
 if (isset($_POST['submit'])) {
@@ -59,7 +59,8 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 				WHERE klconsignment.stockid = stockmaster.stockid
 					AND companycode = '" . $CompanyFrom . "'
 					AND partnercode = '" . $CompanyTo . "'
-					AND fakturpajakdate = '0000-00-00'
+					AND (fakturpajakdate = '0000-00-00'
+						OR fakturpajakdate = '" . $EndDateSQL . "')
 					AND saledate <= '" . $EndDateSQL . "'
 				GROUP BY klconsignment.stockid
 				ORDER BY klconsignment.stockid";
