@@ -20,6 +20,7 @@ WHERE (accountcode LIKE "%AD" OR accountcode = "350510100");
 
 UPDATE chartmasterPMA SET `group_` =  'Penjualan' WHERE `accountcode` = '410010000AD';
 UPDATE chartmasterPMA SET `group_` =  'Biaya Karyawan' WHERE `accountcode` = '612011210AD';
+UPDATE chartmasterPMA SET `group_` =  'Biaya General' WHERE `accountcode` = '510010070AD';
 
 /* ******************************************************************************************/
 /*                               PT BB                                                      */

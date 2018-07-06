@@ -564,6 +564,7 @@ function CashStatusPTADU($Year, $YearlyGoal, $db){
 				AND gltrans.trandate <= '" . $Today . "'
 				AND gltrans.account = '" . $Account . "'
 				AND (gltrans.narrative LIKE '%CASH TO CASH%'
+					OR gltrans.narrative LIKE '%CASH TO SUPP%'
 					OR gltrans.narrative LIKE '%BANK TO CASH%'
 					OR gltrans.narrative LIKE '%UANG KECIL%')";
 	$Result = DB_query($SQL);
@@ -588,6 +589,19 @@ function CashStatusPTADU($Year, $YearlyGoal, $db){
 	$myrow = DB_fetch_array($Result);
 	$ExpensesPTPaidCash = -$myrow[0];
 	
+	// Cash in Kantor to Small Suppliers PTADU
+	$Account = "510010070AD";
+	$SQL = "SELECT SUM(gltrans.amount)
+			FROM gltrans
+			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
+				AND gltrans.trandate <= '" . $Today . "'
+				AND gltrans.account = '" . $Account . "'
+				AND (gltrans.narrative LIKE '%CASH%'
+					OR gltrans.narrative LIKE '%KANTOR%')";
+	$Result = DB_query($SQL);
+	$myrow = DB_fetch_array($Result);
+	$CashToSmallSuppliers = $myrow[0];
+
 	echo '<p class="page_title_text" align="center"><strong>' . 'Status Cash PT. Angin Dingin Utara ' . $Year . '</strong></p>';
 	echo '<div>';
 	echo '<table class="selection">';
@@ -618,7 +632,13 @@ function CashStatusPTADU($Year, $YearlyGoal, $db){
 			'Expenses PT.ADU Paid by Petty Cash (excluding salaries, Corporate CC)', 
 			locale_number_format(-$ExpensesPTPaidCash,0)
 			);
-	$CurrentBalance = $SalesCash+$BankToCash-$ExpensesPTPaidCash;
+	printf('<td>%s</td>
+			<td class="number">%s</td>
+			</tr>', 
+			'Expenses PTBB Small Suppliers Paid from Cash Kantor', 
+			locale_number_format(-$CashToSmallSuppliers,0)
+			);
+	$CurrentBalance = $SalesCash+$BankToCash-$ExpensesPTPaidCash-$CashToSmallSuppliers;
 	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
