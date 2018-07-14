@@ -18,7 +18,7 @@ function KL_DailyChecks($Group, $RootPath, $db, $EmailText= ''){
 	
 
 	if ($Group == "01"){
-		$EmailText = KL_DailyMaintenanceDatabase(FALSE, $db, $EmailText);
+		$EmailText = KL_DailyMaintenanceDatabase01(FALSE, $db, $EmailText);
 	}elseif ($Group == "02"){
 		$EmailText = DailyReorderLevelAdjustments(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
 	}elseif ($Group == "03"){
@@ -26,6 +26,8 @@ function KL_DailyChecks($Group, $RootPath, $db, $EmailText= ''){
 	}elseif ($Group == "04"){
 		$EmailText = WeberpToOpenCartDailySync(FALSE, $db, $db_oc, $oc_tableprefix, $EmailText);
 		$EmailText = OpenCartToWeberpSync(FALSE, $db, $db_oc, $oc_tableprefix, $EmailText);
+	}elseif ($Group == "05"){
+		$EmailText = KL_DailyMaintenanceDatabase05(FALSE, $db, $EmailText);
 	}
 
 	$Result = DB_query("UPDATE config SET confvalue='" . Date('Y-m-d') . "'	WHERE confname='KL_DailyChecks_LastRun'");
@@ -60,7 +62,7 @@ function KL_HourlyChecks($RootPath, $db, $EmailText=''){
 }
 
 
-function KL_DailyMaintenanceDatabase($ShowMessages, $db, $EmailText = ''){
+function KL_DailyMaintenanceDatabase01($ShowMessages, $db, $EmailText = ''){
 	SetObsoleteForCategoryWithoutStock("DISC20", $ShowMessages, $db);
 	SetObsoleteForCategoryWithoutStock("DISC50", $ShowMessages, $db);
 	SetObsoleteForCategoryWithoutStock("DISC80", $ShowMessages, $db);
@@ -93,10 +95,14 @@ function KL_DailyMaintenanceDatabase($ShowMessages, $db, $EmailText = ''){
 	PurgeKLTable("klmovetodiscount50","endprocessdate", $ShowMessages, $db);
 	PurgeKLTable("klmovetodiscount80","endprocessdate", $ShowMessages, $db);
 	PurgeAuditTrailTable($ShowMessages, $db);
-	$EmailText = KL_DailyOptimizationDatabase($ShowMessages, $db, $EmailText);
-
 	return $EmailText;
 }
+
+function KL_DailyMaintenanceDatabase05($ShowMessages, $db, $EmailText = ''){
+	$EmailText = KL_DailyOptimizationDatabase($ShowMessages, $db, $EmailText);
+	return $EmailText;
+}
+
 
 function KL_DailyEmailsToStaff($db, $EmailText){
 	$EmailText = SendEmailChangePriceReadyForStep02($db, $EmailText);
