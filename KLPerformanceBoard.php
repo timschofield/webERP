@@ -687,6 +687,7 @@ function CashStatusPTBB($Year, $YearlyGoal, $db){
 				AND gltrans.account = '" . $Account . "'
 				AND (gltrans.narrative LIKE '%CASH TO CASH%'
 					OR gltrans.narrative LIKE '%BANK TO CASH%'
+					OR gltrans.narrative LIKE '%CASH TO BANK%'
 					OR gltrans.narrative LIKE '%UANG KECIL%')";
 	$Result = DB_query($SQL);
 	$myrow = DB_fetch_array($Result);
