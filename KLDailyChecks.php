@@ -28,6 +28,8 @@ function KL_DailyChecks($Group, $RootPath, $db, $EmailText= ''){
 		$EmailText = OpenCartToWeberpSync(FALSE, $db, $db_oc, $oc_tableprefix, $EmailText);
 	}elseif ($Group == "05"){
 		$EmailText = KL_DailyMaintenanceDatabase05(FALSE, $db, $EmailText);
+	}elseif ($Group == "06"){
+		$EmailText = KL_DailyMaintenanceDatabase06(FALSE, $db, $EmailText);
 	}
 
 	$Result = DB_query("UPDATE config SET confvalue='" . Date('Y-m-d') . "'	WHERE confname='KL_DailyChecks_LastRun'");
@@ -63,19 +65,6 @@ function KL_HourlyChecks($RootPath, $db, $EmailText=''){
 
 
 function KL_DailyMaintenanceDatabase01($ShowMessages, $db, $EmailText = ''){
-	SetObsoleteForCategoryWithoutStock("DISC20", $ShowMessages, $db);
-	SetObsoleteForCategoryWithoutStock("DISC50", $ShowMessages, $db);
-	SetObsoleteForCategoryWithoutStock("DISC80", $ShowMessages, $db);
-	SetObsoleteForCategoryWithoutStock("NOPOKL", $ShowMessages, $db);
-	SetObsoleteForCategoryWithoutStock("NOPOBL", $ShowMessages, $db);
-	SetObsoleteForCategoryWithoutStock("NOPOGE", $ShowMessages, $db);
-	SetObsoleteForCategoryWithoutStock("DISC2A", $ShowMessages, $db);
-	SetObsoleteForCategoryWithoutStock("DISC5A", $ShowMessages, $db);
-	SetObsoleteForCategoryWithoutStock("DISC8A", $ShowMessages, $db);
-	SetObsoleteForCategoryWithoutStock("NOPOKA", $ShowMessages, $db);
-	SetObsoleteForCategoryWithoutStock("NOPOBA", $ShowMessages, $db);
-	SetObsoleteForCategoryWithoutStock("NOPOGA", $ShowMessages, $db);
-	SetTopSalesRanking($ShowMessages, $db);
 	SetRLZeroForObsolete($ShowMessages, $db);
 	SetRLZeroForLocations($ShowMessages, $db);
 	SetEndDatePriceToObsolete($ShowMessages, $db);
@@ -103,6 +92,23 @@ function KL_DailyMaintenanceDatabase05($ShowMessages, $db, $EmailText = ''){
 	return $EmailText;
 }
 
+function KL_DailyMaintenanceDatabase01($ShowMessages, $db, $EmailText = ''){
+	SetObsoleteForCategoryWithoutStock("DISC20", $ShowMessages, $db);
+	SetObsoleteForCategoryWithoutStock("DISC50", $ShowMessages, $db);
+	SetObsoleteForCategoryWithoutStock("DISC80", $ShowMessages, $db);
+	SetObsoleteForCategoryWithoutStock("NOPOKL", $ShowMessages, $db);
+	SetObsoleteForCategoryWithoutStock("NOPOBL", $ShowMessages, $db);
+	SetObsoleteForCategoryWithoutStock("NOPOGE", $ShowMessages, $db);
+	SetObsoleteForCategoryWithoutStock("DISC2A", $ShowMessages, $db);
+	SetObsoleteForCategoryWithoutStock("DISC5A", $ShowMessages, $db);
+	SetObsoleteForCategoryWithoutStock("DISC8A", $ShowMessages, $db);
+	SetObsoleteForCategoryWithoutStock("NOPOKA", $ShowMessages, $db);
+	SetObsoleteForCategoryWithoutStock("NOPOBA", $ShowMessages, $db);
+	SetObsoleteForCategoryWithoutStock("NOPOGA", $ShowMessages, $db);
+	SetTopSalesRanking($ShowMessages, $db);
+	return $EmailText;
+}
+
 
 function KL_DailyEmailsToStaff($db, $EmailText){
 	$EmailText = SendEmailChangePriceReadyForStep02($db, $EmailText);
@@ -113,178 +119,97 @@ function KL_DailyEmailsToStaff($db, $EmailText){
 }
 
 function KL_DailyOptimizationDatabase($ShowMessages, $db, $EmailText = ''){
-	$NumberDay = substr(Date('Y-m-d'),-1); // Get the last digit of the date, so we split optimization over 10 days
+	$NumberDay = substr(Date('Y-m-d'),-2); // Get the date, 
 	
 	$ErrMsg ='Could not OPTIMIZE tables because';
 	$result = DB_query($sql,$ErrMsg);
-	if ($NumberDay == 1){
-		$sql = "OPTIMIZE TABLE  `accountgroups` ,
-					`accountsection` ,
-					`areas` ,
-					`audittrail` ,
-					`bankaccounts` ,
-					`bankaccountusers` ,
-					`banktrans` ,
-					`bom` ,
-					`buckets` ,
-					`chartdetails` ,
-					`chartmaster` ,
-					`chartmasterPMA` ,
-					`chartmasterM` ,
-					`chartmasterPT` ,
-					`cogsglpostings` ,
-					`companies`";
-	}elseif ($NumberDay == 2){
-		$sql = "OPTIMIZE TABLE  `config` ,
-					`contractbom` ,
-					`contractcharges` ,
-					`contractreqts` ,
-					`contracts` ,
-					`currencies` ,
-					`custallocns` ,
-					`custbranch` ,
-					`custcontacts` ,
-					`custnotes` ,
-					`debtorsmaster` ,
-					`debtortrans` ,
-					`debtortranstaxes` ,
-					`debtortype` ,
-					`debtortypenotes`";
-	}elseif ($NumberDay == 3){
-		$sql = "OPTIMIZE TABLE  `deliverynotes` ,
-					`departments` ,
-					`discountmatrix` ,
-					`ediitemmapping` ,
-					`edimessageformat` ,
-					`edi_orders_segs` ,
-					`edi_orders_seg_groups` ,
-					`emailsettings` ,
-					`factorcompanies` ,
-					`fixedassetcategories` ,
-					`fixedassetlocations` ,
-					`fixedassets` ,
-					`fixedassettasks` ,
-					`fixedassettrans` ,
-					`freightcosts` ,
-					`geocode_param`";
-	}elseif ($NumberDay == 4){
-		$sql = "OPTIMIZE TABLE  `gltrans` ,
-					`grns` ,
-					`holdreasons` ,
-					`internalstockcatrole` ,
-					`kladjustrl` ,
-					`klchangeprice` ,
-					`klfreeexchanges` ,
-					`klmovetodiscount50` ,
-					`klmovetodiscount80` ,
-					`labelfields` ,
-					`labels` ,
-					`lastcostrollup` ,
-					`levels` ,
-					`locations` ,
-					`locstock`";
-	}elseif ($NumberDay == 5){
+	if (($NumberDay == 1) OR ($NumberDay == 21)){
+		$sql = "OPTIMIZE TABLE  `gltrans`";
+	}elseif (($NumberDay == 2) OR ($NumberDay == 22)){
+		$sql = "OPTIMIZE TABLE  `audittrail`";
+	}elseif (($NumberDay == 3) OR ($NumberDay == 23)){
+		$sql = "OPTIMIZE TABLE  `stockmoves`";
+	}elseif (($NumberDay == 4) OR ($NumberDay == 24)){
+		$sql = "OPTIMIZE TABLE  `stockmoves`";
+	}elseif (($NumberDay == 5) OR ($NumberDay == 25)){
+		$sql = "OPTIMIZE TABLE  `salesorderdetails`";
+	}elseif (($NumberDay == 6) OR ($NumberDay == 26)){
+		$sql = "OPTIMIZE TABLE  `debtortrans`";
+	}elseif (($NumberDay == 7) OR ($NumberDay == 27)){
+		$sql = "OPTIMIZE TABLE  `packagingused`";
+	}elseif (($NumberDay == 8) OR ($NumberDay == 28)){
 		$sql = "OPTIMIZE TABLE  `loctransfers` ,
-					`mailgroupdetails` ,
-					`mailgroups` ,
-					`manufacturers` ,
-					`mrpcalendar` ,
-					`mrpdemands` ,
-					`mrpdemandtypes` ,
-					`mrpparameters` ,
-					`mrpplannedorders` ,
-					`mrprequirements` ,
-					`mrpsupplies` ,
-					`offers` ,
-					`orderdeliverydifferenceslog` ,
-					`packagingused` ,
-					`paymentmethods` ,
-					`paymentterms`";
-	}elseif ($NumberDay == 6){
-		$sql = "OPTIMIZE TABLE  `pcashdetails` ,
-					`pcexpenses` ,
-					`pctabexpenses` ,
-					`pctabs` ,
-					`pctypetabs` ,
-					`periods` ,
-					`pickinglistdetails` ,
-					`pickinglists` ,
-					`pricematrix` ,
-					`prices` ,
-					`purchdata` ,
-					`purchorderauth` ,
-					`purchorderdetails` ,
-					`purchorders` ,
-					`recurringsalesorders` ,
-					`recurrsalesorderdetails`";
-	}elseif ($NumberDay == 7){
-		$sql = "OPTIMIZE TABLE  `relateditems` ,
-					`reportcolumns` ,
-					`reportfields` ,
-					`reportheaders` ,
-					`reportlets` ,
-					`reportlinks` ,
-					`reports` ,
-					`salesanalysis` ,
-					`salescat` ,
-					`salescatprod` ,
-					`salescattranslations` ,
-					`salesglpostings` ,
-					`salesman` ,
-					`salesorderdetails` ,
-					`salesorders` ,
-					`salestypes`";
-	}elseif ($NumberDay == 8){
-		$sql = "OPTIMIZE TABLE  `scripts` ,
-					`securitygroups` ,
-					`securityroles` ,
-					`securitytokens` ,
-					`sellthroughsupport` ,
-					`shipmentcharges` ,
-					`shipments` ,
-					`shippers` ,
-					`stockcategory` ,
-					`stockcatproperties` ,
-					`stockcheckfreeze` ,
-					`stockcounts` ,
-					`stockdescriptiontranslations` ,
-					`stockitemproperties` ,
-					`stockmaster` ,
-					`stockmoves`";
-	}elseif ($NumberDay == 9){
-		$sql = "OPTIMIZE TABLE  `stockmovestaxes` ,
-					`stockrequest` ,
+					`salesanalysis`";
+	}elseif (($NumberDay == 9) OR ($NumberDay == 29)){
+		$sql = "OPTIMIZE TABLE  `banktrans` ,
+					`locstock`";
+	}elseif (($NumberDay == 10) OR ($NumberDay == 30)){
+		$sql = "OPTIMIZE TABLE  `debtortranstaxes` ,
+					`salesorders`";
+	}elseif (($NumberDay == 11) OR ($NumberDay == 31)){
+		$sql = "OPTIMIZE TABLE  `custallocns` ,
+					`stockmovestaxes`";
+	}elseif ($NumberDay == 12){
+		$sql = "OPTIMIZE TABLE  `klretailcustomers` ,
+					`pcashdetails`";
+	}elseif ($NumberDay == 13){
+		$sql = "OPTIMIZE TABLE  `chartdetails` ,
 					`stockrequestitems` ,
-					`stockserialitems` ,
-					`stockserialmoves` ,
-					`suppallocs` ,
-					`suppliercontacts` ,
-					`supplierdiscounts` ,
-					`suppliers` ,
-					`suppliertype` ,
-					`supptrans` ,
-					`supptranstaxes` ,
-					`systypes` ,
-					`tags` ,
-					`taxauthorities` ,
-					`taxauthrates`";
-	}else{
-		$sql = "OPTIMIZE TABLE  `taxcategories` ,
-					`taxgroups` ,
-					`taxgrouptaxes` ,
-					`taxprovinces` ,
-					`tenderitems` ,
-					`tenders` ,
-					`tendersuppliers` ,
-					`unitsofdimension` ,
-					`unitsofmeasure` ,
-					`woitems` ,
+					`fixedassettrans`";
+	}elseif ($NumberDay == 14){
+		$sql = "OPTIMIZE TABLE  `grns` ,
+					`purchorderdetails` ,
+					`purchdata`";
+	}elseif ($NumberDay == 15){
+		$sql = "OPTIMIZE TABLE  `relateditems` ,
+					`klconsignment` ,
 					`worequirements` ,
-					`workcentres` ,
-					`workorders` ,
-					`woserialnos` ,
-					`www_users` ,
-					`www_users_webshop`";
+					`prices` ,
+					`kladjustrl` ,
+					`stockrequest` ,
+					`suppinvstogrn`";
+	}elseif ($NumberDay == 16){
+		$sql = "OPTIMIZE TABLE  `stockmaster` ,
+					`levels` ,
+					`supptrans` ,
+					`stockdescriptiontranslations` ,
+					`woitems` ,
+					`loctransfercancellations` ,
+					`workorders`";
+	}elseif ($NumberDay == 17){
+		$sql = "OPTIMIZE TABLE  `bom` ,
+					`mrpsupplies` ,
+					`purchorders` ,
+					`supptranstaxes` ,
+					`glaccountusers` ,
+					`salariescalculated` ,
+					`klsalesperformance`";
+	}elseif ($NumberDay == 18){
+		$sql = "OPTIMIZE TABLE  `salescatprod` ,
+					`freightcosts` ,
+					`fixedassets` ,
+					`returneditems` ,
+					`mrprequirements` ,
+					`locationusers` ,
+					`mrpcalendar`";
+	}elseif ($NumberDay == 19){
+		$sql = "OPTIMIZE TABLE  `mrpdemands` ,
+					`scripts` ,
+					`klfreeexchanges` ,
+					`securitygroups` ,
+					`pctabexpenses` ,
+					`chartmaster` ,
+					`pcexpenses`";
+	}elseif ($NumberDay == 20){
+		$sql = "OPTIMIZE TABLE  `custbranch` ,
+					`debtorsmaster` ,
+					`suppliers` ,
+					`salesman` ,
+					`bankaccountusers` ,
+					`klrevisedemaildomains` ,
+					`config` ,
+					`periods` ,
+					`www_users`";
 	}
 	
 	$result = DB_query($sql,$ErrMsg);
