@@ -64,7 +64,7 @@ function KL_HourlyChecks($RootPath, $db, $EmailText=''){
 }
 
 
-function KL_DailyMaintenanceDatabase01($ShowMessages, $db, $EmailText = ''){
+function KL_DailyMaintenanceDatabase06($ShowMessages, $db, $EmailText = ''){
 	SetRLZeroForObsolete($ShowMessages, $db);
 	SetRLZeroForLocations($ShowMessages, $db);
 	SetEndDatePriceToObsolete($ShowMessages, $db);
