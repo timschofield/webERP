@@ -307,9 +307,9 @@ if ($ProcessSection03){
 	if ($KL_SystemAdmin
 		OR $KL_OperationalManager
 		OR $KL_AdministrationTeam){
-		CashStatusPTADU("2018",         0,$db);
+		CashStatusPTADU("2018",  30000000,$db);
 		$NumberOfTestExecuted++;
-		CashStatusPTBB("2018", 2300000000,$db);
+		CashStatusPTBB("2018", 2700000000,$db);
 		$NumberOfTestExecuted++;
 	}
 }
@@ -629,13 +629,13 @@ function CashStatusPTADU($Year, $YearlyGoal, $db){
 	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
-			'Expenses PT.ADU Paid by Petty Cash (excluding salaries, Corporate CC)', 
+			'Expenses PT ADU Paid by Petty Cash (excluding salaries, Corporate CC)', 
 			locale_number_format(-$ExpensesPTPaidCash,0)
 			);
 	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
-			'Expenses PTBB Small Suppliers Paid from Cash Kantor', 
+			'Expenses PT ADU Small Suppliers Paid from Cash Kantor', 
 			locale_number_format(-$CashToSmallSuppliers,0)
 			);
 	$CurrentBalance = $SalesCash+$BankToCash-$ExpensesPTPaidCash-$CashToSmallSuppliers;
@@ -654,8 +654,8 @@ function CashStatusPTADU($Year, $YearlyGoal, $db){
 	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
-			'Balance Cash Kantor PT ADU at end of '. $Year , 
-			locale_number_format(-$YearlyGoal+$CurrentBalance,0)
+			'Cash PT ADU to be balanced before end of '. $Year , 
+			locale_number_format(+$YearlyGoal-$CurrentBalance,0)
 			);
 
 	echo '</table>
@@ -776,8 +776,8 @@ function CashStatusPTBB($Year, $YearlyGoal, $db){
 	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
-			'Balance Cash Kantor PTBB at end of '. $Year , 
-			locale_number_format(-$YearlyGoal+$CurrentBalance,0)
+			'Cash PT BB to be balanced before end of '. $Year , 
+			locale_number_format(+$YearlyGoal-$CurrentBalance,0)
 			);
 
 	echo '</table>
