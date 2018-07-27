@@ -3823,7 +3823,6 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 							<th class="ascending">' . _('Currency') . '</th>
 							<th class="ascending">' . _('Reminder Bank Transfer') . '</th>
 							<th class="ascending">' . _('Paid by Mandiri') . '</th>
-							<th class="ascending">' . _('Paid by iPayMu') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -3841,7 +3840,6 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 			$PaymentLinkText = 'Apply Payment';
 			$PaymentValue = $myrow['ordervalue']+$myrow['freightcost'];
 			$PaymentMandiri = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&Bank=' . ACCOUNT_PTBB_MANDIRI_GIRO . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentLinkText .'</a>';
-			$PaymentiPayMu = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&Bank=' . ACCOUNT_PTBB_IPAYMU . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentLinkText .'</a>';
 			
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -3849,7 +3847,6 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
-					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -3862,8 +3859,7 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 					locale_number_format($myrow['ordervalue']+$myrow['freightcost'],$myrow['decimalplaces']),
 					$myrow['currcode'], 
 					$EmailLink,
-					$PaymentMandiri,
-					$PaymentiPayMu
+					$PaymentMandiri
 					);
 			$i++;
 		}
