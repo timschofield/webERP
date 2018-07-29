@@ -97,11 +97,11 @@ function submit($PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$Deb
 		return;
 	}
 	if (!in_array($_POST['SortBy'],array('salesorderdetails.orderno',
-		'salesorderdetails.stkcode',
-		'debtorsmaster.debtorno,salesorderdetails.orderno',
-		'debtorsmaster.name,debtorsmaster.debtorno,salesorderdetails.orderno',
-		'tempstockmoves.transno,salesorderdetails.stkcode',
-		'salesorderdetails.itemdue,salesorderdetails.orderno'))) {
+						'salesorderdetails.stkcode',
+						'debtorsmaster.debtorno,salesorderdetails.orderno',
+						'debtorsmaster.name,debtorsmaster.debtorno,salesorderdetails.orderno',
+						'tempstockmoves.transno,salesorderdetails.stkcode',
+						'salesorderdetails.itemdue,salesorderdetails.orderno'))) {
 		$InputError = 1;
 		prnMsg(_('The sorting order is not defined'),'error');
 		return;
