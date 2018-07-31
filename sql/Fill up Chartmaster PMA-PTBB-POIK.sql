@@ -67,3 +67,25 @@ WHERE (accountcode LIKE "%IK" OR accountcode = "350510100");
 
 UPDATE chartmasterIK SET `group_` =  'HPP (COGS)' WHERE `accountcode` = '510010005IK';
 
+/* ******************************************************************************************/
+/*                              PERORANGAN PINGKAN (POPI)                                   */
+/* ******************************************************************************************/
+
+CREATE TABLE IF NOT EXISTS `chartmasterPI` (
+  `accountcode` varchar(20) NOT NULL DEFAULT '0',
+  `accountname` char(50) NOT NULL DEFAULT '',
+  `group_` char(30) NOT NULL DEFAULT '',
+  PRIMARY KEY (`accountcode`),
+  KEY `AccountName` (`accountname`),
+  KEY `Group_` (`group_`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+TRUNCATE `chartmasterPI`;
+
+INSERT INTO `chartmasterPI` (`accountcode`, `accountname`, `group_`) 
+SELECT `accountcode`, `accountname`, `group_`
+FROM chartmaster
+WHERE (accountcode LIKE "%PI" OR accountcode = "350510100");
+
+UPDATE chartmasterPI SET `group_` =  'HPP (COGS)' WHERE `accountcode` = '510010005PI';
+

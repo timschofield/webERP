@@ -36,6 +36,9 @@ INSERT INTO kurakura_kl_test_erpolddata.chartmaster SELECT * FROM kurakura_kl_er
 TRUNCATE kurakura_kl_test_erpolddata.`chartmasterIK`;
 INSERT INTO kurakura_kl_test_erpolddata.chartmasterIK SELECT * FROM kurakura_kl_erpolddata.chartmasterIK;
 
+TRUNCATE kurakura_kl_test_erpolddata.`chartmasterPI`;
+INSERT INTO kurakura_kl_test_erpolddata.chartmasterPI SELECT * FROM kurakura_kl_erpolddata.chartmasterPI;
+
 TRUNCATE kurakura_kl_test_erpolddata.`chartmasterPMA`;
 INSERT INTO kurakura_kl_test_erpolddata.chartmasterPMA SELECT * FROM kurakura_kl_erpolddata.chartmasterPMA;
 
