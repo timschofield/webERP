@@ -1,7 +1,7 @@
 <?php
 
 /************************************************************************
-v 4.00 PTADU/PTBB/POIK clustering ready
+v 4.00 PTADU/PTBB/POXX clustering ready
 v 3.11 Code cleaning
 v 3.10 Prepare for PT ADU / PT BB accounting
 v 3.01 add fields for returned goods
@@ -29,13 +29,12 @@ v 1.00 2011-08-10: Shops start using it.
 v 1.00 2011-07-25: Kantor starts using it.
 *********************************************************************/
 
-// POIK HARDCODED SETTINGS UNTIL END OF PTBB STOCK 
-//$AccountCOGSforPOIK = "510010000PT";
-$AccountCOGSforPOIK = "510010000";
-$AccountSalesFromConsignerToPOIK = '410010010';
+// POXX HARDCODED SETTINGS UNTIL END OF PTBB STOCK 
+$AccountCOGSforPOXX = "510010000";
+$AccountSalesFromConsignerToPOXX = '410010010';
 $AccountCOGSbyADU = "510010000AD"; // when retail partner sells PTADU items COGS should go to PTADU
-$CompanyConsignmentPOIK = "CASH";
-// END OF POIK HARDCODED SETTINGS UNTIL END OF PTBB STOCK 
+$CompanyConsignmentPOXX = "CASH";
+// END OF POXX HARDCODED SETTINGS UNTIL END OF PTBB STOCK 
 
 define("VERSIONFILE", "4.00"); // 
 
@@ -837,20 +836,14 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						// PTBB sells its own items
 						$AccountCOGS = GetCOGSGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType, $db);
 					}else{
-						// IT IS A CONSIGNMENT RETAIL SALE TO POIK OR OTHER RETAIL PARTNER, so COGS should go to HPP-(COGS) PTBB OR CASH HPP
-						$AccountCOGS = $AccountCOGSforPOIK;
+						// IT IS A CONSIGNMENT RETAIL SALE TO POXX (OTHER RETAIL PARTNER), so COGS should go to HPP-(COGS) PTBB OR CASH HPP
+						$AccountCOGS = $AccountCOGSforPOXX;
 					}
 				}
 				if (($_SESSION['PercentConsignmentPTADU'] > 0) AND ($_SESSION['PercentConsignmentPTADU'] < 100) AND 
 					($ItemBelongsTo == "PTADU")){
 						// IT IS A PTADU ITEM
-					if ($_SESSION['PartnerCode'] == "PTBB"){
-						// PTBB sells PTADU items so COGS should go to PTADU
 						$AccountCOGS = $AccountCOGSbyADU;
-					}elseif ($_SESSION['PartnerCode'] == "POIK"){
-						// POIK sells PTADU items
-						$AccountCOGS = $AccountCOGSbyADU;
-					}
 				}
 // END OF $AccountCOGS CALCULATION FOR RETAIL AND CONSIGNMENT
 				
@@ -932,8 +925,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 				} /*end of if discount !=0 */
 			} /*end of if price != 0 */
 	
-			// CLUSTERING POIK - PTBB HARDCODED UNTIL END OF PTBB STOCK
-			if ($_SESSION['PartnerCode'] == "POIK"){
+			// CLUSTERING POXX - PTBB HARDCODED UNTIL END OF PTBB STOCK
+			if (substr($_SESSION['PartnerCode'],0,2) == "PO"){
 				if ($ItemBelongsTo == "PTBB"){
 					// it is a PTBB item
 					$RetailPrice = round($OrderLine->Price * (1 - $OrderLine->DiscountPercent) / $ExRate,0);
@@ -950,12 +943,12 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 									'ERROR-POS-00006'
 									);
 
-					// report the sales from consigner to retail partner POIK
+					// report the sales from consigner to retail partner POXX
 					InsertIntoGLTrans("10", 
 									$InvoiceNo, 
 									Date('Y-m-d'),
 									$PeriodNo,
-									$AccountSalesFromConsignerToPOIK,
+									$AccountSalesFromConsignerToPOXX,
 									$_SESSION['Items'.$identifier]->CustRef . " " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . $ConsignmentPrice,
 									round(-$ConsignmentPrice * $OrderLine->Quantity),
 									$Tag,
@@ -977,7 +970,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 													invoicedtopartner)
 											VALUES ('" . Date('Y-m-d') . "',
 													'" . $_SESSION['PartnerCode']  . "',
-													'" . $CompanyConsignmentPOIK  . "',
+													'" . $CompanyConsignmentPOXX  . "',
 													'" . $_SESSION['Items'.$identifier]->CustRef  . "',
 													'" . $_SESSION['Items'.$identifier]->DebtorNo  . "',
 													'" . $OrderLine->StockID  . "',
