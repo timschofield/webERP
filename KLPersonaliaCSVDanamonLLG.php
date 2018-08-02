@@ -77,7 +77,7 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType, &$db) {
 				WHERE company = '" . $Company . "'
 					AND periodno = '" . $PeriodExportDate . "'
 					AND salarytype = '" . $SalaryType . "'
-					AND paymentmethod = 'Bank'
+					AND UPPER(paymentmethod) = 'BANK'
 					AND bankcode NOT LIKE '%Danamon%'
 				ORDER BY joiningdate,
 					fullname";

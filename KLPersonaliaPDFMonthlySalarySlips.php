@@ -156,7 +156,7 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType, &$db) {
 				
 				$TotalBawaPulang = $TotalPenerimaan + $TotalPotongan + $myrow['bulatan'];
 				// set information depending on payment method
-				if ($myrow['paymentmethod'] == 'Bank'){
+				if (strtoupper($myrow['paymentmethod']) == 'BANK'){
 					if (strtoupper($myrow['bankcode']) == 'DANAMON'){
 						$SalaryCopiesToPrint = 2;
 						$EmployeesByBankTransferPayroll++;
@@ -166,13 +166,13 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType, &$db) {
 						$EmployeesByBankTransferLLG++;
 						$AmountByBankTransferLLG += $TotalBawaPulang;
 					}
-				}elseif ($myrow['paymentmethod'] == 'Check'){
+				}elseif (strtoupper($myrow['paymentmethod']) == 'CHECK'){
 					$SalaryCopiesToPrint = 2;
 					$EmployeesByCheck++;
 					$Check[$EmployeesByCheck]['Name'] = $myrow['codename'];
 					$Check[$EmployeesByCheck]['Amount'] = $TotalBawaPulang;
 					$AmountByCheck += $TotalBawaPulang;
-				}elseif ($myrow['paymentmethod'] == 'Cash'){
+				}elseif (strtoupper($myrow['paymentmethod']) == 'CASH'){
 					$SalaryCopiesToPrint = 1;
 					$EmployeesByCash++;
 					$Cash[$EmployeesByCash]['Name'] = $myrow['codename'];
@@ -357,14 +357,14 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType, &$db) {
 
 					// payment details
 					$pdf->ln(5);
-					if ($myrow['paymentmethod'] == 'Bank'){
+					if (strtoupper($myrow['paymentmethod']) == 'BANK'){
 						$pdf->MultiCell($WidthColumn4, 0, 'Pembayaran lewat bank transfer ke bank ' . 
 														$myrow['bankcode'] . 
 														' rekening nomor ' . 
 														$myrow['bankaccount'], 0, 'L', 0, 1, '', '', true);
-					}elseif ($myrow['paymentmethod'] == 'Check'){
+					}elseif (strtoupper($myrow['paymentmethod']) == 'CHECK'){
 						$pdf->MultiCell($WidthColumn4, 0, 'Pembayaran lewat cek dari Bank Danamon', 0, 'L', 0, 1, '', '', true);
-					}elseif ($myrow['paymentmethod'] == 'Cash'){
+					}elseif (strtoupper($myrow['paymentmethod']) == 'CASH'){
 						$pdf->MultiCell($WidthColumn4, 0, 'Pembayaran Tunai' , 0, 'L', 0, 1, '', '', true);
 					}
 					
