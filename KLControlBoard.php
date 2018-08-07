@@ -354,7 +354,15 @@ if ($ProcessSection01){
 									'111121111PT', 
 									'111121120PT', 
 									'111121130PT', 
-									'111203010PT')", "Total Banks PT.BB", 2000000000, 3500000000, $periodnow, $db);
+									'111203010PT',
+									'111259010PT', 
+									'111259020PT', 
+									'111259050PT')", "Total Banks PT.BB", 2000000000, 3500000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
+
+		BalanceListAccountControl("('111259010PT', 
+									'111259020PT', 
+									'111259050PT')", "Total PayPal PT.BB", 0, 20000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 	}
 	
@@ -370,6 +378,18 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 	}
 	
+	if ($KL_SystemAdmin 
+		OR $KL_OperationalManager
+		OR $KL_AdministrationTeam){
+		BalanceAccountControl("111121100PI",  1000000,  50000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
+// Bank Danamon IK not opened yet
+//		BalanceAccountControl("111121105PI",  1000000,  50000000, $periodnow, $db);
+//		$NumberOfTestExecuted++;
+		BalanceAccountControl("111121110PI",  1000000,  50000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
+	}
+
 	if ($KL_SystemAdmin){
 		BalanceListAccountControl("('111259010', 
 									'111259020', 
