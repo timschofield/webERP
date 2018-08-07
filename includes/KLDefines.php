@@ -118,7 +118,7 @@ define("PAYMENT_BY_CREDITCARD", 3);
 define("ACCOUNT_PPN_ADU", "611012030AD"); // GL account for PPN PT.ADU
 
 define("ACCOUNT_HUTANG_PPH23", "611012005PT"); // GL account for retention of PPH23 in Petty cash
-define("ACCOUNT_PTBB_MANDIRI_GIRO", "111121100PT"); 
+define("ACCOUNT_PTBB_MANDIRI", "111121101PT"); 
 
 /* Defines about financial Analysis*/
 define("JUTA", 1000000);
