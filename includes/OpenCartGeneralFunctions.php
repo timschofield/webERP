@@ -280,6 +280,32 @@ function GetWeberpForeignCurrencySurchargeFactor($Location, $db){
 	return $Factor;
 }
 
+function GetWeberpSalesArea($CustomerCode, $Location, $db){
+	if ($CustomerCode == 'WEB-KL-IDR'){
+		$Area = OPENCART_DEFAULT_AREA_INDONESIA;
+	}else{
+		// it is in foreign currency. Check if it goes to PayPal PTBB or others
+		$SQL = "SELECT locations.onlinepartnercode
+				FROM locations
+				WHERE locations.loccode = '" . $Location . "'";
+		$ErrMsg ='Could not get the online partner in webERP because';
+		$result = DB_query($SQL,$ErrMsg);
+		if(DB_num_rows($result) != 0){
+			$myrow = DB_fetch_array($result);
+			if ($myrow['onlinepartnercode'] == 'ONLINEPTBB'){
+				$Area = OPENCART_DEFAULT_AREA_INDONESIA;
+			}else{
+				$Area = OPENCART_DEFAULT_AREA;
+			}
+		}else{
+			$Area = OPENCART_DEFAULT_AREA_INDONESIA;
+		}
+		
+		$Area = OPENCART_DEFAULT_AREA;
+	}
+	return $Area;
+}
+
 function GetWeberpGLAccountFromCurrency($Location, $Currency, $db){
 	$SQL = "SELECT accountdokuidr,
 					accountpaypalaud,

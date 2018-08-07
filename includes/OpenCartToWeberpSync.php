@@ -171,12 +171,7 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db,
 			$Location = OPENCART_DEFAULT_LOCATION;
 			$Comments =  CleanStringForWebERP($myrow['comment']);
 			$WebERPDateOrder = date('Y-m-d H:i:s', strtotime( $myrow['date_modified'] . -$TimeDifference . ' hours'));
-
-			if ($CustomerCode == 'WEB-KL-IDR'){
-				$Area = OPENCART_DEFAULT_AREA_INDONESIA;
-			}else{
-				$Area = OPENCART_DEFAULT_AREA;
-			}
+			$Area = GetWeberpSalesArea($CustomerCode, $Location, $db);
 			
 			if($DefaultShipVia == 10){
 				// if shipping is "Pickup From Store"
