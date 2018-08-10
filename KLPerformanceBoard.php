@@ -678,6 +678,19 @@ function CashStatusPTBB($Year, $YearlyGoal, $db){
 	$myrow = DB_fetch_array($Result);
 	$SalesCash = -$myrow[0];
 
+	// Cash sales still floating (still not received in kantor)
+	$SQL = "SELECT SUM(gltrans.amount)
+			FROM gltrans
+			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
+				AND gltrans.trandate <= '" . $Today . "'
+				AND gltrans.account IN (SELECT klposcashaccount
+										FROM locations
+										WHERE partnercode = 'PTBB'
+											AND typeloc LIKE 'SHOP%')";
+	$Result = DB_query($SQL);
+	$myrow = DB_fetch_array($Result);
+	$FloatingCash = $myrow[0];
+
 	// Cash Danamon IDR PTBB to Cash Kantor
 	$Account = "111121105PT";
 	$SQL = "SELECT SUM(gltrans.amount)
@@ -745,6 +758,12 @@ function CashStatusPTBB($Year, $YearlyGoal, $db){
 	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
+			'Floating Cash in Shops', 
+			locale_number_format(-$FloatingCash,0)
+			);
+	printf('<td>%s</td>
+			<td class="number">%s</td>
+			</tr>', 
 			'Cash Danamon IDR PTBB to Cash Kantor', 
 			locale_number_format($BankToCash,0)
 			);
@@ -760,7 +779,7 @@ function CashStatusPTBB($Year, $YearlyGoal, $db){
 			'Expenses PTBB Small Suppliers Paid from Cash Kantor', 
 			locale_number_format(-$CashToSmallSuppliers,0)
 			);
-	$CurrentBalance = $SalesCash+$BankToCash-$ExpensesPTPaidCash-$CashToSmallSuppliers;
+	$CurrentBalance = $SalesCash+$BankToCash-$FloatingCash-$ExpensesPTPaidCash-$CashToSmallSuppliers;
 	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
