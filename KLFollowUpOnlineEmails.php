@@ -732,7 +732,7 @@ function ShowBankDetails ($Currency, $OrderNo) {
 	if ($Currency == 'IDR'){
 		$BankName = 'Bank Mandiri';
 		$BankBeneficiary = 'PT Bumi Biru';
-		$AccountNumber = '1450010666150';
+		$AccountNumber = '1450011000102';
 		$SwiftCode = 'BMRIIDJA';
 	}else{
 		$BankName = 'Bank Danamon Indonesia';
