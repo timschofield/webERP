@@ -115,7 +115,7 @@ if ($ProcessSection01){
 	}
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager){
-		DailySalesRecords(10, 365, $db);
+		DailySalesRecords(10, 365 * 2, $db);
 		$NumberOfTestExecuted++;
 	}
 }
