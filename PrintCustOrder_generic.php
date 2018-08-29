@@ -361,8 +361,8 @@ if ($ListCount == 0) {
 	include('includes/footer.php');
 	exit;
 } else {
-    	$pdf->OutputD($_SESSION['DatabaseName'] . '_PackingSlip_' . date('Y-m-d') . '.pdf');
-    	$pdf->__destruct();
+	$pdf->OutputD($_SESSION['DatabaseName'] . '_PackingSlip_' . $_GET['TransNo'] . '_' . date('Y-m-d') . '.pdf');
+	$pdf->__destruct();
 	$sql = "UPDATE salesorders
 				SET printedpackingslip=1,
 					datepackingslipprinted=CURRENT_DATE
