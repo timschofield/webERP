@@ -391,11 +391,6 @@ if ($ProcessSection01){
 	}
 
 	if ($KL_SystemAdmin){
-		BalanceListAccountControl("('111259010', 
-									'111259020', 
-									'111259050')", "Total PayPal RL", 0, 20000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-
 		BalanceListAccountControl("('111131100', 
 									'111208010', 
 									'111208020', 
