@@ -15,7 +15,11 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 
 | Description | Type | Author | Date | Details | Ref |
 |:-----------:|:----:|:------:|:----:|:-------:|:---:|
-| Add script to set period of GL transactions where the period has not been set correctly |  | Phil | 2018-07-01 | [View](https://github.com/) |  |
+| Add order number into file name |  | Paul Becker | 2018-08-28 | [View](https://github.com/webERP-team/webERP/commit/e5fd39ed26b0768ccfbe7dba70e0d633de8635c9) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8194) |
+| Log output not working (reported by Michelle) |  | Tim Schofield | 2018-08-28 | [View](https://github.com/webERP-team/webERP/commit/18b96699565897a169e47f588577fda5c50edd47) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8196) |
+| Update DB version info (missing with last release) |  | Rafael | 2018-08-25 | [View](https://github.com/webERP-team/webERP/commit/fd0cc7a9633ced890a0b15d7184a94feaa5fc42f) |  |
+| Add a input check for the sortby input |  | Exson | 2018-07-29 | [View](https://github.com/webERP-team/webERP/commit/593252c64c0b38cc03d661ca6847a1e5096a5222) |  |
+| Add script to set period of GL transactions where the period has not been set correctly |  | Phil | 2018-07-01 | [View](https://github.com/webERP-team/webERP/commit/6136b5a96b564b1add42d2dd3bbe22936f00e476) |  |
 | Relocate tcpdf barcodes directory |  | PaulT | 2018-06-28 | [View](https://github.com/webERP-team/webERP/commit/23fd7ff52) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8173&pid=14904#pid14904) |
 | Fix $Prefix use in footer.php |  | alanmi3383 | 2018-06-28 | [View](https://github.com/webERP-team/webERP/commit/c1093765f) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8173&pid=14897#pid14897) |
 | Add Tim's default shipper for suppliers feature |  | Tim Schofield | 2018-06-23 | [View](https://github.com/timschofield/webERP-svn/commit/8f8ea3d9c) | [Forum](http://www.weberp.org/forum/showthread.php?tid=2696) |
