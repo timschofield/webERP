@@ -618,6 +618,7 @@ if ($ProcessSection01){
 
 
 	if ($KL_OperationalManager 
+		OR $KL_ShopSupportLeader
 		OR $KL_PurchasingTeam){
 
 		ConsumablesGoodsNotEnoughStock(30, 15, 45, $RootPath, $db);
