@@ -106,7 +106,7 @@ if ($NoOfGRNs >0){
 	} //end of loop around GRNs to print
 
 
-    $pdf->OutputD($_SESSION['DatabaseName'] . '_GRN_' . $GRNNo . '_' . date('Y-m-d').'.pdf');
+    $pdf->OutputD($_SESSION['DatabaseName'] . '_QALabel_' . $GRNNo . '_' . date('Y-m-d').'.pdf');
     $pdf->__destruct();
 } else { //there were not GRNs to print
 	$Title = _('GRN Error');
