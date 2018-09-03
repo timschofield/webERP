@@ -5,4 +5,3 @@ INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('Z_FixGL
 
 -- THIS IS THE LAST SQL QUERY. Updates database version number:
 UPDATE config SET confvalue='4.15.1' WHERE confname='VersionNumber';
-

@@ -3,7 +3,7 @@ echo '<div id="MessageContainerFoot">';
 
 if (isset($Messages) and count($Messages) > 0) {
 	foreach ($Messages as $Message) {
-		$Prefix = '';
+		$Prefix = $Message[2];
 		switch ($Message[1]) {
 			case 'error':
 				$Class = 'error';
@@ -16,7 +16,7 @@ if (isset($Messages) and count($Messages) > 0) {
 				<b>' . $Prefix . '</b> : ' . $Message[0] . '</div>';
 				break;
 			case 'warn':
-			case 'warning':	 
+			case 'warning':
 				$Class = 'warn';
 				$Prefix = $Prefix ? $Prefix : _('WARNING') . ' ' . _('Report');
 				if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity'] > 3) {
@@ -84,13 +84,13 @@ if (isset($_SESSION['Favourites'][$ScriptName])) {
 }
 
 echo '<div>
-	<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post">
+	<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
 	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 	<input type="hidden" name="ScriptName" value="' . htmlspecialchars($ScriptName,ENT_QUOTES,'UTF-8') . '" />
 	<input type="hidden" name="Title" value="' . $Title . '" />
 	' . $ShowAdd . $ShowDel . '
-        
-	
+
+
 		</form>
 	</div>
 ';
