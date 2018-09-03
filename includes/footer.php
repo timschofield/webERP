@@ -2,6 +2,10 @@
 echo '<div id="MessageContainerFoot">';
 
 if (isset($Messages) and count($Messages) > 0) {
+	if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity'] > 0) {
+		$LogFile = fopen($_SESSION['LogPath'] . '/weberp.log', 'a');
+	}
+
 	foreach ($Messages as $Message) {
 		$Prefix = $Message[2];
 		switch ($Message[1]) {
