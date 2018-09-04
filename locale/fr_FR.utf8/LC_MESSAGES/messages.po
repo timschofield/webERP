@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-05-20 16:34-0400\n"
-"PO-Revision-Date: 2016-12-20 11:01-0600\n"
+"PO-Revision-Date: 2018-09-03 14:43-0600\n"
 "Last-Translator: Rafael E. Chacón <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: French <none>\n"
 "Language: fr_FR\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: s;\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Launchpad-Export-Date: 2011-03-31 06:25+0000\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
@@ -16823,7 +16823,7 @@ msgstr ""
 
 #: MailingGroupMaintenance.php:3 includes/MainMenuLinksArray.php:127
 msgid "Mailing Group Maintenance"
-msgstr ""
+msgstr "Gestion des listes de diffusion"
 
 #: MailingGroupMaintenance.php:18
 msgid "The Mail Group should be less than 100 characters and cannot contain illegal characters and cannot be null"
@@ -37585,7 +37585,7 @@ msgstr "Retour au bon de travail"
 #: WWW_Access.php:5 WWW_Access.php:11 WWW_Access.php:12
 #: includes/MainMenuLinksArray.php:127
 msgid "Access Permissions Maintenance"
-msgstr ""
+msgstr "Gestion des autorisations d'accès"
 
 # JDN
 #: WWW_Access.php:33 WWW_Access.php:171
@@ -37674,7 +37674,7 @@ msgstr "Voulez-vous supprimer cette autorisation de ce rôle?"
 
 #: WWW_Users.php:11 includes/MainMenuLinksArray.php:127
 msgid "Users Maintenance"
-msgstr ""
+msgstr "Gestion des utilisateurs"
 
 #: WWW_Users.php:25 includes/MainMenuLinksArray.php:8
 #: ../webSHOP/CreditCardPayPalPro.php:90
