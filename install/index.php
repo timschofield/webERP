@@ -344,7 +344,6 @@ if(!extension_loaded('mbstring')){
 				$Result = mkdir($CompanyDir . '/part_pics');
 				$Result = mkdir($CompanyDir . '/reports');
 				$Result = mkdir($CompanyDir . '/reportwriter');
-				$Result = mkdir($CompanyDir . '/pdf_append');
 
 				copy ($Path_To_Root . '/companies/weberpdemo/FormDesigns/FGLabel.xml', $CompanyDir . '/FormDesigns/FGLabel.xml');
 				copy ($Path_To_Root . '/companies/weberpdemo/FormDesigns/GoodsReceived.xml', $CompanyDir . '/FormDesigns/GoodsReceived.xml');
