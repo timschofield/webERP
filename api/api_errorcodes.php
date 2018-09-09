@@ -65,7 +65,6 @@
 	Define('IncorrectDiscountCategory', 1060);
 	Define('TaxCategoriesDoesntExist', 1061);
 	Define('InvalidSerialised', 1062);
-	Define('IncorrectAppendFile', 1063);
 	Define('InvalidPerishable', 1064);
 	Define('InvalidDecmalPlaces', 1065);
 	Define('IncorrectLongStockDescriptionLength', 1066);
