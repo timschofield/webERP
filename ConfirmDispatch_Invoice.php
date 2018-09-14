@@ -1,50 +1,47 @@
 <?php
+/* ConfirmDispatch_Invoice.php */
 /* Creates sales invoices from entered sales orders based on the quantities dispatched that can be modified */
 
 /* Session started in session.php for password checking and authorisation level check */
-include('includes/DefineCartClass.php');
-include('includes/DefineSerialItems.php');
+include ('includes/DefineCartClass.php');
+include ('includes/DefineSerialItems.php');
 
-include('includes/session.php');
+include ('includes/session.php');
 $Title = _('Confirm Dispatches and Invoice An Order');
-
-/* Manual links before header.php */
-$ViewTopic= 'ARTransactions';
+$ViewTopic = 'ARTransactions';
 $BookMark = 'ConfirmInvoice';
-include('includes/header.php');
+include ('includes/header.php');
 
-include('includes/SQL_CommonFunctions.inc');
-include('includes/FreightCalculation.inc');
-include('includes/GetSalesTransGLCodes.inc');
+include ('includes/SQL_CommonFunctions.inc');
+include ('includes/FreightCalculation.inc');
+include ('includes/GetSalesTransGLCodes.inc');
 
-
-if(empty($_GET['identifier'])) {
+if (empty($_GET['identifier'])) {
 	/*unique session identifier to ensure that there is no conflict with other order entry sessions on the same machine  */
 	$identifier=date('U');
 } else {
 	$identifier=$_GET['identifier'];
 }
 
-if(!isset($_GET['OrderNumber']) AND !isset($_SESSION['ProcessingOrder'])) {
+if (!isset($_GET['OrderNumber']) AND !isset($_SESSION['ProcessingOrder'])) {
 	/* This page can only be called with an order number for invoicing*/
 	echo '<div class="centre">
 			<a href="' . $RootPath . '/SelectSalesOrder.php">' . _('Select a sales order to invoice'). '</a>
 		</div>
-		<br />
 		<br />';
 	prnMsg( _('This page can only be opened if an order has been selected Please select an order first from the delivery details screen click on Confirm for invoicing'), 'error' );
 	include ('includes/footer.php');
 	exit;
-} elseif(isset($_GET['OrderNumber']) and $_GET['OrderNumber']>0) {
+} elseif (isset($_GET['OrderNumber']) and $_GET['OrderNumber']>0) {
 
 	unset($_SESSION['Items'.$identifier]->LineItems);
-	unset ($_SESSION['Items'.$identifier]);
+	unset($_SESSION['Items'.$identifier]);
 
 	$_SESSION['ProcessingOrder']=(int)$_GET['OrderNumber'];
 	$_GET['OrderNumber']=(int)$_GET['OrderNumber'];
 	$_SESSION['Items'.$identifier] = new cart;
 
-/*read in all the guff from the selected order into the Items cart */
+	/*read in all the guff from the selected order into the Items cart */
 
 	$OrderHeaderSQL = "SELECT salesorders.orderno,
 								salesorders.debtorno,
@@ -97,7 +94,7 @@ if(!isset($_GET['OrderNumber']) AND !isset($_SESSION['ProcessingOrder'])) {
 							AND pickreq.closed=0
 						WHERE salesorders.orderno = '" . $_GET['OrderNumber']."'";
 
-	if($_SESSION['SalesmanLogin'] != '') {
+	if ($_SESSION['SalesmanLogin'] != '') {
 		$OrderHeaderSQL .= " AND salesorders.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 	}
 
@@ -105,7 +102,7 @@ if(!isset($_GET['OrderNumber']) AND !isset($_SESSION['ProcessingOrder'])) {
 	$DbgMsg = _('The SQL to get the order header was');
 	$GetOrdHdrResult = DB_query($OrderHeaderSQL,$ErrMsg,$DbgMsg);
 
-	if(DB_num_rows($GetOrdHdrResult)==1) {
+	if (DB_num_rows($GetOrdHdrResult)==1) {
 
 		$myrow = DB_fetch_array($GetOrdHdrResult);
 
@@ -124,7 +121,7 @@ if(!isset($_GET['OrderNumber']) AND !isset($_SESSION['ProcessingOrder'])) {
 		$_SESSION['Items'.$identifier]->Consignment = $myrow['consignment'];
 		$_SESSION['Items'.$identifier]->Packages = $myrow['packages'];
 
-		if(is_null($BestShipper)) {
+		if (is_null($BestShipper)) {
 			$BestShipper=0;
 		}
 		$_SESSION['Items'.$identifier]->DeliverTo = $myrow['deliverto'];
@@ -186,7 +183,7 @@ if(!isset($_GET['OrderNumber']) AND !isset($_SESSION['ProcessingOrder'])) {
 		$DbgMsg = _('The SQL that failed was');
 		$LineItemsResult = DB_query($LineItemsSQL,$ErrMsg,$DbgMsg);
 
-		if(DB_num_rows($LineItemsResult)>0) {
+		if (DB_num_rows($LineItemsResult)>0) {
 
 			while ($myrow=DB_fetch_array($LineItemsResult)) {
 				$QOHSQL = "SELECT quantity FROM locstock WHERE stockid='" . $myrow['stkcode'] . "' and loccode='" . $_SESSION['Items'.$identifier]->Location . "'";
@@ -255,7 +252,7 @@ if(!isset($_GET['OrderNumber']) AND !isset($_SESSION['ProcessingOrder'])) {
 		} else { /* there are no line items that have a quantity to deliver */
 			echo '<br />';
 			prnMsg( _('There are no ordered items with a quantity left to deliver. There is nothing left to invoice'));
-			include('includes/footer.php');
+			include ('includes/footer.php');
 			exit;
 
 		} //end of checks on returned data set
@@ -272,10 +269,10 @@ if(!isset($_GET['OrderNumber']) AND !isset($_SESSION['ProcessingOrder'])) {
 
 /* if processing, a dispatch page has been called and ${$StkItm->LineNumber} would have been set from the post
 set all the necessary session variables changed by the POST */
-	if(isset($_POST['ShipVia'])) {
+	if (isset($_POST['ShipVia'])) {
 		$_SESSION['Items'.$identifier]->ShipVia = $_POST['ShipVia'];
 	}
-	if(isset($_POST['ChargeFreightCost'])) {
+	if (isset($_POST['ChargeFreightCost'])) {
 		$_SESSION['Items'.$identifier]->FreightCost = filter_number_format($_POST['ChargeFreightCost']);
 	}
 	if (isset($_POST['InternalComments'])) {
@@ -283,26 +280,26 @@ set all the necessary session variables changed by the POST */
 	}
 	$i=1;
 	foreach ($_SESSION['Items'.$identifier]->FreightTaxes as $FreightTaxLine) {
-		if(isset($_POST['FreightTaxRate' . $i])) {
+		if (isset($_POST['FreightTaxRate' . $i])) {
 			$_SESSION['Items'.$identifier]->FreightTaxes[$i]->TaxRate = filter_number_format($_POST['FreightTaxRate' . $i])/100;
 		}
 		$i++;
 	}
 
 	foreach ($_SESSION['Items'.$identifier]->LineItems as $Itm) {
-		if(sizeOf($Itm->SerialItems) > 0) {
+		if (sizeOf($Itm->SerialItems) > 0) {
 			$_SESSION['Items'.$identifier]->LineItems[$Itm->LineNumber]->QtyDispatched = 0; //initialise QtyDispatched
 			foreach ($Itm->SerialItems as $SerialItem) { //calculate QtyDispatched from bundle quantities
 				$_SESSION['Items'.$identifier]->LineItems[$Itm->LineNumber]->QtyDispatched += $SerialItem->BundleQty;
 			}
 			//Preventing from dispatched more than ordered. Since it's controlled items, users must select the batch/lot again.
-			if($_SESSION['Items'.$identifier]->LineItems[$Itm->LineNumber]->QtyDispatched > ($_SESSION['Items'.$identifier]->LineItems[$Itm->LineNumber]->Quantity - $_SESSION['Items'.$identifier]->LineItems[$Itm->LineNumber]->QtyInv)) {
+			if ($_SESSION['Items'.$identifier]->LineItems[$Itm->LineNumber]->QtyDispatched > ($_SESSION['Items'.$identifier]->LineItems[$Itm->LineNumber]->Quantity - $_SESSION['Items'.$identifier]->LineItems[$Itm->LineNumber]->QtyInv)) {
 				prnMsg(_('Dispatched Quantity should not be more than order balanced quantity').'. '._('To dispatch quantity is').' '.$_SESSION['Items'.$identifier]->LineItems[$Itm->LineNumber]->QtyDispatched.' '._('And the order balance is ').' '.($_SESSION['Items'.$identifier]->LineItems[$Itm->LineNumber]->Quantity - $_SESSION['Items'.$identifier]->LineItems[$Itm->LineNumber]->QtyInv),'error');
-				include('includes/footer.php');
+				include ('includes/footer.php');
 				exit;
 			}
-		} else if(isset($_POST[$Itm->LineNumber . '_QtyDispatched' ])) {
-			if(is_numeric(filter_number_format($_POST[$Itm->LineNumber . '_QtyDispatched' ]))
+		} elseif (isset($_POST[$Itm->LineNumber . '_QtyDispatched' ])) {
+			if (is_numeric(filter_number_format($_POST[$Itm->LineNumber . '_QtyDispatched' ]))
 				AND filter_number_format($_POST[$Itm->LineNumber . '_QtyDispatched']) <= ($_SESSION['Items'.$identifier]->LineItems[$Itm->LineNumber]->Quantity - $_SESSION['Items'.$identifier]->LineItems[$Itm->LineNumber]->QtyInv)) {
 
 				$_SESSION['Items'.$identifier]->LineItems[$Itm->LineNumber]->QtyDispatched = round(filter_number_format($_POST[$Itm->LineNumber . '_QtyDispatched']),$Itm->DecimalPlaces);
@@ -310,7 +307,7 @@ set all the necessary session variables changed by the POST */
 		}
 		$i=1;
 		foreach ($Itm->Taxes as $TaxLine) {
-			if(isset($_POST[$Itm->LineNumber . $i . '_TaxRate'])) {
+			if (isset($_POST[$Itm->LineNumber . $i . '_TaxRate'])) {
 				$_SESSION['Items'.$identifier]->LineItems[$Itm->LineNumber]->Taxes[$i]->TaxRate = filter_number_format($_POST[$Itm->LineNumber . $i . '_TaxRate'])/100;
 			}
 			$i++;
@@ -321,7 +318,7 @@ set all the necessary session variables changed by the POST */
 
 /* Always display dispatch quantities and recalc freight for items being dispatched */
 
-if($_SESSION['Items'.$identifier]->SpecialInstructions) {
+if ($_SESSION['Items'.$identifier]->SpecialInstructions) {
 	prnMsg($_SESSION['Items'.$identifier]->SpecialInstructions,'warn');
 }
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Confirm Invoice') .
@@ -372,24 +369,20 @@ $TaxTotal =0;
 
 /*show the line items on the order with the quantity being dispatched available for modification */
 
-$j=0; //used for tabindex
-
+$j = 0;// Used for autofocus on first field.
 foreach ($_SESSION['Items'.$identifier]->LineItems as $LnItm) {
-	$j++;
-
 	if ($LnItm->QOHatLoc < $LnItm->Quantity and ($LnItm->MBflag == 'B' or $LnItm->MBflag == 'M')) {
 		/*There is a stock deficiency in the stock location selected */
 		$RowStarter = '<tr style="background:#FF0000;color:#FFC0CB">'; //rows show red where stock deficiency
 	} else {
 		$RowStarter = '<tr class="striped_row">';
 	}
-
 	if (sizeOf($LnItm->SerialItems) > 0) {
 		$_SESSION['Items'.$identifier]->LineItems[$LnItm->LineNumber]->QtyDispatched = 0; //initialise QtyDispatched
 		foreach ($LnItm->SerialItems as $SerialItem) { //calculate QtyDispatched from bundle quantities
 			$_SESSION['Items'.$identifier]->LineItems[$LnItm->LineNumber]->QtyDispatched += $SerialItem->BundleQty;
 		}
-	} else if (isset($_POST[$LnItm->LineNumber . '_QtyDispatched'])) {
+	} elseif (isset($_POST[$LnItm->LineNumber . '_QtyDispatched'])) {
 		if (is_numeric(filter_number_format($_POST[$LnItm->LineNumber . '_QtyDispatched'])) and filter_number_format($_POST[$LnItm->LineNumber . '_QtyDispatched']) <= ($_SESSION['Items'.$identifier]->LineItems[$LnItm->LineNumber]->Quantity - $_SESSION['Items'.$identifier]->LineItems[$LnItm->LineNumber]->QtyInv)) {
 
 			$_SESSION['Items'.$identifier]->LineItems[$LnItm->LineNumber]->QtyDispatched = round(filter_number_format($_POST[$LnItm->LineNumber . '_QtyDispatched']), $LnItm->DecimalPlaces);
@@ -408,18 +401,18 @@ foreach ($_SESSION['Items'.$identifier]->LineItems as $LnItm) {
 		<td class="text">' . $LnItm->Units . '</td>
 		<td class="number">' . locale_number_format($LnItm->QtyInv, $LnItm->DecimalPlaces) . '</td>';
 
-	if($LnItm->Controlled==1) {
+	if ($LnItm->Controlled==1) {
 
-		if(isset($_POST['ProcessInvoice'])) {
+		if (isset($_POST['ProcessInvoice'])) {
 			echo '<td class="number">' . locale_number_format($LnItm->QtyDispatched,$LnItm->DecimalPlaces) . '</td>';
 		} else {
 			echo '<td class="number"><input type="hidden" name="' . $LnItm->LineNumber . '_QtyDispatched" required="required" maxlength="11"  value="' . $LnItm->QtyDispatched . '" /><a href="' . $RootPath .'/ConfirmDispatchControlled_Invoice.php?identifier=' . urlencode($identifier) . '&LineNo=' . urlencode($LnItm->LineNumber) . '">' .locale_number_format($LnItm->QtyDispatched,$LnItm->DecimalPlaces) . '</a></td>';
 		}
 	} else {
-		if(isset($_POST['ProcessInvoice'])) {
-			echo '<td class="number">' . locale_number_format($LnItm->QtyDispatched,$LnItm->DecimalPlaces) . '</td>';
+		if (isset($_POST['ProcessInvoice'])) {
+			echo '<td class="number">', locale_number_format($LnItm->QtyDispatched,$LnItm->DecimalPlaces), '</td>';
 		} else {
-			echo '<td class="number"><input tabindex="'.$j.'" type="text" ' . ($j==1 ? 'autofocus="autofocus" ':'') . ' class="number" required="required" title="' . _('Enter the quantity to charge the customer for, that has been dispatched') . '" name="' . $LnItm->LineNumber . '_QtyDispatched" maxlength="12" size="12" value="' . locale_number_format($LnItm->QtyDispatched,$LnItm->DecimalPlaces) . '" /></td>';
+			echo '<td class="number"><input ', (++$j==1 ? 'autofocus="autofocus" ' : ''), 'class="number" maxlength="12" name="', $LnItm->LineNumber, '_QtyDispatched" required="required" title="', _('Enter the quantity to charge the customer for, that has been dispatched'), '" type="text" size="12" value="', locale_number_format($LnItm->QtyDispatched,$LnItm->DecimalPlaces), '" /></td>';
 		}
 	}
 	$DisplayDiscountPercent = locale_number_format($LnItm->DiscountPercent*100,2) . '%';
@@ -433,7 +426,7 @@ foreach ($_SESSION['Items'.$identifier]->LineItems as $LnItm) {
 	echo '<td>';
 	$i=0;
 	foreach ($_SESSION['Items'.$identifier]->LineItems[$LnItm->LineNumber]->Taxes AS $Tax) {
-		if($i>0) {
+		if ($i>0) {
 			echo '<br />';
 		}
 		echo $Tax->TaxAuthDescription;
@@ -447,19 +440,19 @@ foreach ($_SESSION['Items'.$identifier]->LineItems as $LnItm) {
 
 
 	foreach ($LnItm->Taxes AS $Tax) {
-		if(empty($TaxTotals[$Tax->TaxAuthID])) {
+		if (empty($TaxTotals[$Tax->TaxAuthID])) {
 			$TaxTotals[$Tax->TaxAuthID]=0;
 		}
-		if($i>1) {
+		if ($i>1) {
 			echo '<br />';
 		}
-		if(isset($_POST['ProcessInvoice'])) {
+		if (isset($_POST['ProcessInvoice'])) {
 			echo $Tax->TaxRate*100;
 		} else {
 			echo '<input type="text" class="number" required="required" title="' . _('Enter the tax rate applicable as a number') . '" name="' . $LnItm->LineNumber . $i . '_TaxRate" maxlength="4" size="4" value="' . $Tax->TaxRate*100 . '" />';
 		}
 		$i++;
-		if($Tax->TaxOnTax ==1) {
+		if ($Tax->TaxOnTax ==1) {
 			$TaxTotals[$Tax->TaxAuthID] += ($Tax->TaxRate * ($LineTotal + $TaxLineTotal));
 			$TaxLineTotal += ($Tax->TaxRate * ($LineTotal + $TaxLineTotal));
 		} else {
@@ -479,10 +472,10 @@ foreach ($_SESSION['Items'.$identifier]->LineItems as $LnItm) {
 	echo '<td class="number">' . $DisplayTaxAmount . '</td>
 			<td class="number">' . $DisplayGrossLineTotal . '</td>';
 
-	if($LnItm->Controlled==1) {
-		if(!isset($_POST['ProcessInvoice'])) {
+	if ($LnItm->Controlled==1) {
+		if (!isset($_POST['ProcessInvoice'])) {
 			echo '<td><a href="' . $RootPath . '/ConfirmDispatchControlled_Invoice.php?identifier=' . urlencode($identifier) . '&LineNo=' . urlencode($LnItm->LineNumber) . '">';
-			if($LnItm->Serialised==1) {
+			if ($LnItm->Serialised==1) {
 				echo _('Enter Serial Numbers');
 			} else { /*Just batch/roll/lot control */
 				echo _('Enter Batch/Roll/Lot #');
@@ -491,7 +484,7 @@ foreach ($_SESSION['Items'.$identifier]->LineItems as $LnItm) {
 		}
 	}
 	echo '</tr>';
-	if(mb_strlen($LnItm->Narrative)>1) {
+	if (mb_strlen($LnItm->Narrative)>1) {
 		$Narrative=str_replace('\r\n','<br />', $LnItm->Narrative);
 		echo $RowStarter . '<td colspan="12">' . stripslashes($Narrative) . '</td></tr>';
 	}
@@ -503,7 +496,7 @@ It seems unfair to charge the customer twice for freight if the order
 was not fully delivered the first time ?? */
 
 if (!isset($_SESSION['Items'.$identifier]->FreightCost) or $_SESSION['Items'.$identifier]->FreightCost == 0) {
-	if($_SESSION['DoFreightCalc']==True) {
+	if ($_SESSION['DoFreightCalc']==True) {
 		list ($FreightCost, $BestShipper) = CalcFreightCost($_SESSION['Items'.$identifier]->total,
 														$_SESSION['Items'.$identifier]->BrAdd2,
 														$_SESSION['Items'.$identifier]->BrAdd3,
@@ -521,17 +514,17 @@ if (!isset($_SESSION['Items'.$identifier]->FreightCost) or $_SESSION['Items'.$id
 	} else {
 		$FreightCost =0;
 	}
-	if(!is_numeric($BestShipper)) {
+	if (!is_numeric($BestShipper)) {
  		$SQL = "SELECT shipper_id FROM shippers WHERE shipper_id='" . $_SESSION['Default_Shipper'] . "'";
 		$ErrMsg = _('There was a problem testing for a default shipper because');
 		$TestShipperExists = DB_query($SQL, $ErrMsg);
-		if(DB_num_rows($TestShipperExists)==1) {
+		if (DB_num_rows($TestShipperExists)==1) {
 			$BestShipper = $_SESSION['Default_Shipper'];
 		} else {
 			$SQL = "SELECT shipper_id FROM shippers";
 			$ErrMsg = _('There was a problem testing for a default shipper');
 			$TestShipperExists = DB_query($SQL, $ErrMsg);
-			if(DB_num_rows($TestShipperExists)>=1) {
+			if (DB_num_rows($TestShipperExists)>=1) {
 				$ShipperReturned = DB_fetch_row($TestShipperExists);
 				$BestShipper = $ShipperReturned[0];
 			} else {
@@ -542,7 +535,7 @@ if (!isset($_SESSION['Items'.$identifier]->FreightCost) or $_SESSION['Items'.$id
 	}
 }
 
-if(isset($_POST['ChargeFreightCost']) AND !is_numeric(filter_number_format($_POST['ChargeFreightCost']))) {
+if (isset($_POST['ChargeFreightCost']) AND !is_numeric(filter_number_format($_POST['ChargeFreightCost']))) {
 	$_POST['ChargeFreightCost'] = 0;
 }
 
@@ -550,28 +543,27 @@ echo '<tr>
 	<td class="number" colspan="2">', _('Order Freight Cost'), '</td>
 	<td class="number">', locale_number_format($_SESSION['Old_FreightCost'], $_SESSION['Items'.$identifier]->CurrDecimalPlaces), '</td>';
 
-if($_SESSION['DoFreightCalc']==True) {
+if ($_SESSION['DoFreightCalc']==True) {
 	echo '<td class="number" colspan="2">', _('Recalculated Freight Cost'), '</td>
 		<td class="number">', locale_number_format($FreightCost, $_SESSION['Items'.$identifier]->CurrDecimalPlaces), '</td>';
 } else {
 //	echo '<td colspan="1"></td>';// Should be?:	echo '<td colspan="3">&nbsp;</td>';
 }
-$j++;
-if(!isset($_POST['ChargeFreightCost'])) {
+if (!isset($_POST['ChargeFreightCost'])) {
 	$_POST['ChargeFreightCost']=0;
 }
 echo '<td class="number" colspan="2">', _('Charge Freight Cost ex Tax'), '</td>';
-if($_SESSION['Items'.$identifier]->Any_Already_Delivered()==1
+if ($_SESSION['Items'.$identifier]->Any_Already_Delivered()==1
 	AND (!isset($_SESSION['Items'.$identifier]->FreightCost)
 		OR $_POST['ChargeFreightCost']==0)) {
 
-	echo '<td><input class="number" maxlength="12" name="ChargeFreightCost" required="required" size="10" tabindex="', $j, '" type="text" value="0" /></td>';
+	echo '<td><input class="number" maxlength="12" name="ChargeFreightCost" required="required" size="10" type="text" value="0" /></td>';
 	$_SESSION['Items'.$identifier]->FreightCost = 0;
 } else {
-	if(isset($_POST['ProcessInvoice'])) {
+	if (isset($_POST['ProcessInvoice'])) {
 		echo '<td class="number">' . locale_number_format($_SESSION['Items'.$identifier]->FreightCost,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>';
 	} else {
-		echo '<td class="number"><input class="number" maxlength="12" name="ChargeFreightCost" size="10" tabindex="'. $j. '" type="text" value="'. locale_number_format($_SESSION['Items'.$identifier]->FreightCost,$_SESSION['Items'.$identifier]->CurrDecimalPlaces). '" /></td>';
+		echo '<td class="number"><input class="number" maxlength="12" name="ChargeFreightCost" size="10" type="text" value="'. locale_number_format($_SESSION['Items'.$identifier]->FreightCost,$_SESSION['Items'.$identifier]->CurrDecimalPlaces). '" /></td>';
 	}
 	$_POST['ChargeFreightCost'] = locale_number_format($_SESSION['Items'.$identifier]->FreightCost,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
 }
@@ -582,7 +574,7 @@ echo '<td>';
 
 $i=0; // initialise the number of taxes iterated through
 foreach ($_SESSION['Items'.$identifier]->FreightTaxes as $FreightTaxLine) {
-	if($i>0) {
+	if ($i>0) {
 		echo '<br />';
 	}
 	echo $FreightTaxLine->TaxAuthDescription;
@@ -593,17 +585,17 @@ echo '</td><td class="number">';
 
 $i=0;
 foreach ($_SESSION['Items'.$identifier]->FreightTaxes as $FreightTaxLine) {
-	if($i>0) {
+	if ($i>0) {
 		echo '<br />';
 	}
 
-	if(isset($_POST['ProcessInvoice'])) {
+	if (isset($_POST['ProcessInvoice'])) {
 		echo $FreightTaxLine->TaxRate * 100 ;
 	} else {
 		echo '<input class="number" maxlength="4" name="FreightTaxRate'. $FreightTaxLine->TaxCalculationOrder. '" size="4" type="text" value="'. locale_number_format($FreightTaxLine->TaxRate * 100, $_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '" />';
 	}
 
-	if($FreightTaxLine->TaxOnTax ==1) {
+	if ($FreightTaxLine->TaxOnTax ==1) {
 		$TaxTotals[$FreightTaxLine->TaxAuthID] += ($FreightTaxLine->TaxRate * ($_SESSION['Items'.$identifier]->FreightCost + $FreightTaxTotal));
 		$FreightTaxTotal += ($FreightTaxLine->TaxRate * ($_SESSION['Items'.$identifier]->FreightCost + $FreightTaxTotal));
 	} else {
@@ -632,7 +624,7 @@ echo '<tr>
 </tr>';
 
 
-if(! isset($_POST['DispatchDate']) OR ! Is_Date($_POST['DispatchDate'])) {
+if (! isset($_POST['DispatchDate']) OR ! Is_Date($_POST['DispatchDate'])) {
 	$DefaultDispatchDate = Date($_SESSION['DefaultDateFormat'],CalcEarliestDispatchDate());
 } else {
 	$DefaultDispatchDate = $_POST['DispatchDate'];
@@ -640,7 +632,7 @@ if(! isset($_POST['DispatchDate']) OR ! Is_Date($_POST['DispatchDate'])) {
 
 echo '<tbody></table><br />';
 
-if(isset($_POST['ProcessInvoice']) AND $_POST['ProcessInvoice'] != '') {
+if (isset($_POST['ProcessInvoice']) AND $_POST['ProcessInvoice'] != '') {
 
 /* SQL to process the postings for sales invoices...
 
@@ -650,17 +642,17 @@ invoices can have a zero amount but there must be a quantity to invoice */
 	$QuantityInvoicedIsPositive = false;
 
 	foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
-		if($OrderLine->QtyDispatched > 0) {
+		if ($OrderLine->QtyDispatched > 0) {
 			$QuantityInvoicedIsPositive =true;
 		}
 	}
-	if(! $QuantityInvoicedIsPositive) {
+	if (! $QuantityInvoicedIsPositive) {
 		prnMsg( _('There are no lines on this order with a quantity to invoice') . '. ' . _('No further processing has been done'),'error');
-		include('includes/footer.php');
+		include ('includes/footer.php');
 		exit;
 	}
 
-	if($_SESSION['ProhibitNegativeStock']==1) { // checks for negative stock after processing invoice
+	if ($_SESSION['ProhibitNegativeStock']==1) { // checks for negative stock after processing invoice
 	//sadly this check does not combine quantities occuring twice on and order and each line is considered individually :-(
 		$NegativesFound = false;
 		foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
@@ -676,12 +668,12 @@ invoices can have a zero amount but there must be a quantity to invoice */
 			$ErrMsg = _('Could not retrieve the quantity left at the location once this order is invoiced (for the purposes of checking that stock will not go negative because)');
 			$Result = DB_query($SQL,$ErrMsg);
 			$CheckNegRow = DB_fetch_array($Result);
-			if(($CheckNegRow['mbflag']=='B' OR $CheckNegRow['mbflag']=='M') AND mb_substr($OrderLine->StockID,0,4)!='ASSET') {
-				if($CheckNegRow['quantity'] < $OrderLine->QtyDispatched) {
+			if (($CheckNegRow['mbflag']=='B' OR $CheckNegRow['mbflag']=='M') AND mb_substr($OrderLine->StockID,0,4)!='ASSET') {
+				if ($CheckNegRow['quantity'] < $OrderLine->QtyDispatched) {
 					prnMsg( _('Invoicing the selected order would result in negative stock. The system parameters are set to prohibit negative stocks from occurring. This invoice cannot be created until the stock on hand is corrected.'),'error',$OrderLine->StockID . ' ' . $CheckNegRow['description'] . ' - ' . _('Negative Stock Prohibited'));
 					$NegativesFound = true;
 				}
-			} elseif($CheckNegRow['mbflag']=='A') {
+			} elseif ($CheckNegRow['mbflag']=='A') {
 
 				/*Now look for assembly components that would go negative */
 				$SQL = "SELECT bom.component,
@@ -700,7 +692,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 				$ErrMsg = _('Could not retrieve the component quantity left at the location once the assembly item on this order is invoiced (for the purposes of checking that stock will not go negative because)');
 				$Result = DB_query($SQL,$ErrMsg);
 				while ($NegRow = DB_fetch_array($Result)) {
-					if($NegRow['qtyleft']<0) {
+					if ($NegRow['qtyleft']<0) {
 						prnMsg(_('Invoicing the selected order would result in negative stock for a component of an assembly item on the order. The system parameters are set to prohibit negative stocks from occurring. This invoice cannot be created until the stock on hand is corrected.'),'error',$NegRow['component'] . ' ' . $NegRow['description'] . ' - ' . _('Negative Stock Prohibited'));
 						$NegativesFound = true;
 					} // end if negative would result
@@ -709,12 +701,12 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 		} //end of loop around items on the order for negative check
 
-		if($NegativesFound) {
+		if ($NegativesFound) {
 			echo '</div>';
 			echo '</form>';
 			echo '<div class="centre">
 					<input type="submit" name="Update" value="' . _('Update'). '" /></div>';
-			include('includes/footer.php');
+			include ('includes/footer.php');
 			exit;
 		}
 
@@ -738,10 +730,10 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 /*company record read in on login with info on GL Links and debtors GL account*/
 
-	if($_SESSION['CompanyRecord']==0) {
+	if ($_SESSION['CompanyRecord']==0) {
 		/*The company data and preferences could not be retrieved for some reason */
 		prnMsg( _('The company information and preferences could not be retrieved') . ' - ' . _('see your system administrator'), 'error');
-		include('includes/footer.php');
+		include ('includes/footer.php');
 		exit;
 	}
 
@@ -757,11 +749,11 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 	$Result = DB_query($SQL);
 
-	if(DB_num_rows($Result) != count($_SESSION['Items'.$identifier]->LineItems)) {
+	if (DB_num_rows($Result) != count($_SESSION['Items'.$identifier]->LineItems)) {
 
 	/*there should be the same number of items returned from this query as there are lines on the invoice - if not 	then someone has already invoiced or credited some lines */
 
-		if($debug==1) {
+		if ($debug==1) {
 			echo '<br />' . $SQL;
 			echo '<br />' . _('Number of rows returned by SQL') . ':' . DB_num_rows($Result);
 			echo '<br />' . _('Count of items in the session') . ' ' . count($_SESSION['Items'.$identifier]->LineItems);
@@ -773,14 +765,14 @@ invoices can have a zero amount but there must be a quantity to invoice */
 		unset($_SESSION['Items'.$identifier]->LineItems);
 		unset($_SESSION['Items'.$identifier]);
 		unset($_SESSION['ProcessingOrder']);
-		include('includes/footer.php'); exit;
+		include ('includes/footer.php'); exit;
 	}
 
 	$Changes =0;
 
 	while ($myrow = DB_fetch_array($Result)) {
 
-		if($_SESSION['Items'.$identifier]->LineItems[$myrow['orderlineno']]->Quantity != $myrow['quantity']
+		if ($_SESSION['Items'.$identifier]->LineItems[$myrow['orderlineno']]->Quantity != $myrow['quantity']
 			OR $_SESSION['Items'.$identifier]->LineItems[$myrow['orderlineno']]->QtyInv != $myrow['qtyinvoiced']) {
 
 			echo '<br />' . _('Orig order for'). ' ' . $myrow['orderlineno'] . ' '. _('has a quantity of'). ' ' . $myrow['quantity'] . ' '. _('and an invoiced qty of'). ' ' . $myrow['qtyinvoiced'] . ' '. _('the session shows quantity of'). ' ' . $_SESSION['Items'.$identifier]->LineItems[$myrow['orderlineno']]->Quantity . ' ' . _('and quantity invoice of'). ' ' . $_SESSION['Items'.$identifier]->LineItems[$myrow['orderlineno']]->QtyInv;
@@ -794,7 +786,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 			unset($_SESSION['Items'.$identifier]->LineItems);
 			unset($_SESSION['Items'.$identifier]);
 			unset($_SESSION['ProcessingOrder']);
-			include('includes/footer.php');
+			include ('includes/footer.php');
 			exit;
 		}
 	} /*loop through all line items of the order to ensure none have been invoiced since started looking at this order*/
@@ -814,7 +806,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 	DB_Txn_Begin();
 
-	if($DefaultShipVia != $_SESSION['Items'.$identifier]->ShipVia) {
+	if ($DefaultShipVia != $_SESSION['Items'.$identifier]->ShipVia) {
 		$SQL = "UPDATE custbranch
 				SET defaultshipvia ='" . $_SESSION['Items'.$identifier]->ShipVia . "'
 				WHERE debtorno='" . $_SESSION['Items'.$identifier]->DebtorNo . "'
@@ -905,10 +897,10 @@ invoices can have a zero amount but there must be a quantity to invoice */
 	foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
 
 		/*Test to see if the item being sold is an asset */
-		if(mb_substr($OrderLine->StockID,0,6)=='ASSET-') {
+		if (mb_substr($OrderLine->StockID,0,6)=='ASSET-') {
 			$IsAsset = true;
 			$HyphenOccursAt = mb_strpos($OrderLine->StockID,'-',6);
-			if($HyphenOccursAt == false) {
+			if ($HyphenOccursAt == false) {
 				$AssetNumber = intval(mb_substr($OrderLine->StockID,6));
 			} else {
 				$AssetNumber = intval(mb_substr($OrderLine->StockID,6,mb_strlen($OrderLine->StockID)-$HyphenOccursAt-1));
@@ -919,7 +911,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 			$AssetNumber = 0;
 		}
 
-		if($_POST['BOPolicy']=='CAN') {
+		if ($_POST['BOPolicy']=='CAN') {
 
 			$SQL = "UPDATE salesorderdetails
 					SET quantity = quantity - " . ($OrderLine->Quantity - $OrderLine->QtyDispatched - $OrderLine->QtyInv) . "
@@ -931,7 +923,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 
-			if(($OrderLine->Quantity - $OrderLine->QtyDispatched)>0) {
+			if (($OrderLine->Quantity - $OrderLine->QtyDispatched)>0) {
 
 				$SQL = "INSERT INTO orderdeliverydifferenceslog (orderno,
 															invoiceno,
@@ -954,7 +946,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 			}
 
-		} elseif(($OrderLine->Quantity - $OrderLine->QtyDispatched)>0
+		} elseif (($OrderLine->Quantity - $OrderLine->QtyDispatched)>0
 				AND DateDiff(ConvertSQLDate($DefaultDispatchDate),$_SESSION['Items'.$identifier]->DeliveryDate,'d')>0) {
 
 		/*The order is being short delivered after the due date - need to insert a delivery differnce log */
@@ -984,10 +976,10 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 /*Now update SalesOrderDetails for the quantity invoiced and the actual dispatch dates. */
 
-		if($OrderLine->QtyDispatched !=0 AND $OrderLine->QtyDispatched!='' AND $OrderLine->QtyDispatched) {
+		if ($OrderLine->QtyDispatched !=0 AND $OrderLine->QtyDispatched!='' AND $OrderLine->QtyDispatched) {
 
 			// Test above to see if the line is completed or not
-			if($OrderLine->QtyDispatched>=($OrderLine->Quantity - $OrderLine->QtyInv) OR $_POST['BOPolicy']=='CAN') {
+			if ($OrderLine->QtyDispatched>=($OrderLine->Quantity - $OrderLine->QtyInv) OR $_POST['BOPolicy']=='CAN') {
 				$SQL = "UPDATE salesorderdetails
 							SET qtyinvoiced = qtyinvoiced + " . $OrderLine->QtyDispatched . ",
 								actualdispatchdate = '" . $DefaultDispatchDate . "',
@@ -1041,7 +1033,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 			$myrow = DB_fetch_row($Result);
 			$MBFlag = $myrow[0];
 
-			if($MBFlag=='B' OR $MBFlag=='M') {
+			if ($MBFlag=='B' OR $MBFlag=='M') {
 				$Assembly = False;
 
 				/* Need to get the current location quantity
@@ -1053,7 +1045,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 				$ErrMsg = _('WARNING') . ': ' . _('Could not retrieve current location stock');
 				$Result = DB_query($SQL, $ErrMsg);
 
-				if(DB_num_rows($Result)==1) {
+				if (DB_num_rows($Result)==1) {
 					$LocQtyRow = DB_fetch_row($Result);
 					$QtyOnHandPrior = $LocQtyRow[0];
 				} else {
@@ -1070,7 +1062,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 				$DbgMsg = _('The following SQL to update the location stock record was used');
 				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-			} else if($MBFlag=='A') { /* its an assembly */
+			} elseif ($MBFlag=='A') { /* its an assembly */
 				/*Need to get the BOM for this part and make
 				stock moves for the components then update the Location stock balances */
 				$Assembly=True;
@@ -1101,14 +1093,14 @@ invoices can have a zero amount but there must be a quantity to invoice */
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Can not retrieve assembly components location stock quantities because ');
 					$DbgMsg = _('The SQL that failed was');
 					$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-					if(DB_num_rows($Result)==1) {
+					if (DB_num_rows($Result)==1) {
 						$LocQtyRow = DB_fetch_row($Result);
 						$QtyOnHandPrior = $LocQtyRow[0];
 					} else {
 						/*There must be some error this should never happen */
 						$QtyOnHandPrior = 0;
 					}
-					if(empty($AssParts['standard'])) {
+					if (empty($AssParts['standard'])) {
 						$AssParts['standard']=0;
 					}
 					$SQL = "INSERT INTO stockmoves (stockid,
@@ -1164,10 +1156,10 @@ invoices can have a zero amount but there must be a quantity to invoice */
 			//$LocalCurrencyPrice = round(($OrderLine->Price / $_SESSION['CurrencyRate']),$_SESSION['CompanyRecord']['decimalplaces']); change decimalplaces to 5 to avoid price or lines total variance on invoice. And the decimal places should not be over 5 since the stockmoves table defined it as decimal(21,5) now.
 			$LocalCurrencyPrice = round(($OrderLine->Price / $_SESSION['CurrencyRate']),5);
 
-			if(empty($OrderLine->StandardCost)) {
+			if (empty($OrderLine->StandardCost)) {
 				$OrderLine->StandardCost=0;
 			}
-			if($MBFlag=='B' OR $MBFlag=='M') {
+			if ($MBFlag=='B' OR $MBFlag=='M') {
 						$SQL = "INSERT INTO stockmoves (stockid,
 														type,
 														transno,
@@ -1202,7 +1194,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 														'" . DB_escape_string($OrderLine->Narrative) . "' )";
 			} else {
 			// its an assembly or dummy and assemblies/dummies always have nil stock (by definition they are made up at the time of dispatch so new qty on hand will be nil
-				if(empty($OrderLine->StandardCost)) {
+				if (empty($OrderLine->StandardCost)) {
 					$OrderLine->StandardCost=0;
 				}
 				$SQL = "INSERT INTO stockmoves (stockid,
@@ -1267,7 +1259,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 /* Insert the StockSerialMovements and update the StockSerialItems  for controlled items*/
 
-			if($OrderLine->Controlled ==1) {
+			if ($OrderLine->Controlled ==1) {
 				foreach($OrderLine->SerialItems as $Item) {
 					/*We need to add the StockSerialItem record and the StockSerialMoves as well */
 
@@ -1300,7 +1292,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 /*Insert Sales Analysis records */
 
 			$SalesValue = 0;
-			if($_SESSION['CurrencyRate']>0) {
+			if ($_SESSION['CurrencyRate']>0) {
 				$SalesValue = $OrderLine->Price * $OrderLine->QtyDispatched / $_SESSION['CurrencyRate'];
 			}
 
@@ -1343,7 +1335,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 			$myrow = DB_fetch_row($Result);
 
-			if($myrow[0]>0) { /*Update the existing record that already exists */
+			if ($myrow[0]>0) { /*Update the existing record that already exists */
 
 				$SQL = "UPDATE salesanalysis SET amt=amt+" . round(($SalesValue),$_SESSION['CompanyRecord']['decimalplaces']) . ",
 												cost=cost+" . round(($OrderLine->StandardCost * $OrderLine->QtyDispatched),$_SESSION['CompanyRecord']['decimalplaces']) . ",
@@ -1399,7 +1391,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 /* If GLLink_Stock then insert GLTrans to credit stock and debit cost of sales at standard cost*/
 
-			if($_SESSION['CompanyRecord']['gllink_stock']==1 AND $OrderLine->StandardCost !=0 AND ! $IsAsset) {
+			if ($_SESSION['CompanyRecord']['gllink_stock']==1 AND $OrderLine->StandardCost !=0 AND ! $IsAsset) {
 
 /*first the cost of sales entry - GL accounts are retrieved using the function GetCOGSGLAccount from includes/GetSalesTransGLCodes.inc */
 
@@ -1447,9 +1439,9 @@ invoices can have a zero amount but there must be a quantity to invoice */
 				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 			} /* end of if GL and stock integrated and standard cost !=0 and not an asset */
 
-			if($_SESSION['CompanyRecord']['gllink_debtors']==1 AND $OrderLine->Price !=0) {
+			if ($_SESSION['CompanyRecord']['gllink_debtors']==1 AND $OrderLine->Price !=0) {
 
-				if(!$IsAsset) { // its a normal stock item
+				if (!$IsAsset) { // its a normal stock item
 					//Post sales transaction to GL credit sales
 					$SalesGLAccounts = GetSalesGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType);
 
@@ -1473,7 +1465,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 					$DbgMsg = '<br />' ._('The following SQL to insert the GLTrans record was used');
 					$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-					if($OrderLine->DiscountPercent !=0) {
+					if ($OrderLine->DiscountPercent !=0) {
 
 						$SQL = "INSERT INTO gltrans (type,
 													typeno,
@@ -1520,7 +1512,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 					 * 4.) Credit the disposal account with the sale proceeds net of discounts */
 
 					// 1.) Debit the accumulated depreciation account:
-					if($DisposalRow['accumdepn']!=0) {
+					if ($DisposalRow['accumdepn']!=0) {
 						$SQL = "INSERT INTO gltrans (type,
 													typeno,
 													trandate,
@@ -1542,7 +1534,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 						$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 					}
 					// 2.) Credit the cost account:
-					if($DisposalRow['cost']!=0) {
+					if ($DisposalRow['cost']!=0) {
 						$SQL = "INSERT INTO gltrans (
 									type,
 									typeno,
@@ -1564,7 +1556,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 						$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 					}
 					// 3.) Debit the disposal account with the NBV:
-					if($DisposalRow['cost']-$DisposalRow['accumdepn']!=0) {
+					if ($DisposalRow['cost']-$DisposalRow['accumdepn']!=0) {
 						$SQL = "INSERT INTO gltrans (type,
 													typeno,
 													trandate,
@@ -1609,7 +1601,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 			} /*end of if sales integrated with debtors */
 
-			if($IsAsset) {
+			if ($IsAsset) {
 				/* then the item being sold is an asset disposal
 					* need to create fixedassettrans
 					* set disposal date and proceeds
@@ -1658,10 +1650,10 @@ invoices can have a zero amount but there must be a quantity to invoice */
 	$DbgMsg = _('The following SQL to update the pick list was used');
 	$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
-	if($_SESSION['CompanyRecord']['gllink_debtors']==1) {
+	if ($_SESSION['CompanyRecord']['gllink_debtors']==1) {
 
 /*Post debtors transaction to GL debit debtors, credit freight re-charged and credit sales */
-		if(($_SESSION['Items'.$identifier]->total + $_SESSION['Items'.$identifier]->FreightCost + $TaxTotal) !=0) {
+		if (($_SESSION['Items'.$identifier]->total + $_SESSION['Items'.$identifier]->FreightCost + $TaxTotal) !=0) {
 			$SQL = "INSERT INTO gltrans (type,
 										typeno,
 										trandate,
@@ -1685,7 +1677,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 		/*Could do with setting up a more flexible freight posting schema that looks at the sales type and area of the customer branch to determine where to post the freight recovery */
 
-		if($_SESSION['Items'.$identifier]->FreightCost !=0) {
+		if ($_SESSION['Items'.$identifier]->FreightCost !=0) {
 			$SQL = "INSERT INTO gltrans (
 						type,
 						typeno,
@@ -1708,7 +1700,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		}
 		foreach ( $TaxTotals as $TaxAuthID => $TaxAmount) {
-			if($TaxAmount !=0 ) {
+			if ($TaxAmount !=0 ) {
 				$SQL = "INSERT INTO gltrans (type,
 											typeno,
 											trandate,
@@ -1747,7 +1739,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 	echo '<br /><div class="centre">';
 
-	if($_SESSION['InvoicePortraitFormat']==0) {
+	if ($_SESSION['InvoicePortraitFormat']==0) {
 		echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . '<a target="_blank" href="'.$RootPath.'/PrintCustTrans.php?FromTransNo='.$InvoiceNo.'&amp;InvOrCredit=Invoice&amp;PrintPDF=True">' . _('Print this invoice'). ' (' . _('Landscape') . ')</a><br /><br />';
 	} else {
 		echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . '<a target="_blank" href="'.$RootPath.'/PrintCustTransPortrait.php?FromTransNo='.$InvoiceNo.'&amp;InvOrCredit=Invoice&amp;PrintPDF=True">' . _('Print this invoice'). ' (' . _('Portrait') . ')</a><br /><br />';
@@ -1759,77 +1751,65 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 } else { /*Process Invoice not set so allow input of invoice data */
 
-	if(!isset($_POST['Consignment'])) {
+	if (!isset($_POST['Consignment'])) {
 		if ($_SESSION['Items'.$identifier]->Consignment != '') {
 			$_POST['Consignment'] = $_SESSION['Items'.$identifier]->Consignment;
 		} else {
-			$_POST['Consignment']='';
+			$_POST['Consignment'] = '';
 		}
 	}
-	if(!isset($_POST['Packages'])) {
+	if (!isset($_POST['Packages'])) {
 		if ($_SESSION['Items'.$identifier]->Packages) {
 			$_POST['Packages'] = $_SESSION['Items'.$identifier]->Packages;
 		} else {
 			$_POST['Packages']='1';
 		}
 	}
-	if(!isset($_POST['InvoiceText'])) {
-		$_POST['InvoiceText']='';
+	if (!isset($_POST['InvoiceText'])) {
+		$_POST['InvoiceText'] = '';
 	}
-	$j++;
+
 	echo '<table class="selection">
 		<tr>
-			<td>' ._('Date On Invoice'). ':</td>
-			<td><input tabindex="'.$j.'" type="text" required="required" maxlength="10" size="11" required="required" name="DispatchDate" value="' . $DefaultDispatchDate . '" class="date" /></td>
-		</tr>';
-	$j++;
-	echo '<tr>
-			<td>' . _('Consignment Note Ref'). ':</td>
-			<td><input tabindex="'.$j.'" type="text" data-type="no-illegal-chars" title="' . _('Enter the consignment note reference to enable tracking of the delivery in the event of customer proof of delivery issues') . '" maxlength="20" size="20" name="Consignment" value="' . $_POST['Consignment'] . '" /></td>
-		</tr>';
-	$j++;
-	echo '<tr>
-			<td>' . _('No Of Packages in Delivery'). ':</td>
-			<td><input tabindex="'.$j.'" type="number" maxlength="6" size="6" class="integer" name="Packages" value="' . $_POST['Packages'] . '" /></td>
-		</tr>';
-
-	$j++;
-	echo '<tr>
-			<td>' . _('Action For Balance'). ':</td>
+			<td>', _('Date On Invoice'), ':</td>
+			<td><input class="date" maxlength="10" name="DispatchDate" required="required" size="11" type="text" value="', $DefaultDispatchDate, '" /></td>
+		</tr>
+		<tr>
+			<td>', _('Consignment Note Ref'), ':</td>
+			<td><input data-type="no-illegal-chars" maxlength="20" name="Consignment" size="20" title="', _('Enter the consignment note reference to enable tracking of the delivery in the event of customer proof of delivery issues'), '" type="text" value="', $_POST['Consignment'], '" /></td>
+		</tr>
+		<tr>
+			<td>', _('No Of Packages in Delivery'), ':</td>
+			<td><input class="integer" maxlength="6" name="Packages" size="6" type="number" value="', $_POST['Packages'], '" /></td>
+		</tr>
+		<tr>
+			<td>', _('Action For Balance'), ':</td>
 			 <td>
-				<select required="required" tabindex="' . $j . '" name="BOPolicy">
-					<option selected="selected" value="BO">' . _('Automatically put balance on back order') . '</option>
-					<option value="CAN">' . _('Cancel any quantities not delivered') . '</option>
+				<select name="BOPolicy" required="required">
+					<option selected="selected" value="BO">', _('Automatically put balance on back order'), '</option>
+					<option value="CAN">', _('Cancel any quantities not delivered'), '</option>
 				</select>
 			</td>
-		</tr>';
-	$j++;
-	echo '<tr>
-			<td>' ._('Invoice Text'). ':</td>
-			<td><textarea tabindex="'.$j.'" name="InvoiceText" pattern=".{0,20}" cols="31" rows="5">' . reverse_escape($_POST['InvoiceText']) . '</textarea></td>
-		</tr>';
-
-	++$j;
-	echo '<tr>
-			<td>' . _('Internal Comments') . ':</td>
-			<td><textarea tabindex="' . $j . '" name="InternalComments" pattern=".{0,20}" cols="31" rows="5">' . reverse_escape($_SESSION['Items'.$identifier]->InternalComments) . '</textarea></td>
-		</tr>';
-
-	$j++;
-	echo '</table>
+		</tr>
+		<tr>
+			<td>', _('Invoice Text'), ':</td>
+			<td><textarea name="InvoiceText" pattern=".{0,20}" cols="31" rows="5">', reverse_escape($_POST['InvoiceText']), '</textarea></td>
+		</tr>
+		<tr>
+			<td>', _('Internal Comments'), ':</td>
+			<td><textarea name="InternalComments" pattern=".{0,20}" cols="31" rows="5">', reverse_escape($_SESSION['Items'.$identifier]->InternalComments), '</textarea></td>
+		</tr>
+	</table>
 		<br />
 		<div class="centre">
-			<input type="submit" tabindex="'.$j.'" name="Update" value="' . _('Update'). '" />
-			<br />';
-
-	$j++;
-	echo '<br />
-		<input type="submit" tabindex="'.$j.'" name="ProcessInvoice" value="'._('Process Invoice').'" />
+			<input name="Update" type="submit" value="', _('Update'), '" />
+			<input name="ProcessInvoice" type="submit" value="', _('Process Invoice'), '" />
 		</div>
 		<input type="hidden" name="ShipVia" value="' . $_SESSION['Items'.$identifier]->ShipVia . '" />';
 }
+
 echo '</div>';
 echo '</form>';
 
-include('includes/footer.php');
+include ('includes/footer.php');
 ?>
