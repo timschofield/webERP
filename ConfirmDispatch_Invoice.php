@@ -1,4 +1,5 @@
 <?php
+/* ConfirmDispatch_Invoice.php */
 /* Creates sales invoices from entered sales orders based on the quantities dispatched that can be modified */
 
 /* Session started in session.php for password checking and authorisation level check */
@@ -297,7 +298,7 @@ set all the necessary session variables changed by the POST */
 				include ('includes/footer.php');
 				exit;
 			}
-		} else if (isset($_POST[$Itm->LineNumber . '_QtyDispatched' ])) {
+		} elseif (isset($_POST[$Itm->LineNumber . '_QtyDispatched' ])) {
 			if (is_numeric(filter_number_format($_POST[$Itm->LineNumber . '_QtyDispatched' ]))
 				AND filter_number_format($_POST[$Itm->LineNumber . '_QtyDispatched']) <= ($_SESSION['Items'.$identifier]->LineItems[$Itm->LineNumber]->Quantity - $_SESSION['Items'.$identifier]->LineItems[$Itm->LineNumber]->QtyInv)) {
 
@@ -1061,7 +1062,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 				$DbgMsg = _('The following SQL to update the location stock record was used');
 				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-			} else if ($MBFlag=='A') { /* its an assembly */
+			} elseif ($MBFlag=='A') { /* its an assembly */
 				/*Need to get the BOM for this part and make
 				stock moves for the components then update the Location stock balances */
 				$Assembly=True;
@@ -1765,7 +1766,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 		}
 	}
 	if (!isset($_POST['InvoiceText'])) {
-		$_POST['InvoiceText']='';
+		$_POST['InvoiceText'] = '';
 	}
 
 	echo '<table class="selection">
@@ -1806,6 +1807,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 		</div>
 		<input type="hidden" name="ShipVia" value="' . $_SESSION['Items'.$identifier]->ShipVia . '" />';
 }
+
 echo '</div>';
 echo '</form>';
 
