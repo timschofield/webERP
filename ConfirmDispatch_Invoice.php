@@ -12,6 +12,7 @@ $ViewTopic = 'ARTransactions';
 $BookMark = 'ConfirmInvoice';
 include ('includes/header.php');
 
+include ('includes/CurrenciesArray.php');
 include ('includes/SQL_CommonFunctions.inc');
 include ('includes/FreightCalculation.inc');
 include ('includes/GetSalesTransGLCodes.inc');
@@ -321,18 +322,26 @@ set all the necessary session variables changed by the POST */
 if ($_SESSION['Items'.$identifier]->SpecialInstructions) {
 	prnMsg($_SESSION['Items'.$identifier]->SpecialInstructions,'warn');
 }
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Confirm Invoice') .
-	'" alt="" />' . ' ' . _('Confirm Dispatch and Invoice'). '</p>';
-echo '<table class="selection">
-			<tr>
-				<th><img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Customer Code') . ' :<b> ' . $_SESSION['Items'.$identifier]->DebtorNo . '</b></th>
-				<th>' . _('Customer Name') . ' :<b> ' . $_SESSION['Items'.$identifier]->CustomerName. '</b></th>
-			</tr>
-			<tr>
-				<th colspan ="2"><b>' . _('Invoice amounts stated in') . ' ' . $_SESSION['Items'.$identifier]->DefaultCurrency . '</b></th>
-			</tr>
-			</table>
-			<br />';
+
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+	'/images/inventory.png" title="', // Icon image.
+	_('Confirm Dispatch and Invoice'), '" /> ', // Icon title.
+	_('Confirm Dispatch and Invoice'), '</p>', // Page title.
+	'<table class="selection">
+		<tr>
+			<td>', _('Customer Code'), '</td>
+			<td class="text">', $_SESSION['Items'.$identifier]->DebtorNo, '</td>
+		</tr>
+		<tr>
+			<td>', _('Customer Name'), '</td>
+			<td class="text">', $_SESSION['Items'.$identifier]->CustomerName, '</td>
+		</tr>
+		<tr>
+			<td>', _('Invoice amounts stated in'), '</td>
+			<td class="text">', $_SESSION['Items'.$identifier]->DefaultCurrency, ' - ', $CurrencyName[$_SESSION['Items'.$identifier]->DefaultCurrency], '</td>
+		</tr>
+	</table>
+	<br />';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier . '" method="post">';
 echo '<div>';
