@@ -396,11 +396,11 @@ select.selecterror{
 #MainMenuDiv{
 	float:left;
 	white-space:nowrap;
-	text-align:center; 
+	text-align:center;
 	width:11%;
 }
 #MainMenuDiv ul{
-	margin:0 3px 0 0; 
+	margin:0 3px 0 0;
 	padding:0;
 }
 #MainMenuDiv li{
@@ -502,8 +502,8 @@ color:red;
 	margin: 0 0 0 12px;
 }
 
-#TransactionsDiv,#InquiriesDiv,#MaintenanceDiv{ 
-display:table-cell; 
+#TransactionsDiv,#InquiriesDiv,#MaintenanceDiv{
+display:table-cell;
 }
 #InquiriesDiv div{ /* header for standard reports/forms, custom reports */
 	background:url("images/desk.jpg") #631;
@@ -565,6 +565,11 @@ display:table-cell;
 	padding:5px;
 	text-align:center;
 	/* Class selector for page title. */
+}
+.gallery {
+	margin: 5px;
+	float: left;
+	/* Class selector to let an element float to the left. */
 }
 /* END Style for all. ********************************************************/
 

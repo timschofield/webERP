@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-05-20 16:34-0400\n"
-"PO-Revision-Date: 2018-05-07 08:09-0600\n"
+"PO-Revision-Date: 2018-09-18 13:51-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Launchpad-Export-Date: 2011-05-24 09:54+0000\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -12475,7 +12475,7 @@ msgstr "TODO"
 
 #: FixedAssetRegister.php:314
 msgid " From Date"
-msgstr "Fecha inicial"
+msgstr " Fecha inicial"
 
 #: FixedAssetRegister.php:315
 msgid "Enter the start date to show the cost and accumulated depreciation from"
@@ -19429,7 +19429,7 @@ msgstr ""
 
 #: PDFAck.php:225
 msgid "Notes:"
-msgstr ""
+msgstr "Notas:"
 
 #: PDFAck.php:245
 msgid "Total Excluding Tax"
@@ -25066,7 +25066,7 @@ msgstr "El SQL usado para actualizar las cabeceras del informe fue"
 
 #: SalesAnalRepts.php:165
 msgid "report has been updated"
-msgstr "El informe ha sido actualizado"
+msgstr "el informe ha sido actualizado"
 
 #: SalesAnalRepts.php:224
 msgid "The report could not be added because"
@@ -25078,7 +25078,7 @@ msgstr "El SQL usado para agregar la cabecera del informe fue"
 
 #: SalesAnalRepts.php:228
 msgid "report has been added to the database"
-msgstr "Se agregó el informe a la base de datos"
+msgstr "se agregó el informe a la base de datos"
 
 #: SalesAnalRepts.php:255
 msgid "The deletion of the report column failed because"
@@ -33359,7 +33359,7 @@ msgstr ""
 
 #: SystemParameters.php:139
 msgid "Cannot open the configuration file."
-msgstr ""
+msgstr "No se puede abrir el archivo de configuración."
 
 #: SystemParameters.php:385
 msgid "The system configuration could not be updated because"
@@ -34889,11 +34889,11 @@ msgstr ""
 
 #: TestPlanResults.php:409
 msgid " from sample"
-msgstr "de la muestra"
+msgstr " de la muestra"
 
 #: TestPlanResults.php:409
 msgid " for test "
-msgstr "para prueba"
+msgstr " para prueba"
 
 #: TestPlanResults.php:415
 msgid "Test Results have NOT BEEN overwritten for Result ID "
@@ -34905,11 +34905,11 @@ msgstr ""
 
 #: TestPlanResults.php:450
 msgid " from "
-msgstr "desde"
+msgstr " desde"
 
 #: TestPlanResults.php:450
 msgid " for "
-msgstr "para"
+msgstr " para"
 
 #: TestPlanResults.php:595
 msgid "A Sample Result record has been added for Test ID"
@@ -39158,7 +39158,7 @@ msgstr "está vacío"
 
 #: Z_MakeNewCompany.php:186
 msgid "Cannot open the configuration file: "
-msgstr ""
+msgstr "No se puede abrir el archivo de configuración:"
 
 #: Z_MakeNewCompany.php:220
 msgid "The company details and parameters should now be set up for the new company. NB: Only a single user \"admin\" is defined with the password \"weberp\" in the new company database. A new system administrator user should be defined for the new company and this account deleted immediately."
@@ -40544,7 +40544,7 @@ msgstr "Mali"
 
 #: includes/CountriesArray.php:131
 msgid "Myanmar"
-msgstr ""
+msgstr "Myanmar"
 
 #: includes/CountriesArray.php:132
 msgid "Mongolia"
@@ -41899,11 +41899,11 @@ msgstr "Cantidad"
 
 #: includes/DefineTenderClass.php:48
 msgid " Unit "
-msgstr "Unidad"
+msgstr " Unidad"
 
 #: includes/DefineTenderClass.php:48
 msgid " Item Description"
-msgstr "Descripción del artículo"
+msgstr " Descripción del artículo"
 
 #: includes/DefineTenderClass.php:52
 msgid "Tender received from"
@@ -45998,7 +45998,7 @@ msgstr ""
 
 #: install/index.php:400
 msgid "Cannot open the configuration file"
-msgstr ""
+msgstr "No se puede abrir el archivo de configuración"
 
 #: install/index.php:404
 msgid "Cannot write to the configuration file"
@@ -46455,11 +46455,11 @@ msgstr ""
 
 #: ../webSHOP/Checkout.php:390
 msgid "Customer Phone"
-msgstr ""
+msgstr "Teléfono del cliente"
 
 #: ../webSHOP/Checkout.php:391
 msgid "Customer Email"
-msgstr ""
+msgstr "Correo-e del cliente"
 
 #: ../webSHOP/Checkout.php:392 ../webSHOP/includes/DisplayShoppingCart.php:88
 msgid "Total Due"
@@ -46925,7 +46925,7 @@ msgstr "Volver a categoría"
 
 #: ../webSHOP/ItemDetails.php:141
 msgid "Product Details"
-msgstr ""
+msgstr "Detalles del producto"
 
 #: ../webSHOP/Register.php:37
 msgid "You have already registered this email address on the system please login to use your existing account"
@@ -47025,23 +47025,23 @@ msgstr "País de entrega"
 
 #: ../webSHOP/Register.php:288
 msgid "Postal Address 1 "
-msgstr ""
+msgstr "Dirección postal 1"
 
 #: ../webSHOP/Register.php:292
 msgid "Postal Address 2 "
-msgstr ""
+msgstr "Dirección postal 2"
 
 #: ../webSHOP/Register.php:296
 msgid "Postal Address 3 "
-msgstr ""
+msgstr "Dirección postal 3"
 
 #: ../webSHOP/Register.php:300
 msgid "Postal Address 4 "
-msgstr ""
+msgstr "Dirección postal 4"
 
 #: ../webSHOP/Register.php:304
 msgid "Postal Address 5 "
-msgstr ""
+msgstr "Dirección postal 5"
 
 #: ../webSHOP/Register.php:308
 msgid "Postal Address Country"

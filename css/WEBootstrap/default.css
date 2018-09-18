@@ -630,28 +630,6 @@ select.selecterror {
 #Report table {
 	/* Body of a report formatted with table tag. */
 }
-.centre {
-	text-align:center;
-	/* Class selector to horizontal align a text (centre) in an element. */
-}
-.number {
-	text-align:right;
-	/* Class selector to horizontal align a number (right) in an element. */
-}
-.text {
-	text-align:left;
-	/* Class selector to horizontal align a text (left) in an element. */
-}
-.page_title_text {
-	color:black;
-	font-size:18px;
-	margin:10px auto;
-	padding-bottom:2px;
-	padding-top:2px;
-	text-align:center;
-	width:60%;
-	/* Class selector for page title. */
-}
 
 @media (min-width:1098px) {
 	.navbar-toggle {
@@ -702,5 +680,32 @@ select.selecterror {
 	font-size:30px;
 }
 
-
+.centre {
+	text-align:center;
+	/* Class selector to horizontal align a text (centre) in an element. */
+}
+.number {
+	text-align:right;
+	/* Class selector to horizontal align a number (right) in an element. */
+}
+.text {
+	text-align:left;
+	/* Class selector to horizontal align a text (left) in an element. */
+}
+.page_title_text {
+	color:black;
+	font-size:18px;
+	margin:10px auto;
+	padding-bottom:2px;
+	padding-top:2px;
+	text-align:center;
+	width:60%;
+	/* Class selector for page title. */
+}
+.gallery {
+	margin: 5px;
+	float: left;
+	/* Class selector to let an element float to the left. */
+}
 /* END Style for all. ********************************************************/
+

@@ -567,6 +567,11 @@ li {
 	text-align:center;
 	/* Class selector for page title. */
 }
+.gallery {
+	margin: 5px;
+	float: right;
+	/* Class selector to let an element float to the right. */
+}
 /* END Style for all. ********************************************************/
 
 

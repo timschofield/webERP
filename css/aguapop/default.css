@@ -17,7 +17,7 @@ button img {
 body {
 	font-family:Arial, Verdana, Helvetica, sans-serif;
 	font-size:10pt;
-	background: silver;  
+	background: silver;
 	margin:0;
 	padding:0;
 }
@@ -268,7 +268,7 @@ li {
 
 /* CANVAS */
 
-#CanvasDiv { 
+#CanvasDiv {
 	background:steelblue;
 	border-radius:20px;
 	box-shadow:3px 3px 4px #86C3D7 inset, -3px -3px 4px #383878 inset, 0 0 10px black;
@@ -357,11 +357,11 @@ li {
 	width:11%;
 }
 #MainMenuDiv ul{
-	margin:0; 
+	margin:0;
 	padding:0;
 }
 #MainMenuDiv li{
-	list-style:none; 
+	list-style:none;
 }
 #MainMenuDiv li a,
 #MainMenuDiv li a:hover,
@@ -422,18 +422,18 @@ li {
 
 .menu_group_item {
 	padding:2px;
-	text-align:left; 
+	text-align:left;
 }
 .menu_group_item:hover{
 	background:lightblue;
-	text-align:left; 
+	text-align:left;
 }
 
 .menu_group_item p { /* bullet */
 	color: red; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
 	text-indent: -10px; /* this makes the bullet to appear as the li tag previously used */
 	margin: 0 0 0 12px;
-	text-align:left; 
+	text-align:left;
 }
 .menu_group_item a{
 	color:black;
@@ -447,7 +447,7 @@ li {
 #TransactionsDiv,#InquiriesDiv,#MaintenanceDiv{
 	background:whitesmoke;
 	border:2px solid steelblue;
-	display:table-cell; 
+	display:table-cell;
 }
 #InquiriesDiv div{ /* to center custom report/form header */
 	background:lightsteelblue;
@@ -507,6 +507,11 @@ li {
 	padding:5px;
 	text-align:center;
 	/* Class selector for page title. */
+}
+.gallery {
+	margin: 5px;
+	float: left;
+	/* Class selector to let an element float to the left. */
 }
 /* END Style for all. ********************************************************/
 

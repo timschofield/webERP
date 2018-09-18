@@ -525,6 +525,11 @@ select.selecterror{ /*AccountGroups.php, BankAccounts.php, BOMs.php, Stocks.php 
 	text-align:center;
 	/* Class selector for page title. */
 }
+.gallery {
+	margin: 5px;
+	float: left;
+	/* Class selector to let an element float to the left. */
+}
 /* END Style for all. ********************************************************/
 
 
