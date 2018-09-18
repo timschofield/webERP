@@ -507,6 +507,7 @@ textarea.texterror {
 	/* Body of a report formatted with table tag. */
 }
 
+/* CLASS SELECTORS: */
 .centre {
 	text-align:center;
 	/* Class selector to horizontally align a text (centre) in an element. */
@@ -525,6 +526,11 @@ textarea.texterror {
 	padding:5px;
 	text-align:center;
 	/* Class selector for page title. */
+}
+.gallery {
+	margin: 5px;
+	float: left;
+	/* Class selector to let an element float to the left. */
 }
 /* END Style for all. ********************************************************/
 

@@ -130,14 +130,6 @@ $PaperSizes = array('A3_Portrait', 'A3_Landscape',
 
 
 // BEGIN: Procedure division ---------------------------------------------------
-echo '
-<style>
-	div.gallery {
-	    margin: 5px;
-	    float: left;
-		}
-</style>'; // WARNING: THIS <style> SHOULD BE PLACED IN ALL CSS.
-
 /* If the user has chosen to either preview the form, or
  * save it then we first have to get the POST values into a
  * simplexml object and then save the file as either a
