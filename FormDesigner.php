@@ -14,8 +14,9 @@
 	- Alignment,
 	- Show (to show or not an element). */
 
-// RCHACON: To Do: standardize the name of the parameters x, y, width, height, font-size, alignment and radius inside the xml files.
-// RCHACON: Question: The use or not of <label for="KeyId">KeyCaption</label> <input id="KeyId" name="KeyName" type="..." value="KeyValue"> for usability ?
+/* RCHACON: To Do: standardize the name of the parameters x, y, width, height, font-size, alignment and radius inside the xml files. Non-standard attribute "Length" should be replace with "width". */
+/* RCHACON: Question: The use or not of <label for="KeyId">KeyCaption</label> <input id="KeyId" name="KeyName" type="..." value="KeyValue"> for usability ? */
+
 
 include('includes/session.php');
 $Title = _('Form Designer');
@@ -32,44 +33,41 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 // BEGIN: Functions division ---------------------------------------------------
 function InputX($keyName, $keyValue) {
 	 // Function to input the X coordinate from the left side of the sheet to the left side of the field in points (72 points = 25,4 mm).
-	echo '<td class="number">', _('x'), ' = ',
-		'</td><td><input class="number" maxlength="4" name="', $keyName, 'x" size="4" title="',
-		_('Distance from the left side of the sheet to the left side of the element in points') .
-		'" type="number" value="', $keyValue, '" /></td>';
+	echo '<td class="number"><label for="', $keyName, 'x">', _('x'), ' = </label></td>',
+		'<td><input class="number" id="', $keyName, 'x" maxlength="4" name="', $keyName, 'x" size="4" title="',
+			_('Distance from the left side of the sheet to the left side of the element in points'),
+			'" type="number" value="', $keyValue, '" /></td>';
 }
 function InputY($keyName, $keyValue) {
 	 // Function to input the Y coordinate from the lower side of the sheet to the top side of the field in points (72 points = 25,4 mm).
-	echo '<td class="number">', _('y'), ' = ',
-		'</td><td><input class="number" maxlength="4" name="', $keyName, 'y" size="4" title="',
-		_('Distance from the lower side of the sheet to the top side of the element in points'),
-		'" type="number" value="', $keyValue, '" /></td>';
+	echo '<td class="number"><label for="', $keyName, 'y">', _('y'), ' = </label></td>',
+		'<td><input class="number" id="', $keyName, 'y" maxlength="4" name="', $keyName, 'y" size="4" title="',
+			_('Distance from the lower side of the sheet to the top side of the element in points'),
+			'" type="number" value="', $keyValue, '" /></td>';
 }
-
-
 function InputLength($keyName, $keyValue) {
 	 // Function to input the the Length of the field in points (72 points = 25,4 mm).
-	echo '<td class="number">', _('Width'), ' = ',
-		'</td><td><input class="number" maxlength="4" name="', $keyName, 'Length" size="4" title="',
-		_('Width of the element in points'),
-		'" type="number" value="', $keyValue, '" /></td>';
-	 // Requires to standardize xml files from "Length" to "Width" before changing the html name.**********
+	echo '<td class="number"><label for="', $keyName, 'Length">', _('Width'), ' = </label></td>',
+		'<td><input class="number" id="', $keyName, 'Length" maxlength="4" name="', $keyName, 'Length" size="4" title="',
+			_('Width of the element in points'),
+			'" type="number" value="', $keyValue, '" /></td>';
+	 // Requires to standardize xml files from "Length" to "Width" before changing the xml name.**********
 }
-
 function InputWidth($keyName, $keyValue) {
 	 // Function to input the the width of the field in points (72 points = 25,4 mm).
-	echo '<td class="number">', _('Width'), ' = ',
-		'</td><td><input class="number" maxlength="4" name="', $keyName, 'width" size="4" title="',
-		_('Width of the element in points'),
-		'" type="number" value="', $keyValue, '" /></td>';
-	 // Requires to standardize xml files from "width" to "Width" before changing the html name.**********
+	echo '<td class="number"><label for="', $keyName, 'width">', _('Width'), ' = </label></td>',
+		'<td><input class="number" id="', $keyName, 'width" maxlength="4" name="', $keyName, 'width" size="4" title="',
+			_('Width of the element in points'),
+			'" type="number" value="', $keyValue, '" /></td>';
+	 // Requires to standardize xml files from "width" to "Width" before changing the xml name.**********
 }
 function InputHeight($keyName, $keyValue) {
 	 // Function to input the the height of the field in points (72 points = 25,4 mm).
-	echo '<td class="number">', _('Height'), ' = ',
-		'</td><td><input class="number" maxlength="4" name="', $keyName, 'height" size="4" title="'.
-		_('Height of the element in points'),
-		'" type="number" value="', $keyValue, '" /></td>';
-	 // Requires to standardize xml files from "height" to "Height" before changing the html name.**********
+	echo '<td class="number"><label for="', $keyName, 'height">', _('Height'), ' = </label></td>',
+		'<td><input class="number" id="', $keyName, 'height" maxlength="4" name="', $keyName, 'height" size="4" title="',
+			_('Height of the element in points'),
+			'" type="number" value="', $keyValue, '" /></td>';
+	 // Requires to standardize xml files from "height" to "Height" before changing the xml name.**********
 }
 function SelectAlignment($keyName, $keyValue) {
 	 // Function to select a text alignment.
@@ -90,16 +88,12 @@ function SelectAlignment($keyName, $keyValue) {
 	}
 	echo '</select></td>';
 }
-function SelectFontSize($keyName, $keyValue) {
+function InputFontSize($keyName, $keyValue) {
 	 // Function to select a text font size.
-	$FontSizes = array(6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 20, 22, 24, 26, 28, 32, 36, 40, 44, 48); // Possible font sizes
-	echo '<td>' . _('Font Size'). ' = </td><td><select name="', $keyName, 'FontSize">';
-	foreach ($FontSizes as $FontSize) {
-		echo '<option';
-		if ($FontSize==$keyValue) {echo ' selected="selected"';}
-		echo ' title="'._('Font size in points') . '" value="'.$FontSize.'">' . $FontSize . '</option>';
-	}
-	echo '</select></td>';
+	echo '<td class="number"><label for="', $keyName, 'FontSize">', _('Font Size'), ' = </label></td>',
+		'<td><input class="number" id="', $keyName, 'FontSize" maxlength="4" name="', $keyName, 'FontSize" size="4" title="',
+			_('Font size in points'),
+			'" type="number" value="', $keyValue, '" /></td>';
 }
 function SelectShowElement($keyName, $keyValue) {
 	 // Function to select to show or not an element.
@@ -108,7 +102,8 @@ function SelectShowElement($keyName, $keyValue) {
 	$Shows['No']['Title'] = _('Does not display this element');
 	$Shows['Yes']['Caption'] = _('Yes');
 	$Shows['Yes']['Title'] = _('Displays this element');
-	echo '<td>' . _('Show'). ' = </td><td><select name="', $keyName, 'Show">';
+	echo '<td><label for="', $keyName, 'Show">', _('Show'), ' = </label></td>',
+		'<td><select id="', $keyName, 'Show" name="', $keyName, 'Show">';
 	foreach ($Shows as $ShowValue => $ShowOption) {
 		echo '<option';
 		if ($ShowValue==$keyValue) {echo ' selected="selected"';}
@@ -258,13 +253,13 @@ echo '<table class="selection">
 				<th colspan="2">',  _((string)$FormDesign['name']), '</th>
 			</tr>
 			<tr>
-				<td>', _('Form Name'), '</td>
-				<td><input name="formname" type="text" value="', $FormDesign['name'], '" /></td>
+				<td><label for="formname">', _('Form Name'), '</label></td>
+				<td><input id="formname" name="formname" type="text" value="', $FormDesign['name'], '" /></td>
 			</tr>
 			<tr>', // Select the paper size/orientation:
-				'<td>', _('Paper Size'), '</td>
+				'<td><label for="PaperSize">', _('Paper Size'), '</label></td>
 				<td>
-					<select name="PaperSize">';
+					<select id="PaperSize" name="PaperSize">';
 foreach ($PaperSizes as $Paper) {
 	if (mb_substr($Paper,-8)=='Portrait') {
 		$PaperValue = mb_substr($Paper,0,mb_strlen($Paper)-9);
@@ -281,8 +276,8 @@ echo				'</select>
 				</td>
 			</tr>
 			<tr>', // Sets the standard line height for the form:
-				'<td>', _('Line Height'), '</td>
-				<td><input class="number" maxlength="4" name="LineHeight" size="4" title="', _('Standard line height for the form'), '" type="number" value="', $FormDesign->LineHeight, '" /></td>
+				'<td><label for="LineHeight">', _('Line Height'), '</label></td>
+				<td><input class="number" id="LineHeight" maxlength="4" name="LineHeight" size="4" title="', _('Standard line height for the form'), '" type="number" value="', $FormDesign->LineHeight, '" /></td>
 			</tr>
 		</table>
 		<hr />
@@ -302,14 +297,14 @@ foreach ($FormDesign as $key) {
 	        echo '<tr><th colspan="2">', _((string)$key['name']), '</th></tr>
 				<tr>', InputX($key['id'], $key->x), '</tr>
 				<tr>', InputY($key['id'], $key->y), '</tr>
-				<tr>', SelectFontSize($key['id'], $key->FontSize), '</tr>';
+				<tr>', InputFontSize($key['id'], $key->FontSize), '</tr>';
 			break;
 		case 'MultiLineText':
 	        echo '<tr><th colspan="2">', _((string)$key['name']), '</th></tr>
 				<tr>', InputX($key['id'], $key->x), '</tr>
 				<tr>', InputY($key['id'], $key->y), '</tr>
-				<tr>', InputLength($key['id'], $key->Length), '</tr>', // // Non-standard attribute "Length" instead of "width".
-				'<tr>', SelectFontSize($key['id'], $key->FontSize), '</tr>';
+				<tr>', InputLength($key['id'], $key->Length), '</tr>', // Non-standard attribute "Length" instead of "width".
+				'<tr>', InputFontSize($key['id'], $key->FontSize), '</tr>';
 			break;
 		case 'ElementArray':
 			echo '<tr><th colspan="7">' . _((string)$key['name']) . '</th></tr>';
@@ -319,18 +314,18 @@ foreach ($FormDesign as $key) {
 					echo '<td>' . _((string)$subkey['name']) . '</td>';
 					InputX($subkey['id'], $subkey->x);
 					InputY($subkey['id'], $subkey->y);
-					SelectFontSize($subkey['id'], $subkey->FontSize);
+					InputFontSize($subkey['id'], $subkey->FontSize);
 				} elseif ($subkey['type']=='MultiLineText') { // This element (9 td) overflows the table size (7 td).
 					echo '<td>' . _((string)$subkey['name']) . '</td>';
 					InputX($subkey['id'], $subkey->x);
 					InputY($subkey['id'], $subkey->y);
 					InputLength($subkey['id'], $subkey->Length);
-					SelectFontSize($subkey['id'], $subkey->FontSize);
+					InputFontSize($subkey['id'], $subkey->FontSize);
 				} elseif ($subkey['type']=='DataText') {
 					echo '<td>' . _((string)$subkey['name']) . '</td>';
 					InputX($subkey['id'], $subkey->x);
 					InputLength($subkey['id'], $subkey->Length);
-					SelectFontSize($subkey['id'], $subkey->FontSize);
+					InputFontSize($subkey['id'], $subkey->FontSize);
 				} elseif ($subkey['type']=='StartLine') {
 					echo '<td colspan="3">' . _((string)$subkey['name']) . ' = ' . '</td>';
 					echo '<td><input type="text" class="number" name="StartLine" size="4" maxlength="4" value="'.$key->y.'" /></td>';
