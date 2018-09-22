@@ -665,7 +665,7 @@ select.selecterror {
 .glyphicon.glyphicon-th {
 	font-size:30px;
 }
-/* BEGIN Class selectors for all styles Style for all. --------------------- */
+/* BEGIN Class selectors of the style for all devices. ---------------------- */
 .centre {
 	text-align:center;
 	/* Class selector to horizontal align a text (centre) in an element. */
@@ -708,6 +708,6 @@ select.selecterror {
 	width:60%;
 	/* Class selector for page title. */
 }
-/* END Class selectors for all styles Style for all. ----------------------- */
-/* END Style for all. ====================================================== */
+/* END Class selectors of the style for all devices. ------------------------ */
+/* END Style for all devices.================================================ */
 

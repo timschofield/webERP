@@ -380,7 +380,7 @@ list-style-image:url(bullet.gif);
 #Report table {
 	/* Body of a report formatted with table tag. */
 }
-/* BEGIN Class selectors for all styles Style for all. --------------------- */
+/* BEGIN Class selectors of the style for all devices. ---------------------- */
 .centre {
 	text-align:center;
 	/* Class selector to horizontal align a text (centre) in an element. */
@@ -421,8 +421,8 @@ list-style-image:url(bullet.gif);
 	text-align:center;
 	/* Class selector for page title. */
 }
-/* END Class selectors for all styles Style for all. ----------------------- */
-/* END Style for all. ====================================================== */
+/* END Class selectors of the style for all devices. ------------------------ */
+/* END Style for all devices.================================================ */
 
 
 /* If you want to use a cascading style sheet for a small device width, uncomment line "<meta name="viewport" content="width=device-width, initial-scale=1" />" on includes/header.inc and use the following sections. */
