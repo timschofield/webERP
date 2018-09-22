@@ -77,29 +77,29 @@ th.text{
 	text-align:left;
 }
 th.ascending {
-  cursor: s-resize;
+	cursor:s-resize;
 }
 th.descending {
-  cursor: n-resize;
+	cursor:n-resize;
 }
 th:after {
-	content: "";
-	float: right;
-	margin-top: 7px;
-	visibility: hidden;
+	content:"";
+	float:right;
+	margin-top:7px;
+	visibility:hidden;
 }
 th.ascending:after {
-	border-width: 0 4px 4px;
-	border-style: solid;
-	border-color: #000 transparent;
-	visibility: visible;
+	border-width:0 4px 4px;
+	border-style:solid;
+	border-color:#000 transparent;
+	visibility:visible;
 }
 th.descending:after {
-	border-bottom: none;
-	border-left: 4px solid transparent;
-	border-right: 4px solid transparent;
-	border-top: 4px solid #000;
-	visibility: visible;
+	border-bottom:none;
+	border-left:4px solid transparent;
+	border-right:4px solid transparent;
+	border-top:4px solid #000;
+	visibility:visible;
 }
 td{
 	font-family:Arial, Verdana, Helvetica, sans-serif;
@@ -148,10 +148,10 @@ input.image{
 }
 input.inputerror, input.error, select.error, select.selecterror, label.error {
 	color:red;
-	border: 2px solid red;
+	border:2px solid red;
 }
 input:required, select:required, textarea:required {
-	background-color:lightyellow;
+	background-color:#ffffe0;
 }
 select{
 	font-family:Arial, Verdana, Helvetica, sans-serif;
@@ -165,62 +165,43 @@ tr.striped_row:nth-of-type(odd) {
 	background-color:#EEEEEE;
 }
 div.Message {
-    border-radius:10px;
-    padding:10px 10px 10px 36px;
-    margin:5px;
-	opacity: 1;
-    transition: opacity 0.6s; /* 600ms to fade out */
+	border-radius:10px;
+	padding:10px 10px 10px 36px;
+	margin:5px;
+	opacity:1;
+	transition:opacity 0.6s; /* 600ms to fade out */
 }
 div.Message.error {
 	background:#ffecec url('images/message-error.png') no-repeat 10px 50%;
-    border:1px solid #f5aca6;
+	border:1px solid #f5aca6;
 }
 div.Message.success {
 	background:#e9ffd9 url('images/message-success.png') no-repeat 10px 50%;
-    border:1px solid #a6ca8a;
+	border:1px solid #a6ca8a;
 }
 div.Message.info {
 	background:#e3f7fc url('images/message-info.png') no-repeat 10px 50%;
-    border:1px solid #8ed9f6;
+	border:1px solid #8ed9f6;
 }
 div.Message.warn {
 	background:#fff8c4 url('images/message-warning.png') no-repeat 10px 50%;
-    border:1px solid #f2c779;
+	border:1px solid #f2c779;
 }
 .MessageCloseButton {
-    margin-left: 15px;
-    color: #C8C8C8;
-    font-weight: bold;
-    float: right;
-    font-size: 20px;
-	line-height: 17px;
-	cursor: pointer;
-    transition: 0.3s;
+	margin-left:15px;
+	color:#C8C8C8;
+	font-weight:bold;
+	float:right;
+	font-size:20px;
+	line-height:17px;
+	cursor:pointer;
+	transition:0.3s;
 }
 .MessageCloseButton:hover {
-    color: #606060;
+	color:#606060;
 }
 #MessageContainerFoot {
-	display: none;
-}
-div.page_help_text{ /* many */
-	background-color:#ccc;/* lightgray is not a w3c css valid color #ccc */
-	border:#a52a2a 1px solid;
-	border-radius: 5px;
-	padding-top:3px;/* 2px in merge */
-	padding-bottom:3px; /* 2px in merge */
-	padding-left:3px;   /* 10px in merge */
-	z-index:1;
-	width:50%; /* 80% in merge */
-	float:none;
-	visibility:visible;
-	margin:0 auto;
-	position:static;
-	font-family:Verdana, Arial, Helvetica;
-	font-weight:normal;
-	font-size:100%;
-	color:black;
-	text-align:center;
+	display:none;
 }
 
 .dpTbl{
@@ -250,17 +231,17 @@ div.page_help_text{ /* many */
 
 .table1 {
 	width:90%;
-	background: #eee;
-	border: 0px 0px 2px 2px #222 solid;
-	background: #eee;
-	margin: 0 auto;
+	background:#eee;
+	border:0px 0px 2px 2px #222 solid;
+	background:#eee;
+	margin:0 auto;
 }
 .tableheader{
 	font-weight:normal;
 	background-color:#cccce5;
 	color:#300;
 }
-.notavailable{ /* WorkOrderIssue.php, WorkOrderStatus.php  */
+.notavailable{ /* WorkOrderIssue.php, WorkOrderStatus.php */
 	font-weight:lighter;/* light is not a w3c css valid font weight */
 	font-style:italic;
 	color:#555;
@@ -269,11 +250,11 @@ div.page_help_text{ /* many */
 	font-weight:bold;
 	font-style:normal;
 	font-size:120%;
-	color:black;
+	color:#000000;
 	background-color:#ccc;
 }
 .table_index {
-	background-color: #F1FFDD;
+	background-color:#F1FFDD;
 }
 
 .header{ /* used in \includes\InputSerialItemsFile.php */
@@ -321,7 +302,7 @@ select.selecterror{ /*AccountGroups.php, BankAccounts.php, BOMs.php, Stocks.php 
 	background:url(images/menu_bg_grey.png) repeat-x #cfcfcf;
 	color:gray;
 	padding:3px;
-	border:thin solid lightgray;
+	border:thin solid d3d3d3;
 }
 #HeaderWrapDiv{
 }
@@ -344,7 +325,7 @@ select.selecterror{ /*AccountGroups.php, BankAccounts.php, BOMs.php, Stocks.php 
 	color:gray;
 }
 #AppInfoUserDiv a:hover{
-	color:black;
+	color:#000000;
 	text-decoration:underline;
 }
 #AppInfoModuleDiv{
@@ -353,7 +334,7 @@ select.selecterror{ /*AccountGroups.php, BankAccounts.php, BOMs.php, Stocks.php 
 /*** HEADER - QUICK MENU ***/
 
 #QuickMenuDiv{
-	float:right; /* to the right side  */
+	float:right; /* to the right side */
 	margin-top:2px;
 }
 #QuickMenuDiv ul{
@@ -368,13 +349,13 @@ select.selecterror{ /*AccountGroups.php, BankAccounts.php, BOMs.php, Stocks.php 
 
 #QuickMenuDiv li a{
 	padding:9px; /* links as button */
-	border:thin outset lightgray; /* un-pressed state */
+	border:thin outset d3d3d3; /* un-pressed state */
 }
 #QuickMenuDiv li a:hover{
 	padding:9px; /* links as button */
-	border:thin inset lightgray; /* pressed state */
+	border:thin inset d3d3d3; /* pressed state */
 	text-decoration:none; /* no underline */
-	color:black;
+	color:#000000;
 }
 
 /*** BODY ***/
@@ -382,7 +363,7 @@ select.selecterror{ /*AccountGroups.php, BankAccounts.php, BOMs.php, Stocks.php 
 #BodyDiv{
 	clear:both; /* REQUIRED */
 	overflow:hidden; /* REQUIRED */
-	color:black;
+	color:#000000;
 	background:whitesmoke;
 	padding-bottom:5px;
 	text-align:center;
@@ -415,7 +396,7 @@ select.selecterror{ /*AccountGroups.php, BankAccounts.php, BOMs.php, Stocks.php 
 	display:block; /* REQUIRED */
 	padding:3px;
 	border:thin outset silver;
-	color:black;
+	color:#000000;
 	text-decoration:none;
 	background:silver;
 }
@@ -454,7 +435,7 @@ select.selecterror{ /*AccountGroups.php, BankAccounts.php, BOMs.php, Stocks.php 
 	background:silver;
 	outline:thin outset silver;
 	text-align:center;
-	color:black;
+	color:#000000;
 }
 
 #TransactionsDiv,#InquiriesDiv,#MaintenanceDiv{
@@ -462,7 +443,7 @@ select.selecterror{ /*AccountGroups.php, BankAccounts.php, BOMs.php, Stocks.php 
 }
 #InquiriesDiv div{ /* default div, used for custom report header */
 	background:silver;
-	color:black;
+	color:#000000;
 	padding:2px;
 }
 .menu_group_item p{
@@ -478,7 +459,7 @@ select.selecterror{ /*AccountGroups.php, BankAccounts.php, BOMs.php, Stocks.php 
 	overflow:hidden;
 	color:gray;
 	background:url(images/menu_bg_grey.png) repeat-x #cfcfcf;
-	border:thin solid lightgray;
+	border:thin solid d3d3d3;
 }
 #FooterWrapDiv{
 	overflow:hidden;
@@ -499,13 +480,14 @@ select.selecterror{ /*AccountGroups.php, BankAccounts.php, BOMs.php, Stocks.php 
 	display:block;
 	float:right;
 	line-height:2.8em; /* Center the text vertically.
-						  [vertical-align has no effect on text alone] */
+						[vertical-align has no effect on text alone] */
 }
 #Report {
 	/* Division id for reports. */}
 #Report table {
 	/* Body of a report formatted with table tag. */
 }
+/* BEGIN Class selectors for all styles Style for all. --------------------- */
 .centre {
 	text-align:center;
 	/* Class selector to horizontal align a text (centre) in an element. */
@@ -518,19 +500,41 @@ select.selecterror{ /*AccountGroups.php, BankAccounts.php, BOMs.php, Stocks.php 
 	text-align:left;
 	/* Class selector to horizontal align a text (left) in an element. */
 }
+.gallery {
+	float:left;
+	margin:5px;
+	/* Class selector to let an element float to the left. */
+}
+.page_help_text{ /* many */
+	/* class selector for page help text. */
+	background-color:#d3d3d3;
+	border-radius:5px;
+	border:#a52a2a 1px solid;
+	color:#000000;
+	float:none;
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+	font-size:100%;
+	font-weight:normal;
+	margin:0 auto;
+	padding-bottom:3px; /* 2px in merge */
+	padding-left:3px;	 /* 10px in merge */
+	padding-top:3px;/* 2px in merge */
+	position:static;
+	text-align:center;
+	visibility:visible;
+	width:50%; /* 80% in merge */
+	z-index:1;
+	/* Class selector for page help text. */
+}
 .page_title_text {
-	background:gainsboro;
+	background:#dcdcdc;
 	margin:10px auto;
 	padding:5px;
 	text-align:center;
 	/* Class selector for page title. */
 }
-.gallery {
-	margin: 5px;
-	float: left;
-	/* Class selector to let an element float to the left. */
-}
-/* END Style for all. ********************************************************/
+/* END Class selectors for all styles Style for all. ----------------------- */
+/* END Style for all. ====================================================== */
 
 
 /* If you want to use a cascading style sheet for a small device width, uncomment line "<meta name="viewport" content="width=device-width, initial-scale=1" />" on includes/header.inc and use the following sections. */

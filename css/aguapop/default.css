@@ -17,7 +17,7 @@ button img {
 body {
 	font-family:Arial, Verdana, Helvetica, sans-serif;
 	font-size:10pt;
-	background: silver;
+	background:silver;
 	margin:0;
 	padding:0;
 }
@@ -40,11 +40,11 @@ img{ /* icon on page title, etc */
 }
 
 p.good {
-	font-weight: bold;
-	color: green;
+	font-weight:bold;
+	color:green;
 }
 p.bad {
-	font-weight: bold;
+	font-weight:bold;
 	color:red;
 }
 
@@ -61,49 +61,49 @@ table.selection {
 }
 th {
 	background-color:skyblue;
-	color:black;
+	color:#000000;
 	font-weight:normal;
 	padding:3px;
 }
 th.ascending {
-  cursor: s-resize;
+	cursor:s-resize;
 }
 th.descending {
-  cursor: n-resize;
+	cursor:n-resize;
 }
 th:after {
-	content: "";
-	float: right;
-	margin-top: 7px;
-	visibility: hidden;
+	content:"";
+	float:right;
+	margin-top:7px;
+	visibility:hidden;
 }
 th.ascending:after {
-	border-width: 0 4px 4px;
-	border-style: solid;
-	border-color: #000 transparent;
-	visibility: visible;
+	border-width:0 4px 4px;
+	border-style:solid;
+	border-color:#000 transparent;
+	visibility:visible;
 }
 th.descending:after {
-	border-bottom: none;
-	border-left: 4px solid transparent;
-	border-right: 4px solid transparent;
-	border-top: 4px solid #000;
-	visibility: visible;
+	border-bottom:none;
+	border-left:4px solid transparent;
+	border-right:4px solid transparent;
+	border-top:4px solid #000;
+	visibility:visible;
 }
 th.number {
-	color: white;/* Should be black ? */
-	text-align: right;
+	color:white;/* Should be #000000 ? */
+	text-align:right;
 }
 th.text {
-	color: white;/* Should be black ? */
-	text-align: left;
+	color:white;/* Should be #000000 ? */
+	text-align:left;
 }
 td {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	text-align: left;
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+	text-align:left;
 }
 td.select {
-	background-color: whitesmoke;
+	background-color:whitesmoke;
 	padding:3px;
 }
 
@@ -113,32 +113,32 @@ div.centre {
 }
 
 input { /*specifies the input field text characteristics*/
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-style: italic;
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+	font-style:italic;
 }
 input.image {
-	border-width: 0px;
-	background-color: transparent;
+	border-width:0px;
+	background-color:transparent;
 }
 input:hover{
 	background:#9ffffb;
 }
 select {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-family:Arial, Verdana, Helvetica, sans-serif;
 }
 input.inputerror, input.error, select.error, select.selecterror, label.error {
 	color:red;
-	border: 2px solid red;
+	border:2px solid red;
 }
 input:required, select:required, textarea:required {
-	background-color:lightyellow;
+	background-color:#ffffe0;
 }
 select:hover { /* drop down */
 	background:#9ffffb;
 }
 
 textarea{
-	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-family:Arial, Verdana, Helvetica, sans-serif;
 }
 textarea:hover{
 	background:#9ffffb;
@@ -152,118 +152,100 @@ tr.striped_row:nth-of-type(odd) {
 	background-color:whitesmoke;
 }
 div.Message {
-    border-radius:10px;
-    padding:10px 10px 10px 36px;
-    margin:5px;
-	opacity: 1;
-    transition: opacity 0.6s; /* 600ms to fade out */
+	border-radius:10px;
+	padding:10px 10px 10px 36px;
+	margin:5px;
+	opacity:1;
+	transition:opacity 0.6s; /* 600ms to fade out */
 }
 div.Message.error {
 	background:#ffecec url('images/message-error.png') no-repeat 10px 50%;
-    border:1px solid #f5aca6;
+	border:1px solid #f5aca6;
 }
 div.Message.success {
 	background:#e9ffd9 url('images/message-success.png') no-repeat 10px 50%;
-    border:1px solid #a6ca8a;
+	border:1px solid #a6ca8a;
 }
 div.Message.info {
 	background:#e3f7fc url('images/message-info.png') no-repeat 10px 50%;
-    border:1px solid #8ed9f6;
+	border:1px solid #8ed9f6;
 }
 div.Message.warn {
 	background:#fff8c4 url('images/message-warning.png') no-repeat 10px 50%;
-    border:1px solid #f2c779;
+	border:1px solid #f2c779;
 }
 .MessageCloseButton {
-    margin-left: 15px;
-    color: #C8C8C8;
-    font-weight: bold;
-    float: right;
-    font-size: 20px;
-	line-height: 17px;
-	cursor: pointer;
-    transition: 0.3s;
+	margin-left:15px;
+	color:#C8C8C8;
+	font-weight:bold;
+	float:right;
+	font-size:20px;
+	line-height:17px;
+	cursor:pointer;
+	transition:0.3s;
 }
 .MessageCloseButton:hover {
-    color: #606060;
+	color:#606060;
 }
 #MessageContainerFoot {
-	display: none;
-}
-div.page_help_text {
-	background: lightgrey url(images/help.png) top left no-repeat;
-	border: maroon 1px solid;
-	padding-top:2px;
-	padding-bottom: 2px;
-	z-index: 1;
-	width: 80%;
-	float: none;
-	visibility: visible;
-	margin: 0 auto;
-	position: static;
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-weight: normal;
-	color: black;
-	text-align:center;
-	padding-left: 24px;
-	min-height:26px;
+	display:none;
 }
 
 /* date picker */
 .dpTbl {
-	 border: solid navy 1px;
+	 border:solid navy 1px;
 	 background:white;
 }
 .dpTD {
-	border: 0;
-	width: 20px;
-	background-color: whitesmoke;
-	text-align: right;
-	cursor: pointer;
+	border:0;
+	width:20px;
+	background-color:whitesmoke;
+	text-align:right;
+	cursor:pointer;
 }
 .dpDayHighlight {
-	border: 0;
-	width: 20px;
-	background-color: yellow;
-	text-align: right;
-	cursor: pointer;
+	border:0;
+	width:20px;
+	background-color:yellow;
+	text-align:right;
+	cursor:pointer;
 }
 .dpTDHover {
-	border: 0;
-	width: 20px;
-	background-color: gainsboro;
-	text-align: right;
-	cursor: pointer;
+	border:0;
+	width:20px;
+	background-color:gainsboro;
+	text-align:right;
+	cursor:pointer;
 }
 
 /* Table type is used for UI tables type 1 */
 .table1 {
 	width:90%;
-	background: whitesmoke;
-	border: 1px solid darkslategray;
-	margin: 0 auto;
+	background:whitesmoke;
+	border:1px solid darkslategray;
+	margin:0 auto;
 }
 .tableheader {
-	font-weight: normal;
-	background-color: skyblue;
-	color: white;
+	font-weight:normal;
+	background-color:skyblue;
+	color:white;
 }
 .notavailable {
-	font-weight: lighter;
-	font-style: italic;
-	color: gray;
+	font-weight:lighter;
+	font-style:italic;
+	color:gray;
 }
 .label {
-	font-weight: bold;
-	font-style: normal;
-	color: black;
-	background-color: gainsboro;
+	font-weight:bold;
+	font-style:normal;
+	color:#000000;
+	background-color:gainsboro;
 }
 .table_index {
-	background-color: aliceblue;
+	background-color:aliceblue;
 }
 li {
-/*list-style-image: url(bullet.gif);*/
+/*list-style-image:url(bullet.gif);*/
 }
 
 /* CANVAS */
@@ -271,7 +253,7 @@ li {
 #CanvasDiv {
 	background:steelblue;
 	border-radius:20px;
-	box-shadow:3px 3px 4px #86C3D7 inset, -3px -3px 4px #383878 inset, 0 0 10px black;
+	box-shadow:3px 3px 4px #86C3D7 inset, -3px -3px 4px #383878 inset, 0 0 10px #000000;
 	margin:10px;
 }
 
@@ -300,13 +282,13 @@ li {
 /* HEADER - APP INFO */
 
 #AppInfoDiv{
-	float:left; /* REQUIRED: to the left */
+	float:left; /* REQUIRED:to the left */
 }
 #AppInfoCompanyDiv{
-	display:table-cell; /* REQUIRED: as a cell */
+	display:table-cell; /* REQUIRED:as a cell */
 }
 #AppInfoUserDiv{
-	display:table-cell; /* REQUIRED: as a cell */
+	display:table-cell; /* REQUIRED:as a cell */
 	padding-left:5px;
 }
 #AppInfoModuleDiv{
@@ -326,9 +308,9 @@ li {
 	float:right;
 }
 #QuickMenuDiv ul li{
-	float: left;
+	float:left;
 	display:inline;
-	margin: 0px 3px;
+	margin:0px 3px;
 }
 
 /* BODY */
@@ -342,7 +324,7 @@ li {
 	background:lightsteelblue;
 	box-shadow:2px 2px 3px inset;
 	margin:0 5px;
-	padding-top: 1px;
+	padding-top:1px;
 }
 
 /* BODY - MAIN MENU */
@@ -386,7 +368,7 @@ li {
 #SubMenuDiv{
 	display:table; /* display as table, sub menu will auto adjust width */
 	float:right;
-	overflow: hidden;
+	overflow:hidden;
 	margin-left:auto;
 	margin-right:auto;
 	width:88%; /* main menu is 10% */
@@ -397,17 +379,17 @@ li {
 	padding:0;
 }
 #SubMenuDiv li{
-	list-style:none; /* REQUIRED: hide bullets */
+	list-style:none; /* REQUIRED:hide bullets */
 }
 #SubMenuDiv p{
 }
 
 #SubMenuDiv a{
-	color:black;
+	color:#000000;
 	text-decoration:none;
 }
 #SubMenuDiv a:hover{
-	color:black;
+	color:#000000;
 	text-decoration:underline;
 }
 
@@ -430,13 +412,13 @@ li {
 }
 
 .menu_group_item p { /* bullet */
-	color: red; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
-	text-indent: -10px; /* this makes the bullet to appear as the li tag previously used */
-	margin: 0 0 0 12px;
+	color:red; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
+	text-indent:-10px; /* this makes the bullet to appear as the li tag previously used */
+	margin:0 0 0 12px;
 	text-align:left;
 }
 .menu_group_item a{
-	color:black;
+	color:#000000;
 	text-decoration:none;
 }
 .menu_group_item a:hover{
@@ -452,7 +434,7 @@ li {
 #InquiriesDiv div{ /* to center custom report/form header */
 	background:lightsteelblue;
 	font-weight:bold;
-	color:black;
+	color:#000000;
 	padding:2px;
 }
 
@@ -488,6 +470,7 @@ li {
 #Report table {
 	/* Body of a report formatted with table tag. */
 }
+/* BEGIN Class selectors for all styles Style for all. --------------------- */
 .centre {
 	text-align:center;
 	/* Class selector to horizontal align a text (centre) in an element. */
@@ -500,20 +483,40 @@ li {
 	text-align:left;
 	/* Class selector to horizontal align a text (left) in an element. */
 }
+.gallery {
+	float:left;
+	margin:5px;
+	/* Class selector to let an element float to the left. */
+}
+.page_help_text {
+	background:#d3d3d3 url(images/help.png) top left no-repeat;
+	border:#800000 solid 1px;
+	color:#000000;
+	float:none;
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+	font-weight:normal;
+	margin:0 auto;
+	min-height:26px;
+	padding-bottom:2px;
+	padding-left:24px;
+	padding-top:2px;
+	position:static;
+	text-align:center;
+	visibility:visible;
+	width:80%;
+	z-index:1;
+	/* Class selector for page help text. */
+}
 .page_title_text {
-	color:black;
+	color:#000000;
 	font-weight:bold;
 	margin:0 auto; /* . */
 	padding:5px;
 	text-align:center;
 	/* Class selector for page title. */
 }
-.gallery {
-	margin: 5px;
-	float: left;
-	/* Class selector to let an element float to the left. */
-}
-/* END Style for all. ********************************************************/
+/* END Class selectors for all styles Style for all. ----------------------- */
+/* END Style for all. ====================================================== */
 
 
 /* If you want to use a cascading style sheet for a small device width, uncomment line "<meta name="viewport" content="width=device-width, initial-scale=1" />" on includes/header.inc and use the following sections. */
