@@ -1,5 +1,8 @@
 <?php
-/* Classifies accounts in any of the three sections of statement of cash flows to assign each account to an activity */
+/* GLCashFlowsSetup.php */
+/* Classifies accounts in any of the three sections of statement of cash flows to assign each account to an activity. */
+/* This program is under the GNU General Public License, last version. 2016-10-08. */
+/* This creative work is under the CC BY-NC-SA, later version. 2016-10-08. */
 
 // BEGIN: Procedure division ---------------------------------------------------
 include('includes/session.php');
