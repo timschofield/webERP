@@ -49,7 +49,7 @@ a:hover {
 td {
 	font-family:Arial, Verdana, Helvetica;
 	font-size:10px;
-	text-align:left;
+	text-align:right;
 }
 td.select {
 	background-color:#eee;
