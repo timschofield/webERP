@@ -480,8 +480,8 @@ If (isset($_POST['PrintPDF'])) {
 		'<tr>',
 			'<td valign="top">', _('Sort items by'), ':</td>',
 	 		'<td>',
-				'<input checked="checked" name="ItemOrder" type="radio" value="Code">Currency, category and code<br>',
-				'<input name="ItemOrder" type="radio" value="Description">Currency, category and description<br>',
+				'<input checked="checked" name="ItemOrder" type="radio" value="Code">', _('Currency, category and code'), '<br>',
+				'<input name="ItemOrder" type="radio" value="Description">', _('Currency, category and description'), '<br>',
 				(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Select the order of the items in the report') : ''), // If the parameter $_SESSION['ShowFieldHelp'] is not set OR is TRUE, shows this field help text.
 			'</td>',
 	 	'</tr>',

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-04 21:53-0600\n"
+"POT-Creation-Date: 2018-10-05 13:06-0600\n"
 "PO-Revision-Date: 2017-10-02 10:22-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: Arabic <ar@li.org>\n"
@@ -563,7 +563,7 @@ msgstr ""
 #: GLAccountUsers.php:245 GLBalanceSheet.php:711 GLCashFlowsIndirect.php:769
 #: GLCashFlowsIndirect.php:802 GLCashFlowsSetup.php:180 GLProfit_Loss.php:1320
 #: GLTrialBalance.php:751 InternalStockRequestInquiry.php:261
-#: PDFPriceList.php:469 PurchasesReport.php:218 PurchasesReport.php:240
+#: PDFPriceList.php:495 PurchasesReport.php:218 PurchasesReport.php:240
 #: SecurityTokens.php:139 SecurityTokens.php:155 UserGLAccounts.php:251
 #: Z_GLAccountUsersCopyAuthority.php:95 includes/Login.php:7
 msgid "Return"
@@ -1256,7 +1256,7 @@ msgstr ""
 #: OutstandingGRNs.php:48 OutstandingGRNs.php:61 PDFAck.php:275
 #: PDFCustomerList.php:234 PDFCustomerList.php:246 PDFFGLabel.php:216
 #: PDFGLJournal.php:107 PDFGrn.php:179 PDFLowGP.php:58 PDFLowGP.php:70
-#: PDFPriceList.php:252 PDFPrintLabel.php:41 PDFQALabel.php:115
+#: PDFPriceList.php:257 PDFPrintLabel.php:41 PDFQALabel.php:115
 #: PDFQuotation.php:274 PDFQuotationPortrait.php:266 PDFRemittanceAdvice.php:82
 #: PDFSalesBySalesperson.php:159 PDFSalesBySalesperson.php:167
 #: PDFSellThroughSupportClaim.php:73 PDFSellThroughSupportClaim.php:85
@@ -1418,7 +1418,7 @@ msgstr ""
 #: InventoryValuation.php:272 MRPPlannedPurchaseOrders.php:377
 #: MRPPlannedWorkOrders.php:343 MRPReschedules.php:148 MRPShortages.php:297
 #: OutstandingGRNs.php:272 PcReportTab.php:75 PDFCustomerList.php:420
-#: PDFLowGP.php:145 PDFPriceList.php:466 PDFRemittanceAdvice.php:174
+#: PDFLowGP.php:145 PDFPriceList.php:492 PDFRemittanceAdvice.php:174
 #: PDFStockCheckComparison.php:372 PrintCustTrans.php:635
 #: PrintCustTransPortrait.php:616 ReorderLevel.php:248 StockDispatch.php:448
 #: SupplierBalsAtPeriodEnd.php:158 SuppPriceList.php:294 Tax.php:411
@@ -1750,7 +1750,7 @@ msgstr ""
 #: Contracts.php:944 GLProfit_Loss.php:343 GLProfit_Loss.php:536
 #: GLProfit_Loss.php:848 GLProfit_Loss.php:1195 GLTagProfit_Loss.php:330
 #: GLTagProfit_Loss.php:468 GLTagProfit_Loss.php:703 GLTagProfit_Loss.php:890
-#: PDFPriceList.php:90 SalesAnalReptCols.php:30 SalesAnalReptCols.php:32
+#: PDFPriceList.php:89 SalesAnalReptCols.php:30 SalesAnalReptCols.php:32
 #: SalesByTypePeriodInquiry.php:361 SalesCategoryPeriodInquiry.php:168
 #: SalesGraph.php:209 SalesGraph.php:228 SalesGraph.php:308
 #: SelectProduct.php:201
@@ -1972,8 +1972,8 @@ msgstr ""
 #: InventoryQuantities.php:193 InventoryQuantities.php:195 MRP.php:618
 #: MRPReport.php:546 MRPReport.php:548 MRPReschedules.php:140
 #: NoSalesItems.php:21 NoSalesItems.php:49 NoSalesItems.php:69
-#: NoSalesItems.php:71 PDFPeriodStockTransListing.php:57 PDFPriceList.php:330
-#: PDFPriceList.php:431 PO_Items.php:1129 POReport.php:1583
+#: NoSalesItems.php:71 PDFPeriodStockTransListing.php:57 PDFPriceList.php:335
+#: PDFPriceList.php:446 PO_Items.php:1129 POReport.php:1583
 #: PO_SelectOSPurchOrder.php:183 PO_SelectOSPurchOrder.php:193
 #: PO_SelectOSPurchOrder.php:206 PO_SelectOSPurchOrder.php:274
 #: ReorderLevel.php:201 ReorderLevel.php:203 ReorderLevel.php:233
@@ -3075,7 +3075,7 @@ msgstr ""
 #: GLAccountReport.php:327 InventoryPlanningPrefSupplier.php:57
 #: InventoryQuantities.php:233 MRPPlannedPurchaseOrders.php:403
 #: MRPPlannedWorkOrders.php:369 MRPReport.php:832 MRPReschedules.php:175
-#: MRPShortages.php:328 PDFOrderStatus.php:321 PDFPriceList.php:54
+#: MRPShortages.php:328 PDFOrderStatus.php:321 PDFPriceList.php:53
 #: PDFReceipt.php:33 PO_Header.php:820 PO_PDFPurchOrder.php:63
 #: PO_SelectOSPurchOrder.php:649 PrintWOItemSlip.php:142 ReorderLevel.php:272
 #: StockDispatch.php:478 SuppPriceList.php:323
@@ -3114,7 +3114,7 @@ msgstr ""
 #: InventoryPlanningPrefSupplier.php:57 InventoryQuantities.php:234
 #: MRPPlannedPurchaseOrders.php:404 MRPPlannedWorkOrders.php:370
 #: MRPReport.php:833 MRPReschedules.php:176 MRPShortages.php:329
-#: PDFPriceList.php:44 PDFReceipt.php:33 PDFRemittanceAdvice.php:217
+#: PDFPriceList.php:43 PDFReceipt.php:33 PDFRemittanceAdvice.php:217
 #: PrintCustOrder.php:188 PrintCustTrans.php:856 PrintCustTrans.php:1075
 #: PrintCustTrans.php:1131 PrintCustTransPortrait.php:838
 #: PrintCustTransPortrait.php:1056 PrintCustTransPortrait.php:1112
@@ -3941,9 +3941,9 @@ msgid "Any Other"
 msgstr ""
 
 #: COGSGLPostings.php:308 Customers.php:512 Customers.php:849
-#: EDIProcessOrders.php:385 PDFCustomerList.php:333 PDFPriceList.php:49
-#: PDFPriceList.php:51 PDFPriceList.php:126 PDFPriceList.php:249
-#: PDFPriceList.php:392 PricesBasedOnMarkUp.php:225 PricesByCost.php:269
+#: EDIProcessOrders.php:385 PDFCustomerList.php:333 PDFPriceList.php:48
+#: PDFPriceList.php:50 PDFPriceList.php:128 PDFPriceList.php:254
+#: PDFPriceList.php:407 PricesBasedOnMarkUp.php:225 PricesByCost.php:269
 #: SalesGLPostings.php:349 SelectOrderItems.php:725 SuppPriceList.php:137
 #: SuppPriceList.php:284
 msgid "Price List"
@@ -4650,7 +4650,7 @@ msgstr ""
 #: CounterReturns.php:1777 CounterSales.php:746 CounterSales.php:2353
 #: Credit_Invoice.php:300 DeliveryDetails.php:876 GoodsReceived.php:119
 #: InternalStockRequest.php:270 Labels.php:560 Labels.php:562 Labels.php:609
-#: OrderDetails.php:187 OutstandingGRNs.php:179 PDFPriceList.php:72
+#: OrderDetails.php:187 OutstandingGRNs.php:179 PDFPriceList.php:71
 #: PDFPrintLabel.php:60 PickingLists.php:305 PO_Items.php:715
 #: PO_OrderDetails.php:185 PrintCustTrans.php:990 PrintCustTrans.php:1080
 #: PrintCustTrans.php:1136 PrintCustTransPortrait.php:972
@@ -4681,7 +4681,7 @@ msgstr ""
 #: CounterSales.php:747 Credit_Invoice.php:301 DeliveryDetails.php:877
 #: DeliveryDetails.php:939 InternalStockRequest.php:160
 #: InternalStockRequest.php:271 Labels.php:565 OrderDetails.php:188
-#: PDFPriceList.php:76 PDFPrintLabel.php:61 PickingLists.php:306
+#: PDFPriceList.php:75 PDFPrintLabel.php:61 PickingLists.php:306
 #: PO_Items.php:790 PO_OrderDetails.php:186 PrintCustTrans.php:991
 #: PrintCustTrans.php:1081 PrintCustTrans.php:1137
 #: PrintCustTransPortrait.php:973 PrintCustTransPortrait.php:1062
@@ -4730,7 +4730,7 @@ msgstr ""
 #: DeliveryDetails.php:942 GoodsReceived.php:134 Labels.php:575 Labels.php:577
 #: Labels.php:612 OffersReceived.php:109 OffersReceived.php:212
 #: OffersReceived.php:272 OrderDetails.php:191 PDFOrdersInvoiced.php:380
-#: PDFPriceList.php:95 PDFPrintLabel.php:62 PO_AuthoriseMyOrders.php:119
+#: PDFPriceList.php:94 PDFPrintLabel.php:62 PO_AuthoriseMyOrders.php:119
 #: PriceMatrix.php:230 PricesByCost.php:254 Prices_Customer.php:361
 #: Prices.php:221 Prices.php:329 PrintCustTrans.php:994 PrintCustTrans.php:1084
 #: PrintCustTrans.php:1140 PrintCustTransPortrait.php:976
@@ -6594,7 +6594,7 @@ msgstr ""
 
 #: Contracts.php:785 CustomerAccount.php:252 CustomerInquiry.php:252
 #: CustomerTransInquiry.php:101 Dashboard.php:549 FTP_RadioBeacon.php:51
-#: PDFOrdersInvoiced.php:292 PDFOrderStatus.php:292 PDFPriceList.php:86
+#: PDFOrdersInvoiced.php:292 PDFOrderStatus.php:292 PDFPriceList.php:85
 #: PricesByCost.php:164 Prices_Customer.php:263 Prices_Customer.php:337
 #: PrintCustTrans.php:932 PrintCustTransPortrait.php:914
 #: SelectCompletedOrder.php:557 SelectCreditItems.php:243
@@ -8857,7 +8857,7 @@ msgstr ""
 
 #: CustomerAccount.php:299 CustomerAccount.php:324 CustomerInquiry.php:311
 #: CustomerInquiry.php:358 CustomerInquiry.php:398 CustomerInquiry.php:435
-#: CustomerInquiry.php:482 PDFPriceList.php:467
+#: CustomerInquiry.php:482 PDFPriceList.php:493
 msgid "PDF"
 msgstr ""
 
@@ -16561,7 +16561,7 @@ msgstr ""
 msgid "Inventory Planning Reporting"
 msgstr ""
 
-#: InventoryPlanning.php:467 InventoryValuation.php:225 PDFPriceList.php:401
+#: InventoryPlanning.php:467 InventoryValuation.php:225 PDFPriceList.php:416
 #: StockCheck.php:261
 msgid "Select Inventory Categories"
 msgstr ""
@@ -21259,125 +21259,137 @@ msgstr ""
 msgid "Work Order Issues"
 msgstr ""
 
-#: PDFPriceList.php:48 PDFPriceList.php:142 PDFPriceList.php:448
+#: PDFPriceList.php:47 PDFPriceList.php:149 PDFPriceList.php:463
 msgid "Customer Special Prices Only"
 msgstr ""
 
-#: PDFPriceList.php:57 PDFPriceList.php:453 PDFPrintLabel.php:335
+#: PDFPriceList.php:56 PDFPriceList.php:468 PDFPrintLabel.php:335
 msgid "Effective As At"
 msgstr ""
 
-#: PDFPriceList.php:80
+#: PDFPriceList.php:79
 msgid "Effective Date Range"
 msgstr ""
 
-#: PDFPriceList.php:99
+#: PDFPriceList.php:98
 msgid "Prices excluding tax"
 msgstr ""
 
-#: PDFPriceList.php:125
+#: PDFPriceList.php:127
 msgid "Price list by inventory category"
 msgstr ""
 
-#: PDFPriceList.php:145 PDFPriceList.php:156
+#: PDFPriceList.php:152 PDFPriceList.php:163
 msgid "Special price List - No Customer Selected"
 msgstr ""
 
-#: PDFPriceList.php:150
+#: PDFPriceList.php:157
 msgid "The customer must first be selected from the select customer link"
 msgstr ""
 
-#: PDFPriceList.php:150
+#: PDFPriceList.php:157
 msgid "Re-run the price list once the customer has been selected"
 msgstr ""
 
-#: PDFPriceList.php:151 PDFPriceList.php:161 PDFPriceList.php:263
+#: PDFPriceList.php:158 PDFPriceList.php:168 PDFPriceList.php:268
 #: PDFPrintLabel.php:50 PDFRemittanceAdvice.php:39 PricesByCost.php:223
 #: PricesByCost.php:231
 msgid "Back"
 msgstr ""
 
-#: PDFPriceList.php:160
+#: PDFPriceList.php:167
 msgid "The effective date must be entered in the format"
 msgstr ""
 
-#: PDFPriceList.php:249
+#: PDFPriceList.php:254
 msgid "Problem Report...."
 msgstr ""
 
-#: PDFPriceList.php:251 SuppPriceList.php:139 Z_DataExport.php:70
+#: PDFPriceList.php:256 SuppPriceList.php:139 Z_DataExport.php:70
 msgid "The Price List could not be retrieved by the SQL because"
 msgstr ""
 
-#: PDFPriceList.php:254 PDFPrintLabel.php:43
+#: PDFPriceList.php:259 PDFPrintLabel.php:43
 msgid "For debugging purposes the SQL used was:"
 msgstr ""
 
-#: PDFPriceList.php:260
+#: PDFPriceList.php:265
 msgid "Print Price List Error"
 msgstr ""
 
-#: PDFPriceList.php:262
+#: PDFPriceList.php:267
 msgid ""
 "There were no price details to print out for the customer or category "
 "specified"
 msgstr ""
 
-#: PDFPriceList.php:308 PricesByCost.php:200 Prices_Customer.php:216
+#: PDFPriceList.php:313 PricesByCost.php:200 Prices_Customer.php:216
 #: Prices_Customer.php:274 Prices.php:233
 msgid "No End Date"
 msgstr ""
 
-#: PDFPriceList.php:379
+#: PDFPriceList.php:390
+msgid "* Obsolete items included."
+msgstr ""
+
+#: PDFPriceList.php:394
 msgid "Price_List"
 msgstr ""
 
-#: PDFPriceList.php:385
+#: PDFPriceList.php:400
 msgid "Price Listing"
 msgstr ""
 
-#: PDFPriceList.php:393
+#: PDFPriceList.php:408
 msgid "Print a price list by inventory category"
 msgstr ""
 
-#: PDFPriceList.php:417 PDFPrintLabel.php:306 Z_DataExport.php:541
+#: PDFPriceList.php:432 PDFPrintLabel.php:306 Z_DataExport.php:541
 msgid "For Sales Type/Price List"
 msgstr ""
 
-#: PDFPriceList.php:427 PDFPrintLabel.php:320
+#: PDFPriceList.php:442 PDFPrintLabel.php:320
 msgid "For Currency"
 msgstr ""
 
-#: PDFPriceList.php:439
+#: PDFPriceList.php:454
 msgid "Show Gross Profit %"
 msgstr ""
 
-#: PDFPriceList.php:441
+#: PDFPriceList.php:456
 msgid "Prices Only"
 msgstr ""
 
-#: PDFPriceList.php:442
+#: PDFPriceList.php:457
 msgid "Show GP % too"
 msgstr ""
 
-#: PDFPriceList.php:446
+#: PDFPriceList.php:461
 msgid "Price Listing Type"
 msgstr ""
 
-#: PDFPriceList.php:447
+#: PDFPriceList.php:462
 msgid "Default Sales Type Prices"
 msgstr ""
 
-#: PDFPriceList.php:449
+#: PDFPriceList.php:464
 msgid "Full Description"
 msgstr ""
 
-#: PDFPriceList.php:457
+#: PDFPriceList.php:473
 msgid "Show obsolete items"
 msgstr ""
 
-#: PDFPriceList.php:460
+#: PDFPriceList.php:476
 msgid "Check this box to show the obsolete items"
+msgstr ""
+
+#: PDFPriceList.php:481
+msgid "Sort items by"
+msgstr ""
+
+#: PDFPriceList.php:485
+msgid "Select the order of the items in the report"
 msgstr ""
 
 #: PDFPrintLabel.php:40
