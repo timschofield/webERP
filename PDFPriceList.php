@@ -189,7 +189,7 @@ If (isset($_POST['PrintPDF'])) {
 					custbranch.brname,
 					currencies.decimalplaces
 				FROM stockmaster
-					INNER JOIN	stockcategory ON stockmaster.categoryid=stockcategory.categoryid
+					INNER JOIN stockcategory ON stockmaster.categoryid=stockcategory.categoryid
 					INNER JOIN prices ON stockmaster.stockid=prices.stockid
 					INNER JOIN currencies ON prices.currabrev=currencies.currabrev
 					LEFT JOIN custbranch ON prices.debtorno=custbranch.debtorno AND prices.branchcode=custbranch.branchcode
@@ -227,7 +227,7 @@ If (isset($_POST['PrintPDF'])) {
 					stockcategory.categorydescription,
 					currencies.decimalplaces
 				FROM stockmaster
-					INNER JOIN	stockcategory ON stockmaster.categoryid=stockcategory.categoryid
+					INNER JOIN stockcategory ON stockmaster.categoryid=stockcategory.categoryid
 					INNER JOIN prices ON stockmaster.stockid=prices.stockid
 					INNER JOIN currencies ON prices.currabrev=currencies.currabrev
 				WHERE stockmaster.categoryid IN ('". implode("','",$_POST['Categories'])."')
