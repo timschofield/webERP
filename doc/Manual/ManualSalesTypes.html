@@ -32,15 +32,16 @@
 
 <h2><a id="PDFPriceList">Print a price list by inventory category</a></h2>
 
-<p>This script helps you by printing prices of inventory items by inventory categories. Enter the following information to run it:</p>
-
+<p>This script helps you by printing prices of inventory items by inventory categories.</p>
+<p>Report parameters:</p>
 <ul>
 	<li><b>Inventory categories</b>. Just click on an option over the scroll menu. To select multiple options, hold down the control [Ctrl] button to select multiple options (for Mac: hold down the command button to select multiple options). Or, if you want to select a block of options, click the first option and then press the shift button and click over the last option of the block. The inventory categories are set up by system administrators in <u>Main Menu</u> &gt; <u>Setup</u> &gt; Inventory Setup &gt; <u>Inventory Categories Maintenance</u> (See: <a href="ManualContents.php?ViewTopic=Inventory">Inventory</a>, <a href="ManualContents.php?ViewTopic=Inventory#InventoryCategories">Inventory Categories</a>).</li>
 	<li><b>Sales type/Price list</b>. A pull down menu with the types of price lists. The sales types are set up by system administrators in <u>Main Menu</u> &gt; <u>Setup</u> &gt; Receivables/Payables Setup &gt; <u>Sales Types</u> (See: <a href="ManualContents.php?ViewTopic=SalesTypes">Sales types/price lists</a>, <a href="ManualContents.php?ViewTopic=SalesTypes#SalesTypes">Sales Types/Price Lists</a>).</li>
 	<li><b>Currency</b>. A pull down menu with the currencies used by the company. The currencies are set up by system administrators in <u>Main Menu</u> &gt; <u>Setup</u> &gt; General Setup Options &gt; <u>Currencies Maintenance</u> (See: <a href="ManualContents.php?ViewTopic=Currencies">Currencies</a>, <a href="ManualContents.php?ViewTopic=Currencies#Currencies">Currencies</a>).</li>
-	<li><b>Show gross profit</b>. A pull down menu to select between price by item or price and gross profit by item. This value is calculated as gross profit over price -it is NOT a gross profit over cost-, that is: (prices.price - stockmaster.materialcost - stockmaster.labourcost - stockmaster.overheadcost) / prices.price * 100.</li>
+	<li><b>Show gross profit</b>. A pull down menu to select between price by item or price and gross profit by item. The gross profit value is calculated as <b>gross profit over price</b> -it is NOT a gross profit over cost-, that is: (prices.price - stockmaster.materialcost - stockmaster.labourcost - stockmaster.overheadcost) / prices.price * 100.</li>
 	<li><b>Price listing type</b>. A pull down menu to select between "<i>Default Sales Type Prices</i>" (item's price only), "<i>Customer Special Prices Only</i>" or "<i>Full Description</i>" (item's price and long-description).</li>
 	<li><b>Effective date</b>. Date for which prices must be defined. The start and end dates for a item price are set up in each <i>Item Prices</i>.</li>
+	<li><b>Show obsolete</b>. Click this checkbox to show the obsolete items in the report. Default: off.</li>
 </ul>
 
 <p>After clicking the "Print PDF" button, the report is generated with prices of selected items sorted by:</p>
