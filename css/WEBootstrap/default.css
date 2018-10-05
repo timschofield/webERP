@@ -78,6 +78,7 @@ td {
 	color:#575757;
 	padding:2px 4px;
 	text-align:left;
+	vertical-align:top;
 }
 td.select {
 	background-color:#eee;

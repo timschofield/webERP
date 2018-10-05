@@ -24,17 +24,17 @@ body {
 
 /* default styles */
 
-a{
+a {
 	color:blue;
 	text-decoration:none;
 }
-a:hover{
+a:hover {
 	color:red;
 	text-decoration:underline;
 }
-a:active{}
+a:active {}
 
-img{ /* icon on page title, etc */
+img { /* icon on page title, etc */
 	border:none;
 	vertical-align:middle;
 }
@@ -101,6 +101,7 @@ th.text {
 td {
 	font-family:Arial, Verdana, Helvetica, sans-serif;
 	text-align:left;
+	vertical-align:top;
 }
 td.select {
 	background-color:whitesmoke;
@@ -120,7 +121,7 @@ input.image {
 	border-width:0px;
 	background-color:transparent;
 }
-input:hover{
+input:hover {
 	background:#9ffffb;
 }
 select {
@@ -137,10 +138,10 @@ select:hover { /* drop down */
 	background:#9ffffb;
 }
 
-textarea{
+textarea {
 	font-family:Arial, Verdana, Helvetica, sans-serif;
 }
-textarea:hover{
+textarea:hover {
 	background:#9ffffb;
 }
 
@@ -264,50 +265,50 @@ li {
 	color:white;
 	padding:5px 10px 0;
 }
-#HeaderDiv a{
+#HeaderDiv a {
 	border-radius:10px;
 	color:white;
 	text-decoration:none;
 	padding:3px;
 }
-#HeaderDiv a:hover{
+#HeaderDiv a:hover {
 	color:cyan;
 	border-radius:10px;
 	box-shadow:2px 2px 3px #86C3D7, -2px -2px 3px #383878;
 	padding:3px;
 }
-#HeaderWrapDiv{
+#HeaderWrapDiv {
 }
 
 /* HEADER - APP INFO */
 
-#AppInfoDiv{
+#AppInfoDiv {
 	float:left; /* REQUIRED:to the left */
 }
-#AppInfoCompanyDiv{
+#AppInfoCompanyDiv {
 	display:table-cell; /* REQUIRED:as a cell */
 }
-#AppInfoUserDiv{
+#AppInfoUserDiv {
 	display:table-cell; /* REQUIRED:as a cell */
 	padding-left:5px;
 }
-#AppInfoModuleDiv{
+#AppInfoModuleDiv {
 	font-weight:bold;
 	padding:3px;
 }
 
 /* HEADER - QUICK MENU */
 
-#QuickMenuDiv{
+#QuickMenuDiv {
 	float:right;
 	margin-top:7px;
 }
-#QuickMenuDiv ul{
+#QuickMenuDiv ul {
 	margin-top:10px;
 	list-style:none;
 	float:right;
 }
-#QuickMenuDiv ul li{
+#QuickMenuDiv ul li {
 	float:left;
 	display:inline;
 	margin:0px 3px;
@@ -320,7 +321,7 @@ li {
 	overflow:hidden;
 	text-align:center; /* needed to center some buttons on SelectSupplier.php */
 }
-#BodyWrapDiv{
+#BodyWrapDiv {
 	background:lightsteelblue;
 	box-shadow:2px 2px 3px inset;
 	margin:0 5px;
@@ -329,7 +330,7 @@ li {
 
 /* BODY - MAIN MENU */
 
-#MainMenuDiv{
+#MainMenuDiv {
 	float:left;
 	background:steelblue;
 	white-space:nowrap;
@@ -338,16 +339,16 @@ li {
 	padding-top:3px;
 	width:11%;
 }
-#MainMenuDiv ul{
+#MainMenuDiv ul {
 	margin:0;
 	padding:0;
 }
-#MainMenuDiv li{
+#MainMenuDiv li {
 	list-style:none;
 }
 #MainMenuDiv li a,
 #MainMenuDiv li a:hover,
-#MainMenuDiv .main_menu_selected a{
+#MainMenuDiv .main_menu_selected a {
 	display:block; /* REQUIRED */
 	border-radius:10px;
 	color:white;
@@ -355,17 +356,17 @@ li {
 	padding:3px;
 	margin-bottom:5px;
 }
-#MainMenuDiv li a:hover{
+#MainMenuDiv li a:hover {
 	color:cyan;
 	box-shadow:2px 2px 3px #86C3D7, -2px -2px 3px #383878;
 }
-#MainMenuDiv .main_menu_selected a{ /* the selected button */
+#MainMenuDiv .main_menu_selected a { /* the selected button */
 	box-shadow:2px 2px 3px #86C3D7, -2px -2px 3px #383878;
 }
 
 /* BODY - SUB MENU */
 
-#SubMenuDiv{
+#SubMenuDiv {
 	display:table; /* display as table, sub menu will auto adjust width */
 	float:right;
 	overflow:hidden;
@@ -374,21 +375,21 @@ li {
 	width:88%; /* main menu is 10% */
 	text-align:left;
 }
-#SubMenuDiv ul{
+#SubMenuDiv ul {
 	margin:0;
 	padding:0;
 }
-#SubMenuDiv li{
+#SubMenuDiv li {
 	list-style:none; /* REQUIRED:hide bullets */
 }
-#SubMenuDiv p{
+#SubMenuDiv p {
 }
 
-#SubMenuDiv a{
+#SubMenuDiv a {
 	color:#000000;
 	text-decoration:none;
 }
-#SubMenuDiv a:hover{
+#SubMenuDiv a:hover {
 	color:#000000;
 	text-decoration:underline;
 }
@@ -406,7 +407,7 @@ li {
 	padding:2px;
 	text-align:left;
 }
-.menu_group_item:hover{
+.menu_group_item:hover {
 	background:lightblue;
 	text-align:left;
 }
@@ -417,21 +418,21 @@ li {
 	margin:0 0 0 12px;
 	text-align:left;
 }
-.menu_group_item a{
+.menu_group_item a {
 	color:#000000;
 	text-decoration:none;
 }
-.menu_group_item a:hover{
+.menu_group_item a:hover {
 	color:red;
 	text-decoration:none;
 }
 
-#TransactionsDiv,#InquiriesDiv,#MaintenanceDiv{
+#TransactionsDiv,#InquiriesDiv,#MaintenanceDiv {
 	background:whitesmoke;
 	border:2px solid steelblue;
 	display:table-cell;
 }
-#InquiriesDiv div{ /* to center custom report/form header */
+#InquiriesDiv div { /* to center custom report/form header */
 	background:lightsteelblue;
 	font-weight:bold;
 	color:#000000;
@@ -440,28 +441,28 @@ li {
 
 /*** FOOTER ***/
 
-#FooterDiv{
+#FooterDiv {
 	clear:both;
 	color:white;
 	height:53px;
 	padding:0;
 }
-#FooterWrapDiv{
+#FooterWrapDiv {
 	padding:5px;
 }
-#FooterLogoDiv{
+#FooterLogoDiv {
 	background:white;
 	border:2px outset steelblue;
 	border-radius:8px 8px 8px 8px;
 	float:left;
 	padding:3px;
 }
-#FooterVersionDiv{
+#FooterVersionDiv {
 	float:left;
 	margin-left:10px;
 	margin-top:15px;
 }
-#FooterTimeDiv{
+#FooterTimeDiv {
 	float:right;
 	margin-top:15px;
 }
