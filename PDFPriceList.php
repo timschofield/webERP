@@ -1,6 +1,7 @@
 <?php
 /*	PDFPriceList.php */
 /*	Script to print a price list by inventory category */
+
 /*	Output column sizes:
 		* stockmaster.stockid, varchar(20), len = 20chr
 		* stockmaster.description, varchar(50), len = 50chr
@@ -9,10 +10,8 @@
 		* custbranch.brname, varchar(40), len = 40chr
 		* Gross Profit, calculated, len = 8chr
 		* prices.price, decimal(20,4), len = 20chr + 4spaces */
-
-/*	Please note that addTextWrap() YPos is a font-size-height further down than
-	addText() and other functions. Use addText() instead of addTextWrap() to
-	print left aligned elements.*/
+/*	Please note that addTextWrap() YPos is a font-size-height further down than addText() and other functions. Use addText() instead of addTextWrap() to print left aligned elements. */
+/*	All coordinates are measured from the lower left corner of the sheet to the top left corner of the element. */
 
 // BEGIN: Functions division ---------------------------------------------------
 function PageHeader() {
@@ -110,8 +109,11 @@ function PageHeader() {
 include('includes/session.php');
 
 // Merges gets into posts:
-if (isset($_GET['ShowObsolete'])) {// Show obsolete items.
+if (isset($_GET['ShowObsolete'])) {// Option to show obsolete items.
 	$_POST['ShowObsolete'] = $_GET['ShowObsolete'];
+}
+if (isset($_GET['ItemOrder'])) {// Option to select the order of the items in the report.
+	$_POST['ItemOrder'] = $_GET['ItemOrder'];
 }
 
 // Main code:
@@ -127,15 +129,20 @@ If (isset($_POST['PrintPDF'])) {
 
 	$FontSize=10;
 	$line_height=12;
-
+	// Option to select currency:
 	$WhereCurrency = '';
 	if ($_POST['Currency'] != "All") {
 		$WhereCurrency = " AND prices.currabrev = '" . $_POST['Currency'] ."' ";// Query element to select a currency.
 	}
-
+	// Option to show obsolete items:
 	$ShowObsolete = ' AND `stockmaster`.`discontinued` != 1 ';// Query element to exclude obsolete items.
 	if ($_POST['ShowObsolete']) {
 		$ShowObsolete = '';// Cleans the query element to exclude obsolete items.
+	}
+	// Option to select the order of the items in the report:
+	$ItemOrder = 'stockmaster.stockid';// Query element to sort by currency, item_stock_category, and item_code.
+	if ($_POST['ItemOrder'] == 'Description') {
+		$ItemOrder = 'stockmaster.description';// Query element to sort by currency, item_stock_category, and item_description.
 	}
 
 	/*Now figure out the inventory data to report for the category range under review */
@@ -202,9 +209,8 @@ If (isset($_POST['PrintPDF'])) {
 					$ShowObsolete . "
 				ORDER BY
 					prices.currabrev,
-					stockcategory.categorydescription,
-					stockmaster.stockid,
-					prices.startdate";
+					stockcategory.categorydescription," .
+					$ItemOrder;
 
 	} else { /* the sales type list only */
 
@@ -239,9 +245,8 @@ If (isset($_POST['PrintPDF'])) {
 					AND prices.debtorno=''
 				ORDER BY
 					prices.currabrev,
-					stockcategory.categorydescription,
-					stockmaster.stockid,
-					prices.startdate";
+					stockcategory.categorydescription," .
+					$ItemOrder;
 	}
 	$PricesResult = DB_query($SQL,'','',false,false);
 
@@ -271,6 +276,7 @@ If (isset($_POST['PrintPDF'])) {
 	$Category = '';
 	$CatTot_Val=0;
 
+	require_once('includes/CurrenciesArray.php');// To get the currency name from the currency code.
 	While ($PriceList = DB_fetch_array($PricesResult)) {
 
 		if ($CurrCode != $PriceList['currabrev']) {
@@ -279,7 +285,6 @@ If (isset($_POST['PrintPDF'])) {
 				PageHeader();
 			}
 			$YPos -= $FontSize;// Jumps additional line before.
-			require_once('includes/CurrenciesArray.php');// To get the currency name from the currency code.
 			$pdf->addText($Left_Margin, $YPos, $FontSize,
 				$PriceList['currabrev'] . ' - ' . _($CurrencyName[$PriceList['currabrev']]));
 			$CurrCode = $PriceList['currabrev'];
@@ -375,8 +380,18 @@ If (isset($_POST['PrintPDF'])) {
 		}
 	} /*end inventory valn while loop */
 
+	// Warns if obsolete items are included:
+	if ($_POST['ShowObsolete']) {
+		$FontSize = 8;
+		$YPos -= $FontSize;// Jumps additional line.
+		if ($YPos < $Bottom_Margin + $FontSize) {
+			PageHeader();
+		}
+		$pdf->addText($Left_Margin, $YPos, $FontSize, _('* Obsolete items included.'));// Warning text.
+	}
+
 	$FontSize = 10;
-	$FileName=$_SESSION['DatabaseName']. '_' . _('Price_List') . '_' . date('Y-m-d').'.pdf';
+	$FileName = $_SESSION['DatabaseName'] . '_' . _('Price_List') . '_' . date('Y-m-d') . '.pdf';
 	ob_clean();
 	$pdf->OutputD($FileName);
 	$pdf->__destruct();
@@ -453,6 +468,7 @@ If (isset($_POST['PrintPDF'])) {
 			<td>', _('Effective As At'), ':</td>
 			<td><input type="text" required="required" maxlength="10" size="11" class="date" name="EffectiveDate" value="', Date($_SESSION['DefaultDateFormat']), '" /></td>
 		</tr>',
+	// Option to show obsolete items:
 		'<tr>',
 			'<td><label for="ShowObsolete">', _('Show obsolete items'), ':</label></td>',
 	 		'<td>',
@@ -460,6 +476,16 @@ If (isset($_POST['PrintPDF'])) {
 				(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Check this box to show the obsolete items') : ''), // If the parameter $_SESSION['ShowFieldHelp'] is not set OR is TRUE, shows this field help text.
 			'</td>',
 	 	'</tr>',
+	// Option to select the order of the items in the report:
+		'<tr>',
+			'<td valign="top">', _('Sort items by'), ':</td>',
+	 		'<td>',
+				'<input checked="checked" name="ItemOrder" type="radio" value="Code">', _('Currency, category and code'), '<br>',
+				'<input name="ItemOrder" type="radio" value="Description">', _('Currency, category and description'), '<br>',
+				(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Select the order of the items in the report') : ''), // If the parameter $_SESSION['ShowFieldHelp'] is not set OR is TRUE, shows this field help text.
+			'</td>',
+	 	'</tr>',
+
 		'</table>
 		<br />',
 		'<div class="centre noprint">', // Form buttons:
