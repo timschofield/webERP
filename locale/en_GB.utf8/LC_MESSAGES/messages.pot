@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-05 13:09-0600\n"
+"POT-Creation-Date: 2018-10-05 13:30-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20291,6 +20291,14 @@ msgstr ""
 
 #: PDFPriceList.php:481
 msgid "Sort items by"
+msgstr ""
+
+#: PDFPriceList.php:483
+msgid "Currency, category and code"
+msgstr ""
+
+#: PDFPriceList.php:484
+msgid "Currency, category and description"
 msgstr ""
 
 #: PDFPriceList.php:485

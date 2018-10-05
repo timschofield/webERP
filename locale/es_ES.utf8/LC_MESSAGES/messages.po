@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-05 13:06-0600\n"
-"PO-Revision-Date: 2018-10-05 13:18-0600\n"
+"POT-Creation-Date: 2018-10-05 13:30-0600\n"
+"PO-Revision-Date: 2018-10-05 13:34-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -22588,6 +22588,14 @@ msgstr "Marque esta casilla para mostrar los artículos obsoletos"
 #: PDFPriceList.php:481
 msgid "Sort items by"
 msgstr "Ordenar artículos por"
+
+#: PDFPriceList.php:483
+msgid "Currency, category and code"
+msgstr "Moneda, categoría y código"
+
+#: PDFPriceList.php:484
+msgid "Currency, category and description"
+msgstr "Moneda, categoría y descripción"
 
 #: PDFPriceList.php:485
 msgid "Select the order of the items in the report"

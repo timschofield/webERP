@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-05 13:06-0600\n"
+"POT-Creation-Date: 2018-10-05 13:30-0600\n"
 "PO-Revision-Date: 2013-06-01 16:37-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: Swahili <sw@li.org>\n"
@@ -22012,6 +22012,14 @@ msgstr ""
 
 #: PDFPriceList.php:481
 msgid "Sort items by"
+msgstr ""
+
+#: PDFPriceList.php:483
+msgid "Currency, category and code"
+msgstr ""
+
+#: PDFPriceList.php:484
+msgid "Currency, category and description"
 msgstr ""
 
 #: PDFPriceList.php:485
