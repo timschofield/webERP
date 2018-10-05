@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-05 13:30-0600\n"
-"PO-Revision-Date: 2018-10-05 13:34-0600\n"
+"PO-Revision-Date: 2018-10-05 14:05-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -22531,7 +22531,7 @@ msgstr "Sin fecha final"
 
 #: PDFPriceList.php:390
 msgid "* Obsolete items included."
-msgstr "* Artículos obsoletos incluidos."
+msgstr "* Artículos descontinuados incluidos."
 
 #: PDFPriceList.php:394
 msgid "Price_List"
@@ -39172,7 +39172,7 @@ msgstr "No pudo quitarse este Impuesto porque"
 
 #: TaxGroups.php:76
 msgid "This tax was removed."
-msgstr "este impuesto fue eliminado."
+msgstr "Este impuesto fue eliminado."
 
 #: TaxGroups.php:92 TaxGroups.php:115
 msgid "Could not get tax authorities in the selected tax group"
@@ -44210,7 +44210,7 @@ msgstr "Referencia de la etiqueta"
 #: Z_ImportGLTransactions.php:113 Z_ImportPriceList.php:81
 #: Z_ImportPriceList.php:89 Z_ImportPriceList.php:98
 msgid "does not exist"
-msgstr "No existe"
+msgstr "no existe"
 
 #: Z_ImportGLTransactions.php:123
 msgid "All transactions must be in the same period"
@@ -45381,7 +45381,7 @@ msgstr ""
 msgid ""
 "If there are any failures then please check with your system administrator"
 msgstr ""
-"si hay cualquier fallo entonces por favor compruebe con su administrador del "
+"Si hay cualquier fallo entonces por favor compruebe con su administrador del "
 "sistema"
 
 #: Z_Upgrade_3.10-3.11.php:21 Z_Upgrade_3.11-4.00.php:21
@@ -48653,7 +48653,7 @@ msgstr ""
 #: includes/PDFInventoryPlanPageHeader.inc:54
 #: includes/PDFTransPageHeaderPortrait.inc:251
 msgid "Qty"
-msgstr "Cant."
+msgstr "Cantidad"
 
 #: includes/PDFInventoryPlanPageHeader.inc:55
 msgid "MTD"
@@ -50795,7 +50795,7 @@ msgstr "Sin divisa"
 
 #: includes/CurrenciesArray.php:184
 msgid "Yemeni rial"
-msgstr "Rial yemení "
+msgstr "Rial yemení"
 
 #: includes/CurrenciesArray.php:185
 msgid "South African rand"
@@ -51180,7 +51180,7 @@ msgstr "Copyright"
 
 #: includes/footer.php:81
 msgid "version"
-msgstr "Versión"
+msgstr "versión"
 
 #: includes/GetConfig.php:7 ../webSHOP/includes/session.php:69
 msgid "Could not get the configuration parameters from the database because"
@@ -52250,7 +52250,7 @@ msgstr "se sido bloqueado el acceso a"
 
 #: includes/UserLogin.php:251
 msgid "from IP"
-msgstr "Desde el IP"
+msgstr "desde el IP"
 
 #: includes/UserLogin.php:251
 msgid "due to too many failed attempts."
@@ -53443,7 +53443,7 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:281
 msgid "Round (2 decimal)"
-msgstr "redondear (2 decimales)"
+msgstr "Redondear (2 decimales)"
 
 #: reportwriter/languages/en_US/reports.php:282
 msgid "Convert Dollars"
