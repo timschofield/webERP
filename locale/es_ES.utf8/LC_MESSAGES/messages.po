@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-05 13:30-0600\n"
-"PO-Revision-Date: 2018-10-05 14:35-0600\n"
+"PO-Revision-Date: 2018-10-05 18:37-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -22547,7 +22547,7 @@ msgstr "Imprimir lista de precios por categoría de inventario"
 
 #: PDFPriceList.php:432 PDFPrintLabel.php:306 Z_DataExport.php:541
 msgid "For Sales Type/Price List"
-msgstr "Para Ventas Lista Tipo/Precio"
+msgstr "Para Tipo de venta/Lista de precios"
 
 #: PDFPriceList.php:442 PDFPrintLabel.php:320
 msgid "For Currency"
