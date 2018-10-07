@@ -195,7 +195,7 @@ tr.striped_row:nth-of-type(odd) {
 .dpTbl { /* date picker background */
 	border:thin solid #000000;
 	background:white;
-	box-shadow:3px 3px 4px #000; /* shadow on modern browsers */
+	box-shadow:3px 3px 4px #000000; /* shadow on modern browsers */
 }
 
 .dpTD {
@@ -354,7 +354,7 @@ textarea.texterror {
 #MainMenuDiv {
 	float:left;
 	width:11%;
-	border:thin solid #000;
+	border:thin solid #000000;
 	text-align:center;
 	white-space:nowrap;
 }
@@ -508,6 +508,9 @@ textarea.texterror {
 	margin:5px;
 	float:left;
 	/* Class selector to let an element float to the left. */
+}
+.field_help_text {
+	/* Class selector for field help text. */
 }
 .page_help_text {
 	background:#d3d3d3 url(images/help.png) top left no-repeat;

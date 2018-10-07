@@ -93,14 +93,14 @@ th:after {
 th.ascending:after {
 	border-width:0 4px 4px;
 	border-style:solid;
-	border-color:#000 transparent;
+	border-color:#000000 transparent;
 	visibility:visible;
 }
 th.descending:after {
 	border-bottom:none;
 	border-left:4px solid transparent;
 	border-right:4px solid transparent;
-	border-top:4px solid #000;
+	border-top:4px solid #000000;
 	visibility:visible;
 }
 td {
@@ -196,33 +196,13 @@ div.Message.warn {
 #MessageContainerFoot {
 	display:none;
 }
-div.page_help_text {
-	background:#d3d3d3 url(images/help.png) top left no-repeat;
-	border:#A52A2A 1px solid;
-	box-shadow:3px 3px 4px;
-	color:#000000;
-	float:none;
-	font-family:Arial, Verdana, Helvetica, sans-serif;
-	font-size:100%;
-	font-weight:normal;
-	margin:0 auto 10px;
-	padding:10px;
-	padding-bottom:2px;
-	padding-left:10px;
-	padding-top:2px;
-	position:static;
-	text-align:center;
-	visibility:visible;
-	width:80%;
-	z-index:1;
-}
 
 /* date picker */
 
 .dpTbl { /* date picker background */
 	border:thin solid #000000;
 	background:white;
-	box-shadow:3px 3px 4px #000; /* shadow on modern browsers */
+	box-shadow:3px 3px 4px #000000; /* shadow on modern browsers */
 }
 .dpTD {
 	border:0;
@@ -308,7 +288,7 @@ select.selecterror {
 	border:3px outset #feb;
 	border-radius:15px 15px 15px 15px;
 	padding:3px;
-	box-shadow:5px 5px 6px #000; /* modern browser only! */
+	box-shadow:5px 5px 6px #000000; /* modern browser only! */
 }
 
 /* HEADER */
@@ -449,7 +429,7 @@ color:red;
 	background:url(images/desk.jpg) #631;
 	border:3px inset #feb;
 	border-radius:15px;
-	box-shadow:5px 5px 6px #000 inset; /* modern browser only! */
+	box-shadow:5px 5px 6px #000000 inset; /* modern browser only! */
 	margin:0 auto;
 	padding:5px;
 	width:87%;
@@ -458,7 +438,7 @@ color:red;
 	background:url(images/wood.jpg) #feb;
 	border:3px outset #feb;
 	border-radius:10px;
-	box-shadow:5px 5px 6px #000; /* shadow:modern browser only! */
+	box-shadow:5px 5px 6px #000000; /* shadow:modern browser only! */
 	padding:0; /* REQUIRED:remove extra gaps (ex-bullets) */
 	margin:5px;
 }
@@ -559,6 +539,35 @@ display:table-cell;
 	text-align:left;
 	/* Class selector to horizontal align a text (left) in an element. */
 }
+.gallery {
+	margin:5px;
+	float:left;
+	/* Class selector to let an element float to the left. */
+}
+.field_help_text {
+	/* Class selector for field help text. */
+}
+.page_help_text {
+	background:#d3d3d3 url(images/help.png) top left no-repeat;
+	border:#A52A2A 1px solid;
+	box-shadow:3px 3px 4px;
+	color:#000000;
+	float:none;
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+	font-size:100%;
+	font-weight:normal;
+	margin:0 auto 10px;
+	padding:10px;
+	padding-bottom:2px;
+	padding-left:10px;
+	padding-top:2px;
+	position:static;
+	text-align:center;
+	visibility:visible;
+	width:80%;
+	z-index:1;
+	/* Class selector for page help text. */
+}
 .page_title_text {
 	color:#000000;
 	font-weight:bold;
@@ -566,11 +575,6 @@ display:table-cell;
 	padding:5px;
 	text-align:center;
 	/* Class selector for page title. */
-}
-.gallery {
-	margin:5px;
-	float:left;
-	/* Class selector to let an element float to the left. */
 }
 /* END Class selectors of the style for all devices. ------------------------ */
 /* END Style for all devices.================================================ */

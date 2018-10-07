@@ -82,14 +82,14 @@ th:after {
 th.ascending:after {
 	border-width:0 4px 4px;
 	border-style:solid;
-	border-color:#000 transparent;
+	border-color:#000000 transparent;
 	visibility:visible;
 }
 th.descending:after {
 	border-bottom:none;
 	border-left:4px solid transparent;
 	border-right:4px solid transparent;
-	border-top:4px solid #000;
+	border-top:4px solid #000000;
 	visibility:visible;
 }
 td {
@@ -106,13 +106,13 @@ div.centre {
 }
 input {
 	background:url(images/input.png) #eee;
-	color:#000;
-	border:0px 0px 1px 1px #000 dashed;
+	color:#000000;
+	border:0px 0px 1px 1px #000000 dashed;
 }
 input:hover {
 	background:url(images/inputh.png) #eee;
-	color:#000;
-	border:1px 1px 1px 1px #000 solid;
+	color:#000000;
+	border:1px 1px 1px 1px #000000 solid;
 }
 input.image {
 	border-width:0px;
@@ -131,8 +131,8 @@ select {
 }
 textarea {
 	background:url(images/input.png) #eee;
-	color:#000;
-	border:0px 0px 1px 1px #000 dashed;
+	color:#000000;
+	border:0px 0px 1px 1px #000000 dashed;
 }
 textarea:hover {
 }
@@ -144,13 +144,13 @@ tr.striped_row:nth-of-type(odd) {
 }
 textarea {
 	background:url(images/inputtxt.png) #eee;
-	color:#000;
-	border:0px 0px 1px 1px #000 dashed;
+	color:#000000;
+	border:0px 0px 1px 1px #000000 dashed;
 	}
 textarea:hover {
 	background:url(images/inputhtxt.png) #eee;
-	color:#000;
-	border:1px 1px 1px 1px #000 solid;
+	color:#000000;
+	border:1px 1px 1px 1px #000000 solid;
 }
 div.Message {
 	border-radius:10px;
@@ -534,6 +534,9 @@ li { /* ??? */
 	margin:5px;
 	float:left;
 	/* Class selector to let an element float to the left. */
+}
+.field_help_text {
+	/* Class selector for field help text. */
 }
 .page_help_text {
 	background:#d3d3d3 url(images/help.png) top left no-repeat;

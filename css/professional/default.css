@@ -108,14 +108,14 @@ th:after {
 th.ascending:after {
 	border-width:0 4px 4px;
 	border-style:solid;
-	border-color:#000 transparent;
+	border-color:#000000 transparent;
 	visibility:visible;
 }
 th.descending:after {
 	border-bottom:none;
 	border-left:4px solid transparent;
 	border-right:4px solid transparent;
-	border-top:4px solid #000;
+	border-top:4px solid #000000;
 	visibility:visible;
 }
 div.Message {
@@ -527,6 +527,9 @@ textarea.texterror {
 	float:left;
 	margin:5px;
 	/* Class selector to let an element float to the left. */
+}
+.field_help_text {
+	/* Class selector for field help text. */
 }
 .page_help_text {
 	background:#d3d3d3 url(images/help.png) top left no-repeat;
