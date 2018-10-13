@@ -96,7 +96,7 @@ include('includes/header.php');
 					<td>' . $CurPeriod . '</td>
 					<td class="number">' . locale_number_format($dtRow['bfwd'],2) . '</td>';
 
-			$SQL = "SELECT SUM((ovamount+ovgst)/rate) AS totinvnetcrds
+			$SQL = "SELECT SUM((ovamount+ovgst+ovfreight+ovdiscount)/rate) AS totinvnetcrds
 					FROM debtortrans
 					WHERE prd = '" . $CurPeriod . "'
 					AND (type=10 OR type=11)";
@@ -108,7 +108,7 @@ include('includes/header.php');
 
 			echo '<td class="number">' . locale_number_format($invRow['totinvnetcrds'],2) . '</td>';
 
-			$SQL = "SELECT SUM((ovamount+ovgst)/rate) AS totreceipts
+			$SQL = "SELECT SUM((ovamount+ovgst+ovfreight+ovdiscount)/rate) AS totreceipts
 					FROM debtortrans
 					WHERE prd = '" . $CurPeriod . "'
 					AND type=12";

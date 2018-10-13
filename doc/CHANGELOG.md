@@ -15,14 +15,21 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 
 | Description | Type | Author | Date | Details | Ref |
 |:-----------:|:----:|:------:|:----:|:-------:|:---:|
-| Relocate tcpdf barcodes directory |  | PaulT | 2018-06-28 | [View](https://github.com/webERP-team/webERP/commit/23fd7ff52) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8173&pid=14904#pid14904) |
-| Fix $Prefix use in footer.php |  | alanmi3383 | 2018-06-28 | [View](https://github.com/webERP-team/webERP/commit/c1093765f) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8173&pid=14897#pid14897) |
-| Add script to set period of GL transactions where the period has not been set correctly |  | Phil | 2018-07-01 | [View](https://github.com/) |  |
-| Add Tim's default shipper for suppliers feature |  | Tim Schofield | 2018-06-23 | [View](https://github.com/timschofield/webERP-svn/commit/8f8ea3d9c) | [Forum](http://www.weberp.org/forum/showthread.php?tid=2696) |
-| Add Tim's defaultgl column feature |  | Tim Schofield | 2018-06-18 | [View](https://github.com/webERP-team/webERP/pull/67/files) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8169&pid=14931#pid14931) |
-| DailyBankTransactions.php (updated script) |  | Tim Schofield | 2018-06-18 | [View](https://github.com/webERP-team/webERP/commit/ed1e5e0cb) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8179) |
-| MRP.php fix reorder qty insert calculation |  | BrianTMG | 2018-06-17 | [View](https://github.com/webERP-team/webERP/commit/ab6308dcf) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8175) |
-| DailyBankTransactions.php calculation fix |  | Paul Becker | 2018-06-16 | [View](https://github.com/webERP-team/webERP/commit/7d39e0bfd) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8178) |
+| Eliminate pdf_append/ and stockmaster appendfile column | Removed | Paul Becker / Tim | 2018-09-09 | [View](https://github.com/webERP-team/webERP/commit/e0daaed8a9859f41f50821a3339de627b277d954) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8206) |
+| Fix filename output in PDFQALabel | Fixed | Paul Becker | 2018-09-02 | [View](https://github.com/webERP-team/webERP/commit/d54dae8c60530b80591081778810e19709e47dbe) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8198) |
+| Fix calculation descrepancy in Z_CheckDebtorsControl | Fixed | Paul Becker | 2018-09-02 | [View](https://github.com/webERP-team/webERP/commit/bc14d0d28e4356139d4a05a56d97761c47df1eaf) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8188) |
+| Add order number into file name | Change | Paul Becker | 2018-08-28 | [View](https://github.com/webERP-team/webERP/commit/e5fd39ed26b0768ccfbe7dba70e0d633de8635c9) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8194) |
+| Log output not working (reported by Michelle) | Fixed | Tim Schofield | 2018-08-28 | [View](https://github.com/webERP-team/webERP/commit/18b96699565897a169e47f588577fda5c50edd47) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8196) |
+| Update DB version info (missing with last release) | Changed | Rafael | 2018-08-25 | [View](https://github.com/webERP-team/webERP/commit/fd0cc7a9633ced890a0b15d7184a94feaa5fc42f) |  |
+| Add a input check for the sortby input | Fixed | Exson | 2018-07-29 | [View](https://github.com/webERP-team/webERP/commit/593252c64c0b38cc03d661ca6847a1e5096a5222) |  |
+| Add script to set period of GL transactions where the period has not been set correctly | Added | Phil | 2018-07-01 | [View](https://github.com/webERP-team/webERP/commit/6136b5a96b564b1add42d2dd3bbe22936f00e476) |  |
+| Relocate tcpdf barcodes directory | Fixed | PaulT | 2018-06-28 | [View](https://github.com/webERP-team/webERP/commit/23fd7ff52) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8173&pid=14904#pid14904) |
+| Fix $Prefix use in footer.php | Fixed | alanmi3383 | 2018-06-28 | [View](https://github.com/webERP-team/webERP/commit/c1093765f) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8173&pid=14897#pid14897) |
+| Add Tim's default shipper for suppliers feature | Added | Tim Schofield | 2018-06-23 | [View](https://github.com/timschofield/webERP-svn/commit/8f8ea3d9c) | [Forum](http://www.weberp.org/forum/showthread.php?tid=2696) |
+| Add Tim's defaultgl column feature | Added | Tim Schofield | 2018-06-18 | [View](https://github.com/webERP-team/webERP/pull/67/files) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8169&pid=14931#pid14931) |
+| DailyBankTransactions.php (updated script) | Changed | Tim Schofield | 2018-06-18 | [View](https://github.com/webERP-team/webERP/commit/ed1e5e0cb) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8179) |
+| MRP.php fix reorder qty insert calculation | Fixed | BrianTMG | 2018-06-17 | [View](https://github.com/webERP-team/webERP/commit/ab6308dcf) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8175) |
+| DailyBankTransactions.php calculation fix | Fixed | Paul Becker | 2018-06-16 | [View](https://github.com/webERP-team/webERP/commit/7d39e0bfd) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8178) |
 
 ## [v4.15] - 2018-05-20
 
