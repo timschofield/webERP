@@ -69,13 +69,15 @@ if ($_SESSION['PO'.$identifier]->Status != 'Printed') {
 	exit;
 }
 
-/* Always display quantities received and recalc balance for all items on the order */
+// Always display quantities received and recalc balance for all items on the order
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+	'/images/supplier.png" title="', // Icon image.
+	_('Receive'), '" /> ', // Icon title.
+	_('Receive Purchase Order'), ' : ', $_SESSION['PO'.$identifier]->OrderNo, ' ', _('from'), ' ', $_SESSION['PO'.$identifier]->SupplierName, '</p>';// Page title.
 
-echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Receive') . '" alt="" />' . ' ' . _('Receive Purchase Order') . ' : '. $_SESSION['PO'.$identifier]->OrderNo .' '. _('from'). ' ' . $_SESSION['PO'.$identifier]->SupplierName . '</p>';
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier . '" id="form1" method="post">';
-echo '<div>';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?identifier=', $identifier, '" id="form1" method="post">',
+	'<div>',
+	'<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (!isset($_POST['ProcessGoodsReceived'])) {
 	if (!isset($_POST['DefaultReceivedDate']) AND !isset($_SESSION['PO' . $identifier]->DefaultReceivedDate)) {
@@ -110,35 +112,34 @@ if (!isset($_POST['ProcessGoodsReceived'])) {
 				<td><input type="text" name="SupplierReference" value="' . $SupplierReference. '" maxlength="30" size="20"  onchange="ReloadForm(form1.Update)"/></td>
 			</tr>
 		</table>
-		<br />';
-
-	echo '<table cellpadding="2" class="selection">
+		<br />',
+		'<table cellpadding="2" class="selection">
 			<tr><th colspan="2">&nbsp;</th>
-				<th class="centre" colspan="4"><b>' . _('Supplier Units') . '</b></th>
+				<th class="centre" colspan="4"><b>' ., _('Supplier Units'), '</b></th>
 				<th>&nbsp;</th>
-				<th class="centre" colspan="6"><b>' . _('Our Receiving Units') . '</b></th>';
-	if ($_SESSION['ShowValueOnGRN']==1) {
+				<th class="centre" colspan="6"><b>', _('Our Receiving Units'), '</b></th>';
+	if ($_SESSION['ShowValueOnGRN'] == 1) {
 		echo '<th colspan="2">&nbsp;</th>';
 	}
-	echo '</tr>
+	echo	'</tr>
 			<tr>
-				<th>' . _('Item Code') . '</th>
-				<th>' . _('Supplier') . '<br />'. _('Item') . '</th>
-				<th>' . _('Description') . '</th>
-				<th>' . _('Quantity') . '<br />' . _('Ordered') . '</th>
-				<th>' . _('Units') . '</th>
-				<th>' . _('Already') . '<br />' . _('Received') . '</th>
-				<th>' . _('Conversion') . '<br />' . _('Factor') . '</th>
-				<th>' . _('Quantity') . '<br />' . _('Ordered') . '</th>
-				<th>' . _('Units') . '</th>
-				<th>' . _('Already') . '<br />' . _('Received') . '</th>
-				<th>' . _('Delivery') . '<br />' . _('Date') . '</th>
-				<th>' . _('This Delivery') . '<br />' . _('Quantity') . '</th>
-				<th>' . _('Completed') . '</th>';
+				<th>', _('Item Code'), '</th>
+				<th>', _('Supplier') . '<br />'. _('Item'), '</th>
+				<th>', _('Description'), '</th>
+				<th>', _('Quantity Ordered'), '</th>
+				<th>', _('Units'), '</th>
+				<th>', _('Already Received'), '</th>
+				<th>', _('Conversion Factor'), '</th>
+				<th>', _('Quantity Ordered'), '</th>
+				<th>', _('Units'), '</th>
+				<th>', _('Already Received'), '</th>
+				<th>', _('Delivery Date'), '</th>
+				<th>', _('This Delivery') . '<br />' . _('Quantity'), '</th>
+				<th>', _('Completed'), '</th>';
 
-	if ($_SESSION['ShowValueOnGRN']==1) {
-		echo '<th>' . _('Price') . '</th>
-				<th>' . _('Total Value') . '<br />' . _('Received') . '</th>';
+	if ($_SESSION['ShowValueOnGRN'] == 1) {
+		echo '<th>', _('Price'), '</th>
+				<th>', _('Total Value') . '<br />' . _('Received'), '</th>';
 	}
 
 	echo '</tr>';
@@ -212,9 +213,9 @@ maxlength="10" size="10" value="' . locale_number_format(round($LnItm->ReceiveQt
 		}
 		echo ' /></td>';
 
-		if ($_SESSION['ShowValueOnGRN']==1) {
-			echo '<td class="number">' . $DisplayPrice . '</td>';
-			echo '<td class="number">' . $DisplayLineTotal . '</td>';
+		if ($_SESSION['ShowValueOnGRN'] == 1) {
+			echo '<td class="number">', $DisplayPrice, '</td>',
+				'<td class="number">', $DisplayLineTotal, '</td>';
 		}
 
 
@@ -230,7 +231,7 @@ maxlength="10" size="10" value="' . locale_number_format(round($LnItm->ReceiveQt
 		echo '</tr>';
 	}//foreach(LineItem)
 	$DisplayTotal = locale_number_format($_SESSION['PO'.$identifier]->Total,$_SESSION['PO'.$identifier]->CurrDecimalPlaces);
-	if ($_SESSION['ShowValueOnGRN']==1) {
+	if ($_SESSION['ShowValueOnGRN'] == 1) {
 		echo '<tr>
 				<td class="number" colspan="14"><b>', _('Total value of goods received'), '</b></td>
 				<td class="number"><b>',  $DisplayTotal, '</b></td>
@@ -296,7 +297,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 
 	echo '<div class="centre"><input type="submit" name="Update" value="' . _('Update') . '" />';
 
-}elseif ($DeliveryQuantityTooLarge==1 AND isset($_POST['ProcessGoodsReceived'])) {
+} elseif ($DeliveryQuantityTooLarge==1 AND isset($_POST['ProcessGoodsReceived'])) {
 
 	prnMsg(_('Entered quantities cannot be greater than the quantity entered on the purchase invoice including the allowed over-receive percentage'). ' ' . '(' . $_SESSION['OverReceiveProportion'] .'%)','error');
 	echo '<br />';
