@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-05 13:30-0600\n"
-"PO-Revision-Date: 2018-10-05 14:05-0600\n"
+"PO-Revision-Date: 2018-10-18 00:17-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -12950,7 +12950,7 @@ msgstr "Línea de orden de compra"
 #: PO_AuthoriseMyOrders.php:117 WorkOrderIssue.php:784 WorkOrderReceive.php:838
 #: WorkOrderStatus.php:74
 msgid "Quantity Ordered"
-msgstr "Cantidad Solicitada"
+msgstr "Cantidad pedida"
 
 #: EmailConfirmation.php:282
 msgid "The following E-Mail was sent to"
@@ -23504,7 +23504,7 @@ msgstr "Iniciador"
 #: ReprintGRN.php:89 includes/GenPickingListHeader.inc:47
 #: includes/PDFPickingListHeader.inc:45
 msgid "Delivery Date"
-msgstr "Fecha de Entrega"
+msgstr "Fecha de entrega"
 
 #: PO_AuthoriseMyOrders.php:95 PO_Header.php:810 PO_Header.php:815
 #: PO_Header.php:830 PO_Header.php:834 PO_SelectOSPurchOrder.php:235
@@ -40973,7 +40973,7 @@ msgstr "Enviar a orden de trabajo"
 
 #: WorkOrderIssue.php:785 WorkOrderReceive.php:843 WorkOrderStatus.php:79
 msgid "Already Received"
-msgstr "Actualmente Receptado"
+msgstr "Ya recibido"
 
 #: WorkOrderIssue.php:790
 msgid ""
