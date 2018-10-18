@@ -95,7 +95,6 @@ th.descending:after {
 td {
 	font-family:Arial, Verdana, Helvetica, sans-serif;
 	text-align:left;
-	vertical-align:top;
 }
 td.select {
 	background-color:#eee;
@@ -104,12 +103,12 @@ div.centre {
 	margin:0 auto;
 	text-align:center;
 }
-input {
+input{
 	background:url(images/input.png) #eee;
 	color:#000;
 	border:0px 0px 1px 1px #000 dashed;
 }
-input:hover {
+input:hover{
 	background:url(images/inputh.png) #eee;
 	color:#000;
 	border:1px 1px 1px 1px #000 solid;
@@ -129,12 +128,12 @@ select {
 	background:#eee;
 	color:#111;
 }
-textarea {
+textarea{
 	background:url(images/input.png) #eee;
 	color:#000;
 	border:0px 0px 1px 1px #000 dashed;
 }
-textarea:hover {
+textarea:hover{
 }
 tr.striped_row:nth-of-type(even) {
 	background-color:#CCCCCC;
@@ -142,12 +141,12 @@ tr.striped_row:nth-of-type(even) {
 tr.striped_row:nth-of-type(odd) {
 	background-color:#EEEEEE;
 }
-textarea {
+textarea{
 	background:url(images/inputtxt.png) #eee;
 	color:#000;
 	border:0px 0px 1px 1px #000 dashed;
 	}
-textarea:hover {
+textarea:hover{
 	background:url(images/inputhtxt.png) #eee;
 	color:#000;
 	border:1px 1px 1px 1px #000 solid;
@@ -195,21 +194,21 @@ div.Message.warn {
 .dpTbl {
 	border:solid navy 1px;
 }
-.dpTD {
+.dpTD{
 	border:0;
 	width:20px;
 	background-color:#EEEEEE;
 	text-align:right;
 	cursor:pointer;
 }
-.dpDayHighlight {
+.dpDayHighlight{
 	border:0;
 	width:20px;
 	background-color:yellow;
 	text-align:right;
 	cursor:pointer;
 }
-.dpTDHover {
+.dpTDHover{
 	border:0;
 	width:20px;
 	background-color:#CCCCCC;
@@ -271,7 +270,7 @@ li { /* ??? */
 
 /*** CANVAS ***/
 
-#CanvasDiv {
+#CanvasDiv{
 }
 
 /*** HEADER ***/
@@ -286,61 +285,61 @@ li { /* ??? */
 	border-radius:20px;
 	padding:0 5px;
 }
-#HeaderWrapDiv {
+#HeaderWrapDiv{
 }
 
 /*** HEADER - APP INFO ***/
 
-#AppInfoDiv {
+#AppInfoDiv{
 	float:left; /* REQUIRED:to the left */
 }
-#AppInfoDiv img {
+#AppInfoDiv img{
 	vertical-align:middle; /* center image and text vertically */
 }
-#AppInfoCompanyDiv {
+#AppInfoCompanyDiv{
 	display:table-cell; /* REQUIRED:as a cell */
 }
-#AppInfoUserDiv {
+#AppInfoUserDiv{
 	display:table-cell; /* REQUIRED:as a cell */
 }
-#AppInfoUserDiv a {
+#AppInfoUserDiv a{
 	color:white;
 	font-weight:bold;
 	text-decoration:none;
 }
-#AppInfoUserDiv a:hover {
+#AppInfoUserDiv a:hover{
 	color:white;
 	font-weight:bold;
 	text-decoration:underline;
 }
-#AppInfoModuleDiv {
+#AppInfoModuleDiv{
 	padding-left:24px;
 }
 
 /*** HEADER - QUICK MENU ***/
 
-#QuickMenuDiv {
+#QuickMenuDiv{
 	float:right; /* to the right side */
 	margin-top:2px;
 }
-#QuickMenuDiv ul {
+#QuickMenuDiv ul{
 	list-style:none; /* hide the bullets */
 }
-#QuickMenuDiv li {
+#QuickMenuDiv li{
 	display:inline; /* items are inline */
 }
 
 /*** links as buttons!!! clicking anywhere in the button will activate
 	 the link!!! ***HJ***/
 
-#QuickMenuDiv li a {
+#QuickMenuDiv li a{
 	padding:5px; /* links as button */
 	border:2px outset transparent; /* un-pressed state */
 	border-radius:15px;
 	color:white;
 	font-weight:bold;
 }
-#QuickMenuDiv li a:hover {
+#QuickMenuDiv li a:hover{
 	padding:5px; /* links as button */
 	border:2px inset steelblue; /* pressed state */
 	text-decoration:none; /* no underline */
@@ -362,14 +361,14 @@ li { /* ??? */
 	margin:0 auto;
 	margin-bottom:10px;
 }
-#BodyDiv .centre {
+#BodyDiv .centre{
 	margin:0 auto 10px;
 	text-align:center;
 }
 
 /*** BODY - MAIN MENU ***/
 
-#MainMenuDiv {
+#MainMenuDiv{
 	float:left; /* REQUIRED:to the left side */
 	white-space:nowrap; /* don't break text */
 	text-align:center;
@@ -382,16 +381,16 @@ li { /* ??? */
 	padding:3px;
 
 }
-#MainMenuDiv ul {
+#MainMenuDiv ul{
 	list-style:none; /* REQUIRED:hide bullets */
 	padding:0; /* REQUIRED:remove extra gaps (ex-bullets) */
 	margin:0;
 }
-#MainMenuDiv li {
+#MainMenuDiv li{
 	list-style:none; /* REQUIRED */
 	padding:0; /* REQUIRED */
 }
-#MainMenuDiv li a { /* link as button!!! not-pressed state */
+#MainMenuDiv li a{ /* link as button!!! not-pressed state */
 	display:block; /* REQUIRED */
 	padding:3px;
 	border:2px outset transparent;
@@ -399,14 +398,14 @@ li { /* ??? */
 	font-weight:bold;
 	border-radius:15px;
 }
-#MainMenuDiv li a:hover { /* link as button!!! pressed state */
+#MainMenuDiv li a:hover{ /* link as button!!! pressed state */
 	text-decoration:none;
 	padding:3px;
 	border:2px inset steelblue;
 	background:none;
 	border-radius:15px;
 }
-#MainMenuDiv .main_menu_selected a { /* the selected button */
+#MainMenuDiv .main_menu_selected a{ /* the selected button */
 	text-decoration:none;
 	padding:3px;
 	border:2px inset steelblue;
@@ -416,7 +415,7 @@ li { /* ??? */
 
 /*** BODY - SUB MENU ***/
 
-#SubMenuDiv {
+#SubMenuDiv{
 	display:table;
 	margin-left:auto;
 	margin-right:auto;
@@ -424,19 +423,19 @@ li { /* ??? */
 	width:87%;
 	text-align:left;
 }
-#SubMenuDiv ul {
+#SubMenuDiv ul{
 	list-style-type:none; /* REQUIRED:hide bullets */
 	padding:0; /* REQUIRED:remove extra gaps (ex-bullets) */
 	margin:0;
 	border:thin solid #000000;
 	margin-left:3px;
 }
-#SubMenuDiv li {
+#SubMenuDiv li{
 	list-style:none; /* REQUIRED:hide the bullets */
 	width:100%; /* REQUIRED:make item full width */
 	background:#eeeeee;
 }
-#SubMenuDiv li img {
+#SubMenuDiv li img{
 	vertical-align:middle; /* verticall align icon with the text */
 }
 #SubMenuDiv .menu_group_headers {
@@ -451,11 +450,11 @@ li { /* ??? */
 	text-indent:-10px; /* this makes the bullet to appear as the li tag previously used */
 	margin:0 0 0 12px; /* One thing that I didnÂ´t like of the li was that it had no left margin applied */
 }
-#SubMenuDiv a:link, a:visited { /* links */
+#SubMenuDiv a:link, a:visited{ /* links */
 	color:blue;
 	text-decoration:none;
 }
-#SubMenuDiv a:hover {
+#SubMenuDiv a:hover{
 	color:blue;
 	text-decoration:underline;
 }
@@ -466,47 +465,47 @@ li { /* ??? */
 #SubMenuDiv .menu_group_item:hover {
 	background:#bfd8ff;
 }
-#TransactionsDiv {
+#TransactionsDiv{
 	display:table-cell;
 }
-#InquiriesDiv {
+#InquiriesDiv{
 	display:table-cell;
 }
-#InquiriesDiv div { /* default div, used for custom report header */
+#InquiriesDiv div{ /* default div, used for custom report header */
 	background:#dddddd;
 	color:#000000;
 	padding:2px;
 /*	border:thin outset silver;*/
 }
-#MaintenanceDiv {
+#MaintenanceDiv{
 	display:table-cell;
 }
 
 /*** FOOTER ***/
 
-#FooterDiv {
+#FooterDiv{
 	clear:both; /* REQUIRED */
 	overflow:hidden;
 	color:gray;
 	background:url(images/bar.png) repeat-x d3d3d3;
 	border:thin solid d3d3d3;
 }
-#FooterWrapDiv {
+#FooterWrapDiv{
 	overflow:hidden;
 	padding:3px;
 }
-#FooterLogoDiv {
+#FooterLogoDiv{
 	background:white;
 	border-radius:8px;
 	float:left;
 	padding:3px;
 	margin-left:44%; /* to the center (approx) */
 }
-#FooterVersionDiv {
+#FooterVersionDiv{
 	clear:both; /* below the logo */
 	text-align:center;
 }
-#FooterTimeDiv {
+#FooterTimeDiv{
 	display:block;
 	float:right;
 	line-height:2.8em; /* Center the text vertically.

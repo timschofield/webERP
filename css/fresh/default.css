@@ -92,7 +92,6 @@ th.descending:after {
 }
 td {
 	text-align:left;
-	vertical-align:top;
 }
 td.select {
 	background-color:#eee;
@@ -107,7 +106,7 @@ input.image {
 	border-width:0px;
 	background-color:transparent;
 }
-input:hover {
+input:hover{
 }
 select {
 	font-family:Arial, Verdana, Helvetica, sans-serif;;
@@ -120,9 +119,9 @@ input.inputerror, input.error, select.error, select.selecterror, label.error {
 input:required, select:required, textarea:required {
 	background-color:#ffffe0;
 }
-textarea {
+textarea{
 }
-textarea:hover {
+textarea:hover{
 }
 
 tr.striped_row:nth-of-type(even) {
@@ -262,7 +261,7 @@ select.selecterror {
 
 /*** CANVAS ***/
 
-#CanvasDiv {
+#CanvasDiv{
 	background:#fff;
 	margin:0;
 }
@@ -275,56 +274,56 @@ select.selecterror {
 	padding-left:3px;
 	background:#C9D392;
 }
-#HeaderWrapDiv {
+#HeaderWrapDiv{
 }
 
 /*** HEADER - APP INFO ***/
 
-#AppInfoDiv {
+#AppInfoDiv{
 	float:left; /* REQUIRED:to the left */
 }
-#AppInfoDiv img {
+#AppInfoDiv img{
 	vertical-align:middle; /* center image and text vertically */
 }
-#AppInfoCompanyDiv {
+#AppInfoCompanyDiv{
 	display:table-cell; /* REQUIRED:as a cell */
 }
-#AppInfoUserDiv {
+#AppInfoUserDiv{
 	display:table-cell; /* REQUIRED:as a cell */
 }
-#AppInfoUserDiv a {
+#AppInfoUserDiv a{
 	color:#5A5F00;
 }
-#AppInfoUserDiv a:hover {
+#AppInfoUserDiv a:hover{
 	color:#000000;
 	text-decoration:underline;
 }
-#AppInfoModuleDiv {
+#AppInfoModuleDiv{
 }
 
 /*** HEADER - QUICK MENU ***/
 
-#QuickMenuDiv {
+#QuickMenuDiv{
 	float:right; /* to the right side */
 	margin-top:0.1em;
 }
-#QuickMenuDiv ul {
+#QuickMenuDiv ul{
 	list-style:none; /* hide the bullets */
 }
-#QuickMenuDiv li {
+#QuickMenuDiv li{
 	display:inline; /* items are inline */
 }
 
 /*** links as buttons!!! clicking anywhere in the button will activate
 	 the link!!! ***HJ***/
 
-#QuickMenuDiv li a {
+#QuickMenuDiv li a{
 	background:#B4BB86;
 	border:thin outset #5A5F00;
 	color:#5A5F00;
 	padding:8px;
 }
-#QuickMenuDiv li a:hover {
+#QuickMenuDiv li a:hover{
 	background:#B4BB86;
 	border:thin inset #5A5F00;
 	color:#000000;
@@ -355,35 +354,35 @@ select.selecterror {
 
 /*** BODY - MAIN MENU ***/
 
-#MainMenuDiv {
+#MainMenuDiv{
 	float:left; /* REQUIRED:to the left side */
 	white-space:nowrap; /* don't break text */
 	text-align:center;
 	width:11%;
 	background:#617C4F;
 }
-#MainMenuDiv ul {
+#MainMenuDiv ul{
 	list-style:none; /* REQUIRED:hide bullets */
 	padding:0; /* REQUIRED:remove extra gaps (ex-bullets) */
 	margin:0;
 }
-#MainMenuDiv li {
+#MainMenuDiv li{
 	list-style:none; /* REQUIRED */
 	padding:0; /* REQUIRED */
 }
-#MainMenuDiv li a { /* link as button!!! not-pressed state */
+#MainMenuDiv li a{ /* link as button!!! not-pressed state */
 	display:block; /* REQUIRED */
 	padding:3px;
 	border:thin outset #617C4F;
 	color:white;
 }
-#MainMenuDiv li a:hover { /* link as button!!! pressed state */
+#MainMenuDiv li a:hover{ /* link as button!!! pressed state */
 	background:#5A5F00;
 	border:thin inset #617C4F;
 	padding:3px;
 	text-decoration:none;
 }
-#MainMenuDiv .main_menu_selected a { /* the selected button */
+#MainMenuDiv .main_menu_selected a{ /* the selected button */
 	border:thin inset #5A5F00;
 	background:#5A5F00;
 	color:white;
@@ -391,20 +390,20 @@ select.selecterror {
 
 /*** BODY - SUB MENU ***/
 
-#SubMenuDiv {
+#SubMenuDiv{
 	display:table; /* display as table, sub menu will auto adjust width */
 	width:89%; /* main menu is 10% */
 	text-align:left;
 }
-#SubMenuDiv a:link, a:visited {
+#SubMenuDiv a:link, a:visited{
 	color:#5A5F00;
 	text-decoration:none;
 }
-#SubMenuDiv a:hover {
+#SubMenuDiv a:hover{
 	color:#5A5F00;
 	text-decoration:underline;
 }
-#SubMenuDiv ul {
+#SubMenuDiv ul{
 	list-style-type:none; /* REQUIRED:hide bullets */
 	padding:0; /* REQUIRED:remove extra gaps (ex-bullets) */
 	margin-left:3px;
@@ -413,12 +412,12 @@ select.selecterror {
 	border:thin outset #5A5F00;
 	background:#E0F3B1;	/* for custom reports */
 }
-#SubMenuDiv li {
+#SubMenuDiv li{
 	/*list-style:none;*/ /* REQUIRED:hide the bullets */
 	padding:2px;
 	background:#E0F3B1;
 }
-#SubMenuDiv li img {
+#SubMenuDiv li img{
 	vertical-align:middle; /* verticall align icon with the text */
 }
 #SubMenuDiv .menu_group_headers {
@@ -427,24 +426,24 @@ select.selecterror {
 	text-align:center;
 	color:#000000;
 }
-#TransactionsDiv {
+#TransactionsDiv{
 	display:table-cell;
 }
-#InquiriesDiv {
+#InquiriesDiv{
 	display:table-cell;
 }
-#InquiriesDiv div { /* default div, used for custom report header */
+#InquiriesDiv div{ /* default div, used for custom report header */
 	background:#C9D392;
 	color:#000000;
 	padding:2px;
 	border:thin outset #5A5F00;
 }
-#InquiriesDiv body {
+#InquiriesDiv body{
 	background:#eee;
 	color:red;
 	padding:2px;
 }
-#MaintenanceDiv {
+#MaintenanceDiv{
 	display:table-cell;
 /*	float:left;*/
 /*	width:32.5%;
@@ -459,16 +458,16 @@ select.selecterror {
 
 /*** FOOTER ***/
 
-#FooterDiv {
+#FooterDiv{
 	clear:both; /* REQUIRED */
 	overflow:hidden;
 	background:#C9D392;
 }
-#FooterWrapDiv {
+#FooterWrapDiv{
 	overflow:hidden;
 	padding:3px;
 }
-#FooterLogoDiv {
+#FooterLogoDiv{
 	float:right; /* right side */
 	background:white;
 	border-radius:8px;
@@ -477,11 +476,11 @@ select.selecterror {
 #FooterLogoDiv img {
 	vertical-align:middle;
 }
-#FooterVersionDiv {
+#FooterVersionDiv{
 	float:left; /* left side */
 	margin-top:3px;
 }
-#FooterTimeDiv {
+#FooterTimeDiv{
 	clear:left; /* below */
 }
 #Report {

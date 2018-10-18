@@ -98,10 +98,9 @@ th.descending:after {
 	visibility:visible;
 }
 td {
-	color:#575757;
 	padding:2px 4px;
 	text-align:left;
-	vertical-align:top;
+	color:#575757;
 }
 td.select {
 	background-color:#eee;
@@ -141,7 +140,7 @@ input.image {
 	border-width:0px;
 	background-color:transparent;
 }
-input:hover {
+input:hover{
 }
 select {
 	font-family:Arial, Verdana, Helvetica, sans-serif;;
@@ -195,7 +194,7 @@ input[type='submit'], button {
 select {
 	background-color:white;
 }
-textarea {
+textarea{
 	border:thin solid #C3C3C3;
 	padding:4px 8px;
 
@@ -341,7 +340,7 @@ select.selecterror {
 
 /*** CANVAS ***/
 
-#CanvasDiv {
+#CanvasDiv{
 	background:#F1F1F1;
 	margin:0;
 }
@@ -356,41 +355,41 @@ select.selecterror {
 	padding-left:3px;
 	height:44px;
 }
-#HeaderWrapDiv {
+#HeaderWrapDiv{
 }
 
 /*** HEADER - APP INFO ***/
 
-#AppInfoDiv {
+#AppInfoDiv{
 	float:left; /* REQUIRED:to the left */
 }
-#AppInfoDiv img {
+#AppInfoDiv img{
 	vertical-align:middle; /* center image and text vertically */
 }
-#AppInfoCompanyDiv {
+#AppInfoCompanyDiv{
 	display:table-cell; /* REQUIRED:as a cell */
 }
-#AppInfoUserDiv {
+#AppInfoUserDiv{
 	display:table-cell; /* REQUIRED:as a cell */
 }
-#AppInfoUserDiv a {
+#AppInfoUserDiv a{
 	color:#333333;
 	font-weight:bold;
 }
-#AppInfoUserDiv a:hover {
+#AppInfoUserDiv a:hover{
 	text-decoration:none;
 }
-#AppInfoModuleDiv {
+#AppInfoModuleDiv{
 }
 
 /*** HEADER - QUICK MENU ***/
 
-#QuickMenuDiv {
+#QuickMenuDiv{
 	float:right; /* to the right side */
 	z-index:10;
 	margin-right:1.05%;
 }
-#QuickMenuDiv ul {
+#QuickMenuDiv ul{
 	list-style:none; /* hide the bullets */
 	margin:0;
 	padding:0;
@@ -404,7 +403,7 @@ select.selecterror {
 	-ms-filter:"progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3')";
 	filter:progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3');
 }
-#QuickMenuDiv li {
+#QuickMenuDiv li{
 	display:inline-block; /* items are inline */
 	height:38px;
 }
@@ -412,7 +411,7 @@ select.selecterror {
 /*** links as buttons!!! clicking anywhere in the button will activate
 	 the link!!! ***HJ***/
 
-#QuickMenuDiv li a {
+#QuickMenuDiv li a{
 	background:#686868;
 	border-bottom:thin solid #7C7C7C;
 	border-left:thin outset #737373;
@@ -422,17 +421,17 @@ select.selecterror {
 	font-weight:bold;
 	padding:11px 24px;
 }
-#QuickMenuDiv li:first-child a {
+#QuickMenuDiv li:first-child a{
 	-webkit-border-radius:0 0 0 6px;
 	-moz-border-radius:0 0 0 6px;
 	border-radius:0 0 0 6px;
 }
-#QuickMenuDiv li:last-child a {
+#QuickMenuDiv li:last-child a{
 	-webkit-border-radius:0 0 6px 0;
 	-moz-border-radius:0 0 6px 0;
 	border-radius:0 0 6px 0;
 }
-#QuickMenuDiv li a:hover {
+#QuickMenuDiv li a:hover{
 	background:#444444;
 	border-left:thin outset #5C5C5C;
 	text-decoration:none;
@@ -480,7 +479,7 @@ select.selecterror {
 
 /*** BODY - MAIN MENU ***/
 
-#MainMenuDiv {
+#MainMenuDiv{
 	margin-left:.6%;
 	margin-right:1%;
 	float:left; /* REQUIRED:to the left side */
@@ -499,16 +498,16 @@ select.selecterror {
 	-ms-filter:"progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3')";
 	filter:progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3')
 }
-#MainMenuDiv ul {
+#MainMenuDiv ul{
 	list-style:none; /* REQUIRED:hide bullets */
 	padding:0; /* REQUIRED:remove extra gaps (ex-bullets) */
 	margin:0;
 }
-#MainMenuDiv li {
+#MainMenuDiv li{
 	list-style:none; /* REQUIRED */
 	padding:0; /* REQUIRED */
 }
-#MainMenuDiv li a { /* link as button!!! not-pressed state */
+#MainMenuDiv li a{ /* link as button!!! not-pressed state */
 	display:block; /* REQUIRED */
 	padding:8px;
 	/*border-top:thin outset #1E1E1E;*/
@@ -520,23 +519,23 @@ select.selecterror {
 #MainMenuDiv li:first-child a {
 	border-top:none;
 }
-#MainMenuDiv li a:hover { /* link as button!!! pressed state */
+#MainMenuDiv li a:hover{ /* link as button!!! pressed state */
 	text-decoration:none;
 	background:#444444;
 	border-bottom:thin solid #444444;
 }
-#MainMenuDiv .main_menu_selected a { /* the selected button */
+#MainMenuDiv .main_menu_selected a{ /* the selected button */
 	/*border:thin inset #191919;*/
 	background:#2A2A2A;
 	border-bottom:thin solid #191919;
 }
-#MainMenuDiv .main_menu_selected a:hover {
+#MainMenuDiv .main_menu_selected a:hover{
 	background:#2A2A2A;
 }
 
 /*** BODY - SUB MENU ***/
 
-#SubMenuDiv {
+#SubMenuDiv{
 	display:table; /* display as table, sub menu will auto adjust width */
 	width:83.5%; /* main menu is 10% */
 	text-align:left;
@@ -553,24 +552,24 @@ select.selecterror {
 	-ms-filter:"progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3')";
 	filter:progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3')
 }
-#SubMenuDiv a:link, a:visited {
+#SubMenuDiv a:link, a:visited{
 	color:#0088CD;
 	text-decoration:none;
 }
-#SubMenuDiv a:hover {
+#SubMenuDiv a:hover{
 	color:#0088CD;
 	text-decoration:none;
 }
-#SubMenuDiv ul {
+#SubMenuDiv ul{
 	list-style-type:none;
 	padding:0;
 	margin:0;
 }
-#SubMenuDiv li {
+#SubMenuDiv li{
 	padding:2px;
 	color:#333333;
 }
-#SubMenuDiv li img {
+#SubMenuDiv li img{
 	vertical-align:middle; /* verticall align icon with the text */
 }
 #SubMenuDiv .menu_group_headers {
@@ -578,24 +577,24 @@ select.selecterror {
 	text-align:center;
 	color:#2C2C2C;
 }
-#TransactionsDiv {
+#TransactionsDiv{
 	display:table-cell;
 	border-right:thin solid #D2D2D2;
 }
-#InquiriesDiv {
+#InquiriesDiv{
 	display:table-cell;
 	border-right:thin solid #D2D2D2;
 }
-#InquiriesDiv div { /* default div, used for custom report header */
+#InquiriesDiv div{ /* default div, used for custom report header */
 	color:#000000;
 	padding:2px;
 }
-#InquiriesDiv body {
+#InquiriesDiv body{
 	background:#eee;
 	color:red;
 	padding:2px;
 }
-#MaintenanceDiv {
+#MaintenanceDiv{
 	display:table-cell;
 }
 .menu_group_item p {
@@ -605,33 +604,33 @@ select.selecterror {
 
 /*** FOOTER ***/
 
-#FooterDiv {
+#FooterDiv{
 	clear:both; /* REQUIRED */
 	color:#999999;
 	margin:auto;
 	overflow:hidden;
 	width:98.6%;
 }
-#FooterDiv a {
+#FooterDiv a{
 	text-decoration:underline;
 	color:#999999;
 }
-#FooterWrapDiv {
+#FooterWrapDiv{
 	overflow:hidden;
 	padding:3px;
 }
-#FooterLogoDiv {
+#FooterLogoDiv{
 	float:right; /* right side */
 	padding:2px;
 }
 #FooterLogoDiv img {
 	vertical-align:middle;
 }
-#FooterVersionDiv {
+#FooterVersionDiv{
 	float:left; /* left side */
 	margin-top:3px;
 }
-#FooterTimeDiv {
+#FooterTimeDiv{
 	clear:left; /* below */
 }
 #Report {
