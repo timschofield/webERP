@@ -546,6 +546,7 @@ li {
 	/* Class selector to let an element float to the right. */
 }
 .field_help_text {
+	font-style:italic;
 	/* Class selector for field help text. */
 }
 .page_help_text {
