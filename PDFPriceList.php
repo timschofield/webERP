@@ -474,7 +474,9 @@ If (isset($_POST['PrintPDF'])) {
 			'<td><label for="ShowObsolete">', _('Show obsolete items'), ':</label></td>',
 	 		'<td>',
 				'<input',(($_POST['ShowObsolete']) ? ' checked="checked"' : ''), ' id="ShowObsolete" name="ShowObsolete" type="checkbox" />', // "Checked" if ShowObsolete is TRUE.
+				'<span class="field_help_text">',
 				(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Check this box to show the obsolete items') : ''), // If the parameter $_SESSION['ShowFieldHelp'] is not set OR is TRUE, shows this field help text.
+				'</span>',
 			'</td>',
 	 	'</tr>',
 	// Option to select the order of the items in the report:

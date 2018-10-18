@@ -44,10 +44,18 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo'])) {
 
 // Main code:
 if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action']!='New') {// If all parameters are set and valid, generates the report:
-	echo '<table class="selection">
+	echo '<p>', _('Period from'), ': ', $_POST['PeriodFrom'],
+		'<br />', _('Period to'), ': ', $_POST['PeriodTo'], '</p>',
+		'<table class="selection">
 		<thead>
 			<tr>';
-	$TableFoot =
+	$CommonHead =
+				'<th>' . _('Original Overall Amount') . '</th>' .
+				'<th>' . _('Original Overall Taxes') . '</th>' .
+				'<th>' . _('Original Overall Total') . '</th>' .
+				'<th>' . _('GL Overall Amount') . '</th>' .
+				'<th>' . _('GL Overall Taxes') . '</th>' .
+				'<th>' . _('GL Overall Total') . '</th>' .
 			'</tr>
 		</thead><tfoot>
 			<tr>
@@ -56,21 +64,16 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 					_('Original amounts in the supplier\'s currency. GL amounts in the functional currency.') .
 				'</td>
 			</tr>
-		</tfoot><tbody>';// Common table code.
+		</tfoot><tbody>';// Common table head between ShowDetails=off and ShowDetails=on.
 	$TotalGlAmount = 0;
 	$TotalGlTax = 0;
 	$PeriodFrom = FormatDateForSQL($_POST['PeriodFrom']);
 	$PeriodTo = FormatDateForSQL($_POST['PeriodTo']);
 	if($_POST['ShowDetails']) {// Parameters: PeriodFrom, PeriodTo, ShowDetails=on.
-		echo		'<th>', _('Date'), '</th>
-					<th>', _('Purchase Invoice'), '</th>
-					<th>', _('Reference'), '</th>
-					<th>', _('Original Overall Amount'), '</th>
-					<th>', _('Original Overall Taxes'), '</th>
-					<th>', _('Original Overall Total'), '</th>
-					<th>', _('GL Overall Amount'), '</th>
-					<th>', _('GL Overall Taxes'), '</th>
-					<th>', _('GL Overall Total'), '</th>', $TableFoot;
+		echo		'<th>', _('Date'), '</th>',
+					'<th>', _('Purchase Invoice'), '</th>',
+					'<th>', _('Reference'), '</th>',
+					$CommonHead;
 		$SupplierId = '';
 		$SupplierOvAmount = 0;
 		$SupplierOvTax = 0;
@@ -154,15 +157,10 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 
 	} else {// Parameters: PeriodFrom, PeriodTo, ShowDetails=off.
 		// RChacon: Needs to update the table_sort function to use in this table.
-		echo		'<th>', _('Supplier Code'), '</th>
-					<th>', _('Supplier Name'), '</th>
-					<th>', _('Supplier\'s Currency'), '</th>
-					<th>', _('Original Overall Amount'), '</th>
-					<th>', _('Original Overall Taxes'), '</th>
-					<th>', _('Original Overall Total'), '</th>
-					<th>', _('GL Overall Amount'), '</th>
-					<th>', _('GL Overall Taxes'), '</th>
-					<th>', _('GL Overall Total'), '</th>', $TableFoot;
+		echo		'<th>', _('Supplier Code'), '</th>',
+					'<th>', _('Supplier Name'), '</th>',
+					'<th>', _('Supplier\'s Currency'), '</th>',
+					$CommonHead;
 		$Sql = "SELECT
 					supptrans.supplierno,
 					suppliers.suppname,
@@ -245,29 +243,36 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 		// Content of the body of the input table:
 			// Select period from:
 			'<tr>',
-				'<td><label for="PeriodFrom">', _('Select period from'), '</label></td>';
+				'<td><label for="PeriodFrom">', _('Period from'), '</label></td>';
 	if(!isset($_POST['PeriodFrom'])) {
 		$_POST['PeriodFrom'] = date($_SESSION['DefaultDateFormat'], strtotime("-1 year", time()));// One year before current date.
 	}
 	echo 		'<td><input class="date" id="PeriodFrom" maxlength="10" name="PeriodFrom" required="required" size="11" type="text" value="', $_POST['PeriodFrom'], '" />',
+					'<span class="field_help_text">',
 					(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Select the beginning of the reporting period') : ''), // If it is not set the $_SESSION['ShowFieldHelp'] parameter OR it is TRUE, shows the page help text.
+					'</span>',
 		 		'</td>
 			</tr>',
 			// Select period to:
 			'<tr>',
-				'<td><label for="PeriodTo">', _('Select period to'), '</label></td>';
+				'<td><label for="PeriodTo">', _('Period to'), '</label></td>';
 	if(!isset($_POST['PeriodTo'])) {
 		$_POST['PeriodTo'] = date($_SESSION['DefaultDateFormat']);
 	}
 	echo 		'<td><input class="date" id="PeriodTo" maxlength="10" name="PeriodTo" required="required" size="11" type="text" value="', $_POST['PeriodTo'], '" />',
+					'<span class="field_help_text">',
 					(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Select the end of the reporting period') : ''), // If it is not set the $_SESSION['ShowFieldHelp'] parameter OR it is TRUE, shows the page help text.
+					'</span>',
 		 		'</td>
 			</tr>',
 			// Show the budget for the period:
 			'<tr>',
-			 	'<td><label>', _('Show details'), '</label></td>
-			 	<td><input', (isset($_POST['ShowDetails']) ? ' checked="checked"' : ''), ' name="ShowDetails" type="checkbox">', // "Checked" if ShowDetails is set AND it is TRUE.
+			 	'<td><label>', _('Show details'), '</label></td>',
+			 	'<td>',
+				 	'<input', (isset($_POST['ShowDetails']) && $_POST['ShowDetails'] ? ' checked="checked"' : ''), ' name="ShowDetails" type="checkbox">', // If $_POST['ShowDetails'] is set AND it is TRUE, shows this input checked.
+				 	'<span class="field_help_text">',
 			 		(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Check this box to show purchase invoices') : ''), // If it is not set the $_SESSION['ShowFieldHelp'] parameter OR it is TRUE, shows the page help text.
+			 		'</span>',
 		 		'</td>
 			</tr>',
 		 '</tbody></table>';
