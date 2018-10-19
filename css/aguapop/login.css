@@ -1,21 +1,24 @@
 /***
 
-"Wood" Login theme for WebERP
+"aguapop" Login theme for WebERP
 
 by Hindra Joshua
 
 ***/
 
 
-
 body {
-background:lightgray;
-color:white;
-font:14px "Lucida Grande","Arial","Helvetica","Verdana","sans-serif";
-text-align:center;
+	background-attachment:fixed;
+	background-color:#d3d3d3;
+	background-image:url("images/background.jpg");
+	background-repeat:no-repeat;
+	background-size:cover;
+	color:#ffffff;
+	font:14px "Lucida Grande","Arial","Helvetica","Verdana","sans-serif";
+	text-align:center;
 }
 
-img{
+img {
 vertical-align:middle;
 }
 
@@ -41,7 +44,7 @@ padding:12px;
 width:190px;
 }
 
-/*input{
+/*input {
 	background:none repeat scroll 0 0 transparent;
     border:thick outset #FFEEBB;
     border-radius:15px 15px 15px 15px;
@@ -78,9 +81,9 @@ border-radius:15px 15px 15px 15px;
 padding:10px;
 vertical-align:middle;
 width:50%;
-box-shadow:3px 3px 4px black inset;	
+box-shadow:3px 3px 4px black inset;
 }
 
-#demo_text{
+#demo_text {
 	padding:10px;
 }
