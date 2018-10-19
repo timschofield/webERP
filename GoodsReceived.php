@@ -115,7 +115,7 @@ if (!isset($_POST['ProcessGoodsReceived'])) {
 		<br />',
 		'<table cellpadding="2" class="selection">
 			<tr><th colspan="2">&nbsp;</th>
-				<th class="centre" colspan="4"><b>' ., _('Supplier Units'), '</b></th>
+				<th class="centre" colspan="4"><b>', _('Supplier Units'), '</b></th>
 				<th>&nbsp;</th>
 				<th class="centre" colspan="6"><b>', _('Our Receiving Units'), '</b></th>';
 	if ($_SESSION['ShowValueOnGRN'] == 1) {
