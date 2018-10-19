@@ -28,8 +28,7 @@ body {
 	padding:0;
 	margin:0;
 }
-.wrap
- {
+.wrap {
     width: 100%;
     height: 100%;
     min-height: 100%;
@@ -39,8 +38,7 @@ body {
     z-index: 99;
 }
 
-p.form-title
- {
+p.form-title {
     font-family: 'Open Sans' , sans-serif;
     font-size: 20px;
     font-weight: 600;
@@ -54,8 +52,7 @@ p.form-title
     background-color: lightblue;
 }
 
-form
- {
+form {
     width: 45%;
     margin: 0 auto;
 }
@@ -121,15 +118,13 @@ form.login .forgot-pass-content
     margin-top: 10px;
     margin-bottom: 10px;
 }
-.login
- {
+.login {
     font-size: 18px;
     font-weight: 900;
     color: #2ecc71;
 }
 
-form.login a
- {
+form.login a {
     transition: color 0.5s ease;
 }
 
@@ -138,8 +133,7 @@ form.login a:hover
     color: #2ecc71;
 }
 
-.pr-wrap
- {
+.pr-wrap {
     width: 100%;
     height: 100%;
     min-height: 100%;
@@ -150,13 +144,11 @@ form.login a:hover
     display: none;
 }
 
-.show-pass-reset
- {
+.show-pass-reset {
     display: block !important;
 }
 
-.pass-reset
- {
+.pass-reset {
     margin: 0 auto;
     width: 250px;
     position: relative;
