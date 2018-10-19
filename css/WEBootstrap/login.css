@@ -17,16 +17,19 @@ by gianko.com.
     */
     margin: 15% 0px 10px 0px;
 }
-body
-{
-    background: url('images/login.png')center fixed no-repeat;
-    background-size:cover;
-     background-repeat: no-repeat;
-    padding: 0;
-    margin: 0;
+body {
+	background-attachment:fixed;
+	background-color:#d3d3d3;
+	background-image:url('images/login.png');
+	background-position:center center;
+	background-repeat:no-repeat;
+	background-size:cover;
+	color:#ffffff;
+    padding:0;
+    margin:0;
 }
 .wrap
-{
+ {
     width: 100%;
     height: 100%;
     min-height: 100%;
@@ -37,7 +40,7 @@ body
 }
 
 p.form-title
-{
+ {
     font-family: 'Open Sans' , sans-serif;
     font-size: 20px;
     font-weight: 600;
@@ -47,12 +50,12 @@ p.form-title
     text-transform: uppercase;
     letter-spacing: 4px;
 }
-.box{
+.box {
     background-color: lightblue;
 }
 
 form
-{
+ {
     width: 45%;
     margin: 0 auto;
 }
@@ -72,7 +75,7 @@ form
    color: #FFFFFF;
 }
 form.login input[type="text"], form.login input[type="password"]
-{
+ {
     width: 100%;
     margin: 0;
     padding: 5px 10px;
@@ -90,7 +93,7 @@ form.login input[type="text"], form.login input[type="password"]
 }
 
 form.login input[type="submit"]
-{
+ {
     width: 100%;
     font-size: 14px;
     text-transform: uppercase;
@@ -102,41 +105,41 @@ form.login input[type="submit"]
 }
 
 form.login input[type="submit"]:hover
-{
+ {
     transition: background-color 0.5s ease;
 }
 
 form.login .remember-forgot
-{
+ {
     float: left;
     width: 100%;
     margin: 10px 0 0 0;
 }
 form.login .forgot-pass-content
-{
+ {
     min-height: 20px;
     margin-top: 10px;
     margin-bottom: 10px;
 }
 .login
-{
+ {
     font-size: 18px;
     font-weight: 900;
     color: #2ecc71;
 }
 
 form.login a
-{
+ {
     transition: color 0.5s ease;
 }
 
 form.login a:hover
-{
+ {
     color: #2ecc71;
 }
 
 .pr-wrap
-{
+ {
     width: 100%;
     height: 100%;
     min-height: 100%;
@@ -148,12 +151,12 @@ form.login a:hover
 }
 
 .show-pass-reset
-{
+ {
     display: block !important;
 }
 
 .pass-reset
-{
+ {
     margin: 0 auto;
     width: 250px;
     position: relative;
@@ -164,14 +167,14 @@ form.login a:hover
 }
 
 .pass-reset label
-{
+ {
     font-size: 12px;
     font-weight: 400;
     margin-bottom: 15px;
 }
 
 .pass-reset input[type="email"]
-{
+ {
     width: 100%;
     margin: 5px 0 0 0;
     padding: 5px 10px;
@@ -189,7 +192,7 @@ form.login a:hover
 }
 
 .pass-reset input[type="submit"]
-{
+ {
     width: 100%;
     border: 0;
     font-size: 14px;
@@ -202,11 +205,11 @@ form.login a:hover
 }
 
 .pass-reset input[type="submit"]:hover
-{
+ {
     transition: background-color 0.5s ease;
 }
 .posted-by
-{
+ {
     position: absolute;
     bottom: 26px;
     margin: 0 auto;
@@ -215,7 +218,7 @@ form.login a:hover
     padding: 10px;
     left: 45%;
 }
-#userpass{
+#userpass {
     margin-top:50px;
 }
 
