@@ -61,23 +61,20 @@ echo '
 			<div id="HeaderWrapDiv">';
 
 if (isset($Title)) {
-	echo '
-				<div id="AppInfoDiv">
-					<div id="AppInfoCompanyDiv">
-						<img alt="', _('Company'), '" src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/company.png" title="', _('Company'), '" />&nbsp;', stripslashes($_SESSION['CompanyRecord']['coyname']),
-					'</div>
-					<div id="AppInfoUserDiv">
-						<a href="', $RootPath, '/UserSettings.php">&nbsp;<img alt="', _('User'), '" src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/user.png" title="', _('User'), '" />&nbsp;', stripslashes($_SESSION['UsersRealName']), '</a>
-					</div>
-					<div id="AppInfoModuleDiv">',
+	echo		'<div id="AppInfoDiv">',
+					'<div id="AppInfoCompanyDiv">',
+						'<img alt="', _('Company'), '" src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/company.png" title="', _('Company'), '" />&nbsp;', stripslashes($_SESSION['CompanyRecord']['coyname']),
+					'</div>',
+					'<div id="AppInfoUserDiv">',
+						'<a href="', $RootPath, '/UserSettings.php">&nbsp;<img alt="', _('User'), '" src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/user.png" title="', _('User'), '" />&nbsp;', stripslashes($_SESSION['UsersRealName']), '</a>',
+					'</div>',
+					'<div id="AppInfoModuleDiv">',
 						$Title, // Make the title text a class, can be set to display:none in some themes
-					'</div>
-				</div>
-				<div id="QuickMenuDiv">
+					'</div>',
+				'</div>',
+				'<div id="QuickMenuDiv">
 					<ul id="menu">
 						<li><a href="', $RootPath, '/index.php">', _('Main Menu'), '</a>';
-
-
 
 	if (isset($_POST['AddToMenu'])) {
 		if (!isset($_SESSION['Favourites'][$_POST['ScriptName']])) {
@@ -100,20 +97,18 @@ if (isset($Title)) {
 	echo '</li>'; //take off inline formatting, use CSS instead ===HJ===
 
 	if (count($_SESSION['AllowedPageSecurityTokens'])>1){
-		echo '<li><a href="', $RootPath, '/Dashboard.php">', _('Dashboard'), '</a></li>';
-		echo '<li><a href="', $RootPath, '/SelectCustomer.php">', _('Customers'), '</a></li>';
-		echo '<li><a href="', $RootPath, '/SelectProduct.php">', _('Items'), '</a></li>';
-		echo '<li><a href="', $RootPath, '/SelectSupplier.php">', _('Suppliers'), '</a></li>';
-		echo '<li><a href="', $RootPath, '/ManualContents.php', $ViewTopic, $BookMark, '" rel="external" accesskey="8">', _('Manual'), '</a></li>';
+		echo '<li><a href="', $RootPath, '/Dashboard.php">', _('Dashboard'), '</a></li>',
+			'<li><a href="', $RootPath, '/SelectCustomer.php">', _('Customers'), '</a></li>',
+			'<li><a href="', $RootPath, '/SelectProduct.php">', _('Items'), '</a></li>',
+			'<li><a href="', $RootPath, '/SelectSupplier.php">', _('Suppliers'), '</a></li>',
+			'<li><a href="', $RootPath, '/ManualContents.php', $ViewTopic, $BookMark, '" rel="external" accesskey="8">', _('Manual'), '</a></li>';
 	}
 
-	echo '
-						<li><a href="', $RootPath, '/Logout.php" onclick="return confirm(\'', _('Are you sure you wish to logout?'), '\');">', _('Logout'), '</a></li>
-					</ul>
-				</div>';// END div id="QuickMenuDiv" ;
+	echo				'<li><a href="', $RootPath, '/Logout.php" onclick="return confirm(\'', _('Are you sure you wish to logout?'), '\');">', _('Logout'), '</a></li>',
+					'</ul>',
+				'</div>';// END div id="QuickMenuDiv" ;
 }
-echo '
-			</div>',// END div id="HeaderWrapDiv"
+echo		'</div>',// END div id="HeaderWrapDiv"
 		'</div>',// END div id="Headerdiv"
 		'<div id="BodyDiv">',
 			'<div id="BodyWrapDiv">',
