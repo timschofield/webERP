@@ -628,14 +628,12 @@ if(!isset($_GET['delete'])) {
 		<tr>
 			<td>' . _('Facsimile No') . ':' . '</td>
 			<td><input name="Fax" type="tel" pattern="[0-9+\-\s()]*" value="' . $_POST['Fax'] . '" size="31" maxlength="30" title="' . _('The fax number should consist of numbers, parentheses, spaces or the + character') . '"/></td>
-		</tr>';
-		// Email address:
-		echo '<tr title="', _('The email address should be an email format such as adm@weberp.org'), '">
+		</tr>
+		<tr title="', _('The email address should be an email format such as adm@weberp.org'), '">
 			<td><label for="Email">', _('Email'), ':</label></td>
 			<td><input id="Email" maxlength="55" name="Email" size="31" type="email" value="', $_POST['Email'], '" /></td>
-		</tr>';
-		// Tax Province:
-		echo '<tr>
+		</tr>
+		<tr>
 			<td>' . _('Tax Province') . ':' . '</td>
 			<td><select name="TaxProvince">';
 

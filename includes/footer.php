@@ -49,17 +49,22 @@ echo '</div>'; // eof MessageContainer div
 echo '</div>'; // BodyWrapDiv
 echo '</div>'; // BodyDiv
 
-$BaseName = basename($_SERVER['PHP_SELF']);
-$ScriptName = $BaseName.'?'.$_SERVER['QUERY_STRING'];
-if ( $BaseName != 'index.php' AND !isset($_SESSION['Favourites'][$ScriptName])) {
-	$ShowAdd = '<input type="submit" value="' . _('Add To Menu') . '" name="AddToMenu" />';
-} else {
-	$ShowAdd = '';
-}
-if (isset($_SESSION['Favourites'][$ScriptName])) {
-	$ShowDel = '<input type="submit" value="' . _('Remove From Menu') . '" name="DelFromMenu" />';
-} else {
+if($_SESSION['ShortcutMenu']==1) { // if the short cut menus are allowed
+	$BaseName = basename($_SERVER['PHP_SELF']);
+	$ScriptName = $BaseName.'?'.$_SERVER['QUERY_STRING'];
+	if ( $BaseName != 'index.php' AND !isset($_SESSION['Favourites'][$ScriptName])) {
+		$ShowAdd = '<input type="submit" value="' . _('Add To Menu') . '" name="AddToMenu" />';
+	} else {
+		$ShowAdd = '';
+	}
+	if (isset($_SESSION['Favourites'][$ScriptName])) {
+		$ShowDel = '<input type="submit" value="' . _('Remove From Menu') . '" name="DelFromMenu" />';
+	} else {
+		$ShowDel = '';
+	}
+}  else { //don't show the short cut menu options
 	$ShowDel = '';
+	$ShowAdd = '';
 }
 
 echo	'<div class="centre noprint">',

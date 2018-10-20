@@ -1,6 +1,6 @@
 <h1><a of="MRP">Material Requirements Planning (MRP)</a></h1>
 
-<h2>Overview</h2>
+<h2><a id="MRP_Overview">Overview</a></h2>
 
 <p>MRP - Material Requirements Planning -is software used to manage production and purchasing in an efficient and economical manner. It takes demand from sources such as current and forecast orders, work orders, and parts below safety levels, subtracts supply, in the form of inventory on hand, on order, or in process, and calculates requirements for ordering or building parts to cover that demand. This entry in the wiki will describe the MRP features that are available in webERP and the procedures to follow to implement the system.</p>
 
@@ -26,7 +26,7 @@
     <a class="minitext" href="#top">⬆ Top</a>
 </div>
 
-<h2>Production Calendar</h2>
+<h2><a id="MRP_Calendar">Production Calendar</a></h2>
 
 <p>To avoid situations where, based upon a part&#8217;s need (required) date minus its lead time, MRP might schedule a part for a day where the business is closed, a Manufacturing Calendar of valid dates can be created. This is done under the Setup menu &#8211; Inventory Setup - MRP Available Production Days.</p>
 
@@ -38,7 +38,7 @@
     <a class="minitext" href="#top">⬆ Top</a>
 </div>
 
-<h2>Master Production Schedule - Demand Forecasts</h2>
+<h2><a id="MRP_MasterSchedule">Master Production Schedule - Demand Forecasts</a></h2>
 
 <p>The next step in preparing for the MRP is to enter demand forecasts. This is an optional step if you only want to consider current orders. Before entering the actual demands, it is necessary to create Demand Types, which are used to organize the demand records you create and make it easier to keep track of and edit records. Demand Types are created under Setup &#8211; Inventory Setup &#8211; MRP Demand Types. Simply enter a Demand Type code and a description. At least one Demand Type must be created, but you can have as many as you want to distinguish the various types of demands that you want to keep track of. The Demand Type appears in various reports, and the system also allows for the mass deletion of demand records by the Demand Type.</p>
 
@@ -94,7 +94,7 @@
     <a class="minitext" href="#top">⬆ Top</a>
 </div>
 
-<h2>MRP Reports</h2>
+<h2><a id="MRP_Reports">MRP Reports</a></h2>
 
 <p>MRP produces several reports that are under Manufacturing -&gt; Inquiries and Reports. MRP Reschedules Required shows the work orders and purchase orders that, according to the MRP, need to have adjustments made to their due dates. MRP Suggested Purchase Orders and MRP Suggested Work Orders show the orders that MRP has determined should be created to cover demands. MRP Shortages shows all of the parts that have an insufficient quantity to satisfy demand. One thing to keep in mind about this report is that if there is a shortage of a top level assembly, it shows on the report as well as the parts that make it up, so the total dollar amounts might be doubled. The inquiry simply called MRP is used to display all of the supply and demand information for a part.</p>
 

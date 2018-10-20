@@ -75,24 +75,26 @@ if (isset($Title)) {
 				'<div id="QuickMenuDiv">
 					<ul id="menu">
 						<li><a href="', $RootPath, '/index.php">', _('Main Menu'), '</a>';
-
-	if (isset($_POST['AddToMenu'])) {
-		if (!isset($_SESSION['Favourites'][$_POST['ScriptName']])) {
-			$_SESSION['Favourites'][$_POST['ScriptName']] = $_POST['Title'];
+	if ($_SESSION['ShortcutMenu']==1) {
+		if (isset($_POST['AddToMenu'])) {
+			if (!isset($_SESSION['Favourites'][$_POST['ScriptName']])) {
+				$_SESSION['Favourites'][$_POST['ScriptName']] = $_POST['Title'];
+			}
+		}
+	
+		if (isset($_POST['DelFromMenu'])) {
+			unset($_SESSION['Favourites'][$_POST['ScriptName']]);
+		}
+	
+		if (isset($_SESSION['Favourites']) AND count($_SESSION['Favourites'])>0) {
+			echo '<ul>';
+			foreach ($_SESSION['Favourites'] as $url=>$ttl) {
+				echo '<li><a href="', $url, '">', _($ttl), '<a></li>';
+			}
+			echo '</ul>';
 		}
 	}
-
-	if (isset($_POST['DelFromMenu'])) {
-		unset($_SESSION['Favourites'][$_POST['ScriptName']]);
-	}
-
-	if (isset($_SESSION['Favourites']) AND count($_SESSION['Favourites'])>0) {
-		echo '<ul>';
-		foreach ($_SESSION['Favourites'] as $url=>$ttl) {
-			echo '<li><a href="', $url, '">', _($ttl), '<a></li>';
-		}
-		echo '</ul>';
-	}
+}
 
 	echo '</li>'; //take off inline formatting, use CSS instead ===HJ===
 
@@ -107,7 +109,7 @@ if (isset($Title)) {
 	echo				'<li><a href="', $RootPath, '/Logout.php" onclick="return confirm(\'', _('Are you sure you wish to logout?'), '\');">', _('Logout'), '</a></li>',
 					'</ul>',
 				'</div>';// END div id="QuickMenuDiv" ;
-}
+
 echo		'</div>',// END div id="HeaderWrapDiv"
 		'</div>',// END div id="Headerdiv"
 		'<div id="BodyDiv">',
