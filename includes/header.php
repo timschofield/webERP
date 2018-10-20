@@ -109,7 +109,7 @@ if (isset($Title)) {
 	echo				'<li><a href="', $RootPath, '/Logout.php" onclick="return confirm(\'', _('Are you sure you wish to logout?'), '\');">', _('Logout'), '</a></li>',
 					'</ul>',
 				'</div>';// END div id="QuickMenuDiv" ;
-}
+
 echo		'</div>',// END div id="HeaderWrapDiv"
 		'</div>',// END div id="Headerdiv"
 		'<div id="BodyDiv">',

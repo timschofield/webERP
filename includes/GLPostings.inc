@@ -52,19 +52,20 @@ $ChartDetailsNotSetUpResult = DB_query($sql,_('Could not test to see that all ch
 if(DB_num_rows($ChartDetailsNotSetUpResult)>0){
 
 	//first figure out the periods and account codes for which new chart details need to be added and make an array of them
-	$sql = "SELECT chartmaster.accountcode,periods.periodno
-		FROM (chartmaster CROSS JOIN periods)
-		LEFT JOIN chartdetails ON chartmaster.accountcode=chartdetails.accountcode
-		AND periods.periodno=chartdetails.period
-		WHERE (periods.periodno BETWEEN '" . $CreateFrom . "' AND '" . $CreateTo . "')
-		AND chartdetails.accountcode IS NULL ORDER BY accountcode,periodno";
+	$sql = "SELECT chartmaster.accountcode,
+					periods.periodno
+			FROM (chartmaster CROSS JOIN periods)
+			LEFT JOIN chartdetails ON chartmaster.accountcode=chartdetails.accountcode
+			AND periods.periodno=chartdetails.period
+			WHERE (periods.periodno BETWEEN '" . $CreateFrom . "' AND '" . $CreateTo . "')
+			AND chartdetails.accountcode IS NULL ORDER BY accountcode,periodno";
 	$ErrMsg = _('Failed to retrieve new account code and periods');
 	$NewPeriodResult = DB_query($sql,$ErrMsg);
 	if (DB_num_rows($NewPeriodResult)>0){
 		$NewPeriods = array();
 		while ($NewPeriodsRow = DB_fetch_array($NewPeriodResult)) {
 			if (!isset($NewPeriods[$NewPeriodsRow['accountcode']])) {
-				$NewPeriods[$NewPeriodsRow['accountcode']] = $NewPeriodsRow['periods'];
+				$NewPeriods[$NewPeriodsRow['accountcode']] = $NewPeriodsRow['periodno'];
 			}
 		}
 	}
