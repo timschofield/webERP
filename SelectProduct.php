@@ -364,17 +364,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 									ON suppliers.currcode=currencies.currabrev
 									WHERE purchdata.stockid = '" . $StockID . "'
 									AND purchdata.effectivefrom=(SELECT max(a.effectivefrom) FROM purchdata a WHERE purchdata.supplierno=a.supplierno and a.stockid=purchdata.stockid)
-									GROUP BY suppliers.suppname,
-										suppliers.currcode,
-										suppliers.supplierid,
-										purchdata.price,
-										purchdata.suppliers_partno,
-										purchdata.leadtime,
-										purchdata.conversionfactor,
-										purchdata.minorderqty,
-										purchdata.preferred,
-										currencies.decimalplaces
-								ORDER BY purchdata.preferred DESC");
+									ORDER BY purchdata.preferred DESC");
 
 		while ($SuppRow = DB_fetch_array($SuppResult)) {
 			echo '<tr>
