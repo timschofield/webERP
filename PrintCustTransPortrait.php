@@ -775,9 +775,8 @@ if(isset($PrintPDF)
 				$ExchRate = $myrow['rate'];
 				$PageNumber = 1;
 
-				echo '
-				<div class="sheet">
-						<table class="table1">
+				echo '<div class="sheet">
+					<table class="table1">
 						<tr>
 							<td valign="top" style="width:10%"><img src="' . $_SESSION['LogoFile'] . '" alt="" /></td>
 							<td style="background-color:#bbbbbb">';
@@ -1169,9 +1168,7 @@ if(isset($PrintPDF)
 							<td class="number" style="background-color:#EEEEEE;color:red"><b>' . $DisplayTotal . '</b></td></tr>';
 				}
 				echo '</table>
-				</div>';
-
-
+					</div>';
 	/* End footer totals table */
 			} /* end of check to see that there was an invoice record to print */
 			$FromTransNo++;
