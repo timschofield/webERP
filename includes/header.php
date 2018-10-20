@@ -75,6 +75,7 @@ if (isset($Title)) {
 				'<div id="QuickMenuDiv">
 					<ul id="menu">
 						<li><a href="', $RootPath, '/index.php">', _('Main Menu'), '</a>';
+<<<<<<< HEAD
 	if ($_SESSION['ShortcutMenu']==1) {
 		if (isset($_POST['AddToMenu'])) {
 			if (!isset($_SESSION['Favourites'][$_POST['ScriptName']])) {
@@ -92,8 +93,26 @@ if (isset($Title)) {
 				echo '<li><a href="', $url, '">', _($ttl), '<a></li>';
 			}
 			echo '</ul>';
+=======
+if ($_SESSION['ShortcutMenu']==1) {
+	if (isset($_POST['AddToMenu'])) {
+		if (!isset($_SESSION['Favourites'][$_POST['ScriptName']])) {
+			$_SESSION['Favourites'][$_POST['ScriptName']] = $_POST['Title'];
 		}
 	}
+
+	if (isset($_POST['DelFromMenu'])) {
+		unset($_SESSION['Favourites'][$_POST['ScriptName']]);
+	}
+
+	if (isset($_SESSION['Favourites']) AND count($_SESSION['Favourites'])>0) {
+		echo '<ul>';
+		foreach ($_SESSION['Favourites'] as $url=>$ttl) {
+			echo '<li><a href="', $url, '">', _($ttl), '<a></li>';
+>>>>>>> 04c9f4bd7ad9fef0a6061429668c610978e4d0b1
+		}
+	}
+}
 
 	echo '</li>'; //take off inline formatting, use CSS instead ===HJ===
 
