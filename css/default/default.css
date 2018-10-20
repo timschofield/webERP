@@ -225,8 +225,8 @@ tr.striped_row:nth-of-type(odd) {
 /* Table type is used for UI tables type 1 */
 .table1 {
 	width:90%;
-	background:#eee;
-	border:0px 0px 2px 2px #222 solid;
+	background:#eeeeee;
+	border:0px 0px 2px 2px #222222 solid;
 	margin:0 auto;
 }
 
