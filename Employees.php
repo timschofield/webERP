@@ -324,10 +324,10 @@ if(!isset($_GET['delete'])) {
 		echo '<option value="0">' , _('Not Managed') , '</option>';
 	}
 	while ($myrow=DB_fetch_array($ManagersResult)) {
-		if($_POST['Manager']==$myrow['employeeid']) {
-			echo '<option selected="selected" value="' , $myrow['employeeid'] , '">' , $myrow['managername'] , '</option>';
+		if($_POST['Manager']==$myrow['id']) {
+			echo '<option selected="selected" value="' , $myrow['id'] , '">' , $myrow['managername'] , '</option>';
 		} else {
-			echo '<option value="' , $myrow['employeeid'] , '">' , $myrow['managername'] , '</option>';
+			echo '<option value="' , $myrow['id'] , '">' , $myrow['managername'] , '</option>';
 		}
 	}
 

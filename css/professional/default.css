@@ -46,6 +46,7 @@ a:hover {
 /*table detail items default format */
 td {
 	text-align:left;
+	vertical-align:top;
 }
 td.select {
 	background-color:#eee;
@@ -107,14 +108,14 @@ th:after {
 th.ascending:after {
 	border-width:0 4px 4px;
 	border-style:solid;
-	border-color:#000 transparent;
+	border-color:#000000 transparent;
 	visibility:visible;
 }
 th.descending:after {
 	border-bottom:none;
 	border-left:4px solid transparent;
 	border-right:4px solid transparent;
-	border-top:4px solid #000;
+	border-top:4px solid #000000;
 	visibility:visible;
 }
 div.Message {
@@ -167,7 +168,7 @@ input.image {
 	border-width:0px;
 	background-color:transparent;
 }
-input:hover{
+input:hover {
 	background:lightblue;
 }
 input.big {
@@ -185,9 +186,9 @@ input:required, select:required, textarea:required {
 }
 
 /* for buttons ***HJ***/
-button{
+button {
 }
-button:hover{
+button:hover {
 	background:lightblue;
 }
 
@@ -198,7 +199,7 @@ select {
 select.selecterror {
 	background-color:#fddbdb;
 }
-select:hover{
+select:hover {
 	background:lightblue;
 }
 
@@ -220,9 +221,9 @@ p.bad {
 	padding:0px;
 }
 
-textarea{ /* default style for textarea */
+textarea { /* default style for textarea */
 }
-textarea:hover{
+textarea:hover {
 }
 
 /* Table type is used for UI tables type 1 */
@@ -301,7 +302,7 @@ textarea.texterror {
 
 /*** CANVAS ***/
 
-#CanvasDiv{
+#CanvasDiv {
 	background:#fff;
 	margin:5px;
 	border:thin inset #ddd;
@@ -314,55 +315,55 @@ textarea.texterror {
 	color:#000000;
 	padding-left:3px;
 }
-#HeaderWrapDiv{
+#HeaderWrapDiv {
 }
 
 /*** HEADER - APP INFO ***/
 
-#AppInfoDiv{
+#AppInfoDiv {
 	float:left; /* REQUIRED:to the left */
 }
-#AppInfoDiv img{
+#AppInfoDiv img {
 	vertical-align:middle; /* center image and text vertically */
 }
-#AppInfoCompanyDiv{
+#AppInfoCompanyDiv {
 	display:table-cell; /* REQUIRED:as a cell */
 }
-#AppInfoUserDiv{
+#AppInfoUserDiv {
 	display:table-cell; /* REQUIRED:as a cell */
 }
-#AppInfoUserDiv a{
+#AppInfoUserDiv a {
 	color:#000000;
 }
-#AppInfoUserDiv a:hover{
+#AppInfoUserDiv a:hover {
 	color:blue;
 	text-decoration:underline;
 }
-#AppInfoModuleDiv{
+#AppInfoModuleDiv {
 }
 
 /*** HEADER - QUICK MENU ***/
 
-#QuickMenuDiv{
+#QuickMenuDiv {
 	float:right; /* to the right side */
 	margin-top:3px;
 }
-#QuickMenuDiv ul{
+#QuickMenuDiv ul {
 	list-style:none; /* hide the bullets */
 }
-#QuickMenuDiv li{
+#QuickMenuDiv li {
 	display:inline; /* items are inline */
 }
 
 /*** links as buttons!!! clicking anywhere in the button will activate
 	 the link!!! ***HJ***/
 
-#QuickMenuDiv li a{
+#QuickMenuDiv li a {
 	padding:3px; /* links as button */
 	border:thin outset #ddd; /* un-pressed state */
 	background:#ddd;
 }
-#QuickMenuDiv li a:hover{
+#QuickMenuDiv li a:hover {
 	padding:3px; /* links as button */
 	border:thin inset #ddd; /* pressed state */
 	text-decoration:none; /* no underline */
@@ -391,35 +392,35 @@ textarea.texterror {
 
 /*** BODY - MAIN MENU ***/
 
-#MainMenuDiv{
+#MainMenuDiv {
 	float:left; /* REQUIRED:to the left side */
 	white-space:nowrap; /* don't break text */
 	text-align:center;
 	width:11%;
 	background:#ddd;
 }
-#MainMenuDiv ul{
+#MainMenuDiv ul {
 	list-style:none; /* REQUIRED:hide bullets */
 	padding:0; /* REQUIRED:remove extra gaps (ex-bullets) */
 	margin:0;
 }
-#MainMenuDiv li{
+#MainMenuDiv li {
 	list-style:none; /* REQUIRED */
 	padding:0; /* REQUIRED */
 }
-#MainMenuDiv li a{ /* link as button!!! not-pressed state */
+#MainMenuDiv li a { /* link as button!!! not-pressed state */
 	display:block; /* REQUIRED */
 	padding:3px;
 	border:thin outset #ddd;
 	color:blue;
 }
-#MainMenuDiv li a:hover{ /* link as button!!! pressed state */
+#MainMenuDiv li a:hover { /* link as button!!! pressed state */
 	text-decoration:none;
 	padding:3px;
 	border:thin inset #ddd;
 	background:#ddd;
 }
-#MainMenuDiv .main_menu_selected a{ /* the selected button */
+#MainMenuDiv .main_menu_selected a { /* the selected button */
 	border:thin inset #ccc;
 	background:#ccc;
 	color:blue;
@@ -428,24 +429,24 @@ textarea.texterror {
 
 /*** BODY - SUB MENU ***/
 
-#SubMenuDiv{
+#SubMenuDiv {
 	display:table; /* display as table, sub menu will auto adjust width */
 	width:89%; /* main menu is 10% */
 	text-align:left;
 }
-#SubMenuDiv ul{
+#SubMenuDiv ul {
 	list-style-type:none; /* REQUIRED:hide bullets */
 	padding:0; /* REQUIRED:remove extra gaps (ex-bullets) */
 	margin-top:0px;
 	margin-left:3px;
 	border:thin outset #ddd;
 }
-#SubMenuDiv li{
+#SubMenuDiv li {
 	/*list-style:none;*/ /* REQUIRED:hide the bullets */
 	background:#eee;
 	padding:2px;
 }
-#SubMenuDiv li img{
+#SubMenuDiv li img {
 	vertical-align:middle; /* verticall align icon with the text */
 }
 #SubMenuDiv .menu_group_headers {
@@ -454,24 +455,24 @@ textarea.texterror {
 	text-align:center;
 	color:#000000;
 }
-#TransactionsDiv{
+#TransactionsDiv {
 	display:table-cell;
 }
-#InquiriesDiv{
+#InquiriesDiv {
 	display:table-cell;
 }
-#InquiriesDiv div{ /* default div, used for custom report header */
+#InquiriesDiv div { /* default div, used for custom report header */
 	background:#ddd;
 	color:#000000;
 	padding:2px;
 	border:thin outset #ddd;
 }
-#InquiriesDiv body{
+#InquiriesDiv body {
 	background:#eee;
 	color:red;
 	padding:2px;
 }
-#MaintenanceDiv{
+#MaintenanceDiv {
 	display:table-cell;
 /*	float:left;*/
 /*	width:32.5%;
@@ -486,22 +487,22 @@ textarea.texterror {
 
 /*** FOOTER ***/
 
-#FooterDiv{
+#FooterDiv {
 	clear:both; /* REQUIRED */
 	overflow:hidden;
 	color:gray;
 }
-#FooterWrapDiv{
+#FooterWrapDiv {
 	overflow:hidden;
 	padding:3px;
 }
-#FooterLogoDiv{
+#FooterLogoDiv {
 	float:right; /* right side */
 }
-#FooterVersionDiv{
+#FooterVersionDiv {
 	float:left; /* left side */
 }
-#FooterTimeDiv{
+#FooterTimeDiv {
 	clear:left; /* below */
 }
 #Report {
@@ -526,6 +527,10 @@ textarea.texterror {
 	float:left;
 	margin:5px;
 	/* Class selector to let an element float to the left. */
+}
+.field_help_text {
+	font-style:italic;
+	/* Class selector for field help text. */
 }
 .page_help_text {
 	background:#d3d3d3 url(images/help.png) top left no-repeat;
@@ -552,7 +557,15 @@ textarea.texterror {
 	padding-bottom:2px;
 	padding-top:2px;
 	text-align:center;
-	/* Class selector for page title. */
+	/* Class selector for page title text. */
+}
+.sheet {
+	background-color:#ffffff;
+	border:0;
+	color:#000000;
+	margin:5%;
+	padding:5%;
+	/* Class selector for sheet preview. */
 }
 /* END Class selectors of the style for all devices. ------------------------ */
 /* END Style for all devices.================================================ */

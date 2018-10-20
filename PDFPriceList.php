@@ -412,21 +412,22 @@ If (isset($_POST['PrintPDF'])) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<table class="selection">
-			<tr>
-				<td>' . _('Select Inventory Categories') . ':</td>
-				<td><select autofocus="autofocus" required="required" minlength="1" size="12" name="Categories[]"multiple="multiple">';
+		<tr>',
+			'<td><label for="Categories">', _('Select Inventory Categories'), ':</label></td>',
+			'<td>
+				<select autofocus="autofocus" id="Categories" minlength="1" multiple="multiple" name="Categories[]" required="required" size="12">';
 	$SQL = 'SELECT categoryid, categorydescription
 			FROM stockcategory
 			ORDER BY categorydescription';
 	$CatResult = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($CatResult)) {
+		echo '<option' ;
 		if (isset($_POST['Categories']) AND in_array($MyRow['categoryid'], $_POST['Categories'])) {
-			echo '<option selected="selected" value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] .'</option>';
-		} else {
-			echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
+			echo ' selected="selected"';
 		}
+		echo ' value="', $MyRow['categoryid'], '">', $MyRow['categorydescription'], '</option>';
 	}
-	echo '</select>
+	echo		'</select>
 			</td>
 		</tr>
 		<tr><td>', _('For Sales Type/Price List'), ':</td>
@@ -473,16 +474,20 @@ If (isset($_POST['PrintPDF'])) {
 			'<td><label for="ShowObsolete">', _('Show obsolete items'), ':</label></td>',
 	 		'<td>',
 				'<input',(($_POST['ShowObsolete']) ? ' checked="checked"' : ''), ' id="ShowObsolete" name="ShowObsolete" type="checkbox" />', // "Checked" if ShowObsolete is TRUE.
+				'<span class="field_help_text">',
 				(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Check this box to show the obsolete items') : ''), // If the parameter $_SESSION['ShowFieldHelp'] is not set OR is TRUE, shows this field help text.
+				'</span>',
 			'</td>',
 	 	'</tr>',
 	// Option to select the order of the items in the report:
 		'<tr>',
-			'<td valign="top">', _('Sort items by'), ':</td>',
+			'<td><label for="ItemOrder">', _('Sort items by'), ':</label></td>',
 	 		'<td>',
-				'<input checked="checked" name="ItemOrder" type="radio" value="Code">', _('Currency, category and code'), '<br>',
+				'<input checked="checked" id="ItemOrder" name="ItemOrder" type="radio" value="Code">', _('Currency, category and code'), '<br>',
 				'<input name="ItemOrder" type="radio" value="Description">', _('Currency, category and description'), '<br>',
+				'<span class="field_help_text">',
 				(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Select the order of the items in the report') : ''), // If the parameter $_SESSION['ShowFieldHelp'] is not set OR is TRUE, shows this field help text.
+				'</span>',
 			'</td>',
 	 	'</tr>',
 

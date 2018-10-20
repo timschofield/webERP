@@ -64,20 +64,21 @@ th:after {
 th.ascending:after {
 	border-width:0 4px 4px;
 	border-style:solid;
-	border-color:#000 transparent;
+	border-color:#000000 transparent;
 	visibility:visible;
 }
 th.descending:after {
 	border-bottom:none;
 	border-left:4px solid transparent;
 	border-right:4px solid transparent;
-	border-top:4px solid #000;
+	border-top:4px solid #000000;
 	visibility:visible;
 }
 td {
 	color:#575757;
 	padding:2px 4px;
 	text-align:left;
+	vertical-align:top;
 }
 td.select {
 	background-color:#eee;
@@ -683,6 +684,10 @@ select.selecterror {
 	margin:5px;
 	/* Class selector to let an element float to the left. */
 }
+.field_help_text {
+	font-style:italic;
+	/* Class selector for field help text. */
+}
 .page_help_text {
 	background:#d3d3d3 url(images/help.png) top left no-repeat;
 	border:#c3c3c3 solid thin;
@@ -706,7 +711,15 @@ select.selecterror {
 	padding-top:2px;
 	text-align:center;
 	width:60%;
-	/* Class selector for page title. */
+	/* Class selector for page title text. */
+}
+.sheet {
+	background-color:#ffffff;
+	border:0;
+	color:#000000;
+	margin:5%;
+	padding:5%;
+	/* Class selector for sheet preview. */
 }
 /* END Class selectors of the style for all devices. ------------------------ */
 /* END Style for all devices.================================================ */
