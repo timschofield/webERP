@@ -1,11 +1,6 @@
 <?php
 /* Database abstraction for mysqli */
 
-/* PeterMoulding.com
-20071102 Change from mysql to mysqli;
-20071102 Add $db to DB_escape_string();
-*/
-
 define ('LIKE', 'LIKE');
 
 if(!isset($mysqlport)) {
@@ -57,6 +52,7 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 	global $debug;
 	global $PathPrefix;
 	global $db;
+	global $Messages;
 
 	$result = mysqli_query($db, $SQL);
 	$_SESSION['LastInsertId'] = mysqli_insert_id($db);
@@ -64,12 +60,10 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 	if($DebugMessage == '') {
 		$DebugMessage = _('The SQL that failed was');
 	}
-
+		
 	if(DB_error_no() != 0 AND $TrapErrors==true) {
-		if($TrapErrors) {
-			require_once($PathPrefix . 'includes/header.php');
-		}
-		prnMsg($ErrorMessage . '<br />' . DB_error_msg(),'error', _('Database Error'). ' ' .DB_error_no());
+		require_once($PathPrefix . 'includes/header.php');
+		prnMsg($ErrorMessage . '<br />' . DB_error_msg(), 'error', _('Database Error'). ' ' . DB_error_no());
 		if($debug==1) {
 			prnMsg($DebugMessage. '<br />' . $SQL . '<br />','error',_('Database SQL Failure'));
 		}
@@ -82,10 +76,8 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 				prnMsg(_('Rolling Back Transaction OK'), 'error', _('Database Rollback Due to Error Above'));
 			}
 		}
-		if($TrapErrors) {
-			include($PathPrefix . 'includes/footer.php');
-			exit;
-		}
+		include($PathPrefix . 'includes/footer.php');
+		exit;
 	} elseif(isset($_SESSION['MonthsAuditTrail']) and (DB_error_no()==0 AND $_SESSION['MonthsAuditTrail']>0) AND (DB_affected_rows($result)>0)) {
 
 		$SQLArray = explode(' ', $SQL);

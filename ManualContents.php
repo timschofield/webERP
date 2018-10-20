@@ -16,13 +16,18 @@ What section is named after Help Begin: and there can be multiple sections separ
 */
 
 // BEGIN: Procedure division ---------------------------------------------------
+$PageSecurity = 0;
 $Title = _('webERP Manual');
 // Set the language to show the manual:
+/*
 session_start();
 $Language = $_SESSION['Language'];
 if(isset($_GET['Language'])) {// Set an other language for manual.
 	$Language = $_GET['Language'];
 }
+*/
+include('includes/session.php');
+
 // Set the Cascading Style Sheet for the manual:
 $ManualStyle = 'locale/' . $Language . '/Manual/style/manual.css';
 if(!file_exists($ManualStyle)) {// If locale ccs not exist, use doc/Manual/style/manual.css. Each language can have its own css.

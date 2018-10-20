@@ -382,6 +382,11 @@ if (isset($_POST['submit'])) {
 			$sql[] = "UPDATE config SET confvalue = '" . $_POST['X_QualityCOAText'] . "' WHERE confname='QualityCOAText'";
 
 		}
+		if ($_SESSION['ShortcutMenu'] != $_POST['X_ShortcutMenu']){
+			$sql[] = "UPDATE config SET confvalue = '" . $_POST['X_ShortcutMenu'] . "' WHERE confname='ShortcutMenu'";
+
+		}
+		
 		$ErrMsg =  _('The system configuration could not be updated because');
 		if (sizeof($sql) > 1 ) {
 			$result = DB_Txn_Begin();
@@ -404,10 +409,10 @@ if (isset($_POST['submit'])) {
 
 } /* end of if submit */
 
-echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-echo '<div>';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<table cellpadding="2" class="selection" width="98%">';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
+	<div>
+	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+	<table cellpadding="2" class="selection" width="98%">';
 
 $TableHeader = '<tr>
 					<th>' . _('System Variable Name') . '</th>
@@ -1248,10 +1253,26 @@ echo '</select>
          </td>
 	 <td>' .  _('The flag determines if the system creates quality samples automatically for each lot during P/O Receipt and W/O Receipt transactions.').'
 	 </td>
-     </tr>';
+	</tr>
+	<tr style="outline: 1px solid">
+	<td>' . _('Allow use of short-cut menus'). '</td>
+	<td>
+		<select type="text" name="X_ShortcutMenu" >';
+		if ($_SESSION['ShortcutMenu'] == 0){
+			echo '<option select="selected" value="0">' . _('No') . '</option>';
+			echo '<option value="1">' . _('Yes') . '</option>';
+		} elseif ($_SESSION['ShortcutMenu'] == 1){
+			echo '<option select="selected" value="1">' . _('Yes') . '</option>';
+			echo '<option value="0">' . _('No') . '</option>';
+		}
 
+echo '</select>
+         </td>
+	 <td>' .  _('The flag determines if the system allows users to create the javascript short cut menu - this can cause confusion to some users with some themes.').'
+	 </td>
+	</tr>
 
-echo '</table>
+	</table>
 		<br /><div class="centre"><input type="submit" name="submit" value="' . _('Update') . '" /></div>
     </div>
 	</form>';
