@@ -16,5 +16,27 @@ UPDATE `scripts` SET `description` = 'Creates a report of the ad-valorem tax -GS
 
 INSERT INTO config VALUES ('ShortcutMenu','0');
 
+CREATE TABLE `employees` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `surname` varchar(20) NOT NULL,
+  `firstname` varchar(20) NOT NULL,
+  `stockid` varchar(20) NOT NULL COMMENT 'FK with stockmaster',
+  `manager` int(11) NOT NULL COMMENT 'an employee also in this table',
+  `normalhours` double NOT NULL DEFAULT '40',
+  `userid` varchar(20) COMMENT 'loose FK with www-users will have some employees who are not users',
+  `email` varchar(55) NOT NULL DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `employees`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `surname` (`surname`),
+  ADD KEY `firstname` (`firstname`),
+  ADD KEY `stockmaster` (`stockmaster`),
+  ADD KEY `manager` (`manager`),
+  ADD KEY `userid` (`userid`);
+
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`)
+VALUES ('Employees.php', '10', 'Employees requiring time-sheets maintenance and entry ');
+
 -- THIS IS THE LAST SQL QUERY. Updates database version number:
 UPDATE config SET confvalue='4.15.1' WHERE confname='VersionNumber';
