@@ -15,6 +15,7 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 
 | Description | Type | Author | Date | Details | Ref |
 |:-----------:|:----:|:------:|:----:|:-------:|:---:|
+| Add manual links for MRP scripts | Changed | Phil | 2018-10-20 |  |  |
 | Eliminate pdf_append/ and stockmaster appendfile column | Removed | Paul Becker / Tim | 2018-09-09 | [View](https://github.com/webERP-team/webERP/commit/e0daaed8a9859f41f50821a3339de627b277d954) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8206) |
 | Fix filename output in PDFQALabel | Fixed | Paul Becker | 2018-09-02 | [View](https://github.com/webERP-team/webERP/commit/d54dae8c60530b80591081778810e19709e47dbe) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8198) |
 | Fix calculation descrepancy in Z_CheckDebtorsControl | Fixed | Paul Becker | 2018-09-02 | [View](https://github.com/webERP-team/webERP/commit/bc14d0d28e4356139d4a05a56d97761c47df1eaf) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8188) |

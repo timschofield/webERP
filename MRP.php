@@ -1,8 +1,11 @@
 <?php
 
+/* $Id: MRP.php 7959 2018-02-13 04:04:59Z turbopt $*/
 
 include('includes/session.php');
 $Title = _('Run MRP Calculation');
+$ViewTopic= 'MRP';
+$BookMark = 'MRP_Overview';
 include('includes/header.php');
 if (isset($_POST['submit'])) {
 
@@ -322,7 +325,7 @@ if (isset($_POST['submit'])) {
 											 whererequired)
 								   SELECT locstock.stockid,
 										  '" . date('Y-m-d') . "',
-										  locstock.reorderlevel AS reordqty,
+										  (locstock.reorderlevel - locstock.quantity) AS reordqty,
 										  'REORD',
 										  '1',
 										  '1',
