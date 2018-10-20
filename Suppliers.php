@@ -577,7 +577,7 @@ if (isset($_POST['submit'])) {
 									'" . $_POST['DefaultShipper'] . "',
 									'" . $_POST['DefaultGL'] . "'
 								)";
-
+						
 			$ErrMsg = _('The supplier') . ' ' . $_POST['SuppName'] . ' ' . _('could not be added because');
 			$DbgMsg = _('The SQL that was used to insert the supplier but failed was');
 

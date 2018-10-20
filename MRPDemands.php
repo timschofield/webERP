@@ -7,6 +7,8 @@
 
 include('includes/session.php');
 $Title = _('MRP Demands');
+$ViewTopic= 'MRP';
+$BookMark = 'MRP_MasterSchedule';
 include('includes/header.php');
 
 if (isset($_POST['DemandID'])){
