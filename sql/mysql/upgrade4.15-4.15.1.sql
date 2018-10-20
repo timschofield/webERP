@@ -21,9 +21,9 @@ CREATE TABLE `employees` (
   `surname` varchar(20) NOT NULL,
   `firstname` varchar(20) NOT NULL,
   `stockid` varchar(20) NOT NULL COMMENT 'FK with stockmaster',
-  `manager` int(11) NOT NULL COMMENT 'an employee also in this table',
+  `manager` int(11) COMMENT 'an employee also in this table',
   `normalhours` double NOT NULL DEFAULT '40',
-  `userid` varchar(20) COMMENT 'loose FK with www-users will have some employees who are not users',
+  `userid` varchar(20) NOT NULL DEFAULT '' COMMENT 'loose FK with www-users will have some employees who are not users',
   `email` varchar(55) NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

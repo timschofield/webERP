@@ -66,10 +66,8 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 	}
 
 	if(DB_error_no() != 0 AND $TrapErrors==true) {
-		if($TrapErrors) {
-			require_once($PathPrefix . 'includes/header.php');
-		}
-		prnMsg($ErrorMessage . '<br />' . DB_error_msg(),'error', _('Database Error'). ' ' .DB_error_no());
+		require_once($PathPrefix . 'includes/header.php');
+		prnMsg($ErrorMessage . '<br />' . DB_error_msg(), 'error', _('Database Error'). ' ' . DB_error_no());
 		if($debug==1) {
 			prnMsg($DebugMessage. '<br />' . $SQL . '<br />','error',_('Database SQL Failure'));
 		}
