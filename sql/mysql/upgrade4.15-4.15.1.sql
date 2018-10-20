@@ -14,6 +14,7 @@ UPDATE `scripts` SET `description` = 'Customizes the form layout without requiri
 UPDATE `scripts` SET `description` = 'Sets the SMTP server' WHERE `scripts`.`script` = 'SMTPServer.php';
 UPDATE `scripts` SET `description` = 'Creates a report of the ad-valorem tax -GST/VAT- for the period selected from accounts payable and accounts receivable data' WHERE `scripts`.`script` = 'Tax.php';
 
+INSERT INTO config VALUES ('ShortcutMenu','0');
 
 -- THIS IS THE LAST SQL QUERY. Updates database version number:
 UPDATE config SET confvalue='4.15.1' WHERE confname='VersionNumber';

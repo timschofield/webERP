@@ -67,26 +67,27 @@
 				<ul id="menu">
 					<li><a href="', $RootPath, '/index.php">', _('Main Menu'), '</a>';
 
-		if (isset($_POST['AddToMenu'])) {
-			if (!isset($_SESSION['Favourites'][$_POST['ScriptName']])) {
-				$_SESSION['Favourites'][$_POST['ScriptName']] = $_POST['Title'];
+		if ($_SESSION['ShortcutMenu']==1) { //show the short cut menu
+			if (isset($_POST['AddToMenu'])) {
+				if (!isset($_SESSION['Favourites'][$_POST['ScriptName']])) {
+					$_SESSION['Favourites'][$_POST['ScriptName']] = $_POST['Title'];
+				}
 			}
-		}
-
-		if (isset($_POST['DelFromMenu'])) {
-			unset($_SESSION['Favourites'][$_POST['ScriptName']]);
-		}
-
-		if (isset($_SESSION['Favourites']) AND count($_SESSION['Favourites'])>0) {
-			echo '<ul>';
-			foreach ($_SESSION['Favourites'] as $url=>$ttl) {
-				echo '<li><a href="', $url, '">', _($ttl), '<a></li>';
+	
+			if (isset($_POST['DelFromMenu'])) {
+				unset($_SESSION['Favourites'][$_POST['ScriptName']]);
 			}
-			echo '</ul>';
-		}
+	
+			if (isset($_SESSION['Favourites']) AND count($_SESSION['Favourites'])>0) {
+				echo '<ul>';
+				foreach ($_SESSION['Favourites'] as $url=>$ttl) {
+					echo '<li><a href="', $url, '">', _($ttl), '<a></li>';
+				}
+				echo '</ul>';
+			}
+		} //end of show the short cut menu
 
-		echo '</li>'; //take off inline formatting, use CSS instead ===HJ===
-
+		echo '</li>';
 		if (count($_SESSION['AllowedPageSecurityTokens'])>1){
 			echo '<li><a href="', $RootPath, '/Dashboard.php">', _('Dashboard'), '</a></li>';
 			echo '<li><a href="', $RootPath, '/SelectCustomer.php">', _('Customers'), '</a></li>';
