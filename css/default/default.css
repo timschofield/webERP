@@ -225,8 +225,8 @@ tr.striped_row:nth-of-type(odd) {
 /* Table type is used for UI tables type 1 */
 .table1 {
 	width:90%;
-	background:#eee;
-	border:0px 0px 2px 2px #222 solid;
+	background:#eeeeee;
+	border:0px 0px 2px 2px #222222 solid;
 	margin:0 auto;
 }
 
@@ -536,7 +536,15 @@ textarea.texterror {
 	font-weight:bold;
 	padding:5px;
 	text-align:center;
-	/* Class selector for page title. */
+	/* Class selector for page title text. */
+}
+.sheet {
+	background-color:#ffffff;
+	border:0;
+	color:#000000;
+	margin:5%;
+	padding:5%;
+	/* Class selector for sheet preview. */
 }
 /* END Class selectors of the style for all devices. ------------------------ */
 /* END Style for all devices.================================================ */
