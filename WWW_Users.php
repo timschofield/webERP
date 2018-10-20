@@ -732,7 +732,9 @@ if($_POST['ShowDashboard']==0) {
  		 '<option selected="selected" value="1">', _('Yes'), '</option>';
 }
 echo '</select>',
+		'<span class="field_help_text">',
 		(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Show dashboard page after login') : ''), // If the parameter $_SESSION['ShowFieldHelp'] is not set OR is TRUE, shows this field help text.
+		'</span>',
 		'</td>
 	</tr>';
 // Turn off/on page help:
@@ -747,7 +749,9 @@ if($_POST['ShowPageHelp']==0) {
  		 '<option selected="selected" value="1">', _('Yes'), '</option>';
 }
 echo '</select>',
+		'<span class="field_help_text">',
 		(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Show page help when available') : ''), // If the parameter $_SESSION['ShowFieldHelp'] is not set OR is TRUE, shows this field help text.
+		'</span>',
 		'</td>
 	</tr>';
 // Turn off/on field help:
@@ -762,7 +766,9 @@ if($_POST['ShowFieldHelp']==0) {
  		 '<option selected="selected" value="1">', _('Yes'), '</option>';
 }
 echo '</select>',
+		'<span class="field_help_text">',
 		(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Show field help when available') : ''), // If the parameter $_SESSION['ShowFieldHelp'] is not set OR is TRUE, shows this field help text.
+		'</span>',
 		'</td>
 	</tr>';
 

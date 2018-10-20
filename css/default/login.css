@@ -7,20 +7,23 @@ by Hindra Joshua
 ***/
 
 
-
 body {
-background:#ccd;
-color:black;
-font:14px "Lucida Grande","Arial","Helvetica","Verdana","sans-serif";
-text-align:center;
+	background-attachment:fixed;
+	background-color:#ccccdd;
+	background-image:url("images/background.jpg");
+	background-repeat:no-repeat;
+	background-size:cover;
+	color:#000000;
+	font:14px "Lucida Grande","Arial","Helvetica","Verdana","sans-serif";
+	text-align:center;
 }
 
-img{
+img {
 vertical-align:middle;
 }
 
 #container {
-background:#588BB6;
+background:#588bb6;
 border:thin solid black;
 margin-left:auto;
 margin-right:auto;
@@ -57,9 +60,9 @@ border-radius:15px 15px 15px 15px;
 padding:10px;
 vertical-align:middle;
 width:50%;
-box-shadow:3px 3px 4px inset;	
+box-shadow:3px 3px 4px inset;
 }
 
-#demo_text{
+#demo_text {
 	padding:10px;
 }

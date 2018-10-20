@@ -63,12 +63,17 @@ a {
 	text-align:left;
 	/* number class (general). */
 }
-
+.sheet {
+	border:0;
+	margin:0;
+	padding:0;
+	/* Class selector for sheet preview. */
+}
 .page_title_text {
 	font-weight:bold;
 	font-size: 207%;
 	text-align:center;
-	/* Page title class. */
+	/* Class selector for page title. */
 }
 
 body, #CanvasDiv {

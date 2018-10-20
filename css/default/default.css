@@ -94,6 +94,7 @@ th.descending:after {
 
 td {
 	text-align:left;
+	vertical-align:top;
 }
 
 td.select {
@@ -194,7 +195,7 @@ tr.striped_row:nth-of-type(odd) {
 .dpTbl { /* date picker background */
 	border:thin solid #000000;
 	background:white;
-	box-shadow:3px 3px 4px #000; /* shadow on modern browsers */
+	box-shadow:3px 3px 4px #000000; /* shadow on modern browsers */
 }
 
 .dpTD {
@@ -224,8 +225,8 @@ tr.striped_row:nth-of-type(odd) {
 /* Table type is used for UI tables type 1 */
 .table1 {
 	width:90%;
-	background:#eee;
-	border:0px 0px 2px 2px #222 solid;
+	background:#eeeeee;
+	border:0px 0px 2px 2px #222222 solid;
 	margin:0 auto;
 }
 
@@ -353,7 +354,7 @@ textarea.texterror {
 #MainMenuDiv {
 	float:left;
 	width:11%;
-	border:thin solid #000;
+	border:thin solid #000000;
 	text-align:center;
 	white-space:nowrap;
 }
@@ -508,6 +509,10 @@ textarea.texterror {
 	float:left;
 	/* Class selector to let an element float to the left. */
 }
+.field_help_text {
+	font-style:italic;
+	/* Class selector for field help text. */
+}
 .page_help_text {
 	background:#d3d3d3 url(images/help.png) top left no-repeat;
 	border:#a52a2a 1px solid;
@@ -531,7 +536,15 @@ textarea.texterror {
 	font-weight:bold;
 	padding:5px;
 	text-align:center;
-	/* Class selector for page title. */
+	/* Class selector for page title text. */
+}
+.sheet {
+	background-color:#ffffff;
+	border:0;
+	color:#000000;
+	margin:5%;
+	padding:5%;
+	/* Class selector for sheet preview. */
 }
 /* END Class selectors of the style for all devices. ------------------------ */
 /* END Style for all devices.================================================ */
