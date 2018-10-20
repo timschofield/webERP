@@ -17,7 +17,7 @@ UPDATE `scripts` SET `description` = 'Creates a report of the ad-valorem tax -GS
 INSERT INTO config VALUES ('ShortcutMenu','0');
 
 CREATE TABLE `employees` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `surname` varchar(20) NOT NULL,
   `firstname` varchar(20) NOT NULL,
   `stockid` varchar(20) NOT NULL COMMENT 'FK with stockmaster',
@@ -28,10 +28,9 @@ CREATE TABLE `employees` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE `employees`
-  ADD PRIMARY KEY (`id`),
   ADD KEY `surname` (`surname`),
   ADD KEY `firstname` (`firstname`),
-  ADD KEY `stockmaster` (`stockmaster`),
+  ADD KEY `stockid` (`stockid`),
   ADD KEY `manager` (`manager`),
   ADD KEY `userid` (`userid`);
 
