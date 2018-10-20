@@ -518,10 +518,18 @@ li {
 	margin:0 auto; /* . */
 	padding:5px;
 	text-align:center;
-	/* Class selector for page title. */
+	/* Class selector for page title text. */
 }
-/* END Class selectors for all styles Style for all. ----------------------- */
-/* END Style for all. ====================================================== */
+.sheet {
+	background-color:#ffffff;
+	border:0;
+	color:#000000;
+	margin:5%;
+	padding:5%;
+	/* Class selector for sheet preview. */
+}
+/* END Class selectors of the style for all devices. ------------------------ */
+/* END Style for all devices.================================================ */
 
 
 /* If you want to use a cascading style sheet for a small device width, uncomment line "<meta name="viewport" content="width=device-width, initial-scale=1" />" on includes/header.inc and use the following sections. */

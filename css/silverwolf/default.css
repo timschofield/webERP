@@ -536,7 +536,15 @@ select.selecterror { /*AccountGroups.php, BankAccounts.php, BOMs.php, Stocks.php
 	margin:10px auto;
 	padding:5px;
 	text-align:center;
-	/* Class selector for page title. */
+	/* Class selector for page title text. */
+}
+.sheet {
+	background-color:#ffffff;
+	border:0;
+	color:#000000;
+	margin:5%;
+	padding:5%;
+	/* Class selector for sheet preview. */
 }
 /* END Class selectors of the style for all devices. ------------------------ */
 /* END Style for all devices.================================================ */
