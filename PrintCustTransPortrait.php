@@ -1,8 +1,9 @@
 <?php
+/*	PrintCustTransPortrait.php */
 /*  Print Invoices or Credit Notes (Portrait Mode) */
 
 include('includes/session.php');
-
+$Title = _('Print Invoices or Credit Notes (Portrait Mode)');
 $ViewTopic = 'ARReports';
 $BookMark = 'PrintInvoicesCredits';
 
@@ -236,14 +237,14 @@ if(isset($PrintPDF)
 		if(DB_num_rows($result)==1) {
 			$myrow = DB_fetch_array($result);
 
-			if ( $_SESSION['SalesmanLogin'] != '' AND $_SESSION['SalesmanLogin'] != $myrow['salesman'] ){
+			if ( $_SESSION['SalesmanLogin'] != '' AND $_SESSION['SalesmanLogin'] != $myrow['salesman'] ) {
 				$Title=_('Select Invoices/Credit Notes To Print');
 				include('includes/header.php');
 				prnMsg(_('Your account is set up to see only a specific salespersons orders. You are not authorised to view transaction for this order'),'error');
 				include('includes/footer.php');
 				exit;
 			}
-			if ( $CustomerLogin == 1 AND $myrow['debtorno'] != $_SESSION['CustomerID'] ){
+			if ( $CustomerLogin == 1 AND $myrow['debtorno'] != $_SESSION['CustomerID'] ) {
 				$Title=_('Select Invoices/Credit Notes To Print');
 				include('includes/header.php');
 				echo '<p class="bad">' . _('This transaction is addressed to another customer and cannot be displayed for privacy reasons') . '. ' . _('Please select only transactions relevant to your company').'</p>';
@@ -760,7 +761,7 @@ if(isset($PrintPDF)
 
 				$myrow = DB_fetch_array($result);
 
-				if ($_SESSION['SalesmanLogin']!='' AND $_SESSION['SalesmanLogin']!=$myrow['salesman']){
+				if ($_SESSION['SalesmanLogin']!='' AND $_SESSION['SalesmanLogin']!=$myrow['salesman']) {
 					prnMsg(_('Your account is set up to see only a specific salespersons orders. You are not authorised to view transaction for this order'),'error');
 					include('includes/footer.php');
 					exit;
@@ -774,7 +775,9 @@ if(isset($PrintPDF)
 				$ExchRate = $myrow['rate'];
 				$PageNumber = 1;
 
-				echo '<table class="table1">
+				echo '
+				<div class="sheet">
+						<table class="table1">
 						<tr>
 							<td valign="top" style="width:10%"><img src="' . $_SESSION['LogoFile'] . '" alt="" /></td>
 							<td style="background-color:#bbbbbb">';
@@ -1165,7 +1168,10 @@ if(isset($PrintPDF)
 					echo '<tr><td class="number" style="color:red"><b>' . _('TOTAL CREDIT') . '</b></td>
 							<td class="number" style="background-color:#EEEEEE;color:red"><b>' . $DisplayTotal . '</b></td></tr>';
 				}
-				echo '</table>';
+				echo '</table>
+				</div>';
+
+
 	/* End footer totals table */
 			} /* end of check to see that there was an invoice record to print */
 			$FromTransNo++;
