@@ -13,38 +13,38 @@ button img {
 	width:21px;
 }
 
-body{
+body {
 	font-family:Arial, Verdana, Helvetica, sans-serif;
 	font-size:10pt;
 	margin:0;
 	padding:0;
 }
-a{
+a {
 	color:blue;
 	text-decoration:none;
 }
-a:hover{
+a:hover {
 	color:blue;
 	text-decoration:underline;
 }
-img{
+img {
 	border:none;
 	vertical-align:middle;
 }
-p.good{
-    font-weight:bold;
-    color:green;
+p.good {
+	font-weight:bold;
+	color:green;
 }
-p.bad{
-    font-weight:bold;
-    color:red;
+p.bad {
+	font-weight:bold;
+	color:red;
 }
-table{
+table {
 	width:auto; /* automatic width */
 	margin:0 auto;
 	margin-bottom:5px;
 }
-table.selection{}
+table.selection {}
 th { /* table heading */
 	background-color:#cccce5;
 	color:#330000;
@@ -52,69 +52,70 @@ th { /* table heading */
 	text-align:center;
 }
 th.ascending {
-  cursor: s-resize;
+	cursor:s-resize;
 }
 th.descending {
-  cursor: n-resize;
+	cursor:n-resize;
 }
 th:after {
-	content: "";
-	float: right;
-	margin-top: 7px;
-	visibility: hidden;
+	content:"";
+	float:right;
+	margin-top:7px;
+	visibility:hidden;
 }
 th.ascending:after {
-	border-width: 0 4px 4px;
-	border-style: solid;
-	border-color: #000 transparent;
-	visibility: visible;
+	border-width:0 4px 4px;
+	border-style:solid;
+	border-color:#000000 transparent;
+	visibility:visible;
 }
 th.descending:after {
-	border-bottom: none;
-	border-left: 4px solid transparent;
-	border-right: 4px solid transparent;
-	border-top: 4px solid #000;
-	visibility: visible;
+	border-bottom:none;
+	border-left:4px solid transparent;
+	border-right:4px solid transparent;
+	border-top:4px solid #000000;
+	visibility:visible;
 }
-td{
+td {
 	font-family:Arial, Verdana, Helvetica;
 	text-align:left;
+	vertical-align:top;
 }
-td.select{
+td.select {
 	background-color:#eee;
 }
 
-input{
+input {
 	font-family:Arial, Verdana, Helvetica;
 }
-input.image{
+input.image {
 	border-width:0px;
 	background-color:transparent;
 }
-input:hover{
+input:hover {
 	background:lightblue;
 }
 input.inputerror, input.error, select.error, select.selecterror, label.error {
 	color:red;
-	border: 2px solid red;
+	border:2px solid red;
 }
 input:required, select:required, textarea:required {
-	background-color:lightyellow;
+	background-color:#ffffe0;
 }
-select{
+select {
 	font-family:Arial, Verdana, Helvetica;
 }
-select:hover{
+select:hover {
 	background:lightblue;
 }
-select.selecterror{
+select.selecterror {
 	background-color:#fddbdb;
 }
-textarea{ /* default style for textarre */
+textarea { /* default style for textarre */
 	font-family:Arial, Verdana, Helvetica;
 }
-textarea:hover{}
-textarea.texterror{
+textarea:hover {}
+textarea.texterror {
 	background-color:#fddbdb;
 }
 
@@ -126,48 +127,48 @@ tr.striped_row:nth-of-type(odd) {
 	background-color:#EEEEEE;
 }
 div.Message {
-    border-radius:10px;
-    padding:10px 10px 10px 36px;
-    margin:5px;
-	opacity: 1;
-    transition: opacity 0.6s; /* 600ms to fade out */
+	border-radius:10px;
+	padding:10px 10px 10px 36px;
+	margin:5px;
+	opacity:1;
+	transition:opacity 0.6s; /* 600ms to fade out */
 }
 div.Message.error {
 	background:#ffecec url('images/message-error.png') no-repeat 10px 50%;
-    border:1px solid #f5aca6;
+	border:1px solid #f5aca6;
 }
 div.Message.success {
 	background:#e9ffd9 url('images/message-success.png') no-repeat 10px 50%;
-    border:1px solid #a6ca8a;
+	border:1px solid #a6ca8a;
 }
 div.Message.info {
 	background:#e3f7fc url('images/message-info.png') no-repeat 10px 50%;
-    border:1px solid #8ed9f6;
+	border:1px solid #8ed9f6;
 }
 div.Message.warn {
 	background:#fff8c4 url('images/message-warning.png') no-repeat 10px 50%;
-    border:1px solid #f2c779;
+	border:1px solid #f2c779;
 }
 .MessageCloseButton {
-    margin-left: 15px;
-    color: #C8C8C8;
-    font-weight: bold;
-    float: right;
-    font-size: 20px;
-	line-height: 17px;
-	cursor: pointer;
-    transition: 0.3s;
+	margin-left:15px;
+	color:#C8C8C8;
+	font-weight:bold;
+	float:right;
+	font-size:20px;
+	line-height:17px;
+	cursor:pointer;
+	transition:0.3s;
 }
 .MessageCloseButton:hover {
-    color: #606060;
+	color:#606060;
 }
 #MessageContainerFoot {
-	display: none;
+	display:none;
 }
-div.csv{
-	background:lightgray;
-	color:black;
-	border:1px solid black;
+div.csv {
+	background:d3d3d3;
+	color:#000000;
+	border:1px solid #000000;
 	PADDING-LEFT:3px;
 	Z-INDEX:1;
 	width:50%;
@@ -181,43 +182,26 @@ div.csv{
 	font-weight:normal;
 	TEXT-ALIGN:center;
 }
-div.page_help_text{
-	background:lightgrey url(images/help.png) top left no-repeat;
-	BORDER:#a52a2a 1px solid;
-	padding-top:2px;
-	padding-bottom:2px;
-	PADDING-LEFT:10px;
-	Z-INDEX:1;
-	width:80%;
-	FLOAT:none;
-	VISIBILITY:visible;
-	MARGIN:0 auto;
-	POSITION:static;
-	font-family:Arial, Verdana, Helvetica;
-	font-weight:normal;
-	color:black;
-	TEXT-ALIGN:center;
-}
 
-.dpTbl{
+.dpTbl {
 	border:solid navy 1px;
 	background:white;
 }
-.dpTD{
+.dpTD {
 	border:0;
 	width:20px;
 	background-color:#EEEEEE;
 	text-align:right;
 cursor:pointer;
 }
-.dpDayHighlight{
+.dpDayHighlight {
 	border:0;
 	width:20px;
 	background-color:yellow;
 	text-align:right;
 	cursor:pointer;
 }
-.dpTDHover{
+.dpTDHover {
 	border:0;
 	width:20px;
 	background-color:#CCCCCC;
@@ -225,33 +209,33 @@ cursor:pointer;
 	cursor:pointer;
 }
 
-.table1{
-  width:90%;
-  background:#eee;
-  border:1px solid #222;
-  margin:0 auto;
+.table1 {
+	width:90%;
+	background:#eee;
+	border:1px solid #222;
+	margin:0 auto;
 }
-.tableheader{
+.tableheader {
 	font-weight:normal;
 	background-color:#cccce5;
 	color:#330000;
 }
-.notavailable{
+.notavailable {
 	font-weight:lighter;
 	font-style:italic;
 	color:#555555;
 }
-.label{ /* used */
+.label { /* used */
 	font-weight:bold;
 	font-style:normal;
-	color:black;
+	color:#000000;
 	background-color:#cccccc;
 }
-.table_index{
+.table_index {
 	background-color:#F1FFDD;
 }
 
-.header{
+.header {
 	background-image:url("");
 	background-repeat:no-repeat;
 	background-attachment:fixed;
@@ -260,143 +244,144 @@ cursor:pointer;
 	padding:0px;
 }
 
-button{
+button {
 }
-button:hover{
+button:hover {
 	background:lightblue;
 }
 
-.OsRow{
+.OsRow {
 	background-color:#234567;
 	color:white;
 }
 
-/*li{
+/*li {
 list-style-image:url(bullet.gif);
 }*/
 
-#CanvasDiv{
+#CanvasDiv {
 	background-color:#cdf;
 	color:white;
 }
 
-#HeaderDiv{
+#HeaderDiv {
 	background-color:#569;
 	overflow:hidden;
 }
-#HeaderWrapDiv{}
+#HeaderWrapDiv {}
 
-#AppInfoDiv{
+#AppInfoDiv {
 	float:left;
 }
-#AppInfoCompanyDiv{float:left;}
-#AppInfoUserDiv{float:left;}
-#AppInfoUserDiv a{color:white;}
-#AppInfoUserDiv a:hover{color:white;}
-#AppInfoModuleDiv{clear:both;}
+#AppInfoCompanyDiv {float:left;}
+#AppInfoUserDiv {float:left;}
+#AppInfoUserDiv a {color:white;}
+#AppInfoUserDiv a:hover {color:white;}
+#AppInfoModuleDiv {clear:both;}
 
-#QuickMenuDiv{float:right;}
-#QuickMenuDiv ul{list-style:none;margin:0;padding:0;}
-#QuickMenuDiv li{display:inline;float:left;margin:2px 0;padding:0;}
-#QuickMenuDiv li a{
+#QuickMenuDiv {float:right;}
+#QuickMenuDiv ul {list-style:none;margin:0;padding:0;}
+#QuickMenuDiv li {display:inline;float:left;margin:2px 0;padding:0;}
+#QuickMenuDiv li a {
 	background:#aae;
 	border:1px outset #aae;
 	border-top:1px solid #aae;
-	border-radius: 0 0 7px 7px;
-	color:black;
+	border-radius:0 0 7px 7px;
+	color:#000000;
 	padding:1px;
 }
-#QuickMenuDiv li a:hover{
+#QuickMenuDiv li a:hover {
 	background:#cdf;
 	border:1px outset #cdf;
 	border-top:1px solid #cdf;
 	text-decoration:none;
 }
 
-#BodyDiv{
+#BodyDiv {
 	clear:both;
 	overflow:hidden;
 	text-align:center;
-	color:black;
+	color:#000000;
 }
 
-#MainMenuDiv{
+#MainMenuDiv {
 	background:#569;
 	width:100%;
 	height:18px;
 }
-#MainMenuDiv ul{list-style:none;padding:0;margin:0;}
-#MainMenuDiv li{display:inline;float:left;margin:2px 0;padding:0;}
-#MainMenuDiv li a{
+#MainMenuDiv ul {list-style:none;padding:0;margin:0;}
+#MainMenuDiv li {display:inline;float:left;margin:2px 0;padding:0;}
+#MainMenuDiv li a {
 	background:#aae;
 	border:1px outset #aae;
 	border-bottom:1px solid #aae;
-	border-radius: 7px 7px 0 0;
-	color:black;
+	border-radius:7px 7px 0 0;
+	color:#000000;
 	padding:1px;
 }
-#MainMenuDiv li a:hover{
+#MainMenuDiv li a:hover {
 	background:#cdf;
 	border:1px outset #cdf;
 	border-bottom:1px solid #cdf;
 	text-decoration:none;
 }
-#MainMenuDiv .main_menu_selected a{
+#MainMenuDiv .main_menu_selected a {
 	background:#cdf;
 	border:1px outset #cdf;
 	border-bottom:1px solid #cdf;
 }
 
 /*** BODY - SUB MENU ***/
-.menu_group_item a{
+.menu_group_item a {
 }
-.menu_group_items a:hover{
+.menu_group_items a:hover {
 	color:#0000aa;
 	text-decoration:underline;
 }
 
-#SubMenuDiv{
+#SubMenuDiv {
 	clear:both;
 	float:left;
 	display:table;
 	background:#cdf;
-	color:black;
+	color:#000000;
 	text-align:left;
 	padding:1%;
 	width:98%
 }
-#SubMenuDiv ul{
+#SubMenuDiv ul {
 	list-style-type:none;
 	padding:0;
 	margin:0px;
 	border:thin outset #ddd;
 	background:#fff
 }
-#SubMenuDiv li{}
-#SubMenuDiv .menu_group_headers{background:#ddd;border:thin solid #ddd;text-align:center;}
-#TransactionsDiv,#InquiriesDiv,#MaintenanceDiv{float:left;width:33.33%;}
-#InquiriesDiv div{background:#ddd;padding:1px;border:thin solid #ddd;}
+#SubMenuDiv li {}
+#SubMenuDiv .menu_group_headers {background:#ddd;border:thin solid #ddd;text-align:center;}
+#TransactionsDiv,#InquiriesDiv,#MaintenanceDiv {float:left;width:33.33%;}
+#InquiriesDiv div {background:#ddd;padding:1px;border:thin solid #ddd;}
 
-.menu_group_item p{color:#f00;text-indent:-10px;margin:0 0 0 12px;}
+.menu_group_item p {color:#f00;text-indent:-10px;margin:0 0 0 12px;}
 
 /*** FOOTER ***/
 
-#FooterDiv{
+#FooterDiv {
 	clear:both;
 	overflow:hidden;
 	background:#569;
 }
-#FooterWrapDiv{}
-#FooterLogoDiv{
+#FooterWrapDiv {}
+#FooterLogoDiv {
 	float:right;
 }
-#FooterVersionDiv{}
-#FooterTimeDiv{}
+#FooterVersionDiv {}
+#FooterTimeDiv {}
 #Report {
 	/* Division id for reports. */}
 #Report table {
 	/* Body of a report formatted with table tag. */
 }
+/* BEGIN Class selectors of the style for all devices. ---------------------- */
 .centre {
 	text-align:center;
 	/* Class selector to horizontal align a text (centre) in an element. */
@@ -409,13 +394,48 @@ list-style-image:url(bullet.gif);
 	text-align:left;
 	/* Class selector to horizontal align a text (left) in an element. */
 }
+.gallery {
+	margin:5px;
+	float:left;
+	/* Class selector to let an element float to the left. */
+}
+.field_help_text {
+	font-style:italic;
+	/* Class selector for field help text. */
+}
+.page_help_text {
+	background:#d3d3d3 url(images/help.png) top left no-repeat;
+	border:#a52a2a 1px solid;
+	color:#000000;
+	float:none;
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+	font-weight:normal;
+	margin:0 auto;
+	padding-bottom:2px;
+	padding-left:10px;
+	padding-top:2px;
+	position:static;
+	text-align:center;
+	visibility:visible;
+	width:80%;
+	z-index:1;
+}
 .page_title_text {
-	color:black;
+	color:#000000;
 	font-weight:bold;
 	text-align:center;
-	/* Class selector for page title. */
+	/* Class selector for page title text. */
 }
-/* END Style for all. ********************************************************/
+.sheet {
+	background-color:#ffffff;
+	border:0;
+	color:#000000;
+	margin:5%;
+	padding:5%;
+	/* Class selector for sheet preview. */
+}
+/* END Class selectors of the style for all devices. ------------------------ */
+/* END Style for all devices.================================================ */
 
 
 /* If you want to use a cascading style sheet for a small device width, uncomment line "<meta name="viewport" content="width=device-width, initial-scale=1" />" on includes/header.inc and use the following sections. */

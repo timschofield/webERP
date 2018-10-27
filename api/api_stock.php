@@ -232,14 +232,6 @@
 		return $Errors;
 	}
 
-/* Check that the appendfile is 40 characters or less long */
-	function VerifyAppendFile($appendfile, $i, $Errors) {
-		if (mb_strlen($appendfile)>40) {
-			$Errors[$i] = IncorrectAppendFile;
-		}
-		return $Errors;
-	}
-
 /* Verify that the Perishable flag is a 1 or 0 */
 	function VerifyPerishable($Perishable, $i, $Errors) {
 		if ($Perishable!=0 and $Perishable!=1) {
@@ -347,9 +339,6 @@
 		}
 		if (isset($StockItemDetails['serialised'])){
 			$Errors=VerifySerialised($StockItemDetails['serialised'], sizeof($Errors), $Errors);
-		}
-		if (isset($StockItemDetails['appendfile'])){
-			$Errors=VerifyAppendFile($StockItemDetails['apendfile'], sizeof($Errors), $Errors);
 		}
 		if (isset($StockItemDetails['perishable'])){
 			$Errors=VerifyPerishable($StockItemDetails['perishable'], sizeof($Errors), $Errors);
@@ -467,9 +456,6 @@
 		}
 		if (isset($StockItemDetails['serialised'])){
 			$Errors=VerifySerialised($StockItemDetails['serialised'], sizeof($Errors), $Errors);
-		}
-		if (isset($StockItemDetails['appendfile'])){
-			$Errors=VerifyApendFile($StockItemDetails['apendfile'], sizeof($Errors), $Errors);
 		}
 		if (isset($StockItemDetails['perishable'])){
 			$Errors=VerifyPerishable($StockItemDetails['perishable'], sizeof($Errors), $Errors);

@@ -205,8 +205,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 					barcode,
 					discountcategory,
 					taxcatid,
-					decimalplaces,
-					appendfile)
+					decimalplaces)
 				VALUES (
 					'$StockID',
 					'" . $myrow[1]	. "',
@@ -224,8 +223,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 					'" . $myrow[13]	. "',
 					'" . $myrow[14]	. "',
 					"  . $myrow[15]	. ",
-					"  . $myrow[16]	. ",
-					'" . $myrow[17]	. "'
+					"  . $myrow[16]	. "
 				);
 			";
 

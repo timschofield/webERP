@@ -1,10 +1,11 @@
 <?php
-/* This script defines the currencies available. Each customer and supplier must be defined as transacting in one of the currencies defined here. */
+/* Currencies.php */
+/* Defines the currencies available. Each customer and supplier must be defined as transacting in one of the currencies defined here. */
 
 include('includes/session.php');
-$Title = _('Currencies Maintenance');// Screen identification.
-$ViewTopic= 'Currencies';// Filename's id in ManualContents.php's TOC.
-$BookMark = 'Currencies';// Anchor's id in the manual's html document.
+$Title = _('Currencies Maintenance');
+$ViewTopic = 'Setup';
+$BookMark = 'Currencies';
 include('includes/header.php');
 
 include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.

@@ -2823,7 +2823,6 @@ CREATE TABLE `stockmaster` (
   `discountcategory` char(2) NOT NULL DEFAULT '',
   `taxcatid` tinyint(4) NOT NULL DEFAULT '1',
   `serialised` tinyint(4) NOT NULL DEFAULT '0',
-  `appendfile` varchar(40) NOT NULL DEFAULT 'none',
   `perishable` tinyint(1) NOT NULL DEFAULT '0',
   `decimalplaces` tinyint(4) NOT NULL DEFAULT '0',
   `pansize` double NOT NULL DEFAULT '0',

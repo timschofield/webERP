@@ -1,0 +1,204 @@
+<h1><a id="Setup">Setup</a></h1>
+
+<div class="floatright"><a class="minitext" href="#top">⬆ Top</a></div>
+<h2><a id="GeneralSetupOptions">General Setup Options</a></h2>
+
+<h3><a id="CompanyPreferences">Company Preferences</a></h3>
+<p>Defines the settings applicable for the company, including name, address, tax authority reference, whether GL integration used, etc.</p>
+<p>See <a href="ManualContents.php?ViewTopic=CreatingNewSystem#CompanyParameters">Company Parameters</a>.</p>
+
+<h3><a id="SystemParameters">System Parameters</a></h3>
+<p>Sets the main system configuration parameters.</p>
+<p>Narrative is shown alongside each parameter to give the user an idea of where the setting is used.</p>
+<p>See <a href="ManualContents.php?ViewTopic=CreatingNewSystem#SystemParameters">System Parameters</a>.</p>
+
+<h3><a id="WWW_Users">Users Maintenance</a></h3>
+<p>Entry of users and security settings of users.</p>
+<p>See <a href="ManualContents.php?ViewTopic=GettingStarted#UserMaintenance">Setting Up Users</a>.</p>
+
+<h3><a id="SecurityTokens">Maintain Security Tokens</a></h3>
+<p>Administration of security tokens.</p>
+<p>See <a href="ManualContents.php?ViewTopic=SecuritySchema#SecurityTokens">Security Schema</a>.</p>
+
+<h3><a id="WWW_Access">Access Permissions Maintenance</a></h3>
+<p>Adds or removes security roles by a system administrator.</p>
+<p>See <a href="ManualContents.php?ViewTopic=SecuritySchema#WWW_Access">Security Roles</a>.</p>
+
+<h3><a id="PageSecurity">Page Security Settings</a></h3>
+<p>Changes the security token of a script.</p>
+<p>See <a href="ManualContents.php?ViewTopic=SecuritySchema#PageSecurity">PageSecurity values</a>.</p>
+
+<h3><a id="Currencies">Currencies Maintenance</a></h3>
+<p>Defines the currencies available. Each customer and supplier must be defined as transacting in one of the currencies defined here.</p>
+<p>Any number of currencies can be defined in webERP. Every currency that is transacted with either in sales (AR) or purchasing (AP) needs to be defined in the system. To define currencies go to the Setup tab -&gt; General -&gt; Currency Maintenance. Only a few fields are required to be completed for each currency defined:</p>
+<ul>
+    <li><b>Currency</b>. The ISO 4217 code for the currency - this is the international standard 3 character code that is used worldwide to represent the currency. If the code entered exists then it is possible for webERP to retrieve exchange rates from either the European Central Bank or Google, if there is no rate maintained for the currency at the ECB. webERP is capable of updating exchange rates daily from the ECB if set to do so under Setup-&gt;Configuration -&gt;Auto Update Exchange Rates Daily. If this is set to yes, then when the first user logs in for the day the exchange rates are updated automatically. If it is set to no then exchange rates will only be updated if the user does so manually.</li>
+    <li><b>Country</b>. The country of the currency can be entered</li>
+    <li><b>Hundredths Name</b>. The name of 100th of a single unit of the currency can be entered. e.g. pence for GBP or cents for USD</li>
+    <li><b>Decimal Places to Display</b>. </li>
+    <li><b>Exchange Rate</b>. The rate. This must be the number of the local currency that can be purchased with one of this currency.</li>
+    <li><b>Show in webSHOP</b>. </li>
+</ul>
+<p>A utility is also provided which can produce a graph of the movement of any of the defined currencies against the functional currency</p>
+
+<h3><a id="TaxAuthorities">Tax Authorities and Rates Maintenance</a></h3>
+<p>Entry of tax authorities - the state intitutions that charge tax.</p>
+<p>See <a href="ManualContents.php?ViewTopic=Tax#TaxAuthorities">Tax Calculations</a>.</p>
+
+<h3><a id="TaxGroups">Tax Group Maintenance</a></h3>
+<p>Allows for taxes to be grouped together where multiple taxes might apply on sale or purchase of items.</p>
+<p>See <a href="ManualContents.php?ViewTopic=Tax#TaxAuthorities">Tax Calculations</a>.</p>
+
+<h3><a id="TaxProvinces">Dispatch Tax Province Maintenance</a></h3>
+<p>Allows for inventory locations to be defined so that tax applicable from sales in different provinces can be dealt with.</p>
+<p>See <a href="ManualContents.php?ViewTopic=Tax#TaxAuthorities">Tax Calculations</a>.</p>
+
+<h3><a id="TaxCategories">Tax Category Maintenance</a></h3>
+<p>Allows for categories of items to be defined that might have different tax rates applied to them.</p>
+<p>See <a href="ManualContents.php?ViewTopic=Tax#TaxAuthorities">Tax Calculations</a>.</p>
+
+<h3><a id="PeriodsInquiry">List Periods Defined</a></h3>
+<p>Shows a list of all the system defined periods.</p>
+
+<h3><a id="ReportCreator">Report Builder Tool</a></h3>
+<p>Report Writer and Form Creator script that creates templates for user defined reports and forms.</p>
+<p>See <a href="ManualContents.php?ViewTopic=ReportBuilder">Report Builder/Form Builder</a>.</p>
+
+<h3><a id="AuditTrail">View Audit Trail</a></h3>
+<p>Shows the activity with SQL statements and who performed the changes.</p>
+
+<h3><a id="GeocodeSetup">Geocode Maintenance</a></h3>
+<p>Sets the configuration for geocoding of customers and suppliers.</p>
+
+<h3><a id="FormDesigner">Form Designer</a></h3>
+<p>Customizes the form layout without requiring the use of scripting or technical development.</p>
+<p>All measurements are in PostScript points (72 points = 25,4 mm).</p>
+<p>All coordinates are measured from the lower left corner of the sheet to the top left corner of the element.</p>
+
+
+<p>The form elements are:</p>
+<ul>
+<li><b>Image</b>. Its atributes are x, y, width and height.</li>
+<li><b>SimpleText</b>. Its atributes are x and y.</li>
+<li><b>MultiLineText</b>. Its atributes are x, y, width and height.</li>
+
+<li><b>Rectangle</b>. Its atributes are x, y, width and height.</li>
+<li><b>CurvedRectangle</b>. Its atributes are x, y, width, height and radius.</li>
+<li><b>Line</b>. Its atributes are start x co-ordinate, start y co-ordinate, end x co-ordinate, and end y co-ordinate.</li>
+</ul>
+
+<h3><a id="ShopParameters">Web-Store Configuration</a></h3>
+<p>Maintain web-store configuration and set up.</p>
+
+<h3><a id="SMTPServer">SMTP Server Details</a></h3>
+<p>Sets the SMTP server.</p>
+<p>Simple Mail Transfer Protocol (SMTP) is an Internet standard for electronic mail (email) transmission.</p>
+
+<h3><a id="MailingGroupMaintenance">Mailing Group Maintenance</a></h3>
+<p>Mainting mailing lists for items to mail.</p>
+
+
+<div class="floatright"><a class="minitext" href="#top">⬆ Top</a></div>
+<h2><a id="ReceivablesPayablesSetup">Receivables/Payables Setup</a></h2>
+
+<h3><a id="SalesTypes">Sales Types</a></h3>
+<p>.</p>
+<!--p>See <a href="ManualContents.php?ViewTopic=">TITLE</a>.</p-->
+
+<h3><a id="CustomerTypes">Customer Types</a></h3>
+<p>.</p>
+<!--p>See <a href="ManualContents.php?ViewTopic=">TITLE</a>.</p-->
+
+<h3><a id="SupplierTypes">Supplier Types</a></h3>
+<p>.</p>
+<!--p>See <a href="ManualContents.php?ViewTopic=">TITLE</a>.</p-->
+
+<h3><a id="CreditStatus">Credit Status</a></h3>
+<p>.</p>
+<!--p>See <a href="ManualContents.php?ViewTopic=">TITLE</a>.</p-->
+
+<h3><a id="PaymentTerms">Payment Terms</a></h3>
+<p>.</p>
+<!--p>See <a href="ManualContents.php?ViewTopic=">TITLE</a>.</p-->
+
+<h3><a id="PO_AuthorisationLevels">Set Purchase Order Authorisation levels</a></h3>
+<p>.</p>
+<!--p>See <a href="ManualContents.php?ViewTopic=">TITLE</a>.</p-->
+
+<h3><a id="PaymentMethods">Payment Methods</a></h3>
+<p>.</p>
+<!--p>See <a href="ManualContents.php?ViewTopic=">TITLE</a>.</p-->
+
+<h3><a id="SalesPeople">Sales People</a></h3>
+<p>.</p>
+<!--p>See <a href="ManualContents.php?ViewTopic=">TITLE</a>.</p-->
+
+<h3><a id="Areas">Sales Areas</a></h3>
+<p>.</p>
+<!--p>See <a href="ManualContents.php?ViewTopic=">TITLE</a>.</p-->
+
+<h3><a id="Shippers">Shippers</a></h3>
+<p>.</p>
+<!--p>See <a href="ManualContents.php?ViewTopic=">TITLE</a>.</p-->
+
+<h3><a id="SalesGLPostings">Sales GL Interface Postings</a></h3>
+<p>.</p>
+<!--p>See <a href="ManualContents.php?ViewTopic=">TITLE</a>.</p-->
+
+<h3><a id="COGSGLPostings">COGS GL Interface Postings</a></h3>
+<p>.</p>
+<!--p>See <a href="ManualContents.php?ViewTopic=">TITLE</a>.</p-->
+
+<h3><a id="FreightCosts">Freight Costs Maintenance</a></h3>
+<p>.</p>
+<!--p>See <a href="ManualContents.php?ViewTopic=">TITLE</a>.</p-->
+
+<h3><a id="DiscountMatrix">Discount Matrix</a></h3>
+<p>.</p>
+
+
+<div class="floatright"><a class="minitext" href="#top">⬆ Top</a></div>
+<h2><a id="InventorySetup">Inventory Setup</a></h2>
+
+<h3><a id="StockCategories.php">Inventory Categories Maintenance</a></h3>
+<p>.</p>
+<!--p>See <a href="ManualContents.php?ViewTopic=">TITLE</a>.</p-->
+
+<h3><a id="Locations.php">Inventory Locations Maintenance</a></h3>
+<p>.</p>
+<!--p>See <a href="ManualContents.php?ViewTopic=">TITLE</a>.</p-->
+
+<h3><a id="LocationUsers.php">Inventory Location Authorised Users Maintenance</a></h3>
+<p>.</p>
+<!--p>See <a href="ManualContents.php?ViewTopic=">TITLE</a>.</p-->
+
+<h3><a id="UserLocations.php">User Authorised Inventory Locations Maintenance</a></h3>
+<p>.</p>
+<!--p>See <a href="ManualContents.php?ViewTopic=">TITLE</a>.</p-->
+
+<h3><a id="DiscountCategories.php">Discount Category Maintenance</a></h3>
+<p>.</p>
+<!--p>See <a href="ManualContents.php?ViewTopic=">TITLE</a>.</p-->
+
+<h3><a id="UnitsOfMeasure.php">Units of Measure</a></h3>
+<p>.</p>
+<!--p>See <a href="ManualContents.php?ViewTopic=">TITLE</a>.</p-->
+
+<h3><a id="MRPCalendar.php">MRP Available Production Days</a></h3>
+<p>.</p>
+<!--p>See <a href="ManualContents.php?ViewTopic=">TITLE</a>.</p-->
+
+<h3><a id="MRPDemandTypes.php">MRP Demand Types</a></h3>
+<p>.</p>
+<!--p>See <a href="ManualContents.php?ViewTopic=">TITLE</a>.</p-->
+
+<h3><a id="Departments.php">Maintain Internal Departments</a></h3>
+<p>.</p>
+<!--p>See <a href="ManualContents.php?ViewTopic=">TITLE</a>.</p-->
+
+<h3><a id="InternalStockCategoriesByRole.php">Maintain Internal Stock Categories to User Roles</a></h3>
+<p>.</p>
+<!--p>See <a href="ManualContents.php?ViewTopic=">TITLE</a>.</p-->
+
+<h3><a id="Labels.php">Label Templates Maintenance</a></h3>
+<p>.</p>

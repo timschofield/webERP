@@ -8,13 +8,17 @@ by Hindra Joshua
 
 
 body {
-background:url(images/stripe.png) #fff;
-color:gray;
-font:14px "Lucida Grande","Arial","Helvetica","Verdana","sans-serif";
-text-align:center;
+	background-attachment:fixed;
+	background-color:#ffffff;
+	background-image:url("images/stripe.png");
+	background-repeat:repeat;
+	background-size:auto;
+	color:#808080;
+	font:14px "Lucida Grande","Arial","Helvetica","Verdana","sans-serif";
+	text-align:center;
 }
 
-img{
+img {
 vertical-align:middle;
 }
 
@@ -58,9 +62,9 @@ border-radius:15px 15px 15px 15px;
 padding:10px;
 vertical-align:middle;
 width:50%;
-box-shadow:3px 3px 4px black inset;	
+box-shadow:3px 3px 4px black inset;
 }
 
-#demo_text{
+#demo_text {
 	padding:10px;
 }

@@ -1,6 +1,6 @@
 /***
 
-"Default" Login theme for WebERP
+"professional-rtl" Login theme for WebERP
 
 by Hindra Joshua
 
@@ -8,13 +8,17 @@ by Hindra Joshua
 
 
 body {
-background:#fff;
-color:black;
-font:14px "Lucida Grande","Arial","Helvetica","Verdana","sans-serif";
-text-align:center;
+	background-attachment:fixed;
+	background-color:#ffffff;
+	background-image:url("images/background.jpg");
+	background-repeat:no-repeat;
+	background-size:cover;
+	color:#000000;
+	font:14px "Lucida Grande","Arial","Helvetica","Verdana","sans-serif";
+	text-align:center;
 }
 
-img{
+img {
 vertical-align:middle;
 }
 
@@ -56,9 +60,9 @@ border-radius:15px 15px 15px 15px;
 padding:10px;
 vertical-align:middle;
 width:50%;
-box-shadow:3px 3px 4px inset;	
+box-shadow:3px 3px 4px inset;
 }
 
-#demo_text{
+#demo_text {
 	padding:10px;
 }

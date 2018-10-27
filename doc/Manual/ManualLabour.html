@@ -1,0 +1,54 @@
+
+<h1>Labour Recording</h1>
+<h2>Overview</h2>
+<p>The cost of labour is of course a major component of the cost of manufactured items. A method is required to capture the cost of the labour spent in the process of manufacture.</p>
+<p>The work done on work orders and contracts can be captured by the entry of time-sheets. Each employee defined can have a time-sheet - this has nothing to do with payroll - it is about capturing the time/cost of employees against work orders.</p>
+<p>The cost associated with employees is set by associating the employee with an item. The labour item has the cost set at an amount that should recover both the manufacturing wage/salary costs (and typically manufacturing overheads). A special type of item can be defined for labour - these items must have a labour type stock category. It is the (labour) stock category record that defines how the labour cost is posted in the general ledger.</p>
+<p>Labour stock categories post the labour cost - the hours multipled by the item cost - to a balance sheet work in progress account and credit to a profit and loss account for the labour recovery.</p>
+<p>Typically, the actual labour cost from the payroll is debited to the profit and loss account wages/salaries costs - the labour recovery takes this cost from the profit and loss (as a credit) and puts it into stock - until the manufactured items are sold. (webERP handles the cost of sale of a stock item by posting (debiting) the cost to the cost of sales account and reducing (crediting) the stock value by the same amount.) The profit and loss account showing the manufacturing costs would look something like the below example:</p>
+<table align="center">
+<tr>
+	<td>Account</td><td>Amount</td>
+</tr>
+<tr>
+	<td>Wages</td><td align="right">10,000 </td>
+</tr>
+<tr>
+	<td>Repairs and Maintenance</td><td align="right">2,000 </td>
+</tr>
+<tr>
+	<td>Power</td><td align="right">1,000 </td>
+</tr>
+<tr>
+	<td>Rent</td><td align="right">5,000 </td>
+</tr>
+<tr>
+	<td></td><td align="right">____________</td>
+</tr>
+<tr>
+	<td>TOTAL MANUFACTURING COSTS</td><td align="right">18,000 </td>
+</tr>
+<tr>
+<td>Labour recoveries - 400 hours @ $50</td><td align="right">(20,000)</td>
+</tr>
+<tr>
+	<td></td><td align="right">____________</td>
+</tr>
+<tr>
+	<td>NET under/(over) recovery</td><td align="right">(2,000)</td>
+</tr>
+<tr>
+	<td></td><td align="right">____________</td>
+</tr>
+</table>
+<p>The over recovery represents the adjustment to the gross profit required due to the fact that more manufacturing cost was recovered into the cost of stock manufactured in the month than was incurred. Typically, if manufacturing work is greater than budgeted then the overheads are spread more thinly over a greater amount of work - naturally, this results in an over recovery of manufacturing costs. However, if labour is not so productive and the volume of work is less than budgeted then this will result in an under-recovery of manufacturing costs.</p>
+
+<h2><a id="Employees">Setting Up Employees</a></h2>
+<p>Labour in webERP is actually a special type of item - this allows the routings to be defined in the bill of materials along with all the other physical components. Labour items are simply stock items that have a stock category that is a labour type. Child items of labour type stock categories are all labour items. The first step to setup labour is to setup a labour type stock catergory. Since the GL posting for labour is set up at this level a labour type stock category is required for each type of labour that needs to be posted to a different GL account. e.g. perhaps and engineering firm has a separate cost centre for engineering labour/cost from it&quot;s manufacturing - in this case engineering labour would require a separate labour type.</p>
+<p align="center"><img src="doc/Manual/images/LabourStockCategory.png"></p>
+<p>Note that the stock category screen changes when the stock type is set to &quot;Labour&quot; now, what was the stock account for a normal stock category becomes the labour &quot;recovery&quot; account - this is now a profit and loss GL account where the labour costs are credited to. Note that the stock adjustments account will never be used for dummy/service or labour type stock categories as these will never have physical quantites of stock held. Hence no adjustment will ever be required! Also, what was the</p>
+<p>Once the labour type stock category is defined any number of labour type items can be defined like any other stock item. However, since each employee is mapped to a particular labour item it is only necessary to define labour type items for each category of labour where they will have a different cost. Perhaps tradesfolk, apprentices, supervisors may be set up with different costs - but all posted in the GL on the same basis using the same labour stock category.</p>
+<p>Having set up the necessary labour stock categories and labour items in those categories, then the employees can be defined</p>
+<p align="center"><img src="doc/Manual/images/Employees.png"></p>
+</body>
+</html>
