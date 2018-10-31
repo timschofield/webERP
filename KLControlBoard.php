@@ -344,7 +344,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('111121105AD', 
-									'111203010AD')", "Total Banks PT.ADU",  500000000, 2000000000, $periodnow, $db);
+									'111203010AD')", "Total Banks PT.ADU", 1000000000, 4000000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('111121100PT', 
