@@ -15,6 +15,7 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 
 | Description | Type | Author | Date | Details | Ref |
 |:-----------:|:----:|:------:|:----:|:-------:|:---:|
+| PDFWOPrint.php: Fix notices. | Fixed | PaulT | 2018-11-06 | Reported in the forums by William Hunter | [Forum](http://www.weberp.org/forum/showthread.php?tid=8233) |
 | New script to enter timeshees with the new table timesheets| Added | Phil | 2018-10-28 |  |
 | Updates to the manual to describe labour functionality| Added | Phil | 2018-10-20 | [View] (https://github.com/webERP-team/webERP/commit/b466bb45d20d1510947bd64048fcaec3c55e6f78) |
 | Fix error in prnMsg display - DB errors were not reported - had to define $Messages as global inside DB_query function| Fixed | Phil | 2018-10-20 |  | 

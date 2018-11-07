@@ -311,9 +311,9 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		$WOLine=array();
 		while ($RequirementsRow = DB_fetch_array($RequirmentsResult)){
 			if ($RequirementsRow['autoissue']==0){
-				$WOLine[$i][action]='Manual Issue';
+				$WOLine[$i]['action']='Manual Issue';
 			} else {
-				$WOLine[$i][action]='Auto Issue';
+				$WOLine[$i]['action']='Auto Issue';
 			}
 			if (isset($IssuedAlreadyRow[$RequirementsRow['stockid']])){
 				$Issued = $IssuedAlreadyRow[$RequirementsRow['stockid']];
@@ -473,7 +473,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		} //end if need a new page headed up
 	} /*end if there are order details to show on the order - or its a preview*/
 	if($FooterPrintedInPage == 0){
-			$Http = $_SERVER['HTTPS']?'https://':'http://';
+			$Http = !empty($_SERVER['HTTPS']) ? 'https://' : 'http://';
 			$BaseURL = $Http . $_SERVER['HTTP_HOST'] . $RootPath;
 			$pdf->write2DBarcode($BaseURL.'/WorkOrderIssue.php?WO='.$SelectedWO.'&StockID='.$StockID,'QRCODE,H',60,650,100,100,'','N');
 			$pdf->write2DBarcode($StockID,'QRCODE,H',260,650,100,100,'','N');
