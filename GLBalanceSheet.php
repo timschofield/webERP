@@ -18,9 +18,9 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 	include('includes/header.php');
 	echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 		'/images/printer.png" title="' .// Icon image.
-		_('Print Statement of Financial Position') . '" /> ' .// Icon title.
+		_('Statement of Financial Position') . '" /> ' .// Icon title.
 		_('Balance Sheet') . '</p>';// Page title.
-//		_('Print Statement of Financial Position') . '</p>';// Page title.
+//		_('Statement of Financial Position') . '</p>';// Page title.
 
 	echo '<div class="page_help_text">'
 	. _('Balance Sheet (or statement of financial position) is a summary  of balances. Assets, liabilities and ownership equity are listed as of a specific date, such as the end of its financial year. Of the four basic financial statements, the balance sheet is the only statement which applies to a single point in time.') . '<br />'
