@@ -287,6 +287,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 	$PageNumber = 1;
 	$FooterPrintedInPage = 0;
 	if ($SelectedWO != 'Preview') { // It is a real order
+		$IssuedAlreadyRow = array();
 		$ErrMsg = _('There was a problem retrieving the line details for order number') . ' ' . $SelectedWO . ' ' . _('from the database');
 		$RequirmentsResult = DB_query("SELECT worequirements.stockid,
 										stockmaster.description,
