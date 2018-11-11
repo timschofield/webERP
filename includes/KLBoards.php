@@ -1517,6 +1517,19 @@ Updated 3 index in loctransfers
 					(SELECT locstock.quantity
 						FROM locstock
 						WHERE locstock.loccode = locations.loccode
+							AND locstock.stockid = 'PKPB03-XL') AS qty_bag_xl,
+					(SELECT locstock.reorderlevel
+						FROM locstock
+						WHERE locstock.loccode = locations.loccode
+							AND locstock.stockid = 'PKPB03-XL') AS rl_bag_xl,
+					(SELECT SUM(loctransfers.shipqty - loctransfers.recqty)
+						FROM loctransfers
+						WHERE loctransfers.recloc = locations.loccode
+							AND loctransfers.shipqty != loctransfers.recqty
+							AND loctransfers.stockid = 'PKPB03-XL') AS ot_bag_xl,
+					(SELECT locstock.quantity
+						FROM locstock
+						WHERE locstock.loccode = locations.loccode
 							AND locstock.stockid = 'PKPB03-L') AS qty_bag_l,
 					(SELECT locstock.reorderlevel
 						FROM locstock
@@ -1608,6 +1621,7 @@ Updated 3 index in loctransfers
 			$TableResult[$numshops]['rlfactorforpackaging'] = $myrow['rlfactorforpackaging'];
 			$TableResult[$numshops]['klemaillastpackacgingtransfer'] = $myrow['klemaillastpackacgingtransfer'];
 
+			$TableResult[$numshops]['qty_bag_xl'] = $myrow['qty_bag_xl'];
 			$TableResult[$numshops]['qty_bag_l'] = $myrow['qty_bag_l'];
 			$TableResult[$numshops]['qty_bag_m'] = $myrow['qty_bag_m'];
 			$TableResult[$numshops]['qty_bag_s'] = $myrow['qty_bag_s'];
@@ -1615,6 +1629,7 @@ Updated 3 index in loctransfers
 			$TableResult[$numshops]['qty_shopping_m'] = $myrow['qty_shopping_m'];
 			$TableResult[$numshops]['qty_shopping_s'] = $myrow['qty_shopping_s'];
 
+			$TableResult[$numshops]['ot_bag_xl'] = $myrow['ot_bag_xl'];
 			$TableResult[$numshops]['ot_bag_l'] = $myrow['ot_bag_l'];
 			$TableResult[$numshops]['ot_bag_m'] = $myrow['ot_bag_m'];
 			$TableResult[$numshops]['ot_bag_s'] = $myrow['ot_bag_s'];
@@ -1622,6 +1637,7 @@ Updated 3 index in loctransfers
 			$TableResult[$numshops]['ot_shopping_m'] = $myrow['ot_shopping_m'];
 			$TableResult[$numshops]['ot_shopping_s'] = $myrow['ot_shopping_s'];
 
+			$TableResult[$numshops]['rl_bag_xl'] = $myrow['rl_bag_xl'];
 			$TableResult[$numshops]['rl_bag_l'] = $myrow['rl_bag_l'];
 			$TableResult[$numshops]['rl_bag_m'] = $myrow['rl_bag_m'];
 			$TableResult[$numshops]['rl_bag_s'] = $myrow['rl_bag_s'];
@@ -1634,7 +1650,8 @@ Updated 3 index in loctransfers
 	/* Let's see if we need to show some shops	*/
 	$i = 1;
 	while ($i <= $numshops) {
-		if (($TableResult[$i]['qty_bag_l'] < $TableResult[$i]['rl_bag_l']) OR 
+		if (($TableResult[$i]['qty_bag_xl'] < $TableResult[$i]['rl_bag_xl']) OR 
+			($TableResult[$i]['qty_bag_l'] < $TableResult[$i]['rl_bag_l']) OR 
 			($TableResult[$i]['qty_bag_m'] < $TableResult[$i]['rl_bag_m']) OR 
 			($TableResult[$i]['qty_bag_s'] < $TableResult[$i]['rl_bag_s']) OR 
 			($TableResult[$i]['qty_shopping_l'] < $TableResult[$i]['rl_shopping_l']) OR 
@@ -1661,6 +1678,7 @@ Updated 3 index in loctransfers
 					echo '<table class="selection">';
 					$TableHeader = '<tr>
 										<th>' . _('') . '</th>
+										<th colspan="3">' . _('PouchBag XL') . '</th>
 										<th colspan="3">' . _('PouchBag L') . '</th>
 										<th colspan="3">' . _('PouchBag M') . '</th>
 										<th colspan="3">' . _('PouchBag S') . '</th>
@@ -1690,6 +1708,9 @@ Updated 3 index in loctransfers
 										<th class="ascending">' . _('Needs') . '</th>
 										<th class="ascending">' . _('Transit') . '</th>
 										<th class="ascending">' . _('To Ship') . '</th>
+										<th class="ascending">' . _('Needs') . '</th>
+										<th class="ascending">' . _('Transit') . '</th>
+										<th class="ascending">' . _('To Ship') . '</th>
 										<th class="ascending">' . _('Last Email') . '</th>
 										<th class="ascending">' . _('Action') . '</th>
 									</tr>';
@@ -1699,6 +1720,7 @@ Updated 3 index in loctransfers
 				$k = StartEvenOrOddRow($k);
 
 				// Calculate how many we should ship to the shop...
+				$NeedBagXL = max(0,round(($TableResult[$i]['rl_bag_xl'] * $TableResult[$i]['rlfactorforpackaging']) - $TableResult[$i]['qty_bag_xl'],0));
 				$NeedBagL = max(0,round(($TableResult[$i]['rl_bag_l'] * $TableResult[$i]['rlfactorforpackaging']) - $TableResult[$i]['qty_bag_l'],0));
 				$NeedBagM = max(0,round(($TableResult[$i]['rl_bag_m'] * $TableResult[$i]['rlfactorforpackaging']) - $TableResult[$i]['qty_bag_m'],0));
 				$NeedBagS = max(0,round(($TableResult[$i]['rl_bag_s'] * $TableResult[$i]['rlfactorforpackaging']) - $TableResult[$i]['qty_bag_s'],0));
@@ -1706,6 +1728,7 @@ Updated 3 index in loctransfers
 				$NeedShoppingM = max(0,round(($TableResult[$i]['rl_shopping_m'] * $TableResult[$i]['rlfactorforpackaging']) - $TableResult[$i]['qty_shopping_m'],0));
 				$NeedShoppingS = max(0,round(($TableResult[$i]['rl_shopping_s'] * $TableResult[$i]['rlfactorforpackaging']) - $TableResult[$i]['qty_shopping_s'],0));
 
+				$ToShipBagXL = max(0,$NeedBagXL - $TableResult[$i]['ot_bag_xl']);
 				$ToShipBagL = max(0,$NeedBagL - $TableResult[$i]['ot_bag_l']);
 				$ToShipBagM = max(0,$NeedBagM - $TableResult[$i]['ot_bag_m']);
 				$ToShipBagS = max(0,$NeedBagS - $TableResult[$i]['ot_bag_s']);
@@ -1715,6 +1738,7 @@ Updated 3 index in loctransfers
 
 				$EmailLink = '<a href="' . $RootPath . '/KLPreparePackagingTransferBlink.php?Shop=' . $TableResult[$i]['loccode'] 
 																						. '&Name=' . $TableResult[$i]['locationname'] 
+																						. '&BagXL=' . $ToShipBagXL 
 																						. '&BagL=' . $ToShipBagL 
 																						. '&BagM=' . $ToShipBagM 
 																						. '&BagS=' . $ToShipBagS 
@@ -1742,10 +1766,16 @@ Updated 3 index in loctransfers
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
 						<td>%s</td>
 						<td>%s</td>
 						</tr>', 
 						$TableResult[$i]['locationname'], 
+						locale_number_format_zero_blank($NeedBagXL, 0),
+						locale_number_format_zero_blank($TableResult[$i]['ot_bag_xl'],0),
+						locale_number_format_zero_blank($ToShipBagXL,0),
 						locale_number_format_zero_blank($NeedBagL, 0),
 						locale_number_format_zero_blank($TableResult[$i]['ot_bag_l'],0),
 						locale_number_format_zero_blank($ToShipBagL,0),

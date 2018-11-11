@@ -37,20 +37,21 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 						$Param8 . " x PKSB02-L (KL ShoppingBag-L)" . "\n\n" . 
 						$Param9 . " x PKSB02-M (KL ShoppingBag-M)" . "\n\n" . 
 						$Param10 . " x PKSB02-S (KL ShoppingBag-S)" . "\n\n" . 
-						"Once ready inform Ike if transfer by car is needed.";
+						"Once ready inform Kantor Manager if transfer by car is needed.";
 			$EmailAddress = "kl-shopsupport@kapal-laut.com";
 			break;
 		/* PREPARE BLINK PACKAGING TRANSFER EMAILS */
 		case "SendBlinkPackagingToShop":
 			$EmailSubject = "Prepare BLINK packaging transfer for: ". $Param1;
 			$EmailText = $EmailSubject . "\n\n" . 
-						$Param2 . " x PKPB03-L (BLINK PouchBag-L)" . "\n\n" . 
-						$Param3 . " x PKPB03-M (BLINK PouchBag-M)" . "\n\n" . 
-						$Param4 . " x PKPB03-S (BLINK PouchBag-S)" . "\n\n" . 
-						$Param5 . " x PKSB04-L (BLINK ShoppingBag-L)" . "\n\n" . 
-						$Param6 . " x PKSB04-M (BLINK ShoppingBag-M)" . "\n\n" . 
-						$Param7 . " x PKSB04-S (BLINK ShoppingBag-S)" . "\n\n" . 
-						"Once ready inform Ike if transfer by car is needed.";
+						$Param2 . " x PKPB03-XL (BLINK PouchBag-XL)" . "\n\n" . 
+						$Param3 . " x PKPB03-L (BLINK PouchBag-L)" . "\n\n" . 
+						$Param4 . " x PKPB03-M (BLINK PouchBag-M)" . "\n\n" . 
+						$Param5 . " x PKPB03-S (BLINK PouchBag-S)" . "\n\n" . 
+						$Param6 . " x PKSB04-L (BLINK ShoppingBag-L)" . "\n\n" . 
+						$Param7 . " x PKSB04-M (BLINK ShoppingBag-M)" . "\n\n" . 
+						$Param8 . " x PKSB04-S (BLINK ShoppingBag-S)" . "\n\n" . 
+						"Once ready inform Kantor Manager if transfer by car is needed.";
 			$EmailAddress = "kl-shopsupport@kapal-laut.com";
 			break;
 		/* PREPARE OUTLET PACKAGING TRANSFER EMAILS */
@@ -61,7 +62,7 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 						$Param3 . " x PKPB02-M (OUTLET PouchBag-M)" . "\n\n" . 
 						$Param4 . " x PKPB02-S (OUTLET PouchBag-S)" . "\n\n" . 
 						$Param5 . " x PKSB03   (OUTLET ShoppingBag)" . "\n\n" . 
-						"Once ready inform Ike if transfer by car is needed.";
+						"Once ready inform Kantor Manager if transfer by car is needed.";
 			$EmailAddress = "kl-shopsupport@kapal-laut.com";
 			break;
 		/* CHANGE OF PRICE EMAILS */
@@ -70,7 +71,7 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 			$EmailSubject = "Change of Price procedure just started for item: ". $Param1;
 			$EmailText = $EmailSubject . "\n\n" . 
 						"All existing pieces of the item will return to kantor shortly." . "\n\n" . 
-						"If there is any problem or delay, please email Laia.";
+						"If there is any problem or delay, please email Purchasing manager.";
 			$EmailAddress = "kl-shopsupport@kapal-laut.com";
 			break;
 		case "PrintNewPriceTags":
@@ -102,7 +103,7 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 			$EmailSubject = "Movement to 20% Discount Category procedure just started for item: ". $Param1;
 			$EmailText = $EmailSubject . "\n\n" . 
 						"All existing pieces of the item will return to kantor shortly." . "\n\n" . 
-						"If there is any problem or delay, please email Laia and Memo.";
+						"If there is any problem or delay, please email Shop Support Team Leader";
 			$EmailAddress = "kl-shopsupport@kapal-laut.com";
 			break;
 		case "MoveToDiscount50Started":
@@ -110,7 +111,7 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 			$EmailSubject = "Movement to 50% Discount Category procedure just started for item: ". $Param1;
 			$EmailText = $EmailSubject . "\n\n" . 
 						"All existing pieces of the item will return to kantor shortly." . "\n\n" . 
-						"If there is any problem or delay, please email Laia and Memo.";
+						"If there is any problem or delay, please email Shop Support Team Leader";
 			$EmailAddress = "kl-shopsupport@kapal-laut.com";
 			break;
 		case "MoveToDiscount80Started":
@@ -118,7 +119,7 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 			$EmailSubject = "Movement to 80% Discount Category procedure just started for item: ". $Param1;
 			$EmailText = $EmailSubject . "\n\n" . 
 						"All existing pieces of the item will return to kantor shortly." . "\n\n" . 
-						"If there is any problem or delay, please email Laia and Memo.";
+						"If there is any problem or delay, please email Shop Support Team Leader";
 			$EmailAddress = "kl-shopsupport@kapal-laut.com";
 			break;
 		case "MoveToDiscountFromConsignment":

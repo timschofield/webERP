@@ -233,6 +233,9 @@ if (isset($_POST['OrderItems'])
 					case 'PKSB02-S':
 						$_POST['ShoppingBag02S']++;
 						break;
+					case 'PKPB03-XL':
+						$_POST['BlinkPouchBag03XL']++;
+						break;
 					case 'PKPB03-L':
 						$_POST['BlinkPouchBag03L']++;
 						break;
@@ -1341,6 +1344,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		}
 		
 		if ($_SESSION['TypeLoc'] == "SHOPBL"){
+			AdjustPackagingMovement("PKPB03-XL", $_POST['BlinkPouchBag03XL'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
 			AdjustPackagingMovement("PKPB03-L", $_POST['BlinkPouchBag03L'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
 			AdjustPackagingMovement("PKPB03-M", $_POST['BlinkPouchBag03M'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);
 			AdjustPackagingMovement("PKPB03-S", $_POST['BlinkPouchBag03S'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db);

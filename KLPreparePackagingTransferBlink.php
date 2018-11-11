@@ -14,7 +14,8 @@ if (!isset($_GET['Shop'])){
 	exit;
 }
 
-KLSendEmail("SendBlinkPackagingToShop", "ShortConfirmation", $_GET['Name'], $_GET['BagL'], 
+KLSendEmail("SendBlinkPackagingToShop", "ShortConfirmation", $_GET['Name'], $_GET['BagXL'], 
+																	   $_GET['BagL'], 
 																	   $_GET['BagM'], 
 																	   $_GET['BagS'],
 																	   $_GET['ShoppingL'],
