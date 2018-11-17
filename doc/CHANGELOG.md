@@ -15,6 +15,7 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 
 | Description | Type | Author | Date | Details | Ref |
 |:-----------:|:----:|:------:|:----:|:-------:|:---:|
+| Add units column to PDFWOPrint.php | Changed | Paul Becker | 2018-11-17 | [View](https://github.com/webERP-team/webERP/commit/f9ee93b083d34e7d21e2ee3bbb861ac0f0d649cd) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8231) |
 | Fix rounding of shrink factor in Stocks.php | Fixed | Paul Becker | 2018-11-10 | [View](https://github.com/webERP-team/webERP/commit/) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8240) |
 | PDFWOPrint.php: Fix notices, reported in the forums by William Hunter | Fixed | PaulT | 2018-11-06 | [View](https://github.com/webERP-team/webERP/commit/9786f3a5c05b3be1c26827b35ca92f62485d77ee) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8233) |
 | New script to enter timeshees with the new table timesheets| Added | Phil | 2018-10-28 |  |  |
