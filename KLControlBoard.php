@@ -344,7 +344,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('111121105AD', 
-									'111203010AD')", "Total Banks PT.ADU", 1000000000, 4000000000, $periodnow, $db);
+									'111203010AD')", "Total Banks PT.ADU", 1000000000, 9000000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('111121100PT', 
@@ -383,7 +383,7 @@ if ($ProcessSection01){
 		OR $KL_AdministrationTeam){
 		BalanceAccountControl("111121100PI",  1000000,  50000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-// Bank Danamon IK not opened yet
+// Bank Danamon PI not opened yet
 //		BalanceAccountControl("111121105PI",  1000000,  50000000, $periodnow, $db);
 //		$NumberOfTestExecuted++;
 		BalanceAccountControl("111121110PI",  1000000,  50000000, $periodnow, $db);
