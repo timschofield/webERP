@@ -287,13 +287,15 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 	$PageNumber = 1;
 	$FooterPrintedInPage = 0;
 	if ($SelectedWO != 'Preview') { // It is a real order
+		$IssuedAlreadyRow = array();
 		$ErrMsg = _('There was a problem retrieving the line details for order number') . ' ' . $SelectedWO . ' ' . _('from the database');
 		$RequirmentsResult = DB_query("SELECT worequirements.stockid,
 										stockmaster.description,
 										stockmaster.decimalplaces,
 										autoissue,
 										qtypu,
-										controlled
+										controlled,
+										units
 									FROM worequirements INNER JOIN stockmaster
 									ON worequirements.stockid=stockmaster.stockid
 									WHERE wo='" . $SelectedWO . "'
@@ -311,9 +313,9 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		$WOLine=array();
 		while ($RequirementsRow = DB_fetch_array($RequirmentsResult)){
 			if ($RequirementsRow['autoissue']==0){
-				$WOLine[$i][action]='Manual Issue';
+				$WOLine[$i]['action']='Manual Issue';
 			} else {
-				$WOLine[$i][action]='Auto Issue';
+				$WOLine[$i]['action']='Auto Issue';
 			}
 			if (isset($IssuedAlreadyRow[$RequirementsRow['stockid']])){
 				$Issued = $IssuedAlreadyRow[$RequirementsRow['stockid']];
@@ -327,6 +329,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 			$WOLine[$i]['qtyreqd'] = $WOHeader['qtyreqd']*$RequirementsRow['qtypu'];
 			$WOLine[$i]['issued'] = $Issued  ;
 			$WOLine[$i]['decimalplaces'] = $RequirementsRow['decimalplaces'];
+			$WOLine[$i]['units'] = $RequirementsRow['units'];
 			$i+=1;
 		}
 		/* Now do any additional issues of items not in the BOM */
@@ -335,7 +338,8 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 			$RequirementsSQL = "SELECT stockid,
 							description,
 							decimalplaces,
-							controlled
+							controlled,
+							units
 					FROM stockmaster WHERE stockid IN ('".$AdditionalStocks."')";
 			$RequirementsResult = DB_query($RequirementsSQL);
 			$AdditionalStocks = array();
@@ -347,6 +351,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 				$WOLine[$i]['qtyreqd'] = 0;
 				$WOLine[$i]['issued'] = $IssuedAlreadyRow[$myrow['stockid']];
 				$WOLine[$i]['decimalplaces'] = $RequirementsRow['decimalplaces'];
+				$WOLine[$i]['units'] = $RequirementsRow['units'];
 				$i+=1;
 			}
 		}
@@ -365,6 +370,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 				$WOLine[$i]['qtyreqd'] = 9999999.99;
 				$WOLine[$i]['issued'] = 9999999.99;
 				$WOLine[$i]['decimalplaces'] = 2;
+				$WOLine[$i]['units'] = 'ea';
 			}
 			if ($WOLine[$i]['decimalplaces'] != NULL) {
 				$DecimalPlaces = $WOLine[$i]['decimalplaces'];
@@ -377,6 +383,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column3->x, $YPos, $FormDesign->Data->Column3->Length, $FormDesign->Data->Column3->FontSize, $WOLine[$i]['description'], 'left');
 			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column4->x, $YPos, $FormDesign->Data->Column4->Length, $FormDesign->Data->Column4->FontSize, locale_number_format($WOLine[$i]['qtyreqd'],$WOLine[$i]['decimalplaces']), 'right');
 			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column5->x, $YPos, $FormDesign->Data->Column5->Length, $FormDesign->Data->Column5->FontSize, locale_number_format($WOLine[$i]['issued'],$WOLine[$i]['decimalplaces']), 'right');
+			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column6->x, $YPos, $FormDesign->Data->Column6->Length, $FormDesign->Data->Column6->FontSize, $WOLine[$i]['units'], 'left');
 
 			$YPos -= $line_height;
 			if ($YPos - (2*$line_height) <= $Page_Height - $FormDesign->Comments->y) {
@@ -473,7 +480,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		} //end if need a new page headed up
 	} /*end if there are order details to show on the order - or its a preview*/
 	if($FooterPrintedInPage == 0){
-			$Http = $_SERVER['HTTPS']?'https://':'http://';
+			$Http = !empty($_SERVER['HTTPS']) ? 'https://' : 'http://';
 			$BaseURL = $Http . $_SERVER['HTTP_HOST'] . $RootPath;
 			$pdf->write2DBarcode($BaseURL.'/WorkOrderIssue.php?WO='.$SelectedWO.'&StockID='.$StockID,'QRCODE,H',60,650,100,100,'','N');
 			$pdf->write2DBarcode($StockID,'QRCODE,H',260,650,100,100,'','N');
