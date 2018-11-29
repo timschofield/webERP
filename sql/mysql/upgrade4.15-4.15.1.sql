@@ -55,7 +55,7 @@ CREATE TABLE `timesheets` (
   `day5` double NOT NULL default 0,
   `day6` double NOT NULL default 0,
   `day7` double NOT NULL default 0,
-  `status` tinyint(4) NOT NULL default 0,
+  `status` tinyint(4) NOT NULL default 0 COMMENT '0=entered 1=submitted 2=approved',
   KEY `workcentre` (`workcentre`),
   KEY `employees` (`employeeid`),
   KEY `wo` (`wo`),
