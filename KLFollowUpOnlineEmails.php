@@ -735,10 +735,10 @@ function ShowBankDetails ($Currency, $OrderNo) {
 		$AccountNumber = '1450011000102';
 		$SwiftCode = 'BMRIIDJA';
 	}else{
-		$BankName = 'Bank Danamon Indonesia';
+		$BankName = 'Bank Mandiri';
 		$BankBeneficiary = 'PT Bumi Biru';
-		$AccountNumber = '3568005601';
-		$SwiftCode = 'BDINIDJA';
+		$AccountNumber = '1450011000102';
+		$SwiftCode = 'BMRIIDJA';
 	} 
 	$Showresult = '<table border="1">
 				<tr>
