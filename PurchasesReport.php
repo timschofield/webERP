@@ -1,21 +1,29 @@
 <?php
-/* Shows a report of purchases from suppliers for the range of selected dates. */
-/* This program is under the GNU General Public License, last version. Rafael E. Chacón, 2016-12-18. */
-/* This creative work is under the CC BY-NC-SA, later version. Rafael E. Chacón, 2016-12-18. */
+// PurchasesReport.php
+// Shows a report of purchases from suppliers for the range of selected dates.
+// This program is under the GNU General Public License, last version. 2016-12-18.
+// This creative work is under the CC BY-NC-SA, last version. 2016-12-18.
 
 // Notes:
 // Coding Conventions/Style: http://www.weberp.org/CodingConventions.html
 
-// BEGIN: Functions division ---------------------------------------------------
-// END: Functions division -----------------------------------------------------
+/*
+This script is "mirror-symmetric" to script SalesReport.php
+*/
 
-// BEGIN: Procedure division ---------------------------------------------------
 include('includes/session.php');
 $Title = _('Purchases from Suppliers');
 $ViewTopic = 'PurchaseOrdering';
 $BookMark = 'PurchasesReport';
-include('includes/header.php');
 
+// BEGIN Functions division ====================================================
+// END Functions division ======================================================
+
+// BEGIN Data division =========================================================
+// END Data division ===========================================================
+
+// BEGIN Procedure division ====================================================
+include('includes/header.php');
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/reports.png" title="', // Icon image.
 	$Title, '" /> ', // Icon title.
@@ -28,7 +36,7 @@ if(isset($_GET['PeriodFrom'])) {// Select period from.
 if(isset($_GET['PeriodTo'])) {// Select period to.
 	$_POST['PeriodTo'] = $_GET['PeriodTo'];
 }
-if(isset($_GET['ShowDetails'])) {// Show the budget for the period.
+if(isset($_GET['ShowDetails'])) {// Show purchase invoices for the period.
 	$_POST['ShowDetails'] = $_GET['ShowDetails'];
 }
 
@@ -43,12 +51,74 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo'])) {
 }
 
 // Main code:
-if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action']!='New') {// If all parameters are set and valid, generates the report:
+if(!isset($_POST['PeriodFrom']) OR !isset($_POST['PeriodTo']) OR $_POST['Action']=='New') {
+	// If one or more parameters are not set or it is a new report, shows a form to allow input of criteria for the report to generate:
+	echo
+		'<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
+		'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />',
+		// Input table:
+		'<table class="selection">',
+		// Content of the header and footer of the input table:
+		'<thead>
+			<tr>
+				<th colspan="2">', _('Report Parameters'), '</th>
+			</tr>
+		</thead><tfoot>
+			<tr>
+				<td colspan="2">',
+					'<div class="centre">',
+						'<button name="Action" type="submit" value="', _('Submit'), '"><img alt="" src="', $RootPath, '/css/', $Theme,
+							'/images/tick.svg" /> ', _('Submit'), '</button>', // "Submit" button.
+						'<button onclick="window.location=\'index.php?Application=PO\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
+							'/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
+					'</div>',
+				'</td>
+			</tr>
+		</tfoot><tbody>',
+		// Content of the body of the input table:
+			// Select period from:
+			'<tr>',
+				'<td><label for="PeriodFrom">', _('Period from'), '</label></td>';
+	if(!isset($_POST['PeriodFrom'])) {
+		$_POST['PeriodFrom'] = date($_SESSION['DefaultDateFormat'], strtotime("-1 year", time()));// One year before current date.
+	}
+	echo 		'<td><input class="date" id="PeriodFrom" maxlength="10" name="PeriodFrom" required="required" size="11" type="text" value="', $_POST['PeriodFrom'], '" />',
+					'<span class="field_help_text">',
+					(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Select the beginning of the reporting period') : ''), // If it is not set the $_SESSION['ShowFieldHelp'] parameter OR it is TRUE, shows the page help text.
+					'</span>',
+		 		'</td>
+			</tr>',
+			// Select period to:
+			'<tr>',
+				'<td><label for="PeriodTo">', _('Period to'), '</label></td>';
+	if(!isset($_POST['PeriodTo'])) {
+		$_POST['PeriodTo'] = date($_SESSION['DefaultDateFormat']);
+	}
+	echo 		'<td><input class="date" id="PeriodTo" maxlength="10" name="PeriodTo" required="required" size="11" type="text" value="', $_POST['PeriodTo'], '" />',
+					'<span class="field_help_text">',
+					(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Select the end of the reporting period') : ''), // If it is not set the $_SESSION['ShowFieldHelp'] parameter OR it is TRUE, shows the page help text.
+					'</span>',
+		 		'</td>
+			</tr>',
+			// Show the budget for the period:
+			'<tr>',
+			 	'<td><label for="ShowDetails">', _('Show details'), '</label></td>',
+			 	'<td>',
+				 	'<input', (isset($_POST['ShowDetails']) && $_POST['ShowDetails'] ? ' checked="checked"' : ''), ' id="ShowDetails" name="ShowDetails" type="checkbox">', // If $_POST['ShowDetails'] is set AND it is TRUE, shows this input checked.
+				 	'<span class="field_help_text">',
+			 		(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Check this box to show purchase invoices') : ''), // If it is not set the $_SESSION['ShowFieldHelp'] parameter OR it is TRUE, shows the page help text.
+			 		'</span>',
+		 		'</td>
+			</tr>',
+		 '</tbody></table>';
+} else {
+	// If all parameters are set and valid, generates the report:
 	echo '<p>', _('Period from'), ': ', $_POST['PeriodFrom'],
 		'<br />', _('Period to'), ': ', $_POST['PeriodTo'], '</p>',
 		'<table class="selection">
 		<thead>
 			<tr>';
+	// $CommonHead is the common table head between ShowDetails=off and ShowDetails=on:
 	$CommonHead =
 				'<th>' . _('Original Overall Amount') . '</th>' .
 				'<th>' . _('Original Overall Taxes') . '</th>' .
@@ -56,15 +126,15 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 				'<th>' . _('GL Overall Amount') . '</th>' .
 				'<th>' . _('GL Overall Taxes') . '</th>' .
 				'<th>' . _('GL Overall Total') . '</th>' .
-			'</tr>
-		</thead><tfoot>
-			<tr>
-				<td colspan="9"><br /><b>' .
+			'</tr>' .
+		'</thead><tfoot>' .
+			'<tr>' .
+				'<td colspan="9"><br /><b>' .
 					_('Notes') . '</b><br />' .
 					_('Original amounts in the supplier\'s currency. GL amounts in the functional currency.') .
-				'</td>
-			</tr>
-		</tfoot><tbody>';// Common table head between ShowDetails=off and ShowDetails=on.
+				'</td>' .
+			'</tr>' .
+		'</tfoot><tbody>';
 	$TotalGlAmount = 0;
 	$TotalGlTax = 0;
 	$PeriodFrom = FormatDateForSQL($_POST['PeriodFrom']);
@@ -74,6 +144,8 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 					'<th>', _('Purchase Invoice'), '</th>',
 					'<th>', _('Reference'), '</th>',
 					$CommonHead;
+		// Includes $CurrencyName array with currency three-letter alphabetic code and name based on ISO 4217:
+		include('includes/CurrenciesArray.php');
 		$SupplierId = '';
 		$SupplierOvAmount = 0;
 		$SupplierOvTax = 0;
@@ -96,7 +168,6 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 					AND supptrans.`type`=20
 				ORDER BY supptrans.supplierno, supptrans.trandate";
 		$Result = DB_query($Sql);
-		include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
 		foreach($Result as $MyRow) {
 			if($MyRow['supplierno'] != $SupplierId) {// If different, prints supplier totals:
 				if($SupplierId != '') {// If NOT the first line.
@@ -194,12 +265,13 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 			$TotalGlTax += $MyRow['SupplierGlTax'];
 		}
 	}
+	// Prints all suppliers total:
 	echo	'<tr>
 				<td class="text" colspan="6">&nbsp;</td>
 				<td class="number">', locale_number_format($TotalGlAmount, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
 				<td class="number">', locale_number_format($TotalGlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
 				<td class="number">', locale_number_format($TotalGlAmount+$TotalGlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
-			</tr>',// Prints all suppliers total.
+			</tr>',
 		'</tbody></table>
 		<br />
 		<form action="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '" method="post">
@@ -215,70 +287,8 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 			'<button onclick="window.location=\'index.php?Application=PO\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
 				'/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
 		'</div>';
-
-} else {
-	// Shows a form to allow input of criteria for the report to generate:
-	echo '<br />',
-		'<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
-		'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />',
-		// Input table:
-		'<table class="selection">',
-		// Content of the header and footer of the input table:
-		'<thead>
-			<tr>
-				<th colspan="2">', _('Report Parameters'), '</th>
-			</tr>
-		</thead><tfoot>
-			<tr>
-				<td colspan="2">',
-					'<div class="centre">',
-						'<button name="Action" type="submit" value="', _('Submit'), '"><img alt="" src="', $RootPath, '/css/', $Theme,
-							'/images/tick.svg" /> ', _('Submit'), '</button>', // "Submit" button.
-						'<button onclick="window.location=\'index.php?Application=PO\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
-							'/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
-					'</div>',
-				'</td>
-			</tr>
-		</tfoot><tbody>',
-		// Content of the body of the input table:
-			// Select period from:
-			'<tr>',
-				'<td><label for="PeriodFrom">', _('Period from'), '</label></td>';
-	if(!isset($_POST['PeriodFrom'])) {
-		$_POST['PeriodFrom'] = date($_SESSION['DefaultDateFormat'], strtotime("-1 year", time()));// One year before current date.
-	}
-	echo 		'<td><input class="date" id="PeriodFrom" maxlength="10" name="PeriodFrom" required="required" size="11" type="text" value="', $_POST['PeriodFrom'], '" />',
-					'<span class="field_help_text">',
-					(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Select the beginning of the reporting period') : ''), // If it is not set the $_SESSION['ShowFieldHelp'] parameter OR it is TRUE, shows the page help text.
-					'</span>',
-		 		'</td>
-			</tr>',
-			// Select period to:
-			'<tr>',
-				'<td><label for="PeriodTo">', _('Period to'), '</label></td>';
-	if(!isset($_POST['PeriodTo'])) {
-		$_POST['PeriodTo'] = date($_SESSION['DefaultDateFormat']);
-	}
-	echo 		'<td><input class="date" id="PeriodTo" maxlength="10" name="PeriodTo" required="required" size="11" type="text" value="', $_POST['PeriodTo'], '" />',
-					'<span class="field_help_text">',
-					(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Select the end of the reporting period') : ''), // If it is not set the $_SESSION['ShowFieldHelp'] parameter OR it is TRUE, shows the page help text.
-					'</span>',
-		 		'</td>
-			</tr>',
-			// Show the budget for the period:
-			'<tr>',
-			 	'<td><label>', _('Show details'), '</label></td>',
-			 	'<td>',
-				 	'<input', (isset($_POST['ShowDetails']) && $_POST['ShowDetails'] ? ' checked="checked"' : ''), ' name="ShowDetails" type="checkbox">', // If $_POST['ShowDetails'] is set AND it is TRUE, shows this input checked.
-				 	'<span class="field_help_text">',
-			 		(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Check this box to show purchase invoices') : ''), // If it is not set the $_SESSION['ShowFieldHelp'] parameter OR it is TRUE, shows the page help text.
-			 		'</span>',
-		 		'</td>
-			</tr>',
-		 '</tbody></table>';
-
 }
 echo	'</form>';
 include('includes/footer.php');
-// END: Procedure division -----------------------------------------------------
+// END Procedure division ======================================================
 ?>
