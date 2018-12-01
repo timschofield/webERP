@@ -182,7 +182,7 @@ if(!isset($_POST['PeriodFrom']) OR !isset($_POST['PeriodTo']) OR $_POST['Action'
 						'</tr>';
 				}
 				echo '<tr><td colspan="9">&nbsp;</td></tr>';
-				echo '<tr><td class="text" colspan="9">', $MyRow['supplierno'], ' - ', $MyRow['suppname'], ' - ', $MyRow['currcode'], ' ', $CurrencyName[$MyRow['currcode']], '</td></tr>';
+				echo '<tr><td class="text" colspan="9"><a href="', $RootPath, '/SupplierInquiry.php?SupplierID=', $MyRow['supplierno'], '">', $MyRow['supplierno'], ' - ', $MyRow['suppname'], '</a> - ', $MyRow['currcode'], ' ', $CurrencyName[$MyRow['currcode']], '</td></tr>';
 				$TotalGlAmount += $SupplierGlAmount;
 				$TotalGlTax += $SupplierGlTax;
 				$SupplierId = $MyRow['supplierno'];
@@ -250,9 +250,9 @@ if(!isset($_POST['PeriodFrom']) OR !isset($_POST['PeriodTo']) OR $_POST['Action'
 				ORDER BY supptrans.supplierno, supptrans.trandate";
 		$Result = DB_query($Sql);
 		foreach($Result as $MyRow) {
-			echo '<tr class="striped_row">
-					<td class="text"><a href="', $RootPath, '/SupplierInquiry.php?SupplierID=', $MyRow['supplierno'], '">', $MyRow['supplierno'], '</a></td>',
-					'<td class="text">', $MyRow['suppname'], '</td>',
+			echo '<tr class="striped_row">',
+					'<td class="text">', $MyRow['supplierno'], '</td>',
+					'<td class="text"><a href="', $RootPath, '/SupplierInquiry.php?SupplierID=', $MyRow['supplierno'], '">', $MyRow['suppname'], '</a></td>',
 					'<td class="text">', $MyRow['currcode'], '</td>',
 					'<td class="number">', locale_number_format($MyRow['SupplierOvAmount'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
 					'<td class="number">', locale_number_format($MyRow['SupplierOvTax'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
