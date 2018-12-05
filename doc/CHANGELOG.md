@@ -15,7 +15,8 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 
 | Description | Type | Author | Date | Details | Ref |
 |:-----------:|:----:|:------:|:----:|:-------:|:---:|
-|  Fix RTL images  | Fixed | Rafael Chacón |2018-12-05| Fix of right-to-left language images. |   |
+| Fix images call | Fixed | Rafael Chacón |2018-12-05| Fixed calls to old PNG images. |   |
+| Fix RTL images | Fixed | Rafael Chacón |2018-12-05| Fix of right-to-left language images. |   |
 | Fix the size of some images | Fixed | Rafael Chacón |2018-12-05| Fix the size of some SVG images, adjusting the height and the width in the svg tag. |   |
 | Per David Shaw Alter all date and datetime fields to have valid defaults '1000-01-01' as '0000-00-00' no longer acceptable | Changed | Phil | 2018-12-01 | [View](https://github.com/webERP-team/webERP/commit/f9ee93b083d34e7d21e2ee3bbb861ac0f0d649cd) |  |
 | Add units column to PDFWOPrint.php | Changed | Paul Becker | 2018-11-17 | [View](https://github.com/webERP-team/webERP/commit/f9ee93b083d34e7d21e2ee3bbb861ac0f0d649cd) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8231) |
