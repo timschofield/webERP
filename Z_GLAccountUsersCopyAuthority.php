@@ -1,10 +1,12 @@
 <?php
-/* Utility to copy authority of GL accounts from one user to another */
+// Z_GLAccountUsersCopyAuthority.php
+// Utility to copy authority of GL accounts from one user to another.
 
 include('includes/session.php');
 $Title = _('GLAccount - Users Authority Copy Authority');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = 'Z_GLAccountUsersCopyAuthority';
+
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
