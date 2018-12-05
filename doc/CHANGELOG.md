@@ -15,7 +15,8 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 
 | Description | Type | Author | Date | Details | Ref |
 |:-----------:|:----:|:------:|:----:|:-------:|:---:|
-| Delete unneeded images | Fixed | Rafael Chacón |2018-12-05| Delete old PNG images (cross.png, next.png, previous.png, return.png, tick.png) that have been replaced by SVG (Scalable Vector Graphics) images. |   |
+| Add page_info_text class | Added | Rafael Chacón |2018-12-05| Add the page_info_text class that is not hidden/displayed by the ShowPageHelp parameter. |   |
+| Delete unneeded images | Removed | Rafael Chacón |2018-12-05| Delete old PNG images (cross.png, next.png, previous.png, return.png, tick.png) that have been replaced by SVG (Scalable Vector Graphics) images. |   |
 | Fix images call | Fixed | Rafael Chacón |2018-12-05| Fix calls to old PNG images. |   |
 | Fix RTL images | Fixed | Rafael Chacón |2018-12-05| Fix of right-to-left language images. |   |
 | Fix the size of some images | Fixed | Rafael Chacón |2018-12-05| Fix the size of some SVG images, adjusting the height and the width in the svg tag. |   |
