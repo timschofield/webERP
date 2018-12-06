@@ -735,7 +735,7 @@ if($_POST['ShowDashboard']==0) {
 }
 echo '</select>',
 		'<span class="field_help_text">',
-			_('Show dashboard page after login'), // If the parameter $_SESSION['ShowFieldHelp'] is not set OR is TRUE, shows this field help text.
+			_('Show dashboard page after login'), // If the $_SESSION['ShowFieldHelp'] parameter is not set OR is TRUE, shows this field help text.
 		'</span>',
 		'</td>
 	</tr>';
@@ -752,7 +752,7 @@ if($_POST['ShowPageHelp']==0) {
 }
 echo '</select>',
 		'<span class="field_help_text">',
-			_('Show page help when available'), // If the parameter $_SESSION['ShowFieldHelp'] is not set OR is TRUE, shows this field help text.
+			_('Show page help when available'), // If the $_SESSION['ShowFieldHelp'] parameter is not set OR is TRUE, shows this field help text.
 		'</span>',
 		'</td>
 	</tr>';
@@ -769,7 +769,7 @@ if($_POST['ShowFieldHelp']==0) {
 }
 echo '</select>',
 		'<span class="field_help_text">',
-			_('Show field help when available'), // If the parameter $_SESSION['ShowFieldHelp'] is not set OR is TRUE, shows this field help text.
+			_('Show field help when available'), // If the $_SESSION['ShowFieldHelp'] parameter is not set OR is TRUE, shows this field help text.
 		'</span>',
 		'</td>
 	</tr>';

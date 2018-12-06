@@ -477,7 +477,7 @@ If (isset($_POST['PrintPDF'])) {
 	 		'<td>',
 				'<input',(($_POST['ShowObsolete']) ? ' checked="checked"' : ''), ' id="ShowObsolete" name="ShowObsolete" type="checkbox" />', // "Checked" if ShowObsolete is TRUE.
 				'<span class="field_help_text">',
-					_('Check this box to show the obsolete items'), // If the parameter $_SESSION['ShowFieldHelp'] is not set OR is TRUE, shows this field help text.
+					_('Check this box to show the obsolete items'), // If the $_SESSION['ShowFieldHelp'] parameter is not set OR is TRUE, shows this field help text.
 				'</span>',
 			'</td>',
 	 	'</tr>',
@@ -488,7 +488,7 @@ If (isset($_POST['PrintPDF'])) {
 				'<input checked="checked" id="ItemOrder" name="ItemOrder" type="radio" value="Code">', _('Currency, category and code'), '<br>',
 				'<input name="ItemOrder" type="radio" value="Description">', _('Currency, category and description'), '<br>',
 				'<span class="field_help_text">',
-					_('Select the order of the items in the report'), // If the parameter $_SESSION['ShowFieldHelp'] is not set OR is TRUE, shows this field help text.
+					_('Select the order of the items in the report'), // If the $_SESSION['ShowFieldHelp'] parameter is not set OR is TRUE, shows this field help text.
 				'</span>',
 			'</td>',
 	 	'</tr>',
