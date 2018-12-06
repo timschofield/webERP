@@ -84,7 +84,7 @@ if(!isset($_POST['PeriodFrom']) OR !isset($_POST['PeriodTo']) OR $_POST['Action'
 	}
 	echo 		'<td><input class="date" id="PeriodFrom" maxlength="10" name="PeriodFrom" required="required" size="11" type="text" value="', $_POST['PeriodFrom'], '" />',
 					'<span class="field_help_text">',
-					(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Select the beginning of the reporting period') : ''), // If it is not set the $_SESSION['ShowFieldHelp'] parameter OR it is TRUE, shows the page help text.
+						_('Select the beginning of the reporting period'), // If $_SESSION['ShowFieldHelp'] is not set OR it is TRUE, shows the page help text.
 					'</span>',
 		 		'</td>
 			</tr>',
@@ -96,7 +96,7 @@ if(!isset($_POST['PeriodFrom']) OR !isset($_POST['PeriodTo']) OR $_POST['Action'
 	}
 	echo 		'<td><input class="date" id="PeriodTo" maxlength="10" name="PeriodTo" required="required" size="11" type="text" value="', $_POST['PeriodTo'], '" />',
 					'<span class="field_help_text">',
-					(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Select the end of the reporting period') : ''), // If it is not set the $_SESSION['ShowFieldHelp'] parameter OR it is TRUE, shows the page help text.
+						_('Select the end of the reporting period'), // If $_SESSION['ShowFieldHelp'] is not set OR it is TRUE, shows the page help text.
 					'</span>',
 		 		'</td>
 			</tr>',
@@ -106,7 +106,7 @@ if(!isset($_POST['PeriodFrom']) OR !isset($_POST['PeriodTo']) OR $_POST['Action'
 			 	'<td>',
 				 	'<input', (isset($_POST['ShowDetails']) && $_POST['ShowDetails'] ? ' checked="checked"' : ''), ' id="ShowDetails" name="ShowDetails" type="checkbox">', // If $_POST['ShowDetails'] is set AND it is TRUE, shows this input checked.
 				 	'<span class="field_help_text">',
-			 		(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Check this box to show purchase invoices') : ''), // If it is not set the $_SESSION['ShowFieldHelp'] parameter OR it is TRUE, shows the page help text.
+				 		_('Check this box to show purchase invoices'), // If $_SESSION['ShowFieldHelp'] is not set OR it is TRUE, shows the page help text.
 			 		'</span>',
 		 		'</td>
 			</tr>',
