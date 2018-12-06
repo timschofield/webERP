@@ -825,7 +825,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 	}
 	echo			'</select>',
 					'<span class="field_help_text">',
-						_('Select the beginning of the reporting period'), // If the $_SESSION['ShowFieldHelp'] parameter is not set OR it is TRUE, shows the page help text.
+						_('Select the beginning of the reporting period'), // If $_SESSION['ShowFieldHelp'] is not set OR it is TRUE, shows the page help text.
 					'</span>',
 		 		'</td>
 			</tr>',
@@ -842,7 +842,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 	}
 	echo			'</select>',
 					'<span class="field_help_text">',
-						_('Select the end of the reporting period'), // If the $_SESSION['ShowFieldHelp'] parameter is not set OR it is TRUE, shows the page help text.
+						_('Select the end of the reporting period'), // If $_SESSION['ShowFieldHelp'] is not set OR it is TRUE, shows the page help text.
 					'</span>',
 		 		'</td>
 			</tr>';
@@ -866,7 +866,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 			 	'<td><label for="ShowBudget">', _('Show the budget for the period'), '</label></td>
 			 	<td><input',($_POST['ShowBudget'] ? ' checked="checked"' : ''), ' id="ShowBudget" name="ShowBudget" type="checkbox">', // "Checked" if ShowBudget is set AND it is TRUE.
 			 		'<span class="field_help_text">',
-			 			_('Check this box to show the budget for the period'), // If the $_SESSION['ShowFieldHelp'] parameter is not set OR it is TRUE, shows the page help text.
+			 			_('Check this box to show the budget for the period'), // If $_SESSION['ShowFieldHelp'] is not set OR it is TRUE, shows the page help text.
 					'</span>',
 		 		'</td>
 			</tr>',
@@ -875,7 +875,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 				'<td><label for="ShowZeroBalance">', _('Show accounts with zero balance'), '</label></td>
 			 	<td><input',(isset($_POST['ShowZeroBalance']) && $_POST['ShowZeroBalance'] ? ' checked="checked"' : ''), ' id="ShowZeroBalance" name="ShowZeroBalance" type="checkbox">', // "Checked" if ShowZeroBalance is set AND it is TRUE.
 					'<span class="field_help_text">',
-						_('Check this box to show all accounts including those with zero balance'), // If the $_SESSION['ShowFieldHelp'] parameter is not set OR it is TRUE, shows the page help text.
+						_('Check this box to show all accounts including those with zero balance'), // If $_SESSION['ShowFieldHelp'] is not set OR it is TRUE, shows the page help text.
 					'</span>',
 		 		'</td>
 			</tr>',
@@ -884,7 +884,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 			 	'<td><label for="ShowCash">', _('Show cash and cash equivalents accounts'), '</label></td>
 			 	<td><input',($_POST['ShowCash'] ? ' checked="checked"' : ''), ' id="ShowCash" name="ShowCash" type="checkbox">', // "Checked" if ShowZeroBalance is set AND it is TRUE.
 					'<span class="field_help_text">',
-						_('Check this box to show cash and cash equivalents accounts'), // If the $_SESSION['ShowFieldHelp'] parameter is not set OR it is TRUE, shows the page help text.
+						_('Check this box to show cash and cash equivalents accounts'), // If $_SESSION['ShowFieldHelp'] is not set OR it is TRUE, shows the page help text.
 					'</span>',
 		 		'</td>
 			</tr>',
