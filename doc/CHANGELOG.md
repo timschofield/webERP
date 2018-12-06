@@ -15,6 +15,12 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 
 | Description | Type | Author | Date | Details | Ref |
 |:-----------:|:----:|:------:|:----:|:-------:|:---:|
+| Change field_help_text code (part 1) | Changed | Rafael Chacón |2018-12-06| Simplify the field_help_text code, using in header.php:
+
+if (isset($_SESSION['ShowFieldHelp']) AND !$_SESSION['ShowFieldHelp']) {
+	echo '
+		.field_help_text {display:none;}';
+} |   |
 | Add page_info_text class | Added | Rafael Chacón |2018-12-05| Add the page_info_text class that is not hidden/displayed by the ShowPageHelp parameter. |   |
 | Delete unneeded images | Removed | Rafael Chacón |2018-12-05| Delete old PNG images (cross.png, next.png, previous.png, return.png, tick.png) that have been replaced by SVG (Scalable Vector Graphics) images. |   |
 | Fix images call | Fixed | Rafael Chacón |2018-12-05| Fix calls to old PNG images. |   |
