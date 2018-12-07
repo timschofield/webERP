@@ -15,8 +15,8 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 
 | Description | Type | Author | Date | Details | Ref |
 |:-----------:|:----:|:------:|:----:|:-------:|:---:|
-| Change field_help_text code (part 1) | Changed | Rafael Chacón | 2018-12-06 | Simplify the field_help_text code, using in header.php: if (isset($_SESSION['ShowFieldHelp']) AND !$_SESSION['ShowFieldHelp']) { echo '.field_help_text {display:none;}';} |   |
-| Add page_info_text class | Added | Rafael Chacón | 2018-12-05 | Add the page_info_text class that is not hidden/displayed by the ShowPageHelp parameter. |   |
+| Change field_help_text code (part 1) | Changed | Rafael Chacón | 2018-12-06 | [View](https://github.com/webERP-team/webERP/commit/5b660abb2f2360cfea500ea9cbb5dcfdd4e217be) |   |
+| Add page_info_text class | Added | Rafael Chacón | 2018-12-05 | [View](https://github.com/webERP-team/webERP/commit/06151046399d29d04e37f37c88aa63cc7b235d3f) |   |
 | Delete unneeded images | Removed | Rafael Chacón | 2018-12-05 | [View](https://github.com/webERP-team/webERP/commit/f40435a7891c72e46b77af6fa2b5441a29ce16a3) |   |
 | Fix images call | Fixed | Rafael Chacón | 2018-12-05 | [View](https://github.com/webERP-team/webERP/commit/af967fa3e6c9555693142717f6792dd4044ac516) |   |
 | Fix RTL images | Fixed | Rafael Chacón | 2018-12-05 | [View](https://github.com/webERP-team/webERP/commit/e7c875a7feb35aa5bf0a574a363a7d84b959c063) |   |
