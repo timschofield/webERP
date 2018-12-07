@@ -18,8 +18,8 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 | Change field_help_text code (part 1) | Changed | Rafael Chacón | 2018-12-06 | Simplify the field_help_text code, using in header.php: if (isset($_SESSION['ShowFieldHelp']) AND !$_SESSION['ShowFieldHelp']) { echo '.field_help_text {display:none;}';} |   |
 | Add page_info_text class | Added | Rafael Chacón | 2018-12-05 | Add the page_info_text class that is not hidden/displayed by the ShowPageHelp parameter. |   |
 | Delete unneeded images | Removed | Rafael Chacón | 2018-12-05 | Delete old PNG images (cross.png, next.png, previous.png, return.png, tick.png) that have been replaced by SVG (Scalable Vector Graphics) images. |   |
-| Fix images call | Fixed | Rafael Chacón | 2018-12-05 | Fix calls to old PNG images. |   |
-| Fix RTL images | Fixed | Rafael Chacón | 2018-12-05 | Fix of right-to-left language images. |   |
+| Fix images call | Fixed | Rafael Chacón | 2018-12-05 | [View](https://github.com/webERP-team/webERP/commit/af967fa3e6c9555693142717f6792dd4044ac516) |   |
+| Fix RTL images | Fixed | Rafael Chacón | 2018-12-05 | [View](https://github.com/webERP-team/webERP/commit/e7c875a7feb35aa5bf0a574a363a7d84b959c063) |   |
 | Fix the size of some images | Fixed | Rafael Chacón | 2018-12-05 | Fix the size of some SVG images, adjusting the height and the width in the svg tag. |   |
 | Per David Shaw Alter all date and datetime fields to have valid defaults '1000-01-01' as '0000-00-00' no longer acceptable | Changed | Phil | 2018-12-01 | [View](https://github.com/webERP-team/webERP/commit/f9ee93b083d34e7d21e2ee3bbb861ac0f0d649cd) |  |
 | Standardise PurchasesReport.php | Changed | Rafael Chacón | 2018-11-30 | Standardise PurchasesReport.php to SalesReport.php (one script is "mirror-symmetric" to the other script). |   |
