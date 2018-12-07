@@ -17,13 +17,13 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 |:-----------:|:----:|:------:|:----:|:-------:|:---:|
 | Change field_help_text code (part 1) | Changed | Rafael Chacón | 2018-12-06 | Simplify the field_help_text code, using in header.php: if (isset($_SESSION['ShowFieldHelp']) AND !$_SESSION['ShowFieldHelp']) { echo '.field_help_text {display:none;}';} |   |
 | Add page_info_text class | Added | Rafael Chacón | 2018-12-05 | Add the page_info_text class that is not hidden/displayed by the ShowPageHelp parameter. |   |
-| Delete unneeded images | Removed | Rafael Chacón | 2018-12-05 | Delete old PNG images (cross.png, next.png, previous.png, return.png, tick.png) that have been replaced by SVG (Scalable Vector Graphics) images. |   |
+| Delete unneeded images | Removed | Rafael Chacón | 2018-12-05 | [View](https://github.com/webERP-team/webERP/commit/f40435a7891c72e46b77af6fa2b5441a29ce16a3) |   |
 | Fix images call | Fixed | Rafael Chacón | 2018-12-05 | [View](https://github.com/webERP-team/webERP/commit/af967fa3e6c9555693142717f6792dd4044ac516) |   |
 | Fix RTL images | Fixed | Rafael Chacón | 2018-12-05 | [View](https://github.com/webERP-team/webERP/commit/e7c875a7feb35aa5bf0a574a363a7d84b959c063) |   |
-| Fix the size of some images | Fixed | Rafael Chacón | 2018-12-05 | Fix the size of some SVG images, adjusting the height and the width in the svg tag. |   |
+| Fix the size of some images | Fixed | Rafael Chacón | 2018-12-05 | [View](https://github.com/webERP-team/webERP/commit/fbbd45c81dbf9708dd4bcd4e7de5c7076a9faeaa) |   |
 | Per David Shaw Alter all date and datetime fields to have valid defaults '1000-01-01' as '0000-00-00' no longer acceptable | Changed | Phil | 2018-12-01 | [View](https://github.com/webERP-team/webERP/commit/f9ee93b083d34e7d21e2ee3bbb861ac0f0d649cd) |  |
 | Standardise PurchasesReport.php | Changed | Rafael Chacón | 2018-11-30 | Standardise PurchasesReport.php to SalesReport.php (one script is "mirror-symmetric" to the other script). |   |
-| Add SalesReport.php | Added | Rafael Chacón | 2018-11-30 | [View](https://github.com/webERP-team/webERP/commit/8db3875e1304ca2975eca9bd0d79bf0f0cc60c96) |   |
+| Add SalesReport.php | Added | Rafael Chacón | 2018-11-30 | [View](https://github.com/webERP-team/webERP/commit/9dc2c2cf14a4ec2adca40a7923313833a4b62f1a) |   |
 | Add units column to PDFWOPrint.php | Changed | Paul Becker | 2018-11-17 | [View](https://github.com/webERP-team/webERP/commit/f9ee93b083d34e7d21e2ee3bbb861ac0f0d649cd) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8231) |
 | Fix rounding of shrink factor in Stocks.php | Fixed | Paul Becker | 2018-11-10 | [View](https://github.com/webERP-team/webERP/commit/) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8240) |
 | PDFWOPrint.php: Fix notices, reported in the forums by William Hunter | Fixed | PaulT | 2018-11-06 | [View](https://github.com/webERP-team/webERP/commit/9786f3a5c05b3be1c26827b35ca92f62485d77ee) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8233) |
