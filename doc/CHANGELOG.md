@@ -54,29 +54,29 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 | Description | Type | Author | Date | Details | Ref |
 |:-----------:|:----:|:------:|:----:|:-------:|:---:|
 | Upgrade weberpchina.sql file and modify htmlspecialcharts parameter in footer.php |  | Exson Qu | 2018-05-15 | [View](http://github.com/webERP-team/webERP/commit/62a4571fb) |  |
-| Change module alias from "orders" to "Sales" to standardise in MainMenuLinksArray.php |  | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/30115ebda) |  |
-| Groups the INSERT INTO sentences in SQL upgrade script |  | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/7ad7340cc) |  |
-| Various improvements to manual |  | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/cfce65413) |  |
-| Add script description and ViewTopic to SelectPickingLists.php |  | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/62c7a5fb0) |  |
-| Add ViewTopic and BookMark to GeneratePickingList.php |  | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/88a43575f) |  |
-| Add "id" for $BookMark = 'CounterReturns' in ManualSalesOrders.html |  | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/a12be5b00) |  |
-| Add script description, ViewTopic and BookMark in CounterReturns.php |  | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/80243e2d1) |  |
-| Add info to General Ledger manual |  | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/a1c8fac82) |  |
-| Add "id" for $BookMark = 'SelectContract' in SelectContract.php |  | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/fa43031fb) |  |
-| Add "id" for $BookMark = 'SelectContract' in ManualContracts.html |  | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/4d75b86c5) |  |
-| Add 'Bank Account Balances' and 'Graph of Account Transactions' info to manual. Reorganise 'Inquiries and Reports' and 'Maintenance' of 'General Ledger" chapter of manual. |  | Rafael Chacón | 2018-05-07 | [View](http://github.com/webERP-team/webERP/commit/84aa988b3) |  |
-| Add script description and BookMark in BankAccountBalances.php |  | Rafael Chacón | 2018-05-07 | [View](http://github.com/webERP-team/webERP/commit/21ea3ac27) |  |
-| Add section for the "Graph of Account Transactions" script in ManualGeneralLedger.html |  | Rafael Chacón | 2018-05-07 | [View](http://github.com/webERP-team/webERP/commit/078c13a60) |  |
-| Groups "INSERT INTO `scripts`" sentences and completes empty `description` fields in SQL upgrade script |  | Rafael Chacón | 2018-05-07 | [View](http://github.com/webERP-team/webERP/commit/c649a57fb) |  |
-| Add script description, also fix $ViewTopic in GLAccountGraph.php|  | Rafael Chacón | 2018-05-07 | [View](http://github.com/webERP-team/webERP/commit/fdfda2148) |  |
-| Update Spanish translation |  | Rafael Chacón | 2018-05-07 | [View](http://github.com/webERP-team/webERP/commit/41380a6c3) |  |
-| Add script description in PDFShipLabel.php |  | Rafael Chacón | 2018-05-07 | [View](http://github.com/webERP-team/webERP/commit/8e6513bb8) |  |
-| Add script description in PDFAck.php |  | Rafael Chacón | 2018-05-07 | [View](http://github.com/webERP-team/webERP/commit/4cd593557) |  |
-| Add script description in GeneratePickingList.php |  | Rafael Chacón | 2018-05-07 | [View](http://github.com/webERP-team/webERP/commit/4857c4a7e) |  |
-| Add script description, ViewTopic and BookMark in PickingLists.php|  | Rafael Chacón | 2018-05-06 | [View](http://github.com/webERP-team/webERP/commit/aff58aa7d) |  |
-| Rebuild languages files |  | Rafael Chacón | 2018-05-06 | [View](http://github.com/webERP-team/webERP/commit/ca7ee2360) |  |
-| Add script description, ViewTopic and BookMark in SelectPickingLists.php |  | Rafael Chacón | 2018-05-06 | [View](http://github.com/webERP-team/webERP/commit/1c184e09c) |  |
-| Update Spanish translation |  | Rafael Chacón | 2018-05-04 | [View](http://github.com/webERP-team/webERP/commit/511eb2e29) |  |
+| Change module alias from "orders" to "Sales" to standardise in MainMenuLinksArray.php | Changed | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/30115ebda) |  |
+| Groups the INSERT INTO sentences in SQL upgrade script | Changed | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/7ad7340cc) |  |
+| Various improvements to manual | Changed | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/cfce65413) |  |
+| Add script description and ViewTopic to SelectPickingLists.php | Changed | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/62c7a5fb0) |  |
+| Add ViewTopic and BookMark to GeneratePickingList.php | Changed | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/88a43575f) |  |
+| Add "id" for $BookMark = 'CounterReturns' in ManualSalesOrders.html | Changed | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/a12be5b00) |  |
+| Add script description, ViewTopic and BookMark in CounterReturns.php | Changed | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/80243e2d1) |  |
+| Add info to General Ledger manual | Changed | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/a1c8fac82) |  |
+| Add "id" for $BookMark = 'SelectContract' in SelectContract.php | Changed | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/fa43031fb) |  |
+| Add "id" for $BookMark = 'SelectContract' in ManualContracts.html | Changed | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/4d75b86c5) |  |
+| Add 'Bank Account Balances' and 'Graph of Account Transactions' info to manual. Reorganise 'Inquiries and Reports' and 'Maintenance' of 'General Ledger" chapter of manual. | Changed | Rafael Chacón | 2018-05-07 | [View](http://github.com/webERP-team/webERP/commit/84aa988b3) |  |
+| Add script description and BookMark in BankAccountBalances.php | Changed | Rafael Chacón | 2018-05-07 | [View](http://github.com/webERP-team/webERP/commit/21ea3ac27) |  |
+| Add section for the "Graph of Account Transactions" script in ManualGeneralLedger.html | Changed | Rafael Chacón | 2018-05-07 | [View](http://github.com/webERP-team/webERP/commit/078c13a60) |  |
+| Groups "INSERT INTO `scripts`" sentences and completes empty `description` fields in SQL upgrade script | Changed | Rafael Chacón | 2018-05-07 | [View](http://github.com/webERP-team/webERP/commit/c649a57fb) |  |
+| Add script description, also fix $ViewTopic in GLAccountGraph.php| Changed | Rafael Chacón | 2018-05-07 | [View](http://github.com/webERP-team/webERP/commit/fdfda2148) |  |
+| Update Spanish translation | Changed | Rafael Chacón | 2018-05-07 | [View](http://github.com/webERP-team/webERP/commit/41380a6c3) |  |
+| Add script description in PDFShipLabel.php | Changed | Rafael Chacón | 2018-05-07 | [View](http://github.com/webERP-team/webERP/commit/8e6513bb8) |  |
+| Add script description in PDFAck.php | Changed | Rafael Chacón | 2018-05-07 | [View](http://github.com/webERP-team/webERP/commit/4cd593557) |  |
+| Add script description in GeneratePickingList.php | Changed | Rafael Chacón | 2018-05-07 | [View](http://github.com/webERP-team/webERP/commit/4857c4a7e) |  |
+| Add script description, ViewTopic and BookMark in PickingLists.php| Changed | Rafael Chacón | 2018-05-06 | [View](http://github.com/webERP-team/webERP/commit/aff58aa7d) |  |
+| Rebuild languages files | Changed | Rafael Chacón | 2018-05-06 | [View](http://github.com/webERP-team/webERP/commit/ca7ee2360) |  |
+| Add script description, ViewTopic and BookMark in SelectPickingLists.php | Changed | Rafael Chacón | 2018-05-06 | [View](http://github.com/webERP-team/webERP/commit/1c184e09c) |  |
+| Update Spanish translation |  Changed| Rafael Chacón | 2018-05-04 | [View](http://github.com/webERP-team/webERP/commit/511eb2e29) |  |
 | Fixed bank account and related data visible to an unauthorised user in Dashboard.php | Fixed | Paul Becker | 2018-05-02 |  | [Forum](http://www.weberp.org/forum/showthread.php?tid=8161) |
 | Fix the bug that accountgroup validation used the wrong table and field reported by Laura | Fixed | Exson Qu | 2018-04-30 | [View](https://github.com/webERP-team/webERP/commit/56b66d466e3fdd4d5d55c8e1827a3ab74d69a4b8) |  |
 | Added a utility script to fix 1c allocations in AR - a GL journal will be required for the total of debtor balances changed as a result for the control account to remain in balance Z_Fix1cAllocations.php | Added | Phil Daintree | 2018-04-28 | [View](https://github.com/webERP-team/webERP/pull/45/commits/756546887bac32f3ce5d2c357b7e79f7366c0391) |  |
