@@ -53,7 +53,7 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 
 | Description | Type | Author | Date | Details | Ref |
 |:-----------:|:----:|:------:|:----:|:-------:|:---:|
-| Upgrade weberpchina.sql file and modify htmlspecialcharts parameter in footer.php |  | Exson Qu | 2018-05-15 | [View](http://github.com/webERP-team/webERP/commit/62a4571fb) |  |
+| Upgrade weberpchina.sql file and modify htmlspecialcharts parameter in footer.php | Changed | Exson Qu | 2018-05-15 | [View](http://github.com/webERP-team/webERP/commit/62a4571fb) |  |
 | Change module alias from "orders" to "Sales" to standardise in MainMenuLinksArray.php | Changed | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/30115ebda) |  |
 | Groups the INSERT INTO sentences in SQL upgrade script | Changed | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/7ad7340cc) |  |
 | Various improvements to manual | Changed | Rafael Chacón | 2018-05-08 | [View](http://github.com/webERP-team/webERP/commit/cfce65413) |  |
