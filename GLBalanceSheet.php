@@ -578,7 +578,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 		if ($_POST['Detail']=='Detailed') {
 			if (isset($_POST['ShowZeroBalances']) OR (!isset($_POST['ShowZeroBalances']) AND (round($AccountBalance,$_SESSION['CompanyRecord']['decimalplaces']) <> 0 OR round($LYAccountBalance,$_SESSION['CompanyRecord']['decimalplaces']) <> 0))) {
 
-	  			$ActEnquiryURL = '<a href="' . $RootPath . '/GLAccountInquiry.php?Period=' . $_POST['BalancePeriodEnd'] . '&amp;Account=' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . '</a>';
+				$ActEnquiryURL = '<a href="'. $RootPath . '/GLAccountInquiry.php?FromPeriod=-24&amp;ToPeriod=' . urlencode($_POST['BalancePeriodEnd']) . '&amp;Account=' . urlencode($myrow['accountcode']) . '&amp;Show=Yes">' . $myrow['accountcode'] . '</a>';
 
 	  			printf('<tr class="striped_row">
 						<td>%s</td>
