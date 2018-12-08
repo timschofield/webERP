@@ -261,7 +261,7 @@ if (isset($_POST['ComponentSearch']) or isset($_POST['Next']) or isset($_POST['P
 
 	echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedParent=', urlencode($SelectedParent), '">';
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
-	echo '<table>
+	echo '<table class="noprint">
 			<tr>
 				<th colspan="3">
 					<input style="float:left" type="submit" name="Previous" value="<<', _('Previous'), '" />
@@ -368,7 +368,7 @@ if (isset($_GET['Add']) or isset($_GET['Edit'])) {
 			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', _('Search'), '" alt="" /> ', _('Component Details'), '
 		</p>';
 
-	echo '<table>';
+	echo '<table class="noprint">';
 	if (isset($_GET['Edit'])) {
 		$SQL = "SELECT bom.loccode,
 						effectiveafter,
@@ -799,7 +799,7 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 	$DbgMsg = _('The SQL used to retrieve description of the parent part was');
 	$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 	if (DB_num_rows($Result) > 0) {
-		echo '<table>
+		echo '<table class="noprint">
 				<tr>
 					<th>', _('Assembly parent items'), ' : ';
 		$i = 0;
@@ -878,7 +878,10 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 	echo '<input type="hidden" name="SelectedParent" value="', $SelectedParent, '" />';
 	echo '<table>';
 	echo '<tr>
-			<th colspan="16"><b>', $SelectedParent, ' - ', $MyRow[0], ' (', $MBdesc, ') </b></th>
+			<th colspan="15"><b>', $SelectedParent, ' - ', $MyRow[0], ' (', $MBdesc, ') </b></th>
+			<th>
+				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/printer.png" class="PrintIcon noprint" title="', _('Print'), '" alt="', _('Print'), '" onclick="window.print();" />
+			</th>
 		</tr>';
 
 	$BOMTree = array();
@@ -920,14 +923,14 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 		}
 	}
 	echo '</table>
-		<input type="submit" name="renumber" value="Re-Sequence the BOM" />
+		<input type="submit" class="noprint" name="renumber" value="Re-Sequence the BOM" />
 	</form>';
 
 	if (!isset($SelectedComponent)) {
 		echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
 		echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
-		echo '<table>
+		echo '<table class="noprint">
 				<tr>
 					<th colspan="2">', _('Select new component for BOM'), '</th>
 				</tr>';
@@ -973,7 +976,7 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 			</field>
 		</table>
 		<input type="hidden" name="SelectedParent" value="', $SelectedParent, '" />
-		<div class="centre">
+		<div class="centre noprint">
 			<input type="submit" name="ComponentSearch" value="', _('Search Now'), '" />
 		</div>
 	</form>';
