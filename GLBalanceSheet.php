@@ -79,8 +79,8 @@ if (!isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 } elseif (isset($_POST['PrintPDF'])) {
 
 	include ('includes/PDFStarter.php');
-	$PDF->addInfo('Title', _('Balance Sheet'));
-	$PDF->addInfo('Subject', _('Balance Sheet'));
+	$pdf->addInfo('Title', _('Balance Sheet'));
+	$pdf->addInfo('Subject', _('Balance Sheet'));
 	$line_height = 12;
 	$PageNumber = 0;
 	$FontSize = 10;
@@ -182,12 +182,12 @@ if (!isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 		if ($ActGrp != '') {
 			if ($MyRow['groupname'] != $ActGrp) {
 				$FontSize = 8;
-				$PDF->setFont('', 'B');
+				$pdf->setFont('', 'B');
 				while ($MyRow['groupname'] != $ParentGroups[$Level] and $Level > 0) {
 					$YPos-= $line_height;
-					$LeftOvers = $PDF->addTextWrap($Left_Margin + (10 * ($Level + 1)), $YPos, 200, $FontSize, _('Total') . ' ' . $ParentGroups[$Level]);
-					$LeftOvers = $PDF->addTextWrap($Left_Margin + 250, $YPos, 100, $FontSize, locale_number_format($GroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']), 'right');
-					$LeftOvers = $PDF->addTextWrap($Left_Margin + 350, $YPos, 100, $FontSize, locale_number_format($LYGroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']), 'right');
+					$LeftOvers = $pdf->addTextWrap($Left_Margin + (10 * ($Level + 1)), $YPos, 200, $FontSize, _('Total') . ' ' . $ParentGroups[$Level]);
+					$LeftOvers = $pdf->addTextWrap($Left_Margin + 250, $YPos, 100, $FontSize, locale_number_format($GroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']), 'right');
+					$LeftOvers = $pdf->addTextWrap($Left_Margin + 350, $YPos, 100, $FontSize, locale_number_format($LYGroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']), 'right');
 					$ParentGroups[$Level] = '';
 					$GroupTotal[$Level] = 0;
 					$LYGroupTotal[$Level] = 0;
@@ -197,9 +197,9 @@ if (!isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 					}
 				}
 				$YPos-= $line_height;
-				$LeftOvers = $PDF->addTextWrap($Left_Margin + (10 * ($Level + 1)), $YPos, 200, $FontSize, _('Total') . ' ' . $ParentGroups[$Level]);
-				$LeftOvers = $PDF->addTextWrap($Left_Margin + 250, $YPos, 100, $FontSize, locale_number_format($GroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']), 'right');
-				$LeftOvers = $PDF->addTextWrap($Left_Margin + 350, $YPos, 100, $FontSize, locale_number_format($LYGroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']), 'right');
+				$LeftOvers = $pdf->addTextWrap($Left_Margin + (10 * ($Level + 1)), $YPos, 200, $FontSize, _('Total') . ' ' . $ParentGroups[$Level]);
+				$LeftOvers = $pdf->addTextWrap($Left_Margin + 250, $YPos, 100, $FontSize, locale_number_format($GroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']), 'right');
+				$LeftOvers = $pdf->addTextWrap($Left_Margin + 350, $YPos, 100, $FontSize, locale_number_format($LYGroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']), 'right');
 				$ParentGroups[$Level] = '';
 				$GroupTotal[$Level] = 0;
 				$LYGroupTotal[$Level] = 0;
@@ -214,10 +214,10 @@ if (!isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 
 			if ($Section != '') {
 				$FontSize = 8;
-				$PDF->setFont('', 'B');
-				$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 200, $FontSize, $Sections[$Section]);
-				$LeftOvers = $PDF->addTextWrap($Left_Margin + 250, $YPos, 100, $FontSize, locale_number_format($SectionBalance, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
-				$LeftOvers = $PDF->addTextWrap($Left_Margin + 350, $YPos, 100, $FontSize, locale_number_format($SectionBalanceLY, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
+				$pdf->setFont('', 'B');
+				$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 200, $FontSize, $Sections[$Section]);
+				$LeftOvers = $pdf->addTextWrap($Left_Margin + 250, $YPos, 100, $FontSize, locale_number_format($SectionBalance, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
+				$LeftOvers = $pdf->addTextWrap($Left_Margin + 350, $YPos, 100, $FontSize, locale_number_format($SectionBalanceLY, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
 				$YPos-= (2 * $line_height);
 				if ($YPos < $Bottom_Margin) {
 					include ('includes/PDFBalanceSheetPageHeader.inc');
@@ -229,7 +229,7 @@ if (!isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 			$Section = $MyRow['sectioninaccounts'];
 			if ($_POST['Detail'] == 'Detailed') {
 
-				$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 200, $FontSize, $Sections[$MyRow['sectioninaccounts']]);
+				$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 200, $FontSize, $Sections[$MyRow['sectioninaccounts']]);
 				$YPos-= (2 * $line_height);
 				if ($YPos < $Bottom_Margin) {
 					include ('includes/PDFBalanceSheetPageHeader.inc');
@@ -242,14 +242,14 @@ if (!isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 				include ('includes/PDFBalanceSheetPageHeader.inc');
 			}
 			$FontSize = 8;
-			$PDF->setFont('', 'B');
+			$pdf->setFont('', 'B');
 			if ($MyRow['parentgroupname'] == $ActGrp and $ActGrp != '') {
 				$Level++;
 			}
 			$ActGrp = $MyRow['groupname'];
 			$ParentGroups[$Level] = $ActGrp;
 			if ($_POST['Detail'] == 'Detailed') {
-				$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 200, $FontSize, $MyRow['groupname']);
+				$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 200, $FontSize, $MyRow['groupname']);
 				$YPos-= $line_height;
 			}
 			$GroupTotal[$Level] = 0;
@@ -269,11 +269,11 @@ if (!isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 		if ($_POST['Detail'] == 'Detailed') {
 			if (isset($_POST['ShowZeroBalances']) or (!isset($_POST['ShowZeroBalances']) and ($AccountBalance <> 0 or $LYAccountBalance <> 0))) {
 				$FontSize = 8;
-				$PDF->setFont('', '');
-				$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 50, $FontSize, $MyRow['accountcode']);
-				$LeftOvers = $PDF->addTextWrap($Left_Margin + 55, $YPos, 200, $FontSize, $MyRow['accountname']);
-				$LeftOvers = $PDF->addTextWrap($Left_Margin + 250, $YPos, 100, $FontSize, locale_number_format($AccountBalance, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
-				$LeftOvers = $PDF->addTextWrap($Left_Margin + 350, $YPos, 100, $FontSize, locale_number_format($LYAccountBalance, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
+				$pdf->setFont('', '');
+				$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 50, $FontSize, $MyRow['accountcode']);
+				$LeftOvers = $pdf->addTextWrap($Left_Margin + 55, $YPos, 200, $FontSize, $MyRow['accountname']);
+				$LeftOvers = $pdf->addTextWrap($Left_Margin + 250, $YPos, 100, $FontSize, locale_number_format($AccountBalance, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
+				$LeftOvers = $pdf->addTextWrap($Left_Margin + 350, $YPos, 100, $FontSize, locale_number_format($LYAccountBalance, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
 				$YPos-= $line_height;
 			}
 		}
@@ -282,21 +282,21 @@ if (!isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 		}
 	} //end of loop
 	$FontSize = 8;
-	$PDF->setFont('', 'B');
+	$pdf->setFont('', 'B');
 	while ($Level > 0) {
 		$YPos-= $line_height;
-		$LeftOvers = $PDF->addTextWrap($Left_Margin + (10 * ($Level + 1)), $YPos, 200, $FontSize, _('Total') . ' ' . $ParentGroups[$Level]);
-		$LeftOvers = $PDF->addTextWrap($Left_Margin + 250, $YPos, 100, $FontSize, locale_number_format($GroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']), 'right');
-		$LeftOvers = $PDF->addTextWrap($Left_Margin + 350, $YPos, 100, $FontSize, locale_number_format($LYGroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']), 'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin + (10 * ($Level + 1)), $YPos, 200, $FontSize, _('Total') . ' ' . $ParentGroups[$Level]);
+		$LeftOvers = $pdf->addTextWrap($Left_Margin + 250, $YPos, 100, $FontSize, locale_number_format($GroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']), 'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin + 350, $YPos, 100, $FontSize, locale_number_format($LYGroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']), 'right');
 		$ParentGroups[$Level] = '';
 		$GroupTotal[$Level] = 0;
 		$LYGroupTotal[$Level] = 0;
 		$Level--;
 	}
 	$YPos-= $line_height;
-	$LeftOvers = $PDF->addTextWrap($Left_Margin + (10 * ($Level + 1)), $YPos, 200, $FontSize, _('Total') . ' ' . $ParentGroups[$Level]);
-	$LeftOvers = $PDF->addTextWrap($Left_Margin + 250, $YPos, 100, $FontSize, locale_number_format($GroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']), 'right');
-	$LeftOvers = $PDF->addTextWrap($Left_Margin + 350, $YPos, 100, $FontSize, locale_number_format($LYGroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']), 'right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin + (10 * ($Level + 1)), $YPos, 200, $FontSize, _('Total') . ' ' . $ParentGroups[$Level]);
+	$LeftOvers = $pdf->addTextWrap($Left_Margin + 250, $YPos, 100, $FontSize, locale_number_format($GroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']), 'right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin + 350, $YPos, 100, $FontSize, locale_number_format($LYGroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']), 'right');
 	$ParentGroups[$Level] = '';
 	$GroupTotal[$Level] = 0;
 	$LYGroupTotal[$Level] = 0;
@@ -304,18 +304,18 @@ if (!isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 
 	if ($SectionBalanceLY + $SectionBalance != 0) {
 		$FontSize = 8;
-		$PDF->setFont('', 'B');
-		$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 200, $FontSize, $Sections[$Section]);
-		$LeftOvers = $PDF->addTextWrap($Left_Margin + 250, $YPos, 100, $FontSize, locale_number_format($SectionBalance, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
-		$LeftOvers = $PDF->addTextWrap($Left_Margin + 350, $YPos, 100, $FontSize, locale_number_format($SectionBalanceLY, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
+		$pdf->setFont('', 'B');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 200, $FontSize, $Sections[$Section]);
+		$LeftOvers = $pdf->addTextWrap($Left_Margin + 250, $YPos, 100, $FontSize, locale_number_format($SectionBalance, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin + 350, $YPos, 100, $FontSize, locale_number_format($SectionBalanceLY, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
 		$YPos-= $line_height;
 	}
 
 	$YPos-= $line_height;
 
-	$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 200, $FontSize, _('Check Total'));
-	$LeftOvers = $PDF->addTextWrap($Left_Margin + 250, $YPos, 100, $FontSize, locale_number_format($CheckTotal, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
-	$LeftOvers = $PDF->addTextWrap($Left_Margin + 350, $YPos, 100, $FontSize, locale_number_format($LYCheckTotal, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 200, $FontSize, _('Check Total'));
+	$LeftOvers = $pdf->addTextWrap($Left_Margin + 250, $YPos, 100, $FontSize, locale_number_format($CheckTotal, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin + 350, $YPos, 100, $FontSize, locale_number_format($LYCheckTotal, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
 
 	if ($ListCount == 0) { //UldisN
 		$Title = _('Print Balance Sheet Error');
@@ -325,8 +325,8 @@ if (!isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 		include ('includes/footer.php');
 		exit;
 	} else {
-		$PDF->OutputD($_SESSION['DatabaseName'] . '_GL_Balance_Sheet_' . date('Y-m-d') . '.pdf');
-		$PDF->__destruct();
+		$pdf->OutputD($_SESSION['DatabaseName'] . '_GL_Balance_Sheet_' . date('Y-m-d') . '.pdf');
+		$pdf->__destruct();
 	}
 	exit;
 } else {
