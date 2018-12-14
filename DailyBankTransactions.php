@@ -1,10 +1,12 @@
 <?php
-/* Allows you to view all bank transactions for a selected date range, and the inquiry can be filtered by matched or unmatched transactions, or all transactions can be chosen. */
+// DailyBankTransactions.php
+// Allows you to view all bank transactions for a selected date range, and the inquiry can be filtered by matched or unmatched transactions, or all transactions can be chosen.
 
 include ('includes/session.php');
 $Title = _('Bank Transactions Inquiry');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'DailyBankTransactions';
+
 include ('includes/header.php');
 
 if (isset($_GET['BankAccount'])) {
@@ -23,16 +25,17 @@ if (isset($_GET['ToTransDate'])) {
 
 if (!isset($_POST['Show'])) {
 
-	$SQL = "SELECT 	bankaccountname,
-					bankaccounts.accountcode,
-					bankaccounts.currcode
-				FROM bankaccounts
-				INNER JOIN chartmaster
-					ON bankaccounts.accountcode=chartmaster.accountcode
-				INNER JOIN bankaccountusers
-					ON bankaccounts.accountcode=bankaccountusers.accountcode
-				WHERE bankaccountusers.userid = '" . $_SESSION['UserID'] . "'";
-
+	$SQL = "SELECT
+				bankaccountname,
+				bankaccounts.accountcode,
+				bankaccounts.currcode
+			FROM bankaccounts
+			INNER JOIN chartmaster
+				ON bankaccounts.accountcode=chartmaster.accountcode
+			INNER JOIN bankaccountusers
+				ON bankaccounts.accountcode=bankaccountusers.accountcode
+			WHERE bankaccountusers.userid = '" . $_SESSION['UserID'] . "'
+			ORDER BY bankaccountname";
 	$ErrMsg = _('The bank accounts could not be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the bank accounts was');
 	$AccountsResults = DB_query($SQL, $ErrMsg, $DbgMsg);
@@ -58,15 +61,13 @@ if (!isset($_POST['Show'])) {
 		exit;
 	} else {
 		while ($MyRow = DB_fetch_array($AccountsResults)) {
-			/*list the bank account names */
+			// List bank accounts by name:
 			if (!isset($_POST['BankAccount']) and $MyRow['currcode'] == $_SESSION['CompanyRecord']['currencydefault']) {
 				$_POST['BankAccount'] = $MyRow['accountcode'];
 			}
-			if (isset($_POST['BankAccount']) and $_POST['BankAccount'] == $MyRow['accountcode']) {
-				echo '<option selected="selected" value="', $MyRow['accountcode'], '">', $MyRow['bankaccountname'], ' - ', $MyRow['currcode'], '</option>';
-			} else {
-				echo '<option value="', $MyRow['accountcode'], '">', $MyRow['bankaccountname'], ' - ', $MyRow['currcode'], '</option>';
-			}
+			echo '<option',
+				( (isset($_POST['BankAccount']) and $_POST['BankAccount'] == $MyRow['accountcode']) ? ' selected="selected"' : '' ),
+				' value="', $MyRow['accountcode'], '">', $MyRow['bankaccountname'], ' - ', $MyRow['currcode'], '</option>';
 		}
 		echo '</select>
 				</td>
@@ -245,5 +246,4 @@ if (!isset($_POST['Show'])) {
 	echo '</form>';
 }
 include ('includes/footer.php');
-
 ?>
