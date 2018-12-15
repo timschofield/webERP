@@ -15,6 +15,9 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 
 | Description | Type | Author | Date | Details | Ref |
 |:-----------:|:----:|:------:|:----:|:-------:|:---:|
+| Order by bankaccountname | Changed | Rafael Chacón | 2018-12-14 | [View](https://github.com/webERP-team/webERP/commit/eb5bd54f55c4398aa9781ea9b392fd304b845f92) |   |
+| Add option to print the BOM from the entry screen | Changed | Tim Schofield | 2018-12-08 | [View](https://github.com/webERP-team/webERP/commit/cb5754b1228b93a3ae34d993b2f9e3d484aeaf0f) |   |
+| Add option to import po items | Changed | express achiever | 2018-12-06 | [View](https://github.com/webERP-team/webERP/commit/c24c5217369d9c2299b16c680d06d9bed0354a3d) |   |
 | Change field_help_text code (part 1) | Changed | Rafael Chacón | 2018-12-06 | [View](https://github.com/webERP-team/webERP/commit/5b660abb2f2360cfea500ea9cbb5dcfdd4e217be) |   |
 | Add page_info_text class | Added | Rafael Chacón | 2018-12-05 | [View](https://github.com/webERP-team/webERP/commit/06151046399d29d04e37f37c88aa63cc7b235d3f) |   |
 | Delete unneeded images | Removed | Rafael Chacón | 2018-12-05 | [View](https://github.com/webERP-team/webERP/commit/f40435a7891c72e46b77af6fa2b5441a29ce16a3) |   |
