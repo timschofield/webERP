@@ -26,7 +26,7 @@ if (isset($_GET['ToTransDate'])) {
 if (!isset($_POST['Show'])) {
 
 	$SQL = "SELECT
-				bankaccountname,
+				bankaccounts.bankaccountname,
 				bankaccounts.accountcode,
 				bankaccounts.currcode
 			FROM bankaccounts
@@ -35,25 +35,24 @@ if (!isset($_POST['Show'])) {
 			INNER JOIN bankaccountusers
 				ON bankaccounts.accountcode=bankaccountusers.accountcode
 			WHERE bankaccountusers.userid = '" . $_SESSION['UserID'] . "'
-			ORDER BY bankaccountname";
+			ORDER BY bankaccounts.bankaccountname";
 	$ErrMsg = _('The bank accounts could not be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the bank accounts was');
 	$AccountsResults = DB_query($SQL, $ErrMsg, $DbgMsg);
 
-	echo '<p class="page_title_text">
-			<img alt="" src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/bank.png" title="', _('Bank Transactions Inquiry'), '" />', _('Bank Transactions Inquiry'), '
-		</p>'; // Page title.
-	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
-	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
-
-	echo '<table>
+	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+		'/images/bank.png" title="', // Icon image.
+		$Title, '" /> ', // Icon title.
+		$Title, '</p>',// Page title.
+		'<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">',
+		'<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />',
+		'<table>
 			<tr>
 				<td>', _('Bank Account'), ':</td>
 				<td><select name="BankAccount">';
 
 	if (DB_num_rows($AccountsResults) == 0) {
-		echo '</select>
-					</td>
+		echo '</select></td>
 				</tr>
 			</table>';
 		prnMsg(_('Bank Accounts have not yet been defined. You must first') . ' <a href="' . $RootPath . '/BankAccounts.php">' . _('define the bank accounts') . '</a> ' . _('and general ledger accounts to be affected'), 'warn');
@@ -61,12 +60,12 @@ if (!isset($_POST['Show'])) {
 		exit;
 	} else {
 		while ($MyRow = DB_fetch_array($AccountsResults)) {
-			// List bank accounts by name:
+			// Lists bank accounts order by bankaccountname
 			if (!isset($_POST['BankAccount']) and $MyRow['currcode'] == $_SESSION['CompanyRecord']['currencydefault']) {
 				$_POST['BankAccount'] = $MyRow['accountcode'];
 			}
 			echo '<option',
-				( (isset($_POST['BankAccount']) and $_POST['BankAccount'] == $MyRow['accountcode']) ? ' selected="selected"' : '' ),
+				((isset($_POST['BankAccount']) and $_POST['BankAccount'] == $MyRow['accountcode']) ? ' selected="selected"' : '' ),
 				' value="', $MyRow['accountcode'], '">', $MyRow['bankaccountname'], ' - ', $MyRow['currcode'], '</option>';
 		}
 		echo '</select>
