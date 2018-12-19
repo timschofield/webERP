@@ -15,6 +15,7 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 
 | Description | Type | Author | Date | Details | Ref |
 |:-----------:|:----:|:------:|:----:|:-------:|:---:|
+| Sort the bank accounts | Changed | Rafael Chacón | 2018-12-18 | Sort the bank accounts that are going to be shown. |   |
 | Order by bankaccountname | Changed | Rafael Chacón | 2018-12-14 | [View](https://github.com/webERP-team/webERP/commit/eb5bd54f55c4398aa9781ea9b392fd304b845f92) |   |
 | Add option to print the BOM from the entry screen | Changed | Tim Schofield | 2018-12-08 | [View](https://github.com/webERP-team/webERP/commit/cb5754b1228b93a3ae34d993b2f9e3d484aeaf0f) |   |
 | Add option to import po items | Changed | express achiever | 2018-12-06 | [View](https://github.com/webERP-team/webERP/commit/c24c5217369d9c2299b16c680d06d9bed0354a3d) |   |
