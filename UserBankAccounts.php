@@ -204,7 +204,6 @@ if (isset($_POST['process']) or isset($SelectedUser)) {
 		if (!isset($_POST['SelectedBankAccount'])) {
 			echo '<option selected="selected" value="">' . _('Not Yet Selected') . '</option>';
 		}
-
 		while ($MyRow = DB_fetch_array($Result)) {
 			// Lists bank accounts order by bankaccountname
 			echo '<option',
