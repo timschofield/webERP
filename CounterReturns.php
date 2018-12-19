@@ -817,14 +817,12 @@ if (count($_SESSION['Items' . $identifier]->LineItems)>0) { /*only show return l
 	echo '<tr>
 			<td style="color:red">' . _('Bank Account') . ':</td>
 			<td><select name="BankAccount">';
-
 	while ($MyRow = DB_fetch_array($BankAccountsResult)) {
 		// Lists bank accounts order by bankaccountname
 		echo '<option',
 			((isset($_POST['BankAccount']) and $_POST['BankAccount'] == $MyRow['accountcode']) ? ' selected="selected"' : '' ),
 			' value="', $MyRow['accountcode'], '">', $MyRow['bankaccountname'], ' - ', $MyRow['currcode'], '</option>';
 	}
-
 	echo '</select></td>
 		</tr>';
 	if (!isset($_POST['AmountPaid'])) {
