@@ -390,7 +390,7 @@ CREATE TABLE `contracts` (
   KEY `WO` (`wo`),
   KEY `loccode` (`loccode`),
   KEY `DebtorNo` (`debtorno`,`branchcode`),
-  CONSTRAINT `contracts_ibfk_1` FOREIGN KEY (`debtorno`, `branchcode`) REFERENCES `custbranch` (`debtorno`, `branchcode`),
+  CONSTRAINT `contracts_ibfk_1` FOREIGN KEY (`branchcode`, `debtorno`) REFERENCES `custbranch` (`branchcode`, `debtorno`),
   CONSTRAINT `contracts_ibfk_2` FOREIGN KEY (`categoryid`) REFERENCES `stockcategory` (`categoryid`),
   CONSTRAINT `contracts_ibfk_3` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -718,7 +718,7 @@ CREATE TABLE `deliverynotes` (
   PRIMARY KEY (`deliverynotenumber`,`deliverynotelineno`),
   KEY `deliverynotes_ibfk_2` (`salesorderno`,`salesorderlineno`),
   CONSTRAINT `deliverynotes_ibfk_1` FOREIGN KEY (`salesorderno`) REFERENCES `salesorders` (`orderno`),
-  CONSTRAINT `deliverynotes_ibfk_2` FOREIGN KEY (`salesorderno`, `salesorderlineno`) REFERENCES `salesorderdetails` (`orderno`, `orderlineno`)
+  CONSTRAINT `deliverynotes_ibfk_2` FOREIGN KEY (`salesorderlineno`, `salesorderno`) REFERENCES `salesorderdetails` (`orderlineno`, `orderno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1498,7 +1498,7 @@ CREATE TABLE `orderdeliverydifferenceslog` (
   KEY `Can_or_BO` (`can_or_bo`),
   KEY `OrderNo` (`orderno`),
   CONSTRAINT `orderdeliverydifferenceslog_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
-  CONSTRAINT `orderdeliverydifferenceslog_ibfk_2` FOREIGN KEY (`debtorno`, `branch`) REFERENCES `custbranch` (`debtorno`, `branchcode`),
+  CONSTRAINT `orderdeliverydifferenceslog_ibfk_2` FOREIGN KEY (`branch`, `debtorno`) REFERENCES `custbranch` (`branchcode`, `debtorno`)
   CONSTRAINT `orderdeliverydifferenceslog_ibfk_3` FOREIGN KEY (`orderno`) REFERENCES `salesorders` (`orderno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
