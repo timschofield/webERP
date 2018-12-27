@@ -12,30 +12,42 @@ $BookMark = 'BalanceSheet';
 include ('includes/SQL_CommonFunctions.inc');
 include ('includes/AccountSectionsDef.php'); // This loads the $Sections variable
 
+// Merges GETs into POSTs:
+if(isset($_GET['BalancePeriodEnd'])) {
+	$_POST['BalancePeriodEnd'] = $_GET['BalancePeriodEnd'];
+}
+if(isset($_GET['Detail'])) {// Select period from.
+	$_POST['Detail'] = $_GET['Detail'];
+}
+if(isset($_GET['ShowZeroBalance'])) {// Select period from.
+	$_POST['ShowZeroBalance'] = $_GET['ShowZeroBalance'];
+}
+
 if (!isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'])) {
 
-	/*Show a form to allow input of criteria for TB to show */
+	// Show a form to allow input of criteria for TB to show
 	include ('includes/header.php');
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 		'/images/printer.png" title="', // Icon image.
 		$Title2, '" /> ', // Icon title.
 		$Title, '</p>'; // Page title.
+
 	echo '<div class="page_help_text">',
 		_('Balance Sheet (or statement of financial position) is a summary  of balances. Assets, liabilities and ownership equity are listed as of a specific date, such as the end of its financial year. Of the four basic financial statements, the balance sheet is the only statement which applies to a single point in time.'), '<br />',
 		_('The balance sheet has three parts: assets, liabilities and ownership equity. The main categories of assets are listed first and are followed by the liabilities. The difference between the assets and the liabilities is known as equity or the net assets or the net worth or capital of the company and according to the accounting equation, net worth must equal assets minus liabilities.'), '<br />',
 		_('webERP is an "accrual" based system (not a "cash based" system).  Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.'),
 		'</div>';
 
-	echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">';
-	echo '<div>'; // div class=?
-	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />',
-		'<br />',
+	echo '<br />',
+		'<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
+		'<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />',
 		'<table class="selection">
 			<tr>
 				<td>' . _('Select the balance date') . ':</td>
-				<td><select required="required" name="BalancePeriodEnd">';
+				<td><select name="BalancePeriodEnd" required="required">';
 
-	$periodno = GetPeriod(Date($_SESSION['DefaultDateFormat']));
+	$periodno = ((isset($_POST['BalancePeriodEnd'])) ? $_POST['BalancePeriodEnd'] : GetPeriod(Date($_SESSION['DefaultDateFormat'])));
+
 	$SQL = "SELECT lastdate_in_period FROM periods WHERE periodno='" . $periodno . "'";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
@@ -47,22 +59,27 @@ if (!isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 	while ($MyRow = DB_fetch_array($Periods)) {
 		echo
 			'<option',
-			( ($MyRow['periodno'] == $periodno) ? ' selected="selected"' : '' ),
+			(($MyRow['periodno'] == $periodno) ? ' selected="selected"' : ''),
 			' value="', $MyRow['periodno'], '">', ConvertSQLDate($MyRow['lastdate_in_period']), '</option>';
 	}
-
 	echo '</select></td>
 		</tr>',
 		'<tr>
-			<td>', _('Detail Or Summary'), ':</td>
-			<td><select name="Detail" required="required" title="', _('Selecting Summary will show on the totals at the account group level'), '" >
-				<option value="Summary">', _('Summary'), '</option>
-				<option selected="selected" value="Detailed">', _('All Accounts'), '</option>
-			</select></td>
+			<td><label for="Detail">', _('Detail Or Summary'), ':</label></td>
+			<td><select name="Detail" required="required" title="', _('Selecting Summary will show on the totals at the account group level'), '" >';
+	if($_POST['Detail'] == 'Summary') {
+		echo	'<option selected="selected" value="Summary">', _('Summary'), '</option>
+				<option value="Detailed">', _('All Accounts'), '</option>';
+	} else {
+		echo	'<option value="Summary">', _('Summary'), '</option>
+				<option selected="selected" value="Detailed">', _('All Accounts'), '</option>';
+	}
+	echo	'</select></td>
 		</tr>
 		<tr>
-			 <td>', _('Show all Accounts including zero balances'), '</td>
-			 <td><input name="ShowZeroBalances" title="', _('Check this box to display all accounts including those accounts with no balance'), '" type="checkbox" /></td>
+			<td><label for="ShowZeroBalance">', _('Show all Accounts including zero balances'), ':</label></td>
+			<td><input', (($_POST['ShowZeroBalance']) ? ' checked="checked"' : ''), ' id="ShowZeroBalance" name="ShowZeroBalance" title="', _('Check this box to display all accounts including those accounts with no balance'), '" type="checkbox" />', // "Checked" if ShowZeroBalance is TRUE.
+			'</td>
 		</tr>
 		</table>',
 		'<br />',
@@ -73,12 +90,10 @@ if (!isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 				<img alt="" src="', $RootPath, '/css/', $Theme, '/images/pdf.png" /> ', _('Produce PDF Report'), '</button>', // "Produce PDF Report" button.
 			'<button onclick="window.location=\'index.php?Application=GL\'" type="button">
 				<img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
-		'</div>';
+		'</div>',
+		'</form>';
 
-	echo '</div>'; // div class=?
-	echo '</form>';
-
-	/*Now do the posting while the user is thinking about the period to select */
+	// Now do the posting while the user is thinking about the period to select:
 	include ('includes/GLPostings.inc');
 
 } elseif (isset($_POST['PrintPDF'])) {// Produce PDF Report:
@@ -273,7 +288,7 @@ if (!isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 		$CheckTotal+= $AccountBalance;
 
 		if ($_POST['Detail'] == 'Detailed') {
-			if (isset($_POST['ShowZeroBalances']) or (!isset($_POST['ShowZeroBalances']) and ($AccountBalance <> 0 or $AccountBalanceLY <> 0))) {
+			if (isset($_POST['ShowZeroBalance']) or (!isset($_POST['ShowZeroBalance']) and ($AccountBalance <> 0 or $AccountBalanceLY <> 0))) {
 				$FontSize = 8;
 				$pdf->setFont('', '');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 50, $FontSize, $MyRow['accountcode']);
@@ -398,11 +413,6 @@ if (!isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 
 
 	include ('includes/header.php');
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-	echo '<div>'; // div class=?
-	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />',
-		'<input type="hidden" name="BalancePeriodEnd" value="', $_POST['BalancePeriodEnd'], '" />';
-
 	// Page title as IAS1 numerals 10 and 51:
 	include_once ('includes/CurrenciesArray.php'); // Array to retrieve currency name.
 	echo '<div id="Report">'; // Division to identify the report block.
@@ -556,7 +566,7 @@ if (!isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 		$CheckTotalLY+= $AccountBalanceLY;
 
 		if ($_POST['Detail'] == 'Detailed') {
-			if (isset($_POST['ShowZeroBalances']) or (!isset($_POST['ShowZeroBalances']) and (round($AccountBalance, $_SESSION['CompanyRecord']['decimalplaces']) <> 0 or round($AccountBalanceLY, $_SESSION['CompanyRecord']['decimalplaces']) <> 0))) {
+			if (isset($_POST['ShowZeroBalance']) or (!isset($_POST['ShowZeroBalance']) and (round($AccountBalance, $_SESSION['CompanyRecord']['decimalplaces']) <> 0 or round($AccountBalanceLY, $_SESSION['CompanyRecord']['decimalplaces']) <> 0))) {
 
 				$ActEnquiryURL = '<a href="' . $RootPath . '/GLAccountInquiry.php?FromPeriod=' . urlencode(FYStartPeriod($_POST['BalancePeriodEnd'])) . '&amp;ToPeriod=' . urlencode($_POST['BalancePeriodEnd']) . '&amp;Account=' . urlencode($MyRow['accountcode']) . '&amp;Show=Yes">' . $MyRow['accountcode'] . '</a>';// Function FYStartPeriod() in ~/includes/MiscFunctions.php
 
@@ -658,15 +668,18 @@ if (!isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 	/*	echo '</tbody>';// See comment at the begin of the table.*/
 	echo '</table>',
 		'</div>', // END <div id="Report">.
-		'<br />
-		<div class="centre noprint">', // Form buttons:
-			'<button onclick="javascript:window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/printer.png" /> ', _('Print'), '</button>', // "Print" button.
-			'<button name="SelectADifferentPeriod" type="submit" value="', _('Select A Different Period'), '"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/gl.png" /> ', _('Select A Different Balance Date'), '</button>', // "Select A Different Period" button.
-			'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
-		'</div>';
-
-	echo '</div>'; // div class=?
-	echo '</form>';
+		'<br />',
+		'<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">',
+			'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />', // Resend report parameters:
+			'<input name="BalancePeriodEnd" type="hidden" value="', $_POST['BalancePeriodEnd'], '" />',
+			'<input name="Detail" type="hidden" value="', $_POST['Detail'], '" />',
+			'<input name="ShowZeroBalance" type="hidden" value="', $_POST['ShowZeroBalance'], '" />',
+			'<div class="centre noprint">', // Form buttons:
+				'<button onclick="javascript:window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/printer.png" /> ', _('Print'), '</button>', // "Print" button.
+				'<button name="SelectADifferentPeriod" type="submit" value="', _('Select A Different Period'), '"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/gl.png" /> ', _('Select A Different Balance Date'), '</button>', // "Select A Different Period" button.
+				'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
+			'</div>',
+		'</form>';
 }
 
 include ('includes/footer.php');
