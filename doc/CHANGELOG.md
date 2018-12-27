@@ -15,6 +15,7 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 
 | Description | Type | Author | Date | Details | Ref |
 |:-----------:|:----:|:------:|:----:|:-------:|:---:|
+| Improve the readability of a script | Changed | Rafael Chacón | 2018-12-26 | Improve the readability of a script |   |
 | Sort the bank accounts | Changed | Rafael Chacón | 2018-12-18 | [View](https://github.com/webERP-team/webERP/commit/79d88db4ea04099473edfc7f1ddd84deb4ad500f) |   |
 | Order by bankaccountname | Changed | Rafael Chacón | 2018-12-14 | [View](https://github.com/webERP-team/webERP/commit/eb5bd54f55c4398aa9781ea9b392fd304b845f92) |   |
 | Add option to print the BOM from the entry screen | Changed | Tim Schofield | 2018-12-08 | [View](https://github.com/webERP-team/webERP/commit/cb5754b1228b93a3ae34d993b2f9e3d484aeaf0f) |   |
@@ -25,7 +26,7 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 | Fix images call | Fixed | Rafael Chacón | 2018-12-05 | [View](https://github.com/webERP-team/webERP/commit/af967fa3e6c9555693142717f6792dd4044ac516) |   |
 | Fix RTL images | Fixed | Rafael Chacón | 2018-12-05 | [View](https://github.com/webERP-team/webERP/commit/e7c875a7feb35aa5bf0a574a363a7d84b959c063) |   |
 | Fix the size of some images | Fixed | Rafael Chacón | 2018-12-05 | [View](https://github.com/webERP-team/webERP/commit/fbbd45c81dbf9708dd4bcd4e7de5c7076a9faeaa) |   |
-| Per David Shaw Alter all date and datetime fields to have valid defaults '1000-01-01' as '0000-00-00' no longer acceptable | Changed | Phil | 2018-12-01 | [View](https://github.com/webERP-team/webERP/commit/8d94b89dc70b206b82281e702b89063b78189639) |  |
+| Per David Shaw Alter all date and datetime fields to have valid defaults '1000-01-01' as '0000-00-00' no longer acceptable | Changed | Phil | 2018-12-01 | [View](https://github.com/webERP-team/webERP/commit/f9ee93b083d34e7d21e2ee3bbb861ac0f0d649cd) |  |
 | Standardise PurchasesReport.php | Changed | Rafael Chacón | 2018-11-30 | [View](https://github.com/webERP-team/webERP/commit/34841abdeb195052935ae4d1d1efce708eef4ddc) |   |
 | Add SalesReport.php | Added | Rafael Chacón | 2018-11-30 | [View](https://github.com/webERP-team/webERP/commit/9dc2c2cf14a4ec2adca40a7923313833a4b62f1a) |   |
 | Add units column to PDFWOPrint.php | Changed | Paul Becker | 2018-11-17 | [View](https://github.com/webERP-team/webERP/commit/f9ee93b083d34e7d21e2ee3bbb861ac0f0d649cd) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8231) |

@@ -448,7 +448,7 @@ if (!isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 					if ($_POST['Detail'] == 'Detailed') {
 						echo '<tr>
 								<td colspan="2">&nbsp;</td>
-      							<td><hr /></td>
+								<td><hr /></td>
 								<td>&nbsp;</td>
 								<td><hr /></td>
 								<td>&nbsp;</td>
@@ -639,7 +639,7 @@ if (!isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 
 	echo '<tr>
 			<td colspan="3"></td>
-      		<td><hr /></td>
+			<td><hr /></td>
 			<td>&nbsp;</td>
 			<td><hr /></td>
 		</tr>',
@@ -651,7 +651,7 @@ if (!isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 		</tr>',
 		'<tr>
 			<td colspan="3"></td>
-	      	<td><hr /></td>
+			<td><hr /></td>
 			<td>&nbsp;</td>
 			<td><hr /></td>
 		</tr>';
