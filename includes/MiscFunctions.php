@@ -548,21 +548,19 @@ function FYStartPeriod($PeriodNumber) {
 }
 
 function fShowFieldHelp($HelpText) {
-	// If $_SESSION['ShowFieldHelp'] is not set or is TRUE, shows field help text.
-	if (!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp']) {
-		return '<span class = "field_help_text">' . $HelpText . '</span>';
-	} else {
-		return '';
+	// Shows field help text if $_SESSION['ShowFieldHelp'] is TRUE or is not set.
+	if ($_SESSION['ShowFieldHelp'] || !isset($_SESSION['ShowFieldHelp'])) {
+		echo '<span class="field_help_text">', $HelpText, '</span>';
 	}
+	return;
 }
 
 function fShowPageHelp($HelpText) {
-	// If $_SESSION['ShowPageHelp'] is not set or is TRUE, shows page help text.
-	if (!isset($_SESSION['ShowPageHelp']) || $_SESSION['ShowPageHelp']) {
-		return '<div class = "page_help_text">' . $HelpText . '</div>';
-	} else {
-		return '';
+	// Shows page help text if $_SESSION['ShowFieldHelp'] is TRUE or is not set.
+	if ($_SESSION['ShowFieldHelp'] || !isset($_SESSION['ShowFieldHelp'])) {
+		echo '<div class="page_help_text">', $HelpText, '</div>';
 	}
+	return;
 }
 
 ?>
