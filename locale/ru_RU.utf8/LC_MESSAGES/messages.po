@@ -24154,7 +24154,7 @@ msgstr "Общая полученная сумма, исключая налог�
 
 #: PO_PDFPurchOrder.php:9 ReprintGRN.php:18
 msgid "Select a purchase order"
-msgstr ""
+msgstr "Выберите заказ на покупку"
 
 #: PO_PDFPurchOrder.php:12
 msgid "Select a Purchase Order Number to Print before calling this page"
@@ -34175,7 +34175,7 @@ msgstr ""
 #: SuppContractChgs.php:21 SuppFixedAssetChgs.php:18 SupplierPriceList.php:455
 #: SuppLoginSetup.php:14 SuppShiptChgs.php:27 SuppTransGLAnalysis.php:18
 msgid "Select a supplier"
-msgstr ""
+msgstr "Выберите поставщика"
 
 #: SuppContractChgs.php:38
 msgid ""
