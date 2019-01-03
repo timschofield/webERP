@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-03 10:36-0600\n"
-"PO-Revision-Date: 2019-01-03 10:54-0600\n"
+"PO-Revision-Date: 2019-01-03 13:34-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -16218,17 +16218,19 @@ msgstr ""
 
 #: GLStatements.php:29 includes/MainMenuLinksArray.php:165
 msgid "Financial Statements"
-msgstr ""
+msgstr "Estados financieros"
 
 #: GLStatements.php:93
 msgid ""
 "You must select at least one financial statement. Please select financial "
 "statements."
 msgstr ""
+"Debe seleccionar al menos un estado financiero. Por favor seleccione los "
+"estados financieros."
 
 #: GLStatements.php:112
 msgid "In this set of financial statements:"
-msgstr ""
+msgstr "En este conjunto de estados financieros:"
 
 #: GLStatements.php:113
 msgid "Statement of financial position"
@@ -16248,7 +16250,7 @@ msgstr ""
 
 #: GLStatements.php:173
 msgid "Shows a set of financial statements."
-msgstr ""
+msgstr "Muestra un conjunto de estados financieros."
 
 #: GLStatements.php:174
 msgid ""
@@ -16259,6 +16261,12 @@ msgid ""
 "and(e) notes that summarize the significant accounting policies and other "
 "explanatory information."
 msgstr ""
+"Un conjunto completo de estados financieros comprende: (a) un estado de "
+"situación financiera al final y al inicio del período; (b) un estado de "
+"resultados para el período; (c) un estado de cambios en el patrimonio para "
+"el período (d) un estado de flujos de efectivo del período; y (e) notas que "
+"resumen las políticas contables significativas y otra información "
+"explicativa."
 
 #: GLStatements.php:251
 msgid "Check this box to show the budget"
@@ -55432,235 +55440,3 @@ msgstr "Tarjeta de crédito"
 #: ../webSHOP/includes/session.php:162
 msgid "Bank Transfer"
 msgstr "Transferencia bancaria"
-
-#~ msgid "Show Transactions"
-#~ msgstr "Mostrar transacciones"
-
-#~ msgid "Select a Purchase Order"
-#~ msgstr "Seleccionar una orden de compra"
-
-#~ msgid "Select A Supplier"
-#~ msgstr "Seleccionar un proveedor"
-
-#~ msgid "Print Date"
-#~ msgstr "Imprimir fecha"
-
-#~ msgid "Print Statement of Financial Position"
-#~ msgstr "Imprimir estado de situación"
-
-#~ msgid "Show all Accounts including zero balances"
-#~ msgstr "Mostrar todas las cuentas incluyendo saldos en cero"
-
-#~ msgid "Select A Different Balance Date"
-#~ msgstr "Elegir otra Fecha para el Balance General"
-
-#~ msgid "Show the budget for the period"
-#~ msgstr "Muestrar el presupuesto para el período"
-
-#~ msgid "Print Statement of Comprehensive Income"
-#~ msgstr "Imprimir estado de resultados"
-
-#~ msgid "Print Profit and Loss Report"
-#~ msgstr "Imprimir Informe de Ganancias y Pérdidas"
-
-#~ msgid "Quantity Reqd"
-#~ msgstr "Cantidad requerida"
-
-#~ msgid "No item description was automatically translated"
-#~ msgstr "Ninguna descripción de artículo fue traducido automáticamente"
-
-#~ msgid "Confirm Invoice"
-#~ msgstr "Confirmar Factura"
-
-#~ msgid "Amount in org currency"
-#~ msgstr "Cantidad en divisa original"
-
-#~ msgid "Running Total"
-#~ msgstr "Acumulado en"
-
-#~ msgid "Cleared"
-#~ msgstr "Compensado"
-
-#~ msgid "Previous Balance"
-#~ msgstr "Saldo anterior"
-
-#~ msgid "Account Balance"
-#~ msgstr "Saldo de la cuenta"
-
-#~ msgid "Date : "
-#~ msgstr "Fecha :"
-
-#~ msgid "Dispathed Quantity should not be more than order balanced quantity"
-#~ msgstr "Cantidad despachada no debe ser más que el saldo del pedido"
-
-#~ msgid "Amount of Sale"
-#~ msgstr "Monto de la venta"
-
-#~ msgid "The order details for this product cannot be retrieved because"
-#~ msgstr "No se puede obtener los detalles del pedido de este producto porque"
-
-#~ msgid " Through  "
-#~ msgstr "Hasta"
-
-#~ msgid "Print MRP Planned Purchase Orders Error"
-#~ msgstr "Imprimir Error de Órdenes de Compra Planificadas MRP"
-
-#~ msgid "Account No:"
-#~ msgstr "Cuenta No.:"
-
-#~ msgid "Message Report"
-#~ msgstr "Mensaje"
-
-#~ msgid "Failed to populate the database "
-#~ msgstr "No se pudo llenar la base de datos"
-
-#~ msgid " 12345678901234567890"
-#~ msgstr " 12345678901234567890"
-
-#~ msgid "incl Tax"
-#~ msgstr "impuesto incluido"
-
-#~ msgid "Select Period From:"
-#~ msgstr "Seleccionar el período desde:"
-
-#~ msgid "Select Period To:"
-#~ msgstr "Seleccionar el período hasta:"
-
-#~ msgid "Date Paid"
-#~ msgstr "Pagado el día"
-
-#~ msgid "Currency of Payment"
-#~ msgstr "Moneda de pago"
-
-#~ msgid "Reference in banking transactions"
-#~ msgstr "Referencia en las transacciones bancarias"
-
-#~ msgid ""
-#~ "Are you sure you wish to delete this code and the expense it may have set "
-#~ "up?"
-#~ msgstr ""
-#~ "¿Está seguro que desea suprimir este código y los gastos que puede haber "
-#~ "establecido?"
-
-#~ msgid ""
-#~ "Are you sure you wish to delete this code and the expenses it may have "
-#~ "set up?"
-#~ msgstr ""
-#~ "¿Está seguro que desea suprimir este código y los gastos que se hayan "
-#~ "relacionado?"
-
-#~ msgid "The Expense code must be twenty characters or less long"
-#~ msgstr "El código de Gastos debe ser de veinte caracteres o menos largo"
-
-#~ msgid ""
-#~ "The Expense code cannot contain any of the following characters \" ' - "
-#~ "&amp;"
-#~ msgstr ""
-#~ "La código del gasto no puede contener los siguientes caracteres \" ' - "
-#~ "&amp;"
-
-#~ msgid ""
-#~ "The Expense description cannot contain any of the following characters \" "
-#~ "' - &amp;"
-#~ msgstr ""
-#~ "La descripción del gasto no puede contener los siguientes caracteres \" ' "
-#~ "- &amp;"
-
-#~ msgid "Code Of Expense"
-#~ msgstr "Código del Gasto"
-
-#~ msgid "Inventory Planning for Categories Between"
-#~ msgstr "Proyección de Inventario para Categorías Entre"
-
-#~ msgid "Inventory Planning for Products Category"
-#~ msgstr "Planificación de Inventario para Categorías de Productos"
-
-#~ msgid "Confirm Deletion"
-#~ msgstr "Confirmar borrado"
-
-#~ msgid "You Must First Select a Petty Cash Tab To Assign Cash"
-#~ msgstr ""
-#~ "Primero debe seleccionar una ficha de Caja Chica para asignar efectivo"
-
-#~ msgid "Detail Of PC Tab Movements For Last"
-#~ msgstr "Detalle de los movimientos de ficha de caja chica para el último"
-
-#~ msgid "Cash Assignation Date"
-#~ msgstr "Fecha de Asignación de Efectivo"
-
-#~ msgid "Petty Cash Tab To Assign Cash"
-#~ msgstr "Ficha de Caja Chica para asignar efectivo"
-
-#~ msgid "Detail Of Movement For Last "
-#~ msgstr "Detalle del Movimiento por el pasado"
-
-#~ msgid "Authorise expenses to Petty Cash Tab"
-#~ msgstr "Autorizar los gastos de pestaña de Caja Chica"
-
-#~ msgid "The Expense Claim on Tab"
-#~ msgstr "La reclamación de gastos en la pestaña"
-
-#~ msgid "Petty cash Expense record"
-#~ msgstr "Registro de Gastos de Caja chica"
-
-#~ msgid "Petty Cash Tabs for User "
-#~ msgstr "Pestañas de Caja Chica para el usuario"
-
-#~ msgid "Detail Of Movements For Last "
-#~ msgstr "Detalle de los movimientos para el último"
-
-#~ msgid "Date Of Expense"
-#~ msgstr "Fecha del Gasto"
-
-#~ msgid "Expense Description"
-#~ msgstr "Descripción del Gasto"
-
-#~ msgid "A general ledger code must be selected for this expense"
-#~ msgstr "Debe seleccionarse un código contable para este gasto"
-
-#~ msgid "for Type of Tab:"
-#~ msgstr "para el Tipo de Pestaña:"
-
-#~ msgid "Code Of Petty Cash Tab"
-#~ msgstr "Código de Pestaña de Caja Chica"
-
-#~ msgid "Authoriser "
-#~ msgstr "Autorizador"
-
-#~ msgid "Balance At"
-#~ msgstr "balance al"
-
-#~ msgid "Assigner"
-#~ msgstr "Asignador"
-
-#~ msgid ""
-#~ "Only alpha-numeric characters and the underscore character are allowed"
-#~ msgstr "Sólo se permite caracteres alfanuméricos y guión_bajo"
-
-#~ msgid "has been selected"
-#~ msgstr "ya ha sido seleccionado"
-
-#~ msgid "Tax On Sales"
-#~ msgstr "Impuesto en ventas"
-
-#~ msgid "Tax On Purchases"
-#~ msgstr "Impuestos en compras"
-
-#~ msgid ""
-#~ "Adjustments for tax paid to Customs, FBT, entertainments, etc. must also "
-#~ "be entered."
-#~ msgstr ""
-#~ "Ajustes por impuestos pagados a la Aduana, FBT, entretenimientos, etc. "
-#~ "también se deben introducir."
-
-#~ msgid "Tax Authority To Report On"
-#~ msgstr "Declarar a la Autoridad Fiscal"
-
-#~ msgid "Expenses Authorisation"
-#~ msgstr "Autorización de Gastos"
-
-#~ msgid "Act Transfer From "
-#~ msgstr "Acta de transferencia de"
-
-#~ msgid "Narrative in general ledger transactions"
-#~ msgstr "Descripción en las transacciones del libro mayor"

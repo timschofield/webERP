@@ -25,14 +25,12 @@ Parameters:
 // BEGIN: Functions division ===================================================
 // END: Functions division =====================================================
 
-// BEGIN: Data division ========================================================
+// BEGIN: Procedure division ===================================================
+include('includes/session.php');
 $Title = _('Financial Statements');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLStatements';
-// END: Data division ==========================================================
 
-// BEGIN: Procedure division ===================================================
-include('includes/session.php');
 include('includes/header.php');
 
 // Merges gets into posts:
@@ -166,7 +164,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 } else {
 	// If PeriodFrom or PeriodTo are NOT set or it is a NewReport, shows a parameters input form:
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
-		'/images/printer.png" title="', // Icon image.
+		'/images/gl.png" title="', // Icon image.
 		$Title, '" /> ', // Icon title.
 		$Title, '</p>';// Page title.
 	fShowPageHelp(// Shows the page help text if $_SESSION['ShowFieldHelp'] is TRUE or is not set
