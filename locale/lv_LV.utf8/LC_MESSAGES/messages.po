@@ -10571,7 +10571,7 @@ msgstr "No"
 #: DailyBankTransactions.php:95 GLJournalInquiry.php:66
 #: SupplierTransInquiry.php:64
 msgid "Show transactions"
-msgstr ""
+msgstr "Rādīt darījumus"
 
 #: CustomerTransInquiry.php:90 CustWhereAlloc.php:119 SuppWhereAlloc.php:108
 #: Z_CheckAllocs.php:55
@@ -23514,7 +23514,7 @@ msgstr ""
 
 #: PO_PDFPurchOrder.php:9 ReprintGRN.php:18
 msgid "Select a purchase order"
-msgstr ""
+msgstr "Izvēlēties iepirkuma rīkojumu"
 
 #: PO_PDFPurchOrder.php:12
 msgid "Select a Purchase Order Number to Print before calling this page"

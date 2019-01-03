@@ -23863,7 +23863,7 @@ msgstr "कुल ऑर्डर वैल्यू एडेड टैक्�
 
 #: PO_PDFPurchOrder.php:9 ReprintGRN.php:18
 msgid "Select a purchase order"
-msgstr ""
+msgstr "एक खरीद आदेश का चयन करें"
 
 #: PO_PDFPurchOrder.php:12
 msgid "Select a Purchase Order Number to Print before calling this page"
@@ -33733,7 +33733,7 @@ msgstr ""
 #: SuppContractChgs.php:21 SuppFixedAssetChgs.php:18 SupplierPriceList.php:455
 #: SuppLoginSetup.php:14 SuppShiptChgs.php:27 SuppTransGLAnalysis.php:18
 msgid "Select a supplier"
-msgstr ""
+msgstr "एक प्रदायक चुनें"
 
 #: SuppContractChgs.php:38
 msgid ""

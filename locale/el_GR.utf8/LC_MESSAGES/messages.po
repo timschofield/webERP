@@ -24672,7 +24672,7 @@ msgstr "Συνολική Αξία σειρά που λαμβάνονται χω�
 
 #: PO_PDFPurchOrder.php:9 ReprintGRN.php:18
 msgid "Select a purchase order"
-msgstr ""
+msgstr "Επιλέξτε μια εντολή αγοράς"
 
 #: PO_PDFPurchOrder.php:12
 msgid "Select a Purchase Order Number to Print before calling this page"
@@ -34928,7 +34928,7 @@ msgstr ""
 #: SuppContractChgs.php:21 SuppFixedAssetChgs.php:18 SupplierPriceList.php:455
 #: SuppLoginSetup.php:14 SuppShiptChgs.php:27 SuppTransGLAnalysis.php:18
 msgid "Select a supplier"
-msgstr ""
+msgstr "Επιλογή a προμηθευτής"
 
 #: SuppContractChgs.php:38
 msgid ""

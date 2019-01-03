@@ -25046,7 +25046,7 @@ msgstr ""
 #: PO_PDFPurchOrder.php:9 ReprintGRN.php:18
 #, fuzzy
 msgid "Select a purchase order"
-msgstr "Alternative button order"
+msgstr "בחר הזמנת רכש"
 
 #: PO_PDFPurchOrder.php:12
 msgid "Select a Purchase Order Number to Print before calling this page"

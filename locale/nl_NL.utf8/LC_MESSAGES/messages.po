@@ -24246,12 +24246,11 @@ msgstr "Totaal Opdracht bedrag Ontvangen Exclusief BTW"
 
 #: PO_PDFPurchOrder.php:9 ReprintGRN.php:18
 msgid "Select a purchase order"
-msgstr ""
+msgstr "Selecteer een Inkoop Opdracht"
 
 #: PO_PDFPurchOrder.php:12
 msgid "Select a Purchase Order Number to Print before calling this page"
-msgstr ""
-"Selecteer een Bestelling Aantal af te drukken voordat u belt deze pagina"
+msgstr "Selecteer een Bestelling Aantal af te drukken voordat u belt deze pagina"
 
 #: PO_PDFPurchOrder.php:19 PO_PDFPurchOrder.php:125
 #: includes/MainMenuLinksArray.php:47
@@ -24260,9 +24259,7 @@ msgstr "Inkoop Opdracht Opvragen"
 
 #: PO_PDFPurchOrder.php:29
 msgid "This page must be called with a purchase order number to print"
-msgstr ""
-"Deze pagina moet woren opgevraagd met een inkoop order die moet worden "
-"afgedrukt"
+msgstr "Deze pagina moet woren opgevraagd met een inkoop order die moet worden afgedrukt"
 
 #: PO_PDFPurchOrder.php:39
 msgid "Print Purchase Order Number"
@@ -34324,7 +34321,7 @@ msgstr ""
 #: SuppContractChgs.php:21 SuppFixedAssetChgs.php:18 SupplierPriceList.php:455
 #: SuppLoginSetup.php:14 SuppShiptChgs.php:27 SuppTransGLAnalysis.php:18
 msgid "Select a supplier"
-msgstr ""
+msgstr "Selecteer een leverancier"
 
 #: SuppContractChgs.php:38
 msgid ""
