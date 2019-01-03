@@ -10,13 +10,13 @@ Parameters:
 	PeriodFrom: Select the beginning of the reporting period.
 	PeriodTo: Select the end of the reporting period.
 	Period: Select a period instead of using the beginning and end of the reporting period.
-	ShowBudget: Check this box to show the budget for the period.
+	ShowBudget: Check this box to show the budget.
 	ShowDetail: Check this box to show all accounts instead a summary.
-	ShowZeroBalance: Check this box to show all accounts including those with zero balance.
+	ShowZeroBalance: Check this box to show accounts with zero balance.
 	ShowFinancialPosition: Check this box to show the statement of financial position as at the end and at the beginning of the period;
-	ShowComprehensiveIncome: Check this box to show the statement of comprehensive income for the period;
-	ShowChangesInEquity: Check this box to show the statement of changes in equity for the period;
-	ShowCashFlows: Check this box to show the statement of cash flows for the period; and
+	ShowComprehensiveIncome: Check this box to show the statement of comprehensive income;
+	ShowChangesInEquity: Check this box to show the statement of changes in equity;
+	ShowCashFlows: Check this box to show the statement of cash flows; and
 	ShowNotes: Check this box to show the notes that summarize the significant accounting policies and other explanatory information.
 	NewReport: Click this button to start a new report.
 	IsIncluded: Parameter to indicate that a script is included within another.
@@ -248,42 +248,42 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 			'<tr>',
 			 	'<td><label for="ShowBudget">', _('Show the budget'), '</label></td>
 			 	<td><input', ($_POST['ShowBudget'] ? ' checked="checked"' : ''), ' id="ShowBudget" name="ShowBudget" type="checkbox">', // "Checked" if ShowBudget is set AND it is TRUE.
-			 		fShowFieldHelp(_('Check this box to show the budget for the period')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
+			 		fShowFieldHelp(_('Check this box to show the budget')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
 		 		'</td>
 			</tr>',
 	// Show accounts with zero balance:
 			'<tr>',
 			 	'<td><label for="ShowZeroBalance">', _('Show accounts with zero balance'), '</label></td>
 			 	<td><input', ($_POST['ShowZeroBalance'] ? ' checked="checked"' : ''), ' id="ShowZeroBalance" name="ShowZeroBalance" type="checkbox">', // "Checked" if ShowZeroBalance is set AND it is TRUE.
-			 		fShowFieldHelp(_('Check this box to show all accounts including those with zero balance')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
+			 		fShowFieldHelp(_('Check this box to show accounts with zero balance')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
 		 		'</td>
 			</tr>',
 	// Show the statement of financial position:
 			'<tr>',
 			 	'<td><label for="ShowFinancialPosition">', _('Show the statement of financial position'), '</label></td>
 			 	<td><input', ($_POST['ShowFinancialPosition'] ? ' checked="checked"' : ''), ' id="ShowFinancialPosition" name="ShowFinancialPosition" type="checkbox">', // "Checked" if ShowFinancialPosition is set AND it is TRUE.
-			 		fShowFieldHelp(_('Check this box to show the statement of financial position as at the end and at the beginning of the period')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
+			 		fShowFieldHelp(_('Check this box to show the statement of financial position')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
 		 		'</td>
 			</tr>',
 	// Show the statement of comprehensive income:
 			'<tr>',
 			 	'<td><label for="ShowComprehensiveIncome">', _('Show the statement of comprehensive income'), '</label></td>
 			 	<td><input', ($_POST['ShowComprehensiveIncome'] ? ' checked="checked"' : ''), ' id="ShowComprehensiveIncome" name="ShowComprehensiveIncome" type="checkbox">', // "Checked" if ShowComprehensiveIncome is set AND it is TRUE.
-			 		fShowFieldHelp(_('Check this box to show the statement of comprehensive income for the period')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
+			 		fShowFieldHelp(_('Check this box to show the statement of comprehensive income')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
 		 		'</td>
 			</tr>',
 	// Show the statement of changes in equity:
 			'<tr>',
 			 	'<td><label for="ShowChangesInEquity">', _('Show the statement of changes in equity'), '</label></td>
 			 	<td><input', ($_POST['ShowChangesInEquity'] ? ' checked="checked"' : ''), ' id="ShowChangesInEquity" name="ShowChangesInEquity" type="checkbox">', // "Checked" if ShowChangesInEquity is set AND it is TRUE.
-			 		fShowFieldHelp(_('Check this box to show the statement of changes in equity for the period')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
+			 		fShowFieldHelp(_('Check this box to show the statement of changes in equity')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
 		 		'</td>
 			</tr>',
 	// Show the statement of cash flows:
 			'<tr>',
 			 	'<td><label for="ShowCashFlows">', _('Show the statement of cash flows'), '</label></td>
 			 	<td><input', ($_POST['ShowCashFlows'] ? ' checked="checked"' : ''), ' id="ShowCashFlows" name="ShowCashFlows" type="checkbox">', // "Checked" if ShowCashFlows is set AND it is TRUE.
-			 		fShowFieldHelp(_('Check this box to show the statement of cash flows for the period')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
+			 		fShowFieldHelp(_('Check this box to show the statement of cash flows')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
 		 		'</td>
 			</tr>',
 	// Show the notes:
