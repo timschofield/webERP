@@ -1,6 +1,6 @@
-/* Xenos theme by Khwunchai J. */
-/* Xenos is a very clean and classy looking theme design for WebERP. */
-/*
+/*	Xenos theme by Khwunchai J.
+	Xenos is a very clean and classy looking theme design for WebERP.
+
 Design guidelines:
 	Fonts are 10pt hight.
 	Icons are ??px x ??px size.
@@ -104,7 +104,7 @@ td {
 	vertical-align:top;
 }
 td.select {
-	background-color:#eee;
+	background-color:#eeeeee;
 }
 td table {
 	background:red;
@@ -182,7 +182,7 @@ input[type='submit'], button {
 	padding:6px 24px;
 	vertical-align:middle;
 	font-weight:bold;
-	color:#FFFFFF;
+	color:#ffffff;
 	cursor:pointer;
 
 	-webkit-border-radius:4px;
@@ -208,7 +208,7 @@ tr.striped_row:nth-of-type(even) {
 }
 
 tr.striped_row:nth-of-type(odd) {
-	background-color:#CCCCCC;
+	background-color:#cccccc;
 }
 div.Message {
 	border-radius:10px;
@@ -286,14 +286,14 @@ div.Message.warn {
 /* Table type is used for UI tables type 1 */
 .table1 {
 	width:90%;
-	background:#eee;
+	background:#eeeeee;
 	border:0px 0px 2px 2px #222 solid;
 	margin:0 auto;
 }
 /* Table type is used for UI tables type 2 */
 .table2 {
 	width:90%;
-	background:#eee;
+	background:#eeeeee;
 	border:0px 0px 2px 2px #222 solid;
 	margin:0 auto;
 }
@@ -591,7 +591,7 @@ select.selecterror {
 	padding:2px;
 }
 #InquiriesDiv body {
-	background:#eee;
+	background:#eeeeee;
 	color:red;
 	padding:2px;
 }
@@ -662,39 +662,31 @@ select.selecterror {
 	/* Class selector for field help text. */
 }
 .page_help_text {
-	background-color:#D3D3D3;
+	background-color:#d3d3d3;
 	background-image:url(images/help.png);
 	background-position:top left;
 	background-repeat:no-repeat;
 	border:#c3c3c3 solid thin;
 	color:#000000;
-	float:none;
 	font-weight:normal;
 	margin:0 auto;
 	padding:4px 10px;
-	position:static;
 	text-align:center;
-	visibility:visible;
 	width:80%;
-	z-index:1;
-	/* Class selector for page help text. Hidden / displayed by the ShowPageHelp parameter. */
+	/* Class selector for page help text. Hidden/displayed by the ShowPageHelp parameter. */
 }
 .page_info_text {
-	background-color:#D3D3D3;
+	background-color:#d3d3d3;
 	background-image:url(images/info.svg);
 	background-position:top left;
 	background-repeat:no-repeat;
 	border:#c3c3c3 solid thin;
 	color:#000000;
-	float:none;
 	font-weight:normal;
 	margin:0 auto;
 	padding:4px 10px;
-	position:static;
 	text-align:center;
-	visibility:visible;
 	width:80%;
-	z-index:1;
 	/* Class selector for page info text. */
 }
 .page_title_text {

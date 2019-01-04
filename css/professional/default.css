@@ -49,7 +49,7 @@ td {
 	vertical-align:top;
 }
 td.select {
-	background-color:#eee;
+	background-color:#eeeeee;
 }
 .dpTbl {
 	border:solid navy 1px;
@@ -58,7 +58,7 @@ td.select {
 .dpTD {
 	border:0;
 	width:20px;
-	background-color:#EEEEEE;
+	background-color:#eeeeee;
 	text-align:right;
 	cursor:pointer;
 }
@@ -74,17 +74,17 @@ td.select {
 .dpTDHover {
 	border:0;
 	width:20px;
-	background-color:#CCCCCC;
+	background-color:#cccccc;
 	text-align:right;
 	cursor:pointer;
 }
 
 tr.striped_row:nth-of-type(even) {
-	background-color:#CCCCCC;
+	background-color:#cccccc;
 }
 
 tr.striped_row:nth-of-type(odd) {
-	background-color:#EEEEEE;
+	background-color:#eeeeee;
 }
 
 th { /* table heading */
@@ -229,7 +229,7 @@ textarea:hover {
 /* Table type is used for UI tables type 1 */
 .table1 {
 	width:90%;
-	background:#eee;
+	background:#eeeeee;
 	border:1px solid #222;
 	margin:0 auto;
 }
@@ -385,9 +385,9 @@ textarea.texterror {
 	margin-bottom:10px;
 }
 #BodyDiv table.selection {
-	background:#eee;
+	background:#eeeeee;
 	padding:5px;
-	border:thin outset #eee;
+	border:thin outset #eeeeee;
 }
 
 /*** BODY - MAIN MENU ***/
@@ -443,7 +443,7 @@ textarea.texterror {
 }
 #SubMenuDiv li {
 	/*list-style:none;*/ /* REQUIRED:hide the bullets */
-	background:#eee;
+	background:#eeeeee;
 	padding:2px;
 }
 #SubMenuDiv li img {
@@ -468,7 +468,7 @@ textarea.texterror {
 	border:thin outset #ddd;
 }
 #InquiriesDiv body {
-	background:#eee;
+	background:#eeeeee;
 	color:red;
 	padding:2px;
 }
@@ -536,34 +536,26 @@ textarea.texterror {
 	background:#d3d3d3 url(images/help.png) top left no-repeat;
 	border:#a52a2a 1px solid;
 	color:#000000;
-	float:none;
 	font-weight:normal;
 	margin:0 auto;
 	padding-bottom:2px;
 	padding-left:10px;
 	padding-top:2px;
-	position:static;
 	text-align:center;
-	visibility:visible;
 	width:80%;
-	z-index:1;
-	/* Class selector for page help text. Hidden / displayed by the ShowPageHelp parameter. */
+	/* Class selector for page help text. Hidden/displayed by the ShowPageHelp parameter. */
 }
 .page_info_text {
 	background:#d3d3d3 url(images/info.svg) top left no-repeat;
 	border:#a52a2a 1px solid;
 	color:#000000;
-	float:none;
 	font-weight:normal;
 	margin:0 auto;
 	padding-bottom:2px;
 	padding-left:10px;
 	padding-top:2px;
-	position:static;
 	text-align:center;
-	visibility:visible;
 	width:80%;
-	z-index:1;
 	/* Class selector for page info text. */
 }
 .page_title_text {

@@ -108,7 +108,7 @@ td {
 	vertical-align:top;
 }
 td.select {
-	background-color:#eee;
+	background-color:#eeeeee;
 }
 .centre {
 	margin:0 auto 10px;
@@ -159,11 +159,11 @@ select {
 	font-size:100%;
 }
 tr.striped_row:nth-of-type(even) {
-	background-color:#CCCCCC;
+	background-color:#cccccc;
 }
 
 tr.striped_row:nth-of-type(odd) {
-	background-color:#EEEEEE;
+	background-color:#eeeeee;
 }
 div.Message {
 	border-radius:10px;
@@ -211,7 +211,7 @@ div.Message.warn {
 .dpTD {
 	border:0;
 	width:20px;
-	background-color:#eee;
+	background-color:#eeeeee;
 	text-align:right;
 	cursor:pointer;
 }
@@ -232,9 +232,9 @@ div.Message.warn {
 
 .table1 {
 	width:90%;
-	background:#eee;
+	background:#eeeeee;
 	border:0px 0px 2px 2px #222 solid;
-	background:#eee;
+	background:#eeeeee;
 	margin:0 auto;
 }
 .tableheader {
@@ -510,45 +510,34 @@ select.selecterror { /*AccountGroups.php, BankAccounts.php, BOMs.php, Stocks.php
 	font-style:italic;
 	/* Class selector for field help text. */
 }
-.page_help_text { /* many */
-	/* Class selector for page help text. Hidden / displayed by the ShowPageHelp parameter. */
+.page_help_text {
 	background-color:#d3d3d3;
 	border-radius:5px;
 	border:#a52a2a 1px solid;
 	color:#000000;
-	float:none;
-	font-family:Arial, Verdana, Helvetica, sans-serif;
 	font-size:100%;
 	font-weight:normal;
 	margin:0 auto;
 	padding-bottom:3px; /* 2px in merge */
 	padding-left:3px;	 /* 10px in merge */
 	padding-top:3px;/* 2px in merge */
-	position:static;
 	text-align:center;
-	visibility:visible;
 	width:50%; /* 80% in merge */
-	z-index:1;
-	/* Class selector for page help text. Hidden / displayed by the ShowPageHelp parameter. */
+	/* Class selector for page help text. Hidden/displayed by the ShowPageHelp parameter. */
 }
 .page_info_text {
 	background:#d3d3d3 url(images/info.svg) top left no-repeat;
 	border-radius:5px;
 	border:#a52a2a 1px solid;
 	color:#000000;
-	float:none;
-	font-family:Arial, Verdana, Helvetica, sans-serif;
 	font-size:100%;
 	font-weight:normal;
 	margin:0 auto;
 	padding-bottom:3px; /* 2px in merge */
 	padding-left:3px;	 /* 10px in merge */
 	padding-top:3px;/* 2px in merge */
-	position:static;
 	text-align:center;
-	visibility:visible;
 	width:50%; /* 80% in merge */
-	z-index:1;
 	/* Class selector for page info text. */
 }
 .page_title_text {
