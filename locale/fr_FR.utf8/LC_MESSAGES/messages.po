@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-03 10:36-0600\n"
-"PO-Revision-Date: 2018-09-03 14:43-0600\n"
+"PO-Revision-Date: 2019-01-03 20:25-0600\n"
 "Last-Translator: Rafael E. Chacón <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: French <none>\n"
 "Language: fr_FR\n"
@@ -15572,7 +15572,7 @@ msgstr ""
 
 #: GLBalanceSheet.php:25
 msgid "Statement of Financial Position"
-msgstr "Etat de la situation financière"
+msgstr "État de la situation financière"
 
 #: GLBalanceSheet.php:59
 msgid ""
@@ -15881,7 +15881,7 @@ msgstr ""
 
 #: GLCashFlowsIndirect.php:879
 msgid "Check this box to show the budget for the period"
-msgstr "Cocher cette case pour afficher le budget de la période"
+msgstr "Cochez cette case pour afficher le budget de la période"
 
 #: GLCashFlowsIndirect.php:891
 msgid "Show cash and cash equivalents accounts"
@@ -16288,37 +16288,39 @@ msgstr ""
 
 #: GLStatements.php:29 includes/MainMenuLinksArray.php:165
 msgid "Financial Statements"
-msgstr ""
+msgstr "États financiers"
 
 #: GLStatements.php:93
 msgid ""
 "You must select at least one financial statement. Please select financial "
 "statements."
 msgstr ""
+"Vous devez sélectionner au moins un état financier. Veuillez sélectionner "
+"les états financiers."
 
 #: GLStatements.php:112
 msgid "In this set of financial statements:"
-msgstr ""
+msgstr "Dans cet ensemble d'états financiers :"
 
 #: GLStatements.php:113
 msgid "Statement of financial position"
-msgstr ""
+msgstr "État de la situation financière"
 
 #: GLStatements.php:114
 msgid "Statement of comprehensive income"
-msgstr ""
+msgstr "État du résultat global"
 
 #: GLStatements.php:115
 msgid "Statement of changes in equity"
-msgstr ""
+msgstr "État des variations de capitaux propres"
 
 #: GLStatements.php:116
 msgid "Statement of cash flows"
-msgstr ""
+msgstr "Tableau de flux de trésorerie"
 
 #: GLStatements.php:173
 msgid "Shows a set of financial statements."
-msgstr ""
+msgstr "Affiche un ensemble d'états financiers."
 
 #: GLStatements.php:174
 msgid ""
@@ -16329,56 +16331,65 @@ msgid ""
 "and(e) notes that summarize the significant accounting policies and other "
 "explanatory information."
 msgstr ""
+"Un ensemble complet d'états financiers comprend: (a) un état de la situation "
+"financière à la fin et au début de la période, (b) un état du résultat "
+"global pour la période, (c) un état des variations des capitaux propres pour "
+"la période, d) un tableau des flux de trésorerie pour la période; et e) des "
+"notes contenant un résumé des principales méthodes comptables et d'autres "
+"informations explicatives."
 
 #: GLStatements.php:251
 msgid "Check this box to show the budget"
-msgstr ""
+msgstr "Cochez cette case pour afficher le budget"
 
 #: GLStatements.php:258
 msgid "Check this box to show accounts with zero balance"
-msgstr ""
+msgstr "Cochez cette case pour afficher les comptes avec solde nul"
 
 #: GLStatements.php:263
 msgid "Show the statement of financial position"
-msgstr ""
+msgstr "Afficher l'état de situation financière"
 
 #: GLStatements.php:265
 msgid "Check this box to show the statement of financial position"
-msgstr ""
+msgstr "Cochez cette case pour afficher l'état de situation financière"
 
 #: GLStatements.php:270
 msgid "Show the statement of comprehensive income"
-msgstr ""
+msgstr "Afficher l'état du résultat global"
 
 #: GLStatements.php:272
 msgid "Check this box to show the statement of comprehensive income"
-msgstr ""
+msgstr "Cochez cette case pour afficher l'état du résultat global"
 
 #: GLStatements.php:277
 msgid "Show the statement of changes in equity"
-msgstr ""
+msgstr "Afficher l'état des variations des capitaux propres"
 
 #: GLStatements.php:279
 msgid "Check this box to show the statement of changes in equity"
 msgstr ""
+"Cochez cette case pour afficher l'état des variations des capitaux propres"
 
 #: GLStatements.php:284
 msgid "Show the statement of cash flows"
-msgstr ""
+msgstr "Afficher le tableau de flux de trésorerie"
 
 #: GLStatements.php:286
 msgid "Check this box to show the statement of cash flows"
-msgstr ""
+msgstr "Cochez cette case pour afficher le tableau de flux de trésorerie"
 
 #: GLStatements.php:291
 msgid "Show the notes"
-msgstr ""
+msgstr "Afficher les notes"
 
 #: GLStatements.php:293
 msgid ""
 "Check this box to show the notes that summarize the significant accounting "
 "policies and other explanatory information"
 msgstr ""
+"Cochez cette case pour afficher les notes contenant un résumé des "
+"principales méthodes comptables et d'autres informations explicatives."
 
 #: GLTagProfit_Loss.php:5
 msgid "Income and Expenditure by Tag"
@@ -52621,7 +52632,7 @@ msgstr "État du résultat global"
 
 #: includes/MainMenuLinksArray.php:164
 msgid "Statement of Cash Flows"
-msgstr "État des flux de trésorerie"
+msgstr "Tableau de flux de trésorerie"
 
 #: includes/MainMenuLinksArray.php:168
 msgid "Tag Reports"
