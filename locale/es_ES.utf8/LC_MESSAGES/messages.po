@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-03 10:36-0600\n"
-"PO-Revision-Date: 2019-01-03 13:34-0600\n"
+"PO-Revision-Date: 2019-01-03 19:57-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -16234,19 +16234,19 @@ msgstr "En este conjunto de estados financieros:"
 
 #: GLStatements.php:113
 msgid "Statement of financial position"
-msgstr ""
+msgstr "Estado de situación"
 
 #: GLStatements.php:114
 msgid "Statement of comprehensive income"
-msgstr ""
+msgstr "Estado de resultados"
 
 #: GLStatements.php:115
 msgid "Statement of changes in equity"
-msgstr ""
+msgstr "Estado de cambios en el patrimonio"
 
 #: GLStatements.php:116
 msgid "Statement of cash flows"
-msgstr ""
+msgstr "Estado de flujos de efectivo"
 
 #: GLStatements.php:173
 msgid "Shows a set of financial statements."
