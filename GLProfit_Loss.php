@@ -662,7 +662,7 @@ if (!isset($_POST['PeriodFrom']) OR !isset($_POST['PeriodTo']) OR $_POST['NewRep
 	echo '<div id="Report">';// Division to identify the report block.
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 		'/images/gl.png" title="', // Icon image.
-		$Title, '" /> ', // Icon title.
+		$Title2, '" /> ', // Icon title.
 		// Page title as IAS1 numerals 10 and 51:
 		$Title, '<br />', // Page title, reporting statement.
 		stripslashes($_SESSION['CompanyRecord']['coyname']), '<br />', // Page title, reporting entity.
