@@ -1,6 +1,7 @@
 /* Xenos theme by Khwunchai J. */
 /* Xenos is a very clean and classy looking theme design for WebERP. */
-/*	Design guidelines:
+/*
+Design guidelines:
 	Fonts are 10pt hight.
 	Icons are ??px x ??px size.
 */
@@ -8,7 +9,6 @@
 /***
 NOTE:
 This CSS is not yet fully optimized. Some styles maybe redundant and not supported by some browser.
-
 ***/
 
 
@@ -662,7 +662,10 @@ select.selecterror {
 	/* Class selector for field help text. */
 }
 .page_help_text {
-	background:#d3d3d3 url(images/help.png) top left no-repeat;
+	background-color:#D3D3D3;
+	background-image:url(images/help.png);
+	background-position:top left;
+	background-repeat:no-repeat;
 	border:#c3c3c3 solid thin;
 	color:#000000;
 	float:none;
@@ -677,7 +680,10 @@ select.selecterror {
 	/* Class selector for page help text. Hidden / displayed by the ShowPageHelp parameter. */
 }
 .page_info_text {
-	background:#d3d3d3 url(images/info.svg) top left no-repeat;
+	background-color:#D3D3D3;
+	background-image:url(images/info.svg);
+	background-position:top left;
+	background-repeat:no-repeat;
 	border:#c3c3c3 solid thin;
 	color:#000000;
 	float:none;

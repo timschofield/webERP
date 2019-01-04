@@ -1,5 +1,6 @@
-/* Default theme for WebERP by . */
-/*	Design guidelines:
+/* Default theme for WebERP by ... */
+/*
+Design guidelines:
 	Fonts are 10px hight.
 	Icons are 16px x 16px size.
 */
@@ -115,10 +116,6 @@ div.centre {
 
 input {
 	font-family:Arial, Verdana, Helvetica, sans-serif;
-}
-
-input.number {
-	text-align:right;
 }
 
 input.image {
@@ -514,7 +511,10 @@ textarea.texterror {
 	/* Class selector for field help text. */
 }
 .page_help_text {
-	background:#d3d3d3 url(images/help.png) top left no-repeat;
+	background-color:#D3D3D3;
+	background-image:url(images/help.png);
+	background-position:2px 2px;
+	background-repeat:no-repeat;
 	border:#a52a2a 1px solid;
 	color:#000000;
 	float:none;
@@ -522,7 +522,8 @@ textarea.texterror {
 	font-weight:normal;
 	margin:0 auto;
 	padding-bottom:2px;
-	padding-left:10px;
+	padding-left:20px;
+	padding-right:2px;
 	padding-top:2px;
 	position:static;
 	text-align:center;
@@ -532,7 +533,10 @@ textarea.texterror {
 	/* Class selector for page help text. Hidden / displayed by the ShowPageHelp parameter. */
 }
 .page_info_text {
-	background:#d3d3d3 url(images/info.svg) top left no-repeat;
+	background-color:#D3D3D3;
+	background-image:url(images/info.svg);
+	background-position:2px 2px;
+	background-repeat:no-repeat;
 	border:#a52a2a 1px solid;
 	color:#000000;
 	float:none;
@@ -540,7 +544,8 @@ textarea.texterror {
 	font-weight:normal;
 	margin:0 auto;
 	padding-bottom:2px;
-	padding-left:10px;
+	padding-left:20px;
+	padding-right:2px;
 	padding-top:2px;
 	position:static;
 	text-align:center;
