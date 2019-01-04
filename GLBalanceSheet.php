@@ -19,18 +19,14 @@ Parameters:
 // BEGIN: Functions division ===================================================
 // END: Functions division =====================================================
 
-// BEGIN: Data division ========================================================
-$Title = _('Profit and Loss');
-$Title = _('Balance Sheet');
-$Title2 = _('Statement of Financial Position'); // Name as IAS.
-$ViewTopic = 'GeneralLedger';
-$BookMark = 'BalanceSheet';
-// END: Data division ==========================================================
-
 // BEGIN: Procedure division ===================================================
 if(!isset($IsIncluded)) {// Runs normally if this script is NOT included in another.
 	include('includes/session.php');
 }
+$Title = _('Balance Sheet');
+$Title2 = _('Statement of Financial Position'); // Name as IAS.
+$ViewTopic = 'GeneralLedger';
+$BookMark = 'BalanceSheet';
 
 include_once('includes/SQL_CommonFunctions.inc');
 include_once('includes/AccountSectionsDef.php'); // This loads the $Sections variable
@@ -440,34 +436,30 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['SelectADifferentPeriod'])) {
 		include('includes/header.php');
 	}
 
-	include_once('includes/CurrenciesArray.php');// Array to retrieve currency name.
 	echo '<div id="Report">';// Division to identify the report block.
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 		'/images/gl.png" title="', // Icon image.
-		$Title2, '" /> ', // Icon title.
-	// Page title as IAS1 numerals 10 and 51:
-		$Title, '</p>', // Page title, reporting statement.
+		$Title, '" /> ', // Icon title.
+		// Page title as IAS1 numerals 10 and 51:
+		$Title, '<br />', // Page title, reporting statement.
 		stripslashes($_SESSION['CompanyRecord']['coyname']), '<br />', // Page title, reporting entity.
-		_('as at'), ' ', $BalanceDate, '<br />', // Page title, reporting period.
-		_('All amounts stated in'), ': ', _($CurrencyName[$_SESSION['CompanyRecord']['currencydefault']]), '</p>';// Page title, reporting presentation currency and level of rounding used.
-
-	echo '<table class="selection">';
-	if ($_POST['ShowDetail'] == 'Detailed') {
-		$TableHeader = '<tr>
-							<th>' . _('Account') . '</th>
-							<th>' . _('Account Name') . '</th>
-							<th colspan="2">' . $BalanceDate . '</th>
-							<th colspan="2">' . _('Last Year') . '</th>
-						</tr>';
+		_('as at'), ' ', $BalanceDate, '<br />'; // Page title, reporting period.
+	include_once('includes/CurrenciesArray.php');// Array to retrieve currency name.
+	echo _('All amounts stated in'), ': ', _($CurrencyName[$_SESSION['CompanyRecord']['currencydefault']]), '</p>';// Page title, reporting presentation currency and level of rounding used.
+	echo '<table class="selection">',
+		// Content of the header and footer of the output table:
+		'<thead>
+			<tr>';
+	if ($_POST['ShowDetail']=='Detailed') {
+		echo '<th>', _('Account'), '</th><th>', _('Account Name'), '</th>';
 	} else {// Summary report:
-		$TableHeader = '<tr>
-							<th colspan="2"></th>
-							<th colspan="2">' . $BalanceDate . '</th>
-							<th colspan="2">' . _('Last Year') . '</th>
-						</tr>';
+		echo '<th colspan="2"></th>';
 	}
-/*	echo '<thead>' . $TableHeader . '<thead><tbody>';// thead used in conjunction with tbody enable scrolling of the table body independently of the header and footer. Also, when printing a large table that spans multiple pages, these elements can enable the table header to be printed at the top of each page. */
-	echo $TableHeader;
+	echo		'<th colspan="2">', $BalanceDate, '</th>
+				<th colspan="2">', _('Last Year'), '</th>
+			</tr>
+		<thead><tbody>';// thead used in conjunction with tbody enable scrolling of the table body independently of the header and footer. Also, when printing a large table that spans multiple pages, these elements can enable the table header to be printed at the top of each page.
+
 	$j = 0; //row counter
 
 	while ($MyRow = DB_fetch_array($AccountsResult)) {
@@ -572,8 +564,7 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['SelectADifferentPeriod'])) {
 				$ActGrp = $MyRow['groupname'];
 				echo '<tr>
 						<td colspan="6"><h3>', $MyRow['groupname'], '</h3></td>
-					</tr>',
-					$TableHeader;
+					</tr>';
 			}
 			$GroupTotal[$Level] = 0;
 			$GroupTotalLY[$Level] = 0;
@@ -691,9 +682,8 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['SelectADifferentPeriod'])) {
 			<td><hr /></td>
 			<td>&nbsp;</td>
 			<td><hr /></td>
-		</tr>';
-	/*	echo '</tbody>';// See comment at the begin of the table.*/
-	echo '</table>',
+		</tr>
+		</tbody></table>',
 		'</div>';// div id="Report".
 	if(!isset($IsIncluded)) {// Runs normally if this script is NOT included in another.
 		echo // Shows a form to select an action after the report was shown:

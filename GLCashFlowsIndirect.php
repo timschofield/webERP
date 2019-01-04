@@ -42,15 +42,14 @@ function colDebitCredit($Amount) {
 }
 // END: Functions division =====================================================
 
-// BEGIN: Data division ========================================================
-$Title = _('Statement of Cash Flows, Indirect Method');
-$ViewTopic = 'GeneralLedger';
-$BookMark = 'GLCashFlowsIndirect';
-// END: Data division ==========================================================
-
 // BEGIN: Procedure division ===================================================
 if(!isset($IsIncluded)) {// Runs normally if this script is NOT included in another.
 	include('includes/session.php');
+}
+$Title = _('Statement of Cash Flows, Indirect Method');
+if(!isset($IsIncluded)) {// Runs normally if this script is NOT included in another.
+	$ViewTopic = 'GeneralLedger';
+	$BookMark = 'GLCashFlowsIndirect';
 	include('includes/header.php');
 }
 
@@ -92,7 +91,6 @@ if($_POST['PeriodTo']-$_POST['PeriodFrom']+1 > 12) {
 // Main code:
 if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewReport']) {
 	// If PeriodFrom and PeriodTo are set and it is not a NewReport, generates the report:
-	include_once('includes/CurrenciesArray.php');// Array to retrieve currency name.
 	echo '<div id="Report">';// Division to identify the report block.
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 		'/images/gl.png" title="', // Icon image.
@@ -105,6 +103,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 	$Result = DB_query('SELECT lastdate_in_period FROM `periods` WHERE `periodno`=' . $_POST['PeriodTo']);
 	$PeriodToName = DB_fetch_array($Result);
 	echo _('From'), ' ', MonthAndYearFromSQLDate($PeriodFromName['lastdate_in_period']), ' ', _('to'), ' ', MonthAndYearFromSQLDate($PeriodToName['lastdate_in_period']), '<br />'; // Page title, reporting period.
+	include_once('includes/CurrenciesArray.php');// Array to retrieve currency name.
 	echo _('All amounts stated in'), ': ', _($CurrencyName[$_SESSION['CompanyRecord']['currencydefault']]), '</p>';// Page title, reporting presentation currency and level of rounding used.
 	echo '<table class="selection">',
 		// Content of the header and footer of the output table:

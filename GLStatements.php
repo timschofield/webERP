@@ -97,6 +97,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 		'/images/gl.png" title="', // Icon image.
 		$Title, '" /> ', // Icon title.
+		// Page title as IAS1 numerals 10 and 51:
 		$Title, '<br />', // Page title, reporting statement.
 		stripslashes($_SESSION['CompanyRecord']['coyname']), '<br />'; // Page title, reporting entity.
 	$Result = DB_query('SELECT lastdate_in_period FROM `periods` WHERE `periodno`=' . $_POST['PeriodFrom']);
@@ -193,8 +194,8 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 				'</td>
 			</tr>
 		</tfoot><tbody>',
-		// Content of the body of the input table:
-			// Select period from:
+	// Content of the body of the input table:
+	// Select period from:
 			'<tr>',
 				'<td><label for="PeriodFrom">', _('Select period from'), '</label></td>
 		 		<td><select id="PeriodFrom" name="PeriodFrom" required="required">';
