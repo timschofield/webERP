@@ -1,6 +1,6 @@
-/* WEBootstrap theme by giankocr. */
-/* WEBootstrap is a bootstrap theme design for WebERP. */
-/*
+/*	WEBootstrap theme by giankocr.
+	WEBootstrap is a bootstrap theme design for WebERP.
+
 Design guidelines:
 	Fonts are ??px hight.
 	Icons are 36px x 36px size.
@@ -82,10 +82,10 @@ td {
 	vertical-align:top;
 }
 td.select {
-	background-color:#eee;
+	background-color:#eeeeee;
 }
 td table {
-	background:#eee;
+	background:#eeeeee;
 }
 /*
 table tr:first-child th:first-child, table tr:first-child td:first-child {
@@ -157,7 +157,7 @@ input[type='text']:focus, input[type='tel']:focus, input[type='password']:focus,
 input[type='submit'], button {
 	background-color:#34a7e8;
 	border:thin outset #1992DA;
-	color:#FFFFFF;
+	color:#ffffff;
 	cursor:pointer;
 	font-weight:bold;
 	padding:6px 24px;
@@ -184,7 +184,7 @@ tr.striped_row:nth-of-type(even) {
 }
 
 tr.striped_row:nth-of-type(odd) {
-	background-color:#CCCCCC;
+	background-color:#cccccc;
 }
 div.Message {
 	border-radius:10px;
@@ -264,14 +264,14 @@ div.Message.warn {
 
 /* Table type is used for UI tables type 1 */
 .table1 {
-	background:#eee;
+	background:#eeeeee;
 	border:0px 0px 2px 2px #222 solid;
 	margin:0 auto;
 	width:90%;
 }
 /* Table type is used for UI tables type 2 */
 .table2 {
-	background:#eee;
+	background:#eeeeee;
 	border:0px 0px 2px 2px #222 solid;
 	margin:0 auto;
 	width:90%;
@@ -693,30 +693,22 @@ select.selecterror {
 	background:#d3d3d3 url(images/help.png) top left no-repeat;
 	border:#c3c3c3 solid thin;
 	color:#000000;
-	float:none;
 	font-weight:normal;
 	margin:0 auto;
 	padding:4px 10px;
-	position:static;
 	text-align:center;
-	visibility:visible;
 	width:80%;
-	z-index:1;
-	/* Class selector for page help text. Hidden / displayed by the ShowPageHelp parameter. */
+	/* Class selector for page help text. Hidden/displayed by the ShowPageHelp parameter. */
 }
 .page_info_text {
 	background:#d3d3d3 url(images/info.svg) top left no-repeat;
 	border:#c3c3c3 solid thin;
 	color:#000000;
-	float:none;
 	font-weight:normal;
 	margin:0 auto;
 	padding:4px 10px;
-	position:static;
 	text-align:center;
-	visibility:visible;
 	width:80%;
-	z-index:1;
 	/* Class selector for page info text. */
 }
 .page_title_text {

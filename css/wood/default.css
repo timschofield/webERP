@@ -1,6 +1,4 @@
-/* "Wood" Theme for WebERP by Hindra Joshua. */
-/*
-v3, 2012-08-03
+/* "Wood" Theme for WebERP by Hindra Joshua. v3, 2012-08-03.
 
 Changes:
 - Wood textures scaled down
@@ -203,7 +201,7 @@ div.Message.warn {
 .dpTD {
 	border:0;
 	width:20px;
-	background-color:#EEEEEE;
+	background-color:#eeeeee;
 	text-align:right;
 	cursor:pointer;
 }
@@ -217,7 +215,7 @@ div.Message.warn {
 .dpTDHover {
 	border:0;
 	width:20px;
-	background-color:#CCCCCC;
+	background-color:#cccccc;
 	text-align:right;
 	cursor:pointer;
 }
@@ -227,7 +225,7 @@ div.Message.warn {
 /* Table type is used for UI tables type 1 */
 .table1 {
 	width:90%;
-	background:#eee;
+	background:#eeeeee;
 	border:0px 0px 2px 2px solid #222;
 	margin:0 auto;
 }
@@ -549,8 +547,6 @@ display:table-cell;
 	border:#A52A2A 1px solid;
 	box-shadow:3px 3px 4px;
 	color:#000000;
-	float:none;
-	font-family:Arial, Verdana, Helvetica, sans-serif;
 	font-size:100%;
 	font-weight:normal;
 	margin:0 auto 10px;
@@ -558,20 +554,15 @@ display:table-cell;
 	padding-bottom:2px;
 	padding-left:10px;
 	padding-top:2px;
-	position:static;
 	text-align:center;
-	visibility:visible;
 	width:80%;
-	z-index:1;
-	/* Class selector for page help text. Hidden / displayed by the ShowPageHelp parameter. */
+	/* Class selector for page help text. Hidden/displayed by the ShowPageHelp parameter. */
 }
 .page_info_text {
 	background:#d3d3d3 url(images/info.svg) top left no-repeat;
 	border:#A52A2A 1px solid;
 	box-shadow:3px 3px 4px;
 	color:#000000;
-	float:none;
-	font-family:Arial, Verdana, Helvetica, sans-serif;
 	font-size:100%;
 	font-weight:normal;
 	margin:0 auto 10px;
@@ -579,11 +570,8 @@ display:table-cell;
 	padding-bottom:2px;
 	padding-left:10px;
 	padding-top:2px;
-	position:static;
 	text-align:center;
-	visibility:visible;
 	width:80%;
-	z-index:1;
 	/* Class selector for page info text. */
 }
 .page_title_text {

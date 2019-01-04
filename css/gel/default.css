@@ -48,13 +48,13 @@ p.bad {
 	color:red;
 }
 table {
-	background-color:#eee;
+	background-color:#eeeeee;
 	border:0px 0px 2px 2px #222 solid;
-	background:#eee;
+	background:#eeeeee;
 	width:100%;
 }
 table.selection {
-	background-color:#eee;
+	background-color:#eeeeee;
 	outline-style:solid;
 	outline-width:1px;
 }
@@ -95,19 +95,19 @@ td {
 	vertical-align:top;
 }
 td.select {
-	background-color:#eee;
+	background-color:#eeeeee;
 }
 div.centre {
 	margin:0 auto;
 	text-align:center;
 }
 input {
-	background:url(images/input.png) #eee;
+	background:url(images/input.png) #eeeeee;
 	color:#000000;
 	border:0px 0px 1px 1px #000000 dashed;
 }
 input:hover {
-	background:url(images/inputh.png) #eee;
+	background:url(images/inputh.png) #eeeeee;
 	color:#000000;
 	border:1px 1px 1px 1px #000000 solid;
 }
@@ -123,29 +123,29 @@ input:required, select:required, textarea:required {
 	background-color:#ffffe0;
 }
 select {
-	background:#eee;
+	background:#eeeeee;
 	color:#111;
 }
 textarea {
-	background:url(images/input.png) #eee;
+	background:url(images/input.png) #eeeeee;
 	color:#000000;
 	border:0px 0px 1px 1px #000000 dashed;
 }
 textarea:hover {
 }
 tr.striped_row:nth-of-type(even) {
-	background-color:#CCCCCC;
+	background-color:#cccccc;
 }
 tr.striped_row:nth-of-type(odd) {
-	background-color:#EEEEEE;
+	background-color:#eeeeee;
 }
 textarea {
-	background:url(images/inputtxt.png) #eee;
+	background:url(images/inputtxt.png) #eeeeee;
 	color:#000000;
 	border:0px 0px 1px 1px #000000 dashed;
 	}
 textarea:hover {
-	background:url(images/inputhtxt.png) #eee;
+	background:url(images/inputhtxt.png) #eeeeee;
 	color:#000000;
 	border:1px 1px 1px 1px #000000 solid;
 }
@@ -195,7 +195,7 @@ div.Message.warn {
 .dpTD {
 	border:0;
 	width:20px;
-	background-color:#EEEEEE;
+	background-color:#eeeeee;
 	text-align:right;
 	cursor:pointer;
 }
@@ -209,14 +209,14 @@ div.Message.warn {
 .dpTDHover {
 	border:0;
 	width:20px;
-	background-color:#CCCCCC;
+	background-color:#cccccc;
 	text-align:right;
 	cursor:pointer;
 }
 
 .table1 { /*** used ***/
 	width:90%;
-	background:#eee;
+	background:#eeeeee;
 	border:1px solid #222;
 	margin:0 auto;
 }
@@ -238,7 +238,7 @@ div.Message.warn {
 	background-color:#cccccc;
 }
 .table_index { /* used */
-	background-color:#eee;
+	background-color:#eeeeee;
 }
 
 .header {
@@ -540,34 +540,26 @@ li { /* ??? */
 	background:#d3d3d3 url(images/help.png) top left no-repeat;
 	border:#a52a2a 1px solid;
 	color:#000000;
-	float:none;
 	font-weight:normal;
 	margin:0 auto;
 	padding-bottom:2px;
 	padding-left:10px;
 	padding-top:2px;
-	position:static;
 	text-align:center;
-	visibility:visible;
 	width:80%;
-	z-index:1;
-	/* Class selector for page help text. Hidden / displayed by the ShowPageHelp parameter. */
+	/* Class selector for page help text. Hidden/displayed by the ShowPageHelp parameter. */
 }
 .page_info_text {
 	background:#d3d3d3 url(images/info.svg) top left no-repeat;
 	border:#a52a2a 1px solid;
 	color:#000000;
-	float:none;
 	font-weight:normal;
 	margin:0 auto;
 	padding-bottom:2px;
 	padding-left:10px;
 	padding-top:2px;
-	position:static;
 	text-align:center;
-	visibility:visible;
 	width:80%;
-	z-index:1;
 	/* Class selector for page info text. */
 }
 .page_title_text {

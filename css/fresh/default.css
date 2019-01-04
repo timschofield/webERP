@@ -92,7 +92,7 @@ td {
 	vertical-align:top;
 }
 td.select {
-	background-color:#eee;
+	background-color:#eeeeee;
 }
 div.centre { /* centering buttons / links */
 	margin:0 auto;
@@ -176,7 +176,7 @@ div.Message.warn {
 .dpTD {
 	border:0;
 	width:20px;
-	background-color:#EEEEEE;
+	background-color:#eeeeee;
 	text-align:right;
 	cursor:pointer;
 }
@@ -190,7 +190,7 @@ div.Message.warn {
 .dpTDHover {
 	border:0;
 	width:20px;
-	background-color:#CCCCCC;
+	background-color:#cccccc;
 	text-align:right;
 	cursor:pointer;
 }
@@ -199,14 +199,14 @@ div.Message.warn {
 /* Table type is used for UI tables type 1 */
 .table1 {
 	width:90%;
-	background:#eee;
+	background:#eeeeee;
 	border:0px 0px 2px 2px #222 solid;
 	margin:0 auto;
 }
 /* Table type is used for UI tables type 2 */
 .table2 {
 	width:90%;
-	background:#eee;
+	background:#eeeeee;
 	border:0px 0px 2px 2px #222 solid;
 	margin:0 auto;
 }
@@ -437,7 +437,7 @@ select.selecterror {
 	border:thin outset #5A5F00;
 }
 #InquiriesDiv body {
-	background:#eee;
+	background:#eeeeee;
 	color:red;
 	padding:2px;
 }
@@ -451,7 +451,7 @@ select.selecterror {
 .menu_group_item p {
 	color:#00f; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
 	text-indent:-10px; /* this makes the bullet to appear as the li tag previously used */
-	margin:0 0 0 12px; /* One thing that I didnÃÂÃÂ´t like of the li was that it had no left margin applied */
+	margin:0 0 0 12px; /* One thing that I didn´t like of the li was that it had no left margin applied */
 }
 
 /*** FOOTER ***/
@@ -512,34 +512,26 @@ select.selecterror {
 	background:#d3d3d3 url(images/help.png) top left no-repeat;
 	border:#a52a2a 1px solid;
 	color:#000000;
-	float:none;
 	font-weight:normal;
 	margin:0 auto;
 	padding-bottom:2px;
 	padding-left:10px;
 	padding-top:2px;
-	position:static;
 	text-align:center;
-	visibility:visible;
 	width:80%;
-	z-index:1;
-	/* Class selector for page help text. Hidden / displayed by the ShowPageHelp parameter. */
+	/* Class selector for page help text. Hidden/displayed by the ShowPageHelp parameter. */
 }
 .page_info_text {
 	background:#d3d3d3 url(images/info.svg) top left no-repeat;
 	border:#a52a2a 1px solid;
 	color:#000000;
-	float:none;
 	font-weight:normal;
 	margin:0 auto;
 	padding-bottom:2px;
 	padding-left:10px;
 	padding-top:2px;
-	position:static;
 	text-align:center;
-	visibility:visible;
 	width:80%;
-	z-index:1;
 	/* Class selector for page info text. */
 }
 .page_title_text {
