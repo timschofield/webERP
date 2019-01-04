@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-03 10:36-0600\n"
-"PO-Revision-Date: 2019-01-03 20:25-0600\n"
+"PO-Revision-Date: 2019-01-03 20:41-0600\n"
 "Last-Translator: Rafael E. Chacón <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: French <none>\n"
 "Language: fr_FR\n"
@@ -15877,7 +15877,7 @@ msgstr ""
 
 #: GLCashFlowsIndirect.php:877 GLStatements.php:249
 msgid "Show the budget"
-msgstr ""
+msgstr "Afficher le budget"
 
 #: GLCashFlowsIndirect.php:879
 msgid "Check this box to show the budget for the period"
