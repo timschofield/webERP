@@ -91,7 +91,7 @@ if($_POST['PeriodTo']-$_POST['PeriodFrom']+1 > 12) {
 // Main code:
 if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewReport']) {
 	// If PeriodFrom and PeriodTo are set and it is not a NewReport, generates the report:
-	echo '<div id="Report">';// Division to identify the report block.
+	echo '<div class="sheet">';// Division to identify the report block.
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 		'/images/gl.png" title="', // Icon image.
 		$Title, '" /> ', // Icon title.
