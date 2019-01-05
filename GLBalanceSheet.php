@@ -436,7 +436,7 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['SelectADifferentPeriod'])) {
 		include('includes/header.php');
 	}
 
-	echo '<div id="Report">';// Division to identify the report block.
+	echo '<div class="sheet">';// Division to identify the report block.
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 		'/images/gl.png" title="', // Icon image.
 		$Title2, '" /> ', // Icon title.

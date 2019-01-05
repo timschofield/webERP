@@ -547,13 +547,14 @@ select.selecterror { /*AccountGroups.php, BankAccounts.php, BOMs.php, Stocks.php
 	text-align:center;
 	/* Class selector for page title text. */
 }
-.sheet {
+.sheet {/* Uncomment this to use sheet style preview
 	background-color:#ffffff;
 	border:0;
+	box-shadow:26px 16px 8px 0 rgba(0, 0, 0, 0.5);
 	color:#000000;
 	margin:5%;
-	padding:5%;
-	/* Class selector for sheet preview. */
+	padding:5%;*/
+	/* Class selector for sheet style preview. */
 }
 /* END Class selectors of the style for all devices. ------------------------ */
 /* END Style for all devices.================================================ */

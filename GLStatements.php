@@ -94,6 +94,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !($_POST['ShowF
 // Main code:
 if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewReport']) {
 	// If PeriodFrom and PeriodTo are set and it is not a NewReport, generates the report:
+	echo '<div class="sheet">';// Division to identify the report block.
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 		'/images/gl.png" title="', // Icon image.
 		$Title, '" /> ', // Icon title.
@@ -115,6 +116,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 		(($_POST['ShowCashFlows']) ? '<br />* ' . _('Statement of cash flows') . '.' : ''),
 		(($_POST['ShowNotes']) ? '<br />* ' . _('Notes') . '.' : ''),
 		'<p>';
+	echo '</div>';// div id="Report".
 	$IsIncluded = TRUE;
 	$PageBreak = '<hr class="PageBreak"/>' . chr(12);// Marker to indicate that the content that follows is part of a new page.
 	// Displays the statements using the corresponding scripts:
