@@ -10,6 +10,9 @@ Changes:
 Notes:
 - You can remove desk.jpg and/or wood.jpg to get a new look without the textures!
 
+Design guidelines:
+	Fonts are 10pt hight.
+	Icons are ??px x ??px size.  (24x24 ?)
 */
 
 button img {
@@ -159,7 +162,7 @@ div.Message {
 	transition:opacity 0.6s; /* 600ms to fade out */
 }
 div.Message.error {
-	background:#ffecec url('images/message-error.png') no-repeat 10px 50%;
+	background:#ffecec url('images/message-error.svg') no-repeat 10px 50%;
 	border:1px solid #f5aca6;
 }
 div.Message.success {

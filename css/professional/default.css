@@ -1,7 +1,4 @@
-/***
-"Professional" Theme for WebERP
-
-by Hindra Joshua
+/* "Professional" Theme for WebERP by Hindra Joshua
 
 *** This a very clean professional-looking theme - handsome!
 
@@ -14,7 +11,10 @@ but for the obvious one it will be cleaned up.
 To optimized the rest we should examined the whole codes! That would be for
 the next project. :)
 
-***/
+Design guidelines:
+	Fonts are 10pt hight.
+	Icons are ??px x ??px size.  (24x24 ?)
+*/
 
 button img {
 	/* Describes how button image should be displayed. */
@@ -126,7 +126,7 @@ div.Message {
 	transition:opacity 0.6s; /* 600ms to fade out */
 }
 div.Message.error {
-	background:#ffecec url('images/message-error.png') no-repeat 10px 50%;
+	background:#ffecec url('images/message-error.svg') no-repeat 10px 50%;
 	border:1px solid #f5aca6;
 }
 div.Message.success {
@@ -447,7 +447,7 @@ textarea.texterror {
 	padding:2px;
 }
 #SubMenuDiv li img {
-	vertical-align:middle; /* verticall align icon with the text */
+	vertical-align:middle; /* vertical align icon with the text */
 }
 #SubMenuDiv .menu_group_headers {
 	background:#ddd;
