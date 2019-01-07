@@ -135,7 +135,7 @@ div.Message {
 	transition:opacity 0.6s; /* 600ms to fade out */
 }
 div.Message.error {
-	background:#ffecec url('images/message-error.png') no-repeat 10px 50%;
+	background:#ffecec url('images/message-error.svg') no-repeat 10px 50%;
 	border:1px solid #f5aca6;
 }
 div.Message.success {
