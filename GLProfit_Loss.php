@@ -64,8 +64,7 @@ if (!isset($_POST['PeriodFrom']) OR !isset($_POST['PeriodTo']) OR $_POST['NewRep
 		include('includes/header.php');
 	}
 
-	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
-		'/images/printer.png" title="', // Icon image.
+	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/printer.png" title="', // Icon image.
 		$Title2, '" /> ', // Icon title.
 		$Title, '</p>';// Page title.
 	fShowPageHelp(// Shows the page help text if $_SESSION['ShowFieldHelp'] is TRUE or is not set
@@ -194,8 +193,8 @@ if (!isset($_POST['PeriodFrom']) OR !isset($_POST['PeriodTo']) OR $_POST['NewRep
 		exit;
 	}
 
-	$sql = "SELECT lastdate_in_period FROM periods WHERE periodno='" . $_POST['PeriodTo'] . "'";
-	$PrdResult = DB_query($sql);
+	$SQL = "SELECT lastdate_in_period FROM periods WHERE periodno='" . $_POST['PeriodTo'] . "'";
+	$PrdResult = DB_query($SQL);
 	$MyRow = DB_fetch_row($PrdResult);
 	$PeriodToDate = MonthAndYearFromSQLDate($MyRow[0]);
 
@@ -267,11 +266,11 @@ if (!isset($_POST['PeriodFrom']) OR !isset($_POST['PeriodTo']) OR $_POST['NewRep
 	$GrpPrdLY = array(0);
 
 	$TotalIncomeActual = 0;
-	$TotalIncomeBudget =0;
+	$TotalIncomeBudget = 0;
 	$TotalIncomeLY = 0;
 
-	$PeriodProfitLossActual =0;
-	$PeriodProfitLossBudget =0;
+	$PeriodProfitLossActual = 0;
+	$PeriodProfitLossBudget = 0;
 	$PeriodProfitLossLY = 0;
 
 	while ($MyRow = DB_fetch_array($AccountsResult)) {
@@ -623,8 +622,8 @@ if (!isset($_POST['PeriodFrom']) OR !isset($_POST['PeriodTo']) OR $_POST['NewRep
 		exit;
 	}
 
-	$sql = "SELECT lastdate_in_period FROM periods WHERE periodno='" . $_POST['PeriodTo'] . "'";
-	$PrdResult = DB_query($sql);
+	$SQL = "SELECT lastdate_in_period FROM periods WHERE periodno='" . $_POST['PeriodTo'] . "'";
+	$PrdResult = DB_query($SQL);
 	$MyRow = DB_fetch_row($PrdResult);
 	$PeriodToDate = MonthAndYearFromSQLDate($MyRow[0]);
 
@@ -660,8 +659,7 @@ if (!isset($_POST['PeriodFrom']) OR !isset($_POST['PeriodTo']) OR $_POST['NewRep
 	$AccountsResult = DB_query($SQL,_('No general ledger accounts were returned by the SQL because'),_('The SQL that failed was'));
 
 	echo '<div class="sheet">';// Division to identify the report block.
-	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
-		'/images/gl.png" title="', // Icon image.
+	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/gl.png" title="', // Icon image.
 		$Title2, '" /> ', // Icon title.
 		// Page title as IAS1 numerals 10 and 51:
 		$Title, '<br />', // Page title, reporting statement.
@@ -1235,12 +1233,9 @@ if (!isset($_POST['PeriodFrom']) OR !isset($_POST['PeriodTo']) OR $_POST['NewRep
 			'<input name="ShowDetail" type="hidden" value="', $_POST['ShowDetail'], '" />',
 			'<input name="ShowZeroBalance" type="hidden" value="', $_POST['ShowZeroBalance'], '" />',
 			'<div class="centre noprint">', // Form buttons:
-				'<button onclick="window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
-					'/images/printer.png" /> ', _('Print'), '</button>', // "Print" button.
-				'<button name="NewReport" type="submit" value="on"><img alt="" src="', $RootPath, '/css/', $Theme,
-					'/images/reports.png" /> ', _('New Report'), '</button>', // "New Report" button.
-				'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
-					'/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
+				'<button onclick="window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/printer.png" /> ', _('Print'), '</button>', // "Print" button.
+				'<button name="NewReport" type="submit" value="on"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/reports.png" /> ', _('New Report'), '</button>', // "New Report" button.
+				'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
 			'</div>',
 			'</form>';
 	}

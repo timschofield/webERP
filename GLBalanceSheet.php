@@ -42,13 +42,12 @@ if(isset($_GET['ShowZeroBalance'])) {// Select period from.
 	$_POST['ShowZeroBalance'] = $_GET['ShowZeroBalance'];
 }
 
-if (!isset($_POST['PeriodTo']) or isset($_POST['SelectADifferentPeriod'])) {
+if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 	// Show a form to allow input of criteria for TB to show
 	if(!isset($IsIncluded)) {// Runs normally if this script is NOT included in another.
 		include('includes/header.php');
 	}
-	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
-		'/images/printer.png" title="', // Icon image.
+	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/printer.png" title="', // Icon image.
 		$Title2, '" /> ', // Icon title.
 		$Title, '</p>'; // Page title.
 	fShowPageHelp(// Shows the page help text if $_SESSION['ShowFieldHelp'] is TRUE or is not set
@@ -437,8 +436,7 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['SelectADifferentPeriod'])) {
 	}
 
 	echo '<div class="sheet">';// Division to identify the report block.
-	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
-		'/images/gl.png" title="', // Icon image.
+	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/gl.png" title="', // Icon image.
 		$Title2, '" /> ', // Icon title.
 		// Page title as IAS1 numerals 10 and 51:
 		$Title, '<br />', // Page title, reporting statement.
@@ -586,7 +584,7 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['SelectADifferentPeriod'])) {
 		if ($_POST['ShowDetail'] == 'Detailed') {
 			if (isset($_POST['ShowZeroBalance']) or (!isset($_POST['ShowZeroBalance']) and (round($AccountBalance, $_SESSION['CompanyRecord']['decimalplaces']) <> 0 or round($AccountBalanceLY, $_SESSION['CompanyRecord']['decimalplaces']) <> 0))) {
 
-				$ActEnquiryURL = '<a href="' . $RootPath . '/GLAccountInquiry.php?FromPeriod=' . urlencode(FYStartPeriod($_POST['PeriodTo'])) . '&amp;ToPeriod=' . urlencode($_POST['PeriodTo']) . '&amp;Account=' . urlencode($MyRow['accountcode']) . '&amp;Show=Yes">' . $MyRow['accountcode'] . '</a>';// Function FYStartPeriod() in ~/includes/MiscFunctions.php
+				$ActEnquiryURL = '<a href="' . $RootPath . '/GLAccountInquiry.php?PeriodFrom=' . urlencode(FYStartPeriod($_POST['PeriodTo'])) . '&amp;PeriodTo=' . urlencode($_POST['PeriodTo']) . '&amp;Account=' . urlencode($MyRow['accountcode']) . '&amp;Show=Yes">' . $MyRow['accountcode'] . '</a>';// Function FYStartPeriod() in ~/includes/MiscFunctions.php
 
 				echo '<tr class="striped_row">
 						<td>', $ActEnquiryURL, '</td>
@@ -687,6 +685,7 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['SelectADifferentPeriod'])) {
 		'</div>';// div id="Report".
 	if(!isset($IsIncluded)) {// Runs normally if this script is NOT included in another.
 		echo // Shows a form to select an action after the report was shown:
+		echo // Shows a form to select an action after the report was shown:
 			'<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
 			'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />',
 			// Resend report parameters:
@@ -696,12 +695,9 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['SelectADifferentPeriod'])) {
 			'<input name="ShowDetail" type="hidden" value="', $_POST['ShowDetail'], '" />',
 			'<input name="ShowZeroBalance" type="hidden" value="', $_POST['ShowZeroBalance'], '" />',
 			'<div class="centre noprint">', // Form buttons:
-				'<button onclick="window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
-					'/images/printer.png" /> ', _('Print'), '</button>', // "Print" button.
-				'<button name="NewReport" type="submit" value="on"><img alt="" src="', $RootPath, '/css/', $Theme,
-					'/images/reports.png" /> ', _('New Report'), '</button>', // "New Report" button.
-				'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
-					'/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
+				'<button onclick="window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/printer.png" /> ', _('Print'), '</button>', // "Print" button.
+				'<button name="NewReport" type="submit" value="on"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/reports.png" /> ', _('New Report'), '</button>', // "New Report" button.
+				'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
 			'</div>',
 			'</form>';
 	}
