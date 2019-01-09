@@ -15,7 +15,8 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 
 | Description | Type | Author | Date | Details | Ref |
 |:-----------:|:----:|:------:|:----:|:-------:|:---:|
-| Clean up and standardise sheet style view | Rafael Chacón | 2019-01-04 | [View](https://github.com/webERP-team/webERP/commit/81f710f1c85a49dc703db8d968de3c45904bba7c) |   |
+|  Standardise GL reports code | Changed | Rafael Chacón | 2019-01-09 | [View](https://github.com/webERP-team/webERP/commit/e7ceae5931c020f98ce8b89b12d4397d277c4f77) |   |
+| Clean up and standardise sheet style view | Changed | Rafael Chacón | 2019-01-04 | [View](https://github.com/webERP-team/webERP/commit/81f710f1c85a49dc703db8d968de3c45904bba7c) |   |
 | Clean up the CSS | Changed | Rafael Chacón | 2019-01-04 | [View](https://github.com/webERP-team/webERP/commit/57ce6c30a61cec38281b37f21324699ffa64e624) |   |
 | Hides help texts for extra small devices | Changed | Rafael Chacón | 2019-01-04 | [View](https://github.com/webERP-team/webERP/commit/8e468644ff6982cc7682480a5710a25647b38214) |   |
 | Show a set of financial statements | Added | Rafael Chacón | 2019-01-02 | [View](https://github.com/webERP-team/webERP/commit/02beefcd31ef4a848760c7ba93fe0bf36a78393e) |   |
