@@ -619,7 +619,6 @@ if ((! isset($_POST['PeriodFrom'])
 		$CheckPeriodActual += $AccountPeriodActual;
 		$CheckPeriodBudget += $AccountPeriodBudget;
 
-/*		$ActEnquiryURL = '<a href="'. $RootPath . '/GLAccountInquiry.php?PeriodFrom=' . $_POST['PeriodFrom'] . '&amp;PeriodTo=' . $_POST['PeriodTo'] . '&amp;Account=' . $MyRow['accountcode'] . '&amp;Show=Yes">' . $MyRow['accountcode'] . '</a>';*/
 		echo '<tr class="striped_row">
 				<td><a href="', $RootPath, '/GLAccountInquiry.php?PeriodFrom=', $_POST['PeriodFrom'], '&amp;PeriodTo=', $_POST['PeriodTo'], '&amp;Account=', $MyRow['accountcode'], '&amp;Show=Yes">', $MyRow['accountcode'], '</a></td>
 				<td>', htmlspecialchars($MyRow['accountname'], ENT_QUOTES,'UTF-8', false), '</td>

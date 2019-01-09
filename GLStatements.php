@@ -142,9 +142,9 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 		include('GLNotes.php');
 	}
 	echo // Shows a form to select an action after the report was shown:
-			'<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
-			'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />',
-			// Resend report parameters:
+		'<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
+		'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />',
+		// Resend report parameters:
 		'<input name="PeriodFrom" type="hidden" value="', $_POST['PeriodFrom'], '" />',
 		'<input name="PeriodTo" type="hidden" value="', $_POST['PeriodTo'], '" />',
 		'<input name="ShowBudget" type="hidden" value="', $_POST['ShowBudget'], '" />',
