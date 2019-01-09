@@ -34,11 +34,11 @@ if(isset($_GET['Show'])) {
 if(isset($SelectedPeriod)) { //If it was called from itself (in other words an inquiry was run and we wish to leave the periods selected unchanged
 	$FirstPeriodSelected = min($SelectedPeriod);
 	$LastPeriodSelected = max($SelectedPeriod);
-} elseif(isset($_GET['FromPeriod'])) { //If it was called from the Trial Balance/P&L or Balance sheet
-	$FirstPeriodSelected = $_GET['FromPeriod'];
-	$LastPeriodSelected = $_GET['ToPeriod'];
-	$SelectedPeriod[0] = $_GET['FromPeriod'];
-	$SelectedPeriod[1] = $_GET['ToPeriod'];
+} elseif(isset($_GET['PeriodFrom'])) { //If it was called from the Trial Balance/P&L or Balance sheet
+	$FirstPeriodSelected = $_GET['PeriodFrom'];
+	$LastPeriodSelected = $_GET['PeriodTo'];
+	$SelectedPeriod[0] = $_GET['PeriodFrom'];
+	$SelectedPeriod[1] = $_GET['PeriodTo'];
 } else { // Otherwise just highlight the current period
 	$FirstPeriodSelected = GetPeriod(date($_SESSION['DefaultDateFormat']));
 	$LastPeriodSelected = GetPeriod(date($_SESSION['DefaultDateFormat']));

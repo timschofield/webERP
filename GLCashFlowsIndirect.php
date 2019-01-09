@@ -92,8 +92,7 @@ if($_POST['PeriodTo']-$_POST['PeriodFrom']+1 > 12) {
 if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewReport']) {
 	// If PeriodFrom and PeriodTo are set and it is not a NewReport, generates the report:
 	echo '<div class="sheet">';// Division to identify the report block.
-	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
-		'/images/gl.png" title="', // Icon image.
+	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/gl.png" title="', // Icon image.
 		$Title, '" /> ', // Icon title.
 		// Page title as IAS1 numerals 10 and 51:
 		$Title, '<br />', // Page title, reporting statement.
@@ -268,7 +267,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 				OR $MyRow['LastAmount']<>0 OR isset($_POST['ShowZeroBalance'])) {
 
 				echo '<tr class="striped_row">
-						<td class="text"><a href="', $RootPath, '/GLAccountInquiry.php?FromPeriod=', $_POST['PeriodFrom'], '&amp;ToPeriod=', $_POST['PeriodTo'], '&amp;Account=', $MyRow['accountcode'], '">', $MyRow['accountcode'], '</a></td>',
+						<td class="text"><a href="', $RootPath, '/GLAccountInquiry.php?PeriodFrom=', $_POST['PeriodFrom'], '&amp;PeriodTo=', $_POST['PeriodTo'], '&amp;Account=', $MyRow['accountcode'], '">', $MyRow['accountcode'], '</a></td>',
 						'<td class="text">', $MyRow['accountname'], '</td>',
 						colDebitCredit($MyRow['ActualAmount']),
 						colDebitCredit($MyRow['BudgetAmount']),// ShowBudget=ON vs. ShowBudget=OFF.*/
@@ -431,7 +430,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 					OR $MyRow['LastAmount']<>0 OR isset($_POST['ShowZeroBalance'])) {
 
 					echo '<tr class="striped_row">
-							<td class="text"><a href="', $RootPath, '/GLAccountInquiry.php?FromPeriod=', $_POST['PeriodFrom'], '&amp;ToPeriod=', $_POST['PeriodTo'], '&amp;Account=', $MyRow['accountcode'], '">', $MyRow['accountcode'], '</a></td>
+							<td class="text"><a href="', $RootPath, '/GLAccountInquiry.php?PeriodFrom=', $_POST['PeriodFrom'], '&amp;PeriodTo=', $_POST['PeriodTo'], '&amp;Account=', $MyRow['accountcode'], '">', $MyRow['accountcode'], '</a></td>
 							<td class="text">', $MyRow['accountname'], '</td>',
 							colDebitCredit($MyRow['ActualAmount']),
 							colDebitCredit($MyRow['BudgetAmount']),// ShowBudget=ON vs. ShowBudget=OFF.*/
@@ -580,7 +579,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 				OR $MyRow['LastAmount']<>0 OR isset($_POST['ShowZeroBalance'])) {
 
 				echo '<tr class="striped_row">
-						<td class="text"><a href="', $RootPath, '/GLAccountInquiry.php?FromPeriod=', $_POST['PeriodFrom'], '&amp;ToPeriod=', $_POST['PeriodTo'], '&amp;Account=', $MyRow['accountcode'], '">', $MyRow['accountcode'], '</a></td>
+						<td class="text"><a href="', $RootPath, '/GLAccountInquiry.php?PeriodFrom=', $_POST['PeriodFrom'], '&amp;PeriodTo=', $_POST['PeriodTo'], '&amp;Account=', $MyRow['accountcode'], '">', $MyRow['accountcode'], '</a></td>
 						<td class="text">', $MyRow['accountname'], '</td>',
 						colDebitCredit($MyRow['ActualAmount']),
 /*						colDebitCredit($MyRow['BudgetAmount']),// ShowBudget=ON vs. ShowBudget=OFF.*/
@@ -742,7 +741,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 					OR $MyRow['LastAmount']<>0 OR isset($_POST['ShowZeroBalance'])) {
 
 					echo '<tr class="striped_row">
-							<td class="text"><a href="', $RootPath, '/GLAccountInquiry.php?FromPeriod=', $_POST['PeriodFrom'], '&amp;ToPeriod=', $_POST['PeriodTo'], '&amp;Account=', $MyRow['accountcode'], '">', $MyRow['accountcode'], '</a></td>
+							<td class="text"><a href="', $RootPath, '/GLAccountInquiry.php?PeriodFrom=', $_POST['PeriodFrom'], '&amp;PeriodTo=', $_POST['PeriodTo'], '&amp;Account=', $MyRow['accountcode'], '">', $MyRow['accountcode'], '</a></td>
 							<td class="text">', $MyRow['accountname'], '</td>',
 							colDebitCredit($MyRow['ActualAmount']),
 /*							colDebitCredit($MyRow['BudgetAmount']),// ShowBudget=ON vs. ShowBudget=OFF.*/
@@ -779,20 +778,15 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 			'<input name="ShowCash" type="hidden" value="', $_POST['ShowCash'], '" />',
 			'<div class="centre noprint">'; // Form buttons:
 		if($NeedSetup) {
-			echo '<button onclick="window.location=\'GLCashFlowsSetup.php\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
-					'/images/maintenance.png" /> ', _('Run Setup'), '</button>'; // "Run Setup" button.
+			echo '<button onclick="window.location=\'GLCashFlowsSetup.php\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/maintenance.png" /> ', _('Run Setup'), '</button>'; // "Run Setup" button.
 		}
-		echo	'<button onclick="window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
-					'/images/printer.png" /> ', _('Print'), '</button>', // "Print" button.
-				'<button name="NewReport" type="submit" value="on"><img alt="" src="', $RootPath, '/css/', $Theme,
-					'/images/reports.png" /> ', _('New Report'), '</button>', // "New Report" button.
-				'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
-					'/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
+		echo	'<button onclick="window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/printer.png" /> ', _('Print'), '</button>', // "Print" button.
+				'<button name="NewReport" type="submit" value="on"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/reports.png" /> ', _('New Report'), '</button>', // "New Report" button.
+				'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
 			'</div>';
 	}
 } else {// If one or more parameters are NOT set or NOT valid, shows a parameters input form:
-	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
-		'/images/printer.png" title="', // Icon image.
+	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/printer.png" title="', // Icon image.
 		$Title, '" /> ', // Icon title.
 		$Title, '</p>';// Page title.
 	fShowPageHelp(// Shows the page help text if $_SESSION['ShowFieldHelp'] is TRUE or is not set
@@ -814,10 +808,8 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 			<tr>
 				<td colspan="2">',
 					'<div class="centre">',
-						'<button name="Submit" type="submit" value="', _('Submit'), '"><img alt="" src="', $RootPath, '/css/', $Theme,
-							'/images/tick.svg" /> ', _('Submit'), '</button>', // "Submit" button.
-						'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
-							'/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
+						'<button name="Submit" type="submit" value="', _('Submit'), '"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/tick.svg" /> ', _('Submit'), '</button>', // "Submit" button.
+						'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
 					'</div>',
 				'</td>
 			</tr>
