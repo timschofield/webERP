@@ -53,7 +53,7 @@ $AccountsResult = DB_query($SQL);
 
 while ($myrow=DB_fetch_array($AccountsResult)) {
 
-	if ($myrow['pandl']==1){
+	if ($myrow['pandl']==1) {
 			$AccountPeriodActual = $myrow['lastprdcfwd'] - $myrow['firstprdbfwd'];
 			$AccountPeriodBudget = $myrow['lastprdbudgetcfwd'] - $myrow['firstprdbudgetbfwd'];
 			$PeriodProfitLoss += $AccountPeriodActual;
@@ -62,7 +62,7 @@ while ($myrow=DB_fetch_array($AccountsResult)) {
 			$MonthBudgetProfitLoss += $myrow['monthbudget'];
 			$BFwdProfitLoss += $myrow['firstprdbfwd'];
 	} else { /*PandL ==0 its a balance sheet account */
-			if ($myrow['accountcode']==$RetainedEarningsAct){
+			if ($myrow['accountcode']==$RetainedEarningsAct) {
 				$AccountPeriodActual = $BFwdProfitLoss + $myrow['lastprdcfwd'];
 				$AccountPeriodBudget = $BFwdProfitLoss + $myrow['lastprdbudgetcfwd'] - $myrow['firstprdbudgetbfwd'];
 			} else {

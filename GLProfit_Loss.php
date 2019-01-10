@@ -232,7 +232,7 @@ if (!isset($_POST['PeriodFrom']) OR !isset($_POST['PeriodTo']) OR $_POST['NewRep
 		$Title = _('Profit and Loss') . ' - ' . _('Problem Report') . '....';
 		include('includes/header.php');
 		prnMsg( _('No general ledger accounts were returned by the SQL because') . ' - ' . DB_error_msg() );
-		echo '<br /><a href="' .$RootPath .'/index.php">' .  _('Back to the menu'). '</a>';
+		echo '<br /><a href="' .$RootPath, '/index.php">' .  _('Back to the menu'). '</a>';
 		if ($debug == 1) {
 			echo '<br />' .  $SQL;
 		}
@@ -244,7 +244,7 @@ if (!isset($_POST['PeriodFrom']) OR !isset($_POST['PeriodTo']) OR $_POST['NewRep
 		include('includes/header.php');
 		echo '<br />';
 		prnMsg( _('There were no entries to print out for the selections specified'),'warn' );
-		echo '<br /><a href="'. $RootPath.'/index.php">' .  _('Back to the menu'). '</a>';
+		echo '<br /><a href="'. $RootPath, '/index.php">' .  _('Back to the menu'). '</a>';
 		include('includes/footer.php');
 		exit;
 	}
@@ -962,7 +962,7 @@ if (!isset($_POST['PeriodFrom']) OR !isset($_POST['PeriodTo']) OR $_POST['NewRep
 
 		if ($_POST['ShowDetail']=='Detailed') {
 			if (isset($_POST['ShowZeroBalance']) OR (!isset($_POST['ShowZeroBalance']) AND ($AccountPeriodActual <> 0 OR $AccountPeriodBudget <> 0 OR $AccountPeriodLY <> 0))) {
-				$ActEnquiryURL = '<a href="' . $RootPath . '/GLAccountInquiry.php?PeriodFrom=' . urlencode($_POST['PeriodFrom']) . '&amp;PeriodTo=' . urlencode($_POST['PeriodTo']) . '&amp;Account=' . urlencode($MyRow['accountcode']) . '&amp;Show=Yes">' . $MyRow['accountcode'] . '</a>';
+				$ActEnquiryURL = '<a href="' . $RootPath, '/GLAccountInquiry.php?PeriodFrom=' . urlencode($_POST['PeriodFrom']) . '&amp;PeriodTo=' . urlencode($_POST['PeriodTo']) . '&amp;Account=' . urlencode($MyRow['accountcode']) . '&amp;Show=Yes">' . $MyRow['accountcode'] . '</a>';
 				if ($Section == 1) {
 					 echo '<tr class="striped_row">
 							<td>', $ActEnquiryURL, '</td>

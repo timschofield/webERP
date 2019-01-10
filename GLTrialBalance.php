@@ -56,8 +56,7 @@ if ((! isset($_POST['PeriodFrom'])
 
 	// If PeriodFrom or PeriodTo are NOT set or it is a NewReport, shows a parameters input form:
 	include('includes/header.php');
-	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
-		'/images/printer.png" title="', // Icon image.
+	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/printer.png" title="', // Icon image.
 		_('Print Trial Balance'), '" /> ', // Icon title.
 		$Title, '</p>', // Page title.
 	// Shows a form to input the report parameters:
@@ -182,7 +181,7 @@ if ((! isset($_POST['PeriodFrom'])
 		$Title = _('Trial Balance') . ' - ' . _('Problem Report') . '....';
 		include('includes/header.php');
 		prnMsg( _('No general ledger accounts were returned by the SQL because') . ' - ' . DB_error_msg() );
-		echo '<br /><a href="' .$RootPath .'/index.php">' .  _('Back to the menu'). '</a>';
+		echo '<br /><a href="' .$RootPath, '/index.php">' .  _('Back to the menu'). '</a>';
 		if ($debug==1) {
 			echo '<br />' .  $SQL;
 		}
@@ -194,7 +193,7 @@ if ((! isset($_POST['PeriodFrom'])
 		include('includes/header.php');
 		echo '<p>';
 		prnMsg( _('There were no entries to print out for the selections specified') );
-		echo '<br /><a href="'. $RootPath.'/index.php">' .  _('Back to the menu'). '</a>';
+		echo '<br /><a href="'. $RootPath, '/index.php">' .  _('Back to the menu'). '</a>';
 		include('includes/footer.php');
 		exit;
 	}
@@ -407,8 +406,7 @@ if ((! isset($_POST['PeriodFrom'])
 	include('includes/header.php');
 	// If PeriodFrom and PeriodTo are set and it is not a NewReport, generates the report:
 	echo '<div class="sheet">', // Division to identify the report block.
-		'<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
-		'/images/gl.png" title="', // Icon image.
+		'<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/gl.png" title="', // Icon image.
 		$Title, '" /> '; // Icon title.
 
 	$SQL = "SELECT lastdate_in_period

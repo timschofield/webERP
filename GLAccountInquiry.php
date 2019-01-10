@@ -1,5 +1,6 @@
 <?php
-/* Shows the general ledger transactions for a specified account over a specified range of periods */
+// GLAccountInquiry.php
+// Shows the general ledger transactions for a specified account over a specified range of periods.
 
 include ('includes/session.php');
 $Title = _('General Ledger Account Inquiry');
@@ -7,8 +8,7 @@ $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLAccountInquiry';
 include('includes/header.php');
 
-echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
-	'/images/transactions.png" title="',// Icon image.
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/transactions.png" title="',// Icon image.
 	_('General Ledger Account Inquiry'), '" /> ',// Icon title.
 	_('General Ledger Account Inquiry'), '</p>';// Page title.
 
@@ -319,7 +319,7 @@ if(isset($_POST['Show'])) {
 		}
 
 
-		$URL_to_TransDetail = $RootPath . '/GLTransInquiry.php?TypeID=' . $myrow['type'] . '&amp;TransNo=' . $myrow['typeno'];
+		$URL_to_TransDetail = $RootPath, '/GLTransInquiry.php?TypeID=' . $myrow['type'] . '&amp;TransNo=' . $myrow['typeno'];
 		$FormatedTranDate = ConvertSQLDate($myrow['trandate']);
 		if($myrow['amount']>=0) {
 			$DebitAmount = locale_number_format($myrow['amount'], $_SESSION['CompanyRecord']['decimalplaces']);

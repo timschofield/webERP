@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-03 10:36-0600\n"
+"POT-Creation-Date: 2019-01-09 23:58-0600\n"
 "PO-Revision-Date: 2013-06-01 12:06-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: Nederland <info@totamin.nl>\n"
@@ -168,8 +168,8 @@ msgstr ""
 #: CustomerBranches.php:322 CustomerBranches.php:332 Customers.php:295
 #: Customers.php:304 Customers.php:312 Customers.php:323 Customers.php:333
 #: CustomerTypes.php:145 CustomerTypes.php:155 Departments.php:140
-#: Factors.php:133 FixedAssetCategories.php:136 GLAccounts.php:109
-#: GLAccounts.php:123 Locations.php:278 Locations.php:286 Locations.php:297
+#: Factors.php:133 FixedAssetCategories.php:136 GLAccounts.php:108
+#: GLAccounts.php:122 Locations.php:278 Locations.php:286 Locations.php:297
 #: Locations.php:306 Locations.php:315 Locations.php:324 Locations.php:333
 #: Locations.php:342 Locations.php:350 Manufacturers.php:184
 #: MRPDemandTypes.php:86 PaymentMethods.php:161 PaymentTerms.php:145
@@ -248,8 +248,8 @@ msgstr "Kon geen rekening groep ophalen omdat"
 #: DiscountCategories.php:148 DiscountMatrix.php:15 EDIMessageFormat.php:104
 #: FixedAssetLocations.php:12 FixedAssetRegister.php:16
 #: FixedAssetRegister.php:256 FixedAssetTransfer.php:13
-#: GeneratePickingList.php:31 GLAccountGraph.php:40 GLBudgets.php:31
-#: GLJournalInquiry.php:11 GLJournal.php:249 HistoricalTestResults.php:41
+#: GeneratePickingList.php:32 GLAccountGraph.php:41 GLBudgets.php:31
+#: GLJournalInquiry.php:11 GLJournal.php:248 HistoricalTestResults.php:41
 #: InternalStockRequestInquiry.php:167 InternalStockRequest.php:303
 #: InventoryPlanning.php:459 InventoryPlanningPrefSupplier.php:385
 #: MaintenanceTasks.php:13 MaintenanceUserSchedule.php:15 MRPReport.php:538
@@ -295,10 +295,9 @@ msgstr "Sectie"
 msgid "Sequence In TB"
 msgstr "Reeks In TB"
 
-#: AccountGroups.php:288 AccountGroups.php:464 GLBalanceSheet.php:23
-#: GLProfit_Loss.php:22 GLProfit_Loss.php:200 GLProfit_Loss.php:201
-#: GLProfit_Loss.php:253 SelectGLAccount.php:22 SelectGLAccount.php:40
-#: SelectGLAccount.php:62
+#: AccountGroups.php:288 AccountGroups.php:464 GLProfit_Loss.php:25
+#: GLProfit_Loss.php:179 GLProfit_Loss.php:180 GLProfit_Loss.php:232
+#: SelectGLAccount.php:22 SelectGLAccount.php:40 SelectGLAccount.php:62
 msgid "Profit and Loss"
 msgstr "Winst en Verlies"
 
@@ -315,8 +314,8 @@ msgstr "Winst en Verlies"
 #: Customers.php:1048 Customers.php:1054 Customers.php:1057
 #: DailyBankTransactions.php:201 DailyBankTransactions.php:206
 #: DeliveryDetails.php:1142 DeliveryDetails.php:1183 DeliveryDetails.php:1186
-#: FormDesigner.php:88 GLAccountUsers.php:173 GLAccountUsers.php:182
-#: GLTransInquiry.php:73 InternalStockRequestInquiry.php:423
+#: FormDesigner.php:88 GLAccountUsers.php:170 GLAccountUsers.php:179
+#: GLTransInquiry.php:72 InternalStockRequestInquiry.php:423
 #: InternalStockRequestInquiry.php:434 Labels.php:591 Labels.php:593
 #: Labels.php:619 Locations.php:441 Locations.php:663 Locations.php:665
 #: Locations.php:678 Locations.php:680 Locations.php:696 MRPCalendar.php:225
@@ -324,8 +323,8 @@ msgstr "Winst en Verlies"
 #: PaymentMethods.php:221 PaymentMethods.php:222 PaymentMethods.php:223
 #: PaymentMethods.php:224 PaymentMethods.php:295 PaymentMethods.php:302
 #: PaymentMethods.php:309 PaymentMethods.php:316 PDFChequeListing.php:64
-#: PDFDeliveryDifferences.php:75 PDFDIFOT.php:79 PDFWOPrint.php:640
-#: PDFWOPrint.php:644 PO_AuthorisationLevels.php:138
+#: PDFDeliveryDifferences.php:75 PDFDIFOT.php:79 PDFWOPrint.php:641
+#: PDFWOPrint.php:645 PO_AuthorisationLevels.php:138
 #: PO_AuthorisationLevels.php:143 PO_Header.php:780 PO_PDFPurchOrder.php:412
 #: PO_PDFPurchOrder.php:415 ProductSpecs.php:183 ProductSpecs.php:404
 #: ProductSpecs.php:409 ProductSpecs.php:415 ProductSpecs.php:420
@@ -389,8 +388,8 @@ msgstr "Ja"
 #: Customers.php:1046 Customers.php:1053 Customers.php:1056
 #: DailyBankTransactions.php:203 DailyBankTransactions.php:206
 #: DeliveryDetails.php:1143 DeliveryDetails.php:1184 DeliveryDetails.php:1187
-#: FormDesigner.php:86 GLAccountUsers.php:175 GLAccountUsers.php:185
-#: GLTransInquiry.php:92 InternalStockRequestInquiry.php:421
+#: FormDesigner.php:86 GLAccountUsers.php:172 GLAccountUsers.php:182
+#: GLTransInquiry.php:91 InternalStockRequestInquiry.php:421
 #: InternalStockRequestInquiry.php:432 Labels.php:590 Labels.php:594
 #: Labels.php:620 Locations.php:441 Locations.php:668 Locations.php:670
 #: Locations.php:683 Locations.php:685 Locations.php:697 MRPCalendar.php:227
@@ -399,7 +398,7 @@ msgstr "Ja"
 #: PaymentMethods.php:223 PaymentMethods.php:224 PaymentMethods.php:296
 #: PaymentMethods.php:303 PaymentMethods.php:310 PaymentMethods.php:317
 #: PDFChequeListing.php:63 PDFDeliveryDifferences.php:74 PDFDIFOT.php:78
-#: PDFWOPrint.php:641 PDFWOPrint.php:645 PO_AuthorisationLevels.php:140
+#: PDFWOPrint.php:642 PDFWOPrint.php:646 PO_AuthorisationLevels.php:140
 #: PO_AuthorisationLevels.php:145 PO_Header.php:779 PO_PDFPurchOrder.php:413
 #: PO_PDFPurchOrder.php:416 ProductSpecs.php:186 ProductSpecs.php:406
 #: ProductSpecs.php:412 ProductSpecs.php:417 ProductSpecs.php:422
@@ -459,7 +458,7 @@ msgstr "Nee"
 #: CustomerTypes.php:199 Departments.php:177 EDIMessageFormat.php:140
 #: Employees.php:173 Factors.php:327 FixedAssetCategories.php:181
 #: FixedAssetLocations.php:113 FreightCosts.php:245 GeocodeSetup.php:164
-#: GLAccounts.php:330 GLTags.php:95 ImportBankTransAnalysis.php:225
+#: GLAccounts.php:329 GLTags.php:94 ImportBankTransAnalysis.php:225
 #: InternalStockRequest.php:286 Labels.php:326 Labels.php:352 Locations.php:434
 #: MailingGroupMaintenance.php:171 MaintenanceTasks.php:117
 #: Manufacturers.php:252 MRPDemands.php:303 MRPDemandTypes.php:119
@@ -499,7 +498,7 @@ msgstr ""
 #: CustomerTypes.php:200 Departments.php:178 DiscountCategories.php:229
 #: DiscountMatrix.php:174 EDIMessageFormat.php:141 Employees.php:174
 #: FixedAssetCategories.php:182 FreightCosts.php:246 GeocodeSetup.php:165
-#: GLAccounts.php:331 GLJournal.php:423 GLTags.php:96
+#: GLAccounts.php:330 GLJournal.php:422 GLTags.php:95
 #: ImportBankTransAnalysis.php:226 InternalStockCategoriesByRole.php:175
 #: InternalStockRequest.php:287 Labels.php:327 Labels.php:353 Labels.php:597
 #: Locations.php:435 MailingGroupMaintenance.php:172 MaintenanceTasks.php:118
@@ -557,8 +556,8 @@ msgstr ""
 #: AccountGroups.php:371 CompanyPreferences.php:465
 #: ConfirmDispatch_Invoice.php:717 ConfirmDispatch_Invoice.php:1814
 #: Credit_Invoice.php:1633 CustItem.php:444 FixedAssetItems.php:131
-#: FixedAssetItems.php:682 GLAccountUsers.php:152 GLBudgets.php:239
-#: GLCashFlowsSetup.php:172 GLTags.php:67 GoodsReceived.php:292
+#: FixedAssetItems.php:682 GLAccountUsers.php:149 GLBudgets.php:239
+#: GLCashFlowsSetup.php:170 GLTags.php:66 GoodsReceived.php:292
 #: GoodsReceived.php:298 GoodsReceived.php:305 GoodsReceived.php:813
 #: ImportBankTransAnalysis.php:153 ImportBankTransAnalysis.php:184
 #: InternalStockRequestAuthorisation.php:122
@@ -579,14 +578,15 @@ msgstr "Vernieuwen"
 #: AccountGroups.php:373 AccountGroups.php:413 AnalysisHorizontalIncome.php:143
 #: AnalysisHorizontalIncome.php:537 AnalysisHorizontalPosition.php:78
 #: AnalysisHorizontalPosition.php:354 FormDesigner.php:202 FormDesigner.php:350
-#: GLAccountUsers.php:245 GLBalanceSheet.php:116 GLBalanceSheet.php:714
-#: GLCashFlowsIndirect.php:791 GLCashFlowsIndirect.php:821
-#: GLCashFlowsSetup.php:180 GLProfit_Loss.php:1370 GLStatements.php:163
-#: GLStatements.php:193 GLTrialBalance.php:751
+#: GLAccountUsers.php:239 GLBalanceSheet.php:111 GLBalanceSheet.php:699
+#: GLCashFlowsIndirect.php:785 GLCashFlowsIndirect.php:812
+#: GLCashFlowsSetup.php:174 GLProfit_Loss.php:168 GLProfit_Loss.php:1238
+#: GLStatements.php:160 GLStatements.php:187 GLTagProfit_Loss.php:152
+#: GLTagProfit_Loss.php:942 GLTrialBalance.php:702
 #: InternalStockRequestInquiry.php:261 PDFPriceList.php:498
 #: PurchasesReport.php:73 PurchasesReport.php:282 SalesReport.php:73
 #: SalesReport.php:282 SecurityTokens.php:139 SecurityTokens.php:155
-#: UserGLAccounts.php:251 Z_GLAccountUsersCopyAuthority.php:93
+#: UserGLAccounts.php:251 Z_GLAccountUsersCopyAuthority.php:90
 #: includes/Login.php:6
 msgid "Return"
 msgstr ""
@@ -595,7 +595,7 @@ msgstr ""
 msgid "New Account Group Details"
 msgstr ""
 
-#: AccountGroups.php:411 GLTags.php:69 SecurityTokens.php:153
+#: AccountGroups.php:411 GLTags.php:68 SecurityTokens.php:153
 #: Z_ImportDebtors.php:625 Z_ImportDebtors.php:627 Z_ImportSuppliers.php:335
 #: Z_ImportSuppliers.php:337
 msgid "Insert"
@@ -712,7 +712,7 @@ msgstr ""
 #: Currencies.php:532 CustLoginSetup.php:272 Departments.php:249
 #: DiscountMatrix.php:141 EDIMessageFormat.php:238 Employees.php:357
 #: FixedAssetCategories.php:341 FixedAssetLocations.php:163
-#: FreightCosts.php:363 GeocodeSetup.php:262 GLAccounts.php:284 Labels.php:632
+#: FreightCosts.php:363 GeocodeSetup.php:262 GLAccounts.php:283 Labels.php:632
 #: Locations.php:709 Manufacturers.php:367 MRPDemands.php:418
 #: MRPDemandTypes.php:187 OffersReceived.php:56 OffersReceived.php:140
 #: PaymentMethods.php:326 PaymentTerms.php:309 PO_AuthorisationLevels.php:268
@@ -810,8 +810,8 @@ msgstr "Telefoon"
 #: Customers.php:1120 Customers.php:1128 EmailCustTrans.php:15
 #: EmailCustTrans.php:64 Employees.php:158 Employees.php:306 Factors.php:245
 #: Factors.php:296 Locations.php:633 OrderDetails.php:126
-#: PDFRemittanceAdvice.php:250 PDFWOPrint.php:631 PDFWOPrint.php:634
-#: PDFWOPrint.php:736 PDFWOPrint.php:739 PO_PDFPurchOrder.php:399
+#: PDFRemittanceAdvice.php:250 PDFWOPrint.php:632 PDFWOPrint.php:635
+#: PDFWOPrint.php:737 PDFWOPrint.php:740 PO_PDFPurchOrder.php:399
 #: PO_PDFPurchOrder.php:402 PrintCustStatements.php:98 PrintCustTrans.php:831
 #: PrintCustTrans.php:1074 PrintCustTrans.php:1130
 #: PrintCustTransPortrait.php:815 PrintCustTransPortrait.php:1057
@@ -834,8 +834,8 @@ msgstr "Verklaring"
 
 #: AddCustomerContacts.php:137 AddCustomerContacts.php:281
 #: AnalysisHorizontalIncome.php:191 AnalysisHorizontalPosition.php:122
-#: Customers.php:1121 Customers.php:1129 GLCashFlowsIndirect.php:157
-#: GLCashFlowsIndirect.php:469 GLStatements.php:117
+#: Customers.php:1121 Customers.php:1129 GLCashFlowsIndirect.php:155
+#: GLCashFlowsIndirect.php:467 GLStatements.php:116
 #: PcAssignCashTabToTab.php:289 PcAssignCashTabToTab.php:441
 #: PcAssignCashToTab.php:236 PcAssignCashToTab.php:396 PcAuthorizeCash.php:95
 #: PcAuthorizeExpenses.php:102 PcClaimExpensesFromTab.php:455
@@ -932,11 +932,11 @@ msgstr "Notities voor klant"
 #: ContractCosting.php:176 CustomerAccount.php:251 CustomerAllocations.php:346
 #: CustomerAllocations.php:376 CustomerInquiry.php:251
 #: CustomerTransInquiry.php:100 CustWhereAlloc.php:143
-#: GeneratePickingList.php:505 GLAccountReport.php:343 GLTransInquiry.php:46
+#: GeneratePickingList.php:506 GLAccountReport.php:344 GLTransInquiry.php:45
 #: MRPCalendar.php:220 PaymentAllocations.php:66 Payments.php:1005
 #: Payments.php:1369 PcAssignCashTabToTab.php:285 PcAssignCashToTab.php:232
 #: PcAuthorizeCash.php:92 PDFOrdersInvoiced.php:377 PDFRemittanceAdvice.php:307
-#: PDFWOPrint.php:488 PrintCustTrans.php:949 PrintCustTransPortrait.php:933
+#: PDFWOPrint.php:489 PrintCustTrans.php:949 PrintCustTransPortrait.php:933
 #: PrintWOItemSlip.php:186 PrintWOItemSlip.php:197 PrintWOItemSlip.php:208
 #: PurchasesReport.php:137 ReverseGRN.php:404 SalesReport.php:137
 #: SelectCustomer.php:796 SelectCustomer.php:834 ShipmentCosting.php:530
@@ -1084,8 +1084,8 @@ msgstr "Voorraad"
 #: CustomerPurchases.php:82 EmailConfirmation.php:218 EmailConfirmation.php:348
 #: FixedAssetCategories.php:166 FixedAssetDepreciation.php:90
 #: FixedAssetRegister.php:87 FixedAssetRegister.php:388
-#: FixedAssetTransfer.php:59 FixedAssetTransfer.php:161 GLTags.php:62
-#: GLTags.php:81 GLTransInquiry.php:48 GoodsReceived.php:128
+#: FixedAssetTransfer.php:59 FixedAssetTransfer.php:161 GLTags.php:61
+#: GLTags.php:80 GLTransInquiry.php:47 GoodsReceived.php:128
 #: InternalStockCategoriesByRole.php:167 InternalStockRequestInquiry.php:219
 #: InternalStockRequestInquiry.php:266 InternalStockRequestInquiry.php:398
 #: InternalStockRequest.php:348 InternalStockRequest.php:543
@@ -1180,12 +1180,12 @@ msgstr ""
 #: CounterSales.php:849 Credit_Invoice.php:307 Credit_Invoice.php:311
 #: CustomerAllocations.php:347 CustomerAllocations.php:377
 #: CustomerInquiry.php:256 CustomerPurchases.php:91 DeliveryDetails.php:882
-#: DeliveryDetails.php:943 GLBalanceSheet.php:234 GLBalanceSheet.php:246
-#: GLBalanceSheet.php:333 GLBalanceSheet.php:342 GLBudgets.php:212
-#: GLJournal.php:428 GLTransInquiry.php:205 GLTrialBalance.php:242
-#: GLTrialBalance.php:262 GLTrialBalance.php:283 GLTrialBalance.php:379
-#: GLTrialBalance.php:517 GLTrialBalance.php:537 GLTrialBalance.php:560
-#: GLTrialBalance.php:663 GLTrialBalance.php:683 GLTrialBalance.php:706
+#: DeliveryDetails.php:943 GLBalanceSheet.php:229 GLBalanceSheet.php:241
+#: GLBalanceSheet.php:328 GLBalanceSheet.php:337 GLBudgets.php:212
+#: GLJournal.php:427 GLTransInquiry.php:204 GLTrialBalance.php:238
+#: GLTrialBalance.php:258 GLTrialBalance.php:279 GLTrialBalance.php:375
+#: GLTrialBalance.php:502 GLTrialBalance.php:522 GLTrialBalance.php:545
+#: GLTrialBalance.php:637 GLTrialBalance.php:651 GLTrialBalance.php:667
 #: InventoryValuation.php:196 MaterialsNotUsed.php:72 OffersReceived.php:110
 #: OrderDetails.php:193 OutstandingGRNs.php:238 PDFCustTransListing.php:136
 #: PDFOrdersInvoiced.php:381 PDFRemittanceAdvice.php:309
@@ -1225,9 +1225,9 @@ msgstr "Oude Open Posten Rekeningen Analyse"
 #: AgedDebtors.php:267 AgedDebtors.php:369 AgedDebtors.php:433
 #: AgedSuppliers.php:107 BOMExtendedQty.php:153 BOMIndented.php:152
 #: BOMIndentedReverse.php:139 BOMListing.php:42 BOMListing.php:53
-#: DebtorsAtPeriodEnd.php:56 DebtorsAtPeriodEnd.php:68 GLBalanceSheet.php:142
-#: GLBalanceSheet.php:183 GLProfit_Loss.php:253 GLTagProfit_Loss.php:215
-#: GLTrialBalance.php:185 InternalStockRequestInquiry.php:248
+#: DebtorsAtPeriodEnd.php:56 DebtorsAtPeriodEnd.php:68 GLBalanceSheet.php:137
+#: GLBalanceSheet.php:178 GLProfit_Loss.php:232 GLTagProfit_Loss.php:216
+#: GLTrialBalance.php:181 InternalStockRequestInquiry.php:248
 #: InternalStockRequest.php:319 InventoryPlanning.php:98
 #: InventoryPlanning.php:176 InventoryPlanning.php:213
 #: InventoryPlanning.php:262 InventoryPlanningPrefSupplier.php:182
@@ -1265,10 +1265,10 @@ msgstr "De klant details konden niet opgehaald worden met SQL omdat"
 #: BOMIndentedReverse.php:143 BOMIndentedReverse.php:224 BOMListing.php:45
 #: Credit_Invoice.php:200 Dashboard.php:156 Dashboard.php:239 Dashboard.php:357
 #: DebtorsAtPeriodEnd.php:59 DebtorsAtPeriodEnd.php:71 FTP_RadioBeacon.php:180
-#: GetStockImage.php:142 GLBalanceSheet.php:146 GLBalanceSheet.php:186
-#: GLBalanceSheet.php:369 GLProfit_Loss.php:256 GLProfit_Loss.php:268
-#: GLTagProfit_Loss.php:219 GLTagProfit_Loss.php:232 GLTrialBalance.php:188
-#: GLTrialBalance.php:200 InventoryPlanning.php:101 InventoryPlanning.php:179
+#: GetStockImage.php:142 GLBalanceSheet.php:141 GLBalanceSheet.php:181
+#: GLBalanceSheet.php:364 GLProfit_Loss.php:235 GLProfit_Loss.php:247
+#: GLTagProfit_Loss.php:220 GLTagProfit_Loss.php:233 GLTrialBalance.php:184
+#: GLTrialBalance.php:196 InventoryPlanning.php:101 InventoryPlanning.php:179
 #: InventoryPlanning.php:216 InventoryPlanning.php:265
 #: InventoryPlanning.php:340 InventoryPlanningPrefSupplier.php:185
 #: InventoryPlanningPrefSupplier.php:243 InventoryPlanningPrefSupplier.php:270
@@ -1290,7 +1290,7 @@ msgstr "De klant details konden niet opgehaald worden met SQL omdat"
 #: PDFSellThroughSupportClaim.php:73 PDFSellThroughSupportClaim.php:85
 #: PDFShipLabel.php:370 PDFStockCheckComparison.php:36
 #: PDFStockCheckComparison.php:62 PDFStockCheckComparison.php:270
-#: PDFWeeklyOrders.php:208 PDFWeeklyOrders.php:216 PDFWOPrint.php:129
+#: PDFWeeklyOrders.php:208 PDFWeeklyOrders.php:216 PDFWOPrint.php:130
 #: PO_PDFPurchOrder.php:30 PO_PDFPurchOrder.php:155
 #: PrintCustOrder_generic.php:360 PrintCustOrder.php:252
 #: PrintWOItemSlip.php:122 PurchaseByPrefSupplier.php:401
@@ -1323,7 +1323,7 @@ msgid "The details of outstanding transactions for customer"
 msgstr "De details van openstaande transakties voor klanten"
 
 #: AgedDebtors.php:371 AgedSuppliers.php:196 Dashboard.php:238
-#: GLAccountCSV.php:178 GLAccountInquiry.php:181 GLAccountReport.php:96
+#: GLAccountCSV.php:178 GLAccountInquiry.php:181 GLAccountReport.php:97
 #: PO_Items.php:450 PO_Items.php:579 PO_Items.php:604 PO_Items.php:742
 #: PO_Items.php:767 PurchaseByPrefSupplier.php:28 PurchaseByPrefSupplier.php:53
 #: SalesAnalReptCols.php:357 SpecialOrder.php:439
@@ -1341,7 +1341,7 @@ msgstr "kon niet ophalen omdat"
 #: CustItem.php:85 CustItem.php:192 CustomerReceipt.php:592
 #: CustomerReceipt.php:745 CustomerReceipt.php:773 CustomerTransInquiry.php:91
 #: Dashboard.php:241 Dashboard.php:359 DeliveryDetails.php:410
-#: GLProfit_Loss.php:675 GLTagProfit_Loss.php:536 Payments.php:465
+#: GLProfit_Loss.php:659 GLTagProfit_Loss.php:531 Payments.php:465
 #: PDFRemittanceAdvice.php:84 PickingLists.php:192 PickingLists.php:212
 #: PickingLists.php:586 PurchData.php:113 PurchData.php:131 PurchData.php:354
 #: RecurringSalesOrders.php:266 ReverseGRN.php:196 ReverseGRN.php:210
@@ -1538,12 +1538,12 @@ msgstr "N/B"
 msgid "Horizontal Analysis of Statement of Comprehensive Income"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:25 GLProfit_Loss.php:52 GLTagProfit_Loss.php:13
+#: AnalysisHorizontalIncome.php:25 GLTagProfit_Loss.php:14
 #: Z_UpdateChartDetailsBFwd.php:13
 msgid "The selected period from is actually after the period to"
 msgstr "De -van- datum ligt na de -tot- datum"
 
-#: AnalysisHorizontalIncome.php:25 GLProfit_Loss.php:52 GLTagProfit_Loss.php:13
+#: AnalysisHorizontalIncome.php:25 GLTagProfit_Loss.php:14
 msgid "Please reselect the reporting period"
 msgstr "Selecteer een andere periode"
 
@@ -1574,13 +1574,13 @@ msgid ""
 "when expenses are owed based on the supplier invoice date."
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:51 GLCashFlowsIndirect.php:829
-#: GLStatements.php:201
+#: AnalysisHorizontalIncome.php:51 GLCashFlowsIndirect.php:820
+#: GLProfit_Loss.php:83 GLStatements.php:195 GLTrialBalance.php:70
 msgid "Select period from"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:87 GLCashFlowsIndirect.php:849
-#: GLStatements.php:221
+#: AnalysisHorizontalIncome.php:87 GLCashFlowsIndirect.php:840
+#: GLProfit_Loss.php:118 GLStatements.php:215 GLTrialBalance.php:95
 msgid "Select period to"
 msgstr ""
 
@@ -1590,9 +1590,9 @@ msgstr ""
 #: CounterReturns.php:1650 CounterSales.php:2220 CustItem.php:215
 #: CustomerReceipt.php:1217 CustomerReceipt.php:1220 DiscountCategories.php:120
 #: DiscountCategories.php:122 DiscountCategories.php:126
-#: DiscountCategories.php:128 FixedAssetTransfer.php:93 GLAccountGraph.php:155
-#: GLCashFlowsIndirect.php:867 GLProfit_Loss.php:156 GLStatements.php:239
-#: GLTagProfit_Loss.php:102 GLTrialBalance.php:117
+#: DiscountCategories.php:128 FixedAssetTransfer.php:93 GLAccountGraph.php:156
+#: GLCashFlowsIndirect.php:858 GLProfit_Loss.php:136 GLStatements.php:233
+#: GLTagProfit_Loss.php:103 GLTrialBalance.php:113
 #: InternalStockRequestInquiry.php:228 InternalStockRequest.php:359
 #: MRPDemands.php:332 MRPDemands.php:335 MRPReport.php:568 PO_Header.php:544
 #: PO_Items.php:1325 PO_Items.php:1329 PO_SelectOSPurchOrder.php:288
@@ -1612,9 +1612,9 @@ msgstr ""
 msgid "OR"
 msgstr "OF"
 
-#: AnalysisHorizontalIncome.php:123 GLAccountGraph.php:160
-#: GLCashFlowsIndirect.php:871 GLProfit_Loss.php:160 GLStatements.php:243
-#: GLTagProfit_Loss.php:111 GLTrialBalance.php:121 SalesGraph.php:103
+#: AnalysisHorizontalIncome.php:123 GLAccountGraph.php:161
+#: GLCashFlowsIndirect.php:862 GLProfit_Loss.php:140 GLStatements.php:237
+#: GLTagProfit_Loss.php:112 GLTrialBalance.php:117 SalesGraph.php:103
 msgid "Select Period"
 msgstr ""
 
@@ -1623,21 +1623,21 @@ msgid "Detail or summary"
 msgstr ""
 
 #: AnalysisHorizontalIncome.php:128 AnalysisHorizontalPosition.php:63
-#: GLBalanceSheet.php:91
+#: GLBalanceSheet.php:86
 msgid "Selecting Summary will show on the totals at the account group level"
 msgstr ""
 
 #: AnalysisHorizontalIncome.php:129 AnalysisHorizontalIncome.php:180
 #: AnalysisHorizontalPosition.php:64 AnalysisHorizontalPosition.php:111
-#: EDIMessageFormat.php:214 EDIMessageFormat.php:216 GLBalanceSheet.php:93
-#: GLBalanceSheet.php:96 GLProfit_Loss.php:168 GLTagProfit_Loss.php:140
+#: EDIMessageFormat.php:214 EDIMessageFormat.php:216 GLBalanceSheet.php:88
+#: GLBalanceSheet.php:91 GLProfit_Loss.php:148 GLTagProfit_Loss.php:141
 #: POReport.php:1504 SalesInquiry.php:1080 Tax.php:454
 msgid "Summary"
 msgstr "Totalen"
 
 #: AnalysisHorizontalIncome.php:130 AnalysisHorizontalPosition.php:65
-#: GLBalanceSheet.php:94 GLBalanceSheet.php:97 GLProfit_Loss.php:169
-#: GLTagProfit_Loss.php:141
+#: GLBalanceSheet.php:89 GLBalanceSheet.php:92 GLProfit_Loss.php:149
+#: GLTagProfit_Loss.php:142
 msgid "All Accounts"
 msgstr "Alle Rekeningen"
 
@@ -1653,17 +1653,18 @@ msgstr ""
 
 #: AnalysisHorizontalIncome.php:140 AnalysisHorizontalIncome.php:141
 #: AnalysisHorizontalPosition.php:75 AnalysisHorizontalPosition.php:76
-#: GLBalanceSheet.php:111 GLBalanceSheet.php:112 GLProfit_Loss.php:184
+#: GLBalanceSheet.php:106 GLBalanceSheet.php:107 GLProfit_Loss.php:163
+#: GLProfit_Loss.php:164
 msgid "Show on Screen (HTML)"
 msgstr "Toon op het scherm (HTML)"
 
-#: AnalysisHorizontalIncome.php:153 GLProfit_Loss.php:212 GLProfit_Loss.php:639
-#: GLTagProfit_Loss.php:175 GLTagProfit_Loss.php:500
+#: AnalysisHorizontalIncome.php:153 GLProfit_Loss.php:191 GLProfit_Loss.php:620
+#: GLTagProfit_Loss.php:176 GLTagProfit_Loss.php:495
 msgid "A period up to 12 months in duration can be specified"
 msgstr "De geselecteerde periode mag maximaal 12 maanden lang zijn"
 
-#: AnalysisHorizontalIncome.php:153 GLProfit_Loss.php:212 GLProfit_Loss.php:639
-#: GLTagProfit_Loss.php:175 GLTagProfit_Loss.php:500
+#: AnalysisHorizontalIncome.php:153 GLProfit_Loss.php:191 GLProfit_Loss.php:620
+#: GLTagProfit_Loss.php:176 GLTagProfit_Loss.php:495
 msgid ""
 "the system automatically shows a comparative for the same period from the "
 "previous year"
@@ -1671,31 +1672,31 @@ msgstr ""
 "het systeem presenteert automatisch de gegevens van de zelfde periode van "
 "het vorig jaar"
 
-#: AnalysisHorizontalIncome.php:153 GLProfit_Loss.php:212 GLProfit_Loss.php:639
-#: GLTagProfit_Loss.php:175 GLTagProfit_Loss.php:500
+#: AnalysisHorizontalIncome.php:153 GLProfit_Loss.php:191 GLProfit_Loss.php:620
+#: GLTagProfit_Loss.php:176 GLTagProfit_Loss.php:495
 msgid "it cannot do this if a period of more than 12 months is specified"
 msgstr "De periode de is gespecificeerd is te lang (> 12 mnd)"
 
-#: AnalysisHorizontalIncome.php:153 GLProfit_Loss.php:212 GLProfit_Loss.php:639
-#: GLTagProfit_Loss.php:175 GLTagProfit_Loss.php:500
+#: AnalysisHorizontalIncome.php:153 GLProfit_Loss.php:191 GLProfit_Loss.php:620
+#: GLTagProfit_Loss.php:176 GLTagProfit_Loss.php:495
 msgid "Please select an alternative period range"
 msgstr "AUB selecteer een alternatieve Periode"
 
-#: AnalysisHorizontalIncome.php:171 FreightCosts.php:75 GLProfit_Loss.php:685
+#: AnalysisHorizontalIncome.php:171 FreightCosts.php:75 GLProfit_Loss.php:667
 #: MRPReport.php:440 SalesGraph.php:259 SalesGraph.php:267 Timesheets.php:590
 msgid "For"
 msgstr "Voor"
 
-#: AnalysisHorizontalIncome.php:171 GLProfit_Loss.php:685
-#: GLTagProfit_Loss.php:550 GLTrialBalance.php:468 Tax.php:17
+#: AnalysisHorizontalIncome.php:171 GLProfit_Loss.php:667
+#: GLTagProfit_Loss.php:545 GLTrialBalance.php:421 Tax.php:17
 #: includes/PDFTaxPageHeader.inc:30
 msgid "months to"
 msgstr "maanden t/m"
 
 #: AnalysisHorizontalIncome.php:172 AnalysisHorizontalPosition.php:103
 #: Contracts.php:829 CustomerAccount.php:229 CustomerInquiry.php:161
-#: CustomerReceipt.php:1050 GLBalanceSheet.php:452 GLCashFlowsIndirect.php:108
-#: GLProfit_Loss.php:687 GLStatements.php:110 PDFRemittanceAdvice.php:274
+#: CustomerReceipt.php:1050 GLBalanceSheet.php:446 GLCashFlowsIndirect.php:106
+#: GLProfit_Loss.php:670 GLStatements.php:109 PDFRemittanceAdvice.php:274
 #: PO_Header.php:599 PrintCustTrans.php:975 PrintCustTransPortrait.php:959
 #: SupplierInquiry.php:120 includes/PDFQuotationPageHeader.inc:97
 #: includes/PDFQuotationPortraitPageHeader.inc:86
@@ -1706,9 +1707,9 @@ msgid "All amounts stated in"
 msgstr "Alle bedragen geplaats onder"
 
 #: AnalysisHorizontalIncome.php:177 AnalysisHorizontalPosition.php:108
-#: GLAccountInquiry.php:58 GLAccounts.php:213 GLBalanceSheet.php:457
-#: GLCashFlowsIndirect.php:113 GLProfit_Loss.php:695 GLTagProfit_Loss.php:557
-#: GLTrialBalance.php:476 ImportBankTransAnalysis.php:206 PrintCustTrans.php:77
+#: GLAccountInquiry.php:58 GLAccounts.php:212 GLBalanceSheet.php:452
+#: GLCashFlowsIndirect.php:111 GLProfit_Loss.php:676 GLTagProfit_Loss.php:552
+#: GLTrialBalance.php:461 ImportBankTransAnalysis.php:206 PrintCustTrans.php:77
 #: PrintCustTransPortrait.php:77 SupplierCredit.php:454 SupplierInvoice.php:842
 #: SuppTransGLAnalysis.php:104 includes/PDFProfitAndLossPageHeader.inc:30
 #: includes/PDFTagProfitAndLossPageHeader.inc:32
@@ -1717,10 +1718,10 @@ msgid "Account"
 msgstr "Rekening"
 
 #: AnalysisHorizontalIncome.php:178 AnalysisHorizontalPosition.php:109
-#: BankAccountBalances.php:18 Dashboard.php:425 GLAccounts.php:250
-#: GLAccounts.php:302 GLBalanceSheet.php:458 GLCashFlowsIndirect.php:114
-#: GLCodesInquiry.php:26 GLProfit_Loss.php:696 GLTagProfit_Loss.php:558
-#: GLTrialBalance.php:477 SelectGLAccount.php:143 SupplierCredit.php:455
+#: BankAccountBalances.php:18 Dashboard.php:425 GLAccounts.php:249
+#: GLAccounts.php:301 GLBalanceSheet.php:452 GLCashFlowsIndirect.php:112
+#: GLCodesInquiry.php:26 GLProfit_Loss.php:676 GLTagProfit_Loss.php:553
+#: GLTrialBalance.php:462 SelectGLAccount.php:143 SupplierCredit.php:455
 #: SupplierInvoice.php:843 Z_CreateCompanyTemplateFile.php:236
 #: includes/PDFProfitAndLossPageHeader.inc:31
 #: includes/PDFTagProfitAndLossPageHeader.inc:33
@@ -1759,27 +1760,27 @@ msgid ""
 msgstr ""
 
 #: AnalysisHorizontalIncome.php:222 AnalysisHorizontalPosition.php:165
-#: GLBalanceSheet.php:179 GLBalanceSheet.php:421 GLCodesInquiry.php:17
-#: GLProfit_Loss.php:255 GLProfit_Loss.php:675 GLTagProfit_Loss.php:217
-#: GLTagProfit_Loss.php:536 GLTrialBalance.php:187 GLTrialBalance.php:462
+#: GLBalanceSheet.php:174 GLBalanceSheet.php:416 GLCodesInquiry.php:17
+#: GLProfit_Loss.php:234 GLProfit_Loss.php:659 GLTagProfit_Loss.php:218
+#: GLTagProfit_Loss.php:531 GLTrialBalance.php:183 GLTrialBalance.php:452
 msgid "No general ledger accounts were returned by the SQL because"
 msgstr "Geen grootboekrekeningen zijn door de SQL naar voren gebracht omdat"
 
 #: AnalysisHorizontalIncome.php:252 AnalysisHorizontalIncome.php:273
 #: AnalysisHorizontalIncome.php:422 AnalysisHorizontalIncome.php:453
-#: GLProfit_Loss.php:306 GLProfit_Loss.php:335 GLProfit_Loss.php:503
-#: GLProfit_Loss.php:532 GLProfit_Loss.php:743 GLProfit_Loss.php:789
-#: GLProfit_Loss.php:1092 GLProfit_Loss.php:1137 GLTagProfit_Loss.php:260
-#: GLTagProfit_Loss.php:285 GLTagProfit_Loss.php:405 GLTagProfit_Loss.php:428
-#: GLTagProfit_Loss.php:599 GLTagProfit_Loss.php:633 GLTagProfit_Loss.php:806
-#: GLTagProfit_Loss.php:832
+#: GLProfit_Loss.php:288 GLProfit_Loss.php:317 GLProfit_Loss.php:485
+#: GLProfit_Loss.php:514 GLProfit_Loss.php:715 GLProfit_Loss.php:752
+#: GLProfit_Loss.php:1002 GLProfit_Loss.php:1039 GLTagProfit_Loss.php:261
+#: GLTagProfit_Loss.php:286 GLTagProfit_Loss.php:406 GLTagProfit_Loss.php:429
+#: GLTagProfit_Loss.php:594 GLTagProfit_Loss.php:628 GLTagProfit_Loss.php:801
+#: GLTagProfit_Loss.php:827
 msgid "total"
 msgstr "Totaal"
 
 #: AnalysisHorizontalIncome.php:333 AnalysisHorizontalIncome.php:496
-#: Contracts.php:944 GLProfit_Loss.php:389 GLProfit_Loss.php:582
-#: GLProfit_Loss.php:889 GLProfit_Loss.php:1236 GLTagProfit_Loss.php:330
-#: GLTagProfit_Loss.php:468 GLTagProfit_Loss.php:703 GLTagProfit_Loss.php:890
+#: Contracts.php:944 GLProfit_Loss.php:371 GLProfit_Loss.php:564
+#: GLProfit_Loss.php:834 GLProfit_Loss.php:1120 GLTagProfit_Loss.php:331
+#: GLTagProfit_Loss.php:469 GLTagProfit_Loss.php:698 GLTagProfit_Loss.php:885
 #: PDFPriceList.php:91 SalesAnalReptCols.php:30 SalesAnalReptCols.php:32
 #: SalesByTypePeriodInquiry.php:361 SalesCategoryPeriodInquiry.php:168
 #: SalesGraph.php:209 SalesGraph.php:228 SalesGraph.php:308
@@ -1801,15 +1802,15 @@ msgstr ""
 #: ConfirmDispatch_Invoice.php:1754 ContractBOM.php:291 CounterReturns.php:1595
 #: CounterReturns.php:1597 CustomerReceipt.php:598 CustWhereAlloc.php:226
 #: DeliveryDetails.php:603 DeliveryDetails.php:607 DeliveryDetails.php:829
-#: DeliveryDetails.php:833 GLAccountUsers.php:240 GLBalanceSheet.php:710
-#: GLCashFlowsIndirect.php:787 GLJournalInquiry.php:152
-#: GLJournalInquiry.php:154 GLProfit_Loss.php:1366 GLStatements.php:159
-#: GLTagProfit_Loss.php:29 GLTagProfit_Loss.php:544 GLTags.php:53
-#: GLTrialBalance.php:747 PDFCOA.php:28 PDFPrintLabel.php:63 PDFProdSpec.php:18
-#: PDFStockLocTransfer.php:28 PDFWOPrint.php:607 PDFWOPrint.php:626
-#: PDFWOPrint.php:630 PDFWOPrint.php:633 PDFWOPrint.php:731 PDFWOPrint.php:735
-#: PDFWOPrint.php:738 PO_OrderDetails.php:142 PO_PDFPurchOrder.php:394
-#: PO_PDFPurchOrder.php:398 PO_PDFPurchOrder.php:401
+#: DeliveryDetails.php:833 GLAccountUsers.php:236 GLBalanceSheet.php:697
+#: GLCashFlowsIndirect.php:783 GLJournalInquiry.php:152
+#: GLJournalInquiry.php:154 GLProfit_Loss.php:1236 GLStatements.php:158
+#: GLTagProfit_Loss.php:30 GLTagProfit_Loss.php:539 GLTagProfit_Loss.php:940
+#: GLTags.php:52 GLTrialBalance.php:700 PDFCOA.php:28 PDFPrintLabel.php:63
+#: PDFProdSpec.php:18 PDFStockLocTransfer.php:28 PDFWOPrint.php:608
+#: PDFWOPrint.php:627 PDFWOPrint.php:631 PDFWOPrint.php:634 PDFWOPrint.php:732
+#: PDFWOPrint.php:736 PDFWOPrint.php:739 PO_OrderDetails.php:142
+#: PO_PDFPurchOrder.php:394 PO_PDFPurchOrder.php:398 PO_PDFPurchOrder.php:401
 #: PO_SelectOSPurchOrder.php:615 PO_SelectOSPurchOrder.php:647
 #: PrintCustStatements.php:83 PrintCustStatements.php:532
 #: PrintCustStatements.php:552 PrintCustTrans.php:587
@@ -1821,8 +1822,6 @@ msgstr "Afdruk"
 
 #: AnalysisHorizontalIncome.php:534 AnalysisHorizontalIncome.php:535
 #: AnalysisHorizontalPosition.php:351 AnalysisHorizontalPosition.php:352
-#: GLAccountGraph.php:29 GLAccountGraph.php:34 GLTagProfit_Loss.php:941
-#: GLTrialBalance.php:23 GLTrialBalance.php:748 GLTrialBalance.php:749
 #: SalesGraph.php:18 SalesGraph.php:27 SalesGraph.php:32
 msgid "Select A Different Period"
 msgstr "Selecteer Een Andere Periode"
@@ -1837,11 +1836,11 @@ msgstr ""
 msgid "Print Horizontal Analysis of Statement of Financial Position"
 msgstr ""
 
-#: AnalysisHorizontalPosition.php:39 GLBalanceSheet.php:68
+#: AnalysisHorizontalPosition.php:39 GLBalanceSheet.php:63
 msgid "Select the balance date"
 msgstr "Selecteer de balans datum"
 
-#: AnalysisHorizontalPosition.php:102 GLBalanceSheet.php:451
+#: AnalysisHorizontalPosition.php:102 GLBalanceSheet.php:444
 #: includes/PDFDebtorBalsPageHeader.inc:16
 #: includes/PDFSupplierBalsPageHeader.inc:16
 msgid "as at"
@@ -1853,15 +1852,15 @@ msgid ""
 "negative number indicates an application of funds."
 msgstr ""
 
-#: AnalysisHorizontalPosition.php:138 GLBalanceSheet.php:138
-#: GLBalanceSheet.php:393
+#: AnalysisHorizontalPosition.php:138 GLBalanceSheet.php:133
+#: GLBalanceSheet.php:388
 msgid ""
 "The accumulated profits brought forward could not be calculated by the SQL "
 "because"
 msgstr "De geaccummuleerde winst kon niet worden berekend omdat"
 
-#: AnalysisHorizontalPosition.php:334 GLBalanceSheet.php:361
-#: GLBalanceSheet.php:684
+#: AnalysisHorizontalPosition.php:334 GLBalanceSheet.php:356
+#: GLBalanceSheet.php:673
 msgid "Check Total"
 msgstr "Check Totaal"
 
@@ -1933,7 +1932,7 @@ msgid "Area Code"
 msgstr "Regio Code"
 
 #: Areas.php:130 CustomerTypes.php:166 Employees.php:114 Factors.php:139
-#: FixedAssetCategories.php:141 GLAccounts.php:213
+#: FixedAssetCategories.php:141 GLAccounts.php:212
 #: InternalStockCategoriesByRole.php:101 Locations.php:379
 #: Manufacturers.php:196 MRPDemands.php:244 PcAssignCashToTab.php:125
 #: PcClaimExpensesFromTab.php:345 PcExpenses.php:122 PcExpensesTypeTab.php:84
@@ -2038,7 +2037,7 @@ msgstr "tabel "
 msgid "Containing text"
 msgstr ""
 
-#: AuditTrail.php:89 GLAccountUsers.php:151 LocationUsers.php:175
+#: AuditTrail.php:89 GLAccountUsers.php:148 LocationUsers.php:175
 #: MRPReport.php:794 PO_SelectPurchOrder.php:420 SelectContract.php:180
 #: SelectProduct.php:884 UserGLAccounts.php:157 UserLocations.php:176
 msgid "View"
@@ -2049,7 +2048,7 @@ msgid "Date/Time"
 msgstr "Datum / tijd"
 
 #: AuditTrail.php:175 BankAccountUsers.php:77 BankAccountUsers.php:90
-#: GLAccountUsers.php:116 GLAccountUsers.php:128 GLAccountUsers.php:139
+#: GLAccountUsers.php:113 GLAccountUsers.php:125 GLAccountUsers.php:136
 #: LocationUsers.php:76 LocationUsers.php:89 LocationUsers.php:99
 #: PcReportTab.php:370 UserBankAccounts.php:77 UserBankAccounts.php:90
 #: UserGLAccounts.php:117 UserGLAccounts.php:129 UserGLAccounts.php:145
@@ -2063,7 +2062,7 @@ msgstr "Gebruiker"
 #: CustomerPurchases.php:83 CustomerTransInquiry.php:21
 #: CustomerTransInquiry.php:98 CustWhereAlloc.php:25 CustWhereAlloc.php:144
 #: DailyBankTransactions.php:161 Employees.php:156 GLAccountInquiry.php:195
-#: GLAccountReport.php:341 GLJournal.php:265 MRPReschedules.php:189
+#: GLAccountReport.php:342 GLJournal.php:264 MRPReschedules.php:189
 #: ProductSpecs.php:388 QATests.php:256 QATests.php:395
 #: SalesByTypePeriodInquiry.php:355 SelectCustomer.php:404
 #: ShipmentCosting.php:528 ShipmentCosting.php:596 StockLocMovements.php:109
@@ -2335,7 +2334,7 @@ msgstr "Transactie met deze bankrekening code"
 msgid "Bank account deleted"
 msgstr "Bank rekening verwijderd"
 
-#: BankAccounts.php:200 GLJournal.php:294 Locations.php:413 Locations.php:690
+#: BankAccounts.php:200 GLJournal.php:293 Locations.php:413 Locations.php:690
 msgid "GL Account Code"
 msgstr "Grootboek rekening code"
 
@@ -2445,7 +2444,7 @@ msgstr ""
 msgid "You have not selected an user to be authorised to use this bank account"
 msgstr ""
 
-#: BankAccountUsers.php:69 GLAccountUsers.php:101 LocationUsers.php:64
+#: BankAccountUsers.php:69 GLAccountUsers.php:98 LocationUsers.php:64
 msgid "The user"
 msgstr ""
 
@@ -2473,22 +2472,22 @@ msgstr ""
 msgid "Select Bank Account"
 msgstr ""
 
-#: BankAccountUsers.php:115 BankAccountUsers.php:201 GLAccountUsers.php:53
-#: GLAccountUsers.php:218 InternalStockCategoriesByRole.php:119
+#: BankAccountUsers.php:115 BankAccountUsers.php:201 GLAccountUsers.php:52
+#: GLAccountUsers.php:215 InternalStockCategoriesByRole.php:119
 #: InternalStockCategoriesByRole.php:200 LocationUsers.php:118
 #: LocationUsers.php:225 PcClaimExpensesFromTab.php:366
 #: PcClaimExpensesFromTab.php:642 PcExpenses.php:236 PcExpensesTypeTab.php:102
 #: PcExpensesTypeTab.php:166 PurchaseByPrefSupplier.php:316 StockCounts.php:120
 #: UserBankAccounts.php:110 UserBankAccounts.php:205 UserGLAccounts.php:53
 #: UserGLAccounts.php:224 UserLocations.php:119 UserLocations.php:227
-#: Z_GLAccountUsersCopyAuthority.php:67 Z_GLAccountUsersCopyAuthority.php:82
+#: Z_GLAccountUsersCopyAuthority.php:66 Z_GLAccountUsersCopyAuthority.php:81
 msgid "Not Yet Selected"
 msgstr ""
 
 #: BankAccountUsers.php:129 BankAccountUsers.php:218 CustomerReceipt.php:966
 #: CustomerReceipt.php:1201 CustomerTypes.php:263 ExchangeRateTrend.php:54
-#: FreightCosts.php:59 GLAccountUsers.php:73 GLJournal.php:138
-#: GLJournal.php:377 InternalStockCategoriesByRole.php:135
+#: FreightCosts.php:59 GLAccountUsers.php:71 GLJournal.php:137
+#: GLJournal.php:376 InternalStockCategoriesByRole.php:135
 #: InternalStockCategoriesByRole.php:217 LocationUsers.php:135
 #: LocationUsers.php:244 OffersReceived.php:113 Payments.php:1295
 #: PcAssignCashTabToTab.php:203 PcAssignCashTabToTab.php:453
@@ -2526,23 +2525,23 @@ msgstr ""
 msgid "Authorised users for bank account"
 msgstr ""
 
-#: BankAccountUsers.php:166 GLAccountUsers.php:149 LocationUsers.php:173
+#: BankAccountUsers.php:166 GLAccountUsers.php:146 LocationUsers.php:173
 #: WWW_Users.php:465
 msgid "User Code"
 msgstr ""
 
-#: BankAccountUsers.php:167 GLAccountUsers.php:150 LocationUsers.php:174
+#: BankAccountUsers.php:167 GLAccountUsers.php:147 LocationUsers.php:174
 #: PcTabs.php:179 PcTabs.php:274 PO_AuthorisationLevels.php:128
 #: SMTPServer.php:113 UserSettings.php:113
 msgid "User Name"
 msgstr "Gebruikers Naam"
 
-#: BankAccountUsers.php:174 GLAccountUsers.php:189 LocationUsers.php:193
+#: BankAccountUsers.php:174 GLAccountUsers.php:186 LocationUsers.php:193
 #, php-format
 msgid "Are you sure you wish to un-authorise this user?"
 msgstr ""
 
-#: BankAccountUsers.php:174 GLAccountUsers.php:189 LocationUsers.php:193
+#: BankAccountUsers.php:174 GLAccountUsers.php:186 LocationUsers.php:193
 #: UserBankAccounts.php:172 UserGLAccounts.php:195 UserLocations.php:194
 #, php-format
 msgid "Un-authorise"
@@ -2624,8 +2623,8 @@ msgstr "van"
 
 #: BankMatching.php:136 ConfirmDispatchControlled_Invoice.php:67
 #: CounterReturns.php:198 EmailCustTrans.php:64 FixedAssetRegister.php:82
-#: FTP_RadioBeacon.php:273 GLAccountCSV.php:181 GLAccountGraph.php:191
-#: GLAccountReport.php:105 GLCashFlowsIndirect.php:107 GLStatements.php:108
+#: FTP_RadioBeacon.php:273 GLAccountCSV.php:181 GLAccountGraph.php:192
+#: GLAccountReport.php:106 GLCashFlowsIndirect.php:104 GLStatements.php:107
 #: Payments.php:937 PcReportTab.php:127 PDFChequeListing.php:116
 #: PDFChequeListing.php:126 PDFChequeListing.php:210
 #: PDFDeliveryDifferences.php:201 PDFDeliveryDifferences.php:214
@@ -2633,7 +2632,7 @@ msgstr "van"
 #: PDFDIFOT.php:312 PDFFGLabel.php:207 PDFOrdersInvoiced.php:86
 #: PDFOrdersInvoiced.php:260 PDFOrderStatus.php:90 PDFOrderStatus.php:272
 #: PDFRemittanceAdvice.php:47 PDFSalesBySalesperson.php:64 PDFShipLabel.php:361
-#: PDFWeeklyOrders.php:60 PDFWOPrint.php:542 PickingListsControlled.php:62
+#: PDFWeeklyOrders.php:60 PDFWOPrint.php:543 PickingListsControlled.php:62
 #: PO_PDFPurchOrder.php:357 PricesBasedOnMarkUp.php:218
 #: PricesBasedOnMarkUp.php:357 PrintCustStatements.php:93 PrintCustTrans.php:48
 #: PrintCustTrans.php:49 PrintCustTrans.php:52 PrintCustTransPortrait.php:48
@@ -2641,7 +2640,7 @@ msgstr "van"
 #: SalesGraph.php:252 SalesGraph.php:281 SalesGraph.php:285
 #: StockLocTransferReceive.php:392 StockLocTransferReceive.php:536
 #: Stocks.php:333 Stocks.php:338 StockStatus.php:324 StockStatus.php:351
-#: StockTransfers.php:532 Z_GLAccountUsersCopyAuthority.php:38
+#: StockTransfers.php:532 Z_GLAccountUsersCopyAuthority.php:37
 #: includes/PDFAgedDebtorsPageHeader.inc:17
 #: includes/PDFAgedSuppliersPageHeader.inc:16
 #: includes/PDFChequeListingPageHeader.inc:16
@@ -2728,8 +2727,7 @@ msgstr "is niet ingevoerd in een herkenbare datum format"
 msgid "Entry is expected in the format"
 msgstr "invoer format is"
 
-#: BankMatching.php:187 GLProfit_Loss.php:941
-#, php-format
+#: BankMatching.php:187 GLProfit_Loss.php:880
 msgid "after"
 msgstr "na"
 
@@ -2897,7 +2895,7 @@ msgstr "Nummer"
 #: ContractCosting.php:175 CustomerAccount.php:253 CustomerInquiry.php:253
 #: CustomerPurchases.php:92 CustomerReceipt.php:947
 #: CustomerTransInquiry.php:103 CustWhereAlloc.php:146
-#: DailyBankTransactions.php:162 Dashboard.php:58 GLAccountReport.php:342
+#: DailyBankTransactions.php:162 Dashboard.php:58 GLAccountReport.php:343
 #: PaymentAllocations.php:64 PaymentAllocations.php:65 Payments.php:1133
 #: Payments.php:1372 PDFRemittanceAdvice.php:308 PurchasesReport.php:139
 #: SalesReport.php:139 ShiptsList.php:36 StockCounts.php:143
@@ -3131,7 +3129,7 @@ msgid "Extended Quantity BOM Listing For\t   "
 msgstr ""
 
 #: BOMExtendedQty.php:315 BOMIndented.php:306 BOMIndentedReverse.php:284
-#: GLAccountReport.php:327 InventoryPlanningPrefSupplier.php:57
+#: GLAccountReport.php:328 InventoryPlanningPrefSupplier.php:57
 #: InventoryQuantities.php:233 MRPPlannedPurchaseOrders.php:403
 #: MRPPlannedWorkOrders.php:369 MRPReport.php:832 MRPReschedules.php:175
 #: MRPShortages.php:328 PDFOrderStatus.php:321 PDFPriceList.php:55
@@ -3169,7 +3167,7 @@ msgid "Printed"
 msgstr "Afgedrukt"
 
 #: BOMExtendedQty.php:316 BOMIndented.php:307 BOMIndentedReverse.php:285
-#: FixedAssetRegister.php:367 GLAccountReport.php:327
+#: FixedAssetRegister.php:367 GLAccountReport.php:328
 #: InventoryPlanningPrefSupplier.php:57 InventoryQuantities.php:234
 #: MRPPlannedPurchaseOrders.php:404 MRPPlannedWorkOrders.php:370
 #: MRPReport.php:833 MRPReschedules.php:176 MRPShortages.php:329
@@ -4113,8 +4111,8 @@ msgid "Are you sure you wish to delete this COGS GL posting record?"
 msgstr ""
 
 #: COGSGLPostings.php:198 CustomerReceipt.php:1125 CustWhereAlloc.php:210
-#: Dashboard.php:424 GLAccountUsers.php:116 GLAccountUsers.php:128
-#: GLAccountUsers.php:139 GLJournal.php:388 GLTransInquiry.php:47
+#: Dashboard.php:424 GLAccountUsers.php:113 GLAccountUsers.php:125
+#: GLAccountUsers.php:136 GLJournal.php:387 GLTransInquiry.php:46
 #: Payments.php:1305 SupplierTransInquiry.php:168 TaxAuthorities.php:147
 #: TaxAuthorities.php:148 UserGLAccounts.php:117 UserGLAccounts.php:129
 #: UserGLAccounts.php:145
@@ -4186,7 +4184,7 @@ msgid "Issued Cost"
 msgstr "Toegewezen kosten"
 
 #: CollectiveWorkOrderCost.php:58 PDFFGLabel.php:201 PDFShipLabel.php:356
-#: PDFWOPrint.php:284 PDFWOPrint.php:537 Timesheets.php:621
+#: PDFWOPrint.php:285 PDFWOPrint.php:538 Timesheets.php:621
 #: includes/DatabaseTranslations.php:48
 msgid "Work Order"
 msgstr ""
@@ -4204,7 +4202,7 @@ msgid "The work order number entered MUST be numeric"
 msgstr "Werkorder nummer moet numeriek zijn"
 
 #: CollectiveWorkOrderCost.php:127 PDFFGLabel.php:182 PDFShipLabel.php:334
-#: PDFWOPrint.php:285 PDFWOPrint.php:519 SelectWorkOrder.php:43
+#: PDFWOPrint.php:286 PDFWOPrint.php:520 SelectWorkOrder.php:43
 #: api/api_xml-rpc.php:2573 api/api_xml-rpc.php:2769
 #: includes/PDFWOPageHeader.inc:9
 msgid "Work Order Number"
@@ -4371,7 +4369,7 @@ msgstr "Ontvangen"
 msgid "Costing"
 msgstr "Kostprijsberekening"
 
-#: CollectiveWorkOrderCost.php:450 PDFWOPrint.php:677 SelectWorkOrder.php:333
+#: CollectiveWorkOrderCost.php:450 PDFWOPrint.php:678 SelectWorkOrder.php:333
 msgid "Paperwork"
 msgstr ""
 
@@ -4408,14 +4406,13 @@ msgid "Print W/O"
 msgstr ""
 
 #: CollectiveWorkOrderCost.php:511 FormDesigner.php:201
-#: GLCashFlowsIndirect.php:818 GLCashFlowsIndirect.php:819 GLStatements.php:190
-#: GLStatements.php:191 HistoricalTestResults.php:81
-#: InternalStockRequest.php:296 MailingGroupMaintenance.php:145
-#: MRPCreateDemands.php:286 PDFCOA.php:42 PDFCOA.php:72 PDFProdSpec.php:30
-#: PDFProdSpec.php:56 PricesByCost.php:296 ProductSpecs.php:99
-#: ProductSpecs.php:126 PurchasesReport.php:70 PurchasesReport.php:71
-#: ReorderLevelLocation.php:193 SalesReport.php:70 SalesReport.php:71
-#: SupplierGRNAndInvoiceInquiry.php:46
+#: GLCashFlowsIndirect.php:811 GLStatements.php:186
+#: HistoricalTestResults.php:81 InternalStockRequest.php:296
+#: MailingGroupMaintenance.php:145 MRPCreateDemands.php:286 PDFCOA.php:42
+#: PDFCOA.php:72 PDFProdSpec.php:30 PDFProdSpec.php:56 PricesByCost.php:296
+#: ProductSpecs.php:99 ProductSpecs.php:126 PurchasesReport.php:70
+#: PurchasesReport.php:71 ReorderLevelLocation.php:193 SalesReport.php:70
+#: SalesReport.php:71 SupplierGRNAndInvoiceInquiry.php:46
 msgid "Submit"
 msgstr "Indienen"
 
@@ -5980,8 +5977,8 @@ msgstr "Er is een probleem bij het selecteren van de onderdelen records omdat"
 #: ContractBOM.php:143 PO_Items.php:1262 SupplierTenderCreate.php:824
 #: SupplierTenders.php:663 Z_ChangeGLAccountCode.php:61
 #: Z_ChangeLocationCode.php:105 Z_ChangeStockCategory.php:73
-#: Z_ChangeStockCode.php:115 Z_GLAccountUsersCopyAuthority.php:33
-#: Z_GLAccountUsersCopyAuthority.php:44 includes/MiscFunctions.php:384
+#: Z_ChangeStockCode.php:115 Z_GLAccountUsersCopyAuthority.php:32
+#: Z_GLAccountUsersCopyAuthority.php:43 includes/MiscFunctions.php:384
 msgid "The SQL statement that failed was"
 msgstr "De SQL die faalde was"
 
@@ -7159,7 +7156,7 @@ msgstr "Tegen klantcode"
 #: CounterReturns.php:155 CounterSales.php:166 Dashboard.php:493
 #: Dashboard.php:511 DeliveryDetails.php:164 GLAccountCSV.php:192
 #: GLAccountCSV.php:218 GLAccountInquiry.php:217 GLAccountInquiry.php:250
-#: GLAccountReport.php:117 SelectOrderItems.php:466
+#: GLAccountReport.php:118 SelectOrderItems.php:466
 msgid "could not be retrieved"
 msgstr "Kon niet worden opgevraagd"
 
@@ -7307,8 +7304,8 @@ msgstr "BTW"
 #: CounterReturns.php:737 CounterSales.php:834 CustomerPurchases.php:93
 #: CustomerReceipt.php:959 CustomerReceipt.php:993 CustomerReceipt.php:1195
 #: DailyBankTransactions.php:163 GLAccountInquiry.php:198
-#: GLAccountReport.php:346 GLJournalInquiry.php:101 GLJournal.php:367
-#: GLJournal.php:391 ImportBankTransAnalysis.php:209
+#: GLAccountReport.php:347 GLJournalInquiry.php:101 GLJournal.php:366
+#: GLJournal.php:390 ImportBankTransAnalysis.php:209
 #: ImportBankTransAnalysis.php:294 InternalStockRequestAuthorisation.php:71
 #: InternalStockRequestFulfill.php:321 InternalStockRequest.php:243
 #: OrderDetails.php:196 Payments.php:1145 Payments.php:1306
@@ -8015,8 +8012,8 @@ msgid "Invoiced"
 msgstr "Gefactureerd"
 
 #: Credit_Invoice.php:304 CustomerInquiry.php:299 CustomerInquiry.php:346
-#: GLAccountInquiry.php:200 GLAccountReport.php:345 GLJournal.php:361
-#: GLJournal.php:390 GLJournal.php:437 SuppCreditGRNs.php:289
+#: GLAccountInquiry.php:200 GLAccountReport.php:346 GLJournal.php:360
+#: GLJournal.php:389 GLJournal.php:436 SuppCreditGRNs.php:289
 msgid "Credit"
 msgstr "Credit"
 
@@ -9133,10 +9130,10 @@ msgstr ""
 "zijn voor"
 
 #: CustomerAccount.php:55 CustomerAccount.php:90 EmailConfirmation.php:42
-#: FTP_RadioBeacon.php:171 GeneratePickingList.php:232 PDFAck.php:25
+#: FTP_RadioBeacon.php:171 GeneratePickingList.php:233 PDFAck.php:25
 #: PDFAck.php:104 PDFCOA.php:80 PDFPickingList.php:223 PDFProdSpec.php:64
 #: PDFQuotation.php:35 PDFQuotation.php:121 PDFQuotationPortrait.php:37
-#: PDFQuotationPortrait.php:123 PDFWOPrint.php:164 PDFWOPrint.php:291
+#: PDFQuotationPortrait.php:123 PDFWOPrint.php:165 PDFWOPrint.php:292
 #: PO_PDFPurchOrder.php:77 PO_PDFPurchOrder.php:208
 #: PrintCustOrder_generic.php:39 PrintCustOrder_generic.php:167
 #: PrintCustOrder.php:39 PrintCustOrder.php:148 PrintCustStatements.php:156
@@ -9195,7 +9192,7 @@ msgstr "charges"
 
 #: CustomerAccount.php:257 CustomerBalancesMovement.php:118
 #: CustomerBalancesMovement.php:124 CustomerBalancesMovement.php:199
-#: GLTransInquiry.php:50 includes/PDFStatementPageHeader.inc:165
+#: GLTransInquiry.php:49 includes/PDFStatementPageHeader.inc:165
 msgid "Credits"
 msgstr "Credit"
 
@@ -9539,7 +9536,7 @@ msgid "Opening Balance"
 msgstr ""
 
 #: CustomerBalancesMovement.php:117 CustomerBalancesMovement.php:124
-#: CustomerBalancesMovement.php:198 GLTransInquiry.php:49
+#: CustomerBalancesMovement.php:198 GLTransInquiry.php:48
 msgid "Debits"
 msgstr "Domiciliëringen"
 
@@ -10170,7 +10167,7 @@ msgstr ""
 msgid "No General Ledger code has been chosen"
 msgstr "Geen Grootboek-code is gekozen"
 
-#: CustomerReceipt.php:194 GLJournal.php:173 Payments.php:830 Payments.php:865
+#: CustomerReceipt.php:194 GLJournal.php:172 Payments.php:830 Payments.php:865
 msgid "so this GL analysis item could not be added"
 msgstr "dit grootboek analyse item kon niet worden toegevoegd"
 
@@ -10276,7 +10273,7 @@ msgstr ""
 msgid "Cannot insert a GL transaction for the payment discount debit"
 msgstr "De grootboekboeking voor de debit discount betaling mislukte"
 
-#: CustomerReceipt.php:591 GLJournal.php:115
+#: CustomerReceipt.php:591 GLJournal.php:114
 msgid "Cannot commit the changes"
 msgstr "Wijzigingen kunnen niet doorgevoerd worden"
 
@@ -10420,7 +10417,7 @@ msgstr "op"
 msgid "Received"
 msgstr "Ontvangen"
 
-#: CustomerReceipt.php:994 GLAccountInquiry.php:202 GLAccountReport.php:347
+#: CustomerReceipt.php:994 GLAccountInquiry.php:202 GLAccountReport.php:348
 #: GLJournalInquiry.php:103 ImportBankTransAnalysis.php:210
 #: ImportBankTransAnalysis.php:299 InternalStockRequestFulfill.php:360
 #: Payments.php:1307 PcAuthorizeExpenses.php:100 PcClaimExpensesFromTab.php:453
@@ -10454,7 +10451,7 @@ msgid "General Ledger Receipt Entry"
 msgstr "Grootboek Ontvangst Invoer"
 
 #: CustomerReceipt.php:1102 GLAccountCSV.php:70 GLAccountInquiry.php:85
-#: GLAccountReport.php:269 Payments.php:1167 StockAdjustments.php:497
+#: GLAccountReport.php:270 Payments.php:1167 StockAdjustments.php:497
 #: SuppTransGLAnalysis.php:165
 msgid "Select Tag"
 msgstr "Selecteer label"
@@ -10882,8 +10879,8 @@ msgid "Choose which type of transaction to report on."
 msgstr "Kies over welke transactie gerapporteerd moet worden"
 
 #: CustomerTransInquiry.php:50 FixedAssetRegister.php:82
-#: FixedAssetRegister.php:365 FreightCosts.php:78 GLCashFlowsIndirect.php:107
-#: GLJournalInquiry.php:44 GLJournalInquiry.php:61 GLStatements.php:108
+#: FixedAssetRegister.php:365 FreightCosts.php:78 GLCashFlowsIndirect.php:104
+#: GLJournalInquiry.php:44 GLJournalInquiry.php:61 GLStatements.php:107
 #: PcReportExpense.php:99 PcReportTab.php:172 PcReportTab.php:364
 #: SalesAnalRepts.php:425 SalesAnalRepts.php:453 SalesAnalRepts.php:482
 #: SalesAnalRepts.php:501 ShipmentCosting.php:55 Shipments.php:304
@@ -11352,7 +11349,7 @@ msgstr "De gebruikte SQL om de bankrekening details op te vragen was"
 
 #: Dashboard.php:493 Dashboard.php:511 GLAccountCSV.php:192
 #: GLAccountCSV.php:218 GLAccountInquiry.php:217 GLAccountInquiry.php:250
-#: GLAccountReport.php:117
+#: GLAccountReport.php:118
 msgid "The chart details for account"
 msgstr "De details voor rekeing"
 
@@ -13352,7 +13349,7 @@ msgstr ""
 msgid "Cannot insert a depreciation GL entry for the depreciation because"
 msgstr "Kunt geen afschrijvingen GL vermelding voor de afschrijving, omdat"
 
-#: FixedAssetDepreciation.php:192 GLJournal.php:86 GLJournal.php:109
+#: FixedAssetDepreciation.php:192 GLJournal.php:85 GLJournal.php:108
 msgid "The SQL that failed to insert the GL Trans record was"
 msgstr "De SQL waarin de grootboek boeking niet kon worden uitgevoerd was"
 
@@ -13394,7 +13391,7 @@ msgstr "TOTAAL"
 msgid "Depreciation"
 msgstr "Afschrijvingen"
 
-#: FixedAssetDepreciation.php:263 GLJournal.php:118 Payments.php:763
+#: FixedAssetDepreciation.php:263 GLJournal.php:117 Payments.php:763
 msgid "has been successfully entered"
 msgstr "is met succes ingevoerd"
 
@@ -14316,7 +14313,7 @@ msgstr "Wijzig de order om herprinten of herzenden mogelijk te maken"
 msgid "Select Delivery Details"
 msgstr "Selecteer de leverings details"
 
-#: FTP_RadioBeacon.php:197 PDFWOPrint.php:291 PO_PDFPurchOrder.php:208
+#: FTP_RadioBeacon.php:197 PDFWOPrint.php:292 PO_PDFPurchOrder.php:208
 msgid "There was a problem retrieving the line details for order number"
 msgstr ""
 "Er was een probleem met het opvragen van de regel details van order nummer"
@@ -14366,85 +14363,85 @@ msgid "Perhaps it is set to be dispatched from a different stock location"
 msgstr ""
 "Mogelijk dat het moet worden verzonden via  een andere voorraad locatie"
 
-#: GeneratePickingList.php:12 PDFPickingList.php:11
+#: GeneratePickingList.php:13 PDFPickingList.php:11
 msgid "Picking Lists Not Enabled"
 msgstr "Picklijsten niet ingeschakeld"
 
-#: GeneratePickingList.php:19 PDFPickingList.php:14
+#: GeneratePickingList.php:20 PDFPickingList.php:14
 msgid ""
 "The system is not configured for picking lists. A configuration parameter is "
 "required where picking slips are required. Please consult your system "
 "administrator."
 msgstr ""
 
-#: GeneratePickingList.php:27 PDFPickingList.php:21
+#: GeneratePickingList.php:28 PDFPickingList.php:21
 msgid "Select Picking Lists"
 msgstr "Selecteer picklijsten"
 
-#: GeneratePickingList.php:42 PDFPickingList.php:34
+#: GeneratePickingList.php:43 PDFPickingList.php:34
 msgid "Create picking lists for all deliveries to be made on"
 msgstr "Maak picklijsten voor alle leveringen aan worden gedaan op"
 
-#: GeneratePickingList.php:46 PDFPickingList.php:38
+#: GeneratePickingList.php:47 PDFPickingList.php:38
 msgid "From Warehouse"
 msgstr "Uit magazijn"
 
-#: GeneratePickingList.php:55 PDFPickingList.php:48
+#: GeneratePickingList.php:56 PDFPickingList.php:48
 msgid "Print Picking Lists"
 msgstr "Print picklijsten"
 
-#: GeneratePickingList.php:63 PDFPickingList.php:57
+#: GeneratePickingList.php:64 PDFPickingList.php:57
 msgid ""
 "There was a problem retrieving the order header details from the database"
 msgstr ""
 "Er was een probleem het ophalen van de bestelling kop gegevens uit de "
 "database"
 
-#: GeneratePickingList.php:154 GeneratePickingList.php:511
+#: GeneratePickingList.php:155 GeneratePickingList.php:512
 #: PDFPickingList.php:143 PDFPickingList.php:347
 msgid "Print Picking List Error"
 msgstr "Print picking list fout"
 
-#: GeneratePickingList.php:157 PDFPickingList.php:146
+#: GeneratePickingList.php:158 PDFPickingList.php:146
 msgid "Unable to Locate any orders for this criteria "
 msgstr "Niet in staat om alle orders te vinden voor dit criterium "
 
-#: GeneratePickingList.php:161 PDFPickingList.php:150
+#: GeneratePickingList.php:162 PDFPickingList.php:150
 msgid "Enter Another Date"
 msgstr "Voer een andere datum"
 
-#: GeneratePickingList.php:212 PDFPickingList.php:203
+#: GeneratePickingList.php:213 PDFPickingList.php:203
 #: SelectPickingLists.php:428 includes/PDFPickingListHeader.inc:11
 #: includes/DatabaseTranslations.php:32
 msgid "Picking List"
 msgstr "Picking Lijst"
 
-#: GeneratePickingList.php:213 PDFPickingList.php:204
+#: GeneratePickingList.php:214 PDFPickingList.php:204
 msgid "Laser Picking List"
 msgstr "Laser picking list"
 
-#: GeneratePickingList.php:232 PDFPickingList.php:222
+#: GeneratePickingList.php:233 PDFPickingList.php:222
 msgid "There was a problem retrieving the order line details for Order Number"
 msgstr ""
 "Er was een probleem het ophalen van de orderregel details voor volgnummer"
 
-#: GeneratePickingList.php:444
+#: GeneratePickingList.php:445
 msgid "Serial#:"
 msgstr ""
 
-#: GeneratePickingList.php:447
+#: GeneratePickingList.php:448
 msgid "Lot#:"
 msgstr ""
 
-#: GeneratePickingList.php:472 includes/InputSerialItemsExisting.php:38
+#: GeneratePickingList.php:473 includes/InputSerialItemsExisting.php:38
 msgid "Could not retrieve the items for"
 msgstr "Kon de items niet opvragen voor"
 
-#: GeneratePickingList.php:504 PDFWOPrint.php:489
-msgid "Signed for: "
+#: GeneratePickingList.php:505 PDFWOPrint.php:490
+msgid "Signed for"
 msgstr ""
 
-#: GeneratePickingList.php:513
+#: GeneratePickingList.php:514
 msgid "There are no picking lists to print"
 msgstr ""
 
@@ -14624,31 +14621,31 @@ msgstr "Opvragen van de voorraad beelden"
 msgid "The Image could not be retrieved because it does not exist"
 msgstr "Het beeld kon niet worden opgevraagd omdat het niet bestaat"
 
-#: GLAccountCSV.php:6 GLAccountCSV.php:20 GLAccountReport.php:215
-#: GLAccountReport.php:219
+#: GLAccountCSV.php:6 GLAccountCSV.php:20 GLAccountReport.php:216
+#: GLAccountReport.php:220
 msgid "General Ledger Account Report"
 msgstr "Grootboekrekening Verslag"
 
-#: GLAccountCSV.php:20 GLAccountInquiry.php:5 GLAccountInquiry.php:12
-#: GLAccountInquiry.php:13 GLAccountReport.php:219
+#: GLAccountCSV.php:20 GLAccountInquiry.php:6 GLAccountInquiry.php:12
+#: GLAccountInquiry.php:13 GLAccountReport.php:220
 msgid "General Ledger Account Inquiry"
 msgstr "Grootboekrekening zoekopdracht"
 
-#: GLAccountCSV.php:22 GLAccountReport.php:221
+#: GLAccountCSV.php:22 GLAccountReport.php:222
 msgid "Use the keyboard Shift key to select multiple accounts and periods"
 msgstr ""
 "Gebruik het toetsenbord Shift-toets ingedrukt om meerdere accounts en "
 "periodes te selecteren"
 
-#: GLAccountCSV.php:34 GLAccountReport.php:232
+#: GLAccountCSV.php:34 GLAccountReport.php:233
 msgid "Selected Accounts"
 msgstr "Geselecteerde accounts"
 
-#: GLAccountCSV.php:53 GLAccountInquiry.php:107 GLAccountReport.php:251
+#: GLAccountCSV.php:53 GLAccountInquiry.php:107 GLAccountReport.php:252
 msgid "For Period range"
 msgstr "Voor periode"
 
-#: GLAccountCSV.php:78 GLAccountInquiry.php:94 GLAccountReport.php:278
+#: GLAccountCSV.php:78 GLAccountInquiry.php:94 GLAccountReport.php:279
 msgid "All tags"
 msgstr "Alle tags"
 
@@ -14657,11 +14654,11 @@ msgstr "Alle tags"
 msgid "Make CSV File"
 msgstr "Maak een CSV file"
 
-#: GLAccountCSV.php:99 GLAccountInquiry.php:134 GLAccountReport.php:17
+#: GLAccountCSV.php:99 GLAccountInquiry.php:134 GLAccountReport.php:18
 msgid "A period or range of periods must be selected from the list box"
 msgstr "Een periode moet via de lijst worden geselecteerd"
 
-#: GLAccountCSV.php:104 GLAccountReport.php:22 GLAccountReport.php:204
+#: GLAccountCSV.php:104 GLAccountReport.php:23 GLAccountReport.php:205
 msgid "An account or range of accounts must be selected from the list box"
 msgstr ""
 "Een rekening of het bereik van de rekeningen moet worden geselecteerd uit de "
@@ -14672,7 +14669,7 @@ msgstr ""
 msgid "Could not open or create the file under"
 msgstr "Kon de file niet openen of aanmaken"
 
-#: GLAccountCSV.php:178 GLAccountInquiry.php:181 GLAccountReport.php:96
+#: GLAccountCSV.php:178 GLAccountInquiry.php:181 GLAccountReport.php:97
 msgid "The transactions for account"
 msgstr "De transacties voor rekening"
 
@@ -14681,22 +14678,22 @@ msgid "for period"
 msgstr "voor de periode"
 
 #: GLAccountCSV.php:198 GLAccountCSV.php:200 GLAccountInquiry.php:222
-#: GLAccountReport.php:123
+#: GLAccountReport.php:124
 msgid "Brought Forward Balance"
 msgstr "Overgedragen Balance"
 
 #: GLAccountCSV.php:222 GLAccountCSV.php:224 GLAccountCSV.php:247
-#: GLAccountCSV.php:249 GLAccountReport.php:139
+#: GLAccountCSV.php:249 GLAccountReport.php:140
 msgid "Period Total"
 msgstr "Periode Totaal"
 
 #: GLAccountCSV.php:254 GLAccountCSV.php:256 GLAccountInquiry.php:353
-#: GLAccountReport.php:188
+#: GLAccountReport.php:189
 msgid "Total Period Movement"
 msgstr "Totale periode Beweging"
 
 #: GLAccountCSV.php:260 GLAccountCSV.php:262 GLAccountInquiry.php:355
-#: GLAccountReport.php:190
+#: GLAccountReport.php:191
 msgid "Balance C/Fwd"
 msgstr "Balance C/Fwd"
 
@@ -14704,93 +14701,92 @@ msgstr "Balance C/Fwd"
 msgid "to view the file"
 msgstr "Om file te tonen"
 
-#: GLAccountGraph.php:7
+#: GLAccountGraph.php:8
 msgid "GL Account Graph"
 msgstr ""
 
-#: GLAccountGraph.php:28 GLTrialBalance.php:22 SalesGraph.php:17
+#: GLAccountGraph.php:29 SalesGraph.php:17
 msgid ""
 "The selected period from is actually after the period to! Please re-select "
 "the reporting period"
 msgstr "De -van- datum ligt na de -tot- datum! selecteer een andere periode"
 
-#: GLAccountGraph.php:45 GLAccountUsers.php:51 GLBudgets.php:39
-#: GLJournal.php:295 Payments.php:1245
+#: GLAccountGraph.php:46 GLAccountUsers.php:50 GLBudgets.php:39
+#: GLJournal.php:294 Payments.php:1245
 msgid "Select GL Account"
 msgstr "Selecteer GB Nummer"
 
-#: GLAccountGraph.php:72 SalesGraph.php:178
+#: GLAccountGraph.php:73 SalesGraph.php:178
 msgid "Graph Type"
 msgstr "Type grafiek"
 
-#: GLAccountGraph.php:74 SalesGraph.php:180
+#: GLAccountGraph.php:75 SalesGraph.php:180
 msgid "Bar Graph"
 msgstr "Bar Graph"
 
-#: GLAccountGraph.php:75 SalesGraph.php:181
+#: GLAccountGraph.php:76 SalesGraph.php:181
 msgid "Stacked Bar Graph"
 msgstr "Gestapelde staafgrafiek"
 
-#: GLAccountGraph.php:76 SalesGraph.php:182
+#: GLAccountGraph.php:77 SalesGraph.php:182
 msgid "Line Graph"
 msgstr "Lijngrafiek"
 
-#: GLAccountGraph.php:77 SalesGraph.php:183
+#: GLAccountGraph.php:78 SalesGraph.php:183
 msgid "Line Point Graph"
 msgstr "Lijn Point Grafiek"
 
-#: GLAccountGraph.php:78 SalesGraph.php:184
+#: GLAccountGraph.php:79 SalesGraph.php:184
 msgid "Area Graph"
 msgstr "Ruimte Grafiek"
 
-#: GLAccountGraph.php:79 SalesGraph.php:185
+#: GLAccountGraph.php:80 SalesGraph.php:185
 msgid "Points Graph"
 msgstr "Punten Grafiek"
 
-#: GLAccountGraph.php:80 SalesGraph.php:186
+#: GLAccountGraph.php:81 SalesGraph.php:186
 msgid "Pie Graph"
 msgstr "Cirkeldiagram"
 
-#: GLAccountGraph.php:81 SalesGraph.php:187
+#: GLAccountGraph.php:82 SalesGraph.php:187
 msgid "Thin Bar Line Graph"
 msgstr "Dunne Bar lijngrafiek"
 
-#: GLAccountGraph.php:82 SalesGraph.php:188
+#: GLAccountGraph.php:83 SalesGraph.php:188
 msgid "Squared Graph"
 msgstr "Squared Grafiek"
 
-#: GLAccountGraph.php:83 SalesGraph.php:189
+#: GLAccountGraph.php:84 SalesGraph.php:189
 msgid "Stacked Area Graph"
 msgstr "Gestapelde gebied grafiek"
 
-#: GLAccountGraph.php:89
+#: GLAccountGraph.php:90
 msgid "Invert Graph"
 msgstr ""
 
-#: GLAccountGraph.php:94 GLProfit_Loss.php:95 GLTagProfit_Loss.php:45
-#: GLTrialBalance.php:59 SalesGraph.php:41 Z_RePostGLFromPeriod.php:17
-#: Z_UpdateChartDetailsBFwd.php:23
+#: GLAccountGraph.php:95 GLTagProfit_Loss.php:46 SalesGraph.php:41
+#: Z_RePostGLFromPeriod.php:17 Z_UpdateChartDetailsBFwd.php:23
 msgid "Select Period From"
 msgstr "Selecteer Periode Vanaf"
 
-#: GLAccountGraph.php:132 GLProfit_Loss.php:134 GLTagProfit_Loss.php:85
-#: GLTrialBalance.php:95 SalesGraph.php:77 Z_UpdateChartDetailsBFwd.php:41
+#: GLAccountGraph.php:133 GLTagProfit_Loss.php:86 SalesGraph.php:77
+#: Z_UpdateChartDetailsBFwd.php:41
 msgid "Select Period To"
 msgstr "Selecteer Periode Tot"
 
-#: GLAccountGraph.php:166
+#: GLAccountGraph.php:167
 msgid "Show Account Graph"
 msgstr ""
 
-#: GLAccountGraph.php:177
+#: GLAccountGraph.php:178
 msgid "GL Account Graph - Actual vs. Budget"
 msgstr ""
 
-#: GLAccountGraph.php:191 SalesAnalReptCols.php:423 SalesGraph.php:252
+#: GLAccountGraph.php:192 SalesAnalReptCols.php:423 SalesGraph.php:252
 msgid "From Period"
 msgstr "Van Periode"
 
-#: GLAccountGraph.php:211 POReport.php:496 POReport.php:746 POReport.php:747
+#: GLAccountGraph.php:212 POReport.php:496 POReport.php:746 POReport.php:747
 #: POReport.php:1264 POReport.php:1440 POReport.php:1441 POReport.php:1624
 #: PurchaseByPrefSupplier.php:418 PurchaseByPrefSupplier.php:419
 #: SalesGraph.php:304 SalesInquiry.php:783 SalesInquiry.php:1002
@@ -14799,28 +14795,28 @@ msgstr "Van Periode"
 msgid "Month"
 msgstr "Maand"
 
-#: GLAccountGraph.php:230
+#: GLAccountGraph.php:231
 msgid ""
 "The GL Account graph data for the selected criteria could not be retrieved "
 "because"
 msgstr ""
 
-#: GLAccountGraph.php:235
+#: GLAccountGraph.php:236
 msgid "There is not GL Account data for the criteria entered to graph"
 msgstr ""
 
-#: GLAccountGraph.php:255 GLBudgets.php:182 SalesAnalReptCols.php:268
+#: GLAccountGraph.php:256 GLBudgets.php:182 SalesAnalReptCols.php:268
 #: SalesAnalReptCols.php:465 SalesAnalReptCols.php:468 SalesGraph.php:351
 msgid "Actual"
 msgstr "Actueel"
 
-#: GLAccountGraph.php:255 GLBudgets.php:183 SalesAnalReptCols.php:263
+#: GLAccountGraph.php:256 GLBudgets.php:183 SalesAnalReptCols.php:263
 #: SalesAnalReptCols.php:270 SalesAnalReptCols.php:464
 #: SalesAnalReptCols.php:467 SalesGraph.php:351
 msgid "Budget"
 msgstr "Budget"
 
-#: GLAccountGraph.php:267
+#: GLAccountGraph.php:268
 msgid "Select Different Criteria"
 msgstr ""
 
@@ -14850,8 +14846,8 @@ msgstr ""
 msgid "Transactions for account"
 msgstr "Transacties voor rekening"
 
-#: GLAccountInquiry.php:199 GLAccountReport.php:344 GLJournal.php:357
-#: GLJournal.php:389 GLJournal.php:439
+#: GLAccountInquiry.php:199 GLAccountReport.php:345 GLJournal.php:356
+#: GLJournal.php:388 GLJournal.php:438
 msgid "Debit"
 msgstr "Debit"
 
@@ -14859,7 +14855,7 @@ msgstr "Debit"
 msgid "Total for period"
 msgstr "Totaal voor de periode"
 
-#: GLAccountInquiry.php:268 GLBudgets.php:181 GLTransInquiry.php:45
+#: GLAccountInquiry.php:268 GLBudgets.php:181 GLTransInquiry.php:44
 #: SalesByTypePeriodInquiry.php:354 Z_CheckDebtorsControl.php:70
 #: Z_CheckGLTransBalance.php:13 Z_UpdateChartDetailsBFwd.php:80
 msgid "Period"
@@ -14899,15 +14895,15 @@ msgstr ""
 "Een log van de rekeningverschillen voor de perioderapporten worden hieronder "
 "getoond"
 
-#: GLAccountReport.php:31 GLAccountReport.php:32 GLAccountReport.php:325
+#: GLAccountReport.php:32 GLAccountReport.php:33 GLAccountReport.php:326
 msgid "GL Account Report"
 msgstr "GL Accountrapport"
 
-#: GLAccountReport.php:105
+#: GLAccountReport.php:106
 msgid "Listing for Period"
 msgstr "Listing voor periode"
 
-#: GLAccountReport.php:292
+#: GLAccountReport.php:293
 msgid "Run Report"
 msgstr "Rapport uitvoeren"
 
@@ -14915,23 +14911,23 @@ msgstr "Rapport uitvoeren"
 msgid "Not set up"
 msgstr ""
 
-#: GLAccounts.php:10 GLAccounts.php:271 GLCashFlowsIndirect.php:27
+#: GLAccounts.php:10 GLAccounts.php:270 GLCashFlowsIndirect.php:27
 msgid "No effect on cash flow"
 msgstr ""
 
-#: GLAccounts.php:11 GLAccounts.php:272
+#: GLAccounts.php:11 GLAccounts.php:271
 msgid "Operating activity"
 msgstr ""
 
-#: GLAccounts.php:12 GLAccounts.php:273
+#: GLAccounts.php:12 GLAccounts.php:272
 msgid "Investing activity"
 msgstr ""
 
-#: GLAccounts.php:13 GLAccounts.php:274
+#: GLAccounts.php:13 GLAccounts.php:273
 msgid "Financing activity"
 msgstr ""
 
-#: GLAccounts.php:14 GLAccounts.php:275 GLCashFlowsIndirect.php:31
+#: GLAccounts.php:14 GLAccounts.php:274 GLCashFlowsIndirect.php:31
 msgid "Cash or cash equivalent"
 msgstr ""
 
@@ -14943,27 +14939,27 @@ msgstr ""
 msgid "General Ledger Accounts"
 msgstr "Rekeningen in het grootboek"
 
-#: GLAccounts.php:55
+#: GLAccounts.php:54
 msgid "The account name must be fifty characters or less long"
 msgstr "De grootboek rekening naam mag maximaal 50 karakters lang zijn"
 
-#: GLAccounts.php:65
+#: GLAccounts.php:64
 msgid "Could not update the account because"
 msgstr "Kon de grootboekrekening niet vernieuwen opmdat"
 
-#: GLAccounts.php:68
+#: GLAccounts.php:67
 msgid "The general ledger account has been updated"
 msgstr "De grootboekrekening is vernieuwd"
 
-#: GLAccounts.php:83 GLCashFlowsSetup.php:201
+#: GLAccounts.php:82 GLCashFlowsSetup.php:195
 msgid "Could not add the new account code"
 msgstr "Kon de nieuwe grootboekrekening niet toevoegen"
 
-#: GLAccounts.php:86
+#: GLAccounts.php:85
 msgid "The new general ledger account has been added"
 msgstr "De nieuwe grootboekrekening is toegevoegd"
 
-#: GLAccounts.php:108
+#: GLAccounts.php:107
 msgid ""
 "Cannot delete this account because chart details have been created using "
 "this account and at least one period has postings to it"
@@ -14971,15 +14967,15 @@ msgstr ""
 "Grootboekrekening kan niet worden verwijderd omdat er in ieder geval in een "
 "periode op geboekt is"
 
-#: GLAccounts.php:109
+#: GLAccounts.php:108
 msgid "chart details that require this account code"
 msgstr "Rekenschema details dat deze grootboekrekening nodig hebben"
 
-#: GLAccounts.php:116
+#: GLAccounts.php:115
 msgid "Could not test for existing transactions because"
 msgstr "Kon geen test uitvoeren voor betreffende transactie omdat"
 
-#: GLAccounts.php:122
+#: GLAccounts.php:121
 msgid ""
 "Cannot delete this account because transactions have been created using this "
 "account"
@@ -14987,15 +14983,15 @@ msgstr ""
 "Grootboekrekening kon niet worden verwijderd omdat er transacties mee zijn "
 "uitgevoerd"
 
-#: GLAccounts.php:123
+#: GLAccounts.php:122
 msgid "transactions that require this account code"
 msgstr "Transacties die deze grootboekrekening nodig hebben"
 
-#: GLAccounts.php:136
+#: GLAccounts.php:135
 msgid "Could not test for default company GL codes because"
 msgstr "Kon niet testen voor de standaard grootboekrekeningen omdat"
 
-#: GLAccounts.php:142
+#: GLAccounts.php:141
 msgid ""
 "Cannot delete this account because it is used as one of the company default "
 "accounts"
@@ -15003,11 +14999,11 @@ msgstr ""
 "Kon de grootboekrekening niet verwijderen omdat het als een standaard is "
 "gebruikt in de bedrijfsconfiguratie"
 
-#: GLAccounts.php:149
+#: GLAccounts.php:148
 msgid "Could not test for tax authority GL codes because"
 msgstr "Kon de grootboekrekeningen voor de belastingen niet testen omdat"
 
-#: GLAccounts.php:155
+#: GLAccounts.php:154
 msgid ""
 "Cannot delete this account because it is used as one of the tax authority "
 "accounts"
@@ -15015,11 +15011,11 @@ msgstr ""
 "Kon deze grootboekrekening niet verwijderen omdat het voor de belastingen "
 "wordt gebruikt"
 
-#: GLAccounts.php:161
+#: GLAccounts.php:160
 msgid "Could not test for existing sales interface GL codes because"
 msgstr "Kon de interface verkoop met grootboekrekening niet testen omdat"
 
-#: GLAccounts.php:167
+#: GLAccounts.php:166
 msgid ""
 "Cannot delete this account because it is used by one of the sales GL posting "
 "interface records"
@@ -15027,11 +15023,11 @@ msgstr ""
 "Kan deze grootboekrekening niet verwijderen omdat het wordt toegepast voor "
 "vekoopsboekingen"
 
-#: GLAccounts.php:173
+#: GLAccounts.php:172
 msgid "Could not test for existing cost of sales interface codes because"
 msgstr "Kon de verwervingskosten interface niet testen omdat"
 
-#: GLAccounts.php:179
+#: GLAccounts.php:178
 msgid ""
 "Cannot delete this account because it is used by one of the cost of sales GL "
 "posting interface records"
@@ -15039,12 +15035,12 @@ msgstr ""
 "Kon de grootboekrekening niet verwijderen omdat het wordt gebruikt voor het "
 "boeken van de verwerwingskosten"
 
-#: GLAccounts.php:189
+#: GLAccounts.php:188
 msgid "Could not test for existing stock GL codes because"
 msgstr ""
 "Kon de bestaande grootboekrekeningen voor voorraadboekingen niet testen omdat"
 
-#: GLAccounts.php:195
+#: GLAccounts.php:194
 msgid ""
 "Cannot delete this account because it is used by one of the stock GL posting "
 "interface records"
@@ -15052,12 +15048,12 @@ msgstr ""
 "Kon de grootboekrekening niet verwijderen omdat het wordt gebruikt om "
 "voorraad"
 
-#: GLAccounts.php:200
+#: GLAccounts.php:199
 msgid "Could not test for existing bank account GL codes because"
 msgstr ""
 "Kon de bestaande grootboekrekeningen voor bankrekeningen niet testen omdat"
 
-#: GLAccounts.php:206
+#: GLAccounts.php:205
 msgid ""
 "Cannot delete this account because it is used by one the defined bank "
 "accounts"
@@ -15065,52 +15061,53 @@ msgstr ""
 "Deze grootboekrekening kon niet worden verwijderd omdat het voor een van de "
 "bestaande bankrekeningen wordt gebruikt"
 
-#: GLAccounts.php:246 GLAccounts.php:301 GLJournalInquiry.php:99
+#: GLAccounts.php:245 GLAccounts.php:300 GLJournalInquiry.php:99
 #: ImportBankTransAnalysis.php:261 PcExpenses.php:143 PcExpenses.php:228
-#: SuppTransGLAnalysis.php:186 Z_CreateCompanyTemplateFile.php:235
-#: Z_UpdateChartDetailsBFwd.php:80 includes/PDFGLJournalHeader.inc:18
+#: PrintCustStatements.php:102 SuppTransGLAnalysis.php:186
+#: Z_CreateCompanyTemplateFile.php:235 Z_UpdateChartDetailsBFwd.php:80
+#: includes/PDFGLJournalHeader.inc:18
 msgid "Account Code"
 msgstr "Rekening Nummer"
 
-#: GLAccounts.php:247
+#: GLAccounts.php:246
 msgid ""
 "Enter up to 20 alpha-numeric characters for the general ledger account code"
 msgstr ""
 
-#: GLAccounts.php:251
+#: GLAccounts.php:250
 msgid ""
 "Enter up to 50 alpha-numeric characters for the general ledger account name"
 msgstr ""
 
-#: GLAccounts.php:257 GLAccounts.php:303 Z_ImportChartOfAccounts.php:80
+#: GLAccounts.php:256 GLAccounts.php:302 Z_ImportChartOfAccounts.php:80
 #: Z_ImportGLAccountGroups.php:25
 msgid "Account Group"
 msgstr "Rekening Groep"
 
-#: GLAccounts.php:269 GLAccounts.php:305
+#: GLAccounts.php:268 GLAccounts.php:304
 msgid "Cash Flows Activity"
 msgstr ""
 
-#: GLAccounts.php:304
+#: GLAccounts.php:303
 msgid "P/L or B/S"
 msgstr "W/V of B/O"
 
-#: GLAccounts.php:315 GLBalanceSheet.php:24 GLBalanceSheet.php:142
-#: GLBalanceSheet.php:183 GLBalanceSheet.php:210 GLBalanceSheet.php:211
+#: GLAccounts.php:314 GLBalanceSheet.php:26 GLBalanceSheet.php:137
+#: GLBalanceSheet.php:178 GLBalanceSheet.php:205 GLBalanceSheet.php:206
 #: SelectGLAccount.php:22 SelectGLAccount.php:41 SelectGLAccount.php:62
 #: includes/MainMenuLinksArray.php:162
 msgid "Balance Sheet"
 msgstr "Saldo Overzicht"
 
-#: GLAccounts.php:315
+#: GLAccounts.php:314
 msgid "Profit/Loss"
 msgstr "Winst/Verlies"
 
-#: GLAccounts.php:320
+#: GLAccounts.php:319
 msgid "The chart accounts could not be retrieved because"
 msgstr "Het rekenschema kon niet worden opgevraagd omdat"
 
-#: GLAccounts.php:331
+#: GLAccounts.php:330
 msgid ""
 "Are you sure you wish to delete this account? Additional checks will be "
 "performed in any event to ensure data integrity is not compromised."
@@ -15119,94 +15116,94 @@ msgstr ""
 "checks zullen worden uitgevoerd om zeker te stellen dat data integriteit in "
 "takt blijft"
 
-#: GLAccounts.php:343
+#: GLAccounts.php:342
 msgid "Show All Accounts"
 msgstr "Alle rekeningen"
 
-#: GLAccountUsers.php:5 GLAccountUsers.php:42 GLAccountUsers.php:43
-#: GLAccountUsers.php:84 includes/MainMenuLinksArray.php:190
+#: GLAccountUsers.php:5 GLAccountUsers.php:41 GLAccountUsers.php:42
+#: GLAccountUsers.php:81 includes/MainMenuLinksArray.php:190
 msgid "GL Account Authorised Users"
 msgstr ""
 
-#: GLAccountUsers.php:45
+#: GLAccountUsers.php:44
 msgid "You have not selected any GL Account"
 msgstr ""
 
-#: GLAccountUsers.php:85
+#: GLAccountUsers.php:82
 msgid "Authorised Users for"
 msgstr ""
 
-#: GLAccountUsers.php:90
+#: GLAccountUsers.php:87
 msgid "You have not selected an user to be authorised to use this GL Account"
 msgstr ""
 
-#: GLAccountUsers.php:101
+#: GLAccountUsers.php:98
 msgid "is already authorised to use this GL Account"
 msgstr ""
 
-#: GLAccountUsers.php:114
+#: GLAccountUsers.php:111
 msgid "An access permission for a user could not be added"
 msgstr ""
 
-#: GLAccountUsers.php:116
+#: GLAccountUsers.php:113
 msgid "An access permission for a user was added"
 msgstr ""
 
-#: GLAccountUsers.php:126
+#: GLAccountUsers.php:123
 msgid "An access permission for a user could not be removed"
 msgstr ""
 
-#: GLAccountUsers.php:128
+#: GLAccountUsers.php:125
 msgid "An access permission for a user was removed"
 msgstr ""
 
-#: GLAccountUsers.php:137 UserGLAccounts.php:143
+#: GLAccountUsers.php:134 UserGLAccounts.php:143
 msgid "An access permission to update a GL account could not be modified"
 msgstr ""
 
-#: GLAccountUsers.php:139 UserGLAccounts.php:145
+#: GLAccountUsers.php:136 UserGLAccounts.php:145
 msgid "An access permission to update a GL account was modified"
 msgstr ""
 
-#: GLAccountUsers.php:183 LocationUsers.php:182
+#: GLAccountUsers.php:180 LocationUsers.php:182
 msgid "Are you sure you wish to remove Update for this user?"
 msgstr ""
 
-#: GLAccountUsers.php:183 LocationUsers.php:182 UserGLAccounts.php:189
+#: GLAccountUsers.php:180 LocationUsers.php:182 UserGLAccounts.php:189
 #: UserLocations.php:183
 msgid "Remove Update"
 msgstr ""
 
-#: GLAccountUsers.php:186 LocationUsers.php:184
+#: GLAccountUsers.php:183 LocationUsers.php:184
 msgid "Are you sure you wish to add Update for this user?"
 msgstr ""
 
-#: GLAccountUsers.php:186 LocationUsers.php:184 UserGLAccounts.php:192
+#: GLAccountUsers.php:183 LocationUsers.php:184 UserGLAccounts.php:192
 #: UserLocations.php:185
 msgid "Add Update"
 msgstr ""
 
-#: GLAccountUsers.php:193
+#: GLAccountUsers.php:190
 msgid "GL account does not have access permissions for users"
 msgstr ""
 
-#: GLAccountUsers.php:215
+#: GLAccountUsers.php:212
 msgid "Add access permissions to a user"
 msgstr ""
 
-#: GLAccountUsers.php:231
+#: GLAccountUsers.php:228
 msgid "GL account has access permissions for all users"
 msgstr ""
 
-#: GLAccountUsers.php:242
+#: GLAccountUsers.php:237
 msgid "Select A Different GL account"
 msgstr ""
 
-#: GLBalanceSheet.php:25
+#: GLBalanceSheet.php:27
 msgid "Statement of Financial Position"
 msgstr ""
 
-#: GLBalanceSheet.php:59
+#: GLBalanceSheet.php:54
 msgid ""
 "Balance Sheet (or statement of financial position) is a summary  of "
 "balances. Assets, liabilities and ownership equity are listed as of a "
@@ -15220,7 +15217,7 @@ msgstr ""
 "fundamentele jaarrekening, de balans is de enige verklaring die van "
 "toepassing is op een enkel punt in de tijd."
 
-#: GLBalanceSheet.php:60
+#: GLBalanceSheet.php:55
 msgid ""
 "The balance sheet has three parts: assets, liabilities and ownership equity. "
 "The main categories of assets are listed first and are followed by the "
@@ -15237,49 +15234,50 @@ msgstr ""
 "boekhoudkundige vergelijking, nettowaarde moet gelijk zijn aan activa minus "
 "passiva."
 
-#: GLBalanceSheet.php:61 GLCashFlowsIndirect.php:803 GLProfit_Loss.php:75
-#: GLStatements.php:175
+#: GLBalanceSheet.php:56 GLCashFlowsIndirect.php:796 GLProfit_Loss.php:74
+#: GLStatements.php:171
 msgid ""
 "webERP is an \"accrual\" based system (not a \"cash based\" system). Accrual "
 "systems include items when they are invoiced to the customer, and when "
 "expenses are owed based on the supplier invoice date."
 msgstr ""
 
-#: GLBalanceSheet.php:90 GLProfit_Loss.php:166 GLTagProfit_Loss.php:138
+#: GLBalanceSheet.php:85 GLProfit_Loss.php:146 GLTagProfit_Loss.php:139
 msgid "Detail Or Summary"
 msgstr "Detail Of Totalen"
 
-#: GLBalanceSheet.php:103 GLCashFlowsIndirect.php:884 GLProfit_Loss.php:175
-#: GLStatements.php:256
+#: GLBalanceSheet.php:98 GLCashFlowsIndirect.php:875 GLProfit_Loss.php:155
+#: GLStatements.php:250
 msgid "Show accounts with zero balance"
 msgstr ""
 
-#: GLBalanceSheet.php:105 GLCashFlowsIndirect.php:886 GLProfit_Loss.php:177
+#: GLBalanceSheet.php:100 GLCashFlowsIndirect.php:877 GLProfit_Loss.php:157
 msgid "Check this box to show all accounts including those with zero balance"
 msgstr ""
 
-#: GLBalanceSheet.php:113 GLBalanceSheet.php:114 GLProfit_Loss.php:188
+#: GLBalanceSheet.php:108 GLBalanceSheet.php:109 GLProfit_Loss.php:165
+#: GLProfit_Loss.php:166
 msgid "Produce PDF Report"
 msgstr "Produceren PDF Verslag"
 
-#: GLBalanceSheet.php:144 GLBalanceSheet.php:185 PcReportTab.php:119
+#: GLBalanceSheet.php:139 GLBalanceSheet.php:180 PcReportTab.php:119
 #: PcReportTab.php:121 PcReportTab.php:129 PDFOrdersInvoiced.php:252
 #: PDFOrdersInvoiced.php:254 PDFOrdersInvoiced.php:262
 #: includes/ConnectDB_mysqli.inc:66 includes/ConnectDB_mysql.inc:62
 msgid "Database Error"
 msgstr "Database fout"
 
-#: GLBalanceSheet.php:366
+#: GLBalanceSheet.php:361
 msgid "Print Balance Sheet Error"
 msgstr "Fout bij afdrukken balans"
 
-#: GLBalanceSheet.php:368 GLProfit_Loss.php:267 GLTagProfit_Loss.php:230
-#: GLTrialBalance.php:199
+#: GLBalanceSheet.php:363 GLProfit_Loss.php:246 GLTagProfit_Loss.php:231
+#: GLTrialBalance.php:195
 msgid "There were no entries to print out for the selections specified"
 msgstr "Er waren geen gegevens om af te drukken voor de geselecteerde selectie"
 
-#: GLBalanceSheet.php:460 GLBalanceSheet.php:466 GLCashFlowsIndirect.php:152
-#: GLCashFlowsIndirect.php:464 GLProfit_Loss.php:699 GLProfit_Loss.php:706
+#: GLBalanceSheet.php:457 GLCashFlowsIndirect.php:150
+#: GLCashFlowsIndirect.php:462 GLProfit_Loss.php:682
 #: includes/PDFBalanceSheetPageHeader.inc:29
 #: includes/PDFProfitAndLossPageHeader.inc:34
 #: includes/PDFTagProfitAndLossPageHeader.inc:36 includes/MiscFunctions.php:404
@@ -15287,8 +15285,9 @@ msgstr "Er waren geen gegevens om af te drukken voor de geselecteerde selectie"
 msgid "Last Year"
 msgstr "Vorig Jaar"
 
-#: GLBalanceSheet.php:712 GLCashFlowsIndirect.php:789 GLProfit_Loss.php:1368
-#: GLStatements.php:161 PurchasesReport.php:280 SalesReport.php:280
+#: GLBalanceSheet.php:698 GLCashFlowsIndirect.php:784 GLProfit_Loss.php:1237
+#: GLStatements.php:159 GLTagProfit_Loss.php:941 GLTrialBalance.php:701
+#: PurchasesReport.php:280 SalesReport.php:280
 msgid "New Report"
 msgstr ""
 
@@ -15373,83 +15372,84 @@ msgstr ""
 msgid "Financing activities"
 msgstr ""
 
-#: GLCashFlowsIndirect.php:46
+#: GLCashFlowsIndirect.php:49
 msgid "Statement of Cash Flows, Indirect Method"
 msgstr ""
 
-#: GLCashFlowsIndirect.php:84 GLStatements.php:83 PurchasesReport.php:49
-#: SalesReport.php:49
+#: GLCashFlowsIndirect.php:83 GLProfit_Loss.php:51 GLStatements.php:81
+#: GLTrialBalance.php:44 PurchasesReport.php:49 SalesReport.php:49
 msgid ""
 "The beginning of the period should be before or equal to the end of the "
 "period. Please reselect the reporting period."
 msgstr ""
 
-#: GLCashFlowsIndirect.php:89 GLStatements.php:88
+#: GLCashFlowsIndirect.php:88 GLProfit_Loss.php:56 GLStatements.php:86
+#: GLTrialBalance.php:49
 msgid ""
 "The period should be 12 months or less in duration. Please select an "
 "alternative period range."
 msgstr ""
 
-#: GLCashFlowsIndirect.php:115 GLProfit_Loss.php:697 GLProfit_Loss.php:704
-#: GLTagProfit_Loss.php:559 GLTagProfit_Loss.php:564 GLTrialBalance.php:480
+#: GLCashFlowsIndirect.php:113 GLProfit_Loss.php:680 GLTagProfit_Loss.php:554
+#: GLTagProfit_Loss.php:559 GLTrialBalance.php:465
 #: includes/PDFProfitAndLossPageHeader.inc:32
 #: includes/PDFTagProfitAndLossPageHeader.inc:34
 #: includes/PDFTrialBalancePageHeader.inc:31
 msgid "Period Actual"
 msgstr "Periode Actueel"
 
-#: GLCashFlowsIndirect.php:151 GLProfit_Loss.php:698 GLProfit_Loss.php:705
-#: GLTrialBalance.php:481 includes/PDFProfitAndLossPageHeader.inc:33
+#: GLCashFlowsIndirect.php:149 GLProfit_Loss.php:681 GLTrialBalance.php:466
+#: includes/PDFProfitAndLossPageHeader.inc:33
 #: includes/PDFTagProfitAndLossPageHeader.inc:35
 #: includes/PDFTrialBalancePageHeader.inc:32
 msgid "Period Budget"
 msgstr "Periode Budget"
 
-#: GLCashFlowsIndirect.php:158 GLCashFlowsIndirect.php:470
+#: GLCashFlowsIndirect.php:156 GLCashFlowsIndirect.php:468
 msgid ""
 "Cash flows signs: a negative number indicates a cash flow used in "
 "activities; a positive number indicates a cash flow provided by activities."
 msgstr ""
 
-#: GLCashFlowsIndirect.php:160 GLCashFlowsIndirect.php:472
+#: GLCashFlowsIndirect.php:158 GLCashFlowsIndirect.php:470
 msgid ""
 "Cash and cash equivalents signs: a negative number indicates a cash outflow; "
 "a positive number indicates a cash inflow."
 msgstr ""
 
-#: GLCashFlowsIndirect.php:167 GLCashFlowsIndirect.php:479
+#: GLCashFlowsIndirect.php:165 GLCashFlowsIndirect.php:477
 msgid "Net profit and dividends"
 msgstr ""
 
-#: GLCashFlowsIndirect.php:171 GLCashFlowsIndirect.php:483
+#: GLCashFlowsIndirect.php:169 GLCashFlowsIndirect.php:481
 msgid "Net profit for the period"
 msgstr ""
 
-#: GLCashFlowsIndirect.php:190 GLCashFlowsIndirect.php:502
+#: GLCashFlowsIndirect.php:188 GLCashFlowsIndirect.php:500
 msgid "Dividends"
 msgstr ""
 
-#: GLCashFlowsIndirect.php:209 GLCashFlowsIndirect.php:521
+#: GLCashFlowsIndirect.php:207 GLCashFlowsIndirect.php:519
 msgid "Retained earnings"
 msgstr ""
 
-#: GLCashFlowsIndirect.php:296 GLCashFlowsIndirect.php:608
+#: GLCashFlowsIndirect.php:294 GLCashFlowsIndirect.php:606
 msgid "Net increase in cash and cash equivalents"
 msgstr ""
 
-#: GLCashFlowsIndirect.php:358 GLCashFlowsIndirect.php:669
+#: GLCashFlowsIndirect.php:356 GLCashFlowsIndirect.php:667
 msgid "Cash and cash equivalents at beginning of period"
 msgstr ""
 
-#: GLCashFlowsIndirect.php:398 GLCashFlowsIndirect.php:709
+#: GLCashFlowsIndirect.php:396 GLCashFlowsIndirect.php:707
 msgid "Cash and cash equivalents at end of period"
 msgstr ""
 
-#: GLCashFlowsIndirect.php:784
+#: GLCashFlowsIndirect.php:781
 msgid "Run Setup"
 msgstr ""
 
-#: GLCashFlowsIndirect.php:800
+#: GLCashFlowsIndirect.php:793
 msgid ""
 "The statement of cash flows, also known as the successor of the old source "
 "and application of funds statement, reports how changes in balance sheet "
@@ -15457,54 +15457,55 @@ msgid ""
 "analysis down to operating, investing and financing activities."
 msgstr ""
 
-#: GLCashFlowsIndirect.php:801
+#: GLCashFlowsIndirect.php:794
 msgid ""
 "The purpose of the statement of cash flows is to show where the company got "
 "their money from and how it was spent during the period being reported for a "
 "user selectable range of periods."
 msgstr ""
 
-#: GLCashFlowsIndirect.php:802
+#: GLCashFlowsIndirect.php:795
 msgid ""
 "The statement of cash flows represents a period of time. This contrasts with "
 "the statement of financial position, which represents a single moment in "
 "time."
 msgstr ""
 
-#: GLCashFlowsIndirect.php:812 GLStatements.php:184 PurchasesReport.php:64
+#: GLCashFlowsIndirect.php:805 GLStatements.php:180 PurchasesReport.php:64
 #: SalesReport.php:64
 msgid "Report Parameters"
 msgstr ""
 
-#: GLCashFlowsIndirect.php:844 GLStatements.php:216 PurchasesReport.php:86
-#: SalesReport.php:86
+#: GLCashFlowsIndirect.php:835 GLProfit_Loss.php:113 GLStatements.php:210
+#: GLTrialBalance.php:90 PurchasesReport.php:86 SalesReport.php:86
 msgid "Select the beginning of the reporting period"
 msgstr ""
 
-#: GLCashFlowsIndirect.php:858 GLProfit_Loss.php:147 GLStatements.php:230
-#: PurchasesReport.php:96 SalesReport.php:96
+#: GLCashFlowsIndirect.php:849 GLProfit_Loss.php:127 GLStatements.php:224
+#: GLTrialBalance.php:104 PurchasesReport.php:96 SalesReport.php:96
 msgid "Select the end of the reporting period"
 msgstr ""
 
-#: GLCashFlowsIndirect.php:872 GLProfit_Loss.php:161 GLStatements.php:244
+#: GLCashFlowsIndirect.php:863 GLProfit_Loss.php:141 GLStatements.php:238
+#: GLTrialBalance.php:118
 msgid ""
 "Select a period instead of using the beginning and end of the reporting "
 "period."
 msgstr ""
 
-#: GLCashFlowsIndirect.php:877 GLStatements.php:249
+#: GLCashFlowsIndirect.php:868 GLStatements.php:243
 msgid "Show the budget"
 msgstr ""
 
-#: GLCashFlowsIndirect.php:879
+#: GLCashFlowsIndirect.php:870
 msgid "Check this box to show the budget for the period"
 msgstr ""
 
-#: GLCashFlowsIndirect.php:891
+#: GLCashFlowsIndirect.php:882
 msgid "Show cash and cash equivalents accounts"
 msgstr ""
 
-#: GLCashFlowsIndirect.php:893
+#: GLCashFlowsIndirect.php:884
 msgid "Check this box to show cash and cash equivalents accounts"
 msgstr ""
 
@@ -15600,52 +15601,52 @@ msgstr ""
 msgid "The cash flow activity was updated in some accounts"
 msgstr ""
 
-#: GLCashFlowsSetup.php:152
+#: GLCashFlowsSetup.php:151
 msgid ""
 "The statement of cash flows, using direct and indirect methods, is "
 "partitioned into three sections: operating activities, investing activities "
 "and financing activities."
 msgstr ""
 
-#: GLCashFlowsSetup.php:153
+#: GLCashFlowsSetup.php:152
 msgid ""
 "You must classify all accounts in any of those three sections of the cash "
 "flow statement, or as no effect on cash flow, or as cash or cash equivalent."
 msgstr ""
 
-#: GLCashFlowsSetup.php:165
+#: GLCashFlowsSetup.php:164
 msgid "Action to do"
 msgstr ""
 
-#: GLCashFlowsSetup.php:174
+#: GLCashFlowsSetup.php:171
 msgid "Reset values"
 msgstr ""
 
-#: GLCashFlowsSetup.php:176
+#: GLCashFlowsSetup.php:172
 msgid "Automatic setup"
 msgstr ""
 
-#: GLCashFlowsSetup.php:178
+#: GLCashFlowsSetup.php:173
 msgid "Manual setup"
 msgstr ""
 
-#: GLCashFlowsSetup.php:193
+#: GLCashFlowsSetup.php:187
 msgid "Net profit for the period GL account"
 msgstr ""
 
-#: GLCashFlowsSetup.php:198 GLCashFlowsSetup.php:222
+#: GLCashFlowsSetup.php:192 GLCashFlowsSetup.php:216
 msgid "Select..."
 msgstr ""
 
-#: GLCashFlowsSetup.php:212
+#: GLCashFlowsSetup.php:206
 msgid "GL account to post the net profit for the period"
 msgstr ""
 
-#: GLCashFlowsSetup.php:217
+#: GLCashFlowsSetup.php:211
 msgid "Retained earnings GL account"
 msgstr ""
 
-#: GLCashFlowsSetup.php:233
+#: GLCashFlowsSetup.php:227
 msgid "GL account to post the retained earnings"
 msgstr ""
 
@@ -15658,7 +15659,7 @@ msgstr "Zoekopdracht voor grootboekrekeningen"
 msgid "Group"
 msgstr "Groep"
 
-#: GLJournalInquiry.php:4 includes/MainMenuLinksArray.php:160
+#: GLJournalInquiry.php:5 includes/MainMenuLinksArray.php:160
 msgid "General Ledger Journal Inquiry"
 msgstr ""
 
@@ -15691,7 +15692,7 @@ msgstr "Beschrijving account"
 msgid "Others"
 msgstr ""
 
-#: GLJournalInquiry.php:142 GLTransInquiry.php:139 PDFChequeListing.php:171
+#: GLJournalInquiry.php:142 GLTransInquiry.php:138 PDFChequeListing.php:171
 msgid "Other GL Accounts"
 msgstr ""
 
@@ -15699,37 +15700,37 @@ msgstr ""
 msgid "Journal Entry"
 msgstr "Journaal Post Invoeren"
 
-#: GLJournal.php:45
+#: GLJournal.php:44
 msgid ""
 "The date entered was not valid please enter the date to process the journal "
 "in the format"
 msgstr "De ingevoerde datum was niet geldig"
 
-#: GLJournal.php:53 GLJournal.php:450
+#: GLJournal.php:52 GLJournal.php:449
 msgid "Accept and Process Journal"
 msgstr "Accepteer en verwerk journaal boekingen"
 
-#: GLJournal.php:85
+#: GLJournal.php:84
 msgid "Cannot insert a GL entry for the journal line because"
 msgstr "Kan geen grootboek boeking uitvoeren voor de journaal regel omdat"
 
-#: GLJournal.php:103 ReverseGRN.php:249
+#: GLJournal.php:102 ReverseGRN.php:249
 msgid "Reversal"
 msgstr "Omkering"
 
-#: GLJournal.php:108
+#: GLJournal.php:107
 msgid "Cannot insert a GL entry for the reversing journal because"
 msgstr "Kon de grootboekboeking voor de tegenrekening niet uitvoeren omdat"
 
-#: GLJournal.php:118
+#: GLJournal.php:117
 msgid "Journal"
 msgstr "Journaal"
 
-#: GLJournal.php:127
+#: GLJournal.php:126
 msgid "Enter Another General Ledger Journal"
 msgstr "Gebruik een andere grootboek rekening journaal"
 
-#: GLJournal.php:153 GLJournal.php:190
+#: GLJournal.php:152 GLJournal.php:189
 msgid ""
 "GL Journals involving the debtors control account cannot be entered. The "
 "general ledger debtors ledger (AR) integration is enabled so control "
@@ -15741,7 +15742,7 @@ msgstr ""
 "Controle rekeningen worden automatisch onderhouden door het systeem. In de "
 "systeem configuratie kan dit worden uitgezet."
 
-#: GLJournal.php:157 GLJournal.php:196
+#: GLJournal.php:156 GLJournal.php:195
 msgid ""
 "GL Journals involving the creditors control account cannot be entered. The "
 "general ledger creditors ledger (AP) integration is enabled so control "
@@ -15752,13 +15753,13 @@ msgstr ""
 "uitgevoerd. Systeem configuratie  is zo dat deze rekeningen door het systeem "
 "worden onderhouden."
 
-#: GLJournal.php:162 GLJournal.php:206
+#: GLJournal.php:161 GLJournal.php:205
 msgid "GL Journals involving a bank account cannot be entered"
 msgstr ""
 "Journaalboekingen voor een grootboekrekening dat een bankrekening betreft "
 "kunnen niet worden uitgevoerd"
 
-#: GLJournal.php:162 GLJournal.php:206
+#: GLJournal.php:161 GLJournal.php:205
 msgid ""
 "Bank account general ledger entries must be entered by either a bank account "
 "receipt or a bank account payment"
@@ -15766,36 +15767,36 @@ msgstr ""
 "Grootboek boekingen voor een bank moeten uitgevoerd worden via een bank "
 "ontvangst of een bankbetaling"
 
-#: GLJournal.php:173 Payments.php:830
+#: GLJournal.php:172 Payments.php:830
 msgid "The manual GL code entered does not exist in the database"
 msgstr ""
 "De handmatig ingevoeerde grootboekrekening code bestaat niet in de database"
 
-#: GLJournal.php:201
+#: GLJournal.php:200
 msgid "You must select a GL account code"
 msgstr "U moet een account GL-code"
 
-#: GLJournal.php:263
+#: GLJournal.php:262
 msgid "Date to Process Journal"
 msgstr "Datum van Verwerking Journaalpost"
 
-#: GLJournal.php:269 GLJournal.php:272
+#: GLJournal.php:268 GLJournal.php:271
 msgid "Reversing"
 msgstr "Tegenboeken"
 
-#: GLJournal.php:270 GLJournal.php:273
+#: GLJournal.php:269 GLJournal.php:272
 msgid "Normal"
 msgstr "Normaal"
 
-#: GLJournal.php:287
+#: GLJournal.php:286
 msgid "Journal Line Entry"
 msgstr "Journaal Regel Invoer"
 
-#: GLJournal.php:293 GLJournal.php:387
+#: GLJournal.php:292 GLJournal.php:386
 msgid "GL Tag"
 msgstr "Grootboek label"
 
-#: GLJournal.php:310 GLJournal.php:404 GLTagProfit_Loss.php:126
+#: GLJournal.php:309 GLJournal.php:403 GLTagProfit_Loss.php:127
 #: ImportBankTransAnalysis.php:308 MRPPlannedPurchaseOrders.php:354
 #: MRPPlannedPurchaseOrders.php:408 MRPPlannedWorkOrders.php:320
 #: MRPPlannedWorkOrders.php:374 PcAuthorizeExpenses.php:117
@@ -15811,23 +15812,23 @@ msgstr "Grootboek label"
 msgid "None"
 msgstr "Geen"
 
-#: GLJournal.php:335
+#: GLJournal.php:334
 msgid "Select a general ledger account code"
 msgstr "Selecteer een grootboekrekening code"
 
-#: GLJournal.php:371 Payments.php:1271 Payments.php:1276
+#: GLJournal.php:370 Payments.php:1271 Payments.php:1276
 msgid "GL Narrative"
 msgstr "GB Omschrijving - Opmerking"
 
-#: GLJournal.php:384
+#: GLJournal.php:383
 msgid "Journal Summary"
 msgstr "Tijdschrift Samenvatting"
 
-#: GLJournal.php:433
+#: GLJournal.php:432
 msgid "Required to balance"
 msgstr ""
 
-#: GLJournal.php:455
+#: GLJournal.php:454
 msgid ""
 "The journal must balance ie debits equal to credits before it can be "
 "processed"
@@ -15835,11 +15836,11 @@ msgstr ""
 "De journaalboekingen (debet / credit) moet in balans zijn voordat die "
 "kunnen  worden verwerkt"
 
-#: GLProfit_Loss.php:23
+#: GLProfit_Loss.php:26
 msgid "Statement of Comprehensive Income"
 msgstr ""
 
-#: GLProfit_Loss.php:72
+#: GLProfit_Loss.php:71
 msgid ""
 "Profit and loss statement (P&amp;L), also called an Income Statement, or "
 "Statement of Operations, this is the statement that indicates how the "
@@ -15849,7 +15850,7 @@ msgid ""
 "accounted for, also known as the \"bottom line\")."
 msgstr ""
 
-#: GLProfit_Loss.php:73
+#: GLProfit_Loss.php:72
 msgid ""
 "The purpose of the income statement is to show whether the company made or "
 "lost money during the period being reported."
@@ -15857,79 +15858,75 @@ msgstr ""
 "Het doel van de winst-en verliesrekening is om aan te tonen of het bedrijf "
 "gemaakt of verloren geld tijdens de periode waarover wordt gerapporteerd."
 
-#: GLProfit_Loss.php:74
+#: GLProfit_Loss.php:73
 msgid ""
 "The P&amp;L represents a period of time. This contrasts with the Balance "
 "Sheet, which represents a single moment in time."
 msgstr ""
 
-#: GLProfit_Loss.php:264
+#: GLProfit_Loss.php:243
 msgid "Print Profit and Loss Error"
 msgstr "Afdruk Winst en Verlies Fout"
 
-#: GLProfit_Loss.php:412 GLProfit_Loss.php:921 GLProfit_Loss.php:1268
-#: GLTagProfit_Loss.php:341 GLTagProfit_Loss.php:719 GLTagProfit_Loss.php:905
+#: GLProfit_Loss.php:394 GLProfit_Loss.php:863 GLProfit_Loss.php:1149
+#: GLTagProfit_Loss.php:342 GLTagProfit_Loss.php:714 GLTagProfit_Loss.php:900
 #, php-format
 msgid "Gross Profit Percent"
 msgstr "Gemiddeld Winst Percentage"
 
-#: GLProfit_Loss.php:595 GLProfit_Loss.php:941 GLProfit_Loss.php:1301
-#: GLTagProfit_Loss.php:477
-#, php-format
+#: GLProfit_Loss.php:577 GLProfit_Loss.php:880 GLProfit_Loss.php:1179
+#: GLTagProfit_Loss.php:478
 msgid "Profit"
 msgstr "Winst"
 
-#: GLProfit_Loss.php:595 GLProfit_Loss.php:941 GLProfit_Loss.php:1301
-#: GLTagProfit_Loss.php:477
-#, php-format
+#: GLProfit_Loss.php:577 GLProfit_Loss.php:880 GLProfit_Loss.php:1179
+#: GLTagProfit_Loss.php:478
 msgid "Loss"
 msgstr "Verlies"
 
-#: GLProfit_Loss.php:616 GLProfit_Loss.php:1334
-#, php-format
+#: GLProfit_Loss.php:598 GLProfit_Loss.php:1209
 msgid "Net Profit Percent"
 msgstr "Nettowinst Procent"
 
-#: GLProfit_Loss.php:969
-#, php-format
+#: GLProfit_Loss.php:905
 msgid "P/L Percent after"
 msgstr ""
 
-#: GLStatements.php:29 includes/MainMenuLinksArray.php:165
+#: GLStatements.php:30 includes/MainMenuLinksArray.php:165
 msgid "Financial Statements"
 msgstr ""
 
-#: GLStatements.php:93
+#: GLStatements.php:91
 msgid ""
 "You must select at least one financial statement. Please select financial "
 "statements."
 msgstr ""
 
-#: GLStatements.php:112
+#: GLStatements.php:111
 msgid "In this set of financial statements:"
 msgstr ""
 
-#: GLStatements.php:113
+#: GLStatements.php:112
 msgid "Statement of financial position"
 msgstr ""
 
-#: GLStatements.php:114
+#: GLStatements.php:113
 msgid "Statement of comprehensive income"
 msgstr ""
 
-#: GLStatements.php:115
+#: GLStatements.php:114
 msgid "Statement of changes in equity"
 msgstr ""
 
-#: GLStatements.php:116
+#: GLStatements.php:115
 msgid "Statement of cash flows"
 msgstr ""
 
-#: GLStatements.php:173
+#: GLStatements.php:169
 msgid "Shows a set of financial statements."
 msgstr ""
 
-#: GLStatements.php:174
+#: GLStatements.php:170
 msgid ""
 "A complete set of financial statements comprises:(a) a statement of "
 "financial position as at the end and at the beginning of the period;(b) a "
@@ -15939,99 +15936,97 @@ msgid ""
 "explanatory information."
 msgstr ""
 
-#: GLStatements.php:251
+#: GLStatements.php:245
 msgid "Check this box to show the budget"
 msgstr ""
 
-#: GLStatements.php:258
+#: GLStatements.php:252
 msgid "Check this box to show accounts with zero balance"
 msgstr ""
 
-#: GLStatements.php:263
+#: GLStatements.php:257
 msgid "Show the statement of financial position"
 msgstr ""
 
-#: GLStatements.php:265
+#: GLStatements.php:259
 msgid "Check this box to show the statement of financial position"
 msgstr ""
 
-#: GLStatements.php:270
+#: GLStatements.php:264
 msgid "Show the statement of comprehensive income"
 msgstr ""
 
-#: GLStatements.php:272
+#: GLStatements.php:266
 msgid "Check this box to show the statement of comprehensive income"
 msgstr ""
 
-#: GLStatements.php:277
+#: GLStatements.php:271
 msgid "Show the statement of changes in equity"
 msgstr ""
 
-#: GLStatements.php:279
+#: GLStatements.php:273
 msgid "Check this box to show the statement of changes in equity"
 msgstr ""
 
-#: GLStatements.php:284
+#: GLStatements.php:278
 msgid "Show the statement of cash flows"
 msgstr ""
 
-#: GLStatements.php:286
+#: GLStatements.php:280
 msgid "Check this box to show the statement of cash flows"
 msgstr ""
 
-#: GLStatements.php:291
+#: GLStatements.php:285
 msgid "Show the notes"
 msgstr ""
 
-#: GLStatements.php:293
+#: GLStatements.php:287
 msgid ""
 "Check this box to show the notes that summarize the significant accounting "
 "policies and other explanatory information"
 msgstr ""
 
-#: GLTagProfit_Loss.php:5
+#: GLTagProfit_Loss.php:6
 msgid "Income and Expenditure by Tag"
 msgstr "Inkomsten en uitgaven op Tag"
 
-#: GLTagProfit_Loss.php:117
+#: GLTagProfit_Loss.php:118
 msgid "Select tag"
 msgstr "Select tag"
 
-#: GLTagProfit_Loss.php:148
+#: GLTagProfit_Loss.php:150
 msgid "Show Statement of Income and Expenditure"
 msgstr "Toon Staat van Baten en Lasten"
 
-#: GLTagProfit_Loss.php:151 GLTrialBalance.php:129
+#: GLTagProfit_Loss.php:151 GLTrialBalance.php:125
 msgid "PrintPDF"
 msgstr "PrintPDF"
 
-#: GLTagProfit_Loss.php:165 GLTagProfit_Loss.php:166 GLTagProfit_Loss.php:215
+#: GLTagProfit_Loss.php:166 GLTagProfit_Loss.php:167 GLTagProfit_Loss.php:216
 msgid "Income and Expenditure"
 msgstr "Inkomsten en uitgaven"
 
-#: GLTagProfit_Loss.php:227
+#: GLTagProfit_Loss.php:228
 msgid "Print Income and Expenditure Error"
 msgstr "Print Inkomsten en Uitgaven Fout"
 
-#: GLTagProfit_Loss.php:386 GLTagProfit_Loss.php:769
+#: GLTagProfit_Loss.php:387 GLTagProfit_Loss.php:764
 msgid "Detailed"
 msgstr "Gedetailieerd"
 
-#: GLTagProfit_Loss.php:550
+#: GLTagProfit_Loss.php:545
 msgid "Statement of Income and Expenditure for Tag"
 msgstr "Verklaring van inkomsten en uitgaven voor Tag"
 
-#: GLTagProfit_Loss.php:550
+#: GLTagProfit_Loss.php:545
 msgid "during the"
 msgstr "tijdens de"
 
-#: GLTagProfit_Loss.php:929
-#, php-format
+#: GLTagProfit_Loss.php:923
 msgid "Surplus"
 msgstr "Overschot"
 
-#: GLTagProfit_Loss.php:929
-#, php-format
+#: GLTagProfit_Loss.php:923
 msgid "Deficit"
 msgstr "Tekort"
 
@@ -16039,29 +16034,29 @@ msgstr "Tekort"
 msgid "Maintain General Ledger Tags"
 msgstr "Te handhaven Grootboek Tags"
 
-#: GLTags.php:19
+#: GLTags.php:18
 msgid ""
 "This tag cannot be deleted since there are already general ledger "
 "transactions created using it."
 msgstr ""
 
-#: GLTags.php:22
+#: GLTags.php:21
 msgid "The selected tag has been deleted"
 msgstr ""
 
-#: GLTags.php:63
+#: GLTags.php:62
 msgid "Enter the description of the general ledger tag up to 30 characters"
 msgstr ""
 
-#: GLTags.php:80
+#: GLTags.php:79
 msgid "Tag ID"
 msgstr "Label ID"
 
-#: GLTags.php:96
+#: GLTags.php:95
 msgid "Are you sure you wish to delete this GL tag?"
 msgstr ""
 
-#: GLTransInquiry.php:4 GLTransInquiry.php:37 GLTransInquiry.php:38
+#: GLTransInquiry.php:4 GLTransInquiry.php:36 GLTransInquiry.php:37
 msgid "General Ledger Transaction Inquiry"
 msgstr "Zoekopdracht voor  grootboek rekening transacties"
 
@@ -16077,52 +16072,50 @@ msgstr "Deze pagina vereist een geldig transactie type en nummer"
 msgid "No transaction of this type with id"
 msgstr "Geen transacties van type  met nummer"
 
-#: GLTransInquiry.php:51 Timesheets.php:679
+#: GLTransInquiry.php:50 Timesheets.php:679
 msgid "Posted"
 msgstr "Geboekt"
 
-#: GLTrialBalance.php:10 GLTrialBalance.php:39 GLTrialBalance.php:140
-#: GLTrialBalance.php:141 GLTrialBalance.php:185 GLTrialBalance.php:466
-#: includes/MainMenuLinksArray.php:161
+#: GLTrialBalance.php:10 GLTrialBalance.php:136 GLTrialBalance.php:137
+#: GLTrialBalance.php:181 includes/MainMenuLinksArray.php:161
 msgid "Trial Balance"
 msgstr "Saldi Balans"
 
-#: GLTrialBalance.php:38
+#: GLTrialBalance.php:60
 msgid "Print Trial Balance"
 msgstr ""
 
-#: GLTrialBalance.php:128
+#: GLTrialBalance.php:124
 msgid "Show Trial Balance"
 msgstr "Laat Saldi Balans Zien"
 
-#: GLTrialBalance.php:196
+#: GLTrialBalance.php:192
 msgid "Print Trial Balance Error"
 msgstr "Afdruk fout Saldi Balans"
 
-#: GLTrialBalance.php:398 GLTrialBalance.php:732
-#, php-format
+#: GLTrialBalance.php:394 GLTrialBalance.php:685
 msgid "Check Totals"
 msgstr "Check Totalen"
 
-#: GLTrialBalance.php:462 PcReportExpense.php:134 PcReportTab.php:152
+#: GLTrialBalance.php:418 includes/PDFTrialBalancePageHeader.inc:22
+msgid "Trial Balance for the month of "
+msgstr "Saldi Balans voor de maand "
+
+#: GLTrialBalance.php:421
+msgid " AND for the "
+msgstr ""
+
+#: GLTrialBalance.php:452 PcReportExpense.php:134 PcReportTab.php:152
 #: PcReportTab.php:343 PcReportTab.php:453 ShopParameters.php:168
 #: includes/ConnectDB_postgres.inc:48
 msgid "The SQL that failed was:"
 msgstr "De SQLdat faalde was"
 
-#: GLTrialBalance.php:467 includes/PDFTrialBalancePageHeader.inc:22
-msgid "Trial Balance for the month of "
-msgstr "Saldi Balans voor de maand "
-
-#: GLTrialBalance.php:468
-msgid " AND for the "
-msgstr ""
-
-#: GLTrialBalance.php:478 includes/PDFTrialBalancePageHeader.inc:29
+#: GLTrialBalance.php:463 includes/PDFTrialBalancePageHeader.inc:29
 msgid "Month Actual"
 msgstr "Maand Actueel"
 
-#: GLTrialBalance.php:479 includes/PDFTrialBalancePageHeader.inc:30
+#: GLTrialBalance.php:464 includes/PDFTrialBalancePageHeader.inc:30
 msgid "Month Budget"
 msgstr "Maand Budget"
 
@@ -17835,7 +17828,7 @@ msgstr ""
 msgid "Review all defined label records"
 msgstr ""
 
-#: Labels.php:435 PDFWOPrint.php:700
+#: Labels.php:435 PDFWOPrint.php:701
 msgid "Label Description"
 msgstr ""
 
@@ -17904,7 +17897,7 @@ msgstr ""
 msgid "Are you sure you wish to delete this label field?"
 msgstr ""
 
-#: Labels.php:636 PDFPrintLabel.php:12 PDFPrintLabel.php:105 PDFWOPrint.php:638
+#: Labels.php:636 PDFPrintLabel.php:12 PDFPrintLabel.php:105 PDFWOPrint.php:639
 msgid "Print Labels"
 msgstr ""
 
@@ -22006,36 +21999,36 @@ msgstr "Kon niet vaststellen of het een controlled item betreft omdat"
 msgid "Tel"
 msgstr "Tel"
 
-#: PDFFGLabel.php:181 PDFShipLabel.php:333 PDFWOPrint.php:518
+#: PDFFGLabel.php:181 PDFShipLabel.php:333 PDFWOPrint.php:519
 msgid "Please Process this Work order number"
 msgstr ""
 
-#: PDFFGLabel.php:192 PDFShipLabel.php:348 PDFWOPrint.php:529
+#: PDFFGLabel.php:192 PDFShipLabel.php:348 PDFWOPrint.php:530
 #: PO_PDFPurchOrder.php:342
 msgid "The SMTP settings are wrong, please ask administrator for help"
 msgstr ""
 
 #: PDFFGLabel.php:198 PDFFGLabel.php:204 PDFShipLabel.php:354
-#: PDFShipLabel.php:359 PDFWOPrint.php:535 PDFWOPrint.php:540
+#: PDFShipLabel.php:359 PDFWOPrint.php:536 PDFWOPrint.php:541
 msgid "Email a Work Order"
 msgstr ""
 
-#: PDFFGLabel.php:201 PDFShipLabel.php:356 PDFWOPrint.php:537
+#: PDFFGLabel.php:201 PDFShipLabel.php:356 PDFWOPrint.php:538
 #: PO_PDFPurchOrder.php:351 PrintCustTrans.php:561
 #: PrintCustTransPortrait.php:548
 msgid "has been emailed to"
 msgstr "is gemailed naar"
 
-#: PDFFGLabel.php:201 PDFShipLabel.php:356 PDFWOPrint.php:537
+#: PDFFGLabel.php:201 PDFShipLabel.php:356 PDFWOPrint.php:538
 #: PO_PDFPurchOrder.php:351
 msgid "as directed"
 msgstr "Zoals aangegeven"
 
-#: PDFFGLabel.php:207 PDFShipLabel.php:361 PDFWOPrint.php:542
+#: PDFFGLabel.php:207 PDFShipLabel.php:361 PDFWOPrint.php:543
 msgid "Emailing Work order"
 msgstr ""
 
-#: PDFFGLabel.php:207 PDFShipLabel.php:361 PDFWOPrint.php:542
+#: PDFFGLabel.php:207 PDFShipLabel.php:361 PDFWOPrint.php:543
 #: PO_PDFPurchOrder.php:357 Z_ChangeStockCode.php:172
 msgid "failed"
 msgstr "mislukt"
@@ -23011,82 +23004,82 @@ msgstr ""
 msgid "Please find the weekly order report"
 msgstr ""
 
-#: PDFWOPrint.php:109
+#: PDFWOPrint.php:110
 msgid "Select a Work Order"
 msgstr ""
 
-#: PDFWOPrint.php:112
+#: PDFWOPrint.php:113
 msgid "Select a Work Order Number to Print before calling this page"
 msgstr ""
 
-#: PDFWOPrint.php:118 PDFWOPrint.php:211
+#: PDFWOPrint.php:119 PDFWOPrint.php:212
 msgid "Select Work Order"
 msgstr ""
 
-#: PDFWOPrint.php:128
+#: PDFWOPrint.php:129
 msgid "This page must be called with a Work order number to print"
 msgstr ""
 
-#: PDFWOPrint.php:138
+#: PDFWOPrint.php:139
 msgid "Print Work Order Number"
 msgstr ""
 
-#: PDFWOPrint.php:142 PO_PDFPurchOrder.php:44
+#: PDFWOPrint.php:143 PO_PDFPurchOrder.php:44
 msgid ""
 "The email address entered does not appear to be valid. No emails have been "
 "sent."
 msgstr ""
 
-#: PDFWOPrint.php:164
+#: PDFWOPrint.php:165
 msgid ""
 "There was a problem retrieving the Work order header details for Order Number"
 msgstr ""
 
-#: PDFWOPrint.php:202
+#: PDFWOPrint.php:203
 msgid "Print Work Order Error"
 msgstr ""
 
-#: PDFWOPrint.php:205
+#: PDFWOPrint.php:206
 msgid "Unable to Locate Work Order Number"
 msgstr ""
 
-#: PDFWOPrint.php:619 PDFWOPrint.php:724 PO_PDFPurchOrder.php:387
+#: PDFWOPrint.php:620 PDFWOPrint.php:725 PO_PDFPurchOrder.php:387
 msgid "Print or Email the Order"
 msgstr "Afdruk of E-mailen van Opdracht"
 
-#: PDFWOPrint.php:650
+#: PDFWOPrint.php:651
 msgid "There was a problem retrieving the contact details for the location"
 msgstr ""
 
-#: PDFWOPrint.php:663 PDFWOPrint.php:754 PO_PDFPurchOrder.php:428
+#: PDFWOPrint.php:664 PDFWOPrint.php:755 PO_PDFPurchOrder.php:428
 msgid "Email to"
 msgstr "E-mail naar"
 
-#: PDFWOPrint.php:696
+#: PDFWOPrint.php:697
 msgid "Label Item"
 msgstr ""
 
-#: PDFWOPrint.php:704
+#: PDFWOPrint.php:705
 msgid "Label Lot"
 msgstr ""
 
-#: PDFWOPrint.php:708
+#: PDFWOPrint.php:709
 msgid "No of Full Packages"
 msgstr ""
 
-#: PDFWOPrint.php:712
+#: PDFWOPrint.php:713
 msgid "Labels/Package"
 msgstr ""
 
-#: PDFWOPrint.php:716
+#: PDFWOPrint.php:717
 msgid "Weight/Package"
 msgstr ""
 
-#: PDFWOPrint.php:720
+#: PDFWOPrint.php:721
 msgid "LeftOver Qty"
 msgstr ""
 
-#: PDFWOPrint.php:767 SelectPickingLists.php:430 SelectPickingLists.php:477
+#: PDFWOPrint.php:768 SelectPickingLists.php:430 SelectPickingLists.php:477
 #: SelectSalesOrder.php:910 SelectSalesOrder.php:997
 msgid "Labels"
 msgstr ""
@@ -24250,7 +24243,8 @@ msgstr "Selecteer een Inkoop Opdracht"
 
 #: PO_PDFPurchOrder.php:12
 msgid "Select a Purchase Order Number to Print before calling this page"
-msgstr "Selecteer een Bestelling Aantal af te drukken voordat u belt deze pagina"
+msgstr ""
+"Selecteer een Bestelling Aantal af te drukken voordat u belt deze pagina"
 
 #: PO_PDFPurchOrder.php:19 PO_PDFPurchOrder.php:125
 #: includes/MainMenuLinksArray.php:47
@@ -24259,7 +24253,9 @@ msgstr "Inkoop Opdracht Opvragen"
 
 #: PO_PDFPurchOrder.php:29
 msgid "This page must be called with a purchase order number to print"
-msgstr "Deze pagina moet woren opgevraagd met een inkoop order die moet worden afgedrukt"
+msgstr ""
+"Deze pagina moet woren opgevraagd met een inkoop order die moet worden "
+"afgedrukt"
 
 #: PO_PDFPurchOrder.php:39
 msgid "Print Purchase Order Number"
@@ -25476,10 +25472,6 @@ msgstr ""
 
 #: PrintCustStatements.php:98
 msgid "Emailing Customer Account Statements"
-msgstr ""
-
-#: PrintCustStatements.php:102
-msgid "Account #"
 msgstr ""
 
 #: PrintCustStatements.php:104
@@ -36491,7 +36483,7 @@ msgstr ""
 #: Z_ChangeLocationCode.php:282 Z_ChangeSalesmanCode.php:136
 #: Z_ChangeStockCategory.php:125 Z_ChangeStockCode.php:226
 #: Z_ChangeSupplierCode.php:30 Z_DeleteSalesTransActions.php:177
-#: Z_GLAccountUsersCopyAuthority.php:91
+#: Z_GLAccountUsersCopyAuthority.php:89
 msgid "Process"
 msgstr "Verwerk"
 
@@ -41806,8 +41798,8 @@ msgstr ""
 #: Z_ChangeStockCategory.php:86 Z_ChangeStockCategory.php:91
 #: Z_ChangeStockCategory.php:97 Z_ChangeStockCategory.php:106
 #: Z_ChangeStockCode.php:118 Z_ChangeStockCode.php:170
-#: Z_ChangeStockCode.php:199 Z_GLAccountUsersCopyAuthority.php:36
-#: Z_GLAccountUsersCopyAuthority.php:47 includes/MiscFunctions.php:387
+#: Z_ChangeStockCode.php:199 Z_GLAccountUsersCopyAuthority.php:35
+#: Z_GLAccountUsersCopyAuthority.php:46 includes/MiscFunctions.php:387
 msgid "completed"
 msgstr "Uitgevoerd"
 
@@ -43197,40 +43189,40 @@ msgstr ""
 msgid "GLAccount - Users Authority Copy Authority"
 msgstr ""
 
-#: Z_GLAccountUsersCopyAuthority.php:14 Z_GLAccountUsersCopyAuthority.php:15
+#: Z_GLAccountUsersCopyAuthority.php:13 Z_GLAccountUsersCopyAuthority.php:14
 #: includes/MainMenuLinksArray.php:220
 msgid "Copy Authority of GL Accounts from one user to another"
 msgstr ""
 
-#: Z_GLAccountUsersCopyAuthority.php:24
+#: Z_GLAccountUsersCopyAuthority.php:23
 msgid "User FROM must be different from user TO"
 msgstr ""
 
-#: Z_GLAccountUsersCopyAuthority.php:31
+#: Z_GLAccountUsersCopyAuthority.php:30
 msgid "Deleting the current authority to view / update the GL Accounts of user"
 msgstr ""
 
-#: Z_GLAccountUsersCopyAuthority.php:34
+#: Z_GLAccountUsersCopyAuthority.php:33
 msgid "The SQL to delete the auhority in glaccountusers record failed"
 msgstr ""
 
-#: Z_GLAccountUsersCopyAuthority.php:38
+#: Z_GLAccountUsersCopyAuthority.php:37
 msgid "Copying the authority to view / update the GL Accounts from user"
 msgstr ""
 
-#: Z_GLAccountUsersCopyAuthority.php:45
+#: Z_GLAccountUsersCopyAuthority.php:44
 msgid "The SQL to insert the auhority in glaccountusers record failed"
 msgstr ""
 
-#: Z_GLAccountUsersCopyAuthority.php:60
+#: Z_GLAccountUsersCopyAuthority.php:59
 msgid "Select User to copy the Authority FROM"
 msgstr ""
 
-#: Z_GLAccountUsersCopyAuthority.php:75
+#: Z_GLAccountUsersCopyAuthority.php:74
 msgid "Select User to copy the Authority TO"
 msgstr ""
 
-#: Z_GLAccountUsersCopyAuthority.php:90
+#: Z_GLAccountUsersCopyAuthority.php:89
 msgid "Process Copy of Authority"
 msgstr ""
 

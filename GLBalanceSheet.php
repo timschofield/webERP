@@ -138,7 +138,7 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 		include('includes/header.php');
 		prnMsg($ErrMsg . '<br />' . DB_error_msg(), 'error', _('Database Error'));
 		echo '<br />
-				<a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+				<a href="' . $RootPath, '/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug == 1) {
 			echo '<br />' . $SQL;
 		}
@@ -178,7 +178,7 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 		$Title = _('Balance Sheet') . ' - ' . _('Problem Report') . '....';
 		include('includes/header.php');
 		prnMsg($ErrMsg . '<br />' . DB_error_msg(), 'error', _('Database Error'));
-		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+		echo '<br /><a href="' . $RootPath, '/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug == 1) {
 			echo '<br />' . $SQL;
 		}
@@ -361,7 +361,7 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 		$Title = _('Print Balance Sheet Error');
 		include('includes/header.php');
 		prnMsg(_('There were no entries to print out for the selections specified'));
-		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+		echo '<br /><a href="' . $RootPath, '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.php');
 		exit;
 	} else {
@@ -584,7 +584,7 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 		if ($_POST['ShowDetail'] == 'Detailed') {
 			if (isset($_POST['ShowZeroBalance']) or (!isset($_POST['ShowZeroBalance']) and (round($AccountBalance, $_SESSION['CompanyRecord']['decimalplaces']) <> 0 or round($AccountBalanceLY, $_SESSION['CompanyRecord']['decimalplaces']) <> 0))) {
 
-				$ActEnquiryURL = '<a href="' . $RootPath . '/GLAccountInquiry.php?PeriodFrom=' . urlencode(FYStartPeriod($_POST['PeriodTo'])) . '&amp;PeriodTo=' . urlencode($_POST['PeriodTo']) . '&amp;Account=' . urlencode($MyRow['accountcode']) . '&amp;Show=Yes">' . $MyRow['accountcode'] . '</a>';// Function FYStartPeriod() in ~/includes/MiscFunctions.php
+				$ActEnquiryURL = '<a href="' . $RootPath, '/GLAccountInquiry.php?PeriodFrom=' . urlencode(FYStartPeriod($_POST['PeriodTo'])) . '&amp;PeriodTo=' . urlencode($_POST['PeriodTo']) . '&amp;Account=' . urlencode($MyRow['accountcode']) . '&amp;Show=Yes">' . $MyRow['accountcode'] . '</a>';// Function FYStartPeriod() in ~/includes/MiscFunctions.php
 
 				echo '<tr class="striped_row">
 						<td>', $ActEnquiryURL, '</td>
@@ -684,7 +684,6 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 		</tbody></table>',
 		'</div>';// div id="Report".
 	if(!isset($IsIncluded)) {// Runs normally if this script is NOT included in another.
-		echo // Shows a form to select an action after the report was shown:
 		echo // Shows a form to select an action after the report was shown:
 			'<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
 			'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />',
