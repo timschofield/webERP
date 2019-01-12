@@ -71,7 +71,7 @@ if (isset($_POST['submit'])) {
 		$CheckRow = DB_fetch_row($CheckResult);
 		if ($CheckRow[0] > 0) {
 			$InputError = 1;
-			prnMsg(_('The Expense type ') . $_POST['CodeExpense'] . _(' already exists.'), 'error');
+			prnMsg(_('The Expense type ') . $_POST['CodeExpense'] . _(' already exists'), 'error');
 		} else {
 			// Add new record on submit
 			$SQL = "INSERT INTO pcexpenses
