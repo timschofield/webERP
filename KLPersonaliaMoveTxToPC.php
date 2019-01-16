@@ -138,14 +138,13 @@ function submit($Title, $Company, $LastDateOfPeriod, $PaymentDate, $SalaryType, 
 								$myrow['komisiretail'] +
 								$myrow['komisisupport'] +
 								$myrow['bonuspenjualan'];
-				if (($myrow['codename'] == 'Ricard') OR 
-					($myrow['codename'] == 'Laia')){
-					// Bonus paid as commissions to Ricard and Laia for PTADU goes to different GL than karyawan
-					MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "COMM-SHAREHOLDERS", $PaymentDate, $Commissions, $myrow['codename'], $db);
-						
-				}else{
+//				if (($myrow['codename'] == 'Ricard') OR 
+//					($myrow['codename'] == 'Laia')){
+//					// Bonus paid as commissions to Ricard and Laia for PTADU goes to different GL than karyawan
+//					MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "COMM-SHAREHOLDERS", $PaymentDate, $Commissions, $myrow['codename'], $db);
+//				}else{
 					MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "COMMISSIONS", $PaymentDate, $Commissions, $myrow['codename'], $db);
-				}
+//				}
 				
 				//Shifts
 				$Shifts = $myrow['lembur'] +
@@ -159,7 +158,13 @@ function submit($Title, $Company, $LastDateOfPeriod, $PaymentDate, $SalaryType, 
 				//Lain2
 				$Lain2 = $myrow['penerimaanlain'] +
 								$myrow['potonganlain2'];
-				MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "OTHERS", $PaymentDate, $Lain2, $myrow['codename'], $db);
+				if (($myrow['codename'] == 'Ricard') OR 
+					($myrow['codename'] == 'Laia')){
+					// Dividends paid as lain2 to shareholders for PTADU goes to different GL than karyawan
+					MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "COMM-SHAREHOLDERS", $PaymentDate, $Lain2, $myrow['codename'], $db);
+				}else{
+					MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "OTHERS", $PaymentDate, $Lain2, $myrow['codename'], $db);
+				}
 				
 				//JHT
 				$JHT = $myrow['potonganjht'] +
