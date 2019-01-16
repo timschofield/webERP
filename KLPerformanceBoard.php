@@ -307,9 +307,9 @@ if ($ProcessSection03){
 	if ($KL_SystemAdmin
 		OR $KL_OperationalManager
 		OR $KL_AdministrationTeam){
-		CashStatusPTADU("2018",  30000000,$db);
+		CashStatusPTADU("2019", 0,$db);
 		$NumberOfTestExecuted++;
-		CashStatusPTBB("2018", 2700000000,$db);
+		CashStatusPTBB("2019", 0,$db);
 		$NumberOfTestExecuted++;
 	}
 }
