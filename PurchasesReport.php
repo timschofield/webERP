@@ -266,7 +266,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 					fShowFieldHelp(_('Select the end of the reporting period')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
 		 		'</td>
 			</tr>',
-			// Show the budget for the period:
+	// Show the budget for the period:
 			'<tr>',
 			 	'<td><label for="ShowDetails">', _('Show details'), '</label></td>',
 			 	'<td>',

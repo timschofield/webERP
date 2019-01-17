@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-09 23:58-0600\n"
+"POT-Creation-Date: 2019-01-17 12:45-0600\n"
 "PO-Revision-Date: 2015-02-24 18:41-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: Deutsch <weberp-translation@lists.sourceforge.net>\n"
@@ -585,8 +585,8 @@ msgstr "Ändern"
 #: GLStatements.php:160 GLStatements.php:187 GLTagProfit_Loss.php:152
 #: GLTagProfit_Loss.php:942 GLTrialBalance.php:702
 #: InternalStockRequestInquiry.php:261 PDFPriceList.php:498
-#: PurchasesReport.php:73 PurchasesReport.php:282 SalesReport.php:73
-#: SalesReport.php:282 SecurityTokens.php:139 SecurityTokens.php:155
+#: PurchasesReport.php:219 PurchasesReport.php:243 SalesReport.php:219
+#: SalesReport.php:243 SecurityTokens.php:139 SecurityTokens.php:155
 #: UserGLAccounts.php:251 Z_GLAccountUsersCopyAuthority.php:90
 #: includes/Login.php:6
 msgid "Return"
@@ -853,7 +853,7 @@ msgstr "Kontoauszug"
 #: PcAuthorizeExpenses.php:102 PcClaimExpensesFromTab.php:455
 #: PcClaimExpensesFromTab.php:776 PcReportExpense.php:148 PcReportTab.php:222
 #: PcReportTab.php:466 PDFQuotation.php:250 PDFQuotationPortrait.php:247
-#: PurchasesReport.php:127 SalesReport.php:127 SelectCustomer.php:724
+#: PurchasesReport.php:65 SalesReport.php:65 SelectCustomer.php:724
 #: ShopParameters.php:197 SystemParameters.php:424 WOSerialNos.php:305
 #: WOSerialNos.php:311
 msgid "Notes"
@@ -950,7 +950,7 @@ msgstr "Hinweise für den Kunden"
 #: PcAuthorizeCash.php:92 PDFOrdersInvoiced.php:377 PDFRemittanceAdvice.php:307
 #: PDFWOPrint.php:489 PrintCustTrans.php:949 PrintCustTransPortrait.php:933
 #: PrintWOItemSlip.php:186 PrintWOItemSlip.php:197 PrintWOItemSlip.php:208
-#: PurchasesReport.php:137 ReverseGRN.php:404 SalesReport.php:137
+#: PurchasesReport.php:75 ReverseGRN.php:404 SalesReport.php:75
 #: SelectCustomer.php:796 SelectCustomer.php:834 ShipmentCosting.php:530
 #: ShipmentCosting.php:598 Shipments.php:478 StockDispatch.php:278
 #: StockDispatch.php:289 StockDispatch.php:300 StockLocMovements.php:111
@@ -1843,7 +1843,7 @@ msgstr ""
 #: PO_SelectOSPurchOrder.php:615 PO_SelectOSPurchOrder.php:647
 #: PrintCustStatements.php:83 PrintCustStatements.php:532
 #: PrintCustStatements.php:552 PrintCustTrans.php:587
-#: PrintCustTransPortrait.php:574 PurchasesReport.php:278 SalesReport.php:278
+#: PrintCustTransPortrait.php:574 PurchasesReport.php:217 SalesReport.php:217
 #: SelectPickingLists.php:457 SelectSalesOrder.php:983 SuppWhereAlloc.php:187
 #: UserGLAccounts.php:246
 msgid "Print"
@@ -2948,11 +2948,11 @@ msgstr "Nummer"
 #: CustomerTransInquiry.php:103 CustWhereAlloc.php:146
 #: DailyBankTransactions.php:162 Dashboard.php:58 GLAccountReport.php:343
 #: PaymentAllocations.php:64 PaymentAllocations.php:65 Payments.php:1133
-#: Payments.php:1372 PDFRemittanceAdvice.php:308 PurchasesReport.php:139
-#: SalesReport.php:139 ShiptsList.php:36 StockCounts.php:143
-#: StockCounts.php:168 StockCounts.php:215 StockLocMovements.php:114
-#: StockMovements.php:135 SupplierInquiry.php:207 SuppWhereAlloc.php:134
-#: Tax.php:435 WorkOrderEntry.php:798 Z_CheckAllocs.php:63
+#: Payments.php:1372 PDFRemittanceAdvice.php:308 PurchasesReport.php:77
+#: SalesReport.php:77 ShiptsList.php:36 StockCounts.php:143 StockCounts.php:168
+#: StockCounts.php:215 StockLocMovements.php:114 StockMovements.php:135
+#: SupplierInquiry.php:207 SuppWhereAlloc.php:134 Tax.php:435
+#: WorkOrderEntry.php:798 Z_CheckAllocs.php:63
 #: includes/PDFBankingSummaryPageHeader.inc:39
 #: includes/PDFCustTransListingPageHeader.inc:48
 #: includes/PDFPeriodStockTransListingPageHeader.inc:47
@@ -4476,9 +4476,9 @@ msgstr "Fertigungsauftrag drucken"
 #: HistoricalTestResults.php:81 InternalStockRequest.php:296
 #: MailingGroupMaintenance.php:145 MRPCreateDemands.php:286 PDFCOA.php:42
 #: PDFCOA.php:72 PDFProdSpec.php:30 PDFProdSpec.php:56 PricesByCost.php:296
-#: ProductSpecs.php:99 ProductSpecs.php:126 PurchasesReport.php:70
-#: PurchasesReport.php:71 ReorderLevelLocation.php:193 SalesReport.php:70
-#: SalesReport.php:71 SupplierGRNAndInvoiceInquiry.php:46
+#: ProductSpecs.php:99 ProductSpecs.php:126 PurchasesReport.php:242
+#: ReorderLevelLocation.php:193 SalesReport.php:242
+#: SupplierGRNAndInvoiceInquiry.php:46
 msgid "Submit"
 msgstr "Absenden"
 
@@ -4939,7 +4939,7 @@ msgstr "Lieferung bestätigen und fakturieren"
 #: OrderDetails.php:84 PickingLists.php:292 SalesAnalRepts.php:29
 #: SalesAnalRepts.php:31 SalesInquiry.php:781 SalesInquiry.php:791
 #: SalesInquiry.php:813 SalesInquiry.php:961 SalesInquiry.php:976
-#: SalesInquiry.php:982 SalesInquiry.php:1241 SalesReport.php:225
+#: SalesInquiry.php:982 SalesInquiry.php:1241 SalesReport.php:163
 #: WWW_Users.php:336 WWW_Users.php:579 Z_ChangeBranchCode.php:208
 #: includes/PDFStatementPageHeader.inc:120 includes/PDFTransPageHeader.inc:49
 #: includes/PDFTransPageHeaderPortrait.inc:57
@@ -4954,7 +4954,7 @@ msgstr "Kundennummer"
 #: PrintCustStatements.php:103 SalesInquiry.php:782 SalesInquiry.php:792
 #: SalesInquiry.php:816 SalesInquiry.php:960 SalesInquiry.php:971
 #: SalesInquiry.php:977 SalesInquiry.php:983 SalesInquiry.php:1148
-#: SalesInquiry.php:1223 SalesInquiry.php:1242 SalesReport.php:226
+#: SalesInquiry.php:1223 SalesInquiry.php:1242 SalesReport.php:164
 #: SelectCustomer.php:401 SelectOrderItems.php:722 ../webSHOP/Checkout.php:389
 msgid "Customer Name"
 msgstr "Kundenname"
@@ -10313,8 +10313,8 @@ msgid "Click to credit the invoice"
 msgstr "Klicken Sie um die Rechnung gutzuschreiben"
 
 #: CustomerInquiry.php:320 CustomerInquiry.php:450 CustomerInquiry.php:527
-#: CustomerInquiry.php:585 CustomerInquiry.php:637 PurchasesReport.php:200
-#: SalesReport.php:200 SupplierInquiry.php:255
+#: CustomerInquiry.php:585 CustomerInquiry.php:637 PurchasesReport.php:138
+#: SalesReport.php:138 SupplierInquiry.php:255
 msgid "Click to view the GL entries"
 msgstr ""
 
@@ -14747,7 +14747,7 @@ msgstr "Konnte die Seriennummern nicht abrufen für den Artikel"
 
 #: GeneratePickingList.php:505 PDFWOPrint.php:490
 msgid "Signed for"
-msgstr ""
+msgstr "Gezeichnet für"
 
 #: GeneratePickingList.php:514
 msgid "There are no picking lists to print"
@@ -15582,7 +15582,7 @@ msgstr "Vorjahr"
 
 #: GLBalanceSheet.php:698 GLCashFlowsIndirect.php:784 GLProfit_Loss.php:1237
 #: GLStatements.php:159 GLTagProfit_Loss.php:941 GLTrialBalance.php:701
-#: PurchasesReport.php:280 SalesReport.php:280
+#: PurchasesReport.php:218 SalesReport.php:218
 msgid "New Report"
 msgstr ""
 
@@ -15672,7 +15672,7 @@ msgid "Statement of Cash Flows, Indirect Method"
 msgstr ""
 
 #: GLCashFlowsIndirect.php:83 GLProfit_Loss.php:51 GLStatements.php:81
-#: GLTrialBalance.php:44 PurchasesReport.php:49 SalesReport.php:49
+#: GLTrialBalance.php:44 PurchasesReport.php:37 SalesReport.php:37
 msgid ""
 "The beginning of the period should be before or equal to the end of the "
 "period. Please reselect the reporting period."
@@ -15766,18 +15766,18 @@ msgid ""
 "time."
 msgstr ""
 
-#: GLCashFlowsIndirect.php:805 GLStatements.php:180 PurchasesReport.php:64
-#: SalesReport.php:64
+#: GLCashFlowsIndirect.php:805 GLStatements.php:180 PurchasesReport.php:236
+#: SalesReport.php:236
 msgid "Report Parameters"
 msgstr ""
 
 #: GLCashFlowsIndirect.php:835 GLProfit_Loss.php:113 GLStatements.php:210
-#: GLTrialBalance.php:90 PurchasesReport.php:86 SalesReport.php:86
+#: GLTrialBalance.php:90 PurchasesReport.php:256 SalesReport.php:256
 msgid "Select the beginning of the reporting period"
 msgstr ""
 
 #: GLCashFlowsIndirect.php:849 GLProfit_Loss.php:127 GLStatements.php:224
-#: GLTrialBalance.php:104 PurchasesReport.php:96 SalesReport.php:96
+#: GLTrialBalance.php:104 PurchasesReport.php:266 SalesReport.php:266
 msgid "Select the end of the reporting period"
 msgstr ""
 
@@ -20284,7 +20284,7 @@ msgstr ""
 #: POReport.php:717 POReport.php:728 POReport.php:1271 POReport.php:1289
 #: POReport.php:1301 POReport.php:1354 POReport.php:1411 POReport.php:1422
 #: POReport.php:1554 POReport.php:1609 POReport.php:1623
-#: PurchasesReport.php:226 PurchData.php:465 PurchData.php:562
+#: PurchasesReport.php:164 PurchData.php:465 PurchData.php:562
 #: PurchData.php:567 SelectSupplier.php:294 SellThroughSupport.php:159
 #: SupplierPriceList.php:463 Suppliers.php:689 Suppliers.php:973
 #: SupplierTenderCreate.php:413 SupplierTenderCreate.php:614
@@ -21415,8 +21415,8 @@ msgstr "Der Kassenbuchvorgang"
 msgid "The Expense type "
 msgstr "Den Kassenbuchvorgang "
 
-#: PcExpenses.php:74
-msgid " already exists."
+#: PcExpenses.php:74 PcTabs.php:87
+msgid " already exists"
 msgstr " gibt es bereits."
 
 #: PcExpenses.php:89
@@ -21727,10 +21727,6 @@ msgstr "Das Kassenbuch"
 #: PcTabs.php:87
 msgid "The Tab "
 msgstr "Das Kassenbuch "
-
-#: PcTabs.php:87
-msgid " already exists"
-msgstr " gibt es bereits."
 
 #: PcTabs.php:136
 msgid "The Tab record could not be deleted because"
@@ -22634,7 +22630,7 @@ msgstr ""
 "Geben Sie das Datum an, bis zu dem die Buchungen aufgelistet werden sollen"
 
 #: PDFPeriodStockTransListing.php:41 PrintCustTrans.php:48
-#: PrintCustTransPortrait.php:48 SalesInquiry.php:1107 SalesReport.php:138
+#: PrintCustTransPortrait.php:48 SalesInquiry.php:1107 SalesReport.php:76
 #: includes/DatabaseTranslations.php:25
 msgid "Sales Invoice"
 msgstr "Rechnung"
@@ -24639,7 +24635,7 @@ msgstr "oder die Abfrage gab mehrere Bestellungen zurück"
 msgid "Order Header Details"
 msgstr "Kopfangaben der Bestellung"
 
-#: PO_OrderDetails.php:95 PurchasesReport.php:225 SelectProduct.php:567
+#: PO_OrderDetails.php:95 PurchasesReport.php:163 SelectProduct.php:567
 #: Suppliers.php:684 Suppliers.php:967 SupplierTenderCreate.php:412
 #: WWW_Users.php:338 WWW_Users.php:589
 msgid "Supplier Code"
@@ -26639,66 +26635,71 @@ msgstr ""
 msgid "Purchases from Suppliers"
 msgstr ""
 
-#: PurchasesReport.php:81 PurchasesReport.php:110 SalesReport.php:81
-#: SalesReport.php:110
+#: PurchasesReport.php:48 PurchasesReport.php:251 SalesReport.php:48
+#: SalesReport.php:251
 msgid "Period from"
 msgstr ""
 
-#: PurchasesReport.php:91 PurchasesReport.php:111 SalesReport.php:91
-#: SalesReport.php:111
+#: PurchasesReport.php:49 PurchasesReport.php:261 SalesReport.php:49
+#: SalesReport.php:261
 msgid "Period to"
 msgstr ""
 
-#: PurchasesReport.php:101 SalesReport.php:101
-msgid "Show details"
-msgstr ""
-
-#: PurchasesReport.php:104
-msgid "Check this box to show purchase invoices"
-msgstr ""
-
-#: PurchasesReport.php:117 SalesReport.php:117
+#: PurchasesReport.php:55 SalesReport.php:55
 msgid "Original Overall Amount"
 msgstr ""
 
-#: PurchasesReport.php:118 SalesReport.php:118
+#: PurchasesReport.php:56 SalesReport.php:56
 msgid "Original Overall Taxes"
 msgstr ""
 
-#: PurchasesReport.php:119 SalesReport.php:119
+#: PurchasesReport.php:57 SalesReport.php:57
 msgid "Original Overall Total"
 msgstr ""
 
-#: PurchasesReport.php:120 SalesReport.php:120
+#: PurchasesReport.php:58 SalesReport.php:58
 msgid "GL Overall Amount"
 msgstr ""
 
-#: PurchasesReport.php:121 SalesReport.php:121
+#: PurchasesReport.php:59 SalesReport.php:59
 msgid "GL Overall Taxes"
 msgstr ""
 
-#: PurchasesReport.php:122 SalesReport.php:122
+#: PurchasesReport.php:60 SalesReport.php:60
 msgid "GL Overall Total"
 msgstr ""
 
-#: PurchasesReport.php:128
+#: PurchasesReport.php:66
 msgid ""
 "Original amounts in the supplier's currency. GL amounts in the functional "
 "currency."
 msgstr ""
 
-#: PurchasesReport.php:138 SuppWhereAlloc.php:32 SuppWhereAlloc.php:37
+#: PurchasesReport.php:76 SuppWhereAlloc.php:32 SuppWhereAlloc.php:37
 #: SuppWhereAlloc.php:41 SuppWhereAlloc.php:150
 #: includes/DatabaseTranslations.php:33
 msgid "Purchase Invoice"
 msgstr ""
 
-#: PurchasesReport.php:197 SalesReport.php:197
+#: PurchasesReport.php:135 SalesReport.php:135
 msgid "Click to view where allocated"
 msgstr ""
 
-#: PurchasesReport.php:227
+#: PurchasesReport.php:165
 msgid "Supplier's Currency"
+msgstr ""
+
+#: PurchasesReport.php:227
+msgid ""
+"Shows a report of purchases from suppliers for the range of selected dates."
+msgstr ""
+
+#: PurchasesReport.php:271 SalesReport.php:271
+msgid "Show details"
+msgstr ""
+
+#: PurchasesReport.php:274
+msgid "Check this box to show purchase invoices"
 msgstr ""
 
 #: PurchData.php:5 SupplierPriceList.php:5 SupplierPriceList.php:493
@@ -29005,18 +29006,22 @@ msgstr "Aktuell?"
 msgid "Sales to Customers"
 msgstr ""
 
-#: SalesReport.php:104
-msgid "Check this box to show sales invoices"
-msgstr ""
-
-#: SalesReport.php:128
+#: SalesReport.php:66
 msgid ""
 "Original amounts in the customer's currency. GL amounts in the functional "
 "currency."
 msgstr ""
 
-#: SalesReport.php:227
+#: SalesReport.php:165
 msgid "Customer's Currency"
+msgstr ""
+
+#: SalesReport.php:227
+msgid "Shows a report of sales to customers for the range of selected dates."
+msgstr ""
+
+#: SalesReport.php:274
+msgid "Check this box to show sales invoices"
 msgstr ""
 
 #: SalesTopCustomersInquiry.php:5 SalesTopCustomersInquiry.php:8
@@ -55442,6 +55447,9 @@ msgstr ""
 #: ../webSHOP/includes/session.php:162
 msgid "Bank Transfer"
 msgstr ""
+
+#~ msgid " already exists."
+#~ msgstr " gibt es bereits."
 
 #~ msgid "Signed for: "
 #~ msgstr "Unterschrift:"
