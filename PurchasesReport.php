@@ -1,8 +1,8 @@
 <?php
 /* PurchasesReport.php
 Shows a report of purchases from suppliers for the range of selected dates.
-This program is under the GNU General Public License, last version. 2018-11-10.
-This creative work is under the CC BY-NC-SA, last version. 2018-11-10.
+This program is under the GNU General Public License, last version. 2016-12-18.
+This creative work is under the CC BY-NC-SA, last version. 2016-12-18.
 
 This script is "mirror-symmetric" to script SalesReport.php.
 */
@@ -41,11 +41,11 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo'])) {
 // Main code:
 if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewReport']) {
 	// If PeriodFrom and PeriodTo are set and it is not a NewReport, generates the report:
-	echo '<div class="sheet">',// Division to identify the report block.
+	echo '<div class="sheet">', // Division to identify the report block.
 		'<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 		'/images/reports.png" title="', // Icon image.
 		$Title, '" /> ', // Icon title.
-		$Title, '</p>',// Page title.
+		$Title, '</p>', // Page title.
 		'<p>', _('Period from'), ': ', $_POST['PeriodFrom'],
 		'<br />', _('Period to'), ': ', $_POST['PeriodTo'], '</p>',
 		'<table class="selection">
