@@ -42,8 +42,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo'])) {
 if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewReport']) {
 	// If PeriodFrom and PeriodTo are set and it is not a NewReport, generates the report:
 	echo '<div class="sheet">', // Division to identify the report block.
-		'<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
-		'/images/reports.png" title="', // Icon image.
+		'<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/reports.png" title="', // Icon image.
 		$Title, '" /> ', // Icon title.
 		$Title, '</p>', // Page title.
 		'<p>', _('Period from'), ': ', $_POST['PeriodFrom'],
