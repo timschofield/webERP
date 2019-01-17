@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-09 23:58-0600\n"
-"PO-Revision-Date: 2019-01-03 19:57-0600\n"
+"PO-Revision-Date: 2019-01-17 10:16-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -29023,7 +29023,7 @@ msgstr "Actual?"
 
 #: SalesReport.php:15 includes/MainMenuLinksArray.php:13
 msgid "Sales to Customers"
-msgstr ""
+msgstr "Ventas a clientes"
 
 #: SalesReport.php:104
 msgid "Check this box to show sales invoices"
