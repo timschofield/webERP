@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-17 12:45-0600\n"
-"PO-Revision-Date: 2019-01-17 10:16-0600\n"
+"PO-Revision-Date: 2019-01-17 13:34-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -55434,12 +55434,3 @@ msgstr "Tarjeta de crédito"
 #: ../webSHOP/includes/session.php:162
 msgid "Bank Transfer"
 msgstr "Transferencia bancaria"
-
-#~ msgid " already exists."
-#~ msgstr " ya existe."
-
-#~ msgid "Signed for: "
-#~ msgstr "Firmado por:"
-
-#~ msgid "Account #"
-#~ msgstr "Cuenta #"
