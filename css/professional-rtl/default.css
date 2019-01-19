@@ -551,13 +551,16 @@ li {
 	/* Class selector for field help text. */
 }
 .page_help_text {
-	background:#d3d3d3 url(images/help.png) top right no-repeat;
+	background-color:#d3d3d3;
+	background-image:url(images/question.svg);
+	background-position:top right;
+	background-repeat:no-repeat;
 	border:#a52a2a 1px solid;
 	color:#000000;
 	font-weight:normal;
 	margin:0 auto;
 	padding-bottom:2px;
-	padding-right:10px;
+	padding-right:28px;
 	padding-top:2px;
 	text-align:center;
 	width:80%;

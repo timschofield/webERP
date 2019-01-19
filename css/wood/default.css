@@ -546,7 +546,10 @@ display:table-cell;
 	/* Class selector for field help text. */
 }
 .page_help_text {
-	background:#d3d3d3 url(images/help.png) top left no-repeat;
+	background-color:#d3d3d3;
+	background-image:url(images/question.svg);
+	background-position:top left;
+	background-repeat:no-repeat;
 	border:#A52A2A 1px solid;
 	box-shadow:3px 3px 4px;
 	color:#000000;
@@ -555,7 +558,7 @@ display:table-cell;
 	margin:0 auto 10px;
 	padding:10px;
 	padding-bottom:2px;
-	padding-left:10px;
+	padding-left:28px;
 	padding-top:2px;
 	text-align:center;
 	width:80%;

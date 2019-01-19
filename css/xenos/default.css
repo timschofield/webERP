@@ -3,7 +3,7 @@
 
 Design guidelines:
 	Fonts are 10pt hight.
-	Icons are ??px x ??px size.
+	Icons are ??px x ??px size.  (16x16 ?)
 */
 
 /***
@@ -663,14 +663,14 @@ select.selecterror {
 }
 .page_help_text {
 	background-color:#d3d3d3;
-	background-image:url(images/help.png);
+	background-image:url(images/question.svg);
 	background-position:top left;
 	background-repeat:no-repeat;
 	border:#c3c3c3 solid thin;
 	color:#000000;
 	font-weight:normal;
 	margin:0 auto;
-	padding:4px 10px;
+	padding:4px 10px;/* padding-left:4px+16px+4px;*/
 	text-align:center;
 	width:80%;
 	/* Class selector for page help text. Hidden/displayed by the ShowPageHelp parameter. */
