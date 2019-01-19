@@ -508,6 +508,9 @@ select.selecterror { /*AccountGroups.php, BankAccounts.php, BOMs.php, Stocks.php
 }
 .page_help_text {
 	background-color:#d3d3d3;
+	background-image:url(images/question.svg);
+	background-position:top left;
+	background-repeat:no-repeat;
 	border-radius:5px;
 	border:#a52a2a 1px solid;
 	color:#000000;

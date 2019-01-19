@@ -512,7 +512,7 @@ textarea.texterror {
 }
 .page_help_text {
 	background-color:#d3d3d3;
-	background-image:url(images/help.png);
+	background-image:url(images/question.svg);
 	background-position:2px 2px;
 	background-repeat:no-repeat;
 	border:#a52a2a 1px solid;
