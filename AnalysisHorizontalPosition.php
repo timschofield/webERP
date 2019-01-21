@@ -77,7 +77,8 @@ if(!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 		'<table class="selection">', // Content of the header and footer of the input table:
 		'<thead>
 			<tr><th colspan="2">', _('Report Parameters'), '</th></tr>',
-		'</thead><tfoot>
+		'</thead>',
+		'<tfoot>
 			<tr>
 				<td colspan="2">',
 					'<div class="centre">',
@@ -86,7 +87,8 @@ if(!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 					'</div>',
 				'</td>
 			</tr>',
-		'</tfoot><tbody>';
+		'</tfoot>',
+		'<tbody>';
 	// END ReportParametersFormStart.
 	// Content of the body of the input table:
 	// Select period to:
