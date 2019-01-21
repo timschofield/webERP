@@ -15,6 +15,8 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 
 | Description | Type | Author | Date | Details | Ref |
 |:-----------:|:----:|:------:|:----:|:-------:|:---:|
+| Deletes the translation of numbers | Changed | Rafael Chacón | 2019-01-21 | [View](https://github.com/webERP-team/webERP/commit/55bc2e3275c8d6a8284f9fa9118782aa0b8a5908) |   |
+| Standardise buttons in Horizontal Analysis reports | Changed | Rafael Chacón | 2019-01-19 | [View](https://github.com/webERP-team/webERP/commit/22c62fc4129364fa7ce5efa2f1b92adeb9cc7c7f) |   |
 | Clean up purchases and sales reports code | Changed | Rafael Chacón | 2019-01-09 | [View](https://github.com/webERP-team/webERP/commit/f0c064c6abfca9d39f58abb4aac18af39a51de38) |   |
 | Standardise GL reports code | Changed | Rafael Chacón | 2019-01-09 | [View](https://github.com/webERP-team/webERP/commit/e7ceae5931c020f98ce8b89b12d4397d277c4f77) |   |
 | Clean up and standardise sheet style view | Changed | Rafael Chacón | 2019-01-04 | [View](https://github.com/webERP-team/webERP/commit/81f710f1c85a49dc703db8d968de3c45904bba7c) |   |
