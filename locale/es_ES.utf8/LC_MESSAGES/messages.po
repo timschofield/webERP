@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-17 12:45-0600\n"
-"PO-Revision-Date: 2019-01-17 13:34-0600\n"
+"PO-Revision-Date: 2019-01-21 11:19-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
@@ -21395,7 +21395,7 @@ msgstr ""
 
 #: PcClaimExpensesFromTab.php:758
 msgid "Accepted file types"
-msgstr ""
+msgstr "Tipos de archivos aceptados"
 
 #: PcExpenses.php:4
 msgid "Maintenance Of Petty Cash Of Expenses"
