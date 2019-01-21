@@ -8,7 +8,11 @@ msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-17 12:45-0600\n"
+<<<<<<< HEAD
 "PO-Revision-Date: 2019-01-21 11:28-0600\n"
+=======
+"PO-Revision-Date: 2019-01-21 11:19-0600\n"
+>>>>>>> 46f1164c83374968078ec4f23e03d936ca397e32
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
 "Language: es_ES\n"
