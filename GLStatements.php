@@ -119,13 +119,12 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 	$IsIncluded = TRUE;
 	$PageBreak = '<hr class="PageBreak"/>' . chr(12);// Marker to indicate that the content that follows is part of a new page.
 	// Displays the statements using the corresponding scripts:
+	$_POST['ShowDetail'] = 'Detailed';
 	if($_POST['ShowFinancialPosition']) {
-		$_POST['ShowDetail'] = 'Detailed';
 		echo $PageBreak;
 		include('GLBalanceSheet.php');
 	}
 	if($_POST['ShowComprehensiveIncome']) {
-		$_POST['ShowDetail'] = 'Detailed';
 		echo $PageBreak;
 		include('GLProfit_Loss.php');
 	}
