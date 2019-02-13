@@ -15,6 +15,7 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 
 | Description | Type | Author | Date | Details | Ref |
 |:-----------:|:----:|:------:|:----:|:-------:|:---:|
+| Fix concat errors, add urlencode() | Fixed | PaulT | 2019-02-12 | [View](https://github.com/webERP-team/webERP/commit/d6b2ddb7353fcfdfa0b952a117feca83f330eaaa) |   |
 | Deletes the translation of numbers | Changed | Rafael Chacón | 2019-01-21 | [View](https://github.com/webERP-team/webERP/commit/55bc2e3275c8d6a8284f9fa9118782aa0b8a5908) |   |
 | Standardise buttons in Horizontal Analysis reports | Changed | Rafael Chacón | 2019-01-19 | [View](https://github.com/webERP-team/webERP/commit/22c62fc4129364fa7ce5efa2f1b92adeb9cc7c7f) |   |
 | Clean up purchases and sales reports code | Changed | Rafael Chacón | 2019-01-09 | [View](https://github.com/webERP-team/webERP/commit/f0c064c6abfca9d39f58abb4aac18af39a51de38) |   |
