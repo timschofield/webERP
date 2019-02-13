@@ -6,7 +6,7 @@ $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLTransInquiry';
 include('includes/header.php');
 
-$MenuURL = '<div><a href="'. $RootPath, '/index.php?&amp;Application=GL">' . _('General Ledger Menu') . '</a></div>';
+$MenuURL = '<div><a href="'. $RootPath . '/index.php?&amp;Application=GL">' . _('General Ledger Menu') . '</a></div>';
 
 if( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 	prnMsg(_('This page requires a valid transaction type and number'),'warn');
@@ -91,8 +91,8 @@ if( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 				$Posted = _('No');
 			}
 			if( $TransRow['account'] == $_SESSION['CompanyRecord']['debtorsact'] AND $AnalysisCompleted == 'Not Yet') {
-					$URL = $RootPath, '/CustomerInquiry.php?CustomerID=';
-					$FromDate = '&amp;TransAfterDate=' . $TranDate;
+					$URL = $RootPath . '/CustomerInquiry.php?CustomerID=';
+					$FromDate = '&amp;TransAfterDate=' . urlencode($TranDate);
 
 					$DetailSQL = "SELECT debtortrans.debtorno AS otherpartycode,
 										debtortrans.ovamount,
@@ -107,8 +107,8 @@ if( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 					$DetailResult = DB_query($DetailSQL);
 
 			} elseif( $TransRow['account'] == $_SESSION['CompanyRecord']['creditorsact'] AND $AnalysisCompleted == 'Not Yet' ) {
-					$URL = $RootPath, '/SupplierInquiry.php?SupplierID=';
-					$FromDate = '&amp;FromDate=' . $TranDate;
+					$URL = $RootPath . '/SupplierInquiry.php?SupplierID=';
+					$FromDate = '&amp;FromDate=' . urlencode($TranDate);
 
 					$DetailSQL = "SELECT supptrans.supplierno AS otherpartycode,
 										supptrans.ovamount,
@@ -133,7 +133,7 @@ if( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 
 					if ($CheckRow[0] > 0) {
 						$AccountName = $TransRow['accountname'];
-						$URL = $RootPath, '/GLAccountInquiry.php?Account=' . $TransRow['account'];
+						$URL = $RootPath . '/GLAccountInquiry.php?Account=' . urlencode($TransRow['account']);
 					}else{
 						$AccountName = _('Other GL Accounts');
 						$URL = "";

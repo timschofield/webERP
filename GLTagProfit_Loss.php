@@ -763,7 +763,7 @@ if ((!isset($_POST['PeriodFrom']) AND !isset($_POST['PeriodTo'])) OR isset($_POS
 
 		if ($_POST['Detail']==_('Detailed')) {
 
-			$ActEnquiryURL = '<a href="' . $RootPath, '/GLAccountInquiry.php?PeriodFrom=' . urlencode($_POST['PeriodFrom']) . '&amp;PeriodTo=' . urlencode($_POST['PeriodTo']) . '&amp;Account=' . urlencode($MyRow['account']) . '&amp;Show=Yes">' . $MyRow['account'] . '</a>';
+			$ActEnquiryURL = '<a href="' . $RootPath . '/GLAccountInquiry.php?PeriodFrom=' . urlencode($_POST['PeriodFrom']) . '&amp;PeriodTo=' . urlencode($_POST['PeriodTo']) . '&amp;Account=' . urlencode($MyRow['account']) . '&amp;Show=Yes">' . $MyRow['account'] . '</a>';
 
 			if ($Section ==4) {
 				 printf('<tr class="striped_row">

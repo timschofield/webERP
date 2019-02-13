@@ -584,7 +584,7 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 		if ($_POST['ShowDetail'] == 'Detailed') {
 			if (isset($_POST['ShowZeroBalance']) or (!isset($_POST['ShowZeroBalance']) and (round($AccountBalance, $_SESSION['CompanyRecord']['decimalplaces']) <> 0 or round($AccountBalanceLY, $_SESSION['CompanyRecord']['decimalplaces']) <> 0))) {
 
-				$ActEnquiryURL = '<a href="' . $RootPath, '/GLAccountInquiry.php?PeriodFrom=' . urlencode(FYStartPeriod($_POST['PeriodTo'])) . '&amp;PeriodTo=' . urlencode($_POST['PeriodTo']) . '&amp;Account=' . urlencode($MyRow['accountcode']) . '&amp;Show=Yes">' . $MyRow['accountcode'] . '</a>';// Function FYStartPeriod() in ~/includes/MiscFunctions.php
+				$ActEnquiryURL = '<a href="' . $RootPath . '/GLAccountInquiry.php?PeriodFrom=' . urlencode(FYStartPeriod($_POST['PeriodTo'])) . '&amp;PeriodTo=' . urlencode($_POST['PeriodTo']) . '&amp;Account=' . urlencode($MyRow['accountcode']) . '&amp;Show=Yes">' . $MyRow['accountcode'] . '</a>';// Function FYStartPeriod() in ~/includes/MiscFunctions.php
 
 				echo '<tr class="striped_row">
 						<td>', $ActEnquiryURL, '</td>
