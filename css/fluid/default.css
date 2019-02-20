@@ -317,7 +317,7 @@ list-style-image:url(bullet.gif);
 }
 #MainMenuDiv ul {list-style:none;padding:0;margin:0;}
 #MainMenuDiv li {
-	display:inline-block;
+	display:inline;
 	float:left;
 	margin:2px 0;
 	padding:0;}
