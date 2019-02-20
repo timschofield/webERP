@@ -355,7 +355,7 @@ select.selecterror {
 	list-style:none; /* hide the bullets */
 }
 #QuickMenuDiv li {
-	display:inline; /* items are inline */
+	display:inline-block;
 }
 
 /* BODY */

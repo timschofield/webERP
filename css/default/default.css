@@ -21,11 +21,11 @@ button img {
 }
 
 a {
-	color:blue;
+	color:#0000ff;
 	text-decoration:none;
 }
 a:hover {
-	color:blue;
+	color:#0000ff;
 	background-color:transparent;
 	text-decoration:underline;
 	/* Tag selector for mouse over link. */
@@ -34,7 +34,7 @@ a:hover {
 img {
 	border:none;
 	vertical-align:middle;
-}
+}color:#ffffff;
 p.bad {
 	color:red;
 	font-weight:bold;
@@ -59,7 +59,7 @@ table.selection {
 
 th {
 	background-color:#b06161;
-	color:white;
+	color:#ffffff;
 	font-weight:normal;
 }
 
@@ -230,7 +230,7 @@ tr.striped_row:nth-of-type(odd) {
 .tableheader {
 	font-weight:normal;
 	background-color:#800000;
-	color:white;
+	color:#ffffff;
 }
 
 .notavailable {
@@ -271,7 +271,7 @@ textarea.texterror {
 
 .OsRow {
 	background-color:#234567;
-	color:white;
+	color:#ffffff;
 }
 
 /*** CANVAS ***/
@@ -283,13 +283,13 @@ textarea.texterror {
 /*** HEADER ***/
 
 #HeaderDiv {
-	color:white;
+	color:#ffffff;
 	/*background:#588BB6;*/
 	/*overflow:hidden;*/
 }
 
 #HeaderDiv a {
-	color:white;
+	color:#ffffff;
 }
 
 #HeaderDiv a:hover {
@@ -327,8 +327,8 @@ textarea.texterror {
 }
 
 #QuickMenuDiv li {
-	display:inline;
 	border-left:thin ridge #588BB6;
+	display:inline-block;
 	padding:14px 12px;
 }
 
@@ -384,7 +384,7 @@ textarea.texterror {
 }
 
 .main_menu_selected {
-	background-color:white;
+	background-color:#ffffff;
 	padding:2px;
 }
 
@@ -411,11 +411,11 @@ textarea.texterror {
 }
 
 #SubMenuDiv a {
-	color:blue;
+	color:#0000ff;
 }
 
 #SubMenuDiv a:hover {
-	color:blue;
+	color:#0000ff;
 	text-decoration:underline;
 }
 
@@ -433,7 +433,7 @@ textarea.texterror {
 }
 
 .menu_group_item {
-	background-color:white;
+	background-color:#ffffff;
 	padding:2px;
 }
 

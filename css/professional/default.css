@@ -352,7 +352,7 @@ textarea.texterror {
 	list-style:none; /* hide the bullets */
 }
 #QuickMenuDiv li {
-	display:inline; /* items are inline */
+	display:inline-block;
 }
 
 /*** links as buttons!!! clicking anywhere in the button will activate
