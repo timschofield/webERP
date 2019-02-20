@@ -14,7 +14,7 @@ To optimized the rest we should examined the whole codes! That would be for
 the next project. :)
 
 Design guidelines:
-	Fonts are 10pt hight.
+	Fonts are 10pt hight (10pt = 13px at 96dpi ?).
 	Icons are ??px x ??px size.  (24x24 ?)
 */
 
@@ -26,11 +26,11 @@ button img {
 
 body {
 	font-family:Arial, Verdana, Helvetica, sans-serif;
-	font-size:10px;
-	background-color:#ddd;
+	font-size:10pt;
+	background-color:#dddddd;
 	margin:0;
 	padding:0;
-	direction:rtl;
+	direction:rtl;/* right to left */
 }
 
 img {
@@ -48,9 +48,7 @@ a:hover {
 
 /*table detail items default format */
 td {
-	font-family:Arial, Verdana, Helvetica;
-	font-size:10px;
-	text-align:right;
+	text-align:right;/* right to left */
 	vertical-align:top;
 }
 td.select {
@@ -128,7 +126,7 @@ div.Message {
 	padding:10px 10px 10px 36px;
 	margin:5px;
 	opacity:1;
-	transition:opacity 0.6s; /* 600ms to fade out */
+	transition:opacity 0.6s;/* 600ms to fade out */
 }
 div.Message.error {
 	background:#ffecec url('images/message-error.svg') no-repeat 10px 50%;
@@ -328,7 +326,7 @@ li {
 /*** HEADER ***/
 
 #HeaderDiv {
-	overflow:hidden; /* REQUIRED:height according to items contained */
+	overflow:hidden;/* REQUIRED:height according to items contained */
 	color:#000000;
 	padding-right:3px;
 }
@@ -338,16 +336,16 @@ li {
 /*** HEADER - APP INFO ***/
 
 #AppInfoDiv {
-	float:right; /* REQUIRED:to the RIGHT */
+	float:right;/* REQUIRED:to the RIGHT */
 }
 #AppInfoDiv img {
-	vertical-align:middle; /* center image and text vertically */
+	vertical-align:middle;/* center image and text vertically */
 }
 #AppInfoCompanyDiv {
-	display:table-cell; /* REQUIRED:as a cell */
+	display:table-cell;/* REQUIRED:as a cell */
 }
 #AppInfoUserDiv {
-	display:table-cell; /* REQUIRED:as a cell */
+	display:table-cell;/* REQUIRED:as a cell */
 }
 #AppInfoUserDiv a {
 	color:#000000;
@@ -362,43 +360,43 @@ li {
 /*** HEADER - QUICK MENU ***/
 
 #QuickMenuDiv {
-	float:left; /* to the right side */
+	float:left;/* right to left */
 	margin-top:3px;
 }
 #QuickMenuDiv ul {
-	list-style:none; /* hide the bullets */
+	list-style:none;/* hide the bullets */
 }
 #QuickMenuDiv li {
 	display:inline-block;
-	float:right; /* right to left */
+	float:right;/* right to left */
+	height:19px;/* 3px+13px+3px (padding + font_size + padding) */
 }
 
 /*** links as buttons!!! clicking anywhere in the button will activate
 	 the link!!! ***HJ***/
 
 #QuickMenuDiv li a {
-	padding:3px; /* links as button */
-	border:thin outset #ddd; /* un-pressed state */
-	background:#ddd;
+	background:#dddddd;
+	border:thin outset #dddddd;/* un-pressed state */
+	padding:3px;/* links as button */
 }
 #QuickMenuDiv li a:hover {
-	padding:3px; /* links as button */
-	border:thin inset #ddd; /* pressed state */
-	text-decoration:none; /* no underline */
+	border:thin inset #dddddd;/* pressed state */
 	color:blue;
+	text-decoration:none;/* no underline */
 }
 
 /*** BODY ***/
 
 #BodyDiv {
-	clear:both; /* REQUIRED */
-	overflow:hidden; /* REQUIRED */
+	clear:both;/* REQUIRED */
+	overflow:hidden;/* REQUIRED */
 	color:#000000;
 	background:white;
 	text-align:center;
 }
 #BodyDiv table {
-	width:auto; /* automatic width */
+	width:auto;/* automatic width */
 	margin:0 auto;
 	margin-bottom:10px;
 }
@@ -411,23 +409,23 @@ li {
 /*** BODY - MAIN MENU ***/
 
 #MainMenuDiv {
-	float:right; /* REQUIRED:to the RIGHT side */
-	white-space:nowrap; /* don't break text */
+	background:#dddddd;
+	float:right;/*REQUIRED:to the RIGHT side */
 	text-align:center;
+	white-space:nowrap;/* don't break text */
 	width:11%;
-	background:#ddd;
 }
 #MainMenuDiv ul {
-	list-style:none; /* REQUIRED:hide bullets */
-	padding:0; /* REQUIRED:remove extra gaps (ex-bullets) */
+	list-style:none;/* REQUIRED:hide bullets */
 	margin:0;
+	padding:0;/* REQUIRED:remove extra gaps (ex-bullets) */
 }
 #MainMenuDiv li {
-	list-style:none; /* REQUIRED */
-	padding:0; /* REQUIRED */
+	list-style:none;/* REQUIRED */
+	padding:0;/* REQUIRED */
 }
 #MainMenuDiv li a { /* link as button!!! not-pressed state */
-	display:block; /* REQUIRED */
+	display:block;/* REQUIRED */
 	padding:3px;
 	border:thin outset #ddd;
 	color:blue;
@@ -448,13 +446,13 @@ li {
 /*** BODY - SUB MENU ***/
 
 #SubMenuDiv {
-	display:table; /* display as table, sub menu will auto adjust width */
-	width:89%; /* main menu is 10% */
+	display:table;/* display as table, sub menu will auto adjust width */
+	width:89%;/* main menu is 10% */
 	text-align:left;
 }
 #SubMenuDiv ul {
-	list-style-type:none; /* REQUIRED:hide bullets */
-	padding:0; /* REQUIRED:remove extra gaps (ex-bullets) */
+	list-style-type:none;/* REQUIRED:hide bullets */
+	padding:0;/* REQUIRED:remove extra gaps (ex-bullets) */
 	margin-top:0px;
 	margin-left:3px;
 	border:thin outset #ddd;
@@ -465,7 +463,7 @@ li {
 	padding:2px;
 }
 #SubMenuDiv li img {
-	vertical-align:middle; /* verticall align icon with the text */
+	vertical-align:middle;/* verticall align icon with the text */
 }
 #SubMenuDiv .menu_group_headers {
 	background:#ddd;
@@ -498,15 +496,15 @@ li {
 
 }
 .menu_group_item p {
-	color:#00f; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
-	text-indent:3px; /* this makes the bullet to appear as the li tag previously used */
-	margin:0px; /* One thing that I didnÃÂÃÂ´t like of the li was that it had no left margin applied */
+	color:#00f;/* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
+	text-indent:3px;/* this makes the bullet to appear as the li tag previously used */
+	margin:0px;/* One thing that I didnÃÂÃÂ´t like of the li was that it had no left margin applied */
 }
 
 /*** FOOTER ***/
 
 #FooterDiv {
-	clear:both; /* REQUIRED */
+	clear:both;/* REQUIRED */
 	overflow:hidden;
 	color:gray;
 }
@@ -515,13 +513,13 @@ li {
 	padding:3px;
 }
 #FooterLogoDiv {
-	float:left; /* right side */
+	float:left;/* right side */
 }
 #FooterVersionDiv {
-	float:right; /* left side */
+	float:right;/* left side */
 }
 #FooterTimeDiv {
-	clear:right; /* below */
+	clear:right;/* below */
 }
 #Report {
 	/* Division id for reports. */}
