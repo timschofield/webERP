@@ -11,19 +11,18 @@ NOTE:
 This CSS is not yet fully optimized. Some styles maybe redundant and not supported by some browser.
 ***/
 
-
-button img {
-	/* Describes how button image should be displayed. */
-	height:21px;
-	width:21px;
-}
-
 body {
 	font-family:Arial, Verdana, Helvetica, sans-serif;
 	font-size:10pt;
 	margin:0;
 	padding:0;
 	background:#F1F1F1;
+}
+
+button img {
+	height:21px;
+	width:21px;
+	/* Describes how button image should be displayed. Related with body font-size in px. */
 }
 
 /*** Default Styles ***/
@@ -405,7 +404,7 @@ select.selecterror {
 	filter:progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3');
 }
 #QuickMenuDiv li {
-	display:inline-block; /* items are inline */
+	display:inline-block;
 	height:38px;
 }
 

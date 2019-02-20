@@ -389,7 +389,7 @@ select.selecterror {
 	filter:progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3');
 }
 #QuickMenuDiv li {
-	display:inline-block; /* items are inline */
+	display:inline-block;
 	height:38px;
 }
 

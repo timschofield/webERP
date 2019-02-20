@@ -282,7 +282,12 @@ list-style-image:url(bullet.gif);
 
 #QuickMenuDiv {float:right;}
 #QuickMenuDiv ul {list-style:none;margin:0;padding:0;}
-#QuickMenuDiv li {display:inline;float:left;margin:2px 0;padding:0;}
+#QuickMenuDiv li {
+	display:inline-block;
+	float:left;
+	margin:2px 0;
+	padding:0;
+}
 #QuickMenuDiv li a {
 	background:#aae;
 	border:1px outset #aae;
@@ -311,7 +316,11 @@ list-style-image:url(bullet.gif);
 	height:18px;
 }
 #MainMenuDiv ul {list-style:none;padding:0;margin:0;}
-#MainMenuDiv li {display:inline;float:left;margin:2px 0;padding:0;}
+#MainMenuDiv li {
+	display:inline;
+	float:left;
+	margin:2px 0;
+	padding:0;}
 #MainMenuDiv li a {
 	background:#aae;
 	border:1px outset #aae;
