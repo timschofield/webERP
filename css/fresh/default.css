@@ -13,7 +13,7 @@ To optimized the rest we should examined the whole codes! That would be for
 the next project. :)
 
 Design guidelines:
-	Fonts are 10pt hight.
+	Fonts are 10pt hight. (10pt = 13px at 96dpi ??)
 	Icons are ??px x ??px size.  (24x24 px ?)
 */
 
@@ -313,6 +313,7 @@ select.selecterror {
 }
 #QuickMenuDiv li {
 	display:inline-block;
+	height:29px;/* 8px+13px+8px (padding + font_size + padding) */
 }
 
 /*** links as buttons!!! clicking anywhere in the button will activate
@@ -325,10 +326,7 @@ select.selecterror {
 	padding:8px;
 }
 #QuickMenuDiv li a:hover {
-	background:#B4BB86;
-	border:thin inset #5A5F00;
 	color:#000000;
-	padding:8px;
 	text-decoration:none;
 }
 

@@ -11,7 +11,7 @@ Notes:
 - You can remove desk.jpg and/or wood.jpg to get a new look without the textures!
 
 Design guidelines:
-	Fonts are 10pt hight.
+	Fonts are 10pt hight (10pt = 13px at 96dpi ?).16 (10pt = 16px at 120dpi)
 	Icons are ??px x ??px size.  (24x24 ?)
 */
 
@@ -356,6 +356,7 @@ select.selecterror {
 }
 #QuickMenuDiv li {
 	display:inline-block;
+	height:27px;/* 2px+2px+3px+13px+3px+2px+2px (box_shadow + border + padding + font_size + padding + border + box_shadow) */
 }
 
 /* BODY */
