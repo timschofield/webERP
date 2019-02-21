@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-17 12:45-0600\n"
+"POT-Creation-Date: 2019-02-20 19:25-0600\n"
 "PO-Revision-Date: 2014-02-10 22:09+0530\n"
 "Last-Translator: Rajesh Kokil <rajeshkokil@hotmail.com>\n"
 "Language-Team: MARATHI LANGUAGE TEAM AT KITS <rajeshkokil@hotmail.com>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.7\n"
 
-#: AccountGroups.php:5 includes/MainMenuLinksArray.php:190
+#: AccountGroups.php:6 includes/MainMenuLinksArray.php:190
 msgid "Account Groups"
 msgstr "खाते गट"
 
-#: AccountGroups.php:18
+#: AccountGroups.php:19
 msgid ""
 "An error occurred in retrieving the account groups of the parent account "
 "group during the check for recursion"
@@ -29,7 +29,7 @@ msgstr ""
 "एक त्रुटी पुनरावृत्तीच्या साठी तपासताना पालक खाते गटाच्या खाते गट पुनर्प्राप्त करीत "
 "असताना आली"
 
-#: AccountGroups.php:19
+#: AccountGroups.php:20
 msgid ""
 "The SQL that was used to retrieve the account groups of the parent account "
 "group and that failed in the process was"
@@ -37,52 +37,52 @@ msgstr ""
 "पालक खाते समूहाचे खाते गट पुनर्प्राप्त करण्यासाठी वापरले आणि त्या प्रक्रियेत अयशस्वी झाली "
 "याची SQL होते"
 
-#: AccountGroups.php:44
+#: AccountGroups.php:45
 msgid "An error occurred in moving the account group"
 msgstr "एक त्रुटी खाते गट हलवित असताना आली"
 
-#: AccountGroups.php:45
+#: AccountGroups.php:46
 msgid "The SQL that was used to move the account group was"
 msgstr "खाते गट हलविण्यासाठी वापरलेला SQL होते"
 
-#: AccountGroups.php:47 AccountGroups.php:325
+#: AccountGroups.php:48 AccountGroups.php:326
 msgid "Review Account Groups"
 msgstr "पुनरावलोकन खाते गट"
 
-#: AccountGroups.php:48
+#: AccountGroups.php:49
 msgid "All accounts in the account group:"
 msgstr "खाते समूहात सर्व खाती:"
 
-#: AccountGroups.php:48
+#: AccountGroups.php:49
 msgid "have been changed to the account group:"
 msgstr "खाते गटात बदलली गेली आहेत:"
 
-#: AccountGroups.php:67 AccountGroups.php:104 AccountGroups.php:206
-#: AccountGroups.php:241
+#: AccountGroups.php:68 AccountGroups.php:105 AccountGroups.php:207
+#: AccountGroups.php:242
 msgid "The SQL that was used to retrieve the information was"
 msgstr "माहिती पुनर्प्राप्त करण्यासाठी वापरलेला SQL होते"
 
-#: AccountGroups.php:68
+#: AccountGroups.php:69
 msgid "Could not check whether the group exists because"
 msgstr "गट अस्तित्वात नाही हे तपासण्यास करणे शक्य नाही कारण"
 
-#: AccountGroups.php:75
+#: AccountGroups.php:76
 msgid "The account group name already exists in the database"
 msgstr "खाते गट नाव आधीच डेटाबेस मध्ये अस्तित्वात"
 
-#: AccountGroups.php:81
+#: AccountGroups.php:82
 msgid "The account group name cannot contain the character"
 msgstr "खाते गट नाव वर्ण असू शकत नाही"
 
-#: AccountGroups.php:81 Departments.php:29 TaxCategories.php:31
+#: AccountGroups.php:82 Departments.php:29 TaxCategories.php:31
 msgid "or the character"
 msgstr "किंवा वर्ण"
 
-#: AccountGroups.php:87
+#: AccountGroups.php:88
 msgid "The account group name must be at least one character long"
 msgstr "खाते गट नाव किमान एक वर्ण असावा"
 
-#: AccountGroups.php:94
+#: AccountGroups.php:95
 msgid ""
 "The parent account group selected appears to result in a recursive account "
 "structure - select an alternative parent account group or make this group a "
@@ -91,11 +91,11 @@ msgstr ""
 "निवडलेले पालक खाते ग्रूप रिकर्सिव खाते रचना कारणीभूत दिसते - एक पर्यायी पालक खाते गट "
 "निवडा किंवा या गटात एक उच्च स्तर खाते गट करा"
 
-#: AccountGroups.php:105
+#: AccountGroups.php:106
 msgid "Could not check whether the group is recursive because"
 msgstr "गट रिकर्सिव आहे किंवा नाही हे तपासण्यास करणे शक्य नाही कारण"
 
-#: AccountGroups.php:113
+#: AccountGroups.php:114
 msgid ""
 "Since this account group is a child group, the sequence in the trial "
 "balance, the section in the accounts and whether or not the account group "
@@ -107,64 +107,64 @@ msgstr ""
 "सर्व गुणधर्म आहेत खाते गट ताळेबंद किंवा नफा दिसते किंवा नाही असल्याने. हे क्षेत्र केलेले कोणतेही "
 "बदल कुठलाही प्रभाव पडणार नाही."
 
-#: AccountGroups.php:118
+#: AccountGroups.php:119
 msgid "The section in accounts must be an integer"
 msgstr "खात्यातील विभाग पूर्णांक असणे आवश्यक आहे"
 
-#: AccountGroups.php:124
+#: AccountGroups.php:125
 msgid "The sequence in the trial balance must be an integer"
 msgstr "चाचणी शिल्लक मध्ये क्रम पूर्णांक असणे आवश्यक आहे"
 
-#: AccountGroups.php:130
+#: AccountGroups.php:131
 msgid "The sequence in the TB must be numeric and less than"
 msgstr "टीबी मध्ये क्रम असावा आणि कमी असणे आवश्यक आहे"
 
-#: AccountGroups.php:146
+#: AccountGroups.php:147
 msgid "An error occurred in renaming the account group"
 msgstr "एक त्रुटी खाते गट पुनर्नामित करीत असताना आली"
 
-#: AccountGroups.php:147
+#: AccountGroups.php:148
 msgid "The SQL that was used to rename the account group was"
 msgstr "खाते गटाचे नाव करण्यासाठी वापरलेला SQL होते"
 
-#: AccountGroups.php:166
+#: AccountGroups.php:167
 msgid "An error occurred in updating the account group"
 msgstr "एक त्रुटी खाते गट अद्यतनित करीत असताना आली"
 
-#: AccountGroups.php:167
+#: AccountGroups.php:168
 msgid "The SQL that was used to update the account group was"
 msgstr "खाते गट अद्यतनित करण्यासाठी वापरलेला SQL होते"
 
-#: AccountGroups.php:169 AccountSections.php:97 PaymentMethods.php:100
+#: AccountGroups.php:170 AccountSections.php:97 PaymentMethods.php:100
 msgid "Record Updated"
 msgstr "नोंद अद्यावत"
 
-#: AccountGroups.php:185
+#: AccountGroups.php:186
 msgid "An error occurred in inserting the account group"
 msgstr "एक त्रुटी खाते गट अंतर्भूत करीत असताना आली"
 
-#: AccountGroups.php:186
+#: AccountGroups.php:187
 msgid "The SQL that was used to insert the account group was"
 msgstr "खाते गट घालण्यासाठी वापरलेला SQL होते"
 
-#: AccountGroups.php:187 AccountSections.php:107
+#: AccountGroups.php:188 AccountSections.php:107
 msgid "Record inserted"
 msgstr "रेकॉर्ड समाविष्ट"
 
-#: AccountGroups.php:205
+#: AccountGroups.php:206
 msgid "An error occurred in retrieving the group information from chartmaster"
 msgstr "एक त्रुटी chartmaster गटात माहिती पुनर्प्राप्त करीत असताना आली"
 
-#: AccountGroups.php:210
+#: AccountGroups.php:211
 msgid ""
 "Cannot delete this account group because general ledger accounts have been "
 "created using this group"
 msgstr ""
 "हे खाते गट हटविले जाऊ शकत नाही कारण सामान्य खातेवही खाती हा गट वापरून तयार केले आहेत"
 
-#: AccountGroups.php:211 AccountGroups.php:246 AccountSections.php:129
+#: AccountGroups.php:212 AccountGroups.php:247 AccountSections.php:129
 #: Areas.php:114 Areas.php:123 BankAccounts.php:165 CreditStatus.php:124
-#: Currencies.php:247 Currencies.php:255 Currencies.php:263 Currencies.php:273
+#: Currencies.php:252 Currencies.php:260 Currencies.php:268 Currencies.php:278
 #: CustomerBranches.php:292 CustomerBranches.php:302 CustomerBranches.php:312
 #: CustomerBranches.php:322 CustomerBranches.php:332 Customers.php:295
 #: Customers.php:304 Customers.php:312 Customers.php:323 Customers.php:333
@@ -186,53 +186,53 @@ msgstr ""
 msgid "There are"
 msgstr "आहेत"
 
-#: AccountGroups.php:211
+#: AccountGroups.php:212
 msgid "general ledger accounts that refer to this account group"
 msgstr "हे खाते गट संदर्भित करणारे सामान्य खातेवही खाती"
 
-#: AccountGroups.php:218 AccountGroups.php:289 AccountGroups.php:427
+#: AccountGroups.php:219 AccountGroups.php:290 AccountGroups.php:428
 msgid "Parent Group"
 msgstr "पालक गट"
 
-#: AccountGroups.php:234
+#: AccountGroups.php:235
 msgid "Move Group"
 msgstr "गट हलवा"
 
-#: AccountGroups.php:240
+#: AccountGroups.php:241
 msgid "An error occurred in retrieving the parent group information"
 msgstr "एक त्रुटी पालक समुह माहिती पुनर्प्राप्त करीत असताना आली"
 
-#: AccountGroups.php:245
+#: AccountGroups.php:246
 msgid ""
 "Cannot delete this account group because it is a parent account group of "
 "other account group(s)"
 msgstr "हे खाते गट हटवणे शक्य नाही कारण इतर खाते गटांचा हा पालक खाते गट आहे  "
 
-#: AccountGroups.php:246
+#: AccountGroups.php:247
 msgid "account groups that have this group as its/there parent account group"
 msgstr "हा खाते गट ज्यांचा पालक खाते गट आहे असे खाते गट"
 
-#: AccountGroups.php:250
+#: AccountGroups.php:251
 msgid "An error occurred in deleting the account group"
 msgstr "एक त्रुटी खाते गट काढून टाकत असताना आली"
 
-#: AccountGroups.php:251
+#: AccountGroups.php:252
 msgid "The SQL that was used to delete the account group was"
 msgstr "खाते गट हटताना वापरलेला SQL होते"
 
-#: AccountGroups.php:253
+#: AccountGroups.php:254
 msgid "group has been deleted"
 msgstr "गट हटविला गेला आहे"
 
-#: AccountGroups.php:277
+#: AccountGroups.php:278
 msgid "The sql that was used to retrieve the account group information was "
 msgstr ""
 
-#: AccountGroups.php:278
+#: AccountGroups.php:279
 msgid "Could not get account groups because"
 msgstr "खाते गट मिळविणे शक्य नाही कारण"
 
-#: AccountGroups.php:280 AddCustomerContacts.php:27 AddCustomerContacts.php:29
+#: AccountGroups.php:281 AddCustomerContacts.php:27 AddCustomerContacts.php:29
 #: AddCustomerNotes.php:100 AddCustomerTypeNotes.php:93 AgedDebtors.php:453
 #: AgedSuppliers.php:275 Areas.php:143 AuditTrail.php:10 BOMExtendedQty.php:255
 #: BOMIndented.php:250 BOMIndentedReverse.php:238 BOMInquiry.php:179
@@ -281,34 +281,34 @@ msgstr "खाते गट मिळविणे शक्य नाही क�
 msgid "Search"
 msgstr "शोध"
 
-#: AccountGroups.php:285
+#: AccountGroups.php:286
 msgid "Group Name"
 msgstr "गट नाव"
 
-#: AccountGroups.php:286 EDIMessageFormat.php:128 EDIMessageFormat.php:198
+#: AccountGroups.php:287 EDIMessageFormat.php:128 EDIMessageFormat.php:198
 msgid "Section"
 msgstr "भाग"
 
-#: AccountGroups.php:287 AccountGroups.php:476
+#: AccountGroups.php:288 AccountGroups.php:477
 msgid "Sequence In TB"
 msgstr "टीबी मध्ये क्रम"
 
-#: AccountGroups.php:288 AccountGroups.php:464 GLProfit_Loss.php:25
+#: AccountGroups.php:289 AccountGroups.php:465 GLProfit_Loss.php:25
 #: GLProfit_Loss.php:179 GLProfit_Loss.php:180 GLProfit_Loss.php:232
 #: SelectGLAccount.php:22 SelectGLAccount.php:40 SelectGLAccount.php:62
 msgid "Profit and Loss"
 msgstr "नफा, तोटा"
 
-#: AccountGroups.php:299 AccountGroups.php:302 AccountGroups.php:468
-#: AccountGroups.php:471 AddCustomerContacts.php:157
+#: AccountGroups.php:300 AccountGroups.php:303 AccountGroups.php:469
+#: AccountGroups.php:472 AddCustomerContacts.php:157
 #: AddCustomerContacts.php:267 AddCustomerContacts.php:271
 #: AddCustomerContacts.php:274 BOMs.php:120 BOMs.php:524 BOMs.php:526
 #: BOMs_SingleLevel.php:123 BOMs_SingleLevel.php:786 BOMs_SingleLevel.php:788
 #: CompanyPreferences.php:422 CompanyPreferences.php:424
 #: CompanyPreferences.php:437 CompanyPreferences.php:439
 #: CompanyPreferences.php:452 CompanyPreferences.php:454
-#: ContractCosting.php:201 Currencies.php:337 Currencies.php:515
-#: Currencies.php:517 CustomerBranches.php:440 Customers.php:658
+#: ContractCosting.php:201 Currencies.php:342 Currencies.php:490
+#: Currencies.php:492 CustomerBranches.php:440 Customers.php:658
 #: Customers.php:1048 Customers.php:1054 Customers.php:1057
 #: DailyBankTransactions.php:201 DailyBankTransactions.php:206
 #: DeliveryDetails.php:1142 DeliveryDetails.php:1183 DeliveryDetails.php:1186
@@ -372,7 +372,7 @@ msgstr "नफा, तोटा"
 msgid "Yes"
 msgstr "होय"
 
-#: AccountGroups.php:305 AccountGroups.php:467 AccountGroups.php:470
+#: AccountGroups.php:306 AccountGroups.php:468 AccountGroups.php:471
 #: AddCustomerContacts.php:157 AddCustomerContacts.php:266
 #: AddCustomerContacts.php:270 AddCustomerContacts.php:273 BankAccounts.php:213
 #: BankAccounts.php:409 BankAccounts.php:411 BankAccounts.php:415
@@ -381,8 +381,8 @@ msgstr "होय"
 #: CompanyPreferences.php:421 CompanyPreferences.php:425
 #: CompanyPreferences.php:436 CompanyPreferences.php:440
 #: CompanyPreferences.php:451 CompanyPreferences.php:455
-#: ContractCosting.php:199 Currencies.php:339 Currencies.php:520
-#: Currencies.php:522 CustomerBranches.php:440 Customers.php:657
+#: ContractCosting.php:199 Currencies.php:344 Currencies.php:495
+#: Currencies.php:497 CustomerBranches.php:440 Customers.php:657
 #: Customers.php:1046 Customers.php:1053 Customers.php:1056
 #: DailyBankTransactions.php:203 DailyBankTransactions.php:206
 #: DeliveryDetails.php:1143 DeliveryDetails.php:1184 DeliveryDetails.php:1187
@@ -447,11 +447,11 @@ msgstr "होय"
 msgid "No"
 msgstr "नाही"
 
-#: AccountGroups.php:315 AccountSections.php:190 AddCustomerContacts.php:149
+#: AccountGroups.php:316 AccountSections.php:190 AddCustomerContacts.php:149
 #: AddCustomerNotes.php:128 AddCustomerTypeNotes.php:122 Areas.php:155
 #: BankAccounts.php:240 BOMs.php:156 BOMs_SingleLevel.php:151
 #: COGSGLPostings.php:107 COGSGLPostings.php:208 CreditStatus.php:167
-#: Currencies.php:369 Currencies.php:386 CustItem.php:160
+#: Currencies.php:358 Currencies.php:373 CustItem.php:160
 #: CustomerBranches.php:444 Customers.php:1130 Customers.php:1158
 #: CustomerTypes.php:199 Departments.php:177 EDIMessageFormat.php:140
 #: Employees.php:173 Factors.php:327 FixedAssetCategories.php:181
@@ -482,16 +482,16 @@ msgstr "नाही"
 msgid "Edit"
 msgstr "संपादन करणे"
 
-#: AccountGroups.php:316
+#: AccountGroups.php:317
 msgid "Are you sure you wish to delete this account group?"
 msgstr "आपण हे खाते गट हटवू इच्छिता खात्री आहे?"
 
-#: AccountGroups.php:316 AccountSections.php:195 AddCustomerContacts.php:150
+#: AccountGroups.php:317 AccountSections.php:195 AddCustomerContacts.php:150
 #: AddCustomerNotes.php:129 AddCustomerTypeNotes.php:123 Areas.php:156
 #: BankAccounts.php:241 BOMs.php:169 BOMs_SingleLevel.php:152
 #: COGSGLPostings.php:108 COGSGLPostings.php:209 ContractBOM.php:263
 #: ContractOtherReqts.php:115 CounterReturns.php:733 CounterSales.php:830
-#: Credit_Invoice.php:419 CreditStatus.php:168 Currencies.php:372
+#: Credit_Invoice.php:419 CreditStatus.php:168 Currencies.php:359
 #: CustItem.php:161 CustomerReceipt.php:1015 Customers.php:1159
 #: CustomerTypes.php:200 Departments.php:178 DiscountCategories.php:229
 #: DiscountMatrix.php:174 EDIMessageFormat.php:141 Employees.php:174
@@ -530,26 +530,26 @@ msgstr "आपण हे खाते गट हटवू इच्छिता 
 msgid "Delete"
 msgstr "हटवा"
 
-#: AccountGroups.php:345
+#: AccountGroups.php:346
 msgid "An error occurred in retrieving the account group information"
 msgstr "एक त्रुटी खाते समुह माहिती पुनर्प्राप्त करीत असताना आली"
 
-#: AccountGroups.php:346
+#: AccountGroups.php:347
 msgid ""
 "The SQL that was used to retrieve the account group and that failed in the "
 "process was"
 msgstr ""
 "खाते गट पुनर्प्राप्त करण्यासाठी वापरले आणि त्या प्रक्रियेत अयशस्वी झाली याची SQL होते"
 
-#: AccountGroups.php:349
+#: AccountGroups.php:350
 msgid "The account group name does not exist in the database"
 msgstr "खाते गट नाव डेटाबेसमध्ये अस्तित्वात नाही"
 
-#: AccountGroups.php:364
+#: AccountGroups.php:365
 msgid "Edit Account Group Details"
 msgstr "संपादन खाते समुह तपशील"
 
-#: AccountGroups.php:371 CompanyPreferences.php:465
+#: AccountGroups.php:372 CompanyPreferences.php:465
 #: ConfirmDispatch_Invoice.php:717 ConfirmDispatch_Invoice.php:1814
 #: Credit_Invoice.php:1633 CustItem.php:444 FixedAssetItems.php:131
 #: FixedAssetItems.php:682 GLAccountUsers.php:149 GLBudgets.php:239
@@ -571,13 +571,13 @@ msgstr "संपादन खाते समुह तपशील"
 msgid "Update"
 msgstr "अद्यतन"
 
-#: AccountGroups.php:373 AccountGroups.php:413 AnalysisHorizontalIncome.php:143
-#: AnalysisHorizontalIncome.php:537 AnalysisHorizontalPosition.php:78
-#: AnalysisHorizontalPosition.php:354 FormDesigner.php:202 FormDesigner.php:350
+#: AccountGroups.php:374 AccountGroups.php:414 AnalysisHorizontalIncome.php:94
+#: AnalysisHorizontalIncome.php:587 AnalysisHorizontalPosition.php:86
+#: AnalysisHorizontalPosition.php:406 FormDesigner.php:202 FormDesigner.php:350
 #: GLAccountUsers.php:239 GLBalanceSheet.php:111 GLBalanceSheet.php:699
 #: GLCashFlowsIndirect.php:785 GLCashFlowsIndirect.php:812
 #: GLCashFlowsSetup.php:174 GLProfit_Loss.php:168 GLProfit_Loss.php:1238
-#: GLStatements.php:160 GLStatements.php:187 GLTagProfit_Loss.php:152
+#: GLStatements.php:159 GLStatements.php:186 GLTagProfit_Loss.php:152
 #: GLTagProfit_Loss.php:942 GLTrialBalance.php:702
 #: InternalStockRequestInquiry.php:261 PDFPriceList.php:498
 #: PurchasesReport.php:219 PurchasesReport.php:243 SalesReport.php:219
@@ -587,25 +587,25 @@ msgstr "अद्यतन"
 msgid "Return"
 msgstr ""
 
-#: AccountGroups.php:404
+#: AccountGroups.php:405
 msgid "New Account Group Details"
 msgstr "नवीन खाते समुह तपशील"
 
-#: AccountGroups.php:411 GLTags.php:68 SecurityTokens.php:153
+#: AccountGroups.php:412 GLTags.php:68 SecurityTokens.php:153
 #: Z_ImportDebtors.php:625 Z_ImportDebtors.php:627 Z_ImportSuppliers.php:335
 #: Z_ImportSuppliers.php:337
 msgid "Insert"
 msgstr "आत घालणे"
 
-#: AccountGroups.php:423
+#: AccountGroups.php:424
 msgid "Account Group Name"
 msgstr "खाते गट नाव"
 
-#: AccountGroups.php:424
+#: AccountGroups.php:425
 msgid "Enter the account group name"
 msgstr "खाते गट नाव प्रविष्ट करा"
 
-#: AccountGroups.php:424
+#: AccountGroups.php:425
 msgid ""
 "A unique name for the account group must be entered - at least 3 characters "
 "long and less than 30 characters long. Only alpha numeric characters can be "
@@ -614,15 +614,15 @@ msgstr ""
 "खाते गटासाठी एक अद्वितीय नाव प्रविष्ट करणे आवश्यक आहे - किमान 3 वर्ण लांब आणि 30 वर्ण "
 "लांब पेक्षा कमी. केवळ अल्फा अंकीय वर्ण वापरले जाऊ शकते."
 
-#: AccountGroups.php:433
+#: AccountGroups.php:434
 msgid "Top Level Group"
 msgstr "शीर्ष स्तर गट"
 
-#: AccountGroups.php:447
+#: AccountGroups.php:448
 msgid "Section In Accounts"
 msgstr "खात्यातील विभाग"
 
-#: AccountGroups.php:465
+#: AccountGroups.php:466
 msgid ""
 "Select YES if this account group will contain accounts that will consist of "
 "only profit and loss accounts or NO if the group will contain balance sheet "
@@ -631,7 +631,7 @@ msgstr ""
 "या गटात केवळ नफा आणि तोटा खात्यांचे समावेश असेल तर होय निवडाकिंवा या गटात ताळेबंद "
 "खात्यांचे समावेश असेल नाही निवडा"
 
-#: AccountGroups.php:477
+#: AccountGroups.php:478
 msgid ""
 "Enter the sequence number that this account group and its child general "
 "ledger accounts should display in the trial balance"
@@ -711,7 +711,7 @@ msgstr ""
 #: AccountSections.php:279 AddCustomerContacts.php:289 AddCustomerNotes.php:234
 #: AddCustomerTypeNotes.php:213 Areas.php:220 BankAccounts.php:430 BOMs.php:547
 #: BOMs_SingleLevel.php:802 COGSGLPostings.php:357 CreditStatus.php:251
-#: Currencies.php:532 CustLoginSetup.php:272 Departments.php:249
+#: Currencies.php:507 CustLoginSetup.php:272 Departments.php:249
 #: DiscountMatrix.php:141 EDIMessageFormat.php:238 Employees.php:357
 #: FixedAssetCategories.php:341 FixedAssetLocations.php:163
 #: FreightCosts.php:363 GeocodeSetup.php:262 GLAccounts.php:283 Labels.php:632
@@ -835,7 +835,7 @@ msgid "Statement"
 msgstr "विधान"
 
 #: AddCustomerContacts.php:137 AddCustomerContacts.php:281
-#: AnalysisHorizontalIncome.php:191 AnalysisHorizontalPosition.php:122
+#: AnalysisHorizontalIncome.php:242 AnalysisHorizontalPosition.php:175
 #: Customers.php:1121 Customers.php:1129 GLCashFlowsIndirect.php:155
 #: GLCashFlowsIndirect.php:467 GLStatements.php:116
 #: PcAssignCashTabToTab.php:289 PcAssignCashTabToTab.php:441
@@ -1334,7 +1334,7 @@ msgstr "ग्राहक अनिर्णित व्यवहार तप
 msgid "could not be retrieved because"
 msgstr "पुनर्प्राप्त करणे शक्य नाही कारण"
 
-#: AgedDebtors.php:374 AgedSuppliers.php:199 AnalysisHorizontalIncome.php:222
+#: AgedDebtors.php:374 AgedSuppliers.php:199 AnalysisHorizontalIncome.php:273
 #: Areas.php:93 ConfirmDispatch_Invoice.php:184 ConfirmDispatch_Invoice.php:237
 #: ConfirmDispatch_Invoice.php:1022 ConfirmDispatch_Invoice.php:1089
 #: ConfirmDispatch_Invoice.php:1103 Contracts.php:598 CounterReturns.php:1012
@@ -1519,7 +1519,7 @@ msgstr "मध्ये ट्रेडिंग पुरवठादार स
 msgid "Summary or Detailed Report"
 msgstr "सारांश किंवा तपशीलवार अहवाल"
 
-#: AnalysisHorizontalIncome.php:10 AnalysisHorizontalPosition.php:9
+#: AnalysisHorizontalIncome.php:26 AnalysisHorizontalPosition.php:26
 #: BankAccounts.php:366 BOMs.php:118 BOMs.php:124 BOMs.php:132 BOMs.php:1095
 #: BOMs_SingleLevel.php:121 BOMs_SingleLevel.php:127 BOMs_SingleLevel.php:135
 #: BOMs_SingleLevel.php:909 PaymentTerms.php:189 PaymentTerms.php:195
@@ -1534,26 +1534,24 @@ msgstr "सारांश किंवा तपशीलवार अहवा
 msgid "N/A"
 msgstr "N/A"
 
-#: AnalysisHorizontalIncome.php:17 AnalysisHorizontalIncome.php:39
-#: AnalysisHorizontalIncome.php:168 AnalysisHorizontalIncome.php:169
-#: includes/MainMenuLinksArray.php:167
+#: AnalysisHorizontalIncome.php:33 includes/MainMenuLinksArray.php:167
 msgid "Horizontal Analysis of Statement of Comprehensive Income"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:25 GLTagProfit_Loss.php:14
+#: AnalysisHorizontalIncome.php:63 GLTagProfit_Loss.php:14
 #: Z_UpdateChartDetailsBFwd.php:13
 msgid "The selected period from is actually after the period to"
 msgstr "पासून निवडलेले कालावधी संपल्यावर प्रत्यक्षात आहे"
 
-#: AnalysisHorizontalIncome.php:25 GLTagProfit_Loss.php:14
+#: AnalysisHorizontalIncome.php:63 GLTagProfit_Loss.php:14
 msgid "Please reselect the reporting period"
 msgstr "अहवाल कालावधी reselect करा"
 
-#: AnalysisHorizontalIncome.php:38
-msgid "Print Horizontal Analysis of Statement of Comprehensive Income"
+#: AnalysisHorizontalIncome.php:77
+msgid "Shows the horizontal analysis of the statement of comprehensive income."
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:42 AnalysisHorizontalPosition.php:30
+#: AnalysisHorizontalIncome.php:78 AnalysisHorizontalPosition.php:70
 msgid ""
 "Horizontal analysis (also known as trend analysis) is a financial statement "
 "analysis technique that shows changes in the amounts of corresponding "
@@ -1561,7 +1559,7 @@ msgid ""
 "evaluate trend situations."
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:43 AnalysisHorizontalPosition.php:31
+#: AnalysisHorizontalIncome.php:79 AnalysisHorizontalPosition.php:71
 msgid ""
 "The statements for two periods are used in horizontal analysis. The earliest "
 "period is used as the base period. The items on the later statement are "
@@ -1569,31 +1567,51 @@ msgid ""
 "shown both in currency (actual change) and percentage (relative change)."
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:44 AnalysisHorizontalPosition.php:32
+#: AnalysisHorizontalIncome.php:80 AnalysisHorizontalPosition.php:72
+#: GLBalanceSheet.php:56 GLCashFlowsIndirect.php:796 GLProfit_Loss.php:74
+#: GLStatements.php:170
 msgid ""
-"webERP is an \"accrual\" based system (not a \"cash based\" system).  "
-"Accrual systems include items when they are invoiced to the customer, and "
-"when expenses are owed based on the supplier invoice date."
+"webERP is an \"accrual\" based system (not a \"cash based\" system). Accrual "
+"systems include items when they are invoiced to the customer, and when "
+"expenses are owed based on the supplier invoice date."
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:51 GLCashFlowsIndirect.php:820
-#: GLProfit_Loss.php:83 GLStatements.php:195 GLTrialBalance.php:70
+#: AnalysisHorizontalIncome.php:87 AnalysisHorizontalPosition.php:79
+#: GLCashFlowsIndirect.php:805 GLStatements.php:179 PurchasesReport.php:236
+#: SalesReport.php:236
+msgid "Report Parameters"
+msgstr ""
+
+#: AnalysisHorizontalIncome.php:93 AnalysisHorizontalPosition.php:85
+#: CollectiveWorkOrderCost.php:511 FormDesigner.php:201
+#: GLCashFlowsIndirect.php:811 GLStatements.php:185
+#: HistoricalTestResults.php:81 InternalStockRequest.php:296
+#: MailingGroupMaintenance.php:145 MRPCreateDemands.php:286 PDFCOA.php:42
+#: PDFCOA.php:72 PDFProdSpec.php:30 PDFProdSpec.php:56 PricesByCost.php:296
+#: ProductSpecs.php:99 ProductSpecs.php:126 PurchasesReport.php:242
+#: ReorderLevelLocation.php:193 SalesReport.php:242
+#: SupplierGRNAndInvoiceInquiry.php:46
+msgid "Submit"
+msgstr "सबमिट करा"
+
+#: AnalysisHorizontalIncome.php:103 GLCashFlowsIndirect.php:820
+#: GLProfit_Loss.php:83 GLStatements.php:194 GLTrialBalance.php:70
 msgid "Select period from"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:87 GLCashFlowsIndirect.php:840
-#: GLProfit_Loss.php:118 GLStatements.php:215 GLTrialBalance.php:95
+#: AnalysisHorizontalIncome.php:140 GLCashFlowsIndirect.php:840
+#: GLProfit_Loss.php:118 GLStatements.php:214 GLTrialBalance.php:95
 msgid "Select period to"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:114 BOMInquiry.php:27 BOMs.php:971
+#: AnalysisHorizontalIncome.php:167 BOMInquiry.php:27 BOMs.php:971
 #: BOMs.php:1071 BOMs_SingleLevel.php:882 CollectiveWorkOrderCost.php:314
 #: ContractBOM.php:324 ContractBOM.php:329 Contracts.php:765 Contracts.php:768
 #: CounterReturns.php:1650 CounterSales.php:2220 CustItem.php:215
 #: CustomerReceipt.php:1217 CustomerReceipt.php:1220 DiscountCategories.php:120
 #: DiscountCategories.php:122 DiscountCategories.php:126
 #: DiscountCategories.php:128 FixedAssetTransfer.php:93 GLAccountGraph.php:156
-#: GLCashFlowsIndirect.php:858 GLProfit_Loss.php:136 GLStatements.php:233
+#: GLCashFlowsIndirect.php:858 GLProfit_Loss.php:136 GLStatements.php:232
 #: GLTagProfit_Loss.php:103 GLTrialBalance.php:113
 #: InternalStockRequestInquiry.php:228 InternalStockRequest.php:359
 #: MRPDemands.php:332 MRPDemands.php:335 MRPReport.php:568 PO_Header.php:544
@@ -1614,86 +1632,80 @@ msgstr ""
 msgid "OR"
 msgstr "किंवा"
 
-#: AnalysisHorizontalIncome.php:123 GLAccountGraph.php:161
-#: GLCashFlowsIndirect.php:862 GLProfit_Loss.php:140 GLStatements.php:237
+#: AnalysisHorizontalIncome.php:176 GLAccountGraph.php:161
+#: GLCashFlowsIndirect.php:862 GLProfit_Loss.php:140 GLStatements.php:236
 #: GLTagProfit_Loss.php:112 GLTrialBalance.php:117 SalesGraph.php:103
 msgid "Select Period"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:127 AnalysisHorizontalPosition.php:62
+#: AnalysisHorizontalIncome.php:181 AnalysisHorizontalPosition.php:118
 msgid "Detail or summary"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:128 AnalysisHorizontalPosition.php:63
+#: AnalysisHorizontalIncome.php:182 AnalysisHorizontalPosition.php:119
 #: GLBalanceSheet.php:86
 msgid "Selecting Summary will show on the totals at the account group level"
 msgstr "सारांश निवडणे खाते गट स्तरावर बेरीज वर दर्शवेल"
 
-#: AnalysisHorizontalIncome.php:129 AnalysisHorizontalIncome.php:180
-#: AnalysisHorizontalPosition.php:64 AnalysisHorizontalPosition.php:111
+#: AnalysisHorizontalIncome.php:183 AnalysisHorizontalIncome.php:231
+#: AnalysisHorizontalPosition.php:120 AnalysisHorizontalPosition.php:164
 #: EDIMessageFormat.php:214 EDIMessageFormat.php:216 GLBalanceSheet.php:88
 #: GLBalanceSheet.php:91 GLProfit_Loss.php:148 GLTagProfit_Loss.php:141
 #: POReport.php:1504 SalesInquiry.php:1080 Tax.php:454
 msgid "Summary"
 msgstr "सारांश"
 
-#: AnalysisHorizontalIncome.php:130 AnalysisHorizontalPosition.php:65
+#: AnalysisHorizontalIncome.php:184 AnalysisHorizontalPosition.php:121
 #: GLBalanceSheet.php:89 GLBalanceSheet.php:92 GLProfit_Loss.php:149
 #: GLTagProfit_Loss.php:142
 msgid "All Accounts"
 msgstr "सर्व खाती"
 
-#: AnalysisHorizontalIncome.php:134 AnalysisHorizontalPosition.php:69
-msgid "Show all accounts including zero balances"
+#: AnalysisHorizontalIncome.php:189 AnalysisHorizontalPosition.php:126
+#: GLBalanceSheet.php:98 GLCashFlowsIndirect.php:875 GLProfit_Loss.php:155
+#: GLStatements.php:249
+msgid "Show accounts with zero balance"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:135 AnalysisHorizontalPosition.php:70
-msgid ""
-"Check this box to display all accounts including those accounts with no "
-"balance"
-msgstr "शिल्लक नाही सह त्या खात्यांमध्ये सर्व खाती प्रदर्शित करण्यासाठी हे बॉक्स तपासा"
+#: AnalysisHorizontalIncome.php:191 AnalysisHorizontalPosition.php:128
+#: GLStatements.php:251
+msgid "Check this box to show accounts with zero balance"
+msgstr ""
 
-#: AnalysisHorizontalIncome.php:140 AnalysisHorizontalIncome.php:141
-#: AnalysisHorizontalPosition.php:75 AnalysisHorizontalPosition.php:76
-#: GLBalanceSheet.php:106 GLBalanceSheet.php:107 GLProfit_Loss.php:163
-#: GLProfit_Loss.php:164
-msgid "Show on Screen (HTML)"
-msgstr "स्क्रीन वर दाखवा (HTML)"
-
-#: AnalysisHorizontalIncome.php:153 GLProfit_Loss.php:191 GLProfit_Loss.php:620
+#: AnalysisHorizontalIncome.php:205 GLProfit_Loss.php:191 GLProfit_Loss.php:620
 #: GLTagProfit_Loss.php:176 GLTagProfit_Loss.php:495
 msgid "A period up to 12 months in duration can be specified"
 msgstr "कालावधी 12 महिने कालावधीत अप दर्शवले जाऊ शकतात"
 
-#: AnalysisHorizontalIncome.php:153 GLProfit_Loss.php:191 GLProfit_Loss.php:620
+#: AnalysisHorizontalIncome.php:205 GLProfit_Loss.php:191 GLProfit_Loss.php:620
 #: GLTagProfit_Loss.php:176 GLTagProfit_Loss.php:495
 msgid ""
 "the system automatically shows a comparative for the same period from the "
 "previous year"
 msgstr "प्रणाली आपोआप मागील वर्षी पासून याच काळात एक तुलनात्मक दाखवते"
 
-#: AnalysisHorizontalIncome.php:153 GLProfit_Loss.php:191 GLProfit_Loss.php:620
+#: AnalysisHorizontalIncome.php:205 GLProfit_Loss.php:191 GLProfit_Loss.php:620
 #: GLTagProfit_Loss.php:176 GLTagProfit_Loss.php:495
 msgid "it cannot do this if a period of more than 12 months is specified"
 msgstr "जास्त 12 महिन्यांच्या कालावधीत निर्देशीत केले असल्यास हे करू शकत नाही"
 
-#: AnalysisHorizontalIncome.php:153 GLProfit_Loss.php:191 GLProfit_Loss.php:620
+#: AnalysisHorizontalIncome.php:205 GLProfit_Loss.php:191 GLProfit_Loss.php:620
 #: GLTagProfit_Loss.php:176 GLTagProfit_Loss.php:495
 msgid "Please select an alternative period range"
 msgstr "पर्यायी कालावधी श्रेणी निवडा"
 
-#: AnalysisHorizontalIncome.php:171 FreightCosts.php:75 GLProfit_Loss.php:667
+#: AnalysisHorizontalIncome.php:222 FreightCosts.php:75 GLProfit_Loss.php:667
 #: MRPReport.php:440 SalesGraph.php:259 SalesGraph.php:267 Timesheets.php:590
 msgid "For"
 msgstr "साठी"
 
-#: AnalysisHorizontalIncome.php:171 GLProfit_Loss.php:667
+#: AnalysisHorizontalIncome.php:222 GLProfit_Loss.php:667
 #: GLTagProfit_Loss.php:545 GLTrialBalance.php:421 Tax.php:17
 #: includes/PDFTaxPageHeader.inc:30
 msgid "months to"
 msgstr "महिने"
 
-#: AnalysisHorizontalIncome.php:172 AnalysisHorizontalPosition.php:103
+#: AnalysisHorizontalIncome.php:223 AnalysisHorizontalPosition.php:156
 #: Contracts.php:829 CustomerAccount.php:229 CustomerInquiry.php:161
 #: CustomerReceipt.php:1050 GLBalanceSheet.php:446 GLCashFlowsIndirect.php:106
 #: GLProfit_Loss.php:670 GLStatements.php:109 PDFRemittanceAdvice.php:274
@@ -1706,7 +1718,7 @@ msgstr "महिने"
 msgid "All amounts stated in"
 msgstr "म्हटले सर्व रक्कम"
 
-#: AnalysisHorizontalIncome.php:177 AnalysisHorizontalPosition.php:108
+#: AnalysisHorizontalIncome.php:228 AnalysisHorizontalPosition.php:161
 #: GLAccountInquiry.php:58 GLAccounts.php:212 GLBalanceSheet.php:452
 #: GLCashFlowsIndirect.php:111 GLProfit_Loss.php:676 GLTagProfit_Loss.php:552
 #: GLTrialBalance.php:461 ImportBankTransAnalysis.php:206 PrintCustTrans.php:77
@@ -1717,7 +1729,7 @@ msgstr "म्हटले सर्व रक्कम"
 msgid "Account"
 msgstr "खाते"
 
-#: AnalysisHorizontalIncome.php:178 AnalysisHorizontalPosition.php:109
+#: AnalysisHorizontalIncome.php:229 AnalysisHorizontalPosition.php:162
 #: BankAccountBalances.php:18 Dashboard.php:425 GLAccounts.php:249
 #: GLAccounts.php:301 GLBalanceSheet.php:452 GLCashFlowsIndirect.php:112
 #: GLCodesInquiry.php:26 GLProfit_Loss.php:676 GLTagProfit_Loss.php:553
@@ -1729,45 +1741,45 @@ msgstr "खाते"
 msgid "Account Name"
 msgstr "खाते नाव"
 
-#: AnalysisHorizontalIncome.php:182 AnalysisHorizontalPosition.php:113
+#: AnalysisHorizontalIncome.php:233 AnalysisHorizontalPosition.php:166
 msgid "Current period"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:183 AnalysisHorizontalPosition.php:114
+#: AnalysisHorizontalIncome.php:234 AnalysisHorizontalPosition.php:167
 msgid "Last period"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:184 AnalysisHorizontalPosition.php:115
+#: AnalysisHorizontalIncome.php:235 AnalysisHorizontalPosition.php:168
 msgid "Actual change"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:185 AnalysisHorizontalPosition.php:116
+#: AnalysisHorizontalIncome.php:236 AnalysisHorizontalPosition.php:169
 msgid "Relative change"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:192
+#: AnalysisHorizontalIncome.php:243
 msgid ""
 "Actual change signs: a positive number indicates a variation that increases "
 "the net profit; a negative number indicates a variation that decreases the "
 "net profit."
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:193 AnalysisHorizontalPosition.php:124
+#: AnalysisHorizontalIncome.php:244 AnalysisHorizontalPosition.php:177
 msgid ""
 "Relative change signs: a positive number indicates an increase in the amount "
 "of that account; a negative number indicates a decrease in the amount of "
 "that account."
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:222 AnalysisHorizontalPosition.php:165
+#: AnalysisHorizontalIncome.php:273 AnalysisHorizontalPosition.php:218
 #: GLBalanceSheet.php:174 GLBalanceSheet.php:416 GLCodesInquiry.php:17
 #: GLProfit_Loss.php:234 GLProfit_Loss.php:659 GLTagProfit_Loss.php:218
 #: GLTagProfit_Loss.php:531 GLTrialBalance.php:183 GLTrialBalance.php:452
 msgid "No general ledger accounts were returned by the SQL because"
 msgstr "नाही सामान्य खातेवही खाती SQL करून परत आले कारण"
 
-#: AnalysisHorizontalIncome.php:252 AnalysisHorizontalIncome.php:273
-#: AnalysisHorizontalIncome.php:422 AnalysisHorizontalIncome.php:453
+#: AnalysisHorizontalIncome.php:303 AnalysisHorizontalIncome.php:324
+#: AnalysisHorizontalIncome.php:473 AnalysisHorizontalIncome.php:504
 #: GLProfit_Loss.php:288 GLProfit_Loss.php:317 GLProfit_Loss.php:485
 #: GLProfit_Loss.php:514 GLProfit_Loss.php:715 GLProfit_Loss.php:752
 #: GLProfit_Loss.php:1002 GLProfit_Loss.php:1039 GLTagProfit_Loss.php:261
@@ -1777,7 +1789,7 @@ msgstr "नाही सामान्य खातेवही खाती SQ
 msgid "total"
 msgstr "संपूर्ण"
 
-#: AnalysisHorizontalIncome.php:333 AnalysisHorizontalIncome.php:496
+#: AnalysisHorizontalIncome.php:384 AnalysisHorizontalIncome.php:547
 #: Contracts.php:944 GLProfit_Loss.php:371 GLProfit_Loss.php:564
 #: GLProfit_Loss.php:834 GLProfit_Loss.php:1120 GLTagProfit_Loss.php:331
 #: GLTagProfit_Loss.php:469 GLTagProfit_Loss.php:698 GLTagProfit_Loss.php:885
@@ -1789,22 +1801,22 @@ msgstr "संपूर्ण"
 msgid "Gross Profit"
 msgstr "एकूण लाभ"
 
-#: AnalysisHorizontalIncome.php:344
+#: AnalysisHorizontalIncome.php:395
 msgid "Earnings after"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:516
+#: AnalysisHorizontalIncome.php:567
 msgid "Net Profit"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:533 AnalysisHorizontalPosition.php:350
+#: AnalysisHorizontalIncome.php:585 AnalysisHorizontalPosition.php:404
 #: BOMs.php:883 ConfirmDispatch_Invoice.php:1752
 #: ConfirmDispatch_Invoice.php:1754 ContractBOM.php:291 CounterReturns.php:1595
 #: CounterReturns.php:1597 CustomerReceipt.php:598 CustWhereAlloc.php:226
 #: DeliveryDetails.php:603 DeliveryDetails.php:607 DeliveryDetails.php:829
 #: DeliveryDetails.php:833 GLAccountUsers.php:236 GLBalanceSheet.php:697
 #: GLCashFlowsIndirect.php:783 GLJournalInquiry.php:152
-#: GLJournalInquiry.php:154 GLProfit_Loss.php:1236 GLStatements.php:158
+#: GLJournalInquiry.php:154 GLProfit_Loss.php:1236 GLStatements.php:157
 #: GLTagProfit_Loss.php:30 GLTagProfit_Loss.php:539 GLTagProfit_Loss.php:940
 #: GLTags.php:52 GLTrialBalance.php:700 PDFCOA.php:28 PDFPrintLabel.php:63
 #: PDFProdSpec.php:18 PDFStockLocTransfer.php:28 PDFWOPrint.php:608
@@ -1820,46 +1832,46 @@ msgstr ""
 msgid "Print"
 msgstr "छाप उठवणे"
 
-#: AnalysisHorizontalIncome.php:534 AnalysisHorizontalIncome.php:535
-#: AnalysisHorizontalPosition.php:351 AnalysisHorizontalPosition.php:352
-#: SalesGraph.php:18 SalesGraph.php:27 SalesGraph.php:32
-msgid "Select A Different Period"
-msgstr "भिन्न कालावधी निवडा"
+#: AnalysisHorizontalIncome.php:586 AnalysisHorizontalPosition.php:405
+#: GLBalanceSheet.php:698 GLCashFlowsIndirect.php:784 GLProfit_Loss.php:1237
+#: GLStatements.php:158 GLTagProfit_Loss.php:941 GLTrialBalance.php:701
+#: PurchasesReport.php:218 SalesReport.php:218
+msgid "New Report"
+msgstr ""
 
-#: AnalysisHorizontalPosition.php:14 AnalysisHorizontalPosition.php:27
-#: AnalysisHorizontalPosition.php:99 AnalysisHorizontalPosition.php:100
-#: includes/MainMenuLinksArray.php:166
+#: AnalysisHorizontalPosition.php:33 AnalysisHorizontalPosition.php:152
+#: AnalysisHorizontalPosition.php:153 includes/MainMenuLinksArray.php:166
 msgid "Horizontal Analysis of Statement of Financial Position"
 msgstr ""
 
-#: AnalysisHorizontalPosition.php:26
-msgid "Print Horizontal Analysis of Statement of Financial Position"
+#: AnalysisHorizontalPosition.php:69
+msgid "Shows the horizontal analysis of the statement of financial position."
 msgstr ""
 
-#: AnalysisHorizontalPosition.php:39 GLBalanceSheet.php:63
+#: AnalysisHorizontalPosition.php:96 GLBalanceSheet.php:63
 msgid "Select the balance date"
 msgstr "शिल्लक तारीख निवडा"
 
-#: AnalysisHorizontalPosition.php:102 GLBalanceSheet.php:444
+#: AnalysisHorizontalPosition.php:155 GLBalanceSheet.php:444
 #: includes/PDFDebtorBalsPageHeader.inc:16
 #: includes/PDFSupplierBalsPageHeader.inc:16
 msgid "as at"
 msgstr "येथे म्हणून"
 
-#: AnalysisHorizontalPosition.php:123
+#: AnalysisHorizontalPosition.php:176
 msgid ""
 "Actual change signs: a positive number indicates a source of funds; a "
 "negative number indicates an application of funds."
 msgstr ""
 
-#: AnalysisHorizontalPosition.php:138 GLBalanceSheet.php:133
+#: AnalysisHorizontalPosition.php:191 GLBalanceSheet.php:133
 #: GLBalanceSheet.php:388
 msgid ""
 "The accumulated profits brought forward could not be calculated by the SQL "
 "because"
 msgstr "पुढे आणले जमा नफा SQL द्वारे गणना करणे शक्य नव्हते कारण"
 
-#: AnalysisHorizontalPosition.php:334 GLBalanceSheet.php:356
+#: AnalysisHorizontalPosition.php:387 GLBalanceSheet.php:356
 #: GLBalanceSheet.php:673
 msgid "Check Total"
 msgstr "एकूण तपासा"
@@ -2221,7 +2233,7 @@ msgid "Bank Account Balances"
 msgstr ""
 
 #: BankAccountBalances.php:17 BankMatching.php:101 BankReconciliation.php:102
-#: CounterReturns.php:818 Currencies.php:221 CustomerReceipt.php:823
+#: CounterReturns.php:818 Currencies.php:226 CustomerReceipt.php:823
 #: DailyBankTransactions.php:51 Payments.php:972 PDFChequeListing.php:45
 #: TaxAuthorities.php:150 TaxAuthorities.php:312
 msgid "Bank Account"
@@ -2358,7 +2370,7 @@ msgstr "बँक पत्ता"
 msgid "Import Format"
 msgstr ""
 
-#: BankAccounts.php:206 Currencies.php:456 CustItem.php:295 CustItem.php:407
+#: BankAccounts.php:206 Currencies.php:431 CustItem.php:295 CustItem.php:407
 #: CustomerAllocations.php:349 CustomerReceipt.php:857
 #: CustomerTransInquiry.php:108 OffersReceived.php:111 Payments.php:1011
 #: PcReportExpense.php:142 PcReportTab.php:387 PcTabs.php:181 PcTabs.php:309
@@ -2803,11 +2815,11 @@ msgstr "निवडलेले बँक खात्यासाठी वि
 msgid "reconciliation on"
 msgstr "वर मेळ"
 
-#: BankReconciliation.php:76 Currencies.php:202
+#: BankReconciliation.php:76 Currencies.php:206
 msgid "Cannot insert a GL entry for the exchange difference because"
 msgstr "विनिमय फरक साठी जी.एल. नोंद घालू शकत नाही कारण"
 
-#: BankReconciliation.php:77 Currencies.php:203
+#: BankReconciliation.php:77 Currencies.php:207
 msgid "The SQL that failed to insert the exchange difference GL entry was"
 msgstr "विनिमय फरक जी.एल. नोंद घालण्यासाठी अयशस्वी SQL असे होते"
 
@@ -2815,7 +2827,7 @@ msgstr "विनिमय फरक जी.एल. नोंद घालण्
 msgid "Exchange difference of"
 msgstr "एक्सचेंज फरक"
 
-#: BankReconciliation.php:97 Currencies.php:221
+#: BankReconciliation.php:97 Currencies.php:226
 msgid "has been posted"
 msgstr "पोस्ट केले गेले आहे"
 
@@ -2838,7 +2850,7 @@ msgstr "आणि सामान्य खातेवही खाती प�
 msgid "Show bank reconciliation statement"
 msgstr "बँक मेळ विवरणपत्र दाखवा"
 
-#: BankReconciliation.php:167 Currencies.php:174
+#: BankReconciliation.php:167 Currencies.php:177
 msgid "The bank account balance could not be returned by the SQL because"
 msgstr "बँक खात्यातील शिल्लक SQL द्वारे परत जाऊ शकत नाही कारण"
 
@@ -4370,17 +4382,6 @@ msgstr "आवश्यक दिनांक"
 msgid "Print W/O"
 msgstr ""
 
-#: CollectiveWorkOrderCost.php:511 FormDesigner.php:201
-#: GLCashFlowsIndirect.php:811 GLStatements.php:186
-#: HistoricalTestResults.php:81 InternalStockRequest.php:296
-#: MailingGroupMaintenance.php:145 MRPCreateDemands.php:286 PDFCOA.php:42
-#: PDFCOA.php:72 PDFProdSpec.php:30 PDFProdSpec.php:56 PricesByCost.php:296
-#: ProductSpecs.php:99 ProductSpecs.php:126 PurchasesReport.php:242
-#: ReorderLevelLocation.php:193 SalesReport.php:242
-#: SupplierGRNAndInvoiceInquiry.php:46
-msgid "Submit"
-msgstr "सबमिट करा"
-
 #: CompanyPreferences.php:5 includes/MainMenuLinksArray.php:211
 msgid "Company Preferences"
 msgstr "कंपनी प्राधान्ये"
@@ -4512,7 +4513,7 @@ msgid ""
 "statements."
 msgstr "मुख्य कंपनी ईमेल पत्ता प्रविष्ट करा. या पावत्या आणि वाक्य दिसेल."
 
-#: CompanyPreferences.php:234 Currencies.php:399
+#: CompanyPreferences.php:234
 msgid "Home Currency"
 msgstr "घर चलनासंबंधी"
 
@@ -6886,7 +6887,7 @@ msgstr "ग्राहक संदर्भ"
 msgid "Enter the reference that the customer uses for this contract"
 msgstr "ग्राहक या कंत्राट साठी वापरणारे संदर्भ द्या"
 
-#: Contracts.php:950 Currencies.php:311 Currencies.php:495 PO_Header.php:1115
+#: Contracts.php:950 Currencies.php:316 Currencies.php:470 PO_Header.php:1115
 #: PO_OrderDetails.php:113 SupplierCredit.php:287 SupplierInvoice.php:640
 #: SuppPaymentRun.php:296
 msgid "Exchange Rate"
@@ -8215,123 +8216,119 @@ msgstr "आपण या क्रेडिट स्थिती रेकॉ�
 msgid "Show Defined Credit Status Codes"
 msgstr "दर्शवा परिभाषित क्रेडिट स्थिती कोड"
 
-#: Currencies.php:6 Currencies.php:34 includes/MainMenuLinksArray.php:211
+#: Currencies.php:6 includes/MainMenuLinksArray.php:211
 msgid "Currencies Maintenance"
 msgstr "चलने देखभाल"
 
-#: Currencies.php:33
-msgid "Currencies"
-msgstr ""
-
-#: Currencies.php:56
+#: Currencies.php:57
 msgid "The currency already exists in the database"
 msgstr "चलन आधीच डेटाबेस अस्तित्वात"
 
-#: Currencies.php:63
+#: Currencies.php:64
 msgid "The exchange rate must be numeric"
 msgstr "विनिमय दर अंकीय असणे आवश्यक आहे"
 
-#: Currencies.php:69
+#: Currencies.php:70
 msgid ""
 "The number of decimal places to display for amounts in this currency must be "
 "numeric"
 msgstr "या चलनातील रकमा प्रदर्शित दशांश ठिकाणी संख्या अंकीय असणे आवश्यक आहे"
 
-#: Currencies.php:74
+#: Currencies.php:75
 msgid ""
 "The number of decimal places to display for amounts in this currency must be "
 "positive or zero"
 msgstr "या चलनातील रकमा प्रदर्शित दशांश ठिकाणी संख्या सकारात्मक असणे किंवा शून्य आवश्यक"
 
-#: Currencies.php:79
+#: Currencies.php:80
 msgid ""
 "The number of decimal places to display for amounts in this currency is "
 "expected to be 4 or less"
 msgstr "या चलनातील रकमा प्रदर्शित दशांश ठिकाणी संख्या 4 किंवा कमी असेल अशी अपेक्षा आहे"
 
-#: Currencies.php:86
+#: Currencies.php:87
 msgid "The currency country must be 50 characters or less long"
 msgstr "चलन देशात 50 किंवा त्यापेक्षा कमी लांब असणे आवश्यक आहे"
 
-#: Currencies.php:92
+#: Currencies.php:93
 msgid "The hundredths name must be 15 characters or less long"
 msgstr "hundredths नाव 15 किंवा त्यापेक्षा कमी लांब असणे आवश्यक आहे"
 
-#: Currencies.php:116
+#: Currencies.php:117
 msgid "The currency definition record has been updated"
 msgstr "चलन व्याख्या रेकॉर्ड अद्यतनित केले गेले आहे"
 
-#: Currencies.php:136
+#: Currencies.php:139
 msgid "The currency definition record has been added"
 msgstr "चलन व्याख्या रेकॉर्ड जोडले गेले आहे"
 
-#: Currencies.php:199 Currencies.php:217
+#: Currencies.php:204 Currencies.php:222
 msgid "currency rate adjustment to"
 msgstr "ते चलन दर समायोजन"
 
-#: Currencies.php:221
+#: Currencies.php:226
 msgid "Currency Rate difference of"
 msgstr "चलन दर फरक"
 
-#: Currencies.php:246
+#: Currencies.php:251
 msgid ""
 "Cannot delete this currency because customer accounts have been created "
 "referring to this currency"
 msgstr "ग्राहक खाती हे चलन संदर्भ तयार केले गेले कारण हे चलन हटवू शकत नाही"
 
-#: Currencies.php:247
+#: Currencies.php:252
 msgid "customer accounts that refer to this currency"
 msgstr "या चलन पहा ग्राहक खाती"
 
-#: Currencies.php:254
+#: Currencies.php:259
 msgid ""
 "Cannot delete this currency because supplier accounts have been created "
 "referring to this currency"
 msgstr "पुरवठादार खाती हे चलन संदर्भ तयार केले गेले कारण हे चलन हटवू शकत नाही"
 
-#: Currencies.php:255
+#: Currencies.php:260
 msgid "supplier accounts that refer to this currency"
 msgstr "या चलन पहा पुरवठादार खाती"
 
-#: Currencies.php:262
+#: Currencies.php:267
 msgid ""
 "Cannot delete this currency because there are bank transactions that use "
 "this currency"
 msgstr "या चलन वापरणाऱ्या बँक व्यवहार आहेत कारण या चलन हटवू शकत नाही"
 
-#: Currencies.php:263
+#: Currencies.php:268
 msgid "bank transactions that refer to this currency"
 msgstr "या चलन पहा बँक व्यवहार"
 
-#: Currencies.php:265
+#: Currencies.php:270
 msgid ""
 "Cannot delete this currency because it is the functional currency of the "
 "company"
 msgstr "तो कंपनीच्या फंक्शनल चलन आहे कारण हे चलन हटवू शकत नाही"
 
-#: Currencies.php:272
+#: Currencies.php:277
 msgid ""
 "Cannot delete this currency because there are bank accounts that use this "
 "currency"
 msgstr ""
 
-#: Currencies.php:273
+#: Currencies.php:278
 msgid "bank accounts that refer to this currency"
 msgstr ""
 
-#: Currencies.php:278
+#: Currencies.php:283
 msgid "The currency definition record has been deleted"
 msgstr "चलन व्याख्या रेकॉर्ड हटविले गेले आहे"
 
-#: Currencies.php:305
+#: Currencies.php:310
 msgid "ISO4217 Code"
 msgstr "ISO4217 कोड"
 
-#: Currencies.php:306
+#: Currencies.php:311
 msgid "Currency Name"
 msgstr "चलनाचे नाव"
 
-#: Currencies.php:307 Currencies.php:467 CustomerBranches.php:682
+#: Currencies.php:312 Currencies.php:442 CustomerBranches.php:682
 #: Customers.php:491 Customers.php:795 Customers.php:824
 #: DeliveryDetails.php:1065 FreightCosts.php:214 Locations.php:611
 #: Suppliers.php:713 Suppliers.php:997 ../webSHOP/Checkout.php:397
@@ -8341,61 +8338,58 @@ msgstr "चलनाचे नाव"
 msgid "Country"
 msgstr "देश"
 
-#: Currencies.php:308 Currencies.php:479
+#: Currencies.php:313 Currencies.php:454
 msgid "Hundredths Name"
 msgstr "Hundredths नाव"
 
-#: Currencies.php:309 InventoryValuation.php:196
+#: Currencies.php:314 InventoryValuation.php:196
 msgid "Decimal Places"
 msgstr "दशमान ठिकाणे"
 
-#: Currencies.php:310 Currencies.php:511
+#: Currencies.php:315 Currencies.php:486
 msgid "Show in webSHOP"
 msgstr ""
 
-#: Currencies.php:312
+#: Currencies.php:317
 msgid "1 / Ex Rate"
 msgstr "1 / माजी रेट"
 
-#: Currencies.php:313
+#: Currencies.php:318
 msgid "Ex Rate - ECB"
 msgstr "माजी दर - इसीबी"
 
-#: Currencies.php:314 CustomerTypes.php:4 index.php:160 Prices.php:225
+#: Currencies.php:319 CustomerTypes.php:4 index.php:160 Prices.php:225
 #: SelectCustomer.php:155 SelectProduct.php:62 SelectSupplier.php:158
 #: StockCategories.php:273 SupplierTypes.php:5
 msgid "Maintenance"
 msgstr "प्रतिपाळ"
 
-#: Currencies.php:354
-#, php-format
+#: Currencies.php:359
 msgid "Are you sure you wish to delete this currency?"
 msgstr "आपण या चलन हटवू इच्छित खात्री आहे?"
 
-#: Currencies.php:355
-#, php-format
+#: Currencies.php:360
 msgid "Graph"
 msgstr "आलेख"
 
-#: Currencies.php:387
-#, php-format
+#: Currencies.php:374
 msgid "Functional Currency"
 msgstr "कार्यात्मक चलनासंबंधी"
 
-#: Currencies.php:409
+#: Currencies.php:384
 msgid "Show all currency definitions"
 msgstr "सर्व चलन व्याख्या दाखवा"
 
-#: Currencies.php:432 geo_displaymap_customers.php:11
+#: Currencies.php:407 geo_displaymap_customers.php:11
 #: geo_displaymap_suppliers.php:11
 msgid "An error occurred in retrieving the currency information"
 msgstr "एक त्रुटी चलनासंबंधी माहिती पुनर्प्राप्त आली"
 
-#: Currencies.php:448
+#: Currencies.php:423
 msgid "ISO 4217 Currency Code"
 msgstr "आयएसओ 4217 चलन कोड"
 
-#: Currencies.php:487
+#: Currencies.php:462
 msgid "Decimal Places to Display"
 msgstr "प्रदर्शित करण्यासाठी दशमान ठिकाणे"
 
@@ -14190,7 +14184,8 @@ msgstr ""
 msgid "Could not retrieve the items for"
 msgstr "वस्तू परत मिळवू शकलो नाही"
 
-#: GeneratePickingList.php:505 PDFWOPrint.php:490
+#: GeneratePickingList.php:505 PDFGrn.php:167 PDFStockTransfer.php:153
+#: PDFStockTransfer.php:154 PDFWOPrint.php:490
 msgid "Signed for"
 msgstr "साठी साइन केले"
 
@@ -14953,26 +14948,18 @@ msgstr ""
 "निव्वळ मालमत्ता किंवा नेट वर्थ किंवा कंपनीच्या राजधानी म्हणून ओळखले जाते आणि लेखा समीकरण "
 "त्यानुसार, नेट वर्थ मालमत्ता कमी उत्तरदायित्व समान आवश्यक आहे."
 
-#: GLBalanceSheet.php:56 GLCashFlowsIndirect.php:796 GLProfit_Loss.php:74
-#: GLStatements.php:171
-msgid ""
-"webERP is an \"accrual\" based system (not a \"cash based\" system). Accrual "
-"systems include items when they are invoiced to the customer, and when "
-"expenses are owed based on the supplier invoice date."
-msgstr ""
-
 #: GLBalanceSheet.php:85 GLProfit_Loss.php:146 GLTagProfit_Loss.php:139
 msgid "Detail Or Summary"
 msgstr "तपशील किंवा सारांश"
 
-#: GLBalanceSheet.php:98 GLCashFlowsIndirect.php:875 GLProfit_Loss.php:155
-#: GLStatements.php:250
-msgid "Show accounts with zero balance"
-msgstr ""
-
 #: GLBalanceSheet.php:100 GLCashFlowsIndirect.php:877 GLProfit_Loss.php:157
 msgid "Check this box to show all accounts including those with zero balance"
 msgstr ""
+
+#: GLBalanceSheet.php:106 GLBalanceSheet.php:107 GLProfit_Loss.php:163
+#: GLProfit_Loss.php:164
+msgid "Show on Screen (HTML)"
+msgstr "स्क्रीन वर दाखवा (HTML)"
 
 #: GLBalanceSheet.php:108 GLBalanceSheet.php:109 GLProfit_Loss.php:165
 #: GLProfit_Loss.php:166
@@ -15003,12 +14990,6 @@ msgstr "निर्दिष्ट निवडी साठी बाहेर
 #: includes/MiscFunctions.php:486 reportwriter/languages/en_US/reports.php:366
 msgid "Last Year"
 msgstr "गेल्या वर्षी"
-
-#: GLBalanceSheet.php:698 GLCashFlowsIndirect.php:784 GLProfit_Loss.php:1237
-#: GLStatements.php:159 GLTagProfit_Loss.php:941 GLTrialBalance.php:701
-#: PurchasesReport.php:218 SalesReport.php:218
-msgid "New Report"
-msgstr ""
 
 #: GLBudgets.php:6
 msgid "Create GL Budgets"
@@ -15188,29 +15169,24 @@ msgid ""
 "time."
 msgstr ""
 
-#: GLCashFlowsIndirect.php:805 GLStatements.php:180 PurchasesReport.php:236
-#: SalesReport.php:236
-msgid "Report Parameters"
-msgstr ""
-
-#: GLCashFlowsIndirect.php:835 GLProfit_Loss.php:113 GLStatements.php:210
+#: GLCashFlowsIndirect.php:835 GLProfit_Loss.php:113 GLStatements.php:209
 #: GLTrialBalance.php:90 PurchasesReport.php:256 SalesReport.php:256
 msgid "Select the beginning of the reporting period"
 msgstr ""
 
-#: GLCashFlowsIndirect.php:849 GLProfit_Loss.php:127 GLStatements.php:224
+#: GLCashFlowsIndirect.php:849 GLProfit_Loss.php:127 GLStatements.php:223
 #: GLTrialBalance.php:104 PurchasesReport.php:266 SalesReport.php:266
 msgid "Select the end of the reporting period"
 msgstr ""
 
-#: GLCashFlowsIndirect.php:863 GLProfit_Loss.php:141 GLStatements.php:238
+#: GLCashFlowsIndirect.php:863 GLProfit_Loss.php:141 GLStatements.php:237
 #: GLTrialBalance.php:118
 msgid ""
 "Select a period instead of using the beginning and end of the reporting "
 "period."
 msgstr ""
 
-#: GLCashFlowsIndirect.php:868 GLStatements.php:243
+#: GLCashFlowsIndirect.php:868 GLStatements.php:242
 msgid "Show the budget"
 msgstr ""
 
@@ -15635,11 +15611,11 @@ msgstr ""
 msgid "Statement of cash flows"
 msgstr ""
 
-#: GLStatements.php:169
+#: GLStatements.php:168
 msgid "Shows a set of financial statements."
 msgstr ""
 
-#: GLStatements.php:170
+#: GLStatements.php:169
 msgid ""
 "A complete set of financial statements comprises:(a) a statement of "
 "financial position as at the end and at the beginning of the period;(b) a "
@@ -15649,51 +15625,47 @@ msgid ""
 "explanatory information."
 msgstr ""
 
-#: GLStatements.php:245
+#: GLStatements.php:244
 msgid "Check this box to show the budget"
 msgstr ""
 
-#: GLStatements.php:252
-msgid "Check this box to show accounts with zero balance"
-msgstr ""
-
-#: GLStatements.php:257
+#: GLStatements.php:256
 msgid "Show the statement of financial position"
 msgstr ""
 
-#: GLStatements.php:259
+#: GLStatements.php:258
 msgid "Check this box to show the statement of financial position"
 msgstr ""
 
-#: GLStatements.php:264
+#: GLStatements.php:263
 msgid "Show the statement of comprehensive income"
 msgstr ""
 
-#: GLStatements.php:266
+#: GLStatements.php:265
 msgid "Check this box to show the statement of comprehensive income"
 msgstr ""
 
-#: GLStatements.php:271
+#: GLStatements.php:270
 msgid "Show the statement of changes in equity"
 msgstr ""
 
-#: GLStatements.php:273
+#: GLStatements.php:272
 msgid "Check this box to show the statement of changes in equity"
 msgstr ""
 
-#: GLStatements.php:278
+#: GLStatements.php:277
 msgid "Show the statement of cash flows"
 msgstr ""
 
-#: GLStatements.php:280
+#: GLStatements.php:279
 msgid "Check this box to show the statement of cash flows"
 msgstr ""
 
-#: GLStatements.php:285
+#: GLStatements.php:284
 msgid "Show the notes"
 msgstr ""
 
-#: GLStatements.php:287
+#: GLStatements.php:286
 msgid ""
 "Check this box to show the notes that summarize the significant accounting "
 "policies and other explanatory information"
@@ -21698,10 +21670,6 @@ msgstr ""
 msgid "Date of Receipt: "
 msgstr ""
 
-#: PDFGrn.php:167 PDFStockTransfer.php:153 PDFStockTransfer.php:154
-msgid "Signed for "
-msgstr ""
-
 #: PDFGrn.php:176 PDFQALabel.php:112
 msgid "GRN Error"
 msgstr "GRN त्रुटी"
@@ -25651,11 +25619,11 @@ msgstr "शेवटचा"
 msgid "Week"
 msgstr "आठवडा"
 
-#: PurchaseByPrefSupplier.php:420 reportwriter/languages/en_US/reports.php:320
+#: PurchaseByPrefSupplier.php:420
 msgid "3"
 msgstr "3"
 
-#: PurchaseByPrefSupplier.php:421 reportwriter/languages/en_US/reports.php:319
+#: PurchaseByPrefSupplier.php:421
 msgid "2"
 msgstr "2"
 
@@ -27667,6 +27635,10 @@ msgstr "जी.एल. खाते पोस्ट सवलत"
 #: SalesGraph.php:5
 msgid "Sales Report Graph"
 msgstr "विक्री अहवाल आलेख"
+
+#: SalesGraph.php:18 SalesGraph.php:27 SalesGraph.php:32
+msgid "Select A Different Period"
+msgstr "भिन्न कालावधी निवडा"
 
 #: SalesGraph.php:26
 msgid ""
@@ -36704,10 +36676,6 @@ msgstr "अशी यादी तयार लेआउट निवडा"
 
 #: SystemParameters.php:602
 msgid "Invoice Quantity Default"
-msgstr ""
-
-#: SystemParameters.php:604
-msgid "0"
 msgstr ""
 
 #: SystemParameters.php:607
@@ -47563,839 +47531,843 @@ msgid ""
 "was"
 msgstr "इतर कंत्राट requirments पुनर्प्राप्त करण्यासाठी वापरलेला SQL विधान होते"
 
-#: includes/CountriesArray.php:5
+#: includes/CountriesArray.php:8
 msgid "Andorra"
 msgstr "अंडोरा"
 
-#: includes/CountriesArray.php:6
+#: includes/CountriesArray.php:9
 msgid "United Arab Emirates"
 msgstr "संयुक्त अरब अमीराती"
 
-#: includes/CountriesArray.php:7
+#: includes/CountriesArray.php:10
 msgid "Afghanistan"
 msgstr "अफगाणिस्तान"
 
-#: includes/CountriesArray.php:8
+#: includes/CountriesArray.php:11
 msgid "Antigua and Barbuda"
 msgstr "अँटिगा आणि बार्बुडा"
 
-#: includes/CountriesArray.php:9
+#: includes/CountriesArray.php:12
 msgid "Anguilla"
 msgstr "एंजिला"
 
-#: includes/CountriesArray.php:10
+#: includes/CountriesArray.php:13
 msgid "Albania"
 msgstr "अल्बानिया"
 
-#: includes/CountriesArray.php:11
+#: includes/CountriesArray.php:14
 msgid "Armenia"
 msgstr "आर्मेनिया"
 
-#: includes/CountriesArray.php:12
+#: includes/CountriesArray.php:15
 msgid "Angola"
 msgstr "अंगोला"
 
-#: includes/CountriesArray.php:13
+#: includes/CountriesArray.php:16
 msgid "Argentina"
 msgstr "अर्जेंटीना"
 
-#: includes/CountriesArray.php:14
+#: includes/CountriesArray.php:17
 msgid "American Samoa"
 msgstr "अमेरिकन समोआ"
 
-#: includes/CountriesArray.php:15
+#: includes/CountriesArray.php:18
 msgid "Austria"
 msgstr "ऑस्ट्रिया"
 
-#: includes/CountriesArray.php:16
+#: includes/CountriesArray.php:19
 msgid "Australia"
 msgstr "ऑस्ट्रेलिया"
 
-#: includes/CountriesArray.php:17
+#: includes/CountriesArray.php:20
 msgid "Aruba"
 msgstr "अरुबा"
 
-#: includes/CountriesArray.php:18
+#: includes/CountriesArray.php:21
 msgid "Azerbaijan"
 msgstr "अझरबैजान"
 
-#: includes/CountriesArray.php:19
+#: includes/CountriesArray.php:22
 msgid "Bosnia and Herzegovina"
 msgstr "बोस्निया आणि हर्जेगोविना"
 
-#: includes/CountriesArray.php:20
+#: includes/CountriesArray.php:23
 msgid "Barbados"
 msgstr "बार्बाडोस"
 
-#: includes/CountriesArray.php:21
+#: includes/CountriesArray.php:24
 msgid "Bangladesh"
 msgstr "बांग्लादेश"
 
-#: includes/CountriesArray.php:22
+#: includes/CountriesArray.php:25
 msgid "Belgium"
 msgstr "बेल्जियम"
 
-#: includes/CountriesArray.php:23
+#: includes/CountriesArray.php:26
 msgid "Burkina Faso"
 msgstr "बुर्रकिना फासो"
 
-#: includes/CountriesArray.php:24
-msgid "Bulgaria"
-msgstr "बुल्गारिया"
-
-#: includes/CountriesArray.php:25
+#: includes/CountriesArray.php:27
 msgid "Bahrain"
 msgstr "बहरीन"
 
-#: includes/CountriesArray.php:26
+#: includes/CountriesArray.php:28
 msgid "Burundi"
 msgstr "बुरुंडी"
 
-#: includes/CountriesArray.php:27
+#: includes/CountriesArray.php:29
 msgid "Benin"
 msgstr "बेनिन"
 
-#: includes/CountriesArray.php:28
+#: includes/CountriesArray.php:30
 msgid "Bermuda"
 msgstr "बरमुडा"
 
-#: includes/CountriesArray.php:29
+#: includes/CountriesArray.php:31
 msgid "Brunei Darussalam"
 msgstr "ब्रुनै दारुसलाम"
 
-#: includes/CountriesArray.php:30
+#: includes/CountriesArray.php:32
 msgid "Bolivia"
 msgstr "बोलिव्हिया"
 
-#: includes/CountriesArray.php:31
+#: includes/CountriesArray.php:33
 msgid "Brazil"
 msgstr "ब्राझिल"
 
-#: includes/CountriesArray.php:32
+#: includes/CountriesArray.php:34
 msgid "Bahamas"
 msgstr "बहामास"
 
-#: includes/CountriesArray.php:33
+#: includes/CountriesArray.php:35
 msgid "Bhutan"
 msgstr "भूतान"
 
-#: includes/CountriesArray.php:34
+#: includes/CountriesArray.php:36
+msgid "Bulgaria"
+msgstr "बुल्गारिया"
+
+#: includes/CountriesArray.php:37
 msgid "Botswana"
 msgstr "बोट्सवाना"
 
-#: includes/CountriesArray.php:35
+#: includes/CountriesArray.php:38
 msgid "Belarus"
 msgstr "बेलारूस"
 
-#: includes/CountriesArray.php:36
+#: includes/CountriesArray.php:39
 msgid "Belize"
 msgstr "बेलीझ"
 
-#: includes/CountriesArray.php:37
+#: includes/CountriesArray.php:40
 msgid "Canada"
 msgstr "कॅनाडा"
 
-#: includes/CountriesArray.php:38
-msgid "Congo"
-msgstr "कांगो"
-
-#: includes/CountriesArray.php:39
+#: includes/CountriesArray.php:41
 msgid "Central African Republic"
 msgstr "मध्य आफ्रीका गणराज्य"
 
-#: includes/CountriesArray.php:40
+#: includes/CountriesArray.php:42
+msgid "Congo"
+msgstr "कांगो"
+
+#: includes/CountriesArray.php:43
 msgid "Switzerland"
 msgstr "स्विर्त्झलँड"
 
-#: includes/CountriesArray.php:41
+#: includes/CountriesArray.php:44
 msgid "Cote D Ivoire"
 msgstr "कोट डे 'आयव्हरी"
 
-#: includes/CountriesArray.php:42
+#: includes/CountriesArray.php:45
 msgid "Cook Islands"
 msgstr "कुक बेटे"
 
-#: includes/CountriesArray.php:43
+#: includes/CountriesArray.php:46
 msgid "Chile"
 msgstr "लाल मिरची"
 
-#: includes/CountriesArray.php:44
+#: includes/CountriesArray.php:47
 msgid "Cameroon"
 msgstr "कॅमरून"
 
-#: includes/CountriesArray.php:45
+#: includes/CountriesArray.php:48
 msgid "China"
 msgstr "चीन"
 
-#: includes/CountriesArray.php:46
+#: includes/CountriesArray.php:49
 msgid "Colombia"
 msgstr "कोलंबिया"
 
-#: includes/CountriesArray.php:47
+#: includes/CountriesArray.php:50
 msgid "Costa Rica"
 msgstr "कोस्टा रिका"
 
-#: includes/CountriesArray.php:48
-msgid "Montenegro"
-msgstr "माँटेनिग्रो"
-
-#: includes/CountriesArray.php:49
+#: includes/CountriesArray.php:51
 msgid "Catalonia"
 msgstr "कॅटलोनिया"
 
-#: includes/CountriesArray.php:50
+#: includes/CountriesArray.php:52
 msgid "Cuba"
 msgstr "क्यूबा"
 
-#: includes/CountriesArray.php:51
+#: includes/CountriesArray.php:53
 msgid "Cape Verde"
 msgstr "केप वर्ड"
 
-#: includes/CountriesArray.php:52
+#: includes/CountriesArray.php:54
 msgid "Cyprus"
 msgstr "सायप्रस"
 
-#: includes/CountriesArray.php:53
+#: includes/CountriesArray.php:55
 msgid "Czech Republic"
 msgstr "चेक गणराज्य"
 
-#: includes/CountriesArray.php:54
+#: includes/CountriesArray.php:56
 msgid "Germany"
 msgstr "जर्मनी"
 
-#: includes/CountriesArray.php:55
+#: includes/CountriesArray.php:57
 msgid "Djibouti"
 msgstr "जिबूती"
 
-#: includes/CountriesArray.php:56
+#: includes/CountriesArray.php:58
 msgid "Denmark"
 msgstr "डेन्मार्क"
 
-#: includes/CountriesArray.php:57
+#: includes/CountriesArray.php:59
 msgid "Dominica"
 msgstr "डॉमिनिका"
 
-#: includes/CountriesArray.php:58
+#: includes/CountriesArray.php:60
 msgid "Dominican Republic"
 msgstr "डॉमिनिक गणराज्य"
 
-#: includes/CountriesArray.php:59
+#: includes/CountriesArray.php:61
 msgid "Algeria"
 msgstr "अल्जीरिया"
 
-#: includes/CountriesArray.php:60
+#: includes/CountriesArray.php:62
 msgid "Ecuador"
 msgstr "इक्वाडोर"
 
-#: includes/CountriesArray.php:61
+#: includes/CountriesArray.php:63
 msgid "Estonia"
 msgstr "एस्टोनिया"
 
-#: includes/CountriesArray.php:62
+#: includes/CountriesArray.php:64
 msgid "Egypt"
 msgstr "इजिप्त"
 
-#: includes/CountriesArray.php:63
+#: includes/CountriesArray.php:65
 msgid "Eritrea"
 msgstr "इरीट्रिया"
 
-#: includes/CountriesArray.php:64
+#: includes/CountriesArray.php:66
 msgid "Spain"
 msgstr "स्पेन"
 
-#: includes/CountriesArray.php:65
+#: includes/CountriesArray.php:67
 msgid "Ethiopia"
 msgstr "इथियोपिया"
 
-#: includes/CountriesArray.php:66
+#: includes/CountriesArray.php:68
+msgid "European Union"
+msgstr ""
+
+#: includes/CountriesArray.php:69
 msgid "Finland"
 msgstr "फिनलॅड"
 
-#: includes/CountriesArray.php:67
+#: includes/CountriesArray.php:70
 msgid "Fiji"
 msgstr "फिजी"
 
-#: includes/CountriesArray.php:68
+#: includes/CountriesArray.php:71
 msgid "Falkland Islands"
 msgstr "फॉकलंड बेटे"
 
-#: includes/CountriesArray.php:69
+#: includes/CountriesArray.php:72
 msgid "Micronesia"
 msgstr "मायक्रोनेशिया"
 
-#: includes/CountriesArray.php:70
+#: includes/CountriesArray.php:73
 msgid "Faroe Islands"
 msgstr "फॅरो बेटे"
 
-#: includes/CountriesArray.php:71
+#: includes/CountriesArray.php:74
 msgid "France"
 msgstr "फ्रांस"
 
-#: includes/CountriesArray.php:72
+#: includes/CountriesArray.php:75
 msgid "Gabon"
 msgstr "गबॉन"
 
-#: includes/CountriesArray.php:73
-msgid "Grenada"
-msgstr "ग्रेनेडा"
-
-#: includes/CountriesArray.php:74
-msgid "Georgia"
-msgstr "जॉर्जिया"
-
-#: includes/CountriesArray.php:75
-msgid "French Guiana"
-msgstr "फ्रेंच गयाना"
-
 #: includes/CountriesArray.php:76
-msgid "Guernsey and Alderney"
-msgstr "ग्वेर्नसे आणि अल्डरने"
-
-#: includes/CountriesArray.php:77
-msgid "Ghana"
-msgstr "घाना"
-
-#: includes/CountriesArray.php:78
-msgid "Gibraltar"
-msgstr "जिब्राल्टर"
-
-#: includes/CountriesArray.php:79
-msgid "Greenland"
-msgstr "ग्रीनलँड"
-
-#: includes/CountriesArray.php:80
-msgid "Gambia"
-msgstr "झांबिया"
-
-#: includes/CountriesArray.php:81
-msgid "Guinea"
-msgstr "गिनी"
-
-#: includes/CountriesArray.php:82
-msgid "Guadeloupe"
-msgstr "ग्वाडेलोप"
-
-#: includes/CountriesArray.php:83
-msgid "Greece"
-msgstr "ग्रीस"
-
-#: includes/CountriesArray.php:84
-msgid "Guatemala"
-msgstr "ग्वाटेमाला"
-
-#: includes/CountriesArray.php:85
-msgid "Guam"
-msgstr "गुआम"
-
-#: includes/CountriesArray.php:86
-msgid "Guinea-Bissau"
-msgstr "जिनिया - बीसाउ"
-
-#: includes/CountriesArray.php:87
-msgid "Guyana"
-msgstr "गयाना"
-
-#: includes/CountriesArray.php:88
-msgid "Hong Kong"
-msgstr "हाँगकाँग"
-
-#: includes/CountriesArray.php:89
-msgid "Honduras"
-msgstr "होंडरस"
-
-#: includes/CountriesArray.php:90
-msgid "Croatia"
-msgstr "क्रोएशिया"
-
-#: includes/CountriesArray.php:91
-msgid "Haiti"
-msgstr "हैती"
-
-#: includes/CountriesArray.php:92
-msgid "Hungary"
-msgstr "हंगेरी"
-
-#: includes/CountriesArray.php:93
-msgid "Indonesia"
-msgstr "इंडोनेशिया"
-
-#: includes/CountriesArray.php:94
-msgid "Ireland"
-msgstr "आयरलँड"
-
-#: includes/CountriesArray.php:95
-msgid "Israel"
-msgstr "इस्त्राइल"
-
-#: includes/CountriesArray.php:96
-msgid "India"
-msgstr "भारत"
-
-#: includes/CountriesArray.php:97
-msgid "Iraq"
-msgstr "ईराक"
-
-#: includes/CountriesArray.php:98
-msgid "Iran"
-msgstr "ईराण"
-
-#: includes/CountriesArray.php:99
-msgid "Iceland"
-msgstr "आइसलँड"
-
-#: includes/CountriesArray.php:100
-msgid "Italy"
-msgstr "इटली"
-
-#: includes/CountriesArray.php:101
-msgid "Jersey"
-msgstr "जर्सी"
-
-#: includes/CountriesArray.php:102
-msgid "Jamaica"
-msgstr "जमैका"
-
-#: includes/CountriesArray.php:103
-msgid "Jordan"
-msgstr "जॉर्डन"
-
-#: includes/CountriesArray.php:104
-msgid "Japan"
-msgstr "जपान"
-
-#: includes/CountriesArray.php:105
-msgid "Kenya"
-msgstr "केनिया"
-
-#: includes/CountriesArray.php:106
-msgid "Kyrgyzstan"
-msgstr "किरगिझस्तान"
-
-#: includes/CountriesArray.php:107
-msgid "Cambodia"
-msgstr "कंबोडिया"
-
-#: includes/CountriesArray.php:108
-msgid "Kiribati"
-msgstr "किरबाती"
-
-#: includes/CountriesArray.php:109
-msgid "Comoros"
-msgstr "कोमोरोझ"
-
-#: includes/CountriesArray.php:110
-msgid "Saint Kitts and Nevis"
-msgstr "सेंट किट्स आणि नेव्हिस"
-
-#: includes/CountriesArray.php:111
-msgid "Korea (South)"
-msgstr "कोरिया (दक्षिण)"
-
-#: includes/CountriesArray.php:112
-msgid "Kuwait"
-msgstr "कुवेत"
-
-#: includes/CountriesArray.php:113
-msgid "Cayman Islands"
-msgstr "केमॅन बेट"
-
-#: includes/CountriesArray.php:114
-msgid "Kazakhstan"
-msgstr "कझाकिस्तान"
-
-#: includes/CountriesArray.php:115
-msgid "Lao People s Dem. Rep."
-msgstr "लाओ लोकांचे चे डेमोक्रॅटिक. Rep."
-
-#: includes/CountriesArray.php:116
-msgid "Lebanon"
-msgstr "लेबनॉन"
-
-#: includes/CountriesArray.php:117
-msgid "Saint Lucia"
-msgstr "सेंट लुसिया"
-
-#: includes/CountriesArray.php:118
-msgid "Liechtenstein"
-msgstr "लिचेंस्टीन"
-
-#: includes/CountriesArray.php:119
-msgid "Sri Lanka"
-msgstr "श्रीलंका"
-
-#: includes/CountriesArray.php:120
-msgid "Lesotho"
-msgstr "लेसोथो"
-
-#: includes/CountriesArray.php:121
-msgid "Lithuania"
-msgstr "लिथुआनिया"
-
-#: includes/CountriesArray.php:122
-msgid "Luxembourg"
-msgstr "लक्झेंम्बर्ग"
-
-#: includes/CountriesArray.php:123
-msgid "Latvia"
-msgstr "लाटविया"
-
-#: includes/CountriesArray.php:124
-msgid "Libyan Arab Jamahiriya"
-msgstr "लिबियन अरब जमाहिराया"
-
-#: includes/CountriesArray.php:125
-msgid "Morocco"
-msgstr "मोरक्को"
-
-#: includes/CountriesArray.php:126
-msgid "Monaco"
-msgstr "मोनाको"
-
-#: includes/CountriesArray.php:127
-msgid "Moldova, Republic of"
-msgstr "मोल्दोव्हा, गणराज्य"
-
-#: includes/CountriesArray.php:128
-msgid "Madagascar"
-msgstr "मादागास्कर"
-
-#: includes/CountriesArray.php:129
-msgid "Macedonia, TFYR"
-msgstr "मॅसिडोनिया, TFYR"
-
-#: includes/CountriesArray.php:130
-msgid "Mali"
-msgstr "माली"
-
-#: includes/CountriesArray.php:131
-msgid "Myanmar"
-msgstr "म्यानमार"
-
-#: includes/CountriesArray.php:132
-msgid "Mongolia"
-msgstr "मंगोलिया"
-
-#: includes/CountriesArray.php:133
-msgid "Macao, (China)"
-msgstr "मकाऊ, (चीन)"
-
-#: includes/CountriesArray.php:134
-msgid "Northern Mariana Islands"
-msgstr "नॉर्दर्न मेरियाना आयलँड्स"
-
-#: includes/CountriesArray.php:135
-msgid "Martinique"
-msgstr "मार्टीन्क"
-
-#: includes/CountriesArray.php:136
-msgid "Mauritania"
-msgstr "मॉरटानिया"
-
-#: includes/CountriesArray.php:137
-msgid "Malta"
-msgstr "माल्टा"
-
-#: includes/CountriesArray.php:138
-msgid "Mauritius"
-msgstr "मॉरिशस"
-
-#: includes/CountriesArray.php:139
-msgid "Maldives"
-msgstr "मालदीव"
-
-#: includes/CountriesArray.php:140
-msgid "Malawi"
-msgstr "मालवी"
-
-#: includes/CountriesArray.php:141
-msgid "Mexico"
-msgstr "मेक्सिको"
-
-#: includes/CountriesArray.php:142
-msgid "Malaysia"
-msgstr "मलेशिया"
-
-#: includes/CountriesArray.php:143
-msgid "Mozambique"
-msgstr "मोझांबिक"
-
-#: includes/CountriesArray.php:144
-msgid "Namibia"
-msgstr "नामीबिया"
-
-#: includes/CountriesArray.php:145
-msgid "New Caledonia"
-msgstr "न्यू कॅलेडोनिया"
-
-#: includes/CountriesArray.php:146
-msgid "Niger"
-msgstr "नायजर"
-
-#: includes/CountriesArray.php:147
-msgid "Nigeria"
-msgstr "नायजेरीया"
-
-#: includes/CountriesArray.php:148
-msgid "Nicaragua"
-msgstr "निकारागुआ"
-
-#: includes/CountriesArray.php:149
-msgid "Netherlands"
-msgstr "हॉलंड देश"
-
-#: includes/CountriesArray.php:150
-msgid "Norway"
-msgstr "नॉर्वे"
-
-#: includes/CountriesArray.php:151
-msgid "Nepal"
-msgstr "नेपाळ"
-
-#: includes/CountriesArray.php:152
-msgid "New Zealand"
-msgstr "न्यूझीलंड"
-
-#: includes/CountriesArray.php:153
-msgid "Oman"
-msgstr "ओमान"
-
-#: includes/CountriesArray.php:154
-msgid "Panama"
-msgstr "पनामा"
-
-#: includes/CountriesArray.php:155
-msgid "Peru"
-msgstr "पेरू"
-
-#: includes/CountriesArray.php:156
-msgid "French Polynesia"
-msgstr "फ्रेंच पॉलिनेशिया"
-
-#: includes/CountriesArray.php:157
-msgid "Papua New Guinea"
-msgstr "पापुआ न्यू गिनी"
-
-#: includes/CountriesArray.php:158
-msgid "Philippines"
-msgstr "फिलिपींस"
-
-#: includes/CountriesArray.php:159
-msgid "Pakistan"
-msgstr "पाकिस्तान"
-
-#: includes/CountriesArray.php:160
-msgid "Poland"
-msgstr "पोलंड"
-
-#: includes/CountriesArray.php:161
-msgid "Palestinian Territory"
-msgstr "पॅलेस्टिनी प्रदेश"
-
-#: includes/CountriesArray.php:162
-msgid "Portugal"
-msgstr "पोर्तुगाल"
-
-#: includes/CountriesArray.php:163
-msgid "Paraguay"
-msgstr "पराग्वे"
-
-#: includes/CountriesArray.php:164
-msgid "Qatar"
-msgstr "कतर"
-
-#: includes/CountriesArray.php:165
-msgid "Romania"
-msgstr "रोमानिया"
-
-#: includes/CountriesArray.php:166
-msgid "Serbia"
-msgstr "सर्बिया"
-
-#: includes/CountriesArray.php:167
-msgid "Russian Federation"
-msgstr "रशियन फेडरेशन"
-
-#: includes/CountriesArray.php:168
-msgid "Rwanda"
-msgstr "रवांडा"
-
-#: includes/CountriesArray.php:169
-msgid "Saudi Arabia"
-msgstr "सौदी अरेबिया"
-
-#: includes/CountriesArray.php:170
-msgid "Solomon Islands"
-msgstr "सोलोमन बेट"
-
-#: includes/CountriesArray.php:171
-msgid "Seychelles"
-msgstr "सेशल्स"
-
-#: includes/CountriesArray.php:172
-msgid "Sudan"
-msgstr "सूदान"
-
-#: includes/CountriesArray.php:173
-msgid "Sweden"
-msgstr "स्वीडन"
-
-#: includes/CountriesArray.php:174
-msgid "Singapore"
-msgstr "सिंगापुर"
-
-#: includes/CountriesArray.php:175
-msgid "Slovenia"
-msgstr "स्लोवेनिया"
-
-#: includes/CountriesArray.php:176
-msgid "Slovakia"
-msgstr "स्लोवाकिया"
-
-#: includes/CountriesArray.php:177
-msgid "San Marino"
-msgstr "सॅन मारीनो"
-
-#: includes/CountriesArray.php:178
-msgid "Senegal"
-msgstr "सेनेगल"
-
-#: includes/CountriesArray.php:179
-msgid "Somalia"
-msgstr "सोमालिया"
-
-#: includes/CountriesArray.php:180
-msgid "Suriname"
-msgstr "सूरीनाम"
-
-#: includes/CountriesArray.php:181
-msgid "Sao Tome and Principe"
-msgstr "साअटोम और प्रिंसिपे"
-
-#: includes/CountriesArray.php:182
-msgid "El Salvador"
-msgstr "अल साल्वाडोर"
-
-#: includes/CountriesArray.php:183
-msgid "Syrian Arab Republic"
-msgstr "सीरियन अरब प्रजासत्ताक"
-
-#: includes/CountriesArray.php:184
-msgid "Swaziland"
-msgstr "स्वाझीलँड"
-
-#: includes/CountriesArray.php:185
-msgid "Chad"
-msgstr "चाड"
-
-#: includes/CountriesArray.php:186
-msgid "Togo"
-msgstr "टोगो"
-
-#: includes/CountriesArray.php:187
-msgid "Thailand"
-msgstr "थायलँड"
-
-#: includes/CountriesArray.php:188
-msgid "Tajikistan"
-msgstr "ताजीकिस्तान"
-
-#: includes/CountriesArray.php:189
-msgid "Turkmenistan"
-msgstr "तुर्कमेनिस्तान"
-
-#: includes/CountriesArray.php:190
-msgid "Tunisia"
-msgstr "ट्यूनीशिया"
-
-#: includes/CountriesArray.php:191
-msgid "Tonga"
-msgstr "टोंगा"
-
-#: includes/CountriesArray.php:192
-msgid "East Timor (Timor-Leste)"
-msgstr "पूर्व तिमोर (तिमोर-लेस्टे)"
-
-#: includes/CountriesArray.php:193
-msgid "Turkey"
-msgstr "टर्की"
-
-#: includes/CountriesArray.php:194
-msgid "Trinidad and Tobago"
-msgstr "त्रिनिदाद आणि टोबॅगो"
-
-#: includes/CountriesArray.php:195
-msgid "Taiwan"
-msgstr "तैवान"
-
-#: includes/CountriesArray.php:196
-msgid "Tanzania, United Rep. of"
-msgstr "टांझानिया, युनायटेड Rep."
-
-#: includes/CountriesArray.php:197
-msgid "Ukraine"
-msgstr "यूक्रेन"
-
-#: includes/CountriesArray.php:198
-msgid "Uganda"
-msgstr "यूगांडा"
-
-#: includes/CountriesArray.php:199
 msgid "United Kingdom"
 msgstr "यूनाइटेड किंगडम"
 
+#: includes/CountriesArray.php:77
+msgid "Grenada"
+msgstr "ग्रेनेडा"
+
+#: includes/CountriesArray.php:78
+msgid "Georgia"
+msgstr "जॉर्जिया"
+
+#: includes/CountriesArray.php:79
+msgid "French Guiana"
+msgstr "फ्रेंच गयाना"
+
+#: includes/CountriesArray.php:80
+msgid "Guernsey and Alderney"
+msgstr "ग्वेर्नसे आणि अल्डरने"
+
+#: includes/CountriesArray.php:81
+msgid "Ghana"
+msgstr "घाना"
+
+#: includes/CountriesArray.php:82
+msgid "Gibraltar"
+msgstr "जिब्राल्टर"
+
+#: includes/CountriesArray.php:83
+msgid "Greenland"
+msgstr "ग्रीनलँड"
+
+#: includes/CountriesArray.php:84
+msgid "Gambia"
+msgstr "झांबिया"
+
+#: includes/CountriesArray.php:85
+msgid "Guinea"
+msgstr "गिनी"
+
+#: includes/CountriesArray.php:86
+msgid "Guadeloupe"
+msgstr "ग्वाडेलोप"
+
+#: includes/CountriesArray.php:87
+msgid "Greece"
+msgstr "ग्रीस"
+
+#: includes/CountriesArray.php:88
+msgid "Guatemala"
+msgstr "ग्वाटेमाला"
+
+#: includes/CountriesArray.php:89
+msgid "Guam"
+msgstr "गुआम"
+
+#: includes/CountriesArray.php:90
+msgid "Guinea-Bissau"
+msgstr "जिनिया - बीसाउ"
+
+#: includes/CountriesArray.php:91
+msgid "Guyana"
+msgstr "गयाना"
+
+#: includes/CountriesArray.php:92
+msgid "Hong Kong"
+msgstr "हाँगकाँग"
+
+#: includes/CountriesArray.php:93
+msgid "Honduras"
+msgstr "होंडरस"
+
+#: includes/CountriesArray.php:94
+msgid "Croatia"
+msgstr "क्रोएशिया"
+
+#: includes/CountriesArray.php:95
+msgid "Haiti"
+msgstr "हैती"
+
+#: includes/CountriesArray.php:96
+msgid "Hungary"
+msgstr "हंगेरी"
+
+#: includes/CountriesArray.php:97
+msgid "Indonesia"
+msgstr "इंडोनेशिया"
+
+#: includes/CountriesArray.php:98
+msgid "Ireland"
+msgstr "आयरलँड"
+
+#: includes/CountriesArray.php:99
+msgid "Israel"
+msgstr "इस्त्राइल"
+
+#: includes/CountriesArray.php:100
+msgid "India"
+msgstr "भारत"
+
+#: includes/CountriesArray.php:101
+msgid "Iraq"
+msgstr "ईराक"
+
+#: includes/CountriesArray.php:102
+msgid "Iran"
+msgstr "ईराण"
+
+#: includes/CountriesArray.php:103
+msgid "Iceland"
+msgstr "आइसलँड"
+
+#: includes/CountriesArray.php:104
+msgid "Italy"
+msgstr "इटली"
+
+#: includes/CountriesArray.php:105
+msgid "Jersey"
+msgstr "जर्सी"
+
+#: includes/CountriesArray.php:106
+msgid "Jamaica"
+msgstr "जमैका"
+
+#: includes/CountriesArray.php:107
+msgid "Jordan"
+msgstr "जॉर्डन"
+
+#: includes/CountriesArray.php:108
+msgid "Japan"
+msgstr "जपान"
+
+#: includes/CountriesArray.php:109
+msgid "Kenya"
+msgstr "केनिया"
+
+#: includes/CountriesArray.php:110
+msgid "Kyrgyzstan"
+msgstr "किरगिझस्तान"
+
+#: includes/CountriesArray.php:111
+msgid "Cambodia"
+msgstr "कंबोडिया"
+
+#: includes/CountriesArray.php:112
+msgid "Kiribati"
+msgstr "किरबाती"
+
+#: includes/CountriesArray.php:113
+msgid "Comoros"
+msgstr "कोमोरोझ"
+
+#: includes/CountriesArray.php:114
+msgid "Saint Kitts and Nevis"
+msgstr "सेंट किट्स आणि नेव्हिस"
+
+#: includes/CountriesArray.php:115
+msgid "Korea (South)"
+msgstr "कोरिया (दक्षिण)"
+
+#: includes/CountriesArray.php:116
+msgid "Kuwait"
+msgstr "कुवेत"
+
+#: includes/CountriesArray.php:117
+msgid "Cayman Islands"
+msgstr "केमॅन बेट"
+
+#: includes/CountriesArray.php:118
+msgid "Kazakhstan"
+msgstr "कझाकिस्तान"
+
+#: includes/CountriesArray.php:119
+msgid "Lao People s Dem. Rep."
+msgstr "लाओ लोकांचे चे डेमोक्रॅटिक. Rep."
+
+#: includes/CountriesArray.php:120
+msgid "Lebanon"
+msgstr "लेबनॉन"
+
+#: includes/CountriesArray.php:121
+msgid "Saint Lucia"
+msgstr "सेंट लुसिया"
+
+#: includes/CountriesArray.php:122
+msgid "Liechtenstein"
+msgstr "लिचेंस्टीन"
+
+#: includes/CountriesArray.php:123
+msgid "Sri Lanka"
+msgstr "श्रीलंका"
+
+#: includes/CountriesArray.php:124
+msgid "Lesotho"
+msgstr "लेसोथो"
+
+#: includes/CountriesArray.php:125
+msgid "Lithuania"
+msgstr "लिथुआनिया"
+
+#: includes/CountriesArray.php:126
+msgid "Luxembourg"
+msgstr "लक्झेंम्बर्ग"
+
+#: includes/CountriesArray.php:127
+msgid "Latvia"
+msgstr "लाटविया"
+
+#: includes/CountriesArray.php:128
+msgid "Libyan Arab Jamahiriya"
+msgstr "लिबियन अरब जमाहिराया"
+
+#: includes/CountriesArray.php:129
+msgid "Morocco"
+msgstr "मोरक्को"
+
+#: includes/CountriesArray.php:130
+msgid "Monaco"
+msgstr "मोनाको"
+
+#: includes/CountriesArray.php:131
+msgid "Moldova, Republic of"
+msgstr "मोल्दोव्हा, गणराज्य"
+
+#: includes/CountriesArray.php:132
+msgid "Montenegro"
+msgstr "माँटेनिग्रो"
+
+#: includes/CountriesArray.php:133
+msgid "Madagascar"
+msgstr "मादागास्कर"
+
+#: includes/CountriesArray.php:134
+msgid "Macedonia, TFYR"
+msgstr "मॅसिडोनिया, TFYR"
+
+#: includes/CountriesArray.php:135
+msgid "Mali"
+msgstr "माली"
+
+#: includes/CountriesArray.php:136
+msgid "Myanmar"
+msgstr "म्यानमार"
+
+#: includes/CountriesArray.php:137
+msgid "Mongolia"
+msgstr "मंगोलिया"
+
+#: includes/CountriesArray.php:138
+msgid "Macao, (China)"
+msgstr "मकाऊ, (चीन)"
+
+#: includes/CountriesArray.php:139
+msgid "Northern Mariana Islands"
+msgstr "नॉर्दर्न मेरियाना आयलँड्स"
+
+#: includes/CountriesArray.php:140
+msgid "Martinique"
+msgstr "मार्टीन्क"
+
+#: includes/CountriesArray.php:141
+msgid "Mauritania"
+msgstr "मॉरटानिया"
+
+#: includes/CountriesArray.php:142
+msgid "Malta"
+msgstr "माल्टा"
+
+#: includes/CountriesArray.php:143
+msgid "Mauritius"
+msgstr "मॉरिशस"
+
+#: includes/CountriesArray.php:144
+msgid "Maldives"
+msgstr "मालदीव"
+
+#: includes/CountriesArray.php:145
+msgid "Malawi"
+msgstr "मालवी"
+
+#: includes/CountriesArray.php:146
+msgid "Mexico"
+msgstr "मेक्सिको"
+
+#: includes/CountriesArray.php:147
+msgid "Malaysia"
+msgstr "मलेशिया"
+
+#: includes/CountriesArray.php:148
+msgid "Mozambique"
+msgstr "मोझांबिक"
+
+#: includes/CountriesArray.php:149
+msgid "Namibia"
+msgstr "नामीबिया"
+
+#: includes/CountriesArray.php:150
+msgid "New Caledonia"
+msgstr "न्यू कॅलेडोनिया"
+
+#: includes/CountriesArray.php:151
+msgid "Niger"
+msgstr "नायजर"
+
+#: includes/CountriesArray.php:152
+msgid "Nigeria"
+msgstr "नायजेरीया"
+
+#: includes/CountriesArray.php:153
+msgid "Nicaragua"
+msgstr "निकारागुआ"
+
+#: includes/CountriesArray.php:154
+msgid "Netherlands"
+msgstr "हॉलंड देश"
+
+#: includes/CountriesArray.php:155
+msgid "Norway"
+msgstr "नॉर्वे"
+
+#: includes/CountriesArray.php:156
+msgid "Nepal"
+msgstr "नेपाळ"
+
+#: includes/CountriesArray.php:157
+msgid "New Zealand"
+msgstr "न्यूझीलंड"
+
+#: includes/CountriesArray.php:158
+msgid "Oman"
+msgstr "ओमान"
+
+#: includes/CountriesArray.php:159
+msgid "Panama"
+msgstr "पनामा"
+
+#: includes/CountriesArray.php:160
+msgid "Peru"
+msgstr "पेरू"
+
+#: includes/CountriesArray.php:161
+msgid "French Polynesia"
+msgstr "फ्रेंच पॉलिनेशिया"
+
+#: includes/CountriesArray.php:162
+msgid "Papua New Guinea"
+msgstr "पापुआ न्यू गिनी"
+
+#: includes/CountriesArray.php:163
+msgid "Philippines"
+msgstr "फिलिपींस"
+
+#: includes/CountriesArray.php:164
+msgid "Pakistan"
+msgstr "पाकिस्तान"
+
+#: includes/CountriesArray.php:165
+msgid "Poland"
+msgstr "पोलंड"
+
+#: includes/CountriesArray.php:166
+msgid "Palestinian Territory"
+msgstr "पॅलेस्टिनी प्रदेश"
+
+#: includes/CountriesArray.php:167
+msgid "Portugal"
+msgstr "पोर्तुगाल"
+
+#: includes/CountriesArray.php:168
+msgid "Paraguay"
+msgstr "पराग्वे"
+
+#: includes/CountriesArray.php:169
+msgid "Qatar"
+msgstr "कतर"
+
+#: includes/CountriesArray.php:170
+msgid "Romania"
+msgstr "रोमानिया"
+
+#: includes/CountriesArray.php:171
+msgid "Serbia"
+msgstr "सर्बिया"
+
+#: includes/CountriesArray.php:172
+msgid "Russian Federation"
+msgstr "रशियन फेडरेशन"
+
+#: includes/CountriesArray.php:173
+msgid "Rwanda"
+msgstr "रवांडा"
+
+#: includes/CountriesArray.php:174
+msgid "Saudi Arabia"
+msgstr "सौदी अरेबिया"
+
+#: includes/CountriesArray.php:175
+msgid "Solomon Islands"
+msgstr "सोलोमन बेट"
+
+#: includes/CountriesArray.php:176
+msgid "Seychelles"
+msgstr "सेशल्स"
+
+#: includes/CountriesArray.php:177
+msgid "Sudan"
+msgstr "सूदान"
+
+#: includes/CountriesArray.php:178
+msgid "Sweden"
+msgstr "स्वीडन"
+
+#: includes/CountriesArray.php:179
+msgid "Singapore"
+msgstr "सिंगापुर"
+
+#: includes/CountriesArray.php:180
+msgid "Slovenia"
+msgstr "स्लोवेनिया"
+
+#: includes/CountriesArray.php:181
+msgid "Slovakia"
+msgstr "स्लोवाकिया"
+
+#: includes/CountriesArray.php:182
+msgid "San Marino"
+msgstr "सॅन मारीनो"
+
+#: includes/CountriesArray.php:183
+msgid "Senegal"
+msgstr "सेनेगल"
+
+#: includes/CountriesArray.php:184
+msgid "Somalia"
+msgstr "सोमालिया"
+
+#: includes/CountriesArray.php:185
+msgid "Suriname"
+msgstr "सूरीनाम"
+
+#: includes/CountriesArray.php:186
+msgid "Sao Tome and Principe"
+msgstr "साअटोम और प्रिंसिपे"
+
+#: includes/CountriesArray.php:187
+msgid "El Salvador"
+msgstr "अल साल्वाडोर"
+
+#: includes/CountriesArray.php:188
+msgid "Syrian Arab Republic"
+msgstr "सीरियन अरब प्रजासत्ताक"
+
+#: includes/CountriesArray.php:189
+msgid "Swaziland"
+msgstr "स्वाझीलँड"
+
+#: includes/CountriesArray.php:190
+msgid "Chad"
+msgstr "चाड"
+
+#: includes/CountriesArray.php:191
+msgid "Togo"
+msgstr "टोगो"
+
+#: includes/CountriesArray.php:192
+msgid "Thailand"
+msgstr "थायलँड"
+
+#: includes/CountriesArray.php:193
+msgid "Tajikistan"
+msgstr "ताजीकिस्तान"
+
+#: includes/CountriesArray.php:194
+msgid "East Timor (Timor-Leste)"
+msgstr "पूर्व तिमोर (तिमोर-लेस्टे)"
+
+#: includes/CountriesArray.php:195
+msgid "Turkmenistan"
+msgstr "तुर्कमेनिस्तान"
+
+#: includes/CountriesArray.php:196
+msgid "Tunisia"
+msgstr "ट्यूनीशिया"
+
+#: includes/CountriesArray.php:197
+msgid "Tonga"
+msgstr "टोंगा"
+
+#: includes/CountriesArray.php:198
+msgid "Turkey"
+msgstr "टर्की"
+
+#: includes/CountriesArray.php:199
+msgid "Trinidad and Tobago"
+msgstr "त्रिनिदाद आणि टोबॅगो"
+
 #: includes/CountriesArray.php:200
+msgid "Taiwan"
+msgstr "तैवान"
+
+#: includes/CountriesArray.php:201
+msgid "Tanzania, United Rep. of"
+msgstr "टांझानिया, युनायटेड Rep."
+
+#: includes/CountriesArray.php:202
+msgid "Ukraine"
+msgstr "यूक्रेन"
+
+#: includes/CountriesArray.php:203
+msgid "Uganda"
+msgstr "यूगांडा"
+
+#: includes/CountriesArray.php:204
 msgid "United States"
 msgstr "युनायटेड स्टेट्स"
 
-#: includes/CountriesArray.php:201
+#: includes/CountriesArray.php:205
 msgid "Uruguay"
 msgstr "उरुग्वे"
 
-#: includes/CountriesArray.php:202
+#: includes/CountriesArray.php:206
 msgid "Uzbekistan"
 msgstr "उझ्बेकिस्तान"
 
-#: includes/CountriesArray.php:203
+#: includes/CountriesArray.php:207
 msgid "St. Vincent and the Grenadines"
 msgstr "सेंट व्हिन्सेंट आणि ग्रेनेडीन्स"
 
-#: includes/CountriesArray.php:204
+#: includes/CountriesArray.php:208
 msgid "Venezuela"
 msgstr "व्हेनेझ्युएला"
 
-#: includes/CountriesArray.php:205
+#: includes/CountriesArray.php:209
 msgid "British Virgin Islands"
 msgstr "ब्रिटिश व्हर्जिन बेटे"
 
-#: includes/CountriesArray.php:206
+#: includes/CountriesArray.php:210
 msgid "Virgin Islands, U.S."
 msgstr "व्हर्जिन बेटे, यूएस"
 
-#: includes/CountriesArray.php:207
+#: includes/CountriesArray.php:211
 msgid "Viet Nam"
 msgstr "व्हिएतनाम"
 
-#: includes/CountriesArray.php:208
+#: includes/CountriesArray.php:212
 msgid "Vanuatu"
 msgstr "वनूआतु"
 
-#: includes/CountriesArray.php:209
+#: includes/CountriesArray.php:213
 msgid "Samoa"
 msgstr "समोआ"
 
-#: includes/CountriesArray.php:210
+#: includes/CountriesArray.php:214
 msgid "Yemen"
 msgstr "येमेन"
 
-#: includes/CountriesArray.php:211
-msgid "Zambia"
-msgstr "झांबिया"
-
-#: includes/CountriesArray.php:212
+#: includes/CountriesArray.php:215
 msgid "South Africa"
 msgstr "दक्षिण अफ्रीका"
 
-#: includes/CountriesArray.php:213
+#: includes/CountriesArray.php:216
+msgid "Zambia"
+msgstr "झांबिया"
+
+#: includes/CountriesArray.php:217
 msgid "Zimbabwe"
 msgstr "झिंबाब्वे"
 
@@ -51835,82 +51807,6 @@ msgstr ""
 msgid "Times Italic"
 msgstr ""
 
-#: reportwriter/languages/en_US/reports.php:318
-msgid "1"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:321
-msgid "4"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:322
-msgid "5"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:323
-msgid "6"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:324
-msgid "7"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:325
-msgid "8"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:326
-msgid "9"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:327
-msgid "10"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:328
-msgid "12"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:329
-msgid "14"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:330
-msgid "16"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:331
-msgid "18"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:332
-msgid "20"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:333
-msgid "24"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:334
-msgid "28"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:335
-msgid "32"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:336
-msgid "36"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:337
-msgid "40"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:338
-msgid "50"
-msgstr ""
-
 #: reportwriter/languages/en_US/reports.php:341
 msgid "Black"
 msgstr ""
@@ -53243,6 +53139,11 @@ msgstr "क्रेडिट कार्ड"
 #: ../webSHOP/includes/session.php:162
 msgid "Bank Transfer"
 msgstr "बँक हस्तांतरण"
+
+#~ msgid ""
+#~ "Check this box to display all accounts including those accounts with no "
+#~ "balance"
+#~ msgstr "शिल्लक नाही सह त्या खात्यांमध्ये सर्व खाती प्रदर्शित करण्यासाठी हे बॉक्स तपासा"
 
 #~ msgid "Show Transactions"
 #~ msgstr "दर्शवा व्यवहार"

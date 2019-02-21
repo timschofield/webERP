@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-17 12:45-0600\n"
+"POT-Creation-Date: 2019-02-20 19:25-0600\n"
 "PO-Revision-Date: 2013-06-01 11:24-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: Estonian <kalmer.piiskop@eesti.ee>\n"
@@ -18,68 +18,68 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 "X-Launchpad-Export-Date: 2011-03-31 06:24+0000\n"
 
-#: AccountGroups.php:5 includes/MainMenuLinksArray.php:190
+#: AccountGroups.php:6 includes/MainMenuLinksArray.php:190
 msgid "Account Groups"
 msgstr "Kontogrupid"
 
-#: AccountGroups.php:18
+#: AccountGroups.php:19
 msgid ""
 "An error occurred in retrieving the account groups of the parent account "
 "group during the check for recursion"
 msgstr "Rekursiooni ajal emagrupist kontogruppide otsimisel ilmnes viga"
 
-#: AccountGroups.php:19
+#: AccountGroups.php:20
 msgid ""
 "The SQL that was used to retrieve the account groups of the parent account "
 "group and that failed in the process was"
 msgstr "SQL, mis emagrupist kontogruppide otsimisel ebaõnnestus, on"
 
-#: AccountGroups.php:44
+#: AccountGroups.php:45
 msgid "An error occurred in moving the account group"
 msgstr ""
 
-#: AccountGroups.php:45
+#: AccountGroups.php:46
 msgid "The SQL that was used to move the account group was"
 msgstr ""
 
-#: AccountGroups.php:47 AccountGroups.php:325
+#: AccountGroups.php:48 AccountGroups.php:326
 msgid "Review Account Groups"
 msgstr "Kontogruppide ülevaade"
 
-#: AccountGroups.php:48
+#: AccountGroups.php:49
 msgid "All accounts in the account group:"
 msgstr ""
 
-#: AccountGroups.php:48
+#: AccountGroups.php:49
 msgid "have been changed to the account group:"
 msgstr ""
 
-#: AccountGroups.php:67 AccountGroups.php:104 AccountGroups.php:206
-#: AccountGroups.php:241
+#: AccountGroups.php:68 AccountGroups.php:105 AccountGroups.php:207
+#: AccountGroups.php:242
 msgid "The SQL that was used to retrieve the information was"
 msgstr "SQL, mida antud informatsiooni otsimisel kasutati, on"
 
-#: AccountGroups.php:68
+#: AccountGroups.php:69
 msgid "Could not check whether the group exists because"
 msgstr "Ei suutnud kontrollida, kas grupp eksisteerib, kuna"
 
-#: AccountGroups.php:75
+#: AccountGroups.php:76
 msgid "The account group name already exists in the database"
 msgstr "Kontogrupi nimi juba eksisteerib andmebaasis"
 
-#: AccountGroups.php:81
+#: AccountGroups.php:82
 msgid "The account group name cannot contain the character"
 msgstr "Kontogrupi nimes ei tohi sisalduda tähemärki"
 
-#: AccountGroups.php:81 Departments.php:29 TaxCategories.php:31
+#: AccountGroups.php:82 Departments.php:29 TaxCategories.php:31
 msgid "or the character"
 msgstr "või tähemärki"
 
-#: AccountGroups.php:87
+#: AccountGroups.php:88
 msgid "The account group name must be at least one character long"
 msgstr "Kontogrupi nimi peab olema vähemalt ühe tähemärgi pikkune"
 
-#: AccountGroups.php:94
+#: AccountGroups.php:95
 msgid ""
 "The parent account group selected appears to result in a recursive account "
 "structure - select an alternative parent account group or make this group a "
@@ -88,11 +88,11 @@ msgstr ""
 "Valitud emagrupp tundub olevat rekursiivse kontostruktuuriga - vali mõni "
 "teine emagrupp või muuda see grupp kõrgeima taseme kontogrupiks"
 
-#: AccountGroups.php:105
+#: AccountGroups.php:106
 msgid "Could not check whether the group is recursive because"
 msgstr "Ei suutnud kontrollida, kas grupp on rekursiivne, kuna"
 
-#: AccountGroups.php:113
+#: AccountGroups.php:114
 msgid ""
 "Since this account group is a child group, the sequence in the trial "
 "balance, the section in the accounts and whether or not the account group "
@@ -101,55 +101,55 @@ msgid ""
 "will have no effect."
 msgstr ""
 
-#: AccountGroups.php:118
+#: AccountGroups.php:119
 msgid "The section in accounts must be an integer"
 msgstr "Jaotis peab olema täisarv"
 
-#: AccountGroups.php:124
+#: AccountGroups.php:125
 msgid "The sequence in the trial balance must be an integer"
 msgstr "Järgnevus proovibilansi all peab olema täisarv"
 
-#: AccountGroups.php:130
+#: AccountGroups.php:131
 msgid "The sequence in the TB must be numeric and less than"
 msgstr "Järgnevus proovibilansi all peab olema numbriline ja vähem kui"
 
-#: AccountGroups.php:146
+#: AccountGroups.php:147
 msgid "An error occurred in renaming the account group"
 msgstr ""
 
-#: AccountGroups.php:147
+#: AccountGroups.php:148
 msgid "The SQL that was used to rename the account group was"
 msgstr ""
 
-#: AccountGroups.php:166
+#: AccountGroups.php:167
 msgid "An error occurred in updating the account group"
 msgstr "Kontogrupi uuendamisel ilmnes viga"
 
-#: AccountGroups.php:167
+#: AccountGroups.php:168
 msgid "The SQL that was used to update the account group was"
 msgstr "SQL, mida kasutati kontogrupi uuendamisel, on"
 
-#: AccountGroups.php:169 AccountSections.php:97 PaymentMethods.php:100
+#: AccountGroups.php:170 AccountSections.php:97 PaymentMethods.php:100
 msgid "Record Updated"
 msgstr "Kirje uuendatud"
 
-#: AccountGroups.php:185
+#: AccountGroups.php:186
 msgid "An error occurred in inserting the account group"
 msgstr "Kontogrupi sisestamisel ilmnes viga"
 
-#: AccountGroups.php:186
+#: AccountGroups.php:187
 msgid "The SQL that was used to insert the account group was"
 msgstr "SQL, mida kasutati selle kontogrupi sisestamiseks, on"
 
-#: AccountGroups.php:187 AccountSections.php:107
+#: AccountGroups.php:188 AccountSections.php:107
 msgid "Record inserted"
 msgstr "Kirje sisestatud"
 
-#: AccountGroups.php:205
+#: AccountGroups.php:206
 msgid "An error occurred in retrieving the group information from chartmaster"
 msgstr "Grupi info otsimisel chartmaster'ist ilmnes viga"
 
-#: AccountGroups.php:210
+#: AccountGroups.php:211
 msgid ""
 "Cannot delete this account group because general ledger accounts have been "
 "created using this group"
@@ -157,9 +157,9 @@ msgstr ""
 "Ei saa seda kontogruppi kustutada, kuna üldised raamatupidamiskontod on "
 "loodud seda gruppi kasutades"
 
-#: AccountGroups.php:211 AccountGroups.php:246 AccountSections.php:129
+#: AccountGroups.php:212 AccountGroups.php:247 AccountSections.php:129
 #: Areas.php:114 Areas.php:123 BankAccounts.php:165 CreditStatus.php:124
-#: Currencies.php:247 Currencies.php:255 Currencies.php:263 Currencies.php:273
+#: Currencies.php:252 Currencies.php:260 Currencies.php:268 Currencies.php:278
 #: CustomerBranches.php:292 CustomerBranches.php:302 CustomerBranches.php:312
 #: CustomerBranches.php:322 CustomerBranches.php:332 Customers.php:295
 #: Customers.php:304 Customers.php:312 Customers.php:323 Customers.php:333
@@ -181,54 +181,54 @@ msgstr ""
 msgid "There are"
 msgstr "On olemas"
 
-#: AccountGroups.php:211
+#: AccountGroups.php:212
 msgid "general ledger accounts that refer to this account group"
 msgstr "üldised raamatupidamiskontod, mis viitavad sellele kontogrupile"
 
-#: AccountGroups.php:218 AccountGroups.php:289 AccountGroups.php:427
+#: AccountGroups.php:219 AccountGroups.php:290 AccountGroups.php:428
 msgid "Parent Group"
 msgstr "Emagrupp"
 
-#: AccountGroups.php:234
+#: AccountGroups.php:235
 msgid "Move Group"
 msgstr ""
 
-#: AccountGroups.php:240
+#: AccountGroups.php:241
 msgid "An error occurred in retrieving the parent group information"
 msgstr "Emagrupi info otsimisel ilmnes viga"
 
-#: AccountGroups.php:245
+#: AccountGroups.php:246
 msgid ""
 "Cannot delete this account group because it is a parent account group of "
 "other account group(s)"
 msgstr ""
 "Ei saa seda kontogruppi kustutada, kuna see on teiste kontogruppide emagrupp"
 
-#: AccountGroups.php:246
+#: AccountGroups.php:247
 msgid "account groups that have this group as its/there parent account group"
 msgstr "kontogrupid, kelle jaoks see grupp on nende emagrupp"
 
-#: AccountGroups.php:250
+#: AccountGroups.php:251
 msgid "An error occurred in deleting the account group"
 msgstr "Kontogrupi kustutamisel ilmnes viga"
 
-#: AccountGroups.php:251
+#: AccountGroups.php:252
 msgid "The SQL that was used to delete the account group was"
 msgstr "SQL, mida kontogrupi kustutamisel kasutati, on"
 
-#: AccountGroups.php:253
+#: AccountGroups.php:254
 msgid "group has been deleted"
 msgstr "grupp on kustutatud"
 
-#: AccountGroups.php:277
+#: AccountGroups.php:278
 msgid "The sql that was used to retrieve the account group information was "
 msgstr "SQL, mida kontogrupi info otsimiseks kasutati, on "
 
-#: AccountGroups.php:278
+#: AccountGroups.php:279
 msgid "Could not get account groups because"
 msgstr "Ei saanud kontogruppe kätte, kuna"
 
-#: AccountGroups.php:280 AddCustomerContacts.php:27 AddCustomerContacts.php:29
+#: AccountGroups.php:281 AddCustomerContacts.php:27 AddCustomerContacts.php:29
 #: AddCustomerNotes.php:100 AddCustomerTypeNotes.php:93 AgedDebtors.php:453
 #: AgedSuppliers.php:275 Areas.php:143 AuditTrail.php:10 BOMExtendedQty.php:255
 #: BOMIndented.php:250 BOMIndentedReverse.php:238 BOMInquiry.php:179
@@ -277,34 +277,34 @@ msgstr "Ei saanud kontogruppe kätte, kuna"
 msgid "Search"
 msgstr ""
 
-#: AccountGroups.php:285
+#: AccountGroups.php:286
 msgid "Group Name"
 msgstr "Grupi nimi"
 
-#: AccountGroups.php:286 EDIMessageFormat.php:128 EDIMessageFormat.php:198
+#: AccountGroups.php:287 EDIMessageFormat.php:128 EDIMessageFormat.php:198
 msgid "Section"
 msgstr "Jaotis"
 
-#: AccountGroups.php:287 AccountGroups.php:476
+#: AccountGroups.php:288 AccountGroups.php:477
 msgid "Sequence In TB"
 msgstr "Järgnevus proovibilansis"
 
-#: AccountGroups.php:288 AccountGroups.php:464 GLProfit_Loss.php:25
+#: AccountGroups.php:289 AccountGroups.php:465 GLProfit_Loss.php:25
 #: GLProfit_Loss.php:179 GLProfit_Loss.php:180 GLProfit_Loss.php:232
 #: SelectGLAccount.php:22 SelectGLAccount.php:40 SelectGLAccount.php:62
 msgid "Profit and Loss"
 msgstr "Kasum ja kahjum"
 
-#: AccountGroups.php:299 AccountGroups.php:302 AccountGroups.php:468
-#: AccountGroups.php:471 AddCustomerContacts.php:157
+#: AccountGroups.php:300 AccountGroups.php:303 AccountGroups.php:469
+#: AccountGroups.php:472 AddCustomerContacts.php:157
 #: AddCustomerContacts.php:267 AddCustomerContacts.php:271
 #: AddCustomerContacts.php:274 BOMs.php:120 BOMs.php:524 BOMs.php:526
 #: BOMs_SingleLevel.php:123 BOMs_SingleLevel.php:786 BOMs_SingleLevel.php:788
 #: CompanyPreferences.php:422 CompanyPreferences.php:424
 #: CompanyPreferences.php:437 CompanyPreferences.php:439
 #: CompanyPreferences.php:452 CompanyPreferences.php:454
-#: ContractCosting.php:201 Currencies.php:337 Currencies.php:515
-#: Currencies.php:517 CustomerBranches.php:440 Customers.php:658
+#: ContractCosting.php:201 Currencies.php:342 Currencies.php:490
+#: Currencies.php:492 CustomerBranches.php:440 Customers.php:658
 #: Customers.php:1048 Customers.php:1054 Customers.php:1057
 #: DailyBankTransactions.php:201 DailyBankTransactions.php:206
 #: DeliveryDetails.php:1142 DeliveryDetails.php:1183 DeliveryDetails.php:1186
@@ -368,7 +368,7 @@ msgstr "Kasum ja kahjum"
 msgid "Yes"
 msgstr "Jah"
 
-#: AccountGroups.php:305 AccountGroups.php:467 AccountGroups.php:470
+#: AccountGroups.php:306 AccountGroups.php:468 AccountGroups.php:471
 #: AddCustomerContacts.php:157 AddCustomerContacts.php:266
 #: AddCustomerContacts.php:270 AddCustomerContacts.php:273 BankAccounts.php:213
 #: BankAccounts.php:409 BankAccounts.php:411 BankAccounts.php:415
@@ -377,8 +377,8 @@ msgstr "Jah"
 #: CompanyPreferences.php:421 CompanyPreferences.php:425
 #: CompanyPreferences.php:436 CompanyPreferences.php:440
 #: CompanyPreferences.php:451 CompanyPreferences.php:455
-#: ContractCosting.php:199 Currencies.php:339 Currencies.php:520
-#: Currencies.php:522 CustomerBranches.php:440 Customers.php:657
+#: ContractCosting.php:199 Currencies.php:344 Currencies.php:495
+#: Currencies.php:497 CustomerBranches.php:440 Customers.php:657
 #: Customers.php:1046 Customers.php:1053 Customers.php:1056
 #: DailyBankTransactions.php:203 DailyBankTransactions.php:206
 #: DeliveryDetails.php:1143 DeliveryDetails.php:1184 DeliveryDetails.php:1187
@@ -443,11 +443,11 @@ msgstr "Jah"
 msgid "No"
 msgstr "Ei"
 
-#: AccountGroups.php:315 AccountSections.php:190 AddCustomerContacts.php:149
+#: AccountGroups.php:316 AccountSections.php:190 AddCustomerContacts.php:149
 #: AddCustomerNotes.php:128 AddCustomerTypeNotes.php:122 Areas.php:155
 #: BankAccounts.php:240 BOMs.php:156 BOMs_SingleLevel.php:151
 #: COGSGLPostings.php:107 COGSGLPostings.php:208 CreditStatus.php:167
-#: Currencies.php:369 Currencies.php:386 CustItem.php:160
+#: Currencies.php:358 Currencies.php:373 CustItem.php:160
 #: CustomerBranches.php:444 Customers.php:1130 Customers.php:1158
 #: CustomerTypes.php:199 Departments.php:177 EDIMessageFormat.php:140
 #: Employees.php:173 Factors.php:327 FixedAssetCategories.php:181
@@ -478,16 +478,16 @@ msgstr "Ei"
 msgid "Edit"
 msgstr "Redigeeri"
 
-#: AccountGroups.php:316
+#: AccountGroups.php:317
 msgid "Are you sure you wish to delete this account group?"
 msgstr ""
 
-#: AccountGroups.php:316 AccountSections.php:195 AddCustomerContacts.php:150
+#: AccountGroups.php:317 AccountSections.php:195 AddCustomerContacts.php:150
 #: AddCustomerNotes.php:129 AddCustomerTypeNotes.php:123 Areas.php:156
 #: BankAccounts.php:241 BOMs.php:169 BOMs_SingleLevel.php:152
 #: COGSGLPostings.php:108 COGSGLPostings.php:209 ContractBOM.php:263
 #: ContractOtherReqts.php:115 CounterReturns.php:733 CounterSales.php:830
-#: Credit_Invoice.php:419 CreditStatus.php:168 Currencies.php:372
+#: Credit_Invoice.php:419 CreditStatus.php:168 Currencies.php:359
 #: CustItem.php:161 CustomerReceipt.php:1015 Customers.php:1159
 #: CustomerTypes.php:200 Departments.php:178 DiscountCategories.php:229
 #: DiscountMatrix.php:174 EDIMessageFormat.php:141 Employees.php:174
@@ -526,25 +526,25 @@ msgstr ""
 msgid "Delete"
 msgstr "Kustuta"
 
-#: AccountGroups.php:345
+#: AccountGroups.php:346
 msgid "An error occurred in retrieving the account group information"
 msgstr "Kontogrupi info otsimisel ilmnes viga"
 
-#: AccountGroups.php:346
+#: AccountGroups.php:347
 msgid ""
 "The SQL that was used to retrieve the account group and that failed in the "
 "process was"
 msgstr "SQL, mis kontogrupi otsimise protsessi käigus ebaõnnestus, on"
 
-#: AccountGroups.php:349
+#: AccountGroups.php:350
 msgid "The account group name does not exist in the database"
 msgstr ""
 
-#: AccountGroups.php:364
+#: AccountGroups.php:365
 msgid "Edit Account Group Details"
 msgstr ""
 
-#: AccountGroups.php:371 CompanyPreferences.php:465
+#: AccountGroups.php:372 CompanyPreferences.php:465
 #: ConfirmDispatch_Invoice.php:717 ConfirmDispatch_Invoice.php:1814
 #: Credit_Invoice.php:1633 CustItem.php:444 FixedAssetItems.php:131
 #: FixedAssetItems.php:682 GLAccountUsers.php:149 GLBudgets.php:239
@@ -566,13 +566,13 @@ msgstr ""
 msgid "Update"
 msgstr ""
 
-#: AccountGroups.php:373 AccountGroups.php:413 AnalysisHorizontalIncome.php:143
-#: AnalysisHorizontalIncome.php:537 AnalysisHorizontalPosition.php:78
-#: AnalysisHorizontalPosition.php:354 FormDesigner.php:202 FormDesigner.php:350
+#: AccountGroups.php:374 AccountGroups.php:414 AnalysisHorizontalIncome.php:94
+#: AnalysisHorizontalIncome.php:587 AnalysisHorizontalPosition.php:86
+#: AnalysisHorizontalPosition.php:406 FormDesigner.php:202 FormDesigner.php:350
 #: GLAccountUsers.php:239 GLBalanceSheet.php:111 GLBalanceSheet.php:699
 #: GLCashFlowsIndirect.php:785 GLCashFlowsIndirect.php:812
 #: GLCashFlowsSetup.php:174 GLProfit_Loss.php:168 GLProfit_Loss.php:1238
-#: GLStatements.php:160 GLStatements.php:187 GLTagProfit_Loss.php:152
+#: GLStatements.php:159 GLStatements.php:186 GLTagProfit_Loss.php:152
 #: GLTagProfit_Loss.php:942 GLTrialBalance.php:702
 #: InternalStockRequestInquiry.php:261 PDFPriceList.php:498
 #: PurchasesReport.php:219 PurchasesReport.php:243 SalesReport.php:219
@@ -582,47 +582,47 @@ msgstr ""
 msgid "Return"
 msgstr ""
 
-#: AccountGroups.php:404
+#: AccountGroups.php:405
 msgid "New Account Group Details"
 msgstr ""
 
-#: AccountGroups.php:411 GLTags.php:68 SecurityTokens.php:153
+#: AccountGroups.php:412 GLTags.php:68 SecurityTokens.php:153
 #: Z_ImportDebtors.php:625 Z_ImportDebtors.php:627 Z_ImportSuppliers.php:335
 #: Z_ImportSuppliers.php:337
 msgid "Insert"
 msgstr ""
 
-#: AccountGroups.php:423
+#: AccountGroups.php:424
 msgid "Account Group Name"
 msgstr "Kontogrupi nimi"
 
-#: AccountGroups.php:424
+#: AccountGroups.php:425
 msgid "Enter the account group name"
 msgstr ""
 
-#: AccountGroups.php:424
+#: AccountGroups.php:425
 msgid ""
 "A unique name for the account group must be entered - at least 3 characters "
 "long and less than 30 characters long. Only alpha numeric characters can be "
 "used."
 msgstr ""
 
-#: AccountGroups.php:433
+#: AccountGroups.php:434
 msgid "Top Level Group"
 msgstr "Kõrgeima taseme grupp"
 
-#: AccountGroups.php:447
+#: AccountGroups.php:448
 msgid "Section In Accounts"
 msgstr "Jaotis kontode all"
 
-#: AccountGroups.php:465
+#: AccountGroups.php:466
 msgid ""
 "Select YES if this account group will contain accounts that will consist of "
 "only profit and loss accounts or NO if the group will contain balance sheet "
 "account"
 msgstr ""
 
-#: AccountGroups.php:477
+#: AccountGroups.php:478
 msgid ""
 "Enter the sequence number that this account group and its child general "
 "ledger accounts should display in the trial balance"
@@ -701,7 +701,7 @@ msgstr ""
 #: AccountSections.php:279 AddCustomerContacts.php:289 AddCustomerNotes.php:234
 #: AddCustomerTypeNotes.php:213 Areas.php:220 BankAccounts.php:430 BOMs.php:547
 #: BOMs_SingleLevel.php:802 COGSGLPostings.php:357 CreditStatus.php:251
-#: Currencies.php:532 CustLoginSetup.php:272 Departments.php:249
+#: Currencies.php:507 CustLoginSetup.php:272 Departments.php:249
 #: DiscountMatrix.php:141 EDIMessageFormat.php:238 Employees.php:357
 #: FixedAssetCategories.php:341 FixedAssetLocations.php:163
 #: FreightCosts.php:363 GeocodeSetup.php:262 GLAccounts.php:283 Labels.php:632
@@ -825,7 +825,7 @@ msgid "Statement"
 msgstr "Teadaanne"
 
 #: AddCustomerContacts.php:137 AddCustomerContacts.php:281
-#: AnalysisHorizontalIncome.php:191 AnalysisHorizontalPosition.php:122
+#: AnalysisHorizontalIncome.php:242 AnalysisHorizontalPosition.php:175
 #: Customers.php:1121 Customers.php:1129 GLCashFlowsIndirect.php:155
 #: GLCashFlowsIndirect.php:467 GLStatements.php:116
 #: PcAssignCashTabToTab.php:289 PcAssignCashTabToTab.php:441
@@ -1324,7 +1324,7 @@ msgstr "Kliendi tegemata tehingute detailid"
 msgid "could not be retrieved because"
 msgstr "ei saanud otsida, kuna"
 
-#: AgedDebtors.php:374 AgedSuppliers.php:199 AnalysisHorizontalIncome.php:222
+#: AgedDebtors.php:374 AgedSuppliers.php:199 AnalysisHorizontalIncome.php:273
 #: Areas.php:93 ConfirmDispatch_Invoice.php:184 ConfirmDispatch_Invoice.php:237
 #: ConfirmDispatch_Invoice.php:1022 ConfirmDispatch_Invoice.php:1089
 #: ConfirmDispatch_Invoice.php:1103 Contracts.php:598 CounterReturns.php:1012
@@ -1509,7 +1509,7 @@ msgstr "Tarnijatele, kes kauplevad"
 msgid "Summary or Detailed Report"
 msgstr "Kokkuvõttev või detailne raport"
 
-#: AnalysisHorizontalIncome.php:10 AnalysisHorizontalPosition.php:9
+#: AnalysisHorizontalIncome.php:26 AnalysisHorizontalPosition.php:26
 #: BankAccounts.php:366 BOMs.php:118 BOMs.php:124 BOMs.php:132 BOMs.php:1095
 #: BOMs_SingleLevel.php:121 BOMs_SingleLevel.php:127 BOMs_SingleLevel.php:135
 #: BOMs_SingleLevel.php:909 PaymentTerms.php:189 PaymentTerms.php:195
@@ -1524,26 +1524,24 @@ msgstr "Kokkuvõttev või detailne raport"
 msgid "N/A"
 msgstr "Pole saadaval"
 
-#: AnalysisHorizontalIncome.php:17 AnalysisHorizontalIncome.php:39
-#: AnalysisHorizontalIncome.php:168 AnalysisHorizontalIncome.php:169
-#: includes/MainMenuLinksArray.php:167
+#: AnalysisHorizontalIncome.php:33 includes/MainMenuLinksArray.php:167
 msgid "Horizontal Analysis of Statement of Comprehensive Income"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:25 GLTagProfit_Loss.php:14
+#: AnalysisHorizontalIncome.php:63 GLTagProfit_Loss.php:14
 #: Z_UpdateChartDetailsBFwd.php:13
 msgid "The selected period from is actually after the period to"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:25 GLTagProfit_Loss.php:14
+#: AnalysisHorizontalIncome.php:63 GLTagProfit_Loss.php:14
 msgid "Please reselect the reporting period"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:38
-msgid "Print Horizontal Analysis of Statement of Comprehensive Income"
+#: AnalysisHorizontalIncome.php:77
+msgid "Shows the horizontal analysis of the statement of comprehensive income."
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:42 AnalysisHorizontalPosition.php:30
+#: AnalysisHorizontalIncome.php:78 AnalysisHorizontalPosition.php:70
 msgid ""
 "Horizontal analysis (also known as trend analysis) is a financial statement "
 "analysis technique that shows changes in the amounts of corresponding "
@@ -1551,7 +1549,7 @@ msgid ""
 "evaluate trend situations."
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:43 AnalysisHorizontalPosition.php:31
+#: AnalysisHorizontalIncome.php:79 AnalysisHorizontalPosition.php:71
 msgid ""
 "The statements for two periods are used in horizontal analysis. The earliest "
 "period is used as the base period. The items on the later statement are "
@@ -1559,31 +1557,51 @@ msgid ""
 "shown both in currency (actual change) and percentage (relative change)."
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:44 AnalysisHorizontalPosition.php:32
+#: AnalysisHorizontalIncome.php:80 AnalysisHorizontalPosition.php:72
+#: GLBalanceSheet.php:56 GLCashFlowsIndirect.php:796 GLProfit_Loss.php:74
+#: GLStatements.php:170
 msgid ""
-"webERP is an \"accrual\" based system (not a \"cash based\" system).  "
-"Accrual systems include items when they are invoiced to the customer, and "
-"when expenses are owed based on the supplier invoice date."
+"webERP is an \"accrual\" based system (not a \"cash based\" system). Accrual "
+"systems include items when they are invoiced to the customer, and when "
+"expenses are owed based on the supplier invoice date."
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:51 GLCashFlowsIndirect.php:820
-#: GLProfit_Loss.php:83 GLStatements.php:195 GLTrialBalance.php:70
+#: AnalysisHorizontalIncome.php:87 AnalysisHorizontalPosition.php:79
+#: GLCashFlowsIndirect.php:805 GLStatements.php:179 PurchasesReport.php:236
+#: SalesReport.php:236
+msgid "Report Parameters"
+msgstr ""
+
+#: AnalysisHorizontalIncome.php:93 AnalysisHorizontalPosition.php:85
+#: CollectiveWorkOrderCost.php:511 FormDesigner.php:201
+#: GLCashFlowsIndirect.php:811 GLStatements.php:185
+#: HistoricalTestResults.php:81 InternalStockRequest.php:296
+#: MailingGroupMaintenance.php:145 MRPCreateDemands.php:286 PDFCOA.php:42
+#: PDFCOA.php:72 PDFProdSpec.php:30 PDFProdSpec.php:56 PricesByCost.php:296
+#: ProductSpecs.php:99 ProductSpecs.php:126 PurchasesReport.php:242
+#: ReorderLevelLocation.php:193 SalesReport.php:242
+#: SupplierGRNAndInvoiceInquiry.php:46
+msgid "Submit"
+msgstr ""
+
+#: AnalysisHorizontalIncome.php:103 GLCashFlowsIndirect.php:820
+#: GLProfit_Loss.php:83 GLStatements.php:194 GLTrialBalance.php:70
 msgid "Select period from"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:87 GLCashFlowsIndirect.php:840
-#: GLProfit_Loss.php:118 GLStatements.php:215 GLTrialBalance.php:95
+#: AnalysisHorizontalIncome.php:140 GLCashFlowsIndirect.php:840
+#: GLProfit_Loss.php:118 GLStatements.php:214 GLTrialBalance.php:95
 msgid "Select period to"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:114 BOMInquiry.php:27 BOMs.php:971
+#: AnalysisHorizontalIncome.php:167 BOMInquiry.php:27 BOMs.php:971
 #: BOMs.php:1071 BOMs_SingleLevel.php:882 CollectiveWorkOrderCost.php:314
 #: ContractBOM.php:324 ContractBOM.php:329 Contracts.php:765 Contracts.php:768
 #: CounterReturns.php:1650 CounterSales.php:2220 CustItem.php:215
 #: CustomerReceipt.php:1217 CustomerReceipt.php:1220 DiscountCategories.php:120
 #: DiscountCategories.php:122 DiscountCategories.php:126
 #: DiscountCategories.php:128 FixedAssetTransfer.php:93 GLAccountGraph.php:156
-#: GLCashFlowsIndirect.php:858 GLProfit_Loss.php:136 GLStatements.php:233
+#: GLCashFlowsIndirect.php:858 GLProfit_Loss.php:136 GLStatements.php:232
 #: GLTagProfit_Loss.php:103 GLTrialBalance.php:113
 #: InternalStockRequestInquiry.php:228 InternalStockRequest.php:359
 #: MRPDemands.php:332 MRPDemands.php:335 MRPReport.php:568 PO_Header.php:544
@@ -1604,86 +1622,80 @@ msgstr ""
 msgid "OR"
 msgstr "või"
 
-#: AnalysisHorizontalIncome.php:123 GLAccountGraph.php:161
-#: GLCashFlowsIndirect.php:862 GLProfit_Loss.php:140 GLStatements.php:237
+#: AnalysisHorizontalIncome.php:176 GLAccountGraph.php:161
+#: GLCashFlowsIndirect.php:862 GLProfit_Loss.php:140 GLStatements.php:236
 #: GLTagProfit_Loss.php:112 GLTrialBalance.php:117 SalesGraph.php:103
 msgid "Select Period"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:127 AnalysisHorizontalPosition.php:62
+#: AnalysisHorizontalIncome.php:181 AnalysisHorizontalPosition.php:118
 msgid "Detail or summary"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:128 AnalysisHorizontalPosition.php:63
+#: AnalysisHorizontalIncome.php:182 AnalysisHorizontalPosition.php:119
 #: GLBalanceSheet.php:86
 msgid "Selecting Summary will show on the totals at the account group level"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:129 AnalysisHorizontalIncome.php:180
-#: AnalysisHorizontalPosition.php:64 AnalysisHorizontalPosition.php:111
+#: AnalysisHorizontalIncome.php:183 AnalysisHorizontalIncome.php:231
+#: AnalysisHorizontalPosition.php:120 AnalysisHorizontalPosition.php:164
 #: EDIMessageFormat.php:214 EDIMessageFormat.php:216 GLBalanceSheet.php:88
 #: GLBalanceSheet.php:91 GLProfit_Loss.php:148 GLTagProfit_Loss.php:141
 #: POReport.php:1504 SalesInquiry.php:1080 Tax.php:454
 msgid "Summary"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:130 AnalysisHorizontalPosition.php:65
+#: AnalysisHorizontalIncome.php:184 AnalysisHorizontalPosition.php:121
 #: GLBalanceSheet.php:89 GLBalanceSheet.php:92 GLProfit_Loss.php:149
 #: GLTagProfit_Loss.php:142
 msgid "All Accounts"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:134 AnalysisHorizontalPosition.php:69
-msgid "Show all accounts including zero balances"
+#: AnalysisHorizontalIncome.php:189 AnalysisHorizontalPosition.php:126
+#: GLBalanceSheet.php:98 GLCashFlowsIndirect.php:875 GLProfit_Loss.php:155
+#: GLStatements.php:249
+msgid "Show accounts with zero balance"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:135 AnalysisHorizontalPosition.php:70
-msgid ""
-"Check this box to display all accounts including those accounts with no "
-"balance"
+#: AnalysisHorizontalIncome.php:191 AnalysisHorizontalPosition.php:128
+#: GLStatements.php:251
+msgid "Check this box to show accounts with zero balance"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:140 AnalysisHorizontalIncome.php:141
-#: AnalysisHorizontalPosition.php:75 AnalysisHorizontalPosition.php:76
-#: GLBalanceSheet.php:106 GLBalanceSheet.php:107 GLProfit_Loss.php:163
-#: GLProfit_Loss.php:164
-msgid "Show on Screen (HTML)"
-msgstr ""
-
-#: AnalysisHorizontalIncome.php:153 GLProfit_Loss.php:191 GLProfit_Loss.php:620
+#: AnalysisHorizontalIncome.php:205 GLProfit_Loss.php:191 GLProfit_Loss.php:620
 #: GLTagProfit_Loss.php:176 GLTagProfit_Loss.php:495
 msgid "A period up to 12 months in duration can be specified"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:153 GLProfit_Loss.php:191 GLProfit_Loss.php:620
+#: AnalysisHorizontalIncome.php:205 GLProfit_Loss.php:191 GLProfit_Loss.php:620
 #: GLTagProfit_Loss.php:176 GLTagProfit_Loss.php:495
 msgid ""
 "the system automatically shows a comparative for the same period from the "
 "previous year"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:153 GLProfit_Loss.php:191 GLProfit_Loss.php:620
+#: AnalysisHorizontalIncome.php:205 GLProfit_Loss.php:191 GLProfit_Loss.php:620
 #: GLTagProfit_Loss.php:176 GLTagProfit_Loss.php:495
 msgid "it cannot do this if a period of more than 12 months is specified"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:153 GLProfit_Loss.php:191 GLProfit_Loss.php:620
+#: AnalysisHorizontalIncome.php:205 GLProfit_Loss.php:191 GLProfit_Loss.php:620
 #: GLTagProfit_Loss.php:176 GLTagProfit_Loss.php:495
 msgid "Please select an alternative period range"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:171 FreightCosts.php:75 GLProfit_Loss.php:667
+#: AnalysisHorizontalIncome.php:222 FreightCosts.php:75 GLProfit_Loss.php:667
 #: MRPReport.php:440 SalesGraph.php:259 SalesGraph.php:267 Timesheets.php:590
 msgid "For"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:171 GLProfit_Loss.php:667
+#: AnalysisHorizontalIncome.php:222 GLProfit_Loss.php:667
 #: GLTagProfit_Loss.php:545 GLTrialBalance.php:421 Tax.php:17
 #: includes/PDFTaxPageHeader.inc:30
 msgid "months to"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:172 AnalysisHorizontalPosition.php:103
+#: AnalysisHorizontalIncome.php:223 AnalysisHorizontalPosition.php:156
 #: Contracts.php:829 CustomerAccount.php:229 CustomerInquiry.php:161
 #: CustomerReceipt.php:1050 GLBalanceSheet.php:446 GLCashFlowsIndirect.php:106
 #: GLProfit_Loss.php:670 GLStatements.php:109 PDFRemittanceAdvice.php:274
@@ -1696,7 +1708,7 @@ msgstr ""
 msgid "All amounts stated in"
 msgstr "Kõikide summade vääring"
 
-#: AnalysisHorizontalIncome.php:177 AnalysisHorizontalPosition.php:108
+#: AnalysisHorizontalIncome.php:228 AnalysisHorizontalPosition.php:161
 #: GLAccountInquiry.php:58 GLAccounts.php:212 GLBalanceSheet.php:452
 #: GLCashFlowsIndirect.php:111 GLProfit_Loss.php:676 GLTagProfit_Loss.php:552
 #: GLTrialBalance.php:461 ImportBankTransAnalysis.php:206 PrintCustTrans.php:77
@@ -1707,7 +1719,7 @@ msgstr "Kõikide summade vääring"
 msgid "Account"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:178 AnalysisHorizontalPosition.php:109
+#: AnalysisHorizontalIncome.php:229 AnalysisHorizontalPosition.php:162
 #: BankAccountBalances.php:18 Dashboard.php:425 GLAccounts.php:249
 #: GLAccounts.php:301 GLBalanceSheet.php:452 GLCashFlowsIndirect.php:112
 #: GLCodesInquiry.php:26 GLProfit_Loss.php:676 GLTagProfit_Loss.php:553
@@ -1719,45 +1731,45 @@ msgstr ""
 msgid "Account Name"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:182 AnalysisHorizontalPosition.php:113
+#: AnalysisHorizontalIncome.php:233 AnalysisHorizontalPosition.php:166
 msgid "Current period"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:183 AnalysisHorizontalPosition.php:114
+#: AnalysisHorizontalIncome.php:234 AnalysisHorizontalPosition.php:167
 msgid "Last period"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:184 AnalysisHorizontalPosition.php:115
+#: AnalysisHorizontalIncome.php:235 AnalysisHorizontalPosition.php:168
 msgid "Actual change"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:185 AnalysisHorizontalPosition.php:116
+#: AnalysisHorizontalIncome.php:236 AnalysisHorizontalPosition.php:169
 msgid "Relative change"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:192
+#: AnalysisHorizontalIncome.php:243
 msgid ""
 "Actual change signs: a positive number indicates a variation that increases "
 "the net profit; a negative number indicates a variation that decreases the "
 "net profit."
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:193 AnalysisHorizontalPosition.php:124
+#: AnalysisHorizontalIncome.php:244 AnalysisHorizontalPosition.php:177
 msgid ""
 "Relative change signs: a positive number indicates an increase in the amount "
 "of that account; a negative number indicates a decrease in the amount of "
 "that account."
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:222 AnalysisHorizontalPosition.php:165
+#: AnalysisHorizontalIncome.php:273 AnalysisHorizontalPosition.php:218
 #: GLBalanceSheet.php:174 GLBalanceSheet.php:416 GLCodesInquiry.php:17
 #: GLProfit_Loss.php:234 GLProfit_Loss.php:659 GLTagProfit_Loss.php:218
 #: GLTagProfit_Loss.php:531 GLTrialBalance.php:183 GLTrialBalance.php:452
 msgid "No general ledger accounts were returned by the SQL because"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:252 AnalysisHorizontalIncome.php:273
-#: AnalysisHorizontalIncome.php:422 AnalysisHorizontalIncome.php:453
+#: AnalysisHorizontalIncome.php:303 AnalysisHorizontalIncome.php:324
+#: AnalysisHorizontalIncome.php:473 AnalysisHorizontalIncome.php:504
 #: GLProfit_Loss.php:288 GLProfit_Loss.php:317 GLProfit_Loss.php:485
 #: GLProfit_Loss.php:514 GLProfit_Loss.php:715 GLProfit_Loss.php:752
 #: GLProfit_Loss.php:1002 GLProfit_Loss.php:1039 GLTagProfit_Loss.php:261
@@ -1767,7 +1779,7 @@ msgstr ""
 msgid "total"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:333 AnalysisHorizontalIncome.php:496
+#: AnalysisHorizontalIncome.php:384 AnalysisHorizontalIncome.php:547
 #: Contracts.php:944 GLProfit_Loss.php:371 GLProfit_Loss.php:564
 #: GLProfit_Loss.php:834 GLProfit_Loss.php:1120 GLTagProfit_Loss.php:331
 #: GLTagProfit_Loss.php:469 GLTagProfit_Loss.php:698 GLTagProfit_Loss.php:885
@@ -1779,22 +1791,22 @@ msgstr ""
 msgid "Gross Profit"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:344
+#: AnalysisHorizontalIncome.php:395
 msgid "Earnings after"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:516
+#: AnalysisHorizontalIncome.php:567
 msgid "Net Profit"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:533 AnalysisHorizontalPosition.php:350
+#: AnalysisHorizontalIncome.php:585 AnalysisHorizontalPosition.php:404
 #: BOMs.php:883 ConfirmDispatch_Invoice.php:1752
 #: ConfirmDispatch_Invoice.php:1754 ContractBOM.php:291 CounterReturns.php:1595
 #: CounterReturns.php:1597 CustomerReceipt.php:598 CustWhereAlloc.php:226
 #: DeliveryDetails.php:603 DeliveryDetails.php:607 DeliveryDetails.php:829
 #: DeliveryDetails.php:833 GLAccountUsers.php:236 GLBalanceSheet.php:697
 #: GLCashFlowsIndirect.php:783 GLJournalInquiry.php:152
-#: GLJournalInquiry.php:154 GLProfit_Loss.php:1236 GLStatements.php:158
+#: GLJournalInquiry.php:154 GLProfit_Loss.php:1236 GLStatements.php:157
 #: GLTagProfit_Loss.php:30 GLTagProfit_Loss.php:539 GLTagProfit_Loss.php:940
 #: GLTags.php:52 GLTrialBalance.php:700 PDFCOA.php:28 PDFPrintLabel.php:63
 #: PDFProdSpec.php:18 PDFStockLocTransfer.php:28 PDFWOPrint.php:608
@@ -1810,46 +1822,46 @@ msgstr ""
 msgid "Print"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:534 AnalysisHorizontalIncome.php:535
-#: AnalysisHorizontalPosition.php:351 AnalysisHorizontalPosition.php:352
-#: SalesGraph.php:18 SalesGraph.php:27 SalesGraph.php:32
-msgid "Select A Different Period"
+#: AnalysisHorizontalIncome.php:586 AnalysisHorizontalPosition.php:405
+#: GLBalanceSheet.php:698 GLCashFlowsIndirect.php:784 GLProfit_Loss.php:1237
+#: GLStatements.php:158 GLTagProfit_Loss.php:941 GLTrialBalance.php:701
+#: PurchasesReport.php:218 SalesReport.php:218
+msgid "New Report"
 msgstr ""
 
-#: AnalysisHorizontalPosition.php:14 AnalysisHorizontalPosition.php:27
-#: AnalysisHorizontalPosition.php:99 AnalysisHorizontalPosition.php:100
-#: includes/MainMenuLinksArray.php:166
+#: AnalysisHorizontalPosition.php:33 AnalysisHorizontalPosition.php:152
+#: AnalysisHorizontalPosition.php:153 includes/MainMenuLinksArray.php:166
 msgid "Horizontal Analysis of Statement of Financial Position"
 msgstr ""
 
-#: AnalysisHorizontalPosition.php:26
-msgid "Print Horizontal Analysis of Statement of Financial Position"
+#: AnalysisHorizontalPosition.php:69
+msgid "Shows the horizontal analysis of the statement of financial position."
 msgstr ""
 
-#: AnalysisHorizontalPosition.php:39 GLBalanceSheet.php:63
+#: AnalysisHorizontalPosition.php:96 GLBalanceSheet.php:63
 msgid "Select the balance date"
 msgstr ""
 
-#: AnalysisHorizontalPosition.php:102 GLBalanceSheet.php:444
+#: AnalysisHorizontalPosition.php:155 GLBalanceSheet.php:444
 #: includes/PDFDebtorBalsPageHeader.inc:16
 #: includes/PDFSupplierBalsPageHeader.inc:16
 msgid "as at"
 msgstr ""
 
-#: AnalysisHorizontalPosition.php:123
+#: AnalysisHorizontalPosition.php:176
 msgid ""
 "Actual change signs: a positive number indicates a source of funds; a "
 "negative number indicates an application of funds."
 msgstr ""
 
-#: AnalysisHorizontalPosition.php:138 GLBalanceSheet.php:133
+#: AnalysisHorizontalPosition.php:191 GLBalanceSheet.php:133
 #: GLBalanceSheet.php:388
 msgid ""
 "The accumulated profits brought forward could not be calculated by the SQL "
 "because"
 msgstr ""
 
-#: AnalysisHorizontalPosition.php:334 GLBalanceSheet.php:356
+#: AnalysisHorizontalPosition.php:387 GLBalanceSheet.php:356
 #: GLBalanceSheet.php:673
 msgid "Check Total"
 msgstr ""
@@ -2208,7 +2220,7 @@ msgid "Bank Account Balances"
 msgstr ""
 
 #: BankAccountBalances.php:17 BankMatching.php:101 BankReconciliation.php:102
-#: CounterReturns.php:818 Currencies.php:221 CustomerReceipt.php:823
+#: CounterReturns.php:818 Currencies.php:226 CustomerReceipt.php:823
 #: DailyBankTransactions.php:51 Payments.php:972 PDFChequeListing.php:45
 #: TaxAuthorities.php:150 TaxAuthorities.php:312
 msgid "Bank Account"
@@ -2347,7 +2359,7 @@ msgstr "Panga aadress"
 msgid "Import Format"
 msgstr ""
 
-#: BankAccounts.php:206 Currencies.php:456 CustItem.php:295 CustItem.php:407
+#: BankAccounts.php:206 Currencies.php:431 CustItem.php:295 CustItem.php:407
 #: CustomerAllocations.php:349 CustomerReceipt.php:857
 #: CustomerTransInquiry.php:108 OffersReceived.php:111 Payments.php:1011
 #: PcReportExpense.php:142 PcReportTab.php:387 PcTabs.php:181 PcTabs.php:309
@@ -2796,13 +2808,13 @@ msgstr "Ei leidnud valitud pangakonto jaoks vahetuskurssi"
 msgid "reconciliation on"
 msgstr ""
 
-#: BankReconciliation.php:76 Currencies.php:202
+#: BankReconciliation.php:76 Currencies.php:206
 msgid "Cannot insert a GL entry for the exchange difference because"
 msgstr ""
 "Ei saa raamatupidamiskontole vahetuskurssidest tuleneva erinevuse kohta "
 "sissekannet teha, kuna"
 
-#: BankReconciliation.php:77 Currencies.php:203
+#: BankReconciliation.php:77 Currencies.php:207
 msgid "The SQL that failed to insert the exchange difference GL entry was"
 msgstr ""
 "SQL, mis ebaõnnestus vahetuskurssidest tuleneva erinevuse sisestamisel "
@@ -2812,7 +2824,7 @@ msgstr ""
 msgid "Exchange difference of"
 msgstr "Vahetuskurssidest tulenev erinevus suuruses"
 
-#: BankReconciliation.php:97 Currencies.php:221
+#: BankReconciliation.php:97 Currencies.php:226
 msgid "has been posted"
 msgstr "on postitatud"
 
@@ -2835,7 +2847,7 @@ msgstr "ja üldised raamatupidamiskontod, mida mõjutatakse"
 msgid "Show bank reconciliation statement"
 msgstr "Näita pangavõrdluse väljavõtet"
 
-#: BankReconciliation.php:167 Currencies.php:174
+#: BankReconciliation.php:167 Currencies.php:177
 msgid "The bank account balance could not be returned by the SQL because"
 msgstr "SQL ei suutnud pangakonto bilanssi näidata, kuna"
 
@@ -4365,17 +4377,6 @@ msgstr ""
 msgid "Print W/O"
 msgstr ""
 
-#: CollectiveWorkOrderCost.php:511 FormDesigner.php:201
-#: GLCashFlowsIndirect.php:811 GLStatements.php:186
-#: HistoricalTestResults.php:81 InternalStockRequest.php:296
-#: MailingGroupMaintenance.php:145 MRPCreateDemands.php:286 PDFCOA.php:42
-#: PDFCOA.php:72 PDFProdSpec.php:30 PDFProdSpec.php:56 PricesByCost.php:296
-#: ProductSpecs.php:99 ProductSpecs.php:126 PurchasesReport.php:242
-#: ReorderLevelLocation.php:193 SalesReport.php:242
-#: SupplierGRNAndInvoiceInquiry.php:46
-msgid "Submit"
-msgstr ""
-
 #: CompanyPreferences.php:5 includes/MainMenuLinksArray.php:211
 msgid "Company Preferences"
 msgstr "Ettevõtte eelistused"
@@ -4507,7 +4508,7 @@ msgid ""
 "statements."
 msgstr ""
 
-#: CompanyPreferences.php:234 Currencies.php:399
+#: CompanyPreferences.php:234
 msgid "Home Currency"
 msgstr "Koduvaluuta"
 
@@ -6794,7 +6795,7 @@ msgstr ""
 msgid "Enter the reference that the customer uses for this contract"
 msgstr ""
 
-#: Contracts.php:950 Currencies.php:311 Currencies.php:495 PO_Header.php:1115
+#: Contracts.php:950 Currencies.php:316 Currencies.php:470 PO_Header.php:1115
 #: PO_OrderDetails.php:113 SupplierCredit.php:287 SupplierInvoice.php:640
 #: SuppPaymentRun.php:296
 msgid "Exchange Rate"
@@ -8079,123 +8080,119 @@ msgstr ""
 msgid "Show Defined Credit Status Codes"
 msgstr ""
 
-#: Currencies.php:6 Currencies.php:34 includes/MainMenuLinksArray.php:211
+#: Currencies.php:6 includes/MainMenuLinksArray.php:211
 msgid "Currencies Maintenance"
 msgstr ""
 
-#: Currencies.php:33
-msgid "Currencies"
-msgstr ""
-
-#: Currencies.php:56
+#: Currencies.php:57
 msgid "The currency already exists in the database"
 msgstr ""
 
-#: Currencies.php:63
+#: Currencies.php:64
 msgid "The exchange rate must be numeric"
 msgstr ""
 
-#: Currencies.php:69
+#: Currencies.php:70
 msgid ""
 "The number of decimal places to display for amounts in this currency must be "
 "numeric"
 msgstr ""
 
-#: Currencies.php:74
+#: Currencies.php:75
 msgid ""
 "The number of decimal places to display for amounts in this currency must be "
 "positive or zero"
 msgstr ""
 
-#: Currencies.php:79
+#: Currencies.php:80
 msgid ""
 "The number of decimal places to display for amounts in this currency is "
 "expected to be 4 or less"
 msgstr ""
 
-#: Currencies.php:86
+#: Currencies.php:87
 msgid "The currency country must be 50 characters or less long"
 msgstr ""
 
-#: Currencies.php:92
+#: Currencies.php:93
 msgid "The hundredths name must be 15 characters or less long"
 msgstr ""
 
-#: Currencies.php:116
+#: Currencies.php:117
 msgid "The currency definition record has been updated"
 msgstr ""
 
-#: Currencies.php:136
+#: Currencies.php:139
 msgid "The currency definition record has been added"
 msgstr ""
 
-#: Currencies.php:199 Currencies.php:217
+#: Currencies.php:204 Currencies.php:222
 msgid "currency rate adjustment to"
 msgstr ""
 
-#: Currencies.php:221
+#: Currencies.php:226
 msgid "Currency Rate difference of"
 msgstr ""
 
-#: Currencies.php:246
+#: Currencies.php:251
 msgid ""
 "Cannot delete this currency because customer accounts have been created "
 "referring to this currency"
 msgstr ""
 
-#: Currencies.php:247
+#: Currencies.php:252
 msgid "customer accounts that refer to this currency"
 msgstr ""
 
-#: Currencies.php:254
+#: Currencies.php:259
 msgid ""
 "Cannot delete this currency because supplier accounts have been created "
 "referring to this currency"
 msgstr ""
 
-#: Currencies.php:255
+#: Currencies.php:260
 msgid "supplier accounts that refer to this currency"
 msgstr ""
 
-#: Currencies.php:262
+#: Currencies.php:267
 msgid ""
 "Cannot delete this currency because there are bank transactions that use "
 "this currency"
 msgstr ""
 
-#: Currencies.php:263
+#: Currencies.php:268
 msgid "bank transactions that refer to this currency"
 msgstr ""
 
-#: Currencies.php:265
+#: Currencies.php:270
 msgid ""
 "Cannot delete this currency because it is the functional currency of the "
 "company"
 msgstr ""
 
-#: Currencies.php:272
+#: Currencies.php:277
 msgid ""
 "Cannot delete this currency because there are bank accounts that use this "
 "currency"
 msgstr ""
 
-#: Currencies.php:273
+#: Currencies.php:278
 msgid "bank accounts that refer to this currency"
 msgstr ""
 
-#: Currencies.php:278
+#: Currencies.php:283
 msgid "The currency definition record has been deleted"
 msgstr ""
 
-#: Currencies.php:305
+#: Currencies.php:310
 msgid "ISO4217 Code"
 msgstr ""
 
-#: Currencies.php:306
+#: Currencies.php:311
 msgid "Currency Name"
 msgstr ""
 
-#: Currencies.php:307 Currencies.php:467 CustomerBranches.php:682
+#: Currencies.php:312 Currencies.php:442 CustomerBranches.php:682
 #: Customers.php:491 Customers.php:795 Customers.php:824
 #: DeliveryDetails.php:1065 FreightCosts.php:214 Locations.php:611
 #: Suppliers.php:713 Suppliers.php:997 ../webSHOP/Checkout.php:397
@@ -8205,61 +8202,58 @@ msgstr ""
 msgid "Country"
 msgstr ""
 
-#: Currencies.php:308 Currencies.php:479
+#: Currencies.php:313 Currencies.php:454
 msgid "Hundredths Name"
 msgstr ""
 
-#: Currencies.php:309 InventoryValuation.php:196
+#: Currencies.php:314 InventoryValuation.php:196
 msgid "Decimal Places"
 msgstr ""
 
-#: Currencies.php:310 Currencies.php:511
+#: Currencies.php:315 Currencies.php:486
 msgid "Show in webSHOP"
 msgstr ""
 
-#: Currencies.php:312
+#: Currencies.php:317
 msgid "1 / Ex Rate"
 msgstr ""
 
-#: Currencies.php:313
+#: Currencies.php:318
 msgid "Ex Rate - ECB"
 msgstr ""
 
-#: Currencies.php:314 CustomerTypes.php:4 index.php:160 Prices.php:225
+#: Currencies.php:319 CustomerTypes.php:4 index.php:160 Prices.php:225
 #: SelectCustomer.php:155 SelectProduct.php:62 SelectSupplier.php:158
 #: StockCategories.php:273 SupplierTypes.php:5
 msgid "Maintenance"
 msgstr ""
 
-#: Currencies.php:354
-#, php-format
+#: Currencies.php:359
 msgid "Are you sure you wish to delete this currency?"
 msgstr ""
 
-#: Currencies.php:355
-#, php-format
+#: Currencies.php:360
 msgid "Graph"
 msgstr ""
 
-#: Currencies.php:387
-#, php-format
+#: Currencies.php:374
 msgid "Functional Currency"
 msgstr ""
 
-#: Currencies.php:409
+#: Currencies.php:384
 msgid "Show all currency definitions"
 msgstr ""
 
-#: Currencies.php:432 geo_displaymap_customers.php:11
+#: Currencies.php:407 geo_displaymap_customers.php:11
 #: geo_displaymap_suppliers.php:11
 msgid "An error occurred in retrieving the currency information"
 msgstr ""
 
-#: Currencies.php:448
+#: Currencies.php:423
 msgid "ISO 4217 Currency Code"
 msgstr ""
 
-#: Currencies.php:487
+#: Currencies.php:462
 msgid "Decimal Places to Display"
 msgstr ""
 
@@ -13949,7 +13943,8 @@ msgstr ""
 msgid "Could not retrieve the items for"
 msgstr ""
 
-#: GeneratePickingList.php:505 PDFWOPrint.php:490
+#: GeneratePickingList.php:505 PDFGrn.php:167 PDFStockTransfer.php:153
+#: PDFStockTransfer.php:154 PDFWOPrint.php:490
 msgid "Signed for"
 msgstr ""
 
@@ -14694,25 +14689,17 @@ msgid ""
 "liabilities."
 msgstr ""
 
-#: GLBalanceSheet.php:56 GLCashFlowsIndirect.php:796 GLProfit_Loss.php:74
-#: GLStatements.php:171
-msgid ""
-"webERP is an \"accrual\" based system (not a \"cash based\" system). Accrual "
-"systems include items when they are invoiced to the customer, and when "
-"expenses are owed based on the supplier invoice date."
-msgstr ""
-
 #: GLBalanceSheet.php:85 GLProfit_Loss.php:146 GLTagProfit_Loss.php:139
 msgid "Detail Or Summary"
 msgstr ""
 
-#: GLBalanceSheet.php:98 GLCashFlowsIndirect.php:875 GLProfit_Loss.php:155
-#: GLStatements.php:250
-msgid "Show accounts with zero balance"
-msgstr ""
-
 #: GLBalanceSheet.php:100 GLCashFlowsIndirect.php:877 GLProfit_Loss.php:157
 msgid "Check this box to show all accounts including those with zero balance"
+msgstr ""
+
+#: GLBalanceSheet.php:106 GLBalanceSheet.php:107 GLProfit_Loss.php:163
+#: GLProfit_Loss.php:164
+msgid "Show on Screen (HTML)"
 msgstr ""
 
 #: GLBalanceSheet.php:108 GLBalanceSheet.php:109 GLProfit_Loss.php:165
@@ -14743,12 +14730,6 @@ msgstr ""
 #: includes/PDFTagProfitAndLossPageHeader.inc:36 includes/MiscFunctions.php:404
 #: includes/MiscFunctions.php:486 reportwriter/languages/en_US/reports.php:366
 msgid "Last Year"
-msgstr ""
-
-#: GLBalanceSheet.php:698 GLCashFlowsIndirect.php:784 GLProfit_Loss.php:1237
-#: GLStatements.php:159 GLTagProfit_Loss.php:941 GLTrialBalance.php:701
-#: PurchasesReport.php:218 SalesReport.php:218
-msgid "New Report"
 msgstr ""
 
 #: GLBudgets.php:6
@@ -14929,29 +14910,24 @@ msgid ""
 "time."
 msgstr ""
 
-#: GLCashFlowsIndirect.php:805 GLStatements.php:180 PurchasesReport.php:236
-#: SalesReport.php:236
-msgid "Report Parameters"
-msgstr ""
-
-#: GLCashFlowsIndirect.php:835 GLProfit_Loss.php:113 GLStatements.php:210
+#: GLCashFlowsIndirect.php:835 GLProfit_Loss.php:113 GLStatements.php:209
 #: GLTrialBalance.php:90 PurchasesReport.php:256 SalesReport.php:256
 msgid "Select the beginning of the reporting period"
 msgstr ""
 
-#: GLCashFlowsIndirect.php:849 GLProfit_Loss.php:127 GLStatements.php:224
+#: GLCashFlowsIndirect.php:849 GLProfit_Loss.php:127 GLStatements.php:223
 #: GLTrialBalance.php:104 PurchasesReport.php:266 SalesReport.php:266
 msgid "Select the end of the reporting period"
 msgstr ""
 
-#: GLCashFlowsIndirect.php:863 GLProfit_Loss.php:141 GLStatements.php:238
+#: GLCashFlowsIndirect.php:863 GLProfit_Loss.php:141 GLStatements.php:237
 #: GLTrialBalance.php:118
 msgid ""
 "Select a period instead of using the beginning and end of the reporting "
 "period."
 msgstr ""
 
-#: GLCashFlowsIndirect.php:868 GLStatements.php:243
+#: GLCashFlowsIndirect.php:868 GLStatements.php:242
 msgid "Show the budget"
 msgstr ""
 
@@ -15364,11 +15340,11 @@ msgstr ""
 msgid "Statement of cash flows"
 msgstr ""
 
-#: GLStatements.php:169
+#: GLStatements.php:168
 msgid "Shows a set of financial statements."
 msgstr ""
 
-#: GLStatements.php:170
+#: GLStatements.php:169
 msgid ""
 "A complete set of financial statements comprises:(a) a statement of "
 "financial position as at the end and at the beginning of the period;(b) a "
@@ -15378,51 +15354,47 @@ msgid ""
 "explanatory information."
 msgstr ""
 
-#: GLStatements.php:245
+#: GLStatements.php:244
 msgid "Check this box to show the budget"
 msgstr ""
 
-#: GLStatements.php:252
-msgid "Check this box to show accounts with zero balance"
-msgstr ""
-
-#: GLStatements.php:257
+#: GLStatements.php:256
 msgid "Show the statement of financial position"
 msgstr ""
 
-#: GLStatements.php:259
+#: GLStatements.php:258
 msgid "Check this box to show the statement of financial position"
 msgstr ""
 
-#: GLStatements.php:264
+#: GLStatements.php:263
 msgid "Show the statement of comprehensive income"
 msgstr ""
 
-#: GLStatements.php:266
+#: GLStatements.php:265
 msgid "Check this box to show the statement of comprehensive income"
 msgstr ""
 
-#: GLStatements.php:271
+#: GLStatements.php:270
 msgid "Show the statement of changes in equity"
 msgstr ""
 
-#: GLStatements.php:273
+#: GLStatements.php:272
 msgid "Check this box to show the statement of changes in equity"
 msgstr ""
 
-#: GLStatements.php:278
+#: GLStatements.php:277
 msgid "Show the statement of cash flows"
 msgstr ""
 
-#: GLStatements.php:280
+#: GLStatements.php:279
 msgid "Check this box to show the statement of cash flows"
 msgstr ""
 
-#: GLStatements.php:285
+#: GLStatements.php:284
 msgid "Show the notes"
 msgstr ""
 
-#: GLStatements.php:287
+#: GLStatements.php:286
 msgid ""
 "Check this box to show the notes that summarize the significant accounting "
 "policies and other explanatory information"
@@ -21340,10 +21312,6 @@ msgstr ""
 msgid "Date of Receipt: "
 msgstr ""
 
-#: PDFGrn.php:167 PDFStockTransfer.php:153 PDFStockTransfer.php:154
-msgid "Signed for "
-msgstr ""
-
 #: PDFGrn.php:176 PDFQALabel.php:112
 msgid "GRN Error"
 msgstr ""
@@ -25239,11 +25207,11 @@ msgstr ""
 msgid "Week"
 msgstr ""
 
-#: PurchaseByPrefSupplier.php:420 reportwriter/languages/en_US/reports.php:320
+#: PurchaseByPrefSupplier.php:420
 msgid "3"
 msgstr ""
 
-#: PurchaseByPrefSupplier.php:421 reportwriter/languages/en_US/reports.php:319
+#: PurchaseByPrefSupplier.php:421
 msgid "2"
 msgstr ""
 
@@ -27208,6 +27176,10 @@ msgstr ""
 
 #: SalesGraph.php:5
 msgid "Sales Report Graph"
+msgstr ""
+
+#: SalesGraph.php:18 SalesGraph.php:27 SalesGraph.php:32
+msgid "Select A Different Period"
 msgstr ""
 
 #: SalesGraph.php:26
@@ -35973,10 +35945,6 @@ msgstr ""
 
 #: SystemParameters.php:602
 msgid "Invoice Quantity Default"
-msgstr ""
-
-#: SystemParameters.php:604
-msgid "0"
 msgstr ""
 
 #: SystemParameters.php:607
@@ -46458,839 +46426,843 @@ msgid ""
 "was"
 msgstr ""
 
-#: includes/CountriesArray.php:5
+#: includes/CountriesArray.php:8
 msgid "Andorra"
 msgstr ""
 
-#: includes/CountriesArray.php:6
+#: includes/CountriesArray.php:9
 msgid "United Arab Emirates"
 msgstr ""
 
-#: includes/CountriesArray.php:7
+#: includes/CountriesArray.php:10
 msgid "Afghanistan"
 msgstr ""
 
-#: includes/CountriesArray.php:8
+#: includes/CountriesArray.php:11
 msgid "Antigua and Barbuda"
 msgstr ""
 
-#: includes/CountriesArray.php:9
+#: includes/CountriesArray.php:12
 msgid "Anguilla"
 msgstr ""
 
-#: includes/CountriesArray.php:10
+#: includes/CountriesArray.php:13
 msgid "Albania"
 msgstr ""
 
-#: includes/CountriesArray.php:11
+#: includes/CountriesArray.php:14
 msgid "Armenia"
 msgstr ""
 
-#: includes/CountriesArray.php:12
+#: includes/CountriesArray.php:15
 msgid "Angola"
 msgstr ""
 
-#: includes/CountriesArray.php:13
+#: includes/CountriesArray.php:16
 msgid "Argentina"
 msgstr ""
 
-#: includes/CountriesArray.php:14
+#: includes/CountriesArray.php:17
 msgid "American Samoa"
 msgstr ""
 
-#: includes/CountriesArray.php:15
+#: includes/CountriesArray.php:18
 msgid "Austria"
 msgstr ""
 
-#: includes/CountriesArray.php:16
+#: includes/CountriesArray.php:19
 msgid "Australia"
 msgstr ""
 
-#: includes/CountriesArray.php:17
+#: includes/CountriesArray.php:20
 msgid "Aruba"
 msgstr ""
 
-#: includes/CountriesArray.php:18
+#: includes/CountriesArray.php:21
 msgid "Azerbaijan"
 msgstr ""
 
-#: includes/CountriesArray.php:19
+#: includes/CountriesArray.php:22
 msgid "Bosnia and Herzegovina"
 msgstr ""
 
-#: includes/CountriesArray.php:20
+#: includes/CountriesArray.php:23
 msgid "Barbados"
 msgstr ""
 
-#: includes/CountriesArray.php:21
+#: includes/CountriesArray.php:24
 msgid "Bangladesh"
 msgstr ""
 
-#: includes/CountriesArray.php:22
+#: includes/CountriesArray.php:25
 msgid "Belgium"
 msgstr ""
 
-#: includes/CountriesArray.php:23
+#: includes/CountriesArray.php:26
 msgid "Burkina Faso"
 msgstr ""
 
-#: includes/CountriesArray.php:24
-msgid "Bulgaria"
-msgstr ""
-
-#: includes/CountriesArray.php:25
+#: includes/CountriesArray.php:27
 msgid "Bahrain"
 msgstr ""
 
-#: includes/CountriesArray.php:26
+#: includes/CountriesArray.php:28
 msgid "Burundi"
 msgstr ""
 
-#: includes/CountriesArray.php:27
+#: includes/CountriesArray.php:29
 msgid "Benin"
 msgstr ""
 
-#: includes/CountriesArray.php:28
+#: includes/CountriesArray.php:30
 msgid "Bermuda"
 msgstr ""
 
-#: includes/CountriesArray.php:29
+#: includes/CountriesArray.php:31
 msgid "Brunei Darussalam"
 msgstr ""
 
-#: includes/CountriesArray.php:30
+#: includes/CountriesArray.php:32
 msgid "Bolivia"
 msgstr ""
 
-#: includes/CountriesArray.php:31
+#: includes/CountriesArray.php:33
 msgid "Brazil"
 msgstr ""
 
-#: includes/CountriesArray.php:32
+#: includes/CountriesArray.php:34
 msgid "Bahamas"
 msgstr ""
 
-#: includes/CountriesArray.php:33
+#: includes/CountriesArray.php:35
 msgid "Bhutan"
 msgstr ""
 
-#: includes/CountriesArray.php:34
-msgid "Botswana"
-msgstr ""
-
-#: includes/CountriesArray.php:35
-msgid "Belarus"
-msgstr ""
-
 #: includes/CountriesArray.php:36
-msgid "Belize"
+msgid "Bulgaria"
 msgstr ""
 
 #: includes/CountriesArray.php:37
-msgid "Canada"
+msgid "Botswana"
 msgstr ""
 
 #: includes/CountriesArray.php:38
-msgid "Congo"
+msgid "Belarus"
 msgstr ""
 
 #: includes/CountriesArray.php:39
-msgid "Central African Republic"
+msgid "Belize"
 msgstr ""
 
 #: includes/CountriesArray.php:40
-msgid "Switzerland"
+msgid "Canada"
 msgstr ""
 
 #: includes/CountriesArray.php:41
-msgid "Cote D Ivoire"
+msgid "Central African Republic"
 msgstr ""
 
 #: includes/CountriesArray.php:42
-msgid "Cook Islands"
+msgid "Congo"
 msgstr ""
 
 #: includes/CountriesArray.php:43
-msgid "Chile"
+msgid "Switzerland"
 msgstr ""
 
 #: includes/CountriesArray.php:44
-msgid "Cameroon"
+msgid "Cote D Ivoire"
 msgstr ""
 
 #: includes/CountriesArray.php:45
-msgid "China"
+msgid "Cook Islands"
 msgstr ""
 
 #: includes/CountriesArray.php:46
-msgid "Colombia"
+msgid "Chile"
 msgstr ""
 
 #: includes/CountriesArray.php:47
-msgid "Costa Rica"
+msgid "Cameroon"
 msgstr ""
 
 #: includes/CountriesArray.php:48
-msgid "Montenegro"
+msgid "China"
 msgstr ""
 
 #: includes/CountriesArray.php:49
-msgid "Catalonia"
+msgid "Colombia"
 msgstr ""
 
 #: includes/CountriesArray.php:50
-msgid "Cuba"
+msgid "Costa Rica"
 msgstr ""
 
 #: includes/CountriesArray.php:51
-msgid "Cape Verde"
+msgid "Catalonia"
 msgstr ""
 
 #: includes/CountriesArray.php:52
-msgid "Cyprus"
+msgid "Cuba"
 msgstr ""
 
 #: includes/CountriesArray.php:53
-msgid "Czech Republic"
+msgid "Cape Verde"
 msgstr ""
 
 #: includes/CountriesArray.php:54
-msgid "Germany"
+msgid "Cyprus"
 msgstr ""
 
 #: includes/CountriesArray.php:55
-msgid "Djibouti"
+msgid "Czech Republic"
 msgstr ""
 
 #: includes/CountriesArray.php:56
-msgid "Denmark"
+msgid "Germany"
 msgstr ""
 
 #: includes/CountriesArray.php:57
-msgid "Dominica"
+msgid "Djibouti"
 msgstr ""
 
 #: includes/CountriesArray.php:58
-msgid "Dominican Republic"
+msgid "Denmark"
 msgstr ""
 
 #: includes/CountriesArray.php:59
-msgid "Algeria"
+msgid "Dominica"
 msgstr ""
 
 #: includes/CountriesArray.php:60
-msgid "Ecuador"
+msgid "Dominican Republic"
 msgstr ""
 
 #: includes/CountriesArray.php:61
-msgid "Estonia"
+msgid "Algeria"
 msgstr ""
 
 #: includes/CountriesArray.php:62
-msgid "Egypt"
+msgid "Ecuador"
 msgstr ""
 
 #: includes/CountriesArray.php:63
-msgid "Eritrea"
+msgid "Estonia"
 msgstr ""
 
 #: includes/CountriesArray.php:64
-msgid "Spain"
+msgid "Egypt"
 msgstr ""
 
 #: includes/CountriesArray.php:65
-msgid "Ethiopia"
+msgid "Eritrea"
 msgstr ""
 
 #: includes/CountriesArray.php:66
-msgid "Finland"
+msgid "Spain"
 msgstr ""
 
 #: includes/CountriesArray.php:67
-msgid "Fiji"
+msgid "Ethiopia"
 msgstr ""
 
 #: includes/CountriesArray.php:68
-msgid "Falkland Islands"
+msgid "European Union"
 msgstr ""
 
 #: includes/CountriesArray.php:69
-msgid "Micronesia"
+msgid "Finland"
 msgstr ""
 
 #: includes/CountriesArray.php:70
-msgid "Faroe Islands"
+msgid "Fiji"
 msgstr ""
 
 #: includes/CountriesArray.php:71
-msgid "France"
+msgid "Falkland Islands"
 msgstr ""
 
 #: includes/CountriesArray.php:72
-msgid "Gabon"
+msgid "Micronesia"
 msgstr ""
 
 #: includes/CountriesArray.php:73
-msgid "Grenada"
+msgid "Faroe Islands"
 msgstr ""
 
 #: includes/CountriesArray.php:74
-msgid "Georgia"
+msgid "France"
 msgstr ""
 
 #: includes/CountriesArray.php:75
-msgid "French Guiana"
+msgid "Gabon"
 msgstr ""
 
 #: includes/CountriesArray.php:76
-msgid "Guernsey and Alderney"
-msgstr ""
-
-#: includes/CountriesArray.php:77
-msgid "Ghana"
-msgstr ""
-
-#: includes/CountriesArray.php:78
-msgid "Gibraltar"
-msgstr ""
-
-#: includes/CountriesArray.php:79
-msgid "Greenland"
-msgstr ""
-
-#: includes/CountriesArray.php:80
-msgid "Gambia"
-msgstr ""
-
-#: includes/CountriesArray.php:81
-msgid "Guinea"
-msgstr ""
-
-#: includes/CountriesArray.php:82
-msgid "Guadeloupe"
-msgstr ""
-
-#: includes/CountriesArray.php:83
-msgid "Greece"
-msgstr ""
-
-#: includes/CountriesArray.php:84
-msgid "Guatemala"
-msgstr ""
-
-#: includes/CountriesArray.php:85
-msgid "Guam"
-msgstr ""
-
-#: includes/CountriesArray.php:86
-msgid "Guinea-Bissau"
-msgstr ""
-
-#: includes/CountriesArray.php:87
-msgid "Guyana"
-msgstr ""
-
-#: includes/CountriesArray.php:88
-msgid "Hong Kong"
-msgstr ""
-
-#: includes/CountriesArray.php:89
-msgid "Honduras"
-msgstr ""
-
-#: includes/CountriesArray.php:90
-msgid "Croatia"
-msgstr ""
-
-#: includes/CountriesArray.php:91
-msgid "Haiti"
-msgstr ""
-
-#: includes/CountriesArray.php:92
-msgid "Hungary"
-msgstr ""
-
-#: includes/CountriesArray.php:93
-msgid "Indonesia"
-msgstr ""
-
-#: includes/CountriesArray.php:94
-msgid "Ireland"
-msgstr ""
-
-#: includes/CountriesArray.php:95
-msgid "Israel"
-msgstr ""
-
-#: includes/CountriesArray.php:96
-msgid "India"
-msgstr ""
-
-#: includes/CountriesArray.php:97
-msgid "Iraq"
-msgstr ""
-
-#: includes/CountriesArray.php:98
-msgid "Iran"
-msgstr ""
-
-#: includes/CountriesArray.php:99
-msgid "Iceland"
-msgstr ""
-
-#: includes/CountriesArray.php:100
-msgid "Italy"
-msgstr ""
-
-#: includes/CountriesArray.php:101
-msgid "Jersey"
-msgstr ""
-
-#: includes/CountriesArray.php:102
-msgid "Jamaica"
-msgstr ""
-
-#: includes/CountriesArray.php:103
-msgid "Jordan"
-msgstr ""
-
-#: includes/CountriesArray.php:104
-msgid "Japan"
-msgstr ""
-
-#: includes/CountriesArray.php:105
-msgid "Kenya"
-msgstr ""
-
-#: includes/CountriesArray.php:106
-msgid "Kyrgyzstan"
-msgstr ""
-
-#: includes/CountriesArray.php:107
-msgid "Cambodia"
-msgstr ""
-
-#: includes/CountriesArray.php:108
-msgid "Kiribati"
-msgstr ""
-
-#: includes/CountriesArray.php:109
-msgid "Comoros"
-msgstr ""
-
-#: includes/CountriesArray.php:110
-msgid "Saint Kitts and Nevis"
-msgstr ""
-
-#: includes/CountriesArray.php:111
-msgid "Korea (South)"
-msgstr ""
-
-#: includes/CountriesArray.php:112
-msgid "Kuwait"
-msgstr ""
-
-#: includes/CountriesArray.php:113
-msgid "Cayman Islands"
-msgstr ""
-
-#: includes/CountriesArray.php:114
-msgid "Kazakhstan"
-msgstr ""
-
-#: includes/CountriesArray.php:115
-msgid "Lao People s Dem. Rep."
-msgstr ""
-
-#: includes/CountriesArray.php:116
-msgid "Lebanon"
-msgstr ""
-
-#: includes/CountriesArray.php:117
-msgid "Saint Lucia"
-msgstr ""
-
-#: includes/CountriesArray.php:118
-msgid "Liechtenstein"
-msgstr ""
-
-#: includes/CountriesArray.php:119
-msgid "Sri Lanka"
-msgstr ""
-
-#: includes/CountriesArray.php:120
-msgid "Lesotho"
-msgstr ""
-
-#: includes/CountriesArray.php:121
-msgid "Lithuania"
-msgstr ""
-
-#: includes/CountriesArray.php:122
-msgid "Luxembourg"
-msgstr ""
-
-#: includes/CountriesArray.php:123
-msgid "Latvia"
-msgstr ""
-
-#: includes/CountriesArray.php:124
-msgid "Libyan Arab Jamahiriya"
-msgstr ""
-
-#: includes/CountriesArray.php:125
-msgid "Morocco"
-msgstr ""
-
-#: includes/CountriesArray.php:126
-msgid "Monaco"
-msgstr ""
-
-#: includes/CountriesArray.php:127
-msgid "Moldova, Republic of"
-msgstr ""
-
-#: includes/CountriesArray.php:128
-msgid "Madagascar"
-msgstr ""
-
-#: includes/CountriesArray.php:129
-msgid "Macedonia, TFYR"
-msgstr ""
-
-#: includes/CountriesArray.php:130
-msgid "Mali"
-msgstr ""
-
-#: includes/CountriesArray.php:131
-msgid "Myanmar"
-msgstr ""
-
-#: includes/CountriesArray.php:132
-msgid "Mongolia"
-msgstr ""
-
-#: includes/CountriesArray.php:133
-msgid "Macao, (China)"
-msgstr ""
-
-#: includes/CountriesArray.php:134
-msgid "Northern Mariana Islands"
-msgstr ""
-
-#: includes/CountriesArray.php:135
-msgid "Martinique"
-msgstr ""
-
-#: includes/CountriesArray.php:136
-msgid "Mauritania"
-msgstr ""
-
-#: includes/CountriesArray.php:137
-msgid "Malta"
-msgstr ""
-
-#: includes/CountriesArray.php:138
-msgid "Mauritius"
-msgstr ""
-
-#: includes/CountriesArray.php:139
-msgid "Maldives"
-msgstr ""
-
-#: includes/CountriesArray.php:140
-msgid "Malawi"
-msgstr ""
-
-#: includes/CountriesArray.php:141
-msgid "Mexico"
-msgstr ""
-
-#: includes/CountriesArray.php:142
-msgid "Malaysia"
-msgstr ""
-
-#: includes/CountriesArray.php:143
-msgid "Mozambique"
-msgstr ""
-
-#: includes/CountriesArray.php:144
-msgid "Namibia"
-msgstr ""
-
-#: includes/CountriesArray.php:145
-msgid "New Caledonia"
-msgstr ""
-
-#: includes/CountriesArray.php:146
-msgid "Niger"
-msgstr ""
-
-#: includes/CountriesArray.php:147
-msgid "Nigeria"
-msgstr ""
-
-#: includes/CountriesArray.php:148
-msgid "Nicaragua"
-msgstr ""
-
-#: includes/CountriesArray.php:149
-msgid "Netherlands"
-msgstr ""
-
-#: includes/CountriesArray.php:150
-msgid "Norway"
-msgstr ""
-
-#: includes/CountriesArray.php:151
-msgid "Nepal"
-msgstr ""
-
-#: includes/CountriesArray.php:152
-msgid "New Zealand"
-msgstr ""
-
-#: includes/CountriesArray.php:153
-msgid "Oman"
-msgstr ""
-
-#: includes/CountriesArray.php:154
-msgid "Panama"
-msgstr ""
-
-#: includes/CountriesArray.php:155
-msgid "Peru"
-msgstr ""
-
-#: includes/CountriesArray.php:156
-msgid "French Polynesia"
-msgstr ""
-
-#: includes/CountriesArray.php:157
-msgid "Papua New Guinea"
-msgstr ""
-
-#: includes/CountriesArray.php:158
-msgid "Philippines"
-msgstr ""
-
-#: includes/CountriesArray.php:159
-msgid "Pakistan"
-msgstr ""
-
-#: includes/CountriesArray.php:160
-msgid "Poland"
-msgstr ""
-
-#: includes/CountriesArray.php:161
-msgid "Palestinian Territory"
-msgstr ""
-
-#: includes/CountriesArray.php:162
-msgid "Portugal"
-msgstr ""
-
-#: includes/CountriesArray.php:163
-msgid "Paraguay"
-msgstr ""
-
-#: includes/CountriesArray.php:164
-msgid "Qatar"
-msgstr ""
-
-#: includes/CountriesArray.php:165
-msgid "Romania"
-msgstr ""
-
-#: includes/CountriesArray.php:166
-msgid "Serbia"
-msgstr ""
-
-#: includes/CountriesArray.php:167
-msgid "Russian Federation"
-msgstr ""
-
-#: includes/CountriesArray.php:168
-msgid "Rwanda"
-msgstr ""
-
-#: includes/CountriesArray.php:169
-msgid "Saudi Arabia"
-msgstr ""
-
-#: includes/CountriesArray.php:170
-msgid "Solomon Islands"
-msgstr ""
-
-#: includes/CountriesArray.php:171
-msgid "Seychelles"
-msgstr ""
-
-#: includes/CountriesArray.php:172
-msgid "Sudan"
-msgstr ""
-
-#: includes/CountriesArray.php:173
-msgid "Sweden"
-msgstr ""
-
-#: includes/CountriesArray.php:174
-msgid "Singapore"
-msgstr ""
-
-#: includes/CountriesArray.php:175
-msgid "Slovenia"
-msgstr ""
-
-#: includes/CountriesArray.php:176
-msgid "Slovakia"
-msgstr ""
-
-#: includes/CountriesArray.php:177
-msgid "San Marino"
-msgstr ""
-
-#: includes/CountriesArray.php:178
-msgid "Senegal"
-msgstr ""
-
-#: includes/CountriesArray.php:179
-msgid "Somalia"
-msgstr ""
-
-#: includes/CountriesArray.php:180
-msgid "Suriname"
-msgstr ""
-
-#: includes/CountriesArray.php:181
-msgid "Sao Tome and Principe"
-msgstr ""
-
-#: includes/CountriesArray.php:182
-msgid "El Salvador"
-msgstr ""
-
-#: includes/CountriesArray.php:183
-msgid "Syrian Arab Republic"
-msgstr ""
-
-#: includes/CountriesArray.php:184
-msgid "Swaziland"
-msgstr ""
-
-#: includes/CountriesArray.php:185
-msgid "Chad"
-msgstr ""
-
-#: includes/CountriesArray.php:186
-msgid "Togo"
-msgstr ""
-
-#: includes/CountriesArray.php:187
-msgid "Thailand"
-msgstr ""
-
-#: includes/CountriesArray.php:188
-msgid "Tajikistan"
-msgstr ""
-
-#: includes/CountriesArray.php:189
-msgid "Turkmenistan"
-msgstr ""
-
-#: includes/CountriesArray.php:190
-msgid "Tunisia"
-msgstr ""
-
-#: includes/CountriesArray.php:191
-msgid "Tonga"
-msgstr ""
-
-#: includes/CountriesArray.php:192
-msgid "East Timor (Timor-Leste)"
-msgstr ""
-
-#: includes/CountriesArray.php:193
-msgid "Turkey"
-msgstr ""
-
-#: includes/CountriesArray.php:194
-msgid "Trinidad and Tobago"
-msgstr ""
-
-#: includes/CountriesArray.php:195
-msgid "Taiwan"
-msgstr ""
-
-#: includes/CountriesArray.php:196
-msgid "Tanzania, United Rep. of"
-msgstr ""
-
-#: includes/CountriesArray.php:197
-msgid "Ukraine"
-msgstr ""
-
-#: includes/CountriesArray.php:198
-msgid "Uganda"
-msgstr ""
-
-#: includes/CountriesArray.php:199
 msgid "United Kingdom"
 msgstr ""
 
+#: includes/CountriesArray.php:77
+msgid "Grenada"
+msgstr ""
+
+#: includes/CountriesArray.php:78
+msgid "Georgia"
+msgstr ""
+
+#: includes/CountriesArray.php:79
+msgid "French Guiana"
+msgstr ""
+
+#: includes/CountriesArray.php:80
+msgid "Guernsey and Alderney"
+msgstr ""
+
+#: includes/CountriesArray.php:81
+msgid "Ghana"
+msgstr ""
+
+#: includes/CountriesArray.php:82
+msgid "Gibraltar"
+msgstr ""
+
+#: includes/CountriesArray.php:83
+msgid "Greenland"
+msgstr ""
+
+#: includes/CountriesArray.php:84
+msgid "Gambia"
+msgstr ""
+
+#: includes/CountriesArray.php:85
+msgid "Guinea"
+msgstr ""
+
+#: includes/CountriesArray.php:86
+msgid "Guadeloupe"
+msgstr ""
+
+#: includes/CountriesArray.php:87
+msgid "Greece"
+msgstr ""
+
+#: includes/CountriesArray.php:88
+msgid "Guatemala"
+msgstr ""
+
+#: includes/CountriesArray.php:89
+msgid "Guam"
+msgstr ""
+
+#: includes/CountriesArray.php:90
+msgid "Guinea-Bissau"
+msgstr ""
+
+#: includes/CountriesArray.php:91
+msgid "Guyana"
+msgstr ""
+
+#: includes/CountriesArray.php:92
+msgid "Hong Kong"
+msgstr ""
+
+#: includes/CountriesArray.php:93
+msgid "Honduras"
+msgstr ""
+
+#: includes/CountriesArray.php:94
+msgid "Croatia"
+msgstr ""
+
+#: includes/CountriesArray.php:95
+msgid "Haiti"
+msgstr ""
+
+#: includes/CountriesArray.php:96
+msgid "Hungary"
+msgstr ""
+
+#: includes/CountriesArray.php:97
+msgid "Indonesia"
+msgstr ""
+
+#: includes/CountriesArray.php:98
+msgid "Ireland"
+msgstr ""
+
+#: includes/CountriesArray.php:99
+msgid "Israel"
+msgstr ""
+
+#: includes/CountriesArray.php:100
+msgid "India"
+msgstr ""
+
+#: includes/CountriesArray.php:101
+msgid "Iraq"
+msgstr ""
+
+#: includes/CountriesArray.php:102
+msgid "Iran"
+msgstr ""
+
+#: includes/CountriesArray.php:103
+msgid "Iceland"
+msgstr ""
+
+#: includes/CountriesArray.php:104
+msgid "Italy"
+msgstr ""
+
+#: includes/CountriesArray.php:105
+msgid "Jersey"
+msgstr ""
+
+#: includes/CountriesArray.php:106
+msgid "Jamaica"
+msgstr ""
+
+#: includes/CountriesArray.php:107
+msgid "Jordan"
+msgstr ""
+
+#: includes/CountriesArray.php:108
+msgid "Japan"
+msgstr ""
+
+#: includes/CountriesArray.php:109
+msgid "Kenya"
+msgstr ""
+
+#: includes/CountriesArray.php:110
+msgid "Kyrgyzstan"
+msgstr ""
+
+#: includes/CountriesArray.php:111
+msgid "Cambodia"
+msgstr ""
+
+#: includes/CountriesArray.php:112
+msgid "Kiribati"
+msgstr ""
+
+#: includes/CountriesArray.php:113
+msgid "Comoros"
+msgstr ""
+
+#: includes/CountriesArray.php:114
+msgid "Saint Kitts and Nevis"
+msgstr ""
+
+#: includes/CountriesArray.php:115
+msgid "Korea (South)"
+msgstr ""
+
+#: includes/CountriesArray.php:116
+msgid "Kuwait"
+msgstr ""
+
+#: includes/CountriesArray.php:117
+msgid "Cayman Islands"
+msgstr ""
+
+#: includes/CountriesArray.php:118
+msgid "Kazakhstan"
+msgstr ""
+
+#: includes/CountriesArray.php:119
+msgid "Lao People s Dem. Rep."
+msgstr ""
+
+#: includes/CountriesArray.php:120
+msgid "Lebanon"
+msgstr ""
+
+#: includes/CountriesArray.php:121
+msgid "Saint Lucia"
+msgstr ""
+
+#: includes/CountriesArray.php:122
+msgid "Liechtenstein"
+msgstr ""
+
+#: includes/CountriesArray.php:123
+msgid "Sri Lanka"
+msgstr ""
+
+#: includes/CountriesArray.php:124
+msgid "Lesotho"
+msgstr ""
+
+#: includes/CountriesArray.php:125
+msgid "Lithuania"
+msgstr ""
+
+#: includes/CountriesArray.php:126
+msgid "Luxembourg"
+msgstr ""
+
+#: includes/CountriesArray.php:127
+msgid "Latvia"
+msgstr ""
+
+#: includes/CountriesArray.php:128
+msgid "Libyan Arab Jamahiriya"
+msgstr ""
+
+#: includes/CountriesArray.php:129
+msgid "Morocco"
+msgstr ""
+
+#: includes/CountriesArray.php:130
+msgid "Monaco"
+msgstr ""
+
+#: includes/CountriesArray.php:131
+msgid "Moldova, Republic of"
+msgstr ""
+
+#: includes/CountriesArray.php:132
+msgid "Montenegro"
+msgstr ""
+
+#: includes/CountriesArray.php:133
+msgid "Madagascar"
+msgstr ""
+
+#: includes/CountriesArray.php:134
+msgid "Macedonia, TFYR"
+msgstr ""
+
+#: includes/CountriesArray.php:135
+msgid "Mali"
+msgstr ""
+
+#: includes/CountriesArray.php:136
+msgid "Myanmar"
+msgstr ""
+
+#: includes/CountriesArray.php:137
+msgid "Mongolia"
+msgstr ""
+
+#: includes/CountriesArray.php:138
+msgid "Macao, (China)"
+msgstr ""
+
+#: includes/CountriesArray.php:139
+msgid "Northern Mariana Islands"
+msgstr ""
+
+#: includes/CountriesArray.php:140
+msgid "Martinique"
+msgstr ""
+
+#: includes/CountriesArray.php:141
+msgid "Mauritania"
+msgstr ""
+
+#: includes/CountriesArray.php:142
+msgid "Malta"
+msgstr ""
+
+#: includes/CountriesArray.php:143
+msgid "Mauritius"
+msgstr ""
+
+#: includes/CountriesArray.php:144
+msgid "Maldives"
+msgstr ""
+
+#: includes/CountriesArray.php:145
+msgid "Malawi"
+msgstr ""
+
+#: includes/CountriesArray.php:146
+msgid "Mexico"
+msgstr ""
+
+#: includes/CountriesArray.php:147
+msgid "Malaysia"
+msgstr ""
+
+#: includes/CountriesArray.php:148
+msgid "Mozambique"
+msgstr ""
+
+#: includes/CountriesArray.php:149
+msgid "Namibia"
+msgstr ""
+
+#: includes/CountriesArray.php:150
+msgid "New Caledonia"
+msgstr ""
+
+#: includes/CountriesArray.php:151
+msgid "Niger"
+msgstr ""
+
+#: includes/CountriesArray.php:152
+msgid "Nigeria"
+msgstr ""
+
+#: includes/CountriesArray.php:153
+msgid "Nicaragua"
+msgstr ""
+
+#: includes/CountriesArray.php:154
+msgid "Netherlands"
+msgstr ""
+
+#: includes/CountriesArray.php:155
+msgid "Norway"
+msgstr ""
+
+#: includes/CountriesArray.php:156
+msgid "Nepal"
+msgstr ""
+
+#: includes/CountriesArray.php:157
+msgid "New Zealand"
+msgstr ""
+
+#: includes/CountriesArray.php:158
+msgid "Oman"
+msgstr ""
+
+#: includes/CountriesArray.php:159
+msgid "Panama"
+msgstr ""
+
+#: includes/CountriesArray.php:160
+msgid "Peru"
+msgstr ""
+
+#: includes/CountriesArray.php:161
+msgid "French Polynesia"
+msgstr ""
+
+#: includes/CountriesArray.php:162
+msgid "Papua New Guinea"
+msgstr ""
+
+#: includes/CountriesArray.php:163
+msgid "Philippines"
+msgstr ""
+
+#: includes/CountriesArray.php:164
+msgid "Pakistan"
+msgstr ""
+
+#: includes/CountriesArray.php:165
+msgid "Poland"
+msgstr ""
+
+#: includes/CountriesArray.php:166
+msgid "Palestinian Territory"
+msgstr ""
+
+#: includes/CountriesArray.php:167
+msgid "Portugal"
+msgstr ""
+
+#: includes/CountriesArray.php:168
+msgid "Paraguay"
+msgstr ""
+
+#: includes/CountriesArray.php:169
+msgid "Qatar"
+msgstr ""
+
+#: includes/CountriesArray.php:170
+msgid "Romania"
+msgstr ""
+
+#: includes/CountriesArray.php:171
+msgid "Serbia"
+msgstr ""
+
+#: includes/CountriesArray.php:172
+msgid "Russian Federation"
+msgstr ""
+
+#: includes/CountriesArray.php:173
+msgid "Rwanda"
+msgstr ""
+
+#: includes/CountriesArray.php:174
+msgid "Saudi Arabia"
+msgstr ""
+
+#: includes/CountriesArray.php:175
+msgid "Solomon Islands"
+msgstr ""
+
+#: includes/CountriesArray.php:176
+msgid "Seychelles"
+msgstr ""
+
+#: includes/CountriesArray.php:177
+msgid "Sudan"
+msgstr ""
+
+#: includes/CountriesArray.php:178
+msgid "Sweden"
+msgstr ""
+
+#: includes/CountriesArray.php:179
+msgid "Singapore"
+msgstr ""
+
+#: includes/CountriesArray.php:180
+msgid "Slovenia"
+msgstr ""
+
+#: includes/CountriesArray.php:181
+msgid "Slovakia"
+msgstr ""
+
+#: includes/CountriesArray.php:182
+msgid "San Marino"
+msgstr ""
+
+#: includes/CountriesArray.php:183
+msgid "Senegal"
+msgstr ""
+
+#: includes/CountriesArray.php:184
+msgid "Somalia"
+msgstr ""
+
+#: includes/CountriesArray.php:185
+msgid "Suriname"
+msgstr ""
+
+#: includes/CountriesArray.php:186
+msgid "Sao Tome and Principe"
+msgstr ""
+
+#: includes/CountriesArray.php:187
+msgid "El Salvador"
+msgstr ""
+
+#: includes/CountriesArray.php:188
+msgid "Syrian Arab Republic"
+msgstr ""
+
+#: includes/CountriesArray.php:189
+msgid "Swaziland"
+msgstr ""
+
+#: includes/CountriesArray.php:190
+msgid "Chad"
+msgstr ""
+
+#: includes/CountriesArray.php:191
+msgid "Togo"
+msgstr ""
+
+#: includes/CountriesArray.php:192
+msgid "Thailand"
+msgstr ""
+
+#: includes/CountriesArray.php:193
+msgid "Tajikistan"
+msgstr ""
+
+#: includes/CountriesArray.php:194
+msgid "East Timor (Timor-Leste)"
+msgstr ""
+
+#: includes/CountriesArray.php:195
+msgid "Turkmenistan"
+msgstr ""
+
+#: includes/CountriesArray.php:196
+msgid "Tunisia"
+msgstr ""
+
+#: includes/CountriesArray.php:197
+msgid "Tonga"
+msgstr ""
+
+#: includes/CountriesArray.php:198
+msgid "Turkey"
+msgstr ""
+
+#: includes/CountriesArray.php:199
+msgid "Trinidad and Tobago"
+msgstr ""
+
 #: includes/CountriesArray.php:200
-msgid "United States"
+msgid "Taiwan"
 msgstr ""
 
 #: includes/CountriesArray.php:201
-msgid "Uruguay"
+msgid "Tanzania, United Rep. of"
 msgstr ""
 
 #: includes/CountriesArray.php:202
-msgid "Uzbekistan"
+msgid "Ukraine"
 msgstr ""
 
 #: includes/CountriesArray.php:203
-msgid "St. Vincent and the Grenadines"
+msgid "Uganda"
 msgstr ""
 
 #: includes/CountriesArray.php:204
-msgid "Venezuela"
+msgid "United States"
 msgstr ""
 
 #: includes/CountriesArray.php:205
-msgid "British Virgin Islands"
+msgid "Uruguay"
 msgstr ""
 
 #: includes/CountriesArray.php:206
-msgid "Virgin Islands, U.S."
+msgid "Uzbekistan"
 msgstr ""
 
 #: includes/CountriesArray.php:207
-msgid "Viet Nam"
+msgid "St. Vincent and the Grenadines"
 msgstr ""
 
 #: includes/CountriesArray.php:208
-msgid "Vanuatu"
+msgid "Venezuela"
 msgstr ""
 
 #: includes/CountriesArray.php:209
-msgid "Samoa"
+msgid "British Virgin Islands"
 msgstr ""
 
 #: includes/CountriesArray.php:210
-msgid "Yemen"
+msgid "Virgin Islands, U.S."
 msgstr ""
 
 #: includes/CountriesArray.php:211
-msgid "Zambia"
+msgid "Viet Nam"
 msgstr ""
 
 #: includes/CountriesArray.php:212
-msgid "South Africa"
+msgid "Vanuatu"
 msgstr ""
 
 #: includes/CountriesArray.php:213
+msgid "Samoa"
+msgstr ""
+
+#: includes/CountriesArray.php:214
+msgid "Yemen"
+msgstr ""
+
+#: includes/CountriesArray.php:215
+msgid "South Africa"
+msgstr ""
+
+#: includes/CountriesArray.php:216
+msgid "Zambia"
+msgstr ""
+
+#: includes/CountriesArray.php:217
 msgid "Zimbabwe"
 msgstr ""
 
@@ -50704,82 +50676,6 @@ msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:315
 msgid "Times Italic"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:318
-msgid "1"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:321
-msgid "4"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:322
-msgid "5"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:323
-msgid "6"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:324
-msgid "7"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:325
-msgid "8"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:326
-msgid "9"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:327
-msgid "10"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:328
-msgid "12"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:329
-msgid "14"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:330
-msgid "16"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:331
-msgid "18"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:332
-msgid "20"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:333
-msgid "24"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:334
-msgid "28"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:335
-msgid "32"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:336
-msgid "36"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:337
-msgid "40"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:338
-msgid "50"
 msgstr ""
 
 #: reportwriter/languages/en_US/reports.php:341
