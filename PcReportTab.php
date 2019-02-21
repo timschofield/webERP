@@ -1,10 +1,11 @@
 <?php
+// PcReportTab.php
+// .
 
 include ('includes/session.php');
-$Title = _('Petty Cash Management Report');
-/* webERP manual links before header.php */
 $ViewTopic = 'PettyCash';
 $BookMark = 'PcReportTab';
+$Title = _('Petty Cash Management Report');
 
 include ('includes/SQL_CommonFunctions.inc');
 
@@ -61,11 +62,11 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	echo '</select></td>
 		</tr>
 		<tr>
-			<td>' . _('From Date :') . '</td>
+			<td>', _('From Date'), ':</td>
 			<td><input tabindex="2" class="date" type="text" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" /></td>
 		</tr>
 		<tr>
-			<td>' . _('To Date:')  . '</td>
+			<td>', _('To Date'), ':</td>
 			<td><input tabindex="3" class="date" type="text" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
 		</tr>
 		</table>
