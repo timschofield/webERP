@@ -8,6 +8,7 @@ $ViewTopic = 'Setup';
 $BookMark = 'Currencies';
 include('includes/header.php');
 
+include('includes/CountriesArray.php'); // To get the country name from the country code.
 include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
 include('includes/SQL_CommonFunctions.inc');
 
@@ -30,8 +31,8 @@ $Errors = array();
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/currency.png" title="', // Icon image.
-	_('Currencies'), '" /> ', // Icon title.
-	_('Currencies Maintenance'), '</p>';// Page title.
+	$Title, '" /> ', // Icon title.
+	$Title, '</p>';// Page title.
 
 if (isset($_POST['submit'])) {
 
@@ -119,20 +120,22 @@ if (isset($_POST['submit'])) {
 	} else if ($InputError !=1) {
 
 	/*Selected currencies is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new payment terms form */
-		$sql = "INSERT INTO currencies (currency,
-										currabrev,
-										country,
-										hundredsname,
-										decimalplaces,
-										rate,
-										webcart)
-								VALUES ('" . $CurrencyName[$_POST['Abbreviation']] . "',
-										'" . $_POST['Abbreviation'] . "',
-										'" . $_POST['Country'] . "',
-										'" . $_POST['HundredsName'] .  "',
-										'" . filter_number_format($_POST['DecimalPlaces']) . "',
-										'" . filter_number_format($_POST['ExchangeRate']) . "',
-										'" . $_POST['webcart'] . "')";
+		$sql = "INSERT INTO currencies (
+						currency,
+						currabrev,
+						country,
+						hundredsname,
+						decimalplaces,
+						rate,
+						webcart
+					) VALUES ('" .
+						$CurrencyName[$_POST['Abbreviation']] . "', '" .
+						$_POST['Abbreviation'] . "', '" .
+						$_POST['Country'] . "', '" .
+						$_POST['HundredsName'] .  "', '" .
+						filter_number_format($_POST['DecimalPlaces']) . "', '" .
+						filter_number_format($_POST['ExchangeRate']) . "', '" .
+						$_POST['webcart'] . "')";
 		$msg = _('The currency definition record has been added');
 	}
 	//run the SQL from either of the above possibilites
@@ -184,38 +187,40 @@ if (isset($_POST['submit'])) {
 			$DifferenceToAdjust = $NewBalanceInFucntionalCurrency - $OldBalanceInFunctionalCurrency;
 			if($OldRate != $NewRate) {
 
-				$SQL = "INSERT INTO gltrans (type,
-											typeno,
-											trandate,
-											periodno,
-											account,
-											narrative,
-											amount)
-										  VALUES (36,
-											'" . $ExDiffTransNo . "',
-											'" . FormatDateForSQL($PostingDate) . "',
-											'" . $PeriodNo . "',
-											'" . $_SESSION['CompanyRecord']['exchangediffact'] . "',
-											'" . $MyRowBankAccount['bankaccountname'] . ' ' . _('currency rate adjustment to') . ' ' . locale_number_format($NewRate, 'Variable') . ' ' . $SelectedCurrency . '/' . $_SESSION['CompanyRecord']['currencydefault']. "',
-											'" . (-$DifferenceToAdjust) . "')";
-
+				$SQL = "INSERT INTO gltrans (
+								type,
+								typeno,
+								trandate,
+								periodno,
+								account,
+								narrative,
+								amount
+							) VALUES (
+								36, '" .
+								$ExDiffTransNo . "', '" .
+								FormatDateForSQL($PostingDate) . "', '" .
+								$PeriodNo . "', '" .
+								$_SESSION['CompanyRecord']['exchangediffact'] . "', '" .
+								$MyRowBankAccount['bankaccountname'] . ' ' . _('currency rate adjustment to') . ' ' . locale_number_format($NewRate, 'Variable') . ' ' . $SelectedCurrency . '/' . $_SESSION['CompanyRecord']['currencydefault']. "', '" .
+								(-$DifferenceToAdjust) . "')";
 				$ErrMsg = _('Cannot insert a GL entry for the exchange difference because');
 				$DbgMsg = _('The SQL that failed to insert the exchange difference GL entry was');
 				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-				$SQL = "INSERT INTO gltrans (type,
-											typeno,
-											trandate,
-											periodno,
-											account,
-											narrative,
-											amount)
-										  VALUES (36,
-											'" . $ExDiffTransNo . "',
-											'" . FormatDateForSQL($PostingDate) . "',
-											'" . $PeriodNo . "',
-											'" . $MyRowBankAccount['accountcode'] . "',
-											'" . $MyRowBankAccount['bankaccountname'] . ' ' . _('currency rate adjustment to') . ' ' . locale_number_format($NewRate, 'Variable') . ' ' . $SelectedCurrency . '/' . $_SESSION['CompanyRecord']['currencydefault']. "',
-											'" . ($DifferenceToAdjust) . "')";
+				$SQL = "INSERT INTO gltrans (
+								type,
+								typeno,
+								trandate,
+								periodno,
+								account,
+								narrative,
+								amount
+							) VALUES (36, '" .
+								$ExDiffTransNo . "', '" .
+								FormatDateForSQL($PostingDate) . "', '" .
+								$PeriodNo . "', '" .
+								$MyRowBankAccount['accountcode'] . "', '" .
+								$MyRowBankAccount['bankaccountname'] . ' ' . _('currency rate adjustment to') . ' ' . locale_number_format($NewRate, 'Variable') . ' ' . $SelectedCurrency . '/' . $_SESSION['CompanyRecord']['currencydefault']. "', '" .
+								($DifferenceToAdjust) . "')";
 
 				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 				prnMsg(_('Bank Account') . ' ' . $MyRowBankAccount['bankaccountname'] . ' ' . _('Currency Rate difference of') . ' ' . locale_number_format($DifferenceToAdjust, $_SESSION['CompanyRecord']['decimalplaces']) . ' ' . _('has been posted'),'success');
@@ -340,65 +345,35 @@ or deletion of the records*/
 		}
 
 		if ($MyRow['currabrev']!=$FunctionalCurrency) {
-			printf('<td><img src="%s" alt="" /></td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="centre">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td><a href="%s&amp;SelectedCurrency=%s">%s</a></td>
-					<td><a href="%s&amp;SelectedCurrency=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this currency?') . '\');">%s</a></td>
-					<td><a href="%s/ExchangeRateTrend.php?%s">' . _('Graph') . '</a></td>
-					</tr>',
-					$ImageFile,
-					$MyRow['currabrev'],
-					$CurrencyName[$MyRow['currabrev']],
-					$MyRow['country'],
-					$MyRow['hundredsname'],
-					locale_number_format($MyRow['decimalplaces'], 0),
-					$ShowInWebText,
-					locale_number_format($MyRow['rate'], 'Variable'),
-					locale_number_format(1/$MyRow['rate'], 2),
-					locale_number_format(GetCurrencyRate($MyRow['currabrev'],$CurrencyRatesArray), 8),
-					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-					$MyRow['currabrev'],
-					_('Edit'),
-					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-					$MyRow['currabrev'],
-					_('Delete'),
-					$RootPath,
-					'&amp;CurrencyToShow=' . $MyRow['currabrev']);
+			echo '	<td><img src="', $ImageFile, '" alt="" /></td>
+					<td>', $MyRow['currabrev'], '</td>
+					<td>', $CurrencyName[$MyRow['currabrev']], '</td>
+					<td>', $CountriesArray[substr($MyRow['currabrev'], 0, 2)], '</td>
+					<td>', $MyRow['hundredsname'], '</td>
+					<td class="number">', locale_number_format($MyRow['decimalplaces'], 0), '</td>
+					<td class="centre">', $ShowInWebText, '</td>
+					<td class="number">', locale_number_format($MyRow['rate'], 'Variable'), '</td>
+					<td class="number">', locale_number_format(1/$MyRow['rate'], 2), '</td>
+					<td class="number">', locale_number_format(GetCurrencyRate($MyRow['currabrev'],$CurrencyRatesArray), 8), '</td>
+					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SelectedCurrency=', $MyRow['currabrev'], '">', _('Edit'), '</a></td>
+					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SelectedCurrency=', $MyRow['currabrev'], '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this currency?') . '\');">', _('Delete'), '</a></td>
+					<td><a href="', $RootPath, '/ExchangeRateTrend.php?&amp;CurrencyToShow=' . $MyRow['currabrev'], '">' . _('Graph') . '</a></td>
+				</tr>';
 		} else {
-			printf('<td><img src="%s" alt="" /></td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="centre">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
+			echo '	<td><img src="', $ImageFile, '" alt="" /></td>
+					<td>', $MyRow['currabrev'], '</td>
+					<td>', $CurrencyName[$MyRow['currabrev']], '</td>
+					<td>', $CountriesArray[substr($MyRow['currabrev'], 0, 2)], '</td>
+					<td>', $MyRow['hundredsname'], '</td>
+					<td class="number">', locale_number_format($MyRow['decimalplaces'], 0), '</td>
+					<td class="centre">', $ShowInWebText, '</td>
+					<td class="number">', locale_number_format(1, 8), '</td>
+					<td class="number">', locale_number_format(1, 2), '</td>
+					<td class="number">', locale_number_format(1, 8), '</td>
 					<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?&amp;SelectedCurrency=' . urlencode($MyRow['currabrev']) . '">' . _('Edit') . '</a></td>
 					<td colspan="2"><a href="CompanyPreferences.php#CurrencyDefault">' . _('Functional Currency') . '</a></td>
-					</tr>',
-					$ImageFile,
-					$MyRow['currabrev'],
-					$CurrencyName[$MyRow['currabrev']],
-					$MyRow['country'],
-					$MyRow['hundredsname'],
-					locale_number_format($MyRow['decimalplaces'],0),
-					$ShowInWebText,
-					locale_number_format(1,8),
-					locale_number_format(1,2),
-					locale_number_format(1,8),
-					_('Home Currency'));
+				</tr>';
 		}
-
 	} //END WHILE LIST LOOP
 	echo '</table>
 			<br />';
