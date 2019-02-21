@@ -48646,11 +48646,11 @@ msgstr ""
 
 #: includes/CountriesArray.php:46
 msgid "Colombia"
-msgstr ""
+msgstr "Колумбия"
 
 #: includes/CountriesArray.php:47
 msgid "Costa Rica"
-msgstr ""
+msgstr "Коста-Рика"
 
 #: includes/CountriesArray.php:48
 msgid "Montenegro"
@@ -48746,7 +48746,7 @@ msgstr ""
 
 #: includes/CountriesArray.php:71
 msgid "France"
-msgstr ""
+msgstr "Франция"
 
 #: includes/CountriesArray.php:72
 msgid "Gabon"
@@ -49130,7 +49130,7 @@ msgstr ""
 
 #: includes/CountriesArray.php:167
 msgid "Russian Federation"
-msgstr ""
+msgstr "Росси́йская Федера́ция"
 
 #: includes/CountriesArray.php:168
 msgid "Rwanda"
@@ -49262,7 +49262,7 @@ msgstr ""
 
 #: includes/CountriesArray.php:200
 msgid "United States"
-msgstr ""
+msgstr "Соединёнными Штатами"
 
 #: includes/CountriesArray.php:201
 msgid "Uruguay"

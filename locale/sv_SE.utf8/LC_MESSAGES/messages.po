@@ -48767,19 +48767,19 @@ msgstr ""
 
 #: includes/CountriesArray.php:198
 msgid "Uganda"
-msgstr ""
+msgstr "Uganda"
 
 #: includes/CountriesArray.php:199
 msgid "United Kingdom"
-msgstr ""
+msgstr "Storbritannien"
 
 #: includes/CountriesArray.php:200
 msgid "United States"
-msgstr ""
+msgstr "Förenta staterna"
 
 #: includes/CountriesArray.php:201
 msgid "Uruguay"
-msgstr ""
+msgstr "Uruguay"
 
 #: includes/CountriesArray.php:202
 msgid "Uzbekistan"
