@@ -50789,16 +50789,16 @@ msgstr ""
 
 #: includes/CountriesArray.php:203
 msgid "Uganda"
-msgstr ""
+msgstr "Ouganda"
 
 # JDN (colisage?)
 #: includes/CountriesArray.php:204
 msgid "United States"
-msgstr ""
+msgstr "États-Unis"
 
 #: includes/CountriesArray.php:205
 msgid "Uruguay"
-msgstr ""
+msgstr "Uruguay"
 
 #: includes/CountriesArray.php:206
 msgid "Uzbekistan"
