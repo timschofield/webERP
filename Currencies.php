@@ -8,8 +8,8 @@ $ViewTopic = 'Setup';
 $BookMark = 'Currencies';
 include('includes/header.php');
 
-include('includes/CountriesArray.php'); // To get the country name from the country code.
-include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
+include('includes/CountriesArray.php');// To get the country name from the country code.
+include('includes/CurrenciesArray.php');// To get the currency name from the currency code.
 include('includes/SQL_CommonFunctions.inc');
 
 if (isset($_GET['SelectedCurrency'])) {
@@ -345,7 +345,7 @@ or deletion of the records*/
 		}
 
 		if ($MyRow['currabrev']!=$FunctionalCurrency) {
-			echo '	<td><img src="', $ImageFile, '" alt="" /></td>
+			echo '	<td><img alt="" src="', $ImageFile, '" /></td>
 					<td>', $MyRow['currabrev'], '</td>
 					<td>', $CurrencyName[$MyRow['currabrev']], '</td>
 					<td>', $CountriesArray[substr($MyRow['currabrev'], 0, 2)], '</td>
@@ -360,7 +360,7 @@ or deletion of the records*/
 					<td><a href="', $RootPath, '/ExchangeRateTrend.php?&amp;CurrencyToShow=' . $MyRow['currabrev'], '">' . _('Graph') . '</a></td>
 				</tr>';
 		} else {
-			echo '	<td><img src="', $ImageFile, '" alt="" /></td>
+			echo '	<td><img alt="" src="', $ImageFile, '" /></td>
 					<td>', $MyRow['currabrev'], '</td>
 					<td>', $CurrencyName[$MyRow['currabrev']], '</td>
 					<td>', $CountriesArray[substr($MyRow['currabrev'], 0, 2)], '</td>
