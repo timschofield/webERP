@@ -15,6 +15,9 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 
 | Description | Type | Author | Date | Details | Ref |
 |:-----------:|:----:|:------:|:----:|:-------:|:---:|
+| Fix country name in Currencies.php | Fixed | Rafael Chacón | 2019-02-12 | [View](https://github.com/webERP-team/webERP/commit/c6f4d97d496d3ee5289e7ef577b536e50782195a) |   |
+| Fix height in #QuickMenuDiv li | Fixed | Rafael Chacón | 2019-02-12 | [View](https://github.com/webERP-team/webERP/commit/c8cb323b16105866c9d576b0d69c2969cee94962) |   |
+| Use inline-block instead of inline | Changed | Rafael Chacón | 2019-02-12 | [View](https://github.com/webERP-team/webERP/commit/23a580b16f05c6015e03aa64321d57af6878853d) |   |
 | Fix concat errors, add urlencode() | Fixed | PaulT | 2019-02-12 | [View](https://github.com/webERP-team/webERP/commit/d6b2ddb7353fcfdfa0b952a117feca83f330eaaa) |   |
 | Deletes the translation of numbers | Changed | Rafael Chacón | 2019-01-21 | [View](https://github.com/webERP-team/webERP/commit/55bc2e3275c8d6a8284f9fa9118782aa0b8a5908) |   |
 | Standardise buttons in Horizontal Analysis reports | Changed | Rafael Chacón | 2019-01-19 | [View](https://github.com/webERP-team/webERP/commit/22c62fc4129364fa7ce5efa2f1b92adeb9cc7c7f) |   |
