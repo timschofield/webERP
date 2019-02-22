@@ -1,11 +1,11 @@
 <?php
-/* Currencies.php */
-/* Defines the currencies available. Each customer and supplier must be defined as transacting in one of the currencies defined here. */
+// Currencies.php
+// Defines the currencies available. Each customer and supplier must be defined as transacting in one of the currencies defined here.
 
 include('includes/session.php');
-$Title = _('Currencies Maintenance');
 $ViewTopic = 'Setup';
 $BookMark = 'Currencies';
+$Title = _('Currencies Maintenance');
 include('includes/header.php');
 
 include('includes/CountriesArray.php');// To get the country name from the country code.

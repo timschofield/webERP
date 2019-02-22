@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-20 19:25-0600\n"
+"POT-Creation-Date: 2019-02-21 13:37-0600\n"
 "PO-Revision-Date: 2013-11-25 08:24-0600\n"
 "Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: WebERP Translation Team <web-erp-translation@lists."
@@ -170,7 +170,7 @@ msgstr "不能删除，已创建了属于这个科目组的会计科目"
 #: Locations.php:306 Locations.php:315 Locations.php:324 Locations.php:333
 #: Locations.php:342 Locations.php:350 Manufacturers.php:184
 #: MRPDemandTypes.php:86 PaymentMethods.php:161 PaymentTerms.php:145
-#: PaymentTerms.php:152 PcExpenses.php:116 SalesCategories.php:145
+#: PaymentTerms.php:152 PcExpenses.php:120 SalesCategories.php:145
 #: SalesCategories.php:152 SalesPeople.php:158 SalesPeople.php:165
 #: SalesPeople.php:171 SalesTypes.php:139 SalesTypes.php:149 Shippers.php:80
 #: Shippers.php:92 StockCategories.php:215 Stocks.php:790 Stocks.php:799
@@ -240,18 +240,18 @@ msgstr "不能取得科目组, 由于"
 #: CustItem.php:119 CustItem.php:205 CustItem.php:233
 #: DebtorsAtPeriodEnd.php:128 DiscountCategories.php:11
 #: DiscountCategories.php:148 DiscountMatrix.php:15 EDIMessageFormat.php:104
-#: FixedAssetLocations.php:12 FixedAssetRegister.php:16
-#: FixedAssetRegister.php:256 FixedAssetTransfer.php:13
+#: FixedAssetLocations.php:12 FixedAssetRegister.php:18
+#: FixedAssetRegister.php:258 FixedAssetTransfer.php:13
 #: GeneratePickingList.php:32 GLAccountGraph.php:41 GLBudgets.php:31
 #: GLJournalInquiry.php:11 GLJournal.php:248 HistoricalTestResults.php:41
 #: InternalStockRequestInquiry.php:167 InternalStockRequest.php:303
 #: InventoryPlanning.php:459 InventoryPlanningPrefSupplier.php:385
 #: MaintenanceTasks.php:13 MaintenanceUserSchedule.php:15 MRPReport.php:538
-#: NoSalesItems.php:90 PcAssignCashTabToTab.php:79 PcAssignCashTabToTab.php:159
-#: PcAssignCashTabToTab.php:215 PcAssignCashToTab.php:49
+#: NoSalesItems.php:90 PcAssignCashTabToTab.php:80 PcAssignCashTabToTab.php:160
+#: PcAssignCashTabToTab.php:216 PcAssignCashToTab.php:49
 #: PcAssignCashToTab.php:119 PcAssignCashToTab.php:134
 #: PcAssignCashToTab.php:168 PDFPickingList.php:28 PDFStockLocTransfer.php:15
-#: POReport.php:59 POReport.php:63 POReport.php:67
+#: POReport.php:60 POReport.php:64 POReport.php:68
 #: PO_SelectOSPurchOrder.php:146 PriceMatrix.php:16 PricesBasedOnMarkUp.php:7
 #: Prices_Customer.php:34 Prices.php:10 ProductSpecs.php:37
 #: PurchaseByPrefSupplier.php:304 PurchData.php:240 PurchData.php:367
@@ -270,7 +270,7 @@ msgstr "不能取得科目组, 由于"
 #: SupplierPriceList.php:454 SupplierPriceList.php:492 Suppliers.php:297
 #: SupplierTenderCreate.php:552 SupplierTenderCreate.php:653
 #: SupplierTenders.php:321 SupplierTenders.php:383 SupplierTransInquiry.php:9
-#: TestPlanResults.php:26 TopItems.php:117 UnitsOfMeasure.php:9
+#: TestPlanResults.php:30 TopItems.php:117 UnitsOfMeasure.php:9
 #: WhereUsedInquiry.php:17 WorkCentres.php:112 WorkOrderCosting.php:21
 #: WorkOrderIssue.php:21 WorkOrderReceive.php:33 WorkOrderStatus.php:57
 #: Z_BottomUpCosts.php:56 ../webSHOP/includes/header.php:218
@@ -357,9 +357,9 @@ msgstr "损益类"
 #: SystemParameters.php:1228 SystemParameters.php:1250
 #: SystemParameters.php:1252 SystemParameters.php:1267
 #: SystemParameters.php:1269 TaxGroups.php:300 TaxGroups.php:303
-#: TaxGroups.php:346 TestPlanResults.php:285 TestPlanResults.php:504
-#: TestPlanResults.php:722 TestPlanResults.php:835 TestPlanResults.php:895
-#: TestPlanResults.php:899 UserGLAccounts.php:179 UserGLAccounts.php:188
+#: TaxGroups.php:346 TestPlanResults.php:289 TestPlanResults.php:508
+#: TestPlanResults.php:726 TestPlanResults.php:839 TestPlanResults.php:899
+#: TestPlanResults.php:903 UserGLAccounts.php:179 UserGLAccounts.php:188
 #: UserSettings.php:200 UserSettings.php:203 UserSettings.php:214
 #: UserSettings.php:217 WWW_Users.php:544 WWW_Users.php:546 WWW_Users.php:715
 #: WWW_Users.php:718 WWW_Users.php:731 WWW_Users.php:734 WWW_Users.php:745
@@ -431,9 +431,9 @@ msgstr "是"
 #: SystemParameters.php:1229 SystemParameters.php:1249
 #: SystemParameters.php:1253 SystemParameters.php:1266
 #: SystemParameters.php:1270 TaxGroups.php:301 TaxGroups.php:304
-#: TaxGroups.php:348 TestPlanResults.php:287 TestPlanResults.php:507
-#: TestPlanResults.php:724 TestPlanResults.php:837 TestPlanResults.php:896
-#: TestPlanResults.php:898 UserGLAccounts.php:181 UserGLAccounts.php:191
+#: TaxGroups.php:348 TestPlanResults.php:291 TestPlanResults.php:511
+#: TestPlanResults.php:728 TestPlanResults.php:841 TestPlanResults.php:900
+#: TestPlanResults.php:902 UserGLAccounts.php:181 UserGLAccounts.php:191
 #: UserSettings.php:199 UserSettings.php:202 UserSettings.php:213
 #: UserSettings.php:216 WWW_Users.php:543 WWW_Users.php:547 WWW_Users.php:714
 #: WWW_Users.php:717 WWW_Users.php:730 WWW_Users.php:733 WWW_Users.php:744
@@ -457,7 +457,7 @@ msgstr "否"
 #: MailingGroupMaintenance.php:171 MaintenanceTasks.php:117
 #: Manufacturers.php:252 MRPDemands.php:303 MRPDemandTypes.php:119
 #: PaymentMethods.php:226 PaymentTerms.php:204 PcAssignCashToTab.php:293
-#: PcClaimExpensesFromTab.php:544 PcExpenses.php:172 PcTabs.php:209
+#: PcClaimExpensesFromTab.php:544 PcExpenses.php:176 PcTabs.php:209
 #: PcTypeTabs.php:119 PO_AuthorisationLevels.php:155 PriceMatrix.php:285
 #: Prices_Customer.php:286 Prices.php:247 ProductSpecs.php:461
 #: PurchData.php:306 QATests.php:465 SalesCategories.php:296
@@ -498,9 +498,9 @@ msgstr ""
 #: Locations.php:435 MailingGroupMaintenance.php:172 MaintenanceTasks.php:118
 #: Manufacturers.php:253 MRPDemands.php:304 MRPDemandTypes.php:120
 #: PaymentMethods.php:227 Payments.php:1327 PaymentTerms.php:205
-#: PcAssignCashToTab.php:294 PcClaimExpensesFromTab.php:545 PcExpenses.php:173
+#: PcAssignCashToTab.php:294 PcClaimExpensesFromTab.php:545 PcExpenses.php:177
 #: PcExpensesTypeTab.php:151 PcTabs.php:210 PcTypeTabs.php:120
-#: PO_AuthorisationLevels.php:157 PO_Items.php:927 PriceMatrix.php:284
+#: PO_AuthorisationLevels.php:157 PO_Items.php:929 PriceMatrix.php:284
 #: Prices_Customer.php:287 Prices.php:248 ProductSpecs.php:462
 #: PurchData.php:308 PurchData.php:709 QATests.php:466
 #: RelatedItemsUpdate.php:159 RelatedItemsUpdate.php:169
@@ -510,13 +510,13 @@ msgstr ""
 #: SelectCustomer.php:726 SelectCustomer.php:745 SelectCustomer.php:801
 #: SelectCustomer.php:814 SelectCustomer.php:839 SelectCustomer.php:852
 #: SelectOrderItems.php:1423 SelectQASamples.php:399 SellThroughSupport.php:285
-#: Shipments.php:427 Shippers.php:136 SpecialOrder.php:652
+#: Shipments.php:427 Shippers.php:136 SpecialOrder.php:656
 #: StockCategories.php:291 StockCategories.php:631 StockLocTransfer.php:324
 #: SuppContractChgs.php:100 SuppCreditGRNs.php:116 SuppFixedAssetChgs.php:87
 #: SuppInvGRNs.php:150 SupplierContacts.php:167 SupplierTenderCreate.php:421
 #: SupplierTenderCreate.php:448 SupplierTypes.php:166 SuppShiptChgs.php:89
 #: SuppTransGLAnalysis.php:125 TaxAuthorities.php:169 TaxCategories.php:182
-#: TaxGroups.php:187 TaxProvinces.php:175 TestPlanResults.php:891
+#: TaxGroups.php:187 TaxProvinces.php:175 TestPlanResults.php:895
 #: Timesheets.php:693 UnitsOfMeasure.php:180 WorkCentres.php:148
 #: WorkOrderEntry.php:858 WOSerialNos.php:334 WWW_Access.php:124
 #: WWW_Users.php:389 includes/InputSerialItemsKeyed.php:51
@@ -710,7 +710,7 @@ msgstr ""
 #: SalesGLPostings.php:411 SalesPeople.php:374 SelectQASamples.php:507
 #: SelectQASamples.php:577 Shippers.php:195 StockCategories.php:658
 #: SupplierContacts.php:285 SuppLoginSetup.php:290 TaxAuthorities.php:323
-#: TaxCategories.php:240 TaxProvinces.php:229 TestPlanResults.php:941
+#: TaxCategories.php:240 TaxProvinces.php:229 TestPlanResults.php:945
 #: UnitsOfMeasure.php:235 WorkCentres.php:291 WWW_Users.php:829
 msgid "Enter Information"
 msgstr "保存"
@@ -753,8 +753,8 @@ msgstr ""
 #: AddCustomerTypeNotes.php:47 Areas.php:71 CustomerTypes.php:67
 #: DeliveryDetails.php:807 DeliveryDetails.php:824 Factors.php:104
 #: FixedAssetItems.php:254 MRPCalendar.php:177 PcAssignCashToTab.php:82
-#: PcClaimExpensesFromTab.php:73 PcExpenses.php:64 PcTabs.php:77
-#: PcTypeTabs.php:39 PO_Items.php:379 ProductSpecs.php:314 QATests.php:75
+#: PcClaimExpensesFromTab.php:73 PcExpenses.php:68 PcTabs.php:77
+#: PcTypeTabs.php:39 PO_Items.php:381 ProductSpecs.php:314 QATests.php:75
 #: SalesAnalReptCols.php:128 SalesPeople.php:104 SalesTypes.php:65
 #: SelectQASamples.php:84 Stocks.php:617 Suppliers.php:518 SupplierTypes.php:67
 msgid "has been updated"
@@ -775,7 +775,7 @@ msgstr "联系人记录已删除"
 #: ProductSpecs.php:385 QATests.php:391 SalesPeople.php:207
 #: SelectCustomer.php:719 StockDispatch.php:276 StockDispatch.php:287
 #: StockDispatch.php:298 SupplierContacts.php:151 SuppTransGLAnalysis.php:105
-#: Tax.php:434 TestPlanResults.php:485 UserBankAccounts.php:164
+#: Tax.php:434 TestPlanResults.php:489 UserBankAccounts.php:164
 #: UserGLAccounts.php:156 UserLocations.php:175
 #: includes/InputSerialItemsFile.php:85 includes/InputSerialItemsFile.php:137
 msgid "Name"
@@ -825,11 +825,11 @@ msgstr "对账单"
 #: AnalysisHorizontalIncome.php:242 AnalysisHorizontalPosition.php:175
 #: Customers.php:1121 Customers.php:1129 GLCashFlowsIndirect.php:155
 #: GLCashFlowsIndirect.php:467 GLStatements.php:116
-#: PcAssignCashTabToTab.php:289 PcAssignCashTabToTab.php:441
+#: PcAssignCashTabToTab.php:290 PcAssignCashTabToTab.php:442
 #: PcAssignCashToTab.php:236 PcAssignCashToTab.php:396 PcAuthorizeCash.php:95
 #: PcAuthorizeExpenses.php:102 PcClaimExpensesFromTab.php:455
-#: PcClaimExpensesFromTab.php:776 PcReportExpense.php:148 PcReportTab.php:222
-#: PcReportTab.php:466 PDFQuotation.php:250 PDFQuotationPortrait.php:247
+#: PcClaimExpensesFromTab.php:776 PcReportExpense.php:148 PcReportTab.php:223
+#: PcReportTab.php:467 PDFQuotation.php:250 PDFQuotationPortrait.php:247
 #: PurchasesReport.php:65 SalesReport.php:65 SelectCustomer.php:724
 #: ShopParameters.php:197 SystemParameters.php:424 WOSerialNos.php:305
 #: WOSerialNos.php:311
@@ -921,9 +921,9 @@ msgstr "客户通知："
 #: ContractCosting.php:176 CustomerAccount.php:251 CustomerAllocations.php:346
 #: CustomerAllocations.php:376 CustomerInquiry.php:251
 #: CustomerTransInquiry.php:100 CustWhereAlloc.php:143
-#: GeneratePickingList.php:506 GLAccountReport.php:344 GLTransInquiry.php:45
+#: GeneratePickingList.php:509 GLAccountReport.php:344 GLTransInquiry.php:45
 #: MRPCalendar.php:220 PaymentAllocations.php:66 Payments.php:1005
-#: Payments.php:1369 PcAssignCashTabToTab.php:285 PcAssignCashToTab.php:232
+#: Payments.php:1369 PcAssignCashTabToTab.php:286 PcAssignCashToTab.php:232
 #: PcAuthorizeCash.php:92 PDFOrdersInvoiced.php:377 PDFRemittanceAdvice.php:307
 #: PDFWOPrint.php:489 PrintCustTrans.php:949 PrintCustTransPortrait.php:933
 #: PrintWOItemSlip.php:186 PrintWOItemSlip.php:197 PrintWOItemSlip.php:208
@@ -1072,7 +1072,7 @@ msgstr "库"
 #: CounterSales.php:2251 CreditStatus.php:151 CreditStatus.php:235
 #: CustomerPurchases.php:82 EmailConfirmation.php:218 EmailConfirmation.php:348
 #: FixedAssetCategories.php:166 FixedAssetDepreciation.php:90
-#: FixedAssetRegister.php:87 FixedAssetRegister.php:388
+#: FixedAssetRegister.php:89 FixedAssetRegister.php:390
 #: FixedAssetTransfer.php:59 FixedAssetTransfer.php:161 GLTags.php:61
 #: GLTags.php:80 GLTransInquiry.php:47 GoodsReceived.php:128
 #: InternalStockCategoriesByRole.php:167 InternalStockRequestInquiry.php:219
@@ -1084,11 +1084,11 @@ msgstr "库"
 #: MRPDemands.php:289 MRPDemandTypes.php:112 MRPPlannedPurchaseOrders.php:285
 #: MRPPlannedWorkOrders.php:253 MRPReport.php:558 MRPReport.php:772
 #: MRPReschedules.php:187 MRPShortages.php:344 NoSalesItems.php:193
-#: PaymentTerms.php:181 PcExpenses.php:142 PcExpenses.php:224
+#: PaymentTerms.php:181 PcExpenses.php:146 PcExpenses.php:228
 #: PcExpensesTypeTab.php:144 PcTypeTabs.php:112 PDFCOA.php:63
 #: PDFOrdersInvoiced.php:334 PDFOrderStatus.php:335
-#: PDFSalesBySalesperson.php:85 PDFWeeklyOrders.php:81 PO_Items.php:881
-#: PO_Items.php:1368 PO_SelectOSPurchOrder.php:307 PO_SelectPurchOrder.php:214
+#: PDFSalesBySalesperson.php:85 PDFWeeklyOrders.php:81 PO_Items.php:883
+#: PO_Items.php:1371 PO_SelectOSPurchOrder.php:307 PO_SelectPurchOrder.php:214
 #: PricesByCost.php:162 RelatedItemsUpdate.php:158 ReorderLevelLocation.php:72
 #: ReorderLevel.php:287 ReverseGRN.php:403 SalesCategories.php:533
 #: SecurityTokens.php:106 SecurityTokens.php:166 SelectAsset.php:263
@@ -1106,7 +1106,7 @@ msgstr "库"
 #: SupplierTenderCreate.php:434 SupplierTenderCreate.php:684
 #: SupplierTenderCreate.php:842 SupplierTenders.php:325 SupplierTenders.php:416
 #: SupplierTenders.php:682 SuppPriceList.php:215 SuppPriceList.php:340
-#: TestPlanResults.php:177 TestPlanResults.php:268 TopItems.php:175
+#: TestPlanResults.php:181 TestPlanResults.php:272 TopItems.php:175
 #: WorkCentres.php:130 WorkOrderCosting.php:97 WorkOrderCosting.php:129
 #: WorkOrderEntry.php:967 WorkOrderIssue.php:1008 Z_ItemsWithoutPicture.php:34
 #: api/api_xml-rpc.php:3489 includes/PDFGrnHeader.inc:29
@@ -1137,7 +1137,7 @@ msgstr ""
 #: InternalStockRequestFulfill.php:357 InternalStockRequestInquiry.php:268
 #: InternalStockRequestInquiry.php:400 InternalStockRequest.php:544
 #: InventoryValuation.php:196 MRPReport.php:774 NoSalesItems.php:196
-#: OffersReceived.php:108 PickingLists.php:308 PO_Items.php:1371
+#: OffersReceived.php:108 PickingLists.php:308 PO_Items.php:1374
 #: PO_SelectOSPurchOrder.php:310 PO_SelectPurchOrder.php:217
 #: ProductSpecs.php:166 ProductSpecs.php:387 QATests.php:252 QATests.php:394
 #: SelectCompletedOrder.php:509 SelectCreditItems.php:1004
@@ -1146,8 +1146,8 @@ msgstr ""
 #: SelectQASamples.php:301 SelectSalesOrder.php:642 SelectWorkOrder.php:221
 #: Shipments.php:398 Shipments.php:476 Shipt_Select.php:193
 #: StockLocTransferReceive.php:545 SupplierPriceList.php:277
-#: SupplierTenderCreate.php:843 SupplierTenders.php:683 TestPlanResults.php:179
-#: TestPlanResults.php:487 TopItems.php:177 WorkOrderCosting.php:99
+#: SupplierTenderCreate.php:843 SupplierTenders.php:683 TestPlanResults.php:183
+#: TestPlanResults.php:491 TopItems.php:177 WorkOrderCosting.php:99
 #: WorkOrderEntry.php:968 WorkOrderIssue.php:1009 WorkOrderIssue.php:1081
 #: includes/PDFInventoryValnPageHeader.inc:33
 #: includes/PDFOrderPageHeader_generic.inc:96 includes/PDFWOPageHeader.inc:72
@@ -1313,9 +1313,9 @@ msgstr "该用户未清算的交易明细"
 
 #: AgedDebtors.php:371 AgedSuppliers.php:196 Dashboard.php:238
 #: GLAccountCSV.php:178 GLAccountInquiry.php:181 GLAccountReport.php:97
-#: PO_Items.php:450 PO_Items.php:579 PO_Items.php:604 PO_Items.php:742
-#: PO_Items.php:767 PurchaseByPrefSupplier.php:28 PurchaseByPrefSupplier.php:53
-#: SalesAnalReptCols.php:357 SpecialOrder.php:439
+#: PO_Items.php:452 PO_Items.php:581 PO_Items.php:606 PO_Items.php:744
+#: PO_Items.php:769 PurchaseByPrefSupplier.php:28 PurchaseByPrefSupplier.php:53
+#: SalesAnalReptCols.php:357 SpecialOrder.php:443
 #: StockLocTransferReceive.php:480 StockQuantityByDate.php:147
 #: includes/SelectOrderItems_IntoCart.inc:54
 msgid "could not be retrieved because"
@@ -1434,7 +1434,7 @@ msgstr "明细报表"
 #: InventoryPlanningPrefSupplier.php:436 InventoryQuantities.php:209
 #: InventoryValuation.php:272 MRPPlannedPurchaseOrders.php:377
 #: MRPPlannedWorkOrders.php:343 MRPReschedules.php:148 MRPShortages.php:297
-#: OutstandingGRNs.php:272 PcReportTab.php:75 PDFCustomerList.php:420
+#: OutstandingGRNs.php:272 PcReportTab.php:76 PDFCustomerList.php:420
 #: PDFLowGP.php:145 PDFPriceList.php:495 PDFRemittanceAdvice.php:174
 #: PDFStockCheckComparison.php:372 PrintCustTrans.php:635
 #: PrintCustTransPortrait.php:617 ReorderLevel.php:248 StockDispatch.php:448
@@ -1602,7 +1602,7 @@ msgstr ""
 #: GLTagProfit_Loss.php:103 GLTrialBalance.php:113
 #: InternalStockRequestInquiry.php:228 InternalStockRequest.php:359
 #: MRPDemands.php:332 MRPDemands.php:335 MRPReport.php:568 PO_Header.php:544
-#: PO_Items.php:1325 PO_Items.php:1329 PO_SelectOSPurchOrder.php:288
+#: PO_Items.php:1328 PO_Items.php:1332 PO_SelectOSPurchOrder.php:288
 #: PO_SelectPurchOrder.php:194 PurchData.php:377 SalesGraph.php:94
 #: SelectAsset.php:103 SelectCompletedOrder.php:484 SelectCreditItems.php:227
 #: SelectCreditItems.php:986 SelectCustomer.php:267 SelectCustomer.php:272
@@ -1613,7 +1613,7 @@ msgstr ""
 #: SelectSupplier.php:243 SelectWorkOrder.php:205 SellThroughSupport.php:194
 #: Shipt_Select.php:173 SuppFixedAssetChgs.php:125 SupplierPriceList.php:53
 #: SupplierPriceList.php:410 SupplierTenderCreate.php:562
-#: SupplierTenderCreate.php:695 SupplierTenders.php:428 TestPlanResults.php:157
+#: SupplierTenderCreate.php:695 SupplierTenders.php:428 TestPlanResults.php:161
 #: WorkOrderEntry.php:931 WorkOrderEntry.php:935 WorkOrderEntry.php:937
 #: WorkOrderIssue.php:984
 msgid "OR"
@@ -1638,7 +1638,7 @@ msgstr ""
 #: AnalysisHorizontalPosition.php:120 AnalysisHorizontalPosition.php:164
 #: EDIMessageFormat.php:214 EDIMessageFormat.php:216 GLBalanceSheet.php:88
 #: GLBalanceSheet.php:91 GLProfit_Loss.php:148 GLTagProfit_Loss.php:141
-#: POReport.php:1504 SalesInquiry.php:1080 Tax.php:454
+#: POReport.php:1505 SalesInquiry.php:1080 Tax.php:454
 msgid "Summary"
 msgstr "总计"
 
@@ -1931,7 +1931,7 @@ msgstr "区域编号"
 #: FixedAssetCategories.php:141 GLAccounts.php:212
 #: InternalStockCategoriesByRole.php:101 Locations.php:379
 #: Manufacturers.php:196 MRPDemands.php:244 PcAssignCashToTab.php:125
-#: PcClaimExpensesFromTab.php:345 PcExpenses.php:122 PcExpensesTypeTab.php:84
+#: PcClaimExpensesFromTab.php:345 PcExpenses.php:126 PcExpensesTypeTab.php:84
 #: PcTabs.php:138 PcTypeTabs.php:95 SalesAnalReptCols.php:214
 #: SalesCategories.php:156 SalesTypes.php:155 StockCategories.php:232
 #: Suppliers.php:663 SupplierTypes.php:131 Z_DeleteInvoice.php:177
@@ -1968,12 +1968,14 @@ msgid "Incorrect date format used, please re-enter"
 msgstr "输入的日期无效, 请输入有效日期格式"
 
 #: AuditTrail.php:42 BOMIndented.php:321 BOMIndentedReverse.php:299
-#: MRPCalendar.php:265 PcReportExpense.php:69
+#: FixedAssetRegister.php:316 MRPCalendar.php:265 PcReportExpense.php:69
+#: PcReportTab.php:65
 msgid "From Date"
 msgstr "从 日期"
 
 #: AuditTrail.php:46 BOMIndented.php:322 BOMIndentedReverse.php:300
-#: MRPCalendar.php:267 PcReportExpense.php:73
+#: FixedAssetRegister.php:320 MRPCalendar.php:267 PcReportExpense.php:73
+#: PcReportTab.php:69
 msgid "To Date"
 msgstr "到 日期"
 
@@ -1991,8 +1993,8 @@ msgstr "用户 ID"
 #: CustomerBalancesMovement.php:39 CustomerBalancesMovement.php:49
 #: CustomerInquiry.php:192 CustomerInquiry.php:197 CustomerInquiry.php:201
 #: CustomerTransInquiry.php:32 DailyBankTransactions.php:87
-#: DailySalesInquiry.php:51 DailySalesInquiry.php:53 FixedAssetRegister.php:59
-#: FixedAssetRegister.php:68 InternalStockRequestInquiry.php:53
+#: DailySalesInquiry.php:51 DailySalesInquiry.php:53 FixedAssetRegister.php:61
+#: FixedAssetRegister.php:70 InternalStockRequestInquiry.php:53
 #: InternalStockRequestInquiry.php:59 InternalStockRequestInquiry.php:79
 #: InternalStockRequestInquiry.php:87 InternalStockRequestInquiry.php:107
 #: InternalStockRequestInquiry.php:136 InternalStockRequestInquiry.php:138
@@ -2000,8 +2002,8 @@ msgstr "用户 ID"
 #: InventoryQuantities.php:195 MRP.php:621 MRPReport.php:546 MRPReport.php:548
 #: MRPReschedules.php:140 NoSalesItems.php:21 NoSalesItems.php:49
 #: NoSalesItems.php:69 NoSalesItems.php:71 PDFPeriodStockTransListing.php:57
-#: PDFPriceList.php:337 PDFPriceList.php:449 PO_Items.php:1294
-#: POReport.php:1583 PO_SelectOSPurchOrder.php:183
+#: PDFPriceList.php:337 PDFPriceList.php:449 PO_Items.php:1297
+#: POReport.php:1584 PO_SelectOSPurchOrder.php:183
 #: PO_SelectOSPurchOrder.php:193 PO_SelectOSPurchOrder.php:206
 #: PO_SelectOSPurchOrder.php:274 ReorderLevel.php:201 ReorderLevel.php:203
 #: ReorderLevel.php:233 ReorderLevel.php:235 SalesGraph.php:116
@@ -2046,7 +2048,7 @@ msgstr "日期/时间"
 #: AuditTrail.php:175 BankAccountUsers.php:77 BankAccountUsers.php:90
 #: GLAccountUsers.php:113 GLAccountUsers.php:125 GLAccountUsers.php:136
 #: LocationUsers.php:76 LocationUsers.php:89 LocationUsers.php:99
-#: PcReportTab.php:370 UserBankAccounts.php:77 UserBankAccounts.php:90
+#: PcReportTab.php:371 UserBankAccounts.php:77 UserBankAccounts.php:90
 #: UserGLAccounts.php:117 UserGLAccounts.php:129 UserGLAccounts.php:145
 #: UserLocations.php:76 UserLocations.php:89 UserLocations.php:99
 #: includes/header.php:62
@@ -2111,7 +2113,7 @@ msgstr "#"
 #: MaterialsNotUsed.php:34 MRPDemands.php:91 MRPPlannedPurchaseOrders.php:284
 #: MRPPlannedWorkOrders.php:252 MRPReport.php:771 NoSalesItems.php:192
 #: PDFOrdersInvoiced.php:333 PDFOrderStatus.php:334 PO_Header.php:558
-#: PO_Items.php:1367 PO_SelectOSPurchOrder.php:306 PO_SelectPurchOrder.php:213
+#: PO_Items.php:1370 PO_SelectOSPurchOrder.php:306 PO_SelectPurchOrder.php:213
 #: PricesByCost.php:161 PurchData.php:464 RelatedItemsUpdate.php:157
 #: ReorderLevelLocation.php:71 RevisionTranslations.php:58 SalesPeople.php:206
 #: SelectCompletedOrder.php:504 SelectCreditItems.php:1002
@@ -2119,11 +2121,11 @@ msgstr "#"
 #: SelectOrderItems.php:1691 SelectPickingLists.php:278 SelectProduct.php:344
 #: SelectProduct.php:836 SelectQASamples.php:298 SelectSalesOrder.php:639
 #: SelectSupplier.php:293 SelectWorkOrder.php:218 SellThroughSupport.php:158
-#: Shipt_Select.php:189 SpecialOrder.php:147 StockCategories.php:263
+#: Shipt_Select.php:189 SpecialOrder.php:151 StockCategories.php:263
 #: SupplierPriceList.php:275 SupplierPriceList.php:462
 #: SupplierTenderCreate.php:613 SupplierTenderCreate.php:841
 #: SupplierTenders.php:681 SuppPriceList.php:214 SuppPriceList.php:339
-#: TestPlanResults.php:176 TopItems.php:174 UserBankAccounts.php:163
+#: TestPlanResults.php:180 TopItems.php:174 UserBankAccounts.php:163
 #: UserGLAccounts.php:155 UserLocations.php:174 WorkOrderEntry.php:966
 #: WorkOrderIssue.php:1007 includes/PDFTopItemsHeader.inc:48
 #: includes/PO_PDFOrderPageHeader.inc:74 ../webSHOP/ItemDetails.php:72
@@ -2131,13 +2133,13 @@ msgid "Code"
 msgstr "编号"
 
 #: AutomaticTranslationDescriptions.php:43 CustomerTransInquiry.php:52
-#: FixedAssetRegister.php:366 GLJournalInquiry.php:45 GLJournalInquiry.php:62
-#: PcReportExpense.php:103 PcReportTab.php:376 PcTabExpensesList.php:307
-#: POReport.php:518 POReport.php:1518 SalesAnalRepts.php:426
-#: SalesAnalRepts.php:454 SalesAnalRepts.php:483 SalesAnalRepts.php:502
-#: SalesInquiry.php:808 SalesInquiry.php:1117 StockDispatch.php:514
-#: StockLocTransferReceive.php:105 SupplierTransInquiry.php:55
-#: includes/PO_PDFOrderPageHeader.inc:39
+#: FixedAssetRegister.php:368 GLJournalInquiry.php:45 GLJournalInquiry.php:62
+#: PcReportExpense.php:103 PcReportTab.php:181 PcReportTab.php:377
+#: PcTabExpensesList.php:307 POReport.php:519 POReport.php:1282
+#: POReport.php:1519 SalesAnalRepts.php:426 SalesAnalRepts.php:454
+#: SalesAnalRepts.php:483 SalesAnalRepts.php:502 SalesInquiry.php:808
+#: SalesInquiry.php:1117 StockDispatch.php:514 StockLocTransferReceive.php:105
+#: SupplierTransInquiry.php:55 includes/PO_PDFOrderPageHeader.inc:39
 #: reportwriter/languages/en_US/reports.php:105
 msgid "To"
 msgstr "到"
@@ -2352,16 +2354,17 @@ msgstr ""
 #: BankAccounts.php:206 Currencies.php:431 CustItem.php:295 CustItem.php:407
 #: CustomerAllocations.php:349 CustomerReceipt.php:857
 #: CustomerTransInquiry.php:108 OffersReceived.php:111 Payments.php:1011
-#: PcReportExpense.php:142 PcReportTab.php:387 PcTabs.php:181 PcTabs.php:309
-#: PO_AuthorisationLevels.php:129 PO_AuthorisationLevels.php:214
-#: PO_AuthorisationLevels.php:220 PO_AuthoriseMyOrders.php:118
-#: PO_Header.php:561 PO_SelectOSPurchOrder.php:609 PO_SelectPurchOrder.php:422
-#: PriceMatrix.php:166 PriceMatrix.php:264 PricesByCost.php:283 Prices.php:219
-#: Prices.php:287 PurchData.php:276 PurchData.php:466 PurchData.php:603
-#: SelectSupplier.php:295 SellThroughSupport.php:160 SupplierCredit.php:259
-#: SupplierInvoice.php:611 SupplierPriceList.php:464
-#: SupplierTenderCreate.php:615 SupplierTenders.php:125 SupplierTenders.php:531
-#: SupplierTransInquiry.php:116 SuppPriceList.php:334 Z_ImportPriceList.php:98
+#: PcReportExpense.php:142 PcReportTab.php:186 PcReportTab.php:388
+#: PcTabs.php:181 PcTabs.php:309 PO_AuthorisationLevels.php:129
+#: PO_AuthorisationLevels.php:214 PO_AuthorisationLevels.php:220
+#: PO_AuthoriseMyOrders.php:118 PO_Header.php:561 PO_SelectOSPurchOrder.php:609
+#: PO_SelectPurchOrder.php:422 PriceMatrix.php:166 PriceMatrix.php:264
+#: PricesByCost.php:283 Prices.php:219 Prices.php:287 PurchData.php:276
+#: PurchData.php:466 PurchData.php:603 SelectSupplier.php:295
+#: SellThroughSupport.php:160 SupplierCredit.php:259 SupplierInvoice.php:611
+#: SupplierPriceList.php:464 SupplierTenderCreate.php:615
+#: SupplierTenders.php:125 SupplierTenders.php:531 SupplierTransInquiry.php:116
+#: SuppPriceList.php:334 Z_ImportPriceList.php:98
 #: includes/PDFBankingSummaryPageHeader.inc:41
 #: includes/PDFDebtorBalsPageHeader.inc:32
 #: includes/PDFSupplierBalsPageHeader.inc:35 ../webSHOP/Checkout.php:401
@@ -2467,7 +2470,7 @@ msgstr ""
 #: GLAccountUsers.php:215 InternalStockCategoriesByRole.php:119
 #: InternalStockCategoriesByRole.php:200 LocationUsers.php:118
 #: LocationUsers.php:225 PcClaimExpensesFromTab.php:366
-#: PcClaimExpensesFromTab.php:642 PcExpenses.php:236 PcExpensesTypeTab.php:102
+#: PcClaimExpensesFromTab.php:642 PcExpenses.php:240 PcExpensesTypeTab.php:102
 #: PcExpensesTypeTab.php:166 PurchaseByPrefSupplier.php:316 StockCounts.php:120
 #: UserBankAccounts.php:110 UserBankAccounts.php:205 UserGLAccounts.php:53
 #: UserGLAccounts.php:224 UserLocations.php:119 UserLocations.php:227
@@ -2481,10 +2484,10 @@ msgstr ""
 #: GLJournal.php:376 InternalStockCategoriesByRole.php:135
 #: InternalStockCategoriesByRole.php:217 LocationUsers.php:135
 #: LocationUsers.php:244 OffersReceived.php:113 Payments.php:1295
-#: PcAssignCashTabToTab.php:203 PcAssignCashTabToTab.php:453
+#: PcAssignCashTabToTab.php:204 PcAssignCashTabToTab.php:454
 #: PcAssignCashToTab.php:159 PcAssignCashToTab.php:404 PcAuthorizeCash.php:292
 #: PcAuthorizeExpenses.php:410 PcClaimExpensesFromTab.php:379
-#: PcClaimExpensesFromTab.php:786 PcExpenses.php:288 PcExpensesTypeTab.php:115
+#: PcClaimExpensesFromTab.php:786 PcExpenses.php:292 PcExpensesTypeTab.php:115
 #: PcExpensesTypeTab.php:180 PcTabs.php:467 PcTypeTabs.php:169
 #: SalesTypes.php:276 SupplierTypes.php:230 UserBankAccounts.php:127
 #: UserBankAccounts.php:221 UserGLAccounts.php:75 UserLocations.php:136
@@ -2496,10 +2499,10 @@ msgstr "保存"
 #: CustomerAllocations.php:446 CustomerReceipt.php:1202
 #: InternalStockCategoriesByRole.php:136 InternalStockCategoriesByRole.php:218
 #: LocationUsers.php:136 LocationUsers.php:245 Payments.php:1296
-#: PcAssignCashTabToTab.php:204 PcAssignCashTabToTab.php:454
+#: PcAssignCashTabToTab.php:205 PcAssignCashTabToTab.php:455
 #: PcAssignCashToTab.php:160 PcAssignCashToTab.php:405 PcAuthorizeCash.php:293
 #: PcAuthorizeExpenses.php:411 PcClaimExpensesFromTab.php:380
-#: PcClaimExpensesFromTab.php:787 PcExpenses.php:289 PcExpensesTypeTab.php:116
+#: PcClaimExpensesFromTab.php:787 PcExpenses.php:293 PcExpensesTypeTab.php:116
 #: PcExpensesTypeTab.php:181 PcTabs.php:468 PcTypeTabs.php:170
 #: SalesTypes.php:276 SecurityTokens.php:137 SelectCreditItems.php:939
 #: SupplierAllocations.php:509 UserBankAccounts.php:128
@@ -2605,16 +2608,16 @@ msgstr "显示"
 #: BankMatching.php:131 CounterSales.php:229 CreditItemsControlled.php:78
 #: FreightCosts.php:273 GoodsReceivedControlled.php:67 GoodsReceived.php:76
 #: InternalStockRequestFulfill.php:40 StockLocTransferReceive.php:536
-#: SupplierAllocations.php:435 SuppShiptChgs.php:136
+#: SupplierAllocations.php:435 SuppShiptChgs.php:136 TestPlanResults.php:454
 msgid "from"
 msgstr "来自"
 
 #: BankMatching.php:136 ConfirmDispatchControlled_Invoice.php:67
-#: CounterReturns.php:198 EmailCustTrans.php:64 FixedAssetRegister.php:82
+#: CounterReturns.php:198 EmailCustTrans.php:64 FixedAssetRegister.php:84
 #: FTP_RadioBeacon.php:273 GLAccountCSV.php:181 GLAccountGraph.php:192
 #: GLAccountReport.php:106 GLCashFlowsIndirect.php:104 GLStatements.php:107
-#: Payments.php:937 PcReportTab.php:127 PDFChequeListing.php:116
-#: PDFChequeListing.php:126 PDFChequeListing.php:210
+#: Payments.php:937 PcAssignCashTabToTab.php:141 PcReportTab.php:128
+#: PDFChequeListing.php:116 PDFChequeListing.php:126 PDFChequeListing.php:210
 #: PDFDeliveryDifferences.php:201 PDFDeliveryDifferences.php:214
 #: PDFDeliveryDifferences.php:319 PDFDIFOT.php:200 PDFDIFOT.php:213
 #: PDFDIFOT.php:312 PDFFGLabel.php:207 PDFOrdersInvoiced.php:86
@@ -2737,7 +2740,7 @@ msgstr "摘要"
 #: GLJournalInquiry.php:102 ImportBankTransAnalysis.php:208
 #: ImportBankTransAnalysis.php:286 PaymentAllocations.php:67 Payments.php:1283
 #: Payments.php:1288 Payments.php:1304 Payments.php:1373
-#: PcAssignCashTabToTab.php:287 PcAssignCashTabToTab.php:432
+#: PcAssignCashTabToTab.php:288 PcAssignCashTabToTab.php:433
 #: PcAssignCashToTab.php:234 PcAssignCashToTab.php:389 PcAuthorizeCash.php:94
 #: PrintCheque.php:82 PrintCheque.php:96 SelectCreditItems.php:687
 #: SuppContractChgs.php:79 SuppContractChgs.php:167 SuppFixedAssetChgs.php:75
@@ -3025,7 +3028,7 @@ msgstr ""
 #: MRPReport.php:441 MRPReschedules.php:190 OffersReceived.php:107
 #: OffersReceived.php:212 OffersReceived.php:272 OrderDetails.php:189
 #: PDFOrdersInvoiced.php:379 PDFSalesBySalesperson.php:86
-#: PDFWeeklyOrders.php:82 POReport.php:759 POReport.php:1446
+#: PDFWeeklyOrders.php:82 POReport.php:760 POReport.php:1447
 #: PO_SelectOSPurchOrder.php:598 PrintCustTrans.php:992 PrintCustTrans.php:1082
 #: PrintCustTrans.php:1138 PrintCustTransPortrait.php:976
 #: PrintCustTransPortrait.php:1065 PrintCustTransPortrait.php:1121
@@ -3038,7 +3041,7 @@ msgstr ""
 #: SelectOrderItems.php:1527 SelectOrderItems.php:1699
 #: SelectOrderItems.php:1798 ShipmentCosting.php:148 ShipmentCosting.php:149
 #: Shipments.php:397 Shipments.php:399 Shipments.php:400 Shipments.php:475
-#: Shipments.php:477 SpecialOrder.php:619 StockCounts.php:142
+#: Shipments.php:477 SpecialOrder.php:623 StockCounts.php:142
 #: StockCounts.php:167 StockLocMovements.php:113 StockLocTransfer.php:306
 #: StockMovements.php:134 StockStatus.php:328 StockUsageGraph.php:11
 #: SuppCreditGRNs.php:286 SuppCreditGRNs.php:287 SupplierCredit.php:314
@@ -3062,10 +3065,11 @@ msgstr ""
 #: includes/PDFStockCheckPageHeader.inc:36
 #: includes/PDFStockNegativesHeader.inc:32
 #: includes/PDFStockTransferHeader.inc:38 includes/PDFTransPageHeader.inc:214
-#: includes/PO_PDFOrderPageHeader.inc:76 includes/InputSerialItemsFile.php:193
-#: includes/InputSerialItems.php:130 includes/InputSerialItems.php:136
-#: includes/OutputSerialItems.php:37 includes/OutputSerialItems.php:42
-#: includes/OutputSerialItems.php:48 includes/PDFAckPageHeader.php:99
+#: includes/PO_PDFOrderPageHeader.inc:76 includes/DefineTenderClass.php:48
+#: includes/InputSerialItemsFile.php:193 includes/InputSerialItems.php:130
+#: includes/InputSerialItems.php:136 includes/OutputSerialItems.php:37
+#: includes/OutputSerialItems.php:42 includes/OutputSerialItems.php:48
+#: includes/PDFAckPageHeader.php:99
 #: ../webSHOP/includes/DisplayShoppingCart.php:9
 #: ../webSHOP/includes/PlaceOrder.php:251
 msgid "Quantity"
@@ -3144,7 +3148,7 @@ msgid "Printed"
 msgstr "打印日期"
 
 #: BOMExtendedQty.php:316 BOMIndented.php:307 BOMIndentedReverse.php:285
-#: FixedAssetRegister.php:367 GLAccountReport.php:328
+#: FixedAssetRegister.php:369 GLAccountReport.php:328
 #: InventoryPlanningPrefSupplier.php:57 InventoryQuantities.php:234
 #: MRPPlannedPurchaseOrders.php:404 MRPPlannedWorkOrders.php:370
 #: MRPReport.php:833 MRPReschedules.php:176 MRPShortages.php:329
@@ -3218,7 +3222,7 @@ msgstr "制造"
 #: SelectCompletedOrder.php:506 SelectOrderItems.php:1523
 #: SelectOrderItems.php:1695 SelectPickingLists.php:280 SelectQASamples.php:300
 #: SelectSalesOrder.php:641 SelectWorkOrder.php:220 Shipt_Select.php:191
-#: TestPlanResults.php:178 TopItems.php:179 includes/PDFTopItemsHeader.inc:53
+#: TestPlanResults.php:182 TopItems.php:179 includes/PDFTopItemsHeader.inc:53
 msgid "On Hand"
 msgstr "库存数量"
 
@@ -3234,10 +3238,10 @@ msgstr "工作单"
 #: InventoryQuantities.php:244 MRPDemands.php:288 MRPDemands.php:365
 #: MRPDemands.php:375 MRPPlannedPurchaseOrders.php:423
 #: MRPPlannedWorkOrders.php:389 MRPReschedules.php:186 MRPShortages.php:274
-#: MRPShortages.php:343 POReport.php:492 POReport.php:501 POReport.php:520
-#: POReport.php:540 POReport.php:624 POReport.php:722 POReport.php:1260
-#: POReport.php:1269 POReport.php:1283 POReport.php:1298 POReport.php:1351
-#: POReport.php:1416 POReport.php:1522 POReport.php:1607 POReport.php:1620
+#: MRPShortages.php:343 POReport.php:493 POReport.php:502 POReport.php:521
+#: POReport.php:541 POReport.php:625 POReport.php:723 POReport.php:1261
+#: POReport.php:1270 POReport.php:1284 POReport.php:1299 POReport.php:1352
+#: POReport.php:1417 POReport.php:1523 POReport.php:1608 POReport.php:1621
 #: ReorderLevel.php:286 StockDispatch.php:504 StockDispatch.php:511
 msgid "Part Number"
 msgstr "部品号码"
@@ -3247,8 +3251,8 @@ msgstr "部品号码"
 msgid "M/B"
 msgstr "M/B"
 
-#: BOMExtendedQty.php:332 POReport.php:551 POReport.php:635 POReport.php:723
-#: POReport.php:1309 POReport.php:1362 POReport.php:1417 StockClone.php:681
+#: BOMExtendedQty.php:332 POReport.php:552 POReport.php:636 POReport.php:724
+#: POReport.php:1310 POReport.php:1363 POReport.php:1418 StockClone.php:681
 #: StockClone.php:707 Stocks.php:1042 Stocks.php:1066
 msgid "Part Description"
 msgstr "物料描述"
@@ -3362,21 +3366,21 @@ msgstr "可构成BOM的装配物料或套装物料"
 #: BOMInquiry.php:25 BOMs_SingleLevel.php:880 MRPDemands.php:330
 #: PO_SelectOSPurchOrder.php:284 PO_SelectPurchOrder.php:189
 #: SelectPickingLists.php:256 SelectQASamples.php:274 Shipt_Select.php:168
-#: TestPlanResults.php:152 WorkOrderEntry.php:926 WorkOrderIssue.php:979
+#: TestPlanResults.php:156 WorkOrderEntry.php:926 WorkOrderIssue.php:979
 msgid "Enter text extracts in the"
 msgstr "输入"
 
 #: BOMInquiry.php:25 BOMs_SingleLevel.php:880 MRPDemands.php:330
 #: PO_SelectOSPurchOrder.php:284 PO_SelectPurchOrder.php:189
 #: SelectPickingLists.php:256 SelectQASamples.php:274 Shipt_Select.php:168
-#: TestPlanResults.php:152 WorkOrderEntry.php:926 WorkOrderIssue.php:979
+#: TestPlanResults.php:156 WorkOrderEntry.php:926 WorkOrderIssue.php:979
 msgid "description"
 msgstr "物料描述"
 
 #: BOMInquiry.php:28 BOMs_SingleLevel.php:883 MRPDemands.php:333
 #: PO_SelectOSPurchOrder.php:288 PO_SelectPurchOrder.php:194
 #: SelectPickingLists.php:261 SelectQASamples.php:279 Shipt_Select.php:173
-#: TestPlanResults.php:157 WorkOrderEntry.php:931 WorkOrderIssue.php:984
+#: TestPlanResults.php:161 WorkOrderEntry.php:931 WorkOrderIssue.php:984
 msgid "Enter extract of the"
 msgstr "输入"
 
@@ -3393,7 +3397,7 @@ msgstr "输入"
 #: StockMovements.php:46 StockReorderLevel.php:51 StockStatus.php:61
 #: StockTransfers.php:49 StockTransfers.php:554 StockUsage.php:63
 #: SupplierPriceList.php:53 SupplierTenderCreate.php:695
-#: SupplierTenders.php:428 TestPlanResults.php:157 WorkOrderEntry.php:931
+#: SupplierTenders.php:428 TestPlanResults.php:161 WorkOrderEntry.php:931
 #: WorkOrderIssue.php:984 Z_ChangeStockCode.php:200
 #: ../webSHOP/includes/PlaceOrder.php:249
 msgid "Stock Code"
@@ -3403,7 +3407,7 @@ msgstr "物料号"
 #: ContractBOM.php:334 Contracts.php:775 CounterReturns.php:1654
 #: CounterSales.php:2226 CustomerReceipt.php:1227 FixedAssetTransfer.php:106
 #: InternalStockRequestInquiry.php:239 InternalStockRequest.php:371
-#: MRPDemands.php:337 MRPReport.php:580 PO_Header.php:551 PO_Items.php:1342
+#: MRPDemands.php:337 MRPReport.php:580 PO_Header.php:551 PO_Items.php:1345
 #: SelectAsset.php:115 SelectCreditItems.php:234 SelectCreditItems.php:993
 #: SelectCustomer.php:353 SelectGLAccount.php:133 SelectOrderItems.php:614
 #: SelectOrderItems.php:1656 SelectProduct.php:575 SelectSupplier.php:253
@@ -3416,12 +3420,12 @@ msgstr "查找"
 #: BOMInquiry.php:46 BOMs.php:994 BOMs_SingleLevel.php:817
 #: CollectiveWorkOrderCost.php:134 ContractBOM.php:50
 #: InternalStockRequestInquiry.php:487 MRPDemands.php:56 MRPReport.php:600
-#: PO_Items.php:1015 PO_SelectOSPurchOrder.php:64 PO_SelectPurchOrder.php:47
+#: PO_Items.php:1018 PO_SelectOSPurchOrder.php:64 PO_SelectPurchOrder.php:47
 #: SelectCompletedOrder.php:97 SelectCreditItems.php:293
 #: SelectPickingLists.php:70 SelectProduct.php:588 SelectQASamples.php:175
 #: SelectSalesOrder.php:1080 SelectWorkOrder.php:50 Shipt_Select.php:60
 #: SupplierPriceList.php:80 SupplierTenderCreate.php:720
-#: SupplierTenders.php:571 TestPlanResults.php:58 WorkOrderEntry.php:111
+#: SupplierTenders.php:571 TestPlanResults.php:62 WorkOrderEntry.php:111
 #: WorkOrderIssue.php:629
 msgid ""
 "Stock description keywords have been used in preference to the Stock code "
@@ -3435,7 +3439,7 @@ msgid ""
 msgstr "请输入物料描述或物料编号用于查找物料BOM"
 
 #: BOMInquiry.php:94 BOMs.php:1043 BOMs_SingleLevel.php:866 MRPCalendar.php:214
-#: MRPDemands.php:80 MRPDemands.php:283 POReport.php:482 POReport.php:1249
+#: MRPDemands.php:80 MRPDemands.php:283 POReport.php:483 POReport.php:1250
 #: SalesInquiry.php:768
 msgid "The SQL to find the parts selected failed with the message"
 msgstr "查找物料的SQL运行失败，数据库消息"
@@ -3470,14 +3474,14 @@ msgstr "组件"
 #: ContractCosting.php:88 ContractCosting.php:152 ContractOtherReqts.php:98
 #: Contracts.php:1003 Contracts.php:1038 InventoryValuation.php:196
 #: MRPPlannedPurchaseOrders.php:289 MRPPlannedWorkOrders.php:257
-#: MRPShortages.php:346 SpecialOrder.php:712 StockAdjustments.php:451
+#: MRPShortages.php:346 SpecialOrder.php:717 StockAdjustments.php:451
 msgid "Unit Cost"
 msgstr "单位成本"
 
 #: BOMInquiry.php:194 BOMInquiry.php:234 CollectiveWorkOrderCost.php:80
 #: ContractBOM.php:270 ContractCosting.php:83 ContractCosting.php:89
 #: ContractCosting.php:153 ContractCosting.php:178 Contracts.php:1004
-#: Contracts.php:1039 SpecialOrder.php:622 SpecialOrder.php:624
+#: Contracts.php:1039 SpecialOrder.php:626 SpecialOrder.php:628
 msgid "Total Cost"
 msgstr "总成本"
 
@@ -3618,8 +3622,8 @@ msgstr "上一页"
 
 #: BOMs.php:268 CounterReturns.php:1676 CounterReturns.php:1764
 #: CounterSales.php:2247 CounterSales.php:2333 InternalStockRequest.php:539
-#: InternalStockRequest.php:632 MRPReport.php:763 PO_Items.php:1357
-#: PO_Items.php:1359 SelectAsset.php:250 SelectCustomer.php:394
+#: InternalStockRequest.php:632 MRPReport.php:763 PO_Items.php:1360
+#: PO_Items.php:1362 SelectAsset.php:250 SelectCustomer.php:394
 #: SelectCustomer.php:464 SelectOrderItems.php:1688 SelectOrderItems.php:1781
 #: SelectProduct.php:825 SelectSupplier.php:283 SelectSupplier.php:346
 #: SupplierPriceList.php:265 SupplierTenderCreate.php:604
@@ -3634,7 +3638,7 @@ msgstr "下一页"
 #: GoodsReceived.php:126 InternalStockRequest.php:270 Labels.php:560
 #: Labels.php:562 Labels.php:609 OrderDetails.php:187 OutstandingGRNs.php:179
 #: PDFPriceList.php:73 PDFPrintLabel.php:60 PickingLists.php:305
-#: PO_Items.php:880 PO_OrderDetails.php:185 PrintCustTrans.php:990
+#: PO_Items.php:882 PO_OrderDetails.php:185 PrintCustTrans.php:990
 #: PrintCustTrans.php:1080 PrintCustTrans.php:1136
 #: PrintCustTransPortrait.php:974 PrintCustTransPortrait.php:1063
 #: PrintCustTransPortrait.php:1119 PrintWOItemSlip.php:152
@@ -3665,13 +3669,13 @@ msgstr "物料编号"
 #: DeliveryDetails.php:939 InternalStockRequest.php:160
 #: InternalStockRequest.php:271 Labels.php:565 OrderDetails.php:188
 #: PDFPriceList.php:77 PDFPrintLabel.php:61 PickingLists.php:306
-#: PO_Items.php:955 PO_OrderDetails.php:186 PrintCustTrans.php:991
+#: PO_Items.php:958 PO_OrderDetails.php:186 PrintCustTrans.php:991
 #: PrintCustTrans.php:1081 PrintCustTrans.php:1137
 #: PrintCustTransPortrait.php:975 PrintCustTransPortrait.php:1064
 #: PrintCustTransPortrait.php:1120 PurchaseByPrefSupplier.php:413
 #: RecurringSalesOrders.php:329 ReprintGRN.php:88 SalesInquiry.php:849
 #: SalesInquiry.php:867 SalesInquiry.php:966 SelectCreditItems.php:678
-#: SelectOrderItems.php:1353 SpecialOrder.php:617
+#: SelectOrderItems.php:1353 SpecialOrder.php:621
 #: StockCategorySalesInquiry.php:120 StockLocTransferReceive.php:541
 #: SupplierTenders.php:122 SupplierTenders.php:524
 #: includes/GenPickingListHeader.inc:80
@@ -3681,7 +3685,7 @@ msgstr "物料编号"
 #: includes/PDFSalesOrder_generic.inc:93
 #: includes/PDFStockNegativesHeader.inc:31 includes/PDFWOPageHeader.inc:42
 #: includes/PDFWOPageHeader.inc:69 includes/PO_PDFOrderPageHeader.inc:75
-#: includes/PDFAckPageHeader.php:97
+#: includes/DefineTenderClass.php:48 includes/PDFAckPageHeader.php:97
 #: ../webSHOP/includes/DisplayShoppingCart.php:7
 msgid "Item Description"
 msgstr "物料描述"
@@ -3703,7 +3707,7 @@ msgid "Sequence in BOM"
 msgstr ""
 
 #: BOMs.php:454 BOMs.php:899 BOMs_SingleLevel.php:557 BOMs_SingleLevel.php:691
-#: Contracts.php:886 FixedAssetRegister.php:89 InventoryQuantities.php:246
+#: Contracts.php:886 FixedAssetRegister.php:91 InventoryQuantities.php:246
 #: Locations.php:379 LocationUsers.php:152 MRP.php:582 MRP.php:619
 #: NoSalesItems.php:191 PDFOrdersInvoiced.php:295 PDFOrderStatus.php:294
 #: ReorderLevelLocation.php:156 ReorderLevel.php:279 ReorderLevel.php:288
@@ -3881,7 +3885,7 @@ msgstr "组件"
 msgid "has been deleted from this BOM"
 msgstr "已从BOM中删除"
 
-#: BOMs.php:751 BOMs_SingleLevel.php:429 FixedAssetRegister.php:390
+#: BOMs.php:751 BOMs_SingleLevel.php:429 FixedAssetRegister.php:392
 #: StockClone.php:882 StockClone.php:884 Stocks.php:1247 Stocks.php:1249
 msgid "Purchased"
 msgstr "采购物料"
@@ -3923,7 +3927,7 @@ msgid "Sequence"
 msgstr "编号"
 
 #: BOMs.php:896 FixedAssetCategories.php:274 InventoryPlanning.php:419
-#: InventoryValuation.php:196 POReport.php:738 POReport.php:1432
+#: InventoryValuation.php:196 POReport.php:739 POReport.php:1433
 #: SalesInquiry.php:988 StockCategories.php:264 StockCategories.php:400
 msgid "Category Description"
 msgstr "种类描述"
@@ -3956,14 +3960,14 @@ msgstr ""
 msgid "Select a Stock Category"
 msgstr "选择一个库存种类"
 
-#: BOMs.php:967 BOMs.php:1067 ContractBOM.php:319 PO_Items.php:1322
+#: BOMs.php:967 BOMs.php:1067 ContractBOM.php:319 PO_Items.php:1325
 #: SelectCompletedOrder.php:479 SelectCreditItems.php:983
 msgid "Enter text extracts in the description"
 msgstr "输入物料描述"
 
 #: BOMs.php:974 BOMs.php:1074 CollectiveWorkOrderCost.php:314
 #: ContractBOM.php:324 CounterReturns.php:1650 CounterSales.php:2220
-#: PO_Items.php:1325 SelectCompletedOrder.php:484 SelectCreditItems.php:986
+#: PO_Items.php:1328 SelectCompletedOrder.php:484 SelectCreditItems.php:986
 #: SelectOrderItems.php:1645 SelectSalesOrder.php:623 SelectWorkOrder.php:205
 msgid "Enter extract of the Stock Code"
 msgstr "输入物料编号"
@@ -4035,9 +4039,9 @@ msgid "Area"
 msgstr "销售区域"
 
 #: COGSGLPostings.php:95 COGSGLPostings.php:196 COGSGLPostings.php:286
-#: InternalStockRequestInquiry.php:200 POReport.php:497 POReport.php:533
-#: POReport.php:737 POReport.php:1265 POReport.php:1292 POReport.php:1431
-#: POReport.php:1625 SalesGLPostings.php:115 SalesGLPostings.php:225
+#: InternalStockRequestInquiry.php:200 POReport.php:498 POReport.php:534
+#: POReport.php:738 POReport.php:1266 POReport.php:1293 POReport.php:1432
+#: POReport.php:1626 SalesGLPostings.php:115 SalesGLPostings.php:225
 #: SalesGLPostings.php:323 SalesInquiry.php:784 SalesInquiry.php:819
 #: SalesInquiry.php:987 SalesInquiry.php:1244 StockCategorySalesInquiry.php:163
 #: Z_ChangeStockCategory.php:107
@@ -4169,7 +4173,7 @@ msgstr "SQL没有返回物料因为"
 #: PO_SelectOSPurchOrder.php:131 PO_SelectPurchOrder.php:105
 #: SelectCompletedOrder.php:228 SelectPickingLists.php:162
 #: SelectQASamples.php:234 SelectSalesOrder.php:1122 SelectWorkOrder.php:110
-#: TestPlanResults.php:117
+#: TestPlanResults.php:121
 msgid "The SQL used to retrieve the searched parts was"
 msgstr "用于查找物料的SQL是"
 
@@ -4186,7 +4190,7 @@ msgstr "为物料"
 #: SelectContract.php:33 SelectPickingLists.php:170 SelectQASamples.php:247
 #: SelectSalesOrder.php:463 SelectSalesOrder.php:467 SelectWorkOrder.php:130
 #: Shipt_Select.php:47 StockClone.php:1079 StockMovements.php:80 Stocks.php:420
-#: Stocks.php:1444 TestPlanResults.php:124
+#: Stocks.php:1444 TestPlanResults.php:128
 #: includes/PDFBOMListingPageHeader.inc:20
 #: includes/PDFCustomerListPageHeader.inc:30
 #: includes/PDFCustomerListPageHeader.inc:52
@@ -4243,7 +4247,7 @@ msgstr "使用下面的物料选择工具查找指定物料对应的工作单"
 #: PO_SelectPurchOrder.php:180 SelectCompletedOrder.php:467
 #: SelectCreditItems.php:965 SelectPickingLists.php:245 SelectQASamples.php:265
 #: SelectSalesOrder.php:605 SelectWorkOrder.php:192 Shipt_Select.php:157
-#: TestPlanResults.php:143 WorkOrderEntry.php:893 WorkOrderIssue.php:960
+#: TestPlanResults.php:147 WorkOrderEntry.php:893 WorkOrderIssue.php:960
 msgid "Select a stock category"
 msgstr "选择物料组"
 
@@ -4260,7 +4264,7 @@ msgstr "开始查找物料"
 #: PO_SelectOSPurchOrder.php:296 PO_SelectPurchOrder.php:201
 #: SelectCompletedOrder.php:490 SelectPickingLists.php:268
 #: SelectQASamples.php:286 SelectSalesOrder.php:629 SelectWorkOrder.php:210
-#: Shipt_Select.php:181 TestPlanResults.php:164
+#: Shipt_Select.php:181 TestPlanResults.php:168
 msgid "Show All"
 msgstr "全部显示"
 
@@ -4757,7 +4761,7 @@ msgstr "客户编号"
 #: CustItem.php:374 CustItem.php:379 CustomerReceipt.php:294
 #: CustomerReceipt.php:1239 Customers.php:463 Customers.php:771
 #: Customers.php:800 DeliveryDetails.php:857 OrderDetails.php:86
-#: PickingLists.php:293 POReport.php:495 POReport.php:1263
+#: PickingLists.php:293 POReport.php:496 POReport.php:1264
 #: PrintCustStatements.php:103 SalesInquiry.php:782 SalesInquiry.php:792
 #: SalesInquiry.php:816 SalesInquiry.php:960 SalesInquiry.php:971
 #: SalesInquiry.php:977 SalesInquiry.php:983 SalesInquiry.php:1148
@@ -5434,7 +5438,7 @@ msgstr "找不到BOM组件信息"
 #: EDISendInvoices.php:104 EDISendInvoices_Reece.php:184
 #: FixedAssetCategories.php:93 FixedAssetCategories.php:112
 #: PricesBasedOnMarkUp.php:339 PricesBasedOnMarkUp.php:355
-#: SelectCreditItems.php:1433 SpecialOrder.php:492 StockCategories.php:38
+#: SelectCreditItems.php:1433 SpecialOrder.php:496 StockCategories.php:38
 #: StockCategories.php:101 StockCategories.php:188 Z_ReApplyCostToSA.php:62
 #: Z_ReApplyCostToSA.php:74 Z_UpdateSalesAnalysisWithLatestCustomerData.php:39
 msgid "because"
@@ -5818,7 +5822,7 @@ msgstr "系统会自动转到合同页面。如果没有这样，那么您使用
 #: ContractBOM.php:42 ContractOtherReqts.php:45 Contracts.php:95
 #: Contracts.php:104 DeliveryDetails.php:274 DeliveryDetails.php:283
 #: EmailCustTrans.php:22 EmailCustTrans.php:26 GLAccountCSV.php:268
-#: PO_Header.php:240 POReport.php:1485 SalesAnalysis_UserDefined.php:45
+#: PO_Header.php:240 POReport.php:1486 SalesAnalysis_UserDefined.php:45
 #: SelectOrderItems.php:1193 StockQties_csv.php:44 StockUsage.php:20
 #: SupplierCredit.php:206 SupplierCredit.php:217 SupplierCredit.php:229
 #: SupplierCredit.php:239 SupplierCredit.php:249 SupplierInvoice.php:567
@@ -5840,13 +5844,13 @@ msgid "to continue"
 msgstr "继续"
 
 #: ContractBOM.php:142 CounterReturns.php:325 CounterSales.php:350
-#: InternalStockRequest.php:507 PO_Items.php:1261 SelectCreditItems.php:382
+#: InternalStockRequest.php:507 PO_Items.php:1264 SelectCreditItems.php:382
 #: SelectOrderItems.php:813 SupplierTenderCreate.php:823
 #: SupplierTenders.php:662 WorkOrderEntry.php:270 WorkOrderIssue.php:716
 msgid "There is a problem selecting the part records to display because"
 msgstr "查找物料发生错误"
 
-#: ContractBOM.php:143 PO_Items.php:1262 SupplierTenderCreate.php:824
+#: ContractBOM.php:143 PO_Items.php:1265 SupplierTenderCreate.php:824
 #: SupplierTenders.php:663 Z_ChangeGLAccountCode.php:61
 #: Z_ChangeLocationCode.php:105 Z_ChangeStockCategory.php:73
 #: Z_ChangeStockCode.php:115 Z_GLAccountUsersCopyAuthority.php:32
@@ -5854,7 +5858,7 @@ msgstr "查找物料发生错误"
 msgid "The SQL statement that failed was"
 msgstr "失败的 SQL 陈述式是"
 
-#: ContractBOM.php:147 PO_Items.php:1266 SupplierTenderCreate.php:828
+#: ContractBOM.php:147 PO_Items.php:1269 SupplierTenderCreate.php:828
 #: SupplierTenders.php:667
 msgid "There are no products to display matching the criteria provided"
 msgstr "没有符合条件的物料"
@@ -5865,7 +5869,7 @@ msgid ""
 "the order"
 msgstr ""
 
-#: ContractBOM.php:178 PO_Items.php:560 PO_Items.php:723
+#: ContractBOM.php:178 PO_Items.php:562 PO_Items.php:725
 #: StockLocTransfer.php:84 includes/SelectOrderItems_IntoCart.inc:26
 #: includes/SelectOrderItems_IntoCart.inc:64
 msgid "The item"
@@ -5884,13 +5888,13 @@ msgstr ""
 msgid "The item details could not be retrieved"
 msgstr "无法找到商品细节"
 
-#: ContractBOM.php:194 PO_Items.php:580 PO_Items.php:743
+#: ContractBOM.php:194 PO_Items.php:582 PO_Items.php:745
 #: PurchaseByPrefSupplier.php:29 SelectCreditItems.php:629
 msgid "The SQL used to retrieve the item details but failed was"
 msgstr "用作提取物料信息失败的 SQL 是"
 
 #: ContractBOM.php:207 CounterReturns.php:410 CounterSales.php:450
-#: PO_Items.php:683 PO_Items.php:847 SelectOrderItems.php:909
+#: PO_Items.php:685 PO_Items.php:849 SelectOrderItems.php:909
 #: includes/SelectOrderItems_IntoCart.inc:59
 #: includes/SelectOrderItems_IntoCart.inc:237
 msgid "The item code"
@@ -5931,15 +5935,15 @@ msgstr "更新行"
 msgid "Back To Contract Header"
 msgstr "返回合同表头"
 
-#: ContractBOM.php:287 PO_Items.php:1283
+#: ContractBOM.php:287 PO_Items.php:1286
 msgid "The supplier category details could not be retrieved because"
 msgstr "未能提取供应商种类明细, 因为"
 
-#: ContractBOM.php:288 PO_Items.php:1284
+#: ContractBOM.php:288 PO_Items.php:1287
 msgid "The SQL used to retrieve the category details but failed was"
 msgstr "用作提取种类明细失败的 SQL 是"
 
-#: ContractBOM.php:291 PO_Items.php:1289
+#: ContractBOM.php:291 PO_Items.php:1292
 msgid "Search For Stock Items"
 msgstr "查找物料"
 
@@ -5966,7 +5970,7 @@ msgstr "图像"
 
 #: ContractBOM.php:368 CounterSales.php:2118 FixedAssetItems.php:513
 #: FixedAssetItems.php:516 FixedAssetItems.php:534 InternalStockRequest.php:554
-#: Manufacturers.php:244 Manufacturers.php:358 PO_Items.php:1395
+#: Manufacturers.php:244 Manufacturers.php:358 PO_Items.php:1398
 #: SalesCategories.php:82 SalesCategories.php:284 SelectCreditItems.php:1036
 #: SelectOrderItems.php:1536 SelectOrderItems.php:1703 SelectProduct.php:448
 #: SelectProduct.php:874 StockClone.php:115 StockClone.php:740
@@ -6046,12 +6050,13 @@ msgstr "要求库存"
 #: ContractCosting.php:81 ContractCosting.php:87 Contracts.php:1002
 #: CounterReturns.php:671 CounterSales.php:749 CustomerPurchases.php:88
 #: DeliveryDetails.php:879 DeliveryDetails.php:941 OrderDetails.php:190
-#: PO_Items.php:998 PrintCustTrans.php:993 PrintCustTrans.php:1083
+#: PO_Items.php:1001 PrintCustTrans.php:993 PrintCustTrans.php:1083
 #: PrintCustTrans.php:1139 PrintCustTransPortrait.php:977
 #: PrintCustTransPortrait.php:1066 PrintCustTransPortrait.php:1122
 #: RecurringSalesOrders.php:331 SelectCreditItems.php:680
 #: SelectOrderItems.php:1356 WorkOrderIssue.php:786
 #: includes/PDFTopItemsHeader.inc:51 includes/PO_PDFOrderPageHeader.inc:77
+#: includes/DefineTenderClass.php:48
 msgid "Unit"
 msgstr "单位"
 
@@ -6583,7 +6588,7 @@ msgstr "所选的顾客记录"
 #: InternalStockRequest.php:590 PO_Header.php:410 PO_Header.php:486
 #: SelectCreditItems.php:182 SelectOrderItems.php:438 SelectOrderItems.php:541
 #: SelectOrderItems.php:1556 SelectOrderItems.php:1728
-#: SelectOrderItems.php:1906 SpecialOrder.php:66 SpecialOrder.php:90
+#: SelectOrderItems.php:1906 SpecialOrder.php:70 SpecialOrder.php:94
 #: StockCheck.php:214 StockLocStatus.php:196 StockLocStatus.php:220
 #: StockStatus.php:117 StockStatus.php:141 StockStatus.php:161
 #: SupplierCredit.php:87 SupplierInvoice.php:82
@@ -6592,7 +6597,7 @@ msgid "cannot be retrieved because"
 msgstr "找不到, 因为"
 
 #: Contracts.php:725 CounterReturns.php:122 CounterSales.php:128
-#: SelectOrderItems.php:439 SpecialOrder.php:91
+#: SelectOrderItems.php:439 SpecialOrder.php:95
 msgid "The SQL used to retrieve the customer details and failed was"
 msgstr "用于查找客户信息失败的SQL是"
 
@@ -6609,7 +6614,7 @@ msgstr "查找顾客细节失败的SQL是"
 #: SelectOrderItems.php:518 ShopParameters.php:563 ShopParameters.php:569
 #: ShopParameters.php:574 ShopParameters.php:579 ShopParameters.php:585
 #: ShopParameters.php:590 ShopParameters.php:595 ShopParameters.php:600
-#: ShopParameters.php:605 SpecialOrder.php:97
+#: ShopParameters.php:605 SpecialOrder.php:101
 msgid "The"
 msgstr "此"
 
@@ -6727,7 +6732,7 @@ msgstr ""
 #: Contracts.php:862 InventoryQuantities.php:236 PricesByCost.php:246
 #: ReorderLevelLocation.php:171 ReorderLevel.php:275
 #: SalesCategoryPeriodInquiry.php:163 SalesTopItemsInquiry.php:220
-#: SelectProduct.php:117 SpecialOrder.php:682 StockClone.php:760
+#: SelectProduct.php:117 SpecialOrder.php:687 StockClone.php:760
 #: StockDispatch.php:488 Stocks.php:1125 SuppPriceList.php:208
 #: SuppPriceList.php:271 SuppPriceList.php:330 Z_ItemsWithoutPicture.php:32
 #: includes/PDFInventoryValnPageHeader.inc:31
@@ -6735,13 +6740,13 @@ msgstr ""
 msgid "Category"
 msgstr "物料组"
 
-#: Contracts.php:866 PricesBasedOnMarkUp.php:107 SpecialOrder.php:686
+#: Contracts.php:866 PricesBasedOnMarkUp.php:107 SpecialOrder.php:691
 #: StockClone.php:764 Stocks.php:1129
 msgid "The stock categories could not be retrieved because"
 msgstr "找不到物料组, 因为"
 
 #: Contracts.php:867 FixedAssetItems.php:547 PricesBasedOnMarkUp.php:108
-#: SpecialOrder.php:687 StockClone.php:765 Stocks.php:1130
+#: SpecialOrder.php:692 StockClone.php:765 Stocks.php:1130
 msgid "The SQL used to retrieve stock categories and failed was"
 msgstr "用于查找物料组失败的SQL是"
 
@@ -6813,7 +6818,7 @@ msgstr "报价"
 
 #: Contracts.php:964 GoodsReceived.php:138 InternalStockRequestFulfill.php:359
 #: InternalStockRequestInquiry.php:401 PO_Header.php:822 PO_Header.php:825
-#: POReport.php:1584 PO_SelectPurchOrder.php:150 PO_SelectPurchOrder.php:152
+#: POReport.php:1585 PO_SelectPurchOrder.php:150 PO_SelectPurchOrder.php:152
 #: SalesInquiry.php:1170 SelectContract.php:53
 msgid "Completed"
 msgstr "完成"
@@ -7095,8 +7100,8 @@ msgid "Net"
 msgstr "净额"
 
 #: CounterReturns.php:676 CounterSales.php:756 PcAuthorizeExpenses.php:98
-#: PcClaimExpensesFromTab.php:451 PcReportExpense.php:144 PcReportTab.php:219
-#: PcReportTab.php:462 PDFAck.php:251 PrintCustTrans.php:494
+#: PcClaimExpensesFromTab.php:451 PcReportExpense.php:144 PcReportTab.php:220
+#: PcReportTab.php:463 PDFAck.php:251 PrintCustTrans.php:494
 #: PrintCustTrans.php:1178 PrintCustTransPortrait.php:484
 #: PrintCustTransPortrait.php:1161 SelectCreditItems.php:686
 #: SelectCreditItems.php:687 Tax.php:301 Tax.php:437
@@ -7291,7 +7296,7 @@ msgid ""
 msgstr ""
 
 #: CounterReturns.php:1674 CounterReturns.php:1760 CounterSales.php:2245
-#: CounterSales.php:2331 PO_Items.php:1352 PO_Items.php:1354
+#: CounterSales.php:2331 PO_Items.php:1355 PO_Items.php:1357
 #: WorkOrderEntry.php:952 WorkOrderEntry.php:954
 msgid "Prev"
 msgstr "前"
@@ -7455,9 +7460,9 @@ msgstr "收货人"
 #: CustomerTransInquiry.php:104 DeliveryDetails.php:1092 OrderDetails.php:136
 #: PO_Header.php:1128 PO_OrderDetails.php:155 RecurringSalesOrders.php:410
 #: SelectQASamples.php:390 SelectQASamples.php:483 SelectQASamples.php:543
-#: SpecialOrder.php:604 SupplierCredit.php:598 SupplierInquiry.php:208
-#: SupplierInvoice.php:966 SupplierTransInquiry.php:112 TestPlanResults.php:273
-#: TestPlanResults.php:735 WorkOrderEntry.php:817
+#: SpecialOrder.php:608 SupplierCredit.php:598 SupplierInquiry.php:208
+#: SupplierInvoice.php:966 SupplierTransInquiry.php:112 TestPlanResults.php:277
+#: TestPlanResults.php:739 WorkOrderEntry.php:817
 #: Z_ImportGLAccountGroups.php:25 Z_ImportGLAccountSections.php:28
 #: Z_ImportPartCodes.php:30 includes/PDFOrderPageHeader_generic.inc:59
 #: includes/PO_PDFOrderPageHeader.inc:64 ../webSHOP/Checkout.php:583
@@ -7587,17 +7592,17 @@ msgstr "新工作单号码"
 
 #: CounterSales.php:1277 DeliveryDetails.php:572 EDIMessageFormat.php:126
 #: EDIMessageFormat.php:195 ImportBankTrans.php:493 Prices_Customer.php:36
-#: RecurringSalesOrdersProcess.php:89 ReverseGRN.php:343 SpecialOrder.php:121
-#: SpecialOrder.php:124
+#: RecurringSalesOrdersProcess.php:89 ReverseGRN.php:343 SpecialOrder.php:125
+#: SpecialOrder.php:128 TestPlanResults.php:454
 msgid "for"
 msgstr "："
 
 #: CounterSales.php:1293 DeliveryDetails.php:593 DeliveryDetails.php:824
 #: EmailConfirmation.php:179 EmailConfirmation.php:299 FTP_RadioBeacon.php:178
 #: FTP_RadioBeacon.php:281 PO_AuthoriseMyOrders.php:58 PO_OrderDetails.php:26
-#: POReport.php:491 POReport.php:500 POReport.php:732 POReport.php:1259
-#: POReport.php:1268 POReport.php:1426 POReport.php:1570 POReport.php:1606
-#: POReport.php:1619 PO_SelectOSPurchOrder.php:48 PO_SelectOSPurchOrder.php:149
+#: POReport.php:492 POReport.php:501 POReport.php:733 POReport.php:1260
+#: POReport.php:1269 POReport.php:1427 POReport.php:1571 POReport.php:1607
+#: POReport.php:1620 PO_SelectOSPurchOrder.php:48 PO_SelectOSPurchOrder.php:149
 #: PO_SelectPurchOrder.php:37 PO_SelectPurchOrder.php:117 SalesInquiry.php:778
 #: SalesInquiry.php:789 SalesInquiry.php:972 SalesInquiry.php:981
 #: SalesInquiry.php:1160 SalesInquiry.php:1220 SalesInquiry.php:1237
@@ -7608,7 +7613,7 @@ msgid "Order Number"
 msgstr "订单编号"
 
 #: CounterSales.php:1293 DeliveryDetails.php:591 DeliveryDetails.php:593
-#: SpecialOrder.php:559
+#: SpecialOrder.php:563
 msgid "has been entered"
 msgstr "已输入"
 
@@ -8596,7 +8601,7 @@ msgstr ""
 #: CustItem.php:447 MailingGroupMaintenance.php:232 ProductSpecs.php:163
 #: ProductSpecs.php:235 PurchData.php:751 SellThroughSupport.php:467
 #: Shipments.php:502 StockAdjustments.php:490 TaxGroups.php:376
-#: TestPlanResults.php:484 TestPlanResults.php:555 WOSerialNos.php:282
+#: TestPlanResults.php:488 TestPlanResults.php:559 WOSerialNos.php:282
 #: WWW_Access.php:229 reportwriter/languages/en_US/reports.php:131
 #, php-format
 msgid "Add"
@@ -8704,7 +8709,7 @@ msgstr ""
 
 #: CustLoginSetup.php:149 SMTPServer.php:117 SuppLoginSetup.php:132
 #: WWW_Users.php:508 includes/Login.php:98 includes/Login.php:99
-#: install/index.php:962 ../webSHOP/Checkout.php:447
+#: install/index.php:964 ../webSHOP/Checkout.php:447
 #: ../webSHOP/Register.php:612 ../webSHOP/includes/header.php:206
 msgid "Password"
 msgstr "密码"
@@ -8791,6 +8796,7 @@ msgstr "主题"
 #: CustLoginSetup.php:255 Customers.php:637 Customers.php:1020
 #: Customers.php:1030 RevisionTranslations.php:59 SuppLoginSetup.php:273
 #: UserSettings.php:122 WWW_Users.php:344 WWW_Users.php:691
+#: install/index.php:805
 msgid "Language"
 msgstr "语言"
 
@@ -9446,8 +9452,8 @@ msgid "Fax No"
 msgstr "传真"
 
 #: CustomerBranches.php:409 CustomerBranches.php:864 PcAuthorizeExpenses.php:99
-#: PcClaimExpensesFromTab.php:452 PcReportExpense.php:145 PcReportTab.php:220
-#: PcReportTab.php:463 PcTabs.php:189 PcTabs.php:451 SupplierCredit.php:261
+#: PcClaimExpensesFromTab.php:452 PcReportExpense.php:145 PcReportTab.php:221
+#: PcReportTab.php:464 PcTabs.php:189 PcTabs.php:451 SupplierCredit.php:261
 #: Suppliers.php:873 Suppliers.php:1169 TaxGroups.php:176 TaxGroups.php:236
 msgid "Tax Group"
 msgstr "税收组"
@@ -9514,7 +9520,7 @@ msgid "alpha-numeric"
 msgstr ""
 
 #: CustomerBranches.php:638 SalesInquiry.php:840 SalesInquiry.php:859
-#: SpecialOrder.php:148
+#: SpecialOrder.php:152
 msgid "Branch Name"
 msgstr "分公司名称"
 
@@ -10065,13 +10071,13 @@ msgstr "存入"
 msgid "Banked into the"
 msgstr "账号"
 
-#: CustomerReceipt.php:984 Payments.php:954 PO_Items.php:236
-#: SelectSalesOrder.php:249 SelectSalesOrder.php:414 SpecialOrder.php:470
+#: CustomerReceipt.php:984 Payments.php:954 PO_Items.php:238
+#: SelectSalesOrder.php:249 SelectSalesOrder.php:414 SpecialOrder.php:474
 msgid "on"
 msgstr "日期"
 
-#: CustomerReceipt.php:989 GoodsReceived.php:142 POReport.php:629
-#: POReport.php:1356 ReverseGRN.php:404 ReverseGRN.php:405
+#: CustomerReceipt.php:989 GoodsReceived.php:142 POReport.php:630
+#: POReport.php:1357 ReverseGRN.php:404 ReverseGRN.php:405
 #: ShipmentCosting.php:149 Shipments.php:399 Shipments.php:477
 #: StockDispatch.php:509 StockDispatch.php:516 SuppCreditGRNs.php:195
 #: WOCanBeProducedNow.php:45
@@ -10082,8 +10088,8 @@ msgstr "已接收"
 #: GLJournalInquiry.php:103 ImportBankTransAnalysis.php:210
 #: ImportBankTransAnalysis.php:299 InternalStockRequestFulfill.php:360
 #: Payments.php:1307 PcAuthorizeExpenses.php:100 PcClaimExpensesFromTab.php:453
-#: PcClaimExpensesFromTab.php:727 PcExpenses.php:145 PcExpenses.php:249
-#: PcReportExpense.php:146 PcReportTab.php:221 PcReportTab.php:464
+#: PcClaimExpensesFromTab.php:727 PcExpenses.php:149 PcExpenses.php:253
+#: PcReportExpense.php:146 PcReportTab.php:222 PcReportTab.php:465
 #: SupplierCredit.php:457 SupplierInvoice.php:845 SuppTransGLAnalysis.php:108
 msgid "Tag"
 msgstr "标签"
@@ -10521,10 +10527,10 @@ msgstr "交易查询"
 msgid "Choose which type of transaction to report on."
 msgstr "选择报告那种交易类型"
 
-#: CustomerTransInquiry.php:50 FixedAssetRegister.php:82
-#: FixedAssetRegister.php:365 FreightCosts.php:78 GLCashFlowsIndirect.php:104
+#: CustomerTransInquiry.php:50 FixedAssetRegister.php:84
+#: FixedAssetRegister.php:367 FreightCosts.php:78 GLCashFlowsIndirect.php:104
 #: GLJournalInquiry.php:44 GLJournalInquiry.php:61 GLStatements.php:107
-#: PcReportExpense.php:99 PcReportTab.php:172 PcReportTab.php:364
+#: PcReportExpense.php:99 PcReportTab.php:173 PcReportTab.php:365
 #: SalesAnalRepts.php:425 SalesAnalRepts.php:453 SalesAnalRepts.php:482
 #: SalesAnalRepts.php:501 ShipmentCosting.php:55 Shipments.php:304
 #: StockDispatch.php:513 StockLocTransferReceive.php:258 StockTransfers.php:433
@@ -10606,10 +10612,10 @@ msgstr " 已存在"
 msgid "Customer type"
 msgstr "顾客类型"
 
-#: CustomerTypes.php:91 PcAssignCashTabToTab.php:140 PcAssignCashToTab.php:105
-#: PcClaimExpensesFromTab.php:212 PcExpenses.php:89 PcExpensesTypeTab.php:65
-#: PcTabs.php:115 PcTypeTabs.php:57 PO_Items.php:236 SalesTypes.php:89
-#: SelectSalesOrder.php:249 SelectSalesOrder.php:414 SpecialOrder.php:470
+#: CustomerTypes.php:91 PcAssignCashTabToTab.php:141 PcAssignCashToTab.php:105
+#: PcClaimExpensesFromTab.php:212 PcExpenses.php:93 PcExpensesTypeTab.php:65
+#: PcTabs.php:115 PcTypeTabs.php:57 PO_Items.php:238 SalesTypes.php:89
+#: SelectSalesOrder.php:249 SelectSalesOrder.php:414 SpecialOrder.php:474
 #: SupplierTypes.php:76
 msgid "has been created"
 msgstr "已创建"
@@ -10898,9 +10904,9 @@ msgstr ""
 #: Dashboard.php:19 Dashboard.php:28 Dashboard.php:37 Dashboard.php:46
 #: Payments.php:65 ProductSpecs.php:77 ProductSpecs.php:281
 #: ProductSpecs.php:316 QATests.php:109 SalesPeople.php:132
-#: SelectQASamples.php:86 SelectQASamples.php:100 TestPlanResults.php:332
-#: TestPlanResults.php:411 TestPlanResults.php:452 TestPlanResults.php:597
-#: TestPlanResults.php:650 TestPlanResults.php:667
+#: SelectQASamples.php:86 SelectQASamples.php:100 TestPlanResults.php:336
+#: TestPlanResults.php:415 TestPlanResults.php:456 TestPlanResults.php:601
+#: TestPlanResults.php:654 TestPlanResults.php:671
 msgid "The SQL that was used and failed was"
 msgstr "执行失败的SQL是"
 
@@ -10946,7 +10952,7 @@ msgstr "已到期"
 msgid "Days Over"
 msgstr "天"
 
-#: Dashboard.php:274 POReport.php:609 POReport.php:694 POReport.php:802
+#: Dashboard.php:274 POReport.php:610 POReport.php:695 POReport.php:803
 #: SalesInquiry.php:921 SalesInquiry.php:937 SalesInquiry.php:1049
 #: WorkOrderCosting.php:316
 msgid "Totals"
@@ -11006,8 +11012,8 @@ msgid "Cust Order"
 msgstr "客户订单号"
 
 #: Dashboard.php:551 FTP_RadioBeacon.php:53 MRPReschedules.php:191
-#: PDFSalesBySalesperson.php:83 PDFWeeklyOrders.php:79 POReport.php:541
-#: POReport.php:625 POReport.php:1299 POReport.php:1352 POReport.php:1511
+#: PDFSalesBySalesperson.php:83 PDFWeeklyOrders.php:79 POReport.php:542
+#: POReport.php:626 POReport.php:1300 POReport.php:1353 POReport.php:1512
 #: PO_SelectOSPurchOrder.php:604 PO_SelectPurchOrder.php:424
 #: PrintCustTrans.php:895 PrintCustTransPortrait.php:879 SalesInquiry.php:837
 #: SalesInquiry.php:856 SalesInquiry.php:1097 SelectCompletedOrder.php:559
@@ -11039,7 +11045,7 @@ msgstr "订单总额"
 
 #: Dashboard.php:554 ImportBankTransAnalysis.php:208 ImportBankTrans.php:496
 #: ImportBankTrans.php:538 Prices_Customer.php:36 RevisionTranslations.php:29
-#: SpecialOrder.php:121 SpecialOrder.php:124 SupplierCredit.php:315
+#: SpecialOrder.php:125 SpecialOrder.php:128 SupplierCredit.php:315
 #: SupplierCredit.php:316 SupplierCredit.php:418 SupplierCredit.php:458
 #: SupplierInvoice.php:846 Z_CurrencyDebtorsBalances.php:37
 #: Z_CurrencySuppliersBalances.php:35
@@ -11224,15 +11230,15 @@ msgid "Quotation Number"
 msgstr "报价单编号"
 
 #: DeliveryDetails.php:604 DeliveryDetails.php:608 DeliveryDetails.php:834
-#: SpecialOrder.php:566 SpecialOrder.php:567
+#: SpecialOrder.php:570 SpecialOrder.php:571
 msgid "Print packing slip"
 msgstr "打印装箱单"
 
-#: DeliveryDetails.php:604 SpecialOrder.php:566
+#: DeliveryDetails.php:604 SpecialOrder.php:570
 msgid "Preprinted stationery"
 msgstr "套打"
 
-#: DeliveryDetails.php:608 DeliveryDetails.php:834 SpecialOrder.php:567
+#: DeliveryDetails.php:608 DeliveryDetails.php:834 SpecialOrder.php:571
 msgid "Laser"
 msgstr "非套打"
 
@@ -11296,7 +11302,7 @@ msgstr "确认订单交货数量及产生发票"
 msgid "Select A Different Order"
 msgstr "选择其他订单"
 
-#: DeliveryDetails.php:854 Shipments.php:478 SpecialOrder.php:618
+#: DeliveryDetails.php:854 Shipments.php:478 SpecialOrder.php:622
 msgid "Delivery"
 msgstr "交货"
 
@@ -11308,7 +11314,7 @@ msgstr "订单交货明细"
 msgid "Quotation Summary"
 msgstr "报价单总览"
 
-#: DeliveryDetails.php:873 DeliveryDetails.php:936
+#: DeliveryDetails.php:873 DeliveryDetails.php:936 PO_Items.php:878
 msgid "Order Summary"
 msgstr "订单总览"
 
@@ -11514,7 +11520,7 @@ msgstr ""
 msgid "Department Name"
 msgstr ""
 
-#: Departments.php:169 Departments.php:233 PcReportTab.php:382
+#: Departments.php:169 Departments.php:233 PcReportTab.php:383
 msgid "Authoriser"
 msgstr ""
 
@@ -11763,7 +11769,7 @@ msgstr "查看模板行"
 msgid "Heading"
 msgstr "抬头"
 
-#: EDIMessageFormat.php:209 EDIMessageFormat.php:211 POReport.php:1503
+#: EDIMessageFormat.php:209 EDIMessageFormat.php:211 POReport.php:1504
 #: SalesInquiry.php:1079
 msgid "Detail"
 msgstr "明细行"
@@ -12095,7 +12101,7 @@ msgstr "分批交货订单"
 
 #: EDIProcessOrders.php:369 PDFOrdersInvoiced.php:293
 #: SelectCompletedOrder.php:75 SelectCompletedOrder.php:451
-#: SelectSalesOrder.php:560 SpecialOrder.php:601
+#: SelectSalesOrder.php:560 SpecialOrder.php:605
 msgid "Customer Ref"
 msgstr "客户订单号"
 
@@ -12650,7 +12656,7 @@ msgstr "删除代理商？"
 msgid "Are you sure you wish to delete this factoring company?"
 msgstr "您确认要删除此代理公司吗？"
 
-#: Factors.php:286 install/index.php:1054
+#: Factors.php:286 install/index.php:1056
 #: reportwriter/languages/en_US/reports.php:217 ../webSHOP/Register.php:627
 msgid "Company Name"
 msgstr "公司名称"
@@ -12858,8 +12864,8 @@ msgid ""
 msgstr ""
 "无法处理折旧，因为除了日期已经超过当期日期。折旧处理只能处理今天之前的折旧。"
 
-#: FixedAssetDepreciation.php:89 FixedAssetRegister.php:86
-#: FixedAssetRegister.php:364 FixedAssetTransfer.php:160
+#: FixedAssetDepreciation.php:89 FixedAssetRegister.php:88
+#: FixedAssetRegister.php:366 FixedAssetTransfer.php:160
 #: SuppFixedAssetChgs.php:73 SupplierCredit.php:380 SupplierInvoice.php:757
 msgid "Asset ID"
 msgstr "资产 ID"
@@ -12954,7 +12960,7 @@ msgstr "用于更新累计资产折旧的SQL是"
 msgid "GRAND Total"
 msgstr "汇总"
 
-#: FixedAssetDepreciation.php:263 FixedAssetRegister.php:394
+#: FixedAssetDepreciation.php:263 FixedAssetRegister.php:396
 #: GLCashFlowsSetup.php:123 includes/DatabaseTranslations.php:52
 msgid "Depreciation"
 msgstr "折旧"
@@ -13055,8 +13061,8 @@ msgstr "资产无法更新"
 msgid "The SQL that was used to update the asset and failed was"
 msgstr "用于更新固定资产失败的SQL是"
 
-#: FixedAssetItems.php:254 FixedAssetRegister.php:294
-#: FixedAssetRegister.php:387 MaintenanceReminders.php:76
+#: FixedAssetItems.php:254 FixedAssetRegister.php:296
+#: FixedAssetRegister.php:389 MaintenanceReminders.php:76
 #: MaintenanceTasks.php:93 MaintenanceUserSchedule.php:48
 msgid "Asset"
 msgstr "资产"
@@ -13165,7 +13171,8 @@ msgstr ""
 msgid "You do not have access to delete this item image file."
 msgstr ""
 
-#: FixedAssetItems.php:542 FixedAssetRegister.php:264
+#: FixedAssetItems.php:542 FixedAssetRegister.php:266
+#: FixedAssetRegister.php:364
 msgid "Asset Category"
 msgstr "资产种类"
 
@@ -13185,8 +13192,9 @@ msgstr "无法找到资产仓库"
 msgid "The SQL used to retrieve asset locations and failed was"
 msgstr "查找资产仓库失败的SQL是"
 
-#: FixedAssetItems.php:576 FixedAssetRegister.php:279 FixedAssetTransfer.php:71
-#: SelectAsset.php:80 SelectAsset.php:264
+#: FixedAssetItems.php:576 FixedAssetRegister.php:281
+#: FixedAssetRegister.php:365 FixedAssetTransfer.php:71 SelectAsset.php:80
+#: SelectAsset.php:264
 msgid "Asset Location"
 msgstr "资产地点"
 
@@ -13199,7 +13207,7 @@ msgstr ""
 msgid "Bar Code"
 msgstr "条形码"
 
-#: FixedAssetItems.php:594 FixedAssetRegister.php:88
+#: FixedAssetItems.php:594 FixedAssetRegister.php:90
 #: StockSerialItemResearch.php:29 StockSerialItems.php:89
 #: StockSerialItems.php:91 StockSerialItems.php:93 StockSerialItems.php:97
 #: StockSerialItems.php:99 StockSerialItems.php:101
@@ -13246,7 +13254,7 @@ msgstr ""
 msgid "P/L after disposal"
 msgstr ""
 
-#: FixedAssetItems.php:649 FixedAssetRegister.php:397
+#: FixedAssetItems.php:649 FixedAssetRegister.php:399
 msgid "Net Book Value"
 msgstr "账面净值"
 
@@ -13326,112 +13334,96 @@ msgstr ""
 msgid "Delete This Location"
 msgstr "删除此仓库"
 
-#: FixedAssetRegister.php:4 FixedAssetRegister.php:54 FixedAssetRegister.php:55
+#: FixedAssetRegister.php:8 FixedAssetRegister.php:56 FixedAssetRegister.php:57
 msgid "Fixed Asset Register"
 msgstr "固定资产账簿"
 
-#: FixedAssetRegister.php:90
+#: FixedAssetRegister.php:92
 msgid "Date Acquired"
 msgstr "购置日期"
 
-#: FixedAssetRegister.php:91
+#: FixedAssetRegister.php:93
 msgid "Cost B/fwd"
 msgstr "结转成本"
 
-#: FixedAssetRegister.php:92
+#: FixedAssetRegister.php:94
 msgid "Depn B/fwd"
 msgstr "折旧结转"
 
-#: FixedAssetRegister.php:93 FixedAssetRegister.php:393
+#: FixedAssetRegister.php:95 FixedAssetRegister.php:395
 msgid "Additions"
 msgstr "追加"
 
-#: FixedAssetRegister.php:94
+#: FixedAssetRegister.php:96
 msgid "Depn"
 msgstr "折旧"
 
-#: FixedAssetRegister.php:95
+#: FixedAssetRegister.php:97
 msgid "Cost C/fwd"
 msgstr "结转成本"
 
-#: FixedAssetRegister.php:96
+#: FixedAssetRegister.php:98
 msgid "Depn C/fwd"
 msgstr "折旧结转下期"
 
-#: FixedAssetRegister.php:97
+#: FixedAssetRegister.php:99
 msgid "NBV"
 msgstr "净面值"
 
-#: FixedAssetRegister.php:98
+#: FixedAssetRegister.php:100
 msgid "Disposal Value"
 msgstr "残值"
 
-#: FixedAssetRegister.php:208 FixedAssetRegister.php:227
-#: PDFBankingSummary.php:181 PDFChequeListing.php:198 PO_Items.php:938
+#: FixedAssetRegister.php:210 FixedAssetRegister.php:229
+#: PDFBankingSummary.php:181 PDFChequeListing.php:198
 #: includes/PDFSalesAnalysis.inc:70 includes/PDFSalesAnalysis.inc:124
 #: includes/PDFSalesAnalysis.inc:177 includes/PDFSalesAnalysis.inc:311
 #: includes/PDFSalesAnalysis.inc:363 includes/PDFSalesAnalysis.inc:413
 msgid "TOTAL"
 msgstr "总计"
 
-#: FixedAssetRegister.php:244 FixedAssetRegister.php:325
+#: FixedAssetRegister.php:246 FixedAssetRegister.php:327
 msgid "Print as a pdf"
 msgstr "打印为pdf文件"
 
-#: FixedAssetRegister.php:245 FixedAssetRegister.php:326
+#: FixedAssetRegister.php:247 FixedAssetRegister.php:328
 msgid "Print as CSV"
 msgstr "打印为CSV文件"
 
-#: FixedAssetRegister.php:266 FixedAssetRegister.php:281
-#: FixedAssetRegister.php:296 SuppPriceList.php:273
+#: FixedAssetRegister.php:268 FixedAssetRegister.php:283
+#: FixedAssetRegister.php:298 SuppPriceList.php:273
 msgid "ALL"
 msgstr "所有"
 
-#: FixedAssetRegister.php:314
-msgid " From Date"
-msgstr " 从日期"
-
-#: FixedAssetRegister.php:315
+#: FixedAssetRegister.php:317
 msgid "Enter the start date to show the cost and accumulated depreciation from"
 msgstr ""
 
-#: FixedAssetRegister.php:318
-msgid "To Date "
-msgstr "到日期 "
-
-#: FixedAssetRegister.php:319
+#: FixedAssetRegister.php:321
 msgid "Enter the end date to show the cost and accumulated depreciation to"
 msgstr ""
 
-#: FixedAssetRegister.php:324
+#: FixedAssetRegister.php:326
 msgid "Show Assets"
 msgstr "显示资产"
 
-#: FixedAssetRegister.php:362
-msgid "Asset Category "
-msgstr "资产种类 "
-
-#: FixedAssetRegister.php:363
-msgid "Asset Location "
-msgstr "资产仓库 "
-
-#: FixedAssetRegister.php:389 StockLocMovements.php:118 StockMovements.php:141
+#: FixedAssetRegister.php:391 StockLocMovements.php:118 StockMovements.php:141
 msgid "Serial No."
 msgstr "序列号"
 
-#: FixedAssetRegister.php:391
+#: FixedAssetRegister.php:393
 msgid "Cost B/Fwd"
 msgstr "结转成本"
 
-#: FixedAssetRegister.php:392
+#: FixedAssetRegister.php:394
 msgid "Depn B/Fwd"
 msgstr "折旧上期结转"
 
-#: FixedAssetRegister.php:395
+#: FixedAssetRegister.php:397
 msgid "Cost C/Fwd"
 msgstr "结转成本"
 
-#: FixedAssetRegister.php:396
+#: FixedAssetRegister.php:398
 msgid "Depn C/Fwd"
 msgstr "结转折旧"
 
@@ -13474,11 +13466,11 @@ msgid ""
 "for"
 msgstr ""
 
-#: FixedAssetTransfer.php:162
+#: FixedAssetTransfer.php:162 GeneratePickingList.php:446
 msgid "Serial number"
 msgstr "序號"
 
-#: FixedAssetTransfer.php:163 SpecialOrder.php:620
+#: FixedAssetTransfer.php:163 SpecialOrder.php:624
 msgid "Purchase Cost"
 msgstr "採購成本"
 
@@ -13929,7 +13921,7 @@ msgid ""
 "There was a problem retrieving the order header details from the database"
 msgstr "取得此订单抬头时发生错误"
 
-#: GeneratePickingList.php:155 GeneratePickingList.php:512
+#: GeneratePickingList.php:155 GeneratePickingList.php:515
 #: PDFPickingList.php:143 PDFPickingList.php:347
 msgid "Print Picking List Error"
 msgstr "打印装箱单错误"
@@ -13956,24 +13948,20 @@ msgstr "自由格式装箱单"
 msgid "There was a problem retrieving the order line details for Order Number"
 msgstr "取得此订单编号的订单抬头时发生错误"
 
-#: GeneratePickingList.php:445
-msgid "Serial#:"
+#: GeneratePickingList.php:450 SelectQASamples.php:249 TestPlanResults.php:130
+msgid "Lot Number"
 msgstr ""
 
-#: GeneratePickingList.php:448
-msgid "Lot#:"
-msgstr ""
-
-#: GeneratePickingList.php:473 includes/InputSerialItemsExisting.php:38
+#: GeneratePickingList.php:476 includes/InputSerialItemsExisting.php:38
 msgid "Could not retrieve the items for"
 msgstr "未能提取物料于"
 
-#: GeneratePickingList.php:505 PDFGrn.php:167 PDFStockTransfer.php:153
+#: GeneratePickingList.php:508 PDFGrn.php:167 PDFStockTransfer.php:153
 #: PDFStockTransfer.php:154 PDFWOPrint.php:490
 msgid "Signed for"
 msgstr "签字"
 
-#: GeneratePickingList.php:514
+#: GeneratePickingList.php:517
 msgid "There are no picking lists to print"
 msgstr ""
 
@@ -14222,7 +14210,7 @@ msgstr "期间变动总数"
 msgid "Balance C/Fwd"
 msgstr "资产负债表科目"
 
-#: GLAccountCSV.php:268 POReport.php:1485 StockQties_csv.php:44
+#: GLAccountCSV.php:268 POReport.php:1486 StockQties_csv.php:44
 msgid "to view the file"
 msgstr "查看文件"
 
@@ -14311,8 +14299,8 @@ msgstr ""
 msgid "From Period"
 msgstr "由期间"
 
-#: GLAccountGraph.php:212 POReport.php:496 POReport.php:746 POReport.php:747
-#: POReport.php:1264 POReport.php:1440 POReport.php:1441 POReport.php:1624
+#: GLAccountGraph.php:212 POReport.php:497 POReport.php:747 POReport.php:748
+#: POReport.php:1265 POReport.php:1441 POReport.php:1442 POReport.php:1625
 #: PurchaseByPrefSupplier.php:418 PurchaseByPrefSupplier.php:419
 #: SalesGraph.php:304 SalesInquiry.php:783 SalesInquiry.php:1002
 #: SalesInquiry.php:1003 SalesInquiry.php:1243 StockUsageGraph.php:10
@@ -14563,7 +14551,7 @@ msgid ""
 msgstr "删除会计科目失败, 原因是：已作为银行科目"
 
 #: GLAccounts.php:245 GLAccounts.php:300 GLJournalInquiry.php:99
-#: ImportBankTransAnalysis.php:261 PcExpenses.php:143 PcExpenses.php:228
+#: ImportBankTransAnalysis.php:261 PcExpenses.php:147 PcExpenses.php:232
 #: PrintCustStatements.php:102 SuppTransGLAnalysis.php:186
 #: Z_CreateCompanyTemplateFile.php:235 Z_UpdateChartDetailsBFwd.php:80
 #: includes/PDFGLJournalHeader.inc:18
@@ -14744,8 +14732,8 @@ msgstr "显示在屏幕上（HTML）"
 msgid "Produce PDF Report"
 msgstr "打印PDF 报表"
 
-#: GLBalanceSheet.php:139 GLBalanceSheet.php:180 PcReportTab.php:119
-#: PcReportTab.php:121 PcReportTab.php:129 PDFOrdersInvoiced.php:252
+#: GLBalanceSheet.php:139 GLBalanceSheet.php:180 PcReportTab.php:120
+#: PcReportTab.php:122 PcReportTab.php:130 PDFOrdersInvoiced.php:252
 #: PDFOrdersInvoiced.php:254 PDFOrdersInvoiced.php:262
 #: includes/ConnectDB_mysqli.inc:66 includes/ConnectDB_mysql.inc:62
 msgid "Database Error"
@@ -15154,7 +15142,7 @@ msgstr ""
 msgid "Journal Number"
 msgstr ""
 
-#: GLJournalInquiry.php:100 PcExpenses.php:144
+#: GLJournalInquiry.php:100 PcExpenses.php:148
 #: includes/PDFGLJournalHeader.inc:19
 msgid "Account Description"
 msgstr "科目描述"
@@ -15264,8 +15252,8 @@ msgstr "总帐标签"
 #: MRPPlannedPurchaseOrders.php:408 MRPPlannedWorkOrders.php:320
 #: MRPPlannedWorkOrders.php:374 PcAuthorizeExpenses.php:117
 #: PcAuthorizeExpenses.php:134 PcClaimExpensesFromTab.php:504
-#: PcClaimExpensesFromTab.php:737 PcExpenses.php:256 PcExpenses.php:275
-#: PcReportExpense.php:179 PcReportTab.php:242 PcReportTab.php:479
+#: PcClaimExpensesFromTab.php:737 PcExpenses.php:260 PcExpenses.php:279
+#: PcReportExpense.php:179 PcReportTab.php:243 PcReportTab.php:480
 #: PcTabExpensesList.php:148 PcTabs.php:433 PcTabs.php:453
 #: StockAdjustments.php:506 Suppliers.php:786 Suppliers.php:1079
 #: SystemParameters.php:541 SystemParameters.php:1133 SystemParameters.php:1139
@@ -15560,8 +15548,8 @@ msgstr "试 算 表( "
 msgid " AND for the "
 msgstr ""
 
-#: GLTrialBalance.php:452 PcReportExpense.php:134 PcReportTab.php:152
-#: PcReportTab.php:343 PcReportTab.php:453 ShopParameters.php:168
+#: GLTrialBalance.php:452 PcReportExpense.php:134 PcReportTab.php:153
+#: PcReportTab.php:344 PcReportTab.php:454 ShopParameters.php:168
 #: includes/ConnectDB_postgres.inc:48
 msgid "The SQL that failed was:"
 msgstr "失败的SQL是:"
@@ -15660,7 +15648,7 @@ msgstr "收货日期"
 msgid "Supplier's Reference"
 msgstr ""
 
-#: GoodsReceived.php:118 PO_Items.php:886
+#: GoodsReceived.php:118 PO_Items.php:888
 msgid "Supplier Units"
 msgstr ""
 
@@ -15674,7 +15662,7 @@ msgid "Already Received"
 msgstr "已接收"
 
 #: GoodsReceived.php:136 PO_AuthoriseMyOrders.php:62 PO_Header.php:737
-#: PO_Items.php:1002 POReport.php:1512 PO_SelectOSPurchOrder.php:605
+#: PO_Items.php:1005 POReport.php:1513 PO_SelectOSPurchOrder.php:605
 #: PO_SelectPurchOrder.php:425 ReprintGRN.php:89
 #: includes/GenPickingListHeader.inc:47 includes/PDFPickingListHeader.inc:45
 msgid "Delivery Date"
@@ -15941,15 +15929,15 @@ msgstr "执行收货"
 msgid "Historical Test Results"
 msgstr ""
 
-#: HistoricalTestResults.php:25 MRPCalendar.php:48 POReport.php:87
-#: POReport.php:854 SalesInquiry.php:81 SelectQASamples.php:165
-#: TestPlanResults.php:48
+#: HistoricalTestResults.php:25 MRPCalendar.php:48 POReport.php:88
+#: POReport.php:855 SalesInquiry.php:81 SelectQASamples.php:165
+#: TestPlanResults.php:52
 msgid "Invalid From Date"
 msgstr "无效 自日期"
 
-#: HistoricalTestResults.php:30 MRPCalendar.php:53 POReport.php:91
-#: POReport.php:858 SalesInquiry.php:85 SelectQASamples.php:170
-#: TestPlanResults.php:53
+#: HistoricalTestResults.php:30 MRPCalendar.php:53 POReport.php:92
+#: POReport.php:859 SalesInquiry.php:85 SelectQASamples.php:170
+#: TestPlanResults.php:57
 msgid "Invalid To Date"
 msgstr "无效 到日期"
 
@@ -15957,11 +15945,11 @@ msgstr "无效 到日期"
 msgid "Show Test Results For"
 msgstr ""
 
-#: HistoricalTestResults.php:71 SelectQASamples.php:250 TestPlanResults.php:127
+#: HistoricalTestResults.php:71 SelectQASamples.php:250 TestPlanResults.php:131
 msgid "From Sample Date"
 msgstr ""
 
-#: HistoricalTestResults.php:75 SelectQASamples.php:250 TestPlanResults.php:127
+#: HistoricalTestResults.php:75 SelectQASamples.php:250 TestPlanResults.php:131
 msgid "To Sample Date"
 msgstr ""
 
@@ -16372,8 +16360,8 @@ msgid "Internal Stock Categories Requests By Security Role Maintenance "
 msgstr ""
 
 #: InternalStockCategoriesByRole.php:10 Payments.php:7
-#: PcClaimExpensesFromTab.php:354 PcExpenses.php:10 PcExpensesTypeTab.php:10
-#: PcReportTab.php:21 PcReportTab.php:314 PcTabs.php:10 PcTypeTabs.php:10
+#: PcClaimExpensesFromTab.php:354 PcExpenses.php:13 PcExpensesTypeTab.php:10
+#: PcReportTab.php:22 PcReportTab.php:315 PcTabs.php:10 PcTypeTabs.php:10
 msgid "Payment Entry"
 msgstr "付款"
 
@@ -16491,7 +16479,7 @@ msgstr ""
 msgid "Issue"
 msgstr "发出"
 
-#: InternalStockRequestFulfill.php:40 MRPReport.php:749 PO_Items.php:857
+#: InternalStockRequestFulfill.php:40 MRPReport.php:749 PO_Items.php:859
 #: SelectAsset.php:236 SelectCustomer.php:380 SelectCustomer.php:449
 #: SelectOrderItems.php:60 SelectOrderItems.php:1401 SelectProduct.php:811
 #: SelectSupplier.php:269 SelectSupplier.php:332 StockLocTransfer.php:63
@@ -16594,7 +16582,7 @@ msgstr ""
 msgid "Required"
 msgstr "要求"
 
-#: InternalStockRequestFulfill.php:356 POReport.php:634 POReport.php:1361
+#: InternalStockRequestFulfill.php:356 POReport.php:635 POReport.php:1362
 #: SuppCreditGRNs.php:194
 msgid "Delivered"
 msgstr "已交货"
@@ -16703,7 +16691,7 @@ msgstr ""
 #: PO_SelectOSPurchOrder.php:130 PO_SelectPurchOrder.php:104
 #: SelectCompletedOrder.php:227 SelectPickingLists.php:161
 #: SelectProduct.php:779 SelectQASamples.php:233 SelectSalesOrder.php:1121
-#: SupplierPriceList.php:217 TestPlanResults.php:116
+#: SupplierPriceList.php:217 TestPlanResults.php:120
 msgid "No stock items were returned by the SQL because"
 msgstr "查找物料的SQL运行失败, 因为"
 
@@ -18795,7 +18783,7 @@ msgstr "页数"
 msgid "Go to Page"
 msgstr "转到页"
 
-#: MRPReport.php:761 PcAssignCashTabToTab.php:277 PcAssignCashToTab.php:224
+#: MRPReport.php:761 PcAssignCashTabToTab.php:278 PcAssignCashToTab.php:224
 #: PcAuthorizeCash.php:64 PcAuthorizeExpenses.php:64
 #: PcClaimExpensesFromTab.php:417 SelectAsset.php:248 SelectCustomer.php:392
 #: SelectCustomer.php:462 SelectProduct.php:823 SelectSupplier.php:281
@@ -19248,10 +19236,10 @@ msgid ""
 msgstr ""
 
 #: OutstandingGRNs.php:177 PO_Header.php:559 PO_OrderDetails.php:97
-#: POReport.php:503 POReport.php:528 POReport.php:543 POReport.php:627
-#: POReport.php:717 POReport.php:728 POReport.php:1271 POReport.php:1289
-#: POReport.php:1301 POReport.php:1354 POReport.php:1411 POReport.php:1422
-#: POReport.php:1554 POReport.php:1609 POReport.php:1623
+#: POReport.php:504 POReport.php:529 POReport.php:544 POReport.php:628
+#: POReport.php:718 POReport.php:729 POReport.php:1272 POReport.php:1290
+#: POReport.php:1302 POReport.php:1355 POReport.php:1412 POReport.php:1423
+#: POReport.php:1555 POReport.php:1610 POReport.php:1624
 #: PurchasesReport.php:164 PurchData.php:465 PurchData.php:562
 #: PurchData.php:567 SelectSupplier.php:294 SellThroughSupport.php:159
 #: SupplierPriceList.php:463 Suppliers.php:689 Suppliers.php:973
@@ -19263,7 +19251,7 @@ msgstr "供应商名称"
 msgid "PO#"
 msgstr ""
 
-#: OutstandingGRNs.php:180 POReport.php:545 POReport.php:1303
+#: OutstandingGRNs.php:180 POReport.php:546 POReport.php:1304
 #: WorkOrderEntry.php:819 includes/PDFStockLocTransferHeader.inc:66
 msgid "Qty Received"
 msgstr "接收数量"
@@ -19276,7 +19264,7 @@ msgstr "已开发票数量"
 msgid "Qty Pending"
 msgstr ""
 
-#: OutstandingGRNs.php:183 SpecialOrder.php:720
+#: OutstandingGRNs.php:183 SpecialOrder.php:725
 #: includes/PDFTransPageHeader.inc:213
 #: includes/PDFTransPageHeaderPortrait.inc:250
 #: ../webSHOP/includes/PlaceOrder.php:252
@@ -19347,10 +19335,10 @@ msgstr "查询相关交易信息时发生错误。无数据返回"
 msgid "Go back"
 msgstr "按此返回"
 
-#: PaymentAllocations.php:64 POReport.php:502 POReport.php:524 POReport.php:718
-#: POReport.php:727 POReport.php:733 POReport.php:1270 POReport.php:1286
-#: POReport.php:1412 POReport.php:1421 POReport.php:1427 POReport.php:1538
-#: POReport.php:1608 POReport.php:1622
+#: PaymentAllocations.php:64 POReport.php:503 POReport.php:525 POReport.php:719
+#: POReport.php:728 POReport.php:734 POReport.php:1271 POReport.php:1287
+#: POReport.php:1413 POReport.php:1422 POReport.php:1428 POReport.php:1539
+#: POReport.php:1609 POReport.php:1623
 msgid "Supplier Number"
 msgstr "供应商号码"
 
@@ -19952,126 +19940,122 @@ msgstr ""
 msgid "Create Petty Cash Expenses Excel File"
 msgstr ""
 
-#: PcAssignCashTabToTab.php:4
+#: PcAssignCashTabToTab.php:8
 msgid "Assignment of Cash from Tab to Tab"
 msgstr ""
 
-#: PcAssignCashTabToTab.php:35 PcAssignCashToTab.php:33
+#: PcAssignCashTabToTab.php:36 PcAssignCashToTab.php:33
 msgid "You must first select a petty cash tab to assign cash"
 msgstr ""
 
-#: PcAssignCashTabToTab.php:39
+#: PcAssignCashTabToTab.php:40
 msgid "The tab selected FROM should not be the same as the selected TO"
 msgstr ""
 
-#: PcAssignCashTabToTab.php:55
+#: PcAssignCashTabToTab.php:56
 msgid ""
 "The currency of the tab transferred from should be the same as the tab being "
 "transferred to"
 msgstr ""
 
-#: PcAssignCashTabToTab.php:69 PcAssignCashToTab.php:41 PcAuthorizeCash.php:33
+#: PcAssignCashTabToTab.php:70 PcAssignCashToTab.php:41 PcAuthorizeCash.php:33
 #: PcAuthorizeExpenses.php:33 PcClaimExpensesFromTab.php:41
 msgid "The number of days must be a positive number"
 msgstr ""
 
-#: PcAssignCashTabToTab.php:88 PcAssignCashToTab.php:55
+#: PcAssignCashTabToTab.php:89 PcAssignCashToTab.php:55
 msgid "The Amount must be input"
 msgstr ""
 
-#: PcAssignCashTabToTab.php:100 PcAssignCashTabToTab.php:104
+#: PcAssignCashTabToTab.php:101 PcAssignCashTabToTab.php:105
 msgid ""
 "The balance after this assignment would be greater than the specified limit "
 "for this PC tab"
 msgstr "安排此款项后，该个人账户的余额将大于指定的限额"
 
-#: PcAssignCashTabToTab.php:140
+#: PcAssignCashTabToTab.php:141
 msgid "Assignment of cash from PC Tab "
 msgstr ""
 
-#: PcAssignCashTabToTab.php:140
-msgid "to "
-msgstr ""
-
-#: PcAssignCashTabToTab.php:174 PcAssignCashTabToTab.php:221
+#: PcAssignCashTabToTab.php:175 PcAssignCashTabToTab.php:222
 msgid "Petty cash tab to assign cash from"
 msgstr ""
 
-#: PcAssignCashTabToTab.php:186 PcAssignCashTabToTab.php:225
+#: PcAssignCashTabToTab.php:187 PcAssignCashTabToTab.php:226
 msgid "Petty cash tab to assign cash to"
 msgstr ""
 
-#: PcAssignCashTabToTab.php:217
+#: PcAssignCashTabToTab.php:218
 msgid "Select another pair of tabs"
 msgstr ""
 
-#: PcAssignCashTabToTab.php:274 PcAssignCashToTab.php:221
+#: PcAssignCashTabToTab.php:275 PcAssignCashToTab.php:221
 msgid "Detail of Tab Movements For Last"
 msgstr ""
 
-#: PcAssignCashTabToTab.php:276 PcAssignCashToTab.php:223
+#: PcAssignCashTabToTab.php:277 PcAssignCashToTab.php:223
 #: PcAuthorizeCash.php:63 PcAuthorizeExpenses.php:63
 #: PcClaimExpensesFromTab.php:416 includes/PDFDIFOTPageHeader.inc:45
 msgid "Days"
 msgstr "日数"
 
-#: PcAssignCashTabToTab.php:286 PcAssignCashToTab.php:233
+#: PcAssignCashTabToTab.php:287 PcAssignCashToTab.php:233
 #: PcAuthorizeCash.php:93 PcAuthorizeExpenses.php:96
 #: PcClaimExpensesFromTab.php:449 PcClaimExpensesFromTab.php:629
-#: PcExpenses.php:141 PcExpenses.php:209 PcExpenses.php:216
+#: PcExpenses.php:145 PcExpenses.php:213 PcExpenses.php:220
 #: PcExpensesTypeTab.php:143 PcReportExpense.php:40 PcReportExpense.php:95
-#: PcReportTab.php:217 PcReportTab.php:460
+#: PcReportTab.php:218 PcReportTab.php:461
 msgid "Expense Code"
 msgstr "费用代码"
 
-#: PcAssignCashTabToTab.php:288 PcAssignCashToTab.php:235
+#: PcAssignCashTabToTab.php:289 PcAssignCashToTab.php:235
 #: PcAuthorizeExpenses.php:101 PcClaimExpensesFromTab.php:454
-#: PcClaimExpensesFromTab.php:766 PcReportExpense.php:147 PcReportTab.php:465
+#: PcClaimExpensesFromTab.php:766 PcReportExpense.php:147 PcReportTab.php:466
 msgid "Business Purpose"
 msgstr ""
 
-#: PcAssignCashTabToTab.php:290 PcAssignCashToTab.php:237
+#: PcAssignCashTabToTab.php:291 PcAssignCashToTab.php:237
 #: PcAuthorizeExpenses.php:103 PcClaimExpensesFromTab.php:456
-#: PcReportExpense.php:149 PcReportTab.php:467
+#: PcReportExpense.php:149 PcReportTab.php:468
 msgid "Receipt Attachment"
 msgstr ""
 
-#: PcAssignCashTabToTab.php:291 PcAssignCashToTab.php:238
+#: PcAssignCashTabToTab.php:292 PcAssignCashToTab.php:238
 #: PcAuthorizeCash.php:96 PcAuthorizeExpenses.php:104
-#: PcClaimExpensesFromTab.php:457 PcReportExpense.php:150 PcReportTab.php:223
-#: PcReportTab.php:468
+#: PcClaimExpensesFromTab.php:457 PcReportExpense.php:150 PcReportTab.php:224
+#: PcReportTab.php:469
 msgid "Date Authorised"
 msgstr ""
 
-#: PcAssignCashTabToTab.php:324 PcAssignCashToTab.php:276
+#: PcAssignCashTabToTab.php:325 PcAssignCashToTab.php:276
 #: PcAuthorizeExpenses.php:330 PcClaimExpensesFromTab.php:493
-#: PcReportExpense.php:198 PcReportTab.php:518
+#: PcReportExpense.php:198 PcReportTab.php:519
 msgid "Download attachment"
 msgstr ""
 
-#: PcAssignCashTabToTab.php:328 PcAssignCashToTab.php:280
+#: PcAssignCashTabToTab.php:329 PcAssignCashToTab.php:280
 #: PcAuthorizeExpenses.php:334 PcClaimExpensesFromTab.php:497
-#: PcReportExpense.php:200 PcReportTab.php:520 PcTabExpensesList.php:191
+#: PcReportExpense.php:200 PcReportTab.php:521 PcTabExpensesList.php:191
 msgid "No attachment"
 msgstr ""
 
-#: PcAssignCashTabToTab.php:332 PcAssignCashToTab.php:257
-#: PcClaimExpensesFromTab.php:476 PcReportExpense.php:204 PcReportTab.php:268
-#: PcReportTab.php:524 PcTabExpensesList.php:195
+#: PcAssignCashTabToTab.php:333 PcAssignCashToTab.php:257
+#: PcClaimExpensesFromTab.php:476 PcReportExpense.php:204 PcReportTab.php:269
+#: PcReportTab.php:525 PcTabExpensesList.php:195
 msgid "Unauthorised"
 msgstr ""
 
-#: PcAssignCashTabToTab.php:391 PcAssignCashToTab.php:320
+#: PcAssignCashTabToTab.php:392 PcAssignCashToTab.php:320
 #: PcAuthorizeCash.php:258 PcAuthorizeExpenses.php:373
 #: PcClaimExpensesFromTab.php:574
 msgid "Current balance"
 msgstr "目前结余"
 
-#: PcAssignCashTabToTab.php:419 PcAssignCashToTab.php:376
+#: PcAssignCashTabToTab.php:420 PcAssignCashToTab.php:376
 msgid "New Cash Assignment"
 msgstr "新预付现金"
 
-#: PcAssignCashTabToTab.php:422 PcAssignCashToTab.php:380
+#: PcAssignCashTabToTab.php:423 PcAssignCashToTab.php:380
 msgid "Cash Assignment Date"
 msgstr ""
 
@@ -20111,7 +20095,7 @@ msgid "Select another tab"
 msgstr ""
 
 #: PcAssignCashToTab.php:177 PcAuthorizeCash.php:45 PcAuthorizeExpenses.php:46
-#: PcClaimExpensesFromTab.php:406 PcReportTab.php:39
+#: PcClaimExpensesFromTab.php:406 PcReportTab.php:40
 msgid "Petty Cash Tab"
 msgstr ""
 
@@ -20179,14 +20163,14 @@ msgid "You Must First Select a Petty Cash Tab To Authorise"
 msgstr ""
 
 #: PcAuthorizeExpenses.php:95 PcClaimExpensesFromTab.php:448
-#: PcClaimExpensesFromTab.php:623 PcReportExpense.php:140 PcReportTab.php:216
-#: PcReportTab.php:459
+#: PcClaimExpensesFromTab.php:623 PcReportExpense.php:140 PcReportTab.php:217
+#: PcReportTab.php:460
 msgid "Date of Expense"
 msgstr ""
 
 #: PcAuthorizeExpenses.php:97 PcClaimExpensesFromTab.php:450
-#: PcClaimExpensesFromTab.php:658 PcReportExpense.php:143 PcReportTab.php:218
-#: PcReportTab.php:461
+#: PcClaimExpensesFromTab.php:658 PcReportExpense.php:143 PcReportTab.php:219
+#: PcReportTab.php:462
 msgid "Gross Amount"
 msgstr ""
 
@@ -20301,88 +20285,88 @@ msgstr ""
 msgid "Accepted file types"
 msgstr ""
 
-#: PcExpenses.php:4
+#: PcExpenses.php:8
 msgid "Maintenance Of Petty Cash Of Expenses"
 msgstr "费用种类维护"
 
-#: PcExpenses.php:35
+#: PcExpenses.php:39
 msgid "The Expense type  code cannot be an empty string or spaces"
 msgstr "费用类型代码不能是空字符串或者空格"
 
-#: PcExpenses.php:38
+#: PcExpenses.php:42
 msgid "The expense code must be twenty characters or less long"
 msgstr ""
 
-#: PcExpenses.php:41
+#: PcExpenses.php:45
 msgid "The expense code cannot contain any of the following characters "
 msgstr ""
 
-#: PcExpenses.php:44
+#: PcExpenses.php:48
 msgid "The expense description cannot contain any of the following characters "
 msgstr ""
 
-#: PcExpenses.php:47
+#: PcExpenses.php:51
 msgid "The tab code must be fifty characters or less long"
 msgstr ""
 
-#: PcExpenses.php:50
+#: PcExpenses.php:54
 msgid "The tab code description must be entered"
 msgstr ""
 
-#: PcExpenses.php:55
+#: PcExpenses.php:59
 msgid "A tax category must be selected from the list"
 msgstr ""
 
-#: PcExpenses.php:64
+#: PcExpenses.php:68
 msgid "The Expenses type"
 msgstr "费用类型"
 
-#: PcExpenses.php:74
+#: PcExpenses.php:78
 msgid "The Expense type "
 msgstr "费用类型 "
 
-#: PcExpenses.php:74 PcTabs.php:87
+#: PcExpenses.php:78 PcTabs.php:87
 msgid " already exists"
 msgstr ""
 
-#: PcExpenses.php:89
-msgid "Expense "
-msgstr "费用 "
+#: PcExpenses.php:93
+msgid "Expense"
+msgstr ""
 
-#: PcExpenses.php:112
+#: PcExpenses.php:116
 msgid ""
 "The number of type of tabs using this expense code could not be retrieved"
 msgstr "使用此费用代码的标签无法找到"
 
-#: PcExpenses.php:116
+#: PcExpenses.php:120
 msgid ""
 "Cannot delete this petty cash expense because it is used in some tab types"
 msgstr "不能删除此小额现金，因为已被用于某些标签类型"
 
-#: PcExpenses.php:116
+#: PcExpenses.php:120
 msgid "tab types using this expense code"
 msgstr "使用此费用代码的标签类型"
 
-#: PcExpenses.php:120
+#: PcExpenses.php:124
 msgid "The expense type record could not be deleted because"
 msgstr "费用类型记录无法删除"
 
-#: PcExpenses.php:122
+#: PcExpenses.php:126
 msgid "Expense type"
 msgstr "费用类型"
 
-#: PcExpenses.php:146 PcExpenses.php:273 StockClone.php:994 Stocks.php:1359
+#: PcExpenses.php:150 PcExpenses.php:277 StockClone.php:994 Stocks.php:1359
 #: TaxAuthorityRates.php:82 TaxCategories.php:168
 msgid "Tax Category"
 msgstr "税目"
 
-#: PcExpenses.php:173
+#: PcExpenses.php:177
 msgid ""
 "Are you sure you wish to delete this expense code and all the details it may "
 "have set up?"
 msgstr "您确认要删除此费用代码以及所有可能已经设置的与之相关的细节吗？"
 
-#: PcExpenses.php:182
+#: PcExpenses.php:186
 msgid "Show All Petty Cash Expenses Defined"
 msgstr "显示所有已定义的小额现金费用种类"
 
@@ -20452,7 +20436,7 @@ msgstr ""
 msgid "PC Expense Report"
 msgstr ""
 
-#: PcReportExpense.php:79 PcReportTab.php:74
+#: PcReportExpense.php:79 PcReportTab.php:75
 msgid "Show HTML"
 msgstr "显示 HTML"
 
@@ -20466,103 +20450,87 @@ msgstr ""
 msgid "Tab"
 msgstr ""
 
-#: PcReportExpense.php:226 PcReportTab.php:577
+#: PcReportExpense.php:226 PcReportTab.php:578
 msgid "Select A Different Date"
 msgstr "选择其他日期"
 
-#: PcReportTab.php:4
+#: PcReportTab.php:8
 msgid "Petty Cash Management Report"
 msgstr "小额现金管理报告"
 
-#: PcReportTab.php:64
-msgid "From Date :"
-msgstr "自日期"
-
-#: PcReportTab.php:68
-msgid "To Date:"
-msgstr "至日期"
-
-#: PcReportTab.php:85 PcReportTab.php:86
+#: PcReportTab.php:86 PcReportTab.php:87
 msgid "Petty Cash Report Of Tab"
 msgstr "小额现金标签报告"
 
-#: PcReportTab.php:119 PDFOrdersInvoiced.php:252 PDFOrderStatus.php:263
+#: PcReportTab.php:120 PDFOrdersInvoiced.php:252 PDFOrderStatus.php:263
 #: PDFSalesBySalesperson.php:54 PDFWeeklyOrders.php:50
 msgid "An error occurred getting the orders details"
 msgstr "取得订单信息时发生错误"
 
-#: PcReportTab.php:121 PDFOrdersInvoiced.php:254 PDFOrderStatus.php:265
+#: PcReportTab.php:122 PDFOrdersInvoiced.php:254 PDFOrderStatus.php:265
 #: PDFSalesBySalesperson.php:56 PDFWeeklyOrders.php:52
 msgid "The SQL used to get the orders that failed was"
 msgstr "取得订单失败的SQL 是"
 
-#: PcReportTab.php:127
+#: PcReportTab.php:128
 msgid "There were no expenses found in the database within the period from"
 msgstr "找不到此期间内的费用"
 
-#: PcReportTab.php:127 PDFDeliveryDifferences.php:201 PDFDIFOT.php:200
+#: PcReportTab.php:128 PDFDeliveryDifferences.php:201 PDFDIFOT.php:200
 #: PDFOrdersInvoiced.php:260 PDFOrderStatus.php:272
 msgid "Please try again selecting a different date range"
 msgstr "请选取其他的日期范围"
 
-#: PcReportTab.php:129 PDFDeliveryDifferences.php:203 PDFDIFOT.php:202
+#: PcReportTab.php:130 PDFDeliveryDifferences.php:203 PDFDIFOT.php:202
 #: PDFOrdersInvoiced.php:262
 msgid "The SQL that returned no rows was"
 msgstr "执行失败的SQL是"
 
-#: PcReportTab.php:152
+#: PcReportTab.php:153
 msgid "No Petty Cash tabs were returned by the SQL because"
 msgstr "SQL无法找到小额现金标签"
 
-#: PcReportTab.php:169
+#: PcReportTab.php:170
 msgid "Tab Code :"
 msgstr "标签代码："
 
-#: PcReportTab.php:177
+#: PcReportTab.php:178
 msgid "User "
 msgstr "用户 "
 
-#: PcReportTab.php:180
-msgid "To "
-msgstr "至 "
-
-#: PcReportTab.php:185
-msgid "Currency "
-msgstr "货币 "
-
-#: PcReportTab.php:190 PcTabs.php:183 PcTabs.php:333
+#: PcReportTab.php:191 PcTabs.php:183 PcTabs.php:333
 msgid "Cash Assigner"
 msgstr ""
 
-#: PcReportTab.php:195 PcTabs.php:184 PcTabs.php:351
+#: PcReportTab.php:196 PcTabs.php:184 PcTabs.php:351
 msgid "Authoriser - Cash"
 msgstr ""
 
-#: PcReportTab.php:200 PcTabs.php:185 PcTabs.php:369
+#: PcReportTab.php:201 PcTabs.php:185 PcTabs.php:369
 msgid "Authoriser - Expenses"
 msgstr ""
 
-#: PcReportTab.php:205 PcReportTab.php:405
+#: PcReportTab.php:206 PcReportTab.php:406
 msgid "Balance before "
 msgstr "余额发生在此日期前 "
 
-#: PcReportTab.php:300 PcReportTab.php:570
+#: PcReportTab.php:301 PcReportTab.php:571
 msgid "Balance at"
 msgstr "余额截止日期"
 
-#: PcReportTab.php:342
+#: PcReportTab.php:343
 msgid "No Petty Cash Tabs were returned by the SQL because"
 msgstr "SQL无法返回小额现金标签"
 
-#: PcReportTab.php:358 PcTabs.php:178 PcTabs.php:259 PcTabs.php:266
+#: PcReportTab.php:359 PcTabs.php:178 PcTabs.php:259 PcTabs.php:266
 msgid "Tab Code"
 msgstr "标签代码"
 
-#: PcReportTab.php:424
+#: PcReportTab.php:425
 msgid "Total not authorised before "
 msgstr ""
 
-#: PcReportTab.php:452
+#: PcReportTab.php:453
 msgid "No Petty Cash movements for this tab were returned by the SQL because"
 msgstr "无法找到此标签的小额现金变化"
 
@@ -20579,8 +20547,8 @@ msgstr ""
 msgid "For Petty Cash Tab"
 msgstr ""
 
-#: PcTabExpensesList.php:305 POReport.php:517 POReport.php:1281
-#: POReport.php:1517 SalesInquiry.php:808 SalesInquiry.php:1115
+#: PcTabExpensesList.php:305 POReport.php:518 POReport.php:1282
+#: POReport.php:1518 SalesInquiry.php:808 SalesInquiry.php:1115
 #: StockStatus.php:327
 msgid "Date Range"
 msgstr "日期范围"
@@ -20798,7 +20766,7 @@ msgstr ""
 msgid "Notes:"
 msgstr "备注："
 
-#: PDFAck.php:248
+#: PDFAck.php:248 PO_Items.php:941 SpecialOrder.php:665
 msgid "Total Excluding Tax"
 msgstr ""
 
@@ -20960,7 +20928,7 @@ msgstr ""
 msgid "Select Certificate of Analysis To Print"
 msgstr ""
 
-#: PDFCOA.php:34 PO_Items.php:1007
+#: PDFCOA.php:34 PO_Items.php:1010
 msgid "Enter Item"
 msgstr ""
 
@@ -21001,7 +20969,7 @@ msgid "Physical Property"
 msgstr ""
 
 #: PDFCOA.php:170 PDFCOA.php:171 PDFProdSpec.php:129 PDFProdSpec.php:130
-#: TestPlanResults.php:780
+#: TestPlanResults.php:784
 msgid "Test Method"
 msgstr ""
 
@@ -21444,7 +21412,7 @@ msgstr "已开发票的订单总计"
 msgid "Ord Date"
 msgstr "订单日期"
 
-#: PDFOrdersInvoiced.php:349 PDFOrderStatus.php:351 PO_Items.php:925
+#: PDFOrdersInvoiced.php:349 PDFOrderStatus.php:351 PO_Items.php:927
 msgid "Complete"
 msgstr "完成"
 
@@ -22638,25 +22606,25 @@ msgid ""
 "This is a new order. It must be created before you can change the status"
 msgstr "这是一张新订单。在您能修改它之前，必须先创建"
 
-#: PO_Header.php:92 PO_Items.php:109 PurchaseByPrefSupplier.php:177
-#: SelectSalesOrder.php:240 SelectSalesOrder.php:408 SpecialOrder.php:315
+#: PO_Header.php:92 PO_Items.php:111 PurchaseByPrefSupplier.php:177
+#: SelectSalesOrder.php:240 SelectSalesOrder.php:408 SpecialOrder.php:319
 msgid "You do not have permission to authorise this purchase order"
 msgstr "您无权授权此采购订单"
 
-#: PO_Header.php:92 PO_Header.php:114 PO_Header.php:131 PO_Items.php:109
+#: PO_Header.php:92 PO_Header.php:114 PO_Header.php:131 PO_Items.php:111
 #: PurchaseByPrefSupplier.php:177 SelectSalesOrder.php:240
-#: SelectSalesOrder.php:408 SpecialOrder.php:315
+#: SelectSalesOrder.php:408 SpecialOrder.php:319
 msgid "This order is for"
 msgstr "此订单为"
 
-#: PO_Header.php:92 PO_Items.php:106 PurchaseByPrefSupplier.php:174
-#: SelectSalesOrder.php:237 SelectSalesOrder.php:405 SpecialOrder.php:312
+#: PO_Header.php:92 PO_Items.php:108 PurchaseByPrefSupplier.php:174
+#: SelectSalesOrder.php:237 SelectSalesOrder.php:405 SpecialOrder.php:316
 msgid "You can only authorise up to"
 msgstr "您只可授权不多于"
 
-#: PO_Header.php:92 PO_Header.php:114 PO_Header.php:131 PO_Items.php:112
+#: PO_Header.php:92 PO_Header.php:114 PO_Header.php:131 PO_Items.php:114
 #: PurchaseByPrefSupplier.php:179 SelectSalesOrder.php:242
-#: SelectSalesOrder.php:408 SpecialOrder.php:315
+#: SelectSalesOrder.php:408 SpecialOrder.php:319
 msgid "If you think this is a mistake please contact the systems administrator"
 msgstr "如果您认为这是一个错误，请联络系统管理员"
 
@@ -22761,11 +22729,11 @@ msgstr "找不到符合条件的供应商供货信息, 因为"
 msgid "No supplier records contain the selected text"
 msgstr "找不到符合条件的供应商供货信息"
 
-#: PO_Header.php:410 PO_Header.php:486 SpecialOrder.php:66
+#: PO_Header.php:410 PO_Header.php:486 SpecialOrder.php:70
 msgid "The supplier record of the supplier selected"
 msgstr "选取供应商的供货信息记录"
 
-#: PO_Header.php:411 PO_Header.php:487 SpecialOrder.php:67
+#: PO_Header.php:411 PO_Header.php:487 SpecialOrder.php:71
 #: SupplierCredit.php:88 SupplierInvoice.php:83
 msgid "The SQL used to retrieve the supplier details and failed was"
 msgstr "用于查找供应商信息失败的 SQL 是"
@@ -22782,11 +22750,11 @@ msgstr "请联系您系统管理员，以取得更多信息"
 msgid "You can setup authorisations"
 msgstr "您可在这里设置授权"
 
-#: PO_Header.php:531 PO_Header.php:598 PO_Items.php:236 PO_Items.php:379
-#: PO_Items.php:871 PO_Items.php:874 PO_OrderDetails.php:88
+#: PO_Header.php:531 PO_Header.php:598 PO_Items.php:238 PO_Items.php:381
+#: PO_Items.php:873 PO_Items.php:876 PO_OrderDetails.php:88
 #: PO_PDFPurchOrder.php:201 PO_PDFPurchOrder.php:351
 #: PurchaseByPrefSupplier.php:294 SelectSalesOrder.php:249
-#: SelectSalesOrder.php:414 SpecialOrder.php:470
+#: SelectSalesOrder.php:414 SpecialOrder.php:474
 #: includes/DatabaseTranslations.php:31
 msgid "Purchase Order"
 msgstr "采购订单"
@@ -22831,7 +22799,7 @@ msgstr "版本"
 msgid "Revised"
 msgstr "修改"
 
-#: PO_Header.php:751 SelectPickingLists.php:437 SpecialOrder.php:599
+#: PO_Header.php:751 SelectPickingLists.php:437 SpecialOrder.php:603
 msgid "Initiated By"
 msgstr "签订人"
 
@@ -22924,15 +22892,15 @@ msgstr "供应商联系人"
 msgid "Enter Line Items"
 msgstr "输入采购订单行"
 
-#: PO_Items.php:12
+#: PO_Items.php:14
 msgid "Purchase Order Items"
 msgstr "采购订单物料"
 
-#: PO_Items.php:31
+#: PO_Items.php:33
 msgid "Back To Purchase Order Header"
 msgstr "返回采购订单抬头"
 
-#: PO_Items.php:38
+#: PO_Items.php:40
 msgid ""
 "The conversion factor is expected to be numeric - the figure which converts "
 "from our units to the supplier units. e.g. if the supplier units is a tonne "
@@ -22940,201 +22908,201 @@ msgid ""
 "to the suppliers unit is 1000"
 msgstr ""
 
-#: PO_Items.php:44
+#: PO_Items.php:46
 msgid ""
 "The quantity in the supplier units is expected to be numeric. Please re-"
 "enter as a number"
 msgstr ""
 
-#: PO_Items.php:49
+#: PO_Items.php:51
 msgid ""
 "The supplier price is expected to be numeric. Please re-enter as a number"
 msgstr ""
 
-#: PO_Items.php:66
+#: PO_Items.php:68
 msgid ""
 "The purchase order cannot be committed to the database because there is no "
 "delivery street address specified"
 msgstr ""
 
-#: PO_Items.php:69
+#: PO_Items.php:71
 msgid ""
 "The purchase order can not be committed to the database because there is no "
 "location specified to book any stock items into"
 msgstr "采购订单未能提交到数据库, 因为没有指定收货的仓库"
 
-#: PO_Items.php:72 SpecialOrder.php:276
+#: PO_Items.php:74 SpecialOrder.php:280
 msgid ""
 "The purchase order can not be committed to the database because there are no "
 "lines entered on this order"
 msgstr "采购订单未能提交到数据库, 因为没有输入订单行"
 
-#: PO_Items.php:99 PurchaseByPrefSupplier.php:167 SelectSalesOrder.php:223
-#: SelectSalesOrder.php:391 SpecialOrder.php:305
+#: PO_Items.php:101 PurchaseByPrefSupplier.php:167 SelectSalesOrder.php:223
+#: SelectSalesOrder.php:391 SpecialOrder.php:309
 msgid "Order Created and Authorised by"
 msgstr ""
 
-#: PO_Items.php:104 PurchaseByPrefSupplier.php:172 SelectSalesOrder.php:235
-#: SelectSalesOrder.php:403 SpecialOrder.php:310
+#: PO_Items.php:106 PurchaseByPrefSupplier.php:172 SelectSalesOrder.php:235
+#: SelectSalesOrder.php:403 SpecialOrder.php:314
 msgid "Your authority to approve purchase orders in"
 msgstr ""
 
-#: PO_Items.php:104 PurchaseByPrefSupplier.php:172 SelectSalesOrder.php:235
-#: SelectSalesOrder.php:403 SpecialOrder.php:310
+#: PO_Items.php:106 PurchaseByPrefSupplier.php:172 SelectSalesOrder.php:235
+#: SelectSalesOrder.php:403 SpecialOrder.php:314
 msgid "has not yet been set up"
 msgstr ""
 
-#: PO_Items.php:113 PurchaseByPrefSupplier.php:180 SpecialOrder.php:315
+#: PO_Items.php:115 PurchaseByPrefSupplier.php:180 SpecialOrder.php:319
 msgid ""
 "The order will be created with a status of pending and will require "
 "authorisation"
 msgstr ""
 
-#: PO_Items.php:116 PO_Items.php:121 PurchaseByPrefSupplier.php:183
-#: PurchaseByPrefSupplier.php:188 SelectSalesOrder.php:279 SpecialOrder.php:317
-#: SpecialOrder.php:321
+#: PO_Items.php:118 PO_Items.php:123 PurchaseByPrefSupplier.php:183
+#: PurchaseByPrefSupplier.php:188 SelectSalesOrder.php:279 SpecialOrder.php:321
+#: SpecialOrder.php:325
 msgid "Order Created by"
 msgstr "订单创建于"
 
-#: PO_Items.php:196 PurchaseByPrefSupplier.php:253 SelectSalesOrder.php:340
-#: SpecialOrder.php:381
+#: PO_Items.php:198 PurchaseByPrefSupplier.php:253 SelectSalesOrder.php:340
+#: SpecialOrder.php:385
 msgid ""
 "The purchase order header record could not be inserted into the database "
 "because"
 msgstr "未能插入采购订单抬头记录到数据库, 因为"
 
-#: PO_Items.php:197 PurchaseByPrefSupplier.php:254 SelectSalesOrder.php:341
-#: SpecialOrder.php:382
+#: PO_Items.php:199 PurchaseByPrefSupplier.php:254 SelectSalesOrder.php:341
+#: SpecialOrder.php:386
 msgid ""
 "The SQL statement used to insert the purchase order header record and failed "
 "was"
 msgstr "用作插入采购订单抬头记录失败的 SQL 是"
 
-#: PO_Items.php:229 PurchaseByPrefSupplier.php:288 SelectSalesOrder.php:367
-#: SpecialOrder.php:464
+#: PO_Items.php:231 PurchaseByPrefSupplier.php:288 SelectSalesOrder.php:367
+#: SpecialOrder.php:468
 msgid ""
 "One of the purchase order detail records could not be inserted into the "
 "database because"
 msgstr "某个采购订单行未能插入到数据库, 因为"
 
-#: PO_Items.php:230 PurchaseByPrefSupplier.php:289 SelectSalesOrder.php:368
-#: SpecialOrder.php:465
+#: PO_Items.php:232 PurchaseByPrefSupplier.php:289 SelectSalesOrder.php:368
+#: SpecialOrder.php:469
 msgid ""
 "The SQL statement used to insert the purchase order detail record and failed "
 "was"
 msgstr "用作插入采购订单行记录失败的 SQL是"
 
-#: PO_Items.php:241 PO_Items.php:384 SpecialOrder.php:471
+#: PO_Items.php:243 PO_Items.php:386 SpecialOrder.php:475
 msgid "Print Purchase Order"
 msgstr "打印采购订单"
 
-#: PO_Items.php:255
+#: PO_Items.php:257
 msgid "Order completed by"
 msgstr ""
 
-#: PO_Items.php:257
+#: PO_Items.php:259
 msgid "Order modified by"
 msgstr ""
 
-#: PO_Items.php:293
+#: PO_Items.php:295
 msgid "The purchase order could not be updated because"
 msgstr "未能更新采购订单, 因为"
 
-#: PO_Items.php:294
+#: PO_Items.php:296
 msgid ""
 "The SQL statement used to update the purchase order header record, that "
 "failed was"
 msgstr "用作更新采购订单抬头失败的 SQL 是"
 
-#: PO_Items.php:303
+#: PO_Items.php:305
 msgid "The purchase order detail line could not be deleted because"
 msgstr ""
 
-#: PO_Items.php:304
+#: PO_Items.php:306
 msgid ""
 "The SQL statement used to delete the purchase order detail record, that "
 "failed was"
 msgstr ""
 
-#: PO_Items.php:373
+#: PO_Items.php:375
 msgid "One of the purchase order detail records could not be updated because"
 msgstr "其中一个采购订单行未能更新, 因为"
 
-#: PO_Items.php:374
+#: PO_Items.php:376
 msgid ""
 "The SQL statement used to update the purchase order detail record that "
 "failed was"
 msgstr "用作更新采购订单行失败的 SQL 是"
 
-#: PO_Items.php:395
+#: PO_Items.php:397
 msgid "Receive and Enter Purchase Invoice"
 msgstr ""
 
-#: PO_Items.php:412
+#: PO_Items.php:414
 msgid ""
 "This item cannot be deleted because some of it has already been received"
 msgstr "采购订单行不能删除, 因为已收货"
 
-#: PO_Items.php:425 PO_Items.php:429 PO_Items.php:433 PO_Items.php:437
-#: SpecialOrder.php:203 SpecialOrder.php:208 SpecialOrder.php:213
-#: SpecialOrder.php:218 SpecialOrder.php:223 SpecialOrder.php:228
+#: PO_Items.php:427 PO_Items.php:431 PO_Items.php:435 PO_Items.php:439
+#: SpecialOrder.php:207 SpecialOrder.php:212 SpecialOrder.php:217
+#: SpecialOrder.php:222 SpecialOrder.php:227 SpecialOrder.php:232
 msgid "Cannot Enter this order line"
 msgstr "不能插入此订单行"
 
-#: PO_Items.php:425 SpecialOrder.php:203
+#: PO_Items.php:427 SpecialOrder.php:207
 msgid "The quantity of the order item must be numeric"
 msgstr "订单行数量必须是数值"
 
-#: PO_Items.php:429 SpecialOrder.php:208
+#: PO_Items.php:431 SpecialOrder.php:212
 msgid "The quantity of the ordered item entered must be a positive amount"
 msgstr "输入的订单行数量必须是正数"
 
-#: PO_Items.php:433 Prices_Customer.php:71 Prices.php:69 SpecialOrder.php:213
+#: PO_Items.php:435 Prices_Customer.php:71 Prices.php:69 SpecialOrder.php:217
 msgid "The price entered must be numeric"
 msgstr "输入的价格必须是数值"
 
-#: PO_Items.php:437 SpecialOrder.php:228
+#: PO_Items.php:439 SpecialOrder.php:232
 msgid "The date entered must be in the format"
 msgstr "输入的日期格式应为"
 
-#: PO_Items.php:450
+#: PO_Items.php:452
 msgid "The account details for"
 msgstr "账户明细"
 
-#: PO_Items.php:451
+#: PO_Items.php:453
 msgid "The SQL used to retrieve the details of the account, but failed was"
 msgstr "用于提取账户明细失败的 SQL 是"
 
-#: PO_Items.php:455
+#: PO_Items.php:457
 msgid ""
 "The validation process for the GL Code entered could not be executed because"
 msgstr "验证会计科目失败, 因为"
 
-#: PO_Items.php:457
+#: PO_Items.php:459
 msgid "The SQL used to validate the code entered was"
 msgstr "用于验证会计科目的 SQL 是"
 
-#: PO_Items.php:464 PO_Items.php:497
+#: PO_Items.php:466 PO_Items.php:499
 msgid "Cannot enter this order line"
 msgstr "未能输入订单行"
 
-#: PO_Items.php:464
+#: PO_Items.php:466
 msgid "The general ledger code"
 msgstr "会计科目"
 
-#: PO_Items.php:464
+#: PO_Items.php:466
 msgid "is not a general ledger code that is defined in the chart of accounts"
 msgstr "并非定义在会计科目表中的总帐代码"
 
-#: PO_Items.php:464
+#: PO_Items.php:466
 msgid "Please use a code that is already defined"
 msgstr "请使用存在的会计科目"
 
-#: PO_Items.php:464
+#: PO_Items.php:466
 msgid "See the Chart list from the link below"
 msgstr "用以下的链接来查看科目表"
 
-#: PO_Items.php:483
+#: PO_Items.php:485
 msgid ""
 "An asset code was entered but it does not yet exist. Only pre-existing asset "
 "ids can be entered when ordering a fixed asset"
@@ -23142,217 +23110,209 @@ msgstr ""
 "输入了一个还不存在的资产代码。当订购一项固定资产时，仅可以输入已经存在的资产"
 "ID."
 
-#: PO_Items.php:497
+#: PO_Items.php:499
 msgid ""
 "The description of the item being purchased is required where a non-stock "
 "item is being ordered"
 msgstr "当采购非库存商品时, 必须输入商品的描述"
 
-#: PO_Items.php:560 PO_Items.php:723
+#: PO_Items.php:562 PO_Items.php:725
 msgid "is already on this order"
 msgstr "已在这订单内"
 
-#: PO_Items.php:560 PO_Items.php:723
+#: PO_Items.php:562 PO_Items.php:725
 msgid "The system will not allow the same item on the order more than once"
 msgstr "系统不允许物料在同一订单中多次出现"
 
-#: PO_Items.php:560 PO_Items.php:723
+#: PO_Items.php:562 PO_Items.php:725
 msgid ""
 "However you can change the quantity ordered of the existing line if necessary"
 msgstr "但你可以按需要更改现有订单行数量"
 
-#: PO_Items.php:579 PO_Items.php:742 PurchaseByPrefSupplier.php:28
+#: PO_Items.php:581 PO_Items.php:744 PurchaseByPrefSupplier.php:28
 msgid "The item details for"
 msgstr ""
 
-#: PO_Items.php:604 PO_Items.php:767 PurchaseByPrefSupplier.php:53
+#: PO_Items.php:606 PO_Items.php:769 PurchaseByPrefSupplier.php:53
 msgid "The purchasing data for"
 msgstr ""
 
-#: PO_Items.php:605 PO_Items.php:768 PurchaseByPrefSupplier.php:54
+#: PO_Items.php:607 PO_Items.php:770 PurchaseByPrefSupplier.php:54
 msgid "The SQL used to retrieve the purchasing data but failed was"
 msgstr ""
 
-#: PO_Items.php:621 PO_Items.php:784 PurchaseByPrefSupplier.php:71
+#: PO_Items.php:623 PO_Items.php:786 PurchaseByPrefSupplier.php:71
 msgid "Could not retrieve the supplier discounts applicable to the item"
 msgstr ""
 
-#: PO_Items.php:622 PO_Items.php:785 PurchaseByPrefSupplier.php:72
+#: PO_Items.php:624 PO_Items.php:787 PurchaseByPrefSupplier.php:72
 msgid "The SQL used to retrive the supplier discounts that failed was"
 msgstr ""
 
-#: PO_Items.php:629 PO_Items.php:792 PurchaseByPrefSupplier.php:79
+#: PO_Items.php:631 PO_Items.php:794 PurchaseByPrefSupplier.php:79
 msgid "Taken accumulated supplier percentage discounts of"
 msgstr ""
 
-#: PO_Items.php:632 PO_Items.php:795
+#: PO_Items.php:634 PO_Items.php:797
 msgid "Taken accumulated round sum supplier discount of"
 msgstr ""
 
-#: PO_Items.php:632 PO_Items.php:795
+#: PO_Items.php:634 PO_Items.php:797
 msgid "per supplier unit"
 msgstr ""
 
-#: PO_Items.php:683 PO_Items.php:847
+#: PO_Items.php:685 PO_Items.php:849
 msgid ""
 "does not exist in the database and therefore cannot be added to the order"
 msgstr "在数据库中不存在, 所以不能新增到订单"
 
-#: PO_Items.php:857 SelectOrderItems.php:60
+#: PO_Items.php:859 SelectOrderItems.php:60
 msgid "rows have been added to the order"
 msgstr ""
 
-#: PO_Items.php:876
-msgid " Order Summary"
-msgstr " 订单总览"
-
-#: PO_Items.php:882
+#: PO_Items.php:884
 msgid "Quantity Our Units"
 msgstr ""
 
-#: PO_Items.php:883
+#: PO_Items.php:885
 msgid "Our Unit"
 msgstr ""
 
-#: PO_Items.php:884
+#: PO_Items.php:886
 msgid "Price Our Units"
 msgstr ""
 
-#: PO_Items.php:885
+#: PO_Items.php:887
 msgid "Unit Conversion Factor"
 msgstr ""
 
-#: PO_Items.php:886 SpecialOrder.php:704
+#: PO_Items.php:888 SpecialOrder.php:709
 msgid "Order Quantity"
 msgstr "订单数量"
 
-#: PO_Items.php:887 PurchData.php:273
+#: PO_Items.php:889 PurchData.php:273
 msgid "Supplier Unit"
 msgstr "供应商计量单位"
 
-#: PO_Items.php:888 SuppInvGRNs.php:122
+#: PO_Items.php:890 SuppInvGRNs.php:122
 msgid "Order Price"
 msgstr "订单价目"
 
-#: PO_Items.php:888
+#: PO_Items.php:890
 msgid "Supp Units"
 msgstr ""
 
-#: PO_Items.php:889
+#: PO_Items.php:891
 msgid "Sub-Total"
 msgstr ""
 
-#: PO_Items.php:890
+#: PO_Items.php:892
 msgid "Deliver By"
 msgstr "付运 由"
 
-#: PO_Items.php:938
-msgid " excluding Tax"
-msgstr " 不含税"
-
-#: PO_Items.php:945
+#: PO_Items.php:948
 msgid "Update Order Lines"
 msgstr ""
 
-#: PO_Items.php:946
+#: PO_Items.php:949
 msgid "Process Order"
 msgstr ""
 
-#: PO_Items.php:958
+#: PO_Items.php:961
 msgid "General Ledger Code"
 msgstr "总账代码"
 
-#: PO_Items.php:971
+#: PO_Items.php:974
 msgid "OR Asset ID"
 msgstr "或资产 ID"
 
-#: PO_Items.php:978
+#: PO_Items.php:981
 msgid "Not an Asset"
 msgstr "不是资产"
 
-#: PO_Items.php:981
+#: PO_Items.php:984
 msgid "Not yet purchased"
 msgstr "尚未采购"
 
-#: PO_Items.php:988 SuppFixedAssetChgs.php:122
+#: PO_Items.php:991 SuppFixedAssetChgs.php:122
 msgid "New Fixed Asset"
 msgstr "新固定资产"
 
-#: PO_Items.php:990
+#: PO_Items.php:993
 msgid "Quantity to purchase"
 msgstr "采购数量"
 
-#: PO_Items.php:994
+#: PO_Items.php:997
 msgid "Price per item"
 msgstr "每种物料价格"
 
-#: PO_Items.php:999 StockClone.php:845 Stocks.php:1210
+#: PO_Items.php:1002 StockClone.php:845 Stocks.php:1210
 #: includes/PO_ReadInOrder.inc:179
 msgid "each"
 msgstr "每件"
 
-#: PO_Items.php:1230
+#: PO_Items.php:1233
 msgid "Failed to retrieve result count"
 msgstr ""
 
-#: PO_Items.php:1231
+#: PO_Items.php:1234
 msgid "The SQL failed is "
 msgstr ""
 
-#: PO_Items.php:1292
+#: PO_Items.php:1295
 msgid "Item Category"
 msgstr ""
 
-#: PO_Items.php:1324
+#: PO_Items.php:1327
 msgid "Only items defined as from this Supplier"
 msgstr ""
 
-#: PO_Items.php:1329 SelectProduct.php:484 SelectProduct.php:521
+#: PO_Items.php:1332 SelectProduct.php:484 SelectProduct.php:521
 #: StockClone.php:1115 Stocks.php:1481
 msgid "Insert New Item"
 msgstr "插入新物料"
 
-#: PO_Items.php:1333 SelectOrderItems.php:1666
+#: PO_Items.php:1336 SelectOrderItems.php:1666
 msgid "Or"
 msgstr ""
 
-#: PO_Items.php:1334 SelectOrderItems.php:1667
+#: PO_Items.php:1337 SelectOrderItems.php:1667
 msgid "Upload items from csv file"
 msgstr ""
 
-#: PO_Items.php:1335 SelectOrderItems.php:1668
+#: PO_Items.php:1338 SelectOrderItems.php:1668
 msgid "Upload File"
 msgstr ""
 
-#: PO_Items.php:1343
+#: PO_Items.php:1346
 msgid "Order a non stock item"
 msgstr "订购一个非库存物料"
 
-#: PO_Items.php:1355 PO_Items.php:1434
+#: PO_Items.php:1358 PO_Items.php:1437
 msgid "Order some"
 msgstr "复制到订单行"
 
-#: PO_Items.php:1369
+#: PO_Items.php:1372
 msgid "Our Units"
 msgstr ""
 
-#: PO_Items.php:1370
+#: PO_Items.php:1373
 msgid "Conversion"
 msgstr ""
 
-#: PO_Items.php:1370
+#: PO_Items.php:1373
 msgid "Factor"
 msgstr ""
 
-#: PO_Items.php:1371
+#: PO_Items.php:1374
 msgid "Supplier/Order"
 msgstr ""
 
-#: PO_Items.php:1372
+#: PO_Items.php:1375
 msgid "Go to end of list"
 msgstr "到列表尾"
 
-#: PO_Items.php:1404
+#: PO_Items.php:1407
 msgid "Could not retrieve the purchasing data for the item"
 msgstr ""
 
@@ -23585,42 +23545,42 @@ msgstr "订单的供应商没有联系人"
 msgid "You must first set up supplier contacts before emailing an order"
 msgstr "必须在发邮件前定义供应商的联系人"
 
-#: POReport.php:10 POReport.php:513 POReport.php:1279
+#: POReport.php:11 POReport.php:514 POReport.php:1280
 msgid "Purchase Order Report"
 msgstr "采购订单报告"
 
-#: POReport.php:493 POReport.php:547 POReport.php:631 POReport.php:742
-#: POReport.php:761 POReport.php:1261 POReport.php:1305 POReport.php:1358
-#: POReport.php:1436 POReport.php:1448 POReport.php:1621 SalesInquiry.php:780
+#: POReport.php:494 POReport.php:548 POReport.php:632 POReport.php:743
+#: POReport.php:762 POReport.php:1262 POReport.php:1306 POReport.php:1359
+#: POReport.php:1437 POReport.php:1449 POReport.php:1622 SalesInquiry.php:780
 #: SalesInquiry.php:843 SalesInquiry.php:862 SalesInquiry.php:1010
 #: SalesInquiry.php:1240 includes/PDFTransPageHeader.inc:217
 msgid "Extended Price"
 msgstr "价格"
 
-#: POReport.php:494 POReport.php:1262 SalesInquiry.php:1136
+#: POReport.php:495 POReport.php:1263 SalesInquiry.php:1136
 #: SalesInquiry.php:1222
 msgid "Customer Number"
 msgstr "客户编号"
 
-#: POReport.php:512
+#: POReport.php:513
 msgid "Header Details"
 msgstr "表头细节"
 
-#: POReport.php:514 POReport.php:1279 SalesInquiry.php:801
+#: POReport.php:515 POReport.php:1280 SalesInquiry.php:801
 msgid "By"
 msgstr "依"
 
-#: POReport.php:515 POReport.php:1280 POReport.php:1509 SalesInquiry.php:807
+#: POReport.php:516 POReport.php:1281 POReport.php:1510 SalesInquiry.php:807
 #: SalesInquiry.php:1095
 msgid "Date Type"
 msgstr "日期类型"
 
-#: POReport.php:531 POReport.php:1291 POReport.php:1581 SalesInquiry.php:818
+#: POReport.php:532 POReport.php:1292 POReport.php:1582 SalesInquiry.php:818
 #: SalesInquiry.php:1167
 msgid "Line Item Status"
 msgstr "订单行物料状态"
 
-#: POReport.php:539 POReport.php:623 POReport.php:1297 POReport.php:1350
+#: POReport.php:540 POReport.php:624 POReport.php:1298 POReport.php:1351
 #: SalesInquiry.php:835 SalesInquiry.php:853
 #: includes/GenPickingListHeader.inc:45
 #: includes/PDFOrderPageHeader_generic.inc:75
@@ -23630,92 +23590,88 @@ msgstr "订单行物料状态"
 msgid "Order No"
 msgstr "订单编号"
 
-#: POReport.php:542 POReport.php:626 POReport.php:1300 POReport.php:1353
+#: POReport.php:543 POReport.php:627 POReport.php:1301 POReport.php:1354
 #: SupplierTransInquiry.php:57
 msgid "Supplier No"
 msgstr "供应商编号"
 
-#: POReport.php:544 POReport.php:628 POReport.php:1302 POReport.php:1355
+#: POReport.php:545 POReport.php:629 POReport.php:1303 POReport.php:1356
 #: PurchaseByPrefSupplier.php:423 SalesInquiry.php:841
 msgid "Order Qty"
 msgstr "订单数量"
 
-#: POReport.php:546 POReport.php:630 POReport.php:760 POReport.php:1304
-#: POReport.php:1357 POReport.php:1447 SalesInquiry.php:842
+#: POReport.php:547 POReport.php:631 POReport.php:761 POReport.php:1305
+#: POReport.php:1358 POReport.php:1448 SalesInquiry.php:842
 #: SalesInquiry.php:861 SalesInquiry.php:1009
 #: includes/PDFInventoryValnPageHeader.inc:35
 msgid "Extended Cost"
 msgstr "延伸成本"
 
-#: POReport.php:548 POReport.php:632 POReport.php:762 POReport.php:1306
-#: POReport.php:1359 POReport.php:1449 SalesInquiry.php:844
+#: POReport.php:549 POReport.php:633 POReport.php:763 POReport.php:1307
+#: POReport.php:1360 POReport.php:1450 SalesInquiry.php:844
 #: SalesInquiry.php:860 SalesInquiry.php:1011
 msgid "Invoiced Qty"
 msgstr "已开发票数量"
 
-#: POReport.php:549 POReport.php:633 POReport.php:1307 POReport.php:1360
+#: POReport.php:550 POReport.php:634 POReport.php:1308 POReport.php:1361
 #: SalesInquiry.php:845 SalesInquiry.php:863
 msgid "Line Status"
 msgstr "行状况"
 
-#: POReport.php:550 POReport.php:1308 SalesInquiry.php:846
+#: POReport.php:551 POReport.php:1309 SalesInquiry.php:846
 msgid "Item Due"
 msgstr "到期项目（Item Due)"
 
-#: POReport.php:610 POReport.php:695 POReport.php:803 POReport.php:1337
-#: POReport.php:1391 POReport.php:1476 SalesInquiry.php:922
+#: POReport.php:611 POReport.php:696 POReport.php:804 POReport.php:1338
+#: POReport.php:1392 POReport.php:1477 SalesInquiry.php:922
 #: SalesInquiry.php:938 SalesInquiry.php:1050
 msgid "Lines - "
 msgstr "行 "
 
-#: POReport.php:829 POReport.php:1636
+#: POReport.php:830 POReport.php:1637
 msgid "Export as csv file"
 msgstr "以csv文件格式导出"
 
-#: POReport.php:1281
-msgid " To "
-msgstr " 至 "
-
-#: POReport.php:1484
+#: POReport.php:1485
 msgid "The report has been exported as a csv file."
 msgstr "报告已经以csv格式导出。"
 
-#: POReport.php:1501 SalesInquiry.php:1077 StockDispatch.php:421
+#: POReport.php:1502 SalesInquiry.php:1077 StockDispatch.php:421
 msgid "Report Type"
 msgstr "报告类型"
 
-#: POReport.php:1524 POReport.php:1540 POReport.php:1557 POReport.php:1571
+#: POReport.php:1525 POReport.php:1541 POReport.php:1558 POReport.php:1572
 #: SalesInquiry.php:1126 SalesInquiry.php:1138 SalesInquiry.php:1151
 #: SalesInquiry.php:1161
 msgid "Equals"
 msgstr "等于"
 
-#: POReport.php:1525 POReport.php:1541 POReport.php:1556 SalesInquiry.php:1127
+#: POReport.php:1526 POReport.php:1542 POReport.php:1557 SalesInquiry.php:1127
 #: SalesInquiry.php:1139 SalesInquiry.php:1150
 msgid "Begins With"
 msgstr "开头是"
 
-#: POReport.php:1585 SalesInquiry.php:1171
+#: POReport.php:1586 SalesInquiry.php:1171
 msgid "Not Completed"
 msgstr "未完成"
 
-#: POReport.php:1590 SalesInquiry.php:1177
+#: POReport.php:1591 SalesInquiry.php:1177
 msgid "Stock Categories"
 msgstr "库存种类"
 
-#: POReport.php:1594 PricesByCost.php:248 SalesInquiry.php:1181
+#: POReport.php:1595 PricesByCost.php:248 SalesInquiry.php:1181
 msgid "All Categories"
 msgstr "所有种类"
 
-#: POReport.php:1604 SalesInquiry.php:1218
+#: POReport.php:1605 SalesInquiry.php:1218
 msgid "Sort By"
 msgstr "筛选依"
 
-#: POReport.php:1617 SalesInquiry.php:1235
+#: POReport.php:1618 SalesInquiry.php:1235
 msgid "Summary Type"
 msgstr "总结类型"
 
-#: POReport.php:1633 SalesInquiry.php:1257
+#: POReport.php:1634 SalesInquiry.php:1257
 msgid "Run Inquiry"
 msgstr "运行查询"
 
@@ -23731,13 +23687,13 @@ msgstr "输入的订单编号"
 
 #: PO_SelectOSPurchOrder.php:45 PO_SelectPurchOrder.php:34
 #: SelectPickingLists.php:52 SelectPickingLists.php:61 SelectQASamples.php:157
-#: TestPlanResults.php:40
+#: TestPlanResults.php:44
 msgid "MUST"
 msgstr "必须"
 
 #: PO_SelectOSPurchOrder.php:45 PO_SelectPurchOrder.php:34
 #: SelectPickingLists.php:52 SelectPickingLists.php:61 SelectQASamples.php:157
-#: TestPlanResults.php:40
+#: TestPlanResults.php:44
 msgid "be numeric"
 msgstr "是数值"
 
@@ -23788,7 +23744,7 @@ msgstr "按物料查找采购订单"
 #: PO_SelectOSPurchOrder.php:295 PO_SelectPurchOrder.php:200
 #: SelectCompletedOrder.php:487 SelectPickingLists.php:267
 #: SelectQASamples.php:285 SelectSalesOrder.php:628 Shipt_Select.php:180
-#: TestPlanResults.php:163
+#: TestPlanResults.php:167
 msgid "Search Parts Now"
 msgstr "开始查找物料"
 
@@ -23831,7 +23787,7 @@ msgid "Purchase Orders"
 msgstr "采购订单"
 
 #: PO_SelectPurchOrder.php:115 SelectCompletedOrder.php:236
-#: SelectPickingLists.php:170 SelectQASamples.php:247 TestPlanResults.php:124
+#: SelectPickingLists.php:170 SelectQASamples.php:247 TestPlanResults.php:128
 msgid "For the part"
 msgstr "物料"
 
@@ -23928,7 +23884,7 @@ msgid ""
 "quantity"
 msgstr ""
 
-#: PriceMatrix.php:269 SpecialOrder.php:621 includes/PDFLowGPPageHeader.inc:46
+#: PriceMatrix.php:269 SpecialOrder.php:625 includes/PDFLowGPPageHeader.inc:46
 #: includes/PDFSellThroughSupportClaimPageHeader.inc:25
 msgid "Sell Price"
 msgstr "销售单价"
@@ -25044,7 +25000,7 @@ msgstr ""
 msgid "Enter The Item, Fixed Asset or Template to Copy this Specification to"
 msgstr ""
 
-#: ProductSpecs.php:47 PurchData.php:307 TestPlanResults.php:307
+#: ProductSpecs.php:47 PurchData.php:307 TestPlanResults.php:311
 #: reportwriter/languages/en_US/reports.php:137
 #, php-format
 msgid "Copy"
@@ -25063,27 +25019,27 @@ msgid "Product Specification for"
 msgstr ""
 
 #: ProductSpecs.php:165 ProductSpecs.php:386 QATests.php:243 QATests.php:392
-#: TestPlanResults.php:486
+#: TestPlanResults.php:490
 msgid "Method"
 msgstr ""
 
 #: ProductSpecs.php:167 ProductSpecs.php:389 ProductSpecs.php:581
-#: QATests.php:284 QATests.php:396 TestPlanResults.php:488
+#: QATests.php:284 QATests.php:396 TestPlanResults.php:492
 msgid "Possible Values"
 msgstr ""
 
 #: ProductSpecs.php:168 ProductSpecs.php:390 ProductSpecs.php:586
-#: TestPlanResults.php:489 TestPlanResults.php:782
+#: TestPlanResults.php:493 TestPlanResults.php:786
 msgid "Target Value"
 msgstr ""
 
 #: ProductSpecs.php:169 ProductSpecs.php:391 ProductSpecs.php:592
-#: TestPlanResults.php:490
+#: TestPlanResults.php:494
 msgid "Range Min"
 msgstr ""
 
 #: ProductSpecs.php:170 ProductSpecs.php:392 ProductSpecs.php:596
-#: TestPlanResults.php:491
+#: TestPlanResults.php:495
 msgid "Range Max"
 msgstr ""
 
@@ -25107,7 +25063,7 @@ msgstr "复选框"
 msgid "Date Box"
 msgstr ""
 
-#: ProductSpecs.php:204 QATests.php:279 QATests.php:281 TestPlanResults.php:781
+#: ProductSpecs.php:204 QATests.php:279 QATests.php:281 TestPlanResults.php:785
 #: reportwriter/languages/en_US/reports.php:89
 msgid "Range"
 msgstr "范围"
@@ -25135,7 +25091,7 @@ msgid "The Product Specification could not be deleted because"
 msgstr ""
 
 #: ProductSpecs.php:348 QATests.php:143 SalesPeople.php:178
-#: SelectQASamples.php:139 TestPlanResults.php:684
+#: SelectQASamples.php:139 TestPlanResults.php:688
 msgid "has been deleted from the database"
 msgstr "已从数据库中删除"
 
@@ -25165,7 +25121,7 @@ msgstr ""
 msgid "Show All Product Specs"
 msgstr ""
 
-#: ProductSpecs.php:544 TestPlanResults.php:779
+#: ProductSpecs.php:544 TestPlanResults.php:783
 msgid "Test Name"
 msgstr ""
 
@@ -25185,7 +25141,7 @@ msgstr ""
 msgid "Active?"
 msgstr ""
 
-#: ProductSpecs.php:663 TestPlanResults.php:946
+#: ProductSpecs.php:663 TestPlanResults.php:950
 msgid "Add More Tests"
 msgstr ""
 
@@ -28454,7 +28410,7 @@ msgid ""
 "been invoiced"
 msgstr "此客户订单不能修改,因为这张订单已开出发票"
 
-#: SelectOrderItems.php:445 SpecialOrder.php:97
+#: SelectOrderItems.php:445 SpecialOrder.php:101
 msgid ""
 "account is currently flagged as an account that needs to be watched. Please "
 "contact the credit control personnel to discuss"
@@ -28763,7 +28719,7 @@ msgstr ""
 msgid "New"
 msgstr "新建"
 
-#: SelectPickingLists.php:241 SelectQASamples.php:262 TestPlanResults.php:141
+#: SelectPickingLists.php:241 SelectQASamples.php:262 TestPlanResults.php:145
 msgid ""
 "To search for Pick Lists for a specific part use the part selection "
 "facilities below"
@@ -29016,7 +28972,7 @@ msgstr ""
 msgid "Select QA Samples"
 msgstr ""
 
-#: SelectQASamples.php:66 TestPlanResults.php:665
+#: SelectQASamples.php:66 TestPlanResults.php:669
 msgid ""
 "Test Results have not all been entered.  This Lot is not able to be used for "
 "a a Certificate of Analysis"
@@ -29030,7 +28986,7 @@ msgstr ""
 msgid "QA Sample record for"
 msgstr ""
 
-#: SelectQASamples.php:85 SelectQASamples.php:99 TestPlanResults.php:666
+#: SelectQASamples.php:85 SelectQASamples.php:99 TestPlanResults.php:670
 msgid "The update of the QA Sample failed because"
 msgstr ""
 
@@ -29046,7 +29002,7 @@ msgstr ""
 msgid "Cannot delete this Sample ID because there are test results tied to it"
 msgstr ""
 
-#: SelectQASamples.php:133 TestPlanResults.php:681
+#: SelectQASamples.php:133 TestPlanResults.php:685
 msgid "The sample results could not be deleted because"
 msgstr ""
 
@@ -29058,55 +29014,51 @@ msgstr ""
 msgid "QA Sample"
 msgstr ""
 
-#: SelectQASamples.php:157 TestPlanResults.php:40
+#: SelectQASamples.php:157 TestPlanResults.php:44
 msgid "The Sample ID entered"
 msgstr ""
 
 #: SelectQASamples.php:160 SelectQASamples.php:249 SelectQASamples.php:466
-#: TestPlanResults.php:43 TestPlanResults.php:126 TestPlanResults.php:730
+#: TestPlanResults.php:47 TestPlanResults.php:130 TestPlanResults.php:734
 msgid "Sample ID"
 msgstr ""
 
-#: SelectQASamples.php:249 TestPlanResults.php:126
-msgid "Lot Number"
-msgstr ""
-
-#: SelectQASamples.php:251 TestPlanResults.php:128
+#: SelectQASamples.php:251 TestPlanResults.php:132
 msgid "Search Samples"
 msgstr ""
 
-#: SelectQASamples.php:376 TestPlanResults.php:258
+#: SelectQASamples.php:376 TestPlanResults.php:262
 msgid "No QA samples were returned by the SQL because"
 msgstr ""
 
-#: SelectQASamples.php:383 TestPlanResults.php:266
+#: SelectQASamples.php:383 TestPlanResults.php:270
 msgid "Enter Results"
 msgstr ""
 
 #: SelectQASamples.php:384 SelectQASamples.php:471 SelectQASamples.php:527
-#: TestPlanResults.php:267 TestPlanResults.php:731
+#: TestPlanResults.php:271 TestPlanResults.php:735
 msgid "Specification"
 msgstr ""
 
-#: SelectQASamples.php:386 TestPlanResults.php:269 TestPlanResults.php:732
+#: SelectQASamples.php:386 TestPlanResults.php:273 TestPlanResults.php:736
 msgid "Lot / Serial"
 msgstr ""
 
 #: SelectQASamples.php:387 SelectQASamples.php:479 SelectQASamples.php:539
-#: TestPlanResults.php:270 TestPlanResults.php:733
+#: TestPlanResults.php:274 TestPlanResults.php:737
 msgid "Identifier"
 msgstr ""
 
-#: SelectQASamples.php:388 TestPlanResults.php:271
+#: SelectQASamples.php:388 TestPlanResults.php:275
 msgid "Created By"
 msgstr ""
 
-#: SelectQASamples.php:389 SelectQASamples.php:487 TestPlanResults.php:272
-#: TestPlanResults.php:734
+#: SelectQASamples.php:389 SelectQASamples.php:487 TestPlanResults.php:276
+#: TestPlanResults.php:738
 msgid "Sample Date"
 msgstr ""
 
-#: SelectQASamples.php:391 TestPlanResults.php:274
+#: SelectQASamples.php:391 TestPlanResults.php:278
 msgid "Cert Allowed"
 msgstr ""
 
@@ -29778,7 +29730,7 @@ msgstr "运单"
 msgid "To set up a shipment"
 msgstr "要新建运单"
 
-#: Shipments.php:20 SpecialOrder.php:29
+#: Shipments.php:20 SpecialOrder.php:33
 msgid "the supplier must first be selected from the Select Supplier page"
 msgstr "请先从供应商页面中选取供应商"
 
@@ -30520,189 +30472,185 @@ msgstr "非真"
 msgid "Timeout (seconds)"
 msgstr "结束时间(秒)"
 
-#: SpecialOrder.php:8
+#: SpecialOrder.php:13
 msgid "Special Order Entry"
 msgstr "输入特殊订单"
 
-#: SpecialOrder.php:29 SpecialOrder.php:37
+#: SpecialOrder.php:33 SpecialOrder.php:41
 msgid "To set up a special"
 msgstr "输入特殊订单前"
 
-#: SpecialOrder.php:30
+#: SpecialOrder.php:34
 msgid "Select the supplier now"
 msgstr "现在选取供应商"
 
-#: SpecialOrder.php:37
+#: SpecialOrder.php:41
 msgid "the customer must first be selected from the Select Customer page"
 msgstr "请先由客户选取页面来选取客户"
 
-#: SpecialOrder.php:39
+#: SpecialOrder.php:43
 msgid "Select the customer now"
 msgstr "现在选取客户"
 
-#: SpecialOrder.php:90
+#: SpecialOrder.php:94
 msgid "The customer record for"
 msgstr "客户记录:"
 
-#: SpecialOrder.php:121 SpecialOrder.php:124
+#: SpecialOrder.php:125 SpecialOrder.php:128
 msgid "Purchase from"
 msgstr "卖方："
 
-#: SpecialOrder.php:124
+#: SpecialOrder.php:128
 msgid "delivered to"
 msgstr "交货到"
 
-#: SpecialOrder.php:124
+#: SpecialOrder.php:128
 msgid "branch"
 msgstr "分公司"
 
-#: SpecialOrder.php:140
+#: SpecialOrder.php:144
 msgid ""
 "Select the customer branch to deliver the special to from the list below"
 msgstr "请从列表中选择要交货到的分公司"
 
-#: SpecialOrder.php:174
+#: SpecialOrder.php:178
 msgid "There are no branches defined for the customer selected"
 msgstr "选取的客户没有分公司"
 
-#: SpecialOrder.php:174
+#: SpecialOrder.php:178
 msgid "Please select a customer that has branches defined"
 msgstr "请选取有分公司设定的客户"
 
-#: SpecialOrder.php:191 SpecialOrder.php:279
+#: SpecialOrder.php:195 SpecialOrder.php:283
 msgid "The reference for this order is less than 3 characters"
 msgstr "特殊订单号少于3个字"
 
-#: SpecialOrder.php:191 SpecialOrder.php:279
+#: SpecialOrder.php:195 SpecialOrder.php:283
 msgid ""
 "a reference more than 3 characters is required before the order can be added"
 msgstr "用于插入订单的特殊订单号应大于三个字"
 
-#: SpecialOrder.php:194 SpecialOrder.php:282
+#: SpecialOrder.php:198 SpecialOrder.php:286
 msgid "The person entering this order must be specified in the initiator field"
 msgstr "必须输入签订订单的销售员"
 
-#: SpecialOrder.php:194 SpecialOrder.php:282
+#: SpecialOrder.php:198 SpecialOrder.php:286
 msgid "a blank initiator is not allowed"
 msgstr "销售员不能为空"
 
-#: SpecialOrder.php:218
+#: SpecialOrder.php:222
 msgid "The cost entered must be numeric"
 msgstr "成本必须是数字"
 
-#: SpecialOrder.php:223
+#: SpecialOrder.php:227
 msgid "The sale is at a lower price than the cost"
 msgstr "销售价格小于成本"
 
-#: SpecialOrder.php:272
+#: SpecialOrder.php:276
 msgid ""
 "The purchase order can not be committed to the database because there is no "
 "stock location specified to book any stock items into"
 msgstr "未能提交采购订单到数据库, 因为物料没有对应仓库"
 
-#: SpecialOrder.php:426
+#: SpecialOrder.php:430
 msgid "The item record for line"
 msgstr "订单行"
 
-#: SpecialOrder.php:426 SpecialOrder.php:433
+#: SpecialOrder.php:430 SpecialOrder.php:437
 msgid "could not be created because"
 msgstr "未能插入, 因为"
 
-#: SpecialOrder.php:427
+#: SpecialOrder.php:431
 msgid "The SQL statement used to insert the item and failed was"
 msgstr "用作插入订单行失败的 SQL是"
 
-#: SpecialOrder.php:433
+#: SpecialOrder.php:437
 msgid "The item stock locations for the special order line"
 msgstr "订单行的物料存货信息"
 
-#: SpecialOrder.php:434
+#: SpecialOrder.php:438
 msgid ""
 "The SQL statement used to insert the location stock records and failed was"
 msgstr "用于插入仓库物料存货信息失败的 SQL是"
 
-#: SpecialOrder.php:439
+#: SpecialOrder.php:443
 msgid "The item stock category information for the special order line"
 msgstr "订单行的物料组信息"
 
-#: SpecialOrder.php:440
+#: SpecialOrder.php:444
 msgid ""
 "The SQL statement used to get the category information and that failed was"
 msgstr "用于取得物料组信息失败的SQL是"
 
-#: SpecialOrder.php:492
+#: SpecialOrder.php:496
 msgid ""
 "The delivery and sales type for the customer could not be retrieved for this "
 "special order"
 msgstr "找不到特殊订单客户的交货资料和价格表"
 
-#: SpecialOrder.php:493
+#: SpecialOrder.php:497
 msgid "The SQL statement used to get the delivery details and that failed was"
 msgstr "用与取得交货资料失败的SQL是"
 
-#: SpecialOrder.php:535
+#: SpecialOrder.php:539
 msgid "The sales order cannot be added because"
 msgstr "未能新增销售订单, 因为"
 
-#: SpecialOrder.php:545
+#: SpecialOrder.php:549
 msgid "There was a problem inserting a line into the sales order because"
 msgstr "插入订单行到销售订单时发生问题, 因为"
 
-#: SpecialOrder.php:559
+#: SpecialOrder.php:563
 msgid "Sales Order Number"
 msgstr "销售订单编号"
 
-#: SpecialOrder.php:560
+#: SpecialOrder.php:564
 msgid ""
 "Orders created on a cash sales account may need the delivery details for the "
 "order to be modified"
 msgstr "用于现销的订单的交货资料需要修改"
 
-#: SpecialOrder.php:561
+#: SpecialOrder.php:565
 msgid "A freight charge may also be applicable"
 msgstr "必须输入运费"
 
-#: SpecialOrder.php:573
+#: SpecialOrder.php:577
 msgid "Enter A New Special Order"
 msgstr "输入新的特殊订单"
 
-#: SpecialOrder.php:581
+#: SpecialOrder.php:585
 msgid "Receive Purchase Into and Sell From"
 msgstr "采购收货并销售到"
 
-#: SpecialOrder.php:600
+#: SpecialOrder.php:604
 msgid "Special Ref"
 msgstr "特殊订单编号"
 
-#: SpecialOrder.php:613
+#: SpecialOrder.php:617
 msgid "Special Order Summary"
 msgstr "特殊订单总览"
 
-#: SpecialOrder.php:623 SpecialOrder.php:625
+#: SpecialOrder.php:627 SpecialOrder.php:629
 msgid "Total Price"
 msgstr "总价"
 
-#: SpecialOrder.php:660
-msgid "TOTAL Excl Tax"
-msgstr "不含税总计"
-
-#: SpecialOrder.php:677
+#: SpecialOrder.php:682
 msgid "Ordered item Description"
 msgstr "订单行描述"
 
-#: SpecialOrder.php:728
+#: SpecialOrder.php:733
 msgid "Required Delivery Date"
 msgstr "要求交货日期"
 
-#: SpecialOrder.php:735
+#: SpecialOrder.php:740
 msgid "Add Item to Order"
 msgstr "新增订单行"
 
-#: SpecialOrder.php:738
+#: SpecialOrder.php:743
 msgid "Start Again"
 msgstr "重新开始"
 
-#: SpecialOrder.php:741
+#: SpecialOrder.php:746
 msgid "Process This Order"
 msgstr "执行订单"
 
@@ -37525,127 +37473,119 @@ msgstr ""
 msgid "Within 30 legal characters"
 msgstr ""
 
-#: TestPlanResults.php:4
+#: TestPlanResults.php:8
 msgid "Test Plan Results"
 msgstr ""
 
-#: TestPlanResults.php:265
+#: TestPlanResults.php:269
 msgid "Copy Results"
 msgstr ""
 
-#: TestPlanResults.php:281
+#: TestPlanResults.php:285
 msgid "Copy to This Sample"
 msgstr ""
 
-#: TestPlanResults.php:306
+#: TestPlanResults.php:310
 msgid "Override existing Test values?"
 msgstr ""
 
-#: TestPlanResults.php:330
+#: TestPlanResults.php:334
 msgid "Test Results have been copied to sample"
 msgstr ""
 
-#: TestPlanResults.php:331 TestPlanResults.php:410 TestPlanResults.php:451
+#: TestPlanResults.php:335 TestPlanResults.php:414 TestPlanResults.php:455
 msgid "The insert of the test results failed because"
 msgstr ""
 
-#: TestPlanResults.php:409
+#: TestPlanResults.php:413
 msgid "Test Results have been overwritten to sample"
 msgstr ""
 
-#: TestPlanResults.php:409
+#: TestPlanResults.php:413
 msgid " from sample"
 msgstr ""
 
-#: TestPlanResults.php:409
+#: TestPlanResults.php:413
 msgid " for test "
 msgstr ""
 
-#: TestPlanResults.php:415
+#: TestPlanResults.php:419
 msgid "Test Results have NOT BEEN overwritten for Result ID "
 msgstr ""
 
-#: TestPlanResults.php:450
+#: TestPlanResults.php:454
 msgid "Test Results have been copied to"
 msgstr ""
 
-#: TestPlanResults.php:450
-msgid " from "
-msgstr ""
-
-#: TestPlanResults.php:450
-msgid " for "
-msgstr ""
-
-#: TestPlanResults.php:595
+#: TestPlanResults.php:599
 msgid "A Sample Result record has been added for Test ID"
 msgstr ""
 
-#: TestPlanResults.php:596
+#: TestPlanResults.php:600
 msgid "The insert of the Sample Result failed because"
 msgstr ""
 
-#: TestPlanResults.php:648
+#: TestPlanResults.php:652
 msgid "Sample Results were updated for Result ID"
 msgstr ""
 
-#: TestPlanResults.php:649
+#: TestPlanResults.php:653
 msgid "The updated of the sampleresults failed because"
 msgstr ""
 
-#: TestPlanResults.php:678
+#: TestPlanResults.php:682
 msgid ""
 "Cannot delete this Result ID because it is a part of the Product "
 "Specification"
 msgstr ""
 
-#: TestPlanResults.php:684
+#: TestPlanResults.php:688
 msgid "Result QA Sample"
 msgstr ""
 
-#: TestPlanResults.php:692
+#: TestPlanResults.php:696
 msgid "Select a sample to enter results against"
 msgstr ""
 
-#: TestPlanResults.php:694
+#: TestPlanResults.php:698
 msgid ""
 "This page can only be opened if a QA Sample has been selected. Please select "
 "a sample first"
 msgstr ""
 
-#: TestPlanResults.php:699
+#: TestPlanResults.php:703
 msgid "Back to Samples"
 msgstr ""
 
-#: TestPlanResults.php:736
+#: TestPlanResults.php:740
 msgid "Used for Cert"
 msgstr ""
 
-#: TestPlanResults.php:783
+#: TestPlanResults.php:787
 msgid "Test Date"
 msgstr ""
 
-#: TestPlanResults.php:784
+#: TestPlanResults.php:788
 msgid "Tested By"
 msgstr ""
 
-#: TestPlanResults.php:785
+#: TestPlanResults.php:789
 msgid "Test Result"
 msgstr ""
 
-#: TestPlanResults.php:786
+#: TestPlanResults.php:790
 msgid "On Cert"
 msgstr ""
 
-#: TestPlanResults.php:891
+#: TestPlanResults.php:895
 msgid "Are you sure you wish to delete this Test from this Sample ?"
 msgstr ""
 
-#: TestPlanResults.php:947
+#: TestPlanResults.php:951
 msgid "Copy These Results"
 msgstr ""
 
-#: TestPlanResults.php:950
+#: TestPlanResults.php:954
 msgid "Print COA"
 msgstr ""
 
@@ -41470,7 +41410,7 @@ msgid "Can field be null"
 msgstr "字段可以为空吗？"
 
 #: Z_DescribeTable.php:14 includes/DatabaseTranslations.php:63
-#: install/index.php:1073 reportwriter/languages/en_US/reports.php:65
+#: install/index.php:1075 reportwriter/languages/en_US/reports.php:65
 msgid "Default"
 msgstr "默认"
 
@@ -43929,7 +43869,7 @@ msgstr ""
 "注意： 使用此功能意味这用户名称和密码自动在下列的函数不再需要。当调用这些函数"
 "时，请留空此两个参数。"
 
-#: api/api_xml-rpc.php:16 install/index.php:947
+#: api/api_xml-rpc.php:16 install/index.php:949
 msgid "Database Name"
 msgstr "数据库名称"
 
@@ -48534,18 +48474,6 @@ msgstr ""
 msgid "Tender number"
 msgstr ""
 
-#: includes/DefineTenderClass.php:48
-msgid " Quantity "
-msgstr ""
-
-#: includes/DefineTenderClass.php:48
-msgid " Unit "
-msgstr ""
-
-#: includes/DefineTenderClass.php:48
-msgid " Item Description"
-msgstr ""
-
 #: includes/DefineTenderClass.php:52
 msgid "Tender received from"
 msgstr ""
@@ -49638,220 +49566,216 @@ msgstr ""
 msgid "due to too many failed attempts."
 msgstr ""
 
-#: install/index.php:183
+#: install/index.php:185
 msgid ""
 "It seems that the system has been already installed. If you want to install "
 "again, please remove the config.php file first"
 msgstr ""
 
-#: install/index.php:197
+#: install/index.php:199
 msgid "The Company names cannot contain illegal characters such as /\\?%:|<>\""
 msgstr ""
 
-#: install/index.php:203
+#: install/index.php:205
 msgid "The Company Name name should not be empty"
 msgstr ""
 
-#: install/index.php:214
+#: install/index.php:216
 msgid ""
 "The database name should not contains illegal characters such as \"/\\?%:|<>"
 "\" etc"
 msgstr ""
 
-#: install/index.php:220 install/index.php:571
+#: install/index.php:222 install/index.php:573
 msgid "The database name should not be empty"
 msgstr ""
 
-#: install/index.php:227
+#: install/index.php:229
 msgid "The timezone must be legal"
 msgstr ""
 
-#: install/index.php:248
+#: install/index.php:250
 msgid "You must enter a valid email address for the Administrator."
 msgstr ""
 
-#: install/index.php:254
+#: install/index.php:256
 msgid ""
 "Please correct the password. The password is either blank, or the password "
 "check does not match."
 msgstr ""
 
-#: install/index.php:266
+#: install/index.php:268
 msgid "The Host Name is not a valid name."
 msgstr ""
 
-#: install/index.php:272
+#: install/index.php:274
 msgid "The Host Name must not be empty."
 msgstr ""
 
-#: install/index.php:278
+#: install/index.php:280
 msgid ""
 "The user name cannot be empty and length must not be over 16 characters."
 msgstr ""
 
-#: install/index.php:293
+#: install/index.php:295
 msgid "The user language defintion is not in the correct format"
 msgstr ""
 
-#: install/index.php:300
+#: install/index.php:302
 msgid ""
 "The company logo file failed to upload due to it's size. The file was over "
 "the upload_max_filesize set in your php.ini configuration."
 msgstr ""
 
-#: install/index.php:303
+#: install/index.php:305
 msgid "The logo file failed to upload as it was over 10KB size limit."
 msgstr ""
 
-#: install/index.php:318
+#: install/index.php:320
 msgid "The country SQL file name must only contain letters,\"-\",\"_\""
 msgstr ""
 
-#: install/index.php:322
+#: install/index.php:324
 msgid "There is no country SQL file selected. Please select a file."
 msgstr ""
 
-#: install/index.php:368 install/index.php:371
+#: install/index.php:370 install/index.php:373
 msgid "WebERP Demo Company"
 msgstr ""
 
-#: install/index.php:432
+#: install/index.php:434
 msgid "Cannot open the configuration file"
 msgstr ""
 
-#: install/index.php:436
+#: install/index.php:438
 msgid "Cannot write to the configuration file"
 msgstr ""
 
-#: install/index.php:447 install/index.php:452
+#: install/index.php:449 install/index.php:454
 msgid "Failed to connect the database, the error is "
 msgstr ""
 
-#: install/index.php:463 install/index.php:465 install/index.php:492
-#: install/index.php:494
+#: install/index.php:465 install/index.php:467 install/index.php:494
+#: install/index.php:496
 msgid "Failed to create database "
 msgstr ""
 
-#: install/index.php:473 install/index.php:475 install/index.php:506
-#: install/index.php:508
+#: install/index.php:475 install/index.php:477 install/index.php:508
+#: install/index.php:510
 msgid "Failed to create database weberpdemo and the error is  "
 msgstr ""
 
-#: install/index.php:546
+#: install/index.php:548
 msgid "The Host Name is illegal"
 msgstr ""
 
-#: install/index.php:553
+#: install/index.php:555
 msgid "The Host Name should not be empty"
 msgstr ""
 
-#: install/index.php:565
+#: install/index.php:567
 msgid ""
 "The database name should be lower case and not contains illegal characters "
 "such as \"/\\?%:|<>\""
 msgstr ""
 
-#: install/index.php:593
+#: install/index.php:595
 msgid "Please correct the displayed error first"
 msgstr ""
 
-#: install/index.php:607 install/index.php:1017 install/index.php:1044
+#: install/index.php:609 install/index.php:1019 install/index.php:1046
 msgid "webERP Installation Wizard"
 msgstr ""
 
-#: install/index.php:624
+#: install/index.php:626
 msgid ""
 "Please set Cookies allowed in your web brower, otherwise webERP cannot run "
 "properly"
 msgstr ""
 
-#: install/index.php:633
+#: install/index.php:635
 msgid ""
 "Illegal characters or data has been identified, please see your admistrator "
 "for help"
 msgstr ""
 
-#: install/index.php:641
+#: install/index.php:643
 msgid ""
 "Although webERP should work with PHP version 5.1 onwards, a PHP version "
 "greater than 5.2 is strongly recommended"
 msgstr ""
 
-#: install/index.php:648 install/index.php:653
+#: install/index.php:650 install/index.php:655
 msgid "The directory"
 msgstr ""
 
-#: install/index.php:648
+#: install/index.php:650
 msgid "must be writable by web server"
 msgstr ""
 
-#: install/index.php:658
+#: install/index.php:660
 msgid "The mbstring extension is not availble in your PHP"
 msgstr ""
 
-#: install/index.php:663
+#: install/index.php:665
 msgid "The libxml extension is not available in your PHP"
 msgstr ""
 
-#: install/index.php:669
+#: install/index.php:671
 msgid "There is no MySQL or MySQL extension available"
 msgstr ""
 
-#: install/index.php:675
+#: install/index.php:677
 msgid ""
 "The PHP MySQLI extension is recommend as MySQL extension has been deprecated "
 "since PHP 5.5"
 msgstr ""
 
-#: install/index.php:679
+#: install/index.php:681
 msgid ""
 "The MySQL extension has been deprecated since 5.5. You should install the "
 "MySQLI extension or downgrade you PHP version to  one prior to 5.5"
 msgstr ""
 
-#: install/index.php:684
+#: install/index.php:686
 msgid "The GD extension should be installed in your PHP configuration"
 msgstr ""
 
-#: install/index.php:782
+#: install/index.php:784
 msgid "Welcome to the webERP Installation Wizard"
 msgstr ""
 
-#: install/index.php:786
+#: install/index.php:788
 msgid "During installation you may see different status messages."
 msgstr ""
 
-#: install/index.php:787
+#: install/index.php:789
 msgid "When there is an error message you must correct the error to continue."
 msgstr ""
 
-#: install/index.php:788
+#: install/index.php:790
 msgid "If you see a warning message you should take notice before you proceed."
 msgstr ""
 
-#: install/index.php:789
+#: install/index.php:791
 msgid "If you are unsure of an option value, you may keep the default setting."
 msgstr ""
 
-#: install/index.php:796
+#: install/index.php:798
 msgid "Select your language"
 msgstr ""
 
-#: install/index.php:799
+#: install/index.php:801
 msgid ""
 "The installer will try and guess your language from your browser, but may "
 "get it wrong. Please select you preferred language below."
 msgstr ""
 
-#: install/index.php:803
-msgid "Language:"
-msgstr ""
-
-#: install/index.php:908 install/index.php:983
+#: install/index.php:910 install/index.php:985
 msgid "Next Step"
 msgstr ""
 
-#: install/index.php:914
+#: install/index.php:916
 msgid ""
 "webERP is an open source application licenced under GPL V2 and absolutely "
 "free to download.<br /> By installing webERP you acknowledge you have read "
@@ -49860,177 +49784,177 @@ msgid ""
 "information."
 msgstr ""
 
-#: install/index.php:933
+#: install/index.php:935
 msgid "Database settings"
 msgstr ""
 
-#: install/index.php:936
+#: install/index.php:938
 msgid "Please enter your MySQL Database information below."
 msgstr ""
 
-#: install/index.php:937 install/index.php:1050
+#: install/index.php:939 install/index.php:1052
 msgid "* Denotes required field"
 msgstr ""
 
-#: install/index.php:942
+#: install/index.php:944
 msgid "Host Name"
 msgstr ""
 
-#: install/index.php:943
+#: install/index.php:945
 msgid "Enter database host name"
 msgstr ""
 
-#: install/index.php:944
+#: install/index.php:946
 msgid "Commonly: localhost or 127.0.0.1"
 msgstr ""
 
-#: install/index.php:948
+#: install/index.php:950
 msgid "The database name"
 msgstr ""
 
-#: install/index.php:949
+#: install/index.php:951
 msgid "The database must have a valid name"
 msgstr ""
 
-#: install/index.php:952
+#: install/index.php:954
 msgid "Database Prefix"
 msgstr ""
 
-#: install/index.php:953
+#: install/index.php:955
 msgid "Useful with shared hosting"
 msgstr ""
 
-#: install/index.php:954
+#: install/index.php:956
 msgid "Optional: in the form of prefix_"
 msgstr ""
 
-#: install/index.php:957
+#: install/index.php:959
 msgid "Database User Name"
 msgstr ""
 
-#: install/index.php:958
+#: install/index.php:960
 msgid "A valid database user name"
 msgstr ""
 
-#: install/index.php:959
+#: install/index.php:961
 msgid "Must be a user that has permission to create a database"
 msgstr ""
 
-#: install/index.php:963
+#: install/index.php:965
 msgid "mySQL user password"
 msgstr ""
 
-#: install/index.php:964
+#: install/index.php:966
 msgid "Enter the user password if one exists"
 msgstr ""
 
-#: install/index.php:996
+#: install/index.php:998
 msgid "Check Again"
 msgstr ""
 
-#: install/index.php:1018
+#: install/index.php:1020
 msgid "Failed to connect to the database. Please correct the following error:"
 msgstr ""
 
-#: install/index.php:1045
+#: install/index.php:1047
 msgid ""
 "Please enter the company name and please pay attention the company will be "
 "as same as the database name"
 msgstr ""
 
-#: install/index.php:1048
+#: install/index.php:1050
 msgid "Company Settings"
 msgstr ""
 
-#: install/index.php:1056
+#: install/index.php:1058
 msgid ""
 "The name of your company should not contain characters such as |\\?%:<>\""
 msgstr ""
 
-#: install/index.php:1059
+#: install/index.php:1061
 msgid "Chart of Accounts"
 msgstr ""
 
-#: install/index.php:1077
+#: install/index.php:1079
 msgid ""
 "A starter Chart of Accounts (use default.sql if having empty db problems)"
 msgstr ""
 
-#: install/index.php:1080
+#: install/index.php:1082
 msgid "Time Zone"
 msgstr ""
 
-#: install/index.php:1084
+#: install/index.php:1086
 msgid "Company logo file"
 msgstr ""
 
-#: install/index.php:1085
+#: install/index.php:1087
 msgid "A jpg file up to 10k, and not greater than 170px x 80px"
 msgstr ""
 
-#: install/index.php:1086
+#: install/index.php:1088
 msgid "jpg file to 10k, not greater than 170px x 80px"
 msgstr ""
 
-#: install/index.php:1091
+#: install/index.php:1093
 msgid "Installation option"
 msgstr ""
 
-#: install/index.php:1094
+#: install/index.php:1096
 msgid "Install the demo data?"
 msgstr ""
 
-#: install/index.php:1095
+#: install/index.php:1097
 msgid "WebERPDemo site and data will be installed"
 msgstr ""
 
-#: install/index.php:1100
+#: install/index.php:1102
 msgid "Administrator account settings"
 msgstr ""
 
-#: install/index.php:1104
+#: install/index.php:1106
 msgid "The default user name is 'admin' and it cannot be changed."
 msgstr ""
 
-#: install/index.php:1107
+#: install/index.php:1109
 msgid "The default password is 'weberp' which you can change below."
 msgstr ""
 
-#: install/index.php:1113
+#: install/index.php:1115
 msgid "webERP Admin Account"
 msgstr ""
 
-#: install/index.php:1117
+#: install/index.php:1119
 msgid "Email address"
 msgstr ""
 
-#: install/index.php:1119
+#: install/index.php:1121
 msgid "For example: admin@yourcompany.com"
 msgstr ""
 
-#: install/index.php:1122
+#: install/index.php:1124
 msgid "webERP Password"
 msgstr ""
 
-#: install/index.php:1126
+#: install/index.php:1128
 msgid "Re-enter Password"
 msgstr ""
 
-#: install/index.php:1141
+#: install/index.php:1143
 msgid "Install"
 msgstr ""
 
-#: install/index.php:1171
+#: install/index.php:1173
 msgid "Failed to open the new sql file"
 msgstr ""
 
-#: install/index.php:1329
+#: install/index.php:1331
 msgid ""
 "Failed to update the email address and password of the administrator and the "
 "error is"
 msgstr ""
 
-#: install/index.php:1337
+#: install/index.php:1339
 msgid "Failed to update the company name and the erroris"
 msgstr ""
 
@@ -52228,6 +52152,45 @@ msgstr ""
 #: ../webSHOP/includes/session.php:162
 msgid "Bank Transfer"
 msgstr ""
+
+#~ msgid "Asset Category "
+#~ msgstr "资产种类 "
+
+#~ msgid "Asset Location "
+#~ msgstr "资产仓库 "
+
+#~ msgid "Expense "
+#~ msgstr "费用 "
+
+#~ msgid "To "
+#~ msgstr "至 "
+
+#~ msgid "Currency "
+#~ msgstr "货币 "
+
+#~ msgid " Order Summary"
+#~ msgstr " 订单总览"
+
+#~ msgid " To "
+#~ msgstr " 至 "
+
+#~ msgid " From Date"
+#~ msgstr " 从日期"
+
+#~ msgid "To Date "
+#~ msgstr "到日期 "
+
+#~ msgid "From Date :"
+#~ msgstr "自日期"
+
+#~ msgid "To Date:"
+#~ msgstr "至日期"
+
+#~ msgid " excluding Tax"
+#~ msgstr " 不含税"
+
+#~ msgid "TOTAL Excl Tax"
+#~ msgstr "不含税总计"
 
 #~ msgid ""
 #~ "webERP is an \"accrual\" based system (not a \"cash based\" system).  "

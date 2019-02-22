@@ -442,10 +442,13 @@ for ( $i = 0; $i < $TotalOrderCount; $i++ ){
 
 			if ($MyRow2['controlled'] == 1) {
 				if ($MyRow2['serialised'] == 1) {
-					$BundleLabel = _('Serial#:');
+/*					$BundleLabel = _('Serial#:');*/
+					$BundleLabel = _('Serial number') . ':';
 				}
 				else {
-					$BundleLabel = _('Lot#:');
+/*					$BundleLabel = _('Lot#:');*/
+					$BundleLabel = _('Lot Number') . ':';
+/*					$BundleLabel = _('Lot number') . ':';*/
 				}
 				$SQL = "SELECT serialno,
 								quantity,
