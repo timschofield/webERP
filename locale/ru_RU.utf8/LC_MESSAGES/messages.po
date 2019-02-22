@@ -1744,11 +1744,11 @@ msgstr "Название счета"
 
 #: AnalysisHorizontalIncome.php:233 AnalysisHorizontalPosition.php:166
 msgid "Current period"
-msgstr ""
+msgstr "Текущий период"
 
 #: AnalysisHorizontalIncome.php:234 AnalysisHorizontalPosition.php:167
 msgid "Last period"
-msgstr ""
+msgstr "Последний период"
 
 #: AnalysisHorizontalIncome.php:235 AnalysisHorizontalPosition.php:168
 msgid "Actual change"
@@ -15785,7 +15785,7 @@ msgstr ""
 
 #: GLStatements.php:30 includes/MainMenuLinksArray.php:165
 msgid "Financial Statements"
-msgstr ""
+msgstr "Финансовая отчётность"
 
 #: GLStatements.php:91
 msgid ""
@@ -15803,15 +15803,15 @@ msgstr ""
 
 #: GLStatements.php:113
 msgid "Statement of comprehensive income"
-msgstr ""
+msgstr "отчёт о финансовых результатах"
 
 #: GLStatements.php:114
 msgid "Statement of changes in equity"
-msgstr ""
+msgstr "отчёт об изменениях капитала"
 
 #: GLStatements.php:115
 msgid "Statement of cash flows"
-msgstr ""
+msgstr "отчёт о движении денежных средств"
 
 #: GLStatements.php:168
 msgid "Shows a set of financial statements."
@@ -15841,7 +15841,7 @@ msgstr ""
 
 #: GLStatements.php:263
 msgid "Show the statement of comprehensive income"
-msgstr ""
+msgstr "Показать отчёт о финансовых результатах"
 
 #: GLStatements.php:265
 msgid "Check this box to show the statement of comprehensive income"
@@ -15849,7 +15849,7 @@ msgstr ""
 
 #: GLStatements.php:270
 msgid "Show the statement of changes in equity"
-msgstr ""
+msgstr "Показать отчёт об изменениях капитала"
 
 #: GLStatements.php:272
 msgid "Check this box to show the statement of changes in equity"
@@ -15857,7 +15857,7 @@ msgstr ""
 
 #: GLStatements.php:277
 msgid "Show the statement of cash flows"
-msgstr ""
+msgstr "Показать отчёт о движении денежных средств"
 
 #: GLStatements.php:279
 msgid "Check this box to show the statement of cash flows"
@@ -48486,7 +48486,7 @@ msgstr ""
 
 #: includes/CountriesArray.php:33
 msgid "Brazil"
-msgstr ""
+msgstr "Бразилия"
 
 #: includes/CountriesArray.php:34
 msgid "Bahamas"
@@ -48546,7 +48546,7 @@ msgstr ""
 
 #: includes/CountriesArray.php:48
 msgid "China"
-msgstr ""
+msgstr "Китай"
 
 #: includes/CountriesArray.php:49
 msgid "Colombia"
@@ -48578,7 +48578,7 @@ msgstr ""
 
 #: includes/CountriesArray.php:56
 msgid "Germany"
-msgstr ""
+msgstr "Герма́ния"
 
 #: includes/CountriesArray.php:57
 msgid "Djibouti"
@@ -48658,7 +48658,7 @@ msgstr ""
 
 #: includes/CountriesArray.php:76
 msgid "United Kingdom"
-msgstr ""
+msgstr "Соединённое Короле́вство"
 
 #: includes/CountriesArray.php:77
 msgid "Grenada"
@@ -48750,11 +48750,11 @@ msgstr ""
 
 #: includes/CountriesArray.php:99
 msgid "Israel"
-msgstr ""
+msgstr "Изра́иль"
 
 #: includes/CountriesArray.php:100
 msgid "India"
-msgstr ""
+msgstr "И́ндия"
 
 #: includes/CountriesArray.php:101
 msgid "Iraq"
@@ -48990,7 +48990,7 @@ msgstr ""
 
 #: includes/CountriesArray.php:159
 msgid "Panama"
-msgstr ""
+msgstr "Панaма"
 
 #: includes/CountriesArray.php:160
 msgid "Peru"

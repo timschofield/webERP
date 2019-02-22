@@ -1597,17 +1597,17 @@ msgstr ""
 #: ReorderLevelLocation.php:193 SalesReport.php:242
 #: SupplierGRNAndInvoiceInquiry.php:46
 msgid "Submit"
-msgstr ""
+msgstr "שלח"
 
 #: AnalysisHorizontalIncome.php:103 GLCashFlowsIndirect.php:820
 #: GLProfit_Loss.php:83 GLStatements.php:194 GLTrialBalance.php:70
 msgid "Select period from"
-msgstr ""
+msgstr "בחר תקופת מ"
 
 #: AnalysisHorizontalIncome.php:140 GLCashFlowsIndirect.php:840
 #: GLProfit_Loss.php:118 GLStatements.php:214 GLTrialBalance.php:95
 msgid "Select period to"
-msgstr ""
+msgstr "בחר תקופה אל"
 
 #: AnalysisHorizontalIncome.php:167 BOMInquiry.php:27 BOMs.php:971
 #: BOMs.php:1071 BOMs_SingleLevel.php:882 CollectiveWorkOrderCost.php:314
@@ -1641,7 +1641,7 @@ msgstr "או"
 #: GLCashFlowsIndirect.php:862 GLProfit_Loss.php:140 GLStatements.php:236
 #: GLTagProfit_Loss.php:112 GLTrialBalance.php:117 SalesGraph.php:103
 msgid "Select Period"
-msgstr ""
+msgstr "בחר תקופה"
 
 #: AnalysisHorizontalIncome.php:181 AnalysisHorizontalPosition.php:118
 msgid "Detail or summary"
@@ -1671,12 +1671,12 @@ msgstr "כל החשבונות"
 #: GLBalanceSheet.php:98 GLCashFlowsIndirect.php:875 GLProfit_Loss.php:155
 #: GLStatements.php:249
 msgid "Show accounts with zero balance"
-msgstr ""
+msgstr "הצג חשבונות עם יתרת אפס"
 
 #: AnalysisHorizontalIncome.php:191 AnalysisHorizontalPosition.php:128
 #: GLStatements.php:251
 msgid "Check this box to show accounts with zero balance"
-msgstr ""
+msgstr "סמן תיבה זו כדי להציג חשבונות עם יתרת אפס"
 
 #: AnalysisHorizontalIncome.php:205 GLProfit_Loss.php:191 GLProfit_Loss.php:620
 #: GLTagProfit_Loss.php:176 GLTagProfit_Loss.php:495
@@ -1751,11 +1751,11 @@ msgstr "שם חשבון"
 
 #: AnalysisHorizontalIncome.php:233 AnalysisHorizontalPosition.php:166
 msgid "Current period"
-msgstr ""
+msgstr "התקופה הנוכחית"
 
 #: AnalysisHorizontalIncome.php:234 AnalysisHorizontalPosition.php:167
 msgid "Last period"
-msgstr ""
+msgstr "תקופה אחרונה"
 
 #: AnalysisHorizontalIncome.php:235 AnalysisHorizontalPosition.php:168
 msgid "Actual change"
@@ -3503,7 +3503,7 @@ msgstr "חילוץ תמונה"
 #: ../webSHOP/includes/PlaceOrder.php:249
 #, fuzzy
 msgid "Stock Code"
-msgstr "code overflow"
+msgstr "קוד מלאי"
 
 #: BOMInquiry.php:34 BOMs.php:980 BOMs.php:1079 BOMs_SingleLevel.php:887
 #: ContractBOM.php:334 Contracts.php:775 CounterReturns.php:1654
@@ -16226,7 +16226,7 @@ msgstr "לאחר השחרור"
 
 #: GLStatements.php:30 includes/MainMenuLinksArray.php:165
 msgid "Financial Statements"
-msgstr ""
+msgstr "דוחות כספיים"
 
 #: GLStatements.php:91
 msgid ""
@@ -40944,19 +40944,19 @@ msgstr "אם תשאיר את תיבות הסיסמה לרוקן את הסיסמ�
 
 #: UserSettings.php:196 WWW_Users.php:741
 msgid "Display page help"
-msgstr ""
+msgstr "הצג את דף העזרה"
 
 #: UserSettings.php:205 WWW_Users.php:750
 msgid "Show page help when available"
-msgstr ""
+msgstr "הצג עזרה לדף כאשר זמין"
 
 #: UserSettings.php:210 WWW_Users.php:755
 msgid "Display field help"
-msgstr ""
+msgstr "הצג עזרה בשדה"
 
 #: UserSettings.php:219 WWW_Users.php:764
 msgid "Show field help when available"
-msgstr ""
+msgstr "הצג עזרה בשדה כאשר זמין"
 
 #: UserSettings.php:227 WWW_Users.php:772
 msgid "PDF Language Support"
@@ -49911,11 +49911,11 @@ msgstr "סין"
 
 #: includes/CountriesArray.php:49
 msgid "Colombia"
-msgstr "Colombia"
+msgstr "קולומביה"
 
 #: includes/CountriesArray.php:50
 msgid "Costa Rica"
-msgstr "Costa Rica"
+msgstr "קוסטה ריקה"
 
 #: includes/CountriesArray.php:51
 #, fuzzy
@@ -50031,7 +50031,7 @@ msgstr "איי פארו"
 
 #: includes/CountriesArray.php:74
 msgid "France"
-msgstr "France"
+msgstr "צרפת"
 
 #: includes/CountriesArray.php:75
 #, fuzzy
@@ -50451,7 +50451,7 @@ msgstr "עומן"
 
 #: includes/CountriesArray.php:159
 msgid "Panama"
-msgstr ""
+msgstr "פנמה"
 
 #: includes/CountriesArray.php:160
 #, fuzzy
@@ -50821,7 +50821,7 @@ msgstr "Bolivian Mvdol (funds code)"
 
 #: includes/CurrenciesArray.php:29
 msgid "Brazilian real"
-msgstr "Brazilian real"
+msgstr ""
 
 #: includes/CurrenciesArray.php:30
 msgid "Bahamian dollar"
@@ -50945,7 +50945,7 @@ msgstr "Falkland Islands pound"
 
 #: includes/CurrenciesArray.php:60
 msgid "United Kingdom pound sterling"
-msgstr "United Kingdom pound sterling"
+msgstr ""
 
 #: includes/CurrenciesArray.php:61
 msgid "Georgian lari"
@@ -55824,7 +55824,7 @@ msgstr "העברה בנקאית"
 
 #, fuzzy
 #~ msgid "Select Period To:"
-#~ msgstr "Location to Select"
+#~ msgstr "בחר תקופה אל"
 
 #, fuzzy
 #~ msgid "Date Paid"

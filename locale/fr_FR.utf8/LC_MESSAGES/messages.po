@@ -50309,11 +50309,11 @@ msgstr ""
 
 #: includes/CountriesArray.php:99
 msgid "Israel"
-msgstr ""
+msgstr "Israël"
 
 #: includes/CountriesArray.php:100
 msgid "India"
-msgstr ""
+msgstr "Inde"
 
 #: includes/CountriesArray.php:101
 msgid "Iraq"
@@ -50549,7 +50549,7 @@ msgstr ""
 
 #: includes/CountriesArray.php:159
 msgid "Panama"
-msgstr ""
+msgstr "Panama"
 
 #: includes/CountriesArray.php:160
 msgid "Peru"
@@ -50601,7 +50601,7 @@ msgstr ""
 
 #: includes/CountriesArray.php:172
 msgid "Russian Federation"
-msgstr ""
+msgstr "Fédération de Russie"
 
 #: includes/CountriesArray.php:173
 msgid "Rwanda"
