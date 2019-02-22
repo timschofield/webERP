@@ -589,7 +589,7 @@ msgstr "Обновить"
 #: UserGLAccounts.php:251 Z_GLAccountUsersCopyAuthority.php:90
 #: includes/Login.php:6
 msgid "Return"
-msgstr ""
+msgstr "Вернуть"
 
 #: AccountGroups.php:405
 msgid "New Account Group Details"
@@ -36605,7 +36605,7 @@ msgstr ""
 
 #: SuppPriceList.php:206
 msgid "return"
-msgstr ""
+msgstr "вернуть"
 
 #: SuppPriceList.php:207 SuppPriceList.php:321
 msgid "Supplier Price List for"

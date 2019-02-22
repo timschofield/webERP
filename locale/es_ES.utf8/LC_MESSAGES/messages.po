@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.13\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-21 13:37-0600\n"
-"PO-Revision-Date: 2019-02-21 13:32-0600\n"
+"PO-Revision-Date: 2019-02-21 20:22-0600\n"
 "Last-Translator: Rafael E. Chacón <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -55245,27 +55245,3 @@ msgstr "Tarjeta de crédito"
 #: ../webSHOP/includes/session.php:162
 msgid "Bank Transfer"
 msgstr "Transferencia bancaria"
-
-#~ msgid "Asset Category "
-#~ msgstr "Categoría de activos "
-
-#~ msgid "Asset Location "
-#~ msgstr "Ubicación de activos "
-
-#~ msgid "Expense "
-#~ msgstr "Gasto"
-
-#~ msgid "To "
-#~ msgstr "Hasta"
-
-#~ msgid "Currency "
-#~ msgstr "Moneda"
-
-#~ msgid " Order Summary"
-#~ msgstr " Sumario del Pedido"
-
-#~ msgid " To "
-#~ msgstr " A "
-
-#~ msgid "Language:"
-#~ msgstr "Idioma:"
