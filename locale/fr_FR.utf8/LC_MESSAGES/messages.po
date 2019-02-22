@@ -6291,7 +6291,7 @@ msgstr "Inventaire requis"
 #: includes/PDFTopItemsHeader.inc:51 includes/PO_PDFOrderPageHeader.inc:77
 #: includes/DefineTenderClass.php:48
 msgid "Unit"
-msgstr "Unit"
+msgstr "Unité"
 
 #: ContractCosting.php:107
 msgid "Actual usage"
@@ -11940,7 +11940,7 @@ msgstr "Résumé de la commande"
 #: DeliveryDetails.php:915 OrderDetails.php:231 RecurringSalesOrders.php:367
 #: SelectOrderItems.php:1461
 msgid "TOTAL Excl Tax/Freight"
-msgstr "TOTAL H.T.</br>(sans les frais d'expédition)"
+msgstr "Total hors taxe et transport"
 
 # JDN
 #: DeliveryDetails.php:925 DeliveryDetails.php:977 OrderDetails.php:239
@@ -14775,7 +14775,7 @@ msgstr ""
 
 #: GeneratePickingList.php:450 SelectQASamples.php:249 TestPlanResults.php:130
 msgid "Lot Number"
-msgstr ""
+msgstr "Numéro de lot"
 
 #: GeneratePickingList.php:476 includes/InputSerialItemsExisting.php:38
 msgid "Could not retrieve the items for"
@@ -21526,7 +21526,7 @@ msgstr " existe déjà."
 
 #: PcExpenses.php:93
 msgid "Expense"
-msgstr ""
+msgstr "Dépense"
 
 #: PcExpenses.php:116
 msgid ""
@@ -21582,11 +21582,11 @@ msgstr ""
 
 #: PcExpensesTypeTab.php:34
 msgid "You have not selected a tab to maintain the expenses on"
-msgstr "Pas d'onglet sélectionné pour la gestion des frais"
+msgstr "Pas d'onglet sélectionné pour la gestion des dépenses"
 
 #: PcExpensesTypeTab.php:44
 msgid "You have not selected an expense to add to this tab"
-msgstr "Pas de frais sélectionné pour ajouter dans cet onglet"
+msgstr "Pas de dépense sélectionné pour ajouter dans cet onglet"
 
 #: PcExpensesTypeTab.php:58
 msgid "The Expense"
@@ -21598,7 +21598,7 @@ msgstr " existe déjà dans ce type d'onglet."
 
 #: PcExpensesTypeTab.php:65 PcExpensesTypeTab.php:84
 msgid "Expense code"
-msgstr "Code de frais"
+msgstr "Code de dépense"
 
 #: PcExpensesTypeTab.php:65
 msgid "for Type of Tab"
@@ -21618,7 +21618,7 @@ msgstr "Sélectionner le type de \"tab\""
 
 #: PcExpensesTypeTab.php:123 PcExpensesTypeTab.php:139
 msgid "Expense Codes for Type of Tab "
-msgstr "Codes de frais pour \"type of tab\""
+msgstr "Codes de dépenses pour \"type of tab\""
 
 #: PcExpensesTypeTab.php:151
 msgid "Are you sure you wish to delete this expense code?"
@@ -21626,7 +21626,7 @@ msgstr "Voulez-vous supprimer ce code de dépense?"
 
 #: PcExpensesTypeTab.php:159
 msgid "Select Expense Code"
-msgstr "Sélectionner un code de frais"
+msgstr "Sélectionner le code de dépense"
 
 #: PcReportExpense.php:4
 msgid "Petty Cash Expense Management Report"
@@ -21675,7 +21675,7 @@ msgstr "Échec de la commande SQL d'affichage des commandes:"
 # JDN
 #: PcReportTab.php:128
 msgid "There were no expenses found in the database within the period from"
-msgstr "Aucun frais trouvés dans la base pour la période du"
+msgstr "Aucune dépense n'a pas été trouvée dans la base de données pour la période du"
 
 # JDN
 #: PcReportTab.php:128 PDFDeliveryDifferences.php:201 PDFDIFOT.php:200
@@ -21977,7 +21977,7 @@ msgstr ""
 
 #: PDFAck.php:248 PO_Items.php:941 SpecialOrder.php:665
 msgid "Total Excluding Tax"
-msgstr ""
+msgstr "Total hors taxe"
 
 #: PDFAck.php:254 PrintCustTrans.php:491 PrintCustTrans.php:1176
 #: PrintCustTransPortrait.php:481 PrintCustTransPortrait.php:1159
@@ -21987,7 +21987,7 @@ msgstr "Transport"
 
 #: PDFAck.php:257
 msgid "Total Including Tax and Freight"
-msgstr ""
+msgstr "Total avec taxe et transport"
 
 #: PDFAck.php:278
 msgid "There were no items on the Acknowledgement"

@@ -2158,7 +2158,7 @@ msgstr "Код"
 #: SupplierTransInquiry.php:55 includes/PO_PDFOrderPageHeader.inc:39
 #: reportwriter/languages/en_US/reports.php:105
 msgid "To"
-msgstr "Кому"
+msgstr "для"
 
 #: AutomaticTranslationDescriptions.php:44
 msgid "Translated"
@@ -11639,7 +11639,7 @@ msgstr "Итого по заказу"
 #: DeliveryDetails.php:915 OrderDetails.php:231 RecurringSalesOrders.php:367
 #: SelectOrderItems.php:1461
 msgid "TOTAL Excl Tax/Freight"
-msgstr "Всего (исключая налоги/фрахт)"
+msgstr "ИТОГО искл. налоги/фрахт"
 
 #: DeliveryDetails.php:925 DeliveryDetails.php:977 OrderDetails.php:239
 #: SelectOrderItems.php:1469 ../webSHOP/Checkout.php:399
@@ -14350,7 +14350,7 @@ msgstr "Возникли проблемы при получении позици
 
 #: GeneratePickingList.php:450 SelectQASamples.php:249 TestPlanResults.php:130
 msgid "Lot Number"
-msgstr ""
+msgstr "Hомер лота"
 
 #: GeneratePickingList.php:476 includes/InputSerialItemsExisting.php:38
 msgid "Could not retrieve the items for"
@@ -20886,7 +20886,7 @@ msgstr ""
 
 #: PcExpenses.php:93
 msgid "Expense"
-msgstr ""
+msgstr "Расход"
 
 #: PcExpenses.php:116
 msgid ""
@@ -21330,7 +21330,7 @@ msgstr "Примечания:"
 
 #: PDFAck.php:248 PO_Items.php:941 SpecialOrder.php:665
 msgid "Total Excluding Tax"
-msgstr ""
+msgstr "Итого исключая налоги"
 
 #: PDFAck.php:254 PrintCustTrans.php:491 PrintCustTrans.php:1176
 #: PrintCustTransPortrait.php:481 PrintCustTransPortrait.php:1159
