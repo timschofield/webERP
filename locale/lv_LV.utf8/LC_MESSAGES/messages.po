@@ -1,18 +1,17 @@
 # webERP - Latvian Translation File.
-# Copyright (C) 2009 WebERP Team
+# Copyright (C) 2004 weberp.org
 # This file is distributed under the same license as the webERP package.
-# Uldis Nelsons <uldis.nelsons@gmail.com>
+# Uldis Nelsons <uldis.nelsons@gmail.com>, 2013.
 #
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: webERP 4.13\n"
+"Project-Id-Version: webERP 4.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-21 13:37-0600\n"
+"POT-Creation-Date: 2019-02-24 08:36-0600\n"
 "PO-Revision-Date: 2013-06-01 12:05-0600\n"
-"Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
-"Language-Team: WebERP Translation <web-erp-translation@lists.sourceforge."
-"net>\n"
+"Last-Translator: Uldis Nelsons <uldis.nelsons@gmail.com>\n"
+"Language-Team: Latvian <uldis.nelsons@gmail.com>\n"
 "Language: lv_LV\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -233,7 +232,7 @@ msgstr "Nevar iegūt kontu grupu , jo"
 #: BOMIndented.php:250 BOMIndentedReverse.php:238 BOMInquiry.php:179
 #: BOMListing.php:111 BOMs.php:202 BOMs.php:368 BOMs.php:561 BOMs.php:1052
 #: BOMs_SingleLevel.php:229 BOMs_SingleLevel.php:874
-#: CollectiveWorkOrderCost.php:283 CompanyPreferences.php:99
+#: CollectiveWorkOrderCost.php:283 CompanyPreferences.php:100
 #: CounterReturns.php:1617 CounterSales.php:2100 CounterSales.php:2188
 #: Credit_Invoice.php:285 CreditStatus.php:20 CustEDISetup.php:16
 #: CustItem.php:119 CustItem.php:205 CustItem.php:233
@@ -299,9 +298,9 @@ msgstr "Peļņas vai zaudējumu aprēķins"
 #: AddCustomerContacts.php:267 AddCustomerContacts.php:271
 #: AddCustomerContacts.php:274 BOMs.php:120 BOMs.php:524 BOMs.php:526
 #: BOMs_SingleLevel.php:123 BOMs_SingleLevel.php:786 BOMs_SingleLevel.php:788
-#: CompanyPreferences.php:422 CompanyPreferences.php:424
-#: CompanyPreferences.php:437 CompanyPreferences.php:439
-#: CompanyPreferences.php:452 CompanyPreferences.php:454
+#: CompanyPreferences.php:423 CompanyPreferences.php:425
+#: CompanyPreferences.php:438 CompanyPreferences.php:440
+#: CompanyPreferences.php:453 CompanyPreferences.php:455
 #: ContractCosting.php:201 Currencies.php:342 Currencies.php:490
 #: Currencies.php:492 CustomerBranches.php:440 Customers.php:658
 #: Customers.php:1048 Customers.php:1054 Customers.php:1057
@@ -373,9 +372,9 @@ msgstr "Jā"
 #: BankAccounts.php:409 BankAccounts.php:411 BankAccounts.php:415
 #: BankAccounts.php:423 BOMs.php:122 BOMs.php:523 BOMs.php:527
 #: BOMs_SingleLevel.php:125 BOMs_SingleLevel.php:785 BOMs_SingleLevel.php:789
-#: CompanyPreferences.php:421 CompanyPreferences.php:425
-#: CompanyPreferences.php:436 CompanyPreferences.php:440
-#: CompanyPreferences.php:451 CompanyPreferences.php:455
+#: CompanyPreferences.php:422 CompanyPreferences.php:426
+#: CompanyPreferences.php:437 CompanyPreferences.php:441
+#: CompanyPreferences.php:452 CompanyPreferences.php:456
 #: ContractCosting.php:199 Currencies.php:344 Currencies.php:495
 #: Currencies.php:497 CustomerBranches.php:440 Customers.php:657
 #: Customers.php:1046 Customers.php:1053 Customers.php:1056
@@ -543,7 +542,7 @@ msgstr "Kontu grupas nosaukums neeksistē"
 msgid "Edit Account Group Details"
 msgstr ""
 
-#: AccountGroups.php:372 CompanyPreferences.php:465
+#: AccountGroups.php:372 CompanyPreferences.php:466
 #: ConfirmDispatch_Invoice.php:717 ConfirmDispatch_Invoice.php:1814
 #: Credit_Invoice.php:1633 CustItem.php:444 FixedAssetItems.php:131
 #: FixedAssetItems.php:682 GLAccountUsers.php:149 GLBudgets.php:239
@@ -768,7 +767,7 @@ msgstr "Pārstāvja informācija tika saglabāta"
 msgid "The contact record has been deleted"
 msgstr "Pārstāvja informācija tika izdzēsta"
 
-#: AddCustomerContacts.php:132 CompanyPreferences.php:170
+#: AddCustomerContacts.php:132 CompanyPreferences.php:171
 #: CustomerBranches.php:402 Customers.php:1117 Customers.php:1125
 #: ImportBankTransAnalysis.php:207 PrintWOItemSlip.php:184
 #: PrintWOItemSlip.php:195 PrintWOItemSlip.php:206 ProductSpecs.php:164
@@ -1476,7 +1475,7 @@ msgstr ""
 
 #: AgedSuppliers.php:286 OutstandingGRNs.php:262 PDFRemittanceAdvice.php:152
 #: SupplierBalsAtPeriodEnd.php:130 SuppPaymentRun.php:264
-#: Z_ClearPOBackOrders.php:19
+#: Z_ClearPOBackOrders.php:22
 msgid "From Supplier Code"
 msgstr "No piegādātāja koda"
 
@@ -1486,7 +1485,7 @@ msgstr ""
 
 #: AgedSuppliers.php:290 OutstandingGRNs.php:266 PDFRemittanceAdvice.php:156
 #: SupplierBalsAtPeriodEnd.php:134 SuppPaymentRun.php:268
-#: Z_ClearPOBackOrders.php:22
+#: Z_ClearPOBackOrders.php:25
 msgid "To Supplier Code"
 msgstr "Līdz piegādātaja kodam"
 
@@ -2887,7 +2886,7 @@ msgstr "Nr."
 #: DailyBankTransactions.php:162 Dashboard.php:58 GLAccountReport.php:343
 #: PaymentAllocations.php:64 PaymentAllocations.php:65 Payments.php:1133
 #: Payments.php:1372 PDFRemittanceAdvice.php:308 PurchasesReport.php:77
-#: SalesReport.php:77 ShiptsList.php:36 StockCounts.php:143 StockCounts.php:168
+#: SalesReport.php:77 ShiptsList.php:37 StockCounts.php:143 StockCounts.php:168
 #: StockCounts.php:215 StockLocMovements.php:114 StockMovements.php:135
 #: SupplierInquiry.php:207 SuppWhereAlloc.php:134 Tax.php:435
 #: WorkOrderEntry.php:798 Z_CheckAllocs.php:63
@@ -4285,7 +4284,7 @@ msgstr "Izvēlēties"
 #: SelectRecurringSalesOrder.php:89 SelectSalesOrder.php:905
 #: SelectSalesOrder.php:926 SelectWorkOrder.php:328 Shipt_Select.php:316
 #: UserSettings.php:240 Z_poEditLangHeader.php:107 Z_poEditLangModule.php:174
-#: Z_poEditLangRemaining.php:138
+#: Z_poEditLangRemaining.php:139
 #, php-format
 msgid "Modify"
 msgstr "Labot"
@@ -4360,147 +4359,147 @@ msgstr ""
 msgid "Print W/O"
 msgstr ""
 
-#: CompanyPreferences.php:5 includes/MainMenuLinksArray.php:211
+#: CompanyPreferences.php:8 includes/MainMenuLinksArray.php:211
 msgid "Company Preferences"
 msgstr "Uzņēmuma uzstādījumi"
 
-#: CompanyPreferences.php:29
+#: CompanyPreferences.php:30
 msgid "The company name must be entered and be fifty characters or less long"
 msgstr ""
 "Kompānijas nosaukumam ir jābūt ievadītam un jābūt īsākam par piecdesmit "
 "rakstzīmēm"
 
-#: CompanyPreferences.php:36 Suppliers.php:365 Z_ImportSuppliers.php:177
+#: CompanyPreferences.php:37 Suppliers.php:365 Z_ImportSuppliers.php:177
 msgid "The email address is not correctly formed"
 msgstr "E-pasts nav pareizā formātā"
 
-#: CompanyPreferences.php:70
+#: CompanyPreferences.php:71
 msgid "The company preferences could not be updated because"
 msgstr "Uzņēmuma uzstādījumi nevar labot, jo"
 
-#: CompanyPreferences.php:72
+#: CompanyPreferences.php:73
 msgid "Company preferences updated"
 msgstr "Uzņēmuma uzstādijumi tika laboti"
 
-#: CompanyPreferences.php:84
+#: CompanyPreferences.php:85
 msgid "Could not update the currency rates"
 msgstr "Nevar izmainīt valūtas kursus"
 
-#: CompanyPreferences.php:94 Customers.php:278 ShopParameters.php:184
+#: CompanyPreferences.php:95 Customers.php:278 ShopParameters.php:184
 #: Suppliers.php:621 SystemParameters.php:411
 msgid "Validation failed"
 msgstr "Neveiksmīga pārbaude"
 
-#: CompanyPreferences.php:94 ShopParameters.php:184 Suppliers.php:621
+#: CompanyPreferences.php:95 ShopParameters.php:184 Suppliers.php:621
 #: SystemParameters.php:411
 msgid "no updates or deletes took place"
 msgstr "labojumi vai dzēšana nenotika"
 
-#: CompanyPreferences.php:136
+#: CompanyPreferences.php:137
 msgid "The company preferences could not be retrieved because"
 msgstr "Nevar iegūt uzņēmuma uzstādījumus, jo"
 
-#: CompanyPreferences.php:170
+#: CompanyPreferences.php:171
 msgid "to appear on reports"
 msgstr "parādās atskaitēs"
 
-#: CompanyPreferences.php:171
+#: CompanyPreferences.php:172
 msgid ""
 "Enter the name of the business. This will appear on all reports and at the "
 "top of each screen. "
 msgstr ""
 
-#: CompanyPreferences.php:175
+#: CompanyPreferences.php:176
 msgid "Official Company Number"
 msgstr "Reģistrācijas Nr."
 
-#: CompanyPreferences.php:180
+#: CompanyPreferences.php:181
 msgid "Tax Authority Reference"
 msgstr "PVN reģistrācijas nr."
 
-#: CompanyPreferences.php:185 Factors.php:210
+#: CompanyPreferences.php:186 Factors.php:210
 msgid "Address Line 1"
 msgstr "Adreses rinda 1"
 
-#: CompanyPreferences.php:186
+#: CompanyPreferences.php:187
 msgid ""
 "Enter the first line of the company registered office. This will appear on "
 "invoices and statements."
 msgstr ""
 
-#: CompanyPreferences.php:190 Factors.php:213
+#: CompanyPreferences.php:191 Factors.php:213
 msgid "Address Line 2"
 msgstr "Adreses rinda 2"
 
-#: CompanyPreferences.php:191
+#: CompanyPreferences.php:192
 msgid ""
 "Enter the second line of the company registered office. This will appear on "
 "invoices and statements."
 msgstr ""
 
-#: CompanyPreferences.php:195 Factors.php:217
+#: CompanyPreferences.php:196 Factors.php:217
 msgid "Address Line 3"
 msgstr "Adreses rinda 3"
 
-#: CompanyPreferences.php:196
+#: CompanyPreferences.php:197
 msgid ""
 "Enter the third line of the company registered office. This will appear on "
 "invoices and statements."
 msgstr ""
 
-#: CompanyPreferences.php:200 Factors.php:221
+#: CompanyPreferences.php:201 Factors.php:221
 msgid "Address Line 4"
 msgstr "Adreses rinda 4"
 
-#: CompanyPreferences.php:201
+#: CompanyPreferences.php:202
 msgid ""
 "Enter the fourth line of the company registered office. This will appear on "
 "invoices and statements."
 msgstr ""
 
-#: CompanyPreferences.php:205 Factors.php:225
+#: CompanyPreferences.php:206 Factors.php:225
 msgid "Address Line 5"
 msgstr "Adreses rinda 5"
 
-#: CompanyPreferences.php:210 Factors.php:229
+#: CompanyPreferences.php:211 Factors.php:229
 msgid "Address Line 6"
 msgstr "Valsts"
 
-#: CompanyPreferences.php:215
+#: CompanyPreferences.php:216
 msgid "Telephone Number"
 msgstr "Telefons"
 
-#: CompanyPreferences.php:216
+#: CompanyPreferences.php:217
 msgid ""
 "Enter the main telephone number of the company registered office. This will "
 "appear on invoices and statements."
 msgstr ""
 
-#: CompanyPreferences.php:220
+#: CompanyPreferences.php:221
 msgid "Facsimile Number"
 msgstr "Fakss"
 
-#: CompanyPreferences.php:225 CustLoginSetup.php:161 Suppliers.php:735
+#: CompanyPreferences.php:226 CustLoginSetup.php:161 Suppliers.php:735
 #: Suppliers.php:1021 SupplierTenderCreate.php:414 SuppLoginSetup.php:144
 #: WWW_Users.php:520 ../webSHOP/Checkout.php:578
 msgid "Email Address"
 msgstr "E-pasts"
 
-#: CompanyPreferences.php:226
+#: CompanyPreferences.php:227
 msgid ""
 "Enter the main company email address. This will appear on invoices and "
 "statements."
 msgstr ""
 
-#: CompanyPreferences.php:234
+#: CompanyPreferences.php:235
 msgid "Home Currency"
 msgstr "Valūta"
 
-#: CompanyPreferences.php:258
+#: CompanyPreferences.php:259
 msgid "Debtors Control GL Account"
 msgstr "Debitoru norēķinu konts"
 
-#: CompanyPreferences.php:259
+#: CompanyPreferences.php:260
 msgid ""
 "Select the general ledger account to be used for posting the local currency "
 "value of all customer transactions to. This account will always represent "
@@ -4508,11 +4507,11 @@ msgid ""
 "accounts are available for this selection."
 msgstr ""
 
-#: CompanyPreferences.php:275
+#: CompanyPreferences.php:276
 msgid "Creditors Control GL Account"
 msgstr "Kreditoru norēķinu konts"
 
-#: CompanyPreferences.php:276
+#: CompanyPreferences.php:277
 msgid ""
 "Select the general ledger account to be used for posting the local currency "
 "value of all supplier transactions to. This account will always represent "
@@ -4520,15 +4519,15 @@ msgid ""
 "accounts are available for this selection."
 msgstr ""
 
-#: CompanyPreferences.php:292
+#: CompanyPreferences.php:293
 msgid "Payroll Net Pay Clearing GL Account"
 msgstr "Algu izmaksas konts"
 
-#: CompanyPreferences.php:309
+#: CompanyPreferences.php:310
 msgid "Goods Received Clearing GL Account"
 msgstr "Preču saņem&#353;anas kontroles konts"
 
-#: CompanyPreferences.php:310
+#: CompanyPreferences.php:311
 msgid ""
 "Select the general ledger account to be used for posting the cost of goods "
 "received pending the entry of supplier invoices for the goods. This account "
@@ -4536,26 +4535,26 @@ msgid ""
 "Only balance sheet accounts are available for this selection."
 msgstr ""
 
-#: CompanyPreferences.php:325
+#: CompanyPreferences.php:326
 msgid "Retained Earning Clearing GL Account"
 msgstr "Pārskata gada nesadalītā peļņa"
 
-#: CompanyPreferences.php:326
+#: CompanyPreferences.php:327
 msgid ""
 "Select the general ledger account to be used for clearing profit and loss "
 "accounts to that represents the accumulated retained profits of the "
 "business. Only balance sheet accounts are available for this selection."
 msgstr ""
 
-#: CompanyPreferences.php:342
+#: CompanyPreferences.php:343
 msgid "Freight Re-charged GL Account"
 msgstr "Noklusētais transportē&#353;anas izdevumu konts"
 
-#: CompanyPreferences.php:366
+#: CompanyPreferences.php:367
 msgid "Sales Exchange Variances GL Account"
 msgstr "Apgrozījuma valūtas kursa starpības"
 
-#: CompanyPreferences.php:367
+#: CompanyPreferences.php:368
 msgid ""
 "Select the general ledger account to be used for posting accounts receivable "
 "exchange rate differences to - where the exchange rate on sales invocies is "
@@ -4565,11 +4564,11 @@ msgid ""
 "selection."
 msgstr ""
 
-#: CompanyPreferences.php:383
+#: CompanyPreferences.php:384
 msgid "Purchases Exchange Variances GL Account"
 msgstr "Iepirkumu valūtas kursu starpība"
 
-#: CompanyPreferences.php:384
+#: CompanyPreferences.php:385
 msgid ""
 "Select the general ledger account to be used for posting the exchange "
 "differences on the accounts payable transactions to. Supplier invoices "
@@ -4579,22 +4578,22 @@ msgid ""
 "are available for this selection."
 msgstr ""
 
-#: CompanyPreferences.php:400
+#: CompanyPreferences.php:401
 msgid "Payment Discount GL Account"
 msgstr "Saņemto atlaižu konts"
 
-#: CompanyPreferences.php:401
+#: CompanyPreferences.php:402
 msgid ""
 "Select the general ledger account to be used for posting the value of "
 "payment discounts given to customers at the time of entering a receipt. Only "
 "profit and loss general ledger accounts are available for this selection."
 msgstr ""
 
-#: CompanyPreferences.php:417
+#: CompanyPreferences.php:418
 msgid "Create GL entries for accounts receivable transactions"
 msgstr "Veidot grāmatojumus priek&#353; norēķiniem ar klientiem"
 
-#: CompanyPreferences.php:418
+#: CompanyPreferences.php:419
 msgid ""
 "Select yes to ensure that webERP creates general ledger journals for all "
 "accounts receivable transactions. webERP will maintain the debtors control "
@@ -4602,11 +4601,11 @@ msgid ""
 "customer balances in local currency."
 msgstr ""
 
-#: CompanyPreferences.php:432
+#: CompanyPreferences.php:433
 msgid "Create GL entries for accounts payable transactions"
 msgstr "Veidot grāmatojumus priek&#353; norēķiniem ar piegādātājiem"
 
-#: CompanyPreferences.php:433
+#: CompanyPreferences.php:434
 msgid ""
 "Select yes to ensure that webERP creates general ledger journals for all "
 "accounts payable transactions. webERP will maintain the creditors control "
@@ -4614,11 +4613,11 @@ msgid ""
 "supplier balances in local currency."
 msgstr ""
 
-#: CompanyPreferences.php:447
+#: CompanyPreferences.php:448
 msgid "Create GL entries for stock transactions"
 msgstr "Veidot ierakstus virsgrāmatā par preču kustību"
 
-#: CompanyPreferences.php:448
+#: CompanyPreferences.php:449
 msgid ""
 "Select yes to ensure that webERP creates general ledger journals for all "
 "inventory transactions. webERP will maintain the stock control accounts "
@@ -4756,7 +4755,7 @@ msgid "Confirm Dispatch and Invoice"
 msgstr "Apstiprināt preču izsniegšanu un izrakstīt rēķinu"
 
 #: ConfirmDispatch_Invoice.php:332 CustEDISetup.php:93 Customers.php:458
-#: Customers.php:727 Customers.php:765 DeliveryDetails.php:856 geocode.php:53
+#: Customers.php:727 Customers.php:765 DeliveryDetails.php:856 geocode.php:54
 #: OrderDetails.php:84 PickingLists.php:292 SalesAnalRepts.php:29
 #: SalesAnalRepts.php:31 SalesInquiry.php:781 SalesInquiry.php:791
 #: SalesInquiry.php:813 SalesInquiry.php:961 SalesInquiry.php:976
@@ -6095,7 +6094,7 @@ msgstr ""
 #: PO_SelectOSPurchOrder.php:607 PO_SelectPurchOrder.php:421 PurchData.php:271
 #: ReprintGRN.php:84 SelectProduct.php:343 SelectSupplier.php:177
 #: SelectSupplier.php:178 ShipmentCosting.php:527 ShipmentCosting.php:595
-#: Shipt_Select.php:287 ShiptsList.php:10 SuppCreditGRNs.php:288
+#: Shipt_Select.php:287 ShiptsList.php:11 SuppCreditGRNs.php:288
 #: SupplierAllocations.php:556 SupplierAllocations.php:625
 #: SupplierCredit.php:258 SupplierGRNAndInvoiceInquiry.php:30
 #: SupplierInquiry.php:118 SupplierInquiry.php:119 SupplierInvoice.php:610
@@ -8090,7 +8089,7 @@ msgstr ""
 msgid "Show Defined Credit Status Codes"
 msgstr "Parādīt kredīta statusa kodus"
 
-#: Currencies.php:6 includes/MainMenuLinksArray.php:211
+#: Currencies.php:8 includes/MainMenuLinksArray.php:211
 msgid "Currencies Maintenance"
 msgstr "Valūtas"
 
@@ -9308,7 +9307,7 @@ msgid ""
 msgstr "Kravas ir iespējams piegādāt jebkur pasaulē 60 dienu laikā"
 
 #: CustomerBranches.php:100 geocode_genxml_customers.php:20
-#: geocode_genxml_suppliers.php:20 geocode.php:11 geocode.php:29 geocode.php:34
+#: geocode_genxml_suppliers.php:20 geocode.php:12 geocode.php:30 geocode.php:35
 #: SelectCustomer.php:477 SelectCustomer.php:510 SelectCustomer.php:632
 #: SelectSupplier.php:28 SelectSupplier.php:37 SelectSupplier.php:387
 #: Suppliers.php:405
@@ -13971,27 +13970,27 @@ msgstr ""
 msgid "Geocode Generate XML"
 msgstr ""
 
-#: geocode.php:4
+#: geocode.php:5
 msgid "Geocode Generate"
 msgstr "Ieraksts pievienots"
 
-#: geocode.php:25 GeocodeSetup.php:134 GeocodeSetup.php:221
+#: geocode.php:26 GeocodeSetup.php:134 GeocodeSetup.php:221
 msgid "Geocode Setup"
 msgstr "GEO kodu iestatījumi"
 
-#: geocode.php:25
+#: geocode.php:26
 msgid "Geocoding of Customers and Suppliers"
 msgstr ""
 
-#: geocode.php:88
+#: geocode.php:89
 msgid "failed to geocode."
 msgstr ""
 
-#: geocode.php:105
+#: geocode.php:106
 msgid "Supplier Code: "
 msgstr "Piegādātāja kods "
 
-#: geocode.php:144
+#: geocode.php:145
 msgid "Go back to Geocode Setup"
 msgstr ""
 
@@ -17917,29 +17916,29 @@ msgstr ""
 msgid "Mark Completed"
 msgstr ""
 
-#: ManualContents.php:20
+#: ManualContents.php:21
 msgid "webERP Manual"
 msgstr ""
 
-#: ManualContents.php:59 ManualContents.php:81 ManualContents.php:142
+#: ManualContents.php:60 ManualContents.php:82 ManualContents.php:143
 msgid "Table of Contents"
 msgstr ""
 
-#: ManualContents.php:60
+#: ManualContents.php:61
 msgid "Go to Bottom"
 msgstr ""
 
-#: ManualContents.php:74
+#: ManualContents.php:75
 msgid ""
 "Click on a link to view a page, or check boxes and click on \"Display Checked"
 "\" to view selected in one page"
 msgstr ""
 
-#: ManualContents.php:75 ManualContents.php:109
+#: ManualContents.php:76 ManualContents.php:110
 msgid "Display Checked"
 msgstr ""
 
-#: ManualContents.php:141
+#: ManualContents.php:142
 msgid "Go to Top"
 msgstr ""
 
@@ -29520,7 +29519,7 @@ msgstr ""
 msgid "Shipment Details"
 msgstr ""
 
-#: ShipmentCosting.php:58 Shipt_Select.php:288 ShiptsList.php:37
+#: ShipmentCosting.php:58 Shipt_Select.php:288 ShiptsList.php:38
 msgid "Vessel"
 msgstr ""
 
@@ -29949,27 +29948,27 @@ msgstr "Paredzamā piegāde"
 msgid "Close"
 msgstr "Ciet"
 
-#: ShiptsList.php:6
+#: ShiptsList.php:7
 msgid "Shipments Open Inquiry"
 msgstr ""
 
-#: ShiptsList.php:10
+#: ShiptsList.php:11
 msgid "Open Shipments for"
 msgstr ""
 
-#: ShiptsList.php:14
+#: ShiptsList.php:15
 msgid "This page must be given the supplier code to look for shipments for"
 msgstr ""
 
-#: ShiptsList.php:24
+#: ShiptsList.php:25
 msgid "No shipments were returned from the database because"
 msgstr ""
 
-#: ShiptsList.php:28
+#: ShiptsList.php:29
 msgid "There are no open shipments currently set up for"
 msgstr ""
 
-#: ShiptsList.php:38 SuppShiptChgs.php:136
+#: ShiptsList.php:39 SuppShiptChgs.php:136
 msgid "ETA"
 msgstr ""
 
@@ -40764,11 +40763,11 @@ msgstr ""
 msgid "Check Period Sales Ledger Control Account"
 msgstr ""
 
-#: Z_ClearPOBackOrders.php:4
+#: Z_ClearPOBackOrders.php:7
 msgid "UTILITY PAGE To Clear purchase orders with quantity on back order"
 msgstr ""
 
-#: Z_ClearPOBackOrders.php:26
+#: Z_ClearPOBackOrders.php:29
 msgid "Clear Supplier Back Orders"
 msgstr ""
 
@@ -42285,7 +42284,7 @@ msgid "If the company name already exists then you cannot recreate it"
 msgstr ""
 
 #: Z_MakeNewCompany.php:235 Z_poAddLanguage.php:87 Z_poEditLangHeader.php:90
-#: Z_poEditLangModule.php:126 Z_poEditLangRemaining.php:104
+#: Z_poEditLangModule.php:126 Z_poEditLangRemaining.php:105
 #: Z_poRebuildDefault.php:50
 msgid "PLEASE NOTE"
 msgstr "Lūdzu atzīmēt"
@@ -42333,12 +42332,12 @@ msgstr ""
 msgid "New Language"
 msgstr ""
 
-#: Z_poAddLanguage.php:25 Z_poAddLanguage.php:26 Z_poAdmin.php:28
+#: Z_poAddLanguage.php:25 Z_poAddLanguage.php:26 Z_poAdmin.php:30
 msgid "Add a New Language to the System"
 msgstr ""
 
 #: Z_poAddLanguage.php:30 Z_poEditLangHeader.php:19 Z_poEditLangModule.php:15
-#: Z_poEditLangRemaining.php:22 Z_poRebuildDefault.php:24
+#: Z_poEditLangRemaining.php:23 Z_poRebuildDefault.php:24
 msgid "Back to the translation menu"
 msgstr "Atpakaļ uz tulko&#353;anas moduli"
 
@@ -42347,7 +42346,7 @@ msgid "Utility to create a new language file"
 msgstr ""
 
 #: Z_poAddLanguage.php:32 Z_poEditLangHeader.php:21 Z_poEditLangModule.php:17
-#: Z_poEditLangRemaining.php:24
+#: Z_poEditLangRemaining.php:25
 msgid "Current language is"
 msgstr "Aktīvā valoda ir"
 
@@ -42386,27 +42385,19 @@ msgstr ""
 msgid "Full code of the new language in the format en_US"
 msgstr ""
 
-#: Z_poAdmin.php:8
-msgid "UTILITY PAGE"
-msgstr ""
-
-#: Z_poAdmin.php:8
-msgid "that helps maintain language files"
-msgstr ""
-
-#: Z_poAdmin.php:14 Z_poAdmin.php:15 includes/MainMenuLinksArray.php:226
+#: Z_poAdmin.php:12 includes/MainMenuLinksArray.php:226
 msgid "Maintain Language Files"
 msgstr ""
 
-#: Z_poAdmin.php:20
+#: Z_poAdmin.php:22
 msgid "gettext is not installed on this system"
 msgstr ""
 
-#: Z_poAdmin.php:20
+#: Z_poAdmin.php:22
 msgid "You cannot use the language files without it"
 msgstr ""
 
-#: Z_poAdmin.php:25 Z_poEditLangHeader.php:80 Z_poEditLangModule.php:218
+#: Z_poAdmin.php:27 Z_poEditLangHeader.php:80 Z_poEditLangModule.php:218
 msgid ""
 "You do not have write access to the required files please contact your "
 "system administrator"
@@ -42414,28 +42405,28 @@ msgstr ""
 "Jums nav tiesības saglabāt datus. Lūdzu sazinieties as sistēmas "
 "administrātoru"
 
-#: Z_poAdmin.php:27 Z_poRebuildDefault.php:13 Z_poRebuildDefault.php:19
+#: Z_poAdmin.php:29 Z_poRebuildDefault.php:13 Z_poRebuildDefault.php:19
 #: Z_poRebuildDefault.php:20
 msgid "Rebuild the System Default Language File"
 msgstr ""
 
-#: Z_poAdmin.php:29 Z_poEditLangHeader.php:14 Z_poEditLangHeader.php:15
+#: Z_poAdmin.php:31 Z_poEditLangHeader.php:14 Z_poEditLangHeader.php:15
 msgid "Edit a Language File Header"
 msgstr ""
 
-#: Z_poAdmin.php:30 Z_poEditLangModule.php:10 Z_poEditLangModule.php:11
+#: Z_poAdmin.php:32 Z_poEditLangModule.php:10 Z_poEditLangModule.php:11
 msgid "Edit a Language File Module"
 msgstr ""
 
-#: Z_poAdmin.php:31 Z_poEditLangRemaining.php:17 Z_poEditLangRemaining.php:18
+#: Z_poAdmin.php:33 Z_poEditLangRemaining.php:14
 msgid "Edit Remaining Strings For This Language"
 msgstr ""
 
-#: Z_poAdmin.php:32
+#: Z_poAdmin.php:34
 msgid "Download messages.po file"
 msgstr ""
 
-#: Z_poAdmin.php:33
+#: Z_poAdmin.php:35
 msgid "Download messages.mo file"
 msgstr ""
 
@@ -42456,7 +42447,7 @@ msgid "Writing the rest of the language file"
 msgstr ""
 
 #: Z_poEditLangHeader.php:70 Z_poEditLangModule.php:96
-#: Z_poEditLangRemaining.php:74 Z_poRebuildDefault.php:38
+#: Z_poEditLangRemaining.php:75 Z_poRebuildDefault.php:38
 msgid "Done"
 msgstr ""
 
@@ -42471,7 +42462,7 @@ msgid "Make sure you have selected the correct language to translate!"
 msgstr ""
 
 #: Z_poEditLangHeader.php:86 Z_poEditLangModule.php:123
-#: Z_poEditLangRemaining.php:101
+#: Z_poEditLangRemaining.php:102
 msgid ""
 "When finished modifying you must click on Modify at the bottom in order to "
 "save changes"
@@ -42499,7 +42490,7 @@ msgstr ""
 msgid "Edit Module"
 msgstr ""
 
-#: Z_poEditLangModule.php:16 Z_poEditLangRemaining.php:23
+#: Z_poEditLangModule.php:16 Z_poEditLangRemaining.php:24
 msgid "Utility to edit a language file module"
 msgstr ""
 
@@ -42509,16 +42500,16 @@ msgid ""
 "utilities to work"
 msgstr ""
 
-#: Z_poEditLangModule.php:67 Z_poEditLangRemaining.php:45
+#: Z_poEditLangModule.php:67 Z_poEditLangRemaining.php:46
 msgid "Writing the language file"
 msgstr ""
 
-#: Z_poEditLangModule.php:126 Z_poEditLangRemaining.php:104
+#: Z_poEditLangModule.php:126 Z_poEditLangRemaining.php:105
 msgid ""
 "Your existing translation file (messages.po) will be saved as messages.po.old"
 msgstr ""
 
-#: Z_poEditLangModule.php:133 Z_poEditLangRemaining.php:111
+#: Z_poEditLangModule.php:133 Z_poEditLangRemaining.php:112
 msgid "Language File for"
 msgstr ""
 
@@ -42526,15 +42517,15 @@ msgstr ""
 msgid "Module"
 msgstr ""
 
-#: Z_poEditLangModule.php:146 Z_poEditLangRemaining.php:117
+#: Z_poEditLangModule.php:146 Z_poEditLangRemaining.php:118
 msgid "Default text"
 msgstr ""
 
-#: Z_poEditLangModule.php:147 Z_poEditLangRemaining.php:118
+#: Z_poEditLangModule.php:147 Z_poEditLangRemaining.php:119
 msgid "Translation"
 msgstr ""
 
-#: Z_poEditLangModule.php:148 Z_poEditLangRemaining.php:119
+#: Z_poEditLangModule.php:148 Z_poEditLangRemaining.php:120
 msgid "Exists in"
 msgstr ""
 
@@ -42544,10 +42535,6 @@ msgstr ""
 
 #: Z_poEditLangModule.php:244
 msgid "Refresh messages with latest strings"
-msgstr ""
-
-#: Z_poEditLangRemaining.php:11
-msgid "Edit Remaining Items"
 msgstr ""
 
 #: Z_poRebuildDefault.php:25
@@ -42627,21 +42614,21 @@ msgstr ""
 msgid "Updated the sales analysis cost data for period"
 msgstr ""
 
-#: Z_RebuildSalesAnalysis.php:5
+#: Z_RebuildSalesAnalysis.php:6
 msgid "Rebuild sales analysis Records"
 msgstr ""
 
-#: Z_RebuildSalesAnalysis.php:8
+#: Z_RebuildSalesAnalysis.php:9
 msgid ""
 "This script rebuilds sales analysis records. NB: all sales budget figures "
 "will be lost!"
 msgstr ""
 
-#: Z_RebuildSalesAnalysis.php:57
+#: Z_RebuildSalesAnalysis.php:58
 msgid "The sales analysis data could not be recreated because"
 msgstr ""
 
-#: Z_RebuildSalesAnalysis.php:61
+#: Z_RebuildSalesAnalysis.php:62
 msgid ""
 "The sales analsysis data has been recreated based on current stock master "
 "and customer master information"

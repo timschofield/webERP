@@ -1,16 +1,16 @@
 # webERP - Italian Translation File.
-# Copyright (C) 2011 WebERP Team
+# Copyright (C) 2004 weberp.org
 # This file is distributed under the same license as the webERP package.
-# FIRST AUTHOR <xlyz> .2004/2005
+# FIRST AUTHOR <xlyz>, 2004.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: webERP 4.13\n"
+"Project-Id-Version: webERP 4.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-21 13:37-0600\n"
+"POT-Creation-Date: 2019-02-24 08:36-0600\n"
 "PO-Revision-Date: 2013-06-01 11:33-0600\n"
-"Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
-"Language-Team: italian <none>\n"
+"Last-Translator: Italian <none>\n"
+"Language-Team: Italian <none>\n"
 "Language: it_IT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -252,7 +252,7 @@ msgstr "Non àŠ possibile estrarre il piano dei conti perchè"
 #: BOMIndented.php:250 BOMIndentedReverse.php:238 BOMInquiry.php:179
 #: BOMListing.php:111 BOMs.php:202 BOMs.php:368 BOMs.php:561 BOMs.php:1052
 #: BOMs_SingleLevel.php:229 BOMs_SingleLevel.php:874
-#: CollectiveWorkOrderCost.php:283 CompanyPreferences.php:99
+#: CollectiveWorkOrderCost.php:283 CompanyPreferences.php:100
 #: CounterReturns.php:1617 CounterSales.php:2100 CounterSales.php:2188
 #: Credit_Invoice.php:285 CreditStatus.php:20 CustEDISetup.php:16
 #: CustItem.php:119 CustItem.php:205 CustItem.php:233
@@ -318,9 +318,9 @@ msgstr "Profitti e Perdite"
 #: AddCustomerContacts.php:267 AddCustomerContacts.php:271
 #: AddCustomerContacts.php:274 BOMs.php:120 BOMs.php:524 BOMs.php:526
 #: BOMs_SingleLevel.php:123 BOMs_SingleLevel.php:786 BOMs_SingleLevel.php:788
-#: CompanyPreferences.php:422 CompanyPreferences.php:424
-#: CompanyPreferences.php:437 CompanyPreferences.php:439
-#: CompanyPreferences.php:452 CompanyPreferences.php:454
+#: CompanyPreferences.php:423 CompanyPreferences.php:425
+#: CompanyPreferences.php:438 CompanyPreferences.php:440
+#: CompanyPreferences.php:453 CompanyPreferences.php:455
 #: ContractCosting.php:201 Currencies.php:342 Currencies.php:490
 #: Currencies.php:492 CustomerBranches.php:440 Customers.php:658
 #: Customers.php:1048 Customers.php:1054 Customers.php:1057
@@ -392,9 +392,9 @@ msgstr "Sì"
 #: BankAccounts.php:409 BankAccounts.php:411 BankAccounts.php:415
 #: BankAccounts.php:423 BOMs.php:122 BOMs.php:523 BOMs.php:527
 #: BOMs_SingleLevel.php:125 BOMs_SingleLevel.php:785 BOMs_SingleLevel.php:789
-#: CompanyPreferences.php:421 CompanyPreferences.php:425
-#: CompanyPreferences.php:436 CompanyPreferences.php:440
-#: CompanyPreferences.php:451 CompanyPreferences.php:455
+#: CompanyPreferences.php:422 CompanyPreferences.php:426
+#: CompanyPreferences.php:437 CompanyPreferences.php:441
+#: CompanyPreferences.php:452 CompanyPreferences.php:456
 #: ContractCosting.php:199 Currencies.php:344 Currencies.php:495
 #: Currencies.php:497 CustomerBranches.php:440 Customers.php:657
 #: Customers.php:1046 Customers.php:1053 Customers.php:1056
@@ -565,7 +565,7 @@ msgstr "Il nome del gruppo account non esiste nel database"
 msgid "Edit Account Group Details"
 msgstr ""
 
-#: AccountGroups.php:372 CompanyPreferences.php:465
+#: AccountGroups.php:372 CompanyPreferences.php:466
 #: ConfirmDispatch_Invoice.php:717 ConfirmDispatch_Invoice.php:1814
 #: Credit_Invoice.php:1633 CustItem.php:444 FixedAssetItems.php:131
 #: FixedAssetItems.php:682 GLAccountUsers.php:149 GLBudgets.php:239
@@ -793,7 +793,7 @@ msgstr "Il record di contatto è stato aggiunto"
 msgid "The contact record has been deleted"
 msgstr "Il record di contatto è stato eliminato"
 
-#: AddCustomerContacts.php:132 CompanyPreferences.php:170
+#: AddCustomerContacts.php:132 CompanyPreferences.php:171
 #: CustomerBranches.php:402 Customers.php:1117 Customers.php:1125
 #: ImportBankTransAnalysis.php:207 PrintWOItemSlip.php:184
 #: PrintWOItemSlip.php:195 PrintWOItemSlip.php:206 ProductSpecs.php:164
@@ -1501,7 +1501,7 @@ msgstr ""
 
 #: AgedSuppliers.php:286 OutstandingGRNs.php:262 PDFRemittanceAdvice.php:152
 #: SupplierBalsAtPeriodEnd.php:130 SuppPaymentRun.php:264
-#: Z_ClearPOBackOrders.php:19
+#: Z_ClearPOBackOrders.php:22
 msgid "From Supplier Code"
 msgstr "Dal codice fornitore"
 
@@ -1511,7 +1511,7 @@ msgstr ""
 
 #: AgedSuppliers.php:290 OutstandingGRNs.php:266 PDFRemittanceAdvice.php:156
 #: SupplierBalsAtPeriodEnd.php:134 SuppPaymentRun.php:268
-#: Z_ClearPOBackOrders.php:22
+#: Z_ClearPOBackOrders.php:25
 msgid "To Supplier Code"
 msgstr "Per codice fornitore"
 
@@ -2936,7 +2936,7 @@ msgstr "Numero"
 #: DailyBankTransactions.php:162 Dashboard.php:58 GLAccountReport.php:343
 #: PaymentAllocations.php:64 PaymentAllocations.php:65 Payments.php:1133
 #: Payments.php:1372 PDFRemittanceAdvice.php:308 PurchasesReport.php:77
-#: SalesReport.php:77 ShiptsList.php:36 StockCounts.php:143 StockCounts.php:168
+#: SalesReport.php:77 ShiptsList.php:37 StockCounts.php:143 StockCounts.php:168
 #: StockCounts.php:215 StockLocMovements.php:114 StockMovements.php:135
 #: SupplierInquiry.php:207 SuppWhereAlloc.php:134 Tax.php:435
 #: WorkOrderEntry.php:798 Z_CheckAllocs.php:63
@@ -4376,7 +4376,7 @@ msgstr "Seleziona"
 #: SelectRecurringSalesOrder.php:89 SelectSalesOrder.php:905
 #: SelectSalesOrder.php:926 SelectWorkOrder.php:328 Shipt_Select.php:316
 #: UserSettings.php:240 Z_poEditLangHeader.php:107 Z_poEditLangModule.php:174
-#: Z_poEditLangRemaining.php:138
+#: Z_poEditLangRemaining.php:139
 #, php-format
 msgid "Modify"
 msgstr "Modifica"
@@ -4451,147 +4451,147 @@ msgstr "Data richiesta"
 msgid "Print W/O"
 msgstr ""
 
-#: CompanyPreferences.php:5 includes/MainMenuLinksArray.php:211
+#: CompanyPreferences.php:8 includes/MainMenuLinksArray.php:211
 msgid "Company Preferences"
 msgstr "Dati della Società e preferenze"
 
-#: CompanyPreferences.php:29
+#: CompanyPreferences.php:30
 msgid "The company name must be entered and be fifty characters or less long"
 msgstr ""
 "L'indicazione del nome della Società  àŠ obbligatoria. Il nome non può "
 "essere più lungo di 50 caratteri."
 
-#: CompanyPreferences.php:36 Suppliers.php:365 Z_ImportSuppliers.php:177
+#: CompanyPreferences.php:37 Suppliers.php:365 Z_ImportSuppliers.php:177
 msgid "The email address is not correctly formed"
 msgstr "L&#39;indirizzo e-mail non è formato correttamente"
 
-#: CompanyPreferences.php:70
+#: CompanyPreferences.php:71
 msgid "The company preferences could not be updated because"
 msgstr "Non àŠ stato possibile aggiornare i dati perchàŠ"
 
-#: CompanyPreferences.php:72
+#: CompanyPreferences.php:73
 msgid "Company preferences updated"
 msgstr "I dati sono stati aggiornati"
 
-#: CompanyPreferences.php:84
+#: CompanyPreferences.php:85
 msgid "Could not update the currency rates"
 msgstr "Impossibile aggiornare i tassi di valuta"
 
-#: CompanyPreferences.php:94 Customers.php:278 ShopParameters.php:184
+#: CompanyPreferences.php:95 Customers.php:278 ShopParameters.php:184
 #: Suppliers.php:621 SystemParameters.php:411
 msgid "Validation failed"
 msgstr "Convalida fallita"
 
-#: CompanyPreferences.php:94 ShopParameters.php:184 Suppliers.php:621
+#: CompanyPreferences.php:95 ShopParameters.php:184 Suppliers.php:621
 #: SystemParameters.php:411
 msgid "no updates or deletes took place"
 msgstr "non sono stati effettuati aggiornamenti nàŠ cancellazioni"
 
-#: CompanyPreferences.php:136
+#: CompanyPreferences.php:137
 msgid "The company preferences could not be retrieved because"
 msgstr "Non è stato possibile estrarre i dati sulla Società  perchè"
 
-#: CompanyPreferences.php:170
+#: CompanyPreferences.php:171
 msgid "to appear on reports"
 msgstr "utilizzato per i documenti"
 
-#: CompanyPreferences.php:171
+#: CompanyPreferences.php:172
 msgid ""
 "Enter the name of the business. This will appear on all reports and at the "
 "top of each screen. "
 msgstr ""
 
-#: CompanyPreferences.php:175
+#: CompanyPreferences.php:176
 msgid "Official Company Number"
 msgstr "Numero iscrizione Rea"
 
-#: CompanyPreferences.php:180
+#: CompanyPreferences.php:181
 msgid "Tax Authority Reference"
 msgstr "P. IVA / C.F."
 
-#: CompanyPreferences.php:185 Factors.php:210
+#: CompanyPreferences.php:186 Factors.php:210
 msgid "Address Line 1"
 msgstr "Indrizzo - 1a riga"
 
-#: CompanyPreferences.php:186
+#: CompanyPreferences.php:187
 msgid ""
 "Enter the first line of the company registered office. This will appear on "
 "invoices and statements."
 msgstr ""
 
-#: CompanyPreferences.php:190 Factors.php:213
+#: CompanyPreferences.php:191 Factors.php:213
 msgid "Address Line 2"
 msgstr "Indrizzo - 2a riga"
 
-#: CompanyPreferences.php:191
+#: CompanyPreferences.php:192
 msgid ""
 "Enter the second line of the company registered office. This will appear on "
 "invoices and statements."
 msgstr ""
 
-#: CompanyPreferences.php:195 Factors.php:217
+#: CompanyPreferences.php:196 Factors.php:217
 msgid "Address Line 3"
 msgstr "Indrizzo - 3a riga"
 
-#: CompanyPreferences.php:196
+#: CompanyPreferences.php:197
 msgid ""
 "Enter the third line of the company registered office. This will appear on "
 "invoices and statements."
 msgstr ""
 
-#: CompanyPreferences.php:200 Factors.php:221
+#: CompanyPreferences.php:201 Factors.php:221
 msgid "Address Line 4"
 msgstr "Indrizzo - 4a riga"
 
-#: CompanyPreferences.php:201
+#: CompanyPreferences.php:202
 msgid ""
 "Enter the fourth line of the company registered office. This will appear on "
 "invoices and statements."
 msgstr ""
 
-#: CompanyPreferences.php:205 Factors.php:225
+#: CompanyPreferences.php:206 Factors.php:225
 msgid "Address Line 5"
 msgstr "Indirizzo Linea 5"
 
-#: CompanyPreferences.php:210 Factors.php:229
+#: CompanyPreferences.php:211 Factors.php:229
 msgid "Address Line 6"
 msgstr "Indirizzo Line 6"
 
-#: CompanyPreferences.php:215
+#: CompanyPreferences.php:216
 msgid "Telephone Number"
 msgstr "Numero di telefono"
 
-#: CompanyPreferences.php:216
+#: CompanyPreferences.php:217
 msgid ""
 "Enter the main telephone number of the company registered office. This will "
 "appear on invoices and statements."
 msgstr ""
 
-#: CompanyPreferences.php:220
+#: CompanyPreferences.php:221
 msgid "Facsimile Number"
 msgstr "Numero fax"
 
-#: CompanyPreferences.php:225 CustLoginSetup.php:161 Suppliers.php:735
+#: CompanyPreferences.php:226 CustLoginSetup.php:161 Suppliers.php:735
 #: Suppliers.php:1021 SupplierTenderCreate.php:414 SuppLoginSetup.php:144
 #: WWW_Users.php:520 ../webSHOP/Checkout.php:578
 msgid "Email Address"
 msgstr "Indrizzo posta elettronica"
 
-#: CompanyPreferences.php:226
+#: CompanyPreferences.php:227
 msgid ""
 "Enter the main company email address. This will appear on invoices and "
 "statements."
 msgstr ""
 
-#: CompanyPreferences.php:234
+#: CompanyPreferences.php:235
 msgid "Home Currency"
 msgstr "Valuta locale"
 
-#: CompanyPreferences.php:258
+#: CompanyPreferences.php:259
 msgid "Debtors Control GL Account"
 msgstr "Sottoconto per il controllo dei debitori"
 
-#: CompanyPreferences.php:259
+#: CompanyPreferences.php:260
 msgid ""
 "Select the general ledger account to be used for posting the local currency "
 "value of all customer transactions to. This account will always represent "
@@ -4599,11 +4599,11 @@ msgid ""
 "accounts are available for this selection."
 msgstr ""
 
-#: CompanyPreferences.php:275
+#: CompanyPreferences.php:276
 msgid "Creditors Control GL Account"
 msgstr "Sottoconto per il controllo dei creditori"
 
-#: CompanyPreferences.php:276
+#: CompanyPreferences.php:277
 msgid ""
 "Select the general ledger account to be used for posting the local currency "
 "value of all supplier transactions to. This account will always represent "
@@ -4611,15 +4611,15 @@ msgid ""
 "accounts are available for this selection."
 msgstr ""
 
-#: CompanyPreferences.php:292
+#: CompanyPreferences.php:293
 msgid "Payroll Net Pay Clearing GL Account"
 msgstr "Sottoconto per la compensazione di paghe e stipendi"
 
-#: CompanyPreferences.php:309
+#: CompanyPreferences.php:310
 msgid "Goods Received Clearing GL Account"
 msgstr "Sottoconto per la compensazione dei beni ricevuti"
 
-#: CompanyPreferences.php:310
+#: CompanyPreferences.php:311
 msgid ""
 "Select the general ledger account to be used for posting the cost of goods "
 "received pending the entry of supplier invoices for the goods. This account "
@@ -4627,26 +4627,26 @@ msgid ""
 "Only balance sheet accounts are available for this selection."
 msgstr ""
 
-#: CompanyPreferences.php:325
+#: CompanyPreferences.php:326
 msgid "Retained Earning Clearing GL Account"
 msgstr "Sottoconto per la compensazione degli utili non distribuiti"
 
-#: CompanyPreferences.php:326
+#: CompanyPreferences.php:327
 msgid ""
 "Select the general ledger account to be used for clearing profit and loss "
 "accounts to that represents the accumulated retained profits of the "
 "business. Only balance sheet accounts are available for this selection."
 msgstr ""
 
-#: CompanyPreferences.php:342
+#: CompanyPreferences.php:343
 msgid "Freight Re-charged GL Account"
 msgstr "Sottoconto per spese di trasporto resi"
 
-#: CompanyPreferences.php:366
+#: CompanyPreferences.php:367
 msgid "Sales Exchange Variances GL Account"
 msgstr "Sottoconto per variazioni su tassi di cambio del venduto"
 
-#: CompanyPreferences.php:367
+#: CompanyPreferences.php:368
 msgid ""
 "Select the general ledger account to be used for posting accounts receivable "
 "exchange rate differences to - where the exchange rate on sales invocies is "
@@ -4656,11 +4656,11 @@ msgid ""
 "selection."
 msgstr ""
 
-#: CompanyPreferences.php:383
+#: CompanyPreferences.php:384
 msgid "Purchases Exchange Variances GL Account"
 msgstr "Sottoconto per variazioni su tassi di cambio degli acquisti"
 
-#: CompanyPreferences.php:384
+#: CompanyPreferences.php:385
 msgid ""
 "Select the general ledger account to be used for posting the exchange "
 "differences on the accounts payable transactions to. Supplier invoices "
@@ -4670,24 +4670,24 @@ msgid ""
 "are available for this selection."
 msgstr ""
 
-#: CompanyPreferences.php:400
+#: CompanyPreferences.php:401
 msgid "Payment Discount GL Account"
 msgstr "Sottoconto sconto pagamento"
 
-#: CompanyPreferences.php:401
+#: CompanyPreferences.php:402
 msgid ""
 "Select the general ledger account to be used for posting the value of "
 "payment discounts given to customers at the time of entering a receipt. Only "
 "profit and loss general ledger accounts are available for this selection."
 msgstr ""
 
-#: CompanyPreferences.php:417
+#: CompanyPreferences.php:418
 msgid "Create GL entries for accounts receivable transactions"
 msgstr ""
 "Creare registrazioni contabili per le operazioni riguardanti i crediti verso "
 "clienti"
 
-#: CompanyPreferences.php:418
+#: CompanyPreferences.php:419
 msgid ""
 "Select yes to ensure that webERP creates general ledger journals for all "
 "accounts receivable transactions. webERP will maintain the debtors control "
@@ -4695,13 +4695,13 @@ msgid ""
 "customer balances in local currency."
 msgstr ""
 
-#: CompanyPreferences.php:432
+#: CompanyPreferences.php:433
 msgid "Create GL entries for accounts payable transactions"
 msgstr ""
 "Creare registrazioni contabili per le operazioni riguardanti i debiti verso "
 "fornitori"
 
-#: CompanyPreferences.php:433
+#: CompanyPreferences.php:434
 msgid ""
 "Select yes to ensure that webERP creates general ledger journals for all "
 "accounts payable transactions. webERP will maintain the creditors control "
@@ -4709,11 +4709,11 @@ msgid ""
 "supplier balances in local currency."
 msgstr ""
 
-#: CompanyPreferences.php:447
+#: CompanyPreferences.php:448
 msgid "Create GL entries for stock transactions"
 msgstr "Creare registrazioni contabili per le operazioni di magazzino"
 
-#: CompanyPreferences.php:448
+#: CompanyPreferences.php:449
 msgid ""
 "Select yes to ensure that webERP creates general ledger journals for all "
 "inventory transactions. webERP will maintain the stock control accounts "
@@ -4856,7 +4856,7 @@ msgid "Confirm Dispatch and Invoice"
 msgstr "Conferma di spedizione e di fatturazione"
 
 #: ConfirmDispatch_Invoice.php:332 CustEDISetup.php:93 Customers.php:458
-#: Customers.php:727 Customers.php:765 DeliveryDetails.php:856 geocode.php:53
+#: Customers.php:727 Customers.php:765 DeliveryDetails.php:856 geocode.php:54
 #: OrderDetails.php:84 PickingLists.php:292 SalesAnalRepts.php:29
 #: SalesAnalRepts.php:31 SalesInquiry.php:781 SalesInquiry.php:791
 #: SalesInquiry.php:813 SalesInquiry.php:961 SalesInquiry.php:976
@@ -6298,7 +6298,7 @@ msgstr "Altri costi preventivati"
 #: PO_SelectOSPurchOrder.php:607 PO_SelectPurchOrder.php:421 PurchData.php:271
 #: ReprintGRN.php:84 SelectProduct.php:343 SelectSupplier.php:177
 #: SelectSupplier.php:178 ShipmentCosting.php:527 ShipmentCosting.php:595
-#: Shipt_Select.php:287 ShiptsList.php:10 SuppCreditGRNs.php:288
+#: Shipt_Select.php:287 ShiptsList.php:11 SuppCreditGRNs.php:288
 #: SupplierAllocations.php:556 SupplierAllocations.php:625
 #: SupplierCredit.php:258 SupplierGRNAndInvoiceInquiry.php:30
 #: SupplierInquiry.php:118 SupplierInquiry.php:119 SupplierInvoice.php:610
@@ -8492,7 +8492,7 @@ msgstr ""
 msgid "Show Defined Credit Status Codes"
 msgstr "Mostra le classi di affidabilità  del credito esistenti"
 
-#: Currencies.php:6 includes/MainMenuLinksArray.php:211
+#: Currencies.php:8 includes/MainMenuLinksArray.php:211
 msgid "Currencies Maintenance"
 msgstr "Gestione valute"
 
@@ -9741,7 +9741,7 @@ msgstr ""
 "giorni"
 
 #: CustomerBranches.php:100 geocode_genxml_customers.php:20
-#: geocode_genxml_suppliers.php:20 geocode.php:11 geocode.php:29 geocode.php:34
+#: geocode_genxml_suppliers.php:20 geocode.php:12 geocode.php:30 geocode.php:35
 #: SelectCustomer.php:477 SelectCustomer.php:510 SelectCustomer.php:632
 #: SelectSupplier.php:28 SelectSupplier.php:37 SelectSupplier.php:387
 #: Suppliers.php:405
@@ -14624,27 +14624,27 @@ msgstr ""
 msgid "Geocode Generate XML"
 msgstr "Geocode Generare XML"
 
-#: geocode.php:4
+#: geocode.php:5
 msgid "Geocode Generate"
 msgstr "Genera geocode"
 
-#: geocode.php:25 GeocodeSetup.php:134 GeocodeSetup.php:221
+#: geocode.php:26 GeocodeSetup.php:134 GeocodeSetup.php:221
 msgid "Geocode Setup"
 msgstr "Geocode Setup"
 
-#: geocode.php:25
+#: geocode.php:26
 msgid "Geocoding of Customers and Suppliers"
 msgstr "Geocodifica di clienti e fornitori"
 
-#: geocode.php:88
+#: geocode.php:89
 msgid "failed to geocode."
 msgstr "non è riuscito a geocode."
 
-#: geocode.php:105
+#: geocode.php:106
 msgid "Supplier Code: "
 msgstr "Codice fornitore: "
 
-#: geocode.php:144
+#: geocode.php:145
 msgid "Go back to Geocode Setup"
 msgstr "Torna alla Geocode Setup"
 
@@ -18744,29 +18744,29 @@ msgstr ""
 msgid "Mark Completed"
 msgstr ""
 
-#: ManualContents.php:20
+#: ManualContents.php:21
 msgid "webERP Manual"
 msgstr ""
 
-#: ManualContents.php:59 ManualContents.php:81 ManualContents.php:142
+#: ManualContents.php:60 ManualContents.php:82 ManualContents.php:143
 msgid "Table of Contents"
 msgstr ""
 
-#: ManualContents.php:60
+#: ManualContents.php:61
 msgid "Go to Bottom"
 msgstr ""
 
-#: ManualContents.php:74
+#: ManualContents.php:75
 msgid ""
 "Click on a link to view a page, or check boxes and click on \"Display Checked"
 "\" to view selected in one page"
 msgstr ""
 
-#: ManualContents.php:75 ManualContents.php:109
+#: ManualContents.php:76 ManualContents.php:110
 msgid "Display Checked"
 msgstr ""
 
-#: ManualContents.php:141
+#: ManualContents.php:142
 msgid "Go to Top"
 msgstr ""
 
@@ -30926,7 +30926,7 @@ msgstr "non è stato trovato nel database"
 msgid "Shipment Details"
 msgstr "Dettagli di spedizione"
 
-#: ShipmentCosting.php:58 Shipt_Select.php:288 ShiptsList.php:37
+#: ShipmentCosting.php:58 Shipt_Select.php:288 ShiptsList.php:38
 msgid "Vessel"
 msgstr "Nave"
 
@@ -31383,29 +31383,29 @@ msgstr "Arrivo previsto"
 msgid "Close"
 msgstr "Chiudi"
 
-#: ShiptsList.php:6
+#: ShiptsList.php:7
 msgid "Shipments Open Inquiry"
 msgstr "Spedizioni un&#39;indagine aperta"
 
-#: ShiptsList.php:10
+#: ShiptsList.php:11
 msgid "Open Shipments for"
 msgstr "Spedizioni Aperto per"
 
-#: ShiptsList.php:14
+#: ShiptsList.php:15
 msgid "This page must be given the supplier code to look for shipments for"
 msgstr ""
 "Questa pagina deve essere dato il codice fornitore di cercare le spedizioni "
 "per"
 
-#: ShiptsList.php:24
+#: ShiptsList.php:25
 msgid "No shipments were returned from the database because"
 msgstr "Nessuna spedizione sono stati restituiti dal database perché"
 
-#: ShiptsList.php:28
+#: ShiptsList.php:29
 msgid "There are no open shipments currently set up for"
 msgstr "Non ci sono spedizioni aperti attualmente impostato su"
 
-#: ShiptsList.php:38 SuppShiptChgs.php:136
+#: ShiptsList.php:39 SuppShiptChgs.php:136
 msgid "ETA"
 msgstr "ETA"
 
@@ -42891,11 +42891,11 @@ msgstr "Calcolato"
 msgid "Check Period Sales Ledger Control Account"
 msgstr "Controlla Periodo Ledger Sales Account Control"
 
-#: Z_ClearPOBackOrders.php:4
+#: Z_ClearPOBackOrders.php:7
 msgid "UTILITY PAGE To Clear purchase orders with quantity on back order"
 msgstr ""
 
-#: Z_ClearPOBackOrders.php:26
+#: Z_ClearPOBackOrders.php:29
 msgid "Clear Supplier Back Orders"
 msgstr ""
 
@@ -44488,7 +44488,7 @@ msgstr ""
 "Se il nome della società è già presente allora non è possibile ricreare"
 
 #: Z_MakeNewCompany.php:235 Z_poAddLanguage.php:87 Z_poEditLangHeader.php:90
-#: Z_poEditLangModule.php:126 Z_poEditLangRemaining.php:104
+#: Z_poEditLangModule.php:126 Z_poEditLangRemaining.php:105
 #: Z_poRebuildDefault.php:50
 msgid "PLEASE NOTE"
 msgstr "NOTA BENE"
@@ -44536,12 +44536,12 @@ msgstr "posizione posizione"
 msgid "New Language"
 msgstr "New Language"
 
-#: Z_poAddLanguage.php:25 Z_poAddLanguage.php:26 Z_poAdmin.php:28
+#: Z_poAddLanguage.php:25 Z_poAddLanguage.php:26 Z_poAdmin.php:30
 msgid "Add a New Language to the System"
 msgstr "Aggiungi una lingua nuova per il sistema"
 
 #: Z_poAddLanguage.php:30 Z_poEditLangHeader.php:19 Z_poEditLangModule.php:15
-#: Z_poEditLangRemaining.php:22 Z_poRebuildDefault.php:24
+#: Z_poEditLangRemaining.php:23 Z_poRebuildDefault.php:24
 msgid "Back to the translation menu"
 msgstr "Torna al menu di traduzione"
 
@@ -44550,7 +44550,7 @@ msgid "Utility to create a new language file"
 msgstr "Utility per creare un nuovo file di lingua"
 
 #: Z_poAddLanguage.php:32 Z_poEditLangHeader.php:21 Z_poEditLangModule.php:17
-#: Z_poEditLangRemaining.php:24
+#: Z_poEditLangRemaining.php:25
 msgid "Current language is"
 msgstr "La lingua corrente è"
 
@@ -44598,27 +44598,19 @@ msgstr "Se la lingua esiste già allora non è possibile ricreare"
 msgid "Full code of the new language in the format en_US"
 msgstr "codice completo del nuovo linguaggio nel formato en_US"
 
-#: Z_poAdmin.php:8
-msgid "UTILITY PAGE"
-msgstr "UTILITY PAGE"
-
-#: Z_poAdmin.php:8
-msgid "that helps maintain language files"
-msgstr "che aiuta a mantenere i file di lingua"
-
-#: Z_poAdmin.php:14 Z_poAdmin.php:15 includes/MainMenuLinksArray.php:226
+#: Z_poAdmin.php:12 includes/MainMenuLinksArray.php:226
 msgid "Maintain Language Files"
 msgstr "Mantenere File di lingua"
 
-#: Z_poAdmin.php:20
+#: Z_poAdmin.php:22
 msgid "gettext is not installed on this system"
 msgstr "gettext non è installato su questo sistema"
 
-#: Z_poAdmin.php:20
+#: Z_poAdmin.php:22
 msgid "You cannot use the language files without it"
 msgstr "Non è possibile utilizzare i file di lingua, senza che"
 
-#: Z_poAdmin.php:25 Z_poEditLangHeader.php:80 Z_poEditLangModule.php:218
+#: Z_poAdmin.php:27 Z_poEditLangHeader.php:80 Z_poEditLangModule.php:218
 msgid ""
 "You do not have write access to the required files please contact your "
 "system administrator"
@@ -44626,28 +44618,28 @@ msgstr ""
 "Non si dispone di accesso in scrittura al file richiesti si prega di "
 "contattare l&#39;amministratore di sistema"
 
-#: Z_poAdmin.php:27 Z_poRebuildDefault.php:13 Z_poRebuildDefault.php:19
+#: Z_poAdmin.php:29 Z_poRebuildDefault.php:13 Z_poRebuildDefault.php:19
 #: Z_poRebuildDefault.php:20
 msgid "Rebuild the System Default Language File"
 msgstr "Rigenerare il file system di default Lingua"
 
-#: Z_poAdmin.php:29 Z_poEditLangHeader.php:14 Z_poEditLangHeader.php:15
+#: Z_poAdmin.php:31 Z_poEditLangHeader.php:14 Z_poEditLangHeader.php:15
 msgid "Edit a Language File Header"
 msgstr "Modificare un file di intestazione di lingue"
 
-#: Z_poAdmin.php:30 Z_poEditLangModule.php:10 Z_poEditLangModule.php:11
+#: Z_poAdmin.php:32 Z_poEditLangModule.php:10 Z_poEditLangModule.php:11
 msgid "Edit a Language File Module"
 msgstr "Modificare un modulo di file di lingua"
 
-#: Z_poAdmin.php:31 Z_poEditLangRemaining.php:17 Z_poEditLangRemaining.php:18
+#: Z_poAdmin.php:33 Z_poEditLangRemaining.php:14
 msgid "Edit Remaining Strings For This Language"
 msgstr "Modifica stringhe rimanenti per questa lingua"
 
-#: Z_poAdmin.php:32
+#: Z_poAdmin.php:34
 msgid "Download messages.po file"
 msgstr "Scaricare file messages.po"
 
-#: Z_poAdmin.php:33
+#: Z_poAdmin.php:35
 msgid "Download messages.mo file"
 msgstr "Scaricare file messages.mo"
 
@@ -44668,7 +44660,7 @@ msgid "Writing the rest of the language file"
 msgstr "Scrivi il resto del file della lingua"
 
 #: Z_poEditLangHeader.php:70 Z_poEditLangModule.php:96
-#: Z_poEditLangRemaining.php:74 Z_poRebuildDefault.php:38
+#: Z_poEditLangRemaining.php:75 Z_poRebuildDefault.php:38
 msgid "Done"
 msgstr "Fatto"
 
@@ -44685,7 +44677,7 @@ msgid "Make sure you have selected the correct language to translate!"
 msgstr "Assicurarsi di aver selezionato la lingua corretta per tradurre!"
 
 #: Z_poEditLangHeader.php:86 Z_poEditLangModule.php:123
-#: Z_poEditLangRemaining.php:101
+#: Z_poEditLangRemaining.php:102
 msgid ""
 "When finished modifying you must click on Modify at the bottom in order to "
 "save changes"
@@ -44719,7 +44711,7 @@ msgstr "Header Line"
 msgid "Edit Module"
 msgstr "Modifica del modulo"
 
-#: Z_poEditLangModule.php:16 Z_poEditLangRemaining.php:23
+#: Z_poEditLangModule.php:16 Z_poEditLangRemaining.php:24
 msgid "Utility to edit a language file module"
 msgstr "Utility per modificare un modulo di file di lingua"
 
@@ -44729,18 +44721,18 @@ msgid ""
 "utilities to work"
 msgstr ""
 
-#: Z_poEditLangModule.php:67 Z_poEditLangRemaining.php:45
+#: Z_poEditLangModule.php:67 Z_poEditLangRemaining.php:46
 msgid "Writing the language file"
 msgstr "Scrivere il file di lingua"
 
-#: Z_poEditLangModule.php:126 Z_poEditLangRemaining.php:104
+#: Z_poEditLangModule.php:126 Z_poEditLangRemaining.php:105
 msgid ""
 "Your existing translation file (messages.po) will be saved as messages.po.old"
 msgstr ""
 "Il tuo file di traduzione già esistenti (messages.po) sarà salvato come "
 "messages.po.old"
 
-#: Z_poEditLangModule.php:133 Z_poEditLangRemaining.php:111
+#: Z_poEditLangModule.php:133 Z_poEditLangRemaining.php:112
 msgid "Language File for"
 msgstr "File di lingua per"
 
@@ -44748,15 +44740,15 @@ msgstr "File di lingua per"
 msgid "Module"
 msgstr "Modulo"
 
-#: Z_poEditLangModule.php:146 Z_poEditLangRemaining.php:117
+#: Z_poEditLangModule.php:146 Z_poEditLangRemaining.php:118
 msgid "Default text"
 msgstr "Testo predefinito"
 
-#: Z_poEditLangModule.php:147 Z_poEditLangRemaining.php:118
+#: Z_poEditLangModule.php:147 Z_poEditLangRemaining.php:119
 msgid "Translation"
 msgstr "Traduzione"
 
-#: Z_poEditLangModule.php:148 Z_poEditLangRemaining.php:119
+#: Z_poEditLangModule.php:148 Z_poEditLangRemaining.php:120
 msgid "Exists in"
 msgstr "Esiste in"
 
@@ -44767,10 +44759,6 @@ msgstr "Selezionare il modulo da modificare"
 #: Z_poEditLangModule.php:244
 msgid "Refresh messages with latest strings"
 msgstr "messaggi di aggiornamento con le ultime stringhe"
-
-#: Z_poEditLangRemaining.php:11
-msgid "Edit Remaining Items"
-msgstr "Modifica elementi rimanenti"
 
 #: Z_poRebuildDefault.php:25
 msgid "Utility page to rebuild the system default language file"
@@ -44859,21 +44847,21 @@ msgid "Updated the sales analysis cost data for period"
 msgstr ""
 "Aggiornato l&#39;analisi delle vendite dei dati di costo per il periodo"
 
-#: Z_RebuildSalesAnalysis.php:5
+#: Z_RebuildSalesAnalysis.php:6
 msgid "Rebuild sales analysis Records"
 msgstr ""
 
-#: Z_RebuildSalesAnalysis.php:8
+#: Z_RebuildSalesAnalysis.php:9
 msgid ""
 "This script rebuilds sales analysis records. NB: all sales budget figures "
 "will be lost!"
 msgstr ""
 
-#: Z_RebuildSalesAnalysis.php:57
+#: Z_RebuildSalesAnalysis.php:58
 msgid "The sales analysis data could not be recreated because"
 msgstr ""
 
-#: Z_RebuildSalesAnalysis.php:61
+#: Z_RebuildSalesAnalysis.php:62
 msgid ""
 "The sales analsysis data has been recreated based on current stock master "
 "and customer master information"
@@ -54684,6 +54672,15 @@ msgstr ""
 #: ../webSHOP/includes/session.php:162
 msgid "Bank Transfer"
 msgstr ""
+
+#~ msgid "UTILITY PAGE"
+#~ msgstr "UTILITY PAGE"
+
+#~ msgid "that helps maintain language files"
+#~ msgstr "che aiuta a mantenere i file di lingua"
+
+#~ msgid "Edit Remaining Items"
+#~ msgstr "Modifica elementi rimanenti"
 
 #~ msgid "Asset Category "
 #~ msgstr "Asset Categoria "

@@ -1,15 +1,15 @@
-# webERP 4.12繁體(台灣)中文介面
+# webERP 4.12繁體(台灣)中文介面 Translation File.
 # Copyright (C) 2004 weberp.org
 # This file is distributed under the same license as the webERP package.
-# FIRST AUTHOR <akits.tw@yahoo.com.tw>, 2014.
+# Jiro Akits <akits.tw@yahoo.com.tw>, 2014.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: webERP 4.13\n"
+"Project-Id-Version: webERP 4.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-21 13:37-0600\n"
+"POT-Creation-Date: 2019-02-24 08:36-0600\n"
 "PO-Revision-Date: 2015-02-24 18:23-0600\n"
-"Last-Translator: Rafael Chacon <rafael.emilio.chacon@gmail.com>\n"
+"Last-Translator: Jiro Akits <akits.tw@yahoo.com.tw>\n"
 "Language-Team: Jiro Akits <akits.tw@yahoo.com.tw>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
@@ -236,7 +236,7 @@ msgstr "不能取得會計科目組, 因為"
 #: BOMIndented.php:250 BOMIndentedReverse.php:238 BOMInquiry.php:179
 #: BOMListing.php:111 BOMs.php:202 BOMs.php:368 BOMs.php:561 BOMs.php:1052
 #: BOMs_SingleLevel.php:229 BOMs_SingleLevel.php:874
-#: CollectiveWorkOrderCost.php:283 CompanyPreferences.php:99
+#: CollectiveWorkOrderCost.php:283 CompanyPreferences.php:100
 #: CounterReturns.php:1617 CounterSales.php:2100 CounterSales.php:2188
 #: Credit_Invoice.php:285 CreditStatus.php:20 CustEDISetup.php:16
 #: CustItem.php:119 CustItem.php:205 CustItem.php:233
@@ -302,9 +302,9 @@ msgstr "損益表"
 #: AddCustomerContacts.php:267 AddCustomerContacts.php:271
 #: AddCustomerContacts.php:274 BOMs.php:120 BOMs.php:524 BOMs.php:526
 #: BOMs_SingleLevel.php:123 BOMs_SingleLevel.php:786 BOMs_SingleLevel.php:788
-#: CompanyPreferences.php:422 CompanyPreferences.php:424
-#: CompanyPreferences.php:437 CompanyPreferences.php:439
-#: CompanyPreferences.php:452 CompanyPreferences.php:454
+#: CompanyPreferences.php:423 CompanyPreferences.php:425
+#: CompanyPreferences.php:438 CompanyPreferences.php:440
+#: CompanyPreferences.php:453 CompanyPreferences.php:455
 #: ContractCosting.php:201 Currencies.php:342 Currencies.php:490
 #: Currencies.php:492 CustomerBranches.php:440 Customers.php:658
 #: Customers.php:1048 Customers.php:1054 Customers.php:1057
@@ -376,9 +376,9 @@ msgstr "是"
 #: BankAccounts.php:409 BankAccounts.php:411 BankAccounts.php:415
 #: BankAccounts.php:423 BOMs.php:122 BOMs.php:523 BOMs.php:527
 #: BOMs_SingleLevel.php:125 BOMs_SingleLevel.php:785 BOMs_SingleLevel.php:789
-#: CompanyPreferences.php:421 CompanyPreferences.php:425
-#: CompanyPreferences.php:436 CompanyPreferences.php:440
-#: CompanyPreferences.php:451 CompanyPreferences.php:455
+#: CompanyPreferences.php:422 CompanyPreferences.php:426
+#: CompanyPreferences.php:437 CompanyPreferences.php:441
+#: CompanyPreferences.php:452 CompanyPreferences.php:456
 #: ContractCosting.php:199 Currencies.php:344 Currencies.php:495
 #: Currencies.php:497 CustomerBranches.php:440 Customers.php:657
 #: Customers.php:1046 Customers.php:1053 Customers.php:1056
@@ -546,7 +546,7 @@ msgstr "輸入的會計科目組名稱不存在於資料庫"
 msgid "Edit Account Group Details"
 msgstr "編輯會計科目組明細"
 
-#: AccountGroups.php:372 CompanyPreferences.php:465
+#: AccountGroups.php:372 CompanyPreferences.php:466
 #: ConfirmDispatch_Invoice.php:717 ConfirmDispatch_Invoice.php:1814
 #: Credit_Invoice.php:1633 CustItem.php:444 FixedAssetItems.php:131
 #: FixedAssetItems.php:682 GLAccountUsers.php:149 GLBudgets.php:239
@@ -774,7 +774,7 @@ msgstr "聯絡人紀錄已新增"
 msgid "The contact record has been deleted"
 msgstr "聯絡人紀錄已刪除"
 
-#: AddCustomerContacts.php:132 CompanyPreferences.php:170
+#: AddCustomerContacts.php:132 CompanyPreferences.php:171
 #: CustomerBranches.php:402 Customers.php:1117 Customers.php:1125
 #: ImportBankTransAnalysis.php:207 PrintWOItemSlip.php:184
 #: PrintWOItemSlip.php:195 PrintWOItemSlip.php:206 ProductSpecs.php:164
@@ -1482,7 +1482,7 @@ msgstr "沒有結果，所以這PDF檔案是空白"
 
 #: AgedSuppliers.php:286 OutstandingGRNs.php:262 PDFRemittanceAdvice.php:152
 #: SupplierBalsAtPeriodEnd.php:130 SuppPaymentRun.php:264
-#: Z_ClearPOBackOrders.php:19
+#: Z_ClearPOBackOrders.php:22
 msgid "From Supplier Code"
 msgstr "從供應商編號"
 
@@ -1492,7 +1492,7 @@ msgstr "在報表中包含輸入的供應商代碼的第一個字母"
 
 #: AgedSuppliers.php:290 OutstandingGRNs.php:266 PDFRemittanceAdvice.php:156
 #: SupplierBalsAtPeriodEnd.php:134 SuppPaymentRun.php:268
-#: Z_ClearPOBackOrders.php:22
+#: Z_ClearPOBackOrders.php:25
 msgid "To Supplier Code"
 msgstr "至供應商編號"
 
@@ -2899,7 +2899,7 @@ msgstr "編號"
 #: DailyBankTransactions.php:162 Dashboard.php:58 GLAccountReport.php:343
 #: PaymentAllocations.php:64 PaymentAllocations.php:65 Payments.php:1133
 #: Payments.php:1372 PDFRemittanceAdvice.php:308 PurchasesReport.php:77
-#: SalesReport.php:77 ShiptsList.php:36 StockCounts.php:143 StockCounts.php:168
+#: SalesReport.php:77 ShiptsList.php:37 StockCounts.php:143 StockCounts.php:168
 #: StockCounts.php:215 StockLocMovements.php:114 StockMovements.php:135
 #: SupplierInquiry.php:207 SuppWhereAlloc.php:134 Tax.php:435
 #: WorkOrderEntry.php:798 Z_CheckAllocs.php:63
@@ -4295,7 +4295,7 @@ msgstr "選取"
 #: SelectRecurringSalesOrder.php:89 SelectSalesOrder.php:905
 #: SelectSalesOrder.php:926 SelectWorkOrder.php:328 Shipt_Select.php:316
 #: UserSettings.php:240 Z_poEditLangHeader.php:107 Z_poEditLangModule.php:174
-#: Z_poEditLangRemaining.php:138
+#: Z_poEditLangRemaining.php:139
 #, php-format
 msgid "Modify"
 msgstr "修改確認"
@@ -4370,145 +4370,145 @@ msgstr "預交貨日"
 msgid "Print W/O"
 msgstr "列印工作單"
 
-#: CompanyPreferences.php:5 includes/MainMenuLinksArray.php:211
+#: CompanyPreferences.php:8 includes/MainMenuLinksArray.php:211
 msgid "Company Preferences"
 msgstr "公司偏好設定"
 
-#: CompanyPreferences.php:29
+#: CompanyPreferences.php:30
 msgid "The company name must be entered and be fifty characters or less long"
 msgstr "公司名稱必須不多於50字元"
 
-#: CompanyPreferences.php:36 Suppliers.php:365 Z_ImportSuppliers.php:177
+#: CompanyPreferences.php:37 Suppliers.php:365 Z_ImportSuppliers.php:177
 msgid "The email address is not correctly formed"
 msgstr "電子郵件地址格式不正確"
 
-#: CompanyPreferences.php:70
+#: CompanyPreferences.php:71
 msgid "The company preferences could not be updated because"
 msgstr "公司篇好設定不能更新, 因為"
 
-#: CompanyPreferences.php:72
+#: CompanyPreferences.php:73
 msgid "Company preferences updated"
 msgstr "公司偏好設定已更新"
 
-#: CompanyPreferences.php:84
+#: CompanyPreferences.php:85
 msgid "Could not update the currency rates"
 msgstr "無法更新貨幣匯率"
 
-#: CompanyPreferences.php:94 Customers.php:278 ShopParameters.php:184
+#: CompanyPreferences.php:95 Customers.php:278 ShopParameters.php:184
 #: Suppliers.php:621 SystemParameters.php:411
 msgid "Validation failed"
 msgstr "確認失敗"
 
-#: CompanyPreferences.php:94 ShopParameters.php:184 Suppliers.php:621
+#: CompanyPreferences.php:95 ShopParameters.php:184 Suppliers.php:621
 #: SystemParameters.php:411
 msgid "no updates or deletes took place"
 msgstr "沒有更新或刪除被執行"
 
-#: CompanyPreferences.php:136
+#: CompanyPreferences.php:137
 msgid "The company preferences could not be retrieved because"
 msgstr "公司設定不能取得, 因為"
 
-#: CompanyPreferences.php:170
+#: CompanyPreferences.php:171
 msgid "to appear on reports"
 msgstr "在報表中顯示"
 
-#: CompanyPreferences.php:171
+#: CompanyPreferences.php:172
 msgid ""
 "Enter the name of the business. This will appear on all reports and at the "
 "top of each screen. "
 msgstr "輸入公司的名稱。這名稱將出現在所有的報表及螢幕頂部上。"
 
-#: CompanyPreferences.php:175
+#: CompanyPreferences.php:176
 msgid "Official Company Number"
 msgstr "官方的公司編號"
 
-#: CompanyPreferences.php:180
+#: CompanyPreferences.php:181
 msgid "Tax Authority Reference"
 msgstr "統一編號"
 
-#: CompanyPreferences.php:185 Factors.php:210
+#: CompanyPreferences.php:186 Factors.php:210
 msgid "Address Line 1"
 msgstr "地址列 1"
 
-#: CompanyPreferences.php:186
+#: CompanyPreferences.php:187
 msgid ""
 "Enter the first line of the company registered office. This will appear on "
 "invoices and statements."
 msgstr "輸入第一行公司註冊處。這註冊文字將出現在發票和報表上。"
 
-#: CompanyPreferences.php:190 Factors.php:213
+#: CompanyPreferences.php:191 Factors.php:213
 msgid "Address Line 2"
 msgstr "地址列 2"
 
-#: CompanyPreferences.php:191
+#: CompanyPreferences.php:192
 msgid ""
 "Enter the second line of the company registered office. This will appear on "
 "invoices and statements."
 msgstr "輸入第二行公司註冊處。這註冊文字將出現在發票和報表上。"
 
-#: CompanyPreferences.php:195 Factors.php:217
+#: CompanyPreferences.php:196 Factors.php:217
 msgid "Address Line 3"
 msgstr "地址列 3"
 
-#: CompanyPreferences.php:196
+#: CompanyPreferences.php:197
 msgid ""
 "Enter the third line of the company registered office. This will appear on "
 "invoices and statements."
 msgstr "輸入第三行公司註冊處。這註冊文字將出現在發票和報表上。"
 
-#: CompanyPreferences.php:200 Factors.php:221
+#: CompanyPreferences.php:201 Factors.php:221
 msgid "Address Line 4"
 msgstr "地址列 4"
 
-#: CompanyPreferences.php:201
+#: CompanyPreferences.php:202
 msgid ""
 "Enter the fourth line of the company registered office. This will appear on "
 "invoices and statements."
 msgstr "輸入第四行公司註冊處。這註冊文字將出現在發票和報表上。"
 
-#: CompanyPreferences.php:205 Factors.php:225
+#: CompanyPreferences.php:206 Factors.php:225
 msgid "Address Line 5"
 msgstr "地址列 5"
 
-#: CompanyPreferences.php:210 Factors.php:229
+#: CompanyPreferences.php:211 Factors.php:229
 msgid "Address Line 6"
 msgstr "地址列 6"
 
-#: CompanyPreferences.php:215
+#: CompanyPreferences.php:216
 msgid "Telephone Number"
 msgstr "電話號碼"
 
-#: CompanyPreferences.php:216
+#: CompanyPreferences.php:217
 msgid ""
 "Enter the main telephone number of the company registered office. This will "
 "appear on invoices and statements."
 msgstr "輸入公司主要的電話於註冊處。這註冊文字將出現在發票和報表上。"
 
-#: CompanyPreferences.php:220
+#: CompanyPreferences.php:221
 msgid "Facsimile Number"
 msgstr "傳真號碼"
 
-#: CompanyPreferences.php:225 CustLoginSetup.php:161 Suppliers.php:735
+#: CompanyPreferences.php:226 CustLoginSetup.php:161 Suppliers.php:735
 #: Suppliers.php:1021 SupplierTenderCreate.php:414 SuppLoginSetup.php:144
 #: WWW_Users.php:520 ../webSHOP/Checkout.php:578
 msgid "Email Address"
 msgstr "電子郵件地址"
 
-#: CompanyPreferences.php:226
+#: CompanyPreferences.php:227
 msgid ""
 "Enter the main company email address. This will appear on invoices and "
 "statements."
 msgstr "輸入公司主要的電子郵件於註冊處。這註冊文字將出現在發票和報表上。"
 
-#: CompanyPreferences.php:234
+#: CompanyPreferences.php:235
 msgid "Home Currency"
 msgstr "本地貨幣"
 
-#: CompanyPreferences.php:258
+#: CompanyPreferences.php:259
 msgid "Debtors Control GL Account"
 msgstr "應收總帳科目"
 
-#: CompanyPreferences.php:259
+#: CompanyPreferences.php:260
 msgid ""
 "Select the general ledger account to be used for posting the local currency "
 "value of all customer transactions to. This account will always represent "
@@ -4518,11 +4518,11 @@ msgstr ""
 "選擇要用於發布所有客戶交易的當地貨幣價值的總帳科目。此帳戶將永遠代表客戶所欠"
 "的業務總量。只有結算帳戶可用於此選擇。"
 
-#: CompanyPreferences.php:275
+#: CompanyPreferences.php:276
 msgid "Creditors Control GL Account"
 msgstr "應付總帳科目"
 
-#: CompanyPreferences.php:276
+#: CompanyPreferences.php:277
 msgid ""
 "Select the general ledger account to be used for posting the local currency "
 "value of all supplier transactions to. This account will always represent "
@@ -4532,15 +4532,15 @@ msgstr ""
 "選擇要用於發布所有供應商交易的當地貨幣價值的總帳科目。此帳戶將始終代表由企業"
 "欠供應商的總金額。只有結算帳戶可用於此選擇。"
 
-#: CompanyPreferences.php:292
+#: CompanyPreferences.php:293
 msgid "Payroll Net Pay Clearing GL Account"
 msgstr "工資總帳科目"
 
-#: CompanyPreferences.php:309
+#: CompanyPreferences.php:310
 msgid "Goods Received Clearing GL Account"
 msgstr "收貨總帳科目"
 
-#: CompanyPreferences.php:310
+#: CompanyPreferences.php:311
 msgid ""
 "Select the general ledger account to be used for posting the cost of goods "
 "received pending the entry of supplier invoices for the goods. This account "
@@ -4550,11 +4550,11 @@ msgstr ""
 "選擇總帳帳戶用於發布商品成本以待收到供應商發票的進口的貨物。此帳戶將代表尚未"
 "收到由供應商開具發票的貨物價值。只有結算帳戶可用於此選擇。"
 
-#: CompanyPreferences.php:325
+#: CompanyPreferences.php:326
 msgid "Retained Earning Clearing GL Account"
 msgstr "保留收益總帳科目"
 
-#: CompanyPreferences.php:326
+#: CompanyPreferences.php:327
 msgid ""
 "Select the general ledger account to be used for clearing profit and loss "
 "accounts to that represents the accumulated retained profits of the "
@@ -4563,15 +4563,15 @@ msgstr ""
 "選擇總帳帳戶用於結算損益帳，以表示該業務的累計未冲帳的利潤。只有結算帳戶可用"
 "於此選擇。"
 
-#: CompanyPreferences.php:342
+#: CompanyPreferences.php:343
 msgid "Freight Re-charged GL Account"
 msgstr "運費總帳科目"
 
-#: CompanyPreferences.php:366
+#: CompanyPreferences.php:367
 msgid "Sales Exchange Variances GL Account"
 msgstr "銷售匯率差異總帳科目"
 
-#: CompanyPreferences.php:367
+#: CompanyPreferences.php:368
 msgid ""
 "Select the general ledger account to be used for posting accounts receivable "
 "exchange rate differences to - where the exchange rate on sales invocies is "
@@ -4583,11 +4583,11 @@ msgstr ""
 "選擇要用於張貼應收帳款匯率差異的總帳科目 -以客戶收取貨幣的匯率，銷售發票的匯"
 "率是不同的，匯率自動計算並拋到這個總帳科目。僅損益總帳帳戶可用於此選擇。"
 
-#: CompanyPreferences.php:383
+#: CompanyPreferences.php:384
 msgid "Purchases Exchange Variances GL Account"
 msgstr "採購匯率差異總帳科目"
 
-#: CompanyPreferences.php:384
+#: CompanyPreferences.php:385
 msgid ""
 "Select the general ledger account to be used for posting the exchange "
 "differences on the accounts payable transactions to. Supplier invoices "
@@ -4600,11 +4600,11 @@ msgstr ""
 "支付貨幣，以不同的匯率供應商發票具有自動計算並拋到這個總帳科目的差異。僅損益"
 "總帳帳戶可用於此選擇。"
 
-#: CompanyPreferences.php:400
+#: CompanyPreferences.php:401
 msgid "Payment Discount GL Account"
 msgstr "現金折扣總帳科目"
 
-#: CompanyPreferences.php:401
+#: CompanyPreferences.php:402
 msgid ""
 "Select the general ledger account to be used for posting the value of "
 "payment discounts given to customers at the time of entering a receipt. Only "
@@ -4613,11 +4613,11 @@ msgstr ""
 "選擇要用於張貼在輸入收貨時間給予客戶付款折扣價值的總帳科目。僅損益總帳帳戶可"
 "用於此選擇。"
 
-#: CompanyPreferences.php:417
+#: CompanyPreferences.php:418
 msgid "Create GL entries for accounts receivable transactions"
 msgstr "為應收帳交易產生總帳憑證"
 
-#: CompanyPreferences.php:418
+#: CompanyPreferences.php:419
 msgid ""
 "Select yes to ensure that webERP creates general ledger journals for all "
 "accounts receivable transactions. webERP will maintain the debtors control "
@@ -4627,11 +4627,11 @@ msgstr ""
 "選擇yes，以確保ERP新建總帳報表的所有應收帳款的交易。 ERP將維持債務人帳戶控制"
 "（上面選擇），以確保它應該總是以當地貨幣來平衡客戶結餘表。"
 
-#: CompanyPreferences.php:432
+#: CompanyPreferences.php:433
 msgid "Create GL entries for accounts payable transactions"
 msgstr "為應付帳交易產生總帳憑證"
 
-#: CompanyPreferences.php:433
+#: CompanyPreferences.php:434
 msgid ""
 "Select yes to ensure that webERP creates general ledger journals for all "
 "accounts payable transactions. webERP will maintain the creditors control "
@@ -4641,11 +4641,11 @@ msgstr ""
 "選擇yes，以確保ERP新建總帳日記帳的所有應付帳款交易。 ERP將維持債權人控制的帳"
 "戶（上面選擇），以確保它應該總是以當地貨幣平衡供應商餘額清單。"
 
-#: CompanyPreferences.php:447
+#: CompanyPreferences.php:448
 msgid "Create GL entries for stock transactions"
 msgstr "為庫存帳交易產生總帳憑證"
 
-#: CompanyPreferences.php:448
+#: CompanyPreferences.php:449
 msgid ""
 "Select yes to ensure that webERP creates general ledger journals for all "
 "inventory transactions. webERP will maintain the stock control accounts "
@@ -4778,7 +4778,7 @@ msgid "Confirm Dispatch and Invoice"
 msgstr "確認發貨並為訂單開發票"
 
 #: ConfirmDispatch_Invoice.php:332 CustEDISetup.php:93 Customers.php:458
-#: Customers.php:727 Customers.php:765 DeliveryDetails.php:856 geocode.php:53
+#: Customers.php:727 Customers.php:765 DeliveryDetails.php:856 geocode.php:54
 #: OrderDetails.php:84 PickingLists.php:292 SalesAnalRepts.php:29
 #: SalesAnalRepts.php:31 SalesInquiry.php:781 SalesInquiry.php:791
 #: SalesInquiry.php:813 SalesInquiry.php:961 SalesInquiry.php:976
@@ -6121,7 +6121,7 @@ msgstr "其他費用的預算"
 #: PO_SelectOSPurchOrder.php:607 PO_SelectPurchOrder.php:421 PurchData.php:271
 #: ReprintGRN.php:84 SelectProduct.php:343 SelectSupplier.php:177
 #: SelectSupplier.php:178 ShipmentCosting.php:527 ShipmentCosting.php:595
-#: Shipt_Select.php:287 ShiptsList.php:10 SuppCreditGRNs.php:288
+#: Shipt_Select.php:287 ShiptsList.php:11 SuppCreditGRNs.php:288
 #: SupplierAllocations.php:556 SupplierAllocations.php:625
 #: SupplierCredit.php:258 SupplierGRNAndInvoiceInquiry.php:30
 #: SupplierInquiry.php:118 SupplierInquiry.php:119 SupplierInvoice.php:610
@@ -8144,7 +8144,7 @@ msgstr "您確定要刪除這個信用狀況的記錄？"
 msgid "Show Defined Credit Status Codes"
 msgstr "顯示已經定義的信用等級編碼"
 
-#: Currencies.php:6 includes/MainMenuLinksArray.php:211
+#: Currencies.php:8 includes/MainMenuLinksArray.php:211
 msgid "Currencies Maintenance"
 msgstr "貨幣維護"
 
@@ -9360,7 +9360,7 @@ msgid ""
 msgstr "一般海運貨件均能在少於 60 天內送達"
 
 #: CustomerBranches.php:100 geocode_genxml_customers.php:20
-#: geocode_genxml_suppliers.php:20 geocode.php:11 geocode.php:29 geocode.php:34
+#: geocode_genxml_suppliers.php:20 geocode.php:12 geocode.php:30 geocode.php:35
 #: SelectCustomer.php:477 SelectCustomer.php:510 SelectCustomer.php:632
 #: SelectSupplier.php:28 SelectSupplier.php:37 SelectSupplier.php:387
 #: Suppliers.php:405
@@ -14039,27 +14039,27 @@ msgstr ""
 msgid "Geocode Generate XML"
 msgstr "地圖編碼產生XML"
 
-#: geocode.php:4
+#: geocode.php:5
 msgid "Geocode Generate"
 msgstr "產生地圖編碼"
 
-#: geocode.php:25 GeocodeSetup.php:134 GeocodeSetup.php:221
+#: geocode.php:26 GeocodeSetup.php:134 GeocodeSetup.php:221
 msgid "Geocode Setup"
 msgstr "設置地圖編碼"
 
-#: geocode.php:25
+#: geocode.php:26
 msgid "Geocoding of Customers and Suppliers"
 msgstr "客戶和供應商的地圖編碼"
 
-#: geocode.php:88
+#: geocode.php:89
 msgid "failed to geocode."
 msgstr "進行地圖編碼失敗"
 
-#: geocode.php:105
+#: geocode.php:106
 msgid "Supplier Code: "
 msgstr "供應商編碼"
 
-#: geocode.php:144
+#: geocode.php:145
 msgid "Go back to Geocode Setup"
 msgstr "返回到設置地圖編碼"
 
@@ -18015,29 +18015,29 @@ msgstr "你確定你希望標記已完成這個維護任務？"
 msgid "Mark Completed"
 msgstr "標記為已完成"
 
-#: ManualContents.php:20
+#: ManualContents.php:21
 msgid "webERP Manual"
 msgstr ""
 
-#: ManualContents.php:59 ManualContents.php:81 ManualContents.php:142
+#: ManualContents.php:60 ManualContents.php:82 ManualContents.php:143
 msgid "Table of Contents"
 msgstr ""
 
-#: ManualContents.php:60
+#: ManualContents.php:61
 msgid "Go to Bottom"
 msgstr ""
 
-#: ManualContents.php:74
+#: ManualContents.php:75
 msgid ""
 "Click on a link to view a page, or check boxes and click on \"Display Checked"
 "\" to view selected in one page"
 msgstr ""
 
-#: ManualContents.php:75 ManualContents.php:109
+#: ManualContents.php:76 ManualContents.php:110
 msgid "Display Checked"
 msgstr ""
 
-#: ManualContents.php:141
+#: ManualContents.php:142
 msgid "Go to Top"
 msgstr ""
 
@@ -29633,7 +29633,7 @@ msgstr "在資料庫中未能找到"
 msgid "Shipment Details"
 msgstr "運輸明細資料"
 
-#: ShipmentCosting.php:58 Shipt_Select.php:288 ShiptsList.php:37
+#: ShipmentCosting.php:58 Shipt_Select.php:288 ShiptsList.php:38
 msgid "Vessel"
 msgstr "貨運名"
 
@@ -30058,27 +30058,27 @@ msgstr "預計到貨"
 msgid "Close"
 msgstr "關閉"
 
-#: ShiptsList.php:6
+#: ShiptsList.php:7
 msgid "Shipments Open Inquiry"
 msgstr "查詢未完成出貨"
 
-#: ShiptsList.php:10
+#: ShiptsList.php:11
 msgid "Open Shipments for"
 msgstr "未完成的出貨"
 
-#: ShiptsList.php:14
+#: ShiptsList.php:15
 msgid "This page must be given the supplier code to look for shipments for"
 msgstr "這頁必須由要尋找的運輸的供應商編碼來呼叫"
 
-#: ShiptsList.php:24
+#: ShiptsList.php:25
 msgid "No shipments were returned from the database because"
 msgstr "沒有運輸由資料庫傳回, 因為"
 
-#: ShiptsList.php:28
+#: ShiptsList.php:29
 msgid "There are no open shipments currently set up for"
 msgstr "沒有未完成的出貨單"
 
-#: ShiptsList.php:38 SuppShiptChgs.php:136
+#: ShiptsList.php:39 SuppShiptChgs.php:136
 msgid "ETA"
 msgstr "預計到貨日"
 
@@ -40993,11 +40993,11 @@ msgstr "計算結果"
 msgid "Check Period Sales Ledger Control Account"
 msgstr "檢查期間銷售帳控制帳目"
 
-#: Z_ClearPOBackOrders.php:4
+#: Z_ClearPOBackOrders.php:7
 msgid "UTILITY PAGE To Clear purchase orders with quantity on back order"
 msgstr "輔助功能頁面以清除採購訂單延期交貨的數量"
 
-#: Z_ClearPOBackOrders.php:26
+#: Z_ClearPOBackOrders.php:29
 msgid "Clear Supplier Back Orders"
 msgstr "清除供應商返回訂單"
 
@@ -42530,7 +42530,7 @@ msgid "If the company name already exists then you cannot recreate it"
 msgstr "您不能建立一個已存在的公司名稱"
 
 #: Z_MakeNewCompany.php:235 Z_poAddLanguage.php:87 Z_poEditLangHeader.php:90
-#: Z_poEditLangModule.php:126 Z_poEditLangRemaining.php:104
+#: Z_poEditLangModule.php:126 Z_poEditLangRemaining.php:105
 #: Z_poRebuildDefault.php:50
 msgid "PLEASE NOTE"
 msgstr "請註意"
@@ -42578,12 +42578,12 @@ msgstr "所有未能存貨地點記錄的存貨商品已被給予新的地點存
 msgid "New Language"
 msgstr "新語言"
 
-#: Z_poAddLanguage.php:25 Z_poAddLanguage.php:26 Z_poAdmin.php:28
+#: Z_poAddLanguage.php:25 Z_poAddLanguage.php:26 Z_poAdmin.php:30
 msgid "Add a New Language to the System"
 msgstr "新增語言檔到系統"
 
 #: Z_poAddLanguage.php:30 Z_poEditLangHeader.php:19 Z_poEditLangModule.php:15
-#: Z_poEditLangRemaining.php:22 Z_poRebuildDefault.php:24
+#: Z_poEditLangRemaining.php:23 Z_poRebuildDefault.php:24
 msgid "Back to the translation menu"
 msgstr "返回翻譯目錄"
 
@@ -42592,7 +42592,7 @@ msgid "Utility to create a new language file"
 msgstr "產生新語言檔的應用公具"
 
 #: Z_poAddLanguage.php:32 Z_poEditLangHeader.php:21 Z_poEditLangModule.php:17
-#: Z_poEditLangRemaining.php:24
+#: Z_poEditLangRemaining.php:25
 msgid "Current language is"
 msgstr "現在語言是"
 
@@ -42634,54 +42634,46 @@ msgstr "如語言已存在, 不能重產生"
 msgid "Full code of the new language in the format en_US"
 msgstr "完整的新語言編碼格式 en_US"
 
-#: Z_poAdmin.php:8
-msgid "UTILITY PAGE"
-msgstr "工具箱"
-
-#: Z_poAdmin.php:8
-msgid "that helps maintain language files"
-msgstr "維護語言檔"
-
-#: Z_poAdmin.php:14 Z_poAdmin.php:15 includes/MainMenuLinksArray.php:226
+#: Z_poAdmin.php:12 includes/MainMenuLinksArray.php:226
 msgid "Maintain Language Files"
 msgstr "維護語言檔"
 
-#: Z_poAdmin.php:20
+#: Z_poAdmin.php:22
 msgid "gettext is not installed on this system"
 msgstr "gettext 未安裝在這系統"
 
-#: Z_poAdmin.php:20
+#: Z_poAdmin.php:22
 msgid "You cannot use the language files without it"
 msgstr "沒有它, 不能使用語言檔案"
 
-#: Z_poAdmin.php:25 Z_poEditLangHeader.php:80 Z_poEditLangModule.php:218
+#: Z_poAdmin.php:27 Z_poEditLangHeader.php:80 Z_poEditLangModule.php:218
 msgid ""
 "You do not have write access to the required files please contact your "
 "system administrator"
 msgstr "你沒有要求檔案的寫入權限, 請聯絡你的系統管理員"
 
-#: Z_poAdmin.php:27 Z_poRebuildDefault.php:13 Z_poRebuildDefault.php:19
+#: Z_poAdmin.php:29 Z_poRebuildDefault.php:13 Z_poRebuildDefault.php:19
 #: Z_poRebuildDefault.php:20
 msgid "Rebuild the System Default Language File"
 msgstr "重建系統預設語言檔"
 
-#: Z_poAdmin.php:29 Z_poEditLangHeader.php:14 Z_poEditLangHeader.php:15
+#: Z_poAdmin.php:31 Z_poEditLangHeader.php:14 Z_poEditLangHeader.php:15
 msgid "Edit a Language File Header"
 msgstr "編輯語言檔台頭"
 
-#: Z_poAdmin.php:30 Z_poEditLangModule.php:10 Z_poEditLangModule.php:11
+#: Z_poAdmin.php:32 Z_poEditLangModule.php:10 Z_poEditLangModule.php:11
 msgid "Edit a Language File Module"
 msgstr "編輯語言檔模組"
 
-#: Z_poAdmin.php:31 Z_poEditLangRemaining.php:17 Z_poEditLangRemaining.php:18
+#: Z_poAdmin.php:33 Z_poEditLangRemaining.php:14
 msgid "Edit Remaining Strings For This Language"
 msgstr "編輯這語言餘下的字串"
 
-#: Z_poAdmin.php:32
+#: Z_poAdmin.php:34
 msgid "Download messages.po file"
 msgstr "下載 messages.po 檔案"
 
-#: Z_poAdmin.php:33
+#: Z_poAdmin.php:35
 msgid "Download messages.mo file"
 msgstr "下載 messages.mo 檔案"
 
@@ -42702,7 +42694,7 @@ msgid "Writing the rest of the language file"
 msgstr "語言檔案的其他部份寫入中"
 
 #: Z_poEditLangHeader.php:70 Z_poEditLangModule.php:96
-#: Z_poEditLangRemaining.php:74 Z_poRebuildDefault.php:38
+#: Z_poEditLangRemaining.php:75 Z_poRebuildDefault.php:38
 msgid "Done"
 msgstr "完成"
 
@@ -42717,7 +42709,7 @@ msgid "Make sure you have selected the correct language to translate!"
 msgstr "請確定你選取要翻釋的語言"
 
 #: Z_poEditLangHeader.php:86 Z_poEditLangModule.php:123
-#: Z_poEditLangRemaining.php:101
+#: Z_poEditLangRemaining.php:102
 msgid ""
 "When finished modifying you must click on Modify at the bottom in order to "
 "save changes"
@@ -42745,7 +42737,7 @@ msgstr "台頭列"
 msgid "Edit Module"
 msgstr "編輯模組"
 
-#: Z_poEditLangModule.php:16 Z_poEditLangRemaining.php:23
+#: Z_poEditLangModule.php:16 Z_poEditLangRemaining.php:24
 msgid "Utility to edit a language file module"
 msgstr "編輯語言檔模組的應用工具"
 
@@ -42755,16 +42747,16 @@ msgid ""
 "utilities to work"
 msgstr ""
 
-#: Z_poEditLangModule.php:67 Z_poEditLangRemaining.php:45
+#: Z_poEditLangModule.php:67 Z_poEditLangRemaining.php:46
 msgid "Writing the language file"
 msgstr "編寫語言檔案"
 
-#: Z_poEditLangModule.php:126 Z_poEditLangRemaining.php:104
+#: Z_poEditLangModule.php:126 Z_poEditLangRemaining.php:105
 msgid ""
 "Your existing translation file (messages.po) will be saved as messages.po.old"
 msgstr "現有的翻釋檔 (messages.po) 會儲存成 messages.po.old"
 
-#: Z_poEditLangModule.php:133 Z_poEditLangRemaining.php:111
+#: Z_poEditLangModule.php:133 Z_poEditLangRemaining.php:112
 msgid "Language File for"
 msgstr "語言檔"
 
@@ -42772,15 +42764,15 @@ msgstr "語言檔"
 msgid "Module"
 msgstr "模組"
 
-#: Z_poEditLangModule.php:146 Z_poEditLangRemaining.php:117
+#: Z_poEditLangModule.php:146 Z_poEditLangRemaining.php:118
 msgid "Default text"
 msgstr "預設文字"
 
-#: Z_poEditLangModule.php:147 Z_poEditLangRemaining.php:118
+#: Z_poEditLangModule.php:147 Z_poEditLangRemaining.php:119
 msgid "Translation"
 msgstr "翻釋"
 
-#: Z_poEditLangModule.php:148 Z_poEditLangRemaining.php:119
+#: Z_poEditLangModule.php:148 Z_poEditLangRemaining.php:120
 msgid "Exists in"
 msgstr "存在於"
 
@@ -42791,10 +42783,6 @@ msgstr "選取模組來編輯"
 #: Z_poEditLangModule.php:244
 msgid "Refresh messages with latest strings"
 msgstr "刷新訊自為最新句子"
-
-#: Z_poEditLangRemaining.php:11
-msgid "Edit Remaining Items"
-msgstr "編輯餘下商品"
 
 #: Z_poRebuildDefault.php:25
 msgid "Utility page to rebuild the system default language file"
@@ -42874,21 +42862,21 @@ msgstr "使用一個成本"
 msgid "Updated the sales analysis cost data for period"
 msgstr "期間的銷售分析成本數據已更新"
 
-#: Z_RebuildSalesAnalysis.php:5
+#: Z_RebuildSalesAnalysis.php:6
 msgid "Rebuild sales analysis Records"
 msgstr "重建銷售分析記錄"
 
-#: Z_RebuildSalesAnalysis.php:8
+#: Z_RebuildSalesAnalysis.php:9
 msgid ""
 "This script rebuilds sales analysis records. NB: all sales budget figures "
 "will be lost!"
 msgstr "這個腳本重建銷售分析的記錄。注：所有銷售預算數字將會消失！"
 
-#: Z_RebuildSalesAnalysis.php:57
+#: Z_RebuildSalesAnalysis.php:58
 msgid "The sales analysis data could not be recreated because"
 msgstr "銷售分析數據無法重新建立，因為"
 
-#: Z_RebuildSalesAnalysis.php:61
+#: Z_RebuildSalesAnalysis.php:62
 msgid ""
 "The sales analsysis data has been recreated based on current stock master "
 "and customer master information"
@@ -52391,6 +52379,15 @@ msgstr "信用卡"
 #: ../webSHOP/includes/session.php:162
 msgid "Bank Transfer"
 msgstr "銀行轉帳"
+
+#~ msgid "UTILITY PAGE"
+#~ msgstr "工具箱"
+
+#~ msgid "that helps maintain language files"
+#~ msgstr "維護語言檔"
+
+#~ msgid "Edit Remaining Items"
+#~ msgstr "編輯餘下商品"
 
 #~ msgid "Asset Category "
 #~ msgstr "資產類別"

@@ -1,17 +1,17 @@
 # webERP - Marathi Translation File.
-# Copyright (C) 2014 WebERP Contrib
+# Copyright (C) 2004 weberp.org
 # This file is distributed under the same license as the webERP package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: webERP 4.13\n"
+"Project-Id-Version: webERP 4.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-21 13:37-0600\n"
+"POT-Creation-Date: 2019-02-24 08:36-0600\n"
 "PO-Revision-Date: 2014-02-10 22:09+0530\n"
 "Last-Translator: Rajesh Kokil <rajeshkokil@hotmail.com>\n"
 "Language-Team: MARATHI LANGUAGE TEAM AT KITS <rajeshkokil@hotmail.com>\n"
-"Language: Marathi\n"
+"Language: mr_IN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -238,7 +238,7 @@ msgstr "खाते गट मिळविणे शक्य नाही क�
 #: BOMIndented.php:250 BOMIndentedReverse.php:238 BOMInquiry.php:179
 #: BOMListing.php:111 BOMs.php:202 BOMs.php:368 BOMs.php:561 BOMs.php:1052
 #: BOMs_SingleLevel.php:229 BOMs_SingleLevel.php:874
-#: CollectiveWorkOrderCost.php:283 CompanyPreferences.php:99
+#: CollectiveWorkOrderCost.php:283 CompanyPreferences.php:100
 #: CounterReturns.php:1617 CounterSales.php:2100 CounterSales.php:2188
 #: Credit_Invoice.php:285 CreditStatus.php:20 CustEDISetup.php:16
 #: CustItem.php:119 CustItem.php:205 CustItem.php:233
@@ -304,9 +304,9 @@ msgstr "नफा, तोटा"
 #: AddCustomerContacts.php:267 AddCustomerContacts.php:271
 #: AddCustomerContacts.php:274 BOMs.php:120 BOMs.php:524 BOMs.php:526
 #: BOMs_SingleLevel.php:123 BOMs_SingleLevel.php:786 BOMs_SingleLevel.php:788
-#: CompanyPreferences.php:422 CompanyPreferences.php:424
-#: CompanyPreferences.php:437 CompanyPreferences.php:439
-#: CompanyPreferences.php:452 CompanyPreferences.php:454
+#: CompanyPreferences.php:423 CompanyPreferences.php:425
+#: CompanyPreferences.php:438 CompanyPreferences.php:440
+#: CompanyPreferences.php:453 CompanyPreferences.php:455
 #: ContractCosting.php:201 Currencies.php:342 Currencies.php:490
 #: Currencies.php:492 CustomerBranches.php:440 Customers.php:658
 #: Customers.php:1048 Customers.php:1054 Customers.php:1057
@@ -378,9 +378,9 @@ msgstr "होय"
 #: BankAccounts.php:409 BankAccounts.php:411 BankAccounts.php:415
 #: BankAccounts.php:423 BOMs.php:122 BOMs.php:523 BOMs.php:527
 #: BOMs_SingleLevel.php:125 BOMs_SingleLevel.php:785 BOMs_SingleLevel.php:789
-#: CompanyPreferences.php:421 CompanyPreferences.php:425
-#: CompanyPreferences.php:436 CompanyPreferences.php:440
-#: CompanyPreferences.php:451 CompanyPreferences.php:455
+#: CompanyPreferences.php:422 CompanyPreferences.php:426
+#: CompanyPreferences.php:437 CompanyPreferences.php:441
+#: CompanyPreferences.php:452 CompanyPreferences.php:456
 #: ContractCosting.php:199 Currencies.php:344 Currencies.php:495
 #: Currencies.php:497 CustomerBranches.php:440 Customers.php:657
 #: Customers.php:1046 Customers.php:1053 Customers.php:1056
@@ -549,7 +549,7 @@ msgstr "खाते गट नाव डेटाबेसमध्ये अ�
 msgid "Edit Account Group Details"
 msgstr "संपादन खाते समुह तपशील"
 
-#: AccountGroups.php:372 CompanyPreferences.php:465
+#: AccountGroups.php:372 CompanyPreferences.php:466
 #: ConfirmDispatch_Invoice.php:717 ConfirmDispatch_Invoice.php:1814
 #: Credit_Invoice.php:1633 CustItem.php:444 FixedAssetItems.php:131
 #: FixedAssetItems.php:682 GLAccountUsers.php:149 GLBudgets.php:239
@@ -781,7 +781,7 @@ msgstr "संपर्क रेकॉर्ड जोडले गेले �
 msgid "The contact record has been deleted"
 msgstr "संपर्क रेकॉर्ड हटविले गेले आहे"
 
-#: AddCustomerContacts.php:132 CompanyPreferences.php:170
+#: AddCustomerContacts.php:132 CompanyPreferences.php:171
 #: CustomerBranches.php:402 Customers.php:1117 Customers.php:1125
 #: ImportBankTransAnalysis.php:207 PrintWOItemSlip.php:184
 #: PrintWOItemSlip.php:195 PrintWOItemSlip.php:206 ProductSpecs.php:164
@@ -1489,7 +1489,7 @@ msgstr "कोणतेही परिणाम आहेत म्हणून
 
 #: AgedSuppliers.php:286 OutstandingGRNs.php:262 PDFRemittanceAdvice.php:152
 #: SupplierBalsAtPeriodEnd.php:130 SuppPaymentRun.php:264
-#: Z_ClearPOBackOrders.php:19
+#: Z_ClearPOBackOrders.php:22
 msgid "From Supplier Code"
 msgstr "पुरवठादार कोड पासून"
 
@@ -1499,7 +1499,7 @@ msgstr "अहवालात समाविष्ट करण्यासा�
 
 #: AgedSuppliers.php:290 OutstandingGRNs.php:266 PDFRemittanceAdvice.php:156
 #: SupplierBalsAtPeriodEnd.php:134 SuppPaymentRun.php:268
-#: Z_ClearPOBackOrders.php:22
+#: Z_ClearPOBackOrders.php:25
 msgid "To Supplier Code"
 msgstr "पुरवठादार कोड"
 
@@ -2904,7 +2904,7 @@ msgstr "संख्या"
 #: DailyBankTransactions.php:162 Dashboard.php:58 GLAccountReport.php:343
 #: PaymentAllocations.php:64 PaymentAllocations.php:65 Payments.php:1133
 #: Payments.php:1372 PDFRemittanceAdvice.php:308 PurchasesReport.php:77
-#: SalesReport.php:77 ShiptsList.php:36 StockCounts.php:143 StockCounts.php:168
+#: SalesReport.php:77 ShiptsList.php:37 StockCounts.php:143 StockCounts.php:168
 #: StockCounts.php:215 StockLocMovements.php:114 StockMovements.php:135
 #: SupplierInquiry.php:207 SuppWhereAlloc.php:134 Tax.php:435
 #: WorkOrderEntry.php:798 Z_CheckAllocs.php:63
@@ -4311,7 +4311,7 @@ msgstr "निवडा"
 #: SelectRecurringSalesOrder.php:89 SelectSalesOrder.php:905
 #: SelectSalesOrder.php:926 SelectWorkOrder.php:328 Shipt_Select.php:316
 #: UserSettings.php:240 Z_poEditLangHeader.php:107 Z_poEditLangModule.php:174
-#: Z_poEditLangRemaining.php:138
+#: Z_poEditLangRemaining.php:139
 #, php-format
 msgid "Modify"
 msgstr "फेरफार करणे"
@@ -4386,146 +4386,146 @@ msgstr "आवश्यक दिनांक"
 msgid "Print W/O"
 msgstr ""
 
-#: CompanyPreferences.php:5 includes/MainMenuLinksArray.php:211
+#: CompanyPreferences.php:8 includes/MainMenuLinksArray.php:211
 msgid "Company Preferences"
 msgstr "कंपनी प्राधान्ये"
 
-#: CompanyPreferences.php:29
+#: CompanyPreferences.php:30
 msgid "The company name must be entered and be fifty characters or less long"
 msgstr "कंपनी नाव प्रविष्ट आणि लांब पन्नास किंवा त्यापेक्षा कमी असणे करणे आवश्यक आहे"
 
-#: CompanyPreferences.php:36 Suppliers.php:365 Z_ImportSuppliers.php:177
+#: CompanyPreferences.php:37 Suppliers.php:365 Z_ImportSuppliers.php:177
 msgid "The email address is not correctly formed"
 msgstr "ईमेल पत्ता योग्यरित्या स्थापना नाही"
 
-#: CompanyPreferences.php:70
+#: CompanyPreferences.php:71
 msgid "The company preferences could not be updated because"
 msgstr "कंपनी प्राधान्ये अद्यतनित करणे शक्य नाही कारण"
 
-#: CompanyPreferences.php:72
+#: CompanyPreferences.php:73
 msgid "Company preferences updated"
 msgstr "कंपनी प्राधान्ये अद्यतनित"
 
-#: CompanyPreferences.php:84
+#: CompanyPreferences.php:85
 msgid "Could not update the currency rates"
 msgstr "चलन दर अद्यतनित करू शकत नाही"
 
-#: CompanyPreferences.php:94 Customers.php:278 ShopParameters.php:184
+#: CompanyPreferences.php:95 Customers.php:278 ShopParameters.php:184
 #: Suppliers.php:621 SystemParameters.php:411
 msgid "Validation failed"
 msgstr "प्रमाणीकरण अयशस्वी"
 
-#: CompanyPreferences.php:94 ShopParameters.php:184 Suppliers.php:621
+#: CompanyPreferences.php:95 ShopParameters.php:184 Suppliers.php:621
 #: SystemParameters.php:411
 msgid "no updates or deletes took place"
 msgstr "अद्ययावत किंवा deletes झाला"
 
-#: CompanyPreferences.php:136
+#: CompanyPreferences.php:137
 msgid "The company preferences could not be retrieved because"
 msgstr "कंपनी प्राधान्ये कारण पुनर्प्राप्त करणे शक्य नाही"
 
-#: CompanyPreferences.php:170
+#: CompanyPreferences.php:171
 msgid "to appear on reports"
 msgstr "अहवाल प्रकट"
 
-#: CompanyPreferences.php:171
+#: CompanyPreferences.php:172
 msgid ""
 "Enter the name of the business. This will appear on all reports and at the "
 "top of each screen. "
 msgstr ""
 
-#: CompanyPreferences.php:175
+#: CompanyPreferences.php:176
 msgid "Official Company Number"
 msgstr "अधिकृत कंपनी क्रमांक"
 
-#: CompanyPreferences.php:180
+#: CompanyPreferences.php:181
 msgid "Tax Authority Reference"
 msgstr "कर प्राधिकरण संदर्भ"
 
-#: CompanyPreferences.php:185 Factors.php:210
+#: CompanyPreferences.php:186 Factors.php:210
 msgid "Address Line 1"
 msgstr "लाइन 1 पत्ता"
 
-#: CompanyPreferences.php:186
+#: CompanyPreferences.php:187
 msgid ""
 "Enter the first line of the company registered office. This will appear on "
 "invoices and statements."
 msgstr "कंपनी नोंदणीकृत कार्यालय पहिली ओळ प्रविष्ट करा. या पावत्या आणि वाक्य दिसेल."
 
-#: CompanyPreferences.php:190 Factors.php:213
+#: CompanyPreferences.php:191 Factors.php:213
 msgid "Address Line 2"
 msgstr "लाईन 2 पत्ता"
 
-#: CompanyPreferences.php:191
+#: CompanyPreferences.php:192
 msgid ""
 "Enter the second line of the company registered office. This will appear on "
 "invoices and statements."
 msgstr "कंपनी नोंदणीकृत कार्यालय दुसरी ओळ प्रविष्ट करा. या पावत्या आणि वाक्य दिसेल."
 
-#: CompanyPreferences.php:195 Factors.php:217
+#: CompanyPreferences.php:196 Factors.php:217
 msgid "Address Line 3"
 msgstr "लाईन 3 पत्ता"
 
-#: CompanyPreferences.php:196
+#: CompanyPreferences.php:197
 msgid ""
 "Enter the third line of the company registered office. This will appear on "
 "invoices and statements."
 msgstr "कंपनी नोंदणीकृत कार्यालय तिसरी ओळ प्रविष्ट करा. या पावत्या आणि वाक्य दिसेल."
 
-#: CompanyPreferences.php:200 Factors.php:221
+#: CompanyPreferences.php:201 Factors.php:221
 msgid "Address Line 4"
 msgstr "लाईन 4 पत्ता"
 
-#: CompanyPreferences.php:201
+#: CompanyPreferences.php:202
 msgid ""
 "Enter the fourth line of the company registered office. This will appear on "
 "invoices and statements."
 msgstr "कंपनी नोंदणीकृत कार्यालय चौथ्या ओळ प्रविष्ट करा. या पावत्या आणि वाक्य दिसेल."
 
-#: CompanyPreferences.php:205 Factors.php:225
+#: CompanyPreferences.php:206 Factors.php:225
 msgid "Address Line 5"
 msgstr "लाइन 5 पत्ता"
 
-#: CompanyPreferences.php:210 Factors.php:229
+#: CompanyPreferences.php:211 Factors.php:229
 msgid "Address Line 6"
 msgstr "लाइन 6 पत्ता"
 
-#: CompanyPreferences.php:215
+#: CompanyPreferences.php:216
 msgid "Telephone Number"
 msgstr "दूरध्वनी क्रमांक"
 
-#: CompanyPreferences.php:216
+#: CompanyPreferences.php:217
 msgid ""
 "Enter the main telephone number of the company registered office. This will "
 "appear on invoices and statements."
 msgstr ""
 "कंपनी नोंदणीकृत कार्यालय मुख्य टेलिफोन नंबर प्रविष्ट करा. या पावत्या आणि वाक्य दिसेल."
 
-#: CompanyPreferences.php:220
+#: CompanyPreferences.php:221
 msgid "Facsimile Number"
 msgstr "पुस्तक क्रमांक"
 
-#: CompanyPreferences.php:225 CustLoginSetup.php:161 Suppliers.php:735
+#: CompanyPreferences.php:226 CustLoginSetup.php:161 Suppliers.php:735
 #: Suppliers.php:1021 SupplierTenderCreate.php:414 SuppLoginSetup.php:144
 #: WWW_Users.php:520 ../webSHOP/Checkout.php:578
 msgid "Email Address"
 msgstr "ईमेल पत्ता"
 
-#: CompanyPreferences.php:226
+#: CompanyPreferences.php:227
 msgid ""
 "Enter the main company email address. This will appear on invoices and "
 "statements."
 msgstr "मुख्य कंपनी ईमेल पत्ता प्रविष्ट करा. या पावत्या आणि वाक्य दिसेल."
 
-#: CompanyPreferences.php:234
+#: CompanyPreferences.php:235
 msgid "Home Currency"
 msgstr "घर चलनासंबंधी"
 
-#: CompanyPreferences.php:258
+#: CompanyPreferences.php:259
 msgid "Debtors Control GL Account"
 msgstr "Debtors नियंत्रण जी.एल. खाते"
 
-#: CompanyPreferences.php:259
+#: CompanyPreferences.php:260
 msgid ""
 "Select the general ledger account to be used for posting the local currency "
 "value of all customer transactions to. This account will always represent "
@@ -4536,11 +4536,11 @@ msgstr ""
 "हे खाते नेहमी व्यवसाय ग्राहकांना द्वारे owed एकूण रक्कम प्रतिनिधित्व करेल. केवळ ताळेबंद खाती "
 "या निवडीसाठी उपलब्ध आहेत."
 
-#: CompanyPreferences.php:275
+#: CompanyPreferences.php:276
 msgid "Creditors Control GL Account"
 msgstr "धनको जी.एल. खाते नियंत्रण"
 
-#: CompanyPreferences.php:276
+#: CompanyPreferences.php:277
 msgid ""
 "Select the general ledger account to be used for posting the local currency "
 "value of all supplier transactions to. This account will always represent "
@@ -4551,15 +4551,15 @@ msgstr ""
 "निवडा. हे खाते नेहमी पुरवठादार व्यवसायातील द्वारे owed एकूण रक्कम प्रतिनिधित्व करेल. केवळ "
 "ताळेबंद खाती या निवडीसाठी उपलब्ध आहेत."
 
-#: CompanyPreferences.php:292
+#: CompanyPreferences.php:293
 msgid "Payroll Net Pay Clearing GL Account"
 msgstr "वेतनपट नेट पे क्लिअरिंग जी.एल. खाते"
 
-#: CompanyPreferences.php:309
+#: CompanyPreferences.php:310
 msgid "Goods Received Clearing GL Account"
 msgstr "वस्तू क्लिअरिंग जी.एल. खाते प्राप्त"
 
-#: CompanyPreferences.php:310
+#: CompanyPreferences.php:311
 msgid ""
 "Select the general ledger account to be used for posting the cost of goods "
 "received pending the entry of supplier invoices for the goods. This account "
@@ -4570,11 +4570,11 @@ msgstr ""
 "च्या प्रविष्टी प्रलंबित झाला. हे खाते आपूर्तिकर्त्याकडून invoiced अजून प्राप्त माल मूल्य "
 "प्रतिनिधित्व करेल. केवळ ताळेबंद खाती या निवडीसाठी उपलब्ध आहेत."
 
-#: CompanyPreferences.php:325
+#: CompanyPreferences.php:326
 msgid "Retained Earning Clearing GL Account"
 msgstr "क्लिअरिंग जी.एल. खाते मिळवून ठेवली"
 
-#: CompanyPreferences.php:326
+#: CompanyPreferences.php:327
 msgid ""
 "Select the general ledger account to be used for clearing profit and loss "
 "accounts to that represents the accumulated retained profits of the "
@@ -4583,15 +4583,15 @@ msgstr ""
 "त्या नफा आणि तोटा खाती साफ वापरले जाणाऱ्या सामान्य खातेवही खाते निवडा व्यवसायाच्या "
 "ठेवली जमा नफा प्रस्तुत करते. केवळ ताळेबंद खाती या निवडीसाठी उपलब्ध आहेत."
 
-#: CompanyPreferences.php:342
+#: CompanyPreferences.php:343
 msgid "Freight Re-charged GL Account"
 msgstr "सामानाचे पुन्हा चार्ज जी.एल. खाते"
 
-#: CompanyPreferences.php:366
+#: CompanyPreferences.php:367
 msgid "Sales Exchange Variances GL Account"
 msgstr "विक्री एक्सचेंज Variances जी.एल. खाते"
 
-#: CompanyPreferences.php:367
+#: CompanyPreferences.php:368
 msgid ""
 "Select the general ledger account to be used for posting accounts receivable "
 "exchange rate differences to - where the exchange rate on sales invocies is "
@@ -4605,11 +4605,11 @@ msgstr ""
 "फरक पोस्ट वापरले जाणाऱ्या सामान्य खातेवही खाते निवडा. केवळ नफा आणि तोटा सामान्य "
 "खातेवही खाती या निवडीसाठी उपलब्ध आहेत."
 
-#: CompanyPreferences.php:383
+#: CompanyPreferences.php:384
 msgid "Purchases Exchange Variances GL Account"
 msgstr "खरेदी एक्सचेंज Variances जी.एल. खाते"
 
-#: CompanyPreferences.php:384
+#: CompanyPreferences.php:385
 msgid ""
 "Select the general ledger account to be used for posting the exchange "
 "differences on the accounts payable transactions to. Supplier invoices "
@@ -4623,11 +4623,11 @@ msgstr ""
 "स्वयंचलितपणे गणना आणि हे सामान्य खातेवही खाते पोस्ट करा. केवळ नफा आणि तोटा सामान्य "
 "खातेवही खाती या निवडीसाठी उपलब्ध आहेत."
 
-#: CompanyPreferences.php:400
+#: CompanyPreferences.php:401
 msgid "Payment Discount GL Account"
 msgstr "भरणा सवलत जी.एल. खाते"
 
-#: CompanyPreferences.php:401
+#: CompanyPreferences.php:402
 msgid ""
 "Select the general ledger account to be used for posting the value of "
 "payment discounts given to customers at the time of entering a receipt. Only "
@@ -4636,11 +4636,11 @@ msgstr ""
 "एक पावती प्रविष्ट वेळी ग्राहकांना देण्यात देयक सवलत मूल्य पोस्ट वापरले जाणाऱ्या सामान्य "
 "खातेवही खाते निवडा. केवळ नफा आणि तोटा सामान्य खातेवही खाती या निवडीसाठी उपलब्ध आहेत."
 
-#: CompanyPreferences.php:417
+#: CompanyPreferences.php:418
 msgid "Create GL entries for accounts receivable transactions"
 msgstr "खाती स्वीकारण्याजोगे व्यवहारांसाठी जी.एल. नोंदी तयार"
 
-#: CompanyPreferences.php:418
+#: CompanyPreferences.php:419
 msgid ""
 "Select yes to ensure that webERP creates general ledger journals for all "
 "accounts receivable transactions. webERP will maintain the debtors control "
@@ -4651,11 +4651,11 @@ msgstr ""
 "करण्यासाठी होय निवडा. webERP तो नेहमी स्थानिक चलनात ग्राहक शिल्लक यादीत समतोल "
 "पाहिजे याची खात्री करण्यासाठी (वरील निवडलेले) debtors नियंत्रण खाते ठेवेल."
 
-#: CompanyPreferences.php:432
+#: CompanyPreferences.php:433
 msgid "Create GL entries for accounts payable transactions"
 msgstr "खाती देय व्यवहारांसाठी जी.एल. नोंदी तयार"
 
-#: CompanyPreferences.php:433
+#: CompanyPreferences.php:434
 msgid ""
 "Select yes to ensure that webERP creates general ledger journals for all "
 "accounts payable transactions. webERP will maintain the creditors control "
@@ -4666,11 +4666,11 @@ msgstr ""
 "करण्यासाठी होय निवडा. webERP तो नेहमी स्थानिक चलनात पुरवठादार शिल्लक यादीत समतोल "
 "पाहिजे याची खात्री करण्यासाठी (वरील निवडलेले) धनको नियंत्रण खाते ठेवेल."
 
-#: CompanyPreferences.php:447
+#: CompanyPreferences.php:448
 msgid "Create GL entries for stock transactions"
 msgstr "स्टॉक व्यवहारांसाठी जी.एल. नोंदी तयार"
 
-#: CompanyPreferences.php:448
+#: CompanyPreferences.php:449
 msgid ""
 "Select yes to ensure that webERP creates general ledger journals for all "
 "inventory transactions. webERP will maintain the stock control accounts "
@@ -4809,7 +4809,7 @@ msgid "Confirm Dispatch and Invoice"
 msgstr "पुष्टी डिस्पॅच आणि चलन"
 
 #: ConfirmDispatch_Invoice.php:332 CustEDISetup.php:93 Customers.php:458
-#: Customers.php:727 Customers.php:765 DeliveryDetails.php:856 geocode.php:53
+#: Customers.php:727 Customers.php:765 DeliveryDetails.php:856 geocode.php:54
 #: OrderDetails.php:84 PickingLists.php:292 SalesAnalRepts.php:29
 #: SalesAnalRepts.php:31 SalesInquiry.php:781 SalesInquiry.php:791
 #: SalesInquiry.php:813 SalesInquiry.php:961 SalesInquiry.php:976
@@ -6167,7 +6167,7 @@ msgstr "अंदाजित इतर खर्च"
 #: PO_SelectOSPurchOrder.php:607 PO_SelectPurchOrder.php:421 PurchData.php:271
 #: ReprintGRN.php:84 SelectProduct.php:343 SelectSupplier.php:177
 #: SelectSupplier.php:178 ShipmentCosting.php:527 ShipmentCosting.php:595
-#: Shipt_Select.php:287 ShiptsList.php:10 SuppCreditGRNs.php:288
+#: Shipt_Select.php:287 ShiptsList.php:11 SuppCreditGRNs.php:288
 #: SupplierAllocations.php:556 SupplierAllocations.php:625
 #: SupplierCredit.php:258 SupplierGRNAndInvoiceInquiry.php:30
 #: SupplierInquiry.php:118 SupplierInquiry.php:119 SupplierInvoice.php:610
@@ -8221,7 +8221,7 @@ msgstr "आपण या क्रेडिट स्थिती रेकॉ�
 msgid "Show Defined Credit Status Codes"
 msgstr "दर्शवा परिभाषित क्रेडिट स्थिती कोड"
 
-#: Currencies.php:6 includes/MainMenuLinksArray.php:211
+#: Currencies.php:8 includes/MainMenuLinksArray.php:211
 msgid "Currencies Maintenance"
 msgstr "चलने देखभाल"
 
@@ -9451,7 +9451,7 @@ msgid ""
 msgstr "पॅकेज कमी 60 दिवसांत साधारणपणे जगात कुठेही seafreight पाठवलेल्या जाऊ शकते"
 
 #: CustomerBranches.php:100 geocode_genxml_customers.php:20
-#: geocode_genxml_suppliers.php:20 geocode.php:11 geocode.php:29 geocode.php:34
+#: geocode_genxml_suppliers.php:20 geocode.php:12 geocode.php:30 geocode.php:35
 #: SelectCustomer.php:477 SelectCustomer.php:510 SelectCustomer.php:632
 #: SelectSupplier.php:28 SelectSupplier.php:37 SelectSupplier.php:387
 #: Suppliers.php:405
@@ -14185,27 +14185,27 @@ msgstr ""
 msgid "Geocode Generate XML"
 msgstr "Geocode एक्स एम एल व्युत्पन्न"
 
-#: geocode.php:4
+#: geocode.php:5
 msgid "Geocode Generate"
 msgstr "Geocode व्युत्पन्न"
 
-#: geocode.php:25 GeocodeSetup.php:134 GeocodeSetup.php:221
+#: geocode.php:26 GeocodeSetup.php:134 GeocodeSetup.php:221
 msgid "Geocode Setup"
 msgstr "Geocode सेटअप"
 
-#: geocode.php:25
+#: geocode.php:26
 msgid "Geocoding of Customers and Suppliers"
 msgstr "ग्राहक आणि पुरवठादारांच्या Geocoding"
 
-#: geocode.php:88
+#: geocode.php:89
 msgid "failed to geocode."
 msgstr "Geocode करण्यात अयशस्वी."
 
-#: geocode.php:105
+#: geocode.php:106
 msgid "Supplier Code: "
 msgstr ""
 
-#: geocode.php:144
+#: geocode.php:145
 msgid "Go back to Geocode Setup"
 msgstr "सेटअप Geocode परत जा"
 
@@ -18208,29 +18208,29 @@ msgstr "आपण पूर्ण म्हणून ही देखभाल �
 msgid "Mark Completed"
 msgstr "मार्क पूर्ण"
 
-#: ManualContents.php:20
+#: ManualContents.php:21
 msgid "webERP Manual"
 msgstr ""
 
-#: ManualContents.php:59 ManualContents.php:81 ManualContents.php:142
+#: ManualContents.php:60 ManualContents.php:82 ManualContents.php:143
 msgid "Table of Contents"
 msgstr ""
 
-#: ManualContents.php:60
+#: ManualContents.php:61
 msgid "Go to Bottom"
 msgstr ""
 
-#: ManualContents.php:74
+#: ManualContents.php:75
 msgid ""
 "Click on a link to view a page, or check boxes and click on \"Display Checked"
 "\" to view selected in one page"
 msgstr ""
 
-#: ManualContents.php:75 ManualContents.php:109
+#: ManualContents.php:76 ManualContents.php:110
 msgid "Display Checked"
 msgstr ""
 
-#: ManualContents.php:141
+#: ManualContents.php:142
 msgid "Go to Top"
 msgstr ""
 
@@ -29956,7 +29956,7 @@ msgstr "डेटाबेस मध्ये स्थित करणे श�
 msgid "Shipment Details"
 msgstr "चढविणे तपशील"
 
-#: ShipmentCosting.php:58 Shipt_Select.php:288 ShiptsList.php:37
+#: ShipmentCosting.php:58 Shipt_Select.php:288 ShiptsList.php:38
 msgid "Vessel"
 msgstr "जहाज"
 
@@ -30391,27 +30391,27 @@ msgstr "अपेक्षित आगमन"
 msgid "Close"
 msgstr "बंद करणे"
 
-#: ShiptsList.php:6
+#: ShiptsList.php:7
 msgid "Shipments Open Inquiry"
 msgstr "शिपमेंट्समध्ये उघडा चौकशी"
 
-#: ShiptsList.php:10
+#: ShiptsList.php:11
 msgid "Open Shipments for"
 msgstr "खुल्या शिपमेंट्समध्ये"
 
-#: ShiptsList.php:14
+#: ShiptsList.php:15
 msgid "This page must be given the supplier code to look for shipments for"
 msgstr "या पृष्ठासाठी शिपमेंट्समध्ये शोधणे पुरवठादार कोड दिले पाहिजे"
 
-#: ShiptsList.php:24
+#: ShiptsList.php:25
 msgid "No shipments were returned from the database because"
 msgstr "नाही शिपमेंट्समध्ये डेटाबेस परत आले कारण"
 
-#: ShiptsList.php:28
+#: ShiptsList.php:29
 msgid "There are no open shipments currently set up for"
 msgstr "सध्या सेट उघडे शिपमेंट्समध्ये आहेत"
 
-#: ShiptsList.php:38 SuppShiptChgs.php:136
+#: ShiptsList.php:39 SuppShiptChgs.php:136
 msgid "ETA"
 msgstr "ETA"
 
@@ -41536,11 +41536,11 @@ msgstr "हेतुपूर्वक केलेले"
 msgid "Check Period Sales Ledger Control Account"
 msgstr "कालावधी विक्री खतावणी नियंत्रण खाते तपासा"
 
-#: Z_ClearPOBackOrders.php:4
+#: Z_ClearPOBackOrders.php:7
 msgid "UTILITY PAGE To Clear purchase orders with quantity on back order"
 msgstr "परत ऑर्डर वर प्रमाणात सह खरेदी ऑर्डर साफ करण्यासाठी उपयुक्तता PAGE"
 
-#: Z_ClearPOBackOrders.php:26
+#: Z_ClearPOBackOrders.php:29
 msgid "Clear Supplier Back Orders"
 msgstr "स्पष्ट पुरवठादार मागे ऑर्डर"
 
@@ -43095,7 +43095,7 @@ msgid "If the company name already exists then you cannot recreate it"
 msgstr "कंपनी नाव आधीच अस्तित्वात असेल तर आपण ते पुन्हा तयार करू शकत नाही"
 
 #: Z_MakeNewCompany.php:235 Z_poAddLanguage.php:87 Z_poEditLangHeader.php:90
-#: Z_poEditLangModule.php:126 Z_poEditLangRemaining.php:104
+#: Z_poEditLangModule.php:126 Z_poEditLangRemaining.php:105
 #: Z_poRebuildDefault.php:50
 msgid "PLEASE NOTE"
 msgstr "कृपया लक्षात ठेवा"
@@ -43145,12 +43145,12 @@ msgstr ""
 msgid "New Language"
 msgstr "नवीन भाषा"
 
-#: Z_poAddLanguage.php:25 Z_poAddLanguage.php:26 Z_poAdmin.php:28
+#: Z_poAddLanguage.php:25 Z_poAddLanguage.php:26 Z_poAdmin.php:30
 msgid "Add a New Language to the System"
 msgstr "प्रणालीवर एक नवीन भाषा जोडा"
 
 #: Z_poAddLanguage.php:30 Z_poEditLangHeader.php:19 Z_poEditLangModule.php:15
-#: Z_poEditLangRemaining.php:22 Z_poRebuildDefault.php:24
+#: Z_poEditLangRemaining.php:23 Z_poRebuildDefault.php:24
 msgid "Back to the translation menu"
 msgstr "मागे अनुवाद मेनू"
 
@@ -43159,7 +43159,7 @@ msgid "Utility to create a new language file"
 msgstr "नवीन भाषा फाइल तयार करण्यात उपयुक्तता"
 
 #: Z_poAddLanguage.php:32 Z_poEditLangHeader.php:21 Z_poEditLangModule.php:17
-#: Z_poEditLangRemaining.php:24
+#: Z_poEditLangRemaining.php:25
 msgid "Current language is"
 msgstr "वर्तमान भाषा आहे"
 
@@ -43204,54 +43204,46 @@ msgstr "भाषा अस्तित्वात असल्यास नं
 msgid "Full code of the new language in the format en_US"
 msgstr "स्वरूप en_US नवीन भाषा पूर्ण कोड"
 
-#: Z_poAdmin.php:8
-msgid "UTILITY PAGE"
-msgstr "सुविधांसाठीचे PAGE"
-
-#: Z_poAdmin.php:8
-msgid "that helps maintain language files"
-msgstr "भाषा फायली देखरेख मदत करते"
-
-#: Z_poAdmin.php:14 Z_poAdmin.php:15 includes/MainMenuLinksArray.php:226
+#: Z_poAdmin.php:12 includes/MainMenuLinksArray.php:226
 msgid "Maintain Language Files"
 msgstr "भाषा फायली देखरेख"
 
-#: Z_poAdmin.php:20
+#: Z_poAdmin.php:22
 msgid "gettext is not installed on this system"
 msgstr "gettext या प्रणालीवर प्रतिष्ठापीत नाही"
 
-#: Z_poAdmin.php:20
+#: Z_poAdmin.php:22
 msgid "You cannot use the language files without it"
 msgstr "आपण ते न भाषा फायली वापरू शकत नाही"
 
-#: Z_poAdmin.php:25 Z_poEditLangHeader.php:80 Z_poEditLangModule.php:218
+#: Z_poAdmin.php:27 Z_poEditLangHeader.php:80 Z_poEditLangModule.php:218
 msgid ""
 "You do not have write access to the required files please contact your "
 "system administrator"
 msgstr "तुम्ही तुमची प्रणाली प्रशासकाशी संपर्क साधा आवश्यक फायली लिहिण्यासाठी प्रवेश नाही"
 
-#: Z_poAdmin.php:27 Z_poRebuildDefault.php:13 Z_poRebuildDefault.php:19
+#: Z_poAdmin.php:29 Z_poRebuildDefault.php:13 Z_poRebuildDefault.php:19
 #: Z_poRebuildDefault.php:20
 msgid "Rebuild the System Default Language File"
 msgstr "प्रणाली मुलभूत भाषा फाइल पुनः बिल्ड"
 
-#: Z_poAdmin.php:29 Z_poEditLangHeader.php:14 Z_poEditLangHeader.php:15
+#: Z_poAdmin.php:31 Z_poEditLangHeader.php:14 Z_poEditLangHeader.php:15
 msgid "Edit a Language File Header"
 msgstr "भाषा फाइल शीर्षलेख संपादित"
 
-#: Z_poAdmin.php:30 Z_poEditLangModule.php:10 Z_poEditLangModule.php:11
+#: Z_poAdmin.php:32 Z_poEditLangModule.php:10 Z_poEditLangModule.php:11
 msgid "Edit a Language File Module"
 msgstr "भाषा फाइल मॉड्यूल संपादित"
 
-#: Z_poAdmin.php:31 Z_poEditLangRemaining.php:17 Z_poEditLangRemaining.php:18
+#: Z_poAdmin.php:33 Z_poEditLangRemaining.php:14
 msgid "Edit Remaining Strings For This Language"
 msgstr "ही भाषा संपादित उर्वरित स्ट्रिंग"
 
-#: Z_poAdmin.php:32
+#: Z_poAdmin.php:34
 msgid "Download messages.po file"
 msgstr "Messages.po फाइल डाउनलोड करा"
 
-#: Z_poAdmin.php:33
+#: Z_poAdmin.php:35
 msgid "Download messages.mo file"
 msgstr "Messages.mo फाइल डाउनलोड करा"
 
@@ -43272,7 +43264,7 @@ msgid "Writing the rest of the language file"
 msgstr "भाषा फाइल उर्वरीत लेखन"
 
 #: Z_poEditLangHeader.php:70 Z_poEditLangModule.php:96
-#: Z_poEditLangRemaining.php:74 Z_poRebuildDefault.php:38
+#: Z_poEditLangRemaining.php:75 Z_poRebuildDefault.php:38
 msgid "Done"
 msgstr "डू 'क्रियापदाचे भूतकाळी रूप"
 
@@ -43288,7 +43280,7 @@ msgid "Make sure you have selected the correct language to translate!"
 msgstr "आपण अनुवाद करण्याचा योग्य भाषा निवडली खात्री करा!"
 
 #: Z_poEditLangHeader.php:86 Z_poEditLangModule.php:123
-#: Z_poEditLangRemaining.php:101
+#: Z_poEditLangRemaining.php:102
 msgid ""
 "When finished modifying you must click on Modify at the bottom in order to "
 "save changes"
@@ -43317,7 +43309,7 @@ msgstr "शीर्षक ओळ"
 msgid "Edit Module"
 msgstr "संपादित मॉड्यूल"
 
-#: Z_poEditLangModule.php:16 Z_poEditLangRemaining.php:23
+#: Z_poEditLangModule.php:16 Z_poEditLangRemaining.php:24
 msgid "Utility to edit a language file module"
 msgstr "एक भाषा फाइल घटक संपादित करण्यासाठी उपयुक्तता"
 
@@ -43327,17 +43319,17 @@ msgid ""
 "utilities to work"
 msgstr ""
 
-#: Z_poEditLangModule.php:67 Z_poEditLangRemaining.php:45
+#: Z_poEditLangModule.php:67 Z_poEditLangRemaining.php:46
 msgid "Writing the language file"
 msgstr "भाषा फाइल लेखन"
 
-#: Z_poEditLangModule.php:126 Z_poEditLangRemaining.php:104
+#: Z_poEditLangModule.php:126 Z_poEditLangRemaining.php:105
 msgid ""
 "Your existing translation file (messages.po) will be saved as messages.po.old"
 msgstr ""
 "आपल्या विद्यमान अनुवाद फाइल (messages.po) messages.po.old म्हणून जतन केले जातील"
 
-#: Z_poEditLangModule.php:133 Z_poEditLangRemaining.php:111
+#: Z_poEditLangModule.php:133 Z_poEditLangRemaining.php:112
 msgid "Language File for"
 msgstr "भाषा फाइल"
 
@@ -43345,15 +43337,15 @@ msgstr "भाषा फाइल"
 msgid "Module"
 msgstr "घटक"
 
-#: Z_poEditLangModule.php:146 Z_poEditLangRemaining.php:117
+#: Z_poEditLangModule.php:146 Z_poEditLangRemaining.php:118
 msgid "Default text"
 msgstr "डीफॉल्ट मजकूर"
 
-#: Z_poEditLangModule.php:147 Z_poEditLangRemaining.php:118
+#: Z_poEditLangModule.php:147 Z_poEditLangRemaining.php:119
 msgid "Translation"
 msgstr "भाषांतर"
 
-#: Z_poEditLangModule.php:148 Z_poEditLangRemaining.php:119
+#: Z_poEditLangModule.php:148 Z_poEditLangRemaining.php:120
 msgid "Exists in"
 msgstr "विद्यमान"
 
@@ -43364,10 +43356,6 @@ msgstr "संपादित करण्यासाठी मॉड्यू�
 #: Z_poEditLangModule.php:244
 msgid "Refresh messages with latest strings"
 msgstr "नवीनतम स्ट्रिंग संदेश रीफ्रेश"
-
-#: Z_poEditLangRemaining.php:11
-msgid "Edit Remaining Items"
-msgstr "उर्वरित आयटम संपादित करा"
 
 #: Z_poRebuildDefault.php:25
 msgid "Utility page to rebuild the system default language file"
@@ -43450,21 +43438,21 @@ msgstr "एक खर्चाच्या वापरून"
 msgid "Updated the sales analysis cost data for period"
 msgstr "कालावधीसाठी विक्री विश्लेषण खर्च डेटा अद्यतनित"
 
-#: Z_RebuildSalesAnalysis.php:5
+#: Z_RebuildSalesAnalysis.php:6
 msgid "Rebuild sales analysis Records"
 msgstr ""
 
-#: Z_RebuildSalesAnalysis.php:8
+#: Z_RebuildSalesAnalysis.php:9
 msgid ""
 "This script rebuilds sales analysis records. NB: all sales budget figures "
 "will be lost!"
 msgstr ""
 
-#: Z_RebuildSalesAnalysis.php:57
+#: Z_RebuildSalesAnalysis.php:58
 msgid "The sales analysis data could not be recreated because"
 msgstr ""
 
-#: Z_RebuildSalesAnalysis.php:61
+#: Z_RebuildSalesAnalysis.php:62
 msgid ""
 "The sales analsysis data has been recreated based on current stock master "
 "and customer master information"
@@ -53063,6 +53051,15 @@ msgstr "क्रेडिट कार्ड"
 #: ../webSHOP/includes/session.php:162
 msgid "Bank Transfer"
 msgstr "बँक हस्तांतरण"
+
+#~ msgid "UTILITY PAGE"
+#~ msgstr "सुविधांसाठीचे PAGE"
+
+#~ msgid "that helps maintain language files"
+#~ msgstr "भाषा फायली देखरेख मदत करते"
+
+#~ msgid "Edit Remaining Items"
+#~ msgstr "उर्वरित आयटम संपादित करा"
 
 #~ msgid "Language:"
 #~ msgstr "भाषा:"
