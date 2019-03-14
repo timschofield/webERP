@@ -1,9 +1,10 @@
 <?php
-// GLStatements.php
-// Shows a set of financial statements.
-// This program is under the GNU General Public License, last version. 2016-10-08.
-// This creative work is under the CC BY-NC-SA, last version. 2016-10-08.
-/*
+/*	GLStatements.php
+	Shows a set of financial statements.
+	This program is under the GNU General Public License, last version. 2016-10-08.
+	This creative work is under the CC BY-NC-SA, last version. 2016-10-08.
+
+
 Info about financial statements: IAS 1 - Presentation of Financial Statements.
 
 Parameters:
@@ -266,26 +267,33 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 		 		'</td>
 			</tr>',
 	// Show the statement of changes in equity:
+	if(file_exists('GLChangesInEquity.php')) {// Provisional, to be replaced by a rights verification.
+		echo
 			'<tr>',
 			 	'<td><label for="ShowChangesInEquity">', _('Show the statement of changes in equity'), '</label></td>
 			 	<td><input', ($_POST['ShowChangesInEquity'] ? ' checked="checked"' : ''), ' id="ShowChangesInEquity" name="ShowChangesInEquity" type="checkbox">', // "Checked" if ShowChangesInEquity is set AND it is TRUE.
 			 		fShowFieldHelp(_('Check this box to show the statement of changes in equity')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
 		 		'</td>
-			</tr>',
+			</tr>';
+	}
 	// Show the statement of cash flows:
-			'<tr>',
+	echo	'<tr>',
 			 	'<td><label for="ShowCashFlows">', _('Show the statement of cash flows'), '</label></td>
 			 	<td><input', ($_POST['ShowCashFlows'] ? ' checked="checked"' : ''), ' id="ShowCashFlows" name="ShowCashFlows" type="checkbox">', // "Checked" if ShowCashFlows is set AND it is TRUE.
 			 		fShowFieldHelp(_('Check this box to show the statement of cash flows')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
 		 		'</td>
 			</tr>',
 	// Show the notes:
+	if(file_exists('GLNotes.php')) {// Provisional, to be replaced by a rights verification.
+		echo
 			'<tr>',
 			 	'<td><label for="ShowNotes">', _('Show the notes'), '</label></td>
 			 	<td><input', ($_POST['ShowNotes'] ? ' checked="checked"' : ''), ' id="ShowNotes" name="ShowNotes" type="checkbox">', // "Checked" if ShowNotes is set AND it is TRUE.
 			 		fShowFieldHelp(_('Check this box to show the notes that summarize the significant accounting policies and other explanatory information')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
 		 		'</td>
-			</tr>',
+			</tr>';
+	}
+	echo
 		'</tbody></table>';
 		'</form>';
 }
