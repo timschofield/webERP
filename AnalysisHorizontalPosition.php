@@ -115,11 +115,13 @@ if(!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 	echo		'</select></td>
 			</tr>
 			<tr>
-				<td>', _('Detail or summary'), ':</td>
-				<td><select name="ShowDetail" required="required" title="', _('Selecting Summary will show on the totals at the account group level'), '" >
+				<td><label for="ShowDetail">', _('Detail Or Summary'), '</label></td>
+				<td><select name="ShowDetail" required="required">
 					<option value="Summary">', _('Summary'), '</option>
 					<option selected="selected" value="Detailed">', _('All Accounts'), '</option>
-					</select></td>
+					</select>',
+			 		fShowFieldHelp(_('Selecting Summary will show on the totals at the account group level')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
+		 		'</td>
 			</tr>',
 	// Show accounts with zero balance:
 			'<tr>',

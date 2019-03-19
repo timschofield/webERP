@@ -233,7 +233,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 				</td>
 			</tr>
 			<tr>
-				<td>', _('Select Period'), ':</td>
+				<td>', _('Select Period'), '</td>
 				<td>', ReportPeriodList($_POST['Period'], array('l', 't')), fShowFieldHelp(_('Select a period instead of using the beginning and end of the reporting period.')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
 				'</td>
 			</tr>',
@@ -264,7 +264,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 			 	<td><input', ($_POST['ShowComprehensiveIncome'] ? ' checked="checked"' : ''), ' id="ShowComprehensiveIncome" name="ShowComprehensiveIncome" type="checkbox">', // "Checked" if ShowComprehensiveIncome is set AND it is TRUE.
 			 		fShowFieldHelp(_('Check this box to show the statement of comprehensive income')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
 		 		'</td>
-			</tr>',
+			</tr>';
 	// Show the statement of changes in equity:
 	if(file_exists('GLChangesInEquity.php')) {// Provisional, to be replaced by a rights verification.
 		echo
@@ -281,7 +281,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 			 	<td><input', ($_POST['ShowCashFlows'] ? ' checked="checked"' : ''), ' id="ShowCashFlows" name="ShowCashFlows" type="checkbox">', // "Checked" if ShowCashFlows is set AND it is TRUE.
 			 		fShowFieldHelp(_('Check this box to show the statement of cash flows')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
 		 		'</td>
-			</tr>',
+			</tr>';
 	// Show the notes:
 	if(file_exists('GLNotes.php')) {// Provisional, to be replaced by a rights verification.
 		echo
