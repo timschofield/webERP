@@ -796,15 +796,15 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 		_('webERP is an "accrual" based system (not a "cash based" system). Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.'));// Function fShowPageHelp() in ~/includes/MiscFunctions.php
 	echo // Shows a form to input the report parameters:
 		'<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
-		'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '"/>', // Form's head.
+		'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />', // Input table:
 		// Input table:
-		'<table class="selection">',
-		// Content of the header and footer of the input table:
-		'<thead>
+		'<table class="selection">', // Content of the header and footer of the input table:
+/*		'<thead>
 			<tr>
 				<th colspan="2">', _('Report Parameters'), '</th>
 			</tr>
-		</thead><tfoot>
+		</thead>',*/
+		'<tfoot>
 			<tr>
 				<td colspan="2">',
 					'<div class="centre">',

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.15\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-24 08:36-0600\n"
-"PO-Revision-Date: 2019-02-20 20:16-0600\n"
+"PO-Revision-Date: 2019-03-18 20:26-0600\n"
 "Last-Translator: Rafael E. Chacón <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: French <none>\n"
 "Language: fr_FR\n"
@@ -1657,7 +1657,7 @@ msgstr "OU"
 #: GLCashFlowsIndirect.php:862 GLProfit_Loss.php:140 GLStatements.php:236
 #: GLTagProfit_Loss.php:112 GLTrialBalance.php:117 SalesGraph.php:103
 msgid "Select Period"
-msgstr ""
+msgstr "Sélectionner la période"
 
 #: AnalysisHorizontalIncome.php:181 AnalysisHorizontalPosition.php:118
 msgid "Detail or summary"
@@ -15835,6 +15835,8 @@ msgid ""
 "Select a period instead of using the beginning and end of the reporting "
 "period."
 msgstr ""
+"Sélectionnez une période au lieu d'utiliser le début et la fin de la période "
+"de rapport."
 
 #: GLCashFlowsIndirect.php:868 GLStatements.php:242
 msgid "Show the budget"
@@ -52784,30 +52786,30 @@ msgstr ""
 #: includes/MiscFunctions.php:398 includes/MiscFunctions.php:461
 #: reportwriter/languages/en_US/reports.php:357
 msgid "This Year"
-msgstr ""
+msgstr "Cette année"
 
 #: includes/MiscFunctions.php:403 includes/MiscFunctions.php:473
 #: reportwriter/languages/en_US/reports.php:362
 msgid "Last Month"
-msgstr ""
+msgstr "Mois dernier"
 
 #: includes/MiscFunctions.php:409 includes/MiscFunctions.php:498
 #: reportwriter/languages/en_US/reports.php:369
 msgid "Next Month"
-msgstr ""
+msgstr "Mois prochain"
 
 #: includes/MiscFunctions.php:410 includes/MiscFunctions.php:511
 #: reportwriter/languages/en_US/reports.php:371
 msgid "Next Year"
-msgstr ""
+msgstr "Année prochaine"
 
 #: includes/MiscFunctions.php:477 reportwriter/languages/en_US/reports.php:364
 msgid "Last Quarter"
-msgstr ""
+msgstr "Dernier trimestre"
 
 #: includes/MiscFunctions.php:502 reportwriter/languages/en_US/reports.php:370
 msgid "Next Quarter"
-msgstr ""
+msgstr "Prochain trimestre"
 
 #: includes/PDFAckPageHeader.php:39
 msgid "Bill To"
