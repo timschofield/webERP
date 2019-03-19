@@ -83,9 +83,9 @@ if((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or isset($_POST[
 		'<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
 		'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />', // Input table:
 		'<table class="selection">', // Content of the header and footer of the input table:
-		'<thead>
+/*		'<thead>
 			<tr><th colspan="2">', _('Report Parameters'), '</th></tr>',
-		'</thead>',
+		'</thead>',*/
 		'<tfoot>
 			<tr>
 				<td colspan="2">',
