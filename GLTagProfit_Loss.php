@@ -136,7 +136,7 @@ if ((!isset($_POST['PeriodFrom']) AND !isset($_POST['PeriodTo'])) OR isset($_POS
 // End select tag
 
 	echo '<tr>
-			<td><label for="ShowDetail">', _('Detail Or Summary'), '</label></td>
+			<td><label for="ShowDetail">', _('Detail or summary'), '</label></td>
 			<td><select name="Detail">
 				<option selected="selected" value="Summary">' . _('Summary') . '</option>
 				<option selected="selected" value="Detailed">' . _('All Accounts') . '</option>

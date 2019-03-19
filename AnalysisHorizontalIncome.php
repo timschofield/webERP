@@ -178,7 +178,7 @@ if((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or isset($_POST[
 			</tr>',
 	// Show all accounts instead a summary:
 			'<tr>
-				<td><label for="ShowDetail">', _('Detail Or Summary'), '</label></td>
+				<td><label for="ShowDetail">', _('Detail or summary'), '</label></td>
 				<td><select name="ShowDetail" required="required">
 					<option value="Summary">', _('Summary'), '</option>
 					<option selected="selected" value="Detailed">', _('All Accounts'), '</option>

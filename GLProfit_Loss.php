@@ -143,7 +143,7 @@ if (!isset($_POST['PeriodFrom']) OR !isset($_POST['PeriodTo']) OR $_POST['NewRep
 			</tr>';
 
 	echo '<tr>
-			<td><label for="ShowDetail">', _('Detail Or Summary'), '</label></td>
+			<td><label for="ShowDetail">', _('Detail or summary'), '</label></td>
 			<td><select name="ShowDetail">
 					<option value="Summary">' . _('Summary') . '</option>
 					<option selected="selected" value="Detailed">' . _('All Accounts') . '</option>
