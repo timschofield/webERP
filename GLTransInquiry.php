@@ -99,6 +99,7 @@ if( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 										debtortrans.ovgst,
 										debtortrans.ovfreight,
 										debtortrans.rate,
+										debtortrans.ovdiscount,
 										debtorsmaster.name AS otherparty
 									FROM debtortrans INNER JOIN debtorsmaster
 									ON debtortrans.debtorno = debtorsmaster.debtorno
@@ -114,6 +115,7 @@ if( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 										supptrans.ovamount,
 										supptrans.ovgst,
 										supptrans.rate,
+										supptrans.ovdiscount,
 										suppliers.suppname AS otherparty
 									FROM supptrans INNER JOIN suppliers
 									ON supptrans.supplierno = suppliers.supplierid
@@ -175,10 +177,10 @@ if( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 						}
 					} else {
 						if($TransRow['account'] == $_SESSION['CompanyRecord']['debtorsact']) {
-							$Credit = locale_number_format(-($DetailRow['ovamount'] + $DetailRow['ovgst'] + $DetailRow['ovfreight']) / $DetailRow['rate'],$_SESSION['CompanyRecord']['decimalplaces']);
+							$Credit = locale_number_format(-($DetailRow['ovamount'] + $DetailRow['ovgst'] + $DetailRow['ovfreight'] + $DetailRow['ovdiscount']) / $DetailRow['rate'],$_SESSION['CompanyRecord']['decimalplaces']);
 							$Debit = '&nbsp;';
 						} else {
-							$Credit = locale_number_format(($DetailRow['ovamount'] + $DetailRow['ovgst']) / $DetailRow['rate'],$_SESSION['CompanyRecord']['decimalplaces']);
+							$Credit = locale_number_format(($DetailRow['ovamount'] + $DetailRow['ovgst'] + $DetailRow['ovdiscount']) / $DetailRow['rate'],$_SESSION['CompanyRecord']['decimalplaces']);
 							$Debit = '&nbsp;';
 						}
 					}
