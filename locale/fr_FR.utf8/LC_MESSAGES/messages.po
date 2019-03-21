@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.15\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-24 08:36-0600\n"
-"PO-Revision-Date: 2019-03-18 20:26-0600\n"
+"PO-Revision-Date: 2019-03-18 22:59-0600\n"
 "Last-Translator: Rafael E. Chacón <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: French <none>\n"
 "Language: fr_FR\n"
@@ -1596,6 +1596,10 @@ msgid ""
 "systems include items when they are invoiced to the customer, and when "
 "expenses are owed based on the supplier invoice date."
 msgstr ""
+"webERP est un système basé sur la \"comptabilité d'exercice\" (pas un "
+"système \"basé sur les paiements\"). Les systèmes de comptabilité d'exercice "
+"incluent les éléments au moment où ils sont facturés au client et lorsque "
+"des frais sont dus en fonction de la date de facturation du fournisseur."
 
 #: AnalysisHorizontalIncome.php:87 AnalysisHorizontalPosition.php:79
 #: GLCashFlowsIndirect.php:805 GLStatements.php:179 PurchasesReport.php:236
@@ -1661,12 +1665,13 @@ msgstr "Sélectionner la période"
 
 #: AnalysisHorizontalIncome.php:181 AnalysisHorizontalPosition.php:118
 msgid "Detail or summary"
-msgstr ""
+msgstr "Détail ou résumé"
 
 #: AnalysisHorizontalIncome.php:182 AnalysisHorizontalPosition.php:119
 #: GLBalanceSheet.php:86
 msgid "Selecting Summary will show on the totals at the account group level"
 msgstr ""
+"La sélection de résumé affichera les totaux au niveau du groupe de comptes."
 
 #: AnalysisHorizontalIncome.php:183 AnalysisHorizontalIncome.php:231
 #: AnalysisHorizontalPosition.php:120 AnalysisHorizontalPosition.php:164
@@ -1680,7 +1685,7 @@ msgstr "Résumé"
 #: GLBalanceSheet.php:89 GLBalanceSheet.php:92 GLProfit_Loss.php:149
 #: GLTagProfit_Loss.php:142
 msgid "All Accounts"
-msgstr "Tous les Comptes"
+msgstr "Tous les comptes"
 
 #: AnalysisHorizontalIncome.php:189 AnalysisHorizontalPosition.php:126
 #: GLBalanceSheet.php:98 GLCashFlowsIndirect.php:875 GLProfit_Loss.php:155
