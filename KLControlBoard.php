@@ -340,7 +340,7 @@ if ($ProcessSection01){
 									'111111124', 
 									'111111125', 
 									'111111126', 
-									'111111127')", "Total Cash @ shops",         0, 22 * 7000000, $periodnow, $db);
+									'111111127')", "Total Cash @ shops",         0, 23 * 7000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('111121105AD', 
