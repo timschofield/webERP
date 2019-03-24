@@ -307,9 +307,9 @@ if ($ProcessSection03){
 	if ($KL_SystemAdmin
 		OR $KL_OperationalManager
 		OR $KL_AdministrationTeam){
-		CashStatusPTADU("2019", 0,$db);
+		CashStatusPTADU("2019", 30000000,$db);
 		$NumberOfTestExecuted++;
-		CashStatusPTBB("2019", 0,$db);
+		CashStatusPTBB("2019", 50000000,$db);
 		$NumberOfTestExecuted++;
 	}
 }
@@ -623,7 +623,7 @@ function CashStatusPTADU($Year, $YearlyGoal, $db){
 	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
-			'Cash Danamon IDR ADU to Cash Kantor', 
+			'Total Withdrawal from Danamon IDR ADU to Cash Kantor '.$Year, 
 			locale_number_format($BankToCash,0)
 			);
 	printf('<td>%s</td>
@@ -642,20 +642,26 @@ function CashStatusPTADU($Year, $YearlyGoal, $db){
 	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
-			'Current Balance', 
+			'Current Cash ADU in Brankas Kantor', 
 			locale_number_format($CurrentBalance,0)
 			);
 	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
-			'Goal for '. $Year, 
+			'Cash ADU in Brankas Kantor Goal for end of '. $Year, 
 			locale_number_format($YearlyGoal,0)
 			);
+	$ToBeMoved = $YearlyGoal-$CurrentBalance ;
+	if ($ToBeMoved <= 0){
+		$Text = 'Extra Cash ADU still in Brankas Kantor';
+	}else{
+		$Text = 'Withdrawal needed from Danamon IDR ADU to Brankas Kantor';
+	}
 	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
-			'Cash PT ADU to be balanced before end of '. $Year , 
-			locale_number_format(+$YearlyGoal-$CurrentBalance,0)
+			$Text, 
+			locale_number_format(abs($ToBeMoved),0)
 			);
 
 	echo '</table>
@@ -737,7 +743,7 @@ function CashStatusPTBB($Year, $YearlyGoal, $db){
 	$myrow = DB_fetch_array($Result);
 	$CashToSmallSuppliers = $myrow[0];
 
-	echo '<p class="page_title_text" align="center"><strong>' . 'Status Cash PT.Bumi Biru ' . $Year . '</strong></p>';
+	echo '<p class="page_title_text" align="center"><strong>' . 'Status Cash PT. Bumi Biru ' . $Year . '</strong></p>';
 	echo '<div>';
 	echo '<table class="selection">';
 
@@ -752,19 +758,25 @@ function CashStatusPTBB($Year, $YearlyGoal, $db){
 	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
-			'Sales Retail PT.BB Cash', 
+			'Sales Retail PT.BB Cash during '. $Year, 
 			locale_number_format($SalesCash,0)
 			);
 	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
-			'Floating Cash in Shops', 
+			'Floating Cash still in shops', 
 			locale_number_format(-$FloatingCash,0)
 			);
 	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
-			'Cash Danamon IDR PTBB to Cash Kantor', 
+			'Cash received from shops PTBB in Brankas Kantor during '. $Year, 
+			locale_number_format($SalesCash-$FloatingCash,0)
+			);
+	printf('<td>%s</td>
+			<td class="number">%s</td>
+			</tr>', 
+			'Total deposits from Brankas Kantor to Danamon IDR PTBB', 
 			locale_number_format($BankToCash,0)
 			);
 	printf('<td>%s</td>
@@ -783,21 +795,28 @@ function CashStatusPTBB($Year, $YearlyGoal, $db){
 	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
-			'Current Balance', 
+			'Current Cash PTBB in Brankas Kantor', 
 			locale_number_format($CurrentBalance,0)
 			);
 	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
-			'Goal for '. $Year, 
+			'Cash PTBB in Brankas Kantor Goal for end of '. $Year, 
 			locale_number_format($YearlyGoal,0)
 			);
+	$ToBeMoved = $YearlyGoal-$CurrentBalance ;
+	if ($ToBeMoved >= 0){
+		$Text = 'Extra Cash PTBB still in Brankas Kantor';
+	}else{
+		$Text = 'Deposit needed from Brankas Kantor to Danamon IDR PTBB';
+	}
 	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
-			'Cash PT BB to be balanced before end of '. $Year , 
-			locale_number_format(+$YearlyGoal-$CurrentBalance,0)
+			$Text, 
+			locale_number_format(abs($ToBeMoved),0)
 			);
+
 
 	echo '</table>
 		</div>';
