@@ -15,6 +15,8 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 
 | Description | Type | Author | Date | Details | Ref |
 |:-----------:|:----:|:------:|:----:|:-------:|:---:|
+| GLTransInquiry.php: Fix where discount is entered at payment but not included in the report line item calculation | Fixed | express achiever | 2019-03-24 | [View](https://github.com/webERP-team/webERP/commit/dd1895f74dab21ac30222bc11ee6379d6316a48e) |   |
+| StockStatus.php: Table formatting issue | Fixed | express achiever | 2019-03-24 | [View](https://github.com/webERP-team/webERP/commit/0e982f34da72806e8d556126c6be7eeeaee364cc) |   |
 | Replace texts with blanks with trimmed text | Changed | Rafael Chacón | 2019-02-21 | [View](https://github.com/webERP-team/webERP/commit/972c7c145649af2b141d0b17756a5fb1a0a7ed7e) |   |
 | Fix country name in Currencies.php | Fixed | Rafael Chacón | 2019-02-20 | [View](https://github.com/webERP-team/webERP/commit/c6f4d97d496d3ee5289e7ef577b536e50782195a) |   |
 | Fix height in #QuickMenuDiv li | Fixed | Rafael Chacón | 2019-02-20 | [View](https://github.com/webERP-team/webERP/commit/c8cb323b16105866c9d576b0d69c2969cee94962) |   |
