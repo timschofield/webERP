@@ -772,10 +772,13 @@ function KLPrintReceiptHeader($identifier, $OrderNo){
 	$TextToPrint .=  DoubleJustified($TextDateTime, $TextSPG, $LineLenghtCharA, " ");
 
 	$TextToPrint .=  $NewLine . $NewLine;
-
+	$Total = 0;
+	$TotalNumberOfItems = 0;
+	
 	foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
 		$SubTotal = $OrderLine->Quantity * $OrderLine->Price * (1 - $OrderLine->DiscountPercent);
 		$Total = $Total + $SubTotal;
+		$TotalNumberOfItems = $TotalNumberOfItems + $OrderLine->Quantity;
 
 		$CodeSide = $OrderLine->Quantity . " " . $OrderLine->StockID;
 
@@ -826,6 +829,9 @@ function KLPrintReceiptHeader($identifier, $OrderNo){
 		$TextToPrint .= 'Goods: Rp. ' . number_format($Goods) . $NewLine;
 		$TextToPrint .= 'PPN ' . number_format($_SESSION['PPN']) . '%: Rp.  ' . number_format($PPN) . $NewLine;
 	}
+
+	$TextToPrint .= $NewLine . $RightJustified . $EmphasizedDoubleHeightDoubleWidth;
+	$TextToPrint .= '# Items: ' . number_format($TotalNumberOfItems) . $CharacterFontA. $NewLine;
 	
 	return $TextToPrint;
 }

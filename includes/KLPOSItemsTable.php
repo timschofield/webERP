@@ -24,13 +24,15 @@ $_SESSION['Items'.$identifier]->totalWeight = 0;
 $TaxTotals = array();
 $TaxGLCodes = array();
 $TaxTotal =0;
+$TotalNumberOfItems =0;
 $k =0;  //row colour counter
 foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
 
 	$SubTotal = $OrderLine->Quantity * $OrderLine->Price * (1 - $OrderLine->DiscountPercent);
 	$QtyOrdered = $OrderLine->Quantity;
 	$QtyRemain = $QtyOrdered - $OrderLine->QtyInv;
-
+	$TotalNumberOfItems = $TotalNumberOfItems + $OrderLine->Quantity;
+	
 	if ($OrderLine->QOHatLoc < $OrderLine->Quantity AND ($OrderLine->MBflag=='B' OR $OrderLine->MBflag=='M')) {
 		/*There is a stock deficiency in the stock location selected */
 		$RowStarter = '<tr bgcolor="#EEAABB">';
@@ -106,7 +108,11 @@ foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
 echo '<tr class="TotalTableRows">
 			<td colspan="6" class="numberTotal"><b>' . _('Total') . '</b></td>
 			<td colspan="2" class="numberTotal">' . number_format(($_SESSION['Items'.$identifier]->total+$TaxTotal),0) . '</td>
-					</tr>
+	</tr>';
+echo '<tr class="TotalTableRows">
+			<td colspan="6" class="numberTotal"><b>' . _('Number of Items') . '</b></td>
+			<td colspan="2" class="numberTotal">' . number_format($TotalNumberOfItems,0) . '</td>
+	</tr>
 	</table>';
 echo '<input type="hidden" name="TaxTotal" value="'.$TaxTotal.'" />';
 
