@@ -15,6 +15,23 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 
 | Description | Type | Author | Date | Details | Ref |
 |:-----------:|:----:|:------:|:----:|:-------:|:---:|
+| GLTransInquiry.php: Fix where discount is entered at payment but not included in the report line item calculation | Fixed | express achiever | 2019-03-24 | [View](https://github.com/webERP-team/webERP/commit/dd1895f74dab21ac30222bc11ee6379d6316a48e) |   |
+| StockStatus.php: Table formatting issue | Fixed | express achiever | 2019-03-24 | [View](https://github.com/webERP-team/webERP/commit/0e982f34da72806e8d556126c6be7eeeaee364cc) |   |
+| Replace texts with blanks with trimmed text | Changed | Rafael Chacón | 2019-02-21 | [View](https://github.com/webERP-team/webERP/commit/972c7c145649af2b141d0b17756a5fb1a0a7ed7e) |   |
+| Fix country name in Currencies.php | Fixed | Rafael Chacón | 2019-02-20 | [View](https://github.com/webERP-team/webERP/commit/c6f4d97d496d3ee5289e7ef577b536e50782195a) |   |
+| Fix height in #QuickMenuDiv li | Fixed | Rafael Chacón | 2019-02-20 | [View](https://github.com/webERP-team/webERP/commit/c8cb323b16105866c9d576b0d69c2969cee94962) |   |
+| Use inline-block instead of inline | Changed | Rafael Chacón | 2019-02-20 | [View](https://github.com/webERP-team/webERP/commit/23a580b16f05c6015e03aa64321d57af6878853d) |   |
+| Fix concat errors, add urlencode() | Fixed | PaulT | 2019-02-12 | [View](https://github.com/webERP-team/webERP/commit/d6b2ddb7353fcfdfa0b952a117feca83f330eaaa) |   |
+| Deletes the translation of numbers | Changed | Rafael Chacón | 2019-01-21 | [View](https://github.com/webERP-team/webERP/commit/55bc2e3275c8d6a8284f9fa9118782aa0b8a5908) |   |
+| Standardise buttons in Horizontal Analysis reports | Changed | Rafael Chacón | 2019-01-19 | [View](https://github.com/webERP-team/webERP/commit/22c62fc4129364fa7ce5efa2f1b92adeb9cc7c7f) |   |
+| Clean up purchases and sales reports code | Changed | Rafael Chacón | 2019-01-09 | [View](https://github.com/webERP-team/webERP/commit/f0c064c6abfca9d39f58abb4aac18af39a51de38) |   |
+| Standardise GL reports code | Changed | Rafael Chacón | 2019-01-09 | [View](https://github.com/webERP-team/webERP/commit/e7ceae5931c020f98ce8b89b12d4397d277c4f77) |   |
+| Clean up and standardise sheet style view | Changed | Rafael Chacón | 2019-01-04 | [View](https://github.com/webERP-team/webERP/commit/81f710f1c85a49dc703db8d968de3c45904bba7c) |   |
+| Clean up the CSS | Changed | Rafael Chacón | 2019-01-04 | [View](https://github.com/webERP-team/webERP/commit/57ce6c30a61cec38281b37f21324699ffa64e624) |   |
+| Hides help texts for extra small devices | Changed | Rafael Chacón | 2019-01-04 | [View](https://github.com/webERP-team/webERP/commit/8e468644ff6982cc7682480a5710a25647b38214) |   |
+| Show a set of financial statements | Added | Rafael Chacón | 2019-01-02 | [View](https://github.com/webERP-team/webERP/commit/02beefcd31ef4a848760c7ba93fe0bf36a78393e) |   |
+| Fix variable used in function fShowPageHelp | Fixed | Rafael Chacón | 2018-12-30 | [View](https://github.com/webERP-team/webERP/commit/b48c70708c5ae96c46f5162076ab03e9170ca791) |   |
+| Fix SQL in Timesheets per Tim | Fixed | Phil Daintree | 2018-12-29 | [View](https://github.com/webERP-team/webERP/commit/b0d816d88fa55c2e56e7d7a6f46987e44472a30b) |   |
 | Improve the readability of a script | Changed | Rafael Chacón | 2018-12-27 | [View](https://github.com/webERP-team/webERP/commit/9dd0c6ca06fbbb3bd879395ec7721e79d7b5af54) |   |
 | Improve the readability of a script | Changed | Rafael Chacón | 2018-12-26 | [View](https://github.com/webERP-team/webERP/commit/9afe079de81088e1aa9b30f2bd6eed2886068a34) |   |
 | Sort the bank accounts | Changed | Rafael Chacón | 2018-12-18 | [View](https://github.com/webERP-team/webERP/commit/79d88db4ea04099473edfc7f1ddd84deb4ad500f) |   |
@@ -27,12 +44,8 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 | Fix images call | Fixed | Rafael Chacón | 2018-12-05 | [View](https://github.com/webERP-team/webERP/commit/af967fa3e6c9555693142717f6792dd4044ac516) |   |
 | Fix RTL images | Fixed | Rafael Chacón | 2018-12-05 | [View](https://github.com/webERP-team/webERP/commit/e7c875a7feb35aa5bf0a574a363a7d84b959c063) |   |
 | Fix the size of some images | Fixed | Rafael Chacón | 2018-12-05 | [View](https://github.com/webERP-team/webERP/commit/fbbd45c81dbf9708dd4bcd4e7de5c7076a9faeaa) |   |
-<<<<<<< HEAD
 | Per David Shaw Alter all date and datetime fields to have valid defaults '1000-01-01' as '0000-00-00' no longer acceptable | Changed | Phil | 2018-12-01 | [View](https://github.com/webERP-team/webERP/commit/8d94b89dc70b206b82281e702b89063b78189639) |  |
 | Standardise PurchasesReport.php | Changed | Rafael Chacón | 2018-11-30 | [View](https://github.com/webERP-team/webERP/commit/34841abdeb195052935ae4d1d1efce708eef4ddc) |   |
-=======
-| Per David Shaw Alter all date and datetime fields to have valid defaults '1000-01-01' as '0000-00-00' no longer acceptable | Changed | Phil | 2018-12-01 | [View](https://github.com/webERP-team/webERP/commit/8d94b89dc70b206b82281e702b89063b78189639) |  | | Standardise PurchasesReport.php | Changed | Rafael Chacón | 2018-11-30 | [View](https://github.com/webERP-team/webERP/commit/34841abdeb195052935ae4d1d1efce708eef4ddc) |   |
->>>>>>> 7365ff870144a90c71cbc663493803b042d0f50c
 | Add SalesReport.php | Added | Rafael Chacón | 2018-11-30 | [View](https://github.com/webERP-team/webERP/commit/9dc2c2cf14a4ec2adca40a7923313833a4b62f1a) |   |
 | Add units column to PDFWOPrint.php | Changed | Paul Becker | 2018-11-17 | [View](https://github.com/webERP-team/webERP/commit/f9ee93b083d34e7d21e2ee3bbb861ac0f0d649cd) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8231) |
 | Fix rounding of shrink factor in Stocks.php | Fixed | Paul Becker | 2018-11-10 | [View](https://github.com/webERP-team/webERP/commit/) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8240) |
