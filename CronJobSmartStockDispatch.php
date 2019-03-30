@@ -381,7 +381,7 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 				if ($ReportType == 'Batch'){
 					$result = $mail->send(array('kl-shopsupport@kapal-laut.com'));
 				}else{
-					$result = $mail->send(array('ricard@kapal-laut.com'));
+					$result = $mail->send(array('sysadmin@kapal-laut.com'));
 				}
 				if($result){
 					$EmailText = $EmailText . date('d/M/Y H:i:s') . " Email Sent " . $FileName . "\n";
