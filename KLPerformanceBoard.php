@@ -9,6 +9,7 @@ include ('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
+include('includes/KLPrices.php');
 
 /* ASSIGN users to groups */
 include ('includes/KLRoles.inc');
@@ -307,10 +308,9 @@ if ($ProcessSection03){
 	if ($KL_SystemAdmin
 		OR $KL_OperationalManager
 		OR $KL_AdministrationTeam){
-		CashStatusPTADU("2019", 30000000,$db);
+		CashStatus("2019", 30000000, 20000000, 50000000, 50000000, 50000000, $periodnow, TRUE, $db);
 		$NumberOfTestExecuted++;
-		CashStatusPTBB("2019", 50000000,$db);
-		$NumberOfTestExecuted++;
+		
 	}
 }
 
@@ -548,13 +548,15 @@ function AverageCustomerBehaviourByValueInvoice($typereport, $NumDaysA, $db){
 	}
 }
 
-function CashStatusPTADU($Year, $YearlyGoal, $db){
+function CashStatus($Year, $YearlyGoalADU, $MinTransferADU, $YearlyGoalBB, $MinTransferBB, $MinMoveFree, $Period, $ShowTables, $db){
 
 	$Today = date('Y-m-d');
 	$StartDateYTD=FormatDateForSQL(Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,1,1,Date('Y'))));
-	
+	//
+	// CASH STATUS ADU
+	//
 	// Sales Cash PT ADU during the year
-	$SalesCash = 0;
+	$SalesCashADU = 0;
 
 	// Cash Danamon IDR PTADU to Cash Kantor
 	$Account = "111121105AD";
@@ -569,7 +571,7 @@ function CashStatusPTADU($Year, $YearlyGoal, $db){
 					OR gltrans.narrative LIKE '%UANG KECIL%')";
 	$Result = DB_query($SQL);
 	$myrow = DB_fetch_array($Result);
-	$BankToCash = -$myrow[0];
+	$BankToCashADU = -$myrow[0];
 
 	// Expenses ADU Paid by Petty Cash (excluding salaries, Corporate CC)
 	$AccountSuffix = "AD";
@@ -587,7 +589,7 @@ function CashStatusPTADU($Year, $YearlyGoal, $db){
 				AND pcexpenses.glaccount LIKE '%".$AccountSuffix."'";
 	$Result = DB_query($SQL);
 	$myrow = DB_fetch_array($Result);
-	$ExpensesPTPaidCash = -$myrow[0];
+	$ExpensesADUPaidCash = -$myrow[0];
 	
 	// Cash in Kantor to Small Suppliers PTADU
 	$Account = "510010070AD";
@@ -600,79 +602,15 @@ function CashStatusPTADU($Year, $YearlyGoal, $db){
 					OR gltrans.narrative LIKE '%KANTOR%')";
 	$Result = DB_query($SQL);
 	$myrow = DB_fetch_array($Result);
-	$CashToSmallSuppliers = $myrow[0];
+	$CashToSmallSuppliersADU = $myrow[0];
 
-	echo '<p class="page_title_text" align="center"><strong>' . 'Status Cash PT. Angin Dingin Utara ' . $Year . '</strong></p>';
-	echo '<div>';
-	echo '<table class="selection">';
+	$CurrentBalanceADU = $SalesCashADU+$BankToCashADU-$ExpensesADUPaidCash-$CashToSmallSuppliersADU;
+	$ToBeMovedADU = $CurrentBalanceADU-$YearlyGoalADU ;
+	$ToBeTransferredADU = round_basic_price(-$ToBeMovedADU, $MinTransferADU);
 
-	$TableHeader = '<tr>
-						<th>' . 'Concept' . '</th>
-						<th>' . 'Value' . '</th>
-					</tr>';
-	echo $TableHeader;
-	$k = 0; //row colour counter
-	$i = 1;
-	$k = StartEvenOrOddRow($k);
-	printf('<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Sales PT ADU Cash', 
-			locale_number_format($SalesCash,0)
-			);
-	printf('<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Total Withdrawal from Danamon IDR ADU to Cash Kantor '.$Year, 
-			locale_number_format($BankToCash,0)
-			);
-	printf('<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Expenses PT ADU Paid by Petty Cash (excluding salaries, Corporate CC)', 
-			locale_number_format(-$ExpensesPTPaidCash,0)
-			);
-	printf('<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Expenses PT ADU Small Suppliers Paid from Cash Kantor', 
-			locale_number_format(-$CashToSmallSuppliers,0)
-			);
-	$CurrentBalance = $SalesCash+$BankToCash-$ExpensesPTPaidCash-$CashToSmallSuppliers;
-	printf('<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Current Cash ADU in Brankas Kantor', 
-			locale_number_format($CurrentBalance,0)
-			);
-	printf('<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Cash ADU in Brankas Kantor Goal for end of '. $Year, 
-			locale_number_format($YearlyGoal,0)
-			);
-	$ToBeMoved = $YearlyGoal-$CurrentBalance ;
-	if ($ToBeMoved <= 0){
-		$Text = 'Extra Cash ADU still in Brankas Kantor';
-	}else{
-		$Text = 'Withdrawal needed from Danamon IDR ADU to Brankas Kantor';
-	}
-	printf('<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			$Text, 
-			locale_number_format(abs($ToBeMoved),0)
-			);
-
-	echo '</table>
-		</div>';
-}
-
-function CashStatusPTBB($Year, $YearlyGoal, $db){
-
-	$Today = date('Y-m-d');
-	$StartDateYTD=FormatDateForSQL(Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,1,1,Date('Y'))));
-	
+	//
+	// CASH STATUS BB
+	//
 	// Sales PTBB in Cash during the Year
 	$Account = "410000000PT";
 	$SQL = "SELECT SUM(gltrans.amount)
@@ -682,7 +620,7 @@ function CashStatusPTBB($Year, $YearlyGoal, $db){
 				AND gltrans.account = '" . $Account . "'";
 	$Result = DB_query($SQL);
 	$myrow = DB_fetch_array($Result);
-	$SalesCash = -$myrow[0];
+	$SalesCashBB = -$myrow[0];
 
 	// Cash sales still floating (still not received in kantor)
 	$SQL = "SELECT SUM(gltrans.amount)
@@ -695,7 +633,7 @@ function CashStatusPTBB($Year, $YearlyGoal, $db){
 											AND typeloc LIKE 'SHOP%')";
 	$Result = DB_query($SQL);
 	$myrow = DB_fetch_array($Result);
-	$FloatingCash = $myrow[0];
+	$FloatingCashBB = $myrow[0];
 
 	// Cash Danamon IDR PTBB to Cash Kantor
 	$Account = "111121105PT";
@@ -710,7 +648,7 @@ function CashStatusPTBB($Year, $YearlyGoal, $db){
 					OR gltrans.narrative LIKE '%UANG KECIL%')";
 	$Result = DB_query($SQL);
 	$myrow = DB_fetch_array($Result);
-	$BankToCash = -$myrow[0];
+	$BankToCashBB = -$myrow[0];
 
 	// Expenses PT Paid by Petty Cash (excluding salaries, Corporate CC)
 	$AccountSuffix = "PT";
@@ -728,7 +666,7 @@ function CashStatusPTBB($Year, $YearlyGoal, $db){
 				AND pcexpenses.glaccount LIKE '%".$AccountSuffix."'";
 	$Result = DB_query($SQL);
 	$myrow = DB_fetch_array($Result);
-	$ExpensesPTPaidCash = -$myrow[0];
+	$ExpensesBBPaidCash = -$myrow[0];
 	
 	// Cash in Kantor to Small Suppliers PTBB
 	$Account = "510010070PT";
@@ -741,85 +679,236 @@ function CashStatusPTBB($Year, $YearlyGoal, $db){
 					OR gltrans.narrative LIKE '%KANTOR%')";
 	$Result = DB_query($SQL);
 	$myrow = DB_fetch_array($Result);
-	$CashToSmallSuppliers = $myrow[0];
+	$CashToSmallSuppliersBB = $myrow[0];
+	$CurrentBalanceBB = $SalesCashBB+$BankToCashBB-$FloatingCashBB-$ExpensesBBPaidCash-$CashToSmallSuppliersBB;
+	$ToBeMovedBB = $CurrentBalanceBB-$YearlyGoalBB ;
+	$ToBeTransferredBB = round_basic_price($ToBeMovedBB, $MinTransferBB);	
+	
+	//
+	// STATUS CASH KANTOR
+	//
+	$Account = "111111200";
+	$SQL = "SELECT (bfwd + actual) as saldo, accountname
+			FROM chartdetails, chartmaster
+			WHERE chartdetails.accountcode = chartmaster.accountcode
+				AND chartdetails.accountcode = '" . $Account . "'
+				AND chartdetails.period = ". $Period . "";
+				
+	$result = DB_query($SQL);
+	$myrow = DB_fetch_array($result);
+	$SaldoBrankasKantor = $myrow['saldo'];
+	$FreeSaldoBrankasKantor = $SaldoBrankasKantor - $CurrentBalanceADU - $CurrentBalanceBB;
+	$ToBeMovedFree = round_basic_price($FreeSaldoBrankasKantor, $MinMoveFree);	
+		
+	if ($ShowTables){
+		echo '<p class="page_title_text" align="center"><strong>' . 'Status Cash PT. Angin Dingin Utara ' . $Year . '</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
 
-	echo '<p class="page_title_text" align="center"><strong>' . 'Status Cash PT. Bumi Biru ' . $Year . '</strong></p>';
-	echo '<div>';
-	echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th>' . 'Concept' . '</th>
+							<th>' . 'Value' . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'Sales PT ADU Cash', 
+				locale_number_format($SalesCashADU,0)
+				);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'Total Withdrawal from Danamon IDR ADU to Cash Kantor '.$Year, 
+				locale_number_format($BankToCashADU,0)
+				);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'Expenses PT ADU Paid by Petty Cash (excluding salaries, Corporate CC)', 
+				locale_number_format(-$ExpensesADUPaidCash,0)
+				);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'Expenses PT ADU Small Suppliers Paid from Cash Kantor', 
+				locale_number_format(-$CashToSmallSuppliersADU,0)
+				);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'Current Cash ADU in Brankas Kantor', 
+				locale_number_format($CurrentBalanceADU,0)
+				);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'Cash ADU in Brankas Kantor Goal for end of '. $Year, 
+				locale_number_format($YearlyGoalADU,0)
+				);
+		if ($ToBeMovedADU >= 0){
+			$Text = 'Cash ADU OVER goal in Brankas Kantor';
+		}else{
+			$Text = 'Cash ADU BELOW goal in Brankas Kantor';
+		}
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				$Text, 
+				locale_number_format(abs($ToBeMovedADU),0)
+				);
+				
+		if ($ToBeTransferredADU > 0){
+			$Text = 'ACTION NEEDED -> Withdrawal from Danamon IDR ADU to Brankas Kantor';
+			$k = StartEvenOrOddRow($k);
+			printf('<td>%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$Text, 
+					locale_number_format($ToBeTransferredADU,0)
+					);
+		}
+		echo '</table>
+			</div>';
 
-	$TableHeader = '<tr>
-						<th>' . 'Concept' . '</th>
-						<th>' . 'Value' . '</th>
-					</tr>';
-	echo $TableHeader;
-	$k = 0; //row colour counter
-	$i = 1;
-	$k = StartEvenOrOddRow($k);
-	printf('<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Sales Retail PT.BB Cash during '. $Year, 
-			locale_number_format($SalesCash,0)
-			);
-	printf('<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Floating Cash still in shops', 
-			locale_number_format(-$FloatingCash,0)
-			);
-	printf('<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Cash received from shops PTBB in Brankas Kantor during '. $Year, 
-			locale_number_format($SalesCash-$FloatingCash,0)
-			);
-	printf('<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Total deposits from Brankas Kantor to Danamon IDR PTBB', 
-			locale_number_format($BankToCash,0)
-			);
-	printf('<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Expenses PTBB Paid by Petty Cash (excluding salaries, Corporate CC)', 
-			locale_number_format(-$ExpensesPTPaidCash,0)
-			);
-	printf('<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Expenses PTBB Small Suppliers Paid from Cash Kantor', 
-			locale_number_format(-$CashToSmallSuppliers,0)
-			);
-	$CurrentBalance = $SalesCash+$BankToCash-$FloatingCash-$ExpensesPTPaidCash-$CashToSmallSuppliers;
-	printf('<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Current Cash PTBB in Brankas Kantor', 
-			locale_number_format($CurrentBalance,0)
-			);
-	printf('<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Cash PTBB in Brankas Kantor Goal for end of '. $Year, 
-			locale_number_format($YearlyGoal,0)
-			);
-	$ToBeMoved = $YearlyGoal-$CurrentBalance ;
-	if ($ToBeMoved >= 0){
-		$Text = 'Extra Cash PTBB still in Brankas Kantor';
-	}else{
-		$Text = 'Deposit needed from Brankas Kantor to Danamon IDR PTBB';
+		echo '<p class="page_title_text" align="center"><strong>' . 'Status Cash PT. Bumi Biru ' . $Year . '</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+
+		$TableHeader = '<tr>
+							<th>' . 'Concept' . '</th>
+							<th>' . 'Value' . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'Sales Retail PT.BB Cash during '. $Year, 
+				locale_number_format($SalesCashBB,0)
+				);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'Floating Cash still in shops', 
+				locale_number_format(-$FloatingCashBB,0)
+				);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'Cash received from shops PTBB in Brankas Kantor during '. $Year, 
+				locale_number_format($SalesCashBB-$FloatingCashBB,0)
+				);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'Total deposits from Brankas Kantor to Danamon IDR PTBB', 
+				locale_number_format($BankToCashBB,0)
+				);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'Expenses PTBB Paid by Petty Cash (excluding salaries, Corporate CC)', 
+				locale_number_format(-$ExpensesBBPaidCash,0)
+				);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'Expenses PTBB Small Suppliers Paid from Cash Kantor', 
+				locale_number_format(-$CashToSmallSuppliersBB,0)
+				);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'Current Cash PTBB in Brankas Kantor', 
+				locale_number_format($CurrentBalanceBB,0)
+				);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'Cash PTBB in Brankas Kantor Goal for end of '. $Year, 
+				locale_number_format($YearlyGoalBB,0)
+				);
+		if ($ToBeMovedBB >= 0){
+			$Text = 'Cash PTBB OVER goal in Brankas Kantor';
+		}else{
+			$Text = 'Cash PTBB BELOW goal in Brankas Kantor';
+		}
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				$Text, 
+				locale_number_format(abs($ToBeMovedBB),0)
+				);
+		if ($ToBeTransferredBB > 0){
+		$Text = 'ACTION NEEDED -> Deposit from Brankas Kantor to Danamon IDR BB';
+		$k = StartEvenOrOddRow($k);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				$Text, 
+				locale_number_format($ToBeTransferredBB,0)
+				);
+			}
+
+		echo '</table>
+			</div>';	
+			
+		echo '<p class="page_title_text" align="center"><strong>' . 'Status Brankas Kantor ' . $Year . '</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+
+		$TableHeader = '<tr>
+							<th>' . 'Concept' . '</th>
+							<th>' . 'Value' . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'Saldo Cash Brankas Kantor ', 
+				locale_number_format($SaldoBrankasKantor,0)
+				);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'Cash belonging to PTADU', 
+				locale_number_format($CurrentBalanceADU,0)
+				);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'Cash belonging to PTBB', 
+				locale_number_format($CurrentBalanceBB,0)
+				);
+		if ($FreeSaldoBrankasKantor >= 0){
+			$Text = 'ACTION NEEDED -> Move Cash from Brankas Kantor to Brankas RL';
+		}else{
+			$Text = 'ACTION NEEDED -> Move Cash from Brankas RL to Brankas Kantor';
+		}
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'Free Cash in Brankas Kantor', 
+				locale_number_format(($FreeSaldoBrankasKantor),0)
+				);
+		if ($ToBeMovedFree !=0){
+			$k = StartEvenOrOddRow($k);
+			printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				$Text, 
+				locale_number_format(abs($ToBeMovedFree),0)
+				);
+		}
+		echo '</table>
+			</div>';	
 	}
-	printf('<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			$Text, 
-			locale_number_format(abs($ToBeMoved),0)
-			);
-
-
-	echo '</table>
-		</div>';
 }
 
 function DailySalesRecords($Days, $NumDays, $db){
