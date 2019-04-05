@@ -129,6 +129,24 @@ ALTER TABLE tenders CHANGE `requiredbydate` `requiredbydate` datetime NOT NULL D
 ALTER TABLE workorders CHANGE `requiredby` `requiredby` date NOT NULL DEFAULT '1000-01-01';
 ALTER TABLE workorders CHANGE `startdate` `startdate` date NOT NULL DEFAULT '1000-01-01';
 
+CREATE TABLE `jnltmplheader` (
+  `templateid` INT(11) NOT NULL DEFAULT 0,
+  `templatedescription` VARCHAR(50) NOT NULL DEFAULT '',
+  `journaltype` INT(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`templateid`)
+);
+
+CREATE TABLE `jnltmpldetails` (
+  `linenumber` INT(11) NOT NULL DEFAULT 0,
+  `templateid` INT(11) NOT NULL DEFAULT 0,
+  `tags` VARCHAR(50) NOT NULL DEFAULT '0',
+  `accountcode` VARCHAR(20) NOT NULL DEFAULT '1',
+  `amount` DOUBLE NOT NULL DEFAULT 0,
+  `narrative` VARCHAR(200) NOT NULL DEFAULT '',
+  PRIMARY KEY (`templateid`, `linenumber`)
+);
+INSERT INTO  `systypes` (`typeid` ,`typename` ,`typeno`) VALUES ('4',  'Journal Template Number',  '0');
+INSERT INTO `scripts` (`script` ,`pagesecurity` ,`description` ) VALUES ('GLJournalTemplates.php', '15', 'Maintain Journal templates');
 
 -- THIS IS THE LAST SQL QUERY. Updates database version number:
 UPDATE config SET confvalue='4.15.1' WHERE confname='VersionNumber';
