@@ -157,7 +157,11 @@ INSERT INTO kurakura_kl_test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans W
 INSERT INTO kurakura_kl_test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 80 AND periodno <= 90;
 INSERT INTO kurakura_kl_test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 90 AND periodno <= 100;
 INSERT INTO kurakura_kl_test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 100 AND periodno <= 110;
-INSERT INTO kurakura_kl_test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 110;
+INSERT INTO kurakura_kl_test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 110 AND periodno <= 115;
+INSERT INTO kurakura_kl_test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 115 AND periodno <= 120;
+INSERT INTO kurakura_kl_test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 120 AND periodno <= 125;
+INSERT INTO kurakura_kl_test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 125 AND periodno <= 130;
+INSERT INTO kurakura_kl_test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 130;
 
 TRUNCATE kurakura_kl_test_erp.`grns`;
 INSERT INTO kurakura_kl_test_erp.grns SELECT * FROM kurakura_kl_erp.grns;
@@ -463,7 +467,11 @@ INSERT INTO kurakura_kl_test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockm
 INSERT INTO kurakura_kl_test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE prd > 80 AND prd <= 90;
 INSERT INTO kurakura_kl_test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE prd > 90 AND prd <= 100;
 INSERT INTO kurakura_kl_test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE prd > 100 AND prd <= 110;
-INSERT INTO kurakura_kl_test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE prd > 110;
+INSERT INTO kurakura_kl_test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE prd > 110 AND prd <= 115;
+INSERT INTO kurakura_kl_test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE prd > 115 AND prd <= 120;
+INSERT INTO kurakura_kl_test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE prd > 120 AND prd <= 125;
+INSERT INTO kurakura_kl_test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE prd > 125 AND prd <= 130;
+INSERT INTO kurakura_kl_test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE prd > 130;
 
 TRUNCATE kurakura_kl_test_erp.`stockmovestaxes`;
 INSERT INTO kurakura_kl_test_erp.stockmovestaxes SELECT * FROM kurakura_kl_erp.stockmovestaxes;
@@ -579,7 +587,5 @@ UPDATE  kurakura_kl_test_erp.`config` SET  `confvalue` =  'testmerchant_api1.kap
 
 UPDATE kurakura_kl_test_erp.www_users SET theme = "gel";
 UPDATE kurakura_kl_test_erp.www_users SET blocked = 0 WHERE userid LIKE "999%";
-
-UPDATE `kurakura_kl_test_erp`.`locations` SET `partnercode` = 'POIK' WHERE `locations`.`loccode` = 'TOKKS';
 
 SET FOREIGN_KEY_CHECKS=1;
