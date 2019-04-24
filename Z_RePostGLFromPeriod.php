@@ -57,6 +57,7 @@ if (!isset($_POST['FromPeriod'])){
 	/*Now repost the lot */
 
 	include('includes/GLPostingsZero.inc');
+//	include('includes/GLPostingsZeroNoCommit.inc'); // ALLOW LARGE REPOSTS AND AVOID ERROR 405.
 
 	prnMsg(_('All general ledger postings have been reposted from period') . ' ' . $_POST['FromPeriod'],'success');
 }
