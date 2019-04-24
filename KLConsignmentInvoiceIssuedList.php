@@ -149,9 +149,9 @@ function display($Title, &$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DI
 			<td><select name="CompanyFrom">';
 	if($_POST['CompanyFrom']=="PTADU") {
 		echo '<option selected="selected" value="PTADU">' . 'PT ADU' . '</option>';
-		echo '<option value="CASH">' . 'PT BB (temporary until end of stock)' . '</option>';
+//		echo '<option value="CASH">' . 'PT BB (temporary until end of stock)' . '</option>';
 	} else {
-		echo '<option selected="selected" value="CASH">' . 'PT BB (temporary until end of stock)' . '</option>';
+//		echo '<option selected="selected" value="CASH">' . 'PT BB (temporary until end of stock)' . '</option>';
 		echo '<option value="PTADU">' . 'PT ADU' . '</option>';
 	}
 	echo '</select></td></tr>';	
