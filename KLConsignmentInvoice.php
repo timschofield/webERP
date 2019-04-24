@@ -126,6 +126,8 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, &$d
 								partnertelepon,
 								partnernpwpinvoice,
 								accountppn,
+								accountconsignmentcogspartner,
+								accountconsignmentsalesptadu,
 								daysinvoicedue
 							FROM klretailpartners
 							WHERE partnercode = '" . $CompanyTo . "'";
@@ -271,12 +273,36 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, &$d
 				$ErrMsg = 'CRITICAL ERROR! WRITE THIS CODE AND CALL THE OFFICE IMMEDIATELY: ERROR-CONSIGNMENT-00001';		
 				$DbgMsg = 'SQL to update klconsignment record: ';
 				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-				
-				// account for the PPN crossed
+
 				if ($CompanyFrom == 'PTADU'){
 					$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
-					$TransNo = GetNextTransNo( 1, $db);
-					InsertIntoGLTrans("1", 
+					$TransNo = GetNextTransNo( 10, $db);
+
+					// account for the goods sold
+					InsertIntoGLTrans("10", 
+									$TransNo, 
+									Date('Y-m-d'),
+									$PeriodNo,
+									$myCompanyTo['accountconsignmentsalesptadu'],
+									"Invoice " . $InvoiceNumber,
+									-round($TotalGoods),
+									"",
+									'ERROR-CNS-00003'
+									);
+
+					InsertIntoGLTrans("10", 
+									$TransNo, 
+									Date('Y-m-d'),
+									$PeriodNo,
+									$myCompanyTo['accountconsignmentcogspartner'],
+									"Invoice " . $InvoiceNumber,
+									round($TotalGoods),
+									"",
+									'ERROR-CNS-00004'
+									);
+
+					// account for the PPN crossed
+					InsertIntoGLTrans("10", 
 									$TransNo, 
 									Date('Y-m-d'),
 									$PeriodNo,
@@ -287,12 +313,12 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, &$d
 									'ERROR-CNS-00001'
 									);
 									
-					InsertIntoGLTrans("1", 
+					InsertIntoGLTrans("10", 
 									$TransNo, 
 									Date('Y-m-d'),
 									$PeriodNo,
 									$myCompanyTo['accountppn'],
-									"PPN Invoice " . $InvoiceNumber,
+									"PPN Paid Invoice " . $InvoiceNumber,
 									round($TotalPPN),
 									"",
 									'ERROR-CNS-00002'

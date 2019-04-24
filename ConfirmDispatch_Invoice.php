@@ -1360,6 +1360,11 @@ invoices can have a zero amount but there must be a quantity to invoice */
 					$RetailPrice = round($OrderLine->Price * (1 - $OrderLine->DiscountPercent) / $_SESSION['CurrencyRate'],0);
 					$ConsignmentPrice = round($PercentConsignmentPTADU / 100 * $RetailPrice,0);
 					$Tag = "1"; // kantor
+
+/* we do report the accounting of it at consignment invoice creation time, not every sale
+					// For tax reporting reasons this clustering accounting must be excluding PPN (net price), 
+					// as PPN is accounted on consignment invoice creation
+					$NetPrice = round($ConsignmentPrice / ((100 + PPN_PERCENT) / 100),0);
 					
 					// report the COGS for retail partner from PT ADU
 					InsertIntoGLTrans("10", 
@@ -1367,8 +1372,8 @@ invoices can have a zero amount but there must be a quantity to invoice */
 									$DefaultDispatchDate,
 									$PeriodNo,
 									$AccountConsignmentCOGSPartner,
-									$_SESSION['Items'.$identifier]->CustRef . " " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . $ConsignmentPrice,
-									round($ConsignmentPrice * $OrderLine->Quantity),
+									$_SESSION['Items'.$identifier]->CustRef . " " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . $NetPrice,
+									round($NetPrice * $OrderLine->Quantity),
 									$Tag,
 									'ERROR-INV-00003'
 									);
@@ -1379,12 +1384,12 @@ invoices can have a zero amount but there must be a quantity to invoice */
 									$DefaultDispatchDate,
 									$PeriodNo,
 									$AccountConsignmentSalesPTADU,
-									$_SESSION['Items'.$identifier]->CustRef . " " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . $ConsignmentPrice,
-									round(-$ConsignmentPrice * $OrderLine->Quantity),
+									$_SESSION['Items'.$identifier]->CustRef . " " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . $NetPrice,
+									round(-$NetPrice * $OrderLine->Quantity),
 									$Tag,
 									'ERROR-INV-00004'
 									);
-					
+*/					
 					// record the consignment for later invoice to partner
 					$SQL = "INSERT INTO klconsignment 
 								(saledate,

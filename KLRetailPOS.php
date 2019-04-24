@@ -928,77 +928,18 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 				} /*end of if discount !=0 */
 			} /*end of if price != 0 */
 	
-			// CLUSTERING POXX - PTBB HARDCODED UNTIL END OF PTBB STOCK
-			if (substr($_SESSION['PartnerCode'],0,2) == "PO"){
-				if ($ItemBelongsTo == "PTBB"){
-					// it is a PTBB item
-					$RetailPrice = round($OrderLine->Price * (1 - $OrderLine->DiscountPercent) / $ExRate,0);
-					$ConsignmentPrice = round($_SESSION['PercentConsignmentPTADU'] / 100 * $RetailPrice,0);
-					// report the COGS for retail partner from PT BB
-					InsertIntoGLTrans("10", 
-									$InvoiceNo, 
-									Date('Y-m-d'),
-									$PeriodNo,
-									$_SESSION['AccountConsignmentCOGSPartner'],
-									$_SESSION['Items'.$identifier]->CustRef . " " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . $ConsignmentPrice,
-									round($ConsignmentPrice * $OrderLine->Quantity),
-									$Tag,
-									'ERROR-POS-00006'
-									);
-
-					// report the sales from consigner to retail partner POXX
-					InsertIntoGLTrans("10", 
-									$InvoiceNo, 
-									Date('Y-m-d'),
-									$PeriodNo,
-									$AccountSalesFromConsignerToPOXX,
-									$_SESSION['Items'.$identifier]->CustRef . " " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . $ConsignmentPrice,
-									round(-$ConsignmentPrice * $OrderLine->Quantity),
-									$Tag,
-									'ERROR-POS-00007'
-									);
-					
-					// record the consignment for later invoice to partner
-					$SQL = "INSERT INTO klconsignment (	saledate,
-													partnercode,
-													companycode,
-													invoice,
-													debtorno,
-													stockid,
-													qty,
-													retailprice,
-													consignmentprice,
-													cogsadu,
-													standardcost,
-													invoicedtopartner)
-											VALUES ('" . Date('Y-m-d') . "',
-													'" . $_SESSION['PartnerCode']  . "',
-													'" . $CompanyConsignmentPOXX  . "',
-													'" . $_SESSION['Items'.$identifier]->CustRef  . "',
-													'" . $_SESSION['Items'.$identifier]->DebtorNo  . "',
-													'" . $OrderLine->StockID  . "',
-													'" . $OrderLine->Quantity  . "',
-													'" . $RetailPrice  . "',
-													'" . $ConsignmentPrice  . "',
-													'" . $StandardCost  . "',
-													'" . ($StandardCost - $Compensation) . "',
-													'0000-00-00')";
-
-					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The Consignment Sales Details could not be inserted because');
-					$DbgMsg = _('The following SQL to insert the klconsignment record was used');
-					$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-				}
-			}
-//prnMsg("PercentConsignmentPTADU: ". $_SESSION['PercentConsignmentPTADU']);
-//prnMsg("ItemBelongsTo: ". $ItemBelongsTo);
 			// CLUSTERING PTADU
 			if (($_SESSION['PercentConsignmentPTADU'] > 0) AND 
 				($_SESSION['PercentConsignmentPTADU'] < 100) AND 
 				($ItemBelongsTo == "PTADU")){
-				// It is a sales on consignment by PT ADU So we need to report clustering
+				// It is a sales on consignment by PT ADU So we need to report the consignment sale
 				
 				$RetailPrice = round($OrderLine->Price * (1 - $OrderLine->DiscountPercent) / $ExRate,0);
 				$ConsignmentPrice = round($_SESSION['PercentConsignmentPTADU'] / 100 * $RetailPrice,0);
+/* we do report the accounting of it at consignment invoice creation time, not every sale
+				// For tax reporting reasons this clustering accounting must be excluding PPN (net price), 
+				// as PPN is accounted on consignment invoice creation
+				$NetPrice = round($ConsignmentPrice / ((100 + PPN_PERCENT) / 100),0);
 				
 				// report the COGS for retail partner from PT ADU
 				InsertIntoGLTrans("10", 
@@ -1006,8 +947,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								Date('Y-m-d'),
 								$PeriodNo,
 								$_SESSION['AccountConsignmentCOGSPartner'],
-								$_SESSION['Items'.$identifier]->CustRef . " " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . $ConsignmentPrice,
-								($ConsignmentPrice * $OrderLine->Quantity),
+								$_SESSION['Items'.$identifier]->CustRef . " " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ Net " . $NetPrice,
+								($NetPrice * $OrderLine->Quantity),
 								$Tag,
 								'ERROR-POS-00008'
 								);
@@ -1018,12 +959,12 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								Date('Y-m-d'),
 								$PeriodNo,
 								$_SESSION['AccountConsignmentSalesPTADU'],
-								$_SESSION['Items'.$identifier]->CustRef . " " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . $ConsignmentPrice,
-								(-$ConsignmentPrice * $OrderLine->Quantity),
+								$_SESSION['Items'.$identifier]->CustRef . " " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ Net " . $NetPrice,
+								(-$NetPrice * $OrderLine->Quantity),
 								$Tag,
 								'ERROR-POS-00009'
 								);
-				
+*/				
 				// record the consignment for later invoice to partner
 				$SQL = "INSERT INTO klconsignment 
 							(saledate,
