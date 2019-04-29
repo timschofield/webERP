@@ -550,7 +550,9 @@ function AverageCustomerBehaviourByValueInvoice($typereport, $NumDaysA, $db){
 
 function CashStatus($Year, $YearlyGoalADU, $MinTransferADU, $YearlyGoalBB, $MinTransferBB, $MinMoveFree, $Period, $ShowTables, $db){
 
-	$Today = date('Y-m-d');
+//	$Today = date('Y-m-d');
+// All year, not until today as some tx are reported into the future
+	$Today=FormatDateForSQL(Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,12,31,Date('Y'))));
 	$StartDateYTD=FormatDateForSQL(Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,1,1,Date('Y'))));
 	//
 	// CASH STATUS ADU
