@@ -59,19 +59,19 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 									AND klchangeprice.endprocessdate = '" . Date('Y-m-d') . "')";
 		}elseif ($_POST['ChangeToday'] == "ChangeDisc20"){
 			$SQLChange = " AND EXISTS (SELECT *
-										FROM klchangetodiscount20
-										WHERE klchangetodicsount20.stockid = prices.stockid
-											AND klchangetodicsount20.endprocessdate = '" . Date('Y-m-d') . "')";
+										FROM klmovetodiscount20
+										WHERE klmovetodiscount20.stockid = prices.stockid
+											AND klmovetodiscount20.endprocessdate = '" . Date('Y-m-d') . "')";
 		}elseif ($_POST['ChangeToday'] == "ChangeDisc50"){
 			$SQLChange = " AND EXISTS (SELECT *
-										FROM klchangetodiscount50
-										WHERE klchangetodicsount50.stockid = prices.stockid
-											AND klchangetodicsount50.endprocessdate = '" . Date('Y-m-d') . "')";
+										FROM klmovetodiscount50
+										WHERE klmovetodiscount50.stockid = prices.stockid
+											AND klmovetodiscount50.endprocessdate = '" . Date('Y-m-d') . "')";
 		}elseif ($_POST['ChangeToday'] == "ChangeDisc80"){
 			$SQLChange = " AND EXISTS (SELECT *
-										FROM klchangetodiscount80
-										WHERE klchangetodicsount80.stockid = prices.stockid
-											AND klchangetodicsount80.endprocessdate = '" . Date('Y-m-d') . "')";
+										FROM klmovetodiscount80
+										WHERE klmovetodiscount80.stockid = prices.stockid
+											AND klmovetodiscount80.endprocessdate = '" . Date('Y-m-d') . "')";
 		}
 	}
 
@@ -80,7 +80,6 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 								OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_TEST . "
 								OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_STABLE . "
 								OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING . "
-								OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . "
 								OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . "
 								OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_CONSIGNMENT . "
 								OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_PROMOTIONAL_ITEMS . ")";
@@ -292,7 +291,7 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 				
 				// Get the data for each field
 				$StockId = $_POST['StockID' . $i];
-				$Description = $_POST['Description' . $i];
+//				$Description = $_POST['Description' . $i];
 
 				// define Logo information
 				if ($_POST['LabelID'] == 'T570'){
