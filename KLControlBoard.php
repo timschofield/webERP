@@ -412,8 +412,10 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111520000",         -1,          1, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111512000",   50000000,  200000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
+
+		BalanceListAccountControl("('111512000', 
+									'111512000AD')", "Persediaan Bahan Produksi (Components)",   50000000,    150000000, $periodnow, $db);
+
 		BalanceAccountControl("111800000",  250000000,  350000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111900000",   25000000,   50000000, $periodnow, $db);
