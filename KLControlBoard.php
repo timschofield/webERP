@@ -340,7 +340,7 @@ if ($ProcessSection01){
 									'111111124', 
 									'111111125', 
 									'111111126', 
-									'111111127')", "Total Cash @ shops",         0, 23 * 7000000, $periodnow, $db);
+									'111111127')", "Total Cash @ shops",         0, 25 * 7000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('111121105AD', 
@@ -416,7 +416,7 @@ if ($ProcessSection01){
 		BalanceListAccountControl("('111512000', 
 									'111512000AD')", "Persediaan Bahan Produksi (Components)",   50000000,    150000000, $periodnow, $db);
 
-		BalanceAccountControl("111800000",  250000000,  350000000, $periodnow, $db);
+		BalanceAccountControl("111800000",  300000000,  400000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111900000",   25000000,   50000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
