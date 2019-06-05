@@ -76,13 +76,10 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 	}
 
 	if ($_POST['StockCategory'] == "All"){
-		$SQLStockCategory = " AND (stockmaster.categoryid IN ". LIST_STOCK_CATEGORIES_SETUP . "
-								OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_TEST . "
-								OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_STABLE . "
-								OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING . "
+		$SQLStockCategory = " AND (stockmaster.categoryid IN ". LIST_STOCK_CATEGORIES_KAPAL_LAUT . "
+								OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . "
 								OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . "
-								OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_CONSIGNMENT . "
-								OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_PROMOTIONAL_ITEMS . ")";
+								OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_GENERAL . ")";
 	}else{
 		$SQLStockCategory = " AND stockmaster.categoryid = '" . $_POST['StockCategory'] . "' ";
 	}
