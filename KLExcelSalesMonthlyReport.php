@@ -257,7 +257,7 @@ function SheetSalesReport($objPHPExcel,
 	
 	// Get data for current Month
 	list ($SalesMonth, $PcsMonth, $CostMonth) = SalesForPeriod($MonthA, $MonthB, LIST_STOCK_CATEGORIES_KAPAL_LAUT);						 
-	$objPHPExcel->getActiveSheet()->setCellValue('A7', "STABKL");
+	$objPHPExcel->getActiveSheet()->setCellValue('A7', "STABLE KL");
 	$objPHPExcel->getActiveSheet()->setCellValue('B7', $SalesMonth);
 	$objPHPExcel->getActiveSheet()->setCellValue('C7', $PcsMonth);
 	$objPHPExcel->getActiveSheet()->setCellValue('I7', $SalesMonth-$CostMonth);

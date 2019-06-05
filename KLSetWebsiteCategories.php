@@ -167,7 +167,7 @@ if (DB_num_rows($result) != 0){
 					$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
 					$ItemsAdded++;
 				}else{
-					// Mirar si pertany a super categoria STABKL
+					// Mirar si pertany a super categoria STABLE KL
 					$WebsiteCategory = WebsiteCategorySilverJewellery($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
 					if ($WebsiteCategory > 0){
 						InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $FeaturedAsTopSales, $UpdateDB, $db);

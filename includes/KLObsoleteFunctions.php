@@ -379,9 +379,9 @@ function InsuficientStockForItems($Category, $ItemCode, $ItemDescription, $Minim
 function InsuficientStockForTopSalesItems($StockCat, $StockCatDescription, $DaysTopSales, $PercentageOfTopItems, $DaysMinimumStock, $RootPath, $db){
 
 /* Examples of use in Control Boards
-		InsuficientStockForTopSalesItems("STABKL", "10-Silver",90, 100, 150, $RootPath, $db);
+		InsuficientStockForTopSalesItems("STABKA", "10-Silver",90, 100, 150, $RootPath, $db);
 		InsuficientStockForTopSalesItems("STAINL", "20-Stainless Steel", 90, 100, 150, $RootPath, $db);
-		InsuficientStockForTopSalesItems("STABBL", "30-Fashion Jewellery", 90, 100, 150, $RootPath, $db);
+		InsuficientStockForTopSalesItems("STABBA", "30-Fashion Jewellery", 90, 100, 150, $RootPath, $db);
 		InsuficientStockForTopSalesItems("ACCESO", "40-Accessories", 90, 100, 150, $RootPath, $db);
 		InsuficientStockForTopSalesItems("CONSIG", "50-Consignment", 60, 100, 30, $RootPath, $db);
 */		

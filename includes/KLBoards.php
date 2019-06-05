@@ -959,8 +959,8 @@ function FinishedStockDistributionByShopAndCategory($db){
 						stockmaster as m2
 					WHERE l2.loccode = locations.loccode
 						AND m2.stockid = l2.stockid 
-						AND (m2.categoryid = 'STABKL' OR m2.categoryid = 'STABKA')
-						AND l2.reorderlevel != 0) AS modelsSTABKL,
+						AND m2.categoryid = 'STABKA'
+						AND l2.reorderlevel != 0) AS modelsSTABLEKAPALLAUT,
 				(SELECT COUNT(l2.reorderlevel)
 					FROM locstock AS l2,
 						stockmaster as m2
@@ -980,8 +980,8 @@ function FinishedStockDistributionByShopAndCategory($db){
 						stockmaster as m2
 					WHERE l2.loccode = locations.loccode
 						AND m2.stockid = l2.stockid 
-						AND (m2.categoryid = 'STABBL' OR m2.categoryid = 'STABBA')
-						AND l2.reorderlevel != 0) AS modelsSTABBL,
+						AND m2.categoryid = 'STABBA'
+						AND l2.reorderlevel != 0) AS modelsSTABLEBLINK,
 				(SELECT COUNT(l2.reorderlevel)
 					FROM locstock AS l2,
 						stockmaster as m2
@@ -1001,8 +1001,8 @@ function FinishedStockDistributionByShopAndCategory($db){
 						stockmaster as m2
 					WHERE l2.loccode = locations.loccode
 						AND m2.stockid = l2.stockid 
-						AND (m2.categoryid = 'STABGE' OR m2.categoryid = 'STABGA')
-						AND l2.reorderlevel != 0) AS modelsSTABGE,
+						AND m2.categoryid = 'STABGA'
+						AND l2.reorderlevel != 0) AS modelsSTABLEGENERAL,
 				(SELECT COUNT(l2.reorderlevel)
 					FROM locstock AS l2,
 						stockmaster as m2
@@ -1067,13 +1067,13 @@ function FinishedStockDistributionByShopAndCategory($db){
 		while ($myrow = DB_fetch_array($result)) {
 			$k = StartEvenOrOddRow($k);
 			$TotalModelsLocation = 	$myrow['modelsTESTKL'] + 
-									$myrow['modelsSTABKL'] +
+									$myrow['modelsSTABLEKAPALLAUT'] +
 									$myrow['modelsNOPOKL'] +
 									$myrow['modelsTESTBL'] + 
-									$myrow['modelsSTABBL'] +
+									$myrow['modelsSTABLEBLINK'] +
 									$myrow['modelsNOPOBL'] +
 									$myrow['modelsTESTGE'] + 
-									$myrow['modelsSTABGE'] +
+									$myrow['modelsSTABLEGENERAL'] +
 									$myrow['modelsNOPOGE'] +
 									$myrow['modelsDISC20'] +
 									$myrow['modelsDISC50'] +
@@ -1100,13 +1100,13 @@ function FinishedStockDistributionByShopAndCategory($db){
 					$i,
 					$myrow['locationname'],
 					locale_number_format_zero_blank($myrow['modelsTESTKL'],0),
-					locale_number_format_zero_blank($myrow['modelsSTABKL'],0),
+					locale_number_format_zero_blank($myrow['modelsSTABLEKAPALLAUT'],0),
 					locale_number_format_zero_blank($myrow['modelsNOPOKL'],0),
 					locale_number_format_zero_blank($myrow['modelsTESTBL'],0),
-					locale_number_format_zero_blank($myrow['modelsSTABBL'],0),
+					locale_number_format_zero_blank($myrow['modelsSTABLEBLINK'],0),
 					locale_number_format_zero_blank($myrow['modelsNOPOBL'],0),
 					locale_number_format_zero_blank($myrow['modelsTESTGE'],0),
-					locale_number_format_zero_blank($myrow['modelsSTABGE'],0),
+					locale_number_format_zero_blank($myrow['modelsSTABLEGENERAL'],0),
 					locale_number_format_zero_blank($myrow['modelsNOPOGE'],0),
 					locale_number_format_zero_blank($myrow['modelsDISC20'],0),
 					locale_number_format_zero_blank($myrow['modelsDISC50'],0),

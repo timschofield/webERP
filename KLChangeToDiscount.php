@@ -46,10 +46,7 @@ if ($_GET['Action'] == "New"){
 
 DB_Txn_Begin();
 // detect if it is a PTBB or PTADU items
-if (($_GET['Category'] == "STABKL") OR
-	($_GET['Category'] == "STABBL") OR
-	($_GET['Category'] == "STABGE") OR
-	($_GET['Category'] == "NOPOKL") OR
+if (($_GET['Category'] == "NOPOKL") OR
 	($_GET['Category'] == "NOPOBL") OR
 	($_GET['Category'] == "NOPOGE") OR
 	($_GET['Category'] == "DISC20") OR
