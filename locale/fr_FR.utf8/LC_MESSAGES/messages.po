@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webERP 4.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-24 08:36-0600\n"
-"PO-Revision-Date: 2019-03-18 22:59-0600\n"
+"POT-Creation-Date: 2019-03-25 12:11-0600\n"
+"PO-Revision-Date: 2019-03-28 12:03-0600\n"
 "Last-Translator: Rafael E. Chacón <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: French <none>\n"
 "Language: fr_FR\n"
@@ -177,7 +177,7 @@ msgstr "Ce groupe ne peut pas être supprimé car des comptes du GL l'utilisent.
 
 #: AccountGroups.php:212 AccountGroups.php:247 AccountSections.php:129
 #: Areas.php:114 Areas.php:123 BankAccounts.php:165 CreditStatus.php:124
-#: Currencies.php:252 Currencies.php:260 Currencies.php:268 Currencies.php:278
+#: Currencies.php:255 Currencies.php:263 Currencies.php:271 Currencies.php:281
 #: CustomerBranches.php:292 CustomerBranches.php:302 CustomerBranches.php:312
 #: CustomerBranches.php:322 CustomerBranches.php:332 Customers.php:295
 #: Customers.php:304 Customers.php:312 Customers.php:323 Customers.php:333
@@ -324,8 +324,8 @@ msgstr "Pertes et profits"
 #: CompanyPreferences.php:423 CompanyPreferences.php:425
 #: CompanyPreferences.php:438 CompanyPreferences.php:440
 #: CompanyPreferences.php:453 CompanyPreferences.php:455
-#: ContractCosting.php:201 Currencies.php:342 Currencies.php:490
-#: Currencies.php:492 CustomerBranches.php:440 Customers.php:658
+#: ContractCosting.php:201 Currencies.php:345 Currencies.php:493
+#: Currencies.php:495 CustomerBranches.php:440 Customers.php:658
 #: Customers.php:1048 Customers.php:1054 Customers.php:1057
 #: DailyBankTransactions.php:201 DailyBankTransactions.php:206
 #: DeliveryDetails.php:1142 DeliveryDetails.php:1183 DeliveryDetails.php:1186
@@ -398,8 +398,8 @@ msgstr "Oui"
 #: CompanyPreferences.php:422 CompanyPreferences.php:426
 #: CompanyPreferences.php:437 CompanyPreferences.php:441
 #: CompanyPreferences.php:452 CompanyPreferences.php:456
-#: ContractCosting.php:199 Currencies.php:344 Currencies.php:495
-#: Currencies.php:497 CustomerBranches.php:440 Customers.php:657
+#: ContractCosting.php:199 Currencies.php:347 Currencies.php:498
+#: Currencies.php:500 CustomerBranches.php:440 Customers.php:657
 #: Customers.php:1046 Customers.php:1053 Customers.php:1056
 #: DailyBankTransactions.php:203 DailyBankTransactions.php:206
 #: DeliveryDetails.php:1143 DeliveryDetails.php:1184 DeliveryDetails.php:1187
@@ -468,7 +468,7 @@ msgstr "Non"
 #: AddCustomerNotes.php:128 AddCustomerTypeNotes.php:122 Areas.php:155
 #: BankAccounts.php:240 BOMs.php:156 BOMs_SingleLevel.php:151
 #: COGSGLPostings.php:107 COGSGLPostings.php:208 CreditStatus.php:167
-#: Currencies.php:358 Currencies.php:373 CustItem.php:160
+#: Currencies.php:361 Currencies.php:376 CustItem.php:160
 #: CustomerBranches.php:444 Customers.php:1130 Customers.php:1158
 #: CustomerTypes.php:199 Departments.php:177 EDIMessageFormat.php:140
 #: Employees.php:173 Factors.php:327 FixedAssetCategories.php:181
@@ -508,7 +508,7 @@ msgstr "Voulez-vous supprimer ce groupe?"
 #: BankAccounts.php:241 BOMs.php:169 BOMs_SingleLevel.php:152
 #: COGSGLPostings.php:108 COGSGLPostings.php:209 ContractBOM.php:263
 #: ContractOtherReqts.php:115 CounterReturns.php:733 CounterSales.php:830
-#: Credit_Invoice.php:419 CreditStatus.php:168 Currencies.php:359
+#: Credit_Invoice.php:419 CreditStatus.php:168 Currencies.php:362
 #: CustItem.php:161 CustomerReceipt.php:1015 Customers.php:1159
 #: CustomerTypes.php:200 Departments.php:178 DiscountCategories.php:229
 #: DiscountMatrix.php:174 EDIMessageFormat.php:141 Employees.php:174
@@ -589,16 +589,16 @@ msgid "Update"
 msgstr "Mise à jour"
 
 #: AccountGroups.php:374 AccountGroups.php:414 AnalysisHorizontalIncome.php:94
-#: AnalysisHorizontalIncome.php:587 AnalysisHorizontalPosition.php:86
-#: AnalysisHorizontalPosition.php:406 FormDesigner.php:202 FormDesigner.php:350
+#: AnalysisHorizontalIncome.php:589 AnalysisHorizontalPosition.php:86
+#: AnalysisHorizontalPosition.php:408 FormDesigner.php:202 FormDesigner.php:350
 #: GLAccountUsers.php:239 GLBalanceSheet.php:111 GLBalanceSheet.php:699
 #: GLCashFlowsIndirect.php:785 GLCashFlowsIndirect.php:812
 #: GLCashFlowsSetup.php:174 GLProfit_Loss.php:168 GLProfit_Loss.php:1238
-#: GLStatements.php:159 GLStatements.php:186 GLTagProfit_Loss.php:152
+#: GLStatements.php:160 GLStatements.php:186 GLTagProfit_Loss.php:152
 #: GLTagProfit_Loss.php:942 GLTrialBalance.php:702
 #: InternalStockRequestInquiry.php:261 PDFPriceList.php:498
-#: PurchasesReport.php:219 PurchasesReport.php:243 SalesReport.php:219
-#: SalesReport.php:243 SecurityTokens.php:139 SecurityTokens.php:155
+#: PurchasesReport.php:219 PurchasesReport.php:242 SalesReport.php:219
+#: SalesReport.php:242 SecurityTokens.php:139 SecurityTokens.php:155
 #: UserGLAccounts.php:251 Z_GLAccountUsersCopyAuthority.php:90
 #: includes/Login.php:6
 msgid "Return"
@@ -723,7 +723,7 @@ msgstr ""
 #: AccountSections.php:279 AddCustomerContacts.php:289 AddCustomerNotes.php:234
 #: AddCustomerTypeNotes.php:213 Areas.php:220 BankAccounts.php:430 BOMs.php:547
 #: BOMs_SingleLevel.php:802 COGSGLPostings.php:357 CreditStatus.php:251
-#: Currencies.php:507 CustLoginSetup.php:272 Departments.php:249
+#: Currencies.php:510 CustLoginSetup.php:272 Departments.php:249
 #: DiscountMatrix.php:141 EDIMessageFormat.php:238 Employees.php:357
 #: FixedAssetCategories.php:341 FixedAssetLocations.php:163
 #: FreightCosts.php:363 GeocodeSetup.php:262 GLAccounts.php:283 Labels.php:632
@@ -848,9 +848,9 @@ msgid "Statement"
 msgstr "Déclaration"
 
 #: AddCustomerContacts.php:137 AddCustomerContacts.php:281
-#: AnalysisHorizontalIncome.php:242 AnalysisHorizontalPosition.php:175
+#: AnalysisHorizontalIncome.php:244 AnalysisHorizontalPosition.php:177
 #: Customers.php:1121 Customers.php:1129 GLCashFlowsIndirect.php:155
-#: GLCashFlowsIndirect.php:467 GLStatements.php:116
+#: GLCashFlowsIndirect.php:467 GLStatements.php:117
 #: PcAssignCashTabToTab.php:290 PcAssignCashTabToTab.php:442
 #: PcAssignCashToTab.php:236 PcAssignCashToTab.php:396 PcAuthorizeCash.php:95
 #: PcAuthorizeExpenses.php:102 PcClaimExpensesFromTab.php:455
@@ -1197,7 +1197,7 @@ msgstr ""
 #: CustomerInquiry.php:256 CustomerPurchases.php:91 DeliveryDetails.php:882
 #: DeliveryDetails.php:943 GLBalanceSheet.php:229 GLBalanceSheet.php:241
 #: GLBalanceSheet.php:328 GLBalanceSheet.php:337 GLBudgets.php:212
-#: GLJournal.php:427 GLTransInquiry.php:204 GLTrialBalance.php:238
+#: GLJournal.php:427 GLTransInquiry.php:206 GLTrialBalance.php:238
 #: GLTrialBalance.php:258 GLTrialBalance.php:279 GLTrialBalance.php:375
 #: GLTrialBalance.php:502 GLTrialBalance.php:522 GLTrialBalance.php:545
 #: GLTrialBalance.php:637 GLTrialBalance.php:651 GLTrialBalance.php:667
@@ -1347,7 +1347,7 @@ msgstr "Details des transactions des clients à échéance"
 msgid "could not be retrieved because"
 msgstr "ne peut pas être retrouvé car"
 
-#: AgedDebtors.php:374 AgedSuppliers.php:199 AnalysisHorizontalIncome.php:273
+#: AgedDebtors.php:374 AgedSuppliers.php:199 AnalysisHorizontalIncome.php:275
 #: Areas.php:93 ConfirmDispatch_Invoice.php:184 ConfirmDispatch_Invoice.php:237
 #: ConfirmDispatch_Invoice.php:1022 ConfirmDispatch_Invoice.php:1089
 #: ConfirmDispatch_Invoice.php:1103 Contracts.php:598 CounterReturns.php:1012
@@ -1366,7 +1366,7 @@ msgstr "ne peut pas être retrouvé car"
 #: StockCostUpdate.php:77 StockCostUpdate.php:87 StockLocStatus.php:166
 #: StockLocTransferReceive.php:214 StockLocTransferReceive.php:367
 #: StockMovements.php:120 StockQuantityByDate.php:112 StockReorderLevel.php:44
-#: StockStatus.php:280 StockTransfers.php:204 StockTransfers.php:234
+#: StockStatus.php:281 StockTransfers.php:204 StockTransfers.php:234
 #: StockTransfers.php:390 StockUsageGraph.php:54 StockUsage.php:141
 #: SupplierInquiry.php:77 SupplierInquiry.php:98 SupplierInquiry.php:134
 #: SupplierInquiry.php:189 SupplierPriceList.php:383
@@ -1590,7 +1590,7 @@ msgstr ""
 
 #: AnalysisHorizontalIncome.php:80 AnalysisHorizontalPosition.php:72
 #: GLBalanceSheet.php:56 GLCashFlowsIndirect.php:796 GLProfit_Loss.php:74
-#: GLStatements.php:170
+#: GLStatements.php:171
 msgid ""
 "webERP is an \"accrual\" based system (not a \"cash based\" system). Accrual "
 "systems include items when they are invoiced to the customer, and when "
@@ -1601,20 +1601,14 @@ msgstr ""
 "incluent les éléments au moment où ils sont facturés au client et lorsque "
 "des frais sont dus en fonction de la date de facturation du fournisseur."
 
-#: AnalysisHorizontalIncome.php:87 AnalysisHorizontalPosition.php:79
-#: GLCashFlowsIndirect.php:805 GLStatements.php:179 PurchasesReport.php:236
-#: SalesReport.php:236
-msgid "Report Parameters"
-msgstr "Paramètres du rapport"
-
 #: AnalysisHorizontalIncome.php:93 AnalysisHorizontalPosition.php:85
 #: CollectiveWorkOrderCost.php:511 FormDesigner.php:201
 #: GLCashFlowsIndirect.php:811 GLStatements.php:185
 #: HistoricalTestResults.php:81 InternalStockRequest.php:296
 #: MailingGroupMaintenance.php:145 MRPCreateDemands.php:286 PDFCOA.php:42
 #: PDFCOA.php:72 PDFProdSpec.php:30 PDFProdSpec.php:56 PricesByCost.php:296
-#: ProductSpecs.php:99 ProductSpecs.php:126 PurchasesReport.php:242
-#: ReorderLevelLocation.php:193 SalesReport.php:242
+#: ProductSpecs.php:99 ProductSpecs.php:126 PurchasesReport.php:241
+#: ReorderLevelLocation.php:193 SalesReport.php:241
 #: SupplierGRNAndInvoiceInquiry.php:46
 msgid "Submit"
 msgstr "Valider"
@@ -1664,17 +1658,12 @@ msgid "Select Period"
 msgstr "Sélectionner la période"
 
 #: AnalysisHorizontalIncome.php:181 AnalysisHorizontalPosition.php:118
+#: GLBalanceSheet.php:85 GLProfit_Loss.php:146 GLTagProfit_Loss.php:139
 msgid "Detail or summary"
 msgstr "Détail ou résumé"
 
-#: AnalysisHorizontalIncome.php:182 AnalysisHorizontalPosition.php:119
-#: GLBalanceSheet.php:86
-msgid "Selecting Summary will show on the totals at the account group level"
-msgstr ""
-"La sélection de résumé affichera les totaux au niveau du groupe de comptes."
-
-#: AnalysisHorizontalIncome.php:183 AnalysisHorizontalIncome.php:231
-#: AnalysisHorizontalPosition.php:120 AnalysisHorizontalPosition.php:164
+#: AnalysisHorizontalIncome.php:183 AnalysisHorizontalIncome.php:233
+#: AnalysisHorizontalPosition.php:120 AnalysisHorizontalPosition.php:166
 #: EDIMessageFormat.php:214 EDIMessageFormat.php:216 GLBalanceSheet.php:88
 #: GLBalanceSheet.php:91 GLProfit_Loss.php:148 GLTagProfit_Loss.php:141
 #: POReport.php:1505 SalesInquiry.php:1080 Tax.php:454
@@ -1687,23 +1676,29 @@ msgstr "Résumé"
 msgid "All Accounts"
 msgstr "Tous les comptes"
 
-#: AnalysisHorizontalIncome.php:189 AnalysisHorizontalPosition.php:126
+#: AnalysisHorizontalIncome.php:186 AnalysisHorizontalPosition.php:123
+#: GLBalanceSheet.php:86
+msgid "Selecting Summary will show on the totals at the account group level"
+msgstr ""
+"La sélection de résumé affichera les totaux au niveau du groupe de comptes."
+
+#: AnalysisHorizontalIncome.php:191 AnalysisHorizontalPosition.php:128
 #: GLBalanceSheet.php:98 GLCashFlowsIndirect.php:875 GLProfit_Loss.php:155
 #: GLStatements.php:249
 msgid "Show accounts with zero balance"
 msgstr "Afficher les comptes avec solde nul"
 
-#: AnalysisHorizontalIncome.php:191 AnalysisHorizontalPosition.php:128
+#: AnalysisHorizontalIncome.php:193 AnalysisHorizontalPosition.php:130
 #: GLStatements.php:251
 msgid "Check this box to show accounts with zero balance"
 msgstr "Cochez cette case pour afficher les comptes avec solde nul"
 
-#: AnalysisHorizontalIncome.php:205 GLProfit_Loss.php:191 GLProfit_Loss.php:620
+#: AnalysisHorizontalIncome.php:207 GLProfit_Loss.php:191 GLProfit_Loss.php:620
 #: GLTagProfit_Loss.php:176 GLTagProfit_Loss.php:495
 msgid "A period up to 12 months in duration can be specified"
 msgstr "Une période maximale de 12 mois peut être spécifiée"
 
-#: AnalysisHorizontalIncome.php:205 GLProfit_Loss.php:191 GLProfit_Loss.php:620
+#: AnalysisHorizontalIncome.php:207 GLProfit_Loss.php:191 GLProfit_Loss.php:620
 #: GLTagProfit_Loss.php:176 GLTagProfit_Loss.php:495
 msgid ""
 "the system automatically shows a comparative for the same period from the "
@@ -1712,32 +1707,32 @@ msgstr ""
 "le système affiche automatiquement un avantage comparatif pour la même "
 "période de l'année précédente"
 
-#: AnalysisHorizontalIncome.php:205 GLProfit_Loss.php:191 GLProfit_Loss.php:620
+#: AnalysisHorizontalIncome.php:207 GLProfit_Loss.php:191 GLProfit_Loss.php:620
 #: GLTagProfit_Loss.php:176 GLTagProfit_Loss.php:495
 msgid "it cannot do this if a period of more than 12 months is specified"
 msgstr "il ne peut pas le faire si une période de plus de 12 mois est spécifié"
 
-#: AnalysisHorizontalIncome.php:205 GLProfit_Loss.php:191 GLProfit_Loss.php:620
+#: AnalysisHorizontalIncome.php:207 GLProfit_Loss.php:191 GLProfit_Loss.php:620
 #: GLTagProfit_Loss.php:176 GLTagProfit_Loss.php:495
 msgid "Please select an alternative period range"
 msgstr "S'il vous plaît sélectionnez une plage de la période de remplacement"
 
-#: AnalysisHorizontalIncome.php:222 FreightCosts.php:75 GLProfit_Loss.php:667
+#: AnalysisHorizontalIncome.php:224 FreightCosts.php:75 GLProfit_Loss.php:667
 #: MRPReport.php:440 SalesGraph.php:259 SalesGraph.php:267 Timesheets.php:590
 msgid "For"
 msgstr "Pour"
 
-#: AnalysisHorizontalIncome.php:222 GLProfit_Loss.php:667
+#: AnalysisHorizontalIncome.php:224 GLProfit_Loss.php:667
 #: GLTagProfit_Loss.php:545 GLTrialBalance.php:421 Tax.php:17
 #: includes/PDFTaxPageHeader.inc:30
 msgid "months to"
 msgstr "Mois a"
 
 # JDN
-#: AnalysisHorizontalIncome.php:223 AnalysisHorizontalPosition.php:156
+#: AnalysisHorizontalIncome.php:225 AnalysisHorizontalPosition.php:158
 #: Contracts.php:829 CustomerAccount.php:229 CustomerInquiry.php:161
 #: CustomerReceipt.php:1050 GLBalanceSheet.php:446 GLCashFlowsIndirect.php:106
-#: GLProfit_Loss.php:670 GLStatements.php:109 PDFRemittanceAdvice.php:274
+#: GLProfit_Loss.php:670 GLStatements.php:110 PDFRemittanceAdvice.php:274
 #: PO_Header.php:599 PrintCustTrans.php:975 PrintCustTransPortrait.php:959
 #: SupplierInquiry.php:120 includes/PDFQuotationPageHeader.inc:97
 #: includes/PDFQuotationPortraitPageHeader.inc:86
@@ -1747,7 +1742,7 @@ msgstr "Mois a"
 msgid "All amounts stated in"
 msgstr "Montants en"
 
-#: AnalysisHorizontalIncome.php:228 AnalysisHorizontalPosition.php:161
+#: AnalysisHorizontalIncome.php:230 AnalysisHorizontalPosition.php:163
 #: GLAccountInquiry.php:58 GLAccounts.php:212 GLBalanceSheet.php:452
 #: GLCashFlowsIndirect.php:111 GLProfit_Loss.php:676 GLTagProfit_Loss.php:552
 #: GLTrialBalance.php:461 ImportBankTransAnalysis.php:206 PrintCustTrans.php:77
@@ -1758,7 +1753,7 @@ msgstr "Montants en"
 msgid "Account"
 msgstr "Compte"
 
-#: AnalysisHorizontalIncome.php:229 AnalysisHorizontalPosition.php:162
+#: AnalysisHorizontalIncome.php:231 AnalysisHorizontalPosition.php:164
 #: BankAccountBalances.php:18 Dashboard.php:425 GLAccounts.php:249
 #: GLAccounts.php:301 GLBalanceSheet.php:452 GLCashFlowsIndirect.php:112
 #: GLCodesInquiry.php:26 GLProfit_Loss.php:676 GLTagProfit_Loss.php:553
@@ -1770,30 +1765,30 @@ msgstr "Compte"
 msgid "Account Name"
 msgstr "Nom de compte"
 
-#: AnalysisHorizontalIncome.php:233 AnalysisHorizontalPosition.php:166
+#: AnalysisHorizontalIncome.php:235 AnalysisHorizontalPosition.php:168
 msgid "Current period"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:234 AnalysisHorizontalPosition.php:167
+#: AnalysisHorizontalIncome.php:236 AnalysisHorizontalPosition.php:169
 msgid "Last period"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:235 AnalysisHorizontalPosition.php:168
+#: AnalysisHorizontalIncome.php:237 AnalysisHorizontalPosition.php:170
 msgid "Actual change"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:236 AnalysisHorizontalPosition.php:169
+#: AnalysisHorizontalIncome.php:238 AnalysisHorizontalPosition.php:171
 msgid "Relative change"
 msgstr "Taux d'évolution"
 
-#: AnalysisHorizontalIncome.php:243
+#: AnalysisHorizontalIncome.php:245
 msgid ""
 "Actual change signs: a positive number indicates a variation that increases "
 "the net profit; a negative number indicates a variation that decreases the "
 "net profit."
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:244 AnalysisHorizontalPosition.php:177
+#: AnalysisHorizontalIncome.php:246 AnalysisHorizontalPosition.php:179
 msgid ""
 "Relative change signs: a positive number indicates an increase in the amount "
 "of that account; a negative number indicates a decrease in the amount of "
@@ -1803,15 +1798,15 @@ msgstr ""
 "montant de ce compte; un nombre négatif indique une diminution de la "
 "quantité de ce compte."
 
-#: AnalysisHorizontalIncome.php:273 AnalysisHorizontalPosition.php:218
+#: AnalysisHorizontalIncome.php:275 AnalysisHorizontalPosition.php:220
 #: GLBalanceSheet.php:174 GLBalanceSheet.php:416 GLCodesInquiry.php:17
 #: GLProfit_Loss.php:234 GLProfit_Loss.php:659 GLTagProfit_Loss.php:218
 #: GLTagProfit_Loss.php:531 GLTrialBalance.php:183 GLTrialBalance.php:452
 msgid "No general ledger accounts were returned by the SQL because"
 msgstr "Pas de compte GL trouvé avec la commande SQL"
 
-#: AnalysisHorizontalIncome.php:303 AnalysisHorizontalIncome.php:324
-#: AnalysisHorizontalIncome.php:473 AnalysisHorizontalIncome.php:504
+#: AnalysisHorizontalIncome.php:305 AnalysisHorizontalIncome.php:326
+#: AnalysisHorizontalIncome.php:475 AnalysisHorizontalIncome.php:506
 #: GLProfit_Loss.php:288 GLProfit_Loss.php:317 GLProfit_Loss.php:485
 #: GLProfit_Loss.php:514 GLProfit_Loss.php:715 GLProfit_Loss.php:752
 #: GLProfit_Loss.php:1002 GLProfit_Loss.php:1039 GLTagProfit_Loss.php:261
@@ -1821,7 +1816,7 @@ msgstr "Pas de compte GL trouvé avec la commande SQL"
 msgid "total"
 msgstr "Total"
 
-#: AnalysisHorizontalIncome.php:384 AnalysisHorizontalIncome.php:547
+#: AnalysisHorizontalIncome.php:386 AnalysisHorizontalIncome.php:549
 #: Contracts.php:944 GLProfit_Loss.php:371 GLProfit_Loss.php:564
 #: GLProfit_Loss.php:834 GLProfit_Loss.php:1120 GLTagProfit_Loss.php:331
 #: GLTagProfit_Loss.php:469 GLTagProfit_Loss.php:698 GLTagProfit_Loss.php:885
@@ -1833,22 +1828,22 @@ msgstr "Total"
 msgid "Gross Profit"
 msgstr "Bénéfice brut"
 
-#: AnalysisHorizontalIncome.php:395
+#: AnalysisHorizontalIncome.php:397
 msgid "Earnings after"
 msgstr ""
 
-#: AnalysisHorizontalIncome.php:567
+#: AnalysisHorizontalIncome.php:569
 msgid "Net Profit"
 msgstr "Résultat net"
 
-#: AnalysisHorizontalIncome.php:585 AnalysisHorizontalPosition.php:404
+#: AnalysisHorizontalIncome.php:587 AnalysisHorizontalPosition.php:406
 #: BOMs.php:883 ConfirmDispatch_Invoice.php:1752
 #: ConfirmDispatch_Invoice.php:1754 ContractBOM.php:291 CounterReturns.php:1595
 #: CounterReturns.php:1597 CustomerReceipt.php:598 CustWhereAlloc.php:226
 #: DeliveryDetails.php:603 DeliveryDetails.php:607 DeliveryDetails.php:829
 #: DeliveryDetails.php:833 GLAccountUsers.php:236 GLBalanceSheet.php:697
 #: GLCashFlowsIndirect.php:783 GLJournalInquiry.php:152
-#: GLJournalInquiry.php:154 GLProfit_Loss.php:1236 GLStatements.php:157
+#: GLJournalInquiry.php:154 GLProfit_Loss.php:1236 GLStatements.php:158
 #: GLTagProfit_Loss.php:30 GLTagProfit_Loss.php:539 GLTagProfit_Loss.php:940
 #: GLTags.php:52 GLTrialBalance.php:700 PDFCOA.php:28 PDFPrintLabel.php:63
 #: PDFProdSpec.php:18 PDFStockLocTransfer.php:28 PDFWOPrint.php:608
@@ -1864,15 +1859,15 @@ msgstr "Résultat net"
 msgid "Print"
 msgstr "Imprimer"
 
-#: AnalysisHorizontalIncome.php:586 AnalysisHorizontalPosition.php:405
+#: AnalysisHorizontalIncome.php:588 AnalysisHorizontalPosition.php:407
 #: GLBalanceSheet.php:698 GLCashFlowsIndirect.php:784 GLProfit_Loss.php:1237
-#: GLStatements.php:158 GLTagProfit_Loss.php:941 GLTrialBalance.php:701
+#: GLStatements.php:159 GLTagProfit_Loss.php:941 GLTrialBalance.php:701
 #: PurchasesReport.php:218 SalesReport.php:218
 msgid "New Report"
 msgstr "Nouveau rapport"
 
-#: AnalysisHorizontalPosition.php:33 AnalysisHorizontalPosition.php:152
-#: AnalysisHorizontalPosition.php:153 includes/MainMenuLinksArray.php:166
+#: AnalysisHorizontalPosition.php:33 AnalysisHorizontalPosition.php:154
+#: AnalysisHorizontalPosition.php:155 includes/MainMenuLinksArray.php:166
 msgid "Horizontal Analysis of Statement of Financial Position"
 msgstr "Analyse horizontale de l'état de situation financière (bilan)"
 
@@ -1884,26 +1879,26 @@ msgstr ""
 msgid "Select the balance date"
 msgstr "Sélectionner la date du Solde"
 
-#: AnalysisHorizontalPosition.php:155 GLBalanceSheet.php:444
+#: AnalysisHorizontalPosition.php:157 GLBalanceSheet.php:444
 #: includes/PDFDebtorBalsPageHeader.inc:16
 #: includes/PDFSupplierBalsPageHeader.inc:16
 msgid "as at"
 msgstr "au"
 
-#: AnalysisHorizontalPosition.php:176
+#: AnalysisHorizontalPosition.php:178
 msgid ""
 "Actual change signs: a positive number indicates a source of funds; a "
 "negative number indicates an application of funds."
 msgstr ""
 
-#: AnalysisHorizontalPosition.php:191 GLBalanceSheet.php:133
+#: AnalysisHorizontalPosition.php:193 GLBalanceSheet.php:133
 #: GLBalanceSheet.php:388
 msgid ""
 "The accumulated profits brought forward could not be calculated by the SQL "
 "because"
 msgstr ""
 
-#: AnalysisHorizontalPosition.php:387 GLBalanceSheet.php:356
+#: AnalysisHorizontalPosition.php:389 GLBalanceSheet.php:356
 #: GLBalanceSheet.php:673
 msgid "Check Total"
 msgstr "Vérifier le total"
@@ -2282,7 +2277,7 @@ msgid "Bank Account Balances"
 msgstr ""
 
 #: BankAccountBalances.php:17 BankMatching.php:101 BankReconciliation.php:102
-#: CounterReturns.php:818 Currencies.php:226 CustomerReceipt.php:823
+#: CounterReturns.php:818 Currencies.php:229 CustomerReceipt.php:823
 #: DailyBankTransactions.php:51 Payments.php:972 PDFChequeListing.php:45
 #: TaxAuthorities.php:150 TaxAuthorities.php:312
 msgid "Bank Account"
@@ -2429,7 +2424,7 @@ msgstr "Adresse postale"
 msgid "Import Format"
 msgstr ""
 
-#: BankAccounts.php:206 Currencies.php:431 CustItem.php:295 CustItem.php:407
+#: BankAccounts.php:206 Currencies.php:434 CustItem.php:295 CustItem.php:407
 #: CustomerAllocations.php:349 CustomerReceipt.php:857
 #: CustomerTransInquiry.php:108 OffersReceived.php:111 Payments.php:1011
 #: PcReportExpense.php:142 PcReportTab.php:186 PcReportTab.php:388
@@ -2697,7 +2692,7 @@ msgstr "de"
 #: BankMatching.php:136 ConfirmDispatchControlled_Invoice.php:67
 #: CounterReturns.php:198 EmailCustTrans.php:64 FixedAssetRegister.php:84
 #: FTP_RadioBeacon.php:273 GLAccountCSV.php:181 GLAccountGraph.php:192
-#: GLAccountReport.php:106 GLCashFlowsIndirect.php:104 GLStatements.php:107
+#: GLAccountReport.php:106 GLCashFlowsIndirect.php:104 GLStatements.php:108
 #: Payments.php:937 PcAssignCashTabToTab.php:141 PcReportTab.php:128
 #: PDFChequeListing.php:116 PDFChequeListing.php:126 PDFChequeListing.php:210
 #: PDFDeliveryDifferences.php:201 PDFDeliveryDifferences.php:214
@@ -2712,7 +2707,7 @@ msgstr "de"
 #: PrintCustTransPortrait.php:49 PrintCustTransPortrait.php:52
 #: SalesGraph.php:252 SalesGraph.php:281 SalesGraph.php:285
 #: StockLocTransferReceive.php:392 StockLocTransferReceive.php:536
-#: Stocks.php:333 Stocks.php:338 StockStatus.php:324 StockStatus.php:351
+#: Stocks.php:333 Stocks.php:338 StockStatus.php:325 StockStatus.php:352
 #: StockTransfers.php:532 Z_GLAccountUsersCopyAuthority.php:37
 #: includes/PDFAgedDebtorsPageHeader.inc:17
 #: includes/PDFAgedSuppliersPageHeader.inc:16
@@ -2790,7 +2785,7 @@ msgstr "La date entrée pour la sélection du champ"
 
 #: BankMatching.php:181
 msgid "before"
-msgstr "Avant"
+msgstr "avant"
 
 #: BankMatching.php:182 BankMatching.php:188
 msgid "is not entered in a recognised date format"
@@ -2802,7 +2797,7 @@ msgstr "Format du champ"
 
 #: BankMatching.php:187 GLProfit_Loss.php:880
 msgid "after"
-msgstr "Après"
+msgstr "après"
 
 #: BankMatching.php:273
 msgid "The payments with the selected criteria could not be retrieved because"
@@ -2883,12 +2878,12 @@ msgstr "Impossible d'afficher le taux de change pour ce compte bancaire"
 msgid "reconciliation on"
 msgstr "réconciliation"
 
-#: BankReconciliation.php:76 Currencies.php:206
+#: BankReconciliation.php:76 Currencies.php:209
 msgid "Cannot insert a GL entry for the exchange difference because"
 msgstr ""
 "Impossible d'insérer une entrée de GL pour la différence de change en raison"
 
-#: BankReconciliation.php:77 Currencies.php:207
+#: BankReconciliation.php:77 Currencies.php:210
 msgid "The SQL that failed to insert the exchange difference GL entry was"
 msgstr "Échec de la commande SQL d'ajoût de différence de change GL:"
 
@@ -2896,7 +2891,7 @@ msgstr "Échec de la commande SQL d'ajoût de différence de change GL:"
 msgid "Exchange difference of"
 msgstr "Différence de change de"
 
-#: BankReconciliation.php:97 Currencies.php:226
+#: BankReconciliation.php:97 Currencies.php:229
 msgid "has been posted"
 msgstr "a été affichée"
 
@@ -2919,7 +2914,7 @@ msgstr "et affecter les comptes au grand livre"
 msgid "Show bank reconciliation statement"
 msgstr "Afficher l'état du rapprochament"
 
-#: BankReconciliation.php:167 Currencies.php:177
+#: BankReconciliation.php:167 Currencies.php:180
 msgid "The bank account balance could not be returned by the SQL because"
 msgstr "Échec de la commande SQL d'affichage du solde:"
 
@@ -3137,7 +3132,7 @@ msgstr ""
 #: Shipments.php:397 Shipments.php:399 Shipments.php:400 Shipments.php:475
 #: Shipments.php:477 SpecialOrder.php:623 StockCounts.php:142
 #: StockCounts.php:167 StockLocMovements.php:113 StockLocTransfer.php:306
-#: StockMovements.php:134 StockStatus.php:328 StockUsageGraph.php:11
+#: StockMovements.php:134 StockStatus.php:329 StockUsageGraph.php:11
 #: SuppCreditGRNs.php:286 SuppCreditGRNs.php:287 SupplierCredit.php:314
 #: SupplierTenderCreate.php:435 SupplierTenderCreate.php:845
 #: SupplierTenders.php:123 SupplierTenders.php:326 SupplierTenders.php:526
@@ -4973,7 +4968,7 @@ msgstr "Livraison"
 #: PurchData.php:272 PurchData.php:607 RecurringSalesOrders.php:332
 #: SelectCreditItems.php:681 SelectOrderItems.php:1357 SelectProduct.php:189
 #: Shipments.php:401 StockLocMovements.php:115 StockMovements.php:136
-#: StockStatus.php:329 SuppCreditGRNs.php:198 SuppCreditGRNs.php:288
+#: StockStatus.php:330 SuppCreditGRNs.php:198 SuppCreditGRNs.php:288
 #: SuppCreditGRNs.php:289 SupplierPriceList.php:532 SupplierTenders.php:126
 #: SupplierTenders.php:328 SupplierTenders.php:532 SupplierTenders.php:686
 #: SuppPriceList.php:217 SuppPriceList.php:342 api/api_xml-rpc.php:981
@@ -4995,7 +4990,7 @@ msgstr "Prix"
 #: PurchData.php:692 PurchData.php:693 RecurringSalesOrders.php:333
 #: SalesAnalReptCols.php:40 SalesAnalReptCols.php:42 SelectCreditItems.php:683
 #: SelectOrderItems.php:1361 StockLocMovements.php:116 StockMovements.php:137
-#: StockStatus.php:330 includes/PDFQuotationPageHeader.inc:109
+#: StockStatus.php:331 includes/PDFQuotationPageHeader.inc:109
 #: includes/PDFQuotationPortraitPageHeader.inc:95
 #: includes/PDFTransPageHeader.inc:216
 msgid "Discount"
@@ -7095,7 +7090,7 @@ msgstr "Réf. client"
 msgid "Enter the reference that the customer uses for this contract"
 msgstr ""
 
-#: Contracts.php:950 Currencies.php:316 Currencies.php:470 PO_Header.php:1115
+#: Contracts.php:950 Currencies.php:319 Currencies.php:473 PO_Header.php:1115
 #: PO_OrderDetails.php:113 SupplierCredit.php:287 SupplierInvoice.php:640
 #: SuppPaymentRun.php:296
 msgid "Exchange Rate"
@@ -8529,34 +8524,34 @@ msgstr ""
 msgid "Show Defined Credit Status Codes"
 msgstr "Afficher les codes de solvabilité"
 
-#: Currencies.php:8 includes/MainMenuLinksArray.php:211
+#: Currencies.php:11 includes/MainMenuLinksArray.php:211
 msgid "Currencies Maintenance"
 msgstr "Gestion des devises"
 
-#: Currencies.php:57
+#: Currencies.php:60
 msgid "The currency already exists in the database"
 msgstr "La monnaie existe déjà dans la base de données"
 
 # JDN
-#: Currencies.php:64
+#: Currencies.php:67
 msgid "The exchange rate must be numeric"
 msgstr "Le taux de change doit être numérique"
 
 # JDN
-#: Currencies.php:70
+#: Currencies.php:73
 msgid ""
 "The number of decimal places to display for amounts in this currency must be "
 "numeric"
 msgstr "Le nombre de décimales doit être numérique"
 
-#: Currencies.php:75
+#: Currencies.php:78
 msgid ""
 "The number of decimal places to display for amounts in this currency must be "
 "positive or zero"
 msgstr "Le nombre de décimales à afficher doit être supérieur ou égal à zéro"
 
 # JDN
-#: Currencies.php:80
+#: Currencies.php:83
 msgid ""
 "The number of decimal places to display for amounts in this currency is "
 "expected to be 4 or less"
@@ -8564,33 +8559,33 @@ msgstr ""
 "Le nombre de décimales à afficher pour cette devise doit être inférieur ou "
 "égal à 4"
 
-#: Currencies.php:87
+#: Currencies.php:90
 msgid "The currency country must be 50 characters or less long"
 msgstr "Le pays de la devise comporte au maximum 50 caractères"
 
-#: Currencies.php:93
+#: Currencies.php:96
 msgid "The hundredths name must be 15 characters or less long"
 msgstr "Le nom des centièmes comporte au maximum 15 caractères"
 
 # JDN
-#: Currencies.php:117
+#: Currencies.php:120
 msgid "The currency definition record has been updated"
 msgstr "La devise a été mise à jour"
 
 # JDN
-#: Currencies.php:139
+#: Currencies.php:142
 msgid "The currency definition record has been added"
 msgstr "La fiche devise a été ajoutée"
 
-#: Currencies.php:204 Currencies.php:222
+#: Currencies.php:207 Currencies.php:225
 msgid "currency rate adjustment to"
 msgstr ""
 
-#: Currencies.php:226
+#: Currencies.php:229
 msgid "Currency Rate difference of"
 msgstr ""
 
-#: Currencies.php:251
+#: Currencies.php:254
 msgid ""
 "Cannot delete this currency because customer accounts have been created "
 "referring to this currency"
@@ -8598,11 +8593,11 @@ msgstr ""
 "Impossible de supprimer cette devise car il existe des comptes clients qui "
 "se r��ent �cette devise"
 
-#: Currencies.php:252
+#: Currencies.php:255
 msgid "customer accounts that refer to this currency"
 msgstr "Comptes clients se servant de cette devise"
 
-#: Currencies.php:259
+#: Currencies.php:262
 msgid ""
 "Cannot delete this currency because supplier accounts have been created "
 "referring to this currency"
@@ -8610,11 +8605,11 @@ msgstr ""
 "Impossible de supprimer cette devise car il existe des comptes fournisseurs "
 "qui se r��ent �cette devise"
 
-#: Currencies.php:260
+#: Currencies.php:263
 msgid "supplier accounts that refer to this currency"
 msgstr "Comptes fournisseurs se servant de cette devise"
 
-#: Currencies.php:267
+#: Currencies.php:270
 msgid ""
 "Cannot delete this currency because there are bank transactions that use "
 "this currency"
@@ -8622,11 +8617,11 @@ msgstr ""
 "Impossible de supprimer cette devise car il existe des transactions "
 "bancaires qui utilisent cette devise"
 
-#: Currencies.php:268
+#: Currencies.php:271
 msgid "bank transactions that refer to this currency"
 msgstr "Transactions bancaires se servant de cette devise"
 
-#: Currencies.php:270
+#: Currencies.php:273
 msgid ""
 "Cannot delete this currency because it is the functional currency of the "
 "company"
@@ -8634,29 +8629,21 @@ msgstr ""
 "Impossible de supprimer cette devise car elle est la devise de base pour la "
 "soci"
 
-#: Currencies.php:277
+#: Currencies.php:280
 msgid ""
 "Cannot delete this currency because there are bank accounts that use this "
 "currency"
 msgstr ""
 
-#: Currencies.php:278
+#: Currencies.php:281
 msgid "bank accounts that refer to this currency"
 msgstr ""
 
-#: Currencies.php:283
+#: Currencies.php:286
 msgid "The currency definition record has been deleted"
 msgstr "La devise a été supprimée"
 
-#: Currencies.php:310
-msgid "ISO4217 Code"
-msgstr " Code ISO4217"
-
-#: Currencies.php:311
-msgid "Currency Name"
-msgstr "Nom de la monnaie"
-
-#: Currencies.php:312 Currencies.php:442 CustomerBranches.php:682
+#: Currencies.php:313 Currencies.php:445 CustomerBranches.php:682
 #: Customers.php:491 Customers.php:795 Customers.php:824
 #: DeliveryDetails.php:1065 FreightCosts.php:214 Locations.php:611
 #: Suppliers.php:713 Suppliers.php:997 ../webSHOP/Checkout.php:397
@@ -8666,59 +8653,67 @@ msgstr "Nom de la monnaie"
 msgid "Country"
 msgstr "Pays"
 
-#: Currencies.php:313 Currencies.php:454
+#: Currencies.php:314
+msgid "ISO4217 Code"
+msgstr " Code ISO4217"
+
+#: Currencies.php:315
+msgid "Currency Name"
+msgstr "Nom de la monnaie"
+
+#: Currencies.php:316 Currencies.php:457
 msgid "Hundredths Name"
 msgstr "Nom des centièmes"
 
-#: Currencies.php:314 InventoryValuation.php:196
+#: Currencies.php:317 InventoryValuation.php:196
 msgid "Decimal Places"
 msgstr "Décimales"
 
-#: Currencies.php:315 Currencies.php:486
+#: Currencies.php:318 Currencies.php:489
 msgid "Show in webSHOP"
 msgstr ""
 
-#: Currencies.php:317
+#: Currencies.php:320
 msgid "1 / Ex Rate"
 msgstr ""
 
-#: Currencies.php:318
+#: Currencies.php:321
 msgid "Ex Rate - ECB"
 msgstr "Taux de change - BCE"
 
-#: Currencies.php:319 CustomerTypes.php:4 index.php:160 Prices.php:225
+#: Currencies.php:322 CustomerTypes.php:4 index.php:160 Prices.php:225
 #: SelectCustomer.php:155 SelectProduct.php:62 SelectSupplier.php:158
 #: StockCategories.php:273 SupplierTypes.php:5
 msgid "Maintenance"
 msgstr "Gestion"
 
-#: Currencies.php:359
+#: Currencies.php:362
 msgid "Are you sure you wish to delete this currency?"
 msgstr "Voulez-vous supprimer cette devise?"
 
-#: Currencies.php:360
+#: Currencies.php:363
 msgid "Graph"
 msgstr "Graphique"
 
-#: Currencies.php:374
+#: Currencies.php:377
 msgid "Functional Currency"
 msgstr "Devise de référence"
 
 # JDN
-#: Currencies.php:384
+#: Currencies.php:387
 msgid "Show all currency definitions"
 msgstr "Afficher les devises"
 
-#: Currencies.php:407 geo_displaymap_customers.php:11
+#: Currencies.php:411 geo_displaymap_customers.php:11
 #: geo_displaymap_suppliers.php:11
 msgid "An error occurred in retrieving the currency information"
 msgstr "Erreur lors de la recherche des informations sur les devises"
 
-#: Currencies.php:423
+#: Currencies.php:426
 msgid "ISO 4217 Currency Code"
 msgstr "Code de devise ISO 4217"
 
-#: Currencies.php:462
+#: Currencies.php:465
 msgid "Decimal Places to Display"
 msgstr "Nombre de décimales"
 
@@ -9090,14 +9085,14 @@ msgstr "Afficher les mouvements de stock"
 # en attente, en cours ou autre chose?
 #: CustItem.php:456 PurchData.php:760 SelectProduct.php:404
 #: SelectSalesOrder.php:6 StockAdjustments.php:534 StockCostUpdate.php:204
-#: StockMovements.php:234 StockReorderLevel.php:110 StockStatus.php:357
+#: StockMovements.php:234 StockReorderLevel.php:110 StockStatus.php:358
 #: StockTransfers.php:663 StockUsage.php:188
 msgid "Search Outstanding Sales Orders"
 msgstr "Commandes clients en cours"
 
 #: CustItem.php:457 PurchData.php:761 SelectProduct.php:405
 #: StockAdjustments.php:536 StockCostUpdate.php:205 StockMovements.php:235
-#: StockReorderLevel.php:111 StockStatus.php:358 StockTransfers.php:665
+#: StockReorderLevel.php:111 StockStatus.php:359 StockTransfers.php:665
 #: StockUsage.php:190
 msgid "Search Completed Sales Orders"
 msgstr "Commandes clients traitées"
@@ -9518,7 +9513,7 @@ msgstr "Pour éviter ce message à l'avenir"
 
 #: CustomerAllocations.php:49
 msgid "Amount entered was negative"
-msgstr "le montant saisi est négatif"
+msgstr "Le montant saisi est négatif"
 
 #: CustomerAllocations.php:49
 msgid "Only positive amounts are allowed"
@@ -11097,7 +11092,7 @@ msgstr "Choisissez le type de transaction à signaler."
 
 #: CustomerTransInquiry.php:50 FixedAssetRegister.php:84
 #: FixedAssetRegister.php:367 FreightCosts.php:78 GLCashFlowsIndirect.php:104
-#: GLJournalInquiry.php:44 GLJournalInquiry.php:61 GLStatements.php:107
+#: GLJournalInquiry.php:44 GLJournalInquiry.php:61 GLStatements.php:108
 #: PcReportExpense.php:99 PcReportTab.php:173 PcReportTab.php:365
 #: SalesAnalRepts.php:425 SalesAnalRepts.php:453 SalesAnalRepts.php:482
 #: SalesAnalRepts.php:501 ShipmentCosting.php:55 Shipments.php:304
@@ -11184,7 +11179,7 @@ msgstr " existe déjà."
 # JDN
 #: CustomerTypes.php:91 CustomerTypes.php:166
 msgid "Customer type"
-msgstr "Le type de client "
+msgstr "Le type de client"
 
 #: CustomerTypes.php:91 PcAssignCashTabToTab.php:141 PcAssignCashToTab.php:105
 #: PcClaimExpensesFromTab.php:212 PcExpenses.php:93 PcExpensesTypeTab.php:65
@@ -15585,10 +15580,6 @@ msgstr ""
 "l'entreprise et selon l'équation comptable, la valeur nette doit être égal à "
 "l'actif moins le passif."
 
-#: GLBalanceSheet.php:85 GLProfit_Loss.php:146 GLTagProfit_Loss.php:139
-msgid "Detail Or Summary"
-msgstr "Détail ou résumé"
-
 #: GLBalanceSheet.php:100 GLCashFlowsIndirect.php:877 GLProfit_Loss.php:157
 msgid "Check this box to show all accounts including those with zero balance"
 msgstr ""
@@ -15715,7 +15706,7 @@ msgstr "Activités de financement"
 msgid "Statement of Cash Flows, Indirect Method"
 msgstr "État des flux de trésorerie, méthode indirecte"
 
-#: GLCashFlowsIndirect.php:83 GLProfit_Loss.php:51 GLStatements.php:81
+#: GLCashFlowsIndirect.php:83 GLProfit_Loss.php:51 GLStatements.php:82
 #: GLTrialBalance.php:44 PurchasesReport.php:37 SalesReport.php:37
 msgid ""
 "The beginning of the period should be before or equal to the end of the "
@@ -15724,7 +15715,7 @@ msgstr ""
 "Le début de la période doit être antérieur ou égal à la fin de la période. "
 "Veuillez resélectionner la période de déclaration."
 
-#: GLCashFlowsIndirect.php:88 GLProfit_Loss.php:56 GLStatements.php:86
+#: GLCashFlowsIndirect.php:88 GLProfit_Loss.php:56 GLStatements.php:87
 #: GLTrialBalance.php:49
 msgid ""
 "The period should be 12 months or less in duration. Please select an "
@@ -15825,12 +15816,12 @@ msgstr ""
 "unique dans le temps."
 
 #: GLCashFlowsIndirect.php:835 GLProfit_Loss.php:113 GLStatements.php:209
-#: GLTrialBalance.php:90 PurchasesReport.php:256 SalesReport.php:256
+#: GLTrialBalance.php:90 PurchasesReport.php:255 SalesReport.php:255
 msgid "Select the beginning of the reporting period"
 msgstr "Sélectionner le début de la période de rapport"
 
 #: GLCashFlowsIndirect.php:849 GLProfit_Loss.php:127 GLStatements.php:223
-#: GLTrialBalance.php:104 PurchasesReport.php:266 SalesReport.php:266
+#: GLTrialBalance.php:104 PurchasesReport.php:265 SalesReport.php:265
 msgid "Select the end of the reporting period"
 msgstr "Sélectionner la fin de la période de rapport"
 
@@ -16050,7 +16041,7 @@ msgstr "Description du compte"
 msgid "Others"
 msgstr ""
 
-#: GLJournalInquiry.php:142 GLTransInquiry.php:138 PDFChequeListing.php:171
+#: GLJournalInquiry.php:142 GLTransInquiry.php:140 PDFChequeListing.php:171
 msgid "Other GL Accounts"
 msgstr ""
 
@@ -16250,11 +16241,11 @@ msgstr "Bénéfice net pour cent"
 msgid "P/L Percent after"
 msgstr ""
 
-#: GLStatements.php:30 includes/MainMenuLinksArray.php:165
+#: GLStatements.php:31 includes/MainMenuLinksArray.php:165
 msgid "Financial Statements"
 msgstr "États financiers"
 
-#: GLStatements.php:91
+#: GLStatements.php:92
 msgid ""
 "You must select at least one financial statement. Please select financial "
 "statements."
@@ -16262,31 +16253,31 @@ msgstr ""
 "Vous devez sélectionner au moins un état financier. Veuillez sélectionner "
 "les états financiers."
 
-#: GLStatements.php:111
+#: GLStatements.php:112
 msgid "In this set of financial statements:"
 msgstr "Dans cet ensemble d'états financiers :"
 
-#: GLStatements.php:112
+#: GLStatements.php:113
 msgid "Statement of financial position"
 msgstr "État de la situation financière"
 
-#: GLStatements.php:113
+#: GLStatements.php:114
 msgid "Statement of comprehensive income"
 msgstr "État du résultat global"
 
-#: GLStatements.php:114
+#: GLStatements.php:115
 msgid "Statement of changes in equity"
 msgstr "État des variations de capitaux propres"
 
-#: GLStatements.php:115
+#: GLStatements.php:116
 msgid "Statement of cash flows"
 msgstr "Tableau de flux de trésorerie"
 
-#: GLStatements.php:168
+#: GLStatements.php:169
 msgid "Shows a set of financial statements."
 msgstr "Affiche un ensemble d'états financiers."
 
-#: GLStatements.php:169
+#: GLStatements.php:170
 msgid ""
 "A complete set of financial statements comprises:(a) a statement of "
 "financial position as at the end and at the beginning of the period;(b) a "
@@ -16322,28 +16313,28 @@ msgstr "Afficher l'état du résultat global"
 msgid "Check this box to show the statement of comprehensive income"
 msgstr "Cochez cette case pour afficher l'état du résultat global"
 
-#: GLStatements.php:270
+#: GLStatements.php:272
 msgid "Show the statement of changes in equity"
 msgstr "Afficher l'état des variations des capitaux propres"
 
-#: GLStatements.php:272
+#: GLStatements.php:274
 msgid "Check this box to show the statement of changes in equity"
 msgstr ""
 "Cochez cette case pour afficher l'état des variations des capitaux propres"
 
-#: GLStatements.php:277
+#: GLStatements.php:280
 msgid "Show the statement of cash flows"
 msgstr "Afficher le tableau de flux de trésorerie"
 
-#: GLStatements.php:279
+#: GLStatements.php:282
 msgid "Check this box to show the statement of cash flows"
 msgstr "Cochez cette case pour afficher le tableau de flux de trésorerie"
 
-#: GLStatements.php:284
+#: GLStatements.php:289
 msgid "Show the notes"
 msgstr "Afficher les notes"
 
-#: GLStatements.php:286
+#: GLStatements.php:291
 msgid ""
 "Check this box to show the notes that summarize the significant accounting "
 "policies and other explanatory information"
@@ -21528,7 +21519,7 @@ msgstr "Le type de dépenses "
 
 #: PcExpenses.php:78 PcTabs.php:87
 msgid " already exists"
-msgstr " existe déjà."
+msgstr " existe déjà"
 
 #: PcExpenses.php:93
 msgid "Expense"
@@ -21600,7 +21591,7 @@ msgstr "Les frais de"
 
 #: PcExpensesTypeTab.php:58
 msgid "already exists in this Type of Tab"
-msgstr " existe déjà dans ce type d'onglet."
+msgstr "existe déjà dans ce type d'onglet"
 
 #: PcExpensesTypeTab.php:65 PcExpensesTypeTab.php:84
 msgid "Expense code"
@@ -21758,7 +21749,7 @@ msgstr ""
 
 #: PcTabExpensesList.php:305 POReport.php:518 POReport.php:1282
 #: POReport.php:1518 SalesInquiry.php:808 SalesInquiry.php:1115
-#: StockStatus.php:327
+#: StockStatus.php:328
 msgid "Date Range"
 msgstr "Date Range"
 
@@ -25062,7 +25053,7 @@ msgid "Run Inquiry"
 msgstr "Lancer la consultation"
 
 # En attente ou en cours? ou autre chose?
-#: PO_SelectOSPurchOrder.php:8 SelectProduct.php:407 StockStatus.php:360
+#: PO_SelectOSPurchOrder.php:8 SelectProduct.php:407 StockStatus.php:361
 #: StockUsage.php:192
 msgid "Search Outstanding Purchase Orders"
 msgstr "Commandes fournisseurs en cours"
@@ -26732,13 +26723,13 @@ msgstr ""
 msgid "Purchases from Suppliers"
 msgstr "Achats aux fournisseurs"
 
-#: PurchasesReport.php:48 PurchasesReport.php:251 SalesReport.php:48
-#: SalesReport.php:251
+#: PurchasesReport.php:48 PurchasesReport.php:250 SalesReport.php:48
+#: SalesReport.php:250
 msgid "Period from"
 msgstr ""
 
-#: PurchasesReport.php:49 PurchasesReport.php:261 SalesReport.php:49
-#: SalesReport.php:261
+#: PurchasesReport.php:49 PurchasesReport.php:260 SalesReport.php:49
+#: SalesReport.php:260
 msgid "Period to"
 msgstr ""
 
@@ -26793,11 +26784,11 @@ msgid ""
 "Shows a report of purchases from suppliers for the range of selected dates."
 msgstr ""
 
-#: PurchasesReport.php:271 SalesReport.php:271
+#: PurchasesReport.php:270 SalesReport.php:270
 msgid "Show details"
 msgstr "Afficher les détails"
 
-#: PurchasesReport.php:274
+#: PurchasesReport.php:273
 msgid "Check this box to show purchase invoices"
 msgstr "Cochez cette case pour afficher les factures d'achat"
 
@@ -28729,7 +28720,7 @@ msgstr "Nom"
 
 #: SalesCategories.php:372
 msgid "Display in webSHOP?"
-msgstr ""
+msgstr "Afficher en webSHOP ?"
 
 #: SalesCategories.php:396
 msgid "Submit Information"
@@ -29185,7 +29176,7 @@ msgstr ""
 msgid "Shows a report of sales to customers for the range of selected dates."
 msgstr ""
 
-#: SalesReport.php:274
+#: SalesReport.php:273
 msgid "Check this box to show sales invoices"
 msgstr ""
 
@@ -30476,10 +30467,9 @@ msgstr ""
 msgid "Use this screen for the "
 msgstr " "
 
-# JDN
 #: SelectOrderItems.php:1790
 msgid " of products to be ordered"
-msgstr " "
+msgstr ""
 
 # JDN
 #: SelectOrderItems.php:1807
@@ -32786,7 +32776,7 @@ msgstr "Ajustement de la quantité"
 msgid "Enter Stock Adjustment"
 msgstr "Valider l'ajustement"
 
-#: StockAdjustments.php:530 StockStatus.php:355 StockTransfers.php:659
+#: StockAdjustments.php:530 StockStatus.php:356 StockTransfers.php:659
 msgid "Show Movements"
 msgstr "Afficher les mouvements"
 
@@ -33915,7 +33905,7 @@ msgstr "Afficher les mouvements avant"
 msgid "But after"
 msgstr "Mais après"
 
-#: StockLocMovements.php:102 StockMovements.php:119 StockStatus.php:279
+#: StockLocMovements.php:102 StockMovements.php:119 StockStatus.php:280
 msgid ""
 "The stock movements for the selected criteria could not be retrieved because"
 msgstr ""
@@ -33971,11 +33961,11 @@ msgstr ""
 msgid "Re-Order Level"
 msgstr "Niveau de ré-assort"
 
-#: StockLocStatus.php:275 StockLocStatus.php:301 StockStatus.php:229
+#: StockLocStatus.php:275 StockLocStatus.php:301 StockStatus.php:230
 msgid "Serial Numbers"
 msgstr "N° de série"
 
-#: StockLocStatus.php:277 StockLocStatus.php:303 StockStatus.php:231
+#: StockLocStatus.php:277 StockLocStatus.php:303 StockStatus.php:232
 #: WorkOrderEntry.php:850
 msgid "Batches"
 msgstr "Lots"
@@ -34971,19 +34961,19 @@ msgstr ""
 msgid "The workorder component demand for this product from"
 msgstr "La demande de composants autorisation de travail pour ce produit de"
 
-#: StockStatus.php:252
+#: StockStatus.php:253
 msgid "Update Bins"
 msgstr ""
 
-#: StockStatus.php:324
+#: StockStatus.php:325
 msgid "Pricing history for sales of"
 msgstr "Historique des prix des ventes"
 
-#: StockStatus.php:351
+#: StockStatus.php:352
 msgid "No history of sales of"
 msgstr "Pas d'historique des ventes"
 
-#: StockStatus.php:356
+#: StockStatus.php:357
 msgid "Show Usage"
 msgstr "Utilisation du stock"
 
@@ -36278,7 +36268,7 @@ msgstr "mais la somme de OvAmount convertis au ExRate"
 
 #: SupplierCredit.php:1081
 msgid "Credit note"
-msgstr "note de crédit"
+msgstr "Note de crédit"
 
 #: SupplierCredit.php:1084 SupplierInvoice.php:1458
 msgid "The general ledger transaction for the tax could not be added because"
@@ -37625,7 +37615,7 @@ msgstr "Gestion des actifs"
 
 #: SuppLoginSetup.php:101
 msgid "A new supplier login has been created"
-msgstr "Un nouvel identifiant de fournisseur a été créé."
+msgstr "Un nouvel identifiant de fournisseur a été créé"
 
 #: SuppLoginSetup.php:115
 msgid "The user ID must has more than 4 legal characters"
@@ -42457,7 +42447,7 @@ msgstr "ID utilisateur"
 
 #: WWW_Users.php:116
 msgid "already exists and cannot be used again"
-msgstr " existe déjà et ne peut être utilisé à nouveau"
+msgstr "existe déjà et ne peut être utilisé à nouveau"
 
 #: WWW_Users.php:182
 msgid "The selected user record has been updated"
@@ -42603,7 +42593,7 @@ msgstr ""
 
 #: WWW_Users.php:727
 msgid "Display dashboard"
-msgstr ""
+msgstr "Afficher tableau de bord"
 
 #: WWW_Users.php:736
 msgid "Show dashboard page after login"
@@ -44016,7 +44006,7 @@ msgstr ""
 
 #: Z_DeleteCreditNote.php:148
 msgid "Credit note number"
-msgstr "numéro de note de crédit"
+msgstr "Numéro de note de crédit"
 
 #: Z_DeleteCreditNote.php:148
 msgid "has been completely deleted"
@@ -45359,7 +45349,7 @@ msgstr "Utilitaire pour créer un nouveau fichier de langue"
 #: Z_poAddLanguage.php:32 Z_poEditLangHeader.php:21 Z_poEditLangModule.php:17
 #: Z_poEditLangRemaining.php:25
 msgid "Current language is"
-msgstr "langue courante est"
+msgstr "Langue courante est"
 
 #: Z_poAddLanguage.php:43
 msgid ""
@@ -46860,10 +46850,9 @@ msgstr "Ne peut allouer que des reçus ou des avoirs"
 msgid "No transaction found to allocate"
 msgstr "Pas de transaction à affecter"
 
-# JDN
 #: api/api_login.php:87
 msgid "** Error Code Not Defined **"
-msgstr "** Code d'erreur non défini ** "
+msgstr "** Code d'erreur non défini **"
 
 #: api/api_login.php:121 includes/UserLogin.php:170
 msgid "There was a problem deleting expired audit-trail history"
@@ -47919,7 +47908,7 @@ msgstr "Commande à facturer"
 
 #: api/api_xml-rpc.php:1253
 msgid "An integer representing the webERP sales order number"
-msgstr "un entier correspondant au numéro de commande webERP"
+msgstr "Un entier correspondant au numéro de commande webERP"
 
 # JDN
 #: api/api_xml-rpc.php:1258
@@ -51021,7 +51010,7 @@ msgstr "Dollar de Hong Kong"
 
 #: includes/CurrenciesArray.php:69
 msgid "Honduran lempira"
-msgstr "Lempira hondurien "
+msgstr "Lempira hondurien"
 
 #: includes/CurrenciesArray.php:70
 msgid "Croatian kuna"
@@ -55557,6 +55546,12 @@ msgstr ""
 #: ../webSHOP/includes/session.php:162
 msgid "Bank Transfer"
 msgstr ""
+
+#~ msgid "Report Parameters"
+#~ msgstr "Paramètres du rapport"
+
+#~ msgid "Detail Or Summary"
+#~ msgstr "Détail ou résumé"
 
 #~ msgid "UTILITY PAGE"
 #~ msgstr "UTILITAIRE PAGE"
