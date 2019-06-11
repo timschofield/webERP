@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: webERP 4.15\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-09 07:31-0600\n"
-"PO-Revision-Date: 2019-03-28 12:03-0600\n"
+"PO-Revision-Date: 2019-06-10 19:06-0600\n"
 "Last-Translator: Rafael E. Chacón <rafael.emilio.chacon@gmail.com>\n"
 "Language-Team: French <none>\n"
 "Language: fr_FR\n"
@@ -2499,12 +2499,12 @@ msgstr ""
 # JDN
 #: BankAccountUsers.php:13 includes/MainMenuLinksArray.php:80
 msgid "Bank Account Authorised Users"
-msgstr ""
+msgstr "Utilisateurs autorisés par compte bancaire"
 
 # JDN
 #: BankAccountUsers.php:14
 msgid "Maintenance Of Bank Account Authorised Users"
-msgstr ""
+msgstr "Gérer les usages autorisés par compte bancaire"
 
 #: BankAccountUsers.php:37
 msgid "You have not selected any bank account"
@@ -2620,7 +2620,7 @@ msgstr ""
 #: BankAccountUsers.php:192 LocationUsers.php:213 UserBankAccounts.php:102
 #: UserGLAccounts.php:51 UserLocations.php:111
 msgid "Select User"
-msgstr ""
+msgstr "Sélectionner un utilisateur"
 
 #: BankMatching.php:6 BankMatching.php:19 BankMatching.php:29
 msgid "Bank Matching"
@@ -9687,7 +9687,7 @@ msgstr "Il n'y a aucune allocation à faire"
 #: CustomerBalancesMovement.php:4 CustomerBalancesMovement.php:11
 #: includes/MainMenuLinksArray.php:22
 msgid "Customer Activity and Balances"
-msgstr ""
+msgstr "Activité et soldes du client"
 
 #: CustomerBalancesMovement.php:37 CustomerBranches.php:776
 #: SalesAnalRepts.php:19 SalesAnalRepts.php:21 SalesInquiry.php:786
@@ -11549,7 +11549,7 @@ msgstr "Totaux"
 
 #: Dashboard.php:289
 msgid "Supplier Invoices Due within 1 Month"
-msgstr ""
+msgstr "Factures de fournisseurs à payer dans un délai d'un mois"
 
 #: Dashboard.php:294 PrintCustTrans.php:896 PrintCustTransPortrait.php:880
 #: SalesInquiry.php:1098 SupplierInvoice.php:638
@@ -15481,7 +15481,7 @@ msgstr "Afficher tous les comptes"
 #: GLAccountUsers.php:5 GLAccountUsers.php:41 GLAccountUsers.php:42
 #: GLAccountUsers.php:81 includes/MainMenuLinksArray.php:80
 msgid "GL Account Authorised Users"
-msgstr ""
+msgstr "Utilisateurs autorisés par compte"
 
 #: GLAccountUsers.php:44
 msgid "You have not selected any GL Account"
@@ -16269,7 +16269,7 @@ msgstr ""
 
 #: GLJournalTemplates.php:4 GLJournalTemplates.php:31
 msgid "Maintain journal templates"
-msgstr ""
+msgstr "Gérer les modèles de journal"
 
 #: GLJournalTemplates.php:19
 msgid "The GL journal template has been removed from the database"
@@ -18736,7 +18736,7 @@ msgstr ""
 
 #: LocationUsers.php:4 includes/MainMenuLinksArray.php:107
 msgid "Inventory Location Authorised Users Maintenance"
-msgstr ""
+msgstr "Gérer les utilisateurs autorisés par lieu de stockage"
 
 #: LocationUsers.php:9
 msgid "Location Authorised Users"
@@ -19292,7 +19292,7 @@ msgstr ""
 #: MRPCreateDemands.php:229 PDFDeliveryDifferences.php:61 PDFDIFOT.php:65
 #: PDFOrdersInvoiced.php:63 PDFOrderStatus.php:60
 msgid "Inventory Location"
-msgstr "Inventaire sites"
+msgstr "Lieu de stockage"
 
 #: MRPCreateDemands.php:250
 msgid "From Sales Date"
@@ -40890,7 +40890,7 @@ msgstr "Numéro d'erreur"
 
 #: UserBankAccounts.php:13 includes/MainMenuLinksArray.php:80
 msgid "User Authorised Bank Accounts"
-msgstr ""
+msgstr "Comptes bancaires autorisés par utilisateur"
 
 #: UserBankAccounts.php:37 UserLocations.php:32
 msgid "You have not selected any User"
@@ -40936,7 +40936,7 @@ msgstr ""
 #: UserGLAccounts.php:5 UserGLAccounts.php:39 UserGLAccounts.php:40
 #: UserGLAccounts.php:86 includes/MainMenuLinksArray.php:80
 msgid "User Authorised GL Accounts"
-msgstr ""
+msgstr "Comptes autorisés par utilisateur"
 
 #: UserGLAccounts.php:45
 msgid "You have not selected any user"
@@ -41000,7 +41000,7 @@ msgstr ""
 
 #: UserLocations.php:4 includes/MainMenuLinksArray.php:107
 msgid "User Authorised Inventory Locations Maintenance"
-msgstr ""
+msgstr "Gérer les lieux de stockage par utilisateur autorisé"
 
 #: UserLocations.php:9
 msgid "User Authorised Locations"
@@ -42613,7 +42613,7 @@ msgstr "Impossible de supprimer cet utilisateur car"
 
 #: WWW_Users.php:318
 msgid "User Deleted"
-msgstr "Utilisateur supprim"
+msgstr "Utilisateur supprimé"
 
 #: WWW_Users.php:340
 msgid "Last Visit"
@@ -50833,7 +50833,7 @@ msgstr ""
 
 #: includes/CountriesArray.php:208
 msgid "Venezuela"
-msgstr ""
+msgstr "Venezuela"
 
 #: includes/CountriesArray.php:209
 msgid "British Virgin Islands"
@@ -52275,7 +52275,7 @@ msgstr "Impression de liste de paiement"
 
 #: includes/MainMenuLinksArray.php:22
 msgid "Debtor Balances At A Prior Month End"
-msgstr ""
+msgstr "Soldes des débiteurs à la fin du mois précédent"
 
 #: includes/MainMenuLinksArray.php:22
 msgid "Customer Listing By Area/Salesperson"
@@ -52291,7 +52291,7 @@ msgstr "Ajouter un client"
 
 #: includes/MainMenuLinksArray.php:32
 msgid "Select Customer"
-msgstr ""
+msgstr "Sélectionner un client"
 
 #: includes/MainMenuLinksArray.php:38
 msgid "Aged Supplier Report"
@@ -52349,7 +52349,7 @@ msgstr "Détail des commandes  ou résumé"
 # JDN
 #: includes/MainMenuLinksArray.php:50
 msgid "Maintain Supplier Price Lists"
-msgstr ""
+msgstr "Gérer les listes de prix des fournisseurs"
 
 #: includes/MainMenuLinksArray.php:53
 msgid "Inventory Location Transfers"
@@ -52632,7 +52632,7 @@ msgstr "Labels GL"
 
 #: includes/MainMenuLinksArray.php:80
 msgid "Maintain Journal Templates"
-msgstr ""
+msgstr "Gérer les modèles de journal"
 
 #  JDN
 #: includes/MainMenuLinksArray.php:83
@@ -52773,7 +52773,7 @@ msgstr "Gestion des remises"
 
 #: includes/MainMenuLinksArray.php:107
 msgid "Inventory Locations Maintenance"
-msgstr "Gestion des sites"
+msgstr "Gérer les lieux de stockage"
 
 # JDN
 #: includes/MainMenuLinksArray.php:107
