@@ -21,6 +21,7 @@ WHERE (accountcode LIKE "%AD" OR accountcode = "350510100");
 UPDATE chartmasterPMA SET `group_` =  'Penjualan' WHERE `accountcode` = '410010000AD';
 UPDATE chartmasterPMA SET `group_` =  'Biaya Karyawan' WHERE `accountcode` = '612011210AD';
 UPDATE chartmasterPMA SET `group_` =  'Biaya General' WHERE `accountcode` = '510010070AD';
+UPDATE chartmasterPMA SET `group_` =  'Pajak Penghasilan' WHERE `accountcode` = '611012025AD';
 
 /* ******************************************************************************************/
 /*                               PT BB                                                      */
@@ -44,6 +45,7 @@ WHERE (accountcode LIKE "%PT" OR accountcode = "350510100");
 UPDATE chartmasterPT SET `group_` =  'HPP (COGS)' WHERE `accountcode` = '510010005PT';
 UPDATE chartmasterPT SET `group_` =  'Penjualan' WHERE `accountcode` = '410010010PT';
 UPDATE chartmasterPT SET `group_` =  'Biaya General' WHERE `accountcode` = '510010070PT';
+UPDATE chartmasterPT SET `group_` =  'Pajak Penghasilan' WHERE `accountcode` = '611012025PT';
 
 /* ******************************************************************************************/
 /*                              PERORANGAN IKE DIAN (POIK)                                  */
