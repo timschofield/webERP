@@ -42,12 +42,18 @@ if ($KL_SystemAdmin
 	$NumberOfTestExecuted++;
 	SPGPerformanceByShop("RETAILAR", 30, 60, 90, $db);
 	$NumberOfTestExecuted++;
+	SPGPerformanceByShop("RETAILK2", 30, 60, 90, $db);
+	$NumberOfTestExecuted++;
 
 	SPGPerformanceByShop("RETAILKS", 30, 60, 90, $db);
 	$NumberOfTestExecuted++;
 	SPGPerformanceByShop("RETAILPA", 30, 60, 90, $db);
 	$NumberOfTestExecuted++;
 	SPGPerformanceByShop("RETAILPB", 30, 60, 90, $db);
+	$NumberOfTestExecuted++;
+	SPGPerformanceByShop("RETAILBK", 30, 60, 90, $db);
+	$NumberOfTestExecuted++;
+	SPGPerformanceByShop("RETAILBL", 30, 60, 90, $db);
 	$NumberOfTestExecuted++;
 
 	SPGPerformanceByShop("RETAILSA", 30, 60, 90, $db);
