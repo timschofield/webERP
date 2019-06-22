@@ -196,7 +196,7 @@ msgstr "El SQL usado para suprimir el grupo contables fue"
 
 #: AccountGroups.php:254
 msgid "group has been deleted"
-msgstr "El grupo de cuentas ha sido eliminado"
+msgstr "el grupo de cuentas ha sido eliminado"
 
 #: AccountGroups.php:278
 msgid "The sql that was used to retrieve the account group information was "
@@ -627,7 +627,7 @@ msgstr "grupos contables del libro mayor que hacen referencia a esta sección co
 
 #: AccountSections.php:141
 msgid "section has been deleted"
-msgstr "La sección fue eliminada"
+msgstr "la sección fue eliminada"
 
 #: AccountSections.php:166
 msgid "Could not get account group sections because"
@@ -701,7 +701,7 @@ msgstr "Editar contacto para"
 
 #: AddCustomerContacts.php:41
 msgid "The Contact ID must be an integer."
-msgstr "El ID del contacto debe ser un entero"
+msgstr "El ID del contacto debe ser un entero."
 
 #: AddCustomerContacts.php:44
 msgid "The contact name must be forty characters or less long"
@@ -856,7 +856,7 @@ msgstr "Volver a seleccionar cliente"
 
 #: AddCustomerNotes.php:33
 msgid "The contact priority must be an integer."
-msgstr "La prioridad del contacto debe ser un entero"
+msgstr "La prioridad del contacto debe ser un entero."
 
 #: AddCustomerNotes.php:36
 msgid "The contact's notes must be two hundred characters or less long"
@@ -1564,7 +1564,7 @@ msgstr "Seleccionar el perí­odo hasta"
 #: WorkOrderEntry.php:931 WorkOrderEntry.php:935 WorkOrderEntry.php:937
 #: WorkOrderIssue.php:966
 msgid "OR"
-msgstr "ó"
+msgstr "O"
 
 #: AnalysisHorizontalIncome.php:176 GLAccountGraph.php:161
 #: GLCashFlowsIndirect.php:862 GLProfit_Loss.php:140 GLStatements.php:236
@@ -2703,7 +2703,7 @@ msgstr "No se pudo obtener la tasa de cambio de la cuenta bancaria seleccionada"
 
 #: BankReconciliation.php:73 BankReconciliation.php:91
 msgid "reconciliation on"
-msgstr "Conciliación en"
+msgstr "conciliación en"
 
 #: BankReconciliation.php:76 Currencies.php:209
 msgid "Cannot insert a GL entry for the exchange difference because"
@@ -3094,7 +3094,7 @@ msgstr "Cantidad de construcción: "
 
 #: BOMExtendedQty.php:325
 msgid "Build"
-msgstr "estructura"
+msgstr "Estructura"
 
 #: BOMExtendedQty.php:326 BOMInquiry.php:109 BOMs.php:1114
 #: BOMs_SingleLevel.php:899 CollectiveWorkOrderCost.php:329
@@ -4272,7 +4272,7 @@ msgstr "Referencia de la administración tributaria"
 
 #: CompanyPreferences.php:186 Factors.php:210
 msgid "Address Line 1"
-msgstr "Dirección lí­nea 1"
+msgstr "Dirección línea 1"
 
 #: CompanyPreferences.php:187
 msgid "Enter the first line of the company registered office. This will appear on invoices and statements."
@@ -4482,7 +4482,7 @@ msgstr "Artí­culos controlados"
 
 #: ConfirmDispatchControlled_Invoice.php:67 GoodsReceivedControlled.php:67
 msgid "on order"
-msgstr "En Pedidos"
+msgstr "en pedidos"
 
 #: ConfirmDispatch_Invoice.php:10
 msgid "Confirm Dispatches and Invoice An Order"
@@ -7149,7 +7149,7 @@ msgstr "la referencia de la orden"
 
 #: CounterSales.php:1245 DeliveryDetails.php:541
 msgid "our order number"
-msgstr "Nuestro número de pedido"
+msgstr "nuestro número de pedido"
 
 #: CounterSales.php:1249 DeliveryDetails.php:545
 msgid "The following serial numbers have been reserved for this work order"
@@ -9616,7 +9616,7 @@ msgstr "El nombre no puede contener los siguientes caracteres"
 
 #: Customers.php:71 Z_ImportDebtors.php:235
 msgid "The Line 1 of the address must be forty characters or less long"
-msgstr "La Lí­nea 1 de la dirección no debe pasar de 40 caracteres"
+msgstr "La línea 1 de la dirección no debe pasar de 40 caracteres"
 
 #: Customers.php:76 Z_ImportDebtors.php:240
 msgid "The Line 2 of the address must be forty characters or less long"
@@ -9766,7 +9766,7 @@ msgstr "Hasta 10 caracteres para el código de cliente. Los siguientes caractere
 #: Customers.php:467 Customers.php:775 Customers.php:804 Suppliers.php:693
 #: Suppliers.php:977
 msgid "Address Line 1 (Street)"
-msgstr "Dirección, 1 (Calle)"
+msgstr "Dirección 1 (Calle)"
 
 #: Customers.php:471 Customers.php:779 Customers.php:808 Suppliers.php:697
 #: Suppliers.php:981
@@ -26091,7 +26091,6 @@ msgid "Customer's Currency"
 msgstr ""
 
 #: SalesReport.php:227
-#, fuzzy
 msgid "Shows a report of sales to customers for the range of selected dates."
 msgstr "Muestra un informe de ventas a clientes para el rango de fechas seleccionadas."
 
@@ -35797,7 +35796,7 @@ msgstr ""
 
 #: UserBankAccounts.php:90
 msgid "bank account removed"
-msgstr "Cuenta bancaria removida"
+msgstr "cuenta bancaria removida"
 
 #: UserBankAccounts.php:144
 msgid "Authorised bank accounts for"
@@ -41206,7 +41205,7 @@ msgstr "Contraseña de Usuario"
 #: api/api_xml-rpc.php:2961 api/api_xml-rpc.php:2990 api/api_xml-rpc.php:3021
 #: api/api_xml-rpc.php:3053
 msgid "The weberp password associated with this user name. "
-msgstr "La contraseña weberp asociada con este nombre de usuario."
+msgstr "La contraseña webERP asociada con este nombre de usuario."
 
 #: api/api_xml-rpc.php:22 api/api_xml-rpc.php:44
 msgid "This function returns an integer. "

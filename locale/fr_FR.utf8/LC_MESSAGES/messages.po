@@ -2382,12 +2382,12 @@ msgstr ""
 # JDN
 #: BankAccountUsers.php:13 includes/MainMenuLinksArray.php:80
 msgid "Bank Account Authorised Users"
-msgstr ""
+msgstr "Utilisateurs autorisés par compte bancaire"
 
 # JDN
 #: BankAccountUsers.php:14
 msgid "Maintenance Of Bank Account Authorised Users"
-msgstr ""
+msgstr "Gérer les usages autorisés par compte bancaire"
 
 #: BankAccountUsers.php:37
 msgid "You have not selected any bank account"
@@ -2503,7 +2503,7 @@ msgstr ""
 #: BankAccountUsers.php:192 LocationUsers.php:213 UserBankAccounts.php:102
 #: UserGLAccounts.php:51 UserLocations.php:111
 msgid "Select User"
-msgstr ""
+msgstr "Sélectionner un utilisateur"
 
 #: BankMatching.php:6 BankMatching.php:19 BankMatching.php:29
 msgid "Bank Matching"
@@ -2662,7 +2662,7 @@ msgstr "La date entrée pour la sélection du champ"
 
 #: BankMatching.php:181
 msgid "before"
-msgstr "Avant"
+msgstr "avant"
 
 #: BankMatching.php:182 BankMatching.php:188
 msgid "is not entered in a recognised date format"
@@ -2674,7 +2674,7 @@ msgstr "Format du champ"
 
 #: BankMatching.php:187 GLProfit_Loss.php:880
 msgid "after"
-msgstr "Après"
+msgstr "après"
 
 #: BankMatching.php:273
 msgid "The payments with the selected criteria could not be retrieved because"
@@ -8716,7 +8716,7 @@ msgstr "Pour éviter ce message à l'avenir"
 
 #: CustomerAllocations.php:49
 msgid "Amount entered was negative"
-msgstr "le montant saisi est négatif"
+msgstr "Le montant saisi est négatif"
 
 #: CustomerAllocations.php:49
 msgid "Only positive amounts are allowed"
@@ -8871,7 +8871,7 @@ msgstr "Il n'y a aucune allocation à faire"
 #: CustomerBalancesMovement.php:4 CustomerBalancesMovement.php:11
 #: includes/MainMenuLinksArray.php:22
 msgid "Customer Activity and Balances"
-msgstr ""
+msgstr "Activité et soldes du client"
 
 #: CustomerBalancesMovement.php:37 CustomerBranches.php:776
 #: SalesAnalRepts.php:19 SalesAnalRepts.php:21 SalesInquiry.php:786
@@ -10201,7 +10201,7 @@ msgstr " existe déjà."
 # JDN
 #: CustomerTypes.php:91 CustomerTypes.php:166
 msgid "Customer type"
-msgstr "Le type de client "
+msgstr "Le type de client"
 
 #: CustomerTypes.php:91 PcAssignCashTabToTab.php:141 PcAssignCashToTab.php:105
 #: PcClaimExpensesFromTab.php:212 PcExpenses.php:93 PcExpensesTypeTab.php:65
@@ -10541,7 +10541,7 @@ msgstr "Totaux"
 
 #: Dashboard.php:289
 msgid "Supplier Invoices Due within 1 Month"
-msgstr ""
+msgstr "Factures de fournisseurs à payer dans un délai d'un mois"
 
 #: Dashboard.php:294 PrintCustTrans.php:896 PrintCustTransPortrait.php:880
 #: SalesInquiry.php:1098 SupplierInvoice.php:638
@@ -14152,7 +14152,7 @@ msgstr "Afficher tous les comptes"
 #: GLAccountUsers.php:5 GLAccountUsers.php:41 GLAccountUsers.php:42
 #: GLAccountUsers.php:81 includes/MainMenuLinksArray.php:80
 msgid "GL Account Authorised Users"
-msgstr ""
+msgstr "Utilisateurs autorisés par compte"
 
 #: GLAccountUsers.php:44
 msgid "You have not selected any GL Account"
@@ -14834,6 +14834,26 @@ msgstr ""
 #: GLJournalTemplates.php:4 GLJournalTemplates.php:31
 msgid "Maintain journal templates"
 msgstr ""
+
+#: GLJournalTemplates.php:19
+msgid "The GL journal template has been removed from the database"
+msgstr ""
+
+#: GLJournalTemplates.php:28
+msgid "There are no templates stored in the database."
+msgstr ""
+
+#: GLJournalTemplates.php:54
+msgid "Are you sure you wish to delete this template?"
+msgstr ""
+
+#: GLJournal.php:634
+msgid "Load from a template"
+msgstr ""
+
+#: GLJournalTemplates.php:4 GLJournalTemplates.php:31
+msgid "Maintain journal templates"
+msgstr "Gérer les modèles de journal"
 
 #: GLJournalTemplates.php:19
 msgid "The GL journal template has been removed from the database"
@@ -17051,7 +17071,7 @@ msgstr ""
 
 #: LocationUsers.php:4 includes/MainMenuLinksArray.php:107
 msgid "Inventory Location Authorised Users Maintenance"
-msgstr ""
+msgstr "Gérer les utilisateurs autorisés par lieu de stockage"
 
 #: LocationUsers.php:9
 msgid "Location Authorised Users"
@@ -17595,7 +17615,7 @@ msgstr ""
 #: MRPCreateDemands.php:229 PDFDeliveryDifferences.php:61 PDFDIFOT.php:65
 #: PDFOrdersInvoiced.php:63 PDFOrderStatus.php:60
 msgid "Inventory Location"
-msgstr "Inventaire sites"
+msgstr "Lieu de stockage"
 
 #: MRPCreateDemands.php:250
 msgid "From Sales Date"
@@ -19751,7 +19771,7 @@ msgstr "Le type de dépenses "
 
 #: PcExpenses.php:78 PcTabs.php:87
 msgid " already exists"
-msgstr " existe déjà."
+msgstr " existe déjà"
 
 #: PcExpenses.php:93
 msgid "Expense"
@@ -19812,7 +19832,7 @@ msgstr "Les frais de"
 
 #: PcExpensesTypeTab.php:58
 msgid "already exists in this Type of Tab"
-msgstr " existe déjà dans ce type d'onglet."
+msgstr "existe déjà dans ce type d'onglet"
 
 #: PcExpensesTypeTab.php:65 PcExpensesTypeTab.php:84
 msgid "Expense code"
@@ -26344,7 +26364,7 @@ msgstr "Nom"
 
 #: SalesCategories.php:372
 msgid "Display in webSHOP?"
-msgstr ""
+msgstr "Afficher en webSHOP ?"
 
 #: SalesCategories.php:396
 msgid "Submit Information"
@@ -27859,10 +27879,9 @@ msgstr ""
 msgid "Use this screen for the "
 msgstr " "
 
-# JDN
 #: SelectOrderItems.php:1790
 msgid " of products to be ordered"
-msgstr " "
+msgstr ""
 
 # JDN
 #: SelectOrderItems.php:1807
@@ -33005,7 +33024,7 @@ msgstr "mais la somme de OvAmount convertis au ExRate"
 
 #: SupplierCredit.php:1081
 msgid "Credit note"
-msgstr "note de crédit"
+msgstr "Note de crédit"
 
 #: SupplierCredit.php:1084 SupplierInvoice.php:1458
 msgid "The general ledger transaction for the tax could not be added because"
@@ -34158,7 +34177,7 @@ msgstr "Gestion des actifs"
 
 #: SuppLoginSetup.php:101
 msgid "A new supplier login has been created"
-msgstr "Un nouvel identifiant de fournisseur a été créé."
+msgstr "Un nouvel identifiant de fournisseur a été créé"
 
 #: SuppLoginSetup.php:115
 msgid "The user ID must has more than 4 legal characters"
@@ -36830,7 +36849,7 @@ msgstr "Numéro d'erreur"
 
 #: UserBankAccounts.php:13 includes/MainMenuLinksArray.php:80
 msgid "User Authorised Bank Accounts"
-msgstr ""
+msgstr "Comptes bancaires autorisés par utilisateur"
 
 #: UserBankAccounts.php:37 UserLocations.php:32
 msgid "You have not selected any User"
@@ -36876,7 +36895,7 @@ msgstr ""
 #: UserGLAccounts.php:5 UserGLAccounts.php:39 UserGLAccounts.php:40
 #: UserGLAccounts.php:86 includes/MainMenuLinksArray.php:80
 msgid "User Authorised GL Accounts"
-msgstr ""
+msgstr "Comptes autorisés par utilisateur"
 
 #: UserGLAccounts.php:45
 msgid "You have not selected any user"
@@ -36940,7 +36959,7 @@ msgstr ""
 
 #: UserLocations.php:4 includes/MainMenuLinksArray.php:107
 msgid "User Authorised Inventory Locations Maintenance"
-msgstr ""
+msgstr "Gérer les lieux de stockage par utilisateur autorisé"
 
 #: UserLocations.php:9
 msgid "User Authorised Locations"
@@ -38229,7 +38248,7 @@ msgstr "ID utilisateur"
 
 #: WWW_Users.php:116
 msgid "already exists and cannot be used again"
-msgstr " existe déjà et ne peut être utilisé à nouveau"
+msgstr "existe déjà et ne peut être utilisé à nouveau"
 
 #: WWW_Users.php:182
 msgid "The selected user record has been updated"
@@ -38289,7 +38308,7 @@ msgstr "Impossible de supprimer cet utilisateur car"
 
 #: WWW_Users.php:318
 msgid "User Deleted"
-msgstr "Utilisateur supprim"
+msgstr "Utilisateur supprimé"
 
 #: WWW_Users.php:340
 msgid "Last Visit"
@@ -38363,7 +38382,7 @@ msgstr ""
 
 #: WWW_Users.php:727
 msgid "Display dashboard"
-msgstr ""
+msgstr "Afficher tableau de bord"
 
 #: WWW_Users.php:736
 msgid "Show dashboard page after login"
@@ -39674,7 +39693,7 @@ msgstr ""
 
 #: Z_DeleteCreditNote.php:148
 msgid "Credit note number"
-msgstr "numéro de note de crédit"
+msgstr "Numéro de note de crédit"
 
 #: Z_DeleteCreditNote.php:148
 msgid "has been completely deleted"
@@ -40853,7 +40872,7 @@ msgstr "Utilitaire pour créer un nouveau fichier de langue"
 #: Z_poAddLanguage.php:32 Z_poEditLangHeader.php:21 Z_poEditLangModule.php:17
 #: Z_poEditLangRemaining.php:25
 msgid "Current language is"
-msgstr "langue courante est"
+msgstr "Langue courante est"
 
 #: Z_poAddLanguage.php:43
 msgid "Languages must be in the format of a two character country code an underscore _ and a two character language code in upper case"
@@ -42207,10 +42226,9 @@ msgstr "Ne peut allouer que des reçus ou des avoirs"
 msgid "No transaction found to allocate"
 msgstr "Pas de transaction à affecter"
 
-# JDN
 #: api/api_login.php:87
 msgid "** Error Code Not Defined **"
-msgstr "** Code d'erreur non défini ** "
+msgstr "** Code d'erreur non défini **"
 
 #: api/api_login.php:121 includes/UserLogin.php:170
 msgid "There was a problem deleting expired audit-trail history"
@@ -42959,7 +42977,7 @@ msgstr "Commande à facturer"
 
 #: api/api_xml-rpc.php:1253
 msgid "An integer representing the webERP sales order number"
-msgstr "un entier correspondant au numéro de commande webERP"
+msgstr "Un entier correspondant au numéro de commande webERP"
 
 # JDN
 #: api/api_xml-rpc.php:1258
@@ -45435,7 +45453,7 @@ msgstr ""
 
 #: includes/CountriesArray.php:208
 msgid "Venezuela"
-msgstr ""
+msgstr "Venezuela"
 
 #: includes/CountriesArray.php:209
 msgid "British Virgin Islands"
@@ -45715,7 +45733,7 @@ msgstr "Dollar de Hong Kong"
 
 #: includes/CurrenciesArray.php:69
 msgid "Honduran lempira"
-msgstr "Lempira hondurien "
+msgstr "Lempira hondurien"
 
 #: includes/CurrenciesArray.php:70
 msgid "Croatian kuna"
@@ -46840,7 +46858,7 @@ msgstr "Impression de liste de paiement"
 
 #: includes/MainMenuLinksArray.php:22
 msgid "Debtor Balances At A Prior Month End"
-msgstr ""
+msgstr "Soldes des débiteurs à la fin du mois précédent"
 
 #: includes/MainMenuLinksArray.php:22
 msgid "Customer Listing By Area/Salesperson"
@@ -46856,7 +46874,7 @@ msgstr "Ajouter un client"
 
 #: includes/MainMenuLinksArray.php:32
 msgid "Select Customer"
-msgstr ""
+msgstr "Sélectionner un client"
 
 #: includes/MainMenuLinksArray.php:38
 msgid "Aged Supplier Report"
@@ -46914,7 +46932,7 @@ msgstr "Détail des commandes  ou résumé"
 # JDN
 #: includes/MainMenuLinksArray.php:50
 msgid "Maintain Supplier Price Lists"
-msgstr ""
+msgstr "Gérer les listes de prix des fournisseurs"
 
 #: includes/MainMenuLinksArray.php:53
 msgid "Inventory Location Transfers"
@@ -47338,7 +47356,7 @@ msgstr "Gestion des remises"
 
 #: includes/MainMenuLinksArray.php:107
 msgid "Inventory Locations Maintenance"
-msgstr "Gestion des sites"
+msgstr "Gérer les lieux de stockage"
 
 # JDN
 #: includes/MainMenuLinksArray.php:107

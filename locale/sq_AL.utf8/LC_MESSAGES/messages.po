@@ -14488,6 +14488,26 @@ msgstr ""
 msgid "Are you sure you wish to delete this template?"
 msgstr ""
 
+#: GLJournal.php:634
+msgid "Load from a template"
+msgstr ""
+
+#: GLJournalTemplates.php:4 GLJournalTemplates.php:31
+msgid "Maintain journal templates"
+msgstr ""
+
+#: GLJournalTemplates.php:19
+msgid "The GL journal template has been removed from the database"
+msgstr ""
+
+#: GLJournalTemplates.php:28
+msgid "There are no templates stored in the database."
+msgstr ""
+
+#: GLJournalTemplates.php:54
+msgid "Are you sure you wish to delete this template?"
+msgstr ""
+
 #: GLProfit_Loss.php:26
 msgid "Statement of Comprehensive Income"
 msgstr ""
