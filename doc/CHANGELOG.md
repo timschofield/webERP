@@ -394,7 +394,8 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 | Add meta viewport for initial-scale=1 for working css in small devices. |  | RChacon | 2017-06-21 |  |  |
 
 
-[Unreleased]: https://github.com/webERP-team/webERP/compare/v4.15...HEAD
+[Unreleased]: https://github.com/webERP-team/webERP/compare/v4.15.1...HEAD
+[v4.15.1]: https://github.com/webERP-team/webERP/compare/v4.15...v4.15.1
 [v4.15]: https://github.com/webERP-team/webERP/compare/v4.14.1...v4.15
 [v4.14.1]: https://github.com/webERP-team/webERP/compare/v4.14...v4.14.1
 [Semantic Versioning]: http://semver.org/spec/v2.0.0.html
