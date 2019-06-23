@@ -1698,7 +1698,6 @@ msgstr ""
 
 #: AnalysisHorizontalIncome.php:246 AnalysisHorizontalPosition.php:179
 msgid "Relative change signs: a positive number indicates an increase in the amount of that account; a negative number indicates a decrease in the amount of that account."
-
 msgstr ""
 
 #: AnalysisHorizontalIncome.php:275 AnalysisHorizontalPosition.php:220
@@ -3319,7 +3318,6 @@ msgstr "Suchbegriffe zur Artikelbezeichnung hatten Vorrang vor der eingegebenen 
 msgid "At least one stock description keyword or an extract of a stock code must be entered for the search"
 msgstr "Für die Suche muss wenigstens ein Suchbegriff zur Beschreibung oder ein Teil der Artikelnummer eingegeben werden"
 
-
 #: BOMInquiry.php:94 BOMs.php:1055 BOMs_SingleLevel.php:866 MRPCalendar.php:214
 #: MRPDemands.php:80 MRPDemands.php:283 POReport.php:483 POReport.php:1250
 #: SalesInquiry.php:768
@@ -3434,7 +3432,6 @@ msgstr "Bei der rekursiven Auflösung der Stücklistenpositionen ist ein Fehler 
 
 #: BOMs.php:52 BOMs_SingleLevel.php:48
 msgid "The SQL that was used to retrieve the components of the BOM and that failed in the process was"
-
 msgstr "Die fehlerhafte Abfrage zur Ermittlung der Stücklisten-komponenten war"
 
 #: BOMs.php:110 BOMs_SingleLevel.php:98
@@ -3674,7 +3671,6 @@ msgstr "und das Bis-Datum war"
 #: BOMs.php:606 BOMs_SingleLevel.php:275
 msgid "Only non-serialised or non-lot controlled items can be set to auto issue. These items require the lot/serial numbers of items issued to the works orders to be specified so autoissue is not an option. Auto issue has been automatically set to off for this component"
 msgstr "Die automatische Entnahme kann nur für solche Teile gesetzt werden, die nicht über Chargen- oder Seriennummern nachweispflichtig sind. Für nachweispflichtige Teile müssen bei der Entnahme die Chargen- bzw. Seriennummern erfasst werden, daher ist die automatische Buchung der Entnahme nicht möglich. Das Kennzeichen wurde deshalb für diese Komponente ausgeschaltet."
-
 
 #: BOMs.php:613
 msgid "The component selected is the same with the parent, it is not allowed"
@@ -7481,7 +7477,6 @@ msgstr "Die Debitorensumme für die Gutschrift konnten nicht eingefügt werden, 
 msgid "The freight GL posting for this credit note could not be inserted because"
 msgstr "Die Frachtbuchung für diese Gutschrift konnte nicht eingefügt werden, weil"
 
-
 #: Credit_Invoice.php:1476 GoodsReceived.php:788 SupplierCredit.php:1325
 #: SupplierInvoice.php:1906 WorkOrderIssue.php:392 WorkOrderIssue.php:595
 #: WorkOrderReceive.php:755 Z_BottomUpCosts.php:32
@@ -7705,7 +7700,6 @@ msgstr "Kann diese Währung nicht löschen, weil sie die Hauswährung des Untern
 
 #: Currencies.php:280
 msgid "Cannot delete this currency because there are bank accounts that use this currency"
-
 msgstr ""
 
 #: Currencies.php:281
@@ -13887,7 +13881,6 @@ msgstr "Die Bilanz ist eine Vermögensübersicht, die als Zusammenfassung von Ko
 #: GLBalanceSheet.php:55
 msgid "The balance sheet has three parts: assets, liabilities and ownership equity. The main categories of assets are listed first and are followed by the liabilities. The difference between the assets and the liabilities is known as equity or the net assets or the net worth or capital of the company and according to the accounting equation, net worth must equal assets minus liabilities."
 msgstr "Die Bilanz besteht prinzipiell aus drei Blöcken: die Hauptkategorien der Vermögensgegenstände werden zuerst aufgelistet (Aktiva) und dem Eigenkapital und den Verbindlichkeiten auf der anderen Seite (Passiva). Das Eigenkapital errechnet sich aus der Differenz zwischen den Vermögensgegenständen und den Verbindlichkeiten."
-
 
 #: GLBalanceSheet.php:100 GLCashFlowsIndirect.php:877 GLProfit_Loss.php:157
 msgid "Check this box to show all accounts including those with zero balance"
@@ -24898,7 +24891,6 @@ msgstr "Der Wareneingangsbeleg kann nur storniert werden, wenn alle Teile der ur
 msgid "The purchase order detail record could not be updated with the quantity reversed because"
 msgstr "Die Bestellposition konnte nicht mit der Stornomenge fortgeschrieben werden, weil"
 
-
 #: ReverseGRN.php:133
 msgid "GRN Reversed for"
 msgstr "WE für"
@@ -24937,7 +24929,6 @@ msgstr "KRITISCHER FEHLER! NOTIEREN SIE DIESEN FEHLER UND SUCHEN SIE UNTERSTÜTZ
 
 #: ReverseGRN.php:185
 msgid "The following SQL was used to attempt the reduce the cost of the asset was:"
-
 msgstr "Die fehlerhafte Abfrage war"
 
 #: ReverseGRN.php:192
@@ -24951,7 +24942,6 @@ msgstr "Konnte nicht die verfügbare Menge des Artikels ermitteln, bevor die Sto
 #: ReverseGRN.php:270
 msgid "Could not insert the reversing stock movements for the batch/serial numbers"
 msgstr "Konnte die Storno-Warenbewegungen nicht eintragen für die Los-/Seriennummern"
-
 
 #: ReverseGRN.php:270 ReverseGRN.php:277
 msgid "The SQL used but failed was"
