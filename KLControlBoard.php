@@ -2878,7 +2878,7 @@ function ItemsOnSpecialRequest($RootPath, $db){
 function ItemsShouldBeInWebsite($db){
 	$SQL = "SELECT stockid, description
 			FROM stockmaster
-			WHERE categoryid IN " . CATEGORIES_AVAILABLE_WEBSITE .
+			WHERE categoryid IN " . ONLINESHOP_AVAILABLE_STOCK_CATEGORIES .
 				SQLForWebsiteStockidExceptions(). "
 				AND NOT EXISTS (SELECT *
 								FROM salescatprod
@@ -3144,7 +3144,7 @@ function ItemsWithoutWeightOrVolume($RootPath, $db){
 			FROM stockmaster, stockcategory
 			WHERE stockmaster.categoryid = stockcategory.categoryid
 				AND stockcategory.stocktype = 'F'
-				AND stockmaster.categoryid IN " . CATEGORIES_AVAILABLE_WEBSITE .
+				AND stockmaster.categoryid IN " . ONLINESHOP_AVAILABLE_STOCK_CATEGORIES .
 				SQLForWebsiteStockidExceptions() . "
 				AND (stockmaster.grossweight < 0.00001 
 					OR stockmaster.volume < 0.00001

@@ -41,7 +41,7 @@ $SQL = "SELECT stockmaster.stockid,
 		FROM stockmaster, stockcategory
 		WHERE stockmaster.categoryid = stockcategory.categoryid
 			AND stockcategory.stocktype = 'F'
-			AND stockmaster.categoryid IN " . CATEGORIES_AVAILABLE_WEBSITE .
+			AND stockmaster.categoryid IN " . ONLINESHOP_AVAILABLE_STOCK_CATEGORIES .
 			SQLForWebsiteStockidExceptions() . "
 			AND (((NOT EXISTS (SELECT * 
 								FROM salescatprod
@@ -51,7 +51,7 @@ $SQL = "SELECT stockmaster.stockid,
 				OR ((EXISTS (SELECT * 
 							FROM salescatprod
 							WHERE stockmaster.stockid = salescatprod.stockid
-								AND salescatprod.salescatid NOT IN (" . WEBERP_OUTLET_CATEGORIES. ")))
+								AND salescatprod.salescatid NOT IN (" . ONLINESHOP_AVAILABLE_SALES_CATEGORIES. ")))
 					AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . "))
 		ORDER BY stockmaster.stockid";
 $result = DB_query($SQL);
@@ -117,6 +117,8 @@ if (DB_num_rows($result) != 0){
 				$Weight = STANDARD_BAG_WEIGHT;
 			}elseif (isTali($myrow['stockid'])){
 				$Weight = STANDARD_TALI_WEIGHT;
+			}elseif (isKeyHolder($myrow['stockid'])){
+				$Weight = STANDARD_KEYHOLDER_WEIGHT;
 			}
 			UpdateWeight($myrow['stockid'], $Weight, $UpdateDB, $db);
 		}
@@ -151,6 +153,8 @@ if (DB_num_rows($result) != 0){
 				$Volume = STANDARD_BAG_VOLUME;
 			}elseif (isTali($myrow['stockid'])){
 				$Volume = STANDARD_TALI_VOLUME;
+			}elseif (isKeyHolder($myrow['stockid'])){
+				$Volume = STANDARD_KEYHOLDER_VOLUME;
 			}
 			UpdateVolume($myrow['stockid'], $Volume, $UpdateDB, $db);
 		}
@@ -390,7 +394,7 @@ function WebsiteCategoryBlinkJewellery($StockId, $Description, $Long, $Category)
 	
 	//(('BLINK_JEWELLERY',14);
 	if (ItemInList($Category, LIST_STOCK_CATEGORIES_BLINK)){
-		// if belongs to one of the FJ categories BUT it does not have leather
+		// if belongs to one of the Blink categories
 		$WebCat = BLINK_JEWELLERY;	
 	}
 
@@ -426,6 +430,9 @@ function WebsiteCategoryBlinkJewellery($StockId, $Description, $Long, $Category)
 	}	
 	if (($WebCat == BLINK_JEWELLERY) AND isPlasticBag($StockId)){
 		$WebCat = BAGS;	
+	}	
+	if (($WebCat == BLINK_JEWELLERY) AND isKeyHolder($StockId)){
+		$WebCat = BLINK_KEYHOLDERS;	
 	}	
 	return $WebCat; 
 }
@@ -491,7 +498,7 @@ function WebsiteCategoryClassic($StockId, $Description, $Long, $Category){
 function WebsiteCategoryDiscount($StockId, $Description, $Long, $Category){
 	$WebCat = 0;
 
-	if(($Category == "DISC20") OR ($Category == "DISC50") OR ($Category == "DISC2A") OR ($Category == "DISC5A")){
+	if (ItemInList($Category, LIST_STOCK_CATEGORIES_OUTLET)){
 		$WebCat = JEWELLERY_ON_SPECIAL;	
 	}
 
@@ -527,6 +534,9 @@ function WebsiteCategoryDiscount($StockId, $Description, $Long, $Category){
 	}	
 	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isBrooche($StockId)){
 		$WebCat = BROOCHES_ON_SPECIAL;	
+	}	
+	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isKeyHolder($StockId)){
+		$WebCat = KEYHOLDERS_ON_SPECIAL;	
 	}	
 	return $WebCat; 
 }

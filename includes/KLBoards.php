@@ -3399,7 +3399,6 @@ function RecentlyClosedTransferStatus($maxdays, $RootPath, $db){
 function SQLForWebsiteStockidExceptions(){
 	return " AND stockmaster.discontinued = 0
 				AND SUBSTR(stockmaster.stockid, -2, 2) != '-D'
-				AND SUBSTR(stockmaster.stockid, 3, 2) != 'KI'
 				AND SUBSTR(stockmaster.stockid, 3, 2) != 'ST'
 				AND stockmaster.stockid != 'WKPC01'
 				AND stockmaster.stockid NOT LIKE 'KLBE%'

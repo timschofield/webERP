@@ -1035,7 +1035,7 @@ function GetWeberpShippingMethod($OpenCartShippingMethod){
 
 function GetGoogleProductFeedStatus($StockId, $SalesCategory, $Quantity){
 	$Status = 0;
-	if ((strpos(WEBERP_CATEGORIES_FOR_GOOGLE_PRODUCT_FEED, $SalesCategory) > 0)
+	if ((strpos(SALES_CATEGORIES_FOR_GOOGLE_PRODUCT_FEED, $SalesCategory) > 0)
 		AND ($Quantity > 0)){
 		$Status = 1;
 	}

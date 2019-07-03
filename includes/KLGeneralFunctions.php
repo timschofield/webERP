@@ -91,6 +91,10 @@ function isTali($stockid){
 		OR (substr($stockid, 0,4) == "TA15"));
 }
 
+function isKeyHolder($stockid){
+	return (substr($stockid, 2,2) == "KI");
+}
+
 function isFamily($stockid, $Family){
 	return (substr($stockid, 0,2) == $Family);
 }
