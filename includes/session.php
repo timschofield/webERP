@@ -280,6 +280,9 @@ if ($KL_SPGSeniorOrSupport OR $KL_SPGJunior){
 					klretailpartners.percentconsignmentptadu,
 					klretailpartners.accountconsignmentsalesptadu,
 					klretailpartners.accountconsignmentcogspartner,
+					klretailpartners.accountwechat,
+					klretailpartners.comissionwechat,
+					klretailpartners.accountcomissionwechat,
 					klretailpartners.counterinvoicea,
 					klretailpartners.counterinvoiceb,
 					klretailpartners.counterinvoicec,
@@ -372,6 +375,9 @@ if ($KL_SPGSeniorOrSupport OR $KL_SPGJunior){
 		$_SESSION['PercentConsignmentPTADU'] = $myrow['percentconsignmentptadu'];
 		$_SESSION['AccountConsignmentSalesPTADU'] = $myrow['accountconsignmentsalesptadu'];
 		$_SESSION['AccountConsignmentCOGSPartner'] = $myrow['accountconsignmentcogspartner'];
+		$_SESSION['AccountWeChat'] = $myrow['accountwechat'];
+		$_SESSION['ComissionWeChat'] = $myrow['comissionwechat'];
+		$_SESSION['AccountComissionWeChat'] = $myrow['accountcomissionwechat'];
 		$_SESSION['CounterInvoiceA'] = $myrow['counterinvoicea'];
 		$_SESSION['CounterInvoiceB'] = $myrow['counterinvoiceb'];
 		$_SESSION['CounterInvoiceC'] = $myrow['counterinvoicec'];

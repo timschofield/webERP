@@ -20,6 +20,9 @@ if(isset($_GET['SelectedPartner'])) {
 	$SelectedPartner = $_POST['SelectedPartner'];
 }
 
+$ExtraSpace = '<tr><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td></tr>';
+
+
 if(isset($_POST['submit'])) {
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
@@ -72,6 +75,9 @@ if(isset($_POST['submit'])) {
 					percentconsignmentptadu = '" . $_POST['PercentConsignmentPTADU'] . "',
 					accountconsignmentsalesptadu = '" . $_POST['AccountConsignmentSalesPTADU'] . "',
 					accountconsignmentcogspartner = '" . $_POST['AccountConsignmentCOGSPartner'] . "',
+					accountwechat='" . $_POST['AccountWeChat'] . "',
+					comissionwechat = '" . $_POST['ComissionWeChat'] . "',
+					accountcomissionwechat ='" . $_POST['AccountComissionWeChat'] . "',
 					counterinvoicea = '" . $_POST['CounterInvoiceA'] . "',
 					counterinvoiceb = '" . $_POST['CounterInvoiceB'] . "',
 					counterinvoicec = '" . $_POST['CounterInvoiceC'] . "'
@@ -122,6 +128,9 @@ if(isset($_POST['submit'])) {
 		unset($_POST['PercentConsignmentPTADU']);
 		unset($_POST['AccountConsignmentSalesPTADU']);
 		unset($_POST['AccountConsignmentCOGSPartner']);
+		unset($_POST['AccountWeChat']);
+		unset($_POST['ComissionWeChat']);
+		unset($_POST['AccountComissionWeChat']);
 		unset($_POST['CounterInvoiceA']);
 		unset($_POST['CounterInvoiceB']);
 		unset($_POST['CounterInvoiceC']);
@@ -168,6 +177,9 @@ if(isset($_POST['submit'])) {
 								percentconsignmentptadu,
 								accountconsignmentsalesptadu,
 								accountconsignmentcogspartner,
+								accountwechat,
+								comissionwechat,
+								accountcomissionwechat,
 								counterinvoicea,
 								counterinvoiceb,
 								counterinvoicec)
@@ -208,6 +220,9 @@ if(isset($_POST['submit'])) {
 								'" . $_POST['PercentConsignmentPTADU'] . "',
 								'" . $_POST['AccountConsignmentSalesPTADU'] . "',
 								'" . $_POST['AccountConsignmentCOGSPartner'] . "',
+								'" . $_POST['AccountWeChat'] . "',
+								'" . $_POST['ComissionWeChat'] . "',
+								'" . $_POST['AccountComissionWeChat'] . "',
 								'" . $_POST['CounterInvoiceA'] . "',
 								'" . $_POST['CounterInvoiceB'] . "',
 								'" . $_POST['CounterInvoiceC'] . "')";
@@ -256,6 +271,9 @@ if(isset($_POST['submit'])) {
 		unset($_POST['PercentConsignmentPTADU']);
 		unset($_POST['AccountConsignmentSalesPTADU']);
 		unset($_POST['AccountConsignmentCOGSPartner']);
+		unset($_POST['AccountWeChat']);
+		unset($_POST['ComissionWeChat']);
+		unset($_POST['AccountComissionWeChat']);
 		unset($_POST['CounterInvoiceA']);
 		unset($_POST['CounterInvoiceB']);
 		unset($_POST['CounterInvoiceC']);
@@ -400,6 +418,9 @@ if(!isset($_GET['delete'])) {
 					percentconsignmentptadu,
 					accountconsignmentsalesptadu,
 					accountconsignmentcogspartner,
+					accountwechat,
+					comissionwechat,
+					accountcomissionwechat,
 					counterinvoicea,
 					counterinvoiceb,
 					counterinvoicec
@@ -446,6 +467,9 @@ if(!isset($_GET['delete'])) {
 		$_POST['PercentConsignmentPTADU'] = $myrow['percentconsignmentptadu'];
 		$_POST['AccountConsignmentSalesPTADU'] = $myrow['accountconsignmentsalesptadu'];
 		$_POST['AccountConsignmentCOGSPartner'] = $myrow['accountconsignmentcogspartner'];
+		$_POST['AccountWeChat'] = $myrow['accountwechat'];
+		$_POST['AccountComissionWeChat'] = $myrow['accountcomissionwechat'];
+		$_POST['ComissionWeChat'] = $myrow['comissionwechat'];
 		$_POST['CounterInvoiceA'] = $myrow['counterinvoicea'];
 		$_POST['CounterInvoiceB'] = $myrow['counterinvoiceb'];
 		$_POST['CounterInvoiceC'] = $myrow['counterinvoicec'];
@@ -581,6 +605,15 @@ if(!isset($_GET['delete'])) {
 	if(!isset($_POST['AccountConsignmentCOGSPartner'])) {
 		$_POST['AccountConsignmentCOGSPartner'] = '';
 	}
+	if(!isset($_POST['AccountWeChat'])) {
+		$_POST['AccountWeChat'] = '';
+	}
+	if(!isset($_POST['ComissionWeChat'])) {
+		$_POST['ComissionWeChat'] = 0;
+	}
+	if(!isset($_POST['AccountComissionWeChat'])) {
+		$_POST['AccountComissionWeChat'] = '';
+	}
 	if(!isset($_POST['CounterInvoiceA'])) {
 		$_POST['CounterInvoiceA'] = 0;
 	}
@@ -655,6 +688,9 @@ if(!isset($_GET['delete'])) {
 			<td>' . _('NPWP in Consignment Invoice/FP') . ':' . '</td>
 			<td><input type="text" name="PartnerNPWPInvoice" value="' . $_POST['PartnerNPWPInvoice'] . '" size="21" maxlength="20" /></td>
 		</tr>';
+		
+	echo $ExtraSpace;
+
 	echo '<tr>
 			<td>' . _('% PPN') . ':</td>
 			<td><input type="text" name="PPN" class="number" title="' . _('PPN to apply') . '" value="' . $_POST['PPN'] . '" size="5" maxlength="5" /></td>
@@ -672,6 +708,8 @@ if(!isset($_GET['delete'])) {
 		}
 	}
 	echo '</select></td></tr>';
+
+	echo $ExtraSpace;
 
 	echo '<tr>
 		<td>' . _('Credit Card Sales Area') . ':' . '</td>
@@ -718,16 +756,52 @@ if(!isset($_GET['delete'])) {
 		</tr>';
 
 	echo '<tr>
-			<td>' . _('% HPP Compensation') . ':</td>
-			<td><input type="text" name="HPPCompensation" class="number" title="' . _('HPP Compensation') . '" value="' . $_POST['HPPCompensation'] . '" size="5" maxlength="5" /></td>
-		</tr>';
+		<td>' . _('Counter Invoices A') . ':' . '</td>
+		<td><select name="CounterInvoiceA">';
+	$InvoiceSysType = DB_query("SELECT typeid, typename FROM systypes ORDER BY typename");
+	while ($myrow=DB_fetch_array($InvoiceSysType)) {
+		if($_POST['CounterInvoiceA']==$myrow['typeid']) {
+			echo '<option selected="selected" value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
+		} else {
+			echo '<option value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
+		}
+	}
+	echo '</select></td></tr>';
+		
+	echo '<tr>
+		<td>' . _('Counter Invoices B') . ':' . '</td>
+		<td><select name="CounterInvoiceB">';
+	$InvoiceSysType = DB_query("SELECT typeid, typename FROM systypes ORDER BY typename");
+	while ($myrow=DB_fetch_array($InvoiceSysType)) {
+		if($_POST['CounterInvoiceB']==$myrow['typeid']) {
+			echo '<option selected="selected" value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
+		} else {
+			echo '<option value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
+		}
+	}
+	echo '</select></td></tr>';
 
 	echo '<tr>
-		<td>' . _('HPP Compensation GL Account') . ':' . '</td>
-		<td><select name="AccountHPPCompensation">';
+		<td>' . _('Counter Invoices C') . ':' . '</td>
+		<td><select name="CounterInvoiceC">';
+	$InvoiceSysType = DB_query("SELECT typeid, typename FROM systypes ORDER BY typename");
+	while ($myrow=DB_fetch_array($InvoiceSysType)) {
+		if($_POST['CounterInvoiceC']==$myrow['typeid']) {
+			echo '<option selected="selected" value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
+		} else {
+			echo '<option value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
+		}
+	}
+	echo '</select></td></tr>';
+
+	echo $ExtraSpace;
+
+	echo '<tr>
+		<td>' . _('Credit Card Comission GL Account') . ':' . '</td>
+		<td><select name="AccountComissionCreditCard">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($myrow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountHPPCompensation']==$myrow['accountcode']) {
+		if($_POST['AccountComissionCreditCard']==$myrow['accountcode']) {
 			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
 			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
@@ -749,6 +823,16 @@ if(!isset($_GET['delete'])) {
 	echo '</select></td></tr>';
 
 	echo '<tr>
+			<td>' . _('% Credit Card Comission Bank Danamon') . ':</td>
+			<td><input type="text" name="ComissionCCDanamon" class="number" value="' . $_POST['ComissionCCDanamon'] . '" size="5" maxlength="5" /></td>
+		</tr>';
+
+	echo '<tr>
+			<td>' . _('% AMEX Comission Bank Danamon') . ':</td>
+			<td><input type="text" name="ComissionAmexDanamon" class="number" value="' . $_POST['ComissionAmexDanamon'] . '" size="5" maxlength="5" /></td>
+		</tr>';
+
+	echo '<tr>
 		<td>' . _('Bank Mandiri GL Account') . ':' . '</td>
 		<td><select name="AccountBankMandiri">';
 	$GLAccount = DB_query("SELECT accountcode, bankaccountname FROM bankaccounts ORDER BY bankaccountname");
@@ -760,6 +844,11 @@ if(!isset($_GET['delete'])) {
 		}
 	}
 	echo '</select></td></tr>';
+
+	echo '<tr>
+			<td>' . _('% Credit Card Comission Bank Mandiri') . ':</td>
+			<td><input type="text" name="ComissionCCMandiri" class="number" value="' . $_POST['ComissionCCMandiri'] . '" size="5" maxlength="5" /></td>
+		</tr>';
 
 	echo '<tr>
 		<td>' . _('Bank BCA GL Account') . ':' . '</td>
@@ -775,34 +864,6 @@ if(!isset($_GET['delete'])) {
 	echo '</select></td></tr>';
 
 	echo '<tr>
-		<td>' . _('Credit Card Comission GL Account') . ':' . '</td>
-		<td><select name="AccountComissionCreditCard">';
-	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
-	while ($myrow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountComissionCreditCard']==$myrow['accountcode']) {
-			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
-		} else {
-			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
-		}
-	}
-	echo '</select></td></tr>';
-
-	echo '<tr>
-			<td>' . _('% Credit Card Comission Bank Danamon') . ':</td>
-			<td><input type="text" name="ComissionCCDanamon" class="number" value="' . $_POST['ComissionCCDanamon'] . '" size="5" maxlength="5" /></td>
-		</tr>';
-
-	echo '<tr>
-			<td>' . _('% AMEX Comission Bank Danamon') . ':</td>
-			<td><input type="text" name="ComissionAmexDanamon" class="number" value="' . $_POST['ComissionAmexDanamon'] . '" size="5" maxlength="5" /></td>
-		</tr>';
-
-	echo '<tr>
-			<td>' . _('% Credit Card Comission Bank Mandiri') . ':</td>
-			<td><input type="text" name="ComissionCCMandiri" class="number" value="' . $_POST['ComissionCCMandiri'] . '" size="5" maxlength="5" /></td>
-		</tr>';
-
-	echo '<tr>
 			<td>' . _('% Credit Card Comission Bank BCA') . ':</td>
 			<td><input type="text" name="ComissionCCBCA" class="number" value="' . $_POST['ComissionCCBCA'] . '" size="5" maxlength="5" /></td>
 		</tr>';
@@ -811,6 +872,41 @@ if(!isset($_GET['delete'])) {
 			<td>' . _('% AMEX Comission Bank BCA') . ':</td>
 			<td><input type="text" name="ComissionAmexBCA" class="number" value="' . $_POST['ComissionAmexBCA'] . '" size="5" maxlength="5" /></td>
 		</tr>';
+
+	echo $ExtraSpace;
+
+	echo '<tr>
+		<td>' . _('WeChat GL Account') . ':' . '</td>
+		<td><select name="AccountWeChat">';
+	$GLAccount = DB_query("SELECT accountcode, bankaccountname FROM bankaccounts ORDER BY bankaccountname");
+	while ($myrow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountWeChat']==$myrow['accountcode']) {
+			echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . '</option>';
+		} else {
+			echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . '</option>';
+		}
+	}
+	echo '</select></td></tr>';
+
+	echo '<tr>
+			<td>' . _('% Comission WeChat') . ':</td>
+			<td><input type="text" name="ComissionWeChat" class="number" value="' . $_POST['ComissionWeChat'] . '" size="5" maxlength="5" /></td>
+		</tr>';
+
+	echo '<tr>
+		<td>' . _('WeChat Comission GL Account') . ':' . '</td>
+		<td><select name="AccountComissionWeChat">';
+	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
+	while ($myrow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountComissionWeChat']==$myrow['accountcode']) {
+			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		} else {
+			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		}
+	}
+	echo '</select></td></tr>';
+
+	echo $ExtraSpace;
 
 	echo '<tr>
 			<td>' . _('% Consignment to PT ADU') . ':</td>
@@ -849,41 +945,22 @@ if(!isset($_GET['delete'])) {
 	}
 	echo '</select></td></tr>';
 
-	echo '<tr>
-		<td>' . _('Counter Invoices A') . ':' . '</td>
-		<td><select name="CounterInvoiceA">';
-	$InvoiceSysType = DB_query("SELECT typeid, typename FROM systypes ORDER BY typename");
-	while ($myrow=DB_fetch_array($InvoiceSysType)) {
-		if($_POST['CounterInvoiceA']==$myrow['typeid']) {
-			echo '<option selected="selected" value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
-		} else {
-			echo '<option value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
-		}
-	}
-	echo '</select></td></tr>';
-		
-	echo '<tr>
-		<td>' . _('Counter Invoices B') . ':' . '</td>
-		<td><select name="CounterInvoiceB">';
-	$InvoiceSysType = DB_query("SELECT typeid, typename FROM systypes ORDER BY typename");
-	while ($myrow=DB_fetch_array($InvoiceSysType)) {
-		if($_POST['CounterInvoiceB']==$myrow['typeid']) {
-			echo '<option selected="selected" value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
-		} else {
-			echo '<option value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
-		}
-	}
-	echo '</select></td></tr>';
+	echo $ExtraSpace;
 
 	echo '<tr>
-		<td>' . _('Counter Invoices C') . ':' . '</td>
-		<td><select name="CounterInvoiceC">';
-	$InvoiceSysType = DB_query("SELECT typeid, typename FROM systypes ORDER BY typename");
-	while ($myrow=DB_fetch_array($InvoiceSysType)) {
-		if($_POST['CounterInvoiceC']==$myrow['typeid']) {
-			echo '<option selected="selected" value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
+			<td>' . _('% HPP Compensation') . ':</td>
+			<td><input type="text" name="HPPCompensation" class="number" title="' . _('HPP Compensation') . '" value="' . $_POST['HPPCompensation'] . '" size="5" maxlength="5" /></td>
+		</tr>';
+
+	echo '<tr>
+		<td>' . _('HPP Compensation GL Account') . ':' . '</td>
+		<td><select name="AccountHPPCompensation">';
+	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
+	while ($myrow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountHPPCompensation']==$myrow['accountcode']) {
+			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
-			echo '<option value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
+			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		}
 	}
 	echo '</select></td></tr>';

@@ -19,6 +19,9 @@ if (!isset($_POST['AmountPaidCCMandiri'])){
 if (!isset($_POST['AmountPaidCCBCA'])){
 	$_POST['AmountPaidCCBCA'] =0;
 }
+if (!isset($_POST['AmountPaidWeChat'])){
+	$_POST['AmountPaidWeChat'] =0;
+}
 if (!isset($_POST['AmountReturnedGoods'])){
 	$_POST['AmountReturnedGoods'] =0;
 }
@@ -110,9 +113,9 @@ echo '</select></td>';
 echo '</tr>';
 
 echo '<tr>';
-echo '<td></td>';
-echo '<td></td>';
-echo '<td></td>';
+echo '<th>' . _('Other Payments') . '</th>';
+echo '<td>' . _('Amount Paid WeChat/Alipay') . ':</td>
+	  <td><input type="text" class="number" name="AmountPaidWeChat" maxlength="12" size="12" value="' . $_POST['AmountPaidWeChat'] . '" /></td>';
 echo '<th>' . _('Vouchers/Discounts') . '</th>'; 
 echo '<td>' . _('Amount Voucher/Discount') . ':</td>
 	  <td><input type="text" class="number" name="AmountVouchers" maxlength="12" size="12" value="' . $_POST['AmountVouchers'] . '" /></td>';

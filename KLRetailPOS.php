@@ -36,7 +36,7 @@ $AccountCOGSbyADU = "510010000AD"; // when retail partner sells PTADU items COGS
 $CompanyConsignmentPOXX = "CASH";
 // END OF POXX HARDCODED SETTINGS UNTIL END OF PTBB STOCK 
 
-define("VERSIONFILE", "4.00"); // 
+define("VERSIONFILE", "4.10"); // 
 
 include('includes/DefineCartClass.php');
 include('includes/session.php');
@@ -440,7 +440,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 	$TotalReceivedCreditCard = $_POST['AmountPaidCCDanamon'] 
 								+ $_POST['AmountPaidAmexBCA']
 								+ $_POST['AmountPaidCCMandiri'] 
-								+ $_POST['AmountPaidCCBCA'];
+								+ $_POST['AmountPaidCCBCA']
+								+ $_POST['AmountPaidWeChat'];
 
 	$TotalFromCustomer = $TotalReceivedCash 
 						+ $TotalReceivedCreditCard 
@@ -462,6 +463,9 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		$PaymentSystemsUsed++;
 	}
 	if ($_POST['AmountPaidCCBCA'] <> 0){
+		$PaymentSystemsUsed++;
+	}
+	if ($_POST['AmountPaidWeChat'] <> 0){
 		$PaymentSystemsUsed++;
 	}
 
@@ -603,7 +607,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						'" . ($_POST['AmountPaidCCDanamon'] 
 							+ $_POST['AmountPaidAmexBCA']
 							+ $_POST['AmountPaidCCMandiri']
-							+ $_POST['AmountPaidCCBCA']) . "',
+							+ $_POST['AmountPaidCCBCA']
+							+ $_POST['AmountPaidWeChat']) . "',
 						'" . $_POST['AmountReturnedGoods'] . "',
 						'" . $_POST['AmountVouchers'] . "',
 						'" . $Area . "')";
@@ -1268,6 +1273,42 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								$_SESSION['Items'.$identifier]->DefaultCurrency,
 								$_SESSION['Items'.$identifier]->DebtorNo);
 		}//amount paid Credit Card BCA was not zero
+
+		if ($_POST['AmountPaidWeChat']!=0){
+			// si han pagat WECHAT, tot o en part
+			$WeChatNetPayment = ($_POST['AmountPaidWeChat']*(100- $_SESSION['ComissionWeChat'])/100);
+			$WeChatBankComissions = ($_POST['AmountPaidWeChat']*($_SESSION['ComissionWeChat'])/100);
+
+			$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CREDITCARD,
+								$PeriodNo,
+								$_SESSION['AccountWeChat'],
+								$Area,
+								$InvoiceNo,
+								$_SESSION['Items'.$identifier]->CustRef,
+								$_SESSION['Items'.$identifier]->Location,
+								$_POST['AmountPaidWeChat'],
+								$WeChatBankComissions,
+								$WeChatNetPayment,
+								$Tag,
+								$_SESSION['AccountComissionWeChat'],
+								$ExRate);
+
+			$ReceiptNumber = AccountDebtorPayment($ReceiptNumber,
+								PAYMENT_BY_CREDITCARD,
+								$PeriodNo,
+								$_SESSION['AccountWeChat'],
+								$Area,
+								$InvoiceNo,
+								$_SESSION['Items'.$identifier]->CustRef,
+								$_SESSION['Items'.$identifier]->Location,
+								$_POST['AmountPaidWeChat'],
+								$WeChatNetPayment,
+								$ExRate,
+								$DebtorTransID,
+								$OrderNo,
+								$_SESSION['Items'.$identifier]->DefaultCurrency,
+								$_SESSION['Items'.$identifier]->DebtorNo);
+		}//amount paid WeChat  was not zero
 		
 		/* Account for the Packaging */
 		if ($_SESSION['TypeLoc'] == "SHOPKL"){
@@ -1336,6 +1377,9 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		if ($_POST['AmountPaidAmexBCA'] > 0){
 			echo '<tr><td>' . _('Payment AMEX EDC BCA') . ':</td> <td>' . number_format($_POST['AmountPaidAmexBCA'],0) . '</td></tr>';
 		}
+		if ($_POST['AmountPaidWeChat'] > 0){
+			echo '<tr><td>' . _('Payment WeChat/Alipay') . ':</td> <td>' . number_format($_POST['AmountPaidWeChat'],0) . '</td></tr>';
+		}
 		if ($_POST['AmountReturnedGoods'] > 0){
 			echo '<tr><td>' . _('Returned Goods Value') . ':</td> <td>' . number_format($_POST['AmountReturnedGoods'],0) . '</td></tr>';
 			echo '<tr><td>' . _('Returned Goods Codes') . ':</td> <td>' . $_POST['ReturnedGoodsItems'] . '</td></tr>';
@@ -1369,6 +1413,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						number_format($_POST['AmountPaidCCBCA'],0),
 						number_format($_POST['AmountReturnedGoods'],0),
 						number_format($_POST['AmountVouchers'],0),
+						number_format($_POST['AmountPaidWeChat'],0),
 						stripcslashes($_SESSION['Items'.$identifier]->Comments));
 		}
 
@@ -1416,6 +1461,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						$_POST['ReturnDate'],
 						mb_strtoupper($_POST['ReturnedGoodsItems']),
 						$ReturnReasonText,
+						number_format($_POST['AmountPaidWeChat'],0),
 						stripcslashes($_SESSION['Items'.$identifier]->Comments));
 			}
 			if ($_POST['AmountVouchers'] <> 0 ){
@@ -1434,6 +1480,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						number_format($_POST['AmountReturnedGoods'],0),
 						number_format($_POST['AmountVouchers'],0),
 						stripcslashes($_POST['VoucherCode']),
+						number_format($_POST['AmountPaidWeChat'],0),
 						stripcslashes($_SESSION['Items'.$identifier]->Comments));
 			}
 		}
