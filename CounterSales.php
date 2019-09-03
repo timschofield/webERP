@@ -2417,95 +2417,20 @@ if (!isset($_POST['ProcessSale'])) {
 	}
 	echo '</form>';
 }
+echo '<script src="', $RootPath, 'javscripts/CounterSalesFunctions.js"></script>';
 ?>
+<script defer="defer">
+	CounterSales.SetItemList(<?php echo json_encode($_SESSION['ItemList']); ?>);
+	CounterSales.SetQuickEntryTableId('QuickEntryTable');
+	CounterSales.SetRowCounter(<?php echo empty($i) ? 0 : $i; ?>);
+	CounterSales.SetDefaultDeliveryDate(<?php echo empty($DefaultDeliveryDate) ? '""' : $DefaultDeliveryDate; ?>);
+	CounterSales.SetTotalQuickEntryRowsId('TotalQuickEntryRows');
 
-<script>
-function AddQuickEntry(itemcode)
-{
-	// prevent form submitting
-	event.preventDefault();
-
-	var itemlist = <?php echo json_encode($_SESSION['ItemList']); ?>;
-
-	if(itemlist.includes(itemcode.value.trim()))
-	{
-		var table = document.getElementById("QuickEntryTable");
-
-		// loop quick entry table rows
-		for (var j = 0, row; row = table.rows[j]; j++)
-		{
-			found = false;
-			col = row.cells[0];
-			var input_itemcode = col.firstElementChild;
-
-			if(input_itemcode)
-			{
-				// check if item already in list or fill in the first empty row
-				if(input_itemcode.value == '' || input_itemcode.value == itemcode.value.trim())
-				{
-					// set item code
-					input_itemcode.value = itemcode.value.trim();
-					// set qty
-					row.cells[1].firstElementChild.value = row.cells[1].firstElementChild.value ? parseInt(row.cells[1].firstElementChild.value) + 1 : '1';
-					found = true;
-					break;
-				}
-			}
-		}
-
-		// when no rows matched and no more empty rows
-		if(!found)
-		{
-			AddQuickEntryRow(itemcode)
-		}
-	}
-	else
-	{
-		alert("item code not found!");
-	}
-
-	itemcode.value = "";
-}
-
-var i = <?php echo empty($i) ? 0 : $i; ?>;
-function AddQuickEntryRow(itemcode)
-{
-	var defaultdeliverydate = <?php echo empty($DefaultDeliveryDate) ? '""' : $DefaultDeliveryDate; ?>;
-
-	var table = document.getElementById("QuickEntryTable");
-	var row = table.insertRow(-1);
-	var cell1 = row.insertCell(0);
-	var cell2 = row.insertCell(1);
-
-	cell1.innerHTML = "<input type='text' name='part_" + i + "' data-type='no-illegal-chars' title='Enter a part code to be sold. Part codes can contain any alpha-numeric characters underscore or hyphen.' size='21' maxlength='20' value='" + itemcode.value.trim() + "' />";
-	cell2.innerHTML = "<input type='text' class='number' name='qty_" + i + "' size='6' maxlength='6' value='1' /><input type='hidden' class='date' name='ItemDue_" + i + " value='" + defaultdeliverydate + "' />";
-
-	totalquickentry = document.getElementById("TotalQuickEntryRows");
-	totalquickentry.value = parseInt(totalquickentry.value) + 1;
-
-	i++;
-}
-
-function CalculateChangeDue()
-{
-	total_due = <?php echo round($_SESSION['Items'.$identifier]->total + filter_number_format($_POST['TaxTotal']) + filter_number_format($RoundingAdjustment), $_SESSION['Items'.$identifier]->CurrDecimalPlaces); ?>;
-	decimal = <?php echo $_SESSION['Items'.$identifier]->CurrDecimalPlaces; ?>;
-
-	received_amount = document.getElementById("CashReceived");
-	paid_amount = document.getElementById("AmountPaid");
-	change_due = document.getElementById("ChangeDue");
-
-	if(received_amount.value >= total_due)
-	{
-		paid_amount.value = Number(total_due).toFixed(decimal);
-		change_due.value = Number(received_amount.value - total_due).toFixed(decimal);
-	}
-	else
-	{
-		paid_amount.value = 0;
-		change_due.value = 0;
-	}
-}
+	CounterSales.SetTotalDue(<?php echo round($_SESSION['Items'.$identifier]->total + filter_number_format($_POST['TaxTotal']) + filter_number_format($RoundingAdjustment), $_SESSION['Items'.$identifier]->CurrDecimalPlaces) ?>);
+	CounterSales.SetDecimal(<?php echo $_SESSION['Items'.$identifier]->CurrDecimalPlaces; ?>);
+	CounterSales.SetCashReceivedId('CashReceived');
+	CounterSales.SetAmountPaidId('AmountPaid');
+	CounterSales.SetChangeDueId('ChangeDue');
 </script>
 <?php
 include('includes/footer.php');
