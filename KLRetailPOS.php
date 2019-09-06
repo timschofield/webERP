@@ -1122,7 +1122,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								$_SESSION['Items'.$identifier]->CustRef,
 								$_SESSION['Items'.$identifier]->Location,
 								$_POST['AmountPaidCash'],
-								$CreditCardNetPayment,
+								$_POST['AmountPaidCash'],
 								$ExRate,
 								$DebtorTransID,
 								$OrderNo,
