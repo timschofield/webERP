@@ -966,7 +966,7 @@ function FinishedStockDistributionByShopAndCategory($db){
 						stockmaster as m2
 					WHERE l2.loccode = locations.loccode
 						AND m2.stockid = l2.stockid 
-						AND (m2.categoryid = 'NOPOKL' OR m2.categoryid = 'NOPOKA')
+						AND m2.categoryid = 'NOPOKA'
 						AND l2.reorderlevel != 0) AS modelsNOPOKL,
 				(SELECT COUNT(l2.reorderlevel)
 					FROM locstock AS l2,
@@ -987,7 +987,7 @@ function FinishedStockDistributionByShopAndCategory($db){
 						stockmaster as m2
 					WHERE l2.loccode = locations.loccode
 						AND m2.stockid = l2.stockid 
-						AND (m2.categoryid = 'NOPOBL' OR m2.categoryid = 'NOPOBA')
+						AND m2.categoryid = 'NOPOBA'
 						AND l2.reorderlevel != 0) AS modelsNOPOBL,
 				(SELECT COUNT(l2.reorderlevel)
 					FROM locstock AS l2,
@@ -1008,7 +1008,7 @@ function FinishedStockDistributionByShopAndCategory($db){
 						stockmaster as m2
 					WHERE l2.loccode = locations.loccode
 						AND m2.stockid = l2.stockid 
-						AND (m2.categoryid = 'NOPOGE' OR m2.categoryid = 'NOPOGA')
+						AND m2.categoryid = 'NOPOGA'
 						AND l2.reorderlevel != 0) AS modelsNOPOGE,
 				(SELECT COUNT(l2.reorderlevel)
 					FROM locstock AS l2,

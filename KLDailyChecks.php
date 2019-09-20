@@ -96,9 +96,6 @@ function KL_DailyMaintenanceDatabase01($ShowMessages, $db, $EmailText = ''){
 	SetObsoleteForCategoryWithoutStock("DISC20", $ShowMessages, $db);
 	SetObsoleteForCategoryWithoutStock("DISC50", $ShowMessages, $db);
 	SetObsoleteForCategoryWithoutStock("DISC80", $ShowMessages, $db);
-	SetObsoleteForCategoryWithoutStock("NOPOKL", $ShowMessages, $db);
-	SetObsoleteForCategoryWithoutStock("NOPOBL", $ShowMessages, $db);
-	SetObsoleteForCategoryWithoutStock("NOPOGE", $ShowMessages, $db);
 	SetObsoleteForCategoryWithoutStock("DISC2A", $ShowMessages, $db);
 	SetObsoleteForCategoryWithoutStock("DISC5A", $ShowMessages, $db);
 	SetObsoleteForCategoryWithoutStock("DISC8A", $ShowMessages, $db);
