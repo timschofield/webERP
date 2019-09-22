@@ -44,7 +44,7 @@ function HourlyPerformance($numDays, $RootPath, $db){
 	$Yesterday = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 	$InitialDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$numDays));
 
-	$SQL = "SELECT debtorno,
+	$SQL = "SELECT name,
 				(SELECT MIN(salesorders.ordtime)
 				FROM salesorders
 				WHERE salesorders.debtorno = debtorsmaster.debtorno
@@ -173,7 +173,7 @@ function HourlyPerformance($numDays, $RootPath, $db){
 					<td class="number">%s</td>
 					</tr>', 
 					locale_number_format_zero_blank($i,0),
-					$myrow['debtorno'],
+					$myrow['name'],
 					locale_number_format_zero_blank($myrow['totalsalesfull']/$numDays,0),
 					locale_number_format_zero_blank($myrow['valuesalesfull']/$numDays,0),
 					locale_number_format_zero_blank($myrow['totalsales']/$numDays,0),
