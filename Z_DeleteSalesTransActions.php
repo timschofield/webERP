@@ -58,6 +58,7 @@ if (isset($_POST['ProcessDeletions'])) {
 
 		prnMsg(_('Making stock for all parts and locations nil'), 'info');
 		$ErrMsg = _('The SQL to make all stocks zero failed because');
+
 		$Result = DB_query("DELETE FROM pickserialdetails", $ErrMsg);
 		$Result = DB_query("DELETE FROM stockserialmoves", $ErrMsg);
 		$Result = DB_query("DELETE FROM stockserialitems", $ErrMsg);
