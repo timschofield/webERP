@@ -222,8 +222,8 @@ if(isset($_POST['EnterTransfer']) ) {
 		// Insert outgoing inventory GL transaction if any of the locations has a GL account code:
 		if($_SESSION['Transfer']->StockLocationFromAccount !='' or $_SESSION['Transfer']->StockLocationToAccount !='') {
 			// Get the account code:
-			if($_SESSION['Transfer']->StockLocationToAccount !='') {
-				$AccountCode = $_SESSION['Transfer']->StockLocationToAccount;
+			if($_SESSION['Transfer']->StockLocationFromAccount !='') {
+				$AccountCode = $_SESSION['Transfer']->StockLocationFromAccount;
 			} else {
 				$StockGLCode = GetStockGLCode($_SESSION['Transfer']->TransferItem[0]->StockID);// Get Category's account codes.
 				$AccountCode = $StockGLCode['stockact'];// Select account code for stock.
