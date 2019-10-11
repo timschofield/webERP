@@ -99,7 +99,9 @@ if($NewTransfer) {
 	$_SESSION['Transfer']= new StockTransfer(0,
 										$_POST['StockLocationFrom'],
 										'',
+										'',
 										$_POST['StockLocationTo'],
+										'',
 										'',
 										Date($_SESSION['DefaultDateFormat'])
 										);
