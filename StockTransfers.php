@@ -91,18 +91,48 @@ if($NewTransfer) {
 
 	if(!isset($_POST['StockLocationFrom'])) {
 		$_POST['StockLocationFrom']='';
+		$StockLocationFromAccount = '';
+	}
+	else
+	{
+		$SQL = "SELECT glaccountcode
+				FROM locations
+				INNER JOIN locationusers
+				ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
+				WHERE locations.loccode = '" . $_POST['StockLocationFrom'] . "'";
+		$Result = DB_query($SQL);
+		$myrow = DB_fetch_array($Result);
+		{
+			$StockLocationFromAccount = $myrow['glaccountcode'];
+		}
 	}
 	if(!isset($_POST['StockLocationTo'])) {
 		$_POST['StockLocationTo']='';
+		$StockLocationToAccount = '';
+	}
+	else
+	{
+		$SQL = "SELECT glaccountcode
+				FROM locations
+				INNER JOIN locationusers
+				ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
+				WHERE locations.loccode = '" . $_POST['StockLocationTo'] . "'";
+		$Result = DB_query($SQL);
+		$myrow = DB_fetch_array($Result);
+		{
+			$StockLocationToAccount = $myrow['glaccountcode'];
+		}
+
+		$_SESSION['Transfer']->StockLocationTo = $_POST['StockLocationTo'];
 	}
 
 	$_SESSION['Transfer']= new StockTransfer(0,
 										$_POST['StockLocationFrom'],
 										'',
-										'',
+										$StockLocationFromAccount,
 										$_POST['StockLocationTo'],
 										'',
-										'',
+										$StockLocationToAccount,
 										Date($_SESSION['DefaultDateFormat'])
 										);
 	$result = DB_query("SELECT description,
@@ -152,14 +182,39 @@ if(isset($_POST['Quantity'])
 }
 
 if(isset($_POST['StockLocationFrom'])
-	AND $_POST['StockLocationFrom']!= $_SESSION['Transfer']->StockLocationFrom ) {
+	AND $_POST['StockLocationFrom'] != $_SESSION['Transfer']->StockLocationFrom ) {
+
+	$SQL = "SELECT glaccountcode
+			FROM locations
+			INNER JOIN locationusers
+			ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
+			WHERE locations.loccode = '" . $_POST['StockLocationFrom'] . "'";
+	$Result = DB_query($SQL);
+	$myrow = DB_fetch_array($Result);
+	{
+		$_SESSION['Transfer']->StockLocationFromAccount = $myrow['glaccountcode'];
+	}
 
 	$_SESSION['Transfer']->StockLocationFrom = $_POST['StockLocationFrom'];
 	$_SESSION['Transfer']->StockLocationTo = $_POST['StockLocationTo'];
 	$_SESSION['Transfer']->TransferItem[0]->Quantity=filter_number_format($_POST['Quantity']);
 	$_SESSION['Transfer']->TransferItem[0]->SerialItems=array();
 }
-if(isset($_POST['StockLocationTo']) ) {
+
+if(isset($_POST['StockLocationTo'])
+	AND $_POST['StockLocationTo'] != $_SESSION['Transfer']->StockLocationTo) {
+
+	$SQL = "SELECT glaccountcode
+			FROM locations
+			INNER JOIN locationusers
+			ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
+			WHERE locations.loccode = '" . $_POST['StockLocationTo'] . "'";
+	$Result = DB_query($SQL);
+	$myrow = DB_fetch_array($Result);
+	{
+		$_SESSION['Transfer']->StockLocationToAccount = $myrow['glaccountcode'];
+	}
+
 	$_SESSION['Transfer']->StockLocationTo = $_POST['StockLocationTo'];
 }
 
