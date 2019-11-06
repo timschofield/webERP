@@ -208,7 +208,7 @@ if ($_GET['Action'] == 'Enter'){
 									'" . $myrow[1] . "',
 									'" . $myrow[2] . "')";
 
-				$ErrMsg = _('The stock count line number') . ' ' . $i . ' ' . _('could not be entered because');
+				$ErrMsg = _('The stock count line number') . ' ' . $row . ' ' . _('could not be entered because');
 				$DbgMsg = _('The SQL that was used to add the item failed was');
 				$EnterResult = DB_query($sql,$ErrMsg,$DbgMsg,true);
 
