@@ -88,5 +88,8 @@
 			'</div>',// Close Headerdiv
 			'<div id="BodyDiv">',
 				'<div id="BodyWrapDiv">';
+				
+	/* KL RICARD Log the script we run so we can optimize CPU time*/	
+	$_SESSION['ScriptStartTime'] = microtime();
 
 ?>
