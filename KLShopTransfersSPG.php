@@ -10,6 +10,9 @@ $LocationName = GetLocationNameFromCode($_SESSION['UserStockLocation']);
 /********************************************************************************************************
 ITEMS STILL IN PROCESS BY TRANSFERS ON THE LAST X DAYS
 *********************************************************************************************************/
+
+/* This SQL sentence is inefficient EXPLAIN 2019-11-10
+
 $SQL = "SELECT reference,
 				stockid,
 				shipqty,
@@ -23,7 +26,31 @@ $SQL = "SELECT reference,
 			AND shipqty != recqty
 		ORDER BY reference ASC,
 				stockid ASC";
-
+*/
+/* This equivalent query is around 5x more efficient */ 
+$SQL = "SELECT reference,
+				stockid,
+				shipqty,
+				recqty,
+				shipdate,
+				shiploc,
+				recloc
+		FROM loctransfers
+		WHERE shiploc = '". $_SESSION['UserStockLocation'] ."'
+			AND shipqty != recqty
+		UNION 
+		SELECT reference,
+				stockid,
+				shipqty,
+				recqty,
+				shipdate,
+				shiploc,
+				recloc
+		FROM loctransfers
+		WHERE recloc = '". $_SESSION['UserStockLocation'] ."'
+			AND shipqty != recqty
+		ORDER BY reference ASC,
+				stockid ASC";
 $result = DB_query($SQL);
 
 echo '<p class="page_title_text" align="center"><strong>' . 'Transfers still in transit from / to ' . $LocationName .'</strong></p>';
