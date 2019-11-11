@@ -1,6 +1,6 @@
 <?php
 include ('includes/session.php');
-$Title = _('List if Items Sold in Shop');
+$Title = _('List of Items Sold in Shop');
 include ('includes/header.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLDefines.php');

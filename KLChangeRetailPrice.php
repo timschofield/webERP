@@ -1,7 +1,7 @@
 <?php
 
 include ('includes/session.php');
-$Title = _('Kapal-Laut. Set Retail Price');
+$Title = _('Set Retail Price');
 include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
@@ -19,13 +19,13 @@ if (!isset($_GET['Item']) or !isset($_GET['NewPrice']) or !isset($_GET['Action']
 
 if ($_GET['Action'] == "New"){
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' .
-				_('retail Price') . '" alt="" />' . ' ' . _('KL Set Initial Retail Prices for').' ' . $_GET['Item']. '.</p>';
+				_('Retail Price') . '" alt="" />' . ' ' . _('KL Set Initial Retail Prices for').' ' . $_GET['Item']. '.</p>';
 }else if ($_GET['Action'] == "Change"){
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' .
-				_('retail Price') . '" alt="" />' . ' ' . _('KL Change Retail Prices for').' ' . $_GET['Item']. '.</p>';
+				_('Retail Price') . '" alt="" />' . ' ' . _('KL Change Retail Prices for').' ' . $_GET['Item']. '.</p>';
 }else if ($_GET['Action'] == "Finish"){
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' .
-				_('retail Price') . '" alt="" />' . ' ' . _('KL Change Labels for item').' ' . $_GET['Item']. '.</p>';
+				_('Retail Price') . '" alt="" />' . ' ' . _('KL Change Labels for item').' ' . $_GET['Item']. '.</p>';
 }else{
 	echo '<br />';
 	prnMsg( _('Action unknown'), 'error');

@@ -1,14 +1,14 @@
 <?php
 
 include ('includes/session.php');
-$Title = _('Kapal-Laut. Set Retail Price');
+$Title = _('Set Initial Retail Price');
 include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
 include('includes/KLPrices.php');
 
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' .
-				_('retail Price') . '" alt="" />' . ' ' . _('KL Set Initial Retail and Wholesale Prices for').' ' . $_GET['Item']. '.</p>';
+				_('retail Price') . '" alt="" />' . ' ' . _('KL Set Initial Retail Prices for').' ' . $_GET['Item']. '.</p>';
 
 if (!isset($_GET['Item']) or !isset($_GET['NewPrice'])){
 	echo '<br />';

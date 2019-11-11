@@ -4,7 +4,7 @@
 $PricesSecurity = 12;//don't show pricing info unless security token 12 available to user
 include('includes/session.php');
 
-$Title = _('Stock Status');
+$Title = _('Item Stock Status');
 
 include('includes/header.php');
 include ('includes/SQL_CommonFunctions.inc');
