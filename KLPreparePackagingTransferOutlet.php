@@ -1,7 +1,7 @@
 <?php
 
 include ('includes/session.php');
-$Title = _('Kapal-Laut. Sends an email to team to prepare an OUTLET packaging transfer');
+$Title = _('Send email to team to prepare an Outlet packaging transfer');
 include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLEmails.php');
