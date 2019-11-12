@@ -8,7 +8,6 @@ include('includes/KLGeneralFunctions.php');
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (!isset($_POST['FromDate'])){
-//	$_POST['FromDate'] = Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail']));
 	$_POST['FromDate']= Date($_SESSION['DefaultDateFormat']);
 }
 if (!isset($_POST['ToDate'])){
@@ -60,12 +59,25 @@ if(!isset($_POST['ContainingText'])){
 }
 echo '<tr>
 		<td>' . _('Containing text') . ':</td>
-		<td><input type="text" name="ContainingText" size="20" maxlength="20" value="'. $_POST['ContainingText'] . '" /></td>
-	</tr>
-	</table>
+		<td><input type="text" tabindex="4" name="ContainingText" size="20" maxlength="20" value="'. $_POST['ContainingText'] . '" /></td>
+	</tr>';
+
+if (!isset($_POST['DetailedReport'])){
+	$_POST['DetailedReport'] = 'No';
+}
+echo '<tr>
+		<td>' . _('Summary or detailed report') . ':' . '</td>
+		<td><select tabindex="5" name="DetailedReport">
+			<option selected="selected" value="No">' . _('Summary Report') . '</option>
+			<option value="Yes">' . _('Detailed Report') . '</option>
+			</select>
+		</td>
+	</tr>';
+	
+echo '</table>
 	<br />
 	<div class="centre">
-		<input tabindex="5" type="submit" name="View" value="' . _('View') . '" />
+		<input tabindex="6" type="submit" name="View" value="' . _('View') . '" />
 	</div>
 	</div>
 	</form>';
@@ -205,46 +217,46 @@ if (isset($_POST['View'])) {
 	/**************************************************************
 	QUERY DETAILED
 	***************************************************************/
-	
-	$sql="SELECT executiondate,
-			userid,
-			secondsrunning,
-			scripttitle
-		FROM auditscripts
-		WHERE executiondate BETWEEN '".$FromDate."' AND '".$ToDate."'" 
-		. $UserSql
-		. $ContainingText;
+	if ($_POST['DetailedReport'] == "Yes"){
+		$sql="SELECT executiondate,
+				userid,
+				secondsrunning,
+				scripttitle
+			FROM auditscripts
+			WHERE executiondate BETWEEN '".$FromDate."' AND '".$ToDate."'" 
+			. $UserSql
+			. $ContainingText;
 
-	$result = DB_query($sql);
+		$result = DB_query($sql);
 
-	echo '<p class="page_title_text" align="center"><strong>' . 'Detailed Script usage' .'</strong></p>';
-	echo '<div>';
-	echo '<table class="selection">';
-	$TableHeader = '<tr>
-						<th class="ascending">' . _('Date/Time') . '</th>
-						<th class="ascending">' . _('User') . '</th>
-						<th class="ascending">' . _('Seconds') . '</th>
-						<th class="ascending">' . _('Script') . '</th>
-					</tr>';
-	echo $TableHeader;
-	$k = 0; //row colour counter
-	$i = 1;
+		echo '<p class="page_title_text" align="center"><strong>' . 'Detailed Script usage' .'</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('Date/Time') . '</th>
+							<th class="ascending">' . _('User') . '</th>
+							<th class="ascending">' . _('Seconds') . '</th>
+							<th class="ascending">' . _('Script') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
 
-	while ($myrow = DB_fetch_array($result)) {
-		$k = StartEvenOrOddRow($k);
-		printf('<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				</tr>', 
-				$myrow['executiondate'], 
-				$myrow['userid'], 
-				locale_number_format($myrow['secondsrunning'],5),
-				$myrow['scripttitle']
-				);
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			printf('<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					</tr>', 
+					$myrow['executiondate'], 
+					$myrow['userid'], 
+					locale_number_format($myrow['secondsrunning'],5),
+					$myrow['scripttitle']
+					);
+		}
+		echo '</table></div>';
 	}
-	echo '</table></div>';
-	
 }
 include('includes/footer.php');
 

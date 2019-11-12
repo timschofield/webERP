@@ -7,7 +7,7 @@ include('includes/session.php');
 
 
 if (isset($_GET['ModifyOrderNumber'])) {
-	$Title = _('Modify Purchase Order') . ' ' . $_GET['ModifyOrderNumber'];
+	$Title = _('Modify Purchase Order');
 } else {
 	$Title = _('Purchase Order Entry');
 }

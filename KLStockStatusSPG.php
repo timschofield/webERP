@@ -1,12 +1,10 @@
 <?php
 
-/* $Id: StockStatus.php 6338 2013-09-28 05:10:46Z daintree $*/
-
 include('includes/session.php');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 
-$Title = _('Stock Status in KL Shops');
+$Title = _('Stock Status in Shops');
 
 include('includes/header.php');
 
@@ -97,12 +95,6 @@ if ($StockID != ''){
 		$InTransit = $InTransitQuantityIn+$InTransitQuantityOut;
 		$Available = $myrow['quantity'];
 
-/*		if (($InTransitQuantityIn+$InTransitQuantityOut) < 0) {
-			$Available = $myrow['quantity'] + ($InTransitQuantityIn+$InTransitQuantityOut);
-		} else {
-			$Available = $myrow['quantity'];
-		}
-*/
 		printf('<td>%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>

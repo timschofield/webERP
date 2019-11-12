@@ -1,12 +1,10 @@
 <?php
 
-/* $Id: StockStatus.php 6338 2013-09-28 05:10:46Z daintree $*/
-
 include('includes/session.php');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 
-$Title = _('Stock Status in KL Shops For Managers');
+$Title = _('Stock Status in Shops For Managers');
 
 include('includes/header.php');
 

@@ -14,9 +14,9 @@ config.php is in turn included in session.php*/
 include('includes/session.php');
 
 if (isset($_GET['ModifyOrderNumber'])) {
-	$Title = _('Modifying Order') . ' ' . $_GET['ModifyOrderNumber'];
+	$Title = _('Modify Sales Order');
 } else {
-	$Title = _('Select Order Items');
+	$Title = _('Select Sales Order Items');
 }
 /* webERP manual links before header.php */
 $ViewTopic= 'SalesOrders';
