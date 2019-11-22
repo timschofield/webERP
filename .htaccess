@@ -5,7 +5,7 @@ AddHandler application/x-httpd-php54 .php
 
 <IfModule mod_suphp.c>
 #    suPHP_ConfigPath /opt/php54/lib
-suPHP_ConfigPath /home4/kurakura/public_html/ptadu.com/weberp 
+suPHP_ConfigPath /home/ricarda3/public_html/ptadu.com/weberp 
 </IfModule>
 
 

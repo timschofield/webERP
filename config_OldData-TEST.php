@@ -7,8 +7,8 @@ $Version = '0.01';
 
 $Language ='en_GB';
 
-$OldData_db_user = 'kurakura_kl90001';
-$OldData_db_pwd = 'd9cce0fa69e0a0120cfdb';
+$OldData_db_user = 'ricarda3_us_test';
+$OldData_db_pwd = 'pmYjZ0djJ67x7IesO3A1';
 
 $OldData_db_host = 'localhost';
 $OldData_db_name = 'kurakura_kl_test_erpolddata';

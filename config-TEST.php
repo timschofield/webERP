@@ -38,8 +38,8 @@ $dbType = 'mysqli';
 
 
 // sql user & password
-$dbuser = 'kurakura_kl90001';
-$dbpassword = 'd9cce0fa69e0a0120cfdb';
+$dbuser = 'ricarda3_us_test';
+$dbpassword = 'pmYjZ0djJ67x7IesO3A1';
 
 // It would probably be inappropraite to allow selection of the company in a hosted envionment so this option can be switched to 'ShowInputBox' or 'Hide'
 // depending if you allow the user to select the name of the company or must use the default one described at $DefaultCompany
@@ -55,7 +55,7 @@ $AllowCompanySelectionBox = 'Hide';
 
 //If $AllowCompanySelectionBox is not 'ShowSelectionBox' above then the $DefaultCompany string is entered in the login screen as a default 
 //otherwise the user is expected to know the name of the company to log into.
-$DefaultCompany = 'kurakura_kl_erp_test';
+$DefaultCompany = 'ricarda3_kl_test_erp';
 
 //The maximum time that a login session can be idle before automatic logout
 //time is in seconds  3600 seconds in an hour

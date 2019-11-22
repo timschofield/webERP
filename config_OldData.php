@@ -7,10 +7,10 @@ $Version = '0.01';
 
 $Language ='en_GB';
 
-$OldData_db_user = 'kurakura_kl_0001';
-$OldData_db_pwd = 'KXGrwKrlKduQTSdqnLZc';
+$OldData_db_user = 'ricarda3_us_erp';
+$OldData_db_pwd = 'xpbrafViqdQAuJ8fsr2b';
 $OldData_db_host = 'localhost';
-$OldData_db_name = 'kurakura_kl_erpolddata';
+$OldData_db_name = 'ricarda3_kl_erpolddata';
 $OldData_db_tableprefix ='oc_';
 
 

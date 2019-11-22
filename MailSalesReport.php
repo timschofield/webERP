@@ -21,7 +21,7 @@ KL RICARD MODIFICATIONS:
 
 $_GET['ReportID'] = 2;
 $AllowCronJobToBeRun = true;
-$DatabaseName = 'kurakura_kl_erp';
+$DatabaseName = 'ricarda3_kl_erp';
 include('includes/session.php');
 /*The company database to use */
 
