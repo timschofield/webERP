@@ -244,7 +244,7 @@ define("GOOGLE_IDENTIFIER", 'TRUE');
 
 /*	From webERP to OpenCart */
 define("PATH_OPENCART_IMAGES", 'data/KL/part_pics/');
-define("ABSOLUTE_PATH_OPENCART_IMAGES", '/home/ricarda3/public_html/kapal-laut.com/image/data/KL/part_pics/');
+define("ABSOLUTE_PATH_OPENCART_IMAGES", '/home4/kurakura/public_html/kapal-laut.com/image/data/KL/part_pics/');
 
 define("PATH_OPENCART_BASE", 'http://www.kapal-laut.com');
 define("ROUTE_TO_PRODUCT", 'index.php?route=product/product&');

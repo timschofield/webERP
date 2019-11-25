@@ -7,10 +7,10 @@ $Version = '0.01';
 
 $Language ='en_GB';
 
-$opencart_db_user = 'ricarda3_us_test';
-$opencart_db_pwd = 'pmYjZ0djJ67x7IesO3A1';
+$opencart_db_user = 'kurakura_kl90001';
+$opencart_db_pwd = 'd9cce0fa69e0a0120cfdb';
 $opencart_db_host = 'localhost';
-$opencart_db_name = 'ricarda3_kl_test_shop';
+$opencart_db_name = 'kurakura_kl_test_shop';
 $opencart_db_tableprefix ='oc_';
 
 

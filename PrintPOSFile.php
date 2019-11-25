@@ -11,12 +11,20 @@ use Neodynamic\SDK\Web\InstalledPrinter;
 use Neodynamic\SDK\Web\ClientPrintJob;
 //################## PRINTING STUFF #####################	
 
+
 if(isset($_GET['identifier'])) {
 	$identifier = $_GET['identifier'];
 } elseif(isset($_POST['identifier'])) {
 	$identifier = $_POST['identifier'];
 } else {
 	$identifier = '';
+}
+
+// RICARD: To be improved to get just 1 wcpcache folder in all installation
+if($_SESSION['HTTPS_Only'] == 1){
+	$Protocol = "https";
+}else{
+	$Protocol = "http";
 }
 
 $RootPath = dirname(htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'));
@@ -28,18 +36,9 @@ if (isset($DirectoryLevelsDeep)){
 if ($RootPath == "/" OR $RootPath == "\\") {
 	$RootPath = "";
 }
+$filename =  $Protocol . "://$_SERVER[HTTP_HOST]" . $RootPath . '/includes/WebClientPrint/wcpcache/'.$identifier.'.pos';   
 
-// RICARD: 
-//if($_SESSION['HTTPS_Only'] == 1){
-//	$Protocol = "https";
-//}else{
-//	$Protocol = "http";
-//}
-//$filename =  $Protocol . "://$_SERVER[HTTP_HOST]" . $RootPath . '/includes/WebClientPrint/wcpcache/'.$identifier.'.pos';   
-
-$filename =  './includes/WebClientPrint/wcpcache/'.$identifier.'.pos';   
-
-$texttoprint = file_get_contents($filename,false);
+$texttoprint = file_get_contents($filename);
 
 //################## PRINTING STUFF #####################
 
@@ -59,5 +58,9 @@ $texttoprint = file_get_contents($filename,false);
 		exit();
 		
 //################## PRINTING STUFF #####################
+
+
+
+
 
 ?>
