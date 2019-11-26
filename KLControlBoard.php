@@ -1,11 +1,31 @@
 <?php
-define("VERSIONFILE", "4.01");
+define("VERSIONFILE", "4.02");
 
 /* Session started in session.php for password checking and authorisation level check
 config.php is in turn included in session.php*/
 
 include('includes/session.php');
 $Title = _('Kapal-Laut General Control Board '. VERSIONFILE);
+
+/* Assign the sections to be executed, to avoid error 504*/
+$ShowSectionInfo = FALSE;
+$ProcessSection01 = FALSE;
+$ProcessSection02 = FALSE;
+
+if (!isset($_GET['Section'])){
+	$ProcessSection01 = TRUE;
+	$ProcessSection02 = TRUE;
+}else{
+	$ShowSectionInfo = TRUE;
+	if ($_GET['Section'] == '01'){
+		$Title = _('Kapal-Laut General Control Board Section 01 '. VERSIONFILE);
+		$ProcessSection01 = TRUE;
+	}elseif($_GET['Section'] == '02'){
+		$Title = _('Kapal-Laut General Control Board Section 02 '. VERSIONFILE);
+		$ProcessSection02 = TRUE;
+	}
+}
+
 include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
@@ -29,31 +49,15 @@ $NumberOfTestExecuted = 0;
 
 $periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 
-/* Assign the sections to be executed, to avoid error 504*/
-$ShowSectionInfo = FALSE;
-$ProcessSection01 = FALSE;
-$ProcessSection02 = FALSE;
-
-if (!isset($_GET['Section'])){
-	$ProcessSection01 = TRUE;
-	$ProcessSection02 = TRUE;
-}else{
-	$ShowSectionInfo = TRUE;
-	if ($_GET['Section'] == '01'){
-		$ProcessSection01 = TRUE;
-	}elseif($_GET['Section'] == '02'){
-		$ProcessSection02 = TRUE;
-	}
-}
-
 /***************************************************************************************
 * TEST AND PLAY AREA      
 ***************************************************************************************/
 
-if ($KL_SystemAdmin){
-//	ItemsNotNeededInOnlineOrderButRequested($RootPath, $db);
+if ($_SESSION['UserID'] == "Ricard"){
+//		CustomersDebtControl(1000000, $periodnow, $db);
+//		$NumberOfTestExecuted++;
+
 //	phpinfo();
-//	$NumberOfTestExecuted++;
 }
 
 if ($KL_SystemAdmin 
@@ -142,6 +146,7 @@ if ($ProcessSection01){
 		WrongStandardCost("India"      , "", STANDARD_COST_FACTOR_FOREIGN, 0.05, "SHOWONLY", $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
+
 	/***************************************************************************************
 	* RETAIL PRICE         
 	***************************************************************************************/
@@ -237,9 +242,13 @@ if ($ProcessSection01){
 	* BALANCE ACCOUNTS         
 	***************************************************************************************/
 	if ($KL_SystemAdmin){
-		GoodsReceivedNotInvoicedControl(1000000, $periodnow, $db);
+// RICARD 2019-11-26
+// CANCELLED FOR PERFORMANCE REASONS
+//		GoodsReceivedNotInvoicedControl(1000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		CustomersDebtControl(1000000, $periodnow, $db);
+// RICARD 2019-11-26
+// CANCELLED FOR PERFORMANCE REASONS
+//		CustomersDebtControl(1000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -433,6 +442,21 @@ if ($ProcessSection01){
 		BalanceAccountControl("612012016",         -1,          1, $periodnow, $db);
 		$NumberOfTestExecuted++;
 	}
+
+//////////////////////////
+// END OF SECTION
+}
+
+/***************************************************************************************
+* SECTION 2
+***************************************************************************************/
+
+if ($ProcessSection02){
+	if($ShowSectionInfo){
+		prnMsg("Performing Control Panel Section 02",'info');
+	}
+// BEGINNING OF SECTION 2
+//////////////////////////
 
 	/***************************************************************************************
 	* STOCK CONTROL         
@@ -726,16 +750,7 @@ if ($ProcessSection01){
 		CheckNegativeStock($RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
-}
 
-/***************************************************************************************
-* SECTION 2
-***************************************************************************************/
-
-if ($ProcessSection02){
-	if($ShowSectionInfo){
-		prnMsg("Performing Control Panel Section 02",'info');
-	}
 	/***************************************************************************************
 	* SALES CONTROL         
 	***************************************************************************************/

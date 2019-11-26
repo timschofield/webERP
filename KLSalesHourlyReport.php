@@ -1,5 +1,5 @@
 <?php
-define("VERSIONFILE", "1.00");
+define("VERSIONFILE", "1.01");
 
 include ('includes/session.php');
 $Title = _('Kapal-Laut Sales Hourly Report '. VERSIONFILE);
@@ -25,7 +25,9 @@ if ($KL_SystemAdmin
 	OR $KL_SalesDirector){
 	HourlyPerformance( 7,$RootPath, $db);
 	$NumberOfTestExecuted++;
-	HourlyPerformance(15,$RootPath, $db);
+// RICARD 2019-11-26
+// CANCELLED FOR PERFORMANCE REASONS
+//	HourlyPerformance(15,$RootPath, $db);
 	$NumberOfTestExecuted++;
 
 

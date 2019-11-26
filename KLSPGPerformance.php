@@ -1,5 +1,5 @@
 <?php
-define("VERSIONFILE", "1.00");
+define("VERSIONFILE", "1.01");
 
 include ('includes/session.php');
 $Title = _('Kapal-Laut SPG Performance Report '. VERSIONFILE);
@@ -97,9 +97,13 @@ if ($KL_SystemAdmin
 	OR $KL_ShopManager
 	OR $KL_SalesDirector
 	OR $KL_BusinessDevelopmentManager){	
-	RetailTypePayments("SPG",180, $db);
+// RICARD 2019-11-26
+// CANCELLED FOR PERFORMANCE REASONS
+//	RetailTypePayments("SPG",180, $db);
 	$NumberOfTestExecuted++;
-	RetailTypePayments("SPG",  15, $db);
+// RICARD 2019-11-26
+// CANCELLED FOR PERFORMANCE REASONS
+//	RetailTypePayments("SPG",  15, $db);
 	$NumberOfTestExecuted++;
 }
 

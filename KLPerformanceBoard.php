@@ -1,5 +1,5 @@
 <?php
-define("VERSIONFILE", "3.10");
+define("VERSIONFILE", "3.11");
 
 /* Session started in session.php for password checking and authorisation level check config.php is in turn included in session.php*/
 
@@ -75,7 +75,9 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		YearDifferenceSales("Shop",  30, $db);
 		$NumberOfTestExecuted++;
-		YearDifferenceSales("Shop",	 90, $db);
+// RICARD 2019-11-26
+// CANCELLED FOR PERFORMANCE REASONS
+//		YearDifferenceSales("Shop",	 90, $db);
 		$NumberOfTestExecuted++;
 		YearDifferenceSales("Shop", 365, $db);
 		$NumberOfTestExecuted++;
@@ -95,28 +97,23 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_SystemAdmin
-		OR $KL_OperationalManager
-		OR $KL_SalesDirector){
-//		AverageCustomerBehaviourByValueInvoice("Shop", 90, $db);
-//		$NumberOfTestExecuted++;
-//		AverageCustomerBehaviourByValueInvoice("Shop", 365, $db);
-//		$NumberOfTestExecuted++;
-	}
-
 	if ($KL_SystemAdmin 
 		OR $KL_ShopManager
 		OR $KL_OperationalManager
 		OR $KL_SalesDirector
 		OR $KL_BusinessDevelopmentManager){
-		GeneralCustomerBehaviour(30, $db);
+// RICARD 2019-11-26
+// CANCELLED FOR PERFORMANCE REASONS
+//		GeneralCustomerBehaviour(30, $db);
 		$NumberOfTestExecuted++;
 //		GeneralCustomerBehaviour(90, $db);
 //		$NumberOfTestExecuted++;
 	}
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager){
-		DailySalesRecords(10, 365 * 2, $db);
+// RICARD 2019-11-26
+// CANCELLED FOR PERFORMANCE REASONS
+//		DailySalesRecords(10, 365 * 2, $db);
 		$NumberOfTestExecuted++;
 	}
 }
@@ -229,12 +226,10 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 		POStatusControl("RECEIVED IN KANTOR", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-	}
-	
-	if ($KL_SystemAdmin){
 		POStatusControl("ARRIVING IN NEXT DAYS", 75, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
+
 	
 //	RetailTypePayments("Shop",180, $db);
 //	NumberOfTestExecuted++;
@@ -274,7 +269,9 @@ if ($ProcessSection03){
 		PackagingUsageForOutlet(30, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		
-		PackagingUsageByWeeks($RootPath, $db);
+// RICARD 2019-11-26
+// CANCELLED FOR PERFORMANCE REASONS
+//		PackagingUsageByWeeks($RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -299,9 +296,13 @@ if ($ProcessSection03){
 		$NumberOfTestExecuted++;
 		PettyCashStatus("THB", $db);
 		$NumberOfTestExecuted++;
-		PettyCashStatus("EUR", $db);
+// RICARD 2019-11-26
+// CANCELLED FOR PERFORMANCE REASONS
+//		PettyCashStatus("EUR", $db);
 		$NumberOfTestExecuted++;
-		PettyCashStatus("HKD", $db);
+// RICARD 2019-11-26
+// CANCELLED FOR PERFORMANCE REASONS
+//		PettyCashStatus("HKD", $db);
 		$NumberOfTestExecuted++;
 	}
 
