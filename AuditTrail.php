@@ -11,7 +11,8 @@ include('includes/header.php');
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (!isset($_POST['FromDate'])){
-	$_POST['FromDate'] = Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail']));
+//	$_POST['FromDate'] = Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail']));
+	$_POST['FromDate']= Date($_SESSION['DefaultDateFormat']);
 }
 if (!isset($_POST['ToDate'])){
 	$_POST['ToDate']= Date($_SESSION['DefaultDateFormat']);
