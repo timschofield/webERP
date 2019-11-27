@@ -1,5 +1,5 @@
 <?php
-define("VERSIONFILE", "4.02");
+define("VERSIONFILE", "4.03");
 
 /* Session started in session.php for password checking and authorisation level check
 config.php is in turn included in session.php*/
@@ -443,21 +443,6 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 	}
 
-//////////////////////////
-// END OF SECTION
-}
-
-/***************************************************************************************
-* SECTION 2
-***************************************************************************************/
-
-if ($ProcessSection02){
-	if($ShowSectionInfo){
-		prnMsg("Performing Control Panel Section 02",'info');
-	}
-// BEGINNING OF SECTION 2
-//////////////////////////
-
 	/***************************************************************************************
 	* STOCK CONTROL         
 	***************************************************************************************/
@@ -750,6 +735,21 @@ if ($ProcessSection02){
 		CheckNegativeStock($RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
+
+//////////////////////////
+// END OF SECTION
+}
+
+/***************************************************************************************
+* SECTION 2
+***************************************************************************************/
+
+if ($ProcessSection02){
+	if($ShowSectionInfo){
+		prnMsg("Performing Control Panel Section 02",'info');
+	}
+// BEGINNING OF SECTION 2
+//////////////////////////
 
 	/***************************************************************************************
 	* SALES CONTROL         
