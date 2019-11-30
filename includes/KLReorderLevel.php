@@ -984,7 +984,7 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db,
 	
 	if (DB_num_rows($result) != 0){
 		if ($ShowMessages){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Adjustment RL for Toko Online ') . ' </strong></p>';
+			echo '<p class="page_title_text" align="center"><strong>' . _('Adjustment RL for Toko Online') . ' </strong></p>';
 			echo '<div>';
 			echo '<table class="selection">';
 			$TableHeader = '<tr>
@@ -994,6 +994,9 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db,
 								<th>' . _('Old RL') . '</th>
 							</tr>';
 			echo $TableHeader;
+		}
+		if ($EmailText!=''){
+			$EmailText = $EmailText . 'Adjustment RL for Toko Online for existing online orders' . "\n";
 		}
 		$k = 0; //row colour counter
 		$i = 1;
@@ -1022,7 +1025,7 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db,
 				$i++;
 			}
 			if ($EmailText!=''){
-				$EmailText = $EmailText . $myrow['stkcode'] . " QOH = " . $myrow['totalqty'] .  " RL = " . $myrow['reorderlevel'] . "\n";
+				$EmailText = $EmailText . $myrow['stkcode'] . " Old RL = " . $myrow['reorderlevel'] . " New RL = " . $myrow['totalqty'] . "\n";
 			}
 		}
 		if ($ShowMessages){
