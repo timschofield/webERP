@@ -1,11 +1,11 @@
 <?php
-define("VERSIONFILE", "4.03");
+define("VERSIONFILE", "4.04");
 
 /* Session started in session.php for password checking and authorisation level check
 config.php is in turn included in session.php*/
 
 include('includes/session.php');
-$Title = _('Kapal-Laut General Control Board '. VERSIONFILE);
+$Title = _('KL General Control Board '. VERSIONFILE);
 
 /* Assign the sections to be executed, to avoid error 504*/
 $ShowSectionInfo = FALSE;
@@ -17,11 +17,10 @@ if (!isset($_GET['Section'])){
 	$ProcessSection02 = TRUE;
 }else{
 	$ShowSectionInfo = TRUE;
+		$Title = 'KL General Control Board Section ' . $_GET['Section'] . ' ' . VERSIONFILE;
 	if ($_GET['Section'] == '01'){
-		$Title = _('Kapal-Laut General Control Board Section 01 '. VERSIONFILE);
 		$ProcessSection01 = TRUE;
 	}elseif($_GET['Section'] == '02'){
-		$Title = _('Kapal-Laut General Control Board Section 02 '. VERSIONFILE);
 		$ProcessSection02 = TRUE;
 	}
 }

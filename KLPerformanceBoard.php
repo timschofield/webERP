@@ -1,22 +1,10 @@
 <?php
-define("VERSIONFILE", "3.11");
+define("VERSIONFILE", "4.00");
 
 /* Session started in session.php for password checking and authorisation level check config.php is in turn included in session.php*/
 
 include ('includes/session.php');
-$Title = _('Kapal-Laut General Performance Board '. VERSIONFILE);
-include ('includes/header.php');
-include('includes/KLDefines.php');
-include('includes/KLBoards.php');
-include('includes/KLGeneralFunctions.php');
-include('includes/KLPrices.php');
-
-/* ASSIGN users to groups */
-include ('includes/KLRoles.inc');
-$begintime = time_start();
-$NumberOfTestExecuted = 0;
-
-$periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
+$Title = _('KL General Performance Board '. VERSIONFILE);
 
 /* Assign the sections to be executed, to avoid error 504*/
 $ShowSectionInfo = FALSE;
@@ -30,6 +18,7 @@ if (!isset($_GET['Section'])){
 	$ProcessSection03 = TRUE;
 }else{
 	$ShowSectionInfo = TRUE;
+		$Title = 'KL General Performance Board Section ' . $_GET['Section'] . ' ' . VERSIONFILE;
 	if ($_GET['Section'] == '01'){
 		$ProcessSection01 = TRUE;
 	}elseif($_GET['Section'] == '02'){
@@ -38,6 +27,19 @@ if (!isset($_GET['Section'])){
 		$ProcessSection03 = TRUE;
 	}
 }
+
+include ('includes/header.php');
+include('includes/KLDefines.php');
+include('includes/KLBoards.php');
+include('includes/KLGeneralFunctions.php');
+include('includes/KLPrices.php');
+
+/* ASSIGN users to groups */
+include ('includes/KLRoles.inc');
+$begintime = time_start();
+$NumberOfTestExecuted = 0;
+
+$periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 
 /***************************************************************************************
 * TEST AND PLAY AREA      
