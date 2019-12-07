@@ -94,6 +94,7 @@ $TransferRow = DB_fetch_array($result);
 include ('includes/PDFStockLocTransferHeader.inc');
 $line_height=30;
 $FontSize=10;
+$NumPcsInThisTransfer = 0;
 
 do {
 
@@ -105,6 +106,7 @@ do {
 	$pdf->line($Left_Margin, $YPos-2,$Page_Width-$Right_Margin, $YPos-2);
 
 	$YPos -= $line_height;
+	$NumPcsInThisTransfer += $TransferRow['shipqty'];
 
 	if ($YPos < $Bottom_Margin + $line_height) {
 		$PageNumber++;
@@ -112,6 +114,9 @@ do {
 	}
 
 } while ($TransferRow = DB_fetch_array($result));
+
+$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 200, $FontSize, '# Pieces in this transfer: ' . locale_number_format($NumPcsInThisTransfer), 'left');
+
 $pdf->OutputD($_SESSION['DatabaseName'] . '_StockLocTrfShipment_' . date('Y-m-d') . '.pdf');
 $pdf->__destruct();
 ?>

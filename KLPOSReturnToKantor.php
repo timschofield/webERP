@@ -88,21 +88,11 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 										AND loccode='".$_POST['FromStockLocation']."'");
 
 					$myrow = DB_fetch_array($result);
-/*					if (($myrow['quantity']-$InTransitQuantity) < filter_number_format($_POST['StockQTY' . $i])){
-						$InputError = True;
-						$ErrorMessage .= _('The part code entered of'). ' ' . $_POST['StockID' . $i] . ' '. _('does not have enough stock available for transfer.') . '.<br />';
-						$_POST['LinesCounter'] -= 2;
-					}
-*/				}
+				}
 				// Check the accumulated quantity for each item
 				if(isset($StockIDAccQty[$_POST['StockID'.$i]])){
 					$StockIDAccQty[$_POST['StockID'.$i]] += filter_number_format($_POST['StockQTY' . $i]);
-/*					if($myrow[0] < $StockIDAccQty[$_POST['StockID'.$i]]){
-						$InputError = True;
-						$ErrorMessage .=_('The part code entered of'). ' ' . $_POST['StockID'.$i] . ' '._('does not have enough stock available for transter due to accumulated quantity is over quantity on hand.') . '<br />';
-						$_POST['LinesCounter'] -= 2;
-					}
-*/				} else {
+				} else {
 					$StockIDAccQty[$_POST['StockID'.$i]] = filter_number_format($_POST['StockQTY' . $i]);
 				} //end of accumulated check
 
@@ -141,6 +131,8 @@ if(isset($_POST['Submit']) AND $InputError==False){
 	$TextToPrint .=  $NewLine . $NewLine;
 	$TextToPrint .=  $LeftJustified;
 
+	$NumberOfItems = 0;
+
 	DB_Txn_Begin();
 
 	for ($i=0;$i < $_POST['LinesCounter'];$i++){
@@ -170,12 +162,15 @@ if(isset($_POST['Submit']) AND $InputError==False){
 				KLSendEmail("ItemTransferredToSpecialLocation", "Silent", $_POST['StockID' . $i], round(filter_number_format($_POST['StockQTY' . $i]), $DecimalRow['decimalplaces']),$_POST['FromStockLocation'], $_POST['ToStockLocation']);
 			}
 			
+			$NumberOfItems += $_POST['StockQTY' . $i];
 			$TextToPrint .= round(filter_number_format($_POST['StockQTY' . $i]), $DecimalRow['decimalplaces']) . ' x ' . $_POST['StockID' . $i] . $NewLine;
 
 		}
 	}
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to COMMIT Location Transfer transaction');
 	DB_Txn_Commit();
+
+	$TextToPrint .= $NewLine. $Emphasized . '# Pieces in this transfer: ' . filter_number_format($NumberOfItems) . $NewLine;
 
 	$TextToPrint .= $NewLine. $Emphasized . 'Prepared by: ' . $_SESSION['SalesmanLogin'] . $NewLine;
 	$TextToPrint .= $CharacterFontA . 'Date: ' . DisplayDateTime() . $NewLine;
