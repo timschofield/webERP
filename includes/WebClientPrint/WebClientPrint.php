@@ -41,7 +41,7 @@ WebClientPrint::$wcpCacheFolder = $CachePath;
 
 // Clean built-in Cache
 // NOTE: Remove it if you implement your own cache system
-WebClientPrint::cacheClean(30); //in minutes
+WebClientPrint::cacheClean(60*24); //in minutes
 
 // Process request
 $urlParts = parse_url($_SERVER['REQUEST_URI']);
