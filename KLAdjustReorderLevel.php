@@ -22,7 +22,13 @@ $updateDB = true;
 $ShowMessages = true;
 $EmailText = '';
 
-DailyReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+DailyReorderLevelAdjustments01($ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+DailyReorderLevelAdjustments02($ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+DailyReorderLevelAdjustments03($ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+DailyReorderLevelAdjustments04($ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+DailyReorderLevelAdjustments05($ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+DailyReorderLevelAdjustments06($ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+DailyReorderLevelAdjustments07($ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 
 prnMsg("Performed ". NUMBER_OF_TESTS . " RL adjustement strategies",'success');
 time_finish($begintime);

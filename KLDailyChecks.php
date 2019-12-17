@@ -19,8 +19,20 @@ function KL_DailyChecks($Group, $RootPath, $db, $EmailText= ''){
 
 	if ($Group == "01"){
 		$EmailText = KL_DailyMaintenanceDatabase01(FALSE, $db, $EmailText);
-	}elseif ($Group == "02"){
-		$EmailText = DailyReorderLevelAdjustments(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
+	}elseif ($Group == "OnlineRLAdjustments"){
+		$EmailText = DailyReorderLevelAdjustments01(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
+	}elseif ($Group == "RLForTopSalesKL"){
+		$EmailText = DailyReorderLevelAdjustments02(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
+	}elseif ($Group == "RLForTopSalesBL"){
+		$EmailText = DailyReorderLevelAdjustments03(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
+	}elseif ($Group == "RLForTopSalesOU"){
+		$EmailText = DailyReorderLevelAdjustments04(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
+	}elseif ($Group == "RLRebalancing"){
+		$EmailText = DailyReorderLevelAdjustments05(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
+	}elseif ($Group == "RLZeroNotAvailable"){
+		$EmailText = DailyReorderLevelAdjustments06(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
+	}elseif ($Group == "RLAdjustPackaging"){
+		$EmailText = DailyReorderLevelAdjustments07(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
 	}elseif ($Group == "03"){
 		$EmailText = KL_DailyEmailsToStaff($db, $EmailText);
 	}elseif ($Group == "04"){

@@ -1,8 +1,13 @@
 <?php
 
-function DailyReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db, $EmailText){
+function DailyReorderLevelAdjustments01($ShowMessages, $updateDB, $RootPath, $db, $EmailText){
 
 	$EmailText = OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db, $EmailText); // Updates RL for online orders
+	
+	return $EmailText;
+}
+
+function DailyReorderLevelAdjustments02($ShowMessages, $updateDB, $RootPath, $db, $EmailText){
 
 	// For KL SHOPS
 	$Shops = NumberOfShops("SHOPKL", $db);
@@ -28,6 +33,11 @@ function DailyReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db, 
 	$EmailText = SetRLForLowSalesHighRL("SHOPKL",  40, 5, 4, ($Shops * 5), $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 	$EmailText = SetRLForLowSalesHighRL("SHOPKL",  50, 4, 3, ($Shops * 4), $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 	
+	return $EmailText;
+}
+
+function DailyReorderLevelAdjustments03($ShowMessages, $updateDB, $RootPath, $db, $EmailText){
+
 	// For BLINK SHOPS
 	$Shops = NumberOfShops("SHOPBL", $db);
 	if ($EmailText!=''){
@@ -52,6 +62,11 @@ function DailyReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db, 
 	$EmailText = SetRLForLowSalesHighRL("SHOPBL",  40, 5, 4, ($Shops * 5), $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 	$EmailText = SetRLForLowSalesHighRL("SHOPBL",  50, 4, 3, ($Shops * 4), $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 
+	return $EmailText;
+}
+
+function DailyReorderLevelAdjustments04($ShowMessages, $updateDB, $RootPath, $db, $EmailText){
+
 	// for OUTLET SHOPS
 	$Shops = NumberOfShops("SHOPOU", $db);
 	if ($EmailText!=''){
@@ -68,10 +83,25 @@ function DailyReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db, 
 	$EmailText = SetRLForTopSalesItems("SHOPOU",  51, 100, 60, ($Shops * 5), ($Shops * 6), 4, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 	$EmailText = SetRLForTopSalesItems("SHOPOU",  51, 100, 60, ($Shops * 4), ($Shops * 5), 3, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 	
+	return $EmailText;
+}
+
+function DailyReorderLevelAdjustments05($ShowMessages, $updateDB, $RootPath, $db, $EmailText){
+	
 	// These functions does not need to be segregated by type of shop, as it only takes care of shops with RL > 0
 	$EmailText = RebalancingBetweenShops(60, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 
+	return $EmailText;
+}
+
+function DailyReorderLevelAdjustments06($ShowMessages, $updateDB, $RootPath, $db, $EmailText){
+
 	$EmailText = SetRLZeroForNotAvailableItems($ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+
+	return $EmailText;
+}
+
+function DailyReorderLevelAdjustments07($ShowMessages, $updateDB, $RootPath, $db, $EmailText){
 
 	$EmailText = AdjustPackaging(60, 'SHOPKL', $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 	$EmailText = AdjustPackaging(60, 'SHOPBL', $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
