@@ -10,6 +10,7 @@ include('KLDailyChecks.php');
 $Group = $_GET['p'];
 
 $EmailText  = "KL webERP Cron Job: Daily Tasks Group " . $Group . "\n"; 
+$EmailText = $EmailText . 'Cron Job started at '.date('d/M/Y H:i:s'). "\n";
 
 $EmailText  = KL_DailyChecks($Group, $RootPath, $db, $EmailText);
 

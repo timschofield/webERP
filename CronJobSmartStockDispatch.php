@@ -8,6 +8,7 @@ include('includes/htmlMimeMail.php');
 include('includes/GetPrice.inc');
 
 $EmailText  = "KL webERP: Smart Stock Dispatch " . "\n"; 
+$EmailText = $EmailText . 'Cron Job started at '.date('d/M/Y H:i:s'). "\n";
 
 /* Parameters */
 $ReportType = "Batch"; // ONLY FOR REAL ENVIRONMENT

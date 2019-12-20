@@ -17,7 +17,7 @@ function KL_DailyChecks($Group, $RootPath, $db, $EmailText= ''){
 	include ('includes/OpenCartConnectDB.php');
 	
 
-	if ($Group == "01"){
+	if ($Group == "ObsoleteTopSales"){
 		$EmailText = KL_DailyMaintenanceDatabase01(FALSE, $db, $EmailText);
 	}elseif ($Group == "OnlineRLAdjustments"){
 		$EmailText = DailyReorderLevelAdjustments01(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
@@ -105,16 +105,16 @@ function KL_DailyMaintenanceDatabase05($ShowMessages, $db, $EmailText = ''){
 }
 
 function KL_DailyMaintenanceDatabase01($ShowMessages, $db, $EmailText = ''){
-	SetObsoleteForCategoryWithoutStock("DISC20", $ShowMessages, $db);
-	SetObsoleteForCategoryWithoutStock("DISC50", $ShowMessages, $db);
-	SetObsoleteForCategoryWithoutStock("DISC80", $ShowMessages, $db);
-	SetObsoleteForCategoryWithoutStock("DISC2A", $ShowMessages, $db);
-	SetObsoleteForCategoryWithoutStock("DISC5A", $ShowMessages, $db);
-	SetObsoleteForCategoryWithoutStock("DISC8A", $ShowMessages, $db);
-	SetObsoleteForCategoryWithoutStock("NOPOKA", $ShowMessages, $db);
-	SetObsoleteForCategoryWithoutStock("NOPOBA", $ShowMessages, $db);
-	SetObsoleteForCategoryWithoutStock("NOPOGA", $ShowMessages, $db);
-	SetTopSalesRanking($ShowMessages, $db);
+	$EmailText = SetObsoleteForCategoryWithoutStock("DISC20", $ShowMessages, $EmailText, $db);
+	$EmailText = SetObsoleteForCategoryWithoutStock("DISC50", $ShowMessages, $EmailText, $db);
+	$EmailText = SetObsoleteForCategoryWithoutStock("DISC80", $ShowMessages, $EmailText, $db);
+	$EmailText = SetObsoleteForCategoryWithoutStock("DISC2A", $ShowMessages, $EmailText, $db);
+	$EmailText = SetObsoleteForCategoryWithoutStock("DISC5A", $ShowMessages, $EmailText, $db);
+	$EmailText = SetObsoleteForCategoryWithoutStock("DISC8A", $ShowMessages, $EmailText, $db);
+	$EmailText = SetObsoleteForCategoryWithoutStock("NOPOKA", $ShowMessages, $EmailText, $db);
+	$EmailText = SetObsoleteForCategoryWithoutStock("NOPOBA", $ShowMessages, $EmailText, $db);
+	$EmailText = SetObsoleteForCategoryWithoutStock("NOPOGA", $ShowMessages, $EmailText, $db);
+	$EmailText = SetTopSalesRanking($ShowMessages, $EmailText, $db);
 	return $EmailText;
 }
 
@@ -251,7 +251,7 @@ function CleanDiscountForObsoleteItems($ShowMessages, $db){
 	if ($ShowMessages) prnMsg("Discount Category cleaned for obsolete items.","info");
 }
 
-function SetObsoleteForCategoryWithoutStock($category, $ShowMessages, $db){
+function SetObsoleteForCategoryWithoutStock($category, $ShowMessages, $EmailText, $db){
 	$sql = "UPDATE stockmaster
 			SET discontinued = 1
 			WHERE categoryid = '" . $category . "'
@@ -262,6 +262,10 @@ function SetObsoleteForCategoryWithoutStock($category, $ShowMessages, $db){
 	$ErrMsg =_('Could not update items without stock because');
 	$result = DB_query($sql,$ErrMsg);
 	if ($ShowMessages) prnMsg("Items " . $category . " with QOH = 0 flagged as obsolete.","info");
+	if ($EmailText !=''){
+		$EmailText = $EmailText . "Items " . $category . " with QOH = 0 flagged as obsolete." . "\n" ; 
+	}
+	return $EmailText;
 }
 
 function SetRLZeroForObsolete($ShowMessages, $db){
@@ -401,29 +405,35 @@ function PurgeAuditTrailTable($ShowMessages, $db){
 	if ($ShowMessages) prnMsg("Purge old Audit Trail table","info");
 }
 
-function SetTopSalesRanking($ShowMessages, $db){
+function SetTopSalesRanking($ShowMessages, $EmailText, $db){
 
+	if ($EmailText !=''){
+		$EmailText = $EmailText . "Set Top Sales Ranking Table" . "\n\n"; 
+	}	
 	$sql = "TRUNCATE klsalesperformance";
 	$ErrMsg =_('Could not set TRUNCATE klsalesperformance because');
 	$result = DB_query($sql,$ErrMsg);
 	if ($ShowMessages) prnMsg("Truncated klsaleseprformace table","info");
+	if ($EmailText !=''){
+		$EmailText = $EmailText . "Truncated klsaleseprformace table" . "\n"; 
+	}	
+	$EmailText = SetTopSalesByGroup(TRUE,  "KAPAL-LAUT", 60, $ShowMessages, $EmailText, $db);
+	$EmailText = SetTopSalesByGroup(FALSE, "KAPAL-LAUT", 30, $ShowMessages, $EmailText, $db);
+	$EmailText = SetTopSalesByGroup(FALSE, "KAPAL-LAUT", 90, $ShowMessages, $EmailText, $db);
+	$EmailText = SetTopSalesByGroup(TRUE,  "BLINK", 60, $ShowMessages, $EmailText, $db);
+	$EmailText = SetTopSalesByGroup(FALSE, "BLINK", 30, $ShowMessages, $EmailText, $db);
+	$EmailText = SetTopSalesByGroup(FALSE, "BLINK", 90, $ShowMessages, $EmailText, $db);
+	$EmailText = SetTopSalesByGroup(TRUE,  "OUTLET", 60, $ShowMessages, $EmailText, $db);
+	$EmailText = SetTopSalesByGroup(FALSE, "OUTLET", 30, $ShowMessages, $EmailText, $db);
+	$EmailText = SetTopSalesByGroup(FALSE, "OUTLET", 90, $ShowMessages, $EmailText, $db);
+	$EmailText = SetTopSalesByGroup(TRUE,  "GENERAL", 60, $ShowMessages, $EmailText, $db);
+	$EmailText = SetTopSalesByGroup(FALSE, "GENERAL", 30, $ShowMessages, $EmailText, $db);
+	$EmailText = SetTopSalesByGroup(FALSE, "GENERAL", 90, $ShowMessages, $EmailText, $db);
 	
-	SetTopSalesByGroup(TRUE,  "KAPAL-LAUT", 60, $ShowMessages, $db);
-	SetTopSalesByGroup(FALSE, "KAPAL-LAUT", 30, $ShowMessages, $db);
-	SetTopSalesByGroup(FALSE, "KAPAL-LAUT", 90, $ShowMessages, $db);
-	SetTopSalesByGroup(TRUE,  "BLINK", 60, $ShowMessages, $db);
-	SetTopSalesByGroup(FALSE, "BLINK", 30, $ShowMessages, $db);
-	SetTopSalesByGroup(FALSE, "BLINK", 90, $ShowMessages, $db);
-	SetTopSalesByGroup(TRUE,  "OUTLET", 60, $ShowMessages, $db);
-	SetTopSalesByGroup(FALSE, "OUTLET", 30, $ShowMessages, $db);
-	SetTopSalesByGroup(FALSE, "OUTLET", 90, $ShowMessages, $db);
-	SetTopSalesByGroup(TRUE,  "GENERAL", 60, $ShowMessages, $db);
-	SetTopSalesByGroup(FALSE, "GENERAL", 30, $ShowMessages, $db);
-	SetTopSalesByGroup(FALSE, "GENERAL", 90, $ShowMessages, $db);
-	
+	return $EmailText;
 }
 
-function SetTopSalesByGroup($InsertNeeded, $Group, $NumDays, $ShowMessages, $db){
+function SetTopSalesByGroup($InsertNeeded, $Group, $NumDays, $ShowMessages, $EmailText, $db){
 
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 
@@ -480,7 +490,12 @@ function SetTopSalesByGroup($InsertNeeded, $Group, $NumDays, $ShowMessages, $db)
 		}
 	}
 
-	if ($ShowMessages) prnMsg("Top Sales Ranking for " . $Group . " items for last " . $NumDays . " days","info");
+	$Text = "Top Sales Ranking for " . $Group . " items for last " . $NumDays . " days";
+	if ($ShowMessages) prnMsg($Text,"info");
+	if ($EmailText !=''){
+		$EmailText = $EmailText . $Text . "\n"; 
+	}	
+	return $EmailText;
 }
 
 

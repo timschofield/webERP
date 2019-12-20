@@ -7,6 +7,7 @@ include('includes/session_cronjob.php');
 include('KLDailyChecks.php');
 
 $EmailText  = "KL webERP Cron Job: Hourly Tasks" . "\n"; 
+$EmailText = $EmailText . 'Cron Job started at '.date('d/M/Y H:i:s'). "\n";
 
 $EmailText = KL_HourlyChecks($RootPath, $db, $EmailText);
 

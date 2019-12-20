@@ -796,7 +796,7 @@ function SetRLForLowSalesHighRL($ShopType, $maxdays, $oldRL, $maxRL, $minavailab
 			WHERE 	stockmaster.stockid = locstock.stockid
 					AND stockmaster.categoryid NOT IN ('SHDISP')
 					AND locstock.loccode = locations.loccode
-					AND locations.typeloc LIKE '%" . $ShopType . "%'
+					AND locations.typeloc = '" . $ShopType . "'
 					AND (locstock.quantity > 0)
 					AND (locstock.reorderlevel >= ". $oldRL .")
 					AND (SELECT SUM(locstock.quantity)
