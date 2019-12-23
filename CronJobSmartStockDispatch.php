@@ -49,7 +49,7 @@ if (DB_num_rows($result) != 0){
 }
 
 $EmailAddress = "webmaster@kapal-laut.com";
-$EmailSubject  = "KL webERP Cron Job: Daily Stock Dispatch";
+$EmailSubject  = "KL webERP Cron Job: 1050-Daily Stock Dispatch";
 SendEmailFromCron($EmailAddress, $EmailSubject, $EmailText, '');
 
 /****************************************************************************************/

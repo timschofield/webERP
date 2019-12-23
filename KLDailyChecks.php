@@ -17,31 +17,31 @@ function KL_DailyChecks($Group, $RootPath, $db, $EmailText= ''){
 	include ('includes/OpenCartConnectDB.php');
 	
 
-	if ($Group == "ObsoleteTopSales"){
+	if ($Group == "0100-CleanDB"){
+		$EmailText = KL_DailyMaintenanceDatabase06(FALSE, $db, $EmailText);
+	}elseif ($Group == "0200-ObsoleteTopSales"){
 		$EmailText = KL_DailyMaintenanceDatabase01(FALSE, $db, $EmailText);
-	}elseif ($Group == "OnlineRLAdjustments"){
-		$EmailText = DailyReorderLevelAdjustments01(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
-	}elseif ($Group == "RLForTopSalesKL"){
-		$EmailText = DailyReorderLevelAdjustments02(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
-	}elseif ($Group == "RLForTopSalesBL"){
-		$EmailText = DailyReorderLevelAdjustments03(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
-	}elseif ($Group == "RLForTopSalesOU"){
-		$EmailText = DailyReorderLevelAdjustments04(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
-	}elseif ($Group == "RLRebalancing"){
-		$EmailText = DailyReorderLevelAdjustments05(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
-	}elseif ($Group == "RLZeroNotAvailable"){
-		$EmailText = DailyReorderLevelAdjustments06(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
-	}elseif ($Group == "RLAdjustPackaging"){
-		$EmailText = DailyReorderLevelAdjustments07(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
-	}elseif ($Group == "03"){
+	}elseif ($Group == "0300-EmailsToStaff"){
 		$EmailText = KL_DailyEmailsToStaff($db, $EmailText);
-	}elseif ($Group == "04"){
+	}elseif ($Group == "0400-OnlineRLAdjustments"){
+		$EmailText = DailyReorderLevelAdjustments01(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
+	}elseif ($Group == "0500-RLForTopSalesKL"){
+		$EmailText = DailyReorderLevelAdjustments02(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
+	}elseif ($Group == "0600-RLForTopSalesBL"){
+		$EmailText = DailyReorderLevelAdjustments03(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
+	}elseif ($Group == "0700-RLForTopSalesOU"){
+		$EmailText = DailyReorderLevelAdjustments04(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
+	}elseif ($Group == "0800-RLRebalancing"){
+		$EmailText = DailyReorderLevelAdjustments05(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
+	}elseif ($Group == "0900-RLZeroNotAvailable"){
+		$EmailText = DailyReorderLevelAdjustments06(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
+	}elseif ($Group == "1000-RLAdjustPackaging"){
+		$EmailText = DailyReorderLevelAdjustments07(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
+	}elseif ($Group == "1100-OptimizeDB"){
+		$EmailText = KL_DailyMaintenanceDatabase05(FALSE, $db, $EmailText);
+	}elseif ($Group == "1200-SyncWebERPOpenCart"){
 		$EmailText = WeberpToOpenCartDailySync(FALSE, $db, $db_oc, $oc_tableprefix, $EmailText);
 		$EmailText = OpenCartToWeberpSync(FALSE, $db, $db_oc, $oc_tableprefix, $EmailText);
-	}elseif ($Group == "05"){
-		$EmailText = KL_DailyMaintenanceDatabase05(FALSE, $db, $EmailText);
-	}elseif ($Group == "06"){
-		$EmailText = KL_DailyMaintenanceDatabase06(FALSE, $db, $EmailText);
 	}
 
 	$Result = DB_query("UPDATE config SET confvalue='" . Date('Y-m-d') . "'	WHERE confname='KL_DailyChecks_LastRun'");
@@ -76,26 +76,25 @@ function KL_HourlyChecks($RootPath, $db, $EmailText=''){
 }
 
 
-function KL_DailyMaintenanceDatabase06($ShowMessages, $db, $EmailText = ''){
-	SetRLZeroForObsolete($ShowMessages, $db);
-	SetRLZeroForLocations($ShowMessages, $db);
-	SetEndDatePriceToObsolete($ShowMessages, $db);
-	CleanDiscountForObsoleteItems($ShowMessages, $db);
-	CleanObsoleteFromWebsite($ShowMessages, $db);
-	CleanInternalRequestsWithoutItems($ShowMessages, $db);
-	SetStatusCompleteToFinishedOldPurchaseOrders(150, $ShowMessages, $db);
-	CleanWrongPrices($ShowMessages, $db);
-	AuthorizeAllInternalStockRequest($ShowMessages, $db);
-//	PurgeOldPrices($ShowMessages, $db);
-	CleanOldDoubleReceivedGoods(15, $ShowMessages, $db);
-	BlockInactiveUsers(17,  7, $ShowMessages, $db); // 17 = SPG
-	BlockInactiveUsers(22, 30, $ShowMessages, $db); // 22 = SPG-Support
-	PurgeKLTable("kladjustrl","adjustdate", $ShowMessages, $db);
-	PurgeKLTable("klchangeprice","endprocessdate", $ShowMessages, $db);
-	PurgeKLTable("klmovetodiscount20","endprocessdate", $ShowMessages, $db);
-	PurgeKLTable("klmovetodiscount50","endprocessdate", $ShowMessages, $db);
-	PurgeKLTable("klmovetodiscount80","endprocessdate", $ShowMessages, $db);
-	PurgeAuditTrailTable($ShowMessages, $db);
+function KL_DailyMaintenanceDatabase06($ShowMessages, $db, $EmailText){
+	$EmailText = SetRLZeroForObsolete($ShowMessages, $EmailText, $db);
+	$EmailText = SetRLZeroForLocations($ShowMessages, $EmailText, $db);
+	$EmailText = SetEndDatePriceToObsolete($ShowMessages, $EmailText, $db);
+	$EmailText = CleanDiscountForObsoleteItems($ShowMessages, $EmailText, $db);
+	$EmailText = CleanObsoleteFromWebsite($ShowMessages, $EmailText, $db);
+	$EmailText = CleanInternalRequestsWithoutItems($ShowMessages, $EmailText, $db);
+	$EmailText = SetStatusCompleteToFinishedOldPurchaseOrders(150, $ShowMessages, $EmailText, $db);
+	$EmailText = CleanWrongPrices($ShowMessages, $EmailText, $db);
+	$EmailText = AuthorizeAllInternalStockRequest($ShowMessages, $EmailText, $db);
+	$EmailText = CleanOldDoubleReceivedGoods(15, $ShowMessages, $EmailText, $db);
+	$EmailText = BlockInactiveUsers(17,  7, $ShowMessages, $EmailText, $db); // 17 = SPG
+	$EmailText = BlockInactiveUsers(22, 30, $ShowMessages, $EmailText, $db); // 22 = SPG-Support
+	$EmailText = PurgeKLTable("kladjustrl","adjustdate", $ShowMessages, $EmailText, $db);
+	$EmailText = PurgeKLTable("klchangeprice","endprocessdate", $ShowMessages, $EmailText, $db);
+	$EmailText = PurgeKLTable("klmovetodiscount20","endprocessdate", $ShowMessages, $EmailText, $db);
+	$EmailText = PurgeKLTable("klmovetodiscount50","endprocessdate", $ShowMessages, $EmailText, $db);
+	$EmailText = PurgeKLTable("klmovetodiscount80","endprocessdate", $ShowMessages, $EmailText, $db);
+	$EmailText = PurgeAuditTrailTable($ShowMessages, $EmailText, $db);
 	return $EmailText;
 }
 
@@ -222,33 +221,34 @@ function KL_DailyOptimizationDatabase($ShowMessages, $db, $EmailText = ''){
 	}
 	
 	$result = DB_query($sql,$ErrMsg);
-	if ($EmailText !=''){
-		$EmailText = $EmailText . _('The system has just run the daily Kapal-Laut optimization. Day = '). $NumberDay . "\n\n" . $sql . "\n\n"; 
-	}else{
-		prnMsg(_('The system has just run the daily Kapal-Laut optimization. Day = '). $NumberDay,'info');
-	}
+	$Text = 'The system has just run the daily Kapal-Laut optimization. Day = ' . $NumberDay . "\n" . $sql;
+	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
 	return $EmailText;
 }
 
-function PurgeKLTable($TableName,$DateField, $ShowMessages, $db){
+function PurgeKLTable($TableName,$DateField, $ShowMessages, $EmailText, $db){
 	if ($_SESSION['MonthsAuditTrail'] > 0){
 		 $sql = "DELETE FROM " . $TableName . "
 				WHERE  " . $DateField . " <= '" . Date('Y-m-d', mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail'])) . "'
 					AND " . $DateField .  " != '0000-00-00'";
 		$ErrMsg ='Could not purge table ' . $TableName . ' because';
 		$result = DB_query($sql,$ErrMsg);
-		if ($ShowMessages) prnMsg("Table " . $TableName . " purged.","info");
+		$Text = "Table " . $TableName . " purged.";
+		$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
 	}
+	return $EmailText;
 }
 
-function CleanDiscountForObsoleteItems($ShowMessages, $db){
+function CleanDiscountForObsoleteItems($ShowMessages, $EmailText, $db){
 	$sql = "UPDATE stockmaster
 			SET discountcategory = ''
 			WHERE discontinued = 1
 				AND discountcategory != ''";
 	$ErrMsg =_('Could not clean discount category for obsolete items  because');
 	$result = DB_query($sql,$ErrMsg);
-	if ($ShowMessages) prnMsg("Discount Category cleaned for obsolete items.","info");
+	$Text = "Discount Category cleaned for obsolete items.";
+	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
+	return $EmailText;
 }
 
 function SetObsoleteForCategoryWithoutStock($category, $ShowMessages, $EmailText, $db){
@@ -261,14 +261,12 @@ function SetObsoleteForCategoryWithoutStock($category, $ShowMessages, $EmailText
 					WHERE stockmaster.stockid = locstock.stockid) = 0";
 	$ErrMsg =_('Could not update items without stock because');
 	$result = DB_query($sql,$ErrMsg);
-	if ($ShowMessages) prnMsg("Items " . $category . " with QOH = 0 flagged as obsolete.","info");
-	if ($EmailText !=''){
-		$EmailText = $EmailText . "Items " . $category . " with QOH = 0 flagged as obsolete." . "\n" ; 
-	}
+	$Text = "Items " . $category . " with QOH = 0 flagged as obsolete.";
+	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
 	return $EmailText;
 }
 
-function SetRLZeroForObsolete($ShowMessages, $db){
+function SetRLZeroForObsolete($ShowMessages, $EmailText, $db){
 	$sql = "UPDATE locstock
 			SET reorderlevel = 0
 			WHERE EXISTS (SELECT *
@@ -277,19 +275,23 @@ function SetRLZeroForObsolete($ShowMessages, $db){
 						AND stockmaster.discontinued = 1)";
 	$ErrMsg =_('Could not set RL = 0 for obsolete items because');
 	$result = DB_query($sql,$ErrMsg);
-	if ($ShowMessages) prnMsg("RL updated to zero for obsolete items.","info");
+	$Text = "RL updated to zero for obsolete items.";
+	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
+	return $EmailText;
 }
 
-function SetRLZeroForLocations($ShowMessages, $db){
+function SetRLZeroForLocations($ShowMessages, $EmailText, $db){
 	$sql = "UPDATE locstock
 			SET reorderlevel = 0
 			WHERE loccode IN " . LIST_LOCATIONS_WITH_RL_ALWAYS_ZERO;
 	$ErrMsg =_('Could not set RL = 0 for location list because');
 	$result = DB_query($sql,$ErrMsg);
-	if ($ShowMessages) prnMsg("RL updated to zero for location list.","info");
+	$Text = "RL updated to zero for location list.";
+	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
+	return $EmailText;
 }
 
-function SetEndDatePriceToObsolete($ShowMessages, $db){
+function SetEndDatePriceToObsolete($ShowMessages, $EmailText, $db){
 	$sql = "UPDATE prices
 			SET enddate = '" . date('Y-m-d') ."'
 			WHERE EXISTS (SELECT *
@@ -300,46 +302,55 @@ function SetEndDatePriceToObsolete($ShowMessages, $db){
 				  OR enddate = '0000-00-00')";
 	$ErrMsg =_('Could not set end date to today for obsolete items because');
 	$result = DB_query($sql,$ErrMsg);
-	if ($ShowMessages) prnMsg("Prices End Date updated to today for obsolete items.","info");
+	$Text = "Prices End Date updated to today for obsolete items.";
+	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
+	return $EmailText;
 }
 			
-function CleanInternalRequestsWithoutItems($ShowMessages, $db){
+function CleanInternalRequestsWithoutItems($ShowMessages, $EmailText, $db){
 	$sql = "DELETE FROM stockrequest 
 			WHERE NOT EXISTS (SELECT *
 								FROM stockrequestitems
 								WHERE stockrequest.dispatchid = stockrequestitems.dispatchid )";
 	$ErrMsg =_('Could not delete empty internal requests because');
 	$result = DB_query($sql,$ErrMsg);
-	if ($ShowMessages) prnMsg("Empty Internal Requests removed from DB.","info");
+	$Text = "Empty Internal Requests removed from DB.";
+	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
+	return $EmailText;
 }			
 
-function CleanObsoleteFromWebsite($ShowMessages, $db){
+function CleanObsoleteFromWebsite($ShowMessages, $EmailText, $db){
 	$sql = "DELETE FROM salescatprod
 			WHERE EXISTS (SELECT * FROM stockmaster
 							WHERE discontinued = 1
 							AND stockmaster.stockid = salescatprod.stockid)";
 	$ErrMsg =_('Could not delete obsolete items from sales category for website because');
 	$result = DB_query($sql,$ErrMsg);
-	if ($ShowMessages) prnMsg("Obsolete items removed from website list.","info");
+	$Text = "Obsolete items removed from website list.";
+	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
+	return $EmailText;
 }
 	
-function CleanWrongPrices($ShowMessages, $db){
+function CleanWrongPrices($ShowMessages, $EmailText, $db){
 	$sql = "DELETE FROM prices
 			WHERE startdate > enddate
 			AND enddate != '0000-00-00'";
 	$ErrMsg =_('Could not delete wrong prices because');
 	$result = DB_query($sql,$ErrMsg);
-	if ($ShowMessages) prnMsg("Wrong prices removed from DB","info");
+	$Text = "Wrong prices removed from DB";
+	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
 
 	$sql = "UPDATE prices
 			SET enddate = '0000-00-00'
 			WHERE enddate = '2050-12-31'";
 	$ErrMsg =_('Could not delete wrong prices because');
 	$result = DB_query($sql,$ErrMsg);
-	if ($ShowMessages) prnMsg("Set end date 0000-00-00 to prices from DB","info");
+	$Text = "Set end date 0000-00-00 to prices with end date 2050-12-31 from DB";
+	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
+	return $EmailText;
 }
 
-function CleanOldDoubleReceivedGoods($NumDays, $ShowMessages, $db){
+function CleanOldDoubleReceivedGoods($NumDays, $ShowMessages, $EmailText, $db){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 	$sql = "UPDATE loctransfers
 			SET recqty = shipqty
@@ -347,11 +358,13 @@ function CleanOldDoubleReceivedGoods($NumDays, $ShowMessages, $db){
 				AND recqty = 2 * shipqty";
 	$ErrMsg =_('Could not fix double received goods in shops because');
 	$result = DB_query($sql,$ErrMsg);
-	if ($ShowMessages) prnMsg("Clean old double received goods in transfers","info");
+	$Text = "Clean old double received goods in transfers";
+	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
+	return $EmailText;
 }
 
 	
-function SetStatusCompleteToFinishedOldPurchaseOrders($maxdays, $ShowMessages, $db){
+function SetStatusCompleteToFinishedOldPurchaseOrders($maxdays, $ShowMessages, $EmailText, $db){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 	$sql = "UPDATE purchorders 
 			SET status = 'Completed' 
@@ -363,20 +376,25 @@ function SetStatusCompleteToFinishedOldPurchaseOrders($maxdays, $ShowMessages, $
 						AND completed = 0)";
 	$ErrMsg =_('Could not update old finshed POs to complete because');
 	$result = DB_query($sql,$ErrMsg);
-	if ($ShowMessages) prnMsg("Set status to Completed to Finished Purchase Orders older than " . $maxdays . " days.","info");
+	$Text = "Set status = COMPLETED to Finished Purchase Orders older than " . $maxdays . " days.";
+	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
+	return $EmailText;
+
 }		
 
-function AuthorizeAllInternalStockRequest($ShowMessages, $db){
+function AuthorizeAllInternalStockRequest($ShowMessages, $EmailText, $db){
 	$sql = "UPDATE stockrequest
 					SET authorised='1'
 					WHERE authorised !='1'";
 	$ErrMsg =_('Could not authorize all internal stock requests because');
 	$result = DB_query($sql,$ErrMsg);
-	if ($ShowMessages) prnMsg("All pending Internal Stock Requests authorised automatically","info");
+	$Text = "All pending Internal Stock Requests authorised automatically";
+	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
+	return $EmailText;
 }
 
 
-function BlockInactiveUsers($access, $maxdays, $ShowMessages, $db){
+function BlockInactiveUsers($access, $maxdays, $ShowMessages, $EmailText, $db){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays-1)) ;
 
 	$sql = "UPDATE www_users
@@ -389,7 +407,9 @@ function BlockInactiveUsers($access, $maxdays, $ShowMessages, $db){
 				AND userid <> 'TestUser'";
 	$ErrMsg =_('Could not block inactive users because');
 	$result = DB_query($sql,$ErrMsg);
-	if ($ShowMessages) prnMsg("Blocked inactive users","info");
+	$Text = "Blocked inactive users with access level " . $access . " and not logging in for " . $maxdays . " days";
+	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
+	return $EmailText;
 }
 
 function CleanListToPrint($List){
@@ -398,11 +418,13 @@ function CleanListToPrint($List){
 	return $List;
 }
 
-function PurgeAuditTrailTable($ShowMessages, $db){
+function PurgeAuditTrailTable($ShowMessages, $EmailText, $db){
 	 $sql = "DELETE FROM audittrail
 			WHERE  transactiondate <= '" . Date('Y-m-d', mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail'])) . "'";
 	$result = DB_query($sql);
-	if ($ShowMessages) prnMsg("Purge old Audit Trail table","info");
+	$Text = "Purge old Audit Trail table";
+	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
+	return $EmailText;
 }
 
 function SetTopSalesRanking($ShowMessages, $EmailText, $db){
@@ -413,10 +435,9 @@ function SetTopSalesRanking($ShowMessages, $EmailText, $db){
 	$sql = "TRUNCATE klsalesperformance";
 	$ErrMsg =_('Could not set TRUNCATE klsalesperformance because');
 	$result = DB_query($sql,$ErrMsg);
-	if ($ShowMessages) prnMsg("Truncated klsaleseprformace table","info");
-	if ($EmailText !=''){
-		$EmailText = $EmailText . "Truncated klsaleseprformace table" . "\n"; 
-	}	
+	$Text = "Truncated klsaleseprformace table";
+	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
+
 	$EmailText = SetTopSalesByGroup(TRUE,  "KAPAL-LAUT", 60, $ShowMessages, $EmailText, $db);
 	$EmailText = SetTopSalesByGroup(FALSE, "KAPAL-LAUT", 30, $ShowMessages, $EmailText, $db);
 	$EmailText = SetTopSalesByGroup(FALSE, "KAPAL-LAUT", 90, $ShowMessages, $EmailText, $db);
@@ -491,6 +512,11 @@ function SetTopSalesByGroup($InsertNeeded, $Group, $NumDays, $ShowMessages, $Ema
 	}
 
 	$Text = "Top Sales Ranking for " . $Group . " items for last " . $NumDays . " days";
+	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
+	return $EmailText;
+}
+
+function ShowOrEmail($ShowMessages, $EmailText, $Text){
 	if ($ShowMessages) prnMsg($Text,"info");
 	if ($EmailText !=''){
 		$EmailText = $EmailText . $Text . "\n"; 
