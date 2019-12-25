@@ -12,7 +12,7 @@ function DailyReorderLevelAdjustments02($ShowMessages, $updateDB, $RootPath, $db
 	// For KL SHOPS
 	$Shops = NumberOfShops("SHOPKL", $db);
 	if ($EmailText!=''){
-		$EmailText = $EmailText . "\n" . "Number of Shops Kapal-Laut = " . $Shops . "\n\n";
+		$EmailText = $EmailText . "\n" . "Number of Shops Kapal-Laut = " . $Shops . "\n";
 	}
 	if ($ShowMessages){
 		prnMsg('Number of Shops Kapal-laut = ' . $Shops,'info');
@@ -41,7 +41,7 @@ function DailyReorderLevelAdjustments03($ShowMessages, $updateDB, $RootPath, $db
 	// For BLINK SHOPS
 	$Shops = NumberOfShops("SHOPBL", $db);
 	if ($EmailText!=''){
-		$EmailText = $EmailText . "\n" . "Number of Shops Blink = " . $Shops . "\n\n";
+		$EmailText = $EmailText . "\n" . "Number of Shops Blink = " . $Shops . "\n";
 	}
 	if ($ShowMessages){
 		prnMsg('Number of Shops Blink = ' . $Shops,'info');
@@ -70,7 +70,7 @@ function DailyReorderLevelAdjustments04($ShowMessages, $updateDB, $RootPath, $db
 	// for OUTLET SHOPS
 	$Shops = NumberOfShops("SHOPOU", $db);
 	if ($EmailText!=''){
-		$EmailText = $EmailText . "\n" . "Number of Shops Outlet = " . $Shops . "\n\n";
+		$EmailText = $EmailText . "\n" . "Number of Shops Outlet = " . $Shops . "\n";
 	}
 	if ($ShowMessages){
 		prnMsg('Number of Shops Outlet = ' . $Shops,'info');
@@ -302,10 +302,11 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 								$PrintLine = FALSE;
 							}
 							if ($EmailText!=''){
-								$EmailText = $EmailText . $myrow['stockid'] . " @" . 
-														$mydistribution['loccode'] ." " . 
-														locale_number_format($mydistribution['oldrl'],0) ." Needed at:" . 
-														$myrow['locationneeded'] ." " . 
+								$EmailText = $EmailText . $myrow['stockid'] . " @ " . 
+														$mydistribution['loccode'] .
+														" Old RL= " . locale_number_format($mydistribution['oldrl'],0) .
+														" New RL= " . locale_number_format($NewRL,0) .
+														" as is needed at: " .$myrow['locationneeded'] . " " . 
 														$strategy ." " . 
 														"\n";
 							}
@@ -343,12 +344,12 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 				}
 			}
 			if ($EmailText!=''){
-				$EmailText = $EmailText . $myrow['stockid'] . " " . 
-										$myrow['categoryid'] . " " . 
-										$rebalancinglocationfrom ." " . 
-										"---" . " " . 
-										$myrow['locationneeded'] ." " . 
-										$strategy ." " . 
+				$EmailText = $EmailText . $myrow['stockid'] . " Rebalanced from " . 
+										$rebalancinglocationfrom .
+										" to " . 
+										$myrow['locationneeded'] .
+										" with strategy " . 
+										$strategy . " " . 
 										"\n";
 			}
 			$i++;
@@ -555,7 +556,7 @@ to the shops with RL > 0.
 
 */	
 	if ($EmailText!=''){
-		$EmailText = $EmailText . "\n" . "SetRLForTopSalesItems for " . $ShopType . "\n\n";
+		$EmailText = $EmailText . "\n" . "Set RL For " . $ShopType . " top sales items range " . $starttopitems . " - " . $endtopitems . " Top Sales with RL lower than " . $NewRL . " and minimum available stock " . $minstockavailable . "\n";
 	}
 
 	$Today = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
@@ -799,7 +800,7 @@ function SetRLForLowSalesHighRL($ShopType, $BottomPercentTopSales, $oldRL, $maxR
 		with less than minavailablestock at shops or office
 	*/
 	if ($EmailText!=''){
-		$EmailText = $EmailText . "\n" . "SetRLForLowSalesHighRL for " . $ShopType . " MaxRL = " . $maxRL . " MinAvailableStock = " . $minavailablestock . "\n\n";
+		$EmailText = $EmailText . "\n" . "Set RL For " . $ShopType . " items in the bottom " . $BottomPercentTopSales . "% Top Sales with RL higher than " . $maxRL . " and minimum available stock " . $minavailablestock . "\n";
 	}
 
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$maxdays));
@@ -891,7 +892,7 @@ function SetRLForLowSalesHighRL($ShopType, $BottomPercentTopSales, $oldRL, $maxR
 						);
 			}
 			if ($EmailText!=''){
-				$EmailText = $EmailText .  $myrow['stockid'] . " " . $myrow['loccode'] . " OldRL = " . locale_number_format($myrow['reorderlevel'],0) . " NewRL = " . locale_number_format($newRL,0) . " " . $notes . "\n";
+				$EmailText = $EmailText .  $myrow['stockid'] . " @ " . $myrow['loccode'] . " OldRL = " . locale_number_format($myrow['reorderlevel'],0) . " NewRL = " . locale_number_format($newRL,0) . " " . $notes . "\n";
 			}
 			$i++;
 		}
@@ -949,7 +950,7 @@ function SetReorderLevel($reason, $stockid, $loccode, $oldRL, $newRL, $updateDB,
 			}
 			$ErrMsg =_('Could not update reorder level because');
 			$result = DB_query($sql,$ErrMsg);
-			// insert bthe change in the KLAdjustRL table (acting as a log of these automatic changes)
+			// insert the change in the KLAdjustRL table (acting as a log of these automatic changes)
 			$sql = "INSERT INTO kladjustrl 
 						(adjustdate,
 						reason,
