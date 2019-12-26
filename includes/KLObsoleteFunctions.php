@@ -493,6 +493,30 @@ function InsuficientStockForTopSalesItems($StockCat, $StockCatDescription, $Days
 	}
 }
 
+function isReorderLevelManuallyChanged($stockid, $loccode, $maxmanualchanges, $db){
+	if ($maxmanualchanges == 0){
+		return '0000-00-00';
+	}
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxmanualchanges));
+	$SQL="SELECT transactiondate
+		FROM audittrail
+		WHERE transactiondate >= '".$StartDate."'
+			AND querystring LIKE '%" . $stockid . "%' 
+			AND querystring LIKE '%" . $loccode . "%' 
+			AND querystring LIKE '%locstock%reorderlevel%' 
+		ORDER BY transactiondate DESC
+		LIMIT 1";
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		$myrow = DB_fetch_array($result);
+		$lastdate = $myrow['transactiondate'];
+	}else{
+		$lastdate = '0000-00-00';
+	}
+	return $lastdate;
+
+}
+
 function isTopSalesItem($stockid, $topitems, $TopItemsDays, $db){
 
 	$TopSalesField = GetTopSalesField($TopItemsDays);
@@ -896,7 +920,6 @@ No pending transfer regarding this item
 	}
 }
 
-
 function MarkSisterShopInArray(&$TableResult, $numshops, $SisterShop){
 	$sistershop = 1;
 	while ($sistershop <= $numshops){
@@ -1243,6 +1266,102 @@ function SalesOfItemByLocation($stockid, $location, $maxdays, $db){
 		$sales = 999;
 	}
 	return $sales;
+}
+
+function SetRLForLowSalesItems( $starttopitems, $endtopitems, $daystopitems, $NewRL, $ShowMessages, $updateDB, $RootPath, $db){
+
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$daystopitems));
+	$SQL = "SELECT stockmaster.stockid,
+					stockmaster.categoryid,
+					stockmaster.description,
+					SUM(salesorderdetails.qtyinvoiced) AS totalinvoiced
+			FROM salesorderdetails, salesorders, stockmaster
+			WHERE salesorderdetails.orderno = salesorders.orderno 
+				AND stockmaster.discontinued = 0
+				AND salesorderdetails.stkcode = stockmaster.stockid
+				AND (stockmaster.lastcategoryupdate <= '" . $StartDate . "'
+					OR stockmaster.lastcategoryupdate = '0000-00-00')
+				AND salesorderdetails.actualdispatchdate >= '" . $StartDate . "'
+			GROUP BY salesorderdetails.stkcode
+			ORDER BY totalinvoiced DESC
+			LIMIT " . ($starttopitems - 1) . "," . ($endtopitems - $starttopitems + 1);			
+
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		$showHeader = true;
+		$k = 0; //row colour counter
+		$i = $starttopitems;
+		while ($myrow = DB_fetch_array($result)) {
+			$SQLDistribution = "SELECT locstock.loccode, 
+									locstock.reorderlevel AS oldrl
+								FROM locstock,locations
+								WHERE locstock.stockid = '" . $myrow['stockid'] . "'
+									AND locstock.loccode = locations.loccode
+									AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . "
+									AND locstock.reorderlevel > 0";
+			$resultdistribution = DB_query($SQLDistribution);
+			$LocationsToDistribute = DB_num_rows($resultdistribution);
+			if ($LocationsToDistribute != 0){
+				if ($k == 1) {
+					$k = 0;
+				} else {
+					$k = 1;
+				}
+				while ($mydistribution = DB_fetch_array($resultdistribution)) {
+					if($mydistribution['oldrl'] > $NewRL){
+						SetReorderLevel("LowSalesAdjust", $myrow['stockid'], $mydistribution['loccode'], $mydistribution['oldrl'], $NewRL, $updateDB, $db);
+						if ($ShowMessages){
+							if($showHeader){
+								echo '<p class="page_title_text" align="center"><strong>' . _('Set RL Max to ') . $NewRL . ' for Low Sales '. $starttopitems . '-'. $endtopitems . ' for at least ' . $daystopitems . ' days </strong></p>';
+								echo '<div>';
+								echo '<table class="selection">';
+								$TableHeader = '<tr>
+													<th>' . _('#') . '</th>
+													<th>' . _('Code') . '</th>
+													<th>' . _('Category') . '</th>
+													<th>' . _('Description') . '</th>
+													<th>' . _('Toko') . '</th>
+													<th>' . _('Old RL') . '</th>
+													<th>' . _('New RL') . '</th>
+												</tr>';
+								echo $TableHeader;
+								$showHeader = false;
+							}
+							if ($k == 0) {
+								echo '<tr class="EvenTableRows">';
+							} else {
+								echo '<tr class="OddTableRows">';
+							}
+							$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+							printf('<td class="number">%s</td>
+								<td>%s</td>
+								<td>%s</td>
+								<td>%s</td>
+								<td>%s</td>
+								<td class="number">%s</td>
+								<td class="number">%s</td>
+								</tr>', 
+								$i, 
+								$CodeLink, 
+								$myrow['categoryid'], 
+								$myrow['description'], 
+								$mydistribution['loccode'],
+								locale_number_format($mydistribution['oldrl'],0),
+								locale_number_format($NewRL,0)
+								);
+						}
+					}
+				}
+			}
+			$i++;
+		}
+		if ($ShowMessages){
+			if(!$showHeader){
+				echo '</table>
+						</div>';
+			}
+		}
+	}
 }
 
 function SPGBelowMinimumSales($Shop, $NumDaysA, $MinimumSales,$db){

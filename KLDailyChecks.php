@@ -18,30 +18,34 @@ function KL_DailyChecks($Group, $RootPath, $db, $EmailText= ''){
 	
 
 	if ($Group == "0100-CleanDB"){
-		$EmailText = KL_DailyMaintenanceDatabase06(FALSE, $db, $EmailText);
-	}elseif ($Group == "0200-ObsoleteTopSales"){
-		$EmailText = KL_DailyMaintenanceDatabase01(FALSE, $db, $EmailText);
+		$EmailText = KL_DailyCleanDB(FALSE, $db, $EmailText);
+	}elseif ($Group == "0200-Obsolete"){
+		$EmailText = KL_DailySetObsoleteNoStock(FALSE, $db, $EmailText);
+	}elseif ($Group == "0250-TopSales"){
+		$EmailText = SetTopSalesRanking(FALSE, $EmailText, $db);
 	}elseif ($Group == "0300-EmailsToStaff"){
 		$EmailText = KL_DailyEmailsToStaff($db, $EmailText);
 	}elseif ($Group == "0400-OnlineRLAdjustments"){
-		$EmailText = DailyReorderLevelAdjustments01(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
+		$EmailText = KL_DailyRLAdjustmentsForOnline(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
 	}elseif ($Group == "0500-RLForTopSalesKL"){
-		$EmailText = DailyReorderLevelAdjustments02(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
+		$EmailText = KL_DailyRLAdjustmentsForKL(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
 	}elseif ($Group == "0600-RLForTopSalesBL"){
-		$EmailText = DailyReorderLevelAdjustments03(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
+		$EmailText = KL_DailyRLAdjustmentsForBlink(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
 	}elseif ($Group == "0700-RLForTopSalesOU"){
-		$EmailText = DailyReorderLevelAdjustments04(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
+		$EmailText = KL_DailyRLAdjustmentsForOutlet(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
 	}elseif ($Group == "0800-RLRebalancing"){
-		$EmailText = DailyReorderLevelAdjustments05(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
+		$EmailText = KL_DailyRLRebalancing(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
 	}elseif ($Group == "0900-RLZeroNotAvailable"){
-		$EmailText = DailyReorderLevelAdjustments06(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
+		$EmailText = KL_DailyRLZeroNotAvailable(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
 	}elseif ($Group == "1000-RLAdjustPackaging"){
-		$EmailText = DailyReorderLevelAdjustments07(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
+		$EmailText = KL_DailyRLAdjustmentsForPackaging(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
 	}elseif ($Group == "1100-OptimizeDB"){
-		$EmailText = KL_DailyMaintenanceDatabase05(FALSE, $db, $EmailText);
+		$EmailText = KL_DailyOptimizationDatabase(FALSE, $db, $EmailText);
 	}elseif ($Group == "1200-SyncWebERPOpenCart"){
 		$EmailText = WeberpToOpenCartDailySync(FALSE, $db, $db_oc, $oc_tableprefix, $EmailText);
 		$EmailText = OpenCartToWeberpSync(FALSE, $db, $db_oc, $oc_tableprefix, $EmailText);
+	}else{
+		$EmailText = $EmailText . "Group " . $Group . " not found." . "\n";
 	}
 
 	$Result = DB_query("UPDATE config SET confvalue='" . Date('Y-m-d') . "'	WHERE confname='KL_DailyChecks_LastRun'");
@@ -76,7 +80,7 @@ function KL_HourlyChecks($RootPath, $db, $EmailText=''){
 }
 
 
-function KL_DailyMaintenanceDatabase06($ShowMessages, $db, $EmailText){
+function KL_DailyCleanDB($ShowMessages, $db, $EmailText){
 	$EmailText = SetRLZeroForObsolete($ShowMessages, $EmailText, $db);
 	$EmailText = SetRLZeroForLocations($ShowMessages, $EmailText, $db);
 	$EmailText = SetEndDatePriceToObsolete($ShowMessages, $EmailText, $db);
@@ -95,15 +99,11 @@ function KL_DailyMaintenanceDatabase06($ShowMessages, $db, $EmailText){
 	$EmailText = PurgeKLTable("klmovetodiscount50","endprocessdate", $ShowMessages, $EmailText, $db);
 	$EmailText = PurgeKLTable("klmovetodiscount80","endprocessdate", $ShowMessages, $EmailText, $db);
 	$EmailText = PurgeAuditTrailTable($ShowMessages, $EmailText, $db);
+	$EmailText = PurgePackagingUsedTable(2*365, $ShowMessages, $EmailText, $db); //we keep 2 years of packaging used for analysis. Older usage is not relevant
 	return $EmailText;
 }
 
-function KL_DailyMaintenanceDatabase05($ShowMessages, $db, $EmailText = ''){
-	$EmailText = KL_DailyOptimizationDatabase($ShowMessages, $db, $EmailText);
-	return $EmailText;
-}
-
-function KL_DailyMaintenanceDatabase01($ShowMessages, $db, $EmailText = ''){
+function KL_DailySetObsoleteNoStock($ShowMessages, $db, $EmailText = ''){
 	$EmailText = SetObsoleteForCategoryWithoutStock("DISC20", $ShowMessages, $EmailText, $db);
 	$EmailText = SetObsoleteForCategoryWithoutStock("DISC50", $ShowMessages, $EmailText, $db);
 	$EmailText = SetObsoleteForCategoryWithoutStock("DISC80", $ShowMessages, $EmailText, $db);
@@ -113,7 +113,6 @@ function KL_DailyMaintenanceDatabase01($ShowMessages, $db, $EmailText = ''){
 	$EmailText = SetObsoleteForCategoryWithoutStock("NOPOKA", $ShowMessages, $EmailText, $db);
 	$EmailText = SetObsoleteForCategoryWithoutStock("NOPOBA", $ShowMessages, $EmailText, $db);
 	$EmailText = SetObsoleteForCategoryWithoutStock("NOPOGA", $ShowMessages, $EmailText, $db);
-	$EmailText = SetTopSalesRanking($ShowMessages, $EmailText, $db);
 	return $EmailText;
 }
 
@@ -238,6 +237,18 @@ function PurgeKLTable($TableName,$DateField, $ShowMessages, $EmailText, $db){
 	}
 	return $EmailText;
 }
+
+function PurgePackagingUsedTable($DaysToKeep, $ShowMessages, $EmailText, $db){
+	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$DaysToKeep));
+	$sql = "DELETE FROM packagingused
+			WHERE date < '" . $FromDate . "'";
+	$ErrMsg ='Could not purge packagingused table because';
+	$result = DB_query($sql,$ErrMsg);
+	$Text = "Table packagingused purged.";
+	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
+	return $EmailText;
+}
+
 
 function CleanDiscountForObsoleteItems($ShowMessages, $EmailText, $db){
 	$sql = "UPDATE stockmaster

@@ -1,13 +1,13 @@
 <?php
 
-function DailyReorderLevelAdjustments01($ShowMessages, $updateDB, $RootPath, $db, $EmailText){
+function KL_DailyRLAdjustmentsForOnline($ShowMessages, $updateDB, $RootPath, $db, $EmailText){
 
 	$EmailText = OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db, $EmailText); // Updates RL for online orders
 	
 	return $EmailText;
 }
 
-function DailyReorderLevelAdjustments02($ShowMessages, $updateDB, $RootPath, $db, $EmailText){
+function KL_DailyRLAdjustmentsForKL($ShowMessages, $updateDB, $RootPath, $db, $EmailText){
 
 	// For KL SHOPS
 	$Shops = NumberOfShops("SHOPKL", $db);
@@ -36,7 +36,7 @@ function DailyReorderLevelAdjustments02($ShowMessages, $updateDB, $RootPath, $db
 	return $EmailText;
 }
 
-function DailyReorderLevelAdjustments03($ShowMessages, $updateDB, $RootPath, $db, $EmailText){
+function KL_DailyRLAdjustmentsForBlink($ShowMessages, $updateDB, $RootPath, $db, $EmailText){
 
 	// For BLINK SHOPS
 	$Shops = NumberOfShops("SHOPBL", $db);
@@ -65,7 +65,7 @@ function DailyReorderLevelAdjustments03($ShowMessages, $updateDB, $RootPath, $db
 	return $EmailText;
 }
 
-function DailyReorderLevelAdjustments04($ShowMessages, $updateDB, $RootPath, $db, $EmailText){
+function KL_DailyRLAdjustmentsForOutlet($ShowMessages, $updateDB, $RootPath, $db, $EmailText){
 
 	// for OUTLET SHOPS
 	$Shops = NumberOfShops("SHOPOU", $db);
@@ -86,7 +86,7 @@ function DailyReorderLevelAdjustments04($ShowMessages, $updateDB, $RootPath, $db
 	return $EmailText;
 }
 
-function DailyReorderLevelAdjustments05($ShowMessages, $updateDB, $RootPath, $db, $EmailText){
+function KL_DailyRLRebalancing($ShowMessages, $updateDB, $RootPath, $db, $EmailText){
 	
 	// These functions does not need to be segregated by type of shop, as it only takes care of shops with RL > 0
 	$EmailText = RebalancingBetweenShops(60, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
@@ -94,14 +94,14 @@ function DailyReorderLevelAdjustments05($ShowMessages, $updateDB, $RootPath, $db
 	return $EmailText;
 }
 
-function DailyReorderLevelAdjustments06($ShowMessages, $updateDB, $RootPath, $db, $EmailText){
+function KL_DailyRLZeroNotAvailable($ShowMessages, $updateDB, $RootPath, $db, $EmailText){
 
 	$EmailText = SetRLZeroForNotAvailableItems($ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 
 	return $EmailText;
 }
 
-function DailyReorderLevelAdjustments07($ShowMessages, $updateDB, $RootPath, $db, $EmailText){
+function KL_DailyRLAdjustmentsForPackaging($ShowMessages, $updateDB, $RootPath, $db, $EmailText){
 
 	$EmailText = AdjustPackaging(60, 'SHOPKL', $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 	$EmailText = AdjustPackaging(60, 'SHOPBL', $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
@@ -123,29 +123,7 @@ function NumberOfShops($ShopType, $db){
 	}
 }
 
-function isReorderLevelManuallyChanged($stockid, $loccode, $maxmanualchanges, $db){
-	if ($maxmanualchanges == 0){
-		return '0000-00-00';
-	}
-	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxmanualchanges));
-	$SQL="SELECT transactiondate
-		FROM audittrail
-		WHERE transactiondate >= '".$StartDate."'
-			AND querystring LIKE '%" . $stockid . "%' 
-			AND querystring LIKE '%" . $loccode . "%' 
-			AND querystring LIKE '%locstock%reorderlevel%' 
-		ORDER BY transactiondate DESC
-		LIMIT 1";
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		$myrow = DB_fetch_array($result);
-		$lastdate = $myrow['transactiondate'];
-	}else{
-		$lastdate = '0000-00-00';
-	}
-	return $lastdate;
 
-}
 
 function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, $db, $EmailText){
 	/* 
@@ -609,7 +587,7 @@ to the shops with RL > 0.
 						$CurrentNewRL = MaxRLCorrectionSomeModels($myrow['stockid'], $mydistribution['loccode'], $NewRL);
 
 						if($mydistribution['oldrl'] < $CurrentNewRL){
-							SetReorderLevel("TopSalesAdjust", $myrow['stockid'], $mydistribution['loccode'], $mydistribution['oldrl'], $CurrentNewRL, $updateDB, $db);
+							SetReorderLevel("TopSalesLowRL", $myrow['stockid'], $mydistribution['loccode'], $mydistribution['oldrl'], $CurrentNewRL, $updateDB, $db);
 							if ($ShowMessages){
 								if($showHeader){
 									echo '<p class="page_title_text" align="center"><strong>' . 'Set RL minimum to ' . $NewRL . 
@@ -675,102 +653,6 @@ to the shops with RL > 0.
 		}
 	}
 	return $EmailText;
-}
-
-function SetRLForLowSalesItems( $starttopitems, $endtopitems, $daystopitems, $NewRL, $ShowMessages, $updateDB, $RootPath, $db){
-
-	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$daystopitems));
-	$SQL = "SELECT stockmaster.stockid,
-					stockmaster.categoryid,
-					stockmaster.description,
-					SUM(salesorderdetails.qtyinvoiced) AS totalinvoiced
-			FROM salesorderdetails, salesorders, stockmaster
-			WHERE salesorderdetails.orderno = salesorders.orderno 
-				AND stockmaster.discontinued = 0
-				AND salesorderdetails.stkcode = stockmaster.stockid
-				AND (stockmaster.lastcategoryupdate <= '" . $StartDate . "'
-					OR stockmaster.lastcategoryupdate = '0000-00-00')
-				AND salesorderdetails.actualdispatchdate >= '" . $StartDate . "'
-			GROUP BY salesorderdetails.stkcode
-			ORDER BY totalinvoiced DESC
-			LIMIT " . ($starttopitems - 1) . "," . ($endtopitems - $starttopitems + 1);			
-
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		$showHeader = true;
-		$k = 0; //row colour counter
-		$i = $starttopitems;
-		while ($myrow = DB_fetch_array($result)) {
-			$SQLDistribution = "SELECT locstock.loccode, 
-									locstock.reorderlevel AS oldrl
-								FROM locstock,locations
-								WHERE locstock.stockid = '" . $myrow['stockid'] . "'
-									AND locstock.loccode = locations.loccode
-									AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . "
-									AND locstock.reorderlevel > 0";
-			$resultdistribution = DB_query($SQLDistribution);
-			$LocationsToDistribute = DB_num_rows($resultdistribution);
-			if ($LocationsToDistribute != 0){
-				if ($k == 1) {
-					$k = 0;
-				} else {
-					$k = 1;
-				}
-				while ($mydistribution = DB_fetch_array($resultdistribution)) {
-					if($mydistribution['oldrl'] > $NewRL){
-						SetReorderLevel("LowSalesAdjust", $myrow['stockid'], $mydistribution['loccode'], $mydistribution['oldrl'], $NewRL, $updateDB, $db);
-						if ($ShowMessages){
-							if($showHeader){
-								echo '<p class="page_title_text" align="center"><strong>' . _('Set RL Max to ') . $NewRL . ' for Low Sales '. $starttopitems . '-'. $endtopitems . ' for at least ' . $daystopitems . ' days </strong></p>';
-								echo '<div>';
-								echo '<table class="selection">';
-								$TableHeader = '<tr>
-													<th>' . _('#') . '</th>
-													<th>' . _('Code') . '</th>
-													<th>' . _('Category') . '</th>
-													<th>' . _('Description') . '</th>
-													<th>' . _('Toko') . '</th>
-													<th>' . _('Old RL') . '</th>
-													<th>' . _('New RL') . '</th>
-												</tr>';
-								echo $TableHeader;
-								$showHeader = false;
-							}
-							if ($k == 0) {
-								echo '<tr class="EvenTableRows">';
-							} else {
-								echo '<tr class="OddTableRows">';
-							}
-							$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
-							printf('<td class="number">%s</td>
-								<td>%s</td>
-								<td>%s</td>
-								<td>%s</td>
-								<td>%s</td>
-								<td class="number">%s</td>
-								<td class="number">%s</td>
-								</tr>', 
-								$i, 
-								$CodeLink, 
-								$myrow['categoryid'], 
-								$myrow['description'], 
-								$mydistribution['loccode'],
-								locale_number_format($mydistribution['oldrl'],0),
-								locale_number_format($NewRL,0)
-								);
-						}
-					}
-				}
-			}
-			$i++;
-		}
-		if ($ShowMessages){
-			if(!$showHeader){
-				echo '</table>
-						</div>';
-			}
-		}
-	}
 }
 
 function MaxTopSalesForTypeOfShop($ShopType, $NumDays){
@@ -846,7 +728,6 @@ function SetRLForLowSalesHighRL($ShopType, $BottomPercentTopSales, $oldRL, $maxR
 								<th>' . _('Location') . '</th>
 								<th>' . _('Old RL') . '</th>
 								<th>' . _('New RL') . '</th>
-								<th>' . _('Notes') . '</th>
 							</tr>';
 			echo $TableHeader;
 		}
@@ -854,15 +735,7 @@ function SetRLForLowSalesHighRL($ShopType, $BottomPercentTopSales, $oldRL, $maxR
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
 			$newRL = $maxRL;
-			$notes = "";
-
-			// if manually reseted, not change it
-//			$lastManualModification = isReorderLevelManuallyChanged($myrow['stockid'], $location, $maxmanualchanges, $db);
-//			if ($lastManualModification != '0000-00-00'){
-//				$newRL = $myrow['reorderlevel'];
-//				$notes = "Manually changed on ". ConvertSQLDate($lastManualModification);
-//			}
-			SetReorderLevel("LowSalesHighRL", $myrow['stockid'],$myrow['loccode'], $myrow['reorderlevel'], $newRL, $updateDB, $db);
+			SetReorderLevel("BottomSalesHighRL", $myrow['stockid'],$myrow['loccode'], $myrow['reorderlevel'], $newRL, $updateDB, $db);
 			if ($ShowMessages){
 				if ($k == 1) {
 					echo '<tr class="EvenTableRows">';
@@ -879,7 +752,6 @@ function SetRLForLowSalesHighRL($ShopType, $BottomPercentTopSales, $oldRL, $maxR
 						<td>%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
-						<td>%s</td>
 						</tr>', 
 						$i, 
 						$CodeLink, 
@@ -887,8 +759,7 @@ function SetRLForLowSalesHighRL($ShopType, $BottomPercentTopSales, $oldRL, $maxR
 						$myrow['categoryid'], 
 						$myrow['loccode'], 
 						locale_number_format($myrow['reorderlevel'],0),
-						locale_number_format($newRL,0),
-						$notes
+						locale_number_format($newRL,0)
 						);
 			}
 			if ($EmailText!=''){
@@ -1081,9 +952,8 @@ function AdjustPackaging($DaysSales, $ShopType, $ShowMessages, $updateDB, $RootP
 	}
 
 	if ($EmailText!=''){
-		$EmailText = $EmailText . "\n" . "Adjust Packaging" . "\n\n" .
-					"DaysSales = " . $DaysSales . " " .
-					"RootPath = " . $RootPath . "\n" .
+		$EmailText = $EmailText . "\n" . "Adjust Packaging" . "\n" .
+					"For " . $DaysSales . " days of sales" . "\n" .
 					"Type of Shops Using Packaging Control = " . $ShopType . "\n" .
 					"List Items Using Packaging Control = " . CleanListToPrint($ListOfItems) . "\n\n" ;
 	}
