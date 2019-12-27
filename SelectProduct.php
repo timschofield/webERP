@@ -88,7 +88,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 	}
 	echo '<table width="90%">
 			<tr>
-				<th colspan="3"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b title="' . $myrow['longdescription'] . '">' . ' ' . $StockID . ' - ' . $myrow['description'] . '</b> ' . $ItemStatus . '</th>
+				<th colspan="4"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b title="' . $myrow['longdescription'] . '">' . ' ' . $StockID . ' - ' . $myrow['description'] . '</b> ' . $ItemStatus . '</th>
 			</tr>';
 
 
@@ -177,16 +177,16 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 			echo '<td class="select" colspan="2" style="text-align:right">' . locale_number_format($Price, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>';
 		}
 		if (in_array($CostSecurity,$_SESSION['AllowedPageSecurityTokens'])) {
-		echo '<th class="number">' . _('Cost') . ':</th>
-			<td class="select" style="text-align:right">' . locale_number_format($Cost, $_SESSION['StandardCostDecimalPlaces']) . '</td>
-			<th class="number">' . _('Gross Profit') . ':</th>
-			<td class="select" style="text-align:right">';
-		if ($Price > 0) {
-			echo locale_number_format(($Price - $Cost) * 100 / $Price, 1) . '%';
-		} else {
-			echo _('N/A');
-		}
-		echo '</td>';
+			echo '<th class="number">' . _('Cost') . ':</th>
+				<td class="select" style="text-align:right">' . locale_number_format($Cost, $_SESSION['StandardCostDecimalPlaces']) . '</td>
+				<th class="number">' . _('Gross Profit') . ':</th>
+				<td class="select" style="text-align:right">';
+			if ($Price > 0) {
+				echo locale_number_format(($Price - $Cost) * 100 / $Price, 1) . '%';
+			} else {
+				echo _('N/A');
+			}
+			echo '</td>';
 		}
 		echo '</tr>';
 	} //end of if PricesSecurity allows viewing of prices
@@ -238,6 +238,33 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 	$PropertyCounter++;
 } //end loop round properties for the item category
 echo '</table></td>'; //end of Item Category Property mod
+
+// RICARD MOD TO SHOW TOP SALES
+$sql = "SELECT topsales30,
+			topsales60,
+			topsales90
+		FROM klsalesperformance
+		WHERE stockid ='" . $StockID . "'";
+$TopSalesResult = DB_query($sql);
+if (($MyTopSales = DB_fetch_array($TopSalesResult)) AND 
+	(in_array($PricesSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PricesSecurity))){		
+	echo '<td style="width:15%; vertical-align:top">
+			<table>'; //nested table to TOP SALES
+	echo '<tr>
+			<th class="number" style="width:15%">' . _('Top Sales 30 days') . ':</th>
+			<td style="width:17%; text-align:right" class="select">' . '# ' . $MyTopSales['topsales30'] . '</td>
+		</tr>
+		<tr>
+			<th class="number" style="width:15%">' . _('Top Sales 60 days') . ':</th>
+			<td style="width:17%; text-align:right" class="select">' . '# ' . $MyTopSales['topsales60'] . '</td>
+		</tr>
+		<tr>
+			<th class="number" style="width:15%">' . _('Top Sales 90 days') . ':</th>
+			<td style="width:17%; text-align:right" class="select">' . '# ' . $MyTopSales['topsales90'] . '</td>
+		</tr>
+		</table>'; //end of nested table
+	echo '</td>'; //end cell of master table MOD TOP SALES
+}
 echo '<td style="width:15%; vertical-align:top">
 			<table>'; //nested table to show QOH/orders
 $QOH = 0;
