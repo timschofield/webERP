@@ -537,7 +537,15 @@ to the shops with RL > 0.
 		$EmailText = $EmailText . "\n" . "Set RL For " . $ShopType . " top sales items range " . $starttopitems . " - " . $endtopitems . " Top Sales with RL lower than " . $NewRL . " and minimum available stock " . $minstockavailable . "\n";
 	}
 
-	$Today = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
+	if ($ShopType == "SHOPKL") {
+		$WhereCat = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . " ";
+	}elseif ($ShopType == "SHOPBL") {
+		$WhereCat = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . " ";
+	}elseif ($ShopType == "SHOPOU") {
+		$WhereCat = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . " ";
+	}else{
+		$WhereCat = " ";
+	}
 	
 	$SQL = "SELECT stockmaster.stockid,
 					stockmaster.categoryid,
@@ -547,6 +555,7 @@ to the shops with RL > 0.
 			WHERE stockmaster.stockid = klsalesperformance.stockid
 				AND stockmaster.discontinued = 0
 				AND stockmaster.klchangingprice = 0
+				" . $WhereCat . "
 			ORDER BY topsales60 DESC
 			LIMIT " . ($starttopitems - 1) . "," . ($endtopitems - $starttopitems + 1);			
 
@@ -682,10 +691,20 @@ function SetRLForLowSalesHighRL($ShopType, $BottomPercentTopSales, $oldRL, $maxR
 		with less than minavailablestock at shops or office
 	*/
 	if ($EmailText!=''){
-		$EmailText = $EmailText . "\n" . "Set RL For " . $ShopType . " items in the bottom " . $BottomPercentTopSales . "% Top Sales with RL higher than " . $maxRL . " and minimum available stock " . $minavailablestock . "\n";
+		$EmailText = $EmailText . "\n" . "Set RL For " . $ShopType . " items in the bottom " . $BottomPercentTopSales . "% Top Sales with RL higher than " . $maxRL . " and available stock <= " . $minavailablestock . "\n";
 	}
 
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$maxdays));
+
+	if ($ShopType == "SHOPKL") {
+		$WhereCat = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . " ";
+	}elseif ($ShopType == "SHOPBL") {
+		$WhereCat = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . " ";
+	}elseif ($ShopType == "SHOPOU") {
+		$WhereCat = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . " ";
+	}else{
+		$WhereCat = " ";
+	}
 
 	$MaxTopSales = MaxTopSalesForTypeOfShop($ShopType, 60);
 	$MinTopSales = round($MaxTopSales * ((100 - $BottomPercentTopSales) / 100), 0);
@@ -696,14 +715,12 @@ function SetRLForLowSalesHighRL($ShopType, $BottomPercentTopSales, $oldRL, $maxR
 					stockmaster.units, 
 					locstock.quantity,
 					locstock.reorderlevel,
-					locstock.loccode,
-					locations.locationname 
-			FROM 	stockmaster,locstock,locations,klsalesperformance
+					locstock.loccode
+			FROM 	stockmaster,locstock,klsalesperformance
 			WHERE 	stockmaster.stockid = locstock.stockid
 					AND stockmaster.stockid = klsalesperformance.stockid
-					AND locstock.loccode = locations.loccode
-					AND klsalesperformance.topsales60 >= " . $MinTopSales . "
-					AND locations.typeloc = '" . $ShopType . "'
+					AND klsalesperformance.topsales60 >= " . $MinTopSales . 
+					$WhereCat . "
 					AND (locstock.quantity > 0)
 					AND (locstock.reorderlevel >= ". $oldRL .")
 					AND (SELECT SUM(locstock.quantity)
@@ -734,8 +751,7 @@ function SetRLForLowSalesHighRL($ShopType, $BottomPercentTopSales, $oldRL, $maxR
 		$k = 0; //row colour counter
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$newRL = $maxRL;
-			SetReorderLevel("BottomSalesHighRL", $myrow['stockid'],$myrow['loccode'], $myrow['reorderlevel'], $newRL, $updateDB, $db);
+			SetReorderLevel("BottomSalesHighRL", $myrow['stockid'],$myrow['loccode'], $myrow['reorderlevel'], $maxRL, $updateDB, $db);
 			if ($ShowMessages){
 				if ($k == 1) {
 					echo '<tr class="EvenTableRows">';
@@ -759,11 +775,11 @@ function SetRLForLowSalesHighRL($ShopType, $BottomPercentTopSales, $oldRL, $maxR
 						$myrow['categoryid'], 
 						$myrow['loccode'], 
 						locale_number_format($myrow['reorderlevel'],0),
-						locale_number_format($newRL,0)
+						locale_number_format($maxRL,0)
 						);
 			}
 			if ($EmailText!=''){
-				$EmailText = $EmailText .  $myrow['stockid'] . " @ " . $myrow['loccode'] . " OldRL = " . locale_number_format($myrow['reorderlevel'],0) . " NewRL = " . locale_number_format($newRL,0) . " " . $notes . "\n";
+				$EmailText = $EmailText .  $myrow['stockid'] . " @ " . $myrow['loccode'] . " OldRL = " . locale_number_format($myrow['reorderlevel'],0) . " NewRL = " . locale_number_format($maxRL,0) . "\n";
 			}
 			$i++;
 		}
