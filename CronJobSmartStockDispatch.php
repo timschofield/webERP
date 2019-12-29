@@ -7,6 +7,10 @@ include('includes/SQL_CommonFunctions.inc');
 include('includes/htmlMimeMail.php');
 include('includes/GetPrice.inc');
 
+$time = microtime();
+$time = explode(' ', $time);
+$begintime = $time[1] + $time[0];
+
 $EmailText  = "KL webERP: Smart Stock Dispatch " . "\n"; 
 $EmailText = $EmailText . 'Cron Job started at '.date('d/M/Y H:i:s'). "\n";
 
@@ -66,8 +70,8 @@ if (DB_num_rows($result) != 0){
 }
 
 $EmailAddress = "webmaster@kapal-laut.com";
-$EmailSubject  = "KL webERP Cron Job: 1050-Daily Stock Dispatch";
-SendEmailFromCron($EmailAddress, $EmailSubject, $EmailText, '');
+$EmailSubject  = "KL webERP Cron Job: Smart Dispatch ". $Group;
+SendEmailFromCron($EmailAddress, $EmailSubject, $EmailText, '', $begintime);
 
 /****************************************************************************************/
 function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $DispatchPercent, $MaxModelsPerDispatch, $MinModelsPerDispatch, $RootPath, $db, $EmailText){
