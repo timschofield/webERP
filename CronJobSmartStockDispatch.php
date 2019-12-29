@@ -18,6 +18,22 @@ $DispatchPercent = 0;
 $_SESSION['DefaultPageSize'] = 'A4';
 $DaysSalesForOrder = 2;
 
+# GRAB THE VARIABLES FROM THE URL
+$Group = $_GET['p'];
+
+if ($Group == "1050-SmartDispatchKL"){
+	$ShopType = "SHOPKL";
+	$EmailText = $EmailText . 'Smart dispatch for Kapal-Laut Shops' . "\n";
+}elseif ($Group == "1060-SmartDispatchBL"){
+	$ShopType = "SHOPBL";
+	$EmailText = $EmailText . 'Smart dispatch for Blink Shops' . "\n";
+}elseif ($Group == "1070-SmartDispatchOU"){
+	$ShopType = "SHOPOU";
+	$EmailText = $EmailText . 'Smart dispatch for Outlet Shops' . "\n";
+}else{
+	$EmailText = $EmailText . 'Type Of Shop not defined' . "\n";
+}
+
 /* Selection of shops with smart dispatch from / to KANTO, sorted by priority and sales of the last X days */
 $StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$DaysSalesForOrder));
 
@@ -29,6 +45,7 @@ $SQL = "SELECT locations.loccode,
 		FROM locations,locationzones
 		WHERE locations.zone = locationzones.code
 			AND locations.smartdispatchfrom = 'KANTO' 
+			AND locations.typeloc = '" . $ShopType . "' 
 			AND locationzones.smarttransferonweekday".$DayOfWeek . " = 1 
 		ORDER BY locations.priority ASC,
 			(SELECT COUNT(qtyinvoiced)
