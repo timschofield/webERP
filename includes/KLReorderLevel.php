@@ -213,7 +213,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 					// Does not exist any shop with available stock. This was the last one!
 					// No need to do anything!!!
 					$rebalancinglocationfrom = "";
-					$strategy = "No stock available at shops. No RL changed";
+					$strategy = "No shop with available overstock. No RL changed";
 				}else{
 					// let's distribute available stock between the shops with RL > 0.
 					// if RL = 0 we suppose we do not want it there for any reason 
@@ -250,11 +250,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 							$NewRL = ceil($QtyToDistribute / ($LocationsToDistribute - $LocationsDistributed));
 							$NewRL = MaxRLCorrectionSomeModels($myrow['stockid'], $mydistribution['loccode'], $NewRL);
 							SetReorderLevel("Rebalancing", $myrow['stockid'], $mydistribution['loccode'], $mydistribution['oldrl'], $NewRL, $updateDB, $db);
-							if($mydistribution['oldrl'] != $NewRL){
-								$strategy = "QOH=" . $QOH . ". Set RL at ".$mydistribution['loccode'] . "= " . locale_number_format($NewRL,0);
-							}else{
-								$strategy = "QOH=" . $QOH . ". RL OK.";
-							}
+							$strategy = "Distribute available stock at shops";
 							$QtyToDistribute = $QtyToDistribute - $NewRL;
 							$LocationsDistributed++;
 							if ($ShowMessages){
@@ -282,22 +278,23 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 							if ($EmailText!=''){
 								$EmailText = $EmailText . $myrow['stockid'] . " @ " . 
 														$mydistribution['loccode'] .
-														" Old RL= " . locale_number_format($mydistribution['oldrl'],0) .
-														" New RL= " . locale_number_format($NewRL,0) .
-														" as is needed at: " .$myrow['locationneeded'] . " " . 
+														" OldRL= " . locale_number_format($mydistribution['oldrl'],0) .
+														" NewRL= " . locale_number_format($NewRL,0) .
+														" as needed at: " .$myrow['locationneeded'] . " " . 
 														$strategy ." " . 
 														"\n";
 							}
 						}
 					}else{
 						$location = "";
+						$strategy = "No shop to distribute";
 					}
 				}
 			}else{
 				// We have some overstock location. When transferrng from TOKO to kantor will be rebalanced.
 				// No need to do anything!!!
 				$rebalancinglocationfrom = $locationoverstock;
-				$strategy = "Overstock available. No RL changed";
+				$strategy = "Overstock available in some shop. No RL changed";
 			}
 			if ($ShowMessages){
 				if ($PrintLine){
@@ -322,11 +319,11 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 				}
 			}
 			if ($EmailText!=''){
-				$EmailText = $EmailText . $myrow['stockid'] . " Rebalanced from " . 
+				$EmailText = $EmailText . $myrow['stockid'] . " rebalanced from " . 
 										$rebalancinglocationfrom .
 										" to " . 
 										$myrow['locationneeded'] .
-										" with strategy " . 
+										"Strategy " . 
 										$strategy . " " . 
 										"\n";
 			}

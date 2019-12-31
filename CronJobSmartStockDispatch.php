@@ -117,6 +117,9 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 	// The "overstock at FROM" part is controlled in any case with AND (fromlocstock.quantity - fromlocstock.reorderlevel) > 0
 	if ($Strategy == 'All') {
 		$WhereCategory = $WhereCategory . " AND locstock.reorderlevel > locstock.quantity ";
+		$StrategyText = "Items needed at TO location with overstock at FROM location";
+	}else{
+		$StrategyText = "Items with overstock at FROM location";
 	}
 
 	$sql = "SELECT locstock.stockid,
@@ -154,7 +157,7 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 
 	$EmailText = $EmailText .  "\n" . 
 				"Smart Stock Dispatch from " . $FromLocCode . " to " . $ToLocCode . "\n" . 
-				"Strategy " . $Strategy . "\n";
+				"Strategy " . $StrategyText . "\n";
 	$EmailText = $EmailText .  
 				"Min Models to create transfer: " . $MinModelsPerDispatch . "\n" . 
 				"Max Models to be included: " . $MaxModelsPerDispatch . "\n";
@@ -246,11 +249,10 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 					$EmailText = $EmailText . $myrow['stockid'] . " x " . $ShipQty . "\n";
 
 				}else{
-					$EmailText = $EmailText .  str_pad($myrow['stockid'],12," ") . " rejected no picture " . "\n";
+					$EmailText = $EmailText . $myrow['stockid'] . " x " . $NeededQtyAtTo . " rejected no picture" . "\n";
 				}
 			}else{
-				$EmailText = $EmailText .  str_pad($myrow['stockid'],12," ") . " rejected Qty@" . $FromLocCode . " = " . $AvailableShipQtyAtFrom . 
-							" Qty@" . $ToLocCode . " = " . $NeededQtyAtTo . " Shipped = " . $ShipQty . "\n";
+				$EmailText = $EmailText . $myrow['stockid'] . " x " . $NeededQtyAtTo . " rejected insufficient QOH@" . $FromLocCode . " = " . $AvailableShipQtyAtFrom  . "\n";
 			}
 		} /*end while loop  */
 
