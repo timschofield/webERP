@@ -250,7 +250,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 							$NewRL = ceil($QtyToDistribute / ($LocationsToDistribute - $LocationsDistributed));
 							$NewRL = MaxRLCorrectionSomeModels($myrow['stockid'], $mydistribution['loccode'], $NewRL);
 							SetReorderLevel("Rebalancing", $myrow['stockid'], $mydistribution['loccode'], $mydistribution['oldrl'], $NewRL, $updateDB, $db);
-							$strategy = "Distribute available stock at shops";
+							$strategy = "Distribute all available stock between shops with RL>0";
 							$QtyToDistribute = $QtyToDistribute - $NewRL;
 							$LocationsDistributed++;
 							if ($ShowMessages){
@@ -276,12 +276,14 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 								$PrintLine = FALSE;
 							}
 							if ($EmailText!=''){
-								$EmailText = $EmailText . $myrow['stockid'] . " @ " . 
-														$mydistribution['loccode'] .
-														" OldRL= " . locale_number_format($mydistribution['oldrl'],0) .
-														" NewRL= " . locale_number_format($NewRL,0) .
-														" as needed at: " .$myrow['locationneeded'] . " " . 
-														$strategy ." " . 
+								$EmailText = $EmailText . $myrow['stockid'] . " needed @ " . 
+														$myrow['locationneeded'] . 
+														". OldRL @ " . 
+														$mydistribution['loccode'] . 
+														" = " . 
+														locale_number_format($mydistribution['oldrl'],0) .
+														" NewRL = " . 
+														locale_number_format($NewRL,0) .
 														"\n";
 							}
 						}
@@ -319,13 +321,11 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 				}
 			}
 			if ($EmailText!=''){
-				$EmailText = $EmailText . $myrow['stockid'] . " rebalanced from " . 
-										$rebalancinglocationfrom .
-										" to " . 
+				$EmailText = $EmailText . $myrow['stockid'] . " needed @ " . 
 										$myrow['locationneeded'] .
-										"Strategy " . 
+										" " . 
 										$strategy . " " . 
-										"\n";
+										"\n\n";
 			}
 			$i++;
 		}
