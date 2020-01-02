@@ -311,7 +311,7 @@ if ($ProcessSection03){
 	if ($KL_SystemAdmin
 		OR $KL_OperationalManager
 		OR $KL_AdministrationTeam){
-		CashStatus("2019", 30000000, 20000000, 50000000, 50000000, 50000000, $periodnow, TRUE, $db);
+		CashStatus("2020", 30000000, 20000000, 50000000, 50000000, 50000000, $periodnow, TRUE, $db);
 		$NumberOfTestExecuted++;
 		
 	}
@@ -553,8 +553,7 @@ function AverageCustomerBehaviourByValueInvoice($typereport, $NumDaysA, $db){
 
 function CashStatus($Year, $YearlyGoalADU, $MinTransferADU, $YearlyGoalBB, $MinTransferBB, $MinMoveFree, $Period, $ShowTables, $db){
 
-//	$Today = date('Y-m-d');
-// All year, not until today as some tx are reported into the future
+    // Consider all year, not until today as some tx are reported into the future
 	$Today=FormatDateForSQL(Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,12,31,Date('Y'))));
 	$StartDateYTD=FormatDateForSQL(Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,1,1,Date('Y'))));
 	//
