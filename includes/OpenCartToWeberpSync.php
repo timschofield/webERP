@@ -109,9 +109,12 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db,
 					" . $oc_tableprefix . "order.order_status_id,
 					" . $oc_tableprefix . "order.currency_code,
 					" . $oc_tableprefix . "order.currency_value,
-					" . $oc_tableprefix . "order.date_modified
-			FROM " . $oc_tableprefix . "order
-			WHERE " . $oc_tableprefix . "order.order_status_id >= 1
+					" . $oc_tableprefix . "order.date_modified,
+					" . $oc_tableprefix . "customer.customer_group_id
+			FROM " . $oc_tableprefix . "order,
+				 " . $oc_tableprefix . "customer
+			WHERE " . $oc_tableprefix . "order.customer_id  = " . $oc_tableprefix . "customer.customer_id
+				AND " . $oc_tableprefix . "order.order_status_id >= 1
 				AND ( " . $oc_tableprefix . "order.date_added >= '" . $LastTimeRun . "'
 					OR " . $oc_tableprefix . "order.date_modified >= '" . $LastTimeRun . "')
 			ORDER BY " . $oc_tableprefix . "order.order_id";
@@ -171,7 +174,7 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db,
 			$Location = OPENCART_DEFAULT_LOCATION;
 			$Comments =  CleanStringForWebERP($myrow['comment']);
 			$WebERPDateOrder = date('Y-m-d H:i:s', strtotime( $myrow['date_modified'] . -$TimeDifference . ' hours'));
-			$Area = GetWeberpSalesArea($CustomerCode, $Location, $db);
+			$Area = GetWeberpSalesArea($CustomerCode, $Location, $myrow['customer_group_id'], $db);
 			
 			if($DefaultShipVia == 10){
 				// if shipping is "Pickup From Store"

@@ -280,9 +280,14 @@ function GetWeberpForeignCurrencySurchargeFactor($Location, $db){
 	return $Factor;
 }
 
-function GetWeberpSalesArea($CustomerCode, $Location, $db){
+function GetWeberpSalesArea($CustomerCode, $Location, $CustomerGroupId, $db){
+	// by default: retail in Indonesia
+	$Area = OPENCART_DEFAULT_AREA_PTBB;
 	if ($CustomerCode == 'WEB-KL-IDR'){
-		$Area = OPENCART_DEFAULT_AREA_INDONESIA;
+		if ($CustomerGroupId != 1){
+			// It is a Wholesale customer in IDR
+			$Area = OPENCART_DEFAULT_AREA_WHOLESALE;
+		}
 	}else{
 		// it is in foreign currency. Check if it goes to PayPal PTBB or others
 		$SQL = "SELECT locations.onlinepartnercode
@@ -293,15 +298,16 @@ function GetWeberpSalesArea($CustomerCode, $Location, $db){
 		if(DB_num_rows($result) != 0){
 			$myrow = DB_fetch_array($result);
 			if ($myrow['onlinepartnercode'] == 'ONLINEPTBB'){
-				$Area = OPENCART_DEFAULT_AREA_INDONESIA;
+				// Online store managed by PTBB, so goes by default.
+				if ($CustomerGroupId != 1){
+					// Wholesale customer in foreign currency
+					$Area = OPENCART_DEFAULT_AREA_WHOLESALE;
+				}
 			}else{
-				$Area = OPENCART_DEFAULT_AREA;
+				// Online store not managed by PTBB, so cash sales
+				$Area = OPENCART_DEFAULT_AREA_CASH;
 			}
-		}else{
-			$Area = OPENCART_DEFAULT_AREA_INDONESIA;
 		}
-		
-		$Area = OPENCART_DEFAULT_AREA;
 	}
 	return $Area;
 }
