@@ -124,7 +124,18 @@ $SQL = "DELETE stockmovestaxes.* FROM stockmovestaxes INNER JOIN stockmoves
 
 $ErrMsg = _('SQL to delete the stock movement tax records failed with the message');
 $Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-prnMsg(_('Deleted the credit note stock move taxes').'info');
+prnMsg(_('Deleted the credit note stock move taxes'), 'info');
+echo '<br /><br />';
+
+
+/* Delete the stock serial movements  */
+$SQL = "DELETE stockserialmoves.* FROM stockserialmoves INNER JOIN stockmoves
+			ON stockserialmoves.stkmoveno=stockmoves.stkmoveno
+               WHERE stockmoves.type=11 AND stockmoves.transno = '" . $_GET['CreditNoteNo'] . "'";
+
+$ErrMsg = _('SQL to delete the stock serial moves records failed with the message');
+$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+prnMsg(_('Deleted the credit note stock move taxes'), 'info');
 echo '<br /><br />';
 
 
@@ -133,7 +144,7 @@ $SQL = "DELETE FROM stockmoves
 
 $ErrMsg = _('SQL to delete the stock movement record failed with the message');
 $Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-prnMsg(_('Deleted the credit note stock movements').'info');
+prnMsg(_('Deleted the credit note stock movements'), 'info');
 echo '<br /><br />';
 
 
