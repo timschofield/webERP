@@ -46,31 +46,30 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 				unset($_POST['StockQTY' . $i]);
 			}
 		}
-		$StockIDAccQty = array(); //set an array to hold all items' quantity
-		for ($i=$_POST['LinesCounter']-2;$i<$_POST['LinesCounter'];$i++){
+		for ($i=0;$i<$_POST['LinesCounter'];$i++){
 			if (isset($_POST['Delete' . $i])){ //check box to delete the item is set
 				unset($_POST['StockID' . $i]);
 				unset($_POST['StockQTY' . $i]);
 			}
 			if (isset($_POST['StockID' . $i]) AND $_POST['StockID' . $i]!=''){
 				$_POST['StockID' . $i]=trim(mb_strtoupper($_POST['StockID' . $i]));
-				$result = DB_query("SELECT COUNT(stockid) FROM stockmaster WHERE stockid='" . $_POST['StockID' . $i] . "'");
+				$result = DB_query("SELECT COUNT(*) FROM stockmaster WHERE stockid='" . $_POST['StockID' . $i] . "'");
 				$myrow = DB_fetch_row($result);
 				if ($myrow[0]==0){
 					$InputError = True;
 					$ErrorMessage .= _('The part code entered of'). ' ' . $_POST['StockID' . $i] . ' '. _('is not set up in the database') . '. ' . _('Only valid parts can be entered for transfers'). '<br />';
-					$_POST['LinesCounter'] -= 2;
+					$_POST['LinesCounter'] -= 1;
 				}
 				DB_free_result( $result );
 				if (!is_numeric(filter_number_format($_POST['StockQTY' . $i]))){
 					$InputError = True;
 					$ErrorMessage .= _('The quantity entered of'). ' ' . $_POST['StockQTY' . $i] . ' '. _('for part code'). ' ' . $_POST['StockID' . $i] . ' '. _('is not numeric') . '. ' . _('The quantity entered for transfers is expected to be numeric') . '<br />';
-					$_POST['LinesCounter'] -= 2;
+					$_POST['LinesCounter'] -= 1;
 				}
 				if (filter_number_format($_POST['StockQTY' . $i]) <= 0){
 					$InputError = True;
 					$ErrorMessage .= _('The quantity entered for').' '. $_POST['StockID' . $i] . ' ' . _('is less than or equal to 0') . '. ' . _('Please correct this or remove the item') . '<br />';
-					$_POST['LinesCounter'] -= 2;
+					$_POST['LinesCounter'] -= 1;
 				}
 				if ($_SESSION['ProhibitNegativeStock']==1){
 					$InTransitSQL="SELECT SUM(shipqty-recqty) as intransit
@@ -89,12 +88,15 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 
 					$myrow = DB_fetch_array($result);
 				}
-				// Check the accumulated quantity for each item
-				if(isset($StockIDAccQty[$_POST['StockID'.$i]])){
-					$StockIDAccQty[$_POST['StockID'.$i]] += filter_number_format($_POST['StockQTY' . $i]);
-				} else {
-					$StockIDAccQty[$_POST['StockID'.$i]] = filter_number_format($_POST['StockQTY' . $i]);
-				} //end of accumulated check
+				// Check if the last one entered already exists on the transfer
+				$LastItem = $_POST['LinesCounter']-1;
+				if ((!$InputError) AND ($i < $LastItem) AND ($_POST['StockID' . $i] == trim(mb_strtoupper($_POST['StockID' . $LastItem])))){
+					$_POST['StockQTY' . $i] += $_POST['StockQTY' . $LastItem];
+					$_POST['StockID' . $LastItem] ='';
+					$_POST['StockQTY' . $LastItem] =1;
+					$_POST['LinesCounter'] -= 1;
+					prnMsg("Item ". $_POST['StockID' . $i] . " was already in the transfer. Just updating quantity to " . $_POST['StockQTY' . $i],"warn");
+				}
 
 				DB_free_result( $result );
 				$TotalItems++;
@@ -194,7 +196,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 	file_put_contents($filename, $TextToPrint);
 
 	echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . 
-		_('Print the Daily SPG End Of Shift') . '" alt="" />' . ' ' . 
+		_('Print the Return Transfer from Shop to Kantor') . '" alt="" />' . ' ' . 
 		'<a href="#"' . 'onclick="javascript:jsWebClientPrint.print(\'identifier='.$identifier.
 																	'\');">' .  
 		_('Print Return Transfer number: '). $_POST['Trf_ID'] . '</a><br /><br />';
