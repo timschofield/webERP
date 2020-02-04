@@ -3222,7 +3222,7 @@ No pending transfer regarding this item
 					FROM locstock, locations
 					WHERE locstock.stockid = stockmaster.stockid
 						AND locstock.loccode = locations.loccode
-						AND locations.loccode IN " . BALI_SHOPS_LIST_BY_TYPE . ") = 0
+						AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . ") = 0
 				AND (SELECT SUM(locstock.quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
