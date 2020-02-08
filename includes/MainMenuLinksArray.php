@@ -216,7 +216,7 @@ $MenuItems['AR']['Reports']['Caption'] = array(	_('Where Allocated Inquiry'),
 												_('Aged Customer Balances/Overdues Report'),
 												_('Re-Print A Deposit Listing'),
 												_('Debtor Balances At A Prior Month End'),
-												_('Customer Listing By Area/SalesPersonalian'),
+												_('Customer Listing By Area/SalesPerson'),
 												_('List Daily Transactions'),
 												_('Customer Transaction Inquiries'),
 												_('Customer Activity and Balances'));
@@ -703,6 +703,7 @@ $MenuItems['Personalia']['Transactions']['Caption'] = array(_('Import Monthly Sa
 															_('Export Info for PPH21 Deduction'),
 															_('Update PPH21 Deduction'),
 															_('Export Monthly Salary Slips'),
+															_('Send Monthly Salary Slips by e-mail'),
 															_('Export CSV File for Danamon Transfer LLG'),
 															_('Export CSV File for Danamon Transfer Payroll'),
 															_('Move Salaries info to Petty Cash')
@@ -712,6 +713,7 @@ $MenuItems['Personalia']['Transactions']['URL'] = array('/KLPersonaliaImportSala
 														'/KLPersonaliaExportInfoPPH21.php',
 														'/KLPersonaliaDeductionPPH21.php',
 														'/KLPersonaliaPDFMonthlySalarySlips.php',
+														'/KLPersonaliaEmailMonthlySalarySlips.php',
 														'/KLPersonaliaCSVDanamonLLG.php',
 														'/KLPersonaliaCSVDanamonPayroll.php',
 														'/KLPersonaliaMoveTxToPC.php'

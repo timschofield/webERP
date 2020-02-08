@@ -3,11 +3,12 @@
 /////////////////////////////////////////////////////////////////////
 //  Creates and sets new PDF document information
 /////////////////////////////////////////////////////////////////////
+$AdminTeam = $Company . ' Admin Team';
 
 $pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
 // set PDF document information
-$pdf->SetCreator($Company . ' Admin Team');
-$pdf->SetAuthor($Company . ' Admin Team');
+$pdf->SetCreator($AdminTeam);
+$pdf->SetAuthor($AdminTeam);
 $pdf->SetTitle($CoreFileName);
 $pdf->SetSubject($CoreFileName);
 $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
