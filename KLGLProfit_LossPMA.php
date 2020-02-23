@@ -8,7 +8,7 @@ $ViewTopic= 'GeneralLedger';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'ProfitAndLoss';// Anchor's id in the manual's html document.
 include('includes/SQL_CommonFunctions.inc');
 include('includes/AccountSectionsDef.inc'); // This loads the $Sections variable
-
+include('includes/KLGeneralFunctions.php');
 
 if (isset($_POST['FromPeriod']) and ($_POST['FromPeriod'] > $_POST['ToPeriod'])){
 	prnMsg(_('The selected period from is actually after the period to') . '! ' . _('Please reselect the reporting period'),'error');
@@ -673,6 +673,9 @@ if ((!isset($_POST['FromPeriod'])
 	$TotalBudgetIncome=0;
 	$TotalLYIncome=0;
 
+// RICARD
+	include('includes/KLGLPajakRatioSetup.php');
+
 	while ($myrow=DB_fetch_array($AccountsResult)) {
 		if ($myrow['groupname']!= $ActGrp){
 			if ($myrow['parentgroupname']!=$ActGrp AND $ActGrp!=''){
@@ -716,6 +719,8 @@ if ((!isset($_POST['FromPeriod'])
 								locale_number_format($GrpPrdLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
 					}
 
+// RICARD 
+					include('includes/KLGLPajakRatioCalculationsByGroup.php');
 					$GrpPrdLY[$Level] = 0;
 					$GrpPrdActual[$Level] = 0;
 					$GrpPrdBudget[$Level] = 0;
@@ -762,6 +767,8 @@ if ((!isset($_POST['FromPeriod'])
 							locale_number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
 							locale_number_format($GrpPrdLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
 				}
+// RICARD 
+				include('includes/KLGLPajakRatioCalculationsByGroup.php');
 				$GrpPrdLY[$Level] = 0;
 				$GrpPrdActual[$Level] = 0;
 				$GrpPrdBudget[$Level] = 0;
@@ -930,6 +937,9 @@ if ((!isset($_POST['FromPeriod'])
 				}
 
 			}
+// RICARD 
+			include('includes/KLGLPajakRatioCalculationsBySection.php');
+
 			$SectionPrdLY =0;
 			$SectionPrdActual =0;
 			$SectionPrdBudget =0;
@@ -1029,6 +1039,10 @@ if ((!isset($_POST['FromPeriod'])
 				$j++;
 			}
 		}
+		
+// RICARD 
+	include('includes/KLGLPajakRatioCalculationsByAccount.php');
+
 	}
 	//end of loop
 
@@ -1036,6 +1050,7 @@ if ((!isset($_POST['FromPeriod'])
 	if ($myrow['groupname']!= $ActGrp){
 		if ($myrow['parentgroupname']!=$ActGrp AND $ActGrp!=''){
 			while ($myrow['groupname']!=$ParentGroups[$Level] AND $Level>0) {
+
 				if ($_POST['Detail']=='Detailed'){
 					echo '<tr>
 						<td colspan="2"></td>
@@ -1058,7 +1073,7 @@ if ((!isset($_POST['FromPeriod'])
 							$ActGrpLabel,
 							locale_number_format(-$GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
 							locale_number_format(-$GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
-							locale_number_format(-$GrpPrdLY[$Level]),$_SESSION['CompanyRecord']['decimalplaces']);
+							locale_number_format(-$GrpPrdLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
 				} else { /*Costs */
 					printf('<tr>
 								<td colspan="2"><h4><i>%s </i></h4></td>
@@ -1074,6 +1089,7 @@ if ((!isset($_POST['FromPeriod'])
 							locale_number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
 							locale_number_format($GrpPrdLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
 				}
+
 				$GrpPrdLY[$Level] = 0;
 				$GrpPrdActual[$Level] = 0;
 				$GrpPrdBudget[$Level] = 0;
@@ -1126,10 +1142,10 @@ if ((!isset($_POST['FromPeriod'])
 			$ParentGroups[$Level] ='';
 		}
 		$j++;
+
 	}
 
 	if ($myrow['sectioninaccounts']!= $Section){
-
 		if ($Section==1) { /*Income*/
 
 			echo '<tr>
@@ -1247,6 +1263,8 @@ if ((!isset($_POST['FromPeriod'])
 
 		$j++;
 
+
+
 	}
 
 	echo '<tr>
@@ -1308,6 +1326,10 @@ if ((!isset($_POST['FromPeriod'])
 /*	echo '</tbody>';// See comment at the begin of the table.*/
 	echo '</table>';
 	echo '</div>';// div id="Report".
+
+// RICARD 
+	include('includes/KLGLPajakRatioDisplay.php');
+
 	echo '<br />',
 		'<div class="centre noprint">', // Form buttons:
 			'<button onclick="javascript:window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
