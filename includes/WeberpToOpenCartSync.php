@@ -1529,12 +1529,15 @@ function SyncRelatedItems($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tablepre
 		$EmailText = $EmailText . "Sync Related Items" . "\n" . PrintTimeInformation($db);
 	}
 
-	$SQL = "SELECT stockid,
-				related
-			FROM relateditems
-			WHERE date_created >= '" . $LastTimeRun . "'
-				OR date_updated >= '" . $LastTimeRun . "'
-			ORDER BY stockid, related";
+	$SQL = "SELECT relateditems.stockid,
+				relateditems.related
+			FROM relateditems, stockmaster
+			WHERE relateditems.stockid = stockmaster.stockid
+				AND stockmaster.discontinued = '0'
+				AND (relateditems.date_created >= '" . $LastTimeRun . "'
+					OR relateditems.date_updated >= '" . $LastTimeRun . "')
+			ORDER BY relateditems.stockid, 
+				relateditems.related";
 
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
