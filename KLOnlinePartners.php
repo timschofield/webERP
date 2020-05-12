@@ -42,10 +42,16 @@ if(isset($_POST['submit'])) {
 					paypalusername ='" . $_POST['PayPalUsername'] . "',
 					paypalpassword ='" . $_POST['PayPalPassword'] . "',
 					paypalsignature ='" . $_POST['PayPalSignature'] . "',
+					accountdirecttransferidr ='" . $_POST['AccountDirectTransferIDR'] . "',
 					accountdokuidr ='" . $_POST['AccountDokuIDR'] . "',
 					accountdokucomissionidr = '" . $_POST['AccountDokuComissionIDR'] . "',
 					comissionflatdoku = '" . $_POST['ComissionFlatDoku'] . "',
 					comissionccdoku = '" . $_POST['ComissionCCDoku'] . "',
+					accountxenditidr ='" . $_POST['AccountXenditIDR'] . "',
+					accountxenditcomissionidr = '" . $_POST['AccountXenditComissionIDR'] . "',
+					comissionxenditflattransfer = '" . $_POST['ComissionXenditFlatTransfer'] . "',
+					comissionxenditflatcc = '" . $_POST['ComissionXenditFlatCC'] . "',
+					comissionxenditpercentcc = '" . $_POST['ComissionXenditPercentCC'] . "',
 					accountpaypalaud ='" . $_POST['AccountPayPalAUD'] . "',
 					accountpaypalcomissionaud = '" . $_POST['AccountPayPalComissionAUD'] . "',
 					accountpaypalusd ='" . $_POST['AccountPayPalUSD'] . "',
@@ -70,6 +76,7 @@ if(isset($_POST['submit'])) {
 		unset($_POST['PayPalUsername']);
 		unset($_POST['PayPalPassword']);
 		unset($_POST['PayPalSignature']);
+		unset($_POST['AccountDirectTransferIDR']);
 		unset($_POST['AccountDokuIDR']);
 		unset($_POST['AccountDokuComissionIDR']);
 		unset($_POST['ComissionFlatDoku']);
@@ -81,6 +88,11 @@ if(isset($_POST['submit'])) {
 		unset($_POST['AccountPayPalEUR']);
 		unset($_POST['AccountPayPalComissionEUR']);
 		unset($_POST['ForeignCurrencySurchargeFactor']);
+		unset($_POST['AccountXenditIDR']);
+		unset($_POST['AccountXenditComissionIDR']);
+		unset($_POST['ComissionXenditFlatTransfer']);
+		unset($_POST['ComissionXenditFlatCC']);
+		unset($_POST['ComissionXenditPercentCC']);
 
 	} elseif($InputError !=1) {
 
@@ -94,10 +106,16 @@ if(isset($_POST['submit'])) {
 								paypalusername,
 								paypalpassword,
 								paypalsignature,
+								accountdirecttransferidr,
 								accountdokuidr,
 								accountdokucomissionidr,
 								comissionflatdoku,
 								comissionccdoku,
+								accountxenditidr,
+								accountxenditcomissionidr,
+								comissionxenditflattransfer,
+								comissionxenditflatcc,
+								comissionxenditpercentcc,
 								accountpaypalaud,
 								accountpaypalcomissionaud,
 								accountpaypalusd,
@@ -112,10 +130,16 @@ if(isset($_POST['submit'])) {
 								'" . $_POST['PayPalUsername'] ."',
 								'" . $_POST['PayPalPassword'] . "',
 								'" . $_POST['PayPalSignature'] . "',
+								'" . $_POST['AccountDirectTransferIDR'] . "',
 								'" . $_POST['AccountDokuIDR'] . "',
 								'" . $_POST['AccountDokuComissionIDR'] . "',
 								'" . $_POST['ComissionFlatDoku'] . "',
 								'" . $_POST['ComissionCCDoku'] . "',
+								'" . $_POST['AccountXenditIDR'] . "',
+								'" . $_POST['AccountXenditComissionIDR'] . "',
+								'" . $_POST['ComissionXenditFlatTransfer'] . "',
+								'" . $_POST['ComissionXenditFlatCC'] . "',
+								'" . $_POST['ComissionXenditPercentCC'] . "',
 								'" . $_POST['AccountPayPalAUD'] . "',
 								'" . $_POST['AccountPayPalComissionAUD'] . "',
 								'" . $_POST['AccountPayPalUSD'] . "',
@@ -138,6 +162,7 @@ if(isset($_POST['submit'])) {
 		unset($_POST['PayPalUsername']);
 		unset($_POST['PayPalPassword']);
 		unset($_POST['PayPalSignature']);
+		unset($_POST['AccountDirectTransferIDR']);
 		unset($_POST['AccountDokuIDR']);
 		unset($_POST['AccountDokuComissionIDR']);
 		unset($_POST['ComissionFlatDoku']);
@@ -149,6 +174,11 @@ if(isset($_POST['submit'])) {
 		unset($_POST['AccountPayPalEUR']);
 		unset($_POST['AccountPayPalComissionEUR']);
 		unset($_POST['ForeignCurrencySurchargeFactor']);
+		unset($_POST['AccountXenditIDR']);
+		unset($_POST['AccountXenditComissionIDR']);
+		unset($_POST['ComissionXenditFlatTransfer']);
+		unset($_POST['ComissionXenditFlatCC']);
+		unset($_POST['ComissionXenditPercentCC']);
 	}
 
 } elseif(isset($_GET['delete'])) {
@@ -261,10 +291,16 @@ if(!isset($_GET['delete'])) {
 					paypalusername,
 					paypalpassword,
 					paypalsignature,
+					accountdirecttransferidr,
 					accountdokuidr,
 					accountdokucomissionidr,
 					comissionflatdoku,
 					comissionccdoku,
+					accountxenditidr,
+					accountxenditcomissionidr,
+					comissionxenditflattransfer,
+					comissionxenditflatcc,
+					comissionxenditpercentcc,
 					accountpaypalaud,
 					accountpaypalcomissionaud,
 					accountpaypalusd,
@@ -285,6 +321,7 @@ if(!isset($_GET['delete'])) {
 		$_POST['PayPalUsername'] = $myrow['paypalusername'];
 		$_POST['PayPalPassword'] = $myrow['paypalpassword'];
 		$_POST['PayPalSignature'] = $myrow['paypalsignature'];
+		$_POST['AccountDirectTransferIDR'] = $myrow['accountdirecttransferidr'];
 		$_POST['AccountDokuIDR'] = $myrow['accountdokuidr'];
 		$_POST['AccountDokuComissionIDR'] = $myrow['accountdokucomissionidr'];
 		$_POST['ComissionFlatDoku'] = $myrow['comissionflatdoku'];
@@ -296,6 +333,11 @@ if(!isset($_GET['delete'])) {
 		$_POST['AccountPayPalEUR'] = $myrow['accountpaypaleur'];
 		$_POST['AccountPayPalComissionEUR'] = $myrow['accountpaypalcomissioneur'];
 		$_POST['ForeignCurrencySurchargeFactor'] = $myrow['foreigncurrencysurchargefactor'];
+		$_POST['AccountXenditIDR'] = $myrow['accountxenditidr'];
+		$_POST['AccountXenditComissionIDR'] = $myrow['accountxenditcomissionidr'];
+		$_POST['ComissionXenditFlatTransfer'] = $myrow['comissionxenditflattransfer'];
+		$_POST['ComissionXenditFlatCC'] = $myrow['comissionxenditflatcc'];
+		$_POST['ComissionXenditPercentCC'] = $myrow['comissionxenditpercentcc'];
 
 		echo '<input type="hidden" name="SelectedPartner" value="' . $SelectedPartner . '" />';
 		echo '<input type="hidden" name="OnlinePartnerCode" value="' . $_POST['OnlinePartnerCode'] . '" />';
@@ -338,6 +380,9 @@ if(!isset($_GET['delete'])) {
 	if(!isset($_POST['PayPalSignature'])) {
 		$_POST['PayPalSignature'] = '';
 	}
+	if(!isset($_POST['AccountDirectTransferIDR'])) {
+		$_POST['AccountDirectTransferIDR'] = '';
+	}
 	if(!isset($_POST['AccountDokuIDR'])) {
 		$_POST['AccountDokuIDR'] = '';
 	}
@@ -371,17 +416,59 @@ if(!isset($_GET['delete'])) {
 	if(!isset($_POST['ForeignCurrencySurchargeFactor'])) {
 		$_POST['ForeignCurrencySurchargeFactor'] = 0;
 	}
+	if(!isset($_POST['AccountXenditIDR'])) {
+		$_POST['AccountXenditIDR'] = '';
+	}
+	if(!isset($_POST['AccountXenditComissionIDR'])) {
+		$_POST['AccountXenditComissionIDR'] = '';
+	}
+	if(!isset($_POST['ComissionXenditFlatTransfer'])) {
+		$_POST['ComissionXenditFlatTransfer'] = 0;
+	}
+	if(!isset($_POST['ComissionXenditFlatCC'])) {
+		$_POST['ComissionXenditFlatCC'] = 0;
+	}
+	if(!isset($_POST['ComissionXenditPercentCC'])) {
+		$_POST['ComissionXenditPercentCC'] = 0;
+	}
 
 	echo '<tr>
 			<td>' . _('Partner Name') . ':' . '</td>
 			<td><input type="text" name="OnlinePartnerName" required="required" value="'. $_POST['OnlinePartnerName'] . '" title="' . _('Enter the online partner name') . '" namesize="51" maxlength="50" /></td>
 		</tr>
-		<tr>
-			<td>' . _('PayPal Account') . ':' . '</td>
+		<tr>';
+
+	echo '<tr>
+			<td>' . _('Foreign Currency Surcharge Factor') . ':</td>
+			<td><input type="text" name="ForeignCurrencySurchargeFactor" class="number"  value="' . $_POST['ForeignCurrencySurchargeFactor'] . '" size="5" maxlength="5" /></td>
+		</tr>';
+	
+	echo '<tr>
+			<th colspan="2">' . 'Direct Bank Transfer Details' . '</th>
+		</tr>';
+
+	echo '<tr>
+		<td>' . _('Direct Bank Transfer IDR GL Account') . ':' . '</td>
+		<td><select name="AccountDirectTransferIDR">';
+	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
+	while ($myrow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountDirectTransferIDR']==$myrow['accountcode']) {
+			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		} else {
+			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		}
+	}
+	echo '</select></td></tr>';
+
+	echo '<tr>
+			<th colspan="2">' . 'PayPal Details' . '</th>
+		</tr>';
+
+	echo '<td>' . _('PayPal Account') . ':' . '</td>
 			<td><input type="text" name="PayPalAccount" value="' . $_POST['PayPalAccount'] . '" size="51" maxlength="50" /></td>
 		</tr>';
 	echo '<tr>
-			<td>' . _('Test ACcount?') . ':</td>
+			<td>' . _('Test Account?') . ':</td>
 			<td><select name="PayPalTest">';
 	if($_POST['PayPalTest']==1) {
 		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
@@ -405,41 +492,6 @@ if(!isset($_GET['delete'])) {
 		<tr>
 			<td>' . _('PayPal Signature') . ':' . '</td>
 			<td><input type="text" name="PayPalSignature" value="' . $_POST['PayPalSignature'] . '" size="51" maxlength="100" /></td>
-		</tr>';
-
-	echo '<tr>
-		<td>' . _('Doku IDR GL Account') . ':' . '</td>
-		<td><select name="AccountDokuIDR">';
-	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
-	while ($myrow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountDokuIDR']==$myrow['accountcode']) {
-			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
-		} else {
-			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
-		}
-	}
-	echo '</select></td></tr>';
-	echo '<tr>
-		<td>' . _('Comission Doku IDR GL Account') . ':' . '</td>
-		<td><select name="AccountDokuComissionIDR">';
-	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
-	while ($myrow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountDokuComissionIDR']==$myrow['accountcode']) {
-			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
-		} else {
-			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
-		}
-	}
-	echo '</select></td></tr>';
-
-	echo '<tr>
-			<td>' . _('Flat Fee Commission DOKU for all tx (in IDR)') . ':</td>
-			<td><input type="text" name="ComissionFlatDoku" class="number"  value="' . $_POST['ComissionFlatDoku'] . '" size="20" maxlength="20" /></td>
-		</tr>';
-
-	echo '<tr>
-			<td>' . _('% Fee Commission DOKU for CC only (%))') . ':</td>
-			<td><input type="text" name="ComissionCCDoku" class="number"  value="' . $_POST['ComissionCCDoku'] . '" size="5" maxlength="5" /></td>
 		</tr>';
 
 	echo '<tr>
@@ -518,10 +570,89 @@ if(!isset($_GET['delete'])) {
 	echo '</select></td></tr>';
 
 	echo '<tr>
-			<td>' . _('Foreign Currency Surcharge Factor') . ':</td>
-			<td><input type="text" name="ForeignCurrencySurchargeFactor" class="number"  value="' . $_POST['ForeignCurrencySurchargeFactor'] . '" size="5" maxlength="5" /></td>
+			<th colspan="2">' . 'DOKU Details' . '</th>
 		</tr>';
-	
+
+	echo '<tr>
+		<td>' . _('Doku IDR GL Account') . ':' . '</td>
+		<td><select name="AccountDokuIDR">';
+	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
+	while ($myrow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountDokuIDR']==$myrow['accountcode']) {
+			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		} else {
+			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		}
+	}
+	echo '</select></td></tr>';
+	echo '<tr>
+		<td>' . _('Comission Doku IDR GL Account') . ':' . '</td>
+		<td><select name="AccountDokuComissionIDR">';
+	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
+	while ($myrow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountDokuComissionIDR']==$myrow['accountcode']) {
+			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		} else {
+			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		}
+	}
+	echo '</select></td></tr>';
+
+	echo '<tr>
+			<td>' . _('Flat Fee Commission DOKU for all tx (in IDR)') . ':</td>
+			<td><input type="text" name="ComissionFlatDoku" class="number"  value="' . $_POST['ComissionFlatDoku'] . '" size="20" maxlength="20" /></td>
+		</tr>';
+
+	echo '<tr>
+			<td>' . _('% Fee Commission DOKU for CC only (%))') . ':</td>
+			<td><input type="text" name="ComissionCCDoku" class="number"  value="' . $_POST['ComissionCCDoku'] . '" size="5" maxlength="5" /></td>
+		</tr>';
+
+	echo '<tr>
+			<th colspan="2">' . 'XENDIT Details' . '</th>
+		</tr>';
+
+	echo '<tr>
+		<td>' . _('Xendit IDR GL Account') . ':' . '</td>
+		<td><select name="AccountXenditIDR">';
+	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
+	while ($myrow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountXenditIDR']==$myrow['accountcode']) {
+			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		} else {
+			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		}
+	}
+	echo '</select></td></tr>';
+
+	echo '<tr>
+		<td>' . _('Comission Xendit IDR GL Account') . ':' . '</td>
+		<td><select name="AccountXenditComissionIDR">';
+	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
+	while ($myrow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountXenditComissionIDR']==$myrow['accountcode']) {
+			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		} else {
+			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		}
+	}
+	echo '</select></td></tr>';
+
+	echo '<tr>
+			<td>' . _('Flat Fee Commission Xendit for Bank Transfers (in IDR)') . ':</td>
+			<td><input type="text" name="ComissionXenditFlatTransfer" class="number"  value="' . $_POST['ComissionXenditFlatTransfer'] . '" size="20" maxlength="20" /></td>
+		</tr>';
+
+	echo '<tr>
+			<td>' . _('Flat Fee Commission Xendit for CC (in IDR)') . ':</td>
+			<td><input type="text" name="ComissionXenditFlatCC" class="number"  value="' . $_POST['ComissionXenditFlatCC'] . '" size="20" maxlength="20" /></td>
+		</tr>';
+
+	echo '<tr>
+			<td>' . _('% Fee Commission Xendit for CC only (%))') . ':</td>
+			<td><input type="text" name="ComissionXenditPercentCC" class="number"  value="' . $_POST['ComissionXenditPercentCC'] . '" size="5" maxlength="5" /></td>
+		</tr>';
+
 	echo '</table>
 		<br />
 		<div class="centre">

@@ -318,7 +318,7 @@ if ($ProcessSection01){
 	
 	if ($KL_AdministrationTeam){
 		// Bank Mandiri or  BCA has enough funds to be transferred to Danamon
-		BalanceAccountControl(ACCOUNT_PTBB_MANDIRI,  1000000,   50000000, $periodnow, $db);
+		BalanceAccountControl("111121100PT",  1000000,   50000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111121101PT",  1000000,  100000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
@@ -3820,6 +3820,7 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 				salesorders.orddate,
 				SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)) AS ordervalue,
 				salesorders.freightcost,
+				salesorders.klocpaymentcode,
 				debtorsmaster.currcode,
 				currencies.decimalplaces
 			FROM salesorders 
@@ -3851,7 +3852,9 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 							<th class="ascending">' . _('Order Value') . '</th>
 							<th class="ascending">' . _('Currency') . '</th>
 							<th class="ascending">' . _('Reminder Bank Transfer') . '</th>
-							<th class="ascending">' . _('Paid by Mandiri') . '</th>
+							<th class="ascending">' . _('Paid Mandiri TT') . '</th>
+							<th class="ascending">' . _('Paid Xendit TT') . '</th>
+							<th class="ascending">' . _('Paid Xendit CC') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -3868,14 +3871,31 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 			}
 			$PaymentLinkText = 'Apply Payment';
 			$PaymentValue = $myrow['ordervalue']+$myrow['freightcost'];
-			$PaymentMandiri = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&Bank=' . ACCOUNT_PTBB_MANDIRI . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentLinkText .'</a>';
-			
+
+			// prepare the links according to the payment code from OpenCart
+			if ($myrow['klocpaymentcode'] == "bank_mandiri"){
+				$PaymentMandiriTT = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&PaymentCode=' . $myrow['klocpaymentcode'] . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentLinkText .'</a>';
+			}else{
+				$PaymentMandiriTT = '';
+			}
+			if ($myrow['klocpaymentcode'] == "xenditmandiriva"){
+				$PaymentXenditTT = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&PaymentCode=' . $myrow['klocpaymentcode'] . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentLinkText .'</a>';
+			}else{
+				$PaymentXenditTT = '';
+			}
+			if ($myrow['klocpaymentcode'] == "xenditcc"){
+				$PaymentXenditCC = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&PaymentCode=' . $myrow['klocpaymentcode'] . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentLinkText .'</a>';
+			}else{
+				$PaymentXenditCC = '';
+			}
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -3888,7 +3908,9 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 					locale_number_format($myrow['ordervalue']+$myrow['freightcost'],$myrow['decimalplaces']),
 					$myrow['currcode'], 
 					$EmailLink,
-					$PaymentMandiri
+					$PaymentMandiriTT,
+					$PaymentXenditTT,
+					$PaymentXenditCC
 					);
 			$i++;
 		}

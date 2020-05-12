@@ -94,6 +94,7 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db,
 					" . $oc_tableprefix . "order.payment_zone,
 					" . $oc_tableprefix . "order.payment_country,
 					" . $oc_tableprefix . "order.payment_method,
+					" . $oc_tableprefix . "order.payment_code,
 					" . $oc_tableprefix . "order.shipping_firstname AS shippingfirstname,
 					" . $oc_tableprefix . "order.shipping_lastname AS shippinglastname,
 					" . $oc_tableprefix . "order.shipping_company AS shippingcompany,
@@ -132,6 +133,7 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db,
 								<th>' . _('Shipping Cost') . '</th>
 								<th>' . _('Shipper') . '</th>
 								<th>' . _('Currency') . '</th>
+								<th>' . _('Payment Code') . '</th>
 								<th>' . _('Country') . '</th>
 								<th>' . _('Action') . '</th>
 							</tr>';
@@ -175,6 +177,7 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db,
 			$Comments =  CleanStringForWebERP($myrow['comment']);
 			$WebERPDateOrder = date('Y-m-d H:i:s', strtotime( $myrow['date_modified'] . -$TimeDifference . ' hours'));
 			$Area = GetWeberpSalesArea($CustomerCode, $Location, $myrow['customer_group_id'], $db);
+			$PaymentCode = $myrow['payment_code'];
 			
 			if($DefaultShipVia == 10){
 				// if shipping is "Pickup From Store"
@@ -229,6 +232,7 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db,
 									freightcost,
 									quotation,
 									area,
+									klocpaymentcode,
 									deliverydate,
 									quotedate,
 									confirmeddate)
@@ -255,6 +259,7 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db,
 									'" . $FreightCost ."',
 									'" . $Quotation ."',
 									'" . $Area ."',
+									'" . $PaymentCode ."',
 									'" . $myrow['date_modified'] . "',
 									'" . $myrow['date_modified'] . "',
 									'" . $myrow['date_modified'] . "')";
@@ -262,6 +267,7 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db,
 				}
 				if ($ShowMessages){
 					printf('<td>%s</td>
+							<td>%s</td>
 							<td>%s</td>
 							<td>%s</td>
 							<td>%s</td>
@@ -278,6 +284,7 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db,
 							$FreightCost,
 							$DefaultShipVia,
 							$myrow['currency_code'],
+							$PaymentCode,
 							$ShippingCountry,
 							$Action
 							);
@@ -289,6 +296,7 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db,
 											  " = " . $myrow['email'] .
 											  " = " . $myrow['currency_code'] .
 											  " = " . $ShippingCountry .
+											  " = " . $PaymentCode .
 											  " --> " . $Action . "\n";
 				}
 				// Now the items of the order

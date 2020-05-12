@@ -4,6 +4,7 @@ include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 $Title = _('Kapal-Laut Receipt Payment Online');
 include('includes/header.php');
+include('includes/KLDefines.php');
 
 //Get Out if we don't have the data needed to work with
 if (!isset($_GET['OrderNo']) OR $_GET['OrderNo']==''){
@@ -11,8 +12,8 @@ if (!isset($_GET['OrderNo']) OR $_GET['OrderNo']==''){
 	include('includes/footer.php');
 	exit;
 }
-if (!isset($_GET['Bank']) OR $_GET['Bank']==''){
-	prnMsg( _('We need a bank code to process the payment of online order') , 'error');
+if (!isset($_GET['PaymentCode']) OR $_GET['PaymentCode']==''){
+	prnMsg( _('We need a payment code to process the payment of online order') , 'error');
 	include('includes/footer.php');
 	exit;
 }
@@ -25,6 +26,8 @@ if (!isset($_GET['Amount']) OR $_GET['Amount']==''){
 	prnMsg( _('We need an amount to process the payment of online order') , 'error');
 	include('includes/footer.php');
 	exit;
+}else{
+	$TotalAmount = $_GET['Amount'];
 }
 if ($_GET['CustomerCode'] == "WEB-KL-IDR"){
 	$FunctionalExRate = 1;
@@ -39,8 +42,41 @@ if ($_GET['CustomerCode'] == "WEB-KL-IDR"){
 $BatchNo = GetNextTransNo(12,$db);
 $Today = date('Y-m-d');
 $PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
-$Narrative = 'Online ' . $_GET['OrderNo'];
+$Narrative = 'Online ' . $_GET['OrderNo'] . ' ' . $_GET['PaymentCode'];
 $BankTransType = "Transfer";
+
+// let's find the accounts, commission, etc to charge to the different payment codes
+$SQLAccounts = "SELECT accountdirecttransferidr,
+			accountxenditidr,
+			accountxenditcomissionidr,
+			comissionxenditflattransfer,
+			comissionxenditflatcc,
+			comissionxenditpercentcc
+	FROM locations, klonlinepartners
+	WHERE locations.onlinepartnercode = klonlinepartners.onlinepartnercode
+		AND locations.loccode = '" . OPENCART_DEFAULT_LOCATION . "'";
+$ErrMsg ='Could not get the GL Trasnfers and Commissions for online shop payments because';
+$resultAccounts = DB_query($SQLAccounts,$ErrMsg);
+if(DB_num_rows($resultAccounts) != 0){
+	$myrowAccounts = DB_fetch_array($resultAccounts);
+	if ($_GET['PaymentCode'] == "bank_mandiri"){
+		// bank Mandiri direct transfer has no commissions 
+		$GLAccountTransfer = $myrowAccounts['accountdirecttransferidr'];
+		$GLAccountCommission = "";
+		$Commission = 0;
+	}elseif  ($_GET['PaymentCode'] == "xenditmandiriva"){
+		// Xendit transfer via mandiri has commissions
+		$GLAccountTransfer = $myrowAccounts['accountxenditidr'];
+		$GLAccountCommission = $myrowAccounts['accountxenditcomissionidr'];
+		$Commission = round($myrowAccounts['comissionxenditflattransfer'],0);
+	}elseif  ($_GET['PaymentCode'] == "xenditcc"){
+		// Xendit transfer via CC has commissions
+		$GLAccountTransfer = $myrowAccounts['accountxenditidr'];
+		$GLAccountCommission = $myrowAccounts['accountxenditcomissionidr'];
+		$Commission = round(($myrowAccounts['comissionxenditflatcc'] + ($TotalAmount * ($myrowAccounts['comissionxenditpercentcc']/100))) ,0);
+	}
+	$NetAmount = $TotalAmount - $Commission;
+}
 
 $result = DB_Txn_Begin();
 
@@ -71,7 +107,7 @@ $SQL = "INSERT INTO debtortrans (transno,
 			'" . $Narrative . "',
 			'',
 			'" . ($FunctionalExRate*$ExRate) . "',
-			'" . -$_GET['Amount'] . "',
+			'" . -$TotalAmount . "',
 			'" . 0 . "',
 			'" . $Narrative. "',
 			''
@@ -83,7 +119,7 @@ $result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 $SQL = "UPDATE debtorsmaster
 			SET lastpaiddate = '" . $Today . "',
-			lastpaid='" . $_GET['Amount'] ."'
+			lastpaid='" . $TotalAmount ."'
 		WHERE debtorsmaster.debtorno='" . $_GET['CustomerCode'] . "'";
 
 $DbgMsg = _('The SQL that failed to update the date of the last payment received was');
@@ -103,13 +139,13 @@ $SQL="INSERT INTO banktrans (type,
 	VALUES (
 		12,
 		'" . $BatchNo . "',
-		'" . $_GET['Bank'] . "',
+		'" . $GLAccountTransfer . "',
 		'" . $Narrative . "',
 		'" . $ExRate . "',
 		'" . $FunctionalExRate . "',
 		'" . $Today . "',
 		'" . $BankTransType . "',
-		'" . ($_GET['Amount'] * $FunctionalExRate * $ExRate) . "',
+		'" . ($NetAmount * $FunctionalExRate * $ExRate) . "',
 		'" . $Currency . "'
 	)";
 $DbgMsg = _('The SQL that failed to insert the bank account transaction was');
@@ -128,13 +164,35 @@ $SQL="INSERT INTO gltrans (type,
 		'" . $BatchNo . "',
 		'" . $Today . "',
 		'" . $PeriodNo . "',
-		'" . $_GET['Bank'] . "',
+		'" . $GLAccountTransfer . "',
 		'" . $Narrative . "',
-		'" . $_GET['Amount'] . "'
+		'" . $NetAmount . "'
 	)";
-$DbgMsg = _('The SQL that failed to insert the GL transaction fro the bank account debit was');
+$DbgMsg = _('The SQL that failed to insert the GL transaction from the bank account debit was');
 $ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
 $result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+
+if ($Commission > 0){
+	$SQL="INSERT INTO gltrans (type,
+								typeno,
+								trandate,
+								periodno,
+								account,
+								narrative,
+								amount)
+		VALUES (
+			12,
+			'" . $BatchNo . "',
+			'" . $Today . "',
+			'" . $PeriodNo . "',
+			'" . $GLAccountCommission . "',
+			'" . $Narrative . "',
+			'" . $Commission . "'
+		)";
+	$DbgMsg = _('The SQL that failed to insert the GL transaction from the commission was');
+	$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
+	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+}
 
 $SQL="INSERT INTO gltrans ( type,
 							typeno,
@@ -150,7 +208,7 @@ $SQL="INSERT INTO gltrans ( type,
 				'" . $PeriodNo . "',
 				'" . $_SESSION['CompanyRecord']['debtorsact'] . "',
 				'" . $Narrative . "',
-				'" . -$_GET['Amount'] . "'
+				'" . -$TotalAmount . "'
 				)";
 $DbgMsg = _('The SQL that failed to insert the GL transaction for the debtors account credit was');
 $ErrMsg = _('Cannot insert a GL transaction for the debtors account credit');
@@ -172,9 +230,11 @@ echo '<table class="selection">
 		</tr>';
 
 echo '<tr><td>' . _('Order Number') . ':</td> <td>' . $_GET['OrderNo'] . '</td></tr>';
-echo '<tr><td>' . _('GL Bank Account') . ':</td> <td>' . $_GET['Bank'] . '</td></tr>';
+echo '<tr><td>' . _('GL Bank Account') . ':</td> <td>' . $GLAccountTransfer . '</td></tr>';
 echo '<tr><td>' . _('Customer Code') . ':</td> <td>' . $_GET['CustomerCode'] . '</td></tr>';
-echo '<tr><td>' . _('Amount') . ':</td> <td>' . number_format($_GET['Amount'],0) . ' ' . $Currency . '</td></tr>';
+echo '<tr><td>' . _('Total Amount') . ':</td> <td>' . number_format($TotalAmount,0) . ' ' . $Currency . '</td></tr>';
+echo '<tr><td>' . _('Net Amount') . ':</td> <td>' . number_format($NetAmount,0) . ' ' . $Currency . '</td></tr>';
+echo '<tr><td>' . _('Commission') . ':</td> <td>' . number_format($Commission,0) . ' ' . $Currency . '</td></tr>';
 echo '</table>';	//end of table of final show of order
 
 	
