@@ -318,8 +318,6 @@ if ($ProcessSection01){
 	
 	if ($KL_AdministrationTeam){
 		// Bank Mandiri or  BCA has enough funds to be transferred to Danamon
-		BalanceAccountControl("111121100PT",  1000000,   50000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
 		BalanceAccountControl("111121101PT",  1000000,  100000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111121110PT",   100000,  300000000, $periodnow, $db);
