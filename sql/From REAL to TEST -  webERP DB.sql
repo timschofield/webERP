@@ -588,4 +588,6 @@ UPDATE  kurakura_kl_test_erp.`config` SET  `confvalue` =  'testmerchant_api1.kap
 UPDATE kurakura_kl_test_erp.www_users SET theme = "gel";
 UPDATE kurakura_kl_test_erp.www_users SET blocked = 0 WHERE userid LIKE "999%";
 
+UPDATE  kurakura_kl_test_erp.`klonlinepartners` SET  `paypaltest` =  1;
+
 SET FOREIGN_KEY_CHECKS=1;
