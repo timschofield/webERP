@@ -3392,6 +3392,7 @@ function OldOnlineQuotations($NumDays, $RootPath, $db){
 		$TableHeader = '<tr>
 							<th class="ascending">' . _('#') . '</th>
 							<th class="ascending">' . _('Order') . '</th>
+							<th class="ascending">' . _('#KL-Website') . '</th>
 							<th class="ascending">' . _('Customer') . '</th>
 							<th class="ascending">' . _('Name') . '</th>
 							<th class="ascending">' . _('Order Date') . '</th>
@@ -3414,6 +3415,7 @@ function OldOnlineQuotations($NumDays, $RootPath, $db){
 			}
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -3423,6 +3425,7 @@ function OldOnlineQuotations($NumDays, $RootPath, $db){
 					</tr>', 
 					$i, 
 					$CodeLink, 
+					locale_number_format($myrow['customerref']),
 					$myrow['debtorno'], 
 					$myrow['name'], 
 					ConvertSQLDate($myrow['orddate']), 
@@ -3844,6 +3847,7 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 		$TableHeader = '<tr>
 							<th class="ascending">' . _('#') . '</th>
 							<th class="ascending">' . _('Order') . '</th>
+							<th class="ascending">' . _('#KL-Website') . '</th>
 							<th class="ascending">' . _('Customer') . '</th>
 							<th class="ascending">' . _('Name') . '</th>
 							<th class="ascending">' . _('Order Date') . '</th>
@@ -3888,6 +3892,7 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 			}
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -3900,6 +3905,7 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 					</tr>', 
 					$i, 
 					$CodeLink, 
+					locale_number_format($myrow['customerref']),
 					$myrow['debtorno'], 
 					$myrow['name'], 
 					ConvertSQLDate($myrow['orddate']), 
@@ -3996,6 +4002,7 @@ function OutstandingOrders($customertype, $ordertype, $RootPath, $db){
 	}
 	
 	$SQL = "SELECT salesorders.orderno,	
+				salesorders.customerref,
 				debtorsmaster.debtorno, "
 			   . $namefield . ",
 				salesorders.orddate,
@@ -4020,6 +4027,7 @@ function OutstandingOrders($customertype, $ordertype, $RootPath, $db){
 		$TableHeader = '<tr>
 							<th class="ascending">' . _('#') . '</th>
 							<th class="ascending">' . _('Order') . '</th>
+							<th class="ascending">' . _('#KL-Website') . '</th>
 							<th class="ascending">' . _('Customer') . '</th>
 							<th class="ascending">' . _('Name') . '</th>
 							<th class="ascending">' . _('Order Date') . '</th>
@@ -4033,6 +4041,7 @@ function OutstandingOrders($customertype, $ordertype, $RootPath, $db){
 			$CodeLink = '<a href="' . $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . $myrow['orderno'] . '">' . $myrow['orderno'] . '</a>';
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -4040,6 +4049,7 @@ function OutstandingOrders($customertype, $ordertype, $RootPath, $db){
 					</tr>', 
 					$i, 
 					$CodeLink, 
+					locale_number_format($myrow['customerref']),
 					$myrow['debtorno'], 
 					$myrow['name'], 
 					ConvertSQLDate($myrow['orddate']), 
