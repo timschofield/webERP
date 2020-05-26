@@ -3406,13 +3406,9 @@ function OldOnlineQuotations($NumDays, $RootPath, $db){
 		while ($myrow = DB_fetch_array($result)) {
 			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . $myrow['orderno'] . '">' . $myrow['orderno'] . '</a>';
+			// if we have not send the remind transfer email yet, makes no sense sending it now, after $NumDays days :-(
 			$EmailType = "RemindBankTransfer";
-			if ($myrow['klemailremindbanktransfer']== '0000-00-00'){
-				$EmailLinkText = 'Send now';
-				$EmailLink = '<a href="' . $RootPath . '/KLFollowUpOnlineEmails.php?TransNo=' . $myrow['orderno'] . '&EmailType=' . $EmailType. '&CustomerOrder=' . $myrow['customerref'] . '">'. $EmailLinkText .'</a>';
-			}else{
-				$EmailLink = ConvertSQLDate($myrow['klemailremindbanktransfer']);
-			}
+			$EmailLink = ConvertSQLDate($myrow['klemailremindbanktransfer']);
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -3867,7 +3863,7 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 			$EmailType = "RemindBankTransfer";
 			if ($myrow['klemailremindbanktransfer']== '0000-00-00'){
 				$EmailLinkText = 'Send now';
-				$EmailLink = '<a href="' . $RootPath . '/KLFollowUpOnlineEmails.php?TransNo=' . $myrow['orderno'] . '&EmailType=' . $EmailType. '&CustomerOrder=' . $myrow['customerref'] . '">'. $EmailLinkText .'</a>';
+				$EmailLink = '<a href="' . $RootPath . '/KLFollowUpOnlineEmails.php?TransNo=' . $myrow['orderno'] . '&EmailType=' . $EmailType . '&PaymentCode=' . $myrow['klocpaymentcode'] . '&CustomerOrder=' . $myrow['customerref'] . '">'. $EmailLinkText .'</a>';
 			}else{
 				$EmailLink = ConvertSQLDate($myrow['klemailremindbanktransfer']);
 			}
@@ -3973,22 +3969,27 @@ function OutstandingOrders($customertype, $ordertype, $RootPath, $db){
 		$whereclause = " AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_RETAIL . ")";
 		$namefield = " debtorsmaster.name ";
 		$Titletext = "Outstanding Retail";
+		$WebsiteIDName = "";
 	}elseif ($customertype == "Consignment"){
 		$whereclause = " AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_CONSIGNMENT . ")";
 		$namefield = " debtorsmaster.name ";
 		$Titletext = "Outstanding Consignment";
+		$WebsiteIDName = "";
 	}elseif ($customertype == "Wholesale"){
 		$whereclause = " AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_WHOLESALE . ")";
 		$namefield = " debtorsmaster.name ";
 		$Titletext = "Outstanding Wholesale";
+		$WebsiteIDName = "";
 	}elseif ($customertype == "Online"){
 		$whereclause = " AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_ONLINE . ")";
 		$namefield = " salesorders.deliverto AS name ";
 		$Titletext = "Outstanding Online";
+		$WebsiteIDName = "#KL-Website";
 	}else{
 		$namefield = " debtorsmaster.name ";
 		$whereclause = " ";
 		$Titletext = _('Outstanding');
+		$WebsiteIDName = "";
 	}
 	
 	if ($ordertype == "Quotation"){
@@ -4027,7 +4028,7 @@ function OutstandingOrders($customertype, $ordertype, $RootPath, $db){
 		$TableHeader = '<tr>
 							<th class="ascending">' . _('#') . '</th>
 							<th class="ascending">' . _('Order') . '</th>
-							<th class="ascending">' . _('#KL-Website') . '</th>
+							<th class="ascending">' . $WebsiteIDName . '</th>
 							<th class="ascending">' . _('Customer') . '</th>
 							<th class="ascending">' . _('Name') . '</th>
 							<th class="ascending">' . _('Order Date') . '</th>
@@ -4039,6 +4040,12 @@ function OutstandingOrders($customertype, $ordertype, $RootPath, $db){
 		while ($myrow = DB_fetch_array($result)) {
 			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . $myrow['orderno'] . '">' . $myrow['orderno'] . '</a>';
+			if ($customertype == "Online"){
+				$WebsiteID = locale_number_format($myrow['customerref']);
+			}else{
+				$WebsiteID = "";
+			}
+
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -4049,7 +4056,7 @@ function OutstandingOrders($customertype, $ordertype, $RootPath, $db){
 					</tr>', 
 					$i, 
 					$CodeLink, 
-					locale_number_format($myrow['customerref']),
+					$WebsiteID,
 					$myrow['debtorno'], 
 					$myrow['name'], 
 					ConvertSQLDate($myrow['orddate']), 

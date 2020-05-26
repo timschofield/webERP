@@ -343,22 +343,64 @@ if ($_GET['EmailType']!='NoSendThankYou'){
 	}
 
 	if ($_GET['EmailType']=='RemindBankTransfer'){
-		  $MailMessage .= '
-				<tr>
-					<td colspan="4">
-						<p>' . 'On ' . ConvertSQLDate($myrow['orddate']) . ' we received an online order from you to be settle by bank transfer to our account, but after checking our bank account we have not received funds from you.' . '</p>
-					</td>
-				</tr>
-				</table>';
-		  $MailMessage .=  ShowBankDetails ($myrow['currcode'], $_GET['TransNo']);
-		  $MailMessage .= '
-				<table cellpadding="2" cellspacing="2">
-				<tr>
-					<td colspan="4">
-						' . 'If you already send the funds or plan to send send the funds via bank transfer: Please check with your bank and send us the scanned proof of transfer, so we can double check in our bank.' . '
-					</td>
-				</tr>';
-		$MailMessage .= '<br/>';
+		if ($_GET['PaymentCode'] == "bank_mandiri"){
+			// bank Mandiri direct transfer
+			  $MailMessage .= '
+					<tr>
+						<td colspan="4">
+							<p>' . 'On ' . ConvertSQLDate($myrow['orddate']) . ' we received an online order from you to be settled by bank transfer to our bank account, but we have not received funds from you yet.' . '</p>
+						</td>
+					</tr>
+					</table>';
+			  $MailMessage .=  ShowBankDetails ($myrow['currcode'], $_GET['TransNo']);
+			  $MailMessage .= '
+					<table cellpadding="2" cellspacing="2">
+					<tr>
+						<td colspan="4">
+							' . 'If you already send the funds or plan to send send the funds via bank transfer: Please check with your bank and send us the scanned proof of transfer, so we can double check in our bank.' . '
+						</td>
+					</tr>';
+			$MailMessage .= '<br/>';
+		}elseif  ($_GET['PaymentCode'] == "xenditmandiriva"){
+			// Xendit transfer via mandiri
+			  $MailMessage .= '
+					<tr>
+						<td colspan="4">
+							<p>' . 'On ' . ConvertSQLDate($myrow['orddate']) . ' we received an online order from you to be settled by virtual account transfer to our account, but after checking our payment gateway service, we have not received funds from you yet.' . '</p>
+						</td>
+					</tr>
+					</table>';
+			  $MailMessage .= '
+					<table cellpadding="2" cellspacing="2">
+					<tr>
+						<td colspan="4">
+							' . 'If you already send the funds or plan to send send the funds via virtual account transfer: Please let us know.' . '
+						</td>
+					</tr>
+					<tr>
+						<td colspan="4">
+							' . 'If not, please be aware that the payment process will be expired in 24 hours, hence you will have to order again.' . '
+						</td>
+					</tr>';
+			$MailMessage .= '<br/>';
+		}elseif  ($_GET['PaymentCode'] == "xenditcc"){
+			// Xendit transfer via CC 
+			  $MailMessage .= '
+					<tr>
+						<td colspan="4">
+							<p>' . 'On ' . ConvertSQLDate($myrow['orddate']) . ' credit card to our account, but after checking our payment gateway service, we have not received funds from you yet.' . '</p>
+						</td>
+					</tr>
+					</table>';
+			  $MailMessage .= '
+					<table cellpadding="2" cellspacing="2">
+					<tr>
+						<td colspan="4">
+							' . 'If you already send the funds or plan to send send the funds via credit card: Please let us know.' . '
+						</td>
+					</tr>';
+			$MailMessage .= '<br/>';
+		}
 	}
 
 	if ($_GET['EmailType']=='PaymentConfirmation'){
