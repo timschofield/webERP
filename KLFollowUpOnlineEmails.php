@@ -462,6 +462,7 @@ if ($_GET['EmailType']!='NoSendThankYou'){
 				<tr>
 					<td colspan="4">
 						<p>' . 'On '. ConvertSQLDate($myrow['orddate']) .' you purchased some jewellery from us, and we shipped it via ' . DB_escape_string($myrow['shippername']). '.</p>
+						<p>' . 'We would love to see your picture with our jewelry in our instagram @kapallautbali, follow us and tag us in your picture, and you will receive a discount code for future purchase online.' . '</p>
 						<p>' . 'You should have received it few days ago, and we very much hope you are enjoying your new jewels. ' . '</p>
 						<p>' . 'Should you wish to comment your experience on our Facebook fan page you can find us here http://www.facebook.com/KapalLautBali.' . '</p>
 						<p>' . 'Be sure we will read it to all our staff at our daily briefing! We do take all feedback seriously. If there is any information that you think will help us improve, feel free to email us direct to sales@kapal-laut.com ' . '</p>
