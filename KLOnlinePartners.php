@@ -52,6 +52,7 @@ if(isset($_POST['submit'])) {
 					comissionxenditflattransfer = '" . $_POST['ComissionXenditFlatTransfer'] . "',
 					comissionxenditflatcc = '" . $_POST['ComissionXenditFlatCC'] . "',
 					comissionxenditpercentcc = '" . $_POST['ComissionXenditPercentCC'] . "',
+					accountcomissionppn ='" . $_POST['AccountComissionPPN'] . "',
 					accountpaypalaud ='" . $_POST['AccountPayPalAUD'] . "',
 					accountpaypalcomissionaud = '" . $_POST['AccountPayPalComissionAUD'] . "',
 					accountpaypalusd ='" . $_POST['AccountPayPalUSD'] . "',
@@ -93,6 +94,7 @@ if(isset($_POST['submit'])) {
 		unset($_POST['ComissionXenditFlatTransfer']);
 		unset($_POST['ComissionXenditFlatCC']);
 		unset($_POST['ComissionXenditPercentCC']);
+		unset($_POST['AccountComissionPPN']);
 
 	} elseif($InputError !=1) {
 
@@ -116,6 +118,7 @@ if(isset($_POST['submit'])) {
 								comissionxenditflattransfer,
 								comissionxenditflatcc,
 								comissionxenditpercentcc,
+								accountcomissionppn,
 								accountpaypalaud,
 								accountpaypalcomissionaud,
 								accountpaypalusd,
@@ -140,6 +143,7 @@ if(isset($_POST['submit'])) {
 								'" . $_POST['ComissionXenditFlatTransfer'] . "',
 								'" . $_POST['ComissionXenditFlatCC'] . "',
 								'" . $_POST['ComissionXenditPercentCC'] . "',
+								'" . $_POST['AccountComissionPPN'] . "',
 								'" . $_POST['AccountPayPalAUD'] . "',
 								'" . $_POST['AccountPayPalComissionAUD'] . "',
 								'" . $_POST['AccountPayPalUSD'] . "',
@@ -179,6 +183,7 @@ if(isset($_POST['submit'])) {
 		unset($_POST['ComissionXenditFlatTransfer']);
 		unset($_POST['ComissionXenditFlatCC']);
 		unset($_POST['ComissionXenditPercentCC']);
+		unset($_POST['AccountComissionPPN']);
 	}
 
 } elseif(isset($_GET['delete'])) {
@@ -301,6 +306,7 @@ if(!isset($_GET['delete'])) {
 					comissionxenditflattransfer,
 					comissionxenditflatcc,
 					comissionxenditpercentcc,
+					accountcomissionppn,
 					accountpaypalaud,
 					accountpaypalcomissionaud,
 					accountpaypalusd,
@@ -338,6 +344,7 @@ if(!isset($_GET['delete'])) {
 		$_POST['ComissionXenditFlatTransfer'] = $myrow['comissionxenditflattransfer'];
 		$_POST['ComissionXenditFlatCC'] = $myrow['comissionxenditflatcc'];
 		$_POST['ComissionXenditPercentCC'] = $myrow['comissionxenditpercentcc'];
+		$_POST['AccountComissionPPN'] = $myrow['accountcomissionppn'];
 
 		echo '<input type="hidden" name="SelectedPartner" value="' . $SelectedPartner . '" />';
 		echo '<input type="hidden" name="OnlinePartnerCode" value="' . $_POST['OnlinePartnerCode'] . '" />';
@@ -431,6 +438,9 @@ if(!isset($_GET['delete'])) {
 	if(!isset($_POST['ComissionXenditPercentCC'])) {
 		$_POST['ComissionXenditPercentCC'] = 0;
 	}
+	if(!isset($_POST['AccountComissionPPN'])) {
+		$_POST['AccountComissionPPN'] = 0;
+	}
 
 	echo '<tr>
 			<td>' . _('Partner Name') . ':' . '</td>
@@ -443,6 +453,19 @@ if(!isset($_GET['delete'])) {
 			<td><input type="text" name="ForeignCurrencySurchargeFactor" class="number"  value="' . $_POST['ForeignCurrencySurchargeFactor'] . '" size="5" maxlength="5" /></td>
 		</tr>';
 	
+	echo '<tr>
+		<td>' . _('PPN Paid in Commissions GL Account') . ':' . '</td>
+		<td><select name="AccountComissionPPN">';
+	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
+	while ($myrow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountComissionPPN']==$myrow['accountcode']) {
+			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		} else {
+			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		}
+	}
+	echo '</select></td></tr>';
+
 	echo '<tr>
 			<th colspan="2">' . 'Direct Bank Transfer Details' . '</th>
 		</tr>';

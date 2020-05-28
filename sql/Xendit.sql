@@ -31,3 +31,6 @@ UPDATE salesorders SET klocpaymentcode = "bank_mandiri" WHERE debtorno = "WEB-KL
 Ara cal:
 modificar KLReceiptPaymentOnline per diferents payment codes
 */
+
+ALTER TABLE `klonlinepartners` 
+ADD `` VARCHAR(20) NOT NULL COMMENT 'GL Account for commissionPPN ' AFTER `comissionxenditpercentcc`;

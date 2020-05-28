@@ -49,6 +49,7 @@ $BankTransType = "Transfer";
 $SQLAccounts = "SELECT accountdirecttransferidr,
 			accountxenditidr,
 			accountxenditcomissionidr,
+			accountcomissionppn,
 			comissionxenditflattransfer,
 			comissionxenditflatcc,
 			comissionxenditpercentcc
@@ -63,19 +64,23 @@ if(DB_num_rows($resultAccounts) != 0){
 		// bank Mandiri direct transfer has no commissions 
 		$GLAccountTransfer = $myrowAccounts['accountdirecttransferidr'];
 		$GLAccountCommission = "";
+		$GLAccountCommissionPPN = "";
 		$Commission = 0;
 	}elseif  ($_GET['PaymentCode'] == "xenditmandiriva"){
 		// Xendit transfer via mandiri has commissions
 		$GLAccountTransfer = $myrowAccounts['accountxenditidr'];
 		$GLAccountCommission = $myrowAccounts['accountxenditcomissionidr'];
+		$GLAccountCommissionPPN = $myrowAccounts['accountcomissionppn'];
 		$Commission = round($myrowAccounts['comissionxenditflattransfer'],0);
 	}elseif  ($_GET['PaymentCode'] == "xenditcc"){
 		// Xendit transfer via CC has commissions
 		$GLAccountTransfer = $myrowAccounts['accountxenditidr'];
 		$GLAccountCommission = $myrowAccounts['accountxenditcomissionidr'];
+		$GLAccountCommissionPPN = $myrowAccounts['accountcomissionppn'];
 		$Commission = round(($myrowAccounts['comissionxenditflatcc'] + ($TotalAmount * ($myrowAccounts['comissionxenditpercentcc']/100))) ,0);
 	}
-	$NetAmount = $TotalAmount - $Commission;
+	$CommissionPPN = round($Commission * PPN_PERCENT / 100, 0);
+	$NetAmount = $TotalAmount - $Commission - $CommissionPPN;
 }
 
 $result = DB_Txn_Begin();
@@ -194,6 +199,28 @@ if ($Commission > 0){
 	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 }
 
+if ($CommissionPPN > 0){
+	$SQL="INSERT INTO gltrans (type,
+								typeno,
+								trandate,
+								periodno,
+								account,
+								narrative,
+								amount)
+		VALUES (
+			12,
+			'" . $BatchNo . "',
+			'" . $Today . "',
+			'" . $PeriodNo . "',
+			'" . $GLAccountCommissionPPN . "',
+			'" . $Narrative . "',
+			'" . $CommissionPPN . "'
+		)";
+	$DbgMsg = _('The SQL that failed to insert the GL transaction from the PPN commission was');
+	$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
+	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+}
+
 $SQL="INSERT INTO gltrans ( type,
 							typeno,
 							trandate,
@@ -235,6 +262,7 @@ echo '<tr><td>' . _('Customer Code') . ':</td> <td>' . $_GET['CustomerCode'] . '
 echo '<tr><td>' . _('Total Amount') . ':</td> <td>' . number_format($TotalAmount,0) . ' ' . $Currency . '</td></tr>';
 echo '<tr><td>' . _('Net Amount') . ':</td> <td>' . number_format($NetAmount,0) . ' ' . $Currency . '</td></tr>';
 echo '<tr><td>' . _('Commission') . ':</td> <td>' . number_format($Commission,0) . ' ' . $Currency . '</td></tr>';
+echo '<tr><td>' . _('Commission PPN') . ':</td> <td>' . number_format($CommissionPPN,0) . ' ' . $Currency . '</td></tr>';
 echo '</table>';	//end of table of final show of order
 
 	
