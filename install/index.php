@@ -165,19 +165,23 @@ if(!extension_loaded('mbstring')){
 		$DatabaseName = '';
 		$DefaultDatabase = '';
 
-	}else{
+	}
 
+	include('../includes/MiscFunctions.php');
+
+	if (isset($_POST['Language']) && checkLanguageChoice($_POST['Language'])) {
 		$Language = $_POST['Language'];
-		if(substr($Language,0,2)=='zh'){//To help set the default time zone
+
+		if(substr($Language,0,2) == 'zh') { //To help set the default time zone
 			date_default_timezone_set('Asia/Shanghai');
 		}
-		$DefaultLanguage = $_POST['Language'];
 
-		}
+		$DefaultLanguage = $Language;
+	}
 
 	$PathPrefix = '../';//To make the LanguageSetup.php script run properly
 	include('../includes/LanguageSetup.php');
-	include('../includes/MiscFunctions.php');
+
 	$DefaultTheme = 'xenos';
 
 	// Prevent the installation file from running again:
