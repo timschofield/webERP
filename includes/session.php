@@ -71,7 +71,7 @@ if (isset($_SESSION['DatabaseName'])) {
 					$PostVariableValue[$PostArrayKey] = stripslashes($value[$PostArrayKey]);
 					}
 				*/
-				$PostVariableValue[$PostArrayKey] = quote_smart($value[$PostArrayKey]);
+				$PostVariableValue[$PostArrayKey] = quote_smart($PostVariableValue[$PostArrayKey]);
 				$_POST[$PostVariableName][$PostArrayKey] = DB_escape_string(htmlspecialchars($PostArrayValue, ENT_QUOTES, 'UTF-8'));
 
 			}
@@ -169,7 +169,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 	switch ($rc) {
 		case UL_OK; //user logged in successfully
 		include ($PathPrefix . 'includes/LanguageSetup.php'); //set up the language
-		
+
 	break;
 
 	case UL_SHOWLOGIN:
@@ -267,7 +267,7 @@ if (in_array(9, $_SESSION['AllowedPageSecurityTokens']) and count($_SESSION['All
 	$SupplierLogin = 1;
 } else {
 	$SupplierLogin = 0; //false
-	
+
 }
 if (in_array(1, $_SESSION['AllowedPageSecurityTokens']) and count($_SESSION['AllowedPageSecurityTokens']) == 2) {
 	$CustomerLogin = 1;
@@ -276,10 +276,10 @@ if (in_array(1, $_SESSION['AllowedPageSecurityTokens']) and count($_SESSION['All
 }
 if (in_array($_SESSION['PageSecurityArray']['WWW_Users.php'], $_SESSION['AllowedPageSecurityTokens'])) { /*System administrator login */
 	$debug = 1; //allow debug messages
-	
+
 } else {
 	$debug = 0; //don't allow debug messages
-	
+
 }
 
 if ($FirstLogin and !$SupplierLogin and !$CustomerLogin and $_SESSION['ShowDashboard'] == 1) {
