@@ -2,11 +2,6 @@
 
 /* $Id: DailySalesInquiry.php 6944 2014-10-27 07:15:34Z daintree $*/
 
-/**************************************************************************************
-KL RICARD MODIFICATIONS:
-- Added filter current = 1 in select for salesman
-***************************************************************************************/
-
 include('includes/session.php');
 $Title = _('Daily Sales Inquiry');
 include('includes/header.php');
@@ -68,6 +63,29 @@ if($_SESSION['SalesmanLogin'] != '') {
 	}
 	echo '</select></td>';
 }
+
+echo '</tr>
+	  <tr>';
+
+echo '<td>' . _('Customer Type') . ':</td><td><select tabindex="3" name="CustomerType">';
+$CustomerTypeResult = DB_query("SELECT typename, typeid FROM debtortype ORDER BY typename");
+if (!isset($_POST['CustomerType'])){
+	$_POST['CustomerType'] = 'All';
+	echo '<option selected="selected" value="All">' . _('All') . '</option>';
+} else {
+	echo '<option value="All">' . _('All') . '</option>';
+}
+while ($CustomerTypeRow = DB_fetch_array($CustomerTypeResult)){
+
+	if ($_POST['CustomerType']==$CustomerTypeRow['typeid']) {
+		echo '<option selected="selected" value="' . $CustomerTypeRow['typeid'] . '">' . $CustomerTypeRow['typename'] . '</option>';
+	} else {
+		echo '<option value="' . $CustomerTypeRow['typeid'] . '">' . $CustomerTypeRow['typename'] . '</option>';
+	}
+}
+echo '</select></td>';
+
+
 echo '</tr>
 	</table>
 	<br />
@@ -92,7 +110,7 @@ if (mb_strlen($Date_Array[2])>4) {
 
 $StartDateSQL =  date('Y-m-d', mktime(0,0,0, (int)$Date_Array[1],1,(int)$Date_Array[0]));
 
-/* KL RICARD Change the SQl to use salesorders table to filter by SPG correctly*/
+/* KL RICARD Change the SQL to use salesorders table to filter by SPG correctly*/
 $sql = "SELECT 	orddate AS trandate,
 				SUM(unitprice*(1-discountpercent)* (qtyinvoiced) / currencies.rate) as salesvalue,
 				SUM(CASE WHEN mbflag='A' THEN 0 ELSE ((materialcost+labourcost+overheadcost) * qtyinvoiced) END) as cost
@@ -100,6 +118,7 @@ $sql = "SELECT 	orddate AS trandate,
 			INNER JOIN salesorderdetails ON salesorders.orderno=salesorderdetails.orderno
 			INNER JOIN stockmaster ON stockmaster.stockid=salesorderdetails.stkcode
 			INNER JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
+			INNER JOIN debtortype ON debtorsmaster.typeid = debtortype.typeid
 			INNER JOIN currencies ON currencies.currabrev = debtorsmaster.currcode
 			WHERE orddate>='" . $StartDateSQL . "'
 			AND orddate<='" . $EndDateSQL . "'";
@@ -110,6 +129,9 @@ if ($_SESSION['SalesmanLogin'] != '') {
 	$sql .= " AND salesorders.salesperson='" . $_POST['Salesperson'] . "'";
 }
 
+if ($_POST['CustomerType']!='All') {
+	$sql .= " AND debtorsmaster.typeid='" . $_POST['CustomerType'] . "'";
+}
 $sql .= " GROUP BY salesorders.orddate ORDER BY salesorders.orddate";
 
 $ErrMsg = _('The sales data could not be retrieved because') . ' - ' . DB_error_msg();
