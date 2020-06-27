@@ -274,6 +274,64 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 							AND salesorders.orddate >= '". $StartDateSort . "'
 							AND salesorders.orddate <= '". $Yesterday . "'
 							AND salesorders.debtorno = debtorsmaster.debtorno) DESC";
+	}elseif ($typereport == "Online"){
+		$SQL = "SELECT debtorsmaster.debtorno,
+					debtorsmaster.name,
+					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))/currencies.rate
+						FROM salesorderdetails, salesorders
+						WHERE salesorderdetails.orderno = salesorders.orderno
+							AND salesorderdetails.completed = 1
+							AND salesorders.orddate >= '". $StartDateA . "'
+							AND salesorders.orddate <= '". $Yesterday . "'
+							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesA,
+					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))/currencies.rate
+						FROM salesorderdetails, salesorders
+						WHERE salesorderdetails.orderno = salesorders.orderno
+							AND salesorderdetails.completed = 1
+							AND salesorders.orddate >= '". $StartDateB . "'
+							AND salesorders.orddate <= '". $Yesterday . "'
+							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesB,
+					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))/currencies.rate
+						FROM salesorderdetails, salesorders
+						WHERE salesorderdetails.orderno = salesorders.orderno
+							AND salesorderdetails.completed = 1
+							AND salesorders.orddate >= '". $StartDateC . "'
+							AND salesorders.orddate <= '". $Yesterday . "'
+							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesC,
+					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))/currencies.rate
+						FROM salesorderdetails, salesorders
+						WHERE salesorderdetails.orderno = salesorders.orderno
+							AND salesorderdetails.completed = 1
+							AND salesorders.orddate >= '". $StartDateD . "'
+							AND salesorders.orddate <= '". $Yesterday . "'
+							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesD,
+					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))/currencies.rate
+						FROM salesorderdetails, salesorders
+						WHERE salesorderdetails.orderno = salesorders.orderno
+							AND salesorderdetails.completed = 1
+							AND salesorders.orddate >= '". $StartDateE . "'
+							AND salesorders.orddate <= '". $Yesterday . "'
+							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesE,
+					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))/currencies.rate
+						FROM salesorderdetails, salesorders
+						WHERE salesorderdetails.orderno = salesorders.orderno
+							AND salesorderdetails.completed = 1
+							AND salesorders.orddate >= '". $StartDateF . "'
+							AND salesorders.orddate <= '". $Yesterday . "'
+							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesF,
+					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))/currencies.rate
+						FROM salesorderdetails, salesorders
+						WHERE salesorderdetails.orderno = salesorders.orderno
+							AND salesorderdetails.completed = 1
+							AND salesorders.orddate >=  '". $StartDateMTD . "'
+							AND salesorders.orddate <= '". $Yesterday . "'
+							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesMTD
+				FROM debtorsmaster
+				INNER JOIN currencies
+					ON debtorsmaster.currcode = currencies.currabrev
+				WHERE debtorsmaster.typeid = 9 
+					AND debtorsmaster.debtorno LIKE 'WEB-%'
+				ORDER BY debtorsmaster.debtorno";	
 	}else{
 		$SQL = "SELECT salesmancode,
 					salesmanname,
@@ -355,13 +413,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 			}else{
 				echo '<p class="page_title_text" align="center"><strong>' . _('Current Average Daily sales in ') . $Shop . ' by ' . $typereport . " during the last " . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . ", ". $NumDaysE . ", ". $NumDaysF . " days. Sorted by " . $NumDaysSort ." days. Trend by " . $NumDaysD . " days.".'</strong></p>';
 			}
-			if($typereport == "Shop"){
-// Ricard Do not show
-//				$TitleTarget = "Minimum Target";
-				$TitleTarget = "";
-			}else{
-				$TitleTarget = "";
-			}
+			$TitleTarget = "";
 		}
 		echo '<div>';
 		echo '<table class="selection">';
@@ -387,12 +439,9 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 			$k = StartEvenOrOddRow($k);
 			
 			$target = "";
-			if ($typereport == "Shop"){
+			if (($typereport == "Shop") OR ($typereport == "Online")){
 				$Code = $myrow['debtorno'];
 				$Name = $myrow['name'];
-				if($Year != "LastYear"){
-//					$target = locale_number_format($myrow['minmonthlysalestarget']/30*$NumDaysC,0);
-				}
 			}else{
 				$Code = $myrow['salesmancode'];
 				$Name = $myrow['salesmanname'];
@@ -453,7 +502,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 			$TotalForecast = $TotalForecast + round($myrow['salesC'], -5);
 			$i++;
 		}
-		if ($typereport == "Shop"){
+		if (($typereport == "Shop") OR ($typereport == "Online")){
 			$percent = ($TotalDateD-$TotalDateC)/$TotalDateC * 100;
 			$trend = " ";
 			if ($percent > 0){

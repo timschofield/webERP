@@ -64,6 +64,8 @@ if ($ProcessSection01){
 		OR $KL_BusinessDevelopmentManager){
 		AverageSales("Shop", 365, 90, 30, 15, 7, 1, 30, "CurrentYear", "All", $db);
 		$NumberOfTestExecuted++;
+		AverageSales("Online", 365, 90, 30, 15, 7, 1, 30, "CurrentYear", "All", $db);
+		$NumberOfTestExecuted++;
 	}
 	
 	if ($KL_SystemAdmin
