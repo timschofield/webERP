@@ -4037,6 +4037,7 @@ function OutstandingOrders($customertype, $ordertype, $RootPath, $db){
 		echo $TableHeader;
 		$k = 0; //row colour counter
 		$i = 1;
+		$TotalValue = 0;
 		while ($myrow = DB_fetch_array($result)) {
 			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . $myrow['orderno'] . '">' . $myrow['orderno'] . '</a>';
@@ -4062,8 +4063,25 @@ function OutstandingOrders($customertype, $ordertype, $RootPath, $db){
 					ConvertSQLDate($myrow['orddate']), 
 					locale_number_format($myrow['ordervalue'],0)
 					);
+			$TotalValue += $myrow['ordervalue'];
 			$i++;
 		}
+		printf('<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				"", 
+				"", 
+				"",
+				"", 
+				"", 
+				"Total IDR", 
+				locale_number_format($TotalValue,0)
+				);
 		echo '</table>
 				</div>';
 	}
