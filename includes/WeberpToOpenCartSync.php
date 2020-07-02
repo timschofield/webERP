@@ -868,7 +868,7 @@ function SyncProductDescriptionTranslations($ShowMessages, $LastTimeRun, $db, $d
 								);
 					}
 					if ($EmailText !=''){
-						$EmailText = $EmailText . str_pad($Model, 20, " ") . " Description Translations for " . locale_number_format($Quantity,0) . "\n";
+						$EmailText = $EmailText . str_pad($Model, 20, " ") . " Description Translations for " . mb_substr($myrow['language_id'],0,5) . "\n";
 					}
 					$i++;
 				}
