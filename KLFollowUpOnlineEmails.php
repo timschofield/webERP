@@ -231,8 +231,11 @@ if ($_GET['EmailType']!='NoSendThankYou'){
 		$myrow = DB_fetch_array($result);
 		$DeliverBlind = $myrow['deliverblind'];
 		$DeliveryDate = $myrow['salesorders.deliverydate'];
+	}else{
+		prnMsg( _('Found too many Orders with Number') . ' : ' . $_GET['TransNo'] . ' ', 'error');
+		include('includes/footer.php');
+		exit;
 	}
-
 	/* Introduction text */
 	$MailMessage = '
 		<html>
