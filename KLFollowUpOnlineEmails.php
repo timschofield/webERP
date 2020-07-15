@@ -236,470 +236,46 @@ if ($_GET['EmailType']!='NoSendThankYou'){
 		include('includes/footer.php');
 		exit;
 	}
-	/* Introduction text */
+	
 	$MailMessage = '
 		<html>
 		<head>
 			<title>' .$MailSubject . '</title>
 		</head>
-		<body>
-			<br/>
-			<table cellpadding="2" cellspacing="2">
-				<tr>
-					<td align="center" colspan="4">
-						<h2>' . $MailSubject . '</h2>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="4">
-						<p>' . 'Hi ' . DB_escape_string($myrow['customername']) . ':</p>
-					</td>
-				</tr>';
-				
-	if ($_GET['EmailType']=='NoOrderPlaced'){
-		  $MailMessage .= '
-				<tr>
-					<td colspan="4">
-						<p>' . 'On ' . ConvertSQLDate($myrow['clientsince']) . ' you registered in our online shop, but we realized you did not continue the purchase process.' . '</p>
-					</td>
-				</tr>
-				</table>';
-		$MailMessage .= '	
-				<table>
-					<tr>
-						<th> ' . 'You were registered from this email address as' . ':
-						</th>
-						<td>' . DB_escape_string($myrow['customername']) . '
-						</td>
-					</tr>';
-		if(mb_strlen(trim($myrow['address1']))) {
-			  $MailMessage .= '
-					<tr>
-						<td>
-						</td>
-						<td>' . DB_escape_string($myrow['address1']) . '
-						</td>
-					</tr>';
-		}
-		if(mb_strlen(trim($myrow['address2']))) {
-			  $MailMessage .= '
-					<tr>
-						<td>
-						</td>
-						<td>' . DB_escape_string($myrow['address2']) . '
-						</td>
-					</tr>';
-		}
-		if(mb_strlen(trim($myrow['address3']))) {
-			  $MailMessage .= '
-					<tr>
-						<td>
-						</td>
-						<td>' . DB_escape_string($myrow['address3']) . '
-						</td>
-					</tr>';
-		}
-		if(mb_strlen(trim($myrow['address4']))) {
-			  $MailMessage .= '
-					<tr>
-						<td>
-						</td>
-						<td>' . DB_escape_string($myrow['address4']) . '
-						</td>
-					</tr>';
-		}
-		if(mb_strlen(trim($myrow['address5']))) {
-			  $MailMessage .= '
-					<tr>
-						<td>
-						</td>
-						<td>' . DB_escape_string($myrow['address5']) . '
-						</td>
-					</tr>';
-		}
-		if(mb_strlen(trim($myrow['address6']))) {
-			  $MailMessage .= '
-					<tr>
-						<td>
-						</td>
-						<td>' . DB_escape_string($myrow['address6']) . '
-						</td>
-					</tr>';
-		}
+		<body>';
+	$Language = "ENGLISH";
+	include('includes/KLFollowUpOnlineEmailMessageText.php');
 
-		$MailMessage .= '
-				</table>';
+	$Language = "BAHASA";
+	include('includes/KLFollowUpOnlineEmailMessageText.php');
 
-		$MailMessage .= '<br/>';
-		$MailMessage .= '
-				<table cellpadding="2" cellspacing="2">
-				<tr>
-					<td colspan="4">
-						<ul>
-							<li>' . 'If you found any shop malfunction, purchase issue or did not find the product you were looking for, please let us know so we can fix it or help you.' . '</li>
-							<li>' . 'If you changed your mind during the process, we would like also know why, so we can improve the customer experience on our online shop. We want to treat the online visitor with the same care and detail we do on our street shops. Please help us to do it!' . '</li>
-							<li>' . 'If you did not registered yourself on our online shop, someone else did it using your data. Please let us know so we can delete your data from our system.' . '</li>
-						</ul>
-					</td>
-				</tr>';
-		$MailMessage .= '<br/>';
-	}
-
-	if ($_GET['EmailType']=='RemindBankTransfer'){
-		if ($_GET['PaymentCode'] == "bank_mandiri"){
-			// bank Mandiri direct transfer
-			  $MailMessage .= '
-					<tr>
-						<td colspan="4">
-							<p>' . 'On ' . ConvertSQLDate($myrow['orddate']) . ' we received an online order from you to be settled by bank transfer to our bank account, but we have not received funds from you yet.' . '</p>
-						</td>
-					</tr>
-					</table>';
-			  $MailMessage .=  ShowBankDetails ($myrow['currcode'], $_GET['TransNo']);
-			  $MailMessage .= '
-					<table cellpadding="2" cellspacing="2">
-					<tr>
-						<td colspan="4">
-							' . 'If you already send the funds or plan to send send the funds via bank transfer: Please check with your bank and send us the scanned proof of transfer, so we can double check in our bank.' . '
-						</td>
-					</tr>';
-			$MailMessage .= '<br/>';
-		}elseif  ($_GET['PaymentCode'] == "xenditmandiriva"){
-			// Xendit transfer via mandiri
-			  $MailMessage .= '
-					<tr>
-						<td colspan="4">
-							<p>' . 'On ' . ConvertSQLDate($myrow['orddate']) . ' we received an online order from you to be settled by virtual account transfer to our account, but after checking our payment gateway service, we have not received funds from you yet.' . '</p>
-						</td>
-					</tr>
-					</table>';
-			  $MailMessage .= '
-					<table cellpadding="2" cellspacing="2">
-					<tr>
-						<td colspan="4">
-							' . 'If you already send the funds or plan to send send the funds via virtual account transfer: Please let us know.' . '
-						</td>
-					</tr>
-					<tr>
-						<td colspan="4">
-							' . 'If not, please be aware that the payment process will be expired in 24 hours, hence you will have to order again.' . '
-						</td>
-					</tr>';
-			$MailMessage .= '<br/>';
-		}elseif  ($_GET['PaymentCode'] == "xenditcc"){
-			// Xendit transfer via CC 
-			  $MailMessage .= '
-					<tr>
-						<td colspan="4">
-							<p>' . 'On ' . ConvertSQLDate($myrow['orddate']) . ' credit card to our account, but after checking our payment gateway service, we have not received funds from you yet.' . '</p>
-						</td>
-					</tr>
-					</table>';
-			  $MailMessage .= '
-					<table cellpadding="2" cellspacing="2">
-					<tr>
-						<td colspan="4">
-							' . 'If you already send the funds or plan to send send the funds via credit card: Please let us know.' . '
-						</td>
-					</tr>';
-			$MailMessage .= '<br/>';
-		}
-	}
-
-	if ($_GET['EmailType']=='PaymentConfirmation'){
-		  $MailMessage .= '
-				<tr>
-					<td colspan="4">
-						<p>' . 'We just received the confirmation of your payment for the order ' . locale_number_format($_GET['CustomerOrder'],0) . '</p>
-					</td>
-				</tr>';
-	}
-
-	if ($_GET['EmailType']=='TrackingConfirmation'){
-		if($myrow['shippername'] == 'Pick up from store') {
-			$MailMessage .= '
-				<tr>
-					<td colspan="4">
-						' . 'Your parcel is ready to pick up from the chosen store. In case we agreed a delivery in Bali, it will be delivered there soon. Please contact us for further details if needed.' . '
-					</td>
-				</tr>';
-		}else{
-			$MailMessage .= '
-				<tr>
-					<td colspan="4">
-						<p>' . 'We just shipped your order via ' . DB_escape_string($myrow['shippername']) . '. The tracking number of your parcel is:' . DB_escape_string($myrow['consignment']) .'</p>
-					</td>
-				</tr>';
-			if($myrow['shippername'] == 'EMS'){
-				$MailMessage .= '
-					<tr>
-						<td colspan="4">
-							' . 'You can track your shipment at http://ems.posindonesia.co.id/index.php' . '
-						</td>
-					</tr>';
-			}else{
-				$MailMessage .= '
-					<tr>
-						<td colspan="4">
-							' . 'You can track your shipment at http://jne.co.id/index.php?lang=IN' . '
-						</td>
-					</tr>';
-			 }
-			$MailMessage .= '
-				<tr>
-					<td colspan="4">
-						' . 'For delivery transit schedules and general information check http://www.kapal-laut.com/Delivery-Shipping-Information' . '
-					</td>
-				</tr>';
-		}
-		$MailMessage .= '
-			<tr>
-				<td colspan="4">
-					<p>' . 'Please let us know when you receive it, and we would like to see some pictures of you wearing the jewels! You can post them on our Facebook Fan Page at www.facebook.com/KapalLautBali ' . '</p>
-				</td>
-			</tr>';
-	}
-
-	if ($_GET['EmailType']=='ThankYouOrder'){
-		 $MailMessage .= '
-				<tr>
-					<td colspan="4">
-						<p>' . 'On '. ConvertSQLDate($myrow['orddate']) .' you purchased some jewellery from us, and we shipped it via ' . DB_escape_string($myrow['shippername']). '.</p>
-						<p>' . 'We would love to see your picture with our jewelry in our instagram @kapallautbali, follow us and tag us in your picture, and you will receive a discount code for future purchase online.' . '</p>
-						<p>' . 'You should have received it few days ago, and we very much hope you are enjoying your new jewels. ' . '</p>
-						<p>' . 'Should you wish to comment your experience on our Facebook fan page you can find us here http://www.facebook.com/KapalLautBali.' . '</p>
-						<p>' . 'Be sure we will read it to all our staff at our daily briefing! We do take all feedback seriously. If there is any information that you think will help us improve, feel free to email us direct to sales@kapal-laut.com ' . '</p>
-					</td>
-				</tr>';
-	}
-	$MailMessage .= '			
-			</table>';
-
-	if (($_GET['EmailType']=='PaymentConfirmation') 
-		OR	($_GET['EmailType']=='TrackingConfirmation')
-		OR	($_GET['EmailType']=='TrackingConfirmation')){
-		/* Email the order details */
-		$MailMessage .= '	
-				<table>
-					<tr>
-						<th> <b>' . _('Order to be delivered to') . ':</b>
-						</th>
-						<td>' . DB_escape_string($myrow['customername']) . '
-						</td>
-					</tr>';
-		if(mb_strlen(trim($myrow['deladd1']))) {
-			  $MailMessage .= '
-					<tr>
-						<td>
-						</td>
-						<td>' . DB_escape_string($myrow['deladd1']) . '
-						</td>
-					</tr>';
-		}
-		if(mb_strlen(trim($myrow['deladd2']))) {
-			  $MailMessage .= '
-					<tr>
-						<td>
-						</td>
-						<td>' . DB_escape_string($myrow['deladd2']) . '
-						</td>
-					</tr>';
-		}
-		if(mb_strlen(trim($myrow['deladd3']))) {
-			  $MailMessage .= '
-					<tr>
-						<td>
-						</td>
-						<td>' . DB_escape_string($myrow['deladd3']) . '
-						</td>
-					</tr>';
-		}
-		if(mb_strlen(trim($myrow['deladd4']))) {
-			  $MailMessage .= '
-					<tr>
-						<td>
-						</td>
-						<td>' . DB_escape_string($myrow['deladd4']) . '
-						</td>
-					</tr>';
-		}
-		if(mb_strlen(trim($myrow['deladd5']))) {
-			  $MailMessage .= '
-					<tr>
-						<td>
-						</td>
-						<td>' . DB_escape_string($myrow['deladd5']) . '
-						</td>
-					</tr>';
-		}
-		if(mb_strlen(trim($myrow['deladd6']))) {
-			  $MailMessage .= '
-					<tr>
-						<td>
-						</td>
-						<td>' . DB_escape_string($myrow['deladd6']) . '
-						</td>
-					</tr>';
-		}
-
-		$MailMessage .= '
-				</table>';
-
-		$MailMessage .= '<br/>';
-
-		/* order items details */
-
-		$MailMessage .= '
-				<table border="1" width="90%">
-					<tr>
-						<th>' . _('Stock Code') . '</th>
-						<th>' . _('Description') . '</th>
-						<th>' . _('Quantity') . '</th>
-						<th>' . _('Unit Price') . '</th>
-						<th>' . _('Line Price') . '</th>
-					</tr>';
-			
-		$sql = "SELECT salesorderdetails.stkcode,
-				stockmaster.description,
-				stockmaster.grossweight,
-				stockmaster.volume,
-				salesorderdetails.quantity,
-				salesorderdetails.qtyinvoiced,
-				salesorderdetails.unitprice,
-				salesorderdetails.discountpercent,
-				salesorderdetails.narrative,
-				salesorderdetails.poline,
-				salesorderdetails.itemdue
-			FROM salesorderdetails INNER JOIN stockmaster
-				ON salesorderdetails.stkcode=stockmaster.stockid
-			WHERE salesorderdetails.orderno=" . $_GET['TransNo'] . "
-			ORDER BY poline";
-		$result=DB_query($sql, $ErrMsg);
-		$CartTotalValue  = 0;
-		$CartTotalWeight = 0;
-		$CartTotalVolume = 0;
-		if (DB_num_rows($result)>0){
-			while ($myrow2=DB_fetch_array($result)){
-	//			14/01/2015 
-	// 			ONLINE ORDERS already come with NET prices
-				$GrossPrice = round($myrow2['unitprice'],$myrow['decimalplaces']) ;
-				$LineTotal = $GrossPrice * $myrow2['quantity'];
-				$CartTotalValue += $LineTotal;
-				$CartTotalWeight += $CartItem->Weight * $CartItem->Quantity;
-				$CartTotalVolume += $CartItem->Volume * $CartItem->Quantity;
-				$MailMessage .= '
-						<tr>
-							<td>' . $myrow2['stkcode'] . '</td>
-							<td>' . $myrow2['description'] . '</td>
-							<td align="right">' . locale_number_format($myrow2['quantity'],0) . '</td>
-							<td align="right">' .  locale_number_format($GrossPrice,$myrow['decimalplaces'])  . '</td>
-							<td align="right">' .  locale_number_format($LineTotal,$myrow['decimalplaces'])  . '</td>
-						</tr>';		
-			} //end while there are line items to print out
-		} /*end if there are order details to show on the order*/
-
-		$MailMessage .= '
-					<tr>
-						<td colspan="4" align="right">' . _('Total Items Ordered Value') . '</td>
-						<td align="right">' . locale_number_format($CartTotalValue,$myrow['decimalplaces']) . '</td>
-					</tr>';
-
-		/* freight details */
-		if ($myrow['freightcost'] != 0){
-			$MailMessage .=  '
-				<tr>
-					<td colspan="4" align="right">' . _('Freight Costs') . '</td>
-					<td align="right">' . locale_number_format($myrow['freightcost'],$myrow['decimalplaces']) . '</td>
-				</tr>';
-		}else{
-			if ($myrow['shippername'] == 'Pick up from store'){
-				$MailMessage .=  '
-					<tr>
-						<td colspan="4" align="right">' . _('Pick up from store') . '</td>
-					</tr>';
-			}else{
-				$MailMessage .=  '
-					<tr>
-						<td colspan="4" align="right">' . _('Freight Costs paid by') . ' ' . $_SESSION['ShopName'] . '</td>
-					</tr>';
-			}
-		}
-			$MailMessage .=  '
-				<tr>
-					<td colspan="4" align="right">' . _('Total') . ' (' . $myrow['currcode'] . ') ' . '</td>
-					<td align="right">' . locale_number_format($CartTotalValue + $myrow['freightcost'],$myrow['decimalplaces']) . '</td>
-				</tr>';
-		$MailMessage .= '
-				</table>';
-	}
-	$MailMessage .= '<br/>';
-	/* Despedida */
-	$MailMessage .= '<table cellpadding="2" cellspacing="2">';
-
-	if ($_GET['EmailType']=='PaymentConfirmation'){
-		$MailMessage .= '<tr>
-					<td colspan="4">
-						<p>' . 'We will prepare all the goods and ship it in 2-3 days time. We will email you the shipment tracking number.' . '</p>
-						<p>' . 'Do not hesitate to contact us for any further detail you might need. Many thanks for your purchase.' . '</p>
-					</td>
-				</tr>';
-	}
-
-	if ($_GET['EmailType']=='ThankYouOrder'){
-		$MailMessage .= '<tr>
-					<td colspan="4">
-						<p>' . 'Again, thank you for your purchase. We hope you enjoy your new jewels.' . '</p>
-					</td>
-				</tr>';
-	}
-
-	if ($_GET['EmailType']=='TrackingConfirmation'){
-		$MailMessage .= '<tr>
-					<td align="center" colspan="4">
-						<p>' . 'Do not hesitate to contact us for any further detail you might need. Many thanks for your purchase.' . '</p>
-					</td>
-				</tr>';
-	}
-	if (($_GET['EmailType']=='NoOrderPlaced')
-		OR	($_GET['EmailType']=='RemindBankTransfer')){
-		$MailMessage .= '<tr>
-					<td align="center" colspan="4">
-						<p>' . 'Do not hesitate to contact us for any further detail you might need. Many thanks.' . '</p>
-					</td>
-				</tr>';
-	}
-	$MailMessage .= '<tr>
-					<td colspan="4">
-						<p>' .  _('Kapal-Laut Your Essential Jewellery Online Sales Team.') . '</p>
-					</td>
-				</tr>';
-
-	$MailMessage .= '</table>';
 	$MailMessage .= '</body>
 					</html>';
-}
-if($_SESSION['ShopMode']=='test'){
-	// do not bother customers if we are doing tests with their data
-	$MailTo = $_SESSION['ShopManagerEmail'];
-}else{
-	$MailTo = $myrow['contactemail'];
-}
 
+	// find email address "to" 
+	if($_SESSION['ShopMode']=='test'){
+		// do not bother customers if we are doing tests with their data
+		$MailTo = $_SESSION['ShopManagerEmail'];
+	}else{
+		$MailTo = $myrow['contactemail'];
+	}
 
-if($_SESSION['SmtpSetting']==0){
-	$result = mail( $MailTo, $MailSubject, $MailMessage, $headers );
-}else{
-	include('includes/htmlMimeMail.php');
-	$mail = new htmlMimeMail();
-	$mail->setSubject($mailSubject);
-	$mail->setHTML($MailMessage);
-	$result = SendmailBySmtp($mail,array($MailTo));
-}
+	// send the email
+	if($_SESSION['SmtpSetting']==0){
+		$result = mail( $MailTo, $MailSubject, $MailMessage, $headers );
+	}else{
+		include('includes/htmlMimeMail.php');
+		$mail = new htmlMimeMail();
+		$mail->setSubject($mailSubject);
+		$mail->setHTML($MailMessage);
+		$result = SendmailBySmtp($mail,array($MailTo));
+	}
 
-if ($_GET['EmailType']!='NoSendThankYou'){
 	echo '<h1>Email sent to ' . $MailTo. '</h1><br />';
 	echo $MailMessage . "<br />";
+
 }else{
+	// No thanks email, so nothing had to be done.
 	echo '<h1>NO Thank you Email for order ' . $_GET['TransNo'] . '</h1><br />';
 }
 
@@ -773,7 +349,7 @@ if (($_GET['EmailType']=='ThankYouOrder') OR ($_GET['EmailType']=='NoSendThankYo
 
 include('includes/footer.php');
 
-function ShowBankDetails ($Currency, $OrderNo) {
+function ShowBankDetails ($Currency, $OrderNo, $Language) {
 
 	if ($Currency == 'IDR'){
 		$BankName = 'Bank Mandiri';
@@ -786,30 +362,46 @@ function ShowBankDetails ($Currency, $OrderNo) {
 		$AccountNumber = '1450011000102';
 		$SwiftCode = 'BMRIIDJA';
 	} 
+	if ($Language == "ENGLISH"){
+		$TextBank0010 = 'Bank Account Details';
+		$TextBank0020 = 'Bank Name';
+		$TextBank0030 = 'Account Holder Name';
+		$TextBank0040 = 'Account Number';
+		$TextBank0050 = 'SWIFT Code';
+		$TextBank0060 = 'Reference';
+		$TextBank0070 = 'Online Order';
+	}else{
+		$TextBank0010 = 'Informasi Rekening Bank';
+		$TextBank0020 = 'Nama Bank';
+		$TextBank0030 = 'Nama Pemilik Rekening';
+		$TextBank0040 = 'Nomor rekening';
+		$TextBank0050 = 'Kode SWIFT';
+		$TextBank0060 = 'Referensi';
+		$TextBank0070 = 'Order Online';
+	}	
 	$Showresult = '<table border="1">
 				<tr>
-					<th colspan="2"><strong>' . _('Bank Account Details') . '</strong></th>
+					<th colspan="2"><strong>' . $TextBank0010 . '</strong></th>
 				</tr>
 				<tr>
-					<td>' . _('Bank') .':</td><td>' . $BankName . '</td>
+					<td>' . $TextBank0020 .':</td><td>' . $BankName . '</td>
 				</tr>
 				<tr>
-					<td>' . _('Account Holder Name') . ':</td><td>' . $BankBeneficiary . '</td>
+					<td>' . $TextBank0030 . ':</td><td>' . $BankBeneficiary . '</td>
 				</tr>
 				<tr>
-					<td>' . _('Account Number') . ':</td><td>' . $AccountNumber . '</td>
+					<td>' . $TextBank0040 . ':</td><td>' . $AccountNumber . '</td>
 				</tr>';
 	if($SwiftCode != ''){
 		$Showresult .= '<tr>
-						<td>' . _('SWIFT Code') . ':</td><td>' . $SwiftCode . '</td>
+						<td>' . $TextBank0050 . ':</td><td>' . $SwiftCode . '</td>
 					</tr>';
 	}			
 	$Showresult .= '<tr>
-					<td>' . _('Reference') . ':</td><td>'  . _('Online Order: ') . $OrderNo . '</td>
+					<td>' . $TextBank0060 . ':</td><td>'  . $TextBank0070 . ': ' . $OrderNo . '</td>
 			</tr>
 			</table>';
 	return $Showresult;
 }
-
 
 ?>
