@@ -234,7 +234,9 @@ define("ONLINESHOP_AVAILABLE_SALES_CATEGORIES", '51,52,53,54,55,56,59,60,74,85')
 
 define("SALES_CATEGORIES_FOR_GOOGLE_PRODUCT_FEED", '31,32,33,34,36,37,50,38,35,43,44,45,46,47,48,51,52,53,54,55,56,40,41,49,42,39,61,62,63,64,65,66,67,71,72,73,74,75,76');
 
-define("GOOGLE_BRAND", 'Kapal-Laut. Your Essential Jewellery');
+define("GOOGLE_BRAND_KL", 'Kapal-Laut. Your Essential Jewellery');
+define("GOOGLE_BRAND_BLINK", 'Blink by Kapal-Laut');
+define("GOOGLE_BRAND_OUTLET", 'Outlet by Kapal-Laut');
 define("GOOGLE_GENDER", 'Female');
 define("GOOGLE_AGEGROUP", 'Adult');
 define("GOOGLE_CONDITION", 'New');

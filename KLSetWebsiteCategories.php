@@ -66,6 +66,7 @@ if (DB_num_rows($result) != 0){
 						<th>' . _('Stock Category') . '</th>
 						<th>' . _('Weight Kg') . '</th>
 						<th>' . _('Volume m3') . '</th>
+						<th>' . _('Brand') . '</th>
 						<th>' . _('Website Category') . '</th>
 						<th>' . _('Featured') . '</th>
 					</tr>';
@@ -167,44 +168,53 @@ if (DB_num_rows($result) != 0){
 				$WebsiteCategory = WebsiteCategoryDiscount($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
 				if ($WebsiteCategory > 0){
 					DeleteWebsiteSalesCategories($myrow['stockid'], $UpdateDB, $db);
-					InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $FeaturedAsTopSales, $UpdateDB, $db);
+					$Brand = 3;
+					InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $Brand, FALSE, $FeaturedAsTopSales, $UpdateDB, $db);
 					$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
 					$ItemsAdded++;
 				}else{
 					// Mirar si pertany a super categoria STABLE KL
 					$WebsiteCategory = WebsiteCategorySilverJewellery($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
 					if ($WebsiteCategory > 0){
-						InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $FeaturedAsTopSales, $UpdateDB, $db);
+						$Brand = 1;
+						InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $Brand, FALSE, $FeaturedAsTopSales, $UpdateDB, $db);
 						$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
 						$ItemsAdded++;
 					}else{
 						// Mirar si pertany a super categoria BLINK JEWELLERY
 						$WebsiteCategory = WebsiteCategoryBlinkJewellery($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
 						if ($WebsiteCategory > 0){
-							InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $FeaturedAsTopSales, $UpdateDB, $db);
+							$Brand = 2;
+							InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $Brand, FALSE, $FeaturedAsTopSales, $UpdateDB, $db);
 							$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
 							$ItemsAdded++;
 						}else{
 							// Mirar si pertany a super categoria CLASSIC
 							$WebsiteCategory = WebsiteCategoryClassic($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
 							if ($WebsiteCategory > 0){
-								InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $FeaturedAsTopSales, $UpdateDB, $db);
+								$Brand = 1;
+								InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $Brand, FALSE, $FeaturedAsTopSales, $UpdateDB, $db);
 								$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
 								$ItemsAdded++;
 							}else{
 								// Mirar si pertany a super categoria BAGS
 								$WebsiteCategory = WebsiteCategoryBags($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
 								if ($WebsiteCategory > 0){
-									InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $FeaturedAsTopSales, $UpdateDB, $db);
+									$Brand = 2;
+									InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $Brand, FALSE, $FeaturedAsTopSales, $UpdateDB, $db);
 									$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
 									$ItemsAdded++;
 								}else{
 									// Mirar si pertany a super categoria WORLD BRANDS
 									$WebsiteCategory = WebsiteCategoryWorldBrandJewellery($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
 									if ($WebsiteCategory > 0){
-										InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $FeaturedAsTopSales, $UpdateDB, $db);
+										$Brand = 1;
+										InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $Brand, FALSE, $FeaturedAsTopSales, $UpdateDB, $db);
 										$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
 										$ItemsAdded++;
+									}else{
+										$WebsiteDescription = 'NO WEBSITE CATEGORY';
+										$WebsiteCategory = 0;
 									}
 								}
 							}
@@ -223,7 +233,15 @@ if (DB_num_rows($result) != 0){
 			$WebsiteDescription = 'ITEM EXCLUDED';
 		}
 		$k = StartEvenOrOddRow($k);
+		if ($Brand == 1){
+			$BrandText = "KL";
+		}elseif ($Brand == 2){
+			$BrandText = "Blink";
+		}elseif ($Brand == 3){
+			$BrandText = "Outlet";
+		}
 		printf('<td class="number">%s</td>
+				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
@@ -238,6 +256,7 @@ if (DB_num_rows($result) != 0){
 				$myrow['categoryid'], 
 				$Weight, 
 				$Volume, 
+				$BrandText,
 				$WebsiteDescription,
 				$FeaturedText
 				);
@@ -248,17 +267,17 @@ if (DB_num_rows($result) != 0){
 	prnMsg("Number of items associated to website catalog: " . locale_number_format($ItemsAdded));
 }
 
-function InsertWebsiteSalesCategory($Stockid, $WebsiteCategory, $Featured, $UpdateDB, $db){
+function InsertWebsiteSalesCategory($Stockid, $WebsiteCategory, $Manufacturers_id, $MultipleCategories, $Featured, $UpdateDB, $db){
 	if($UpdateDB){
 		
-//		if we allow an item to be in several categories this code must be commented. 
-//		if we only want it in one category, then uncomment!
-		$sql =	"DELETE FROM salescatprod 
-					WHERE salescatid = '" . $WebsiteCategory . "' 
-						AND stockid ='" .  $Stockid . "'";
-		$ErrMsg =_('Could not delete the previous website category for the item because');
-		$result = DB_query($sql,$ErrMsg);
-// Comment or uncomment end 
+		if (!$MultipleCategories){
+			// if don't allow an item in multiple sales categories, then delete the existing ones
+			$sql =	"DELETE FROM salescatprod 
+						WHERE salescatid = '" . $WebsiteCategory . "' 
+							AND stockid ='" .  $Stockid . "'";
+			$ErrMsg =_('Could not delete the previous website category for the item because');
+			$result = DB_query($sql,$ErrMsg);
+		}
 
 		$SQLCheck = "SELECT *
 				FROM salescatprod
@@ -269,10 +288,12 @@ function InsertWebsiteSalesCategory($Stockid, $WebsiteCategory, $Featured, $Upda
 			$sql = "INSERT INTO salescatprod (
 						salescatid ,
 						stockid,
+						manufacturers_id,
 						featured)
 					VALUES (
 						'" . $WebsiteCategory . "',
 						'" . $Stockid . "',
+						'" . $Manufacturers_id . "',
 						'" . $Featured . "')";
 			$ErrMsg =_('Could not insert the website category for the item because');
 			$result = DB_query($sql,$ErrMsg);

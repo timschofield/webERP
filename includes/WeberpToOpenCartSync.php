@@ -211,22 +211,25 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 			if (ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_KAPAL_LAUT)){
 				$StoreId = OPENCART_STORE_KAPAL_LAUT;
 				$StoreText = "KL";
+				$GoogleBrand = GOOGLE_BRAND_KL;
 			}elseif (ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_BLINK)){
 				$StoreId = OPENCART_STORE_BLINK;
 				$StoreText = "Blink";
+				$GoogleBrand = GOOGLE_BRAND_BLINK;
 			}elseif (ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_OUTLET)){
 				$StoreId = OPENCART_STORE_OUTLET;
 				$StoreText = "Outlet";
+				$GoogleBrand = GOOGLE_BRAND_OUTLET;
 			}else{
 				$StoreId = OPENCART_STORE_KAPAL_LAUT;
 				$StoreText = "KL";
+				$GoogleBrand = GOOGLE_BRAND_KL;
 			}
 			
 			/* Google Product Feed Fields */
 			$MPN = $myrow['stockid'];
 			$GPFStatus = GetGoogleProductFeedStatus($myrow['stockid'], $myrow['salescatid'], $Quantity);
 			$GoogleProductCategory = GetGoogleProductFeedCategory($myrow['stockid'], $myrow['salescatid']);
-			$GoogleBrand = GOOGLE_BRAND;
 			$GoogleGender = GOOGLE_GENDER;
 			$GoogleAgeGroup = GOOGLE_AGEGROUP;
 			$GoogleCondition = GOOGLE_CONDITION;
