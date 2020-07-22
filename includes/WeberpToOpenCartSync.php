@@ -1342,7 +1342,7 @@ function MaintainOpenCartOutletSalesCategories($ShowMessages, $LastTimeRun, $db,
 			FROM " . $oc_tableprefix . "product_to_category ,
 				 " . $oc_tableprefix . "product
 			WHERE " . $oc_tableprefix . "product.product_id = " . $oc_tableprefix . "product_to_category.product_id
-				AND category_id IN (" . ONLINESHOP_AVAILABLE_SALES_CATEGORIES . ")";
+				AND category_id IN (" . ONLINESHOP_OUTLET_SALES_CATEGORIES . ")";
 		$result = DB_query_oc($SQL);
 	if (DB_num_rows($result) != 0){
 		if ($ShowMessages){
@@ -1368,7 +1368,7 @@ function MaintainOpenCartOutletSalesCategories($ShowMessages, $LastTimeRun, $db,
 			$Action = "Delete sales categories not OUTLET";
 			$sqlDelete = "DELETE FROM " . $oc_tableprefix . "product_to_category
 							WHERE product_id = '" . $ProductId . "'
-								AND category_id NOT IN (" . ONLINESHOP_AVAILABLE_SALES_CATEGORIES . ")";
+								AND category_id NOT IN (" . ONLINESHOP_OUTLET_SALES_CATEGORIES . ")";
 			$resultDelete = DB_query_oc($sqlDelete,$UpdateErrMsg,$DbgMsg,true);
 			if ($ShowMessages){
 				$k = StartEvenOrOddRow($k);
@@ -1402,7 +1402,7 @@ function MaintainWeberpOutletSalesCategories($ShowMessages, $LastTimeRun, $db, $
 
 	$SQL = "SELECT salescatprod.stockid
 			FROM salescatprod
-			WHERE salescatprod.salescatid IN (" . ONLINESHOP_AVAILABLE_SALES_CATEGORIES . ")";
+			WHERE salescatprod.salescatid IN (" . ONLINESHOP_OUTLET_SALES_CATEGORIES . ")";
 		$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		if ($ShowMessages){
@@ -1428,7 +1428,7 @@ function MaintainWeberpOutletSalesCategories($ShowMessages, $LastTimeRun, $db, $
 			$Action = "Delete sales categories not OUTLET";
 			$sqlDelete = "DELETE FROM salescatprod
 							WHERE stockid = '" . $ProductId . "'
-								AND salescatid NOT IN (" . ONLINESHOP_AVAILABLE_SALES_CATEGORIES . ")";
+								AND salescatid NOT IN (" . ONLINESHOP_OUTLET_SALES_CATEGORIES . ")";
 			$resultDelete = DB_query($sqlDelete,$db,$UpdateErrMsg,$DbgMsg,true);
 			if ($ShowMessages){
 				printf('<td>%s</td>

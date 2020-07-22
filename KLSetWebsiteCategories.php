@@ -51,7 +51,7 @@ $SQL = "SELECT stockmaster.stockid,
 				OR ((EXISTS (SELECT * 
 							FROM salescatprod
 							WHERE stockmaster.stockid = salescatprod.stockid
-								AND salescatprod.salescatid NOT IN (" . ONLINESHOP_AVAILABLE_SALES_CATEGORIES. ")))
+								AND salescatprod.salescatid NOT IN (" . ONLINESHOP_OUTLET_SALES_CATEGORIES. ")))
 					AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . "))
 		ORDER BY stockmaster.stockid";
 $result = DB_query($SQL);

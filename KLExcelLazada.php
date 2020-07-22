@@ -109,7 +109,7 @@ function submit(&$db, &$db_oc, $oc_tableprefix, $FromPrice, $ToPrice, $QOHMinima
 				WHERE   " . $oc_tableprefix . "product.product_id = " . $oc_tableprefix . "product_description.product_id
 					AND " . $oc_tableprefix . "product.product_id = " . $oc_tableprefix . "product_to_category.product_id
 					AND " . $oc_tableprefix . "product_to_category.category_id = " . $oc_tableprefix . "category_description.category_id
-					AND " . $oc_tableprefix . "product_to_category.category_id NOT IN (" . ONLINESHOP_AVAILABLE_SALES_CATEGORIES . ")
+					AND " . $oc_tableprefix . "product_to_category.category_id NOT IN (" . ONLINESHOP_OUTLET_SALES_CATEGORIES . ")
 					AND " . $oc_tableprefix . "product.status = 1
 					AND " . $oc_tableprefix . "product.price >= '" . $FromPrice . "'
 					AND " . $oc_tableprefix . "product.price <= '" . $ToPrice . "'
