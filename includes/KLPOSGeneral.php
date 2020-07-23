@@ -802,6 +802,10 @@ function KLPrintReceiptHeader($identifier, $OrderNo){
 			$CodeSide .= " " . "Necklace";
 		}elseif (isFoulard($OrderLine->StockID)){
 			$CodeSide .= " " . "Foulard";
+		}elseif (isFaceMask($OrderLine->StockID)){
+			$CodeSide .= " " . "Face Mask";
+		}elseif (isJewelleryRoll($OrderLine->StockID)){
+			$CodeSide .= " " . "Jewellery Roll";
 		}elseif (isBag($OrderLine->StockID) OR isPlasticBag($OrderLine->StockID)){
 			$CodeSide .= " " . "Bag";
 		}elseif (isTali($OrderLine->StockID)){

@@ -58,6 +58,13 @@ function isAnklet($stockid){
 	return (substr($stockid, 2,2) == "AK");
 }
 
+function isFaceMask($stockid){
+	return (substr($stockid, 2,2) == "FM");
+}
+
+function isJewelleryRoll($stockid){
+	return (substr($stockid, 2,2) == "JR");
+}
 function isPendant($stockid){
 	return (substr($stockid, 2,2) == "PE");
 }
@@ -112,6 +119,10 @@ function TypeOfItem($stockid){
 		$Type = "Earring";
 	}elseif (isEarcuff($stockid)){
 		$Type = "EarCuff";
+	}elseif (isFaceMask($stockid)){
+		$Type = "Face Mask";
+	}elseif (isJewelleryRoll($stockid)){
+		$Type = "Jewellery Roll";
 	}elseif (isBracelet($stockid)){
 		$Type = "Bracelet";
 	}elseif (isAnklet($stockid)){

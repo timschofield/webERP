@@ -112,6 +112,10 @@ if (DB_num_rows($result) != 0){
 				$Weight = STANDARD_NECKLACE_WEIGHT;
 			}elseif (isFoulard($myrow['stockid'])){
 				$Weight = STANDARD_FOULARD_WEIGHT;
+			}elseif (isFaceMask($myrow['stockid'])){
+				$Weight = STANDARD_FACEMASK_WEIGHT;
+			}elseif (isJewelleryRoll($myrow['stockid'])){
+				$Weight = STANDARD_JEWELLERY_ROLL_WEIGHT;
 			}elseif (isBag($myrow['stockid'])){
 				$Weight = STANDARD_BAG_WEIGHT;
 			}elseif (isPlasticBag($myrow['stockid'])){
@@ -148,6 +152,10 @@ if (DB_num_rows($result) != 0){
 				$Volume = STANDARD_NECKLACE_VOLUME;
 			}elseif (isFoulard($myrow['stockid'])){
 				$Volume = STANDARD_FOULARD_VOLUME;
+			}elseif (isFaceMask($myrow['stockid'])){
+				$Volume = STANDARD_FACEMASK_VOLUME;
+			}elseif (isJewelleryRoll($myrow['stockid'])){
+				$Volume = STANDARD_JEWELLERY_ROLL_VOLUME;
 			}elseif (isBag($myrow['stockid'])){
 				$Volume = STANDARD_BAG_VOLUME;
 			}elseif (isPlasticBag($myrow['stockid'])){
@@ -369,6 +377,11 @@ function WebsiteCategorySilverJewellery($StockId, $Description, $Long, $Category
 		}
 	}
 
+	if (ItemInList($Category, LIST_STOCK_CATEGORIES_GENERAL)){
+		// if belongs to one of the general categories 
+		$WebCat = GENERAL_ACCESSORIES;	
+	}
+	
 	// filter some false positives
 	if (ItemExcludedFromWebsite($StockId, $Category)){
 		$WebCat = ITEM_EXCLUDED_FROM_WEBSITE;
@@ -407,6 +420,13 @@ function WebsiteCategorySilverJewellery($StockId, $Description, $Long, $Category
 	if (($WebCat == KL_JEWELLERY) AND isBrooche($StockId)){
 		$WebCat = KL_BROOCHES;	
 	}	
+	if (($WebCat == GENERAL_ACCESSORIES) AND isFaceMask($StockId)){
+		$WebCat = GE_FACEMASKS;	
+	}	
+	if (($WebCat == GENERAL_ACCESSORIES) AND isJewelleryRoll($StockId)){
+		$WebCat = GE_JEWELLERY_ROLLS;	
+	}	
+
 	return $WebCat; 
 }
 
@@ -417,6 +437,11 @@ function WebsiteCategoryBlinkJewellery($StockId, $Description, $Long, $Category)
 	if (ItemInList($Category, LIST_STOCK_CATEGORIES_BLINK)){
 		// if belongs to one of the Blink categories
 		$WebCat = BLINK_JEWELLERY;	
+	}
+
+	if (ItemInList($Category, LIST_STOCK_CATEGORIES_GENERAL)){
+		// if belongs to one of the general categories 
+		$WebCat = GENERAL_ACCESSORIES;	
 	}
 
 	// filter some false positives
@@ -455,6 +480,13 @@ function WebsiteCategoryBlinkJewellery($StockId, $Description, $Long, $Category)
 	if (($WebCat == BLINK_JEWELLERY) AND isKeyHolder($StockId)){
 		$WebCat = BLINK_KEYHOLDERS;	
 	}	
+	if (($WebCat == GENERAL_JEWELLERY) AND isFaceMask($StockId)){
+		$WebCat = GE_FACEMASKS;	
+	}	
+	if (($WebCat == GENERAL_JEWELLERY) AND isJewelleryRoll($StockId)){
+		$WebCat = GE_JEWELLERY_ROLLS;	
+	}	
+
 	return $WebCat; 
 }
 
@@ -559,6 +591,13 @@ function WebsiteCategoryDiscount($StockId, $Description, $Long, $Category){
 	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isKeyHolder($StockId)){
 		$WebCat = KEYHOLDERS_ON_SPECIAL;	
 	}	
+	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isFaceMask($StockId)){
+		$WebCat = FACEMASKS_ON_SPECIAL;	
+	}
+	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isJewelleryRoll($StockId)){
+		$WebCat = JEWELLERY_ROLLS_ON_SPECIAL;	
+	}	
+
 	return $WebCat; 
 }
 
