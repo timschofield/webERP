@@ -413,6 +413,20 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 				$SortOrder++;
 			}
 		
+			// if it's a general item, we have to add it too to Blink store.
+			if  (ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_GENERAL) AND
+			   (!DataExistsInOpenCart($db_oc, $oc_tableprefix . 'product_to_store', 'product_id', $ProductId, 'store_id', OPENCART_STORE_BLINK))){
+				$sqlInsert = "INSERT INTO " . $oc_tableprefix . "product_to_store
+								(product_id,
+								store_id)
+							VALUES
+								('" . $ProductId . "',
+								'" . OPENCART_STORE_BLINK . "'
+								)";
+				$resultInsert = DB_query_oc($sqlInsert,$InsertErrMsg,$DbgMsg,true);
+				$StoreText = $StoreText . " + BL";
+			}
+
 			// if it's not on the wholesale store, we add it.
 			if (!DataExistsInOpenCart($db_oc, $oc_tableprefix . 'product_to_store', 'product_id', $ProductId, 'store_id', OPENCART_STORE_WHOLESALE)){
 				$sqlInsert = "INSERT INTO " . $oc_tableprefix . "product_to_store
