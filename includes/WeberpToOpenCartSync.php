@@ -28,7 +28,7 @@ function WeberpToOpenCartDailySync($ShowMessages, $db, $db_oc, $oc_tableprefix, 
 	$EmailText = WeberpToOpenCartHourlySync($ShowMessages, $db, $db_oc, $oc_tableprefix, FALSE, $EmailText);
 
 	// recreate the list of featured in OpenCart
-	$EmailText = SyncFeaturedList($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
+//	$EmailText = SyncFeaturedList($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
 
 	// update sales categories
 	$EmailText = SyncSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
