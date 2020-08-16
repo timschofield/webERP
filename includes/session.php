@@ -56,6 +56,7 @@ to limit possibility for SQL injection attacks and cross scripting attacks
 */
 
 if (isset($_SESSION['DatabaseName'])) {
+	
 	foreach ($_POST as $PostVariableName => $PostVariableValue) {
 		if (gettype($PostVariableValue) != 'array') {
 			/*    if(get_magic_quotes_gpc()) {
@@ -86,12 +87,14 @@ if (isset($_SESSION['DatabaseName'])) {
 			$_GET[$GetKey] = DB_escape_string(htmlspecialchars($GetValue, ENT_QUOTES, 'UTF-8'));
 		}
 	}
+
 } else { //set SESSION['FormID'] before the a user has even logged in
 	$_SESSION['FormID'] = sha1(uniqid(mt_rand(), true));
 }
 
 include ($PathPrefix . 'includes/LanguageSetup.php');
 $FirstLogin = False;
+
 
 if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 	if (isset($_SESSION['Favourites'])) {
@@ -143,9 +146,11 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 		}
 	}
 
-	header('Location: index.php');
-} elseif (isset($AllowAnyone)) { /* only do security checks if AllowAnyone is not true */
-	if (!isset($_SESSION['DatabaseName'])) {
+	header('Location: index.php'); //go back to the main index/login
+	
+} elseif (isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true */
+	if (!isset($_SESSION['DatabaseName'])){
+
 		$_SESSION['AllowedPageSecurityTokens'] = array();
 		$_SESSION['DatabaseName'] = $DefaultDatabase;
 		$_SESSION['CompanyName'] = $DefaultDatabase;
@@ -169,33 +174,32 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 	switch ($rc) {
 		case UL_OK; //user logged in successfully
 		include ($PathPrefix . 'includes/LanguageSetup.php'); //set up the language
-
-	break;
-
-	case UL_SHOWLOGIN:
-		include ($PathPrefix . 'includes/Login.php');
-		exit;
-
-	case UL_BLOCKED:
-		die(include ($PathPrefix . 'includes/FailedLogin.php'));
-
-	case UL_CONFIGERR:
-		$Title = _('Account Error Report');
-		include ($PathPrefix . 'includes/header.php');
-		echo '<br /><br /><br />';
-		prnMsg(_('Your user role does not have any access defined for webERP. There is an error in the security setup for this user account'), 'error');
-		include ($PathPrefix . 'includes/footer.php');
-		exit;
-
-	case UL_NOTVALID:
-		$demo_text = '<font size="3" color="red"><b>' . _('incorrect password') . '</b></font><br /><b>' . _('The user/password combination') . '<br />' . _('is not a valid user of the system') . '</b>';
-		die(include ($PathPrefix . 'includes/Login.php'));
-
-	case UL_MAINTENANCE:
-		$demo_text = '<font size="3" color="red"><b>' . _('system maintenance') . '</b></font><br /><b>' . _('webERP is not available right now') . '<br />' . _('during maintenance of the system') . '</b>';
-		die(include ($PathPrefix . 'includes/Login.php'));
-
-}
+		break;
+	
+		case UL_SHOWLOGIN:
+			include ($PathPrefix . 'includes/Login.php');
+			exit;
+	
+		case UL_BLOCKED:
+			die(include ($PathPrefix . 'includes/FailedLogin.php'));
+	
+		case UL_CONFIGERR:
+			$Title = _('Account Error Report');
+			include ($PathPrefix . 'includes/header.php');
+			echo '<br /><br /><br />';
+			prnMsg(_('Your user role does not have any access defined for webERP. There is an error in the security setup for this user account'), 'error');
+			include ($PathPrefix . 'includes/footer.php');
+			exit;
+	
+		case UL_NOTVALID:
+			$demo_text = '<font size="3" color="red"><b>' . _('incorrect password') . '</b></font><br /><b>' . _('The user/password combination') . '<br />' . _('is not a valid user of the system') . '</b>';
+			die(include ($PathPrefix . 'includes/Login.php'));
+	
+		case UL_MAINTENANCE:
+			$demo_text = '<font size="3" color="red"><b>' . _('system maintenance') . '</b></font><br /><b>' . _('webERP is not available right now') . '<br />' . _('during maintenance of the system') . '</b>';
+			die(include ($PathPrefix . 'includes/Login.php'));
+	
+	}
 }
 
 /*If the Code $Version - held in ConnectDB.inc is > than the Database VersionNumber held in config table then do upgrades */
@@ -212,6 +216,7 @@ if (isset($_POST['Theme']) and ($_SESSION['UsersRealName'] == $_POST['RealName']
 	$Theme = $DefaultTheme;
 	$_SESSION['Theme'] = $DefaultTheme;
 }
+
 
 if ($_SESSION['HTTPS_Only'] == 1) {
 	if ($_SERVER['HTTPS'] != 'on') {
@@ -326,7 +331,7 @@ function quote_smart($value) {
 	// Quote if not integer
 	if (!is_numeric($value)) {
 		$value = "'" . DB_escape_string($value) . "'";
-	}
+	} 
 	return $value;
 }
 
