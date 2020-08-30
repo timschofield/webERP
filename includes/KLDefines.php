@@ -1,5 +1,7 @@
 <?php
 
+define("MINIMUM_SURVIVAL_CASH", 3000000000);
+
 define("CURRENCY_CODE", 'IDR');
 define("CUSTOMER_TYPE_RETAIL", '2');
 define("CUSTOMER_TYPE_CONSIGNMENT", '6');
