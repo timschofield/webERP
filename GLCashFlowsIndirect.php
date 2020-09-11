@@ -41,7 +41,7 @@ function colDebitCreditPercent($Amount) {
 
 // BEGIN: Procedure division ---------------------------------------------------
 include('includes/session.php');
-$Title = _('Statement of Cash Flows, Indirect Method');
+$Title = _('KL Statement of Cash Flows, Cash Accounts Difference Method');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLCashFlowsIndirect';
 include('includes/header.php');
@@ -54,7 +54,6 @@ if(isset($_GET['PeriodFrom'])) {// Select period from.
 if(isset($_GET['PeriodTo'])) {// Select period to.
 	$_POST['PeriodTo'] = $_GET['PeriodTo'];
 }
-$_POST['ShowBudget'] = TRUE;
 if(isset($_GET['ShowZeroBalance'])) {// Show accounts with zero balance.
 	$_POST['ShowZeroBalance'] = $_GET['ShowZeroBalance'];
 }
@@ -123,108 +122,43 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 	}
 	include('includes/GLPostings.inc');// Posts pending GL transactions.
 	// Outputs the table:
-	if($_POST['ShowBudget']) {// Parameters: PeriodFrom, PeriodTo, ShowBudget=on, ShowZeroBalance=on/off, ShowCash=on/off.
-		// BEGIN Outputs the table with budget.
-		// Code maintenance note: To update 'Outputs the table withOUT budget', copy 'Outputs the table with budget' and remove lines with 'budget'.
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++>>
-		echo		'<th colspan="2">', _('Period Budget'), '</th>',
-					'<th colspan="2">', _('Last Year'), '</th>
-				</tr>
-			</thead><tfoot>
-				<tr>',
-					'<td class="text" colspan="8">',// Prints an explanation of signs in actual and relative changes:
-						'<br /><b>', _('Notes'), ':</b><br />',
-						_('Cash flows signs: a negative number indicates a cash flow used in activities; a positive number indicates a cash flow provided by activities.'), '<br />';
-		if($_POST['ShowCash']) {
-			echo		_('Cash signs: a negative number indicates a cash outflow; a positive number indicates a cash inflow.'), '<br />';
-		}
-		echo		'</td>
-				</tr>
-			</tfoot><tbody>';
-		// Net profit − dividends = Retained earnings:
-		echo '<tr>
-				<td class="text" colspan="8"><br /><h2>', _('Net profit for the period'), '</h2></td>
+	echo		'<th colspan="2">', _('Period Budget'), '</th>',
+				'<th colspan="2">', _('Last Year'), '</th>
 			</tr>
-			<tr class="OddTableRows">
-				<td>&nbsp;</td>
-				<td class="text">', _('Net profit for the period (From P&L Statement)'), '</td>';
-		// Net profit for the period:
+		</thead><tfoot>
+			<tr>',
+				'<td class="text" colspan="8">',// Prints an explanation of signs in actual and relative changes:
+					'<br /><b>', _('Notes'), ':</b><br />',
+					_('Cash flows signs: a negative number indicates a cash flow used in activities; a positive number indicates a cash flow provided by activities.'), '<br />';
+	if($_POST['ShowCash']) {
+		echo		_('Cash signs: a negative number indicates a cash outflow; a positive number indicates a cash inflow.'), '<br />';
+	}
+	echo		'</td>
+			</tr>
+		</tfoot><tbody>';
+	if($_POST['ShowCash']) {
+		// Prints a detail of Cash at beginning of period (Parameters: PeriodFrom, PeriodTo, ShowZeroBalance=on/off, ShowCash=ON):
+		echo '<tr><td colspan="8">&nbsp;</td></tr>';
+		$ActualBeginning = 0;
+		$BudgetBeginning = 0;
+		$LastBeginning = 0;
 		$Sql = "SELECT
-					Sum(CASE WHEN (chartdetails.period >= '" . $_POST['PeriodFrom'] . "' AND chartdetails.period <= '" . $_POST['PeriodTo'] . "') THEN -chartdetails.actual ELSE 0 END) AS ActualProfit,
-					Sum(CASE WHEN (chartdetails.period >= '" . $_POST['PeriodFrom'] . "' AND chartdetails.period <= '" . $_POST['PeriodTo'] . "') THEN -chartdetails.budget ELSE 0 END) AS BudgetProfit,
-					Sum(CASE WHEN (chartdetails.period >= '" . ($_POST['PeriodFrom']-12) . "' AND chartdetails.period <= '" . ($_POST['PeriodTo']-12) . "') THEN -chartdetails.actual ELSE 0 END) AS LastProfit
-				FROM chartmaster
-					INNER JOIN chartdetails ON chartmaster.accountcode=chartdetails.accountcode
-					INNER JOIN accountgroups ON chartmaster.group_=accountgroups.groupname
-				WHERE accountgroups.pandl=1";
-		$MyRow1 = DB_fetch_array(DB_query($Sql));
-		echo	colDebitCredit($MyRow1['ActualProfit']),
-				colDebitCredit($MyRow1['BudgetProfit']),
-				colDebitCredit($MyRow1['LastProfit']),
-			'</tr>';
-
-		echo '<tr>',
-				'<td class="text" colspan="2">', _('Net profit'), '</td>',
-		// Retained earnings changes:
-					colDebitCredit($MyRow1['ActualProfit']),
-					colDebitCredit($MyRow1['BudgetRetained']),
-					colDebitCredit($MyRow1['LastProfit']),
-			'</tr>';
-		$ActualTotal += $MyRow1['ActualProfit'];
-		$BudgetTotal += $MyRow1['BudgetRetained'];
-		$LastTotal += $$MyRow1['LastProfit'];
-		// Cash flows sections:
-		$BudgetSection = 0;
-		$BudgetTotal = 0;
-		$Sql = "SELECT
-					chartmaster.cashflowsactivity,
 					chartdetails.accountcode,
 					chartmaster.accountname,
-					Sum(CASE WHEN (chartdetails.period >= '" . $_POST['PeriodFrom'] . "' AND chartdetails.period <= '" . $_POST['PeriodTo'] . "') THEN -chartdetails.actual ELSE 0 END) AS ActualAmount,
-					Sum(CASE WHEN (chartdetails.period >= '" . $_POST['PeriodFrom'] . "' AND chartdetails.period <= '" . $_POST['PeriodTo'] . "') THEN -chartdetails.budget ELSE 0 END) AS BudgetAmount,
-					Sum(CASE WHEN (chartdetails.period >= '" . ($_POST['PeriodFrom']-12) . "' AND chartdetails.period <= '" . ($_POST['PeriodTo']-12) . "') THEN -chartdetails.actual ELSE 0 END) AS LastAmount
+					Sum(CASE WHEN (chartdetails.period = '" . ($_POST['PeriodFrom']) . "') THEN chartdetails.bfwd ELSE 0 END) AS ActualAmount,
+					Sum(CASE WHEN (chartdetails.period = '" . ($_POST['PeriodFrom']) . "') THEN chartdetails.bfwdbudget ELSE 0 END) AS BudgetAmount,
+					Sum(CASE WHEN (chartdetails.period = '" . ($_POST['PeriodFrom']-12) . "') THEN chartdetails.bfwd ELSE 0 END) AS LastAmount
 				FROM chartmaster
 					INNER JOIN chartdetails ON chartmaster.accountcode=chartdetails.accountcode
 					INNER JOIN accountgroups ON chartmaster.group_=accountgroups.groupname
-				WHERE accountgroups.pandl=0 AND chartmaster.cashflowsactivity!=4
-				GROUP BY
-					chartdetails.accountcode
-				ORDER BY
-					chartmaster.cashflowsactivity,
-					chartdetails.accountcode";
+				WHERE accountgroups.pandl=0 AND chartmaster.cashflowsactivity=4
+				GROUP BY chartdetails.accountcode
+				ORDER BY chartdetails.accountcode";
 		$Result = DB_query($Sql);
-		$IdSection = -1;
-		// Looks for an account without setting up:
-		$NeedSetup = FALSE;
 		foreach($Result as $MyRow) {
-			if($MyRow['cashflowsactivity'] == -1) {
-				$NeedSetup = TRUE;
-				echo '<tr><td colspan="8">&nbsp;</td></tr>';
-				break;
-			}
-		}
-		foreach($Result as $MyRow) {
-			if($IdSection <> $MyRow['cashflowsactivity']) {
-				// Prints section total:
-				echo '<tr>
-			    	<td class="text" colspan="2">', CashFlowsActivityName($IdSection), '</td>',
-					colDebitCredit($ActualSection),
-					colDebitCredit($BudgetSection),
-					colDebitCredit($LastSection),
-			    '</tr>';
-				// Resets section totals:
-				$ActualSection = 0;
-				$BudgetSection = 0;
-				$LastSection = 0;
-				$IdSection = $MyRow['cashflowsactivity'];
-				// Prints next section title:
-				echo '<tr>
-			    		<td class="text" colspan="8"><br /><h2>', CashFlowsActivityName($IdSection), '</h2></td>
-			    	</tr>';
-			}
-			if(ABS($MyRow['ActualAmount'])> 1
-				OR ABS($MyRow['BudgetAmount'])> 1
-				OR ABS($MyRow['LastAmount'])> 1 OR isset($_POST['ShowZeroBalance'])) {
+		if(ABS($MyRow['ActualAmount'])> 1
+			OR ABS($MyRow['BudgetAmount'])> 1
+			OR ABS($MyRow['LastAmount'])> 1 OR isset($_POST['ShowZeroBalance'])) {
 				if($k == 1) {
 					echo '<tr class="OddTableRows">';
 					$k = 0;
@@ -232,207 +166,119 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 					echo '<tr class="EvenTableRows">';
 					$k = 1;
 				}
-				echo	'<td class="text"><a href="', $RootPath, '/GLAccountInquiry.php?FromPeriod=', $_POST['PeriodFrom'], '&amp;ToPeriod=', $_POST['PeriodTo'], '&amp;Account=', $MyRow['accountcode'], '">', $MyRow['accountcode'], '</a></td>',
+				echo	'<td class="text"><a href="', $RootPath, '/GLAccountInquiry.php?Period=', $_POST['PeriodFrom'], '&amp;Account=', $MyRow['accountcode'], '">', $MyRow['accountcode'], '</a></td>',
 						'<td class="text">', $MyRow['accountname'], '</td>',
 						colDebitCredit($MyRow['ActualAmount']),
 						colDebitCredit($MyRow['BudgetAmount']),
 						colDebitCredit($MyRow['LastAmount']),
 					'</tr>';
-				$ActualSection += $MyRow['ActualAmount'];
-				$ActualTotal += $MyRow['ActualAmount'];
-				$BudgetSection += $MyRow['BudgetAmount'];
-				$BudgetTotal += $MyRow['BudgetAmount'];
-				$LastSection += $MyRow['LastAmount'];
-				$LastTotal += $MyRow['LastAmount'];
+				$ActualBeginning += $MyRow['ActualAmount'];
+				$BudgetBeginning += $MyRow['BudgetAmount'];
+				$LastBeginning += $MyRow['LastAmount'];
 			}
 		}
-		// Prints the last section total:
-		echo '<tr>
-				<td class="text" colspan="2">', CashFlowsActivityName($IdSection), '</td>',
-				colDebitCredit($ActualSection),
-				colDebitCredit($BudgetSection),
-				colDebitCredit($LastSection),
-			'</tr>
-			<tr><td colspan="8">&nbsp;</td></tr>',
-		// Prints Net increase in cash and cash equivalents:
-			'<tr>
-				<td class="text" colspan="2"><b>', _('Net increase in cash and cash equivalents'), '</b></td>',
-				colDebitCredit($ActualTotal),
-				colDebitCredit($BudgetTotal),
-				colDebitCredit($LastTotal),
-			'</tr>';
-		$NetIncrease = $ActualTotal;
-		// Prints Cash at beginning of period:
-		if($_POST['ShowCash']) {
-			// Prints a detail of Cash at beginning of period (Parameters: PeriodFrom, PeriodTo, ShowBudget=on, ShowZeroBalance=on/off, ShowCash=ON):
-			echo '<tr><td colspan="8">&nbsp;</td></tr>';
-			$ActualBeginning = 0;
-			$BudgetBeginning = 0;
-			$LastBeginning = 0;
-			$Sql = "SELECT
-						chartdetails.accountcode,
-						chartmaster.accountname,
-						Sum(CASE WHEN (chartdetails.period = '" . ($_POST['PeriodFrom'] -1) . "') THEN chartdetails.bfwd ELSE 0 END) AS ActualAmount,
-						Sum(CASE WHEN (chartdetails.period = '" . ($_POST['PeriodFrom'] -1) . "') THEN chartdetails.bfwdbudget ELSE 0 END) AS BudgetAmount,
-						Sum(CASE WHEN (chartdetails.period = '" . ($_POST['PeriodFrom']-11) . "') THEN chartdetails.bfwd ELSE 0 END) AS LastAmount
-					FROM chartmaster
-						INNER JOIN chartdetails ON chartmaster.accountcode=chartdetails.accountcode
-						INNER JOIN accountgroups ON chartmaster.group_=accountgroups.groupname
-					WHERE accountgroups.pandl=0 AND chartmaster.cashflowsactivity=4
-					GROUP BY chartdetails.accountcode
-					ORDER BY chartdetails.accountcode";
-			$Result = DB_query($Sql);
-			foreach($Result as $MyRow) {
-			if(ABS($MyRow['ActualAmount'])> 1
-				OR ABS($MyRow['BudgetAmount'])> 1
-				OR ABS($MyRow['LastAmount'])> 1 OR isset($_POST['ShowZeroBalance'])) {
-					if($k == 1) {
-						echo '<tr class="OddTableRows">';
-						$k = 0;
-					} else {
-						echo '<tr class="EvenTableRows">';
-						$k = 1;
-					}
-					echo	'<td class="text"><a href="', $RootPath, '/GLAccountInquiry.php?Period=', $_POST['PeriodFrom'], '&amp;Account=', $MyRow['accountcode'], '">', $MyRow['accountcode'], '</a></td>',
-							'<td class="text">', $MyRow['accountname'], '</td>',
-							colDebitCredit($MyRow['ActualAmount']),
-							colDebitCredit($MyRow['BudgetAmount']),
-							colDebitCredit($MyRow['LastAmount']),
-						'</tr>';
-					$ActualBeginning += $MyRow['ActualAmount'];
-					$BudgetBeginning += $MyRow['BudgetAmount'];
-					$LastBeginning += $MyRow['LastAmount'];
-				}
-			}
-		} else {
-			// Prints a summary of Cash at beginning of period (Parameters: PeriodFrom, PeriodTo, ShowBudget=on, ShowZeroBalance=on/off, ShowCash=OFF):
-			$Sql = "SELECT
-						Sum(CASE WHEN (chartdetails.period = '" . ($_POST['PeriodFrom'] -1) . "') THEN chartdetails.bfwd ELSE 0 END) AS ActualAmount,
-						Sum(CASE WHEN (chartdetails.period = '" . ($_POST['PeriodFrom'] -1) . "') THEN chartdetails.bfwdbudget ELSE 0 END) AS BudgetAmount,
-						Sum(CASE WHEN (chartdetails.period = '" . ($_POST['PeriodFrom']-11) . "') THEN chartdetails.bfwd ELSE 0 END) AS LastAmount
-					FROM chartmaster
-						INNER JOIN chartdetails ON chartmaster.accountcode=chartdetails.accountcode
-						INNER JOIN accountgroups ON chartmaster.group_=accountgroups.groupname
-					WHERE accountgroups.pandl=0 AND chartmaster.cashflowsactivity=4";
-			$Result = DB_query($Sql);
-			$MyRow = DB_fetch_array($Result);
-			$ActualBeginning = $MyRow['ActualAmount'];
-			$BudgetBeginning = $MyRow['BudgetAmount'];
-			$LastBeginning = $MyRow['LastAmount'];
-		}
-		echo '<tr>
-				<td class="text" colspan="2"><b>', _('Cash at beginning of period'), '</b></td>',
-				colDebitCredit($ActualBeginning),
-				colDebitCredit($BudgetBeginning),
-				colDebitCredit($LastBeginning),
-			'</tr>';
-		$CashAtStartPeriod = $ActualBeginning;
+	} else {
+		// Prints a summary of Cash at beginning of period (Parameters: PeriodFrom, PeriodTo, ShowZeroBalance=on/off, ShowCash=OFF):
+		$Sql = "SELECT
+					Sum(CASE WHEN (chartdetails.period = '" . ($_POST['PeriodFrom']) . "') THEN chartdetails.bfwd ELSE 0 END) AS ActualAmount,
+					Sum(CASE WHEN (chartdetails.period = '" . ($_POST['PeriodFrom']) . "') THEN chartdetails.bfwdbudget ELSE 0 END) AS BudgetAmount,
+					Sum(CASE WHEN (chartdetails.period = '" . ($_POST['PeriodFrom']-12) . "') THEN chartdetails.bfwd ELSE 0 END) AS LastAmount
+				FROM chartmaster
+					INNER JOIN chartdetails ON chartmaster.accountcode=chartdetails.accountcode
+					INNER JOIN accountgroups ON chartmaster.group_=accountgroups.groupname
+				WHERE accountgroups.pandl=0 AND chartmaster.cashflowsactivity=4";
+		$Result = DB_query($Sql);
+		$MyRow = DB_fetch_array($Result);
+		$ActualBeginning = $MyRow['ActualAmount'];
+		$BudgetBeginning = $MyRow['BudgetAmount'];
+		$LastBeginning = $MyRow['LastAmount'];
+	}
+	echo '<tr>
+			<td class="text" colspan="2"><b>', _('Cash at beginning of period'), '</b></td>',
+			colDebitCredit($ActualBeginning),
+			colDebitCredit($BudgetBeginning),
+			colDebitCredit($LastBeginning),
+		'</tr>';
+	$CashAtStartPeriod = $ActualBeginning;
 
-		// Prints Cash at end of period:
-		if($_POST['ShowCash']) {
-			// Prints a detail of Cash at end of period (Parameters: PeriodFrom, PeriodTo, ShowBudget=on, ShowZeroBalance=on/off, ShowCash=ON):
-			echo '<tr><td colspan="8">&nbsp;</td></tr>';
-			$Sql = "SELECT
-						chartdetails.accountcode,
-						chartmaster.accountname,
-						Sum(CASE WHEN (chartdetails.period = '" . ($_POST['PeriodTo']) . "') THEN chartdetails.bfwd ELSE 0 END) AS ActualAmount,
-						Sum(CASE WHEN (chartdetails.period = '" . ($_POST['PeriodTo']) . "') THEN chartdetails.bfwdbudget ELSE 0 END) AS BudgetAmount,
-						Sum(CASE WHEN (chartdetails.period = '" . ($_POST['PeriodTo']-12) . "') THEN chartdetails.bfwd ELSE 0 END) AS LastAmount
-					FROM chartmaster
-						INNER JOIN chartdetails ON chartmaster.accountcode=chartdetails.accountcode
-						INNER JOIN accountgroups ON chartmaster.group_=accountgroups.groupname
-					WHERE accountgroups.pandl=0 AND chartmaster.cashflowsactivity=4
-					GROUP BY chartdetails.accountcode
-					ORDER BY chartdetails.accountcode";
-			$Result = DB_query($Sql);
-			foreach($Result as $MyRow) {
-				if(ABS($MyRow['ActualAmount']) > 1
-					OR ABS($MyRow['BudgetAmount']) > 1
-					OR ABS($MyRow['LastAmount']) > 1 OR isset($_POST['ShowZeroBalance'])) {
-					if($k == 1) {
-						echo '<tr class="OddTableRows">';
-						$k = 0;
-					} else {
-						echo '<tr class="EvenTableRows">';
-						$k = 1;
-					}
-					echo	'<td class="text"><a href="', $RootPath, '/GLAccountInquiry.php?Period=', $_POST['PeriodTo'], '&amp;Account=', $MyRow['accountcode'], '">', $MyRow['accountcode'], '</a></td>',
-							'<td class="text">', $MyRow['accountname'], '</td>',
-							colDebitCredit($MyRow['ActualAmount']),
-							colDebitCredit($MyRow['BudgetAmount']),
-							colDebitCredit($MyRow['LastAmount']),
-						'</tr>';
+	if($_POST['ShowCash']) {
+		// Prints a detail of Cash at End of period (Parameters: PeriodFrom, PeriodTo, ShowZeroBalance=on/off, ShowCash=ON):
+		echo '<tr><td colspan="8">&nbsp;</td></tr>';
+		$ActualEnd = 0;
+		$BudgetEnd = 0;
+		$LastEnd = 0;
+		$Sql = "SELECT
+					chartdetails.accountcode,
+					chartmaster.accountname,
+					Sum(CASE WHEN (chartdetails.period = '" . ($_POST['PeriodTo']) . "') THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS ActualAmount,
+					Sum(CASE WHEN (chartdetails.period = '" . ($_POST['PeriodTo']) . "') THEN chartdetails.bfwdbudget ELSE 0 END) AS BudgetAmount,
+					Sum(CASE WHEN (chartdetails.period = '" . ($_POST['PeriodTo']-12) . "') THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS LastAmount
+				FROM chartmaster
+					INNER JOIN chartdetails ON chartmaster.accountcode=chartdetails.accountcode
+					INNER JOIN accountgroups ON chartmaster.group_=accountgroups.groupname
+				WHERE accountgroups.pandl=0 AND chartmaster.cashflowsactivity=4
+				GROUP BY chartdetails.accountcode
+				ORDER BY chartdetails.accountcode";
+		$Result = DB_query($Sql);
+		foreach($Result as $MyRow) {
+		if(ABS($MyRow['ActualAmount'])> 1
+			OR ABS($MyRow['BudgetAmount'])> 1
+			OR ABS($MyRow['LastAmount'])> 1 OR isset($_POST['ShowZeroBalance'])) {
+				if($k == 1) {
+					echo '<tr class="OddTableRows">';
+					$k = 0;
+				} else {
+					echo '<tr class="EvenTableRows">';
+					$k = 1;
 				}
+				echo	'<td class="text"><a href="', $RootPath, '/GLAccountInquiry.php?Period=', $_POST['PeriodFrom'], '&amp;Account=', $MyRow['accountcode'], '">', $MyRow['accountcode'], '</a></td>',
+						'<td class="text">', $MyRow['accountname'], '</td>',
+						colDebitCredit($MyRow['ActualAmount']),
+						colDebitCredit($MyRow['BudgetAmount']),
+						colDebitCredit($MyRow['LastAmount']),
+					'</tr>';
+				$ActualEnd += $MyRow['ActualAmount'];
+				$BudgetEnd += $MyRow['BudgetAmount'];
+				$LastEnd += $MyRow['LastAmount'];
 			}
 		}
-	
-		// Prints Cash at end of period total:
-		echo '<tr>
-				<td class="text" colspan="2"><b>', _('Cash at end of period'), '</b></td>',
-				colDebitCredit($ActualTotal+$ActualBeginning),
-				colDebitCredit($BudgetTotal+$BudgetBeginning),
-				colDebitCredit($LastTotal+$LastBeginning),
-			'</tr>';
-		$CashAtEndPeriod = $ActualTotal+$ActualBeginning;
-		// Prints 'Cash or cash equivalent' section if selected (Parameters: PeriodFrom, PeriodTo, ShowBudget=on, ShowZeroBalance=on/off, ShowCash=ON):
-		if($_POST['ShowCash']) {
-			// Prints 'Cash or cash equivalent' section title:
-			echo '<tr><td colspan="8">&nbsp</td><tr>
-				<tr>
-		    		<td class="text" colspan="8"><br /><h2>', CashFlowsActivityName(4), '</h2></td>
-		    	</tr>';
-			// Initialise 'Cash or cash equivalent' section accumulators:
-			$ActualCash = 0;
-			$BudgetCash = 0;
-			$LastCash = 0;
-			$Sql = "SELECT
-				chartdetails.accountcode,
-				chartmaster.accountname,
-				Sum(CASE WHEN (chartdetails.period >= '" . $_POST['PeriodFrom'] . "' AND chartdetails.period <= '" . $_POST['PeriodTo'] . "') THEN chartdetails.actual ELSE 0 END) AS ActualAmount,
-				Sum(CASE WHEN (chartdetails.period >= '" . $_POST['PeriodFrom'] . "' AND chartdetails.period <= '" . $_POST['PeriodTo'] . "') THEN chartdetails.budget ELSE 0 END) AS BudgetAmount,
-				Sum(CASE WHEN (chartdetails.period >= '" . ($_POST['PeriodFrom']-12) . "' AND chartdetails.period <= '" . ($_POST['PeriodTo']-12) . "') THEN chartdetails.actual ELSE 0 END) AS LastAmount
-			FROM chartmaster
-				INNER JOIN chartdetails ON chartmaster.accountcode=chartdetails.accountcode
-				INNER JOIN accountgroups ON chartmaster.group_=accountgroups.groupname
-			WHERE accountgroups.pandl=0 AND chartmaster.cashflowsactivity=4
-			GROUP BY chartdetails.accountcode
-			ORDER BY
-				chartdetails.accountcode";
-			$Result = DB_query($Sql);
-			foreach($Result as $MyRow) {
-				if(ABS($MyRow['ActualAmount']) > 1
-					OR ABS($MyRow['BudgetAmount']) > 1
-					OR ABS($MyRow['LastAmount']) > 1 OR isset($_POST['ShowZeroBalance'])) {
-					if($k == 1) {
-						echo '<tr class="OddTableRows">';
-						$k = 0;
-					} else {
-						echo '<tr class="EvenTableRows">';
-						$k = 1;
-					}
-					echo	'<td class="text"><a href="', $RootPath, '/GLAccountInquiry.php?FromPeriod=', $_POST['PeriodFrom'], '&amp;ToPeriod=', $_POST['PeriodTo'], '&amp;Account=', $MyRow['accountcode'], '">', $MyRow['accountcode'], '</a></td>',
-							'<td class="text">', $MyRow['accountname'], '</td>',
-							colDebitCredit($MyRow['ActualAmount']),
-							colDebitCredit($MyRow['BudgetAmount']),
-							colDebitCredit($MyRow['LastAmount']),
-						'</tr>';
-					$ActualCash += $MyRow['ActualAmount'];
-					$BudgetCash += $MyRow['BudgetAmount'];
-					$LastCash += $MyRow['LastAmount'];
-				}
-			}
-			// Prints 'Cash or cash equivalent' section total:
-			echo '<tr>
-		    	<td class="text" colspan="2">', CashFlowsActivityName(4), '</td>',
-				colDebitCredit($ActualCash),
-				colDebitCredit($BudgetCash),
-				colDebitCredit($LastCash),
-		    '</tr>';
-		}
-	}	echo '<tr><td colspan="8">&nbsp;</td></tr>';
+	} else {
+		// Prints a summary of Cash at End of period (Parameters: PeriodFrom, PeriodTo, ShowZeroBalance=on/off, ShowCash=OFF):
+		$Sql = "SELECT
+					Sum(CASE WHEN (chartdetails.period = '" . ($_POST['PeriodTo']) . "') THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS ActualAmount,
+					Sum(CASE WHEN (chartdetails.period = '" . ($_POST['PeriodTo']) . "') THEN chartdetails.bfwdbudget ELSE 0 END) AS BudgetAmount,
+					Sum(CASE WHEN (chartdetails.period = '" . ($_POST['PeriodTo']-12) . "') THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS LastAmount
+				FROM chartmaster
+					INNER JOIN chartdetails ON chartmaster.accountcode=chartdetails.accountcode
+					INNER JOIN accountgroups ON chartmaster.group_=accountgroups.groupname
+				WHERE accountgroups.pandl=0 AND chartmaster.cashflowsactivity=4";
+		$Result = DB_query($Sql);
+		$MyRow = DB_fetch_array($Result);
+		$ActualEnd = $MyRow['ActualAmount'];
+		$BudgetEnd = $MyRow['BudgetAmount'];
+		$LastEnd = $MyRow['LastAmount'];
+	}
+	echo '<tr>
+			<td class="text" colspan="2"><b>', _('Cash at End of period'), '</b></td>',
+			colDebitCredit($ActualEnd),
+			colDebitCredit($BudgetEnd),
+			colDebitCredit($LastEnd),
+		'</tr>';
+
+	$CashAtEndPeriod = $ActualEnd;
+	$CashVariation = $CashAtEndPeriod - $CashAtStartPeriod;
+
+	echo '<tr>
+			<td class="text" colspan="2"><b>', _('Cash Flow'), '</b></td>',
+			colDebitCredit($CashVariation),
+			colDebitCredit(0),
+			colDebitCredit(0),
+		'</tr>';
+
+	echo '<tr><td colspan="8">&nbsp;</td></tr>';
 	$NumPeriods = $_POST['PeriodTo'] - $_POST['PeriodFrom'] + 1;
-	$MonthlyVariation = ROUND($NetIncrease / $NumPeriods, 1);
-	$MonthlyPercent = ROUND($NetIncrease / ($CashAtStartPeriod / $NumPeriods) * 100, 1);
+	$MonthlyVariation = ROUND($CashVariation / $NumPeriods, 1);
+	$MonthlyPercent = ROUND($MonthlyVariation / $CashAtStartPeriod * 100, 1);
 	echo '<tr>
 			<td class="text" colspan="2"><b>', _('Average monthly cash variation'), '</b></td>',
 			colDebitCredit($MonthlyVariation),
@@ -445,9 +291,9 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 			colDebitCredit(0),
 			colDebitCredit(0),
 		'</tr>';
-	if ($NetIncrease < 0){
+	if ($CashVariation < 0){
 		echo '<tr>
-				<td class="text" colspan="2"><b>', _('Minimum Cash To Restart'), '</b></td>',
+				<td class="text" colspan="2"><b>', _('Cash needed to Shutdown'), '</b></td>',
 				colDebitCredit(MINIMUM_SURVIVAL_CASH),
 				colDebitCredit(0),
 				colDebitCredit(0),
@@ -459,7 +305,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 				colDebitCredit(0),
 				colDebitCredit(0),
 			'</tr>';
-		$SurvivalMonths = -round($CashAvailable / ($NetIncrease / $NumPeriods), 0, PHP_ROUND_HALF_DOWN);
+		$SurvivalMonths = -round($CashAvailable / $MonthlyVariation, 0, PHP_ROUND_HALF_DOWN);
 		echo '<tr>
 				<td class="text" colspan="2"><b>', _('Cash survival in months'), '</b></td>',
 				colDebitCredit($SurvivalMonths),
@@ -476,7 +322,6 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 		'<input name="PeriodTo" type="hidden" value="', $_POST['PeriodTo'], '" />',
 		'<input name="ShowDetail" type="hidden" value="', $_POST['ShowDetail'], '" />',
 		'<input name="ShowZeroBalance" type="hidden" value="', $_POST['ShowZeroBalance'], '" />',
-		'<input name="ShowBudget" type="hidden" value="', $_POST['ShowBudget'], '" />',
 		'<input name="ShowCash" type="hidden" value="', $_POST['ShowCash'], '" />',
 		'<div class="centre noprint">'; // Form buttons:
 	if($NeedSetup) {
