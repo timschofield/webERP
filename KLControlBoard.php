@@ -926,8 +926,8 @@ if ($ProcessSection02){
 
 	if ($KL_SystemAdmin 
 		OR $KL_ShopManagerOnline){
-		OnlineCustomersNoOrderPlaced($RootPath, $db);
-		$NumberOfTestExecuted++;
+//		OnlineCustomersNoOrderPlaced($RootPath, $db);
+//		$NumberOfTestExecuted++;
 		OnlineQuotationsFollowUp($RootPath, $db);
 		$NumberOfTestExecuted++;
 		OldOnlineQuotations(10, $RootPath, $db);
@@ -986,10 +986,10 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 		ItemsShouldBeInWebsite($db);
 		$NumberOfTestExecuted++;
-		UsersNotLoggingIn(60, "ALL_EXCEPT_SPGSUPPORT", $db);
-		$NumberOfTestExecuted++;
-		UsersNotLoggingIn(90, "SPGSUPPORT", $db);
-		$NumberOfTestExecuted++;
+//		UsersNotLoggingIn(60, "ALL_EXCEPT_SPGSUPPORT", $db);
+//		$NumberOfTestExecuted++;
+//		UsersNotLoggingIn(90, "SPGSUPPORT", $db);
+//		$NumberOfTestExecuted++;
 	}
 	
 	if ($KL_SystemAdmin 
