@@ -1657,7 +1657,7 @@ function WrongGiftItem($stockid, $customertype, $ErrorType, $OrderValue, $numDay
 		$whereclause = " AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_WHOLESALE . ") ";
 		$Titletext = "Wholesale";
 	}elseif ($customertype == "Online"){
-		$whereclause = " AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_ONLINE . ") ";
+		$whereclause = " AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_WEBSITE . ") ";
 		$Titletext = "Online";
 	}else{
 		$whereclause = " ";

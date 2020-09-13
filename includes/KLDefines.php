@@ -6,7 +6,8 @@ define("CURRENCY_CODE", 'IDR');
 define("CUSTOMER_TYPE_RETAIL", '2');
 define("CUSTOMER_TYPE_CONSIGNMENT", '6');
 define("CUSTOMER_TYPE_WHOLESALE", '3,4,5');
-define("CUSTOMER_TYPE_ONLINE", '9');
+define("CUSTOMER_TYPE_WEBSITE", '9');
+define("CUSTOMER_TYPE_MARKETPLACE", '10');
 define("RETAIL_PRICE_LIST", 'RT');
 define("PPN_PERCENT", 10);
 

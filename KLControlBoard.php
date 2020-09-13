@@ -930,6 +930,8 @@ if ($ProcessSection02){
 //		$NumberOfTestExecuted++;
 		OnlineQuotationsFollowUp($RootPath, $db);
 		$NumberOfTestExecuted++;
+		OnlineMarketPlacePaymentPending($RootPath, $db);
+		$NumberOfTestExecuted++;
 		OldOnlineQuotations(10, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	//	OutstandingOrders("Online", "Quotation", $RootPath, $db);
@@ -942,6 +944,8 @@ if ($ProcessSection02){
 		OR $KL_OperationalManager
 		OR $KL_ShopSupportTeam){ 
 		OutstandingOrders("Online", "Order", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		OutstandingOrders("MarketPlace", "Order", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		OnlineItemsOnProcess($RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -3376,7 +3380,7 @@ function OldOnlineQuotations($NumDays, $RootPath, $db){
 				INNER JOIN currencies
 					ON debtorsmaster.currcode = currencies.currabrev
 			WHERE salesorderdetails.completed= 0	
-				AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_ONLINE . ")
+				AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_WEBSITE . ")
 				AND salesorders.quotation = 1
 				AND salesorders.orddate < '" . $StartDate . "'
 			GROUP BY salesorders.orderno,	
@@ -3492,7 +3496,7 @@ function OnlineCustomersNoOrderPlaced($RootPath, $db){
 					debtorsmaster.currcode,
 					debtorsmaster.clientsince
 			FROM debtorsmaster
-			WHERE debtorsmaster.typeid IN (". CUSTOMER_TYPE_ONLINE . ")
+			WHERE debtorsmaster.typeid IN (". CUSTOMER_TYPE_WEBSITE . ")
 				AND debtorsmaster.klemailnowebshoporder = '0000-00-00'
 				AND NOT EXISTS (SELECT * 
 								FROM salesorders
@@ -3691,7 +3695,7 @@ function OnlineOrdersFollowUp($Source, $numDays, $RootPath, $db){
 						ON salesorders.shipvia = shippers.shipper_id
 					INNER JOIN currencies
 						ON debtorsmaster.currcode = currencies.currabrev
-				WHERE debtorsmaster.typeid IN (". CUSTOMER_TYPE_ONLINE . ")
+				WHERE debtorsmaster.typeid IN (". CUSTOMER_TYPE_WEBSITE . ")
 					AND debtorsmaster.debtorno != 'LAZADA'
 					AND salesorders.quotation = 0
 					AND (	(debtortrans.type = 12 
@@ -3828,7 +3832,7 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 				INNER JOIN currencies
 					ON debtorsmaster.currcode = currencies.currabrev
 			WHERE salesorderdetails.completed= 0	
-				AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_ONLINE . ")
+				AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_WEBSITE . ")
 				AND salesorders.quotation = 1
 			GROUP BY salesorders.orderno,	
 				debtorsmaster.name,
@@ -3919,6 +3923,109 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 	}
 }
 
+function OnlineMarketPlacePaymentPending($RootPath, $db){
+
+	$Titletext = "Follow up MarketPlace Online Orders Payment Pending";
+		
+	$SQL = "SELECT salesorders.orderno,	
+				salesorders.customerref,
+				debtorsmaster.debtorno,
+				salesorders.deliverto AS name,
+				salesorders.orddate,
+				SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)) AS ordervalue,
+				salesorders.freightcost,
+				salesorders.klpaidcash,
+				debtorsmaster.currcode,
+				currencies.decimalplaces
+			FROM salesorders 
+				INNER JOIN salesorderdetails 	
+					ON salesorders.orderno = salesorderdetails.orderno
+				INNER JOIN debtorsmaster 
+					ON salesorders.debtorno = debtorsmaster.debtorno
+				INNER JOIN currencies
+					ON debtorsmaster.currcode = currencies.currabrev
+			WHERE salesorders.klpaidcash= 0	
+				AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_MARKETPLACE . ")
+			GROUP BY salesorders.orderno,	
+				debtorsmaster.name,
+				salesorders.orddate
+			ORDER BY salesorders.orderno";			
+
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . $Titletext . '</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Order') . '</th>
+							<th class="ascending">' . _('#KL-Website') . '</th>
+							<th class="ascending">' . _('Customer') . '</th>
+							<th class="ascending">' . _('Name') . '</th>
+							<th class="ascending">' . _('Order Date') . '</th>
+							<th class="ascending">' . _('Order Value') . '</th>
+							<th class="ascending">' . _('Currency') . '</th>
+							<th class="ascending">' . _('Mark As Paid') . '</th>
+							<th class="ascending">' . _('Paid Tokopedia') . '</th>
+							<th class="ascending">' . _('Paid Shopee') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			$CodeLink = '<a href="' . $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . $myrow['orderno'] . '">' . $myrow['orderno'] . '</a>';
+			$PaymentLinkText = 'Apply Payment';
+			$PaymentValue = $myrow['ordervalue']+$myrow['freightcost'];
+
+			$PaymentLinkManualText = 'Mark As Paid';
+			$PaymentManual = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&PaymentCode=' . 'MANUAL_MARKETPLACE' . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentLinkManualText .'</a>';
+			// prepare the links according to the Marketplace
+			$PaymentTokopedia = 'NOT CODED';
+			$PaymentShopee = 'NOT CODED';
+/*			if ($myrow['debtorno'] == "TOKOPEDIA"){
+				$PaymentTokopedia = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&PaymentCode=' . $myrow['debtorno'] . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentLinkText .'</a>';
+			}else{
+				$PaymentTokopedia = '';
+			}
+			if ($myrow['debtorno'] == "SHOPEE"){
+				$PaymentShopee = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&PaymentCode=' . $myrow['debtorno'] . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentLinkText .'</a>';
+			}else{
+				$PaymentShopee = '';
+			}
+*/
+			printf('<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					</tr>', 
+					$i, 
+					$CodeLink, 
+					locale_number_format($myrow['customerref']),
+					$myrow['debtorno'], 
+					$myrow['name'], 
+					ConvertSQLDate($myrow['orddate']), 
+					locale_number_format($myrow['ordervalue']+$myrow['freightcost'],$myrow['decimalplaces']),
+					$myrow['currcode'], 
+					$PaymentManual,
+					$PaymentTokopedia,
+					$PaymentShopee
+					);
+			$i++;
+		}
+		echo '</table>
+				</div>';
+	}
+}
+
+
 function OpenCartItemsWithoutPicture($RootPath, $db, $db_oc, $oc_tableprefix){
 
 	$SQL = "SELECT 	" . $oc_tableprefix . "product.model AS stockid
@@ -3981,9 +4088,14 @@ function OutstandingOrders($customertype, $ordertype, $RootPath, $db){
 		$Titletext = "Outstanding Wholesale";
 		$WebsiteIDName = "";
 	}elseif ($customertype == "Online"){
-		$whereclause = " AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_ONLINE . ")";
+		$whereclause = " AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_WEBSITE . ")";
 		$namefield = " salesorders.deliverto AS name ";
 		$Titletext = "Outstanding Online";
+		$WebsiteIDName = "#KL-Website";
+	}elseif ($customertype == "MarketPlace"){
+		$whereclause = " AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_MARKETPLACE . ")";
+		$namefield = " salesorders.deliverto AS name ";
+		$Titletext = "Outstanding MarketPlace";
 		$WebsiteIDName = "#KL-Website";
 	}else{
 		$namefield = " debtorsmaster.name ";
@@ -4014,7 +4126,7 @@ function OutstandingOrders($customertype, $ordertype, $RootPath, $db){
 				ON salesorders.debtorno = debtorsmaster.debtorno
 				INNER JOIN currencies
 				ON debtorsmaster.currcode = currencies.currabrev
-			WHERE salesorderdetails.completed= 0	"
+			WHERE salesorderdetails.completed= 0 "
 			. $whereclause .
 			" GROUP BY salesorders.orderno,	
 				debtorsmaster.name,
