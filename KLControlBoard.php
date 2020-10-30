@@ -925,12 +925,18 @@ if ($ProcessSection02){
 	*/
 
 	if ($KL_SystemAdmin 
+		OR $KL_OperationalManager 
+		OR $KL_AdministrationTeam
+		OR $KL_ShopManagerOnline){
+		OnlineMarketPlacePaymentPending($RootPath, $db);
+		$NumberOfTestExecuted++;
+	}
+
+	if ($KL_SystemAdmin 
 		OR $KL_ShopManagerOnline){
 //		OnlineCustomersNoOrderPlaced($RootPath, $db);
 //		$NumberOfTestExecuted++;
 		OnlineQuotationsFollowUp($RootPath, $db);
-		$NumberOfTestExecuted++;
-		OnlineMarketPlacePaymentPending($RootPath, $db);
 		$NumberOfTestExecuted++;
 		OldOnlineQuotations(10, $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -3959,7 +3965,7 @@ function OnlineMarketPlacePaymentPending($RootPath, $db){
 		$TableHeader = '<tr>
 							<th class="ascending">' . _('#') . '</th>
 							<th class="ascending">' . _('Order') . '</th>
-							<th class="ascending">' . _('#KL-Website') . '</th>
+							<th class="ascending">' . _('#MarketPlace') . '</th>
 							<th class="ascending">' . _('Customer') . '</th>
 							<th class="ascending">' . _('Name') . '</th>
 							<th class="ascending">' . _('Order Date') . '</th>

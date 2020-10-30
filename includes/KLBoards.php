@@ -330,7 +330,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 				INNER JOIN currencies
 					ON debtorsmaster.currcode = currencies.currabrev
 				WHERE debtorsmaster.typeid = 9 
-					AND debtorsmaster.debtorno LIKE 'WEB-%'
+					OR debtorsmaster.typeid = 10
 				ORDER BY debtorsmaster.debtorno";	
 	}else{
 		$SQL = "SELECT salesmancode,
