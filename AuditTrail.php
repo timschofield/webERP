@@ -180,6 +180,7 @@ if (isset($_POST['View'])) {
 			<th>' . _('Field Name') . '</th>
 			<th>' . _('Value') . '</th></tr>';
 	while ($myrow = DB_fetch_row($result)) {
+				
 		if (Query_Type($myrow[2]) == "INSERT") {
 			InsertQueryInfo(str_replace("INSERT INTO",'',$myrow[2]));
 			$RowColour = '#a8ff90';
@@ -193,8 +194,9 @@ if (isset($_POST['View'])) {
 			$RowColour = '#fe90bf';
 		}
 
-		if ((trim($_SESSION['SQLString']['table']) == $_POST['SelectedTable'])  ||
-			($_POST['SelectedTable'] == 'ALL')) {
+		if ((trim($_SESSION['SQLString']['table']) != 'auditscripts') AND 
+		   ((trim($_SESSION['SQLString']['table']) == $_POST['SelectedTable'])  OR
+			($_POST['SelectedTable'] == 'ALL'))) {
 			if (!isset($_SESSION['SQLString']['values'])) {
 				$_SESSION['SQLString']['values'][0]='';
 			}
