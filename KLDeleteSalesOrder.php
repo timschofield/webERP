@@ -1,0 +1,34 @@
+<?php
+
+include('includes/session.php');
+include('includes/SQL_CommonFunctions.inc');
+$Title = _('Kapal-Laut Delete Sales Order');
+include('includes/header.php');
+include('includes/KLDefines.php');
+
+//Get Out if we don't have the data needed to work with
+if (!isset($_GET['OrderNo']) OR $_GET['OrderNo']==''){
+	prnMsg( _('We need an order number to delete it') , 'error');
+	include('includes/footer.php');
+	exit;
+}
+
+$result = DB_Txn_Begin();
+
+$SQL = "DELETE FROM salesorderdetails WHERE salesorderdetails.orderno='" . $_GET['OrderNo'] . "'";
+$DbgMsg = _('The SQL that failed to delete the sales order details was');
+$ErrMsg = _('Cannot delete the sales order details because');
+$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+prnMsg( _('Deleted Sales Order Lines ').  $_GET['OrderNo']);
+
+$SQL = "DELETE FROM salesorders WHERE salesorders.orderno='" . $_GET['OrderNo'] . "'";
+$DbgMsg = _('The SQL that failed to delete the sales order was');
+$ErrMsg = _('Cannot delete the sales order because');
+$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+prnMsg( _('Deleted Sales Order Header ').  $_GET['OrderNo']);
+
+$result = DB_Txn_Commit();
+
+include('includes/footer.php');
+
+?>

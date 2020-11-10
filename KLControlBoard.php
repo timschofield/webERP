@@ -1021,7 +1021,7 @@ if ($ProcessSection02){
 //		$NumberOfTestExecuted++;
 		OnlineQuotationsFollowUp($RootPath, $db);
 		$NumberOfTestExecuted++;
-		OldOnlineQuotations(10, $RootPath, $db);
+		OldOnlineQuotations(10, 1, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	//	OutstandingOrders("Online", "Quotation", $RootPath, $db);
 	//	$NumberOfTestExecuted++;
@@ -3446,10 +3446,11 @@ function ObsoleteComponentsInActiveBOM($RootPath, $db){
 	}
 }
 
-function OldOnlineQuotations($NumDays, $RootPath, $db){
+function OldOnlineQuotations($NumDaysMandiri, $NumDaysXendit, $RootPath, $db){
 
-	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
-	$Titletext = "Online Quotations with more than " . $NumDays . " Days. (To de deleted)";
+	$StartDateMandiri = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysMandiri));
+	$StartDateXendit = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysXendit));
+	$Titletext = "Old Online Quotations to be deleted. No Mandiri Transfer in " . $NumDaysMandiri . " days or Xendit in " . $NumDaysXendit . " days";
 		
 	$SQL = "SELECT salesorders.orderno,	
 				salesorders.customerref,
@@ -3459,6 +3460,7 @@ function OldOnlineQuotations($NumDays, $RootPath, $db){
 				salesorders.orddate,
 				SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)) AS ordervalue,
 				salesorders.freightcost,
+				salesorders.klocpaymentcode,
 				debtorsmaster.currcode,
 				currencies.decimalplaces
 			FROM salesorders 
@@ -3471,7 +3473,9 @@ function OldOnlineQuotations($NumDays, $RootPath, $db){
 			WHERE salesorderdetails.completed= 0	
 				AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_WEBSITE . ")
 				AND salesorders.quotation = 1
-				AND salesorders.orddate < '" . $StartDate . "'
+				AND ((salesorders.klocpaymentcode = 'bank_mandiri' AND salesorders.orddate < '" . $StartDateMandiri . "') 
+					OR (salesorders.klocpaymentcode = 'xenditmandiriva' AND salesorders.orddate < '" . $StartDateXendit . "')
+					OR (salesorders.klocpaymentcode = 'xenditcc' AND salesorders.orddate < '" . $StartDateXendit . "'))
 			GROUP BY salesorders.orderno,	
 				debtorsmaster.name,
 				salesorders.orddate
@@ -3491,7 +3495,9 @@ function OldOnlineQuotations($NumDays, $RootPath, $db){
 							<th class="ascending">' . _('Order Date') . '</th>
 							<th class="ascending">' . _('Order Value') . '</th>
 							<th class="ascending">' . _('Currency') . '</th>
-							<th class="ascending">' . _('Reminder Bank Transfer Sent On') . '</th>
+							<th class="ascending">' . _('Payment System') . '</th>
+							<th class="ascending">' . _('Reminder Sent On') . '</th>
+							<th class="ascending">' . _('Action') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -3502,6 +3508,7 @@ function OldOnlineQuotations($NumDays, $RootPath, $db){
 			// if we have not send the remind transfer email yet, makes no sense sending it now, after $NumDays days :-(
 			$EmailType = "RemindBankTransfer";
 			$EmailLink = ConvertSQLDate($myrow['klemailremindbanktransfer']);
+			$DeleteLink = '<a href="' . $RootPath . '/KLDeleteSalesOrder.php?OrderNo=' . $myrow['orderno'] . '">' . 'Delete Order' . '</a>';
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -3509,6 +3516,8 @@ function OldOnlineQuotations($NumDays, $RootPath, $db){
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					</tr>', 
@@ -3520,7 +3529,9 @@ function OldOnlineQuotations($NumDays, $RootPath, $db){
 					ConvertSQLDate($myrow['orddate']), 
 					locale_number_format($myrow['ordervalue']+$myrow['freightcost'],$myrow['decimalplaces']),
 					$myrow['currcode'], 
-					$EmailLink
+					$myrow['klocpaymentcode'], 
+					$EmailLink,
+					$DeleteLink
 					);
 			$i++;
 		}
