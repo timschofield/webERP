@@ -1,11 +1,5 @@
-Options -Indexes
-
-# Use PHP54 as default
-AddHandler application/x-httpd-php54 .php
-
+# Use PHP56 as default
+AddHandler application/x-httpd-php56 .php
 <IfModule mod_suphp.c>
-#    suPHP_ConfigPath /opt/php54/lib
-suPHP_ConfigPath /home4/kurakura/public_html/ptadu.com/weberp 
+suPHP_ConfigPath /opt/php56/lib
 </IfModule>
-
-
