@@ -869,14 +869,16 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db,
 		$EmailText = $EmailText . "\n" . "OnlineReorderLevelAdjustments" . "\n\n";
 	}
 	
-	// set all RL=0 for toko online
+	// set all RL = MINIMUM_STOCK_ONLINESHOP_EVERY_ITEM for toko online
 	if($updateDB){
-		$RLSQL = "UPDATE locstock
-					SET reorderlevel = 0 
-					WHERE reorderlevel > 0 AND loccode = ". CODE_ONLINE_SHOP ."";
+		$RLSQL = "UPDATE locstock, stockmaster
+					SET locstock.reorderlevel = ". MINIMUM_STOCK_ONLINESHOP_EVERY_ITEM ."
+					WHERE locstock.loccode = ". CODE_ONLINE_SHOP ."
+						AND stockmaster.discontinued = 0
+						AND stockmaster.categoryid IN " . ONLINESHOP_AVAILABLE_STOCK_CATEGORIES . "";
 		$Result = DB_query($RLSQL,$ErrMsg,$DbgMsg,true);		
 		if ($ShowMessages){
-			prnMsg(_('Reset all RL=0 for location Shop Online'),'info');
+			prnMsg(_('Reset all RL=' . MINIMUM_STOCK_ONLINESHOP_EVERY_ITEM . ' for location Shop Online'),'info');
 		}
 		if ($EmailText!=''){
 			$EmailText = $EmailText . "Reset all RL=0 for location Shop Online" . "\n";
@@ -884,8 +886,7 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db,
 	}
 // adjust RL for toko online as needed
 	$SQL = "SELECT salesorderdetails.stkcode,
-				SUM(salesorderdetails.quantity) AS totalqty,
-				locstock.reorderlevel
+				SUM(salesorderdetails.quantity) AS totalqty
 			FROM salesorders, salesorderdetails, locstock
 			WHERE salesorderdetails.orderno = salesorders.orderno
 				AND salesorderdetails.stkcode = locstock.stockid
@@ -906,7 +907,7 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db,
 			$TableHeader = '<tr>
 								<th>' . _('#') . '</th>
 								<th>' . _('Code') . '</th>
-								<th>' . _('QOH = New RL') . '</th>
+								<th>' . _('New RL') . '</th>
 								<th>' . _('Old RL') . '</th>
 							</tr>';
 			echo $TableHeader;
@@ -918,7 +919,8 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db,
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
 			/* set the RL to the total of qty requested by customers */
-			SetReorderLevel("OnlineSales", $myrow['stkcode'],'TOKWS', 0, $myrow['totalqty'], $updateDB, $db);
+			$NewRLOnline = MINIMUM_STOCK_ONLINESHOP_EVERY_ITEM + $myrow['totalqty'];
+			SetReorderLevel("OnlineSales", $myrow['stkcode'],'TOKWS', MINIMUM_STOCK_ONLINESHOP_EVERY_ITEM, $NewRLOnline, $updateDB, $db);
 			if ($ShowMessages){
 				if ($k == 1) {
 					echo '<tr class="EvenTableRows">';
@@ -935,13 +937,13 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db,
 						</tr>', 
 						$i, 
 						$CodeLink, 
-						locale_number_format($myrow['totalqty'],0),
-						locale_number_format($myrow['reorderlevel'],0)
+						locale_number_format($NewRLOnline,0),
+						locale_number_format(MINIMUM_STOCK_ONLINESHOP_EVERY_ITEM,0)
 						);
 				$i++;
 			}
 			if ($EmailText!=''){
-				$EmailText = $EmailText . $myrow['stkcode'] . " Old RL = " . $myrow['reorderlevel'] . " New RL = " . $myrow['totalqty'] . "\n";
+				$EmailText = $EmailText . $myrow['stkcode'] . " Old RL = " . MINIMUM_STOCK_ONLINESHOP_EVERY_ITEM . " New RL = " . $NewRLOnline . "\n";
 			}
 		}
 		if ($ShowMessages){

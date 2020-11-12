@@ -135,6 +135,13 @@ define("GL_COGS_OTHERS",   "('510010100PT','510500010PT')");
 /* Defines about WebStore */
 
 define("ONLINE_PRICE_LIST", 'RT');
+// Modification COVID.  To increase the importance of shop online we keep at least MINIMUM_STOCK_ONLINESHOP_EVERY_ITEM in location "400-Online shop"
+// ready to be shipped if there is any online order. 
+// This way, we avoid the issue of items with QOH kantor = =, stock at the shops and online orders request them, 
+// and we need to send someone to the shops to get it.
+// once Bali shops return to normal, reset to 0 or a very low value, depending of importance of online shop.
+// Side effect = Online shop will have a full catalog available.
+define("MINIMUM_STOCK_ONLINESHOP_EVERY_ITEM", 1); 
 
 /* Defines about weight in KG*/
 define('STANDARD_TALI_WEIGHT',     0.050);
