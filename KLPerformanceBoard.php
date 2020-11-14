@@ -851,19 +851,20 @@ function CashStatus($Year, $YearlyGoalADU, $MinTransferADU, $YearlyGoalBB, $MinT
 				locale_number_format(abs($ToBeMovedBB),0)
 				);
 
-		if ($ToBeTransferredBB > 0){
-			$Text = 'ACTION NEEDED -> Deposit from Brankas Kantor to Danamon IDR BB';
-		}elseif ($ToBeTransferredBB < 0){
-			$Text = 'ACTION NEEDED -> Withdrawal from Danamon IDR BB to Brankas Kantor';
+		if ($ToBeTransferredBB != 0){
+			if ($ToBeTransferredBB > 0){
+				$Text = 'ACTION NEEDED -> Deposit from Brankas Kantor to Danamon IDR BB';
+			}elseif ($ToBeTransferredBB < 0){
+				$Text = 'ACTION NEEDED -> Withdrawal from Danamon IDR BB to Brankas Kantor';
+			}
+			$k = StartEvenOrOddRow($k);
+			printf('<td>%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$Text, 
+					locale_number_format(-$ToBeTransferredBB,0)
+					);
 		}
-		$k = StartEvenOrOddRow($k);
-		printf('<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				$Text, 
-				locale_number_format(-$ToBeTransferredBB,0)
-				);
-
 		echo '</table>
 			</div>';	
 			
