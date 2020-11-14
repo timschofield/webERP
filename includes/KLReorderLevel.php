@@ -873,7 +873,8 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db,
 	if($updateDB){
 		$RLSQL = "UPDATE locstock, stockmaster
 					SET locstock.reorderlevel = ". MINIMUM_STOCK_ONLINESHOP_EVERY_ITEM ."
-					WHERE locstock.loccode = ". CODE_ONLINE_SHOP ."
+					WHERE locstock.stockid = stockmaster.stockid
+						AND locstock.loccode = ". CODE_ONLINE_SHOP ."
 						AND stockmaster.discontinued = 0
 						AND stockmaster.categoryid IN " . ONLINESHOP_AVAILABLE_STOCK_CATEGORIES . "";
 		$Result = DB_query($RLSQL,$ErrMsg,$DbgMsg,true);		
