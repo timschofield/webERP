@@ -81,7 +81,7 @@ function Is_date($DateEntry) {
 } //end of Is_Date function
 
 
-function MonthAndYearFromSQLDate($DateEntry) {
+function MonthAndYearFromSQLDate($DateEntry, $useShortMonthAndYear = false) {
 
 	if (mb_strpos($DateEntry,'/')) {
 		$Date_Array = explode('/',$DateEntry);
@@ -95,9 +95,19 @@ function MonthAndYearFromSQLDate($DateEntry) {
 		$Date_Array[2]= mb_substr($Date_Array[2],0,2);
 	}
 
-	$MonthName = GetMonthText(date('n', mktime(0,0,0, (int)$Date_Array[1],(int)$Date_Array[2],(int)$Date_Array[0])));
-	return $MonthName . ' ' . date('Y', mktime(0,0,0, (int)$Date_Array[1],(int)$Date_Array[2],(int)$Date_Array[0]));
+	$MonthAndYear = '';
+	$timestamp = mktime(0,0,0, (int)$Date_Array[1], (int)$Date_Array[2], (int)$Date_Array[0]);
 
+	if ($useShortMonthAndYear) {
+		// 2-digit month and year: 04/20.
+		// Useful for Graphs with many plot references.
+		$MonthAndYear = date('m/y', $timestamp);
+	} else {
+		$MonthName = GetMonthText(date('n', $timestamp));
+		$MonthAndYear = $MonthName . ' ' . date('Y', $timestamp);
+	}
+
+	return $MonthAndYear;
 }
 
 function GetMonthText($MonthNumber){

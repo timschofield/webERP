@@ -57,6 +57,9 @@ if (isset($_POST['submit'])) {
 		$_POST['X_NumberOfPeriodsOfStockUsage'] < 1 OR $_POST['X_NumberOfPeriodsOfStockUsage'] > 12 ) {
 		$InputError = 1;
 		prnMsg(_('Financial period per year must be a number between 1 and 12'),'error');
+	} elseif (!in_array(intval($_POST['X_StockUsageShowZeroWithinPeriodRange']), [0, 1])) {
+		$InputError = 1;
+		prnMsg(_('Unexpected Show Zero Counts Within Stock Usage Graph Period Range value.'), 'error');
 	} elseif (mb_strlen($_POST['X_TaxAuthorityReferenceName']) >25) {
 		$InputError = 1;
 		prnMsg(_('The Tax Authority Reference Name must be 25 characters or less long'),'error');
@@ -200,6 +203,9 @@ if (isset($_POST['submit'])) {
 		}
 		if ($_SESSION['NumberOfPeriodsOfStockUsage'] != $_POST['X_NumberOfPeriodsOfStockUsage'] ) {
 			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_NumberOfPeriodsOfStockUsage']."' WHERE confname = 'NumberOfPeriodsOfStockUsage'";
+		}
+		if ($_SESSION['StockUsageShowZeroWithinPeriodRange'] != $_POST['X_StockUsageShowZeroWithinPeriodRange']) {
+			$sql[] = "UPDATE config SET confvalue = '" . intval($_POST['X_StockUsageShowZeroWithinPeriodRange']) . "' WHERE confname = 'StockUsageShowZeroWithinPeriodRange'";
 		}
 		if ($_SESSION['Check_Qty_Charged_vs_Del_Qty'] != $_POST['X_Check_Qty_Charged_vs_Del_Qty'] ) {
 			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_Check_Qty_Charged_vs_Del_Qty']."' WHERE confname = 'Check_Qty_Charged_vs_Del_Qty'";
@@ -774,6 +780,15 @@ echo '<tr style="outline: 1px solid"><td>' . _('Number Of Periods Of StockUsage'
 for ($i=1; $i <= 12; $i++ )
 	echo '<option '.($_SESSION['NumberOfPeriodsOfStockUsage'] == $i?'selected="selected" ':'').'value="'.$i.'">' . $i . '</option>';
 echo '</select></td><td>' . _('In stock usage inquiries this determines how many periods of stock usage to show. An average is calculated over this many periods')  . '</td></tr>';
+
+// StockUsageShowZeroWithinPeriodRange
+echo '<tr style="outline: 1px solid"><td>' . _('Show Zero Counts Within Stock Usage Graph Period Range') . ':</td>
+	<td><select name="X_StockUsageShowZeroWithinPeriodRange">
+	<option ' . ($_SESSION['StockUsageShowZeroWithinPeriodRange'] ? 'selected="selected" ':'') . 'value="1">' . _('Yes') . '</option>
+	<option ' . (!$_SESSION['StockUsageShowZeroWithinPeriodRange'] ? 'selected="selected" ':'') . 'value="0">' . _('No') . '</option>
+	</select></td>
+	<td>' . _('Show periods having zero counts within Stock Usage Graph. Choosing yes may show a wider period range than expected.') . '</td>
+	</tr>';
 
 //Show values on GRN
 echo '<tr style="outline: 1px solid"><td>' . _('Show order values on GRN') . ':</td>
