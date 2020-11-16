@@ -11,10 +11,10 @@ $graph->SetXTitle(_('Month'));
 $graph->SetYTitle(_('Quantity'));
 $graph->SetBackgroundColor("wheat");
 $graph->SetTitleColor("blue");
-$graph->SetPlotType('linepoints');
+$graph->SetPlotType('bars');
 $graph->SetShading(5);
 $graph->SetDrawYGrid(TRUE);
-$graph->SetMarginsPixels(40, 40, 40, 40);
+$graph->SetMarginsPixels(60, 40, 40, 40);
 $graph->SetDataType('text-data');
 
 if($_GET['StockLocation'] == 'All') {
