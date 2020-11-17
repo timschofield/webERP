@@ -8,11 +8,19 @@
 //DefaultLanguage to use for the login screen and the setup of new users - the users language selection will override
 $DefaultLanguage ='en_GB.utf8';
 
+// Default theme to use for the login screen and the setup of new users.
+//The users' theme selection will override
+//$DefaultTheme = 'professional';
+//$DefaultTheme = 'wood';
+//$DefaultTheme = 'silverwolf';
+$DefaultTheme = 'gel';
+//$DefaultTheme = 'xenos';
+
 // Whether to display the demo login and password or not on the login screen
 $allow_demo_mode = False;
 
 // email address of the system administrator
-$SysAdminEmail = '';
+$SysAdminEmail = 'it@bumibiru.com';
 
 // The timezone of the business - this allows the possibility of having
 // the web-server on a overseas machine but record local time
@@ -55,7 +63,9 @@ $AllowCompanySelectionBox = 'Hide';
 
 //If $AllowCompanySelectionBox is not 'ShowSelectionBox' above then the $DefaultCompany string is entered in the login screen as a default 
 //otherwise the user is expected to know the name of the company to log into.
-$DefaultCompany = 'kurakura_kl_erp_test';
+// KL RICARD: LOOK AT THE END OF FILE!!! there is other palce to set the name.t this seems to be obsolete
+
+$DefaultCompany = 'kurakura_kl_test_erp';
 
 //The maximum time that a login session can be idle before automatic logout
 //time is in seconds  3600 seconds in an hour
@@ -109,5 +119,9 @@ turning on NOTICES destroys things */
 error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING);
 /* For Development Use */
 //error_reporting (-1);
+
+//Installed companies
+$CompanyList[0] = array('database'=>'kurakura_kl_test_erp' ,'company'=>'Kapal-Laut TEST' );
+
 /*Make sure there is nothing - not even spaces after this last ?> */
 ?>
