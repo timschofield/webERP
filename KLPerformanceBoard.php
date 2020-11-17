@@ -301,20 +301,16 @@ if ($ProcessSection03){
 		$NumberOfTestExecuted++;
 		PettyCashStatus("THB", $db);
 		$NumberOfTestExecuted++;
-// RICARD 2019-11-26
-// CANCELLED FOR PERFORMANCE REASONS
-//		PettyCashStatus("EUR", $db);
+		PettyCashStatus("EUR", $db);
 		$NumberOfTestExecuted++;
-// RICARD 2019-11-26
-// CANCELLED FOR PERFORMANCE REASONS
-//		PettyCashStatus("HKD", $db);
+		PettyCashStatus("HKD", $db);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin
 		OR $KL_OperationalManager
 		OR $KL_AdministrationTeam){
-		CashStatus("2020", 30000000, 20000000, 50000000, 50000000, 50000000, $periodnow, TRUE, $db);
+		CashStatus("2020", 50000000, 25000000, 50000000, 25000000, 50000000, $periodnow, TRUE, $db);
 		$NumberOfTestExecuted++;
 		
 	}

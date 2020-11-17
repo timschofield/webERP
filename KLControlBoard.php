@@ -3509,7 +3509,7 @@ function OldOnlineQuotations($NumDaysMandiri, $NumDaysXendit, $RootPath, $db){
 			// if we have not send the remind transfer email yet, makes no sense sending it now, after $NumDays days :-(
 			$EmailType = "RemindBankTransfer";
 			$EmailLink = ConvertSQLDate($myrow['klemailremindbanktransfer']);
-			$DeleteLink = '<a href="' . $RootPath . '/KLDeleteSalesOrder.php?OrderNo=' . $myrow['orderno'] . '">' . 'Delete Order' . '</a>';
+			$DeleteLink = '<a href="' . $RootPath . '/KLDeleteSalesOrder.php?OrderNo=' . $myrow['orderno'] . '">' . 'Delete Quotation' . '</a>';
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -3958,6 +3958,7 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 							<th class="ascending">' . _('Paid Mandiri TT') . '</th>
 							<th class="ascending">' . _('Paid Xendit TT') . '</th>
 							<th class="ascending">' . _('Paid Xendit CC') . '</th>
+							<th class="ascending">' . _('Action') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -3991,6 +3992,7 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 			}else{
 				$PaymentXenditCC = '';
 			}
+			$DeleteLink = '<a href="' . $RootPath . '/KLDeleteSalesOrder.php?OrderNo=' . $myrow['orderno'] . '">' . 'Delete Quotation' . '</a>';
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -3998,6 +4000,7 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
+					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -4015,7 +4018,8 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 					$EmailLink,
 					$PaymentMandiriTT,
 					$PaymentXenditTT,
-					$PaymentXenditCC
+					$PaymentXenditCC,
+					$DeleteLink
 					);
 			$i++;
 		}
