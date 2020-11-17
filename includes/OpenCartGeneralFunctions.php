@@ -22,7 +22,7 @@ function Get_SQL_to_PHP_time_difference($db) {
 
 function Get_SQL_OC_to_PHP_time_difference($db) {
 	// Based on http://stackoverflow.com/questions/3108591/calculate-number-of-hours-between-2-dates-in-php
-/*    $NowPHP = new DateTime();
+    $NowPHP = new DateTime();
 
 	$SQL = "SELECT NOW()";
 	$result = DB_query_oc($SQL);
@@ -38,8 +38,8 @@ function Get_SQL_OC_to_PHP_time_difference($db) {
 		$Offset = 0;
 	}
 	return $Offset;
-*/
-	return -1; // Bali to JKT (OC DB lives in JKT time)
+
+//	return -1; // Bali to JKT (OC DB lives in JKT time)
 }
 
 function GetServerTimeNow($TimeDifference){
