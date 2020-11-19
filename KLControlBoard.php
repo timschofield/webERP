@@ -3656,6 +3656,7 @@ function OnlineItemsOnProcess($RootPath, $db){
 	$SQL = "SELECT salesorders.orderno,	
 				debtorsmaster.debtorno,
 				salesorders.deliverto AS name,
+				stockmaster.categoryid,
 				salesorders.orddate,
 				salesorderdetails.stkcode,
 				salesorderdetails.quantity AS qtyorder,
@@ -3665,10 +3666,11 @@ function OnlineItemsOnProcess($RootPath, $db){
 					FROM locstock AS l2
 					WHERE l1.stockid = l2.stockid
 						AND l2.loccode = " . CODE_KANTOR . ") AS qohkantor
-			FROM salesorderdetails, salesorders, locstock AS l1, debtorsmaster	
+			FROM salesorderdetails, salesorders, locstock AS l1, debtorsmaster, stockmaster	
 			WHERE salesorderdetails.orderno = salesorders.orderno
 				AND salesorderdetails.stkcode = l1.stockid
 				AND salesorders.debtorno = debtorsmaster.debtorno
+				AND salesorderdetails.stkcode = stockmaster.stockid
 				AND salesorders.quotation = 0
 				AND salesorders.fromstkloc = ". CODE_ONLINE_SHOP ."
 				AND l1.loccode = ". CODE_ONLINE_SHOP ."
@@ -3681,24 +3683,66 @@ function OnlineItemsOnProcess($RootPath, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Order') . '</th>
-							<th class="ascending">' . _('Customer') . '</th>
-							<th class="ascending">' . _('Name') . '</th>
-							<th class="ascending">' . _('Order Date') . '</th>
-							<th class="ascending">' . _('Item Code') . '</th>
-							<th class="ascending">' . _('Quantity') . '</th>
-							<th class="ascending">' . _('RL at Toko Online') . '</th>
-							<th class="ascending">' . _('QOH Toko Online') . '</th>
-							<th class="ascending">' . _('QOH Kantor') . '</th>
+							<th>' . _('#') . '</th>
+							<th>' . _('Order') . '</th>
+							<th>' . _('Customer') . '</th>
+							<th>' . _('Name') . '</th>
+							<th>' . _('Order Date') . '</th>
+							<th>' . _('Item Code') . '</th>
+							<th>' . _('Quantity') . '</th>
+							<th>' . _('QOH Toko Online') . '</th>
+							<th>' . _('QOH Kantor') . '</th>
+							<th>' . _('Status') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
 		$i = 1;
+		$OrderInProcess = -1;
+		$OrderReadyForShipment = true;
 		while ($myrow = DB_fetch_array($result)) {
+			if (($OrderInProcess != $myrow['orderno']) AND ($OrderInProcess != -1)){
+				// We just checked all items in the order, and it is not the first one
+				if ($OrderReadyForShipment){
+					$Status = "ORDER READY FOR SHIPMENT";
+				}else{
+					$Status = "Order in process";
+				}
+				$k = StartEvenOrOddRow($k);
+				printf('<td>%s</td>
+						<td class="number">%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td>%s</td>
+						</tr>', 
+						"",
+						"", 
+						"", 
+						"", 
+						"", 
+						"", 
+						"",
+						"",
+						"",
+						$Status
+						);
+			$OrderReadyForShipment = true;
+			}
 			$k = StartEvenOrOddRow($k);
+			
 			$CodeLink = '<a href="' . $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . $myrow['orderno'] . '">' . $myrow['orderno'] . '</a>';
 			$ItemLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stkcode'] . '">' . $myrow['stkcode'] . '</a>';
+			
+			if (($myrow['qtyready'] >= $myrow['qtyorder']) OR (!ItemInList($myrow['categoryid'], ONLINESHOP_AVAILABLE_STOCK_CATEGORIES))){
+				$Status = "";
+			}else{
+				$Status = "In process";
+				$OrderReadyForShipment = false;
+			}
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
@@ -3708,7 +3752,7 @@ function OnlineItemsOnProcess($RootPath, $db){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
-					<td class="number">%s</td>
+					<td>%s</td>
 					</tr>', 
 					$i, 
 					$CodeLink, 
@@ -3717,12 +3761,43 @@ function OnlineItemsOnProcess($RootPath, $db){
 					ConvertSQLDate($myrow['orddate']), 
 					$ItemLink, 
 					locale_number_format($myrow['qtyorder'],0),
-					locale_number_format($myrow['reorderlevel'],0),
 					locale_number_format($myrow['qtyready'],0),
-					locale_number_format($myrow['qohkantor'],0)
+					locale_number_format($myrow['qohkantor'],0),
+					$Status
 					);
 			$i++;
+			$OrderInProcess = $myrow['orderno'];
 		}
+		// status of the last order online
+		if ($OrderReadyForShipment){
+			$Status = "ORDER READY FOR SHIPMENT";
+		}else{
+			$Status = "Order in process";
+		}
+		$k = StartEvenOrOddRow($k);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td>%s</td>
+				</tr>', 
+				"",
+				"", 
+				"", 
+				"", 
+				"", 
+				"", 
+				"",
+				"",
+				"",
+				$Status
+				);
+
 		echo '</table>
 				</div>';
 	}
