@@ -1021,7 +1021,10 @@ function AdjustPackagingItemByShop($Item, $Shop, $DaysSales, $ShowMessages, $upd
 		// New RL is the daily needs x number of days to keep as RL
 		$NewRL = max(round($myrow['sales'] / $DaysSales * $myrow['rldaysforpackaging'],0),MIN_REORDER_LEVEL_PACKAGING_ITEM_PER_SHOP);
 		$OldRL = $myrow['rl'];
-		if ($NewRL > $OldRL){
+// RICARD: Due to very low sales, we make RL for packaging fluctuate, so we don't pile up packaging stock at the shops
+// previously we only increased it. 
+//		if ($NewRL > $OldRL){
+		if ($NewRL != $OldRL){
 			if ($ShowMessages){
 				$text = $Shop . ' ' . $Item .  
 					' Old RL = ' . $OldRL . 
