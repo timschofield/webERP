@@ -3705,7 +3705,7 @@ function OnlineItemsOnProcess($RootPath, $db){
 				if ($OrderReadyForShipment){
 					$Status = "ORDER READY FOR SHIPMENT";
 				}else{
-					$Status = "Order in process";
+					$Status = "ORDER IN PROCESS";
 				}
 				$k = StartEvenOrOddRow($k);
 				printf('<td>%s</td>
@@ -3739,8 +3739,11 @@ function OnlineItemsOnProcess($RootPath, $db){
 			
 			if (($myrow['qtyready'] >= $myrow['qtyorder']) OR (!ItemInList($myrow['categoryid'], ONLINESHOP_AVAILABLE_STOCK_CATEGORIES))){
 				$Status = "";
+			}elseif($myrow['qtyorder'] > $myrow['qohkantor']){
+				$Status = "Needs return from shops";
+				$OrderReadyForShipment = false;
 			}else{
-				$Status = "In process";
+				$Status = "In process kantor";
 				$OrderReadyForShipment = false;
 			}
 			printf('<td class="number">%s</td>
@@ -3772,7 +3775,7 @@ function OnlineItemsOnProcess($RootPath, $db){
 		if ($OrderReadyForShipment){
 			$Status = "ORDER READY FOR SHIPMENT";
 		}else{
-			$Status = "Order in process";
+			$Status = "ORDER IN PROCESS";
 		}
 		$k = StartEvenOrOddRow($k);
 		printf('<td>%s</td>
