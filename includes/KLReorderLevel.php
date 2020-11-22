@@ -151,7 +151,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 						FROM locstock, locations
 						WHERE stockmaster.stockid  = locstock.stockid 
 							AND locstock.loccode = locations.loccode
-							AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . "
+							AND locations.typeloc IN " . ALL_SHOPS_LIST_BY_TYPE . "
 							AND locstock.quantity < locstock.reorderlevel
 						ORDER BY reorderlevel DESC
 						LIMIT 1) AS locationneeded
@@ -161,13 +161,13 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 							FROM locstock, locations
 							WHERE stockmaster.stockid  = locstock.stockid 
 								AND locstock.loccode = locations.loccode
-								AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . "
+								AND locations.typeloc IN " . ALL_SHOPS_LIST_BY_TYPE . "
 								AND locstock.quantity < locstock.reorderlevel)
 				AND EXISTS (SELECT *
 							FROM locstock, locations
 							WHERE stockmaster.stockid  = locstock.stockid 
 								AND locstock.loccode = locations.loccode
-								AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . "
+								AND locations.typeloc IN " . ALL_SHOPS_LIST_BY_TYPE . "
 								AND locstock.quantity > 0)
 				AND EXISTS (SELECT *
 						FROM locstock
@@ -222,7 +222,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 				}else{
 					// let's distribute available stock between the shops with RL > 0.
 					// if RL = 0 we suppose we do not want it there for any reason 
-					$QtyToDistribute = QtyAvailable($myrow['stockid'], "ALLSHOPS", $db);
+					$QtyToDistribute = QtyAvailable($myrow['stockid'], "ALLSHOPSANDONLINE", $db);
 					$QOH =$QtyToDistribute;
 					$LocationsDistributed = 0;
 					
@@ -231,7 +231,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 										FROM locstock, locations
 										WHERE  locstock.loccode = locations.loccode
 											AND locstock.stockid = '" . $myrow['stockid'] . "'
-											AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . "
+											AND locations.typeloc IN " . ALL_SHOPS_LIST_BY_TYPE . "
 											AND locstock.reorderlevel > 0 
 										ORDER BY locations.priority ASC, 
 												(SELECT COUNT(qtyinvoiced)
@@ -355,7 +355,7 @@ function WorstLocationForItem($stockid, $stockcat, $kind, $maxdays, $db){
 		$SQL = $SQL . " AND locstock.quantity > 0 "; 
 	}
 
-	$SQL = $SQL . "	AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . "
+	$SQL = $SQL . "	AND locations.typeloc IN " . ALL_SHOPS_LIST_BY_TYPE . "
 					ORDER BY locations.priority DESC,
 					(SELECT COUNT(qtyinvoiced)
 						FROM salesorderdetails, salesorders
@@ -380,7 +380,7 @@ function LocationOrderForItem($stockid, $order, $maxdays, $db){
 			FROM locstock,locations
 			WHERE locstock.stockid = '" . $stockid . "'
 				AND locstock.loccode = locations.loccode
-				AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . "
+				AND locations.typeloc IN " . ALL_SHOPS_LIST_BY_TYPE . "
 			ORDER BY (SELECT COUNT(qtyinvoiced)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
@@ -406,6 +406,8 @@ function QtyAvailable($stockid, $location, $db){
 				AND locstock.loccode = locations.loccode";
 	if ($location == "ALLSHOPS"){
 		$SQL = $SQL . " AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . " "; 
+	}elseif ($location == "ALLSHOPSANDONLINE"){
+		$SQL = $SQL . " AND locations.typeloc IN " . ALL_SHOPS_LIST_BY_TYPE . " "; 
 	}elseif ($location == "ALL"){
 		$SQL = $SQL . " "; 
 	}else{
