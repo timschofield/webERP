@@ -313,7 +313,7 @@ if ($_GET['EmailType']=='ThankYouOrder'){
 	 $MailMessage .= '
 			<tr>
 				<td colspan="4">
-					<p>' . $Text0020 . ' '. ConvertSQLDate($myrow['orddate']) .' ' . ' ' . DB_escape_string($myrow['shippername']). '.</p>
+					<p>' . $Text0020 . ' '. ConvertSQLDate($myrow['orddate']) .' ' . $Text0220 . ' ' . DB_escape_string($myrow['shippername']). '.</p>
 					<p>' . $Text0230 . '</p>
 					<p>' . $Text0240 . '</p>
 					<p>' . $Text0250 . ' http://www.facebook.com/KapalLautBali' . '</p>
