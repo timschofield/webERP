@@ -519,167 +519,141 @@ if ($ProcessSection01){
 		ItemsWithStockKantorButReorderLevelTokoZero($RootPath, $db);
 		$NumberOfTestExecuted++;
 
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("TESTKA", "TOKPU", 10, $RootPath, $db);
+		CategoryItemsNotInShop("TESTKA", "TOKPU", 10, $RootPath, $db);
 		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		CategoryItemsNotInShop("TESTKA", "TOKKA", 10, $RootPath, $db);
-		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("TESTKA", "TOKSU", 10, $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		CategoryItemsNotInShop("TESTKA", "TOKSS", 10, $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		CategoryItemsNotInShop("TESTKA", "TOKPA", 10, $RootPath, $db);
-		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("TESTKA", "TOKSA", 10, $RootPath, $db);
+//		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("TESTKA", "TOKSA", 10, $RootPath, $db);
 		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		CategoryItemsNotInShop("TESTKA", "TOK66", 10, $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		CategoryItemsNotInShop("TESTKA", "TOKM2", 10, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("STABKA", "TOKPU", 14, $RootPath, $db);
+		CategoryItemsNotInShop("STABKA", "TOKPU", 14, $RootPath, $db);
 		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		CategoryItemsNotInShop("STABKA", "TOKKA", 14, $RootPath, $db);
-		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("STABKA", "TOKSU", 14, $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		CategoryItemsNotInShop("STABKA", "TOKSS", 14, $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		CategoryItemsNotInShop("STABKA", "TOKPA", 14, $RootPath, $db);
-		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("STABKA", "TOKSA", 14, $RootPath, $db);
+//		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABKA", "TOKSA", 14, $RootPath, $db);
 		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		CategoryItemsNotInShop("STABKA", "TOK66", 14, $RootPath, $db);
-		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("STABKA", "TOKSE", 14, $RootPath, $db);
+//		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABKA", "TOKSE", 14, $RootPath, $db);
 		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		CategoryItemsNotInShop("STABKA", "TOKKS", 14, $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		CategoryItemsNotInShop("STABKA", "TOKOB", 14, $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		CategoryItemsNotInShop("STABKA", "TOKM2", 14, $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		CategoryItemsNotInShop("STABKA", "TOKU2", 14, $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("NOPOKA", "TOKPU", 8, $RootPath, $db);
+		CategoryItemsNotInShop("NOPOKA", "TOKPU", 8, $RootPath, $db);
 		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		CategoryItemsNotInShop("NOPOKA", "TOKKA", 8, $RootPath, $db);
-		$NumberOfTestExecuted++;
-//		CategoryItemsNotInShop("NOPOKA", "TOKSU", 8, $RootPath, $db);
 //		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		CategoryItemsNotInShop("NOPOKA", "TOKSS", 8, $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		CategoryItemsNotInShop("NOPOKA", "TOKPA", 8, $RootPath, $db);
-		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("NOPOKA", "TOKSA", 8, $RootPath, $db);
+//		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("NOPOKA", "TOKSA", 8, $RootPath, $db);
 		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		CategoryItemsNotInShop("NOPOKA", "TOK66", 8, $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 		
 // COVID REDUCTION OF PANEL
 //		CategoryItemsNotInShop("TESTBA", "TOKBU", 8, $RootPath, $db);
+//		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("TESTBA", "TOKPS", 8, $RootPath, $db);
 		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("TESTBA", "TOKPS", 8, $RootPath, $db);
+		CategoryItemsNotInShop("TESTBA", "TOKSB", 8, $RootPath, $db);
 		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("TESTBA", "TOKSB", 8, $RootPath, $db);
-		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("TESTBA", "TOKBB", 8, $RootPath, $db);
+		CategoryItemsNotInShop("TESTBA", "TOKBB", 8, $RootPath, $db);
 		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		CategoryItemsNotInShop("TESTBA", "TOKBK", 8, $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		CategoryItemsNotInShop("TESTBA", "TOKK2", 8, $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 
 // COVID REDUCTION OF PANEL
 //		CategoryItemsNotInShop("STABBA", "TOKBU", 15, $RootPath, $db);
+//		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABBA", "TOKPS", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("STABBA", "TOKPS", 15, $RootPath, $db);
-		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("STABBA", "TOKSB", 15, $RootPath, $db);
+		CategoryItemsNotInShop("STABBA", "TOKSB", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		CategoryItemsNotInShop("STABBA", "TOKPB", 15, $RootPath, $db);
-		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("STABBA", "TOKMU", 15, $RootPath, $db);
+//		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABBA", "TOKMU", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		CategoryItemsNotInShop("STABBA", "TOKU3", 15, $RootPath, $db);
-		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("STABBA", "TOKBB", 15, $RootPath, $db);
+//		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABBA", "TOKBB", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		CategoryItemsNotInShop("STABBA", "TOKTB", 15, $RootPath, $db);
-		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("STABBA", "TOKO2", 15, $RootPath, $db);
+//		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABBA", "TOKO2", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		CategoryItemsNotInShop("STABBA", "TOKBK", 15, $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		CategoryItemsNotInShop("STABBA", "TOKK2", 15, $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 
 // COVID REDUCTION OF PANEL
 //		CategoryItemsNotInShop("NOPOBA", "TOKBU", 8, $RootPath, $db);
+//		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("NOPOBA", "TOKPS", 8, $RootPath, $db);
 		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("NOPOBA", "TOKPS", 8, $RootPath, $db);
+		CategoryItemsNotInShop("NOPOBA", "TOKSB", 8, $RootPath, $db);
 		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("NOPOBA", "TOKSB", 8, $RootPath, $db);
-		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("NOPOBA", "TOKBB", 8, $RootPath, $db);
+		CategoryItemsNotInShop("NOPOBA", "TOKBB", 8, $RootPath, $db);
 		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		CategoryItemsNotInShop("NOPOBA", "TOKBK", 8, $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		CategoryItemsNotInShop("NOPOBA", "TOKK2", 8, $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 
 // COVID REDUCTION OF PANEL
 //		CategoryItemsNotInShop("DISC2A", "TOKAR", 1, $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		CategoryItemsNotInShop("DISC5A", "TOKAR", 1, $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		CategoryItemsNotInShop("DISC8A", "TOKAR", 1, $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -1023,8 +997,8 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 		OldOnlineQuotations(10, 1, $RootPath, $db);
 		$NumberOfTestExecuted++;
-	//	OutstandingOrders("Online", "Quotation", $RootPath, $db);
-	//	$NumberOfTestExecuted++;
+//		OutstandingOrders("Online", "Quotation", $RootPath, $db);
+//		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin 
