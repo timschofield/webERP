@@ -24,6 +24,7 @@ $SQL = "SELECT stockmaster.stockid,
 			stockmaster.categoryid
 		FROM stockmaster, salescatprod
 		WHERE stockmaster.stockid = salescatprod.stockid
+			AND discontinued = 0
 		ORDER BY stockmaster.stockid";
 $result = DB_query($SQL);
 if (DB_num_rows($result) != 0){
@@ -40,6 +41,7 @@ if (DB_num_rows($result) != 0){
 	$i = 0;
 	while ($myrow = DB_fetch_array($result)) {
 		
+		// Exception for DRAR items
 		if (substr($myrow['stockid'], 0,4) == "DRAR"){
 			$CodePreffix = substr($myrow['stockid'], 0,4);
 		}else{

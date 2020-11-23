@@ -104,15 +104,16 @@ function KL_DailyCleanDB($ShowMessages, $db, $EmailText){
 }
 
 function KL_DailySetObsoleteNoStock($ShowMessages, $db, $EmailText = ''){
+	$EmailText = SetObsoleteForCategoryWithoutStock("NOPOKA", $ShowMessages, $EmailText, $db);
+	$EmailText = SetObsoleteForCategoryWithoutStock("NOPOBA", $ShowMessages, $EmailText, $db);
+	$EmailText = SetObsoleteForCategoryWithoutStock("NOPOGA", $ShowMessages, $EmailText, $db);
 	$EmailText = SetObsoleteForCategoryWithoutStock("DISC20", $ShowMessages, $EmailText, $db);
 	$EmailText = SetObsoleteForCategoryWithoutStock("DISC50", $ShowMessages, $EmailText, $db);
 	$EmailText = SetObsoleteForCategoryWithoutStock("DISC80", $ShowMessages, $EmailText, $db);
 	$EmailText = SetObsoleteForCategoryWithoutStock("DISC2A", $ShowMessages, $EmailText, $db);
 	$EmailText = SetObsoleteForCategoryWithoutStock("DISC5A", $ShowMessages, $EmailText, $db);
 	$EmailText = SetObsoleteForCategoryWithoutStock("DISC8A", $ShowMessages, $EmailText, $db);
-	$EmailText = SetObsoleteForCategoryWithoutStock("NOPOKA", $ShowMessages, $EmailText, $db);
-	$EmailText = SetObsoleteForCategoryWithoutStock("NOPOBA", $ShowMessages, $EmailText, $db);
-	$EmailText = SetObsoleteForCategoryWithoutStock("NOPOGA", $ShowMessages, $EmailText, $db);
+	$EmailText = PurgeRelatedItemsFromObsolete($ShowMessages, $EmailText, $db);
 	return $EmailText;
 }
 
@@ -437,6 +438,26 @@ function PurgeAuditTrailTable($ShowMessages, $EmailText, $db){
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
 	return $EmailText;
 }
+
+function PurgeRelatedItemsFromObsolete($ShowMessages, $EmailText, $db){
+	$sql = "DELETE FROM relateditems
+			WHERE relateditems.stockid IN (SELECT stockmaster.stockid
+											FROM stockmaster
+											WHERE discontinued = 1)";
+	$result = DB_query($sql);
+	$Text = "Purge Related Items table from obsolete items (stockid)";
+	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
+
+	$sql = "DELETE FROM relateditems
+			WHERE relateditems.related IN (SELECT stockmaster.stockid
+											FROM stockmaster
+											WHERE discontinued = 1)";
+	$result = DB_query($sql);
+	$Text = "Purge Related Items table from obsolete items (related)";
+	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
+	return $EmailText;
+}
+
 
 function SetTopSalesRanking($ShowMessages, $EmailText, $db){
 
