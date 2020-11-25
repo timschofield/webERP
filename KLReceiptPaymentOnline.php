@@ -50,7 +50,7 @@ $BankTransType = "Transfer";
 if ($_GET['PaymentCode'] != "MANUAL_MARKETPLACE") {
 	// apply the proper payment
 	// let's find the accounts, commission, etc to charge to the different payment codes
-	$SQLAccounts = "SELECT accountdirecttransferidr,
+	$SQLAccounts = "SELECT accounttransfermandiri,
 				accountxenditidr,
 				accountxenditcomissionidr,
 				accountcomissionppn,
@@ -66,7 +66,19 @@ if ($_GET['PaymentCode'] != "MANUAL_MARKETPLACE") {
 		$myrowAccounts = DB_fetch_array($resultAccounts);
 		if ($_GET['PaymentCode'] == "bank_mandiri"){
 			// bank Mandiri direct transfer has no commissions 
-			$GLAccountTransfer = $myrowAccounts['accountdirecttransferidr'];
+			$GLAccountTransfer = $myrowAccounts['accounttransfermandiri'];
+			$GLAccountCommission = "";
+			$GLAccountCommissionPPN = "";
+			$Commission = 0;
+		}elseif ($_GET['PaymentCode'] == "bank_bca"){
+			// bank bca direct transfer has no commissions 
+			$GLAccountTransfer = $myrowAccounts['accounttransferbca'];
+			$GLAccountCommission = "";
+			$GLAccountCommissionPPN = "";
+			$Commission = 0;
+		}elseif ($_GET['PaymentCode'] == "bank_danamon"){
+			// bank Mandiri direct transfer has no commissions 
+			$GLAccountTransfer = $myrowAccounts['accounttransferdanamon'];
 			$GLAccountCommission = "";
 			$GLAccountCommissionPPN = "";
 			$Commission = 0;

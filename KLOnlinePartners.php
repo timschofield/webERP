@@ -42,7 +42,9 @@ if(isset($_POST['submit'])) {
 					paypalusername ='" . $_POST['PayPalUsername'] . "',
 					paypalpassword ='" . $_POST['PayPalPassword'] . "',
 					paypalsignature ='" . $_POST['PayPalSignature'] . "',
-					accountdirecttransferidr ='" . $_POST['AccountDirectTransferIDR'] . "',
+					accounttransfermandiri ='" . $_POST['AccountTransferMandiri'] . "',
+					accounttransferbca ='" . $_POST['AccountTransferBCA'] . "',
+					accounttransferdanamon ='" . $_POST['AccountTransferDanamon'] . "',
 					accountdokuidr ='" . $_POST['AccountDokuIDR'] . "',
 					accountdokucomissionidr = '" . $_POST['AccountDokuComissionIDR'] . "',
 					comissionflatdoku = '" . $_POST['ComissionFlatDoku'] . "',
@@ -77,7 +79,9 @@ if(isset($_POST['submit'])) {
 		unset($_POST['PayPalUsername']);
 		unset($_POST['PayPalPassword']);
 		unset($_POST['PayPalSignature']);
-		unset($_POST['AccountDirectTransferIDR']);
+		unset($_POST['AccountTransferMandiri']);
+		unset($_POST['AccountTransferBCA']);
+		unset($_POST['AccountTransferDanamon']);
 		unset($_POST['AccountDokuIDR']);
 		unset($_POST['AccountDokuComissionIDR']);
 		unset($_POST['ComissionFlatDoku']);
@@ -108,7 +112,9 @@ if(isset($_POST['submit'])) {
 								paypalusername,
 								paypalpassword,
 								paypalsignature,
-								accountdirecttransferidr,
+								accounttransfermandiri,
+								accounttransferbca,
+								accounttransferdanamon,
 								accountdokuidr,
 								accountdokucomissionidr,
 								comissionflatdoku,
@@ -133,7 +139,9 @@ if(isset($_POST['submit'])) {
 								'" . $_POST['PayPalUsername'] ."',
 								'" . $_POST['PayPalPassword'] . "',
 								'" . $_POST['PayPalSignature'] . "',
-								'" . $_POST['AccountDirectTransferIDR'] . "',
+								'" . $_POST['AccountTransferMandiri'] . "',
+								'" . $_POST['AccountTransferBCA'] . "',
+								'" . $_POST['AccountTransferDanamon'] . "',
 								'" . $_POST['AccountDokuIDR'] . "',
 								'" . $_POST['AccountDokuComissionIDR'] . "',
 								'" . $_POST['ComissionFlatDoku'] . "',
@@ -166,7 +174,9 @@ if(isset($_POST['submit'])) {
 		unset($_POST['PayPalUsername']);
 		unset($_POST['PayPalPassword']);
 		unset($_POST['PayPalSignature']);
-		unset($_POST['AccountDirectTransferIDR']);
+		unset($_POST['AccountTransferMandiri']);
+		unset($_POST['AccountTransferBCA']);
+		unset($_POST['AccountTransferDanamon']);
 		unset($_POST['AccountDokuIDR']);
 		unset($_POST['AccountDokuComissionIDR']);
 		unset($_POST['ComissionFlatDoku']);
@@ -296,7 +306,9 @@ if(!isset($_GET['delete'])) {
 					paypalusername,
 					paypalpassword,
 					paypalsignature,
-					accountdirecttransferidr,
+					accounttransfermandiri,
+					accounttransferbca,
+					accounttransferdanamon,
 					accountdokuidr,
 					accountdokucomissionidr,
 					comissionflatdoku,
@@ -327,7 +339,9 @@ if(!isset($_GET['delete'])) {
 		$_POST['PayPalUsername'] = $myrow['paypalusername'];
 		$_POST['PayPalPassword'] = $myrow['paypalpassword'];
 		$_POST['PayPalSignature'] = $myrow['paypalsignature'];
-		$_POST['AccountDirectTransferIDR'] = $myrow['accountdirecttransferidr'];
+		$_POST['AccountTransferMandiri'] = $myrow['accounttransfermandiri'];
+		$_POST['AccountTransferBCA'] = $myrow['accounttransferbca'];
+		$_POST['AccountTransferDanamon'] = $myrow['accounttransferdanamon'];
 		$_POST['AccountDokuIDR'] = $myrow['accountdokuidr'];
 		$_POST['AccountDokuComissionIDR'] = $myrow['accountdokucomissionidr'];
 		$_POST['ComissionFlatDoku'] = $myrow['comissionflatdoku'];
@@ -387,8 +401,8 @@ if(!isset($_GET['delete'])) {
 	if(!isset($_POST['PayPalSignature'])) {
 		$_POST['PayPalSignature'] = '';
 	}
-	if(!isset($_POST['AccountDirectTransferIDR'])) {
-		$_POST['AccountDirectTransferIDR'] = '';
+	if(!isset($_POST['AccountTransferMandiri'])) {
+		$_POST['AccountTransferMandiri'] = '';
 	}
 	if(!isset($_POST['AccountDokuIDR'])) {
 		$_POST['AccountDokuIDR'] = '';
@@ -471,11 +485,37 @@ if(!isset($_GET['delete'])) {
 		</tr>';
 
 	echo '<tr>
-		<td>' . _('Direct Bank Transfer IDR GL Account') . ':' . '</td>
-		<td><select name="AccountDirectTransferIDR">';
+		<td>' . _('Mandiri Bank Transfer IDR GL Account') . ':' . '</td>
+		<td><select name="AccountTransferMandiri">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($myrow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountDirectTransferIDR']==$myrow['accountcode']) {
+		if($_POST['AccountTransferMandiri']==$myrow['accountcode']) {
+			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		} else {
+			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		}
+	}
+	echo '</select></td></tr>';
+
+	echo '<tr>
+		<td>' . _('BCA Bank Transfer IDR GL Account') . ':' . '</td>
+		<td><select name="AccountTransferBCA">';
+	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
+	while ($myrow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountTransferBCA']==$myrow['accountcode']) {
+			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		} else {
+			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		}
+	}
+	echo '</select></td></tr>';
+
+	echo '<tr>
+		<td>' . _('Danamon Bank Transfer IDR GL Account') . ':' . '</td>
+		<td><select name="AccountTransferDanamon">';
+	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
+	while ($myrow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountTransferDanamon']==$myrow['accountcode']) {
 			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
 			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';

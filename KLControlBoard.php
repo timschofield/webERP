@@ -4008,6 +4008,8 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 							<th class="ascending">' . _('Currency') . '</th>
 							<th class="ascending">' . _('Reminder Bank Transfer') . '</th>
 							<th class="ascending">' . _('Paid Mandiri TT') . '</th>
+							<th class="ascending">' . _('Paid BCA TT') . '</th>
+							<th class="ascending">' . _('Paid Danamon TT') . '</th>
 							<th class="ascending">' . _('Paid Xendit TT') . '</th>
 							<th class="ascending">' . _('Paid Xendit CC') . '</th>
 							<th class="ascending">' . _('Action') . '</th>
@@ -4034,6 +4036,16 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 			}else{
 				$PaymentMandiriTT = '';
 			}
+			if ($myrow['klocpaymentcode'] == "bank_bca"){
+				$PaymentBCATT = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&PaymentCode=' . $myrow['klocpaymentcode'] . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentLinkText .'</a>';
+			}else{
+				$PaymentBCATT = '';
+			}
+			if ($myrow['klocpaymentcode'] == "bank_danamon"){
+				$PaymentDanamonTT = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&PaymentCode=' . $myrow['klocpaymentcode'] . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentLinkText .'</a>';
+			}else{
+				$PaymentDanamonTT = '';
+			}
 			if ($myrow['klocpaymentcode'] == "xenditmandiriva"){
 				$PaymentXenditTT = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&PaymentCode=' . $myrow['klocpaymentcode'] . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentLinkText .'</a>';
 			}else{
@@ -4058,6 +4070,8 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
 					</tr>', 
 					$i, 
 					$CodeLink, 
@@ -4069,6 +4083,8 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 					$myrow['currcode'], 
 					$EmailLink,
 					$PaymentMandiriTT,
+					$PaymentBCATT,
+					$PaymentDanamonTT,
 					$PaymentXenditTT,
 					$PaymentXenditCC,
 					$DeleteLink
