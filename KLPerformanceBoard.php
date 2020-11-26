@@ -108,7 +108,7 @@ if ($ProcessSection01){
 		OR $KL_BusinessDevelopmentManager){
 // RICARD 2019-11-26
 // CANCELLED FOR PERFORMANCE REASONS
-//		GeneralCustomerBehaviour(30, $db);
+		GeneralCustomerBehaviour(30, $db);
 		$NumberOfTestExecuted++;
 //		GeneralCustomerBehaviour(90, $db);
 //		$NumberOfTestExecuted++;
@@ -118,7 +118,7 @@ if ($ProcessSection01){
 // RICARD 2019-11-26
 // CANCELLED FOR PERFORMANCE REASONS
 //		DailySalesRecords(10, 365 * 2, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 	}
 }
 
@@ -189,7 +189,7 @@ if ($ProcessSection02){
 		OR $KL_BusinessDevelopmentManager){
 // COVID REDUCTION OF PANEL
 //		PurchaseOrdersProcessTime(90, $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 		PurchaseOrdersWrongPlannedDates($RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
@@ -277,7 +277,7 @@ if ($ProcessSection03){
 // RICARD 2019-11-26
 // CANCELLED FOR PERFORMANCE REASONS
 //		PackagingUsageByWeeks($RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin){

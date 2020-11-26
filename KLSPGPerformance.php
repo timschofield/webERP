@@ -785,7 +785,7 @@ function HourlySales($numDays, $RootPath, $db){
 			FROM debtorsmaster, custbranch, locations
 			WHERE debtorsmaster.debtorno = custbranch.debtorno
 				AND custbranch.defaultlocation = locations.loccode
-				AND locations.zone NOT IN ". ZONES_OF_KANTOR . "
+				AND locations.typeloc IN " . ALL_SHOPS_LIST_BY_TYPE . "
 				AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_RETAIL . ")
 			ORDER BY locations.zone, 
 				debtorsmaster.debtorno";

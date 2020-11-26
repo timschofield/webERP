@@ -15,9 +15,6 @@ include ('includes/KLRoles.inc');
 $begintime = time_start();
 $NumberOfTestExecuted = 0;
 
-if ($KL_SystemAdmin){
-}
-
 if ($KL_SystemAdmin 
 	OR $KL_OperationalManager 
 	OR $KL_BusinessDevelopmentManager 
@@ -28,10 +25,7 @@ if ($KL_SystemAdmin
 // RICARD 2019-11-26
 // CANCELLED FOR PERFORMANCE REASONS
 //	HourlyPerformance(15,$RootPath, $db);
-	$NumberOfTestExecuted++;
-
-
-	
+//	$NumberOfTestExecuted++;
 }
 
 prnMsg("Performed ". $NumberOfTestExecuted . " Sales Hourly Report",'success');
