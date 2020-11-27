@@ -227,6 +227,10 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 					// let's distribute available stock between the shops with RL > 0.
 					// if RL = 0 we suppose we do not want it there for any reason 
 					$QtyToDistribute = QtyAvailable($myrow['stockid'], "ALLSHOPSANDONLINE", $db);
+					if ($EmailText!=''){
+						$EmailText = $EmailText . $myrow['stockid']. " Quantity to distribute = " . $QtyToDistribute . "\n";
+					}
+
 					$QOH =$QtyToDistribute;
 					$LocationsDistributed = 0;
 					
@@ -332,7 +336,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 			if ($EmailText!=''){
 				$EmailText = $EmailText . $myrow['stockid'] . " needed @ " . 
 										$myrow['locationneeded'] .
-										" " . 
+										" Strategy used: " . 
 										$strategy . " " . 
 										"\n\n";
 			}
@@ -1039,9 +1043,9 @@ function AdjustPackagingItemByShop($Item, $Shop, $DaysSales, $ShowMessages, $upd
 				echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
 			}
 			if ($EmailText!=''){
-				$text = $Shop . ' ' . $Item . "\n" . 
-					' Old RL = ' . $OldRL . "\n" . 
-					' Used ' . $DaysSales . ' days = ' . $myrow['sales'] . "\n" . 
+				$text = $Shop . ' ' . $Item .  
+					' Old RL = ' . $OldRL .  
+					' Used ' . $DaysSales . ' days = ' . $myrow['sales'] .  
 					' New RL = ' . $NewRL . "\n";
 				$EmailText = $EmailText . $text;
 			}
