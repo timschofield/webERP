@@ -4098,7 +4098,7 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 
 function OnlineMarketPlacePaymentPending($RootPath, $db){
 
-	$Titletext = "Follow up MarketPlace Online Orders Payment Pending";
+	$Titletext = "Follow up Marketplace Online Orders Payment Pending";
 		
 	$SQL = "SELECT salesorders.orderno,	
 				salesorders.customerref,
@@ -4122,7 +4122,8 @@ function OnlineMarketPlacePaymentPending($RootPath, $db){
 			GROUP BY salesorders.orderno,	
 				debtorsmaster.name,
 				salesorders.orddate
-			ORDER BY salesorders.orderno";			
+			ORDER BY salesorders.debtorno,
+					salesorders.deliverto";			
 
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
@@ -4131,10 +4132,10 @@ function OnlineMarketPlacePaymentPending($RootPath, $db){
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
 							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Order') . '</th>
-							<th class="ascending">' . _('#MarketPlace') . '</th>
 							<th class="ascending">' . _('Customer') . '</th>
 							<th class="ascending">' . _('Name') . '</th>
+							<th class="ascending">' . _('Order') . '</th>
+							<th class="ascending">' . _('#MarketPlace') . '</th>
 							<th class="ascending">' . _('Order Date') . '</th>
 							<th class="ascending">' . _('Order Value') . '</th>
 							<th class="ascending">' . _('Currency') . '</th>
@@ -4152,26 +4153,27 @@ function OnlineMarketPlacePaymentPending($RootPath, $db){
 			$PaymentValue = $myrow['ordervalue']+$myrow['freightcost'];
 
 			$PaymentLinkManualText = 'Mark As Paid';
+			
 			$PaymentManual = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&PaymentCode=' . 'MANUAL_MARKETPLACE' . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentLinkManualText .'</a>';
 			// prepare the links according to the Marketplace
-			$PaymentTokopedia = 'NOT CODED';
-			$PaymentShopee = 'NOT CODED';
-/*			if ($myrow['debtorno'] == "TOKOPEDIA"){
-				$PaymentTokopedia = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&PaymentCode=' . $myrow['debtorno'] . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentLinkText .'</a>';
+			if ($myrow['debtorno'] == "TOKOPEDIA"){
+				$PaymentTokopedia = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&PaymentCode=' . 'tokopedia' . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentLinkText .'</a>';
+				$PaymentManual = '';
 			}else{
 				$PaymentTokopedia = '';
 			}
 			if ($myrow['debtorno'] == "SHOPEE"){
-				$PaymentShopee = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&PaymentCode=' . $myrow['debtorno'] . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentLinkText .'</a>';
+//				$PaymentShopee = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&PaymentCode=' . 'shopee' . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentLinkText .'</a>';
+				$PaymentShopee = 'NOT CODED';
 			}else{
 				$PaymentShopee = '';
 			}
-*/
+
 			printf('<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
@@ -4180,10 +4182,10 @@ function OnlineMarketPlacePaymentPending($RootPath, $db){
 					<td>%s</td>
 					</tr>', 
 					$i, 
-					$CodeLink, 
-					locale_number_format($myrow['customerref']),
 					$myrow['debtorno'], 
 					$myrow['name'], 
+					$myrow['orderno'], 
+					$myrow['customerref'],
 					ConvertSQLDate($myrow['orddate']), 
 					locale_number_format($myrow['ordervalue']+$myrow['freightcost'],$myrow['decimalplaces']),
 					$myrow['currcode'], 

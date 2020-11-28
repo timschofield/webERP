@@ -118,6 +118,7 @@ define("PAYMENT_BY_CASH", 2);
 define("PAYMENT_BY_CREDITCARD", 3); 
 
 define("ACCOUNT_PPN_ADU", "611012030AD"); // GL account for PPN PT.ADU
+define("ACCOUNT_PPN_BB", "611012030PT"); // GL account for PPN PT.BB
 
 define("ACCOUNT_HUTANG_PPH23", "611012005PT"); // GL account for retention of PPH23 in Petty cash
 
@@ -330,6 +331,14 @@ define("ABSOLUTE_PATH_WEBERP_TEST", '/var/www/vhosts/kapal-laut.com/ptadu.com/TE
 define("PATH_OPENCART_IMAGES", 'data/KL/part_pics/');
 define("PATH_OPENCART_BASE", 'http://www.kapal-laut.com');
 define("ROUTE_TO_PRODUCT", 'index.php?route=product/product&');
+
+// TOKOPEDIA
+define("TOKOPEDIA_BANK_GL_ACCOUNT", '111121121PT');
+define("TOKOPEDIA_COMMISSION_GL_ACCOUNT", '700211321PT');
+define("TOKOPEDIA_COMMISSION_PERCENT", 1.00);
+define("TOKOPEDIA_COMMISSION_FREE_SHIPPING_PER_ITEM_PERCENT", 2.50);
+define("TOKOPEDIA_COMMISSION_FREE_SHIPPING_PER_ITEM_MAXIMUM", 10000);
+
 
 
 ?>
