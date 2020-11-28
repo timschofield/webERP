@@ -151,7 +151,7 @@ TRUNCATE kurakura_kl_test_erp.`glaccountusers`;
 INSERT INTO kurakura_kl_test_erp.glaccountusers SELECT * FROM kurakura_kl_erp.glaccountusers;
 
 TRUNCATE kurakura_kl_test_erp.`gltrans`;
-INSERT INTO kurakura_kl_test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno <= 30;
+/* INSERT INTO kurakura_kl_test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno <= 30;
 INSERT INTO kurakura_kl_test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 30 AND periodno <= 60;
 INSERT INTO kurakura_kl_test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 60 AND periodno <= 80;
 INSERT INTO kurakura_kl_test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 80 AND periodno <= 90;
@@ -159,9 +159,15 @@ INSERT INTO kurakura_kl_test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans W
 INSERT INTO kurakura_kl_test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 100 AND periodno <= 110;
 INSERT INTO kurakura_kl_test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 110 AND periodno <= 115;
 INSERT INTO kurakura_kl_test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 115 AND periodno <= 120;
+*/
 INSERT INTO kurakura_kl_test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 120 AND periodno <= 125;
 INSERT INTO kurakura_kl_test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 125 AND periodno <= 130;
-INSERT INTO kurakura_kl_test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 130;
+INSERT INTO kurakura_kl_test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 130 AND periodno <= 135;
+INSERT INTO kurakura_kl_test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 135 AND periodno <= 140;
+INSERT INTO kurakura_kl_test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 140 AND periodno <= 145;
+INSERT INTO kurakura_kl_test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 145 AND periodno <= 150;
+INSERT INTO kurakura_kl_test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 150 AND periodno <= 155;
+INSERT INTO kurakura_kl_test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 155 AND periodno <= 160;
 
 TRUNCATE kurakura_kl_test_erp.`grns`;
 INSERT INTO kurakura_kl_test_erp.grns SELECT * FROM kurakura_kl_erp.grns;
@@ -461,7 +467,7 @@ TRUNCATE kurakura_kl_test_erp.`stockmaster`;
 INSERT INTO kurakura_kl_test_erp.stockmaster SELECT * FROM kurakura_kl_erp.stockmaster;
 
 TRUNCATE kurakura_kl_test_erp.`stockmoves`;
-INSERT INTO kurakura_kl_test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE prd <= 30;
+/* INSERT INTO kurakura_kl_test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE prd <= 30;
 INSERT INTO kurakura_kl_test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE prd > 30 AND prd <= 60;
 INSERT INTO kurakura_kl_test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE prd > 60 AND prd <= 80;
 INSERT INTO kurakura_kl_test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE prd > 80 AND prd <= 90;
@@ -470,6 +476,7 @@ INSERT INTO kurakura_kl_test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockm
 INSERT INTO kurakura_kl_test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE prd > 110 AND prd <= 115;
 INSERT INTO kurakura_kl_test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE prd > 115 AND prd <= 120;
 INSERT INTO kurakura_kl_test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE prd > 120 AND prd <= 125;
+*/ 
 INSERT INTO kurakura_kl_test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE prd > 125 AND prd <= 130;
 INSERT INTO kurakura_kl_test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE prd > 130;
 
