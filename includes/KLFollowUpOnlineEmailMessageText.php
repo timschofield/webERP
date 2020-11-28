@@ -9,7 +9,7 @@ if ($Language == "ENGLISH"){
 	$Text0060 = 'If you changed your mind during the process, we would like also know why, so we can improve the customer experience on our online shop. We want to treat the online visitor with the same care and detail we do on our street shops. Please help us to do it!';
 	$Text0070 = 'If you did not registered yourself on our online shop, someone else did it using your data. Please let us know so we can delete your data from our system.';
 	$Text0080 = 'we received an online order from you to be settled by bank transfer to our bank account, but we have not received funds from you yet.';
-	$Text0090 = 'If you already send the funds or plan to send send the funds via bank transfer: Please check with your bank and send us the scanned proof of transfer, so we can double check in our bank.';
+	$Text0090 = 'Please send us the proof of transfer (picture or screenshot), to sales@kapal-laut.com or WhatsApp to +61 81 238 167 91 so we can double check in our bank.';
 	$Text0100 = 'we received an online order from you to be settled by virtual account transfer to our account, but after checking our payment gateway service, we have not received funds from you yet.';
 	$Text0110 = 'If you already send the funds or plan to send send the funds via virtual account transfer: Please let us know.';
 	$Text0120 = 'If not, please be aware that the payment process will be expired in 24 hours, hence you will have to order again.';
@@ -53,7 +53,7 @@ if ($Language == "ENGLISH"){
 	$Text0060 = 'Jika anda berubah pikiran dalam proses pembelian, kami juga ingin tahu mengapa, sehingga kami bisa meningkatkan pengalaman pelanggan di online shop kami. Kami ingin memberikan perhatian dan perlakuan yang sama baiknya kepada pelanggan online seperti pada pelanggan yang datang ke toko-toko kami. Mohon bantu kami untuk melakukannya!';
 	$Text0070 = 'Jika anda tidak mendaftar di online shop kami, ada orang lain yang melakukannya menggunakan data anda. Mohon informasinya agar kami bisa menghapus data anda dari sistem kami.';
 	$Text0080 = 'kami menerima order online dari anda yang perlu diselesaikan dengan pembayaran via transfer ke rekening bank kami, tapi kami belum menerima pembayaran dari anda.';
-	$Text0090 = 'Jika anda sudah melakukan transfer atau berencana melakukannya: Silakan cek rekening anda dan kirimkan bukti pembayarannya, agar kami bisa memeriksa rekening bank kami.';
+	$Text0090 = 'Tolong kirimkan bukti pembayarannya lewat photo atau screenshot ke sales@kapal-laut.com atau WhatsApp ke 081 238 167 91, agar kami bisa memeriksa rekening bank kami.';
 	$Text0100 = 'kami menerima order online dari anda yang perlu diselesaikan dengan transfer akun virtual ke akun kami, tapi setelah memeriksa portal pembayaran kamir, kami belum menerima pembayaran dari anda.';
 	$Text0110 = 'Jika anda sudah mengirim dana atau berencana melakukannya via transfer akun virtual: Mohon infokan kepada kami.';
 	$Text0120 = 'Jika tidak, mohon diperhatikan bahwa proses pembayaran akan habis dalam 24 jam, sehingga anda harus order lagi.';
