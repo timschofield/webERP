@@ -350,19 +350,33 @@ if (($_GET['EmailType']=='ThankYouOrder') OR ($_GET['EmailType']=='NoSendThankYo
 include('includes/footer.php');
 
 function ShowBankDetails ($Currency, $OrderNo, $Language) {
+	if ($Currency != "IDR"){
+		return "";
+	}
 
-	if ($Currency == 'IDR'){
-		$BankName = 'Bank Mandiri';
-		$BankBeneficiary = 'PT Bumi Biru';
-		$AccountNumber = '1450011000102';
-		$SwiftCode = 'BMRIIDJA';
-	}else{
-		$BankName = 'Bank Mandiri';
-		$BankBeneficiary = 'PT Bumi Biru';
-		$AccountNumber = '1450011000102';
-		$SwiftCode = 'BMRIIDJA';
-	} 
-	if ($Language == "ENGLISH"){
+	$BankName = 'Bank Mandiri';
+	$BankBeneficiary = 'PT Bumi Biru';
+	$AccountNumber = '14 50 01 10 00 102';
+	
+	$ShowResult = ShowBankAccount($BankName, $BankBeneficiary, $AccountNumber, $SwiftCode);
+
+	$BankName = 'Bank BCA';
+	$BankBeneficiary = 'PT Bumi Biru';
+	$AccountNumber = '77 00 40 80 81';
+	
+	$ShowResult .= ShowBankAccount($BankName, $BankBeneficiary, $AccountNumber, $SwiftCode);
+
+	$BankName = 'Bank Danamon';
+	$BankBeneficiary = 'PT Bumi Biru';
+	$AccountNumber = '35 68 00 55 02';
+	
+	$ShowResult .= ShowBankAccount($BankName, $BankBeneficiary, $AccountNumber, $SwiftCode);
+
+	return $Showresult;
+}
+
+function ShowBankAccount($BankName, $BankBeneficiary, $AccountNumber, $SwiftCode){
+		if ($Language == "ENGLISH"){
 		$TextBank0010 = 'Bank Account Details';
 		$TextBank0020 = 'Bank Name';
 		$TextBank0030 = 'Account Holder Name';
@@ -401,7 +415,8 @@ function ShowBankDetails ($Currency, $OrderNo, $Language) {
 					<td>' . $TextBank0060 . ':</td><td>'  . $TextBank0070 . ': ' . $OrderNo . '</td>
 			</tr>
 			</table>';
-	return $Showresult;
+			
+	return $ShowResult;
 }
 
 ?>
