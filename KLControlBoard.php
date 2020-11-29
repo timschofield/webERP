@@ -94,7 +94,7 @@ if ($ProcessSection01){
 		OR $KL_ShopManager){
 // COVID REDUCTION OF PANEL
 //		SPGNotReportingSalesInDays(2, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SalesDirector
@@ -379,9 +379,6 @@ if ($ProcessSection01){
 		OR $KL_AdministrationTeam){
 		BalanceAccountControl("111121100IK",  1000000,  50000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-// Bank Danamon IK not opened yet
-//		BalanceAccountControl("111121105IK",  1000000,  50000000, $periodnow, $db);
-//		$NumberOfTestExecuted++;
 		BalanceAccountControl("111121110IK",  1000000,  50000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 	}
@@ -391,9 +388,6 @@ if ($ProcessSection01){
 		OR $KL_AdministrationTeam){
 		BalanceAccountControl("111121100PI",  1000000,  50000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-// Bank Danamon PI not opened yet
-//		BalanceAccountControl("111121105PI",  1000000,  50000000, $periodnow, $db);
-//		$NumberOfTestExecuted++;
 		BalanceAccountControl("111121110PI",  1000000,  50000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 	}
@@ -784,99 +778,99 @@ if ($ProcessSection02){
 
 // COVID REDUCTION OF PANEL
 //		ItemsInCategoryForMoreThanDays( 120, "SETKLA", $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		ItemsInCategoryForMoreThanDays( 120, "SETBLA", $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		ItemsInCategoryForMoreThanDays( 120, "SETGEA", $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 
 
 // COVID REDUCTION OF PANEL
 //		ActiveItemsNoSales( 30, "TESTKA", $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		ItemsInCategoryForMoreThanDays( 60, "TESTKA", $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 
 // COVID REDUCTION OF PANEL
 //		ActiveItemsNoSales( 30, "TESTBA", $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		ItemsInCategoryForMoreThanDays( 60, "TESTBA", $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 
 // COVID REDUCTION OF PANEL
 //		ActiveItemsNoSales( 30, "TESTGA", $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		ItemsInCategoryForMoreThanDays( 60, "TESTGA", $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 
 // COVID REDUCTION OF PANEL
 //		ActiveItemsNoSales( 30, "STABKA", $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		ActiveItemsNoSales( 30, "STABBA", $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		ActiveItemsNoSales( 30, "STABGA", $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 
 // COVID REDUCTION OF PANEL
 //		ActiveItemsNoSales( 30, "NOPOKA", $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		ItemsInCategoryForMoreThanDays( 90, "NOPOKA", $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 
 // COVID REDUCTION OF PANEL
 //		ActiveItemsNoSales( 30, "NOPOBA", $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		ItemsInCategoryForMoreThanDays( 90, "NOPOBA", $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 
 // COVID REDUCTION OF PANEL
 //		ActiveItemsNoSales( 30, "NOPOGA", $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		ItemsInCategoryForMoreThanDays( 90, "NOPOGA", $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 
 // COVID REDUCTION OF PANEL
 //		ActiveItemsNoSales( 30, "DISC20", $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		ActiveItemsNoSales( 30, "DISC2A", $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		ItemsInCategoryForMoreThanDays( 90, "DISC20", $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		ItemsInCategoryForMoreThanDays( 90, "DISC2A", $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 		
 // COVID REDUCTION OF PANEL
 //		ActiveItemsNoSales( 50, "DISC50", $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		ActiveItemsNoSales( 50, "DISC5A", $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		ItemsInCategoryForMoreThanDays( 120, "DISC50", $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		ItemsInCategoryForMoreThanDays( 120, "DISC5A", $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 		
 // COVID REDUCTION OF PANEL
 //		ActiveItemsNoSales( 60, "DISC80", $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		ActiveItemsNoSales( 60, "DISC8A", $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 	}
 
 	/***************************************************************************************
@@ -896,7 +890,7 @@ if ($ProcessSection02){
 	if ($KL_BusinessDevelopmentManager){
 // COVID REDUCTION OF PANEL
 //		PurchaseOrdersProcessTime(90, $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 	}
 	
 	
@@ -995,7 +989,7 @@ if ($ProcessSection02){
 //		$NumberOfTestExecuted++;
 		OnlineQuotationsFollowUp($RootPath, $db);
 		$NumberOfTestExecuted++;
-		OldOnlineQuotations(10, 1, $RootPath, $db);
+		OldOnlineQuotations(3, 1, $RootPath, $db);
 		$NumberOfTestExecuted++;
 //		OutstandingOrders("Online", "Quotation", $RootPath, $db);
 //		$NumberOfTestExecuted++;
@@ -1119,16 +1113,17 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 	
-	if ($KL_SystemAdmin){
-		StockToPTADU("PO", 1, 1, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		StockToPTADU("WO", 1, 1, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		StockToPTADU("PO", 99999999, 2, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		StockToPTADU("WO", 99999999, 2, $RootPath, $db);
-		$NumberOfTestExecuted++;
-	}
+//	if ($KL_SystemAdmin){
+//		StockToPTADU("PO", 1, 1, $RootPath, $db);
+//		$NumberOfTestExecuted++;
+//		StockToPTADU("WO", 1, 1, $RootPath, $db);
+//		$NumberOfTestExecuted++;
+//		StockToPTADU("PO", 99999999, 99999999, $RootPath, $db);
+//		$NumberOfTestExecuted++;
+//		StockToPTADU("WO", 99999999, 2, $RootPath, $db);
+//		$NumberOfTestExecuted++;
+//	}
+
 }
 prnMsg("Performed ". $NumberOfTestExecuted . " control tests",'success');
 
@@ -3425,7 +3420,7 @@ function OldOnlineQuotations($NumDaysMandiri, $NumDaysXendit, $RootPath, $db){
 
 	$StartDateMandiri = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysMandiri));
 	$StartDateXendit = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysXendit));
-	$Titletext = "Old Online Quotations to be deleted. No Mandiri Transfer in " . $NumDaysMandiri . " days or Xendit in " . $NumDaysXendit . " days";
+	$Titletext = "Old Online Quotations to be deleted. No Bank Transfer in " . $NumDaysMandiri . " days or Xendit in " . $NumDaysXendit . " days";
 		
 	$SQL = "SELECT salesorders.orderno,	
 				salesorders.customerref,
