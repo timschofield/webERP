@@ -571,7 +571,7 @@ function ComponentsToObsolete($ShowOnlyTotal, $ShowLimit, $RootPath, $db){
 						FROM locstock
 						WHERE s.stockid = locstock.stockid) AS qoh
 			FROM stockmaster AS s
-			WHERE s.categoryid IN ('COMPON','ZCMOTH','ZCMSST')
+			WHERE s.categoryid IN " . LIST_STOCK_CATEGORIES_COMPONENTS . "
 				AND s.discontinued = 0
 				AND NOT EXISTS(
 					SELECT bom.component
@@ -1233,11 +1233,11 @@ function GoodsToBeProduced($CategoryComponent, $ParentCategory, $RootPath, $db){
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		if ($ParentCategory == "ONLYDISCOUNT"){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Components '). $CategoryComponent . _(' ready to WO in kantor used ONLY for Discount items') . '</strong></p>';
+			echo '<p class="page_title_text" align="center"><strong>' . _('Components ready to WO in kantor used ONLY for Discount items') . '</strong></p>';
 		}elseif ($ParentCategory == "DISCOUNT"){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Components '). $CategoryComponent . _(' ready to WO in kantor used for Discount items') . '</strong></p>';
+			echo '<p class="page_title_text" align="center"><strong>' . _('Components ready to WO in kantor used for Discount items') . '</strong></p>';
 		}else{
-			echo '<p class="page_title_text" align="center"><strong>' . _('Components '). $CategoryComponent . _(' ready to WO in kantor for any items') . '</strong></p>';
+			echo '<p class="page_title_text" align="center"><strong>' . _('Components ready to WO in kantor for any items') . '</strong></p>';
 		}
 		echo '<div>';
 		echo '<table class="selection">';

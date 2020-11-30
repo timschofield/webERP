@@ -475,8 +475,6 @@ if ($ProcessSection01){
 	if ($KL_BusinessDevelopmentManager
 		OR $KL_PurchasingTeam){
 
-		ItemsInmediateShortage("COMPON", $RootPath, $db);
-		$NumberOfTestExecuted++;
 		ItemsInmediateShortage("COMPOA", $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
@@ -678,15 +676,9 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		SamplesNotLongerNeeded($RootPath, $db);
 		$NumberOfTestExecuted++;
-		GoodsToBeProduced("COMPON", "ONLYDISCOUNT", $RootPath, $db);
-		$NumberOfTestExecuted++;
 		GoodsToBeProduced("COMPOA", "ONLYDISCOUNT", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		GoodsToBeProduced("COMPON", "DISCOUNT", $RootPath, $db);
-		$NumberOfTestExecuted++;
 		GoodsToBeProduced("COMPOA", "DISCOUNT", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		GoodsToBeProduced("COMPON", "ALL", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		GoodsToBeProduced("COMPOA", "ALL", $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -1113,16 +1105,16 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 	
-//	if ($KL_SystemAdmin){
-//		StockToPTADU("PO", 1, 1, $RootPath, $db);
-//		$NumberOfTestExecuted++;
-//		StockToPTADU("WO", 1, 1, $RootPath, $db);
-//		$NumberOfTestExecuted++;
-//		StockToPTADU("PO", 99999999, 99999999, $RootPath, $db);
-//		$NumberOfTestExecuted++;
-//		StockToPTADU("WO", 99999999, 2, $RootPath, $db);
-//		$NumberOfTestExecuted++;
-//	}
+	if ($KL_SystemAdmin){
+		StockToPTADU("PO", 1, 1, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		StockToPTADU("WO", 1, 1, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		StockToPTADU("PO", 99999999, 5, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		StockToPTADU("WO", 99999999, 5, $RootPath, $db);
+		$NumberOfTestExecuted++;
+	}
 
 }
 prnMsg("Performed ". $NumberOfTestExecuted . " control tests",'success');
@@ -5153,7 +5145,7 @@ function StockToPTADU($Kind, $FactorNearStock, $LimitToMove, $RootPath, $db){
 							AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . ") AS qohshops
 				FROM purchorderdetails, stockmaster
 				WHERE purchorderdetails.itemcode = stockmaster.stockid
-					AND stockmaster.categoryid IN ('DISC20','DISC50','DISC80','COMPON')
+					AND stockmaster.categoryid IN ('DISC20','DISC50','DISC80')
 					AND purchorderdetails.orderno >= 2808
 					AND purchorderdetails.orderno != 2811
 					AND purchorderdetails.orderno != 2816
@@ -5177,7 +5169,7 @@ function StockToPTADU($Kind, $FactorNearStock, $LimitToMove, $RootPath, $db){
 							AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . ") AS qohshops
 				FROM workorders, woitems, stockmaster
 				WHERE woitems.stockid = stockmaster.stockid
-					AND stockmaster.categoryid IN ('DISC20','DISC50','DISC80','COMPON')
+					AND stockmaster.categoryid IN ('DISC20','DISC50','DISC80')
 					AND workorders.wo = woitems.wo
 					AND workorders.closed = 1
 					AND (workorders.wo > 3614 
@@ -5259,8 +5251,6 @@ function StockToPTADU($Kind, $FactorNearStock, $LimitToMove, $RootPath, $db){
 				$NewCategory = "DISC5A";
 			}elseif ($myrow['categoryid'] == "DISC80"){
 				$NewCategory = "DISC8A";
-			}elseif ($myrow['categoryid'] == "COMPON"){
-				$NewCategory = "COMPOA";
 			}
 			
 			// if there is some ADU qty at shops (so, stock at shops more than BB stock) OR no BB qty left

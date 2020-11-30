@@ -494,8 +494,7 @@ function ItemBelongsToPT($StockID){
 	$PT = "PTBB"; // by default it is PTBB
 	if (($StockCategory == "DISC20") OR
 		($StockCategory == "DISC50") OR
-		($StockCategory == "DISC80") OR
-		($StockCategory == "COMPON")){
+		($StockCategory == "DISC80")){
 		$PT = "PTBB";
 	}
 	if (($StockCategory == "SETKLA") OR
