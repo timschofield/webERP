@@ -349,30 +349,24 @@ if (($_GET['EmailType']=='ThankYouOrder') OR ($_GET['EmailType']=='NoSendThankYo
 
 include('includes/footer.php');
 
-function ShowBankDetails ($Currency, $OrderNo, $Language) {
-	if ($Currency != "IDR"){
-		return "";
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+function ShowBankDetails ($Bank, $Currency, $OrderNo, $Language) {
+
+	$BankBeneficiary = 'PT Bumi Biru';
+
+	if ($Bank == 'bank_mandiri'){
+		$BankName = 'Bank Mandiri';
+		$AccountNumber = '14 50 01 10 00 102';
+	}elseif($Bank == 'bank_bca'){
+		$BankName = 'Bank BCA';
+		$AccountNumber = '77 00 40 80 81';
+	}elseif($Bank == 'bank_danamon'){
+		$BankName = 'Bank Danamon';
+		$AccountNumber = '35 68 00 55 02';
 	}
-
-	$BankName = 'Bank Mandiri';
-	$BankBeneficiary = 'PT Bumi Biru';
-	$AccountNumber = '14 50 01 10 00 102';
-	
 	$ShowResult = ShowBankAccount($BankName, $BankBeneficiary, $AccountNumber, $SwiftCode);
-
-	$BankName = 'Bank BCA';
-	$BankBeneficiary = 'PT Bumi Biru';
-	$AccountNumber = '77 00 40 80 81';
-	
-	$ShowResult .= ShowBankAccount($BankName, $BankBeneficiary, $AccountNumber, $SwiftCode);
-
-	$BankName = 'Bank Danamon';
-	$BankBeneficiary = 'PT Bumi Biru';
-	$AccountNumber = '35 68 00 55 02';
-	
-	$ShowResult .= ShowBankAccount($BankName, $BankBeneficiary, $AccountNumber, $SwiftCode);
-
-	return $Showresult;
+	return $ShowResult;
 }
 
 function ShowBankAccount($BankName, $BankBeneficiary, $AccountNumber, $SwiftCode){
@@ -393,7 +387,8 @@ function ShowBankAccount($BankName, $BankBeneficiary, $AccountNumber, $SwiftCode
 		$TextBank0060 = 'Referensi';
 		$TextBank0070 = 'Order Online';
 	}	
-	$Showresult = '<table border="1">
+
+	$ShowResult = '<table border="1">
 				<tr>
 					<th colspan="2"><strong>' . $TextBank0010 . '</strong></th>
 				</tr>
@@ -407,11 +402,11 @@ function ShowBankAccount($BankName, $BankBeneficiary, $AccountNumber, $SwiftCode
 					<td>' . $TextBank0040 . ':</td><td>' . $AccountNumber . '</td>
 				</tr>';
 	if($SwiftCode != ''){
-		$Showresult .= '<tr>
+		$ShowResult .= '<tr>
 						<td>' . $TextBank0050 . ':</td><td>' . $SwiftCode . '</td>
 					</tr>';
 	}			
-	$Showresult .= '<tr>
+	$ShowResult .= '<tr>
 					<td>' . $TextBank0060 . ':</td><td>'  . $TextBank0070 . ': ' . $OrderNo . '</td>
 			</tr>
 			</table>';
