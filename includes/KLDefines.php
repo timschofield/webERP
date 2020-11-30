@@ -236,10 +236,11 @@ define('WORLD_BRAND_PLATADEPALO',69);
 define('WORLD_BRAND_HIPANEMA',70);
 define('WORLD_BRAND_DESIGUAL',83);
 
+
+//********************************************************************************
 //********************************************************************************
 // WebERP - Opencart Bridge settings
-// previously were in the file includes/WeberpOpenCartDefines.php
-// moved here for easy maintenance
+//********************************************************************************
 //********************************************************************************
 
 define("WEBERP_ONLINE_CUSTOMER_CODE_PREFIX",    'WEB-KL-');
@@ -332,7 +333,13 @@ define("PATH_OPENCART_IMAGES", 'data/KL/part_pics/');
 define("PATH_OPENCART_BASE", 'http://www.kapal-laut.com');
 define("ROUTE_TO_PRODUCT", 'index.php?route=product/product&');
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
 // TOKOPEDIA
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+
 define("TOKOPEDIA_BANK_GL_ACCOUNT", '111121121PT');
 define("TOKOPEDIA_COMMISSION_GL_ACCOUNT", '700211321PT');
 define("TOKOPEDIA_COMMISSION_PERCENT", 1.00);

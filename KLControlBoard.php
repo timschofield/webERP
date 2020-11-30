@@ -246,11 +246,11 @@ if ($ProcessSection01){
 // RICARD 2019-11-26
 // CANCELLED FOR PERFORMANCE REASONS
 //		GoodsReceivedNotInvoicedControl(1000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 // RICARD 2019-11-26
 // CANCELLED FOR PERFORMANCE REASONS
 //		CustomersDebtControl(1000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_AdministrationTeam){
