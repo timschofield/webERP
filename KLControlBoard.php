@@ -4126,7 +4126,7 @@ function OnlineMarketPlacePaymentPending($RootPath, $db){
 							<th class="ascending">' . _('Order Date') . '</th>
 							<th class="ascending">' . _('Order Value') . '</th>
 							<th class="ascending">' . _('Currency') . '</th>
-							<th class="ascending">' . _('Mark As Paid') . '</th>
+							<th class="ascending">' . '' . '</th>
 							<th class="ascending">' . _('Paid Tokopedia') . '</th>
 							<th class="ascending">' . _('Paid Shopee') . '</th>
 						</tr>';
@@ -4150,8 +4150,8 @@ function OnlineMarketPlacePaymentPending($RootPath, $db){
 				$PaymentTokopedia = '';
 			}
 			if ($myrow['debtorno'] == "SHOPEE"){
-//				$PaymentShopee = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&PaymentCode=' . 'shopee' . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentLinkText .'</a>';
-				$PaymentShopee = 'NOT CODED';
+				$PaymentShopee = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&PaymentCode=' . 'shopee' . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentLinkText .'</a>';
+				$PaymentManual = '';
 			}else{
 				$PaymentShopee = '';
 			}

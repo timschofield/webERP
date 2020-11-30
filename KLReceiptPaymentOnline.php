@@ -95,11 +95,17 @@ if ($_GET['PaymentCode'] != "MANUAL_MARKETPLACE") {
 			$GLAccountCommissionPPN = $myrowAccounts['accountcomissionppn'];
 			$Commission = round(($myrowAccounts['comissionxenditflatcc'] + ($TotalAmount * ($myrowAccounts['comissionxenditpercentcc']/100))) ,0);
 		}elseif  ($_GET['PaymentCode'] == "tokopedia"){
-			// Tokopedia payments CC has commissions
+			// Tokopedia payments  has commissions
 			$GLAccountTransfer = TOKOPEDIA_BANK_GL_ACCOUNT;
 			$GLAccountCommission = TOKOPEDIA_COMMISSION_GL_ACCOUNT;
 			$GLAccountCommissionPPN = ACCOUNT_PPN_BB;
 			$Commission = CalculateCommissionTokopedia($_GET['CustomerCode'], $_GET['OrderNo'], $TotalAmount);
+		}elseif  ($_GET['PaymentCode'] == "shopee"){
+			// Shopee payments  has commissions
+			$GLAccountTransfer = SHOPEE_BANK_GL_ACCOUNT;
+			$GLAccountCommission = SHOPEE_COMMISSION_GL_ACCOUNT;
+			$GLAccountCommissionPPN = ACCOUNT_PPN_BB;
+			$Commission = CalculateCommissionShopee($_GET['CustomerCode'], $_GET['OrderNo'], $TotalAmount);
 		}
 		$CommissionPPN = round($Commission * PPN_PERCENT / 100, 0);
 		$NetAmount = $TotalAmount - $Commission - $CommissionPPN;
@@ -325,6 +331,10 @@ if ($_GET['PaymentCode'] != "MANUAL_MARKETPLACE") {
 	
 include('includes/footer.php');
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 function CalculateCommissionTokopedia($CustomerCode, $OrderNo, $TotalAmount){
 	if ($CustomerCode != "TOKOPEDIA"){
 		prnMsg("ERROR: Customer code = " . $CustomerCode . " and Payment Code = tokopedia", "error");
@@ -368,5 +378,18 @@ function CalculateCommissionTokopedia($CustomerCode, $OrderNo, $TotalAmount){
 	$Commission = round($Commission /((100 + PPN_PERCENT)/100) ,0); // this commision already net
 	return $Commission;
 }
+
+function CalculateCommissionShopee($CustomerCode, $OrderNo, $TotalAmount){
+	if ($CustomerCode != "SHOPEE"){
+		prnMsg("ERROR: Customer code = " . $CustomerCode . " and Payment Code = shopee", "error");
+		include('includes/footer.php');
+		exit;
+	}
+	// 1,5% from all order for Shopee
+	$Commission = round($TotalAmount * SHOPEE_COMMISSION_PERCENT /100 ,0); // this commission still includes PPN
+	$Commission = round($Commission /((100 + PPN_PERCENT)/100) ,0); // this commision already net
+	return $Commission;
+}
+
 
 ?>
