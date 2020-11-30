@@ -1039,8 +1039,8 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 		ItemsShouldBeInWebsite($db);
 		$NumberOfTestExecuted++;
-//		UsersNotLoggingIn(60, "ALL_EXCEPT_SPGSUPPORT", $db);
-//		$NumberOfTestExecuted++;
+		UsersNotLoggingIn(60, "ALL_EXCEPT_SPGSUPPORT", $db);
+		$NumberOfTestExecuted++;
 //		UsersNotLoggingIn(90, "SPGSUPPORT", $db);
 //		$NumberOfTestExecuted++;
 	}
