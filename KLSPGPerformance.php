@@ -560,7 +560,7 @@ function SPGPerformanceWeekly($db){
 								WHERE salesorderdetails.orderno = salesorders.orderno
 									AND salesorderdetails.completed = 1
 									AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '" . $Last7A . "'
+							AND salesorders.orddate >= '" . $Last30A . "'
 							AND salesorders.orddate <= '" . $YesterdayA . "'
 									AND salesorders.salesperson = salesman.salesmancode) > 0)
 			ORDER BY locations.zone,

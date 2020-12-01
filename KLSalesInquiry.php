@@ -1195,7 +1195,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	echo '<tr>
 			<td>' . _('For Sales Person') . ':</td>
 			<td><select name="Salesman">';
-	$sql="SELECT salesmancode, salesmanname FROM salesman";
+	$sql="SELECT salesmancode, salesmanname FROM salesman WHERE current = 1";
 	$SalesmanResult= DB_query($sql);
 	echo '<option selected="selected" value="All">' . _('All Salesmen')  . '</option>';
 	While ($myrow = DB_fetch_array($SalesmanResult)){
