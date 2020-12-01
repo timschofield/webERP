@@ -47,6 +47,10 @@ $begintime = time_start();
 $NumberOfTestExecuted = 0;
 
 $periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
+$NumberOfOpenShopsKL = NumberOfShops("SHOPKL", $db);
+$NumberOfOpenShopsBL = NumberOfShops("SHOPBL", $db);
+$NumberOfOpenShopsOU = NumberOfShops("SHOPOU", $db);
+$NumberOfOpenShopsTotal = $NumberOfOpenShopsKL + $NumberOfOpenShopsBL + $NumberOfOpenShopsOU;
 
 /***************************************************************************************
 * TEST AND PLAY AREA      
@@ -97,16 +101,6 @@ if ($ProcessSection01){
 //		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_SalesDirector
-		OR $KL_ShopManager
-		OR $KL_ShopSupportLeader
-		OR $KL_OperationalManager){
-// POS does not allow splitted payments so no reason for this control check.
-//		SplittedPaymentsBySPG(15, 2, $db);
-//		$NumberOfTestExecuted++;
-	}
-
-
 	/***************************************************************************************
 	* STANDARD COST         
 	***************************************************************************************/
@@ -153,8 +147,7 @@ if ($ProcessSection01){
 
 	if ($KL_BusinessDevelopmentManager
 		OR $KL_SystemAdmin){
-// COVID REDUCTION OF PANEL
-//		over_or_below_limit("DISC80 Items in AR", "BELOW", 50, $RootPath, $db);
+		over_or_below_limit("DISC80 Items in AR", "BELOW", 50, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -235,8 +228,6 @@ if ($ProcessSection01){
 		OR $KL_ShopSupportLeader){
 		ErrorsInTransfers( 7, $RootPath, $db);
 		$NumberOfTestExecuted++;
-//		ErrorsInTransfers(30, $RootPath, $db);
-//		$NumberOfTestExecuted++;
 	}
 	
 	/***************************************************************************************
@@ -255,57 +246,65 @@ if ($ProcessSection01){
 
 	if ($KL_AdministrationTeam){
 		
-		BalanceAccountControl("111111101",         0,   15000000, $periodnow, $db);
+		BalanceAccountControl("111111101",         0,   10000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111102",         0,   15000000, $periodnow, $db);
+		BalanceAccountControl("111111102",         0,   10000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111103",         0,   15000000, $periodnow, $db);
+		BalanceAccountControl("111111103",         0,   10000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111105",         0,   15000000, $periodnow, $db);
+		BalanceAccountControl("111111107",         0,   10000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111106",         0,   15000000, $periodnow, $db);
+		BalanceAccountControl("111111108",         0,   10000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111107",         0,   15000000, $periodnow, $db);
+		BalanceAccountControl("111111109",         0,   10000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111108",         0,   15000000, $periodnow, $db);
+		BalanceAccountControl("111111110",         0,   10000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111109",         0,   15000000, $periodnow, $db);
+		BalanceAccountControl("111111111",         0,   10000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111110",         0,   15000000, $periodnow, $db);
+		BalanceAccountControl("111111112",         0,   10000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111111",         0,   15000000, $periodnow, $db);
+		BalanceAccountControl("111111113",         0,   10000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111112",         0,   15000000, $periodnow, $db);
+		BalanceAccountControl("111111114",         0,   10000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111113",         0,   15000000, $periodnow, $db);
+		BalanceAccountControl("111111115",         0,   10000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111114",         0,   15000000, $periodnow, $db);
+		BalanceAccountControl("111111116",         0,   10000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111115",         0,   15000000, $periodnow, $db);
+		BalanceAccountControl("111111117",         0,   10000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111116",         0,   15000000, $periodnow, $db);
+		BalanceAccountControl("111111118",         0,   10000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111117",         0,   15000000, $periodnow, $db);
+		BalanceAccountControl("111111119",         0,   10000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111118",         0,   15000000, $periodnow, $db);
+		BalanceAccountControl("111111120",         0,   10000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111119",         0,   15000000, $periodnow, $db);
+		BalanceAccountControl("111111121",         0,   10000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111120",         0,   15000000, $periodnow, $db);
+		BalanceAccountControl("111111122",         0,   10000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111121",         0,   15000000, $periodnow, $db);
+		BalanceAccountControl("111111123",         0,   10000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111122",         0,   15000000, $periodnow, $db);
+		BalanceAccountControl("111111124",         0,   10000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111123",         0,   15000000, $periodnow, $db);
+		BalanceAccountControl("111111125",         0,   10000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111124",         0,   15000000, $periodnow, $db);
+		BalanceAccountControl("111111126",         0,   10000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111125",         0,   15000000, $periodnow, $db);
+		BalanceAccountControl("111111127",         0,   10000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111126",         0,   15000000, $periodnow, $db);
+		BalanceAccountControl("111111128",         0,   10000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111127",         0,   15000000, $periodnow, $db);
+		BalanceAccountControl("111111129",         0,   10000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
+		BalanceAccountControl("111111130",         0,   10000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
+		BalanceAccountControl("111111131",         0,   10000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
+		BalanceAccountControl("111111132",         0,   10000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
+		BalanceAccountControl("111111133",         0,   10000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -316,17 +315,20 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111202030",          -1,          1, $periodnow, $db);
 		$NumberOfTestExecuted++;
+		BalanceAccountControl("111204030",           0,   20000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
 	}
 	
 	if ($KL_AdministrationTeam){
 		// Bank Mandiri or  BCA has enough funds to be transferred to Danamon
 		BalanceAccountControl("111121101PT",  1000000,  100000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111121110PT",   100000,  300000000, $periodnow, $db);
+		BalanceAccountControl("111121110PT",   100000,  200000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 	}
 	
-	if ($KL_SystemAdmin){
+	if ($KL_SystemAdmin 
+		OR $KL_AdministrationTeam){
 		BalanceListAccountControl("('111111101', 
 									'111111102', 
 									'111111103', 
@@ -348,11 +350,12 @@ if ($ProcessSection01){
 									'111111124', 
 									'111111125', 
 									'111111126', 
-									'111111127')", "Total Cash @ shops",         0, 25 * 7000000, $periodnow, $db);
+									'111111127')", "Total Cash @ shops", 0, $NumberOfOpenShopsTotal * 6000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-
+	}
+	if ($KL_SystemAdmin){
 		BalanceListAccountControl("('111121105AD', 
-									'111203010AD')", "Total Banks PT.ADU", 1000000000, 9000000000, $periodnow, $db);
+									'111203010AD')", "Total Banks PT.ADU", 1000000000, 10000000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('111121100PT', 
@@ -365,7 +368,7 @@ if ($ProcessSection01){
 									'111203010PT',
 									'111259010PT', 
 									'111259020PT', 
-									'111259050PT')", "Total Banks PT.BB", 2000000000, 3500000000, $periodnow, $db);
+									'111259050PT')", "Total Banks PT.BB", 2000000000, 4000000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('111259010PT', 
@@ -377,18 +380,18 @@ if ($ProcessSection01){
 	if ($KL_SystemAdmin 
 		OR $KL_OperationalManager
 		OR $KL_AdministrationTeam){
-		BalanceAccountControl("111121100IK",  1000000,  50000000, $periodnow, $db);
+		BalanceAccountControl("111121100IK",  1000000,  10000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111121110IK",  1000000,  50000000, $periodnow, $db);
+		BalanceAccountControl("111121110IK",  1000000,  10000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 	}
 	
 	if ($KL_SystemAdmin 
 		OR $KL_OperationalManager
 		OR $KL_AdministrationTeam){
-		BalanceAccountControl("111121100PI",  1000000,  50000000, $periodnow, $db);
+		BalanceAccountControl("111121100PI",  1000000,  10000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111121110PI",  1000000,  50000000, $periodnow, $db);
+		BalanceAccountControl("111121110PI",  1000000,  10000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -397,7 +400,7 @@ if ($ProcessSection01){
 									'111208010', 
 									'111208020', 
 									'111208030', 
-									'111208040')", "Total Brankas RL",      0, 2000000000, $periodnow, $db);
+									'111208040')", "Total Brankas RL",      0, 1500000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('111513000', 
@@ -420,15 +423,15 @@ if ($ProcessSection01){
 
 		BalanceAccountControl("111800000",  350000000,  450000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111900000",   25000000,   50000000, $periodnow, $db);
+		BalanceAccountControl("111900000",   25000000,   40000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111311100",  -20000000,          0, $periodnow, $db);
+		BalanceAccountControl("111311100",  -10000000,   10000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111499000",         -1,          1, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("211021400", -100000000,          1, $periodnow, $db);
+		BalanceAccountControl("211021400",  -10000000,          1, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("211021500",  600000000,  900000000, $periodnow, $db);
+		BalanceAccountControl("211021500",  100000000,  200000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("612012015",         -1,          1, $periodnow, $db);
 		$NumberOfTestExecuted++;
@@ -503,151 +506,67 @@ if ($ProcessSection01){
 
 	if ($KL_BusinessDevelopmentManager){
 
-//		ItemsWithStockLocationButNoStockAvailable("CSLAZ", "Lazada", 15, 9999, $RootPath, $db);
-//		$NumberOfTestExecuted++;
-//		ItemsWithStockLocationButNoStockAvailable("CSZAL", "Zalora", 15, 9999, $RootPath, $db);
-//		$NumberOfTestExecuted++;
-	
 		ItemsWithStockKantorButReorderLevelTokoZero($RootPath, $db);
 		$NumberOfTestExecuted++;
 
+		// Items TEST KL in Big shops KL
 		CategoryItemsNotInShop("TESTKA", "TOKPU", 10, $RootPath, $db);
 		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("TESTKA", "TOKKA", 10, $RootPath, $db);
-//		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("TESTKA", "TOKSS", 10, $RootPath, $db);
-//		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("TESTKA", "TOKPA", 10, $RootPath, $db);
-//		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("TESTKA", "TOKSA", 10, $RootPath, $db);
 		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("TESTKA", "TOK66", 10, $RootPath, $db);
-//		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("TESTKA", "TOKM2", 10, $RootPath, $db);
-		$NumberOfTestExecuted++;
 
+		// Items STABLE KL in ALL shops KL
 		CategoryItemsNotInShop("STABKA", "TOKPU", 14, $RootPath, $db);
 		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("STABKA", "TOKKA", 14, $RootPath, $db);
-//		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("STABKA", "TOKSS", 14, $RootPath, $db);
-//		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("STABKA", "TOKPA", 14, $RootPath, $db);
-//		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("STABKA", "TOKSA", 14, $RootPath, $db);
 		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("STABKA", "TOK66", 14, $RootPath, $db);
-//		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("STABKA", "TOKSE", 14, $RootPath, $db);
 		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("STABKA", "TOKKS", 14, $RootPath, $db);
-//		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("STABKA", "TOKOB", 14, $RootPath, $db);
-//		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("STABKA", "TOKM2", 14, $RootPath, $db);
-//		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("STABKA", "TOKU2", 14, $RootPath, $db);
-//		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABKA", "TOKOB", 14, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABKA", "TOKB2", 14, $RootPath, $db);
+		$NumberOfTestExecuted++;
 
+		// Items NO PO KL in Big shops KL
 		CategoryItemsNotInShop("NOPOKA", "TOKPU", 8, $RootPath, $db);
 		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("NOPOKA", "TOKKA", 8, $RootPath, $db);
-//		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("NOPOKA", "TOKSS", 8, $RootPath, $db);
-//		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("NOPOKA", "TOKPA", 8, $RootPath, $db);
-//		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("NOPOKA", "TOKSA", 8, $RootPath, $db);
 		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("NOPOKA", "TOK66", 8, $RootPath, $db);
-//		$NumberOfTestExecuted++;
 		
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("TESTBA", "TOKBU", 8, $RootPath, $db);
-//		$NumberOfTestExecuted++;
+		// Items TEST BL in Big shops BL
 		CategoryItemsNotInShop("TESTBA", "TOKPS", 8, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("TESTBA", "TOKSB", 8, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("TESTBA", "TOKBB", 8, $RootPath, $db);
 		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("TESTBA", "TOKBK", 8, $RootPath, $db);
-//		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("TESTBA", "TOKK2", 8, $RootPath, $db);
-//		$NumberOfTestExecuted++;
 
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("STABBA", "TOKBU", 15, $RootPath, $db);
-//		$NumberOfTestExecuted++;
+		// Items STABLE BL in ALL shops BL
 		CategoryItemsNotInShop("STABBA", "TOKPS", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("STABBA", "TOKSB", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("STABBA", "TOKPB", 15, $RootPath, $db);
-//		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("STABBA", "TOKMU", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("STABBA", "TOKU3", 15, $RootPath, $db);
-//		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("STABBA", "TOKBB", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("STABBA", "TOKTB", 15, $RootPath, $db);
-//		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("STABBA", "TOKO2", 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("STABBA", "TOKBK", 15, $RootPath, $db);
-//		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("STABBA", "TOKK2", 15, $RootPath, $db);
-//		$NumberOfTestExecuted++;
 
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("NOPOBA", "TOKBU", 8, $RootPath, $db);
-//		$NumberOfTestExecuted++;
+		// Items NO PO BL in Big shops BL
 		CategoryItemsNotInShop("NOPOBA", "TOKPS", 8, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("NOPOBA", "TOKSB", 8, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("NOPOBA", "TOKBB", 8, $RootPath, $db);
 		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("NOPOBA", "TOKBK", 8, $RootPath, $db);
-//		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("NOPOBA", "TOKK2", 8, $RootPath, $db);
-//		$NumberOfTestExecuted++;
 
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("DISC2A", "TOKAR", 1, $RootPath, $db);
-//		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("DISC5A", "TOKAR", 1, $RootPath, $db);
-//		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		CategoryItemsNotInShop("DISC8A", "TOKAR", 1, $RootPath, $db);
+		// Items OUTLET in ALL shops OU
+		CategoryItemsNotInShop("DISC2A", "TOKAR", 1, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("DISC5A", "TOKAR", 1, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("DISC8A", "TOKAR", 1, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 	}
@@ -759,8 +678,6 @@ if ($ProcessSection02){
 	if($ShowSectionInfo){
 		prnMsg("Performing Control Panel Section 02",'info');
 	}
-// BEGINNING OF SECTION 2
-//////////////////////////
 
 	/***************************************************************************************
 	* SALES CONTROL         
@@ -1030,8 +947,6 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 		OpenCartItemsWithoutPicture($RootPath, $db, $db_oc, $oc_tableprefix);
 		$NumberOfTestExecuted++;
-	//	ImagesShouldNotBeInOpencartCatalog($RootPath, $db, $db_oc, $oc_tableprefix);
-	//	$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin){
@@ -1069,8 +984,9 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin 
+		OR $KL_BusinessDevelopmentManager 
 		OR $KL_OperationalManager){
-		TransfersDelayed(4, $RootPath, $db);
+		TransfersDelayed(5, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 

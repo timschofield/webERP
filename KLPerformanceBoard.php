@@ -2836,10 +2836,10 @@ function YearDifferenceSales($typereport, $NumDaysA, $db){
 			$percent = (($TotalBothYearsDateA)-($TotalBothYearsDateB))/($TotalBothYearsDateB) * 100;
 			$trend = " ";
 			if ($percent > 0){
-				$trend = "Improving ". locale_number_format($percent,0) . "%";
+				$trend = "Improving ". locale_number_format($percent,1) . "%";
 			}
 			if ($percent < 0){
-				$trend = "Degrading ". locale_number_format($percent,0) . "%";
+				$trend = "Degrading ". locale_number_format($percent,1) . "%";
 			}
 			$k = StartEvenOrOddRow($k);
 			$Rent = round(($TotalBothYearsRent / 365 * $NumDaysA) / $TotalBothYearsDateA * 100) . '%';
@@ -2902,10 +2902,10 @@ function YearDifferenceSales($typereport, $NumDaysA, $db){
 			$percent = (($TotalDateA)-($TotalDateB))/($TotalDateB) * 100;
 			$trend = " ";
 			if ($percent > 0){
-				$trend = "Improving ". locale_number_format($percent,0) . "%";
+				$trend = "Improving ". locale_number_format($percent,1) . "%";
 			}
 			if ($percent < 0){
-				$trend = "Degrading ". locale_number_format($percent,0) . "%";
+				$trend = "Degrading ". locale_number_format($percent,1) . "%";
 			}
 			$k = StartEvenOrOddRow($k);
 			$Rent = round(($TotalRent / 365 * $NumDaysA) / $TotalDateA * 100) . '%';
