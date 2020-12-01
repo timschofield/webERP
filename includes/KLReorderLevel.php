@@ -926,7 +926,7 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db,
 			echo $TableHeader;
 		}
 		if ($EmailText!=''){
-			$EmailText = $EmailText . 'Adjustment RL for Shop Online for items with QOH <= '. MINIMUM_STOCK_ONLINESHOP_EVERY_ITEM . "\n";
+			$EmailText = $EmailText . "\n" . 'Adjustment RL for Shop Online for items with QOH <= '. MINIMUM_STOCK_ONLINESHOP_EVERY_ITEM . "\n";
 		}
 		$k = 0; //row colour counter
 		$i = 1;
@@ -1004,7 +1004,7 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db,
 			echo $TableHeader;
 		}
 		if ($EmailText!=''){
-			$EmailText = $EmailText . 'Adjustment RL for Shop Online due to existing online orders' . "\n";
+			$EmailText = $EmailText . "\n" . 'Adjustment RL for Shop Online due to existing online orders' . "\n";
 		}
 		$k = 0; //row colour counter
 		$i = 1;
