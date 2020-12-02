@@ -3318,11 +3318,11 @@ function ObsoleteComponentsInActiveBOM($RootPath, $db){
 	}
 }
 
-function OldOnlineQuotations($NumDaysMandiri, $NumDaysXendit, $RootPath, $db){
+function OldOnlineQuotations($NumDaysBank, $NumDaysXendit, $RootPath, $db){
 
-	$StartDateMandiri = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysMandiri));
+	$StartDateBank = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysBank));
 	$StartDateXendit = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysXendit));
-	$Titletext = "Old Online Quotations to be deleted. No Bank Transfer in " . $NumDaysMandiri . " days or Xendit in " . $NumDaysXendit . " days";
+	$Titletext = "Old Online Quotations to be deleted. No Bank Transfer in " . $NumDaysBank . " days or Xendit in " . $NumDaysXendit . " days";
 		
 	$SQL = "SELECT salesorders.orderno,	
 				salesorders.customerref,
@@ -3345,9 +3345,13 @@ function OldOnlineQuotations($NumDaysMandiri, $NumDaysXendit, $RootPath, $db){
 			WHERE salesorderdetails.completed= 0	
 				AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_WEBSITE . ")
 				AND salesorders.quotation = 1
-				AND ((salesorders.klocpaymentcode = 'bank_mandiri' AND salesorders.orddate < '" . $StartDateMandiri . "') 
-					OR (salesorders.klocpaymentcode = 'xenditmandiriva' AND salesorders.orddate < '" . $StartDateXendit . "')
-					OR (salesorders.klocpaymentcode = 'xenditcc' AND salesorders.orddate < '" . $StartDateXendit . "'))
+				AND (((salesorders.klocpaymentcode = 'bank_mandiri' 
+							OR salesorders.klocpaymentcode = 'bank_bca' 
+							OR salesorders.klocpaymentcode = 'bank_danamon' ) 
+								AND salesorders.orddate < '" . $StartDateBank . "') 
+					OR ((salesorders.klocpaymentcode = 'xenditmandiriva' 
+							OR salesorders.klocpaymentcode = 'xenditcc')
+						AND salesorders.orddate < '" . $StartDateXendit . "'))
 			GROUP BY salesorders.orderno,	
 				debtorsmaster.name,
 				salesorders.orddate
@@ -3609,11 +3613,14 @@ function OnlineItemsOnProcess($RootPath, $db){
 			$ItemLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stkcode'] . '">' . $myrow['stkcode'] . '</a>';
 			
 			if (($myrow['qtyready'] >= $myrow['qtyorder']) OR (!ItemInList($myrow['categoryid'], ONLINESHOP_AVAILABLE_STOCK_CATEGORIES))){
+				// item ready to ship
 				$Status = "";
 			}elseif($myrow['qtyorder'] > $myrow['qohkantor']){
+				// QOH kantor not enough to cover the order, so we need to get some from the shops
 				$Status = "Needs return from shops";
 				$OrderReadyForShipment = false;
 			}else{
+				// QOH kantor enough to cover the requirements of the order
 				$Status = "In process kantor";
 				$OrderReadyForShipment = false;
 			}
