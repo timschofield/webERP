@@ -421,7 +421,7 @@ if ($ProcessSection01){
 
 		BalanceAccountControl("111800000",  350000000,  450000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111900000",   25000000,   40000000, $periodnow, $db);
+		BalanceAccountControl("111900000",   20000000,   30000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111311100",  -10000000,   10000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
