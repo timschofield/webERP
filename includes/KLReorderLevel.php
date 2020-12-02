@@ -884,9 +884,8 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db,
 		$RLSQL = "UPDATE locstock, stockmaster
 					SET locstock.reorderlevel = ". MINIMUM_STOCK_ONLINESHOP_EVERY_ITEM ."
 					WHERE locstock.stockid = stockmaster.stockid
-						AND locstock.loccode = ". CODE_ONLINE_SHOP ."
-						AND stockmaster.discontinued = 0
-						AND stockmaster.categoryid IN " . ONLINESHOP_AVAILABLE_STOCK_CATEGORIES . "";
+						AND " . SQLFilterStockmasterForOnlineShop() ."
+						AND locstock.loccode = ". CODE_ONLINE_SHOP ."";
 		$Result = DB_query($RLSQL,$ErrMsg,$DbgMsg,true);		
 		if ($ShowMessages){
 			prnMsg(_('Set all RL=' . MINIMUM_STOCK_ONLINESHOP_EVERY_ITEM . ' for location Shop Online'),'info');
@@ -901,10 +900,9 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db,
 				SUM(locstock.quantity) AS qoh
 			FROM locstock, locations, stockmaster
 			WHERE locstock.stockid = stockmaster.stockid
+				AND " . SQLFilterStockmasterForOnlineShop() ."
 				AND locstock.loccode = locations.loccode
 				AND locations.stockreadytosell = 1
-				AND stockmaster.discontinued = 0
-				AND stockmaster.categoryid IN " . ONLINESHOP_AVAILABLE_STOCK_CATEGORIES . "
 			GROUP BY locstock.stockid
 			HAVING qoh <= ". MINIMUM_STOCK_ONLINESHOP_EVERY_ITEM ."
 			ORDER BY locstock.stockid";
@@ -920,7 +918,6 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db,
 								<th>' . _('#') . '</th>
 								<th>' . _('Code') . '</th>
 								<th>' . _('QOH') . '</th>
-								<th>' . _('Old RL') . '</th>
 								<th>' . _('New RL') . '</th>
 							</tr>';
 			echo $TableHeader;
@@ -947,18 +944,16 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db,
 						<td>%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
-						<td class="number">%s</td>
 						</tr>', 
 						$i, 
 						$CodeLink, 
 						locale_number_format($myrow['qoh'],0),
-						locale_number_format(MINIMUM_STOCK_ONLINESHOP_EVERY_ITEM,0),
 						locale_number_format($NewRLOnline,0)
 						);
 				$i++;
 			}
 			if ($EmailText!=''){
-				$EmailText = $EmailText . $myrow['stockid'] . " QOH = " . $myrow['qoh'] . " Old RL = " . MINIMUM_STOCK_ONLINESHOP_EVERY_ITEM . " New RL = " . $NewRLOnline . "\n";
+				$EmailText = $EmailText . $myrow['stockid'] . " QOH = " . $myrow['qoh'] . " New RL = " . $NewRLOnline . "\n";
 			}
 		}
 		if ($ShowMessages){

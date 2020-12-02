@@ -38,11 +38,8 @@ $SQL = "SELECT stockmaster.stockid,
 			   stockmaster.volume,
 			   stockmaster.longdescription,	
 			   stockmaster.categoryid	
-		FROM stockmaster, stockcategory
-		WHERE stockmaster.categoryid = stockcategory.categoryid
-			AND stockcategory.stocktype = 'F'
-			AND stockmaster.categoryid IN " . ONLINESHOP_AVAILABLE_STOCK_CATEGORIES .
-			SQLForWebsiteStockidExceptions() . "
+		FROM stockmaster
+		WHERE " . SQLFilterStockmasterForOnlineShop() . "
 			AND (((NOT EXISTS (SELECT * 
 								FROM salescatprod
 								WHERE stockmaster.stockid = salescatprod.stockid))

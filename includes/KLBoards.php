@@ -3445,7 +3445,7 @@ function RecentlyClosedTransferStatus($maxdays, $RootPath, $db){
 	}
 }
 
-function SQLForWebsiteStockidExceptions(){
+function SQLFilterStockmasterForOnlineShop(){
 	/* Not discontinued
 		Not some items in doscount and some not (items ending with -D)
 		Not a set (items with "ST" in position 3 and 4 of code)
@@ -3456,12 +3456,13 @@ function SQLForWebsiteStockidExceptions(){
 		Not items starting with GOTA
 		Not Tali Mie (items starting with TM-)
 	*/
-	return " AND stockmaster.discontinued = 0
-				AND SUBSTR(stockmaster.stockid, -2, 2) != '-D' 
-				AND SUBSTR(stockmaster.stockid, 3, 2) != 'ST'
-				AND stockmaster.stockid NOT LIKE 'KLBE%'
-				AND stockmaster.stockid NOT LIKE 'GOTA%'
-				AND stockmaster.stockid NOT LIKE 'TM-%'";
+	return " stockmaster.categoryid IN " . ONLINESHOP_AVAILABLE_STOCK_CATEGORIES . "
+			AND stockmaster.discontinued = 0
+			AND SUBSTR(stockmaster.stockid, -2, 2) != '-D' 
+			AND SUBSTR(stockmaster.stockid, 3, 2) != 'ST'
+			AND stockmaster.stockid NOT LIKE 'KLBE%'
+			AND stockmaster.stockid NOT LIKE 'GOTA%'
+			AND stockmaster.stockid NOT LIKE 'TM-%' ";
 }
 
 function TransfersDelayed($maxdays, $RootPath, $db){
