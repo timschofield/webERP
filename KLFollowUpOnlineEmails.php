@@ -365,11 +365,11 @@ function ShowBankDetails ($Bank, $Currency, $OrderNo, $Language) {
 		$BankName = 'Bank Danamon';
 		$AccountNumber = '35 68 00 55 02';
 	}
-	$ShowResult = ShowBankAccount($BankName, $BankBeneficiary, $AccountNumber, $SwiftCode);
+	$ShowResult = ShowBankAccount($BankName, $BankBeneficiary, $AccountNumber, $SwiftCode, $OrderNo);
 	return $ShowResult;
 }
 
-function ShowBankAccount($BankName, $BankBeneficiary, $AccountNumber, $SwiftCode){
+function ShowBankAccount($BankName, $BankBeneficiary, $AccountNumber, $SwiftCode, $OrderNo){
 		if ($Language == "ENGLISH"){
 		$TextBank0010 = 'Bank Account Details';
 		$TextBank0020 = 'Bank Name';
