@@ -321,7 +321,7 @@ if ($ProcessSection01){
 		// Bank Mandiri or  BCA has enough funds to be transferred to Danamon
 		BalanceAccountControl("111121101PT",  1000000,  100000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111121110PT",   100000,  200000000, $periodnow, $db);
+		BalanceAccountControl("111121110PT",  1000000,  100000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 	}
 	
@@ -371,7 +371,7 @@ if ($ProcessSection01){
 
 		BalanceListAccountControl("('111259010PT', 
 									'111259020PT', 
-									'111259050PT')", "Total PayPal PT.BB", 0, 20000000, $periodnow, $db);
+									'111259050PT')", "Total PayPal PT.BB", 0, 30000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 	}
 	
