@@ -20,7 +20,7 @@ $DefaultTheme = 'gel';
 $allow_demo_mode = False;
 
 // email address of the system administrator
-$SysAdminEmail = 'it@bumibiru.com';
+$SysAdminEmail = 'webmaster@kapal-laut.com';
 
 // The timezone of the business - this allows the possibility of having
 // the web-server on a overseas machine but record local time
@@ -46,8 +46,8 @@ $dbType = 'mysqli';
 
 
 // sql user & password
-$dbuser = 'kurakura_kl90001';
-$dbpassword = 'd9cce0fa69e0a0120cfdb';
+$dbuser = 'DBU_ptadu_test';
+$dbpassword = 'LTq%w@.KkJcZ$@!^HBz';
 
 // It would probably be inappropraite to allow selection of the company in a hosted envionment so this option can be switched to 'ShowInputBox' or 'Hide'
 // depending if you allow the user to select the name of the company or must use the default one described at $DefaultCompany
