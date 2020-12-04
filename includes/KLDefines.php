@@ -329,7 +329,8 @@ define("ABSOLUTE_PATH_OPENCART_IMAGES", '/var/www/vhosts/kapal-laut.com/httpdocs
 define("ABSOLUTE_PATH_WEBERP", '/var/www/vhosts/kapal-laut.com/ptadu.com/weberp/');
 define("ABSOLUTE_PATH_WEBERP_TEST", '/var/www/vhosts/kapal-laut.com/ptadu.com/TEST/weberp/');
 
-define("PATH_OPENCART_IMAGES", 'data/KL/part_pics/');
+//define("PATH_OPENCART_IMAGES", 'data/KL/part_pics/');
+define("PATH_OPENCART_IMAGES", 'catalog/KL/part_pics/');
 define("PATH_OPENCART_BASE", 'http://www.kapal-laut.com');
 define("ROUTE_TO_PRODUCT", 'index.php?route=product/product&');
 

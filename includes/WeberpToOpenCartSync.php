@@ -43,7 +43,7 @@ function WeberpToOpenCartDailySync($ShowMessages, $db, $db_oc, $oc_tableprefix, 
 	$EmailText = SyncMultipleImages($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
 
 	// assign related items
-	$EmailText = SyncRelatedItems($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
+//	$EmailText = SyncRelatedItems($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
 
 	// We are done!
 	SetLastTimeRun('WeberpToOpenCartDaily', $db);
@@ -84,10 +84,10 @@ function WeberpToOpenCartHourlySync($ShowMessages, $db, $db_oc, $oc_tableprefix,
 	$EmailText = SyncProductQOH($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
 
 	// update description translations
-	$EmailText = SyncProductDescriptionTranslations($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
+//	$EmailText = SyncProductDescriptionTranslations($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
 
 	// clean duplicated URL alias
-	$EmailText = CleanDuplicatedUrlAlias($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
+//	$EmailText = CleanDuplicatedUrlAlias($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
 
 	// We are done!
 	SetLastTimeRun('WeberpToOpenCartHourly', $db);
@@ -205,6 +205,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 			$Name = $myrow['description'];
 			$Description =  str_replace("'", "\'", $myrow['longdescription']);
 			$MetaDescription = CreateMetaDescription($myrow['stockid'], trim($myrow['description']));
+			$MetaTitle = $MetaDescription;
 			$MetaKeyword = CreateMetaKeyword($myrow['stockid'], trim($myrow['description']));
 			$Tag = $myrow['description'];
 			
@@ -242,6 +243,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 				$Action = "Update";
 				// Let's get the OpenCart primary key for product
 				$ProductId = GetOpenCartProductId($Model, $db_oc, $oc_tableprefix);
+/*	ADAPT FIELD TO V2.3
 				$sqlUpdate = "UPDATE " . $oc_tableprefix . "product SET
 								sku = '" . $SKU . "',
 								mpn = '" . $MPN . "',
@@ -263,12 +265,27 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 								height = '" . $Height . "',
 								length_class_id = '" . $LenghtClassId . "'
 							WHERE product_id = '" . $ProductId . "'";
+*/
+				$sqlUpdate = "UPDATE " . $oc_tableprefix . "product SET
+								sku = '" . $SKU . "',
+								mpn = '" . $MPN . "',
+								image = '" . $Image . "',
+								status = '" . $Status . "',
+								quantity = '" . $Quantity . "',
+								manufacturer_id = '" . $ManufacturerId . "',
+								weight = '" . $Weight . "',
+								length = '" . $Length . "',
+								width = '" . $Width . "',
+								height = '" . $Height . "',
+								length_class_id = '" . $LenghtClassId . "'
+							WHERE product_id = '" . $ProductId . "'";
 				$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
 
 				$sqlUpdate = "UPDATE " . $oc_tableprefix . "product_description SET
 								name = '" . $Name . "',
 								description = '" . $Description . "',
 								meta_description = '" . $MetaDescription . "',
+								meta_title = '" . $MetaTitle . "',
 								meta_keyword = '" . $MetaKeyword . "',
 								tag = '" . $Tag . "'
 							WHERE product_id = '" . $ProductId . "'
@@ -290,7 +307,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 
 			}else{
 				$Action = "Insert";
-				$sqlInsert = "INSERT INTO " . $oc_tableprefix . "product
+/*				$sqlInsert = "INSERT INTO " . $oc_tableprefix . "product
 								(model,
 								sku,
 								upc,
@@ -369,6 +386,69 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 								'" . $ServerNow . "',
 								'" . $ServerNow . "'
 								)";
+*/				$sqlInsert = "INSERT INTO " . $oc_tableprefix . "product
+								(model,
+								sku,
+								upc,
+								ean,
+								jan,
+								isbn,
+								mpn,
+								location,
+								quantity,
+								stock_status_id,
+								image,
+								manufacturer_id,
+								shipping,
+								price,
+								points,
+								tax_class_id,
+								date_available,
+								weight,
+								weight_class_id,
+								length,
+								width,
+								height,
+								length_class_id,
+								subtract,
+								minimum,
+								sort_order,
+								status,
+								viewed,
+								date_added,
+								date_modified)
+							VALUES
+								('" . $Model . "',
+								'" . $SKU . "',
+								'" . $UPC . "',
+								'" . $EAN . "',
+								'" . $JAN . "',
+								'" . $ISBN . "',
+								'" . $MPN . "',
+								'" . $Location . "',
+								'" . $Quantity . "',
+								'" . $StockStatusId . "',
+								'" . $Image . "',
+								'" . $ManufacturerId . "',
+								'" . $Shipping . "',
+								'" . $Price . "',
+								'" . $Points . "',
+								'" . $TaxClassId . "',
+								'" . $DateAvailable . "',
+								'" . $Weight . "',
+								'" . $WeightClassId . "',
+								'" . $Length . "',
+								'" . $Width . "',
+								'" . $Height . "',
+								'" . $LenghtClassId . "',
+								'" . $Subtract . "',
+								'" . $Minimum . "',
+								'" . $SortOrder . "',
+								'" . $Status . "',
+								'" . $Viewed . "',
+								'" . $ServerNow . "',
+								'" . $ServerNow . "'
+								)";
 				$resultInsert = DB_query_oc($sqlInsert,$InsertErrMsg,$DbgMsg,true);
 
 				// Let's get the OpenCart primary key for product
@@ -380,6 +460,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 								name,
 								description,
 								meta_description,
+								meta_title,
 								meta_keyword,
 								tag)
 							VALUES
@@ -388,6 +469,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 								'" . $Name . "',
 								'" . $Description . "',
 								'" . $MetaDescription . "',
+								'" . $MetaTitle . "',
 								'" . $MetaKeyword . "',
 								'" . $Tag . "'
 								)";
@@ -529,12 +611,13 @@ function SyncProductSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $o
 			// Let's get the OpenCart primary key for product
 			$ProductId = GetOpenCartProductId($Model, $db_oc, $oc_tableprefix);
 			
-			// Delete the current product_to_category, as we now only accept 1 product_to_category in website
+/*			// Delete the current product_to_category, as we now only accept 1 product_to_category in website
+ADAPT FOR v2.3 
 			$Action = "Delete";
 			$sqlDelete = "DELETE FROM " . $oc_tableprefix . "product_to_category 
 						WHERE product_id = '" . $ProductId . "'";
 			$resultDelete = DB_query_oc($sqlDelete,$UpdateErrMsg,$DbgMsg,true);
-
+*/
 			// Insert the new record
 			$Action = "Insert";
 			$sqlInsert = "INSERT INTO " . $oc_tableprefix . "product_to_category

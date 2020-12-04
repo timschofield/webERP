@@ -632,12 +632,14 @@ function UpdateSettingValueOpenCartByGroupAndKey($Group, $Key, $Value, $db_oc, $
 }
 
 function CreateMetaDescription($Group, $Item){
-	$MetaDescription = $_SESSION['ShopName'] . ' ' . $Group . ' ' . $Item;
+//	$MetaDescription = $_SESSION['ShopName'] . ' ' . $Group . ' ' . $Item;
+	$MetaDescription = $Group . ' ' . $Item;
 	return $MetaDescription;
 }
 
 function CreateMetaKeyword($Group, $Item){
-	$MetaKeyword = $_SESSION['ShopName'] . ' ' . $Group . ' ' . $Item;
+//	$MetaKeyword = $_SESSION['ShopName'] . ' ' . $Group . ' ' . $Item;
+	$MetaKeyword = $Group . ' ' . $Item;
 	$MetaKeyword = str_ireplace(' ', ',', $MetaKeyword);
 	$MetaKeyword = str_ireplace(',', ',', $MetaKeyword);
 	$MetaKeyword = str_ireplace(';', ',', $MetaKeyword);
