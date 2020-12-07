@@ -1184,7 +1184,7 @@ echo'	<tr>
 		$ErrMsg = _('The shipper details could not be retrieved');
 		$DbgMsg = _('SQL used to retrieve the shipper details was') . ':';
 
-		$sql = "SELECT shipper_id, shippername FROM shippers";
+		$sql = "SELECT shipper_id, shippername FROM shippers ORDER BY shippername";
 		$ShipperResults = DB_query($sql,$ErrMsg,$DbgMsg);
 		while ($myrow=DB_fetch_array($ShipperResults)) {
 			if($myrow['shipper_id']==$_POST['ShipVia']) {
