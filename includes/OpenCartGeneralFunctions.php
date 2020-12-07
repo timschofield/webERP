@@ -384,6 +384,20 @@ function GetWeberpOrderNo($CustomerId, $OrderId, $db){
 	}
 }
 
+function GetOnlineOrderNoFromWeberp($OrderId, $db){
+	$SQL = "SELECT customerref
+			FROM salesorders
+			WHERE orderno = '" . $OrderId . "'";
+	$ErrMsg =_('Could not get the Online Order No in webERP because');
+	$result = DB_query($SQL,$ErrMsg);
+	if(DB_num_rows($result) != 0){
+		$myrow = DB_fetch_array($result);
+		return $myrow[0];
+	}else{
+		return '';
+	}
+}
+
 function GetWeberpCustomerCurrency($CustomerId, $db){
 	$SQL = "SELECT currcode
 			FROM debtorsmaster
@@ -978,13 +992,29 @@ function MaintainUrlAlias($SEOQuery, $SEOKeyword, $db_oc, $oc_tableprefix){
 	}
 }
 
-function UpdateOpenCartOrderStatus($OrderId, $Value, $db_oc, $oc_tableprefix){
+function UpdateOpenCartOrderStatus($OrderId, $StatusId, $Notify, $Comment, $db_oc, $oc_tableprefix){
+	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference($db));
 	$DbgMsg = _('The SQL statement that failed was');
 	$UpdateErrMsg = _('The SQL to Update OpenCart Order Status failed');
 	$sqlUpdate = "UPDATE " . $oc_tableprefix . "order
-					SET	order_status_id = '" . $Value . "'
+					SET	order_status_id = '" . $StatusId . "'
 				WHERE order_id = '" . $OrderId . "'";
 	$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
+
+	$sqlInsert = "INSERT INTO " . $oc_tableprefix . "order_history
+					(order_id,
+					order_status_id,
+					notify,
+					comment,
+					date_added)
+				VALUES
+					('" . $OrderId . "',
+					'" . $StatusId . "',
+					'" . $Notify . "',
+					'" . $Comment . "',
+					'" . $ServerNow . "'
+					)";
+	$resultInsert = DB_query_oc($sqlInsert,$ErrMsg,$DbgMsg,true);
 }
 
 function RoundPriceFromCart($value, $currency){

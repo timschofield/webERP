@@ -324,6 +324,15 @@ define("OPENCART_WHOLESALE_DISCOUNT", 'WHOLESALE-DISCOUNT');
 define("OPENCART_DEFAULT_PAYMENT_SYSTEM", 'PayPal');
 define("OPENCART_DOKU_PAYMENT_SYSTEM", 'Doku');
 
+
+define("OPENCART_ORDER_STATUS_PENDING", 1);
+define("OPENCART_ORDER_STATUS_PROCESSING", 2);
+define("OPENCART_ORDER_STATUS_SHIPPED", 3);
+define("OPENCART_ORDER_STATUS_COMPLETE", 5);
+define("OPENCART_ORDER_STATUS_CANCELLED", 7);
+define("OPENCART_ORDER_STATUS_EXPIRED", 14);
+
+
 /* HARD CODED PATHS */
 define("ABSOLUTE_PATH_OPENCART_IMAGES", '/var/www/vhosts/kapal-laut.com/httpdocs/image/data/KL/part_pics/');
 define("ABSOLUTE_PATH_WEBERP", '/var/www/vhosts/kapal-laut.com/ptadu.com/weberp/');

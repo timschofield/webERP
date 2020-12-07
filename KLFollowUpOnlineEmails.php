@@ -322,18 +322,23 @@ if ($_GET['EmailType']=='PaymentConfirmation'){
 }
 
 if ($_GET['EmailType']=='TrackingConfirmation'){
-	// change status of the order in Opencart, as complete = 5
 	include ('includes/WeberpOpenCartDefines.php');
 	include ('includes/OpenCartGeneralFunctions.php');
 	include ('includes/OpenCartConnectDB.php');
-	UpdateOpenCartOrderStatus($_GET['CustomerOrder'], 5, $db_oc, $oc_tableprefix);
+	// change status of the order in Opencart, as OPENCART_ORDER_STATUS_SHIPPED
+	$ReasonChangeStatusId = "webERP --> Order shipped via " . $myrow['shippername'] . " AWB# = " . $myrow['consignment'];  
+	UpdateOpenCartOrderStatus($_GET['CustomerOrder'], OPENCART_ORDER_STATUS_SHIPPED, 1, $ReasonChangeStatusId, $db_oc, $oc_tableprefix);
+	prnMsg("Updated Order status in OpenCart as SHIPPED");
+	// change status of the order in Opencart, as OPENCART_ORDER_STATUS_COMPLETE
+	$ReasonChangeStatusId = "webERP --> Order shipped and accounted for.";
+	UpdateOpenCartOrderStatus($_GET['CustomerOrder'], OPENCART_ORDER_STATUS_COMPLETE, 1, $ReasonChangeStatusId, $db_oc, $oc_tableprefix);
 	prnMsg("Updated Order status in OpenCart as COMPLETE");
 
 	// update the sales order, as we send shipped it
 	$sql = "UPDATE salesorders 
 			SET klemailtrackingconfirm = '" . Date('Y-m-d') . "'
 			WHERE orderno =	'" . $_GET['TransNo'] . "'";
-	$ErrMsg =_('Could not update the sales order KL email remind bank transfer date because');
+	$ErrMsg =_('Could not update the sales order KL email tracking confirm date because');
 	$result = DB_query($sql,$ErrMsg);
 	prnMsg("Updated date of sending remind bank transfer to online customer to today");
 }
