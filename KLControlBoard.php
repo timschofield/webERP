@@ -915,7 +915,8 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_BusinessDevelopmentManager
+	if ($KL_SystemAdmin
+		OR $KL_BusinessDevelopmentManager
 		OR $KL_ShopSupportLeader){ 
 		ItemsNotNeededInOnlineOrderButRequested($RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -2478,7 +2479,7 @@ function ItemsNotNeededInOnlineOrderButRequested($RootPath, $db){
 	$result = DB_query($SQL);
 	
 	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . "Items Not needed for any Online Shop but with QOH > 0 in Shop Online" . '</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . "Items Not needed for any Online Order but with QOH > 0 in Shop Online" . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>

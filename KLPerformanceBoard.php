@@ -137,6 +137,7 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin 
+		OR $KL_BusinessDevelopmentManager
 		OR $KL_OperationalManager
 		OR $KL_SalesDirector
 		OR $KL_ShopManager){
@@ -147,10 +148,11 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin 
+		OR $KL_BusinessDevelopmentManager
 		OR $KL_OperationalManager){
 		RecentlyClosedTransferStatus(1, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ErrorsInTransfers(7, $RootPath, $db);
+		ErrorsInTransfers(15, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
