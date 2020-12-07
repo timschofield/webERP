@@ -31,7 +31,7 @@ function WeberpToOpenCartDailySync($ShowMessages, $db, $db_oc, $oc_tableprefix, 
 //	$EmailText = SyncFeaturedList($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
 
 	// update sales categories
-	$EmailText = SyncSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
+//	$EmailText = SyncSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
 
 	// activate / inactivate categories depending on items No items = inactive. Items = Active
 	$EmailText = ActivateCategoryDependingOnQOH($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
@@ -1144,6 +1144,7 @@ function SyncSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_table
 			$SortOrder = 1;
 			$Name = trim($myrow['salescatname']);
 			$Description = trim($myrow['salescatname']);
+			$MetaTitle = trim($myrow['salescatname']);
 			$MetaDescription = CreateMetaDescription('Sales category', trim($myrow['salescatname']));
 			$MetaKeyword = CreateMetaKeyword('', trim($myrow['salescatname']));
 			$CategoryId = $myrow['salescatid'];
@@ -1159,7 +1160,11 @@ function SyncSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_table
 
 				$sqlUpdate = "UPDATE " . $oc_tableprefix . "category_description
 								SET language_id 		= '" . $Language_Id . "',
-									name	 			= '" . $Name . "'
+									name	 			= '" . $Name . "',
+									description			= '" . $Description . "',
+									meta_title 			= '" . $MetaTitle . "',
+									meta_description	= '" . $MetaDescription . "',
+									meta_keyword		= '" . $MetaKeyword . "'
 								WHERE category_id 	= '" . $CategoryId . "'";
 				$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
 
@@ -1167,7 +1172,6 @@ function SyncSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_table
 				$SEOQuery = 'category_id='.$CategoryId;
 				$SEOKeyword = CreateSEOKeyword($Name);
 				MaintainUrlAlias($SEOQuery, $SEOKeyword, $db_oc, $oc_tableprefix);
-
 			}else{
 				$Action = "Insert";
 				$sqlInsert = "INSERT INTO " . $oc_tableprefix . "category
@@ -1197,6 +1201,7 @@ function SyncSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_table
 								language_id,
 								name,
 								description,
+								meta_title,
 								meta_description,
 								meta_keyword)
 							VALUES
@@ -1204,6 +1209,7 @@ function SyncSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_table
 								'" . $Language_Id . "',
 								'" . $Name . "',
 								'" . $Description . "',
+								'" . $MetaTitle . "',
 								'" . $MetaDescription . "',
 								'" . $MetaKeyword . "'
 								)";
