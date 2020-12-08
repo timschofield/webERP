@@ -1365,7 +1365,7 @@ function ActivateCategoryDependingOnQOH($ShowMessages, $LastTimeRun, $db, $db_oc
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		if ($ShowMessages){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Activate/Inactivate Categories depending on QOH') .'</strong></p>';
+			echo '<p class="page_title_text" align="center"><strong>' . _('Activate/Inactivate Sales Categories depending on QOH') .'</strong></p>';
 			echo '<div>';
 			echo '<table class="selection">';
 			$TableHeader = '<tr>

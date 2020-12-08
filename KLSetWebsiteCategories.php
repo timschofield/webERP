@@ -178,7 +178,7 @@ if (DB_num_rows($result) != 0){
 					$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
 					$ItemsAdded++;
 				}else{
-					// Mirar si pertany a super categoria STABLE KL
+					// Mirar si pertany a super categoria SILVER KL
 					$WebsiteCategory = WebsiteCategorySilverJewellery($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
 					if ($WebsiteCategory > 0){
 						$Brand = 1;
@@ -210,17 +210,8 @@ if (DB_num_rows($result) != 0){
 									$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
 									$ItemsAdded++;
 								}else{
-									// Mirar si pertany a super categoria WORLD BRANDS
-									$WebsiteCategory = WebsiteCategoryWorldBrandJewellery($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
-									if ($WebsiteCategory > 0){
-										$Brand = 1;
-										InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $Brand, FALSE, $FeaturedAsTopSales, $UpdateDB, $db);
-										$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
-										$ItemsAdded++;
-									}else{
-										$WebsiteDescription = 'NO WEBSITE CATEGORY';
-										$WebsiteCategory = 0;
-									}
+									$WebsiteDescription = 'NO WEBSITE CATEGORY';
+									$WebsiteCategory = 0;
 								}
 							}
 						}
@@ -333,33 +324,6 @@ function UpdateVolume($Stockid, $Volume, $UpdateDB, $db){
 		$ErrMsg =_('Could not update the item volume because');
 		$result = DB_query($sql,$ErrMsg);
 	}
-}
-
-function WebsiteCategoryWorldBrandJewellery($StockId, $Description, $Long, $Category){
-	$WebCat = 0;
-	
-	//('WORLD_BRAND_JEWELLERY',68);
-	if (($Category == "CONSIG") OR isFamily($StockId, "DS"))	{ 
-		// if belongs to one of the consignment categories 
-			$WebCat = WORLD_BRAND_JEWELLERY;	
-	}
-
-	// filter some false positives
-	if (ItemExcludedFromWebsite($StockId, $Category)){
-		$WebCat = ITEM_EXCLUDED_FROM_WEBSITE;
-	}
-	
-	// define subcategory
-	if (($WebCat == WORLD_BRAND_JEWELLERY) AND isFamily($StockId, "PL")){
-		$WebCat = WORLD_BRAND_PLATADEPALO;	
-	}
-	if (($WebCat == WORLD_BRAND_JEWELLERY) AND isfamily($StockId, "HP")){
-		$WebCat = WORLD_BRAND_HIPANEMA;	
-	}
-	if (($WebCat == WORLD_BRAND_JEWELLERY) AND isfamily($StockId, "DS")){
-		$WebCat = WORLD_BRAND_DESIGUAL;	
-	}
-	return $WebCat; 
 }
 
 function WebsiteCategorySilverJewellery($StockId, $Description, $Long, $Category){
