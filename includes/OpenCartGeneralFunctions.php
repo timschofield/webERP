@@ -609,11 +609,27 @@ function UpdateDiscountInOpenCart($ProductId, $CustomerGroupId, $Quantity, $Prio
 	}
 }
 
-function GetOpenCartSettingId($Store, $Group, $Key, $db_oc, $oc_tableprefix){
+function GetOpenCartSettingId($Store, $Code, $Key, $db_oc, $oc_tableprefix){
 	$SQL = "SELECT setting_id
 			FROM " . $oc_tableprefix . "setting
 			WHERE store_id = '" . $Store . "'
-				AND `group` = '" . $Group . "'
+				AND `code` = '" . $Code . "'
+				AND `key` = '" . $Key . "'";
+	$ErrMsg =_('Could not get the SettingId in OpenCart because');
+	$result = DB_query_oc($SQL,$ErrMsg);
+	if(DB_num_rows($result) != 0){
+		$myrow = DB_fetch_array($result);
+		return $myrow[0];
+	}else{
+		return 0;
+	}
+}
+
+function GetOpenCartSettingValue($Store, $Code, $Key, $db_oc, $oc_tableprefix){
+	$SQL = "SELECT value
+			FROM " . $oc_tableprefix . "setting
+			WHERE store_id = '" . $Store . "'
+				AND `code` = '" . $Code . "'
 				AND `key` = '" . $Key . "'";
 	$ErrMsg =_('Could not get the SettingId in OpenCart because');
 	$result = DB_query_oc($SQL,$ErrMsg);
@@ -634,13 +650,14 @@ function UpdateSettingValueOpenCart($SettingId, $Value, $db_oc, $oc_tableprefix)
 	$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
 }
 
-function UpdateSettingValueOpenCartByGroupAndKey($Group, $Key, $Value, $db_oc, $oc_tableprefix){
+function UpdateSettingValueOpenCartByCodeAndKey($Store, $Code, $Key, $Value, $db_oc, $oc_tableprefix){
 	$DbgMsg = _('The SQL statement that failed was');
 	$UpdateErrMsg = _('The SQL to update setting value in Opencart failed');
 	$sqlUpdate = "UPDATE " . $oc_tableprefix . "setting
 					SET	value = '" . $Value . "'
-				WHERE `group` = '" . $Group . "'
-					AND `key` = '" . $Key . "'";
+				WHERE `code` = '" . $Code . "'
+					AND `key` = '" . $Key . "'
+					AND `store_id` = '" . $Store . "'";
 
 	$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
 }

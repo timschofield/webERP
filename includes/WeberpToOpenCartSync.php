@@ -28,6 +28,7 @@ function WeberpToOpenCartDailySync($ShowMessages, $db, $db_oc, $oc_tableprefix, 
 	$EmailText = WeberpToOpenCartHourlySync($ShowMessages, $db, $db_oc, $oc_tableprefix, FALSE, $EmailText);
 
 	// recreate the list of featured in OpenCart
+// NOT READY FOR OC v3.0, OC_SETTING IS DIFFERENT
 //	$EmailText = SyncFeaturedList($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
 
 	// update sales categories
@@ -1750,6 +1751,9 @@ function SyncCurrencies($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefi
 		$UpdateErrMsg = _('The SQL to update Currency Exchange Rates in Opencart failed');
 		$InsertErrMsg = _('The SQL to insert Currency Exchange Rates in Opencart failed');
 
+		// Get the default currency used for PayPal Commerce Platform
+		$DefaultPayPalCommercePlatformCurrency = GetOpenCartSettingValue(0, "payment_paypal", "payment_paypal_currency_code", $db_oc, $oc_tableprefix);
+
 		$k = 0; //row colour counter
 		$i = 0;
 		while ($myrow = DB_fetch_array($result)) {
@@ -1804,6 +1808,24 @@ function SyncCurrencies($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefi
 			}
 			if ($EmailText !=''){
 				$EmailText = $EmailText . $Currency . " = " . $Rate. " --> " . $Action . "\n";
+			}
+			if ($Currency == $DefaultPayPalCommercePlatformCurrency){
+				// update the exchage rate for Paypal Commerce Platform
+				UpdateSettingValueOpenCartByCodeAndKey(0, "payment_paypal", "payment_paypal_currency_value", $Rate, $db_oc, $oc_tableprefix);
+				if ($ShowMessages){
+					$k = StartEvenOrOddRow($k);
+					printf('<td>%s</td>
+							<td>%s</td>
+							<td>%s</td>
+							</tr>',
+							$Currency . ' Paypal Commerce Platform',
+							$Rate,
+							'Update'
+							);
+				}
+				if ($EmailText !=''){
+					$EmailText = $EmailText . $Currency . " PayPal Commerce Platform = " . $Rate. " --> " . $Action . "\n";
+				}
 			}
 			$i++;
 		}
