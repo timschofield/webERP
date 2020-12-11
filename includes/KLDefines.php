@@ -145,34 +145,34 @@ define("ONLINE_PRICE_LIST", 'RT');
 define("MINIMUM_STOCK_ONLINESHOP_EVERY_ITEM", 1); 
 
 /* Defines about weight in KG*/
-define('STANDARD_TALI_WEIGHT',     0.050);
-define('STANDARD_BEAD_WEIGHT',     0.050);
-define('STANDARD_RING_WEIGHT',     0.050);
-define('STANDARD_EARRING_WEIGHT',  0.060);
-define('STANDARD_BRACELET_WEIGHT', 0.080);
-define('STANDARD_PENDANT_WEIGHT',  0.090);
-define('STANDARD_NECKLACE_WEIGHT', 0.190);
-define('STANDARD_BAG_WEIGHT',      0.450);
-define('STANDARD_FOULARD_WEIGHT',  0.250);
-define('STANDARD_BROOCHE_WEIGHT',  0.080);
-define('STANDARD_KEYHOLDER_WEIGHT',0.080);
-define('STANDARD_FACEMASK_WEIGHT', 0.080); // Verification pending
-define('STANDARD_JEWELLERY_ROLL_WEIGHT', 0.080); // Verification pending
+define('STANDARD_TALI_WEIGHT',       0.050);
+define('STANDARD_BEAD_WEIGHT',       0.050);
+define('STANDARD_RING_WEIGHT',       0.050);
+define('STANDARD_EARRING_WEIGHT',    0.060);
+define('STANDARD_BRACELET_WEIGHT',   0.080);
+define('STANDARD_PENDANT_WEIGHT',    0.090);
+define('STANDARD_NECKLACE_WEIGHT',   0.190);
+define('STANDARD_BAG_WEIGHT',        0.450);
+define('STANDARD_FOULARD_WEIGHT',    0.250);
+define('STANDARD_BROOCHE_WEIGHT',    0.080);
+define('STANDARD_KEYHOLDER_WEIGHT',  0.080);
+define('STANDARD_FACEMASK_WEIGHT',   0.080); 
+define('STANDARD_JEWEL_ROLL_WEIGHT', 0.080); 
 
-/* Defines about volume in m3*/
-define('STANDARD_TALI_VOLUME',     0.0003);
-define('STANDARD_BEAD_VOLUME',     0.0003);
-define('STANDARD_RING_VOLUME',     0.0003);
-define('STANDARD_EARRING_VOLUME',  0.0003);
-define('STANDARD_BRACELET_VOLUME', 0.0004);
-define('STANDARD_PENDANT_VOLUME',  0.0004);
-define('STANDARD_NECKLACE_VOLUME', 0.0004);
-define('STANDARD_BAG_VOLUME',      0.0020);
-define('STANDARD_FOULARD_VOLUME',  0.0010);
-define('STANDARD_BROOCHE_VOLUME',  0.0004);
-define('STANDARD_KEYHOLDER_VOLUME',0.0004);
-define('STANDARD_FACEMASK_VOLUME', 0.0004); // Verification pending
-define('STANDARD_JEWELLERY_ROLL_VOLUME', 0.0004); // Verification pending
+/* shipping dimensions in mm (webERP set up in mm) */
+
+define('BOX_S_LENGTH',         75);
+define('BOX_S_WIDTH',          75);
+define('BOX_S_HEIGHT',         45);
+define('BOX_M_LENGTH',        110);
+define('BOX_M_WIDTH',         110);
+define('BOX_M_HEIGHT',         45);
+define('BOX_L_LENGTH',        230);
+define('BOX_L_WIDTH',         160);
+define('BOX_L_HEIGHT',         45);
+define('BOX_XL_LENGTH',       300); // approx
+define('BOX_XL_WIDTH',        300); // approx
+define('BOX_XL_HEIGHT',       200); // approx
 
 /* Defines about website sales categories */
 define("ONLINESHOP_AVAILABLE_STOCK_CATEGORIES", "('TESTKA','TESTBA','TESTGA','STABKA','STABBA','STABGA','NOPOKA','NOPOBA','NOPOGA','DISC20','DISC2A','DISC50','DISC5A')");

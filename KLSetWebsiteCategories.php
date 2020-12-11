@@ -112,7 +112,7 @@ if (DB_num_rows($result) != 0){
 			}elseif (isFaceMask($myrow['stockid'])){
 				$Weight = STANDARD_FACEMASK_WEIGHT;
 			}elseif (isJewelleryRoll($myrow['stockid'])){
-				$Weight = STANDARD_JEWELLERY_ROLL_WEIGHT;
+				$Weight = STANDARD_JEWEL_ROLL_WEIGHT;
 			}elseif (isBag($myrow['stockid'])){
 				$Weight = STANDARD_BAG_WEIGHT;
 			}elseif (isPlasticBag($myrow['stockid'])){
@@ -128,41 +128,72 @@ if (DB_num_rows($result) != 0){
 		$Volume = $myrow['volume'];
 		if ($Volume == 0){
 			if (isRing($myrow['stockid'])){
-				$Volume = STANDARD_RING_VOLUME;
+				$Length = BOX_S_LENGTH;
+				$Width  = BOX_S_WIDTH;
+				$Height = BOX_S_HEIGHT;
 			}elseif (isToeRing($myrow['stockid'])){
-				$Volume = STANDARD_RING_VOLUME;
+				$Length = BOX_S_LENGTH;
+				$Width  = BOX_S_WIDTH;
+				$Height = BOX_S_HEIGHT;
 			}elseif (isBead($myrow['stockid'])){
-				$Volume = STANDARD_BEAD_VOLUME;
+				$Length = BOX_S_LENGTH;
+				$Width  = BOX_S_WIDTH;
+				$Height = BOX_S_HEIGHT;
 			}elseif (isBrooche($myrow['stockid'])){
-				$Volume = STANDARD_BROOCHE_VOLUME;
+				$Length = BOX_M_LENGTH;
+				$Width  = BOX_M_WIDTH;
+				$Height = BOX_M_HEIGHT;
 			}elseif (isEarring($myrow['stockid'])){
-				$Volume = STANDARD_EARRING_VOLUME;
+				$Length = BOX_S_LENGTH;
+				$Width  = BOX_S_WIDTH;
+				$Height = BOX_S_HEIGHT;
 			}elseif (isEarcuff($myrow['stockid'])){
-				$Volume = STANDARD_EARRING_VOLUME;
+				$Length = BOX_S_LENGTH;
+				$Width  = BOX_S_WIDTH;
+				$Height = BOX_S_HEIGHT;
 			}elseif (isBracelet($myrow['stockid'])){
-				$Volume = STANDARD_BRACELET_VOLUME;
+				$Length = BOX_M_LENGTH;
+				$Width  = BOX_M_WIDTH;
+				$Height = BOX_M_HEIGHT;
 			}elseif (isAnklet($myrow['stockid'])){
-				$Volume = STANDARD_BRACELET_VOLUME;
+				$Length = BOX_M_LENGTH;
+				$Width  = BOX_M_WIDTH;
+				$Height = BOX_M_HEIGHT;
 			}elseif (isPendant($myrow['stockid'])){
-				$Volume = STANDARD_PENDANT_VOLUME;
+				$Length = BOX_M_LENGTH;
+				$Width  = BOX_M_WIDTH;
+				$Height = BOX_M_HEIGHT;
 			}elseif (isNecklace($myrow['stockid'])){
-				$Volume = STANDARD_NECKLACE_VOLUME;
-			}elseif (isFoulard($myrow['stockid'])){
-				$Volume = STANDARD_FOULARD_VOLUME;
+				$Length = BOX_M_LENGTH;
+				$Width  = BOX_M_WIDTH;
+				$Height = BOX_M_HEIGHT;
 			}elseif (isFaceMask($myrow['stockid'])){
-				$Volume = STANDARD_FACEMASK_VOLUME;
+				$Length = BOX_M_LENGTH;
+				$Width  = BOX_M_WIDTH;
+				$Height = BOX_M_HEIGHT;
 			}elseif (isJewelleryRoll($myrow['stockid'])){
-				$Volume = STANDARD_JEWELLERY_ROLL_VOLUME;
+				$Length = BOX_L_LENGTH;
+				$Width  = BOX_L_WIDTH;
+				$Height = BOX_L_HEIGHT;
 			}elseif (isBag($myrow['stockid'])){
-				$Volume = STANDARD_BAG_VOLUME;
+				$Length = BOX_XL_LENGTH;
+				$Width  = BOX_XL_WIDTH;
+				$Height = BOX_XL_HEIGHT;
 			}elseif (isPlasticBag($myrow['stockid'])){
-				$Volume = STANDARD_BAG_VOLUME;
+				$Length = BOX_XL_LENGTH;
+				$Width  = BOX_XL_WIDTH;
+				$Height = BOX_XL_HEIGHT;
 			}elseif (isTali($myrow['stockid'])){
-				$Volume = STANDARD_TALI_VOLUME;
+				$Length = BOX_S_LENGTH;
+				$Width  = BOX_S_WIDTH;
+				$Height = BOX_S_HEIGHT;
 			}elseif (isKeyHolder($myrow['stockid'])){
-				$Volume = STANDARD_KEYHOLDER_VOLUME;
+				$Length = BOX_S_LENGTH;
+				$Width  = BOX_S_WIDTH;
+				$Height = BOX_S_HEIGHT;
 			}
-			UpdateVolume($myrow['stockid'], $Volume, $UpdateDB, $db);
+			$Volume = round(($Length/1000)*($Width/1000)*($Height/1000),4,PHP_ROUND_HALF_UP); // dimensions in mm and volume in m3
+			UpdateVolume($myrow['stockid'], $Volume, $Length, $Width, $Height, $UpdateDB, $db);
 		}
 		// si tenim descripció prou llarga
 		if (strlen($myrow['description']) >= 5){
@@ -316,12 +347,15 @@ function UpdateWeight($Stockid, $Weight, $UpdateDB, $db){
 	}
 }
 
-function UpdateVolume($Stockid, $Volume, $UpdateDB, $db){
+function UpdateVolume($Stockid, $Volume, $Length, $Width, $Height, $UpdateDB, $db){
 	if($UpdateDB){
 		$sql = "UPDATE stockmaster 
-				SET volume = " . $Volume . "
+				SET volume = " . $Volume . ",
+					length =  " . $Length . ",
+					width =  " . $Width . ",
+					height =  " . $Height . "
 				WHERE stockid =	'" . $Stockid . "'";
-		$ErrMsg =_('Could not update the item volume because');
+		$ErrMsg =_('Could not update the item volume and dimensions because');
 		$result = DB_query($sql,$ErrMsg);
 	}
 }

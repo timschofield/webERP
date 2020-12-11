@@ -179,11 +179,20 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 			$TaxClassId = 0; // Not sure how to link stockid and tax in webERP
 			$DateAvailable = $ServerNow;
 			$Weight = $myrow['grossweight'];
-			$WeightClassId = 1; //In webERP grossweight is always in Kg.
-			$Length = $myrow['length'];
-			$Width = $myrow['width'];
-			$Height = $myrow['height'];
-			$LenghtClassId = GetLenghtClassId($myrow['unitsdimension'], 1, $db_oc, $oc_tableprefix);
+			$WeightClassId = 1; //In OpenCart grossweight is always in Kg.
+
+			if ($myrow['unitsdimension'] == 'mm'){
+				$FactorLenght = 10;
+			}elseif ($myrow['unitsdimension'] == 'cm'){
+				$FactorLenght = 1;
+			}else{
+				// should be meter
+				$FactorLenght = 0.1;
+			}
+			$Length = $myrow['length']/$FactorLenght; 
+			$Width = $myrow['width']/$FactorLenght; 
+			$Height = $myrow['height']/$FactorLenght; 
+			$LenghtClassId = 1; // Store in OC in cm
 			$Subtract = 1;
 			$Minimum = 1;
 			$SortOrder = 1;
