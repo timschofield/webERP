@@ -1761,7 +1761,7 @@ function SyncCurrencies($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefi
 		$InsertErrMsg = _('The SQL to insert Currency Exchange Rates in Opencart failed');
 
 		// Get the default currency used for PayPal Commerce Platform
-		$DefaultPayPalCommercePlatformCurrency = GetOpenCartSettingValue(0, "payment_paypal", "payment_paypal_currency_code", $db_oc, $oc_tableprefix);
+//		$DefaultPayPalCommercePlatformCurrency = GetOpenCartSettingValue(0, "payment_paypal", "payment_paypal_currency_code", $db_oc, $oc_tableprefix);
 
 		$k = 0; //row colour counter
 		$i = 0;
@@ -1818,7 +1818,7 @@ function SyncCurrencies($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefi
 			if ($EmailText !=''){
 				$EmailText = $EmailText . $Currency . " = " . $Rate. " --> " . $Action . "\n";
 			}
-			if ($Currency == $DefaultPayPalCommercePlatformCurrency){
+/*			if ($Currency == $DefaultPayPalCommercePlatformCurrency){
 				// update the exchage rate for Paypal Commerce Platform
 				UpdateSettingValueOpenCartByCodeAndKey(0, "payment_paypal", "payment_paypal_currency_value", $Rate, $db_oc, $oc_tableprefix);
 				if ($ShowMessages){
@@ -1836,7 +1836,7 @@ function SyncCurrencies($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefi
 					$EmailText = $EmailText . $Currency . " PayPal Commerce Platform = " . $Rate. " --> " . $Action . "\n";
 				}
 			}
-			$i++;
+*/			$i++;
 		}
 		if ($ShowMessages){
 			echo '</table>
