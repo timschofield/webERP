@@ -316,12 +316,16 @@ function InsertWebsiteSalesCategory($Stockid, $WebsiteCategory, $Manufacturers_i
 						salescatid ,
 						stockid,
 						manufacturers_id,
-						featured)
+						featured,
+						date_created,
+						date_updated)
 					VALUES (
 						'" . $WebsiteCategory . "',
 						'" . $Stockid . "',
 						'" . $Manufacturers_id . "',
-						'" . $Featured . "')";
+						'" . $Featured . "',
+						NOW(),
+						NOW())";
 			$ErrMsg =_('Could not insert the website category for the item because');
 			$result = DB_query($sql,$ErrMsg);
 		}

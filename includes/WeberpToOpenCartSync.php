@@ -32,7 +32,7 @@ function WeberpToOpenCartDailySync($ShowMessages, $db, $db_oc, $oc_tableprefix, 
 //	$EmailText = SyncFeaturedList($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
 
 	// update sales categories
-//	$EmailText = SyncSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
+	$EmailText = SyncSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
 
 	// activate / inactivate categories depending on items No items = inactive. Items = Active
 	$EmailText = ActivateCategoryDependingOnQOH($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
@@ -88,7 +88,7 @@ function WeberpToOpenCartHourlySync($ShowMessages, $db, $db_oc, $oc_tableprefix,
 //	$EmailText = SyncProductDescriptionTranslations($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
 
 	// clean duplicated URL alias
-	$EmailText = CleanDuplicatedUrlAlias($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
+//	$EmailText = CleanDuplicatedUrlAlias($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
 
 	// We are done!
 	SetLastTimeRun('WeberpToOpenCartHourly', $db);
@@ -216,21 +216,22 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 
 			$LanguageId = 1; // webERP and OpenCart should have the same default language
 			$Name = $myrow['description'];
+			$webERPCategoryId = $myrow['categoryid'];
 			$Description =  str_replace("'", "\'", $myrow['longdescription']);
 			$MetaDescription = CreateMetaDescription($myrow['stockid'], trim($myrow['description']));
 			$MetaTitle = $MetaDescription;
 			$MetaKeyword = CreateMetaKeyword($myrow['stockid'], trim($myrow['description']));
 			$Tag = CreateTagsForItem($myrow['description'], $myrow['longdescription'], $myrow['salescatname']);
 			
-			if (ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_KAPAL_LAUT)){
+			if (ItemInList($webERPCategoryId, LIST_STOCK_CATEGORIES_KAPAL_LAUT)){
 				$StoreId = OPENCART_STORE_KAPAL_LAUT;
 				$StoreText = "KL";
 				$GoogleBrand = GOOGLE_BRAND_KL;
-			}elseif (ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_BLINK)){
+			}elseif (ItemInList($webERPCategoryId, LIST_STOCK_CATEGORIES_BLINK)){
 				$StoreId = OPENCART_STORE_BLINK;
 				$StoreText = "Blink";
 				$GoogleBrand = GOOGLE_BRAND_BLINK;
-			}elseif (ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_OUTLET)){
+			}elseif (ItemInList($webERPCategoryId, LIST_STOCK_CATEGORIES_OUTLET)){
 				$StoreId = OPENCART_STORE_OUTLET;
 				$StoreText = "Outlet";
 				$GoogleBrand = GOOGLE_BRAND_OUTLET;
@@ -286,14 +287,6 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 								store_id = '" . $StoreId . "'
 							WHERE product_id = '" . $ProductId . "'";
 				$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
-
-				// update discounts if needed
-				MaintainOpenCartDiscountForItem($ProductId, $Price, $DiscountCategory, $PriceList, $db, $db_oc, $oc_tableprefix);
-
-				// update SEO Keywords if needed
-				$SEOQuery = 'product_id='.$ProductId;
-				$SEOKeyword = CreateSEOKeyword($Model . "-" . $Name);
-				MaintainUrlAlias($SEOQuery, $SEOKeyword, $db_oc, $oc_tableprefix);
 
 			}else{
 				$Action = "Insert";
@@ -396,16 +389,16 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 								)";
 				$resultInsert = DB_query_oc($sqlInsert,$InsertErrMsg,$DbgMsg,true);
 
-				// create discounts if needed
-				MaintainOpenCartDiscountForItem($ProductId, $Price, $DiscountCategory, $PriceList, $db, $db_oc, $oc_tableprefix);
-
-				// create SEO Keywords if needed
-				$SEOQuery = 'product_id='.$ProductId;
-				$SEOKeyword = CreateSEOKeyword($Model . "-" . $Name);
-				MaintainUrlAlias($SEOQuery, $SEOKeyword, $db_oc, $oc_tableprefix);
-
 				$SortOrder++;
 			}
+
+			// create discounts if needed
+			MaintainOpenCartDiscountForItem($ProductId, $Price, $DiscountCategory, $PriceList, $db, $db_oc, $oc_tableprefix);
+
+			// create SEO Keywords if needed
+			$SEOQuery = 'product_id='.$ProductId;
+			$SEOKeyword = CreateSEOKeyword($Model . "-" . $Name);
+			MaintainSeoUrl($SEOQuery, $SEOKeyword, $StoreId, $LanguageId, $db_oc, $oc_tableprefix);
 		
 			// if it's a general item, we have to add it too to Blink store.
 			if  (ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_GENERAL) AND
@@ -419,6 +412,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 								)";
 				$resultInsert = DB_query_oc($sqlInsert,$InsertErrMsg,$DbgMsg,true);
 				$StoreText = $StoreText . " + BL";
+				MaintainSeoUrl($SEOQuery, $SEOKeyword, OPENCART_STORE_BLINK, $LanguageId, $db_oc, $oc_tableprefix);
 			}
 
 			// if it's not on the wholesale store, we add it.
@@ -432,6 +426,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 								)";
 				$resultInsert = DB_query_oc($sqlInsert,$InsertErrMsg,$DbgMsg,true);
 				$StoreText = $StoreText . " + WH";
+				MaintainSeoUrl($SEOQuery, $SEOKeyword, OPENCART_STORE_WHOLESALE, $LanguageId, $db_oc, $oc_tableprefix);
 			}
 			
 			if ($ShowMessages){
@@ -526,7 +521,7 @@ function SyncProductSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $o
 			$ProductId = GetOpenCartProductId($Model, $db_oc, $oc_tableprefix);
 			
 /*			// Delete the current product_to_category, as we now only accept 1 product_to_category in website
-ADAPT FOR v2.3 
+ADAPT FOR v3.0
 			$Action = "Delete";
 			$sqlDelete = "DELETE FROM " . $oc_tableprefix . "product_to_category 
 						WHERE product_id = '" . $ProductId . "'";
@@ -596,7 +591,9 @@ function SyncProductPrices($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tablepr
 				AND prices.currabrev ='" . $Currency . "'
 				AND (prices.date_created >= '" . $LastTimeRun . "'
 					OR prices.date_updated >= '" . $LastTimeRun . "')
-			ORDER BY prices.stockid";
+			ORDER BY prices.stockid ASC,
+					prices.startdate ASC,
+					prices.enddate ASC";
 
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
@@ -910,12 +907,12 @@ function CleanDuplicatedUrlAlias($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_t
 		$EmailText = $EmailText . "Clean Duplicated URL Alias" . "\n" . PrintTimeInformation($db);
 	}
 
-	$SQL = "SELECT 	" . $oc_tableprefix . "url_alias.url_alias_id,
-				" . $oc_tableprefix . "url_alias.query,
-				" . $oc_tableprefix . "url_alias.keyword
-		FROM " . $oc_tableprefix . "url_alias
-		ORDER BY " . $oc_tableprefix . "url_alias.query,
-				" . $oc_tableprefix . "url_alias.url_alias_id DESC";
+	$SQL = "SELECT 	" . $oc_tableprefix . "seo_url.seo_url_id,
+				" . $oc_tableprefix . "seo_url.query,
+				" . $oc_tableprefix . "seo_url.keyword
+		FROM " . $oc_tableprefix . "seo_url
+		ORDER BY " . $oc_tableprefix . "seo_url.query,
+				" . $oc_tableprefix . "seo_url.seo_url_id DESC";
 	$result = DB_query_oc($SQL);
 	if (DB_num_rows($result) != 0){
 		$k = 0; //row colour counter
@@ -944,8 +941,8 @@ function CleanDuplicatedUrlAlias($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_t
 					$ShowHeader = FALSE;
 				}
 				// we delete the duplicated
-				$sqlDelete = "DELETE FROM " . $oc_tableprefix . "url_alias
-							WHERE url_alias_id = '" .  $myrow['url_alias_id'] . "'";
+				$sqlDelete = "DELETE FROM " . $oc_tableprefix . "seo_url
+							WHERE seo_url_id = '" .  $myrow['seo_url_id'] . "'";
 				$resultDelete = DB_query_oc($sqlDelete,$UpdateErrMsg,$DbgMsg,true);
 
 				// we set it up as a redirect just in case someome uses this old URL keyword
@@ -980,13 +977,13 @@ function CleanDuplicatedUrlAlias($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_t
 							<td>%s</td>
 							<td>%s</td>
 							</tr>',
-							locale_number_format($myrow['url_alias_id'],0),
+							locale_number_format($myrow['seo_url_id'],0),
 							$myrow['query'],
 							$myrow['keyword']
 							);
 				}
 				if ($EmailText !=''){
-					$EmailText = $EmailText . locale_number_format($myrow['url_alias_id'],0) . " --> " . $myrow['query'] . " --> ". $myrow['keyword'] . "\n";
+					$EmailText = $EmailText . locale_number_format($myrow['seo_url_id'],0) . " --> " . $myrow['query'] . " --> ". $myrow['keyword'] . "\n";
 				}
 				$i++;
 			}
@@ -1052,7 +1049,7 @@ function SyncSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_table
 			}else{
 				$Top = 0;
 			}
-			$StoreId = 0;
+
 			$Column = 1;
 			$Language_Id = 1; // for now NO multi language
 			$SortOrder = 1;
@@ -1082,10 +1079,6 @@ function SyncSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_table
 								WHERE category_id 	= '" . $CategoryId . "'";
 				$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
 
-				// update SEO Keywords if needed
-				$SEOQuery = 'category_id='.$CategoryId;
-				$SEOKeyword = CreateSEOKeyword($Name);
-				MaintainUrlAlias($SEOQuery, $SEOKeyword, $db_oc, $oc_tableprefix);
 			}else{
 				$Action = "Insert";
 				$sqlInsert = "INSERT INTO " . $oc_tableprefix . "category
@@ -1138,12 +1131,18 @@ function SyncSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_table
 				$resultInsert = DB_query_oc($sqlInsert,$InsertErrMsg,$DbgMsg,true);
 				$SortOrder++;
 
-				// insert SEO Keywords if needed
-				$SEOQuery = 'category_id='.$CategoryId;
-				$SEOKeyword = CreateSEOKeyword($Name);
-				MaintainUrlAlias($SEOQuery, $SEOKeyword, $db_oc, $oc_tableprefix);
-
 			}
+
+			// SEO URL Keywords if needed
+			$SEOQuery = 'category_id='.$CategoryId;
+			$SEOKeyword = CreateSEOKeyword($Name);
+			// This bit should be smarter... we don't know if a sales category is from KL or Blink, so we assign to both
+			// outlet and wholesale, yes, they are.
+			MaintainSeoUrl($SEOQuery, $SEOKeyword, OPENCART_STORE_KAPAL_LAUT, $LanguageId, $db_oc, $oc_tableprefix);
+			MaintainSeoUrl($SEOQuery, $SEOKeyword, OPENCART_STORE_BLINK, $LanguageId, $db_oc, $oc_tableprefix);
+			MaintainSeoUrl($SEOQuery, $SEOKeyword, OPENCART_STORE_OUTLET, $LanguageId, $db_oc, $oc_tableprefix);
+			MaintainSeoUrl($SEOQuery, $SEOKeyword, OPENCART_STORE_WHOLESALE, $LanguageId, $db_oc, $oc_tableprefix);
+
 			if ($ShowMessages){
 				$k = StartEvenOrOddRow($k);
 				printf('<td>%s</td>

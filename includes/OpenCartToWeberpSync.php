@@ -59,7 +59,7 @@ function OpenCartToWeberpSync($ShowMessages, $db, $db_oc, $oc_tableprefix, $Emai
 	$EmailText = SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
 
 	// update payment information by DOKU
-	$EmailText = SyncDOKUPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
+//	$EmailText = SyncDOKUPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
 
 	// We are done!
 	SetLastTimeRun('OpenCartToWeberp', $db);
@@ -602,7 +602,7 @@ function SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeR
 				" . $oc_tableprefix . "paypal_order.authorization_id,
 				" . $oc_tableprefix . "paypal_order.total AS paypaltotal,
 				" . $oc_tableprefix . "paypal_order_transaction.transaction_id,
-				" . $oc_tableprefix . "paypal_order_transaction.created,
+				" . $oc_tableprefix . "paypal_order_transaction.date_added,
 				" . $oc_tableprefix . "paypal_order_transaction.payment_status,
 				" . $oc_tableprefix . "paypal_order_transaction.pending_reason,
 				" . $oc_tableprefix . "paypal_order_transaction.transaction_entity,
@@ -616,8 +616,8 @@ function SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeR
 		WHERE " . $oc_tableprefix . "paypal_order.paypal_order_id = " . $oc_tableprefix . "paypal_order_transaction.paypal_order_id
 				AND " . $oc_tableprefix . "paypal_order.order_id  = " . $oc_tableprefix . "order.order_id
 				AND " . $oc_tableprefix . "order.customer_id  = " . $oc_tableprefix . "customer.customer_id
-				AND ( " . $oc_tableprefix . "paypal_order.created >= '" . $LastTimeRun . "'
-					OR " . $oc_tableprefix . "paypal_order.modified >= '" . $LastTimeRun . "')
+				AND ( " . $oc_tableprefix . "paypal_order.date_added >= '" . $LastTimeRun . "'
+					OR " . $oc_tableprefix . "paypal_order.date_modified >= '" . $LastTimeRun . "')
 		ORDER BY " . $oc_tableprefix . "paypal_order.paypal_order_id";
 	$result = DB_query_oc($SQL);
 
