@@ -126,9 +126,11 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 				stockmaster.categoryid,
 				stockmaster.discountcategory,
 				salescatprod.salescatid,
+				salescat.salescatname,
 				salescatprod.manufacturers_id
-			FROM stockmaster, salescatprod
+			FROM stockmaster, salescatprod, salescat
 			WHERE stockmaster.stockid = salescatprod.stockid
+				AND salescatprod.salescatid = salescat.salescatid
 				AND ((stockmaster.date_created >= '" . $LastTimeRun . "'	OR stockmaster.date_updated >= '" . $LastTimeRun . "')
 					OR (salescatprod.date_created >= '" . $LastTimeRun . "'	OR salescatprod.date_updated >= '" . $LastTimeRun . "'))
 			ORDER BY stockmaster.stockid";
@@ -145,6 +147,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 								<th>' . _('QOH') . '</th>
 								<th>' . _('Basic Price') . '</th>
 								<th>' . _('Store') . '</th>
+								<th>' . _('Tag') . '</th>
 								<th>' . _('Action') . '</th>
 							</tr>';
 			echo $TableHeader;
@@ -217,7 +220,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 			$MetaDescription = CreateMetaDescription($myrow['stockid'], trim($myrow['description']));
 			$MetaTitle = $MetaDescription;
 			$MetaKeyword = CreateMetaKeyword($myrow['stockid'], trim($myrow['description']));
-			$Tag = $myrow['description'];
+			$Tag = CreateTagsForItem($myrow['description'], $myrow['longdescription'], $myrow['salescatname']);
 			
 			if (ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_KAPAL_LAUT)){
 				$StoreId = OPENCART_STORE_KAPAL_LAUT;
@@ -248,34 +251,11 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 			$GoogleIdentifier = GOOGLE_IDENTIFIER;
 
 			/* END Google Product Feed Fields */
-
 			if (DataExistsInOpenCart($db_oc, $oc_tableprefix . 'product', 'model', $myrow['stockid'])){
 				$Action = "Update";
 				// Let's get the OpenCart primary key for product
 				$ProductId = GetOpenCartProductId($Model, $db_oc, $oc_tableprefix);
-/*	ADAPT FIELD TO V2.3
-				$sqlUpdate = "UPDATE " . $oc_tableprefix . "product SET
-								sku = '" . $SKU . "',
-								mpn = '" . $MPN . "',
-								image = '" . $Image . "',
-								status = '" . $Status . "',
-								quantity = '" . $Quantity . "',
-								gpf_status = '" . $GPFStatus . "',
-								google_product_category = '" . $GoogleProductCategory . "',
-								brand = '" . $GoogleBrand . "',
-								gender = '" . $GoogleGender . "',
-								agegroup = '" . $GoogleAgeGroup . "',
-								`condition` = '" . $GoogleCondition . "',
-								oos_status = '" . $GoogleOosStatus . "',
-								identifier_exists = '" . $GoogleIdentifier . "',
-								manufacturer_id = '" . $ManufacturerId . "',
-								weight = '" . $Weight . "',
-								length = '" . $Length . "',
-								width = '" . $Width . "',
-								height = '" . $Height . "',
-								length_class_id = '" . $LenghtClassId . "'
-							WHERE product_id = '" . $ProductId . "'";
-*/
+
 				$sqlUpdate = "UPDATE " . $oc_tableprefix . "product SET
 								sku = '" . $SKU . "',
 								mpn = '" . $MPN . "',
@@ -317,86 +297,8 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 
 			}else{
 				$Action = "Insert";
-/*				$sqlInsert = "INSERT INTO " . $oc_tableprefix . "product
-								(model,
-								sku,
-								upc,
-								ean,
-								jan,
-								isbn,
-								mpn,
-								location,
-								quantity,
-								stock_status_id,
-								image,
-								manufacturer_id,
-								shipping,
-								price,
-								points,
-								tax_class_id,
-								date_available,
-								weight,
-								weight_class_id,
-								length,
-								width,
-								height,
-								length_class_id,
-								subtract,
-								minimum,
-								sort_order,
-								status,
-								viewed,
-								gpf_status,
-								google_product_category,
-								brand,
-								gender,
-								agegroup,
-								`condition`,
-								oos_status,
-								identifier_exists,
-								date_added,
-								date_modified)
-							VALUES
-								('" . $Model . "',
-								'" . $SKU . "',
-								'" . $UPC . "',
-								'" . $EAN . "',
-								'" . $JAN . "',
-								'" . $ISBN . "',
-								'" . $MPN . "',
-								'" . $Location . "',
-								'" . $Quantity . "',
-								'" . $StockStatusId . "',
-								'" . $Image . "',
-								'" . $ManufacturerId . "',
-								'" . $Shipping . "',
-								'" . $Price . "',
-								'" . $Points . "',
-								'" . $TaxClassId . "',
-								'" . $DateAvailable . "',
-								'" . $Weight . "',
-								'" . $WeightClassId . "',
-								'" . $Length . "',
-								'" . $Width . "',
-								'" . $Height . "',
-								'" . $LenghtClassId . "',
-								'" . $Subtract . "',
-								'" . $Minimum . "',
-								'" . $SortOrder . "',
-								'" . $Status . "',
-								'" . $Viewed . "',
-								'" . $GPFStatus . "',
-								'" . $GoogleProductCategory . "',
-								'" . $GoogleBrand . "',
-								'" . $GoogleGender . "',
-								'" . $GoogleAgeGroup . "',
-								'" . $GoogleCondition . "',
-								'" . $GoogleOosStatus . "',
-								'" . $GoogleIdentifier . "',
-								'" . $ServerNow . "',
-								'" . $ServerNow . "'
-								)";
-*/				$sqlInsert = "INSERT INTO " . $oc_tableprefix . "product
+
+				$sqlInsert = "INSERT INTO " . $oc_tableprefix . "product
 								(model,
 								sku,
 								upc,
@@ -539,12 +441,14 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 						<td class="number">%s</td>
 						<td>%s</td>
 						<td>%s</td>
+						<td>%s</td>
 						</tr>',
 						$Model,
 						$Name,
 						locale_number_format($Quantity,0),
 						locale_number_format($Price,0),
 						$StoreText,
+						$Tag,
 						$Action
 						);
 			}

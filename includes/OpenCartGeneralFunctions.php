@@ -1124,4 +1124,41 @@ function GetGoogleProductFeedCategory($StockId, $SalesCategory){
 	return $Category;
 }
 
+
+function CreateTagsForItem($Description, $LongDescription, $SalesCategoryName){
+	$ListOfTags = "";
+	$Separator = ", ";
+	//create a long string and look for keywords
+	$LongText = strtolower($Description . " " . $LongDescription . " " . $SalesCategoryName);
+	$SQL = "SELECT tagname
+			FROM stocktags
+			ORDER BY tagname";
+	$result = DB_query($SQL);
+	while ($myrow = DB_fetch_array($result)){
+		
+		if (StringContainsTag($LongText, $myrow['tagname'])){
+			// we found a tag in the text, so a candidate for tag
+			if ((InconsistentTag($ListOfTags, 'earring', $myrow['tagname'], 'ring')) == FALSE){
+				//  but, we must filter inconsistencies
+				if ($ListOfTags == ""){
+					// the very first one
+					$ListOfTags = $myrow['tagname'];
+				}else{
+					$ListOfTags = $ListOfTags. $Separator . $myrow['tagname'];
+				}
+			}
+		}
+	}
+	return $ListOfTags;
+}
+
+function StringContainsTag($HayStack, $Needle){
+	$Pos = stripos($HayStack, $Needle);
+	$Result = !($Pos === false);
+	return $Result;
+}
+
+function InconsistentTag($ListOfTags, $ExistingTag, $ProposedTag, $WrongTag){
+	return ((StringContainsTag($ListOfTags, $ExistingTag)) AND ($ProposedTag == $WrongTag));
+}
 ?>

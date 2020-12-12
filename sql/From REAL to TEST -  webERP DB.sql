@@ -492,6 +492,9 @@ INSERT INTO kurakura_kl_test_erp.stockrequestitems SELECT * FROM kurakura_kl_erp
 TRUNCATE kurakura_kl_test_erp.`stockserialitems`;
 INSERT INTO kurakura_kl_test_erp.stockserialitems SELECT * FROM kurakura_kl_erp.stockserialitems;
 
+TRUNCATE kurakura_kl_test_erp.`stocktags`;
+INSERT INTO kurakura_kl_test_erp.stocktags SELECT * FROM kurakura_kl_erp.stocktags;
+
 TRUNCATE kurakura_kl_test_erp.`stockserialmoves`;
 INSERT INTO kurakura_kl_test_erp.stockserialmoves SELECT * FROM kurakura_kl_erp.stockserialmoves;
 
