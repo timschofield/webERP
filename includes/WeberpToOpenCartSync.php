@@ -105,6 +105,7 @@ function WeberpToOpenCartHourlySync($ShowMessages, $db, $db_oc, $oc_tableprefix,
 function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText= ''){
 	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference($db));
 	$Today = date('Y-m-d');
+	$TagSeparator = ", ";
 
 	if ($EmailText !=''){
 		$EmailText = $EmailText . "Basic Product Information" . "\n" . PrintTimeInformation($db);
@@ -196,6 +197,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 			$Width = $myrow['width']/$FactorLenght; 
 			$Height = $myrow['height']/$FactorLenght; 
 			$LenghtClassId = 1; // Store in OC in cm
+			
 			$Subtract = 1;
 			$Minimum = 1;
 			$SortOrder = 1;
@@ -217,30 +219,36 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 			$LanguageId = 1; // webERP and OpenCart should have the same default language
 			$Name = $myrow['description'];
 			$webERPCategoryId = $myrow['categoryid'];
-			$Description =  str_replace("'", "\'", $myrow['longdescription']);
-			$MetaDescription = CreateMetaDescription($myrow['stockid'], trim($myrow['description']));
-			$MetaTitle = $MetaDescription;
-			$MetaKeyword = CreateMetaKeyword($myrow['stockid'], trim($myrow['description']));
-			$Tag = CreateTagsForItem($myrow['description'], $myrow['longdescription'], $myrow['salescatname']);
+			$LongDescription = CleanText($myrow['longdescription']); 
 			
 			if (ItemInList($webERPCategoryId, LIST_STOCK_CATEGORIES_KAPAL_LAUT)){
 				$StoreId = OPENCART_STORE_KAPAL_LAUT;
 				$StoreText = "KL";
+				$StoreName = META_STORE_NAME_KL;
 				$GoogleBrand = GOOGLE_BRAND_KL;
 			}elseif (ItemInList($webERPCategoryId, LIST_STOCK_CATEGORIES_BLINK)){
 				$StoreId = OPENCART_STORE_BLINK;
 				$StoreText = "Blink";
+				$StoreName = META_STORE_NAME_BL;
 				$GoogleBrand = GOOGLE_BRAND_BLINK;
 			}elseif (ItemInList($webERPCategoryId, LIST_STOCK_CATEGORIES_OUTLET)){
 				$StoreId = OPENCART_STORE_OUTLET;
 				$StoreText = "Outlet";
+				$StoreName = META_STORE_NAME_OU;
 				$GoogleBrand = GOOGLE_BRAND_OUTLET;
 			}else{
 				$StoreId = OPENCART_STORE_KAPAL_LAUT;
 				$StoreText = "KL";
+				$StoreName = META_STORE_NAME_KL;
 				$GoogleBrand = GOOGLE_BRAND_KL;
 			}
 			
+			/* Meta data */
+			$Tag = CreateTagsForItem($myrow['description'], $myrow['longdescription'], $myrow['salescatname']);
+			$MetaKeyword = $myrow['stockid'] . $TagSeparator . $StoreName . $TagSeparator . $Tag;
+			$MetaDescription = $myrow['stockid'] . " " . $LongDescription;
+			$MetaTitle = $myrow['stockid'] . " " . $Name;
+
 			/* Google Product Feed Fields */
 			$MPN = $myrow['stockid'];
 			$GPFStatus = GetGoogleProductFeedStatus($myrow['stockid'], $myrow['salescatid'], $Quantity);
@@ -274,7 +282,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 
 				$sqlUpdate = "UPDATE " . $oc_tableprefix . "product_description SET
 								name = '" . $Name . "',
-								description = '" . $Description . "',
+								description = '" . $LongDescription . "',
 								meta_description = '" . $MetaDescription . "',
 								meta_title = '" . $MetaTitle . "',
 								meta_keyword = '" . $MetaKeyword . "',
@@ -372,7 +380,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 								('" . $ProductId . "',
 								'" . $LanguageId . "',
 								'" . $Name . "',
-								'" . $Description . "',
+								'" . $LongDescription . "',
 								'" . $MetaDescription . "',
 								'" . $MetaTitle . "',
 								'" . $MetaKeyword . "',
@@ -824,16 +832,16 @@ function SyncProductDescriptionTranslations($ShowMessages, $LastTimeRun, $db, $d
 				if ($LanguageId != ""){
 
 					$Name = $myrow['descriptiontranslation'];
-					$Description =  str_replace("'", "\'", $myrow['longdescriptiontranslation']);
+					$LongDescription =  str_replace("'", "\'", $myrow['longdescriptiontranslation']);
 					$MetaDescription = CreateMetaDescription($myrow['stockid'], trim($myrow['descriptiontranslation']));
-					$MetaKeyword = CreateMetaKeyword($myrow['stockid'], trim($myrow['descriptiontranslation']));
-					$Tag = $myrow['descriptiontranslation'];
+//					$MetaKeyword = CreateMetaKeyword($myrow['stockid'], trim($myrow['descriptiontranslation']));
+//					$Tag = $myrow['descriptiontranslation'];
 
 					if (DataExistsInOpenCart($db_oc, $oc_tableprefix . 'product_description', 'product_id', $ProductId, 'language_id', $LanguageId )){
 						$Action = "Update";
 						$sqlUpdate = "UPDATE " . $oc_tableprefix . "product_description SET
 										name = '" . $Name . "',
-										description = '" . $Description . "',
+										description = '" . $LongDescription . "',
 										meta_description = '" . $MetaDescription . "',
 										meta_keyword = '" . $MetaKeyword . "',
 										tag = '" . $Tag . "'
@@ -855,7 +863,7 @@ function SyncProductDescriptionTranslations($ShowMessages, $LastTimeRun, $db, $d
 										('" . $ProductId . "',
 										'" . $LanguageId . "',
 										'" . $Name . "',
-										'" . $Description . "',
+										'" . $LongDescription . "',
 										'" . $MetaDescription . "',
 										'" . $MetaKeyword . "',
 										'" . $Tag . "'
@@ -1057,7 +1065,6 @@ function SyncSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_table
 			$Description = trim($myrow['salescatname']);
 			$MetaTitle = trim($myrow['salescatname']);
 			$MetaDescription = CreateMetaDescription('Sales category', trim($myrow['salescatname']));
-			$MetaKeyword = CreateMetaKeyword('', trim($myrow['salescatname']));
 			$CategoryId = $myrow['salescatid'];
 			if (DataExistsInOpenCart($db_oc, $oc_tableprefix . 'category', 'category_id', $myrow['salescatid'])){
 				$Action = "Update";

@@ -180,6 +180,7 @@ define('FEATURED_IN_WEBSITE_AS_TOP_SALES',20);
 
 define('ITEM_EXCLUDED_FROM_WEBSITE',-9999);
 
+/* Sales Categories based on type of item*/
 define('KL_JEWELLERY',5);
 define('KL_RINGS',31);
 define('KL_BRACELETS',32);
@@ -191,7 +192,6 @@ define('KL_TOERINGS',58);
 define('KL_SLIMRINGS',67);
 define('KL_EARCUFFS',71);
 define('KL_BROOCHES',82);
-
 define('BLINK_JEWELLERY',14);
 define('BLINK_RINGS',35);
 define('BLINK_BRACELETS',36);
@@ -201,13 +201,10 @@ define('BLINK_NECKLACES',50);
 define('BLINK_EARCUFFS',72);
 define('BLINK_BROOCHES',77);
 define('BLINK_KEYHOLDERS',84);
-
 define('BAGS',29);
-
 define('GENERAL_ACCESSORIES',88);
 define('GE_JEWELLERY_ROLLS',89);
 define('GE_FACEMASKS',90);
-
 define('JEWELLERY_ON_SPECIAL',51);
 define('RINGS_ON_SPECIAL',52);
 define('BRACELETS_ON_SPECIAL',53);
@@ -221,7 +218,6 @@ define('BROOCHES_ON_SPECIAL',81);
 define('KEYHOLDERS_ON_SPECIAL',85);
 define('JEWELLERY_ROLLS_ON_SPECIAL',91);
 define('FACEMASKS_ON_SPECIAL',92);
-
 define('CLASSIC_JEWELLERY',61);
 define('CLASSIC_RINGS',62);
 define('CLASSIC_BRACELETS',63);
@@ -230,11 +226,6 @@ define('CLASSIC_PENDANTS',65);
 define('CLASSIC_NECKLACES',66);
 define('CLASSIC_EARCUFFS',75);
 define('CLASSIC_BROOCHES',80);
-
-define('WORLD_BRAND_JEWELLERY',68);
-define('WORLD_BRAND_PLATADEPALO',69);
-define('WORLD_BRAND_HIPANEMA',70);
-define('WORLD_BRAND_DESIGUAL',83);
 
 
 //********************************************************************************
@@ -342,6 +333,11 @@ define("ABSOLUTE_PATH_WEBERP_TEST", '/var/www/vhosts/kapal-laut.com/ptadu.com/TE
 define("PATH_OPENCART_IMAGES", 'catalog/KL/part_pics/');
 define("PATH_OPENCART_BASE", 'http://www.kapal-laut.com');
 define("ROUTE_TO_PRODUCT", 'index.php?route=product/product&');
+
+// META DATA
+define("META_STORE_NAME_KL", "Kapal-Laut Jewellery");
+define("META_STORE_NAME_BL", "Blink by Kapal-Laut");
+define("META_STORE_NAME_OU", "Outlet by Kapal-Laut");
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////

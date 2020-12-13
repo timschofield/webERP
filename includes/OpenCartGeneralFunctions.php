@@ -663,7 +663,6 @@ function UpdateSettingValueOpenCartByCodeAndKey($Store, $Code, $Key, $Value, $db
 }
 
 function CreateMetaDescription($Group, $Item){
-//	$MetaDescription = $_SESSION['ShopName'] . ' ' . $Group . ' ' . $Item;
 	$MetaDescription = $Group . ' ' . $Item;
 	return $MetaDescription;
 }
@@ -689,6 +688,13 @@ function CreateSEOKeyword($KeyWord){
 	return $SEOKeyword;
 }
 
+function CleanText($MessedText){
+	$CleanText = strip_tags($MessedText);
+	$CleanText = str_ireplace('/', '', $CleanText);
+	$CleanText = str_ireplace("\'", '', $CleanText);
+	$CleanText = str_ireplace('"', '', $CleanText);
+	return $CleanText;
+}
 
 Function GetNextSequenceNo ($SequenceType){
 
