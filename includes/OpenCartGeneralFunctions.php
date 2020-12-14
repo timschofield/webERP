@@ -485,6 +485,18 @@ function GetOnlinePriceList($db){
 	}
 }
 
+/* function GetDiscountFromCouponOpenCart($CouponCode, $db_oc, $oc_tableprefix){
+	$SQL = "SELECT discount,
+					type
+			FROM " . $oc_tableprefix . "coupon
+			WHERE coupon_id = '" . $CouponCode . "'";
+
+	$ErrMsg =_('Could not get the coupon discount in OpenCart because');
+	$result = DB_query_oc($SQL,$ErrMsg);
+	$myrow = DB_fetch_array($result);
+	return array($myrow['discount'], $myrow['type']);
+}*/
+
 function GetDiscount($DiscountCategory, $Quantity, $PriceList, $db){
 	/* Select the disount rate from the discount Matrix */
 	$result = DB_query("SELECT MAX(discountrate) AS discount

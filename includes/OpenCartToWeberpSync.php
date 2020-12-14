@@ -377,68 +377,32 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db,
 					$ItemsOrder++;
 					// we need to register the coupon use
 					$CouponCode = GetTotalTitleFromOrder("coupon", $myrow['order_id'], $db_oc, $oc_tableprefix);
-					if (strpos(strtoupper($CouponCode),"VBE-") !== false){
+//					($CouponDiscount, $CouponType) = GetDiscountFromCouponOpenCart($CouponCode, $db_oc, $oc_tableprefix);
+					
+					if (strpos(strtoupper($CouponCode),"VBP-") !== false){ 
+						// the 100% VIP Cards
+						$CouponStockId = OPENCART_VIP_PLATINUM_CODE;
+					}else if (strpos(strtoupper($CouponCode),"VBE-") !== false){ 
+						// the 50% VIP cards
 						$CouponStockId = OPENCART_VIP_ELITE_CODE;
-					}else if (strpos(strtoupper($CouponCode),"VBG-") !== false){
+					}else if (strpos(strtoupper($CouponCode),"VBG-") !== false){ 
+						// the 30% VIP Cards
 						$CouponStockId = OPENCART_VIP_GOLD_CODE;
 					}else if (strpos(strtoupper($CouponCode),"VBS-") !== false){
+						// the 15% VIP Cards
 						$CouponStockId = OPENCART_VIP_SILVER_CODE;
+					}else if (strpos(strtoupper($CouponCode),"VN1-") !== false){
+						// the 10% online cards
+						$CouponStockId = OPENCART_VIP_ONLINE_CODE;
 					}else if (strpos(strtoupper($CouponCode),"RF-") !== false){
-						$CouponStockId = OPENCART_CUSTOMER_REFUND_CODE;  // Customer refunds
-					}else if (strpos(strtoupper($CouponCode),"AUSDAY") !== false){   // Australia Day
-						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
-					}else if (strpos(strtoupper($CouponCode),"BLFDAY") !== false){   // Black Friday Day
-						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
-					}else if (strpos(strtoupper($CouponCode),"CANDAY") !== false){   // Canada Day
-						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
-					}else if (strpos(strtoupper($CouponCode),"CHIDAY") !== false){   // China Day
-						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
-					}else if (strpos(strtoupper($CouponCode),"DADDAY") !== false){   // Dad's Day
-						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
-					}else if (strpos(strtoupper($CouponCode),"DOUDAY") !== false){   // China Double Seven Festival Day
-						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
-					}else if (strpos(strtoupper($CouponCode),"FRADAY") !== false){    // France Day
-						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
-					}else if (strpos(strtoupper($CouponCode),"GERDAY") !== false){    // German Day
-						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
-					}else if (strpos(strtoupper($CouponCode),"IDULAD") !== false){    // Idul Adha Day
-						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
-					}else if (strpos(strtoupper($CouponCode),"IDULFI") !== false){    // Idul Fitri Day
-						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
-					}else if (strpos(strtoupper($CouponCode),"INDDAY") !== false){    // Indonesia Day
-						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
-					}else if (strpos(strtoupper($CouponCode),"KARTINI") !== false){   // Indonesia Kartini Day
-						$CouponStockId = OPENCART_KARTINI_DAY_DISCOUNT_CODE;
-					}else if (strpos(strtoupper($CouponCode),"MALDAY") !== false){    // Malaysia Day
-						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
-					}else if (strpos(strtoupper($CouponCode),"THADAY") !== false){    // ThanksGiving Day
-						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
-					}else if (strpos(strtoupper($CouponCode),"SNGDAY") !== false){    // Singapore Day
-						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
-					}else if (strpos(strtoupper($CouponCode),"USADAY") !== false){    // USA Day
-						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
-					}else if (strpos(strtoupper($CouponCode),"AVIDAY") !== false){    // USA Aviation Day
-						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
-					}else if (strpos(strtoupper($CouponCode),"WOEDAY") !== false){    // USA Wonen's Equality Day
-						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
-					}else if (strpos(strtoupper($CouponCode),"BIRTHDAY") !== false){  // Birthday mailing
-						$CouponStockId = OPENCART_BIRTHDAY_DISCOUNT_CODE;
-					}else if (strpos(strtoupper($CouponCode),"MOTHER") !== false){    // Mother's Day
-						$CouponStockId = OPENCART_MOTHERS_DAY_DISCOUNT_CODE;
-					}else if (strpos(strtoupper($CouponCode),"VALENTINE") !== false){ // Valentine's Day
-						$CouponStockId = OPENCART_VALENTINE_DAY_DISCOUNT_CODE;
-					}else if (strpos(strtoupper($CouponCode),OPENCART_GIFT_100K_CODE) !== false){
-						$CouponStockId = OPENCART_GIFT_100K_CODE;
-					}else if (strpos(strtoupper($CouponCode),OPENCART_GIFT_125K_CODE) !== false){
-						$CouponStockId = OPENCART_GIFT_125K_CODE;
-					}else if (strpos(strtoupper($CouponCode),OPENCART_GIFT_250K_CODE) !== false){
-						$CouponStockId = OPENCART_GIFT_250K_CODE;
-					}else if (strpos(strtoupper($CouponCode),OPENCART_GIFT_300K_CODE) !== false){
-						$CouponStockId = OPENCART_GIFT_300K_CODE;
+						// customer refunds for any reason
+						$CouponStockId = OPENCART_CUSTOMER_REFUND_CODE;  
 					}else if (strpos(strtoupper($CouponCode),"WH-") !== false){
+						// wholesale vouches for any reason
 						$CouponStockId = OPENCART_WHOLESALE_DISCOUNT;
 					}else{
-						$CouponStockId = OPENCART_ONLINE_COUPON_CODE;
+						// any other promotional discount
+						$CouponStockId = OPENCART_PROMOTION_DISCOUNT_CODE;
 					}
 					$CouponQty = 1;
 					if ($Action == "Update"){
