@@ -32,7 +32,7 @@ function WeberpToOpenCartDailySync($ShowMessages, $db, $db_oc, $oc_tableprefix, 
 //	$EmailText = SyncFeaturedList($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
 
 	// update sales categories
-	$EmailText = SyncSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
+//	$EmailText = SyncSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
 
 	// activate / inactivate categories depending on items No items = inactive. Items = Active
 	$EmailText = ActivateCategoryDependingOnQOH($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
