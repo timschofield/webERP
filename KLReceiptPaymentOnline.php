@@ -107,7 +107,7 @@ if ($_GET['PaymentCode'] != "MANUAL_MARKETPLACE") {
 			$GLAccountCommissionPPN = ACCOUNT_PPN_BB;
 			$Commission = CalculateCommissionShopee($_GET['CustomerCode'], $_GET['OrderNo'], $TotalAmount);
 		}
-		$CommissionPPN = round($Commission * PPN_PERCENT / 100, 0);
+		$CommissionPPN = round($Commission * PPN_PERCENT / 100, 0, ROUND_HALF_DOWN);
 		$NetAmount = $TotalAmount - $Commission - $CommissionPPN;
 	}
 
