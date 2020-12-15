@@ -2374,7 +2374,8 @@ function ItemsInmediateShortage($Cat, $RootPath, $db){
 
 
 function ItemsInKLProcessAndRLNotZero($RootPath, $db){
-	/* Check if there is any item in any KL process and RL is not zero... */
+	/* Check if there is any item in any KL process and RL is not zero... 
+	Online shop location is excluded as it is not a real RL, stock still is at kantor */
 
 	$SQL = "SELECT stockmaster.stockid,			
 				   stockmaster.description,			
@@ -2390,6 +2391,7 @@ function ItemsInKLProcessAndRLNotZero($RootPath, $db){
 			INNER JOIN locations 			
 			ON locstock.loccode = locations.loccode			
 			WHERE locstock.reorderlevel != 0
+				AND locstock.loccode NOT IN " . LIST_ONLINE_SHOPS . "
 				AND (stockmaster.klmovingdiscount20 != 0
 					OR  stockmaster.klmovingdiscount50 != 0
 					OR  stockmaster.klmovingdiscount80 != 0
