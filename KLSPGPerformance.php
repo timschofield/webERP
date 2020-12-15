@@ -28,61 +28,7 @@ if ($KL_SystemAdmin
 	AverageSales("SPG", 365, 90, 30, 15, 7, 1,30, "CurrentYear", "All", $db);
 	$NumberOfTestExecuted++;
 
-	SPGPerformanceByShop("RETAIL66", 30, 60, 90, $db);
-	$NumberOfTestExecuted++;
-	SPGPerformanceByShop("RETAILSE", 30, 60, 90, $db);
-	$NumberOfTestExecuted++;
-	SPGPerformanceByShop("RETAILOB", 30, 60, 90, $db);
-	$NumberOfTestExecuted++;
-	SPGPerformanceByShop("RETAILO2", 30, 60, 90, $db);
-	$NumberOfTestExecuted++;
-	SPGPerformanceByShop("RETAILKA", 30, 60, 90, $db);
-	$NumberOfTestExecuted++;
-	SPGPerformanceByShop("RETAILPS", 30, 60, 90, $db);
-	$NumberOfTestExecuted++;
-	SPGPerformanceByShop("RETAILAR", 30, 60, 90, $db);
-	$NumberOfTestExecuted++;
-	SPGPerformanceByShop("RETAILK2", 30, 60, 90, $db);
-	$NumberOfTestExecuted++;
-
-	SPGPerformanceByShop("RETAILKS", 30, 60, 90, $db);
-	$NumberOfTestExecuted++;
-	SPGPerformanceByShop("RETAILPA", 30, 60, 90, $db);
-	$NumberOfTestExecuted++;
-	SPGPerformanceByShop("RETAILPB", 30, 60, 90, $db);
-	$NumberOfTestExecuted++;
-	SPGPerformanceByShop("RETAILBK", 30, 60, 90, $db);
-	$NumberOfTestExecuted++;
-	SPGPerformanceByShop("RETAILBL", 30, 60, 90, $db);
-	$NumberOfTestExecuted++;
-
-	SPGPerformanceByShop("RETAILSA", 30, 60, 90, $db);
-	$NumberOfTestExecuted++;
-	SPGPerformanceByShop("RETAILSB", 30, 60, 90, $db);
-	$NumberOfTestExecuted++;
-	SPGPerformanceByShop("RETAILSU", 30, 60, 90, $db);
-	$NumberOfTestExecuted++;
-	SPGPerformanceByShop("RETAILSS", 30, 60, 90, $db);
-	$NumberOfTestExecuted++;
-
-	SPGPerformanceByShop("RETAILUB", 30, 60, 90, $db);
-	$NumberOfTestExecuted++;
-	SPGPerformanceByShop("RETAILM2", 30, 60, 90, $db);
-	$NumberOfTestExecuted++;
-	SPGPerformanceByShop("RETAILMU", 30, 60, 90, $db);
-	$NumberOfTestExecuted++;
-	SPGPerformanceByShop("RETAILPU", 30, 60, 90, $db);
-	$NumberOfTestExecuted++;
-	SPGPerformanceByShop("RETAILBU", 30, 60, 90, $db);
-	$NumberOfTestExecuted++;
-	SPGPerformanceByShop("RETAILU2", 30, 60, 90, $db);
-	$NumberOfTestExecuted++;
-	SPGPerformanceByShop("RETAILU3", 30, 60, 90, $db);
-	$NumberOfTestExecuted++;
-	
-	SPGPerformanceByShop("RETAILBB", 30, 60, 90, $db);
-	$NumberOfTestExecuted++;
-	SPGPerformanceByShop("RETAILTB", 30, 60, 90, $db);
+	SPGPerformanceAllShops(30, 60, 90, $db);
 	$NumberOfTestExecuted++;
 
 	HourlySales(30,$RootPath, $db);
@@ -233,6 +179,18 @@ function RetailTypePayments($typereport, $maxdays, $db){
 		
 		echo '</table>
 				</div>';
+	}
+}
+
+function SPGPerformanceAllShops($NumDaysA, $NumDaysB, $NumDaysC, $db){
+	$SQL = "SELECT locations.cashsalecustomer
+			FROM locations
+			WHERE locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . "
+			ORDER BY locations.zone,
+				locations.loccode";
+	$result = DB_query($SQL);
+	while ($myrow = DB_fetch_array($result)) {
+		SPGPerformanceByShop($myrow['cashsalecustomer'], $NumDaysA, $NumDaysB, $NumDaysC, $db);
 	}
 }
 
