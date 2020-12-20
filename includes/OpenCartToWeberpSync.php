@@ -170,7 +170,7 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db,
 			$Quotation = 1; // is NOT a firm order until we check the payments
 			$FreightCost = RoundPriceFromCart(GetTotalFromOrder("shipping", $myrow['order_id'], $db_oc, $oc_tableprefix) * $myrow['currency_value'],$myrow['currency_code']);
 			$CouponDiscount = RoundPriceFromCart(GetTotalFromOrder("coupon", $myrow['order_id'], $db_oc, $oc_tableprefix) * $myrow['currency_value'],$myrow['currency_code']);
-			$OrderDiscount = RoundPriceFromCart(GetTotalFromOrder("dco", $myrow['order_id'], $db_oc, $oc_tableprefix) * $myrow['currency_value'],$myrow['currency_code']);
+			$OrderDiscount = RoundPriceFromCart(GetTotalFromOrder("discountrule", $myrow['order_id'], $db_oc, $oc_tableprefix) * $myrow['currency_value'],$myrow['currency_code']);
 			$OpenCartOrderNumber = $myrow['order_id'];
 			$Salesman = OPENCART_DEFAULT_SALESMAN;
 			$Location = OPENCART_DEFAULT_LOCATION;
@@ -456,8 +456,10 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db,
 				if ($OrderDiscount != 0){
 					$ItemsOrder++;
 					// we need to register the dco discount use (GENERAL ORDER DISCOUNT)
-					$DiscountCode = GetTotalTitleFromOrder("dco", $myrow['order_id'], $db_oc, $oc_tableprefix);
-					if (strpos(strtoupper($DiscountCode),"20") !== false){
+					$DiscountCode = GetTotalTitleFromOrder("discountrule", $myrow['order_id'], $db_oc, $oc_tableprefix);
+					if (strpos(strtoupper($DiscountCode),"10") !== false){
+						$DiscountStockId = OPENCART_ONLINE_ORDER_DISCOUNT10;
+					}else if (strpos(strtoupper($DiscountCode),"20") !== false){
 						$DiscountStockId = OPENCART_ONLINE_ORDER_DISCOUNT20;
 					}else if (strpos(strtoupper($DiscountCode),"30") !== false){
 						$DiscountStockId = OPENCART_ONLINE_ORDER_DISCOUNT30;
@@ -468,7 +470,7 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db,
 					}else if (strpos(strtoupper($DiscountCode),"60") !== false){
 						$DiscountStockId = OPENCART_ONLINE_ORDER_DISCOUNT60;
 					}else{
-						$DiscountStockId = OPENCART_ONLINE_ORDER_DISCOUNT10;
+						$DiscountStockId = OPENCART_WHOLESALE_DISCOUNT;
 					}
 					$DiscountQty = 1;
 					

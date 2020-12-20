@@ -166,6 +166,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 			/* Field Matching */
 			$Model = $myrow['stockid'];
 			$SKU = $myrow['stockid'];
+			$MPN = $myrow['stockid'];
 			$UPC = '';
 			$EAN = '';
 			$JAN = '';
@@ -237,6 +238,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 				$StoreName = META_STORE_NAME_OU;
 				$GoogleBrand = GOOGLE_BRAND_OUTLET;
 			}else{
+				// it's a general item, so we assign first to KL.
 				$StoreId = OPENCART_STORE_KAPAL_LAUT;
 				$StoreText = "KL";
 				$StoreName = META_STORE_NAME_KL;
@@ -250,7 +252,6 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 			$MetaTitle = $myrow['stockid'] . " " . $Name;
 
 			/* Google Product Feed Fields */
-			$MPN = $myrow['stockid'];
 			$GPFStatus = GetGoogleProductFeedStatus($myrow['stockid'], $myrow['salescatid'], $Quantity);
 			$GoogleProductCategory = GetGoogleProductFeedCategory($myrow['stockid'], $myrow['salescatid']);
 			$GoogleGender = GOOGLE_GENDER;
@@ -258,8 +259,8 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 			$GoogleCondition = GOOGLE_CONDITION;
 			$GoogleOosStatus = GOOGLE_OOS_STATUS;
 			$GoogleIdentifier = GOOGLE_IDENTIFIER;
-
-			/* END Google Product Feed Fields */
+			
+			/* Now, insert it or update it */
 			if (DataExistsInOpenCart($db_oc, $oc_tableprefix . 'product', 'model', $myrow['stockid'])){
 				$Action = "Update";
 				// Let's get the OpenCart primary key for product

@@ -204,7 +204,7 @@ if (DB_num_rows($result) != 0){
 				$WebsiteCategory = WebsiteCategoryDiscount($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
 				if ($WebsiteCategory > 0){
 					DeleteWebsiteSalesCategories($myrow['stockid'], $UpdateDB, $db);
-					$Brand = 3;
+					$Brand = FindWebsiteBrand($myrow['stockid'], $myrow['categoryid']);
 					InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $Brand, FALSE, $FeaturedAsTopSales, $UpdateDB, $db);
 					$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
 					$ItemsAdded++;
@@ -212,7 +212,7 @@ if (DB_num_rows($result) != 0){
 					// Mirar si pertany a super categoria SILVER KL
 					$WebsiteCategory = WebsiteCategorySilverJewellery($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
 					if ($WebsiteCategory > 0){
-						$Brand = 1;
+						$Brand = FindWebsiteBrand($myrow['stockid'], $myrow['categoryid']);
 						InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $Brand, FALSE, $FeaturedAsTopSales, $UpdateDB, $db);
 						$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
 						$ItemsAdded++;
@@ -220,7 +220,7 @@ if (DB_num_rows($result) != 0){
 						// Mirar si pertany a super categoria BLINK JEWELLERY
 						$WebsiteCategory = WebsiteCategoryBlinkJewellery($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
 						if ($WebsiteCategory > 0){
-							$Brand = 2;
+							$Brand = FindWebsiteBrand($myrow['stockid'], $myrow['categoryid']);
 							InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $Brand, FALSE, $FeaturedAsTopSales, $UpdateDB, $db);
 							$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
 							$ItemsAdded++;
@@ -228,7 +228,7 @@ if (DB_num_rows($result) != 0){
 							// Mirar si pertany a super categoria CLASSIC
 							$WebsiteCategory = WebsiteCategoryClassic($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
 							if ($WebsiteCategory > 0){
-								$Brand = 1;
+								$Brand = FindWebsiteBrand($myrow['stockid'], $myrow['categoryid']);
 								InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $Brand, FALSE, $FeaturedAsTopSales, $UpdateDB, $db);
 								$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
 								$ItemsAdded++;
@@ -236,7 +236,7 @@ if (DB_num_rows($result) != 0){
 								// Mirar si pertany a super categoria BAGS
 								$WebsiteCategory = WebsiteCategoryBags($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
 								if ($WebsiteCategory > 0){
-									$Brand = 2;
+									$Brand = FindWebsiteBrand($myrow['stockid'], $myrow['categoryid']);
 									InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $Brand, FALSE, $FeaturedAsTopSales, $UpdateDB, $db);
 									$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
 									$ItemsAdded++;
@@ -293,6 +293,13 @@ if (DB_num_rows($result) != 0){
 			</div>';
 	prnMsg("Number of items associated to website catalog: " . locale_number_format($ItemsAdded));
 }
+
+time_finish($begintime);
+include ('includes/footer.php');
+
+/********************************************************************************************************
+				Associated functions 
+*********************************************************************************************************/
 
 function InsertWebsiteSalesCategory($Stockid, $WebsiteCategory, $Manufacturers_id, $MultipleCategories, $Featured, $UpdateDB, $db){
 	if($UpdateDB){
@@ -596,7 +603,6 @@ function WebsiteCategoryDiscount($StockId, $Description, $Long, $Category){
 	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isJewelleryRoll($StockId)){
 		$WebCat = JEWELLERY_ROLLS_ON_SPECIAL;	
 	}	
-
 	return $WebCat; 
 }
 
@@ -612,8 +618,34 @@ function FindWebsiteDescription($WebsiteCategory, $db){
 	return $WebsiteDescription;
 }
 
-time_finish($begintime);
-include ('includes/footer.php');
+function FindWebsiteBrand($StockID, $Category){
+	if (ItemInList($Category, LIST_STOCK_CATEGORIES_KAPAL_LAUT)){
+		// if belongs to one of the KL categories, so Brand is KL
+		$Brand = 1;	
+	}else if (ItemInList($Category, LIST_STOCK_CATEGORIES_BLINK)){
+		// if belongs to one of the BL categories, so Brand is BL
+		$Brand = 2;	
+	}else if (ItemInList($Category, LIST_STOCK_CATEGORIES_GENERAL)){
+		// if belongs to one of the General categories, so Brand is KL
+		$Brand = 1;	
+	}else{
+		//should be a discounted item, we keep the previous brand if still available, otherwise assing the outlet brand
+		$SQL = "SELECT manufacturers_id
+				FROM salescatprod 
+				WHERE stockid = '" . $Stockid . "'";
+		$result = DB_query($SQL);
+		if (DB_num_rows($result) != 0){
+			// assign the current brand
+			$myrow = DB_fetch_array($result);
+			$Brand = $myrow['manufacturers_id'];	
+		}else{
+			// we are lost... so assign the outlet one
+			$Brand = 3;	
+		}
+	}
+	return $Brand;
+}
+
 
 function ItemFeaturedAsTopSale($StockID, $Category, $DaysTopSales, $db){
 	$Featured = FALSE;
