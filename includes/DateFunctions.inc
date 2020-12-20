@@ -988,13 +988,18 @@ function CalcEarliestDispatchDate (){
 }
 
 function CreatePeriod($PeriodNo, $PeriodEnd) {
-				$GetPrdSQL = "INSERT INTO periods (periodno,
-													lastdate_in_period)
-												VALUES (
-													'" . $PeriodNo . "',
-													'" . Date('Y-m-d', $PeriodEnd) . "')";
-				$ErrMsg = _('An error occurred in adding a new period number');
-				$GetPrdResult = DB_query($GetPrdSQL, $ErrMsg);
+	$GetPrdSQL = "INSERT INTO periods (periodno,
+										lastdate_in_period)
+									VALUES (
+										'" . $PeriodNo . "',
+										'" . Date('Y-m-d', $PeriodEnd) . "')";
+	$ErrMsg = _('An error occurred in adding a new period number');
+	$GetPrdResult = DB_query($GetPrdSQL, $ErrMsg);
+
+	$TotalsSQL = "INSERT INTO gltotals (account, period, amount)
+				SELECT accountcode, '" . $PeriodNo . "', 0 FROM chartmaster";
+	$ErrMsg = _('An error occurred in adding a new period number to the gltotals table');
+	$TotalsResult = DB_query($TotalsSQL, $ErrMsg);
 
 }
 
