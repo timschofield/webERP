@@ -75,14 +75,17 @@ function WeberpToOpenCartHourlySync($ShowMessages, $db, $db_oc, $oc_tableprefix,
 	// update product basic information
 	$EmailText = SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
 
-	// update product - sales categories relationship
-	$EmailText = SyncProductSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
-
 	// update product prices
 	$EmailText = SyncProductPrices($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
 
 	// update stock in hand
 	$EmailText = SyncProductQOH($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
+
+	// update product - sales categories relationship
+	$EmailText = SyncProductSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
+
+	// Purge Any Product left with Discount over 50%. This happens somethimes when products move from 50% to 80% discount.
+	$EmailText = PurgeDiscountOver50($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
 
 	// update description translations
 //	$EmailText = SyncProductDescriptionTranslations($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
@@ -473,6 +476,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 	if ($EmailText !=''){
 		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . _('Product Basic Info synchronized from webERP to OpenCart') . "\n\n";
 	}
+
 	return $EmailText;
 }
 
@@ -777,6 +781,32 @@ function SyncProductQOH($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefi
 
 	return $EmailText;
 }
+
+function PurgeDiscountOver50($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText=''){
+
+	if ($EmailText !=''){
+		$EmailText = $EmailText . "Purge Products with Discount Over 50%" . "\n" . PrintTimeInformation($db);
+	}
+
+	// if original price is more than 2 times the special price, it means discount > 50%. Set as disabled.
+	$sqlUpdate = "UPDATE oc_product, oc_product_special
+			SET oc_product.status = 0
+			WHERE oc_product.product_id = oc_product_special.product_id
+			AND oc_product.price / oc_product_special.price > 2
+			AND oc_product.status = 1;";
+
+	$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
+	
+	if ($ShowMessages){
+		prnMsg('Purged Products with Discount Over 50%','success');
+	}
+	if ($EmailText !=''){
+		$EmailText = $EmailText . " Purged Products with Discount Over 50%" . "\n";
+	}
+
+	return $EmailText;
+}
+
 
 function SyncProductDescriptionTranslations($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText=''){
 
