@@ -218,14 +218,6 @@ define('BROOCHES_ON_SPECIAL',81);
 define('KEYHOLDERS_ON_SPECIAL',85);
 define('JEWELLERY_ROLLS_ON_SPECIAL',91);
 define('FACEMASKS_ON_SPECIAL',92);
-define('CLASSIC_JEWELLERY',61);
-define('CLASSIC_RINGS',62);
-define('CLASSIC_BRACELETS',63);
-define('CLASSIC_EARRINGS',64);
-define('CLASSIC_PENDANTS',65);
-define('CLASSIC_NECKLACES',66);
-define('CLASSIC_EARCUFFS',75);
-define('CLASSIC_BROOCHES',80);
 
 
 //********************************************************************************
@@ -245,7 +237,7 @@ define("WEBERP_DISCOUNTS_IN_OPENCART_TABLE", 'product_special');
 
 define("ONLINESHOP_OUTLET_SALES_CATEGORIES", '51,52,53,54,55,56,59,60,74,81,85,91,92');
 
-define("SALES_CATEGORIES_FOR_GOOGLE_PRODUCT_FEED", '31,32,33,34,36,37,50,38,35,43,44,45,46,47,48,51,52,53,54,55,56,40,41,49,42,39,61,62,63,64,65,66,67,71,72,73,74,75,76,88,89');
+define("SALES_CATEGORIES_FOR_GOOGLE_PRODUCT_FEED", '31,32,33,34,36,37,50,38,35,43,44,45,46,47,48,51,52,53,54,55,56,40,41,49,42,39,67,71,72,73,74,76,80,89');
 
 define("GOOGLE_BRAND_KL", 'Kapal-Laut. Your Essential Jewellery');
 define("GOOGLE_BRAND_BLINK", 'Blink by Kapal-Laut');
@@ -309,7 +301,6 @@ define("OPENCART_WHOLESALE_DISCOUNT", 'WHOLESALE-DISCOUNT');
 define("OPENCART_DEFAULT_PAYMENT_SYSTEM", 'PayPal');
 define("OPENCART_DOKU_PAYMENT_SYSTEM", 'Doku');
 
-
 define("OPENCART_ORDER_STATUS_PENDING", 1);
 define("OPENCART_ORDER_STATUS_PROCESSING", 2);
 define("OPENCART_ORDER_STATUS_SHIPPED", 3);
@@ -317,13 +308,11 @@ define("OPENCART_ORDER_STATUS_COMPLETE", 5);
 define("OPENCART_ORDER_STATUS_CANCELLED", 7);
 define("OPENCART_ORDER_STATUS_EXPIRED", 14);
 
-
 /* HARD CODED PATHS */
 define("ABSOLUTE_PATH_OPENCART_IMAGES", '/var/www/vhosts/kapal-laut.com/httpdocs/image/data/KL/part_pics/');
 define("ABSOLUTE_PATH_WEBERP", '/var/www/vhosts/kapal-laut.com/ptadu.com/weberp/');
 define("ABSOLUTE_PATH_WEBERP_TEST", '/var/www/vhosts/kapal-laut.com/ptadu.com/TEST/weberp/');
 
-//define("PATH_OPENCART_IMAGES", 'data/KL/part_pics/');
 define("PATH_OPENCART_IMAGES", 'catalog/KL/part_pics/');
 define("PATH_OPENCART_BASE", 'http://www.kapal-laut.com');
 define("ROUTE_TO_PRODUCT", 'index.php?route=product/product&');
