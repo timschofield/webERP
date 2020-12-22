@@ -1097,6 +1097,7 @@ function RoundPriceFromCart($value, $currency){
 }
 
 function GetWeberpShippingMethod($OpenCartShippingMethod){
+	$OpenCartShippingMethod = strtoupper($OpenCartShippingMethod);
 	if (strpos($OpenCartShippingMethod, SHIPMENT01_OPENCART_TEXT) > 0){
 		$WeberpShipping = SHIPMENT01_WEBERP_CODE;
 	}elseif (strpos($OpenCartShippingMethod, SHIPMENT02_OPENCART_TEXT) > 0){
@@ -1107,6 +1108,14 @@ function GetWeberpShippingMethod($OpenCartShippingMethod){
 		$WeberpShipping = SHIPMENT04_WEBERP_CODE;
 	}elseif (strpos($OpenCartShippingMethod, SHIPMENT05_OPENCART_TEXT) > 0){
 		$WeberpShipping = SHIPMENT05_WEBERP_CODE;
+	}elseif (strpos($OpenCartShippingMethod, SHIPMENT06_OPENCART_TEXT) > 0){
+		$WeberpShipping = SHIPMENT06_WEBERP_CODE;
+	}elseif (strpos($OpenCartShippingMethod, SHIPMENT07_OPENCART_TEXT) > 0){
+		$WeberpShipping = SHIPMENT07_WEBERP_CODE;
+	}elseif (strpos($OpenCartShippingMethod, SHIPMENT08_OPENCART_TEXT) > 0){
+		$WeberpShipping = SHIPMENT08_WEBERP_CODE;
+	}elseif (strpos($OpenCartShippingMethod, SHIPMENT09_OPENCART_TEXT) > 0){
+		$WeberpShipping = SHIPMENT09_WEBERP_CODE;
 	}else{
 		$WeberpShipping = OPENCART_DEFAULT_SHIPVIA;
 	}
