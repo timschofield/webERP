@@ -282,7 +282,7 @@ if ($_GET['PaymentCode'] != "MANUAL_MARKETPLACE") {
 		// online sale from our website, we must update the status of the order in OpenCart
 		$OnlineOrderNo = GetOnlineOrderNoFromWeberp($_GET['OrderNo'], $db);
 		$ReasonChangeStatusId = "webERP --> Payment received by " . $_GET['PaymentCode'] . " Amount = " . $TotalAmount;  
-		UpdateOpenCartOrderStatus($OnlineOrderNo, OPENCART_ORDER_STATUS_PROCESSING, 1, $ReasonChangeStatusId, $db_oc, $oc_tableprefix);
+		UpdateOpenCartOrderStatus($OnlineOrderNo, OPENCART_ORDER_STATUS_PROCESSING, 0, $ReasonChangeStatusId, $db_oc, $oc_tableprefix);
 	}
 
 
