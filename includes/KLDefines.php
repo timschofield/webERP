@@ -324,7 +324,7 @@ define("OPENCART_ORDER_STATUS_CANCELLED", 7);
 define("OPENCART_ORDER_STATUS_EXPIRED", 14);
 
 /* HARD CODED PATHS */
-define("ABSOLUTE_PATH_OPENCART_IMAGES", '/var/www/vhosts/kapal-laut.com/httpdocs/image/data/KL/part_pics/');
+define("ABSOLUTE_PATH_OPENCART_IMAGES", '/var/www/vhosts/kapal-laut.com/httpdocs/image/catalog/KL/part_pics/');
 define("ABSOLUTE_PATH_WEBERP", '/var/www/vhosts/kapal-laut.com/ptadu.com/weberp/');
 define("ABSOLUTE_PATH_WEBERP_TEST", '/var/www/vhosts/kapal-laut.com/ptadu.com/TEST/weberp/');
 
