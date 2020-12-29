@@ -5,6 +5,8 @@ include('includes/SQL_CommonFunctions.inc');
 $Title = _('Kapal-Laut Receipt Payment Online');
 include('includes/header.php');
 include('includes/KLDefines.php');
+include('includes/OpenCartGeneralFunctions.php');
+include('includes/OpenCartConnectDB.php');
 
 //Get Out if we don't have the data needed to work with
 if (!isset($_GET['OrderNo']) OR $_GET['OrderNo']==''){
@@ -275,6 +277,14 @@ if ($_GET['PaymentCode'] != "MANUAL_MARKETPLACE") {
 	$DbgMsg = _('The SQL that failed to update the quotation flag of the sales order was');
 	$ErrMsg = _('Cannot update the quotation flag of the sales order because');
 	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+
+	if ($_GET['CustomerCode'] == "WEB-KL-IDR") {
+		// online sale from our website, we must update the status of the order in OpenCart
+		$OnlineOrderNo = GetOnlineOrderNoFromWeberp($_GET['OrderNo'], $db);
+		$ReasonChangeStatusId = "webERP --> Payment received by " . $_GET['PaymentCode'] . " Amount = " . $TotalAmount;  
+		UpdateOpenCartOrderStatus($OnlineOrderNo, OPENCART_ORDER_STATUS_PROCESSING, 0, $ReasonChangeStatusId, $db_oc, $oc_tableprefix);
+	}
+
 
 	if  (($_GET['PaymentCode'] == "tokopedia") OR 
 		 ($_GET['PaymentCode'] == "shopee")){

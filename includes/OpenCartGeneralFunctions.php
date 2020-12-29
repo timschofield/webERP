@@ -384,6 +384,20 @@ function GetWeberpOrderNo($CustomerId, $OrderId, $db){
 	}
 }
 
+function GetOnlineOrderNoFromWeberp($OrderId, $db){
+	$SQL = "SELECT customerref
+			FROM salesorders
+			WHERE orderno = '" . $OrderId . "'";
+	$ErrMsg =_('Could not get the Online Order No in webERP because');
+	$result = DB_query($SQL,$ErrMsg);
+	if(DB_num_rows($result) != 0){
+		$myrow = DB_fetch_array($result);
+		return $myrow[0];
+	}else{
+		return '';
+	}
+}
+
 function GetWeberpCustomerCurrency($CustomerId, $db){
 	$SQL = "SELECT currcode
 			FROM debtorsmaster
@@ -470,6 +484,18 @@ function GetOnlinePriceList($db){
 		return array(0,0);
 	}
 }
+
+/* function GetDiscountFromCouponOpenCart($CouponCode, $db_oc, $oc_tableprefix){
+	$SQL = "SELECT discount,
+					type
+			FROM " . $oc_tableprefix . "coupon
+			WHERE coupon_id = '" . $CouponCode . "'";
+
+	$ErrMsg =_('Could not get the coupon discount in OpenCart because');
+	$result = DB_query_oc($SQL,$ErrMsg);
+	$myrow = DB_fetch_array($result);
+	return array($myrow['discount'], $myrow['type']);
+}*/
 
 function GetDiscount($DiscountCategory, $Quantity, $PriceList, $db){
 	/* Select the disount rate from the discount Matrix */
@@ -595,11 +621,27 @@ function UpdateDiscountInOpenCart($ProductId, $CustomerGroupId, $Quantity, $Prio
 	}
 }
 
-function GetOpenCartSettingId($Store, $Group, $Key, $db_oc, $oc_tableprefix){
+function GetOpenCartSettingId($Store, $Code, $Key, $db_oc, $oc_tableprefix){
 	$SQL = "SELECT setting_id
 			FROM " . $oc_tableprefix . "setting
 			WHERE store_id = '" . $Store . "'
-				AND `group` = '" . $Group . "'
+				AND `code` = '" . $Code . "'
+				AND `key` = '" . $Key . "'";
+	$ErrMsg =_('Could not get the SettingId in OpenCart because');
+	$result = DB_query_oc($SQL,$ErrMsg);
+	if(DB_num_rows($result) != 0){
+		$myrow = DB_fetch_array($result);
+		return $myrow[0];
+	}else{
+		return 0;
+	}
+}
+
+function GetOpenCartSettingValue($Store, $Code, $Key, $db_oc, $oc_tableprefix){
+	$SQL = "SELECT value
+			FROM " . $oc_tableprefix . "setting
+			WHERE store_id = '" . $Store . "'
+				AND `code` = '" . $Code . "'
 				AND `key` = '" . $Key . "'";
 	$ErrMsg =_('Could not get the SettingId in OpenCart because');
 	$result = DB_query_oc($SQL,$ErrMsg);
@@ -620,24 +662,26 @@ function UpdateSettingValueOpenCart($SettingId, $Value, $db_oc, $oc_tableprefix)
 	$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
 }
 
-function UpdateSettingValueOpenCartByGroupAndKey($Group, $Key, $Value, $db_oc, $oc_tableprefix){
+function UpdateSettingValueOpenCartByCodeAndKey($Store, $Code, $Key, $Value, $db_oc, $oc_tableprefix){
 	$DbgMsg = _('The SQL statement that failed was');
 	$UpdateErrMsg = _('The SQL to update setting value in Opencart failed');
 	$sqlUpdate = "UPDATE " . $oc_tableprefix . "setting
 					SET	value = '" . $Value . "'
-				WHERE `group` = '" . $Group . "'
-					AND `key` = '" . $Key . "'";
+				WHERE `code` = '" . $Code . "'
+					AND `key` = '" . $Key . "'
+					AND `store_id` = '" . $Store . "'";
 
 	$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
 }
 
 function CreateMetaDescription($Group, $Item){
-	$MetaDescription = $_SESSION['ShopName'] . ' ' . $Group . ' ' . $Item;
+	$MetaDescription = $Group . ' ' . $Item;
 	return $MetaDescription;
 }
 
 function CreateMetaKeyword($Group, $Item){
-	$MetaKeyword = $_SESSION['ShopName'] . ' ' . $Group . ' ' . $Item;
+//	$MetaKeyword = $_SESSION['ShopName'] . ' ' . $Group . ' ' . $Item;
+	$MetaKeyword = $Group . ' ' . $Item;
 	$MetaKeyword = str_ireplace(' ', ',', $MetaKeyword);
 	$MetaKeyword = str_ireplace(',', ',', $MetaKeyword);
 	$MetaKeyword = str_ireplace(';', ',', $MetaKeyword);
@@ -656,6 +700,13 @@ function CreateSEOKeyword($KeyWord){
 	return $SEOKeyword;
 }
 
+function CleanText($MessedText){
+	$CleanText = strip_tags($MessedText);
+	$CleanText = str_ireplace('/', '', $CleanText);
+	$CleanText = str_ireplace("\'", '', $CleanText);
+	$CleanText = str_ireplace('"', '', $CleanText);
+	return $CleanText;
+}
 
 Function GetNextSequenceNo ($SequenceType){
 
@@ -944,45 +995,68 @@ function GetPaypalReturnDataInArray($RawData){
 	return $ResponseArray;
 }
 
-function MaintainUrlAlias($SEOQuery, $SEOKeyword, $db_oc, $oc_tableprefix){
+function MaintainSeoUrl($SEOQuery, $SEOKeyword, $StoreId, $LanguageId, $db_oc, $oc_tableprefix){
 	// search if we already have it
-	$SQL = "SELECT url_alias_id
-			FROM " . $oc_tableprefix . "url_alias
-			WHERE query = '" . $SEOQuery . "'";
-	$ErrMsg =_('Could not get the UrlAlias in Opencart because');
+	$SQL = "SELECT seo_url_id
+			FROM " . $oc_tableprefix . "seo_url
+			WHERE query = '" . $SEOQuery . "'
+				AND store_id = '" . $StoreId . "'
+				AND language_id = '" .  $LanguageId . "'";
+	$ErrMsg =_('Could not get the SEO URL in Opencart because');
 	$result = DB_query_oc($SQL,$ErrMsg);
 	if(DB_num_rows($result) != 0){
 		// if we have it, we update it
 		$myrow = DB_fetch_array($result);
-		$AliasId = $myrow['url_alias_id'];
+		$SeoUrlId = $myrow['seo_url_id'];
+		
 		$DbgMsg = _('The SQL that failed was');
-		$ErrMsg = _('The MaintainUrlAlias function failed');
-		$sqlUpdate = "UPDATE " . $oc_tableprefix . "url_alias SET
+		$ErrMsg = _('The MaintainSeoUrl function failed');
+		$sqlUpdate = "UPDATE " . $oc_tableprefix . "seo_url SET
 						keyword ='" . $SEOKeyword . "'
-					WHERE url_alias_id = '" . $$AliasId . "'";
+					WHERE seo_url_id = '" . $SeoUrlId . "'";
 		$resultUpdate = DB_query_oc($sqlUpdate,$ErrMsg,$DbgMsg,true);
 	}else{
 		// otherwise we insert it
 		$DbgMsg = _('The SQL that failed was');
-		$ErrMsg = _('The MaintainUrlAlias function failed');
-		$sqlInsert = "INSERT INTO " . $oc_tableprefix . "url_alias
-						(query,
+		$ErrMsg = _('The MaintainSeoUrl function failed');
+		$sqlInsert = "INSERT INTO " . $oc_tableprefix . "seo_url
+						(store_id,
+						language_id,
+						query,
 						keyword)
 					VALUES
-						('" . $SEOQuery . "',
+						('" . $StoreId . "',
+						'" . $LanguageId . "',
+						'" . $SEOQuery . "',
 						'" . $SEOKeyword . "'
 						)";
 		$resultInsert = DB_query_oc($sqlInsert,$ErrMsg,$DbgMsg,true);
 	}
 }
 
-function UpdateOpenCartOrderStatus($OrderId, $Value, $db_oc, $oc_tableprefix){
+function UpdateOpenCartOrderStatus($OrderId, $StatusId, $Notify, $Comment, $db_oc, $oc_tableprefix){
+	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference($db));
 	$DbgMsg = _('The SQL statement that failed was');
 	$UpdateErrMsg = _('The SQL to Update OpenCart Order Status failed');
 	$sqlUpdate = "UPDATE " . $oc_tableprefix . "order
-					SET	order_status_id = '" . $Value . "'
+					SET	order_status_id = '" . $StatusId . "'
 				WHERE order_id = '" . $OrderId . "'";
 	$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
+
+	$sqlInsert = "INSERT INTO " . $oc_tableprefix . "order_history
+					(order_id,
+					order_status_id,
+					notify,
+					comment,
+					date_added)
+				VALUES
+					('" . $OrderId . "',
+					'" . $StatusId . "',
+					'" . $Notify . "',
+					'" . $Comment . "',
+					'" . $ServerNow . "'
+					)";
+	$resultInsert = DB_query_oc($sqlInsert,$ErrMsg,$DbgMsg,true);
 }
 
 function RoundPriceFromCart($value, $currency){
@@ -1023,6 +1097,7 @@ function RoundPriceFromCart($value, $currency){
 }
 
 function GetWeberpShippingMethod($OpenCartShippingMethod){
+	$OpenCartShippingMethod = strtoupper($OpenCartShippingMethod);
 	if (strpos($OpenCartShippingMethod, SHIPMENT01_OPENCART_TEXT) > 0){
 		$WeberpShipping = SHIPMENT01_WEBERP_CODE;
 	}elseif (strpos($OpenCartShippingMethod, SHIPMENT02_OPENCART_TEXT) > 0){
@@ -1033,6 +1108,14 @@ function GetWeberpShippingMethod($OpenCartShippingMethod){
 		$WeberpShipping = SHIPMENT04_WEBERP_CODE;
 	}elseif (strpos($OpenCartShippingMethod, SHIPMENT05_OPENCART_TEXT) > 0){
 		$WeberpShipping = SHIPMENT05_WEBERP_CODE;
+	}elseif (strpos($OpenCartShippingMethod, SHIPMENT06_OPENCART_TEXT) > 0){
+		$WeberpShipping = SHIPMENT06_WEBERP_CODE;
+	}elseif (strpos($OpenCartShippingMethod, SHIPMENT07_OPENCART_TEXT) > 0){
+		$WeberpShipping = SHIPMENT07_WEBERP_CODE;
+	}elseif (strpos($OpenCartShippingMethod, SHIPMENT08_OPENCART_TEXT) > 0){
+		$WeberpShipping = SHIPMENT08_WEBERP_CODE;
+	}elseif (strpos($OpenCartShippingMethod, SHIPMENT09_OPENCART_TEXT) > 0){
+		$WeberpShipping = SHIPMENT09_WEBERP_CODE;
 	}else{
 		$WeberpShipping = OPENCART_DEFAULT_SHIPVIA;
 	}
@@ -1075,4 +1158,41 @@ function GetGoogleProductFeedCategory($StockId, $SalesCategory){
 	return $Category;
 }
 
+
+function CreateTagsForItem($Description, $LongDescription, $SalesCategoryName){
+	$ListOfTags = "";
+	$Separator = ", ";
+	//create a long string and look for keywords
+	$LongText = strtolower($Description . " " . $LongDescription . " " . $SalesCategoryName);
+	$SQL = "SELECT tagname
+			FROM stocktags
+			ORDER BY tagname";
+	$result = DB_query($SQL);
+	while ($myrow = DB_fetch_array($result)){
+		
+		if (StringContainsTag($LongText, $myrow['tagname'])){
+			// we found a tag in the text, so a candidate for tag
+			if ((InconsistentTag($ListOfTags, 'earring', $myrow['tagname'], 'ring')) == FALSE){
+				//  but, we must filter inconsistencies
+				if ($ListOfTags == ""){
+					// the very first one
+					$ListOfTags = $myrow['tagname'];
+				}else{
+					$ListOfTags = $ListOfTags. $Separator . $myrow['tagname'];
+				}
+			}
+		}
+	}
+	return $ListOfTags;
+}
+
+function StringContainsTag($HayStack, $Needle){
+	$Pos = stripos($HayStack, $Needle);
+	$Result = !($Pos === false);
+	return $Result;
+}
+
+function InconsistentTag($ListOfTags, $ExistingTag, $ProposedTag, $WrongTag){
+	return ((StringContainsTag($ListOfTags, $ExistingTag)) AND ($ProposedTag == $WrongTag));
+}
 ?>

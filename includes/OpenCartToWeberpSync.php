@@ -59,7 +59,7 @@ function OpenCartToWeberpSync($ShowMessages, $db, $db_oc, $oc_tableprefix, $Emai
 	$EmailText = SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
 
 	// update payment information by DOKU
-	$EmailText = SyncDOKUPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
+//	$EmailText = SyncDOKUPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
 
 	// We are done!
 	SetLastTimeRun('OpenCartToWeberp', $db);
@@ -170,7 +170,7 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db,
 			$Quotation = 1; // is NOT a firm order until we check the payments
 			$FreightCost = RoundPriceFromCart(GetTotalFromOrder("shipping", $myrow['order_id'], $db_oc, $oc_tableprefix) * $myrow['currency_value'],$myrow['currency_code']);
 			$CouponDiscount = RoundPriceFromCart(GetTotalFromOrder("coupon", $myrow['order_id'], $db_oc, $oc_tableprefix) * $myrow['currency_value'],$myrow['currency_code']);
-			$OrderDiscount = RoundPriceFromCart(GetTotalFromOrder("dco", $myrow['order_id'], $db_oc, $oc_tableprefix) * $myrow['currency_value'],$myrow['currency_code']);
+			$OrderDiscount = RoundPriceFromCart(GetTotalFromOrder("discountrule", $myrow['order_id'], $db_oc, $oc_tableprefix) * $myrow['currency_value'],$myrow['currency_code']);
 			$OpenCartOrderNumber = $myrow['order_id'];
 			$Salesman = OPENCART_DEFAULT_SALESMAN;
 			$Location = OPENCART_DEFAULT_LOCATION;
@@ -377,68 +377,32 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db,
 					$ItemsOrder++;
 					// we need to register the coupon use
 					$CouponCode = GetTotalTitleFromOrder("coupon", $myrow['order_id'], $db_oc, $oc_tableprefix);
-					if (strpos(strtoupper($CouponCode),"VBE-") !== false){
+//					($CouponDiscount, $CouponType) = GetDiscountFromCouponOpenCart($CouponCode, $db_oc, $oc_tableprefix);
+					
+					if (strpos(strtoupper($CouponCode),"VBP-") !== false){ 
+						// the 100% VIP Cards
+						$CouponStockId = OPENCART_VIP_PLATINUM_CODE;
+					}else if (strpos(strtoupper($CouponCode),"VBE-") !== false){ 
+						// the 50% VIP cards
 						$CouponStockId = OPENCART_VIP_ELITE_CODE;
-					}else if (strpos(strtoupper($CouponCode),"VBG-") !== false){
+					}else if (strpos(strtoupper($CouponCode),"VBG-") !== false){ 
+						// the 30% VIP Cards
 						$CouponStockId = OPENCART_VIP_GOLD_CODE;
 					}else if (strpos(strtoupper($CouponCode),"VBS-") !== false){
+						// the 15% VIP Cards
 						$CouponStockId = OPENCART_VIP_SILVER_CODE;
+					}else if (strpos(strtoupper($CouponCode),"VN1-") !== false){
+						// the 10% online cards
+						$CouponStockId = OPENCART_VIP_ONLINE_CODE;
 					}else if (strpos(strtoupper($CouponCode),"RF-") !== false){
-						$CouponStockId = OPENCART_CUSTOMER_REFUND_CODE;  // Customer refunds
-					}else if (strpos(strtoupper($CouponCode),"AUSDAY") !== false){   // Australia Day
-						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
-					}else if (strpos(strtoupper($CouponCode),"BLFDAY") !== false){   // Black Friday Day
-						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
-					}else if (strpos(strtoupper($CouponCode),"CANDAY") !== false){   // Canada Day
-						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
-					}else if (strpos(strtoupper($CouponCode),"CHIDAY") !== false){   // China Day
-						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
-					}else if (strpos(strtoupper($CouponCode),"DADDAY") !== false){   // Dad's Day
-						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
-					}else if (strpos(strtoupper($CouponCode),"DOUDAY") !== false){   // China Double Seven Festival Day
-						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
-					}else if (strpos(strtoupper($CouponCode),"FRADAY") !== false){    // France Day
-						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
-					}else if (strpos(strtoupper($CouponCode),"GERDAY") !== false){    // German Day
-						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
-					}else if (strpos(strtoupper($CouponCode),"IDULAD") !== false){    // Idul Adha Day
-						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
-					}else if (strpos(strtoupper($CouponCode),"IDULFI") !== false){    // Idul Fitri Day
-						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
-					}else if (strpos(strtoupper($CouponCode),"INDDAY") !== false){    // Indonesia Day
-						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
-					}else if (strpos(strtoupper($CouponCode),"KARTINI") !== false){   // Indonesia Kartini Day
-						$CouponStockId = OPENCART_KARTINI_DAY_DISCOUNT_CODE;
-					}else if (strpos(strtoupper($CouponCode),"MALDAY") !== false){    // Malaysia Day
-						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
-					}else if (strpos(strtoupper($CouponCode),"THADAY") !== false){    // ThanksGiving Day
-						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
-					}else if (strpos(strtoupper($CouponCode),"SNGDAY") !== false){    // Singapore Day
-						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
-					}else if (strpos(strtoupper($CouponCode),"USADAY") !== false){    // USA Day
-						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
-					}else if (strpos(strtoupper($CouponCode),"AVIDAY") !== false){    // USA Aviation Day
-						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
-					}else if (strpos(strtoupper($CouponCode),"WOEDAY") !== false){    // USA Wonen's Equality Day
-						$CouponStockId = OPENCART_NATIONAL_DAY_DISCOUNT_CODE;
-					}else if (strpos(strtoupper($CouponCode),"BIRTHDAY") !== false){  // Birthday mailing
-						$CouponStockId = OPENCART_BIRTHDAY_DISCOUNT_CODE;
-					}else if (strpos(strtoupper($CouponCode),"MOTHER") !== false){    // Mother's Day
-						$CouponStockId = OPENCART_MOTHERS_DAY_DISCOUNT_CODE;
-					}else if (strpos(strtoupper($CouponCode),"VALENTINE") !== false){ // Valentine's Day
-						$CouponStockId = OPENCART_VALENTINE_DAY_DISCOUNT_CODE;
-					}else if (strpos(strtoupper($CouponCode),OPENCART_GIFT_100K_CODE) !== false){
-						$CouponStockId = OPENCART_GIFT_100K_CODE;
-					}else if (strpos(strtoupper($CouponCode),OPENCART_GIFT_125K_CODE) !== false){
-						$CouponStockId = OPENCART_GIFT_125K_CODE;
-					}else if (strpos(strtoupper($CouponCode),OPENCART_GIFT_250K_CODE) !== false){
-						$CouponStockId = OPENCART_GIFT_250K_CODE;
-					}else if (strpos(strtoupper($CouponCode),OPENCART_GIFT_300K_CODE) !== false){
-						$CouponStockId = OPENCART_GIFT_300K_CODE;
+						// customer refunds for any reason
+						$CouponStockId = OPENCART_CUSTOMER_REFUND_CODE;  
 					}else if (strpos(strtoupper($CouponCode),"WH-") !== false){
+						// wholesale vouches for any reason
 						$CouponStockId = OPENCART_WHOLESALE_DISCOUNT;
 					}else{
-						$CouponStockId = OPENCART_ONLINE_COUPON_CODE;
+						// any other promotional discount
+						$CouponStockId = OPENCART_PROMOTION_DISCOUNT_CODE;
 					}
 					$CouponQty = 1;
 					if ($Action == "Update"){
@@ -492,8 +456,10 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db,
 				if ($OrderDiscount != 0){
 					$ItemsOrder++;
 					// we need to register the dco discount use (GENERAL ORDER DISCOUNT)
-					$DiscountCode = GetTotalTitleFromOrder("dco", $myrow['order_id'], $db_oc, $oc_tableprefix);
-					if (strpos(strtoupper($DiscountCode),"20") !== false){
+					$DiscountCode = GetTotalTitleFromOrder("discountrule", $myrow['order_id'], $db_oc, $oc_tableprefix);
+					if (strpos(strtoupper($DiscountCode),"10") !== false){
+						$DiscountStockId = OPENCART_ONLINE_ORDER_DISCOUNT10;
+					}else if (strpos(strtoupper($DiscountCode),"20") !== false){
 						$DiscountStockId = OPENCART_ONLINE_ORDER_DISCOUNT20;
 					}else if (strpos(strtoupper($DiscountCode),"30") !== false){
 						$DiscountStockId = OPENCART_ONLINE_ORDER_DISCOUNT30;
@@ -504,7 +470,7 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db,
 					}else if (strpos(strtoupper($DiscountCode),"60") !== false){
 						$DiscountStockId = OPENCART_ONLINE_ORDER_DISCOUNT60;
 					}else{
-						$DiscountStockId = OPENCART_ONLINE_ORDER_DISCOUNT10;
+						$DiscountStockId = OPENCART_WHOLESALE_DISCOUNT;
 					}
 					$DiscountQty = 1;
 					
@@ -602,7 +568,7 @@ function SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeR
 				" . $oc_tableprefix . "paypal_order.authorization_id,
 				" . $oc_tableprefix . "paypal_order.total AS paypaltotal,
 				" . $oc_tableprefix . "paypal_order_transaction.transaction_id,
-				" . $oc_tableprefix . "paypal_order_transaction.created,
+				" . $oc_tableprefix . "paypal_order_transaction.date_added,
 				" . $oc_tableprefix . "paypal_order_transaction.payment_status,
 				" . $oc_tableprefix . "paypal_order_transaction.pending_reason,
 				" . $oc_tableprefix . "paypal_order_transaction.transaction_entity,
@@ -616,8 +582,8 @@ function SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeR
 		WHERE " . $oc_tableprefix . "paypal_order.paypal_order_id = " . $oc_tableprefix . "paypal_order_transaction.paypal_order_id
 				AND " . $oc_tableprefix . "paypal_order.order_id  = " . $oc_tableprefix . "order.order_id
 				AND " . $oc_tableprefix . "order.customer_id  = " . $oc_tableprefix . "customer.customer_id
-				AND ( " . $oc_tableprefix . "paypal_order.created >= '" . $LastTimeRun . "'
-					OR " . $oc_tableprefix . "paypal_order.modified >= '" . $LastTimeRun . "')
+				AND ( " . $oc_tableprefix . "paypal_order.date_added >= '" . $LastTimeRun . "'
+					OR " . $oc_tableprefix . "paypal_order.date_modified >= '" . $LastTimeRun . "')
 		ORDER BY " . $oc_tableprefix . "paypal_order.paypal_order_id";
 	$result = DB_query_oc($SQL);
 

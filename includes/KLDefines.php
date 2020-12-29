@@ -145,34 +145,34 @@ define("ONLINE_PRICE_LIST", 'RT');
 define("MINIMUM_STOCK_ONLINESHOP_EVERY_ITEM", 1); 
 
 /* Defines about weight in KG*/
-define('STANDARD_TALI_WEIGHT',     0.050);
-define('STANDARD_BEAD_WEIGHT',     0.050);
-define('STANDARD_RING_WEIGHT',     0.050);
-define('STANDARD_EARRING_WEIGHT',  0.060);
-define('STANDARD_BRACELET_WEIGHT', 0.080);
-define('STANDARD_PENDANT_WEIGHT',  0.090);
-define('STANDARD_NECKLACE_WEIGHT', 0.190);
-define('STANDARD_BAG_WEIGHT',      0.450);
-define('STANDARD_FOULARD_WEIGHT',  0.250);
-define('STANDARD_BROOCHE_WEIGHT',  0.080);
-define('STANDARD_KEYHOLDER_WEIGHT',0.080);
-define('STANDARD_FACEMASK_WEIGHT', 0.080); // Verification pending
-define('STANDARD_JEWELLERY_ROLL_WEIGHT', 0.080); // Verification pending
+define('STANDARD_TALI_WEIGHT',       0.050);
+define('STANDARD_BEAD_WEIGHT',       0.050);
+define('STANDARD_RING_WEIGHT',       0.050);
+define('STANDARD_EARRING_WEIGHT',    0.060);
+define('STANDARD_BRACELET_WEIGHT',   0.080);
+define('STANDARD_PENDANT_WEIGHT',    0.090);
+define('STANDARD_NECKLACE_WEIGHT',   0.190);
+define('STANDARD_BAG_WEIGHT',        0.450);
+define('STANDARD_FOULARD_WEIGHT',    0.250);
+define('STANDARD_BROOCHE_WEIGHT',    0.080);
+define('STANDARD_KEYHOLDER_WEIGHT',  0.080);
+define('STANDARD_FACEMASK_WEIGHT',   0.080); 
+define('STANDARD_JEWEL_ROLL_WEIGHT', 0.080); 
 
-/* Defines about volume in m3*/
-define('STANDARD_TALI_VOLUME',     0.0003);
-define('STANDARD_BEAD_VOLUME',     0.0003);
-define('STANDARD_RING_VOLUME',     0.0003);
-define('STANDARD_EARRING_VOLUME',  0.0003);
-define('STANDARD_BRACELET_VOLUME', 0.0004);
-define('STANDARD_PENDANT_VOLUME',  0.0004);
-define('STANDARD_NECKLACE_VOLUME', 0.0004);
-define('STANDARD_BAG_VOLUME',      0.0020);
-define('STANDARD_FOULARD_VOLUME',  0.0010);
-define('STANDARD_BROOCHE_VOLUME',  0.0004);
-define('STANDARD_KEYHOLDER_VOLUME',0.0004);
-define('STANDARD_FACEMASK_VOLUME', 0.0004); // Verification pending
-define('STANDARD_JEWELLERY_ROLL_VOLUME', 0.0004); // Verification pending
+/* shipping dimensions in mm (webERP set up in mm) */
+
+define('BOX_S_LENGTH',         75);
+define('BOX_S_WIDTH',          75);
+define('BOX_S_HEIGHT',         45);
+define('BOX_M_LENGTH',        110);
+define('BOX_M_WIDTH',         110);
+define('BOX_M_HEIGHT',         45);
+define('BOX_L_LENGTH',        230);
+define('BOX_L_WIDTH',         160);
+define('BOX_L_HEIGHT',         45);
+define('BOX_XL_LENGTH',       300); // approx
+define('BOX_XL_WIDTH',        300); // approx
+define('BOX_XL_HEIGHT',       200); // approx
 
 /* Defines about website sales categories */
 define("ONLINESHOP_AVAILABLE_STOCK_CATEGORIES", "('TESTKA','TESTBA','TESTGA','STABKA','STABBA','STABGA','NOPOKA','NOPOBA','NOPOGA','DISC20','DISC2A','DISC50','DISC5A')");
@@ -180,6 +180,7 @@ define('FEATURED_IN_WEBSITE_AS_TOP_SALES',20);
 
 define('ITEM_EXCLUDED_FROM_WEBSITE',-9999);
 
+/* Sales Categories based on type of item*/
 define('KL_JEWELLERY',5);
 define('KL_RINGS',31);
 define('KL_BRACELETS',32);
@@ -201,13 +202,11 @@ define('BLINK_NECKLACES',50);
 define('BLINK_EARCUFFS',72);
 define('BLINK_BROOCHES',77);
 define('BLINK_KEYHOLDERS',84);
-
 define('BAGS',29);
 
 define('GENERAL_ACCESSORIES',88);
 define('GE_JEWELLERY_ROLLS',89);
 define('GE_FACEMASKS',90);
-
 define('JEWELLERY_ON_SPECIAL',51);
 define('RINGS_ON_SPECIAL',52);
 define('BRACELETS_ON_SPECIAL',53);
@@ -221,20 +220,6 @@ define('BROOCHES_ON_SPECIAL',81);
 define('KEYHOLDERS_ON_SPECIAL',85);
 define('JEWELLERY_ROLLS_ON_SPECIAL',91);
 define('FACEMASKS_ON_SPECIAL',92);
-
-define('CLASSIC_JEWELLERY',61);
-define('CLASSIC_RINGS',62);
-define('CLASSIC_BRACELETS',63);
-define('CLASSIC_EARRINGS',64);
-define('CLASSIC_PENDANTS',65);
-define('CLASSIC_NECKLACES',66);
-define('CLASSIC_EARCUFFS',75);
-define('CLASSIC_BROOCHES',80);
-
-define('WORLD_BRAND_JEWELLERY',68);
-define('WORLD_BRAND_PLATADEPALO',69);
-define('WORLD_BRAND_HIPANEMA',70);
-define('WORLD_BRAND_DESIGUAL',83);
 
 
 //********************************************************************************
@@ -252,9 +237,14 @@ define("OPENCART_STORE_WHOLESALE", 8);
 
 define("WEBERP_DISCOUNTS_IN_OPENCART_TABLE", 'product_special');
 
+define("ONLINESHOP_KAPAL_LAUT_SALES_CATEGORIES", '5,31,32,33,34,48,57,58,67,71,82');
+define("ONLINESHOP_BLINK_SALES_CATEGORIES", '14,29,35,36,37,38,50,72,77,84');
 define("ONLINESHOP_OUTLET_SALES_CATEGORIES", '51,52,53,54,55,56,59,60,74,81,85,91,92');
 
-define("SALES_CATEGORIES_FOR_GOOGLE_PRODUCT_FEED", '31,32,33,34,36,37,50,38,35,43,44,45,46,47,48,51,52,53,54,55,56,40,41,49,42,39,61,62,63,64,65,66,67,71,72,73,74,75,76,88,89');
+define("MARKETPLACE_KAPAL_LAUT_SALES_CATEGORIES", '94');
+define("MARKETPLACE_BLINK_SALES_CATEGORIES", '95');
+
+define("SALES_CATEGORIES_FOR_GOOGLE_PRODUCT_FEED", '31,32,33,34,36,37,50,38,35,43,44,45,46,47,48,51,52,53,54,55,56,40,41,49,42,39,67,71,72,73,74,76,80,89');
 
 define("GOOGLE_BRAND_KL", 'Kapal-Laut. Your Essential Jewellery');
 define("GOOGLE_BRAND_BLINK", 'Blink by Kapal-Laut');
@@ -288,14 +278,22 @@ define("OPENCART_DEFAULT_LOCATION", 'TOKWS');
 
 define("SHIPMENT01_OPENCART_TEXT", 'EMS'); 
 define("SHIPMENT01_WEBERP_CODE", 5); 
-define("SHIPMENT02_OPENCART_TEXT", 'JNE-OKE'); 
+define("SHIPMENT02_OPENCART_TEXT", 'JNE OKE'); 
 define("SHIPMENT02_WEBERP_CODE", 6); 
-define("SHIPMENT03_OPENCART_TEXT", 'JNE-YES'); 
+define("SHIPMENT03_OPENCART_TEXT", 'JNE YES'); 
 define("SHIPMENT03_WEBERP_CODE", 7); 
-define("SHIPMENT04_OPENCART_TEXT", 'JNE-REG'); 
+define("SHIPMENT04_OPENCART_TEXT", 'JNE REG'); 
 define("SHIPMENT04_WEBERP_CODE", 8); 
 define("SHIPMENT05_OPENCART_TEXT", 'Store'); 
 define("SHIPMENT05_WEBERP_CODE", 10); 
+define("SHIPMENT06_OPENCART_TEXT", 'JNE INT'); 
+define("SHIPMENT06_WEBERP_CODE", 19); 
+define("SHIPMENT07_OPENCART_TEXT", 'TIKI REG'); 
+define("SHIPMENT07_WEBERP_CODE", 21); 
+define("SHIPMENT08_OPENCART_TEXT", 'TIKI ECO'); 
+define("SHIPMENT08_WEBERP_CODE", 22); 
+define("SHIPMENT09_OPENCART_TEXT", 'TIKI ONS'); 
+define("SHIPMENT09_WEBERP_CODE", 23); 
 
 define("OPENCART_DEFAULT_SHIPVIA", 6); 
 
@@ -306,56 +304,60 @@ define("OPENCART_ONLINE_ORDER_DISCOUNT40", 'DISCOUNT-40%');
 define("OPENCART_ONLINE_ORDER_DISCOUNT50", 'DISCOUNT-50%');
 define("OPENCART_ONLINE_ORDER_DISCOUNT60", 'DISCOUNT-60%');
 
-define("OPENCART_ONLINE_COUPON_CODE", 'VIP-ONLINE-10%');
+define("OPENCART_PROMOTION_DISCOUNT_CODE", 'PROMOTION-DISCOUNT');
+define("OPENCART_VIP_ONLINE_CODE", 'VIP-ONLINE-10%');
 define("OPENCART_VIP_SILVER_CODE", 'VIP-SILVER-15%');
 define("OPENCART_VIP_GOLD_CODE", 'VIP-GOLD-30%');
 define("OPENCART_VIP_ELITE_CODE", 'VIP-ELITE-50%');
+define("OPENCART_VIP_ELITE_CODE", 'VIP-PLATINUM-100%');
 define("OPENCART_CUSTOMER_REFUND_CODE", 'CUSTOMER-REFUND');
-define("OPENCART_BIRTHDAY_DISCOUNT_CODE", 'BIRTHDAY-20%');
-define("OPENCART_VALENTINE_DAY_DISCOUNT_CODE", 'VALENTINE-20%');
-define("OPENCART_KARTINI_DAY_DISCOUNT_CODE", 'KARTINI-20%');
-define("OPENCART_NATIONAL_DAY_DISCOUNT_CODE", 'NATIONALDAY-20%');
-define("OPENCART_GIFT_100K_CODE", 'GIFT-100K');
-define("OPENCART_GIFT_125K_CODE", 'GIFT-125K');
-define("OPENCART_GIFT_250K_CODE", 'GIFT-250K');
-define("OPENCART_GIFT_300K_CODE", 'GIFT-300K');
 define("OPENCART_WHOLESALE_DISCOUNT", 'WHOLESALE-DISCOUNT');
 
 define("OPENCART_DEFAULT_PAYMENT_SYSTEM", 'PayPal');
 define("OPENCART_DOKU_PAYMENT_SYSTEM", 'Doku');
+
+define("OPENCART_ORDER_STATUS_PENDING", 1);
+define("OPENCART_ORDER_STATUS_PROCESSING", 2);
+define("OPENCART_ORDER_STATUS_SHIPPED", 3);
+define("OPENCART_ORDER_STATUS_COMPLETE", 5);
+define("OPENCART_ORDER_STATUS_CANCELLED", 7);
+define("OPENCART_ORDER_STATUS_EXPIRED", 14);
 
 /* HARD CODED PATHS */
 define("ABSOLUTE_PATH_OPENCART_IMAGES", '/var/www/vhosts/kapal-laut.com/httpdocs/image/data/KL/part_pics/');
 define("ABSOLUTE_PATH_WEBERP", '/var/www/vhosts/kapal-laut.com/ptadu.com/weberp/');
 define("ABSOLUTE_PATH_WEBERP_TEST", '/var/www/vhosts/kapal-laut.com/ptadu.com/TEST/weberp/');
 
-define("PATH_OPENCART_IMAGES", 'data/KL/part_pics/');
+define("PATH_OPENCART_IMAGES", 'catalog/KL/part_pics/');
 define("PATH_OPENCART_BASE", 'http://www.kapal-laut.com');
 define("ROUTE_TO_PRODUCT", 'index.php?route=product/product&');
 
+// META DATA
+define("META_STORE_NAME_KL", "Kapal-Laut Jewellery");
+define("META_STORE_NAME_BL", "Blink by Kapal-Laut");
+define("META_STORE_NAME_OU", "Outlet by Kapal-Laut");
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+// MARKETPLACES
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+define("ADMINCERDAS_MINIMUM_STOCK_TO_UPDATE", 20);
+
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // TOKOPEDIA
 ///////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////
-
 define("TOKOPEDIA_BANK_GL_ACCOUNT", '111121121PT');
 define("TOKOPEDIA_COMMISSION_GL_ACCOUNT", '700211321PT');
 define("TOKOPEDIA_COMMISSION_PERCENT", 1.00);
 define("TOKOPEDIA_COMMISSION_FREE_SHIPPING_PER_ITEM_PERCENT", 2.50);
 define("TOKOPEDIA_COMMISSION_FREE_SHIPPING_PER_ITEM_MAXIMUM", 10000);
 
-
-///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // SHOPEE
-///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
 define("SHOPEE_BANK_GL_ACCOUNT", '111121122PT');
 define("SHOPEE_COMMISSION_GL_ACCOUNT", '700211322PT');
 define("SHOPEE_COMMISSION_PERCENT", 1.50);
-
-
 
 ?>

@@ -112,7 +112,7 @@ if (DB_num_rows($result) != 0){
 			}elseif (isFaceMask($myrow['stockid'])){
 				$Weight = STANDARD_FACEMASK_WEIGHT;
 			}elseif (isJewelleryRoll($myrow['stockid'])){
-				$Weight = STANDARD_JEWELLERY_ROLL_WEIGHT;
+				$Weight = STANDARD_JEWEL_ROLL_WEIGHT;
 			}elseif (isBag($myrow['stockid'])){
 				$Weight = STANDARD_BAG_WEIGHT;
 			}elseif (isPlasticBag($myrow['stockid'])){
@@ -128,41 +128,72 @@ if (DB_num_rows($result) != 0){
 		$Volume = $myrow['volume'];
 		if ($Volume == 0){
 			if (isRing($myrow['stockid'])){
-				$Volume = STANDARD_RING_VOLUME;
+				$Length = BOX_S_LENGTH;
+				$Width  = BOX_S_WIDTH;
+				$Height = BOX_S_HEIGHT;
 			}elseif (isToeRing($myrow['stockid'])){
-				$Volume = STANDARD_RING_VOLUME;
+				$Length = BOX_S_LENGTH;
+				$Width  = BOX_S_WIDTH;
+				$Height = BOX_S_HEIGHT;
 			}elseif (isBead($myrow['stockid'])){
-				$Volume = STANDARD_BEAD_VOLUME;
+				$Length = BOX_S_LENGTH;
+				$Width  = BOX_S_WIDTH;
+				$Height = BOX_S_HEIGHT;
 			}elseif (isBrooche($myrow['stockid'])){
-				$Volume = STANDARD_BROOCHE_VOLUME;
+				$Length = BOX_M_LENGTH;
+				$Width  = BOX_M_WIDTH;
+				$Height = BOX_M_HEIGHT;
 			}elseif (isEarring($myrow['stockid'])){
-				$Volume = STANDARD_EARRING_VOLUME;
+				$Length = BOX_S_LENGTH;
+				$Width  = BOX_S_WIDTH;
+				$Height = BOX_S_HEIGHT;
 			}elseif (isEarcuff($myrow['stockid'])){
-				$Volume = STANDARD_EARRING_VOLUME;
+				$Length = BOX_S_LENGTH;
+				$Width  = BOX_S_WIDTH;
+				$Height = BOX_S_HEIGHT;
 			}elseif (isBracelet($myrow['stockid'])){
-				$Volume = STANDARD_BRACELET_VOLUME;
+				$Length = BOX_M_LENGTH;
+				$Width  = BOX_M_WIDTH;
+				$Height = BOX_M_HEIGHT;
 			}elseif (isAnklet($myrow['stockid'])){
-				$Volume = STANDARD_BRACELET_VOLUME;
+				$Length = BOX_M_LENGTH;
+				$Width  = BOX_M_WIDTH;
+				$Height = BOX_M_HEIGHT;
 			}elseif (isPendant($myrow['stockid'])){
-				$Volume = STANDARD_PENDANT_VOLUME;
+				$Length = BOX_M_LENGTH;
+				$Width  = BOX_M_WIDTH;
+				$Height = BOX_M_HEIGHT;
 			}elseif (isNecklace($myrow['stockid'])){
-				$Volume = STANDARD_NECKLACE_VOLUME;
-			}elseif (isFoulard($myrow['stockid'])){
-				$Volume = STANDARD_FOULARD_VOLUME;
+				$Length = BOX_M_LENGTH;
+				$Width  = BOX_M_WIDTH;
+				$Height = BOX_M_HEIGHT;
 			}elseif (isFaceMask($myrow['stockid'])){
-				$Volume = STANDARD_FACEMASK_VOLUME;
+				$Length = BOX_M_LENGTH;
+				$Width  = BOX_M_WIDTH;
+				$Height = BOX_M_HEIGHT;
 			}elseif (isJewelleryRoll($myrow['stockid'])){
-				$Volume = STANDARD_JEWELLERY_ROLL_VOLUME;
+				$Length = BOX_L_LENGTH;
+				$Width  = BOX_L_WIDTH;
+				$Height = BOX_L_HEIGHT;
 			}elseif (isBag($myrow['stockid'])){
-				$Volume = STANDARD_BAG_VOLUME;
+				$Length = BOX_XL_LENGTH;
+				$Width  = BOX_XL_WIDTH;
+				$Height = BOX_XL_HEIGHT;
 			}elseif (isPlasticBag($myrow['stockid'])){
-				$Volume = STANDARD_BAG_VOLUME;
+				$Length = BOX_XL_LENGTH;
+				$Width  = BOX_XL_WIDTH;
+				$Height = BOX_XL_HEIGHT;
 			}elseif (isTali($myrow['stockid'])){
-				$Volume = STANDARD_TALI_VOLUME;
+				$Length = BOX_S_LENGTH;
+				$Width  = BOX_S_WIDTH;
+				$Height = BOX_S_HEIGHT;
 			}elseif (isKeyHolder($myrow['stockid'])){
-				$Volume = STANDARD_KEYHOLDER_VOLUME;
+				$Length = BOX_S_LENGTH;
+				$Width  = BOX_S_WIDTH;
+				$Height = BOX_S_HEIGHT;
 			}
-			UpdateVolume($myrow['stockid'], $Volume, $UpdateDB, $db);
+			$Volume = round(($Length/1000)*($Width/1000)*($Height/1000),4,PHP_ROUND_HALF_UP); // dimensions in mm and volume in m3
+			UpdateVolume($myrow['stockid'], $Volume, $Length, $Width, $Height, $UpdateDB, $db);
 		}
 		// si tenim descripció prou llarga
 		if (strlen($myrow['description']) >= 5){
@@ -173,15 +204,15 @@ if (DB_num_rows($result) != 0){
 				$WebsiteCategory = WebsiteCategoryDiscount($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
 				if ($WebsiteCategory > 0){
 					DeleteWebsiteSalesCategories($myrow['stockid'], $UpdateDB, $db);
-					$Brand = 3;
+					$Brand = FindWebsiteBrand($myrow['stockid'], $myrow['categoryid']);
 					InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $Brand, FALSE, $FeaturedAsTopSales, $UpdateDB, $db);
 					$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
 					$ItemsAdded++;
 				}else{
-					// Mirar si pertany a super categoria STABLE KL
+					// Mirar si pertany a super categoria SILVER KL
 					$WebsiteCategory = WebsiteCategorySilverJewellery($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
 					if ($WebsiteCategory > 0){
-						$Brand = 1;
+						$Brand = FindWebsiteBrand($myrow['stockid'], $myrow['categoryid']);
 						InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $Brand, FALSE, $FeaturedAsTopSales, $UpdateDB, $db);
 						$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
 						$ItemsAdded++;
@@ -189,39 +220,21 @@ if (DB_num_rows($result) != 0){
 						// Mirar si pertany a super categoria BLINK JEWELLERY
 						$WebsiteCategory = WebsiteCategoryBlinkJewellery($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
 						if ($WebsiteCategory > 0){
-							$Brand = 2;
+							$Brand = FindWebsiteBrand($myrow['stockid'], $myrow['categoryid']);
 							InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $Brand, FALSE, $FeaturedAsTopSales, $UpdateDB, $db);
 							$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
 							$ItemsAdded++;
 						}else{
-							// Mirar si pertany a super categoria CLASSIC
-							$WebsiteCategory = WebsiteCategoryClassic($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
+							// Mirar si pertany a super categoria BAGS
+							$WebsiteCategory = WebsiteCategoryBags($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
 							if ($WebsiteCategory > 0){
-								$Brand = 1;
+								$Brand = FindWebsiteBrand($myrow['stockid'], $myrow['categoryid']);
 								InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $Brand, FALSE, $FeaturedAsTopSales, $UpdateDB, $db);
 								$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
 								$ItemsAdded++;
 							}else{
-								// Mirar si pertany a super categoria BAGS
-								$WebsiteCategory = WebsiteCategoryBags($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
-								if ($WebsiteCategory > 0){
-									$Brand = 2;
-									InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $Brand, FALSE, $FeaturedAsTopSales, $UpdateDB, $db);
-									$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
-									$ItemsAdded++;
-								}else{
-									// Mirar si pertany a super categoria WORLD BRANDS
-									$WebsiteCategory = WebsiteCategoryWorldBrandJewellery($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
-									if ($WebsiteCategory > 0){
-										$Brand = 1;
-										InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $Brand, FALSE, $FeaturedAsTopSales, $UpdateDB, $db);
-										$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
-										$ItemsAdded++;
-									}else{
-										$WebsiteDescription = 'NO WEBSITE CATEGORY';
-										$WebsiteCategory = 0;
-									}
-								}
+								$WebsiteDescription = 'NO WEBSITE CATEGORY';
+								$WebsiteCategory = 0;
 							}
 						}
 					}
@@ -272,6 +285,13 @@ if (DB_num_rows($result) != 0){
 	prnMsg("Number of items associated to website catalog: " . locale_number_format($ItemsAdded));
 }
 
+time_finish($begintime);
+include ('includes/footer.php');
+
+/********************************************************************************************************
+				Associated functions 
+*********************************************************************************************************/
+
 function InsertWebsiteSalesCategory($Stockid, $WebsiteCategory, $Manufacturers_id, $MultipleCategories, $Featured, $UpdateDB, $db){
 	if($UpdateDB){
 		
@@ -294,12 +314,16 @@ function InsertWebsiteSalesCategory($Stockid, $WebsiteCategory, $Manufacturers_i
 						salescatid ,
 						stockid,
 						manufacturers_id,
-						featured)
+						featured,
+						date_created,
+						date_updated)
 					VALUES (
 						'" . $WebsiteCategory . "',
 						'" . $Stockid . "',
 						'" . $Manufacturers_id . "',
-						'" . $Featured . "')";
+						'" . $Featured . "',
+						NOW(),
+						NOW())";
 			$ErrMsg =_('Could not insert the website category for the item because');
 			$result = DB_query($sql,$ErrMsg);
 		}
@@ -325,41 +349,17 @@ function UpdateWeight($Stockid, $Weight, $UpdateDB, $db){
 	}
 }
 
-function UpdateVolume($Stockid, $Volume, $UpdateDB, $db){
+function UpdateVolume($Stockid, $Volume, $Length, $Width, $Height, $UpdateDB, $db){
 	if($UpdateDB){
 		$sql = "UPDATE stockmaster 
-				SET volume = " . $Volume . "
+				SET volume = " . $Volume . ",
+					length =  " . $Length . ",
+					width =  " . $Width . ",
+					height =  " . $Height . "
 				WHERE stockid =	'" . $Stockid . "'";
-		$ErrMsg =_('Could not update the item volume because');
+		$ErrMsg =_('Could not update the item volume and dimensions because');
 		$result = DB_query($sql,$ErrMsg);
 	}
-}
-
-function WebsiteCategoryWorldBrandJewellery($StockId, $Description, $Long, $Category){
-	$WebCat = 0;
-	
-	//('WORLD_BRAND_JEWELLERY',68);
-	if (($Category == "CONSIG") OR isFamily($StockId, "DS"))	{ 
-		// if belongs to one of the consignment categories 
-			$WebCat = WORLD_BRAND_JEWELLERY;	
-	}
-
-	// filter some false positives
-	if (ItemExcludedFromWebsite($StockId, $Category)){
-		$WebCat = ITEM_EXCLUDED_FROM_WEBSITE;
-	}
-	
-	// define subcategory
-	if (($WebCat == WORLD_BRAND_JEWELLERY) AND isFamily($StockId, "PL")){
-		$WebCat = WORLD_BRAND_PLATADEPALO;	
-	}
-	if (($WebCat == WORLD_BRAND_JEWELLERY) AND isfamily($StockId, "HP")){
-		$WebCat = WORLD_BRAND_HIPANEMA;	
-	}
-	if (($WebCat == WORLD_BRAND_JEWELLERY) AND isfamily($StockId, "DS")){
-		$WebCat = WORLD_BRAND_DESIGUAL;	
-	}
-	return $WebCat; 
 }
 
 function WebsiteCategorySilverJewellery($StockId, $Description, $Long, $Category){
@@ -368,10 +368,7 @@ function WebsiteCategorySilverJewellery($StockId, $Description, $Long, $Category
 	//('KL_JEWELLERY',5);
 	if (ItemInList($Category, LIST_STOCK_CATEGORIES_KAPAL_LAUT)){
 		// if belongs to one of the silver categories 
-		if (WebsiteCategoryClassic($StockId, $Description, $Long, $Category) == 0){
-			// AND is NOT a classic category
-			$WebCat = KL_JEWELLERY;	
-		}
+		$WebCat = KL_JEWELLERY;	
 	}
 
 	if (ItemInList($Category, LIST_STOCK_CATEGORIES_GENERAL)){
@@ -504,47 +501,6 @@ function WebsiteCategoryBags($StockId, $Description, $Long, $Category){
 	return $WebCat; 
 }
 
-function WebsiteCategoryClassic($StockId, $Description, $Long, $Category){
-	$WebCat = 0;
-	
-	//(('CLASSIC_JEWELLERY',61);
-	if ((substr($StockId, 0,4) == "BEPU") 
-		OR (substr($StockId, 0,4) == "PSPU")
-		OR (substr($StockId, 0,4) == "ALCL")) { 
-		$WebCat = CLASSIC_JEWELLERY;	
-	}
-
-	// filter some false positives
-	if (ItemExcludedFromWebsite($StockId, $Category)){
-		$WebCat = ITEM_EXCLUDED_FROM_WEBSITE;
-	}
-
-	// define subcategory
-	if (($WebCat == CLASSIC_JEWELLERY) AND isRing($StockId)){
-		$WebCat = CLASSIC_RINGS;	
-	}
-	if (($WebCat == CLASSIC_JEWELLERY) AND isEarring($StockId)){
-		$WebCat = CLASSIC_EARRINGS;	
-	}
-	if (($WebCat == CLASSIC_JEWELLERY) AND isEarcuff($StockId)){
-		$WebCat = CLASSIC_EARCUFFS;	
-	}
-	if (($WebCat == CLASSIC_JEWELLERY) AND isBracelet($StockId)){
-		$WebCat = CLASSIC_BRACELETS;	
-	}
-	if (($WebCat == CLASSIC_JEWELLERY) AND isNecklace($StockId)){
-		$WebCat = CLASSIC_NECKLACES;	
-	}
-	if (($WebCat == CLASSIC_JEWELLERY) AND isPendant($StockId)){
-		$WebCat = CLASSIC_PENDANTS;	
-	}	
-	if (($WebCat == CLASSIC_JEWELLERY) AND isBrooche($StockId)){
-		$WebCat = CLASSIC_BROOCHES;	
-	}	
-	return $WebCat; 
-}
-
-
 function WebsiteCategoryDiscount($StockId, $Description, $Long, $Category){
 	$WebCat = 0;
 
@@ -594,7 +550,6 @@ function WebsiteCategoryDiscount($StockId, $Description, $Long, $Category){
 	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isJewelleryRoll($StockId)){
 		$WebCat = JEWELLERY_ROLLS_ON_SPECIAL;	
 	}	
-
 	return $WebCat; 
 }
 
@@ -610,8 +565,34 @@ function FindWebsiteDescription($WebsiteCategory, $db){
 	return $WebsiteDescription;
 }
 
-time_finish($begintime);
-include ('includes/footer.php');
+function FindWebsiteBrand($StockID, $Category){
+	if (ItemInList($Category, LIST_STOCK_CATEGORIES_KAPAL_LAUT)){
+		// if belongs to one of the KL categories, so Brand is KL
+		$Brand = 1;	
+	}else if (ItemInList($Category, LIST_STOCK_CATEGORIES_BLINK)){
+		// if belongs to one of the BL categories, so Brand is BL
+		$Brand = 2;	
+	}else if (ItemInList($Category, LIST_STOCK_CATEGORIES_GENERAL)){
+		// if belongs to one of the General categories, so Brand is KL
+		$Brand = 1;	
+	}else{
+		//should be a discounted item, we keep the previous brand if still available, otherwise assing the outlet brand
+		$SQL = "SELECT manufacturers_id
+				FROM salescatprod 
+				WHERE stockid = '" . $Stockid . "'";
+		$result = DB_query($SQL);
+		if (DB_num_rows($result) != 0){
+			// assign the current brand
+			$myrow = DB_fetch_array($result);
+			$Brand = $myrow['manufacturers_id'];	
+		}else{
+			// we are lost... so assign the outlet one
+			$Brand = 3;	
+		}
+	}
+	return $Brand;
+}
+
 
 function ItemFeaturedAsTopSale($StockID, $Category, $DaysTopSales, $db){
 	$Featured = FALSE;
