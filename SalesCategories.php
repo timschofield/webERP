@@ -7,6 +7,9 @@ include('includes/session.php');
 $Title = _('Sales Category Maintenance');
 
 include('includes/header.php');
+include('includes/KLDefines.php');
+include('includes/KLGeneralFunctions.php');
+
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
@@ -447,14 +450,40 @@ if($result AND DB_num_rows($result)) {
 }
 
 // This query will return the stock that is available
+// Only shows the items of the categories going downhill
+
+if (isset($ParentCategory)){
+	if (ItemInList($ParentCategory, ONLINESHOP_KAPAL_LAUT_SALES_CATEGORIES) 
+		OR ItemInList($ParentCategory, MARKETPLACE_KAPAL_LAUT_SALES_CATEGORIES)){
+		// it is a Kapal-Laut
+		$SQLCategories = " AND stockmaster.categoryid IN ". LIST_STOCK_CATEGORIES_KAPAL_LAUT ." ";
+	}else if (ItemInList($ParentCategory, ONLINESHOP_BLINK_SALES_CATEGORIES) 
+		OR ItemInList($ParentCategory, MARKETPLACE_BLINK_SALES_CATEGORIES)){
+		// it is a Blink
+		$SQLCategories = " AND stockmaster.categoryid IN ". LIST_STOCK_CATEGORIES_BLINK ." ";
+	}else if (ItemInList($ParentCategory, ONLINESHOP_OUTLET_SALES_CATEGORIES)){
+		// it is a child of Outlet
+		$SQLCategories = " AND stockmaster.categoryid IN ". LIST_STOCK_CATEGORIES_OUTLET ." ";
+	}else{
+		// show everything
+		$SQLCategories = " AND (stockmaster.categoryid IN ". LIST_STOCK_CATEGORIES_KAPAL_LAUT ."
+							OR stockmaster.categoryid IN ". LIST_STOCK_CATEGORIES_BLINK ."
+							OR stockmaster.categoryid IN ". LIST_STOCK_CATEGORIES_OUTLET .")";
+	}
+}else{
+	// not assigned a parent, so all of them
+	$SQLCategories = " AND (stockmaster.categoryid IN ". LIST_STOCK_CATEGORIES_KAPAL_LAUT ."
+						OR stockmaster.categoryid IN ". LIST_STOCK_CATEGORIES_BLINK ."
+						OR stockmaster.categoryid IN ". LIST_STOCK_CATEGORIES_OUTLET .")";
+}
 $sql = "SELECT stockid, 
 				description 
 		FROM stockmaster INNER JOIN stockcategory 
 		ON stockmaster.categoryid=stockcategory.categoryid 
-		WHERE discontinued = 0
-		AND mbflag<>'G'
-		AND stocktype<>'M'
+		WHERE discontinued = 0 ". 
+		$SQLCategories ." 
 		ORDER BY stockid";
+
 $result = DB_query($sql);
 if($result AND DB_num_rows($result)) {
 	// continue id stock id in the stockid array

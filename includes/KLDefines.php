@@ -192,6 +192,7 @@ define('KL_TOERINGS',58);
 define('KL_SLIMRINGS',67);
 define('KL_EARCUFFS',71);
 define('KL_BROOCHES',82);
+
 define('BLINK_JEWELLERY',14);
 define('BLINK_RINGS',35);
 define('BLINK_BRACELETS',36);
@@ -202,6 +203,7 @@ define('BLINK_EARCUFFS',72);
 define('BLINK_BROOCHES',77);
 define('BLINK_KEYHOLDERS',84);
 define('BAGS',29);
+
 define('GENERAL_ACCESSORIES',88);
 define('GE_JEWELLERY_ROLLS',89);
 define('GE_FACEMASKS',90);
@@ -235,7 +237,12 @@ define("OPENCART_STORE_WHOLESALE", 8);
 
 define("WEBERP_DISCOUNTS_IN_OPENCART_TABLE", 'product_special');
 
+define("ONLINESHOP_KAPAL_LAUT_SALES_CATEGORIES", '5,31,32,33,34,48,57,58,67,71,82');
+define("ONLINESHOP_BLINK_SALES_CATEGORIES", '14,29,35,36,37,38,50,72,77,84');
 define("ONLINESHOP_OUTLET_SALES_CATEGORIES", '51,52,53,54,55,56,59,60,74,81,85,91,92');
+
+define("MARKETPLACE_KAPAL_LAUT_SALES_CATEGORIES", '94');
+define("MARKETPLACE_BLINK_SALES_CATEGORIES", '95');
 
 define("SALES_CATEGORIES_FOR_GOOGLE_PRODUCT_FEED", '31,32,33,34,36,37,50,38,35,43,44,45,46,47,48,51,52,53,54,55,56,40,41,49,42,39,67,71,72,73,74,76,80,89');
 
@@ -330,29 +337,27 @@ define("META_STORE_NAME_KL", "Kapal-Laut Jewellery");
 define("META_STORE_NAME_BL", "Blink by Kapal-Laut");
 define("META_STORE_NAME_OU", "Outlet by Kapal-Laut");
 
-
 ///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+// MARKETPLACES
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+define("ADMINCERDAS_MINIMUM_STOCK_TO_UPDATE", 20);
+
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // TOKOPEDIA
 ///////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////
-
 define("TOKOPEDIA_BANK_GL_ACCOUNT", '111121121PT');
 define("TOKOPEDIA_COMMISSION_GL_ACCOUNT", '700211321PT');
 define("TOKOPEDIA_COMMISSION_PERCENT", 1.00);
 define("TOKOPEDIA_COMMISSION_FREE_SHIPPING_PER_ITEM_PERCENT", 2.50);
 define("TOKOPEDIA_COMMISSION_FREE_SHIPPING_PER_ITEM_MAXIMUM", 10000);
 
-
-///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // SHOPEE
-///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
 define("SHOPEE_BANK_GL_ACCOUNT", '111121122PT');
 define("SHOPEE_COMMISSION_GL_ACCOUNT", '700211322PT');
 define("SHOPEE_COMMISSION_PERCENT", 1.50);
-
-
 
 ?>

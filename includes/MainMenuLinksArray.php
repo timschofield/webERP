@@ -187,6 +187,7 @@ $MenuItems['orders']['Maintenance']['Caption'] = array( _('Create Contract'),
 														_('OpenCart: Sync webERP to OC Daily'),
 														_('OpenCart: Sync webERP to OC Hourly'),
 														_('OpenCart: Sync OC to webERP'),
+														_('AdminCerdas: Upload to marketplaces'),
 														_('Sell Through Support Deals'));
 
 $MenuItems['orders']['Maintenance']['URL'] = array( '/Contracts.php',
@@ -199,6 +200,7 @@ $MenuItems['orders']['Maintenance']['URL'] = array( '/Contracts.php',
 													'/WeberpToOpenCartDaily.php',
 													'/WeberpToOpenCartHourly.php',
 													'/OpenCartToWeberp.php',
+													'/KLExcelAdminCerdas.php',
 													'/SellThroughSupport.php');
 
 $MenuItems['AR']['Transactions']['Caption'] = array(_('Select Order to Invoice'),
