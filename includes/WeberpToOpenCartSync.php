@@ -106,6 +106,7 @@ function WeberpToOpenCartHourlySync($ShowMessages, $db, $db_oc, $oc_tableprefix,
 }
 
 function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText= ''){
+	$i = 0;
 	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference($db));
 	$Today = date('Y-m-d');
 	$TagSeparator = ", ";
@@ -161,7 +162,6 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 		$InsertErrMsg = _('The SQL to insert Basic Product Information in Opencart failed');
 
 		$k = 0; //row colour counter
-		$i = 0;
 		while ($myrow = DB_fetch_array($result)) {
 			if ($ShowMessages){
 				$k = StartEvenOrOddRow($k);
@@ -177,6 +177,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 			$Location = '';
 			$Quantity = GetOnlineQOH($myrow['stockid'], $db);
 			$StockStatusId = 5; // Out of stock by default
+
 			$Image = PATH_OPENCART_IMAGES . $myrow['stockid'].'.jpg';
 			$ManufacturerId = $myrow['manufacturers_id'];
 			$Shipping = 1; // will need function depending if it's a shippable or not item
@@ -454,7 +455,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 						$Name,
 						locale_number_format($Quantity,0),
 						locale_number_format($Price,0),
-						$StoreText,
+						$StoreText . " " .$Image,
 						$Tag,
 						$Action
 						);
@@ -481,6 +482,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 }
 
 function SyncProductSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText= ''){
+	$i = 0;
 
 	if ($EmailText !=''){
 		$EmailText = $EmailText . "Product - Sales Categories" . "\n" . PrintTimeInformation($db);
@@ -516,7 +518,6 @@ function SyncProductSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $o
 		$InsertErrMsg = _('The SQL to insert Product - Sales Categories in Opencart failed');
 
 		$k = 0; //row colour counter
-		$i = 0;
 		while ($myrow = DB_fetch_array($result)) {
 
 			/* Field Matching */
@@ -587,6 +588,7 @@ ADAPT FOR v3.0
 }
 
 function SyncProductPrices($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText = ''){
+	$i = 0;
 
 	if ($EmailText !=''){
 		$EmailText = $EmailText . "Product Price Sync" . "\n" . PrintTimeInformation($db);
@@ -626,7 +628,6 @@ function SyncProductPrices($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tablepr
 		$UpdateErrMsg = _('The SQL to update Product Prices in Opencart failed');
 
 		$k = 0; //row colour counter
-		$i = 0;
 		while ($myrow = DB_fetch_array($result)) {
 			$k = StartEvenOrOddRow($k);
 
@@ -681,6 +682,7 @@ function SyncProductPrices($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tablepr
 }
 
 function SyncProductQOH($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText=''){
+	$i = 0;
 
 	if ($EmailText !=''){
 		$EmailText = $EmailText . "Sync Product QOH" . "\n" . PrintTimeInformation($db);
@@ -716,7 +718,6 @@ function SyncProductQOH($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefi
 		$UpdateErrMsg = _('The SQL to update Product QOH in Opencart failed');
 
 		$k = 0; //row colour counter
-		$i = 0;
 		while ($myrow = DB_fetch_array($result)) {
 
 			/* Field Matching */
@@ -767,7 +768,7 @@ function SyncProductQOH($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefi
 	$sqlUpdate = "UPDATE " . $oc_tableprefix . "product SET
 					status = 0
 				WHERE quantity = 0";
-	$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
+	$resultUpdate = DB_query_oc($sqlUpdate,"","",true);
 	if ($EmailText !=''){
 		$EmailText = $EmailText . " Set Status = 0 for all items with QOH = 0" . "\n";
 	}
@@ -795,7 +796,7 @@ function PurgeDiscountOver50($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_table
 			AND oc_product.price / oc_product_special.price > 2
 			AND oc_product.status = 1;";
 
-	$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
+	$resultUpdate = DB_query_oc($sqlUpdate,"","",true);
 	
 	if ($ShowMessages){
 		prnMsg('Purged Products with Discount Over 50%','success');
@@ -1527,7 +1528,6 @@ function SyncMultipleImages($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tablep
 	}
 	$SQLTruncate = "TRUNCATE " . $oc_tableprefix . "product_image";
 	$resultSQLTruncate = DB_query_oc($SQLTruncate);
-
 	$k = 0; //row colour counter
 	$i= 0;
 	// get all images in part_pics folder (ideally should be OpenCart images folder...)
@@ -1544,22 +1544,23 @@ function SyncMultipleImages($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tablep
 				$ProductId = GetOpenCartProductId($StockId, $db_oc, $oc_tableprefix);
 				if ($ProductId > 0){
 					// insert info about multiple images
+					$Image = PATH_OPENCART_IMAGES . $file;
 					$sqlInsert = "INSERT INTO " . $oc_tableprefix . "product_image
 									(product_id,
 									image,
 									sort_order)
 								VALUES
 									('" . $ProductId . "',
-									'" . PATH_OPENCART_IMAGES . $file . "',
+									'" . $Image . "',
 									'" . $multipleimage . "')";
-					$resultInsert = DB_query_oc($sqlInsert,$InsertErrMsg,$DbgMsg,true);
+					$resultInsert = DB_query_oc($sqlInsert,"","",true);
 					if ($ShowMessages){
 						$k = StartEvenOrOddRow($k);
 						printf('<td>%s</td>
 								<td>%s</td>
 								</tr>',
 								$StockId,
-								$file
+								$Image
 								);
 					}
 					$i++;
@@ -1669,6 +1670,7 @@ function SyncRelatedItems($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tablepre
 }
 
 function SyncCurrencies($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText= ''){
+	$i = 0;
 	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference($db));
 	if ($EmailText !=''){
 		$EmailText = $EmailText . "Sync Currency Exchange Rates" . "\n" . PrintTimeInformation($db);

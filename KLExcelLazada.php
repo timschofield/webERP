@@ -3,7 +3,6 @@
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
-include('includes/WeberpOpenCartDefines.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/OpenCartGeneralFunctions.php');
 include('includes/OpenCartConnectDB.php');

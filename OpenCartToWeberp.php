@@ -9,7 +9,7 @@ $Title = _('OpenCart to webERP Syncrhonizer '. VERSIONFILE);
 include ('includes/header.php');
 
 include ('includes/KLGeneralFunctions.php');
-include ('includes/WeberpOpenCartDefines.php');
+include ('includes/KLDefines.php');
 include ('includes/OpenCartGeneralFunctions.php');
 include ('includes/OpenCartToWeberpSync.php');
 include ('includes/OpenCartConnectDB.php');

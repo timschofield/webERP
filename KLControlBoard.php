@@ -35,7 +35,6 @@ include('includes/KLReorderLevel.php');
 
 include('includes/OpenCartGeneralFunctions.php');
 include('includes/OpenCartConnectDB.php');
-include('includes/WeberpOpenCartDefines.php');
 
 /* Do the pending GL Postings to get the latest financial control reports*/
 include('includes/GLPostings.inc');
@@ -847,9 +846,7 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_SystemAdmin 
-		OR $KL_BusinessDevelopmentManager
-		OR $KL_OperationalManager){
+	if ($KL_SystemAdmin){
 		OutstandingOrders("Retail", "Order", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		OutstandingOrders("Retail", "Quotation", $RootPath, $db);
@@ -3917,7 +3914,7 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 							<th class="ascending">' . _('Paid Mandiri TT') . '</th>
 							<th class="ascending">' . _('Paid BCA TT') . '</th>
 							<th class="ascending">' . _('Paid Danamon TT') . '</th>
-							<th class="ascending">' . _('Paid Xendit TT') . '</th>
+							<th class="ascending">' . _('Paid Xendit VA') . '</th>
 							<th class="ascending">' . _('Paid Xendit CC') . '</th>
 						</tr>';
 		echo $TableHeader;

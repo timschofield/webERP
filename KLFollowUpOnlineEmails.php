@@ -322,7 +322,7 @@ if ($_GET['EmailType']=='PaymentConfirmation'){
 }
 
 if ($_GET['EmailType']=='TrackingConfirmation'){
-	include ('includes/WeberpOpenCartDefines.php');
+	include ('includes/KLDefines.php');
 	include ('includes/OpenCartGeneralFunctions.php');
 	include ('includes/OpenCartConnectDB.php');
 	// change status of the order in Opencart, as OPENCART_ORDER_STATUS_SHIPPED

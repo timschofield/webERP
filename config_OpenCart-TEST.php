@@ -10,7 +10,7 @@ $Language ='en_GB';
 $opencart_db_user = 'DBU_kl_shop';
 $opencart_db_pwd = '2e549bf390a028a9fRR55.2afd';
 $opencart_db_host = 'localhost';
-$opencart_db_name = 'kl_shop_oc_30';
+$opencart_db_name = 'test_online_shop';
 $opencart_db_tableprefix ='oc_';
 
 ?>

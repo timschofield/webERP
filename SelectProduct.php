@@ -14,6 +14,7 @@ $BookMark = 'SelectingInventory';
 
 include ('includes/header.php');
 include ('includes/SQL_CommonFunctions.inc');
+include ('includes/KLDefines.php');
 
 if (isset($_GET['StockID'])) {
 	//The page is called with a StockID
@@ -430,7 +431,10 @@ if ($Its_A_Kitset_Assembly_Or_Dummy == False) {
 
 	$SupportedImgExt = array('png','jpg','jpeg');
 	$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/' . $StockID . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
-	echo '<a href="' . $RootPath . '/' . $imagefile . '" target="_blank">' . _('Show Part Picture (if available)') . '</a><br />';
+//	echo '<a href="' . $RootPath . '/' . $imagefile . '" target="_blank">' . _('Show Part Picture (if available)') . '</a><br />';
+	$largefile = PATH_TO_CATALOG_IMAGES . $StockID . '.jpg';
+	echo '<a href="' . $largefile . '" target="_blank">' . _('Show Part Picture (if available)') . '</a><br />';
+
 }
 if ($Its_A_Dummy == False) {
 	echo '<a href="' . $RootPath . '/BOMInquiry.php?StockID=' . urlencode($StockID) . '">' . _('View Costed Bill Of Material') . '</a><br />';

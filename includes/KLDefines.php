@@ -331,6 +331,7 @@ define("ABSOLUTE_PATH_WEBERP_TEST", '/var/www/vhosts/kapal-laut.com/ptadu.com/TE
 define("PATH_OPENCART_IMAGES", 'catalog/KL/part_pics/');
 define("PATH_OPENCART_BASE", 'http://www.kapal-laut.com');
 define("ROUTE_TO_PRODUCT", 'index.php?route=product/product&');
+define("PATH_TO_CATALOG_IMAGES", 'https://www.kapal-laut.com/image/catalog/KL/part_pics/');
 
 // META DATA
 define("META_STORE_NAME_KL", "Kapal-Laut Jewellery");

@@ -10,7 +10,6 @@ function KL_DailyChecks($Group, $RootPath, $db, $EmailText= ''){
 	include('includes/KLGeneralFunctions.php');
 	include('includes/GetPrice.inc');
 	
-	include ('includes/WeberpOpenCartDefines.php');
 	include ('includes/OpenCartGeneralFunctions.php');
 	include ('includes/WeberpToOpenCartSync.php');
 	include ('includes/OpenCartToWeberpSync.php');
@@ -67,7 +66,6 @@ function KL_HourlyChecks($RootPath, $db, $EmailText=''){
 	include('includes/KLGeneralFunctions.php');
 	include('includes/GetPrice.inc');
 	
-	include ('includes/WeberpOpenCartDefines.php');
 	include ('includes/OpenCartGeneralFunctions.php');
 	include ('includes/WeberpToOpenCartSync.php');
 	include ('includes/OpenCartToWeberpSync.php');

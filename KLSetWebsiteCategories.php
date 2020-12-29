@@ -10,7 +10,6 @@ include ('includes/header.php');
 include ('includes/KLDefines.php');
 include ('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
-include('includes/WeberpOpenCartDefines.php');
 
 $UpdateDB = TRUE;
 
