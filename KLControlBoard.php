@@ -370,7 +370,7 @@ if ($ProcessSection01){
 
 		BalanceListAccountControl("('111259010PT', 
 									'111259020PT', 
-									'111259050PT')", "Total PayPal PT.BB", 0, 30000000, $periodnow, $db);
+									'111259050PT')", "Total PayPal PT.BB", 0, 50000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 	}
 	
@@ -404,7 +404,7 @@ if ($ProcessSection01){
 									'111513000AD')", "Total WIP",   -5000000,    5000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 
-		BalanceAccountControl("111111200",   50000000,  100000000, $periodnow, $db);
+		BalanceAccountControl("111111200",   50000000,  200000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111202010",         -1,          1, $periodnow, $db);
 		$NumberOfTestExecuted++;
