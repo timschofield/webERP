@@ -45,10 +45,14 @@ function submit(&$db, $TypeOfShop) {
 						stockmaster.longdescription,
 						stockmaster.grossweight,
 						stockmaster.categoryid,
+						stockdescriptiontranslations.descriptiontranslation,
+						stockdescriptiontranslations.longdescriptiontranslation,
 						prices.price
-				FROM stockmaster, salescatprod, prices
+				FROM stockmaster, salescatprod, prices, stockdescriptiontranslations
 				WHERE stockmaster.stockid = salescatprod.stockid
 					AND stockmaster.stockid = prices.stockid
+					AND stockmaster.stockid = stockdescriptiontranslations.stockid
+					AND stockdescriptiontranslations.language_id = 'id_ID.utf8'
 					AND stockmaster.discontinued = 0
 					AND salescatprod.salescatid = " . $SalesCategory . "
 					AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
@@ -68,15 +72,15 @@ function submit(&$db, $TypeOfShop) {
 			// Set document properties
 			$objPHPExcel->getProperties()->setCreator("webERP")
 										 ->setLastModifiedBy("webERP")
-										 ->setTitle("Admin Cerdas" . $TypeOfShop)
-										 ->setSubject("Admin Cerdas" . $TypeOfShop)
-										 ->setDescription("Admin Cerdas" . $TypeOfShop)
+										 ->setTitle("Admin Cerdas " . $NameOfShop)
+										 ->setSubject("Admin Cerdas " . $NameOfShop)
+										 ->setDescription("Admin Cerdas " . $NameOfShop)
 										 ->setKeywords("")
 										 ->setCategory("");
 
 			// Add title data
 			$objPHPExcel->setActiveSheetIndex(0);
-			$objPHPExcel->getActiveSheet()->setTitle(("Admin Cerdas" . $TypeOfShop));
+			$objPHPExcel->getActiveSheet()->setTitle(("AC " . $NameOfShop));
 
 			$objPHPExcel->getActiveSheet()->setCellValue('A1', 'Kode');
 			$objPHPExcel->getActiveSheet()->setCellValue('B1', 'Nama Produk');
@@ -99,31 +103,31 @@ function submit(&$db, $TypeOfShop) {
 			while ($myrow = DB_fetch_array($result)) {
 				
 				$StockId = $myrow['stockid'];
-				$Name = $myrow['description'];
+				$Name = $myrow['descriptiontranslation'] . "-"  . $myrow['description'];
 				$Price = round($myrow['price']);
 				$PriceDiscount = '';
-				$Description = $myrow['longdescription'];
+				$Description = $myrow['longdescriptiontranslation']. " - " . $myrow['longdescription'];
 				$Weight = $myrow['grossweight'] * 1000; // webERP in KG, AdminCerdas in gr
 				
 				// if we have more than ADMINCERDAS_MINIMUM_STOCK_TO_UPDATE we "cap" it, 
 				// so we don't spend update credits updating QOH when it is not important for us
 				$QOH = 	min(GetOnlineQOH($myrow['stockid'], $db), ADMINCERDAS_MINIMUM_STOCK_TO_UPDATE);
 
-				$Url_1 = PATH_OPENCART_BASE. "/" . PATH_OPENCART_IMAGES . $myrow['stockid'].'.jpg';
+				$Url_1 = PATH_TO_CATALOG_IMAGES . $myrow['stockid'].'.jpg';
 
 				if (file_exists($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'].'.1.jpg')){
-					$Url_2 = PATH_OPENCART_BASE. "/" . PATH_OPENCART_IMAGES . $myrow['stockid'].'.1.jpg';
+					$Url_2 = PATH_TO_CATALOG_IMAGES . $myrow['stockid'].'.1.jpg';
 				}else{
 					$Url_2 =  "";
 				}
 
 				if(file_exists($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'].'.2.jpg')) {
-					$Url_3 = PATH_OPENCART_BASE. "/" . PATH_OPENCART_IMAGES . $myrow['stockid'].'.2.jpg';
+					$Url_3 = PATH_TO_CATALOG_IMAGES . $myrow['stockid'].'.2.jpg';
 				}else{
 					$Url_3 =  "";
 				}
 
-				$Category = "";
+				$Category = FindShopeeCategory($StockId, $Name, $Description);
  
 				$ActiveSheet->setCellValue('A'.$i, $StockId);
 				$ActiveSheet->setCellValue('B'.$i, $Name);
@@ -150,7 +154,7 @@ function submit(&$db, $TypeOfShop) {
 
 			// Redirect output to a client’s web browser (Excel2007)
 			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-			$File ='AdminCerdas-' .  $TypeOfShop . '-' . Date('Y-m-d-H-i-s'). '.xlsx';
+			$File ='AC-' .  $NameOfShop . '-' . Date('Y-m-d-H-i-s'). '.xlsx';
 			header('Content-Disposition: attachment;filename="' . $File . '"');
 			header('Cache-Control: max-age=0');
 			// If you're serving to IE 9, then the following may be needed
@@ -166,7 +170,7 @@ function submit(&$db, $TypeOfShop) {
 			$objWriter->save('php://output');
 
 		}else{
-			$Title = "Excel file for uplaoding products to Admin Cerdas";
+			$Title = "Excel file for uploading products to Admin Cerdas";
 			include('includes/header.php');
 			prnMsg('No products to upload');
 			include('includes/footer.php');
@@ -179,7 +183,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 {
 // Display form fields. This function is called the first time
 // the page is called.
-	$Title = _('Excel file for uplaoding products to Admin Cerdas');
+	$Title = _('Excel file for uploading products to Admin Cerdas');
 
 	include('includes/header.php');
 
@@ -219,5 +223,57 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	include('includes/footer.php');
 
 } // End of function display()
+
+function FindShopeeCategory($StockId, $Name, $Description){
+	$ShopeeCat = "";
+	if (isRing($StockId)){
+		$ShopeeCat = SHOPEE_CATEGORY_RING;
+	}elseif (isToeRing($StockId)){
+		$ShopeeCat = SHOPEE_CATEGORY_TOE_RING;
+	}elseif (isBrooche($StockId)){
+		$ShopeeCat = SHOPEE_CATEGORY_BROOCHE;
+	}elseif (isEarring($StockId)){
+		if (ItemInList("stud", $Description)){
+			$ShopeeCat = SHOPEE_CATEGORY_EARRING_STUD;
+		}else if (ItemInList("hoop", $Description)){
+			$ShopeeCat = SHOPEE_CATEGORY_EARRING_HOOP;
+		}else if (ItemInList("hook", $Description)){
+			$ShopeeCat = SHOPEE_CATEGORY_EARRING_HOOK;
+		}else{
+			$ShopeeCat = SHOPEE_CATEGORY_EARRING;
+		}
+	}elseif (isEarcuff($StockId)){
+		$ShopeeCat = SHOPEE_CATEGORY_EARRING_STUD;
+	}elseif (isBracelet($StockId)){
+		if (ItemInList("bangle", $Description)){
+			$ShopeeCat = SHOPEE_CATEGORY_BANGLE;
+		}else if (ItemInList("pearl", $Description)){
+			$ShopeeCat = SHOPEE_CATEGORY_BRACELET_PEARL;
+		}else{
+			$ShopeeCat = SHOPEE_CATEGORY_BRACELET;
+		}
+	}elseif (isAnklet($StockId)){
+		$ShopeeCat = SHOPEE_CATEGORY_ANKLET;
+	}elseif (isPendant($StockId)){
+		if (ItemInList("pearl", $Description)){
+			$ShopeeCat = SHOPEE_CATEGORY_PENDANT_PEARL;
+		}else{
+			$ShopeeCat = SHOPEE_CATEGORY_PENDANT;
+		}
+	}elseif (isNecklace($StockId)){
+		if (ItemInList("choker", $Description)){
+			$ShopeeCat = SHOPEE_CATEGORY_CHOKER;
+		}else if (ItemInList("pearl", $Description)){
+			$ShopeeCat = SHOPEE_CATEGORY_NECKLACE_PEARL;
+		}else{
+			$ShopeeCat = SHOPEE_CATEGORY_NECKLACE;
+		}
+	}elseif (isBag($StockId)){
+		$ShopeeCat = SHOPEE_CATEGORY_BAG;
+	}elseif (isKeyHolder($StockId)){
+		$ShopeeCat = SHOPEE_CATEGORY_KEYHOLDER;
+	}
+	return $ShopeeCat;
+}
 
 ?>

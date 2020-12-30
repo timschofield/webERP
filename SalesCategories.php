@@ -177,7 +177,10 @@ if (isset($_POST['submit'])  AND isset($EditName) ) { // Creating or updating a 
 	} //end if stock category used in debtor transactions
 	unset($_GET['Delete']);
 	unset($EditName);
-} elseif( isset($_POST['submit']) AND isset($_POST['AddStockID']) AND $_POST['Brand']!='') {
+} elseif( isset($_POST['submit']) AND isset($_POST['AddStockID'])) {
+	// ASSIGN THE BRAND 
+	
+	$_POST['Brand'] = FindWebsiteBrand($myrow['AddStockID'], $myrow['categoryid']);;
 	$sql = "INSERT INTO salescatprod (stockid,
 										salescatid,
 										manufacturers_id) 
@@ -477,6 +480,7 @@ if (isset($ParentCategory)){
 						OR stockmaster.categoryid IN ". LIST_STOCK_CATEGORIES_OUTLET .")";
 }
 $sql = "SELECT stockid, 
+				stockmaster.categoryid,
 				description 
 		FROM stockmaster INNER JOIN stockcategory 
 		ON stockmaster.categoryid=stockcategory.categoryid 
@@ -514,7 +518,7 @@ if($result AND DB_num_rows($result)) {
 				$myrow['description'] . '&quot;</option>';
 		}
 	}
-	echo '</select></td>
+/*	echo '</select></td>
 			</tr>
 			<tr>
 			<td>' . _('Select Manufacturer/Brand') . ':</td>
@@ -524,7 +528,7 @@ if($result AND DB_num_rows($result)) {
 	while( $myrow = DB_fetch_array($BrandResult) ) {
 		echo '<option value="'.$myrow['manufacturers_id'].'">' .  $myrow['manufacturers_name'] . '</option>';
 	}
-
+*/
 	echo '</select></td>
 			</tr></table>
 		<br />
@@ -571,12 +575,11 @@ if($result ) {
 	if( DB_num_rows($result)) {
 		echo '<table class="selection">';
 		echo '<tr>
-				<th colspan="4">' . _('Inventory items for') . ' ' . $CategoryPath . '</th>
+				<th colspan="3">' . _('Inventory items for') . ' ' . $CategoryPath . '</th>
 			</tr>
 			<tr>
 				<th class="ascending">' . _('Item') . '</th>
 				<th class="ascending">' . _('Description') . '</th>
-				<th class="ascending">' . _('Brand') . '</th>
 				<th class="ascending">' . _('Featured') . '</th>
 			</tr>';
 
@@ -593,7 +596,6 @@ if($result ) {
 
 			echo '<td>' . $myrow['stockid'] . '</td>
 				<td>' . $myrow['description'] . '</td>
-				<td>' . $myrow['manufacturers_name'] . '</td>
 				<td>';
 			if ($myrow['featured']==1){
 				echo '<img src="css/' . $Theme . '/images/tick.png"></td>

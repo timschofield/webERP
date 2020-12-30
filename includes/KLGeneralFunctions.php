@@ -522,5 +522,33 @@ function CreateConsignmentInvoiceNumber($CompanyFrom, $CompanyTo, $EndDate){
 	return $CompanyFrom . '-' . $CompanyTo . '-' . $EndDate;
 }
 
+function FindWebsiteBrand($StockID, $Category){
+	if (ItemInList($Category, LIST_STOCK_CATEGORIES_KAPAL_LAUT)){
+		// if belongs to one of the KL categories, so Brand is KL
+		$Brand = 1;	
+	}else if (ItemInList($Category, LIST_STOCK_CATEGORIES_BLINK)){
+		// if belongs to one of the BL categories, so Brand is BL
+		$Brand = 2;	
+	}else if (ItemInList($Category, LIST_STOCK_CATEGORIES_GENERAL)){
+		// if belongs to one of the General categories, so Brand is KL
+		$Brand = 1;	
+	}else{
+		//should be a discounted item, we keep the previous brand if still available, otherwise assing the outlet brand
+		$SQL = "SELECT manufacturers_id
+				FROM salescatprod 
+				WHERE stockid = '" . $Stockid . "'";
+		$result = DB_query($SQL);
+		if (DB_num_rows($result) != 0){
+			// assign the current brand
+			$myrow = DB_fetch_array($result);
+			$Brand = $myrow['manufacturers_id'];	
+		}else{
+			// we are lost... so assign the outlet one
+			$Brand = 3;	
+		}
+	}
+	return $Brand;
+}
+
 
 ?>

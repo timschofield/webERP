@@ -331,7 +331,7 @@ define("ABSOLUTE_PATH_WEBERP", '/var/www/vhosts/kapal-laut.com/ptadu.com/weberp/
 define("ABSOLUTE_PATH_WEBERP_TEST", '/var/www/vhosts/kapal-laut.com/ptadu.com/TEST/weberp/');
 
 define("PATH_OPENCART_IMAGES", 'catalog/KL/part_pics/');
-define("PATH_OPENCART_BASE", 'http://www.kapal-laut.com');
+define("PATH_OPENCART_BASE", 'https://www.kapal-laut.com');
 define("ROUTE_TO_PRODUCT", 'index.php?route=product/product&');
 define("PATH_TO_CATALOG_IMAGES", 'https://www.kapal-laut.com/image/catalog/KL/part_pics/');
 
@@ -362,5 +362,25 @@ define("TOKOPEDIA_COMMISSION_FREE_SHIPPING_PER_ITEM_MAXIMUM", 10000);
 define("SHOPEE_BANK_GL_ACCOUNT", '111121122PT');
 define("SHOPEE_COMMISSION_GL_ACCOUNT", '700211322PT');
 define("SHOPEE_COMMISSION_PERCENT", 1.50);
+
+define("SHOPEE_CATEGORY_RING", '1139');
+define("SHOPEE_CATEGORY_TOE_RING", '1139');
+define("SHOPEE_CATEGORY_BROOCHE", '17875');
+define("SHOPEE_CATEGORY_EARRING", '1141');
+define("SHOPEE_CATEGORY_EARRING_HOOK", '7329');
+define("SHOPEE_CATEGORY_EARRING_STUD", '7327');
+define("SHOPEE_CATEGORY_EARRING_HOOP", '7328');
+define("SHOPEE_CATEGORY_BANGLE", '7321');
+define("SHOPEE_CATEGORY_BRACELET_PEARL", '7323');
+define("SHOPEE_CATEGORY_BRACELET", '1137');
+define("SHOPEE_CATEGORY_ANKLET", '17868');
+define("SHOPEE_CATEGORY_PENDANT", '7320');
+define("SHOPEE_CATEGORY_PENDANT_PEARL", '7319');
+define("SHOPEE_CATEGORY_CHOKER", '7317');
+define("SHOPEE_CATEGORY_NECKLACE_PEARL", '7319');
+define("SHOPEE_CATEGORY_NECKLACE", '1133');
+define("SHOPEE_CATEGORY_BAG", '16629');
+define("SHOPEE_CATEGORY_KEYHOLDER", '16632');
+
 
 ?>
