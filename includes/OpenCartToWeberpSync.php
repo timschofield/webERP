@@ -111,11 +111,9 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db,
 					" . $oc_tableprefix . "order.currency_code,
 					" . $oc_tableprefix . "order.currency_value,
 					" . $oc_tableprefix . "order.date_modified,
-					" . $oc_tableprefix . "customer.customer_group_id
-			FROM " . $oc_tableprefix . "order,
-				 " . $oc_tableprefix . "customer
-			WHERE " . $oc_tableprefix . "order.customer_id  = " . $oc_tableprefix . "customer.customer_id
-				AND " . $oc_tableprefix . "order.order_status_id >= 1
+					" . $oc_tableprefix . "order.customer_group_id
+			FROM " . $oc_tableprefix . "order
+			WHERE " . $oc_tableprefix . "order.order_status_id >= 1
 				AND ( " . $oc_tableprefix . "order.date_added >= '" . $LastTimeRun . "'
 					OR " . $oc_tableprefix . "order.date_modified >= '" . $LastTimeRun . "')
 			ORDER BY " . $oc_tableprefix . "order.order_id";
