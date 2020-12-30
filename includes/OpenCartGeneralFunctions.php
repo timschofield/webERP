@@ -1116,6 +1116,8 @@ function GetWeberpShippingMethod($OpenCartShippingMethod){
 		$WeberpShipping = SHIPMENT08_WEBERP_CODE;
 	}elseif (strpos($OpenCartShippingMethod, SHIPMENT09_OPENCART_TEXT) > 0){
 		$WeberpShipping = SHIPMENT09_WEBERP_CODE;
+	}elseif (strpos($OpenCartShippingMethod, SHIPMENT10_OPENCART_TEXT) > 0){
+		$WeberpShipping = SHIPMENT10_WEBERP_CODE;
 	}else{
 		$WeberpShipping = OPENCART_DEFAULT_SHIPVIA;
 	}
