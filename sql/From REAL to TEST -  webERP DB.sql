@@ -19,10 +19,10 @@ TRUNCATE kurakura_kl_test_erp.`bankaccountusers`;
 INSERT INTO kurakura_kl_test_erp.bankaccountusers SELECT * FROM kurakura_kl_erp.bankaccountusers;
 
 TRUNCATE kurakura_kl_test_erp.`banktrans`;
-INSERT INTO kurakura_kl_test_erp.banktrans SELECT * FROM kurakura_kl_erp.banktrans;
+/* INSERT INTO kurakura_kl_test_erp.banktrans SELECT * FROM kurakura_kl_erp.banktrans; */
 
 TRUNCATE kurakura_kl_test_erp.`bom`;
-INSERT INTO kurakura_kl_test_erp.bom SELECT * FROM kurakura_kl_erp.bom;
+/* INSERT INTO kurakura_kl_test_erp.bom SELECT * FROM kurakura_kl_erp.bom; */
 
 TRUNCATE kurakura_kl_test_erp.`buckets`;
 INSERT INTO kurakura_kl_test_erp.buckets SELECT * FROM kurakura_kl_erp.buckets;
@@ -70,7 +70,7 @@ TRUNCATE kurakura_kl_test_erp.`currencies`;
 INSERT INTO kurakura_kl_test_erp.currencies SELECT * FROM kurakura_kl_erp.currencies;
 
 TRUNCATE kurakura_kl_test_erp.`custallocns`;
-INSERT INTO kurakura_kl_test_erp.custallocns SELECT * FROM kurakura_kl_erp.custallocns;
+/* INSERT INTO kurakura_kl_test_erp.custallocns SELECT * FROM kurakura_kl_erp.custallocns; */
 
 TRUNCATE kurakura_kl_test_erp.`custbranch`;
 INSERT INTO kurakura_kl_test_erp.custbranch SELECT * FROM kurakura_kl_erp.custbranch;
@@ -79,7 +79,7 @@ TRUNCATE kurakura_kl_test_erp.`custcontacts`;
 INSERT INTO kurakura_kl_test_erp.custcontacts SELECT * FROM kurakura_kl_erp.custcontacts;
 
 TRUNCATE kurakura_kl_test_erp.`custitem`;
-INSERT INTO kurakura_kl_test_erp.custitem SELECT * FROM kurakura_kl_erp.custitem;
+/* INSERT INTO kurakura_kl_test_erp.custitem SELECT * FROM kurakura_kl_erp.custitem; */
 
 TRUNCATE kurakura_kl_test_erp.`custnotes`;
 INSERT INTO kurakura_kl_test_erp.custnotes SELECT * FROM kurakura_kl_erp.custnotes;
@@ -88,10 +88,10 @@ TRUNCATE kurakura_kl_test_erp.`debtorsmaster`;
 INSERT INTO kurakura_kl_test_erp.debtorsmaster SELECT * FROM kurakura_kl_erp.debtorsmaster;
 
 TRUNCATE kurakura_kl_test_erp.`debtortrans`;
-INSERT INTO kurakura_kl_test_erp.debtortrans SELECT * FROM kurakura_kl_erp.debtortrans;
+/* INSERT INTO kurakura_kl_test_erp.debtortrans SELECT * FROM kurakura_kl_erp.debtortrans; */
 
 TRUNCATE kurakura_kl_test_erp.`debtortranstaxes`;
-INSERT INTO kurakura_kl_test_erp.debtortranstaxes SELECT * FROM kurakura_kl_erp.debtortranstaxes;
+/* INSERT INTO kurakura_kl_test_erp.debtortranstaxes SELECT * FROM kurakura_kl_erp.debtortranstaxes; */
 
 TRUNCATE kurakura_kl_test_erp.`debtortype`;
 INSERT INTO kurakura_kl_test_erp.debtortype SELECT * FROM kurakura_kl_erp.debtortype;
@@ -139,7 +139,7 @@ TRUNCATE kurakura_kl_test_erp.`fixedassettasks`;
 INSERT INTO kurakura_kl_test_erp.fixedassettasks SELECT * FROM kurakura_kl_erp.fixedassettasks;
 
 TRUNCATE kurakura_kl_test_erp.`fixedassettrans`;
-INSERT INTO kurakura_kl_test_erp.fixedassettrans SELECT * FROM kurakura_kl_erp.fixedassettrans;
+/* INSERT INTO kurakura_kl_test_erp.fixedassettrans SELECT * FROM kurakura_kl_erp.fixedassettrans; */
 
 TRUNCATE kurakura_kl_test_erp.`freightcosts`;
 INSERT INTO kurakura_kl_test_erp.freightcosts SELECT * FROM kurakura_kl_erp.freightcosts;
@@ -171,7 +171,7 @@ INSERT INTO kurakura_kl_test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans W
 */
 
 TRUNCATE kurakura_kl_test_erp.`grns`;
-INSERT INTO kurakura_kl_test_erp.grns SELECT * FROM kurakura_kl_erp.grns;
+/* INSERT INTO kurakura_kl_test_erp.grns SELECT * FROM kurakura_kl_erp.grns; */
 
 TRUNCATE kurakura_kl_test_erp.`holdreasons`;
 INSERT INTO kurakura_kl_test_erp.holdreasons SELECT * FROM kurakura_kl_erp.holdreasons;
@@ -186,10 +186,10 @@ TRUNCATE kurakura_kl_test_erp.`klchangeprice`;
 INSERT INTO kurakura_kl_test_erp.klchangeprice SELECT * FROM kurakura_kl_erp.klchangeprice;
 
 TRUNCATE kurakura_kl_test_erp.`kladjustrl`;
-INSERT INTO kurakura_kl_test_erp.kladjustrl SELECT * FROM kurakura_kl_erp.kladjustrl;
+/* INSERT INTO kurakura_kl_test_erp.kladjustrl SELECT * FROM kurakura_kl_erp.kladjustrl; */
 
 TRUNCATE kurakura_kl_test_erp.`klconsignment`;
-INSERT INTO kurakura_kl_test_erp.klconsignment SELECT * FROM kurakura_kl_erp.klconsignment;
+/* INSERT INTO kurakura_kl_test_erp.klconsignment SELECT * FROM kurakura_kl_erp.klconsignment; */
 
 TRUNCATE kurakura_kl_test_erp.`klfreeexchanges`;
 INSERT INTO kurakura_kl_test_erp.klfreeexchanges SELECT * FROM kurakura_kl_erp.klfreeexchanges;
@@ -213,7 +213,7 @@ TRUNCATE kurakura_kl_test_erp.`klpostatus`;
 INSERT INTO kurakura_kl_test_erp.klpostatus SELECT * FROM kurakura_kl_erp.klpostatus;
 
 TRUNCATE kurakura_kl_test_erp.`klretailcustomers`;
-INSERT INTO kurakura_kl_test_erp.klretailcustomers SELECT * FROM kurakura_kl_erp.klretailcustomers;
+/* INSERT INTO kurakura_kl_test_erp.klretailcustomers SELECT * FROM kurakura_kl_erp.klretailcustomers; */
 
 TRUNCATE kurakura_kl_test_erp.`klretailpartners`;
 INSERT INTO kurakura_kl_test_erp.klretailpartners SELECT * FROM kurakura_kl_erp.klretailpartners;
@@ -252,10 +252,10 @@ TRUNCATE kurakura_kl_test_erp.`locstock`;
 INSERT INTO kurakura_kl_test_erp.locstock SELECT * FROM kurakura_kl_erp.locstock;
 
 TRUNCATE kurakura_kl_test_erp.`loctransfercancellations`;
-INSERT INTO kurakura_kl_test_erp.loctransfercancellations SELECT * FROM kurakura_kl_erp.loctransfercancellations;
+/* INSERT INTO kurakura_kl_test_erp.loctransfercancellations SELECT * FROM kurakura_kl_erp.loctransfercancellations; */
 
 TRUNCATE kurakura_kl_test_erp.`loctransfers`;
-INSERT INTO kurakura_kl_test_erp.loctransfers SELECT * FROM kurakura_kl_erp.loctransfers;
+/* INSERT INTO kurakura_kl_test_erp.loctransfers SELECT * FROM kurakura_kl_erp.loctransfers; */
 
 TRUNCATE kurakura_kl_test_erp.`mailgroupdetails`;
 INSERT INTO kurakura_kl_test_erp.mailgroupdetails SELECT * FROM kurakura_kl_erp.mailgroupdetails;
@@ -294,7 +294,7 @@ TRUNCATE kurakura_kl_test_erp.`orderdeliverydifferenceslog`;
 INSERT INTO kurakura_kl_test_erp.orderdeliverydifferenceslog SELECT * FROM kurakura_kl_erp.orderdeliverydifferenceslog;
 
 TRUNCATE kurakura_kl_test_erp.`packagingused`;
-INSERT INTO kurakura_kl_test_erp.packagingused SELECT * FROM kurakura_kl_erp.packagingused;
+/* INSERT INTO kurakura_kl_test_erp.packagingused SELECT * FROM kurakura_kl_erp.packagingused; */
 
 TRUNCATE kurakura_kl_test_erp.`paymentmethods`;
 INSERT INTO kurakura_kl_test_erp.paymentmethods SELECT * FROM kurakura_kl_erp.paymentmethods;
@@ -303,7 +303,7 @@ TRUNCATE kurakura_kl_test_erp.`paymentterms`;
 INSERT INTO kurakura_kl_test_erp.paymentterms SELECT * FROM kurakura_kl_erp.paymentterms;
 
 TRUNCATE kurakura_kl_test_erp.`pcashdetails`;
-INSERT INTO kurakura_kl_test_erp.pcashdetails SELECT * FROM kurakura_kl_erp.pcashdetails;
+/* INSERT INTO kurakura_kl_test_erp.pcashdetails SELECT * FROM kurakura_kl_erp.pcashdetails; */
 
 TRUNCATE kurakura_kl_test_erp.`pcexpenses`;
 INSERT INTO kurakura_kl_test_erp.pcexpenses SELECT * FROM kurakura_kl_erp.pcexpenses;
@@ -312,7 +312,7 @@ TRUNCATE kurakura_kl_test_erp.`pctabexpenses`;
 INSERT INTO kurakura_kl_test_erp.pctabexpenses SELECT * FROM kurakura_kl_erp.pctabexpenses;
 
 TRUNCATE kurakura_kl_test_erp.`pcsalaries`;
-INSERT INTO kurakura_kl_test_erp.pcsalaries SELECT * FROM kurakura_kl_erp.pcsalaries;
+INSERT INTO kurakura_kl_test_erp.pcsalaries SELECT * FROM kurakura_kl_erp.pcsalaries; 
 
 TRUNCATE kurakura_kl_test_erp.`pctabs`;
 INSERT INTO kurakura_kl_test_erp.pctabs SELECT * FROM kurakura_kl_erp.pctabs;
@@ -345,7 +345,7 @@ TRUNCATE kurakura_kl_test_erp.`purchorderauth`;
 INSERT INTO kurakura_kl_test_erp.purchorderauth SELECT * FROM kurakura_kl_erp.purchorderauth;
 
 TRUNCATE kurakura_kl_test_erp.`purchorderdetails`;
-INSERT INTO kurakura_kl_test_erp.purchorderdetails SELECT * FROM kurakura_kl_erp.purchorderdetails;
+/* INSERT INTO kurakura_kl_test_erp.purchorderdetails SELECT * FROM kurakura_kl_erp.purchorderdetails; */
 
 TRUNCATE kurakura_kl_test_erp.`purchorders`;
 INSERT INTO kurakura_kl_test_erp.purchorders SELECT * FROM kurakura_kl_erp.purchorders;
@@ -411,10 +411,10 @@ TRUNCATE kurakura_kl_test_erp.`salesman`;
 INSERT INTO kurakura_kl_test_erp.salesman SELECT * FROM kurakura_kl_erp.salesman;
 
 TRUNCATE kurakura_kl_test_erp.`salesorderdetails`;
-INSERT INTO kurakura_kl_test_erp.salesorderdetails SELECT * FROM kurakura_kl_erp.salesorderdetails;
+/* INSERT INTO kurakura_kl_test_erp.salesorderdetails SELECT * FROM kurakura_kl_erp.salesorderdetails; */
 
 TRUNCATE kurakura_kl_test_erp.`salesorders`;
-INSERT INTO kurakura_kl_test_erp.salesorders SELECT * FROM kurakura_kl_erp.salesorders;
+/* INSERT INTO kurakura_kl_test_erp.salesorders SELECT * FROM kurakura_kl_erp.salesorders; */
 
 TRUNCATE kurakura_kl_test_erp.`salestypes`;
 INSERT INTO kurakura_kl_test_erp.salestypes SELECT * FROM kurakura_kl_erp.salestypes;
@@ -483,13 +483,13 @@ INSERT INTO kurakura_kl_test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockm
 */
 
 TRUNCATE kurakura_kl_test_erp.`stockmovestaxes`;
-INSERT INTO kurakura_kl_test_erp.stockmovestaxes SELECT * FROM kurakura_kl_erp.stockmovestaxes;
+/* INSERT INTO kurakura_kl_test_erp.stockmovestaxes SELECT * FROM kurakura_kl_erp.stockmovestaxes; */
 
 TRUNCATE kurakura_kl_test_erp.`stockrequest`;
 INSERT INTO kurakura_kl_test_erp.stockrequest SELECT * FROM kurakura_kl_erp.stockrequest;
 
 TRUNCATE kurakura_kl_test_erp.`stockrequestitems`;
-INSERT INTO kurakura_kl_test_erp.stockrequestitems SELECT * FROM kurakura_kl_erp.stockrequestitems;
+/* INSERT INTO kurakura_kl_test_erp.stockrequestitems SELECT * FROM kurakura_kl_erp.stockrequestitems; */
 
 TRUNCATE kurakura_kl_test_erp.`stockserialitems`;
 INSERT INTO kurakura_kl_test_erp.stockserialitems SELECT * FROM kurakura_kl_erp.stockserialitems;
@@ -519,10 +519,10 @@ TRUNCATE kurakura_kl_test_erp.`suppliertype`;
 INSERT INTO kurakura_kl_test_erp.suppliertype SELECT * FROM kurakura_kl_erp.suppliertype;
 
 TRUNCATE kurakura_kl_test_erp.`supptrans`;
-INSERT INTO kurakura_kl_test_erp.supptrans SELECT * FROM kurakura_kl_erp.supptrans;
+/* INSERT INTO kurakura_kl_test_erp.supptrans SELECT * FROM kurakura_kl_erp.supptrans; */
 
 TRUNCATE kurakura_kl_test_erp.`supptranstaxes`;
-INSERT INTO kurakura_kl_test_erp.supptranstaxes SELECT * FROM kurakura_kl_erp.supptranstaxes;
+/* INSERT INTO kurakura_kl_test_erp.supptranstaxes SELECT * FROM kurakura_kl_erp.supptranstaxes; */
 
 TRUNCATE kurakura_kl_test_erp.`systypes`;
 INSERT INTO kurakura_kl_test_erp.systypes SELECT * FROM kurakura_kl_erp.systypes;
@@ -573,7 +573,7 @@ TRUNCATE kurakura_kl_test_erp.`workcentres`;
 INSERT INTO kurakura_kl_test_erp.workcentres SELECT * FROM kurakura_kl_erp.workcentres;
 
 TRUNCATE kurakura_kl_test_erp.`workorders`;
-INSERT INTO kurakura_kl_test_erp.workorders SELECT * FROM kurakura_kl_erp.workorders;
+/* INSERT INTO kurakura_kl_test_erp.workorders SELECT * FROM kurakura_kl_erp.workorders; */
 
 TRUNCATE kurakura_kl_test_erp.`woserialnos`;
 INSERT INTO kurakura_kl_test_erp.woserialnos SELECT * FROM kurakura_kl_erp.woserialnos;
