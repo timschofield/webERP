@@ -181,7 +181,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 			$Image = PATH_OPENCART_IMAGES . $myrow['stockid'].'.jpg';
 			$ManufacturerId = $myrow['manufacturers_id'];
 			$Shipping = 1; // will need function depending if it's a shippable or not item
-			$CustomerCode = GetWeberpCustomerIdFromCurrency(OPENCART_DEFAULT_CURRENCY, $db);
+			$CustomerCode = WEBERP_ONLINE_RETAIL_CUSTOMER_CODE_PREFIX . OPENCART_DEFAULT_CURRENCY;
 			$Price = GetPrice($myrow['stockid'], $CustomerCode, $CustomerCode); // Get the price without any discount from webERP
 			$DiscountCategory = $myrow['discountcategory'];
 			$Points = 0; // No points concept in webERP
@@ -633,7 +633,7 @@ function SyncProductPrices($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tablepr
 
 			/* Field Matching */
 			$Model = $myrow['stockid'];
-			$CustomerCode = GetWeberpCustomerIdFromCurrency(OPENCART_DEFAULT_CURRENCY, $db);
+			$CustomerCode = WEBERP_ONLINE_RETAIL_CUSTOMER_CODE_PREFIX . OPENCART_DEFAULT_CURRENCY;
 			$Price = GetPrice ($myrow['stockid'], $CustomerCode, $CustomerCode); // Get the price without any discount from webERP
 			$ManufacturerId = $myrow['manufacturers_id'];
 			$DiscountCategory = $myrow['discountcategory'];

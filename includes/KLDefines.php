@@ -120,6 +120,8 @@ define("PAYMENT_BY_CREDITCARD", 3);
 define("ACCOUNT_PPN_ADU", "611012030AD"); // GL account for PPN PT.ADU
 define("ACCOUNT_PPN_BB", "611012030PT"); // GL account for PPN PT.BB
 
+define("ACCOUNT_SHIPPING_ADU", "612011920AD"); // GL account for Shipping costs directly managed by PT.ADU
+
 define("ACCOUNT_HUTANG_PPH23", "611012005PT"); // GL account for retention of PPH23 in Petty cash
 
 /* Defines about financial Analysis*/
@@ -228,7 +230,8 @@ define('FACEMASKS_ON_SPECIAL',92);
 //********************************************************************************
 //********************************************************************************
 
-define("WEBERP_ONLINE_CUSTOMER_CODE_PREFIX",    'WEB-KL-');
+define("WEBERP_ONLINE_RETAIL_CUSTOMER_CODE_PREFIX",    'WEB-KL-');
+define("WEBERP_ONLINE_WHOLESALE_CUSTOMER_CODE_PREFIX", 'WEB-WH-');
 
 define("OPENCART_STORE_KAPAL_LAUT", 0);
 define("OPENCART_STORE_BLINK", 4);
@@ -271,8 +274,8 @@ define("OPENCART_DEFAULT_CUSTOMER_TAXGROUPID", 1);
 
 define("OPENCART_DEFAULT_SALESMAN", '999');
 define("OPENCART_DEFAULT_AREA_CASH", 'OWS');
-define("OPENCART_DEFAULT_AREA_PTBB", 'OWB');
-define("OPENCART_DEFAULT_AREA_WHOLESALE", 'WHC');
+define("OPENCART_DEFAULT_AREA_RETAIL", 'OWB');
+define("OPENCART_DEFAULT_AREA_WHOLESALE", 'OWW');
 define("OPENCART_DEFAULT_CURRENCY", 'IDR');
 define("OPENCART_DEFAULT_LOCATION", 'TOKWS');
 

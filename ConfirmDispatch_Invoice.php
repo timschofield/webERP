@@ -21,6 +21,7 @@ include('includes/SQL_CommonFunctions.inc');
 include('includes/FreightCalculation.inc');
 include('includes/GetSalesTransGLCodes.inc');
 include('includes/KLGeneralFunctions.php');
+include('includes/KLDefines.php');
 
 if(empty($_GET['identifier'])) {
 	/*unique session identifier to ensure that there is no conflict with other order entry sessions on the same machine  */
@@ -1328,7 +1329,9 @@ invoices can have a zero amount but there must be a quantity to invoice */
 //	OR ($Area == 'WHC') OR ($Area == 'WHZ'))			
 
 				$ItemBelongsTo = ItemBelongsToPT($OrderLine->StockID);
-				if ($ItemBelongsTo == "PTADU"){  // is a PTADU item 
+				// if it is a PTADU item and NOT sold directly by PTADU to a Wholesale Online (OWW) customer
+				// Becasue when it is directly sold by PTADU we do not need clustering
+				if (($ItemBelongsTo == "PTADU") AND ($Area != OPENCART_DEFAULT_AREA_WHOLESALE)){  
 					$AccountCOGSbyADU = "510010000AD"; // when retail partner sells PTADU items COGS should go to PTADU
 					$AccountCOGS = $AccountCOGSbyADU;
 					
@@ -1348,6 +1351,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 						exit;
 					}
 					$myrow = DB_fetch_array($result); //get the only row returned
+
 					if ($myrow['partnercode']=='NORETAIL'){
 						prnMsg(_('ERROR-INV-00002. The location used as warehouse delivery can not sell PTADU items.'),'error');
 						include('includes/footer.php');
@@ -1699,6 +1703,12 @@ invoices can have a zero amount but there must be a quantity to invoice */
 		/*Could do with setting up a more flexible freight posting schema that looks at the sales type and area of the customer branch to determine where to post the freight recovery */
 
 		if($_SESSION['Items'.$identifier]->FreightCost !=0) {
+			// check if it is a sale managed directly by PTADU (Area OWW)
+			if ($Area == "OWW"){
+				$ShippingGLAccount = ACCOUNT_SHIPPING_ADU;
+			}else{
+				$ShippingGLAccount = $_SESSION['CompanyRecord']['freightact'];
+			}
 			$SQL = "INSERT INTO gltrans (
 						type,
 						typeno,
@@ -1712,7 +1722,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 					'" . $InvoiceNo . "',
 					'" . $DefaultDispatchDate . "',
 					'" . $PeriodNo . "',
-					'" . $_SESSION['CompanyRecord']['freightact'] . "',
+					'" . $ShippingGLAccount . "',
 					'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
 					'" . (-$_SESSION['Items'.$identifier]->FreightCost/$_SESSION['CurrencyRate']) . "')";
 

@@ -159,7 +159,7 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db,
 				echo '<tr class="EvenTableRows">';
 			}
 			/* FIELD MATCHING */
-			$CustomerCode = GetWeberpCustomerIdFromCurrency($myrow['currency_code'], $db);
+			$CustomerCode = GetWeberpCustomerIdFromCustomerGroupAndCurrency($myrow['customer_group_id'], $myrow['currency_code'], $db);
 			$CustomerName = CleanStringForWebERP(CapitalizeName($myrow['customerfirstname'] . ' ' . $myrow['customerlastname']));
 			$PaymentName = CleanStringForWebERP(CapitalizeName($myrow['paymentfirstname'] . ' ' . $myrow['paymentlastname']));
 			$ShippingName = CleanStringForWebERP(CapitalizeName($myrow['shippingfirstname'] . ' ' . $myrow['shippinglastname']));
@@ -558,6 +558,7 @@ function SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeR
 				" . $oc_tableprefix . "order.currency_code AS ordercurrency,
 				" . $oc_tableprefix . "order.currency_value,
 				" . $oc_tableprefix . "order.customer_id,
+				" . $oc_tableprefix . "order.customer_group_id,
 				" . $oc_tableprefix . "customer.email,
 				" . $oc_tableprefix . "order.total AS ordertotal,
 				" . $oc_tableprefix . "paypal_order.paypal_order_id,
@@ -627,7 +628,7 @@ function SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeR
 				}
 			}
 			/* FIELD MATCHING */
-			$CustomerCode = GetWeberpCustomerIdFromCurrency($myrow['ordercurrency'], $db);
+			$CustomerCode = GetWeberpCustomerIdFromCustomerGroupAndCurrency($myrow['customer_group_id'], $myrow['ordercurrency'], $db);
 			$OrderNo = GetWeberpOrderNo($CustomerCode, $myrow['order_id'], $db);
 			$PaymentSystem = OPENCART_DEFAULT_PAYMENT_SYSTEM;
 			$CurrencyOrder = $myrow['ordercurrency'];
@@ -636,7 +637,7 @@ function SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeR
 			$Rate = GetWeberpCurrencyRate($CurrencyOrder, $db);
 			$AmountPaid = $myrow['paypaltotal'];
 			$TransactionID = $myrow['transaction_id'];
-			$GLAccount = GetWeberpGLAccountFromCurrency(OPENCART_DEFAULT_LOCATION, $CurrencyPayment, $db);
+			$GLAccount = GetWeberpGLAccountFromCustomerGroupAndCurrency($myrow['customer_group_id'], $CurrencyPayment, $db);
 			$GLCommissionAccount = GetWeberpGLCommissionAccountFromCurrency(OPENCART_DEFAULT_LOCATION, $CurrencyPayment, $db);
 			$PayPalResponseArray = GetPaypalReturnDataInArray($myrow['debug_data']);
 			$Commission = urldecode($PayPalResponseArray['PAYMENTINFO_0_FEEAMT']);
@@ -740,6 +741,7 @@ function SyncDOKUPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun
 				" . $oc_tableprefix . "order.currency_code AS ordercurrency,
 				" . $oc_tableprefix . "order.currency_value,
 				" . $oc_tableprefix . "order.customer_id,
+				" . $oc_tableprefix . "order.customer_group_id,
 				" . $oc_tableprefix . "customer.email,
 				" . $oc_tableprefix . "order.total AS ordertotal,
 				" . $oc_tableprefix . "dokuonecheckout.payment_channel,
@@ -803,7 +805,7 @@ function SyncDOKUPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun
 				}
 			}
 			/* FIELD MATCHING */
-			$CustomerCode = GetWeberpCustomerIdFromCurrency($myrow['ordercurrency'], $db);
+			$CustomerCode = GetWeberpCustomerIdFromCustomerGroupAndCurrency($myrow['customer_group_id'], $myrow['ordercurrency'], $db);
 			$OrderNo = GetWeberpOrderNo($CustomerCode, $myrow['order_id'], $db);
 			$PaymentSystem = OPENCART_DOKU_PAYMENT_SYSTEM;
 			$CurrencyOrder = $myrow['ordercurrency'];

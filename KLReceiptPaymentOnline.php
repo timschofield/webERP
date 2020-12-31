@@ -32,6 +32,7 @@ if (!isset($_GET['Amount']) OR $_GET['Amount']==''){
 	$TotalAmount = $_GET['Amount'];
 }
 if (($_GET['CustomerCode'] == "WEB-KL-IDR") 
+	OR ($_GET['CustomerCode'] == "WEB-WH-IDR") 
 	OR ($_GET['CustomerCode'] == "TOKOPEDIA") 
 	OR ($_GET['CustomerCode'] == "SHOPEE")){
 	$FunctionalExRate = 1;
@@ -49,19 +50,30 @@ $PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 $Narrative = 'Online ' . $_GET['OrderNo'] . ' ' . $_GET['PaymentCode'];
 $BankTransType = "Transfer";
 
+if (($_GET['CustomerCode'] == "WEB-WH-IDR") ){
+	// it is a wholesale online order customer, so processed by PTADU
+	$OnlinePartner = "ONLINEPTAD";
+}else{
+	// it is retail in iDR, so it goes to PTBB
+	$OnlinePartner = "ONLINEPTBB";
+
+}
+
+
 if ($_GET['PaymentCode'] != "MANUAL_MARKETPLACE") {
 	// apply the proper payment
 	// let's find the accounts, commission, etc to charge to the different payment codes
 	$SQLAccounts = "SELECT accounttransfermandiri,
+				accounttransferbca,
+				accounttransferdanamon,
 				accountxenditidr,
 				accountxenditcomissionidr,
 				accountcomissionppn,
 				comissionxenditflattransfer,
 				comissionxenditflatcc,
 				comissionxenditpercentcc
-		FROM locations, klonlinepartners
-		WHERE locations.onlinepartnercode = klonlinepartners.onlinepartnercode
-			AND locations.loccode = '" . OPENCART_DEFAULT_LOCATION . "'";
+			FROM klonlinepartners
+			WHERE klonlinepartners.onlinepartnercode = '" . $OnlinePartner . "'";
 	$ErrMsg ='Could not get the GL Trasnfers and Commissions for online shop payments because';
 	$resultAccounts = DB_query($SQLAccounts,$ErrMsg);
 	if(DB_num_rows($resultAccounts) != 0){
