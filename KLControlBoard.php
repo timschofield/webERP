@@ -3911,11 +3911,8 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 							<th class="ascending">' . _('Order Value') . '</th>
 							<th class="ascending">' . _('Currency') . '</th>
 							<th class="ascending">' . _('Reminder Bank Transfer') . '</th>
-							<th class="ascending">' . _('Paid Mandiri TT') . '</th>
-							<th class="ascending">' . _('Paid BCA TT') . '</th>
-							<th class="ascending">' . _('Paid Danamon TT') . '</th>
-							<th class="ascending">' . _('Paid Xendit VA') . '</th>
-							<th class="ascending">' . _('Paid Xendit CC') . '</th>
+							<th class="ascending">' . _('Payment Method') . '</th>
+							<th class="ascending">' . _('Action') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -3934,30 +3931,21 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 			$PaymentValue = $myrow['ordervalue']+$myrow['freightcost'];
 
 			// prepare the links according to the payment code from OpenCart
+			$PaymentLink = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&PaymentCode=' . $myrow['klocpaymentcode'] . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentLinkText .'</a>';
 			if ($myrow['klocpaymentcode'] == "bank_mandiri"){
-				$PaymentMandiriTT = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&PaymentCode=' . $myrow['klocpaymentcode'] . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentLinkText .'</a>';
+				$PaymentMethodText = "TT Mandiri";
+			}else if ($myrow['klocpaymentcode'] == "bank_bca"){
+				$PaymentMethodText = "TT BCA";
+			}else if ($myrow['klocpaymentcode'] == "bank_danamon"){
+				$PaymentMethodText = "TT Danamon";
+			}else if ($myrow['klocpaymentcode'] == "xenditmandiriva"){
+				$PaymentMethodText = "Xendit VA";
+			}else if ($myrow['klocpaymentcode'] == "xenditcc"){
+				$PaymentMethodText = "Xendit CC";
+			}else if ($myrow['klocpaymentcode'] == "snap"){
+				$PaymentMethodText = "MidTrans";
 			}else{
-				$PaymentMandiriTT = '';
-			}
-			if ($myrow['klocpaymentcode'] == "bank_bca"){
-				$PaymentBCATT = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&PaymentCode=' . $myrow['klocpaymentcode'] . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentLinkText .'</a>';
-			}else{
-				$PaymentBCATT = '';
-			}
-			if ($myrow['klocpaymentcode'] == "bank_danamon"){
-				$PaymentDanamonTT = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&PaymentCode=' . $myrow['klocpaymentcode'] . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentLinkText .'</a>';
-			}else{
-				$PaymentDanamonTT = '';
-			}
-			if ($myrow['klocpaymentcode'] == "xenditmandiriva"){
-				$PaymentXenditTT = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&PaymentCode=' . $myrow['klocpaymentcode'] . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentLinkText .'</a>';
-			}else{
-				$PaymentXenditTT = '';
-			}
-			if ($myrow['klocpaymentcode'] == "xenditcc"){
-				$PaymentXenditCC = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&PaymentCode=' . $myrow['klocpaymentcode'] . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentLinkText .'</a>';
-			}else{
-				$PaymentXenditCC = '';
+				$PaymentLink = '';
 			}
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -3966,9 +3954,6 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -3983,11 +3968,8 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 					locale_number_format($myrow['ordervalue']+$myrow['freightcost'],$myrow['decimalplaces']),
 					$myrow['currcode'], 
 					$EmailLink,
-					$PaymentMandiriTT,
-					$PaymentBCATT,
-					$PaymentDanamonTT,
-					$PaymentXenditTT,
-					$PaymentXenditCC
+					$PaymentMethodText,
+					$PaymentLink
 					);
 			$i++;
 		}
