@@ -306,7 +306,7 @@ if ($ProcessSection03){
 	if ($KL_SystemAdmin
 		OR $KL_OperationalManager
 		OR $KL_AdministrationTeam){
-		CashStatus("2020", 50000000, 25000000, 50000000, 25000000, 50000000, $periodnow, TRUE, $db);
+		CashStatus(2021, 62000000, 50000000, 25000000, 54000000, 50000000, 25000000, 50000000, $periodnow, TRUE, $db);
 		$NumberOfTestExecuted++;
 		
 	}
@@ -546,7 +546,7 @@ function AverageCustomerBehaviourByValueInvoice($typereport, $NumDaysA, $db){
 	}
 }
 
-function CashStatus($Year, $YearlyGoalADU, $MinTransferADU, $YearlyGoalBB, $MinTransferBB, $MinMoveFree, $Period, $ShowTables, $db){
+function CashStatus($Year, $CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTransferADU, $CashEndOfPreviousYearBB, $YearlyGoalBB, $MinTransferBB, $MinMoveFree, $Period, $ShowTables, $db){
 
     // Consider all year, not until today as some tx are reported into the future
 	$Today=FormatDateForSQL(Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,12,31,Date('Y'))));
@@ -603,7 +603,7 @@ function CashStatus($Year, $YearlyGoalADU, $MinTransferADU, $YearlyGoalBB, $MinT
 	$myrow = DB_fetch_array($Result);
 	$CashToSmallSuppliersADU = $myrow[0];
 
-	$CurrentBalanceADU = $SalesCashADU+$BankToCashADU-$ExpensesADUPaidCash-$CashToSmallSuppliersADU;
+	$CurrentBalanceADU = $CashEndOfPreviousYearADU+$SalesCashADU+$BankToCashADU-$ExpensesADUPaidCash-$CashToSmallSuppliersADU;
 	$ToBeMovedADU = $CurrentBalanceADU-$YearlyGoalADU ;
 	$ToBeTransferredADU = round_basic_price(-$ToBeMovedADU, $MinTransferADU);
 
@@ -679,7 +679,7 @@ function CashStatus($Year, $YearlyGoalADU, $MinTransferADU, $YearlyGoalBB, $MinT
 	$Result = DB_query($SQL);
 	$myrow = DB_fetch_array($Result);
 	$CashToSmallSuppliersBB = $myrow[0];
-	$CurrentBalanceBB = $SalesCashBB+$BankToCashBB-$FloatingCashBB-$ExpensesBBPaidCash-$CashToSmallSuppliersBB;
+	$CurrentBalanceBB = $CashEndOfPreviousYearBB+$SalesCashBB+$BankToCashBB-$FloatingCashBB-$ExpensesBBPaidCash-$CashToSmallSuppliersBB;
 	$ToBeMovedBB = $CurrentBalanceBB-$YearlyGoalBB ;
 	$ToBeTransferredBB = round_basic_price($ToBeMovedBB, $MinTransferBB);	
 	
@@ -854,7 +854,7 @@ function CashStatus($Year, $YearlyGoalADU, $MinTransferADU, $YearlyGoalBB, $MinT
 					<td class="number">%s</td>
 					</tr>', 
 					$Text, 
-					locale_number_format(-$ToBeTransferredBB,0)
+					locale_number_format(abs($ToBeTransferredBB),0)
 					);
 		}
 		echo '</table>
@@ -889,11 +889,6 @@ function CashStatus($Year, $YearlyGoalADU, $MinTransferADU, $YearlyGoalBB, $MinT
 				'Cash belonging to PTBB', 
 				locale_number_format($CurrentBalanceBB,0)
 				);
-		if ($FreeSaldoBrankasKantor >= 0){
-			$Text = 'ACTION NEEDED -> Move Cash from Brankas Kantor to Brankas RL';
-		}else{
-			$Text = 'ACTION NEEDED -> Move Cash from Brankas RL to Brankas Kantor';
-		}
 		printf('<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
@@ -901,6 +896,11 @@ function CashStatus($Year, $YearlyGoalADU, $MinTransferADU, $YearlyGoalBB, $MinT
 				locale_number_format(($FreeSaldoBrankasKantor),0)
 				);
 		if ($ToBeMovedFree !=0){
+			if ($FreeSaldoBrankasKantor >= 0){
+				$Text = 'ACTION NEEDED -> Move Cash from Brankas Kantor to Brankas RL';
+			}else{
+				$Text = 'ACTION NEEDED -> Move Cash from Brankas RL to Brankas Kantor';
+			}
 			$k = StartEvenOrOddRow($k);
 			printf('<td>%s</td>
 				<td class="number">%s</td>
