@@ -32,10 +32,10 @@ function submit(&$db, $TypeOfShop) {
 		
 		if ($TypeOfShop == 1){
 			$NameOfShop = "Kapal-Laut";
-			$SalesCategory = 94;
+		$FilterCategory = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . " ";
 		}else{
 			$NameOfShop = "Blink";
-			$SalesCategory = 95;
+		$FilterCategory = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . " ";
 		}
 		
 		$Now = Date('Y-m-d H-i-s');
@@ -48,13 +48,12 @@ function submit(&$db, $TypeOfShop) {
 						stockdescriptiontranslations.descriptiontranslation,
 						stockdescriptiontranslations.longdescriptiontranslation,
 						prices.price
-				FROM stockmaster, salescatprod, prices, stockdescriptiontranslations
-				WHERE stockmaster.stockid = salescatprod.stockid
-					AND stockmaster.stockid = prices.stockid
+				FROM stockmaster, prices, stockdescriptiontranslations
+				WHERE stockmaster.stockid = prices.stockid
 					AND stockmaster.stockid = stockdescriptiontranslations.stockid
 					AND stockdescriptiontranslations.language_id = 'id_ID.utf8'
-					AND stockmaster.discontinued = 0
-					AND salescatprod.salescatid = " . $SalesCategory . "
+					AND stockmaster.discontinued = 0 " . 
+					$FilterCategory . "
 					AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
 					AND prices.currabrev = '". CURRENCY_CODE ."'
 					AND prices.startdate <= '". $Now. "' 
