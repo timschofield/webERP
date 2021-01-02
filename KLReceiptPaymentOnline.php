@@ -91,8 +91,14 @@ if ($_GET['PaymentCode'] != "MANUAL_MARKETPLACE") {
 			$GLAccountCommissionPPN = "";
 			$Commission = 0;
 		}elseif ($_GET['PaymentCode'] == "bank_danamon"){
-			// bank Mandiri direct transfer has no commissions 
+			// bank Danamon direct transfer has no commissions THIS IS FOR WHOLESALE ONLY, GOES TO PTADU
 			$GLAccountTransfer = $myrowAccounts['accounttransferdanamon'];
+			$GLAccountCommission = "";
+			$GLAccountCommissionPPN = "";
+			$Commission = 0;
+		}elseif  ($_GET['PaymentCode'] == "snap"){
+			// MidTrans has commissions but we can't integrate them. We account full order, later manually we process commissions
+			$GLAccountTransfer = MIDTRANS_BANK_GL_ACCOUNT;
 			$GLAccountCommission = "";
 			$GLAccountCommissionPPN = "";
 			$Commission = 0;
