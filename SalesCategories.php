@@ -7,9 +7,6 @@ include('includes/session.php');
 $Title = _('Sales Category Maintenance');
 
 include('includes/header.php');
-include('includes/KLDefines.php');
-include('includes/KLGeneralFunctions.php');
-
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
@@ -177,10 +174,7 @@ if (isset($_POST['submit'])  AND isset($EditName) ) { // Creating or updating a 
 	} //end if stock category used in debtor transactions
 	unset($_GET['Delete']);
 	unset($EditName);
-} elseif( isset($_POST['submit']) AND isset($_POST['AddStockID'])) {
-	// ASSIGN THE BRAND 
-	
-	$_POST['Brand'] = FindWebsiteBrand($myrow['AddStockID'], $myrow['categoryid']);;
+} elseif( isset($_POST['submit']) AND isset($_POST['AddStockID']) AND $_POST['Brand']!='') {
 	$sql = "INSERT INTO salescatprod (stockid,
 										salescatid,
 										manufacturers_id) 
@@ -453,41 +447,14 @@ if($result AND DB_num_rows($result)) {
 }
 
 // This query will return the stock that is available
-// Only shows the items of the categories going downhill
-
-if (isset($ParentCategory)){
-	if (ItemInList($ParentCategory, ONLINESHOP_KAPAL_LAUT_SALES_CATEGORIES) 
-		OR ItemInList($ParentCategory, MARKETPLACE_KAPAL_LAUT_SALES_CATEGORIES)){
-		// it is a Kapal-Laut
-		$SQLCategories = " AND stockmaster.categoryid IN ". LIST_STOCK_CATEGORIES_KAPAL_LAUT ." ";
-	}else if (ItemInList($ParentCategory, ONLINESHOP_BLINK_SALES_CATEGORIES) 
-		OR ItemInList($ParentCategory, MARKETPLACE_BLINK_SALES_CATEGORIES)){
-		// it is a Blink
-		$SQLCategories = " AND stockmaster.categoryid IN ". LIST_STOCK_CATEGORIES_BLINK ." ";
-	}else if (ItemInList($ParentCategory, ONLINESHOP_OUTLET_SALES_CATEGORIES)){
-		// it is a child of Outlet
-		$SQLCategories = " AND stockmaster.categoryid IN ". LIST_STOCK_CATEGORIES_OUTLET ." ";
-	}else{
-		// show everything
-		$SQLCategories = " AND (stockmaster.categoryid IN ". LIST_STOCK_CATEGORIES_KAPAL_LAUT ."
-							OR stockmaster.categoryid IN ". LIST_STOCK_CATEGORIES_BLINK ."
-							OR stockmaster.categoryid IN ". LIST_STOCK_CATEGORIES_OUTLET .")";
-	}
-}else{
-	// not assigned a parent, so all of them
-	$SQLCategories = " AND (stockmaster.categoryid IN ". LIST_STOCK_CATEGORIES_KAPAL_LAUT ."
-						OR stockmaster.categoryid IN ". LIST_STOCK_CATEGORIES_BLINK ."
-						OR stockmaster.categoryid IN ". LIST_STOCK_CATEGORIES_OUTLET .")";
-}
 $sql = "SELECT stockid, 
-				stockmaster.categoryid,
 				description 
 		FROM stockmaster INNER JOIN stockcategory 
 		ON stockmaster.categoryid=stockcategory.categoryid 
-		WHERE discontinued = 0 ". 
-		$SQLCategories ." 
+		WHERE discontinued = 0
+		AND mbflag<>'G'
+		AND stocktype<>'M'
 		ORDER BY stockid";
-
 $result = DB_query($sql);
 if($result AND DB_num_rows($result)) {
 	// continue id stock id in the stockid array
@@ -518,7 +485,7 @@ if($result AND DB_num_rows($result)) {
 				$myrow['description'] . '&quot;</option>';
 		}
 	}
-/*	echo '</select></td>
+	echo '</select></td>
 			</tr>
 			<tr>
 			<td>' . _('Select Manufacturer/Brand') . ':</td>
@@ -528,7 +495,7 @@ if($result AND DB_num_rows($result)) {
 	while( $myrow = DB_fetch_array($BrandResult) ) {
 		echo '<option value="'.$myrow['manufacturers_id'].'">' .  $myrow['manufacturers_name'] . '</option>';
 	}
-*/
+
 	echo '</select></td>
 			</tr></table>
 		<br />
@@ -575,11 +542,12 @@ if($result ) {
 	if( DB_num_rows($result)) {
 		echo '<table class="selection">';
 		echo '<tr>
-				<th colspan="3">' . _('Inventory items for') . ' ' . $CategoryPath . '</th>
+				<th colspan="4">' . _('Inventory items for') . ' ' . $CategoryPath . '</th>
 			</tr>
 			<tr>
 				<th class="ascending">' . _('Item') . '</th>
 				<th class="ascending">' . _('Description') . '</th>
+				<th class="ascending">' . _('Brand') . '</th>
 				<th class="ascending">' . _('Featured') . '</th>
 			</tr>';
 
@@ -596,6 +564,7 @@ if($result ) {
 
 			echo '<td>' . $myrow['stockid'] . '</td>
 				<td>' . $myrow['description'] . '</td>
+				<td>' . $myrow['manufacturers_name'] . '</td>
 				<td>';
 			if ($myrow['featured']==1){
 				echo '<img src="css/' . $Theme . '/images/tick.png"></td>
