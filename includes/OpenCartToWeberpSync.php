@@ -638,7 +638,7 @@ function SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeR
 			$AmountPaid = $myrow['paypaltotal'];
 			$TransactionID = $myrow['transaction_id'];
 			$GLAccount = GetWeberpGLAccountFromCustomerGroupAndCurrency($myrow['customer_group_id'], $CurrencyPayment, $db);
-			$GLCommissionAccount = GetWeberpGLCommissionAccountFromCurrency(OPENCART_DEFAULT_LOCATION, $CurrencyPayment, $db);
+			$GLCommissionAccount = GetWeberpGLCommissionAccountFromCustomerGroupAndCurrency($myrow['customer_group_id'], $CurrencyPayment, $db);
 			$PayPalResponseArray = GetPaypalReturnDataInArray($myrow['debug_data']);
 			$Commission = urldecode($PayPalResponseArray['PAYMENTINFO_0_FEEAMT']);
 			$WebERPDateOrder = date('Y-m-d H:i:s', strtotime( $myrow['created'] . -$TimeDifference . ' hours'));
@@ -814,8 +814,8 @@ function SyncDOKUPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun
 			$Rate = GetWeberpCurrencyRate($CurrencyOrder, $db);
 			$AmountPaid = $myrow['amount'];
 			$TransactionID = $myrow['trx_id'];
-			$GLAccount = GetWeberpGLAccountFromCurrency(OPENCART_DEFAULT_LOCATION, $CurrencyPayment, $db);
-			$GLCommissionAccount = GetWeberpGLCommissionAccountFromCurrency(OPENCART_DEFAULT_LOCATION, $CurrencyPayment, $db);
+			$GLAccount = GetWeberpGLAccountFromCustomerGroupAndCurrency($myrow['customer_group_id'], $CurrencyPayment, $db);
+			$GLCommissionAccount = GetWeberpGLCommissionAccountFromCustomerGroupAndCurrency($myrow['customer_group_id'], $CurrencyPayment, $db);
 			
 			$Commission = $ComissionFlatDOKU; // For each tx there is a flat comission
 			if (($myrow['payment_channel'] == "15") OR ($myrow['payment_channel'] == "16")){
