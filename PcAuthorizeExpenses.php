@@ -10,6 +10,7 @@ include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
+include('includes/KLGeneralFunctions.php');
 
 
 if(isset($_POST['SelectedTabs'])) {
@@ -209,6 +210,12 @@ if(isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) OR
 
 			// if there's a retention, we account for it
 			if ($HutangPPH23 != 0){
+				$CompanyExpenses = GLAccountBelongsTo($AccountTo);
+				if ($CompanyExpenses == "PTADU"){
+					$AccountPPH23 = ACCOUNT_HUTANG_PPH23_PTADU;
+				}else{
+					$AccountPPH23 = ACCOUNT_HUTANG_PPH23_PTBB;
+				}
 				$sqlHutangPPH23="INSERT INTO `gltrans` (`counterindex`,
 												`type`,
 												`typeno`,
@@ -227,7 +234,7 @@ if(isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) OR
 												0,
 												'".$myrow['date']."',
 												'".$PeriodNo."',
-												'". ACCOUNT_HUTANG_PPH23 ."',
+												'". $AccountPPH23 ."',
 												'". $Narrative ."',
 												'".-$HutangPPH23."',
 												0,

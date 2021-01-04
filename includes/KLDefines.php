@@ -122,7 +122,8 @@ define("ACCOUNT_PPN_BB", "611012030PT"); // GL account for PPN PT.BB
 
 define("ACCOUNT_SHIPPING_ADU", "612011920AD"); // GL account for Shipping costs directly managed by PT.ADU
 
-define("ACCOUNT_HUTANG_PPH23", "611012005PT"); // GL account for retention of PPH23 in Petty cash
+define("ACCOUNT_HUTANG_PPH23_PTBB",  "611012005PT"); // GL account for retention of PPH23 PTBB in Petty cash
+define("ACCOUNT_HUTANG_PPH23_PTADU", "611012005AD"); // GL account for retention of PPH23 PTADU in Petty cash
 
 /* Defines about financial Analysis*/
 define("JUTA", 1000000);

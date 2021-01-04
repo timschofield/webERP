@@ -483,6 +483,21 @@ function InsertIntoGLTrans($Type, $Typeno, $Trandate, $Period, $Account, $Narrat
 	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 }
 
+function GLAccountBelongsTo($Account){
+	if (ItemInList("AD", $Account)){
+		$Company = "PTADU";
+	}else if (ItemInList("PT", $Account)){
+		$Company = "PTBB";
+	}else if (ItemInList("IK", $Account)){
+		$Company = "POIK";
+	}else if (ItemInList("PI", $Account)){
+		$Company = "POPI";
+	}else{
+		$Company = "CASH";
+	}
+	return $Company;
+}
+
 function ItemBelongsToPT($StockID){
 	$SQL="SELECT stockmaster.categoryid
 			FROM stockmaster
