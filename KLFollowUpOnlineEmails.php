@@ -330,6 +330,7 @@ if ($_GET['EmailType']=='TrackingConfirmation'){
 	UpdateOpenCartOrderStatus($_GET['CustomerOrder'], OPENCART_ORDER_STATUS_SHIPPED, 0, $ReasonChangeStatusId, $db_oc, $oc_tableprefix);
 	prnMsg("Updated Order status in OpenCart as SHIPPED");
 	// change status of the order in Opencart, as OPENCART_ORDER_STATUS_COMPLETE
+	sleep(1); // to show the change of status in the correct order
 	$ReasonChangeStatusId = "webERP --> Order shipped and accounted for.";
 	UpdateOpenCartOrderStatus($_GET['CustomerOrder'], OPENCART_ORDER_STATUS_COMPLETE, 0, $ReasonChangeStatusId, $db_oc, $oc_tableprefix);
 	prnMsg("Updated Order status in OpenCart as COMPLETE");
