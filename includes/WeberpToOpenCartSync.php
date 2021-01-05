@@ -224,7 +224,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 			$LanguageId = 1; // webERP and OpenCart should have the same default language
 			$Name = $myrow['description'];
 			$webERPCategoryId = $myrow['categoryid'];
-			$LongDescription = CleanText($myrow['longdescription']); 
+			$LongDescription = FormatDescriptionOpencart($myrow['longdescription']); 
 			
 			if (ItemInList($webERPCategoryId, LIST_STOCK_CATEGORIES_KAPAL_LAUT)){
 				$StoreId = OPENCART_STORE_KAPAL_LAUT;
@@ -252,7 +252,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 			/* Meta data */
 			$Tag = CreateTagsForItem($myrow['description'], $myrow['longdescription'], $myrow['salescatname']);
 			$MetaKeyword = $myrow['stockid'] . $TagSeparator . $StoreName . $TagSeparator . $Tag;
-			$MetaDescription = $myrow['stockid'] . " " . $LongDescription;
+			$MetaDescription = $myrow['stockid'] . " " . CleanText($myrow['longdescription']);
 			$MetaTitle = $myrow['stockid'] . " " . $Name;
 
 			/* Google Product Feed Fields */
@@ -455,7 +455,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 						$Name,
 						locale_number_format($Quantity,0),
 						locale_number_format($Price,0),
-						$StoreText . " " .$Image,
+						$StoreText,
 						$Tag,
 						$Action
 						);

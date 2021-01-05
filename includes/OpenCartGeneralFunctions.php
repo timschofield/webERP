@@ -733,12 +733,22 @@ function CreateSEOKeyword($KeyWord){
 	return $SEOKeyword;
 }
 
+function FormatDescriptionOpencart($MessedText){
+	//preserve the line breaks as in https://stackoverflow.com/questions/9345514/is-there-any-way-to-convert-plain-text-into-html-with-line-breaks
+	$MessedText = CleanText($MessedText);
+	$MessedText = nl2br($MessedText);
+	$MessedText = str_ireplace('<br />' , '</p><p>', $MessedText);
+	$MessedText = '<p>'. $MessedText . '</p>';
+	
+	return $MessedText;
+}
+
 function CleanText($MessedText){
-	$CleanText = strip_tags($MessedText);
-	$CleanText = str_ireplace('/', '', $CleanText);
-	$CleanText = str_ireplace("\'", '', $CleanText);
-	$CleanText = str_ireplace('"', '', $CleanText);
-	return $CleanText;
+	$MessedText = strip_tags($MessedText);
+    $MessedText = str_ireplace('/', '', $MessedText);
+	$MessedText = str_ireplace('"', '', $MessedText);
+    $CleanText = str_ireplace("\'", '', $CleanText);
+	return $MessedText;
 }
 
 Function GetNextSequenceNo ($SequenceType){
