@@ -303,7 +303,7 @@ TRUNCATE kurakura_kl_test_erp.`paymentterms`;
 INSERT INTO kurakura_kl_test_erp.paymentterms SELECT * FROM kurakura_kl_erp.paymentterms;
 
 TRUNCATE kurakura_kl_test_erp.`pcashdetails`;
-/* INSERT INTO kurakura_kl_test_erp.pcashdetails SELECT * FROM kurakura_kl_erp.pcashdetails; */
+INSERT INTO kurakura_kl_test_erp.pcashdetails SELECT * FROM kurakura_kl_erp.pcashdetails WHERE `date` >= "2020-12-10"; 
 
 TRUNCATE kurakura_kl_test_erp.`pcexpenses`;
 INSERT INTO kurakura_kl_test_erp.pcexpenses SELECT * FROM kurakura_kl_erp.pcexpenses;
@@ -411,10 +411,10 @@ TRUNCATE kurakura_kl_test_erp.`salesman`;
 INSERT INTO kurakura_kl_test_erp.salesman SELECT * FROM kurakura_kl_erp.salesman;
 
 TRUNCATE kurakura_kl_test_erp.`salesorderdetails`;
-/* INSERT INTO kurakura_kl_test_erp.salesorderdetails SELECT * FROM kurakura_kl_erp.salesorderdetails; */
+INSERT INTO kurakura_kl_test_erp.salesorderdetails SELECT * FROM kurakura_kl_erp.salesorderdetails WHERE orderno >= 448300; 
 
 TRUNCATE kurakura_kl_test_erp.`salesorders`;
-/* INSERT INTO kurakura_kl_test_erp.salesorders SELECT * FROM kurakura_kl_erp.salesorders; */
+INSERT INTO kurakura_kl_test_erp.salesorders SELECT * FROM kurakura_kl_erp.salesorders WHERE orderno >= 448300; 
 
 TRUNCATE kurakura_kl_test_erp.`salestypes`;
 INSERT INTO kurakura_kl_test_erp.salestypes SELECT * FROM kurakura_kl_erp.salestypes;
