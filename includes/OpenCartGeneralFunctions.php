@@ -748,6 +748,7 @@ function CleanText($MessedText){
     $MessedText = str_ireplace('/', '', $MessedText);
 	$MessedText = str_ireplace('"', '', $MessedText);
     $CleanText = str_ireplace("\'", '', $CleanText);
+    $CleanText = str_ireplace("'", '', $CleanText);
 	return $MessedText;
 }
 
