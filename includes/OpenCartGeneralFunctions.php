@@ -1240,4 +1240,47 @@ function StringContainsTag($HayStack, $Needle){
 function InconsistentTag($ListOfTags, $ExistingTag, $ProposedTag, $WrongTag){
 	return ((StringContainsTag($ListOfTags, $ExistingTag)) AND ($ProposedTag == $WrongTag));
 }
+
+function UpdateOpenCartOrderStatusInWeberp($OrderNo, $OpencartOrderStatus){
+	$sql = "UPDATE salesorders
+			SET klocorderstatus = '" . $OpencartOrderStatus ."'
+			WHERE orderno = '" . $OrderNo . "'";
+	$ErrMsg =_('Could not update OpenCart Status order in webERP because');
+	$result = DB_query($sql,$ErrMsg);
+}
+
+function GetOpenCartStatusTextFromCode($StatusId, $db_oc, $oc_tableprefix){
+	$SQL = "SELECT name
+			FROM " . $oc_tableprefix . "order_status
+			WHERE language_id = '1'
+				AND order_status_id = '" . $StatusId . "'";
+	$ErrMsg =_('Could not get the Status name in OpenCart because');
+	$result = DB_query_oc($SQL,$ErrMsg);
+	if(DB_num_rows($result) != 0){
+		$myrow = DB_fetch_array($result);
+		return $myrow[0];
+	}else{
+		return "Abandoned";
+	}	
+}
+
+function GetPaymentMethodTextFromCode($PaymentCode){
+	if ($PaymentCode == "bank_mandiri"){
+		$PaymentMethodText = "TT Mandiri";
+	}else if ($PaymentCode == "bank_bca"){
+		$PaymentMethodText = "TT BCA";
+	}else if ($PaymentCode == "bank_danamon"){
+		$PaymentMethodText = "TT Danamon";
+	}else if ($PaymentCode == "xenditmandiriva"){
+		$PaymentMethodText = "Xendit VA";
+	}else if ($PaymentCode == "xenditcc"){
+		$PaymentMethodText = "Xendit CC";
+	}else if ($PaymentCode == "snap"){
+		$PaymentMethodText = "MidTrans";
+	}else{
+		$PaymentMethodText = "";
+	}
+	return $PaymentMethodText;
+}
+
 ?>

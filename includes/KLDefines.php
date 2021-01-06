@@ -329,6 +329,9 @@ define("OPENCART_ORDER_STATUS_COMPLETE", 5);
 define("OPENCART_ORDER_STATUS_CANCELLED", 7);
 define("OPENCART_ORDER_STATUS_EXPIRED", 14);
 
+define("WEBERP_ORDER_STATUS_QUOTATION", 1);
+define("WEBERP_ORDER_STATUS_ORDER", 0);
+
 /* HARD CODED PATHS */
 define("ABSOLUTE_PATH_OPENCART_IMAGES", '/var/www/vhosts/kapal-laut.com/httpdocs/image/catalog/KL/part_pics/');
 define("ABSOLUTE_PATH_WEBERP", '/var/www/vhosts/kapal-laut.com/ptadu.com/weberp/');

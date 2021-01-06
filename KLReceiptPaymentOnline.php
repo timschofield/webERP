@@ -5,6 +5,7 @@ include('includes/SQL_CommonFunctions.inc');
 $Title = _('Kapal-Laut Receipt Payment Online');
 include('includes/header.php');
 include('includes/KLDefines.php');
+include('includes/KLGeneralFunctions.php');
 include('includes/OpenCartGeneralFunctions.php');
 include('includes/OpenCartConnectDB.php');
 
@@ -44,21 +45,13 @@ if (($_GET['CustomerCode'] == "WEB-KL-IDR")
 	exit;
 }
 
-$BatchNo = GetNextTransNo(12,$db);
-$Today = date('Y-m-d');
-$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
-$Narrative = 'Online ' . $_GET['OrderNo'] . ' ' . $_GET['PaymentCode'];
-$BankTransType = "Transfer";
-
 if (($_GET['CustomerCode'] == "WEB-WH-IDR") ){
 	// it is a wholesale online order customer, so processed by PTADU
 	$OnlinePartner = "ONLINEPTAD";
 }else{
 	// it is retail in iDR, so it goes to PTBB
 	$OnlinePartner = "ONLINEPTBB";
-
 }
-
 
 if ($_GET['PaymentCode'] != "MANUAL_MARKETPLACE") {
 	// apply the proper payment
@@ -131,192 +124,20 @@ if ($_GET['PaymentCode'] != "MANUAL_MARKETPLACE") {
 		$NetAmount = $TotalAmount - $Commission - $CommissionPPN;
 	}
 
-	$result = DB_Txn_Begin();
-
-	$SQL = "INSERT INTO debtortrans (transno,
-									type,
-									debtorno,
-									branchcode,
-									order_,
-									trandate,
-									inputdate,
-									prd,
-									reference,
-									tpe,
-									rate,
-									ovamount,
-									ovdiscount,
-									invtext,
-									salesperson)
-			VALUES (
-				'" . $BatchNo . "',
-				12,
-				'" . $_GET['CustomerCode'] . "',
-				'',
-				'" . $_GET['OrderNo'] . "',
-				'" . $Today . "',
-				'" . $Today . "',
-				'" . $PeriodNo . "',
-				'" . $Narrative . "',
-				'',
-				'" . ($FunctionalExRate*$ExRate) . "',
-				'" . -$TotalAmount . "',
-				'" . 0 . "',
-				'" . $Narrative. "',
-				''
-			)";
-			
-	$DbgMsg = _('The SQL that failed to insert the customer receipt transaction was');
-	$ErrMsg = _('Cannot insert a receipt transaction against the customer because') ;
-	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-
-	$SQL = "UPDATE debtorsmaster
-				SET lastpaiddate = '" . $Today . "',
-				lastpaid='" . $TotalAmount ."'
-			WHERE debtorsmaster.debtorno='" . $_GET['CustomerCode'] . "'";
-
-	$DbgMsg = _('The SQL that failed to update the date of the last payment received was');
-	$ErrMsg = _('Cannot update the customer record for the date of the last payment received because');
-	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-
-	$SQL="INSERT INTO banktrans (type,
-								transno,
-								bankact,
-								ref,
-								exrate,
-								functionalexrate,
-								transdate,
-								banktranstype,
-								amount,
-								currcode)
-		VALUES (
-			12,
-			'" . $BatchNo . "',
-			'" . $GLAccountTransfer . "',
-			'" . $Narrative . "',
-			'" . $ExRate . "',
-			'" . $FunctionalExRate . "',
-			'" . $Today . "',
-			'" . $BankTransType . "',
-			'" . ($NetAmount * $FunctionalExRate * $ExRate) . "',
-			'" . $Currency . "'
-		)";
-	$DbgMsg = _('The SQL that failed to insert the bank account transaction was');
-	$ErrMsg = _('Cannot insert a bank transaction');
-	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-
-	$SQL="INSERT INTO gltrans (type,
-								typeno,
-								trandate,
-								periodno,
-								account,
-								narrative,
-								amount)
-		VALUES (
-			12,
-			'" . $BatchNo . "',
-			'" . $Today . "',
-			'" . $PeriodNo . "',
-			'" . $GLAccountTransfer . "',
-			'" . $Narrative . "',
-			'" . $NetAmount . "'
-		)";
-	$DbgMsg = _('The SQL that failed to insert the GL transaction from the bank account debit was');
-	$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
-	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-
-	if ($Commission > 0){
-		$SQL="INSERT INTO gltrans (type,
-									typeno,
-									trandate,
-									periodno,
-									account,
-									narrative,
-									amount)
-			VALUES (
-				12,
-				'" . $BatchNo . "',
-				'" . $Today . "',
-				'" . $PeriodNo . "',
-				'" . $GLAccountCommission . "',
-				'" . $Narrative . "',
-				'" . $Commission . "'
-			)";
-		$DbgMsg = _('The SQL that failed to insert the GL transaction from the commission was');
-		$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
-		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-	}
-
-	if ($CommissionPPN > 0){
-		$SQL="INSERT INTO gltrans (type,
-									typeno,
-									trandate,
-									periodno,
-									account,
-									narrative,
-									amount)
-			VALUES (
-				12,
-				'" . $BatchNo . "',
-				'" . $Today . "',
-				'" . $PeriodNo . "',
-				'" . $GLAccountCommissionPPN . "',
-				'" . $Narrative . "',
-				'" . $CommissionPPN . "'
-			)";
-		$DbgMsg = _('The SQL that failed to insert the GL transaction from the PPN commission was');
-		$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
-		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-	}
-
-	$SQL="INSERT INTO gltrans ( type,
-								typeno,
-								trandate,
-								periodno,
-								account,
-								narrative,
-								amount)
-				VALUES (
-					12,
-					'" . $BatchNo . "',
-					'" . $Today . "',
-					'" . $PeriodNo . "',
-					'" . $_SESSION['CompanyRecord']['debtorsact'] . "',
-					'" . $Narrative . "',
-					'" . -$TotalAmount . "'
-					)";
-	$DbgMsg = _('The SQL that failed to insert the GL transaction for the debtors account credit was');
-	$ErrMsg = _('Cannot insert a GL transaction for the debtors account credit');
-	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);			
-
-	$SQL = "UPDATE salesorders
-				SET quotation = '0'
-			WHERE salesorders.orderno='" . $_GET['OrderNo'] . "'";
-	$DbgMsg = _('The SQL that failed to update the quotation flag of the sales order was');
-	$ErrMsg = _('Cannot update the quotation flag of the sales order because');
-	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-
-	if ($_GET['CustomerCode'] == "WEB-KL-IDR") {
-		// online sale from our website, we must update the status of the order in OpenCart
-		$OnlineOrderNo = GetOnlineOrderNoFromWeberp($_GET['OrderNo'], $db);
-		$ReasonChangeStatusId = "webERP --> Payment received by " . $_GET['PaymentCode'] . " Amount = " . $TotalAmount;  
-		UpdateOpenCartOrderStatus($OnlineOrderNo, OPENCART_ORDER_STATUS_PROCESSING, 0, $ReasonChangeStatusId, $db_oc, $oc_tableprefix);
-	}
-
-
-	if  (($_GET['PaymentCode'] == "tokopedia") OR 
-		 ($_GET['PaymentCode'] == "shopee")){
-		// in case paid my marketplace (so after order is closed and shipment, we need to mark it as "received somehow", so we use klpaidcash
-		$SQL = "UPDATE salesorders
-					SET klpaidcash = '" . $TotalAmount . "'
-				WHERE salesorders.orderno='" . $_GET['OrderNo'] . "'";
-		$DbgMsg = _('The SQL that failed to update the payment flag of the sales order was');
-		$ErrMsg = _('Cannot update the payment flag of the sales order because');
-		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-	}
-
-	$result = DB_Txn_Commit();
-
+ProcessPaymentOnlineOrder($_GET['OrderNo'], 
+						$_GET['PaymentCode'], 
+						$_GET['CustomerCode'], 
+						$Currency,
+						$FunctionalExRate, 
+						$ExRate, 
+						$TotalAmount,
+						$NetAmount,
+						$Commission,
+						$CommissionPPN,
+						$GLAccountTransfer,
+						$GLAccountCommission,
+						$GLAccountCommissionPPN);
+								
 	echo '<table class="selection">
 			<tr>
 				<th colspan=2>' . _('Process of online order payment') . '

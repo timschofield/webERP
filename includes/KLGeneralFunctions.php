@@ -565,5 +565,211 @@ function FindWebsiteBrand($StockID, $Category){
 	return $Brand;
 }
 
+function ProcessPaymentOnlineOrder($OrderNo, 
+								$PaymentCode, 
+								$CustomerCode, 
+								$Currency,
+								$FunctionalExRate, 
+								$ExRate, 
+								$TotalAmount,
+								$NetAmount,
+								$Commission,
+								$CommissionPPN,
+								$GLAccountTransfer,
+								$GLAccountCommission,
+								$GLAccountCommissionPPN
+								){
+	$result = DB_Txn_Begin();
+
+	$BatchNo = GetNextTransNo(12,$db);
+	$Today = date('Y-m-d');
+	$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
+	$Narrative = 'Online ' . $OrderNo . ' ' . $PaymentCode;
+	$BankTransType = "Transfer";
+
+	$SQL = "INSERT INTO debtortrans (transno,
+									type,
+									debtorno,
+									branchcode,
+									order_,
+									trandate,
+									inputdate,
+									prd,
+									reference,
+									tpe,
+									rate,
+									ovamount,
+									ovdiscount,
+									invtext,
+									salesperson)
+			VALUES (
+				'" . $BatchNo . "',
+				12,
+				'" . $CustomerCode . "',
+				'',
+				'" . $OrderNo . "',
+				'" . $Today . "',
+				'" . $Today . "',
+				'" . $PeriodNo . "',
+				'" . $Narrative . "',
+				'',
+				'" . ($FunctionalExRate*$ExRate) . "',
+				'" . -$TotalAmount . "',
+				'" . 0 . "',
+				'" . $Narrative. "',
+				''
+			)";
+			
+	$DbgMsg = _('The SQL that failed to insert the customer receipt transaction was');
+	$ErrMsg = _('Cannot insert a receipt transaction against the customer because') ;
+	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+
+	$SQL = "UPDATE debtorsmaster
+				SET lastpaiddate = '" . $Today . "',
+				lastpaid='" . $TotalAmount ."'
+			WHERE debtorsmaster.debtorno='" . $CustomerCode . "'";
+
+	$DbgMsg = _('The SQL that failed to update the date of the last payment received was');
+	$ErrMsg = _('Cannot update the customer record for the date of the last payment received because');
+	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+
+	$SQL="INSERT INTO banktrans (type,
+								transno,
+								bankact,
+								ref,
+								exrate,
+								functionalexrate,
+								transdate,
+								banktranstype,
+								amount,
+								currcode)
+		VALUES (
+			12,
+			'" . $BatchNo . "',
+			'" . $GLAccountTransfer . "',
+			'" . $Narrative . "',
+			'" . $ExRate . "',
+			'" . $FunctionalExRate . "',
+			'" . $Today . "',
+			'" . $BankTransType . "',
+			'" . ($NetAmount * $FunctionalExRate * $ExRate) . "',
+			'" . $Currency . "'
+		)";
+	$DbgMsg = _('The SQL that failed to insert the bank account transaction was');
+	$ErrMsg = _('Cannot insert a bank transaction');
+	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+
+	$SQL="INSERT INTO gltrans (type,
+								typeno,
+								trandate,
+								periodno,
+								account,
+								narrative,
+								amount)
+		VALUES (
+			12,
+			'" . $BatchNo . "',
+			'" . $Today . "',
+			'" . $PeriodNo . "',
+			'" . $GLAccountTransfer . "',
+			'" . $Narrative . "',
+			'" . $NetAmount . "'
+		)";
+	$DbgMsg = _('The SQL that failed to insert the GL transaction from the bank account debit was');
+	$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
+	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+
+	if ($Commission > 0){
+		$SQL="INSERT INTO gltrans (type,
+									typeno,
+									trandate,
+									periodno,
+									account,
+									narrative,
+									amount)
+			VALUES (
+				12,
+				'" . $BatchNo . "',
+				'" . $Today . "',
+				'" . $PeriodNo . "',
+				'" . $GLAccountCommission . "',
+				'" . $Narrative . "',
+				'" . $Commission . "'
+			)";
+		$DbgMsg = _('The SQL that failed to insert the GL transaction from the commission was');
+		$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
+		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	}
+
+	if ($CommissionPPN > 0){
+		$SQL="INSERT INTO gltrans (type,
+									typeno,
+									trandate,
+									periodno,
+									account,
+									narrative,
+									amount)
+			VALUES (
+				12,
+				'" . $BatchNo . "',
+				'" . $Today . "',
+				'" . $PeriodNo . "',
+				'" . $GLAccountCommissionPPN . "',
+				'" . $Narrative . "',
+				'" . $CommissionPPN . "'
+			)";
+		$DbgMsg = _('The SQL that failed to insert the GL transaction from the PPN commission was');
+		$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
+		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	}
+
+	$SQL="INSERT INTO gltrans ( type,
+								typeno,
+								trandate,
+								periodno,
+								account,
+								narrative,
+								amount)
+				VALUES (
+					12,
+					'" . $BatchNo . "',
+					'" . $Today . "',
+					'" . $PeriodNo . "',
+					'" . $_SESSION['CompanyRecord']['debtorsact'] . "',
+					'" . $Narrative . "',
+					'" . -$TotalAmount . "'
+					)";
+	$DbgMsg = _('The SQL that failed to insert the GL transaction for the debtors account credit was');
+	$ErrMsg = _('Cannot insert a GL transaction for the debtors account credit');
+	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);			
+
+	$SQL = "UPDATE salesorders
+				SET quotation = '0'
+			WHERE salesorders.orderno='" . $OrderNo . "'";
+	$DbgMsg = _('The SQL that failed to update the quotation flag of the sales order was');
+	$ErrMsg = _('Cannot update the quotation flag of the sales order because');
+	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+
+	if ($CustomerCode == "WEB-KL-IDR") {
+		// online sale from our website, we must update the status of the order in OpenCart
+		$OnlineOrderNo = GetOnlineOrderNoFromWeberp($OrderNo, $db);
+		$ReasonChangeStatusId = "webERP --> Payment received by " . $PaymentCode . " Amount = " . $TotalAmount;  
+		UpdateOpenCartOrderStatus($OnlineOrderNo, OPENCART_ORDER_STATUS_PROCESSING, 0, $ReasonChangeStatusId, $db_oc, $oc_tableprefix);
+	}
+
+
+	if  (($PaymentCode == "tokopedia") OR 
+		 ($PaymentCode == "shopee")){
+		// in case paid my marketplace (so after order is closed and shipment, we need to mark it as "received somehow", so we use klpaidcash
+		$SQL = "UPDATE salesorders
+					SET klpaidcash = '" . $TotalAmount . "'
+				WHERE salesorders.orderno='" . $OrderNo . "'";
+		$DbgMsg = _('The SQL that failed to update the payment flag of the sales order was');
+		$ErrMsg = _('Cannot update the payment flag of the sales order because');
+		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	}
+
+	$result = DB_Txn_Commit();
+}
 
 ?>

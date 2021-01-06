@@ -56,7 +56,6 @@ $NumberOfOpenShopsTotal = $NumberOfOpenShopsKL + $NumberOfOpenShopsBL + $NumberO
 ***************************************************************************************/
 
 if ($_SESSION['UserID'] == "Ricard"){
-
 //	phpinfo();
 }
 
@@ -880,23 +879,34 @@ if ($ProcessSection02){
 	*/
 
 	if ($KL_SystemAdmin 
-		OR $KL_OperationalManager 
-		OR $KL_AdministrationTeam
-		OR $KL_ShopManagerOnline){
+		OR $KL_BusinessDevelopmentManager
+		OR $KL_ShopManagerOnline
+		OR $KL_OperationalManager
+		OR $KL_ShopSupportTeam){ 
 		OnlineMarketPlacePaymentPending($RootPath, $db);
+		$NumberOfTestExecuted++;
+		OutstandingOrders("MarketPlace", "Order", $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
+	if ($KL_SystemAdmin){
+		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_PENDING, $RootPath, $db, $db_oc, $oc_tableprefix);
+		$NumberOfTestExecuted++;
+		}
+
 	if ($KL_SystemAdmin 
 		OR $KL_ShopManagerOnline){
-//		OnlineCustomersNoOrderPlaced($RootPath, $db);
-//		$NumberOfTestExecuted++;
-		OnlineQuotationsFollowUp($RootPath, $db);
+		OnlineQuotationsFollowUp($RootPath, $db, $db_oc, $oc_tableprefix);
 		$NumberOfTestExecuted++;
-		OldOnlineQuotations(3, 1, $RootPath, $db);
+		OldOnlineQuotations(1, $RootPath, $db);
 		$NumberOfTestExecuted++;
 //		OutstandingOrders("Online", "Quotation", $RootPath, $db);
 //		$NumberOfTestExecuted++;
+	}
+
+	if ($KL_SystemAdmin){ 
+		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_PROCESSING, $RootPath, $db, $db_oc, $oc_tableprefix);
+		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin 
@@ -906,12 +916,10 @@ if ($ProcessSection02){
 		OR $KL_ShopSupportTeam){ 
 		OutstandingOrders("Online", "Order", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		OutstandingOrders("MarketPlace", "Order", $RootPath, $db);
-		$NumberOfTestExecuted++;
 		OnlineItemsOnProcess($RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
-
+	
 	if ($KL_SystemAdmin
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_ShopSupportLeader){ 
@@ -3318,15 +3326,14 @@ function ObsoleteComponentsInActiveBOM($RootPath, $db){
 	}
 }
 
-function OldOnlineQuotations($NumDaysBank, $NumDaysXendit, $RootPath, $db){
+function OldOnlineQuotations($NumDaysBank, $RootPath, $db){
 
 	$StartDateBank = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysBank));
 	$StartDateXendit = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysXendit));
-	$Titletext = "Old Online Quotations to be deleted. No Bank Transfer in " . $NumDaysBank . " days or Xendit in " . $NumDaysXendit . " days";
+	$Titletext = "Old Online Quotations to be deleted. No Payment received in more than " . $NumDaysBank . " days.";
 		
 	$SQL = "SELECT salesorders.orderno,	
 				salesorders.customerref,
-				salesorders.klemailremindbanktransfer,
 				debtorsmaster.debtorno,
 				salesorders.deliverto AS name,
 				salesorders.orddate,
@@ -3345,18 +3352,11 @@ function OldOnlineQuotations($NumDaysBank, $NumDaysXendit, $RootPath, $db){
 			WHERE salesorderdetails.completed= 0	
 				AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_WEBSITE . ")
 				AND salesorders.quotation = 1
-				AND (((salesorders.klocpaymentcode = 'bank_mandiri' 
-							OR salesorders.klocpaymentcode = 'bank_bca' 
-							OR salesorders.klocpaymentcode = 'bank_danamon' ) 
-								AND salesorders.orddate < '" . $StartDateBank . "') 
-					OR ((salesorders.klocpaymentcode = 'xenditmandiriva' 
-							OR salesorders.klocpaymentcode = 'xenditcc')
-						AND salesorders.orddate < '" . $StartDateXendit . "'))
+				AND salesorders.orddate < '" . $StartDateBank . "'
 			GROUP BY salesorders.orderno,	
 				debtorsmaster.name,
 				salesorders.orddate
 			ORDER BY salesorders.orderno";			
-
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . $Titletext . '</strong></p>';
@@ -3371,8 +3371,7 @@ function OldOnlineQuotations($NumDaysBank, $NumDaysXendit, $RootPath, $db){
 							<th class="ascending">' . _('Order Date') . '</th>
 							<th class="ascending">' . _('Order Value') . '</th>
 							<th class="ascending">' . _('Currency') . '</th>
-							<th class="ascending">' . _('Payment System') . '</th>
-							<th class="ascending">' . _('Reminder Sent On') . '</th>
+							<th class="ascending">' . _('Payment Method') . '</th>
 							<th class="ascending">' . _('Action') . '</th>
 						</tr>';
 		echo $TableHeader;
@@ -3381,9 +3380,7 @@ function OldOnlineQuotations($NumDaysBank, $NumDaysXendit, $RootPath, $db){
 		while ($myrow = DB_fetch_array($result)) {
 			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . $myrow['orderno'] . '">' . $myrow['orderno'] . '</a>';
-			// if we have not send the remind transfer email yet, makes no sense sending it now, after $NumDays days :-(
-			$EmailType = "RemindBankTransfer";
-			$EmailLink = ConvertSQLDate($myrow['klemailremindbanktransfer']);
+			$PaymentMethodText = GetPaymentMethodTextFromCode($myrow['klocpaymentcode']);
 			$DeleteLink = '<a href="' . $RootPath . '/KLDeleteSalesOrder.php?OrderNo=' . $myrow['orderno'] . '">' . 'Delete as Expired' . '</a>';
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -3392,7 +3389,6 @@ function OldOnlineQuotations($NumDaysBank, $NumDaysXendit, $RootPath, $db){
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
-					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -3405,8 +3401,7 @@ function OldOnlineQuotations($NumDaysBank, $NumDaysXendit, $RootPath, $db){
 					ConvertSQLDate($myrow['orddate']), 
 					locale_number_format($myrow['ordervalue']+$myrow['freightcost'],$myrow['decimalplaces']),
 					$myrow['currcode'], 
-					$myrow['klocpaymentcode'], 
-					$EmailLink,
+					$PaymentMethodText, 
 					$DeleteLink
 					);
 			$i++;
@@ -3866,7 +3861,7 @@ function OnlineOrdersFollowUp($Source, $numDays, $RootPath, $db){
 	}
 }
 
-function OnlineQuotationsFollowUp($RootPath, $db){
+function OnlineQuotationsFollowUp($RootPath, $db, $db_oc, $oc_tableprefix){
 
 	$Titletext = "Follow up Outstanding Online Quotations";
 		
@@ -3879,6 +3874,7 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 				SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)) AS ordervalue,
 				salesorders.freightcost,
 				salesorders.klocpaymentcode,
+				salesorders.klocorderstatus,
 				debtorsmaster.currcode,
 				currencies.decimalplaces
 			FROM salesorders 
@@ -3910,8 +3906,8 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 							<th class="ascending">' . _('Order Date') . '</th>
 							<th class="ascending">' . _('Order Value') . '</th>
 							<th class="ascending">' . _('Currency') . '</th>
-							<th class="ascending">' . _('Reminder Bank Transfer') . '</th>
 							<th class="ascending">' . _('Payment Method') . '</th>
+							<th class="ascending">' . _('OC Status') . '</th>
 							<th class="ascending">' . _('Action') . '</th>
 						</tr>';
 		echo $TableHeader;
@@ -3920,33 +3916,23 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 		while ($myrow = DB_fetch_array($result)) {
 			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . $myrow['orderno'] . '">' . $myrow['orderno'] . '</a>';
-			$EmailType = "RemindBankTransfer";
-			if ($myrow['klemailremindbanktransfer']== '0000-00-00'){
-				$EmailLinkText = 'Send now';
-				$EmailLink = '<a href="' . $RootPath . '/KLFollowUpOnlineEmails.php?TransNo=' . $myrow['orderno'] . '&EmailType=' . $EmailType . '&PaymentCode=' . $myrow['klocpaymentcode'] . '&CustomerOrder=' . $myrow['customerref'] . '">'. $EmailLinkText .'</a>';
-			}else{
-				$EmailLink = ConvertSQLDate($myrow['klemailremindbanktransfer']);
-			}
+
 			$PaymentLinkText = 'Apply Payment';
 			$PaymentValue = $myrow['ordervalue']+$myrow['freightcost'];
 
 			// prepare the links according to the payment code from OpenCart
 			$PaymentLink = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&PaymentCode=' . $myrow['klocpaymentcode'] . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentLinkText .'</a>';
-			if ($myrow['klocpaymentcode'] == "bank_mandiri"){
-				$PaymentMethodText = "TT Mandiri";
-			}else if ($myrow['klocpaymentcode'] == "bank_bca"){
-				$PaymentMethodText = "TT BCA";
-			}else if ($myrow['klocpaymentcode'] == "bank_danamon"){
-				$PaymentMethodText = "TT Danamon";
-			}else if ($myrow['klocpaymentcode'] == "xenditmandiriva"){
-				$PaymentMethodText = "Xendit VA";
-			}else if ($myrow['klocpaymentcode'] == "xenditcc"){
-				$PaymentMethodText = "Xendit CC";
-			}else if ($myrow['klocpaymentcode'] == "snap"){
-				$PaymentMethodText = "MidTrans";
-			}else{
+			$PaymentMethodText = GetPaymentMethodTextFromCode($myrow['klocpaymentcode']);
+
+			$OCStatusText = GetOpenCartStatusTextFromCode($myrow['klocorderstatus'], $db_oc, $oc_tableprefix);
+			if (($OCStatusText == "Abandoned") OR ($OCStatusText == "Pending")){
+				$OCStatusText = ''; // clean up the output, we are not interested in these 2 status
 				$PaymentLink = '';
 			}
+			if ($OCStatusText != "Processing"){
+				$PaymentLink = ''; // do not allow Apply payment in case of an status that is not processing
+			}
+			
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -3967,8 +3953,8 @@ function OnlineQuotationsFollowUp($RootPath, $db){
 					ConvertSQLDate($myrow['orddate']), 
 					locale_number_format($myrow['ordervalue']+$myrow['freightcost'],$myrow['decimalplaces']),
 					$myrow['currcode'], 
-					$EmailLink,
 					$PaymentMethodText,
+					$OCStatusText,
 					$PaymentLink
 					);
 			$i++;
@@ -5213,6 +5199,70 @@ function StockToPTADU($Kind, $FactorNearStock, $LimitToMove, $RootPath, $db){
 			</div>
 			</form>';
 	}
+}
+
+function OpenCartOrdersByStatus($Status, $RootPath, $db, $db_oc, $oc_tableprefix){
+	$SQL = "SELECT 	oc_order.order_id,
+				oc_order.store_name,
+				oc_order.firstname,
+				oc_order.lastname,
+				oc_order.date_modified
+			FROM oc_order
+			WHERE oc_order.order_status_id = '" . $Status . "'
+			ORDER BY oc_order.date_modified";
+	$result = DB_query_oc($SQL);
+	if (DB_num_rows($result) != 0){
+		$showHeader = TRUE;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			if ($showHeader){
+				if ($Status == OPENCART_ORDER_STATUS_PENDING){
+					$StatusText = "Pending";
+				}else if ($Status == OPENCART_ORDER_STATUS_PROCESSING){
+					$StatusText = "Processing";
+				}else{
+					$StatusText = "Unknown";
+				}
+				echo '<p class="page_title_text" align="center"><strong>' . $StatusText .' OpenCart Online Orders' . '</strong></p>';
+				echo '<div>';
+				echo '<table class="selection">';
+				$TableHeader = '<tr>
+									<th class="ascending">' . _('#') . '</th>
+									<th class="ascending">' . _('#Order') . '</th>
+									<th class="ascending">' . _('Last Modification') . '</th>
+									<th class="ascending">' . _('Shop') . '</th>
+									<th class="ascending">' . _('Customer name') . '</th>
+								</tr>';
+				echo $TableHeader;
+				$showHeader = FALSE;
+			}
+			if ($myrow['currency_code'] == "IDR"){
+				$RoundingDecimals = 0;
+			}else{
+				$RoundingDecimals = 2;
+			}
+			$k = StartEvenOrOddRow($k);
+			printf('<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					</tr>', 
+					$i, 
+					locale_number_format($myrow['order_id'],0),
+					ConvertSQLDateTime($myrow['date_modified']), 
+					$myrow['store_name'],
+					$myrow['firstname'] . " " . $myrow['lastname']
+					);
+			$i++;
+		}
+		if (!$showHeader){
+			echo '</table>
+				</div>';
+		}
+	}
+
 }
 
 ?>

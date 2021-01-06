@@ -58,10 +58,14 @@ function OpenCartToWeberpSync($ShowMessages, $db, $db_oc, $oc_tableprefix, $Emai
 	// update payment information by PayPal
 	$EmailText = SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
 
+	// update order status from OpenCart to webERP
+	$EmailText = SyncOrderStatus($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
+
 	// update payment information by DOKU
 //	$EmailText = SyncDOKUPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
 
 	// We are done!
+// DEVELOPMENT ONLY. UNCOMMENT FOR PRODUCTION
 	SetLastTimeRun('OpenCartToWeberp', $db);
 	DB_Txn_Commit();
 	if ($ShowMessages){
@@ -917,5 +921,128 @@ function SyncDOKUPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun
 	return $EmailText;
 }
 
+function SyncOrderStatus($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText=''){
+
+	if ($EmailText !=''){
+		$EmailText = $EmailText . "Sync OpenCart Order Status " . "\n" . PrintTimeInformation($db);
+	}
+
+	// Now deal with the Order Status, in case it changed due to payments received or any other weird stuff happening
+	$SQL = "SELECT " . $oc_tableprefix . "order.order_id,
+				" . $oc_tableprefix . "order.customer_group_id,
+				" . $oc_tableprefix . "order.currency_code,
+				" . $oc_tableprefix . "order_history.order_status_id,
+				" . $oc_tableprefix . "order_history.comment
+			FROM " . $oc_tableprefix . "order,
+				" . $oc_tableprefix . "order_history
+			WHERE " . $oc_tableprefix . "order.order_id = " . $oc_tableprefix . "order_history.order_id
+				AND " . $oc_tableprefix . "order.order_status_id >= 1
+				AND ( " . $oc_tableprefix . "order.date_added >= '" . $LastTimeRun . "'
+					OR " . $oc_tableprefix . "order.date_modified >= '" . $LastTimeRun . "')
+			ORDER BY " . $oc_tableprefix . "order.order_id ASC,
+					" . $oc_tableprefix . "order_history.order_history_id ASC";
+	$result = DB_query_oc($SQL);
+
+	if (DB_num_rows($result) != 0){
+		if ($ShowMessages){
+			echo '<p class="page_title_text" align="center"><strong>' . _('Updated Order Status from OpenCart') .'</strong></p>';
+			echo '<div>';
+			echo '<table class="selection">';
+			$TableHeader = '<tr>
+								<th>' . _('OpenCart #') . '</th>
+								<th>' . _('webERP #') . '</th>
+								<th>' . _('OC Status') . '</th>
+								<th>' . _('webERP Status') . '</th>
+								<th>' . _('Message') . '</th>
+							</tr>';
+			echo $TableHeader;
+		}
+		$DbgMsg = _('The SQL statement that failed was');
+		$UpdateErrMsg = _('The SQL to update Order Status in webERP failed');
+
+		$k = 0; //row colour counter
+		$i = 0;
+		while ($myrow = DB_fetch_array($result)) {
+			if ($ShowMessages){
+				if ($k == 1) {
+					echo '<tr class="EvenTableRows">';
+					$k = 0;
+				} else {
+					echo '<tr class="OddTableRows">';
+					$k = 1;
+				}
+			}
+			/* FIELD MATCHING */
+			$CustomerCode = GetWeberpCustomerIdFromCustomerGroupAndCurrency($myrow['customer_group_id'], $myrow['currency_code'], $db);
+			$OrderNo = GetWeberpOrderNo($CustomerCode, $myrow['order_id'], $db);
+
+			$webERPStatusText = "";
+/* webERP change of status, still not activated, so we override the text
+			if ($myrow['order_status_id'] == OPENCART_ORDER_STATUS_PENDING){
+				$WeberpOrderStatus = WEBERP_ORDER_STATUS_QUOTATION;
+				$webERPStatusText = "Quotation";
+			}else if ($myrow['order_status_id'] == OPENCART_ORDER_STATUS_PROCESSING){
+				$WeberpOrderStatus = WEBERP_ORDER_STATUS_ORDER;
+				$webERPStatusText = "Order";
+				// also, we have to account for the payment of the online order here...
+			}else if ($myrow['order_status_id'] == OPENCART_ORDER_STATUS_SHIPPED){
+				$WeberpOrderStatus = WEBERP_ORDER_STATUS_ORDER;
+				$webERPStatusText = "Order";
+			}else if ($myrow['order_status_id'] == OPENCART_ORDER_STATUS_COMPLETE){
+				$WeberpOrderStatus = WEBERP_ORDER_STATUS_ORDER;
+				$webERPStatusText = "Order";
+			}else if ($myrow['order_status_id'] == OPENCART_ORDER_STATUS_CANCELLED){
+				$WeberpOrderStatus = WEBERP_ORDER_STATUS_ORDER;
+				$webERPStatusText = "Order";
+			}else if ($myrow['order_status_id'] == OPENCART_ORDER_STATUS_EXPIRED){
+				$WeberpOrderStatus = WEBERP_ORDER_STATUS_ORDER;
+				$webERPStatusText = "Order";
+			}else{
+				$WeberpOrderStatus = WEBERP_ORDER_STATUS_QUOTATION;
+				$webERPStatusText = "Quotation";
+			}
+*/
+			$OCStatusText = GetOpenCartStatusTextFromCode($myrow['order_status_id'], $db_oc, $oc_tableprefix);
+
+			UpdateOpenCartOrderStatusInWeberp($OrderNo, $myrow['order_status_id']);
+
+			if ($ShowMessages){
+				printf('<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						</tr>',
+						$myrow['order_id'],
+						$OrderNo,
+						$OCStatusText,
+						$webERPStatusText,
+						$myrow['comment']
+						);
+			}
+			if ($EmailText !=''){
+				$EmailText = $EmailText . $myrow['order_id'] .
+									      " = " . $OrderNo .
+									      " --> " . $OCStatusText .
+									      " = " . $webERPStatusText .
+									      " = " . $myrow['comment'] .
+									      " = " . $TotalOrder . "\n";
+			}
+			$i++;
+		}
+		if ($ShowMessages){
+			echo '</table>
+					</div>
+					</form>';
+		}
+	}
+	if ($ShowMessages){
+		prnMsg(locale_number_format($i,0) . ' ' . _('Updated Order Status from OpenCart to webERP'),'success');
+	}
+	if ($EmailText !=''){
+		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . _('Updated Order Status from OpenCart to webERP') . "\n\n";
+	}
+	return $EmailText;
+}
 
 ?>
