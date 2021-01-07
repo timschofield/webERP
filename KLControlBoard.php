@@ -879,12 +879,19 @@ if ($ProcessSection02){
 	*/
 
 	if ($KL_SystemAdmin 
+		OR $KL_AdministrationTeam
+		OR $KL_ShopManagerOnline
+		OR $KL_OperationalManager){ 
+		OnlineMarketPlacePaymentPending($RootPath, $db);
+		$NumberOfTestExecuted++;
+	}
+
+	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager
+		OR $KL_AdministrationTeam
 		OR $KL_ShopManagerOnline
 		OR $KL_OperationalManager
 		OR $KL_ShopSupportTeam){ 
-		OnlineMarketPlacePaymentPending($RootPath, $db);
-		$NumberOfTestExecuted++;
 		OutstandingOrders("MarketPlace", "Order", $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
