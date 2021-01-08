@@ -1535,7 +1535,7 @@ function SyncMultipleImages($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tablep
 	foreach ($imagefiles as $file) {
 		$multipleimage = 1;
 		$exist_multiple = TRUE;
-		while ($multipleimage <= 5){
+		while ($multipleimage <= 9){
 			$suffix = ".". $multipleimage;
 			if (strpos($file, $suffix) > 0){
 				// GET stockid from filename

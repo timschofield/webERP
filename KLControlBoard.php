@@ -1991,6 +1991,18 @@ function ImagesWithoutProduct($RootPath, $db){
 			if (strpos($StockId, '.5') > 0){
 				$StockId = substr($file, 0, strpos($StockId, '.5'));
 			}
+			if (strpos($StockId, '.6') > 0){
+				$StockId = substr($file, 0, strpos($StockId, '.6'));
+			}
+			if (strpos($StockId, '.7') > 0){
+				$StockId = substr($file, 0, strpos($StockId, '.7'));
+			}
+			if (strpos($StockId, '.8') > 0){
+				$StockId = substr($file, 0, strpos($StockId, '.8'));
+			}
+			if (strpos($StockId, '.9') > 0){
+				$StockId = substr($file, 0, strpos($StockId, '.9'));
+			}
 			$SQL = "SELECT stockid
 				FROM stockmaster
 				WHERE stockmaster.stockid = '" . $StockId . "'";
