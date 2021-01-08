@@ -1039,42 +1039,46 @@ function GetPaypalReturnDataInArray($RawData){
 	return $ResponseArray;
 }
 
-function MaintainSeoUrl($SEOQuery, $SEOKeyword, $StoreId, $LanguageId, $db_oc, $oc_tableprefix){
-	// search if we already have it
-	$SQL = "SELECT seo_url_id
-			FROM " . $oc_tableprefix . "seo_url
-			WHERE query = '" . $SEOQuery . "'
-				AND store_id = '" . $StoreId . "'
-				AND language_id = '" .  $LanguageId . "'";
-	$ErrMsg =_('Could not get the SEO URL in Opencart because');
-	$result = DB_query_oc($SQL,$ErrMsg);
-	if(DB_num_rows($result) != 0){
-		// if we have it, we update it
-		$myrow = DB_fetch_array($result);
-		$SeoUrlId = $myrow['seo_url_id'];
-		
-		$DbgMsg = _('The SQL that failed was');
-		$ErrMsg = _('The MaintainSeoUrl function failed');
-		$sqlUpdate = "UPDATE " . $oc_tableprefix . "seo_url SET
-						keyword ='" . $SEOKeyword . "'
-					WHERE seo_url_id = '" . $SeoUrlId . "'";
-		$resultUpdate = DB_query_oc($sqlUpdate,$ErrMsg,$DbgMsg,true);
-	}else{
-		// otherwise we insert it
-		$DbgMsg = _('The SQL that failed was');
-		$ErrMsg = _('The MaintainSeoUrl function failed');
-		$sqlInsert = "INSERT INTO " . $oc_tableprefix . "seo_url
-						(store_id,
-						language_id,
-						query,
-						keyword)
-					VALUES
-						('" . $StoreId . "',
-						'" . $LanguageId . "',
-						'" . $SEOQuery . "',
-						'" . $SEOKeyword . "'
-						)";
-		$resultInsert = DB_query_oc($sqlInsert,$ErrMsg,$DbgMsg,true);
+function MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, $StoreId, $LanguageId, $db_oc, $oc_tableprefix){
+	// only work on SEO URL if we are on "Insert" action, as "Update" will lead to 404 errors from Google Bots and
+	// links created before the update moficiation (as the new link will be different and old ones will not be found.
+	if ($Action == "Insert"){
+		// search if we already have it
+		$SQL = "SELECT seo_url_id
+				FROM " . $oc_tableprefix . "seo_url
+				WHERE query = '" . $SEOQuery . "'
+					AND store_id = '" . $StoreId . "'
+					AND language_id = '" .  $LanguageId . "'";
+		$ErrMsg =_('Could not get the SEO URL in Opencart because');
+		$result = DB_query_oc($SQL,$ErrMsg);
+		if(DB_num_rows($result) != 0){
+			// if we have it, we update it
+			$myrow = DB_fetch_array($result);
+			$SeoUrlId = $myrow['seo_url_id'];
+			
+			$DbgMsg = _('The SQL that failed was');
+			$ErrMsg = _('The MaintainSeoUrl function failed');
+			$sqlUpdate = "UPDATE " . $oc_tableprefix . "seo_url SET
+							keyword ='" . $SEOKeyword . "'
+						WHERE seo_url_id = '" . $SeoUrlId . "'";
+			$resultUpdate = DB_query_oc($sqlUpdate,$ErrMsg,$DbgMsg,true);
+		}else{
+			// otherwise we insert it
+			$DbgMsg = _('The SQL that failed was');
+			$ErrMsg = _('The MaintainSeoUrl function failed');
+			$sqlInsert = "INSERT INTO " . $oc_tableprefix . "seo_url
+							(store_id,
+							language_id,
+							query,
+							keyword)
+						VALUES
+							('" . $StoreId . "',
+							'" . $LanguageId . "',
+							'" . $SEOQuery . "',
+							'" . $SEOKeyword . "'
+							)";
+			$resultInsert = DB_query_oc($sqlInsert,$ErrMsg,$DbgMsg,true);
+		}
 	}
 }
 

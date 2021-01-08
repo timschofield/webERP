@@ -411,8 +411,8 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 			// create SEO Keywords if needed
 			$SEOQuery = 'product_id='.$ProductId;
 			$SEOKeyword = CreateSEOKeyword($Model . "-" . $Name);
-			MaintainSeoUrl($SEOQuery, $SEOKeyword, $StoreId, $LanguageId, $db_oc, $oc_tableprefix);
-		
+			MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, $StoreId, $LanguageId, $db_oc, $oc_tableprefix);
+			
 			// if it's a general item, we have to add it too to Blink store.
 			if  (ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_GENERAL) AND
 			   (!DataExistsInOpenCart($db_oc, $oc_tableprefix . 'product_to_store', 'product_id', $ProductId, 'store_id', OPENCART_STORE_BLINK))){
@@ -425,7 +425,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 								)";
 				$resultInsert = DB_query_oc($sqlInsert,$InsertErrMsg,$DbgMsg,true);
 				$StoreText = $StoreText . " + BL";
-				MaintainSeoUrl($SEOQuery, $SEOKeyword, OPENCART_STORE_BLINK, $LanguageId, $db_oc, $oc_tableprefix);
+				MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, OPENCART_STORE_BLINK, $LanguageId, $db_oc, $oc_tableprefix);
 			}
 
 			// if it's not on the wholesale store, we add it.
@@ -439,7 +439,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 								)";
 				$resultInsert = DB_query_oc($sqlInsert,$InsertErrMsg,$DbgMsg,true);
 				$StoreText = $StoreText . " + WH";
-				MaintainSeoUrl($SEOQuery, $SEOKeyword, OPENCART_STORE_WHOLESALE, $LanguageId, $db_oc, $oc_tableprefix);
+				MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, OPENCART_STORE_WHOLESALE, $LanguageId, $db_oc, $oc_tableprefix);
 			}
 			
 			if ($ShowMessages){
@@ -1177,10 +1177,10 @@ function SyncSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_table
 			$SEOKeyword = CreateSEOKeyword($Name);
 			// This bit should be smarter... we don't know if a sales category is from KL or Blink, so we assign to both
 			// outlet and wholesale, yes, they are.
-			MaintainSeoUrl($SEOQuery, $SEOKeyword, OPENCART_STORE_KAPAL_LAUT, $LanguageId, $db_oc, $oc_tableprefix);
-			MaintainSeoUrl($SEOQuery, $SEOKeyword, OPENCART_STORE_BLINK, $LanguageId, $db_oc, $oc_tableprefix);
-			MaintainSeoUrl($SEOQuery, $SEOKeyword, OPENCART_STORE_OUTLET, $LanguageId, $db_oc, $oc_tableprefix);
-			MaintainSeoUrl($SEOQuery, $SEOKeyword, OPENCART_STORE_WHOLESALE, $LanguageId, $db_oc, $oc_tableprefix);
+			MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, OPENCART_STORE_KAPAL_LAUT, $LanguageId, $db_oc, $oc_tableprefix);
+			MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, OPENCART_STORE_BLINK, $LanguageId, $db_oc, $oc_tableprefix);
+			MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, OPENCART_STORE_OUTLET, $LanguageId, $db_oc, $oc_tableprefix);
+			MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, OPENCART_STORE_WHOLESALE, $LanguageId, $db_oc, $oc_tableprefix);
 
 			if ($ShowMessages){
 				$k = StartEvenOrOddRow($k);
