@@ -65,7 +65,6 @@ function OpenCartToWeberpSync($ShowMessages, $db, $db_oc, $oc_tableprefix, $Emai
 //	$EmailText = SyncDOKUPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
 
 	// We are done!
-// DEVELOPMENT ONLY. UNCOMMENT FOR PRODUCTION
 	SetLastTimeRun('OpenCartToWeberp', $db);
 	DB_Txn_Commit();
 	if ($ShowMessages){
@@ -563,7 +562,7 @@ function SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeR
 				" . $oc_tableprefix . "order.currency_value,
 				" . $oc_tableprefix . "order.customer_id,
 				" . $oc_tableprefix . "order.customer_group_id,
-				" . $oc_tableprefix . "customer.email,
+				" . $oc_tableprefix . "order.email,
 				" . $oc_tableprefix . "order.total AS ordertotal,
 				" . $oc_tableprefix . "paypal_order.paypal_order_id,
 				" . $oc_tableprefix . "paypal_order.capture_status,
@@ -580,11 +579,9 @@ function SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeR
 				" . $oc_tableprefix . "paypal_order_transaction.call_data
 		FROM " . $oc_tableprefix . "paypal_order,
 			 " . $oc_tableprefix . "paypal_order_transaction,
-			 " . $oc_tableprefix . "order,
-			 " . $oc_tableprefix . "customer
+			 " . $oc_tableprefix . "order
 		WHERE " . $oc_tableprefix . "paypal_order.paypal_order_id = " . $oc_tableprefix . "paypal_order_transaction.paypal_order_id
 				AND " . $oc_tableprefix . "paypal_order.order_id  = " . $oc_tableprefix . "order.order_id
-				AND " . $oc_tableprefix . "order.customer_id  = " . $oc_tableprefix . "customer.customer_id
 				AND ( " . $oc_tableprefix . "paypal_order.date_added >= '" . $LastTimeRun . "'
 					OR " . $oc_tableprefix . "paypal_order.date_modified >= '" . $LastTimeRun . "')
 		ORDER BY " . $oc_tableprefix . "paypal_order.paypal_order_id";
