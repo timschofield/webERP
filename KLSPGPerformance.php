@@ -25,12 +25,16 @@ if ($KL_SystemAdmin
 	SPGPerformanceWeekly($db);
 	$NumberOfTestExecuted++;
 
-	AverageSales("SPG", 365, 90, 30, 15, 7, 1,30, "CurrentYear", "All", $db);
+	AverageSales("SPG", 30, 15, 10, 7, 5, 1, 7, "CurrentYear", "All", $db);
 	$NumberOfTestExecuted++;
 
-	SPGPerformanceAllShops(30, 60, 90, $db);
+	SPGPerformanceAllShops(15, 30, 45, $db);
 	$NumberOfTestExecuted++;
 
+	HourlySales(7,$RootPath, $db);
+	$NumberOfTestExecuted++;
+	HourlySales(15,$RootPath, $db);
+	$NumberOfTestExecuted++;
 	HourlySales(30,$RootPath, $db);
 	$NumberOfTestExecuted++;
 	//	YearDifferenceSales("SPG", 30, $db);

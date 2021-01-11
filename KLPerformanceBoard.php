@@ -62,9 +62,9 @@ if ($ProcessSection01){
 		OR $KL_ShopManager
 		OR $KL_SalesDirector
 		OR $KL_BusinessDevelopmentManager){
-		AverageSales("Shop", 365, 90, 30, 15, 7, 1, 30, "CurrentYear", "All", $db);
+		AverageSales("Shop", 30, 15, 10, 7, 5, 1, 7, "CurrentYear", "All", $db);
 		$NumberOfTestExecuted++;
-		AverageSales("Online", 365, 90, 30, 15, 7, 1, 30, "CurrentYear", "All", $db);
+		AverageSales("Online", 30, 15, 10, 7, 5, 1, 7, "CurrentYear", "All", $db);
 		$NumberOfTestExecuted++;
 	}
 	
@@ -82,9 +82,9 @@ if ($ProcessSection01){
 // RICARD 2019-11-26
 // CANCELLED FOR PERFORMANCE REASONS
 //		YearDifferenceSales("Shop",	 90, $db);
-		$NumberOfTestExecuted++;
-		YearDifferenceSales("Shop", 365, $db);
-		$NumberOfTestExecuted++;
+//		$NumberOfTestExecuted++;
+//		YearDifferenceSales("Shop", 365, $db);
+//		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin){
