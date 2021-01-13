@@ -865,7 +865,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 		$result = DB_Txn_Commit();
 
 	}
-	return = $result;
+	return $result;
 }
 
 function CalculateCommissionTokopedia($CustomerCode, $OrderNo, $TotalAmount){
