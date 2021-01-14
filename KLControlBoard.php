@@ -3944,10 +3944,7 @@ function OnlineQuotationsFollowUp($RootPath, $db, $db_oc, $oc_tableprefix){
 			$PaymentMethodText = GetPaymentMethodTextFromCode($myrow['klocpaymentcode']);
 
 			$OCStatusText = GetOpenCartStatusTextFromCode($myrow['klocorderstatus'], $db_oc, $oc_tableprefix);
-			if (($OCStatusText == "Abandoned") OR ($OCStatusText == "Pending")){
-				$OCStatusText = ''; // clean up the output, we are not interested in these 2 status
-				$PaymentLink = '';
-			}
+
 			if ($OCStatusText != "Processing"){
 				$PaymentLink = ''; // do not allow Apply payment in case of an status that is not processing
 			}
