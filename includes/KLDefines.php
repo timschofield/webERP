@@ -12,11 +12,13 @@ define("RETAIL_PRICE_LIST", 'RT');
 define("PPN_PERCENT", 10);
 
 /* Defines about prices IDR */
-define("PRICE_ROUNDING_STEP01",   10000);
-define("PRICE_ROUNDING_LIMIT01", 300000);
-define("PRICE_ROUNDING_STEP02",   25000);
-define("PRICE_ROUNDING_LIMIT02", 600000);
-define("PRICE_ROUNDING_STEP03",   50000);
+define("PRICE_ROUNDING_STEP01",               5000);
+define("PRICE_ROUNDING_LIMIT01",            100000);
+define("PRICE_ROUNDING_STEP02",              25000);
+define("PRICE_ROUNDING_LIMIT02",           1000000);
+define("PRICE_ROUNDING_COMMERCIAL_MODULE02",100000);
+define("PRICE_ROUNDING_COMMERCIAL_STEP02",    5000);
+define("PRICE_ROUNDING_STEP03",             100000);
 
 /* Defines abot small selling prices */
 define("SMALL_PRICE_CALCULATED_STEP01",  50000);
