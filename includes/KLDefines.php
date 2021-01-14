@@ -372,24 +372,24 @@ define("SHOPEE_BANK_GL_ACCOUNT", '111121122PT');
 define("SHOPEE_COMMISSION_GL_ACCOUNT", '700211322PT');
 define("SHOPEE_COMMISSION_PERCENT", 1.50);
 
-define("SHOPEE_CATEGORY_RING", '1139');
-define("SHOPEE_CATEGORY_TOE_RING", '1139');
-define("SHOPEE_CATEGORY_BROOCHE", '17875');
-define("SHOPEE_CATEGORY_EARRING", '1141');
-define("SHOPEE_CATEGORY_EARRING_HOOK", '7329');
-define("SHOPEE_CATEGORY_EARRING_STUD", '7327');
-define("SHOPEE_CATEGORY_EARRING_HOOP", '7328');
-define("SHOPEE_CATEGORY_BANGLE", '7321');
-define("SHOPEE_CATEGORY_BRACELET_PEARL", '7323');
-define("SHOPEE_CATEGORY_BRACELET", '1137');
-define("SHOPEE_CATEGORY_ANKLET", '17868');
-define("SHOPEE_CATEGORY_PENDANT", '7320');
-define("SHOPEE_CATEGORY_PENDANT_PEARL", '7319');
-define("SHOPEE_CATEGORY_CHOKER", '7317');
-define("SHOPEE_CATEGORY_NECKLACE_PEARL", '7319');
-define("SHOPEE_CATEGORY_NECKLACE", '1133');
-define("SHOPEE_CATEGORY_BAG", '16629');
-define("SHOPEE_CATEGORY_KEYHOLDER", '16632');
+define("SHOPEE_CATEGORY_RING",           'Cincin Kasual');
+define("SHOPEE_CATEGORY_TOE_RING",       'Cincin Kasual');
+define("SHOPEE_CATEGORY_BROOCHE",        'Bros');
+define("SHOPEE_CATEGORY_EARRING",        'Anting Plug');
+define("SHOPEE_CATEGORY_EARRING_HOOK",   'Anting Hooks');
+define("SHOPEE_CATEGORY_EARRING_STUD",   'Anting Stud');
+define("SHOPEE_CATEGORY_EARRING_HOOP",   'Anting Hoops');
+define("SHOPEE_CATEGORY_BANGLE",         'Bangle');
+define("SHOPEE_CATEGORY_BRACELET_PEARL", 'Gelang Mutiara');
+define("SHOPEE_CATEGORY_BRACELET",       'Gelang Etnik & Bead');
+define("SHOPEE_CATEGORY_ANKLET",         'Gelang Kaki');
+define("SHOPEE_CATEGORY_PENDANT",        'Liontin');
+define("SHOPEE_CATEGORY_PENDANT_PEARL",  'Kalung Mutiara');
+define("SHOPEE_CATEGORY_CHOKER",         'Choker');
+define("SHOPEE_CATEGORY_NECKLACE_PEARL", 'Kalung Mutiara');
+define("SHOPEE_CATEGORY_NECKLACE",       'Kalung Etnik');
+define("SHOPEE_CATEGORY_BAG",            'Clutch');
+define("SHOPEE_CATEGORY_KEYHOLDER",      'Hiasan & Gantungan Kunci');
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // MIDTRANS
