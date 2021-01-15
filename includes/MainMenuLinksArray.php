@@ -6,7 +6,7 @@ KL RICARD MODIFICATIONS:
 - Added entries for all KL scripts
 *****************************************************************************************/
 // RICARD: Personalize menu entries by level
-include('includes/KLRoles.inc');
+include('includes/KLRoles.php');
 
 /* webERP menus with Captions and URLs. */
 

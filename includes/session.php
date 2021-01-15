@@ -238,7 +238,7 @@ if (in_array($_SESSION['PageSecurityArray']['WWW_Users.php'], $_SESSION['Allowed
 }
 
 /* KL RICARD If it's an SPG logging in, charge all info in _SESSION to avoid the same SQL for every retail sale.*/
-include('includes/KLRoles.inc');
+include('includes/KLRoles.php');
 if ($KL_SPGSeniorOrSupport OR $KL_SPGJunior){
 	/*Get the default customer-branch combo from the user's default location record */
 	$sql = "SELECT 	locations.cashsalecustomer,

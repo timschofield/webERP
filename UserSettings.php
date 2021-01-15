@@ -7,7 +7,7 @@ $Title = _('User Settings');
 $ViewTopic = 'GettingStarted';
 $BookMark = 'UserSettings';
 include('includes/header.php');
-include('includes/KLRoles.inc');
+include('includes/KLRoles.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/user.png" title="',// Icon image.
