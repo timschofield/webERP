@@ -2874,7 +2874,7 @@ function ItemsOnSpecialRequest($RootPath, $db){
 function ItemsShouldBeInWebsite($db){
 	$SQL = "SELECT stockid, description
 			FROM stockmaster
-			WHERE " . SQLFilterStockmasterForOnlineShop(). "
+			WHERE " . SQLFilterStockmasterForOnlineShop("ALL"). "
 				AND NOT EXISTS (SELECT *
 								FROM salescatprod
 								WHERE salescatprod.stockid = stockmaster.stockid)";
@@ -3137,7 +3137,7 @@ function ItemsWithoutWeightOrVolume($RootPath, $db){
 				   stockmaster.longdescription,	
 				   stockmaster.categoryid	
 			FROM stockmaster
-			WHERE ". SQLFilterStockmasterForOnlineShop() . "
+			WHERE ". SQLFilterStockmasterForOnlineShop("ALL") . "
 				AND (stockmaster.grossweight < 0.00001 
 					OR stockmaster.volume < 0.00001
 					OR stockmaster.grossweight <= stockmaster.netweight)

@@ -38,17 +38,12 @@ $SQL = "SELECT stockmaster.stockid,
 			   stockmaster.longdescription,	
 			   stockmaster.categoryid	
 		FROM stockmaster
-		WHERE " . SQLFilterStockmasterForOnlineShop() . "
-			AND (((NOT EXISTS (SELECT * 
+		WHERE " . SQLFilterStockmasterForOnlineShop("KL+BL") . "
+			AND ((NOT EXISTS (SELECT * 
 								FROM salescatprod
 								WHERE stockmaster.stockid = salescatprod.stockid))
 					OR stockmaster.grossweight = 0
 					OR stockmaster.volume = 0)
-				OR ((EXISTS (SELECT * 
-							FROM salescatprod
-							WHERE stockmaster.stockid = salescatprod.stockid
-								AND salescatprod.salescatid NOT IN (" . ONLINESHOP_OUTLET_SALES_CATEGORIES. ")))
-					AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . "))
 		ORDER BY stockmaster.stockid";
 $result = DB_query($SQL);
 if (DB_num_rows($result) != 0){
@@ -199,42 +194,32 @@ if (DB_num_rows($result) != 0){
 			// si tenim foto seguim endavant, sino no el publiquem a la website
 			if(file_exists($_SESSION['part_pics_dir'] . '/' .$myrow['stockid'].'.jpg') ) {
 
-				// Mirar si pertany a super categoria ON SPECIAL. Si està en DISCOUNT, Només pot estar a on SPECIAL, per a no mesclar...
-				$WebsiteCategory = WebsiteCategoryDiscount($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
+				// Mirar si pertany a super categoria SILVER KL
+				$WebsiteCategory = WebsiteCategorySilverJewellery($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
 				if ($WebsiteCategory > 0){
-					DeleteWebsiteSalesCategories($myrow['stockid'], $UpdateDB, $db);
 					$Brand = FindWebsiteBrand($myrow['stockid'], $myrow['categoryid']);
 					InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $Brand, FALSE, $FeaturedAsTopSales, $UpdateDB, $db);
 					$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
 					$ItemsAdded++;
 				}else{
-					// Mirar si pertany a super categoria SILVER KL
-					$WebsiteCategory = WebsiteCategorySilverJewellery($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
+					// Mirar si pertany a super categoria BLINK JEWELLERY
+					$WebsiteCategory = WebsiteCategoryBlinkJewellery($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
 					if ($WebsiteCategory > 0){
 						$Brand = FindWebsiteBrand($myrow['stockid'], $myrow['categoryid']);
 						InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $Brand, FALSE, $FeaturedAsTopSales, $UpdateDB, $db);
 						$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
 						$ItemsAdded++;
 					}else{
-						// Mirar si pertany a super categoria BLINK JEWELLERY
-						$WebsiteCategory = WebsiteCategoryBlinkJewellery($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
+						// Mirar si pertany a super categoria BAGS
+						$WebsiteCategory = WebsiteCategoryBags($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
 						if ($WebsiteCategory > 0){
 							$Brand = FindWebsiteBrand($myrow['stockid'], $myrow['categoryid']);
 							InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $Brand, FALSE, $FeaturedAsTopSales, $UpdateDB, $db);
 							$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
 							$ItemsAdded++;
 						}else{
-							// Mirar si pertany a super categoria BAGS
-							$WebsiteCategory = WebsiteCategoryBags($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
-							if ($WebsiteCategory > 0){
-								$Brand = FindWebsiteBrand($myrow['stockid'], $myrow['categoryid']);
-								InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $Brand, FALSE, $FeaturedAsTopSales, $UpdateDB, $db);
-								$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
-								$ItemsAdded++;
-							}else{
-								$WebsiteDescription = 'NO WEBSITE CATEGORY';
-								$WebsiteCategory = 0;
-							}
+							$WebsiteDescription = 'NO WEBSITE CATEGORY';
+							$WebsiteCategory = 0;
 						}
 					}
 				}

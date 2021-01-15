@@ -884,7 +884,7 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db,
 		$RLSQL = "UPDATE locstock, stockmaster
 					SET locstock.reorderlevel = ". MINIMUM_STOCK_ONLINESHOP_EVERY_ITEM ."
 					WHERE locstock.stockid = stockmaster.stockid
-						AND " . SQLFilterStockmasterForOnlineShop() ."
+						AND " . SQLFilterStockmasterForOnlineShop("ALL") ."
 						AND locstock.loccode = ". CODE_ONLINE_SHOP ."";
 		$Result = DB_query($RLSQL,$ErrMsg,$DbgMsg,true);		
 		if ($ShowMessages){
@@ -900,7 +900,7 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db,
 				SUM(locstock.quantity) AS qoh
 			FROM locstock, locations, stockmaster
 			WHERE locstock.stockid = stockmaster.stockid
-				AND " . SQLFilterStockmasterForOnlineShop() ."
+				AND " . SQLFilterStockmasterForOnlineShop("ALL") ."
 				AND locstock.loccode = locations.loccode
 				AND locations.stockreadytosell = 1
 			GROUP BY locstock.stockid
