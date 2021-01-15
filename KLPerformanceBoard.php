@@ -60,10 +60,16 @@ if ($ProcessSection01){
 	if ($KL_SystemAdmin 
 		OR $KL_OperationalManager
 		OR $KL_ShopManager
-		OR $KL_SalesDirector
 		OR $KL_BusinessDevelopmentManager){
 		AverageSales("Shop", 30, 15, 10, 7, 5, 1, 7, "CurrentYear", "All", $db);
 		$NumberOfTestExecuted++;
+	}
+
+	if ($KL_SystemAdmin 
+		OR $KL_OperationalManager
+		OR $KL_ShopManager
+		OR $KL_SalesTeamOnline
+		OR $KL_BusinessDevelopmentManager){
 		AverageSales("Online", 30, 15, 10, 7, 5, 1, 7, "CurrentYear", "All", $db);
 		$NumberOfTestExecuted++;
 	}
@@ -71,8 +77,7 @@ if ($ProcessSection01){
 	if ($KL_SystemAdmin
 		OR $KL_OperationalManager
 		OR $KL_BusinessDevelopmentManager
-		OR $KL_ShopManager
-		OR $KL_SalesDirector){
+		OR $KL_ShopManager){
 //		YearDifferenceSales("Shop",   7, $db);
 //		$NumberOfTestExecuted++;
 		YearDifferenceSales("Shop",  15, $db);
@@ -95,7 +100,6 @@ if ($ProcessSection01){
 	if ($KL_SystemAdmin 
 		OR $KL_OperationalManager
 		OR $KL_ShopManager
-		OR $KL_SalesDirector
 		OR $KL_BusinessDevelopmentManager){
 		AverageCustomerBehaviourByValueInvoice("Shop", 30, $db);
 		$NumberOfTestExecuted++;
@@ -104,7 +108,6 @@ if ($ProcessSection01){
 	if ($KL_SystemAdmin 
 		OR $KL_ShopManager
 		OR $KL_OperationalManager
-		OR $KL_SalesDirector
 		OR $KL_BusinessDevelopmentManager){
 // RICARD 2019-11-26
 // CANCELLED FOR PERFORMANCE REASONS
@@ -139,7 +142,6 @@ if ($ProcessSection02){
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_OperationalManager
-		OR $KL_SalesDirector
 		OR $KL_ShopManager){
 		ActiveTransfersByLocation($RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -159,7 +161,6 @@ if ($ProcessSection02){
 	if ($KL_SystemAdmin 
 		OR $KL_OperationalManager
 		OR $KL_ShopManager
-		OR $KL_SalesDirector
 		OR $KL_BusinessDevelopmentManager){
 		FinishedStockDistribution("FORSALE", "LOCATION", $db);
 		$NumberOfTestExecuted++;
@@ -284,7 +285,6 @@ if ($ProcessSection03){
 	if ($KL_SystemAdmin 
 		OR $KL_OperationalManager
 		OR $KL_ShopManager
-		OR $KL_SalesDirector
 		OR $KL_BusinessDevelopmentManager){
 		FinishedStockDistribution("DISPLAYS", "LOCATION", $db);
 		$NumberOfTestExecuted++;

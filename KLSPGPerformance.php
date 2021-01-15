@@ -20,8 +20,7 @@ if ($KL_SystemAdmin){
 if ($KL_SystemAdmin 
 	OR $KL_OperationalManager 
 	OR $KL_BusinessDevelopmentManager 
-	OR $KL_ShopManager 
-	OR $KL_SalesDirector){
+	OR $KL_ShopManager){
 	SPGPerformanceWeekly($db);
 	$NumberOfTestExecuted++;
 
@@ -45,7 +44,6 @@ if ($KL_SystemAdmin
 if ($KL_SystemAdmin 
 	OR $KL_OperationalManager
 	OR $KL_ShopManager
-	OR $KL_SalesDirector
 	OR $KL_BusinessDevelopmentManager){	
 // RICARD 2019-11-26
 // CANCELLED FOR PERFORMANCE REASONS

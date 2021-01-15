@@ -66,9 +66,8 @@ if ($KL_SystemAdmin
 	OR $KL_PurchasingTeam 
 	OR $KL_ShopSupportTeam 
 	OR $KL_ShopSupportLeader 
-	OR $KL_SalesDirector 
 	OR $KL_ShopManager
-	OR $KL_ShopManagerOnline
+	OR $KL_SalesTeamOnline
 	OR $KL_PettyCash 
 	OR $KL_SPGSeniorOrSupport 
 	OR $KL_SPGJunior){
@@ -90,7 +89,6 @@ if ($ProcessSection01){
 	***************************************************************************************/
 
 	if ($KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector
 		OR $KL_ShopManager){
 // COVID REDUCTION OF PANEL
 //		SPGNotReportingSalesInDays(2, $db);
@@ -678,8 +676,7 @@ if ($ProcessSection02){
 	/***************************************************************************************
 	* SALES CONTROL         
 	***************************************************************************************/
-	if ($KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector){
+	if ($KL_BusinessDevelopmentManager){
 
 // COVID REDUCTION OF PANEL
 //		ItemsInCategoryForMoreThanDays( 120, "SETKLA", $RootPath, $db);
@@ -854,6 +851,7 @@ if ($ProcessSection02){
 
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager
+		OR $KL_SalesTeamOnline
 		OR $KL_OperationalManager
 		OR $KL_ShopSupportLeader
 		OR $KL_ShopSupportTeam){
@@ -863,6 +861,7 @@ if ($ProcessSection02){
 
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager
+		OR $KL_SalesTeamOnline
 		OR $KL_OperationalManager){
 		OutstandingOrders("Wholesale", "Quotation", $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -880,7 +879,7 @@ if ($ProcessSection02){
 
 	if ($KL_SystemAdmin 
 		OR $KL_AdministrationTeam
-		OR $KL_ShopManagerOnline
+		OR $KL_SalesTeamOnline
 		OR $KL_OperationalManager){ 
 		OnlineMarketPlacePaymentPending($RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -889,20 +888,21 @@ if ($ProcessSection02){
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_AdministrationTeam
-		OR $KL_ShopManagerOnline
+		OR $KL_SalesTeamOnline
 		OR $KL_OperationalManager
 		OR $KL_ShopSupportTeam){ 
 		OutstandingOrders("MarketPlace", "Order", $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_SystemAdmin){
+	if ($KL_SystemAdmin
+		OR $KL_SalesTeamOnline){
 		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_PENDING, $RootPath, $db, $db_oc, $oc_tableprefix);
 		$NumberOfTestExecuted++;
 		}
 
 	if ($KL_SystemAdmin 
-		OR $KL_ShopManagerOnline){
+		OR $KL_SalesTeamOnline){
 		OnlineQuotationsFollowUp($RootPath, $db, $db_oc, $oc_tableprefix);
 		$NumberOfTestExecuted++;
 		OldOnlineQuotations(1, $RootPath, $db);
@@ -911,14 +911,15 @@ if ($ProcessSection02){
 //		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_SystemAdmin){ 
+	if ($KL_SystemAdmin
+		OR $KL_SalesTeamOnline){ 
 		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_PROCESSING, $RootPath, $db, $db_oc, $oc_tableprefix);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager
-		OR $KL_ShopManagerOnline
+		OR $KL_SalesTeamOnline
 		OR $KL_OperationalManager
 		OR $KL_ShopSupportTeam){ 
 		OutstandingOrders("Online", "Order", $RootPath, $db);
@@ -936,7 +937,7 @@ if ($ProcessSection02){
 
 	if ($KL_SystemAdmin
 		OR $KL_BusinessDevelopmentManager
-		OR $KL_ShopManagerOnline){
+		OR $KL_SalesTeamOnline){
 		OnlineOrdersFollowUp("KL-WEBSITE", 10, $RootPath, $db);
 		$NumberOfTestExecuted++;
 //		OnlineOrdersFollowUp("LAZADA", 10, $RootPath, $db);
@@ -953,6 +954,7 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin
+		OR $KL_SalesTeamOnline
 		OR $KL_ITSupport){
 		ImagesWithoutProduct($RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -960,11 +962,15 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_SystemAdmin){
+	if ($KL_SystemAdmin
+		OR $KL_SalesTeamOnline){
 		ItemsWithoutWeightOrVolume($RootPath, $db);
 		$NumberOfTestExecuted++;
 		ItemsShouldBeInWebsite($db);
 		$NumberOfTestExecuted++;
+	}
+
+	if ($KL_SystemAdmin){
 		UsersNotLoggingIn(60, "ALL_EXCEPT_SPGSUPPORT", $db);
 		$NumberOfTestExecuted++;
 //		UsersNotLoggingIn(90, "SPGSUPPORT", $db);
@@ -975,8 +981,7 @@ if ($ProcessSection02){
 		OR $KL_OperationalManager 
 		OR $KL_BusinessDevelopmentManager 
 		OR $KL_ShopSupportLeader 
-		OR $KL_ShopManager
-		OR $KL_SalesDirector){
+		OR $KL_ShopManager){
 		RegularTransfersToShopNotReceived('08:00:00','15:00:00', $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
@@ -1024,7 +1029,6 @@ if ($ProcessSection02){
 		OR $KL_PurchasingTeam 
 		OR $KL_ShopSupportTeam 
 		OR $KL_ShopSupportLeader 
-		OR $KL_SalesDirector 
 		OR $KL_PettyCash 
 		OR $KL_SPGSeniorOrSupport 
 		OR $KL_SPGJunior){

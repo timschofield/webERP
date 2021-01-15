@@ -18,8 +18,7 @@ $NumberOfTestExecuted = 0;
 if ($KL_SystemAdmin 
 	OR $KL_OperationalManager 
 	OR $KL_BusinessDevelopmentManager 
-	OR $KL_ShopManager 
-	OR $KL_SalesDirector){
+	OR $KL_ShopManager){
 	HourlyPerformance( 7,$RootPath, $db);
 	$NumberOfTestExecuted++;
 // RICARD 2019-11-26
