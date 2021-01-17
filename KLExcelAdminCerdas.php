@@ -102,10 +102,20 @@ function submit(&$db, $TypeOfShop) {
 			while ($myrow = DB_fetch_array($result)) {
 				
 				$StockId = $myrow['stockid'];
-				$Name = $myrow['descriptiontranslation'] . "-"  . $myrow['description'];
+
+				$TextSizeIndonesian = CreateTextSize($myrow['stockid'], "ID");
+				$TextSizeEnglish = CreateTextSize($myrow['stockid'], "EN");
+
+				$Name = $myrow['descriptiontranslation'] . " " .
+						$TextSizeIndonesian . "-"  . 
+						$myrow['description'] . " " . 
+						$TextSizeEnglish;
 				$Price = round($myrow['price']);
 				$PriceDiscount = '';
-				$Description = $myrow['longdescriptiontranslation']. " - " . $myrow['longdescription'];
+				$Description = $myrow['longdescriptiontranslation']. " " . 
+						$TextSizeIndonesian . " - "  . 
+						$myrow['longdescription'] . " " .
+						$TextSizeEnglish;
 				$Weight = $myrow['grossweight'] * 1000; // webERP in KG, AdminCerdas in gr
 				
 				// if we have more than ADMINCERDAS_MINIMUM_STOCK_TO_UPDATE we "cap" it, 

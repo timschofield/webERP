@@ -175,6 +175,46 @@ function RingSize($stockid){
 	return $Size;
 }
 
+function ClassicalSize($stockid){
+	if (strlen($stockid) == 6){
+		$Size = "NO CLASSICAL SIZE";
+	}else if (substr($stockid, -3,3) == "-XS"){
+		$Size = "XS";
+	}else if (substr($stockid, -2,2) == "-S"){
+		$Size = "S";
+	}else if (substr($stockid, -2,2) == "-M"){
+		$Size = "M";
+	}else if (substr($stockid, -2,2) == "-L"){
+		$Size = "L";
+	}else if (substr($stockid, -3,3) == "-XL"){
+		$Size = "XL";
+	}else{
+		$Size = "NO CLASSICAL SIZE";
+	}
+	return $Size;
+}
+
+function CreateTextSize($stockid, $language){
+	$Size = ClassicalSize($stockid);
+	if ($Size == "NO CLASSICAL SIZE"){
+		if (isRing($stockid)){
+			$Size = RingSize($stockid);
+		}
+	} 
+	if ($Size == "NO CLASSICAL SIZE"){
+		$TextSize = "";
+	}else if ($Size == "FR"){
+		$TextSize = "Free Size";
+	}else{
+		if ($language == "ID"){
+			$TextSize = "Ukuran: ". $Size;
+		}else{
+			$TextSize = "Size: ". $Size;
+		}
+	}
+	return $TextSize;
+}
+
 function ItemCodeQOH($Stockid,$CodeDetail){
 	$ErrMsg = 'Error in function ItemCodeQOH()';
 
