@@ -1526,8 +1526,8 @@ function SyncMultipleImages($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tablep
 						</tr>';
 		echo $TableHeader;
 	}
-	$SQLTruncate = "TRUNCATE " . $oc_tableprefix . "product_image";
-	$resultSQLTruncate = DB_query_oc($SQLTruncate);
+//	$SQLTruncate = "TRUNCATE " . $oc_tableprefix . "product_image";
+//	$resultSQLTruncate = DB_query_oc($SQLTruncate);
 	$k = 0; //row colour counter
 	$i= 0;
 	// get all images in part_pics folder (ideally should be OpenCart images folder...)
@@ -1545,25 +1545,27 @@ function SyncMultipleImages($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tablep
 				if ($ProductId > 0){
 					// insert info about multiple images
 					$Image = PATH_OPENCART_IMAGES . $file;
-					$sqlInsert = "INSERT INTO " . $oc_tableprefix . "product_image
-									(product_id,
-									image,
-									sort_order)
-								VALUES
-									('" . $ProductId . "',
-									'" . $Image . "',
-									'" . $multipleimage . "')";
-					$resultInsert = DB_query_oc($sqlInsert,"","",true);
-					if ($ShowMessages){
-						$k = StartEvenOrOddRow($k);
-						printf('<td>%s</td>
-								<td>%s</td>
-								</tr>',
-								$StockId,
-								$Image
-								);
+					if (DataExistsInOpenCart($db_oc, "oc_product_image", "product_id", $ProductId, "image", $Image)== FALSE){
+						$sqlInsert = "INSERT INTO " . $oc_tableprefix . "product_image
+										(product_id,
+										image,
+										sort_order)
+									VALUES
+										('" . $ProductId . "',
+										'" . $Image . "',
+										'" . $multipleimage . "')";
+						$resultInsert = DB_query_oc($sqlInsert,"","",true);
+						if ($ShowMessages){
+							$k = StartEvenOrOddRow($k);
+							printf('<td>%s</td>
+									<td>%s</td>
+									</tr>',
+									$StockId,
+									$Image
+									);
+						}
+						$i++;
 					}
-					$i++;
 				}
 			}
 			$multipleimage++;
