@@ -81,20 +81,20 @@ function submit(&$db, $TypeOfShop) {
 			$objPHPExcel->setActiveSheetIndex(0);
 			$objPHPExcel->getActiveSheet()->setTitle(("AC " . $NameOfShop));
 
-			$objPHPExcel->getActiveSheet()->setCellValue('A1', 'Kode');
-			$objPHPExcel->getActiveSheet()->setCellValue('B1', 'Nama Produk');
-			$objPHPExcel->getActiveSheet()->setCellValue('C1', 'Harga');
-			$objPHPExcel->getActiveSheet()->setCellValue('D1', 'Harga Diskon');
-			$objPHPExcel->getActiveSheet()->setCellValue('E1', 'Deskripsi');
-			$objPHPExcel->getActiveSheet()->setCellValue('F1', 'Berat (gram)');
-			$objPHPExcel->getActiveSheet()->setCellValue('G1', 'Stok');
-			$objPHPExcel->getActiveSheet()->setCellValue('H1', 'URL Foto 1');
-			$objPHPExcel->getActiveSheet()->setCellValue('I1', 'URL Foto 2');
-			$objPHPExcel->getActiveSheet()->setCellValue('J1', 'URL Foto 3');
-			$objPHPExcel->getActiveSheet()->setCellValue('K1', 'Kategori');
+			$objPHPExcel->getActiveSheet()->setCellValue('A5', 'Kode');
+			$objPHPExcel->getActiveSheet()->setCellValue('B5', 'Nama Produk');
+			$objPHPExcel->getActiveSheet()->setCellValue('C5', 'Harga');
+			$objPHPExcel->getActiveSheet()->setCellValue('D5', 'Harga Diskon');
+			$objPHPExcel->getActiveSheet()->setCellValue('E5', 'Deskripsi');
+			$objPHPExcel->getActiveSheet()->setCellValue('F5', 'Berat (gram)');
+			$objPHPExcel->getActiveSheet()->setCellValue('G5', 'Stok');
+			$objPHPExcel->getActiveSheet()->setCellValue('H5', 'URL Foto 1');
+			$objPHPExcel->getActiveSheet()->setCellValue('I5', 'URL Foto 2');
+			$objPHPExcel->getActiveSheet()->setCellValue('J5', 'URL Foto 3');
+			$objPHPExcel->getActiveSheet()->setCellValue('K5', 'Kategori');
 
 			// Add data
-			$StartingRow = 2;
+			$StartingRow = 6;
 			$i = $StartingRow;
 			$objPHPExcel->setActiveSheetIndex(0);
 			$ActiveSheet = $objPHPExcel->getActiveSheet();
@@ -277,6 +277,8 @@ function FindShopeeCategory($StockId, $Name, $Description){
 		}else{
 			$ShopeeCat = SHOPEE_CATEGORY_NECKLACE;
 		}
+	}elseif (isTali($StockId)){
+		$ShopeeCat = SHOPEE_CATEGORY_NECKLACE;
 	}elseif (isBag($StockId)){
 		$ShopeeCat = SHOPEE_CATEGORY_BAG;
 	}elseif (isKeyHolder($StockId)){

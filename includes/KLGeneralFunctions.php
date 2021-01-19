@@ -175,9 +175,30 @@ function RingSize($stockid){
 	return $Size;
 }
 
+function NumberSize($stockid){
+	if (strlen($stockid) == 6){
+		$Size = "NO SIZE";
+	}else if((substr($stockid, -2,1) == "0") 
+		OR (substr($stockid, -2,1) == "1")
+		OR (substr($stockid, -2,1) == "2")
+		OR (substr($stockid, -2,1) == "3")
+		OR (substr($stockid, -2,1) == "4")
+		OR (substr($stockid, -2,1) == "5")
+		OR (substr($stockid, -2,1) == "6")
+		OR (substr($stockid, -2,1) == "7")
+		OR (substr($stockid, -2,1) == "8")
+		OR (substr($stockid, -2,1) == "9")){
+		// number sizes! We need to get the 2 last characters -XX
+		$Size = substr($stockid, strlen($stockid)-2,2);
+	} else{
+		$Size = "NO SIZE";
+	}
+	return $Size;
+}
+
 function ClassicalSize($stockid){
 	if (strlen($stockid) == 6){
-		$Size = "NO CLASSICAL SIZE";
+		$Size = "NO SIZE";
 	}else if (substr($stockid, -3,3) == "-XS"){
 		$Size = "XS";
 	}else if (substr($stockid, -2,2) == "-S"){
@@ -189,19 +210,21 @@ function ClassicalSize($stockid){
 	}else if (substr($stockid, -3,3) == "-XL"){
 		$Size = "XL";
 	}else{
-		$Size = "NO CLASSICAL SIZE";
+		$Size = "NO SIZE";
 	}
 	return $Size;
 }
 
 function CreateTextSize($stockid, $language){
 	$Size = ClassicalSize($stockid);
-	if ($Size == "NO CLASSICAL SIZE"){
+	if ($Size == "NO SIZE"){
 		if (isRing($stockid)){
 			$Size = RingSize($stockid);
-		}
+		}else{
+			$Size = NumberSize($stockid);
+		}		
 	} 
-	if ($Size == "NO CLASSICAL SIZE"){
+	if ($Size == "NO SIZE"){
 		$TextSize = "";
 	}else if ($Size == "FR"){
 		$TextSize = "Free Size";
