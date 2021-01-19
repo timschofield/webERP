@@ -314,7 +314,13 @@ if ($ProcessSection01){
 	}
 	
 	if ($KL_AdministrationTeam){
-		// Bank Mandiri or  BCA has enough funds to be transferred to Danamon
+		// Other banks have enough funds to be transferred to Danamon
+		BalanceAccountControl("111121121PT",        0,   20000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
+		BalanceAccountControl("111121122PT",        0,   20000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
+		BalanceAccountControl("111121125PT",        0,  100000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
 		BalanceAccountControl("111121101PT",  1000000,  100000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111121110PT",  1000000,  100000000, $periodnow, $db);
@@ -349,9 +355,16 @@ if ($ProcessSection01){
 	}
 	if ($KL_SystemAdmin){
 		BalanceListAccountControl("('111121105AD', 
+									'111259010AD', 
+									'111259020AD'	, 
+									'111259050AD'
 									'111203010AD')", "Total Banks PT.ADU", 1000000000, 10000000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 
+		BalanceListAccountControl("('111259010AD', 
+									'111259020AD', 
+									'111259050AD')", "Total PayPal PT.ADU", 0, 50000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
 		BalanceListAccountControl("('111121100PT', 
 									'111121101PT', 
 									'111121105PT', 
