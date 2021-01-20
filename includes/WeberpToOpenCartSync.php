@@ -44,7 +44,7 @@ function WeberpToOpenCartDailySync($ShowMessages, $db, $db_oc, $oc_tableprefix, 
 	$EmailText = SyncMultipleImages($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
 
 	// assign related items
-//	$EmailText = SyncRelatedItems($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
+	$EmailText = SyncRelatedItems($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
 
 	// We are done!
 	SetLastTimeRun('WeberpToOpenCartDaily', $db);
@@ -1621,40 +1621,45 @@ function SyncRelatedItems($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tablepre
 		$k = 0; //row colour counter
 		$i = 0;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 
 			/* FIELD MATCHING */
 			$ProductId = GetOpenCartProductId($myrow['stockid'], $db_oc, $oc_tableprefix);
 			$RelatedId = GetOpenCartProductId($myrow['related'], $db_oc, $oc_tableprefix);
-
-			if (DataExistsInOpenCart($db_oc, $oc_tableprefix . 'product_related', 'product_id', $ProductId, 'related_id', $RelatedId )){
-				$Action = "Update";
-			}else{
-				$Action = "Insert";
-				$sqlInsert = "INSERT INTO " . $oc_tableprefix . "product_related
-								(product_id,
-								related_id)
-							VALUES
-								('" . $ProductId . "',
-								'" . $RelatedId . "'
-								)";
-				$resultInsert = DB_query_oc($sqlInsert,$InsertErrMsg,$DbgMsg,true);
+			if (($ProductId != '') AND ($RelatedId != '')){
+				// if both products still exist in OpenCart
+				if (((isRing($ProductId)) AND (isRing($RelatedId))) == FALSE){
+					// if both are rings most probably is a sizing "related", so we don't sync them
+					$k = StartEvenOrOddRow($k);
+					if (DataExistsInOpenCart($db_oc, $oc_tableprefix . 'product_related', 'product_id', $ProductId, 'related_id', $RelatedId )){
+						$Action = "Update";
+					}else{
+						$Action = "Insert";
+						$sqlInsert = "INSERT INTO " . $oc_tableprefix . "product_related
+										(product_id,
+										related_id)
+									VALUES
+										('" . $ProductId . "',
+										'" . $RelatedId . "'
+										)";
+						$resultInsert = DB_query_oc($sqlInsert,$InsertErrMsg,$DbgMsg,true);
+					}
+					if ($ShowMessages){
+						printf('<td>%s</td>
+								<td>%s</td>
+								<td>%s</td>
+								<td>%s</td>
+								<td>%s</td>
+								</tr>',
+								$myrow['stockid'],
+								$myrow['related'],
+								$ProductId,
+								$RelatedId,
+								$Action
+								);
+					}
+					$i++;
+				}
 			}
-			if ($ShowMessages){
-				printf('<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						</tr>',
-						$myrow['stockid'],
-						$myrow['related'],
-						$ProductId,
-						$RelatedId,
-						$Action
-						);
-			}
-			$i++;
 		}
 		if ($ShowMessages){
 			echo '</table>

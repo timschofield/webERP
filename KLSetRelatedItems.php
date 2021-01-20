@@ -22,9 +22,8 @@ $result = DB_query($SQL);
 // Select items and classify them
 $SQL = "SELECT stockmaster.stockid,
 			stockmaster.categoryid
-		FROM stockmaster, salescatprod
-		WHERE stockmaster.stockid = salescatprod.stockid
-			AND discontinued = 0
+		FROM stockmaster
+		WHERE discontinued = 0
 		ORDER BY stockmaster.stockid";
 $result = DB_query($SQL);
 if (DB_num_rows($result) != 0){
@@ -41,7 +40,7 @@ if (DB_num_rows($result) != 0){
 	$i = 0;
 	while ($myrow = DB_fetch_array($result)) {
 		
-		// Exception for DRAR items
+/*		// Exception for DRAR items
 		if (substr($myrow['stockid'], 0,4) == "DRAR"){
 			$CodePreffix = substr($myrow['stockid'], 0,4);
 		}else{
@@ -68,8 +67,8 @@ if (DB_num_rows($result) != 0){
 							stockid,
 							related)
 						VALUES (
-							'" . $myrow['stockid'] . "',
-							'" . $myrelated['stockid'] . "')";
+							UPPER('" . $myrow['stockid'] . "'),
+							UPPER('" . $myrelated['stockid'] . "'))";
 				$ErrMsg =_('Could not insert the related items because');
 				$resultinsert = DB_query($sqlinsert,$ErrMsg);
 
@@ -85,7 +84,7 @@ if (DB_num_rows($result) != 0){
 						);
 			}
 		}
-		
+*/		
 		if (ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_KAPAL_LAUT)){
 			$SQLExists = "SELECT *
 							FROM relateditems
@@ -98,7 +97,7 @@ if (DB_num_rows($result) != 0){
 							stockid,
 							related)
 						VALUES (
-							'" . $myrow['stockid'] . "',
+							UPPER('" . $myrow['stockid'] . "'),
 							'WKPC01')";
 				$ErrMsg =_('Could not insert the related items because');
 				$resultinsert = DB_query($sqlinsert,$ErrMsg);
