@@ -46,13 +46,10 @@ if ($_GET['Action'] == "New"){
 
 DB_Txn_Begin();
 // detect if it is a PTBB or PTADU items
-if (($_GET['Category'] == "DISC20") OR
-	($_GET['Category'] == "DISC50") OR
+if (($_GET['Category'] == "DISC50") OR
 	($_GET['Category'] == "DISC80")){
 	//it is a PTBB item, so let's apply PTBB discount categories
-	if ($_GET['Discount'] == "20"){
-		$NewCategory = "DISC20";
-	}elseif($_GET['Discount'] == "50"){
+	if($_GET['Discount'] == "50"){
 		$NewCategory = "DISC50";
 	}else{
 		$NewCategory = "DISC80";

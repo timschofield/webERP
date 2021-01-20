@@ -1557,13 +1557,13 @@ function TopSalesNotInEnoughShops($starttopitems, $endtopitems, $maxdays, $minsh
 			FROM salesorderdetails, salesorders, stockmaster
 			WHERE salesorderdetails.orderno = salesorders.orderno ";
 	if ($categories == "DISC20"){
-		$SQL = $SQL . " AND stockmaster.categoryid = 'DISC20'";
+		$SQL = $SQL . " AND stockmaster.categoryid = 'DISC2A'";
 	}		
 	if ($categories == "DISC50"){
-		$SQL = $SQL . " AND stockmaster.categoryid = 'DISC50'";
+		$SQL = $SQL . " AND stockmaster.categoryid = 'DISC5A'";
 	}		
 	if ($categories == "DISC80"){
-		$SQL = $SQL . " AND stockmaster.categoryid = 'DISC80'";
+		$SQL = $SQL . " AND stockmaster.categoryid = 'DISC8A'";
 	}		
 	if ($categories == "TEST"){
 		$SQL = $SQL . " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_TEST . "";

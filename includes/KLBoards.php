@@ -1064,7 +1064,7 @@ function FinishedStockDistributionByShopAndCategory($db){
 						stockmaster as m2
 					WHERE l2.loccode = locations.loccode
 						AND m2.stockid = l2.stockid 
-						AND (m2.categoryid = 'DISC20' OR m2.categoryid = 'DISC2A')
+						AND m2.categoryid = 'DISC2A'
 						AND l2.reorderlevel != 0) AS modelsDISC20,
 				(SELECT COUNT(l2.reorderlevel)
 					FROM locstock AS l2,

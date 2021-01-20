@@ -76,7 +76,7 @@
 
 			$DefaultManualLink = '<li><a rel="external" accesskey="8" href="' .  $RootPath . '../../wiki/index.php'. '">' . _('Intranet KL') . '</a></li>';
 			echo $DefaultManualLink;
-			$DefaultWebLink = '<li><a rel="external" accesskey="9" href="' .   'http://www.kapal-laut.com'. '">' . _('Online Shop') . '</a></li>';
+			$DefaultWebLink = '<li><a rel="external" accesskey="9" href="' .   'https://kapal-laut.com'. '">' . _('Online Shop') . '</a></li>';
 			echo $DefaultWebLink;
 		}
 

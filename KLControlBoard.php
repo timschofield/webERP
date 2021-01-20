@@ -202,8 +202,6 @@ if ($ProcessSection01){
 		OR $KL_PurchasingTeam 
 		OR $KL_ShopSupportLeader){	
 
-		DiscountedItemsWithWrongDiscount("DISC20", "20", $RootPath, $db);
-		$NumberOfTestExecuted++;
 		DiscountedItemsWithWrongDiscount("DISC2A", "20", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		DiscountedItemsWithWrongDiscount("DISC50", "50", $RootPath, $db);
@@ -755,13 +753,7 @@ if ($ProcessSection02){
 //		$NumberOfTestExecuted++;
 
 // COVID REDUCTION OF PANEL
-//		ActiveItemsNoSales( 30, "DISC20", $RootPath, $db);
-//		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
 //		ActiveItemsNoSales( 30, "DISC2A", $RootPath, $db);
-//		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		ItemsInCategoryForMoreThanDays( 90, "DISC20", $RootPath, $db);
 //		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		ItemsInCategoryForMoreThanDays( 90, "DISC2A", $RootPath, $db);
@@ -1313,7 +1305,7 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $RootPath, $db){
 		$TitleCat = "NO MORE PO";
 		$ShopsToSetRL = $ShopsBL;
 	} else if ($Category == 'DISC2A') {
-		$WhereCat = " AND (stockmaster.categoryid = 'DISC20' OR stockmaster.categoryid = 'DISC2A')";
+		$WhereCat = " AND (stockmaster.categoryid = 'DISC2A')";
 		$TypeOfShop = 'SHOPOU';
 		$TitleCat = "DISC20";
 		$ShopsToSetRL = $ShopsOU;
@@ -1808,8 +1800,7 @@ function GoodsJustArrived($kind, $location, $numdays, $RootPath, $db){
 			}elseif ($myrow['categoryid']== 'STABBA'){
 				$TypeOfShop = 'SHOPBL';
 				$ShopsToSetRL = $ShopsBL;
-			}elseif(($myrow['categoryid']== 'DISC20') 
-					OR ($myrow['categoryid']== 'DISC2A') 
+			}elseif(($myrow['categoryid']== 'DISC2A') 
 					OR ($myrow['categoryid']== 'DISC50') 
 					OR ($myrow['categoryid']== 'DISC5A') 
 					OR ($myrow['categoryid']== 'DISC80') 
@@ -5059,7 +5050,7 @@ function StockToPTADU($Kind, $FactorNearStock, $LimitToMove, $RootPath, $db){
 							AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . ") AS qohshops
 				FROM purchorderdetails, stockmaster
 				WHERE purchorderdetails.itemcode = stockmaster.stockid
-					AND stockmaster.categoryid IN ('DISC20','DISC50','DISC80')
+					AND stockmaster.categoryid IN ('DISC50','DISC80')
 					AND purchorderdetails.orderno >= 2808
 					AND purchorderdetails.orderno != 2811
 					AND purchorderdetails.orderno != 2816
@@ -5083,7 +5074,7 @@ function StockToPTADU($Kind, $FactorNearStock, $LimitToMove, $RootPath, $db){
 							AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . ") AS qohshops
 				FROM workorders, woitems, stockmaster
 				WHERE woitems.stockid = stockmaster.stockid
-					AND stockmaster.categoryid IN ('DISC20','DISC50','DISC80')
+					AND stockmaster.categoryid IN ('DISC50','DISC80')
 					AND workorders.wo = woitems.wo
 					AND workorders.closed = 1
 					AND (workorders.wo > 3614 
@@ -5159,9 +5150,7 @@ function StockToPTADU($Kind, $FactorNearStock, $LimitToMove, $RootPath, $db){
 
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['itemcode'] . '">' . $myrow['itemcode'] . '</a>';
 
-			if ($myrow['categoryid'] == "DISC20"){
-				$NewCategory = "DISC2A";
-			}elseif ($myrow['categoryid'] == "DISC50"){
+			if ($myrow['categoryid'] == "DISC50"){
 				$NewCategory = "DISC5A";
 			}elseif ($myrow['categoryid'] == "DISC80"){
 				$NewCategory = "DISC8A";
