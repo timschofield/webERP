@@ -204,11 +204,7 @@ if ($ProcessSection01){
 
 		DiscountedItemsWithWrongDiscount("DISC2A", "20", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		DiscountedItemsWithWrongDiscount("DISC50", "50", $RootPath, $db);
-		$NumberOfTestExecuted++;
 		DiscountedItemsWithWrongDiscount("DISC5A", "50", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		DiscountedItemsWithWrongDiscount("DISC58", "80", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		DiscountedItemsWithWrongDiscount("DISC8A", "80", $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -759,22 +755,12 @@ if ($ProcessSection02){
 //		ItemsInCategoryForMoreThanDays( 90, "DISC2A", $RootPath, $db);
 //		$NumberOfTestExecuted++;
 		
-// COVID REDUCTION OF PANEL
-//		ActiveItemsNoSales( 50, "DISC50", $RootPath, $db);
-//		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
 //		ActiveItemsNoSales( 50, "DISC5A", $RootPath, $db);
-//		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		ItemsInCategoryForMoreThanDays( 120, "DISC50", $RootPath, $db);
 //		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		ItemsInCategoryForMoreThanDays( 120, "DISC5A", $RootPath, $db);
 //		$NumberOfTestExecuted++;
 		
-// COVID REDUCTION OF PANEL
-//		ActiveItemsNoSales( 60, "DISC80", $RootPath, $db);
-//		$NumberOfTestExecuted++;
 // COVID REDUCTION OF PANEL
 //		ActiveItemsNoSales( 60, "DISC8A", $RootPath, $db);
 //		$NumberOfTestExecuted++;
@@ -1040,17 +1026,6 @@ if ($ProcessSection02){
 		PettyCashBalance('User', $db);
 		$NumberOfTestExecuted++;
 	}
-	
-	if ($KL_SystemAdmin){
-		StockToPTADU("PO", 1, 1, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		StockToPTADU("WO", 1, 1, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		StockToPTADU("PO", 99999999, 5, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		StockToPTADU("WO", 99999999, 5, $RootPath, $db);
-		$NumberOfTestExecuted++;
-	}
 
 }
 prnMsg("Performed ". $NumberOfTestExecuted . " control tests",'success');
@@ -1310,12 +1285,12 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $RootPath, $db){
 		$TitleCat = "DISC20";
 		$ShopsToSetRL = $ShopsOU;
 	} else if ($Category == 'DISC5A') {
-		$WhereCat = " AND (stockmaster.categoryid = 'DISC50' OR stockmaster.categoryid = 'DISC5A')";
+		$WhereCat = " AND (stockmaster.categoryid = 'DISC5A')";
 		$TypeOfShop = 'SHOPOU';
 		$TitleCat = "DISC50";
 		$ShopsToSetRL = $ShopsOU;
 	} else if ($Category == 'DISC8A') {
-		$WhereCat = " AND (stockmaster.categoryid = 'DISC80' OR stockmaster.categoryid = 'DISC8A')";
+		$WhereCat = " AND (stockmaster.categoryid = 'DISC8A')";
 		$TypeOfShop = 'SHOPOU';
 		$TitleCat = "DISC80";
 		$ShopsToSetRL = $ShopsOU;
@@ -1801,9 +1776,7 @@ function GoodsJustArrived($kind, $location, $numdays, $RootPath, $db){
 				$TypeOfShop = 'SHOPBL';
 				$ShopsToSetRL = $ShopsBL;
 			}elseif(($myrow['categoryid']== 'DISC2A') 
-					OR ($myrow['categoryid']== 'DISC50') 
 					OR ($myrow['categoryid']== 'DISC5A') 
-					OR ($myrow['categoryid']== 'DISC80') 
 					OR ($myrow['categoryid']== 'DISC8A')){
 				$TypeOfShop = 'SHOPOU';
 				$ShopsToSetRL = $ShopsOU;
@@ -4295,14 +4268,14 @@ function over_or_below_limit($Request, $Sign, $Limit, $RootPath, $db){
 		$SQL = "SELECT COUNT(*)
 				FROM stockmaster,locstock
 				WHERE stockmaster.stockid = locstock.stockid
-					AND stockmaster.categoryid LIKE 'DISC2%'
+					AND stockmaster.categoryid = 'DISC2A'
 					AND locstock.reorderlevel > 0
 					AND locstock.loccode ='TOKAR'";
 	}elseif ($Request =="DISC80 Items in AR"){
 		$SQL = "SELECT COUNT(*)
 				FROM stockmaster,locstock
 				WHERE stockmaster.stockid = locstock.stockid
-					AND stockmaster.categoryid LIKE 'DISC8%'
+					AND stockmaster.categoryid = 'DISC8A'
 					AND locstock.reorderlevel > 0
 					AND locstock.loccode ='TOKAR'";
 	}
@@ -5030,196 +5003,6 @@ function WrongItemsOnWorkOrders($RootPath, $db){
 			echo '</table>
 				</div>';
 		}
-	}
-}
-
-function StockToPTADU($Kind, $FactorNearStock, $LimitToMove, $RootPath, $db){
-	
-	if($Kind == "PO"){
-		$SQL = "SELECT purchorderdetails.itemcode,
-					stockmaster.categoryid,
-					(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS stdcost,
-					SUM(purchorderdetails.quantityrecd) AS qtyreceivedptadu,
-					(SELECT SUM(locstock.quantity)
-						FROM locstock
-						WHERE locstock.stockid = purchorderdetails.itemcode) AS qoh,
-					(SELECT SUM(locstock.quantity)
-						FROM locstock,locations
-						WHERE locstock.stockid = stockmaster.stockid
-							AND locstock.loccode = locations.loccode
-							AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . ") AS qohshops
-				FROM purchorderdetails, stockmaster
-				WHERE purchorderdetails.itemcode = stockmaster.stockid
-					AND stockmaster.categoryid IN ('DISC50','DISC80')
-					AND purchorderdetails.orderno >= 2808
-					AND purchorderdetails.orderno != 2811
-					AND purchorderdetails.orderno != 2816
-					AND purchorderdetails.orderno != 2819
-				GROUP BY purchorderdetails.itemcode
-				HAVING qtyreceivedptadu * " . $FactorNearStock. " >= qoh 
-					AND qtyreceivedptadu > 0
-				ORDER BY purchorderdetails.itemcode";
-	}elseif($Kind == "WO"){
-		$SQL = "SELECT woitems.stockid AS itemcode,
-					stockmaster.categoryid,
-					(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS stdcost,
-					SUM(woitems.qtyrecd) AS qtyreceivedptadu,
-					(SELECT SUM(locstock.quantity)
-						FROM locstock
-						WHERE locstock.stockid = woitems.stockid) AS qoh,
-					(SELECT SUM(locstock.quantity)
-						FROM locstock,locations
-						WHERE locstock.stockid = woitems.stockid
-							AND locstock.loccode = locations.loccode
-							AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . ") AS qohshops
-				FROM workorders, woitems, stockmaster
-				WHERE woitems.stockid = stockmaster.stockid
-					AND stockmaster.categoryid IN ('DISC50','DISC80')
-					AND workorders.wo = woitems.wo
-					AND workorders.closed = 1
-					AND (workorders.wo > 3614 
-						OR workorders.wo = 3576
-						OR workorders.wo = 3577
-						OR workorders.wo = 3578
-						OR workorders.wo = 3579
-						OR workorders.wo = 3580
-						OR workorders.wo = 3581
-						OR workorders.wo = 3582
-						OR workorders.wo = 3583
-						OR workorders.wo = 3584
-						OR workorders.wo = 3591
-						OR workorders.wo = 3592
-						OR workorders.wo = 3594
-						OR workorders.wo = 3599
-						OR workorders.wo = 3600
-						OR workorders.wo = 3601
-						OR workorders.wo = 3606
-						OR workorders.wo = 3613
-						)
-					AND workorders.wo != 3617
-					AND workorders.wo != 3623
-					AND workorders.wo != 3651
-					AND workorders.wo != 3652
-					AND workorders.wo != 3653
-					AND workorders.wo != 3654
-					AND workorders.wo != 3655
-					AND workorders.wo != 3661
-					AND workorders.wo != 3662
-					AND workorders.wo != 3664
-					AND workorders.wo != 3673
-					AND workorders.wo != 3674
-					AND workorders.wo != 3687
-					AND workorders.wo != 3691
-					AND workorders.wo != 3693
-					AND workorders.wo != 3694
-					AND workorders.wo != 3695
-				GROUP BY woitems.stockid
-				HAVING qtyreceivedptadu * " . $FactorNearStock. " >= qoh
-					AND qtyreceivedptadu > 0
-				ORDER BY woitems.stockid";
-	}
-			
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . $Kind . ' items to move to PTADU stock categories with QOH ADU >= ' . $FactorNearStock . ' * QOH Total </strong></p>';
-		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . '#' . '</th>
-							<th class="ascending">' . 'Stock ID' . '</th>
-							<th class="ascending">' . 'Std Cost' . '</th>
-							<th class="ascending">' . 'Category BB' . '</th>
-							<th class="ascending">' . 'Category ADU' . '</th>
-							<th class="ascending">' . 'QOH Total' . '</th>
-							<th class="ascending">' . 'QOH ADU' . '</th>
-							<th class="ascending">' . 'QOH BB' . '</th>
-							<th class="ascending">' . 'Value ADU' . '</th>
-							<th class="ascending">' . 'Value BB' . '</th>
-							<th class="ascending">' . 'Action' . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
-		$i = 1;
-		$TotalPcsADU = 0;
-		$TotalPcsBB = 0;
-		$TotalValueADU = 0;
-		$TotalValueBB = 0;
-		
-		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
-
-			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['itemcode'] . '">' . $myrow['itemcode'] . '</a>';
-
-			if ($myrow['categoryid'] == "DISC50"){
-				$NewCategory = "DISC5A";
-			}elseif ($myrow['categoryid'] == "DISC80"){
-				$NewCategory = "DISC8A";
-			}
-			
-			// if there is some ADU qty at shops (so, stock at shops more than BB stock) OR no BB qty left
-			if (($myrow['qoh']-$myrow['qtyreceivedptadu']) <= $LimitToMove){
-				$Action = '<a href="' . $RootPath . '/KLUpdateStockCategory.php?StockId=' . $myrow['itemcode'] . '&OldCat=' . $myrow['categoryid'] . '&NewCat=' . $NewCategory .'">' . 'Change Category' . '</a>';
-			}else{
-				$Action = '';
-			}
-			$TotalPcsADU += $myrow['qtyreceivedptadu'];
-			$TotalPcsBB += ($myrow['qoh']-$myrow['qtyreceivedptadu']);
-			$TotalValueADU += $myrow['qtyreceivedptadu']*$myrow['stdcost'];
-			$TotalValueBB += ($myrow['qoh']-$myrow['qtyreceivedptadu'])*$myrow['stdcost'];
-		
-			printf('<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					</tr>', 
-					locale_number_format_zero_blank($i,0),
-					$CodeLink,
-					locale_number_format_zero_blank($myrow['stdcost'],0),
-					$myrow['categoryid'],
-					$NewCategory,
-					locale_number_format_zero_blank($myrow['qoh'],0),
-					locale_number_format_zero_blank($myrow['qtyreceivedptadu'],0),
-					locale_number_format_zero_blank($myrow['qoh']-$myrow['qtyreceivedptadu'],0),
-					locale_number_format_zero_blank($myrow['qtyreceivedptadu']*$myrow['stdcost'],0),
-					locale_number_format_zero_blank(($myrow['qoh']-$myrow['qtyreceivedptadu'])*$myrow['stdcost'],0),
-					$Action
-					);
-			$i++;
-		}
-		printf('<td class="number">%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				</tr>', 
-				'',
-				'TOTAL',
-				'',
-				'',
-				'',
-				'',
-				locale_number_format_zero_blank($TotalPcsADU,0),
-				locale_number_format_zero_blank($TotalPcsBB,0),
-				locale_number_format_zero_blank($TotalValueADU,0),
-				locale_number_format_zero_blank($TotalValueBB,0),
-				''
-				);
-		echo '</table>
-			</div>
-			</form>';
 	}
 }
 

@@ -265,11 +265,7 @@ function UpdatePriceItem($StockId, $SalesType, $Currency, $Price, $StartDate, $S
 }
 
 function UpdateDiscountCategory($StockId, $NewCategory, $DiscountCode, $db){
-	if ($NewCategory == "DISC80"){
-		$reason = "KL Move To Outlet";
-	}else if ($NewCategory == "DISC50"){
-		$reason = "KL Move To 50% Discount";
-	}else if ($NewCategory == "DISC8A"){
+	if ($NewCategory == "DISC8A"){
 		$reason = "KL Move To 80% Discount";
 	}else if ($NewCategory == "DISC5A"){
 		$reason = "KL Move To 50% Discount";

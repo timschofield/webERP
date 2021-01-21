@@ -1071,14 +1071,14 @@ function FinishedStockDistributionByShopAndCategory($db){
 						stockmaster as m2
 					WHERE l2.loccode = locations.loccode
 						AND m2.stockid = l2.stockid 
-						AND (m2.categoryid = 'DISC50' OR m2.categoryid = 'DISC5A')
+						AND m2.categoryid = 'DISC5A'
 						AND l2.reorderlevel != 0) AS modelsDISC50,
 				(SELECT COUNT(l2.reorderlevel)
 					FROM locstock AS l2,
 						stockmaster as m2
 					WHERE l2.loccode = locations.loccode
 						AND m2.stockid = l2.stockid 
-						AND (m2.categoryid = 'DISC80' OR m2.categoryid = 'DISC8A')
+						AND m2.categoryid = 'DISC8A'
 						AND l2.reorderlevel != 0) AS modelsDISC80
 			FROM locations
 			WHERE locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . "

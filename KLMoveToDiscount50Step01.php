@@ -51,7 +51,7 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'DiscountCategory';
 		$i++;
 		prnMsg(_('The Discount Type must be 50 (so far, only 50% discount available for Discount Category)'),'error');
-	}elseif (($myrow['categoryid'] == 'DISC50') OR ($myrow['categoryid'] == 'DISC5A')) {
+	}elseif ($myrow['categoryid'] == 'DISC5A') {
 		$InputError = 1;
 		$Errors[$i] = 'AlreadyDiscount50';
 		$i++;
