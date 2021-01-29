@@ -15,21 +15,6 @@ $UpdateDB = TRUE;
 
 $begintime = time_start();
 
-// Delete the current classification
- 
-// Not any more,,, we just add the items not in Online Shop
-/*
-if($UpdateDB){
-	prnMsg("Updating webERP DB...");
-
-	$sql = "TRUNCATE salescatprod";
-	$ErrMsg =_('Could not truncate the salescatprod table because');
-	$result = DB_query($sql,$ErrMsg);
-}else{
-	prnMsg("NOT updating webERP DB. Only for test purposes. Set $UpdateDB = TRUE");
-}
-*/
-
 // Select items and classify them
 $SQL = "SELECT stockmaster.stockid,
 			   stockmaster.description,
@@ -287,29 +272,31 @@ function InsertWebsiteSalesCategory($Stockid, $WebsiteCategory, $Manufacturers_i
 			$ErrMsg =_('Could not delete the previous website category for the item because');
 			$result = DB_query($sql,$ErrMsg);
 		}
-
-		$SQLCheck = "SELECT *
-				FROM salescatprod
-				WHERE salescatprod.stockid = '" . $Stockid . "'
-					AND salescatprod.salescatid = '" . $WebsiteCategory . "'";	
-		$result = DB_query($SQLCheck);
-		if(DB_num_rows($result) == 0){
-			$sql = "INSERT INTO salescatprod (
-						salescatid ,
-						stockid,
-						manufacturers_id,
-						featured,
-						date_created,
-						date_updated)
-					VALUES (
-						'" . $WebsiteCategory . "',
-						'" . $Stockid . "',
-						'" . $Manufacturers_id . "',
-						'" . $Featured . "',
-						NOW(),
-						NOW())";
-			$ErrMsg =_('Could not insert the website category for the item because');
-			$result = DB_query($sql,$ErrMsg);
+		if ($Manufacturers_id != 3){
+			// if it is not belonging to OUTLET, as it is phased out. Outlet items belong to teh same categories as before
+			$SQLCheck = "SELECT *
+					FROM salescatprod
+					WHERE salescatprod.stockid = '" . $Stockid . "'
+						AND salescatprod.salescatid = '" . $WebsiteCategory . "'";	
+			$result = DB_query($SQLCheck);
+			if(DB_num_rows($result) == 0){
+				$sql = "INSERT INTO salescatprod (
+							salescatid ,
+							stockid,
+							manufacturers_id,
+							featured,
+							date_created,
+							date_updated)
+						VALUES (
+							'" . $WebsiteCategory . "',
+							'" . $Stockid . "',
+							'" . $Manufacturers_id . "',
+							'" . $Featured . "',
+							NOW(),
+							NOW())";
+				$ErrMsg =_('Could not insert the website category for the item because');
+				$result = DB_query($sql,$ErrMsg);
+			}			
 		}
 	}
 }
