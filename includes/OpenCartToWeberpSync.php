@@ -1,38 +1,5 @@
 <?php
 
-/******************************************************************************
-This pice of code to be executed once
-
-ALTER TABLE  `oc_dokuonecheckout` 
-	ADD  `date_created` DATETIME NOT NULL ,
-	ADD  `date_updated` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL;
-
-CREATE TRIGGER oc_dokuonecheckout_creation_timestamp BEFORE INSERT ON oc_dokuonecheckout 
-FOR EACH ROW
-SET NEW.date_created = NOW();	
-
-For TESTS
-UPDATE oc_dokuonecheckout SET `date_updated` = NOW(); 
-
-DOKU Payment Channel 
-02 Mandiri ClickPay
-04 DOKU Wallet
-05 ATM Permata VA LITE
-06 BRI e-Pay
-07 ATM Permata VA
-08 Mandiri Multipayment LITE
-09 Mandiri Multipayment
-14 Alfagroup
-15 Credit Card Visa/Master Multi Currency
-16 Credit Card Tokenization
-17 Recurring Payment
-18 KlikPayBCA
-19 CIMB Clicks
-21 Sinarmas VA Full
-22 Sinarmas VA Lite
-23 MOTO
-*******************************************************************************/
-
 function OpenCartToWeberpSync($ShowMessages, $db, $db_oc, $oc_tableprefix, $EmailText=''){
 	$begintime = time_start();
 
@@ -58,11 +25,11 @@ function OpenCartToWeberpSync($ShowMessages, $db, $db_oc, $oc_tableprefix, $Emai
 	// update payment information by PayPal
 	$EmailText = SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
 
+	// update payment information by snap Midtrans 
+	$EmailText = SyncSnapPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
+
 	// update order status from OpenCart to webERP
 	$EmailText = SyncOrderStatus($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
-
-	// update payment information by DOKU
-//	$EmailText = SyncDOKUPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
 
 	// We are done!
 	SetLastTimeRun('OpenCartToWeberp', $db);
@@ -727,197 +694,6 @@ function SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeR
 	return $EmailText;
 }
 
-function SyncDOKUPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText=''){
-
-	if ($EmailText !=''){
-		$EmailText = $EmailText . "Sync OpenCart Order DOKU Payment Information" . "\n" . PrintTimeInformation($db);
-	}
-	
-	$ComissionFlatDOKU = GetWeberpComissionFlatDOKU($db);
-	$ComissionCCDOKU = GetWeberpComissionCCDOKU($db);
-
-	// Now deal with the DOKU payment/s of the order...
-	$SQL = "SELECT 	" . $oc_tableprefix . "dokuonecheckout.trx_id,
-				" . $oc_tableprefix . "order.order_id,
-				" . $oc_tableprefix . "order.currency_code AS ordercurrency,
-				" . $oc_tableprefix . "order.currency_value,
-				" . $oc_tableprefix . "order.customer_id,
-				" . $oc_tableprefix . "order.customer_group_id,
-				" . $oc_tableprefix . "customer.email,
-				" . $oc_tableprefix . "order.total AS ordertotal,
-				" . $oc_tableprefix . "dokuonecheckout.payment_channel,
-				" . $oc_tableprefix . "dokuonecheckout.process_type,
-				" . $oc_tableprefix . "dokuonecheckout.result_msg,
-				" . $oc_tableprefix . "dokuonecheckout.status_code,
-				" . $oc_tableprefix . "dokuonecheckout.approval_code,
-				" . $oc_tableprefix . "dokuonecheckout.amount
-		FROM " . $oc_tableprefix . "dokuonecheckout,
-			 " . $oc_tableprefix . "order,
-			 " . $oc_tableprefix . "customer
-		WHERE " . $oc_tableprefix . "dokuonecheckout.transidmerchant  = " . $oc_tableprefix . "order.order_id
-				AND " . $oc_tableprefix . "order.customer_id  = " . $oc_tableprefix . "customer.customer_id
-				AND ( " . $oc_tableprefix . "dokuonecheckout.date_created >= '" . $LastTimeRun . "'
-					OR " . $oc_tableprefix . "dokuonecheckout.date_updated >= '" . $LastTimeRun . "')
-		ORDER BY " . $oc_tableprefix . "dokuonecheckout.trx_id";
-	$result = DB_query_oc($SQL);
-
-	if (DB_num_rows($result) != 0){
-		if ($ShowMessages){
-			echo '<p class="page_title_text" align="center"><strong>' . _('DOKU Payments from OpenCart') .'</strong></p>';
-			echo '<div>';
-			echo '<table class="selection">';
-			$TableHeader = '<tr>
-								<th>' . _('CustomerID') . '</th>
-								<th>' . _('email') . '</th>
-								<th>' . _('webERP Code') . '</th>
-								<th>' . _('OrderID') . '</th>
-								<th>' . _('webERP #') . '</th>
-								<th>' . _('Order Total') . '</th>
-								<th>' . _('Order Curr') . '</th>
-								<th>' . _('DOKU Total') . '</th>
-								<th>' . _('Shipment') . '</th>
-								<th>' . _('DOKU Curr') . '</th>
-								<th>' . _('DOKU Trx') . '</th>
-								<th>' . _('Trx Total') . '</th>
-								<th>' . _('Channel') . '</th>
-								<th>' . _('Commission') . '</th>
-								<th>' . _('Date') . '</th>
-								<th>' . _('Process') . '</th>
-								<th>' . _('Result') . '</th>
-								<th>' . _('Status code') . '</th>
-								<th>' . _('Approval code') . '</th>
-							</tr>';
-			echo $TableHeader;
-		}
-		$DbgMsg = _('The SQL statement that failed was');
-		$UpdateErrMsg = _('The SQL to update OpenCart DOKU payments in webERP failed');
-		$InsertErrMsg = _('The SQL to insert OpenCart DOKU payments in webERP failed');
-
-		$k = 0; //row colour counter
-		$i = 0;
-		while ($myrow = DB_fetch_array($result)) {
-			if ($ShowMessages){
-				if ($k == 1) {
-					echo '<tr class="EvenTableRows">';
-					$k = 0;
-				} else {
-					echo '<tr class="OddTableRows">';
-					$k = 1;
-				}
-			}
-			/* FIELD MATCHING */
-			$CustomerCode = GetWeberpCustomerIdFromCustomerGroupAndCurrency($myrow['customer_group_id'], $myrow['ordercurrency'], $db);
-			$OrderNo = GetWeberpOrderNo($CustomerCode, $myrow['order_id'], $db);
-			$PaymentSystem = OPENCART_DOKU_PAYMENT_SYSTEM;
-			$CurrencyOrder = $myrow['ordercurrency'];
-			$CurrencyPayment = $myrow['ordercurrency'];
-			$TotalOrder = round($myrow['ordertotal'] * $myrow['currency_value'],0); // from OC default currency to order and payment currency
-			$Rate = GetWeberpCurrencyRate($CurrencyOrder, $db);
-			$AmountPaid = $myrow['amount'];
-			$TransactionID = $myrow['trx_id'];
-			$GLAccount = GetWeberpGLAccountFromCustomerGroupAndCurrency($myrow['customer_group_id'], $CurrencyPayment, $db);
-			$GLCommissionAccount = GetWeberpGLCommissionAccountFromCustomerGroupAndCurrency($myrow['customer_group_id'], $CurrencyPayment, $db);
-			
-			$Commission = $ComissionFlatDOKU; // For each tx there is a flat comission
-			if (($myrow['payment_channel'] == "15") OR ($myrow['payment_channel'] == "16")){
-				// if it is a payment via CC there is a CC commission extra from DOKU to add to the flat commission
-				$Commission += round(($AmountPaid * $ComissionCCDOKU /100),0);
-			}
-			
-			$WebERPDateOrder = date('Y-m-d H:i:s', strtotime( $myrow['created'] . -$TimeDifference . ' hours'));
-			$FreightCost = RoundPriceFromCart(GetTotalFromOrder("shipping", $myrow['order_id'], $db_oc, $oc_tableprefix) * $myrow['currency_value'],$myrow['ordercurrency']);
-
-
-			if (($myrow['ordercurrency'] == 'IDR') AND ($myrow['result_msg'] == 'SUCCESS')) {
-				// order currency is IDR
-				// AND has been paid OK
-				$PaymentOK = true;
-			}else{
-				$PaymentOK = false;
-			}
-
-			if ($PaymentOK){
-				$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']),$db);
-				InsertCustomerReceipt($CustomerCode, $AmountPaid, $FreightCost, $CurrencyPayment, $Rate, $GLAccount, $PaymentSystem, $TransactionID, $OrderNo, $PeriodNo, $db);
-				TransactionCommissionGL($CustomerCode, $GLAccount, $GLCommissionAccount, $Commission, $CurrencyPayment, $Rate, $PaymentSystem, $TransactionID, $PeriodNo, $db);
-				ChangeOrderQuotationFlag($OrderNo, 0, $db); // it has been paid, so we consider it a firm order
-			}
-
-			if ($ShowMessages){
-				printf('<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						</tr>',
-						$myrow['customer_id'],
-						$myrow['email'],
-						$CustomerCode,
-						$myrow['order_id'],
-						$OrderNo,
-						$TotalOrder,
-						$myrow['ordercurrency'],
-						$AmountPaid,
-						$FreightCost,
-						$myrow['ordercurrency'],
-						$TransactionID,
-						$myrow['amount'],
-						$myrow['payment_channel'],
-						$Commission,
-						$WebERPDateOrder,
-						$myrow['process_type'],
-						$myrow['result_msg'],
-						$myrow['status_code'],
-						$myrow['approval_code']
-						);
-			}
-			if ($EmailText !=''){
-				$EmailText = $EmailText . $myrow['customer_id'] .
-									      " = " . $myrow['email'] .
-									      " = " . $CustomerCode .
-									      " = " . $myrow['order_id'] .
-									      " = " . $TotalOrder .
-									      " = " . $myrow['ordercurrency'] .
-									      " = " . $AmountPaid .
-									      " = " . $FreightCost .
-									      " = " . $myrow['payment_channel'] .
-									      " = " . $myrow['process_type'] .
-									      " = " . $myrow['result_msg'] .
-									      " = " . $myrow['status_code'] .
-									      " = " . $myrow['approval_code'] .
-										  " --> " . $Action . "\n";
-			}
-			$i++;
-		}
-		if ($ShowMessages){
-			echo '</table>
-					</div>
-					</form>';
-		}
-	}
-	if ($ShowMessages){
-		prnMsg(locale_number_format($i,0) . ' ' . _('DOKU Payments synchronized from OpenCart to webERP'),'success');
-	}
-	if ($EmailText !=''){
-		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . _('DOKU Payments synchronized from OpenCart to webERP') . "\n\n";
-	}
-	return $EmailText;
-}
-
 function SyncOrderStatus($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText=''){
 
 	if ($EmailText !=''){
@@ -972,33 +748,7 @@ function SyncOrderStatus($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_
 			/* FIELD MATCHING */
 			$CustomerCode = GetWeberpCustomerIdFromCustomerGroupAndCurrency($myrow['customer_group_id'], $myrow['currency_code'], $db);
 			$OrderNo = GetWeberpOrderNo($CustomerCode, $myrow['order_id'], $db);
-
 			$webERPStatusText = "";
-/* webERP change of status, still not activated, so we override the text
-			if ($myrow['order_status_id'] == OPENCART_ORDER_STATUS_PENDING){
-				$WeberpOrderStatus = WEBERP_ORDER_STATUS_QUOTATION;
-				$webERPStatusText = "Quotation";
-			}else if ($myrow['order_status_id'] == OPENCART_ORDER_STATUS_PROCESSING){
-				$WeberpOrderStatus = WEBERP_ORDER_STATUS_ORDER;
-				$webERPStatusText = "Order";
-				// also, we have to account for the payment of the online order here...
-			}else if ($myrow['order_status_id'] == OPENCART_ORDER_STATUS_SHIPPED){
-				$WeberpOrderStatus = WEBERP_ORDER_STATUS_ORDER;
-				$webERPStatusText = "Order";
-			}else if ($myrow['order_status_id'] == OPENCART_ORDER_STATUS_COMPLETE){
-				$WeberpOrderStatus = WEBERP_ORDER_STATUS_ORDER;
-				$webERPStatusText = "Order";
-			}else if ($myrow['order_status_id'] == OPENCART_ORDER_STATUS_CANCELLED){
-				$WeberpOrderStatus = WEBERP_ORDER_STATUS_ORDER;
-				$webERPStatusText = "Order";
-			}else if ($myrow['order_status_id'] == OPENCART_ORDER_STATUS_EXPIRED){
-				$WeberpOrderStatus = WEBERP_ORDER_STATUS_ORDER;
-				$webERPStatusText = "Order";
-			}else{
-				$WeberpOrderStatus = WEBERP_ORDER_STATUS_QUOTATION;
-				$webERPStatusText = "Quotation";
-			}
-*/
 			$OCStatusText = GetOpenCartStatusTextFromCode($myrow['order_status_id'], $db_oc, $oc_tableprefix);
 
 			UpdateOpenCartOrderStatusInWeberp($OrderNo, $myrow['order_status_id']);
@@ -1041,5 +791,104 @@ function SyncOrderStatus($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_
 	}
 	return $EmailText;
 }
+
+function SyncSnapPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText=''){
+
+	if ($EmailText !=''){
+		$EmailText = $EmailText . "Sync Snap (MIDTRANS) OpenCart Order Payments " . "\n" . PrintTimeInformation($db);
+	}
+
+	$SQL = "SELECT " . $oc_tableprefix . "order.order_id,
+				" . $oc_tableprefix . "order.customer_group_id,
+				" . $oc_tableprefix . "order.currency_code,
+				" . $oc_tableprefix . "order.date_modified,
+				" . $oc_tableprefix . "order.total
+			FROM " . $oc_tableprefix . "order
+			WHERE " . $oc_tableprefix . "order.order_status_id = 2
+				AND " . $oc_tableprefix . "order.payment_code = 'snap'
+				AND ( " . $oc_tableprefix . "order.date_added >= '" . $LastTimeRun . "'
+					OR " . $oc_tableprefix . "order.date_modified >= '" . $LastTimeRun . "')
+			ORDER BY " . $oc_tableprefix . "order.order_id ASC";
+	$result = DB_query_oc($SQL);
+
+	if (DB_num_rows($result) != 0){
+		if ($ShowMessages){
+			echo '<p class="page_title_text" align="center"><strong>' . _('Sync Snap (MIDTRANS) OpenCart Order Payments') .'</strong></p>';
+			echo '<div>';
+			echo '<table class="selection">';
+			$TableHeader = '<tr>
+								<th>' . _('OpenCart #') . '</th>
+								<th>' . _('webERP #') . '</th>
+								<th>' . _('Total Paid') . '</th>
+								<th>' . _('Payment Time') . '</th>
+								<th>' . _('Result') . '</th>
+							</tr>';
+			echo $TableHeader;
+		}
+		$DbgMsg = _('The SQL statement that failed was');
+		$UpdateErrMsg = _('The SQL to update Order Status in webERP failed');
+
+		$k = 0; //row colour counter
+		$i = 0;
+		while ($myrow = DB_fetch_array($result)) {
+			if ($ShowMessages){
+				if ($k == 1) {
+					echo '<tr class="EvenTableRows">';
+					$k = 0;
+				} else {
+					echo '<tr class="OddTableRows">';
+					$k = 1;
+				}
+			}
+			/* FIELD MATCHING */
+			$CustomerCode = GetWeberpCustomerIdFromCustomerGroupAndCurrency($myrow['customer_group_id'], $myrow['currency_code'], $db);
+			$OrderNo = GetWeberpOrderNo($CustomerCode, $myrow['order_id'], $db);
+
+			if ($myrow['currency_code'] == 'IDR'){
+				$Result = ProcessPaymentOnlineOrder($OrderNo, 'snap', $CustomerCode, $myrow['total']);
+			}else{
+				$Result = "ERROR";
+			}
+			if ($Result != "ERROR"){
+				$Result = "OK";
+			}
+			if ($ShowMessages){
+				printf('<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						</tr>',
+						$myrow['order_id'],
+						$OrderNo,
+						locale_number_format($myrow['total'],0),
+						$myrow['date_modified'],
+						$Result
+						);
+			}
+			if ($EmailText !=''){
+				$EmailText = $EmailText . $myrow['order_id'] .
+									      " = " . $OrderNo .
+									      " --> " . locale_number_format($myrow['total'],0) .
+									      " = " . $myrow['date_modified'] .
+									      " = " . $Result . "\n";
+			}
+			$i++;
+		}
+		if ($ShowMessages){
+			echo '</table>
+					</div>
+					</form>';
+		}
+	}
+	if ($ShowMessages){
+		prnMsg(locale_number_format($i,0) . ' ' . _('snap (MIDTRANS) Payments synchronized from OpenCart to webERP'),'success');
+	}
+	if ($EmailText !=''){
+		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . _('snap (MIDTRANS) Payments synchronized from OpenCart to webERP') . "\n\n";
+	}
+	return $EmailText;
+}
+
 
 ?>

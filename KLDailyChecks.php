@@ -9,7 +9,7 @@ function KL_DailyChecks($Group, $RootPath, $db, $EmailText= ''){
 	include('includes/KLEmails.php');
 	include('includes/KLGeneralFunctions.php');
 	include('includes/GetPrice.inc');
-	
+	include('includes/SQL_CommonFunctions.inc');
 	include ('includes/OpenCartGeneralFunctions.php');
 	include ('includes/WeberpToOpenCartSync.php');
 	include ('includes/OpenCartToWeberpSync.php');
@@ -65,7 +65,7 @@ function KL_HourlyChecks($RootPath, $db, $EmailText=''){
 	include('includes/KLEmails.php');
 	include('includes/KLGeneralFunctions.php');
 	include('includes/GetPrice.inc');
-	
+	include('includes/SQL_CommonFunctions.inc');
 	include ('includes/OpenCartGeneralFunctions.php');
 	include ('includes/WeberpToOpenCartSync.php');
 	include ('includes/OpenCartToWeberpSync.php');
