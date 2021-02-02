@@ -121,6 +121,12 @@ function submit(&$db, $TypeOfShop) {
 				// if we have more than ADMINCERDAS_MINIMUM_STOCK_TO_UPDATE we "cap" it, 
 				// so we don't spend update credits updating QOH when it is not important for us
 				$QOH = 	min(GetOnlineQOH($myrow['stockid'], $db), ADMINCERDAS_MINIMUM_STOCK_TO_UPDATE);
+				
+				//if less than ADMINCERDAS_MINIMUM_STOCK_TO_SHOW then consider we do not have available for marketplaces
+				// no allow problems of orders not fulfilled and low rankings
+				if ($QOH <= ADMINCERDAS_MINIMUM_STOCK_TO_SHOW){
+					$QOH = 0;
+				}
 
 				$Url_1 = PATH_TO_CATALOG_IMAGES . $myrow['stockid'].'.jpg';
 
