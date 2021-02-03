@@ -128,6 +128,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 				stockmaster.width,
 				stockmaster.height,
 				stockmaster.unitsdimension,
+				stockmaster.klpackaging,
 				stockmaster.categoryid,
 				stockmaster.discountcategory,
 				salescatprod.salescatid,
@@ -412,6 +413,9 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 			$SEOQuery = 'product_id='.$ProductId;
 			$SEOKeyword = CreateSEOKeyword($Model . "-" . $Name);
 			MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, $StoreId, $LanguageId, $db_oc, $oc_tableprefix);
+			
+			// maintain the packaging image
+			MaintainPackagingImage($ProductId, $myrow['klpackaging'], $db_oc, $oc_tableprefix);
 			
 			// if it's a general item, we have to add it too to Blink store.
 			if  (ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_GENERAL) AND

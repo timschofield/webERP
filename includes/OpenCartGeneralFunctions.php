@@ -1288,4 +1288,47 @@ function GetPaymentMethodTextFromCode($PaymentCode){
 	return $PaymentMethodText;
 }
 
+
+function MaintainPackagingImage($ProductId, $KLPackaging, $db_oc, $oc_tableprefix){
+
+	if ($KLPackaging != ""){
+		$KLPackagingImage = OPENCART_PACKAGING_SET_IMAGE_PATH . $KLPackaging . ".jpg";
+
+		// check if already exists the row with the info. If not, insert it! 
+		// search if we already have it
+		$SQL = "SELECT product_image_id
+				FROM oc_product_image
+				WHERE product_id = '" . $ProductId . "'
+					AND sort_order = '" . OPENCART_PACKAGING_SET_IMAGE_SORT_ORDER . "'";
+		$ErrMsg =_('Could not get the packaging image in Opencart because');
+		$result = DB_query_oc($SQL,$ErrMsg);
+		if(DB_num_rows($result) != 0){
+			// if we have it, we update it
+			$myrow = DB_fetch_array($result);
+			$ProductImageId = $myrow['product_image_id'];
+			
+			$DbgMsg = _('The SQL that failed was');
+			$ErrMsg = _('The MaintainPackagingImage function failed');
+			$sqlUpdate = "UPDATE oc_product_image SET
+							image ='" . $KLPackagingImage . "'
+						WHERE product_image_id = '" . $ProductImageId . "'";
+			$resultUpdate = DB_query_oc($sqlUpdate,$ErrMsg,$DbgMsg,true);
+		}else{
+			// otherwise we insert it
+			$DbgMsg = _('The SQL that failed was');
+			$ErrMsg = _('The MaintainPackagingImage function failed');
+			$sqlInsert = "INSERT INTO oc_product_image
+							(product_id,
+							image,
+							sort_order)
+						VALUES
+							('" . $ProductId . "',
+							'" . $KLPackagingImage . "',
+							'" . OPENCART_PACKAGING_SET_IMAGE_SORT_ORDER . "'
+							)";
+			$resultInsert = DB_query_oc($sqlInsert,$ErrMsg,$DbgMsg,true);
+		}
+	}
+}
+
 ?>

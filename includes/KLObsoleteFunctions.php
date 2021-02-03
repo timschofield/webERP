@@ -1,5 +1,22 @@
 <?php
 
+
+define('JEWELLERY_ON_SPECIAL',51);
+define('RINGS_ON_SPECIAL',52);
+define('BRACELETS_ON_SPECIAL',53);
+define('EARRINGS_ON_SPECIAL',54);
+define('PENDANTS_ON_SPECIAL',55);
+define('NECKLACES_ON_SPECIAL',56);
+define('ANKLETS_ON_SPECIAL',60);
+define('TOERINGS_ON_SPECIAL',59);
+define('EARCUFFS_ON_SPECIAL',74);
+define('BROOCHES_ON_SPECIAL',81);
+define('KEYHOLDERS_ON_SPECIAL',85);
+define('JEWELLERY_ROLLS_ON_SPECIAL',91);
+define('FACEMASKS_ON_SPECIAL',92);
+
+
+
 /* This file contains obsolete functions that can be useful someday for some reason */
 
 function AdjustNoSales($location, $maxdays, $maxmanualchanges, $topitems, $TopItemsDays, $ShowMessages, $updateDB, $RootPath, $db){
@@ -1934,6 +1951,58 @@ function SyncDOKUPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun
 		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . _('DOKU Payments synchronized from OpenCart to webERP') . "\n\n";
 	}
 	return $EmailText;
+}
+
+function WebsiteCategoryDiscount($StockId, $Description, $Long, $Category){
+	$WebCat = 0;
+
+	if (ItemInList($Category, LIST_STOCK_CATEGORIES_OUTLET)){
+		$WebCat = JEWELLERY_ON_SPECIAL;	
+	}
+
+	// filter some false positives
+	if (ItemExcludedFromWebsite($StockId, $Category)){
+		$WebCat = ITEM_EXCLUDED_FROM_WEBSITE;
+	}
+
+	// define subcategory
+	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isRing($StockId)){
+		$WebCat = RINGS_ON_SPECIAL;	
+	}
+	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isEarring($StockId)){
+		$WebCat = EARRINGS_ON_SPECIAL;	
+	}
+	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isEarcuff($StockId)){
+		$WebCat = EARCUFFS_ON_SPECIAL;	
+	}
+	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isBracelet($StockId)){
+		$WebCat = BRACELETS_ON_SPECIAL;	
+	}
+	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isNecklace($StockId)){
+		$WebCat = NECKLACES_ON_SPECIAL;	
+	}
+	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isPendant($StockId)){
+		$WebCat = PENDANTS_ON_SPECIAL;	
+	}	
+	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isToeRing($StockId)){
+		$WebCat = TOERINGS_ON_SPECIAL;	
+	}	
+	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isAnklet($StockId)){
+		$WebCat = ANKLETS_ON_SPECIAL;	
+	}	
+	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isBrooche($StockId)){
+		$WebCat = BROOCHES_ON_SPECIAL;	
+	}	
+	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isKeyHolder($StockId)){
+		$WebCat = KEYHOLDERS_ON_SPECIAL;	
+	}	
+	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isFaceMask($StockId)){
+		$WebCat = FACEMASKS_ON_SPECIAL;	
+	}
+	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isJewelleryRoll($StockId)){
+		$WebCat = JEWELLERY_ROLLS_ON_SPECIAL;	
+	}	
+	return $WebCat; 
 }
 
 

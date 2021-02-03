@@ -445,7 +445,8 @@ if (isset($_POST['submit'])) {
 				$sql = $sql . "length='" . filter_number_format($_POST['length']) . "',
 							width='" . filter_number_format($_POST['Width']) . "',
 							height='" . filter_number_format($_POST['Height']) . "',
-							unitsdimension='" . $_POST['UnitsDimension'] . "', ";
+							unitsdimension='" . $_POST['UnitsDimension'] . "',
+							klpackaging='" . $_POST['KLPackaging'] . "', ";
 				// KL RICARD END MODIF AND BEGINNING OF NEXT LINE TO CONTACTENATE THE STRINGS
 				$sql = $sql . "units='" . $_POST['Units'] . "',
 							mbflag='" . $_POST['MBFlag'] . "',
@@ -665,6 +666,7 @@ if (isset($_POST['submit'])) {
 												width,
 												height,
 												unitsdimension,
+												klpackaging,
 												barcode,
 												discountcategory,
 												taxcatid,
@@ -690,6 +692,7 @@ if (isset($_POST['submit'])) {
 								'" . filter_number_format($_POST['Width']) . "',
 								'" . filter_number_format($_POST['Height']) . "',
 								'" . $_POST['UnitsDimension']. "',
+								'" . $_POST['KLPackaging']. "',
 								'" . $_POST['BarCode'] . "',
 								'" . $_POST['DiscountCategory'] . "',
 								'" . $_POST['TaxCat'] . "',
@@ -783,6 +786,7 @@ if (isset($_POST['submit'])) {
 						unset($_POST['Width']);
 						unset($_POST['Height']);
 						unset($_POST['UnitsDimension']);
+						unset($_POST['KLPackaging']);
 // KL RICARD END Added lines for new fields
 						unset($_POST['BarCode']);
 						unset($_POST['ReorderLevel']);
@@ -936,6 +940,7 @@ if (isset($_POST['submit'])) {
 		unset($_POST['Width']);
 		unset($_POST['Height']);
 		unset($_POST['UnitsDimension']);
+		unset($_POST['KLPackaging']);
 // KL RICARD END Added lines for new fields
 		unset($_POST['BarCode']);
 		unset($_POST['ReorderLevel']);
@@ -1005,6 +1010,7 @@ if (!isset($StockID) OR $StockID=='' or isset($_POST['UpdateCategories'])) {
 					width,
 					height,
 					unitsdimension,
+					klpackaging,
 					barcode,
 					discountcategory,
 					taxcatid,
@@ -1035,6 +1041,7 @@ if (!isset($StockID) OR $StockID=='' or isset($_POST['UpdateCategories'])) {
 	$_POST['Width']  = $myrow['width'];
 	$_POST['Height']  = $myrow['height'];
 	$_POST['UnitsDimension']  = $myrow['unitsdimension'];
+	$_POST['KLPackaging']  = $myrow['klpackaging'];
 	$_POST['BarCode']  = $myrow['barcode'];
 	$_POST['DiscountCategory']  = $myrow['discountcategory'];
 	$_POST['TaxCat'] = $myrow['taxcatid'];
@@ -1205,7 +1212,9 @@ if (!isset($_POST['Height']) OR $_POST['Height']==''){
 if (!isset($_POST['UnitsDimension']) OR $_POST['UnitsDimension']==''){
 	$_POST['UnitsDimension']='mm';
 }
-// KL RICARD END
+if (!isset($_POST['KLPackaging']) OR $_POST['KLPackaging']==''){
+	$_POST['KLPackaging']='NO-PACKAGING';
+}// KL RICARD END
 
 if (!isset($_POST['Controlled']) OR $_POST['Controlled']==''){
 	$_POST['Controlled']=0;
@@ -1247,6 +1256,25 @@ echo '<tr>
 		<td>' . _('Net Weight (KGs)') . ':</td><td><input ' . (in_array('NetWeight',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="NetWeight" size="12" maxlength="10" value="' . locale_number_format($_POST['NetWeight'],'Variable') . '" />
 		<i>' .  _('Weight of the item (only) in KG.') . '</i></td>
 	</tr>';
+// KL RICARD PACKAGING
+echo '<tr>
+		<td>' . _('Packaging Set') . ':</td>
+		<td><select ' . (in_array('Description',$Errors) ?  'class="selecterror"' : '' ) .'  name="KLPackaging">';
+
+$sql = "SELECT packagingcode, packagingdescription FROM klpackaging ORDER BY packagingdescription";
+$KLPResult = DB_query($sql);
+
+if (!isset($_POST['KLPackaging'])) {
+	$KLProw['packagingdescription']=_('-');
+}
+while( $KLProw = DB_fetch_array($KLPResult) ) {
+	 if (isset($_POST['KLPackaging']) AND $_POST['KLPackaging']==$KLProw['packagingcode']){
+		echo '<option selected="selected" value="' . $KLProw['packagingcode'] . '">' . $KLProw['packagingdescription'] . '</option>';
+	 } else {
+		echo '<option value="' . $KLProw['packagingcode'] . '">' . $KLProw['packagingdescription']  . '</option>';
+	 }
+}
+
 // KL RICARD DIMENSION FIELDS	
 echo '<tr>
 		<td>' . _('Units of Dimension') . ':</td>

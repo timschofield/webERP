@@ -166,6 +166,9 @@ define('STANDARD_JEWEL_ROLL_WEIGHT', 0.080);
 
 /* shipping dimensions in mm (webERP set up in mm) */
 
+define('BOX_XS_LENGTH',       150); // approx for polishing cloth
+define('BOX_XS_WIDTH',         75); // approx for polishing cloth
+define('BOX_XS_HEIGHT',        10); // approx for polishing cloth
 define('BOX_S_LENGTH',         75);
 define('BOX_S_WIDTH',          75);
 define('BOX_S_HEIGHT',         45);
@@ -213,20 +216,6 @@ define('BAGS',29);
 define('GENERAL_ACCESSORIES',88);
 define('GE_JEWELLERY_ROLLS',89);
 define('GE_FACEMASKS',90);
-define('JEWELLERY_ON_SPECIAL',51);
-define('RINGS_ON_SPECIAL',52);
-define('BRACELETS_ON_SPECIAL',53);
-define('EARRINGS_ON_SPECIAL',54);
-define('PENDANTS_ON_SPECIAL',55);
-define('NECKLACES_ON_SPECIAL',56);
-define('ANKLETS_ON_SPECIAL',60);
-define('TOERINGS_ON_SPECIAL',59);
-define('EARCUFFS_ON_SPECIAL',74);
-define('BROOCHES_ON_SPECIAL',81);
-define('KEYHOLDERS_ON_SPECIAL',85);
-define('JEWELLERY_ROLLS_ON_SPECIAL',91);
-define('FACEMASKS_ON_SPECIAL',92);
-
 
 //********************************************************************************
 //********************************************************************************
@@ -344,6 +333,10 @@ define("PATH_OPENCART_IMAGES", 'catalog/KL/part_pics/');
 define("PATH_OPENCART_BASE", 'https://www.kapal-laut.com');
 define("ROUTE_TO_PRODUCT", 'index.php?route=product/product&');
 define("PATH_TO_CATALOG_IMAGES", 'https://www.kapal-laut.com/image/catalog/KL/part_pics/');
+
+define("OPENCART_PACKAGING_SET_IMAGE_SORT_ORDER", 9999);
+define("OPENCART_PACKAGING_SET_IMAGE_PATH", 'catalog/KL/packaging_sets/');
+
 
 // META DATA
 define("META_STORE_NAME_KL", "Kapal-Laut Jewellery");
