@@ -1213,7 +1213,7 @@ if (!isset($_POST['UnitsDimension']) OR $_POST['UnitsDimension']==''){
 	$_POST['UnitsDimension']='mm';
 }
 if (!isset($_POST['KLPackaging']) OR $_POST['KLPackaging']==''){
-	$_POST['KLPackaging']='NO-PACKAGING';
+	$_POST['KLPackaging']='';
 }// KL RICARD END
 
 if (!isset($_POST['Controlled']) OR $_POST['Controlled']==''){
@@ -1264,9 +1264,10 @@ echo '<tr>
 $sql = "SELECT packagingcode, packagingdescription FROM klpackaging ORDER BY packagingdescription";
 $KLPResult = DB_query($sql);
 
-if (!isset($_POST['KLPackaging'])) {
+if (!isset($_POST['KLPackaging']) OR ($_POST['KLPackaging'] == '')) {
 	$KLProw['packagingdescription']=_('-');
 }
+	echo '<option value="' . '' . '">' . '-'  . '</option>';
 while( $KLProw = DB_fetch_array($KLPResult) ) {
 	 if (isset($_POST['KLPackaging']) AND $_POST['KLPackaging']==$KLProw['packagingcode']){
 		echo '<option selected="selected" value="' . $KLProw['packagingcode'] . '">' . $KLProw['packagingdescription'] . '</option>';

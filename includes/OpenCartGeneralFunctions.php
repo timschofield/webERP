@@ -1291,7 +1291,8 @@ function GetPaymentMethodTextFromCode($PaymentCode){
 
 function MaintainPackagingImage($ProductId, $KLPackaging, $db_oc, $oc_tableprefix){
 
-	if ($KLPackaging != ""){
+	if (($KLPackaging != "") AND ($KLPackaging != "	NO-PACKAGING")){
+		// if the item has assigned a real packaging set...
 		$KLPackagingImage = OPENCART_PACKAGING_SET_IMAGE_PATH . $KLPackaging . ".jpg";
 
 		// check if already exists the row with the info. If not, insert it! 

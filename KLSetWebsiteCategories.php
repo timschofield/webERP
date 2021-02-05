@@ -29,6 +29,7 @@ $SQL = "SELECT stockmaster.stockid,
 								FROM salescatprod
 								WHERE stockmaster.stockid = salescatprod.stockid))
 					OR stockmaster.grossweight = 0
+					OR stockmaster.klpackaging = ''
 					OR stockmaster.volume = 0)
 		ORDER BY stockmaster.stockid";
 $result = DB_query($SQL);
@@ -358,17 +359,17 @@ function UpdatePackaging($Stockid, $Category, $UpdateDB, $db){
 
 	if (isRing($Stockid)){
 		$Packaging = "-S";
-	}elseif (isToeRing($myrow['stockid'])){
+	}elseif (isToeRing($Stockid)){
 		$Packaging = "-S";
 	}elseif (isBead($Stockid)){
 		$Packaging = "-S";
-	}elseif (isBrooche($myrow['stockid'])){
+	}elseif (isBrooche($Stockid)){
 		$Packaging = "-M";
-	}elseif (isEarring($myrow['stockid'])){
+	}elseif (isEarring($Stockid)){
 		$Packaging = "-S";
-	}elseif (isEarcuff($myrow['stockid'])){
+	}elseif (isEarcuff($Stockid)){
 		$Packaging = "-S";
-	}elseif (isBracelet($myrow['stockid'])){
+	}elseif (isBracelet($Stockid)){
 		$Packaging = "-M";
 	}elseif (isAnklet($Stockid)){
 		$Packaging = "-M";
@@ -391,7 +392,7 @@ function UpdatePackaging($Stockid, $Category, $UpdateDB, $db){
 	}else{
 		$Packaging = "";
 	}
-	
+
 	if ($Packaging != ""){
 		if (ItemInList($Category, LIST_STOCK_CATEGORIES_KAPAL_LAUT)){
 			// if belongs to one of the KL categories 
@@ -403,7 +404,6 @@ function UpdatePackaging($Stockid, $Category, $UpdateDB, $db){
 			$Packaging = "";
 		}
 	}
-
 	if (($Packaging != "") AND ($UpdateDB)){
 		$sql = "UPDATE stockmaster 
 				SET klpackaging = '" . $Packaging . "'
