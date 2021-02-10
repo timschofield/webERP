@@ -215,7 +215,7 @@ function ClassicalSize($stockid){
 	return $Size;
 }
 
-function CreateTextSize($stockid, $language){
+function CreateTextSize($stockid, $language, $IncludeTextDescription){
 	$Size = ClassicalSize($stockid);
 	if ($Size == "NO SIZE"){
 		if (isRing($stockid)){
@@ -224,15 +224,23 @@ function CreateTextSize($stockid, $language){
 			$Size = NumberSize($stockid);
 		}		
 	} 
-	if ($Size == "NO SIZE"){
-		$TextSize = "";
-	}else if ($Size == "FR"){
-		$TextSize = "Free Size";
-	}else{
-		if ($language == "ID"){
-			$TextSize = "Ukuran: ". $Size;
+	if ($IncludeTextDescription){
+		if ($Size == "NO SIZE"){
+			$TextSize = "";
+		}else if ($Size == "FR"){
+			$TextSize = "Free Size";
 		}else{
-			$TextSize = "Size: ". $Size;
+			if ($language == "ID"){
+				$TextSize = "Ukuran: ". $Size;
+			}else{
+				$TextSize = "Size: ". $Size;
+			}
+		}
+	}else{
+		if (($Size == "NO SIZE") OR ($Size == "FR")){
+			$TextSize = "";
+		}else{
+			$TextSize = " - Size " . $Size;
 		}
 	}
 	return $TextSize;

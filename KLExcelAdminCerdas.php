@@ -103,13 +103,19 @@ function submit(&$db, $TypeOfShop) {
 				
 				$StockId = $myrow['stockid'];
 
-				$TextSizeIndonesian = CreateTextSize($myrow['stockid'], "ID");
-				$TextSizeEnglish = CreateTextSize($myrow['stockid'], "EN");
+				$TextSizeIndonesian = CreateTextSize($myrow['stockid'], "ID", true);
+				$TextSizeEnglish = CreateTextSize($myrow['stockid'], "EN", true);
+				$TextSizeGrouping = CreateTextSize($myrow['stockid'], "EN", false);
 
-				$Name = $myrow['descriptiontranslation'] . " " .
-						$TextSizeIndonesian . "-"  . 
+/*				$Name = $myrow['descriptiontranslation'] . " " .
+						$TextSizeIndonesian . " | "  . 
 						$myrow['description'] . " " . 
-						$TextSizeEnglish;
+						$TextSizeEnglish . 
+						$TextSizeGrouping;
+*/
+				$Name = $myrow['descriptiontranslation'] . " | "  . 
+						$myrow['description'] . 
+						$TextSizeGrouping;
 				$Price = round($myrow['price']);
 				$PriceDiscount = '';
 				$Description = $myrow['longdescriptiontranslation']. " " . 
