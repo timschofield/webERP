@@ -17,6 +17,21 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 	$EmailAddress = "";
 		
 	switch ($Type) {
+		/* PREPARE ORDER ONLINE TO SHOP SUPPORT */
+		case "PrepareOrderOnline":
+			$EmailSubject = "Prepare Order Online webERP#: ". $Param1 . " OpenCart #: " .$Param2 ;
+			$EmailText = $EmailSubject . "\n\n" . 
+						"Type:       " . $Param10 . "\n\n" . 
+						"Deliver to: " . $Param3 . "\n" . 
+						"Comments:   " . $Param4 . "\n\n" . 
+						"Shipping:   " . $Param5 . "\n\n" .
+						"Products in this order:" . "\n" .
+						$Param6 . 
+						RepeatText(" ",73). "Total:" . $Param7 . " " . $Param11 . "\n" .
+						"Models in this order: " . $Param8 . "\n" .
+						"Pieces in this order: " . $Param9 . "\n\n";
+			$EmailAddress = "kl-onlinesupport@kapal-laut.com";
+			break;
 		/* TRANSFER TO SPECIAL LOCATION */
 		case "ItemTransferredToSpecialLocation":
 			$EmailSubject = "Transfer to Special Location ". $Param4;
@@ -308,7 +323,7 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 	if (strpos($_SERVER['PHP_SELF'],"TEST")){
 		$EmailSubject = "TEST webERP " . $EmailSubject;
 		$EmailText = "TEST webERP " . $EmailText;
-		$EmailAddress = "it@bumibiru.com";
+		$EmailAddress = "webmaster@kapal-laut.com";
 	}
 
 	/* Final formatting bits */
@@ -328,4 +343,13 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 	}
 }
 
+function RepeatText($char, $long){
+	$i = 0;
+	$text = "";
+	while ($i < $long){
+		$text .= $char;
+		$i++;
+	}
+	return $text;
+}
 ?>

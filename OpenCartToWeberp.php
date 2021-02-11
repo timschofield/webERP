@@ -11,6 +11,7 @@ include('includes/SQL_CommonFunctions.inc');
 
 include ('includes/KLGeneralFunctions.php');
 include ('includes/KLDefines.php');
+include ('includes/KLEmails.php');
 include ('includes/OpenCartGeneralFunctions.php');
 include ('includes/OpenCartToWeberpSync.php');
 include ('includes/OpenCartConnectDB.php');

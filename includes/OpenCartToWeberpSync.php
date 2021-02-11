@@ -31,6 +31,9 @@ function OpenCartToWeberpSync($ShowMessages, $db, $db_oc, $oc_tableprefix, $Emai
 	// update order status from OpenCart to webERP
 	$EmailText = SyncOrderStatus($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
 
+	// send emails to team of new orders arrived
+	$EmailText = EmailOrdersReadyToPrepare($ShowMessages, $db, $EmailText);
+
 	// We are done!
 	SetLastTimeRun('OpenCartToWeberp', $db);
 	DB_Txn_Commit();
@@ -888,6 +891,205 @@ function SyncSnapPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun
 		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . _('snap (MIDTRANS) Payments synchronized from OpenCart to webERP') . "\n\n";
 	}
 	return $EmailText;
+}
+
+function EmailOrdersReadyToPrepare($ShowMessages, $db, $EmailText){
+	$SectionTitle = "Send Emails to Shop Support Team for orders just received";
+
+	if ($EmailText !=''){
+		$EmailText = $EmailText . $SectionTitle . "\n" . PrintTimeInformation($db);
+	}
+
+		$SQL = "SELECT salesorders.orderno,	
+					salesorders.customerref,
+					salesorders.klemailpaymentconfirm,
+					salesorders.klemailtrackingconfirm,
+					salesorders.klemailthankyouorder,
+					debtorsmaster.debtorno,
+					salesorders.comments,
+					salesorders.orddate,
+					salesorders.deliverto AS customername,
+					salesorders.deladd1,
+					salesorders.deladd2,
+					salesorders.deladd3,
+					salesorders.deladd4,
+					salesorders.deladd5,
+					salesorders.deladd6,
+					salesorders.orddate,
+					salesorders.freightcost,
+					debtorsmaster.currcode,
+					shippers.shippername,
+					currencies.decimalplaces
+				FROM salesorders 
+					INNER JOIN debtorsmaster 
+						ON salesorders.debtorno = debtorsmaster.debtorno
+					INNER JOIN shippers 
+						ON salesorders.shipvia = shippers.shipper_id
+					INNER JOIN currencies
+						ON debtorsmaster.currcode = currencies.currabrev
+				WHERE debtorsmaster.typeid IN (". CUSTOMER_TYPE_WEBSITE . ")
+					AND salesorders.quotation = 0
+					AND salesorders.klemailpaymentconfirm = '0000-00-00'
+				ORDER BY salesorders.orderno";			
+	$result = DB_query($SQL);
+
+	if (DB_num_rows($result) != 0){
+		if ($ShowMessages){
+			echo '<p class="page_title_text" align="center"><strong>' . $SectionTitle .'</strong></p>';
+			echo '<div>';
+			echo '<table class="selection">';
+			$TableHeader = '<tr>
+								<th>' . _('OpenCart #') . '</th>
+								<th>' . _('webERP #') . '</th>
+								<th>' . _('Customer') . '</th>
+							</tr>';
+			echo $TableHeader;
+		}
+		$DbgMsg = _('The SQL statement that failed was');
+		$UpdateErrMsg = 'The SQL to ' . $SectionTitle . ' failed';
+
+		$k = 0; //row colour counter
+		$i = 0;
+		while ($myrow = DB_fetch_array($result)) {
+			if ($ShowMessages){
+				if ($k == 1) {
+					echo '<tr class="EvenTableRows">';
+					$k = 0;
+				} else {
+					echo '<tr class="OddTableRows">';
+					$k = 1;
+				}
+			}
+			/* FIELD MATCHING */
+			if (substr($myrow['debtorno'],4,2) == "WH"){
+				$TypeCustomer = "WHOLESALE";
+			}else{
+				$TypeCustomer = "RETAIL";
+			}
+			$Address = BuildAddress($myrow['customername'], 
+									$myrow['deladd1'], 
+									$myrow['deladd2'], 
+									$myrow['deladd3'], 
+									$myrow['deladd4'], 
+									$myrow['deladd5'], 
+									$myrow['deladd6'],
+									12);
+
+			$sql = "SELECT salesorderdetails.stkcode,
+					stockmaster.description,
+					stockmaster.grossweight,
+					stockmaster.volume,
+					salesorderdetails.quantity,
+					salesorderdetails.qtyinvoiced,
+					salesorderdetails.unitprice,
+					salesorderdetails.discountpercent,
+					salesorderdetails.narrative,
+					salesorderdetails.poline,
+					salesorderdetails.itemdue
+				FROM salesorderdetails INNER JOIN stockmaster
+					ON salesorderdetails.stkcode=stockmaster.stockid
+				WHERE salesorderdetails.orderno=" . $myrow['orderno'] . "
+				ORDER BY poline";
+			$result2=DB_query($sql, $ErrMsg);
+			$ProductLines = "";
+			$TotalModels = 0;
+			$TotalPieces = 0;
+			$TotalOrder = 0;
+			if (DB_num_rows($result2)>0){
+				while ($myrow2=DB_fetch_array($result2)){
+					$GrossPrice = round($myrow2['unitprice'],$myrow['decimalplaces']);
+					$LineTotal = $GrossPrice * $myrow2['quantity'];
+					$TotalModels += 1;
+					$TotalPieces += $myrow2['quantity'];
+					$TotalOrder += $LineTotal;
+					$ProductLines .= str_pad($myrow2['quantity'],3," ", STR_PAD_LEFT) . " x " .
+									str_pad($myrow2['stkcode'],13, " ", STR_PAD_RIGHT) . 
+									str_pad($myrow2['description'],50, " ", STR_PAD_RIGHT) . 
+									str_pad(locale_number_format($GrossPrice,$myrow['decimalplaces']),11," ", STR_PAD_LEFT) . 
+									str_pad(locale_number_format($LineTotal,$myrow['decimalplaces']),11," ", STR_PAD_LEFT) . 
+									" " . $myrow['currcode'] . "\n";
+				}
+			}
+			
+			KLSendEmail("PrepareOrderOnline",
+						"Silent",
+						$myrow['orderno'],
+						$myrow['customerref'],
+						$Address,
+						$myrow['comments'],
+						$myrow['shippername'],
+						$ProductLines,
+						str_pad(locale_number_format($TotalOrder,$myrow['decimalplaces']),12," ", STR_PAD_LEFT),
+						str_pad($TotalModels,3," ", STR_PAD_LEFT),
+						str_pad($TotalPieces,3," ", STR_PAD_LEFT),
+						$TypeCustomer,
+						$myrow['currcode']
+						);
+
+			// update the sales order, as we start the process
+			$sqlUpdate = "UPDATE salesorders 
+					SET klemailpaymentconfirm = '" . Date('Y-m-d') . "'
+					WHERE orderno =	'" . $myrow['orderno'] . "'";
+			$ErrMsg =_('Could not update the sales order KL email payment confirmation date because');
+			$resultUpdate = DB_query($sqlUpdate,$ErrMsg);
+
+			if ($ShowMessages){
+				printf('<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td>%s</td>
+						</tr>',
+						$myrow['customerref'],
+						$myrow['orderno'],
+						$myrow['customername']
+						);
+			}
+			if ($EmailText !=''){
+				$EmailText = $EmailText . $myrow['customerref'] .
+									      " = " . $myrow['orderno'] .
+									      " = " . $myrow['customername'] . "\n";
+			}
+			$i++;
+		}
+		if ($ShowMessages){
+			echo '</table>
+					</div>
+					</form>';
+		}
+	}
+	if ($ShowMessages){
+		prnMsg(locale_number_format($i,0) . ' ' . $SectionTitle,'success');
+	}
+	if ($EmailText !=''){
+		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . $SectionTitle . "\n\n";
+	}
+	return $EmailText;	
+	
+}
+
+function BuildAddress($Name, $Line1, $Line2, $Line3, $Line4, $Line5, $Line6, $Indent){
+	$Address = "";
+	if ($Name != ""){
+		$Address .= $Name . "\n";
+	}
+	if ($Line1 != ""){
+		$Address .= repeatText(" ", $Indent) .$Line1 . "\n";
+	}
+	if ($Line2 != ""){
+		$Address .= repeatText(" ", $Indent) .$Line2 . "\n";
+	}
+	if ($Line3 != ""){
+		$Address .= repeatText(" ", $Indent) .$Line3 . "\n";
+	}
+	if ($Line4 != ""){
+		$Address .= repeatText(" ", $Indent) .$Line4 . "\n";
+	}
+	if ($Line5 != ""){
+		$Address .= repeatText(" ", $Indent) .$Line5 . "\n";
+	}
+	if ($Line6 != ""){
+		$Address .= repeatText(" ", $Indent) .$Line6 . "\n";
+	}
+	return $Address;
 }
 
 

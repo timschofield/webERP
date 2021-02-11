@@ -298,7 +298,7 @@ if ($_GET['EmailType']=='RemindBankTransfer'){
 }
 
 if ($_GET['EmailType']=='PaymentConfirmation'){
-	if($_SESSION['ShopMode']!='test'){
+/*	if($_SESSION['ShopMode']!='test'){
 		// send a confirmation to team, so they prepare a new order ASAP, if it is NOT a test
 		$MailTo = "kl-onlinesupport@kapal-laut.com";
 		$MailSubject = "New order online. Process ASAP.";
@@ -312,7 +312,7 @@ if ($_GET['EmailType']=='PaymentConfirmation'){
 			$result = SendmailBySmtp($mail,array($MailTo));
 		}
 	}
-	// update the sales order, as we send the payment confirmation
+*/	// update the sales order, as we send the payment confirmation
 	$sql = "UPDATE salesorders 
 			SET klemailpaymentconfirm = '" . Date('Y-m-d') . "'
 			WHERE orderno =	'" . $_GET['TransNo'] . "'";
