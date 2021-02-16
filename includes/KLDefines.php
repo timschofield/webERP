@@ -331,7 +331,8 @@ define("ABSOLUTE_PATH_WEBERP_TEST", '/var/www/vhosts/kapal-laut.com/ptadu.com/TE
 define("PATH_OPENCART_IMAGES", 'catalog/KL/part_pics/');
 define("PATH_OPENCART_BASE", 'https://www.kapal-laut.com');
 define("ROUTE_TO_PRODUCT", 'index.php?route=product/product&');
-define("PATH_TO_CATALOG_IMAGES", 'https://www.kapal-laut.com/image/catalog/KL/part_pics/');
+define("PATH_TO_CATALOG_IMAGES", 'https://kapal-laut.com/image/catalog/KL/part_pics/');
+define("PATH_TO_CATALOG_PACKAGING_IMAGES", 'https://kapal-laut.com/image/catalog/KL/packaging_sets/');
 
 define("OPENCART_PACKAGING_SET_IMAGE_SORT_ORDER", 9999);
 define("OPENCART_PACKAGING_SET_IMAGE_PATH", 'catalog/KL/packaging_sets/');
