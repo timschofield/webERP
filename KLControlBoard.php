@@ -537,11 +537,15 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("TESTBA", "TOKBB", $NumberOfOpenShopsBL, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("TESTBA", "TOKSB", $NumberOfOpenShopsBL, $RootPath, $db);
+		$NumberOfTestExecuted++;
 
 		// Items STABLE BL in ALL shops BL
 		CategoryItemsNotInShop("STABBA", "TOKPS", $NumberOfOpenShopsBL*2, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("STABBA", "TOKMU", $NumberOfOpenShopsBL*2, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABBA", "TOKSB", $NumberOfOpenShopsBL*2, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("STABBA", "TOKBB", $NumberOfOpenShopsBL*2, $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -550,6 +554,8 @@ if ($ProcessSection01){
 		CategoryItemsNotInShop("NOPOBA", "TOKPS", $NumberOfOpenShopsBL, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("NOPOBA", "TOKBB", $NumberOfOpenShopsBL, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("NOPOBA", "TOKSB", $NumberOfOpenShopsBL, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 		// Items OUTLET in ALL shops OU
