@@ -915,7 +915,8 @@ function EmailOrdersReadyToPrepare($ShowMessages, $db, $EmailText){
 					salesorders.deladd4,
 					salesorders.deladd5,
 					salesorders.deladd6,
-					salesorders.orddate,
+					salesorders.contactphone,
+					salesorders.contactemail,
 					salesorders.freightcost,
 					debtorsmaster.currcode,
 					shippers.shippername,
@@ -1023,7 +1024,9 @@ function EmailOrdersReadyToPrepare($ShowMessages, $db, $EmailText){
 						str_pad($TotalModels,3," ", STR_PAD_LEFT),
 						str_pad($TotalPieces,3," ", STR_PAD_LEFT),
 						$TypeCustomer,
-						$myrow['currcode']
+						$myrow['currcode'],
+						$myrow['contactphone'],
+						$myrow['contactemail']
 						);
 
 			// update the sales order, as we start the process

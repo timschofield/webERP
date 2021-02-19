@@ -23,6 +23,8 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 			$EmailText = $EmailSubject . "\n\n" . 
 						"Type:       " . $Param10 . "\n\n" . 
 						"Deliver to: " . $Param3 . "\n" . 
+						"Email:      " . $Param13 . "\n" . 
+						"Phone:      " . $Param12 . "\n\n" . 
 						"Comments:   " . $Param4 . "\n\n" . 
 						"Shipping:   " . $Param5 . "\n\n" .
 						"Products in this order:" . "\n" .
