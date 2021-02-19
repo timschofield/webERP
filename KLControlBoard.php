@@ -510,52 +510,64 @@ if ($ProcessSection01){
 		ItemsWithStockKantorButReorderLevelTokoZero($RootPath, $db);
 		$NumberOfTestExecuted++;
 
-		// Items TEST KL in Big shops KL
+		// Items TEST KL in ALL shops KL
 		CategoryItemsNotInShop("TESTKA", "TOKPU", $NumberOfOpenShopsKL, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("TESTKA", "TOKSA", $NumberOfOpenShopsKL, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("TESTKA", "TOKSE", $NumberOfOpenShopsKL, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("TESTKA", "TOKB2", $NumberOfOpenShopsKL, $RootPath, $db);
+		$NumberOfTestExecuted++;
 
 		// Items STABLE KL in ALL shops KL
-		CategoryItemsNotInShop("STABKA", "TOKPU", $NumberOfOpenShopsKL*2, $RootPath, $db);
+		CategoryItemsNotInShop("STABKA", "TOKPU", $NumberOfOpenShopsKL, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("STABKA", "TOKSA", $NumberOfOpenShopsKL*2, $RootPath, $db);
+		CategoryItemsNotInShop("STABKA", "TOKSA", $NumberOfOpenShopsKL, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("STABKA", "TOKSE", $NumberOfOpenShopsKL*2, $RootPath, $db);
+		CategoryItemsNotInShop("STABKA", "TOKSE", $NumberOfOpenShopsKL, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("STABKA", "TOKB2", $NumberOfOpenShopsKL*2, $RootPath, $db);
+		CategoryItemsNotInShop("STABKA", "TOKB2", $NumberOfOpenShopsKL, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-		// Items NO PO KL in Big shops KL
+		// Items NO PO KL in ALL shops KL
 		CategoryItemsNotInShop("NOPOKA", "TOKPU", $NumberOfOpenShopsKL, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("NOPOKA", "TOKSA", $NumberOfOpenShopsKL, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("NOPOKA", "TOKSE", $NumberOfOpenShopsKL, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("NOPOKA", "TOKB2", $NumberOfOpenShopsKL, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		
-		// Items TEST BL in Big shops BL
+		// Items TEST BL in ALL shops BL
 		CategoryItemsNotInShop("TESTBA", "TOKPS", $NumberOfOpenShopsBL, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("TESTBA", "TOKBB", $NumberOfOpenShopsBL, $RootPath, $db);
+		CategoryItemsNotInShop("TESTBA", "TOKMU", $NumberOfOpenShopsBL, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("TESTBA", "TOKSB", $NumberOfOpenShopsBL, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("TESTBA", "TOKBB", $NumberOfOpenShopsBL, $RootPath, $db);
+		$NumberOfTestExecuted++;
 
 		// Items STABLE BL in ALL shops BL
-		CategoryItemsNotInShop("STABBA", "TOKPS", $NumberOfOpenShopsBL*2, $RootPath, $db);
+		CategoryItemsNotInShop("STABBA", "TOKPS", $NumberOfOpenShopsBL, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("STABBA", "TOKMU", $NumberOfOpenShopsBL*2, $RootPath, $db);
+		CategoryItemsNotInShop("STABBA", "TOKMU", $NumberOfOpenShopsBL, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("STABBA", "TOKSB", $NumberOfOpenShopsBL*2, $RootPath, $db);
+		CategoryItemsNotInShop("STABBA", "TOKSB", $NumberOfOpenShopsBL, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("STABBA", "TOKBB", $NumberOfOpenShopsBL*2, $RootPath, $db);
+		CategoryItemsNotInShop("STABBA", "TOKBB", $NumberOfOpenShopsBL, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-		// Items NO PO BL in Big shops BL
+		// Items NO PO BL in ALL shops BL
 		CategoryItemsNotInShop("NOPOBA", "TOKPS", $NumberOfOpenShopsBL, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("NOPOBA", "TOKBB", $NumberOfOpenShopsBL, $RootPath, $db);
+		CategoryItemsNotInShop("NOPOBA", "TOKMU", $NumberOfOpenShopsBL, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("NOPOBA", "TOKSB", $NumberOfOpenShopsBL, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("NOPOBA", "TOKBB", $NumberOfOpenShopsBL, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 		// Items OUTLET in ALL shops OU
@@ -1237,6 +1249,8 @@ function BalanceListAccountControl($accountlist, $description, $min, $max, $peri
 }
 
 function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $RootPath, $db){
+	
+	$MinQOH = $MinQOH + 1; // as we keep 1 for online shop allways in knator
 	
 	$Message = $Category . _(' items NOT in ') . $Shop . ' with QOH >= ' . $MinQOH .' (excluding Change of Price, Move to Discount, Service, Shop online and Return to Supplier)';
 
