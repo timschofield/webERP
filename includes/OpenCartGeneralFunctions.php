@@ -1087,7 +1087,8 @@ function UpdateOpenCartOrderStatus($OrderId, $StatusId, $Notify, $Comment, $db_o
 	$DbgMsg = _('The SQL statement that failed was');
 	$UpdateErrMsg = _('The SQL to Update OpenCart Order Status failed');
 	$sqlUpdate = "UPDATE " . $oc_tableprefix . "order
-					SET	order_status_id = '" . $StatusId . "'
+					SET	order_status_id = '" . $StatusId . "',
+						date_modified = '" . $ServerNow . "'
 				WHERE order_id = '" . $OrderId . "'";
 	$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
 
