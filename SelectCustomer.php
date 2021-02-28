@@ -522,7 +522,7 @@ if(isset($_SESSION['CustomerID']) AND $_SESSION['CustomerID'] != '') {
 				$address = urlencode($myrow2["braddress1"] . "," . $myrow2["braddress2"] . "," . $myrow2["braddress3"] . "," . $myrow2["braddress4"]);
 				$id = $myrow2["branchcode"];
 				$debtorno =$myrow2["debtorno"];
-				$request_url = $base_url . $address . ',&sensor=true';
+				$request_url = $base_url . $address . '&key=' . $API_key . '&sensor=true';
 
 				$buffer = file_get_contents($request_url)/* or die("url not loading")*/;
 				$xml = simplexml_load_string($buffer);
