@@ -117,14 +117,14 @@ function submit(&$db, $TypeOfShop) {
 					$NamaVariant = "";
 				}
 
-				$Name = $myrow['descriptiontranslation'] . " | "  . 
-						$myrow['description'] . 
+				$Name = trim($myrow['descriptiontranslation']) . " -"  . 
+						trim($myrow['description']) . 
 						$TextSizeGrouping;
 				$Price = round($myrow['price']);
 				$PriceDiscount = '';
-				$Description = $myrow['longdescriptiontranslation']. " " . 
+				$Description = trim($myrow['longdescriptiontranslation']). " " . 
 						$TextSizeIndonesian . " - "  . 
-						$myrow['longdescription'] . " " .
+						trim($myrow['longdescription']) . " " .
 						$TextSizeEnglish;
 				$Weight = $myrow['grossweight'] * 1000; // webERP in KG, AdminCerdas in gr
 				
