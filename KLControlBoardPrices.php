@@ -490,39 +490,41 @@ function PriceBelowStandard($Stockcat, $Factor, $Tolerance, $MinQoh, $RootPath, 
 		$k = 0; //row colour counter
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
-			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 			$NewPrice = $myrow['standardcost'] * $Factor;
 			$RecommendedPrice = correction_for_low_end_prices(round_price($NewPrice, "UP"));
-			$Increase = locale_number_format(($RecommendedPrice-$myrow['retailprice'])/$myrow['retailprice']*100,1).'%';
-			$PositionTopSales = PositionTopSalesItem($myrow['stockid'], 60, $db);
-			$NewPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $RecommendedPrice .  '">' . locale_number_format($RecommendedPrice,0) . '</a>';
-			$IncomeIncrease = $myrow['qoh'] * ($RecommendedPrice-$myrow['retailprice']);
-			printf('<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					$i, 
-					$CodeLink, 
-					$myrow['description'], 
-					locale_number_format($PositionTopSales,0),
-					locale_number_format($myrow['qoh'],0),
-					locale_number_format($myrow['standardcost'],0),
-					locale_number_format($myrow['retailprice'],0),
-					locale_number_format($NewPrice,0),
-					$NewPriceLink,
-					$Increase,
-					locale_number_format($IncomeIncrease,0)
-					);
-			$i++;
+			if ($myrow['retailprice'] != $RecommendedPrice){
+				$k = StartEvenOrOddRow($k);
+				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+				$Increase = locale_number_format(($RecommendedPrice-$myrow['retailprice'])/$myrow['retailprice']*100,1).'%';
+				$PositionTopSales = PositionTopSalesItem($myrow['stockid'], 60, $db);
+				$NewPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $RecommendedPrice .  '">' . locale_number_format($RecommendedPrice,0) . '</a>';
+				$IncomeIncrease = $myrow['qoh'] * ($RecommendedPrice-$myrow['retailprice']);
+				printf('<td class="number">%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						</tr>', 
+						$i, 
+						$CodeLink, 
+						$myrow['description'], 
+						locale_number_format($PositionTopSales,0),
+						locale_number_format($myrow['qoh'],0),
+						locale_number_format($myrow['standardcost'],0),
+						locale_number_format($myrow['retailprice'],0),
+						locale_number_format($NewPrice,0),
+						$NewPriceLink,
+						$Increase,
+						locale_number_format($IncomeIncrease,0)
+						);
+				$i++;
+			}
 		}
 		echo '</table>
 				</div>';
