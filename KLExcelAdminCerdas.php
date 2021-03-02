@@ -11,13 +11,13 @@ include('includes/GetPrice.inc');
 
 
 if (isset($_POST['submit'])) {
-    submit($db, $_POST['TypeOfShop']);
+    submit($db, $_POST['TypeOfShop'], $_POST['TypeOfFile']);
 } else {
     display($db);
 }
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit(&$db, $TypeOfShop) {
+function submit(&$db, $TypeOfShop, $TypeOfFile) {
 
 	//initialise no input errors
 	$InputError = 0;
@@ -81,21 +81,32 @@ function submit(&$db, $TypeOfShop) {
 			// Add title data
 			$objPHPExcel->setActiveSheetIndex(0);
 			$objPHPExcel->getActiveSheet()->setTitle(("AC " . $NameOfShop));
-
-			$objPHPExcel->getActiveSheet()->setCellValue('A5', 'Kode');
-			$objPHPExcel->getActiveSheet()->setCellValue('B5', 'Nama Produk');
-			$objPHPExcel->getActiveSheet()->setCellValue('C5', 'Harga');
-			$objPHPExcel->getActiveSheet()->setCellValue('D5', 'Harga Diskon');
-			$objPHPExcel->getActiveSheet()->setCellValue('E5', 'Deskripsi');
-			$objPHPExcel->getActiveSheet()->setCellValue('F5', 'Berat (gram)');
-			$objPHPExcel->getActiveSheet()->setCellValue('G5', 'Stok');
-			$objPHPExcel->getActiveSheet()->setCellValue('H5', 'URL Foto 1');
-			$objPHPExcel->getActiveSheet()->setCellValue('I5', 'URL Foto 2');
-			$objPHPExcel->getActiveSheet()->setCellValue('J5', 'URL Foto 3');
-			$objPHPExcel->getActiveSheet()->setCellValue('K5', 'Kategori');
-			$objPHPExcel->getActiveSheet()->setCellValue('L5', 'URL Foto 4');
-			$objPHPExcel->getActiveSheet()->setCellValue('M5', 'URL Foto 5');
-			$objPHPExcel->getActiveSheet()->setCellValue('N5', 'Nama Variasi');
+			
+			if ($TypeOfFile == "FullUpdate"){
+				$objPHPExcel->getActiveSheet()->setCellValue('A5', 'Kode');
+				$objPHPExcel->getActiveSheet()->setCellValue('B5', 'Nama Produk');
+				$objPHPExcel->getActiveSheet()->setCellValue('C5', 'Harga');
+				$objPHPExcel->getActiveSheet()->setCellValue('D5', 'Harga Diskon');
+				$objPHPExcel->getActiveSheet()->setCellValue('E5', 'Deskripsi');
+				$objPHPExcel->getActiveSheet()->setCellValue('F5', 'Berat (gram)');
+				$objPHPExcel->getActiveSheet()->setCellValue('G5', 'Stok');
+				$objPHPExcel->getActiveSheet()->setCellValue('H5', 'URL Foto 1');
+				$objPHPExcel->getActiveSheet()->setCellValue('I5', 'URL Foto 2');
+				$objPHPExcel->getActiveSheet()->setCellValue('J5', 'URL Foto 3');
+				$objPHPExcel->getActiveSheet()->setCellValue('K5', 'Kategori');
+				$objPHPExcel->getActiveSheet()->setCellValue('L5', 'URL Foto 4');
+				$objPHPExcel->getActiveSheet()->setCellValue('M5', 'URL Foto 5');
+				$objPHPExcel->getActiveSheet()->setCellValue('N5', 'Nama Variasi');
+			}elseif ($TypeOfFile == "QOHOnly"){
+				$objPHPExcel->getActiveSheet()->setCellValue('A5', 'Kode');
+				$objPHPExcel->getActiveSheet()->setCellValue('B5', 'Nama Produk');
+				$objPHPExcel->getActiveSheet()->setCellValue('C5', 'Stok');
+			}elseif ($TypeOfFile == "PricesOnly"){
+				$objPHPExcel->getActiveSheet()->setCellValue('A5', 'Kode');
+				$objPHPExcel->getActiveSheet()->setCellValue('B5', 'Nama Produk');
+				$objPHPExcel->getActiveSheet()->setCellValue('C5', 'Harga');
+				$objPHPExcel->getActiveSheet()->setCellValue('D5', 'Harga Diskon');
+			}
 
 			// Add data
 			$StartingRow = 6;
@@ -187,21 +198,32 @@ function submit(&$db, $TypeOfShop) {
 				}
 
 				$Category = FindShopeeCategory($StockId, $Name, $Description);
- 
-				$ActiveSheet->setCellValue('A'.$i, $StockId);
-				$ActiveSheet->setCellValue('B'.$i, $Name);
-				$ActiveSheet->setCellValue('C'.$i, $Price);
-				$ActiveSheet->setCellValue('D'.$i, $PriceDiscount);
-				$ActiveSheet->setCellValue('E'.$i, $Description);
-				$ActiveSheet->setCellValue('F'.$i, $Weight);
-				$ActiveSheet->setCellValue('G'.$i, $QOH);
-				$ActiveSheet->setCellValue('H'.$i, $Url_1);
-				$ActiveSheet->setCellValue('I'.$i, $Url_2);
-				$ActiveSheet->setCellValue('J'.$i, $Url_3);
-				$ActiveSheet->setCellValue('K'.$i, $Category);
-				$ActiveSheet->setCellValue('L'.$i, $Url_4);
-				$ActiveSheet->setCellValue('M'.$i, $Url_5);
-				$ActiveSheet->setCellValue('N'.$i, $NamaVariant);
+
+				if ($TypeOfFile == "FullUpdate"){
+					$ActiveSheet->setCellValue('A'.$i, $StockId);
+					$ActiveSheet->setCellValue('B'.$i, $Name);
+					$ActiveSheet->setCellValue('C'.$i, $Price);
+					$ActiveSheet->setCellValue('D'.$i, $PriceDiscount);
+					$ActiveSheet->setCellValue('E'.$i, $Description);
+					$ActiveSheet->setCellValue('F'.$i, $Weight);
+					$ActiveSheet->setCellValue('G'.$i, $QOH);
+					$ActiveSheet->setCellValue('H'.$i, $Url_1);
+					$ActiveSheet->setCellValue('I'.$i, $Url_2);
+					$ActiveSheet->setCellValue('J'.$i, $Url_3);
+					$ActiveSheet->setCellValue('K'.$i, $Category);
+					$ActiveSheet->setCellValue('L'.$i, $Url_4);
+					$ActiveSheet->setCellValue('M'.$i, $Url_5);
+					$ActiveSheet->setCellValue('N'.$i, $NamaVariant);
+				}elseif ($TypeOfFile == "QOHOnly"){
+					$ActiveSheet->setCellValue('A'.$i, $StockId);
+					$ActiveSheet->setCellValue('B'.$i, $Name);
+					$ActiveSheet->setCellValue('C'.$i, $QOH);
+				}elseif ($TypeOfFile == "PricesOnly"){
+					$ActiveSheet->setCellValue('A'.$i, $StockId);
+					$ActiveSheet->setCellValue('B'.$i, $Name);
+					$ActiveSheet->setCellValue('C'.$i, $Price);
+					$ActiveSheet->setCellValue('D'.$i, $PriceDiscount);
+				}
 
 				$i++;
 			}
@@ -216,7 +238,13 @@ function submit(&$db, $TypeOfShop) {
 
 			// Redirect output to a client’s web browser (Excel2007)
 			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-			$File ='AC-' .  $NameOfShop . '-' . Date('Y-m-d-H-i-s'). '.xlsx';
+			if ($TypeOfFile == "FullUpdate"){
+				$File ='AC-FULL-' .  $NameOfShop . '-' . Date('Y-m-d-H-i-s'). '.xlsx';
+			}elseif ($TypeOfFile == "QOHOnly"){
+				$File ='AC-QOH-' .  $NameOfShop . '-' . Date('Y-m-d-H-i-s'). '.xlsx';
+			}elseif ($TypeOfFile == "PricesOnly"){
+				$File ='AC-PRICE-' .  $NameOfShop . '-' . Date('Y-m-d-H-i-s'). '.xlsx';
+			}
 			header('Content-Disposition: attachment;filename="' . $File . '"');
 			header('Cache-Control: max-age=0');
 			// If you're serving to IE 9, then the following may be needed
@@ -269,6 +297,15 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	while ($myrow=DB_fetch_array($LocResult)){
 		 echo '<option value="' . $myrow['manufacturers_id'] . '">' . $myrow['manufacturers_name'] . '</option>';
 	}
+
+	echo '<tr>
+			<td>' . _('Type of ACI File') . ':</td>
+			<td><select name="TypeOfFile">
+				<option selected="selected" value="FullUpdate">' . _('Full Update') . '</option>
+				<option value="QOHOnly">' . _('QOH-Stock available Only') . '</option>
+				<option value="PricesOnly">' . _('Prices Only') . '</option>
+			</select></td>
+		</tr>';
 
 	echo '</table>
 		<table>';
