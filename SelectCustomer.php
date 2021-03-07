@@ -615,8 +615,7 @@ function initMap() {
 	});
 }
 </script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=', $API_key, '&callback=initMap"></script>';
-/*		echo '<script src="https://' . $map_host . '/maps/api/js?v=3.exp&key=' . $API_key . '" type="text/javascript"></script>';*/
+<script src="https://', $map_host , '/maps/api/js?key=', $API_key, '&callback=initMap"></script>';
 		}
 
 	}// end if Geocode integration is turned on

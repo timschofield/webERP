@@ -37,7 +37,7 @@ $result2 = DB_query($sql, $ErrMsg);
 
 // Initialize delay in geocode speed
 $delay = 0;
-$base_url = "http://" . MAPS_HOST . "/maps/api/geocode/xml?address=";
+$base_url = "https://" . MAPS_HOST . "/maps/api/geocode/xml?address=";
 
 // Iterate through the customer branch rows, geocoding each address
 

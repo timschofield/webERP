@@ -31,7 +31,7 @@ $Map_Host = $myrow['map_host'];
 </style>
 
 <?php
-echo '<script src="http://' . $Map_Host . '/maps/api/js?key=' . $Api_Key . '&sensor=false"';
+echo '<script src="https://' . $Map_Host . '/maps/api/js?key=' . $Api_Key . '&sensor=false"';
 echo ' type="text/javascript"></script>';?>
 <script type="text/javascript">
 //<![CDATA[
