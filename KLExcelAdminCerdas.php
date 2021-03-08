@@ -97,19 +97,21 @@ function submit(&$db, $TypeOfShop, $TypeOfFile) {
 				$objPHPExcel->getActiveSheet()->setCellValue('L5', 'URL Foto 4');
 				$objPHPExcel->getActiveSheet()->setCellValue('M5', 'URL Foto 5');
 				$objPHPExcel->getActiveSheet()->setCellValue('N5', 'Nama Variasi');
+				$StartingRow = 6;
 			}elseif ($TypeOfFile == "QOHOnly"){
 				$objPHPExcel->getActiveSheet()->setCellValue('A5', 'Kode');
 				$objPHPExcel->getActiveSheet()->setCellValue('B5', 'Nama Produk');
 				$objPHPExcel->getActiveSheet()->setCellValue('C5', 'Stok');
+				$StartingRow = 6;
 			}elseif ($TypeOfFile == "PricesOnly"){
-				$objPHPExcel->getActiveSheet()->setCellValue('A5', 'Kode');
-				$objPHPExcel->getActiveSheet()->setCellValue('B5', 'Nama Produk');
-				$objPHPExcel->getActiveSheet()->setCellValue('C5', 'Harga');
-				$objPHPExcel->getActiveSheet()->setCellValue('D5', 'Harga Diskon');
+				$objPHPExcel->getActiveSheet()->setCellValue('A1', 'Kode');
+				$objPHPExcel->getActiveSheet()->setCellValue('B1', 'Nama Produk');
+				$objPHPExcel->getActiveSheet()->setCellValue('C1', 'Harga');
+				$objPHPExcel->getActiveSheet()->setCellValue('D1', 'Harga Diskon');
+				$StartingRow = 2;
 			}
 
 			// Add data
-			$StartingRow = 6;
 			$i = $StartingRow;
 			$objPHPExcel->setActiveSheetIndex(0);
 			$ActiveSheet = $objPHPExcel->getActiveSheet();
