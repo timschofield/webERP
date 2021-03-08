@@ -3764,9 +3764,6 @@ function OnlineOrdersFollowUp($Source, $numDays, $RootPath, $db){
 								AND salesorders.klemailpaymentconfirm = '0000-00-00')
 						 OR (debtortrans.type = 10 
 								AND salesorders.klemailtrackingconfirm = '0000-00-00')
-						 OR (salesorders.klemailthankyouorder = '0000-00-00' 
-								AND salesorders.klemailtrackingconfirm <= '" . $ThankYouDate . "' 
-								AND salesorders.klemailtrackingconfirm != '0000-00-00')
 						)
 				GROUP BY salesorders.orderno,	
 					debtorsmaster.name,
