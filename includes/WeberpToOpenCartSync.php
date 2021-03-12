@@ -729,10 +729,8 @@ function SyncProductQOH($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefi
 			$Quantity = GetOnlineQOH($myrow['stockid'], $db);
 			if ($Quantity > 0){
 				$Status = 1;
-				$GPFStatus = 1;
 			}else{
 				$Status = 0;
-				$GPFStatus = 0;
 			}
 
 			// Let's get the OpenCart primary key for product
@@ -741,7 +739,6 @@ function SyncProductQOH($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefi
 			$Action = "Update";
 			$sqlUpdate = "UPDATE " . $oc_tableprefix . "product SET
 							quantity = '" . $Quantity . "',
-							gpf_status = '" . $GPFStatus . "',
 							status = '" . $Status . "'
 						WHERE product_id = '" . $ProductId . "'";
 			$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
