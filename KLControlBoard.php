@@ -3787,7 +3787,6 @@ function OnlineOrdersFollowUp($Source, $numDays, $RootPath, $db){
 							<th class="ascending">' . _('Payment Confirmation') . '</th>
 							<th class="ascending">' . _('Tracking Number') . '</th>
 							<th class="ascending">' . _('Tracking Confirmation') . '</th>
-							<th colspan="3" class="ascending">' . _('Thank You') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -3844,8 +3843,6 @@ function OnlineOrdersFollowUp($Source, $numDays, $RootPath, $db){
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
 					</tr>', 
 					$i, 
 					$CodeLink, 
@@ -3857,9 +3854,7 @@ function OnlineOrdersFollowUp($Source, $numDays, $RootPath, $db){
 					$myrow['currcode'], 
 					$EmailLink1,
 					$myrow['shippername'] . ' ' . $myrow['consignment'],
-					$EmailLink2,
-					$EmailLink3,
-					$EmailLink4
+					$EmailLink2
 					);
 			$i++;
 		}
