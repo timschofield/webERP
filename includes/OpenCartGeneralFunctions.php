@@ -1083,16 +1083,22 @@ function MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, $StoreId, $LanguageId, 
 }
 
 function UpdateOpenCartOrderStatus($OrderId, $StatusId, $Notify, $Comment, $db_oc, $oc_tableprefix){
+prnMsg($OrderId);
+prnMsg($StatusId);
+prnMsg($Notify);
+prnMsg($Comment);
+
 	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference($db));
 	$DbgMsg = _('The SQL statement that failed was');
 	$UpdateErrMsg = _('The SQL to Update OpenCart Order Status failed');
-	$sqlUpdate = "UPDATE " . $oc_tableprefix . "order
+	$sqlUpdate = "UPDATE oc_order
 					SET	order_status_id = '" . $StatusId . "',
 						date_modified = '" . $ServerNow . "'
 				WHERE order_id = '" . $OrderId . "'";
 	$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
+prnMsg($sqlUpdate);
 
-	$sqlInsert = "INSERT INTO " . $oc_tableprefix . "order_history
+	$sqlInsert = "INSERT INTO oc_order_history
 					(order_id,
 					order_status_id,
 					notify,
@@ -1106,6 +1112,8 @@ function UpdateOpenCartOrderStatus($OrderId, $StatusId, $Notify, $Comment, $db_o
 					'" . $ServerNow . "'
 					)";
 	$resultInsert = DB_query_oc($sqlInsert,$ErrMsg,$DbgMsg,true);
+prnMsg($sqlInsert);
+
 }
 
 function RoundPriceFromCart($value, $currency){

@@ -436,8 +436,6 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 		$k = 0; //row colour counter
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
-			
 			$target = "";
 			if (($typereport == "Shop") OR ($typereport == "Online")){
 				$Code = $myrow['debtorno'];
@@ -464,34 +462,39 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 			$forecast = locale_number_format(round($myrow['salesC'], -5),0);
 			$MTD = locale_number_format($myrow['salesMTD'], 0);
 			
-			printf('<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					$i,
-					$Code,
-					$Name,
-					$dailyA, 
-					$dailyB, 
-					$dailyC,
-					$dailyD,
-					$dailyE,
-					$dailyF,
-					$MTD,
-					$trend,
-					$forecast,
-					$target
-					);
+			if ($dailyA + $dailyB + $dailyC + $dailyD + $dailyE + $dailyF > 0){
+				// if there is any daily report not zero...
+				$k = StartEvenOrOddRow($k);
+				printf('<td>%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						</tr>', 
+						$i,
+						$Code,
+						$Name,
+						$dailyA, 
+						$dailyB, 
+						$dailyC,
+						$dailyD,
+						$dailyE,
+						$dailyF,
+						$MTD,
+						$trend,
+						$forecast,
+						$target
+						);
+				
+			}
 			$TotalDateA = $TotalDateA +($myrow['salesA']/$NumDaysA);
 			$TotalDateB = $TotalDateB +($myrow['salesB']/$NumDaysB);
 			$TotalDateC = $TotalDateC +($myrow['salesC']/$NumDaysC);

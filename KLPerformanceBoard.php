@@ -76,19 +76,41 @@ if ($ProcessSection01){
 	
 	if ($KL_SystemAdmin
 		OR $KL_OperationalManager
+		OR $KL_SalesTeamOnline
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_ShopManager){
-//		YearDifferenceSales("Shop",   7, $db);
-//		$NumberOfTestExecuted++;
-		YearDifferenceSales("Shop",  15, $db);
+
+		PeriodDifferenceSales("immeDIATE", "Online",   7, $db);
 		$NumberOfTestExecuted++;
-		YearDifferenceSales("Shop",  30, $db);
+		PeriodDifferenceSales("immeDIATE", "Online",  15, $db);
+		$NumberOfTestExecuted++;
+		PeriodDifferenceSales("immeDIATE", "Online",  30, $db);
+		$NumberOfTestExecuted++;
+	}
+
+	if ($KL_SystemAdmin
+		OR $KL_OperationalManager
+		OR $KL_SalesTeamOnline
+		OR $KL_BusinessDevelopmentManager
+		OR $KL_ShopManager){
+		PeriodDifferenceSales("immeDIATE", "Shop",   7, $db);
+		$NumberOfTestExecuted++;
+		PeriodDifferenceSales("immeDIATE", "Shop",  15, $db);
+		$NumberOfTestExecuted++;
+		PeriodDifferenceSales("immeDIATE", "Shop",  30, $db);
+		$NumberOfTestExecuted++;
+
+//		PeriodDifferenceSales("YEAR", "Shop",   7, $db);
+//		$NumberOfTestExecuted++;
+//		PeriodDifferenceSales("YEAR", "Shop",  15, $db);
+//		$NumberOfTestExecuted++;
+		PeriodDifferenceSales("YEAR", "Shop",  30, $db);
 		$NumberOfTestExecuted++;
 // RICARD 2019-11-26
 // CANCELLED FOR PERFORMANCE REASONS
-//		YearDifferenceSales("Shop",	 90, $db);
+//		PeriodDifferenceSales("YEAR", "Shop",	 90, $db);
 //		$NumberOfTestExecuted++;
-//		YearDifferenceSales("Shop", 365, $db);
+//		PeriodDifferenceSales("YEAR", "Shop", 365, $db);
 //		$NumberOfTestExecuted++;
 	}
 
@@ -459,7 +481,6 @@ function AverageCustomerBehaviourByValueInvoice($typereport, $NumDaysA, $db){
 		$k = 0; //row colour counter
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 
 			if ($typereport == "Shop"){
 				$Code = $myrow['debtorno'];
@@ -468,36 +489,39 @@ function AverageCustomerBehaviourByValueInvoice($typereport, $NumDaysA, $db){
 				return;
 			}
 			
-			printf('<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					$i,
-					$Code,
-					$Name,
-					locale_number_format($myrow['invoicesum']/$myrow['invoicecount'],0), 
-					locale_number_format($myrow['invoicecount']/$NumDaysA,1),
-					locale_number_format($myrow['invoice01']/$myrow['invoicecount']*100,1).'%', 
-					locale_number_format($myrow['invoice02']/$myrow['invoicecount']*100,1).'%', 
-					locale_number_format($myrow['invoice03']/$myrow['invoicecount']*100,1).'%', 
-					locale_number_format($myrow['invoice04']/$myrow['invoicecount']*100,1).'%', 
-					locale_number_format($myrow['invoice05']/$myrow['invoicecount']*100,1).'%', 
-					locale_number_format($myrow['invoice06']/$myrow['invoicecount']*100,1).'%', 
-					locale_number_format($myrow['invoice07']/$myrow['invoicecount']*100,1).'%', 
-					locale_number_format($myrow['invoice08']/$myrow['invoicecount']*100,1).'%', 
-					locale_number_format($myrow['invoice09']/$myrow['invoicecount']*100,1).'%'
-					);
+			if ($myrow['invoicesum'] > 0){
+				$k = StartEvenOrOddRow($k);
+				printf('<td class="number">%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						</tr>', 
+						$i,
+						$Code,
+						$Name,
+						locale_number_format($myrow['invoicesum']/$myrow['invoicecount'],0), 
+						locale_number_format($myrow['invoicecount']/$NumDaysA,1),
+						locale_number_format($myrow['invoice01']/$myrow['invoicecount']*100,1).'%', 
+						locale_number_format($myrow['invoice02']/$myrow['invoicecount']*100,1).'%', 
+						locale_number_format($myrow['invoice03']/$myrow['invoicecount']*100,1).'%', 
+						locale_number_format($myrow['invoice04']/$myrow['invoicecount']*100,1).'%', 
+						locale_number_format($myrow['invoice05']/$myrow['invoicecount']*100,1).'%', 
+						locale_number_format($myrow['invoice06']/$myrow['invoicecount']*100,1).'%', 
+						locale_number_format($myrow['invoice07']/$myrow['invoicecount']*100,1).'%', 
+						locale_number_format($myrow['invoice08']/$myrow['invoicecount']*100,1).'%', 
+						locale_number_format($myrow['invoice09']/$myrow['invoicecount']*100,1).'%'
+						);
+			}
 			$i++;
 			$SumInvoiceSum   += $myrow['invoicesum'];
 			$SumInvoiceCount += $myrow['invoicecount'] ;
@@ -1084,39 +1108,41 @@ function GeneralCustomerBehaviour($NumDaysA, $db){
 		$k = 0; //row colour counter
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
-
 			$Code = $myrow['debtorno'];
 			$Name = $myrow['name'];
 			
-			printf('<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					$i,
-					$Code,
-					$Name,
-					locale_number_format_zero_blank($myrow['invoicesum']/$myrow['invoicecount'],0), 
-					locale_number_format_zero_blank($myrow['invoicesum']/$myrow['itemcount'],0), 
-					locale_number_format_zero_blank($myrow['invoicecount']/$NumDaysA,1),
-					locale_number_format_zero_blank($myrow['itemcount']/$NumDaysA,1),
-					locale_number_format_zero_blank($myrow['itemcount']/$myrow['invoicecount'],1),
-					locale_number_format_zero_blank($myrow['invoicesum_lastyear']/$myrow['invoicecount_lastyear'],0), 
-					locale_number_format_zero_blank($myrow['invoicesum_lastyear']/$myrow['itemcount_lastyear'],0), 
-					locale_number_format_zero_blank($myrow['invoicecount_lastyear']/$NumDaysA,1),
-					locale_number_format_zero_blank($myrow['itemcount_lastyear']/$NumDaysA,1),
-					locale_number_format_zero_blank($myrow['itemcount_lastyear']/$myrow['invoicecount_lastyear'],1)
-					);
+			if ($myrow['invoicesum'] > 0){
+				$k = StartEvenOrOddRow($k);
+				printf('<td class="number">%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						</tr>', 
+						$i,
+						$Code,
+						$Name,
+						locale_number_format_zero_blank($myrow['invoicesum']/$myrow['invoicecount'],0), 
+						locale_number_format_zero_blank($myrow['invoicesum']/$myrow['itemcount'],0), 
+						locale_number_format_zero_blank($myrow['invoicecount']/$NumDaysA,1),
+						locale_number_format_zero_blank($myrow['itemcount']/$NumDaysA,1),
+						locale_number_format_zero_blank($myrow['itemcount']/$myrow['invoicecount'],1),
+						locale_number_format_zero_blank($myrow['invoicesum_lastyear']/$myrow['invoicecount_lastyear'],0), 
+						locale_number_format_zero_blank($myrow['invoicesum_lastyear']/$myrow['itemcount_lastyear'],0), 
+						locale_number_format_zero_blank($myrow['invoicecount_lastyear']/$NumDaysA,1),
+						locale_number_format_zero_blank($myrow['itemcount_lastyear']/$NumDaysA,1),
+						locale_number_format_zero_blank($myrow['itemcount_lastyear']/$myrow['invoicecount_lastyear'],1)
+						);
+				
+			}
 			$i++;
 		}
 		echo '</table>
@@ -2680,13 +2706,17 @@ function PettyCashStatus($currency, $db){
 	}
 }
 
-function YearDifferenceSales($typereport, $NumDaysA, $db){
+function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA, $db){
 
 	$YesterdayA  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 	$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA));
-	$YesterdayB  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1-365));
-	$StartDateB = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-365));
-
+	if ($typeperiod == "YEAR"){
+		$YesterdayB  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1-365));
+		$StartDateB = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-365));
+	}else{
+		$YesterdayB  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1-$NumDaysA));
+		$StartDateB = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-$NumDaysA));
+	}
 	$TotalDateA = 0;
 	$TotalDateB = 0;
 	$TotalRent = 0;
@@ -2697,36 +2727,51 @@ function YearDifferenceSales($typereport, $NumDaysA, $db){
 	$TotalNewRent = 0;
 	$TotalOldRent = 0;
 
-	if ($typereport == "Shop"){
+	if (($typereport == "Shop") OR ($typereport == "Online")){
 		$SQL = "SELECT debtorno,
-					name,
-					(SELECT locations.klyearlyrent 
+					name, ";
+		if ($typereport == "Shop"){
+			$SQL = $SQL . "(SELECT locations.klyearlyrent 
 						FROM locations
 						WHERE locations.cashsalecustomer = debtorsmaster.debtorno
-						LIMIT 1) AS yearlyrent,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
-						FROM salesorderdetails, salesorders
+						LIMIT 1) AS yearlyrent, ";
+		}else{
+			$SQL = $SQL . "0 AS yearlyrent, ";
+		}
+		$SQL = $SQL . "(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))/currencies.rate
+						FROM salesorderdetails, salesorders, currencies
 						WHERE salesorderdetails.orderno = salesorders.orderno
+							AND debtorsmaster.currcode = currencies.currabrev
 							AND salesorderdetails.completed = 1
 							AND salesorders.orddate >= '". $StartDateA . "'
 							AND salesorders.orddate <= '". $YesterdayA . "'
 							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesA,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
-						FROM salesorderdetails, salesorders
+					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))/currencies.rate
+						FROM salesorderdetails, salesorders, currencies
 						WHERE salesorderdetails.orderno = salesorders.orderno
+							AND debtorsmaster.currcode = currencies.currabrev
 							AND salesorderdetails.completed = 1
 							AND salesorders.orddate >= '". $StartDateB . "'
 							AND salesorders.orddate <= '". $YesterdayB . "'
 							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesB
-				FROM debtorsmaster
-				WHERE debtorsmaster.typeid = 2
-				ORDER BY (SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.orddate >= '". $StartDateA . "'
-							AND salesorders.orddate <= '". $YesterdayA . "'
-							AND salesorders.debtorno = debtorsmaster.debtorno) DESC";
+				FROM debtorsmaster ";
+		if ($typereport == "Shop"){
+			$SQL = $SQL .  "WHERE debtorsmaster.typeid = 2 
+							ORDER BY (SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+										FROM salesorderdetails, salesorders
+										WHERE salesorderdetails.orderno = salesorders.orderno
+											AND salesorderdetails.completed = 1
+											AND salesorders.orddate >= '". $StartDateA . "'
+											AND salesorders.orddate <= '". $YesterdayA . "'
+											AND salesorders.debtorno = debtorsmaster.debtorno) DESC";
+		}else{
+			$SQL = $SQL . "WHERE (debtorsmaster.typeid = 9 OR debtorsmaster.typeid = 10)
+								AND debtorsmaster.debtorno != 'WEB-WH-IDR'
+								AND debtorsmaster.debtorno != 'WEB-WH-USD'
+								AND debtorsmaster.debtorno != 'WEB-WH-EUR'
+								AND debtorsmaster.debtorno != 'WEB-WH-AUD' 
+							ORDER BY debtorsmaster.debtorno";
+		}
 	}else{
 		$SQL = "SELECT salesmancode,
 					salesmanname,
@@ -2754,19 +2799,26 @@ function YearDifferenceSales($typereport, $NumDaysA, $db){
 							AND salesorders.orddate <= '". $YesterdayA . "'
 							AND salesorders.salesperson = salesman.salesmancode) DESC";
 	}
-	
-						
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Difference sales for ') . $typereport . " during the last " . $NumDaysA . " days and same period last year".'</strong></p>';
+		if ($typeperiod == "YEAR"){
+			echo '<p class="page_title_text" align="center"><strong>' . _('Difference sales for ') . $typereport . " during the last " . $NumDaysA . " days and same period last year".'</strong></p>';
+			$TitleCurrent = $NumDaysA . ' Days This Year';
+			$TitlePrevious = $NumDaysA . ' Days Last Year';
+		}else{
+			echo '<p class="page_title_text" align="center"><strong>' . _('Difference sales for ') . $typereport . " during the last " . $NumDaysA . " days and previous immediate same period".'</strong></p>';
+			$TitleCurrent = $NumDaysA . ' Last Days';
+			$TitlePrevious = $NumDaysA . ' Previous Days';
+		}
 		echo '<div>';
 		echo '<table class="selection">';
+
 		$TableHeader = '<tr>
 							<th class="ascending">' . _('#') . '</th>
 							<th class="ascending">' . $typereport . '</th>
 							<th class="ascending">' . _('Name') . '</th>
-							<th class="ascending">' . $NumDaysA . _(' Days This Year') . '</th>
-							<th class="ascending">' . $NumDaysA . _(' Days Last Year') . '</th>
+							<th class="ascending">' . $TitleCurrent . '</th>
+							<th class="ascending">' . $TitlePrevious . '</th>
 							<th class="ascending">' . _('Trend') . '</th>
 							<th class="ascending">' . _('%Rent/Sales') . '</th>
 						</tr>';
@@ -2774,9 +2826,8 @@ function YearDifferenceSales($typereport, $NumDaysA, $db){
 		$k = 0; //row colour counter
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 
-			if ($typereport == "Shop"){
+			if (($typereport == "Shop") OR ($typereport == "Online")){
 				$Code = $myrow['debtorno'];
 				$Name = $myrow['name'];
 				if (($myrow['salesA'] > 0) AND ($myrow['yearlyrent'] > 0)){
@@ -2798,23 +2849,25 @@ function YearDifferenceSales($typereport, $NumDaysA, $db){
 			if ($percent < -IMPROVEMENT_SALES_COMPARED_LAST_YEAR){
 				$trend = "Degrading ". locale_number_format($percent,0) . "%";
 			}
-			
-			printf('<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					$i,
-					$Code,
-					$Name,
-					locale_number_format($myrow['salesA'],0), 
-					locale_number_format($myrow['salesB'],0), 
-					$trend,
-					$Rent
-					);
+			if (($myrow['salesA'] > 0) OR ($myrow['salesB'] > 0)){
+				$k = StartEvenOrOddRow($k);
+				printf('<td>%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						</tr>', 
+						$i,
+						$Code,
+						$Name,
+						locale_number_format($myrow['salesA'],0), 
+						locale_number_format($myrow['salesB'],0), 
+						$trend,
+						$Rent
+						);
+			}
 
 			if (($myrow['salesA'] > 0) AND ($myrow['salesB'] > 0)){
 				$TotalBothYearsDateA = $TotalBothYearsDateA +($myrow['salesA']);
@@ -2901,6 +2954,8 @@ function YearDifferenceSales($typereport, $NumDaysA, $db){
 						$Rent
 						);
 			}
+		}
+		if (($typereport == "Shop") OR ($typereport == "Online")){
 			$percent = (($TotalDateA)-($TotalDateB))/($TotalDateB) * 100;
 			$trend = " ";
 			if ($percent > 0){

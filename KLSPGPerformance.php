@@ -36,7 +36,7 @@ if ($KL_SystemAdmin
 	$NumberOfTestExecuted++;
 	HourlySales(30,$RootPath, $db);
 	$NumberOfTestExecuted++;
-	//	YearDifferenceSales("SPG", 30, $db);
+	//	PeriodDifferenceSales("YEAR", "SPG", 30, $db);
 	//  $NumberOfTestExecuted++;
 
 }
