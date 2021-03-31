@@ -141,7 +141,7 @@ if ($ProcessSection01){
 
 	if ($KL_BusinessDevelopmentManager
 		OR $KL_SystemAdmin){
-		over_or_below_limit("DISC80 Items in AR", "BELOW", 50, $RootPath, $db);
+		over_or_below_limit("DISC80 Items in AR", "BELOW", 30, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
