@@ -41,6 +41,7 @@ function KL_DailyChecks($Group, $RootPath, $db, $EmailText= ''){
 	}elseif ($Group == "1100-OptimizeDB"){
 		$EmailText = KL_DailyOptimizationDatabase(FALSE, $db, $EmailText);
 	}elseif ($Group == "1200-SyncWebERPOpenCart"){
+		$EmailText = KL_DailyCleanOpenCartDB(FALSE, $db, $db_oc, $oc_tableprefix, $EmailText);
 		$EmailText = WeberpToOpenCartDailySync(FALSE, $db, $db_oc, $oc_tableprefix, $EmailText);
 		$EmailText = OpenCartToWeberpSync(FALSE, $db, $db_oc, $oc_tableprefix, $EmailText);
 	}else{

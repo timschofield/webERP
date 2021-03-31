@@ -1804,5 +1804,97 @@ function SyncCurrencies($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefi
 	return $EmailText;
 }
 
+function KL_DailyCleanOpenCartDB($ShowMessages, $db, $db_oc, $oc_tableprefix, $EmailText=''){
+	$begintime = time_start();
+
+	DB_Txn_Begin();
+
+	// clean old pending orders
+	$EmailText = ChangeOldPendingOpenCartOrders($ShowMessages, 3, $db, $db_oc, $oc_tableprefix, $EmailText);
+
+	DB_Txn_Commit();
+	if ($ShowMessages){
+		time_finish($begintime);
+	}
+
+	return $EmailText;
+}
+
+function ChangeOldPendingOpenCartOrders($ShowMessages, $MaxDays, $db, $db_oc, $oc_tableprefix, $EmailText= ''){
+	$Title = 'Change old PENDING OC Orders to EXPIRED';
+	$i = 0;
+	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference($db));
+	if ($EmailText !=''){
+		$EmailText = $EmailText . "Change old PENDING OC Orders to EXPIRED" . "\n" . PrintTimeInformation($db);
+	}
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$MaxDays-1)) ;
+
+	$SQL = "SELECT order_id,
+				firstname,
+				lastname
+			FROM oc_order
+			WHERE order_status_id = " . OPENCART_ORDER_STATUS_PENDING . " 
+				AND date_modified <= '" . $StartDate . "'
+			ORDER BY order_id";
+
+	$result = DB_query_oc($SQL);
+	if (DB_num_rows($result) != 0){
+		if ($ShowMessages){
+			echo '<p class="page_title_text" align="center"><strong>' . $Title  .'</strong></p>';
+			echo '<div>';
+			echo '<table class="selection">';
+			$TableHeader = '<tr>
+								<th>' . _('Order ID') . '</th>
+								<th>' . _('Name') . '</th>
+								<th>' . _('Comment') . '</th>
+							</tr>';
+			echo $TableHeader;
+		}
+		$DbgMsg = _('The SQL statement that failed was');
+		$UpdateErrMsg = 'The SQL to update ' . $Title . ' failed';
+		$InsertErrMsg = 'The SQL to insert ' . $Title . ' failed';
+
+		$k = 0; //row colour counter
+		$i = 0;
+		while ($myrow = DB_fetch_array($result)) {
+
+			/* FIELD MATCHING */
+			$OrderId = $myrow['order_id'];
+			$Name = $myrow['firstname'] . " " . $myrow['lastname'];
+			$Comment = "webERP -> EXPIRED: Payment not received in due time.";
+			UpdateOpenCartOrderStatus($OrderId, OPENCART_ORDER_STATUS_EXPIRED, 0, "", "", $Comment, $db_oc, $oc_tableprefix);
+
+			if ($ShowMessages){
+				$k = StartEvenOrOddRow($k);
+				printf('<td>%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						</tr>',
+						$OrderId,
+						$Name,
+						$Comment
+						);
+			}
+			if ($EmailText !=''){
+				$EmailText = $EmailText . " Order ID = " . $OrderId. " --> " . $Comment . "\n";
+			}
+		$i++;
+		}
+		if ($ShowMessages){
+			echo '</table>
+					</div>
+					</form>';
+		}
+	}
+	if ($ShowMessages){
+		prnMsg(locale_number_format($i,0) . ' ' . $Title ,'success');
+	}
+	if ($EmailText !=''){
+		$EmailText = $EmailText . locale_number_format($i,0) . ' ' .$Title  . "\n\n";
+	}
+	return $EmailText;
+}
+
+
 
 ?>
