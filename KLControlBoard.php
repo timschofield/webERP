@@ -904,7 +904,7 @@ if ($ProcessSection02){
 		OR $KL_SalesTeamOnline){
 		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_PENDING, $RootPath, $db, $db_oc, $oc_tableprefix);
 		$NumberOfTestExecuted++;
-		}
+	}
 
 	if ($KL_SystemAdmin 
 		OR $KL_SalesTeamOnline){
@@ -922,6 +922,12 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 
+	if ($KL_SystemAdmin
+		OR $KL_SalesTeamOnline){
+		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_SHIPPED, $RootPath, $db, $db_oc, $oc_tableprefix);
+		$NumberOfTestExecuted++;
+	}
+ 
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesTeamOnline
@@ -3860,7 +3866,7 @@ function OnlineOrdersFollowUp($Source, $numDays, $RootPath, $db){
 					$myrow['currcode'], 
 					$EmailLink1,
 					$myrow['shippername'] . ' ' . $myrow['consignment'],
-					$EmailLink2
+					''
 					);
 			$i++;
 		}
@@ -5034,6 +5040,8 @@ function OpenCartOrdersByStatus($Status, $RootPath, $db, $db_oc, $oc_tableprefix
 					$StatusText = "Pending";
 				}else if ($Status == OPENCART_ORDER_STATUS_PROCESSING){
 					$StatusText = "Processing";
+				}else if ($Status == OPENCART_ORDER_STATUS_SHIPPED){
+					$StatusText = "Shipped";
 				}else{
 					$StatusText = "Unknown";
 				}

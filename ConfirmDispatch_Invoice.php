@@ -621,7 +621,6 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 			$ErrMsg = _('Could not retrieve the quantity left at the location once this order is invoiced (for the purposes of checking that stock will not go negative because)');
 			$Result = DB_query($SQL,$ErrMsg);
-			$CheckNegRow = DB_fetch_array($Result);
 			if(($CheckNegRow['mbflag']=='B' OR $CheckNegRow['mbflag']=='M') AND mb_substr($OrderLine->StockID,0,4)!='ASSET') {
 				if($CheckNegRow['quantity'] < $OrderLine->QtyDispatched) {
 					prnMsg( _('Invoicing the selected order would result in negative stock. The system parameters are set to prohibit negative stocks from occurring. This invoice cannot be created until the stock on hand is corrected.'),'error',$OrderLine->StockID . ' ' . $CheckNegRow['description'] . ' - ' . _('Negative Stock Prohibited'));
@@ -1755,7 +1754,8 @@ invoices can have a zero amount but there must be a quantity to invoice */
 		}
 	} /*end of if Sales and GL integrated */
 	EnsureGLEntriesBalance(10,$InvoiceNo,$db);
-
+	
+	MarkWebErpOrderInOpenCartAs($_SESSION['Items'.$identifier]->OrderNo, OPENCART_ORDER_STATUS_SHIPPED, $_POST['Consignment'], $db);
 
 	DB_Txn_Commit();
 // *************************************************************************
@@ -1836,4 +1836,36 @@ echo '</div>';
 echo '</form>';
 
 include('includes/footer.php');
+
+
+function MarkWebErpOrderInOpenCartAs($OrderNo, $Status, $AWB, $db){
+	include ('includes/KLDefines.php');
+	include ('includes/OpenCartGeneralFunctions.php');
+	include ('includes/OpenCartConnectDB.php');
+
+	$SQL = "SELECT salesorders.debtorno,
+					debtorsmaster.typeid,
+					salesorders.customerref,
+					salesorders.shipvia,
+					shippers.shippername
+			FROM salesorders 
+			INNER JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
+			INNER JOIN shippers ON salesorders.shipvia = shippers.shipper_id
+			WHERE salesorders.orderno = '" . $OrderNo ."'";
+	$result = DB_query($SQL);
+	if (DB_num_rows($result)!=0) {
+		$myrow = DB_fetch_array($result);
+		if ($myrow['typeid'] == CUSTOMER_TYPE_WEBSITE){
+			if ($Status == OPENCART_ORDER_STATUS_SHIPPED){
+				$ReasonChangeStatusId = "webERP --> Order shipped via " . $myrow['shippername'] . " AWB# = " . $AWB;  
+				UpdateOpenCartOrderStatus($myrow['customerref'], $Status, 0, $myrow['shipvia'], $AWB, $ReasonChangeStatusId, $db, $db_oc, $oc_tableprefix);
+			}else{
+				$ReasonChangeStatusId = "webERP --> Change of status";  
+				UpdateOpenCartOrderStatus($myrow['customerref'], $Status, 0, "", "", $ReasonChangeStatusId, $db, $db_oc, $oc_tableprefix);
+			}
+		}
+	}
+}
+
+
 ?>

@@ -809,7 +809,6 @@ function PurgeDiscountOver50($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_table
 	return $EmailText;
 }
 
-
 function SyncProductDescriptionTranslations($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText=''){
 
 	if ($EmailText !=''){
@@ -1811,6 +1810,8 @@ function KL_DailyCleanOpenCartDB($ShowMessages, $db, $db_oc, $oc_tableprefix, $E
 
 	// clean old pending orders
 	$EmailText = ChangeOldPendingOpenCartOrders($ShowMessages, 3, $db, $db_oc, $oc_tableprefix, $EmailText);
+	// Change from shipped to complete
+	$EmailText = ChangeOldShippedOpenCartOrders($ShowMessages, 2, $db, $db_oc, $oc_tableprefix, $EmailText);
 
 	DB_Txn_Commit();
 	if ($ShowMessages){
@@ -1825,9 +1826,9 @@ function ChangeOldPendingOpenCartOrders($ShowMessages, $MaxDays, $db, $db_oc, $o
 	$i = 0;
 	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference($db));
 	if ($EmailText !=''){
-		$EmailText = $EmailText . "Change old PENDING OC Orders to EXPIRED" . "\n" . PrintTimeInformation($db);
+		$EmailText = $EmailText . $Title . "\n" . PrintTimeInformation($db);
 	}
-	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$MaxDays-1)) ;
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$MaxDays)) ;
 
 	$SQL = "SELECT order_id,
 				firstname,
@@ -1862,7 +1863,7 @@ function ChangeOldPendingOpenCartOrders($ShowMessages, $MaxDays, $db, $db_oc, $o
 			$OrderId = $myrow['order_id'];
 			$Name = $myrow['firstname'] . " " . $myrow['lastname'];
 			$Comment = "webERP -> EXPIRED: Payment not received in due time.";
-			UpdateOpenCartOrderStatus($OrderId, OPENCART_ORDER_STATUS_EXPIRED, 0, "", "", $Comment, $db_oc, $oc_tableprefix);
+			UpdateOpenCartOrderStatus($OrderId, OPENCART_ORDER_STATUS_EXPIRED, 0, "", "", $Comment, $db, $db_oc, $oc_tableprefix);
 
 			if ($ShowMessages){
 				$k = StartEvenOrOddRow($k);
@@ -1895,6 +1896,80 @@ function ChangeOldPendingOpenCartOrders($ShowMessages, $MaxDays, $db, $db_oc, $o
 	return $EmailText;
 }
 
+function ChangeOldShippedOpenCartOrders($ShowMessages, $MaxDays, $db, $db_oc, $oc_tableprefix, $EmailText= ''){
+	$Title = 'Change old SHIPPED OC Orders to COMPLETE';
+	$i = 0;
+	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference($db));
+	if ($EmailText !=''){
+		$EmailText = $EmailText . $Title . "\n" . PrintTimeInformation($db);
+	}
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$MaxDays)) ;
+
+	$SQL = "SELECT order_id,
+				firstname,
+				lastname
+			FROM oc_order
+			WHERE order_status_id = " . OPENCART_ORDER_STATUS_SHIPPED . " 
+				AND date_modified <= '" . $StartDate . "'
+			ORDER BY order_id";
+
+	$result = DB_query_oc($SQL);
+	if (DB_num_rows($result) != 0){
+		if ($ShowMessages){
+			echo '<p class="page_title_text" align="center"><strong>' . $Title  .'</strong></p>';
+			echo '<div>';
+			echo '<table class="selection">';
+			$TableHeader = '<tr>
+								<th>' . _('Order ID') . '</th>
+								<th>' . _('Name') . '</th>
+								<th>' . _('Comment') . '</th>
+							</tr>';
+			echo $TableHeader;
+		}
+		$DbgMsg = _('The SQL statement that failed was');
+		$UpdateErrMsg = 'The SQL to update ' . $Title . ' failed';
+		$InsertErrMsg = 'The SQL to insert ' . $Title . ' failed';
+
+		$k = 0; //row colour counter
+		$i = 0;
+		while ($myrow = DB_fetch_array($result)) {
+
+			/* FIELD MATCHING */
+			$OrderId = $myrow['order_id'];
+			$Name = $myrow['firstname'] . " " . $myrow['lastname'];
+			$Comment = "webERP -> COMPLETE: Order already shipped and accounted for.";
+			UpdateOpenCartOrderStatus($OrderId, OPENCART_ORDER_STATUS_COMPLETE, 0, "", "", $Comment, $db, $db_oc, $oc_tableprefix);
+
+			if ($ShowMessages){
+				$k = StartEvenOrOddRow($k);
+				printf('<td>%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						</tr>',
+						$OrderId,
+						$Name,
+						$Comment
+						);
+			}
+			if ($EmailText !=''){
+				$EmailText = $EmailText . " Order ID = " . $OrderId. " --> " . $Comment . "\n";
+			}
+		$i++;
+		}
+		if ($ShowMessages){
+			echo '</table>
+					</div>
+					</form>';
+		}
+	}
+	if ($ShowMessages){
+		prnMsg(locale_number_format($i,0) . ' ' . $Title ,'success');
+	}
+	if ($EmailText !=''){
+		$EmailText = $EmailText . locale_number_format($i,0) . ' ' .$Title  . "\n\n";
+	}
+	return $EmailText;
+}
 
 
 ?>

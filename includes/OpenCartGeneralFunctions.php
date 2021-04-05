@@ -1082,11 +1082,7 @@ function MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, $StoreId, $LanguageId, 
 	}
 }
 
-function UpdateOpenCartOrderStatus($OrderId, $StatusId, $Notify, $Comment, $db_oc, $oc_tableprefix){
-prnMsg($OrderId);
-prnMsg($StatusId);
-prnMsg($Notify);
-prnMsg($Comment);
+function UpdateOpenCartOrderStatus($OrderId, $StatusId, $Notify, $Carrier, $AWB, $Comment, $db, $db_oc, $oc_tableprefix){
 
 	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference($db));
 	$DbgMsg = _('The SQL statement that failed was');
@@ -1096,8 +1092,8 @@ prnMsg($Comment);
 						date_modified = '" . $ServerNow . "'
 				WHERE order_id = '" . $OrderId . "'";
 	$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
-prnMsg($sqlUpdate);
 
+	// Insert the status change into the history table
 	$sqlInsert = "INSERT INTO oc_order_history
 					(order_id,
 					order_status_id,
@@ -1112,7 +1108,47 @@ prnMsg($sqlUpdate);
 					'" . $ServerNow . "'
 					)";
 	$resultInsert = DB_query_oc($sqlInsert,$ErrMsg,$DbgMsg,true);
-prnMsg($sqlInsert);
+
+	if ($StatusId == OPENCART_ORDER_STATUS_SHIPPED){
+		// Insert the status change into the powertrack table
+		if ($Carrier == SHIPMENT01_WEBERP_CODE){
+			$CarrierPowerTrack = SHIPMENT01_POWERTRACK_CODE ;
+		}else if ($Carrier == SHIPMENT02_WEBERP_CODE){
+			$CarrierPowerTrack = SHIPMENT02_POWERTRACK_CODE ;
+		}else if ($Carrier == SHIPMENT03_WEBERP_CODE){
+			$CarrierPowerTrack = SHIPMENT03_POWERTRACK_CODE ;
+		}else if ($Carrier == SHIPMENT04_WEBERP_CODE){
+			$CarrierPowerTrack = SHIPMENT04_POWERTRACK_CODE ;
+		}else if ($Carrier == SHIPMENT05_WEBERP_CODE){
+			$CarrierPowerTrack = SHIPMENT05_POWERTRACK_CODE ;
+		}else if ($Carrier == SHIPMENT06_WEBERP_CODE){
+			$CarrierPowerTrack = SHIPMENT06_POWERTRACK_CODE ;
+		}else if ($Carrier == SHIPMENT07_WEBERP_CODE){
+			$CarrierPowerTrack = SHIPMENT07_POWERTRACK_CODE ;
+		}else if ($Carrier == SHIPMENT08_WEBERP_CODE){
+			$CarrierPowerTrack = SHIPMENT08_POWERTRACK_CODE ;
+		}else if ($Carrier == SHIPMENT09_WEBERP_CODE){
+			$CarrierPowerTrack = SHIPMENT09_POWERTRACK_CODE ;
+		}else if ($Carrier == SHIPMENT10_WEBERP_CODE){
+			$CarrierPowerTrack = SHIPMENT10_POWERTRACK_CODE ;
+		}
+		$sqlInsert = "INSERT INTO oc_order_history_powertrack
+						(order_id,
+						order_status_id,
+						powertrack_carrier,
+						powertrack_trackcode,
+						date_added)
+					VALUES
+						('" . $OrderId . "',
+						'" . $StatusId . "',
+						'" . $CarrierPowerTrack . "',
+						'" . $AWB . "',
+						'" . $ServerNow . "'
+						)";
+		$resultInsert = DB_query_oc($sqlInsert,$ErrMsg,$DbgMsg,true);
+	}
+
+
 
 }
 
