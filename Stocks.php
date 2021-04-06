@@ -434,6 +434,7 @@ if (isset($_POST['submit'])) {
 						SET longdescription='" . $_POST['LongDescription'] . "',
 							description='" . $_POST['Description'] . "',
 							discontinued='" . $_POST['Discontinued'] . "',
+							klsynctoopencart='" . $_POST['KLSyncToOpenCart'] . "',
 							controlled='" . $_POST['Controlled'] . "',
 							serialised='" . $_POST['Serialised']."',
 							perishable='" . $_POST['Perishable']."',
@@ -656,6 +657,7 @@ if (isset($_POST['submit'])) {
 												mbflag,
 												eoq,
 												discontinued,
+												klsynctoopencart,
 												controlled,
 												serialised,
 												perishable,
@@ -682,6 +684,7 @@ if (isset($_POST['submit'])) {
 								'" . $_POST['MBFlag'] . "',
 								'" . filter_number_format($_POST['EOQ']) . "',
 								'" . $_POST['Discontinued'] . "',
+								'" . $_POST['KLSyncToOpenCart'] . "',
 								'" . $_POST['Controlled'] . "',
 								'" . $_POST['Serialised']. "',
 								'" . $_POST['Perishable']. "',
@@ -775,6 +778,7 @@ if (isset($_POST['submit'])) {
 						unset($_POST['Units']);
 						unset($_POST['MBFlag']);
 						unset($_POST['Discontinued']);
+						unset($_POST['KLSyncToOpenCart']);
 						unset($_POST['Controlled']);
 						unset($_POST['Serialised']);
 						unset($_POST['Perishable']);
@@ -929,6 +933,7 @@ if (isset($_POST['submit'])) {
 		unset($_POST['Units']);
 		unset($_POST['MBFlag']);
 		unset($_POST['Discontinued']);
+		unset($_POST['KLSyncToOpenCart']);
 		unset($_POST['Controlled']);
 		unset($_POST['Serialised']);
 		unset($_POST['Perishable']);
@@ -999,6 +1004,7 @@ if (!isset($StockID) OR $StockID=='' or isset($_POST['UpdateCategories'])) {
 					units,
 					mbflag,
 					discontinued,
+					klsynctoopencart,
 					controlled,
 					serialised,
 					perishable,
@@ -1031,6 +1037,7 @@ if (!isset($StockID) OR $StockID=='' or isset($_POST['UpdateCategories'])) {
 	$_POST['Units']  = $myrow['units'];
 	$_POST['MBFlag']  = $myrow['mbflag'];
 	$_POST['Discontinued']  = $myrow['discontinued'];
+	$_POST['KLSyncToOpenCart']  = $myrow['klsynctoopencart'];
 	$_POST['Controlled']  = $myrow['controlled'];
 	$_POST['Serialised']  = $myrow['serialised'];
 	$_POST['Perishable']  = $myrow['perishable'];
@@ -1228,6 +1235,9 @@ if (!isset($_POST['DecimalPlaces']) OR  $_POST['DecimalPlaces']==''){
 if (!isset($_POST['Discontinued']) OR  $_POST['Discontinued']==''){
 	$_POST['Discontinued']=0;
 }
+if (!isset($_POST['KLSyncToOpenCart']) OR  $_POST['KLSyncToOpenCart']==''){
+	$_POST['KLSyncToOpenCart']=1;
+}
 if (!isset($_POST['Pansize'])) {
 	$_POST['Pansize']=0;
 }
@@ -1383,6 +1393,24 @@ if ($_POST['Discontinued']==1){
 echo '</select></td>
 		</tr>';
 
+echo '<tr>
+		<td>' . _('Sync item to OpenCart website?') . ':</td>
+		<td><select name="KLSyncToOpenCart">';
+
+if ($_POST['KLSyncToOpenCart']==0){
+	echo '<option selected="selected" value="0">' . _('Do NOT Sync') . '</option>';
+} else {
+	echo '<option value="0">' . _('Do NOT Sync') . '</option>';
+}
+
+if ($_POST['KLSyncToOpenCart']==1){
+	echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
+} else {
+	echo '<option value="1">' . _('Yes') . '</option>';
+}
+echo '</select></td>
+		</tr>';
+		
 echo '<tr>
 		<td>' . _('Batch, Serial or Lot Control') . ':</td>
 		<td><select name="Controlled">';

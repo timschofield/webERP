@@ -136,6 +136,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 				salescatprod.manufacturers_id
 			FROM stockmaster, salescatprod, salescat
 			WHERE stockmaster.stockid = salescatprod.stockid
+				AND stockmaster.klsynctoopencart = '1'
 				AND salescatprod.salescatid = salescat.salescatid
 				AND ((stockmaster.date_created >= '" . $LastTimeRun . "'	OR stockmaster.date_updated >= '" . $LastTimeRun . "')
 					OR (salescatprod.date_created >= '" . $LastTimeRun . "'	OR salescatprod.date_updated >= '" . $LastTimeRun . "'))
@@ -606,6 +607,7 @@ function SyncProductPrices($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tablepr
 				stockmaster.discountcategory
 			FROM prices, stockmaster
 			WHERE prices.stockid = stockmaster.stockid
+				AND stockmaster.klsynctoopencart = '1'
 				AND prices.typeabbrev ='" . $PriceList . "'
 				AND prices.currabrev ='" . $Currency . "'
 				AND (prices.date_created >= '" . $LastTimeRun . "'
@@ -697,10 +699,12 @@ function SyncProductQOH($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefi
 
 	/* Look for the late modifications of prices table in webERP */
 	$SQL = "SELECT DISTINCT(locstock.stockid)
-			FROM locstock, salescatprod, locations
+			FROM locstock, salescatprod, locations, stockmaster
 			WHERE locstock.stockid = salescatprod.stockid
+				AND locstock.stockid = stockmaster.stockid
 				AND locstock.loccode = locations.loccode
 				AND locations.stockavailableforonline = '1'
+				AND stockmaster.klsynctoopencart = '1'
 				AND (locstock.date_created >= '" . $LastTimeRun . "'
 					OR locstock.date_updated >= '" . $LastTimeRun . "')
 			ORDER BY locstock.stockid";
@@ -821,8 +825,10 @@ function SyncProductDescriptionTranslations($ShowMessages, $LastTimeRun, $db, $d
 					descriptiontranslation,
 					longdescriptiontranslation,
 					needsrevision
-			FROM stockdescriptiontranslations
-			WHERE  (stockdescriptiontranslations.date_created >= '" . $LastTimeRun . "'
+			FROM stockdescriptiontranslations, stockmaster
+			WHERE stockdescriptiontranslations.stockid = stockmaster.stockid
+				AND stockmaster.klsynctoopencart = '1'
+				AND (stockdescriptiontranslations.date_created >= '" . $LastTimeRun . "'
 					OR stockdescriptiontranslations.date_updated >= '" . $LastTimeRun . "')
 			ORDER BY stockdescriptiontranslations.stockid";
 
@@ -1594,6 +1600,7 @@ function SyncRelatedItems($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tablepre
 			FROM relateditems, stockmaster
 			WHERE relateditems.stockid = stockmaster.stockid
 				AND stockmaster.discontinued = '0'
+				AND stockmaster.klsynctoopencart = '1'
 				AND (relateditems.date_created >= '" . $LastTimeRun . "'
 					OR relateditems.date_updated >= '" . $LastTimeRun . "')
 			ORDER BY relateditems.stockid, 
