@@ -1099,12 +1099,16 @@ function UpdateOpenCartOrderStatus($OrderId, $StatusId, $Notify, $Carrier, $AWB,
 					order_status_id,
 					notify,
 					comment,
+					powertrack_carrier,
+					powertrack_trackcode,
 					date_added)
 				VALUES
 					('" . $OrderId . "',
 					'" . $StatusId . "',
 					'" . $Notify . "',
 					'" . $Comment . "',
+					'" . $CarrierPowerTrack . "',
+					'" . $AWB . "',
 					'" . $ServerNow . "'
 					)";
 	$resultInsert = DB_query_oc($sqlInsert,$ErrMsg,$DbgMsg,true);
