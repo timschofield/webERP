@@ -3774,8 +3774,6 @@ function OnlineOrdersFollowUp($Source, $numDays, $RootPath, $db){
 					AND salesorders.quotation = 0
 					AND (	(debtortrans.type = 12 
 								AND salesorders.klemailpaymentconfirm = '0000-00-00')
-						 OR (debtortrans.type = 10 
-								AND salesorders.klemailtrackingconfirm = '0000-00-00')
 						)
 				GROUP BY salesorders.orderno,	
 					debtorsmaster.name,
