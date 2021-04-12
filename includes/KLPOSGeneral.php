@@ -973,6 +973,18 @@ function KLPrintReceiptShopFooter($identifier, $OrderNo){
 		}
 	}
 	if ($_SESSION['TypeLoc'] == "SHOPBL"){
+		if ($_POST['PackagingBox02L'] != 0){
+			$TextToPrint .= "BL Box-L: ". $_POST['PackagingBox02L'] . " boxes";
+			$TextToPrint .= $NewLine;
+		}
+		if ($_POST['PackagingBox02M'] != 0){
+			$TextToPrint .= "BL Box-M: ". $_POST['PackagingBox02M'] . " boxes";
+			$TextToPrint .= $NewLine;
+		}
+		if ($_POST['PackagingBox02S'] != 0){
+			$TextToPrint .= "BL Box-S: ". $_POST['PackagingBox02S'] . " boxes";
+			$TextToPrint .= $NewLine;
+		}
 		if ($_POST['BlinkPouchBag03XL'] != 0){
 			$TextToPrint .= "Blink Pouchbag-XL: ". $_POST['BlinkPouchBag03XL'] . " pouches";
 			$TextToPrint .= $NewLine;

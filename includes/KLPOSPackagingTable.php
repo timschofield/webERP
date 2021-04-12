@@ -80,6 +80,15 @@ if ($_SESSION['TypeLoc'] == "SHOPKL"){
 // If the shop is using BLINK packaging, show it!
 if ($_SESSION['TypeLoc'] == "SHOPBL"){
 
+	if (!isset($_POST['PackagingBox02L'])){
+		$_POST['PackagingBox02L'] =0;
+	}
+	if (!isset($_POST['PackagingBox02M'])){
+		$_POST['PackagingBox02M'] =0;
+	}
+	if (!isset($_POST['PackagingBox02S'])){
+		$_POST['PackagingBox02S'] =0;
+	}
 	if (!isset($_POST['BlinkShoppingBag04L'])){
 		$_POST['BlinkShoppingBag04L'] =0;
 	}
@@ -119,8 +128,8 @@ if ($_SESSION['TypeLoc'] == "SHOPBL"){
 	echo'</tr>';
 			
 	echo '<tr>
-		  <td></td>
-		  <td></td>';
+		  <td>' . _('BLINK Box Large') . ':</td>
+		  <td><input type="text" class="number" name="PackagingBox02L" maxlength="3" size="3" value="' . $_POST['PackagingBox02L'] . '" /></td>';
 	echo '<td></td>';
 	echo '<td>' . _('BLINK Pouch Bag Large') . ':</td>
 		  <td><input type="text" class="number" name="BlinkPouchBag03L" maxlength="3" size="3" value="' . $_POST['BlinkPouchBag03L'] . '" /></td>';
@@ -130,8 +139,8 @@ if ($_SESSION['TypeLoc'] == "SHOPBL"){
 	echo'</tr>';
 
 	echo '<tr>
-		  <td></td>
-		  <td></td>';
+		  <td>' . _('BLINK Box Medium') . ':</td>
+		  <td><input type="text" class="number" name="PackagingBox02M" maxlength="3" size="3" value="' . $_POST['PackagingBox02M'] . '" /></td>';
 	echo '<td></td>';
 	echo '<td>' . _('BLINK Pouch Bag Medium') . ':</td>
 		  <td><input type="text" class="number" name="BlinkPouchBag03M" maxlength="3" size="3" value="' . $_POST['BlinkPouchBag03M'] . '" /></td>';
@@ -141,8 +150,8 @@ if ($_SESSION['TypeLoc'] == "SHOPBL"){
 	echo'</tr>';
 	
 	echo '<tr>
-		  <td></td>
-		  <td></td>';
+		  <td>' . _('BLINK Box Small') . ':</td>
+		  <td><input type="text" class="number" name="PackagingBox02S" maxlength="3" size="3" value="' . $_POST['PackagingBox02S'] . '" /></td>';
 	echo '<td></td>';
 	echo '<td>' . _('BLINK Pouch Bag Small') . ':</td>
 		  <td><input type="text" class="number" name="BlinkPouchBag03S" maxlength="3" size="3" value="' . $_POST['BlinkPouchBag03S'] . '" /></td>';
