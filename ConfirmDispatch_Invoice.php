@@ -1670,6 +1670,33 @@ invoices can have a zero amount but there must be a quantity to invoice */
 				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 			}
+			
+			// ADJUST PACKAGING KL
+			// Check if it is from category packaging
+			$Result = DB_query("SELECT categoryid
+								FROM stockmaster
+								WHERE stockid = '" . $OrderLine->StockID . "'",
+								 _('Cannot retrieve the categoryid'));
+
+			$myrow = DB_fetch_row($Result);
+			$CtegoryID = $myrow[0];
+			if (ItemInList($CtegoryID, LIST_STOCK_CATEGORIES_SHOP_PACKAGING)){
+				/* Insert movement at packaging used . Strictly not needed as it can be calculated from Stockmoves type 17 but there can be small differences */
+				$SQL = "INSERT INTO packagingused (
+							orderno,
+							fromlocation,
+							stockid,
+							qty,
+							date)
+						VALUES ('" .$_SESSION['ProcessingOrder'] . "',
+							'" . $_SESSION['Items'.$identifier]->Location . "',
+							'" . $OrderLine->StockID . "',
+							'" . $OrderLine->QtyDispatched . "',
+							'" . Date('Y-m-d') . "')";
+				$ErrMsg = _('ERROR: Contact the office!!!  -> AdjustPackagingMovement-1030');
+				$DbgMsg = _('The following SQL to insert the packaging used was used');
+				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+			}
 		} /*Quantity dispatched is more than 0 */
 	} /*end of OrderLine loop */
 
