@@ -2495,9 +2495,11 @@ function ItemsNotNeededInOnlineOrderButRequested($RootPath, $db){
 	
 	$SQL = "SELECT locstock.stockid,
 				locstock.quantity
-			FROM locstock
-			WHERE locstock.loccode = ". CODE_ONLINE_SHOP ."
+			FROM locstock, stockmaster
+			WHERE locstock.stockid = stockmaster.stockid
+				AND locstock.loccode = ". CODE_ONLINE_SHOP ."
 				AND locstock.quantity > 0
+				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SHOP_PACKAGING . "
 				AND NOT EXISTS (SELECT 	salesorderdetails.stkcode
 								FROM salesorderdetails, salesorders
 								WHERE salesorderdetails.orderno = salesorders.orderno
