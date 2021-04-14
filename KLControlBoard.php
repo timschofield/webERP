@@ -143,6 +143,8 @@ if ($ProcessSection01){
 		OR $KL_SystemAdmin){
 		over_or_below_limit("DISC80 Items in AR", "BELOW", 30, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		over_or_below_limit("DISC80 Items in BU", "BELOW", 30, $RootPath, $db);
+		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_BusinessDevelopmentManager
@@ -4292,6 +4294,13 @@ function over_or_below_limit($Request, $Sign, $Limit, $RootPath, $db){
 					AND stockmaster.categoryid = 'DISC8A'
 					AND locstock.reorderlevel > 0
 					AND locstock.loccode ='TOKAR'";
+	}elseif ($Request =="DISC80 Items in BU"){
+		$SQL = "SELECT COUNT(*)
+				FROM stockmaster,locstock
+				WHERE stockmaster.stockid = locstock.stockid
+					AND stockmaster.categoryid = 'DISC8A'
+					AND locstock.reorderlevel > 0
+					AND locstock.loccode ='TOKBU'";
 	}
 	
 	$result = DB_query($SQL);
