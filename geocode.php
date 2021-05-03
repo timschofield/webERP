@@ -37,7 +37,7 @@ $result2 = DB_query($sql, $ErrMsg);
 
 // Initialize delay in geocode speed
 $delay = 0;
-$base_url = "http://" . MAPS_HOST . "/maps/api/geocode/xml?address=";
+$base_url = "https://" . MAPS_HOST . "/maps/api/geocode/xml?address=";
 
 // Iterate through the customer branch rows, geocoding each address
 
@@ -49,7 +49,7 @@ while ($row = DB_fetch_array($result)) {
     $address = urlencode($row["braddress1"] . "," . $row["braddress2"] . "," . $row["braddress3"] . "," . $row["braddress4"]);
     $id = $row["branchcode"];
     $debtorno =$row["debtorno"];
-    $request_url = $base_url . $address . ',&sensor=true';
+    $request_url = $base_url . $address . '&key=' . KEY . '&sensor=true';
 
     echo '<br \>', _('Customer Code'), ': ', $id;
 
@@ -101,7 +101,7 @@ while ($row2 = DB_fetch_array($result2)) {
     $address = $row2["address1"] . ",+" . $row2["address2"] . ",+" . $row2["address3"] . ",+" . $row2["address4"];
     $address = urlencode($row2["address1"] . "," . $row2["address2"] . "," . $row2["address3"] . "," . $row2["address4"]);
     $id = $row2["supplierid"];
-    $request_url = $base_url . $address . ',&sensor=true';
+    $request_url = $base_url . $address . '&key=' . KEY . '&sensor=true';
 
     echo '<p>' . _('Supplier Code: ') . $id;
 

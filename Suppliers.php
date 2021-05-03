@@ -269,7 +269,7 @@ function Is_ValidAccount($ActNo) {
 				}
 			break;
 		} //end switch
-		
+
 	} //end for loop
 	if ($BankPrefix == '25' or $BankPrefix == '33') {
 		if ($CheckSum / 10 - (int)($CheckSum / 10) != 0) {
@@ -414,8 +414,8 @@ if (isset($_POST['submit'])) {
 				echo '<div class="warn">' . _('Warning - Geocode Integration is enabled, but no hosts are setup.  Go to Geocode Setup') . '</div>';
 			} else {
 				$address = urlencode($_POST['Address1'] . ', ' . $_POST['Address2'] . ', ' . $_POST['Address3'] . ', ' . $_POST['Address4'] . ', ' . $_POST['Address5'] . ', ' . $_POST['Address6']);
-				$base_url = "http://" . MAPS_HOST . "/maps/api/geocode/xml?address=";
-				$request_url = $base_url . $address . ',&sensor=true';
+				$base_url = "https://" . MAPS_HOST . "/maps/api/geocode/xml?address=";
+				$request_url = $base_url . $address . '&key=' . KEY . '&sensor=true';
 
 				$xml = simplexml_load_string(utf8_encode(file_get_contents($request_url))) or die("url not loading");
 				//			$xml = simplexml_load_file($request_url) or die("url not loading");
@@ -577,7 +577,7 @@ if (isset($_POST['submit'])) {
 									'" . $_POST['DefaultShipper'] . "',
 									'" . $_POST['DefaultGL'] . "'
 								)";
-						
+
 			$ErrMsg = _('The supplier') . ' ' . $_POST['SuppName'] . ' ' . _('could not be added because');
 			$DbgMsg = _('The SQL that was used to insert the supplier but failed was');
 
@@ -664,7 +664,7 @@ if (isset($_POST['submit'])) {
 		unset($SupplierID);
 		unset($_SESSION['SupplierID']);
 	} //end if Delete supplier
-	
+
 }
 
 if (!isset($SupplierID)) {
