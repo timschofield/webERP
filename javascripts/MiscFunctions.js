@@ -415,17 +415,17 @@ function initial() {
 	for(i=0;i<ds.length;i++) {
 		if(ds[i].className=="ascending") ds[i].onclick=SortSelect;
 	}
-	
+
 	/* Notification messages */
-	
+
 	/* Move messages from footer div into header div */
 	document.getElementById('MessageContainerHead').appendChild(
     document.getElementById('MessageContainerFoot')
 	);
-	
+
 	/* Show footer div after it has been moved to header div */
 	document.getElementById('MessageContainerFoot').style["display"] = "block";
-		  
+
 	/* Close button dynamic styling*/
 	var close = document.getElementsByClassName("MessageCloseButton");
 	var i;
@@ -450,13 +450,13 @@ function AddAmount(t, Target, d) {
 function update1(s) {
 	var ss=s.split(';');
 	var sss=ss.map((a)=>document.getElementById(a).value);
-	var ttl = sss.reduce((a,b)=>parseFloat(a)+parseFloat(b)); 
+	var ttl = sss.reduce((a,b)=>parseFloat(a)+parseFloat(b));
 	document.getElementById('ttl').value = ttl;
 }
 function payVerify(b,a) {
 	var s=document.getElementById('update');
 	var s=s.getAttribute('data-ids');
-	update1(s);	
+	update1(s);
 	var cs=document.getElementById('Amount').getAttribute('class');
 	if (parseFloat(document.getElementById(b).value) < parseFloat(parseFloat(document.getElementById(a).value))){
 		if (cs.indexOf('error') == -1) {
@@ -469,6 +469,34 @@ function payVerify(b,a) {
 		}
 		return true;
 	}
+}
+
+function AddScript(e, t) {
+	theme = localStorage.Theme;
+	document.getElementById("favourites").innerHTML = document.getElementById("favourites").innerHTML + '<option value="' + e + '">' + t + "</option>";
+	document.getElementById("PlusMinus").src = "css/" + theme + "/images/subtract.png";
+	document.getElementById("PlusMinus").setAttribute("onClick", "javascript: RemoveScript('" + e + "', '" + t + "');");
+	UpdateFavourites(e, t)
+}
+
+function RemoveScript(e, t) {
+	theme = localStorage.Theme;
+	remSelOpt(e, document.getElementById("favourites"));
+	document.getElementById("PlusMinus").src = "css/" + theme + "/images/add.png";
+	document.getElementById("PlusMinus").setAttribute("onClick", "javascript: AddScript('" + e + "', '" + t + "');");
+	UpdateFavourites(e, t)
+}
+
+function UpdateFavourites(e, t) {
+	Target = "UpdateFavourites.php?Script=" + e + "&Title=" + t;
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest
+	} else {
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP")
+	}
+	xmlhttp.open("GET", Target, true);
+	xmlhttp.send();
+	return false
 }
 
 window.onload=initial;

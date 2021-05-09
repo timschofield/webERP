@@ -112,6 +112,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 			$_SESSION['ShowDashboard'] = $myrow['showdashboard'];
 			$_SESSION['ShowPageHelp'] = $myrow['showpagehelp'];
 			$_SESSION['ShowFieldHelp'] = $myrow['showfieldhelp'];
+			$_SESSION['ScreenFontSize'] = $myrow['fontsize'];
 
 			if (isset($myrow['pdflanguage'])) {
 				$_SESSION['PDFLanguage'] = $myrow['pdflanguage'];

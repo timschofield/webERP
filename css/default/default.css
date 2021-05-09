@@ -1,585 +1,117 @@
-/* Default theme for WebERP by ...
-
-Design guidelines:
-	Fonts are 10px hight.
-	Icons are 16px x 16px size.
-*/
-
+@font-face {
+font-family:Ubuntu;
+font-style:normal;
+font-weight:400;
+src: local('Ubuntu'), url(https://fonts.googleapis.com/css?family=Ubuntu);
+}
 body {
-	background-color:#ccccdd;
-	font-family:Arial, Verdana, Helvetica, sans-serif;
-	font-size:10pt;
-	margin:0;
-	padding:0;
-	/* Tag selector for body. */
+font-family:Arial, Verdana, Helvetica, sans-serif;
+background-color:#ccd;
+font-weight:400;
+margin:0;
+padding:0;
 }
-
-button img {
-	height:16px;
-	width:16px;
-	/* Describes how button image should be displayed. Related with body font-size in px. */
+.summary_box{
+width:20%;
+border: 1px solid;
+text-align: left;
+padding: 1%;
+border-radius: 4px;
 }
-
+img {
+width:32px;
+height:32px;
+}
+img.StockImage {
+width:48px;
+transition: transform .5s;
+}
+img.StockImage:hover {
+border-radius:3px;
+transform: scale(5);
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+img.Graph {
+width:90%;
+height:auto;
+}
 a {
-	color:#0000ff;
-	text-decoration:none;
+color:navy;
+text-decoration:none;
+display:inline;
 }
 a:hover {
-	color:#0000ff;
-	background-color:transparent;
-	text-decoration:underline;
-	/* Tag selector for mouse over link. */
+text-decoration:underline;
 }
-
-img {
-	border:none;
-	vertical-align:middle;
+a.ButtonLink {
+text-decoration:none;
+display:inline;
 }
-p.bad {
-	color:red;
-	font-weight:bold;
-	/* Tag selector for paragraph class "bad". */
-}
-p.good {
-	color:green;
-	font-weight:bold;
-	/* Tag selector for paragraph class "good". */
-}
-
-table {
-	margin:0 auto;
-	width:auto;
-	max-width:90%;
-	padding-bottom:5px;
-}
-
-table.selection {
-	padding-bottom:5px;
-}
-
-th {
-	background-color:#b06161;
-	color:#ffffff;
-	font-weight:normal;
-}
-
-th.ascending {
-	cursor:s-resize;
-}
-
-th.descending {
-	cursor:n-resize;
-}
-
-th:after {
-	content:"";
-	float:right;
-	margin-top:7px;
-	visibility:hidden;
-}
-
-th.ascending:after {
-	border-width:0 4px 4px;
-	border-style:solid;
-	border-color:#000000 transparent;
-	visibility:visible;
-}
-
-th.descending:after {
-	border-bottom:none;
-	border-left:4px solid transparent;
-	border-right:4px solid transparent;
-	border-top:#000000 solid 4px;
-	visibility:visible;
-}
-
-td {
-	text-align:left;
-	vertical-align:top;
-}
-
-td.select {
-	background-color:#eeeeee;
-}
-
-td a img {
-	height:16px;
-	width:16px;
-	/* Icon for a link inside a table element. */
-}
-
-div.centre {
-	margin:0 auto;
-	text-align:center;
-	padding:5px;
-}
-
-input {
-	font-family:Arial, Verdana, Helvetica, sans-serif;
-}
-
-input.image {
-	border-width:0px;
-	background-color:transparent;
-}
-
-input:required, select:required, textarea:required {
-	background-color:#ffffe0;
-}
-
-input:hover {
-}
-
-select {
-	font-family:Arial, Verdana, Helvetica, sans-serif;
-}
-
-textarea {
-	font-family:Arial, Verdana, Helvetica, sans-serif;
-}
-
-textarea:hover {
-}
-
-tr.striped_row:nth-of-type(even) {
-	background-color:#cccccc;
-}
-
-tr.striped_row:nth-of-type(odd) {
-	background-color:#eeeeee;
-}
-
-.Message {
-	border-radius:10px;
-	padding:10px 10px 10px 36px;
-	margin:5px;
-	opacity:1;
-	transition:opacity 0.6s; /* 600ms to fade out */
-}
-.error {
-	background:#ffecec url('images/message-error.svg') no-repeat 10px 50%;
-	border:1px solid #f5aca6;
-}
-.success {
-	background:#e9ffd9 url('images/message-success.svg') no-repeat 10px 50%;
-	border:1px solid #a6ca8a;
-}
-.info {
-	background:#e3f7fc url('images/info.svg') no-repeat 10px 50%;
-	border:1px solid #8ed9f6;
-}
-.warn {
-	background:#fff8c4 url('images/message-warning.png') no-repeat 10px 50%;
-	border:1px solid #f2c779;
-}
-.MessageCloseButton {
-	margin-left:15px;
-	color:#C8C8C8;
-	font-weight:bold;
-	float:right;
-	font-size:20px;
-	line-height:17px;
-	cursor:pointer;
-	transition:0.3s;
-}
-.MessageCloseButton:hover {
-	color:#606060;
-}
-#MessageContainerFoot {
-	display:none;
-}
-
-.dpTbl { /* date picker background */
-	border:thin solid #000000;
-	background:white;
-	box-shadow:3px 3px 4px #000000; /* shadow on modern browsers */
-}
-
-.dpTD {
-	border:0;
-	width:20px;
-	background-color:#eeeeee;
-	text-align:right;
-	cursor:pointer;
-}
-
-.dpDayHighlight {
-	border:0;
-	width:20px;
-	background-color:yellow;
-	text-align:right;
-	cursor:pointer;
-}
-
-.dpTDHover {
-	border:0;
-	width:20px;
-	background-color:#cccccc;
-	text-align:right;
-	cursor:pointer;
-}
-
-/* Table type is used for UI tables type 1 */
-.table1 {
-	width:90%;
-	background:#eeeeee;
-	border:0px 0px 2px 2px #222222 solid;
-	margin:0 auto;
-}
-
-.tableheader {
-	font-weight:normal;
-	background-color:#800000;
-	color:#ffffff;
-}
-
-.notavailable {
-	font-weight:lighter;
-	font-style:italic;
-	color:#555555;
-}
-
-.label {
-	font-weight:bold;
-	font-style:normal;
-	font-size:120%;
-	color:#000000;
-	background-color:#cccccc;
-}
-
-.table_index {
-	background-color:#F1FFDD;
-}
-
-.header {
-	background-image:url("");
-	background-repeat:no-repeat;
-	background-attachment:fixed;
-	border:none;
-	margin:0px;
-	padding:0px;
-}
-
-input.inputerror, input.error, select.error, select.selecterror, label.error {
-	color:red;
-	border:2px solid red;
-}
-
-textarea.texterror {
-	background-color:#fddbdb;
-}
-
-.OsRow {
-	background-color:#234567;
-	color:#ffffff;
-}
-
-/*** CANVAS ***/
-
-#CanvasDiv {
-	background:#588BB6;
-}
-
-/*** HEADER ***/
-
-#HeaderDiv {
-	color:#ffffff;
-	/*background:#588BB6;*/
-	/*overflow:hidden;*/
-}
-
-#HeaderDiv a {
-	color:#ffffff;
-}
-
-#HeaderDiv a:hover {
-	text-decoration:underline;
-}
-
-#HeaderWrapDiv {
-}
-
-/*** HEADER - APP INFO ***/
-
-#AppInfoDiv {
-	float:left;
-	padding:0;
-}
-
-#AppInfoCompanyDiv,#AppInfoUserDiv {
-	display:table-cell;
-}
-
-#AppInfoModuleDiv {
-	font-weight:bold;
-	font-size:120%;
-	padding:3px;
-}
-
-/*** HEADER - QUICK MENU ***/
-
-#QuickMenuDiv {
-	float:right;
-	margin-top:2px;
-}
-
-#QuickMenuDiv ul {
-}
-
-#QuickMenuDiv li {
-	border-left:thin ridge #588BB6;
-	display:inline-block;
-	padding:14px 12px;
-}
-
-/*** BODY ***/
-
-#BodyDiv {
-	clear:both;
-	text-align:center;
-}
-
-#BodyWrapDiv {
-	background:#cccccc;
-	padding-top:1px;
-	/*border:thin solid #ccc;*/
-	/*clear:both;*/
-}
-
-/*** BODY - MAIN MENU ***/
-
-#MainMenuDiv {
-	float:left;
-	width:11%;
-	border:thin solid #000000;
-	text-align:center;
-	white-space:nowrap;
-}
-
-#MainMenuDiv ul {
-	margin:0;
-	padding:0;
-}
-
-#MainMenuDiv li {
-	list-style:none;
-}
-
-#MainMenuDiv li a {
-	color:#000000;
-}
-
-#MainMenuDiv li a:hover {
-	color:#000000;
-	text-decoration:underline;
-}
-
-.main_menu_unselected {
-	background:#8EDE8D;
-	padding:2px;
-}
-
-.main_menu_unselected:hover {
-	background:white;
-}
-
-.main_menu_selected {
-	background-color:#ffffff;
-	padding:2px;
-}
-
-/*** BODY - SUB MENU ***/
-
-#SubMenuDiv {
-	display:table;
-	float:right;
-	overflow:hidden;
-	text-align:left;
-	width:88.5%;
-}
-
-#SubMenuDiv ul {
-	margin:0;
-	padding:0;
-	background:#fff;
-	border:thin solid #000000;
-	margin-left:3px;
-}
-
-#SubMenuDiv li {
-	list-style:none;
-}
-
-#SubMenuDiv a {
-	color:#0000ff;
-}
-
-#SubMenuDiv a:hover {
-	color:#0000ff;
-	text-decoration:underline;
-}
-
-#TransactionsDiv,
-#InquiriesDiv,
-#MaintenanceDiv {
-	display:table-cell;
-}
-
-.menu_group_headers {
-	text-align:center;
-	color:#000000;
-	background:#eeeeee;
-	border-bottom:thin solid #000000;
-}
-
-.menu_group_item {
-	background-color:#ffffff;
-	padding:2px;
-}
-
-.menu_group_item p {
-	color:#00f; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
-	text-indent:-12px; /* this makes the bullet to appear as the li tag previously used */
-	margin:0 0 0 12px; /* One thing that I didn't like of the li was that it had no left margin applied */
-}
-
-#InquiriesDiv div { /* header for standard reports/forms, custom reports */
-	border-top:thin solid #000000;
-	border-bottom:thin solid #000000;
-	background:#eeeeee;
-	color:#000000;
-	padding:2px;
-}
-
-/*** FOOTER ***/
-
-#FooterDiv {
-	clear:both;
-	overflow:hidden;
-	color:#cccccc;
-	padding:3px 2px;
-}
-
-#FooterWrapDiv {
-
-}
-
-#FooterLogoDiv {
-	background:white;
-	border-radius:7px;
-	float:left;
-	padding:3px;
-}
-
-#FooterVersionDiv {
-	float:left;
-	margin-left:10px;
-	margin-top:15px;
-}
-
-#FooterTimeDiv {
-	float:right;
-	margin-top:15px;
-}
-
-#Report {
-	/* Division id for reports. */}
-
-#Report table {
-	/* Body of a report formatted with table tag. */
-}
-/* BEGIN Class selectors of the style for all devices. ---------------------- */
 .centre {
-	text-align:center;
-	/* Class selector to horizontally align a text (centre) in an element. */
+margin:0 auto;
+text-align:center;
 }
-.number {
-	text-align:right;
-	/* Class selector to horizontally align a number (right) in an element. */
+.top {
+vertical-align:top;
 }
-.text {
-	text-align:left;
-	/* Class selector to horizontally align a text (left) in an element. */
+.dpTbl {
+border:thin solid #000;
+background:#FFF;
+box-shadow:3px 3px 4px #000;
+}
+.dpTD {
+border:0;
+width:20px;
+background-color:#EEE;
+text-align:right;
+cursor:pointer;
+}
+.dpDayHighlight {
+border:0;
+width:20px;
+background-color:#FF0;
+text-align:right;
+cursor:pointer;
+}
+.dpTDHover {
+border:0;
+width:20px;
+background-color:#CCC;
+text-align:right;
+cursor:pointer;
+}
+.notavailable {
+font-weight:lighter;
+font-style:italic;
+color:#555;
 }
 .gallery {
-	margin:5px;
-	float:left;
-	/* Class selector to let an element float to the left. */
+margin: 5px;
+float: left;
+/* Class selector to let an element float to the left. */
 }
-.field_help_text {
-	font-style:italic;
-	/* Class selector for field help text. */
+[data-title]:hover:after {
+opacity: 1;
+transition: all 0.1s ease 0.5s;
+visibility: visible;
 }
-.page_help_text {
-	background-color:#d3d3d3;
-	background-image:url(images/question.svg);
-	background-position:2px 2px;
-	background-repeat:no-repeat;
-	border:#a52a2a 1px solid;
-	color:#000000;
-	font-weight:normal;
-	margin:0 auto;
-	padding-bottom:2px;
-	padding-left:20px;
-	padding-right:2px;
-	padding-top:2px;
-	text-align:center;
-	width:80%;
-	/* Class selector for page help text. Hidden/displayed by the ShowPageHelp parameter. */
+[data-title]:after {
+content: attr(data-title);
+background-color: #ADD8E6;
+color: #404552;
+font-size: 100%;
+position: absolute;
+padding: 1px 5px 2px 5px;
+bottom: -1.9em;
+left: 10%;
+white-space: nowrap;
+box-shadow: 1px 1px 3px #222222;
+opacity: 0;
+border: 1px solid #111111;
+border-radius:5px;
+z-index: 99999;
+visibility: hidden;
 }
-.page_info_text {
-	background-color:#d3d3d3;
-	background-image:url(images/info.svg);
-	background-position:2px 2px;
-	background-repeat:no-repeat;
-	border:#a52a2a 1px solid;
-	color:#000000;
-	font-weight:normal;
-	margin:0 auto;
-	padding-bottom:2px;
-	padding-left:20px;
-	padding-right:2px;
-	padding-top:2px;
-	text-align:center;
-	width:80%;
-	/* Class selector for page info text. */
-}
-.page_title_text {
-	color:#000000;
-	font-weight:bold;
-	padding:5px;
-	text-align:center;
-	/* Class selector for page title text. */
-}
-.sheet {
-	background-color:#ffffff;
-	border:0;
-	box-shadow:26px 16px 8px 0 rgba(0, 0, 0, 0.5);
-	color:#000000;
-	margin:5%;
-	padding:5%;
-	/* Class selector for sheet style preview. */
-}
-/* END Class selectors of the style for all devices. ------------------------ */
-/* END Style for all devices.================================================ */
-
-
-/* If you want to use a cascading style sheet for a small device width, uncomment line "<meta name="viewport" content="width=device-width, initial-scale=1" />" on includes/header.php and use the following sections. */
-
-@media only screen and (max-device-width:767px) {
-	/* Style for new browser in a device with a rendering width less than 768px (xs - Extra small devices - Phones). */
-	.field_help_text {display:none;/* Hides field help text. */}
-	.page_help_text {display:none;/* Hides page help text. */}
-}
-
-@media only screen and (min-device-width:768px) and (max-device-width:991px) {
-	/* Style for new browser in a device with a rendering width between 768px and 992px (sm - Small devices - Tablets). */
-}
-
-@media only screen and (min-device-width:992px) and (max-device-width:1199px) {
-	/* Style for new browser in a device with a rendering width between 992px and 1200px (md - Medium devices - Desktops). */
-}
-
-@media only screen and (min-device-width:1200px) {
-	/* Style for new browser in a device with a rendering width greater than 1200px (lg - Large devices - Larger desktops). */
+[data-title] {
+position: relative;
 }

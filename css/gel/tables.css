@@ -1,0 +1,74 @@
+table {
+background-color:#eee;
+border:0 0 2px 2px #222 solid;
+background:#eee;
+width:auto;
+margin:5px auto;
+table-layout: fixed;
+}
+table tr.visible {
+display:table-row;
+}
+table tr.invisible {
+display:none;
+}
+table th {
+background-color:#ccc;
+color:#300;
+text-align:center;
+}
+table th img {
+vertical-align:middle;
+}
+table th.SortedColumn {
+cursor:s-resize;
+padding-right:16px;
+background-image:url(images/ascending.png);
+background-repeat: no-repeat;
+background-position:right;
+background-size:12px;
+}
+table td {
+text-align:left;
+}
+table tr.striped_row:nth-of-type(even) {
+background-color:#CCC;
+}
+table tr.striped_row:nth-of-type(odd) {
+background-color:#EEE;
+}
+table tr.success_row {
+background-color:#b9ecb4;
+color:green;
+border:1px solid green;
+}
+table tr.warn_row {
+background-color:#fa0;
+color:#000;
+border:1px solid #000;
+}
+table tr.info_row {
+background-color:#5d70f8;
+color:#FFF;
+border:1px solid #FFF;
+}
+table tr.error_row {
+background-color:red;
+color:#FFF;
+font-style:italic;
+font-weight:700;
+border:3px solid red;
+}
+table tr.total_row {
+background:#0000FF;
+color:#FFFFFF;
+font-weight:bold;
+}
+table .number {
+text-align:right;
+}
+table th .PrintIcon {
+width:32px;
+float:right;
+cursor:pointer;
+}

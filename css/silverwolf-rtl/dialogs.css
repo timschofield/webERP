@@ -1,0 +1,82 @@
+#mask {
+display:none;
+position:fixed;
+top:0;
+right:0;
+bottom:0;
+left:0;
+background-color: rgba(26, 26, 26, 0.5);
+backdrop-filter: blur(2px);
+z-index:2;
+}
+#dialog {
+min-width:10%;
+max-width:50%;
+display:inline-block;
+background:#fff;
+z-index:99;
+border:solid #000 1px;
+border-radius:7px;
+position:fixed;
+top:50%;
+right:50%;
+margin-top:-9em;
+margin-right:-15em;
+box-shadow:0 0 5px #16187A;
+padding:2px 2px 5px;
+}
+#dialog #dialog_header {
+background:lightgray;
+width:auto;
+border-radius:4px;
+font-size:130%;
+text-align:right;
+padding-right:5px;
+color:#000;
+margin:2px;
+}
+#dialog .dialog_image {
+vertical-align:middle;
+}
+#dialog #dialog_main {
+background:#FFF;
+width:auto;
+border-radius:4px;
+text-align:right;
+padding-left:5px;
+padding-right:5px;
+font-style:italic;
+font-size:130%;
+color:#565141;
+margin:3% 2px;
+}
+#dialog #dialog_buttons {
+text-align:left;
+}
+#dialog .okButton {
+display:inline-block;
+background-color:lightgray;
+border:thin;
+color:#000;
+border-radius:3px;
+cursor:pointer;
+font-style:normal;
+box-shadow:2px 2px 3px;
+width:20%;
+border-color:#CCC;
+margin:2px 0px 5px 15px;
+padding:2px;
+}
+#dialog .okButton:active {
+box-shadow:0 0 0;
+border:thin;
+border-color:#CCC;
+padding:2px;
+}
+#dialog .okButton:hover {
+background-color:lightgray;
+box-shadow:2px 2px 3px;
+border:thin;
+border-color:#CCC;
+padding:2px;
+}
