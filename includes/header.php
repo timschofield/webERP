@@ -106,7 +106,7 @@ echo '<div id="Info">
 	</div>';
 
 echo '<div id="ExitIcon">
-		<a data-title="', _('Logout'), '" href="', $PathPrefix, $RootPath, '/Logout.php" onclick="return MakeConfirm(\'', _('Are you sure you wish to logout?'), '\', \'', _('Confirm Logout'), '\', this);">
+		<a data-title="', _('Logout'), '" href="', $PathPrefix, $RootPath, '/Logout.php" onclick="return confirm(\'', _('Are you sure you wish to logout?'), '\');">
 			<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/quit.png" alt="', _('Logout'), '" />
 		</a>
 	</div>';
