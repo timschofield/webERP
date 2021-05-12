@@ -1,0 +1,111 @@
+.MainBody {
+background:transparent;
+margin:5px;
+padding:10px;
+border: 1px solid #82BCF4;
+border-radius: 7px;
+}
+.ModuleList {
+float:right;
+background:transparent;
+white-space:nowrap;
+text-align:right;
+padding-left:10px;
+padding-right:10px;
+padding-top:3px;
+width:11%;
+width:min-content;
+border:1px solid #8DCDEB;
+border-radius:7px;
+margin:7px;
+}
+.ModuleList li a,.ModuleList li a:hover {
+background:#A3D2FF;
+color:#494C56;
+display:block;
+border-radius:10px;
+text-decoration:none;
+margin-bottom:5px;
+padding:3px;
+border:1px solid #404552;
+padding-right:5px;
+}
+.ModuleList .ModuleSelected a {
+border:1px solid #1A1A1A;
+background:#A3D2FF;
+color:#494C56;
+padding-right:5px;
+}
+.ModuleList .ModuleUnSelected a{
+border:1px solid #0E1826;
+background:transparent;
+color:#A3D2FF;
+padding-right:5px;
+}
+.ModuleList ul,.MenuList ul {
+margin:0;
+padding:0;
+}
+.ModuleList li,.MenuList li {
+list-style:none;
+}
+.MenuList {
+display: inline;
+width:30%;
+border-radius:10px;
+margin-top:5px;
+vertical-align:top;
+margin-left:5px;
+}
+.MenuList legend {
+}
+.MenuList legend img {
+padding-left:7px;
+width:32px;
+height:32px;
+vertical-align:middle;
+}
+.MenuItem {
+color:#8DCDEB;
+text-decoration:none;
+text-align:right;
+padding:2px;
+}
+.MenuItem:hover {
+background:transparent;
+text-align:right;
+color:white;
+}
+.MenuList .CustomMenuList {
+background:transparent;
+border:1px solid #8DCDEB;
+color:#FFF;
+font-weight:700;
+text-align:center;
+padding:3px;
+}
+.page_title_text{
+position:relative;
+font-weight:bold;
+text-align:center;
+margin:0 auto;
+padding:5px;
+clear: both;
+}
+.page_title_text img {
+padding-right:7px;
+width:32px;
+height:32px;
+vertical-align:middle;
+}
+div.toplink {
+float:right;
+}
+.clearfix {
+  overflow: auto;
+}
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}

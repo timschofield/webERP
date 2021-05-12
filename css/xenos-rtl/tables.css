@@ -1,0 +1,84 @@
+table {
+background-color:white;
+margin:0 auto;
+margin-bottom:10px;
+width:auto;
+/*border-collapse: collapse;*/
+border:thin outset #B3B3B3;
+-webkit-border-radius:  4px;
+-moz-border-radius:     4px;
+border-radius:          4px;
+-moz-box-shadow:    1px 1px 2px #C3C3C3;
+-webkit-box-shadow: 1px 1px 2px #C3C3C3;
+box-shadow:         1px 1px 2px #C3C3C3;
+-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3')";
+filter: progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3')
+table-layout: fixed;
+}
+table tr.visible {
+display:table-row;
+}
+table tr.invisible {
+display:none;
+}
+table th {
+font-weight:bold;
+color:#2C2C2C;
+text-align:center;
+border-bottom:thin solid #B3B3B3;
+}
+table th.SortedColumn {
+cursor:s-resize;
+padding-left:16px;
+background-image:url(images/ascending.png);
+background-repeat: no-repeat;
+background-position:left;
+background-size:12px;
+}
+table th img {
+vertical-align:middle;
+}
+table td {
+padding:2px 4px;
+text-align:right;
+color:#575757;
+}
+table td.select {
+background-color:#eee;
+}
+table tr.striped_row:nth-of-type(even) {
+background-color:white;
+}
+table tr.striped_row:nth-of-type(odd) {
+background-color:#CCCCCC;
+}
+table tr.success_row {
+color:darkgreen;
+background-color:#90EE90;
+}
+table tr.warn_row {
+color:maroon;
+background-color:#B88D8D;
+}
+table tr.info_row {
+color:navy;
+background-color:#1E90FF;
+}
+table tr.error_row {
+color:red;
+background-color:#FFC0CB;
+}
+table tr.total_row {
+background:#CDC7C7;
+color:#1A1A1A;
+font-weight:bold;
+}
+table .number {
+text-align:left;
+}
+table th .PrintIcon {
+float:left;
+cursor:pointer;
+width:32px;
+margin-left:5px;
+}

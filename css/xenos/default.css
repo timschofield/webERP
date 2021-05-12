@@ -1,731 +1,119 @@
-/*	Xenos theme by Khwunchai J.
-	Xenos is a very clean and classy looking theme design for WebERP.
-
-Design guidelines:
-	Fonts are 10pt hight.
-	Icons are ??px x ??px size.  (16x16 ?)
-*/
-
-/***
-NOTE:
-This CSS is not yet fully optimized. Some styles maybe redundant and not supported by some browser.
-***/
-
+@font-face {
+}
 body {
-	font-family:Arial, Verdana, Helvetica, sans-serif;
-	font-size:10pt;
-	margin:0;
-	padding:0;
-	background:#F1F1F1;
+font-family:sans-serif;
+font-size:10pt;
+margin:0;
+padding:0;
+background:#F1F1F1;
 }
-
-button img {
-	height:21px;
-	width:21px;
-	/* Describes how button image should be displayed. Related with body font-size in px. */
+.summary_box{
+width:20%;
+border: 1px solid;
+text-align: left;
+padding: 1%;
+border-radius: 4px;
+margin:0 auto;
+margin-bottom:10px;
 }
-
-/*** Default Styles ***/
+img {
+width:32px;
+height:32px;
+}
+img.StockImage {
+width:48px;
+transition: transform .5s;
+}
+img.StockImage:hover {
+transform: scale(5);
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+img.Graph {
+width:90%;
+height:auto;
+}
 a {
-	color:#0088CD;
-	text-decoration:none;
+color:#4D4D4D;
+text-decoration:none;
 }
 a:hover {
-	color:#0088CD;
-	text-decoration:underline;
+color:#0088CD;
+text-decoration:underline;
 }
-
-img {
-	border:none;
-	vertical-align:middle;
+.ButtonLink {
+text-decoration:none;
+display:inline;
 }
-p.good {
-	font-weight:bold;
-	color:green;
+.centre {
+margin:0 auto;
+text-align:center;
 }
-p.bad {
-	font-weight:bold;
-	color:red;
+.top {
+vertical-align:top;
 }
-table {
-	background-color:white;
-	margin:0 auto;
-	width:100%;
-	/*border-collapse:collapse;*/
-	border:thin outset #B3B3B3;
-
-	-webkit-border-radius:4px;
-	-moz-border-radius:4px;
-	border-radius:4px;
-	-moz-box-shadow:1px 1px 2px #C3C3C3;
-	-webkit-box-shadow:1px 1px 2px #C3C3C3;
-	box-shadow:1px 1px 2px #C3C3C3;
-	-ms-filter:"progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3')";
-	filter:progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3')
-}
-table.selection {
-}
-th {
-	border-bottom:thin solid #B3B3B3;
-	color:#2C2C2C;
-	font-weight:bold;
-	text-align:center;
-}
-th.ascending {
-	cursor:s-resize;
-}
-th.descending {
-	cursor:n-resize;
-}
-th:after {
-	content:"";
-	float:right;
-	margin-top:7px;
-	visibility:hidden;
-}
-th.ascending:after {
-	border-width:0 4px 4px;
-	border-style:solid;
-	border-color:#000000 transparent;
-	visibility:visible;
-}
-th.descending:after {
-	border-bottom:none;
-	border-left:4px solid transparent;
-	border-right:4px solid transparent;
-	border-top:4px solid #000000;
-	visibility:visible;
-}
-td {
-	color:#575757;
-	padding:2px 4px;
-	text-align:left;
-	vertical-align:top;
-}
-td.select {
-	background-color:#eeeeee;
-}
-td table {
-	background:red;
-}
-/*
-table tr:first-child th:first-child, table tr:first-child td:first-child {
-	-moz-border-radius-topleft:4px;
-	-webkit-border-top-left-radius:4px;
-	border-top-left-radius:4px;
-}
-table tr:first-child th:last-child, table tr:first-child td:last-child {
-	-moz-border-radius-topright:4px;
-	-webkit-border-top-right-radius:4px;
-	border-top-right-radius:4px;
-}
-table tr:last-child td:first-child {
-	-moz-border-radius-bottomleft:4px;
-	-webkit-border-bottom-left-radius:4px;
-	border-bottom-left-radius:4px;
-}
-table tr:last-child td:last-child {
-	-moz-border-radius-bottomright:4px;
-	-webkit-border-bottom-right-radius:4px;
-	border-bottom-right-radius:4px;
-}
-*/
-div.centre {
-	margin:0 auto;
-	text-align:center;
-}
-input {
-}
-input.image {
-	border-width:0px;
-	background-color:transparent;
-}
-input:hover {
-}
-select {
-	font-family:Arial, Verdana, Helvetica, sans-serif;;
-	font-size:12px;
-	border:thin solid #C3C3C3;
-	-webkit-border-radius:4px;
-	-moz-border-radius:4px;
-	border-radius:4px;
-	padding:4px 8px;
-	cursor:pointer;
-}
-input.inputerror, input.error, select.error, select.selecterror, label.error {
-	color:red;
-	border:2px solid red;
-}
-input[type='text'], input[type='tel'], input[type='password'], input[type='email'] {
-	border:thin solid #C3C3C3;
-	padding:4px 8px;
-
-	-webkit-border-radius:4px;
-	-moz-border-radius:4px;
-	border-radius:4px;
-}
-input:required, select:required, textarea:required {
-	background-color:#e2f5ff;
-}
-input[type='text']:focus, input[type='tel']:focus, input[type='password']:focus, input[type='email']:focus, input[type='submit'], textarea:focus, select:focus, button:focus {
-	outline:none;
-	border-color:#2380CD;
-
-	-moz-box-shadow:0px 0px 5px #55B1EA;
-	-webkit-box-shadow:0px 0px 5px #55B1EA;
-	box-shadow:0px 0px 5px #55B1EA;
-}
-input[type='submit'], button {
-	background-color:#34a7e8;
-	border:thin outset #1992DA;
-	padding:6px 24px;
-	vertical-align:middle;
-	font-weight:bold;
-	color:#ffffff;
-	cursor:pointer;
-
-	-webkit-border-radius:4px;
-	-moz-border-radius:4px;
-	border-radius:4px;
-	-moz-box-shadow:1px 1px 1px #64BEF1 inset;
-	-webkit-box-shadow:1px 1px 1px #64BEF1 inset;
-	box-shadow:1px 1px 1px #64BEF1 inset;
-}
-select {
-	background-color:white;
-}
-textarea {
-	border:thin solid #C3C3C3;
-	padding:4px 8px;
-
-	-webkit-border-radius:4px;
-	-moz-border-radius:4px;
-	border-radius:4px;
-}
-tr.striped_row:nth-of-type(even) {
-	background-color:white;
-}
-
-tr.striped_row:nth-of-type(odd) {
-	background-color:#cccccc;
-}
-div.Message {
-	border-radius:10px;
-	padding:10px 10px 10px 36px;
-	margin:5px;
-	opacity:1;
-	transition:opacity 0.6s; /* 600ms to fade out */
-}
-div.Message.error {
-	background:#ffecec url('images/message-error.svg') no-repeat 10px 50%;
-	border:1px solid #f5aca6;
-}
-div.Message.success {
-	background:#e9ffd9 url('images/message-success.svg') no-repeat 10px 50%;
-	border:1px solid #a6ca8a;
-}
-div.Message.info {
-	background:#e3f7fc url('images/info.svg') no-repeat 10px 50%;
-	border:1px solid #8ed9f6;
-}
-div.Message.warn {
-	background:#fff8c4 url('images/message-warning.png') no-repeat 10px 50%;
-	border:1px solid #f2c779;
-}
-.MessageCloseButton {
-	margin-left:15px;
-	color:#C8C8C8;
-	font-weight:bold;
-	float:right;
-	font-size:20px;
-	line-height:17px;
-	cursor:pointer;
-	transition:0.3s;
-}
-.MessageCloseButton:hover {
-	color:#606060;
-}
-#MessageContainerFoot {
-	display:none;
-}
-
-/*** Calendar picker ***/
 .dpTbl {
-	border:1px solid #C3C3C3;
-	-moz-box-shadow:0px 0px 8px #999999;
-	-webkit-box-shadow:0px 0px 8px #999999;
-	box-shadow:0px 0px 8px #999999;
-	-ms-filter:"progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=0, Color='#64BEF1')";
-	filter:progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=0, Color='#64BEF1');
+border:1px solid #C3C3C3;
+-moz-box-shadow:    0px 0px 8px #999999;
+-webkit-box-shadow: 0px 0px 8px #999999;
+box-shadow:         0px 0px 8px #999999;
+-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=0, Color='#64BEF1')";
+filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=0, Color='#64BEF1');
 }
 .dpTD {
-	border:0;
-	width:25px;
-	text-align:right;
-	cursor:pointer;
+border: 0;
+width:25px;
+text-align:right;
+cursor:pointer;
 }
 .dpTbl button {
-	padding:4px 12px;
+    padding: 4px 12px;
 }
 .dpDayHighlight {
-	border:0;
-	width:20px;
-	background-color:yellow;
-	text-align:right;
-	cursor:pointer;
+border: 0;
+width:20px;
+background-color: yellow;
+text-align:right;
+cursor:pointer;
 }
 .dpTDHover {
-	border:0;
-	width:20px;
-	background-color:#E1E1E1;
-	text-align:right;
-	cursor:pointer;
-}
-
-/* Table type is used for UI tables type 1 */
-.table1 {
-	width:90%;
-	background:#eeeeee;
-	border:0px 0px 2px 2px #222 solid;
-	margin:0 auto;
-}
-/* Table type is used for UI tables type 2 */
-.table2 {
-	width:90%;
-	background:#eeeeee;
-	border:0px 0px 2px 2px #222 solid;
-	margin:0 auto;
-}
-.tableheader {
-	font-weight:normal;
-	background-color:#777C59;
+border: 0;
+width:20px;
+background-color: #E1E1E1;
+text-align:right;
+cursor:pointer;
 }
 .notavailable {
-	font-weight:lighter;
-	font-style:italic;
-	color:#555555;
-}
-.label {
-	font-weight:bold;
-	font-style:normal;
-	font-size:120%;
-	color:#575757;
-}
-.table_index {
-	background-color:#F1FFDD;
-}
-
-
-.header {
-	background-image:url("");
-	background-repeat:no-repeat;
-	background-attachment:fixed;
-	border:none;
-	margin:0px;
-	padding:0px;
-}
-input.inputerror {
-	background-color:#fddbdb;
-}
-textarea.texterror {
-	background-color:#fddbdb;
-}
-select.selecterror {
-	background-color:#fddbdb;
-}
-.OsRow {
-	background-color:#234567;
-	color:white;
-}
-
-/*** CANVAS ***/
-
-#CanvasDiv {
-	background:#F1F1F1;
-	margin:0;
-}
-
-/*** HEADER ***/
-
-#HeaderDiv {
-	/*
-	overflow:hidden;	REQUIRED:height according to items contained */
-	color:#333333;
-	font-weight:bold;
-	padding-left:3px;
-	height:44px;
-}
-#HeaderWrapDiv {
-}
-
-/*** HEADER - APP INFO ***/
-
-#AppInfoDiv {
-	float:left; /* REQUIRED:to the left */
-}
-#AppInfoDiv img {
-	vertical-align:middle; /* center image and text vertically */
-}
-#AppInfoCompanyDiv {
-	display:table-cell; /* REQUIRED:as a cell */
-}
-#AppInfoUserDiv {
-	display:table-cell; /* REQUIRED:as a cell */
-}
-#AppInfoUserDiv a {
-	color:#333333;
-	font-weight:bold;
-}
-#AppInfoUserDiv a:hover {
-	text-decoration:none;
-}
-#AppInfoModuleDiv {
-}
-
-/*** HEADER - QUICK MENU ***/
-
-#QuickMenuDiv {
-	float:right; /* to the right side */
-	z-index:10;
-	margin-right:1.05%;
-}
-#QuickMenuDiv ul {
-	list-style:none; /* hide the bullets */
-	margin:0;
-	padding:0;
-
-	-webkit-border-radius:0 0 6px 6px;
-	-moz-border-radius:0 0 6px 6px;
-	border-radius:0 0 6px 6px;
-	-moz-box-shadow:1px 1px 2px #C3C3C3;
-	-webkit-box-shadow:1px 1px 2px #C3C3C3;
-	box-shadow:1px 1px 2px #C3C3C3;
-	-ms-filter:"progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3')";
-	filter:progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3');
-}
-#QuickMenuDiv li {
-	display:inline-block;
-	height:38px;
-}
-
-/*** links as buttons!!! clicking anywhere in the button will activate
-	 the link!!! ***HJ***/
-
-#QuickMenuDiv li a {
-	background:#686868;
-	border-bottom:thin solid #7C7C7C;
-	border-left:thin outset #737373;
-	border-right:thin inset #5D5D5D;
-	color:white;
-	display:block;
-	font-weight:bold;
-	padding:11px 24px;
-}
-#QuickMenuDiv li:first-child a {
-	-webkit-border-radius:0 0 0 6px;
-	-moz-border-radius:0 0 0 6px;
-	border-radius:0 0 0 6px;
-}
-#QuickMenuDiv li:last-child a {
-	-webkit-border-radius:0 0 6px 0;
-	-moz-border-radius:0 0 6px 0;
-	border-radius:0 0 6px 0;
-}
-#QuickMenuDiv li a:hover {
-	background:#444444;
-	border-left:thin outset #5C5C5C;
-	text-decoration:none;
-}
-
-/*** BODY ***/
-
-#BodyDiv {
-	clear:both; /* REQUIRED */
-	overflow:hidden; /* REQUIRED */
-	color:#000000;
-	background:#F1F1F1;
-	padding:5px;
-	text-align:center;
-	min-height:440px;
-}
-#BodyDiv table {
-	width:auto; /* automatic width */
-	margin:0 auto;
-	margin-bottom:10px;
-
-	-webkit-border-radius:4px;
-	-moz-border-radius:4px;
-	border-radius:4px;
-	-moz-box-shadow:1px 1px 2px #C3C3C3;
-	-webkit-box-shadow:1px 1px 2px #C3C3C3;
-	box-shadow:1px 1px 2px #C3C3C3;
-	-ms-filter:"progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3')";
-	filter:progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3')
-}
-#BodyDiv table.selection {
-	background-color:white;
-	border:thin outset #D2D2D2;
-	padding:5px;
-
-	-webkit-border-radius:4px;
-	-moz-border-radius:4px;
-	border-radius:4px;
-	-moz-box-shadow:1px 1px 2px #C3C3C3;
-	-webkit-box-shadow:1px 1px 2px #C3C3C3;
-	box-shadow:1px 1px 2px #C3C3C3;
-	-ms-filter:"progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3')";
-	filter:progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3')
-}
-
-/*** BODY - MAIN MENU ***/
-
-#MainMenuDiv {
-	margin-left:.6%;
-	margin-right:1%;
-	float:left; /* REQUIRED:to the left side */
-	white-space:nowrap; /* don't break text */
-	text-align:center;
-	width:14%;
-	border:thin inset #5D5D5D;
-	background:#686868;
-
-	-webkit-border-radius:4px;
-	-moz-border-radius:4px;
-	border-radius:4px;
-	-moz-box-shadow:1px 1px 2px #C3C3C3;
-	-webkit-box-shadow:1px 1px 2px #C3C3C3;
-	box-shadow:1px 1px 2px #C3C3C3;
-	-ms-filter:"progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3')";
-	filter:progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3')
-}
-#MainMenuDiv ul {
-	list-style:none; /* REQUIRED:hide bullets */
-	padding:0; /* REQUIRED:remove extra gaps (ex-bullets) */
-	margin:0;
-}
-#MainMenuDiv li {
-	list-style:none; /* REQUIRED */
-	padding:0; /* REQUIRED */
-}
-#MainMenuDiv li a { /* link as button!!! not-pressed state */
-	display:block; /* REQUIRED */
-	padding:8px;
-	/*border-top:thin outset #1E1E1E;*/
-	border-top:thin solid #5D5D5D;
-	border-bottom:thin solid #737373;
-	color:white;
-	font-weight:bold;
-}
-#MainMenuDiv li:first-child a {
-	border-top:none;
-}
-#MainMenuDiv li a:hover { /* link as button!!! pressed state */
-	text-decoration:none;
-	background:#444444;
-	border-bottom:thin solid #444444;
-}
-#MainMenuDiv .main_menu_selected a { /* the selected button */
-	/*border:thin inset #191919;*/
-	background:#2A2A2A;
-	border-bottom:thin solid #191919;
-}
-#MainMenuDiv .main_menu_selected a:hover {
-	background:#2A2A2A;
-}
-
-/*** BODY - SUB MENU ***/
-
-#SubMenuDiv {
-	display:table; /* display as table, sub menu will auto adjust width */
-	width:83.5%; /* main menu is 10% */
-	text-align:left;
-	border:thin outset #D2D2D2;
-	background-color:white;	/* for custom reports */
-	min-height:400px;
-
-	-webkit-border-radius:4px;
-	-moz-border-radius:4px;
-	border-radius:4px;
-	-moz-box-shadow:1px 1px 2px #C3C3C3;
-	-webkit-box-shadow:1px 1px 2px #C3C3C3;
-	box-shadow:1px 1px 2px #C3C3C3;
-	-ms-filter:"progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3')";
-	filter:progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3')
-}
-#SubMenuDiv a:link, a:visited {
-	color:#0088CD;
-	text-decoration:none;
-}
-#SubMenuDiv a:hover {
-	color:#0088CD;
-	text-decoration:none;
-}
-#SubMenuDiv ul {
-	list-style-type:none;
-	padding:0;
-	margin:0;
-}
-#SubMenuDiv li {
-	padding:2px;
-	color:#333333;
-}
-#SubMenuDiv li img {
-	vertical-align:middle; /* verticall align icon with the text */
-}
-#SubMenuDiv .menu_group_headers {
-	border-bottom:thin solid #DADADA;
-	text-align:center;
-	color:#2C2C2C;
-}
-#TransactionsDiv {
-	display:table-cell;
-	border-right:thin solid #D2D2D2;
-}
-#InquiriesDiv {
-	display:table-cell;
-	border-right:thin solid #D2D2D2;
-}
-#InquiriesDiv div { /* default div, used for custom report header */
-	color:#000000;
-	padding:2px;
-}
-#InquiriesDiv body {
-	background:#eeeeee;
-	color:red;
-	padding:2px;
-}
-#MaintenanceDiv {
-	display:table-cell;
-}
-.menu_group_item p {
-	color:transparent; /* buttets color */
-	margin:4px 0 0 0;
-}
-
-/*** FOOTER ***/
-
-#FooterDiv {
-	clear:both; /* REQUIRED */
-	color:#999999;
-	margin:auto;
-	overflow:hidden;
-	width:98.6%;
-}
-#FooterDiv a {
-	text-decoration:underline;
-	color:#999999;
-}
-#FooterWrapDiv {
-	overflow:hidden;
-	padding:3px;
-}
-#FooterLogoDiv {
-	float:right; /* right side */
-	padding:2px;
-}
-#FooterLogoDiv img {
-	vertical-align:middle;
-}
-#FooterVersionDiv {
-	float:left; /* left side */
-	margin-top:3px;
-}
-#FooterTimeDiv {
-	clear:left; /* below */
-}
-#Report {
-	/* Division id for reports. */}
-#Report table {
-	/* Body of a report formatted with table tag. */
-}
-/* BEGIN Class selectors of the style for all devices. ---------------------- */
-.centre {
-	text-align:center;
-	/* Class selector to horizontal align a text (centre) in an element. */
-}
-.number {
-	text-align:right;
-	/* Class selector to horizontal align a number (right) in an element. */
-}
-.text {
-	text-align:left;
-	/* Class selector to horizontal align a text (left) in an element. */
+font-weight:lighter;
+font-style:italic;
+color:#555555;
 }
 .gallery {
-	float:left;
-	margin:5px;
-	/* Class selector to let an element float to the left. */
+margin: 5px;
+float: left;
+/* Class selector to let an element float to the left. */
 }
-.field_help_text {
-	font-style:italic;
-	/* Class selector for field help text. */
+[data-title]:hover:after {
+opacity: 1;
+transition: all 0.1s ease 0.5s;
+visibility: visible;
 }
-.page_help_text {
-	background-color:#d3d3d3;
-	background-image:url(images/question.svg);
-	background-position:top left;
-	background-repeat:no-repeat;
-	border:#c3c3c3 solid thin;
-	color:#000000;
-	font-weight:normal;
-	margin:0 auto;
-	padding:4px 10px;/* padding-left:4px+16px+4px;*/
-	text-align:center;
-	width:80%;
-	/* Class selector for page help text. Hidden/displayed by the ShowPageHelp parameter. */
+[data-title]:after {
+content: attr(data-title);
+background-color: #1A1A1A;
+color: #E6E6FA;
+font-size: 100%;
+position: absolute;
+padding: 1px 5px 2px 5px;
+bottom: -1.9em;
+left: 10%;
+white-space: nowrap;
+box-shadow: 1px 1px 3px #222222;
+opacity: 0;
+border: 1px solid #111111;
+border-radius:5px;
+z-index: 99999;
+visibility: hidden;
 }
-.page_info_text {
-	background-color:#d3d3d3;
-	background-image:url(images/info.svg);
-	background-position:top left;
-	background-repeat:no-repeat;
-	border:#c3c3c3 solid thin;
-	color:#000000;
-	font-weight:normal;
-	margin:0 auto;
-	padding:4px 10px;
-	text-align:center;
-	width:80%;
-	/* Class selector for page info text. */
-}
-.page_title_text {
-	color:#000000;
-	font-size:18px;
-	margin:10px auto;
-	padding-bottom:2px;
-	padding-top:2px;
-	text-align:center;
-	width:60%;
-	/* Class selector for page title text. */
-}
-.sheet {/* Uncomment this to use sheet style preview
-	background-color:#ffffff;
-	border:0;
-	box-shadow:26px 16px 8px 0 rgba(0, 0, 0, 0.5);
-	color:#000000;
-	margin:5%;
-	padding:5%;*/
-	/* Class selector for sheet style preview. */
-}
-/* END Class selectors of the style for all devices. ------------------------ */
-
-
-/* If you want to use a cascading style sheet for a small device width, uncomment line "<meta name="viewport" content="width=device-width, initial-scale=1" />" on includes/header.php and use the following sections. */
-
-@media only screen and (max-device-width:767px) {
-	/* Style for new browser in a device with a rendering width less than 768px (xs - Extra small devices - Phones). */
-	.field_help_text {display:none;/* Hides field help text. */}
-	.page_help_text {display:none;/* Hides page help text. */}
-}
-
-@media only screen and (min-device-width:768px) and (max-device-width:991px) {
-	/* Style for new browser in a device with a rendering width between 768px and 992px (sm - Small devices - Tablets). */
-}
-
-@media only screen and (min-device-width:992px) and (max-device-width:1199px) {
-	/* Style for new browser in a device with a rendering width between 992px and 1200px (md - Medium devices - Desktops). */
-}
-
-@media only screen and (min-device-width:1200px) {
-	/* Style for new browser in a device with a rendering width greater than 1200px (lg - Large devices - Larger desktops). */
+[data-title] {
+position: relative;
 }

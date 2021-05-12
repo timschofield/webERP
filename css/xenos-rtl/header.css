@@ -1,0 +1,91 @@
+header {
+background:transparent;
+padding:10px;
+}
+header #Info {
+display:inline;
+padding:10px;
+}
+header #Info img {
+padding-left:7px;
+height:32px;
+width:32px;
+vertical-align:middle;
+}
+header #Info a {
+}
+header #ActionIcon {
+background:#8A8A8A;
+display:inline;
+float:left;
+padding-left:10px;
+padding-right:10px;
+height:40px;
+padding-top:9px;
+border-right: 1px solid #1A1A1A;
+margin-top:-10px;
+}
+header #ActionIcon img{
+padding-left:7px;
+height:32px;
+width:32px;
+}
+header #ActionIcon:hover {
+background:#4D4D4D;
+transition-duration:0.5s;
+}
+header #ExitIcon {
+background:#8A8A8A;
+display:inline;
+float:left;
+padding-right:10px;
+padding-left:30px;
+height:40px;
+padding-top:9px;
+border-right: 1px solid #1A1A1A;
+margin-top:-10px;
+}
+header #ExitIcon:hover {
+background:#4D4D4D;
+transition-duration:0.5s;
+}
+header #ExitIcon img {
+height:32px;
+width:32px;
+}
+header .FontSize {
+font-weight:bold;
+display:inline;
+padding:3px;
+color:#4D4D4D;
+}
+header .ScriptTitle {
+font-weight:bold;
+font-size:130%;
+display:inline;
+padding:10px;
+margin-right:0px;
+}
+header #favourites {
+background: url(images/descending.png) no-repeat left #8A8A8A;
+background-size:contain;
+overflow: hidden;
+color:#FFFFFF;
+font-size: 130%;
+font-weight:bold;
+padding-top: 2px;
+padding-bottom: 2px;
+padding-right: 7px;
+padding-left:32px;
+border: solid 1px #34A7E8;
+border-radius: 4px;
+margin: 2px;
+-moz-appearance:none;
+-webkit-appearance: none;
+cursor:pointer;
+}
+header #favourites:hover {
+background:url(images/descending.png) no-repeat left #4D4D4D;
+background-size:contain;
+transition-duration:0.5s;
+}

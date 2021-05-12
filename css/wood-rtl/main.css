@@ -1,0 +1,125 @@
+.MainBody {
+background:url(images/wood.jpg) #feb;
+margin:5px;
+margin-top:0px;
+margin-bottom:0px;
+padding:10px;
+border: 0px solid #82BCF4;
+}
+.ModuleList {
+float:right;
+background:url(images/wood.jpg) #feb;
+white-space:nowrap;
+text-align:right;
+padding-left:10px;
+padding-right:10px;
+padding-top:3px;
+width:11%;
+width:min-content;
+border:0px solid #8DCDEB;
+margin-right:5px;
+}
+.ModuleList li a,.ModuleList li a:hover {
+background:url(images/desk.jpg) #631;
+display:block;
+border-radius:10px;
+text-decoration:none;
+margin-bottom:5px;
+padding:3px;
+border:1px solid #404552;
+padding-right:5px;
+color:white;
+transition-duration:0.5s;
+}
+.ModuleList .ModuleSelected a {
+border:1px solid #1A1A1A;
+background:url(images/desk.jpg) #631;
+color:white;
+padding-right:5px;
+}
+.ModuleList .ModuleUnSelected a {
+border:1px solid #1A1A1A;
+background:transparent;
+color:#4D4D4D;
+padding-right:5px;
+}
+.ModuleList ul,.MenuList ul {
+margin:0;
+padding:0;
+}
+.ModuleList li,.MenuList li {
+list-style:none;
+}
+.MenuList {
+display: inline;
+width:30%;
+border-radius:10px;
+margin-top:5px;
+vertical-align:top;
+margin-left:5px;
+}
+.MenuList legend {
+background:url(images/desk.jpg) #631;
+color:#FFFFFF;
+padding:3px;
+padding-left:7px;
+border-radius:7px;
+}
+.MenuList legend img {
+width:40px;
+height:40px;
+padding-left:10px;
+vertical-align:middle;
+}
+.MenuItem {
+padding:2px;
+}
+.MenuItem a{
+color:#1A1A1A;
+text-decoration:none;
+text-align:right;
+padding:2px;
+}
+.MenuItem a:hover {
+background:transparent;
+text-align:right;
+text-decoration:underline;
+color:#1A1A1A;
+}
+.MenuList .CustomMenuList {
+background:url(images/desk.jpg) #631;
+border:3px outset #631;
+border-radius:10px 10px 0 0;
+color:#FFF;
+font-weight:700;
+text-align:center;
+margin:3px 3px 0;
+padding:2px;
+}
+.page_title_text {
+color:#000;
+font-weight:700;
+text-align:center;
+margin:5px auto;
+padding:5px;
+clear: both;
+}
+.page_title_text img {
+padding-left:7px;
+width:40px;
+height:40px;
+vertical-align:middle;
+}
+.toplink {
+float:right;
+margin-top:10px;
+display:inline-block;
+}
+.clearfix {
+  overflow: auto;
+}
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
