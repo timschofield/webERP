@@ -1,0 +1,47 @@
+.chart_wrapper {
+display: grid;
+grid-template-columns: 50% 50%;
+}
+.chart_key {
+margin-left:15px;
+vertical-align:top;
+}
+.pie {
+border-radius: 100%;
+height: calc(var(--size, 200) * 1px);
+position: relative;
+width: calc(var(--size, 200) * 1px);
+background:#B06161;
+overflow:hidden;
+}
+.pie__segment {
+height:100%;
+overflow:hidden;
+position:absolute;
+transform: translate(0, -50%) rotate(90deg) rotate(calc(var(--offset, 0) * 1deg));
+transform-origin: 50% 100%;
+width: 100%;
+}
+.pie__segment:before {
+background: #588BB6;
+content:'';
+height:100%;
+position:absolute;
+transform: translate(0, 100%) rotate(calc(var(--value, 45) * 1deg));
+transform-origin: 50% 0;
+width: 100%;
+}
+.seg_one {
+background:#B06161;
+color:#E5E5E5;
+font-size:150%;
+padding:3px;
+margin:3px;
+}
+.seg_two {
+background:#588BB6;
+color:#E5E5E5;
+font-size:150%;
+margin:3px;
+padding:3px;
+}

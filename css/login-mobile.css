@@ -1,0 +1,162 @@
+body {
+background:#fff;
+color:#616161;
+font-family:"Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+font-size:10pt;
+margin:0;
+padding:0;
+text-align:center
+vertical-align:middle;
+}
+
+#container {
+-moz-box-shadow:0 0 15px #DADADA;
+-webkit-box-shadow:0 0 15px #DADADA;
+background:linear-gradient(135deg,#ffffff0%,#f6f6f647%,#ededed100%);
+border:solid #A49999 1px;
+border-radius:15px;
+box-shadow:0 0 15px #DADADA;
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff',endColorstr='#ededed',GradientType=1);
+margin:1% auto 0;
+opacity:1.0;
+padding:10px 0 36px;
+text-align:left;
+width:90%;
+z-index:1000
+}
+
+#login_logo {
+height:51px;
+margin:0 auto 10px;
+width:45%
+}
+
+#ProjectLinks {
+display: none;
+}
+
+#login_box {
+background:#E5E5E5;
+border:solid #A49999 1px;
+border-radius:15px;
+margin:0 20px 10px 20px;
+margin-top:30px;
+width: 95%;
+}
+
+#contact_box {
+background:#E5E5E5;
+border:solid #A49999 1px;
+border-radius:15px;
+margin:0;
+width:98%
+}
+
+form {
+margin:0
+}
+
+th {
+text-align:center
+}
+
+td {
+vertical-align:top
+}
+
+select {
+-moz-border-radius:3px;
+-webkit-border-radius:3px;
+background:transparent;
+border-color:gray;
+border-radius:3px;
+border-style:solid;
+border-width:1px;
+color:#616161;
+font-size:300%;
+margin:10px 0 0 50px;
+position:relative;
+width:80%
+}
+
+select:hover, select:focus {
+background:transparent;
+border-color:#000;
+border-radius:3px;
+border-style:solid;
+border-width:1px;
+box-shadow:0 0 5px #7E7575;
+box-shadow:0 0 5px #7E7575
+}
+
+input {
+background-color:transparent;
+border-color:gray;
+border-radius:3px;
+border-style:solid;
+border-width:1px;
+color:#616161;
+font-size:300%;
+margin:10px 0 0;
+vertical-align:middle;
+margin:10px 0 0 50px;
+position:relative;
+width:80%
+}
+
+input:hover, input:focus {
+background-color:transparent;
+border-color:#000;
+border-style:solid;
+border-width:1px;
+box-shadow:0 0 5px #7E7575;
+box-shadow:0 0 5px #7E7575
+}
+
+button {
+background:#E5E5E5;
+border:solid gray 1px;
+border-radius:7px;
+color:#8A8A8A;
+font-size:300%;
+font-weight:700;
+margin:10px 10px 10px 50px;
+padding:4px;
+width:30%
+}
+
+button:hover {
+background:#BABABA;
+box-shadow:0 0 5px #7E7575;
+color:#382E2E;
+cursor:pointer
+}
+
+input.button:active {
+background:#000
+}
+
+span {
+margin:0 0 0 50px
+}
+
+label {
+display:block;
+float:left;
+font-weight:700;
+font-size:300%;
+line-height:normal;
+margin:10px 0 0 50px;
+position:relative;
+width:80%
+}
+
+#demo_text {
+margin:10px 0 0 50px;
+font-size:180%;
+}
+
+div.centre {
+margin:0 auto 10px;
+text-align:center
+}

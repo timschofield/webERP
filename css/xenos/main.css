@@ -1,0 +1,124 @@
+.MainBody {
+background:white;
+margin:5px;
+padding:10px;
+border: 1px solid #82BCF4;
+border-radius: 7px;
+}
+.ModuleList {
+float:left;
+background:#686868;
+white-space:nowrap;
+text-align:left;
+padding:10px;
+width:11%;
+width:min-content;
+border:0px solid #8DCDEB;
+border-radius:7px;
+margin:7px;
+}
+.ModuleList li a,.ModuleList li a:hover {
+display:block;
+background:#494C56;
+color:white;
+border-radius:10px;
+text-decoration:none;
+margin-bottom:1px;
+padding:7px;
+border:0px solid #404552;
+padding-left:5px;
+font-weight:normal;
+transition-duration:0.5s;
+}
+.ModuleList .ModuleSelected a {
+border:0px solid #1A1A1A;
+background:#2A2A2A;
+color:white;
+margin-bottom:1px;
+padding:7px;
+padding-left:5px;
+font-weight:normal;
+}
+.ModuleList .ModuleUnSelected a {
+border:0px solid #1A1A1A;
+background:#686868;
+color:white;
+margin-bottom:1px;
+padding:7px;
+padding-left:5px;
+font-weight:normal;
+}
+.ModuleList ul,.MenuList ul {
+margin:0;
+padding:0;
+}
+.ModuleList li,.MenuList li {
+list-style:none;
+}
+.MenuList {
+display: inline;
+width:30%;
+border-radius:10px;
+margin-top:5px;
+vertical-align:top;
+margin-right:5px;
+}
+.MenuList legend {
+}
+.MenuList legend img {
+width:40px;
+height:40px;
+padding-right:8px;
+vertical-align:middle;
+}
+.MenuItem {
+padding:2px;
+}
+.MenuItem a{
+color:#4D4D4D;
+text-decoration:none;
+text-align:left;
+}
+.MenuItem a:hover {
+background:transparent;
+text-align:left;
+text-decoration:underline;
+color:#2980F7;
+}
+.MenuList .CustomMenuList {
+background:#686868;
+border-bottom:thin solid #DADADA;
+text-align:center;
+color:white;
+}
+.page_title_text {
+padding-top:2px;
+padding-bottom:2px;
+font-size:18px;
+color:black;
+width:60%;
+text-align:center;
+margin:5px auto;
+border: 0px black solid;
+border-radius:16px;
+clear: both;
+}
+.page_title_text img {
+padding-right:7px;
+width:48px;
+height:48px;
+vertical-align:middle;
+}
+.toplink {
+float:left;
+margin-top:10px;
+display:inline-block;
+}
+.clearfix {
+  overflow: auto;
+}
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}

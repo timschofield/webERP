@@ -1,0 +1,84 @@
+table {
+width:auto;
+max-width:90%;
+padding-bottom:5px;
+margin:5px auto;
+table-layout: fixed;
+}
+table tr.visible {
+display:table-row;
+}
+table tr.invisible {
+display:none;
+}
+table th {
+background-color:transparent;
+padding:3px;
+border: 1px solid #8DCDEB;
+border-radius:3px;
+}
+table th img {
+vertical-align:middle;
+}
+table th.SortedColumn {
+cursor:s-resize;
+padding-right:16px;
+background-image:url(images/ascending.png);
+background-repeat: no-repeat;
+background-position:right center;
+background-size:12px;
+}
+table td {
+text-align:left;
+}
+table td.select {
+background-color:transparent;
+padding:3px;
+}
+table tr.striped_row:nth-of-type(even) {
+background-color:#383C4A;
+}
+table tr.striped_row:nth-of-type(odd) {
+background-color:#2F343F;
+}
+table tr.success_row {
+margin-top: 5px;
+background-color:#7FFFD4;
+color:green;
+border:1px solid green;
+margin:5px auto;
+}
+table tr.warn_row {
+margin-top: 5px;
+background-color:#FFC0CB;
+color:maroon;
+border:1px solid maroon;
+margin:5px auto;
+}
+table tr.info_row {
+margin-top: 5px;
+background-color:#449EF6;
+color:navy;
+border:1px solid navy;
+margin:5px auto;
+}
+table tr.error_row {
+margin-top: 5px;
+background-color:#FFE4E1;
+color:red;
+border:1px solid red;
+margin:5px auto;
+}
+table tr.total_row {
+background:#25252E;
+color:#FFFFFF;
+font-weight:bold;
+}
+table .number {
+text-align:right;
+}
+table th .PrintIcon {
+width:32px;
+float:right;
+cursor:pointer;
+}

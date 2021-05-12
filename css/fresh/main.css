@@ -1,0 +1,124 @@
+.MainBody {
+background:#E0F3B1;
+margin:3px;
+padding:1px;
+border: 1px solid #008000;
+border-radius: 7px;
+}
+.ModuleList {
+float:left;
+background:#617C4F;
+white-space:nowrap;
+text-align:left;
+padding-left:10px;
+padding-right:10px;
+padding-top:13px;
+padding-bottom:13px;
+width:11%;
+width:min-content;
+border:1px solid #8DCDEB;
+border-radius:17px;
+margin:7px;
+color:white;
+}
+.ModuleList li a,.ModuleList li a:hover {
+background:#5A5F00;
+display:block;
+border-radius:10px;
+text-decoration:none;
+margin-bottom:5px;
+padding:3px;
+border:1px solid #404552;
+padding-left:5px;
+color:white;
+}
+.ModuleList .ModuleSelected a {
+border:1px solid #1A1A1A;
+background:#5A5F00;
+color:white;
+padding-left:5px;
+}
+.ModuleList .ModuleUnSelected a {
+border:1px solid #1A1A1A;
+background:#617C4F;
+color:white;
+padding-left:5px;
+}
+.ModuleList ul,.MenuList ul {
+margin:0;
+padding:0;
+}
+.ModuleList li,.MenuList li {
+list-style:none;
+}
+.MenuList {
+background:#E0F3B1;
+display: inline;
+width:30%;
+border-radius:10px;
+margin-top:5px;
+vertical-align:top;
+margin-right:5px;
+}
+.MenuList legend {
+background:#C9D392;
+padding:1px;
+padding-left:5px;
+padding-right:8px;
+border-radius:17px;
+}
+.MenuList legend img {
+padding-right:7px;
+width:40px;
+height:40px;
+vertical-align:middle;
+}
+.MenuItem {
+color:#836C16;
+text-decoration:none;
+text-align:left;
+padding:2px;
+}
+.MenuItem a {
+color:#836C16;
+}
+.MenuItem:hover {
+background:transparent;
+text-align:left;
+color:white;
+}
+.MenuList .CustomMenuList {
+background:#C9D392;
+outline:thin outset #5A5F00;
+text-align:center;
+color:#000;
+}
+.page_title_text {
+padding-top:4px;
+padding-bottom:4px;
+font-weight:700;
+font-size:130%;
+color:#008000;
+background-color:#C9D392;
+width:30%;
+text-align:center;
+margin:10px auto;
+border-radius:13px;
+clear: both;
+}
+.page_title_text img {
+width:48px;
+height:48px;
+vertical-align:middle;
+}
+.toplink {
+float:left;
+}
+.clearfix {
+  overflow: auto;
+}
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
