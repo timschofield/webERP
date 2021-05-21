@@ -57,47 +57,18 @@ if ($ProcessSection01){
 		prnMsg("Sales Performance Board Section 01.",'info');
 	}
 
-	if ($KL_SystemAdmin 
+	if ($KL_SystemAdmin
 		OR $KL_OperationalManager
-		OR $KL_ShopManager
-		OR $KL_BusinessDevelopmentManager){
+		OR $KL_SalesTeamOnline
+		OR $KL_BusinessDevelopmentManager
+		OR $KL_ShopManager){
 		AverageSales("Shop", 30, 15, 10, 7, 5, 1, 7, "CurrentYear", "All", $db);
 		$NumberOfTestExecuted++;
-	}
-
-	if ($KL_SystemAdmin 
-		OR $KL_OperationalManager
-		OR $KL_ShopManager
-		OR $KL_SalesTeamOnline
-		OR $KL_BusinessDevelopmentManager){
-		AverageSales("Online", 30, 15, 10, 7, 5, 1, 7, "CurrentYear", "All", $db);
+		PeriodDifferenceSales("IMMEDIATE", "Shop",   7, $db);
 		$NumberOfTestExecuted++;
-	}
-	
-	if ($KL_SystemAdmin
-		OR $KL_OperationalManager
-		OR $KL_SalesTeamOnline
-		OR $KL_BusinessDevelopmentManager
-		OR $KL_ShopManager){
-
-		PeriodDifferenceSales("immeDIATE", "Online",   7, $db);
+		PeriodDifferenceSales("IMMEDIATE", "Shop",  15, $db);
 		$NumberOfTestExecuted++;
-		PeriodDifferenceSales("immeDIATE", "Online",  15, $db);
-		$NumberOfTestExecuted++;
-		PeriodDifferenceSales("immeDIATE", "Online",  30, $db);
-		$NumberOfTestExecuted++;
-	}
-
-	if ($KL_SystemAdmin
-		OR $KL_OperationalManager
-		OR $KL_SalesTeamOnline
-		OR $KL_BusinessDevelopmentManager
-		OR $KL_ShopManager){
-		PeriodDifferenceSales("immeDIATE", "Shop",   7, $db);
-		$NumberOfTestExecuted++;
-		PeriodDifferenceSales("immeDIATE", "Shop",  15, $db);
-		$NumberOfTestExecuted++;
-		PeriodDifferenceSales("immeDIATE", "Shop",  30, $db);
+		PeriodDifferenceSales("IMMEDIATE", "Shop",  30, $db);
 		$NumberOfTestExecuted++;
 
 //		PeriodDifferenceSales("YEAR", "Shop",   7, $db);
@@ -114,9 +85,20 @@ if ($ProcessSection01){
 //		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_SystemAdmin){
-//		AverageCustomerBehaviourByValueInvoice("Shop", 15, $db);
-//		$NumberOfTestExecuted++;
+	if ($KL_SystemAdmin
+		OR $KL_OperationalManager
+		OR $KL_SalesTeamOnline
+		OR $KL_BusinessDevelopmentManager
+		OR $KL_ShopManager){
+
+		AverageSales("Online", 30, 15, 10, 7, 5, 1, 7, "CurrentYear", "All", $db);
+		$NumberOfTestExecuted++;
+		PeriodDifferenceSales("IMMEDIATE", "Online",   7, $db);
+		$NumberOfTestExecuted++;
+		PeriodDifferenceSales("IMMEDIATE", "Online",  15, $db);
+		$NumberOfTestExecuted++;
+		PeriodDifferenceSales("IMMEDIATE", "Online",  30, $db);
+		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin 
