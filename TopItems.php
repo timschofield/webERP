@@ -8,6 +8,8 @@ include ('includes/session.php');
 $Title = _('Top Items Searching');
 include ('includes/header.php');
 include ('includes/SQL_CommonFunctions.inc');
+include('includes/KLDefines.php');
+
 
 //check if input already
 if (!(isset($_POST['Search']))) {
@@ -139,6 +141,7 @@ if (!(isset($_POST['Search']))) {
 					AND salesorderdetails.stkcode = stockmaster.stockid
 					AND salesorders.debtorno = debtorsmaster.debtorno
 					AND debtorsmaster.currcode = currencies.currabrev
+					AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SHOP_PACKAGING . "
 					AND salesorderdetails.actualdispatchdate >= '" . $FromDate . "'";
 
 	if ($_POST['Location'] != 'All') {
