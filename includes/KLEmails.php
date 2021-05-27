@@ -26,7 +26,7 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 						"Email:      " . $Param13 . "\n" . 
 						"Phone:      " . $Param12 . "\n\n" . 
 						"Comments:   " . $Param4 . "\n\n" . 
-						"Shipping:   " . $Param5 . "\n\n" .
+						"Shipping by:" . $Param5 . " Cost : " . $Param14 .  " " . $Param11 . "\n\n" .
 						"Products in this order:" . "\n" .
 						$Param6 . 
 						RepeatText(" ",73). "Total:" . $Param7 . " " . $Param11 . "\n" .

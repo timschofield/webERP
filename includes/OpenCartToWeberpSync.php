@@ -1026,7 +1026,8 @@ function EmailOrdersReadyToPrepare($ShowMessages, $db, $EmailText){
 						$TypeCustomer,
 						$myrow['currcode'],
 						$myrow['contactphone'],
-						$myrow['contactemail']
+						$myrow['contactemail'],
+						$myrow['freightcost']
 						);
 
 			// update the sales order, as we start the process
