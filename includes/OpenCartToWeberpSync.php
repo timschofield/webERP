@@ -49,47 +49,47 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db,
 		$EmailText = $EmailText . "Sync OpenCart Order Information" . "\n" . PrintTimeInformation($db);
 	}
 
-	$SQL = "SELECT 	" . $oc_tableprefix . "order.order_id,
-					" . $oc_tableprefix . "order.customer_id,
-					" . $oc_tableprefix . "order.firstname AS customerfirstname,
-					" . $oc_tableprefix . "order.lastname AS customerlastname,
-					" . $oc_tableprefix . "order.email,
-					" . $oc_tableprefix . "order.telephone,
-					" . $oc_tableprefix . "order.fax,
-					" . $oc_tableprefix . "order.comment,
-					" . $oc_tableprefix . "order.payment_firstname AS paymentfirstname,
-					" . $oc_tableprefix . "order.payment_lastname AS paymentlastname,
-					" . $oc_tableprefix . "order.payment_company AS paymentcompany,
-					" . $oc_tableprefix . "order.payment_address_1,
-					" . $oc_tableprefix . "order.payment_address_2,
-					" . $oc_tableprefix . "order.payment_city,
-					" . $oc_tableprefix . "order.payment_postcode,
-					" . $oc_tableprefix . "order.payment_zone,
-					" . $oc_tableprefix . "order.payment_country,
-					" . $oc_tableprefix . "order.payment_method,
-					" . $oc_tableprefix . "order.payment_code,
-					" . $oc_tableprefix . "order.shipping_firstname AS shippingfirstname,
-					" . $oc_tableprefix . "order.shipping_lastname AS shippinglastname,
-					" . $oc_tableprefix . "order.shipping_company AS shippingcompany,
-					" . $oc_tableprefix . "order.shipping_address_1,
-					" . $oc_tableprefix . "order.shipping_address_2,
-					" . $oc_tableprefix . "order.shipping_city,
-					" . $oc_tableprefix . "order.shipping_postcode,
-					" . $oc_tableprefix . "order.shipping_zone,
-					" . $oc_tableprefix . "order.shipping_country,
-					" . $oc_tableprefix . "order.shipping_method,
-					" . $oc_tableprefix . "order.shipping_code,
-					" . $oc_tableprefix . "order.total,
-					" . $oc_tableprefix . "order.order_status_id,
-					" . $oc_tableprefix . "order.currency_code,
-					" . $oc_tableprefix . "order.currency_value,
-					" . $oc_tableprefix . "order.date_modified,
-					" . $oc_tableprefix . "order.customer_group_id
-			FROM " . $oc_tableprefix . "order
-			WHERE " . $oc_tableprefix . "order.order_status_id = 2
-				AND ( " . $oc_tableprefix . "order.date_added >= '" . $LastTimeRun . "'
-					OR " . $oc_tableprefix . "order.date_modified >= '" . $LastTimeRun . "')
-			ORDER BY " . $oc_tableprefix . "order.order_id";
+	$SQL = "SELECT 	oc_order.order_id,
+					oc_order.customer_id,
+					oc_order.firstname AS customerfirstname,
+					oc_order.lastname AS customerlastname,
+					oc_order.email,
+					oc_order.telephone,
+					oc_order.fax,
+					oc_order.comment,
+					oc_order.payment_firstname AS paymentfirstname,
+					oc_order.payment_lastname AS paymentlastname,
+					oc_order.payment_company AS paymentcompany,
+					oc_order.payment_address_1,
+					oc_order.payment_address_2,
+					oc_order.payment_city,
+					oc_order.payment_postcode,
+					oc_order.payment_zone,
+					oc_order.payment_country,
+					oc_order.payment_method,
+					oc_order.payment_code,
+					oc_order.shipping_firstname AS shippingfirstname,
+					oc_order.shipping_lastname AS shippinglastname,
+					oc_order.shipping_company AS shippingcompany,
+					oc_order.shipping_address_1,
+					oc_order.shipping_address_2,
+					oc_order.shipping_city,
+					oc_order.shipping_postcode,
+					oc_order.shipping_zone,
+					oc_order.shipping_country,
+					oc_order.shipping_method,
+					oc_order.shipping_code,
+					oc_order.total,
+					oc_order.order_status_id,
+					oc_order.currency_code,
+					oc_order.currency_value,
+					oc_order.date_modified,
+					oc_order.customer_group_id
+			FROM oc_order
+			WHERE oc_order.order_status_id = 2
+				AND ( oc_order.date_added >= '" . $LastTimeRun . "'
+					OR oc_order.date_modified >= '" . $LastTimeRun . "')
+			ORDER BY oc_order.order_id";
 
 	$result = DB_query_oc($SQL);
 	if (DB_num_rows($result) != 0){
@@ -271,15 +271,15 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db,
 											  " --> " . $Action . "\n";
 				}
 				// Now the items of the order
-				$SQLItemsOrder = "SELECT " . $oc_tableprefix . "order_product.model,
-										" . $oc_tableprefix . "order_product.quantity,
-										" . $oc_tableprefix . "order_product.price,
-										" . $oc_tableprefix . "order_product.total,
-										" . $oc_tableprefix . "order_product.tax,
-										" . $oc_tableprefix . "order_product.reward
-								FROM " . $oc_tableprefix . "order_product
-								WHERE " . $oc_tableprefix . "order_product.order_id = " . $myrow['order_id'] . "
-								ORDER BY " . $oc_tableprefix . "order_product.order_product_id";
+				$SQLItemsOrder = "SELECT oc_order_product.model,
+										oc_order_product.quantity,
+										oc_order_product.price,
+										oc_order_product.total,
+										oc_order_product.tax,
+										oc_order_product.reward
+								FROM oc_order_product
+								WHERE oc_order_product.order_id = " . $myrow['order_id'] . "
+								ORDER BY oc_order_product.order_product_id";
 				$resultItemsOrder = DB_query_oc($SQLItemsOrder);
 				$ItemsOrder = 0;
 				if ($ShowMessages){
@@ -526,35 +526,35 @@ function SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeR
 	}
 
 	// Now deal with the Paypal payment/s of the order...
-	$SQL = "SELECT 	" . $oc_tableprefix . "paypal_order.paypal_order_id,
-				" . $oc_tableprefix . "order.order_id,
-				" . $oc_tableprefix . "order.currency_code AS ordercurrency,
-				" . $oc_tableprefix . "order.currency_value,
-				" . $oc_tableprefix . "order.customer_id,
-				" . $oc_tableprefix . "order.customer_group_id,
-				" . $oc_tableprefix . "order.email,
-				" . $oc_tableprefix . "order.total AS ordertotal,
-				" . $oc_tableprefix . "paypal_order.paypal_order_id,
-				" . $oc_tableprefix . "paypal_order.capture_status,
-				" . $oc_tableprefix . "paypal_order.currency_code AS paypalcurrency,
-				" . $oc_tableprefix . "paypal_order.authorization_id,
-				" . $oc_tableprefix . "paypal_order.total AS paypaltotal,
-				" . $oc_tableprefix . "paypal_order_transaction.transaction_id,
-				" . $oc_tableprefix . "paypal_order_transaction.date_added,
-				" . $oc_tableprefix . "paypal_order_transaction.payment_status,
-				" . $oc_tableprefix . "paypal_order_transaction.pending_reason,
-				" . $oc_tableprefix . "paypal_order_transaction.transaction_entity,
-				" . $oc_tableprefix . "paypal_order_transaction.amount,
-				" . $oc_tableprefix . "paypal_order_transaction.debug_data,
-				" . $oc_tableprefix . "paypal_order_transaction.call_data
-		FROM " . $oc_tableprefix . "paypal_order,
-			 " . $oc_tableprefix . "paypal_order_transaction,
-			 " . $oc_tableprefix . "order
-		WHERE " . $oc_tableprefix . "paypal_order.paypal_order_id = " . $oc_tableprefix . "paypal_order_transaction.paypal_order_id
-				AND " . $oc_tableprefix . "paypal_order.order_id  = " . $oc_tableprefix . "order.order_id
-				AND ( " . $oc_tableprefix . "paypal_order.date_added >= '" . $LastTimeRun . "'
-					OR " . $oc_tableprefix . "paypal_order.date_modified >= '" . $LastTimeRun . "')
-		ORDER BY " . $oc_tableprefix . "paypal_order.paypal_order_id";
+	$SQL = "SELECT 	oc_paypal_order.paypal_order_id,
+				oc_order.order_id,
+				oc_order.currency_code AS ordercurrency,
+				oc_order.currency_value,
+				oc_order.customer_id,
+				oc_order.customer_group_id,
+				oc_order.email,
+				oc_order.total AS ordertotal,
+				oc_paypal_order.paypal_order_id,
+				oc_paypal_order.capture_status,
+				oc_paypal_order.currency_code AS paypalcurrency,
+				oc_paypal_order.authorization_id,
+				oc_paypal_order.total AS paypaltotal,
+				oc_paypal_order_transaction.transaction_id,
+				oc_paypal_order_transaction.date_added,
+				oc_paypal_order_transaction.payment_status,
+				oc_paypal_order_transaction.pending_reason,
+				oc_paypal_order_transaction.transaction_entity,
+				oc_paypal_order_transaction.amount,
+				oc_paypal_order_transaction.debug_data,
+				oc_paypal_order_transaction.call_data
+		FROM oc_paypal_order,
+			 oc_paypal_order_transaction,
+			 oc_order
+		WHERE oc_paypal_order.paypal_order_id = oc_paypal_order_transaction.paypal_order_id
+				AND oc_paypal_order.order_id  = oc_order.order_id
+				AND ( oc_paypal_order.date_added >= '" . $LastTimeRun . "'
+					OR oc_paypal_order.date_modified >= '" . $LastTimeRun . "')
+		ORDER BY oc_paypal_order.paypal_order_id";
 	$result = DB_query_oc($SQL);
 
 	if (DB_num_rows($result) != 0){
@@ -704,19 +704,18 @@ function SyncOrderStatus($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_
 	}
 
 	// Now deal with the Order Status, in case it changed due to payments received or any other weird stuff happening
-	$SQL = "SELECT " . $oc_tableprefix . "order.order_id,
-				" . $oc_tableprefix . "order.customer_group_id,
-				" . $oc_tableprefix . "order.currency_code,
-				" . $oc_tableprefix . "order_history.order_status_id,
-				" . $oc_tableprefix . "order_history.comment
-			FROM " . $oc_tableprefix . "order,
-				" . $oc_tableprefix . "order_history
-			WHERE " . $oc_tableprefix . "order.order_id = " . $oc_tableprefix . "order_history.order_id
-				AND " . $oc_tableprefix . "order.order_status_id >= 1
-				AND ( " . $oc_tableprefix . "order.date_added >= '" . $LastTimeRun . "'
-					OR " . $oc_tableprefix . "order.date_modified >= '" . $LastTimeRun . "')
-			ORDER BY " . $oc_tableprefix . "order.order_id ASC,
-					" . $oc_tableprefix . "order_history.order_history_id ASC";
+	$SQL = "SELECT oc_order.order_id,
+				oc_order.customer_group_id,
+				oc_order.currency_code,
+				oc_order_history.order_status_id,
+				oc_order_history.comment
+			FROM oc_order,
+				oc_order_history
+			WHERE oc_order.order_id = oc_order_history.order_id
+				AND oc_order.order_status_id >= 1
+				AND oc_order_history.date_added >= '" . $LastTimeRun . "'
+			ORDER BY oc_order.order_id ASC,
+					oc_order_history.order_history_id ASC";
 	$result = DB_query_oc($SQL);
 
 	if (DB_num_rows($result) != 0){
@@ -801,17 +800,17 @@ function SyncSnapPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun
 		$EmailText = $EmailText . "Sync Snap (MIDTRANS) OpenCart Order Payments " . "\n" . PrintTimeInformation($db);
 	}
 
-	$SQL = "SELECT " . $oc_tableprefix . "order.order_id,
-				" . $oc_tableprefix . "order.customer_group_id,
-				" . $oc_tableprefix . "order.currency_code,
-				" . $oc_tableprefix . "order.date_modified,
-				" . $oc_tableprefix . "order.total
-			FROM " . $oc_tableprefix . "order
-			WHERE " . $oc_tableprefix . "order.order_status_id = 2
-				AND " . $oc_tableprefix . "order.payment_code = 'snap'
-				AND ( " . $oc_tableprefix . "order.date_added >= '" . $LastTimeRun . "'
-					OR " . $oc_tableprefix . "order.date_modified >= '" . $LastTimeRun . "')
-			ORDER BY " . $oc_tableprefix . "order.order_id ASC";
+	$SQL = "SELECT oc_order.order_id,
+				oc_order.customer_group_id,
+				oc_order.currency_code,
+				oc_order.date_modified,
+				oc_order.total
+			FROM oc_order
+			WHERE oc_order.order_status_id = 2
+				AND oc_order.payment_code = 'snap'
+				AND ( oc_order.date_added >= '" . $LastTimeRun . "'
+					OR oc_order.date_modified >= '" . $LastTimeRun . "')
+			ORDER BY oc_order.order_id ASC";
 	$result = DB_query_oc($SQL);
 
 	if (DB_num_rows($result) != 0){
