@@ -190,96 +190,96 @@ if (isset($_POST['OrderItems'])
 
 		if (!isset($NewItem)){
 			unset($NewItem);
-			break;	/* break out of the loop if nothing in the quick entry fields*/
-		}
-		/*Now figure out if the item is shop packaging or not*/
-		$sql = "SELECT stockmaster.categoryid
-						FROM stockmaster
-						WHERE stockmaster.stockid='". $NewItem ."'";
+		}else{
+			/*Now figure out if the item is shop packaging or not*/
+			$sql = "SELECT stockmaster.categoryid
+							FROM stockmaster
+							WHERE stockmaster.stockid='". $NewItem ."'";
 
-		$ErrMsg = _('Could not determine if the part was shop packaging or not because');
-		$DbgMsg = _('The sql that was used to determine if the part being ordered was shop packaging or not was ');
-		$PackagingResult = DB_query($sql,$ErrMsg,$DbgMsg);
-		if (DB_num_rows($PackagingResult)==0){
-			prnMsg( _('The item code') . ' ' . $NewItem . ' ' . _('could not be retrieved from the database'),'warn');
-		} elseif ($myrow=DB_fetch_array($PackagingResult)){
-			if ($myrow['categoryid'] == "SHPACK"){
-				// It's a packaging item
-				switch ($NewItem) {
-					case 'PKBX01-L':
-						$_POST['PackagingBox01L']++;
-						break;
-					case 'PKBX01-M':
-						$_POST['PackagingBox01M']++;
-						break;
-					case 'PKBX01-S':
-						$_POST['PackagingBox01S']++;
-						break;
-					case 'PKBX02-L':
-						$_POST['PackagingBox02L']++;
-						break;
-					case 'PKBX02-M':
-						$_POST['PackagingBox02M']++;
-						break;
-					case 'PKBX02-S':
-						$_POST['PackagingBox02S']++;
-						break;
-					case 'PKPB01-L':
-						$_POST['PackagingPouchBag01L']++;
-						break;
-					case 'PKPB01-M':
-						$_POST['PackagingPouchBag01M']++;
-						break;
-					case 'PKPB01-S':
-						$_POST['PackagingPouchBag01S']++;
-						break;
-					case 'PKSB02-L':
-						$_POST['ShoppingBag02L']++;
-						break;
-					case 'PKSB02-M':
-						$_POST['ShoppingBag02M']++;
-						break;
-					case 'PKSB02-S':
-						$_POST['ShoppingBag02S']++;
-						break;
-					case 'PKPB03-XL':
-						$_POST['BlinkPouchBag03XL']++;
-						break;
-					case 'PKPB03-L':
-						$_POST['BlinkPouchBag03L']++;
-						break;
-					case 'PKPB03-M':
-						$_POST['BlinkPouchBag03M']++;
-						break;
-					case 'PKPB03-S':
-						$_POST['BlinkPouchBag03S']++;
-						break;
-					case 'PKSB04-L':
-						$_POST['BlinkShoppingBag04L']++;
-						break;
-					case 'PKSB04-M':
-						$_POST['BlinkShoppingBag04M']++;
-						break;
-					case 'PKSB04-S':
-						$_POST['BlinkShoppingBag04S']++;
-						break;
-					case 'PKPB02-L':
-						$_POST['OutletPouchBag02L']++;
-						break;
-					case 'PKPB02-M':
-						$_POST['OutletPouchBag02M']++;
-						break;
-					case 'PKPB02-S':
-						$_POST['OutletPouchBag02S']++;
-						break;
-					case 'PKSB03':
-						$_POST['OutletShoppingBag03M']++;
-						break;
+			$ErrMsg = _('Could not determine if the part was shop packaging or not because');
+			$DbgMsg = _('The sql that was used to determine if the part being ordered was shop packaging or not was ');
+			$PackagingResult = DB_query($sql,$ErrMsg,$DbgMsg);
+			if (DB_num_rows($PackagingResult)==0){
+				prnMsg( _('The item code') . ' ' . $NewItem . ' ' . _('could not be retrieved from the database'),'warn');
+			} elseif ($myrow=DB_fetch_array($PackagingResult)){
+				if ($myrow['categoryid'] == "SHPACK"){
+					// It's a packaging item
+					switch ($NewItem) {
+						case 'PKBX01-L':
+							$_POST['PackagingBox01L']++;
+							break;
+						case 'PKBX01-M':
+							$_POST['PackagingBox01M']++;
+							break;
+						case 'PKBX01-S':
+							$_POST['PackagingBox01S']++;
+							break;
+						case 'PKBX02-L':
+							$_POST['PackagingBox02L']++;
+							break;
+						case 'PKBX02-M':
+							$_POST['PackagingBox02M']++;
+							break;
+						case 'PKBX02-S':
+							$_POST['PackagingBox02S']++;
+							break;
+						case 'PKPB01-L':
+							$_POST['PackagingPouchBag01L']++;
+							break;
+						case 'PKPB01-M':
+							$_POST['PackagingPouchBag01M']++;
+							break;
+						case 'PKPB01-S':
+							$_POST['PackagingPouchBag01S']++;
+							break;
+						case 'PKSB02-L':
+							$_POST['ShoppingBag02L']++;
+							break;
+						case 'PKSB02-M':
+							$_POST['ShoppingBag02M']++;
+							break;
+						case 'PKSB02-S':
+							$_POST['ShoppingBag02S']++;
+							break;
+						case 'PKPB03-XL':
+							$_POST['BlinkPouchBag03XL']++;
+							break;
+						case 'PKPB03-L':
+							$_POST['BlinkPouchBag03L']++;
+							break;
+						case 'PKPB03-M':
+							$_POST['BlinkPouchBag03M']++;
+							break;
+						case 'PKPB03-S':
+							$_POST['BlinkPouchBag03S']++;
+							break;
+						case 'PKSB04-L':
+							$_POST['BlinkShoppingBag04L']++;
+							break;
+						case 'PKSB04-M':
+							$_POST['BlinkShoppingBag04M']++;
+							break;
+						case 'PKSB04-S':
+							$_POST['BlinkShoppingBag04S']++;
+							break;
+						case 'PKPB02-L':
+							$_POST['OutletPouchBag02L']++;
+							break;
+						case 'PKPB02-M':
+							$_POST['OutletPouchBag02M']++;
+							break;
+						case 'PKPB02-S':
+							$_POST['OutletPouchBag02S']++;
+							break;
+						case 'PKSB03':
+							$_POST['OutletShoppingBag03M']++;
+							break;
+					}
+				}else{
+					// it's not packaging, so a sold item
+					include('includes/SelectOrderItems_IntoCart.inc');
+					$_SESSION['Items'.$identifier]->GetTaxes(($_SESSION['Items'.$identifier]->LineCounter - 1));
 				}
-			}else{
-				// it's not packaging, so a sold item
-				include('includes/SelectOrderItems_IntoCart.inc');
-				$_SESSION['Items'.$identifier]->GetTaxes(($_SESSION['Items'.$identifier]->LineCounter - 1));
 			}
 		}
 		$i++;
