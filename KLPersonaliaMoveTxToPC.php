@@ -279,10 +279,15 @@ function display($Title, &$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DI
 	echo '<table class="selection">';
 	
 	include('includes/KLPersonaliaParameterSelection.php');
+
+	$PeriodNow = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
+	$PeriodsResult = DB_query("SELECT lastdate_in_period, periodno FROM periods WHERE periodno = '" . ($PeriodNow - 1) . "'");
+	$PeriodRow = DB_fetch_row($PeriodsResult);
+	$LastDate = $PeriodRow[0];
 	
 	echo '<tr>
 		<td>' . _('Payment date') . ':</td>
-		<td><input type="text" size="11" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="PaymentDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" />';
+		<td><input type="text" size="11" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="PaymentDate" value="' . ConvertSQLDate($LastDate) . '" />';
 	echo '</td></tr>';
 	echo '<tr><td>&nbsp;</td></tr>
 		<tr>
