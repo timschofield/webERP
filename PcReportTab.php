@@ -43,9 +43,9 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 
 	$SQL = "SELECT tabcode
 		FROM pctabs
-		WHERE ( authorizer='" . $_SESSION['UserID'] .
-			"' OR usercode ='" . $_SESSION['UserID'].
-			"' OR assigner ='" . $_SESSION['UserID'] . "' )
+		WHERE ( authorizer LIKE '%" . $_SESSION['UserID'] .
+			"' OR usercode LIKE '%" . $_SESSION['UserID'].
+			"' OR assigner LIKE '%" . $_SESSION['UserID'] . "' )
 		ORDER BY tabcode";
 	$result = DB_query($SQL);
 
