@@ -1543,7 +1543,7 @@ function SyncMultipleImages($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tablep
 		$exist_multiple = TRUE;
 		while ($multipleimage <= 9){
 			$suffix = ".". $multipleimage;
-			if (strpos($file, $suffix) > 0){
+			if (strpos($file, $suffix) !== false){
 				// GET stockid from filename
 				$StockId = substr($file, 0, strpos($file, $suffix));
 				// get Opencart productid

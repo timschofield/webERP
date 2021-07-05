@@ -29,7 +29,7 @@ WebClientPrint::$webClientPrintAbsoluteUrl = Utils::getRoot(). $RootPath .'/incl
 //$CachePath = Utils::getRoot() . $RootPath .'/includes/WebClientPrint/wcpcache/';
 //$CachePath = realpath($_SERVER["DOCUMENT_ROOT"]) . $RootPath .'/includes/WebClientPrint/wcpcache/';
 
-if (strpos($_SERVER['PHP_SELF'],"TEST")){
+if (strpos($_SERVER['PHP_SELF'],"TEST")!== false){
 	$CachePath = '/var/www/vhosts/kapal-laut.com/ptadu.com/TEST/weberp/includes/WebClientPrint/wcpcache/';
 }else{
 	$CachePath = '/var/www/vhosts/kapal-laut.com/ptadu.com/weberp/includes/WebClientPrint/wcpcache/';

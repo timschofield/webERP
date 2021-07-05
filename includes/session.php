@@ -111,7 +111,7 @@ if(basename($_SERVER['SCRIPT_NAME'])=='Logout.php'){
 	/*  Need to set the theme to make login screen nice */
 	$Theme = (isset($_SESSION['Theme'])) ? $_SESSION['Theme'] : $DefaultTheme;
 	/* RICARD KL Set up the login theme for regular and test webERP */
-	if (strpos($_SERVER['PHP_SELF'],"TEST")){
+	if (strpos($_SERVER['PHP_SELF'],"TEST")!== false){
 		$Theme = 'gel'; 
 	}else{
 		$Theme = (isset($_SESSION['Theme'])) ? $_SESSION['Theme'] : 'default'; 
@@ -153,7 +153,7 @@ if (strcmp($Version,$_SESSION['VersionNumber'])>0 AND (basename($_SERVER['SCRIPT
 	header('Location: UpgradeDatabase.php');
 }
 
-if (strpos($_SERVER['PHP_SELF'],"TEST")){
+if (strpos($_SERVER['PHP_SELF'],"TEST")!== false){
 	$_SESSION['Theme'] = 'gel';
 	$Theme = 'gel'; 
 }else{

@@ -1981,31 +1981,31 @@ function ImagesWithoutProduct($RootPath, $db){
 			$file != 'Obsolete' AND
 			$file != 'part_pics'){
 			$StockId = substr($file, 0, strpos($file, $suffix));
-			if (strpos($StockId, '.1') > 0){
+			if (strpos($StockId, '.1') !== false){
 				$StockId = substr($file, 0, strpos($StockId, '.1'));
 			}
-			if (strpos($StockId, '.2') > 0){
+			if (strpos($StockId, '.2') !== false){
 				$StockId = substr($file, 0, strpos($StockId, '.2'));
 			}
-			if (strpos($StockId, '.3') > 0){
+			if (strpos($StockId, '.3') !== false){
 				$StockId = substr($file, 0, strpos($StockId, '.3'));
 			}
-			if (strpos($StockId, '.4') > 0){
+			if (strpos($StockId, '.4') !== false){
 				$StockId = substr($file, 0, strpos($StockId, '.4'));
 			}
-			if (strpos($StockId, '.5') > 0){
+			if (strpos($StockId, '.5') !== false){
 				$StockId = substr($file, 0, strpos($StockId, '.5'));
 			}
-			if (strpos($StockId, '.6') > 0){
+			if (strpos($StockId, '.6') !== false){
 				$StockId = substr($file, 0, strpos($StockId, '.6'));
 			}
-			if (strpos($StockId, '.7') > 0){
+			if (strpos($StockId, '.7') !== false){
 				$StockId = substr($file, 0, strpos($StockId, '.7'));
 			}
-			if (strpos($StockId, '.8') > 0){
+			if (strpos($StockId, '.8') !== false){
 				$StockId = substr($file, 0, strpos($StockId, '.8'));
 			}
-			if (strpos($StockId, '.9') > 0){
+			if (strpos($StockId, '.9') !== false){
 				$StockId = substr($file, 0, strpos($StockId, '.9'));
 			}
 			$SQL = "SELECT stockid

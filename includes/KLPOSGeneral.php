@@ -1,7 +1,7 @@
 <?php
 
 function webERP_in_test(){
-	return (strpos($_SERVER['PHP_SELF'],"TEST"));
+	return (strpos($_SERVER['PHP_SELF'],"TEST")!== false);
 }
 
 

@@ -1197,25 +1197,25 @@ function RoundPriceFromCart($value, $currency){
 
 function GetWeberpShippingMethod($OpenCartShippingMethod){
 	$OpenCartShippingMethod = strtoupper($OpenCartShippingMethod);
-	if (strpos($OpenCartShippingMethod, SHIPMENT01_OPENCART_TEXT) > 0){
+	if (strpos($OpenCartShippingMethod, SHIPMENT01_OPENCART_TEXT) !== false){
 		$WeberpShipping = SHIPMENT01_WEBERP_CODE;
-	}elseif (strpos($OpenCartShippingMethod, SHIPMENT02_OPENCART_TEXT) > 0){
+	}elseif (strpos($OpenCartShippingMethod, SHIPMENT02_OPENCART_TEXT) !== false){
 		$WeberpShipping = SHIPMENT02_WEBERP_CODE;
-	}elseif (strpos($OpenCartShippingMethod, SHIPMENT03_OPENCART_TEXT) > 0){
+	}elseif (strpos($OpenCartShippingMethod, SHIPMENT03_OPENCART_TEXT) !== false){
 		$WeberpShipping = SHIPMENT03_WEBERP_CODE;
-	}elseif (strpos($OpenCartShippingMethod, SHIPMENT04_OPENCART_TEXT) > 0){
+	}elseif (strpos($OpenCartShippingMethod, SHIPMENT04_OPENCART_TEXT) !== false){
 		$WeberpShipping = SHIPMENT04_WEBERP_CODE;
-	}elseif (strpos($OpenCartShippingMethod, SHIPMENT05_OPENCART_TEXT) > 0){
+	}elseif (strpos($OpenCartShippingMethod, SHIPMENT05_OPENCART_TEXT) !== false){
 		$WeberpShipping = SHIPMENT05_WEBERP_CODE;
-	}elseif (strpos($OpenCartShippingMethod, SHIPMENT06_OPENCART_TEXT) > 0){
+	}elseif (strpos($OpenCartShippingMethod, SHIPMENT06_OPENCART_TEXT) !== false){
 		$WeberpShipping = SHIPMENT06_WEBERP_CODE;
-	}elseif (strpos($OpenCartShippingMethod, SHIPMENT07_OPENCART_TEXT) > 0){
+	}elseif (strpos($OpenCartShippingMethod, SHIPMENT07_OPENCART_TEXT) !== false){
 		$WeberpShipping = SHIPMENT07_WEBERP_CODE;
-	}elseif (strpos($OpenCartShippingMethod, SHIPMENT08_OPENCART_TEXT) > 0){
+	}elseif (strpos($OpenCartShippingMethod, SHIPMENT08_OPENCART_TEXT) !== false){
 		$WeberpShipping = SHIPMENT08_WEBERP_CODE;
-	}elseif (strpos($OpenCartShippingMethod, SHIPMENT09_OPENCART_TEXT) > 0){
+	}elseif (strpos($OpenCartShippingMethod, SHIPMENT09_OPENCART_TEXT) !== false){
 		$WeberpShipping = SHIPMENT09_WEBERP_CODE;
-	}elseif (strpos($OpenCartShippingMethod, SHIPMENT10_OPENCART_TEXT) > 0){
+	}elseif (strpos($OpenCartShippingMethod, SHIPMENT10_OPENCART_TEXT) !== false){
 		$WeberpShipping = SHIPMENT10_WEBERP_CODE;
 	}else{
 		$WeberpShipping = OPENCART_DEFAULT_SHIPVIA;
@@ -1225,7 +1225,7 @@ function GetWeberpShippingMethod($OpenCartShippingMethod){
 
 function GetGoogleProductFeedStatus($StockId, $SalesCategory, $Quantity){
 	$Status = 0;
-	if ((strpos(SALES_CATEGORIES_FOR_GOOGLE_PRODUCT_FEED, $SalesCategory) > 0)
+	if ((strpos(SALES_CATEGORIES_FOR_GOOGLE_PRODUCT_FEED, $SalesCategory) !== false)
 		AND ($Quantity > 0)){
 		$Status = 1;
 	}
