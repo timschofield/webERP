@@ -46,14 +46,21 @@ if ( isset($_POST['submit']) ) {
 		would not run in this case cos submit is false of course  see the
 		delete code below*/
 
-		$sql = "UPDATE shippers SET shippername='" . $_POST['ShipperName'] . "'
+		$sql = "UPDATE shippers SET shippername='" . $_POST['ShipperName'] . "',
+					opencart_text='".  $_POST['Opencart_Text'] ."',
+					powertrack_code='".  $_POST['Powertrack_Code'] ."'
 				WHERE shipper_id = '".$SelectedShipper."'";
 		$msg = _('The shipper record has been updated');
 	} elseif ($InputError !=1) {
 
 	/*SelectedShipper is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new Shipper form */
 
-		$sql = "INSERT INTO shippers (shippername) VALUES ('" . $_POST['ShipperName'] . "')";
+		$sql = "INSERT INTO shippers (shippername, 
+									opencart_text, 
+									powertrack_code) 
+				VALUES ('" . $_POST['ShipperName'] . "',
+						'" . $_POST['Opencart_Text'] . "',
+						'" . $_POST['Powertrack_Code'] . "')";
 		$msg = _('The shipper record has been added');
 	}
 
@@ -64,6 +71,8 @@ if ( isset($_POST['submit']) ) {
 		prnMsg($msg, 'success');
 		unset($SelectedShipper);
 		unset($_POST['ShipperName']);
+		unset($_POST['Opencart_Text']);
+		unset($_POST['Powertrack_Code']);
 		unset($_POST['Shipper_ID']);
 	}
 
@@ -127,7 +136,11 @@ or deletion of the records*/
 	$result = DB_query($sql);
 
 	echo '<table class="selection">
-		<tr><th>' .  _('Shipper ID'). '</th><th>' .  _('Shipper Name'). '</th></tr>';
+		<tr><th>' .  _('Shipper ID'). '</th>
+			<th>' .  _('Shipper Name'). '</th>
+			<th>' .  _('OpenCart Text'). '</th>
+			<th>' .  _('PowerTrack Code'). '</th>
+		</tr>';
 
 	$k=0; //row colour counter
 
@@ -141,10 +154,14 @@ or deletion of the records*/
 		}
 		printf('<td>%s</td>
 			<td>%s</td>
+			<td>%s</td>
+			<td>%s</td>
 			<td><a href="%sSelectedShipper=%s">' .  _('Edit') . '</a></td>
 			<td><a href="%sSelectedShipper=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this shipper?') . '\');">' .  _('Delete'). '</a></td></tr>',
 			$myrow[0],
 			$myrow[1],
+			$myrow[3],
+			$myrow[4],
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' ,
 			$myrow[0],
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
@@ -171,13 +188,19 @@ if (!isset($_GET['delete'])) {
 	if (isset($SelectedShipper)) {
 		//editing an existing Shipper
 
-		$sql = "SELECT shipper_id, shippername FROM shippers WHERE shipper_id='".$SelectedShipper."'";
+		$sql = "SELECT shipper_id, 
+					shippername, 
+					opencart_text, 
+					powertrack_code
+				FROM shippers WHERE shipper_id='".$SelectedShipper."'";
 
 		$result = DB_query($sql);
 		$myrow = DB_fetch_array($result);
 
 		$_POST['Shipper_ID'] = $myrow['shipper_id'];
 		$_POST['ShipperName']	= $myrow['shippername'];
+		$_POST['Opencart_Text']	= $myrow['opencart_text'];
+		$_POST['Powertrack_Code']	= $myrow['powertrack_code'];
 
 		echo '<input type="hidden" name="SelectedShipper" value="'. $SelectedShipper .'" />';
 		echo '<input type="hidden" name="Shipper_ID" value="' . $_POST['Shipper_ID'] . '" />';
@@ -189,13 +212,28 @@ if (!isset($_GET['delete'])) {
 	if (!isset($_POST['ShipperName'])) {
 		$_POST['ShipperName']='';
 	}
+	if (!isset($_POST['Opencart_Text'])) {
+		$_POST['Opencart_Text']='';
+	}
+	if (!isset($_POST['Powertrack_Code'])) {
+		$_POST['Powertrack_Code']='';
+	}
 
 	echo '<tr><td>' .  _('Shipper Name') .':</td>
 			<td>
 				<input type="text" name="ShipperName"'. (in_array('ShipperName',$Errors) ? 'class="inputerror"' : '' ) . ' value="'. $_POST['ShipperName'] .'" size="35" maxlength="40" />
 			</td>
 		</tr>
-
+		<tr><td>' .  _('OpenCart Text') .':</td>
+			<td>
+				<input type="text" name="Opencart_Text"'. ' value="'. $_POST['Opencart_Text'] .'" size="20" maxlength="20" />
+			</td>
+		</tr>
+		<tr><td>' .  _('PowerTrack Code') .':</td>
+			<td>
+				<input type="text" name="Powertrack_Code"'. ' value="'. $_POST['Powertrack_Code'] .'" size="10" maxlength="10" />
+			</td>
+		</tr>
 	</table>
 
 	<br />
