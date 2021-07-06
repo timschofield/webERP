@@ -185,9 +185,10 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 						'Total CC EDC Mandiri  : ' . $Param9  . "\r\n" .
 						'Total CC EDC BCA      : ' . $Param10 . "\r\n" .
 						'Total WeChat/Alipay   : ' . $Param13 . "\r\n" .
+						'Total QRIS            : ' . $Param14 . "\r\n" .
 						'Total Returned Goods  : ' . $Param11 . "\r\n" .
 						'Total Voucher/Discount: ' . $Param12 . "\r\n" .
-						'Comments              : ' . $Param14; 		
+						'Comments              : ' . $Param15; 		
 			$EmailAddress = "kl-splittedpayments@kapal-laut.com";
 			break;
 		case "GoodsReturnedToShop":
@@ -204,13 +205,14 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 						'Total CC EDC Mandiri   : ' . $Param9  . "\r\n" .
 						'Total CC EDC BCA       : ' . $Param10  . "\r\n" .
 						'Total WeChat/Alipay    : ' . $Param17 . "\r\n" .
+						'Total QRIS             : ' . $Param18 . "\r\n" .
 						'Total Returned Goods   : ' . $Param11 . "\r\n" .
 						'Total Voucher/Discount : ' . $Param12 . "\r\n" .
 						'Old Invoice            : ' . $Param13 . "\r\n" .
 						'Old Invoice Date       : ' . $Param14 . "\r\n" .
 						'Items Returned         : ' . $Param15 . "\r\n" .
 						'Reason of return       : ' . $Param16 . "\r\n" .
-						'Comments               : ' . $Param18; 		
+						'Comments               : ' . $Param19; 		
 			$EmailAddress = "kl-goodsreturnedtoshop@kapal-laut.com";
 			break;
 		case "VoucherDiscounts":
@@ -227,10 +229,11 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 						'Total CC EDC Mandiri  : ' . $Param9  . "\r\n" .
 						'Total CC EDC BCA      : ' . $Param10  . "\r\n" .
 						'Total WeChat/Alipay   : ' . $Param14 . "\r\n" .
+						'Total QRIS            : ' . $Param15 . "\r\n" .
 						'Total Returned Goods  : ' . $Param11 . "\r\n" .
 						'Total Voucher/Discount: ' . $Param12 . "\r\n" .
 						'Voucher/Discount Code : ' . $Param13 . "\r\n" .
-						'Comments              : ' . $Param15; 		
+						'Comments              : ' . $Param16; 		
 			$EmailAddress = "kl-voucherdiscounts@kapal-laut.com";
 			break;
 		case "SalesWithNotEnoughQOH":

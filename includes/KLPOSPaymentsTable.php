@@ -22,6 +22,9 @@ if (!isset($_POST['AmountPaidCCBCA'])){
 if (!isset($_POST['AmountPaidWeChat'])){
 	$_POST['AmountPaidWeChat'] =0;
 }
+if (!isset($_POST['AmountPaidQRIS'])){
+	$_POST['AmountPaidQRIS'] =0;
+}
 if (!isset($_POST['AmountReturnedGoods'])){
 	$_POST['AmountReturnedGoods'] =0;
 }
@@ -123,8 +126,8 @@ echo '</tr>';
 
 echo '<tr>';
 echo '<td></td>';
-echo '<td></td>';
-echo '<td></td>';
+echo '<td>' . _('Amount Paid QRIS') . ':</td>
+	  <td><input type="text" class="number" name="AmountPaidQRIS" maxlength="12" size="12" value="' . $_POST['AmountPaidQRIS'] . '" /></td>';
 echo '<td></td>';
 echo '<td>' . _('Voucher/Discount Code') . ':</td>
 	  <td><input type="text" class="text" name="VoucherCode" maxlength="40" size="12" value="' . $_POST['VoucherCode'] . '" /></td>';
