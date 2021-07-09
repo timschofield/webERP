@@ -710,6 +710,7 @@ $MenuItems['Personalia']['Transactions']['Caption'] = array(_('Import Monthly Sa
 															_('Send Monthly Salary Slips by e-mail'),
 															_('Export CSV File for Danamon Transfer LLG'),
 															_('Export CSV File for Danamon Transfer Payroll'),
+															_('Export CSV File for Danamon Transfer @ Cash Connect'),
 															_('Move Salaries info to Petty Cash')
 															);
 
@@ -720,6 +721,7 @@ $MenuItems['Personalia']['Transactions']['URL'] = array('/KLPersonaliaImportSala
 														'/KLPersonaliaEmailMonthlySalarySlips.php',
 														'/KLPersonaliaCSVDanamonLLG.php',
 														'/KLPersonaliaCSVDanamonPayroll.php',
+														'/KLPersonaliaCSVDanamonCashConnect.php',
 														'/KLPersonaliaMoveTxToPC.php'
 														);
 
