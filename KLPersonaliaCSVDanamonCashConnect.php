@@ -54,6 +54,7 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType, &$db) {
 						bankaccountholder,
 						bankcode,
 						fullname,
+						email,
 						upahpokok,
 						tunjanganmakan,
 						tunjangantransport,
@@ -160,9 +161,10 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType, &$db) {
 							"" . $Separator . 
 							"" . $Separator . 
 							"" . $Separator . 
-							"" . $Separator . 
+							$myrow['email'] . $Separator . 
 							"" . $Separator . 
 							$ToAccountDescrption . $Separator . 
+							"" . $Separator . 
 							"" . $Separator . 
 							"" . $Separator . 
 							$ValueTransfer . $Separator . 
@@ -200,9 +202,10 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType, &$db) {
 							"Bali" . $Separator . 
 							"" . $Separator . 
 							"" . $Separator . 
-							"" . $Separator . 
+							$myrow['email'] . $Separator . 
 							"" . $Separator . 
 							$ToAccountDescrption . $Separator . 
+							"" . $Separator . 
 							"" . $Separator . 
 							"IDR" . $Separator . 
 							$ValueTransfer . $Separator . 
