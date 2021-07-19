@@ -114,7 +114,7 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType, &$db) {
 					"S" . $Separator . 
 					"Y" . $Separator . 
 					"" . $Separator . 
-					date("Ymd") . $Separator . 
+					"" . $Separator . 
 					"" . $Separator . 
 					"" . $EOL;
 
@@ -181,7 +181,7 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType, &$db) {
 							"" . $Separator . 
 							"" . $Separator . 
 							"" . $Separator . 
-							"" . $Separator . 
+							"2150" . $Separator . 
 							"" . $Separator . 
 							"" . $Separator . 
 							"" . $EOL;
