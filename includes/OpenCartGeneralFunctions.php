@@ -1153,10 +1153,20 @@ function UpdateOpenCartOrderStatus($OrderId, $StatusId, $Notify, $Carrier, $AWB,
 						)";
 		$resultInsert = DB_query_oc($sqlInsert,$ErrMsg,$DbgMsg,true);
 	}
-
-
-
 }
+
+function UpdateOpenCartOrderPayment($OrderId, $db, $db_oc, $oc_tableprefix){
+
+	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference($db));
+
+	$DbgMsg = _('The SQL statement that failed was');
+	$UpdateErrMsg = _('The SQL to Update OpenCart Order Payment failed');
+	$sqlUpdate = "UPDATE oc_order
+					SET	kl_payment_sync_to_weberp = '" . $ServerNow . "'
+				WHERE order_id = '" . $OrderId . "'";
+	$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
+}
+
 
 function RoundPriceFromCart($value, $currency){
 	// copied and adapted from opencart/system/library/currency.php lines 74 to 106 approx.

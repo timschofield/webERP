@@ -900,6 +900,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 			$OnlineOrderNo = GetOnlineOrderNoFromWeberp($OrderNo, $db);
 			$ReasonChangeStatusId = "webERP --> Payment received by " . $PaymentCode . " Amount = " . $TotalAmount;  
 			UpdateOpenCartOrderStatus($OnlineOrderNo, OPENCART_ORDER_STATUS_PROCESSING, 0, "", "", $ReasonChangeStatusId, $db, $db_oc, $oc_tableprefix);
+			UpdateOpenCartOrderPayment($OnlineOrderNo, $db, $db_oc, $oc_tableprefix);
 		}
 
 
@@ -913,7 +914,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 			$ErrMsg = _('Cannot update the payment flag of the sales order because');
 			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		}
-
+		
 		$result = DB_Txn_Commit();
 
 	}else{

@@ -808,6 +808,7 @@ function SyncSnapPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun
 			FROM oc_order
 			WHERE oc_order.order_status_id = 2
 				AND oc_order.payment_code = 'snap'
+				AND oc_order.kl_payment_sync_to_weberp = '0000-00-00 00:00:00'
 				AND ( oc_order.date_added >= '" . $LastTimeRun . "'
 					OR oc_order.date_modified >= '" . $LastTimeRun . "')
 			ORDER BY oc_order.order_id ASC";
