@@ -281,6 +281,7 @@ function display($Title, &$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DI
 } // End of function display()
 
 function FindBeneficiaryBankCode($ExcelBankCode){
+	$ExcelBankCode = strtoupper($ExcelBankCode);
 	switch ($ExcelBankCode) {
     case "BCA":
 		$BeneficiaryBankCode = "0140397";
