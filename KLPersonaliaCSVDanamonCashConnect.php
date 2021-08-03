@@ -35,18 +35,18 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType, &$db) {
 
 	// The month selected should be last month for Monthly salaries
 	if ($SalaryType == "MONTHLY"){
-//		if($PeriodNow != ($PeriodExportDate + 1)){
-//			$InputErrorMessage = "The month selected to export Monthly Salary CSV File for Transfer Danamon Cash Connect should be last month";
-//			$InputError = TRUE;
-//		}
+		if($PeriodNow != ($PeriodExportDate + 1)){
+			$InputErrorMessage = "The month selected to export Monthly Salary CSV File for Transfer Danamon Cash Connect should be last month";
+			$InputError = TRUE;
+		}
 	}
 		
 	// The month selected should be current month for THR Only salaries
 	if ($SalaryType == "THRONLY"){
-//		if($PeriodNow != ($PeriodExportDate)){
-//			$InputErrorMessage = "The month selected to export THR Only CSV File for Transfer LLG Danamon should be current month";
-//			$InputError = TRUE;
-//		}
+		if($PeriodNow != ($PeriodExportDate)){
+			$InputErrorMessage = "The month selected to export THR Only CSV File for Transfer LLG Danamon should be current month";
+			$InputError = TRUE;
+		}
 	}
 
 	if(!$InputError){
