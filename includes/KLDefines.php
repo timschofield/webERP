@@ -169,15 +169,15 @@ define('STANDARD_JEWEL_ROLL_WEIGHT', 0.080);
 define('BOX_XS_LENGTH',       150); // approx for polishing cloth
 define('BOX_XS_WIDTH',         75); // approx for polishing cloth
 define('BOX_XS_HEIGHT',        10); // approx for polishing cloth
-define('BOX_S_LENGTH',         75);
-define('BOX_S_WIDTH',          75);
-define('BOX_S_HEIGHT',         45);
-define('BOX_M_LENGTH',        110);
-define('BOX_M_WIDTH',         110);
-define('BOX_M_HEIGHT',         45);
-define('BOX_L_LENGTH',        230);
-define('BOX_L_WIDTH',         160);
-define('BOX_L_HEIGHT',         45);
+define('BOX_S_LENGTH',         85);
+define('BOX_S_WIDTH',          85);
+define('BOX_S_HEIGHT',         50);
+define('BOX_M_LENGTH',        115);
+define('BOX_M_WIDTH',         115);
+define('BOX_M_HEIGHT',         50);
+define('BOX_L_LENGTH',        235);
+define('BOX_L_WIDTH',         165);
+define('BOX_L_HEIGHT',         50);
 define('BOX_XL_LENGTH',       300); // approx
 define('BOX_XL_WIDTH',        300); // approx
 define('BOX_XL_HEIGHT',       200); // approx
