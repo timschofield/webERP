@@ -4027,6 +4027,8 @@ function OnlineMarketPlacePaymentPending($RootPath, $db){
 		echo $TableHeader;
 		$k = 0; //row colour counter
 		$i = 1;
+		$TotalPaymentValue = 0;
+		
 		while ($myrow = DB_fetch_array($result)) {
 			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . $myrow['orderno'] . '">' . $myrow['orderno'] . '</a>';
@@ -4068,14 +4070,39 @@ function OnlineMarketPlacePaymentPending($RootPath, $db){
 					$myrow['orderno'], 
 					$myrow['customerref'],
 					ConvertSQLDate($myrow['orddate']), 
-					locale_number_format($myrow['ordervalue']+$myrow['freightcost'],$myrow['decimalplaces']),
+					locale_number_format($PaymentValue,$myrow['decimalplaces']),
 					$myrow['currcode'], 
 					$PaymentManual,
 					$PaymentTokopedia,
 					$PaymentShopee
 					);
 			$i++;
+			$TotalPaymentValue += $PaymentValue;
 		}
+		printf('<td class="number">%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td>%s</td>
+				<td class="number">%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				</tr>', 
+				"", 
+				"", 
+				"", 
+				"", 
+				"",
+				"TOTAL:", 
+				locale_number_format($TotalPaymentValue,$myrow['decimalplaces']),
+				"IDR", 
+				"",
+				"",
+				""
+				);
 		echo '</table>
 				</div>';
 	}
