@@ -310,7 +310,7 @@ if ($ProcessSection03){
 	if ($KL_SystemAdmin
 		OR $KL_OperationalManager
 		OR $KL_AdministrationTeam){
-		CashStatus(2021, 62000000, 50000000, 25000000, 54000000, 50000000, 25000000, 50000000, $periodnow, TRUE, $db);
+		CashStatus(2021, 62000000, 40000000, 20000000, 54000000, 40000000, 20000000, 40000000, $periodnow, TRUE, $db);
 		$NumberOfTestExecuted++;
 		
 	}
