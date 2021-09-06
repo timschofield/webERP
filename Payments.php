@@ -627,9 +627,21 @@ if(isset($_POST['CommitBatch'])) {
 		/* RICARD KL prepare the e-mail text just in case there are any controlled accounts */
 		$EmailText = _('Transaction') . ': ' . $TransNo . "\n" .
 					 _('User') . ': ' . $_SESSION['UserID'] . "\n" .
-					 _('Bank Account') . ': ' .$_SESSION['PaymentDetail'.$identifier]->Account . "\n";
+					 _('Bank Account') . ': ' . $_SESSION['PaymentDetail'.$identifier]->Account . "\n";
 		$emailToBeSent = false;
 
+		/* Check if the bank account is a controlled GL account */
+		$SQL = "SELECT controlled
+				FROM chartmaster
+				WHERE accountcode='" . $_SESSION['PaymentDetail'.$identifier]->Account . "'";
+		$ControlledResult = DB_query($SQL);
+		$ControlledRow = DB_fetch_array($ControlledResult) ;
+		if ($ControlledRow['controlled'] == 1)
+		{
+			$emailToBeSent = true;
+		}
+
+		/* Check if any of the GL accounts on the tx is a controlled GL account */
 		foreach($_SESSION['PaymentDetail'.$identifier]->GLItems as $PaymentItem) {
 
 			$SQL = "SELECT controlled
@@ -640,7 +652,6 @@ if(isset($_POST['CommitBatch'])) {
 			if ($ControlledRow['controlled'] == 1)
 			{
 				$emailToBeSent = true;
-				$EmailSubject = _('GL transaction to be controlled'); 
 			}
 			$EmailText .= $PaymentItem->GLCode . ' X ' . 
 						locale_number_format($PaymentItem->Amount,$_SESSION['PaymentDetail'.$identifier]->CurrDecimalPlaces) . ' ' . 
@@ -649,17 +660,19 @@ if(isset($_POST['CommitBatch'])) {
 		}
 
 		if ($emailToBeSent){
+			$GLAccountEmail = "kl-glcontrolledtx@kapal-laut.com";
+			$EmailSubject = _('GL transaction to be controlled'); 
 			$EmailText .= _('Email sent by webERP'). ' ' .date('d/M/Y H:i:s').'';
 			//Send email to the Admin
 			if($_SESSION['SmtpSetting']==0) {
-				mail($SysAdminEmail,$EmailSubject,$EmailText);
+				mail($GLAccountEmail,$EmailSubject,$EmailText);
 
 			} else {
 				include('includes/htmlMimeMail.php');
 				$mail = new htmlMimeMail();
 				$mail->setSubject($EmailSubject);
 				$mail->setHTML($EmailText);
-				$result = SendmailBySmtp($mail,array($SysAdminEmail));
+				$result = SendmailBySmtp($mail,array($GLAccountEmail));
 			}
 		}
 		
