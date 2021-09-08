@@ -137,7 +137,7 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db,
 			$PaymentName = CleanStringForWebERP(CapitalizeName($myrow['paymentfirstname'] . ' ' . $myrow['paymentlastname']));
 			$ShippingName = CleanStringForWebERP(CapitalizeName($myrow['shippingfirstname'] . ' ' . $myrow['shippinglastname']));
 			$SalesType = OPENCART_DEFAULT_CUSTOMER_SALES_TYPE;
-			$DefaultShipVia = GetWeberpShippingMethod($myrow['shipping_method']);
+			$DefaultShipVia = GetWeberpShippingMethod($myrow['shipping_code']);
 			$Quotation = 1; // is NOT a firm order until we check the payments
 			$FreightCost = RoundPriceFromCart(GetTotalFromOrder("shipping", $myrow['order_id'], $db_oc, $oc_tableprefix) * $myrow['currency_value'],$myrow['currency_code']);
 			$CouponDiscount = RoundPriceFromCart(GetTotalFromOrder("coupon", $myrow['order_id'], $db_oc, $oc_tableprefix) * $myrow['currency_value'],$myrow['currency_code']);
