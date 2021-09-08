@@ -626,13 +626,11 @@ if ($ProcessSection01){
 		ItemsWithoutPurchasingData($RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
-	if ($KL_BusinessDevelopmentManager){
-		ComponentsToObsolete(false, 0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-	}
 
 	if ($KL_BusinessDevelopmentManager
 		OR $KL_PurchasingTeam){
+		ComponentsToObsolete(false, 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		FlaggedAsObsoleteButStockAvailable($RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
