@@ -78,6 +78,9 @@ if(isset($_POST['submit'])) {
 					accountwechat='" . $_POST['AccountWeChat'] . "',
 					comissionwechat = '" . $_POST['ComissionWeChat'] . "',
 					accountcomissionwechat ='" . $_POST['AccountComissionWeChat'] . "',
+					accountqris='" . $_POST['AccountQRIS'] . "',
+					comissionqris = '" . $_POST['ComissionQRIS'] . "',
+					accountcomissionqris ='" . $_POST['AccountComissionQRIS'] . "',
 					counterinvoicea = '" . $_POST['CounterInvoiceA'] . "',
 					counterinvoiceb = '" . $_POST['CounterInvoiceB'] . "',
 					counterinvoicec = '" . $_POST['CounterInvoiceC'] . "'
@@ -131,6 +134,9 @@ if(isset($_POST['submit'])) {
 		unset($_POST['AccountWeChat']);
 		unset($_POST['ComissionWeChat']);
 		unset($_POST['AccountComissionWeChat']);
+		unset($_POST['AccountQRIS']);
+		unset($_POST['ComissionQRIS']);
+		unset($_POST['AccountComissionQRIS']);
 		unset($_POST['CounterInvoiceA']);
 		unset($_POST['CounterInvoiceB']);
 		unset($_POST['CounterInvoiceC']);
@@ -180,6 +186,9 @@ if(isset($_POST['submit'])) {
 								accountwechat,
 								comissionwechat,
 								accountcomissionwechat,
+								accountqris,
+								comissionqris,
+								accountcomissionqris,
 								counterinvoicea,
 								counterinvoiceb,
 								counterinvoicec)
@@ -223,6 +232,9 @@ if(isset($_POST['submit'])) {
 								'" . $_POST['AccountWeChat'] . "',
 								'" . $_POST['ComissionWeChat'] . "',
 								'" . $_POST['AccountComissionWeChat'] . "',
+								'" . $_POST['AccountQRIS'] . "',
+								'" . $_POST['ComissionQRIS'] . "',
+								'" . $_POST['AccountComissionQRIS'] . "',
 								'" . $_POST['CounterInvoiceA'] . "',
 								'" . $_POST['CounterInvoiceB'] . "',
 								'" . $_POST['CounterInvoiceC'] . "')";
@@ -274,6 +286,9 @@ if(isset($_POST['submit'])) {
 		unset($_POST['AccountWeChat']);
 		unset($_POST['ComissionWeChat']);
 		unset($_POST['AccountComissionWeChat']);
+		unset($_POST['AccountQRIS']);
+		unset($_POST['ComissionQRIS']);
+		unset($_POST['AccountComissionQRIS']);
 		unset($_POST['CounterInvoiceA']);
 		unset($_POST['CounterInvoiceB']);
 		unset($_POST['CounterInvoiceC']);
@@ -421,6 +436,9 @@ if(!isset($_GET['delete'])) {
 					accountwechat,
 					comissionwechat,
 					accountcomissionwechat,
+					accountqris,
+					comissionqris,
+					accountcomissionqris,
 					counterinvoicea,
 					counterinvoiceb,
 					counterinvoicec
@@ -470,6 +488,9 @@ if(!isset($_GET['delete'])) {
 		$_POST['AccountWeChat'] = $myrow['accountwechat'];
 		$_POST['AccountComissionWeChat'] = $myrow['accountcomissionwechat'];
 		$_POST['ComissionWeChat'] = $myrow['comissionwechat'];
+		$_POST['AccountQRIS'] = $myrow['accountqris'];
+		$_POST['AccountComissionQRIS'] = $myrow['accountcomissionqris'];
+		$_POST['ComissionQRIS'] = $myrow['comissionqris'];
 		$_POST['CounterInvoiceA'] = $myrow['counterinvoicea'];
 		$_POST['CounterInvoiceB'] = $myrow['counterinvoiceb'];
 		$_POST['CounterInvoiceC'] = $myrow['counterinvoicec'];
@@ -613,6 +634,15 @@ if(!isset($_GET['delete'])) {
 	}
 	if(!isset($_POST['AccountComissionWeChat'])) {
 		$_POST['AccountComissionWeChat'] = '';
+	}
+	if(!isset($_POST['AccountQRIS'])) {
+		$_POST['AccountQRIS'] = '';
+	}
+	if(!isset($_POST['ComissionQRIS'])) {
+		$_POST['ComissionQRIS'] = 0;
+	}
+	if(!isset($_POST['AccountComissionQRIS'])) {
+		$_POST['AccountComissionQRIS'] = '';
 	}
 	if(!isset($_POST['CounterInvoiceA'])) {
 		$_POST['CounterInvoiceA'] = 0;
@@ -899,6 +929,39 @@ if(!isset($_GET['delete'])) {
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($myrow=DB_fetch_array($GLAccount)) {
 		if($_POST['AccountComissionWeChat']==$myrow['accountcode']) {
+			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		} else {
+			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		}
+	}
+	echo '</select></td></tr>';
+
+	echo $ExtraSpace;
+
+	echo '<tr>
+		<td>' . _('QRIS GL Account') . ':' . '</td>
+		<td><select name="AccountQRIS">';
+	$GLAccount = DB_query("SELECT accountcode, bankaccountname FROM bankaccounts ORDER BY bankaccountname");
+	while ($myrow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountQRIS']==$myrow['accountcode']) {
+			echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . '</option>';
+		} else {
+			echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . '</option>';
+		}
+	}
+	echo '</select></td></tr>';
+
+	echo '<tr>
+			<td>' . _('% Comission QRIS') . ':</td>
+			<td><input type="text" name="ComissionQRIS" class="number" value="' . $_POST['ComissionQRIS'] . '" size="5" maxlength="5" /></td>
+		</tr>';
+
+	echo '<tr>
+		<td>' . _('QRIS Comission GL Account') . ':' . '</td>
+		<td><select name="AccountComissionQRIS">';
+	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
+	while ($myrow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountComissionQRIS']==$myrow['accountcode']) {
 			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
 			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';

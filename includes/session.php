@@ -283,6 +283,9 @@ if ($KL_SPGSeniorOrSupport OR $KL_SPGJunior){
 					klretailpartners.accountwechat,
 					klretailpartners.comissionwechat,
 					klretailpartners.accountcomissionwechat,
+					klretailpartners.accountqris,
+					klretailpartners.comissionqris,
+					klretailpartners.accountcomissionqris,
 					klretailpartners.counterinvoicea,
 					klretailpartners.counterinvoiceb,
 					klretailpartners.counterinvoicec,
@@ -378,6 +381,9 @@ if ($KL_SPGSeniorOrSupport OR $KL_SPGJunior){
 		$_SESSION['AccountWeChat'] = $myrow['accountwechat'];
 		$_SESSION['ComissionWeChat'] = $myrow['comissionwechat'];
 		$_SESSION['AccountComissionWeChat'] = $myrow['accountcomissionwechat'];
+		$_SESSION['AccountQRIS'] = $myrow['accountqris'];
+		$_SESSION['ComissionQRIS'] = $myrow['comissionqris'];
+		$_SESSION['AccountComissionQRIS'] = $myrow['accountcomissionqris'];
 		$_SESSION['CounterInvoiceA'] = $myrow['counterinvoicea'];
 		$_SESSION['CounterInvoiceB'] = $myrow['counterinvoiceb'];
 		$_SESSION['CounterInvoiceC'] = $myrow['counterinvoicec'];

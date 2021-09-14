@@ -923,6 +923,9 @@ function KLPrintReceiptShopFooter($identifier, $OrderNo){
 	if ($_POST['AmountPaidWeChat'] > 0){
 		$TextToPrint .= 'Paid WeChat/Alipay: ' . number_format($_POST['AmountPaidWeChat'],0) . $NewLine;
 	}
+	if ($_POST['AmountPaidQRIS'] > 0){
+		$TextToPrint .= 'Paid QRIS: ' . number_format($_POST['AmountPaidQRIS'],0) . $NewLine;
+	}
 	if ($_POST['AmountReturnedGoods'] > 0){
 		$TextToPrint .= 'Returned Goods: ' . number_format($_POST['AmountReturnedGoods'],0) . $NewLine;
 	}
