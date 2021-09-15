@@ -1437,7 +1437,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 			echo '<tr><td>' . _('Payment WeChat/Alipay') . ':</td> <td>' . number_format($_POST['AmountPaidWeChat'],0) . '</td></tr>';
 		}
 		if ($_POST['AmountPaidQRIS'] > 0){
-			echo '<tr><td>' . _('Payment QRIS') . ':</td> <td>' . number_format($_POST['AmountPaidQRIS'],0) . '</td></tr>';
+			echo '<tr><td>' . _('Payment QRIS Mandiri') . ':</td> <td>' . number_format($_POST['AmountPaidQRIS'],0) . '</td></tr>';
 		}
 		if ($_POST['AmountReturnedGoods'] > 0){
 			echo '<tr><td>' . _('Returned Goods Value') . ':</td> <td>' . number_format($_POST['AmountReturnedGoods'],0) . '</td></tr>';

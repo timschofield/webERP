@@ -205,7 +205,7 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 						'Total CC EDC Mandiri   : ' . $Param9  . "\r\n" .
 						'Total CC EDC BCA       : ' . $Param10  . "\r\n" .
 						'Total WeChat/Alipay    : ' . $Param17 . "\r\n" .
-						'Total QRIS             : ' . $Param18 . "\r\n" .
+						'Total QRIS Mandiri     : ' . $Param18 . "\r\n" .
 						'Total Returned Goods   : ' . $Param11 . "\r\n" .
 						'Total Voucher/Discount : ' . $Param12 . "\r\n" .
 						'Old Invoice            : ' . $Param13 . "\r\n" .
@@ -229,7 +229,7 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 						'Total CC EDC Mandiri  : ' . $Param9  . "\r\n" .
 						'Total CC EDC BCA      : ' . $Param10  . "\r\n" .
 						'Total WeChat/Alipay   : ' . $Param14 . "\r\n" .
-						'Total QRIS            : ' . $Param15 . "\r\n" .
+						'Total QRIS Mandiri    : ' . $Param15 . "\r\n" .
 						'Total Returned Goods  : ' . $Param11 . "\r\n" .
 						'Total Voucher/Discount: ' . $Param12 . "\r\n" .
 						'Voucher/Discount Code : ' . $Param13 . "\r\n" .

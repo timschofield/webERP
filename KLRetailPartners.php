@@ -939,7 +939,7 @@ if(!isset($_GET['delete'])) {
 	echo $ExtraSpace;
 
 	echo '<tr>
-		<td>' . _('QRIS GL Account') . ':' . '</td>
+		<td>' . _('QRIS Mandiri GL Account') . ':' . '</td>
 		<td><select name="AccountQRIS">';
 	$GLAccount = DB_query("SELECT accountcode, bankaccountname FROM bankaccounts ORDER BY bankaccountname");
 	while ($myrow=DB_fetch_array($GLAccount)) {
@@ -952,12 +952,12 @@ if(!isset($_GET['delete'])) {
 	echo '</select></td></tr>';
 
 	echo '<tr>
-			<td>' . _('% Comission QRIS') . ':</td>
+			<td>' . _('% Comission QRIS Mandiri') . ':</td>
 			<td><input type="text" name="ComissionQRIS" class="number" value="' . $_POST['ComissionQRIS'] . '" size="5" maxlength="5" /></td>
 		</tr>';
 
 	echo '<tr>
-		<td>' . _('QRIS Comission GL Account') . ':' . '</td>
+		<td>' . _('QRIS Mandiri Comission GL Account') . ':' . '</td>
 		<td><select name="AccountComissionQRIS">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($myrow=DB_fetch_array($GLAccount)) {

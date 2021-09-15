@@ -126,7 +126,7 @@ echo '</tr>';
 
 echo '<tr>';
 echo '<td></td>';
-echo '<td>' . _('Amount Paid QRIS') . ':</td>
+echo '<td>' . _('Amount Paid QRIS Mandiri') . ':</td>
 	  <td><input type="text" class="number" name="AmountPaidQRIS" maxlength="12" size="12" value="' . $_POST['AmountPaidQRIS'] . '" /></td>';
 echo '<td></td>';
 echo '<td>' . _('Voucher/Discount Code') . ':</td>
