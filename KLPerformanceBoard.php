@@ -589,6 +589,7 @@ function CashStatus($Year, $CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTransf
 				AND pctabs.currency = 'IDR'
 				AND pcashdetails.codeexpense != 'ASSIGNCASH'
 				AND pctabs.tabcode NOT LIKE 'SALARIES%'
+				AND pctabs.tabcode NOT LIKE '%CEK ADU'
 				AND pctabs.tabcode NOT LIKE '%DANAMON'
 				AND pctabs.tabcode NOT LIKE 'CC-BCA%'
 				AND pcexpenses.glaccount LIKE '%".$AccountSuffix."'";
@@ -666,6 +667,7 @@ function CashStatus($Year, $CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTransf
 				AND pctabs.currency = 'IDR'
 				AND pcashdetails.codeexpense != 'ASSIGNCASH'
 				AND pctabs.tabcode NOT LIKE 'SALARIES%'
+				AND pctabs.tabcode NOT LIKE '%CEK BB'
 				AND pctabs.tabcode NOT LIKE '%DANAMON'
 				AND pctabs.tabcode NOT LIKE 'CC-BCA%'
 				AND pcexpenses.glaccount LIKE '%".$AccountSuffix."'";
@@ -732,7 +734,7 @@ function CashStatus($Year, $CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTransf
 		printf('<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
-				'Expenses PT ADU Paid by Petty Cash (excluding salaries, Corporate CC)', 
+				'Expenses PT ADU Paid by Petty Cash (excluding checks, salaries, Corporate CC)', 
 				locale_number_format(-$ExpensesADUPaidCash,0)
 				);
 		printf('<td>%s</td>
@@ -816,7 +818,7 @@ function CashStatus($Year, $CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTransf
 		printf('<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
-				'Expenses PTBB Paid by Petty Cash (excluding salaries, Corporate CC)', 
+				'Expenses PTBB Paid by Petty Cash (excluding checks, salaries, Corporate CC)', 
 				locale_number_format(-$ExpensesBBPaidCash,0)
 				);
 		printf('<td>%s</td>
