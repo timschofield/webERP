@@ -392,9 +392,9 @@ if ($ProcessSection01){
 	if ($KL_SystemAdmin 
 		OR $KL_OperationalManager
 		OR $KL_AdministrationTeam){
-		BalanceAccountControl("111121100PI",  1000000,  10000000, $periodnow, $db);
+		BalanceAccountControl("111121100PI",  2000000,  20000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111121110PI",  1000000,  10000000, $periodnow, $db);
+		BalanceAccountControl("111121110PI",  2000000,  20000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -521,6 +521,10 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("TESTKA", "TOKB2", $NumberOfOpenShopsKL, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("TESTKA", "TOKOB", $NumberOfOpenShopsKL, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("TESTKA", "TOKKA", $NumberOfOpenShopsKL, $RootPath, $db);
+		$NumberOfTestExecuted++;
 
 		// Items STABLE KL in ALL shops KL
 		CategoryItemsNotInShop("STABKA", "TOKPU", $NumberOfOpenShopsKL, $RootPath, $db);
@@ -530,6 +534,10 @@ if ($ProcessSection01){
 		CategoryItemsNotInShop("STABKA", "TOKSE", $NumberOfOpenShopsKL, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("STABKA", "TOKB2", $NumberOfOpenShopsKL, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABKA", "TOKOB", $NumberOfOpenShopsKL, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABKA", "TOKKA", $NumberOfOpenShopsKL, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 		// Items NO PO KL in ALL shops KL
@@ -541,35 +549,39 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("NOPOKA", "TOKB2", $NumberOfOpenShopsKL, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("NOPOKA", "TOKB2", $NumberOfOpenShopsKL, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("NOPOKA", "TOKKA", $NumberOfOpenShopsKL, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		
 		// Items TEST BL in ALL shops BL
-		CategoryItemsNotInShop("TESTBA", "TOKPS", $NumberOfOpenShopsBL, $RootPath, $db);
-		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("TESTBA", "TOKMU", $NumberOfOpenShopsBL, $RootPath, $db);
 		$NumberOfTestExecuted++;
-//		CategoryItemsNotInShop("TESTBA", "TOKSB", $NumberOfOpenShopsBL, $RootPath, $db);
-//		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("TESTBA", "TOKK2", $NumberOfOpenShopsBL, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("TESTBA", "TOKBB", $NumberOfOpenShopsBL, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("TESTBA", "TOKO2", $NumberOfOpenShopsBL, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 		// Items STABLE BL in ALL shops BL
-		CategoryItemsNotInShop("STABBA", "TOKPS", $NumberOfOpenShopsBL, $RootPath, $db);
-		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("STABBA", "TOKMU", $NumberOfOpenShopsBL, $RootPath, $db);
 		$NumberOfTestExecuted++;
-//		CategoryItemsNotInShop("STABBA", "TOKSB", $NumberOfOpenShopsBL, $RootPath, $db);
-//		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABBA", "TOKK2", $NumberOfOpenShopsBL, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("STABBA", "TOKBB", $NumberOfOpenShopsBL, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABBA", "TOKO2", $NumberOfOpenShopsBL, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 		// Items NO PO BL in ALL shops BL
-		CategoryItemsNotInShop("NOPOBA", "TOKPS", $NumberOfOpenShopsBL, $RootPath, $db);
-		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("NOPOBA", "TOKMU", $NumberOfOpenShopsBL, $RootPath, $db);
 		$NumberOfTestExecuted++;
-//		CategoryItemsNotInShop("NOPOBA", "TOKSB", $NumberOfOpenShopsBL, $RootPath, $db);
-//		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("NOPOBA", "TOKK2", $NumberOfOpenShopsBL, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("NOPOBA", "TOKBB", $NumberOfOpenShopsBL, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("NOPOBA", "TOKO2", $NumberOfOpenShopsBL, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 		// Items OUTLET in ALL shops OU
