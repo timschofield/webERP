@@ -10,8 +10,8 @@ include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLEmails.php');
 
-PackagingToBeRefilledKapalLaut(true, $RootPath, $db);
-PackagingToBeRefilledBlink(true, $RootPath, $db);
+PackagingToBeRefilled("KAPAL-LAUT", true, $RootPath, $db);
+PackagingToBeRefilled("BLINK", true, $RootPath, $db);
 PackagingToBeRefilledOutlet(true, $RootPath, $db);
 
 include ('includes/footer.php');

@@ -1143,16 +1143,42 @@ function PackagingStatusForBlink($RootPath, $db){
 					(SELECT locstock.quantity
 						FROM locstock
 						WHERE locstock.loccode = locations.loccode
-							AND locstock.stockid = 'PKPB03-XL') AS qty_bag_xl,
+							AND locstock.stockid = 'PKBX02-L') AS qty_box_l,
 					(SELECT locstock.reorderlevel
 						FROM locstock
 						WHERE locstock.loccode = locations.loccode
-							AND locstock.stockid = 'PKPB03-XL') AS rl_bag_xl,
+							AND locstock.stockid = 'PKBX02-L') AS rl_box_l,
 					(SELECT SUM(loctransfers.shipqty - loctransfers.recqty)
 						FROM loctransfers
 						WHERE loctransfers.recloc = locations.loccode
 							AND loctransfers.shipqty != loctransfers.recqty
-							AND loctransfers.stockid = 'PKPB03-XL') AS ot_bag_xl,
+							AND loctransfers.stockid = 'PKBX02-L') AS ot_box_l,
+					(SELECT locstock.quantity
+						FROM locstock
+						WHERE locstock.loccode = locations.loccode
+							AND locstock.stockid = 'PKBX02-M') AS qty_box_m,
+					(SELECT locstock.reorderlevel
+						FROM locstock
+						WHERE locstock.loccode = locations.loccode
+							AND locstock.stockid = 'PKBX02-M') AS rl_box_m,
+					(SELECT SUM(loctransfers.shipqty - loctransfers.recqty)
+						FROM loctransfers
+						WHERE loctransfers.recloc = locations.loccode
+							AND loctransfers.shipqty != loctransfers.recqty
+							AND loctransfers.stockid = 'PKBX02-M') AS ot_box_m,
+					(SELECT locstock.quantity
+						FROM locstock
+						WHERE locstock.loccode = locations.loccode
+							AND locstock.stockid = 'PKBX02-S') AS qty_box_s,
+					(SELECT locstock.reorderlevel
+						FROM locstock
+						WHERE locstock.loccode = locations.loccode
+							AND locstock.stockid = 'PKBX02-S') AS rl_box_s,
+					(SELECT SUM(loctransfers.shipqty - loctransfers.recqty)
+						FROM loctransfers
+						WHERE loctransfers.recloc = locations.loccode
+							AND loctransfers.shipqty != loctransfers.recqty
+							AND loctransfers.stockid = 'PKBX02-S') AS ot_box_s,
 					(SELECT locstock.quantity
 						FROM locstock
 						WHERE locstock.loccode = locations.loccode
@@ -1250,7 +1276,9 @@ function PackagingStatusForBlink($RootPath, $db){
 									<th>' . _('') . '</th>
 									<th>' . _('') . '</th>
 									<th>' . _('') . '</th>
-									<th colspan="3">' . _('BLINK PouchBag XL') . '</th>
+									<th colspan="3">' . _('BLINK Box L') . '</th>
+									<th colspan="3">' . _('BLINK Box M') . '</th>
+									<th colspan="3">' . _('BLINK Box S') . '</th>
 									<th colspan="3">' . _('BLINK PouchBag L') . '</th>
 									<th colspan="3">' . _('BLINK PouchBag M') . '</th>
 									<th colspan="3">' . _('BLINK PouchBag S') . '</th>
@@ -1259,9 +1287,15 @@ function PackagingStatusForBlink($RootPath, $db){
 									<th colspan="3">' . _('BLINK ShoppingBag S') . '</th>
 								</tr>';
 				$TableHeader = $TableHeader . '<tr>
-									<th class="ascending">' . _('KL Shop') . '</th>
+									<th class="ascending">' . _('BLINK Shop') . '</th>
 									<th class="ascending">' . _('Days RL') . '</th>
 									<th class="ascending">' . _('Factor') . '</th>
+									<th class="ascending">' . _('QOH') . '</th>
+									<th class="ascending">' . _('Transit') . '</th>
+									<th class="ascending">' . _('RL') . '</th>
+									<th class="ascending">' . _('QOH') . '</th>
+									<th class="ascending">' . _('Transit') . '</th>
+									<th class="ascending">' . _('RL') . '</th>
 									<th class="ascending">' . _('QOH') . '</th>
 									<th class="ascending">' . _('Transit') . '</th>
 									<th class="ascending">' . _('RL') . '</th>
@@ -1313,13 +1347,25 @@ function PackagingStatusForBlink($RootPath, $db){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
 					</tr>', 
 					$myrow['locationname'], 
 					$myrow['rldaysforpackaging'], 
 					$myrow['rlfactorforpackaging'], 
-					locale_number_format_zero_blank($myrow['qty_bag_xl'],0), 
-					locale_number_format_zero_blank($myrow['ot_bag_xl'],0),
-					locale_number_format_zero_blank($myrow['rl_bag_xl'],0),
+					locale_number_format_zero_blank($myrow['qty_box_l'],0), 
+					locale_number_format_zero_blank($myrow['ot_box_l'],0),
+					locale_number_format_zero_blank($myrow['rl_box_l'],0),
+					locale_number_format_zero_blank($myrow['qty_box_m'],0), 
+					locale_number_format_zero_blank($myrow['ot_box_m'],0),
+					locale_number_format_zero_blank($myrow['rl_box_m'],0),
+					locale_number_format_zero_blank($myrow['qty_box_s'],0), 
+					locale_number_format_zero_blank($myrow['ot_box_s'],0),
+					locale_number_format_zero_blank($myrow['rl_box_s'],0),
 					locale_number_format_zero_blank($myrow['qty_bag_l'],0), 
 					locale_number_format_zero_blank($myrow['ot_bag_l'],0),
 					locale_number_format_zero_blank($myrow['rl_bag_l'],0),
@@ -1491,15 +1537,15 @@ function PackagingStatusForKapalLaut($RootPath, $db){
 									<th>' . _('') . '</th>
 									<th>' . _('') . '</th>
 									<th>' . _('') . '</th>
-									<th colspan="3">' . _('Box L') . '</th>
-									<th colspan="3">' . _('Box M') . '</th>
-									<th colspan="3">' . _('Box S') . '</th>
-									<th colspan="3">' . _('PouchBag L') . '</th>
-									<th colspan="3">' . _('PouchBag M') . '</th>
-									<th colspan="3">' . _('PouchBag S') . '</th>
-									<th colspan="3">' . _('ShoppingBag L') . '</th>
-									<th colspan="3">' . _('ShoppingBag M') . '</th>
-									<th colspan="3">' . _('ShoppingBag S') . '</th>
+									<th colspan="3">' . _('KL Box L') . '</th>
+									<th colspan="3">' . _('KL Box M') . '</th>
+									<th colspan="3">' . _('KL Box S') . '</th>
+									<th colspan="3">' . _('KL PouchBag L') . '</th>
+									<th colspan="3">' . _('KL PouchBag M') . '</th>
+									<th colspan="3">' . _('KL PouchBag S') . '</th>
+									<th colspan="3">' . _('KL ShoppingBag L') . '</th>
+									<th colspan="3">' . _('KL ShoppingBag M') . '</th>
+									<th colspan="3">' . _('KL ShoppingBag S') . '</th>
 								</tr>';
 				$TableHeader = $TableHeader . '<tr>
 									<th class="ascending">' . _('KL Shop') . '</th>
@@ -1767,12 +1813,30 @@ function PackagingUsageForBlink($NumDays, $RootPath, $db){
 					(SELECT locstock.quantity
 						FROM locstock
 						WHERE locstock.loccode = locations.loccode
-							AND locstock.stockid = 'PKPB03-XL') AS qty_bag_xl,
+							AND locstock.stockid = 'PKBX02-L') AS qty_box_l,
 					(SELECT SUM(packagingused.qty)
 						FROM packagingused
 						WHERE packagingused.fromlocation = locations.loccode
-							AND packagingused.stockid = 'PKPB03-XL'
-							AND packagingused.date >= '". $FromDate ."') AS sales_bag_xl,
+							AND packagingused.stockid = 'PKBX02-L'
+							AND packagingused.date >= '". $FromDate ."') AS sales_box_l,
+					(SELECT locstock.quantity
+						FROM locstock
+						WHERE locstock.loccode = locations.loccode
+							AND locstock.stockid = 'PKBX02-M') AS qty_box_m,
+					(SELECT SUM(packagingused.qty)
+						FROM packagingused
+						WHERE packagingused.fromlocation = locations.loccode
+							AND packagingused.stockid = 'PKBX02-M'
+							AND packagingused.date >= '". $FromDate ."') AS sales_box_m,
+					(SELECT locstock.quantity
+						FROM locstock
+						WHERE locstock.loccode = locations.loccode
+							AND locstock.stockid = 'PKBX02-S') AS qty_box_s,
+					(SELECT SUM(packagingused.qty)
+						FROM packagingused
+						WHERE packagingused.fromlocation = locations.loccode
+							AND packagingused.stockid = 'PKBX02-S'
+							AND packagingused.date >= '". $FromDate ."') AS sales_box_s,
 					(SELECT locstock.quantity
 						FROM locstock
 						WHERE locstock.loccode = locations.loccode
@@ -1836,8 +1900,13 @@ function PackagingUsageForBlink($NumDays, $RootPath, $db){
 	$showHeader = TRUE;
 	$i = 1;
 	
-	$totalqty_bag_xl   = 0;
-	$totalsales_bag_xl = 0;
+	$totalqty_box_l   = 0;
+	$totalsales_box_l = 0;
+	$totalqty_box_m   = 0;
+	$totalsales_box_m = 0;
+	$totalqty_box_s   = 0;
+	$totalsales_box_s = 0;
+
 	$totalqty_bag_l   = 0;
 	$totalsales_bag_l = 0;
 	$totalqty_bag_m   = 0;
@@ -1861,16 +1930,24 @@ function PackagingUsageForBlink($NumDays, $RootPath, $db){
 				echo '<table class="selection">';
 				$TableHeader = '<tr>
 									<th>' . _('') . '</th>
-									<th colspan="3">' . _('PouchBag XL') . '</th>
-									<th colspan="3">' . _('PouchBag L') . '</th>
-									<th colspan="3">' . _('PouchBag M') . '</th>
-									<th colspan="3">' . _('PouchBag S') . '</th>
-									<th colspan="3">' . _('ShoppingBag L') . '</th>
-									<th colspan="3">' . _('ShoppingBag M') . '</th>
-									<th colspan="3">' . _('ShoppingBag S') . '</th>
+									<th colspan="3">' . _('BLINK Box L') . '</th>
+									<th colspan="3">' . _('BLINK Box M') . '</th>
+									<th colspan="3">' . _('BLINK Box S') . '</th>
+									<th colspan="3">' . _('BLINK PouchBag L') . '</th>
+									<th colspan="3">' . _('BLINK PouchBag M') . '</th>
+									<th colspan="3">' . _('BLINK PouchBag S') . '</th>
+									<th colspan="3">' . _('BLINK ShoppingBag L') . '</th>
+									<th colspan="3">' . _('BLINK ShoppingBag M') . '</th>
+									<th colspan="3">' . _('BLINK ShoppingBag S') . '</th>
 								</tr>';
 				$TableHeader = $TableHeader . '<tr>
-									<th class="ascending">' . _('KL Shop') . '</th>
+									<th class="ascending">' . _('BL Shop') . '</th>
+									<th class="ascending">' . _('QOH') . '</th>
+									<th class="ascending">' . _('Use ') . $NumDays . ' d</th>
+									<th class="ascending">' . _('Days Stock') . '</th>
+									<th class="ascending">' . _('QOH') . '</th>
+									<th class="ascending">' . _('Use ') . $NumDays . ' d</th>
+									<th class="ascending">' . _('Days Stock') . '</th>
 									<th class="ascending">' . _('QOH') . '</th>
 									<th class="ascending">' . _('Use ') . $NumDays . ' d</th>
 									<th class="ascending">' . _('Days Stock') . '</th>
@@ -1920,11 +1997,23 @@ function PackagingUsageForBlink($NumDays, $RootPath, $db){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
 					</tr>', 
 					$myrow['locationname'], 
-					locale_number_format_zero_blank($myrow['qty_bag_xl'],0), 
-					locale_number_format_zero_blank($myrow['sales_bag_xl'],0),
-					locale_number_format_zero_blank($myrow['qty_bag_xl']/($myrow['sales_bag_xl']/$NumDays),0),
+					locale_number_format_zero_blank($myrow['qty_box_l'],0), 
+					locale_number_format_zero_blank($myrow['sales_box_l'],0),
+					locale_number_format_zero_blank($myrow['qty_box_l']/($myrow['sales_box_l']/$NumDays),0),
+					locale_number_format_zero_blank($myrow['qty_box_m'],0), 
+					locale_number_format_zero_blank($myrow['sales_box_m'],0),
+					locale_number_format_zero_blank($myrow['qty_box_m']/($myrow['sales_box_m']/$NumDays),0),
+					locale_number_format_zero_blank($myrow['qty_box_s'],0), 
+					locale_number_format_zero_blank($myrow['sales_box_s'],0),
+					locale_number_format_zero_blank($myrow['qty_box_s']/($myrow['sales_box_s']/$NumDays),0),
 					locale_number_format_zero_blank($myrow['qty_bag_l'],0), 
 					locale_number_format_zero_blank($myrow['sales_bag_l'],0),
 					locale_number_format_zero_blank($myrow['qty_bag_l']/($myrow['sales_bag_l']/$NumDays),0),
@@ -1944,9 +2033,13 @@ function PackagingUsageForBlink($NumDays, $RootPath, $db){
 					locale_number_format_zero_blank($myrow['sales_shopping_s'],0),
 					locale_number_format_zero_blank($myrow['qty_shopping_s']/($myrow['sales_shopping_s']/$NumDays),0)
 					);
+			$totalqty_box_l   = $totalqty_box_l + $myrow['qty_box_l'];
+			$totalsales_box_l = $totalsales_box_l + $myrow['sales_box_l'];
+			$totalqty_box_m   = $totalqty_box_m + $myrow['qty_box_m'];
+			$totalsales_box_m = $totalsales_box_m + $myrow['sales_box_m'];
+			$totalqty_box_s   = $totalqty_box_s + $myrow['qty_box_s'];
+			$totalsales_box_s = $totalsales_box_s + $myrow['sales_box_s'];
 
-			$totalqty_bag_xl   = $totalqty_bag_xl + $myrow['qty_bag_xl'];
-			$totalsales_bag_xl = $totalsales_bag_xl + $myrow['sales_bag_xl'];
 			$totalqty_bag_l   = $totalqty_bag_l + $myrow['qty_bag_l'];
 			$totalsales_bag_l = $totalsales_bag_l + $myrow['sales_bag_l'];
 			$totalqty_bag_m   = $totalqty_bag_m + $myrow['qty_bag_m'];
@@ -1986,11 +2079,23 @@ function PackagingUsageForBlink($NumDays, $RootPath, $db){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
 					</tr>', 
 					'TOTAL', 
-					locale_number_format_zero_blank($totalqty_bag_xl,0), 
-					locale_number_format_zero_blank($totalsales_bag_xl,0),
-					locale_number_format_zero_blank($totalqty_bag_xl/($totalsales_bag_xl/$NumDays),0),
+					locale_number_format_zero_blank($totalqty_box_l,0), 
+					locale_number_format_zero_blank($totalsales_box_l,0),
+					locale_number_format_zero_blank($totalqty_box_l/($totalsales_box_l/$NumDays),0),
+					locale_number_format_zero_blank($totalqty_box_m,0), 
+					locale_number_format_zero_blank($totalsales_box_m,0),
+					locale_number_format_zero_blank($totalqty_box_m/($totalsales_box_m/$NumDays),0),
+					locale_number_format_zero_blank($totalqty_box_s,0), 
+					locale_number_format_zero_blank($totalsales_box_s,0),
+					locale_number_format_zero_blank($totalqty_box_s/($totalsales_box_s/$NumDays),0),
 					locale_number_format_zero_blank($totalqty_bag_l,0), 
 					locale_number_format_zero_blank($totalsales_bag_l,0),
 					locale_number_format_zero_blank($totalqty_bag_l/($totalsales_bag_l/$NumDays),0),

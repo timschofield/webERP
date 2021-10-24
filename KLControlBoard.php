@@ -359,7 +359,7 @@ if ($ProcessSection01){
 
 		BalanceListAccountControl("('111259010AD', 
 									'111259020AD', 
-									'111259050AD')", "Total PayPal PT.ADU", 0, 50000000, $periodnow, $db);
+									'111259050AD')", "Total PayPal PT.ADU", -1, 30000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceListAccountControl("('111121100PT', 
 									'111121101PT', 
@@ -376,7 +376,7 @@ if ($ProcessSection01){
 
 		BalanceListAccountControl("('111259010PT', 
 									'111259020PT', 
-									'111259050PT')", "Total PayPal PT.BB", 0, 50000000, $periodnow, $db);
+									'111259050PT')", "Total PayPal PT.BB", -1, 30000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 	}
 	
@@ -426,7 +426,7 @@ if ($ProcessSection01){
 
 		BalanceAccountControl("111800000",  350000000,  450000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111900000",   20000000,   30000000, $periodnow, $db);
+		BalanceAccountControl("111900000",   15000000,   30000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111311100",  -10000000,   10000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
@@ -670,9 +670,9 @@ if ($ProcessSection01){
 	if ($KL_SystemAdmin OR
 		$KL_ShopSupportLeader OR 
 		$KL_OperationalManager){
-		PackagingToBeRefilledKapalLaut(false, $RootPath, $db);
+		PackagingToBeRefilled("KAPAL-LAUT", false, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PackagingToBeRefilledBlink(false, $RootPath, $db);
+		PackagingToBeRefilled("BLINK", false, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		PackagingToBeRefilledOutlet(false, $RootPath, $db);
 		$NumberOfTestExecuted++;

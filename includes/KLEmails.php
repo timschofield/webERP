@@ -61,13 +61,15 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 		case "SendBlinkPackagingToShop":
 			$EmailSubject = "Prepare BLINK packaging transfer for: ". $Param1;
 			$EmailText = $EmailSubject . "\n\n" . 
-						$Param2 . " x PKPB03-XL (BLINK PouchBag-XL)" . "\n\n" . 
-						$Param3 . " x PKPB03-L (BLINK PouchBag-L)" . "\n\n" . 
-						$Param4 . " x PKPB03-M (BLINK PouchBag-M)" . "\n\n" . 
-						$Param5 . " x PKPB03-S (BLINK PouchBag-S)" . "\n\n" . 
-						$Param6 . " x PKSB04-L (BLINK ShoppingBag-L)" . "\n\n" . 
-						$Param7 . " x PKSB04-M (BLINK ShoppingBag-M)" . "\n\n" . 
-						$Param8 . " x PKSB04-S (BLINK ShoppingBag-S)" . "\n\n" . 
+						$Param2 . " x PKBX02-L (BLINK Box-L)" . "\n\n" . 
+						$Param3 . " x PKBX02-M (BLINK Box-M)" . "\n\n" . 
+						$Param4 . " x PKBX02-S (BLINK Box-S)" . "\n\n" . 
+						$Param5 . " x PKPB03-L (BLINK PouchBag-L)" . "\n\n" . 
+						$Param6 . " x PKPB03-M (BLINK PouchBag-M)" . "\n\n" . 
+						$Param7 . " x PKPB03-S (BLINK PouchBag-S)" . "\n\n" . 
+						$Param8 . " x PKSB04-L (BLINK ShoppingBag-L)" . "\n\n" . 
+						$Param9 . " x PKSB04-M (BLINK ShoppingBag-M)" . "\n\n" . 
+						$Param10 . " x PKSB04-S (BLINK ShoppingBag-S)" . "\n\n" . 
 						"Once ready inform Kantor Manager if transfer by car is needed.";
 			$EmailAddress = "kl-shopsupport@kapal-laut.com";
 			break;
