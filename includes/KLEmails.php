@@ -277,7 +277,7 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 					'Shop : '. $Param3 . "\r\n" .
 					$BlockText . "\r\n" .
 					'Updated by : ' . $Param4; 		
-			$EmailAddress = "kl-administrationteam@kapal-laut.com";
+			$EmailAddress = "kl-spg-administration@kapal-laut.com";
 			break;
 
 		case "SpgUsernameCreated":
@@ -292,14 +292,14 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 					'Shop : '. $Param3 . "\r\n" .
 					$BlockText . "\r\n" .
 					'Created by : ' . $Param4; 		
-			$EmailAddress = "kl-administrationteam@kapal-laut.com";
+			$EmailAddress = "kl-spg-administration@kapal-laut.com";
 			break;
 
 		case "SpgUsernameDeleted":
 			$EmailSubject = "SPG Username Deleted : ". $Param1;
 			$EmailText = $EmailSubject . "\n\n" .
 					'Deleted by : ' . $Param2; 		
-			$EmailAddress = "kl-administrationteam@kapal-laut.com";
+			$EmailAddress = "kl-spg-administration@kapal-laut.com";
 			break;
 
 		case "SpgCodeUpdated":
@@ -307,7 +307,7 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 			$EmailText = $EmailSubject . "\n\n" .
 					'Name :'. ' '. $Param2 . "\r\n" .
 					'Updated by : ' . $Param3; 		
-			$EmailAddress = "kl-administrationteam@kapal-laut.com";
+			$EmailAddress = "kl-spg-administration@kapal-laut.com";
 			break;
 
 		case "SpgCodeCreated":
@@ -315,14 +315,14 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 			$EmailText = $EmailSubject . "\n\n" .
 					'Name :'. ' '. $Param2 . "\r\n" .
 					'Created by : ' . $Param3; 		
-			$EmailAddress = "kl-administrationteam@kapal-laut.com";
+			$EmailAddress = "kl-spg-administration@kapal-laut.com";
 			break;
 			
 		case "SpgCodeDeleted":
 			$EmailSubject = "SPG Code Deleted : ". $Param1;
 			$EmailText = $EmailSubject . "\n\n" .
 					'Deleted by : ' . $Param2; 		
-			$EmailAddress = "kl-administrationteam@kapal-laut.com";
+			$EmailAddress = "kl-spg-administration@kapal-laut.com";
 			break;
 	}
 
