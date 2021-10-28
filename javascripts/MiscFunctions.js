@@ -458,7 +458,7 @@ function payVerify(b,a) {
 	var s=s.getAttribute('data-ids');
 	update1(s);
 	var cs=document.getElementById('Amount').getAttribute('class');
-	if (parseFloat(document.getElementById(b).value) < parseFloat(parseFloat(document.getElementById(a).value))){
+	if ((parseFloat(document.getElementById(b).value) < parseFloat(parseFloat(document.getElementById(a).value))) && (parseFloat(document.getElementById(b).value) >= 0)){
 		if (cs.indexOf('error') == -1) {
 			document.getElementById('Amount').className="error" + ' ' + cs;
 		}
