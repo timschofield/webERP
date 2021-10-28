@@ -918,6 +918,12 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 
+	if ($KL_SystemAdmin
+		OR $KL_SalesTeamOnline){
+		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_SHIPPED, $RootPath, $db, $db_oc, $oc_tableprefix);
+		$NumberOfTestExecuted++;
+	}
+ 
 	if ($KL_SystemAdmin 
 		OR $KL_SalesTeamOnline){
 		OnlineQuotationsFollowUp($RootPath, $db, $db_oc, $oc_tableprefix);
@@ -934,12 +940,6 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_SystemAdmin
-		OR $KL_SalesTeamOnline){
-		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_SHIPPED, $RootPath, $db, $db_oc, $oc_tableprefix);
-		$NumberOfTestExecuted++;
-	}
- 
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesTeamOnline
