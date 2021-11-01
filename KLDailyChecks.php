@@ -466,18 +466,18 @@ function SetTopSalesRanking($ShowMessages, $EmailText, $db){
 	$Text = "Truncated klsaleseprformace table";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
 
-	$EmailText = SetTopSalesByGroup(TRUE,  "KAPAL-LAUT", 60, $ShowMessages, $EmailText, $db);
+	$EmailText = SetTopSalesByGroup(TRUE,  "KAPAL-LAUT", 90, $ShowMessages, $EmailText, $db);
+	$EmailText = SetTopSalesByGroup(FALSE, "KAPAL-LAUT", 60, $ShowMessages, $EmailText, $db);
 	$EmailText = SetTopSalesByGroup(FALSE, "KAPAL-LAUT", 30, $ShowMessages, $EmailText, $db);
-	$EmailText = SetTopSalesByGroup(FALSE, "KAPAL-LAUT", 90, $ShowMessages, $EmailText, $db);
-	$EmailText = SetTopSalesByGroup(TRUE,  "BLINK", 60, $ShowMessages, $EmailText, $db);
+	$EmailText = SetTopSalesByGroup(TRUE,  "BLINK", 90, $ShowMessages, $EmailText, $db);
+	$EmailText = SetTopSalesByGroup(FALSE, "BLINK", 60, $ShowMessages, $EmailText, $db);
 	$EmailText = SetTopSalesByGroup(FALSE, "BLINK", 30, $ShowMessages, $EmailText, $db);
-	$EmailText = SetTopSalesByGroup(FALSE, "BLINK", 90, $ShowMessages, $EmailText, $db);
-	$EmailText = SetTopSalesByGroup(TRUE,  "OUTLET", 60, $ShowMessages, $EmailText, $db);
+	$EmailText = SetTopSalesByGroup(TRUE,  "OUTLET", 90, $ShowMessages, $EmailText, $db);
+	$EmailText = SetTopSalesByGroup(FALSE, "OUTLET", 60, $ShowMessages, $EmailText, $db);
 	$EmailText = SetTopSalesByGroup(FALSE, "OUTLET", 30, $ShowMessages, $EmailText, $db);
-	$EmailText = SetTopSalesByGroup(FALSE, "OUTLET", 90, $ShowMessages, $EmailText, $db);
-	$EmailText = SetTopSalesByGroup(TRUE,  "GENERAL", 60, $ShowMessages, $EmailText, $db);
+	$EmailText = SetTopSalesByGroup(TRUE,  "GENERAL", 90, $ShowMessages, $EmailText, $db);
+	$EmailText = SetTopSalesByGroup(FALSE, "GENERAL", 60, $ShowMessages, $EmailText, $db);
 	$EmailText = SetTopSalesByGroup(FALSE, "GENERAL", 30, $ShowMessages, $EmailText, $db);
-	$EmailText = SetTopSalesByGroup(FALSE, "GENERAL", 90, $ShowMessages, $EmailText, $db);
 	
 	return $EmailText;
 }
