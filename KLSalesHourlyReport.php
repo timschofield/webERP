@@ -21,10 +21,8 @@ if ($KL_SystemAdmin
 	OR $KL_ShopManager){
 	HourlyPerformance( 7,$RootPath, $db);
 	$NumberOfTestExecuted++;
-// RICARD 2019-11-26
-// CANCELLED FOR PERFORMANCE REASONS
-//	HourlyPerformance(15,$RootPath, $db);
-//	$NumberOfTestExecuted++;
+	HourlyPerformance(15,$RootPath, $db);
+	$NumberOfTestExecuted++;
 }
 
 prnMsg("Performed ". $NumberOfTestExecuted . " Sales Hourly Report",'success');

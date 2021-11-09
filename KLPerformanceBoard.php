@@ -62,7 +62,7 @@ if ($ProcessSection01){
 		OR $KL_SalesTeamOnline
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_ShopManager){
-		AverageSales("Shop", 30, 15, 10, 7, 5, 1, 7, "CurrentYear", "All", $db);
+		AverageSales("Shop", 90, 60, 30, 15, 7, 1, 30, "CurrentYear", "All", $db);
 		$NumberOfTestExecuted++;
 		PeriodDifferenceSales("IMMEDIATE", "Shop",   7, $db);
 		$NumberOfTestExecuted++;
@@ -91,7 +91,7 @@ if ($ProcessSection01){
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_ShopManager){
 
-		AverageSales("Online", 30, 15, 10, 7, 5, 1, 7, "CurrentYear", "All", $db);
+		AverageSales("Online", 90, 60, 30, 15, 7, 1, 30, "CurrentYear", "All", $db);
 		$NumberOfTestExecuted++;
 		PeriodDifferenceSales("IMMEDIATE", "Online",   7, $db);
 		$NumberOfTestExecuted++;
