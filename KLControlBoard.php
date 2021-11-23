@@ -383,18 +383,18 @@ if ($ProcessSection01){
 	if ($KL_SystemAdmin 
 		OR $KL_OperationalManager
 		OR $KL_AdministrationTeam){
-		BalanceAccountControl("111121100IK",  1000000,  10000000, $periodnow, $db);
+		BalanceAccountControl("111121100IK",  2000000,  30000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111121110IK",  1000000,  10000000, $periodnow, $db);
+		BalanceAccountControl("111121110IK",  2000000,  30000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 	}
 	
 	if ($KL_SystemAdmin 
 		OR $KL_OperationalManager
 		OR $KL_AdministrationTeam){
-		BalanceAccountControl("111121100PI",  2000000,  20000000, $periodnow, $db);
+		BalanceAccountControl("111121100PI",  2000000,  30000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111121110PI",  2000000,  20000000, $periodnow, $db);
+		BalanceAccountControl("111121110PI",  2000000,  30000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -987,6 +987,7 @@ if ($ProcessSection02){
 
 	if ($KL_SystemAdmin
 		OR $KL_BusinessDevelopmentManager
+		OR $KL_PurchasingTeam
 		OR $KL_SalesTeamOnline){
 		ItemsWithoutWeightOrVolume($RootPath, $db);
 		$NumberOfTestExecuted++;
