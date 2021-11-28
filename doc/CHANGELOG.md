@@ -453,10 +453,10 @@ Merge: 501e26ede 2ace548b5
 | Add meta viewport for initial-scale=1 for working css in small devices. |  | RChacon | 2017-06-21 |  |  |
 
 
-[Unreleased]: https://github.com/webERP-team/webERP/compare/v4.15.1...HEAD
+[Unreleased]: https://github.com/webERP-team/webERP/compare/v4.15.2...HEAD
+[v4.15.2]: https://github.com/webERP-team/webERP/compare/v4.15.1...v4.15.2
 [v4.15.1]: https://github.com/webERP-team/webERP/compare/v4.15...v4.15.1
 [v4.15]: https://github.com/webERP-team/webERP/compare/v4.14.1...v4.15
-[v4.14.1]: https://github.com/webERP-team/webERP/compare/v4.14...v4.14.1
 [Semantic Versioning]: http://semver.org/spec/v2.0.0.html
 [Keep a Changelog]: http://keepachangelog.com/en/1.0.0/
 [CHANGELOG_ARCHIVE.md]: CHANGELOG_ARCHIVE.md
