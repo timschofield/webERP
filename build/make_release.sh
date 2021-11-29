@@ -1,7 +1,7 @@
 #! /bin/bash
 
 BASE_DIR=/var/www/html/webERP;
-OUTPUT_DIR=/home/user/Documents/webERP;
+OUTPUT_DIR=/home/Documents/webERP;
 MYSQL_USER=root;
 MYSQL_PWD=a;
 
