@@ -55,7 +55,6 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 | StockCounts.php: Add alternative method for user to enter stock counts. | Changed | Express Achiever| 2019-11-07 | [View](https://github.com/webERP-team/webERP/commit/6f29993e579810e33c7f2016fe329f88798bca46) | |
 | SelectSalesOrder.php Fix SQL error. Also apply whitespace and variable name formatting. | Fixed | PaulT | 2019-11-02 | [View](https://github.com/webERP-team/webERP/commit/912a3424fa58317f5c00911730d9036350d6b258) | |
 | Fix a few issues related to GL Posting for Stock Transfers. | Fixed | Express Achiever | 2019-10-12 | [View](https://github.com/webERP-team/webERP/commit/47e0a731883f1cbc1057afac9187ae262016a90e) | |
-Merge: 501e26ede 2ace548b5
 | Demo mode tidy. | Changed | Phil Daintree | 2019-10-05 | [View](https://github.com/webERP-team/webERP/commit/501e26ede1c679842efcc12f605337563845ce9d) | |
 | Demo mode modifications. | Changed | Phil Daintree | 2019-10-05 | [View](https://github.com/webERP-team/webERP/commit/8a7cab0b7d104d6550424f618ee36d894d63eca8) | |
 | SalesCategories.php: Rework the script to conform with the project standards, and to make the use of it easier and more intuitive. | Changed | Tim Schofield | 2019-09-26 | [View](https://github.com/webERP-team/webERP/commit/6937e7887938d825f46152d408517172f8bda7ab) | |
