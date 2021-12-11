@@ -99,7 +99,7 @@ if(isset($ForceConfigReload) AND $ForceConfigReload==true OR !isset($_SESSION['C
 				auth
 			FROM emailsettings";
 	$result=DB_query($sql,'','',false,false);
-	if (DB_error_no()==0) {
+	if (DB_error_no()==0 and DB_num_rows($result) > 0) {
 		/*test to ensure that the emailsettings table exists!!
 		 * if it doesn't exist then we are into an UpgradeDatabase scenario anyway
 		*/
