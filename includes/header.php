@@ -113,7 +113,7 @@ echo '<div id="ExitIcon">
 
 if (count($_SESSION['AllowedPageSecurityTokens']) > 1) {
 
-	$DefaultManualLink = '<div id="ActionIcon"><a data-title="' . _('Read the manual') . '" target="_blank" href="' . $PathPrefix . $RootPath . '/doc/Manual/ManualContents.php' . $ViewTopic . $BookMark . '"><img src="' . $PathPrefix . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/manual.png" alt="' . _('Help') . '" /></a></div>';
+	$DefaultManualLink = '<div id="ActionIcon"><a data-title="' . _('Read the manual') . '" target="_blank" href="' . $PathPrefix . $RootPath . '/ManualContents.php' . $ViewTopic . $BookMark . '"><img src="' . $PathPrefix . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/manual.png" alt="' . _('Help') . '" /></a></div>';
 
 	if (strstr($_SESSION['Language'], 'en')) {
 		echo $DefaultManualLink;
