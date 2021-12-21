@@ -161,15 +161,15 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 
 	} else {// Parameters: PeriodFrom, PeriodTo, ShowDetails=off.
 		// RChacon: Needs to update the table_sort function to use in this table.
-		echo		'<th>', _('Supplier Code'), '</th>
-					<th>', _('Supplier Name'), '</th>
-					<th>', _('Supplier\'s Currency'), '</th>
-					<th>', _('Original Overall Amount'), '</th>
-					<th>', _('Original Overall Taxes'), '</th>
-					<th>', _('Original Overall Total'), '</th>
-					<th>', _('GL Overall Amount'), '</th>
-					<th>', _('GL Overall Taxes'), '</th>
-					<th>', _('GL Overall Total'), '</th>', $TableFoot;
+		echo		'<th class="ascending">', _('Supplier Code'), '</th>
+					<th class="ascending">', _('Supplier Name'), '</th>
+					<th class="ascending">', _('Supplier\'s Currency'), '</th>
+					<th class="ascending">', _('Original Overall Amount'), '</th>
+					<th class="ascending">', _('Original Overall Taxes'), '</th>
+					<th class="ascending">', _('Original Overall Total'), '</th>
+					<th class="ascending">', _('GL Overall Amount'), '</th>
+					<th class="ascending">', _('GL Overall Taxes'), '</th>
+					<th class="ascending">', _('GL Overall Total'), '</th>', $TableFoot;
 		$Sql = "SELECT
 					supptrans.supplierno,
 					suppliers.suppname,

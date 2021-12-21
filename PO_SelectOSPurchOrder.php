@@ -250,6 +250,11 @@ if (!isset($OrderNumber) or $OrderNumber == '') {
 		} else {
 			echo '<option value="Rejected">' . _('Rejected') . '</option>';
 		}
+		if ($_POST['Status'] == 'Completed') {
+			echo '<option selected="selected" value="Completed">' . _('Completed') . '</option>';
+		} else {
+			echo '<option value="Completed">' . _('Completed') . '</option>';
+		}
 	}
 	$Checked = (isset($_POST['PODetails']))?'checked="checked"':'';
 	echo '</select>
@@ -353,6 +358,8 @@ else {
 		$StatusCriteria = " AND purchorders.status='Rejected' ";
 	} elseif ($_POST['Status'] == 'Cancelled') {
 		$StatusCriteria = " AND purchorders.status='Cancelled' ";
+	} elseif ($_POST['Status'] == 'Completed') {
+		$StatusCriteria = " AND purchorders.status='Completed' ";
 	}
 	if (isset($OrderNumber) AND $OrderNumber != '') {
 		$SQL = "SELECT purchorders.orderno,
