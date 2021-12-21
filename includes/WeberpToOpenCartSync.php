@@ -221,6 +221,12 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 				/* It's an obsolete item, not available in website */
 				$Status = 0;
 			}
+
+			if ($DiscountCategory == 80){
+				/* It's a Outlet 80% discount item, we have to disable it! */
+					$Status = 0;
+			}
+
 			$Viewed = 0;
 
 			$LanguageId = 1; // webERP and OpenCart should have the same default language
@@ -1977,6 +1983,5 @@ function ChangeOldShippedOpenCartOrders($ShowMessages, $MaxDays, $db, $db_oc, $o
 	}
 	return $EmailText;
 }
-
 
 ?>

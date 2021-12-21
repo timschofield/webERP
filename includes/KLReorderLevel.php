@@ -895,6 +895,22 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db,
 		}
 	}
 
+	if($updateDB){
+		// set RL =0 for any item in DISC80 stcck category,as we don't want them on the online shop
+		$RLSQL = "UPDATE locstock, stockmaster
+					SET locstock.reorderlevel = 0
+					WHERE locstock.stockid = stockmaster.stockid
+						AND stockmaster.categoryid = 'DISC8A'
+						AND locstock.loccode = ". CODE_ONLINE_SHOP ."";
+		$Result = DB_query($RLSQL,$ErrMsg,$DbgMsg,true);		
+		if ($ShowMessages){
+			prnMsg(_('Set RL = 0 for Outlet 80% Discount items for location Shop Online'),'info');
+		}
+		if ($EmailText!=''){
+			$EmailText = $EmailText . "Set RL = 0 for Outlet 80% Discount items for location Shop Online" . "\n";
+		}
+	}
+
 // adjust RL for shop online as if we have too little stock
 	$SQL = "SELECT locstock.stockid,
 				SUM(locstock.quantity) AS qoh
