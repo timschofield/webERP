@@ -37,6 +37,7 @@ if ($Language == "ENGLISH"){
 	$Text0340 = 'Shipping Costs';
 	$Text0350 = 'Pick up from store';
 	$Text0360 = 'Shipping Costs paid by';
+	$Text0365 = 'Shipping Costs to be calculated after packaging';
 	$Text0370 = 'Total';
 	$Text0380 = 'We will prepare all the goods and ship it in 2-3 days time. We will email you the shipment tracking number.';
 	$Text0390 = 'Do not hesitate to contact us for any further detail you might need. Many thanks for your purchase.';
@@ -81,6 +82,7 @@ if ($Language == "ENGLISH"){
 	$Text0340 = 'Harga Pengiriman';
 	$Text0350 = 'Diambil dari toko';
 	$Text0360 = 'Biaya Pengiriman dibayar oleh';
+	$Text0365 = 'Biaya Pengiriman untuk dihitung setelah packaging';
 	$Text0370 = 'Total';
 	$Text0380 = 'Kami akan menyiapkan barang anda dan mengirimkannya dalam 2-3 hari. Kami akan mengirimkan email tentang nomor resi pengiriman.';
 	$Text0390 = 'Jangan ragu untuk menghubungi kami jika ada informasi yang mungkin anda perlukan. Terima kasih atas pembelian anda.';
@@ -466,6 +468,11 @@ if (($_GET['EmailType']=='PaymentConfirmation')
 			$MailMessage .=  '
 				<tr>
 					<td colspan="4" align="right">' . $Text0350 . '</td>
+				</tr>';
+		}elseif ($myrow['shippername'] == 'Wholesale Order Shipping'){
+			$MailMessage .=  '
+				<tr>
+					<td colspan="4" align="right">' . $Text0365 . '</td>
 				</tr>';
 		}else{
 			$MailMessage .=  '
