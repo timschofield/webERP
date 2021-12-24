@@ -15,7 +15,6 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 
 | Description | Type | Author | Date | Details | Ref |
 |:-----------:|:----:|:------:|:----:|:-------:|:---:|
-| SQL migrate file for the next anticipated version. | Added | PaulT | 2021-12-18 | [View](https://github.com/webERP-team/webERP/commit/207a41d6f29e765d2cbff8a69d9e3705dacf32fc) | |
 | header.php: Fix hyperlink to the manual. (reported in the forums by Dale Scott) | Fixed | Tim Schofield | 2021-12-16 | [View](https://github.com/webERP-team/webERP/commit/c474bd10d104595d63afb340a967763b88a25b00) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8990&pid=17130) |
 
 ## [v4.15.2] - 2021-11-27
