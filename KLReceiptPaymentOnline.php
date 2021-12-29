@@ -6,6 +6,7 @@ $Title = _('Kapal-Laut Receipt Payment Online');
 include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
+include('includes/KLMarketplaceFunctions.php');
 include('includes/OpenCartGeneralFunctions.php');
 include('includes/OpenCartConnectDB.php');
 

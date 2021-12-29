@@ -8,6 +8,7 @@ function KL_DailyChecks($Group, $RootPath, $db, $EmailText= ''){
 	include('includes/KLReorderLevel.php');
 	include('includes/KLEmails.php');
 	include('includes/KLGeneralFunctions.php');
+	include('includes/KLMarketplaceFunctions.php');
 	include('includes/GetPrice.inc');
 	include('includes/SQL_CommonFunctions.inc');
 	include ('includes/OpenCartGeneralFunctions.php');

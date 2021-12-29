@@ -10,6 +10,7 @@ include ('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 
 include ('includes/KLGeneralFunctions.php');
+include ('includes/KLMarketplaceFunctions.php');
 include ('includes/KLDefines.php');
 include ('includes/KLEmails.php');
 include ('includes/OpenCartGeneralFunctions.php');
