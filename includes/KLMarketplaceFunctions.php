@@ -99,4 +99,76 @@ function ItemMarketplaceName($StockID, $Description, $Translation){
 	return $Name;
 }
 
+function ItemMarketplaceQOH($StockID, $db){
+	// if we have more than ADMINCERDAS_MINIMUM_STOCK_TO_UPDATE we "cap" it, 
+	// so we don't spend update credits updating QOH when it is not important for us
+	$QOH = 	min(ItemOnlineQOH($StockID, $db), ADMINCERDAS_MINIMUM_STOCK_TO_UPDATE);
+	
+	//if less than ADMINCERDAS_MINIMUM_STOCK_TO_SHOW then consider we do not have available for marketplaces
+	// to avoid problems of orders not fulfilled and low rankings, better show QOH = 0 than cancel the order.
+	// Anyway, this can be revised, depending on internal marketplace order management 
+	if ($QOH <= ADMINCERDAS_MINIMUM_STOCK_TO_SHOW){
+		$QOH = 0;
+	}
+	return $QOH;
+}
+
+function ItemInsertShopeeInfo($StockId, $EnabledShopee, $ShopeeProductId, $URLShopee, $db){
+	$SQL="INSERT INTO klstockmarketplaces 
+				(stockid,
+				shopeeurl,
+				shopeeproductid,
+				shopeeenabled)
+		VALUES (
+			'" . $StockId . "',
+			'" . $URLShopee . "',
+			'" . $ShopeeProductId . "',
+			'" . $EnabledShopee . "')";
+
+	$DbgMsg = _('The SQL that failed to insert the Shopee marketplace info was');
+	$ErrMsg = _('Cannot insert the Shopee marketplace info because');
+	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+}
+
+function ItemInsertTokopediaInfo($StockId, $EnabledTokopedia, $TokopediaProductId, $URLTokopedia, $db){
+	$SQL="INSERT INTO klstockmarketplaces 
+				(stockid,
+				tokopediaurl,
+				tokopediaproductid,
+				tokopediaenabled)
+		VALUES (
+			'" . $StockId . "',
+			'" . $URLTokopedia . "',
+			'" . $TokopediaProductId . "',
+			'" . $EnabledTokopedia . "')";
+
+	$DbgMsg = _('The SQL that failed to insert the Tokopedia marketplace info was');
+	$ErrMsg = _('Cannot insert the Tokopedia marketplace info because');
+	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+}
+
+function ItemUpdateShopeeInfo($StockId, $EnabledShopee, $ShopeeProductId, $URLShopee, $db){
+	$SQL = "UPDATE klstockmarketplaces
+			SET shopeeurl = '" . $URLShopee . "',
+				shopeeproductid = '" . $ShopeeProductId ."',
+				shopeeenabled='" . $EnabledShopee ."'
+		WHERE klstockmarketplaces.stockid='" . $StockId . "'";
+
+	$DbgMsg = _('The SQL that failed to update the Shopee marketplace info was');
+	$ErrMsg = _('Cannot update the Shopee marketplace info because');
+	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+}
+
+function ItemUpdateTokopediaInfo($StockId, $EnabledTokopedia, $TokopediaProductId, $URLTokopedia, $db){
+	$SQL = "UPDATE klstockmarketplaces
+			SET tokopediaurl = '" . $URLTokopedia . "',
+				tokopediaproductid = '" . $TokopediaProductId ."',
+				tokopediaenabled='" . $EnabledTokopedia ."'
+		WHERE klstockmarketplaces.stockid='" . $StockId . "'";
+
+	$DbgMsg = _('The SQL that failed to update the Tokopedia marketplace info was');
+	$ErrMsg = _('Cannot update the Tokopedia marketplace info because');
+	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+}
+
 ?>

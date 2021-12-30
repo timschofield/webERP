@@ -379,6 +379,11 @@ define("TOKOPEDIA_COMMISSION_PERCENT", 1.00);
 define("TOKOPEDIA_COMMISSION_FREE_SHIPPING_PER_ITEM_PERCENT", 2.50);
 define("TOKOPEDIA_COMMISSION_FREE_SHIPPING_PER_ITEM_MAXIMUM", 10000);
 
+define("TOKOPEDIA_PREFIX_URL", "https://www.tokopedia.com/");
+define("TOKOPEDIA_BLINK_STOREID", "blinkfashionjewellery");
+define("TOKOPEDIA_KAPAL_LAUT_STOREID", "kapallautjewellery");
+
+
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // SHOPEE
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -404,6 +409,11 @@ define("SHOPEE_CATEGORY_NECKLACE_PEARL", 'Kalung Mutiara');
 define("SHOPEE_CATEGORY_NECKLACE",       'Kalung Etnik');
 define("SHOPEE_CATEGORY_BAG",            'Clutch');
 define("SHOPEE_CATEGORY_KEYHOLDER",      'Hiasan & Gantungan Kunci');
+
+define("SHOPEE_PREFIX_URL", "https://www.shopee.co.id/produk-i.");
+define("SHOPEE_BLINK_STOREID", "303205858");
+define("SHOPEE_KAPAL_LAUT_STOREID", "359256976");
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // MIDTRANS

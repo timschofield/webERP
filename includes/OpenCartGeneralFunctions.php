@@ -489,7 +489,7 @@ function GetTotalFromOrder($Concept, $OrderId, $db_oc, $oc_tableprefix){
 	}
 }
 
-function GetOnlineQOH($StockId, $db){
+function ItemOnlineQOH($StockId, $db){
 	$SQL = "SELECT SUM(locstock.quantity)
 			FROM locstock, locations
 			WHERE locstock.loccode = locations.loccode

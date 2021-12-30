@@ -188,6 +188,8 @@ $MenuItems['orders']['Maintenance']['Caption'] = array( _('Create Contract'),
 														_('OpenCart: Sync webERP to OC Hourly'),
 														_('OpenCart: Sync OC to webERP'),
 														_('AdminCerdas: Upload to marketplaces'),
+														_('Tokopedia: Import ProductID-URL'),
+														_('Shopee: Import ProductID-URL'),
 														_('Sell Through Support Deals'));
 
 $MenuItems['orders']['Maintenance']['URL'] = array( '/Contracts.php',
@@ -201,6 +203,8 @@ $MenuItems['orders']['Maintenance']['URL'] = array( '/Contracts.php',
 													'/WeberpToOpenCartHourly.php',
 													'/OpenCartToWeberp.php',
 													'/KLExcelAdminCerdas.php',
+													'/KLTokopediaURL.php',
+													'/KLShopeeURL.php',
 													'/SellThroughSupport.php');
 
 $MenuItems['AR']['Transactions']['Caption'] = array(_('Select Order to Invoice'),
