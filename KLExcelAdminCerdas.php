@@ -6,6 +6,7 @@ include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
+include('includes/KLMarketplaceFunctions.php');
 include('includes/OpenCartGeneralFunctions.php');
 include('includes/GetPrice.inc');
 
@@ -130,9 +131,7 @@ function submit(&$db, $TypeOfShop, $TypeOfFile) {
 					$NamaVariant = "";
 				}
 
-				$Name = trim($myrow['descriptiontranslation']) . " -"  . 
-						trim($myrow['description']) . 
-						$TextSizeGrouping;
+				$Name = ItemMarketplaceName($myrow['stockid'], $myrow['description'], $myrow['descriptiontranslation']);
 				$Price = round($myrow['price']);
 				$PriceDiscount = '';
 				$Description = trim($myrow['longdescriptiontranslation']). " " . 

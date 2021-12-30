@@ -60,4 +60,43 @@ function CalculateCommissionShopee($CustomerCode, $OrderNo, $TotalAmount){
 	return $Commission;
 }
 
+function CreateTextSize($stockid, $language, $IncludeTextDescription){
+	$Size = ClassicalSize($stockid);
+	if ($Size == "NO SIZE"){
+		if (isRing($stockid)){
+			$Size = RingSize($stockid);
+		}else{
+			$Size = NumberSize($stockid);
+		}		
+	} 
+	if ($IncludeTextDescription){
+		if ($Size == "NO SIZE"){
+			$TextSize = "";
+		}else if ($Size == "FR"){
+			$TextSize = "Free Size";
+		}else{
+			if ($language == "ID"){
+				$TextSize = "Ukuran: ". $Size;
+			}else{
+				$TextSize = "Size: ". $Size;
+			}
+		}
+	}else{
+		if (($Size == "NO SIZE") OR ($Size == "FR")){
+			$TextSize = "";
+		}else{
+			$TextSize = " - Size " . $Size;
+		}
+	}
+	return $TextSize;
+}
+
+function ItemMarketplaceName($StockID, $Description, $Translation){
+	$Name = trim($Translation) . 
+			" -"  . 
+			trim($Description) . 
+			CreateTextSize($StockID, "EN", false);
+	return $Name;
+}
+
 ?>
