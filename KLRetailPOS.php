@@ -957,35 +957,6 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 				
 				$RetailPrice = round($OrderLine->Price * (1 - $OrderLine->DiscountPercent) / $ExRate,0);
 				$ConsignmentPrice = round($_SESSION['PercentConsignmentPTADU'] / 100 * $RetailPrice,0);
-/* we do report the accounting of it at consignment invoice creation time, not every sale
-				// For tax reporting reasons this clustering accounting must be excluding PPN (net price), 
-				// as PPN is accounted on consignment invoice creation
-				$NetPrice = round($ConsignmentPrice / ((100 + PPN_PERCENT) / 100),0);
-				
-				// report the COGS for retail partner from PT ADU
-				InsertIntoGLTrans("10", 
-								$InvoiceNo, 
-								Date('Y-m-d'),
-								$PeriodNo,
-								$_SESSION['AccountConsignmentCOGSPartner'],
-								$_SESSION['Items'.$identifier]->CustRef . " " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ Net " . $NetPrice,
-								($NetPrice * $OrderLine->Quantity),
-								$Tag,
-								'ERROR-POS-00008'
-								);
-
-				// report the sales for PT ADU to retail partner
-				InsertIntoGLTrans("10", 
-								$InvoiceNo, 
-								Date('Y-m-d'),
-								$PeriodNo,
-								$_SESSION['AccountConsignmentSalesPTADU'],
-								$_SESSION['Items'.$identifier]->CustRef . " " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ Net " . $NetPrice,
-								(-$NetPrice * $OrderLine->Quantity),
-								$Tag,
-								'ERROR-POS-00009'
-								);
-*/				
 				// record the consignment for later invoice to partner
 				$SQL = "INSERT INTO klconsignment 
 							(saledate,
