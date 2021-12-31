@@ -1084,7 +1084,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		}
 
 		if ($_POST['AmountPaidCash']!=0){
-			// si han pagat CASH, tot o en part
+			// si han pagat CASH
 			$BankAccountCash = $_SESSION['klposcashaccount'];
 			$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CASH,
 								$PeriodNo,
@@ -1118,10 +1118,10 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		}//amount paid cash was not zero
 		
 		if ($_POST['AmountPaidCCDanamon']!=0){
-			// si han pagat CREDITCARD DANAMON, tot o en part
-			$CreditCardNetPayment = ($_POST['AmountPaidCCDanamon']*(100- $_SESSION['ComissionCCDanamon'])/100);
-			$CreditCardBankComissions = ($_POST['AmountPaidCCDanamon']*($_SESSION['ComissionCCDanamon'])/100);
-
+			// si han pagat CREDITCARD DANAMON
+			$CreditCardBankComissions = round($_POST['AmountPaidCCDanamon']*($_SESSION['ComissionCCDanamon'])/100);
+			$CreditCardNetPayment = $_POST['AmountPaidCCDanamon'] - $CreditCardBankComissions;
+			
 			$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CREDITCARD,
 								$PeriodNo,
 								$_SESSION['AccountBankDanamon'],
@@ -1155,8 +1155,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 		if ($_POST['AmountPaidAmexBCA']!=0){
 			// si han pagat AMEX DANAMON, tot o en part
-			$CreditCardNetPayment = ($_POST['AmountPaidAmexBCA']*(100- $_SESSION['ComissionAmexBCA'])/100);
-			$CreditCardBankComissions = ($_POST['AmountPaidAmexBCA']*($_SESSION['ComissionAmexBCA'])/100);
+			$CreditCardBankComissions = round($_POST['AmountPaidAmexBCA']*($_SESSION['ComissionAmexBCA'])/100);
+			$CreditCardNetPayment = $_POST['AmountPaidAmexBCA'] - $CreditCardBankComissions;
 			
 			$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CREDITCARD,
 								$PeriodNo,
@@ -1190,9 +1190,9 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		}//amount paid American Express was not zero
 
 		if ($_POST['AmountPaidCCMandiri']!=0){
-			// si han pagat CREDITCARD MANDIRI, tot o en part
-			$CreditCardNetPayment = ($_POST['AmountPaidCCMandiri']*(100- $_SESSION['ComissionCCMandiri'])/100);
-			$CreditCardBankComissions = ($_POST['AmountPaidCCMandiri']*($_SESSION['ComissionCCMandiri'])/100);
+			// si han pagat CREDITCARD MANDIRI
+			$CreditCardBankComissions = round($_POST['AmountPaidCCMandiri']*($_SESSION['ComissionCCMandiri'])/100);
+			$CreditCardNetPayment = $_POST['AmountPaidCCMandiri']-$CreditCardBankComissions;
 
 			$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CREDITCARD,
 								$PeriodNo,
@@ -1226,9 +1226,9 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		}//amount paid Credit Card MANDIRI was not zero
 		
 		if ($_POST['AmountPaidCCBCA']!=0){
-			// si han pagat CREDITCARD BCA, tot o en part
-			$CreditCardNetPayment = ($_POST['AmountPaidCCBCA']*(100- $_SESSION['ComissionCCBCA'])/100);
-			$CreditCardBankComissions = ($_POST['AmountPaidCCBCA']*($_SESSION['ComissionCCBCA'])/100);
+			// si han pagat CREDITCARD BCA
+			$CreditCardBankComissions = round($_POST['AmountPaidCCBCA']*($_SESSION['ComissionCCBCA'])/100);
+			$CreditCardNetPayment = $_POST['AmountPaidCCBCA']-$CreditCardBankComissions;
 			
 			$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CREDITCARD,
 								$PeriodNo,
@@ -1263,8 +1263,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 		if ($_POST['AmountPaidWeChat']!=0){
 			// si han pagat WECHAT, tot o en part
-			$WeChatNetPayment = ($_POST['AmountPaidWeChat']*(100- $_SESSION['ComissionWeChat'])/100);
-			$WeChatBankComissions = ($_POST['AmountPaidWeChat']*($_SESSION['ComissionWeChat'])/100);
+			$WeChatBankComissions = round($_POST['AmountPaidWeChat']*($_SESSION['ComissionWeChat'])/100);
+			$WeChatNetPayment = $_POST['AmountPaidWeChat']-$WeChatBankComissions;
 
 			$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CREDITCARD,
 								$PeriodNo,
@@ -1299,8 +1299,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		
 		if ($_POST['AmountPaidQRIS']!=0){
 			// si han pagat QRIS, tot o en part
-			$QRISNetPayment = ($_POST['AmountPaidQRIS']*(100- $_SESSION['ComissionQRIS'])/100);
-			$QRISBankComissions = ($_POST['AmountPaidQRIS']*($_SESSION['ComissionQRIS'])/100);
+			$QRISBankComissions = round($_POST['AmountPaidQRIS']*($_SESSION['ComissionQRIS'])/100);
+			$QRISNetPayment = $_POST['AmountPaidQRIS']-$QRISBankComissions;
 
 			$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CREDITCARD,
 								$PeriodNo,
