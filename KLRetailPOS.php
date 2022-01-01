@@ -880,6 +880,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 					$StandardCost = round($OrderLine->StandardCost * ($_SESSION['HPPCompensation'] / 100),0);
 					$Compensation = round($StandardCost - $OrderLine->StandardCost,0);
 				}
+				$StandardCostLine = round($StandardCost * $OrderLine->Quantity);
 				
 				InsertIntoGLTrans("10", 
 								$InvoiceNo, 
@@ -887,7 +888,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								$PeriodNo,
 								$AccountCOGS,
 								$OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . $StandardCost,
-								round($StandardCost * $OrderLine->Quantity),
+								$StandardCostLine,
 								$Tag,
 								'ERROR-POS-00001'
 								);
@@ -913,8 +914,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								Date('Y-m-d'),
 								$PeriodNo,
 								$StockGLCode['stockact'],
-								$OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . round($OrderLine->StandardCost),
-								round(-($OrderLine->StandardCost) * $OrderLine->Quantity),
+								$OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . $StandardCost,
+								-$StandardCostLine,
 								$Tag,
 								'ERROR-POS-00003'
 								);
