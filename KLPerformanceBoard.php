@@ -310,8 +310,11 @@ if ($ProcessSection03){
 	if ($KL_SystemAdmin
 		OR $KL_OperationalManager
 		OR $KL_AdministrationTeam){
-		CashStatus(2021, 62000000, 20000000, 20000000, 54000000, 20000000, 20000000, 20000000, $periodnow, TRUE, $db);
+		CashStatus(2022, 20000000, 20000000, 20000000, 20000000, 20000000, 20000000, 20000000, $periodnow, TRUE, $db);
 		$NumberOfTestExecuted++;
+		UnbalancedGLTransTX(7, $RootPath, $db);
+		$NumberOfTestExecuted++;
+
 		
 	}
 }
@@ -3076,5 +3079,55 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA, $db){
 				</div>';
 	}
 }
+
+function UnbalancedGLTransTX($NumDays, $RootPath, $db){
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
+	$SQL = "SELECT gltrans.trandate, 
+				systypes.typename, 
+				gltrans.type, 
+				gltrans.typeno, 
+				SUM(gltrans.amount) AS unbalance
+			FROM gltrans, systypes
+			WHERE gltrans.type = systypes.typeid 
+				AND gltrans.trandate >= '" . $StartDate . "'
+			GROUP BY gltrans.type, gltrans.typeno 
+			HAVING ABS(SUM(gltrans.amount)) >= 1
+			ORDER BY gltrans.trandate";
+	$result = DB_query($SQL);
+	
+	if (DB_num_rows($result) != 0){
+		$k = 0; //row colour counter
+		echo '<p class="page_title_text" align="center"><strong>' . 'Unbalanced GLTrans Transactions during the last ' . $NumDays . ' days' . '</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('Date') . '</th>
+							<th class="ascending">' . _('Type') . '</th>
+							<th class="ascending">' . _('TypeNo') . '</th>
+							<th class="ascending">' . _('Unbalance') . '</th>
+						</tr>';
+		echo $TableHeader;
+
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+
+			$CodeLink = '<a href="' . $RootPath . '/GLTransInquiry.php?TypeID=' . $myrow['type'] . '&TransNo=' . $myrow['typeno'] . '">' . $myrow['typeno'] . '</a>';
+					
+			printf('<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					ConvertSQLDateTime($myrow['trandate']), 
+					$myrow['typename'], 
+					$CodeLink, 
+					locale_number_format($myrow['unbalance'],0)
+					);
+		}
+		echo '</table>
+			</div>';
+	}
+}
+
 
 ?>
