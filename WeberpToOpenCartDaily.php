@@ -10,6 +10,7 @@ include ('includes/header.php');
 include('includes/GetPrice.inc');
 
 include ('includes/KLGeneralFunctions.php');
+include('includes/KLMarketplaceFunctions.php');
 include ('includes/OpenCartGeneralFunctions.php');
 include ('includes/KLDefines.php');
 include ('includes/OpenCartConnectDB.php');

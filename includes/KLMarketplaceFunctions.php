@@ -60,6 +60,11 @@ function CalculateCommissionShopee($CustomerCode, $OrderNo, $TotalAmount){
 	return $Commission;
 }
 
+function ClearUrl($Url){
+	$Clean = str_replace("/", "\\/", $Url);
+	return $Clean;
+}
+
 function CreateTextSize($stockid, $language, $IncludeTextDescription){
 	$Size = ClassicalSize($stockid);
 	if ($Size == "NO SIZE"){
@@ -111,6 +116,28 @@ function ItemMarketplaceQOH($StockID, $db){
 		$QOH = 0;
 	}
 	return $QOH;
+}
+
+function ItemEnableShopeeInfo($StockId, $EnabledShopee, $db){
+	$SQL = "UPDATE klstockmarketplaces
+			SET shopeeenabled='" . $EnabledShopee ."'
+		WHERE klstockmarketplaces.stockid='" . $StockId . "'
+			AND shopeeurl IS NOT NULL";
+
+	$DbgMsg = _('The SQL that failed to enable/disable the Shopee marketplace info was');
+	$ErrMsg = _('Cannot enable/disable the Shopee marketplace info because');
+	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+}
+
+function ItemEnableTokopediaInfo($StockId, $EnabledTokopedia, $db){
+	$SQL = "UPDATE klstockmarketplaces
+			SET tokopediaenabled='" . $EnabledTokopedia ."'
+		WHERE klstockmarketplaces.stockid='" . $StockId . "'
+			AND tokopediaurl IS NOT NULL";
+
+	$DbgMsg = _('The SQL that failed to enable/disable the Tokopedia marketplace info was');
+	$ErrMsg = _('Cannot enable/disable the Tokopedia marketplace info because');
+	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 }
 
 function ItemInsertShopeeInfo($StockId, $EnabledShopee, $ShopeeProductId, $URLShopee, $db){

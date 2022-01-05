@@ -80,6 +80,9 @@ function WeberpToOpenCartHourlySync($ShowMessages, $db, $db_oc, $oc_tableprefix,
 
 	// update stock in hand
 	$EmailText = SyncProductQOH($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
+	
+	// update links for marketplaces
+	$EmailText = SyncProductMarketplacesLinks($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
 
 	// update product - sales categories relationship
 	$EmailText = SyncProductSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
@@ -700,10 +703,7 @@ function SyncProductQOH($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefi
 		$EmailText = $EmailText . "Sync Product QOH" . "\n" . PrintTimeInformation($db);
 	}
 
-	/* let's get the webERP price list and base currency for the online customer */
-	list ($PriceList, $Currency) = GetOnlinePriceList($db);
-
-	/* Look for the late modifications of prices table in webERP */
+	/* Look for the late modifications of locstock table in webERP */
 	$SQL = "SELECT DISTINCT(locstock.stockid)
 			FROM locstock, salescatprod, locations, stockmaster
 			WHERE locstock.stockid = salescatprod.stockid
@@ -752,6 +752,7 @@ function SyncProductQOH($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefi
 							status = '" . $Status . "'
 						WHERE product_id = '" . $ProductId . "'";
 			$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
+			
 			if ($ShowMessages){
 				$k = StartEvenOrOddRow($k);
 				printf('<td>%s</td>
@@ -789,6 +790,213 @@ function SyncProductQOH($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefi
 	}
 	if ($EmailText !=''){
 		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . _('Product QOH synchronized from webERP to OpenCart') . "\n\n";
+	}
+
+	return $EmailText;
+}
+
+function SyncProductMarketplacesLinks($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText=''){
+	$i = 0;
+	if ($EmailText !=''){
+		$EmailText = $EmailText . "Enable/Disable Product in Marketplaces based on QOH" . "\n" . PrintTimeInformation($db);
+	}
+
+	/* Look for the late modifications of locstock table in webERP, to see all products that have changed QOH somehow 
+		we will need to update the webERP table klstockmarketplaces, later on a second SQL we can update OpenCart properly*/
+	$SQL = "SELECT DISTINCT(locstock.stockid)
+			FROM locstock, salescatprod, locations, stockmaster
+			WHERE locstock.stockid = salescatprod.stockid
+				AND locstock.stockid = stockmaster.stockid
+				AND locstock.loccode = locations.loccode
+				AND locations.stockavailableforonline = '1'
+				AND stockmaster.klsynctoopencart = '1'
+				AND (locstock.date_created >= '" . $LastTimeRun . "'
+					OR locstock.date_updated >= '" . $LastTimeRun . "')
+			ORDER BY locstock.stockid";
+
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		if ($ShowMessages){
+			echo '<p class="page_title_text" align="center"><strong>' . _('Product QOH Available for Marketplaces Updates') .'</strong></p>';
+			echo '<div>';
+			echo '<table class="selection">';
+			$TableHeader = '<tr>
+								<th>' . _('StockID') . '</th>
+								<th>' . _('Marketplace QOH') . '</th>
+								<th>' . _('Action') . '</th>
+							</tr>';
+			echo $TableHeader;
+		}
+		$DbgMsg = _('The SQL statement that failed was');
+		$UpdateErrMsg = _('The SQL to update Product QOH in Opencart failed');
+
+		$k = 0; //row colour counter
+		while ($myrow = DB_fetch_array($result)) {
+			$QOH = ItemMarketplaceQOH($myrow['stockid'], $db);
+			$EnabledMarketplaces = ($QOH > 0);
+			if ($EnabledMarketplaces) {
+				$Action = "Enable";
+			}else{
+				$Action = "Disable";
+			}
+
+			ItemEnableTokopediaInfo($StockId, $EnabledMarketplaces, $db);
+			ItemEnableShopeeInfo($StockId, $EnabledMarketplaces, $db);
+			
+			if ($ShowMessages){
+				$k = StartEvenOrOddRow($k);
+				printf('<td>%s</td>
+						<td class="number">%s</td>
+						<td>%s</td>
+						</tr>',
+						$myrow['stockid'],
+						locale_number_format($QOH,0),
+						$Action
+						);
+			}
+			if ($EmailText !=''){
+				$EmailText = $EmailText . str_pad($myrow['stockid'], 20, " ") . " Action = " . $Action . "\n";
+			}
+			$i++;
+		}
+		
+		if ($ShowMessages){
+			echo '</table>
+					</div>';
+		}
+	}
+	
+	if ($ShowMessages){
+		prnMsg(locale_number_format($i,0) . ' ' . _('Products set as Enabled/Disabled for Marketplaces in webERP'),'success');
+	}
+	if ($EmailText !=''){
+		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . _('Products set as Enabled/Disabled for Marketplaces in webERP') . "\n\n";
+	}
+
+	// second round... now update Opencart oc_product_link table with current information
+	$i = 0;
+	if ($EmailText !=''){
+		$EmailText = $EmailText . "Sync Product Links to Marketplaces" . "\n" . PrintTimeInformation($db);
+	}
+
+	$SQL = "SELECT stockid,
+				tokopediaenabled,
+				tokopediaurl,
+				shopeeenabled,
+				shopeeurl
+			FROM klstockmarketplaces
+			WHERE (klstockmarketplaces.date_created >= '" . $LastTimeRun . "'
+					OR klstockmarketplaces.date_updated >= '" . $LastTimeRun . "')
+			ORDER BY stockid";
+
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		if ($ShowMessages){
+			echo '<p class="page_title_text" align="center"><strong>' . _('Product Links to Marketplaces Updates') .'</strong></p>';
+			echo '<div>';
+			echo '<table class="selection">';
+			$TableHeader = '<tr>
+								<th>' . _('StockID') . '</th>
+								<th>' . _('Tokopedia Enabled') . '</th>
+								<th>' . _('Shopee Enabled') . '</th>
+								<th>' . _('Action') . '</th>
+							</tr>';
+			echo $TableHeader;
+		}
+		$DbgMsg = _('The SQL statement that failed was');
+		$UpdateErrMsg = _('The SQL to update Product Links to marketplaces in Opencart failed');
+		$InsertErrMsg = _('The SQL to insert Product Links to marketplaces in Opencart failed');
+
+		$k = 0; //row colour counter
+		while ($myrow = DB_fetch_array($result)) {
+
+			/* Field Matching */
+			$Model = $myrow['stockid'];
+			$TokopediaEnabled = $myrow['tokopediaenabled'];
+			$TokopediaLink = ClearUrl($myrow['tokopediaurl']);
+			$ShopeeEnabled = $myrow['shopeeenabled'];
+			$ShopeeLink = ClearUrl($myrow['shopeeurl']);
+			
+			$Link = '{"1":{"status":"';
+			if ($TokopediaEnabled){
+				$Link .= '1';
+				$TextTokopediaEnabled = "Enabled";
+			}else{
+				$Link .= '0';
+				$TextTokopediaEnabled = "Disabled";
+			}
+			$Link .= '","link":"';
+			$Link .= $TokopediaLink;
+			$Link .= '"},'; // Closing the Tokopedia info
+
+			$Link .= '"2":{"status":"';
+			if ($ShopeeEnabled){
+				$Link .= '1';
+				$TextShopeeEnabled = "Enabled";
+			}else{
+				$Link .= '0';
+				$TextShopeeEnabled = "Disabled";
+			}
+			$Link .= '","link":"';
+			$Link .= $ShopeeLink;
+			$Link .= '"}'; // closing the Shopee info
+			$Link .= '}'; // closing the full link info
+
+			// Let's get the OpenCart primary key for product
+			$ProductId = GetOpenCartProductId($Model, $db_oc, $oc_tableprefix);
+
+			/* Now, insert it or update it */
+			if (DataExistsInOpenCart($db_oc, $oc_tableprefix . 'product_link', 'product_id', $ProductId)){
+				$Action = "Update";
+
+				$sqlUpdate = "UPDATE " . $oc_tableprefix . "product_link SET
+								product_link = '" . $Link . "'
+							WHERE product_id = '" . $ProductId . "'";
+				$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
+			}else{
+				$Action = "Insert";
+
+				$sqlInsert = "INSERT INTO " . $oc_tableprefix . "product_link
+								(product_id,
+								product_link)
+							VALUES
+								('" . $ProductId . "',
+								'" . $Link . "'
+								)";
+				$resultInsert = DB_query_oc($sqlInsert,$InsertErrMsg,$DbgMsg,true);
+			}
+			
+			if ($ShowMessages){
+				$k = StartEvenOrOddRow($k);
+				printf('<td>%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						</tr>',
+						$Model,
+						$TextTokopediaEnabled,
+						$TextTokopediaEnabled,
+						$Action
+						);
+			}
+			if ($EmailText !=''){
+				$EmailText = $EmailText . str_pad($Model, 20, " ") . " Marketplaces links updated" . "\n";
+			}
+			$i++;
+		}
+		
+		if ($ShowMessages){
+			echo '</table>
+					</div>
+					</form>';
+		}
+	}
+
+	if ($ShowMessages){
+		prnMsg(locale_number_format($i,0) . ' ' . _('Marketplaces links updated to OpenCart'),'success');
+	}
+	if ($EmailText !=''){
+		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . _('Marketplaces links updated to OpenCart') . "\n\n";
 	}
 
 	return $EmailText;
