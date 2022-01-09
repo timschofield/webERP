@@ -141,9 +141,17 @@ if ($ProcessSection01){
 
 	if ($KL_BusinessDevelopmentManager
 		OR $KL_SystemAdmin){
+		over_or_below_limit("DISC20 Items in AR", "BELOW", 20, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		over_or_below_limit("DISC20 Items in BU", "BELOW", 20, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		over_or_below_limit("DISC20 Items in B2", "BELOW", 20, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		over_or_below_limit("DISC80 Items in AR", "BELOW", 30, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		over_or_below_limit("DISC80 Items in BU", "BELOW", 30, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		over_or_below_limit("DISC80 Items in B2", "BELOW", 30, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -519,8 +527,6 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("TESTKA", "TOKSE", $NumberOfOpenShopsKL, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("TESTKA", "TOKB2", $NumberOfOpenShopsKL, $RootPath, $db);
-		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("TESTKA", "TOKOB", $NumberOfOpenShopsKL, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("TESTKA", "TOKKA", $NumberOfOpenShopsKL, $RootPath, $db);
@@ -533,8 +539,6 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("STABKA", "TOKSE", $NumberOfOpenShopsKL, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("STABKA", "TOKB2", $NumberOfOpenShopsKL, $RootPath, $db);
-		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("STABKA", "TOKOB", $NumberOfOpenShopsKL, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("STABKA", "TOKKA", $NumberOfOpenShopsKL, $RootPath, $db);
@@ -546,8 +550,6 @@ if ($ProcessSection01){
 		CategoryItemsNotInShop("NOPOKA", "TOKSA", $NumberOfOpenShopsKL, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("NOPOKA", "TOKSE", $NumberOfOpenShopsKL, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("NOPOKA", "TOKB2", $NumberOfOpenShopsKL, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("NOPOKA", "TOKB2", $NumberOfOpenShopsKL, $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -596,6 +598,12 @@ if ($ProcessSection01){
 		CategoryItemsNotInShop("DISC5A", "TOKBU", $NumberOfOpenShopsOU, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("DISC8A", "TOKBU", $NumberOfOpenShopsOU, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("DISC2A", "TOKB2", $NumberOfOpenShopsOU, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("DISC5A", "TOKB2", $NumberOfOpenShopsOU, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("DISC8A", "TOKB2", $NumberOfOpenShopsOU, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 	}
@@ -4325,6 +4333,20 @@ function over_or_below_limit($Request, $Sign, $Limit, $RootPath, $db){
 					AND stockmaster.categoryid = 'DISC2A'
 					AND locstock.reorderlevel > 0
 					AND locstock.loccode ='TOKAR'";
+	}elseif ($Request =="DISC20 Items in BU"){
+		$SQL = "SELECT COUNT(*)
+				FROM stockmaster,locstock
+				WHERE stockmaster.stockid = locstock.stockid
+					AND stockmaster.categoryid = 'DISC2A'
+					AND locstock.reorderlevel > 0
+					AND locstock.loccode ='TOKBU'";
+	}elseif ($Request =="DISC20 Items in B2"){
+		$SQL = "SELECT COUNT(*)
+				FROM stockmaster,locstock
+				WHERE stockmaster.stockid = locstock.stockid
+					AND stockmaster.categoryid = 'DISC2A'
+					AND locstock.reorderlevel > 0
+					AND locstock.loccode ='TOKB2'";
 	}elseif ($Request =="DISC80 Items in AR"){
 		$SQL = "SELECT COUNT(*)
 				FROM stockmaster,locstock
@@ -4339,6 +4361,13 @@ function over_or_below_limit($Request, $Sign, $Limit, $RootPath, $db){
 					AND stockmaster.categoryid = 'DISC8A'
 					AND locstock.reorderlevel > 0
 					AND locstock.loccode ='TOKBU'";
+	}elseif ($Request =="DISC80 Items in B2"){
+		$SQL = "SELECT COUNT(*)
+				FROM stockmaster,locstock
+				WHERE stockmaster.stockid = locstock.stockid
+					AND stockmaster.categoryid = 'DISC8A'
+					AND locstock.reorderlevel > 0
+					AND locstock.loccode ='TOKB2'";
 	}
 	
 	$result = DB_query($SQL);
