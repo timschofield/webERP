@@ -32,7 +32,14 @@ if (isset($_POST['submit'])) {
 	$i=1;
 	if (mb_strlen($_POST['TagName']) >100) {
 		$InputError = 1;
-		prnMsg(_('The tag name description must be 100 characters or less long'),'error');
+		prnMsg(_('The tag name in English must be 100 characters or less long'),'error');
+		$Errors[$i] = 'ItemTag';
+		$i++;
+	}
+
+	if (mb_strlen($_POST['TagNameBahasa']) >100) {
+		$InputError = 1;
+		prnMsg(_('The tag name in Bahasa must be 100 characters or less long'),'error');
 		$Errors[$i] = 'ItemTag';
 		$i++;
 	}
@@ -40,20 +47,29 @@ if (isset($_POST['submit'])) {
 	if (mb_strlen($_POST['TagName'])==0) {
 		$InputError = 1;
 		echo '<br />';
-		prnMsg(_('The tag name description must contain at least one character'),'error');
+		prnMsg(_('The tag name in English must contain at least one character'),'error');
 		$Errors[$i] = 'ItemTag';
 		$i++;
 	}
 
-	$checksql = "SELECT count(*)
+	if (mb_strlen($_POST['TagNameBahasa'])==0) {
+		$InputError = 1;
+		echo '<br />';
+		prnMsg(_('The tag name in Bahasa must contain at least one character'),'error');
+		$Errors[$i] = 'ItemTag';
+		$i++;
+	}
+
+ 	$checksql = "SELECT count(*)
 		     FROM stocktags
-		     WHERE tagname = '" . $_POST['TagName'] . "'";
+		     WHERE tagname = '" . $_POST['TagName'] . "'
+				OR tagnamebahasa = '" . $_POST['TagNameBahasa'] . "'";
 	$checkresult=DB_query($checksql);
 	$checkrow=DB_fetch_row($checkresult);
 	if ($checkrow[0]>0 and !isset($SelectedTag)) {
 		$InputError = 1;
 		echo '<br />';
-		prnMsg(_('You already have a tag called').' '.$_POST['TagName'],'error');
+		prnMsg(_('You already have a tag called').' '.$_POST['TagName'].' or '.$_POST['TagNameBahasa'],'error');
 		$Errors[$i] = 'TagName';
 		$i++;
 	}
@@ -61,7 +77,8 @@ if (isset($_POST['submit'])) {
 	if (isset($SelectedTag) AND $InputError !=1) {
 
 		$sql = "UPDATE stocktags
-			SET tagname = LOWER('" . $_POST['TagName'] . "')
+			SET tagname = LOWER('" . $_POST['TagName'] . "'),
+				tagnamebahasa = LOWER('" . $_POST['TagNameBahasa'] . "')
 			WHERE tagid = '" .$SelectedTag."'";
 
 		$msg = _('The tag') . ' ' . $SelectedTag . ' ' .  _('has been updated');
@@ -71,7 +88,8 @@ if (isset($_POST['submit'])) {
 
 		$checkSql = "SELECT count(*)
 			     FROM stocktags
-			     WHERE tagname = '" . $_POST['TagName'] . "'";
+			     WHERE tagname = '" . $_POST['TagName'] . "'
+					OR tagnamebahasa = '" . $_POST['TagNameBahasa'] . "'";
 
 		$checkresult = DB_query($checkSql);
 		$checkrow = DB_fetch_row($checkresult);
@@ -84,10 +102,13 @@ if (isset($_POST['submit'])) {
 			// Add new record on submit
 
 			$sql = "INSERT INTO stocktags
-						(tagname)
-					VALUES (LOWER('" . $_POST['TagName'] . "'))";
+						(tagname,
+						tagnamebahasa)
+					VALUES (LOWER('" . $_POST['TagName'] . "'),
+							LOWER('" . $_POST['TagNameBahasa'] . "')
+						   )";
 
-			$msg = _('Item tag') . ' ' . $_POST["tagname"] .  ' ' . _('has been created');
+			$msg = _('Item tag') . ' ' . $_POST["tagname"] .  ' - ' . $_POST["tagnamebahasa"] .  ' ' . _('has been created');
 
 		}
 	}
@@ -99,20 +120,22 @@ if (isset($_POST['submit'])) {
 		unset($SelectedTag);
 		unset($_POST['tagid']);
 		unset($_POST['TagName']);
+		unset($_POST['TagNameBahasa']);
 	}
 
 } elseif ( isset($_GET['delete']) ) {
 
-	$result = DB_query("SELECT tagname FROM stocktags WHERE tagid='".$SelectedTag."'");
+	$result = DB_query("SELECT tagname, tagnamebahasa FROM stocktags WHERE tagid='".$SelectedTag."'");
 	if (DB_Num_Rows($result)>0){
 		$TypeRow = DB_fetch_array($result);
 		$TagName = $TypeRow['tagname'];
+		$TagNameBahasa = $TypeRow['tagnamebahasa'];
 
 		$sql="DELETE FROM stocktags WHERE tagid='".$SelectedTag."'";
 		$ErrMsg = _('The tag record could not be deleted because');
 		$result = DB_query($sql,$ErrMsg);
 		echo '<br />';
-		prnMsg(_('Item tag') . ' ' . $TagName  . ' ' . _('has been deleted') ,'success');
+		prnMsg(_('Item tag') . ' ' . $TagName  . ' - ' . $TagNameBahasa  . ' ' . _('has been deleted') ,'success');
 	}
 	unset ($SelectedTag);
 	unset($_GET['delete']);
@@ -125,12 +148,13 @@ then none of the above are true and the list of sales types will be displayed wi
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = "SELECT tagid, tagname FROM stocktags ORDER BY tagname";
+	$sql = "SELECT tagid, tagname, tagnamebahasa FROM stocktags ORDER BY tagname";
 	$result = DB_query($sql);
 
 	echo '<br /><table class="selection">';
 	echo '<tr>
-				<th class="ascending">' . _('Tag Name') . '</th>
+				<th class="ascending">' . _('Tag English') . '</th>
+				<th class="ascending">' . _('Tag Bahasa') . '</th>
 		</tr>';
 
 $k=0; //row colour counter
@@ -145,10 +169,12 @@ while ($myrow = DB_fetch_row($result)) {
 	}
 
 printf('<td>%s</td>
+		<td>%s</td>
 		<td><a href="%sSelectedTag=%s">' . _('Edit') . '</a></td>
 		<td><a href="%sSelectedTag=%s&amp;delete=yes" onclick=\'return confirm("' . _('Are you sure you wish to delete this Tag?') . '");\'>' . _('Delete') . '</a></td>
 		</tr>',
 		$myrow[1],
+		$myrow[2],
 		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 		$myrow[0],
 		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
@@ -174,7 +200,8 @@ if (! isset($_GET['delete'])) {
 	if ( isset($SelectedTag) AND $SelectedTag!='' ) {
 
 		$sql = "SELECT tagid,
-			       tagname
+			       tagname,
+				   tagnamebahasa
 		        FROM stocktags
 		        WHERE tagid='".$SelectedTag."'";
 
@@ -183,6 +210,7 @@ if (! isset($_GET['delete'])) {
 
 		$_POST['tagid'] = $myrow['tagid'];
 		$_POST['TagName']  = $myrow['tagname'];
+		$_POST['TagNameBahasa']  = $myrow['tagnamebahasa'];
 
 		echo '<input type="hidden" name="SelectedTag" value="' . $SelectedTag . '" />
 			<input type="hidden" name="tagid" value="' . $_POST['tagid'] . '" />
@@ -201,9 +229,16 @@ if (! isset($_GET['delete'])) {
 	if (!isset($_POST['TagName'])) {
 		$_POST['TagName']='';
 	}
+	if (!isset($_POST['TagNameBahasa'])) {
+		$_POST['TagNameBahasa']='';
+	}
 	echo '<tr>
-			<td>' . _('Tag Name') . ':</td>
-			<td><input type="text" name="TagName"  required="required" title="' . _('The tag name is required') . '" value="' . $_POST['TagName'] . '" /></td>
+			<td>' . _('Tag English') . ':</td>
+			<td><input type="text" name="TagName"  required="required" title="' . _('The tag name in English is required') . '" value="' . $_POST['TagName'] . '" /></td>
+		</tr>
+		<tr>
+			<td>' . _('Tag Bahasa') . ':</td>
+			<td><input type="text" name="TagNameBahasa"  required="required" title="' . _('The tag name is in Bahasa required') . '" value="' . $_POST['TagNameBahasa'] . '" /></td>
 		</tr>
 		</table>
 		<br />
