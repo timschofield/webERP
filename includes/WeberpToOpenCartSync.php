@@ -91,7 +91,7 @@ function WeberpToOpenCartHourlySync($ShowMessages, $db, $db_oc, $oc_tableprefix,
 	$EmailText = PurgeDiscountOver50($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
 
 	// update description translations
-//	$EmailText = SyncProductDescriptionTranslations($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
+	$EmailText = SyncProductDescriptionTranslations($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
 
 	// clean duplicated URL alias
 //	$EmailText = CleanDuplicatedUrlAlias($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
@@ -261,7 +261,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 			}
 			
 			/* Meta data */
-			$Tag = CreateTagsForItem($myrow['description'], $myrow['longdescription'], $myrow['salescatname']);
+			$Tag = CreateTagsForItem(1, $myrow['description'], $myrow['longdescription'], $myrow['salescatname']);
 			$MetaKeyword = $myrow['stockid'] . $TagSeparator . $StoreName . $TagSeparator . $Tag;
 			$MetaDescription = $myrow['stockid'] . " " . CleanText($myrow['longdescription']);
 			$MetaTitle = $myrow['stockid'] . " " . $Name;
@@ -1034,11 +1034,11 @@ function SyncProductDescriptionTranslations($ShowMessages, $LastTimeRun, $db, $d
 	}
 
 	/* Look for the late modifications of description translations table in webERP */
-	$SQL = "SELECT stockid,
-					language_id,
-					descriptiontranslation,
-					longdescriptiontranslation,
-					needsrevision
+	$SQL = "SELECT stockdescriptiontranslations.stockid,
+					stockdescriptiontranslations.language_id,
+					stockdescriptiontranslations.descriptiontranslation,
+					stockdescriptiontranslations.longdescriptiontranslation,
+					stockdescriptiontranslations.needsrevision
 			FROM stockdescriptiontranslations, stockmaster
 			WHERE stockdescriptiontranslations.stockid = stockmaster.stockid
 				AND stockmaster.klsynctoopencart = '1'
@@ -1084,8 +1084,12 @@ function SyncProductDescriptionTranslations($ShowMessages, $LastTimeRun, $db, $d
 				if ($LanguageId != ""){
 
 					$Name = $myrow['descriptiontranslation'];
-					$LongDescription =  str_replace("'", "\'", $myrow['longdescriptiontranslation']);
-					$MetaDescription = CreateMetaDescription($myrow['stockid'], trim($myrow['descriptiontranslation']));
+					$LongDescription = FormatDescriptionOpencart($myrow['longdescriptiontranslation']); 
+					$Tag = CreateTagsForItem($LanguageId, $myrow['descriptiontranslation'], $myrow['longdescriptiontranslation'], $myrow['salescatname']);
+					$MetaKeyword = $myrow['stockid'] . $TagSeparator . $StoreName . $TagSeparator . $Tag;
+					$MetaDescription = $myrow['stockid'] . " " . CleanText($myrow['longdescriptiontranslation']);
+
+//					$MetaDescription = CreateMetaDescription($myrow['stockid'], trim($myrow['descriptiontranslation']));
 //					$MetaKeyword = CreateMetaKeyword($myrow['stockid'], trim($myrow['descriptiontranslation']));
 //					$Tag = $myrow['descriptiontranslation'];
 

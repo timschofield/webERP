@@ -1270,26 +1270,32 @@ function GetGoogleProductFeedCategory($StockId, $SalesCategory){
 }
 
 
-function CreateTagsForItem($Description, $LongDescription, $SalesCategoryName){
+function CreateTagsForItem($LanguageId, $Description, $LongDescription, $SalesCategoryName){
 	$ListOfTags = "";
 	$Separator = ", ";
 	//create a long string and look for keywords
 	$LongText = strtolower($Description . " " . $LongDescription . " " . $SalesCategoryName);
-	$SQL = "SELECT tagname
-			FROM stocktags
-			ORDER BY tagname";
+	if ($LanguageId == 1){
+		$SQL = "SELECT tagname AS tagtext
+				FROM stocktags
+				ORDER BY tagname";
+	}else{
+		$SQL = "SELECT tagnamebahasa AS tagtext
+				FROM stocktags
+				ORDER BY tagnamebahasa";
+	}
 	$result = DB_query($SQL);
 	while ($myrow = DB_fetch_array($result)){
 		
-		if (StringContainsTag($LongText, $myrow['tagname'])){
+		if (StringContainsTag($LongText, $myrow['tagtext'])){
 			// we found a tag in the text, so a candidate for tag
-			if ((InconsistentTag($ListOfTags, 'earring', $myrow['tagname'], 'ring')) == FALSE){
+			if ((InconsistentTag($ListOfTags, 'earring', $myrow['tagtext'], 'ring')) == FALSE){
 				//  but, we must filter inconsistencies
 				if ($ListOfTags == ""){
 					// the very first one
-					$ListOfTags = $myrow['tagname'];
+					$ListOfTags = $myrow['tagtext'];
 				}else{
-					$ListOfTags = $ListOfTags. $Separator . $myrow['tagname'];
+					$ListOfTags = $ListOfTags. $Separator . $myrow['tagtext'];
 				}
 			}
 		}
