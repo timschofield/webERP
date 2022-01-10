@@ -57,6 +57,24 @@ $NumberOfOpenShopsTotal = $NumberOfOpenShopsKL + $NumberOfOpenShopsBL + $NumberO
 
 if ($_SESSION['UserID'] == "Ricard"){
 //	phpinfo();
+
+/* TEST AND PLAY WITH call_user_func to move this script mainly to a table in DB
+//		over_or_below_limit("DISC80 Items in AR", "BELOW", 20, $RootPath, $db);
+	 $FunctionName = "over_or_below_limit";
+	 $Parameters = '"DISC80 Items in AR", "BELOW", 30, $RootPath, $db';
+	 call_user_func($FunctionName, "DISC80 Items in AR", "BELOW", 30, $RootPath, $db);
+	 $FunctionName("DISC80 Items in AR", "BELOW", 30, $RootPath, $db);
+
+	 $Par1 = "DISC80 Items in AR";
+	 $Par2 = "BELOW";
+	 $Par3 = 30;
+	 $Par4 = $RootPath;
+	 $Par5 = $db;
+	 $Par6 = "";
+	 call_user_func($FunctionName, $Par1, $Par2, $Par3, $Par4, $Par5, $Par6);
+	 $FunctionName($Par1, $Par2, $Par3, $Par4, $Par5, $Par6);
+	prnMsg("END OF TESTS");
+*/
 }
 
 if ($KL_SystemAdmin 
