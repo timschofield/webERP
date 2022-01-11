@@ -707,29 +707,28 @@ function UpdateSettingValueOpenCartByCodeAndKey($Store, $Code, $Key, $Value, $db
 	$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
 }
 
-function CreateMetaDescription($Group, $Item){
+function CreateMetaDescriptionSalesCategory($Group, $Item){
 	$MetaDescription = $Group . ' ' . $Item;
 	return $MetaDescription;
 }
 
-function CreateMetaKeyword($Group, $Item){
-//	$MetaKeyword = $_SESSION['ShopName'] . ' ' . $Group . ' ' . $Item;
-	$MetaKeyword = $Group . ' ' . $Item;
-	$MetaKeyword = str_ireplace(' ', ',', $MetaKeyword);
-	$MetaKeyword = str_ireplace(',', ',', $MetaKeyword);
-	$MetaKeyword = str_ireplace(';', ',', $MetaKeyword);
-	$MetaKeyword = str_ireplace('.', ',', $MetaKeyword);
-	$MetaKeyword = str_ireplace('/', ',', $MetaKeyword);
+function CreateMetaDescriptionItem($StockId, $Text){
+	$MetaDescription = $StockId . " " . CleanText($Text);
+	return $MetaDescription;
+}
+
+function CreateMetaTitleItem($StockId, $Name, $Separator){
+	$MetaTitle = $StockId . $Separator . $Name;
+	return $MetaTitle;
+}
+
+function CreateMetaKeywordItem($StockId, $StoreName, $Tag, $TagSeparator){
+	$MetaKeyword = $StockId . $TagSeparator . $StoreName . $TagSeparator . $Tag;
 	return $MetaKeyword;
 }
 
 function CreateSEOKeyword($KeyWord){
-	$SEOKeyword =trim($KeyWord);
-	$SEOKeyword = str_ireplace(' ', '-', $SEOKeyword);
-	$SEOKeyword = str_ireplace(',', '-', $SEOKeyword);
-	$SEOKeyword = str_ireplace(';', '-', $SEOKeyword);
-	$SEOKeyword = str_ireplace('.', '-', $SEOKeyword);
-	$SEOKeyword = str_ireplace('/', '-', $SEOKeyword);
+	$SEOKeyword = CleanKeywordText($KeyWord);
 	return $SEOKeyword;
 }
 
@@ -750,6 +749,32 @@ function CleanText($MessedText){
     $CleanText = str_ireplace("\'", '', $CleanText);
     $CleanText = str_ireplace("'", '', $CleanText);
 	return $MessedText;
+}
+
+function CleanKeywordText($Text){
+	$Text =trim($Text);
+	$Text = str_ireplace(' ', ',', $Text);
+	$Text = str_ireplace(',', ',', $Text);
+	$Text = str_ireplace(';', ',', $Text);
+	$Text = str_ireplace('.', ',', $Text);
+	$Text = str_ireplace('/', ',', $Text);
+	return $Text;
+}
+
+function GetWeberpItemBrand($webERPCategoryId, $ManufacturerId){
+	if (ItemInList($webERPCategoryId, LIST_STOCK_CATEGORIES_KAPAL_LAUT)
+		OR ($ManufacturerId == 1)){
+		$ItemBrand = "KL";
+	}elseif (ItemInList($webERPCategoryId, LIST_STOCK_CATEGORIES_BLINK)
+		OR ($ManufacturerId == 2)){
+		$ItemBrand = "BL";
+	}elseif (ItemInList($webERPCategoryId, LIST_STOCK_CATEGORIES_GENERAL)){
+		$ItemBrand = "GE";
+	}else{
+		// should never happen
+		$ItemBrand = "KL";
+	}
+	return $ItemBrand;
 }
 
 Function GetNextSequenceNo ($SequenceType){
@@ -1167,7 +1192,6 @@ function UpdateOpenCartOrderPayment($OrderId, $db, $db_oc, $oc_tableprefix){
 	$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
 }
 
-
 function RoundPriceFromCart($value, $currency){
 	// copied and adapted from opencart/system/library/currency.php lines 74 to 106 approx.
 
@@ -1270,26 +1294,32 @@ function GetGoogleProductFeedCategory($StockId, $SalesCategory){
 }
 
 
-function CreateTagsForItem($Description, $LongDescription, $SalesCategoryName){
+function CreateTagsForItem($LanguageId, $Description, $LongDescription, $SalesCategoryName){
 	$ListOfTags = "";
 	$Separator = ", ";
 	//create a long string and look for keywords
 	$LongText = strtolower($Description . " " . $LongDescription . " " . $SalesCategoryName);
-	$SQL = "SELECT tagname
-			FROM stocktags
-			ORDER BY tagname";
+	if ($LanguageId == 1){
+		$SQL = "SELECT tagname AS tagtext
+				FROM stocktags
+				ORDER BY tagname";
+	}else{
+		$SQL = "SELECT tagnamebahasa AS tagtext
+				FROM stocktags
+				ORDER BY tagnamebahasa";
+	}
 	$result = DB_query($SQL);
 	while ($myrow = DB_fetch_array($result)){
 		
-		if (StringContainsTag($LongText, $myrow['tagname'])){
+		if (StringContainsTag($LongText, $myrow['tagtext'])){
 			// we found a tag in the text, so a candidate for tag
-			if ((InconsistentTag($ListOfTags, 'earring', $myrow['tagname'], 'ring')) == FALSE){
+			if ((InconsistentTag($ListOfTags, 'earring', $myrow['tagtext'], 'ring')) == FALSE){
 				//  but, we must filter inconsistencies
 				if ($ListOfTags == ""){
 					// the very first one
-					$ListOfTags = $myrow['tagname'];
+					$ListOfTags = $myrow['tagtext'];
 				}else{
-					$ListOfTags = $ListOfTags. $Separator . $myrow['tagname'];
+					$ListOfTags = $ListOfTags. $Separator . $myrow['tagtext'];
 				}
 			}
 		}
