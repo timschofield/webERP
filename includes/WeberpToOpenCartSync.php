@@ -830,15 +830,16 @@ function SyncProductMarketplacesLinks($ShowMessages, $LastTimeRun, $db, $db_oc, 
 		$k = 0; //row colour counter
 		while ($myrow = DB_fetch_array($result)) {
 			$QOH = ItemMarketplaceQOH($myrow['stockid'], $db);
-			$EnabledMarketplaces = ($QOH > 0);
-			if ($EnabledMarketplaces) {
+			if ($QOH > 0) {
 				$Action = "Enable";
+				$EnabledMarketplaces = "1";
 			}else{
 				$Action = "Disable";
+				$EnabledMarketplaces = "0";
 			}
 
-			ItemEnableTokopediaInfo($StockId, $EnabledMarketplaces, $db);
-			ItemEnableShopeeInfo($StockId, $EnabledMarketplaces, $db);
+			ItemEnableTokopediaInfo($myrow['stockid'], $EnabledMarketplaces, $db);
+			ItemEnableShopeeInfo($myrow['stockid'], $EnabledMarketplaces, $db);
 			
 			if ($ShowMessages){
 				$k = StartEvenOrOddRow($k);
@@ -977,7 +978,7 @@ function SyncProductMarketplacesLinks($ShowMessages, $LastTimeRun, $db, $db_oc, 
 						);
 			}
 			if ($EmailText !=''){
-				$EmailText = $EmailText . str_pad($Model, 20, " ") . " Marketplaces links updated" . "\n";
+				$EmailText = $EmailText . str_pad($Model, 20, " ") . $Action . " --> " . $Link . "\n";
 			}
 			$i++;
 		}

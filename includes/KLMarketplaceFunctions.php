@@ -119,25 +119,53 @@ function ItemMarketplaceQOH($StockID, $db){
 }
 
 function ItemEnableShopeeInfo($StockId, $EnabledShopee, $db){
-	$SQL = "UPDATE klstockmarketplaces
-			SET shopeeenabled='" . $EnabledShopee ."'
-		WHERE klstockmarketplaces.stockid='" . $StockId . "'
-			AND shopeeurl IS NOT NULL";
-
+	if (DataExistsInWebERP($db, "klstockmarketplaces", "stockid", $StockId)){
+		// Already exists, should exist!!! so only update the enable flag
+		$SQL = "UPDATE klstockmarketplaces
+				SET shopeeenabled='" . $EnabledShopee ."'
+			WHERE klstockmarketplaces.stockid='" . $StockId . "'
+				AND tokopediaurl IS NOT NULL";
+	}else{
+		// does not exist, so need to insert a new row for the item as DISABLED, as it means we do not have the URL's yet
+		$SQL="INSERT INTO klstockmarketplaces 
+					(stockid,
+					tokopediaenabled,
+					shopeeenabled)
+			VALUES (
+				'" . $StockId . "',
+				'0',
+				'0')";
+	}
 	$DbgMsg = _('The SQL that failed to enable/disable the Shopee marketplace info was');
 	$ErrMsg = _('Cannot enable/disable the Shopee marketplace info because');
 	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 }
 
 function ItemEnableTokopediaInfo($StockId, $EnabledTokopedia, $db){
-	$SQL = "UPDATE klstockmarketplaces
-			SET tokopediaenabled='" . $EnabledTokopedia ."'
-		WHERE klstockmarketplaces.stockid='" . $StockId . "'
-			AND tokopediaurl IS NOT NULL";
 
+	if (DataExistsInWebERP($db, "klstockmarketplaces", "stockid", $StockId)){
+		// Already exists, so only update the enable flag
+		$SQL = "UPDATE klstockmarketplaces
+				SET tokopediaenabled='" . $EnabledTokopedia ."'
+			WHERE klstockmarketplaces.stockid='" . $StockId . "'
+				AND tokopediaurl IS NOT NULL";
+	}else{
+		// does not exist, so need to insert a new row for the item as DISABLED, as it means we do not have the URL's yet
+		$SQL="INSERT INTO klstockmarketplaces 
+					(stockid,
+					tokopediaenabled,
+					shopeeenabled)
+			VALUES (
+				'" . $StockId . "',
+				'0',
+				'0')";
+	}
 	$DbgMsg = _('The SQL that failed to enable/disable the Tokopedia marketplace info was');
 	$ErrMsg = _('Cannot enable/disable the Tokopedia marketplace info because');
 	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+
+
+
 }
 
 function ItemInsertShopeeInfo($StockId, $EnabledShopee, $ShopeeProductId, $URLShopee, $db){
