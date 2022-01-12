@@ -800,7 +800,8 @@ function SyncProductMarketplacesLinks($ShowMessages, $LastTimeRun, $db, $db_oc, 
 
 	/* Look for the late modifications of locstock table in webERP, to see all products that have changed QOH somehow 
 		we will need to update the webERP table klstockmarketplaces, later on a second SQL we can update OpenCart properly*/
-	$SQL = "SELECT DISTINCT(locstock.stockid)
+	$SQL = "SELECT DISTINCT(locstock.stockid), 
+				stockmaster.categoryid
 			FROM locstock, salescatprod, locations, stockmaster
 			WHERE locstock.stockid = salescatprod.stockid
 				AND locstock.stockid = stockmaster.stockid
@@ -829,13 +830,20 @@ function SyncProductMarketplacesLinks($ShowMessages, $LastTimeRun, $db, $db_oc, 
 
 		$k = 0; //row colour counter
 		while ($myrow = DB_fetch_array($result)) {
-			$QOH = ItemMarketplaceQOH($myrow['stockid'], $db);
-			if ($QOH > 0) {
-				$Action = "Enable";
-				$EnabledMarketplaces = "1";
-			}else{
-				$Action = "Disable";
+			if (ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_OUTLET)){
+				// discounted items are not enabled in marketplaces
+				$Action = "Disable Outlet";
 				$EnabledMarketplaces = "0";
+			}else{
+				// is not discount item, so we can decide depending on QOH
+				$QOH = ItemMarketplaceQOH($myrow['stockid'], $db);
+				if ($QOH > 0) {
+					$Action = "Enable";
+					$EnabledMarketplaces = "1";
+				}else{
+					$Action = "Disable QOH";
+					$EnabledMarketplaces = "0";
+				}
 			}
 
 			ItemEnableTokopediaInfo($myrow['stockid'], $EnabledMarketplaces, $db);
