@@ -728,7 +728,12 @@ function CreateMetaKeywordItem($StockId, $StoreName, $Tag, $TagSeparator){
 }
 
 function CreateSEOKeyword($KeyWord){
-	$SEOKeyword = CleanKeywordText($KeyWord);
+	$SEOKeyword =trim($KeyWord);
+	$SEOKeyword = str_ireplace(' ', '-', $SEOKeyword);
+	$SEOKeyword = str_ireplace(',', '-', $SEOKeyword);
+	$SEOKeyword = str_ireplace(';', '-', $SEOKeyword);
+	$SEOKeyword = str_ireplace('.', '-', $SEOKeyword);
+	$SEOKeyword = str_ireplace('/', '-', $SEOKeyword);
 	return $SEOKeyword;
 }
 
