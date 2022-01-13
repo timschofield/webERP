@@ -1078,10 +1078,13 @@ function SyncProductDescriptionTranslations($ShowMessages, $LastTimeRun, $db, $d
 			$ItemBrand = GetWeberpItemBrand($webERPCategoryId, $ManufacturerId);
 
 			if ($ItemBrand == "KL"){
+				$StoreId = OPENCART_STORE_KAPAL_LAUT;
 				$StoreName = META_STORE_NAME_KL;
 			}elseif ($ItemBrand == "BL"){
+				$StoreId = OPENCART_STORE_BLINK;
 				$StoreName = META_STORE_NAME_BL;
 			}elseif ($ItemBrand == "GE"){
+				$StoreId = OPENCART_STORE_KAPAL_LAUT;
 				$StoreName = META_STORE_NAME_KL;
 			}
 
@@ -1140,7 +1143,21 @@ function SyncProductDescriptionTranslations($ShowMessages, $LastTimeRun, $db, $d
 										)";
 						$resultInsert = DB_query_oc($sqlInsert,$InsertErrMsg,$DbgMsg,true);
 					}
-				
+	
+					// create SEO Keywords if needed
+					$SEOQuery = 'product_id='.$ProductId;
+					$SEOKeyword = CreateSEOKeyword($Model . "-" . $Name);
+					MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, $StoreId, $LanguageId, $db_oc, $oc_tableprefix);
+
+					// if it's a general item, we have to add it too to Blink store.
+					if ($ItemBrand == "GE"){
+						MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, OPENCART_STORE_BLINK, $LanguageId, $db_oc, $oc_tableprefix);
+					}
+
+					// if it's not on the wholesale store, we add it.
+					MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, OPENCART_STORE_WHOLESALE, $LanguageId, $db_oc, $oc_tableprefix);
+
+	
 					if ($ShowMessages){
 						$k = StartEvenOrOddRow($k);
 						printf('<td>%s</td>
