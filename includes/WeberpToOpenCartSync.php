@@ -2056,6 +2056,8 @@ function KL_DailyCleanOpenCartDB($ShowMessages, $db, $db_oc, $oc_tableprefix, $E
 
 	DB_Txn_Begin();
 
+	// clean old coupons
+	$EmailText = CleanOldOpenCartCoupons($ShowMessages, 15, $db, $db_oc, $oc_tableprefix, $EmailText);
 	// clean old pending orders
 	$EmailText = ChangeOldPendingOpenCartOrders($ShowMessages, 3, $db, $db_oc, $oc_tableprefix, $EmailText);
 	// Change from shipped to complete
@@ -2066,6 +2068,83 @@ function KL_DailyCleanOpenCartDB($ShowMessages, $db, $db_oc, $oc_tableprefix, $E
 		time_finish($begintime);
 	}
 
+	return $EmailText;
+}
+
+function CleanOldOpenCartCoupons($ShowMessages, $MaxDays, $db, $db_oc, $oc_tableprefix, $EmailText= ''){
+	$Title = 'Clean old OpenCart Couons expired ' . $MaxDays . ' ago';
+	$i = 0;
+	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference($db));
+	if ($EmailText !=''){
+		$EmailText = $EmailText . $Title . "\n" . PrintTimeInformation($db);
+	}
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$MaxDays)) ;
+
+	$SQL = "SELECT coupon_id,
+				name,
+				code
+			FROM oc_coupon
+			WHERE date_end <= '" . $StartDate . "'
+			ORDER BY coupon_id";
+
+	$result = DB_query_oc($SQL);
+	if (DB_num_rows($result) != 0){
+		if ($ShowMessages){
+			echo '<p class="page_title_text" align="center"><strong>' . $Title  .'</strong></p>';
+			echo '<div>';
+			echo '<table class="selection">';
+			$TableHeader = '<tr>
+								<th>' . _('Coupon ID') . '</th>
+								<th>' . _('Name') . '</th>
+								<th>' . _('Code') . '</th>
+							</tr>';
+			echo $TableHeader;
+		}
+		$DbgMsg = _('The SQL statement that failed was');
+		$UpdateErrMsg = 'The SQL to update ' . $Title . ' failed';
+		$InsertErrMsg = 'The SQL to insert ' . $Title . ' failed';
+
+		$k = 0; //row colour counter
+		$i = 0;
+		while ($myrow = DB_fetch_array($result)) {
+
+			/* FIELD MATCHING */
+			$CouponId = $myrow['coupon_id'];
+			$Name = $myrow['name'];
+			$Code = $myrow['code'];
+			
+			$SQLDelete = "DELETE FROM oc_coupon WHERE coupon_id = '" . $CouponId . "'";
+
+			$resultDelete = DB_query_oc($SQLDelete);
+
+			if ($ShowMessages){
+				$k = StartEvenOrOddRow($k);
+				printf('<td>%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						</tr>',
+						$CouponId,
+						$Name,
+						$Code
+						);
+			}
+			if ($EmailText !=''){
+				$EmailText = $EmailText . " Coupon ID = " . $CouponId. " - " . $Name ." - " . $Code . "\n";
+			}
+		$i++;
+		}
+		if ($ShowMessages){
+			echo '</table>
+					</div>
+					</form>';
+		}
+	}
+	if ($ShowMessages){
+		prnMsg(locale_number_format($i,0) . ' ' . $Title ,'success');
+	}
+	if ($EmailText !=''){
+		$EmailText = $EmailText . locale_number_format($i,0) . ' ' .$Title  . "\n\n";
+	}
 	return $EmailText;
 }
 
