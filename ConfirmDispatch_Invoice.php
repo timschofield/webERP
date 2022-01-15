@@ -2,11 +2,6 @@
 /* $Id: ConfirmDispatch_Invoice.php 7652 2016-10-23 19:27:31Z rchacon $*/
 /* Creates sales invoices from entered sales orders based on the quantities dispatched that can be modified */
 
-/**************************************************************************************
-KL RICARD MODIFICATIONS:
-- change of "consignment" to "tracking"
-***************************************************************************************/
-
 /* Session started in session.php for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
@@ -773,7 +768,8 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 /*Update order header for invoice charged on */
 	$SQL = "UPDATE salesorders
-			SET comments = CONCAT(comments,' Inv ','" . $InvoiceNo . "')
+			SET comments = CONCAT(comments,' Inv ','" . $InvoiceNo . "'),
+				deliverydate = '" . date('Y-m-d') . "'
 			WHERE orderno= '" . $_SESSION['ProcessingOrder']."'";
 
 	$ErrMsg = _('CRITICAL ERROR') . ' ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales order header could not be updated with the invoice number');
@@ -1364,35 +1360,6 @@ invoices can have a zero amount but there must be a quantity to invoice */
 					$ConsignmentPrice = round($PercentConsignmentPTADU / 100 * $RetailPrice,0);
 					$Tag = "1"; // kantor
 
-/* we do report the accounting of it at consignment invoice creation time, not every sale
-					// For tax reporting reasons this clustering accounting must be excluding PPN (net price), 
-					// as PPN is accounted on consignment invoice creation
-					$NetPrice = round($ConsignmentPrice / ((100 + PPN_PERCENT) / 100),0);
-					
-					// report the COGS for retail partner from PT ADU
-					InsertIntoGLTrans("10", 
-									$InvoiceNo, 
-									$DefaultDispatchDate,
-									$PeriodNo,
-									$AccountConsignmentCOGSPartner,
-									$_SESSION['Items'.$identifier]->CustRef . " " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . $NetPrice,
-									round($NetPrice * $OrderLine->Quantity),
-									$Tag,
-									'ERROR-INV-00003'
-									);
-
-					// report the sales for PT ADU to retail partner
-					InsertIntoGLTrans("10", 
-									$InvoiceNo, 
-									$DefaultDispatchDate,
-									$PeriodNo,
-									$AccountConsignmentSalesPTADU,
-									$_SESSION['Items'.$identifier]->CustRef . " " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . $NetPrice,
-									round(-$NetPrice * $OrderLine->Quantity),
-									$Tag,
-									'ERROR-INV-00004'
-									);
-*/					
 					// record the consignment for later invoice to partner
 					$SQL = "INSERT INTO klconsignment 
 								(saledate,
