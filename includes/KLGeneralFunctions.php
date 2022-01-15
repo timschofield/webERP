@@ -857,9 +857,21 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 		$ErrMsg = _('Cannot insert a GL transaction for the debtors account credit');
 		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);			
 
-		$SQL = "UPDATE salesorders
-					SET quotation = '0'
-				WHERE salesorders.orderno='" . $OrderNo . "'";
+		// update the salesorder table, from quotation to confirmed order
+		if  (($PaymentCode == "tokopedia") OR 
+			 ($PaymentCode == "shopee")){
+			// in case paid by marketplace (so after order is closed and shipment, we need to mark it as "received somehow", so we use klpaidcash
+			$SQL = "UPDATE salesorders
+						SET klpaidcash = '" . $TotalAmount . "',
+							quotation = '0',
+							confirmeddate = '" . $Today . "'
+					WHERE salesorders.orderno='" . $OrderNo . "'";
+		}else{
+			$SQL = "UPDATE salesorders
+						SET quotation = '0',
+							confirmeddate = '" . $Today . "'
+					WHERE salesorders.orderno='" . $OrderNo . "'";
+		}
 		$DbgMsg = _('The SQL that failed to update the quotation flag of the sales order was');
 		$ErrMsg = _('Cannot update the quotation flag of the sales order because');
 		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
@@ -872,18 +884,6 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 			UpdateOpenCartOrderPayment($OnlineOrderNo, $db, $db_oc, $oc_tableprefix);
 		}
 
-
-		if  (($PaymentCode == "tokopedia") OR 
-			 ($PaymentCode == "shopee")){
-			// in case paid my marketplace (so after order is closed and shipment, we need to mark it as "received somehow", so we use klpaidcash
-			$SQL = "UPDATE salesorders
-						SET klpaidcash = '" . $TotalAmount . "'
-					WHERE salesorders.orderno='" . $OrderNo . "'";
-			$DbgMsg = _('The SQL that failed to update the payment flag of the sales order was');
-			$ErrMsg = _('Cannot update the payment flag of the sales order because');
-			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-		}
-		
 		$result = DB_Txn_Commit();
 
 	}else{
@@ -899,7 +899,6 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 		$result = DB_Txn_Commit();
-
 	}
 	return $result;
 }
