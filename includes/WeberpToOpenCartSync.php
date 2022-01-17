@@ -44,7 +44,7 @@ function WeberpToOpenCartDailySync($ShowMessages, $db, $db_oc, $oc_tableprefix, 
 	$EmailText = SyncMultipleImages($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
 
 	// assign related items
-	$EmailText = SyncRelatedItems($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
+//	$EmailText = SyncRelatedItems($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
 
 	// We are done!
 	SetLastTimeRun('WeberpToOpenCartDaily', $db);

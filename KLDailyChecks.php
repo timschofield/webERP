@@ -111,7 +111,7 @@ function KL_DailySetObsoleteNoStock($ShowMessages, $db, $EmailText = ''){
 	$EmailText = SetObsoleteForCategoryWithoutStock("DISC2A", $ShowMessages, $EmailText, $db);
 	$EmailText = SetObsoleteForCategoryWithoutStock("DISC5A", $ShowMessages, $EmailText, $db);
 	$EmailText = SetObsoleteForCategoryWithoutStock("DISC8A", $ShowMessages, $EmailText, $db);
-	$EmailText = PurgeRelatedItemsFromObsolete($ShowMessages, $EmailText, $db);
+//	$EmailText = PurgeRelatedItemsFromObsolete($ShowMessages, $EmailText, $db);
 	return $EmailText;
 }
 
