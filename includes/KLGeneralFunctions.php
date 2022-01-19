@@ -572,7 +572,7 @@ function CreateConsignmentInvoiceNumber($CompanyFrom, $CompanyTo, $EndDate){
 	return $CompanyFrom . '-' . $CompanyTo . '-' . $EndDate;
 }
 
-function FindWebsiteBrand($StockID, $Category){
+function FindWebsiteBrand($StockID, $Category, $Description){
 	if (ItemInList($Category, LIST_STOCK_CATEGORIES_KAPAL_LAUT)){
 		// if belongs to one of the KL categories, so Brand is KL
 		$Brand = 1;	
@@ -583,7 +583,7 @@ function FindWebsiteBrand($StockID, $Category){
 		// if belongs to one of the General categories, so Brand is KL
 		$Brand = 1;	
 	}else{
-		//should be a discounted item, we keep the previous brand if still available, otherwise assing the outlet brand
+		//should be a discounted item, we keep the previous brand if still available, otherwise we continue messing around
 		$SQL = "SELECT manufacturers_id
 				FROM salescatprod 
 				WHERE stockid = '" . $Stockid . "'";
@@ -593,8 +593,14 @@ function FindWebsiteBrand($StockID, $Category){
 			$myrow = DB_fetch_array($result);
 			$Brand = $myrow['manufacturers_id'];	
 		}else{
-			// we are lost... so assign the outlet one
-			$Brand = 3;	
+			// we check the description, if we get any info
+				if (mb_stristr($Description, "silver") != FALSE){
+					// description contains "silver", should be KL
+					$Brand = 1;	
+				}else{
+					// description does not contain "silver", should be Blink
+					$Brand = 2;	
+				}			
 		}
 	}
 	return $Brand;

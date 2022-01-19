@@ -1,6 +1,6 @@
 <?php
 
-define("VERSIONFILE", "1.08"); 
+define("VERSIONFILE", "2.00"); 
 
 /* Session started in session.php for password checking and authorisation level check
 config.php is in turn included in session.php*/
@@ -24,7 +24,7 @@ $SQL = "SELECT stockmaster.stockid,
 			   stockmaster.longdescription,	
 			   stockmaster.categoryid	
 		FROM stockmaster
-		WHERE " . SQLFilterStockmasterForOnlineShop("KL+BL") . "
+		WHERE " . SQLFilterStockmasterForOnlineShop("ALL") . "
 			AND ((NOT EXISTS (SELECT * 
 								FROM salescatprod
 								WHERE stockmaster.stockid = salescatprod.stockid))
@@ -46,7 +46,6 @@ if (DB_num_rows($result) != 0){
 						<th>' . _('Volume m3') . '</th>
 						<th>' . _('Brand') . '</th>
 						<th>' . _('Website Category') . '</th>
-						<th>' . _('Featured') . '</th>
 					</tr>';
 	echo $TableHeader;
 	$k = 0; //row colour counter
@@ -57,63 +56,52 @@ if (DB_num_rows($result) != 0){
 		$WebsiteDescription = "";
 		$FeaturedAsTopSales = 0;
 		$FeaturedText = "";
+		$Brand = FindWebsiteBrand($myrow['stockid'], $myrow['categoryid'], $myrow['description']);
 
-/* 	KL RICARD 30/08/2013
-	Do not feature as top sales. featured depending on promotions...
-		if (ItemFeaturedAsTopSale($myrow['stockid'], $myrow['categoryid'], 30, $db)){
-			$FeaturedAsTopSales = 1;
-			$FeaturedText = "Yes";
-		}
-*/		
-		// Mirar si hem d'actualitzar pes o volum
+		// check if we should update weight
 		$Weight = $myrow['grossweight'];
 		if ($Weight == 0){
 			$Weight = UpdateWeight($myrow['stockid'], $Weight, $UpdateDB, $db);
 		}
 		
+		// check if we should update volume
 		$Volume = $myrow['volume'];
 		if ($Volume == 0){
 			$Volume = UpdateVolume($myrow['stockid'], $UpdateDB, $db);
 			UpdatePackaging($myrow['stockid'],$myrow['categoryid'], $UpdateDB, $db);
 		}
 		
+		// check if we should update packaging
 		$Packaging = $myrow['klpackaging'];
 		if ($Packaging == ""){
-			UpdatePackaging($myrow['stockid'],$myrow['categoryid'], $UpdateDB, $db);
+			UpdatePackaging($myrow['stockid'],$myrow['categoryid'], $Brand, $UpdateDB, $db);
 		}
 		
-		// si tenim descripció prou llarga
-		if (strlen($myrow['description']) >= 5){
-			// si tenim foto seguim endavant, sino no el publiquem a la website
+		// if we have some kind of description, long enough, we can move ahead. Otherwise, we miss the descriptiob
+		if (strlen($myrow['description']) >= 8){
+			// if we have picture, then we can publish online, otherwise not yet!
 			if(file_exists($_SESSION['part_pics_dir'] . '/' .$myrow['stockid'].'.jpg') ) {
+				// From the brand we know if it gors to KL online shop or Blink online shop
 
-				// Mirar si pertany a super categoria SILVER KL
-				$WebsiteCategory = WebsiteCategorySilverJewellery($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
-				if ($WebsiteCategory > 0){
-					$Brand = FindWebsiteBrand($myrow['stockid'], $myrow['categoryid']);
-					InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $Brand, FALSE, $FeaturedAsTopSales, $UpdateDB, $db);
-					$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
-					$ItemsAdded++;
-				}else{
-					// Mirar si pertany a super categoria BLINK JEWELLERY
-					$WebsiteCategory = WebsiteCategoryBlinkJewellery($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
-					if ($WebsiteCategory > 0){
-						$Brand = FindWebsiteBrand($myrow['stockid'], $myrow['categoryid']);
+				if ($Brand == 1){
+					// KL brand detected ;-) select the sub category 
+					$WebsiteCategory = WebsiteCategorySilverJewellery($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
+					if ($WebsiteCategory > 0){ 
 						InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $Brand, FALSE, $FeaturedAsTopSales, $UpdateDB, $db);
 						$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
 						$ItemsAdded++;
 					}else{
-						// Mirar si pertany a super categoria BAGS
-						$WebsiteCategory = WebsiteCategoryBags($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
-						if ($WebsiteCategory > 0){
-							$Brand = FindWebsiteBrand($myrow['stockid'], $myrow['categoryid']);
-							InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $Brand, FALSE, $FeaturedAsTopSales, $UpdateDB, $db);
-							$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
-							$ItemsAdded++;
-						}else{
-							$WebsiteDescription = 'NO WEBSITE CATEGORY';
-							$WebsiteCategory = 0;
-						}
+						$WebsiteDescription = 'NO KAPAL-LAUT CATEGORY';
+					}
+				}else{
+					// Blink brand detected ;-)
+					$WebsiteCategory = WebsiteCategoryBlinkJewellery($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
+					if ($WebsiteCategory > 0){ 
+						InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $Brand, FALSE, $FeaturedAsTopSales, $UpdateDB, $db);
+						$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
+						$ItemsAdded++;
+					}else{
+						$WebsiteDescription = 'NO BLINK CATEGORY';
 					}
 				}
 			}else{
@@ -132,11 +120,8 @@ if (DB_num_rows($result) != 0){
 			$BrandText = "KL";
 		}elseif ($Brand == 2){
 			$BrandText = "Blink";
-		}elseif ($Brand == 3){
-			$BrandText = "Outlet";
 		}
 		printf('<td class="number">%s</td>
-				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
@@ -152,8 +137,7 @@ if (DB_num_rows($result) != 0){
 				$Weight, 
 				$Volume, 
 				$BrandText,
-				$WebsiteDescription,
-				$FeaturedText
+				$WebsiteDescription
 				);
 		$i++;
 	}
@@ -180,32 +164,31 @@ function InsertWebsiteSalesCategory($Stockid, $WebsiteCategory, $Manufacturers_i
 			$ErrMsg =_('Could not delete the previous website category for the item because');
 			$result = DB_query($sql,$ErrMsg);
 		}
-		if ($Manufacturers_id != 3){
-			// if it is not belonging to OUTLET, as it is phased out. Outlet items belong to teh same categories as before
-			$SQLCheck = "SELECT *
-					FROM salescatprod
-					WHERE salescatprod.stockid = '" . $Stockid . "'
-						AND salescatprod.salescatid = '" . $WebsiteCategory . "'";	
-			$result = DB_query($SQLCheck);
-			if(DB_num_rows($result) == 0){
-				$sql = "INSERT INTO salescatprod (
-							salescatid ,
-							stockid,
-							manufacturers_id,
-							featured,
-							date_created,
-							date_updated)
-						VALUES (
-							'" . $WebsiteCategory . "',
-							'" . $Stockid . "',
-							'" . $Manufacturers_id . "',
-							'" . $Featured . "',
-							NOW(),
-							NOW())";
-				$ErrMsg =_('Could not insert the website category for the item because');
-				$result = DB_query($sql,$ErrMsg);
-			}			
-		}
+
+		$SQLCheck = "SELECT *
+				FROM salescatprod
+				WHERE salescatprod.stockid = '" . $Stockid . "'
+					AND salescatprod.salescatid = '" . $WebsiteCategory . "'";	
+		$result = DB_query($SQLCheck);
+
+		if(DB_num_rows($result) == 0){
+			$sql = "INSERT INTO salescatprod (
+						salescatid ,
+						stockid,
+						manufacturers_id,
+						featured,
+						date_created,
+						date_updated)
+					VALUES (
+						'" . $WebsiteCategory . "',
+						'" . $Stockid . "',
+						'" . $Manufacturers_id . "',
+						'" . $Featured . "',
+						NOW(),
+						NOW())";
+			$ErrMsg =_('Could not insert the website category for the item because');
+			$result = DB_query($sql,$ErrMsg);
+		}			
 	}
 }
 
@@ -355,7 +338,7 @@ function UpdateVolume($Stockid, $UpdateDB, $db){
 	return $Volume;
 }
 
-function UpdatePackaging($Stockid, $Category, $UpdateDB, $db){
+function UpdatePackaging($Stockid, $Category, $Brand, $UpdateDB, $db){
 
 	if (isRing($Stockid)){
 		$Packaging = "-S";
@@ -394,11 +377,9 @@ function UpdatePackaging($Stockid, $Category, $UpdateDB, $db){
 	}
 
 	if ($Packaging != ""){
-		if (ItemInList($Category, LIST_STOCK_CATEGORIES_KAPAL_LAUT)){
-			// if belongs to one of the KL categories 
+		if ($Brand == 1){
 			$Packaging = "SET-PACK-KL". $Packaging;	
-		}elseif (ItemInList($Category, LIST_STOCK_CATEGORIES_BLINK)){
-			// if belongs to one of the Blink categories
+		}elseif ($Brand == 2){
 			$Packaging = "SET-PACK-BL". $Packaging;	
 		}else{
 			$Packaging = "";
@@ -415,13 +396,9 @@ function UpdatePackaging($Stockid, $Category, $UpdateDB, $db){
 
 
 function WebsiteCategorySilverJewellery($StockId, $Description, $Long, $Category){
-	$WebCat = 0;
-	
-	//('KL_JEWELLERY',5);
-	if (ItemInList($Category, LIST_STOCK_CATEGORIES_KAPAL_LAUT)){
-		// if belongs to one of the silver categories 
-		$WebCat = KL_JEWELLERY;	
-	}
+
+	// It comes from Kapal-Laut Brand, so assume it is KAPAL_LAUT, let's try to be more precise
+	$WebCat = KL_JEWELLERY;	
 
 	if (ItemInList($Category, LIST_STOCK_CATEGORIES_GENERAL)){
 		// if belongs to one of the general categories 
@@ -472,18 +449,13 @@ function WebsiteCategorySilverJewellery($StockId, $Description, $Long, $Category
 	if (($WebCat == GENERAL_ACCESSORIES) AND isJewelleryRoll($StockId)){
 		$WebCat = GE_JEWELLERY_ROLLS;	
 	}	
-
 	return $WebCat; 
 }
 
 function WebsiteCategoryBlinkJewellery($StockId, $Description, $Long, $Category){
-	$WebCat = 0;
-	
-	//(('BLINK_JEWELLERY',14);
-	if (ItemInList($Category, LIST_STOCK_CATEGORIES_BLINK)){
-		// if belongs to one of the Blink categories
-		$WebCat = BLINK_JEWELLERY;	
-	}
+
+	// It comes from Blink Brand, so assume it is BLINK, let's try to be more precise
+	$WebCat = BLINK_JEWELLERY;	
 
 	if (ItemInList($Category, LIST_STOCK_CATEGORIES_GENERAL)){
 		// if belongs to one of the general categories 
@@ -532,27 +504,8 @@ function WebsiteCategoryBlinkJewellery($StockId, $Description, $Long, $Category)
 	if (($WebCat == GENERAL_JEWELLERY) AND isJewelleryRoll($StockId)){
 		$WebCat = GE_JEWELLERY_ROLLS;	
 	}	
-
 	return $WebCat; 
 }
-
-function WebsiteCategoryBags($StockId, $Description, $Long, $Category){
-	$WebCat = 0;
-	
-	//('BAGS',29);
-	if ((ItemInList($Category, LIST_STOCK_CATEGORIES_GENERAL))
-		AND (isPlasticBag($StockId))){ 
-		$WebCat = BAGS;	
-	}
-
-	// filter some false positives
-	if (ItemExcludedFromWebsite($StockId, $Category)){
-		$WebCat = ITEM_EXCLUDED_FROM_WEBSITE;
-	}
-
-	return $WebCat; 
-}
-
 
 
 function FindWebsiteDescription($WebsiteCategory, $db){
@@ -564,26 +517,6 @@ function FindWebsiteDescription($WebsiteCategory, $db){
 		$WebsiteDescription = $WebsiteCategory . ' -> ' . $myrowCat['salescatname'];
 	}
 	return $WebsiteDescription;
-}
-
-
-function ItemFeaturedAsTopSale($StockID, $Category, $DaysTopSales, $db){
-	$Featured = FALSE;
-	// si és Top Sales, llavors FEATURED
-	if (PositionTopSalesItem($StockID, $DaysTopSales, $db) <= FEATURED_IN_WEBSITE_AS_TOP_SALES){
-		$Featured = TRUE;
-	}
-	// si està a DISCOUNT, OUTLET or NO MORE BUYING llavors, not featured
-	if (   ItemInList($Category, LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING)
-		OR ItemInList($Category, LIST_STOCK_CATEGORIES_OUTLET)
-		OR ItemInList($Category, LIST_STOCK_CATEGORIES_OUTLET)){
-		$Featured = FALSE;
-	}
-	// si és una BAG llavors, not featured
-	if (isPlasticBag($StockID))  { 
-		$Featured = FALSE;
-	}
-	return $Featured;
 }
 
 function ItemExcludedFromWebsite($StockID, $Category){
