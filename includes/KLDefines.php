@@ -367,8 +367,8 @@ define("META_STORE_NAME_OU", "Outlet by Kapal-Laut");
 // MARKETPLACES
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
-define("ADMINCERDAS_MINIMUM_STOCK_TO_UPDATE", 10);
-define("ADMINCERDAS_MINIMUM_STOCK_TO_SHOW",    3);
+define("ACI_MAXIMUM_QOH_TO_SHOW_IN_MARKETPLACES",     10); // if we have more than X then, we will show QOH=X in marketplaces to avoid unneeded updates
+define("ACI_MINIMUM_QOH_TO_SHOW_ITEM_IN_MARKETPLACES", 3); // if we have less than X then we consider QOH = 0 for the marketplaces to avoid cancelled orders and bad reviews 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // TOKOPEDIA
