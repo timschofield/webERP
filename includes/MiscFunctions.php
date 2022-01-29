@@ -451,4 +451,190 @@ function ChangeFieldInTable($TableName, $FieldName, $OldValue, $NewValue, $db){
 	echo ' ... ' . _('completed');
 }
 
+
+/* Used in report scripts for standard periods.
+ * Parameter $Choice is from the 'Period' combobox value.
+*/
+function ReportPeriodList($Choice, $Options = array('t', 'l', 'n')) {
+	$Periods = array();
+
+	if (in_array('t', $Options)) {
+		$Periods[] = _('This Month');
+		$Periods[] = _('This Year');
+		$Periods[] = _('This Financial Year');
+	}
+
+	if (in_array('l', $Options)) {
+		$Periods[] = _('Last Month');
+		$Periods[] = _('Last Year');
+		$Periods[] = _('Last Financial Year');
+	}
+
+	if (in_array('n', $Options)) {
+		$Periods[] = _('Next Month');
+		$Periods[] = _('Next Year');
+		$Periods[] = _('Next Financial Year');
+	}
+
+	$Count = count($Periods);
+
+	$HTML = '<select name="Period">
+				<option value=""></option>';
+
+	for ($x = 0;$x < $Count;++$x) {
+		if (!empty($Choice) && $Choice == $Periods[$x]) {
+			$HTML.= '<option value="' . $Periods[$x] . '" selected>' . $Periods[$x] . '</option>';
+		} else {
+			$HTML.= '<option value="' . $Periods[$x] . '">' . $Periods[$x] . '</option>';
+		}
+	}
+
+	$HTML.= '</select>';
+
+	return $HTML;
+}
+
+function ReportPeriod($PeriodName, $FromOrTo) {
+	/* Used in report scripts to determine period.
+	*/
+	$ThisMonth = date('m');
+	$ThisYear = date('Y');
+	$LastMonth = $ThisMonth - 1;
+	$LastYear = $ThisYear - 1;
+	$NextMonth = $ThisMonth + 1;
+	$NextYear = $ThisYear + 1;
+	// Find total number of days in this month:
+	$TotalDays = cal_days_in_month(CAL_GREGORIAN, $ThisMonth, $ThisYear);
+	// Find total number of days in last month:
+	$TotalDaysLast = cal_days_in_month(CAL_GREGORIAN, $LastMonth, $ThisYear);
+	// Find total number of days in next month:
+	$TotalDaysNext = cal_days_in_month(CAL_GREGORIAN, $NextMonth, $ThisYear);
+	switch ($PeriodName) {
+		case _('This Month'):
+			$DateStart = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $ThisMonth, 1, $ThisYear));
+			$DateEnd = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $ThisMonth, $TotalDays, $ThisYear));
+		break;
+		case _('This Quarter'):
+			$QtrStrt = intval(($ThisMonth - 1) / 3) * 3 + 1;
+			$QtrEnd = intval(($ThisMonth - 1) / 3) * 3 + 3;
+			if ($QtrEnd == 4 or $QtrEnd == 6 or $QtrEnd == 9 or $QtrEnd == 11) {
+				$TotalDays = 30;
+			}
+			$DateStart = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $QtrStrt, 1, $ThisYear));
+			$DateEnd = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $QtrEnd, $TotalDays, $ThisYear));
+		break;
+		case _('This Year'):
+			$DateStart = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, 1, 1, $ThisYear));
+			$DateEnd = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, 12, 31, $ThisYear));
+		break;
+		case _('This Financial Year'):
+			if (Date('m') > $_SESSION['YearEnd']) {
+				$DateStart = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, $_SESSION['YearEnd'] + 1, 1, Date('Y')));
+			} else {
+				$DateStart = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, $_SESSION['YearEnd'] + 1, 1, Date('Y') - 1));
+			}
+			$DateEnd = date($_SESSION['DefaultDateFormat'], YearEndDate($_SESSION['YearEnd'], 0));
+		break;
+		case _('Last Month'):
+			$DateStart = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $LastMonth, 1, $ThisYear));
+			$DateEnd = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $LastMonth, $TotalDaysLast, $ThisYear));
+		break;
+		case _('Last Quarter'):
+			$QtrStrt = intval(($ThisMonth - 1) / 3) * 3 - 2;
+			$QtrEnd = intval(($ThisMonth - 1) / 3) * 3 + 0;
+			if ($QtrEnd == 4 or $QtrEnd == 6 or $QtrEnd == 9 or $QtrEnd == 11) {
+				$TotalDays = 30;
+			}
+			$DateStart = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $QtrStrt, 1, $ThisYear));
+			$DateEnd = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $QtrEnd, $TotalDays, $ThisYear));
+		break;
+		case _('Last Year'):
+			$DateStart = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, 1, 1, $LastYear));
+			$DateEnd = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, 12, 31, $LastYear));
+		break;
+		case _('Last Financial Year'):
+			if (Date('m') > $_SESSION['YearEnd']) {
+				$DateStart = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, $_SESSION['YearEnd'] + 1, 1, Date('Y') - 1));
+			} else {
+				$DateStart = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, $_SESSION['YearEnd'] + 1, 1, Date('Y') - 2));
+			}
+			$DateEnd = date($_SESSION['DefaultDateFormat'], YearEndDate($_SESSION['YearEnd'], -1));
+		break;
+		case _('Next Month'):
+			$DateStart = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $NextMonth, 1, $ThisYear));
+			$DateEnd = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $NextMonth, $TotalDaysNext, $ThisYear));
+		break;
+		case _('Next Quarter'):
+			$QtrStrt = intval(($ThisMonth - 1) / 3) * 3 + 4;
+			$QtrEnd = intval(($ThisMonth - 1) / 3) * 3 + 6;
+			if ($QtrEnd == 4 or $QtrEnd == 6 or $QtrEnd == 9 or $QtrEnd == 11) {
+				$TotalDays = 30;
+			}
+			$DateStart = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $QtrStrt, 1, $ThisYear));
+			$DateEnd = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $QtrEnd, $TotalDays, $ThisYear));
+		break;
+		case _('Next Year'):
+			$DateStart = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, 1, 1, $NextYear));
+			$DateEnd = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, 12, 31, $NextYear));
+		break;
+		case _('Next Financial Year'):
+			if (Date('m') > $_SESSION['YearEnd']) {
+				$DateStart = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, $_SESSION['YearEnd'] + 1, 1, Date('Y') + 1));
+			} else {
+				$DateStart = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, $_SESSION['YearEnd'] + 1, 1, Date('Y')));
+			}
+			$DateEnd = date($_SESSION['DefaultDateFormat'], YearEndDate($_SESSION['YearEnd'], 1));
+		break;
+		default:
+			$DateStart = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $LastMonth, 1, $ThisYear));
+			$DateEnd = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $LastMonth, $TotalDaysLast, $ThisYear));
+		break;
+	}
+	if ($FromOrTo == 'From') {
+		$Period = GetPeriod($DateStart);
+	} else {
+		$Period = GetPeriod($DateEnd);
+	}
+	return $Period;
+}
+
+function FYStartPeriod($PeriodNumber) {
+	$SQL = "SELECT lastdate_in_period FROM periods WHERE periodno='" . $PeriodNumber . "'";
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	$DateArray = explode('-', $MyRow['lastdate_in_period']);
+	if ($DateArray[1] > $_SESSION['YearEnd']) {
+		$DateStart = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, $_SESSION['YearEnd'] + 1, 1, $DateArray[0]));
+	} else {
+		$DateStart = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, $_SESSION['YearEnd'] + 1, 1, $DateArray[0] - 1));
+	}
+	$StartPeriod = GetPeriod($DateStart);
+	return $StartPeriod;
+}
+
+function fShowFieldHelp($HelpText) {
+	// Shows field help text if $_SESSION['ShowFieldHelp'] is TRUE or is not set.
+	if ($_SESSION['ShowFieldHelp'] || !isset($_SESSION['ShowFieldHelp'])) {
+		echo '<span class="field_help_text">', $HelpText, '</span>';
+	}
+	return;
+}
+
+function fShowPageHelp($HelpText) {
+	// Shows page help text if $_SESSION['ShowFieldHelp'] is TRUE or is not set.
+	if ($_SESSION['ShowPageHelp'] || !isset($_SESSION['ShowPageHelp'])) {
+		echo '<div class="page_help_text">', $HelpText, '</div><br />';
+	}
+	return;
+}
+
+
+/*
+ * Improve language check to avoid potential LFI issue.
+ * Reported by: https://lyhinslab.org
+ */
+function checkLanguageChoice($language) {
+	return preg_match('/^([a-z]{2}\_[A-Z]{2})(\.utf8)$/', $language);
+}
+
 ?>
