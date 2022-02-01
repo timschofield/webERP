@@ -1198,33 +1198,31 @@ function UpdateOpenCartOrderPayment($OrderId, $db, $db_oc, $oc_tableprefix){
 }
 
 function RoundPriceFromCart($value, $currency){
-	// copied and adapted from opencart/system/library/currency.php lines 74 to 106 approx.
-
 	switch ($currency){
 	case 'AUD':
-		$round = 0.05;
+		$round = 0.01;
 		$step = 0;
 		break;
 	case 'IDR':
-		$round = 1000;
+		$round = 1;
 		$step = 0;
 		break;
 	case 'USD':
-		$round = 0.05;
+		$round = 0.01;
 		$step = 0;
 		break;
 	case 'EUR':
-		$round = 0.05;
+		$round = 0.01;
 		$step = 0;
 		break;
 	default:
-		 $round = 1;
-		 $step = 0;
-		 break;
+		$round = 1;
+		$step = 0;
+		break;
 	}
 
 	if ($round) {
-		$value = round($value / $round ) * $round;
+		$value = round($value / $round) * $round;
 	}
 
 	if ($step) {
