@@ -34,6 +34,7 @@ if (!isset($_GET['Amount']) OR $_GET['Amount']==''){
 if (($_GET['CustomerCode'] != "WEB-KL-IDR") 
 	AND ($_GET['CustomerCode'] != "WEB-WH-IDR") 
 	AND ($_GET['CustomerCode'] != "TOKOPEDIA") 
+	AND ($_GET['CustomerCode'] != "LAZADA") 
 	AND ($_GET['CustomerCode'] != "SHOPEE")){
 	prnMsg( _('Script ready to process IDR online orders only') , 'error');
 	include('includes/footer.php');

@@ -60,6 +60,18 @@ function CalculateCommissionShopee($CustomerCode, $OrderNo, $TotalAmount){
 	return $Commission;
 }
 
+function CalculateCommissionLazada($CustomerCode, $OrderNo, $TotalAmount){
+	if ($CustomerCode != "LAZADA"){
+		prnMsg("ERROR: Customer code = " . $CustomerCode . " and Payment Code = lazada", "error");
+		include('includes/footer.php');
+		exit;
+	}
+	// 1,80 from all order for lazada
+	$Commission = round($TotalAmount * LAZADA_COMMISSION_PERCENT /100 ,0); // this commission still includes PPN
+	$Commission = round($Commission /((100 + PPN_PERCENT)/100) ,0); // this commision already net
+	return $Commission;
+}
+
 function ClearUrl($Url){
 	$Clean = str_replace("/", "\\/", $Url);
 	return $Clean;
@@ -118,23 +130,46 @@ function ItemMarketplaceQOH($StockID, $db){
 	return $QOH;
 }
 
+function SQLInsertNewItemKLStockmarketplaces($StockId){
+	$SQL="INSERT INTO klstockmarketplaces 
+				(stockid,
+				tokopediaenabled,
+				shopeeenabled,
+				lazadaenabled)
+		VALUES (
+			'" . $StockId . "',
+			'0',
+			'0',
+			'0')";
+	return $SQL;
+}
+
+function ItemEnableLazadaInfo($StockId, $EnabledLazada, $db){
+	if (DataExistsInWebERP($db, "klstockmarketplaces", "stockid", $StockId)){
+		// Already exists, should exist!!! so only update the enable flag
+		$SQL = "UPDATE klstockmarketplaces
+				SET lazadaenabled='" . $EnabledLazada ."'
+			WHERE klstockmarketplaces.stockid='" . $StockId . "'
+				AND lazadaurl IS NOT NULL";
+	}else{
+		// does not exist, so need to insert a new row for the item as DISABLED, as it means we do not have the URL's yet
+		$SQL=SQLInsertNewItemKLStockmarketplaces($StockId);
+	}
+	$DbgMsg = _('The SQL that failed to enable/disable the Lazada marketplace info was');
+	$ErrMsg = _('Cannot enable/disable the Lazada marketplace info because');
+	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+}
+
 function ItemEnableShopeeInfo($StockId, $EnabledShopee, $db){
 	if (DataExistsInWebERP($db, "klstockmarketplaces", "stockid", $StockId)){
 		// Already exists, should exist!!! so only update the enable flag
 		$SQL = "UPDATE klstockmarketplaces
 				SET shopeeenabled='" . $EnabledShopee ."'
 			WHERE klstockmarketplaces.stockid='" . $StockId . "'
-				AND tokopediaurl IS NOT NULL";
+				AND shopeeurl IS NOT NULL";
 	}else{
 		// does not exist, so need to insert a new row for the item as DISABLED, as it means we do not have the URL's yet
-		$SQL="INSERT INTO klstockmarketplaces 
-					(stockid,
-					tokopediaenabled,
-					shopeeenabled)
-			VALUES (
-				'" . $StockId . "',
-				'0',
-				'0')";
+		$SQL=SQLInsertNewItemKLStockmarketplaces($StockId);
 	}
 	$DbgMsg = _('The SQL that failed to enable/disable the Shopee marketplace info was');
 	$ErrMsg = _('Cannot enable/disable the Shopee marketplace info because');
@@ -142,7 +177,6 @@ function ItemEnableShopeeInfo($StockId, $EnabledShopee, $db){
 }
 
 function ItemEnableTokopediaInfo($StockId, $EnabledTokopedia, $db){
-
 	if (DataExistsInWebERP($db, "klstockmarketplaces", "stockid", $StockId)){
 		// Already exists, so only update the enable flag
 		$SQL = "UPDATE klstockmarketplaces
@@ -151,21 +185,28 @@ function ItemEnableTokopediaInfo($StockId, $EnabledTokopedia, $db){
 				AND tokopediaurl IS NOT NULL";
 	}else{
 		// does not exist, so need to insert a new row for the item as DISABLED, as it means we do not have the URL's yet
-		$SQL="INSERT INTO klstockmarketplaces 
-					(stockid,
-					tokopediaenabled,
-					shopeeenabled)
-			VALUES (
-				'" . $StockId . "',
-				'0',
-				'0')";
+		$SQL=SQLInsertNewItemKLStockmarketplaces($StockId);
 	}
 	$DbgMsg = _('The SQL that failed to enable/disable the Tokopedia marketplace info was');
 	$ErrMsg = _('Cannot enable/disable the Tokopedia marketplace info because');
 	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+}
 
+function ItemInsertLazadaInfo($StockId, $EnabledLazada, $LazadaProductId, $URLLazada, $db){
+	$SQL="INSERT INTO klstockmarketplaces 
+				(stockid,
+				lazadaurl,
+				lazadaproductid,
+				lazadaenabled)
+		VALUES (
+			'" . $StockId . "',
+			'" . $URLLazada . "',
+			'" . $LazadaProductId . "',
+			'" . $EnabledLazada . "')";
 
-
+	$DbgMsg = _('The SQL that failed to insert the Lazada marketplace info was');
+	$ErrMsg = _('Cannot insert the Lazada marketplace info because');
+	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 }
 
 function ItemInsertShopeeInfo($StockId, $EnabledShopee, $ShopeeProductId, $URLShopee, $db){
@@ -199,6 +240,18 @@ function ItemInsertTokopediaInfo($StockId, $EnabledTokopedia, $TokopediaProductI
 
 	$DbgMsg = _('The SQL that failed to insert the Tokopedia marketplace info was');
 	$ErrMsg = _('Cannot insert the Tokopedia marketplace info because');
+	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+}
+
+function ItemUpdateLazadaInfo($StockId, $EnabledLazada, $LazadaProductId, $URLLazada, $db){
+	$SQL = "UPDATE klstockmarketplaces
+			SET lazadaurl = '" . $URLLazada . "',
+				lazadaproductid = '" . $LazadaProductId ."',
+				lazadaenabled='" . $EnabledLazada ."'
+		WHERE klstockmarketplaces.stockid='" . $StockId . "'";
+
+	$DbgMsg = _('The SQL that failed to update the Lazada marketplace info was');
+	$ErrMsg = _('Cannot update the Lazada marketplace info because');
 	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 }
 

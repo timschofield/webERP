@@ -190,6 +190,7 @@ $MenuItems['orders']['Maintenance']['Caption'] = array( _('Create Contract'),
 														_('AdminCerdas: Upload to marketplaces'),
 														_('Tokopedia: Import ProductID-URL'),
 														_('Shopee: Import ProductID-URL'),
+														_('Lazada: Import ProductID-URL'),
 														_('Sell Through Support Deals'));
 
 $MenuItems['orders']['Maintenance']['URL'] = array( '/Contracts.php',
@@ -205,6 +206,7 @@ $MenuItems['orders']['Maintenance']['URL'] = array( '/Contracts.php',
 													'/KLExcelAdminCerdas.php',
 													'/KLTokopediaURL.php',
 													'/KLShopeeURL.php',
+													'/KLLazadaURL.php',
 													'/SellThroughSupport.php');
 
 $MenuItems['AR']['Transactions']['Caption'] = array(_('Select Order to Invoice'),

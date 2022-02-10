@@ -4064,6 +4064,7 @@ function OnlineMarketPlacePaymentPending($RootPath, $db){
 							<th class="ascending">' . '' . '</th>
 							<th class="ascending">' . _('Paid Tokopedia') . '</th>
 							<th class="ascending">' . _('Paid Shopee') . '</th>
+							<th class="ascending">' . _('Paid Lazada') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -4092,6 +4093,12 @@ function OnlineMarketPlacePaymentPending($RootPath, $db){
 			}else{
 				$PaymentShopee = '';
 			}
+			if ($myrow['debtorno'] == "LAZADA"){
+				$PaymentLazada = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&PaymentCode=' . 'lazada' . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentLinkText .'</a>';
+				$PaymentManual = '';
+			}else{
+				$PaymentLazada = '';
+			}
 
 			printf('<td class="number">%s</td>
 					<td>%s</td>
@@ -4100,6 +4107,7 @@ function OnlineMarketPlacePaymentPending($RootPath, $db){
 					<td class="number">%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
+					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -4115,7 +4123,8 @@ function OnlineMarketPlacePaymentPending($RootPath, $db){
 					$myrow['currcode'], 
 					$PaymentManual,
 					$PaymentTokopedia,
-					$PaymentShopee
+					$PaymentShopee,
+					$PaymentLazada
 					);
 			$i++;
 			$TotalPaymentValue += $PaymentValue;
@@ -4131,6 +4140,7 @@ function OnlineMarketPlacePaymentPending($RootPath, $db){
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
+				<td>%s</td>
 				</tr>', 
 				"", 
 				"", 
@@ -4140,6 +4150,7 @@ function OnlineMarketPlacePaymentPending($RootPath, $db){
 				"TOTAL:", 
 				locale_number_format($TotalPaymentValue,$myrow['decimalplaces']),
 				"IDR", 
+				"",
 				"",
 				"",
 				""

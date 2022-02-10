@@ -612,6 +612,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 	if (($CustomerCode == "WEB-KL-IDR") 
 		OR ($CustomerCode == "WEB-WH-IDR") 
 		OR ($CustomerCode == "TOKOPEDIA") 
+		OR ($CustomerCode == "LAZADA") 
 		OR ($CustomerCode == "SHOPEE")){
 		$FunctionalExRate = 1;
 		$ExRate = 1;
@@ -694,6 +695,12 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 				$GLAccountCommission = SHOPEE_COMMISSION_GL_ACCOUNT;
 				$GLAccountCommissionPPN = ACCOUNT_PPN_BB;
 				$Commission = CalculateCommissionShopee($CustomerCode, $OrderNo, $TotalAmount);
+			}elseif  ($PaymentCode == "lazada"){
+				// Lazada payments  has commissions
+				$GLAccountTransfer = LAZADA_BANK_GL_ACCOUNT;
+				$GLAccountCommission = LAZADA_COMMISSION_GL_ACCOUNT;
+				$GLAccountCommissionPPN = ACCOUNT_PPN_BB;
+				$Commission = CalculateCommissionLazada($CustomerCode, $OrderNo, $TotalAmount);
 			}
 			$CommissionPPN = round($Commission * PPN_PERCENT / 100, 0);
 			$NetAmount = $TotalAmount - $Commission - $CommissionPPN;
@@ -865,6 +872,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 
 		// update the salesorder table, from quotation to confirmed order
 		if  (($PaymentCode == "tokopedia") OR 
+			 ($PaymentCode == "lazada") OR 
 			 ($PaymentCode == "shopee")){
 			// in case paid by marketplace (so after order is closed and shipment, we need to mark it as "received somehow", so we use klpaidcash
 			$SQL = "UPDATE salesorders

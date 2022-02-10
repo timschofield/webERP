@@ -848,6 +848,7 @@ function SyncProductMarketplacesLinks($ShowMessages, $LastTimeRun, $db, $db_oc, 
 
 			ItemEnableTokopediaInfo($myrow['stockid'], $EnabledMarketplaces, $db);
 			ItemEnableShopeeInfo($myrow['stockid'], $EnabledMarketplaces, $db);
+			ItemEnableLazadaInfo($myrow['stockid'], $EnabledMarketplaces, $db);
 			
 			if ($ShowMessages){
 				$k = StartEvenOrOddRow($k);
@@ -889,7 +890,9 @@ function SyncProductMarketplacesLinks($ShowMessages, $LastTimeRun, $db, $db_oc, 
 				tokopediaenabled,
 				tokopediaurl,
 				shopeeenabled,
-				shopeeurl
+				shopeeurl,
+				lazadaenabled,
+				lazadaurl
 			FROM klstockmarketplaces
 			WHERE (klstockmarketplaces.date_created >= '" . $LastTimeRun . "'
 					OR klstockmarketplaces.date_updated >= '" . $LastTimeRun . "')
@@ -905,6 +908,7 @@ function SyncProductMarketplacesLinks($ShowMessages, $LastTimeRun, $db, $db_oc, 
 								<th>' . _('StockID') . '</th>
 								<th>' . _('Tokopedia Enabled') . '</th>
 								<th>' . _('Shopee Enabled') . '</th>
+								<th>' . _('Lazada Enabled') . '</th>
 								<th>' . _('Action') . '</th>
 							</tr>';
 			echo $TableHeader;
@@ -922,6 +926,8 @@ function SyncProductMarketplacesLinks($ShowMessages, $LastTimeRun, $db, $db_oc, 
 			$TokopediaLink = ClearUrl($myrow['tokopediaurl']);
 			$ShopeeEnabled = $myrow['shopeeenabled'];
 			$ShopeeLink = ClearUrl($myrow['shopeeurl']);
+			$LazadaEnabled = $myrow['lazadaenabled'];
+			$LazadaLink = ClearUrl($myrow['lazadaurl']);
 			
 			$Link = '{"1":{"status":"';
 			if ($TokopediaEnabled){
@@ -945,7 +951,20 @@ function SyncProductMarketplacesLinks($ShowMessages, $LastTimeRun, $db, $db_oc, 
 			}
 			$Link .= '","link":"';
 			$Link .= $ShopeeLink;
-			$Link .= '"}'; // closing the Shopee info
+			$Link .= '"},'; // closing the Shopee info
+
+			$Link .= '"3":{"status":"';
+			if ($LazadaEnabled){
+				$Link .= '1';
+				$TextLazadaEnabled = "Enabled";
+			}else{
+				$Link .= '0';
+				$TextLazadaEnabled = "Disabled";
+			}
+			$Link .= '","link":"';
+			$Link .= $LazadaLink;
+			$Link .= '"}'; // closing the Lazada info
+
 			$Link .= '}'; // closing the full link info
 
 			// Let's get the OpenCart primary key for product
@@ -978,10 +997,12 @@ function SyncProductMarketplacesLinks($ShowMessages, $LastTimeRun, $db, $db_oc, 
 						<td>%s</td>
 						<td>%s</td>
 						<td>%s</td>
+						<td>%s</td>
 						</tr>',
 						$Model,
 						$TextTokopediaEnabled,
-						$TextTokopediaEnabled,
+						$TextShopeeEnabled,
+						$TextLazadaEnabled,
 						$Action
 						);
 			}
