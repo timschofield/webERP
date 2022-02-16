@@ -279,4 +279,59 @@ function ItemUpdateTokopediaInfo($StockId, $EnabledTokopedia, $TokopediaProductI
 	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 }
 
+function FindShopeeCategory($StockId, $Name, $Description){
+	$ShopeeCat = "";
+	if (isRing($StockId)){
+		$ShopeeCat = SHOPEE_CATEGORY_RING;
+	}elseif (isToeRing($StockId)){
+		$ShopeeCat = SHOPEE_CATEGORY_TOE_RING;
+	}elseif (isBrooche($StockId)){
+		$ShopeeCat = SHOPEE_CATEGORY_BROOCHE;
+	}elseif (isEarring($StockId)){
+		if (ItemInList("stud", $Description)){
+			$ShopeeCat = SHOPEE_CATEGORY_EARRING_STUD;
+		}else if (ItemInList("hoop", $Description)){
+			$ShopeeCat = SHOPEE_CATEGORY_EARRING_HOOP;
+		}else if (ItemInList("hook", $Description)){
+			$ShopeeCat = SHOPEE_CATEGORY_EARRING_HOOK;
+		}else{
+			$ShopeeCat = SHOPEE_CATEGORY_EARRING;
+		}
+	}elseif (isEarcuff($StockId)){
+		$ShopeeCat = SHOPEE_CATEGORY_EARRING_STUD;
+	}elseif (isBracelet($StockId)){
+		if (ItemInList("bangle", $Description)){
+			$ShopeeCat = SHOPEE_CATEGORY_BANGLE;
+		}else if (ItemInList("pearl", $Description)){
+			$ShopeeCat = SHOPEE_CATEGORY_BRACELET_PEARL;
+		}else{
+			$ShopeeCat = SHOPEE_CATEGORY_BRACELET;
+		}
+	}elseif (isAnklet($StockId)){
+		$ShopeeCat = SHOPEE_CATEGORY_ANKLET;
+	}elseif (isPendant($StockId)){
+		if (ItemInList("pearl", $Description)){
+			$ShopeeCat = SHOPEE_CATEGORY_PENDANT_PEARL;
+		}else{
+			$ShopeeCat = SHOPEE_CATEGORY_PENDANT;
+		}
+	}elseif (isNecklace($StockId)){
+		if (ItemInList("choker", $Description)){
+			$ShopeeCat = SHOPEE_CATEGORY_CHOKER;
+		}else if (ItemInList("pearl", $Description)){
+			$ShopeeCat = SHOPEE_CATEGORY_NECKLACE_PEARL;
+		}else{
+			$ShopeeCat = SHOPEE_CATEGORY_NECKLACE;
+		}
+	}elseif (isTali($StockId)){
+		$ShopeeCat = SHOPEE_CATEGORY_NECKLACE;
+	}elseif (isBag($StockId)){
+		$ShopeeCat = SHOPEE_CATEGORY_BAG;
+	}elseif (isKeyHolder($StockId)){
+		$ShopeeCat = SHOPEE_CATEGORY_KEYHOLDER;
+	}
+	return $ShopeeCat;
+}
+
+
 ?>

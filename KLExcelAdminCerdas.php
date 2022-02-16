@@ -33,15 +33,14 @@ function submit(&$db, $TypeOfShop, $TypeOfFile) {
 		
 		if ($TypeOfShop == 1){
 			$NameOfShop = "Kapal-Laut";
-		$FilterCategory = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . " ";
 		}else{
 			$NameOfShop = "Blink";
-		$FilterCategory = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . " ";
 		}
 		
 		$Now = Date('Y-m-d H-i-s');
 
 		$SQL = "SELECT stockmaster.stockid,
+						stockmaster.categoryid,
 						stockmaster.description,
 						stockmaster.longdescription,
 						stockmaster.grossweight,
@@ -50,12 +49,13 @@ function submit(&$db, $TypeOfShop, $TypeOfFile) {
 						stockdescriptiontranslations.descriptiontranslation,
 						stockdescriptiontranslations.longdescriptiontranslation,
 						prices.price
-				FROM stockmaster, prices, stockdescriptiontranslations
+				FROM stockmaster, prices, stockdescriptiontranslations, salescatprod
 				WHERE stockmaster.stockid = prices.stockid
 					AND stockmaster.stockid = stockdescriptiontranslations.stockid
+					AND stockmaster.stockid = salescatprod.stockid
 					AND stockdescriptiontranslations.language_id = 'id_ID.utf8'
-					AND stockmaster.discontinued = 0 " . 
-					$FilterCategory . "
+					AND stockmaster.discontinued = 0 
+					AND salescatprod.manufacturers_id = '" . $TypeOfShop . "' 
 					AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
 					AND prices.currabrev = '". CURRENCY_CODE ."'
 					AND prices.startdate <= '". $Now. "' 
@@ -119,106 +119,109 @@ function submit(&$db, $TypeOfShop, $TypeOfFile) {
 			
 			while ($myrow = DB_fetch_array($result)) {
 				
-				$StockId = $myrow['stockid'];
+				if (($myrow['categoryid'] != "DISC2A") AND ($myrow['categoryid'] != "DISC5A") AND ($myrow['categoryid'] != "DISC8A")){
+					// we don't send discounted items to marketplaces
+					
+					$StockId = $myrow['stockid'];
 
-				$TextSizeIndonesian = CreateTextSize($myrow['stockid'], "ID", true);
-				$TextSizeEnglish = CreateTextSize($myrow['stockid'], "EN", true);
-				$TextSizeGrouping = CreateTextSize($myrow['stockid'], "EN", false);
-				
-				if ($TextSizeGrouping != ""){
-					$NamaVariant = "Ukuran";
-				}else{
-					$NamaVariant = "";
-				}
+					$TextSizeIndonesian = CreateTextSize($myrow['stockid'], "ID", true);
+					$TextSizeEnglish = CreateTextSize($myrow['stockid'], "EN", true);
+					$TextSizeGrouping = CreateTextSize($myrow['stockid'], "EN", false);
+					
+					if ($TextSizeGrouping != ""){
+						$NamaVariant = "Ukuran";
+					}else{
+						$NamaVariant = "";
+					}
 
-				$Name = ItemMarketplaceName($myrow['stockid'], $myrow['description'], $myrow['descriptiontranslation']);
-				$Price = round($myrow['price']);
-				$PriceDiscount = '';
-				$Description = trim($myrow['longdescriptiontranslation']). " " . 
-						$TextSizeIndonesian . " - "  . 
-						trim($myrow['longdescription']) . " " .
-						$TextSizeEnglish;
-				$Weight = $myrow['grossweight'] * 1000; // webERP in KG, AdminCerdas in gr
-				
-				$QOH = ItemMarketplaceQOH($myrow['stockid'],$db);
+					$Name = ItemMarketplaceName($myrow['stockid'], $myrow['description'], $myrow['descriptiontranslation']);
+					$Price = round($myrow['price']);
+					$PriceDiscount = '';
+					$Description = trim($myrow['longdescriptiontranslation']). " " . 
+							$TextSizeIndonesian . " - "  . 
+							trim($myrow['longdescription']) . " " .
+							$TextSizeEnglish;
+					$Weight = $myrow['grossweight'] * 1000; // webERP in KG, AdminCerdas in gr
+					
+					$QOH = ItemMarketplaceQOH($myrow['stockid'],$db);
 
-				// All items have at least 1 image
-				$Url_1 = PATH_TO_CATALOG_IMAGES . $myrow['stockid'].'.jpg';
-				$PackagingImage = FALSE;
+					// All items have at least 1 image
+					$Url_1 = PATH_TO_CATALOG_IMAGES . $myrow['stockid'].'.jpg';
+					$PackagingImage = FALSE;
 
-				// if there is a 2nd image we choose it or the packaging pic
-				if (file_exists($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'].'.1.jpg')){
-					$Url_2 = PATH_TO_CATALOG_IMAGES . $myrow['stockid'].'.1.jpg';
-				}else{
+					// if there is a 2nd image we choose it or the packaging pic
+					if (file_exists($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'].'.1.jpg')){
+						$Url_2 = PATH_TO_CATALOG_IMAGES . $myrow['stockid'].'.1.jpg';
+					}else{
+						if ((!$PackagingImage) AND ($myrow['klpackaging'] != "") AND ($myrow['klpackaging'] != "NO-PACKAGING")){
+							$Url_2 = PATH_TO_CATALOG_PACKAGING_IMAGES . $myrow['klpackaging'].'.jpg';
+							$PackagingImage =  TRUE;
+						}else{
+							$Url_2 = "";
+						}
+					}
+
+					// if there is a 3rd image we choose it or the packaging pic
+					if(file_exists($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'].'.2.jpg')) {
+						$Url_3 = PATH_TO_CATALOG_IMAGES . $myrow['stockid'].'.2.jpg';
+					}else{
+						if ((!$PackagingImage) AND ($myrow['klpackaging'] != "") AND ($myrow['klpackaging'] != "NO-PACKAGING")){
+							$Url_3 = PATH_TO_CATALOG_PACKAGING_IMAGES . $myrow['klpackaging'].'.jpg';
+							$PackagingImage =  TRUE;
+						}else{
+							$Url_3 = "";
+						}
+					}
+
+					// if there is a 4th image we choose it or the packaging pic
+					if(file_exists($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'].'.3.jpg')) {
+						$Url_4 = PATH_TO_CATALOG_IMAGES . $myrow['stockid'].'.3.jpg';
+					}else{
+						if ((!$PackagingImage) AND ($myrow['klpackaging'] != "") AND ($myrow['klpackaging'] != "NO-PACKAGING")){
+							$Url_4 = PATH_TO_CATALOG_PACKAGING_IMAGES . $myrow['klpackaging'].'.jpg';
+							$PackagingImage =  TRUE;
+						}else{
+							$Url_4 = "";
+						}
+					}
+
+					// only a packaging pic for the 5th URL (if not yet)
 					if ((!$PackagingImage) AND ($myrow['klpackaging'] != "") AND ($myrow['klpackaging'] != "NO-PACKAGING")){
-						$Url_2 = PATH_TO_CATALOG_PACKAGING_IMAGES . $myrow['klpackaging'].'.jpg';
+						$Url_5 = PATH_TO_CATALOG_PACKAGING_IMAGES . $myrow['klpackaging'].'.jpg';
 						$PackagingImage =  TRUE;
 					}else{
-						$Url_2 = "";
+						$Url_5 = "";
 					}
-				}
 
-				// if there is a 3rd image we choose it or the packaging pic
-				if(file_exists($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'].'.2.jpg')) {
-					$Url_3 = PATH_TO_CATALOG_IMAGES . $myrow['stockid'].'.2.jpg';
-				}else{
-					if ((!$PackagingImage) AND ($myrow['klpackaging'] != "") AND ($myrow['klpackaging'] != "NO-PACKAGING")){
-						$Url_3 = PATH_TO_CATALOG_PACKAGING_IMAGES . $myrow['klpackaging'].'.jpg';
-						$PackagingImage =  TRUE;
-					}else{
-						$Url_3 = "";
+					$Category = FindShopeeCategory($StockId, $Name, $Description);
+
+					if ($TypeOfFile == "FullUpdate"){
+						$ActiveSheet->setCellValue('A'.$i, $StockId);
+						$ActiveSheet->setCellValue('B'.$i, $Name);
+						$ActiveSheet->setCellValue('C'.$i, $Price);
+						$ActiveSheet->setCellValue('D'.$i, $PriceDiscount);
+						$ActiveSheet->setCellValue('E'.$i, $Description);
+						$ActiveSheet->setCellValue('F'.$i, $Weight);
+						$ActiveSheet->setCellValue('G'.$i, $QOH);
+						$ActiveSheet->setCellValue('H'.$i, $Url_1);
+						$ActiveSheet->setCellValue('I'.$i, $Url_2);
+						$ActiveSheet->setCellValue('J'.$i, $Url_3);
+						$ActiveSheet->setCellValue('K'.$i, $Category);
+						$ActiveSheet->setCellValue('L'.$i, $Url_4);
+						$ActiveSheet->setCellValue('M'.$i, $Url_5);
+						$ActiveSheet->setCellValue('N'.$i, $NamaVariant);
+					}elseif ($TypeOfFile == "QOHOnly"){
+						$ActiveSheet->setCellValue('A'.$i, $StockId);
+						$ActiveSheet->setCellValue('B'.$i, $Name);
+						$ActiveSheet->setCellValue('C'.$i, $QOH);
+					}elseif ($TypeOfFile == "PricesOnly"){
+						$ActiveSheet->setCellValue('A'.$i, $StockId);
+						$ActiveSheet->setCellValue('B'.$i, $Name);
+						$ActiveSheet->setCellValue('C'.$i, $Price);
+						$ActiveSheet->setCellValue('D'.$i, $PriceDiscount);
 					}
+					$i++;
 				}
-
-				// if there is a 4th image we choose it or the packaging pic
-				if(file_exists($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'].'.3.jpg')) {
-					$Url_4 = PATH_TO_CATALOG_IMAGES . $myrow['stockid'].'.3.jpg';
-				}else{
-					if ((!$PackagingImage) AND ($myrow['klpackaging'] != "") AND ($myrow['klpackaging'] != "NO-PACKAGING")){
-						$Url_4 = PATH_TO_CATALOG_PACKAGING_IMAGES . $myrow['klpackaging'].'.jpg';
-						$PackagingImage =  TRUE;
-					}else{
-						$Url_4 = "";
-					}
-				}
-
-				// only a packaging pic for the 5th URL (if not yet)
-				if ((!$PackagingImage) AND ($myrow['klpackaging'] != "") AND ($myrow['klpackaging'] != "NO-PACKAGING")){
-					$Url_5 = PATH_TO_CATALOG_PACKAGING_IMAGES . $myrow['klpackaging'].'.jpg';
-					$PackagingImage =  TRUE;
-				}else{
-					$Url_5 = "";
-				}
-
-				$Category = FindShopeeCategory($StockId, $Name, $Description);
-
-				if ($TypeOfFile == "FullUpdate"){
-					$ActiveSheet->setCellValue('A'.$i, $StockId);
-					$ActiveSheet->setCellValue('B'.$i, $Name);
-					$ActiveSheet->setCellValue('C'.$i, $Price);
-					$ActiveSheet->setCellValue('D'.$i, $PriceDiscount);
-					$ActiveSheet->setCellValue('E'.$i, $Description);
-					$ActiveSheet->setCellValue('F'.$i, $Weight);
-					$ActiveSheet->setCellValue('G'.$i, $QOH);
-					$ActiveSheet->setCellValue('H'.$i, $Url_1);
-					$ActiveSheet->setCellValue('I'.$i, $Url_2);
-					$ActiveSheet->setCellValue('J'.$i, $Url_3);
-					$ActiveSheet->setCellValue('K'.$i, $Category);
-					$ActiveSheet->setCellValue('L'.$i, $Url_4);
-					$ActiveSheet->setCellValue('M'.$i, $Url_5);
-					$ActiveSheet->setCellValue('N'.$i, $NamaVariant);
-				}elseif ($TypeOfFile == "QOHOnly"){
-					$ActiveSheet->setCellValue('A'.$i, $StockId);
-					$ActiveSheet->setCellValue('B'.$i, $Name);
-					$ActiveSheet->setCellValue('C'.$i, $QOH);
-				}elseif ($TypeOfFile == "PricesOnly"){
-					$ActiveSheet->setCellValue('A'.$i, $StockId);
-					$ActiveSheet->setCellValue('B'.$i, $Name);
-					$ActiveSheet->setCellValue('C'.$i, $Price);
-					$ActiveSheet->setCellValue('D'.$i, $PriceDiscount);
-				}
-
-				$i++;
 			}
 
 			// Auto Size columns
@@ -315,59 +318,5 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	include('includes/footer.php');
 
 } // End of function display()
-
-function FindShopeeCategory($StockId, $Name, $Description){
-	$ShopeeCat = "";
-	if (isRing($StockId)){
-		$ShopeeCat = SHOPEE_CATEGORY_RING;
-	}elseif (isToeRing($StockId)){
-		$ShopeeCat = SHOPEE_CATEGORY_TOE_RING;
-	}elseif (isBrooche($StockId)){
-		$ShopeeCat = SHOPEE_CATEGORY_BROOCHE;
-	}elseif (isEarring($StockId)){
-		if (ItemInList("stud", $Description)){
-			$ShopeeCat = SHOPEE_CATEGORY_EARRING_STUD;
-		}else if (ItemInList("hoop", $Description)){
-			$ShopeeCat = SHOPEE_CATEGORY_EARRING_HOOP;
-		}else if (ItemInList("hook", $Description)){
-			$ShopeeCat = SHOPEE_CATEGORY_EARRING_HOOK;
-		}else{
-			$ShopeeCat = SHOPEE_CATEGORY_EARRING;
-		}
-	}elseif (isEarcuff($StockId)){
-		$ShopeeCat = SHOPEE_CATEGORY_EARRING_STUD;
-	}elseif (isBracelet($StockId)){
-		if (ItemInList("bangle", $Description)){
-			$ShopeeCat = SHOPEE_CATEGORY_BANGLE;
-		}else if (ItemInList("pearl", $Description)){
-			$ShopeeCat = SHOPEE_CATEGORY_BRACELET_PEARL;
-		}else{
-			$ShopeeCat = SHOPEE_CATEGORY_BRACELET;
-		}
-	}elseif (isAnklet($StockId)){
-		$ShopeeCat = SHOPEE_CATEGORY_ANKLET;
-	}elseif (isPendant($StockId)){
-		if (ItemInList("pearl", $Description)){
-			$ShopeeCat = SHOPEE_CATEGORY_PENDANT_PEARL;
-		}else{
-			$ShopeeCat = SHOPEE_CATEGORY_PENDANT;
-		}
-	}elseif (isNecklace($StockId)){
-		if (ItemInList("choker", $Description)){
-			$ShopeeCat = SHOPEE_CATEGORY_CHOKER;
-		}else if (ItemInList("pearl", $Description)){
-			$ShopeeCat = SHOPEE_CATEGORY_NECKLACE_PEARL;
-		}else{
-			$ShopeeCat = SHOPEE_CATEGORY_NECKLACE;
-		}
-	}elseif (isTali($StockId)){
-		$ShopeeCat = SHOPEE_CATEGORY_NECKLACE;
-	}elseif (isBag($StockId)){
-		$ShopeeCat = SHOPEE_CATEGORY_BAG;
-	}elseif (isKeyHolder($StockId)){
-		$ShopeeCat = SHOPEE_CATEGORY_KEYHOLDER;
-	}
-	return $ShopeeCat;
-}
 
 ?>
