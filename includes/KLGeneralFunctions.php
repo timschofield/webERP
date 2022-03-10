@@ -393,7 +393,7 @@ function getDirectoryTree( $outerDir , $x){
 
 function ItemInList($Item, $List){
 	// http://www.php.net/manual/en/function.strpos.php for details on ===	
-	if (strpos($List, $Item) === FALSE){
+	if (strpos(strtolower($List), strtolower($Item)) === FALSE){
 		return false;
 	}else{
 		return true;

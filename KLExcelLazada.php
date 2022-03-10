@@ -1,53 +1,39 @@
 <?php
 
+require_once ('Classes/PHPExcel.php');
+
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
+include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
+include('includes/KLMarketplaceFunctions.php');
 include('includes/OpenCartGeneralFunctions.php');
-include('includes/OpenCartConnectDB.php');
-include ('includes/GoogleTranslator.php');
+include('includes/GetPrice.inc');
 
-require_once ('Classes/PHPExcel.php');
 
-if (!isset($_POST['FromPrice'])){
-	$_POST['FromPrice'] = 0;
-}
-if (!isset($_POST['ToPrice'])){
-	$_POST['ToPrice'] = 999999999;
-}
-if (!isset($_POST['QOHMinimal'])){
-	$_POST['QOHMinimal'] = 10;
-}
-if (!isset($_POST['PopularItems'])){
-	$_POST['PopularItems'] = 1000;
-}
 if (isset($_POST['submit'])) {
-    submit($db, $db_oc, $oc_tableprefix, $_POST['FromPrice'], $_POST['ToPrice'], $_POST['QOHMinimal'], $_POST['PopularItems']);
+    submit($db, $_POST['TypeOfShop']);
 } else {
     display($db);
 }
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit(&$db, &$db_oc, $oc_tableprefix, $FromPrice, $ToPrice, $QOHMinimal, $PopularItems) {
+function submit(&$db, $TypeOfShop) {
 
 	// CONSTANT TEXTS
 	$ShippingTimeMinimal = 3;
 	$ShippingTimeMaximal = 6;
-	$Brand = "Kapal-Laut Your Essential Jewellery";
 	$Warranty = "Garansi terbatas untuk 3 bulan. Cek http://www.kapal-laut.com/Warranty-Conditions";
 	$Country = "Indonesia";
+	$CurrencyCode = "IDR";
 	$ImagePath = "http://www.kapal-laut.com/image/";
-	$ColourSteel = 'Putih keperakan';
-	$ColourMetal = 'Logam putih';
-	$ColourSilver = 'Perak';
-	$MaterialSteel = 'Stainless Steel';
-	$MaterialMetal = 'Logam';
-	$MaterialSilver = 'Perak 925';
+	$BodyJewellery = "Yes";
+	$BarangBerbahaya = "No";
 	$SizeFreeSize = 'Free size';
 	$UnitPair = '1 pasang';
 	$UnitPcs = '1 biji';
-	$Highlight01 = 'Highlight Sentence 01';
+	$Highlight01 = 'Highlight Sentence 02';
 	$Highlight02 = 'Highlight Sentence 02';
 	$Highlight03 = 'Highlight Sentence 03';
 
@@ -58,269 +44,327 @@ function submit(&$db, &$db_oc, $oc_tableprefix, $FromPrice, $ToPrice, $QOHMinima
 	$InputError = 0;
 
 	//first off validate inputs sensible
-
-	if ($_POST['FromPrice'] < 0) {
+	if (($TypeOfShop < 1) OR ($TypeOfShop > 2)) {
 		$InputError = 1;
-		prnMsg(_('From Price has to be greater than 0'),'error');
-	}
-	if ($_POST['ToPrice'] < 0) {
-		$InputError = 1;
-		prnMsg(_('To Price has to be greater than 0'),'error');
-	}
-	if ($_POST['ToPrice'] < $_POST['FromPrice']) {
-		$InputError = 1;
-		prnMsg(_('To Price has to be greater than From Price'),'error');
-	}
-	if ($QOHMinimal < 1) {
-		$InputError = 1;
-		prnMsg(_('QOH Minimal has to be 1 or higher'),'error');
-	}
-	if ($PopularItems < 1) {
-		$InputError = 1;
-		prnMsg(_('Number of Items has to be 1 or higher'),'error');
+		prnMsg("Type of marketplace should be Kapal-Laut or Blink only",'error');
 	}
 
 	if ($InputError == 0){
-		$FromPrice = $_POST['FromPrice'];
-		$ToPrice = $_POST['ToPrice'];
-		
-		$sql = "SELECT 	" . $oc_tableprefix . "product.product_id,
-						" . $oc_tableprefix . "product_description.name,
-						" . $oc_tableprefix . "product_description.description,
-						" . $oc_tableprefix . "product.model,
-						" . $oc_tableprefix . "product.sku,
-						" . $oc_tableprefix . "product.weight,
-						" . $oc_tableprefix . "product.length,
-						" . $oc_tableprefix . "product.width,
-						" . $oc_tableprefix . "product.height,
-						" . $oc_tableprefix . "product.length_class_id,
-						" . $oc_tableprefix . "product.image,
-						" . $oc_tableprefix . "product.google_product_category,
-						" . $oc_tableprefix . "product.gender,
-						" . $oc_tableprefix . "product.agegroup,
-						" . $oc_tableprefix . "product.price,
-						" . $oc_tableprefix . "product.quantity,
-						" . $oc_tableprefix . "category_description.name AS category_name
-				FROM " . $oc_tableprefix . "product,
-						" . $oc_tableprefix . "product_description,
-						" . $oc_tableprefix . "product_to_category,
-						" . $oc_tableprefix . "category_description
-				WHERE   " . $oc_tableprefix . "product.product_id = " . $oc_tableprefix . "product_description.product_id
-					AND " . $oc_tableprefix . "product.product_id = " . $oc_tableprefix . "product_to_category.product_id
-					AND " . $oc_tableprefix . "product_to_category.category_id = " . $oc_tableprefix . "category_description.category_id
-					AND " . $oc_tableprefix . "product_to_category.category_id NOT IN (" . ONLINESHOP_OUTLET_SALES_CATEGORIES . ")
-					AND " . $oc_tableprefix . "product.status = 1
-					AND " . $oc_tableprefix . "product.price >= '" . $FromPrice . "'
-					AND " . $oc_tableprefix . "product.price <= '" . $ToPrice . "'
-					AND " . $oc_tableprefix . "product.quantity >= '" . $QOHMinimal . "'
-				ORDER BY " . $oc_tableprefix . "product.viewed DESC
-				LIMIT 0," . $PopularItems . "";
-//prnMsg($sql);					
-		$ErrMsg = _('The SQL to find the OpenCart Products to export to Lazada');
-		$result = DB_query_oc($sql,$ErrMsg);
-		if (DB_num_rows($result) != 0){
 
+		if ($TypeOfShop == 1){
+			$NameOfShop = "Kapal-Laut";
+			$Brand = "Kapal-Laut. Your Essential Jewellery";
+		}else{
+			$NameOfShop = "Blink";
+			$Brand = "Blink by Kapal-Laut";
+		}
+
+		$NameProductPrefix = $Brand . ' ';
+			
+		$Now = Date('Y-m-d H-i-s');
+		
+		$SQL = "SELECT stockmaster.stockid,
+						stockmaster.categoryid,
+						stockmaster.description,
+						stockmaster.longdescription,
+						stockmaster.grossweight,
+						stockmaster.length,
+						stockmaster.width,
+						stockmaster.height,
+						stockmaster.unitsdimension,
+						stockmaster.klpackaging,
+						stockmaster.categoryid,
+						stockdescriptiontranslations.descriptiontranslation,
+						stockdescriptiontranslations.longdescriptiontranslation,
+						prices.price
+				FROM stockmaster, prices, stockdescriptiontranslations, salescatprod
+				WHERE stockmaster.stockid = prices.stockid
+					AND stockmaster.stockid = stockdescriptiontranslations.stockid
+					AND stockmaster.stockid = salescatprod.stockid
+					AND stockdescriptiontranslations.language_id = 'id_ID.utf8'
+					AND stockmaster.discontinued = 0 
+					AND salescatprod.manufacturers_id = '" . $TypeOfShop . "' 
+					AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
+					AND prices.currabrev = '". CURRENCY_CODE ."'
+					AND prices.startdate <= '". $Now. "' 
+					AND (prices.enddate >= '". $Now. "' OR prices.enddate = '0000-00-00')
+				ORDER BY stockmaster.stockid";
+		$result = DB_query($SQL);
+		if (DB_num_rows($result) != 0){
+			
+			// Set value binder
+			PHPExcel_Cell::setValueBinder( new PHPExcel_Cell_AdvancedValueBinder() );
+		
 			// Create new PHPExcel object
 			$objPHPExcel = new PHPExcel();
 
 			// Set document properties
 			$objPHPExcel->getProperties()->setCreator("webERP")
 										 ->setLastModifiedBy("webERP")
-										 ->setTitle("Lazada Products")
-										 ->setSubject("Lazada Products")
-										 ->setDescription("Lazada Products")
+										 ->setTitle("Lazada " . $NameOfShop)
+										 ->setSubject("Lazada " . $NameOfShop)
+										 ->setDescription("Lazada " . $NameOfShop)
 										 ->setKeywords("")
 										 ->setCategory("");
-		
+
 			// Add title data
 			$objPHPExcel->setActiveSheetIndex(0);
-			$objPHPExcel->getActiveSheet()->setCellValue('A1', 'No.');
-			$objPHPExcel->getActiveSheet()->setCellValue('B1', 'Nama Produk');
-			$objPHPExcel->getActiveSheet()->setCellValue('C1', 'Brand / Merk produk');
-			$objPHPExcel->getActiveSheet()->setCellValue('D1', 'Model');
-			$objPHPExcel->getActiveSheet()->setCellValue('E1', 'Warna');
-			$objPHPExcel->getActiveSheet()->setCellValue('F1', 'Harga');
-			$objPHPExcel->getActiveSheet()->setCellValue('G1', 'Kode SKU/produk');
-			$objPHPExcel->getActiveSheet()->setCellValue('H1', 'Variasi ukuran');
-			$objPHPExcel->getActiveSheet()->setCellValue('I1', 'Jumlah');
-			$objPHPExcel->getActiveSheet()->setCellValue('J1', 'Deskripsi produk 1');
-			$objPHPExcel->getActiveSheet()->setCellValue('K1', 'Highlight');
-			$objPHPExcel->getActiveSheet()->setCellValue('N1', 'isi Kemasan');
-			$objPHPExcel->getActiveSheet()->setCellValue('O1', 'Lama pengiriman (Minimal)');
-			$objPHPExcel->getActiveSheet()->setCellValue('P1', 'Lama pengiriman (Maximal)');
-			$objPHPExcel->getActiveSheet()->setCellValue('Q1', 'Ukuran Produk');
-			$objPHPExcel->getActiveSheet()->setCellValue('R1', 'berat produk kg');
-			$objPHPExcel->getActiveSheet()->setCellValue('S1', 'panjang kemasan');
-			$objPHPExcel->getActiveSheet()->setCellValue('T1', 'lebar kemasan');
-			$objPHPExcel->getActiveSheet()->setCellValue('U1', 'tinggi kemasan');
-			$objPHPExcel->getActiveSheet()->setCellValue('V1', 'berat kemasan');
-			$objPHPExcel->getActiveSheet()->setCellValue('W1', 'garansi produk');
-			$objPHPExcel->getActiveSheet()->setCellValue('X1', 'bahan baku produk');
-			$objPHPExcel->getActiveSheet()->setCellValue('Y1', 'Negara tempat produksi');
-			$objPHPExcel->getActiveSheet()->setCellValue('Z1', 'URL Gambar');
-			$objPHPExcel->getActiveSheet()->setCellValue('AA1', 'Google Category');
-			$objPHPExcel->getActiveSheet()->setCellValue('AB1', 'Google Gender');
-			$objPHPExcel->getActiveSheet()->setCellValue('AC1', 'Google Age Group');
+			$ActiveSheet = $objPHPExcel->getActiveSheet();
+			$ActiveSheet->setTitle(("Lazada " . $NameOfShop));
+
+			$ActiveSheet->setCellValue('A2', 'Group No');
+			$ActiveSheet->setCellValue('B2', 'Catid');
+			$ActiveSheet->setCellValue('C2', 'Nama Produk');
+			$ActiveSheet->setCellValue('D2', 'Gambar produk1');
+			$ActiveSheet->setCellValue('E2', 'Gambar produk2');
+			$ActiveSheet->setCellValue('F2', 'Gambar produk3');
+			$ActiveSheet->setCellValue('G2', 'Gambar produk4');
+			$ActiveSheet->setCellValue('H2', 'Gambar produk5');
+			$ActiveSheet->setCellValue('I2', 'Gambar produk6');
+			$ActiveSheet->setCellValue('J2', 'Gambar produk7');
+			$ActiveSheet->setCellValue('K2', 'Gambar produk8');
+			$ActiveSheet->setCellValue('L2', 'Showcase_image1:1');
+			$ActiveSheet->setCellValue('M2', 'originalLocalName');
+			$ActiveSheet->setCellValue('N2', 'currencyCode');
+			$ActiveSheet->setCellValue('O2', 'URL Video');
+			$ActiveSheet->setCellValue('P2', 'Merek');
+			$ActiveSheet->setCellValue('Q2', 'Bahan');
+			$ActiveSheet->setCellValue('R2', 'Jenis Batu Perhiasan Utama');
+			$ActiveSheet->setCellValue('S2', 'Model');
+			$ActiveSheet->setCellValue('T2', 'Perhiasan Tubuh');
+			$ActiveSheet->setCellValue('U2', 'Peralatan Alat Perhiasan');
+			$ActiveSheet->setCellValue('V2', 'Long Description (Lorikeet)');
+			$ActiveSheet->setCellValue('W2', 'Deskripsi Bahasa Inggris Panjang (Tidak Wajib)');
+			$ActiveSheet->setCellValue('X2', 'Apa yang ada di dalam kotak');
+			$ActiveSheet->setCellValue('Y2', 'Kebijakan Garansi');
+			$ActiveSheet->setCellValue('Z2', 'Garansi');
+			$ActiveSheet->setCellValue('AA2', 'Jenis Garansi');
+			$ActiveSheet->setCellValue('AB2', 'Barang Berbahaya');
+			$ActiveSheet->setCellValue('AC2', 'Warna');
+			$ActiveSheet->setCellValue('AD2', 'props');
+			$ActiveSheet->setCellValue('AE2', 'Gambar1');
+			$ActiveSheet->setCellValue('AF2', 'Gambar2');
+			$ActiveSheet->setCellValue('AG2', 'Gambar3');
+			$ActiveSheet->setCellValue('AH2', 'Gambar4');
+			$ActiveSheet->setCellValue('AI2', 'Gambar5');
+			$ActiveSheet->setCellValue('AJ2', 'Gambar6');
+			$ActiveSheet->setCellValue('AK2', 'Gambar7');
+			$ActiveSheet->setCellValue('AL2', 'Gambar8');
+			$ActiveSheet->setCellValue('AM2', 'Color');
+			$ActiveSheet->setCellValue('AN2', 'Package Height');
+			$ActiveSheet->setCellValue('AO2', 'Package Width');
+			$ActiveSheet->setCellValue('AP2', 'Package Length');
+			$ActiveSheet->setCellValue('AQ2', 'Package Weight');
+			$ActiveSheet->setCellValue('AR2', 'Stok DS');
+			$ActiveSheet->setCellValue('AS2', 'Harga');
+			$ActiveSheet->setCellValue('AT2', 'SpecialPrice');
+			$ActiveSheet->setCellValue('AU2', 'SpecialPrice Start');
+			$ActiveSheet->setCellValue('AV2', 'SpecialPrice End');
+			$ActiveSheet->setCellValue('AW2', 'Seller SKU');
 
 			// Add data
-			$i = 2;
+			$i = 3;
 
-			$NameProductPrefix = $Brand . ' ';
-			
 			while ($myrow = DB_fetch_array($result)) {
-				// Get the Bahasa Indonesia descriptions from webERP database
-				$sqlwebERP = "SELECT descriptiontranslation,
-									longdescriptiontranslation
-							FROM stockdescriptiontranslations
-							WHERE stockid = '" . $myrow['model'] . "'
-								AND language_id = 'id_ID.utf8'";
-				$ErrMsg = _('The SQL to find the webERP descriptions to export to Lazada');
-				$resultdescriptions = DB_query($sqlwebERP,$ErrMsg);
-				if (DB_num_rows($resultdescriptions) != 0){
-					$mydescriptions = DB_fetch_array($resultdescriptions);
-					$Description = $mydescriptions['descriptiontranslation'];
-					$LongDescription = $mydescriptions['longdescriptiontranslation'];
-				}else{
-					$Description = '';
-					$LongDescription = '';
-				}
-
-				$objPHPExcel->setActiveSheetIndex(0);
-				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $i-1);
-				$NameProduct = $Description;
-				$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $NameProductPrefix . $NameProduct);
-				$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $Brand);
-				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, $myrow['model']);
 				
-				if (mb_stristr($myrow['name'], "steel") != FALSE){
-					$Colour = $ColourSteel;
-					$Material = $MaterialSteel;
-				}elseif (mb_stristr($myrow['name'], "metal") != FALSE){
-					$Colour = $ColourMetal;
-					$Material = $MaterialMetal;
-				}elseif (mb_stristr($myrow['name'], "silver") != FALSE){
-					$Colour = $ColourSilver;
-					$Material = $MaterialSilver;
-				}elseif (mb_stristr($myrow['category_name'], "silver") != FALSE){
-					$Colour = $ColourSilver;
-					$Material = $MaterialSilver;
-				}elseif (mb_stristr($myrow['category_name'], "fashion") != FALSE){
-					$Colour = $ColourMetal;
-					$Material = $MaterialMetal;
-				}elseif (mb_stristr($myrow['category_name'], "steel") != FALSE){
-					$Colour = $ColourSteel;
-					$Material = $MaterialSteel;
-				}else{
-					$Colour = $ColourSilver;
-				}
-				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, $Colour);
-				$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, $myrow['price']);
-				$objPHPExcel->getActiveSheet()->setCellValue('G'.$i, $myrow['model']);
+				if (($myrow['categoryid'] != "DISC2A") AND ($myrow['categoryid'] != "DISC5A") AND ($myrow['categoryid'] != "DISC8A")){
+					// we don't send discounted items to marketplaces
+					
+					$StockId = $myrow['stockid'];
 
-				if (isRing($myrow['model'])){
-					$Size = RingSize($myrow['model']);
-					if ($Size == "FR"){
-						$Size = $SizeFreeSize;
-					}
-				}else{
-					$Size = "";
-				}
-				$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, $Size);
-
-				$objPHPExcel->getActiveSheet()->setCellValue('I'.$i, $myrow['quantity']);
-
-				$objPHPExcel->getActiveSheet()->setCellValue('J'.$i, $LongDescription);
-
-				$objPHPExcel->getActiveSheet()->setCellValue('K'.$i, $Highlight01);
-				$objPHPExcel->getActiveSheet()->setCellValue('L'.$i, $Highlight02);
-				$objPHPExcel->getActiveSheet()->setCellValue('M'.$i, $Highlight03);
-
-				if (isEarring($myrow['model']) OR isEarcuff($myrow['model'])){
-					$UnitsSale = $UnitPair; 
-				}else{
-					$UnitsSale = $UnitPcs; 
-				}
-				$objPHPExcel->getActiveSheet()->setCellValue('N'.$i, $UnitsSale);
-				$objPHPExcel->getActiveSheet()->setCellValue('O'.$i, $ShippingTimeMinimal);
-				$objPHPExcel->getActiveSheet()->setCellValue('P'.$i, $ShippingTimeMaximal);
-
-				$LenghtUnits = GetLenghtUnits($myrow['length_class_id'], 1, $db_oc, $oc_tableprefix);
-				if ($LenghtUnits == 'cm'){
-					$Lenght = locale_number_format($myrow['length'],1);
-					$Width = locale_number_format($myrow['width'],1);
-					$Height = locale_number_format($myrow['height'],1);
-				}elseif ($LenghtUnits == 'mm'){
-					$Lenght = locale_number_format($myrow['length']/10,2);
-					$Width = locale_number_format($myrow['width']/10,2);
-					$Height = locale_number_format($myrow['height']/10,2);
-				}
-
-				$Dimensions = '';
-				if ($myrow['length'] > 0){
-					$Dimensions = $Lenght;
-				}else{
-					$Lenght = '';
-				}
-				if ($myrow['width'] > 0){
-					if ($Dimensions == ''){
-						$Dimensions = $Width;
+					$TextSizeIndonesian = CreateTextSize($StockId, "ID", true);
+					$TextSizeEnglish = CreateTextSize($StockId, "EN", true);
+					$TextSizeGrouping = CreateTextSize($StockId, "EN", false);
+					
+					if ($TextSizeGrouping != ""){
+						$NamaVariant = "Ukuran";
 					}else{
-						$Dimensions = $Dimensions . ' x ' . $Width;
+						$NamaVariant = "";
 					}
-				}else{
-					$Width = '';
-				}
-				if ($myrow['height'] > 0){
-					if ($Dimensions == ''){
-						$Dimensions = $Height;
-					}else{
-						$Dimensions = $Dimensions . ' x ' . $Height;
-					}
-				}else{
-					$Height = '';
-				}
-				 
-				$objPHPExcel->getActiveSheet()->setCellValue('Q'.$i, $Dimensions);
 
-				$Weight = locale_number_format($myrow['weight'],2);
-				$objPHPExcel->getActiveSheet()->setCellValue('R'.$i, $Weight);
-				
-				$objPHPExcel->getActiveSheet()->setCellValue('S'.$i, $Lenght);
-				$objPHPExcel->getActiveSheet()->setCellValue('T'.$i, $Width);
-				$objPHPExcel->getActiveSheet()->setCellValue('U'.$i, $Height);
-				$objPHPExcel->getActiveSheet()->setCellValue('V'.$i, $Weight);
-				$objPHPExcel->getActiveSheet()->setCellValue('W'.$i, $Warranty);
-				$objPHPExcel->getActiveSheet()->setCellValue('X'.$i, $Material);
-				$objPHPExcel->getActiveSheet()->setCellValue('Y'.$i, $Country);
-				$objPHPExcel->getActiveSheet()->setCellValue('Z'.$i, $ImagePath . $myrow['image']);
-				$objPHPExcel->getActiveSheet()->setCellValue('AA'.$i, $myrow['google_product_category']);
-				$objPHPExcel->getActiveSheet()->setCellValue('AB'.$i, $myrow['gender']);
-				$objPHPExcel->getActiveSheet()->setCellValue('AC'.$i, $myrow['agegroup']);
-				$i++;
+					$Name = ItemMarketplaceName($StockId, $myrow['description'], $myrow['descriptiontranslation']);
+					$Price = round($myrow['price']);
+					$PriceDiscount = '';
+					$Description = trim($myrow['longdescriptiontranslation']). " " . 
+							$TextSizeIndonesian . " - "  . 
+							trim($myrow['longdescription']) . " " .
+							$TextSizeEnglish;
+					$Weight = $myrow['grossweight'] * 1000; // webERP in KG, AdminCerdas in gr
+					
+					$QOH = ItemMarketplaceQOH($StockId,$db);
+					$Category = FindShopeeCategory($StockId, $Name, $Description);
+					$Material = FindLazadaMaterial($TypeOfShop, $Name);
+					$Stone = FindLazadaStone($Name);
+					$WhatsInTheBox = WhatsInTheBox($StockId);
+					$Color = FindLazadaColor($Name);
+
+					if ($myrow['unitsdimension'] == 'mm'){
+						$FactorLenght = 10;
+					}elseif ($myrow['unitsdimension'] == 'cm'){
+						$FactorLenght = 1;
+					}else{
+						// should be meter
+						$FactorLenght = 0.1;
+					}
+					$Length = $myrow['length']/$FactorLenght; 
+					$Width = $myrow['width']/$FactorLenght; 
+					$Height = $myrow['height']/$FactorLenght; 
+					$Weight = $myrow['grossweight'];
+
+					// All items have at least 1 image
+					$Url_1 = PATH_TO_CATALOG_IMAGES . $StockId.'.jpg';
+					$PackagingImage = FALSE;
+
+					// if there is a 2nd image we choose it or the packaging pic
+					if (file_exists($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'].'.1.jpg')){
+						$Url_2 = PATH_TO_CATALOG_IMAGES . $myrow['stockid'].'.1.jpg';
+					}else{
+						if ((!$PackagingImage) AND ($myrow['klpackaging'] != "") AND ($myrow['klpackaging'] != "NO-PACKAGING")){
+							$Url_2 = PATH_TO_CATALOG_PACKAGING_IMAGES . $myrow['klpackaging'].'.jpg';
+							$PackagingImage =  TRUE;
+						}else{
+							$Url_2 = "";
+						}
+					}
+
+					// if there is a 3rd image we choose it or the packaging pic
+					if(file_exists($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'].'.2.jpg')) {
+						$Url_3 = PATH_TO_CATALOG_IMAGES . $myrow['stockid'].'.2.jpg';
+					}else{
+						if ((!$PackagingImage) AND ($myrow['klpackaging'] != "") AND ($myrow['klpackaging'] != "NO-PACKAGING")){
+							$Url_3 = PATH_TO_CATALOG_PACKAGING_IMAGES . $myrow['klpackaging'].'.jpg';
+							$PackagingImage =  TRUE;
+						}else{
+							$Url_3 = "";
+						}
+					}
+
+					// if there is a 4th image we choose it or the packaging pic
+					if(file_exists($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'].'.3.jpg')) {
+						$Url_4 = PATH_TO_CATALOG_IMAGES . $myrow['stockid'].'.3.jpg';
+					}else{
+						if ((!$PackagingImage) AND ($myrow['klpackaging'] != "") AND ($myrow['klpackaging'] != "NO-PACKAGING")){
+							$Url_4 = PATH_TO_CATALOG_PACKAGING_IMAGES . $myrow['klpackaging'].'.jpg';
+							$PackagingImage =  TRUE;
+						}else{
+							$Url_4 = "";
+						}
+					}
+
+					// if there is a 5th image we choose it or the packaging pic
+					if(file_exists($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'].'.4.jpg')) {
+						$Url_5 = PATH_TO_CATALOG_IMAGES . $myrow['stockid'].'.4.jpg';
+					}else{
+						if ((!$PackagingImage) AND ($myrow['klpackaging'] != "") AND ($myrow['klpackaging'] != "NO-PACKAGING")){
+							$Url_5 = PATH_TO_CATALOG_PACKAGING_IMAGES . $myrow['klpackaging'].'.jpg';
+							$PackagingImage =  TRUE;
+						}else{
+							$Url_5 = "";
+						}
+					}
+
+					// if there is a 6th image we choose it or the packaging pic
+					if(file_exists($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'].'.5.jpg')) {
+						$Url_6 = PATH_TO_CATALOG_IMAGES . $myrow['stockid'].'.5.jpg';
+					}else{
+						if ((!$PackagingImage) AND ($myrow['klpackaging'] != "") AND ($myrow['klpackaging'] != "NO-PACKAGING")){
+							$Url_6 = PATH_TO_CATALOG_PACKAGING_IMAGES . $myrow['klpackaging'].'.jpg';
+							$PackagingImage =  TRUE;
+						}else{
+							$Url_6 = "";
+						}
+					}
+
+					// if there is a 7th image we choose it or the packaging pic
+					if(file_exists($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'].'.6.jpg')) {
+						$Url_7 = PATH_TO_CATALOG_IMAGES . $myrow['stockid'].'.6.jpg';
+					}else{
+						if ((!$PackagingImage) AND ($myrow['klpackaging'] != "") AND ($myrow['klpackaging'] != "NO-PACKAGING")){
+							$Url_7 = PATH_TO_CATALOG_PACKAGING_IMAGES . $myrow['klpackaging'].'.jpg';
+							$PackagingImage =  TRUE;
+						}else{
+							$Url_7 = "";
+						}
+					}
+
+					// only a packaging pic for the 8th URL (if not yet)
+					if ((!$PackagingImage) AND ($myrow['klpackaging'] != "") AND ($myrow['klpackaging'] != "NO-PACKAGING")){
+						$Url_8 = PATH_TO_CATALOG_PACKAGING_IMAGES . $myrow['klpackaging'].'.jpg';
+						$PackagingImage =  TRUE;
+					}else{
+						$Url_8 = "";
+					}
+
+
+					$ActiveSheet->setCellValue('A'.$i, $StockId);
+					$ActiveSheet->setCellValue('B'.$i, $Category);
+					$ActiveSheet->setCellValue('C'.$i, $Name);
+					$ActiveSheet->setCellValue('D'.$i, $Url_1);
+					$ActiveSheet->setCellValue('E'.$i, $Url_2);
+					$ActiveSheet->setCellValue('F'.$i, $Url_3);
+					$ActiveSheet->setCellValue('G'.$i, $Url_4);
+					$ActiveSheet->setCellValue('H'.$i, $Url_5);
+					$ActiveSheet->setCellValue('I'.$i, $Url_6);
+					$ActiveSheet->setCellValue('J'.$i, $Url_7);
+					$ActiveSheet->setCellValue('K'.$i, $Url_8);
+					$ActiveSheet->setCellValue('L'.$i, '');
+					$ActiveSheet->setCellValue('M'.$i, '');
+					$ActiveSheet->setCellValue('N'.$i, $CurrencyCode);
+					$ActiveSheet->setCellValue('O'.$i, '');
+					$ActiveSheet->setCellValue('P'.$i, $Brand);
+					$ActiveSheet->setCellValue('Q'.$i, $Material);
+					$ActiveSheet->setCellValue('R'.$i, $Stone);
+					$ActiveSheet->setCellValue('S'.$i, '');
+					$ActiveSheet->setCellValue('T'.$i, $BodyJewellery);
+					$ActiveSheet->setCellValue('U'.$i, '');
+					$ActiveSheet->setCellValue('V'.$i, $myrow['descriptiontranslation']);
+					$ActiveSheet->setCellValue('W'.$i, $myrow['description']);
+					$ActiveSheet->setCellValue('X'.$i, $WhatsInTheBox);
+					$ActiveSheet->setCellValue('Y'.$i, $Warranty);
+					$ActiveSheet->setCellValue('Z'.$i, $Warranty);
+					$ActiveSheet->setCellValue('AA'.$i, $Warranty);
+					$ActiveSheet->setCellValue('AB'.$i, $BarangBerbahaya);
+					$ActiveSheet->setCellValue('AC'.$i, $Color);
+					$ActiveSheet->setCellValue('AD'.$i, '');
+					$ActiveSheet->setCellValue('AE'.$i, '');
+					$ActiveSheet->setCellValue('AF'.$i, '');
+					$ActiveSheet->setCellValue('AG'.$i, '');
+					$ActiveSheet->setCellValue('AH'.$i, '');
+					$ActiveSheet->setCellValue('AI'.$i, '');
+					$ActiveSheet->setCellValue('AJ'.$i, '');
+					$ActiveSheet->setCellValue('AK'.$i, '');
+					$ActiveSheet->setCellValue('AL'.$i, '');
+					$ActiveSheet->setCellValue('AM'.$i, $Color);
+					$ActiveSheet->setCellValue('AN'.$i, $Height);
+					$ActiveSheet->setCellValue('AO'.$i, $Width);
+					$ActiveSheet->setCellValue('AP'.$i, $Length);
+					$ActiveSheet->setCellValue('AQ'.$i, $Weight);
+					$ActiveSheet->setCellValue('AR'.$i, $QOH);
+					$ActiveSheet->setCellValue('AS'.$i, $Price);
+					$ActiveSheet->setCellValue('AT'.$i, '');
+					$ActiveSheet->setCellValue('AU'.$i, '');
+					$ActiveSheet->setCellValue('AV'.$i, '');
+					$ActiveSheet->setCellValue('AW'.$i, $StockId);
+
+					$i++;
+				}
 			}
-			
-			// Freeze panes
-			$objPHPExcel->getActiveSheet()->freezePane('A2');
-		
+
 			// Auto Size columns
-			foreach(range('A','AA') as $columnID) {
-				$objPHPExcel->getActiveSheet()->getColumnDimension($columnID)
-					->setAutoSize(true);
+			foreach(range('A','AW') as $columnID) {
+				$ActiveSheet->getColumnDimension($columnID)->setAutoSize(true);
 			}
-			
-			// Rename worksheet
-			$objPHPExcel->getActiveSheet()->setTitle('KL-Lazada');
-
+	
 			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 			$objPHPExcel->setActiveSheetIndex(0);
 
 			// Redirect output to a client’s web browser (Excel2007)
 			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-			$File = 'KL-Products-Lazada-' . Date('Y-m-d'). '.xlsx';
+			$File ='LAZADA-' .  $NameOfShop . '-' . Date('Y-m-d-H-i-s'). '.xlsx';
 			header('Content-Disposition: attachment;filename="' . $File . '"');
 			header('Cache-Control: max-age=0');
 			// If you're serving to IE 9, then the following may be needed
-			header('Cache-Control: max-age=1');
+			header('Cache-Control: max-age=2');
 
 			// If you're serving to IE over SSL, then the following may be needed
 			header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
@@ -332,10 +376,12 @@ function submit(&$db, &$db_oc, $oc_tableprefix, $FromPrice, $ToPrice, $QOHMinima
 			$objWriter->save('php://output');
 
 		}else{
-			prnMsg('No Products selected for Lazada');
-			prnMsg('Query was: '. $sql);
+			$Title = "Excel file for uploading products to Lazada";
+			include('includes/header.php');
+			prnMsg('No products to upload');
+			include('includes/footer.php');
 		}
-	}
+	} 
 } // End of function submit()
 
 
@@ -343,7 +389,8 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 {
 // Display form fields. This function is called the first time
 // the page is called.
-	$Title = _('Excel file for Lazada');
+	$Title = _('Excel file for uploading products to Lazada');
+
 	include('includes/header.php');
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
@@ -352,26 +399,20 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Excel file to upload products to Lazada') . '" alt="" />' . ' ' . _('Excel file to upload products to Lazada') . '
+			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title. '" alt="" />' . ' ' . $Title . '
 		</p>';
 
-	echo '<table>';
-
-	echo '<tr>
-			<td>' . _('Price Range') . ':</td>
-			<td><input type="text" name="FromPrice" size="10" maxlength="20" value="' . $_POST['FromPrice'] . '" />' 
-			. ' To ' . ': <input type="text" name="ToPrice" size="10" maxlength="20" value="' . $_POST['ToPrice'] . '" />'
-			. ' IDR' . '</td>
-		</tr>';
-	echo '<tr>
-			<td>' . _('QOH Minimal') . ':</td>
-			<td><input type="text" name="QOHMinimal" size="5" maxlength="5" value="' . $_POST['QOHMinimal'] . '" /></td>
-		</tr>';
-	echo '<tr>
-			<td>' . _('# Items') . ':</td>
-			<td><input type="text" name="PopularItems" size="5" maxlength="5" value="' . $_POST['PopularItems'] . '" />'
-			. ' Website Most Popular Items' . ':</td>
-		</tr>';
+	echo '<table class="selection">
+			<tr><td>'. _('Lazada shop').':</td>
+			<td><select name="TypeOfShop" onchange="submit();"> ';
+	$SQL = "SELECT manufacturers.manufacturers_id, 
+					manufacturers_name 
+			FROM manufacturers 
+			ORDER BY manufacturers_name";
+	$LocResult = DB_query($SQL);
+	while ($myrow=DB_fetch_array($LocResult)){
+		 echo '<option value="' . $myrow['manufacturers_id'] . '">' . $myrow['manufacturers_name'] . '</option>';
+	}
 
 	echo '</table>
 		<table>';
@@ -379,14 +420,13 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	echo '<tr><td>&nbsp;</td></tr>
 		<tr>
 			<td>&nbsp;</td>
-			<td><input type="submit" name="submit" value="' . _('Create Excel File for Lazada') . '" /></td>
+			<td><input type="submit" name="submit" value="' . _('Create Excel file to upload products to Lazada') . '" /></td>
 		</tr>
 		</table>
 		<br />';
 	echo '</div>
          </form>';
 	include('includes/footer.php');
-
 } // End of function display()
 
 ?>

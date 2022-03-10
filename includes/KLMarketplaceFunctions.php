@@ -333,5 +333,104 @@ function FindShopeeCategory($StockId, $Name, $Description){
 	return $ShopeeCat;
 }
 
+function FindLazadaMaterial($TypeOfShop, $Text){
+	
+	if ($TypeOfShop == 1){
+		// if it is KL, then default material is Silver
+		$Material = "Silver - Perak";	
+	}else{
+		// if it is Blink, then default material is Metal
+		$Material = "Metal - Logam";	
+	}
+
+	if (ItemInList("silver", $Text)){
+		$Material = "Silver - Perak";	
+	}elseif (ItemInList("wood", $Text)){
+		$Material = "Wood - Kayu";	
+	}elseif (ItemInList("leather", $Text)){
+		$Material = "Leather - Kulit";	
+	}elseif (ItemInList("Resin", $Text)){
+		$Material = "Resin";	
+	}elseif (ItemInList("Shell", $Text)){
+		$Material = "Shell";	
+	}
+	return $Material;
+}
+
+function FindLazadaStone($Text){
+	
+	if (ItemInList("cat eye", $Text)){
+		$Stone = "Cat Eye";	
+	}elseif (ItemInList("freshwater", $Text)){
+		$Stone = "Freshwater Pearl - Mutiara Air Tawar";	
+	}elseif (ItemInList("pearl", $Text)){
+		$Stone = "Pearl - Mutiara";	
+	}elseif (ItemInList("hematite", $Text)){
+		$Stone = "Hematite - Manik-manik";	
+	}elseif (ItemInList("mother of pearl", $Text)){
+		$Stone = "Mother of Pearl";	
+	}elseif (ItemInList("opal", $Text)){
+		$Stone = "Opal";	
+	}elseif (ItemInList("turquoise", $Text)){
+		$Stone = "Turquoise";	
+	}elseif (ItemInList("Zircon", $Text)){
+		$Stone = "Zircon";	
+	}elseif (ItemInList("crystal", $Text)){
+		$Stone = "Crystal -  Kristal";	
+	}
+	return $Stone;
+}
+
+function WhatsInTheBox($StockId){
+	$Box = "";
+	if (isRing($StockId)){
+		$Box = "Ring";
+	}elseif (isToeRing($StockId)){
+		$Box = "Toe Ring";
+	}elseif (isBrooche($StockId)){
+		$Box = "Brooche";
+	}elseif (isEarring($StockId)){
+		$Box = "2 Earrings";
+	}elseif (isEarcuff($StockId)){
+		$Box = "2 Earcuffs";
+	}elseif (isBracelet($StockId)){
+		$Box = "Bracelet";
+	}elseif (isAnklet($StockId)){
+		$Box = "Anklet";
+	}elseif (isPendant($StockId)){
+		$Box = "Pendant";
+	}elseif (isNecklace($StockId)){
+		$Box = "Necklace";
+	}elseif (isTali($StockId)){
+		$Box = "Tali Cord";
+	}elseif (isBag($StockId)){
+		$Box = "Bag";
+	}elseif (isKeyHolder($StockId)){
+		$Box = "Key Holder";
+	}
+	return $Box . ", Pouchbag, Jewellery Box";
+}
+
+function FindLazadaColor($Text){
+	
+	if (ItemInList("white", $Text)){
+		$Color = "White - Putih";	
+	}elseif (ItemInList("yellow", $Text)){
+		$Color = "Yellow - Kuning";	
+	}elseif (ItemInList("silver", $Text)){
+		$Color = "Silver - Perak";	
+	}elseif (ItemInList("blue", $Text)){
+		$Color = "Blue - Biru";	
+	}elseif (ItemInList("red", $Text)){
+		$Color = "Red - Merah";	
+	}elseif (ItemInList("pink", $Text)){
+		$Color = "Pink";	
+	}elseif (ItemInList("Green", $Text)){
+		$Color = "Green - Hijau";	
+	}elseif (ItemInList("Grey", $Text)){
+		$Color = "Grey - Abu abu";	
+	}
+	return $Color;
+}
 
 ?>
