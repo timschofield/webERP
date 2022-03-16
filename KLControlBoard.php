@@ -124,17 +124,17 @@ if ($ProcessSection01){
 	}
 
 	if ($KL_SystemAdmin){
-		WrongStandardCost("Indonesia"  , "", STANDARD_COST_FACTOR_INDONESIA, 0.04, "SHOWLINK", $RootPath, $db);
+		WrongStandardCost("Indonesia"  , "", STANDARD_COST_FACTOR_INDONESIA, 0.05, "SHOWLINK", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		WrongStandardCost("Thailand"   , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath, $db);
+		WrongStandardCost("Thailand"   , "", STANDARD_COST_FACTOR_FOREIGN, 0.05, "SHOWLINK", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		WrongStandardCost("China"      , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath, $db);
+		WrongStandardCost("China"      , "", STANDARD_COST_FACTOR_FOREIGN, 0.05, "SHOWLINK", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		WrongStandardCost("Hong Kong"  , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath, $db);
+		WrongStandardCost("Hong Kong"  , "", STANDARD_COST_FACTOR_FOREIGN, 0.05, "SHOWLINK", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		WrongStandardCost("Philippines", "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath, $db);
+		WrongStandardCost("Philippines", "", STANDARD_COST_FACTOR_FOREIGN, 0.05, "SHOWLINK", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		WrongStandardCost("India"      , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath, $db);
+		WrongStandardCost("India"      , "", STANDARD_COST_FACTOR_FOREIGN, 0.05, "SHOWLINK", $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -163,13 +163,9 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		over_or_below_limit("DISC20 Items in BU", "BELOW", 20, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		over_or_below_limit("DISC20 Items in B2", "BELOW", 20, $RootPath, $db);
-		$NumberOfTestExecuted++;
 		over_or_below_limit("DISC80 Items in AR", "BELOW", 30, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		over_or_below_limit("DISC80 Items in BU", "BELOW", 30, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		over_or_below_limit("DISC80 Items in B2", "BELOW", 30, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -561,6 +557,8 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("STABKA", "TOKKA", $NumberOfOpenShopsKL, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABKA", "TOKB2", $NumberOfOpenShopsKL, $RootPath, $db);
+		$NumberOfTestExecuted++;
 
 		// Items NO PO KL in ALL shops KL
 		CategoryItemsNotInShop("NOPOKA", "TOKPU", $NumberOfOpenShopsKL, $RootPath, $db);
@@ -614,12 +612,6 @@ if ($ProcessSection01){
 		CategoryItemsNotInShop("DISC5A", "TOKBU", $NumberOfOpenShopsOU, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("DISC8A", "TOKBU", $NumberOfOpenShopsOU, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("DISC2A", "TOKB2", $NumberOfOpenShopsOU, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("DISC5A", "TOKB2", $NumberOfOpenShopsOU, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("DISC8A", "TOKB2", $NumberOfOpenShopsOU, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("DISC2A", "TOKTK", $NumberOfOpenShopsOU, $RootPath, $db);
 		$NumberOfTestExecuted++;
