@@ -145,53 +145,12 @@ function submit(&$db, $TypeOfShop, $TypeOfFile) {
 					
 					$QOH = ItemMarketplaceQOH($myrow['stockid'],$db);
 
-					// All items have at least 1 image
-					$Url_1 = PATH_TO_CATALOG_IMAGES . $myrow['stockid'].'.jpg';
 					$PackagingImage = FALSE;
-
-					// if there is a 2nd image we choose it or the packaging pic
-					if (file_exists($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'].'.1.jpg')){
-						$Url_2 = PATH_TO_CATALOG_IMAGES . $myrow['stockid'].'.1.jpg';
-					}else{
-						if ((!$PackagingImage) AND ($myrow['klpackaging'] != "") AND ($myrow['klpackaging'] != "NO-PACKAGING")){
-							$Url_2 = PATH_TO_CATALOG_PACKAGING_IMAGES . $myrow['klpackaging'].'.jpg';
-							$PackagingImage =  TRUE;
-						}else{
-							$Url_2 = "";
-						}
-					}
-
-					// if there is a 3rd image we choose it or the packaging pic
-					if(file_exists($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'].'.2.jpg')) {
-						$Url_3 = PATH_TO_CATALOG_IMAGES . $myrow['stockid'].'.2.jpg';
-					}else{
-						if ((!$PackagingImage) AND ($myrow['klpackaging'] != "") AND ($myrow['klpackaging'] != "NO-PACKAGING")){
-							$Url_3 = PATH_TO_CATALOG_PACKAGING_IMAGES . $myrow['klpackaging'].'.jpg';
-							$PackagingImage =  TRUE;
-						}else{
-							$Url_3 = "";
-						}
-					}
-
-					// if there is a 4th image we choose it or the packaging pic
-					if(file_exists($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'].'.3.jpg')) {
-						$Url_4 = PATH_TO_CATALOG_IMAGES . $myrow['stockid'].'.3.jpg';
-					}else{
-						if ((!$PackagingImage) AND ($myrow['klpackaging'] != "") AND ($myrow['klpackaging'] != "NO-PACKAGING")){
-							$Url_4 = PATH_TO_CATALOG_PACKAGING_IMAGES . $myrow['klpackaging'].'.jpg';
-							$PackagingImage =  TRUE;
-						}else{
-							$Url_4 = "";
-						}
-					}
-
-					// only a packaging pic for the 5th URL (if not yet)
-					if ((!$PackagingImage) AND ($myrow['klpackaging'] != "") AND ($myrow['klpackaging'] != "NO-PACKAGING")){
-						$Url_5 = PATH_TO_CATALOG_PACKAGING_IMAGES . $myrow['klpackaging'].'.jpg';
-						$PackagingImage =  TRUE;
-					}else{
-						$Url_5 = "";
-					}
+					list($Url_1, $PackagingImage) = ItemImagesURL($StockId,   1, $PackagingImage, $myrow['klpackaging']);
+					list($Url_2, $PackagingImage) = ItemImagesURL($StockId,   2, $PackagingImage, $myrow['klpackaging']);
+					list($Url_3, $PackagingImage) = ItemImagesURL($StockId,   3, $PackagingImage, $myrow['klpackaging']);
+					list($Url_4, $PackagingImage) = ItemImagesURL($StockId,   4, $PackagingImage, $myrow['klpackaging']);
+					list($Url_5, $PackagingImage) = ItemImagesURL($StockId, 999, $PackagingImage, $myrow['klpackaging']);
 
 					$Category = FindShopeeCategory($StockId, $Name, $Description);
 

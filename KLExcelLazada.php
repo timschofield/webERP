@@ -211,90 +211,15 @@ function submit(&$db, $TypeOfShop) {
 					$Height = $myrow['height']/$FactorLenght; 
 					$Weight = $myrow['grossweight'];
 
-					// All items have at least 1 image
-					$Url_1 = PATH_TO_CATALOG_IMAGES . $StockId.'.jpg';
 					$PackagingImage = FALSE;
-
-					// if there is a 2nd image we choose it or the packaging pic
-					if (file_exists($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'].'.1.jpg')){
-						$Url_2 = PATH_TO_CATALOG_IMAGES . $myrow['stockid'].'.1.jpg';
-					}else{
-						if ((!$PackagingImage) AND ($myrow['klpackaging'] != "") AND ($myrow['klpackaging'] != "NO-PACKAGING")){
-							$Url_2 = PATH_TO_CATALOG_PACKAGING_IMAGES . $myrow['klpackaging'].'.jpg';
-							$PackagingImage =  TRUE;
-						}else{
-							$Url_2 = "";
-						}
-					}
-
-					// if there is a 3rd image we choose it or the packaging pic
-					if(file_exists($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'].'.2.jpg')) {
-						$Url_3 = PATH_TO_CATALOG_IMAGES . $myrow['stockid'].'.2.jpg';
-					}else{
-						if ((!$PackagingImage) AND ($myrow['klpackaging'] != "") AND ($myrow['klpackaging'] != "NO-PACKAGING")){
-							$Url_3 = PATH_TO_CATALOG_PACKAGING_IMAGES . $myrow['klpackaging'].'.jpg';
-							$PackagingImage =  TRUE;
-						}else{
-							$Url_3 = "";
-						}
-					}
-
-					// if there is a 4th image we choose it or the packaging pic
-					if(file_exists($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'].'.3.jpg')) {
-						$Url_4 = PATH_TO_CATALOG_IMAGES . $myrow['stockid'].'.3.jpg';
-					}else{
-						if ((!$PackagingImage) AND ($myrow['klpackaging'] != "") AND ($myrow['klpackaging'] != "NO-PACKAGING")){
-							$Url_4 = PATH_TO_CATALOG_PACKAGING_IMAGES . $myrow['klpackaging'].'.jpg';
-							$PackagingImage =  TRUE;
-						}else{
-							$Url_4 = "";
-						}
-					}
-
-					// if there is a 5th image we choose it or the packaging pic
-					if(file_exists($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'].'.4.jpg')) {
-						$Url_5 = PATH_TO_CATALOG_IMAGES . $myrow['stockid'].'.4.jpg';
-					}else{
-						if ((!$PackagingImage) AND ($myrow['klpackaging'] != "") AND ($myrow['klpackaging'] != "NO-PACKAGING")){
-							$Url_5 = PATH_TO_CATALOG_PACKAGING_IMAGES . $myrow['klpackaging'].'.jpg';
-							$PackagingImage =  TRUE;
-						}else{
-							$Url_5 = "";
-						}
-					}
-
-					// if there is a 6th image we choose it or the packaging pic
-					if(file_exists($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'].'.5.jpg')) {
-						$Url_6 = PATH_TO_CATALOG_IMAGES . $myrow['stockid'].'.5.jpg';
-					}else{
-						if ((!$PackagingImage) AND ($myrow['klpackaging'] != "") AND ($myrow['klpackaging'] != "NO-PACKAGING")){
-							$Url_6 = PATH_TO_CATALOG_PACKAGING_IMAGES . $myrow['klpackaging'].'.jpg';
-							$PackagingImage =  TRUE;
-						}else{
-							$Url_6 = "";
-						}
-					}
-
-					// if there is a 7th image we choose it or the packaging pic
-					if(file_exists($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'].'.6.jpg')) {
-						$Url_7 = PATH_TO_CATALOG_IMAGES . $myrow['stockid'].'.6.jpg';
-					}else{
-						if ((!$PackagingImage) AND ($myrow['klpackaging'] != "") AND ($myrow['klpackaging'] != "NO-PACKAGING")){
-							$Url_7 = PATH_TO_CATALOG_PACKAGING_IMAGES . $myrow['klpackaging'].'.jpg';
-							$PackagingImage =  TRUE;
-						}else{
-							$Url_7 = "";
-						}
-					}
-
-					// only a packaging pic for the 8th URL (if not yet)
-					if ((!$PackagingImage) AND ($myrow['klpackaging'] != "") AND ($myrow['klpackaging'] != "NO-PACKAGING")){
-						$Url_8 = PATH_TO_CATALOG_PACKAGING_IMAGES . $myrow['klpackaging'].'.jpg';
-						$PackagingImage =  TRUE;
-					}else{
-						$Url_8 = "";
-					}
-
+					list($Url_1, $PackagingImage) = ItemImagesURL($StockId,   1, $PackagingImage, $myrow['klpackaging']);
+					list($Url_2, $PackagingImage) = ItemImagesURL($StockId,   2, $PackagingImage, $myrow['klpackaging']);
+					list($Url_3, $PackagingImage) = ItemImagesURL($StockId,   3, $PackagingImage, $myrow['klpackaging']);
+					list($Url_4, $PackagingImage) = ItemImagesURL($StockId,   4, $PackagingImage, $myrow['klpackaging']);
+					list($Url_5, $PackagingImage) = ItemImagesURL($StockId,   5, $PackagingImage, $myrow['klpackaging']);
+					list($Url_6, $PackagingImage) = ItemImagesURL($StockId,   6, $PackagingImage, $myrow['klpackaging']);
+					list($Url_7, $PackagingImage) = ItemImagesURL($StockId,   7, $PackagingImage, $myrow['klpackaging']);
+					list($Url_8, $PackagingImage) = ItemImagesURL($StockId, 999, $PackagingImage, $myrow['klpackaging']);
 
 					$ActiveSheet->setCellValue('A'.$i, $StockId);
 					$ActiveSheet->setCellValue('B'.$i, $Category);
