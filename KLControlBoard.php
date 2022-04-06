@@ -559,6 +559,8 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("STABKA", "TOKB2", $NumberOfOpenShopsKL, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABKA", "TOKU2", $NumberOfOpenShopsKL, $RootPath, $db);
+		$NumberOfTestExecuted++;
 
 		// Items NO PO KL in ALL shops KL
 		CategoryItemsNotInShop("NOPOKA", "TOKPU", $NumberOfOpenShopsKL, $RootPath, $db);
@@ -573,6 +575,8 @@ if ($ProcessSection01){
 		// Items TEST BL in ALL shops BL
 		CategoryItemsNotInShop("TESTBA", "TOKMU", $NumberOfOpenShopsBL, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("TESTBA", "TOKBU", $NumberOfOpenShopsBL, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("TESTBA", "TOKK2", $NumberOfOpenShopsBL, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("TESTBA", "TOKBB", $NumberOfOpenShopsBL, $RootPath, $db);
@@ -583,6 +587,8 @@ if ($ProcessSection01){
 		// Items STABLE BL in ALL shops BL
 		CategoryItemsNotInShop("STABBA", "TOKMU", $NumberOfOpenShopsBL, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("STABBA", "TOKBU", $NumberOfOpenShopsBL, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("STABBA", "TOKK2", $NumberOfOpenShopsBL, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("STABBA", "TOKBB", $NumberOfOpenShopsBL, $RootPath, $db);
@@ -592,6 +598,8 @@ if ($ProcessSection01){
 
 		// Items NO PO BL in ALL shops BL
 		CategoryItemsNotInShop("NOPOBA", "TOKMU", $NumberOfOpenShopsBL, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop("NOPOBA", "TOKBU", $NumberOfOpenShopsBL, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("NOPOBA", "TOKK2", $NumberOfOpenShopsBL, $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -607,11 +615,11 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("DISC8A", "TOKAR", $NumberOfOpenShopsOU, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("DISC2A", "TOKBU", $NumberOfOpenShopsOU, $RootPath, $db);
+		CategoryItemsNotInShop("DISC2A", "TOKU3", $NumberOfOpenShopsOU, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("DISC5A", "TOKBU", $NumberOfOpenShopsOU, $RootPath, $db);
+		CategoryItemsNotInShop("DISC5A", "TOKU3", $NumberOfOpenShopsOU, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("DISC8A", "TOKBU", $NumberOfOpenShopsOU, $RootPath, $db);
+		CategoryItemsNotInShop("DISC8A", "TOKU3", $NumberOfOpenShopsOU, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		CategoryItemsNotInShop("DISC2A", "TOKTK", $NumberOfOpenShopsOU, $RootPath, $db);
 		$NumberOfTestExecuted++;
