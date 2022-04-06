@@ -484,11 +484,11 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		//ItemsInSetup("NeedPrice", $RootPath, $db);
 		//$NumberOfTestExecuted++;
-		ItemsWithoutRetailPrice("SETKLA", 4.75, $RootPath, $db);
+		ItemsWithoutRetailPrice("SETKLA", 4.85, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsWithoutRetailPrice("SETBLA", 4.75, $RootPath, $db);
+		ItemsWithoutRetailPrice("SETBLA", 4.85, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsWithoutRetailPrice("SETGEA", 4.75, $RootPath, $db);
+		ItemsWithoutRetailPrice("SETGEA", 4.85, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		ItemsInSetup("WithReorderLevel", "SETKLA", $RootPath, $db);
 		$NumberOfTestExecuted++;
