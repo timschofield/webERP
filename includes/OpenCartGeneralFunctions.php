@@ -1136,6 +1136,10 @@ function UpdateOpenCartOrderStatus($OrderId, $StatusId, $Notify, $Carrier, $AWB,
 		$CarrierPowerTrack = SHIPMENT09_POWERTRACK_CODE ;
 	}else if ($Carrier == SHIPMENT10_WEBERP_CODE){
 		$CarrierPowerTrack = SHIPMENT10_POWERTRACK_CODE ;
+	}else if ($Carrier == SHIPMENT11_WEBERP_CODE){
+		$CarrierPowerTrack = SHIPMENT11_POWERTRACK_CODE ;
+	}else if ($Carrier == SHIPMENT12_WEBERP_CODE){
+		$CarrierPowerTrack = SHIPMENT12_POWERTRACK_CODE ;
 	}
 
 	$DbgMsg = _('The SQL statement that failed was');
