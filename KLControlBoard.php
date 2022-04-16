@@ -157,15 +157,18 @@ if ($ProcessSection01){
 	* RETAIL PRICE         
 	***************************************************************************************/
 
-	if ($KL_BusinessDevelopmentManager
-		OR $KL_SystemAdmin){
+	if ($KL_BusinessDevelopmentManager){
 		over_or_below_limit("DISC20 Items in AR", "BELOW", 20, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		over_or_below_limit("DISC20 Items in BU", "BELOW", 20, $RootPath, $db);
+		over_or_below_limit("DISC20 Items in TK", "BELOW", 20, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		over_or_below_limit("DISC20 Items in U3", "BELOW", 20, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		over_or_below_limit("DISC80 Items in AR", "BELOW", 30, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		over_or_below_limit("DISC80 Items in BU", "BELOW", 30, $RootPath, $db);
+		over_or_below_limit("DISC80 Items in TK", "BELOW", 30, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		over_or_below_limit("DISC80 Items in U3", "BELOW", 30, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -1076,18 +1079,6 @@ if ($ProcessSection02){
 		PettyCashBalance('Authorizer', $db);
 		$NumberOfTestExecuted++;
 		PettyCashToBeAuthorized($db);
-		$NumberOfTestExecuted++;
-	}
-	
-	if ($KL_OperationalManager 
-		OR $KL_AdministrationTeam 
-		OR $KL_PurchasingTeam 
-		OR $KL_ShopSupportTeam 
-		OR $KL_ShopSupportLeader 
-		OR $KL_PettyCash 
-		OR $KL_SPGSeniorOrSupport 
-		OR $KL_SPGJunior){
-		PettyCashBalance('User', $db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -4380,6 +4371,20 @@ function over_or_below_limit($Request, $Sign, $Limit, $RootPath, $db){
 					AND stockmaster.categoryid = 'DISC2A'
 					AND locstock.reorderlevel > 0
 					AND locstock.loccode ='TOKB2'";
+	}elseif ($Request =="DISC20 Items in U3"){
+		$SQL = "SELECT COUNT(*)
+				FROM stockmaster,locstock
+				WHERE stockmaster.stockid = locstock.stockid
+					AND stockmaster.categoryid = 'DISC2A'
+					AND locstock.reorderlevel > 0
+					AND locstock.loccode ='TOKU3'";
+	}elseif ($Request =="DISC20 Items in TK"){
+		$SQL = "SELECT COUNT(*)
+				FROM stockmaster,locstock
+				WHERE stockmaster.stockid = locstock.stockid
+					AND stockmaster.categoryid = 'DISC2A'
+					AND locstock.reorderlevel > 0
+					AND locstock.loccode ='TOKTK'";
 	}elseif ($Request =="DISC80 Items in AR"){
 		$SQL = "SELECT COUNT(*)
 				FROM stockmaster,locstock
@@ -4401,6 +4406,20 @@ function over_or_below_limit($Request, $Sign, $Limit, $RootPath, $db){
 					AND stockmaster.categoryid = 'DISC8A'
 					AND locstock.reorderlevel > 0
 					AND locstock.loccode ='TOKB2'";
+	}elseif ($Request =="DISC80 Items in U3"){
+		$SQL = "SELECT COUNT(*)
+				FROM stockmaster,locstock
+				WHERE stockmaster.stockid = locstock.stockid
+					AND stockmaster.categoryid = 'DISC8A'
+					AND locstock.reorderlevel > 0
+					AND locstock.loccode ='TOKU3'";
+	}elseif ($Request =="DISC80 Items in TK"){
+		$SQL = "SELECT COUNT(*)
+				FROM stockmaster,locstock
+				WHERE stockmaster.stockid = locstock.stockid
+					AND stockmaster.categoryid = 'DISC8A'
+					AND locstock.reorderlevel > 0
+					AND locstock.loccode ='TOKTK'";
 	}
 	
 	$result = DB_query($SQL);
