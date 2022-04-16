@@ -13,13 +13,13 @@ include('includes/GetPrice.inc');
 
 
 if (isset($_POST['submit'])) {
-    submit($db, $_POST['TypeOfFile']);
+    submit($db, $_POST['TypeOfShop'], $_POST['TypeOfFile']);
 } else {
     display($db);
 }
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit(&$db, $TypeOfFile) {
+function submit(&$db, $TypeOfShop, $TypeOfFile) {
 
 	// CONSTANT TEXTS
 	$ShippingTimeMinimal = 3;
@@ -63,6 +63,7 @@ function submit(&$db, $TypeOfFile) {
 					AND stockmaster.stockid = salescatprod.stockid
 					AND stockdescriptiontranslations.language_id = 'id_ID.utf8'
 					AND stockmaster.discontinued = 0 
+					AND salescatprod.manufacturers_id = '" . $TypeOfShop . "'
 					AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
 					AND prices.currabrev = '". CURRENCY_CODE ."'
 					AND prices.startdate <= '". $Now. "' 
@@ -206,7 +207,6 @@ function submit(&$db, $TypeOfFile) {
 					list($Url_6, $PackagingImage) = ItemImagesURL($StockId,   6, $PackagingImage, $myrow['klpackaging']);
 					list($Url_7, $PackagingImage) = ItemImagesURL($StockId,   7, $PackagingImage, $myrow['klpackaging']);
 					list($Url_8, $PackagingImage) = ItemImagesURL($StockId, 999, $PackagingImage, $myrow['klpackaging']);
-
 					// only a packaging pic for the 8th URL (if not yet)
 
 					if ($TypeOfFile == "FSMaster"){
@@ -253,7 +253,7 @@ function submit(&$db, $TypeOfFile) {
 
 			// Redirect output to a client’s web browser (Excel2007)
 			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-			$File ='FS-' .  $TypeOfFile	. '-' . Date('Y-m-d-H-i-s'). '.xlsx';
+			$File = $NameOfShop . '-' .  $TypeOfFile . '-' . Date('Y-m-d-H-i-s'). '.xlsx';
 			header('Content-Disposition: attachment;filename="' . $File . '"');
 			header('Cache-Control: max-age=0');
 			// If you're serving to IE 9, then the following may be needed
@@ -295,7 +295,18 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title. '" alt="" />' . ' ' . $Title . '
 		</p>';
 
-	echo '<table class="selection">';
+	echo '<table class="selection">';	
+	
+	echo '<tr><td>'. _('Marketplace kind of shop').':</td>
+			<td><select name="TypeOfShop" onchange="submit();"> ';
+	$SQL = "SELECT manufacturers.manufacturers_id, 
+					manufacturers_name 
+			FROM manufacturers 
+			ORDER BY manufacturers_name";
+	$LocResult = DB_query($SQL);
+	while ($myrow=DB_fetch_array($LocResult)){
+		 echo '<option value="' . $myrow['manufacturers_id'] . '">' . $myrow['manufacturers_name'] . '</option>';
+	}
 
 	echo '<tr>
 			<td>' . _('Type of FORSTOK File') . ':</td>
