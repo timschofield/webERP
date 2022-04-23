@@ -488,6 +488,8 @@ or deletion of the records*/
 				onlinepartnercode,
 				stockreadytosell,
 				stockavailableforonline,
+				rlfactorforpackaging,
+				rldaysforpackaging,
 				managed
 			FROM locations INNER JOIN taxprovinces
 			ON locations.taxprovinceid=taxprovinces.taxprovinceid
@@ -502,18 +504,18 @@ or deletion of the records*/
 		<tr>
 			<th class="ascending">', _('Code'), '</th>
 			<th class="ascending">', _('Location Name'), '</th>
-			<th class="ascending">', _('Priority'), '</th>
 			<th class="ascending">', _('Zone'), '</th>
 			<th class="ascending">', _('Type'), '</th>
 			<th class="ascending">', _('Retail Partner'), '</th>
-			<th class="ascending">', _('Stock Ready Sell'), '</th>
 			<th class="ascending">', _('Online Partner'), '</th>
+			<th class="ascending">', _('Stock Ready Sell'), '</th>
 			<th class="ascending">', _('Stock for Online?'), '</th>
+			<th class="ascending">', _('Priority'), '</th>
 			<th class="ascending">', _('ST From'), '</th>
 			<th class="ascending">', _('ST Max'), '</th>
 			<th class="ascending">', _('ST Min'), '</th>
-			<th class="ascending">', _('POS Cash GL'), '</th>
-			<th class="ascending">', _('POS Tag'), '</th>
+			<th class="ascending">', _('Pack Factor'), '</th>
+			<th class="ascending">', _('Pack Days'), '</th>
 			<th class="noprint" colspan="2">&nbsp;</th>
 		</tr>';
 
@@ -548,35 +550,35 @@ while ($myrow = DB_fetch_array($result)) {
 	}
 	printf('<td>%s</td>
 			<td>%s</td>
+			<td>%s</td>
+			<td>%s</td>
+			<td>%s</td>
+			<td>%s</td>
+			<td>%s</td>
+			<td>%s</td>
 			<td class="number">%s</td>
 			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
 			<td class="number">%s</td>
 			<td class="number">%s</td>
-			<td>%s</td>
+			<td class="number">%s</td>
 			<td class="number">%s</td>
 			<td class="noprint"><a href="%sSelectedLocation=%s">' . _('Edit') . '</a></td>
 			<td class="noprint"><a href="%sSelectedLocation=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this inventory location?') . '\');">' . _('Delete') . '</a></td>
 			</tr>',
 			$myrow['loccode'],
 			$myrow['locationname'],
-			$myrow['priority'],
 			$myrow['zone'],
 			$myrow['typeloc'],
 			$PartnerCode,
-			$ReadyToSell,
 			$OnlinePartnerCode,
+			$ReadyToSell,
 			$AvailableForOnline,
+			$myrow['priority'],
 			$myrow['smartdispatchfrom'],
 			$myrow['smartdispatchmaxmodels'],
 			$myrow['smartdispatchminmodels'],
-			$myrow['klposcashaccount'],
-			$myrow['klpostag'],
+			$myrow['rlfactorforpackaging'],
+			$myrow['rldaysforpackaging'],
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $myrow['loccode'],
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $myrow['loccode']);
 	}
@@ -1033,12 +1035,14 @@ function UpdateOnlinePartnerPaypalSettingsInOpenCart($NewLocationType, $NewOnlin
 					WHERE klonlinepartners.onlinepartnercode='" . $NewOnlinePartnerCode . "'";
 			$result = DB_query($sql);
 			$myrow = DB_fetch_array($result);
-		
-			UpdateSettingValueOpenCartByGroupAndKey('pp_express', 'pp_express_username', $myrow['paypalusername'], $db_oc, $oc_tableprefix);
-			UpdateSettingValueOpenCartByGroupAndKey('pp_express', 'pp_express_password', $myrow['paypalpassword'], $db_oc, $oc_tableprefix);
-			UpdateSettingValueOpenCartByGroupAndKey('pp_express', 'pp_express_signature', $myrow['paypalsignature'], $db_oc, $oc_tableprefix);
-			UpdateSettingValueOpenCartByGroupAndKey('pp_express', 'pp_express_test', $myrow['paypaltest'], $db_oc, $oc_tableprefix);
-			prnMsg('Updated KL Online Partner ' . $NewOnlinePartnerCode . ' in OpenCart', 'success');
+
+// On OpenCart 3, the settings are different, just show a reminder to update these fields		
+//			UpdateSettingValueOpenCartByCodeAndKey(0,'pp_express', 'pp_express_username', $myrow['paypalusername'], $db_oc, $oc_tableprefix);
+//			UpdateSettingValueOpenCartByCodeAndKey(0,'pp_express', 'pp_express_password', $myrow['paypalpassword'], $db_oc, $oc_tableprefix);
+//			UpdateSettingValueOpenCartByCodeAndKey(0,'pp_express', 'pp_express_signature', $myrow['paypalsignature'], $db_oc, $oc_tableprefix);
+//			UpdateSettingValueOpenCartByCodeAndKey(0,'pp_express', 'pp_express_test', $myrow['paypaltest'], $db_oc, $oc_tableprefix);
+//			prnMsg('Updated KL Online Partner ' . $NewOnlinePartnerCode . ' in OpenCart', 'success');
+			prnMsg('Remind to update PayPal setting for Online Partner ' . $NewOnlinePartnerCode . ' in OpenCart', 'warning');
 		}else{
 			prnMsg('The ONLINE location should have a valid KL Online Partner', 'error');
 		}
