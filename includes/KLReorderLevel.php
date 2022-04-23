@@ -809,21 +809,10 @@ function MaxRLCorrectionSomeModels($stockid, $loccode, $NewRL){
 	//
 	// MAX correction for some locations, depending on some items
 	//
-/*	if ($loccode == "TOKPA"){
-		if ($stockid != "GIFT-ALAR01"){
+/*	if (($loccode == "TOKXX") AND ($stockid != "GIFT-ALAR01")){
 			$CurrentNewRL	= min($NewRL, 2);
-		}
 	}
 */
-	//
-	// MAX correction for some models, depending on the shops
-	//
-/*	if (isPlasticBag($stockid)){
-		if ($loccode == "TOKKS"){
-			$CurrentNewRL	= min($NewRL, 2);
-		}
-	}
-*/	// END of MAX Corrections of New RL
 	return $CurrentNewRL;
 }
 
@@ -946,7 +935,7 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db,
 		while ($myrow = DB_fetch_array($result)) {
 			/* set the RL to 0 for shop online, as we have qoh <= limit accepted  */
 			$NewRLOnline = 0;
-			SetReorderLevel("Not Enough QOH", $myrow['stockid'],'TOKWS', MINIMUM_STOCK_ONLINESHOP_EVERY_ITEM, $NewRLOnline, $updateDB, $db);
+			SetReorderLevel("Not Enough QOH", $myrow['stockid'],CODE_ONLINE_SHOP, MINIMUM_STOCK_ONLINESHOP_EVERY_ITEM, $NewRLOnline, $updateDB, $db);
 			if ($ShowMessages){
 				if ($k == 1) {
 					echo '<tr class="EvenTableRows">';
@@ -1022,7 +1011,7 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db,
 		while ($myrow = DB_fetch_array($result)) {
 			/* set the RL to the total of qty requested by customers */
 			$NewRLOnline = MINIMUM_STOCK_ONLINESHOP_EVERY_ITEM + $myrow['totalqty'];
-			SetReorderLevel("OnlineSales", $myrow['stkcode'],'TOKWS', $myrow['reorderlevel'], $NewRLOnline, $updateDB, $db);
+			SetReorderLevel("OnlineSales", $myrow['stkcode'],CODE_ONLINE_SHOP, $myrow['reorderlevel'], $NewRLOnline, $updateDB, $db);
 			if ($ShowMessages){
 				if ($k == 1) {
 					echo '<tr class="EvenTableRows">';
