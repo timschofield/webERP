@@ -1319,9 +1319,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 /*first the cost of sales entry - GL accounts are retrieved using the function GetCOGSGLAccount from includes/GetSalesTransGLCodes.inc */
 
 // Begin of Consignment sales for PTADU MODIFICATIONS. Ricard KL
-// CONSIGNMENT FOR ONLINE AND WHOLESALE 
-// AND (($Area == 'OWB') OR ($Area == 'OWS') // AND is a online sale OR a wholesale 
-//	OR ($Area == 'WHC') OR ($Area == 'WHZ'))			
+// CONSIGNMENT FOR ONLINE
 
 				$ItemBelongsTo = ItemBelongsToPT($OrderLine->StockID);
 				// if it is a PTADU item and NOT sold directly by PTADU to a Wholesale Online (OWW) customer

@@ -249,14 +249,10 @@ if ($ProcessSection01){
 	* BALANCE ACCOUNTS         
 	***************************************************************************************/
 	if ($KL_SystemAdmin){
-// RICARD 2019-11-26
-// CANCELLED FOR PERFORMANCE REASONS
-//		GoodsReceivedNotInvoicedControl(1000000, $periodnow, $db);
-//		$NumberOfTestExecuted++;
-// RICARD 2019-11-26
-// CANCELLED FOR PERFORMANCE REASONS
-//		CustomersDebtControl(1000000, $periodnow, $db);
-//		$NumberOfTestExecuted++;
+		GoodsReceivedNotInvoicedControl(1000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
+		CustomersDebtControl(1000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_AdministrationTeam){
@@ -459,7 +455,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("211021400",  -10000000,          1, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("211021500",  100000000,  200000000, $periodnow, $db);
+		BalanceAccountControl("211021500",  150000000,  400000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("612012015",         -1,          1, $periodnow, $db);
 		$NumberOfTestExecuted++;
@@ -485,8 +481,8 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		ItemsInSetup("NeedDescription", "SETGEA", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		//ItemsInSetup("NeedPrice", $RootPath, $db);
-		//$NumberOfTestExecuted++;
+		ItemsInSetup("NeedPrice", $RootPath, $db);
+		$NumberOfTestExecuted++;
 		ItemsWithoutRetailPrice("SETKLA", 4.85, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		ItemsWithoutRetailPrice("SETBLA", 4.85, $RootPath, $db);
@@ -996,8 +992,6 @@ if ($ProcessSection02){
 		OR $KL_SalesTeamOnline){
 		OnlineOrdersFollowUp("KL-WEBSITE", 10, $RootPath, $db);
 		$NumberOfTestExecuted++;
-//		OnlineOrdersFollowUp("LAZADA", 10, $RootPath, $db);
-//		$NumberOfTestExecuted++;
 	}
 	/***************************************************************************************
 	* Other tests     
