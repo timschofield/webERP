@@ -1498,9 +1498,12 @@ function ItemsWithoutRetailPrice($stockcat, $factorRetail, $RootPath, $db){
 function ListPriorityLocations($db){
 	$SQL="SELECT locationname,
 				zone,
+				typeloc,
+				partnercode,
 				priority,
 				stockavailableforonline,
-				smartdispatchminmodels,
+				rlfactorforpackaging,
+				rldaysforpackaging,
 				smartdispatchmaxmodels
 		FROM locations
 		WHERE locations.typeloc IN " . ALL_SHOPS_LIST_BY_TYPE . "
@@ -1512,12 +1515,16 @@ function ListPriorityLocations($db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
 							<th class="ascending">' . _('Location') . '</th>
 							<th class="ascending">' . _('Zone') . '</th>
+							<th class="ascending">' . _('Type') . '</th>
+							<th class="ascending">' . _('Partner') . '</th>
 							<th class="ascending">' . _('Priority') . '</th>
-							<th class="ascending">' . _('Stock Online?') . '</th>
-							<th class="ascending">' . _('Min Daily Tr') . '</th>
 							<th class="ascending">' . _('Max Daily Tr') . '</th>
+							<th class="ascending">' . _('Stock Online?') . '</th>
+							<th class="ascending">' . _('Pack Factor') . '</th>
+							<th class="ascending">' . _('Pack Days') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -1529,19 +1536,27 @@ function ListPriorityLocations($db){
 			}else{
 				$StockOnline = "No";
 			}
-			printf('<td>%s</td>
+			printf('<td class="number">%s</td>
 					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>', 
+					$i,
 					$myrow['locationname'],
 					$myrow['zone'],
+					$myrow['typeloc'],
+					$myrow['partnercode'],
 					$myrow['priority'],
+					$myrow['smartdispatchmaxmodels'],
 					$StockOnline,
-					$myrow['smartdispatchminmodels'],
-					$myrow['smartdispatchmaxmodels']
+					$myrow['rlfactorforpackaging'],
+					$myrow['rldaysforpackaging']
 					);
 			$i++;
 		}
