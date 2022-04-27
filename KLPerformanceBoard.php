@@ -113,8 +113,6 @@ if ($ProcessSection01){
 		OR $KL_ShopManager
 		OR $KL_OperationalManager
 		OR $KL_BusinessDevelopmentManager){
-// RICARD 2019-11-26
-// CANCELLED FOR PERFORMANCE REASONS
 		GeneralCustomerBehaviour(30, $db);
 		$NumberOfTestExecuted++;
 //		GeneralCustomerBehaviour(90, $db);
@@ -122,10 +120,8 @@ if ($ProcessSection01){
 	}
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager){
-// RICARD 2019-11-26
-// CANCELLED FOR PERFORMANCE REASONS
-//		DailySalesRecords(10, 365 * 2, $db);
-//		$NumberOfTestExecuted++;
+		DailySalesRecords(10, 365 * 2, $db);
+		$NumberOfTestExecuted++;
 	}
 }
 

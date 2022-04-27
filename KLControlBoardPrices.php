@@ -58,32 +58,32 @@ if ($ProcessSection01){
 	//	PricesNotUpdatedinXDays(365*2, 15, $RootPath, $db);
 	//	PricesNotUpdatedinXDays(365  , 10, $RootPath, $db);
 
-		ItemsWithoutRetailPrice("SETKLA", 4.85, $RootPath, $db);
+		ItemsWithoutRetailPrice("SETKLA", 6.00, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsWithoutRetailPrice("SETBLA", 5.00, $RootPath, $db);
+		ItemsWithoutRetailPrice("SETBLA", 6.75, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsWithoutRetailPrice("SETGEA", 3.50, $RootPath, $db);
-		$NumberOfTestExecuted++;
-
-		ItemsWithoutRetailPrice("TESTKA", 4.85, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ItemsWithoutRetailPrice("TESTBA", 5.50, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ItemsWithoutRetailPrice("TESTGA", 3.50, $RootPath, $db);
+		ItemsWithoutRetailPrice("SETGEA", 4.40, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-		ItemsWithoutRetailPrice("STABKA", 4.85, $RootPath, $db);
+		ItemsWithoutRetailPrice("TESTKA", 6.00, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsWithoutRetailPrice("STABBA", 5.50, $RootPath, $db);
+		ItemsWithoutRetailPrice("TESTBA", 6.75, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsWithoutRetailPrice("STABGA", 3.50, $RootPath, $db);
+		ItemsWithoutRetailPrice("TESTGA", 4.40, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-		ItemsWithoutRetailPrice("NOPOKA", 4.85, $RootPath, $db);
+		ItemsWithoutRetailPrice("STABKA", 6.00, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsWithoutRetailPrice("NOPOBA", 5.50, $RootPath, $db);
+		ItemsWithoutRetailPrice("STABBA", 6.75, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsWithoutRetailPrice("NOPOGA", 3.50, $RootPath, $db);
+		ItemsWithoutRetailPrice("STABGA", 4.40, $RootPath, $db);
+		$NumberOfTestExecuted++;
+
+		ItemsWithoutRetailPrice("NOPOKA", 6.00, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsWithoutRetailPrice("NOPOBA", 6.75, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsWithoutRetailPrice("NOPOGA", 4.40, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 	//	ItemsWithoutRetailPrice("CONSIG", 1.60, $RootPath, $db);
@@ -91,31 +91,31 @@ if ($ProcessSection01){
 
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager){
-		PriceBelowStandard("SETKLA", 4.85, 0, 10, $RootPath, $db);
+		PriceBelowStandard("SETKLA", 6.00, 0, 10, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PriceBelowStandard("TESTKA", 4.85, 0, 15, $RootPath, $db);
+		PriceBelowStandard("TESTKA", 6.00, 0, 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PriceBelowStandard("STABKA", 4.85, 0, 20, $RootPath, $db);
+		PriceBelowStandard("STABKA", 6.00, 0, 20, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PriceBelowStandard("NOPOKA", 4.85, 0, 20, $RootPath, $db);
-		$NumberOfTestExecuted++;
-
-		PriceBelowStandard("SETBLA", 5.50, 0, 10, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		PriceBelowStandard("TESTBA", 5.50, 0, 15, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		PriceBelowStandard("STABBA", 5.50, 0, 20, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		PriceBelowStandard("NOPOBA", 5.50, 0, 20, $RootPath, $db);
+		PriceBelowStandard("NOPOKA", 6.00, 0, 20, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-		PriceBelowStandard("SETGEA", 3.50, 0, 10, $RootPath, $db);
+		PriceBelowStandard("SETBLA", 6.75, 0, 10, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PriceBelowStandard("TESTGA", 3.50, 0, 15, $RootPath, $db);
+		PriceBelowStandard("TESTBA", 6.75, 0, 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PriceBelowStandard("STABGA", 3.50, 0, 20, $RootPath, $db);
+		PriceBelowStandard("STABBA", 6.75, 0, 20, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PriceBelowStandard("NOPOGA", 3.50, 0, 20, $RootPath, $db);
+		PriceBelowStandard("NOPOBA", 6.75, 0, 20, $RootPath, $db);
+		$NumberOfTestExecuted++;
+
+		PriceBelowStandard("SETGEA", 4.40, 0, 10, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		PriceBelowStandard("TESTGA", 4.40, 0, 15, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		PriceBelowStandard("STABGA", 4.40, 0, 20, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		PriceBelowStandard("NOPOGA", 4.40, 0, 20, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 }
@@ -132,18 +132,18 @@ if ($ProcessSection02){
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager){
 
-		ItemsTooCheap("TESTKA", 4.85, 5.00, 0.05, 10, 80, 60, $RootPath, $db);
+		ItemsTooCheap("TESTKA", 6.00, 6.25, 0.05, 10, 80, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsTooCheap("STABKA", 4.85, 5.00, 0.05, 20, 80, 60, $RootPath, $db);
+		ItemsTooCheap("STABKA", 6.00, 6.25, 0.05, 20, 80, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsTooCheap("NOPOKA", 4.85, 5.00, 0.05, 20, 80, 60, $RootPath, $db);
+		ItemsTooCheap("NOPOKA", 6.00, 6.25, 0.05, 20, 80, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-		ItemsTooCheap("TESTBA", 5.50, 5.75, 0.05, 10, 80, 60, $RootPath, $db);
+		ItemsTooCheap("TESTBA", 6.75, 7.20, 0.05, 10, 80, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsTooCheap("STABBA", 5.50, 5.75, 0.05, 20, 80, 60, $RootPath, $db);
+		ItemsTooCheap("STABBA", 6.75, 7.20, 0.05, 20, 80, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsTooCheap("NOPOBA", 5.50, 5.75, 0.05, 20, 80, 60, $RootPath, $db);
+		ItemsTooCheap("NOPOBA", 6.75, 7.20, 0.05, 20, 80, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 /*		ItemsTooCheap("TESTGA", 3.50, 5.75, 0.05, 10, 100, 60, $RootPath, $db);
@@ -153,18 +153,18 @@ if ($ProcessSection02){
 		ItemsTooCheap("NOPOGA", 3.50, 5.75, 0.05, 10, 100, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
 */
-		ItemsTooExpensive("TESTKA", 4.85, 5.00, 0.05, 10, 300, 90, $RootPath, $db);
+		ItemsTooExpensive("TESTKA", 6.00, 6.25, 0.05, 10, 300, 90, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsTooExpensive("STABKA", 4.85, 5.50, 0.05, 20, 300, 90, $RootPath, $db);
+		ItemsTooExpensive("STABKA", 6.00, 6.25, 0.05, 20, 300, 90, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsTooExpensive("NOPOKA", 4.85, 5.50, 0.05, 20, 300, 60, $RootPath, $db);
+		ItemsTooExpensive("NOPOKA", 6.00, 6.25, 0.05, 20, 300, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-		ItemsTooExpensive("TESTBA", 5.50, 6.00, 0.05, 10, 175, 90, $RootPath, $db);
+		ItemsTooExpensive("TESTBA", 6.75, 7.50, 0.05, 10, 200, 90, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsTooExpensive("STABBA", 5.50, 6.00, 0.05, 20, 175, 90, $RootPath, $db);
+		ItemsTooExpensive("STABBA", 6.75, 7.50, 0.05, 20, 200, 90, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsTooExpensive("NOPOBA", 5.50, 6.00, 0.05, 20, 175, 90, $RootPath, $db);
+		ItemsTooExpensive("NOPOBA", 6.75, 7.50, 0.05, 20, 200, 90, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 /*		ItemsTooExpensive("TESTGA", 5.50, 6.00, 0.05, 5, 800, 90, $RootPath, $db);
