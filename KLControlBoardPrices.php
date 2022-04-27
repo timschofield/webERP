@@ -100,13 +100,13 @@ if ($ProcessSection01){
 		PriceBelowStandard("NOPOKA", 6.00, 0, 20, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-		PriceBelowStandard("SETBLA", 6.75, 0, 10, $RootPath, $db);
+		PriceBelowStandard("SETBLA", 6.25, 0, 10, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PriceBelowStandard("TESTBA", 6.75, 0, 15, $RootPath, $db);
+		PriceBelowStandard("TESTBA", 6.25, 0, 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PriceBelowStandard("STABBA", 6.75, 0, 20, $RootPath, $db);
+		PriceBelowStandard("STABBA", 6.25, 0, 20, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PriceBelowStandard("NOPOBA", 6.75, 0, 20, $RootPath, $db);
+		PriceBelowStandard("NOPOBA", 6.25, 0, 20, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 		PriceBelowStandard("SETGEA", 4.40, 0, 10, $RootPath, $db);
@@ -139,11 +139,11 @@ if ($ProcessSection02){
 		ItemsTooCheap("NOPOKA", 6.00, 6.25, 0.05, 20, 80, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-		ItemsTooCheap("TESTBA", 6.75, 7.20, 0.05, 10, 80, 60, $RootPath, $db);
+		ItemsTooCheap("TESTBA", 6.25, 6.75, 0.05, 10, 80, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsTooCheap("STABBA", 6.75, 7.20, 0.05, 20, 80, 60, $RootPath, $db);
+		ItemsTooCheap("STABBA", 6.25, 6.75, 0.05, 20, 80, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsTooCheap("NOPOBA", 6.75, 7.20, 0.05, 20, 80, 60, $RootPath, $db);
+		ItemsTooCheap("NOPOBA", 6.25, 6.75, 0.05, 20, 80, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 /*		ItemsTooCheap("TESTGA", 3.50, 5.75, 0.05, 10, 100, 60, $RootPath, $db);
@@ -160,11 +160,11 @@ if ($ProcessSection02){
 		ItemsTooExpensive("NOPOKA", 6.00, 6.25, 0.05, 20, 300, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-		ItemsTooExpensive("TESTBA", 6.75, 7.50, 0.05, 10, 200, 90, $RootPath, $db);
+		ItemsTooExpensive("TESTBA", 6.25, 6.75, 0.05, 10, 200, 90, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsTooExpensive("STABBA", 6.75, 7.50, 0.05, 20, 200, 90, $RootPath, $db);
+		ItemsTooExpensive("STABBA", 6.25, 6.75, 0.05, 20, 200, 90, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsTooExpensive("NOPOBA", 6.75, 7.50, 0.05, 20, 200, 90, $RootPath, $db);
+		ItemsTooExpensive("NOPOBA", 6.25, 6.75, 0.05, 20, 200, 90, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 /*		ItemsTooExpensive("TESTGA", 5.50, 6.00, 0.05, 5, 800, 90, $RootPath, $db);
