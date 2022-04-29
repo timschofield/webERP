@@ -88,6 +88,8 @@ if(isset($_POST['submit'])) {
 		$Result = DB_query($Sql, $ErrMsg);
 
 		prnMsg(_('The new general ledger account has been added'),'success');
+		// update GL accounts for PTADU, PTBB, POIK, POPI, etc...
+		UpdateMultiCompanyAccounts();
 	}
 
 	unset($_POST['Group']);
@@ -216,6 +218,8 @@ if(isset($_POST['submit'])) {
 									$Sql="DELETE FROM chartmaster WHERE accountcode= '" . $SelectedAccount ."'";
 									$Result = DB_query($Sql);
 									prnMsg(_('Account') . ' ' . $SelectedAccount . ' ' . _('has been deleted'), 'succes');
+									// update GL accounts for PTADU, PTBB, POIK, POPI, etc...
+									UpdateMultiCompanyAccounts();
 								}
 							}
 						}
@@ -377,4 +381,155 @@ if(isset($SelectedAccount)) {
 }
 
 include('includes/footer.php');
+
+//*****************************************************************************************************************
+// Functions related to MultiCompany Accounting
+//*****************************************************************************************************************
+
+function UpdateMultiCompanyAccounts(){
+	//each time a GL account is inserted or deleted we have to update the chartmaster for each company
+
+	prnMsg('Updating PT ADU ChartmasterPMA table', 'info');
+
+	$Sql="CREATE TABLE IF NOT EXISTS `chartmasterPMA` (
+		  `accountcode` varchar(20) NOT NULL DEFAULT '0',
+		  `accountname` char(50) NOT NULL DEFAULT '',
+		  `group_` char(30) NOT NULL DEFAULT '',
+		  PRIMARY KEY (`accountcode`),
+		  KEY `AccountName` (`accountname`),
+		  KEY `Group_` (`group_`)
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8";
+	$Result = DB_query($Sql);
+	prnMsg('      Recreated ChartmasterPMA table', 'info');
+
+	$Sql="TRUNCATE `chartmasterPMA`";
+	$Result = DB_query($Sql);
+	prnMsg('      Truncated ChartmasterPMA table', 'info');
+
+	$Sql="INSERT INTO `chartmasterPMA` (`accountcode`, `accountname`, `group_`) 
+			SELECT `accountcode`, `accountname`, `group_`
+			FROM chartmaster
+			WHERE (accountcode LIKE '%AD' OR accountcode = '350510100')";
+	$Result = DB_query($Sql);
+	prnMsg('      Inserted accounts into ChartmasterPMA table', 'info');
+
+	$Sql="UPDATE chartmasterPMA SET `group_` =  'Penjualan' WHERE `accountcode` = '410010000AD'";
+	$Result = DB_query($Sql);
+	prnMsg('      Adjusting groups into ChartmasterPMA table', 'info');
+
+	$Sql="UPDATE chartmasterPMA SET `group_` =  'Biaya Karyawan' WHERE `accountcode` = '612011210AD'";
+	$Result = DB_query($Sql);
+	prnMsg('      Adjusting groups into ChartmasterPMA table', 'info');
+
+	$Sql="UPDATE chartmasterPMA SET `group_` =  'Biaya Karyawan' WHERE `accountcode` = '612011220AD'";
+	$Result = DB_query($Sql);
+	prnMsg('      Adjusting groups into ChartmasterPMA table', 'info');
+
+	$Sql="UPDATE chartmasterPMA SET `group_` =  'Biaya General' WHERE `accountcode` = '510010070AD'";
+	$Result = DB_query($Sql);
+	prnMsg('      Adjusting groups into ChartmasterPMA table', 'info');
+
+	$Sql="UPDATE chartmasterPMA SET `group_` =  'Pajak Penghasilan' WHERE `accountcode` = '611012025AD'";
+	$Result = DB_query($Sql);
+	prnMsg('      Adjusting groups into ChartmasterPMA table', 'info');
+
+	prnMsg('Updating PT BB ChartmasterPT table', 'info');
+
+	$Sql="CREATE TABLE IF NOT EXISTS `chartmasterPT` (
+			`accountcode` varchar(20) NOT NULL DEFAULT '0',
+			`accountname` char(50) NOT NULL DEFAULT '',
+			`group_` char(30) NOT NULL DEFAULT '',
+			PRIMARY KEY (`accountcode`),
+			KEY `AccountName` (`accountname`),
+			KEY `Group_` (`group_`)
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8";
+	$Result = DB_query($Sql);
+	prnMsg('      Recreated ChartmasterPT table', 'info');
+
+	$Sql="TRUNCATE `chartmasterPT`";
+	$Result = DB_query($Sql);
+	prnMsg('      Truncated ChartmasterPT table', 'info');
+
+	$Sql="INSERT INTO `chartmasterPT` (`accountcode`, `accountname`, `group_`) 
+			SELECT `accountcode`, `accountname`, `group_`
+			FROM chartmaster
+			WHERE (accountcode LIKE '%PT' OR accountcode = '350510100')";
+	$Result = DB_query($Sql);
+	prnMsg('      Inserted accounts into ChartmasterPT table', 'info');
+
+	$Sql="UPDATE chartmasterPT SET `group_` =  'HPP (COGS)' WHERE `accountcode` = '510010005PT'";
+	$Result = DB_query($Sql);
+	prnMsg('      Adjusting groups into ChartmasterPT table', 'info');
+
+	$Sql="UPDATE chartmasterPT SET `group_` =  'Penjualan' WHERE `accountcode` = '410010010PT'";
+	$Result = DB_query($Sql);
+	prnMsg('      Adjusting groups into ChartmasterPT table', 'info');
+
+	$Sql="UPDATE chartmasterPT SET `group_` =  'Biaya General' WHERE `accountcode` = '510010070PT'";
+	$Result = DB_query($Sql);
+	prnMsg('      Adjusting groups into ChartmasterPT table', 'info');
+
+	$Sql="UPDATE chartmasterPT SET `group_` =  'Pajak Penghasilan' WHERE `accountcode` = '611012025PT'";
+	$Result = DB_query($Sql);
+	prnMsg('      Adjusting groups into ChartmasterPT table', 'info');
+
+
+	prnMsg('Updating PO IK chartmasterIK table', 'info');
+
+	$Sql="CREATE TABLE IF NOT EXISTS `chartmasterIK` (
+			`accountcode` varchar(20) NOT NULL DEFAULT '0',
+			`accountname` char(50) NOT NULL DEFAULT '',
+			`group_` char(30) NOT NULL DEFAULT '',
+			PRIMARY KEY (`accountcode`),
+			KEY `AccountName` (`accountname`),
+			KEY `Group_` (`group_`)
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8";
+	$Result = DB_query($Sql);
+	prnMsg('      Recreated ChartmasterIK table', 'info');
+
+	$Sql="TRUNCATE `chartmasterIK`";
+	$Result = DB_query($Sql);
+	prnMsg('      Truncated ChartmasterIK table', 'info');
+
+	$Sql="INSERT INTO `chartmasterIK` (`accountcode`, `accountname`, `group_`) 
+			SELECT `accountcode`, `accountname`, `group_`
+			FROM chartmaster
+			WHERE (accountcode LIKE '%IK' OR accountcode = '350510100')";
+	$Result = DB_query($Sql);
+	prnMsg('      Inserted accounts into ChartmasterIK table', 'info');
+
+	$Sql="UPDATE chartmasterIK SET `group_` =  'HPP (COGS)' WHERE `accountcode` = '510010005IK'";
+	$Result = DB_query($Sql);
+	prnMsg('      Adjusting groups into ChartmasterIK table', 'info');
+
+	prnMsg('Updating PO PI chartmasterPI table', 'info');
+
+	$Sql="CREATE TABLE IF NOT EXISTS `chartmasterPI` (
+			`accountcode` varchar(20) NOT NULL DEFAULT '0',
+			`accountname` char(50) NOT NULL DEFAULT '',
+			`group_` char(30) NOT NULL DEFAULT '',
+			PRIMARY KEY (`accountcode`),
+			KEY `AccountName` (`accountname`),
+			KEY `Group_` (`group_`)
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8";
+	$Result = DB_query($Sql);
+	prnMsg('      Recreated ChartmasterPI table', 'info');
+
+	$Sql="TRUNCATE `chartmasterPI`";
+	$Result = DB_query($Sql);
+	prnMsg('      Truncated ChartmasterPI table', 'info');
+
+	$Sql="INSERT INTO `chartmasterPI` (`accountcode`, `accountname`, `group_`) 
+			SELECT `accountcode`, `accountname`, `group_`
+			FROM chartmaster
+			WHERE (accountcode LIKE '%PI' OR accountcode = '350510100')";
+	$Result = DB_query($Sql);
+	prnMsg('      Inserted accounts into ChartmasterPI table', 'info');
+
+	$Sql="UPDATE chartmasterPI SET `group_` =  'HPP (COGS)' WHERE `accountcode` = '510010005PI'";
+	$Result = DB_query($Sql);
+	prnMsg('      Adjusting groups into ChartmasterPI table', 'info');
+}
+
+
 ?>
