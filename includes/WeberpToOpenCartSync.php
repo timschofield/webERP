@@ -1075,7 +1075,9 @@ function SyncProductDescriptionTranslations($ShowMessages, $LastTimeRun, $db, $d
 				AND stockdescriptiontranslations.stockid = stockmaster.stockid
 				AND stockmaster.klsynctoopencart = '1'
 				AND (stockdescriptiontranslations.date_created >= '" . $LastTimeRun . "'
-					OR stockdescriptiontranslations.date_updated >= '" . $LastTimeRun . "')
+					OR stockdescriptiontranslations.date_updated >= '" . $LastTimeRun . "'
+					OR stockmaster.date_created >= '" . $LastTimeRun . "' 
+					OR stockmaster.date_updated >= '" . $LastTimeRun . "')
 			ORDER BY stockdescriptiontranslations.stockid";
 
 	$result = DB_query($SQL);
