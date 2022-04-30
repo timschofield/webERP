@@ -249,6 +249,8 @@ if ($ProcessSection01){
 	* BALANCE ACCOUNTS         
 	***************************************************************************************/
 	if ($KL_SystemAdmin){
+		GLTransDateControl($db);
+		$NumberOfTestExecuted++;
 		GoodsReceivedNotInvoicedControl(1000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		CustomersDebtControl(1000000, $periodnow, $db);
@@ -1747,6 +1749,55 @@ function FlaggedAsObsoleteButStockAvailable($RootPath, $db){
 					$i, 
 					$CodeLink, 
 					$myrow['description'] 
+					);
+			$i++;
+		}
+		echo '</table>
+				</div>';
+	}
+}
+
+function GLTransDateControl($db){
+	$SQL = "SELECT counterindex,
+					type,
+					typeno,
+					account,
+					narrative,
+					amount
+			FROM gltrans
+			WHERE trandate = '0000-00-00'";
+			
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . _('Wrong dated GLTrans transactions in DB') . '</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('Counterindex') . '</th>
+							<th class="ascending">' . _('Type') . '</th>
+							<th class="ascending">' . _('Typeno') . '</th>
+							<th class="ascending">' . _('Account') . '</th>
+							<th class="ascending">' . _('Narrative') . '</th>
+							<th class="ascending">' . _('Amount') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			printf('<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$myrow['counterindex'],
+					$myrow['type'],
+					$myrow['typeno'],
+					$myrow['account'],
+					$myrow['narrative'],
+					$myrow['amount']
 					);
 			$i++;
 		}
