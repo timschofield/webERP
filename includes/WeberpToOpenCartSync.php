@@ -189,6 +189,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 			$CustomerCode = WEBERP_ONLINE_RETAIL_CUSTOMER_CODE_PREFIX . OPENCART_DEFAULT_CURRENCY;
 			$Price = GetPrice($myrow['stockid'], $CustomerCode, $CustomerCode); // Get the price without any discount from webERP
 			$DiscountCategory = $myrow['discountcategory'];
+			$ItemCategory = $myrow['category_id'];
 			$Points = 0; // No points concept in webERP
 			$TaxClassId = 0; // Not sure how to link stockid and tax in webERP
 			$DateAvailable = $ServerNow;
@@ -225,7 +226,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 				$Status = 0;
 			}
 
-			if ($DiscountCategory == 80){
+			if (($DiscountCategory == 80) OR ($ItemCategory == "DISC8A")){
 				/* It's a Outlet 80% discount item, we have to disable it! */
 					$Status = 0;
 			}
