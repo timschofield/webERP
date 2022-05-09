@@ -72,7 +72,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 			header("Content-Disposition: attachment; filename=FakturPajak-" . $CompanyFrom . "-". $CompanyTo . "-". $NomorSeriFP . ".csv");
 			$output = fopen("php://output", "w");
 			$BOL = "";
-			$Separator = ",";
+			$Separator = ";";
 			$EOL = "\n";
 			
 			if ($DraftOrInvoice == 'DRAFT'){
@@ -302,14 +302,14 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 			}
 
 			// Write lines into actual file
-			$InitialLine1 = $BOL. 'FK,KD_JENIS_TRANSAKSI,FG_PENGGANTI,NOMOR_FAKTUR,MASA_PAJAK,TAHUN_PAJAK,TANGGAL_FAKTUR,NPWP,NAMA,ALAMAT_LENGKAP,JUMLAH_DPP,JUMLAH_PPN,JUMLAH_PPNBM,ID_KETERANGAN_TAMBAHAN,FG_UANG_MUKA,UANG_MUKA_DPP,UANG_MUKA_PPN,UANG_MUKA_PPNBM,REFERENSI' . $EOL;
+			$InitialLine1 = $BOL. 'FK,KD_JENIS_TRANSAKSI,FG_PENGGANTI,NOMOR_FAKTUR,MASA_PAJAK,TAHUN_PAJAK,TANGGAL_FAKTUR,NPWP,NAMA,ALAMAT_LENGKAP,JUMLAH_DPP,JUMLAH_PPN,JUMLAH_PPNBM,ID_KETERANGAN_TAMBAHAN,FG_UANG_MUKA,UANG_MUKA_DPP,UANG_MUKA_PPN,UANG_MUKA_PPNBM,REFERENSI,KODE_DOKUMEN_PENDUKUNG' . $EOL;
 			$InitialLine2 = $BOL. 'LT,NPWP,NAMA,JALAN,BLOK,NOMOR,RT,RW,KECAMATAN,KELURAHAN,KABUPATEN,PROPINSI,KODE_POS,NOMOR_TELEPON' . $EOL;
 			$InitialLine3 = $BOL. 'OF,KODE_OBJEK,NAMA,HARGA_SATUAN,JUMLAH_BARANG,HARGA_TOTAL,DISKON,DPP,PPN,TARIF_PPNBM,PPNBM' . $EOL;
 			fwrite($output, $InitialLine1);
 			fwrite($output, $InitialLine2);
 			fwrite($output, $InitialLine3);
 			fwrite($output, $FKLine);
-			fwrite($output, $LTLine);
+//			fwrite($output, $LTLine);
 			fwrite($output, $OFLines);
 			fclose($output);
 			
