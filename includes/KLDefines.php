@@ -11,6 +11,10 @@ define("CUSTOMER_TYPE_MARKETPLACE", '10');
 define("RETAIL_PRICE_LIST", 'RT');
 define("PPN_PERCENT", 11);
 
+/* Defines about Purchase Orders */
+define("COMPANY_NAME_FOR_PO", 'PT. ANGIN DINGIN UTARA');
+define("NPWP_FOR_PO", '81.304.529.1-906.000');
+
 /* Defines about prices IDR */
 define("PRICE_ROUNDING_STEP01",               5000);
 define("PRICE_ROUNDING_LIMIT01",            100000);
