@@ -13,8 +13,9 @@ For changelogs earlier than v4.14.1, please refer to [CHANGELOG_ARCHIVE.md].
 
 ## [Unreleased]
 
-|                                            Description                                             | Type | Author | Date | Details | Ref |
-|:--------------------------------------------------------------------------------------------------:|:----:|:------:|:----:|:-------:|:---:|
+| Description | Type | Author | Date | Details | Ref |
+|:-----------:|:----:|:------:|:----:|:-------:|:---:|
+| SystemParameters.php: Fix typo in a LogSeverity option, refactored these options (less code), and other element updates. | Fixed | PaulT | 2022-05-15 | [View](https://github.com/webERP-team/webERP/commit/c6b2d5ee128f8a3b2051a12be87d7346f95ff6f2) |  |
 | footer.php: Restore missing LogFile handling causing error. (reported in the forums by Dale Scott) | Fixed | PaulT | 2022-05-15 | [View](https://github.com/webERP-team/webERP/commit/5fb8b2c3589f6504324a8a82ee327084ec517923) | [Forum](https://www.weberp.org/forum/showthread.php?tid=9255) |
 | header.php: Fix hyperlink to the manual. (reported in the forums by Dale Scott) | Fixed | Tim Schofield | 2021-12-16 | [View](https://github.com/webERP-team/webERP/commit/c474bd10d104595d63afb340a967763b88a25b00) | [Forum](http://www.weberp.org/forum/showthread.php?tid=8990&pid=17130) |
 
