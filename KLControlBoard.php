@@ -369,15 +369,24 @@ if ($ProcessSection01){
 									'111111124', 
 									'111111125', 
 									'111111126', 
-									'111111127')", "Total Cash @ shops", 0, $NumberOfOpenShopsTotal * 5000000, $periodnow, $db);
+									'111111127',
+									'111111128',
+									'111111129',
+									'111111130',
+									'111111131',
+									'111111132',
+									'111111133',
+									'111111134',
+									'111111135')", "Total Cash @ shops", 0, $NumberOfOpenShopsTotal * 4000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 	}
 	if ($KL_SystemAdmin){
-		BalanceListAccountControl("('111121105AD', 
+		BalanceListAccountControl("('111121105AD',
+									'111121110AD',
+									'111203010AD',
 									'111259010AD', 
-									'111259020AD'	, 
-									'111259050AD'
-									'111203010AD')", "Total Banks PT.ADU", 4000000000, 7000000000, $periodnow, $db);
+									'111259020AD', 
+									'111259050AD')", "Total Banks PT.ADU", 4000000000, 6000000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('111259010AD', 
@@ -389,9 +398,15 @@ if ($ProcessSection01){
 									'111121105PT', 
 									'111121110PT', 
 									'111121111PT', 
-									'111121120PT', 
+									'111121112PT', 
+									'111121120PT',
+									'111121121PT',
+									'111121122PT',
+									'111121125PT',
 									'111121130PT', 
 									'111203010PT',
+									'111203015PT',
+									'111203020PT',
 									'111259010PT', 
 									'111259020PT', 
 									'111259050PT')", "Total Banks PT.BB", 2000000000, 3500000000, $periodnow, $db);
@@ -449,15 +464,15 @@ if ($ProcessSection01){
 
 		BalanceAccountControl("111800000",  350000000,  450000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111900000",   500000 * $NumberOfOpenShopsTotal, 750000 * $NumberOfOpenShopsTotal, $periodnow, $db);
+		BalanceAccountControl("111900000",   500000 * $NumberOfOpenShopsTotal, 1000000 * $NumberOfOpenShopsTotal, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111311100",  -10000000,   10000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111499000",         -1,          1, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("211021400",  -20000000,          1, $periodnow, $db);
+		BalanceAccountControl("211021400",  -40000000,          1, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("211021500",  150000000,  400000000, $periodnow, $db);
+		BalanceAccountControl("211021500",  300000000,  600000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("612012015",         -1,          1, $periodnow, $db);
 		$NumberOfTestExecuted++;
