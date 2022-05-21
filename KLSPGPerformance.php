@@ -898,118 +898,118 @@ function HourlySales($numDays, $RootPath, $db){
 
 	$SQL = "SELECT debtorsmaster.debtorno,
 				locations.zone,
-				(SELECT SUM(klpaidcash+klpaidcreditcard+klreturnedgoods+klvouchers)
+				(SELECT SUM(klpaidcash+klpaidcreditcard)
 				FROM salesorders
 				WHERE salesorders.debtorno = debtorsmaster.debtorno
 					AND salesorders.orddate >= '". $InitialDate ."'
 					AND salesorders.orddate <= '". $Yesterday ."'
 					AND salesorders.ordtime < '08:00:00') AS sales07,
-				(SELECT SUM(klpaidcash+klpaidcreditcard+klreturnedgoods+klvouchers)
+				(SELECT SUM(klpaidcash+klpaidcreditcard)
 				FROM salesorders
 				WHERE salesorders.debtorno = debtorsmaster.debtorno
 					AND salesorders.orddate >= '". $InitialDate ."'
 					AND salesorders.orddate <= '". $Yesterday ."'
 					AND salesorders.ordtime >= '08:00:00'
 					AND salesorders.ordtime < '09:00:00') AS sales08,
-				(SELECT SUM(klpaidcash+klpaidcreditcard+klreturnedgoods+klvouchers)
+				(SELECT SUM(klpaidcash+klpaidcreditcard)
 				FROM salesorders
 				WHERE salesorders.debtorno = debtorsmaster.debtorno
 					AND salesorders.orddate >= '". $InitialDate ."'
 					AND salesorders.orddate <= '". $Yesterday ."'
 					AND salesorders.ordtime >= '09:00:00'
 					AND salesorders.ordtime < '10:00:00') AS sales09,
-				(SELECT SUM(klpaidcash+klpaidcreditcard+klreturnedgoods+klvouchers)
+				(SELECT SUM(klpaidcash+klpaidcreditcard)
 				FROM salesorders
 				WHERE salesorders.debtorno = debtorsmaster.debtorno
 					AND salesorders.orddate >= '". $InitialDate ."'
 					AND salesorders.orddate <= '". $Yesterday ."'
 					AND salesorders.ordtime >= '10:00:00'
 					AND salesorders.ordtime <  '11:00:00') AS sales10,
-				(SELECT SUM(klpaidcash+klpaidcreditcard+klreturnedgoods+klvouchers)
+				(SELECT SUM(klpaidcash+klpaidcreditcard)
 				FROM salesorders
 				WHERE salesorders.debtorno = debtorsmaster.debtorno
 					AND salesorders.orddate >= '". $InitialDate ."'
 					AND salesorders.orddate <= '". $Yesterday ."'
 					AND salesorders.ordtime >= '11:00:00'
 					AND salesorders.ordtime <  '12:00:00') AS sales11,
-				(SELECT SUM(klpaidcash+klpaidcreditcard+klreturnedgoods+klvouchers)
+				(SELECT SUM(klpaidcash+klpaidcreditcard)
 				FROM salesorders
 				WHERE salesorders.debtorno = debtorsmaster.debtorno
 					AND salesorders.orddate >= '". $InitialDate ."'
 					AND salesorders.orddate <= '". $Yesterday ."'
 					AND salesorders.ordtime >= '12:00:00'
 					AND salesorders.ordtime <  '13:00:00') AS sales12,
-				(SELECT SUM(klpaidcash+klpaidcreditcard+klreturnedgoods+klvouchers)
+				(SELECT SUM(klpaidcash+klpaidcreditcard)
 				FROM salesorders
 				WHERE salesorders.debtorno = debtorsmaster.debtorno
 					AND salesorders.orddate >= '". $InitialDate ."'
 					AND salesorders.orddate <= '". $Yesterday ."'
 					AND salesorders.ordtime >= '13:00:00'
 					AND salesorders.ordtime <  '14:00:00') AS sales13,
-				(SELECT SUM(klpaidcash+klpaidcreditcard+klreturnedgoods+klvouchers)
+				(SELECT SUM(klpaidcash+klpaidcreditcard)
 				FROM salesorders
 				WHERE salesorders.debtorno = debtorsmaster.debtorno
 					AND salesorders.orddate >= '". $InitialDate ."'
 					AND salesorders.orddate <= '". $Yesterday ."'
 					AND salesorders.ordtime >= '14:00:00'
 					AND salesorders.ordtime <  '15:00:00') AS sales14,
-				(SELECT SUM(klpaidcash+klpaidcreditcard+klreturnedgoods+klvouchers)
+				(SELECT SUM(klpaidcash+klpaidcreditcard)
 				FROM salesorders
 				WHERE salesorders.debtorno = debtorsmaster.debtorno
 					AND salesorders.orddate >= '". $InitialDate ."'
 					AND salesorders.orddate <= '". $Yesterday ."'
 					AND salesorders.ordtime >= '15:00:00'
 					AND salesorders.ordtime <  '16:00:00') AS sales15,
-				(SELECT SUM(klpaidcash+klpaidcreditcard+klreturnedgoods+klvouchers)
+				(SELECT SUM(klpaidcash+klpaidcreditcard)
 				FROM salesorders
 				WHERE salesorders.debtorno = debtorsmaster.debtorno
 					AND salesorders.orddate >= '". $InitialDate ."'
 					AND salesorders.orddate <= '". $Yesterday ."'
 					AND salesorders.ordtime >= '16:00:00'
 					AND salesorders.ordtime <  '17:00:00') AS sales16,
-				(SELECT SUM(klpaidcash+klpaidcreditcard+klreturnedgoods+klvouchers)
+				(SELECT SUM(klpaidcash+klpaidcreditcard)
 				FROM salesorders
 				WHERE salesorders.debtorno = debtorsmaster.debtorno
 					AND salesorders.orddate >= '". $InitialDate ."'
 					AND salesorders.orddate <= '". $Yesterday ."'
 					AND salesorders.ordtime >= '17:00:00'
 					AND salesorders.ordtime <  '18:00:00') AS sales17,
-				(SELECT SUM(klpaidcash+klpaidcreditcard+klreturnedgoods+klvouchers)
+				(SELECT SUM(klpaidcash+klpaidcreditcard)
 				FROM salesorders
 				WHERE salesorders.debtorno = debtorsmaster.debtorno
 					AND salesorders.orddate >= '". $InitialDate ."'
 					AND salesorders.orddate <= '". $Yesterday ."'
 					AND salesorders.ordtime >= '18:00:00'
 					AND salesorders.ordtime <  '19:00:00') AS sales18,
-				(SELECT SUM(klpaidcash+klpaidcreditcard+klreturnedgoods+klvouchers)
+				(SELECT SUM(klpaidcash+klpaidcreditcard)
 				FROM salesorders
 				WHERE salesorders.debtorno = debtorsmaster.debtorno
 					AND salesorders.orddate >= '". $InitialDate ."'
 					AND salesorders.orddate <= '". $Yesterday ."'
 					AND salesorders.ordtime >= '19:00:00'
 					AND salesorders.ordtime <  '20:00:00') AS sales19,
-				(SELECT SUM(klpaidcash+klpaidcreditcard+klreturnedgoods+klvouchers)
+				(SELECT SUM(klpaidcash+klpaidcreditcard)
 				FROM salesorders
 				WHERE salesorders.debtorno = debtorsmaster.debtorno
 					AND salesorders.orddate >= '". $InitialDate ."'
 					AND salesorders.orddate <= '". $Yesterday ."'
 					AND salesorders.ordtime >= '20:00:00'
 					AND salesorders.ordtime <  '21:00:00') AS sales20,
-				(SELECT SUM(klpaidcash+klpaidcreditcard+klreturnedgoods+klvouchers)
+				(SELECT SUM(klpaidcash+klpaidcreditcard)
 				FROM salesorders
 				WHERE salesorders.debtorno = debtorsmaster.debtorno
 					AND salesorders.orddate >= '". $InitialDate ."'
 					AND salesorders.orddate <= '". $Yesterday ."'
 					AND salesorders.ordtime >= '21:00:00'
 					AND salesorders.ordtime <  '22:00:00') AS sales21,
-				(SELECT SUM(klpaidcash+klpaidcreditcard+klreturnedgoods+klvouchers)
+				(SELECT SUM(klpaidcash+klpaidcreditcard)
 				FROM salesorders
 				WHERE salesorders.debtorno = debtorsmaster.debtorno
 					AND salesorders.orddate >= '". $InitialDate ."'
 					AND salesorders.orddate <= '". $Yesterday ."'
 					AND salesorders.ordtime >= '22:00:00'
 					AND salesorders.ordtime <  '23:00:00') AS sales22,
-				(SELECT SUM(klpaidcash+klpaidcreditcard+klreturnedgoods+klvouchers)
+				(SELECT SUM(klpaidcash+klpaidcreditcard)
 				FROM salesorders
 				WHERE salesorders.debtorno = debtorsmaster.debtorno
 					AND salesorders.orddate >= '". $InitialDate ."'

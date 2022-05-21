@@ -140,7 +140,8 @@ if (DB_num_rows($result) != 0){
 	$TextToPrint .= "Total Returned Goods: " . number_format($TotalReturned) . $NewLine;
 	$TextToPrint .= "Total Voucher/Discounts: " . number_format($TotalVouchers) . $NewLine;
 	$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth;
-	$TextToPrint .= 'Total: ' . number_format($Total) . $NewLine;
+	$TextToPrint .= "Total including returns/discounts: " . number_format($Total) . $NewLine;
+	$TextToPrint .= "Total Personal Sales SPG: " . number_format($TotalCash + $TotalCreditCard) . $NewLine;
 	
 	printf('<td class="number">%s</td>
 			<td>%s</td>
