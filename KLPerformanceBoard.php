@@ -184,9 +184,8 @@ if ($ProcessSection02){
 	if ($KL_SystemAdmin 
 		OR $KL_OperationalManager
 		OR $KL_BusinessDevelopmentManager){
-// COVID REDUCTION OF PANEL
-//		PurchaseOrdersProcessTime(90, $RootPath, $db);
-//		$NumberOfTestExecuted++;
+		PurchaseOrdersProcessTime(90, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		PurchaseOrdersWrongPlannedDates($RootPath, $db);
 		$NumberOfTestExecuted++;
 	}

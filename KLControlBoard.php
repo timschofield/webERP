@@ -421,18 +421,18 @@ if ($ProcessSection01){
 	if ($KL_SystemAdmin 
 		OR $KL_OperationalManager
 		OR $KL_AdministrationTeam){
-		BalanceAccountControl("111121100IK",  2000000,  30000000, $periodnow, $db);
+		BalanceAccountControl("111121100IK",  5000000,  30000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111121110IK",  2000000,  30000000, $periodnow, $db);
+		BalanceAccountControl("111121110IK",  5000000,  30000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 	}
 	
 	if ($KL_SystemAdmin 
 		OR $KL_OperationalManager
 		OR $KL_AdministrationTeam){
-		BalanceAccountControl("111121100PI",  2000000,  30000000, $periodnow, $db);
+		BalanceAccountControl("111121100PI",  5000000,  30000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111121110PI",  2000000,  30000000, $periodnow, $db);
+		BalanceAccountControl("111121110PI",  5000000,  30000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -470,9 +470,9 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111499000",         -1,          1, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("211021400",  -40000000,          1, $periodnow, $db);
+		BalanceAccountControl("211021400", -100000000,          1, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("211021500",  300000000,  600000000, $periodnow, $db);
+		BalanceAccountControl("211021500",  500000000, 1000000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("612012015",         -1,          1, $periodnow, $db);
 		$NumberOfTestExecuted++;
@@ -851,13 +851,6 @@ if ($ProcessSection02){
 		WrongItemsOnWorkOrders($RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
-
-	if ($KL_BusinessDevelopmentManager){
-// COVID REDUCTION OF PANEL
-//		PurchaseOrdersProcessTime(90, $RootPath, $db);
-//		$NumberOfTestExecuted++;
-	}
-	
 	
 	if ($KL_BusinessDevelopmentManager OR 
 		$KL_PurchasingTeam){
