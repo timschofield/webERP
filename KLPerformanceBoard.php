@@ -331,7 +331,7 @@ function AverageCustomerBehaviourByValueInvoice($typereport, $NumDaysA, $db){
 	if ($typereport == "Shop"){
 		$SQL = "SELECT debtorno,
 					name,
-					(SELECT SUM(salesorders.klpaidcash + salesorders.klpaidcreditcard + klreturnedgoods)
+					(SELECT SUM(salesorders.klpaidcash + salesorders.klpaidcreditcard)
 						FROM salesorders
 						WHERE salesorders.orddate >=  '" . $StartDateA . "'
 							AND salesorders.orddate <= '" . $YesterdayA . "'
@@ -348,70 +348,70 @@ function AverageCustomerBehaviourByValueInvoice($typereport, $NumDaysA, $db){
 						WHERE salesorders.orddate >=  '" . $StartDateA . "'
 							AND salesorders.orddate <= '" . $YesterdayA . "'
 							AND salesorders.debtorno = debtorsmaster.debtorno
-							AND (salesorders.klpaidcash + salesorders.klpaidcreditcard + klreturnedgoods) <= " . AVERAGE_INVOICE_VALUE_01 . "
+							AND (salesorders.klpaidcash + salesorders.klpaidcreditcard) <= " . AVERAGE_INVOICE_VALUE_01 . "
 						GROUP BY salesorders.debtorno) AS invoice01,
 					(SELECT COUNT(DISTINCT(salesorders.orderno))
 						FROM salesorders
 						WHERE salesorders.orddate >=  '" . $StartDateA . "'
 							AND salesorders.orddate <= '" . $YesterdayA . "'
 							AND salesorders.debtorno = debtorsmaster.debtorno
-							AND (salesorders.klpaidcash + salesorders.klpaidcreditcard + klreturnedgoods) >  " . AVERAGE_INVOICE_VALUE_01 . "
-							AND (salesorders.klpaidcash + salesorders.klpaidcreditcard + klreturnedgoods) <= " . AVERAGE_INVOICE_VALUE_02 . "
+							AND (salesorders.klpaidcash + salesorders.klpaidcreditcard) >  " . AVERAGE_INVOICE_VALUE_01 . "
+							AND (salesorders.klpaidcash + salesorders.klpaidcreditcard) <= " . AVERAGE_INVOICE_VALUE_02 . "
 						GROUP BY salesorders.debtorno) AS invoice02,
 					(SELECT COUNT(DISTINCT(salesorders.orderno))
 						FROM salesorders
 						WHERE salesorders.orddate >=  '" . $StartDateA . "'
 							AND salesorders.orddate <= '" . $YesterdayA . "'
 							AND salesorders.debtorno = debtorsmaster.debtorno
-							AND (salesorders.klpaidcash + salesorders.klpaidcreditcard + klreturnedgoods) >  " . AVERAGE_INVOICE_VALUE_02 . "
-							AND (salesorders.klpaidcash + salesorders.klpaidcreditcard + klreturnedgoods) <= " . AVERAGE_INVOICE_VALUE_03 . "
+							AND (salesorders.klpaidcash + salesorders.klpaidcreditcard) >  " . AVERAGE_INVOICE_VALUE_02 . "
+							AND (salesorders.klpaidcash + salesorders.klpaidcreditcard) <= " . AVERAGE_INVOICE_VALUE_03 . "
 						GROUP BY salesorders.debtorno) AS invoice03,
 					(SELECT COUNT(DISTINCT(salesorders.orderno))
 						FROM salesorders
 						WHERE salesorders.orddate >=  '" . $StartDateA . "'
 							AND salesorders.orddate <= '" . $YesterdayA . "'
 							AND salesorders.debtorno = debtorsmaster.debtorno
-							AND (salesorders.klpaidcash + salesorders.klpaidcreditcard + klreturnedgoods) >  " . AVERAGE_INVOICE_VALUE_03 . "
-							AND (salesorders.klpaidcash + salesorders.klpaidcreditcard + klreturnedgoods) <= " . AVERAGE_INVOICE_VALUE_04 . "
+							AND (salesorders.klpaidcash + salesorders.klpaidcreditcard) >  " . AVERAGE_INVOICE_VALUE_03 . "
+							AND (salesorders.klpaidcash + salesorders.klpaidcreditcard) <= " . AVERAGE_INVOICE_VALUE_04 . "
 						GROUP BY salesorders.debtorno) AS invoice04,
 					(SELECT COUNT(DISTINCT(salesorders.orderno))
 						FROM salesorders
 						WHERE salesorders.orddate >=  '" . $StartDateA . "'
 							AND salesorders.orddate <= '" . $YesterdayA . "'
 							AND salesorders.debtorno = debtorsmaster.debtorno
-							AND (salesorders.klpaidcash + salesorders.klpaidcreditcard + klreturnedgoods) >  " . AVERAGE_INVOICE_VALUE_04 . "
-							AND (salesorders.klpaidcash + salesorders.klpaidcreditcard + klreturnedgoods) <= " . AVERAGE_INVOICE_VALUE_05 . "
+							AND (salesorders.klpaidcash + salesorders.klpaidcreditcard) >  " . AVERAGE_INVOICE_VALUE_04 . "
+							AND (salesorders.klpaidcash + salesorders.klpaidcreditcard) <= " . AVERAGE_INVOICE_VALUE_05 . "
 						GROUP BY salesorders.debtorno) AS invoice05,
 					(SELECT COUNT(DISTINCT(salesorders.orderno))
 						FROM salesorders
 						WHERE salesorders.orddate >=  '" . $StartDateA . "'
 							AND salesorders.orddate <= '" . $YesterdayA . "'
 							AND salesorders.debtorno = debtorsmaster.debtorno
-							AND (salesorders.klpaidcash + salesorders.klpaidcreditcard + klreturnedgoods) >  " . AVERAGE_INVOICE_VALUE_05 . "
-							AND (salesorders.klpaidcash + salesorders.klpaidcreditcard + klreturnedgoods) <= " . AVERAGE_INVOICE_VALUE_06 . "
+							AND (salesorders.klpaidcash + salesorders.klpaidcreditcard) >  " . AVERAGE_INVOICE_VALUE_05 . "
+							AND (salesorders.klpaidcash + salesorders.klpaidcreditcard) <= " . AVERAGE_INVOICE_VALUE_06 . "
 						GROUP BY salesorders.debtorno) AS invoice06,
 					(SELECT COUNT(DISTINCT(salesorders.orderno))
 						FROM salesorders
 						WHERE salesorders.orddate >=  '" . $StartDateA . "'
 							AND salesorders.orddate <= '" . $YesterdayA . "'
 							AND salesorders.debtorno = debtorsmaster.debtorno
-							AND (salesorders.klpaidcash + salesorders.klpaidcreditcard + klreturnedgoods) >  " . AVERAGE_INVOICE_VALUE_06 . "
-							AND (salesorders.klpaidcash + salesorders.klpaidcreditcard + klreturnedgoods) <= " . AVERAGE_INVOICE_VALUE_07 . "
+							AND (salesorders.klpaidcash + salesorders.klpaidcreditcard) >  " . AVERAGE_INVOICE_VALUE_06 . "
+							AND (salesorders.klpaidcash + salesorders.klpaidcreditcard) <= " . AVERAGE_INVOICE_VALUE_07 . "
 						GROUP BY salesorders.debtorno) AS invoice07,
 					(SELECT COUNT(DISTINCT(salesorders.orderno))
 						FROM salesorders
 						WHERE salesorders.orddate >=  '" . $StartDateA . "'
 							AND salesorders.orddate <= '" . $YesterdayA . "'
 							AND salesorders.debtorno = debtorsmaster.debtorno
-							AND (salesorders.klpaidcash + salesorders.klpaidcreditcard + klreturnedgoods) >  " . AVERAGE_INVOICE_VALUE_07 . "
-							AND (salesorders.klpaidcash + salesorders.klpaidcreditcard + klreturnedgoods) <= " . AVERAGE_INVOICE_VALUE_08 . "
+							AND (salesorders.klpaidcash + salesorders.klpaidcreditcard) >  " . AVERAGE_INVOICE_VALUE_07 . "
+							AND (salesorders.klpaidcash + salesorders.klpaidcreditcard) <= " . AVERAGE_INVOICE_VALUE_08 . "
 						GROUP BY salesorders.debtorno) AS invoice08,
 					(SELECT COUNT(DISTINCT(salesorders.orderno))
 						FROM salesorders
 						WHERE salesorders.orddate >=  '" . $StartDateA . "'
 							AND salesorders.orddate <= '" . $YesterdayA . "'
 							AND salesorders.debtorno = debtorsmaster.debtorno
-							AND (salesorders.klpaidcash + salesorders.klpaidcreditcard + klreturnedgoods) > " . AVERAGE_INVOICE_VALUE_08 . "
+							AND (salesorders.klpaidcash + salesorders.klpaidcreditcard) > " . AVERAGE_INVOICE_VALUE_08 . "
 						GROUP BY salesorders.debtorno) AS invoice09
 				FROM debtorsmaster
 				WHERE debtorsmaster.typeid = 2
@@ -1020,7 +1020,7 @@ function GeneralCustomerBehaviour($NumDaysA, $db){
 						AND salesorders.debtorno = debtorsmaster.debtorno
 						AND salesorderdetails.orderno = salesorders.orderno
 					GROUP BY salesorders.debtorno) AS itemcount,
-				(SELECT SUM(salesorders.klpaidcash + salesorders.klpaidcreditcard + klreturnedgoods)
+				(SELECT SUM(salesorders.klpaidcash + salesorders.klpaidcreditcard)
 					FROM salesorders
 					WHERE salesorders.orddate >=  '" . $StartDateA . "'
 						AND salesorders.orddate <= '" . $YesterdayA . "'
@@ -1039,7 +1039,7 @@ function GeneralCustomerBehaviour($NumDaysA, $db){
 						AND salesorders.debtorno = debtorsmaster.debtorno
 						AND salesorderdetails.orderno = salesorders.orderno
 					GROUP BY salesorders.debtorno) AS itemcount_lastyear,
-				(SELECT SUM(salesorders.klpaidcash + salesorders.klpaidcreditcard + klreturnedgoods)
+				(SELECT SUM(salesorders.klpaidcash + salesorders.klpaidcreditcard)
 					FROM salesorders
 					WHERE salesorders.orddate >=  '" . $StartDateB . "'
 						AND salesorders.orddate <= '" . $YesterdayB . "'
