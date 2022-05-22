@@ -318,7 +318,7 @@ prnMsg($SQL);
 		array('grey','wheat'),  //Data Colors
 		array('black')	//Border Colors
 	);
-	$graph->SetLegend(array(_('Actual'),_('Budget')));
+//	$graph->SetLegend(array(_('Actual'),_('Budget')));
 	$graph->SetYDataLabelPos('plotin');
 
 	//Draw it
