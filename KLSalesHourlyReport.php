@@ -53,7 +53,7 @@ function HourlyPerformance($numDays, $RootPath, $db){
 				WHERE salesorders.debtorno = debtorsmaster.debtorno
 					AND salesorders.orddate >= '". $InitialDate ."'
 					AND salesorders.orddate <= '". $Yesterday ."') AS totalsalesfull,
-				(SELECT SUM(klpaidcash+klpaidcreditcard+klreturnedgoods+klvouchers)
+				(SELECT SUM(klpaidcash+klpaidcreditcard)
 				FROM salesorders
 				WHERE salesorders.debtorno = debtorsmaster.debtorno
 					AND salesorders.orddate >= '". $InitialDate ."'
@@ -76,7 +76,7 @@ function HourlyPerformance($numDays, $RootPath, $db){
 					AND salesorders.orddate >= '". $InitialDate ."'
 					AND salesorders.orddate <= '". $Yesterday ."'
 					AND salesorders.ordtime <= '". $Now ."') AS totalsales,
-				(SELECT SUM(klpaidcash+klpaidcreditcard+klreturnedgoods+klvouchers)
+				(SELECT SUM(klpaidcash+klpaidcreditcard)
 				FROM salesorders
 				WHERE salesorders.debtorno = debtorsmaster.debtorno
 					AND salesorders.orddate >= '". $InitialDate ."'
@@ -94,13 +94,13 @@ function HourlyPerformance($numDays, $RootPath, $db){
 				FROM salesorders
 				WHERE salesorders.debtorno = debtorsmaster.debtorno
 					AND salesorders.orddate = '". $Today ."') AS totalsalestoday,
-				(SELECT SUM(klpaidcash+klpaidcreditcard+klreturnedgoods+klvouchers)
+				(SELECT SUM(klpaidcash+klpaidcreditcard)
 				FROM salesorders
 				WHERE salesorders.debtorno = debtorsmaster.debtorno
 					AND salesorders.orddate = '". $Today ."') AS valuesalestoday
 			FROM debtorsmaster
 			WHERE debtorsmaster.typeid IN (". CUSTOMER_TYPE_RETAIL . ")
-			ORDER BY (SELECT SUM(klpaidcash+klpaidcreditcard+klreturnedgoods+klvouchers)
+			ORDER BY (SELECT SUM(klpaidcash+klpaidcreditcard)
 				FROM salesorders
 				WHERE salesorders.debtorno = debtorsmaster.debtorno
 					AND salesorders.orddate >= '". $InitialDate ."'

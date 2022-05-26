@@ -632,6 +632,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		$ErrMsg = _('The order cannot be added because');
 		$InsertQryResult = DB_query($HeaderSQL,$ErrMsg,$DbgMsg,true);
 
+		$LinesInOrder = 0;
 		// Now process all the lines of the order
 		$DbgMsg = _('Problem inserting a line of a sales order. The SQL that failed was');
 		foreach ($_SESSION['Items'.$identifier]->LineItems as $StockItem) {
@@ -662,6 +663,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 			$ErrMsg = _('Unable to add the sales order line');
 			$Ins_LineItemResult = DB_query($LineItemsSQL,$ErrMsg,$DbgMsg,true);
+			$LinesInOrder++;
 		} /* end inserted line items into sales order details */
 		/* End of insertion of new sales order */
 
@@ -683,6 +685,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 				order_,
 				ovamount,
 				ovgst,
+				ovdiscount,
 				rate,
 				invtext,
 				shipvia,
@@ -700,10 +703,13 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 				'" . $OrderNo . "',
 				'" . ($_SESSION['Items'.$identifier]->total) . "',
 				'" . $_POST['TaxTotal'] . "',
+				'" . -($_POST['AmountReturnedGoods'] + $_POST['AmountVouchers']) . "',
 				'" . $ExRate . "',
 				'" . $InvoiceText . "',
 				'" . $_SESSION['Items'.$identifier]->ShipVia . "',
-				'" . ($_SESSION['Items'.$identifier]->total + $_POST['TaxTotal']- $_POST['AmountReturnedGoods']) . "')";
+				'" . ($_SESSION['Items'.$identifier]->total + $_POST['TaxTotal'] - $_POST['AmountReturnedGoods'] - $_POST['AmountVouchers']) . "')";
+
+//				'" . ($_SESSION['Items'.$identifier]->total + $_POST['TaxTotal']- $_POST['AmountReturnedGoods']) . "')";
 //				'" . ($_SESSION['Items'.$identifier]->total + $_POST['TaxTotal']) . "')";
 //				'" . ($_SESSION['Items'.$identifier]->total + $_POST['TaxTotal'] - $_POST['AmountReturnedGoods'] - $_POST['AmountVouchers']) . "')";
 
@@ -1011,6 +1017,35 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 		if ($_POST['AmountVouchers']!=0){
 			// If there's any general discount or voucher on the purchase, not item by item
+			
+			$LineItemsSQL = "INSERT INTO salesorderdetails 
+								(orderlineno,
+								orderno,
+								stkcode,
+								unitprice,
+								quantity,
+								discountpercent,
+								narrative,
+								itemdue,
+								actualdispatchdate,
+								qtyinvoiced,
+								completed)
+							VALUES ('".$LinesInOrder . "',
+								'" . $OrderNo . "',
+								'RETAIL-VOUCHER-DISC',
+								'". -$_POST['AmountVouchers'] . "',
+								'1',
+								'0',
+								'Voucher,Discount,VIP Card',
+								'" . Date('Y-m-d') . "',
+								'" . Date('Y-m-d') . "',
+								'1',
+								1)";
+
+			$ErrMsg = _('Unable to add the Voucher Discount order line');
+			$Ins_LineItemResult = DB_query($LineItemsSQL,$ErrMsg,$DbgMsg,true);
+			$LinesInOrder++;
+			
 			$ReceiptNumber = AccountDiscountOnOrderRetail('Voucher/Discount',
 								$InvoiceNo,
 								$PeriodNo,
@@ -1025,8 +1060,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								$Tag,
 								'',
 								$ExRate);
-/*	Voucher and discounts do not have to be recorded against the debtor table as it gets unbalanced accounts
-		$ReceiptNumber = AccountDebtorDiscount($ReceiptNumber,
+//	Voucher and discounts do not have to be recorded against the debtor table as it gets unbalanced accounts
+/*		$ReceiptNumber = AccountDebtorDiscount($ReceiptNumber,
 								'VOUCHER_DISCOUNT',
 								$PeriodNo,
 								$Area,
@@ -1041,6 +1076,34 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		
 		if ($_POST['AmountReturnedGoods']!=0){
 			// If there's any good returned, also account for it
+			$LineItemsSQL = "INSERT INTO salesorderdetails 
+								(orderlineno,
+								orderno,
+								stkcode,
+								unitprice,
+								quantity,
+								discountpercent,
+								narrative,
+								itemdue,
+								actualdispatchdate,
+								qtyinvoiced,
+								completed)
+							VALUES ('".$LinesInOrder . "',
+								'" . $OrderNo . "',
+								'RETAIL-RETURNEDGOODS',
+								'". -$_POST['AmountReturnedGoods'] . "',
+								'1',
+								'0',
+								'Returned Goods',
+								'" . Date('Y-m-d') . "',
+								'" . Date('Y-m-d') . "',
+								'1',
+								1)";
+
+			$ErrMsg = _('Unable to add the Returned Goods Value order line');
+			$Ins_LineItemResult = DB_query($LineItemsSQL,$ErrMsg,$DbgMsg,true);
+			$LinesInOrder++;
+
 			$ReceiptNumber = AccountDiscountOnOrderRetail('Returned Goods',
 								$InvoiceNo,
 								$PeriodNo,
@@ -1055,7 +1118,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								$Tag,
 								'',
 								$ExRate);
-			$ReceiptNumber = AccountDebtorDiscount($ReceiptNumber,
+/*			$ReceiptNumber = AccountDebtorDiscount($ReceiptNumber,
 								'RETURNED_GOODS',
 								$PeriodNo,
 								$Area,
@@ -1066,7 +1129,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								$ExRate,
 								$OrderNo,
 								$_SESSION['Items'.$identifier]->DebtorNo);
-		
+*/		
 		}//amount vouched or discount was not zero
 
 		foreach ( $_SESSION['Items'.$identifier]->TaxTotals as $TaxAuthID => $TaxAmount){

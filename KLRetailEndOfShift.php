@@ -1,6 +1,6 @@
 <?php
 
-define("VERSIONFILE", "1.00"); 
+define("VERSIONFILE", "1.01"); 
 
 /* Session started in session.php for password checking and authorisation level check
 config.php is in turn included in session.php*/
@@ -140,7 +140,8 @@ if (DB_num_rows($result) != 0){
 	$TextToPrint .= "Total Returned Goods: " . number_format($TotalReturned) . $NewLine;
 	$TextToPrint .= "Total Voucher/Discounts: " . number_format($TotalVouchers) . $NewLine;
 	$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth;
-	$TextToPrint .= 'Total: ' . number_format($Total) . $NewLine;
+	$TextToPrint .= "Total include returns/vouchers: " . number_format($Total) . $NewLine;
+	$TextToPrint .= "Total Personal Sales SPG: " . number_format($TotalCash + $TotalCreditCard) . $NewLine;
 	
 	printf('<td class="number">%s</td>
 			<td>%s</td>

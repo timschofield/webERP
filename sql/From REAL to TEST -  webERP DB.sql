@@ -414,11 +414,11 @@ TRUNCATE test_erp.`salesman`;
 INSERT INTO test_erp.salesman SELECT * FROM kurakura_kl_erp.salesman;
 
 TRUNCATE test_erp.`salesorderdetails`;
-INSERT INTO test_erp.salesorderdetails SELECT * FROM kurakura_kl_erp.salesorderdetails WHERE orderno >= 448300; 
-
+/*INSERT INTO test_erp.salesorderdetails SELECT * FROM kurakura_kl_erp.salesorderdetails WHERE orderno >= 448300; 
+*/
 TRUNCATE test_erp.`salesorders`;
-INSERT INTO test_erp.salesorders SELECT * FROM kurakura_kl_erp.salesorders WHERE orderno >= 448300; 
-
+/*INSERT INTO test_erp.salesorders SELECT * FROM kurakura_kl_erp.salesorders WHERE orderno >= 448300; 
+*/
 TRUNCATE test_erp.`salestypes`;
 INSERT INTO test_erp.salestypes SELECT * FROM kurakura_kl_erp.salestypes;
 

@@ -171,7 +171,7 @@ function SPGTypePayments($SPG, $maxdays, $db){
 				SUM(salesorders.klpaidcreditcard) AS creditshop, 
 				SUM(salesorders.klreturnedgoods) AS returnedgoodsshop,
 				SUM(salesorders.klvouchers) AS vouchersshop,
-				SUM(salesorders.klpaidcash+salesorders.klpaidcreditcard+salesorders.klreturnedgoods+salesorders.klvouchers) AS totalshop
+				SUM(salesorders.klpaidcash+salesorders.klpaidcreditcard) AS totalshop
 		FROM salesorders, salesman, debtorsmaster
 		WHERE salesorders.salesperson = salesman.salesmancode
 			AND salesorders.debtorno = debtorsmaster.debtorno
@@ -282,9 +282,7 @@ function lastSalesSPG($spg, $NumDaysA, $db){
 				$k = 1;
 			}
 			$total = $myrow['klpaidcash'] + 
-					$myrow['klpaidcreditcard'] +
-					$myrow['klreturnedgoods'] + 
-					$myrow['klvouchers'];
+					$myrow['klpaidcreditcard'];
 					
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
