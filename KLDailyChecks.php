@@ -100,6 +100,7 @@ function KL_DailyCleanDB($ShowMessages, $db, $EmailText){
 	$EmailText = PurgeKLTable("klmovetodiscount50","endprocessdate", $ShowMessages, $EmailText, $db);
 	$EmailText = PurgeKLTable("klmovetodiscount80","endprocessdate", $ShowMessages, $EmailText, $db);
 	$EmailText = PurgeAuditTrailTable($ShowMessages, $EmailText, $db);
+	$EmailText = PurgeAuditScriptsTable($ShowMessages, $EmailText, $db);
 	$EmailText = PurgePackagingUsedTable(2*365, $ShowMessages, $EmailText, $db); //we keep 2 years of packaging used for analysis. Older usage is not relevant
 	return $EmailText;
 }
@@ -432,7 +433,16 @@ function PurgeAuditTrailTable($ShowMessages, $EmailText, $db){
 	 $sql = "DELETE FROM audittrail
 			WHERE  transactiondate <= '" . Date('Y-m-d', mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail'])) . "'";
 	$result = DB_query($sql);
-	$Text = "Purge old Audit Trail table";
+	$Text = "Purge Audit Trail table";
+	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
+	return $EmailText;
+}
+
+function PurgeAuditScriptsTable($ShowMessages, $EmailText, $db){
+	 $sql = "DELETE FROM auditscripts
+			WHERE  executiondate <= '" . Date('Y-m-d', mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail'])) . "'";
+	$result = DB_query($sql);
+	$Text = "Purge Audit Script table";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
 	return $EmailText;
 }
