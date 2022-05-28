@@ -146,6 +146,29 @@ if(basename($_SERVER['SCRIPT_NAME'])=='Logout.php'){
 		die(include($PathPrefix . 'includes/Login.php'));
 
 	}
+
+	/* If script is from TEST weberp, DB should be TEST as well */
+	/* DB name is hardcoded, needs to be updated if renamed*/
+	if ((strpos($_SERVER['PHP_SELF'],"TEST")!== false) AND ($_SESSION['DatabaseName'] != "test_erp")){
+		$Title = _('Wrong webERP Type');
+		include($PathPrefix . 'includes/header.php');
+		echo '<br /><br /><br />';
+		prnMsg(_('Accessing webERP TEST but connecting to Production Database. Logout and login again.'),'error');
+		include($PathPrefix . 'includes/footer.php');
+		exit;
+	}
+	/* If script is from production weberp, DB should be Production as well */
+	/* DB name is hardcoded, needs to be updated if renamed*/
+	if  ((strpos($_SERVER['PHP_SELF'],"TEST") == false) AND ($_SESSION['DatabaseName'] != "kurakura_kl_erp")){
+		$Title = _('Wrong webERP Type');
+		include($PathPrefix . 'includes/header.php');
+		echo '<br /><br /><br />';
+		prnMsg(_('Accessing webERP Production but connecting to TEST Database. Logout and login again.'),'error');
+		include($PathPrefix . 'includes/footer.php');
+		exit;
+	}
+
+
 }
 
 /*If the Code $Version - held in ConnectDB.inc is > than the Database VersionNumber held in config table then do upgrades */
