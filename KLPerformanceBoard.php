@@ -201,8 +201,8 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin){
-//		POStatusControl("STILL NOT FULLY PAID", 0, $RootPath, $db);
-//		$NumberOfTestExecuted++;
+		POStatusControl("STILL NOT FULLY PAID", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
 	}
 	
 	if ($KL_SystemAdmin OR

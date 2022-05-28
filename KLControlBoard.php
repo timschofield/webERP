@@ -1033,10 +1033,10 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin){
-		UsersNotLoggingIn(60, "ALL_EXCEPT_SPGSUPPORT", $db);
+		UsersNotLoggingIn(($_SESSION['MonthsAuditTrail'] *30)+1, "ALL_EXCEPT_SPGSUPPORT", $db);
 		$NumberOfTestExecuted++;
-//		UsersNotLoggingIn(90, "SPGSUPPORT", $db);
-//		$NumberOfTestExecuted++;
+		UsersNotLoggingIn(($_SESSION['MonthsAuditTrail'] *30)+1, "SPGSUPPORT", $db);
+		$NumberOfTestExecuted++;
 	}
 	
 	if ($KL_SystemAdmin 
