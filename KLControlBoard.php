@@ -56,6 +56,7 @@ $NumberOfOpenShopsTotal = $NumberOfOpenShopsKL + $NumberOfOpenShopsBL + $NumberO
 ***************************************************************************************/
 
 if ($_SESSION['UserID'] == "Ricard"){
+
 //	phpinfo();
 
 /* TEST AND PLAY WITH call_user_func to move this script mainly to a table in DB
@@ -216,11 +217,11 @@ if ($ProcessSection01){
 		OR $KL_PurchasingTeam 
 		OR $KL_ShopSupportLeader){
 		
-		ItemsInWrongShops("KAPAL-LAUT", $RootPath, $db);
+		ItemsInWrongShops("SHOPKL", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsInWrongShops("BLINK", $RootPath, $db);
+		ItemsInWrongShops("SHOPBL", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsInWrongShops("OUTLET", $RootPath, $db);
+		ItemsInWrongShops("SHOPOU", $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 	}
@@ -547,7 +548,11 @@ if ($ProcessSection01){
 
 	if ($KL_BusinessDevelopmentManager){
 
-		ItemsWithStockKantorButReorderLevelTokoZero($RootPath, $db);
+		ItemsWithStockKantorButReorderLevelTokoZero("SHOPKL", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsWithStockKantorButReorderLevelTokoZero("SHOPBL", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsWithStockKantorButReorderLevelTokoZero("SHOPOU", $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 		// Items TEST KL in ALL shops KL
@@ -562,21 +567,8 @@ if ($ProcessSection01){
 		CategoryItemsNotInShop("TESTKA", "TOKKA", $NumberOfOpenShopsKL, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-		// Items STABLE KL in ALL shops KL
-		CategoryItemsNotInShop("STABKA", "TOKPU", $NumberOfOpenShopsKL, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("STABKA", "TOKSA", $NumberOfOpenShopsKL, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("STABKA", "TOKSE", $NumberOfOpenShopsKL, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("STABKA", "TOKOB", $NumberOfOpenShopsKL, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("STABKA", "TOKKA", $NumberOfOpenShopsKL, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("STABKA", "TOKB2", $NumberOfOpenShopsKL, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("STABKA", "TOKU2", $NumberOfOpenShopsKL, $RootPath, $db);
-		$NumberOfTestExecuted++;
+		// Items STABLE KL should be available in ALL shops KL
+		$NumberOfTestExecuted = CategoryItemsNotInAllShops("STABKA", "SHOPKL", $NumberOfTestExecuted, $RootPath, $db);
 
 		// Items NO PO KL in ALL shops KL
 		CategoryItemsNotInShop("NOPOKA", "TOKPU", $NumberOfOpenShopsKL, $RootPath, $db);
@@ -600,17 +592,8 @@ if ($ProcessSection01){
 		CategoryItemsNotInShop("TESTBA", "TOKO2", $NumberOfOpenShopsBL, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-		// Items STABLE BL in ALL shops BL
-		CategoryItemsNotInShop("STABBA", "TOKMU", $NumberOfOpenShopsBL, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("STABBA", "TOKBU", $NumberOfOpenShopsBL, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("STABBA", "TOKK2", $NumberOfOpenShopsBL, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("STABBA", "TOKBB", $NumberOfOpenShopsBL, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("STABBA", "TOKO2", $NumberOfOpenShopsBL, $RootPath, $db);
-		$NumberOfTestExecuted++;
+		// Items STABLE BL should be available in ALL shops BL
+		$NumberOfTestExecuted = CategoryItemsNotInAllShops("STABBA", "SHOPBL", $NumberOfTestExecuted, $RootPath, $db);
 
 		// Items NO PO BL in ALL shops BL
 		CategoryItemsNotInShop("NOPOBA", "TOKMU", $NumberOfOpenShopsBL, $RootPath, $db);
@@ -624,28 +607,11 @@ if ($ProcessSection01){
 		CategoryItemsNotInShop("NOPOBA", "TOKO2", $NumberOfOpenShopsBL, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-		// Items OUTLET in ALL shops OU
-		CategoryItemsNotInShop("DISC2A", "TOKAR", $NumberOfOpenShopsOU, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("DISC5A", "TOKAR", $NumberOfOpenShopsOU, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("DISC8A", "TOKAR", $NumberOfOpenShopsOU, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("DISC2A", "TOKU3", $NumberOfOpenShopsOU, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("DISC5A", "TOKU3", $NumberOfOpenShopsOU, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("DISC8A", "TOKU3", $NumberOfOpenShopsOU, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("DISC2A", "TOKTK", $NumberOfOpenShopsOU, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("DISC5A", "TOKTK", $NumberOfOpenShopsOU, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("DISC8A", "TOKTK", $NumberOfOpenShopsOU, $RootPath, $db);
-		$NumberOfTestExecuted++;
-
+		// Items OUTLET should be available in ALL shops OU
+		$NumberOfTestExecuted = CategoryItemsNotInAllShops("DISC2A", "SHOPOU", $NumberOfTestExecuted, $RootPath, $db);
+		$NumberOfTestExecuted = CategoryItemsNotInAllShops("DISC5A", "SHOPOU", $NumberOfTestExecuted, $RootPath, $db);
+		$NumberOfTestExecuted = CategoryItemsNotInAllShops("DISC8A", "SHOPOU", $NumberOfTestExecuted, $RootPath, $db);
 	}
-
 
 	if ($KL_OperationalManager 
 		OR $KL_ShopSupportLeader
@@ -757,85 +723,60 @@ if ($ProcessSection02){
 	***************************************************************************************/
 	if ($KL_BusinessDevelopmentManager){
 
-// COVID REDUCTION OF PANEL
-//		ItemsInCategoryForMoreThanDays( 120, "SETKLA", $RootPath, $db);
-//		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		ItemsInCategoryForMoreThanDays( 120, "SETBLA", $RootPath, $db);
-//		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		ItemsInCategoryForMoreThanDays( 120, "SETGEA", $RootPath, $db);
-//		$NumberOfTestExecuted++;
+		ItemsInCategoryForMoreThanDays( 120, "SETKLA", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsInCategoryForMoreThanDays( 120, "SETBLA", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsInCategoryForMoreThanDays( 120, "SETGEA", $RootPath, $db);
+		$NumberOfTestExecuted++;
 
+		ActiveItemsNoSales( 30, "TESTKA", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsInCategoryForMoreThanDays( 60, "TESTKA", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ActiveItemsNoSales( 30, "TESTBA", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsInCategoryForMoreThanDays( 60, "TESTBA", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ActiveItemsNoSales( 30, "TESTGA", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsInCategoryForMoreThanDays( 60, "TESTGA", $RootPath, $db);
+		$NumberOfTestExecuted++;
 
-// COVID REDUCTION OF PANEL
-//		ActiveItemsNoSales( 30, "TESTKA", $RootPath, $db);
-//		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		ItemsInCategoryForMoreThanDays( 60, "TESTKA", $RootPath, $db);
-//		$NumberOfTestExecuted++;
+		ActiveItemsNoSales( 30, "STABKA", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ActiveItemsNoSales( 30, "STABBA", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ActiveItemsNoSales( 30, "STABGA", $RootPath, $db);
+		$NumberOfTestExecuted++;
 
-// COVID REDUCTION OF PANEL
-//		ActiveItemsNoSales( 30, "TESTBA", $RootPath, $db);
-//		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		ItemsInCategoryForMoreThanDays( 60, "TESTBA", $RootPath, $db);
-//		$NumberOfTestExecuted++;
+		ActiveItemsNoSales( 30, "NOPOKA", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsInCategoryForMoreThanDays( 90, "NOPOKA", $RootPath, $db);
+		$NumberOfTestExecuted++;
 
-// COVID REDUCTION OF PANEL
-//		ActiveItemsNoSales( 30, "TESTGA", $RootPath, $db);
-//		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		ItemsInCategoryForMoreThanDays( 60, "TESTGA", $RootPath, $db);
-//		$NumberOfTestExecuted++;
+		ActiveItemsNoSales( 30, "NOPOBA", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsInCategoryForMoreThanDays( 90, "NOPOBA", $RootPath, $db);
+		$NumberOfTestExecuted++;
 
-// COVID REDUCTION OF PANEL
-//		ActiveItemsNoSales( 30, "STABKA", $RootPath, $db);
-//		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		ActiveItemsNoSales( 30, "STABBA", $RootPath, $db);
-//		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		ActiveItemsNoSales( 30, "STABGA", $RootPath, $db);
-//		$NumberOfTestExecuted++;
+		ActiveItemsNoSales( 30, "NOPOGA", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsInCategoryForMoreThanDays( 90, "NOPOGA", $RootPath, $db);
+		$NumberOfTestExecuted++;
 
-// COVID REDUCTION OF PANEL
-//		ActiveItemsNoSales( 30, "NOPOKA", $RootPath, $db);
-//		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		ItemsInCategoryForMoreThanDays( 90, "NOPOKA", $RootPath, $db);
-//		$NumberOfTestExecuted++;
-
-// COVID REDUCTION OF PANEL
-//		ActiveItemsNoSales( 30, "NOPOBA", $RootPath, $db);
-//		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		ItemsInCategoryForMoreThanDays( 90, "NOPOBA", $RootPath, $db);
-//		$NumberOfTestExecuted++;
-
-// COVID REDUCTION OF PANEL
-//		ActiveItemsNoSales( 30, "NOPOGA", $RootPath, $db);
-//		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		ItemsInCategoryForMoreThanDays( 90, "NOPOGA", $RootPath, $db);
-//		$NumberOfTestExecuted++;
-
-// COVID REDUCTION OF PANEL
-//		ActiveItemsNoSales( 30, "DISC2A", $RootPath, $db);
-//		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		ItemsInCategoryForMoreThanDays( 90, "DISC2A", $RootPath, $db);
-//		$NumberOfTestExecuted++;
+		ActiveItemsNoSales( 30, "DISC2A", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsInCategoryForMoreThanDays( 90, "DISC2A", $RootPath, $db);
+		$NumberOfTestExecuted++;
 		
-//		ActiveItemsNoSales( 50, "DISC5A", $RootPath, $db);
-//		$NumberOfTestExecuted++;
-// COVID REDUCTION OF PANEL
-//		ItemsInCategoryForMoreThanDays( 120, "DISC5A", $RootPath, $db);
-//		$NumberOfTestExecuted++;
+		ActiveItemsNoSales( 50, "DISC5A", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsInCategoryForMoreThanDays( 120, "DISC5A", $RootPath, $db);
+		$NumberOfTestExecuted++;
 		
-// COVID REDUCTION OF PANEL
-//		ActiveItemsNoSales( 60, "DISC8A", $RootPath, $db);
-//		$NumberOfTestExecuted++;
+		ActiveItemsNoSales( 60, "DISC8A", $RootPath, $db);
+		$NumberOfTestExecuted++;
 	}
 
 	/***************************************************************************************
@@ -922,7 +863,6 @@ if ($ProcessSection02){
 		OutstandingOrders("Wholesale", "Quotation", $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
-
 	
 	/*
 	if ($KL_SystemAdmin 
@@ -1298,6 +1238,24 @@ function BalanceListAccountControl($accountlist, $description, $min, $max, $peri
 		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
 	}
 }
+
+function CategoryItemsNotInAllShops($Category, $ShopType, $NumberOfTestExecuted, $RootPath, $db){
+
+	$MinQOH = NumberOfShops($ShopType, $db);
+	
+	$SQL="SELECT loccode
+		FROM locations
+		WHERE typeloc LIKE '%" . $ShopType . "%'";
+	$result = DB_query($SQL);
+	while ($myrow = DB_fetch_array($result)){
+		CategoryItemsNotInShop($Category, $myrow['loccode'], $MinQOH, $RootPath, $db);
+		$NumberOfTestExecuted++;
+	}
+	return $NumberOfTestExecuted;
+	
+}
+
+
 
 function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $RootPath, $db){
 	
@@ -2733,19 +2691,19 @@ function ItemsInSetup($Check, $Category, $RootPath, $db){
 	}
 }
 
-function ItemsInWrongShops($TypeItem, $RootPath, $db){
+function ItemsInWrongShops($ShopType, $RootPath, $db){
 
-	if ($TypeItem == "KAPAL-LAUT"){
+	if ($ShopType == "SHOPKL"){
 		$Message = 'KL items on wrong shops';
 		$Condition =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . "
 							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . ")
 						AND locations.typeloc = 'SHOPKL' ";
-	}elseif ($TypeItem == "BLINK"){
+	}elseif ($ShopType == "SHOPBL"){
 		$Message = 'BLINK items on wrong shops';
 		$Condition =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . "
 							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . ")
 						AND locations.typeloc = 'SHOPBL' ";
-	}elseif ($TypeItem == "OUTLET"){
+	}elseif ($ShopType == "SHOPOU"){
 		$Message = 'DISCOUNT items on wrong shops';
 		$Condition =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . "
 							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . ")
@@ -3275,10 +3233,10 @@ function ItemsWithoutWeightOrVolume($RootPath, $db){
 	}
 }
 
-function ItemsWithStockKantorButReorderLevelTokoZero($RootPath, $db){
+function ItemsWithStockKantorButReorderLevelTokoZero($ShopType, $RootPath, $db){
 /**********************************************************************
 items with stock kantor > 0 
-RL is zero at all shops
+RL is zero at one type of shop
 No pending transfer regarding this item
 
 2013-04-16 excluding items in change price process
@@ -3286,6 +3244,22 @@ No pending transfer regarding this item
 2014-12-02 excluding items in OLD categories
 
 ***********************************************************************/
+	if ($ShopType == "SHOPKL"){
+		$Message = 'KAPAL-LAUT';
+		$Condition =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . "
+							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_GENERAL . ")";
+	}elseif ($ShopType == "SHOPBL"){
+		$Message = 'BLINK';
+		$Condition =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . "
+							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_GENERAL . ")";
+	}elseif ($ShopType == "SHOPOU"){
+		$Message = 'OUTLET';
+		$Condition =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . "
+							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_GENERAL . ")";
+	}else{
+		//error_
+		return;
+	}
 
 	$SQL = "SELECT stockid,
 			stockmaster.categoryid,
@@ -3304,7 +3278,7 @@ No pending transfer regarding this item
 					FROM locstock, locations
 					WHERE locstock.stockid = stockmaster.stockid
 						AND locstock.loccode = locations.loccode
-						AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . ") = 0
+						AND locations.typeloc = '" . $ShopType . "') = 0
 				AND (SELECT SUM(locstock.quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
@@ -3314,16 +3288,13 @@ No pending transfer regarding this item
 						WHERE  recqty < shipqty
 							AND loctransfers.stockid =  stockmaster.stockid)
 				AND discontinued = 0
-				AND stockcategory.stocktype = 'F'
-				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SHOP_DISPLAYS . "
-				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SHOP_CONSUMABLES . "
-				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SETUP . "
-				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_OLD . "
+				AND stockcategory.stocktype = 'F' " . 
+				$Condition . "
 			ORDER BY stockid";
 
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Items with stock available (but NO changing price or category) at Kantor but RL zero for ALL SHOPS') . '</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . $Message . ' Items with stock available (but NO changing price or category) at Kantor but RL zero for all ' . $Message . '  SHOPS' . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
