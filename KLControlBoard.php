@@ -3250,8 +3250,7 @@ No pending transfer regarding this item
 							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_GENERAL . ")";
 	}elseif ($ShopType == "SHOPBL"){
 		$Message = 'BLINK';
-		$Condition =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . "
-							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_GENERAL . ")";
+		$Condition =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . ")";
 	}elseif ($ShopType == "SHOPOU"){
 		$Message = 'OUTLET';
 		$Condition =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . "
