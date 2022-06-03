@@ -555,62 +555,17 @@ if ($ProcessSection01){
 		ItemsWithStockKantorButReorderLevelTokoZero("SHOPOU", $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-		// Items TEST KL in ALL shops KL
-		CategoryItemsNotInShop("TESTKA", "TOKPU", $NumberOfOpenShopsKL, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("TESTKA", "TOKSA", $NumberOfOpenShopsKL, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("TESTKA", "TOKSE", $NumberOfOpenShopsKL, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("TESTKA", "TOKOB", $NumberOfOpenShopsKL, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("TESTKA", "TOKKA", $NumberOfOpenShopsKL, $RootPath, $db);
-		$NumberOfTestExecuted++;
+		$NumberOfTestExecuted = CategoryItemsMissingInShops("TESTKA", "SHOPKL", $NumberOfTestExecuted, $RootPath, $db);
+		$NumberOfTestExecuted = CategoryItemsMissingInShops("STABKA", "SHOPKL", $NumberOfTestExecuted, $RootPath, $db);
+		$NumberOfTestExecuted = CategoryItemsMissingInShops("NOPOKA", "SHOPKL", $NumberOfTestExecuted, $RootPath, $db);
 
-		// Items STABLE KL should be available in ALL shops KL
-		$NumberOfTestExecuted = CategoryItemsNotInAllShops("STABKA", "SHOPKL", $NumberOfTestExecuted, $RootPath, $db);
+		$NumberOfTestExecuted = CategoryItemsMissingInShops("TESTBA", "SHOPBL", $NumberOfTestExecuted, $RootPath, $db);
+		$NumberOfTestExecuted = CategoryItemsMissingInShops("STABBA", "SHOPBL", $NumberOfTestExecuted, $RootPath, $db);
+		$NumberOfTestExecuted = CategoryItemsMissingInShops("NOPOBA", "SHOPBL", $NumberOfTestExecuted, $RootPath, $db);
 
-		// Items NO PO KL in ALL shops KL
-		CategoryItemsNotInShop("NOPOKA", "TOKPU", $NumberOfOpenShopsKL, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("NOPOKA", "TOKSA", $NumberOfOpenShopsKL, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("NOPOKA", "TOKSE", $NumberOfOpenShopsKL, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("NOPOKA", "TOKKA", $NumberOfOpenShopsKL, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		
-		// Items TEST BL in ALL shops BL
-		CategoryItemsNotInShop("TESTBA", "TOKMU", $NumberOfOpenShopsBL, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("TESTBA", "TOKBU", $NumberOfOpenShopsBL, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("TESTBA", "TOKK2", $NumberOfOpenShopsBL, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("TESTBA", "TOKBB", $NumberOfOpenShopsBL, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("TESTBA", "TOKO2", $NumberOfOpenShopsBL, $RootPath, $db);
-		$NumberOfTestExecuted++;
-
-		// Items STABLE BL should be available in ALL shops BL
-		$NumberOfTestExecuted = CategoryItemsNotInAllShops("STABBA", "SHOPBL", $NumberOfTestExecuted, $RootPath, $db);
-
-		// Items NO PO BL in ALL shops BL
-		CategoryItemsNotInShop("NOPOBA", "TOKMU", $NumberOfOpenShopsBL, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("NOPOBA", "TOKBU", $NumberOfOpenShopsBL, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("NOPOBA", "TOKK2", $NumberOfOpenShopsBL, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("NOPOBA", "TOKBB", $NumberOfOpenShopsBL, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop("NOPOBA", "TOKO2", $NumberOfOpenShopsBL, $RootPath, $db);
-		$NumberOfTestExecuted++;
-
-		// Items OUTLET should be available in ALL shops OU
-		$NumberOfTestExecuted = CategoryItemsNotInAllShops("DISC2A", "SHOPOU", $NumberOfTestExecuted, $RootPath, $db);
-		$NumberOfTestExecuted = CategoryItemsNotInAllShops("DISC5A", "SHOPOU", $NumberOfTestExecuted, $RootPath, $db);
-		$NumberOfTestExecuted = CategoryItemsNotInAllShops("DISC8A", "SHOPOU", $NumberOfTestExecuted, $RootPath, $db);
+		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC2A", "SHOPOU", $NumberOfTestExecuted, $RootPath, $db);
+		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC5A", "SHOPOU", $NumberOfTestExecuted, $RootPath, $db);
+		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC8A", "SHOPOU", $NumberOfTestExecuted, $RootPath, $db);
 	}
 
 	if ($KL_OperationalManager 
@@ -1239,13 +1194,28 @@ function BalanceListAccountControl($accountlist, $description, $min, $max, $peri
 	}
 }
 
-function CategoryItemsNotInAllShops($Category, $ShopType, $NumberOfTestExecuted, $RootPath, $db){
+function CategoryItemsMissingInShops($Category, $ShopType, $NumberOfTestExecuted, $RootPath, $db){
 
 	$MinQOH = NumberOfShops($ShopType, $db);
 	
+	if (ItemInList($Category, LIST_STOCK_CATEGORIES_TEST)){
+		$Condition = " AND locations.alltestitems = '1' ";
+	}elseif (ItemInList($Category, LIST_STOCK_CATEGORIES_STABLE)){
+		$Condition = " AND locations.allstableitems = '1' ";
+	}elseif (ItemInList($Category, LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING)){
+		$Condition = " AND locations.allnopoitems = '1' ";
+	}elseif ($Category == "DISC20"){
+		$Condition = " AND locations.alldisc20items = '1' ";
+	}elseif ($Category == "DISC50"){
+		$Condition = " AND locations.alldisc50items = '1' ";
+	}elseif ($Category == "DISC80"){
+		$Condition = " AND locations.alldisc80items = '1' ";
+	}
+	
 	$SQL="SELECT loccode
 		FROM locations
-		WHERE typeloc LIKE '%" . $ShopType . "%'";
+		WHERE typeloc LIKE '%" . $ShopType . "%'" 
+		. $Condition;
 	$result = DB_query($SQL);
 	while ($myrow = DB_fetch_array($result)){
 		CategoryItemsNotInShop($Category, $myrow['loccode'], $MinQOH, $RootPath, $db);
