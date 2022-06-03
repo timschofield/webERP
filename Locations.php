@@ -95,6 +95,12 @@ if(isset($_POST['submit'])) {
 									stockreadytosell = '" . $_POST['StockReadyToSell'] . "',
 									stockavailableforonline = '" . $_POST['StockAvailableForOnline'] . "',
 									glaccountcode = '" . $_POST['GLAccountCode'] . "',
+									alltestitems = '" . $_POST['AllTestItems'] . "',
+									allstableitems = '" . $_POST['AllStableItems'] . "',
+									allnopoitems = '" . $_POST['AllNoPoItems'] . "',
+									alldisc20items = '" . $_POST['AllDisc20Items'] . "',
+									alldisc50items = '" . $_POST['AllDisc50Items'] . "',
+									alldisc80items = '" . $_POST['AllDisc80Items'] . "',
 									allowinvoicing = '" . $_POST['AllowInvoicing'] . "'
 						WHERE loccode = '" . $SelectedLocation . "'";
 
@@ -142,6 +148,12 @@ if(isset($_POST['submit'])) {
 		unset($_POST['StockReadyToSell']);
 		unset($_POST['StockAvailableForOnline']);
 		unset($_POST['GLAccountCode']);
+		unset($_POST['AllTestItems']);
+		unset($_POST['AllStableItems']);
+		unset($_POST['AllNoPoItems']);
+		unset($_POST['AllDisc20Items']);
+		unset($_POST['AllDisc50Items']);
+		unset($_POST['AllDisc80Items']);
 		unset($_POST['AllowInvoicing']);
 
 
@@ -190,6 +202,12 @@ if(isset($_POST['submit'])) {
 										stockreadytosell,
 										stockavailableforonline,
 										glaccountcode,
+										alltestitems,
+										allstableitems,
+										allnopoitems,
+										alldisc20items,
+										alldisc50items,
+										alldisc80items,
 										allowinvoicing)
 						VALUES ('" . $_POST['LocCode'] . "',
 								'" . $_POST['LocationName'] . "',
@@ -225,6 +243,12 @@ if(isset($_POST['submit'])) {
 								'" . $_POST['StockReadyToSell'] . "',
 								'" . $_POST['StockAvailableForOnline'] . "',
 								'" . $_POST['GLAccountCode'] . "',
+								'" . $_POST['AllTestItems'] . "',
+								'" . $_POST['AllStableItems'] . "',
+								'" . $_POST['AllNoPoItems'] . "',
+								'" . $_POST['AllDisc20Items'] . "',
+								'" . $_POST['AllDisc50Items'] . "',
+								'" . $_POST['AllDisc80Items'] . "',
 								'" . $_POST['AllowInvoicing'] . "')";
 
 		$ErrMsg = _('An error occurred inserting the new location record because');
@@ -305,9 +329,14 @@ if(isset($_POST['submit'])) {
 		unset($_POST['StockReadyToSell']);
 		unset($_POST['StockAvailableForOnline']);
 		unset($_POST['GLAccountCode']);
+		unset($_POST['AllTestItems']);
+		unset($_POST['AllStableItems']);
+		unset($_POST['AllNoPoItems']);
+		unset($_POST['AllDisc20Items']);
+		unset($_POST['AllDisc50Items']);
+		unset($_POST['AllDisc80Items']);
 		unset($_POST['AllowInvoicing']);
 	}
-
 
 	/* Go through the tax authorities for all Locations deleting or adding TaxAuthRates records as necessary */
 
@@ -637,6 +666,12 @@ if(!isset($_GET['delete'])) {
 					stockreadytosell,
 					stockavailableforonline,
 					glaccountcode,
+					alltestitems,
+					allstableitems,
+					allnopoitems,
+					alldisc20items,
+					alldisc50items,
+					alldisc80items,
 					allowinvoicing
 				FROM locations
 				WHERE loccode='" . $SelectedLocation . "'
@@ -679,6 +714,12 @@ if(!isset($_GET['delete'])) {
 		$_POST['StockReadyToSell'] = $myrow['stockreadytosell'];
 		$_POST['StockAvailableForOnline'] = $myrow['stockavailableforonline'];
 		$_POST['GLAccountCode'] = $myrow['glaccountcode'];
+		$_POST['AllTestItems'] = $myrow['alltestitems'];
+		$_POST['AllStableItems'] = $myrow['allstableitems'];
+		$_POST['AllNoPoItems'] = $myrow['allnopoitems'];
+		$_POST['AllDisc20Items'] = $myrow['alldisc20items'];
+		$_POST['AllDisc50Items'] = $myrow['alldisc50items'];
+		$_POST['AllDisc80Items'] = $myrow['alldisc80items'];
 		$_POST['AllowInvoicing'] = $myrow['allowinvoicing'];
 
 		echo '<input type="hidden" name="SelectedLocation" value="' . $SelectedLocation . '" />';
@@ -754,6 +795,24 @@ if(!isset($_GET['delete'])) {
 	}
 	if(!isset($_POST['StockAvailableForOnline'])) {
 		$_POST['StockAvailableForOnline'] = 0;
+	}
+	if(!isset($_POST['AllTestItems'])) {
+		$_POST['AllTestItems'] = 0;
+	}
+	if(!isset($_POST['AllStableItems'])) {
+		$_POST['AllStableItems'] = 1;
+	}
+	if(!isset($_POST['AllNoPoItems'])) {
+		$_POST['AllNoPoItems'] = 0;
+	}
+	if(!isset($_POST['AllDisc20Items'])) {
+		$_POST['AllDisc20Items'] = 1;
+	}
+	if(!isset($_POST['AllDisc50Items'])) {
+		$_POST['AllDisc50Items'] = 1;
+	}
+	if(!isset($_POST['AllDisc80Items'])) {
+		$_POST['AllDisc80Items'] = 1;
 	}
 
 	echo '<tr>
@@ -895,6 +954,96 @@ if(!isset($_GET['delete'])) {
 	}
 	echo '</select></td>
 		</tr>';
+	// categories for location
+	echo '<tr>
+			<td>' . _('If KL or BLINK shop: Display ALL TEST items?') . ':</td>
+			<td><select name="AllTestItems">';
+	if($_POST['AllTestItems']==1) {
+		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
+	} else {
+		echo '<option value="1">' . _('Yes') . '</option>';
+	}
+	if($_POST['AllTestItems']==0) {
+		echo '<option selected="selected" value="0">' . _('No') . '</option>';
+	} else {
+		echo '<option value="0">' . _('No') . '</option>';
+	}
+	echo '</select></td></tr>';
+
+	echo '<tr>
+			<td>' . _('If KL or BLINK shop: Display ALL STABLE items?') . ':</td>
+			<td><select name="AllStableItems">';
+	if($_POST['AllStableItems']==1) {
+		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
+	} else {
+		echo '<option value="1">' . _('Yes') . '</option>';
+	}
+	if($_POST['AllStableItems']==0) {
+		echo '<option selected="selected" value="0">' . _('No') . '</option>';
+	} else {
+		echo '<option value="0">' . _('No') . '</option>';
+	}
+	echo '</select></td></tr>';
+
+	echo '<tr>
+			<td>' . _('If KL or BLINK shop: Display ALL NO PO items?') . ':</td>
+			<td><select name="AllNoPoItems">';
+	if($_POST['AllNoPoItems']==1) {
+		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
+	} else {
+		echo '<option value="1">' . _('Yes') . '</option>';
+	}
+	if($_POST['AllNoPoItems']==0) {
+		echo '<option selected="selected" value="0">' . _('No') . '</option>';
+	} else {
+		echo '<option value="0">' . _('No') . '</option>';
+	}
+	echo '</select></td></tr>';
+
+	echo '<tr>
+			<td>' . _('If OUTLET shop: Display ALL Discount 20% items?') . ':</td>
+			<td><select name="AllDisc20Items">';
+	if($_POST['AllDisc20Items']==1) {
+		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
+	} else {
+		echo '<option value="1">' . _('Yes') . '</option>';
+	}
+	if($_POST['AllDisc20Items']==0) {
+		echo '<option selected="selected" value="0">' . _('No') . '</option>';
+	} else {
+		echo '<option value="0">' . _('No') . '</option>';
+	}
+	echo '</select></td></tr>';
+
+	echo '<tr>
+			<td>' . _('If OUTLET shop: Display ALL Discount 50% items?') . ':</td>
+			<td><select name="AllDisc50Items">';
+	if($_POST['AllDisc50Items']==1) {
+		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
+	} else {
+		echo '<option value="1">' . _('Yes') . '</option>';
+	}
+	if($_POST['AllDisc50Items']==0) {
+		echo '<option selected="selected" value="0">' . _('No') . '</option>';
+	} else {
+		echo '<option value="0">' . _('No') . '</option>';
+	}
+	echo '</select></td></tr>';
+
+	echo '<tr>
+			<td>' . _('If OUTLET shop: Display ALL Discount 80% items?') . ':</td>
+			<td><select name="AllDisc80Items">';
+	if($_POST['AllDisc80Items']==1) {
+		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
+	} else {
+		echo '<option value="1">' . _('Yes') . '</option>';
+	}
+	if($_POST['AllDisc80Items']==0) {
+		echo '<option selected="selected" value="0">' . _('No') . '</option>';
+	} else {
+		echo '<option value="0">' . _('No') . '</option>';
+	}
+	echo '</select></td></tr>';
 
 	// Retail Partner:
 	echo '<tr>
