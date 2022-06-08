@@ -429,7 +429,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 							<th class="ascending">' . $NumDaysF . _(' days') . '</th>
 							<th class="ascending">' . _('MTD') . '</th>
 							<th class="ascending">' . _('Trend') . '</th>
-							<th class="ascending">' . 'Forecast '. $NumDaysC . _(' days') . '</th>
+							<th class="ascending">' . 'Monthly Forecast' . '</th>
 							<th class="ascending">' . $TitleTarget . '</th>
 						</tr>';
 		echo $TableHeader;
@@ -451,7 +451,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 			$dailyD = locale_number_format(($myrow['salesD']/$NumDaysD),0);
 			$dailyE = locale_number_format(($myrow['salesE']/$NumDaysE),0);
 			$dailyF = locale_number_format(($myrow['salesF']/$NumDaysF),0);
-			$percent = (($myrow['salesD']/$NumDaysD)-($myrow['salesC']/$NumDaysC))/($myrow['salesC']/$NumDaysC) * 100;
+			$percent = (($myrow['salesD']/$NumDaysD)-($myrow['salesB']/$NumDaysB))/($myrow['salesB']/$NumDaysB) * 100;
 			$trend = " ";
 			if ($percent > IMPROVEMENT_AVERAGE_SALES){
 				$trend = "Improving ". locale_number_format($percent,0) . "%";
@@ -459,7 +459,8 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 			if ($percent < -IMPROVEMENT_AVERAGE_SALES){
 				$trend = "Degrading ". locale_number_format($percent,0) . "%";
 			}
-			$forecast = locale_number_format(round($myrow['salesC'], -5),0);
+			$forecast = round($myrow['salesC']*((100+$percent)/100), -5);
+			
 			$MTD = locale_number_format($myrow['salesMTD'], 0);
 			
 			if ($dailyA + $dailyB + $dailyC + $dailyD + $dailyE + $dailyF > 0){
@@ -490,7 +491,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 						$dailyF,
 						$MTD,
 						$trend,
-						$forecast,
+						locale_number_format($forecast,0),
 						$target
 						);
 				
@@ -502,11 +503,11 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 			$TotalDateE = $TotalDateE +($myrow['salesE']/$NumDaysE);
 			$TotalDateF = $TotalDateF +($myrow['salesF']/$NumDaysF);
 			$TotalDateMTD = $TotalDateMTD +$myrow['salesMTD'];
-			$TotalForecast = $TotalForecast + round($myrow['salesC'], -5);
+			$percent = ($TotalDateD-$TotalDateB)/$TotalDateB * 100;
+			$TotalForecast = $TotalForecast + round($forecast, -5);
 			$i++;
 		}
 		if (($typereport == "Shop") OR ($typereport == "Online")){
-			$percent = ($TotalDateD-$TotalDateC)/$TotalDateC * 100;
 			$trend = " ";
 			if ($percent > 0){
 				$trend = "Improving ". locale_number_format($percent,0) . "%";
