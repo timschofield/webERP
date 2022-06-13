@@ -222,7 +222,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 					// Does not exist any shop with available stock. This was the last one!
 					// No need to do anything!!!
 					$rebalancinglocationfrom = "";
-					$strategy = "No shop with available overstock. No RL changed";
+					$strategy = "No shop with available stock. No RL changed";
 				}else{
 					// let's distribute available stock between the shops with RL > 0.
 					// if RL = 0 we suppose we do not want it there for any reason 
