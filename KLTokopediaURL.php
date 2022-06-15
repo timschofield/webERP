@@ -77,7 +77,7 @@ function submit(&$db, $SelectedFile) {
 			// get the data for a product
 			$Error = "";
 			$TokopediaProductId = $worksheet->getCell('B'.$row)->getCalculatedValue();
-			$StockId = $worksheet->getCell('H'.$row)->getCalculatedValue();
+			$StockId = $worksheet->getCell('I'.$row)->getCalculatedValue();
 			$TokopediaProductName = $worksheet->getCell('C'.$row)->getCalculatedValue();
 			$URLTokopedia = $worksheet->getCell('D'.$row)->getCalculatedValue();
 			$LinkTokopedia = '<li><a rel="external" href="' . $URLTokopedia . '">' . _('Tokopedia') . '</a></li>';
