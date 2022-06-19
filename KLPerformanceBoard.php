@@ -70,6 +70,8 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		PeriodDifferenceSales("IMMEDIATE", "Shop",  30, $db);
 		$NumberOfTestExecuted++;
+		PeriodDifferenceSales("2019", "Shop",  30, $db);
+		$NumberOfTestExecuted++;
 
 //		PeriodDifferenceSales("YEAR", "Shop",   7, $db);
 //		$NumberOfTestExecuted++;
@@ -2800,9 +2802,13 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA, $db){
 	if ($typeperiod == "YEAR"){
 		$YesterdayB  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1-365));
 		$StartDateB = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-365));
-	}else{
+	}elseif ($typeperiod == "IMMEDIATE"){
 		$YesterdayB  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1-$NumDaysA));
 		$StartDateB = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-$NumDaysA));
+	}else{
+		// comparing with a fixed year
+		$YesterdayB  = $typeperiod . substr($YesterdayA, 4, 6);
+		$StartDateB  = $typeperiod . substr($StartDateA, 4, 6);
 	}
 	$TotalDateA = 0;
 	$TotalDateB = 0;
@@ -2843,7 +2849,7 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA, $db){
 							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesB
 				FROM debtorsmaster ";
 		if ($typereport == "Shop"){
-			$SQL = $SQL .  "WHERE debtorsmaster.typeid = 2 
+			$SQL = $SQL .  "WHERE (debtorsmaster.typeid = 2 OR debtorsmaster.typeid = 11)
 							ORDER BY (SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
 										FROM salesorderdetails, salesorders
 										WHERE salesorderdetails.orderno = salesorders.orderno
@@ -2892,10 +2898,14 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA, $db){
 			echo '<p class="page_title_text" align="center"><strong>' . _('Difference sales for ') . $typereport . " during the last " . $NumDaysA . " days and same period last year".'</strong></p>';
 			$TitleCurrent = $NumDaysA . ' Days This Year';
 			$TitlePrevious = $NumDaysA . ' Days Last Year';
-		}else{
+		}elseif ($typeperiod == "IMMEDIATE"){
 			echo '<p class="page_title_text" align="center"><strong>' . _('Difference sales for ') . $typereport . " during the last " . $NumDaysA . " days and previous immediate same period".'</strong></p>';
 			$TitleCurrent = $NumDaysA . ' Last Days';
 			$TitlePrevious = $NumDaysA . ' Previous Days';
+		}else{
+			echo '<p class="page_title_text" align="center"><strong>' . _('Difference sales for ') . $typereport . " during the last " . $NumDaysA . " days and same period in " . $typeperiod .'</strong></p>';
+			$TitleCurrent = $NumDaysA . ' Days This Year';
+			$TitlePrevious = $NumDaysA . ' Days '. $typeperiod;
 		}
 		echo '<div>';
 		echo '<table class="selection">';
@@ -2954,6 +2964,7 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA, $db){
 						$trend,
 						$Rent
 						);
+				$i++;
 			}
 
 			if (($myrow['salesA'] > 0) AND ($myrow['salesB'] > 0)){
@@ -2972,7 +2983,6 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA, $db){
 			$TotalDateA = $TotalDateA +($myrow['salesA']);
 			$TotalRent = $TotalRent +($myrow['yearlyrent']);
 			$TotalDateB = $TotalDateB +($myrow['salesB']);
-			$i++;
 		}
 		if ($typereport == "Shop"){
 			$percent = (($TotalBothYearsDateA)-($TotalBothYearsDateB))/($TotalBothYearsDateB) * 100;
