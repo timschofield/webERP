@@ -2849,7 +2849,8 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA, $db){
 							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesB
 				FROM debtorsmaster ";
 		if ($typereport == "Shop"){
-			$SQL = $SQL .  "WHERE (debtorsmaster.typeid = 2 OR debtorsmaster.typeid = 11)
+			// retail shops or old retail shops
+			$SQL = $SQL .  "WHERE (debtorsmaster.typeid = 2 OR debtorsmaster.typeid = 11)  
 							ORDER BY (SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
 										FROM salesorderdetails, salesorders
 										WHERE salesorderdetails.orderno = salesorders.orderno
@@ -2858,6 +2859,7 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA, $db){
 											AND salesorders.orddate <= '". $YesterdayA . "'
 											AND salesorders.debtorno = debtorsmaster.debtorno) DESC";
 		}else{
+			// online not being wholesale
 			$SQL = $SQL . "WHERE (debtorsmaster.typeid = 9 OR debtorsmaster.typeid = 10)
 								AND debtorsmaster.debtorno != 'WEB-WH-IDR'
 								AND debtorsmaster.debtorno != 'WEB-WH-USD'

@@ -2368,7 +2368,8 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 				suppliers.currcode,
 				currencies.rate AS exchangerate,
 				currencies.decimalplaces AS currdecimalplaces,
-				SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue
+				SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue,
+				SUM(purchorderdetails.quantityord) AS orderitems
 			FROM purchorders INNER JOIN purchorderdetails
 				ON purchorders.orderno = purchorderdetails.orderno
 			INNER JOIN suppliers 
@@ -2395,7 +2396,7 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th colspan="9">' . _('Order') . '</th>
+							<th colspan="10">' . _('Order') . '</th>
 							<th colspan="3">' . _('Supplier DP') . '</th>
 							<th colspan="3">' . _('Payment Needed') . '</th>
 							<th colspan="3">' . _('Acummulated Payment') . '</th>
@@ -2407,6 +2408,7 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 							<th>' . $FieldName1 . '</th>
 							<th>' . $FieldName2 . '</th>
 							<th>' . $ShipmentAWB . '</th>
+							<th>' . _('# pcs') . '</th>
 							<th>' . _('IDR') . '</th>
 							<th>' . _('USD') . '</th>
 							<th>' . _('THB') . '</th>
@@ -2425,6 +2427,7 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 		$TotalValueOrderIDR = 0;
 		$TotalValueOrderUSD = 0;
 		$TotalValueOrderTHB = 0;
+		$TotalItemsAllOrders = 0;
 		$TotalValueAllOrders = 0;
 		$TotalValueAllPayments = 0;
 		$AcumIDR = 0;
@@ -2458,6 +2461,8 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 			$PaymentOrderUSD = 0;
 			$PaymentOrderTHB = 0;
 			
+			$TotalItemsAllOrders += $myrow['orderitems'];
+
 			if ($myrow['currcode'] == 'IDR'){
 				$ValueOrderIDR = $myrow['ordervalue'];
 				$TotalValueOrderIDR += $ValueOrderIDR;
@@ -2527,6 +2532,7 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
+					<td class="number">%s</td>
 					</tr>', 
 					$i, 
 					$CodeLink, 
@@ -2534,6 +2540,7 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 					ConvertSQLDate($myrow['reportdate']), 
 					$Date2, 
 					$myrow['shipmentawb'],
+					locale_number_format_zero_blank($myrow['orderitems'],0),
 					locale_number_format_zero_blank($ValueOrderIDR,0),
 					locale_number_format_zero_blank($ValueOrderUSD,0),
 					locale_number_format_zero_blank($ValueOrderTHB,0),
@@ -2579,6 +2586,7 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
+					<td class="number">%s</td>
 					</tr>', 
 					'', 
 					'', 
@@ -2586,6 +2594,7 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 					'', 
 					'', 
 					'', 
+					locale_number_format_zero_blank($TotalItemsAllOrders,0),
 					locale_number_format_zero_blank($TotalValueOrderIDR,0),
 					locale_number_format_zero_blank($TotalValueOrderUSD,0),
 					locale_number_format_zero_blank($TotalValueOrderTHB,0),
@@ -2618,11 +2627,13 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
+					<td class="number">%s</td>
 					</tr>', 
 					'', 
 					'', 
 					'TOTAL ORDERS @ SC',
 					'IDR', 
+					'', 
 					'', 
 					'', 
 					locale_number_format_zero_blank($TotalValueAllOrders,0),
@@ -2667,11 +2678,13 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
+					<td class="number">%s</td>
 					</tr>', 
 					'', 
 					'', 
 					'COGS',
 					'IDR', 
+					'', 
 					'', 
 					'', 
 					locale_number_format_zero_blank($myrow['cogs'],0),
@@ -2706,11 +2719,13 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
+					<td class="number">%s</td>
 					</tr>', 
 					'', 
 					'', 
 					'DIFFERENCE STOCK',
 					'IDR', 
+					'', 
 					'', 
 					'', 
 					locale_number_format_zero_blank($TotalValueAllOrders-$myrow['cogs'],0),
@@ -2746,11 +2761,13 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
+					<td class="number">%s</td>
 					</tr>', 
 					'', 
 					'', 
 					'MONTHLY STOCK CHANGE',
 					'IDR', 
+					'', 
 					'', 
 					'', 
 					locale_number_format_zero_blank(($TotalValueAllOrders-$myrow['cogs'])/$maxdays*30,0),
