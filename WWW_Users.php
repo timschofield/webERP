@@ -14,6 +14,9 @@ $ViewTopic = 'GettingStarted';
 $BookMark = 'UserMaintenance';
 include('includes/header.php');
 
+/* ASSIGN users to groups */
+include ('includes/KLRoles.php');
+
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/group_add.png" title="', // Icon image.
 	$Title, '" /> ', // Icon title.
@@ -359,6 +362,11 @@ if(!isset($SelectedUser)) {
 					theme,
 					language
 				FROM www_users";
+	
+	if (!$KL_SystemAdmin){
+		// if not system admin, can not access to system admin role. To prevent rogue employees quicking out the sys admin ;-)
+		$Sql = $Sql . " WHERE fullaccess != '8'";
+	} 
 	$Result = DB_query($Sql);
 
 	$k = 1;// Row colour counter.
@@ -524,13 +532,28 @@ echo '<tr>
 		<td>' . _('Security Role') . ':</td>
 		<td><select name="Access">';
 
-foreach($SecurityRoles as $SecKey => $SecVal) {
-	if(isset($_POST['Access']) and $SecKey == $_POST['Access']) {
-		echo '<option selected="selected" value="' . $SecKey . '">' . $SecVal  . '</option>';
-	} else {
-		echo '<option value="' . $SecKey . '">' . $SecVal  . '</option>';
+if (!$KL_SystemAdmin){
+	// if not system admin, can not access to system admin role. To prevent rogue employees quicking out the sys admin ;-)
+	foreach($SecurityRoles as $SecKey => $SecVal) {
+		if ($SecKey != '8'){
+			if(isset($_POST['Access']) and $SecKey == $_POST['Access']) {
+				echo '<option selected="selected" value="' . $SecKey . '">' . $SecVal  . '</option>';
+			} else {
+				echo '<option value="' . $SecKey . '">' . $SecVal  . '</option>';
+			}
+		}
 	}
-}
+}else{
+	// sysadmin can assign sysadmin role
+	foreach($SecurityRoles as $SecKey => $SecVal) {
+		if(isset($_POST['Access']) and $SecKey == $_POST['Access']) {
+			echo '<option selected="selected" value="' . $SecKey . '">' . $SecVal  . '</option>';
+		} else {
+			echo '<option value="' . $SecKey . '">' . $SecVal  . '</option>';
+		}
+	}
+} 
+
 echo '</select>';
 echo '<input type="hidden" name="ID" value="'.$_SESSION['UserID'].'" /></td>
 

@@ -3,6 +3,10 @@
 include ('includes/session.php');
 $Title = _('Bank Accounts - Users Authority Copy Authority');// Screen identificator.
 include('includes/header.php');
+
+/* ASSIGN users to groups */
+include ('includes/KLRoles.php');
+
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/maintenance.png" title="',// Icon image.
 	_('Copy Authority of Bank Accounts from one user to another'), '" /> ',// Icon title.
@@ -53,10 +57,21 @@ echo '<table>';
 echo ' <tr>
 		<td>' . _('Select User to copy the Authority FROM') . ':</td>
 		<td><select name="FromUserID">';
-$Result = DB_query("SELECT userid,
-							realname
-					FROM www_users
-					ORDER BY userid");
+
+if ($KL_SystemAdmin){
+	// if system admin can access to anyone.
+	$Result = DB_query("SELECT userid,
+								realname
+						FROM www_users
+						ORDER BY userid");
+}else{
+	// if not system admin, can not access to system admin role. To prevent rogue employees quicking out the sys admin ;-)
+	$Result = DB_query("SELECT userid,
+								realname
+						FROM www_users
+						ORDER BY userid
+						WHERE fullaccess != '8'");
+} 
 
 echo '<option selected value="">' . _('Not Yet Selected') . '</option>';
 while ($MyRow = DB_fetch_array($Result)) {
@@ -68,10 +83,21 @@ echo '</select></td></tr>';
 echo ' <tr>
 		<td>' . _('Select User to copy the Authority TO') . ':</td>
 		<td><select name="ToUserID">';
-$Result = DB_query("SELECT userid,
-							realname
-					FROM www_users
-					ORDER BY userid");
+
+if ($KL_SystemAdmin){
+	// if system admin can access to anyone.
+	$Result = DB_query("SELECT userid,
+								realname
+						FROM www_users
+						ORDER BY userid");
+}else{
+	// if not system admin, can not access to system admin role. To prevent rogue employees quicking out the sys admin ;-)
+	$Result = DB_query("SELECT userid,
+								realname
+						FROM www_users
+						ORDER BY userid
+						WHERE fullaccess != '8'");
+} 
 
 echo '<option selected value="">' . _('Not Yet Selected') . '</option>';
 while ($MyRow = DB_fetch_array($Result)) {
