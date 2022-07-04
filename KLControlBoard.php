@@ -1229,7 +1229,7 @@ function CategoryItemsMissingInShops($Category, $ShopType, $NumberOfTestExecuted
 
 function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $RootPath, $db){
 	
-	$MinQOH = $MinQOH + 1; // as we keep 1 for online shop allways in kantor
+	$MinQOH = $MinQOH + 1; // as we keep 1 for online shop allways in knator
 	
 	$Message = $Category . _(' items NOT in ') . $Shop . ' with QOH >= ' . $MinQOH .' (excluding Change of Price, Move to Discount, Service, Shop online and Return to Supplier)';
 
@@ -1297,7 +1297,6 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $RootPath, $db){
 						WHERE l.stockid = stockmaster.stockid
 							AND l.loccode NOT IN " . LIST_SERVICE_LOCATIONS . "
 							AND l.loccode NOT IN " . LIST_CONSIGNMENT_LOCATIONS . "
-							AND l.loccode NOT IN " . LIST_ONLINE_SHOPS . "
 							AND l.loccode NOT IN " . LIST_SAMPLE_LOCATIONS . ") AS qoh,
 					locstock.reorderlevel
 			FROM stockmaster, locstock
@@ -1320,11 +1319,13 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $RootPath, $db){
 						WHERE l.stockid = stockmaster.stockid
 							AND l.loccode NOT IN " . LIST_SERVICE_LOCATIONS . "
 							AND l.loccode NOT IN " . LIST_CONSIGNMENT_LOCATIONS . "
-							AND l.loccode NOT IN " . LIST_ONLINE_SHOPS . "
 							AND l.loccode NOT IN " . LIST_SAMPLE_LOCATIONS . ") >= ". $MinQOH .")
+				AND ((SELECT SUM(l.reorderlevel)
+						FROM locstock l
+						WHERE l.stockid = stockmaster.stockid
+							AND l.loccode IN " . LIST_ONLINE_SHOPS . ") = 0)
 			ORDER BY stockmaster.stockid";
 
-// prnMsg($SQL);
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . $Message . '</strong></p>';
@@ -2416,8 +2417,7 @@ function ItemsInmediateShortage($Cat, $RootPath, $db){
 
 
 function ItemsInKLProcessAndRLNotZero($RootPath, $db){
-	/* Check if there is any item in any KL process and RL is not zero... 
-	Online shop location is excluded as it is not a real RL, stock still is at kantor */
+	/* Check if there is any item in any KL process and RL is not zero... */
 
 	$SQL = "SELECT stockmaster.stockid,			
 				   stockmaster.description,			
@@ -2433,7 +2433,6 @@ function ItemsInKLProcessAndRLNotZero($RootPath, $db){
 			INNER JOIN locations 			
 			ON locstock.loccode = locations.loccode			
 			WHERE locstock.reorderlevel != 0
-				AND locstock.loccode NOT IN " . LIST_ONLINE_SHOPS . "
 				AND (stockmaster.klmovingdiscount20 != 0
 					OR  stockmaster.klmovingdiscount50 != 0
 					OR  stockmaster.klmovingdiscount80 != 0

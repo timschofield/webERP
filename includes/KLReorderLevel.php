@@ -17,13 +17,12 @@ function KL_DailyRLAdjustmentsForKL($ShowMessages, $updateDB, $RootPath, $db, $E
 	if ($ShowMessages){
 		prnMsg('Number of Shops Kapal-laut = ' . $Shops,'info');
 	}
-// Modification COVID. All new RL have been reduced -1 or -2, to keep more stock in kantor, less at shops.
-// Previously (6,5,4) (5,4,3) (4,3,2) for each group
-	$EmailText = SetRLForTopSalesItems("SHOPKL",   1,  50, ($Shops * 7),       999999, 4, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
-	$EmailText = SetRLForTopSalesItems("SHOPKL",   1,  50, ($Shops * 6), ($Shops * 7), 3, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+// Modification COVID. All new RL have been reduced -1, to keep more stock in kantor, less at shops.
+	$EmailText = SetRLForTopSalesItems("SHOPKL",   1,  50, ($Shops * 7),       999999, 5, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	$EmailText = SetRLForTopSalesItems("SHOPKL",   1,  50, ($Shops * 6), ($Shops * 7), 4, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 	$EmailText = SetRLForTopSalesItems("SHOPKL",   1,  50, ($Shops * 5), ($Shops * 6), 3, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 
-	$EmailText = SetRLForTopSalesItems("SHOPKL",  51, 100, ($Shops * 6),       999999, 3, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	$EmailText = SetRLForTopSalesItems("SHOPKL",  51, 100, ($Shops * 6),       999999, 4, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 	$EmailText = SetRLForTopSalesItems("SHOPKL",  51, 100, ($Shops * 5), ($Shops * 6), 3, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 	$EmailText = SetRLForTopSalesItems("SHOPKL",  51, 100, ($Shops * 4), ($Shops * 5), 2, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 
@@ -31,10 +30,9 @@ function KL_DailyRLAdjustmentsForKL($ShowMessages, $updateDB, $RootPath, $db, $E
 	$EmailText = SetRLForTopSalesItems("SHOPKL", 101, 250, ($Shops * 4), ($Shops * 5), 2, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 	$EmailText = SetRLForTopSalesItems("SHOPKL", 101, 250, ($Shops * 3), ($Shops * 4), 2, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 
-// Modification COVID. All new RL have been reduced -2, to keep more stock in kantor, less at shops.
-// previously 6,5,4 and 5,4,3
-	$EmailText = SetRLForLowSalesHighRL("SHOPKL",  30, 4, 3, ($Shops * 6), $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
-	$EmailText = SetRLForLowSalesHighRL("SHOPKL",  20, 3, 2, ($Shops * 5), $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+// Modification COVID. All new RL have been reduced -1, to keep more stock in kantor, less at shops.
+	$EmailText = SetRLForLowSalesHighRL("SHOPKL",  30, 5, 4, ($Shops * 6), $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	$EmailText = SetRLForLowSalesHighRL("SHOPKL",  20, 4, 3, ($Shops * 5), $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 	$EmailText = SetRLForLowSalesHighRL("SHOPKL",  10, 3, 2, ($Shops * 4), $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 	
 	return $EmailText;
@@ -50,13 +48,12 @@ function KL_DailyRLAdjustmentsForBlink($ShowMessages, $updateDB, $RootPath, $db,
 	if ($ShowMessages){
 		prnMsg('Number of Shops Blink = ' . $Shops,'info');
 	}
-// Modification COVID. All new RL have been reduced -1 or -2, to keep more stock in kantor, less at shops.
-// Previously (6,5,4) (5,4,3) (4,3,2) for each group
-	$EmailText = SetRLForTopSalesItems("SHOPBL",   1,  50, ($Shops * 7),       999999, 4, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
-	$EmailText = SetRLForTopSalesItems("SHOPBL",   1,  50, ($Shops * 6), ($Shops * 7), 3, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+// Modification COVID. All new RL have been reduced -1, to keep more stock in kantor, less at shops.
+	$EmailText = SetRLForTopSalesItems("SHOPBL",   1,  50, ($Shops * 7),       999999, 5, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	$EmailText = SetRLForTopSalesItems("SHOPBL",   1,  50, ($Shops * 6), ($Shops * 7), 4, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 	$EmailText = SetRLForTopSalesItems("SHOPBL",   1,  50, ($Shops * 5), ($Shops * 6), 3, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 
-	$EmailText = SetRLForTopSalesItems("SHOPBL",  51, 100, ($Shops * 6),       999999, 3, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	$EmailText = SetRLForTopSalesItems("SHOPBL",  51, 100, ($Shops * 6),       999999, 4, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 	$EmailText = SetRLForTopSalesItems("SHOPBL",  51, 100, ($Shops * 5), ($Shops * 6), 3, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 	$EmailText = SetRLForTopSalesItems("SHOPBL",  51, 100, ($Shops * 4), ($Shops * 5), 2, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 
@@ -64,10 +61,9 @@ function KL_DailyRLAdjustmentsForBlink($ShowMessages, $updateDB, $RootPath, $db,
 	$EmailText = SetRLForTopSalesItems("SHOPBL", 101, 200, ($Shops * 4), ($Shops * 5), 2, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 	$EmailText = SetRLForTopSalesItems("SHOPBL", 101, 200, ($Shops * 3), ($Shops * 4), 2, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 
-// Modification COVID. All new RL have been reduced -2, to keep more stock in kantor, less at shops.
-// previously 6,5,4 and 5,4,3
-	$EmailText = SetRLForLowSalesHighRL("SHOPBL",  30, 4, 3, ($Shops * 6), $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
-	$EmailText = SetRLForLowSalesHighRL("SHOPBL",  20, 3, 2, ($Shops * 5), $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+// Modification COVID. All new RL have been reduced -1, to keep more stock in kantor, less at shops.
+	$EmailText = SetRLForLowSalesHighRL("SHOPBL",  30, 5, 4, ($Shops * 6), $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	$EmailText = SetRLForLowSalesHighRL("SHOPBL",  20, 4, 3, ($Shops * 5), $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 	$EmailText = SetRLForLowSalesHighRL("SHOPBL",  10, 3, 2, ($Shops * 4), $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 
 	return $EmailText;
@@ -155,7 +151,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 						FROM locstock, locations
 						WHERE stockmaster.stockid  = locstock.stockid 
 							AND locstock.loccode = locations.loccode
-							AND locations.typeloc IN " . ALL_SHOPS_LIST_BY_TYPE . "
+							AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . "
 							AND locstock.quantity < locstock.reorderlevel
 						ORDER BY reorderlevel DESC
 						LIMIT 1) AS locationneeded
@@ -165,13 +161,13 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 							FROM locstock, locations
 							WHERE stockmaster.stockid  = locstock.stockid 
 								AND locstock.loccode = locations.loccode
-								AND locations.typeloc IN " . ALL_SHOPS_LIST_BY_TYPE . "
+								AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . "
 								AND locstock.quantity < locstock.reorderlevel)
 				AND EXISTS (SELECT *
 							FROM locstock, locations
 							WHERE stockmaster.stockid  = locstock.stockid 
 								AND locstock.loccode = locations.loccode
-								AND locations.typeloc IN " . ALL_SHOPS_LIST_BY_TYPE . "
+								AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . "
 								AND locstock.quantity > 0)
 				AND EXISTS (SELECT *
 						FROM locstock
@@ -226,11 +222,10 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 				}else{
 					// let's distribute available stock between the shops with RL > 0.
 					// if RL = 0 we suppose we do not want it there for any reason 
-					$QtyToDistribute = QtyAvailable($myrow['stockid'], "ALLSHOPSANDONLINE", $db);
+					$QtyToDistribute = QtyAvailable($myrow['stockid'], "ALLSHOPS", $db);
 					if ($EmailText!=''){
 						$EmailText = $EmailText . $myrow['stockid']. " Quantity to distribute = " . $QtyToDistribute . "\n";
 					}
-
 					$QOH =$QtyToDistribute;
 					$LocationsDistributed = 0;
 					
@@ -239,7 +234,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 										FROM locstock, locations
 										WHERE  locstock.loccode = locations.loccode
 											AND locstock.stockid = '" . $myrow['stockid'] . "'
-											AND locations.typeloc IN " . ALL_SHOPS_LIST_BY_TYPE . "
+											AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . "
 											AND locstock.reorderlevel > 0 
 										ORDER BY locations.priority ASC, 
 												(SELECT COUNT(qtyinvoiced)
@@ -363,7 +358,7 @@ function WorstLocationForItem($stockid, $stockcat, $kind, $maxdays, $db){
 		$SQL = $SQL . " AND locstock.quantity > 0 "; 
 	}
 
-	$SQL = $SQL . "	AND locations.typeloc IN " . ALL_SHOPS_LIST_BY_TYPE . "
+	$SQL = $SQL . "	AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . "
 					ORDER BY locations.priority DESC,
 					(SELECT COUNT(qtyinvoiced)
 						FROM salesorderdetails, salesorders
@@ -388,7 +383,7 @@ function LocationOrderForItem($stockid, $order, $maxdays, $db){
 			FROM locstock,locations
 			WHERE locstock.stockid = '" . $stockid . "'
 				AND locstock.loccode = locations.loccode
-				AND locations.typeloc IN " . ALL_SHOPS_LIST_BY_TYPE . "
+				AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . "
 			ORDER BY (SELECT COUNT(qtyinvoiced)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
@@ -806,13 +801,6 @@ function SetRLForLowSalesHighRL($ShopType, $BottomPercentTopSales, $oldRL, $maxR
 
 function MaxRLCorrectionSomeModels($stockid, $loccode, $NewRL){
 	$CurrentNewRL = $NewRL;
-	//
-	// MAX correction for some locations, depending on some items
-	//
-/*	if (($loccode == "TOKXX") AND ($stockid != "GIFT-ALAR01")){
-			$CurrentNewRL	= min($NewRL, 2);
-	}
-*/
 	return $CurrentNewRL;
 }
 
@@ -868,113 +856,20 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db,
 		$EmailText = $EmailText . "\n" . "OnlineReorderLevelAdjustments" . "\n\n";
 	}
 	
+	// set all RL=0 for toko online
 	if($updateDB){
-		// set all RL = MINIMUM_STOCK_ONLINESHOP_EVERY_ITEM for toko online
-		$RLSQL = "UPDATE locstock, stockmaster
-					SET locstock.reorderlevel = ". MINIMUM_STOCK_ONLINESHOP_EVERY_ITEM ."
-					WHERE locstock.stockid = stockmaster.stockid
-						AND " . SQLFilterStockmasterForOnlineShop("ALL") ."
-						AND locstock.loccode = ". CODE_ONLINE_SHOP ."";
+		$RLSQL = "UPDATE locstock
+					SET reorderlevel = 0 
+					WHERE reorderlevel > 0 AND loccode = ". CODE_ONLINE_SHOP ."";
 		$Result = DB_query($RLSQL,$ErrMsg,$DbgMsg,true);		
 		if ($ShowMessages){
-			prnMsg(_('Set all RL=' . MINIMUM_STOCK_ONLINESHOP_EVERY_ITEM . ' for location Shop Online'),'info');
+			prnMsg(_('Reset all RL=0 for location Shop Online'),'info');
 		}
 		if ($EmailText!=''){
-			$EmailText = $EmailText . "Set all RL= ". MINIMUM_STOCK_ONLINESHOP_EVERY_ITEM ." for location Shop Online" . "\n";
+			$EmailText = $EmailText . "Reset all RL=0 for location Shop Online" . "\n";
 		}
 	}
-
-	if($updateDB){
-		// set RL =0 for any item in DISC80 stcck category,as we don't want them on the online shop
-		$RLSQL = "UPDATE locstock, stockmaster
-					SET locstock.reorderlevel = 0
-					WHERE locstock.stockid = stockmaster.stockid
-						AND stockmaster.categoryid = 'DISC8A'
-						AND locstock.loccode = ". CODE_ONLINE_SHOP ."";
-		$Result = DB_query($RLSQL,$ErrMsg,$DbgMsg,true);		
-		if ($ShowMessages){
-			prnMsg(_('Set RL = 0 for Outlet 80% Discount items for location Shop Online'),'info');
-		}
-		if ($EmailText!=''){
-			$EmailText = $EmailText . "Set RL = 0 for Outlet 80% Discount items for location Shop Online" . "\n";
-		}
-	}
-
-// adjust RL for shop online as if we have too little stock
-	$SQL = "SELECT locstock.stockid,
-				SUM(locstock.quantity) AS qoh
-			FROM locstock, locations, stockmaster
-			WHERE locstock.stockid = stockmaster.stockid
-				AND " . SQLFilterStockmasterForOnlineShop("ALL") ."
-				AND locstock.loccode = locations.loccode
-				AND locations.stockreadytosell = 1
-			GROUP BY locstock.stockid
-			HAVING qoh <= ". MINIMUM_STOCK_ONLINESHOP_EVERY_ITEM ."
-			ORDER BY locstock.stockid";
-				
-	$result = DB_query($SQL);		
-	
-	if (DB_num_rows($result) != 0){
-		if ($ShowMessages){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Adjustment RL for Shop Online for items with QOH <= '). MINIMUM_STOCK_ONLINESHOP_EVERY_ITEM . ' </strong></p>';
-			echo '<div>';
-			echo '<table class="selection">';
-			$TableHeader = '<tr>
-								<th>' . _('#') . '</th>
-								<th>' . _('Code') . '</th>
-								<th>' . _('QOH') . '</th>
-								<th>' . _('New RL') . '</th>
-							</tr>';
-			echo $TableHeader;
-		}
-		if ($EmailText!=''){
-			$EmailText = $EmailText . "\n" . 'Adjustment RL for Shop Online for items with QOH <= '. MINIMUM_STOCK_ONLINESHOP_EVERY_ITEM . "\n";
-		}
-		$k = 0; //row colour counter
-		$i = 1;
-		while ($myrow = DB_fetch_array($result)) {
-			/* set the RL to 0 for shop online, as we have qoh <= limit accepted  */
-			$NewRLOnline = 0;
-			SetReorderLevel("Not Enough QOH", $myrow['stockid'],CODE_ONLINE_SHOP, MINIMUM_STOCK_ONLINESHOP_EVERY_ITEM, $NewRLOnline, $updateDB, $db);
-			if ($ShowMessages){
-				if ($k == 1) {
-					echo '<tr class="EvenTableRows">';
-					$k = 0;
-				} else {
-					echo '<tr class="OddTableRows">';
-					$k = 1;
-				}
-				$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
-				printf('<td class="number">%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						</tr>', 
-						$i, 
-						$CodeLink, 
-						locale_number_format($myrow['qoh'],0),
-						locale_number_format($NewRLOnline,0)
-						);
-				$i++;
-			}
-			if ($EmailText!=''){
-				$EmailText = $EmailText . $myrow['stockid'] . " QOH = " . $myrow['qoh'] . " New RL = " . $NewRLOnline . "\n";
-			}
-		}
-		if ($ShowMessages){
-			echo '</table>
-					</div>';
-		}
-	}else{
-		if ($ShowMessages){
-			prnMsg(_('No items with QOH <= ' . MINIMUM_STOCK_ONLINESHOP_EVERY_ITEM . " to adjust RL for Shop Online"),'info');
-		}
-		if ($EmailText!=''){
-			$EmailText = $EmailText . 'No items with QOH <= ' . MINIMUM_STOCK_ONLINESHOP_EVERY_ITEM . " to adjust RL for Shop Online" . "\n";
-		}
-	}
-	
-// adjust RL for shop online as needed due to existing online orders
+// adjust RL for toko online as needed
 	$SQL = "SELECT salesorderdetails.stkcode,
 				SUM(salesorderdetails.quantity) AS totalqty,
 				locstock.reorderlevel
@@ -992,26 +887,25 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db,
 	
 	if (DB_num_rows($result) != 0){
 		if ($ShowMessages){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Adjustment RL for Shop Online due to existing online orders') . ' </strong></p>';
+			echo '<p class="page_title_text" align="center"><strong>' . _('Adjustment RL for Toko Online') . ' </strong></p>';
 			echo '<div>';
 			echo '<table class="selection">';
 			$TableHeader = '<tr>
 								<th>' . _('#') . '</th>
 								<th>' . _('Code') . '</th>
+								<th>' . _('QOH = New RL') . '</th>
 								<th>' . _('Old RL') . '</th>
-								<th>' . _('New RL') . '</th>
 							</tr>';
 			echo $TableHeader;
 		}
 		if ($EmailText!=''){
-			$EmailText = $EmailText . "\n" . 'Adjustment RL for Shop Online due to existing online orders' . "\n";
+			$EmailText = $EmailText . 'Adjustment RL for Toko Online for existing online orders' . "\n";
 		}
 		$k = 0; //row colour counter
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
 			/* set the RL to the total of qty requested by customers */
-			$NewRLOnline = MINIMUM_STOCK_ONLINESHOP_EVERY_ITEM + $myrow['totalqty'];
-			SetReorderLevel("OnlineSales", $myrow['stkcode'],CODE_ONLINE_SHOP, $myrow['reorderlevel'], $NewRLOnline, $updateDB, $db);
+			SetReorderLevel("OnlineSales", $myrow['stkcode'],'TOKWS', 0, $myrow['totalqty'], $updateDB, $db);
 			if ($ShowMessages){
 				if ($k == 1) {
 					echo '<tr class="EvenTableRows">';
@@ -1028,13 +922,13 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db,
 						</tr>', 
 						$i, 
 						$CodeLink, 
-						locale_number_format($myrow['reorderlevel'],0),
-						locale_number_format($NewRLOnline,0)
+						locale_number_format($myrow['totalqty'],0),
+						locale_number_format($myrow['reorderlevel'],0)
 						);
 				$i++;
 			}
 			if ($EmailText!=''){
-				$EmailText = $EmailText . $myrow['stkcode'] . " Old RL = " . $myrow['reorderlevel'] . " New RL = " . $NewRLOnline . "\n";
+				$EmailText = $EmailText . $myrow['stkcode'] . " Old RL = " . $myrow['reorderlevel'] . " New RL = " . $myrow['totalqty'] . "\n";
 			}
 		}
 		if ($ShowMessages){
@@ -1111,9 +1005,6 @@ function AdjustPackagingItemByShop($Item, $Shop, $DaysSales, $ShowMessages, $upd
 		// New RL is the daily needs x number of days to keep as RL
 		$NewRL = max(round($myrow['sales'] / $DaysSales * $myrow['rldaysforpackaging'],0),MIN_REORDER_LEVEL_PACKAGING_ITEM_PER_SHOP);
 		$OldRL = $myrow['rl'];
-// RICARD: Due to very low sales, we make RL for packaging fluctuate, so we don't pile up packaging stock at the shops
-// previously we only increased it. 
-//		if ($NewRL > $OldRL){
 		if ($NewRL != $OldRL){
 			if ($ShowMessages){
 				$text = $Shop . ' ' . $Item .  
