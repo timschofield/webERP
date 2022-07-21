@@ -2205,9 +2205,9 @@ function PositionTopSalesItem($stockid, $TopItemsDays, $db){
 	return $TopSalesPosition;
 }
 
-function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
+function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $RootPath, $db){
 
-	if ($TypeOfCode == "IN NEGOTIAION WITH SUPPLIER"){
+	if ($TypeOfCode == "IN NEGOTIATION WITH SUPPLIER"){
 		$DateField1 = "orddate";
 		$FieldName1 = "Planned Order Date";
 		$DateField2 = "orddate";
@@ -2355,6 +2355,18 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 	}else{
 		return;
 	}
+
+	$SQLFilterProduct = "";
+	if ($TypeOfProduct != ""){
+		if ($TypeOfProduct == "PACKAGING"){
+			$TitleWarning = "Packaging " . $TitleWarning;
+			$SQLFilterProduct = " AND stockmaster.categoryid = 'SHPACK' "; 
+		}else{
+			$TitleWarning = "Items FOR SALE " . $TitleWarning;
+			$SQLFilterProduct = " AND stockmaster.categoryid != 'SHPACK' "; 
+		}
+	}
+
 	
 	$SQL = "SELECT purchorders.orderno,
 				purchorders.supplierno,
@@ -2370,14 +2382,18 @@ function POStatusControl($TypeOfCode, $maxdays, $RootPath, $db){
 				currencies.decimalplaces AS currdecimalplaces,
 				SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue,
 				SUM(purchorderdetails.quantityord) AS orderitems
-			FROM purchorders INNER JOIN purchorderdetails
+			FROM purchorders 
+			INNER JOIN purchorderdetails
 				ON purchorders.orderno = purchorderdetails.orderno
+			INNER JOIN stockmaster
+				ON stockmaster.stockid = purchorderdetails.itemcode
 			INNER JOIN suppliers 
 				ON  purchorders.supplierno = suppliers.supplierid 
 			INNER JOIN currencies
 				ON suppliers.currcode=currencies.currabrev
 			WHERE purchorderdetails.completed=0 "
 			    . $SQLFilterKLStatus . 
+			    $SQLFilterProduct . 
 				" AND purchorders.status IN ('Authorised', 'Printed', 'Pending')	
 			GROUP BY purchorders.orderno ASC,
 				purchorders.supplierno,
