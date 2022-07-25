@@ -194,42 +194,48 @@ if ($ProcessSection02){
 
 	if ($KL_SystemAdmin OR
 		$KL_OperationalManager){
-		POStatusControl("IN NEGOTIAION WITH SUPPLIER", 0, $RootPath, $db);
+		POStatusControl("","IN NEGOTIAION WITH SUPPLIER", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		POStatusControl("ON PRODUCTION", 0, $RootPath, $db);
+		POStatusControl("PACKAGING","ON PRODUCTION", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		POStatusControl("FINISHED BUT NOT PAID", 0, $RootPath, $db);
+		POStatusControl("FORSALE","ON PRODUCTION", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		POStatusControl("","FINISHED BUT NOT PAID", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin){
-		POStatusControl("STILL NOT FULLY PAID", 0, $RootPath, $db);
+		POStatusControl("PACKAGING","STILL NOT FULLY PAID", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		POStatusControl("FORSALE","STILL NOT FULLY PAID", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 	
 	if ($KL_SystemAdmin OR
 		$KL_OperationalManager){
-		POStatusControl("BALI PAID BUT NOT RECEIVED IN KANTOR", 0, $RootPath, $db);
+		POStatusControl("","BALI PAID BUT NOT RECEIVED IN KANTOR", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		POStatusControl("BALI RECEIVED IN KANTOR BUT NOT PAID", 0, $RootPath, $db);
+		POStatusControl("","BALI RECEIVED IN KANTOR BUT NOT PAID", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		POStatusControl("PAID NOT SHIPPED BY SUPPLIER", 0, $RootPath, $db);
+		POStatusControl("","PAID NOT SHIPPED BY SUPPLIER", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		POStatusControl("PAID NOT RECEIVED IN AYE CARGO", 0, $RootPath, $db);
+		POStatusControl("","PAID NOT RECEIVED IN AYE CARGO", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		POStatusControl("PAID NOT RECEIVED IN WANGFOONG CARGO", 0, $RootPath, $db);
+		POStatusControl("","PAID NOT RECEIVED IN WANGFOONG CARGO", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		POStatusControl("IN AYE CARGO BUT NOT SHIPPED", 0, $RootPath, $db);
+		POStatusControl("","IN AYE CARGO BUT NOT SHIPPED", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		POStatusControl("IN WANGFOONG CARGO BUT NOT SHIPPED", 0, $RootPath, $db);
+		POStatusControl("","IN WANGFOONG CARGO BUT NOT SHIPPED", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		POStatusControl("SHIPPED IN TRANSIT", 0, $RootPath, $db);
+		POStatusControl("","SHIPPED IN TRANSIT", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		POStatusControl("CUSTOMS CLEARANCE", 0, $RootPath, $db);
+		POStatusControl("","CUSTOMS CLEARANCE", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		POStatusControl("RECEIVED IN KANTOR", 0, $RootPath, $db);
+		POStatusControl("","RECEIVED IN KANTOR", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		POStatusControl("ARRIVING IN NEXT DAYS", 75, $RootPath, $db);
+		POStatusControl("PACKAGING","ARRIVING IN NEXT DAYS", 75, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		POStatusControl("FORSALE","ARRIVING IN NEXT DAYS", 75, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -307,7 +313,7 @@ if ($ProcessSection03){
 	if ($KL_SystemAdmin
 		OR $KL_OperationalManager
 		OR $KL_AdministrationTeam){
-		CashStatus(2022, 20000000, 20000000, 20000000, 20000000, 20000000, 20000000, 20000000, $periodnow, TRUE, $db);
+		CashStatus(2022, 20000000, 50000000, 25000000, 20000000, 50000000, 25000000, 20000000, $periodnow, TRUE, $db);
 		$NumberOfTestExecuted++;
 		UnbalancedGLTransTX(7, $RootPath, $db);
 		$NumberOfTestExecuted++;
