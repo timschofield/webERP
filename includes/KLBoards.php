@@ -2666,7 +2666,8 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $RootPath, $db){
 					'' 
 					);
 		}
-		if ($TypeOfCode == "ARRIVING IN NEXT DAYS"){
+		if (($TypeOfCode == "ARRIVING IN NEXT DAYS") 
+			AND ($TypeOfProduct != "PACKAGING")){
 			$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 			$SQL = "SELECT SUM(amount) AS cogs
 					FROM  gltrans 
