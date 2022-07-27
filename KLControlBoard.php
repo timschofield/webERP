@@ -422,18 +422,18 @@ if ($ProcessSection01){
 	if ($KL_SystemAdmin 
 		OR $KL_OperationalManager
 		OR $KL_AdministrationTeam){
-		BalanceAccountControl("111121100IK",  5000000,  30000000, $periodnow, $db);
+		BalanceAccountControl("111121100IK",  5000000, 150000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111121110IK",  5000000,  30000000, $periodnow, $db);
+		BalanceAccountControl("111121110IK",  5000000,  50000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 	}
 	
 	if ($KL_SystemAdmin 
 		OR $KL_OperationalManager
 		OR $KL_AdministrationTeam){
-		BalanceAccountControl("111121100PI",  5000000,  30000000, $periodnow, $db);
+		BalanceAccountControl("111121100PI",  5000000, 150000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111121110PI",  5000000,  30000000, $periodnow, $db);
+		BalanceAccountControl("111121110PI",  5000000,  50000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 	}
 
