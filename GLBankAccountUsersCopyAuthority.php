@@ -69,8 +69,8 @@ if ($KL_SystemAdmin){
 	$Result = DB_query("SELECT userid,
 								realname
 						FROM www_users
-						ORDER BY userid
-						WHERE fullaccess != '8'");
+						WHERE fullaccess != '8'
+						ORDER BY userid");
 } 
 
 echo '<option selected value="">' . _('Not Yet Selected') . '</option>';
@@ -95,8 +95,8 @@ if ($KL_SystemAdmin){
 	$Result = DB_query("SELECT userid,
 								realname
 						FROM www_users
-						ORDER BY userid
-						WHERE fullaccess != '8'");
+						WHERE fullaccess != '8'
+						ORDER BY userid");
 } 
 
 echo '<option selected value="">' . _('Not Yet Selected') . '</option>';
