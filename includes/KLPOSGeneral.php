@@ -861,8 +861,8 @@ function KLPrintReceiptCustomerFooter($identifier, $OrderNo){
 	// read terms and conditions
 	$TextToPrint .= $CharacterFontB . $LeftJustified;
 	$TextToPrint .= "This invoice is the only valid proof of purchase. Keep it. ";
-	$TextToPrint .= "No refund. Exchange within 7 days with this original invoice, packaging and goods in perfect and unused conditions. We reserve the right to refuse any exchange. ";
-	$TextToPrint .= "For more information on our catalog, promotions, shop locations, job opportunities, news and warranty terms and conditions check our website. ";
+	$TextToPrint .= "No refund. Exchange within 7 days with this original invoice, packaging and goods in perfect and unused conditions. We reserve the right to refuse any exchange. Warranty only valid with this original invoice (bank statement is not valid).";
+	$TextToPrint .= "For more information on our terms and conditions, promotions, shop locations, job opportunities, news and warranty terms and conditions check our online shop. ";
 	if ((isset($_SESSION['PartnerName'])) AND ($_SESSION['PartnerName'] != '')){
 		$TextToPrint .= $_SESSION['PartnerName'];
 	}
@@ -876,20 +876,26 @@ function KLPrintReceiptCustomerFooter($identifier, $OrderNo){
 	// website
 	$TextToPrint .= $NewLine . $NewLine . $EmphasizedDoubleHeightDoubleWidth . $CenteredJustified;
 	if ($_SESSION['TypeLoc'] == "SHOPKL"){
-		$TextToPrint .= "www.kapal-laut.com" . $NewLine;
+		$TextToPrint .= "kapal-laut.com" . $NewLine;
 	}else if ($_SESSION['TypeLoc'] == "SHOPBL"){
 		$TextToPrint .= "blink.kapal-laut.com" . $NewLine;
-	}else if ($_SESSION['TypeLoc'] == "SHOPOU"){
-		$TextToPrint .= "outlet.kapal-laut.com" . $NewLine;
 	}else{
-		$TextToPrint .= "SHOP NAME NOT FOUND" . $NewLine;
+		$TextToPrint .= "kapal-laut.com" . $NewLine;
 	}
 
 	// Follow us
 	$TextToPrint .= $CharacterFontA . $Emphasized . $CenteredJustified . $NewLine;
 	$TextToPrint .= "Follow us on" . $NewLine ;
-	$TextToPrint .= "Facebook: KapalLautBali" . $NewLine ;
-	$TextToPrint .= "Instagram: @KapalLautBali" . $NewLine ;
+	if ($_SESSION['TypeLoc'] == "SHOPKL"){
+		$TextToPrint .= "Facebook: KapalLautBali" . $NewLine ;
+		$TextToPrint .= "Instagram: @KapalLautBali" . $NewLine ;
+	}else if ($_SESSION['TypeLoc'] == "SHOPBL"){
+		$TextToPrint .= "Facebook: BlinkFashionJewellery" . $NewLine ;
+		$TextToPrint .= "Instagram: @BlinkFashionJewellery" . $NewLine ;
+	}else{
+		$TextToPrint .= "Facebook: KapalLautBali" . $NewLine ;
+		$TextToPrint .= "Instagram: @KapalLautBali" . $NewLine ;
+	}
 	$TextToPrint .= KLPrintReceiptTestWarning("INVOICE");
 
 	$TextToPrint .= $NewLine;
