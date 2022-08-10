@@ -470,29 +470,33 @@ function PriceBelowStandard($Stockcat, $Factor, $Tolerance, $MinQoh, $RootPath, 
 
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . $Stockcat . _(' Items with retail price below minimum. ') . $Factor . _(' x standard cost. Tolerance -') . locale_number_format($Tolerance * 100,0) . '%. QOH >= ' .  locale_number_format($MinQoh,0). '</strong></p>';
-		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Description') . '</th>
-							<th class="ascending">' . _('TopSales') . '</th>
-							<th class="ascending">' . _('QOH') . '</th>
-							<th class="ascending">' . _('Std Cost') . '</th>
-							<th class="ascending">' . _('Current Price') . '</th>
-							<th class="ascending">' . _('Minimum Price') . '</th>
-							<th class="ascending">' . _('Recommended Retail') . '</th>
-							<th class="ascending">' . _('% Increase') . '</th>
-							<th class="ascending">' . _('Income Increase') . '</th>
-						</tr>';
-		echo $TableHeader;
+		$ShowHeader = TRUE;
 		$k = 0; //row colour counter
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
 			$NewPrice = $myrow['standardcost'] * $Factor;
 			$RecommendedPrice = correction_for_low_end_prices(round_price($NewPrice, "UP"));
 			if ($myrow['retailprice'] != $RecommendedPrice){
+				if ($ShowHeader){
+					echo '<p class="page_title_text" align="center"><strong>' . $Stockcat . _(' Items with retail price below minimum. ') . $Factor . _(' x standard cost. Tolerance -') . locale_number_format($Tolerance * 100,0) . '%. QOH >= ' .  locale_number_format($MinQoh,0). '</strong></p>';
+					echo '<div>';
+					echo '<table class="selection">';
+					$TableHeader = '<tr>
+										<th class="ascending">' . _('#') . '</th>
+										<th class="ascending">' . _('Code') . '</th>
+										<th class="ascending">' . _('Description') . '</th>
+										<th class="ascending">' . _('TopSales') . '</th>
+										<th class="ascending">' . _('QOH') . '</th>
+										<th class="ascending">' . _('Std Cost') . '</th>
+										<th class="ascending">' . _('Current Price') . '</th>
+										<th class="ascending">' . _('Minimum Price') . '</th>
+										<th class="ascending">' . _('Recommended Retail') . '</th>
+										<th class="ascending">' . _('% Increase') . '</th>
+										<th class="ascending">' . _('Income Increase') . '</th>
+									</tr>';
+					echo $TableHeader;
+					$ShowHeader = FALSE;
+				}
 				$k = StartEvenOrOddRow($k);
 				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 				$Increase = locale_number_format(($RecommendedPrice-$myrow['retailprice'])/$myrow['retailprice']*100,1).'%';
@@ -526,8 +530,10 @@ function PriceBelowStandard($Stockcat, $Factor, $Tolerance, $MinQoh, $RootPath, 
 				$i++;
 			}
 		}
-		echo '</table>
-				</div>';
+		if(!$ShowHeader){
+			echo '</table>
+					</div>';
+		}
 	}
 }
 
