@@ -315,7 +315,7 @@ if ($ProcessSection03){
 		OR $KL_AdministrationTeam){
 		CashStatus(2022, 20000000, 50000000, 25000000, 20000000, 50000000, 25000000, 20000000, $periodnow, TRUE, $db);
 		$NumberOfTestExecuted++;
-		UnbalancedGLTransTX(7, $RootPath, $db);
+		UnbalancedGLTransTX(15, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 		
