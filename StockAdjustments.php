@@ -5,6 +5,8 @@
 include('includes/DefineStockAdjustment.php');
 include('includes/DefineSerialItems.php');
 include('includes/session.php');
+include ('includes/KLRoles.php');
+
 $Title = _('Stock Adjustments');
 
 /* webERP manual links before header.php */
@@ -371,7 +373,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 		$ConfirmationText = _('A stock adjustment for'). ' ' . $_SESSION['Adjustment' . $identifier]->StockID . ' -  ' . $_SESSION['Adjustment' . $identifier]->ItemDescription . ' '._('has been created from location').' ' . $_SESSION['Adjustment' . $identifier]->StockLocation .' '. _('for a quantity of') . ' ' . locale_number_format($_SESSION['Adjustment' . $identifier]->Quantity,$_SESSION['Adjustment' . $identifier]->DecimalPlaces) . ' ' . $AdjustReason;
 		prnMsg( $ConfirmationText,'success');
 
-		if ($_SESSION['InventoryManagerEmail']!=''){
+		if (($_SESSION['InventoryManagerEmail']!='') OR (!$KL_SystemAdmin)){
 			$ConfirmationText = $ConfirmationText . ' ' . _('by user') . ' ' . $_SESSION['UserID'] . ' ' . _('at') . ' ' . Date('Y-m-d H:i:s');
 			$EmailSubject = _('Stock adjustment for'). ' ' . $_SESSION['Adjustment' . $identifier]->StockID;
 			if($_SESSION['SmtpSetting']==0){
@@ -383,7 +385,6 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 				$mail->setText($ConfirmationText);
 				$result = SendmailBySmtp($mail,array($_SESSION['InventoryManagerEmail']));
 			}
-
 		}
 		$StockID = $_SESSION['Adjustment' . $identifier]->StockID;
 		unset ($_SESSION['Adjustment' . $identifier]);
