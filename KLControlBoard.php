@@ -752,7 +752,7 @@ if ($ProcessSection02){
 		$KL_PurchasingTeam){
 		PurchaseOrdersWrongPlannedDates($RootPath, $db);
 		$NumberOfTestExecuted++;
-		POStatusControl("","IN NEGOTIAION WITH SUPPLIER", 0, $RootPath, $db);
+		POStatusControl("","IN NEGOTIATION WITH SUPPLIER", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		POStatusControl("PACKAGING","ON PRODUCTION", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;

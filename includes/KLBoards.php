@@ -1458,7 +1458,8 @@ function ItemsWithoutRetailPrice($stockcat, $factorRetail, $RootPath, $db){
 
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . $stockcat . _(' Items without active retail price') . '</strong></p>';
+		$CategoryName = GetCategoryNameFromCode($stockcat);
+		echo '<p class="page_title_text" align="center"><strong>' . $CategoryName . _(' Items without active retail price') . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>

@@ -241,7 +241,8 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQoh, $
 			$PositionTopSales = PositionTopSalesItem($myrow['stockid'], $DaysTopSales, $db);
 			if ($PositionTopSales < $TopSales){
 				if ($ShowHeader){
-					echo '<p class="page_title_text" align="center"><strong>' .  $Stockcat . ' Items TOO CHEAP: ' . ' TOP '.locale_number_format($TopSales,0) . ' sales. Price BELOW ' . $FactorMax . _(' x standard cost. Tolerance ') . locale_number_format($Tolerance * 100,0) . '%. QOH >= ' .  locale_number_format($MinQoh,0).  '</strong></p>';
+					$CategoryName = GetCategoryNameFromCode($Stockcat);
+					echo '<p class="page_title_text" align="center"><strong>' .  $CategoryName . ' Items TOO CHEAP: ' . ' TOP '.locale_number_format($TopSales,0) . ' sales. Price BELOW ' . $FactorMax . _(' x standard cost. Tolerance ') . locale_number_format($Tolerance * 100,0) . '%. QOH >= ' .  locale_number_format($MinQoh,0).  '</strong></p>';
 					echo '<div>';
 					echo '<table class="selection">';
 					$TableHeader = '<tr>
@@ -358,7 +359,8 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQo
 			$PositionTopSales = PositionTopSalesItem($myrow['stockid'], $DaysTopSales, $db);
 			if ($PositionTopSales > $TopSales){
 				if ($ShowHeader){
-					echo '<p class="page_title_text" align="center"><strong>' .  $Stockcat . ' Items TOO EXPENSIVE: ' . ' NO TOP '.locale_number_format($TopSales,0) . ' sales. Retail Price OVER ' . $FactorMax . _(' x standard cost. Tolerance ') . locale_number_format($Tolerance * 100,0) . '%. QOH >= ' .  locale_number_format($MinQoh,0).  '</strong></p>';
+					$CategoryName = GetCategoryNameFromCode($Stockcat);
+					echo '<p class="page_title_text" align="center"><strong>' .  $CategoryName . ' Items TOO EXPENSIVE: ' . ' NO TOP '.locale_number_format($TopSales,0) . ' sales. Retail Price OVER ' . $FactorMax . _(' x standard cost. Tolerance ') . locale_number_format($Tolerance * 100,0) . '%. QOH >= ' .  locale_number_format($MinQoh,0).  '</strong></p>';
 					echo '<div>';
 					echo '<table class="selection">';
 					$TableHeader = '<tr>
@@ -478,7 +480,8 @@ function PriceBelowStandard($Stockcat, $Factor, $Tolerance, $MinQoh, $RootPath, 
 			$RecommendedPrice = correction_for_low_end_prices(round_price($NewPrice, "UP"));
 			if ($myrow['retailprice'] != $RecommendedPrice){
 				if ($ShowHeader){
-					echo '<p class="page_title_text" align="center"><strong>' . $Stockcat . _(' Items with retail price below minimum. ') . $Factor . _(' x standard cost. Tolerance -') . locale_number_format($Tolerance * 100,0) . '%. QOH >= ' .  locale_number_format($MinQoh,0). '</strong></p>';
+					$CategoryName = GetCategoryNameFromCode($Stockcat);
+					echo '<p class="page_title_text" align="center"><strong>' . $CategoryName . _(' Items with retail price below minimum. ') . $Factor . _(' x standard cost. Tolerance -') . locale_number_format($Tolerance * 100,0) . '%. QOH >= ' .  locale_number_format($MinQoh,0). '</strong></p>';
 					echo '<div>';
 					echo '<table class="selection">';
 					$TableHeader = '<tr>

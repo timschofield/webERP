@@ -194,7 +194,7 @@ if ($ProcessSection02){
 
 	if ($KL_SystemAdmin OR
 		$KL_OperationalManager){
-		POStatusControl("","IN NEGOTIAION WITH SUPPLIER", 0, $RootPath, $db);
+		POStatusControl("","IN NEGOTIATION WITH SUPPLIER", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		POStatusControl("PACKAGING","ON PRODUCTION", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;

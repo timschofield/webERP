@@ -453,6 +453,14 @@ function CleanStringForWebERP($s){
 	return $s;
 }
 
+function GetCategoryNameFromCode($CategoryId){
+	$ErrMsg = 'Error in function GetCategoryNameFromCode()';
+	$SQL="SELECT categorydescription FROM stockcategory WHERE categoryid='" . $CategoryId . "'";
+	$result = DB_query($SQL,$ErrMsg);
+	$Row = DB_fetch_row($result);
+	return $Row['0'];
+}
+
 function GetLocationNameFromCode($LocCode){
 	$ErrMsg = 'Error in function GetLocationNameFromCode()';
 	$SQL="SELECT locationname FROM locations WHERE loccode='" . $LocCode . "'";
