@@ -2362,12 +2362,19 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $RootPath, $db){
 		if ($TypeOfProduct == "PACKAGING"){
 			$TitleWarning = "Packaging " . $TitleWarning;
 			$SQLFilterProduct = " AND stockmaster.categoryid = 'SHPACK' "; 
-		}else{
+		}elseif ($TypeOfProduct == "OTHERS"){
+			$TitleWarning = "Other " . $TitleWarning;
+			$SQLFilterProduct = " AND (stockmaster.categoryid = 'SHDISP' 
+									OR stockmaster.categoryid = 'SHCONS'
+									OR stockmaster.categoryid = 'SHOTHE')"; 
+		}elseif ($TypeOfProduct == "FORSALE"){
 			$TitleWarning = "Items FOR SALE " . $TitleWarning;
-			$SQLFilterProduct = " AND stockmaster.categoryid != 'SHPACK' "; 
+			$SQLFilterProduct = " AND stockmaster.categoryid != 'SHPACK' 
+								AND stockmaster.categoryid != 'SHDISP' 
+								AND stockmaster.categoryid != 'SHCONS' 
+								AND stockmaster.categoryid != 'SHOTHE'"; 
 		}
 	}
-
 	
 	$SQL = "SELECT purchorders.orderno,
 				purchorders.supplierno,
@@ -2668,7 +2675,8 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $RootPath, $db){
 					);
 		}
 		if (($TypeOfCode == "ARRIVING IN NEXT DAYS") 
-			AND ($TypeOfProduct != "PACKAGING")){
+			AND ($TypeOfProduct == "FORSALE")){
+			$AverageItemCost = $TotalValueAllOrders / $TotalItemsAllOrders;
 			$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 			$SQL = "SELECT SUM(amount) AS cogs
 					FROM  gltrans 
@@ -2747,6 +2755,47 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $RootPath, $db){
 					'', 
 					'', 
 					locale_number_format_zero_blank($TotalValueAllOrders-$myrow['cogs'],0),
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'' 
+					);
+			$k = StartEvenOrOddRow($k);
+			printf('<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					'', 
+					'', 
+					'DIFFERENCE STOCK',
+					'PCS', 
+					'', 
+					'(APPROX)', 
+					'', 
+					locale_number_format_zero_blank(($TotalValueAllOrders-$myrow['cogs'])/$AverageItemCost,0),
 					'', 
 					'', 
 					'', 

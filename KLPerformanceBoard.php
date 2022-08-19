@@ -200,6 +200,8 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 		POStatusControl("FORSALE","ON PRODUCTION", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		POStatusControl("OTHERS","ON PRODUCTION", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		POStatusControl("","FINISHED BUT NOT PAID", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
@@ -208,6 +210,8 @@ if ($ProcessSection02){
 		POStatusControl("PACKAGING","STILL NOT FULLY PAID", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		POStatusControl("FORSALE","STILL NOT FULLY PAID", 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		POStatusControl("OTHERS","STILL NOT FULLY PAID", 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 	
@@ -236,6 +240,8 @@ if ($ProcessSection02){
 		POStatusControl("PACKAGING","ARRIVING IN NEXT DAYS", 75, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		POStatusControl("FORSALE","ARRIVING IN NEXT DAYS", 75, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		POStatusControl("OTHERS","ARRIVING IN NEXT DAYS", 75, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
