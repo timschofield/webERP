@@ -2795,7 +2795,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $RootPath, $db){
 					'', 
 					'(APPROX)', 
 					'', 
-					locale_number_format_zero_blank(($TotalValueAllOrders-$myrow['cogs'])/$AverageItemCost,0),
+					locale_number_format_zero_blank(round(($TotalValueAllOrders-$myrow['cogs'])/$AverageItemCost,-2),0),
 					'', 
 					'', 
 					'', 
