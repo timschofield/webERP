@@ -1174,6 +1174,36 @@ function FinishedStockDistributionByShopAndCategory($db){
 	}
 }
 
+function GetTotalQtyItemsForSale($db){
+	$SQL = "SELECT SUM(locstock.quantity) AS realstock
+			FROM locstock, stockmaster, stockcategory
+			WHERE stockmaster.stockid = locstock.stockid
+				AND stockmaster.categoryid = stockcategory.categoryid
+				AND stockcategory.stocktype = 'F'
+				AND stockmaster.categoryid NOT IN ('SHDISP', 'SHCONS', 'SHPACK', 'SHOTHE')";
+	$result = DB_query($SQL,$ErrMsg);
+	$Row = DB_fetch_row($result);
+	return $Row['0'];
+}
+
+function GetTotalValueItemsForSale($period, $db){
+	$SQL = "SELECT SUM(bfwd + actual) as saldo
+			FROM chartdetails, chartmaster
+			WHERE chartdetails.accountcode = chartmaster.accountcode
+				AND chartdetails.accountcode IN ('111515000AD', 
+												'111516000AD', 
+												'111517000AD', 
+												'111518000AD',
+												'111518900AD',
+												'111519000AD',
+												'111519100AD')
+				AND chartdetails.period = ". $period . "";
+
+	$result = DB_query($SQL,$ErrMsg);
+	$Row = DB_fetch_row($result);
+	return $Row['0'];
+}
+
 function GetTopSalesField($TopItemsDays){
 	// selects the field to be used in queries of Top Sales depending on the days
 	
@@ -2206,7 +2236,7 @@ function PositionTopSalesItem($stockid, $TopItemsDays, $db){
 	return $TopSalesPosition;
 }
 
-function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $RootPath, $db){
+function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $RootPath, $db){
 
 	if ($TypeOfCode == "IN NEGOTIATION WITH SUPPLIER"){
 		$DateField1 = "orddate";
@@ -2585,6 +2615,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $RootPath, $db){
 			}
 			$i++;
 		}
+
 		if (($TypeOfCode == "IN NEGOTIAION WITH SUPPLIER") OR
 			($TypeOfCode == "ON PRODUCTION") OR 
 			($TypeOfCode == "FINISHED BUT NOT PAID") OR 
@@ -2632,6 +2663,12 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $RootPath, $db){
 					'', 
 					'' 
 					);
+		}
+
+		if (($TypeOfCode == "ARRIVING IN NEXT DAYS") 
+			AND ($TypeOfProduct == "FORSALE")){
+			$CurrentTotalQtyItemsForSale = GetTotalQtyItemsForSale($db);
+			$CurrentTotalValueItemsForSale = GetTotalValueItemsForSale($periodnow, $db);
 			$k = StartEvenOrOddRow($k);
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -2655,7 +2692,96 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $RootPath, $db){
 					</tr>', 
 					'', 
 					'', 
-					'TOTAL ORDERS @ SC',
+					'CURRENT STOCK @SC',
+					'IDR', 
+					'', 
+					'', 
+					'', 
+					locale_number_format_zero_blank($CurrentTotalValueItemsForSale,0),
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'' 
+					);
+/*			$k = StartEvenOrOddRow($k);
+			printf('<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					'', 
+					'', 
+					'CURRENT STOCK @SC',
+					'PCS', 
+					'', 
+					'', 
+					'', 
+					locale_number_format_zero_blank($CurrentTotalQtyItemsForSale,0),
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'' 
+					);
+*/		}
+
+		if (($TypeOfCode == "IN NEGOTIAION WITH SUPPLIER") OR
+			($TypeOfCode == "ON PRODUCTION") OR 
+			($TypeOfCode == "FINISHED BUT NOT PAID") OR 
+			($TypeOfCode == "STILL NOT FULLY PAID") OR 
+			($TypeOfCode == "ARRIVING IN NEXT DAYS")){
+			$k = StartEvenOrOddRow($k);
+			printf('<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					'', 
+					'', 
+					'TOTAL ORDERS',
 					'IDR', 
 					'', 
 					'', 
@@ -2673,10 +2799,51 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $RootPath, $db){
 					'', 
 					'' 
 					);
-		}
+/*			$k = StartEvenOrOddRow($k);
+			printf('<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					'', 
+					'', 
+					'TOTAL ORDERS',
+					'PCS', 
+					'', 
+					'', 
+					'', 
+					locale_number_format_zero_blank($TotalItemsAllOrders,0),
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'' 
+					);
+*/		}
 		if (($TypeOfCode == "ARRIVING IN NEXT DAYS") 
 			AND ($TypeOfProduct == "FORSALE")){
-			$AverageItemCost = $TotalValueAllOrders / $TotalItemsAllOrders;
+			$AverageItemCost = $CurrentTotalValueItemsForSale / $CurrentTotalQtyItemsForSale;
 			$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 			$SQL = "SELECT SUM(amount) AS cogs
 					FROM  gltrans 
@@ -2708,12 +2875,12 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $RootPath, $db){
 					</tr>', 
 					'', 
 					'', 
-					'COGS',
+					'EXPECTED COGS ' . $maxdays . ' DAYS',
 					'IDR', 
 					'', 
+					'(APPROX)', 
 					'', 
-					'', 
-					locale_number_format_zero_blank($myrow['cogs'],0),
+					locale_number_format_zero_blank(round($myrow['cogs'], -6),0),
 					'', 
 					'', 
 					'', 
@@ -2726,7 +2893,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $RootPath, $db){
 					'', 
 					'' 
 					);
-			$k = StartEvenOrOddRow($k);
+/*			$k = StartEvenOrOddRow($k);
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
@@ -2749,53 +2916,12 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $RootPath, $db){
 					</tr>', 
 					'', 
 					'', 
-					'DIFFERENCE STOCK',
-					'IDR', 
-					'', 
-					'', 
-					'', 
-					locale_number_format_zero_blank($TotalValueAllOrders-$myrow['cogs'],0),
-					'', 
-					'', 
-					'', 
-					'', 
-					'', 
-					'', 
-					'', 
-					'', 
-					'', 
-					'', 
-					'' 
-					);
-			$k = StartEvenOrOddRow($k);
-			printf('<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					'', 
-					'', 
-					'DIFFERENCE STOCK',
+					'EXPECTED COGS ' . $maxdays . ' DAYS',
 					'PCS', 
 					'', 
 					'(APPROX)', 
 					'', 
-					locale_number_format_zero_blank(round(($TotalValueAllOrders-$myrow['cogs'])/$AverageItemCost,-2),0),
+					locale_number_format_zero_blank(round($myrow['cogs']/$AverageItemCost, -2),0),
 					'', 
 					'', 
 					'', 
@@ -2809,6 +2935,8 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $RootPath, $db){
 					'' 
 					);
 
+*/
+			$ExpectedDifferenceValueStock = round($TotalValueAllOrders-$myrow['cogs'],-6);
 			$k = StartEvenOrOddRow($k);
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -2832,12 +2960,139 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $RootPath, $db){
 					</tr>', 
 					'', 
 					'', 
-					'MONTHLY STOCK CHANGE',
+					'EXPECTED DIFFERENCE STOCK',
 					'IDR', 
 					'', 
+					'(APPROX)', 
+					'', 
+					locale_number_format_zero_blank($ExpectedDifferenceValueStock,0),
 					'', 
 					'', 
-					locale_number_format_zero_blank(($TotalValueAllOrders-$myrow['cogs'])/$maxdays*30,0),
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'' 
+					);
+					
+			$ExpectedDifferenceQtyStock = round($ExpectedDifferenceValueStock/$AverageItemCost,-2);
+			$k = StartEvenOrOddRow($k);
+			printf('<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					'', 
+					'', 
+					'EXPECTED DIFFERENCE STOCK',
+					'PCS', 
+					'', 
+					'(APPROX)', 
+					'', 
+					locale_number_format_zero_blank($ExpectedDifferenceQtyStock,0),
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'' 
+					);
+			$ExpectedFutureValueStock = round($CurrentTotalValueItemsForSale+$ExpectedDifferenceValueStock, -6);
+			$k = StartEvenOrOddRow($k);
+			printf('<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					'', 
+					'', 
+					'EXPECTED STOCK IN ' . $maxdays . ' DAYS',
+					'IDR', 
+					'', 
+					'(APPROX)', 
+					'', 
+					locale_number_format_zero_blank($ExpectedFutureValueStock,0),
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'', 
+					'' 
+					);
+			$ExpectedFutureQtyStock = round($ExpectedFutureValueStock / $AverageItemCost, -2);
+			$k = StartEvenOrOddRow($k);
+			printf('<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					'', 
+					'', 
+					'EXPECTED STOCK IN ' . $maxdays . ' DAYS',
+					'PCS', 
+					'', 
+					'(APPROX)', 
+					'', 
+					locale_number_format_zero_blank($ExpectedFutureQtyStock,0),
 					'', 
 					'', 
 					'', 

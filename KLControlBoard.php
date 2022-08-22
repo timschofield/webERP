@@ -752,57 +752,57 @@ if ($ProcessSection02){
 		$KL_PurchasingTeam){
 		PurchaseOrdersWrongPlannedDates($RootPath, $db);
 		$NumberOfTestExecuted++;
-		POStatusControl("","IN NEGOTIATION WITH SUPPLIER", 0, $RootPath, $db);
+		POStatusControl("","IN NEGOTIATION WITH SUPPLIER", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		POStatusControl("PACKAGING","ON PRODUCTION", 0, $RootPath, $db);
+		POStatusControl("PACKAGING","ON PRODUCTION", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		POStatusControl("FORSALE","ON PRODUCTION", 0, $RootPath, $db);
+		POStatusControl("FORSALE","ON PRODUCTION", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		POStatusControl("OTHERS","ON PRODUCTION", 0, $RootPath, $db);
+		POStatusControl("OTHERS","ON PRODUCTION", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		POStatusControl("","FINISHED BUT NOT PAID", 0, $RootPath, $db);
+		POStatusControl("","FINISHED BUT NOT PAID", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 	
 	if ($KL_BusinessDevelopmentManager){
-		POStatusControl("PACKAGING","STILL NOT FULLY PAID", 0, $RootPath, $db);
+		POStatusControl("PACKAGING","STILL NOT FULLY PAID", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		POStatusControl("FORSALE","STILL NOT FULLY PAID", 0, $RootPath, $db);
+		POStatusControl("FORSALE","STILL NOT FULLY PAID", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		POStatusControl("OTHERS","STILL NOT FULLY PAID", 0, $RootPath, $db);
+		POStatusControl("OTHERS","STILL NOT FULLY PAID", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 	
 	if ($KL_BusinessDevelopmentManager OR 
 		$KL_PurchasingTeam){
-		POStatusControl("","BALI PAID BUT NOT RECEIVED IN KANTOR", 0, $RootPath, $db);
+		POStatusControl("","BALI PAID BUT NOT RECEIVED IN KANTOR", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		POStatusControl("","BALI RECEIVED IN KANTOR BUT NOT PAID", 0, $RootPath, $db);
+		POStatusControl("","BALI RECEIVED IN KANTOR BUT NOT PAID", 0,$periodnow,  $RootPath, $db);
 		$NumberOfTestExecuted++;
-		POStatusControl("","PAID NOT SHIPPED BY SUPPLIER", 0, $RootPath, $db);
+		POStatusControl("","PAID NOT SHIPPED BY SUPPLIER", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		POStatusControl("","PAID NOT RECEIVED IN AYE CARGO", 0, $RootPath, $db);
+		POStatusControl("","PAID NOT RECEIVED IN AYE CARGO", 0,$periodnow,  $RootPath, $db);
 		$NumberOfTestExecuted++;
-		POStatusControl("","PAID NOT RECEIVED IN WANGFOONG CARGO", 0, $RootPath, $db);
+		POStatusControl("","PAID NOT RECEIVED IN WANGFOONG CARGO", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		POStatusControl("","IN AYE CARGO BUT NOT SHIPPED", 0, $RootPath, $db);
+		POStatusControl("","IN AYE CARGO BUT NOT SHIPPED", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		POStatusControl("","IN WANGFOONG CARGO BUT NOT SHIPPED", 0, $RootPath, $db);
+		POStatusControl("","IN WANGFOONG CARGO BUT NOT SHIPPED", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		POStatusControl("","SHIPPED IN TRANSIT", 0, $RootPath, $db);
+		POStatusControl("","SHIPPED IN TRANSIT", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		POStatusControl("","CUSTOMS CLEARANCE", 0, $RootPath, $db);
+		POStatusControl("","CUSTOMS CLEARANCE", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		POStatusControl("PACKAGING","ARRIVING IN NEXT DAYS", 75, $RootPath, $db);
+		POStatusControl("PACKAGING","ARRIVING IN NEXT DAYS", 75, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		POStatusControl("FORSALE","ARRIVING IN NEXT DAYS", 75, $RootPath, $db);
+		POStatusControl("FORSALE","ARRIVING IN NEXT DAYS", 75, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		POStatusControl("OTHERS","ARRIVING IN NEXT DAYS", 75, $RootPath, $db);
+		POStatusControl("OTHERS","ARRIVING IN NEXT DAYS", 75, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_BusinessDevelopmentManager){
-		POStatusControl("","ARRIVING IN NEXT DAYS", 75, $RootPath, $db);
+		POStatusControl("","ARRIVING IN NEXT DAYS", 75, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
