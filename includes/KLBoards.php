@@ -2227,7 +2227,7 @@ function PositionTopSalesItem($stockid, $TopItemsDays, $db){
 		  FROM klsalesperformance
 		  WHERE stockid = '" . $stockid . "'";
 	$result = DB_query($SQL);
-	$TopSalesPosition = 999999;
+	$TopSalesPosition = 9999999;
 	if (DB_num_rows($result) != 0){
 		if ($myrow = DB_fetch_array($result)) {
 			$TopSalesPosition = $myrow['topsalesposition'];
