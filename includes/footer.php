@@ -4,56 +4,69 @@ echo '<div id="mask">
 	</div>';
 
 if (isset($Messages) and count($Messages) > 0) {
+	$LogFile = false;
+
+	if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity'] > 0) { // add these 3 lines
+		$LogFile = fopen($_SESSION['LogPath'] . '/weberp.log', 'a');
+	}
+
 	foreach ($Messages as $Message) {
 		switch ($Message[1]) {
 			case 'error':
 				$Class = 'error';
 				$Message[2] = $Message[2] ? $Message[2] : _('ERROR') . ' ' . _('Report');
-				if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity'] > 3) {
-					fwrite($LogFile, date('Y-m-d h-m-s') . ',' . $Type . ',' . $_SESSION['UserID'] . ',' . trim($Msg, ',') . "\n");
+				if (!empty($LogFile) && isset($_SESSION['LogSeverity']) && $_SESSION['LogSeverity'] > 0) {
+					fwrite($LogFile, date('Y-m-d h-m-s') . ',' . $Message[2] . ',' . $_SESSION['UserID'] . ',' . trim($Message[0], ',') . "\n");
 				}
-			break;
+			    break;
+
 			case 'warn':
 			case 'warning':
 				$Class = 'warn';
 				$Message[2] = $Message[2] ? $Message[2] : _('WARNING') . ' ' . _('Report');
-				if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity'] > 3) {
-					fwrite($LogFile, date('Y-m-d h-m-s') . ',' . $Type . ',' . $_SESSION['UserID'] . ',' . trim($Msg, ',') . "\n");
+				if (!empty($LogFile) && isset($_SESSION['LogSeverity']) && $_SESSION['LogSeverity'] > 1) {
+					fwrite($LogFile, date('Y-m-d h-m-s') . ',' . $Message[2] . ',' . $_SESSION['UserID'] . ',' . trim($Message[0], ',') . "\n");
 				}
-			break;
-			case 'success':
-				$Class = 'success';
-				$Message[2] = $Message[2] ? $Message[2] : _('SUCCESS') . ' ' . _('Report');
-				if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity'] > 3) {
-					fwrite($LogFile, date('Y-m-d h-m-s') . ',' . $Type . ',' . $_SESSION['UserID'] . ',' . trim($Msg, ',') . "\n");
+				break;
+
+            case 'info':
+                $Class = 'info';
+                $Message[2] = $Message[2] ? $Message[2] : _('INFORMATION') . ' ' . _('Message');
+				if (!empty($LogFile) && isset($_SESSION['LogSeverity']) && $_SESSION['LogSeverity'] > 2) {
+					fwrite($LogFile, date('Y-m-d h-m-s') . ',' . $Message[2] . ',' . $_SESSION['UserID'] . ',' . trim($Message[0], ',') . "\n");
 				}
-			break;
-			case 'info':
+				break;
+
+            case 'success':
 			default:
-				$Message[2] = $Message[2] ? $Message[2] : _('INFORMATION') . ' ' . _('Message');
-				$Class = 'info';
-				if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity'] > 2) {
-					fwrite($LogFile, date('Y-m-d h-m-s') . ',' . $Type . ',' . $_SESSION['UserID'] . ',' . trim($Msg, ',') . "\n");
+                $Class = 'success';
+                $Message[2] = $Message[2] ? $Message[2] : _('SUCCESS') . ' ' . _('Report');
+				if (!empty($LogFile) && isset($_SESSION['LogSeverity']) && $_SESSION['LogSeverity'] > 3) {
+					fwrite($LogFile, date('Y-m-d h-m-s') . ',' . $Message[2] . ',' . $_SESSION['UserID'] . ',' . trim($Message[0], ',') . "\n");
 				}
 		}
+
 		echo '<div id="MessageContainerFoot">
 				<div class="Message ', $Class, ' noPrint">
 					<span class="MessageCloseButton">&times;</span>
 					<b>', $Message[2], '</b> : ', $Message[0], '
 				</div>
 			</div>';
+
+		if (!empty($LogFile)) {
+			fclose($LogFile);
+		}
 	}
 }
 
 echo '</section>'; // BodyDiv
 echo '<footer class="noPrint">
-		<a class="FooterLogo" href="http://www.weberp.org" target="_blank">
-			<img src="', $RootPath, '/', $_SESSION['LogoFile'], '" width="120" alt="KwaMoja" title="KwaMoja" />
+		<a class="FooterLogo" href="https://www.weberp.org" target="_blank">
+			<img width="120" alt="webERP" title="webERP" src="', $RootPath, '/', $_SESSION['LogoFile'], '"/>
 		</a>
 		<div class="FooterVersion">webERP ', _('version'), ' ', $_SESSION['VersionNumber'], '</div>
 		<div class="FooterTime">', DisplayDateTime(), '</div>
-	</footer>'; // FooterDiv
+	  </footer>'; // FooterDiv
 echo '</body>';
 echo '</html>';
 
-?>
