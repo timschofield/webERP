@@ -1239,7 +1239,7 @@ function PricesNotUpdatedinXDays($numDays, $percentageIncrease, $RootPath, $db){
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
 			$k = StartEvenOrOddRow($k);
-			$NewPrice = correction_for_low_end_prices(round_price($myrow['price'] * (1 + $percentageIncrease/100), "UP"));
+			$NewPrice = round_price($myrow['price'] * (1 + $percentageIncrease/100), "UP");
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 		//	$PriceLink = '<a href="' . $RootPath . '/Prices.php?Item=' . $myrow['stockid'] . '">' . locale_number_format($myrow['price'],0) . '</a>';
 			$NewPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $NewPrice .  '">' . locale_number_format($NewPrice,0) . '</a>';

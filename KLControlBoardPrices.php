@@ -233,10 +233,10 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQoh, $
 					LIMIT 1) < ((stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) * ". $FactorMax ." / ". $FactorTolerance ."))";
 
 	$result = DB_query($SQL);
-	$ShowHeader = TRUE;
 	if (DB_num_rows($result) != 0){
 		$k = 0; //row colour counter
 		$i = 1;
+		$ShowHeader = TRUE;
 		while ($myrow = DB_fetch_array($result)) {
 			$PositionTopSales = PositionTopSalesItem($myrow['stockid'], $DaysTopSales, $db);
 			if ($PositionTopSales < $TopSales){
@@ -266,7 +266,7 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQoh, $
 				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 				$MaxPrice = $myrow['standardcost'] * $FactorMax;
 				$MinPrice = $myrow['standardcost'] * $FactorMin;
-				$RecommendedPrice = correction_for_low_end_prices(round_price($MaxPrice, "UP"));
+				$RecommendedPrice = round_price($MaxPrice, "UP");
 				$Increase = locale_number_format(($RecommendedPrice-$myrow['retailprice'])/$myrow['retailprice']*100,1).'%';
 				$NewPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $RecommendedPrice .  '">' . locale_number_format($RecommendedPrice,0) . '</a>';
 				$IncomeIncrease = $myrow['qoh'] * ($RecommendedPrice-$myrow['retailprice']);
@@ -300,12 +300,11 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQoh, $
 				$i++;
 			}
 		}
+		if (!$ShowHeader){
+			echo '</table>
+					</div>';
+		}
 	}
-	if (!$ShowHeader){
-		echo '</table>
-				</div>';
-	}
-	
 }
 
 function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQoh, $TopSales, $DaysTopSales, $RootPath, $db){
@@ -351,13 +350,15 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQo
 					LIMIT 1) > ((stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) * ". $FactorMax ." / ". $FactorTolerance ."))";
 
 	$result = DB_query($SQL);
-	$ShowHeader = TRUE;
 	if (DB_num_rows($result) != 0){
 		$k = 0; //row colour counter
 		$i = 1;
+		$ShowHeader = TRUE;
 		while ($myrow = DB_fetch_array($result)) {
 			$PositionTopSales = PositionTopSalesItem($myrow['stockid'], $DaysTopSales, $db);
-			if ($PositionTopSales > $TopSales){
+			$RecommendedPrice = round_price($MaxPrice, "DOWN");
+			if (($PositionTopSales > $TopSales) AND 
+				($RecommendedPrice < $myrow['retailprice'])){
 				if ($ShowHeader){
 					$CategoryName = GetCategoryNameFromCode($Stockcat);
 					echo '<p class="page_title_text" align="center"><strong>' .  $CategoryName . ' Items TOO EXPENSIVE: ' . ' NO TOP '.locale_number_format($TopSales,0) . ' sales. Retail Price OVER ' . $FactorMax . _(' x standard cost. Tolerance ') . locale_number_format($Tolerance * 100,0) . '%. QOH >= ' .  locale_number_format($MinQoh,0).  '</strong></p>';
@@ -383,46 +384,45 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQo
 				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 				$MaxPrice = $myrow['standardcost'] * $FactorMax;
 				$MinPrice = $myrow['standardcost'] * $FactorMin;
-				$RecommendedPrice = correction_for_low_end_prices(round_price($MaxPrice, "DOWN"));
 				$Decrease = locale_number_format(($RecommendedPrice-$myrow['retailprice'])/$myrow['retailprice']*100,1).'%';
 				$NewPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $RecommendedPrice .  '">' . locale_number_format($RecommendedPrice,0) . '</a>';
 				$IncomeDecrease = $myrow['qoh'] * ($RecommendedPrice-$myrow['retailprice']);
-				if ($RecommendedPrice < $myrow['retailprice']){
-					$k = StartEvenOrOddRow($k);
-					printf('<td class="number">%s</td>
-							<td>%s</td>
-							<td>%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td>%s</td>
-							<td class="number">%s</td>
-							</tr>', 
-							$i, 
-							$CodeLink, 
-							$myrow['description'], 
-							locale_number_format($PositionTopSales,0),
-							locale_number_format($myrow['qoh'],0),
-							locale_number_format($myrow['standardcost'],0),
-							locale_number_format($MinPrice,0),
-							locale_number_format($myrow['retailprice'],0),
-							locale_number_format($MaxPrice,0),
-							$NewPriceLink,
-							$Decrease,
-							locale_number_format($IncomeDecrease,0)
-							);
-					$i++;
-				}
+
+				$k = StartEvenOrOddRow($k);
+				printf('<td class="number">%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						</tr>', 
+						$i, 
+						$CodeLink, 
+						$myrow['description'], 
+						locale_number_format($PositionTopSales,0),
+						locale_number_format($myrow['qoh'],0),
+						locale_number_format($myrow['standardcost'],0),
+						locale_number_format($MinPrice,0),
+						locale_number_format($myrow['retailprice'],0),
+						locale_number_format($MaxPrice,0),
+						$NewPriceLink,
+						$Decrease,
+						locale_number_format($IncomeDecrease,0)
+						);
+				$i++;
+				
 			}
 		}
-	}
-	if (!$ShowHeader){
-		echo '</table>
-				</div>';
+		if (!$ShowHeader){
+			echo '</table>
+					</div>';
+		}
 	}
 }
 
@@ -472,12 +472,12 @@ function PriceBelowStandard($Stockcat, $Factor, $Tolerance, $MinQoh, $RootPath, 
 
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		$ShowHeader = TRUE;
 		$k = 0; //row colour counter
 		$i = 1;
+		$ShowHeader = TRUE;
 		while ($myrow = DB_fetch_array($result)) {
 			$NewPrice = $myrow['standardcost'] * $Factor;
-			$RecommendedPrice = correction_for_low_end_prices(round_price($NewPrice, "UP"));
+			$RecommendedPrice = round_price($NewPrice, "UP");
 			if ($myrow['retailprice'] != $RecommendedPrice){
 				if ($ShowHeader){
 					$CategoryName = GetCategoryNameFromCode($Stockcat);

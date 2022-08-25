@@ -164,6 +164,7 @@ function round_price($n, $up="UP"){
 			}
 		}
 	}
+	$price = correction_for_low_end_prices($price);
 	return $price;
 }
 
