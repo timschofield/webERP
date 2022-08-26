@@ -33,6 +33,7 @@ function submit(&$db, $ListCategories, $DaysTopSales) {
 				(SELECT SUM(quantity)
 					FROM locstock
 					WHERE stockmaster.stockid = locstock.stockid) AS qoh,
+				prices.startdate AS DOB_price,
 				prices.price AS retailprice,
 				(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS standardcost
 			FROM stockmaster, prices			
@@ -68,11 +69,10 @@ function submit(&$db, $ListCategories, $DaysTopSales) {
 			$objPHPExcel->getActiveSheet()->setCellValue('D1', 'DOB_CATEGORY');
 			$objPHPExcel->getActiveSheet()->setCellValue('E1', 'QOH');
 			$objPHPExcel->getActiveSheet()->setCellValue('F1', 'TOP_ITEM');
-//			$objPHPExcel->getActiveSheet()->setCellValue('G1', 'PCS_SOLD');
-//			$objPHPExcel->getActiveSheet()->setCellValue('H1', 'VALUE_SOLD');
-			$objPHPExcel->getActiveSheet()->setCellValue('I1', 'STANDARD_COST');
-			$objPHPExcel->getActiveSheet()->setCellValue('J1', 'RETAILPRICE');
-			$objPHPExcel->getActiveSheet()->setCellValue('K1', 'PRICEFACTOR');
+			$objPHPExcel->getActiveSheet()->setCellValue('G1', 'STANDARD_COST');
+			$objPHPExcel->getActiveSheet()->setCellValue('H1', 'DOB_PRICE');
+			$objPHPExcel->getActiveSheet()->setCellValue('I1', 'RETAILPRICE');
+			$objPHPExcel->getActiveSheet()->setCellValue('J1', 'PRICEFACTOR');
  
 			// Add data
 			$i = 2;
@@ -84,11 +84,10 @@ function submit(&$db, $ListCategories, $DaysTopSales) {
 				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, ConvertSQLDate($myrow['lastcategoryupdate']));
 				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, $myrow['qoh']);
 				$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, PositionTopSalesItem($myrow['stockid'], $DaysTopSales, $db));
-//				$objPHPExcel->getActiveSheet()->setCellValue('G'.$i, round($myrow['totalinvoiced'],0));
-//				$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, round($myrow['valuesales'],0));
-				$objPHPExcel->getActiveSheet()->setCellValue('I'.$i, round($myrow['standardcost'],0));
-				$objPHPExcel->getActiveSheet()->setCellValue('J'.$i, $myrow['retailprice']);
-				$objPHPExcel->getActiveSheet()->setCellValue('K'.$i, round(($myrow['retailprice']/$myrow['standardcost']),2));
+				$objPHPExcel->getActiveSheet()->setCellValue('G'.$i, round($myrow['standardcost'],0));
+				$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, ConvertSQLDate($myrow['DOB_price']));
+				$objPHPExcel->getActiveSheet()->setCellValue('I'.$i, $myrow['retailprice']);
+				$objPHPExcel->getActiveSheet()->setCellValue('J'.$i, round(($myrow['retailprice']/$myrow['standardcost']),2));
 				
 				$i++;
 			}
@@ -97,7 +96,7 @@ function submit(&$db, $ListCategories, $DaysTopSales) {
 			$objPHPExcel->getActiveSheet()->freezePane('A2');
 		
 			// Auto Size columns
-			foreach(range('A','F') as $columnID) {
+			foreach(range('A','J') as $columnID) {
 				$objPHPExcel->getActiveSheet()->getColumnDimension($columnID)
 					->setAutoSize(true);
 			}
