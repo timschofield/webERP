@@ -2692,7 +2692,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 					</tr>', 
 					'', 
 					'', 
-					'CURRENT STOCK @SC',
+					'CURRENT STOCK',
 					'IDR', 
 					'', 
 					'', 
@@ -2710,7 +2710,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 					'', 
 					'' 
 					);
-/*			$k = StartEvenOrOddRow($k);
+			$k = StartEvenOrOddRow($k);
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
@@ -2733,7 +2733,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 					</tr>', 
 					'', 
 					'', 
-					'CURRENT STOCK @SC',
+					'CURRENT STOCK',
 					'PCS', 
 					'', 
 					'', 
@@ -2751,7 +2751,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 					'', 
 					'' 
 					);
-*/		}
+		}
 
 		if (($TypeOfCode == "IN NEGOTIAION WITH SUPPLIER") OR
 			($TypeOfCode == "ON PRODUCTION") OR 
