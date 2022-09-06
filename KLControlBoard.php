@@ -173,7 +173,8 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_BusinessDevelopmentManager
+	if ($KL_SystemAdmin
+		OR $KL_BusinessDevelopmentManager
 		OR $KL_ShopSupportTeam){
 		
 		over_or_below_limit("Items changing price or moving category", "OVER", 50, $RootPath, $db);
@@ -242,7 +243,7 @@ if ($ProcessSection01){
 
 	if ($KL_OperationalManager 
 		OR $KL_ShopSupportLeader){
-		ErrorsInTransfers( 7, $RootPath, $db);
+		ErrorsInTransfers( 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 	

@@ -96,7 +96,7 @@ function ActiveTransfersByLocation($RootPath, $db){
 				locale_number_format($TotalPcsIn,0),
 				locale_number_format($TotalPcsOut+$TotalPcsIn,0)
 				);
-		
+		InsertBusinessHistory("TRANSFERS","PENDING GOODS TO BE TRANSFERRED @ SHOPS (PCS)", $TotalPcsOut+$TotalPcsIn);
 		echo '</table>
 				</div>
 				</form>';
@@ -168,6 +168,7 @@ function ActiveTransferStatus($RootPath, $db){
 				'Total', 
 				locale_number_format($total,0)
 				);
+		InsertBusinessHistory("TRANSFERS", "ACTIVE TRANSFERS (PCS)", $total);
 		echo '</table>
 				</div>
 				</form>';
@@ -1268,10 +1269,13 @@ function GoodsToBeProduced($CategoryComponent, $ParentCategory, $RootPath, $db){
 	if (DB_num_rows($result) != 0){
 		if ($ParentCategory == "ONLYDISCOUNT"){
 			echo '<p class="page_title_text" align="center"><strong>' . _('Components ready to WO in kantor used ONLY for Discount items') . '</strong></p>';
+			$BusinessConcept = "COMPONENTS READY FOR WO ONLY FOR DISCOUNT";
 		}elseif ($ParentCategory == "DISCOUNT"){
 			echo '<p class="page_title_text" align="center"><strong>' . _('Components ready to WO in kantor used for Discount items') . '</strong></p>';
+			$BusinessConcept = "COMPONENTS READY FOR WO FOR DISCOUNT ITEMS";
 		}else{
 			echo '<p class="page_title_text" align="center"><strong>' . _('Components ready to WO in kantor for any items') . '</strong></p>';
+			$BusinessConcept = "COMPONENTS READY FOR WO";
 		}
 		echo '<div>';
 		echo '<table class="selection">';
@@ -1307,6 +1311,7 @@ function GoodsToBeProduced($CategoryComponent, $ParentCategory, $RootPath, $db){
 					);
 			$i++;
 		}
+		InsertBusinessHistory("COMPONENTS", $BusinessConcept, $totalcost);
 		printf('<td class="number">%s</td>
 				<td>%s</td>
 				<td>%s</td>
@@ -2669,6 +2674,8 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 			AND ($TypeOfProduct == "FORSALE")){
 			$CurrentTotalQtyItemsForSale = GetTotalQtyItemsForSale($db);
 			$CurrentTotalValueItemsForSale = GetTotalValueItemsForSale($periodnow, $db);
+			InsertBusinessHistory("STOCK", "CURRENT STOCK ITEMS FOR SALE (IDR)", $CurrentTotalValueItemsForSale);
+			InsertBusinessHistory("STOCK", "CURRENT STOCK ITEMS FOR SALE (PCS)", $CurrentTotalQtyItemsForSale);
 			$k = StartEvenOrOddRow($k);
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -2844,6 +2851,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 		if (($TypeOfCode == "ARRIVING IN NEXT DAYS") 
 			AND ($TypeOfProduct == "FORSALE")){
 			$AverageItemCost = $CurrentTotalValueItemsForSale / $CurrentTotalQtyItemsForSale;
+			InsertBusinessHistory("STOCK", "AVERAGE ITEM FOR SALE STANDARD COST (PCS)", $AverageItemCost);
 			$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 			$SQL = "SELECT SUM(amount) AS cogs
 					FROM  gltrans 
@@ -2853,6 +2861,9 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 			$result = DB_query($SQL);
 			$myrow = DB_fetch_array($result);
 			$k = StartEvenOrOddRow($k);
+			InsertBusinessHistory("PURCHASE ORDERS", "CURRENT PO x ITEMS FOR SALE NEXT ". $maxdays." DAYS (IDR)", $TotalValueAllOrders);
+			InsertBusinessHistory("PURCHASE ORDERS", "CURRENT PO x ITEMS FOR SALE NEXT ". $maxdays." DAYS (PCS)", $TotalItemsAllOrders);
+			InsertBusinessHistory("STOCK", "EXPECTED COGS NEXT ". $maxdays . " DAYS (IDR)", round($myrow['cogs'],-6));
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
@@ -2875,7 +2886,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 					</tr>', 
 					'', 
 					'', 
-					'EXPECTED COGS ' . $maxdays . ' DAYS',
+					'EXPECTED COGS NEXT ' . $maxdays . ' DAYS',
 					'IDR', 
 					'', 
 					'(APPROX)', 
@@ -2893,6 +2904,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 					'', 
 					'' 
 					);
+			InsertBusinessHistory("STOCK", "EXPECTED COGS NEXT ". $maxdays . " DAYS (PCS)", round($myrow['cogs']/$AverageItemCost, -2));
 /*			$k = StartEvenOrOddRow($k);
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -2937,6 +2949,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 
 */
 			$ExpectedDifferenceValueStock = round($TotalValueAllOrders-$myrow['cogs'],-6);
+			InsertBusinessHistory("STOCK", "EXPECTED DIFFERENCE STOCK IN ". $maxdays . " DAYS (IDR)", $ExpectedDifferenceValueStock);
 			$k = StartEvenOrOddRow($k);
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -2980,6 +2993,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 					);
 					
 			$ExpectedDifferenceQtyStock = round($ExpectedDifferenceValueStock/$AverageItemCost,-2);
+			InsertBusinessHistory("STOCK", "EXPECTED DIFFERENCE STOCK IN ". $maxdays . " DAYS (PCS)", $ExpectedDifferenceQtyStock);
 			$k = StartEvenOrOddRow($k);
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -3022,6 +3036,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 					'' 
 					);
 			$ExpectedFutureValueStock = round($CurrentTotalValueItemsForSale+$ExpectedDifferenceValueStock, -6);
+			InsertBusinessHistory("STOCK", "EXPECTED FUTURE STOCK ". $maxdays . " DAYS (IDR)", $ExpectedFutureValueStock);
 			$k = StartEvenOrOddRow($k);
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -3045,7 +3060,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 					</tr>', 
 					'', 
 					'', 
-					'EXPECTED STOCK IN ' . $maxdays . ' DAYS',
+					'EXPECTED FUTURE STOCK IN ' . $maxdays . ' DAYS',
 					'IDR', 
 					'', 
 					'(APPROX)', 
@@ -3064,6 +3079,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 					'' 
 					);
 			$ExpectedFutureQtyStock = round($ExpectedFutureValueStock / $AverageItemCost, -2);
+			InsertBusinessHistory("STOCK", "EXPECTED FUTURE STOCK ". $maxdays . " DAYS (PCS)", $ExpectedFutureQtyStock);
 			$k = StartEvenOrOddRow($k);
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -3087,7 +3103,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 					</tr>', 
 					'', 
 					'', 
-					'EXPECTED STOCK IN ' . $maxdays . ' DAYS',
+					'EXPECTED FUTURE STOCK IN ' . $maxdays . ' DAYS',
 					'PCS', 
 					'', 
 					'(APPROX)', 
@@ -3105,7 +3121,6 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 					'', 
 					'' 
 					);
-			
 		}
 		echo '</table>
 				</div>';
