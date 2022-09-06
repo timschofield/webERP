@@ -131,31 +131,6 @@ function DataExistsInOpenCart($db_oc, $table, $f1, $v1, $f2 = '', $v2 = ''){
 	return $Exists;
 }
 
-function DataExistsInWebERP($db, $table, $f1, $v1, $f2 = '', $v2 = ''){
-	if ($f2 == ''){
-		/* Primary key is 1 field only */
-		$SQL = "SELECT COUNT(*)
-				FROM " . $table . "
-				WHERE " . $f1 . " = '" . $v1 . "'";
-	}else{
-		/* Primary key is 2 fields */
-		$SQL = "SELECT COUNT(*)
-				FROM " . $table . "
-				WHERE " . $f1 . " = '" . $v1 . "'
-					AND " . $f2 . " = '" . $v2 . "'";
-	}
-	$ErrMsg =_('Could not check existence of data in webERP because');
-	$result = DB_query($SQL,$ErrMsg);
-
-	if(DB_num_rows($result) != 0){
-		$myrow = DB_fetch_array($result);
-		$Exists = ($myrow[0] > 0);
-	}else{
-		$Exists = false;
-	}
-	return $Exists;
-}
-
 function GetLenghtClassId($webERPDimensions, $language_id, $db_oc, $oc_tableprefix){
 	$SQL = "SELECT length_class_id
 			FROM " . $oc_tableprefix . "length_class_description
