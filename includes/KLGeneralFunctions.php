@@ -982,15 +982,17 @@ function DataExistsInWebERP($db, $table, $f1, $v1, $f2 = '', $v2 = ''){
 
 
 
-function InsertBusinessHistory($Concept, $Value){
+function InsertBusinessHistory($Class, $Concept, $Value){
 	$Date = date('Y-m-d');
 	if (!DataExistsInWebERP($db, 'klbusinesshistory', 'date', $Date, 'concept', $Concept)){
 		$SQL = "INSERT INTO klbusinesshistory 
 				(date,
+				class,
 				concept,
 				value)
 			VALUES 
 				('" . $Date . "',
+				'" . $Class . "',
 				'" . $Concept . "',
 				'" . $Value . "')";
 		$ErrMsg = 'Error in function InsertBusinessHistory()';
