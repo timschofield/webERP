@@ -254,6 +254,7 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQoh, $
 										<th class="ascending">' . _('Std Cost') . '</th>
 										<th class="ascending">' . _('Minimum Price') . '</th>
 										<th class="ascending">' . _('Current Price') . '</th>
+										<th class="ascending">' . _('Current Factor') . '</th>
 										<th class="ascending">' . _('Optimum Price') . '</th>
 										<th class="ascending">' . _('Recommended Retail') . '</th>
 										<th class="ascending">' . _('% Increase') . '</th>
@@ -281,6 +282,7 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQoh, $
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
+						<td class="number">%s</td>
 						<td>%s</td>
 						<td class="number">%s</td>
 						</tr>', 
@@ -292,6 +294,7 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQoh, $
 						locale_number_format($myrow['standardcost'],0),
 						locale_number_format($MinPrice,0),
 						locale_number_format($myrow['retailprice'],0),
+						locale_number_format($myrow['retailprice']/$myrow['standardcost'],2),
 						locale_number_format($MaxPrice,0),
 						$NewPriceLink,
 						$Increase,
@@ -377,6 +380,7 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQo
 										<th class="ascending">' . _('Std Cost') . '</th>
 										<th class="ascending">' . _('Minimum Price') . '</th>
 										<th class="ascending">' . _('Current Price') . '</th>
+										<th class="ascending">' . _('Current Factor') . '</th>
 										<th class="ascending">' . _('Optimum Price') . '</th>
 										<th class="ascending">' . _('Recommended Retail') . '</th>
 										<th class="ascending">' . _('% Decrease') . '</th>
@@ -399,6 +403,7 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQo
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
+						<td class="number">%s</td>
 						<td>%s</td>
 						<td class="number">%s</td>
 						</tr>', 
@@ -410,6 +415,7 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQo
 						locale_number_format($myrow['standardcost'],0),
 						locale_number_format($MinPrice,0),
 						locale_number_format($myrow['retailprice'],0),
+						locale_number_format($myrow['retailprice']/$myrow['standardcost'],2),
 						locale_number_format($MaxPrice,0),
 						$NewPriceLink,
 						$Decrease,
@@ -491,6 +497,7 @@ function PriceBelowStandard($Stockcat, $Factor, $Tolerance, $MinQoh, $RootPath, 
 										<th class="ascending">' . _('QOH') . '</th>
 										<th class="ascending">' . _('Std Cost') . '</th>
 										<th class="ascending">' . _('Current Price') . '</th>
+										<th class="ascending">' . _('Current Factor') . '</th>
 										<th class="ascending">' . _('Minimum Price') . '</th>
 										<th class="ascending">' . _('Recommended Retail') . '</th>
 										<th class="ascending">' . _('% Increase') . '</th>
@@ -514,6 +521,7 @@ function PriceBelowStandard($Stockcat, $Factor, $Tolerance, $MinQoh, $RootPath, 
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
+						<td class="number">%s</td>
 						<td>%s</td>
 						<td class="number">%s</td>
 						</tr>', 
@@ -524,6 +532,7 @@ function PriceBelowStandard($Stockcat, $Factor, $Tolerance, $MinQoh, $RootPath, 
 						locale_number_format($myrow['qoh'],0),
 						locale_number_format($myrow['standardcost'],0),
 						locale_number_format($myrow['retailprice'],0),
+						locale_number_format($myrow['retailprice']/$myrow['standardcost'],2),
 						locale_number_format($NewPrice,0),
 						$NewPriceLink,
 						$Increase,
