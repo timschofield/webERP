@@ -356,7 +356,11 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQo
 		$ShowHeader = TRUE;
 		while ($myrow = DB_fetch_array($result)) {
 			$PositionTopSales = PositionTopSalesItem($myrow['stockid'], $DaysTopSales, $db);
-			$RecommendedPrice = round_price($MaxPrice, "DOWN");
+			$MaxPrice = $myrow['standardcost'] * $FactorMax;
+			$MinPrice = $myrow['standardcost'] * $FactorMin;
+			$RecommendedPrice = round_price($MaxPrice, "UP");
+			$Decrease = locale_number_format(($RecommendedPrice-$myrow['retailprice'])/$myrow['retailprice']*100,1).'%';
+			$IncomeDecrease = $myrow['qoh'] * ($RecommendedPrice-$myrow['retailprice']);
 			if (($PositionTopSales > $TopSales) AND 
 				($RecommendedPrice < $myrow['retailprice'])){
 				if ($ShowHeader){
@@ -382,11 +386,7 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQo
 					$ShowHeader = FALSE;
 				}
 				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
-				$MaxPrice = $myrow['standardcost'] * $FactorMax;
-				$MinPrice = $myrow['standardcost'] * $FactorMin;
-				$Decrease = locale_number_format(($RecommendedPrice-$myrow['retailprice'])/$myrow['retailprice']*100,1).'%';
 				$NewPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $RecommendedPrice .  '">' . locale_number_format($RecommendedPrice,0) . '</a>';
-				$IncomeDecrease = $myrow['qoh'] * ($RecommendedPrice-$myrow['retailprice']);
 
 				$k = StartEvenOrOddRow($k);
 				printf('<td class="number">%s</td>
@@ -416,7 +416,6 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQo
 						locale_number_format($IncomeDecrease,0)
 						);
 				$i++;
-				
 			}
 		}
 		if (!$ShowHeader){
