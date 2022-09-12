@@ -990,6 +990,15 @@ function FinishedStockDistribution($kind, $byreport, $db){
 				$percentModels,
 				""
 				);
+		if ($kind == "FORSALE"){			
+			InsertBusinessHistory("STOCK", "STOCK ITEMS FOR SALE (PCS)", $totalpcs);
+		}
+		if ($kind == "DISPLAYS"){			
+			InsertBusinessHistory("STOCK", "STOCK DISPLAYS (PCS)", $totalpcs);
+		}
+		if ($kind == "PACKAGING"){			
+			InsertBusinessHistory("STOCK", "STOCK PACKAGING (PCS)", $totalpcs);
+		}
 		
 		echo '</table>
 				</div>
@@ -1269,13 +1278,13 @@ function GoodsToBeProduced($CategoryComponent, $ParentCategory, $RootPath, $db){
 	if (DB_num_rows($result) != 0){
 		if ($ParentCategory == "ONLYDISCOUNT"){
 			echo '<p class="page_title_text" align="center"><strong>' . _('Components ready to WO in kantor used ONLY for Discount items') . '</strong></p>';
-			$BusinessConcept = "COMPONENTS READY FOR WO ONLY FOR DISCOUNT";
+			$BusinessConcept = "COMPONENTS READY FOR WO ONLY FOR DISCOUNT (IDR)";
 		}elseif ($ParentCategory == "DISCOUNT"){
 			echo '<p class="page_title_text" align="center"><strong>' . _('Components ready to WO in kantor used for Discount items') . '</strong></p>';
-			$BusinessConcept = "COMPONENTS READY FOR WO FOR DISCOUNT ITEMS";
+			$BusinessConcept = "COMPONENTS READY FOR WO FOR DISCOUNT ITEMS (IDR)";
 		}else{
 			echo '<p class="page_title_text" align="center"><strong>' . _('Components ready to WO in kantor for any items') . '</strong></p>';
-			$BusinessConcept = "COMPONENTS READY FOR WO";
+			$BusinessConcept = "COMPONENTS READY FOR WO (IDR)";
 		}
 		echo '<div>';
 		echo '<table class="selection">';
