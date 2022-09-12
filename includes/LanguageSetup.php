@@ -11,14 +11,13 @@ NB this language must also exist in the locale on the web-server
 normally the lower case two character language code underscore uppercase
 2 character country code does the trick  except for en !!*/
 
-
 /*
  * Improve language check to avoid potential LFI issue.
  * Reported by: https://lyhinslab.org
  */
 if (isset($_POST['Language']) && checkLanguageChoice($_POST['Language'])) {
 	$_SESSION['Language'] = $_POST['Language'];
-} else {
+} elseif (!isset($_SESSION['Language'])) {
 	$_SESSION['Language'] = $DefaultLanguage;
 }
 
