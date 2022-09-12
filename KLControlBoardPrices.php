@@ -153,18 +153,18 @@ if ($ProcessSection02){
 		ItemsTooCheap("NOPOGA", 3.50, 5.75, 0.05, 10, 100, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
 */
-		ItemsTooExpensive("TESTKA", 6.00, 6.25, 0.05, 10, 300, 90, $RootPath, $db);
+		ItemsTooExpensive("TESTKA", 6.00, 6.50, 0.05, 10, 300, 90, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsTooExpensive("STABKA", 6.00, 6.25, 0.05, 20, 300, 90, $RootPath, $db);
+		ItemsTooExpensive("STABKA", 6.00, 6.50, 0.05, 20, 300, 90, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsTooExpensive("NOPOKA", 6.00, 6.25, 0.05, 20, 300, 60, $RootPath, $db);
+		ItemsTooExpensive("NOPOKA", 6.00, 6.50, 0.05, 20, 300, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-		ItemsTooExpensive("TESTBA", 6.50, 6.75, 0.05, 10, 200, 90, $RootPath, $db);
+		ItemsTooExpensive("TESTBA", 6.50, 7.00, 0.05, 10, 200, 90, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsTooExpensive("STABBA", 6.50, 6.75, 0.05, 20, 200, 90, $RootPath, $db);
+		ItemsTooExpensive("STABBA", 6.50, 7.00, 0.05, 20, 200, 90, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsTooExpensive("NOPOBA", 6.50, 6.75, 0.05, 20, 200, 90, $RootPath, $db);
+		ItemsTooExpensive("NOPOBA", 6.50, 7.00, 0.05, 20, 200, 90, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 /*		ItemsTooExpensive("TESTGA", 5.50, 6.00, 0.05, 5, 800, 90, $RootPath, $db);
@@ -342,6 +342,15 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQo
 				AND ((SELECT SUM(quantity)
 					FROM locstock
 					WHERE stockmaster.stockid = locstock.stockid) >= " . $MinQoh . ")
+				AND ((SELECT price 					
+					FROM prices	
+					WHERE stockmaster.stockid = prices.stockid	
+						AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
+						AND prices.currabrev = '". CURRENCY_CODE ."'
+						AND prices.startdate <= '". $StartDate. "' 
+						AND prices.startdate <= '". $today. "' 
+						AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')
+					LIMIT 1) > " . SMALL_PRICE_CALCULATED_STEP04 . ") 
 				AND ((SELECT price 					
 					FROM prices	
 					WHERE stockmaster.stockid = prices.stockid	
