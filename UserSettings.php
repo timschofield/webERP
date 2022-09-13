@@ -105,6 +105,22 @@ if(isset($_POST['Modify'])) {
 	}
 }
 
+$SQL = "SELECT
+			email,
+			showpagehelp,
+			showfieldhelp,
+			language
+		from www_users WHERE userid = '" . $_SESSION['UserID'] . "'";
+$Result = DB_query($SQL);
+$MyRow = DB_fetch_array($Result);
+
+if(!isset($_POST['email'])) {
+	$_POST['email'] = $MyRow['email'];
+}
+$_POST['ShowPageHelp'] = $MyRow['showpagehelp'];
+$_POST['ShowFieldHelp'] = $MyRow['showfieldhelp'];
+$_POST['Language'] = $MyRow['language'];
+
 echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
 	'<input name="FormID" value="', $_SESSION['FormID'], '" type="hidden" />';
 
@@ -177,20 +193,6 @@ echo '</select>
 	</tr>
 	<tr>
 		<td>', _('Email'), ':</td>';
-
-$SQL = "SELECT
-			email,
-			showpagehelp,
-			showfieldhelp
-		from www_users WHERE userid = '" . $_SESSION['UserID'] . "'";
-$Result = DB_query($SQL);
-$MyRow = DB_fetch_array($Result);
-
-if(!isset($_POST['email'])) {
-	$_POST['email'] = $MyRow['email'];
-}
-$_POST['ShowPageHelp'] = $MyRow['showpagehelp'];
-$_POST['ShowFieldHelp'] = $MyRow['showfieldhelp'];
 
 echo '<td><input name="email" size="40" type="email" value="', $_POST['email'], '" /></td>
 	</tr>';
