@@ -516,6 +516,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 			if ($percent < 0){
 				$trend = "Degrading ". locale_number_format($percent,0) . "%";
 			}
+			$k = StartEvenOrOddRow($k);
 			printf('<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -542,6 +543,36 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 					locale_number_format($TotalDateMTD,0),
 					$trend,
 					locale_number_format($TotalForecast,0),
+					""
+					);
+			$i--;
+			$k = StartEvenOrOddRow($k);
+			printf('<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					"",
+					"",
+					"AVERAGE",
+					locale_number_format($TotalDateA/$i,0), 
+					locale_number_format($TotalDateB/$i,0), 
+					locale_number_format($TotalDateC/$i,0),
+					locale_number_format($TotalDateD/$i,0),
+					locale_number_format($TotalDateE/$i,0),
+					locale_number_format($TotalDateF/$i,0),
+					locale_number_format($TotalDateMTD/$i,0),
+					"",
+					locale_number_format($TotalForecast/$i,0),
 					""
 					);
 		}
@@ -1391,6 +1422,11 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 	if (DB_num_rows($result) != 0){
 		$k = 0; //row colour counter
 		$i = 1;
+		$UsageXDays = 0;
+		$ForecastXDays = 0;
+		$QOHTotal = 0;
+		$PendingQOO = 0;
+		$OptimmumOrder = 0;
 		while ($myrow = DB_fetch_array($result)) {
 			$DailyUse = $myrow['qused'] / $DaysUsage;
 			$ForecastProductionOnly = ceil($DailyUse * $DaysProduction);
@@ -1443,6 +1479,12 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					$showHeader = FALSE;
 				}
 
+				$UsageXDays += $ForecastProductionOnly;
+				$ForecastXDays += $Forecast;
+				$QOHTotal += $myrow['qoh'];
+				$PendingQOO += $myrow['qoo'];
+				$OptimmumOrder += $QtyToOrder;
+				
 				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 				$k = StartEvenOrOddRow($k);
 				printf('<td class="number">%s</td>
@@ -1471,6 +1513,40 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 			$i++;
 		}
 		if (!$showHeader){
+			$TotalDailyUse = $UsageXDays / $DaysProduction;
+			$TotalDaysQOH = floor($QOHTotal / $TotalDailyUse);
+			$TotalDaysQOO = floor(($QOHTotal + $PendingQOO) / $TotalDailyUse);
+			$k = StartEvenOrOddRow($k);
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					"", 
+					"TOTAL", 
+					"", 
+					locale_number_format($UsageXDays,0),
+					locale_number_format($ForecastXDays,0),
+					locale_number_format($QOHTotal,0),
+					locale_number_format($TotalDaysQOH,0),
+					locale_number_format_zero_blank($PendingQOO,0),
+					locale_number_format($TotalDaysQOO,0),
+					locale_number_format_zero_blank($OptimmumOrder,0)
+					);
+			InsertBusinessHistory("PACKAGING", "PACKAGING USED LAST " . $DaysProduction .  " DAYS (PCS)", $UsageXDays);
+			InsertBusinessHistory("PACKAGING", "PACKAGING FORECAST NEXT " . $DaysMinimumStock .  " DAYS (PCS)", $ForecastXDays);
+			InsertBusinessHistory("PACKAGING", "PACKAGING QOH TOTAL (PCS)", $QOHTotal);
+			InsertBusinessHistory("PACKAGING", "PACKAGING QOH TOTAL (DAYS)", $TotalDaysQOH);
+			InsertBusinessHistory("PACKAGING", "PACKAGING QOO NOT RECEIVED (PCS)", $PendingQOO);
+			InsertBusinessHistory("PACKAGING", "PACKAGING QOH + QOO TOTAL (DAYS)", $TotalDaysQOO);
+			InsertBusinessHistory("PACKAGING", "OPTIMUM ORDER (PCS)", $OptimmumOrder);
+
 			echo '</table>
 				</div>';
 		}

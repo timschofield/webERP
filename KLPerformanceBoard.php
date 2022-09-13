@@ -56,6 +56,10 @@ if ($ProcessSection01){
 	if($ShowSectionInfo){
 		prnMsg("Sales Performance Board Section 01.",'info');
 	}
+	if ($KL_SystemAdmin){
+		ShowBusinessHistory(60);
+		$NumberOfTestExecuted++;
+	} 
 
 	if ($KL_SystemAdmin
 		OR $KL_OperationalManager
@@ -3146,6 +3150,53 @@ function UnbalancedGLTransTX($NumDays, $RootPath, $db){
 		echo '</table>
 			</div>';
 	}
+}
+
+function ShowBusinessHistory($NumDays){
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
+	$SQL = "SELECT class,
+				concept,
+				MIN(value) AS minimumvalue,
+				AVG(value) AS averagevalue,
+				MAX(value) AS maximumvalue
+			FROM klbusinesshistory
+			WHERE date >= '" . $StartDate . "'
+			GROUP BY class, concept
+			ORDER BY class, concept";
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		$k = 0; //row colour counter
+		echo '<p class="page_title_text" align="center"><strong>' . 'General Business Data last ' . $NumDays . ' days' . '</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('Class') . '</th>
+							<th class="ascending">' . _('Concept') . '</th>
+							<th class="ascending">' . _('Minimum') . '</th>
+							<th class="ascending">' . _('Average') . '</th>
+							<th class="ascending">' . _('Maximum') . '</th>
+						</tr>';
+		echo $TableHeader;
+
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			printf('<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$myrow['class'], 
+					$myrow['concept'], 
+					locale_number_format($myrow['minimumvalue'],0),
+					locale_number_format($myrow['averagevalue'],0),
+					locale_number_format($myrow['maximumvalue'],0)
+					);
+		}
+		echo '</table>
+			</div>';
+	}
+	
 }
 
 
