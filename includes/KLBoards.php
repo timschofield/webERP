@@ -1587,6 +1587,7 @@ function ItemsWithoutRetailPrice($stockcat, $factorRetail, $RootPath, $db){
 							<th class="ascending">' . _('Code') . '</th>
 							<th class="ascending">' . _('Description') . '</th>
 							<th class="ascending">' . _('Std Cost') . '</th>
+							<th class="ascending">' . _('Factor') . '</th>
 							<th class="ascending">' . _('Recommended Retail') . '</th>
 						</tr>';
 		echo $TableHeader;
@@ -1603,11 +1604,13 @@ function ItemsWithoutRetailPrice($stockcat, $factorRetail, $RootPath, $db){
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
+					<td class="number">%s</td>
 					</tr>', 
 					$i, 
 					$CodeLink, 
 					$myrow['description'],
 					$PriceLink,
+					locale_number_format_zero_blank($NewPrice/$myrow['stdcost'], 2),
 					$NewPriceLink
 					);
 			$i++;

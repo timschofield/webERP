@@ -1,5 +1,5 @@
 <?php
-define("VERSIONFILE", "5.00");
+define("VERSIONFILE", "5.01");
 
 /* Session started in session.php for password checking and authorisation level check
 config.php is in turn included in session.php*/
@@ -91,31 +91,31 @@ if ($ProcessSection01){
 
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager){
-		PriceBelowStandard("SETKLA", 6.00, 0, 10, $RootPath, $db);
+		PriceBelowStandard("SETKLA", 6.00, 10, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PriceBelowStandard("TESTKA", 6.00, 0, 15, $RootPath, $db);
+		PriceBelowStandard("TESTKA", 6.00, 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PriceBelowStandard("STABKA", 6.00, 0, 20, $RootPath, $db);
+		PriceBelowStandard("STABKA", 6.00, 20, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PriceBelowStandard("NOPOKA", 6.00, 0, 20, $RootPath, $db);
-		$NumberOfTestExecuted++;
-
-		PriceBelowStandard("SETBLA", 6.50, 0, 10, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		PriceBelowStandard("TESTBA", 6.50, 0, 15, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		PriceBelowStandard("STABBA", 6.50, 0, 20, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		PriceBelowStandard("NOPOBA", 6.50, 0, 20, $RootPath, $db);
+		PriceBelowStandard("NOPOKA", 6.00, 20, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-		PriceBelowStandard("SETGEA", 4.40, 0, 10, $RootPath, $db);
+		PriceBelowStandard("SETBLA", 6.50, 10, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PriceBelowStandard("TESTGA", 4.40, 0, 15, $RootPath, $db);
+		PriceBelowStandard("TESTBA", 6.50, 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PriceBelowStandard("STABGA", 4.40, 0, 20, $RootPath, $db);
+		PriceBelowStandard("STABBA", 6.50, 20, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PriceBelowStandard("NOPOGA", 4.40, 0, 20, $RootPath, $db);
+		PriceBelowStandard("NOPOBA", 6.50, 20, $RootPath, $db);
+		$NumberOfTestExecuted++;
+
+		PriceBelowStandard("SETGEA", 4.40, 10, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		PriceBelowStandard("TESTGA", 4.40, 15, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		PriceBelowStandard("STABGA", 4.40, 20, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		PriceBelowStandard("NOPOGA", 4.40, 20, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 }
@@ -132,46 +132,46 @@ if ($ProcessSection02){
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager){
 
-		ItemsTooCheap("TESTKA", 6.00, 6.25, 0.05, 10, 80, 60, $RootPath, $db);
+		ItemsTooCheap("TESTKA", 6.00, 6.25, 10, 80, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsTooCheap("STABKA", 6.00, 6.25, 0.05, 20, 80, 60, $RootPath, $db);
+		ItemsTooCheap("STABKA", 6.00, 6.25, 20, 80, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsTooCheap("NOPOKA", 6.00, 6.25, 0.05, 20, 80, 60, $RootPath, $db);
-		$NumberOfTestExecuted++;
-
-		ItemsTooCheap("TESTBA", 6.50, 6.75, 0.05, 10, 80, 60, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ItemsTooCheap("STABBA", 6.50, 6.75, 0.05, 20, 80, 60, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ItemsTooCheap("NOPOBA", 6.50, 6.75, 0.05, 20, 80, 60, $RootPath, $db);
+		ItemsTooCheap("NOPOKA", 6.00, 6.25, 20, 80, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-/*		ItemsTooCheap("TESTGA", 3.50, 5.75, 0.05, 10, 100, 60, $RootPath, $db);
+		ItemsTooCheap("TESTBA", 6.50, 6.75, 10, 80, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsTooCheap("STABGA", 3.50, 5.75, 0.05, 10, 100, 60, $RootPath, $db);
+		ItemsTooCheap("STABBA", 6.50, 6.75,20, 80, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsTooCheap("NOPOGA", 3.50, 5.75, 0.05, 10, 100, 60, $RootPath, $db);
+		ItemsTooCheap("NOPOBA", 6.50, 6.75, 20, 80, 60, $RootPath, $db);
+		$NumberOfTestExecuted++;
+
+/*		ItemsTooCheap("TESTGA", 3.50, 5.75, 10, 100, 60, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsTooCheap("STABGA", 3.50, 5.75, 10, 100, 60, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsTooCheap("NOPOGA", 3.50, 5.75, 10, 100, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
 */
-		ItemsTooExpensive("TESTKA", 6.00, 6.50, 0.05, 10, 300, 90, $RootPath, $db);
+		ItemsTooExpensive("TESTKA", 6.00, 6.50, 10, 300, 90, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsTooExpensive("STABKA", 6.00, 6.50, 0.05, 20, 300, 90, $RootPath, $db);
+		ItemsTooExpensive("STABKA", 6.00, 6.50, 20, 300, 90, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsTooExpensive("NOPOKA", 6.00, 6.50, 0.05, 20, 300, 60, $RootPath, $db);
-		$NumberOfTestExecuted++;
-
-		ItemsTooExpensive("TESTBA", 6.50, 7.00, 0.05, 10, 200, 90, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ItemsTooExpensive("STABBA", 6.50, 7.00, 0.05, 20, 200, 90, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ItemsTooExpensive("NOPOBA", 6.50, 7.00, 0.05, 20, 200, 90, $RootPath, $db);
+		ItemsTooExpensive("NOPOKA", 6.00, 6.50, 20, 300, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-/*		ItemsTooExpensive("TESTGA", 5.50, 6.00, 0.05, 5, 800, 90, $RootPath, $db);
+		ItemsTooExpensive("TESTBA", 6.50, 7.00, 10, 200, 90, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsTooExpensive("STABGA", 5.50, 6.00, 0.05, 5, 800, 90, $RootPath, $db);
+		ItemsTooExpensive("STABBA", 6.50, 7.00, 20, 200, 90, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsTooExpensive("NOPOGA", 5.50, 6.00, 0.05, 5, 800, 90, $RootPath, $db);
+		ItemsTooExpensive("NOPOBA", 6.50, 7.00, 20, 200, 90, $RootPath, $db);
+		$NumberOfTestExecuted++;
+
+/*		ItemsTooExpensive("TESTGA", 5.50, 6.00, 5, 800, 90, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsTooExpensive("STABGA", 5.50, 6.00, 5, 800, 90, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsTooExpensive("NOPOGA", 5.50, 6.00, 5, 800, 90, $RootPath, $db);
 		$NumberOfTestExecuted++;
 */
 	}
@@ -180,6 +180,8 @@ if ($ProcessSection02){
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager){
 		PriceWrongRounding($RootPath, $db);
+		$NumberOfTestExecuted++;
+		PricesTooOld(4, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 }
@@ -192,10 +194,9 @@ include ('includes/footer.php');
 FUNCTIONS ONLY USED IN PRICING CONTROL BOARD
 *********************************************************************************************/
 
-function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQoh, $TopSales, $DaysTopSales, $RootPath, $db){
+function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $DaysTopSales, $RootPath, $db){
 	$today = date('Y-m-d');
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$DaysTopSales));
-	$FactorTolerance = 1 + $Tolerance;
 
 	$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description,
@@ -203,17 +204,15 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQoh, $
 				(SELECT SUM(quantity)
 					FROM locstock
 					WHERE stockmaster.stockid = locstock.stockid) AS qoh,
-				(SELECT price 					
-					FROM prices	
-					WHERE stockmaster.stockid = prices.stockid	
-						AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
-						AND prices.currabrev = '". CURRENCY_CODE ."'
-						AND prices.startdate <= '". $today. "' 
-						AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')
-					LIMIT 1) AS retailprice,
+				prices.price AS retailprice,
 				(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS standardcost
-			FROM stockmaster				
-			WHERE stockmaster.categoryid = '". $Stockcat ."'					
+			FROM stockmaster, prices				
+			WHERE stockmaster.stockid = prices.stockid	
+				AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
+				AND prices.currabrev = '". CURRENCY_CODE ."'
+				AND prices.startdate <= '". $today. "' 
+				AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')
+				AND stockmaster.categoryid = '". $Stockcat ."'					
 				AND stockmaster.discontinued = 0
 				AND stockmaster.klchangingprice = 0
 				AND stockmaster.klmovingdiscount20 = 0
@@ -223,14 +222,7 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQoh, $
 				AND ((SELECT SUM(quantity)
 					FROM locstock
 					WHERE stockmaster.stockid = locstock.stockid) >= " . $MinQoh . ")
-				AND ((SELECT price 					
-					FROM prices	
-					WHERE stockmaster.stockid = prices.stockid	
-						AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
-						AND prices.currabrev = '". CURRENCY_CODE ."'
-						AND prices.startdate <= '". $today. "' 
-						AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')
-					LIMIT 1) < ((stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) * ". $FactorMax ." / ". $FactorTolerance ."))";
+				AND (prices.price < ((stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) * ". $FactorMax . "))";
 
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
@@ -242,7 +234,7 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQoh, $
 			if ($PositionTopSales < $TopSales){
 				if ($ShowHeader){
 					$CategoryName = GetCategoryNameFromCode($Stockcat);
-					echo '<p class="page_title_text" align="center"><strong>' .  $CategoryName . ' Items TOO CHEAP: ' . ' TOP '.locale_number_format($TopSales,0) . ' sales. Price BELOW ' . $FactorMax . _(' x standard cost. Tolerance ') . locale_number_format($Tolerance * 100,0) . '%. QOH >= ' .  locale_number_format($MinQoh,0).  '</strong></p>';
+					echo '<p class="page_title_text" align="center"><strong>' .  $CategoryName . ' Items TOO CHEAP: ' . ' TOP '.locale_number_format($TopSales,0) . ' sales. Price BELOW ' . $FactorMax . ' x standard cost. QOH >= ' .  locale_number_format($MinQoh,0).  '</strong></p>';
 					echo '<div>';
 					echo '<table class="selection">';
 					$TableHeader = '<tr>
@@ -310,10 +302,9 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQoh, $
 	}
 }
 
-function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQoh, $TopSales, $DaysTopSales, $RootPath, $db){
+function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $DaysTopSales, $RootPath, $db){
 	$today = date('Y-m-d');
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$DaysTopSales));
-	$FactorTolerance = 1 - $Tolerance;
 
 	$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description,
@@ -321,18 +312,16 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQo
 				(SELECT SUM(quantity)
 					FROM locstock
 					WHERE stockmaster.stockid = locstock.stockid) AS qoh,
-				(SELECT price 					
-					FROM prices	
-					WHERE stockmaster.stockid = prices.stockid	
-						AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
-						AND prices.currabrev = '". CURRENCY_CODE ."'
-						AND prices.startdate <= '". $StartDate. "' 
-						AND prices.startdate <= '". $today. "' 
-						AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')
-					LIMIT 1) AS retailprice,
+				prices.price AS retailprice,
 				(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS standardcost
-			FROM stockmaster				
-			WHERE stockmaster.categoryid = '". $Stockcat ."'					
+			FROM stockmaster, prices				
+			WHERE stockmaster.stockid = prices.stockid	
+				AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
+				AND prices.currabrev = '". CURRENCY_CODE ."'
+				AND prices.startdate <= '". $StartDate. "' 
+				AND prices.startdate <= '". $today. "' 
+				AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')
+				AND stockmaster.categoryid = '". $Stockcat ."'					
 				AND stockmaster.discontinued = 0
 				AND stockmaster.klchangingprice = 0
 				AND stockmaster.klmovingdiscount20 = 0
@@ -342,24 +331,8 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQo
 				AND ((SELECT SUM(quantity)
 					FROM locstock
 					WHERE stockmaster.stockid = locstock.stockid) >= " . $MinQoh . ")
-				AND ((SELECT price 					
-					FROM prices	
-					WHERE stockmaster.stockid = prices.stockid	
-						AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
-						AND prices.currabrev = '". CURRENCY_CODE ."'
-						AND prices.startdate <= '". $StartDate. "' 
-						AND prices.startdate <= '". $today. "' 
-						AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')
-					LIMIT 1) > " . SMALL_PRICE_CALCULATED_STEP04 . ") 
-				AND ((SELECT price 					
-					FROM prices	
-					WHERE stockmaster.stockid = prices.stockid	
-						AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
-						AND prices.currabrev = '". CURRENCY_CODE ."'
-						AND prices.startdate <= '". $StartDate. "' 
-						AND prices.startdate <= '". $today. "' 
-						AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')
-					LIMIT 1) > ((stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) * ". $FactorMax ." / ". $FactorTolerance ."))";
+				AND (prices.price > " . SMALL_PRICE_CALCULATED_STEP04 . ") 
+				AND (prices.price > ((stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) * " . $FactorMax . "))";
 
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
@@ -377,7 +350,7 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQo
 				($RecommendedPrice < $myrow['retailprice'])){
 				if ($ShowHeader){
 					$CategoryName = GetCategoryNameFromCode($Stockcat);
-					echo '<p class="page_title_text" align="center"><strong>' .  $CategoryName . ' Items TOO EXPENSIVE: ' . ' NO TOP '.locale_number_format($TopSales,0) . ' sales. Retail Price OVER ' . $FactorMax . _(' x standard cost. Tolerance ') . locale_number_format($Tolerance * 100,0) . '%. QOH >= ' .  locale_number_format($MinQoh,0).  '</strong></p>';
+					echo '<p class="page_title_text" align="center"><strong>' .  $CategoryName . ' Items TOO EXPENSIVE: ' . ' NO TOP '.locale_number_format($TopSales,0) . ' sales. Retail Price OVER ' . $FactorMax . _(' x standard cost. ') . 'QOH >= ' .  locale_number_format($MinQoh,0).  '</strong></p>';
 					echo '<div>';
 					echo '<table class="selection">';
 					$TableHeader = '<tr>
@@ -440,9 +413,8 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $Tolerance, $MinQo
 	}
 }
 
-function PriceBelowStandard($Stockcat, $Factor, $Tolerance, $MinQoh, $RootPath, $db){
+function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath, $db){
 	$today = date('Y-m-d');
-	$FactorTolerance = 1 + $Tolerance;
 
 	$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description,
@@ -450,17 +422,15 @@ function PriceBelowStandard($Stockcat, $Factor, $Tolerance, $MinQoh, $RootPath, 
 				(SELECT SUM(quantity)
 					FROM locstock
 					WHERE stockmaster.stockid = locstock.stockid) AS qoh,
-				(SELECT price 					
-					FROM prices	
-					WHERE stockmaster.stockid = prices.stockid	
-						AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
-						AND prices.currabrev = '". CURRENCY_CODE ."'
-						AND prices.startdate <= '". $today. "' 
-						AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')
-					LIMIT 1) AS retailprice,
+				prices.price AS retailprice,
 				(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS standardcost
-			FROM stockmaster				
-			WHERE stockmaster.categoryid = '". $Stockcat ."'					
+			FROM stockmaster, prices				
+			WHERE stockmaster.stockid = prices.stockid	
+				AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
+				AND prices.currabrev = '". CURRENCY_CODE ."'
+				AND prices.startdate <= '". $today. "' 
+				AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')
+				AND stockmaster.categoryid = '". $Stockcat ."'					
 				AND stockmaster.discontinued = 0
 				AND stockmaster.klchangingprice = 0
 				AND stockmaster.klmovingdiscount20 = 0
@@ -469,14 +439,7 @@ function PriceBelowStandard($Stockcat, $Factor, $Tolerance, $MinQoh, $RootPath, 
 				AND ((SELECT SUM(quantity)
 					FROM locstock
 					WHERE stockmaster.stockid = locstock.stockid) >= " . $MinQoh . ")
-				AND ((SELECT price 					
-					FROM prices	
-					WHERE stockmaster.stockid = prices.stockid	
-						AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
-						AND prices.currabrev = '". CURRENCY_CODE ."'
-						AND prices.startdate <= '". $today. "' 
-						AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')
-					LIMIT 1) < ((stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) * ". $Factor ." / ". $FactorTolerance ."))
+				AND (prices.price < ((stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) * ". $Factor ."))
 				AND NOT EXISTS (SELECT * 					
 					FROM prices	
 					WHERE stockmaster.stockid = prices.stockid	
@@ -495,7 +458,7 @@ function PriceBelowStandard($Stockcat, $Factor, $Tolerance, $MinQoh, $RootPath, 
 			if ($myrow['retailprice'] != $RecommendedPrice){
 				if ($ShowHeader){
 					$CategoryName = GetCategoryNameFromCode($Stockcat);
-					echo '<p class="page_title_text" align="center"><strong>' . $CategoryName . _(' Items with retail price below minimum. ') . $Factor . _(' x standard cost. Tolerance -') . locale_number_format($Tolerance * 100,0) . '%. QOH >= ' .  locale_number_format($MinQoh,0). '</strong></p>';
+					echo '<p class="page_title_text" align="center"><strong>' . $CategoryName . _(' Items with retail price below minimum. ') . $Factor . _(' x standard cost. ') .  'QOH >= ' .  locale_number_format($MinQoh,0). '</strong></p>';
 					echo '<div>';
 					echo '<table class="selection">';
 					$TableHeader = '<tr>
@@ -646,5 +609,96 @@ function PriceWrongRounding($RootPath, $db){
 	}
 }
 
+function PricesTooOld($Years, $RootPath, $db){
+	$today = date('Y-m-d');
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$Years * 365));
+
+	$SQL = "SELECT stockmaster.stockid, 
+				stockmaster.description,
+				stockmaster.categoryid,
+				(SELECT SUM(quantity)
+					FROM locstock
+					WHERE stockmaster.stockid = locstock.stockid) AS qoh,
+				prices.startdate,
+				prices.price AS retailprice,
+				(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS standardcost
+			FROM stockmaster, prices				
+			WHERE stockmaster.stockid = prices.stockid
+				AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
+				AND prices.currabrev = '". CURRENCY_CODE ."'
+				AND prices.startdate <= '". $StartDate. "' 
+				AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')
+				AND stockmaster.discontinued = 0
+				AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_TEST . "
+					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_STABLE . "
+					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING . ")
+				AND stockmaster.klchangingprice = 0
+				AND stockmaster.klmovingdiscount20 = 0
+				AND stockmaster.klmovingdiscount50 = 0
+				AND stockmaster.klmovingdiscount80 = 0
+			ORDER BY stockmaster.stockid";
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		$k = 0; //row colour counter
+		$i = 1;
+		$ShowHeader = TRUE;
+		while ($myrow = DB_fetch_array($result)) {
+			$RoundedUp = round_price($myrow['retailprice'], "UP");
+			
+			if($myrow['retailprice'] != $RoundedUp){
+				if($ShowHeader){
+					echo '<p class="page_title_text" align="center"><strong>' . _('Items with prices older than ') . $Years . ' years' . '</strong></p>';
+					echo '<div>';
+					echo '<table class="selection">';
+					$TableHeader = '<tr>
+										<th class="ascending">' . _('#') . '</th>
+										<th class="ascending">' . _('Code') . '</th>
+										<th class="ascending">' . _('Description') . '</th>
+										<th class="ascending">' . _('Top Sales') . '</th>
+										<th class="ascending">' . _('QOH') . '</th>
+										<th class="ascending">' . _('Standard Cost') . '</th>
+										<th class="ascending">' . _('Price Date') . '</th>
+										<th class="ascending">' . _('Current Price') . '</th>
+										<th class="ascending">' . _('Current Factor') . '</th>
+										<th class="ascending">' . _('Rounded Up') . '</th>
+									</tr>';
+					echo $TableHeader;
+					$ShowHeader = FALSE;
+				}
+				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+				$UpPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $RoundedUp .  '">' . locale_number_format($RoundedUp,0) . '</a>';
+				$PositionTopSales = PositionTopSalesItem($myrow['stockid'], 60, $db);
+				$k = StartEvenOrOddRow($k);
+				printf('<td class="number">%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						</tr>', 
+						$i, 
+						$CodeLink, 
+						$myrow['description'], 
+						$PositionTopSales,
+						locale_number_format($myrow['qoh'],0),
+						locale_number_format($myrow['standardcost'],0),
+						ConvertSQLDateTime($myrow['startdate']), 
+						locale_number_format($myrow['retailprice'],0),
+						locale_number_format($myrow['retailprice']/$myrow['standardcost'],2),
+						$UpPriceLink
+						);
+				$i++;
+			}
+		}
+		if(!$ShowHeader){
+			echo '</table>
+					</div>';
+		}
+	}
+}
 
 ?>
