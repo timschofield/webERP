@@ -149,11 +149,13 @@ if(isset($_POST['ProcessTransfer'])) {
 							$SQL = "INSERT INTO stockserialitems (stockid,
 												loccode,
 												serialno,
-												quantity)
+												quantity,
+												qualitytext)
 								VALUES ('" . $TrfLine->StockID . "',
 								'" . $_SESSION['Transfer']->StockLocationFrom . "',
 								'" . $Item->BundleRef . "',
-								'" . -$Item->BundleQty . "')";
+								'" . -$Item->BundleQty . "',
+								'')";
 
 							$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item for the stock being transferred out of the existing location could not be inserted because');
 							$DbgMsg = _('The following SQL to update the serial stock item record was used');
@@ -303,11 +305,13 @@ if(isset($_POST['ProcessTransfer'])) {
 							$SQL = "INSERT INTO stockserialitems (stockid,
 											loccode,
 											serialno,
-											quantity)
+											quantity,
+											qualitytext)
 								VALUES ('" . $TrfLine->StockID . "',
 								'" . $_SESSION['Transfer']->StockLocationTo . "',
 								'" . $Item->BundleRef . "',
-								'" . $Item->BundleQty . "')";
+								'" . $Item->BundleQty . "',
+								'')";
 
 							$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record for the stock coming in could not be added because');
 							$DbgMsg =  _('The following SQL to update the serial stock item record was used');
