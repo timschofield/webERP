@@ -60,31 +60,31 @@ if ($ProcessSection01){
 
 		ItemsWithoutRetailPrice("SETKLA", 6.00, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsWithoutRetailPrice("SETBLA", 6.50, $RootPath, $db);
+		ItemsWithoutRetailPrice("TESTKA", 6.00, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsWithoutRetailPrice("SETGEA", 4.40, $RootPath, $db);
+		ItemsWithoutRetailPrice("STABKA", 6.00, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsWithoutRetailPrice("NOPOKA", 6.00, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-		ItemsWithoutRetailPrice("TESTKA", 6.00, $RootPath, $db);
+		ItemsWithoutRetailPrice("SETBLA", 6.50, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		ItemsWithoutRetailPrice("TESTBA", 6.50, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsWithoutRetailPrice("TESTGA", 4.40, $RootPath, $db);
-		$NumberOfTestExecuted++;
-
-		ItemsWithoutRetailPrice("STABKA", 6.00, $RootPath, $db);
-		$NumberOfTestExecuted++;
 		ItemsWithoutRetailPrice("STABBA", 6.50, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ItemsWithoutRetailPrice("STABGA", 4.40, $RootPath, $db);
-		$NumberOfTestExecuted++;
-
-		ItemsWithoutRetailPrice("NOPOKA", 6.00, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		ItemsWithoutRetailPrice("NOPOBA", 6.50, $RootPath, $db);
 		$NumberOfTestExecuted++;
+
+		ItemsWithoutRetailPrice("SETGEA", 4.40, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsWithoutRetailPrice("TESTGA", 4.40, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		ItemsWithoutRetailPrice("STABGA", 4.40, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		ItemsWithoutRetailPrice("NOPOGA", 4.40, $RootPath, $db);
 		$NumberOfTestExecuted++;
+
 
 	//	ItemsWithoutRetailPrice("CONSIG", 1.60, $RootPath, $db);
 	}
@@ -141,7 +141,7 @@ if ($ProcessSection02){
 
 		ItemsTooCheap("TESTBA", 6.50, 6.75, 10, 80, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsTooCheap("STABBA", 6.50, 6.75,20, 80, 60, $RootPath, $db);
+		ItemsTooCheap("STABBA", 6.50, 6.75, 20, 80, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		ItemsTooCheap("NOPOBA", 6.50, 6.75, 20, 80, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
