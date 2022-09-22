@@ -3433,9 +3433,7 @@ function PurchaseOrdersWrongPlannedDates($RootPath, $db){
 				AND klpostatus.code = purchorders.klstatus
 				AND purchorderdetails.completed = 0
 				AND purchorders.status IN ('Authorised', 'Printed', 'Pending')
-				AND (   (purchorders.klstatus <= '1000' 
-						AND (purchorders.orddate < '" . $Today ."'))
-					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus <= '2000' 
+				AND ( (purchorders.klstatus > '1000' AND purchorders.klstatus <= '2000' 
 						AND (purchorders.deliverydate < '" . $Today ."'))
 					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '4000' AND suppliers.paymentterms = 'B1'
 						AND (purchorders.paymentdate < '" . $Today ."'))

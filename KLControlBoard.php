@@ -646,11 +646,6 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_PurchasingTeam){
-		InsuficientStockForShopPackaging('SHPACK', 15, 75, 30, true, $RootPath, $db); // Works for both regular and outlet shop packaging
-		$NumberOfTestExecuted++;
-	}
-
 	if ($KL_SystemAdmin
 		OR $KL_OperationalManager
 		OR $KL_BusinessDevelopmentManager
@@ -672,6 +667,22 @@ if ($ProcessSection01){
 if ($ProcessSection02){
 	if($ShowSectionInfo){
 		prnMsg("Performing Control Panel Section 02",'info');
+	}
+
+	/***************************************************************************************
+	* PACKAGING CONTROL         
+	***************************************************************************************/
+	if ($KL_BusinessDevelopmentManager OR 
+		$KL_PurchasingTeam){
+		prnMsg("Packaging Information",'info');
+		InsuficientStockForShopPackaging('SHPACK', 15, 75, 30, true, $RootPath, $db); // Works for both regular and outlet shop packaging
+		$NumberOfTestExecuted++;
+		POStatusControl("PACKAGING","ON PRODUCTION", 0, $periodnow, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		POStatusControl("PACKAGING","STILL NOT FULLY PAID", 0, $periodnow, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		POStatusControl("PACKAGING","ARRIVING IN NEXT DAYS", 75, $periodnow, $RootPath, $db);
+		$NumberOfTestExecuted++;
 	}
 
 	/***************************************************************************************
@@ -755,8 +766,6 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 		POStatusControl("","IN NEGOTIATION WITH SUPPLIER", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		POStatusControl("PACKAGING","ON PRODUCTION", 0, $periodnow, $RootPath, $db);
-		$NumberOfTestExecuted++;
 		POStatusControl("FORSALE","ON PRODUCTION", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		POStatusControl("OTHERS","ON PRODUCTION", 0, $periodnow, $RootPath, $db);
@@ -766,8 +775,6 @@ if ($ProcessSection02){
 	}
 	
 	if ($KL_BusinessDevelopmentManager){
-		POStatusControl("PACKAGING","STILL NOT FULLY PAID", 0, $periodnow, $RootPath, $db);
-		$NumberOfTestExecuted++;
 		POStatusControl("FORSALE","STILL NOT FULLY PAID", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		POStatusControl("OTHERS","STILL NOT FULLY PAID", 0, $periodnow, $RootPath, $db);
@@ -793,8 +800,6 @@ if ($ProcessSection02){
 		POStatusControl("","SHIPPED IN TRANSIT", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		POStatusControl("","CUSTOMS CLEARANCE", 0, $periodnow, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		POStatusControl("PACKAGING","ARRIVING IN NEXT DAYS", 75, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		POStatusControl("FORSALE","ARRIVING IN NEXT DAYS", 75, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;

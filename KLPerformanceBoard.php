@@ -56,10 +56,6 @@ if ($ProcessSection01){
 	if($ShowSectionInfo){
 		prnMsg("Sales Performance Board Section 01.",'info');
 	}
-	if ($KL_SystemAdmin){
-		ShowBusinessHistory(60);
-		$NumberOfTestExecuted++;
-	} 
 
 	if ($KL_SystemAdmin
 		OR $KL_OperationalManager
@@ -146,7 +142,6 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin 
-		OR $KL_BusinessDevelopmentManager
 		OR $KL_OperationalManager
 		OR $KL_ShopManager){
 		ActiveTransfersByLocation($RootPath, $db);
@@ -187,9 +182,7 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_SystemAdmin 
-		OR $KL_OperationalManager
-		OR $KL_BusinessDevelopmentManager){
+	if ($KL_SystemAdmin){
 		PurchaseOrdersProcessTime(90, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		PurchaseOrdersWrongPlannedDates($RootPath, $db);
@@ -264,8 +257,7 @@ if ($ProcessSection03){
 	}
 
 	if ($KL_SystemAdmin 
-		OR $KL_OperationalManager
-		OR $KL_BusinessDevelopmentManager){
+		OR $KL_OperationalManager){
 		InsuficientStockForShopPackaging('SHPACK', 15, 75, 30, true, $RootPath, $db);
 		$NumberOfTestExecuted++;
 //		InsuficientStockForShopPackaging('ZAPON', 15, 60, 30, true, $RootPath, $db);
@@ -325,11 +317,14 @@ if ($ProcessSection03){
 		OR $KL_AdministrationTeam){
 		CashStatus(2022, 20000000, 50000000, 25000000, 20000000, 50000000, 25000000, 20000000, $periodnow, TRUE, $db);
 		$NumberOfTestExecuted++;
+	}
+	if ($KL_SystemAdmin){
+		ShowBusinessHistory(60);
+		$NumberOfTestExecuted++;
 		UnbalancedGLTransTX(15, $RootPath, $db);
 		$NumberOfTestExecuted++;
-
-		
-	}
+	} 
+	
 }
 
 prnMsg("Performed ". $NumberOfTestExecuted . " performance tests",'success');
