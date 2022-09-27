@@ -1824,16 +1824,14 @@ function GoodsJustArrived($kind, $location, $numdays, $RootPath, $db){
 		while ($myrow = DB_fetch_array($result)) {
 			$k = StartEvenOrOddRow($k);
 			
-			// count to how many shops do we need to set the RL
-			if ($myrow['categoryid']== 'STABKA'){
+			// count how many shops do we need to set the RL
+			if (ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_KAPAL_LAUT)){
 				$TypeOfShop = 'SHOPKL';
 				$ShopsToSetRL = $ShopsKL;
-			}elseif ($myrow['categoryid']== 'STABBA'){
+			}elseif (ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_BLINK)){
 				$TypeOfShop = 'SHOPBL';
 				$ShopsToSetRL = $ShopsBL;
-			}elseif(($myrow['categoryid']== 'DISC2A') 
-					OR ($myrow['categoryid']== 'DISC5A') 
-					OR ($myrow['categoryid']== 'DISC8A')){
+			}elseif (ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_OUTLET)){
 				$TypeOfShop = 'SHOPOU';
 				$ShopsToSetRL = $ShopsOU;
 			}else{
