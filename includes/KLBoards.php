@@ -175,6 +175,141 @@ function ActiveTransferStatus($RootPath, $db){
 	}
 }
 
+function AverageBusinessHistory($NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE, $NumDaysF, $db){
+
+	$Yesterday  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
+	$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA));
+	$StartDateB = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysB));
+	$StartDateC = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysC));
+	$StartDateD = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysD));
+	$StartDateE = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysE));
+	$StartDateF = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysF));
+	$StartDateSort = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysSort));
+	$StartDateMTD=FormatDateForSQL(Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,Date('m'),1,Date('Y'))));
+
+	$SQL = "SELECT bh1.class,
+				bh1.concept,
+				(SELECT AVG(value)
+					FROM klbusinesshistory bh2
+					WHERE bh1.class =  bh2.class
+						AND bh1.concept =  bh2.concept
+						AND bh2.date >= '". $StartDateA . "'
+						AND bh2.date <= '". $Yesterday . "') AS salesA,
+				(SELECT AVG(value)
+					FROM klbusinesshistory bh2
+					WHERE bh1.class =  bh2.class
+						AND bh1.concept =  bh2.concept
+						AND bh2.date >= '". $StartDateB . "'
+						AND bh2.date <= '". $Yesterday . "') AS salesB,
+				(SELECT AVG(value)
+					FROM klbusinesshistory bh2
+					WHERE bh1.class =  bh2.class
+						AND bh1.concept =  bh2.concept
+						AND bh2.date >= '". $StartDateC . "'
+						AND bh2.date <= '". $Yesterday . "') AS salesC,
+				(SELECT AVG(value)
+					FROM klbusinesshistory bh2
+					WHERE bh1.class =  bh2.class
+						AND bh1.concept =  bh2.concept
+						AND bh2.date >= '". $StartDateD . "'
+						AND bh2.date <= '". $Yesterday . "') AS salesD,
+				(SELECT AVG(value)
+					FROM klbusinesshistory bh2
+					WHERE bh1.class =  bh2.class
+						AND bh1.concept =  bh2.concept
+						AND bh2.date >= '". $StartDateE . "'
+						AND bh2.date <= '". $Yesterday . "') AS salesE,
+				(SELECT AVG(value)
+					FROM klbusinesshistory bh2
+					WHERE bh1.class =  bh2.class
+						AND bh1.concept =  bh2.concept
+						AND bh2.date >= '". $StartDateF . "'
+						AND bh2.date <= '". $Yesterday . "') AS salesF
+			FROM klbusinesshistory bh1
+			GROUP BY bh1.class,
+					bh1.concept
+			ORDER BY bh1.class,
+					bh1.concept";
+
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . _('Business History ') . " for the last " . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . ", ". $NumDaysE . ", ". $NumDaysF . " days. Trend by " . $NumDaysD . " days.".'</strong></p>';
+		$TitleTarget = "";
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . 'Class' . '</th>
+							<th class="ascending">' . _('Concept') . '</th>
+							<th class="ascending">' . $NumDaysA . _(' days') . '</th>
+							<th class="ascending">' . $NumDaysB . _(' days') . '</th>
+							<th class="ascending">' . $NumDaysC . _(' days') . '</th>
+							<th class="ascending">' . $NumDaysD . _(' days') . '</th>
+							<th class="ascending">' . $NumDaysE . _(' days') . '</th>
+							<th class="ascending">' . $NumDaysF . _(' days') . '</th>
+							<th class="ascending">' . _('Trend') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$target = "";
+			$Code = $myrow['class'];
+			$Name = $myrow['concept'];
+			
+			$dailyA = locale_number_format(($myrow['salesA']),0);
+			$dailyB = locale_number_format(($myrow['salesB']),0);
+			$dailyC = locale_number_format(($myrow['salesC']),0);
+			$dailyD = locale_number_format(($myrow['salesD']),0);
+			$dailyE = locale_number_format(($myrow['salesE']),0);
+			$dailyF = locale_number_format(($myrow['salesF']),0);
+			$percent = (($myrow['salesD'])-($myrow['salesB']))/($myrow['salesB']) * 100;
+			$trend = " ";
+			if ($percent > IMPROVEMENT_AVERAGE_SALES){
+				$trend = "Increasing ". locale_number_format($percent,0) . "%";
+			}
+			if ($percent < -IMPROVEMENT_AVERAGE_SALES){
+				$trend = "Decreasing ". locale_number_format($percent,0) . "%";
+			}
+			$forecast = round($myrow['salesC']*((100+$percent)/100), -5);
+			
+			$MTD = locale_number_format($myrow['salesMTD'], 0);
+			
+			if ($dailyA + $dailyB + $dailyC + $dailyD + $dailyE + $dailyF > 0){
+				// if there is any daily report not zero...
+				$k = StartEvenOrOddRow($k);
+				printf('<td>%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td>%s</td>
+						</tr>', 
+						$i,
+						$Code,
+						$Name,
+						$dailyA, 
+						$dailyB, 
+						$dailyC,
+						$dailyD,
+						$dailyE,
+						$dailyF,
+						$trend
+						);
+				
+			}
+			$i++;
+		}
+		echo '</table>
+				</div>';
+	}
+}
+
+
 function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE, $NumDaysF, $NumDaysSort, $Year, $Shop, $db){
 
 	if ($Year == "LastYear"){
@@ -2950,7 +3085,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 			$myrow = DB_fetch_array($result);
 			$k = StartEvenOrOddRow($k);
 			InsertBusinessHistory("PURCHASE ORDERS", "CURRENT PO x ITEMS FOR SALE NEXT ". $maxdays." DAYS (IDR)", $TotalValueAllOrders);
-			InsertBusinessHistory("PURCHASE ORDERS", "CURRENT PO x ITEMS FOR SALE NEXT ". $maxdays." DAYS (PCS)", $TotalItemsAllOrders);
+			InsertBusinessHistory("PURCHASE ORDERS", "CURRENT PO x ITEMS FOR SALE NEXT ". $maxdays." DAYS (PCS @SC)", round($TotalValueAllOrders/$AverageItemCost));
 			InsertBusinessHistory("STOCK", "EXPECTED COGS NEXT ". $maxdays . " DAYS (IDR)", round($myrow['cogs'],-6));
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>

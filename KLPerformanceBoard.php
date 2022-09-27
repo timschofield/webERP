@@ -319,7 +319,13 @@ if ($ProcessSection03){
 		$NumberOfTestExecuted++;
 	}
 	if ($KL_SystemAdmin){
+		ShowBusinessHistory(7);
+		$NumberOfTestExecuted++;
+		ShowBusinessHistory(30);
+		$NumberOfTestExecuted++;
 		ShowBusinessHistory(60);
+		$NumberOfTestExecuted++;
+		AverageBusinessHistory(60, 30, 21, 15, 7, 1, $db);
 		$NumberOfTestExecuted++;
 		UnbalancedGLTransTX(15, $RootPath, $db);
 		$NumberOfTestExecuted++;
