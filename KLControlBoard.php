@@ -1035,9 +1035,13 @@ function ActiveItemsNoSales($maxdays, $group, $RootPath, $db){
 					stockmaster.units, 
 					(SELECT SUM(locstock.quantity)
 						FROM locstock
-						WHERE locstock.stockid = stockmaster.stockid) AS quantity
-			FROM 	stockmaster, stockcategory
-			WHERE 	stockmaster.categoryid = stockcategory.categoryid
+						WHERE locstock.stockid = stockmaster.stockid) AS quantity,
+					topsales30,
+					topsales60,
+					topsales90
+			FROM 	stockmaster, stockcategory, klsalesperformance
+			WHERE 	stockmaster.stockid = klsalesperformance.stockid
+					AND stockmaster.categoryid = stockcategory.categoryid
 					AND stockmaster.discontinued = 0 
 					AND stockmaster.klchangingprice = 0
 					AND stockmaster.klmovingdiscount20 = 0
@@ -1085,6 +1089,9 @@ function ActiveItemsNoSales($maxdays, $group, $RootPath, $db){
 							<th class="ascending">' . _('Category') . '</th>
 							<th class="ascending">' . _('DOB Category') . '</th>
 							<th class="ascending">' . _('QOH') . '</th>
+							<th class="ascending">' . _('#Top Sales 30') . '</th>
+							<th class="ascending">' . _('#Top Sales 60') . '</th>
+							<th class="ascending">' . _('#Top Sales 90') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -1098,14 +1105,20 @@ function ActiveItemsNoSales($maxdays, $group, $RootPath, $db){
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
 					</tr>', 
 					$i, 
 					$CodeLink, 
 					$myrow['description'], 
 					$myrow['categoryid'], 
 					ConvertSQLDate($myrow['lastcategoryupdate']),
-					locale_number_format($myrow['quantity'],0)
-					);
+					locale_number_format($myrow['quantity'],0),
+					locale_number_format($myrow['topsales30'],0),
+					locale_number_format($myrow['topsales60'],0),
+					locale_number_format($myrow['topsales90'],0)
+				);
 			$i++;
 		}
 		echo '</table>
@@ -2264,9 +2277,13 @@ function ItemsInCategoryForMoreThanDays($maxdays, $group, $RootPath, $db){
 					stockmaster.units, 
 					(SELECT SUM(locstock.quantity)
 						FROM locstock
-						WHERE locstock.stockid = stockmaster.stockid) AS quantity
-			FROM 	stockmaster
-			WHERE 	stockmaster.discontinued = 0 
+						WHERE locstock.stockid = stockmaster.stockid) AS quantity,
+					topsales30,
+					topsales60,
+					topsales90
+			FROM 	stockmaster, klsalesperformance
+			WHERE stockmaster.stockid = klsalesperformance.stockid
+				AND stockmaster.discontinued = 0 
 				AND stockmaster.klchangingprice = 0
 				AND stockmaster.klmovingdiscount20 = 0
 				AND stockmaster.klmovingdiscount50 = 0
@@ -2288,6 +2305,9 @@ function ItemsInCategoryForMoreThanDays($maxdays, $group, $RootPath, $db){
 							<th class="ascending">' . _('Category') . '</th>
 							<th class="ascending">' . _('DOB Category') . '</th>
 							<th class="ascending">' . _('QOH') . '</th>
+							<th class="ascending">' . _('#Top Sales 30') . '</th>
+							<th class="ascending">' . _('#Top Sales 60') . '</th>
+							<th class="ascending">' . _('#Top Sales 90') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -2301,13 +2321,19 @@ function ItemsInCategoryForMoreThanDays($maxdays, $group, $RootPath, $db){
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
 					</tr>', 
 					$i, 
 					$CodeLink, 
 					$myrow['description'], 
 					$myrow['categoryid'], 
 					ConvertSQLDate($myrow['lastcategoryupdate']),
-					locale_number_format($myrow['quantity'],0)
+					locale_number_format($myrow['quantity'],0),
+					locale_number_format($myrow['topsales30'],0),
+					locale_number_format($myrow['topsales60'],0),
+					locale_number_format($myrow['topsales90'],0)
 					);
 			$i++;
 		}
