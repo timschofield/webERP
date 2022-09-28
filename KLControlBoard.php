@@ -57,7 +57,7 @@ $NumberOfOpenShopsTotal = $NumberOfOpenShopsKL + $NumberOfOpenShopsBL + $NumberO
 
 if ($_SESSION['UserID'] == "Ricard"){
 
-//	phpinfo();
+	//	phpinfo();
 
 /* TEST AND PLAY WITH call_user_func to move this script mainly to a table in DB
 //		over_or_below_limit("DISC80 Items in AR", "BELOW", 20, $RootPath, $db);
@@ -321,6 +321,10 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111111133",         0,   10000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
+		BalanceAccountControl("111111134",         0,   10000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
+		BalanceAccountControl("111111135",         0,   10000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin 
@@ -502,12 +506,19 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		ItemsInSetup("NeedPrice", $RootPath, $db);
 		$NumberOfTestExecuted++;
+		}
+
+	if ($KL_BusinessDevelopmentManager){
 		ItemsWithoutRetailPrice("SETKLA", 6.00, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsWithoutRetailPrice("SETBLA", 6.00, $RootPath, $db);
+		ItemsWithoutRetailPrice("SETBLA", 6.50, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsWithoutRetailPrice("SETGEA", 6.00, $RootPath, $db);
+		ItemsWithoutRetailPrice("SETGEA", 4.40, $RootPath, $db);
 		$NumberOfTestExecuted++;
+	}
+
+	if ($KL_BusinessDevelopmentManager
+		OR $KL_PurchasingTeam){
 		ItemsInSetup("WithReorderLevel", "SETKLA", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		ItemsInSetup("WithReorderLevel", "SETBLA", $RootPath, $db);
