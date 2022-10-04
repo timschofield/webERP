@@ -1,6 +1,6 @@
 <?php
 
-define("VERSIONFILE", "2.00"); 
+define("VERSIONFILE", "2.10"); 
 
 /* Session started in session.php for password checking and authorisation level check
 config.php is in turn included in session.php*/
@@ -63,20 +63,21 @@ if (DB_num_rows($result) != 0){
 		if ($Weight == 0){
 			$Weight = UpdateWeight($myrow['stockid'], $Weight, $UpdateDB, $db);
 		}
+
+		// check if we should update packaging, as volume depends on the packaging used
+		$Packaging = $myrow['klpackaging'];
+		if ($Packaging == ""){
+			$Packaging = UpdatePackaging($myrow['stockid'],$myrow['categoryid'], $Brand, $UpdateDB, $db);
+			$Volume = UpdateVolumeByPackaging($myrow['stockid'], $Packaging, $UpdateDB, $db);
+		}
 		
-		// check if we should update volume
+/*		// check if we should update volume
 		$Volume = $myrow['volume'];
 		if ($Volume == 0){
 			$Volume = UpdateVolume($myrow['stockid'], $UpdateDB, $db);
-			UpdatePackaging($myrow['stockid'],$myrow['categoryid'], $UpdateDB, $db);
+			$Packaging = UpdatePackaging($myrow['stockid'],$myrow['categoryid'], $UpdateDB, $db);
 		}
-		
-		// check if we should update packaging
-		$Packaging = $myrow['klpackaging'];
-		if ($Packaging == ""){
-			UpdatePackaging($myrow['stockid'],$myrow['categoryid'], $Brand, $UpdateDB, $db);
-		}
-		
+*/		
 		// if we have some kind of description, long enough, we can move ahead. Otherwise, we miss the descriptiob
 		if (strlen($myrow['description']) >= 8){
 			// if we have picture, then we can publish online, otherwise not yet!
@@ -338,6 +339,45 @@ function UpdateVolume($Stockid, $UpdateDB, $db){
 	return $Volume;
 }
 
+function UpdateVolumeByPackaging($Stockid, $Packaging, $UpdateDB, $db){
+	$TypePackaging = substr($Packaging, -1, 1);
+	if ($Stockid = "WKPC01"){
+		$Length = BOX_XS_LENGTH;
+		$Width  = BOX_XS_WIDTH;
+		$Height = BOX_XS_HEIGHT;
+	}elseif ($TypePackaging == "S"){
+		$Length = BOX_S_LENGTH;
+		$Width  = BOX_S_WIDTH;
+		$Height = BOX_S_HEIGHT;
+	}elseif ($TypePackaging == "M"){
+		$Length = BOX_M_LENGTH;
+		$Width  = BOX_M_WIDTH;
+		$Height = BOX_M_HEIGHT;
+	}elseif ($TypePackaging == "L"){
+		$Length = BOX_L_LENGTH;
+		$Width  = BOX_L_WIDTH;
+		$Height = BOX_L_HEIGHT;
+	}else{
+		$Length = BOX_M_LENGTH;
+		$Width  = BOX_M_WIDTH;
+		$Height = BOX_M_HEIGHT;
+	}
+	
+	$Volume = round(($Length/1000)*($Width/1000)*($Height/1000),4,PHP_ROUND_HALF_UP); // dimensions in mm and volume in m3
+	
+	if($UpdateDB){
+		$sql = "UPDATE stockmaster 
+				SET volume = " . $Volume . ",
+					length =  " . $Length . ",
+					width =  " . $Width . ",
+					height =  " . $Height . "
+				WHERE stockid =	'" . $Stockid . "'";
+		$ErrMsg =_('Could not update the item volume and dimensions because');
+		$result = DB_query($sql,$ErrMsg);
+	}
+	return $Volume;
+}
+
 function UpdatePackaging($Stockid, $Category, $Brand, $UpdateDB, $db){
 
 	if (isRing($Stockid)){
@@ -392,6 +432,8 @@ function UpdatePackaging($Stockid, $Category, $Brand, $UpdateDB, $db){
 		$ErrMsg =_('Could not update the packaging set because');
 		$result = DB_query($sql,$ErrMsg);
 	}
+	
+	return $Packaging;
 }
 
 
