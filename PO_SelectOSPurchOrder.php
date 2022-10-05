@@ -101,7 +101,7 @@ if (isset($_POST['SearchParts'])) {
 				ON stockmaster.stockid=purchorderdetails.itemcode
 				INNER JOIN purchorders on purchorders.orderno=purchorderdetails.orderno
 				WHERE purchorderdetails.completed=0
-				AND purchorders.status NOT IN ('Completed','Cancelled','Rejected') 
+				AND purchorders.status NOT IN ('Completed','Cancelled','Rejected')
 				AND stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%'
 				" . $WhereStockCat . "
 				GROUP BY stockmaster.stockid,
@@ -115,11 +115,11 @@ if (isset($_POST['SearchParts'])) {
 					stockmaster.description,
 					stockmaster.units,
 					SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS qord
-				FROM stockmaster INNER JOIN purchorderdetails 
+				FROM stockmaster INNER JOIN purchorderdetails
 				ON stockmaster.stockid=purchorderdetails.itemcode
 				INNER JOIN purchorders on purchorders.orderno=purchorderdetails.orderno
 				WHERE purchorderdetails.completed=0
-				AND purchorders.status NOT IN ('Completed','Cancelled','Rejected') 
+				AND purchorders.status NOT IN ('Completed','Cancelled','Rejected')
 				" . $WhereStockCat . "
 				GROUP BY stockmaster.stockid,
 					stockmaster.description,
@@ -397,7 +397,7 @@ else {
 					purchorders.requisitionno,
 					purchorders.allowprint,
 					suppliers.currcode
-                ORDER BY purchorders.orderno ASC";
+				ORDER BY purchorders.orderno ASC";
 	} else {
 		//$OrderNumber is not set
 		if (isset($SelectedSupplier)) {
@@ -454,7 +454,7 @@ else {
 							purchorders.allowprint,
 							suppliers.currcode,
 							currencies.decimalplaces
-                        ORDER BY purchorders.orderno ASC";
+						ORDER BY purchorders.orderno ASC";
 			} else {
 				$SQL = "SELECT purchorders.realorderno,
 							purchorders.orderno,
@@ -492,7 +492,7 @@ else {
 							purchorders.allowprint,
 							suppliers.currcode,
 							currencies.decimalplaces
-                        ORDER BY purchorders.orderno ASC";
+						ORDER BY purchorders.orderno ASC";
 			}
 		} //isset($SelectedSupplier)
 		else { //no supplier selected
@@ -548,7 +548,7 @@ else {
 							purchorders.allowprint,
 							suppliers.currcode,
 							currencies.decimalplaces
-                        ORDER BY purchorders.orderno ASC";
+						ORDER BY purchorders.orderno ASC";
 			} else {
 				$SQL = "SELECT purchorders.realorderno,
 							purchorders.orderno,
@@ -585,7 +585,7 @@ else {
 							purchorders.allowprint,
 							suppliers.currcode,
 							currencies.decimalplaces
-                        ORDER BY purchorders.orderno ASC";
+						ORDER BY purchorders.orderno ASC";
 			}
 		} //end selected supplier
 	} //end not order number selected
