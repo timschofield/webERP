@@ -57,27 +57,22 @@ if (DB_num_rows($result) != 0){
 		$FeaturedAsTopSales = 0;
 		$FeaturedText = "";
 		$Brand = FindWebsiteBrand($myrow['stockid'], $myrow['categoryid'], $myrow['description']);
-
-		// check if we should update weight
 		$Weight = $myrow['grossweight'];
+		$Packaging = $myrow['klpackaging'];
+		$Volume = $myrow['volume'];
+
 		if ($Weight == 0){
 			$Weight = UpdateWeight($myrow['stockid'], $Weight, $UpdateDB, $db);
 		}
 
-		// check if we should update packaging, as volume depends on the packaging used
-		$Packaging = $myrow['klpackaging'];
 		if ($Packaging == ""){
 			$Packaging = UpdatePackaging($myrow['stockid'],$myrow['categoryid'], $Brand, $UpdateDB, $db);
 			$Volume = UpdateVolumeByPackaging($myrow['stockid'], $Packaging, $UpdateDB, $db);
 		}
 		
-/*		// check if we should update volume
-		$Volume = $myrow['volume'];
 		if ($Volume == 0){
-			$Volume = UpdateVolume($myrow['stockid'], $UpdateDB, $db);
-			$Packaging = UpdatePackaging($myrow['stockid'],$myrow['categoryid'], $UpdateDB, $db);
+			$Volume = UpdateVolumeByPackaging($myrow['stockid'], $Packaging, $UpdateDB, $db);
 		}
-*/		
 		// if we have some kind of description, long enough, we can move ahead. Otherwise, we miss the descriptiob
 		if (strlen($myrow['description']) >= 8){
 			// if we have picture, then we can publish online, otherwise not yet!
@@ -341,7 +336,7 @@ function UpdateVolume($Stockid, $UpdateDB, $db){
 
 function UpdateVolumeByPackaging($Stockid, $Packaging, $UpdateDB, $db){
 	$TypePackaging = substr($Packaging, -1, 1);
-	if ($Stockid = "WKPC01"){
+	if ($Stockid == "WKPC01"){
 		$Length = BOX_XS_LENGTH;
 		$Width  = BOX_XS_WIDTH;
 		$Height = BOX_XS_HEIGHT;

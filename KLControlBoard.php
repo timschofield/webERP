@@ -165,11 +165,11 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		over_or_below_limit("DISC20 Items in U3", "BELOW", 20, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		over_or_below_limit("DISC80 Items in AR", "BELOW", 30, $RootPath, $db);
+		over_or_below_limit("DISC80 Items in AR", "BELOW", 20, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		over_or_below_limit("DISC80 Items in TK", "BELOW", 30, $RootPath, $db);
+		over_or_below_limit("DISC80 Items in TK", "BELOW", 20, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		over_or_below_limit("DISC80 Items in U3", "BELOW", 30, $RootPath, $db);
+		over_or_below_limit("DISC80 Items in U3", "BELOW", 20, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -177,9 +177,9 @@ if ($ProcessSection01){
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_ShopSupportTeam){
 		
-		over_or_below_limit("Items changing price or moving category", "OVER", 50, $RootPath, $db);
+		over_or_below_limit("Items changing price or moving category", "OVER", 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		over_or_below_limit("Items changing price", "OVER", 20, $RootPath, $db);
+		over_or_below_limit("Items changing price", "OVER", 30, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		over_or_below_limit("Items moving to 20% discount", "OVER", 20, $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -478,7 +478,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("211021400", -200000000,          1, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("211021500",  500000000, 1000000000, $periodnow, $db);
+		BalanceAccountControl("211021500",  400000000,  800000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("612012015",         -1,          1, $periodnow, $db);
 		$NumberOfTestExecuted++;
