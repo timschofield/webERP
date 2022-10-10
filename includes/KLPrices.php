@@ -151,9 +151,9 @@ function round_price($n, $up="UP"){
 			}else{
 				$price = round_basic_price($n - (PRICE_ROUNDING_STEP02/2), PRICE_ROUNDING_STEP02);
 			}
-			if (($price % PRICE_ROUNDING_COMMERCIAL_MODULE02) == 0){
-				$price = $price - PRICE_ROUNDING_COMMERCIAL_STEP02;
-			}
+		}
+		if (($price % PRICE_ROUNDING_COMMERCIAL_MODULE02) == 0){
+			$price = $price - PRICE_ROUNDING_COMMERCIAL_STEP02;
 		}
 	}else{
 		if(!multiple_of($n, PRICE_ROUNDING_STEP03)){

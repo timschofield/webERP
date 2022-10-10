@@ -181,7 +181,7 @@ if ($ProcessSection02){
 		OR $KL_BusinessDevelopmentManager){
 		PriceWrongRounding($RootPath, $db);
 		$NumberOfTestExecuted++;
-		PricesTooOld(4, $RootPath, $db);
+		PricesTooOld(3, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 }
@@ -204,6 +204,7 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $D
 				(SELECT SUM(quantity)
 					FROM locstock
 					WHERE stockmaster.stockid = locstock.stockid) AS qoh,
+				prices.startdate,
 				prices.price AS retailprice,
 				(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS standardcost
 			FROM stockmaster, prices				
@@ -232,67 +233,76 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $D
 		while ($myrow = DB_fetch_array($result)) {
 			$PositionTopSales = PositionTopSalesItem($myrow['stockid'], $DaysTopSales, $db);
 			if ($PositionTopSales < $TopSales){
-				if ($ShowHeader){
-					$CategoryName = GetCategoryNameFromCode($Stockcat);
-					echo '<p class="page_title_text" align="center"><strong>' .  $CategoryName . ' Items TOO CHEAP: ' . ' TOP '.locale_number_format($TopSales,0) . ' sales. Price BELOW ' . $FactorMax . ' x standard cost. QOH >= ' .  locale_number_format($MinQoh,0).  '</strong></p>';
-					echo '<div>';
-					echo '<table class="selection">';
-					$TableHeader = '<tr>
-										<th class="ascending">' . _('#') . '</th>
-										<th class="ascending">' . _('Code') . '</th>
-										<th class="ascending">' . _('Description') . '</th>
-										<th class="ascending">' . _('TopSales') . '</th>
-										<th class="ascending">' . _('QOH') . '</th>
-										<th class="ascending">' . _('Std Cost') . '</th>
-										<th class="ascending">' . _('Minimum Price') . '</th>
-										<th class="ascending">' . _('Current Price') . '</th>
-										<th class="ascending">' . _('Current Factor') . '</th>
-										<th class="ascending">' . _('Optimum Price') . '</th>
-										<th class="ascending">' . _('Recommended Retail') . '</th>
-										<th class="ascending">' . _('% Increase') . '</th>
-										<th class="ascending">' . _('Income Increase') . '</th>
-									</tr>';
-					echo $TableHeader;
-					$ShowHeader = FALSE;
-				}
-				$k = StartEvenOrOddRow($k);
-				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+
 				$MaxPrice = $myrow['standardcost'] * $FactorMax;
 				$MinPrice = $myrow['standardcost'] * $FactorMin;
 				$RecommendedPrice = round_price($MaxPrice, "UP");
 				$Increase = locale_number_format(($RecommendedPrice-$myrow['retailprice'])/$myrow['retailprice']*100,1).'%';
-				$NewPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $RecommendedPrice .  '">' . locale_number_format($RecommendedPrice,0) . '</a>';
 				$IncomeIncrease = $myrow['qoh'] * ($RecommendedPrice-$myrow['retailprice']);
 				
-				printf('<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						</tr>', 
-						$i, 
-						$CodeLink, 
-						$myrow['description'], 
-						locale_number_format($PositionTopSales,0),
-						locale_number_format($myrow['qoh'],0),
-						locale_number_format($myrow['standardcost'],0),
-						locale_number_format($MinPrice,0),
-						locale_number_format($myrow['retailprice'],0),
-						locale_number_format($myrow['retailprice']/$myrow['standardcost'],2),
-						locale_number_format($MaxPrice,0),
-						$NewPriceLink,
-						$Increase,
-						locale_number_format($IncomeIncrease,0)
-						);
-				$i++;
+				// due to rounding in recommended price, sometimes recommended price is equal to current price, so we filter them
+				if ($myrow['retailprice'] != $RecommendedPrice){
+					if ($ShowHeader){
+						$CategoryName = GetCategoryNameFromCode($Stockcat);
+						echo '<p class="page_title_text" align="center"><strong>' .  $CategoryName . ' Items TOO CHEAP: ' . ' TOP '.locale_number_format($TopSales,0) . ' sales. Price BELOW ' . $FactorMax . ' x standard cost. QOH >= ' .  locale_number_format($MinQoh,0).  '</strong></p>';
+						echo '<div>';
+						echo '<table class="selection">';
+						$TableHeader = '<tr>
+											<th class="ascending">' . _('#') . '</th>
+											<th class="ascending">' . _('Code') . '</th>
+											<th class="ascending">' . _('Description') . '</th>
+											<th class="ascending">' . _('TopSales') . '</th>
+											<th class="ascending">' . _('QOH') . '</th>
+											<th class="ascending">' . _('Std Cost') . '</th>
+											<th class="ascending">' . _('Minimum Price') . '</th>
+											<th class="ascending">' . _('Date Price') . '</th>
+											<th class="ascending">' . _('Current Price') . '</th>
+											<th class="ascending">' . _('Current Factor') . '</th>
+											<th class="ascending">' . _('Optimum Price') . '</th>
+											<th class="ascending">' . _('Recommended Retail') . '</th>
+											<th class="ascending">' . _('% Increase') . '</th>
+											<th class="ascending">' . _('Income Increase') . '</th>
+										</tr>';
+						echo $TableHeader;
+						$ShowHeader = FALSE;
+					}
+					$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+					$NewPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $RecommendedPrice .  '">' . locale_number_format($RecommendedPrice,0) . '</a>';
+					
+					$k = StartEvenOrOddRow($k);
+					printf('<td class="number">%s</td>
+							<td>%s</td>
+							<td>%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td>%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td>%s</td>
+							<td class="number">%s</td>
+							</tr>', 
+							$i, 
+							$CodeLink, 
+							$myrow['description'], 
+							locale_number_format($PositionTopSales,0),
+							locale_number_format($myrow['qoh'],0),
+							locale_number_format($myrow['standardcost'],0),
+							locale_number_format($MinPrice,0),
+							ConvertSQLDateTime($myrow['startdate']), 
+							locale_number_format($myrow['retailprice'],0),
+							locale_number_format($myrow['retailprice']/$myrow['standardcost'],2),
+							locale_number_format($MaxPrice,0),
+							$NewPriceLink,
+							$Increase,
+							locale_number_format($IncomeIncrease,0)
+							);
+					$i++;
+					
+				}
 			}
 		}
 		if (!$ShowHeader){
@@ -312,6 +322,7 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales
 				(SELECT SUM(quantity)
 					FROM locstock
 					WHERE stockmaster.stockid = locstock.stockid) AS qoh,
+				prices.startdate,
 				prices.price AS retailprice,
 				(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS standardcost
 			FROM stockmaster, prices				
@@ -361,6 +372,7 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales
 										<th class="ascending">' . _('QOH') . '</th>
 										<th class="ascending">' . _('Std Cost') . '</th>
 										<th class="ascending">' . _('Minimum Price') . '</th>
+										<th class="ascending">' . _('Date Price') . '</th>
 										<th class="ascending">' . _('Current Price') . '</th>
 										<th class="ascending">' . _('Current Factor') . '</th>
 										<th class="ascending">' . _('Optimum Price') . '</th>
@@ -382,6 +394,7 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
+						<td>%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
@@ -396,6 +409,7 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales
 						locale_number_format($myrow['qoh'],0),
 						locale_number_format($myrow['standardcost'],0),
 						locale_number_format($MinPrice,0),
+						ConvertSQLDateTime($myrow['startdate']), 
 						locale_number_format($myrow['retailprice'],0),
 						locale_number_format($myrow['retailprice']/$myrow['standardcost'],2),
 						locale_number_format($MaxPrice,0),
@@ -422,6 +436,7 @@ function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath, $db){
 				(SELECT SUM(quantity)
 					FROM locstock
 					WHERE stockmaster.stockid = locstock.stockid) AS qoh,
+				prices.startdate,
 				prices.price AS retailprice,
 				(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS standardcost
 			FROM stockmaster, prices				
@@ -468,6 +483,7 @@ function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath, $db){
 										<th class="ascending">' . _('TopSales') . '</th>
 										<th class="ascending">' . _('QOH') . '</th>
 										<th class="ascending">' . _('Std Cost') . '</th>
+										<th class="ascending">' . _('Date Price') . '</th>
 										<th class="ascending">' . _('Current Price') . '</th>
 										<th class="ascending">' . _('Current Factor') . '</th>
 										<th class="ascending">' . _('Minimum Price') . '</th>
@@ -490,6 +506,7 @@ function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath, $db){
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
+						<td>%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
@@ -503,6 +520,7 @@ function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath, $db){
 						locale_number_format($PositionTopSales,0),
 						locale_number_format($myrow['qoh'],0),
 						locale_number_format($myrow['standardcost'],0),
+						ConvertSQLDateTime($myrow['startdate']), 
 						locale_number_format($myrow['retailprice'],0),
 						locale_number_format($myrow['retailprice']/$myrow['standardcost'],2),
 						locale_number_format($NewPrice,0),
