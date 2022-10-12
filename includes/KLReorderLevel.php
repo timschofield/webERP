@@ -111,6 +111,7 @@ function KL_DailyRLAdjustmentsForPackaging($ShowMessages, $updateDB, $RootPath, 
 	$EmailText = AdjustPackaging(60, 'SHOPKL', $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 	$EmailText = AdjustPackaging(60, 'SHOPBL', $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 	$EmailText = AdjustPackaging(60, 'SHOPOU', $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	$EmailText = AdjustPackagingGudang('PACKU', $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 	
 	return $EmailText;
 }
@@ -945,6 +946,58 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db,
 	}
 	return $EmailText;
 }
+
+function AdjustPackagingGudang($GudangCode, $ShowMessages, $updateDB, $RootPath, $db, $EmailText){
+
+	// getting the zone from the gudang code
+	$SQL = "SELECT locations.zone
+			FROM locations
+			WHERE locations.loccode = '" . $GudangCode . "'";
+	$resultzone = DB_query($SQL);
+	if (DB_num_rows($resultzone) != 0){
+		$myZone = DB_fetch_array($resultzone);
+		$GudangZone = $myZone['zone'];
+		$Message = "Adjusting RL for Packaging Gudang " . $GudangCode . " Zone " . $GudangZone;
+		if ($ShowMessages){
+			prnMsg($Message,'info');
+		}
+		if ($EmailText!=''){
+			$EmailText = $EmailText . $Message . "\n";
+		}
+	
+	}	
+
+	$SQL = "SELECT  stockmaster.stockid,
+					MAX(locations.rlfactorforpackaging) AS rlfactor,
+					MAX(locations.rldaysforpackaging) AS rldays,
+					SUM(locstock.quantity) AS qoh,
+					SUM(locstock.reorderlevel) AS rl
+			FROM locations, locstock, stockmaster
+			WHERE locations.loccode = locstock.loccode
+				AND stockmaster.stockid = locstock.stockid
+				AND locations.zone = '" . $GudangZone . "'
+				AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_SHOP_PACKAGING . "
+				AND stockmaster.discontinued = 0
+			GROUP BY stockmaster.stockid
+			ORDER BY stockmaster.stockid";
+	$result = DB_query($SQL);
+
+	if (DB_num_rows($result) != 0){
+		while ($myrow = DB_fetch_array($result)) {
+			$text = $GudangCode . ' ' . $myrow['stockid'] . ' New RL = ' . $myrow['rl'];
+			if ($ShowMessages){
+				echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+			}
+			if ($EmailText!=''){
+				$EmailText = $EmailText . $text . "\n";
+			}
+			SetReorderLevel("PackagingGudangOptimization", $myrow['stockid'], $GudangCode, 0, $myrow['rl'], $updateDB, $db);
+		}
+	}	
+
+	return $EmailText;
+}
+
 
 function AdjustPackaging($DaysSales, $ShopType, $ShowMessages, $updateDB, $RootPath, $db, $EmailText){
 	
