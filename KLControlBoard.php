@@ -57,6 +57,9 @@ $NumberOfOpenShopsTotal = $NumberOfOpenShopsKL + $NumberOfOpenShopsBL + $NumberO
 
 if ($_SESSION['UserID'] == "Ricard"){
 
+		PackagingToBeRefilledGudang("PACKU", "PACKA", false, $RootPath, $db);
+		PackagingToBeRefilledGudang("PACKU", "PACKA", true, $RootPath, $db);
+
 	//	phpinfo();
 
 /* TEST AND PLAY WITH call_user_func to move this script mainly to a table in DB

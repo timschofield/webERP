@@ -2448,6 +2448,133 @@ function PackagingToBeRefilledOutlet($ShowAll, $RootPath, $db){
 	}
 }
 
+function PackagingToBeRefilledGudang($GudangCode, $ParentGudang, $ShowAll, $RootPath, $db){
+
+	$TableResult = array();
+	
+	$SQL = "SELECT  stockmaster.stockid,
+					stockmaster.description,
+					locstock.quantity AS qoh,
+					(SELECT l2.quantity
+						FROM locstock AS l2
+						WHERE l2.stockid = stockmaster.stockid
+							AND l2.loccode = '". $ParentGudang ."') AS qohparent,
+					locstock.reorderlevel AS rl,
+					locations.locationname,
+					locations.rlfactorforpackaging AS rlfactor,
+					(SELECT SUM(loctransfers.shipqty - loctransfers.recqty)
+						FROM loctransfers
+						WHERE loctransfers.recloc = locations.loccode
+							AND loctransfers.shipqty != loctransfers.recqty
+							AND loctransfers.stockid = stockmaster.stockid) AS intransit
+			FROM locations, locstock, stockmaster
+			WHERE locations.loccode = locstock.loccode
+				AND stockmaster.stockid = locstock.stockid
+				AND locstock.reorderlevel != 0
+				AND locations.loccode = '" . $GudangCode . "'
+				AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_SHOP_PACKAGING . "
+				AND stockmaster.discontinued = 0
+			GROUP BY stockmaster.stockid
+			ORDER BY stockmaster.stockid";
+	$result = DB_query($SQL);
+	
+	$showHeader = FALSE;
+	$showReport = FALSE;
+	$numitems = 0;
+	if (DB_num_rows($result) != 0){
+		while ($myrow = DB_fetch_array($result)) {
+			$numitems++;
+			$TableResult[$numitems]['stockid'] = $myrow['stockid'];
+			$TableResult[$numitems]['description'] = $myrow['description'];
+			$TableResult[$numitems]['qohparent'] = $myrow['qohparent'];
+			$TableResult[$numitems]['qoh'] = $myrow['qoh'];
+			$TableResult[$numitems]['rl'] = $myrow['rl'];
+			$TableResult[$numitems]['locationname'] = $myrow['locationname'];
+			$TableResult[$numitems]['rlfactor'] = $myrow['rlfactor'];
+			$TableResult[$numitems]['intransit'] = $myrow['intransit'];
+
+			$TableResult[$numitems]['needed']= max(0,round(($myrow['rl'] * $myrow['rlfactor']) - $myrow['qoh'],0));
+			$TableResult[$numitems]['toship'] = RoundPackagingTransfer(min(max(0,$TableResult[$numitems]['needed'] - $myrow['intransit']),$myrow['qohparent']));
+
+			if (($myrow['qoh'] < $myrow['rl']) AND ($TableResult[$numitems]['toship'] > 0)){
+				// at least 1 item needs to be refilled at the location and we can ship it, so we have to show the report
+				$TableResult[$numitems]['show'] = TRUE;
+				$showHeader = TRUE;
+				$showReport = TRUE;
+			}else{
+				$TableResult[$numitems]['show'] = FALSE;
+			}
+		}
+	}
+
+	if ($showReport){
+		$i = 1;
+		$k = 0; //row colour counter
+
+		while ($i <= $numitems) {
+			
+			// IF we are SHORT of that packaging material in that location...
+			// Or we show All the the packaging items in that location 
+			if($showHeader){
+				echo '<p class="page_title_text" align="center"><strong>' . 'Packaging Items needed at ' . $TableResult[$i]['locationname'] . '. Prepare a Transfer in webERP from Gudang Packaging Kesambi' . '</strong></p>';
+				echo '<div>';
+				echo '<table class="selection">';
+				$TableHeader = '<tr>
+									<th class="ascending">' . _('Code') . '</th>
+									<th class="ascending">' . _('Description') . '</th>
+									<th class="ascending">' . _('QOH @ ') . $ParentGudang . '</th>
+									<th class="ascending">' . _('RL @ ') . $GudangCode . '</th>
+									<th class="ascending">' . _('QOH @ ') . $GudangCode . '</th>
+									<th class="ascending">' . _('Needs') . '</th>
+									<th class="ascending">' . _('Transit') . '</th>
+									<th class="ascending">' . _('To Ship') . '</th>
+								</tr>';
+				echo $TableHeader;
+				$showHeader = FALSE;
+			}
+			$k = StartEvenOrOddRow($k);
+			
+			printf('<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$TableResult[$i]['stockid'], 
+					$TableResult[$i]['description'], 
+					locale_number_format_zero_blank($TableResult[$i]['qohparent'],0),
+					locale_number_format_zero_blank($TableResult[$i]['rl'],0),
+					locale_number_format_zero_blank($TableResult[$i]['qoh'],0),
+					locale_number_format_zero_blank($TableResult[$i]['needed'],0),
+					locale_number_format_zero_blank($TableResult[$i]['intransit'],0),
+					locale_number_format_zero_blank($TableResult[$i]['toship'],0)
+					);
+			$i++;
+		}
+		if (!$showHeader){
+			echo '</table>
+				</div>';
+		}
+	}
+}
+
+function RoundPackagingTransfer($n){
+	if ($n < 10){
+		$n = $n;
+	}elseif ($n < 100){
+		$n = ceil($n/10)*10;
+	}elseif ($n < 1000){
+		$n = ceil($n/50)*50;
+	}else{
+		$n = ceil($n/100)*100;
+	}
+	return $n;
+}
+
+
 function PositionTopSalesItem($stockid, $TopItemsDays, $db){
 
 	$TopSalesField = GetTopSalesField($TopItemsDays);
