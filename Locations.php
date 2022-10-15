@@ -89,6 +89,7 @@ if(isset($_POST['submit'])) {
 									typeloc = '" . $_POST['TypeLoc'] . "',
 									partnercode = '" . $_POST['PartnerCode'] . "',
 									onlinepartnercode = '" . $_POST['OnlinePartnerCode'] . "',
+									packagingfrom = '" . $_POST['PackagingFrom'] . "',
 									rlfactorforpackaging = '" . $_POST['RLFactorForPackaging'] . "',
 									rldaysforpackaging = '" . $_POST['RLDaysForPackaging'] . "',
 									usedforwo = '" . $_POST['UsedForWO'] . "',
@@ -142,6 +143,7 @@ if(isset($_POST['submit'])) {
 		unset($_POST['TypeLoc']);
 		unset($_POST['PartnerCode']);
 		unset($_POST['OnlinePartnerCode']);
+		unset($_POST['PackagingFrom']);
 		unset($_POST['RLFactorForPackaging']);
 		unset($_POST['RLDaysForPackaging']);
 		unset($_POST['UsedForWO']);
@@ -196,6 +198,7 @@ if(isset($_POST['submit'])) {
 										typeloc,
 										partnercode,
 										onlinepartnercode,
+										packagingfrom,
 										rlfactorforpackaging,
 										rldaysforpackaging,
 										usedforwo,
@@ -237,6 +240,7 @@ if(isset($_POST['submit'])) {
 								'" . $_POST['TypeLoc'] . "',
 								'" . $_POST['PartnerCode'] . "',
 								'" . $_POST['OnlinePartnerCode'] . "',
+								'" . $_POST['PackagingFrom'] . "',
 								'" . $_POST['RLFactorForPackaging'] . "',
 								'" . $_POST['RLDaysForPackaging'] . "',
 								'" . $_POST['UsedForWO'] . "',
@@ -323,6 +327,7 @@ if(isset($_POST['submit'])) {
 		unset($_POST['TypeLoc']);
 		unset($_POST['PartnerCode']);
 		unset($_POST['OnlinePartnerCode']);
+		unset($_POST['PackagingFrom']);
 		unset($_POST['RLFactorForPackaging']);
 		unset($_POST['RLDaysForPackaging']);
 		unset($_POST['UsedForWO']);
@@ -517,6 +522,7 @@ or deletion of the records*/
 				onlinepartnercode,
 				stockreadytosell,
 				stockavailableforonline,
+				packagingfrom,
 				rlfactorforpackaging,
 				rldaysforpackaging,
 				managed
@@ -543,6 +549,7 @@ or deletion of the records*/
 			<th class="ascending">', _('ST From'), '</th>
 			<th class="ascending">', _('ST Max'), '</th>
 			<th class="ascending">', _('ST Min'), '</th>
+			<th class="ascending">', _('Pack From'), '</th>
 			<th class="ascending">', _('Pack Factor'), '</th>
 			<th class="ascending">', _('Pack Days'), '</th>
 			<th class="noprint" colspan="2">&nbsp;</th>
@@ -589,6 +596,7 @@ while ($myrow = DB_fetch_array($result)) {
 			<td>%s</td>
 			<td class="number">%s</td>
 			<td class="number">%s</td>
+			<td>%s</td>
 			<td class="number">%s</td>
 			<td class="number">%s</td>
 			<td class="noprint"><a href="%sSelectedLocation=%s">' . _('Edit') . '</a></td>
@@ -606,6 +614,7 @@ while ($myrow = DB_fetch_array($result)) {
 			$myrow['smartdispatchfrom'],
 			$myrow['smartdispatchmaxmodels'],
 			$myrow['smartdispatchminmodels'],
+			$myrow['packagingfrom'],
 			$myrow['rlfactorforpackaging'],
 			$myrow['rldaysforpackaging'],
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $myrow['loccode'],
@@ -660,6 +669,7 @@ if(!isset($_GET['delete'])) {
 					typeloc,
 					partnercode,
 					onlinepartnercode,
+					packagingfrom,
 					rlfactorforpackaging,
 					rldaysforpackaging,
 					usedforwo,
@@ -708,6 +718,7 @@ if(!isset($_GET['delete'])) {
 		$_POST['TypeLoc'] = $myrow['typeloc'];
 		$_POST['PartnerCode'] = $myrow['partnercode'];
 		$_POST['OnlinePartnerCode'] = $myrow['onlinepartnercode'];
+		$_POST['PackagingFrom'] = $myrow['packagingfrom'];
 		$_POST['RLFactorForPackaging'] = $myrow['rlfactorforpackaging'];
 		$_POST['RLDaysForPackaging'] = $myrow['rldaysforpackaging'];
 		$_POST['UsedForWO'] = $myrow['usedforwo'];
@@ -1100,6 +1111,11 @@ if(!isset($_GET['delete'])) {
 		echo '<option value="1">' . _('Yes') . '</option>';
 	}
 	echo '</select></td></tr>';
+
+	echo '<tr>
+			<td>' . _('Receives Packaging from') . ':</td>
+			<td><input type="text" name="PackagingFrom" title="' . _('Enter the location code where Packaging should be sent from (PACKA, PACKU, etc)') . '" data-type="no-illegal-chars" name="LocCode" value="' . $_POST['PackagingFrom'] . '" size="5" maxlength="5" /></td>
+		</tr>';
 
 	echo '<tr>
 			<td>' . _('KL RL Factor for Packaging Transfers') . ':' . '</td>

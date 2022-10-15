@@ -42,6 +42,14 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 			$EmailAddress = "kl-transferspeciallocation@kapal-laut.com";
 			break;
 		/* PREPARE PACKAGING TRANSFER EMAILS */
+		case "SendPackagingFromGudang":
+			$EmailSubject = "Prepare Packaging Transfer for: ". $Param1;
+			$EmailText = $EmailSubject . "\n\n" . 
+						$Param2 . "\n" . 
+						"Once ready inform Shop Support Leader if transfer by car is needed.";
+			$EmailAddress = "kl-shopsupport@kapal-laut.com";
+			break;
+		/* PREPARE PACKAGING TRANSFER EMAILS */
 		case "SendPackagingToShop":
 			$EmailSubject = "Prepare KL packaging transfer for: ". $Param1;
 			$EmailText = $EmailSubject . "\n\n" . 

@@ -57,6 +57,7 @@ $NumberOfOpenShopsTotal = $NumberOfOpenShopsKL + $NumberOfOpenShopsBL + $NumberO
 
 if ($_SESSION['UserID'] == "Ricard"){
 
+		
 	//	phpinfo();
 
 /* TEST AND PLAY WITH call_user_func to move this script mainly to a table in DB
@@ -649,11 +650,7 @@ if ($ProcessSection01){
 	if ($KL_SystemAdmin OR
 		$KL_ShopSupportLeader OR 
 		$KL_OperationalManager){
-		PackagingToBeRefilled("KAPAL-LAUT", false, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		PackagingToBeRefilled("BLINK", false, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		PackagingToBeRefilledOutlet(false, $RootPath, $db);
+		CheckPackagingToBeRefilled(FALSE, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 

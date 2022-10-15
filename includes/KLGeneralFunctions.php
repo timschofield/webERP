@@ -469,6 +469,14 @@ function GetLocationNameFromCode($LocCode){
 	return $Row['0'];
 }
 
+function GetItemDescriptionFromCode($Stockid){
+	$ErrMsg = 'Error in function GetItemDescriptionFromCode()';
+	$SQL="SELECT description FROM stockmaster WHERE stockid='" . $Stockid . "'";
+	$result = DB_query($SQL,$ErrMsg);
+	$Row = DB_fetch_row($result);
+	return $Row['0'];
+}
+
 function NegativeNumber($Value){
 	// be sure the value returned is negative
 	if ($Value > 0){

@@ -111,6 +111,7 @@ function KL_DailyRLAdjustmentsForPackaging($ShowMessages, $updateDB, $RootPath, 
 	$EmailText = AdjustPackaging(60, 'SHOPKL', $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 	$EmailText = AdjustPackaging(60, 'SHOPBL', $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 	$EmailText = AdjustPackaging(60, 'SHOPOU', $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	$EmailText = AdjustPackagingGudang('PACKU', $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 	
 	return $EmailText;
 }
@@ -945,6 +946,80 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db,
 	}
 	return $EmailText;
 }
+
+function AdjustPackagingGudang($GudangCode, $ShowMessages, $updateDB, $RootPath, $db, $EmailText){
+
+	$Message = "Adjusting RL for Packaging Gudang " . $GudangCode ;
+	if ($ShowMessages){
+		prnMsg($Message,'info');
+	}
+	if ($EmailText!=''){
+		$EmailText = $EmailText . "\n" . $Message . "\n";
+	}
+
+	// updating the RL settings for packaging, just in case any of the dependant shops has change its settings and affects the gudang
+	$SQL = "SELECT  MAX(locations.rlfactorforpackaging) AS rlfactor,
+					MAX(locations.rldaysforpackaging) AS rldays
+			FROM locations
+			WHERE locations.packagingfrom = '" . $GudangCode . "'
+				AND locations.loccode != '" . $GudangCode . "'";
+	$result = DB_query($SQL);
+
+	if (DB_num_rows($result) != 0){
+		$myrow = DB_fetch_array($result);
+		$text = $GudangCode . ' RL Factor for Packaging = ' . $myrow['rlfactor'];
+		if ($ShowMessages){
+			echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+		}
+		if ($EmailText!=''){
+			$EmailText = $EmailText . $text . "\n";
+		}
+		$text = $GudangCode . ' RL Days for Packaging = ' . $myrow['rldays'];
+		if ($ShowMessages){
+			echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+		}
+		if ($EmailText!=''){
+			$EmailText = $EmailText . $text . "\n";
+		}
+		$sql = "UPDATE locations
+				SET rlfactorforpackaging = '" . $myrow['rlfactor'] ."',
+					rldaysforpackaging = '" . $myrow['rldays'] ."'
+				WHERE loccode = '". $GudangCode ."'";
+		$ErrMsg = 'Could not update RL packaging settings for Gudang because';
+		$result = DB_query($sql,$ErrMsg);
+	}	
+
+	// Now, update the RL for the items to be stocked at the gudang
+	$SQL = "SELECT  stockmaster.stockid,
+					SUM(locstock.quantity) AS qoh,
+					SUM(locstock.reorderlevel) AS rl
+			FROM locations, locstock, stockmaster
+			WHERE locations.loccode = locstock.loccode
+				AND stockmaster.stockid = locstock.stockid
+				AND locations.packagingfrom = '" . $GudangCode . "'
+				AND locations.loccode != '" . $GudangCode . "'
+				AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_SHOP_PACKAGING . "
+				AND stockmaster.discontinued = 0
+			GROUP BY stockmaster.stockid
+			ORDER BY stockmaster.stockid";
+	$result = DB_query($SQL);
+
+	if (DB_num_rows($result) != 0){
+		while ($myrow = DB_fetch_array($result)) {
+			$text = $GudangCode . ' ' . $myrow['stockid'] . ' New RL = ' . $myrow['rl'];
+			if ($ShowMessages){
+				echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+			}
+			if ($EmailText!=''){
+				$EmailText = $EmailText . $text . "\n";
+			}
+			SetReorderLevel("PackagingGudangOptimization", $myrow['stockid'], $GudangCode, 0, $myrow['rl'], $updateDB, $db);
+		}
+	}	
+
+	return $EmailText;
+}
+
 
 function AdjustPackaging($DaysSales, $ShopType, $ShowMessages, $updateDB, $RootPath, $db, $EmailText){
 	

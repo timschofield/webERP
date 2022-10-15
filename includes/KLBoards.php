@@ -2448,6 +2448,181 @@ function PackagingToBeRefilledOutlet($ShowAll, $RootPath, $db){
 	}
 }
 
+function CheckPackagingToBeRefilled($ShowAll, $RootPath, $db){
+	$SQL = "SELECT  locations.loccode
+			FROM locations
+			WHERE locations.packagingfrom != ''
+				AND locations.loccode NOT IN " . LIST_ONLINE_SHOPS . "
+			ORDER BY locations.packagingfrom,
+				locations.locationname";
+	$result = DB_query($SQL);
+	
+	if (DB_num_rows($result) != 0){
+		while ($myrow = DB_fetch_array($result)) {
+			PackagingToBeRefilledFromGudang($myrow['loccode'], $ShowAll, $RootPath, $db);
+		}
+	}
+}
+
+function PackagingToBeRefilledFromGudang($GudangCode, $ShowAll, $RootPath, $db){
+
+	$TableResult = array();
+	
+	// get info from locations table
+	$SQL = "SELECT  locations.locationname,
+					locations.rlfactorforpackaging AS rlfactor,
+					locations.packagingfrom AS parentgudang,
+					(SELECT l2.locationname
+						FROM locations l2
+						WHERE l2.loccode = locations.packagingfrom) AS parentgudangname
+			FROM locations
+			WHERE locations.loccode = '" . $GudangCode . "'";
+	$result = DB_query($SQL);
+	$myrow = DB_fetch_array($result);
+	
+	$RLFactor = $myrow['rlfactor'];
+	$LocationName = $myrow['locationname'];
+	$ParentGudang = $myrow['parentgudang'];
+	$ParentGudangName = $myrow['parentgudangname'];
+	
+	// check what packaging items are missing on that location
+	$SQL = "SELECT  stockmaster.stockid,
+					stockmaster.description,
+					locstock.quantity AS qoh,
+					(SELECT l2.quantity
+						FROM locstock AS l2
+						WHERE l2.stockid = stockmaster.stockid
+							AND l2.loccode = '". $ParentGudang ."') AS qohparent,
+					locstock.reorderlevel AS rl,
+					(SELECT SUM(loctransfers.shipqty - loctransfers.recqty)
+						FROM loctransfers
+						WHERE loctransfers.recloc = locstock.loccode
+							AND loctransfers.shipqty != loctransfers.recqty
+							AND loctransfers.stockid = stockmaster.stockid) AS intransit
+			FROM locstock, stockmaster
+			WHERE stockmaster.stockid = locstock.stockid
+				AND locstock.reorderlevel != 0
+				AND locstock.loccode = '" . $GudangCode . "'
+				AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_SHOP_PACKAGING . "
+				AND stockmaster.discontinued = 0
+			ORDER BY stockmaster.stockid";
+	$result = DB_query($SQL);
+	
+	$showHeader = FALSE;
+	$showReport = FALSE;
+	$numitems = 0;
+	if (DB_num_rows($result) != 0){
+		while ($myrow = DB_fetch_array($result)) {
+			$numitems++;
+			$TableResult[$numitems]['stockid'] = $myrow['stockid'];
+			$TableResult[$numitems]['description'] = $myrow['description'];
+			$TableResult[$numitems]['qohparent'] = $myrow['qohparent'];
+			$TableResult[$numitems]['qoh'] = $myrow['qoh'];
+			$TableResult[$numitems]['rl'] = $myrow['rl'];
+			$TableResult[$numitems]['intransit'] = $myrow['intransit'];
+			$TableResult[$numitems]['optimum'] = round(($myrow['rl'] * $RLFactor),0);
+			$TableResult[$numitems]['needed']= max(0,$TableResult[$numitems]['optimum'] - $myrow['qoh']);
+			$TableResult[$numitems]['toship'] = RoundPackagingTransfer(min(max(0,$TableResult[$numitems]['needed'] - $myrow['intransit']),$myrow['qohparent']));
+
+			if ($ShowAll OR (($myrow['qoh'] < $myrow['rl']) AND ($TableResult[$numitems]['toship'] > 0))){
+				// at least 1 item needs to be refilled at the location and we can ship it, so we have to show the report
+				$TableResult[$numitems]['show'] = TRUE;
+				$showHeader = TRUE;
+				$showReport = TRUE;
+			}else{
+				$TableResult[$numitems]['show'] = FALSE;
+			}
+		}
+	}
+
+	if ($showReport){
+		$i = 1;
+		$ItemsToShip = 0;
+		$k = 0; //row colour counter
+
+		while ($i <= $numitems) {
+			// IF we are SHORT of that packaging material in that location...
+			// Or we show All the the packaging items in that location 
+			if($showHeader){
+				echo '<p class="page_title_text" align="center"><strong>' . 'Packaging Items needed at ' . $LocationName . ' from ' . $ParentGudangName . '</strong></p>';
+				echo '<div>';
+				echo '<table class="selection">';
+				$TableHeader = '<tr>
+									<th class="ascending">' . _('Code') . '</th>
+									<th class="ascending">' . _('Description') . '</th>
+									<th class="ascending">' . _('QOH @ ') . $ParentGudang . '</th>
+									<th class="ascending">' . _('QOH @ ') . $GudangCode . '</th>
+									<th class="ascending">' . _('RL @ ') . $GudangCode . '</th>
+									<th class="ascending">' . _('Optimum') . '</th>
+									<th class="ascending">' . _('Needing') . '</th>
+									<th class="ascending">' . _('Transit') . '</th>
+									<th class="ascending">' . _('To Ship') . '</th>
+								</tr>';
+				echo $TableHeader;
+				$showHeader = FALSE;
+				$EmailLink = '<a href="' . $RootPath . '/KLPreparePackagingTransferFromGudang.php?From=' . $ParentGudang 
+																								. '&To=' . $GudangCode;
+			}
+			
+			if ($TableResult[$i]['toship'] > 0){
+				$k = StartEvenOrOddRow($k);
+				printf('<td>%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						</tr>', 
+						$TableResult[$i]['stockid'], 
+						$TableResult[$i]['description'], 
+						locale_number_format_zero_blank($TableResult[$i]['qohparent'],0),
+						locale_number_format_zero_blank($TableResult[$i]['qoh'],0),
+						locale_number_format_zero_blank($TableResult[$i]['rl'],0),
+						locale_number_format_zero_blank($TableResult[$i]['optimum'],0),
+						locale_number_format_zero_blank($TableResult[$i]['needed'],0),
+						locale_number_format_zero_blank($TableResult[$i]['intransit'],0),
+						locale_number_format_zero_blank($TableResult[$i]['toship'],0)
+						);
+				if ($TableResult[$i]['toship'] > 0){
+					$ItemsToShip++;
+					$EmailLink = $EmailLink . '&Item' . $ItemsToShip . '=' . $TableResult[$i]['stockid'] .  
+											'&Qty' . $ItemsToShip . '=' . $TableResult[$i]['toship']; 
+				}
+			}
+			$i++;
+		}
+		if (!$showHeader){
+			$EmailLink = $EmailLink . '">' . 'Send email to team' . '</a>';
+			$k = StartEvenOrOddRow($k);
+			printf('<td>%s</td>
+					<td>%s</td>
+					</tr>', 
+					"",
+					$EmailLink
+					);
+			echo '</table>
+				</div>';
+		}
+	}
+}
+
+function RoundPackagingTransfer($n){
+	if ($n < 10){
+		$n = $n;
+	}elseif ($n < 100){
+		$n = ceil($n/10)*10;
+	}elseif ($n < 1000){
+		$n = ceil($n/50)*50;
+	}else{
+		$n = ceil($n/100)*100;
+	}
+	return $n;
+}
+
+
 function PositionTopSalesItem($stockid, $TopItemsDays, $db){
 
 	$TopSalesField = GetTopSalesField($TopItemsDays);
@@ -3029,48 +3204,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 					'', 
 					'' 
 					);
-/*			$k = StartEvenOrOddRow($k);
-			printf('<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					'', 
-					'', 
-					'TOTAL ORDERS',
-					'PCS', 
-					'', 
-					'', 
-					'', 
-					locale_number_format_zero_blank($TotalItemsAllOrders,0),
-					'', 
-					'', 
-					'', 
-					'', 
-					'', 
-					'', 
-					'', 
-					'', 
-					'', 
-					'', 
-					'' 
-					);
-*/		}
+		}
 		if (($TypeOfCode == "ARRIVING IN NEXT DAYS") 
 			AND ($TypeOfProduct == "FORSALE")){
 			$AverageItemCost = $CurrentTotalValueItemsForSale / $CurrentTotalQtyItemsForSale;
@@ -3128,49 +3262,6 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 					'' 
 					);
 			InsertBusinessHistory("STOCK", "EXPECTED COGS NEXT ". $maxdays . " DAYS (PCS)", round($myrow['cogs']/$AverageItemCost, -2));
-/*			$k = StartEvenOrOddRow($k);
-			printf('<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					'', 
-					'', 
-					'EXPECTED COGS ' . $maxdays . ' DAYS',
-					'PCS', 
-					'', 
-					'(APPROX)', 
-					'', 
-					locale_number_format_zero_blank(round($myrow['cogs']/$AverageItemCost, -2),0),
-					'', 
-					'', 
-					'', 
-					'', 
-					'', 
-					'', 
-					'', 
-					'', 
-					'', 
-					'', 
-					'' 
-					);
-
-*/
 			$ExpectedDifferenceValueStock = round($TotalValueAllOrders-$myrow['cogs'],-6);
 			InsertBusinessHistory("STOCK", "EXPECTED DIFFERENCE STOCK IN ". $maxdays . " DAYS (IDR)", $ExpectedDifferenceValueStock);
 			$k = StartEvenOrOddRow($k);
