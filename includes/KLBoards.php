@@ -2448,7 +2448,7 @@ function PackagingToBeRefilledOutlet($ShowAll, $RootPath, $db){
 	}
 }
 
-function CheckPackagingToBeRefilled($ShowAll, $RootPath, $db){
+function CheckPackagingToBeRefilled($ShowAll, $ShowLinkEmail, $RootPath, $db){
 	$SQL = "SELECT  locations.loccode
 			FROM locations
 			WHERE locations.packagingfrom != ''
@@ -2459,12 +2459,12 @@ function CheckPackagingToBeRefilled($ShowAll, $RootPath, $db){
 	
 	if (DB_num_rows($result) != 0){
 		while ($myrow = DB_fetch_array($result)) {
-			PackagingToBeRefilledFromGudang($myrow['loccode'], $ShowAll, $RootPath, $db);
+			PackagingToBeRefilledFromGudang($myrow['loccode'], $ShowAll, $ShowLinkEmail, $RootPath, $db);
 		}
 	}
 }
 
-function PackagingToBeRefilledFromGudang($GudangCode, $ShowAll, $RootPath, $db){
+function PackagingToBeRefilledFromGudang($GudangCode, $ShowAll, $ShowLinkEmail, $RootPath, $db){
 
 	$TableResult = array();
 	
@@ -2596,13 +2596,15 @@ function PackagingToBeRefilledFromGudang($GudangCode, $ShowAll, $RootPath, $db){
 		}
 		if (!$showHeader){
 			$EmailLink = $EmailLink . '">' . 'Send email to team' . '</a>';
-			$k = StartEvenOrOddRow($k);
-			printf('<td>%s</td>
-					<td>%s</td>
-					</tr>', 
-					"",
-					$EmailLink
-					);
+			if ($ShowLinkEmail){
+				$k = StartEvenOrOddRow($k);
+				printf('<td>%s</td>
+						<td>%s</td>
+						</tr>', 
+						"",
+						$EmailLink
+						);
+			}
 			echo '</table>
 				</div>';
 		}

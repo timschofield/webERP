@@ -648,9 +648,13 @@ if ($ProcessSection01){
 	}
 
 	if ($KL_SystemAdmin OR
-		$KL_ShopSupportLeader OR 
 		$KL_OperationalManager){
-		CheckPackagingToBeRefilled(FALSE, $RootPath, $db);
+		CheckPackagingToBeRefilled(FALSE, FALSE, $RootPath, $db);
+		$NumberOfTestExecuted++;
+	}
+
+	if ($KL_ShopSupportLeader){
+		CheckPackagingToBeRefilled(FALSE, TRUE, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
