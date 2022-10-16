@@ -557,6 +557,7 @@ function PriceWrongRounding($RootPath, $db){
 				AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_TEST . "
 					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_STABLE . "
 					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING . ")
+				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_GENERAL . "
 				AND stockmaster.klchangingprice = 0
 				AND stockmaster.klmovingdiscount20 = 0
 				AND stockmaster.klmovingdiscount50 = 0
