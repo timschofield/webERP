@@ -6,6 +6,7 @@ include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLPrices.php');
 include('includes/KLEmails.php');
+include('includes/KLGeneralFunctions.php');
 
 if (isset($_GET['SelectedPriceChange'])){
 	$SelectedPriceChange =mb_strtoupper($_GET['SelectedPriceChange']);
@@ -51,7 +52,7 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'NewRetailPrice';
 		$i++;
 		prnMsg(_('The new retail price must be a number'),'error');
-	}elseif ($_POST['NewRetailPrice'] != round_price($_POST['NewRetailPrice'], "UP")) {
+	}elseif (($_POST['NewRetailPrice'] != round_price($_POST['NewRetailPrice'], "UP")) AND !(ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_GENERAL))) {
 		$InputError = 1;
 		$Errors[$i] = 'NewRetailPrice';
 		$i++;
