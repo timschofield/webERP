@@ -52,12 +52,8 @@ if ($ProcessSection01){
 	* RETAIL PRICE         
 	***************************************************************************************/
 
-	if ($KL_SystemAdmin 
-		OR $KL_BusinessDevelopmentManager){
+	if ($KL_BusinessDevelopmentManager){
 		
-	//	PricesNotUpdatedinXDays(365*2, 15, $RootPath, $db);
-	//	PricesNotUpdatedinXDays(365  , 10, $RootPath, $db);
-
 		ItemsWithoutRetailPrice("SETKLA", 6.00, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		ItemsWithoutRetailPrice("TESTKA", 6.00, $RootPath, $db);
@@ -85,37 +81,36 @@ if ($ProcessSection01){
 		ItemsWithoutRetailPrice("NOPOGA", 4.40, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-
 	//	ItemsWithoutRetailPrice("CONSIG", 1.60, $RootPath, $db);
 	}
 
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager){
-		PriceBelowStandard("SETKLA", 6.00, 10, $RootPath, $db);
+		PriceBelowStandard("SETKLA", 6.00, 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PriceBelowStandard("TESTKA", 6.00, 15, $RootPath, $db);
+		PriceBelowStandard("TESTKA", 6.00, 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PriceBelowStandard("STABKA", 6.00, 20, $RootPath, $db);
+		PriceBelowStandard("STABKA", 6.00, 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PriceBelowStandard("NOPOKA", 6.00, 20, $RootPath, $db);
-		$NumberOfTestExecuted++;
-
-		PriceBelowStandard("SETBLA", 6.50, 10, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		PriceBelowStandard("TESTBA", 6.50, 15, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		PriceBelowStandard("STABBA", 6.50, 20, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		PriceBelowStandard("NOPOBA", 6.50, 20, $RootPath, $db);
+		PriceBelowStandard("NOPOKA", 6.00, 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-		PriceBelowStandard("SETGEA", 4.40, 10, $RootPath, $db);
+		PriceBelowStandard("SETBLA", 6.50, 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PriceBelowStandard("TESTGA", 4.40, 15, $RootPath, $db);
+		PriceBelowStandard("TESTBA", 6.50, 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PriceBelowStandard("STABGA", 4.40, 20, $RootPath, $db);
+		PriceBelowStandard("STABBA", 6.50, 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PriceBelowStandard("NOPOGA", 4.40, 20, $RootPath, $db);
+		PriceBelowStandard("NOPOBA", 6.50, 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+
+		PriceBelowStandard("SETGEA", 4.40, 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		PriceBelowStandard("TESTGA", 4.40, 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		PriceBelowStandard("STABGA", 4.40, 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		PriceBelowStandard("NOPOGA", 4.40, 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 }
@@ -179,9 +174,9 @@ if ($ProcessSection02){
 
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager){
-		PriceWrongRounding($RootPath, $db);
+		PricesTooOld(3, 10, 20, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PricesTooOld(3, $RootPath, $db);
+		PriceWrongRounding($RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 }
@@ -460,7 +455,8 @@ function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath, $db){
 					WHERE stockmaster.stockid = prices.stockid	
 						AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
 						AND prices.currabrev = '". CURRENCY_CODE ."'
-						AND prices.startdate > '". $today. "')";
+						AND prices.startdate > '". $today. "')
+			ORDER BY (prices.price / (stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost))";
 
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
@@ -627,7 +623,7 @@ function PriceWrongRounding($RootPath, $db){
 	}
 }
 
-function PricesTooOld($Years, $RootPath, $db){
+function PricesTooOld($Years, $IncreaseA, $IncreaseB, $RootPath, $db){
 	$today = date('Y-m-d');
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$Years * 365));
 
@@ -654,63 +650,65 @@ function PricesTooOld($Years, $RootPath, $db){
 				AND stockmaster.klmovingdiscount20 = 0
 				AND stockmaster.klmovingdiscount50 = 0
 				AND stockmaster.klmovingdiscount80 = 0
-			ORDER BY stockmaster.stockid";
+			ORDER BY prices.startdate";
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		$k = 0; //row colour counter
 		$i = 1;
 		$ShowHeader = TRUE;
 		while ($myrow = DB_fetch_array($result)) {
-			$RoundedUp = round_price($myrow['retailprice'], "UP");
-			
-			if($myrow['retailprice'] != $RoundedUp){
-				if($ShowHeader){
-					echo '<p class="page_title_text" align="center"><strong>' . _('Items with prices older than ') . $Years . ' years' . '</strong></p>';
-					echo '<div>';
-					echo '<table class="selection">';
-					$TableHeader = '<tr>
-										<th class="ascending">' . _('#') . '</th>
-										<th class="ascending">' . _('Code') . '</th>
-										<th class="ascending">' . _('Description') . '</th>
-										<th class="ascending">' . _('Top Sales') . '</th>
-										<th class="ascending">' . _('QOH') . '</th>
-										<th class="ascending">' . _('Standard Cost') . '</th>
-										<th class="ascending">' . _('Price Date') . '</th>
-										<th class="ascending">' . _('Current Price') . '</th>
-										<th class="ascending">' . _('Current Factor') . '</th>
-										<th class="ascending">' . _('Rounded Up') . '</th>
-									</tr>';
-					echo $TableHeader;
-					$ShowHeader = FALSE;
-				}
-				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
-				$UpPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $RoundedUp .  '">' . locale_number_format($RoundedUp,0) . '</a>';
-				$PositionTopSales = PositionTopSalesItem($myrow['stockid'], 60, $db);
-				$k = StartEvenOrOddRow($k);
-				printf('<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						</tr>', 
-						$i, 
-						$CodeLink, 
-						$myrow['description'], 
-						$PositionTopSales,
-						locale_number_format($myrow['qoh'],0),
-						locale_number_format($myrow['standardcost'],0),
-						ConvertSQLDateTime($myrow['startdate']), 
-						locale_number_format($myrow['retailprice'],0),
-						locale_number_format($myrow['retailprice']/$myrow['standardcost'],2),
-						$UpPriceLink
-						);
-				$i++;
+			if($ShowHeader){
+				echo '<p class="page_title_text" align="center"><strong>' . _('Items with prices older than ') . $Years . ' years' . '</strong></p>';
+				echo '<div>';
+				echo '<table class="selection">';
+				$TableHeader = '<tr>
+									<th class="ascending">' . _('#') . '</th>
+									<th class="ascending">' . _('Code') . '</th>
+									<th class="ascending">' . _('Description') . '</th>
+									<th class="ascending">' . _('Top Sales') . '</th>
+									<th class="ascending">' . _('QOH') . '</th>
+									<th class="ascending">' . _('Standard Cost') . '</th>
+									<th class="ascending">' . _('Price Date') . '</th>
+									<th class="ascending">' . _('Current Price') . '</th>
+									<th class="ascending">' . _('Current Factor') . '</th>
+									<th class="ascending">' . _('Increase ') . $IncreaseA. '%' . '</th>
+									<th class="ascending">' . _('Increase ') . $IncreaseB. '%' . '</th>
+								</tr>';
+				echo $TableHeader;
+				$ShowHeader = FALSE;
 			}
+			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+			$PriceA = round_price(($myrow['retailprice']*(1+($IncreaseA/100))), "UP");
+			$PriceB = round_price(($myrow['retailprice']*(1+($IncreaseB/100))), "UP");
+			$PriceALink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $PriceA .  '">' . locale_number_format($PriceA,0) . '</a>';
+			$PriceBLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $PriceB .  '">' . locale_number_format($PriceB,0) . '</a>';
+			$PositionTopSales = PositionTopSalesItem($myrow['stockid'], 60, $db);
+			$k = StartEvenOrOddRow($k);
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$i, 
+					$CodeLink, 
+					$myrow['description'], 
+					$PositionTopSales,
+					locale_number_format($myrow['qoh'],0),
+					locale_number_format($myrow['standardcost'],0),
+					ConvertSQLDateTime($myrow['startdate']), 
+					locale_number_format($myrow['retailprice'],0),
+					locale_number_format($myrow['retailprice']/$myrow['standardcost'],2),
+					$PriceALink,
+					$PriceBLink
+					);
+			$i++;
 		}
 		if(!$ShowHeader){
 			echo '</table>
