@@ -2613,7 +2613,7 @@ function PackagingToBeRefilledFromGudang($GudangCode, $ShowAll, $ShowLinkEmail, 
 
 function RoundPackagingTransfer($n){
 	if ($n < 10){
-		$n = $n;
+		$n = ceil($n/5)*5;
 	}elseif ($n < 100){
 		$n = ceil($n/10)*10;
 	}elseif ($n < 1000){
