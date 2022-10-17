@@ -33,6 +33,7 @@ if (isset($_POST['submit'])) {
 	ie the page has called itself with some user input */
 	$i=1;
 	//first off validate inputs sensible round_price($myrow['retailprice'], "UP")
+	
 	$result = DB_query("SELECT klchangingprice, 
 								klmovingdiscount20,
 								klmovingdiscount50,
@@ -47,6 +48,11 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		$Errors[$i] = 'StockId';
 		$i++;
+	}elseif (GetTotalItemsChangingPrice() >= MAX_ITEMS_CHANGING_PRICE) {
+		$InputError = 1;
+		$Errors[$i] = 'MaxItemsChangingPrice';
+		$i++;
+		prnMsg(_('Too many items changing price at the same time. Maximum = '). MAX_ITEMS_CHANGING_PRICE,'error');
 	}elseif (!is_numeric(filter_number_format($_POST['NewRetailPrice']))) {
 		$InputError = 1;
 		$Errors[$i] = 'NewRetailPrice';

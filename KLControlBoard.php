@@ -178,15 +178,15 @@ if ($ProcessSection01){
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_ShopSupportTeam){
 		
-		over_or_below_limit("Items changing price or moving category", "OVER", 60, $RootPath, $db);
+		over_or_below_limit("Items changing price or moving category", "OVER", MAX_ITEMS_CHANGING_PRICE_OR_MOVING_DISC, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		over_or_below_limit("Items changing price", "OVER", 30, $RootPath, $db);
+		over_or_below_limit("Items changing price", "OVER", MAX_ITEMS_CHANGING_PRICE, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		over_or_below_limit("Items moving to 20% discount", "OVER", 20, $RootPath, $db);
+		over_or_below_limit("Items moving to 20% discount", "OVER", MAX_ITEMS_MOVING_DISC20, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		over_or_below_limit("Items moving to 50% discount", "OVER", 20, $RootPath, $db);
+		over_or_below_limit("Items moving to 50% discount", "OVER", MAX_ITEMS_MOVING_DISC50, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		over_or_below_limit("Items moving to 80% discount", "OVER", 20, $RootPath, $db);
+		over_or_below_limit("Items moving to 80% discount", "OVER", MAX_ITEMS_MOVING_DISC80, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 

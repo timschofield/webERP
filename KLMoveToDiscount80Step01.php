@@ -51,6 +51,11 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'DiscountCategory';
 		$i++;
 		prnMsg(_('The Outlet Type must be 80 (so far, only 80% discount available for Outlet Category)'),'error');
+	}elseif (GetTotalItemsMovingToDiscount('80') >= MAX_ITEMS_MOVING_DISC80) {
+		$InputError = 1;
+		$Errors[$i] = 'MaxItemsMovingToDiscount';
+		$i++;
+		prnMsg('Too many items moving to Discount 80% at the same time. Maximum = '. MAX_ITEMS_MOVING_DISC80,'error');
 	}elseif ($myrow['categoryid'] == 'DISC8A') {
 		$InputError = 1;
 		$Errors[$i] = 'AlreadyOutlet';

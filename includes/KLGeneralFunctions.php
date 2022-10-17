@@ -477,6 +477,22 @@ function GetItemDescriptionFromCode($Stockid){
 	return $Row['0'];
 }
 
+function GetTotalItemsChangingPrice(){
+	$ErrMsg = 'Error in function GetTotalItemsChangingPrice()';
+	$SQL="SELECT COUNT(*) FROM stockmaster WHERE klchangingprice='1'";
+	$result = DB_query($SQL,$ErrMsg);
+	$Row = DB_fetch_row($result);
+	return $Row['0'];
+}
+
+function GetTotalItemsMovingToDiscount($DiscountLevel){
+	$ErrMsg = 'Error in function GetTotalItemsMovingToDiscount()';
+	$SQL="SELECT COUNT(*) FROM stockmaster WHERE klmovingdiscount".$DiscountLevel."='1'";
+	$result = DB_query($SQL,$ErrMsg);
+	$Row = DB_fetch_row($result);
+	return $Row['0'];
+}
+
 function NegativeNumber($Value){
 	// be sure the value returned is negative
 	if ($Value > 0){
