@@ -24,6 +24,17 @@ define("PRICE_ROUNDING_COMMERCIAL_MODULE02",100000);
 define("PRICE_ROUNDING_COMMERCIAL_STEP02",    5000);
 define("PRICE_ROUNDING_STEP03",             100000);
 
+
+/* Defines about packaging transfers */
+define("TRANSFER_ROUNDING_STEP01",               5);
+define("TRANSFER_ROUNDING_LIMIT01",             10);
+define("TRANSFER_ROUNDING_STEP02",              10);
+define("TRANSFER_ROUNDING_LIMIT02",            100);
+define("TRANSFER_ROUNDING_STEP03",              50);
+define("TRANSFER_ROUNDING_LIMIT03",           1000);
+define("TRANSFER_ROUNDING_STEP04",             100);
+
+
 /* Defines abot small selling prices */
 define("SMALL_PRICE_CALCULATED_STEP01",  50000);
 define("SMALL_PRICE_CORRECTED_STEP01",  165000);

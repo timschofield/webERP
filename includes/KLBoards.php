@@ -2616,14 +2616,14 @@ function PackagingToBeRefilledFromGudang($GudangCode, $ShowAll, $ShowLinkEmail, 
 }
 
 function RoundPackagingTransfer($n){
-	if ($n < 10){
-		$n = ceil($n/5)*5;
-	}elseif ($n < 100){
-		$n = ceil($n/10)*10;
-	}elseif ($n < 1000){
-		$n = ceil($n/50)*50;
+	if ($n < TRANSFER_ROUNDING_LIMIT01){
+		$n = ceil($n/TRANSFER_ROUNDING_STEP01)*TRANSFER_ROUNDING_STEP01;
+	}elseif ($n < TRANSFER_ROUNDING_LIMIT02){
+		$n = ceil($n/TRANSFER_ROUNDING_STEP02)*TRANSFER_ROUNDING_STEP02;
+	}elseif ($n < TRANSFER_ROUNDING_LIMIT03){
+		$n = ceil($n/TRANSFER_ROUNDING_STEP03)*TRANSFER_ROUNDING_STEP03;
 	}else{
-		$n = ceil($n/100)*100;
+		$n = ceil($n/TRANSFER_ROUNDING_STEP04)*TRANSFER_ROUNDING_STEP04;
 	}
 	return $n;
 }
