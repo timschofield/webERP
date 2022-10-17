@@ -294,7 +294,8 @@ if (isset($_POST['submit'])) {
 							stockcategory.wipact,
 							stockmaster.categoryid,
 							description,
-							longdescription
+							longdescription,
+							stockmaster.klpackaging
 					FROM stockmaster
 					INNER JOIN stockcategory
 					ON stockmaster.categoryid=stockcategory.categoryid
@@ -310,6 +311,7 @@ if (isset($_POST['submit'])) {
 			$OldCategoryId = $myrow[6]; // KL Ricard: ADDED THIS line
 			$OldDescription = $myrow[7];
 			$OldLongDescription = $myrow[8];
+			$OldKLPackaging = $myrow[9]; // KL Ricard: ADDED THIS line
 
 
 			$sql = "SELECT SUM(locstock.quantity)
@@ -429,7 +431,15 @@ if (isset($_POST['submit'])) {
 			if ($InputError == 0){
 
 				DB_Txn_Begin();
-
+				if ($OldKLPackaging != $_POST['KLPackaging']){
+					// if we change the packaging, then should reset the dimensions
+					$_POST['Volume'] = 0;
+					$_POST['GrossWeight'] = 0;
+					$_POST['NetWeight'] = 0;
+					$_POST['Length'] = 0;
+					$_POST['Width'] = 0;
+					$_POST['Height'] = 0;
+				}
 				$sql = "UPDATE stockmaster
 						SET longdescription='" . $_POST['LongDescription'] . "',
 							description='" . $_POST['Description'] . "',
