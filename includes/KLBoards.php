@@ -2472,6 +2472,7 @@ function PackagingToBeRefilledFromGudang($GudangCode, $ShowAll, $ShowLinkEmail, 
 	$SQL = "SELECT  locations.locationname,
 					locations.rlfactorforpackaging AS rlfactor,
 					locations.packagingfrom AS parentgudang,
+					locations.klemaillastpackacgingtransfer,
 					(SELECT l2.locationname
 						FROM locations l2
 						WHERE l2.loccode = locations.packagingfrom) AS parentgudangname
@@ -2484,6 +2485,7 @@ function PackagingToBeRefilledFromGudang($GudangCode, $ShowAll, $ShowLinkEmail, 
 	$LocationName = $myrow['locationname'];
 	$ParentGudang = $myrow['parentgudang'];
 	$ParentGudangName = $myrow['parentgudangname'];
+	$LastPackagingTransferDate = ConvertSQLDate($myrow['klemaillastpackacgingtransfer']);
 	
 	// check what packaging items are missing on that location
 	$SQL = "SELECT  stockmaster.stockid,
@@ -2544,7 +2546,9 @@ function PackagingToBeRefilledFromGudang($GudangCode, $ShowAll, $ShowLinkEmail, 
 			// IF we are SHORT of that packaging material in that location...
 			// Or we show All the the packaging items in that location 
 			if($showHeader){
-				echo '<p class="page_title_text" align="center"><strong>' . 'Packaging Items needed at ' . $LocationName . ' from ' . $ParentGudangName . '</strong></p>';
+				echo '<p class="page_title_text" align="center"><strong>' . 
+					'Packaging needed at ' . $LocationName . ' from ' . $ParentGudangName . 
+					'. Last transfer: ' . $LastPackagingTransferDate . '</strong></p>';
 				echo '<div>';
 				echo '<table class="selection">';
 				$TableHeader = '<tr>
