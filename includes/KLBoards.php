@@ -2453,7 +2453,8 @@ function CheckPackagingToBeRefilled($ShowAll, $ShowLinkEmail, $RootPath, $db){
 			FROM locations
 			WHERE locations.packagingfrom != ''
 				AND locations.loccode NOT IN " . LIST_ONLINE_SHOPS . "
-			ORDER BY locations.packagingfrom,
+			ORDER BY locations.klemaillastpackacgingtransfer, 
+				locations.packagingfrom,
 				locations.locationname";
 	$result = DB_query($SQL);
 	
