@@ -197,7 +197,7 @@ if (isset($_POST['submit'])) {
 		$i++;
 	}
 // KL RICARD: Add length, Width, Height and Units_dimension
-	if (filter_number_format($_POST['length'])<0) {
+	if (filter_number_format($_POST['Length'])<0) {
 		$InputError = 1;
 		prnMsg(_('The length of the item must be a positive number'),'error');
 		$Errors[$i] = 'length';
@@ -443,7 +443,7 @@ if (isset($_POST['submit'])) {
 				if ($OldCategoryId != $_POST['CategoryID']){
 					$sql = $sql . "lastcategoryupdate='" . date('Y-m-d') . "', ";
 				}
-				$sql = $sql . "length='" . filter_number_format($_POST['length']) . "',
+				$sql = $sql . "length='" . filter_number_format($_POST['Length']) . "',
 							width='" . filter_number_format($_POST['Width']) . "',
 							height='" . filter_number_format($_POST['Height']) . "',
 							unitsdimension='" . $_POST['UnitsDimension'] . "',
@@ -691,7 +691,7 @@ if (isset($_POST['submit'])) {
 								'" . filter_number_format($_POST['Volume']) . "',
 								'" . filter_number_format($_POST['GrossWeight']) . "',
 								'" . filter_number_format($_POST['NetWeight']) . "',
-								'" . filter_number_format($_POST['length']) . "',
+								'" . filter_number_format($_POST['Length']) . "',
 								'" . filter_number_format($_POST['Width']) . "',
 								'" . filter_number_format($_POST['Height']) . "',
 								'" . $_POST['UnitsDimension']. "',
@@ -786,7 +786,7 @@ if (isset($_POST['submit'])) {
 						unset($_POST['GrossWeight']);
 						unset($_POST['NetWeight']);
 // KL RICARD Added lines for new fields
-						unset($_POST['length']);
+						unset($_POST['Length']);
 						unset($_POST['Width']);
 						unset($_POST['Height']);
 						unset($_POST['UnitsDimension']);
@@ -941,7 +941,7 @@ if (isset($_POST['submit'])) {
 		unset($_POST['GrossWeight']);
 		unset($_POST['NetWeight']);
 // KL RICARD Added lines for new fields
-		unset($_POST['length']);
+		unset($_POST['Length']);
 		unset($_POST['Width']);
 		unset($_POST['Height']);
 		unset($_POST['UnitsDimension']);
@@ -1044,7 +1044,7 @@ if (!isset($StockID) OR $StockID=='' or isset($_POST['UpdateCategories'])) {
 	$_POST['Volume']  = $myrow['volume'];
 	$_POST['GrossWeight']  = $myrow['grossweight'];
 	$_POST['NetWeight']  = $myrow['netweight'];
-	$_POST['length']  = $myrow['length'];
+	$_POST['Length']  = $myrow['length'];
 	$_POST['Width']  = $myrow['width'];
 	$_POST['Height']  = $myrow['height'];
 	$_POST['UnitsDimension']  = $myrow['unitsdimension'];
@@ -1207,8 +1207,8 @@ if (!isset($_POST['NetWeight']) OR $_POST['NetWeight']==''){
 	$_POST['NetWeight']=0;
 }
 // KL RICARD
-if (!isset($_POST['length']) OR $_POST['length']==''){
-	$_POST['length']=0;
+if (!isset($_POST['Length']) OR $_POST['Length']==''){
+	$_POST['Length']=0;
 }
 if (!isset($_POST['Width']) OR $_POST['Width']==''){
 	$_POST['Width']=0;
@@ -1306,7 +1306,7 @@ while( $UODrow = DB_fetch_array($UODResult) ) {
 }
 	
 echo '<tr>
-		<td>' . _('length') . ':</td><td><input ' . (in_array('length',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="length" size="12" maxlength="11" value="' . locale_number_format($_POST['length'],0) . '" />' . ' '. $_POST['UnitsDimension'] . '</td>
+		<td>' . _('length') . ':</td><td><input ' . (in_array('length',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="length" size="12" maxlength="11" value="' . locale_number_format($_POST['Length'],0) . '" />' . ' '. $_POST['UnitsDimension'] . '</td>
 	</tr>';
 echo '<tr>
 		<td>' . _('Width') . ':</td><td><input ' . (in_array('Width',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="Width" size="12" maxlength="11" value="' . locale_number_format($_POST['Width'],0) . '" />' . ' '. $_POST['UnitsDimension'] . '</td>
