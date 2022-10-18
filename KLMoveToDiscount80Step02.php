@@ -117,7 +117,7 @@ include('includes/KLPrices.php');
 					<td class="number">%s</td>
 					<td>%s</td>
 					</tr>', 
-					locale_number_format($myrow['countermovediscount'],0),
+					locale_number_format($i,0),
 					$CodeLink, 
 					$myrow['description'],
 					ConvertSQLDate($myrow['startprocessdate']),
