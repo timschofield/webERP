@@ -8,6 +8,8 @@ include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLPrices.php');
 include('includes/KLEmails.php');
+/* ASSIGN users to groups */
+include ('includes/KLRoles.php');
 
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' .
 				_('Retail Price') . '" alt="" />' . ' ' . _('KL Start the Process of Change Retail Prices for').' ' . $_GET['Item']. '.</p>';
@@ -17,7 +19,7 @@ if (!isset($_GET['Item']) or !isset($_GET['NewPrice'])){
 	prnMsg( _('This page must be given the item code and its new Retail price.'), 'error');
 	include('includes/footer.php');
 	exit;
-}elseif ((ItemCodeQOH($_GET['Item'],'CodeFull') != 0) AND (GetTotalItemsChangingPrice() >= MAX_ITEMS_CHANGING_PRICE)) {
+}elseif ((ItemCodeQOH($_GET['Item'],'CodeFull') != 0) AND (GetTotalItemsChangingPrice() >= MAX_ITEMS_CHANGING_PRICE) AND (!$KL_SystemAdmin)) {
 	echo '<br />';
 	prnMsg(_('Too many items changing price at the same time. Maximum = '). MAX_ITEMS_CHANGING_PRICE,'error');
 	include('includes/footer.php');
