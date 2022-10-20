@@ -65,6 +65,7 @@ function isFaceMask($stockid){
 function isJewelleryRoll($stockid){
 	return (substr($stockid, 2,2) == "JR");
 }
+
 function isPendant($stockid){
 	return (substr($stockid, 2,2) == "PE");
 }
@@ -386,6 +387,7 @@ function StartSameColourRow($k){
 	}
 	return $k;
 }
+
 function getDirectoryTree( $outerDir , $x){ 
     $dirs = array_diff( scandir( $outerDir ), Array( ".", ".." ) ); 
     return $dirs; 
@@ -1003,8 +1005,6 @@ function DataExistsInWebERP($db, $table, $f1, $v1, $f2 = '', $v2 = ''){
 	}
 	return $Exists;
 }
-
-
 
 function InsertBusinessHistory($Class, $Concept, $Value){
 	$Date = date('Y-m-d');

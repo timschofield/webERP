@@ -48,7 +48,7 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		$Errors[$i] = 'StockId';
 		$i++;
-	}elseif (GetTotalItemsChangingPrice() >= MAX_ITEMS_CHANGING_PRICE) {
+}elseif ((ItemCodeQOH($_POST['Stockid'],'CodeFull') != 0) AND (GetTotalItemsChangingPrice() >= MAX_ITEMS_CHANGING_PRICE)) {
 		$InputError = 1;
 		$Errors[$i] = 'MaxItemsChangingPrice';
 		$i++;
@@ -58,9 +58,7 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'NewRetailPrice';
 		$i++;
 		prnMsg(_('The new retail price must be a number'),'error');
-	}elseif (($_POST['NewRetailPrice'] != round_price($_POST['NewRetailPrice'], "UP")) 
-				AND ($_POST['NewRetailPrice'] >= SMALL_PRICE_CORRECTED_STEP04)
-				AND !(ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_GENERAL))) {
+	}elseif (($_POST['NewRetailPrice'] != round_price($_POST['NewRetailPrice'], "UP")) AND !(ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_GENERAL))) {
 		$InputError = 1;
 		$Errors[$i] = 'NewRetailPrice';
 		$i++;
@@ -197,38 +195,31 @@ or deletion of the records*/
 
 	echo '<table class="selection">';
 	echo '<tr>
-			<th>' . _('Change #') . '</th>
+			<th>' . _('#') . '</th>
 			<th>' . _('Item Code') . '</th>
 			<th>' . _('New Retail Price') . '</th>
 			<th>' . _('Start Date') . '</th>
 		</tr>';
+	$i=1;
 	$k=0;
 	while ($myrow=DB_fetch_array($result)) {
-
-	if ($k==1){
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k++;
-	}
-
-	printf('<td class="number">%s</td>
-			<td>%s</td>
-			<td class="number">%s</td>
-			<td>%s</td>
-			<td><a href="%sSelectedPriceChange=%s">'. _('Edit') . '</a></td>
-			<td><a href="%sSelectedPriceChange=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this price change?') . '\');">' . _('Delete') . '</a></td>
-			</tr>',
-			$myrow['counterpricechange'],
-			$myrow['stockid'],
-			locale_number_format($myrow['newretailprice'],0),
-			ConvertSQLDate($myrow['startprocessdate']),
-			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-			$myrow['counterpricechange'],
-			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-			$myrow['counterpricechange']);
-
+		$k = StartEvenOrOddRow($k);
+		printf('<td class="number">%s</td>
+				<td>%s</td>
+				<td class="number">%s</td>
+				<td>%s</td>
+				<td><a href="%sSelectedPriceChange=%s">'. _('Edit') . '</a></td>
+				<td><a href="%sSelectedPriceChange=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this price change?') . '\');">' . _('Delete') . '</a></td>
+				</tr>',
+				$i,
+				$myrow['stockid'],
+				locale_number_format($myrow['newretailprice'],0),
+				ConvertSQLDate($myrow['startprocessdate']),
+				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
+				$myrow['counterpricechange'],
+				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
+				$myrow['counterpricechange']);
+		$i++;
 	} //END WHILE LIST LOOP
 	echo '</table><br />';
 } //end of ifs and buts!

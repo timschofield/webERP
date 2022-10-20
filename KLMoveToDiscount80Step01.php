@@ -4,6 +4,7 @@ include('includes/session.php');
 $Title = _('KL Move Item To 80% Discount -> Step 01');
 include('includes/header.php');
 include('includes/KLDefines.php');
+include('includes/KLGeneralFunctions.php');
 include('includes/KLPrices.php');
 include('includes/KLEmails.php');
 
@@ -188,32 +189,26 @@ or deletion of the records*/
 
 	echo '<table class="selection">';
 	echo '<tr>
-			<th>' . _('Move #') . '</th>
+			<th>' . _('#') . '</th>
 			<th>' . _('Item Code') . '</th>
 			<th>' . _('Outlet Discount') . '</th>
 			<th>' . _('Start Date') . '</th>
 		</tr>';
+	$i=1;
 	$k=0;
 	while ($myrow=DB_fetch_array($result)) {
 
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k++;
-		}
-
+		$k = StartEvenOrOddRow($k);
 		printf('<td class="number">%s</td>
 				<td>%s</td>
 				<td class="number">%s</td>
 				<td>%s</td>
 				</tr>',
-				$myrow['countermovediscount'],
+				$i,
 				$myrow['stockid'],
 				$myrow['discountcategory'],
 				ConvertSQLDate($myrow['startprocessdate']));
-
+		$i++;
 	} //END WHILE LIST LOOP
 	echo '</table><br />';
 } //end of ifs and buts!

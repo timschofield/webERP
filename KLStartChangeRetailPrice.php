@@ -17,7 +17,7 @@ if (!isset($_GET['Item']) or !isset($_GET['NewPrice'])){
 	prnMsg( _('This page must be given the item code and its new Retail price.'), 'error');
 	include('includes/footer.php');
 	exit;
-}elseif (GetTotalItemsChangingPrice() >= MAX_ITEMS_CHANGING_PRICE) {
+}elseif ((ItemCodeQOH($_GET['Item'],'CodeFull') != 0) AND (GetTotalItemsChangingPrice() >= MAX_ITEMS_CHANGING_PRICE)) {
 	echo '<br />';
 	prnMsg(_('Too many items changing price at the same time. Maximum = '). MAX_ITEMS_CHANGING_PRICE,'error');
 	include('includes/footer.php');
