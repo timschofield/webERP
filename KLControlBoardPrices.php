@@ -576,7 +576,7 @@ function PriceWrongRounding($RootPath, $db){
 			$RoundedDown = round_price($myrow['retailprice'], "DOWN");
 			$RoundedUp = round_price($myrow['retailprice'], "UP");
 			
-			if($myrow['retailprice'] != $RoundedUp){
+			if(!IsPriceRoundedOK($myrow['retailprice'])){
 				if($ShowHeader){
 					echo '<p class="page_title_text" align="center"><strong>' . _('Items with WRONG rounding retail price.') . '</strong></p>';
 					echo '<div>';
