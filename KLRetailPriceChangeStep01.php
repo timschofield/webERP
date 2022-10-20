@@ -58,7 +58,9 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'NewRetailPrice';
 		$i++;
 		prnMsg(_('The new retail price must be a number'),'error');
-	}elseif (($_POST['NewRetailPrice'] != round_price($_POST['NewRetailPrice'], "UP")) AND !(ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_GENERAL))) {
+	}elseif (($_POST['NewRetailPrice'] != round_price($_POST['NewRetailPrice'], "UP")) 
+				AND ($_POST['NewRetailPrice'] >= SMALL_PRICE_CORRECTED_STEP04)
+				AND !(ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_GENERAL))) {
 		$InputError = 1;
 		$Errors[$i] = 'NewRetailPrice';
 		$i++;

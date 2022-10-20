@@ -148,6 +148,9 @@ if ($ProcessSection02){
 		ItemsTooCheap("NOPOGA", 3.50, 5.75, 10, 100, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
 */
+	}
+
+	if ($KL_SystemAdmin){
 		ItemsTooExpensive("TESTKA", 6.00, 6.50, 10, 300, 90, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		ItemsTooExpensive("STABKA", 6.00, 6.50, 20, 300, 90, $RootPath, $db);
