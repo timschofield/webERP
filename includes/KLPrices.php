@@ -133,6 +133,14 @@ function round_basic_price($n,$x=1) {
     return round($n/$x)*$x;
 }
 
+function IsPriceRoundedOK($n, $up="UP"){
+	return (($n==round_price($n, $up))
+			OR ($n==SMALL_PRICE_CORRECTED_STEP01) 
+			OR ($n==SMALL_PRICE_CORRECTED_STEP02) 
+			OR ($n==SMALL_PRICE_CORRECTED_STEP03) 
+			OR ($n==SMALL_PRICE_CORRECTED_STEP04));	
+}
+
 function round_price($n, $up="UP"){
 
 	$price = $n;
