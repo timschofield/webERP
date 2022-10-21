@@ -1727,8 +1727,9 @@ function ItemsWithoutRetailPrice($stockcat, $factorRetail, $RootPath, $db){
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
-		$i = 1;
+		$i = 0;
 		while ($myrow = DB_fetch_array($result)) {
+			$i++;
 			$k = StartEvenOrOddRow($k);
 			$NewPrice = round_price($myrow['stdcost'] * $factorRetail, "UP");
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
@@ -1748,11 +1749,11 @@ function ItemsWithoutRetailPrice($stockcat, $factorRetail, $RootPath, $db){
 					locale_number_format_zero_blank($NewPrice/$myrow['stdcost'], 2),
 					$NewPriceLink
 					);
-			$i++;
 		}
 		echo '</table>
 				</div>';
 	}
+	return $i;
 }
 
 function ListPriorityLocations($db){

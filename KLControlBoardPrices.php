@@ -21,6 +21,7 @@ include ('includes/KLRoles.php');
 
 $begintime = time_start();
 $NumberOfTestExecuted = 0;
+$IssuesFound = 0;
 
 $periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 
@@ -54,31 +55,31 @@ if ($ProcessSection01){
 
 	if ($KL_BusinessDevelopmentManager){
 		
-		ItemsWithoutRetailPrice("SETKLA", 6.00, $RootPath, $db);
+		$IssuesFound += ItemsWithoutRetailPrice("SETKLA", 6.00, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsWithoutRetailPrice("TESTKA", 6.00, $RootPath, $db);
+		$IssuesFound += ItemsWithoutRetailPrice("TESTKA", 6.00, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsWithoutRetailPrice("STABKA", 6.00, $RootPath, $db);
+		$IssuesFound += ItemsWithoutRetailPrice("STABKA", 6.00, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsWithoutRetailPrice("NOPOKA", 6.00, $RootPath, $db);
-		$NumberOfTestExecuted++;
-
-		ItemsWithoutRetailPrice("SETBLA", 6.50, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ItemsWithoutRetailPrice("TESTBA", 6.50, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ItemsWithoutRetailPrice("STABBA", 6.50, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ItemsWithoutRetailPrice("NOPOBA", 6.50, $RootPath, $db);
+		$IssuesFound += ItemsWithoutRetailPrice("NOPOKA", 6.00, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-		ItemsWithoutRetailPrice("SETGEA", 4.40, $RootPath, $db);
+		$IssuesFound += ItemsWithoutRetailPrice("SETBLA", 6.50, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsWithoutRetailPrice("TESTGA", 4.40, $RootPath, $db);
+		$IssuesFound += ItemsWithoutRetailPrice("TESTBA", 6.50, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsWithoutRetailPrice("STABGA", 4.40, $RootPath, $db);
+		$IssuesFound += ItemsWithoutRetailPrice("STABBA", 6.50, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsWithoutRetailPrice("NOPOGA", 4.40, $RootPath, $db);
+		$IssuesFound += ItemsWithoutRetailPrice("NOPOBA", 6.50, $RootPath, $db);
+		$NumberOfTestExecuted++;
+
+		$IssuesFound += ItemsWithoutRetailPrice("SETGEA", 4.40, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		$IssuesFound += ItemsWithoutRetailPrice("TESTGA", 4.40, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		$IssuesFound += ItemsWithoutRetailPrice("STABGA", 4.40, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		$IssuesFound += ItemsWithoutRetailPrice("NOPOGA", 4.40, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
 	//	ItemsWithoutRetailPrice("CONSIG", 1.60, $RootPath, $db);
@@ -86,31 +87,31 @@ if ($ProcessSection01){
 
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager){
-		PriceBelowStandard("SETKLA", 6.00, 0, $RootPath, $db);
+		$IssuesFound += PriceBelowStandard("SETKLA", 6.00, 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PriceBelowStandard("TESTKA", 6.00, 0, $RootPath, $db);
+		$IssuesFound += PriceBelowStandard("TESTKA", 6.00, 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PriceBelowStandard("STABKA", 6.00, 0, $RootPath, $db);
+		$IssuesFound += PriceBelowStandard("STABKA", 6.00, 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PriceBelowStandard("NOPOKA", 6.00, 0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-
-		PriceBelowStandard("SETBLA", 6.50, 0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		PriceBelowStandard("TESTBA", 6.50, 0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		PriceBelowStandard("STABBA", 6.50, 0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		PriceBelowStandard("NOPOBA", 6.50, 0, $RootPath, $db);
+		$IssuesFound += PriceBelowStandard("NOPOKA", 6.00, 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-		PriceBelowStandard("SETGEA", 4.40, 0, $RootPath, $db);
+		$IssuesFound += PriceBelowStandard("SETBLA", 6.50, 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PriceBelowStandard("TESTGA", 4.40, 0, $RootPath, $db);
+		$IssuesFound += PriceBelowStandard("TESTBA", 6.50, 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PriceBelowStandard("STABGA", 4.40, 0, $RootPath, $db);
+		$IssuesFound += PriceBelowStandard("STABBA", 6.50, 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PriceBelowStandard("NOPOGA", 4.40, 0, $RootPath, $db);
+		$IssuesFound += PriceBelowStandard("NOPOBA", 6.50, 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+
+		$IssuesFound += PriceBelowStandard("SETGEA", 4.40, 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		$IssuesFound += PriceBelowStandard("TESTGA", 4.40, 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		$IssuesFound += PriceBelowStandard("STABGA", 4.40, 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		$IssuesFound += PriceBelowStandard("NOPOGA", 4.40, 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 }
@@ -127,49 +128,49 @@ if ($ProcessSection02){
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager){
 
-		ItemsTooCheap("TESTKA", 6.00, 6.25, 10, 80, 60, $RootPath, $db);
+		$IssuesFound += ItemsTooCheap("TESTKA", 6.00, 6.25, 10, 80, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsTooCheap("STABKA", 6.00, 6.25, 20, 80, 60, $RootPath, $db);
+		$IssuesFound += ItemsTooCheap("STABKA", 6.00, 6.25, 20, 80, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsTooCheap("NOPOKA", 6.00, 6.25, 20, 80, 60, $RootPath, $db);
-		$NumberOfTestExecuted++;
-
-		ItemsTooCheap("TESTBA", 6.50, 6.75, 10, 80, 60, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ItemsTooCheap("STABBA", 6.50, 6.75, 20, 80, 60, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ItemsTooCheap("NOPOBA", 6.50, 6.75, 20, 80, 60, $RootPath, $db);
+		$IssuesFound += ItemsTooCheap("NOPOKA", 6.00, 6.25, 20, 80, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-/*		ItemsTooCheap("TESTGA", 3.50, 5.75, 10, 100, 60, $RootPath, $db);
+		$IssuesFound += ItemsTooCheap("TESTBA", 6.50, 6.75, 10, 80, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsTooCheap("STABGA", 3.50, 5.75, 10, 100, 60, $RootPath, $db);
+		$IssuesFound += ItemsTooCheap("STABBA", 6.50, 6.75, 20, 80, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsTooCheap("NOPOGA", 3.50, 5.75, 10, 100, 60, $RootPath, $db);
+		$IssuesFound += ItemsTooCheap("NOPOBA", 6.50, 6.75, 20, 80, 60, $RootPath, $db);
+		$NumberOfTestExecuted++;
+
+/*		$IssuesFound += ItemsTooCheap("TESTGA", 3.50, 5.75, 10, 100, 60, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		$IssuesFound += ItemsTooCheap("STABGA", 3.50, 5.75, 10, 100, 60, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		$IssuesFound += ItemsTooCheap("NOPOGA", 3.50, 5.75, 10, 100, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
 */
 	}
 
 	if ($KL_SystemAdmin){
-		ItemsTooExpensive("TESTKA", 6.00, 6.50, 10, 300, 90, $RootPath, $db);
+		$IssuesFound += ItemsTooExpensive("TESTKA", 6.00, 6.50, 10, 300, 90, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsTooExpensive("STABKA", 6.00, 6.50, 20, 300, 90, $RootPath, $db);
+		$IssuesFound += ItemsTooExpensive("STABKA", 6.00, 6.50, 20, 300, 90, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsTooExpensive("NOPOKA", 6.00, 6.50, 20, 300, 60, $RootPath, $db);
-		$NumberOfTestExecuted++;
-
-		ItemsTooExpensive("TESTBA", 6.50, 7.00, 10, 200, 90, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ItemsTooExpensive("STABBA", 6.50, 7.00, 20, 200, 90, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ItemsTooExpensive("NOPOBA", 6.50, 7.00, 20, 200, 90, $RootPath, $db);
+		$IssuesFound += ItemsTooExpensive("NOPOKA", 6.00, 6.50, 20, 300, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-/*		ItemsTooExpensive("TESTGA", 5.50, 6.00, 5, 800, 90, $RootPath, $db);
+		$IssuesFound += ItemsTooExpensive("TESTBA", 6.50, 7.00, 10, 200, 90, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsTooExpensive("STABGA", 5.50, 6.00, 5, 800, 90, $RootPath, $db);
+		$IssuesFound += ItemsTooExpensive("STABBA", 6.50, 7.00, 20, 200, 90, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsTooExpensive("NOPOGA", 5.50, 6.00, 5, 800, 90, $RootPath, $db);
+		$IssuesFound += ItemsTooExpensive("NOPOBA", 6.50, 7.00, 20, 200, 90, $RootPath, $db);
+		$NumberOfTestExecuted++;
+
+/*		$IssuesFound += ItemsTooExpensive("TESTGA", 5.50, 6.00, 5, 800, 90, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		$IssuesFound += ItemsTooExpensive("STABGA", 5.50, 6.00, 5, 800, 90, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		$IssuesFound += ItemsTooExpensive("NOPOGA", 5.50, 6.00, 5, 800, 90, $RootPath, $db);
 		$NumberOfTestExecuted++;
 */
 	}
@@ -177,14 +178,15 @@ if ($ProcessSection02){
 
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager){
-		PricesTooOld(3, 10, 20, $RootPath, $db);
+		$IssuesFound += PricesTooOld(3, 10, 20, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PriceWrongRounding($RootPath, $db);
+		$IssuesFound += PriceWrongRounding($RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 }
 
 prnMsg("Performed ". $NumberOfTestExecuted . " pricing control tests",'success');
+prnMsg("Detected ". $IssuesFound . " pricing issues",'success');
 time_finish($begintime);
 include ('includes/footer.php');
 
@@ -226,7 +228,7 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $D
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		$k = 0; //row colour counter
-		$i = 1;
+		$i = 0;
 		$ShowHeader = TRUE;
 		while ($myrow = DB_fetch_array($result)) {
 			$PositionTopSales = PositionTopSalesItem($myrow['stockid'], $DaysTopSales, $db);
@@ -268,6 +270,7 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $D
 					$NewPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $RecommendedPrice .  '">' . locale_number_format($RecommendedPrice,0) . '</a>';
 					
 					$k = StartEvenOrOddRow($k);
+					$i++;
 					printf('<td class="number">%s</td>
 							<td>%s</td>
 							<td>%s</td>
@@ -298,8 +301,6 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $D
 							$Increase,
 							locale_number_format($IncomeIncrease,0)
 							);
-					$i++;
-					
 				}
 			}
 		}
@@ -308,6 +309,7 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $D
 					</div>';
 		}
 	}
+	return $i;
 }
 
 function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $DaysTopSales, $RootPath, $db){
@@ -346,7 +348,7 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		$k = 0; //row colour counter
-		$i = 1;
+		$i = 0;
 		$ShowHeader = TRUE;
 		while ($myrow = DB_fetch_array($result)) {
 			$PositionTopSales = PositionTopSalesItem($myrow['stockid'], $DaysTopSales, $db);
@@ -385,6 +387,7 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales
 				$NewPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $RecommendedPrice .  '">' . locale_number_format($RecommendedPrice,0) . '</a>';
 
 				$k = StartEvenOrOddRow($k);
+				$i++;
 				printf('<td class="number">%s</td>
 						<td>%s</td>
 						<td>%s</td>
@@ -415,7 +418,6 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales
 						$Decrease,
 						locale_number_format($IncomeDecrease,0)
 						);
-				$i++;
 			}
 		}
 		if (!$ShowHeader){
@@ -423,6 +425,7 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales
 					</div>';
 		}
 	}
+	return $i;
 }
 
 function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath, $db){
@@ -464,7 +467,7 @@ function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath, $db){
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		$k = 0; //row colour counter
-		$i = 1;
+		$i = 0;
 		$ShowHeader = TRUE;
 		while ($myrow = DB_fetch_array($result)) {
 			$NewPrice = $myrow['standardcost'] * $Factor;
@@ -494,6 +497,7 @@ function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath, $db){
 					$ShowHeader = FALSE;
 				}
 				$k = StartEvenOrOddRow($k);
+				$i++;
 				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 				$Increase = locale_number_format(($RecommendedPrice-$myrow['retailprice'])/$myrow['retailprice']*100,1).'%';
 				$PositionTopSales = PositionTopSalesItem($myrow['stockid'], 60, $db);
@@ -527,7 +531,6 @@ function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath, $db){
 						$Increase,
 						locale_number_format($IncomeIncrease,0)
 						);
-				$i++;
 			}
 		}
 		if(!$ShowHeader){
@@ -535,6 +538,7 @@ function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath, $db){
 					</div>';
 		}
 	}
+	return $i;
 }
 
 function PriceWrongRounding($RootPath, $db){
@@ -570,7 +574,7 @@ function PriceWrongRounding($RootPath, $db){
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		$k = 0; //row colour counter
-		$i = 1;
+		$i = 0;
 		$ShowHeader = TRUE;
 		while ($myrow = DB_fetch_array($result)) {
 			$RoundedDown = round_price($myrow['retailprice'], "DOWN");
@@ -599,6 +603,7 @@ function PriceWrongRounding($RootPath, $db){
 				$UpPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $RoundedUp .  '">' . locale_number_format($RoundedUp,0) . '</a>';
 				$PositionTopSales = PositionTopSalesItem($myrow['stockid'], 60, $db);
 				$k = StartEvenOrOddRow($k);
+				$i++;
 				printf('<td class="number">%s</td>
 						<td>%s</td>
 						<td>%s</td>
@@ -617,7 +622,6 @@ function PriceWrongRounding($RootPath, $db){
 						locale_number_format($myrow['retailprice'],0),
 						$UpPriceLink
 						);
-				$i++;
 			}
 		}
 		if(!$ShowHeader){
@@ -625,6 +629,7 @@ function PriceWrongRounding($RootPath, $db){
 					</div>';
 		}
 	}
+	return $i;
 }
 
 function PricesTooOld($Years, $IncreaseA, $IncreaseB, $RootPath, $db){
@@ -658,7 +663,7 @@ function PricesTooOld($Years, $IncreaseA, $IncreaseB, $RootPath, $db){
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		$k = 0; //row colour counter
-		$i = 1;
+		$i = 0;
 		$ShowHeader = TRUE;
 		while ($myrow = DB_fetch_array($result)) {
 			if($ShowHeader){
@@ -688,6 +693,7 @@ function PricesTooOld($Years, $IncreaseA, $IncreaseB, $RootPath, $db){
 			$PriceBLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $PriceB .  '">' . locale_number_format($PriceB,0) . '</a>';
 			$PositionTopSales = PositionTopSalesItem($myrow['stockid'], 60, $db);
 			$k = StartEvenOrOddRow($k);
+			$i++;
 			printf('<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -712,13 +718,13 @@ function PricesTooOld($Years, $IncreaseA, $IncreaseB, $RootPath, $db){
 					$PriceALink,
 					$PriceBLink
 					);
-			$i++;
 		}
 		if(!$ShowHeader){
 			echo '</table>
 					</div>';
 		}
 	}
+	return $i;
 }
 
 ?>
