@@ -315,7 +315,7 @@ if ($ProcessSection03){
 	if ($KL_SystemAdmin
 		OR $KL_OperationalManager
 		OR $KL_AdministrationTeam){
-		CashStatus(2022, 20000000, 50000000, 25000000, 20000000, 50000000, 25000000, 20000000, $periodnow, TRUE, $db);
+		CashStatus(2022, 20000000, 50000000, 25000000, 20000000, 50000000, 25000000, 100000000, $periodnow, TRUE, $db);
 		$NumberOfTestExecuted++;
 	}
 	if ($KL_SystemAdmin){
@@ -721,8 +721,6 @@ function CashStatus($Year, $CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTransf
 	$result = DB_query($SQL);
 	$myrow = DB_fetch_array($result);
 	$SaldoBrankasKantor = $myrow['saldo'];
-	$FreeSaldoBrankasKantor = $SaldoBrankasKantor - $CurrentBalanceADU - $CurrentBalanceBB;
-	$ToBeMovedFree = round_basic_price($FreeSaldoBrankasKantor, $MinMoveFree);	
 		
 	if ($ShowTables){
 		echo '<p class="page_title_text" align="center"><strong>' . 'Status Cash PT. Angin Dingin Utara ' . $Year . '</strong></p>';
@@ -888,6 +886,15 @@ function CashStatus($Year, $CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTransf
 		echo '<p class="page_title_text" align="center"><strong>' . 'Status Brankas Kantor ' . $Year . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
+		
+		if ($CurrentBalanceADU < 0){
+			$CurrentBalanceADU = 0;
+		}
+		if ($CurrentBalanceBB < 0){
+			$CurrentBalanceBB = 0;
+		}
+		$FreeSaldoBrankasKantor = $SaldoBrankasKantor - $CurrentBalanceADU - $CurrentBalanceBB;
+		$ToBeMovedFree = round_basic_price($FreeSaldoBrankasKantor, $MinMoveFree);	
 
 		$TableHeader = '<tr>
 							<th>' . 'Concept' . '</th>
