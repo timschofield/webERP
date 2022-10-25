@@ -2966,10 +2966,10 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA, $db){
 			
 			$percent = (($myrow['salesA'])-($myrow['salesB']))/($myrow['salesB']) * 100;
 			$trend = " ";
-			if ($percent > IMPROVEMENT_SALES_COMPARED_LAST_YEAR){
+			if ($percent > MINIMUM_AVERAGE_SALES_COMPARED_LAST_YEAR_TREND){
 				$trend = "Improving ". locale_number_format($percent,0) . "%";
 			}
-			if ($percent < -IMPROVEMENT_SALES_COMPARED_LAST_YEAR){
+			if ($percent < -MINIMUM_AVERAGE_SALES_COMPARED_LAST_YEAR_TREND){
 				$trend = "Degrading ". locale_number_format($percent,0) . "%";
 			}
 			if (($myrow['salesA'] > 0) OR ($myrow['salesB'] > 0)){

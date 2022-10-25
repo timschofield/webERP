@@ -265,43 +265,37 @@ function AverageBusinessHistory($NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $Num
 			$dailyF = locale_number_format(($myrow['salesF']),0);
 			$percent = (($myrow['salesD'])-($myrow['salesB']))/($myrow['salesB']) * 100;
 			$trend = " ";
-			if ($percent > IMPROVEMENT_AVERAGE_SALES){
+			if ($percent > MINIMUM_BUSINESS_HISTORY_TREND){
 				$trend = "Increasing ". locale_number_format($percent,0) . "%";
 			}
-			if ($percent < -IMPROVEMENT_AVERAGE_SALES){
+			if ($percent < -MINIMUM_BUSINESS_HISTORY_TREND){
 				$trend = "Decreasing ". locale_number_format($percent,0) . "%";
 			}
 			$forecast = round($myrow['salesC']*((100+$percent)/100), -5);
 			
-			$MTD = locale_number_format($myrow['salesMTD'], 0);
-			
-			if ($dailyA + $dailyB + $dailyC + $dailyD + $dailyE + $dailyF > 0){
-				// if there is any daily report not zero...
-				$k = StartEvenOrOddRow($k);
-				printf('<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						</tr>', 
-						$i,
-						$Code,
-						$Name,
-						$dailyA, 
-						$dailyB, 
-						$dailyC,
-						$dailyD,
-						$dailyE,
-						$dailyF,
-						$trend
-						);
-				
-			}
+			$k = StartEvenOrOddRow($k);
+			printf('<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					</tr>', 
+					$i,
+					$Code,
+					$Name,
+					$dailyA, 
+					$dailyB, 
+					$dailyC,
+					$dailyD,
+					$dailyE,
+					$dailyF,
+					$trend
+					);
 			$i++;
 		}
 		echo '</table>
@@ -589,10 +583,10 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 			$dailyF = locale_number_format(($myrow['salesF']/$NumDaysF),0);
 			$percent = (($myrow['salesD']/$NumDaysD)-($myrow['salesB']/$NumDaysB))/($myrow['salesB']/$NumDaysB) * 100;
 			$trend = " ";
-			if ($percent > IMPROVEMENT_AVERAGE_SALES){
+			if ($percent > MINIMUM_AVERAGE_SALES_TREND){
 				$trend = "Improving ". locale_number_format($percent,0) . "%";
 			}
-			if ($percent < -IMPROVEMENT_AVERAGE_SALES){
+			if ($percent < -MINIMUM_AVERAGE_SALES_TREND){
 				$trend = "Degrading ". locale_number_format($percent,0) . "%";
 			}
 			$forecast = round($myrow['salesC']*((100+$percent)/100), -5);
@@ -1156,14 +1150,8 @@ function FinishedStockDistribution($kind, $byreport, $db){
 				$percentModels,
 				""
 				);
-		if ($kind == "FORSALE"){			
-			InsertBusinessHistory("STOCK", "STOCK ITEMS FOR SALE (PCS)", $totalpcs);
-		}
 		if ($kind == "DISPLAYS"){			
 			InsertBusinessHistory("STOCK", "STOCK DISPLAYS (PCS)", $totalpcs);
-		}
-		if ($kind == "PACKAGING"){			
-			InsertBusinessHistory("STOCK", "STOCK PACKAGING (PCS)", $totalpcs);
 		}
 		
 		echo '</table>
@@ -1561,7 +1549,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 		$ForecastXDays = 0;
 		$QOHTotal = 0;
 		$PendingQOO = 0;
-		$OptimmumOrder = 0;
+		$OptimumOrder = 0;
 		while ($myrow = DB_fetch_array($result)) {
 			$DailyUse = $myrow['qused'] / $DaysUsage;
 			$ForecastProductionOnly = ceil($DailyUse * $DaysProduction);
@@ -1618,7 +1606,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 				$ForecastXDays += $Forecast;
 				$QOHTotal += $myrow['qoh'];
 				$PendingQOO += $myrow['qoo'];
-				$OptimmumOrder += $QtyToOrder;
+				$OptimumOrder += $QtyToOrder;
 				
 				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 				$k = StartEvenOrOddRow($k);
@@ -1672,7 +1660,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					locale_number_format($TotalDaysQOH,0),
 					locale_number_format_zero_blank($PendingQOO,0),
 					locale_number_format($TotalDaysQOO,0),
-					locale_number_format_zero_blank($OptimmumOrder,0)
+					locale_number_format_zero_blank($OptimumOrder,0)
 					);
 			InsertBusinessHistory("PACKAGING", "PACKAGING USED LAST " . $DaysProduction .  " DAYS (PCS)", $UsageXDays);
 			InsertBusinessHistory("PACKAGING", "PACKAGING FORECAST NEXT " . $DaysMinimumStock .  " DAYS (PCS)", $ForecastXDays);
@@ -1680,7 +1668,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 			InsertBusinessHistory("PACKAGING", "PACKAGING QOH TOTAL (DAYS)", $TotalDaysQOH);
 			InsertBusinessHistory("PACKAGING", "PACKAGING QOO NOT RECEIVED (PCS)", $PendingQOO);
 			InsertBusinessHistory("PACKAGING", "PACKAGING QOH + QOO TOTAL (DAYS)", $TotalDaysQOO);
-			InsertBusinessHistory("PACKAGING", "OPTIMUM ORDER (PCS)", $OptimmumOrder);
+			InsertBusinessHistory("PACKAGING", "PACKAGING OPTIMUM ORDER (PCS)", $OptimumOrder);
 
 			echo '</table>
 				</div>';
@@ -4142,15 +4130,15 @@ function ShowTotalItemsMoving(){
 
 	$NumItems = GetTotalItemsMovingToDiscount("20");
 	echo '<p class="bad" align="center"><strong>' . "# Items moving to 20% discount: " . $NumItems . '</strong></p>';
-	InsertBusinessHistory("PRICES", "ITEMS MOVING to 20% DISCOUNT", $NumItems);
+	InsertBusinessHistory("PRICES", "ITEMS MOVING TO 20% DISCOUNT", $NumItems);
 
 	$NumItems = GetTotalItemsMovingToDiscount("50");
 	echo '<p class="bad" align="center"><strong>' . "# Items moving to 50% discount: " . $NumItems . '</strong></p>';
-	InsertBusinessHistory("PRICES", "ITEMS MOVING to 50% DISCOUNT", $NumItems);
+	InsertBusinessHistory("PRICES", "ITEMS MOVING TO 50% DISCOUNT", $NumItems);
 
 	$NumItems = GetTotalItemsMovingToDiscount("80");
 	echo '<p class="bad" align="center"><strong>' . "# Items moving to 80% discount: " . $NumItems . '</strong></p>';
-	InsertBusinessHistory("PRICES", "ITEMS MOVING to 80% DISCOUNT", $NumItems);
+	InsertBusinessHistory("PRICES", "ITEMS MOVING TO 80% DISCOUNT", $NumItems);
 }
 
 ?>
