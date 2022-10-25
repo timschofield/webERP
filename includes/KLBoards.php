@@ -177,7 +177,7 @@ function ActiveTransferStatus($RootPath, $db){
 
 function AverageBusinessHistory($NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE, $NumDaysF, $db){
 
-	$Yesterday  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
+	$Today  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',0));
 	$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA));
 	$StartDateB = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysB));
 	$StartDateC = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysC));
@@ -194,37 +194,37 @@ function AverageBusinessHistory($NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $Num
 					WHERE bh1.class =  bh2.class
 						AND bh1.concept =  bh2.concept
 						AND bh2.date >= '". $StartDateA . "'
-						AND bh2.date <= '". $Yesterday . "') AS salesA,
+						AND bh2.date <= '". $Today . "') AS salesA,
 				(SELECT AVG(value)
 					FROM klbusinesshistory bh2
 					WHERE bh1.class =  bh2.class
 						AND bh1.concept =  bh2.concept
 						AND bh2.date >= '". $StartDateB . "'
-						AND bh2.date <= '". $Yesterday . "') AS salesB,
+						AND bh2.date <= '". $Today . "') AS salesB,
 				(SELECT AVG(value)
 					FROM klbusinesshistory bh2
 					WHERE bh1.class =  bh2.class
 						AND bh1.concept =  bh2.concept
 						AND bh2.date >= '". $StartDateC . "'
-						AND bh2.date <= '". $Yesterday . "') AS salesC,
+						AND bh2.date <= '". $Today . "') AS salesC,
 				(SELECT AVG(value)
 					FROM klbusinesshistory bh2
 					WHERE bh1.class =  bh2.class
 						AND bh1.concept =  bh2.concept
 						AND bh2.date >= '". $StartDateD . "'
-						AND bh2.date <= '". $Yesterday . "') AS salesD,
+						AND bh2.date <= '". $Today . "') AS salesD,
 				(SELECT AVG(value)
 					FROM klbusinesshistory bh2
 					WHERE bh1.class =  bh2.class
 						AND bh1.concept =  bh2.concept
 						AND bh2.date >= '". $StartDateE . "'
-						AND bh2.date <= '". $Yesterday . "') AS salesE,
+						AND bh2.date <= '". $Today . "') AS salesE,
 				(SELECT AVG(value)
 					FROM klbusinesshistory bh2
 					WHERE bh1.class =  bh2.class
 						AND bh1.concept =  bh2.concept
 						AND bh2.date >= '". $StartDateF . "'
-						AND bh2.date <= '". $Yesterday . "') AS salesF
+						AND bh2.date <= '". $Today . "') AS salesF
 			FROM klbusinesshistory bh1
 			GROUP BY bh1.class,
 					bh1.concept
@@ -233,7 +233,7 @@ function AverageBusinessHistory($NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $Num
 
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Business History ') . " for the last " . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . ", ". $NumDaysE . ", ". $NumDaysF . " days. Trend by " . $NumDaysD . " days.".'</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . "Business History for the last " . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . ", ". $NumDaysE . ", ". $NumDaysF . " days. Trend by " . $NumDaysD . " days.".'</strong></p>';
 		$TitleTarget = "";
 		echo '<div>';
 		echo '<table class="selection">';

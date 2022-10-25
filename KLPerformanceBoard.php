@@ -325,7 +325,7 @@ if ($ProcessSection03){
 		$NumberOfTestExecuted++;
 		ShowBusinessHistory(60);
 		$NumberOfTestExecuted++;
-		AverageBusinessHistory(60, 30, 21, 15, 7, 1, $db);
+		AverageBusinessHistory(60, 30, 21, 15, 7, 0, $db);
 		$NumberOfTestExecuted++;
 		UnbalancedGLTransTX(15, $RootPath, $db);
 		$NumberOfTestExecuted++;
