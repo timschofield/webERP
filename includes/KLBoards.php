@@ -2572,7 +2572,9 @@ function PackagingToBeRefilledFromGudang($GudangCode, $ShowAll, $ShowLinkEmail, 
 			}
 			
 			if ($TableResult[$i]['toship'] > 0){
-				if ($TableResult[$i]['rl'] > $TableResult[$i]['qoh']){
+				if ($TableResult[$i]['qoh'] == 0){
+					$Reason = "QOH = 0";
+				}elseif ($TableResult[$i]['rl'] > $TableResult[$i]['qoh']){
 					$Reason = "QOH below RL";
 				}else{
 					$Reason = "Top up";
@@ -4131,6 +4133,24 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $Mode, $
 		echo '</table>
 				</div>';
 	}
+}
+
+function ShowTotalItemsMoving(){
+	$NumItems = GetTotalItemsChangingPrice();
+	echo '<p class="bad" align="center"><strong>' . "# Items changing price: " . $NumItems . '</strong></p>';
+	InsertBusinessHistory("PRICES", "ITEMS CHANGING PRICE", $NumItems);
+
+	$NumItems = GetTotalItemsMovingToDiscount("20");
+	echo '<p class="bad" align="center"><strong>' . "# Items moving to 20% discount: " . $NumItems . '</strong></p>';
+	InsertBusinessHistory("PRICES", "ITEMS MOVING to 20% DISCOUNT", $NumItems);
+
+	$NumItems = GetTotalItemsMovingToDiscount("50");
+	echo '<p class="bad" align="center"><strong>' . "# Items moving to 50% discount: " . $NumItems . '</strong></p>';
+	InsertBusinessHistory("PRICES", "ITEMS MOVING to 50% DISCOUNT", $NumItems);
+
+	$NumItems = GetTotalItemsMovingToDiscount("80");
+	echo '<p class="bad" align="center"><strong>' . "# Items moving to 80% discount: " . $NumItems . '</strong></p>';
+	InsertBusinessHistory("PRICES", "ITEMS MOVING to 80% DISCOUNT", $NumItems);
 }
 
 ?>

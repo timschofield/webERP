@@ -52,7 +52,8 @@ if ($ProcessSection01){
 	/***************************************************************************************
 	* RETAIL PRICE         
 	***************************************************************************************/
-
+	ShowTotalItemsMoving();
+	
 	if ($KL_BusinessDevelopmentManager){
 		
 		$IssuesFound += ItemsWithoutRetailPrice("SETKLA", 6.00, $RootPath, $db);
@@ -187,10 +188,6 @@ if ($ProcessSection02){
 
 prnMsg("Performed ". $NumberOfTestExecuted . " pricing control tests",'success');
 prnMsg("Detected ". $IssuesFound . " pricing issues",'success');
-InsertBusinessHistory("PRICES", "ITEMS CHANGING PRICE", GetTotalItemsChangingPrice());
-InsertBusinessHistory("PRICES", "ITEMS MOVING to 20% DISCOUNT", GetTotalItemsMovingToDiscount("20"));
-InsertBusinessHistory("PRICES", "ITEMS MOVING to 50% DISCOUNT", GetTotalItemsMovingToDiscount("50"));
-InsertBusinessHistory("PRICES", "ITEMS MOVING to 80% DISCOUNT", GetTotalItemsMovingToDiscount("80"));
 InsertBusinessHistory("PRICES", "PRICING ISSUES", $IssuesFound);
 
 time_finish($begintime);
