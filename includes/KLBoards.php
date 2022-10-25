@@ -2563,6 +2563,7 @@ function PackagingToBeRefilledFromGudang($GudangCode, $ShowAll, $ShowLinkEmail, 
 									<th class="ascending">' . _('Needing') . '</th>
 									<th class="ascending">' . _('Transit') . '</th>
 									<th class="ascending">' . _('To Ship') . '</th>
+									<th class="ascending">' . _('Reason') . '</th>
 								</tr>';
 				echo $TableHeader;
 				$showHeader = FALSE;
@@ -2571,6 +2572,11 @@ function PackagingToBeRefilledFromGudang($GudangCode, $ShowAll, $ShowLinkEmail, 
 			}
 			
 			if ($TableResult[$i]['toship'] > 0){
+				if ($TableResult[$i]['rl'] > $TableResult[$i]['qoh']){
+					$Reason = "QOH below RL";
+				}else{
+					$Reason = "Top up";
+				}
 				$k = StartEvenOrOddRow($k);
 				printf('<td>%s</td>
 						<td>%s</td>
@@ -2581,6 +2587,7 @@ function PackagingToBeRefilledFromGudang($GudangCode, $ShowAll, $ShowLinkEmail, 
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
+						<td>%s</td>
 						</tr>', 
 						$TableResult[$i]['stockid'], 
 						$TableResult[$i]['description'], 
@@ -2590,7 +2597,8 @@ function PackagingToBeRefilledFromGudang($GudangCode, $ShowAll, $ShowLinkEmail, 
 						locale_number_format_zero_blank($TableResult[$i]['optimum'],0),
 						locale_number_format_zero_blank($TableResult[$i]['needed'],0),
 						locale_number_format_zero_blank($TableResult[$i]['intransit'],0),
-						locale_number_format_zero_blank($TableResult[$i]['toship'],0)
+						locale_number_format_zero_blank($TableResult[$i]['toship'],0),
+						$Reason
 						);
 				if ($TableResult[$i]['toship'] > 0){
 					$ItemsToShip++;
