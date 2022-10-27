@@ -162,15 +162,7 @@ if ($ProcessSection01){
 	if ($KL_BusinessDevelopmentManager){
 		over_or_below_limit("DISC20 Items in AR", "BELOW", 20, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		over_or_below_limit("DISC20 Items in TK", "BELOW", 20, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		over_or_below_limit("DISC20 Items in U3", "BELOW", 20, $RootPath, $db);
-		$NumberOfTestExecuted++;
 		over_or_below_limit("DISC80 Items in AR", "BELOW", 20, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		over_or_below_limit("DISC80 Items in TK", "BELOW", 20, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		over_or_below_limit("DISC80 Items in U3", "BELOW", 20, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -508,15 +500,6 @@ if ($ProcessSection01){
 		ItemsInSetup("NeedPrice", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		}
-
-	if ($KL_BusinessDevelopmentManager){
-		ItemsWithoutRetailPrice("SETKLA", 6.00, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ItemsWithoutRetailPrice("SETBLA", 6.50, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ItemsWithoutRetailPrice("SETGEA", 4.40, $RootPath, $db);
-		$NumberOfTestExecuted++;
-	}
 
 	if ($KL_BusinessDevelopmentManager
 		OR $KL_PurchasingTeam){
@@ -2717,17 +2700,17 @@ function ItemsInSetup($Check, $Category, $RootPath, $db){
 function ItemsInWrongShops($ShopType, $RootPath, $db){
 
 	if ($ShopType == "SHOPKL"){
-		$Message = 'KL items on wrong shops';
+		$Message = 'Blink or Discount Items on KL shops';
 		$Condition =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . "
 							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . ")
 						AND locations.typeloc = 'SHOPKL' ";
 	}elseif ($ShopType == "SHOPBL"){
-		$Message = 'BLINK items on wrong shops';
+		$Message = 'KL or Discount items on BLINK shops';
 		$Condition =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . "
 							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . ")
 						AND locations.typeloc = 'SHOPBL' ";
 	}elseif ($ShopType == "SHOPOU"){
-		$Message = 'DISCOUNT items on wrong shops';
+		$Message = 'KL or Blink items on OUTLET shops';
 		$Condition =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . "
 							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . ")
 						AND locations.typeloc = 'SHOPOU' ";

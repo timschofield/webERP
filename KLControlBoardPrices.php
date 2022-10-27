@@ -54,7 +54,8 @@ if ($ProcessSection01){
 	***************************************************************************************/
 	ShowTotalItemsMoving();
 	
-	if ($KL_BusinessDevelopmentManager){
+	if ($KL_SystemAdmin 
+		OR $KL_BusinessDevelopmentManager){
 		
 		$IssuesFound += ItemsWithoutRetailPrice("SETKLA", 6.00, $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -129,6 +130,9 @@ if ($ProcessSection02){
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager){
 
+	}
+
+	if ($KL_SystemAdmin){
 		$IssuesFound += ItemsTooCheap("TESTKA", 6.00, 6.25, 10, 80, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		$IssuesFound += ItemsTooCheap("STABKA", 6.00, 6.25, 20, 80, 60, $RootPath, $db);
@@ -150,9 +154,6 @@ if ($ProcessSection02){
 		$IssuesFound += ItemsTooCheap("NOPOGA", 3.50, 5.75, 10, 100, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
 */
-	}
-
-	if ($KL_SystemAdmin){
 		$IssuesFound += ItemsTooExpensive("TESTKA", 6.00, 6.50, 10, 300, 90, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		$IssuesFound += ItemsTooExpensive("STABKA", 6.00, 6.50, 20, 300, 90, $RootPath, $db);
