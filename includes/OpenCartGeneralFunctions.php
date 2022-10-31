@@ -1115,6 +1115,8 @@ function UpdateOpenCartOrderStatus($OrderId, $StatusId, $Notify, $Carrier, $AWB,
 		$CarrierPowerTrack = SHIPMENT11_POWERTRACK_CODE ;
 	}else if ($Carrier == SHIPMENT12_WEBERP_CODE){
 		$CarrierPowerTrack = SHIPMENT12_POWERTRACK_CODE ;
+	}else if ($Carrier == SHIPMENT13_WEBERP_CODE){
+		$CarrierPowerTrack = SHIPMENT13_POWERTRACK_CODE ;
 	}
 
 	$DbgMsg = _('The SQL statement that failed was');
@@ -1233,6 +1235,12 @@ function GetWeberpShippingMethod($OpenCartShippingMethod){
 		$WeberpShipping = SHIPMENT09_WEBERP_CODE;
 	}elseif (strpos($OpenCartShippingMethod, SHIPMENT10_OPENCART_TEXT) !== false){
 		$WeberpShipping = SHIPMENT10_WEBERP_CODE;
+	}elseif (strpos($OpenCartShippingMethod, SHIPMENT11_OPENCART_TEXT) !== false){
+		$WeberpShipping = SHIPMENT11_WEBERP_CODE;
+	}elseif (strpos($OpenCartShippingMethod, SHIPMENT12_OPENCART_TEXT) !== false){
+		$WeberpShipping = SHIPMENT12_WEBERP_CODE;
+	}elseif (strpos($OpenCartShippingMethod, SHIPMENT13_OPENCART_TEXT) !== false){
+		$WeberpShipping = SHIPMENT13_WEBERP_CODE;
 	}else{
 		$WeberpShipping = OPENCART_DEFAULT_SHIPVIA;
 	}
