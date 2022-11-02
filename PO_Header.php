@@ -214,14 +214,14 @@ if (isset($_GET['NewOrder']) AND isset($_GET['StockID']) AND isset($_GET['Select
 	$_SESSION['PO' . $identifier]->GLLink = $_SESSION['CompanyRecord']['gllink_stock'];
 	/* set the SupplierID we got */
 	$_SESSION['PO' . $identifier]->SupplierID = $_GET['SelectedSupplier'];
-	$_SESSION['PO' . $identifier]->KLAgreedDeliveryDate = date($_SESSION['DefaultDateFormat']);
-	$_SESSION['PO' . $identifier]->DeliveryDate = date($_SESSION['DefaultDateFormat']);
+	$_SESSION['PO' . $identifier]->KLAgreedDeliveryDate = '00/00/0000';
+	$_SESSION['PO' . $identifier]->DeliveryDate = '00/00/0000';
 	$_SESSION['PO' . $identifier]->KLStatus = '1000';
-	$_SESSION['PO' . $identifier]->KLPaymentDate = date($_SESSION['DefaultDateFormat']);
-	$_SESSION['PO' . $identifier]->KLShipmentDate = date($_SESSION['DefaultDateFormat']);
+	$_SESSION['PO' . $identifier]->KLPaymentDate = '00/00/0000';
+	$_SESSION['PO' . $identifier]->KLShipmentDate = '00/00/0000';
 	$_SESSION['PO' . $identifier]->KLShipmentAWB = '';
-	$_SESSION['PO' . $identifier]->KLCustomsDate = date($_SESSION['DefaultDateFormat']);
-	$_SESSION['PO' . $identifier]->KLArrivalDate = date($_SESSION['DefaultDateFormat']);
+	$_SESSION['PO' . $identifier]->KLCustomsDate = '00/00/0000';
+	$_SESSION['PO' . $identifier]->KLArrivalDate = '00/00/0000';
 	$_SESSION['PO' . $identifier]->Initiator = $_SESSION['UserID'];
 	$_SESSION['RequireSupplierSelection'] = 0;
 	$_POST['Select'] = $_GET['SelectedSupplier'];
