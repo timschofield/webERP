@@ -62,7 +62,7 @@ if ($ProcessSection01){
 		OR $KL_SalesTeamOnline
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_ShopManager){
-		AverageSales("Shop", 90, 60, 30, 15, 7, 1, 30, "CurrentYear", "All", $db);
+		AverageSales("Shop", 180, 90, 30, 15, 7, 1, 30, "CurrentYear", "All", $db);
 		$NumberOfTestExecuted++;
 		PeriodDifferenceSales("IMMEDIATE", "Shop",   7, $db);
 		$NumberOfTestExecuted++;
@@ -93,7 +93,7 @@ if ($ProcessSection01){
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_ShopManager){
 
-		AverageSales("Online", 90, 60, 30, 15, 7, 1, 30, "CurrentYear", "All", $db);
+		AverageSales("Online", 180, 90, 30, 15, 7, 1, 30, "CurrentYear", "All", $db);
 		$NumberOfTestExecuted++;
 		PeriodDifferenceSales("IMMEDIATE", "Online",   7, $db);
 		$NumberOfTestExecuted++;
@@ -315,17 +315,15 @@ if ($ProcessSection03){
 	if ($KL_SystemAdmin
 		OR $KL_OperationalManager
 		OR $KL_AdministrationTeam){
-		CashStatus(2022, 20000000, 50000000, 25000000, 20000000, 50000000, 25000000, 100000000, $periodnow, TRUE, $db);
+		CashStatus(2022, 20000000, 50000000, 100000000, 20000000, 50000000, 100000000, 100000000, $periodnow, TRUE, $db);
 		$NumberOfTestExecuted++;
 	}
 	if ($KL_SystemAdmin){
 		ShowBusinessHistory(7);
 		$NumberOfTestExecuted++;
-		ShowBusinessHistory(30);
+		ShowBusinessHistory(90);
 		$NumberOfTestExecuted++;
-		ShowBusinessHistory(60);
-		$NumberOfTestExecuted++;
-		AverageBusinessHistory(60, 30, 21, 15, 7, 0, $db);
+		AverageBusinessHistory(180, 90, 30, 15, 7, 0, $db);
 		$NumberOfTestExecuted++;
 		UnbalancedGLTransTX(15, $RootPath, $db);
 		$NumberOfTestExecuted++;
