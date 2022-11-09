@@ -303,6 +303,18 @@ function SetRLZeroForLocations($ShowMessages, $EmailText, $db){
 }
 
 function SetEndDatePriceToObsolete($ShowMessages, $EmailText, $db){
+	$sql = "SELECT COUNT(*) AS items
+			FROM prices
+			WHERE EXISTS (SELECT *
+						FROM stockmaster
+						WHERE stockmaster.stockid = prices.stockid
+						AND stockmaster.discontinued = 1)
+				AND (enddate > '"  . date('Y-m-d') ."'
+				  OR enddate = '0000-00-00')";
+	$result = DB_query($sql,$ErrMsg);
+	$myrow = DB_fetch_array($result);
+	InsertBusinessHistory("STOCK", "ITEMS MOVED TO OBSOLETE (ITEMS)", $myrow['items']);
+
 	$sql = "UPDATE prices
 			SET enddate = '" . date('Y-m-d') ."'
 			WHERE EXISTS (SELECT *
@@ -394,6 +406,13 @@ function SetStatusCompleteToFinishedOldPurchaseOrders($maxdays, $ShowMessages, $
 }		
 
 function AuthorizeAllInternalStockRequest($ShowMessages, $EmailText, $db){
+	$sql = "SELECT COUNT(*) AS total
+			FROM stockrequest
+			WHERE authorised !='1'";
+	$result = DB_query($sql,$ErrMsg);
+	$myrow = DB_fetch_array($result);
+	InsertBusinessHistory("SHOPS", "INTERNAL REQUESTS", $myrow['total']);
+
 	$sql = "UPDATE stockrequest
 					SET authorised='1'
 					WHERE authorised !='1'";

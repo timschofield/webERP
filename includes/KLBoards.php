@@ -699,7 +699,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 					locale_number_format($TotalDateD/$i,0),
 					locale_number_format($TotalDateE/$i,0),
 					locale_number_format($TotalDateF/$i,0),
-					locale_number_format($TotalDateMTD/$i,0),
+					"",
 					"",
 					locale_number_format($TotalForecast/$i,0),
 					""

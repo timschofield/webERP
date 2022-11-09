@@ -140,6 +140,8 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 		and there is no transfer alive for this item 
 		
 	*/
+
+	$ItemsRebalanced = 0;
 	if ($EmailText!=''){
 		$EmailText = $EmailText . "\n" . "Rebalancing stock between shops." . "\n\n";
 	}
@@ -296,6 +298,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 														"\n";
 							}
 						}
+						$ItemsRebalanced++;
 					}else{
 						$location = "";
 						$strategy = "No shop to distribute";
@@ -343,6 +346,9 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 					</div>';
 		}
 	}
+
+	InsertBusinessHistory("SHOPS", "ITEMS REBALANCED BETWEEN SHOPS (ITEMS)", $ItemsRebalanced);
+
 	return $EmailText;
 }
 
