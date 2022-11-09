@@ -7,6 +7,7 @@ $Title = _('Bank Account Users');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'BankAccountUsers';
 include('includes/header.php');
+include('includes/KLEmails.php');
 
 echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 	'/images/bank.png" title="' .
@@ -74,8 +75,9 @@ if (isset($_POST['submit'])) {
 										VALUES ('" . $_POST['SelectedBankAccount'] . "',
 												'" . $_POST['SelectedUser'] . "')";
 
-			$msg = _('User') . ': ' . $_POST['SelectedUser'].' '._('has been authorised to use') .' '. $_POST['SelectedBankAccount'] .  ' ' . _('bank account');
+			$msg = _('User') . ': ' . $_POST['SelectedUser'].' '._('has been authorised to user') .' '. $_POST['SelectedBankAccount'] .  ' ' . _('bank account');
 			$result = DB_query($sql);
+			KLSendEmail("BankAccountsUserCreated", "Silent",$_SESSION['UserID'], $_POST['SelectedUser'], $_POST['SelectedBankAccount']);
 			prnMsg($msg,'success');
 			unset($_POST['SelectedUser']);
 		}
@@ -87,6 +89,7 @@ if (isset($_POST['submit'])) {
 
 	$ErrMsg = _('The bank account user record could not be deleted because');
 	$result = DB_query($sql,$ErrMsg);
+	KLSendEmail("BankAccountsUserDeleted", "Silent",$_SESSION['UserID'], $SelectedUser, $SelectedBankAccount);
 	prnMsg(_('User').' '. $SelectedUser .' '. _('has been un-authorised to use').' '. $SelectedBankAccount .' '. _('bank account') ,'success');
 	unset($_GET['delete']);
 }

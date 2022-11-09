@@ -6,6 +6,7 @@ $Title = _('Inventory Location Authorised Users Maintenance');
 $ViewTopic = 'Inventory';// Filename in ManualContents.php's TOC.
 $BookMark = 'LocationUsers';// Anchor's id in the manual's html document.
 include('includes/header.php');
+include('includes/KLEmails.php');
 
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/money_add.png" title="' . _('Location Authorised Users') . '" alt="" />' . ' ' . $Title . '</p>';
 
@@ -76,6 +77,7 @@ if (isset($_POST['submit'])) {
 
 			$msg = _('User') . ': ' . $_POST['SelectedUser'] . ' ' . _('authority to use the') . ' ' . $_POST['SelectedLocation'] . ' ' . _('location has been changed');
 			$Result = DB_query($SQL);
+			KLSendEmail("LocationUserCreated", "Silent",$_SESSION['UserID'], $_POST['SelectedUser'],$_POST['SelectedLocation']);
 			prnMsg($msg, 'success');
 			unset($_POST['SelectedUser']);
 		}
@@ -87,6 +89,7 @@ if (isset($_POST['submit'])) {
 
 	$ErrMsg = _('The Location user record could not be deleted because');
 	$Result = DB_query($SQL, $ErrMsg);
+	KLSendEmail("LocationUserDeleted", "Silent",$_SESSION['UserID'], $SelectedUser, $SelectedLocation);
 	prnMsg(_('User') . ' ' . $SelectedUser . ' ' . _('has had their authority to use the') . ' ' . $SelectedLocation . ' ' . _('location removed'), 'success');
 	unset($_GET['delete']);
 } elseif (isset($_GET['ToggleUpdate'])) {
@@ -97,6 +100,7 @@ if (isset($_POST['submit'])) {
 
 	$ErrMsg = _('The Location user record could not be deleted because');
 	$Result = DB_query($SQL, $ErrMsg);
+	KLSendEmail("LocationUserUpdated", "Silent",$_SESSION['UserID'], $SelectedUser, $SelectedLocation);
 	prnMsg(_('User') . ' ' . $SelectedUser . ' ' . _('has had their authority to update') . ' ' . $SelectedLocation . ' ' . _('location removed'), 'success');
 	unset($_GET['ToggleUpdate']);
 }

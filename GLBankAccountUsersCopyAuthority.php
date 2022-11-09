@@ -3,6 +3,7 @@
 include ('includes/session.php');
 $Title = _('Bank Accounts - Users Authority Copy Authority');// Screen identificator.
 include('includes/header.php');
+include('includes/KLEmails.php');
 
 /* ASSIGN users to groups */
 include ('includes/KLRoles.php');
@@ -44,6 +45,7 @@ if(isset($_POST['ProcessCopyAuthority'])) {
 		$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
 		echo ' ... ' . _('completed');
 		echo '<br />';
+		KLSendEmail("BankAccountUserRightsCopied", "Silent",$_SESSION['UserID'], $_POST['FromUserID'],$_POST['ToUserID']);
 		$result = DB_Txn_Commit();
 
 	}//only do the stuff above if  $InputError==0

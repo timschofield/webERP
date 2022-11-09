@@ -7,6 +7,7 @@ $Title = _('Bank Account Users');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'UserBankAccounts';
 include('includes/header.php');
+include('includes/KLEmails.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/money_add.png" title="',// Icon image.
@@ -76,6 +77,7 @@ if (isset($_POST['submit'])) {
 
 			$msg = _('User') . ': ' . $_POST['SelectedUser'] . ' ' . _('authority to use the') . ' ' . $_POST['SelectedBankAccount'] . ' ' . _('bank account has been changed');
 			$Result = DB_query($SQL);
+			KLSendEmail("BankAccountsUserCreated", "Silent",$_SESSION['UserID'], $_POST['SelectedUser'], $_POST['SelectedBankAccount']);
 			prnMsg($msg, 'success');
 			unset($_POST['SelectedBankAccount']);
 		}
@@ -87,6 +89,7 @@ if (isset($_POST['submit'])) {
 
 	$ErrMsg = _('The Bank account user record could not be deleted because');
 	$Result = DB_query($SQL, $ErrMsg);
+	KLSendEmail("BankAccountsUserDeleted", "Silent",$_SESSION['UserID'], $SelectedUser, $SelectedBankAccount);
 	prnMsg(_('User') . ' ' . $SelectedUser . ' ' . _('has had their authority to use the') . ' ' . $SelectedBankAccount . ' ' . _('bank account removed'), 'success');
 	unset($_GET['delete']);
 }

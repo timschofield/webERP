@@ -7,6 +7,7 @@ $Title = _('User Authorised GL Accounts');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'UserGLAccounts';
 include('includes/header.php');
+include('includes/KLEmails.php');
 
 if(isset($_POST['SelectedUser']) and $_POST['SelectedUser']<>'') {//If POST not empty:
 	$SelectedUser = mb_strtoupper($_POST['SelectedUser']);
@@ -115,6 +116,7 @@ if(!isset($SelectedUser)) {// If is NOT set a user for GL accounts.
 								'1')";
 				$ErrMsg = _('An access permission to a GL account could not be added');
 				if(DB_query($SQL, $ErrMsg)) {
+					KLSendEmail("GLAccountsUserCreated", "Silent",$_SESSION['UserID'], $SelectedUser, $SelectedGLAccount);
 					prnMsg(_('An access permission to a GL account was added') . '. ' . _('User') . ': ' . $SelectedUser . '. ' . _('GL Account') . ': ' . $SelectedGLAccount . '.', 'success');
 					unset($_GET['SelectedGLAccount']);
 					unset($_POST['SelectedGLAccount']);
@@ -127,6 +129,7 @@ if(!isset($SelectedUser)) {// If is NOT set a user for GL accounts.
 			AND userid='" . $SelectedUser . "'";
 		$ErrMsg = _('An access permission to a GL account could not be removed');
 		if(DB_query($SQL, $ErrMsg)) {
+			KLSendEmail("GLAccountsUserDeleted", "Silent",$_SESSION['UserID'], $SelectedUser, $SelectedGLAccount);
 			prnMsg(_('An access permission to a GL account was removed') . '. ' . _('User') . ': ' . $SelectedUser . '. ' . _('GL Account') . ': ' . $SelectedGLAccount . '.', 'success');
 			unset($_GET['delete']);
 			unset($_POST['delete']);
@@ -143,6 +146,7 @@ if(!isset($SelectedUser)) {// If is NOT set a user for GL accounts.
 				AND userid='" . $SelectedUser . "'";
 		$ErrMsg = _('An access permission to update a GL account could not be modified');
 		if(DB_query($SQL, $ErrMsg)) {
+			KLSendEmail("GLAccountsUserUpdated", "Silent",$_SESSION['UserID'], $SelectedUser, $SelectedGLAccount);
 			prnMsg(_('An access permission to update a GL account was modified') . '. ' . _('User') . ': ' . $SelectedUser . '. ' . _('GL Account') . ': ' . $SelectedGLAccount . '.', 'success');
 			unset($_GET['ToggleUpdate']);
 			unset($_POST['ToggleUpdate']);

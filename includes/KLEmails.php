@@ -332,6 +332,119 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 					'Deleted by : ' . $Param2; 		
 			$EmailAddress = "kl-spg-administration@kapal-laut.com";
 			break;
+
+		case "UserCreated":
+			$EmailSubject = "webERP User Created : ". $Param2;
+			$EmailText = $EmailSubject . "\n\n" .
+					'Name :'. ' '. $Param3 . "\r\n" .
+					'Role :'. ' '. $Param4 . "\r\n" .
+					'Created by : ' . $Param1; 		
+			$EmailAddress = "kl-user-administration@kapal-laut.com";
+			break;
+
+		case "UserDeleted":
+			$EmailSubject = "webERP User Deleted : ". $Param2;
+			$EmailText = $EmailSubject . "\n\n" .
+					'Name :'. ' '. $Param3 . "\r\n" .
+					'Role :'. ' '. $Param4 . "\r\n" .
+					'Deleted by : ' . $Param1; 		
+			$EmailAddress = "kl-user-administration@kapal-laut.com";
+			break;
+
+		case "UserUpdated":
+			$EmailSubject = "webERP User Updated : ". $Param2;
+			$EmailText = $EmailSubject . "\n\n" .
+					'Name :'. ' '. $Param3 . "\r\n" .
+					'Role :'. ' '. $Param4 . "\r\n" .
+					'Updated by : ' . $Param1; 		
+			$EmailAddress = "kl-user-administration@kapal-laut.com";
+			break;
+
+		case "PasswordUpdated":
+			$EmailSubject = "webERP Password Updated : ". $Param2;
+			$EmailText = $EmailSubject . "\n\n" .
+					'Name :'. ' '. $Param3 . "\r\n" .
+					'Updated by : ' . $Param1; 		
+			$EmailAddress = "kl-user-administration@kapal-laut.com";
+			break;
+
+		case "LocationUserCreated":
+			$EmailSubject = "webERP Location-User Access Rights Created : ". $Param3 . "-" . $Param2;
+			$EmailText = $EmailSubject . "\n\n" .
+					'Created by : ' . $Param1; 		
+			$EmailAddress = "kl-user-administration@kapal-laut.com";
+			break;
+
+		case "LocationUserDeleted":
+			$EmailSubject = "webERP Location-User Access Rights Deleted : ". $Param3 . "-" . $Param2;
+			$EmailText = $EmailSubject . "\n\n" .
+					'Deleted by : ' . $Param1; 		
+			$EmailAddress = "kl-user-administration@kapal-laut.com";
+			break;
+
+		case "LocationUserUpdated":
+			$EmailSubject = "webERP Location-User Access Rights Updated : ". $Param3 . "-" . $Param2;
+			$EmailText = $EmailSubject . "\n\n" .
+					'Updated by : ' . $Param1; 		
+			$EmailAddress = "kl-user-administration@kapal-laut.com";
+			break;
+
+		case "LocationUserRightsCopied":
+			$EmailSubject = "webERP Location-User Access Rights Copied from ". $Param2 . " to " . $Param3;
+			$EmailText = $EmailSubject . "\n\n" .
+					'Executed by : ' . $Param1; 		
+			$EmailAddress = "kl-user-administration@kapal-laut.com";
+			break;
+
+		case "GLAccountsUserCreated":
+			$EmailSubject = "webERP GL Account-User Access Rights Created : ". $Param3 . "-" . $Param2;
+			$EmailText = $EmailSubject . "\n\n" .
+					'Created by : ' . $Param1; 		
+			$EmailAddress = "kl-user-administration@kapal-laut.com";
+			break;
+
+		case "GLAccountsUserDeleted":
+			$EmailSubject = "webERP GL Account-User Access Rights Deleted : ". $Param3 . "-" . $Param2;
+			$EmailText = $EmailSubject . "\n\n" .
+					'Deleted by : ' . $Param1; 		
+			$EmailAddress = "kl-user-administration@kapal-laut.com";
+			break;
+
+		case "GLAccountsUserUpdated":
+			$EmailSubject = "webERP GL Account-User Access Rights Updated : ". $Param3 . "-" . $Param2;
+			$EmailText = $EmailSubject . "\n\n" .
+					'Updated by : ' . $Param1; 		
+			$EmailAddress = "kl-user-administration@kapal-laut.com";
+			break;
+		
+		case "GLAccountUserRightsCopied":
+			$EmailSubject = "webERP GL Account -User Access Rights Copied from ". $Param2 . " to " . $Param3;
+			$EmailText = $EmailSubject . "\n\n" .
+					'Executed by : ' . $Param1; 		
+			$EmailAddress = "kl-user-administration@kapal-laut.com";
+			break;
+
+		case "BankAccountsUserCreated":
+			$EmailSubject = "webERP Bank Account-User Access Rights Created : ". $Param3 . "-" . $Param2;
+			$EmailText = $EmailSubject . "\n\n" .
+					'Created by : ' . $Param1; 		
+			$EmailAddress = "kl-user-administration@kapal-laut.com";
+			break;
+
+		case "BankAccountsUserDeleted":
+			$EmailSubject = "webERP Bank Account-User Access Rights Deleted : ". $Param3 . "-" . $Param2;
+			$EmailText = $EmailSubject . "\n\n" .
+					'Deleted by : ' . $Param1; 		
+			$EmailAddress = "kl-user-administration@kapal-laut.com";
+			break;
+		
+		case "BankAccountUserRightsCopied":
+			$EmailSubject = "webERP Bank Account -User Access Rights Copied from ". $Param2 . " to " . $Param3;
+			$EmailText = $EmailSubject . "\n\n" .
+					'Executed by : ' . $Param1; 		
+			$EmailAddress = "kl-user-administration@kapal-laut.com";
+			break;
+
 	}
 
 	/* If sent from TEST weberp, add some text to not confuse the receiver */

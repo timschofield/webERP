@@ -9,6 +9,7 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	_('Copy Authority of Locations from one user to another'), '</p>';// Page title.
 
 include('includes/SQL_CommonFunctions.inc');
+include('includes/KLEmails.php');
 
 if(isset($_POST['ProcessCopyAuthority'])) {
 
@@ -40,6 +41,7 @@ if(isset($_POST['ProcessCopyAuthority'])) {
 		$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
 		echo ' ... ' . _('completed');
 		echo '<br />';
+		KLSendEmail("LocationUserRightsCopied", "Silent",$_SESSION['UserID'], $_POST['FromUserID'],$_POST['ToUserID']);
 		$result = DB_Txn_Commit();
 
 	}//only do the stuff above if  $InputError==0

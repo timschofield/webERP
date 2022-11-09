@@ -13,6 +13,7 @@ $Title = _('Users Maintenance');
 $ViewTopic = 'GettingStarted';
 $BookMark = 'UserMaintenance';
 include('includes/header.php');
+include ('includes/KLEmails.php');
 
 /* ASSIGN users to groups */
 include ('includes/KLRoles.php');
@@ -188,6 +189,11 @@ if(isset($_POST['submit'])) {
 		$_SESSION['ShowPageHelp'] = $_POST['ShowPageHelp'];
 		$_SESSION['ShowFieldHelp'] = $_POST['ShowFieldHelp'];
 
+		KLSendEmail("UserUpdated", "Silent",$_SESSION['UserID'], $SelectedUser, $_POST['RealName'], $_POST['Access']);
+		if($_POST['Password'] != '') {
+		KLSendEmail("PasswordUpdated", "Silent",$_SESSION['UserID'], $SelectedUser, $_POST['RealName']);
+		}
+		
 	} elseif($InputError !=1) {
 
 		$sql = "INSERT INTO www_users (userid,
@@ -246,6 +252,8 @@ if(isset($_POST['submit'])) {
 		$DbgMsg = _('The SQL that was used to create the user locations and failed was');
 		$Result = DB_query($LocationSql, $ErrMsg, $DbgMsg);
 		prnMsg( _('User has been authorized to use and update only his / her default location'), 'success' );
+
+		KLSendEmail("UserCreated", "Silent",$_SESSION['UserID'], $SelectedUser, $_POST['RealName'], $_POST['Access']);
 		
 //	KL RICARD commented out. new users have NO rights to see/update GL accounts unless explicitely specified later on.
 
@@ -319,6 +327,9 @@ if(isset($_POST['submit'])) {
 			$ErrMsg = _('The User could not be deleted because');;
 			$result = DB_query($sql,$ErrMsg);
 			prnMsg(_('User Deleted'),'info');
+
+			KLSendEmail("UserDeleted", "Silent",$_SESSION['UserID'], $SelectedUser, $_POST['RealName'], $_POST['Access']);
+
 		}
 		unset($SelectedUser);
 	}
