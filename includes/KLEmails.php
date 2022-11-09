@@ -345,8 +345,6 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 		case "UserDeleted":
 			$EmailSubject = "webERP User Deleted : ". $Param2;
 			$EmailText = $EmailSubject . "\n\n" .
-					'Name :'. ' '. $Param3 . "\r\n" .
-					'Role :'. ' '. $Param4 . "\r\n" .
 					'Deleted by : ' . $Param1; 		
 			$EmailAddress = "kl-user-administration@kapal-laut.com";
 			break;

@@ -328,7 +328,7 @@ if(isset($_POST['submit'])) {
 			$result = DB_query($sql,$ErrMsg);
 			prnMsg(_('User Deleted'),'info');
 
-			KLSendEmail("UserDeleted", "Silent",$_SESSION['UserID'], $SelectedUser, $_POST['RealName'], $_POST['Access']);
+			KLSendEmail("UserDeleted", "Silent",$_SESSION['UserID'], $SelectedUser);
 
 		}
 		unset($SelectedUser);
