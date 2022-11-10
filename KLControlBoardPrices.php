@@ -12,9 +12,7 @@ include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLPrices.php');
 include('includes/KLEmails.php');
-
-/* Do the pending GL Postings to get the latest finantial control reports*/
-include ('includes/GLPostings.inc');
+include('includes/SQL_CommonFunctions.inc');
 
 /* ASSIGN users to groups */
 include ('includes/KLRoles.php');
@@ -57,63 +55,61 @@ if ($ProcessSection01){
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager){
 		
-		$IssuesFound += ItemsWithoutRetailPrice("SETKLA", 6.00, $RootPath, $db);
+		$IssuesFound += ItemsWithoutRetailPrice("SETKLA", MINIMUM_PRICE_FACTOR_KL, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		$IssuesFound += ItemsWithoutRetailPrice("TESTKA", 6.00, $RootPath, $db);
+		$IssuesFound += ItemsWithoutRetailPrice("TESTKA", MINIMUM_PRICE_FACTOR_KL, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		$IssuesFound += ItemsWithoutRetailPrice("STABKA", 6.00, $RootPath, $db);
+		$IssuesFound += ItemsWithoutRetailPrice("STABKA", MINIMUM_PRICE_FACTOR_KL, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		$IssuesFound += ItemsWithoutRetailPrice("NOPOKA", 6.00, $RootPath, $db);
-		$NumberOfTestExecuted++;
-
-		$IssuesFound += ItemsWithoutRetailPrice("SETBLA", 6.50, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		$IssuesFound += ItemsWithoutRetailPrice("TESTBA", 6.50, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		$IssuesFound += ItemsWithoutRetailPrice("STABBA", 6.50, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		$IssuesFound += ItemsWithoutRetailPrice("NOPOBA", 6.50, $RootPath, $db);
+		$IssuesFound += ItemsWithoutRetailPrice("NOPOKA", MINIMUM_PRICE_FACTOR_KL, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-		$IssuesFound += ItemsWithoutRetailPrice("SETGEA", 4.40, $RootPath, $db);
+		$IssuesFound += ItemsWithoutRetailPrice("SETBLA", MINIMUM_PRICE_FACTOR_BLINK, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		$IssuesFound += ItemsWithoutRetailPrice("TESTGA", 4.40, $RootPath, $db);
+		$IssuesFound += ItemsWithoutRetailPrice("TESTBA", MINIMUM_PRICE_FACTOR_BLINK, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		$IssuesFound += ItemsWithoutRetailPrice("STABGA", 4.40, $RootPath, $db);
+		$IssuesFound += ItemsWithoutRetailPrice("STABBA", MINIMUM_PRICE_FACTOR_BLINK, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		$IssuesFound += ItemsWithoutRetailPrice("NOPOGA", 4.40, $RootPath, $db);
+		$IssuesFound += ItemsWithoutRetailPrice("NOPOBA", MINIMUM_PRICE_FACTOR_BLINK, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-	//	ItemsWithoutRetailPrice("CONSIG", 1.60, $RootPath, $db);
+		$IssuesFound += ItemsWithoutRetailPrice("SETGEA", MINIMUM_PRICE_FACTOR_GENERAL, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		$IssuesFound += ItemsWithoutRetailPrice("TESTGA", MINIMUM_PRICE_FACTOR_GENERAL, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		$IssuesFound += ItemsWithoutRetailPrice("STABGA", MINIMUM_PRICE_FACTOR_GENERAL, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		$IssuesFound += ItemsWithoutRetailPrice("NOPOGA", MINIMUM_PRICE_FACTOR_GENERAL, $RootPath, $db);
+		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager){
-		$IssuesFound += PriceBelowStandard("SETKLA", 6.00, 0, $RootPath, $db);
+		$IssuesFound += PriceBelowStandard("SETKLA", MINIMUM_PRICE_FACTOR_KL, 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		$IssuesFound += PriceBelowStandard("TESTKA", 6.00, 0, $RootPath, $db);
+		$IssuesFound += PriceBelowStandard("TESTKA", MINIMUM_PRICE_FACTOR_KL, 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		$IssuesFound += PriceBelowStandard("STABKA", 6.00, 0, $RootPath, $db);
+		$IssuesFound += PriceBelowStandard("STABKA", MINIMUM_PRICE_FACTOR_KL, 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		$IssuesFound += PriceBelowStandard("NOPOKA", 6.00, 0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-
-		$IssuesFound += PriceBelowStandard("SETBLA", 6.50, 0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		$IssuesFound += PriceBelowStandard("TESTBA", 6.50, 0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		$IssuesFound += PriceBelowStandard("STABBA", 6.50, 0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		$IssuesFound += PriceBelowStandard("NOPOBA", 6.50, 0, $RootPath, $db);
+		$IssuesFound += PriceBelowStandard("NOPOKA", MINIMUM_PRICE_FACTOR_KL, 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-		$IssuesFound += PriceBelowStandard("SETGEA", 4.40, 0, $RootPath, $db);
+		$IssuesFound += PriceBelowStandard("SETBLA", MINIMUM_PRICE_FACTOR_BLINK, 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		$IssuesFound += PriceBelowStandard("TESTGA", 4.40, 0, $RootPath, $db);
+		$IssuesFound += PriceBelowStandard("TESTBA", MINIMUM_PRICE_FACTOR_BLINK, 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		$IssuesFound += PriceBelowStandard("STABGA", 4.40, 0, $RootPath, $db);
+		$IssuesFound += PriceBelowStandard("STABBA", MINIMUM_PRICE_FACTOR_BLINK, 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		$IssuesFound += PriceBelowStandard("NOPOGA", 4.40, 0, $RootPath, $db);
+		$IssuesFound += PriceBelowStandard("NOPOBA", MINIMUM_PRICE_FACTOR_BLINK, 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+
+		$IssuesFound += PriceBelowStandard("SETGEA", MINIMUM_PRICE_FACTOR_GENERAL, 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		$IssuesFound += PriceBelowStandard("TESTGA", MINIMUM_PRICE_FACTOR_GENERAL, 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		$IssuesFound += PriceBelowStandard("STABGA", MINIMUM_PRICE_FACTOR_GENERAL, 0, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		$IssuesFound += PriceBelowStandard("NOPOGA", MINIMUM_PRICE_FACTOR_GENERAL, 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 }
@@ -133,50 +129,34 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin){
-		$IssuesFound += ItemsTooCheap("TESTKA", 6.00, 6.25, 10, 80, 60, $RootPath, $db);
+		$IssuesFound += ItemsTooCheap("TESTKA", MINIMUM_PRICE_FACTOR_KL, MINIMUM_PRICE_FACTOR_TOPSALES_KL, 0, 50, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		$IssuesFound += ItemsTooCheap("STABKA", 6.00, 6.25, 20, 80, 60, $RootPath, $db);
+		$IssuesFound += ItemsTooCheap("STABKA", MINIMUM_PRICE_FACTOR_KL, MINIMUM_PRICE_FACTOR_TOPSALES_KL, 0, 50, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		$IssuesFound += ItemsTooCheap("NOPOKA", 6.00, 6.25, 20, 80, 60, $RootPath, $db);
-		$NumberOfTestExecuted++;
-
-		$IssuesFound += ItemsTooCheap("TESTBA", 6.50, 6.75, 10, 80, 60, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		$IssuesFound += ItemsTooCheap("STABBA", 6.50, 6.75, 20, 80, 60, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		$IssuesFound += ItemsTooCheap("NOPOBA", 6.50, 6.75, 20, 80, 60, $RootPath, $db);
+		$IssuesFound += ItemsTooCheap("NOPOKA", MINIMUM_PRICE_FACTOR_KL, MINIMUM_PRICE_FACTOR_TOPSALES_KL, 0, 50, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-/*		$IssuesFound += ItemsTooCheap("TESTGA", 3.50, 5.75, 10, 100, 60, $RootPath, $db);
+		$IssuesFound += ItemsTooCheap("TESTBA", MINIMUM_PRICE_FACTOR_BLINK, MINIMUM_PRICE_FACTOR_TOPSALES_BLINK, 0, 40, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		$IssuesFound += ItemsTooCheap("STABGA", 3.50, 5.75, 10, 100, 60, $RootPath, $db);
+		$IssuesFound += ItemsTooCheap("STABBA", MINIMUM_PRICE_FACTOR_BLINK, MINIMUM_PRICE_FACTOR_TOPSALES_BLINK, 0, 40, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		$IssuesFound += ItemsTooCheap("NOPOGA", 3.50, 5.75, 10, 100, 60, $RootPath, $db);
-		$NumberOfTestExecuted++;
-*/
-		$IssuesFound += ItemsTooExpensive("TESTKA", 6.00, 6.50, 10, 300, 90, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		$IssuesFound += ItemsTooExpensive("STABKA", 6.00, 6.50, 20, 300, 90, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		$IssuesFound += ItemsTooExpensive("NOPOKA", 6.00, 6.50, 20, 300, 60, $RootPath, $db);
+		$IssuesFound += ItemsTooCheap("NOPOBA", MINIMUM_PRICE_FACTOR_BLINK, MINIMUM_PRICE_FACTOR_TOPSALES_BLINK, 0, 40, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-		$IssuesFound += ItemsTooExpensive("TESTBA", 6.50, 7.00, 10, 200, 90, $RootPath, $db);
+		$IssuesFound += ItemsTooExpensive("TESTKA", MINIMUM_PRICE_FACTOR_KL, MAXIMUM_PRICE_FACTOR_BOTTOMSALES_KL, 0, 500, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		$IssuesFound += ItemsTooExpensive("STABBA", 6.50, 7.00, 20, 200, 90, $RootPath, $db);
+		$IssuesFound += ItemsTooExpensive("STABKA", MINIMUM_PRICE_FACTOR_KL, MAXIMUM_PRICE_FACTOR_BOTTOMSALES_KL, 0, 500, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		$IssuesFound += ItemsTooExpensive("NOPOBA", 6.50, 7.00, 20, 200, 90, $RootPath, $db);
+		$IssuesFound += ItemsTooExpensive("NOPOKA", MINIMUM_PRICE_FACTOR_KL, MAXIMUM_PRICE_FACTOR_BOTTOMSALES_KL, 0, 500, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-/*		$IssuesFound += ItemsTooExpensive("TESTGA", 5.50, 6.00, 5, 800, 90, $RootPath, $db);
+		$IssuesFound += ItemsTooExpensive("TESTBA", MINIMUM_PRICE_FACTOR_BLINK, MAXIMUM_PRICE_FACTOR_BOTTOMSALES_BLINK, 0, 300, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		$IssuesFound += ItemsTooExpensive("STABGA", 5.50, 6.00, 5, 800, 90, $RootPath, $db);
+		$IssuesFound += ItemsTooExpensive("STABBA", MINIMUM_PRICE_FACTOR_BLINK, MAXIMUM_PRICE_FACTOR_BOTTOMSALES_BLINK, 0, 300, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		$IssuesFound += ItemsTooExpensive("NOPOGA", 5.50, 6.00, 5, 800, 90, $RootPath, $db);
+		$IssuesFound += ItemsTooExpensive("NOPOBA", MINIMUM_PRICE_FACTOR_BLINK, MAXIMUM_PRICE_FACTOR_BOTTOMSALES_BLINK, 0, 300, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
-*/
 	}
-
 
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager){
@@ -257,6 +237,7 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $D
 											<th class="ascending">' . _('Description') . '</th>
 											<th class="ascending">' . _('TopSales') . '</th>
 											<th class="ascending">' . _('QOH') . '</th>
+											<th class="ascending">' . _('QOO') . '</th>
 											<th class="ascending">' . _('Std Cost') . '</th>
 											<th class="ascending">' . _('Minimum Price') . '</th>
 											<th class="ascending">' . _('Date Price') . '</th>
@@ -272,12 +253,15 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $D
 					}
 					$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 					$NewPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $RecommendedPrice .  '">' . locale_number_format($RecommendedPrice,0) . '</a>';
+					$QOO = GetQuantityOnOrderDueToPurchaseOrders($myrow['stockid'], '') 
+						+ GetQuantityOnOrderDueToWorkOrders($myrow['stockid'], '');
 					
 					$k = StartEvenOrOddRow($k);
 					$i++;
 					printf('<td class="number">%s</td>
 							<td>%s</td>
 							<td>%s</td>
+							<td class="number">%s</td>
 							<td class="number">%s</td>
 							<td class="number">%s</td>
 							<td class="number">%s</td>
@@ -295,6 +279,7 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $D
 							$myrow['description'], 
 							locale_number_format($PositionTopSales,0),
 							locale_number_format($myrow['qoh'],0),
+							locale_number_format($QOO,0),
 							locale_number_format($myrow['standardcost'],0),
 							locale_number_format($MinPrice,0),
 							ConvertSQLDateTime($myrow['startdate']), 
@@ -374,6 +359,7 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales
 										<th class="ascending">' . _('Description') . '</th>
 										<th class="ascending">' . _('TopSales') . '</th>
 										<th class="ascending">' . _('QOH') . '</th>
+										<th class="ascending">' . _('QOO') . '</th>
 										<th class="ascending">' . _('Std Cost') . '</th>
 										<th class="ascending">' . _('Minimum Price') . '</th>
 										<th class="ascending">' . _('Date Price') . '</th>
@@ -389,12 +375,15 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales
 				}
 				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 				$NewPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $RecommendedPrice .  '">' . locale_number_format($RecommendedPrice,0) . '</a>';
+				$QOO = GetQuantityOnOrderDueToPurchaseOrders($myrow['stockid'], '') 
+					+ GetQuantityOnOrderDueToWorkOrders($myrow['stockid'], '');
 
 				$k = StartEvenOrOddRow($k);
 				$i++;
 				printf('<td class="number">%s</td>
 						<td>%s</td>
 						<td>%s</td>
+						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
@@ -412,6 +401,7 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales
 						$myrow['description'], 
 						locale_number_format($PositionTopSales,0),
 						locale_number_format($myrow['qoh'],0),
+						locale_number_format($QOO,0),
 						locale_number_format($myrow['standardcost'],0),
 						locale_number_format($MinPrice,0),
 						ConvertSQLDateTime($myrow['startdate']), 
@@ -488,6 +478,7 @@ function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath, $db){
 										<th class="ascending">' . _('Description') . '</th>
 										<th class="ascending">' . _('TopSales') . '</th>
 										<th class="ascending">' . _('QOH') . '</th>
+										<th class="ascending">' . _('QOO') . '</th>
 										<th class="ascending">' . _('Std Cost') . '</th>
 										<th class="ascending">' . _('Date Price') . '</th>
 										<th class="ascending">' . _('Current Price') . '</th>
@@ -507,9 +498,13 @@ function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath, $db){
 				$PositionTopSales = PositionTopSalesItem($myrow['stockid'], 60, $db);
 				$NewPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $RecommendedPrice .  '">' . locale_number_format($RecommendedPrice,0) . '</a>';
 				$IncomeIncrease = $myrow['qoh'] * ($RecommendedPrice-$myrow['retailprice']);
+				$QOO = GetQuantityOnOrderDueToPurchaseOrders($myrow['stockid'], '') 
+					+ GetQuantityOnOrderDueToWorkOrders($myrow['stockid'], '');
+
 				printf('<td class="number">%s</td>
 						<td>%s</td>
 						<td>%s</td>
+						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
@@ -526,6 +521,7 @@ function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath, $db){
 						$myrow['description'], 
 						locale_number_format($PositionTopSales,0),
 						locale_number_format($myrow['qoh'],0),
+						locale_number_format($QOO,0),
 						locale_number_format($myrow['standardcost'],0),
 						ConvertSQLDateTime($myrow['startdate']), 
 						locale_number_format($myrow['retailprice'],0),
@@ -595,6 +591,7 @@ function PriceWrongRounding($RootPath, $db){
 										<th class="ascending">' . _('Description') . '</th>
 										<th class="ascending">' . _('Top Sales') . '</th>
 										<th class="ascending">' . _('QOH') . '</th>
+										<th class="ascending">' . _('QOO') . '</th>
 										<th class="ascending">' . _('Rounded Down') . '</th>
 										<th class="ascending">' . _('Current Price') . '</th>
 										<th class="ascending">' . _('Rounded Up') . '</th>
@@ -606,11 +603,14 @@ function PriceWrongRounding($RootPath, $db){
 				$DownPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $RoundedDown .  '">' . locale_number_format($RoundedDown,0) . '</a>';
 				$UpPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $RoundedUp .  '">' . locale_number_format($RoundedUp,0) . '</a>';
 				$PositionTopSales = PositionTopSalesItem($myrow['stockid'], 60, $db);
+				$QOO = GetQuantityOnOrderDueToPurchaseOrders($myrow['stockid'], '') 
+					+ GetQuantityOnOrderDueToWorkOrders($myrow['stockid'], '');
 				$k = StartEvenOrOddRow($k);
 				$i++;
 				printf('<td class="number">%s</td>
 						<td>%s</td>
 						<td>%s</td>
+						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
@@ -622,6 +622,7 @@ function PriceWrongRounding($RootPath, $db){
 						$myrow['description'], 
 						$PositionTopSales,
 						locale_number_format($myrow['qoh'],0),
+						locale_number_format($QOO,0),
 						$DownPriceLink,
 						locale_number_format($myrow['retailprice'],0),
 						$UpPriceLink
@@ -680,6 +681,7 @@ function PricesTooOld($Years, $IncreaseA, $IncreaseB, $RootPath, $db){
 									<th class="ascending">' . _('Description') . '</th>
 									<th class="ascending">' . _('Top Sales') . '</th>
 									<th class="ascending">' . _('QOH') . '</th>
+									<th class="ascending">' . _('QOO') . '</th>
 									<th class="ascending">' . _('Standard Cost') . '</th>
 									<th class="ascending">' . _('Price Date') . '</th>
 									<th class="ascending">' . _('Current Price') . '</th>
@@ -696,11 +698,14 @@ function PricesTooOld($Years, $IncreaseA, $IncreaseB, $RootPath, $db){
 			$PriceALink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $PriceA .  '">' . locale_number_format($PriceA,0) . '</a>';
 			$PriceBLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $PriceB .  '">' . locale_number_format($PriceB,0) . '</a>';
 			$PositionTopSales = PositionTopSalesItem($myrow['stockid'], 60, $db);
+			$QOO = GetQuantityOnOrderDueToPurchaseOrders($myrow['stockid'], '') 
+				+ GetQuantityOnOrderDueToWorkOrders($myrow['stockid'], '');
 			$k = StartEvenOrOddRow($k);
 			$i++;
 			printf('<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
+					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -715,6 +720,7 @@ function PricesTooOld($Years, $IncreaseA, $IncreaseB, $RootPath, $db){
 					$myrow['description'], 
 					$PositionTopSales,
 					locale_number_format($myrow['qoh'],0),
+					locale_number_format($QOO,0),
 					locale_number_format($myrow['standardcost'],0),
 					ConvertSQLDateTime($myrow['startdate']), 
 					locale_number_format($myrow['retailprice'],0),
