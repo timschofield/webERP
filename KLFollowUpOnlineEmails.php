@@ -256,22 +256,27 @@ if ($_GET['EmailType']!='NoSendThankYou'){
 	if($_SESSION['ShopMode']=='test'){
 		// do not bother customers if we are doing tests with their data
 		$MailTo = $_SESSION['ShopManagerEmail'];
+		$SendEmail = TRUE;
 	}else{
 		$MailTo = $myrow['contactemail'];
+		$SendEmail = FALSE;
 	}
 
 	// send the email
-	if($_SESSION['SmtpSetting']==0){
-		$result = mail( $MailTo, $MailSubject, $MailMessage, $headers );
-	}else{
-		include('includes/htmlMimeMail.php');
-		$mail = new htmlMimeMail();
-		$mail->setSubject($mailSubject);
-		$mail->setHTML($MailMessage);
-		$result = SendmailBySmtp($mail,array($MailTo));
+	// now don't send to customer as all communications handled by opencart
+	// but we still want to  inform the team some lines below these
+	if ($SendEmail){
+		if($_SESSION['SmtpSetting']==0){
+			$result = mail( $MailTo, $MailSubject, $MailMessage, $headers );
+		}else{
+			include('includes/htmlMimeMail.php');
+			$mail = new htmlMimeMail();
+			$mail->setSubject($mailSubject);
+			$mail->setHTML($MailMessage);
+			$result = SendmailBySmtp($mail,array($MailTo));
+		}
+		echo '<h1>Email sent to ' . $MailTo. '</h1><br />';
 	}
-
-	echo '<h1>Email sent to ' . $MailTo. '</h1><br />';
 	echo $MailMessage . "<br />";
 
 }else{
@@ -298,8 +303,9 @@ if ($_GET['EmailType']=='RemindBankTransfer'){
 }
 
 if ($_GET['EmailType']=='PaymentConfirmation'){
-/*	if($_SESSION['ShopMode']!='test'){
+	if($_SESSION['ShopMode']!='test'){
 		// send a confirmation to team, so they prepare a new order ASAP, if it is NOT a test
+		// now only for orders that are imported into webERP as quotation, payment processed in webERP manually and we don't want to bother the customer
 		$MailTo = "kl-onlinesupport@kapal-laut.com";
 		$MailSubject = "New order online. Process ASAP.";
 		if($_SESSION['SmtpSetting']==0){
@@ -312,7 +318,7 @@ if ($_GET['EmailType']=='PaymentConfirmation'){
 			$result = SendmailBySmtp($mail,array($MailTo));
 		}
 	}
-*/	// update the sales order, as we send the payment confirmation
+	// update the sales order, as we send the payment confirmation
 	$sql = "UPDATE salesorders 
 			SET klemailpaymentconfirm = '" . Date('Y-m-d') . "'
 			WHERE orderno =	'" . $_GET['TransNo'] . "'";
