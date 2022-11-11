@@ -125,10 +125,6 @@ if ($ProcessSection02){
 
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager){
-
-	}
-
-	if ($KL_SystemAdmin){
 		$IssuesFound += ItemsTooCheap("TESTKA", MINIMUM_PRICE_FACTOR_KL, MINIMUM_PRICE_FACTOR_TOPSALES_KL, 0, 50, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		$IssuesFound += ItemsTooCheap("STABKA", MINIMUM_PRICE_FACTOR_KL, MINIMUM_PRICE_FACTOR_TOPSALES_KL, 0, 50, 60, $RootPath, $db);
