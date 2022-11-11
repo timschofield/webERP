@@ -126,17 +126,17 @@ if ($ProcessSection01){
 	}
 
 	if ($KL_SystemAdmin){
-		WrongStandardCost("Indonesia"  , "", STANDARD_COST_FACTOR_INDONESIA, 0.05, "SHOWLINK", $RootPath, $db);
+		WrongStandardCost("Indonesia"  , "", STANDARD_COST_FACTOR_INDONESIA, 0.04, "SHOWLINK", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		WrongStandardCost("Thailand"   , "", STANDARD_COST_FACTOR_FOREIGN, 0.05, "SHOWLINK", $RootPath, $db);
+		WrongStandardCost("Thailand"   , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		WrongStandardCost("China"      , "", STANDARD_COST_FACTOR_FOREIGN, 0.05, "SHOWLINK", $RootPath, $db);
+		WrongStandardCost("China"      , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		WrongStandardCost("Hong Kong"  , "", STANDARD_COST_FACTOR_FOREIGN, 0.05, "SHOWLINK", $RootPath, $db);
+		WrongStandardCost("Hong Kong"  , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		WrongStandardCost("Philippines", "", STANDARD_COST_FACTOR_FOREIGN, 0.05, "SHOWLINK", $RootPath, $db);
+		WrongStandardCost("Philippines", "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		WrongStandardCost("India"      , "", STANDARD_COST_FACTOR_FOREIGN, 0.05, "SHOWLINK", $RootPath, $db);
+		WrongStandardCost("India"      , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -420,7 +420,7 @@ if ($ProcessSection01){
 	if ($KL_SystemAdmin 
 		OR $KL_OperationalManager
 		OR $KL_AdministrationTeam){
-		BalanceAccountControl("111121100IK",  5000000, 250000000, $periodnow, $db);
+		BalanceAccountControl("111121100IK",  5000000, 200000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111121110IK",  5000000,  50000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
@@ -429,7 +429,7 @@ if ($ProcessSection01){
 	if ($KL_SystemAdmin 
 		OR $KL_OperationalManager
 		OR $KL_AdministrationTeam){
-		BalanceAccountControl("111121100PI",  5000000, 250000000, $periodnow, $db);
+		BalanceAccountControl("111121100PI",  5000000, 200000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111121110PI",  5000000,  50000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
@@ -444,7 +444,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('111513000', 
-									'111513000AD')", "Total WIP",   -5000000,    5000000, $periodnow, $db);
+									'111513000AD')", "Total WIP",  -10000000,   10000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 
 		BalanceAccountControl("111111200",   50000000,  300000000, $periodnow, $db);
@@ -465,13 +465,13 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111900000",   500000 * $NumberOfOpenShopsTotal, 1000000 * $NumberOfOpenShopsTotal, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111311100",  -20000000,   10000000, $periodnow, $db);
+		BalanceAccountControl("111311100",  -50000000,   10000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111499000",         -1,          1, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("211021400", -200000000,          1, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("211021500",  400000000,  800000000, $periodnow, $db);
+		BalanceAccountControl("211021500",  400000000, 1000000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("612012015",         -1,          1, $periodnow, $db);
 		$NumberOfTestExecuted++;

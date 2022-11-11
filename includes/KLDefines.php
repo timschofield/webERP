@@ -15,6 +15,19 @@ define("PPN_PERCENT", 11);
 define("COMPANY_NAME_FOR_PO", 'PT. ANGIN DINGIN UTARA');
 define("NPWP_FOR_PO", '81.304.529.1-906.000');
 
+/* Defines about standard Cost*/
+define("STANDARD_COST_FACTOR_INDONESIA", 1.00);
+define("STANDARD_COST_FACTOR_FOREIGN"  , 1.00);
+
+/* Defines about Prices factors*/
+define("MINIMUM_PRICE_FACTOR_KL",                6.00);
+define("MINIMUM_PRICE_FACTOR_TOPSALES_KL",       6.30);
+define("MAXIMUM_PRICE_FACTOR_BOTTOMSALES_KL",    6.60);
+define("MINIMUM_PRICE_FACTOR_BLINK",             6.50);
+define("MINIMUM_PRICE_FACTOR_TOPSALES_BLINK",    6.80);
+define("MAXIMUM_PRICE_FACTOR_BOTTOMSALES_BLINK", 7.15);
+define("MINIMUM_PRICE_FACTOR_GENERAL",           4.40);
+
 /* Defines about prices IDR */
 define("PRICE_ROUNDING_STEP01",               5000);
 define("PRICE_ROUNDING_LIMIT01",            100000);
@@ -23,17 +36,6 @@ define("PRICE_ROUNDING_LIMIT02",           1000000);
 define("PRICE_ROUNDING_COMMERCIAL_MODULE02",100000);
 define("PRICE_ROUNDING_COMMERCIAL_STEP02",    5000);
 define("PRICE_ROUNDING_STEP03",             100000);
-
-
-/* Defines about packaging transfers */
-define("TRANSFER_ROUNDING_STEP01",               5);
-define("TRANSFER_ROUNDING_LIMIT01",             10);
-define("TRANSFER_ROUNDING_STEP02",              10);
-define("TRANSFER_ROUNDING_LIMIT02",            100);
-define("TRANSFER_ROUNDING_STEP03",              50);
-define("TRANSFER_ROUNDING_LIMIT03",           1000);
-define("TRANSFER_ROUNDING_STEP04",             100);
-
 
 /* Defines abot small selling prices */
 define("SMALL_PRICE_CALCULATED_STEP01",  50000);
@@ -48,6 +50,14 @@ define("SMALL_PRICE_CORRECTED_STEP03",  185000);
 define("SMALL_PRICE_CALCULATED_STEP04", 195000);
 define("SMALL_PRICE_CORRECTED_STEP04",  195000);
 
+/* Defines about packaging transfers */
+define("TRANSFER_ROUNDING_STEP01",               5);
+define("TRANSFER_ROUNDING_LIMIT01",             10);
+define("TRANSFER_ROUNDING_STEP02",              10);
+define("TRANSFER_ROUNDING_LIMIT02",            100);
+define("TRANSFER_ROUNDING_STEP03",              50);
+define("TRANSFER_ROUNDING_LIMIT03",           1000);
+define("TRANSFER_ROUNDING_STEP04",             100);
 
 /* Defines about customer behaviour*/
 define("AVERAGE_INVOICE_VALUE_01",  125000);
@@ -70,10 +80,6 @@ define("AGE_STEP_07",  74);
 
 /* Defines about Pricetag control */
 define("RE_CHECK_PRICETAGS_CHANGED_DURING_LAST_X_DAYS",  35);
-
-/* Defines about standard Cost*/
-define("STANDARD_COST_FACTOR_INDONESIA", 1.00);
-define("STANDARD_COST_FACTOR_FOREIGN"  , 1.00);
 
 /* Defines about categories */
 define("LIST_STOCK_CATEGORIES_IN_KL_SHOPS_NOT_FOR_SALE", "('SHDISP', 'SHCONS', 'SHPACK', 'SHOTHE')");

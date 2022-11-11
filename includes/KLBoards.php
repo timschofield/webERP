@@ -263,7 +263,7 @@ function AverageBusinessHistory($NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $Num
 			$dailyD = locale_number_format(($myrow['salesD']),0);
 			$dailyE = locale_number_format(($myrow['salesE']),0);
 			$dailyF = locale_number_format(($myrow['salesF']),0);
-			$percent = (($myrow['salesD'])-($myrow['salesB']))/($myrow['salesB']) * 100;
+			$percent = (($myrow['salesD'])-($myrow['salesC']))/($myrow['salesC']) * 100;
 			$trend = " ";
 			if ($percent > MINIMUM_BUSINESS_HISTORY_TREND){
 				$trend = "Increasing ". locale_number_format($percent,0) . "%";
@@ -271,7 +271,6 @@ function AverageBusinessHistory($NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $Num
 			if ($percent < -MINIMUM_BUSINESS_HISTORY_TREND){
 				$trend = "Decreasing ". locale_number_format($percent,0) . "%";
 			}
-			$forecast = round($myrow['salesC']*((100+$percent)/100), -5);
 			
 			$k = StartEvenOrOddRow($k);
 			printf('<td>%s</td>
@@ -581,7 +580,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 			$dailyD = locale_number_format(($myrow['salesD']/$NumDaysD),0);
 			$dailyE = locale_number_format(($myrow['salesE']/$NumDaysE),0);
 			$dailyF = locale_number_format(($myrow['salesF']/$NumDaysF),0);
-			$percent = (($myrow['salesD']/$NumDaysD)-($myrow['salesB']/$NumDaysB))/($myrow['salesB']/$NumDaysB) * 100;
+			$percent = (($myrow['salesD']/$NumDaysD)-($myrow['salesC']/$NumDaysC))/($myrow['salesC']/$NumDaysC) * 100;
 			$trend = " ";
 			if ($percent > MINIMUM_AVERAGE_SALES_TREND){
 				$trend = "Improving ". locale_number_format($percent,0) . "%";
@@ -633,7 +632,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 			$TotalDateE = $TotalDateE +($myrow['salesE']/$NumDaysE);
 			$TotalDateF = $TotalDateF +($myrow['salesF']/$NumDaysF);
 			$TotalDateMTD = $TotalDateMTD +$myrow['salesMTD'];
-			$percent = ($TotalDateD-$TotalDateB)/$TotalDateB * 100;
+			$percent = ($TotalDateD-$TotalDateC)/$TotalDateC * 100;
 			$TotalForecast = $TotalForecast + round($forecast, -5);
 			$i++;
 		}
@@ -808,6 +807,8 @@ function ComponentsToObsolete($ShowOnlyTotal, $ShowLimit, $RootPath, $db){
 			echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
 		}
 	}
+	InsertBusinessHistory("COMPONENTS", "COMPONENTS NOT USED IN ANY BOM (IDR)", $totalcost);
+
 }
 
 function ErrorsInTransfers($maxdays, $RootPath, $db){
