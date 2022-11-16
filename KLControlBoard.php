@@ -56,8 +56,7 @@ $NumberOfOpenShopsTotal = $NumberOfOpenShopsKL + $NumberOfOpenShopsBL + $NumberO
 ***************************************************************************************/
 
 if ($_SESSION['UserID'] == "Ricard"){
-
-		
+	
 	//	phpinfo();
 
 /* TEST AND PLAY WITH call_user_func to move this script mainly to a table in DB
@@ -546,18 +545,20 @@ if ($ProcessSection01){
 
 		ItemsWithStockKantorButReorderLevelTokoZero("SHOPKL", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsWithStockKantorButReorderLevelTokoZero("SHOPBL", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ItemsWithStockKantorButReorderLevelTokoZero("SHOPOU", $RootPath, $db);
-		$NumberOfTestExecuted++;
 
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("TESTKA", "SHOPKL", $NumberOfTestExecuted, $RootPath, $db);
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("STABKA", "SHOPKL", $NumberOfTestExecuted, $RootPath, $db);
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("NOPOKA", "SHOPKL", $NumberOfTestExecuted, $RootPath, $db);
 
+		ItemsWithStockKantorButReorderLevelTokoZero("SHOPBL", $RootPath, $db);
+		$NumberOfTestExecuted++;
+
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("TESTBA", "SHOPBL", $NumberOfTestExecuted, $RootPath, $db);
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("STABBA", "SHOPBL", $NumberOfTestExecuted, $RootPath, $db);
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("NOPOBA", "SHOPBL", $NumberOfTestExecuted, $RootPath, $db);
+
+		ItemsWithStockKantorButReorderLevelTokoZero("SHOPOU", $RootPath, $db);
+		$NumberOfTestExecuted++;
 
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC2A", "SHOPOU", $NumberOfTestExecuted, $RootPath, $db);
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC5A", "SHOPOU", $NumberOfTestExecuted, $RootPath, $db);
@@ -1230,17 +1231,17 @@ function CategoryItemsMissingInShops($Category, $ShopType, $NumberOfTestExecuted
 		$Condition = " AND locations.allstableitems = '1' ";
 	}elseif (ItemInList($Category, LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING)){
 		$Condition = " AND locations.allnopoitems = '1' ";
-	}elseif ($Category == "DISC20"){
+	}elseif ($Category == "DISC2A"){
 		$Condition = " AND locations.alldisc20items = '1' ";
-	}elseif ($Category == "DISC50"){
+	}elseif ($Category == "DISC5A"){
 		$Condition = " AND locations.alldisc50items = '1' ";
-	}elseif ($Category == "DISC80"){
+	}elseif ($Category == "DISC8A"){
 		$Condition = " AND locations.alldisc80items = '1' ";
 	}
 	
 	$SQL="SELECT loccode
 		FROM locations
-		WHERE typeloc LIKE '%" . $ShopType . "%'" 
+		WHERE typeloc = '" . $ShopType . "'" 
 		. $Condition;
 	$result = DB_query($SQL);
 	while ($myrow = DB_fetch_array($result)){
@@ -1254,8 +1255,6 @@ function CategoryItemsMissingInShops($Category, $ShopType, $NumberOfTestExecuted
 
 
 function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $RootPath, $db){
-	
-	$MinQOH = $MinQOH + 1; // as we keep 1 for online shop allways in knator
 	
 	$Message = $Category . _(' items NOT in ') . $Shop . ' with QOH >= ' . $MinQOH .' (excluding Change of Price, Move to Discount, Service, Shop online and Return to Supplier)';
 
@@ -1351,7 +1350,6 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $RootPath, $db){
 						WHERE l.stockid = stockmaster.stockid
 							AND l.loccode IN " . LIST_ONLINE_SHOPS . ") = 0)
 			ORDER BY stockmaster.stockid";
-
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . $Message . '</strong></p>';
@@ -3250,14 +3248,18 @@ No pending transfer regarding this item
 2014-12-02 excluding items in OLD categories
 
 ***********************************************************************/
+
 	if ($ShopType == "SHOPKL"){
+		$ShopsToSetRL = NumberOfShops("SHOPKL", $db);
 		$Message = 'KAPAL-LAUT';
 		$Condition =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . "
 							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_GENERAL . ")";
 	}elseif ($ShopType == "SHOPBL"){
+		$ShopsToSetRL = NumberOfShops("SHOPBL", $db);
 		$Message = 'BLINK';
 		$Condition =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . ")";
 	}elseif ($ShopType == "SHOPOU"){
+		$ShopsToSetRL = NumberOfShops("SHOPOU", $db);
 		$Message = 'OUTLET';
 		$Condition =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . "
 							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_GENERAL . ")";
@@ -3308,6 +3310,12 @@ No pending transfer regarding this item
 							<th class="ascending">' . _('Category') . '</th>
 							<th class="ascending">' . _('Description') . '</th>
 							<th class="ascending">' . _('QOH Kantor') . '</th>
+							<th class="ascending">' . _('RL=?') . '</th>
+							<th class="ascending">' . _('RL=1') . '</th>
+							<th class="ascending">' . _('RL=2') . '</th>
+							<th class="ascending">' . _('RL=3') . '</th>
+							<th class="ascending">' . _('RL=4') . '</th>
+							<th class="ascending">' . _('RL=5') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -3315,17 +3323,53 @@ No pending transfer regarding this item
 		while ($myrow = DB_fetch_array($result)) {
 			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+			$ManualLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . 'Manual' . '</a>';
+			// set the links to nil, and just set some if we have enough QOH
+			$LinkRL1 = '';
+			$LinkRL2 = '';
+			$LinkRL3 = '';
+			$LinkRL4 = '';
+			$LinkRL5 = '';
+			if($ShopsToSetRL != 0){
+				if ($myrow['QtyKantor'] >= $ShopsToSetRL){
+					$LinkRL1 = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $ShopType . '&RL=1' . '">' . 'RL=1' . '</a>';
+				}
+				if ($myrow['QtyKantor'] >= $ShopsToSetRL * 2){
+					$LinkRL2 = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $ShopType . '&RL=2' . '">' . 'RL=2' . '</a>';
+				}
+				if ($myrow['QtyKantor'] >= $ShopsToSetRL * 3){
+					$LinkRL3 = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $ShopType . '&RL=3' . '">' . 'RL=3' . '</a>';
+				}
+				if ($myrow['QtyKantor'] >= $ShopsToSetRL * 4){
+					$LinkRL4 = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $ShopType . '&RL=4' . '">' . 'RL=4' . '</a>';
+				}
+				if ($myrow['QtyKantor'] >= $ShopsToSetRL * 5){
+					$LinkRL5 = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $ShopType . '&RL=5' . '">' . 'RL=5' . '</a>';
+				}
+			}
 			printf('<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
 					</tr>', 
 					$i, 
 					$CodeLink, 
 					$myrow['categoryid'], 
 					$myrow['description'], 
-					locale_number_format($myrow['QtyKantor'],0)
+					locale_number_format($myrow['QtyKantor'],0),
+					$ManualLink,
+					$LinkRL1,
+					$LinkRL2,
+					$LinkRL3,
+					$LinkRL4,
+					$LinkRL5
 					);
 			$i++;
 		}
