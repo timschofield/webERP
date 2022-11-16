@@ -888,6 +888,13 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 
+	if ($KL_SystemAdmin
+		OR $KL_BusinessDevelopmentManager
+		OR $KL_SalesTeamOnline){
+		OnlineOrdersFollowUp("KL-WEBSITE", 10, $RootPath, $db);
+		$NumberOfTestExecuted++;
+	}
+
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesTeamOnline
@@ -906,12 +913,6 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_SystemAdmin
-		OR $KL_BusinessDevelopmentManager
-		OR $KL_SalesTeamOnline){
-		OnlineOrdersFollowUp("KL-WEBSITE", 10, $RootPath, $db);
-		$NumberOfTestExecuted++;
-	}
 	/***************************************************************************************
 	* Other tests     
 	***************************************************************************************/
