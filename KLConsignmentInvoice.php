@@ -281,7 +281,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, &$d
 					// account for the goods sold
 					InsertIntoGLTrans("10", 
 									$TransNo, 
-									Date('Y-m-d'),
+									$EndDate,
 									$PeriodNo,
 									$myCompanyTo['accountconsignmentsalesptadu'],
 									"Invoice " . $InvoiceNumber,
@@ -292,7 +292,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, &$d
 
 					InsertIntoGLTrans("10", 
 									$TransNo, 
-									Date('Y-m-d'),
+									$EndDate,
 									$PeriodNo,
 									$myCompanyTo['accountconsignmentcogspartner'],
 									"Invoice " . $InvoiceNumber,
@@ -304,7 +304,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, &$d
 					// account for the PPN crossed
 					InsertIntoGLTrans("10", 
 									$TransNo, 
-									Date('Y-m-d'),
+									$EndDate,
 									$PeriodNo,
 									ACCOUNT_PPN_ADU,
 									"PPN Received " . $InvoiceNumber,
@@ -315,7 +315,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, &$d
 									
 					InsertIntoGLTrans("10", 
 									$TransNo, 
-									Date('Y-m-d'),
+									$EndDate,
 									$PeriodNo,
 									$myCompanyTo['accountppn'],
 									"PPN Paid Invoice " . $InvoiceNumber,
