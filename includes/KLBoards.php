@@ -96,7 +96,7 @@ function ActiveTransfersByLocation($RootPath, $db){
 				locale_number_format($TotalPcsIn,0),
 				locale_number_format($TotalPcsOut+$TotalPcsIn,0)
 				);
-		InsertBusinessHistory("TRANSFERS","PENDING GOODS TO BE TRANSFERRED @ SHOPS (PCS)", $TotalPcsOut+$TotalPcsIn);
+		InsertKPI("TRANSFERS","PENDING GOODS TO BE TRANSFERRED @ SHOPS (PCS)", $TotalPcsOut+$TotalPcsIn);
 		echo '</table>
 				</div>
 				</form>';
@@ -168,14 +168,14 @@ function ActiveTransferStatus($RootPath, $db){
 				'Total', 
 				locale_number_format($total,0)
 				);
-		InsertBusinessHistory("TRANSFERS", "ACTIVE TRANSFERS (PCS)", $total);
+		InsertKPI("TRANSFERS", "ACTIVE TRANSFERS (PCS)", $total);
 		echo '</table>
 				</div>
 				</form>';
 	}
 }
 
-function AverageBusinessHistory($NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE, $NumDaysF, $db){
+function AverageKPIHistory($NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE, $NumDaysF, $db){
 
 	$Today  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',0));
 	$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA));
@@ -190,42 +190,42 @@ function AverageBusinessHistory($NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $Num
 	$SQL = "SELECT bh1.class,
 				bh1.concept,
 				(SELECT AVG(value)
-					FROM klbusinesshistory bh2
+					FROM klkpi bh2
 					WHERE bh1.class =  bh2.class
 						AND bh1.concept =  bh2.concept
 						AND bh2.date >= '". $StartDateA . "'
 						AND bh2.date <= '". $Today . "') AS salesA,
 				(SELECT AVG(value)
-					FROM klbusinesshistory bh2
+					FROM klkpi bh2
 					WHERE bh1.class =  bh2.class
 						AND bh1.concept =  bh2.concept
 						AND bh2.date >= '". $StartDateB . "'
 						AND bh2.date <= '". $Today . "') AS salesB,
 				(SELECT AVG(value)
-					FROM klbusinesshistory bh2
+					FROM klkpi bh2
 					WHERE bh1.class =  bh2.class
 						AND bh1.concept =  bh2.concept
 						AND bh2.date >= '". $StartDateC . "'
 						AND bh2.date <= '". $Today . "') AS salesC,
 				(SELECT AVG(value)
-					FROM klbusinesshistory bh2
+					FROM klkpi bh2
 					WHERE bh1.class =  bh2.class
 						AND bh1.concept =  bh2.concept
 						AND bh2.date >= '". $StartDateD . "'
 						AND bh2.date <= '". $Today . "') AS salesD,
 				(SELECT AVG(value)
-					FROM klbusinesshistory bh2
+					FROM klkpi bh2
 					WHERE bh1.class =  bh2.class
 						AND bh1.concept =  bh2.concept
 						AND bh2.date >= '". $StartDateE . "'
 						AND bh2.date <= '". $Today . "') AS salesE,
 				(SELECT AVG(value)
-					FROM klbusinesshistory bh2
+					FROM klkpi bh2
 					WHERE bh1.class =  bh2.class
 						AND bh1.concept =  bh2.concept
 						AND bh2.date >= '". $StartDateF . "'
 						AND bh2.date <= '". $Today . "') AS salesF
-			FROM klbusinesshistory bh1
+			FROM klkpi bh1
 			GROUP BY bh1.class,
 					bh1.concept
 			ORDER BY bh1.class,
@@ -233,7 +233,7 @@ function AverageBusinessHistory($NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $Num
 
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . "Business History for the last " . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . ", ". $NumDaysE . ", ". $NumDaysF . " days. Trend by " . $NumDaysD . " days.".'</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . "Average Business KPI for the last " . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . ", ". $NumDaysE . ", ". $NumDaysF . " days. Trend by " . $NumDaysD . " days.".'</strong></p>';
 		$TitleTarget = "";
 		echo '<div>';
 		echo '<table class="selection">';
@@ -807,7 +807,7 @@ function ComponentsToObsolete($ShowOnlyTotal, $ShowLimit, $RootPath, $db){
 			echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
 		}
 	}
-	InsertBusinessHistory("COMPONENTS", "COMPONENTS NOT USED IN ANY BOM (IDR)", $totalcost);
+	InsertKPI("COMPONENTS", "COMPONENTS NOT USED IN ANY BOM (IDR)", $totalcost);
 
 }
 
@@ -1152,7 +1152,7 @@ function FinishedStockDistribution($kind, $byreport, $db){
 				""
 				);
 		if ($kind == "DISPLAYS"){			
-			InsertBusinessHistory("STOCK", "STOCK DISPLAYS (PCS)", $totalpcs);
+			InsertKPI("STOCK", "STOCK DISPLAYS (PCS)", $totalpcs);
 		}
 		
 		echo '</table>
@@ -1475,7 +1475,7 @@ function GoodsToBeProduced($CategoryComponent, $ParentCategory, $RootPath, $db){
 					);
 			$i++;
 		}
-		InsertBusinessHistory("COMPONENTS", $BusinessConcept, $totalcost);
+		InsertKPI("COMPONENTS", $BusinessConcept, $totalcost);
 		printf('<td class="number">%s</td>
 				<td>%s</td>
 				<td>%s</td>
@@ -1663,13 +1663,13 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					locale_number_format($TotalDaysQOO,0),
 					locale_number_format_zero_blank($OptimumOrder,0)
 					);
-			InsertBusinessHistory("PACKAGING", "PACKAGING USED LAST " . $DaysProduction .  " DAYS (PCS)", $UsageXDays);
-			InsertBusinessHistory("PACKAGING", "PACKAGING FORECAST NEXT " . $DaysMinimumStock .  " DAYS (PCS)", $ForecastXDays);
-			InsertBusinessHistory("PACKAGING", "PACKAGING QOH TOTAL (PCS)", $QOHTotal);
-			InsertBusinessHistory("PACKAGING", "PACKAGING QOH TOTAL (DAYS)", $TotalDaysQOH);
-			InsertBusinessHistory("PACKAGING", "PACKAGING QOO NOT RECEIVED (PCS)", $PendingQOO);
-			InsertBusinessHistory("PACKAGING", "PACKAGING QOH + QOO TOTAL (DAYS)", $TotalDaysQOO);
-			InsertBusinessHistory("PACKAGING", "PACKAGING OPTIMUM ORDER (PCS)", $OptimumOrder);
+			InsertKPI("PACKAGING", "PACKAGING USED LAST " . $DaysProduction .  " DAYS (PCS)", $UsageXDays);
+			InsertKPI("PACKAGING", "PACKAGING FORECAST NEXT " . $DaysMinimumStock .  " DAYS (PCS)", $ForecastXDays);
+			InsertKPI("PACKAGING", "PACKAGING QOH TOTAL (PCS)", $QOHTotal);
+			InsertKPI("PACKAGING", "PACKAGING QOH TOTAL (DAYS)", $TotalDaysQOH);
+			InsertKPI("PACKAGING", "PACKAGING QOO NOT RECEIVED (PCS)", $PendingQOO);
+			InsertKPI("PACKAGING", "PACKAGING QOH + QOO TOTAL (DAYS)", $TotalDaysQOO);
+			InsertKPI("PACKAGING", "PACKAGING OPTIMUM ORDER (PCS)", $OptimumOrder);
 
 			echo '</table>
 				</div>';
@@ -3079,8 +3079,8 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 			AND ($TypeOfProduct == "FORSALE")){
 			$CurrentTotalQtyItemsForSale = GetTotalQtyItemsForSale($db);
 			$CurrentTotalValueItemsForSale = GetTotalValueItemsForSale($periodnow, $db);
-			InsertBusinessHistory("STOCK", "CURRENT STOCK ITEMS FOR SALE (IDR)", $CurrentTotalValueItemsForSale);
-			InsertBusinessHistory("STOCK", "CURRENT STOCK ITEMS FOR SALE (PCS)", $CurrentTotalQtyItemsForSale);
+			InsertKPI("STOCK", "CURRENT STOCK ITEMS FOR SALE (IDR)", $CurrentTotalValueItemsForSale);
+			InsertKPI("STOCK", "CURRENT STOCK ITEMS FOR SALE (PCS)", $CurrentTotalQtyItemsForSale);
 			$k = StartEvenOrOddRow($k);
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -3215,7 +3215,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 		if (($TypeOfCode == "ARRIVING IN NEXT DAYS") 
 			AND ($TypeOfProduct == "FORSALE")){
 			$AverageItemCost = $CurrentTotalValueItemsForSale / $CurrentTotalQtyItemsForSale;
-			InsertBusinessHistory("STOCK", "AVERAGE ITEM FOR SALE STANDARD COST (PCS)", $AverageItemCost);
+			InsertKPI("STOCK", "AVERAGE ITEM FOR SALE STANDARD COST (PCS)", $AverageItemCost);
 			$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 			$SQL = "SELECT SUM(amount) AS cogs
 					FROM  gltrans 
@@ -3225,9 +3225,9 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 			$result = DB_query($SQL);
 			$myrow = DB_fetch_array($result);
 			$k = StartEvenOrOddRow($k);
-			InsertBusinessHistory("PURCHASE ORDERS", "CURRENT PO x ITEMS FOR SALE NEXT ". $maxdays." DAYS (IDR)", $TotalValueAllOrders);
-			InsertBusinessHistory("PURCHASE ORDERS", "CURRENT PO x ITEMS FOR SALE NEXT ". $maxdays." DAYS (PCS @SC)", round($TotalValueAllOrders/$AverageItemCost));
-			InsertBusinessHistory("STOCK", "EXPECTED COGS NEXT ". $maxdays . " DAYS (IDR)", round($myrow['cogs'],-6));
+			InsertKPI("PURCHASE ORDERS", "CURRENT PO x ITEMS FOR SALE NEXT ". $maxdays." DAYS (IDR)", $TotalValueAllOrders);
+			InsertKPI("PURCHASE ORDERS", "CURRENT PO x ITEMS FOR SALE NEXT ". $maxdays." DAYS (PCS @SC)", round($TotalValueAllOrders/$AverageItemCost));
+			InsertKPI("STOCK", "EXPECTED COGS NEXT ". $maxdays . " DAYS (IDR)", round($myrow['cogs'],-6));
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
@@ -3268,9 +3268,9 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 					'', 
 					'' 
 					);
-			InsertBusinessHistory("STOCK", "EXPECTED COGS NEXT ". $maxdays . " DAYS (PCS)", round($myrow['cogs']/$AverageItemCost, -2));
+			InsertKPI("STOCK", "EXPECTED COGS NEXT ". $maxdays . " DAYS (PCS)", round($myrow['cogs']/$AverageItemCost, -2));
 			$ExpectedDifferenceValueStock = round($TotalValueAllOrders-$myrow['cogs'],-6);
-			InsertBusinessHistory("STOCK", "EXPECTED DIFFERENCE STOCK IN ". $maxdays . " DAYS (IDR)", $ExpectedDifferenceValueStock);
+			InsertKPI("STOCK", "EXPECTED DIFFERENCE STOCK IN ". $maxdays . " DAYS (IDR)", $ExpectedDifferenceValueStock);
 			$k = StartEvenOrOddRow($k);
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -3314,7 +3314,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 					);
 					
 			$ExpectedDifferenceQtyStock = round($ExpectedDifferenceValueStock/$AverageItemCost,-2);
-			InsertBusinessHistory("STOCK", "EXPECTED DIFFERENCE STOCK IN ". $maxdays . " DAYS (PCS)", $ExpectedDifferenceQtyStock);
+			InsertKPI("STOCK", "EXPECTED DIFFERENCE STOCK IN ". $maxdays . " DAYS (PCS)", $ExpectedDifferenceQtyStock);
 			$k = StartEvenOrOddRow($k);
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -3357,7 +3357,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 					'' 
 					);
 			$ExpectedFutureValueStock = round($CurrentTotalValueItemsForSale+$ExpectedDifferenceValueStock, -6);
-			InsertBusinessHistory("STOCK", "EXPECTED FUTURE STOCK ". $maxdays . " DAYS (IDR)", $ExpectedFutureValueStock);
+			InsertKPI("STOCK", "EXPECTED FUTURE STOCK ". $maxdays . " DAYS (IDR)", $ExpectedFutureValueStock);
 			$k = StartEvenOrOddRow($k);
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -3400,7 +3400,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 					'' 
 					);
 			$ExpectedFutureQtyStock = round($ExpectedFutureValueStock / $AverageItemCost, -2);
-			InsertBusinessHistory("STOCK", "EXPECTED FUTURE STOCK ". $maxdays . " DAYS (PCS)", $ExpectedFutureQtyStock);
+			InsertKPI("STOCK", "EXPECTED FUTURE STOCK ". $maxdays . " DAYS (PCS)", $ExpectedFutureQtyStock);
 			$k = StartEvenOrOddRow($k);
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -4127,19 +4127,19 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $Mode, $
 function ShowTotalItemsMoving(){
 	$NumItems = GetTotalItemsChangingPrice();
 	echo '<p class="bad" align="center"><strong>' . "# Items changing price: " . $NumItems . '</strong></p>';
-	InsertBusinessHistory("PRICES", "ITEMS CHANGING PRICE", $NumItems);
+	InsertKPI("PRICES", "ITEMS CHANGING PRICE", $NumItems);
 
 	$NumItems = GetTotalItemsMovingToDiscount("20");
 	echo '<p class="bad" align="center"><strong>' . "# Items moving to 20% discount: " . $NumItems . '</strong></p>';
-	InsertBusinessHistory("PRICES", "ITEMS MOVING TO 20% DISCOUNT", $NumItems);
+	InsertKPI("PRICES", "ITEMS MOVING TO 20% DISCOUNT", $NumItems);
 
 	$NumItems = GetTotalItemsMovingToDiscount("50");
 	echo '<p class="bad" align="center"><strong>' . "# Items moving to 50% discount: " . $NumItems . '</strong></p>';
-	InsertBusinessHistory("PRICES", "ITEMS MOVING TO 50% DISCOUNT", $NumItems);
+	InsertKPI("PRICES", "ITEMS MOVING TO 50% DISCOUNT", $NumItems);
 
 	$NumItems = GetTotalItemsMovingToDiscount("80");
 	echo '<p class="bad" align="center"><strong>' . "# Items moving to 80% discount: " . $NumItems . '</strong></p>';
-	InsertBusinessHistory("PRICES", "ITEMS MOVING TO 80% DISCOUNT", $NumItems);
+	InsertKPI("PRICES", "ITEMS MOVING TO 80% DISCOUNT", $NumItems);
 }
 
 ?>

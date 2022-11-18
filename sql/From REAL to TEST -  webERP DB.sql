@@ -191,8 +191,8 @@ TRUNCATE test_erp.`kladjustrl`;
 TRUNCATE test_erp.`klconsignment`;
 /* INSERT INTO test_erp.klconsignment SELECT * FROM kurakura_kl_erp.klconsignment; */
 
-TRUNCATE test_erp.`klbusinesshistory`;
-INSERT INTO test_erp.klbusinesshistory SELECT * FROM kurakura_kl_erp.klbusinesshistory;
+TRUNCATE test_erp.`klkpi`;
+INSERT INTO test_erp.klkpi SELECT * FROM kurakura_kl_erp.klkpi;
 
 TRUNCATE test_erp.`klfreeexchanges`;
 INSERT INTO test_erp.klfreeexchanges SELECT * FROM kurakura_kl_erp.klfreeexchanges;

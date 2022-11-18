@@ -347,7 +347,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 		}
 	}
 
-	InsertBusinessHistory("SHOPS", "ITEMS REBALANCED BETWEEN SHOPS (ITEMS)", $ItemsRebalanced);
+	InsertKPI("SHOPS", "ITEMS REBALANCED BETWEEN SHOPS (ITEMS)", $ItemsRebalanced);
 
 	return $EmailText;
 }

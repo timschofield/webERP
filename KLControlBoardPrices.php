@@ -165,7 +165,7 @@ if ($ProcessSection02){
 
 prnMsg("Performed ". $NumberOfTestExecuted . " pricing control tests",'success');
 prnMsg("Detected ". $IssuesFound . " pricing issues",'success');
-InsertBusinessHistory("PRICES", "PRICING ISSUES", $IssuesFound);
+InsertKPI("PRICES", "PRICING ISSUES", $IssuesFound);
 
 time_finish($begintime);
 include ('includes/footer.php');

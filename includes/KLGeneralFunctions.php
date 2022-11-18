@@ -1006,10 +1006,10 @@ function DataExistsInWebERP($db, $table, $f1, $v1, $f2 = '', $v2 = ''){
 	return $Exists;
 }
 
-function InsertBusinessHistory($Class, $Concept, $Value){
+function InsertKPI($Class, $Concept, $Value){
 	$Date = date('Y-m-d');
-	if (!DataExistsInWebERP($db, 'klbusinesshistory', 'date', $Date, 'concept', $Concept)){
-		$SQL = "INSERT INTO klbusinesshistory 
+	if (!DataExistsInWebERP($db, 'klkpi', 'date', $Date, 'concept', $Concept)){
+		$SQL = "INSERT INTO klkpi 
 				(date,
 				class,
 				concept,
@@ -1019,8 +1019,8 @@ function InsertBusinessHistory($Class, $Concept, $Value){
 				'" . $Class . "',
 				'" . $Concept . "',
 				'" . $Value . "')";
-		$ErrMsg = 'Error in function InsertBusinessHistory()';
-		$DbgMsg = 'SQL to insert klbusinesshistory record: ';
+		$ErrMsg = 'Error in function InsertKPI()';
+		$DbgMsg = 'SQL to insert klkpi record: ';
 		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 	}
 }

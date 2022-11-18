@@ -319,11 +319,11 @@ if ($ProcessSection03){
 		$NumberOfTestExecuted++;
 	}
 	if ($KL_SystemAdmin){
-		ShowBusinessHistory(7);
+		ShowKPIHistory(7);
 		$NumberOfTestExecuted++;
-		ShowBusinessHistory(90);
+		ShowKPIHistory(90);
 		$NumberOfTestExecuted++;
-		AverageBusinessHistory(180, 90, 30, 15, 7, 0, $db);
+		AverageKPIHistory(180, 90, 30, 15, 7, 0, $db);
 		$NumberOfTestExecuted++;
 		UnbalancedGLTransTX(15, $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -3158,21 +3158,21 @@ function UnbalancedGLTransTX($NumDays, $RootPath, $db){
 	}
 }
 
-function ShowBusinessHistory($NumDays){
+function ShowKPIHistory($NumDays){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 	$SQL = "SELECT class,
 				concept,
 				MIN(value) AS minimumvalue,
 				AVG(value) AS averagevalue,
 				MAX(value) AS maximumvalue
-			FROM klbusinesshistory
+			FROM klkpi
 			WHERE date >= '" . $StartDate . "'
 			GROUP BY class, concept
 			ORDER BY class, concept";
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		$k = 0; //row colour counter
-		echo '<p class="page_title_text" align="center"><strong>' . 'General Business Data last ' . $NumDays . ' days' . '</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . 'General KPI last ' . $NumDays . ' days' . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>

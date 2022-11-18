@@ -313,7 +313,7 @@ function SetEndDatePriceToObsolete($ShowMessages, $EmailText, $db){
 				  OR enddate = '0000-00-00')";
 	$result = DB_query($sql,$ErrMsg);
 	$myrow = DB_fetch_array($result);
-	InsertBusinessHistory("STOCK", "ITEMS MOVED TO OBSOLETE (ITEMS)", $myrow['items']);
+	InsertKPI("STOCK", "ITEMS MOVED TO OBSOLETE (ITEMS)", $myrow['items']);
 
 	$sql = "UPDATE prices
 			SET enddate = '" . date('Y-m-d') ."'
@@ -411,7 +411,7 @@ function AuthorizeAllInternalStockRequest($ShowMessages, $EmailText, $db){
 			WHERE authorised !='1'";
 	$result = DB_query($sql,$ErrMsg);
 	$myrow = DB_fetch_array($result);
-	InsertBusinessHistory("SHOPS", "INTERNAL REQUESTS", $myrow['total']);
+	InsertKPI("SHOPS", "INTERNAL REQUESTS", $myrow['total']);
 
 	$sql = "UPDATE stockrequest
 					SET authorised='1'
