@@ -315,7 +315,10 @@ if ($ProcessSection03){
 	if ($KL_SystemAdmin
 		OR $KL_OperationalManager
 		OR $KL_AdministrationTeam){
-		CashStatus(2022, 20000000, 50000000, 100000000, 20000000, 50000000, 100000000, 100000000, $periodnow, TRUE, $db);
+		CashStatus(2022, 
+					20000000, 300000000, 100000000, 
+					20000000, 300000000, 100000000, 
+					100000000, $periodnow, TRUE, $db);
 		$NumberOfTestExecuted++;
 	}
 	if ($KL_SystemAdmin){
@@ -567,7 +570,10 @@ function AverageCustomerBehaviourByValueInvoice($typereport, $NumDaysA, $db){
 	}
 }
 
-function CashStatus($Year, $CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTransferADU, $CashEndOfPreviousYearBB, $YearlyGoalBB, $MinTransferBB, $MinMoveFree, $Period, $ShowTables, $db){
+function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTransferADU, 
+							$CashEndOfPreviousYearBB, $YearlyGoalBB, $MinTransferBB, 
+							$MinMoveFree, 
+							$Period, $ShowTables, $db){
 
     // Consider all year, not until today as some tx are reported into the future
 	$Today=FormatDateForSQL(Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,12,31,Date('Y'))));
@@ -719,6 +725,20 @@ function CashStatus($Year, $CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTransf
 	$result = DB_query($SQL);
 	$myrow = DB_fetch_array($result);
 	$SaldoBrankasKantor = $myrow['saldo'];
+
+	//
+	// STATUS CASH BRANKAS SHAREHOLDERS
+	//
+	$Account = "111131100";
+	$SQL = "SELECT (bfwd + actual) as saldo, accountname
+			FROM chartdetails, chartmaster
+			WHERE chartdetails.accountcode = chartmaster.accountcode
+				AND chartdetails.accountcode = '" . $Account . "'
+				AND chartdetails.period = ". $Period . "";
+	$result = DB_query($SQL);
+	$myrow = DB_fetch_array($result);
+	$SaldoBrankasShareholders = $myrow['saldo'];
+
 		
 	if ($ShowTables){
 		echo '<p class="page_title_text" align="center"><strong>' . 'Status Cash PT. Angin Dingin Utara ' . $Year . '</strong></p>';
@@ -881,18 +901,14 @@ function CashStatus($Year, $CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTransf
 		echo '</table>
 			</div>';	
 			
-		echo '<p class="page_title_text" align="center"><strong>' . 'Status Brankas Kantor ' . $Year . '</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . 'Status Brankas Kantor and Shareholders ' . $Year . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		
-		if ($CurrentBalanceADU < 0){
-			$CurrentBalanceADU = 0;
-		}
-		if ($CurrentBalanceBB < 0){
-			$CurrentBalanceBB = 0;
-		}
 		$FreeSaldoBrankasKantor = $SaldoBrankasKantor - $CurrentBalanceADU - $CurrentBalanceBB;
 		$ToBeMovedFree = round_basic_price($FreeSaldoBrankasKantor, $MinMoveFree);	
+		$FreeSaldoBrankasShareholders = $SaldoBrankasShareholders + $FreeSaldoBrankasKantor;
+		$ToBeDistributedToShareholders = round_basic_price($FreeSaldoBrankasShareholders, $MinMoveFree);	
 
 		$TableHeader = '<tr>
 							<th>' . 'Concept' . '</th>
@@ -922,21 +938,47 @@ function CashStatus($Year, $CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTransf
 		printf('<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
-				'Free Cash in Brankas Kantor', 
+				'Extra Cash in Brankas Kantor', 
 				locale_number_format(($FreeSaldoBrankasKantor),0)
+				);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'Saldo Cash in Brankas Shareholders', 
+				locale_number_format($SaldoBrankasShareholders,0)
+				);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'Extra Cash in Brankas Shareholders', 
+				locale_number_format($FreeSaldoBrankasShareholders,0)
 				);
 		if ($ToBeMovedFree !=0){
 			if ($FreeSaldoBrankasKantor >= 0){
-				$Text = 'ACTION NEEDED -> Move Cash from Brankas Kantor to Brankas RL';
+				$Text = 'ACTION NEEDED -> Move Cash from Brankas Kantor to Brankas Shareholders';
 			}else{
-				$Text = 'ACTION NEEDED -> Move Cash from Brankas RL to Brankas Kantor';
+				$Text = 'ACTION NEEDED -> Move Cash from Brankas Shareholders to Brankas Kantor';
 			}
-			$k = StartEvenOrOddRow($k);
+			StartEvenOrOddRow($k);
 			printf('<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
 				$Text, 
 				locale_number_format(abs($ToBeMovedFree),0)
+				);
+		}
+		if ($ToBeDistributedToShareholders !=0){
+			if ($FreeSaldoBrankasShareholders >= 0){
+				$Text = 'ACTION NEEDED -> Distribute Cash from Brankas Shareholders to Shareholders';
+			}else{
+				$Text = 'ACTION NEEDED -> Get Cash from Shareholders to Brankas Shareholders';
+			}
+			StartEvenOrOddRow($k);
+			printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				$Text, 
+				locale_number_format(abs($ToBeDistributedToShareholders),0)
 				);
 		}
 		echo '</table>

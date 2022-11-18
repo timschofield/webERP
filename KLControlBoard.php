@@ -439,7 +439,7 @@ if ($ProcessSection01){
 									'111208010', 
 									'111208020', 
 									'111208030', 
-									'111208040')", "Total Brankas RL",      0,2500000000, $periodnow, $db);
+									'111208040')", "Total Brankas Shareholders",      0,2500000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('111513000', 
