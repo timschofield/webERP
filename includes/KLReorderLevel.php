@@ -111,7 +111,7 @@ function KL_DailyRLAdjustmentsForPackaging($ShowMessages, $updateDB, $RootPath, 
 	$EmailText = AdjustPackaging(60, 'SHOPKL', $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 	$EmailText = AdjustPackaging(60, 'SHOPBL', $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 	$EmailText = AdjustPackaging(60, 'SHOPOU', $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
-	$EmailText = AdjustPackagingGudang('PACKU', $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+	$EmailText = AdjustPackagingGudang('PACKU', FACTOR_GUDANG_PACKAGING, $ShowMessages, $updateDB, $RootPath, $db, $EmailText);
 	
 	return $EmailText;
 }
@@ -953,7 +953,7 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $db,
 	return $EmailText;
 }
 
-function AdjustPackagingGudang($GudangCode, $ShowMessages, $updateDB, $RootPath, $db, $EmailText){
+function AdjustPackagingGudang($GudangCode, $FactorGudangPackaging, $ShowMessages, $updateDB, $RootPath, $db, $EmailText){
 
 	$Message = "Adjusting RL for Packaging Gudang " . $GudangCode ;
 	if ($ShowMessages){
@@ -988,7 +988,7 @@ function AdjustPackagingGudang($GudangCode, $ShowMessages, $updateDB, $RootPath,
 			$EmailText = $EmailText . $text . "\n";
 		}
 		$sql = "UPDATE locations
-				SET rlfactorforpackaging = '" . $myrow['rlfactor'] ."',
+				SET rlfactorforpackaging = '" . round($myrow['rlfactor']*$FactorGudangPackaging, 2) ."',
 					rldaysforpackaging = '" . $myrow['rldays'] ."'
 				WHERE loccode = '". $GudangCode ."'";
 		$ErrMsg = 'Could not update RL packaging settings for Gudang because';
