@@ -28,7 +28,7 @@ function ActiveTransfersByLocation($RootPath, $db){
 				WHERE  recqty < shipqty
 					AND loctransfers.recloc = locations.loccode) as transferin
 			FROM locations
-			WHERE locations.typeloc IN " . ALL_SHOPS_LIST_BY_TYPE . "
+			WHERE locations.typeloc IN " . LIST_ALL_SHOPS_BY_TYPE . "
 			ORDER BY (SELECT SUM(shipqty-recqty)
 				FROM loctransfers
 				WHERE  recqty < shipqty
@@ -1250,7 +1250,7 @@ function FinishedStockDistributionByShopAndCategory($db){
 						AND m2.categoryid = 'DISC8A'
 						AND l2.reorderlevel != 0) AS modelsDISC80
 			FROM locations
-			WHERE locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . "
+			WHERE locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
 			ORDER BY locations.locationname";
 						
 	$result = DB_query($SQL);
@@ -1756,7 +1756,7 @@ function ListPriorityLocations($db){
 				rldaysforpackaging,
 				smartdispatchmaxmodels
 		FROM locations
-		WHERE locations.typeloc IN " . ALL_SHOPS_LIST_BY_TYPE . "
+		WHERE locations.typeloc IN " . LIST_ALL_SHOPS_BY_TYPE . "
 		ORDER BY locationname ASC";
 
 	$result = DB_query($SQL);

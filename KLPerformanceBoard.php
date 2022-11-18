@@ -1281,7 +1281,7 @@ function PackagingStatusForBlink($RootPath, $db){
 							AND loctransfers.stockid = 'PKSB04-S') AS ot_shopping_s
 			FROM locations
 			WHERE locations.typeloc = 'SHOPBL'
-				OR locations.loccode IN " . LIST_GUDANG_FOR_PACKAGING . "
+				OR locations.loccode IN " . LIST_PACAKING_LOCATIONS . "
 			ORDER BY locations.loccode";
 
 	$result = DB_query($SQL);
@@ -1542,7 +1542,7 @@ function PackagingStatusForKapalLaut($RootPath, $db){
 							AND loctransfers.stockid = 'PKSB02-S') AS ot_shopping_s
 			FROM locations
 			WHERE locations.typeloc = 'SHOPKL'
-				OR locations.loccode IN " . LIST_GUDANG_FOR_PACKAGING . "
+				OR locations.loccode IN " . LIST_PACAKING_LOCATIONS . "
 			ORDER BY locations.loccode";
 
 	$result = DB_query($SQL);
@@ -1738,7 +1738,7 @@ function PackagingStatusForOutlet($RootPath, $db){
 							AND loctransfers.stockid = 'PKSB03') AS ot_shopping_m
 			FROM locations
 			WHERE locations.typeloc = 'SHOPOU'
-				OR locations.loccode IN " . LIST_GUDANG_FOR_PACKAGING . "
+				OR locations.loccode IN " . LIST_PACAKING_LOCATIONS . "
 			ORDER BY locations.loccode";
 
 	$result = DB_query($SQL);
@@ -1915,7 +1915,7 @@ function PackagingUsageForBlink($NumDays, $RootPath, $db){
 							AND packagingused.date >= '". $FromDate ."') AS sales_shopping_s
 			FROM locations
 			WHERE locations.typeloc = 'SHOPBL'
-				OR locations.loccode IN " . LIST_GUDANG_FOR_PACKAGING . "
+				OR locations.loccode IN " . LIST_PACAKING_LOCATIONS . "
 			ORDER BY locations.loccode";
 
 	$result = DB_query($SQL);
@@ -2234,7 +2234,7 @@ function PackagingUsageForKapalLaut($NumDays, $RootPath, $db){
 							AND packagingused.date >= '". $FromDate ."') AS sales_shopping_s
 			FROM locations
 			WHERE locations.typeloc = 'SHOPKL'
-				OR locations.loccode IN " . LIST_GUDANG_FOR_PACKAGING . "
+				OR locations.loccode IN " . LIST_PACAKING_LOCATIONS . "
 			ORDER BY locations.loccode";
 
 	$result = DB_query($SQL);
@@ -2637,7 +2637,7 @@ function PackagingUsageForOutlet($NumDays, $RootPath, $db){
 							AND packagingused.date >= '". $FromDate ."') AS sales_shopping_m
 			FROM locations
 			WHERE locations.typeloc = 'SHOPOU'
-				OR locations.loccode IN " . LIST_GUDANG_FOR_PACKAGING . "
+				OR locations.loccode IN " . LIST_PACAKING_LOCATIONS . "
 			ORDER BY locations.loccode";
 
 	$result = DB_query($SQL);

@@ -562,7 +562,7 @@ function ItemsInCategoryWithStockKantorButReorderLevelTokoZero($CategoryId, $Roo
 			$WhereLocation = " AND locations.typeloc = 'SHOPOU' ";
 		}
 	}else{
-		$WhereLocation = " AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . " ";
+		$WhereLocation = " AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . " ";
 	}
 
 	$SQL = "SELECT stockid,
@@ -1314,7 +1314,7 @@ function SetRLForLowSalesItems( $starttopitems, $endtopitems, $daystopitems, $Ne
 								FROM locstock,locations
 								WHERE locstock.stockid = '" . $myrow['stockid'] . "'
 									AND locstock.loccode = locations.loccode
-									AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . "
+									AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
 									AND locstock.reorderlevel > 0";
 			$resultdistribution = DB_query($SQLDistribution);
 			$LocationsToDistribute = DB_num_rows($resultdistribution);

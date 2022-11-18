@@ -2150,7 +2150,7 @@ function ItemsChangingPriceDelayed($NumDays, $RootPath, $db){
 					FROM locstock,locations
 					WHERE locstock.stockid = stockmaster.stockid
 						AND locstock.loccode = locations.loccode
-						AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . ") AS qohpos,
+						AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . ") AS qohpos,
 				(SELECT SUM(locstock.quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
@@ -2164,13 +2164,13 @@ function ItemsChangingPriceDelayed($NumDays, $RootPath, $db){
 					WHERE locstock.stockid = stockmaster.stockid
 						AND locstock.loccode = locations.loccode
 						AND locstock.loccode NOT IN " . LIST_KANTOR_LOCATIONS . "
-						AND locations.typeloc NOT IN " . BALI_SHOPS_LIST_BY_TYPE . "
+						AND locations.typeloc NOT IN " . LIST_BALI_SHOPS_BY_TYPE . "
 						AND locstock.loccode NOT IN " . LIST_CONSIGNMENT_LOCATIONS . ") AS qohotherlocs,
 				(SELECT SUM(loctransfers.shipqty-loctransfers.recqty) 
 					FROM loctransfers,locations
 					WHERE loctransfers.stockid = stockmaster.stockid
 						AND loctransfers.shiploc = locations.loccode
-						AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . ") AS intransitfromshops,
+						AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . ") AS intransitfromshops,
 				(SELECT SUM(loctransfers.shipqty-loctransfers.recqty) 
 					FROM loctransfers
 					WHERE loctransfers.stockid = stockmaster.stockid
@@ -2781,7 +2781,7 @@ function ItemsMovingToDiscountDelayed($TypeDiscount, $NumDays, $RootPath, $db){
 					FROM locstock,locations
 					WHERE locstock.stockid = stockmaster.stockid
 					AND locstock.loccode = locations.loccode
-					AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . ") AS qohpos,
+					AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . ") AS qohpos,
 				(SELECT SUM(locstock.quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
@@ -2795,13 +2795,13 @@ function ItemsMovingToDiscountDelayed($TypeDiscount, $NumDays, $RootPath, $db){
 					WHERE locstock.stockid = stockmaster.stockid
 					AND locstock.loccode = locations.loccode
 					AND locstock.loccode NOT IN " . LIST_KANTOR_LOCATIONS . "
-					AND locations.typeloc NOT IN " . BALI_SHOPS_LIST_BY_TYPE . "
+					AND locations.typeloc NOT IN " . LIST_BALI_SHOPS_BY_TYPE . "
 					AND locstock.loccode NOT IN " . LIST_CONSIGNMENT_LOCATIONS . ") AS qohotherlocs,
 				(SELECT SUM(loctransfers.shipqty-loctransfers.recqty) 
 						FROM loctransfers,locations
 						WHERE loctransfers.stockid = stockmaster.stockid
 						AND loctransfers.shiploc = locations.loccode
-						AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . ") AS intransitfromshops,
+						AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . ") AS intransitfromshops,
 				(SELECT SUM(loctransfers.shipqty-loctransfers.recqty) 
 						FROM loctransfers
 						WHERE loctransfers.stockid = stockmaster.stockid
@@ -2990,7 +2990,7 @@ function ItemsWithStockLocationButNoStockAvailable($Location, $NameLocation, $Mi
 					FROM locations, locstock l2
 					WHERE l2.loccode = locations.loccode
 						AND locstock.stockid = l2.stockid
-						AND (locations.typeloc IN " . ALL_SHOPS_LIST_BY_TYPE . "
+						AND (locations.typeloc IN " . LIST_ALL_SHOPS_BY_TYPE . "
 							OR l2.loccode = " . CODE_KANTOR . ")
 				) AS available
 			FROM locstock, stockmaster
@@ -3004,7 +3004,7 @@ function ItemsWithStockLocationButNoStockAvailable($Location, $NameLocation, $Mi
 						FROM locations, locstock l2
 						WHERE l2.loccode = locations.loccode
 							AND locstock.stockid = l2.stockid
-							AND (locations.typeloc IN " . ALL_SHOPS_LIST_BY_TYPE . "
+							AND (locations.typeloc IN " . LIST_ALL_SHOPS_BY_TYPE . "
 								OR l2.loccode = " . CODE_KANTOR . ")
 					) <= " . $MinAvailable;
 	$result = DB_query($SQL);
@@ -4575,8 +4575,8 @@ id	select_type	table	type	possible_keys	key	key_len	ref	rows	Extra
 			WHERE stockmaster.stockid = locstock.stockid
 				AND locstock.loccode = locations.loccode
 				AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_SHOP_PACKAGING . "
-				AND locations.typeloc NOT IN " . BALI_SHOPS_LIST_BY_TYPE . "
-				AND locstock.loccode NOT IN " . LIST_GUDANG_FOR_PACKAGING . "
+				AND locations.typeloc NOT IN " . LIST_BALI_SHOPS_BY_TYPE . "
+				AND locstock.loccode NOT IN " . LIST_PACAKING_LOCATIONS . "
 				AND ( locstock.quantity > 0 OR locstock.reorderlevel > 0 )
 			ORDER BY stockmaster.stockid";
 

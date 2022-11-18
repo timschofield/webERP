@@ -190,7 +190,7 @@ function RetailTypePayments($typereport, $maxdays, $db){
 function SPGPerformanceAllShops($NumDaysA, $NumDaysB, $NumDaysC, $db){
 	$SQL = "SELECT locations.cashsalecustomer
 			FROM locations
-			WHERE locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . "
+			WHERE locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
 			ORDER BY locations.zone,
 				locations.loccode";
 	$result = DB_query($SQL);
@@ -1029,7 +1029,7 @@ function HourlySales($numDays, $RootPath, $db){
 			FROM debtorsmaster, custbranch, locations
 			WHERE debtorsmaster.debtorno = custbranch.debtorno
 				AND custbranch.defaultlocation = locations.loccode
-				AND locations.typeloc IN " . ALL_SHOPS_LIST_BY_TYPE . "
+				AND locations.typeloc IN " . LIST_ALL_SHOPS_BY_TYPE . "
 				AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_RETAIL . ")
 			ORDER BY locations.zone, 
 				debtorsmaster.debtorno";

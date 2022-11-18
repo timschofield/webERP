@@ -154,7 +154,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 						FROM locstock, locations
 						WHERE stockmaster.stockid  = locstock.stockid 
 							AND locstock.loccode = locations.loccode
-							AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . "
+							AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
 							AND locstock.quantity < locstock.reorderlevel
 						ORDER BY reorderlevel DESC
 						LIMIT 1) AS locationneeded
@@ -164,13 +164,13 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 							FROM locstock, locations
 							WHERE stockmaster.stockid  = locstock.stockid 
 								AND locstock.loccode = locations.loccode
-								AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . "
+								AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
 								AND locstock.quantity < locstock.reorderlevel)
 				AND EXISTS (SELECT *
 							FROM locstock, locations
 							WHERE stockmaster.stockid  = locstock.stockid 
 								AND locstock.loccode = locations.loccode
-								AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . "
+								AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
 								AND locstock.quantity > 0)
 				AND EXISTS (SELECT *
 						FROM locstock
@@ -237,7 +237,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 										FROM locstock, locations
 										WHERE  locstock.loccode = locations.loccode
 											AND locstock.stockid = '" . $myrow['stockid'] . "'
-											AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . "
+											AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
 											AND locstock.reorderlevel > 0 
 										ORDER BY locations.priority ASC, 
 												(SELECT COUNT(qtyinvoiced)
@@ -365,7 +365,7 @@ function WorstLocationForItem($stockid, $stockcat, $kind, $maxdays, $db){
 		$SQL = $SQL . " AND locstock.quantity > 0 "; 
 	}
 
-	$SQL = $SQL . "	AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . "
+	$SQL = $SQL . "	AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
 					ORDER BY locations.priority DESC,
 					(SELECT COUNT(qtyinvoiced)
 						FROM salesorderdetails, salesorders
@@ -390,7 +390,7 @@ function LocationOrderForItem($stockid, $order, $maxdays, $db){
 			FROM locstock,locations
 			WHERE locstock.stockid = '" . $stockid . "'
 				AND locstock.loccode = locations.loccode
-				AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . "
+				AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
 			ORDER BY (SELECT COUNT(qtyinvoiced)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
@@ -415,9 +415,9 @@ function QtyAvailable($stockid, $location, $db){
 			WHERE locstock.stockid = '" . $stockid . "'
 				AND locstock.loccode = locations.loccode";
 	if ($location == "ALLSHOPS"){
-		$SQL = $SQL . " AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . " "; 
+		$SQL = $SQL . " AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . " "; 
 	}elseif ($location == "ALLSHOPSANDONLINE"){
-		$SQL = $SQL . " AND locations.typeloc IN " . ALL_SHOPS_LIST_BY_TYPE . " "; 
+		$SQL = $SQL . " AND locations.typeloc IN " . LIST_ALL_SHOPS_BY_TYPE . " "; 
 	}elseif ($location == "ALL"){
 		$SQL = $SQL . " "; 
 	}else{
@@ -824,7 +824,7 @@ function SetReorderLevel($reason, $stockid, $loccode, $oldRL, $newRL, $updateDB,
 						WHERE stockid = '". $stockid ."'
 							AND loccode IN (SELECT locations.loccode
 											FROM locations
-											WHERE locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . ")";
+											WHERE locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . ")";
 			}else{
 				$sql = "UPDATE locstock
 						SET reorderlevel = '" . $newRL ."'

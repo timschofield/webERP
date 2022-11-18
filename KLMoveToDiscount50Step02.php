@@ -15,7 +15,7 @@ include('includes/KLPrices.php');
 					FROM locstock,locations
 					WHERE locstock.stockid = stockmaster.stockid
 					AND locstock.loccode = locations.loccode
-					AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . ") AS qohpos,
+					AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . ") AS qohpos,
 				(SELECT sum(quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
@@ -29,13 +29,13 @@ include('includes/KLPrices.php');
 					WHERE locstock.stockid = stockmaster.stockid
 					AND locstock.loccode = locations.loccode
 					AND locations.loccode NOT IN " . LIST_KANTOR_LOCATIONS . "
-					AND locations.typeloc NOT IN " . BALI_SHOPS_LIST_BY_TYPE . "
+					AND locations.typeloc NOT IN " . LIST_BALI_SHOPS_BY_TYPE . "
 					AND locations.loccode NOT IN " . LIST_CONSIGNMENT_LOCATIONS . ") AS qohotherlocs,
 				(SELECT SUM(loctransfers.shipqty-loctransfers.recqty) 
 						FROM loctransfers,locations
 						WHERE loctransfers.stockid = stockmaster.stockid
 						AND loctransfers.shiploc = locations.loccode
-						AND locations.typeloc IN " . BALI_SHOPS_LIST_BY_TYPE . ") AS intransitfromshops,
+						AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . ") AS intransitfromshops,
 				(SELECT SUM(loctransfers.shipqty-loctransfers.recqty) 
 						FROM loctransfers
 						WHERE loctransfers.stockid = stockmaster.stockid
