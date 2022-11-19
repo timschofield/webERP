@@ -318,7 +318,7 @@ if ($ProcessSection03){
 		CashStatus(2022, 
 					20000000, 300000000, 100000000, 
 					20000000, 300000000, 100000000, 
-					100000000, $periodnow, TRUE, $db);
+					100000000, $periodnow, $KL_SystemAdmin, TRUE, $db);
 		$NumberOfTestExecuted++;
 	}
 	if ($KL_SystemAdmin){
@@ -573,7 +573,8 @@ function AverageCustomerBehaviourByValueInvoice($typereport, $NumDaysA, $db){
 function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTransferADU, 
 							$CashEndOfPreviousYearBB, $YearlyGoalBB, $MinTransferBB, 
 							$MinMoveFree, 
-							$Period, $ShowTables, $db){
+							$Period, 
+							$AdminRole, $ShowTables, $db){
 
     // Consider all year, not until today as some tx are reported into the future
 	$Today=FormatDateForSQL(Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,12,31,Date('Y'))));
@@ -901,88 +902,90 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 		echo '</table>
 			</div>';	
 			
-		echo '<p class="page_title_text" align="center"><strong>' . 'Status Brankas Kantor and Shareholders ' . $Year . '</strong></p>';
-		echo '<div>';
-		echo '<table class="selection">';
-		
-		$FreeSaldoBrankasKantor = $SaldoBrankasKantor - $CurrentBalanceADU - $CurrentBalanceBB;
-		$ToBeMovedFree = round_basic_price($FreeSaldoBrankasKantor, $MinMoveFree);	
-		$FreeSaldoBrankasShareholders = $SaldoBrankasShareholders + $FreeSaldoBrankasKantor;
-		$ToBeDistributedToShareholders = round_basic_price($FreeSaldoBrankasShareholders, $MinMoveFree);	
+		if ($AdminRole){
+			echo '<p class="page_title_text" align="center"><strong>' . 'Status Brankas Kantor and Shareholders ' . $Year . '</strong></p>';
+			echo '<div>';
+			echo '<table class="selection">';
+			
+			$FreeSaldoBrankasKantor = $SaldoBrankasKantor - $CurrentBalanceADU - $CurrentBalanceBB;
+			$ToBeMovedFree = round_basic_price($FreeSaldoBrankasKantor, $MinMoveFree);	
+			$FreeSaldoBrankasShareholders = $SaldoBrankasShareholders + $FreeSaldoBrankasKantor;
+			$ToBeDistributedToShareholders = round_basic_price($FreeSaldoBrankasShareholders, $MinMoveFree);	
 
-		$TableHeader = '<tr>
-							<th>' . 'Concept' . '</th>
-							<th>' . 'Value' . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
-		$i = 1;
-		printf('<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				'Saldo Cash Brankas Kantor ', 
-				locale_number_format($SaldoBrankasKantor,0)
-				);
-		printf('<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				'Cash belonging to PTADU', 
-				locale_number_format($CurrentBalanceADU,0)
-				);
-		printf('<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				'Cash belonging to PTBB', 
-				locale_number_format($CurrentBalanceBB,0)
-				);
-		printf('<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				'Extra Cash in Brankas Kantor', 
-				locale_number_format(($FreeSaldoBrankasKantor),0)
-				);
-		printf('<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				'Saldo Cash in Brankas Shareholders', 
-				locale_number_format($SaldoBrankasShareholders,0)
-				);
-		printf('<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				'Extra Cash in Brankas Shareholders', 
-				locale_number_format($FreeSaldoBrankasShareholders,0)
-				);
-		if ($ToBeMovedFree !=0){
-			if ($FreeSaldoBrankasKantor >= 0){
-				$Text = 'ACTION NEEDED -> Move Cash from Brankas Kantor to Brankas Shareholders';
-			}else{
-				$Text = 'ACTION NEEDED -> Move Cash from Brankas Shareholders to Brankas Kantor';
-			}
-			StartEvenOrOddRow($k);
+			$TableHeader = '<tr>
+								<th>' . 'Concept' . '</th>
+								<th>' . 'Value' . '</th>
+							</tr>';
+			echo $TableHeader;
+			$k = 0; //row colour counter
+			$i = 1;
 			printf('<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				$Text, 
-				locale_number_format(abs($ToBeMovedFree),0)
-				);
-		}
-		if ($ToBeDistributedToShareholders !=0){
-			if ($FreeSaldoBrankasShareholders >= 0){
-				$Text = 'ACTION NEEDED -> Distribute Cash from Brankas Shareholders to Shareholders';
-			}else{
-				$Text = 'ACTION NEEDED -> Get Cash from Shareholders to Brankas Shareholders';
-			}
-			StartEvenOrOddRow($k);
+					<td class="number">%s</td>
+					</tr>', 
+					'Saldo Cash Brankas Kantor ', 
+					locale_number_format($SaldoBrankasKantor,0)
+					);
 			printf('<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				$Text, 
-				locale_number_format(abs($ToBeDistributedToShareholders),0)
-				);
+					<td class="number">%s</td>
+					</tr>', 
+					'Cash belonging to PTADU', 
+					locale_number_format($CurrentBalanceADU,0)
+					);
+			printf('<td>%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					'Cash belonging to PTBB', 
+					locale_number_format($CurrentBalanceBB,0)
+					);
+			printf('<td>%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					'Extra Cash in Brankas Kantor', 
+					locale_number_format(($FreeSaldoBrankasKantor),0)
+					);
+			printf('<td>%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					'Saldo Cash in Brankas Shareholders', 
+					locale_number_format($SaldoBrankasShareholders,0)
+					);
+			printf('<td>%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					'Extra Cash in Brankas Shareholders', 
+					locale_number_format($FreeSaldoBrankasShareholders,0)
+					);
+			if ($ToBeMovedFree !=0){
+				if ($FreeSaldoBrankasKantor >= 0){
+					$Text = 'ACTION NEEDED -> Move Cash from Brankas Kantor to Brankas Shareholders';
+				}else{
+					$Text = 'ACTION NEEDED -> Move Cash from Brankas Shareholders to Brankas Kantor';
+				}
+				StartEvenOrOddRow($k);
+				printf('<td>%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$Text, 
+					locale_number_format(abs($ToBeMovedFree),0)
+					);
+			}
+			if ($ToBeDistributedToShareholders !=0){
+				if ($FreeSaldoBrankasShareholders >= 0){
+					$Text = 'ACTION NEEDED -> Distribute Cash from Brankas Shareholders to Shareholders';
+				}else{
+					$Text = 'ACTION NEEDED -> Get Cash from Shareholders to Brankas Shareholders';
+				}
+				StartEvenOrOddRow($k);
+				printf('<td>%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$Text, 
+					locale_number_format(abs($ToBeDistributedToShareholders),0)
+					);
+			}
+			echo '</table>
+				</div>';	
 		}
-		echo '</table>
-			</div>';	
 	}
 }
 
