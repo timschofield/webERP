@@ -973,14 +973,16 @@ function AdjustPackagingGudang($GudangCode, $FactorGudangPackaging, $ShowMessage
 
 	if (DB_num_rows($result) != 0){
 		$myrow = DB_fetch_array($result);
-		$text = $GudangCode . ' RL Factor for Packaging = ' . $myrow['rlfactor'];
+		$RLFactorGudang = round($myrow['rlfactor']*$FactorGudangPackaging, 2);
+		$RLDaysGudang = round($myrow['rldays']*$FactorGudangPackaging, 0);
+		$text = $GudangCode . ' RL Factor for Packaging = ' . $RLFactorGudang;
 		if ($ShowMessages){
 			echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
 		}
 		if ($EmailText!=''){
 			$EmailText = $EmailText . $text . "\n";
 		}
-		$text = $GudangCode . ' RL Days for Packaging = ' . $myrow['rldays'];
+		$text = $GudangCode . ' RL Days for Packaging = ' . $RLDaysGudang;
 		if ($ShowMessages){
 			echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
 		}
@@ -988,8 +990,8 @@ function AdjustPackagingGudang($GudangCode, $FactorGudangPackaging, $ShowMessage
 			$EmailText = $EmailText . $text . "\n";
 		}
 		$sql = "UPDATE locations
-				SET rlfactorforpackaging = '" . round($myrow['rlfactor']*$FactorGudangPackaging, 2) ."',
-					rldaysforpackaging = '" . $myrow['rldays'] ."'
+				SET rlfactorforpackaging = '" . $RLFactorGudang ."',
+					rldaysforpackaging = '" . $RLDaysGudang ."'
 				WHERE loccode = '". $GudangCode ."'";
 		$ErrMsg = 'Could not update RL packaging settings for Gudang because';
 		$result = DB_query($sql,$ErrMsg);
@@ -997,7 +999,6 @@ function AdjustPackagingGudang($GudangCode, $FactorGudangPackaging, $ShowMessage
 
 	// Now, update the RL for the items to be stocked at the gudang
 	$SQL = "SELECT  stockmaster.stockid,
-					SUM(locstock.quantity) AS qoh,
 					SUM(locstock.reorderlevel) AS rl
 			FROM locations, locstock, stockmaster
 			WHERE locations.loccode = locstock.loccode

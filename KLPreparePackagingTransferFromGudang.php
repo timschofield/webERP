@@ -1,7 +1,7 @@
 <?php
 
 include ('includes/session.php');
-$Title = _('Send email to team to prepare a Kapal-Laut packaging transfer');
+$Title = _('Send email to team to prepare a Packaging Transfer');
 include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
@@ -46,7 +46,7 @@ DB_Txn_Begin();
 
 $sql = "UPDATE locations 
 		SET klemaillastpackacgingtransfer = '" . Date('Y-m-d') . "'
-		WHERE loccode =	'" . $_GET['Shop'] . "'";
+		WHERE loccode =	'" . $_GET['To'] . "'";
 $ErrMsg =_('Could not update the date of the last packaging transfer reminder because');
 $result = DB_query($sql,$ErrMsg);
 prnMsg("Updated date of email for packaging transfer to shop to today");
