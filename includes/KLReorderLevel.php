@@ -212,11 +212,11 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 			$PrintLine = TRUE;
 
 			//Look for the WORST location with overstock.
-			$locationoverstock  = WorstLocationForItem($myrow['stockid'], $myrow['categoryid'], "OVERSTOCK", $maxdays, $db);
+			$locationoverstock  = WorstLocationForItem($myrow['stockid'], "OVERSTOCK", $maxdays, $db);
 			if ($locationoverstock == ""){
 				// NO location with overstock
 				// We need to reduce RL at the worst selling location with some stock available (qty > 0)
-				$locationworst  = WorstLocationForItem($myrow['stockid'], $myrow['categoryid'], "AVAILABLE", $maxdays, $db);
+				$locationworst  = WorstLocationForItem($myrow['stockid'], "AVAILABLE", $maxdays, $db);
 				if ($locationworst == ""){
 					// Does not exist any shop with available stock. This was the last one!
 					// No need to do anything!!!
@@ -225,13 +225,26 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 				}else{
 					// let's distribute available stock between the shops with RL > 0.
 					// if RL = 0 we suppose we do not want it there for any reason 
-					$QtyToDistribute = QtyAvailable($myrow['stockid'], "ALLSHOPS", $db);
+					$QtyToDistribute = ItemCodeQOH($myrow['stockid'], "CODE_FULL", "ALL_SHOPS", $db);
 					if ($EmailText!=''){
 						$EmailText = $EmailText . $myrow['stockid']. " Quantity to distribute = " . $QtyToDistribute . "\n";
 					}
 					$QOH =$QtyToDistribute;
 					$LocationsDistributed = 0;
 					
+					// order should also account if the shop is supposed to have all the collection or not,
+					// so we order firsts shops with all collection = TRUE, as normally shops with all collection = FALSE
+					// are the small shops or slow shops
+					
+					if (ItemInLIst($myrow['categoryid'], LIST_STOCK_CATEGORIES_TEST)){
+						$OrderBy = " locations.alltestitems DESC, ";
+					}elseif (ItemInLIst($myrow['categoryid'], LIST_STOCK_CATEGORIES_STABLE)){
+						$OrderBy = " locations.allstableitems DESC, ";
+					}elseif (ItemInLIst($myrow['categoryid'], LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING)){
+						$OrderBy = " locations.allnopoitems DESC, ";
+					}else{
+						$OrderBy = "";
+					}
 					$SQLDistribution = "SELECT locstock.loccode, 
 											locstock.reorderlevel AS oldrl
 										FROM locstock, locations
@@ -239,7 +252,8 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 											AND locstock.stockid = '" . $myrow['stockid'] . "'
 											AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
 											AND locstock.reorderlevel > 0 
-										ORDER BY locations.priority ASC, 
+										ORDER BY locations.priority ASC, ".
+												$OrderBy ."
 												(SELECT COUNT(qtyinvoiced)
 													FROM salesorderdetails, salesorders
 													WHERE salesorderdetails.orderno = salesorders.orderno
@@ -306,7 +320,8 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 				}
 			}else{
 				// We have some overstock location. When transferrng from TOKO to kantor will be rebalanced.
-				// No need to do anything!!!
+				// No need to do anything, as the overstock item in that location will return to kantor 
+				// and from kantor will be sent to the location needing it.
 				$rebalancinglocationfrom = $locationoverstock;
 				$strategy = "Overstock available in some shop. No RL changed";
 			}
@@ -352,7 +367,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 	return $EmailText;
 }
 
-function WorstLocationForItem($stockid, $stockcat, $kind, $maxdays, $db){
+function WorstLocationForItem($stockid, $kind, $maxdays, $db){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 	$SQL = "SELECT locstock.loccode
 			FROM locstock, locations
@@ -407,30 +422,6 @@ function LocationOrderForItem($stockid, $order, $maxdays, $db){
 		$location = "";
 	}
 	return $location;
-}
-
-function QtyAvailable($stockid, $location, $db){
-	$SQL = "SELECT SUM(locstock.quantity) AS total
-			FROM locstock,locations
-			WHERE locstock.stockid = '" . $stockid . "'
-				AND locstock.loccode = locations.loccode";
-	if ($location == "ALLSHOPS"){
-		$SQL = $SQL . " AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . " "; 
-	}elseif ($location == "ALLSHOPSANDONLINE"){
-		$SQL = $SQL . " AND locations.typeloc IN " . LIST_ALL_SHOPS_BY_TYPE . " "; 
-	}elseif ($location == "ALL"){
-		$SQL = $SQL . " "; 
-	}else{
-		$SQL = $SQL . " AND locstock.loccode = '". $location . "'"; 
-	}
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		$myrow = DB_fetch_array($result);
-		$qty = $myrow['total'];
-	}else{
-		$qty = 0;
-	}
-	return $qty;
 }
 
 function ActiveLocationsForItem($stockid, $db){

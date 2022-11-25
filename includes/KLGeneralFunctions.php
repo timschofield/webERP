@@ -216,35 +216,51 @@ function ClassicalSize($stockid){
 	return $Size;
 }
 
-function ItemCodeQOH($Stockid,$CodeDetail){
+function ItemCodeQOH($Stockid, $CodeDetail, $Where){
 	$ErrMsg = 'Error in function ItemCodeQOH()';
 
-	if ($CodeDetail == 'CodeFull'){
-		$WhereCondition = "WHERE stockid = '". $Stockid ."'";
-	}elseif ($CodeDetail == 'CodeFullWithRings'){
+	$SQL = "SELECT SUM(locstock.quantity) AS TOTAL
+			FROM locstock,locations 
+			WHERE locstock.loccode = locations.loccode ";
+
+	if ($CodeDetail == 'CODE_FULL'){
+		$SQL .= "AND  stockid = '". $Stockid ."'";
+	}elseif ($CodeDetail == 'CODE_FULL_WITH_RINGS'){
 		if (isRing($Stockid)){
-			$WhereCondition = "WHERE stockid LIKE '". $Stockid ."%'";
+			$SQL .= "AND stockid LIKE '". $Stockid ."%'";
 		}else{
-			$WhereCondition = "WHERE stockid = '". $Stockid ."'";
+			$SQL .= "AND stockid = '". $Stockid ."'";
 		}
 	}else{
-		$WhereCondition = "WHERE stockid LIKE '". $Stockid ."%'";
+		$SQL .= "AND stockid LIKE '". $Stockid ."%'";
 	}
-	
-	$SQL = "SELECT SUM(quantity)
-			FROM locstock " .
-			$WhereCondition ;
+
+	if ($Where == "ALL_SHOPS"){
+		$SQL .= " AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . " "; 
+	}elseif ($Where == "ALL_SHOPS_AND_ONLINE"){
+		$SQL .= " AND locations.typeloc IN " . LIST_ALL_SHOPS_BY_TYPE . " "; 
+	}elseif ($Where == "ALL"){
+		$SQL .= " "; 
+	}else{
+		$SQL .= " AND locstock.loccode = '". $Where . "'"; 
+	}
+
 	$result = DB_query($SQL,$ErrMsg);
-	$Row = DB_fetch_row($result);
-	return $Row['0'];
+	if (DB_num_rows($result) != 0){
+		$myrow = DB_fetch_array($result);
+		$qty = $myrow['total'];
+	}else{
+		$qty = 0;
+	}
+	return $qty;
 }
 
 function ItemCodeQuantityInvoiced($Stockid,$FromDate,$ToDate,$Debtorno,$CodeDetail){
 	$ErrMsg = 'Error in function ItemCodeQuantityInvoiced()';
 
-	if ($CodeDetail == 'CodeFull'){
+	if ($CodeDetail == 'CODE_FULL'){
 		$WhereCondition = "AND salesorderdetails.stkcode = '". $Stockid ."'";
-	}elseif ($CodeDetail == 'CodeFullWithRings'){
+	}elseif ($CodeDetail == 'CODE_FULL_WITH_RINGS'){
 		if (isRing($Stockid)){
 			$WhereCondition = "AND salesorderdetails.stkcode LIKE '". $Stockid ."%'";
 		}else{
@@ -273,9 +289,9 @@ function ItemCodeQuantityInvoiced($Stockid,$FromDate,$ToDate,$Debtorno,$CodeDeta
 function ItemCodeAvgPriceInvoiced($Stockid,$FromDate,$ToDate,$Debtorno,$CodeDetail){
 	$ErrMsg = 'Error in function ItemCodeAvgPriceInvoiced()';
 	
-	if ($CodeDetail == 'CodeFull'){
+	if ($CodeDetail == 'CODE_FULL'){
 		$WhereCondition = "AND salesorderdetails.stkcode = '". $Stockid ."'";
-	}elseif ($CodeDetail == 'CodeFullWithRings'){
+	}elseif ($CodeDetail == 'CODE_FULL_WITH_RINGS'){
 		if (isRing($Stockid)){
 			$WhereCondition = "AND salesorderdetails.stkcode LIKE '". $Stockid ."%'";
 		}else{
@@ -307,9 +323,9 @@ function ItemCodeAvgPriceInvoiced($Stockid,$FromDate,$ToDate,$Debtorno,$CodeDeta
 function ItemCodeQOO_PurchaseOrders($Stockid, $CodeDetail){
 	$ErrMsg = 'Error in function ItemCodeQOO_PurchaseOorders()';
 
-	if ($CodeDetail == 'CodeFull'){
+	if ($CodeDetail == 'CODE_FULL'){
 		$WhereCondition = "WHERE purchorderdetails.itemcode = '". $Stockid ."'";
-	}elseif ($CodeDetail == 'CodeFullWithRings'){
+	}elseif ($CodeDetail == 'CODE_FULL_WITH_RINGS'){
 		if (isRing($Stockid)){
 			$WhereCondition = "WHERE purchorderdetails.itemcode LIKE '". $Stockid ."%'";
 		}else{
@@ -337,9 +353,9 @@ function ItemCodeQOO_PurchaseOrders($Stockid, $CodeDetail){
 function ItemCodeQOO_WorkOrders($Stockid,$CodeDetail){
 	$ErrMsg = 'Error in function ItemCodeQOO_WorkOorders()';
 
-	if ($CodeDetail == 'CodeFull'){
+	if ($CodeDetail == 'CODE_FULL'){
 		$WhereCondition = "AND woitems.stockid = '". $Stockid ."'";
-	}elseif ($CodeDetail == 'CodeFullWithRings'){
+	}elseif ($CodeDetail == 'CODE_FULL_WITH_RINGS'){
 		if (isRing($Stockid)){
 			$WhereCondition = "AND woitems.stockid LIKE '". $Stockid ."%'";
 		}else{

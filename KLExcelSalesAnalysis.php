@@ -34,7 +34,7 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 		$FromDate = FormatDateForSQL($_POST['FromDate']);
 		$ToDate = FormatDateForSQL($_POST['ToDate']);
 		
-		if ($CodeDetail == 'CodeFull'){
+		if ($CodeDetail == 'CODE_FULL'){
 			$SQL = "SELECT stockmaster.stockid,
 							stockmaster.description,
 							stockmaster.categoryid,
@@ -51,7 +51,7 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 					WHERE stockmaster.discontinued = 0
 						AND stockmaster.categoryid IN ('". implode("','",$_POST['Categories'])."')
 					ORDER BY stockmaster.stockid";
-		}elseif($CodeDetail == 'CodeFullWithRings'){
+		}elseif($CodeDetail == 'CODE_FULL_WITH_RINGS'){
 			$SQL = "SELECT CASE WHEN SUBSTRING(stockmaster.stockid,3,2) = 'AN' THEN SUBSTRING(stockmaster.stockid,1,6) ELSE stockmaster.stockid END AS stockid,
 							stockmaster.description,
 							stockmaster.categoryid,
@@ -116,18 +116,18 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 			$objPHPExcel->getActiveSheet()->setCellValue('C3', '=C2-C1');
  			$objPHPExcel->getActiveSheet()->setCellValue('C4', 150);
 
-			if ($CodeDetail == 'CodeFull'){
+			if ($CodeDetail == 'CODE_FULL'){
 				$objPHPExcel->getActiveSheet()->setCellValue('E1', 'ALL CODES');
-			}elseif ($CodeDetail == 'CodeFullWithRings'){
+			}elseif ($CodeDetail == 'CODE_FULL_WITH_RINGS'){
 				$objPHPExcel->getActiveSheet()->setCellValue('E1', 'RINGS GROUPED');
 			}else{
 				$objPHPExcel->getActiveSheet()->setCellValue('E1', '6 LETTER CODES');
 			}
 
 			$objPHPExcel->getActiveSheet()->setCellValue('A5', 'ITEM CODE');
-			if ($CodeDetail == 'CodeFull'){
+			if ($CodeDetail == 'CODE_FULL'){
 				$ColumnTitle = 'DESCRIPTION';
-			}elseif ($CodeDetail == 'CodeFullWithRings'){
+			}elseif ($CodeDetail == 'CODE_FULL_WITH_RINGS'){
 				$ColumnTitle = 'TEXT';
 			}else{
 				$ColumnTitle = 'FLAVOURS';
@@ -174,10 +174,10 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 				
 				if ($LastStockid != $myrow['stockid']){
 				
-					if ($CodeDetail == 'CodeFull'){
+					if ($CodeDetail == 'CODE_FULL'){
 						$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $myrow['description']);
 						$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $myrow['categoryid']);
-					}elseif ($CodeDetail == 'CodeFullWithRings'){
+					}elseif ($CodeDetail == 'CODE_FULL_WITH_RINGS'){
 						$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $myrow['description']);
 						$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $myrow['categoryid']);
 					}else{
@@ -187,19 +187,19 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 					$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, substr($myrow['stockid'], 0,2));
 					$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, TypeOfItem($myrow['stockid']));
 
-					if ($CodeDetail != 'Code6'){
+					if ($CodeDetail != 'CODE_6'){
 						$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, ConvertSQLDate($myrow['lastcategoryupdate']));
 					}
 					
 					$objPHPExcel->getActiveSheet()->setCellValue('G'.$i, round($myrow['standardcost'],0));
 
-					if ($CodeDetail != 'Code6'){
+					if ($CodeDetail != 'CODE_6'){
 						$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, $myrow['discountcategory']);
 					}
 					
 					$objPHPExcel->getActiveSheet()->setCellValue('I'.$i, round(ItemCodeAvgPriceInvoiced($myrow['stockid'],$FromDate,$ToDate,'',$CodeDetail),0));
 
-					$objPHPExcel->getActiveSheet()->setCellValue('J'.$i, round(ItemCodeQOH($myrow['stockid'],$CodeDetail),0));
+					$objPHPExcel->getActiveSheet()->setCellValue('J'.$i, round(ItemCodeQOH($myrow['stockid'],$CodeDetail, "ALL"),0));
 					$objPHPExcel->getActiveSheet()->setCellValue('K'.$i, '=G'.$i.'*J'.$i.'');
 
 					$objPHPExcel->getActiveSheet()->setCellValue('L'.$i, round(ItemCodeQOO_PurchaseOrders($myrow['stockid'],$CodeDetail)+ItemCodeQOO_WorkOrders($myrow['stockid'],$CodeDetail),0));
@@ -341,9 +341,9 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	echo '<tr>
 			<td>' . _('Item Codes detailed as') . ':</td>
 			<td><select name="CodeDetail">
-				<option selected="selected" value="CodeFull">' . _('Full Item Code') . '</option>
-				<option value="CodeFullWithRings">' . _('Full Item Code + Rings Grouped') . '</option>
-				<option value="Code6">' . _('Basic Item Code (6 Char)') . '</option>
+				<option selected="selected" value="CODE_FULL">' . _('Full Item Code') . '</option>
+				<option value="CODE_FULL_WITH_RINGS">' . _('Full Item Code + Rings Grouped') . '</option>
+				<option value="CODE_6">' . _('Basic Item Code (6 Char)') . '</option>
 			</select></td>
 		</tr>';
 	
