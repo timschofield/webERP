@@ -56,7 +56,7 @@ $NumberOfOpenShopsTotal = $NumberOfOpenShopsKL + $NumberOfOpenShopsBL + $NumberO
 ***************************************************************************************/
 
 if ($_SESSION['UserID'] == "Ricard"){
-	
+	// $KL_BusinessDevelopmentManager = TRUE;
 	//	phpinfo();
 
 /* TEST AND PLAY WITH call_user_func to move this script mainly to a table in DB
@@ -1356,7 +1356,7 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $RootPath, $db){
 		echo '<p class="page_title_text" align="center"><strong>' . $Message . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
-		$TableHeader = '<tr>
+/*		$TableHeader = '<tr>
 							<th class="ascending">' . _('#') . '</th>
 							<th class="ascending">' . _('Code') . '</th>
 							<th class="ascending">' . _('Description') . '</th>
@@ -1367,6 +1367,14 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $RootPath, $db){
 							<th class="ascending">' . _('RL=3') . '</th>
 							<th class="ascending">' . _('RL=4') . '</th>
 							<th class="ascending">' . _('RL=5') . '</th>
+						</tr>';
+*/
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Code') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('QOH') . '</th>
+							<th class="ascending">' . _('RL=?') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -1414,23 +1422,13 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $RootPath, $db){
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
 					</tr>', 
 					$i, 
 					$CodeLink, 
 					$myrow['description'], 
 					$myrow['qoh'], 
-					$ManualLink,
-					$LinkRL1,
-					$LinkRL2,
-					$LinkRL3,
-					$LinkRL4,
-					$LinkRL5
-					);
+					$ManualLink
+			);
 			$i++;
 		}
 		echo '</table>

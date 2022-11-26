@@ -34,15 +34,20 @@ echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b>' . $Title. '</b>
 	</p>';
 
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+echo '<div>';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+
 $result = DB_query("SELECT description, 
 							units 
 					FROM stockmaster 
 					WHERE stockid='" . $StockID . "'");
 $myrow = DB_fetch_row($result);
 
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-echo '<div>';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<table class="selection">';
+echo '<tr>
+		<th colspan="3"><h3><b>' . $StockID . ' - ' . $myrow[0] . '</b>  (' . _('In Units of') . ' ' . $myrow[1] . ')</h3></th>
+	</tr>';
 
 $sql = "SELECT locstock.loccode,
 				locations.locationname,
@@ -61,13 +66,7 @@ $sql = "SELECT locstock.loccode,
 
 $ErrMsg = _('The stock held at each location cannot be retrieved because');
 $DbgMsg = _('The SQL that failed was');
-
 $LocStockResult = DB_query($sql, $ErrMsg, $DbgMsg);
-
-echo '<table class="selection">';
-echo '<tr>
-		<th colspan="3"><h3><b>' . $StockID . ' - ' . $myrow[0] . '</b>  (' . _('In Units of') . ' ' . $myrow[1] . ')</h3></th>
-	</tr>';
 
 $TableHeader = '<tbody><tr>
 					<th class="ascending">' . _('Location') . '</th>
