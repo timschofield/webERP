@@ -1041,4 +1041,22 @@ function InsertKPI($Class, $Concept, $Value){
 	}
 }
 
+function NumberOfShops($ShopType, $Categories, $db){
+	if ($Categories == "ALL"){
+		
+	}else{
+		
+	}
+	$SQL="SELECT COUNT(*)
+		FROM locations
+		WHERE typeloc = '" . $ShopType . "'";
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		$myrow = DB_fetch_array($result);
+		return $myrow[0];
+	}else{
+		return 0;
+	}
+}
+
 ?>

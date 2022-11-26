@@ -46,9 +46,9 @@ $begintime = time_start();
 $NumberOfTestExecuted = 0;
 
 $periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
-$NumberOfOpenShopsKL = NumberOfShops("SHOPKL", $db);
-$NumberOfOpenShopsBL = NumberOfShops("SHOPBL", $db);
-$NumberOfOpenShopsOU = NumberOfShops("SHOPOU", $db);
+$NumberOfOpenShopsKL = NumberOfShops("SHOPKL", "ALL", $db);
+$NumberOfOpenShopsBL = NumberOfShops("SHOPBL", "ALL", $db);
+$NumberOfOpenShopsOU = NumberOfShops("SHOPOU", "ALL", $db);
 $NumberOfOpenShopsTotal = $NumberOfOpenShopsKL + $NumberOfOpenShopsBL + $NumberOfOpenShopsOU;
 
 /***************************************************************************************
@@ -1224,7 +1224,7 @@ function BalanceListAccountControl($accountlist, $description, $min, $max, $peri
 
 function CategoryItemsMissingInShops($Category, $ShopType, $NumberOfTestExecuted, $RootPath, $db){
 
-	$MinQOH = NumberOfShops($ShopType, $db);
+	$MinQOH = NumberOfShops($ShopType, "ALL", $db);
 	
 	if (ItemInList($Category, LIST_STOCK_CATEGORIES_TEST)){
 		$Condition = " AND locations.alltestitems = '1' ";
@@ -1259,9 +1259,9 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $RootPath, $db){
 	
 	$Message = $Category . _(' items NOT in ') . $Shop . ' with QOH >= ' . $MinQOH .' (excluding Change of Price, Move to Discount, Service, Shop online and Return to Supplier)';
 
-	$ShopsKL = NumberOfShops("SHOPKL", $db);
-	$ShopsBL = NumberOfShops("SHOPBL", $db);
-	$ShopsOU = NumberOfShops("SHOPOU", $db);
+	$ShopsKL = NumberOfShops("SHOPKL", "ALL", $db);
+	$ShopsBL = NumberOfShops("SHOPBL", "ALL", $db);
+	$ShopsOU = NumberOfShops("SHOPOU", "ALL", $db);
 
 	// count to how many shops do we need to set the RL
 	if ($Category == 'TESTKA'){
@@ -1770,9 +1770,9 @@ function GLTransDateControl($db){
 
 function GoodsJustArrived($kind, $location, $numdays, $RootPath, $db){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$numdays));
-	$ShopsKL = NumberOfShops("SHOPKL", $db);
-	$ShopsBL = NumberOfShops("SHOPBL", $db);
-	$ShopsOU = NumberOfShops("SHOPOU", $db);
+	$ShopsKL = NumberOfShops("SHOPKL", "ALL", $db);
+	$ShopsBL = NumberOfShops("SHOPBL", "ALL", $db);
+	$ShopsOU = NumberOfShops("SHOPOU", "ALL", $db);
 	if ($kind == "PO"){
 		$type = 25;
 	}elseif ($kind == "WO"){
@@ -3251,16 +3251,16 @@ No pending transfer regarding this item
 ***********************************************************************/
 
 	if ($ShopType == "SHOPKL"){
-		$ShopsToSetRL = NumberOfShops("SHOPKL", $db);
+		$ShopsToSetRL = NumberOfShops("SHOPKL", "ALL", $db);
 		$Message = 'KAPAL-LAUT';
 		$Condition =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . "
 							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_GENERAL . ")";
 	}elseif ($ShopType == "SHOPBL"){
-		$ShopsToSetRL = NumberOfShops("SHOPBL", $db);
+		$ShopsToSetRL = NumberOfShops("SHOPBL", "ALL", $db);
 		$Message = 'BLINK';
 		$Condition =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . ")";
 	}elseif ($ShopType == "SHOPOU"){
-		$ShopsToSetRL = NumberOfShops("SHOPOU", $db);
+		$ShopsToSetRL = NumberOfShops("SHOPOU", "ALL", $db);
 		$Message = 'OUTLET';
 		$Condition =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . "
 							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_GENERAL . ")";

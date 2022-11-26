@@ -10,7 +10,7 @@ function KL_DailyRLAdjustmentsForOnline($ShowMessages, $updateDB, $RootPath, $db
 function KL_DailyRLAdjustmentsForKL($ShowMessages, $updateDB, $RootPath, $db, $EmailText){
 
 	// For KL SHOPS
-	$Shops = NumberOfShops("SHOPKL", $db);
+	$Shops = NumberOfShops("SHOPKL", "ALL", $db);
 	if ($EmailText!=''){
 		$EmailText = $EmailText . "\n" . "Number of Shops Kapal-Laut = " . $Shops . "\n";
 	}
@@ -41,7 +41,7 @@ function KL_DailyRLAdjustmentsForKL($ShowMessages, $updateDB, $RootPath, $db, $E
 function KL_DailyRLAdjustmentsForBlink($ShowMessages, $updateDB, $RootPath, $db, $EmailText){
 
 	// For BLINK SHOPS
-	$Shops = NumberOfShops("SHOPBL", $db);
+	$Shops = NumberOfShops("SHOPBL", "ALL", $db);
 	if ($EmailText!=''){
 		$EmailText = $EmailText . "\n" . "Number of Shops Blink = " . $Shops . "\n";
 	}
@@ -72,7 +72,7 @@ function KL_DailyRLAdjustmentsForBlink($ShowMessages, $updateDB, $RootPath, $db,
 function KL_DailyRLAdjustmentsForOutlet($ShowMessages, $updateDB, $RootPath, $db, $EmailText){
 
 	// for OUTLET SHOPS
-	$Shops = NumberOfShops("SHOPOU", $db);
+	$Shops = NumberOfShops("SHOPOU", "ALL", $db);
 	if ($EmailText!=''){
 		$EmailText = $EmailText . "\n" . "Number of Shops Outlet = " . $Shops . "\n";
 	}
@@ -115,21 +115,6 @@ function KL_DailyRLAdjustmentsForPackaging($ShowMessages, $updateDB, $RootPath, 
 	
 	return $EmailText;
 }
-
-function NumberOfShops($ShopType, $db){
-	$SQL="SELECT COUNT(*)
-		FROM locations
-		WHERE typeloc LIKE '%" . $ShopType . "%'";
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		$myrow = DB_fetch_array($result);
-		return $myrow[0];
-	}else{
-		return 0;
-	}
-}
-
-
 
 function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, $db, $EmailText){
 	/* 
