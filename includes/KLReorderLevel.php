@@ -210,7 +210,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 				}else{
 					// let's distribute available stock between the shops with RL > 0.
 					// if RL = 0 we suppose we do not want it there for any reason 
-					$QtyToDistribute = ItemCodeQOH($myrow['stockid'], "CODE_FULL", "ALL_SHOPS", $db);
+					$QtyToDistribute = QtyAvailable($myrow['stockid'], "ALLSHOPS", $db);
 					if ($EmailText!=''){
 						$EmailText = $EmailText . $myrow['stockid']. " Quantity to distribute = " . $QtyToDistribute . "\n";
 					}
@@ -407,6 +407,30 @@ function LocationOrderForItem($stockid, $order, $maxdays, $db){
 		$location = "";
 	}
 	return $location;
+}
+
+function QtyAvailable($stockid, $location, $db){
+	$SQL = "SELECT SUM(locstock.quantity) AS total
+			FROM locstock,locations
+			WHERE locstock.stockid = '" . $stockid . "'
+				AND locstock.loccode = locations.loccode";
+	if ($location == "ALLSHOPS"){
+		$SQL = $SQL . " AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . " "; 
+	}elseif ($location == "ALLSHOPSANDONLINE"){
+		$SQL = $SQL . " AND locations.typeloc IN " . LIST_ALL_SHOPS_BY_TYPE . " "; 
+	}elseif ($location == "ALL"){
+		$SQL = $SQL . " "; 
+	}else{
+		$SQL = $SQL . " AND locstock.loccode = '". $location . "'"; 
+	}
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		$myrow = DB_fetch_array($result);
+		$qty = $myrow['total'];
+	}else{
+		$qty = 0;
+	}
+	return $qty;
 }
 
 function ActiveLocationsForItem($stockid, $db){
