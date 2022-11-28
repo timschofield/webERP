@@ -60,19 +60,25 @@ echo '<tr>
 		<th colspan="3"><h3><b>' . $StockID . ' - ' . $myitem['description'] . '</b>  (' . _('In Units of') . ' ' . $myitem['units'] . ')</h3></th>
 	</tr>';
 
-if ($AllShops != "Y"){
+if ($AllShops == "N"){
+	// we only want to distribute between the locations with the flags allitemsXXXX == true (big shops) not to small ones with allitemsXXXX == false
 	if (ItemInLIst($myitem['categoryid'], LIST_STOCK_CATEGORIES_TEST)){
-		$FilterLoc = " AND locations.alltestitems = 1";
+		$FilterLoc = " AND locations.alltestitems = 1 ";
 	}elseif (ItemInLIst($myitem['categoryid'], LIST_STOCK_CATEGORIES_STABLE)){
-		$FilterLoc = " AND locations.allstableitems = 1";
+		$FilterLoc = " AND locations.allstableitems = 1 ";
 	}elseif (ItemInLIst($myitem['categoryid'], LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING)){
-		$FilterLoc = " AND locations.allnopoitems = 1";
-	}elseif (ItemInLIst($myitem['categoryid'], LIST_STOCK_CATEGORIES_OUTLET)){
-		$FilterLoc = " AND locations.allnopoitems = 1";
+		$FilterLoc = " AND locations.allnopoitems = 1 ";
+	}elseif ($myitem['categoryid'] == "DISC2A"){
+		$FilterLoc = " AND locations.alldisc20items = 1 ";
+	}elseif ($myitem['categoryid'] == "DISC5A"){
+		$FilterLoc = " AND locations.alldisc50items = 1 ";
+	}elseif ($myitem['categoryid'] == "DISC8A"){
+		$FilterLoc = " AND locations.alldisc80items = 1 ";
 	}else{
 		$FilterLoc = "";
 	}
 }else{
+	// want o distribute to all the locations
 	$FilterLoc = "";
 }
 
