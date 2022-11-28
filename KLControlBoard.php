@@ -56,7 +56,7 @@ $NumberOfOpenShopsTotal = $NumberOfOpenShopsKL + $NumberOfOpenShopsBL + $NumberO
 ***************************************************************************************/
 
 if ($_SESSION['UserID'] == "Ricard"){
-	// $KL_BusinessDevelopmentManager = TRUE;
+	$KL_BusinessDevelopmentManager = TRUE;
 	//	phpinfo();
 
 /* TEST AND PLAY WITH call_user_func to move this script mainly to a table in DB
@@ -1356,19 +1356,6 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $RootPath, $db){
 		echo '<p class="page_title_text" align="center"><strong>' . $Message . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
-/*		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Description') . '</th>
-							<th class="ascending">' . _('QOH') . '</th>
-							<th class="ascending">' . _('RL=?') . '</th>
-							<th class="ascending">' . _('RL=1') . '</th>
-							<th class="ascending">' . _('RL=2') . '</th>
-							<th class="ascending">' . _('RL=3') . '</th>
-							<th class="ascending">' . _('RL=4') . '</th>
-							<th class="ascending">' . _('RL=5') . '</th>
-						</tr>';
-*/
 		$TableHeader = '<tr>
 							<th class="ascending">' . _('#') . '</th>
 							<th class="ascending">' . _('Code') . '</th>
@@ -1390,31 +1377,7 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $RootPath, $db){
 			}else{
 				$ManualLink = '';
 			}
-
-			// set the links to nil, and just set some if we have enough QOH
-			$LinkRL1 = '';
-			$LinkRL2 = '';
-			$LinkRL3 = '';
-			$LinkRL4 = '';
-			$LinkRL5 = '';
-			if($ShopsToSetRL != 0){
-				if ($myrow['qoh'] >= $ShopsToSetRL){
-					$LinkRL1 = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&RL=1' . '">' . 'RL=1' . '</a>';
-				}
-				if ($myrow['qoh'] >= $ShopsToSetRL * 2){
-					$LinkRL2 = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&RL=2' . '">' . 'RL=2' . '</a>';
-				}
-				if ($myrow['qoh'] >= $ShopsToSetRL * 3){
-					$LinkRL3 = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&RL=3' . '">' . 'RL=3' . '</a>';
-				}
-				if ($myrow['qoh'] >= $ShopsToSetRL * 4){
-					$LinkRL4 = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&RL=4' . '">' . 'RL=4' . '</a>';
-				}
-				if ($myrow['qoh'] >= $ShopsToSetRL * 5){
-					$LinkRL5 = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&RL=5' . '">' . 'RL=5' . '</a>';
-				}
-			}
-
+	
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 
 			printf('<td class="number">%s</td>
@@ -1809,19 +1772,39 @@ function GoodsJustArrived($kind, $location, $numdays, $RootPath, $db){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Date') . '</th>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Category') . '</th>
-							<th class="ascending">' . _('Description') . '</th>
-							<th class="ascending">' . _('Received') . '</th>
-							<th class="ascending">' . _('QOH') . '</th>
-							<th class="ascending">' . _('RL=?') . '</th>
-							<th class="ascending">' . _('RL=1') . '</th>
-							<th class="ascending">' . _('RL=2') . '</th>
-							<th class="ascending">' . _('RL=3') . '</th>
-							<th class="ascending">' . _('RL=4') . '</th>
-							<th class="ascending">' . _('RL=5') . '</th>
+							<th>' . _('#') . '</th>
+							<th>' . _('Date') . '</th>
+							<th>' . _('Code') . '</th>
+							<th>' . _('Category') . '</th>
+							<th>' . _('Description') . '</th>
+							<th>' . _('Received') . '</th>
+							<th>' . _('QOH') . '</th>
+							<th>' . _('RL=?') . '</th>
+							<th colspan="2">' . _('RL=1') . '</th>
+							<th colspan="2">' . _('RL=2') . '</th>
+							<th colspan="2">' . _('RL=3') . '</th>
+							<th colspan="2">' . _('RL=4') . '</th>
+							<th colspan="2">' . _('RL=5') . '</th>
+						</tr>
+						<tr>
+							<th class="ascending"></th>
+							<th class="ascending"></th>
+							<th class="ascending"></th>
+							<th class="ascending"></th>
+							<th class="ascending"></th>
+							<th class="ascending"></th>
+							<th></th>
+							<th></th>
+							<th>' . _('All') . '</th>
+							<th>' . _('Some') . '</th>
+							<th>' . _('All') . '</th>
+							<th>' . _('Some') . '</th>
+							<th>' . _('All') . '</th>
+							<th>' . _('Some') . '</th>
+							<th>' . _('All') . '</th>
+							<th>' . _('Some') . '</th>
+							<th>' . _('All') . '</th>
+							<th>' . _('Some') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -1853,26 +1836,37 @@ function GoodsJustArrived($kind, $location, $numdays, $RootPath, $db){
 			}
 
 			// set the links to nil, and just set some if we have enough QOH
-			$LinkRL1 = '';
-			$LinkRL2 = '';
-			$LinkRL3 = '';
-			$LinkRL4 = '';
-			$LinkRL5 = '';
+			$LinkRL1All = '';
+			$LinkRL1Some = '';
+			$LinkRL2All = '';
+			$LinkRL2Some = '';
+			$LinkRL3All = '';
+			$LinkRL3Some = '';
+			$LinkRL4All = '';
+			$LinkRL4Some = '';
+			$LinkRL5All = '';
+			$LinkRL5Some = '';
+
 			if($ShopsToSetRL != 0){
 				if ($myrow['qtytotal'] >= $ShopsToSetRL){
-					$LinkRL1 = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&RL=1' . '">' . 'RL=1' . '</a>';
+					$LinkRL1All  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=Y' . '&RL=1' . '">' . 'RL=1' . '</a>';
+					$LinkRL1Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=1' . '">' . 'RL=1' . '</a>';
 				}
 				if ($myrow['qtytotal'] >= $ShopsToSetRL * 2){
-					$LinkRL2 = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&RL=2' . '">' . 'RL=2' . '</a>';
+					$LinkRL2All  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=Y' . '&RL=2' . '">' . 'RL=2' . '</a>';
+					$LinkRL2Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=2' . '">' . 'RL=2' . '</a>';
 				}
 				if ($myrow['qtytotal'] >= $ShopsToSetRL * 3){
-					$LinkRL3 = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&RL=3' . '">' . 'RL=3' . '</a>';
+					$LinkRL3All  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=Y' . '&RL=3' . '">' . 'RL=3' . '</a>';
+					$LinkRL3Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=3' . '">' . 'RL=3' . '</a>';
 				}
 				if ($myrow['qtytotal'] >= $ShopsToSetRL * 4){
-					$LinkRL4 = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&RL=4' . '">' . 'RL=4' . '</a>';
+					$LinkRL4All  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=Y' . '&RL=4' . '">' . 'RL=4' . '</a>';
+					$LinkRL4Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=4' . '">' . 'RL=4' . '</a>';
 				}
 				if ($myrow['qtytotal'] >= $ShopsToSetRL * 5){
-					$LinkRL5 = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&RL=5' . '">' . 'RL=5' . '</a>';
+					$LinkRL5All  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=Y' . '&RL=5' . '">' . 'RL=5' . '</a>';
+					$LinkRL5Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=5' . '">' . 'RL=5' . '</a>';
 				}
 			}
 
@@ -1889,6 +1883,11 @@ function GoodsJustArrived($kind, $location, $numdays, $RootPath, $db){
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
 					</tr>', 
 					$i, 
 					ConvertSQLDate($myrow['trandate']),
@@ -1898,11 +1897,16 @@ function GoodsJustArrived($kind, $location, $numdays, $RootPath, $db){
 					locale_number_format($myrow['qtyarrived'],0),
 					locale_number_format($myrow['qtytotal'],0),
 					$ManualLink,
-					$LinkRL1,
-					$LinkRL2,
-					$LinkRL3,
-					$LinkRL4,
-					$LinkRL5
+					$LinkRL1All,
+					$LinkRL1Some,
+					$LinkRL2All,
+					$LinkRL2Some,
+					$LinkRL3All,
+					$LinkRL3Some,
+					$LinkRL4All,
+					$LinkRL4Some,
+					$LinkRL5All,
+					$LinkRL5Some
 					);
 			$i++;
 		}
@@ -3236,7 +3240,7 @@ function ItemsWithoutWeightOrVolume($RootPath, $db){
 	}
 }
 
-function ItemsWithStockKantorButReorderLevelTokoZero($ShopType, $RootPath, $db){
+function ItemsWithStockKantorButReorderLevelTokoZero($TypeOfShop, $RootPath, $db){
 /**********************************************************************
 items with stock kantor > 0 
 RL is zero at one type of shop
@@ -3248,16 +3252,16 @@ No pending transfer regarding this item
 
 ***********************************************************************/
 
-	if ($ShopType == "SHOPKL"){
+	if ($TypeOfShop == "SHOPKL"){
 		$ShopsToSetRL = NumberOfShops("SHOPKL", "ALL", $db);
 		$Message = 'KAPAL-LAUT';
 		$Condition =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . "
 							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_GENERAL . ")";
-	}elseif ($ShopType == "SHOPBL"){
+	}elseif ($TypeOfShop == "SHOPBL"){
 		$ShopsToSetRL = NumberOfShops("SHOPBL", "ALL", $db);
 		$Message = 'BLINK';
 		$Condition =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . ")";
-	}elseif ($ShopType == "SHOPOU"){
+	}elseif ($TypeOfShop == "SHOPOU"){
 		$ShopsToSetRL = NumberOfShops("SHOPOU", "ALL", $db);
 		$Message = 'OUTLET';
 		$Condition =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . "
@@ -3284,7 +3288,7 @@ No pending transfer regarding this item
 					FROM locstock, locations
 					WHERE locstock.stockid = stockmaster.stockid
 						AND locstock.loccode = locations.loccode
-						AND locations.typeloc = '" . $ShopType . "') = 0
+						AND locations.typeloc = '" . $TypeOfShop . "') = 0
 				AND (SELECT SUM(locstock.quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
@@ -3304,17 +3308,34 @@ No pending transfer regarding this item
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Category') . '</th>
-							<th class="ascending">' . _('Description') . '</th>
-							<th class="ascending">' . _('QOH Kantor') . '</th>
-							<th class="ascending">' . _('RL=?') . '</th>
-							<th class="ascending">' . _('RL=1') . '</th>
-							<th class="ascending">' . _('RL=2') . '</th>
-							<th class="ascending">' . _('RL=3') . '</th>
-							<th class="ascending">' . _('RL=4') . '</th>
-							<th class="ascending">' . _('RL=5') . '</th>
+							<th>' . _('#') . '</th>
+							<th>' . _('Code') . '</th>
+							<th>' . _('Category') . '</th>
+							<th>' . _('Description') . '</th>
+							<th>' . _('QOH Kantor') . '</th>
+							<th>' . _('RL=?') . '</th>
+							<th colspan="2">' . _('RL=1') . '</th>
+							<th colspan="2">' . _('RL=2') . '</th>
+							<th colspan="2">' . _('RL=3') . '</th>
+							<th colspan="2">' . _('RL=4') . '</th>
+							<th colspan="2">' . _('RL=5') . '</th>
+						<tr>
+							<th class="ascending"></th>
+							<th class="ascending"></th>
+							<th class="ascending"></th>
+							<th class="ascending"></th>
+							<th class="ascending"></th>
+							<th></th>
+							<th>' . _('All') . '</th>
+							<th>' . _('Some') . '</th>
+							<th>' . _('All') . '</th>
+							<th>' . _('Some') . '</th>
+							<th>' . _('All') . '</th>
+							<th>' . _('Some') . '</th>
+							<th>' . _('All') . '</th>
+							<th>' . _('Some') . '</th>
+							<th>' . _('All') . '</th>
+							<th>' . _('Some') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -3324,26 +3345,36 @@ No pending transfer regarding this item
 			$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 			$ManualLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . 'Manual' . '</a>';
 			// set the links to nil, and just set some if we have enough QOH
-			$LinkRL1 = '';
-			$LinkRL2 = '';
-			$LinkRL3 = '';
-			$LinkRL4 = '';
-			$LinkRL5 = '';
+			$LinkRL1All = '';
+			$LinkRL1Some = '';
+			$LinkRL2All = '';
+			$LinkRL2Some = '';
+			$LinkRL3All = '';
+			$LinkRL3Some = '';
+			$LinkRL4All = '';
+			$LinkRL4Some = '';
+			$LinkRL5All = '';
+			$LinkRL5Some = '';
 			if($ShopsToSetRL != 0){
 				if ($myrow['QtyKantor'] >= $ShopsToSetRL){
-					$LinkRL1 = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $ShopType . '&RL=1' . '">' . 'RL=1' . '</a>';
+					$LinkRL1All  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=Y' . '&RL=1' . '">' . 'RL=1' . '</a>';
+					$LinkRL1Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=1' . '">' . 'RL=1' . '</a>';
 				}
 				if ($myrow['QtyKantor'] >= $ShopsToSetRL * 2){
-					$LinkRL2 = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $ShopType . '&RL=2' . '">' . 'RL=2' . '</a>';
+					$LinkRL2All  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=Y' . '&RL=2' . '">' . 'RL=2' . '</a>';
+					$LinkRL2Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=2' . '">' . 'RL=2' . '</a>';
 				}
 				if ($myrow['QtyKantor'] >= $ShopsToSetRL * 3){
-					$LinkRL3 = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $ShopType . '&RL=3' . '">' . 'RL=3' . '</a>';
+					$LinkRL3All  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=Y' . '&RL=3' . '">' . 'RL=3' . '</a>';
+					$LinkRL3Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=3' . '">' . 'RL=3' . '</a>';
 				}
 				if ($myrow['QtyKantor'] >= $ShopsToSetRL * 4){
-					$LinkRL4 = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $ShopType . '&RL=4' . '">' . 'RL=4' . '</a>';
+					$LinkRL4All  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=Y' . '&RL=4' . '">' . 'RL=4' . '</a>';
+					$LinkRL4Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=4' . '">' . 'RL=4' . '</a>';
 				}
 				if ($myrow['QtyKantor'] >= $ShopsToSetRL * 5){
-					$LinkRL5 = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $ShopType . '&RL=5' . '">' . 'RL=5' . '</a>';
+					$LinkRL5All  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=Y' . '&RL=5' . '">' . 'RL=5' . '</a>';
+					$LinkRL5Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=5' . '">' . 'RL=5' . '</a>';
 				}
 			}
 			printf('<td class="number">%s</td>
@@ -3357,6 +3388,11 @@ No pending transfer regarding this item
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
 					</tr>', 
 					$i, 
 					$CodeLink, 
@@ -3364,11 +3400,16 @@ No pending transfer regarding this item
 					$myrow['description'], 
 					locale_number_format($myrow['QtyKantor'],0),
 					$ManualLink,
-					$LinkRL1,
-					$LinkRL2,
-					$LinkRL3,
-					$LinkRL4,
-					$LinkRL5
+					$LinkRL1All,
+					$LinkRL1Some,
+					$LinkRL2All,
+					$LinkRL2Some,
+					$LinkRL3All,
+					$LinkRL3Some,
+					$LinkRL4All,
+					$LinkRL4Some,
+					$LinkRL5All,
+					$LinkRL5Some
 					);
 			$i++;
 		}

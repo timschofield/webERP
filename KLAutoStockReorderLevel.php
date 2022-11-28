@@ -5,6 +5,8 @@
 include('includes/session.php');
 $Title = _('Automatic Setting of Stock Re-Order Level');
 include('includes/header.php');
+include('includes/KLDefines.php');
+include('includes/KLGeneralFunctions.php');
 
 if (isset($_GET['StockID'])){
 	$StockID = trim(mb_strtoupper($_GET['StockID']));
@@ -30,6 +32,14 @@ if (isset($_GET['RL'])){
 	$RL = 0;
 }
 
+if (isset($_GET['AllShops'])){
+	$AllShops = trim(mb_strtoupper($_GET['AllShops']));
+} elseif (isset($_POST['AllShops'])){
+	$AllShops = trim(mb_strtoupper($_POST['AllShops']));
+}else{
+	$AllShops = '';
+}
+
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b>' . $Title. '</b>
 	</p>';
@@ -38,16 +48,33 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-$result = DB_query("SELECT description, 
-							units 
+$result = DB_query("SELECT description,
+						categoryid,
+						units 
 					FROM stockmaster 
 					WHERE stockid='" . $StockID . "'");
-$myrow = DB_fetch_row($result);
+$myitem=DB_fetch_array($result);
 
 echo '<table class="selection">';
 echo '<tr>
-		<th colspan="3"><h3><b>' . $StockID . ' - ' . $myrow[0] . '</b>  (' . _('In Units of') . ' ' . $myrow[1] . ')</h3></th>
+		<th colspan="3"><h3><b>' . $StockID . ' - ' . $myitem['description'] . '</b>  (' . _('In Units of') . ' ' . $myitem['units'] . ')</h3></th>
 	</tr>';
+
+if ($AllShops != "Y"){
+	if (ItemInLIst($myitem['categoryid'], LIST_STOCK_CATEGORIES_TEST)){
+		$FilterLoc = " AND locations.alltestitems = 1";
+	}elseif (ItemInLIst($myitem['categoryid'], LIST_STOCK_CATEGORIES_STABLE)){
+		$FilterLoc = " AND locations.allstableitems = 1";
+	}elseif (ItemInLIst($myitem['categoryid'], LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING)){
+		$FilterLoc = " AND locations.allnopoitems = 1";
+	}elseif (ItemInLIst($myitem['categoryid'], LIST_STOCK_CATEGORIES_OUTLET)){
+		$FilterLoc = " AND locations.allnopoitems = 1";
+	}else{
+		$FilterLoc = "";
+	}
+}else{
+	$FilterLoc = "";
+}
 
 $sql = "SELECT locstock.loccode,
 				locations.locationname,
@@ -58,10 +85,14 @@ $sql = "SELECT locstock.loccode,
 		FROM locstock 
 		INNER JOIN locations
 			ON locstock.loccode=locations.loccode
-		INNER JOIN locationusers ON locationusers.loccode=locstock.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
+		INNER JOIN locationusers 
+			ON locationusers.loccode=locstock.loccode 
+				AND locationusers.userid='" .  $_SESSION['UserID'] . "' 
+				AND locationusers.canview=1
 		INNER JOIN stockmaster
 			ON locstock.stockid=stockmaster.stockid
-		WHERE locstock.stockid = '" . $StockID . "'
+		WHERE locstock.stockid = '" . $StockID . "'".
+		$FilterLoc ."
 		ORDER BY locations.locationname";
 
 $ErrMsg = _('The stock held at each location cannot be retrieved because');
