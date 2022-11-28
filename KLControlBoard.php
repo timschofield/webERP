@@ -1065,7 +1065,7 @@ function ActiveItemsNoSales($maxdays, $group, $RootPath, $db){
 	$result = DB_query($SQL);		
 	
 	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . $group . _(' Items with NO sales on last ') . $maxdays . ' days and NO current PO or WO. Move to next category step</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . GetCategoryNameFromCode($group) . _(' Items with NO sales on last ') . $maxdays . ' days and NO current PO or WO. Move to next category step</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
@@ -1257,7 +1257,7 @@ function CategoryItemsMissingInShops($Category, $ShopType, $NumberOfTestExecuted
 
 function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $RootPath, $db){
 	
-	$Message = $Category . _(' items NOT in ') . $Shop . ' with QOH >= ' . $MinQOH .' (excluding Change of Price, Move to Discount, Service, Shop online and Return to Supplier)';
+	$Message = GetCategoryNameFromCode($Category) . _(' items NOT in ') . $Shop . ' with QOH >= ' . $MinQOH .' (excluding Change of Price, Move to Discount, Service, Shop online and Return to Supplier)';
 
 	$ShopsKL = NumberOfShops("SHOPKL", "ALL", $db);
 	$ShopsBL = NumberOfShops("SHOPBL", "ALL", $db);
@@ -1267,53 +1267,42 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $RootPath, $db){
 	if ($Category == 'TESTKA'){
 		$WhereCat = " AND stockmaster.categoryid = 'TESTKA' ";
 		$TypeOfShop = 'SHOPKL';
-		$TitleCat = "TEST";
 		$ShopsToSetRL = $ShopsKL;
 	} else if ($Category == 'STABKA') {
 		$WhereCat = " AND stockmaster.categoryid = 'STABKA' ";
 		$TypeOfShop = 'SHOPKL';
-		$TitleCat = "STABLE";
 		$ShopsToSetRL = $ShopsKL;
 	} else if ($Category == 'NOPOKA') {
 		$WhereCat = " AND stockmaster.categoryid = 'NOPOKA' ";
 		$TypeOfShop = 'SHOPKL';
-		$TitleCat = "NO MORE PO";
 		$ShopsToSetRL = $ShopsKL;
 	} else if ($Category == 'TESTBA') {
 		$WhereCat = " AND stockmaster.categoryid = 'TESTBA' ";
 		$TypeOfShop = 'SHOPBL';
-		$TitleCat = "TEST";
 		$ShopsToSetRL = $ShopsKL;
 	} else if ($Category == 'STABBA') {
 		$WhereCat = " AND stockmaster.categoryid = 'STABBA' ";
 		$TypeOfShop = 'SHOPBL';
-		$TitleCat = "STABLE";
 		$ShopsToSetRL = $ShopsBL;
 	} else if ($Category == 'NOPOBA') {
 		$WhereCat = " AND stockmaster.categoryid = 'NOPOBA' ";
 		$TypeOfShop = 'SHOPBL';
-		$TitleCat = "NO MORE PO";
 		$ShopsToSetRL = $ShopsBL;
 	} else if ($Category == 'DISC2A') {
 		$WhereCat = " AND (stockmaster.categoryid = 'DISC2A')";
 		$TypeOfShop = 'SHOPOU';
-		$TitleCat = "DISC20";
 		$ShopsToSetRL = $ShopsOU;
 	} else if ($Category == 'DISC5A') {
 		$WhereCat = " AND (stockmaster.categoryid = 'DISC5A')";
 		$TypeOfShop = 'SHOPOU';
-		$TitleCat = "DISC50";
 		$ShopsToSetRL = $ShopsOU;
 	} else if ($Category == 'DISC8A') {
 		$WhereCat = " AND (stockmaster.categoryid = 'DISC8A')";
 		$TypeOfShop = 'SHOPOU';
-		$TitleCat = "DISC80";
 		$ShopsToSetRL = $ShopsOU;
 	}else{
 		$ShopsToSetRL = 0;
 	}
-
-	$Message = $TitleCat . _(' items NOT in ') . $Shop . ' with QOH >= ' . $MinQOH .' (excluding Change of Price, Move to Discount, Service, Shop online and Return to Supplier)';
 	
 	$SQL = "SELECT stockmaster.stockid,
 					stockmaster.description,
@@ -2280,7 +2269,7 @@ function ItemsInCategoryForMoreThanDays($maxdays, $group, $RootPath, $db){
 	$result = DB_query($SQL);		
 	
 	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . $group . ' Items for more than ' . $maxdays . ' days. Move to next step of cycle of life</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . GetCategoryNameFromCode($group) . ' Items for more than ' . $maxdays . ' days. Move to next step of cycle of life</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
@@ -2595,7 +2584,7 @@ function ItemsInSetup($Check, $Category, $RootPath, $db){
 	$today = date('Y-m-d');
 	
 	if ($Check == "ReadyToTest"){
-		$Title = $Category . " Items ready to change to TEST";
+		$Title = GetCategoryNameFromCode($Category) . " Items ready to change to TEST";
 		$SQLWhere = "AND LENGTH(stockmaster.description) > 2
 					AND (SELECT SUM(locstock.quantity)
 							FROM locstock
@@ -2613,22 +2602,22 @@ function ItemsInSetup($Check, $Category, $RootPath, $db){
 							WHERE  recqty < shipqty
 								AND loctransfers.stockid =  stockmaster.stockid)";
 	}elseif($Check == "NeedDescription"){
-		$Title = $Category . " Items needing descriptions";
+		$Title = GetCategoryNameFromCode($Category) . " Items needing descriptions";
 		$SQLWhere ="AND LENGTH(stockmaster.description) <= 2";
 	}elseif($Check == "NeedPrice"){
-		$Title = $Category . " Items needing price";
+		$Title = GetCategoryNameFromCode($Category) . " Items needing price";
 		$SQLWhere ="AND (SELECT price
 				FROM prices
 				WHERE stockmaster.stockid = prices.stockid
 					AND prices.typeabbrev = 'RT'
 					AND currabrev = 'IDR') IS NULL";
 	}elseif($Check == "WithReorderLevel"){
-		$Title = $Category . " Items with RL (items in SETUP should not have RL set)";
+		$Title = GetCategoryNameFromCode($Category) . " Items with RL (items in SETUP should not have RL set)";
 		$SQLWhere ="AND (SELECT SUM(reorderlevel)
 				FROM locstock
 				WHERE stockmaster.stockid = locstock.stockid) > 0 ";
 	}else{
-		$Title = $Category . " Items in SETUP";
+		$Title = GetCategoryNameFromCode($Category) . " Items in SETUP";
 		$SQLWhere ="";
 	}
 
