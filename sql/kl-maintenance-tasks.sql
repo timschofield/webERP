@@ -2,7 +2,7 @@
 CREATE TABLE `klmaintenancetasks` (
   `counterindex` int(20) NOT NULL,
   `loccode` varchar(5) NOT NULL,
-  `maintenancetype` varchar(20) NOT NULL,
+  `maintenancetype` varchar(10) NOT NULL,
   `status` varchar(20) NOT NULL,
   `creationuser` varchar(20) NOT NULL,
   `creationdate` date NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE `klmaintenancetasks` (
 --
 
 CREATE TABLE `klmaintenancetypes` (
-  `maintenancetype` varchar(20) NOT NULL COMMENT 'code for the type',
+  `maintenancetype` varchar(10) NOT NULL COMMENT 'code for the type',
   `description` varchar(50) NOT NULL COMMENT 'text description'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

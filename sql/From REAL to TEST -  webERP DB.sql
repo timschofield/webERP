@@ -197,6 +197,12 @@ INSERT INTO test_erp.klkpi SELECT * FROM kurakura_kl_erp.klkpi;
 TRUNCATE test_erp.`klfreeexchanges`;
 INSERT INTO test_erp.klfreeexchanges SELECT * FROM kurakura_kl_erp.klfreeexchanges;
 
+TRUNCATE test_erp.`klmaintenancetasks`;
+INSERT INTO test_erp.klmaintenancetasks SELECT * FROM kurakura_kl_erp.klmaintenancetasks;
+
+TRUNCATE test_erp.`klmaintenancetypes`;
+INSERT INTO test_erp.klmaintenancetypes SELECT * FROM kurakura_kl_erp.klmaintenancetypes;
+
 TRUNCATE test_erp.`klmovetodiscount20`;
 INSERT INTO test_erp.klmovetodiscount20 SELECT * FROM kurakura_kl_erp.klmovetodiscount20;
 
