@@ -219,7 +219,7 @@ function ClassicalSize($stockid){
 function ItemCodeQOH($Stockid, $CodeDetail, $Where){
 	$ErrMsg = 'Error in function ItemCodeQOH()';
 
-	$SQL = "SELECT SUM(locstock.quantity) AS TOTAL
+	$SQL = "SELECT SUM(locstock.quantity) AS total
 			FROM locstock,locations 
 			WHERE locstock.loccode = locations.loccode ";
 
