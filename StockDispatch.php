@@ -16,6 +16,8 @@ include('includes/SQL_CommonFunctions.inc');
 include('includes/GetPrice.inc');
 
 include('includes/KLEmails.php');
+include('includes/KLGeneralFunctions.php');
+
 
 if (isset($_POST['PrintPDF'])) {
 
@@ -340,10 +342,7 @@ if (isset($_POST['PrintPDF'])) {
 										. _('dispatch percentage entered, that needed quantity is inflated by the percentage entered.') . '<br/>'
 										. _('Use Bulk Inventory Transfer - Receive to process the batch') . '</div>';
 
-	$sql = "SELECT defaultlocation FROM www_users WHERE userid='".$_SESSION['UserID']."'";
-	$result = DB_query($sql);
-	$myrow = DB_fetch_array($result);
-	$DefaultLocation = $myrow['defaultlocation'];
+	$DefaultLocation = GetDefaultLocationFromUser($_SESSION['UserID']);
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 	echo '<div>
 		  <br />';
