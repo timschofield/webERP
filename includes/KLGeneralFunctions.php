@@ -479,7 +479,7 @@ function GetCategoryNameFromCode($CategoryId){
 	return $Row['0'];
 }
 
-function GetDefaultLocationFromUser($UserId){{
+function GetDefaultLocationFromUser($UserId){
 	$ErrMsg = 'Error in function GetDefaultLocationFromUser()';
 	$SQL = "SELECT defaultlocation FROM www_users WHERE userid='".$UserId."'";
 	$result = DB_query($SQL,$ErrMsg);
