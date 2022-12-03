@@ -222,7 +222,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 					locationname 
 			FROM locations 
 			INNER JOIN locationusers 
-				ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
+				ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 			ORDER BY locationname";
 	$LocResult = DB_query($SQL);
 	while ($myrow=DB_fetch_array($LocResult)){

@@ -479,6 +479,14 @@ function GetCategoryNameFromCode($CategoryId){
 	return $Row['0'];
 }
 
+function GetDefaultLocationFromUser($UserId){
+	$ErrMsg = 'Error in function GetDefaultLocationFromUser()';
+	$SQL = "SELECT defaultlocation FROM www_users WHERE userid='".$UserId."'";
+	$result = DB_query($SQL,$ErrMsg);
+	$Row = DB_fetch_row($result);
+	return $Row['0'];
+}
+
 function GetLocationNameFromCode($LocCode){
 	$ErrMsg = 'Error in function GetLocationNameFromCode()';
 	$SQL="SELECT locationname FROM locations WHERE loccode='" . $LocCode . "'";
