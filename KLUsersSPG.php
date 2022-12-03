@@ -171,7 +171,7 @@ if (isset($_POST['submit'])) {
 													" . CODE_KANTOR . ",
 													'" . $_POST['UserID'] . "',
 													1,
-													1
+													0
 												)";
 		$Result = DB_query($LocationSql, $ErrMsg, $DbgMsg);
 
