@@ -660,12 +660,14 @@ $MenuItems['GL']['Maintenance']['URL'] = array(		'/AccountSections.php',
 $MenuItems['FA']['Transactions']['Caption'] = array(_('Add a new Asset'),
 													_('Select an Asset'),
 													_('Change Asset Location'),
-													_('Depreciation Journal'));
+													_('Depreciation Journal'),
+													_('KL Maintenance Tasks'));
 
 $MenuItems['FA']['Transactions']['URL'] = array('/FixedAssetItems.php',
 												'/SelectAsset.php',
 												'/FixedAssetTransfer.php',
-												'/FixedAssetDepreciation.php');
+												'/FixedAssetDepreciation.php',
+												'/KLMaintenanceTasks.php');
 
 $MenuItems['FA']['Reports']['Caption'] = array(	_('Asset Register'),
 												_('My Maintenance Schedule'),
@@ -677,11 +679,13 @@ $MenuItems['FA']['Reports']['URL'] = array(	'/FixedAssetRegister.php',
 
 $MenuItems['FA']['Maintenance']['Caption'] = array(	_('Fixed Asset Category Maintenance'),
 													_('Add or Maintain Asset Locations'),
-													_('Fixed Asset Maintenance Tasks'));
+													_('Fixed Asset Maintenance Tasks'),
+													_('KL Maintenance Types Maintenace'));
 
 $MenuItems['FA']['Maintenance']['URL'] = array(	'/FixedAssetCategories.php',
 												'/FixedAssetLocations.php',
-												'/MaintenanceTasks.php');
+												'/MaintenanceTasks.php',
+												'/KLMaintenanceTypes.php');
 
 $MenuItems['PC']['Transactions']['Caption'] = array(_('Assign Cash to PC Tab'),
 							_('Cash Transfer Between Tabs'),
@@ -804,7 +808,6 @@ $MenuItems['system']['Reports']['Caption'] = array(	_('Sales Types'),
 													_('Sales GL Interface Postings'),
 													_('COGS GL Interface Postings'),
 													_('Freight Costs Maintenance'),
-													_('KL Maintenance Types Maintenace'),
 													_('Discount Matrix'));
 $MenuItems['system']['Reports']['URL'] = array(	'/SalesTypes.php',
 												'/ReturnedItemsReasons.php',
@@ -819,7 +822,6 @@ $MenuItems['system']['Reports']['URL'] = array(	'/SalesTypes.php',
 												'/SalesGLPostings.php',
 												'/COGSGLPostings.php',
 												'/FreightCosts.php',
-												'/KLMaintenanceTypes.php',
 												'/DiscountMatrix.php');
 $MenuItems['system']['Maintenance']['Caption'] = array(	_('Inventory Categories Maintenance'),
 														_('Inventory Location Zones Maintenance'),
