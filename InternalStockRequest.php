@@ -224,7 +224,7 @@ echo '</select></td>
 $sql="SELECT locations.loccode,
 			locationname
 		FROM locations
-		INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
+		INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 		WHERE internalrequest = 1
 		ORDER BY locationname";
 
