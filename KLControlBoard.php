@@ -1837,25 +1837,25 @@ function GoodsJustArrived($kind, $location, $numdays, $RootPath, $db){
 			$LinkRL5Some = '';
 
 			if($ShopsToSetRL != 0){
-				if ($myrow['qtytotal'] >= $ShopsToSetRL){
-					$LinkRL1All  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=Y' . '&RL=1' . '">' . 'RL=1' . '</a>';
-					$LinkRL1Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=1' . '">' . 'RL=1' . '</a>';
+				if ($myrow['qtytotal'] >= 0){
+					$LinkRL1All  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=Y' . '&RL=1' . '">' . '1' . '</a>';
+					$LinkRL1Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=1' . '">' . '1' . '</a>';
 				}
 				if ($myrow['qtytotal'] >= $ShopsToSetRL * 2){
-					$LinkRL2All  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=Y' . '&RL=2' . '">' . 'RL=2' . '</a>';
-					$LinkRL2Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=2' . '">' . 'RL=2' . '</a>';
+					$LinkRL2All  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=Y' . '&RL=2' . '">' . '2' . '</a>';
+					$LinkRL2Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=2' . '">' . '2' . '</a>';
 				}
 				if ($myrow['qtytotal'] >= $ShopsToSetRL * 3){
-					$LinkRL3All  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=Y' . '&RL=3' . '">' . 'RL=3' . '</a>';
-					$LinkRL3Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=3' . '">' . 'RL=3' . '</a>';
+					$LinkRL3All  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=Y' . '&RL=3' . '">' . '3' . '</a>';
+					$LinkRL3Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=3' . '">' . '3' . '</a>';
 				}
 				if ($myrow['qtytotal'] >= $ShopsToSetRL * 4){
-					$LinkRL4All  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=Y' . '&RL=4' . '">' . 'RL=4' . '</a>';
-					$LinkRL4Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=4' . '">' . 'RL=4' . '</a>';
+					$LinkRL4All  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=Y' . '&RL=4' . '">' . '4' . '</a>';
+					$LinkRL4Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=4' . '">' . '4' . '</a>';
 				}
 				if ($myrow['qtytotal'] >= $ShopsToSetRL * 5){
-					$LinkRL5All  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=Y' . '&RL=5' . '">' . 'RL=5' . '</a>';
-					$LinkRL5Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=5' . '">' . 'RL=5' . '</a>';
+					$LinkRL5All  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=Y' . '&RL=5' . '">' . '5' . '</a>';
+					$LinkRL5Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=5' . '">' . '5' . '</a>';
 				}
 			}
 
@@ -3345,25 +3345,25 @@ No pending transfer regarding this item
 			$LinkRL5All = '';
 			$LinkRL5Some = '';
 			if($ShopsToSetRL != 0){
-				if ($myrow['QtyKantor'] >= $ShopsToSetRL){
-					$LinkRL1All  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=Y' . '&RL=1' . '">' . 'RL=1' . '</a>';
-					$LinkRL1Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=1' . '">' . 'RL=1' . '</a>';
+				if ($myrow['QtyKantor'] >= 0){
+					$LinkRL1All  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=Y' . '&RL=1' . '">' . '1' . '</a>';
+					$LinkRL1Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=1' . '">' . '1' . '</a>';
 				}
 				if ($myrow['QtyKantor'] >= $ShopsToSetRL * 2){
-					$LinkRL2All  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=Y' . '&RL=2' . '">' . 'RL=2' . '</a>';
-					$LinkRL2Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=2' . '">' . 'RL=2' . '</a>';
+					$LinkRL2All  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=Y' . '&RL=2' . '">' . '2' . '</a>';
+					$LinkRL2Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=2' . '">' . '2' . '</a>';
 				}
 				if ($myrow['QtyKantor'] >= $ShopsToSetRL * 3){
-					$LinkRL3All  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=Y' . '&RL=3' . '">' . 'RL=3' . '</a>';
-					$LinkRL3Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=3' . '">' . 'RL=3' . '</a>';
+					$LinkRL3All  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=Y' . '&RL=3' . '">' . '3' . '</a>';
+					$LinkRL3Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=3' . '">' . '3' . '</a>';
 				}
 				if ($myrow['QtyKantor'] >= $ShopsToSetRL * 4){
-					$LinkRL4All  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=Y' . '&RL=4' . '">' . 'RL=4' . '</a>';
-					$LinkRL4Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=4' . '">' . 'RL=4' . '</a>';
+					$LinkRL4All  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=Y' . '&RL=4' . '">' . '4' . '</a>';
+					$LinkRL4Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=4' . '">' . '4' . '</a>';
 				}
 				if ($myrow['QtyKantor'] >= $ShopsToSetRL * 5){
-					$LinkRL5All  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=Y' . '&RL=5' . '">' . 'RL=5' . '</a>';
-					$LinkRL5Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=5' . '">' . 'RL=5' . '</a>';
+					$LinkRL5All  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=Y' . '&RL=5' . '">' . '5' . '</a>';
+					$LinkRL5Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=5' . '">' . '5' . '</a>';
 				}
 			}
 			printf('<td class="number">%s</td>
