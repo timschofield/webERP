@@ -56,7 +56,7 @@ $NumberOfOpenShopsTotal = $NumberOfOpenShopsKL + $NumberOfOpenShopsBL + $NumberO
 ***************************************************************************************/
 
 if ($_SESSION['UserID'] == "Ricard"){
-	$KL_BusinessDevelopmentManager = TRUE;
+	// $KL_BusinessDevelopmentManager = TRUE;
 	//	phpinfo();
 
 /* TEST AND PLAY WITH call_user_func to move this script mainly to a table in DB
@@ -233,8 +233,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_OperationalManager 
-		OR $KL_ShopSupportLeader){
+	if ($KL_ShopSupportLeader){
 		ErrorsInTransfers( 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
@@ -426,7 +425,6 @@ if ($ProcessSection01){
 	}
 	
 	if ($KL_SystemAdmin 
-		OR $KL_OperationalManager
 		OR $KL_AdministrationTeam){
 		BalanceAccountControl("111121100PI",  5000000, 120000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
@@ -565,8 +563,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC8A", "SHOPOU", $NumberOfTestExecuted, $RootPath, $db);
 	}
 
-	if ($KL_OperationalManager 
-		OR $KL_ShopSupportLeader
+	if ($KL_ShopSupportLeader
 		OR $KL_PurchasingTeam){
 
 		ConsumablesGoodsNotEnoughStock(30, 15, 45, $RootPath, $db);
@@ -854,7 +851,6 @@ if ($ProcessSection02){
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_AdministrationTeam
 		OR $KL_SalesTeamOnline
-		OR $KL_OperationalManager
 		OR $KL_ShopSupportTeam){ 
 		OutstandingOrders("MarketPlace", "Order", $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -898,7 +894,6 @@ if ($ProcessSection02){
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesTeamOnline
-		OR $KL_OperationalManager
 		OR $KL_ShopSupportTeam){ 
 		OutstandingOrders("Online", "Order", $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -974,7 +969,7 @@ if ($ProcessSection02){
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager 
 		OR $KL_OperationalManager){
-		TransfersDelayed(5, $RootPath, $db);
+		TransfersDelayed(4, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -1246,7 +1241,9 @@ function CategoryItemsMissingInShops($Category, $ShopType, $NumberOfTestExecuted
 		. $Condition;
 	$result = DB_query($SQL);
 	while ($myrow = DB_fetch_array($result)){
-		CategoryItemsNotInShop($Category, $myrow['loccode'], $MinQOH, $RootPath, $db);
+		CategoryItemsNotInShop($Category, $myrow['loccode'], $MinQOH, "ALL", $RootPath, $db);
+		$NumberOfTestExecuted++;
+		CategoryItemsNotInShop($Category, $myrow['loccode'], 1, "KANTOR", $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 	return $NumberOfTestExecuted;
@@ -1255,64 +1252,61 @@ function CategoryItemsMissingInShops($Category, $ShopType, $NumberOfTestExecuted
 
 
 
-function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $RootPath, $db){
+function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $WhereisQOH, $RootPath, $db){
 	
-	$Message = GetCategoryNameFromCode($Category) . _(' items NOT in ') . $Shop . ' with QOH >= ' . $MinQOH .' (excluding Change of Price, Move to Discount, Service, Shop online and Return to Supplier)';
-
-	$ShopsKL = NumberOfShops("SHOPKL", "ALL", $db);
-	$ShopsBL = NumberOfShops("SHOPBL", "ALL", $db);
-	$ShopsOU = NumberOfShops("SHOPOU", "ALL", $db);
+	$Exclusions = " (excluding items in Active Tranfers, Pending of Transfer, Change of Price, Move to Discount, Service, Shop Online and Return to Supplier)";
+	if ($WhereisQOH == "KANTOR"){
+		$Message = GetCategoryNameFromCode($Category) . _(' items NOT in ') . $Shop . ' but with QOH >= ' . $MinQOH .' in KANTOR' . $Exclusions;
+		$SQLQty = "(SELECT SUM(l.quantity)
+						FROM locstock l
+						WHERE l.stockid = stockmaster.stockid
+							AND l.loccode IN " . LIST_LOCATIONS_KANTOR . ")";
+		$TitleQOH = "QOH Kantor";
+	}else{
+		$Message = GetCategoryNameFromCode($Category) . _(' items NOT in ') . $Shop . ' with QOH >= ' . $MinQOH .' in TOTAL' . $Exclusions;
+		$SQLQty = "(SELECT SUM(l.quantity)
+						FROM locstock l
+						WHERE l.stockid = stockmaster.stockid
+							AND l.loccode NOT IN " . LIST_SERVICE_LOCATIONS . "
+							AND l.loccode NOT IN " . LIST_CONSIGNMENT_LOCATIONS . "
+							AND l.loccode NOT IN " . LIST_SAMPLE_LOCATIONS . ")";
+		$TitleQOH = "QOH Total";
+	}
 
 	// count to how many shops do we need to set the RL
 	if ($Category == 'TESTKA'){
 		$WhereCat = " AND stockmaster.categoryid = 'TESTKA' ";
 		$TypeOfShop = 'SHOPKL';
-		$ShopsToSetRL = $ShopsKL;
 	} else if ($Category == 'STABKA') {
 		$WhereCat = " AND stockmaster.categoryid = 'STABKA' ";
 		$TypeOfShop = 'SHOPKL';
-		$ShopsToSetRL = $ShopsKL;
 	} else if ($Category == 'NOPOKA') {
 		$WhereCat = " AND stockmaster.categoryid = 'NOPOKA' ";
 		$TypeOfShop = 'SHOPKL';
-		$ShopsToSetRL = $ShopsKL;
 	} else if ($Category == 'TESTBA') {
 		$WhereCat = " AND stockmaster.categoryid = 'TESTBA' ";
 		$TypeOfShop = 'SHOPBL';
-		$ShopsToSetRL = $ShopsKL;
 	} else if ($Category == 'STABBA') {
 		$WhereCat = " AND stockmaster.categoryid = 'STABBA' ";
 		$TypeOfShop = 'SHOPBL';
-		$ShopsToSetRL = $ShopsBL;
 	} else if ($Category == 'NOPOBA') {
 		$WhereCat = " AND stockmaster.categoryid = 'NOPOBA' ";
 		$TypeOfShop = 'SHOPBL';
-		$ShopsToSetRL = $ShopsBL;
 	} else if ($Category == 'DISC2A') {
 		$WhereCat = " AND (stockmaster.categoryid = 'DISC2A')";
 		$TypeOfShop = 'SHOPOU';
-		$ShopsToSetRL = $ShopsOU;
 	} else if ($Category == 'DISC5A') {
 		$WhereCat = " AND (stockmaster.categoryid = 'DISC5A')";
 		$TypeOfShop = 'SHOPOU';
-		$ShopsToSetRL = $ShopsOU;
 	} else if ($Category == 'DISC8A') {
 		$WhereCat = " AND (stockmaster.categoryid = 'DISC8A')";
 		$TypeOfShop = 'SHOPOU';
-		$ShopsToSetRL = $ShopsOU;
-	}else{
-		$ShopsToSetRL = 0;
 	}
 	
 	$SQL = "SELECT stockmaster.stockid,
 					stockmaster.description,
-					locstock.loccode,
-					(SELECT SUM(l.quantity)
-						FROM locstock l
-						WHERE l.stockid = stockmaster.stockid
-							AND l.loccode NOT IN " . LIST_SERVICE_LOCATIONS . "
-							AND l.loccode NOT IN " . LIST_CONSIGNMENT_LOCATIONS . "
-							AND l.loccode NOT IN " . LIST_SAMPLE_LOCATIONS . ") AS qoh,
+					locstock.loccode, " . 
+					$SQLQty . " AS qoh,
 					locstock.reorderlevel
 			FROM stockmaster, locstock
 			WHERE stockmaster.stockid = locstock.stockid" . 
@@ -1329,16 +1323,20 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $RootPath, $db){
 						FROM locstock l
 						WHERE l.stockid = stockmaster.stockid
 							AND l.loccode = 'KASPE') = 0)
-				AND ((SELECT SUM(l.quantity)
-						FROM locstock l
-						WHERE l.stockid = stockmaster.stockid
-							AND l.loccode NOT IN " . LIST_SERVICE_LOCATIONS . "
-							AND l.loccode NOT IN " . LIST_CONSIGNMENT_LOCATIONS . "
-							AND l.loccode NOT IN " . LIST_SAMPLE_LOCATIONS . ") >= ". $MinQOH .")
+				AND ( " . $SQLQty . " >= ". $MinQOH .")
 				AND ((SELECT SUM(l.reorderlevel)
 						FROM locstock l
 						WHERE l.stockid = stockmaster.stockid
 							AND l.loccode IN " . LIST_ONLINE_SHOPS . ") = 0)
+				AND NOT EXISTS (SELECT *
+						FROM loctransfers 
+						WHERE  recqty < shipqty
+							AND loctransfers.stockid =  stockmaster.stockid)
+				AND NOT EXISTS (SELECT *
+						FROM locstock l
+						WHERE  l.stockid = stockmaster.stockid
+							AND l.reorderlevel > 0
+							AND l.quantity =  0)
 			ORDER BY stockmaster.stockid";
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
@@ -1349,8 +1347,13 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $RootPath, $db){
 							<th class="ascending">' . _('#') . '</th>
 							<th class="ascending">' . _('Code') . '</th>
 							<th class="ascending">' . _('Description') . '</th>
-							<th class="ascending">' . _('QOH') . '</th>
+							<th class="ascending">' . $TitleQOH . '</th>
 							<th class="ascending">' . _('RL=?') . '</th>
+							<th class="ascending">' . _('RL=1') . '</th>
+							<th class="ascending">' . _('RL=2') . '</th>
+							<th class="ascending">' . _('RL=3') . '</th>
+							<th class="ascending">' . _('RL=4') . '</th>
+							<th class="ascending">' . _('RL=5') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -1358,20 +1361,37 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $RootPath, $db){
 		while ($myrow = DB_fetch_array($result)) {
 			$k = StartEvenOrOddRow($k);
 
-			if ((ItemInList($Category , LIST_STOCK_CATEGORIES_TEST)) 
-				OR (ItemInList($Category , LIST_STOCK_CATEGORIES_STABLE))
-				OR (ItemInList($Category , LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING))
-				OR (ItemInList($Category , LIST_STOCK_CATEGORIES_OUTLET))) {
-				$ManualLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . 'Manual' . '</a>';
-			}else{
-				$ManualLink = '';
-			}
-	
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+			$ManualLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . 'Manual' . '</a>';
+			$LinkRL1 = '';
+			$LinkRL2 = '';
+			$LinkRL3 = '';
+			$LinkRL4 = '';
+			$LinkRL5 = '';
+			if ($myrow['qoh'] >= 1){
+				$LinkRL1  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&LocCode=' . $Shop . '&RL=1' . '">' . '1' . '</a>';
+			}
+			if ($myrow['qoh'] >= 2){
+				$LinkRL2  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&LocCode=' . $Shop . '&RL=2' . '">' . '2' . '</a>';
+			}
+			if ($myrow['qoh'] >= 3){
+				$LinkRL3  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&LocCode=' . $Shop . '&RL=3' . '">' . '3' . '</a>';
+			}
+			if ($myrow['qoh'] >= 4){
+				$LinkRL4  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&LocCode=' . $Shop . '&RL=4' . '">' . '4' . '</a>';
+			}
+			if ($myrow['qoh'] >= 5){
+				$LinkRL5  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&LocCode=' . $Shop . '&RL=5' . '">' . '5' . '</a>';
+			}
 
 			printf('<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>', 
@@ -1379,7 +1399,12 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $RootPath, $db){
 					$CodeLink, 
 					$myrow['description'], 
 					$myrow['qoh'], 
-					$ManualLink
+					$ManualLink,
+					$LinkRL1,
+					$LinkRL2,
+					$LinkRL3,
+					$LinkRL4,
+					$LinkRL5
 			);
 			$i++;
 		}

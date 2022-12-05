@@ -107,6 +107,7 @@ define("CODE_KANTOR",      "'KANTO'");
 define("CODE_ONLINE_SHOP", "'TOKWS'");
 
 define("LIST_ZONES_OF_KANTOR",   "('OFFICE')"); 
+define("LIST_LOCATIONS_KANTOR",  "('KANTO')");
 
 define("LIST_BALI_SHOPS_BY_TYPE", "('SHOPKL','SHOPBL','SHOPOU')");
 define("LIST_ALL_SHOPS_BY_TYPE",  "('SHOPKL','SHOPBL','SHOPOU','ONLINE')");

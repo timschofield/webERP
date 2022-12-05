@@ -302,7 +302,6 @@ function AverageKPIHistory($NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE
 	}
 }
 
-
 function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE, $NumDaysF, $NumDaysSort, $Year, $Shop, $db){
 
 	if ($Year == "LastYear"){
@@ -1745,13 +1744,19 @@ function ItemsWithoutRetailPrice($stockcat, $factorRetail, $RootPath, $db){
 	return $i;
 }
 
-function ListPriorityLocations($db){
+function LocationInformationReview($db){
 	$SQL="SELECT locationname,
 				zone,
 				typeloc,
 				partnercode,
 				priority,
 				stockavailableforonline,
+				alltestitems,
+				allstableitems,
+				allnopoitems,
+				alldisc20items,
+				alldisc50items,
+				alldisc80items,
 				rlfactorforpackaging,
 				rldaysforpackaging,
 				smartdispatchmaxmodels
@@ -1761,7 +1766,7 @@ function ListPriorityLocations($db){
 
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Priority Assigned to Shops. 1-Maximum 10-Minimum') . '</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . _('Shop Information Review') . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
@@ -1773,6 +1778,12 @@ function ListPriorityLocations($db){
 							<th class="ascending">' . _('Priority') . '</th>
 							<th class="ascending">' . _('Max Daily Tr') . '</th>
 							<th class="ascending">' . _('Stock Online?') . '</th>
+							<th class="ascending">' . _('All Test?') . '</th>
+							<th class="ascending">' . _('All Stable?') . '</th>
+							<th class="ascending">' . _('All NOPO?') . '</th>
+							<th class="ascending">' . _('All 20%D?') . '</th>
+							<th class="ascending">' . _('All 50%D?') . '</th>
+							<th class="ascending">' . _('All 80%D?') . '</th>
 							<th class="ascending">' . _('Pack Factor') . '</th>
 							<th class="ascending">' . _('Pack Days') . '</th>
 						</tr>';
@@ -1786,6 +1797,36 @@ function ListPriorityLocations($db){
 			}else{
 				$StockOnline = "No";
 			}
+			if ($myrow['alltestitems'] ==  1){
+				$StockTest = "Yes";
+			}else{
+				$StockTest = "No";
+			}
+			if ($myrow['allstableitems'] ==  1){
+				$StockStable = "Yes";
+			}else{
+				$StockStable = "No";
+			}
+			if ($myrow['allnopoitems'] ==  1){
+				$StockNoPo= "Yes";
+			}else{
+				$StockNoPo = "No";
+			}
+			if ($myrow['alldisc20items'] ==  1){
+				$Stock20D= "Yes";
+			}else{
+				$Stock20D = "No";
+			}
+			if ($myrow['alldisc50items'] ==  1){
+				$Stock50D= "Yes";
+			}else{
+				$Stock50D = "No";
+			}
+			if ($myrow['alldisc80items'] ==  1){
+				$Stock80D= "Yes";
+			}else{
+				$Stock80D = "No";
+			}
 			printf('<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -1793,6 +1834,12 @@ function ListPriorityLocations($db){
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -1805,6 +1852,12 @@ function ListPriorityLocations($db){
 					$myrow['priority'],
 					$myrow['smartdispatchmaxmodels'],
 					$StockOnline,
+					$StockTest,
+					$StockStable,
+					$StockNoPo,
+					$Stock20D,
+					$Stock50D,
+					$Stock80D,
 					$myrow['rlfactorforpackaging'],
 					$myrow['rldaysforpackaging']
 					);
@@ -2005,7 +2058,6 @@ function RoundPackagingTransfer($n){
 	}
 	return $n;
 }
-
 
 function PositionTopSalesItem($stockid, $TopItemsDays, $db){
 

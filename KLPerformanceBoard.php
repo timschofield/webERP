@@ -64,8 +64,6 @@ if ($ProcessSection01){
 		OR $KL_ShopManager){
 		AverageSales("Shop", 180, 90, 30, 15, 7, 1, 30, "CurrentYear", "All", $db);
 		$NumberOfTestExecuted++;
-		PeriodDifferenceSales("IMMEDIATE", "Shop",   7, $db);
-		$NumberOfTestExecuted++;
 		PeriodDifferenceSales("IMMEDIATE", "Shop",  15, $db);
 		$NumberOfTestExecuted++;
 		PeriodDifferenceSales("IMMEDIATE", "Shop",  30, $db);
@@ -73,10 +71,6 @@ if ($ProcessSection01){
 		PeriodDifferenceSales("2019", "Shop",  30, $db);
 		$NumberOfTestExecuted++;
 
-//		PeriodDifferenceSales("YEAR", "Shop",   7, $db);
-//		$NumberOfTestExecuted++;
-//		PeriodDifferenceSales("YEAR", "Shop",  15, $db);
-//		$NumberOfTestExecuted++;
 		PeriodDifferenceSales("YEAR", "Shop",  30, $db);
 		$NumberOfTestExecuted++;
 // RICARD 2019-11-26
@@ -88,10 +82,8 @@ if ($ProcessSection01){
 	}
 
 	if ($KL_SystemAdmin
-		OR $KL_OperationalManager
 		OR $KL_SalesTeamOnline
-		OR $KL_BusinessDevelopmentManager
-		OR $KL_ShopManager){
+		OR $KL_BusinessDevelopmentManager){
 
 		AverageSales("Online", 180, 90, 30, 15, 7, 1, 30, "CurrentYear", "All", $db);
 		$NumberOfTestExecuted++;
@@ -107,7 +99,7 @@ if ($ProcessSection01){
 		OR $KL_OperationalManager
 		OR $KL_ShopManager
 		OR $KL_BusinessDevelopmentManager){
-		AverageCustomerBehaviourByValueInvoice("Shop", 30, $db);
+		AverageCustomerBehaviourByValueInvoice("Shop", 60, $db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -115,7 +107,7 @@ if ($ProcessSection01){
 		OR $KL_ShopManager
 		OR $KL_OperationalManager
 		OR $KL_BusinessDevelopmentManager){
-		GeneralCustomerBehaviour(30, $db);
+		GeneralCustomerBehaviour(60, $db);
 		$NumberOfTestExecuted++;
 //		GeneralCustomerBehaviour(90, $db);
 //		$NumberOfTestExecuted++;
@@ -137,7 +129,7 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin){
-		ListPriorityLocations($db);
+		LocationInformationReview($db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -160,7 +152,6 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin 
-		OR $KL_OperationalManager
 		OR $KL_ShopManager
 		OR $KL_BusinessDevelopmentManager){
 		FinishedStockDistribution("FORSALE", "LOCATION", $db);
@@ -189,9 +180,8 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_SystemAdmin OR
-		$KL_OperationalManager){
-		POStatusControl("","IN NEGOTIATION WITH SUPPLIER", 0, $periodnow, $RootPath, $db);
+	if ($KL_SystemAdmin){
+/*		POStatusControl("","IN NEGOTIATION WITH SUPPLIER", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		POStatusControl("PACKAGING","ON PRODUCTION", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -201,19 +191,12 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 		POStatusControl("","FINISHED BUT NOT PAID", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
-	}
-
-	if ($KL_SystemAdmin){
 		POStatusControl("PACKAGING","STILL NOT FULLY PAID", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		POStatusControl("FORSALE","STILL NOT FULLY PAID", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		POStatusControl("OTHERS","STILL NOT FULLY PAID", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
-	}
-	
-	if ($KL_SystemAdmin OR
-		$KL_OperationalManager){
 		POStatusControl("","BALI PAID BUT NOT RECEIVED IN KANTOR", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		POStatusControl("","BALI RECEIVED IN KANTOR BUT NOT PAID", 0, $periodnow, $RootPath, $db);
@@ -228,12 +211,16 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 		POStatusControl("","IN WANGFOONG CARGO BUT NOT SHIPPED", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		POStatusControl("","SHIPPED IN TRANSIT", 0, $periodnow, $RootPath, $db);
+*/		POStatusControl("","SHIPPED IN TRANSIT", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		POStatusControl("","CUSTOMS CLEARANCE", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		POStatusControl("","RECEIVED IN KANTOR", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
+	}
+	
+	if ($KL_SystemAdmin OR
+		$KL_OperationalManager){
 		POStatusControl("PACKAGING","ARRIVING IN NEXT DAYS", 75, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		POStatusControl("FORSALE","ARRIVING IN NEXT DAYS", 75, $periodnow, $RootPath, $db);
@@ -256,8 +243,7 @@ if ($ProcessSection03){
 		prnMsg("Packaging, Displays, Petty Cash, Financial Performance Board Section 03.",'info');
 	}
 
-	if ($KL_SystemAdmin 
-		OR $KL_OperationalManager){
+	if ($KL_SystemAdmin ){
 		InsuficientStockForShopPackaging('SHPACK', 15, 90, 30, true, $RootPath, $db);
 		$NumberOfTestExecuted++;
 //		InsuficientStockForShopPackaging('ZAPON', 15, 60, 30, true, $RootPath, $db);
@@ -279,11 +265,6 @@ if ($ProcessSection03){
 		$NumberOfTestExecuted++;
 		PackagingUsageForOutlet(30, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		
-// RICARD 2019-11-26
-// CANCELLED FOR PERFORMANCE REASONS
-//		PackagingUsageByWeeks($RootPath, $db);
-//		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin){
@@ -291,9 +272,7 @@ if ($ProcessSection03){
 		$NumberOfTestExecuted++;
 	}
 	
-	if ($KL_SystemAdmin 
-		OR $KL_OperationalManager
-		OR $KL_ShopManager
+	if ($KL_ShopManager
 		OR $KL_BusinessDevelopmentManager){
 		FinishedStockDistribution("DISPLAYS", "LOCATION", $db);
 		$NumberOfTestExecuted++;
@@ -313,17 +292,14 @@ if ($ProcessSection03){
 	}
 
 	if ($KL_SystemAdmin
-		OR $KL_OperationalManager
 		OR $KL_AdministrationTeam){
 		CashStatus(2022, 
-					20000000, 300000000, 100000000, 
-					20000000, 300000000, 100000000, 
+					20000000, 400000000, 100000000, 
+					20000000, 400000000, 100000000, 
 					100000000, $periodnow, $KL_SystemAdmin, TRUE, $db);
 		$NumberOfTestExecuted++;
 	}
 	if ($KL_SystemAdmin){
-		ShowKPIHistory(7);
-		$NumberOfTestExecuted++;
 		ShowKPIHistory(90);
 		$NumberOfTestExecuted++;
 		AverageKPIHistory(180, 90, 30, 15, 7, 0, $db);

@@ -16,6 +16,14 @@ if (isset($_GET['StockID'])){
 	$StockID = '';
 }
 
+if (isset($_GET['LocCode'])){
+	$LocCode = trim(mb_strtoupper($_GET['LocCode']));
+} elseif (isset($_POST['LocCode'])){
+	$LocCode = trim(mb_strtoupper($_POST['LocCode']));
+}else{
+	$LocCode = '';
+}
+
 if (isset($_GET['TypeOfShop'])){
 	$TypeOfShop = trim(mb_strtoupper($_GET['TypeOfShop']));
 } elseif (isset($_POST['TypeOfShop'])){
@@ -60,26 +68,32 @@ echo '<tr>
 		<th colspan="3"><h3><b>' . $StockID . ' - ' . $myitem['description'] . '</b>  (' . _('In Units of') . ' ' . $myitem['units'] . ')</h3></th>
 	</tr>';
 
-if ($AllShops == "N"){
-	// we only want to distribute between the locations with the flags allitemsXXXX == true (big shops) not to small ones with allitemsXXXX == false
-	if (ItemInLIst($myitem['categoryid'], LIST_STOCK_CATEGORIES_TEST)){
-		$FilterLoc = " AND locations.alltestitems = 1 ";
-	}elseif (ItemInLIst($myitem['categoryid'], LIST_STOCK_CATEGORIES_STABLE)){
-		$FilterLoc = " AND locations.allstableitems = 1 ";
-	}elseif (ItemInLIst($myitem['categoryid'], LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING)){
-		$FilterLoc = " AND locations.allnopoitems = 1 ";
-	}elseif ($myitem['categoryid'] == "DISC2A"){
-		$FilterLoc = " AND locations.alldisc20items = 1 ";
-	}elseif ($myitem['categoryid'] == "DISC5A"){
-		$FilterLoc = " AND locations.alldisc50items = 1 ";
-	}elseif ($myitem['categoryid'] == "DISC8A"){
-		$FilterLoc = " AND locations.alldisc80items = 1 ";
+if ($LocCode != ''){
+	// we want to distribute to a specific location
+	$FilterLoc = " AND locations.loccode = '" . $LocCode . "' ";
+}else{
+	// we want to distribute to a group of locations
+	if ($AllShops == "N"){
+		// we only want to distribute between the locations with the flags allitemsXXXX == true (big shops) not to small ones with allitemsXXXX == false
+		if (ItemInLIst($myitem['categoryid'], LIST_STOCK_CATEGORIES_TEST)){
+			$FilterLoc = " AND locations.alltestitems = 1 ";
+		}elseif (ItemInLIst($myitem['categoryid'], LIST_STOCK_CATEGORIES_STABLE)){
+			$FilterLoc = " AND locations.allstableitems = 1 ";
+		}elseif (ItemInLIst($myitem['categoryid'], LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING)){
+			$FilterLoc = " AND locations.allnopoitems = 1 ";
+		}elseif ($myitem['categoryid'] == "DISC2A"){
+			$FilterLoc = " AND locations.alldisc20items = 1 ";
+		}elseif ($myitem['categoryid'] == "DISC5A"){
+			$FilterLoc = " AND locations.alldisc50items = 1 ";
+		}elseif ($myitem['categoryid'] == "DISC8A"){
+			$FilterLoc = " AND locations.alldisc80items = 1 ";
+		}else{
+			$FilterLoc = "";
+		}
 	}else{
+		// want to distribute to all the locations
 		$FilterLoc = "";
 	}
-}else{
-	// want o distribute to all the locations
-	$FilterLoc = "";
 }
 
 $sql = "SELECT locstock.loccode,
@@ -94,7 +108,7 @@ $sql = "SELECT locstock.loccode,
 		INNER JOIN locationusers 
 			ON locationusers.loccode=locstock.loccode 
 				AND locationusers.userid='" .  $_SESSION['UserID'] . "' 
-				AND locationusers.canview=1
+				AND locationusers.canupd=1
 		INNER JOIN stockmaster
 			ON locstock.stockid=stockmaster.stockid
 		WHERE locstock.stockid = '" . $StockID . "'".
@@ -124,10 +138,12 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 		$k=1;
 	}
 
-	if($myrow['typeloc'] == $TypeOfShop){
+	if(($myrow['typeloc'] == $TypeOfShop) 
+		OR ($myrow['loccode'] == $LocCode)){
 		$sql = "UPDATE locstock SET reorderlevel = '" . $RL . "'
 			WHERE stockid = '" . $StockID . "'
 			AND loccode = '"  . $myrow['loccode'] ."'";
+
 		$UpdateReorderLevel = DB_query($sql);
 		$NewRL = $RL;
 	}else{
