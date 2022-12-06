@@ -228,10 +228,6 @@ if ($ProcessSection02){
 		POStatusControl("OTHERS","ARRIVING IN NEXT DAYS", 75, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
-
-	
-//	RetailTypePayments("Shop",180, $db);
-//	NumberOfTestExecuted++;
 }
 
 /***************************************************************************************

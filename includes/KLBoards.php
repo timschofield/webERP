@@ -725,6 +725,81 @@ function ChangeItemStandardCost($StockID, $NewCost, $OldCost, $QOH){
 	UpdateCost($db, $StockID); //Update any affected BOMs
 }
 
+function ClosedMaintenanceTasks($NumDays){
+	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
+	$sql = "SELECT klmaintenancetasks.counterindex, 
+				klmaintenancetasks.loccode,
+				locations.locationname,
+				klmaintenancetasks.maintenancetype,
+				klmaintenancetypes.description AS typedescription,
+				klmaintenancetasks.description AS taskdescription,
+				klmaintenancetasks.creationuser,
+				klmaintenancetasks.creationdate,
+				klmaintenancetasks.closeuser,
+				klmaintenancetasks.closedate
+			FROM klmaintenancetasks
+				INNER JOIN locations 
+					ON locations.loccode=klmaintenancetasks.loccode 
+				INNER JOIN klmaintenancetypes 
+					ON klmaintenancetypes.maintenancetype=klmaintenancetasks.maintenancetype 
+				INNER JOIN locationusers 
+					ON locationusers.loccode=klmaintenancetasks.loccode 
+						AND locationusers.userid='" .  $_SESSION['UserID'] . "'
+						AND locationusers.canview=1
+			WHERE klmaintenancetasks.closed = 1
+				AND closedate >= " . $FromDate . "
+			ORDER BY klmaintenancetasks.counterindex";
+	$result = DB_query($sql);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . _('Closed Maintenance Tasks during the last ') . $NumDays . _(' days').'</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' .  _('#') . '</th>
+							<th class="ascending">' .  _('Location') . '</th>
+							<th class="ascending">' . _('Type') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('Created By') . '</th>
+							<th class="ascending">' . _('Created Date') . '</th>
+							<th class="ascending">' . _('Closed By') . '</th>
+							<th class="ascending">' . _('Closed Date') . '</th>
+							<th class="ascending">' . _('Days') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					locale_number_format($myrow['counterindex'],0),
+					$myrow['locationname'],
+					$myrow['maintenancetype'],
+					$myrow['taskdescription'],
+					$myrow['creationuser'],
+					ConvertSQLDate($myrow['creationdate']),
+					$myrow['closeuser'],
+					ConvertSQLDate($myrow['closedate']),
+					locale_number_format(abs(strtotime($myrow['closedate']) - strtotime($myrow['creationdate']))/60/60/24,2)
+					);
+			$i++;
+		}
+		echo '</table>
+				</div>';
+	}
+	
+	
+}
+
 function ComponentsToObsolete($ShowOnlyTotal, $ShowLimit, $RootPath, $db){
 	$SQL = "SELECT s.stockid,
 					s.units,

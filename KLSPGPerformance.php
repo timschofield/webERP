@@ -52,10 +52,6 @@ if ($KL_SystemAdmin
 
 	RetailTypePayments("SPG",90, $db);
 	$NumberOfTestExecuted++;
-// RICARD 2019-11-26
-// CANCELLED FOR PERFORMANCE REASONS
-//	RetailTypePayments("SPG",  15, $db);
-	$NumberOfTestExecuted++;
 }
 
 prnMsg("Performed ". $NumberOfTestExecuted . " SPG Performance Report",'success');

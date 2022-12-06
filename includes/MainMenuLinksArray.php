@@ -671,11 +671,13 @@ $MenuItems['FA']['Transactions']['URL'] = array('/FixedAssetItems.php',
 
 $MenuItems['FA']['Reports']['Caption'] = array(	_('Asset Register'),
 												_('My Maintenance Schedule'),
-												_('Maintenance Reminder Emails'));
+												_('Maintenance Reminder Emails'),
+												_('KL Maintenance Tasks Control Board'));
 
 $MenuItems['FA']['Reports']['URL'] = array(	'/FixedAssetRegister.php',
 											'/MaintenanceUserSchedule.php',
-											'/MaintenanceReminders.php');
+											'/MaintenanceReminders.php',
+											'/KLMaintenanceTasksBoard.php');
 
 $MenuItems['FA']['Maintenance']['Caption'] = array(	_('Fixed Asset Category Maintenance'),
 													_('Add or Maintain Asset Locations'),

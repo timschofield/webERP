@@ -31,7 +31,7 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs are sensible
 
-/*
+
 
 	$sql=	"SELECT COUNT(*)
 			FROM klmaintenancetasks 
@@ -47,23 +47,7 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'CounterIndex';
 		$i++;
 	}
-	if (!is_numeric($_POST['CounterIndex'])) {
-		$InputError = 1;
-		prnMsg(_('The status code name must be an integer'),'error');
-		$Errors[$i] = 'CounterIndex';
-		$i++;
-	}
-	if (mb_strlen($_POST['LocCode']) > 30) {
-		$InputError = 1;
-		prnMsg(_('The credit status description must be thirty characters or less long'),'error');
-	}
-	if (mb_strlen($_POST['LocCode']) == 0) {
-		$InputError = 1;
-		prnMsg(_('The credit status description must be entered'),'error');
-		$Errors[$i] = 'LocCode';
-		$i++;
-	}
-*/
+
 	$msg='';
 
 	if (isset($SelectedIndex) AND $InputError !=1) {
