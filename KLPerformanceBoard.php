@@ -44,9 +44,15 @@ $periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 /***************************************************************************************
 * TEST AND PLAY AREA      
 ***************************************************************************************/
-if ($KL_SystemAdmin){
-} 
+/***************************************************************************************
+* TEST AND PLAY AREA      
+***************************************************************************************/
 
+if ($_SESSION['UserID'] == "Ricard"){
+	// $KL_BusinessDevelopmentManager = TRUE;
+	OpenMaintenanceTasksDistribution();
+	//	phpinfo();
+}
 
 /***************************************************************************************
 * SECTION 1         
@@ -70,15 +76,14 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		PeriodDifferenceSales("2019", "Shop",  30, $db);
 		$NumberOfTestExecuted++;
-
 		PeriodDifferenceSales("YEAR", "Shop",  30, $db);
 		$NumberOfTestExecuted++;
-// RICARD 2019-11-26
-// CANCELLED FOR PERFORMANCE REASONS
-//		PeriodDifferenceSales("YEAR", "Shop",	 90, $db);
-//		$NumberOfTestExecuted++;
-//		PeriodDifferenceSales("YEAR", "Shop", 365, $db);
-//		$NumberOfTestExecuted++;
+	}
+
+	if ($KL_SystemAdmin
+		OR $KL_BusinessDevelopmentManager){
+		PeriodDifferenceSales("2019", "Shop",  "YTD", $db);
+		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin
@@ -2835,20 +2840,54 @@ function PettyCashStatus($currency, $db){
 }
 
 function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA, $db){
+	
+	if ($NumDaysA == "YTD"){
+		// we need to translate YTD to a number of days
+		// As suggested by OpenAI ChatGPT ;-)
+		// Get the current timestamp
+		$current_timestamp = time();
+		// Extract the year from the timestamp
+		$current_year = date('Y', $current_timestamp);
+		// Create a timestamp for the first day of the year
+		$first_day_timestamp = mktime(0, 0, 0, 1, 1, $current_year);
+		// Calculate the number of seconds between the two timestamps
+		$seconds_diff = $current_timestamp - $first_day_timestamp;
+		// Calculate the number of days between the first day of the year and the current day
+		$NumDaysA = floor($seconds_diff / 86400);		
 
-	$YesterdayA  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
-	$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA));
-	if ($typeperiod == "YEAR"){
-		$YesterdayB  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1-365));
-		$StartDateB = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-365));
-	}elseif ($typeperiod == "IMMEDIATE"){
-		$YesterdayB  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1-$NumDaysA));
-		$StartDateB = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-$NumDaysA));
-	}else{
-		// comparing with a fixed year
-		$YesterdayB  = $typeperiod . substr($YesterdayA, 4, 6);
-		$StartDateB  = $typeperiod . substr($StartDateA, 4, 6);
+		$YesterdayA  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
+		$StartDateA = date('Y', $current_timestamp) . '-01-01';
+		$YesterdayB = $typeperiod . substr($YesterdayA, 4, 6);
+		$StartDateB = $typeperiod . '-01-01';
+		$Title = _('Difference sales for ') . $typereport . " YTD (Year To Date) and same period in " . $typeperiod;
+		$TitleCurrent = $NumDaysA . ' Days This Year';
+		$TitlePrevious = $NumDaysA . ' Days '. $typeperiod;
 	}
+	else{
+		$YesterdayA  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
+		$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA));
+		if ($typeperiod == "YEAR"){
+			$YesterdayB  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1-365));
+			$StartDateB = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-365));
+			$Title = _('Difference sales for ') . $typereport . " during the last " . $NumDaysA . " days and same period last year";
+			$TitleCurrent = $NumDaysA . ' Days This Year';
+			$TitlePrevious = $NumDaysA . ' Days Last Year';
+		}elseif ($typeperiod == "IMMEDIATE"){
+			$YesterdayB  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1-$NumDaysA));
+			$StartDateB = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-$NumDaysA));
+			$Title = _('Difference sales for ') . $typereport .  " during the last " . $NumDaysA . " days and previous immediate same period";
+			$TitleCurrent = $NumDaysA . ' Last Days';
+			$TitlePrevious = $NumDaysA . ' Previous Days';
+		}else{
+			// comparing with a fixed year
+			$YesterdayB  = $typeperiod . substr($YesterdayA, 4, 6);
+			$StartDateB  = $typeperiod . substr($StartDateA, 4, 6);
+			$Title = _('Difference sales for ') . $typereport . " during the last " . $NumDaysA . " days and same period in " . $typeperiod;
+			$TitleCurrent = $NumDaysA . ' Days This Year';
+			$TitlePrevious = $NumDaysA . ' Days '. $typeperiod;
+		}
+	}
+
 	$TotalDateA = 0;
 	$TotalDateB = 0;
 	$TotalRent = 0;
@@ -2935,19 +2974,7 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA, $db){
 	}
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		if ($typeperiod == "YEAR"){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Difference sales for ') . $typereport . " during the last " . $NumDaysA . " days and same period last year".'</strong></p>';
-			$TitleCurrent = $NumDaysA . ' Days This Year';
-			$TitlePrevious = $NumDaysA . ' Days Last Year';
-		}elseif ($typeperiod == "IMMEDIATE"){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Difference sales for ') . $typereport . " during the last " . $NumDaysA . " days and previous immediate same period".'</strong></p>';
-			$TitleCurrent = $NumDaysA . ' Last Days';
-			$TitlePrevious = $NumDaysA . ' Previous Days';
-		}else{
-			echo '<p class="page_title_text" align="center"><strong>' . _('Difference sales for ') . $typereport . " during the last " . $NumDaysA . " days and same period in " . $typeperiod .'</strong></p>';
-			$TitleCurrent = $NumDaysA . ' Days This Year';
-			$TitlePrevious = $NumDaysA . ' Days '. $typeperiod;
-		}
+		echo '<p class="page_title_text" align="center"><strong>' . $Title  .'</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 
@@ -3219,6 +3246,34 @@ function ShowKPIHistory($NumDays){
 		echo '</table>
 			</div>';
 	}
+}
+
+function OpenMaintenanceTasksDistribution(){
+
+	// creating the header
+	$SQL = "SELECT maintenancetype
+			FROM klmaintenancetypes
+			ORDER BY maintenancetype";
+	$result = DB_query($SQL);
+	$NumberOfTypes = 0;
+	if (DB_num_rows($result) != 0){
+		$k = 0; //row colour counter
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('Location') . '</th>';
+		while ($myrow = DB_fetch_array($result)) {
+			$TableHeader .= '<th class="ascending">' . $myrow['maintenancetype'] . '</th>';
+			$NumberOfTypes++;
+		}
+		$TableHeader .= '</tr>';
+	}
+
+	echo '<p class="page_title_text" align="center"><strong>' . 'Open Maintenance Tasks Distribution' . '</strong></p>';
+	echo '<div>';
+	echo '<table class="selection">';
+	echo $TableHeader;
+	echo '</table>
+		</div>';
+	
 	
 }
 

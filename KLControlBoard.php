@@ -250,72 +250,10 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_AdministrationTeam){
+	if ($KL_SystemAdmin 
+		OR $KL_AdministrationTeam){
 		// cash at retail shops
-		BalanceAccountControl("111111101",         0,   10000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111102",         0,   10000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111103",         0,   10000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111107",         0,   10000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111108",         0,   10000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111109",         0,   10000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111110",         0,   10000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111111",         0,   10000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111112",         0,   10000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111113",         0,   10000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111114",         0,   10000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111115",         0,   10000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111116",         0,   10000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111117",         0,   10000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111118",         0,   10000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111119",         0,   10000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111120",         0,   10000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111121",         0,   10000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111122",         0,   10000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111123",         0,   10000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111124",         0,   10000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111125",         0,   10000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111126",         0,   10000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111127",         0,   10000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111128",         0,   10000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111129",         0,   10000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111130",         0,   10000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111131",         0,   10000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111132",         0,   10000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111133",         0,   10000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111134",         0,   10000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111135",         0,   10000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
+		$NumberOfTestExecuted = CashAtShops(0, 10000000, 0, $NumberOfOpenShopsTotal * 4000000, $NumberOfTestExecuted, $periodnow, $db);
 	}
 
 	if ($KL_SystemAdmin 
@@ -343,40 +281,6 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 	}
 	
-	if ($KL_SystemAdmin 
-		OR $KL_AdministrationTeam){
-		BalanceListAccountControl("('111111101', 
-									'111111102', 
-									'111111103', 
-									'111111109', 
-									'111111110', 
-									'111111111', 
-									'111111112', 
-									'111111113', 
-									'111111114', 
-									'111111115', 
-									'111111116', 
-									'111111117', 
-									'111111118', 
-									'111111119', 
-									'111111120', 
-									'111111121', 
-									'111111122', 
-									'111111123', 
-									'111111124', 
-									'111111125', 
-									'111111126', 
-									'111111127',
-									'111111128',
-									'111111129',
-									'111111130',
-									'111111131',
-									'111111132',
-									'111111133',
-									'111111134',
-									'111111135')", "Total Cash @ shops", 0, $NumberOfOpenShopsTotal * 4000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-	}
 	if ($KL_SystemAdmin){
 		BalanceListAccountControl("('111121105AD',
 									'111121110AD',
@@ -441,7 +345,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('111513000', 
-									'111513000AD')", "Total WIP",  -10000000,   10000000, $periodnow, $db);
+									'111513000AD')", "Total WIP",  -0,   30000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 
 		BalanceAccountControl("111111200",   50000000,  300000000, $periodnow, $db);
@@ -624,7 +528,7 @@ if ($ProcessSection01){
 
 	if ($KL_ShopSupportTeam
 		OR $KL_PurchasingTeam){
-		PackagingItemsOnWrongLocation($RootPath, $db); // Works for both regular and outlet shop packaging
+		PackagingItemsOnWrongLocation($RootPath, $db); 
 		$NumberOfTestExecuted++;
 	}
 
@@ -1216,6 +1120,27 @@ function BalanceListAccountControl($accountlist, $description, $min, $max, $peri
 		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
 	}
 }
+
+function CashAtShops($MinCashPerShop, $MaxCashPerShop, $MinCashAllShops, $MaxCashAllShops, $NumberOfTestExecuted, $periodnow, $db){
+	// while builing the list of KL POS accounts for all shops, we check one by one
+	$ListAccounts = "('";
+	$SQL="SELECT klposcashaccount
+		FROM locations
+		WHERE  locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . " 
+		ORDER BY locations.locationname"; 
+	$result = DB_query($SQL);
+	while ($myrow = DB_fetch_array($result)){
+		$ListAccounts = $ListAccounts . $myrow['klposcashaccount'] . "','";
+		BalanceAccountControl($myrow['klposcashaccount'], $MinCashPerShop,$MaxCashPerShop, $periodnow, $db);
+		$NumberOfTestExecuted++;
+	}
+	$ListAccounts = substr($ListAccounts, 0, -2) . ")";
+	// Once we have the list of all KL POS accounts for all shops, we check the total in the system
+	BalanceListAccountControl($ListAccounts, "Total Cash @ shops", $MinCashAllShops, $MaxCashAllShops, $periodnow, $db);
+	$NumberOfTestExecuted++;
+	return $NumberOfTestExecuted;
+}
+
 
 function CategoryItemsMissingInShops($Category, $ShopType, $NumberOfTestExecuted, $RootPath, $db){
 
