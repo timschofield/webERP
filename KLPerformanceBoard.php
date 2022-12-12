@@ -273,7 +273,8 @@ if ($ProcessSection03){
 		$NumberOfTestExecuted++;
 	}
 	
-	if ($KL_ShopManager
+	if ($KL_SystemAdmin  
+		OR $KL_ShopManager
 		OR $KL_BusinessDevelopmentManager){
 		FinishedStockDistribution("DISPLAYS", "LOCATION", $db);
 		$NumberOfTestExecuted++;

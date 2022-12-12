@@ -158,11 +158,9 @@ if ($ProcessSection01){
 	* RETAIL PRICE         
 	***************************************************************************************/
 
-	if ($KL_BusinessDevelopmentManager){
-		over_or_below_limit("DISC20 Items in AR", "BELOW", 20, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		over_or_below_limit("DISC80 Items in AR", "BELOW", 20, $RootPath, $db);
-		$NumberOfTestExecuted++;
+	if ($KL_SystemAdmin
+		OR $KL_BusinessDevelopmentManager){
+		$NumberOfTestExecuted = MinimumOutletStockAvailable(20, 80, 20, $NumberOfTestExecuted);
 	}
 
 	if ($KL_SystemAdmin
@@ -4402,76 +4400,6 @@ function over_or_below_limit($Request, $Sign, $Limit, $RootPath, $db){
 					OR stockmaster.klmovingdiscount20 != 0
 					OR stockmaster.klmovingdiscount50 != 0
 					OR stockmaster.klmovingdiscount80 != 0";
-	}elseif ($Request =="DISC20 Items in AR"){
-		$SQL = "SELECT COUNT(*)
-				FROM stockmaster,locstock
-				WHERE stockmaster.stockid = locstock.stockid
-					AND stockmaster.categoryid = 'DISC2A'
-					AND locstock.reorderlevel > 0
-					AND locstock.loccode ='TOKAR'";
-	}elseif ($Request =="DISC20 Items in BU"){
-		$SQL = "SELECT COUNT(*)
-				FROM stockmaster,locstock
-				WHERE stockmaster.stockid = locstock.stockid
-					AND stockmaster.categoryid = 'DISC2A'
-					AND locstock.reorderlevel > 0
-					AND locstock.loccode ='TOKBU'";
-	}elseif ($Request =="DISC20 Items in B2"){
-		$SQL = "SELECT COUNT(*)
-				FROM stockmaster,locstock
-				WHERE stockmaster.stockid = locstock.stockid
-					AND stockmaster.categoryid = 'DISC2A'
-					AND locstock.reorderlevel > 0
-					AND locstock.loccode ='TOKB2'";
-	}elseif ($Request =="DISC20 Items in U3"){
-		$SQL = "SELECT COUNT(*)
-				FROM stockmaster,locstock
-				WHERE stockmaster.stockid = locstock.stockid
-					AND stockmaster.categoryid = 'DISC2A'
-					AND locstock.reorderlevel > 0
-					AND locstock.loccode ='TOKU3'";
-	}elseif ($Request =="DISC20 Items in TK"){
-		$SQL = "SELECT COUNT(*)
-				FROM stockmaster,locstock
-				WHERE stockmaster.stockid = locstock.stockid
-					AND stockmaster.categoryid = 'DISC2A'
-					AND locstock.reorderlevel > 0
-					AND locstock.loccode ='TOKTK'";
-	}elseif ($Request =="DISC80 Items in AR"){
-		$SQL = "SELECT COUNT(*)
-				FROM stockmaster,locstock
-				WHERE stockmaster.stockid = locstock.stockid
-					AND stockmaster.categoryid = 'DISC8A'
-					AND locstock.reorderlevel > 0
-					AND locstock.loccode ='TOKAR'";
-	}elseif ($Request =="DISC80 Items in BU"){
-		$SQL = "SELECT COUNT(*)
-				FROM stockmaster,locstock
-				WHERE stockmaster.stockid = locstock.stockid
-					AND stockmaster.categoryid = 'DISC8A'
-					AND locstock.reorderlevel > 0
-					AND locstock.loccode ='TOKBU'";
-	}elseif ($Request =="DISC80 Items in B2"){
-		$SQL = "SELECT COUNT(*)
-				FROM stockmaster,locstock
-				WHERE stockmaster.stockid = locstock.stockid
-					AND stockmaster.categoryid = 'DISC8A'
-					AND locstock.reorderlevel > 0
-					AND locstock.loccode ='TOKB2'";
-	}elseif ($Request =="DISC80 Items in U3"){
-		$SQL = "SELECT COUNT(*)
-				FROM stockmaster,locstock
-				WHERE stockmaster.stockid = locstock.stockid
-					AND stockmaster.categoryid = 'DISC8A'
-					AND locstock.reorderlevel > 0
-					AND locstock.loccode ='TOKU3'";
-	}elseif ($Request =="DISC80 Items in TK"){
-		$SQL = "SELECT COUNT(*)
-				FROM stockmaster,locstock
-				WHERE stockmaster.stockid = locstock.stockid
-					AND stockmaster.categoryid = 'DISC8A'
-					AND locstock.reorderlevel > 0
-					AND locstock.loccode ='TOKTK'";
 	}
 	
 	$result = DB_query($SQL);
@@ -4490,6 +4418,60 @@ function over_or_below_limit($Request, $Sign, $Limit, $RootPath, $db){
 		}
 	}
 }
+
+function MinimumOutletStockAvailable($MinModels20, $MinModels50, $MinModels80, $NumberOfTestExecuted){
+	$SQL="SELECT loccode,
+			locationname
+		FROM locations
+		WHERE typeloc = 'SHOPOU'" 
+		. $Condition;
+	$result = DB_query($SQL);
+	while ($myshop = DB_fetch_array($result)){
+		$SQL = "SELECT COUNT(*)
+				FROM stockmaster,locstock
+				WHERE stockmaster.stockid = locstock.stockid
+					AND stockmaster.categoryid = 'DISC2A'
+					AND locstock.reorderlevel > 0
+					AND locstock.loccode ='".$myshop['loccode']."'";
+		$result = DB_query($SQL);
+		$myrow = DB_fetch_array($result);
+		if ($myrow[0] < $MinModels20){
+			$text = "Discount 20% avaliable at " . $myshop['locationname'] . " is BELOW the minimum. Current value = " . locale_number_format($myrow[0],0) . " Minimum = " . locale_number_format($MinModels20,0);
+			echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+		}
+		$NumberOfTestExecuted++;
+
+		$SQL = "SELECT COUNT(*)
+				FROM stockmaster,locstock
+				WHERE stockmaster.stockid = locstock.stockid
+					AND stockmaster.categoryid = 'DISC5A'
+					AND locstock.reorderlevel > 0
+					AND locstock.loccode ='".$myshop['loccode']."'";
+		$result = DB_query($SQL);
+		$myrow = DB_fetch_array($result);
+		if ($myrow[0] < $MinModels50){
+			$text = "Discount 50% avaliable at " . $myshop['locationname'] . " is BELOW the minimum. Current value = " . locale_number_format($myrow[0],0) . " Minimum = " . locale_number_format($MinModels50,0);
+			echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+		}
+		$NumberOfTestExecuted++;
+
+		$SQL = "SELECT COUNT(*)
+				FROM stockmaster,locstock
+				WHERE stockmaster.stockid = locstock.stockid
+					AND stockmaster.categoryid = 'DISC8A'
+					AND locstock.reorderlevel > 0
+					AND locstock.loccode ='".$myshop['loccode']."'";
+		$result = DB_query($SQL);
+		$myrow = DB_fetch_array($result);
+		if ($myrow[0] < $MinModels80){
+			$text = "Discount 80% avaliable at " . $myshop['locationname'] . " is BELOW the minimum. Current value = " . locale_number_format($myrow[0],0) . " Minimum = " . locale_number_format($MinModels80,0);
+			echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+		}
+		$NumberOfTestExecuted++;
+	}
+	return $NumberOfTestExecuted;
+}
+
 
 function OvestockAtSamples($maxallowedsamples, $RootPath, $db){
 
