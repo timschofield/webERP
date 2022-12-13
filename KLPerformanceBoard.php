@@ -280,6 +280,17 @@ if ($ProcessSection03){
 		$NumberOfTestExecuted++;
 	}
 
+	if ($KL_SystemAdmin
+		OR $KL_OperationalManager
+		OR $KL_OpereationalTeam
+		OR $KL_BusinessDevelopmentManager
+		OR $KL_ShopManager){
+		MaintenanceTasksList("OPEN");
+		$NumberOfTestExecuted++;
+		MaintenanceTasksList("CLOSED", 60);
+		$NumberOfTestExecuted++;
+	}
+
 	if ($KL_SystemAdmin){
 		PettyCashStatus("IDR", $db);
 		$NumberOfTestExecuted++;

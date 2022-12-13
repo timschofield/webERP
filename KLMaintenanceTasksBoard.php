@@ -10,7 +10,7 @@ include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLBoards.php');
 
-ClosedMaintenanceTasks(60);
+MaintenanceTasksList("CLOSED", 60);
 
 include ('includes/footer.php');
 
