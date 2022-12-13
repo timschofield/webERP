@@ -50,7 +50,8 @@ $periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 
 if ($_SESSION['UserID'] == "Ricard"){
 	// $KL_BusinessDevelopmentManager = TRUE;
-	OpenMaintenanceTasksDistribution();
+//	MaintenanceTasksDistribution("OPEN", 0);
+//	MaintenanceTasksDistribution("CLOSED", 60);
 	//	phpinfo();
 }
 
@@ -3260,33 +3261,80 @@ function ShowKPIHistory($NumDays){
 	}
 }
 
-function OpenMaintenanceTasksDistribution(){
+function MaintenanceTasksDistribution($Status, $NumDays){
+	if ($Status == "OPEN"){
+		$WhereStatus = "WHERE klmaintenancetasks.closed = 0";
+		$Title = 'Open Maintenance Tasks distribution';
+	}else{
+		$WhereStatus = "WHERE klmaintenancetasks.closed = 1
+							AND closedate >= '" . $FromDate . "'";
+		$Title = 'Closed Maintenance Tasks distribution during the last ' . $NumDays . ' days';
+	}
+	$TableResult = array();
 
 	// creating the header
 	$SQL = "SELECT maintenancetype
 			FROM klmaintenancetypes
 			ORDER BY maintenancetype";
 	$result = DB_query($SQL);
-	$NumberOfTypes = 0;
+	$TotalOfTypes = 0;
 	if (DB_num_rows($result) != 0){
 		$k = 0; //row colour counter
 		$TableHeader = '<tr>
 							<th class="ascending">' . _('Location') . '</th>';
 		while ($myrow = DB_fetch_array($result)) {
 			$TableHeader .= '<th class="ascending">' . $myrow['maintenancetype'] . '</th>';
-			$NumberOfTypes++;
+			$TableResult[$myrow['maintenancetype']]['total'] = 0;
+			$TotalOfTypes++;
 		}
 		$TableHeader .= '</tr>';
-	}
+		
+		// now populate the array with info
+		$sql = "SELECT COUNT(counterindex) AS total, 
+					klmaintenancetasks.loccode,
+					locations.locationname,
+					klmaintenancetasks.maintenancetype
+				FROM klmaintenancetasks
+					INNER JOIN locations 
+						ON locations.loccode=klmaintenancetasks.loccode 
+					INNER JOIN klmaintenancetypes 
+						ON klmaintenancetypes.maintenancetype=klmaintenancetasks.maintenancetype 
+					INNER JOIN locationusers 
+						ON locationusers.loccode=klmaintenancetasks.loccode 
+							AND locationusers.userid='" .  $_SESSION['UserID'] . "'
+							AND locationusers.canview=1 " . 
+				$WhereStatus . "
+				GROUP BY klmaintenancetasks.loccode, klmaintenancetasks.maintenancetype
+				ORDER BY klmaintenancetasks.loccode, klmaintenancetasks.maintenancetype";
+		$result = DB_query($sql);
+		if (DB_num_rows($result) != 0){
+			echo '<p class="page_title_text" align="center"><strong>' . $Title . '</strong></p>';
+			echo '<div>';
+			echo '<table class="selection">';
+			echo $TableHeader;
 
-	echo '<p class="page_title_text" align="center"><strong>' . 'Open Maintenance Tasks Distribution' . '</strong></p>';
-	echo '<div>';
-	echo '<table class="selection">';
-	echo $TableHeader;
-	echo '</table>
-		</div>';
-	
-	
+			$TotalOfLocations = 0;
+			while ($myrow = DB_fetch_array($result)) {
+				$TotalOfLocations++;
+				$TableResult[$myrow['maintenancetype']][$myrow['loccode']] = $myrow['total'];
+				$TableResult[$myrow['maintenancetype']]['total'] =+ $myrow['total'];
+			}
+			
+			// now create the lines to be shown
+			$type = 1;
+			while ($type <= $TotalOfTypes){
+				$loc = 1;
+				while($loc <= $TotalOfLOcations){
+					
+					$loc++;
+				}
+				$type++;
+			}
+			
+			echo '</table>
+				</div>';
+		}
+	}
 }
 
 

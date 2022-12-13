@@ -785,10 +785,10 @@ function MaintenanceTasksList($Status, $NumDays){
 		}
 		echo $TableHeader;
 		$k = 0; //row colour counter
-		$i = 1;
+		$i = 0;
 		while ($myrow = DB_fetch_array($result)) {
 			$k = StartEvenOrOddRow($k);
-			
+			$i++;
 			if ($Status == "OPEN"){
 				printf('<td class="number">%s</td>
 						<td>%s</td>
@@ -823,13 +823,17 @@ function MaintenanceTasksList($Status, $NumDays){
 						ConvertSQLDateTime($myrow['creationdate']),
 						$myrow['closeuser'],
 						ConvertSQLDateTime($myrow['closedate']),
-						locale_number_format(abs(strtotime($myrow['closedate']) - strtotime($myrow['creationdate']))/60/60/24,2)
+						locale_number_format(abs(strtotime($myrow['closedate']) - strtotime($myrow['creationdate']))/60/60/24,1)
 						);
 			}
-			$i++;
 		}
 		echo '</table>
 				</div>';
+		if ($Status == "OPEN"){
+			InsertKPI("Maintenance", "Open Maintenance Tasks", $i);
+		}else{
+			InsertKPI("Maintenance", "Closed Maintenance Tasks during " . $NumDays . " days", $i);
+		}
 	}
 	
 	
