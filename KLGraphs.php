@@ -71,7 +71,7 @@ if (!isset($_POST['FromDate'])
 		if($myrow['concept']==$_POST['Concept']){
 			echo '<option selected="selected" value="' . $myrow['concept'] . '">' . $myrow['class'] . ' - ' . $myrow['concept'] . '</option>';
 		} else {
-			echo '<option value="' . $myrow['concept'] . '">' . $myrow['concept'] . '</option>';
+			echo '<option value="' . $myrow['concept'] . '">' . $myrow['class'] . ' - ' . $myrow['concept'] . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
