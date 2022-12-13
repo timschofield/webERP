@@ -203,7 +203,6 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	include('includes/footer.php');
 } else {
 
-	$graph = new PHPlot(950,450);
 	$SelectClause ='';
 	$WhereClause ='';
 	$GraphTitle ='';
@@ -266,7 +265,7 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 			periods.lastdate_in_period
 		ORDER BY salesanalysis.periodno";
 
-
+	$graph = new PHPlot(1200,600);
 	$graph->SetTitle($GraphTitle);
 	$graph->SetTitleColor('blue');
 	$graph->SetOutputFile('companies/' .$_SESSION['DatabaseName'] .  '/reports/salesgraph.png');
@@ -291,17 +290,23 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	$graph->SetDataType('text-data');
 	$graph->SetNumberFormat($DecimalPoint, $ThousandsSeparator);
 	$graph->SetPrecisionY($_SESSION['CompanyRecord']['decimalplaces']);
+	$graph->SetDataColors(
+		array('grey'),  //Data Colors
+		array('black')	//Border Colors
+	);
+	$graph->SetYDataLabelPos('plotin');
+//	$graph->SetYDataLabelPos('none');
 
 	$SalesResult = DB_query($SQL);
 	if (DB_error_no() !=0) {
-
 		prnMsg(_('The sales graph data for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg(),'error');
+		prnMsg($SQL);
 		include('includes/footer.php');
 		exit;
 	}
 	if (DB_num_rows($SalesResult)==0){
-prnMsg($SQL);
 		prnMsg(_('There is not sales data for the criteria entered to graph'),'info');
+		prnMsg($SQL);
 		include('includes/footer.php');
 		exit;
 	}
@@ -309,17 +314,11 @@ prnMsg($SQL);
 	$GraphArray = array();
 	$i = 0;
 	while ($myrow = DB_fetch_array($SalesResult)){
-		$GraphArray[$i] = array(MonthAndYearFromSQLDate($myrow['lastdate_in_period']),$myrow['sales'],$myrow['budget']);
+		$GraphArray[$i] = array(MonthAndYearFromSQLDate($myrow['lastdate_in_period']),$myrow['sales']);
 		$i++;
 	}
 
 	$graph->SetDataValues($GraphArray);
-	$graph->SetDataColors(
-		array('grey','wheat'),  //Data Colors
-		array('black')	//Border Colors
-	);
-//	$graph->SetLegend(array(_('Actual'),_('Budget')));
-	$graph->SetYDataLabelPos('plotin');
 
 	//Draw it
 	$graph->DrawGraph();
