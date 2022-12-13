@@ -96,7 +96,7 @@ function ActiveTransfersByLocation($RootPath, $db){
 				locale_number_format($TotalPcsIn,0),
 				locale_number_format($TotalPcsOut+$TotalPcsIn,0)
 				);
-		InsertKPI("TRANSFERS","PENDING GOODS TO BE TRANSFERRED @ SHOPS (PCS)", $TotalPcsOut+$TotalPcsIn);
+		InsertKPI("Transfers","Goods Pending to be transferred @ shops (pcs)", $TotalPcsOut+$TotalPcsIn);
 		echo '</table>
 				</div>
 				</form>';
@@ -168,7 +168,7 @@ function ActiveTransferStatus($RootPath, $db){
 				'Total', 
 				locale_number_format($total,0)
 				);
-		InsertKPI("TRANSFERS", "ACTIVE TRANSFERS (PCS)", $total);
+		InsertKPI("Transfers", "Active Transfers (pcs)", $total);
 		echo '</table>
 				</div>
 				</form>';
