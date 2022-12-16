@@ -460,6 +460,20 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						+ $_POST['AmountReturnedGoods'] 
 						+ $_POST['AmountVouchers'];
 						
+	$TotalNumberOfItems =0;
+	foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
+		$TotalNumberOfItems = $TotalNumberOfItems + $OrderLine->Quantity;
+	}
+
+	$TotalNumberOfBoxes = $_POST['PackagingBox01L'] + $_POST['PackagingBox01M'] + $_POST['PackagingBox01S'] 
+						+ $_POST['PackagingBox02L'] + $_POST['PackagingBox02M'] + $_POST['PackagingBox02S'];
+	$TotalNumberOfShoppingBags = $_POST['ShoppingBag02S'] + $_POST['ShoppingBag02M'] + $_POST['ShoppingBag02L'] +
+								$_POST['BlinkShoppingBag04L'] + $_POST['BlinkShoppingBag04M'] + $_POST['BlinkShoppingBag04S'] + 
+								$_POST['OutletShoppingBag03M'];
+	$TotalNumberOfPouchBags = $_POST['PackagingPouchBag01L'] + $_POST['PackagingPouchBag01M'] + $_POST['PackagingPouchBag01S'] + 
+							$_POST['BlinkPouchBag03XL'] + $_POST['BlinkPouchBag03L'] + $_POST['BlinkPouchBag03M'] + $_POST['BlinkPouchBag03S'] +
+							$_POST['OutletPouchBag02L'] + $_POST['OutletPouchBag02M'] + $_POST['OutletPouchBag02S'];
+
 	//check number of payment systems used in this transaction.
 	$PaymentSystemsUsed = 0;
 	if ($_POST['AmountPaidCash'] <> 0){
@@ -521,6 +535,22 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 	// if vouchers were presented, we need the code of the voucher
 	if (($_POST['AmountVouchers'] <> 0) && ($_POST['VoucherCode'] == '')){
 		prnMsg(_('If voucher or discount was used, the code of voucher or discount must be reported'),'error');
+		$InputError = true;
+	}
+	
+	// if too much packaging was reported (to prevent human error input)
+	if ($TotalNumberOfBoxes > $TotalNumberOfItems){
+		prnMsg('Too much boxes used. Used = ' . $TotalNumberOfBoxes . ' Items sold = ' . $TotalNumberOfItems,'error');
+		$InputError = true;
+	}
+
+	if ($TotalNumberOfPouchBags > $TotalNumberOfItems){
+		prnMsg('Too much pouch bags used. Used = ' . $TotalNumberOfPouchBags . ' Items sold = ' . $TotalNumberOfItems,'error');
+		$InputError = true;
+	}
+
+	if ($TotalNumberOfShoppingBags > $TotalNumberOfItems){
+		prnMsg('Too much shopping bags used. Used = ' . $TotalNumberOfShoppingBags . ' Items sold = ' . $TotalNumberOfItems,'error');
 		$InputError = true;
 	}
 	
@@ -708,10 +738,6 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 				'" . $InvoiceText . "',
 				'" . $_SESSION['Items'.$identifier]->ShipVia . "',
 				'" . ($_SESSION['Items'.$identifier]->total + $_POST['TaxTotal'] - $_POST['AmountReturnedGoods'] - $_POST['AmountVouchers']) . "')";
-
-//				'" . ($_SESSION['Items'.$identifier]->total + $_POST['TaxTotal']- $_POST['AmountReturnedGoods']) . "')";
-//				'" . ($_SESSION['Items'.$identifier]->total + $_POST['TaxTotal']) . "')";
-//				'" . ($_SESSION['Items'.$identifier]->total + $_POST['TaxTotal'] - $_POST['AmountReturnedGoods'] - $_POST['AmountVouchers']) . "')";
 
 		$ErrMsg =_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The debtor transaction record could not be inserted because');
 		$DbgMsg = _('The following SQL to insert the debtor transaction record was used');
