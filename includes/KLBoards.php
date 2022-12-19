@@ -761,28 +761,20 @@ function MaintenanceTasksList($Status, $NumDays){
 		echo '<p class="page_title_text" align="center"><strong>' . $Title .'</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
-		if ($Status == "OPEN"){
-			$TableHeader = '<tr>
-								<th class="ascending">' .  _('#') . '</th>
-								<th class="ascending">' .  _('Location') . '</th>
-								<th class="ascending">' . _('Type') . '</th>
-								<th class="ascending">' . _('Description') . '</th>
-								<th class="ascending">' . _('Created By') . '</th>
-								<th class="ascending">' . _('Created Date') . '</th>
-							</tr>';
-		}else{
-			$TableHeader = '<tr>
-								<th class="ascending">' .  _('#') . '</th>
-								<th class="ascending">' .  _('Location') . '</th>
-								<th class="ascending">' . _('Type') . '</th>
-								<th class="ascending">' . _('Description') . '</th>
-								<th class="ascending">' . _('Created By') . '</th>
-								<th class="ascending">' . _('Created Date') . '</th>
-								<th class="ascending">' . _('Closed By') . '</th>
+		$TableHeader = '<tr>
+							<th class="ascending">' .  _('#') . '</th>
+							<th class="ascending">' .  _('Task') . '</th>
+							<th class="ascending">' .  _('Location') . '</th>
+							<th class="ascending">' . _('Type') . '</th>
+							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('Created By') . '</th>
+							<th class="ascending">' . _('Created Date') . '</th>';
+		if ($Status != "OPEN"){
+			$TableHeader .= '	<th class="ascending">' . _('Closed By') . '</th>
 								<th class="ascending">' . _('Closed Date') . '</th>
-								<th class="ascending">' . _('Days') . '</th>
-							</tr>';
+								<th class="ascending">' . _('Days') . '</th>';
 		}
+		$TableHeader .= '</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
 		$i = 0;
@@ -791,12 +783,14 @@ function MaintenanceTasksList($Status, $NumDays){
 			$i++;
 			if ($Status == "OPEN"){
 				printf('<td class="number">%s</td>
+						<td class="number">%s</td>
 						<td>%s</td>
 						<td>%s</td>
 						<td>%s</td>
 						<td>%s</td>
 						<td>%s</td>
 						</tr>', 
+						$i,
 						locale_number_format($myrow['counterindex'],0),
 						$myrow['locationname'],
 						$myrow['maintenancetype'],
@@ -806,6 +800,7 @@ function MaintenanceTasksList($Status, $NumDays){
 						);
 			}else{
 				printf('<td class="number">%s</td>
+						<td class="number">%s</td>
 						<td>%s</td>
 						<td>%s</td>
 						<td>%s</td>
@@ -815,6 +810,7 @@ function MaintenanceTasksList($Status, $NumDays){
 						<td>%s</td>
 						<td class="number">%s</td>
 						</tr>', 
+						$i,
 						locale_number_format($myrow['counterindex'],0),
 						$myrow['locationname'],
 						$myrow['maintenancetype'],
@@ -2094,6 +2090,7 @@ function PackagingToBeRefilledFromGudang($GudangCode, $ShowAll, $ShowLinkEmail, 
 									<th class="ascending">' . _('RL @ ') . $GudangCode . '</th>
 									<th class="ascending">' . _('Optimum') . '</th>
 									<th class="ascending">' . _('Needing') . '</th>
+									<th class="ascending">' . _('%') . '</th>
 									<th class="ascending">' . _('Transit') . '</th>
 									<th class="ascending">' . _('To Ship') . '</th>
 									<th class="ascending">' . _('Reason') . '</th>
@@ -2122,6 +2119,7 @@ function PackagingToBeRefilledFromGudang($GudangCode, $ShowAll, $ShowLinkEmail, 
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
+						<td class="number">%s</td>
 						<td>%s</td>
 						</tr>', 
 						$TableResult[$i]['stockid'], 
@@ -2131,6 +2129,7 @@ function PackagingToBeRefilledFromGudang($GudangCode, $ShowAll, $ShowLinkEmail, 
 						locale_number_format_zero_blank($TableResult[$i]['rl'],0),
 						locale_number_format_zero_blank($TableResult[$i]['optimum'],0),
 						locale_number_format_zero_blank($TableResult[$i]['needed'],0),
+						locale_number_format_zero_blank($TableResult[$i]['needed']/$TableResult[$i]['optimum']*100,0). "%",
 						locale_number_format_zero_blank($TableResult[$i]['intransit'],0),
 						locale_number_format_zero_blank($TableResult[$i]['toship'],0),
 						$Reason
