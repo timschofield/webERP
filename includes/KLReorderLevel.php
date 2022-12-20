@@ -347,7 +347,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 		}
 	}
 
-	InsertKPI("SHOPS", "ITEMS REBALANCED BETWEEN SHOPS (ITEMS)", $ItemsRebalanced);
+	InsertKPI("Shops", "Models rebalanced between shops (MODELS)", $ItemsRebalanced);
 
 	return $EmailText;
 }

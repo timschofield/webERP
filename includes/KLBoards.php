@@ -916,7 +916,7 @@ function ComponentsToObsolete($ShowOnlyTotal, $ShowLimit, $RootPath, $db){
 			echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
 		}
 	}
-	InsertKPI("COMPONENTS", "COMPONENTS NOT USED IN ANY BOM (IDR)", $totalcost);
+	InsertKPI("Components", "Components not used in any BOM (IDR)", $totalcost);
 
 }
 
@@ -1261,7 +1261,7 @@ function FinishedStockDistribution($kind, $byreport, $db){
 				""
 				);
 		if ($kind == "DISPLAYS"){			
-			InsertKPI("STOCK", "STOCK DISPLAYS (PCS)", $totalpcs);
+			InsertKPI("Stock", "Stock of Displays (PCS)", $totalpcs);
 		}
 		
 		echo '</table>
@@ -1542,13 +1542,13 @@ function GoodsToBeProduced($CategoryComponent, $ParentCategory, $RootPath, $db){
 	if (DB_num_rows($result) != 0){
 		if ($ParentCategory == "ONLYDISCOUNT"){
 			echo '<p class="page_title_text" align="center"><strong>' . _('Components ready to WO in kantor used ONLY for Discount items') . '</strong></p>';
-			$BusinessConcept = "COMPONENTS READY FOR WO ONLY FOR DISCOUNT (IDR)";
+			$BusinessConcept = "Components ONLY for Discount items (IDR)";
 		}elseif ($ParentCategory == "DISCOUNT"){
 			echo '<p class="page_title_text" align="center"><strong>' . _('Components ready to WO in kantor used for Discount items') . '</strong></p>';
-			$BusinessConcept = "COMPONENTS READY FOR WO FOR DISCOUNT ITEMS (IDR)";
+			$BusinessConcept = "Components for Discount items (IDR)";
 		}else{
 			echo '<p class="page_title_text" align="center"><strong>' . _('Components ready to WO in kantor for any items') . '</strong></p>';
-			$BusinessConcept = "COMPONENTS READY FOR WO (IDR)";
+			$BusinessConcept = "Components for any items (IDR)";
 		}
 		echo '<div>';
 		echo '<table class="selection">';
@@ -1584,7 +1584,7 @@ function GoodsToBeProduced($CategoryComponent, $ParentCategory, $RootPath, $db){
 					);
 			$i++;
 		}
-		InsertKPI("COMPONENTS", $BusinessConcept, $totalcost);
+		InsertKPI("Components", $BusinessConcept, $totalcost);
 		printf('<td class="number">%s</td>
 				<td>%s</td>
 				<td>%s</td>
@@ -1772,13 +1772,13 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					locale_number_format($TotalDaysQOO,0),
 					locale_number_format_zero_blank($OptimumOrder,0)
 					);
-			InsertKPI("PACKAGING", "PACKAGING USED LAST " . $DaysProduction .  " DAYS (PCS)", $UsageXDays);
-			InsertKPI("PACKAGING", "PACKAGING FORECAST NEXT " . $DaysMinimumStock .  " DAYS (PCS)", $ForecastXDays);
-			InsertKPI("PACKAGING", "PACKAGING QOH TOTAL (PCS)", $QOHTotal);
-			InsertKPI("PACKAGING", "PACKAGING QOH TOTAL (DAYS)", $TotalDaysQOH);
-			InsertKPI("PACKAGING", "PACKAGING QOO NOT RECEIVED (PCS)", $PendingQOO);
-			InsertKPI("PACKAGING", "PACKAGING QOH + QOO TOTAL (DAYS)", $TotalDaysQOO);
-			InsertKPI("PACKAGING", "PACKAGING OPTIMUM ORDER (PCS)", $OptimumOrder);
+			InsertKPI("Packaging", "Packaging used last " . $DaysProduction .  " days (PCS)", $UsageXDays);
+			InsertKPI("Packaging", "Packaging forecast next " . $DaysMinimumStock .  " days (PCS)", $ForecastXDays);
+			InsertKPI("Packaging", "Packaging QOH total (PCS)", $QOHTotal);
+			InsertKPI("Packaging", "Packaging QOH total (DAYS)", $QOHTotal);
+			InsertKPI("Packaging", "Packaging QOO not received (PCS)", $PendingQOO);
+			InsertKPI("Packaging", "Packaging QOH + QOO total (DAYS)", $TotalDaysQOO);
+			InsertKPI("Packaging", "Packaging Optimum Order (PCS)", $OptimumOrder);
 
 			echo '</table>
 				</div>';
@@ -2621,8 +2621,8 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 			AND ($TypeOfProduct == "FORSALE")){
 			$CurrentTotalQtyItemsForSale = GetTotalQtyItemsForSale($db);
 			$CurrentTotalValueItemsForSale = GetTotalValueItemsForSale($periodnow, $db);
-			InsertKPI("STOCK", "CURRENT STOCK ITEMS FOR SALE (IDR)", $CurrentTotalValueItemsForSale);
-			InsertKPI("STOCK", "CURRENT STOCK ITEMS FOR SALE (PCS)", $CurrentTotalQtyItemsForSale);
+			InsertKPI("Stock", "Current Stock Items For Sale (IDR)", $CurrentTotalValueItemsForSale);
+			InsertKPI("Stock", "Current Stock Items For Sale (PCS)", $CurrentTotalQtyItemsForSale);
 			$k = StartEvenOrOddRow($k);
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -2757,7 +2757,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 		if (($TypeOfCode == "ARRIVING IN NEXT DAYS") 
 			AND ($TypeOfProduct == "FORSALE")){
 			$AverageItemCost = $CurrentTotalValueItemsForSale / $CurrentTotalQtyItemsForSale;
-			InsertKPI("STOCK", "AVERAGE ITEM FOR SALE STANDARD COST (PCS)", $AverageItemCost);
+			InsertKPI("Stock", "Average Standard Cost for item for sale (IDR)", $AverageItemCost);
 			$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 			$SQL = "SELECT SUM(amount) AS cogs
 					FROM  gltrans 
@@ -2767,9 +2767,9 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 			$result = DB_query($SQL);
 			$myrow = DB_fetch_array($result);
 			$k = StartEvenOrOddRow($k);
-			InsertKPI("PURCHASE ORDERS", "CURRENT PO x ITEMS FOR SALE NEXT ". $maxdays." DAYS (IDR)", $TotalValueAllOrders);
-			InsertKPI("PURCHASE ORDERS", "CURRENT PO x ITEMS FOR SALE NEXT ". $maxdays." DAYS (PCS @SC)", round($TotalValueAllOrders/$AverageItemCost));
-			InsertKPI("STOCK", "EXPECTED COGS NEXT ". $maxdays . " DAYS (IDR)", round($myrow['cogs'],-6));
+			InsertKPI("Purchase Orders", "PO Items for sale arriving next ". $maxdays." days (IDR)", $TotalValueAllOrders);
+			InsertKPI("Purchase Orders", "PO Items for sale arriving next ". $maxdays." days (PCS @SC)", round($TotalValueAllOrders/$AverageItemCost));
+			InsertKPI("Stock", "Expected COGS next ". $maxdays . " days (IDR)", round($myrow['cogs'],-6));
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
@@ -2810,9 +2810,9 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 					'', 
 					'' 
 					);
-			InsertKPI("STOCK", "EXPECTED COGS NEXT ". $maxdays . " DAYS (PCS)", round($myrow['cogs']/$AverageItemCost, -2));
+			InsertKPI("Stock", "Expected COGS next ". $maxdays . " days (PCS)", round($myrow['cogs']/$AverageItemCost, -2));
 			$ExpectedDifferenceValueStock = round($TotalValueAllOrders-$myrow['cogs'],-6);
-			InsertKPI("STOCK", "EXPECTED DIFFERENCE STOCK IN ". $maxdays . " DAYS (IDR)", $ExpectedDifferenceValueStock);
+			InsertKPI("Stock", "Expected difference stock in ". $maxdays . " days (IDR)", $ExpectedDifferenceValueStock);
 			$k = StartEvenOrOddRow($k);
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -2856,7 +2856,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 					);
 					
 			$ExpectedDifferenceQtyStock = round($ExpectedDifferenceValueStock/$AverageItemCost,-2);
-			InsertKPI("STOCK", "EXPECTED DIFFERENCE STOCK IN ". $maxdays . " DAYS (PCS)", $ExpectedDifferenceQtyStock);
+			InsertKPI("Stock", "Expected difference stock in ". $maxdays . " days (PCS)", $ExpectedDifferenceQtyStock);
 			$k = StartEvenOrOddRow($k);
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -2899,7 +2899,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 					'' 
 					);
 			$ExpectedFutureValueStock = round($CurrentTotalValueItemsForSale+$ExpectedDifferenceValueStock, -6);
-			InsertKPI("STOCK", "EXPECTED FUTURE STOCK ". $maxdays . " DAYS (IDR)", $ExpectedFutureValueStock);
+			InsertKPI("Stock", "Expected future stock in ". $maxdays . " days (IDR)", $ExpectedFutureValueStock);
 			$k = StartEvenOrOddRow($k);
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -2942,7 +2942,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 					'' 
 					);
 			$ExpectedFutureQtyStock = round($ExpectedFutureValueStock / $AverageItemCost, -2);
-			InsertKPI("STOCK", "EXPECTED FUTURE STOCK ". $maxdays . " DAYS (PCS)", $ExpectedFutureQtyStock);
+			InsertKPI("Stock", "Expected future stock in ". $maxdays . " days (PCS)", $ExpectedFutureQtyStock);
 			$k = StartEvenOrOddRow($k);
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -3669,19 +3669,19 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $Mode, $
 function ShowTotalItemsMoving(){
 	$NumItems = GetTotalItemsChangingPrice();
 	echo '<p class="bad" align="center"><strong>' . "# Items changing price: " . $NumItems . '</strong></p>';
-	InsertKPI("PRICES", "ITEMS CHANGING PRICE", $NumItems);
+	InsertKPI("Prices", "Items changing price", $NumItems);
 
 	$NumItems = GetTotalItemsMovingToDiscount("20");
 	echo '<p class="bad" align="center"><strong>' . "# Items moving to 20% discount: " . $NumItems . '</strong></p>';
-	InsertKPI("PRICES", "ITEMS MOVING TO 20% DISCOUNT", $NumItems);
+	InsertKPI("Prices", "Items moving to 20% discount", $NumItems);
 
 	$NumItems = GetTotalItemsMovingToDiscount("50");
 	echo '<p class="bad" align="center"><strong>' . "# Items moving to 50% discount: " . $NumItems . '</strong></p>';
-	InsertKPI("PRICES", "ITEMS MOVING TO 50% DISCOUNT", $NumItems);
+	InsertKPI("Prices", "Items moving to 50% discount", $NumItems);
 
 	$NumItems = GetTotalItemsMovingToDiscount("80");
 	echo '<p class="bad" align="center"><strong>' . "# Items moving to 80% discount: " . $NumItems . '</strong></p>';
-	InsertKPI("PRICES", "ITEMS MOVING TO 80% DISCOUNT", $NumItems);
+	InsertKPI("Prices", "Items moving to 80% discount", $NumItems);
 }
 
 ?>

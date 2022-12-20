@@ -1,9 +1,5 @@
 <?php
 
-/* $Id: SalesInquiry.php 6458 2013-11-30 11:54:03Z exsonqu $*/
-/* $Id: KLSalesInquiry.php 4647 2011-08-04 08:24:32Z daintree $*/
-
-// SalesInquiry.php
 // Inquiry on Sales Orders - If Date Type is Order Date, salesorderdetails is the main table
 // If Date Type is Invoice, stockmoves is the main table
 
