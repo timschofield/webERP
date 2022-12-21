@@ -1775,7 +1775,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 			InsertKPI("Packaging", "Packaging used last " . $DaysProduction .  " days (PCS)", $UsageXDays);
 			InsertKPI("Packaging", "Packaging forecast next " . $DaysMinimumStock .  " days (PCS)", $ForecastXDays);
 			InsertKPI("Packaging", "Packaging QOH total (PCS)", $QOHTotal);
-			InsertKPI("Packaging", "Packaging QOH total (DAYS)", $QOHTotal);
+			InsertKPI("Packaging", "Packaging QOH total (DAYS)", $TotalDaysQOH);
 			InsertKPI("Packaging", "Packaging QOO not received (PCS)", $PendingQOO);
 			InsertKPI("Packaging", "Packaging QOH + QOO total (DAYS)", $TotalDaysQOO);
 			InsertKPI("Packaging", "Packaging Optimum Order (PCS)", $OptimumOrder);
