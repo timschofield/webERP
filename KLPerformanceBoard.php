@@ -69,7 +69,7 @@ if ($ProcessSection01){
 		OR $KL_SalesTeamOnline
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_ShopManager){
-		AverageSales("Shop", 180, 90, 30, 15, 7, 1, 30, "CurrentYear", "All", $db);
+		AverageSales("Shop", 365, 180, 90, 30, 15, 1, 30, "CurrentYear", "All", $db);
 		$NumberOfTestExecuted++;
 		PeriodDifferenceSales("IMMEDIATE", "Shop",  15, $db);
 		$NumberOfTestExecuted++;
@@ -91,7 +91,7 @@ if ($ProcessSection01){
 		OR $KL_SalesTeamOnline
 		OR $KL_BusinessDevelopmentManager){
 
-		AverageSales("Online", 180, 90, 30, 15, 7, 1, 30, "CurrentYear", "All", $db);
+		AverageSales("Online", 365, 180, 90, 30, 15, 1, 30, "CurrentYear", "All", $db);
 		$NumberOfTestExecuted++;
 		PeriodDifferenceSales("IMMEDIATE", "Online",   7, $db);
 		$NumberOfTestExecuted++;
@@ -557,6 +557,8 @@ function AverageCustomerBehaviourByValueInvoice($typereport, $NumDaysA, $db){
 				);
 		echo '</table>
 				</div>';
+		InsertKPI("Sales", "Average Value Invoice During Last " . $NumDaysA . " days (IDR)", $SumInvoiceSum/$SumInvoiceCount);
+		InsertKPI("Sales", "Average Number of Invoices During Last " . $NumDaysA . " days (INVOICES)", $SumInvoiceCount/$NumDaysA);
 	}
 }
 
@@ -1146,6 +1148,8 @@ function GeneralCustomerBehaviour($NumDaysA, $db){
 							<th>' . '# Pcs/Inv'. '</th>
 						</tr>';
 		echo $TableHeader;
+		$TotalInvoiceCount = 0;
+		$TotalItemCount = 0;		
 		$k = 0; //row colour counter
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
@@ -1153,6 +1157,10 @@ function GeneralCustomerBehaviour($NumDaysA, $db){
 			$Name = $myrow['name'];
 			
 			if ($myrow['invoicesum'] > 0){
+
+				$TotalInvoiceCount += $myrow['invoicecount'];
+				$TotalItemCount += $myrow['itemcount'];		
+
 				$k = StartEvenOrOddRow($k);
 				printf('<td class="number">%s</td>
 						<td>%s</td>
@@ -1188,6 +1196,8 @@ function GeneralCustomerBehaviour($NumDaysA, $db){
 		}
 		echo '</table>
 				</div>';
+		InsertKPI("Sales", "Average Daily Items Sold Last " . $NumDaysA . " days (ITEMS)", $TotalItemCount/$NumDaysA);
+		InsertKPI("Sales", "Average #Items per Invoice Last " . $NumDaysA . " days (ITEMS)", $TotalItemCount/$TotalInvoiceCount);
 	}
 }
 
@@ -3261,6 +3271,7 @@ function ShowKPIHistory($NumDays){
 	}
 }
 
+/*
 function MaintenanceTasksDistribution($Status, $NumDays){
 	if ($Status == "OPEN"){
 		$WhereStatus = "WHERE klmaintenancetasks.closed = 0";
@@ -3271,71 +3282,77 @@ function MaintenanceTasksDistribution($Status, $NumDays){
 		$Title = 'Closed Maintenance Tasks distribution during the last ' . $NumDays . ' days';
 	}
 	$TableResult = array();
-
-	// creating the header
-	$SQL = "SELECT maintenancetype
-			FROM klmaintenancetypes
-			ORDER BY maintenancetype";
-	$result = DB_query($SQL);
-	$TotalOfTypes = 0;
+	// now populate the array with info
+	$sql = "SELECT COUNT(counterindex) AS total, 
+				klmaintenancetasks.loccode,
+				locations.locationname,
+				klmaintenancetasks.maintenancetype
+			FROM klmaintenancetasks
+				INNER JOIN locations 
+					ON locations.loccode=klmaintenancetasks.loccode 
+				INNER JOIN klmaintenancetypes 
+					ON klmaintenancetypes.maintenancetype=klmaintenancetasks.maintenancetype 
+				INNER JOIN locationusers 
+					ON locationusers.loccode=klmaintenancetasks.loccode 
+						AND locationusers.userid='" .  $_SESSION['UserID'] . "'
+						AND locationusers.canview=1 " . 
+			$WhereStatus . "
+			GROUP BY klmaintenancetasks.loccode, klmaintenancetasks.maintenancetype
+			ORDER BY klmaintenancetasks.loccode, klmaintenancetasks.maintenancetype";
+	$result = DB_query($sql);
 	if (DB_num_rows($result) != 0){
-		$k = 0; //row colour counter
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('Location') . '</th>';
 		while ($myrow = DB_fetch_array($result)) {
-			$TableHeader .= '<th class="ascending">' . $myrow['maintenancetype'] . '</th>';
-			$TableResult[$myrow['maintenancetype']]['total'] = 0;
-			$TotalOfTypes++;
+			$TableResult[$myrow['loccode']][$myrow['maintenancetype']] = $myrow['total'];
 		}
-		$TableHeader .= '</tr>';
+		$TableHeader = '<tr>
+						<th class="ascending">' . _('Location') . '</th>
+						<th class="ascending">' . _('AC') . '</th>
+						<th class="ascending">' . _('Bocor') . '</th>
+						<th class="ascending">' . _('Furniture') . '</th>
+						<th class="ascending">' . _('IT') . '</th>
+						<th class="ascending">' . _('Lampu') . '</th>
+						<th class="ascending">' . _('Listrik') . '</th>
+						<th class="ascending">' . _('Paint') . '</th>
+						<th class="ascending">' . _('Pintukaca') . '</th>
+						<th class="ascending">' . _('Toilet') . '</th>
+						<th class="ascending">' . _('Wallpaper') . '</th>
+						<th class="ascending">' . _('DLL') . '</th>
+						<th class="ascending">' . _('Total') . '</th>
+					</tr>';
+		echo '<p class="page_title_text" align="center"><strong>' . $Title . '</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		foreach ($TableResult as $row) {
+			$k = StartEvenOrOddRow($k);
+			printf('<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$row['class'], 
+					$myrow['concept'], 
+					locale_number_format($myrow['minimumvalue'],0),
+					locale_number_format($myrow['averagevalue'],0),
+					locale_number_format($myrow['maximumvalue'],0)
+					);
+		}
 		
-		// now populate the array with info
-		$sql = "SELECT COUNT(counterindex) AS total, 
-					klmaintenancetasks.loccode,
-					locations.locationname,
-					klmaintenancetasks.maintenancetype
-				FROM klmaintenancetasks
-					INNER JOIN locations 
-						ON locations.loccode=klmaintenancetasks.loccode 
-					INNER JOIN klmaintenancetypes 
-						ON klmaintenancetypes.maintenancetype=klmaintenancetasks.maintenancetype 
-					INNER JOIN locationusers 
-						ON locationusers.loccode=klmaintenancetasks.loccode 
-							AND locationusers.userid='" .  $_SESSION['UserID'] . "'
-							AND locationusers.canview=1 " . 
-				$WhereStatus . "
-				GROUP BY klmaintenancetasks.loccode, klmaintenancetasks.maintenancetype
-				ORDER BY klmaintenancetasks.loccode, klmaintenancetasks.maintenancetype";
-		$result = DB_query($sql);
-		if (DB_num_rows($result) != 0){
-			echo '<p class="page_title_text" align="center"><strong>' . $Title . '</strong></p>';
-			echo '<div>';
-			echo '<table class="selection">';
-			echo $TableHeader;
-
-			$TotalOfLocations = 0;
-			while ($myrow = DB_fetch_array($result)) {
-				$TotalOfLocations++;
-				$TableResult[$myrow['maintenancetype']][$myrow['loccode']] = $myrow['total'];
-				$TableResult[$myrow['maintenancetype']]['total'] =+ $myrow['total'];
-			}
-			
-			// now create the lines to be shown
-			$type = 1;
-			while ($type <= $TotalOfTypes){
-				$loc = 1;
-				while($loc <= $TotalOfLOcations){
-					
-					$loc++;
-				}
-				$type++;
-			}
-			
-			echo '</table>
-				</div>';
-		}
+		echo '</table>
+			</div>';
 	}
 }
+*/
 
 
 ?>

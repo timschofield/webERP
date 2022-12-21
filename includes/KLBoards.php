@@ -587,7 +587,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 			if ($percent < -MINIMUM_AVERAGE_SALES_TREND){
 				$trend = "Degrading ". locale_number_format($percent,0) . "%";
 			}
-			$forecast = round($myrow['salesC']*((100+$percent)/100), -5);
+			$forecast = round($myrow['salesD']*((100+$percent)/100), -5);
 			
 			$MTD = locale_number_format($myrow['salesMTD'], 0);
 			
@@ -705,7 +705,22 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 		}
 		echo '</table>
 				</div>';
+	}			
+	if (($typereport == "Shop") AND ($Year == "CurrentYear")){
+		InsertKPI("Sales", "Average Daily Retail Sales Last " . $NumDaysA . " days (IDR)", $TotalDateA);
+		InsertKPI("Sales", "Average Daily Retail Sales Last " . $NumDaysB . " days (IDR)", $TotalDateB);
+		InsertKPI("Sales", "Average Daily Retail Sales Last " . $NumDaysC . " days (IDR)", $TotalDateC);
+		InsertKPI("Sales", "Average Daily Retail Sales Last " . $NumDaysD . " days (IDR)", $TotalDateD);
+		InsertKPI("Sales", "Average Daily Retail Sales Last " . $NumDaysE . " days (IDR)", $TotalDateE);
 	}
+	if (($typereport == "Online") AND ($Year == "CurrentYear")){
+		InsertKPI("Sales", "Average Daily Online Sales Last " . $NumDaysA . " days (IDR)", $TotalDateA);
+		InsertKPI("Sales", "Average Daily Online Sales Last " . $NumDaysB . " days (IDR)", $TotalDateB);
+		InsertKPI("Sales", "Average Daily Online Sales Last " . $NumDaysC . " days (IDR)", $TotalDateC);
+		InsertKPI("Sales", "Average Daily Online Sales Last " . $NumDaysD . " days (IDR)", $TotalDateD);
+		InsertKPI("Sales", "Average Daily Online Sales Last " . $NumDaysE . " days (IDR)", $TotalDateE);
+	}
+
 }
 
 function ChangeItemStandardCost($StockID, $NewCost, $OldCost, $QOH){
