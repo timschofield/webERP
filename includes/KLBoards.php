@@ -783,13 +783,11 @@ function MaintenanceTasksList($Status, $NumDays){
 							<th class="ascending">' . _('Type') . '</th>
 							<th class="ascending">' . _('Description') . '</th>
 							<th class="ascending">' . _('Created By') . '</th>
-							<th class="ascending">' . _('Created Date') . '</th>';
-		if ($Status != "OPEN"){
-			$TableHeader .= '	<th class="ascending">' . _('Closed By') . '</th>
-								<th class="ascending">' . _('Closed Date') . '</th>
-								<th class="ascending">' . _('Days') . '</th>';
-		}
-		$TableHeader .= '</tr>';
+							<th class="ascending">' . _('Created Date') . '</th>
+							<th class="ascending">' . _('Closed By') . '</th>
+							<th class="ascending">' . _('Closed Date') . '</th>
+							<th class="ascending">' . _('Days') . '</th>
+						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
 		$i = 0;
@@ -797,46 +795,72 @@ function MaintenanceTasksList($Status, $NumDays){
 			$k = StartEvenOrOddRow($k);
 			$i++;
 			if ($Status == "OPEN"){
-				printf('<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						</tr>', 
-						$i,
-						locale_number_format($myrow['counterindex'],0),
-						$myrow['locationname'],
-						$myrow['maintenancetype'],
-						$myrow['taskdescription'],
-						$myrow['creationuser'],
-						ConvertSQLDateTime($myrow['creationdate'])
-						);
+				$CloseUser = "";
+				$CloseDate = "";
+				$DaysOpen = "";
 			}else{
-				printf('<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						</tr>', 
-						$i,
-						locale_number_format($myrow['counterindex'],0),
-						$myrow['locationname'],
-						$myrow['maintenancetype'],
-						$myrow['taskdescription'],
-						$myrow['creationuser'],
-						ConvertSQLDateTime($myrow['creationdate']),
-						$myrow['closeuser'],
-						ConvertSQLDateTime($myrow['closedate']),
-						locale_number_format(abs(strtotime($myrow['closedate']) - strtotime($myrow['creationdate']))/60/60/24,1)
-						);
+				$CloseUser = $myrow['closeuser'];
+				$CloseDate = ConvertSQLDateTime($myrow['closedate']);
+				$DaysOpen = locale_number_format(abs(strtotime($myrow['closedate']) - strtotime($myrow['creationdate']))/60/60/24,1);
 			}
+			printf('<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$i,
+					locale_number_format($myrow['counterindex'],0),
+					$myrow['locationname'],
+					$myrow['maintenancetype'],
+					$myrow['taskdescription'],
+					$myrow['creationuser'],
+					ConvertSQLDateTime($myrow['creationdate']),
+					$CloseUser,
+					$CloseDate,
+					$DaysOpen
+					);
+			// check if there are any updates to show
+			$sqlupdates = "SELECT klmaintenancetaskupdates.counterindex, 
+								klmaintenancetaskupdates.description AS updatedescription,
+								klmaintenancetaskupdates.updateuser,
+								klmaintenancetaskupdates.updatedate
+							FROM klmaintenancetaskupdates
+							WHERE klmaintenancetaskupdates.taskcounter = '".$myrow['counterindex']."'
+							ORDER BY klmaintenancetaskupdates.counterindex";
+			$resultupdates = DB_query($sqlupdates);
+			while ($myupdates=DB_fetch_array($resultupdates)) {
+				$k = StartSameColourRow($k);
+			printf('<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					'',
+					'',
+					'',
+					'',
+					$myupdates['updatedescription'],
+					$myupdates['updateuser'],
+					ConvertSQLDateTime($myupdates['updatedate']),
+					'',
+					'',
+					''
+					);
+		}
+
+
 		}
 		echo '</table>
 				</div>';
@@ -846,8 +870,6 @@ function MaintenanceTasksList($Status, $NumDays){
 			InsertKPI("Maintenance", "Closed Maintenance Tasks during " . $NumDays . " days", $i);
 		}
 	}
-	
-	
 }
 
 function ComponentsToObsolete($ShowOnlyTotal, $ShowLimit, $RootPath, $db){

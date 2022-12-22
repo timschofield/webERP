@@ -200,6 +200,9 @@ INSERT INTO test_erp.klfreeexchanges SELECT * FROM kurakura_kl_erp.klfreeexchang
 TRUNCATE test_erp.`klmaintenancetasks`;
 INSERT INTO test_erp.klmaintenancetasks SELECT * FROM kurakura_kl_erp.klmaintenancetasks;
 
+TRUNCATE test_erp.`klmaintenancetaskupdates`;
+INSERT INTO test_erp.klmaintenancetaskupdates SELECT * FROM kurakura_kl_erp.klmaintenancetaskupdates;
+
 TRUNCATE test_erp.`klmaintenancetypes`;
 INSERT INTO test_erp.klmaintenancetypes SELECT * FROM kurakura_kl_erp.klmaintenancetypes;
 

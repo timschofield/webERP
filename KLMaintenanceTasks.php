@@ -24,14 +24,11 @@ echo '<p class="page_title_text">
 if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
-	$i=1;
 
 	/* actions to take once the user has clicked the submit button
 	ie the page has called itself with some user input */
 
 	//first off validate inputs are sensible
-
-
 
 	$sql=	"SELECT COUNT(*)
 			FROM klmaintenancetasks 
@@ -41,9 +38,10 @@ if (isset($_POST['submit'])) {
 	$result=DB_query($sql);
 	$myrow=DB_fetch_row($result);
 
+	$i=1;
 	if ($myrow[0]!=0 and !isset($SelectedIndex)) {
 		$InputError = 1;
-		prnMsg( _('Already exists an open maintenance task for the location and type of maintenace in the database'),'error');
+		prnMsg( _('Already exists an open maintenance task for the location and type of maintenace in the database. If you need, you can UPDATE the existing one.'),'error');
 		$Errors[$i] = 'CounterIndex';
 		$i++;
 	}
@@ -54,13 +52,16 @@ if (isset($_POST['submit'])) {
 
 		/*SelectedIndex could also exist if submit had not been clicked this code would not run in this case cos submit is false of course	see the close code below*/
 
-		$sql = "UPDATE klmaintenancetasks SET
-						loccode = '" . $_POST['LocCode'] . "',
-						maintenancetype = '" . $_POST['MaintenanceType'] . "',
-						description = '" . $_POST['Description'] . "',
-						updateuser = '" . $_SESSION['UserID'] . "',
-						updatedate = NOW() 
-				WHERE counterindex = '".$SelectedIndex."'";
+		$sql = "INSERT INTO klmaintenancetaskupdates 
+					(taskcounter,
+					description,
+					updateuser,
+					updatedate)
+				VALUES ('" . $SelectedIndex . "',
+					'".$_POST['Description'] . "',
+					'".$_SESSION['UserID'] . "',
+					NOW())";
+
 		$msg = 'The maintenance task '. $SelectedIndex .' has been updated';
 
 	} else if ($InputError !=1) {
@@ -138,9 +139,9 @@ or deletion of the records*/
 			<th>' .  '# Task'  . '</th>
 			<th>' .  'Location'  . '</th>
 			<th>' .  'Type'  . '</th>
+			<th>' .  'User'  . '</th>
+			<th>' .  'Date'  . '</th>
 			<th>' .  'Description'  . '</th>
-			<th>' .  'Creation User'  . '</th>
-			<th>' .  'Creation Date'  . '</th>
         </tr>';
 
 	$k=0; //row colour counter
@@ -159,14 +160,45 @@ or deletion of the records*/
 				$myrow['counterindex'],
 				$myrow['locationname'],
 				$myrow['typedescription'],
-				$myrow['taskdescription'],
 				$myrow['creationuser'],
 				ConvertSQLDateTime($myrow['creationdate']),
+				$myrow['taskdescription'],
 				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'),
 				$myrow['counterindex'],
 				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'),
 				$myrow['counterindex']);
 
+		// check if there are any updates to show
+		$sqlupdates = "SELECT klmaintenancetaskupdates.counterindex, 
+							klmaintenancetaskupdates.description AS updatedescription,
+							klmaintenancetaskupdates.updateuser,
+							klmaintenancetaskupdates.updatedate
+						FROM klmaintenancetaskupdates
+						WHERE klmaintenancetaskupdates.taskcounter = '".$myrow['counterindex']."'
+						ORDER BY klmaintenancetaskupdates.counterindex";
+		$resultupdates = DB_query($sqlupdates);
+		while ($myupdates=DB_fetch_array($resultupdates)) {
+			$k = StartSameColourRow($k);
+			printf('<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					</tr>',
+					'',
+					'',
+					'',
+					$myupdates['updateuser'],
+					ConvertSQLDateTime($myupdates['updatedate']),
+					$myupdates['updatedescription'],
+					'',
+					'',
+					'',
+					'');
+		}
 	} //END WHILE LIST LOOP
 	echo '</table>';
 
@@ -186,13 +218,20 @@ if (!isset($_GET['close'])) {
 
 	if (isset($SelectedIndex) and ($InputError!=1)) {
 		//editing an existing status code
+		$ButtonText = "Update Task";
 
-		$sql = "SELECT counterindex,
-					loccode,
-					maintenancetype,
-					description
-				FROM klmaintenancetasks
-				WHERE counterindex='".$SelectedIndex."'";
+		$sql = "SELECT klmaintenancetasks.counterindex,
+					klmaintenancetasks.loccode,
+					locations.locationname,
+					klmaintenancetasks.creationuser,
+					klmaintenancetasks.creationdate,
+					klmaintenancetasks.maintenancetype,
+					klmaintenancetypes.description AS typedescription,
+					klmaintenancetasks.description
+				FROM klmaintenancetasks,locations,klmaintenancetypes
+				WHERE locations.loccode = klmaintenancetasks.loccode
+					AND klmaintenancetypes.maintenancetype = klmaintenancetasks.maintenancetype
+					AND counterindex='".$SelectedIndex."'";
 
 		$result = DB_query($sql);
 		$myrow = DB_fetch_array($result);
@@ -209,74 +248,101 @@ if (!isset($_GET['close'])) {
 					<td>' .  _('# Task') .':</td>
 					<td>' . $_POST['CounterIndex'] . '</td>
 				</tr>';
+		echo '	<tr>
+					<td>' .  _('Location') .':</td>
+					<td>' . $myrow['locationname'] . '</td>
+				</tr>';
+		echo '	<tr>
+					<td>' .  _('Maintenance Type') .':</td>
+					<td>' . $myrow['typedescription'] . '</td>
+				</tr>';
+		echo '	<tr>
+					<td>' .  _('Description') .':</td>
+					<td>' . $myrow['creationdate']. " @ " . $myrow['creationuser'] . ": " . $myrow['description'] . '</td>
+				</tr>';
+		// check if there are any updates to show
+		$sqlupdates = "SELECT klmaintenancetaskupdates.counterindex, 
+							klmaintenancetaskupdates.description AS updatedescription,
+							klmaintenancetaskupdates.updateuser,
+							klmaintenancetaskupdates.updatedate
+						FROM klmaintenancetaskupdates
+						WHERE klmaintenancetaskupdates.taskcounter = '".$SelectedIndex."'
+						ORDER BY klmaintenancetaskupdates.counterindex";
+		$resultupdates = DB_query($sqlupdates);
+		while ($myupdates=DB_fetch_array($resultupdates)) {
+			echo '	<tr>
+						<td></td>
+						<td>' . $myupdates['updatedate']. " @ " . $myupdates['updateuser'] . ": " .$myupdates['updatedescription'] . '</td>
+					</tr>';
+		}
 
 	} else { //end of if $SelectedIndex only do the else when a new record is being entered
+		$ButtonText = "Add Task";
 		if (!isset($_POST['CounterIndex'])) {
 			$_POST['CounterIndex'] = '';
 		}
+		if (!isset($_POST['LocCode'])) {
+			$_POST['LocCode'] = '';
+		}
+		if (!isset($_POST['MaintenanceType'])) {
+		$_POST['MaintenanceType'] = '';
+		}
+		
 		echo '<br />
 			<table class="selection">';
-	}
 
-	if (!isset($_POST['LocCode'])) {
-		$_POST['LocCode'] = '';
-	}
-	if (!isset($_POST['MaintenanceType'])) {
-		$_POST['MaintenanceType'] = '';
-	}
-	if (!isset($_POST['Description'])) {
-		$_POST['Description'] = '';
-	}
+		$sql = "SELECT locations.loccode, 
+					locations.locationname 
+				FROM locations 
+					INNER JOIN locationusers 
+						ON locationusers.loccode=locations.loccode 
+							AND locationusers.userid='" .  $_SESSION['UserID'] . "' 
+							AND locationusers.canupd=1
+				ORDER BY locationname";
+		$resultStkLocs = DB_query($sql);
 
-	$sql = "SELECT locations.loccode, 
-				locationname 
-			FROM locations 
-				INNER JOIN locationusers 
-					ON locationusers.loccode=locations.loccode 
-						AND locationusers.userid='" .  $_SESSION['UserID'] . "' 
-						AND locationusers.canupd=1
-			ORDER BY locationname";
-	$resultStkLocs = DB_query($sql);
+		echo '<tr>
+				<td>' . _('Location') . ':</td>
+				<td><select name="LocCode">';
 
-	echo '<tr>
-			<td>' . _('Location') . ':</td>
-			<td><select name="LocCode">';
-
-	while ($myrow=DB_fetch_array($resultStkLocs)){
-		if (isset($_POST['LocCode'])){
-			if ($myrow['loccode'] == $_POST['LocCode']){
-				echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname']. '</option>';
+		while ($myrow=DB_fetch_array($resultStkLocs)){
+			if (isset($_POST['LocCode'])){
+				if ($myrow['loccode'] == $_POST['LocCode']){
+					echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname']. '</option>';
+				} else {
+					echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+				}
 			} else {
 				echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 			}
-		} else {
-			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		}
-	}
-	echo '</select></td>';
+		echo '</select></td>';
 
-	$sql = "SELECT maintenancetype,
-				description
-			FROM klmaintenancetypes 
-			ORDER BY description";
-	$resultTypes = DB_query($sql);
+		$sql = "SELECT maintenancetype,
+					description
+				FROM klmaintenancetypes 
+				ORDER BY description";
+		$resultTypes = DB_query($sql);
 
-	echo '<tr>
-			<td>' . _('Maintenace Type') . ':</td>
-			<td><select name="MaintenanceType">';
+		echo '<tr>
+				<td>' . _('Maintenance Type') . ':</td>
+				<td><select name="MaintenanceType">';
 
-	while ($myrow=DB_fetch_array($resultTypes)){
-		if (isset($_POST['MaintenanceType'])){
-			if ($myrow['maintenancetype'] == $_POST['MaintenanceType']){
-				echo '<option selected="selected" value="' . $myrow['maintenancetype'] . '">' . $myrow['description']. '</option>';
+		while ($myrow=DB_fetch_array($resultTypes)){
+			if (isset($_POST['MaintenanceType'])){
+				if ($myrow['maintenancetype'] == $_POST['MaintenanceType']){
+					echo '<option selected="selected" value="' . $myrow['maintenancetype'] . '">' . $myrow['description']. '</option>';
+				} else {
+					echo '<option value="' . $myrow['maintenancetype'] . '">' . $myrow['description'] . '</option>';
+				}
 			} else {
 				echo '<option value="' . $myrow['maintenancetype'] . '">' . $myrow['description'] . '</option>';
 			}
-		} else {
-			echo '<option value="' . $myrow['maintenancetype'] . '">' . $myrow['description'] . '</option>';
 		}
+		echo '</select></td>';
 	}
-	echo '</select></td>';
+
+	$_POST['Description'] = '';
 
 	if (isset($_POST['Description'])) {
 		$Description = AddCarriageReturns($_POST['Description']);
@@ -285,14 +351,14 @@ if (!isset($_GET['close'])) {
 	}
 	echo '<tr>
 			<td>' . _('Task Description') . '):</td>
-			<td><textarea ' . (in_array('Description',$Errors) ?  'class="texterror"' : '' ) .'  name="Description" cols="40" rows="3">' . stripslashes($Description) . '</textarea></td>
+			<td><textarea ' . (in_array('Description',$Errors) ?  'class="texterror"' : '' ) .'  name="Description" cols="60" rows="5">' . stripslashes($Description) . '</textarea></td>
 		</tr>';
 
 	echo '</tr>
 			</table>
 			<br />
 			<div class="centre">
-				<input tabindex="4" type="submit" name="submit" value="' . _('Add / Update Task') . '" />
+				<input tabindex="4" type="submit" name="submit" value="' . $ButtonText . '" />
 			</div>
             </div>
 			</form>';
