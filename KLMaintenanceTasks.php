@@ -258,7 +258,7 @@ if (!isset($_GET['close'])) {
 				</tr>';
 		echo '	<tr>
 					<td>' .  _('Description') .':</td>
-					<td>' . $myrow['creationdate']. " @ " . $myrow['creationuser'] . ": " . $myrow['description'] . '</td>
+					<td>' . $myrow['creationuser']. " @ " . ConvertSQLDateTime($myrow['creationdate']) . ": " . $myrow['description'] . '</td>
 				</tr>';
 		// check if there are any updates to show
 		$sqlupdates = "SELECT klmaintenancetaskupdates.counterindex, 
@@ -272,7 +272,7 @@ if (!isset($_GET['close'])) {
 		while ($myupdates=DB_fetch_array($resultupdates)) {
 			echo '	<tr>
 						<td></td>
-						<td>' . $myupdates['updatedate']. " @ " . $myupdates['updateuser'] . ": " .$myupdates['updatedescription'] . '</td>
+						<td>' . $myupdates['updateuser']. " @ " . ConvertSQLDateTime($myupdates['updatedate']) . ": " .$myupdates['updatedescription'] . '</td>
 					</tr>';
 		}
 
