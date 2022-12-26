@@ -836,39 +836,32 @@ function MaintenanceTasksList($Status, $NumDays){
 			$resultupdates = DB_query($sqlupdates);
 			while ($myupdates=DB_fetch_array($resultupdates)) {
 				$k = StartSameColourRow($k);
-			printf('<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					'',
-					'',
-					'',
-					'',
-					$myupdates['updatedescription'],
-					$myupdates['updateuser'],
-					ConvertSQLDateTime($myupdates['updatedate']),
-					'',
-					'',
-					''
-					);
-		}
-
-
+				printf('<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						</tr>', 
+						'',
+						'',
+						'',
+						'',
+						$myupdates['updatedescription'],
+						$myupdates['updateuser'],
+						ConvertSQLDateTime($myupdates['updatedate']),
+						'',
+						'',
+						''
+						);
+			}
 		}
 		echo '</table>
 				</div>';
-		if ($Status == "OPEN"){
-			InsertKPI("Maintenance", "Open Maintenance Tasks", $i);
-		}else{
-			InsertKPI("Maintenance", "Closed Maintenance Tasks during " . $NumDays . " days", $i);
-		}
 	}
 }
 

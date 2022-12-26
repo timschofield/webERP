@@ -50,8 +50,6 @@ $periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 
 if ($_SESSION['UserID'] == "Ricard"){
 	// $KL_BusinessDevelopmentManager = TRUE;
-//	MaintenanceTasksDistribution("OPEN", 0);
-//	MaintenanceTasksDistribution("CLOSED", 60);
 	//	phpinfo();
 }
 
@@ -282,10 +280,24 @@ if ($ProcessSection03){
 	}
 
 	if ($KL_SystemAdmin
-		OR $KL_OperationalManager
+		OR $KL_BusinessDevelopmentManager){
+		MaintenanceTasksDistribution("OPEN", 0);
+		$NumberOfTestExecuted++;
+		MaintenanceTasksDistribution("CLOSED", 60);
+		$NumberOfTestExecuted++;
+		MaintenanceTasksDistribution("TOTAL", 60);
+		$NumberOfTestExecuted++;
+	}
+
+	if ($KL_OperationalManager
 		OR $KL_OpereationalTeam
-		OR $KL_BusinessDevelopmentManager
 		OR $KL_ShopManager){
+		MaintenanceTasksDistribution("OPEN", 0);
+		$NumberOfTestExecuted++;
+		MaintenanceTasksDistribution("CLOSED", 60);
+		$NumberOfTestExecuted++;
+		MaintenanceTasksDistribution("TOTAL", 60);
+		$NumberOfTestExecuted++;
 		MaintenanceTasksList("OPEN");
 		$NumberOfTestExecuted++;
 		MaintenanceTasksList("CLOSED", 60);
@@ -558,7 +570,7 @@ function AverageCustomerBehaviourByValueInvoice($typereport, $NumDaysA, $db){
 		echo '</table>
 				</div>';
 		InsertKPI("Sales", "Average Value Invoice During Last " . $NumDaysA . " days (IDR)", $SumInvoiceSum/$SumInvoiceCount);
-		InsertKPI("Sales", "Average Number of Invoices During Last " . $NumDaysA . " days (INVOICES)", $SumInvoiceCount/$NumDaysA);
+		InsertKPI("Sales", "Average Invoices During Last " . $NumDaysA . " days (INVOICES)", $SumInvoiceCount/$NumDaysA);
 	}
 }
 
@@ -3271,15 +3283,20 @@ function ShowKPIHistory($NumDays){
 	}
 }
 
-/*
+
 function MaintenanceTasksDistribution($Status, $NumDays){
 	if ($Status == "OPEN"){
 		$WhereStatus = "WHERE klmaintenancetasks.closed = 0";
 		$Title = 'Open Maintenance Tasks distribution';
-	}else{
+	}elseif ($Status == "CLOSED"){
 		$WhereStatus = "WHERE klmaintenancetasks.closed = 1
 							AND closedate >= '" . $FromDate . "'";
 		$Title = 'Closed Maintenance Tasks distribution during the last ' . $NumDays . ' days';
+	}elseif ($Status == "TOTAL"){
+		$WhereStatus = "WHERE klmaintenancetasks.closed = 0
+							OR (klmaintenancetasks.closed = 1
+								AND closedate >= '" . $FromDate . "')";
+		$Title = 'All Maintenance Tasks distribution during the last ' . $NumDays . ' days';
 	}
 	$TableResult = array();
 	// now populate the array with info
@@ -3298,10 +3315,11 @@ function MaintenanceTasksDistribution($Status, $NumDays){
 						AND locationusers.canview=1 " . 
 			$WhereStatus . "
 			GROUP BY klmaintenancetasks.loccode, klmaintenancetasks.maintenancetype
-			ORDER BY klmaintenancetasks.loccode, klmaintenancetasks.maintenancetype";
+			ORDER BY locationname, klmaintenancetasks.maintenancetype";
 	$result = DB_query($sql);
 	if (DB_num_rows($result) != 0){
 		while ($myrow = DB_fetch_array($result)) {
+			$TableResult[$myrow['loccode']]['locationname'] = $myrow['locationname'];
 			$TableResult[$myrow['loccode']][$myrow['maintenancetype']] = $myrow['total'];
 		}
 		$TableHeader = '<tr>
@@ -3310,6 +3328,7 @@ function MaintenanceTasksDistribution($Status, $NumDays){
 						<th class="ascending">' . _('Bocor') . '</th>
 						<th class="ascending">' . _('Furniture') . '</th>
 						<th class="ascending">' . _('IT') . '</th>
+						<th class="ascending">' . _('Kanopi') . '</th>
 						<th class="ascending">' . _('Lampu') . '</th>
 						<th class="ascending">' . _('Listrik') . '</th>
 						<th class="ascending">' . _('Paint') . '</th>
@@ -3323,9 +3342,119 @@ function MaintenanceTasksDistribution($Status, $NumDays){
 		echo '<div>';
 		echo '<table class="selection">';
 		echo $TableHeader;
+		$TotalIssuesAC = 0;
+		$TotalIssuesBOCOR = 0;
+		$TotalIssuesFURNITURE = 0;
+		$TotalIssuesIT = 0;
+		$TotalIssuesKANOPI = 0;
+		$TotalIssuesLAMPU = 0;
+		$TotalIssuesLISTRIK = 0;
+		$TotalIssuesPAINT = 0;
+		$TotalIssuesPINTUKACA = 0;
+		$TotalIssuesTOILET = 0;
+		$TotalIssuesWALLPAPER = 0;
+		$TotalIssuesDLL = 0;
+		$TotalIssues = 0;
 		$k = 0; //row colour counter
 		foreach ($TableResult as $row) {
+			$TotalIssuesLocation = 0;
 			$k = StartEvenOrOddRow($k);
+			if (isset($row['AC'])){
+				$IssuesAC = $row['AC'];
+				$TotalIssuesAC += $IssuesAC;
+				$TotalIssuesLocation += $IssuesAC;
+				$TotalIssues += $IssuesAC;
+			}else{
+				$IssuesAC = '';
+			}
+			if (isset($row['BOCOR'])){
+				$IssuesBOCOR = $row['BOCOR'];
+				$TotalIssuesBOCOR += $IssuesBOCOR;
+				$TotalIssuesLocation += $IssuesBOCOR;
+				$TotalIssues += $IssuesBOCOR;
+			}else{
+				$IssuesBOCOR = '';
+			}
+			if (isset($row['FURNITURE'])){
+				$IssuesFURNITURE = $row['FURNITURE'];
+				$TotalIssuesFURNITURE += $IssuesFURNITURE;
+				$TotalIssuesLocation += $IssuesFURNITURE;
+				$TotalIssues += $IssuesFURNITURE;
+			}else{
+				$IssuesFURNITURE = '';
+			}
+			if (isset($row['IT'])){
+				$IssuesIT = $row['IT'];
+				$TotalIssuesIT += $IssuesIT;
+				$TotalIssuesLocation += $IssuesIT;
+				$TotalIssues += $IssuesIT;
+			}else{
+				$IssuesIT = '';
+			}
+			if (isset($row['KANOPI'])){
+				$IssuesKANOPI = $row['KANOPI'];
+				$TotalIssuesKANOPI += $IssuesKANOPI;
+				$TotalIssuesLocation += $IssuesKANOPI;
+				$TotalIssues += $IssuesKANOPI;
+			}else{
+				$IssuesKANOPI = '';
+			}
+			if (isset($row['LAMPU'])){
+				$IssuesLAMPU = $row['LAMPU'];
+				$TotalIssuesLAMPU += $IssuesLAMPU;
+				$TotalIssuesLocation += $IssuesLAMPU;
+				$TotalIssues += $IssuesLAMPU;
+			}else{
+				$IssuesLAMPU = '';
+			}
+			if (isset($row['LISTRIK'])){
+				$IssuesLISTRIK = $row['LISTRIK'];
+				$TotalIssuesLISTRIK += $IssuesLISTRIK;
+				$TotalIssuesLocation += $IssuesLISTRIK;
+				$TotalIssues += $IssuesLISTRIK;
+			}else{
+				$IssuesLISTRIK = '';
+			}
+			if (isset($row['PAINT'])){
+				$IssuesPAINT = $row['PAINT'];
+				$TotalIssuesPAINT += $IssuesPAINT;
+				$TotalIssuesLocation += $IssuesPAINT;
+				$TotalIssues += $IssuesPAINT;
+			}else{
+				$IssuesPAINT = '';
+			}
+			if (isset($row['PINTUKACA'])){
+				$IssuesPINTUKACA = $row['PINTUKACA'];
+				$TotalIssuesPINTUKACA += $IssuesPINTUKACA;
+				$TotalIssuesLocation += $IssuesPINTUKACA;
+				$TotalIssues += $IssuesPINTUKACA;
+			}else{
+				$IssuesPINTUKACA = '';
+			}
+			if (isset($row['TOILET'])){
+				$IssuesTOILET = $row['TOILET'];
+				$TotalIssuesTOILET += $IssuesTOILET;
+				$TotalIssuesLocation += $IssuesTOILET;
+				$TotalIssues += $IssuesTOILET;
+			}else{
+				$IssuesTOILET = '';
+			}
+			if (isset($row['WALLPAPER'])){
+				$IssuesWALLPAPER = $row['WALLPAPER'];
+				$TotalIssuesWALLPAPER += $IssuesWALLPAPER;
+				$TotalIssuesLocation += $IssuesWALLPAPER;
+				$TotalIssues += $IssuesWALLPAPER;
+			}else{
+				$IssuesWALLPAPER = '';
+			}
+			if (isset($row['_DLL'])){
+				$IssuesDLL = $row['_DLL'];
+				$TotalIssuesDLL += $IssuesDLL;
+				$TotalIssuesLocation += $IssuesDLL;
+				$TotalIssues += $IssuesDLL;
+			}else{
+				$IssuesDLL = '';
+			}
 			printf('<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -3339,20 +3468,67 @@ function MaintenanceTasksDistribution($Status, $NumDays){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
+					<td class="number">%s</td>
 					</tr>', 
-					$row['class'], 
-					$myrow['concept'], 
-					locale_number_format($myrow['minimumvalue'],0),
-					locale_number_format($myrow['averagevalue'],0),
-					locale_number_format($myrow['maximumvalue'],0)
+					$row['locationname'], 
+					$IssuesAC, 
+					$IssuesBOCOR, 
+					$IssuesFURNITURE, 
+					$IssuesIT, 
+					$IssuesKANOPI, 
+					$IssuesLAMPU, 
+					$IssuesLISTRIK, 
+					$IssuesPAINT, 
+					$IssuesPINTUKACA, 
+					$IssuesTOILET, 
+					$IssuesWALLPAPER, 
+					$IssuesDLL, 
+					$TotalIssuesLocation 
 					);
 		}
+		$k = StartEvenOrOddRow($k);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				"TOTAL", 
+				$TotalIssuesAC, 
+				$TotalIssuesBOCOR, 
+				$TotalIssuesFURNITURE, 
+				$TotalIssuesIT, 
+				$TotalIssuesKANOPI, 
+				$TotalIssuesLAMPU, 
+				$TotalIssuesLISTRIK, 
+				$TotalIssuesPAINT, 
+				$TotalIssuesPINTUKACA, 
+				$TotalIssuesTOILET, 
+				$TotalIssuesWALLPAPER, 
+				$TotalIssuesDLL, 
+				$TotalIssues
+				);
 		
 		echo '</table>
 			</div>';
+
+		if ($Status == "OPEN"){
+			InsertKPI("Maintenance", "Open Maintenance Tasks", $TotalIssues);
+		}elseif ($Status == "CLOSED"){
+			InsertKPI("Maintenance", "Closed Maintenance Tasks during " . $NumDays . " days", $TotalIssues);
+		}elseif ($Status == "TOTAL"){
+			InsertKPI("Maintenance", "All Maintenance Tasks during " . $NumDays . " days", $TotalIssues);
+		}
 	}
 }
-*/
-
 
 ?>
