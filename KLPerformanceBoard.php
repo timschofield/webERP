@@ -283,9 +283,9 @@ if ($ProcessSection03){
 		OR $KL_BusinessDevelopmentManager){
 		MaintenanceTasksDistribution("OPEN", 0);
 		$NumberOfTestExecuted++;
-		MaintenanceTasksDistribution("CLOSED", 60);
+		MaintenanceTasksDistribution("CLOSED", 30);
 		$NumberOfTestExecuted++;
-		MaintenanceTasksDistribution("TOTAL", 60);
+		MaintenanceTasksDistribution("TOTAL", 30);
 		$NumberOfTestExecuted++;
 	}
 
@@ -294,13 +294,13 @@ if ($ProcessSection03){
 		OR $KL_ShopManager){
 		MaintenanceTasksDistribution("OPEN", 0);
 		$NumberOfTestExecuted++;
-		MaintenanceTasksDistribution("CLOSED", 60);
+		MaintenanceTasksDistribution("CLOSED", 30);
 		$NumberOfTestExecuted++;
-		MaintenanceTasksDistribution("TOTAL", 60);
+		MaintenanceTasksDistribution("TOTAL", 30);
 		$NumberOfTestExecuted++;
 		MaintenanceTasksList("OPEN");
 		$NumberOfTestExecuted++;
-		MaintenanceTasksList("CLOSED", 60);
+		MaintenanceTasksList("CLOSED", 30);
 		$NumberOfTestExecuted++;
 	}
 
@@ -3273,9 +3273,9 @@ function ShowKPIHistory($NumDays){
 					</tr>', 
 					$myrow['class'], 
 					$myrow['concept'], 
-					locale_number_format($myrow['minimumvalue'],0),
-					locale_number_format($myrow['averagevalue'],0),
-					locale_number_format($myrow['maximumvalue'],0)
+					locale_number_format_kpi($myrow['minimumvalue']),
+					locale_number_format_kpi($myrow['averagevalue']),
+					locale_number_format_kpi($myrow['maximumvalue'])
 					);
 		}
 		echo '</table>

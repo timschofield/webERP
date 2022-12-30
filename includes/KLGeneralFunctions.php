@@ -384,6 +384,17 @@ function locale_number_format_zero_blank($num,$dec){
 	}
 }
 
+function locale_number_format_kpi($num){
+	if($num >= 1000){
+		return locale_number_format($num,0);
+	}elseif($num >= 10){
+		return locale_number_format($num,1);
+	}else{
+		return locale_number_format($num,2);
+	}
+}
+
+
 function StartEvenOrOddRow($k){
 	if ($k == 1) {
 		echo '<tr class="EvenTableRows">';

@@ -257,12 +257,12 @@ function AverageKPIHistory($NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE
 			$Code = $myrow['class'];
 			$Name = $myrow['concept'];
 			
-			$dailyA = locale_number_format(($myrow['salesA']),0);
-			$dailyB = locale_number_format(($myrow['salesB']),0);
-			$dailyC = locale_number_format(($myrow['salesC']),0);
-			$dailyD = locale_number_format(($myrow['salesD']),0);
-			$dailyE = locale_number_format(($myrow['salesE']),0);
-			$dailyF = locale_number_format(($myrow['salesF']),0);
+			$dailyA = locale_number_format_kpi(($myrow['salesA']));
+			$dailyB = locale_number_format_kpi(($myrow['salesB']));
+			$dailyC = locale_number_format_kpi(($myrow['salesC']));
+			$dailyD = locale_number_format_kpi(($myrow['salesD']));
+			$dailyE = locale_number_format_kpi(($myrow['salesE']));
+			$dailyF = locale_number_format_kpi(($myrow['salesF']));
 			$percent = (($myrow['salesD'])-($myrow['salesC']))/($myrow['salesC']) * 100;
 			$trend = " ";
 			if ($percent > MINIMUM_BUSINESS_HISTORY_TREND){
