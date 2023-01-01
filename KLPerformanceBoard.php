@@ -73,14 +73,10 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		PeriodDifferenceSales("IMMEDIATE", "Shop",  30, $db);
 		$NumberOfTestExecuted++;
-		PeriodDifferenceSales("2019", "Shop",  30, $db);
-		$NumberOfTestExecuted++;
 		PeriodDifferenceSales("YEAR", "Shop",  30, $db);
 		$NumberOfTestExecuted++;
-	}
-
-	if ($KL_SystemAdmin
-		OR $KL_BusinessDevelopmentManager){
+		PeriodDifferenceSales("2019", "Shop",  30, $db);
+		$NumberOfTestExecuted++;
 		PeriodDifferenceSales("2019", "Shop",  "YTD", $db);
 		$NumberOfTestExecuted++;
 	}
@@ -283,9 +279,9 @@ if ($ProcessSection03){
 		OR $KL_BusinessDevelopmentManager){
 		MaintenanceTasksDistribution("OPEN", 0);
 		$NumberOfTestExecuted++;
-		MaintenanceTasksDistribution("CLOSED", 60);
+		MaintenanceTasksDistribution("CLOSED", 30);
 		$NumberOfTestExecuted++;
-		MaintenanceTasksDistribution("TOTAL", 60);
+		MaintenanceTasksDistribution("TOTAL", 30);
 		$NumberOfTestExecuted++;
 	}
 
@@ -294,13 +290,13 @@ if ($ProcessSection03){
 		OR $KL_ShopManager){
 		MaintenanceTasksDistribution("OPEN", 0);
 		$NumberOfTestExecuted++;
-		MaintenanceTasksDistribution("CLOSED", 60);
+		MaintenanceTasksDistribution("CLOSED", 30);
 		$NumberOfTestExecuted++;
-		MaintenanceTasksDistribution("TOTAL", 60);
+		MaintenanceTasksDistribution("TOTAL", 30);
 		$NumberOfTestExecuted++;
 		MaintenanceTasksList("OPEN");
 		$NumberOfTestExecuted++;
-		MaintenanceTasksList("CLOSED", 60);
+		MaintenanceTasksList("CLOSED", 30);
 		$NumberOfTestExecuted++;
 	}
 
@@ -319,9 +315,9 @@ if ($ProcessSection03){
 
 	if ($KL_SystemAdmin
 		OR $KL_AdministrationTeam){
-		CashStatus(2022, 
-					20000000, 400000000, 100000000, 
-					20000000, 400000000, 100000000, 
+		CashStatus(2023, 
+					445000000, 400000000, 100000000, 
+					387000000, 400000000, 100000000, 
 					100000000, $periodnow, $KL_SystemAdmin, TRUE, $db);
 		$NumberOfTestExecuted++;
 	}
@@ -2916,7 +2912,7 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA, $db){
 		}else{
 			// comparing with a fixed year
 			$YesterdayB  = $typeperiod . substr($YesterdayA, 4, 6);
-			$StartDateB  = $typeperiod . substr($StartDateA, 4, 6);
+			$StartDateB = FormatDateForSQL(DateAdd(ConvertSQLDate($YesterdayB),'d',-$NumDaysA));
 			$Title = _('Difference sales for ') . $typereport . " during the last " . $NumDaysA . " days and same period in " . $typeperiod;
 			$TitleCurrent = $NumDaysA . ' Days This Year';
 			$TitlePrevious = $NumDaysA . ' Days '. $typeperiod;
@@ -3273,9 +3269,9 @@ function ShowKPIHistory($NumDays){
 					</tr>', 
 					$myrow['class'], 
 					$myrow['concept'], 
-					locale_number_format($myrow['minimumvalue'],0),
-					locale_number_format($myrow['averagevalue'],0),
-					locale_number_format($myrow['maximumvalue'],0)
+					locale_number_format_kpi($myrow['minimumvalue']),
+					locale_number_format_kpi($myrow['averagevalue']),
+					locale_number_format_kpi($myrow['maximumvalue'])
 					);
 		}
 		echo '</table>
