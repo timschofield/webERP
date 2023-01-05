@@ -56,8 +56,21 @@ $NumberOfOpenShopsTotal = $NumberOfOpenShopsKL + $NumberOfOpenShopsBL + $NumberO
 ***************************************************************************************/
 
 if ($_SESSION['UserID'] == "Ricard"){
-	// $KL_BusinessDevelopmentManager = TRUE;
-	//	phpinfo();
+//	$KL_SystemAdmin = TRUE;
+//	$KL_OperationalManager = TRUE;
+//	$KL_OperationalLeader = TRUE;
+//	$KL_AdministrationTeam = TRUE;
+//	$KL_BusinessDevelopmentManager = TRUE;
+//	$KL_PurchasingTeam = TRUE;
+//	$KL_ShopSupportTeam = TRUE;
+//	$KL_ShopSupportLeader = TRUE;
+//	$KL_OnlineSales = TRUE;
+//	$KL_ShopManager = TRUE;
+//	$KL_SPGSeniorOrSupport = TRUE;
+//	$KL_SPGJunior = TRUE;
+//	$KL_PettyCash = TRUE;
+//	$KL_ITSupport = TRUE;
+//	phpinfo();
 
 /* TEST AND PLAY WITH call_user_func to move this script mainly to a table in DB
 //		over_or_below_limit("DISC80 Items in AR", "BELOW", 20, $RootPath, $db);
@@ -360,7 +373,7 @@ if ($ProcessSection01){
 		BalanceListAccountControl("('111512000', 
 									'111512000AD')", "Persediaan Bahan Produksi (Components)",   50000000,    150000000, $periodnow, $db);
 
-		BalanceAccountControl("111800000",  300000000,  400000000, $periodnow, $db);
+		BalanceAccountControl("111800000",  350000000,  450000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111900000",   500000 * $NumberOfOpenShopsTotal, 1000000 * $NumberOfOpenShopsTotal, $periodnow, $db);
 		$NumberOfTestExecuted++;

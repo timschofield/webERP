@@ -44,13 +44,23 @@ $periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 /***************************************************************************************
 * TEST AND PLAY AREA      
 ***************************************************************************************/
-/***************************************************************************************
-* TEST AND PLAY AREA      
-***************************************************************************************/
 
 if ($_SESSION['UserID'] == "Ricard"){
-	// $KL_BusinessDevelopmentManager = TRUE;
-	//	phpinfo();
+//	$KL_SystemAdmin = TRUE;
+//	$KL_OperationalManager = TRUE;
+//	$KL_OperationalLeader = TRUE;
+//	$KL_AdministrationTeam = TRUE;
+//	$KL_BusinessDevelopmentManager = TRUE;
+//	$KL_PurchasingTeam = TRUE;
+//	$KL_ShopSupportTeam = TRUE;
+//	$KL_ShopSupportLeader = TRUE;
+//	$KL_OnlineSales = TRUE;
+//	$KL_ShopManager = TRUE;
+//	$KL_SPGSeniorOrSupport = TRUE;
+//	$KL_SPGJunior = TRUE;
+//	$KL_PettyCash = TRUE;
+//	$KL_ITSupport = TRUE;
+//	phpinfo();
 }
 
 /***************************************************************************************
