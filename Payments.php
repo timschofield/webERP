@@ -634,12 +634,12 @@ if(isset($_POST['CommitBatch'])) {
 				WHERE accountcode='" . $_SESSION['PaymentDetail'.$identifier]->Account . "'";
 		$ControlledResult = DB_query($SQL);
 		$ControlledRow = DB_fetch_array($ControlledResult) ;
-		if ($ControlledRow['controlled'] == 1)
-		{
+		if ($ControlledRow['controlled'] == 1){
 			$emailToBeSent = true;
 		}
 		$EmailText = _('Transaction') . ': ' . $TransNo . "\n" .
 					 _('User') . ': ' . $_SESSION['UserID'] . "\n" .
+					 _('Tx Date') . ': ' . $_SESSION['PaymentDetail'.$identifier]->DatePaid . "\n" .
 					 _('Bank Account') . ': ' . $_SESSION['PaymentDetail'.$identifier]->Account . " - " . $ControlledRow['accountname'] . "\n";
 
 		/* Check if any of the GL accounts on the tx is a controlled GL account */
