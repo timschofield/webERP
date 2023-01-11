@@ -627,16 +627,12 @@ if(isset($_POST['CommitBatch'])) {
 		/* RICARD KL prepare the e-mail text just in case there are any controlled accounts */
 		$emailToBeSent = false;
 
-		/* Check if the bank account is a controlled GL account */
-		$SQL = "SELECT controlled, 
-					accountname
+		$SQL = "SELECT accountname
 				FROM chartmaster
 				WHERE accountcode='" . $_SESSION['PaymentDetail'.$identifier]->Account . "'";
 		$ControlledResult = DB_query($SQL);
 		$ControlledRow = DB_fetch_array($ControlledResult) ;
-		if ($ControlledRow['controlled'] == 1){
-			$emailToBeSent = true;
-		}
+
 		$EmailText = _('Transaction') . ': ' . $TransNo . "\n" .
 					 _('User') . ': ' . $_SESSION['UserID'] . "\n" .
 					 _('Tx Date') . ': ' . $_SESSION['PaymentDetail'.$identifier]->DatePaid . "\n" .
@@ -655,10 +651,10 @@ if(isset($_POST['CommitBatch'])) {
 			{
 				$emailToBeSent = true;
 			}
-			$EmailText .= $PaymentItem->GLCode . " - " . 
-						$ControlledRow['accountname'] . ' X ' . 
-						locale_number_format($PaymentItem->Amount,$_SESSION['PaymentDetail'.$identifier]->CurrDecimalPlaces) . ' ' . 
-						$_SESSION['PaymentDetail'.$identifier]->Currency . ' -> ' . 
+			$EmailText .= str_pad(locale_number_format($PaymentItem->Amount,$_SESSION['PaymentDetail'.$identifier]->CurrDecimalPlaces), 15, " ", STR_PAD_LEFT) . ' ' . 
+						$_SESSION['PaymentDetail'.$identifier]->Currency . ' @ ' . 
+						$PaymentItem->GLCode . " - " . 
+						$ControlledRow['accountname'] . ' ==> ' . 
 						$PaymentItem->Narrative . "\n" ;
 		}
 

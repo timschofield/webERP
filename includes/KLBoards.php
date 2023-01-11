@@ -1884,10 +1884,12 @@ function ItemsWithoutRetailPrice($stockcat, $factorRetail, $RootPath, $db){
 	return $i;
 }
 
-function LocationInformationReview($db){
-	$SQL="SELECT locationname,
+function LocationInformationReview($RootPath, $db){
+	$SQL="SELECT loccode,
+				locationname,
 				zone,
 				typeloc,
+				klyearlyrent,
 				partnercode,
 				priority,
 				stockavailableforonline,
@@ -1915,6 +1917,7 @@ function LocationInformationReview($db){
 							<th class="ascending">' . _('Zone') . '</th>
 							<th class="ascending">' . _('Type') . '</th>
 							<th class="ascending">' . _('Partner') . '</th>
+							<th class="ascending">' . _('Rent (jt)') . '</th>
 							<th class="ascending">' . _('Priority') . '</th>
 							<th class="ascending">' . _('Max Daily Tr') . '</th>
 							<th class="ascending">' . _('Stock Online?') . '</th>
@@ -1932,6 +1935,7 @@ function LocationInformationReview($db){
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
 			$k = StartEvenOrOddRow($k);
+			$CodeLink = '<a href="' . $RootPath . '/Locations.php?SelectedLocation=' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</a>';
 			if ($myrow['stockavailableforonline'] ==  1){
 				$StockOnline = "Yes";
 			}else{
@@ -1974,6 +1978,7 @@ function LocationInformationReview($db){
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -1985,10 +1990,11 @@ function LocationInformationReview($db){
 					<td class="number">%s</td>
 					</tr>', 
 					$i,
-					$myrow['locationname'],
+					$CodeLink,
 					$myrow['zone'],
 					$myrow['typeloc'],
 					$myrow['partnercode'],
+					locale_number_format($myrow['klyearlyrent']/JUTA,0),
 					$myrow['priority'],
 					$myrow['smartdispatchmaxmodels'],
 					$StockOnline,

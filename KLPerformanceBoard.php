@@ -139,7 +139,7 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin){
-		LocationInformationReview($db);
+		LocationInformationReview($RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
