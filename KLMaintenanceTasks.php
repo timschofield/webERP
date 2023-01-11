@@ -15,7 +15,7 @@ if (isset($Errors)) {
 	unset($Errors);
 }
 $Errors = array();
-$InputError = 0;
+$InputError = FALSE;
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'
 	</p>
@@ -39,56 +39,58 @@ if (isset($_POST['submit'])) {
 	$myrow=DB_fetch_row($result);
 
 	$i=1;
-	if ($myrow[0]!=0 and !isset($SelectedIndex)) {
-		$InputError = 1;
-		prnMsg( _('Already exists an open maintenance task for the location and type of maintenace in the database. If you need, you can UPDATE the existing one.'),'error');
-		$Errors[$i] = 'CounterIndex';
-		$i++;
-	}
+//	if ($myrow[0]!=0 and !isset($SelectedIndex)) {
+//		$InputError = TRUE;
+//		prnMsg( _('Already exists an open maintenance task for the location and type of maintenace in the database. If you need, you can UPDATE the existing one.'),'error');
+//		$Errors[$i] = 'CounterIndex';
+//		$i++;
+//	}
 
 	$msg='';
 
-	if (isset($SelectedIndex) AND $InputError !=1) {
+	if (!$InputError){
+		if (isset($SelectedIndex)) {
+			/*SelectedIndex could also exist if submit had not been clicked this code would not run in this case cos submit is false of course	see the close code below*/
+			if (isset($_POST['Description']) AND ($_POST['Description'] != '')){
+				$sql = "INSERT INTO klmaintenancetaskupdates 
+							(taskcounter,
+							description,
+							updateuser,
+							updatedate)
+						VALUES ('" . $SelectedIndex . "',
+							'". $_POST['Description'] . "',
+							'".$_SESSION['UserID'] . "',
+							NOW())";
 
-		/*SelectedIndex could also exist if submit had not been clicked this code would not run in this case cos submit is false of course	see the close code below*/
+				$msg = 'The maintenance task '. $SelectedIndex .' has been updated';
+				$result = DB_query($sql);
+				prnMsg($msg,'success');
+			}else{
+				prnMsg("Trask description update was empty, so no update was recroded",'warn');
+			}
+		}else{
+			/*SelectedIndex is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new status code form */
+			$sql = "INSERT INTO klmaintenancetasks 
+						(loccode,
+						maintenancetype,
+						description,
+						closed,
+						creationuser,
+						creationdate)
+					VALUES ('" .$_POST['LocCode'] . "',
+						'".$_POST['MaintenanceType'] . "',
+						'".$_POST['Description'] . "',
+						'0',
+						'".$_SESSION['UserID'] . "',
+						NOW())";
 
-		$sql = "INSERT INTO klmaintenancetaskupdates 
-					(taskcounter,
-					description,
-					updateuser,
-					updatedate)
-				VALUES ('" . $SelectedIndex . "',
-					'".$_POST['Description'] . "',
-					'".$_SESSION['UserID'] . "',
-					NOW())";
-
-		$msg = 'The maintenance task '. $SelectedIndex .' has been updated';
-
-	} else if ($InputError !=1) {
-
-	/*SelectedIndex is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new status code form */
-
-		$sql = "INSERT INTO klmaintenancetasks 
-					(loccode,
-					maintenancetype,
-					description,
-					closed,
-					creationuser,
-					creationdate)
-				VALUES ('" .$_POST['LocCode'] . "',
-					'".$_POST['MaintenanceType'] . "',
-					'".$_POST['Description'] . "',
-					'0',
-					'".$_SESSION['UserID'] . "',
-					NOW())";
-
-		$msg = _('A new maintenance task has been created');
-		unset ($SelectedIndex);
-		unset ($_POST['LocCode']);
+			$msg = _('A new maintenance task has been created');
+			$result = DB_query($sql);
+			prnMsg($msg,'success');
+			unset ($SelectedIndex);
+			unset ($_POST['LocCode']);
+		}
 	}
-	//run the SQL from either of the above possibilites
-	$result = DB_query($sql);
-	prnMsg($msg,'success');
 } elseif (isset($_GET['close'])) {
 	//the link to close a selected record was clicked instead of the submit button
 
