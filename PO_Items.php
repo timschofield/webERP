@@ -741,6 +741,8 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 			</tr>';
 
 	$_SESSION['PO'.$identifier]->Total = 0;
+	$TotalOurItems = 0;
+	$TotalSupplierItems = 0;
 	$k = 0;  //row colour counter
 
 	foreach ($_SESSION['PO'.$identifier]->LineItems as $POLine) {
@@ -784,12 +786,19 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 			}
 			echo '</tr>';
 			$_SESSION['PO'.$identifier]->Total += $LineTotal;
+			$TotalOurItems += $POLine->Quantity;
+			$TotalSupplierItems += round($POLine->Quantity/$POLine->ConversionFactor,$POLine->DecimalPlaces);
 		}
 	}
 
 	$DisplayTotal = locale_number_format($_SESSION['PO'.$identifier]->Total,$_SESSION['PO'.$identifier]->CurrDecimalPlaces);
-	echo '<tr><td colspan="9" class="number">' . _('TOTAL') . _(' excluding Tax') . '</td>
-						<td class="number"><b>' . $DisplayTotal . '</b></td>
+	echo '<tr>
+			<td colspan="2" class="number">' . _('TOTAL') . '</td>
+			<td class="number"><b>' . locale_number_format($TotalOurItems,0) . '</b></td>
+			<td colspan="3" class="number">' . '</td>
+			<td class="number"><b>' . locale_number_format($TotalSupplierItems,0) . '</b></td>
+			<td colspan="2" class="number">' . _('TOTAL excl. Tax') . '</td>
+			<td class="number"><b>' . $DisplayTotal . '</b></td>
 			</tr></table>';
 	echo '<br />
 			<div class="centre">
