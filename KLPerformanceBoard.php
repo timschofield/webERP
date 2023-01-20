@@ -83,6 +83,23 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		PeriodDifferenceSales("IMMEDIATE", "Shop",  30, $db);
 		$NumberOfTestExecuted++;
+	}
+
+	if ($KL_SystemAdmin
+		OR $KL_BusinessDevelopmentManager){
+		PeriodDifferenceSales("IMMEDIATE", "Shop",  90, $db);
+		$NumberOfTestExecuted++;
+		PeriodDifferenceSales("IMMEDIATE", "Shop", 180, $db);
+		$NumberOfTestExecuted++;
+		PeriodDifferenceSales("IMMEDIATE", "Shop", 365, $db);
+		$NumberOfTestExecuted++;
+	}
+
+	if ($KL_SystemAdmin
+		OR $KL_OperationalManager
+		OR $KL_SalesTeamOnline
+		OR $KL_BusinessDevelopmentManager
+		OR $KL_ShopManager){
 		PeriodDifferenceSales("YEAR", "Shop",  30, $db);
 		$NumberOfTestExecuted++;
 		PeriodDifferenceSales("2019", "Shop",  30, $db);
