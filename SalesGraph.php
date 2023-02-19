@@ -294,8 +294,8 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 		array('grey'),  //Data Colors
 		array('black')	//Border Colors
 	);
-	$graph->SetYDataLabelPos('plotin');
-//	$graph->SetYDataLabelPos('none');
+//	$graph->SetYDataLabelPos('plotin');
+	$graph->SetYDataLabelPos('none');
 
 	$SalesResult = DB_query($SQL);
 	if (DB_error_no() !=0) {
