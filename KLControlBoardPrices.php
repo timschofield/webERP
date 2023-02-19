@@ -77,7 +77,7 @@ if ($ProcessSection01){
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager){
 		
-		$IssuesFound += ItemsWithoutRetailPrice("SETKLA", MINIMUM_PRICE_FACTOR_KL, $RootPath, $db);
+		ItemsWithoutRetailPrice("SETKLA", MINIMUM_PRICE_FACTOR_KL, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		$IssuesFound += ItemsWithoutRetailPrice("TESTKA", MINIMUM_PRICE_FACTOR_KL, $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -86,7 +86,7 @@ if ($ProcessSection01){
 		$IssuesFound += ItemsWithoutRetailPrice("NOPOKA", MINIMUM_PRICE_FACTOR_KL, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-		$IssuesFound += ItemsWithoutRetailPrice("SETBLA", MINIMUM_PRICE_FACTOR_BLINK, $RootPath, $db);
+		ItemsWithoutRetailPrice("SETBLA", MINIMUM_PRICE_FACTOR_BLINK, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		$IssuesFound += ItemsWithoutRetailPrice("TESTBA", MINIMUM_PRICE_FACTOR_BLINK, $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -95,7 +95,7 @@ if ($ProcessSection01){
 		$IssuesFound += ItemsWithoutRetailPrice("NOPOBA", MINIMUM_PRICE_FACTOR_BLINK, $RootPath, $db);
 		$NumberOfTestExecuted++;
 
-		$IssuesFound += ItemsWithoutRetailPrice("SETGEA", MINIMUM_PRICE_FACTOR_GENERAL, $RootPath, $db);
+		ItemsWithoutRetailPrice("SETGEA", MINIMUM_PRICE_FACTOR_GENERAL, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		$IssuesFound += ItemsWithoutRetailPrice("TESTGA", MINIMUM_PRICE_FACTOR_GENERAL, $RootPath, $db);
 		$NumberOfTestExecuted++;

@@ -102,8 +102,8 @@ if ($ProcessSection01){
 		OR $KL_ShopManager){
 		PeriodDifferenceSales("YEAR", "Shop",  30, $db);
 		$NumberOfTestExecuted++;
-		PeriodDifferenceSales("2019", "Shop",  30, $db);
-		$NumberOfTestExecuted++;
+//		PeriodDifferenceSales("2019", "Shop",  30, $db);
+//		$NumberOfTestExecuted++;
 		PeriodDifferenceSales("2019", "Shop",  "YTD", $db);
 		$NumberOfTestExecuted++;
 	}
@@ -267,7 +267,7 @@ if ($ProcessSection03){
 	}
 
 	if ($KL_SystemAdmin ){
-		InsuficientStockForShopPackaging('SHPACK', 15, 90, 30, true, $RootPath, $db);
+		InsuficientStockForShopPackaging('SHPACK', 15, 120, 30, true, $RootPath, $db);
 		$NumberOfTestExecuted++;
 //		InsuficientStockForShopPackaging('ZAPON', 15, 60, 30, true, $RootPath, $db);
 //		$NumberOfTestExecuted++;
