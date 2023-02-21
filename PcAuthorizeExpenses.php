@@ -140,7 +140,7 @@ if(isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) OR
 				$AccountTo = $myrowAccExp['glaccount'];
 				$TagTo = $myrowAccExp['tag'];
 				if ($myrowAccExp['klretentionpph23'] != 0){
-					$HutangPPH23 = $Amount * ($myrowAccExp['klretentionpph23']/100);
+					$HutangPPH23 = $Amount / (1-($myrowAccExp['klretentionpph23']/100));
 				}else{
 					$HutangPPH23 = 0;
 				}
