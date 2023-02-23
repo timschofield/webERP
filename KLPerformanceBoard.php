@@ -3308,6 +3308,7 @@ function ShowKPIHistory($NumDays){
 
 
 function MaintenanceTasksDistribution($Status, $NumDays){
+	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 	if ($Status == "OPEN"){
 		$WhereStatus = "WHERE klmaintenancetasks.closed = 0";
 		$Title = 'Open Maintenance Tasks distribution';
