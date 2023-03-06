@@ -352,7 +352,7 @@ if ($ProcessSection01){
 									'111208010', 
 									'111208020', 
 									'111208030', 
-									'111208040')", "Total Brankas Shareholders",      0,2500000000, $periodnow, $db);
+									'111208040')", "Total Brankas Shareholders",      0,3000000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('111513000', 
@@ -366,6 +366,14 @@ if ($ProcessSection01){
 		BalanceAccountControl("111111209",          0,   25000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111131100",         -1, 2000000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
+		BalanceAccountControl("111208010",         -1, 1000000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
+		BalanceAccountControl("111208020",         -1, 1000000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
+		BalanceAccountControl("111208030",         -1, 1000000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
+		BalanceAccountControl("111208040",         -1, 1000000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111520000",         -1,          1, $periodnow, $db);
 		$NumberOfTestExecuted++;
