@@ -259,6 +259,18 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		CustomersDebtControl(1000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
+		PettyCashBalanceControlControl("IDR", "('111111209',
+												'111111309')", 1, $periodnow, $db);
+		$NumberOfTestExecuted++;
+		PettyCashBalanceControlControl("USD", "('111205010')", 1, $periodnow, $db);
+		$NumberOfTestExecuted++;
+		PettyCashBalanceControlControl("EUR", "('111205020')", 1, $periodnow, $db);
+		$NumberOfTestExecuted++;
+		PettyCashBalanceControlControl("THB", "('111205030',
+												'111204030')", 1, $periodnow, $db);
+		$NumberOfTestExecuted++;
+		PettyCashBalanceControlControl("HKD", "('111205040')", 1, $periodnow, $db);
+		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin 
@@ -1965,6 +1977,33 @@ function GoodsReceivedNotInvoicedControl($AcceptedDifference, $period, $db){
 		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
 	}
 }
+
+function PettyCashBalanceControlControl($Currency, $PCGLAccounts, $AcceptedDifference, $period, $db){
+	$SQL = "SELECT SUM(pcashdetails.amount)/currencies.rate as amount_idr
+			FROM pcashdetails,pctabs,currencies	
+			WHERE pcashdetails.tabcode = pctabs.tabcode	
+				AND pctabs.currency = currencies.currabrev
+				AND pctabs.currency = '". $Currency ."'
+				AND pcashdetails.authorized != '0000-00-00'";
+
+	$result = DB_query($SQL);
+	$myrow = DB_fetch_array($result);
+	$PettyCashValue = $myrow['amount_idr'];
+
+	$SQL = "SELECT SUM((bfwd + actual)) as saldo
+			FROM chartdetails
+			WHERE chartdetails.accountcode IN ".$PCGLAccounts."
+				AND chartdetails.period = ". $period . "";
+	$result = DB_query($SQL);
+	$myrow = DB_fetch_array($result);
+	$ValueAtBalance = $myrow['saldo'];
+
+	if (abs($ValueAtBalance - $PettyCashValue) > $AcceptedDifference){
+		$text = "Petty Cash (" . $Currency . ") Balance value = " . locale_number_format($ValueAtBalance,0) . " <-> Real Petty Cash (" . $Currency . ") = " . locale_number_format($PettyCashValue,0);
+		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+	}
+}
+
 
 function ImagesWithoutProduct($RootPath, $db){
 	$ShowHeader = TRUE;
