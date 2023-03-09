@@ -139,7 +139,7 @@ TRUNCATE test_erp.`fixedassettasks`;
 INSERT INTO test_erp.fixedassettasks SELECT * FROM kurakura_kl_erp.fixedassettasks;
 
 TRUNCATE test_erp.`fixedassettrans`;
-/* INSERT INTO test_erp.fixedassettrans SELECT * FROM kurakura_kl_erp.fixedassettrans; */
+INSERT INTO test_erp.fixedassettrans SELECT * FROM kurakura_kl_erp.fixedassettrans;
 
 TRUNCATE test_erp.`freightcosts`;
 INSERT INTO test_erp.freightcosts SELECT * FROM kurakura_kl_erp.freightcosts;
