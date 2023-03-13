@@ -343,8 +343,8 @@ if ($ProcessSection03){
 	if ($KL_SystemAdmin
 		OR $KL_AdministrationTeam){
 		CashStatus(2023, 
-					445000000, 400000000, 100000000, 
-					387000000, 400000000, 100000000, 
+					159227000, 200000000, 100000000, 
+					45760000, 400000000, 100000000, 
 					100000000, $periodnow, $KL_SystemAdmin, TRUE, $db);
 		$NumberOfTestExecuted++;
 	}
@@ -783,6 +783,12 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 		printf('<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
+				'Cash ADU in Brankas Kantor end of ' . ($Year-1), 
+				locale_number_format($CashEndOfPreviousYearADU,0)
+				);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
 				'Sales PT ADU Cash', 
 				locale_number_format($SalesCashADU,0)
 				);
@@ -855,7 +861,13 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 		printf('<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
-				'Sales Retail PT.BB Cash during '. $Year, 
+				'Cash PTBB in Brankas Kantor end of ' . ($Year-1), 
+				locale_number_format($CashEndOfPreviousYearBB,0)
+				);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'Sales Retail PTBB Cash during '. $Year, 
 				locale_number_format($SalesCashBB,0)
 				);
 		printf('<td>%s</td>
