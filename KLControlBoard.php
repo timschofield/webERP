@@ -306,6 +306,7 @@ if ($ProcessSection01){
 	
 	if ($KL_SystemAdmin){
 		BalanceListAccountControl("('111121105AD',
+									'111121107AD',
 									'111121110AD',
 									'111203010AD',
 									'111259010AD', 
