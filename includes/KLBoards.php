@@ -705,20 +705,27 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 		}
 		echo '</table>
 				</div>';
-	}			
+	}	
+	
+	$NumDaysA = str_pad($NumDaysA, 3, '0', STR_PAD_LEFT);
+	$NumDaysB = str_pad($NumDaysB, 3, '0', STR_PAD_LEFT);
+	$NumDaysC = str_pad($NumDaysC, 3, '0', STR_PAD_LEFT);
+	$NumDaysD = str_pad($NumDaysD, 3, '0', STR_PAD_LEFT);
+	$NumDaysE = str_pad($NumDaysE, 3, '0', STR_PAD_LEFT);
+	
 	if (($typereport == "Shop") AND ($Year == "CurrentYear")){
-		InsertKPI("Sales", "Average Daily Retail Sales Last " . $NumDaysA . " days (IDR)", $TotalDateA);
-		InsertKPI("Sales", "Average Daily Retail Sales Last " . $NumDaysB . " days (IDR)", $TotalDateB);
-		InsertKPI("Sales", "Average Daily Retail Sales Last " . $NumDaysC . " days (IDR)", $TotalDateC);
-		InsertKPI("Sales", "Average Daily Retail Sales Last " . $NumDaysD . " days (IDR)", $TotalDateD);
-		InsertKPI("Sales", "Average Daily Retail Sales Last " . $NumDaysE . " days (IDR)", $TotalDateE);
+		InsertKPI("Sales", "Retail Sales Daily Average Last " . $NumDaysA . " days (IDR)", $TotalDateA);
+		InsertKPI("Sales", "Retail Sales Daily Average Last " . $NumDaysB . " days (IDR)", $TotalDateB);
+		InsertKPI("Sales", "Retail Sales Daily Average Last " . $NumDaysC . " days (IDR)", $TotalDateC);
+		InsertKPI("Sales", "Retail Sales Daily Average Last " . $NumDaysD . " days (IDR)", $TotalDateD);
+		InsertKPI("Sales", "Retail Sales Daily Average Last " . $NumDaysE . " days (IDR)", $TotalDateE);
 	}
 	if (($typereport == "Online") AND ($Year == "CurrentYear")){
-		InsertKPI("Sales", "Average Daily Online Sales Last " . $NumDaysA . " days (IDR)", $TotalDateA);
-		InsertKPI("Sales", "Average Daily Online Sales Last " . $NumDaysB . " days (IDR)", $TotalDateB);
-		InsertKPI("Sales", "Average Daily Online Sales Last " . $NumDaysC . " days (IDR)", $TotalDateC);
-		InsertKPI("Sales", "Average Daily Online Sales Last " . $NumDaysD . " days (IDR)", $TotalDateD);
-		InsertKPI("Sales", "Average Daily Online Sales Last " . $NumDaysE . " days (IDR)", $TotalDateE);
+		InsertKPI("Sales", "Online Sales Daily Average Last " . $NumDaysA . " days (IDR)", $TotalDateA);
+		InsertKPI("Sales", "Online Sales Daily Average Last " . $NumDaysB . " days (IDR)", $TotalDateB);
+		InsertKPI("Sales", "Online Sales Daily Average Last " . $NumDaysC . " days (IDR)", $TotalDateC);
+		InsertKPI("Sales", "Online Sales Daily Average Last " . $NumDaysD . " days (IDR)", $TotalDateD);
+		InsertKPI("Sales", "Online Sales Daily Average Last " . $NumDaysE . " days (IDR)", $TotalDateE);
 	}
 
 }
