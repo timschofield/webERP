@@ -19,9 +19,11 @@ if ($KL_SystemAdmin
 	OR $KL_OperationalManager 
 	OR $KL_BusinessDevelopmentManager 
 	OR $KL_ShopManager){
-	HourlyPerformance( 7,$RootPath, $db);
+	HourlyPerformance(15,$RootPath, $db);
 	$NumberOfTestExecuted++;
 	HourlyPerformance(30,$RootPath, $db);
+	$NumberOfTestExecuted++;
+	HourlyPerformance(90,$RootPath, $db);
 	$NumberOfTestExecuted++;
 }
 

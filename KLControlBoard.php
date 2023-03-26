@@ -741,15 +741,20 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_SystemAdmin){
+	if ($KL_SystemAdmin 
+		OR $KL_AdministrationTeam){
 		OutstandingOrders("Retail", "Order", $RootPath, $db);
 		$NumberOfTestExecuted++;
+	}
+
+	if ($KL_SystemAdmin ){
 		OutstandingOrders("Retail", "Quotation", $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager
+		OR $KL_AdministrationTeam
 		OR $KL_SalesTeamOnline
 		OR $KL_OperationalManager
 		OR $KL_ShopSupportLeader
@@ -829,10 +834,17 @@ if ($ProcessSection02){
 
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager
+		OR $KL_AdministrationTeam
 		OR $KL_SalesTeamOnline
 		OR $KL_ShopSupportTeam){ 
 		OutstandingOrders("Online", "Order", $RootPath, $db);
 		$NumberOfTestExecuted++;
+	}
+
+	if ($KL_SystemAdmin 
+		OR $KL_BusinessDevelopmentManager
+		OR $KL_SalesTeamOnline
+		OR $KL_ShopSupportTeam){ 
 		OnlineItemsOnProcess($RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
