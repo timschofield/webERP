@@ -232,6 +232,8 @@ function UpdateWeight($Stockid, $UpdateDB, $db){
 		$Weight = STANDARD_TALI_WEIGHT;
 	}elseif (isKeyHolder($Stockid)){
 		$Weight = STANDARD_KEYHOLDER_WEIGHT;
+	}else{
+		$Weight = 0;
 	}
 	
 	if($UpdateDB){

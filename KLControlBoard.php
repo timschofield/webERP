@@ -311,7 +311,7 @@ if ($ProcessSection01){
 									'111203010AD',
 									'111259010AD', 
 									'111259020AD', 
-									'111259050AD')", "Total Banks PT.ADU", 3000000000, 5000000000, $periodnow, $db);
+									'111259050AD')", "Total Banks PT.ADU", 2000000000, 4000000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('111259010AD', 
@@ -334,7 +334,7 @@ if ($ProcessSection01){
 									'111203020PT',
 									'111259010PT', 
 									'111259020PT', 
-									'111259050PT')", "Total Banks PT.BB", 2000000000, 3000000000, $periodnow, $db);
+									'111259050PT')", "Total Banks PT.BB", 2000000000, 3500000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('111259010PT', 
@@ -604,7 +604,7 @@ if ($ProcessSection02){
 	if ($KL_BusinessDevelopmentManager OR 
 		$KL_PurchasingTeam){
 		prnMsg("Packaging Information",'info');
-		InsuficientStockForShopPackaging('SHPACK', 15, 120, 30, true, $RootPath, $db); // Works for both regular and outlet shop packaging
+		InsuficientStockForShopPackaging('SHPACK', 15, 110, 30, true, $RootPath, $db); // Works for both regular and outlet shop packaging
 		$NumberOfTestExecuted++;
 		POStatusControl("PACKAGING","ON PRODUCTION", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -1412,8 +1412,10 @@ function CheckNegativeStock($RootPath, $db){
 		echo $TableHeader;
 		$k = 0; //row colour counter
 		$i = 1;
+		$total = 0;
 		while ($myrow = DB_fetch_array($result)) {
 			$k = StartEvenOrOddRow($k);
+			$total += $myrow['quantity'];
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 			printf('<td class="number">%s</td>
 					<td>%s</td>
@@ -1429,8 +1431,21 @@ function CheckNegativeStock($RootPath, $db){
 					);
 			$i++;
 		}
+		printf('<td class="number">%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				"", 
+				"TOTAL", 
+				"", 
+				"", 
+				locale_number_format($total,0)
+				);
 		echo '</table>
 				</div>';
+		InsertKPI("Stock", "Negative Stock items (PCS)", -$total);
 	}
 }
 
@@ -2660,6 +2675,7 @@ function ItemsInSetup($Check, $Category, $RootPath, $db){
 			 $SQLWhere ." 
 			ORDER BY stockid";
 
+// prnMsg($SQL);
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		$k = 0; //row colour counter
