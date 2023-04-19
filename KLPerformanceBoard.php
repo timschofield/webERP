@@ -1045,7 +1045,7 @@ function DailySalesRecords($Days, $NumDays, $db){
 
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Top and bottom ') . $Days . _(' retail sales days since '). ConvertSQLDate($FromDate) .'</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . _('Top ') . $Days . _(' retail sales days since '). ConvertSQLDate($FromDate) .'</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
@@ -1055,42 +1055,6 @@ function DailySalesRecords($Days, $NumDays, $db){
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
-		$i = 1;
-		while (($myrow = DB_fetch_array($result)) AND ($i <= $Days)) {
-			$k = StartEvenOrOddRow($k);
-			printf('<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					locale_number_format($i,0),
-					ConvertSQLDate($myrow['orddate']),
-					locale_number_format($myrow['sales'],0)
-					);
-			$i++;
-		}
-	}
-
-	$SQL = "SELECT salesorders.orddate,
-				SUM(salesorderdetails.qtyinvoiced * (salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent))) AS sales
-			FROM salesorders
-			INNER JOIN salesorderdetails ON
-				salesorders.orderno=salesorderdetails.orderno
-			INNER JOIN debtorsmaster ON 
-				salesorders.debtorno = debtorsmaster.debtorno
-			WHERE debtorsmaster.typeid IN (". CUSTOMER_TYPE_RETAIL . ")
-				AND salesorders.orddate >= '" . $FromDate . "'
-			GROUP BY salesorders.orddate
-			ORDER BY SUM(salesorderdetails.qtyinvoiced * (salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent))) ASC
-			LIMIT ". $Days . "";
-
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		$TableHeader = '<tr>
-							<th class="ascending"></th>
-							<th class="ascending"></th>
-							<th class="ascending"></th>
-						</tr>';
-		echo $TableHeader;
 		$i = 1;
 		while (($myrow = DB_fetch_array($result)) AND ($i <= $Days)) {
 			$k = StartEvenOrOddRow($k);

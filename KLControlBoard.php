@@ -1385,6 +1385,7 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $WhereisQOH, $RootPat
 function CheckNegativeStock($RootPath, $db){
 	/* Check if there is any negative stock */
 
+	$total = 0;
 	$SQL = "SELECT stockmaster.stockid,			
 				   stockmaster.description,			
 				   stockmaster.decimalplaces,			
@@ -1412,7 +1413,6 @@ function CheckNegativeStock($RootPath, $db){
 		echo $TableHeader;
 		$k = 0; //row colour counter
 		$i = 1;
-		$total = 0;
 		while ($myrow = DB_fetch_array($result)) {
 			$k = StartEvenOrOddRow($k);
 			$total += $myrow['quantity'];
@@ -1445,8 +1445,8 @@ function CheckNegativeStock($RootPath, $db){
 				);
 		echo '</table>
 				</div>';
-		InsertKPI("Stock", "Negative Stock items (PCS)", -$total);
 	}
+	InsertKPI("Stock", "Negative Stock items (PCS)", abs($total));
 }
 
 function ConsumablesGoodsNotEnoughStock($DaysUsage, $DaysMinStock, $DaysStockPurchase, $RootPath, $db){
@@ -1530,6 +1530,21 @@ function ConsumablesGoodsNotEnoughStock($DaysUsage, $DaysMinStock, $DaysStockPur
 	}
 }
 
+function CustomerDebtByCurrency($Currency){
+	$SQL = "SELECT SUM(
+					debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc
+				)/currencies.rate AS balance
+			FROM debtorsmaster,
+				currencies,
+				debtortrans
+			WHERE debtorsmaster.currcode = currencies.currabrev
+				AND debtorsmaster.debtorno = debtortrans.debtorno
+				AND debtorsmaster.currcode = '".$Currency."' ";
+	$result = DB_query($SQL);
+	$myrow = DB_fetch_array($result);
+	return $myrow[0];
+}
+
 function CustomersDebtControl($AcceptedDifference, $period, $db){
 	$SQL = "SELECT (bfwd + actual) as saldo
 			FROM chartdetails
@@ -1540,57 +1555,10 @@ function CustomersDebtControl($AcceptedDifference, $period, $db){
 	
 	$ValueAtBalance = $myrow['saldo'];
 	
-	$SQL = "SELECT SUM(
-					debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc
-				)/currencies.rate AS balance
-			FROM debtorsmaster,
-				currencies,
-				debtortrans
-			WHERE debtorsmaster.currcode = currencies.currabrev
-				AND debtorsmaster.debtorno = debtortrans.debtorno
-				AND debtorsmaster.currcode = 'IDR' ";
-	$result = DB_query($SQL);
-	$myrow = DB_fetch_array($result);
-	$DebtValueIDR = $myrow[0];
-
-	$SQL = "SELECT SUM(
-					debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc
-				)/currencies.rate AS balance
-			FROM debtorsmaster,
-				currencies,
-				debtortrans
-			WHERE debtorsmaster.currcode = currencies.currabrev
-				AND debtorsmaster.debtorno = debtortrans.debtorno
-				AND debtorsmaster.currcode = 'USD' ";
-	$result = DB_query($SQL);
-	$myrow = DB_fetch_array($result);
-	$DebtValueUSD = $myrow[0];
-
-	$SQL = "SELECT SUM(
-					debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc
-				)/currencies.rate AS balance
-			FROM debtorsmaster,
-				currencies,
-				debtortrans
-			WHERE debtorsmaster.currcode = currencies.currabrev
-				AND debtorsmaster.debtorno = debtortrans.debtorno
-				AND debtorsmaster.currcode = 'AUD' ";
-	$result = DB_query($SQL);
-	$myrow = DB_fetch_array($result);
-	$DebtValueAUD = $myrow[0];
-
-	$SQL = "SELECT SUM(
-					debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc
-				)/currencies.rate AS balance
-			FROM debtorsmaster,
-				currencies,
-				debtortrans
-			WHERE debtorsmaster.currcode = currencies.currabrev
-				AND debtorsmaster.debtorno = debtortrans.debtorno
-				AND debtorsmaster.currcode = 'EUR' ";
-	$result = DB_query($SQL);
-	$myrow = DB_fetch_array($result);
-	$DebtValueEUR = $myrow[0];	
+	$DebtValueIDR = CustomerDebtByCurrency("IDR");
+	$DebtValueUSD = CustomerDebtByCurrency("USD");
+	$DebtValueAUD = CustomerDebtByCurrency("AUD");
+	$DebtValueEUR = CustomerDebtByCurrency("EUR");
 	
 	$DebtValue = $DebtValueIDR + $DebtValueUSD + $DebtValueAUD + $DebtValueEUR;
 	
