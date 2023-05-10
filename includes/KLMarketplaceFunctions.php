@@ -287,6 +287,8 @@ function FindShopeeCategory($StockId, $Name, $Description){
 		$ShopeeCat = SHOPEE_CATEGORY_TOE_RING;
 	}elseif (isBrooche($StockId)){
 		$ShopeeCat = SHOPEE_CATEGORY_BROOCHE;
+	}elseif (isPiercing($StockId)){
+		$ShopeeCat = SHOPEE_CATEGORY_PIERCING;
 	}elseif (isEarring($StockId)){
 		if (ItemInList("stud", $Description)){
 			$ShopeeCat = SHOPEE_CATEGORY_EARRING_STUD;
@@ -393,6 +395,8 @@ function WhatsInTheBox($StockId){
 		$Box = "2 Earrings";
 	}elseif (isEarcuff($StockId)){
 		$Box = "2 Earcuffs";
+	}elseif (isPiercing($StockId)){
+		$Box = "Piercing";
 	}elseif (isBracelet($StockId)){
 		$Box = "Bracelet";
 	}elseif (isAnklet($StockId)){

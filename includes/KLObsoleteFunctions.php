@@ -1972,6 +1972,9 @@ function WebsiteCategoryDiscount($StockId, $Description, $Long, $Category){
 	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isEarring($StockId)){
 		$WebCat = EARRINGS_ON_SPECIAL;	
 	}
+	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isPiercing($StockId)){
+		$WebCat = EARRINGS_ON_SPECIAL;	
+	}
 	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isEarcuff($StockId)){
 		$WebCat = EARCUFFS_ON_SPECIAL;	
 	}

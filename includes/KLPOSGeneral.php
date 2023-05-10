@@ -794,6 +794,8 @@ function KLPrintReceiptHeader($identifier, $OrderNo){
 			$CodeSide .= " " . "Earrings";
 		}elseif (isBracelet($OrderLine->StockID)){
 			$CodeSide .= " " . "Bracelet";
+		}elseif (isPiercing($OrderLine->StockID)){
+			$CodeSide .= " " . "Piercing";
 		}elseif (isAnklet($OrderLine->StockID)){
 			$CodeSide .= " " . "Anklet";
 		}elseif (isPendant($OrderLine->StockID)){

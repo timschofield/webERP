@@ -78,6 +78,10 @@ function isEarring($stockid){
 	return (substr($stockid, 2,2) == "AR");
 }
 
+function isPiercing($stockid){
+	return (substr($stockid, 2,2) == "PC");
+}
+
 function isEarcuff($stockid){
 	return (substr($stockid, 2,2) == "CF");
 }
@@ -118,6 +122,8 @@ function TypeOfItem($stockid){
 		$Type = "Brooche";
 	}elseif (isEarring($stockid)){
 		$Type = "Earring";
+	}elseif (isPiercing($stockid)){
+		$Type = "Piercing";
 	}elseif (isEarcuff($stockid)){
 		$Type = "EarCuff";
 	}elseif (isFaceMask($stockid)){

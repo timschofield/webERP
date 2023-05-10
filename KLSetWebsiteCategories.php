@@ -210,6 +210,8 @@ function UpdateWeight($Stockid, $UpdateDB, $db){
 		$Weight = STANDARD_EARRING_WEIGHT;
 	}elseif (isEarcuff($Stockid)){
 		$Weight = STANDARD_EARRING_WEIGHT;
+	}elseif (isPiercing($Stockid)){
+		$Weight = STANDARD_PIERCING_WEIGHT;
 	}elseif (isBracelet($Stockid)){
 		$Weight = STANDARD_BRACELET_WEIGHT;
 	}elseif (isAnklet($Stockid)){
@@ -268,6 +270,10 @@ function UpdateVolume($Stockid, $UpdateDB, $db){
 		$Width  = BOX_S_WIDTH;
 		$Height = BOX_S_HEIGHT;
 	}elseif (isEarcuff($Stockid)){
+		$Length = BOX_S_LENGTH;
+		$Width  = BOX_S_WIDTH;
+		$Height = BOX_S_HEIGHT;
+	}elseif (isPiercing($Stockid)){
 		$Length = BOX_S_LENGTH;
 		$Width  = BOX_S_WIDTH;
 		$Height = BOX_S_HEIGHT;
@@ -389,6 +395,8 @@ function UpdatePackaging($Stockid, $Category, $Brand, $UpdateDB, $db){
 		$Packaging = "-S";
 	}elseif (isEarcuff($Stockid)){
 		$Packaging = "-S";
+	}elseif (isPiercing($Stockid)){
+		$Packaging = "-S";
 	}elseif (isBracelet($Stockid)){
 		$Packaging = "-M";
 	}elseif (isAnklet($Stockid)){
@@ -467,6 +475,9 @@ function WebsiteCategorySilverJewellery($StockId, $Description, $Long, $Category
 	if (($WebCat == KL_JEWELLERY) AND isEarcuff($StockId)){
 		$WebCat = KL_EARCUFFS;	
 	}
+	if (($WebCat == KL_JEWELLERY) AND isPiercing($StockId)){
+		$WebCat = KL_PIERCINGS;	
+	}
 	if (($WebCat == KL_JEWELLERY) AND isBracelet($StockId)){
 		$WebCat = KL_BRACELETS;	
 	}
@@ -518,6 +529,9 @@ function WebsiteCategoryBlinkJewellery($StockId, $Description, $Long, $Category)
 	}
 	if (($WebCat == BLINK_JEWELLERY) AND isBracelet($StockId)){
 		$WebCat = BLINK_BRACELETS;	
+	}
+	if (($WebCat == BLINK_JEWELLERY) AND isPiercing($StockId)){
+		$WebCat = BLINK_PIERCINGS;	
 	}
 	if (($WebCat == BLINK_JEWELLERY) AND isNecklace($StockId)){
 		$WebCat = BLINK_NECKLACES;	

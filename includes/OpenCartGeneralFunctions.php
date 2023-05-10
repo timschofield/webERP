@@ -1265,6 +1265,8 @@ function GetGoogleProductFeedCategory($StockId, $SalesCategory){
 		$Category = "Clothing & Accessories > Jewellery & Watches > Earrings";
 	}elseif (isEarcuff($StockId)){
 		$Category = "Clothing & Accessories > Jewellery & Watches > Earrings";
+	}elseif (isPiercing($StockId)){
+		$Category = "Clothing & Accessories > Jewellery & Watches > Piercings";
 	}elseif (isBracelet($StockId)){
 		$Category = "Clothing & Accessories > Jewellery & Watches > Bracelets";
 	}elseif (isAnklet($StockId)){
