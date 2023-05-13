@@ -68,7 +68,7 @@ if ($StockID != ''){
 	while ($myrow=DB_fetch_array($LocStockResult)) {
 		$k = StartEvenOrOddRow($k);
 
-		$InTransitSQL="SELECT SUM(shipqty-recqty) as intransit
+		$InTransitSQL="SELECT SUM(pendingqty) as intransit
 						FROM loctransfers
 						WHERE stockid='" . $StockID . "'
 							AND shiploc='".$myrow['loccode']."'";
@@ -80,7 +80,7 @@ if ($StockID != ''){
 			$InTransitQuantityOut=0;
 		}
 
-		$InTransitSQL="SELECT SUM(-shipqty+recqty) as intransit
+		$InTransitSQL="SELECT SUM(-pendingqty) as intransit
 						FROM loctransfers
 						WHERE stockid='" . $StockID . "'
 							AND recloc='".$myrow['loccode']."'";

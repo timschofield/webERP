@@ -31,16 +31,16 @@ include('includes/KLPrices.php');
 					AND locations.loccode NOT IN " . LIST_KANTOR_LOCATIONS . "
 					AND locations.typeloc NOT IN " . LIST_BALI_SHOPS_BY_TYPE . "
 					AND locations.loccode NOT IN " . LIST_CONSIGNMENT_LOCATIONS . ") AS qohotherlocs,
-				(SELECT SUM(loctransfers.shipqty-loctransfers.recqty) 
+				(SELECT SUM(loctransfers.pendingqty) 
 						FROM loctransfers,locations
 						WHERE loctransfers.stockid = stockmaster.stockid
 						AND loctransfers.shiploc = locations.loccode
 						AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . ") AS intransitfromshops,
-				(SELECT SUM(loctransfers.shipqty-loctransfers.recqty) 
+				(SELECT SUM(loctransfers.pendingqty) 
 						FROM loctransfers
 						WHERE loctransfers.stockid = stockmaster.stockid
 						AND loctransfers.shiploc IN " . LIST_CONSIGNMENT_LOCATIONS . ") AS intransitfromconsignment,
-				(SELECT SUM(loctransfers.shipqty-loctransfers.recqty) 
+				(SELECT SUM(loctransfers.pendingqty) 
 						FROM loctransfers
 						WHERE loctransfers.stockid = stockmaster.stockid
 						AND loctransfers.shiploc IN " . LIST_KANTOR_LOCATIONS . ") AS intransitfromkantor,

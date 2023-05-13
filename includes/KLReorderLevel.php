@@ -164,7 +164,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 							AND locstock.quantity = 0)
 				AND NOT EXISTS (SELECT *
 						FROM loctransfers 
-						WHERE  recqty < shipqty
+						WHERE  pendingqty > 0
 							AND loctransfers.stockid =  stockmaster.stockid)
 			ORDER BY stockmaster.stockid";
 	$result = DB_query($SQL);

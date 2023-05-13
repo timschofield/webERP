@@ -104,7 +104,7 @@ if (!(isset($_POST['Search']))) {
 						FROM locstock
 						WHERE locstock.stockid = stockmaster.stockid
 						AND locstock.loccode = '" . $_POST['FromLoc'] . "') 
-						-(SELECT SUM(shipqty-recqty) 
+						-(SELECT SUM(pendingqty) 
 						FROM loctransfers
 						WHERE loctransfers.stockid = stockmaster.stockid
 							AND shiploc='" . $_POST['FromLoc'] ."')
@@ -121,7 +121,7 @@ if (!(isset($_POST['Search']))) {
 						FROM locstock
 						WHERE locstock.stockid = stockmaster.stockid
 						AND locstock.loccode = '" . $_POST['FromLoc'] . "') 
-						-(SELECT SUM(shipqty-recqty) 
+						-(SELECT SUM(pendingqty) 
 						FROM loctransfers
 						WHERE loctransfers.stockid = stockmaster.stockid
 							AND shiploc='" . $_POST['FromLoc'] ."')

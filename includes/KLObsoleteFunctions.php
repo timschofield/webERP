@@ -589,7 +589,7 @@ function ItemsInCategoryWithStockKantorButReorderLevelTokoZero($CategoryId, $Roo
 						AND locstock.loccode = " . CODE_KANTOR . ") > 0
 				AND NOT EXISTS (SELECT *
 						FROM loctransfers 
-						WHERE  recqty < shipqty
+						WHERE  pendingqty > 0
 							AND loctransfers.stockid =  stockmaster.stockid)
 				AND discontinued = 0
 				AND stockcategory.stocktype = 'F'
@@ -896,7 +896,7 @@ No pending transfer regarding this item
 						AND locstock.loccode = " . CODE_KANTOR . ") > 0
 				AND NOT EXISTS (SELECT *
 						FROM loctransfers 
-						WHERE  recqty < shipqty
+						WHERE  pendingqty > 0
 							AND loctransfers.stockid =  stockmaster.stockid)
 			ORDER BY stockid";
 
@@ -1019,7 +1019,7 @@ function OvestockAtShops($kind, $RootPath, $db){
 					AND reorderlevel < quantity
 					AND NOT EXISTS (SELECT *
 									FROM loctransfers 
-									WHERE  recqty < shipqty
+									WHERE  pendingqty > 0
 										AND loctransfers.stockid =  stockmaster.stockid)
 				ORDER BY locstock.loccode, stockmaster.categoryid, locstock.stockid";
 	}else{
@@ -1035,7 +1035,7 @@ function OvestockAtShops($kind, $RootPath, $db){
 					AND loccode IN " . LIST_ALL_SHOPS . "
 					AND NOT EXISTS (SELECT *
 										FROM loctransfers 
-										WHERE  recqty < shipqty
+										WHERE  pendingqty > 0
 											AND loctransfers.stockid =  locstock.stockid)
 				ORDER BY locstock.loccode, stockmaster.categoryid, locstock.stockid";
 	}
@@ -2056,10 +2056,10 @@ Updated 3 index in loctransfers
 						FROM locstock
 						WHERE locstock.loccode = locations.loccode
 							AND locstock.stockid = '".$CodeBoxL."') AS rl_box_l,
-					(SELECT SUM(loctransfers.shipqty - loctransfers.recqty)
+					(SELECT SUM(loctransfers.pendingqty)
 						FROM loctransfers
 						WHERE loctransfers.recloc = locations.loccode
-							AND loctransfers.shipqty != loctransfers.recqty
+							AND loctransfers.pendingqty != 0
 							AND loctransfers.stockid = '".$CodeBoxL."') AS ot_box_l,
 					(SELECT locstock.quantity
 						FROM locstock
@@ -2069,10 +2069,10 @@ Updated 3 index in loctransfers
 						FROM locstock
 						WHERE locstock.loccode = locations.loccode
 							AND locstock.stockid = '".$CodeBoxM."') AS rl_box_m,
-					(SELECT SUM(loctransfers.shipqty - loctransfers.recqty)
+					(SELECT SUM(loctransfers.pendingqty)
 						FROM loctransfers
 						WHERE loctransfers.recloc = locations.loccode
-							AND loctransfers.shipqty != loctransfers.recqty
+							AND loctransfers.pendingqty != 0
 							AND loctransfers.stockid = '".$CodeBoxM."') AS ot_box_m,
 					(SELECT locstock.quantity
 						FROM locstock
@@ -2082,10 +2082,10 @@ Updated 3 index in loctransfers
 						FROM locstock
 						WHERE locstock.loccode = locations.loccode
 							AND locstock.stockid = '".$CodeBoxS."') AS rl_box_s,
-					(SELECT SUM(loctransfers.shipqty - loctransfers.recqty)
+					(SELECT SUM(loctransfers.pendingqty)
 						FROM loctransfers
 						WHERE loctransfers.recloc = locations.loccode
-							AND loctransfers.shipqty != loctransfers.recqty
+							AND loctransfers.pendingqty != 0
 							AND loctransfers.stockid = '".$CodeBoxS."') AS ot_box_s,
 					(SELECT locstock.quantity
 						FROM locstock
@@ -2095,10 +2095,10 @@ Updated 3 index in loctransfers
 						FROM locstock
 						WHERE locstock.loccode = locations.loccode
 							AND locstock.stockid = '".$CodeBagL."') AS rl_bag_l,
-					(SELECT SUM(loctransfers.shipqty - loctransfers.recqty)
+					(SELECT SUM(loctransfers.pendingqty)
 						FROM loctransfers
 						WHERE loctransfers.recloc = locations.loccode
-							AND loctransfers.shipqty != loctransfers.recqty
+							AND loctransfers.pendingqty != 0
 							AND loctransfers.stockid = '".$CodeBagL."') AS ot_bag_l,
 					(SELECT locstock.quantity
 						FROM locstock
@@ -2108,10 +2108,10 @@ Updated 3 index in loctransfers
 						FROM locstock
 						WHERE locstock.loccode = locations.loccode
 							AND locstock.stockid = '".$CodeBagM."') AS rl_bag_m,
-					(SELECT SUM(loctransfers.shipqty - loctransfers.recqty)
+					(SELECT SUM(loctransfers.pendingqty)
 						FROM loctransfers
 						WHERE loctransfers.recloc = locations.loccode
-							AND loctransfers.shipqty != loctransfers.recqty
+							AND loctransfers.pendingqty != 0
 							AND loctransfers.stockid = '".$CodeBagM."') AS ot_bag_m,
 					(SELECT locstock.quantity
 						FROM locstock
@@ -2121,10 +2121,10 @@ Updated 3 index in loctransfers
 						FROM locstock
 						WHERE locstock.loccode = locations.loccode
 							AND locstock.stockid = '".$CodeBagS."') AS rl_bag_s,
-					(SELECT SUM(loctransfers.shipqty - loctransfers.recqty)
+					(SELECT SUM(loctransfers.pendingqty)
 						FROM loctransfers
 						WHERE loctransfers.recloc = locations.loccode
-							AND loctransfers.shipqty != loctransfers.recqty
+							AND loctransfers.pendingqty != 0
 							AND loctransfers.stockid = '".$CodeBagS."') AS ot_bag_s,
 					(SELECT locstock.quantity
 						FROM locstock
@@ -2134,10 +2134,10 @@ Updated 3 index in loctransfers
 						FROM locstock
 						WHERE locstock.loccode = locations.loccode
 							AND locstock.stockid = '".$CodeShoppingL."') AS rl_shopping_l,
-					(SELECT SUM(loctransfers.shipqty - loctransfers.recqty)
+					(SELECT SUM(loctransfers.pendingqty)
 						FROM loctransfers
 						WHERE loctransfers.recloc = locations.loccode
-							AND loctransfers.shipqty != loctransfers.recqty
+							AND loctransfers.pendingqty != 0
 							AND loctransfers.stockid = '".$CodeShoppingL."') AS ot_shopping_l,
 					(SELECT locstock.quantity
 						FROM locstock
@@ -2147,10 +2147,10 @@ Updated 3 index in loctransfers
 						FROM locstock
 						WHERE locstock.loccode = locations.loccode
 							AND locstock.stockid = '".$CodeShoppingM."') AS rl_shopping_m,
-					(SELECT SUM(loctransfers.shipqty - loctransfers.recqty)
+					(SELECT SUM(loctransfers.pendingqty)
 						FROM loctransfers
 						WHERE loctransfers.recloc = locations.loccode
-							AND loctransfers.shipqty != loctransfers.recqty
+							AND loctransfers.pendingqty != 0
 							AND loctransfers.stockid = '".$CodeShoppingM."') AS ot_shopping_m,
 					(SELECT locstock.quantity
 						FROM locstock
@@ -2160,10 +2160,10 @@ Updated 3 index in loctransfers
 						FROM locstock
 						WHERE locstock.loccode = locations.loccode
 							AND locstock.stockid = '".$CodeShoppingS."') AS rl_shopping_s,
-					(SELECT SUM(loctransfers.shipqty - loctransfers.recqty)
+					(SELECT SUM(loctransfers.pendingqty)
 						FROM loctransfers
 						WHERE loctransfers.recloc = locations.loccode
-							AND loctransfers.shipqty != loctransfers.recqty
+							AND loctransfers.pendingqty != 0
 							AND loctransfers.stockid = '".$CodeShoppingS."') AS ot_shopping_s
 			FROM locations
 			WHERE locations.typeloc = '".$TypeLoc."' " .  
@@ -2441,10 +2441,10 @@ function PackagingToBeRefilledOutlet($ShowAll, $RootPath, $db){
 						FROM locstock
 						WHERE locstock.loccode = locations.loccode
 							AND locstock.stockid = 'PKPB02-L') AS rl_bag_l,
-					(SELECT SUM(loctransfers.shipqty - loctransfers.recqty)
+					(SELECT SUM(loctransfers.pendingqty)
 						FROM loctransfers
 						WHERE loctransfers.recloc = locations.loccode
-							AND loctransfers.shipqty != loctransfers.recqty
+							AND loctransfers.pendingqty != 0
 							AND loctransfers.stockid = 'PKPB02-L') AS ot_bag_l,
 					(SELECT locstock.quantity
 						FROM locstock
@@ -2454,10 +2454,10 @@ function PackagingToBeRefilledOutlet($ShowAll, $RootPath, $db){
 						FROM locstock
 						WHERE locstock.loccode = locations.loccode
 							AND locstock.stockid = 'PKPB02-M') AS rl_bag_m,
-					(SELECT SUM(loctransfers.shipqty - loctransfers.recqty)
+					(SELECT SUM(loctransfers.pendingqty)
 						FROM loctransfers
 						WHERE loctransfers.recloc = locations.loccode
-							AND loctransfers.shipqty != loctransfers.recqty
+							AND loctransfers.pendingqty != 0
 							AND loctransfers.stockid = 'PKPB02-M') AS ot_bag_m,
 					(SELECT locstock.quantity
 						FROM locstock
@@ -2467,10 +2467,10 @@ function PackagingToBeRefilledOutlet($ShowAll, $RootPath, $db){
 						FROM locstock
 						WHERE locstock.loccode = locations.loccode
 							AND locstock.stockid = 'PKPB02-S') AS rl_bag_s,
-					(SELECT SUM(loctransfers.shipqty - loctransfers.recqty)
+					(SELECT SUM(loctransfers.pendingqty)
 						FROM loctransfers
 						WHERE loctransfers.recloc = locations.loccode
-							AND loctransfers.shipqty != loctransfers.recqty
+							AND loctransfers.pendingqty != 0
 							AND loctransfers.stockid = 'PKPB02-S') AS ot_bag_s,
 					(SELECT locstock.quantity
 						FROM locstock
@@ -2480,10 +2480,10 @@ function PackagingToBeRefilledOutlet($ShowAll, $RootPath, $db){
 						FROM locstock
 						WHERE locstock.loccode = locations.loccode
 							AND locstock.stockid = 'PKSB03') AS rl_shopping_m,
-					(SELECT SUM(loctransfers.shipqty - loctransfers.recqty)
+					(SELECT SUM(loctransfers.pendingqty)
 						FROM loctransfers
 						WHERE loctransfers.recloc = locations.loccode
-							AND loctransfers.shipqty != loctransfers.recqty
+							AND loctransfers.pendingqty != 0
 							AND loctransfers.stockid = 'PKSB03') AS ot_shopping_m
 			FROM locations
 			WHERE locations.typeloc = 'SHOPOU' " .  

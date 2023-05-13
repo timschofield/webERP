@@ -176,11 +176,11 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 			// Check if there is any stock in transit already sent from FROM LOCATION
 			$InTransitQuantityAtFrom = 0;
 			if ($_SESSION['ProhibitNegativeStock']==1){
-				$InTransitSQL="SELECT SUM(shipqty-recqty) as intransit
+				$InTransitSQL="SELECT SUM(pendingqty) as intransit
 								FROM loctransfers
 								WHERE stockid='" . $myrow['stockid'] . "'
 									AND shiploc='".$FromLocCode."'
-									AND shipqty>recqty";
+									AND pendingqty > 0";
 				$InTransitResult=DB_query($InTransitSQL);
 				$InTransitRow=DB_fetch_array($InTransitResult);
 				if ($InTransitRow['intransit']!='') {
@@ -194,11 +194,11 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 
 			// Check if TO location is already waiting to receive some stock of this item
 			$InTransitQuantityAtTo=0;
-			$InTransitSQL="SELECT SUM(shipqty-recqty) as intransit
+			$InTransitSQL="SELECT SUM(pendingqty) as intransit
 							FROM loctransfers
 							WHERE stockid='" . $myrow['stockid'] . "'
 								AND recloc='".$ToLocCode."'
-								AND shipqty>recqty";
+								AND pendingqty > 0";
 			$InTransitResult=DB_query($InTransitSQL);
 			$InTransitRow=DB_fetch_array($InTransitResult);
 			if ($InTransitRow['intransit']!='') {

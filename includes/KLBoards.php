@@ -11,27 +11,27 @@ function ActiveTransfersByLocation($RootPath, $db){
 	$TotalPcsOut = 0;
 	
 	$SQL = "SELECT locations.locationname,
-			(SELECT SUM(shipqty-recqty)
+			(SELECT SUM(pendingqty)
 				FROM loctransfers
-				WHERE  recqty < shipqty
+				WHERE  pendingqty > 0
 					AND loctransfers.shiploc = locations.loccode) as qtyout,
-			(SELECT SUM(shipqty-recqty)
+			(SELECT SUM(pendingqty)
 				FROM loctransfers
-				WHERE  recqty < shipqty
+				WHERE  pendingqty > 0
 					AND loctransfers.recloc = locations.loccode) as qtyin,
 			(SELECT COUNT(DISTINCT(reference))
 				FROM loctransfers
-				WHERE  recqty < shipqty
+				WHERE  pendingqty > 0
 					AND loctransfers.shiploc = locations.loccode) as transferout,
 			(SELECT COUNT(DISTINCT(reference))
 				FROM loctransfers
-				WHERE  recqty < shipqty
+				WHERE  pendingqty > 0
 					AND loctransfers.recloc = locations.loccode) as transferin
 			FROM locations
 			WHERE locations.typeloc IN " . LIST_ALL_SHOPS_BY_TYPE . "
-			ORDER BY (SELECT SUM(shipqty-recqty)
+			ORDER BY (SELECT SUM(pendingqty)
 				FROM loctransfers
-				WHERE  recqty < shipqty
+				WHERE  pendingqty > 0
 					AND (loctransfers.shiploc = locations.loccode OR loctransfers.recloc = locations.loccode)) DESC";
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
@@ -112,9 +112,9 @@ function ActiveTransferStatus($RootPath, $db){
 					(SELECT locationname
 						FROM locations
 						WHERE locations.loccode = recloc)AS locto,
-					SUM(shipqty-recqty) AS pendingqty
+					SUM(pendingqty) AS pendingqty
 			FROM loctransfers
-			WHERE  recqty < shipqty
+			WHERE  pendingqty > 0
 			GROUP BY reference
 			ORDER BY shipdate ASC, reference ASC";
 	$result = DB_query($SQL);
@@ -974,7 +974,7 @@ function ErrorsInTransfers($maxdays, $RootPath, $db){
 			FROM loctransfers 
 			WHERE loctransfers.shipdate >= '". $StartDate ."'
 			GROUP BY loctransfers.reference
-			HAVING SUM(loctransfers.shipqty) = SUM(loctransfers.recqty)
+			HAVING SUM(loctransfers.pendingqty) = 0
 			ORDER BY loctransfers.reference";
 			
 	$result = DB_query($SQL);
@@ -2070,10 +2070,10 @@ function PackagingToBeRefilledFromGudang($GudangCode, $ShowAll, $ShowLinkEmail, 
 						WHERE l2.stockid = stockmaster.stockid
 							AND l2.loccode = '". $ParentGudang ."') AS qohparent,
 					locstock.reorderlevel AS rl,
-					(SELECT SUM(loctransfers.shipqty - loctransfers.recqty)
+					(SELECT SUM(loctransfers.pendingqty)
 						FROM loctransfers
 						WHERE loctransfers.recloc = locstock.loccode
-							AND loctransfers.shipqty != loctransfers.recqty
+							AND loctransfers.pendingqty != 0
 							AND loctransfers.stockid = stockmaster.stockid) AS intransit
 			FROM locstock, stockmaster
 			WHERE stockmaster.stockid = locstock.stockid
@@ -3496,7 +3496,7 @@ function TransfersDelayed($maxdays, $RootPath, $db){
 					shiploc,
 					recloc
 			FROM loctransfers 
-			WHERE  recqty < shipqty
+			WHERE  pendingqty > 0
 				AND shipdate <= '". $StartDate ."'
 			ORDER BY reference";
 	$result = DB_query($SQL);

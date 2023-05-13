@@ -23,7 +23,7 @@ $SQL = "SELECT reference,
 		FROM loctransfers
 		WHERE (shiploc = '". $_SESSION['UserStockLocation'] ."'
 				OR recloc = '". $_SESSION['UserStockLocation'] ."')
-			AND shipqty != recqty
+			AND pendingqty != 0
 		ORDER BY reference ASC,
 				stockid ASC";
 */
@@ -37,7 +37,7 @@ $SQL = "SELECT reference,
 				recloc
 		FROM loctransfers
 		WHERE shiploc = '". $_SESSION['UserStockLocation'] ."'
-			AND shipqty != recqty
+			AND pendingqty != 0
 		UNION 
 		SELECT reference,
 				stockid,
@@ -48,7 +48,7 @@ $SQL = "SELECT reference,
 				recloc
 		FROM loctransfers
 		WHERE recloc = '". $_SESSION['UserStockLocation'] ."'
-			AND shipqty != recqty
+			AND pendingqty != 0
 		ORDER BY reference ASC,
 				stockid ASC";
 $result = DB_query($SQL);

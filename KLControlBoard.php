@@ -56,6 +56,9 @@ $NumberOfOpenShopsTotal = $NumberOfOpenShopsKL + $NumberOfOpenShopsBL + $NumberO
 ***************************************************************************************/
 
 if ($_SESSION['UserID'] == "Ricard"){
+
+//	$NumberOfTestExecuted = CategoryItemsMissingInShops("TESTKA", "SHOPKL", $NumberOfTestExecuted, $RootPath, $db);
+
 //	$KL_SystemAdmin = TRUE;
 //	$KL_OperationalManager = TRUE;
 //	$KL_OperationalLeader = TRUE;
@@ -248,7 +251,7 @@ if ($ProcessSection01){
 		ErrorsInTransfers( 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
-	
+
 	/***************************************************************************************
 	* BALANCE ACCOUNTS         
 	***************************************************************************************/
@@ -498,7 +501,21 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC5A", "SHOPOU", $NumberOfTestExecuted, $RootPath, $db);
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC8A", "SHOPOU", $NumberOfTestExecuted, $RootPath, $db);
 	}
+//////////////////////////
+// END OF SECTION
+}
 
+/***************************************************************************************
+* SECTION 2
+***************************************************************************************/
+
+if ($ProcessSection02){
+	if($ShowSectionInfo){
+		prnMsg("Performing Control Panel Section 02",'info');
+	}
+
+// SECTION 2 STARTS HERE
+////////////////////////////	
 	if ($KL_ShopSupportLeader
 		OR $KL_PurchasingTeam){
 
@@ -585,18 +602,6 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 	}
 
-//////////////////////////
-// END OF SECTION
-}
-
-/***************************************************************************************
-* SECTION 2
-***************************************************************************************/
-
-if ($ProcessSection02){
-	if($ShowSectionInfo){
-		prnMsg("Performing Control Panel Section 02",'info');
-	}
 
 	/***************************************************************************************
 	* PACKAGING CONTROL         
@@ -1271,7 +1276,7 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $WhereisQOH, $RootPat
 		$WhereCat = " AND (stockmaster.categoryid = 'DISC8A')";
 		$TypeOfShop = 'SHOPOU';
 	}
-	
+
 	$SQL = "SELECT stockmaster.stockid,
 					stockmaster.description,
 					locstock.loccode, " . 
@@ -1299,7 +1304,7 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $WhereisQOH, $RootPat
 							AND l.loccode IN " . LIST_ONLINE_SHOPS . ") = 0)
 				AND NOT EXISTS (SELECT *
 						FROM loctransfers 
-						WHERE  recqty < shipqty
+						WHERE  pendingqty > 0
 							AND loctransfers.stockid =  stockmaster.stockid)
 				AND NOT EXISTS (SELECT *
 						FROM locstock l
@@ -1307,6 +1312,8 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $WhereisQOH, $RootPat
 							AND l.reorderlevel > 0
 							AND l.quantity =  0)
 			ORDER BY stockmaster.stockid";
+
+//prnMsg($SQL);
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . $Message . '</strong></p>';
@@ -2161,16 +2168,16 @@ function ItemsChangingPriceDelayed($NumDays, $RootPath, $db){
 						AND locstock.loccode NOT IN " . LIST_KANTOR_LOCATIONS . "
 						AND locations.typeloc NOT IN " . LIST_BALI_SHOPS_BY_TYPE . "
 						AND locstock.loccode NOT IN " . LIST_CONSIGNMENT_LOCATIONS . ") AS qohotherlocs,
-				(SELECT SUM(loctransfers.shipqty-loctransfers.recqty) 
+				(SELECT SUM(loctransfers.pendingqty) 
 					FROM loctransfers,locations
 					WHERE loctransfers.stockid = stockmaster.stockid
 						AND loctransfers.shiploc = locations.loccode
 						AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . ") AS intransitfromshops,
-				(SELECT SUM(loctransfers.shipqty-loctransfers.recqty) 
+				(SELECT SUM(loctransfers.pendingqty) 
 					FROM loctransfers
 					WHERE loctransfers.stockid = stockmaster.stockid
 						AND loctransfers.shiploc IN " . LIST_CONSIGNMENT_LOCATIONS . ") AS intransitfromconsignment,
-				(SELECT SUM(loctransfers.shipqty-loctransfers.recqty) 
+				(SELECT SUM(loctransfers.pendingqty) 
 					FROM loctransfers
 					WHERE loctransfers.stockid = stockmaster.stockid
 						AND loctransfers.shiploc IN " . LIST_KANTOR_LOCATIONS . ") AS intransitfromkantor,
@@ -2603,7 +2610,7 @@ function ItemsInSetup($Check, $Category, $RootPath, $db){
 								AND currabrev = 'IDR') IS NOT NULL
 					AND NOT EXISTS (SELECT *
 							FROM loctransfers 
-							WHERE  recqty < shipqty
+							WHERE  pendingqty > 0
 								AND loctransfers.stockid =  stockmaster.stockid)";
 	}elseif($Check == "NeedDescription"){
 		$Title = GetCategoryNameFromCode($Category) . " Items needing descriptions";
@@ -2793,16 +2800,16 @@ function ItemsMovingToDiscountDelayed($TypeDiscount, $NumDays, $RootPath, $db){
 					AND locstock.loccode NOT IN " . LIST_KANTOR_LOCATIONS . "
 					AND locations.typeloc NOT IN " . LIST_BALI_SHOPS_BY_TYPE . "
 					AND locstock.loccode NOT IN " . LIST_CONSIGNMENT_LOCATIONS . ") AS qohotherlocs,
-				(SELECT SUM(loctransfers.shipqty-loctransfers.recqty) 
+				(SELECT SUM(loctransfers.pendingqty) 
 						FROM loctransfers,locations
 						WHERE loctransfers.stockid = stockmaster.stockid
 						AND loctransfers.shiploc = locations.loccode
 						AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . ") AS intransitfromshops,
-				(SELECT SUM(loctransfers.shipqty-loctransfers.recqty) 
+				(SELECT SUM(loctransfers.pendingqty) 
 						FROM loctransfers
 						WHERE loctransfers.stockid = stockmaster.stockid
 						AND loctransfers.shiploc IN " . LIST_CONSIGNMENT_LOCATIONS . ") AS intransitfromconsignment,
-				(SELECT SUM(loctransfers.shipqty-loctransfers.recqty) 
+				(SELECT SUM(loctransfers.pendingqty) 
 						FROM loctransfers
 						WHERE loctransfers.stockid = stockmaster.stockid
 						AND loctransfers.shiploc IN " . LIST_KANTOR_LOCATIONS . ") AS intransitfromkantor,
@@ -3278,6 +3285,7 @@ No pending transfer regarding this item
 				AND stockmaster.klmovingdiscount20 = 0
 				AND stockmaster.klmovingdiscount50 = 0
 				AND stockmaster.klmovingdiscount80 = 0
+				AND discontinued = 0
 				AND (SELECT SUM(locstock.reorderlevel)
 					FROM locstock, locations
 					WHERE locstock.stockid = stockmaster.stockid
@@ -3289,13 +3297,12 @@ No pending transfer regarding this item
 						AND locstock.loccode = " . CODE_KANTOR . ") > 0
 				AND NOT EXISTS (SELECT *
 						FROM loctransfers 
-						WHERE  recqty < shipqty
+						WHERE  pendingqty > 0
 							AND loctransfers.stockid =  stockmaster.stockid)
-				AND discontinued = 0
 				AND stockcategory.stocktype = 'F' " . 
 				$Condition . "
 			ORDER BY stockid";
-
+// prnMsg($SQL);
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . $Message . ' Items with stock available (but NO changing price or category) at Kantor but RL zero for all ' . $Message . '  SHOPS' . '</strong></p>';
@@ -4751,7 +4758,7 @@ function RegularTransfersToShopNotReceived($PreparationTime, $LimitTime, $RootPa
 						loctransfers.recloc
 				FROM loctransfers,locations
 				WHERE  loctransfers.recloc = locations.loccode
-					AND loctransfers.recqty < loctransfers.shipqty
+					AND loctransfers.pendingqty > 0
 					AND loctransfers.shipdate <= '". $StartDate ." " . $PreparationTime . "'
 					AND   (locations.typeloc = 'SHOPKL'
 						OR locations.typeloc = 'SHOPBL'
@@ -4958,7 +4965,7 @@ function TransferWithWrongInformation($maxdays, $RootPath, $db){
 			FROM loctransfers
 			WHERE  shipdate >= '" . $StartDate . "'
 				AND recdate > '2000'
-				AND shipqty != recqty
+				AND pendingqty != 0
 			ORDER BY recdate ASC, reference ASC, stockid ASC";
 			
 	$result = DB_query($SQL);

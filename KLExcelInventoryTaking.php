@@ -28,11 +28,11 @@ function submit(&$db, $ListCategories, $Location) {
 						stockmaster.description,
 						stockmaster.categoryid,
 						locstock.quantity,
-						(SELECT SUM(shipqty-recqty)
+						(SELECT SUM(pendingqty)
 							FROM loctransfers
 							WHERE loctransfers.stockid = locstock.stockid
 								AND shiploc='" . $Location . "') AS intransitout,
-						(SELECT SUM(shipqty-recqty) as intransit
+						(SELECT SUM(pendingqty) as intransit
 							FROM loctransfers
 							WHERE loctransfers.stockid = locstock.stockid
 								AND recloc='" . $Location . "') AS intransitin

@@ -64,7 +64,7 @@ if ($StockID != ''){
 			$k=1;
 		}
 
-		$InTransitSQL="SELECT SUM(shipqty-recqty) as intransit
+		$InTransitSQL="SELECT SUM(pendingqty) as intransit
 						FROM loctransfers
 						WHERE stockid LIKE '" . $StockID . "%'
 							AND shiploc='".$myrow['loccode']."'";
@@ -76,7 +76,7 @@ if ($StockID != ''){
 			$InTransitQuantityOut=0;
 		}
 
-		$InTransitSQL="SELECT SUM(-shipqty+recqty) as intransit
+		$InTransitSQL="SELECT SUM(-pendingqty) as intransit
 						FROM loctransfers
 						WHERE stockid LIKE '" . $StockID . "%'
 							AND recloc='".$myrow['loccode']."'";

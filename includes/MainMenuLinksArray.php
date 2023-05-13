@@ -64,7 +64,8 @@ $MenuItems['orders']['Transactions']['URL'] = array('/SelectOrderItems.php?NewOr
 													'/RecurringSalesOrdersProcess.php');
 
 //if ($KL_SystemAdmin OR $KL_BusinessDevelopmentManager){
-if (false){
+if ($KL_BusinessDevelopmentManager){
+//if (false){
 	$TextControlBoard01 = _('KL Control Board Section 01');
 	$LinkControlBoard01 = "/KLControlBoard.php?Section=01";
 	$TextControlBoard02 = _('KL Control Board Section 02');

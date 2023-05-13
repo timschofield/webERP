@@ -667,7 +667,7 @@ if(isset($_SESSION['Transfer'])) {
 			FROM loctransfers INNER JOIN locations
 				ON loctransfers.shiploc=locations.loccode
 			WHERE recloc='" . $_POST['RecLocation'] . "'
-			AND recqty < shipqty";
+			AND pendingqty > 0";
 
 	$TrfResult = DB_query($sql);
 	if(DB_num_rows($TrfResult)>0) {
