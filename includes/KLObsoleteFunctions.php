@@ -1201,7 +1201,7 @@ function PricesNotUpdatedinXDays($numDays, $percentageIncrease, $RootPath, $db){
 
 	$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description,
-				(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS stdcost,
+				(stockmaster.actualcost) AS stdcost,
 				prices.price,
 				prices.startdate
 			FROM prices, stockmaster

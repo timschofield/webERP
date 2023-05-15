@@ -178,7 +178,7 @@ if (isset($_GET['ReceivePO']) AND $_GET['ReceivePO']!=''){
 
 					if ($OrderLine->StockID!='') { //Its a stock item line
 						/*Need to get the current standard cost as it is now so we can process GL jorunals later*/
-						$SQL = "SELECT materialcost + labourcost + overheadcost as stdcost
+						$SQL = "SELECT actualcost as stdcost
 									FROM stockmaster
 									WHERE stockid='" . $OrderLine->StockID . "'";
 						$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The standard cost of the item being received cannot be retrieved because');

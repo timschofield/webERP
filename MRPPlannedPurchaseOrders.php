@@ -42,8 +42,7 @@ if (isset($_POST['PrintPDF'])) {
 					   stockmaster.mbflag,
 					   stockmaster.decimalplaces,
 					   stockmaster.actualcost,
-					   (stockmaster.materialcost + stockmaster.labourcost +
-						stockmaster.overheadcost ) as computedcost
+					   (stockmaster.actualcost ) as computedcost
 				FROM mrpplannedorders, stockmaster
 				WHERE mrpplannedorders.part = stockmaster.stockid " . $WhereDate . "
 				 AND stockmaster.mbflag IN ('B','P')
@@ -60,8 +59,7 @@ if (isset($_POST['PrintPDF'])) {
 					   stockmaster.mbflag,
 					   stockmaster.decimalplaces,
 					   stockmaster.actualcost,
-					   (stockmaster.materialcost + stockmaster.labourcost +
-						stockmaster.overheadcost ) as computedcost
+					   (stockmaster.actualcost ) as computedcost
 				FROM mrpplannedorders, stockmaster
 				WHERE mrpplannedorders.part = stockmaster.stockid " . $WhereDate . "
 				AND stockmaster.mbflag IN ('B','P')
@@ -71,11 +69,7 @@ if (isset($_POST['PrintPDF'])) {
 						 stockmaster.description,
 						 stockmaster.mbflag,
 						 stockmaster.decimalplaces,
-						 stockmaster.actualcost,
-					   stockmaster.materialcost,
-					   stockmaster.labourcost,
-					   stockmaster.overheadcost,
-					   computedcost
+						computedcost
 				ORDER BY mrpplannedorders.part,weekindex";
 	} else {  // This else consolidates by month
 		$sql = "SELECT mrpplannedorders.part,
@@ -89,8 +83,7 @@ if (isset($_POST['PrintPDF'])) {
 					   stockmaster.mbflag,
 					   stockmaster.decimalplaces,
 					   stockmaster.actualcost,
-					   (stockmaster.materialcost + stockmaster.labourcost +
-						stockmaster.overheadcost ) as computedcost
+					   (stockmaster.actualcost ) as computedcost
 				FROM mrpplannedorders, stockmaster
 				WHERE mrpplannedorders.part = stockmaster.stockid  " . $WhereDate . "
 				AND stockmaster.mbflag IN ('B','P')
@@ -100,10 +93,6 @@ if (isset($_POST['PrintPDF'])) {
 						 stockmaster.description,
 						 stockmaster.mbflag,
 						 stockmaster.decimalplaces,
-						 stockmaster.actualcost,
-					   stockmaster.materialcost,
-					   stockmaster.labourcost,
-					   stockmaster.overheadcost,
 					   computedcost
 				ORDER BY mrpplannedorders.part,yearmonth ";
 	}

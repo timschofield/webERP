@@ -67,7 +67,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 								stockmaster.decimalplaces,
 								stockmaster.controlled,
 								stockmaster.serialised,
-								stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost AS cost,
+								stockmaster.actualcost AS cost,
 								stockmaster.discontinued,
 								stockmaster.eoq,
 								stockmaster.volume,
@@ -156,7 +156,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 								AND startdate <= '". Date('Y-m-d') ."' AND ( enddate >= '" . Date('Y-m-d') . "' OR enddate = '0000-00-00')
 								AND stockid='" . $StockID . "'");
 		if ($myrow['mbflag'] == 'K' OR $myrow['mbflag'] == 'A' OR $myrow['mbflag'] == 'G') {
-			$CostResult = DB_query("SELECT SUM(bom.quantity * (stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost)) AS cost
+			$CostResult = DB_query("SELECT SUM(bom.quantity * (stockmaster.actualcost)) AS cost
 									FROM bom INNER JOIN stockmaster
 									ON bom.component=stockmaster.stockid
 									WHERE bom.parent='" . $StockID . "'

@@ -36,7 +36,7 @@ function ChangeItemStockCategory($StockID, $OldCat, $NewCat){
 
 	$sql = "SELECT stockcategory.stockact,
 				stockcategory.wipact,
-				materialcost+labourcost+overheadcost AS itemcost,
+				actualcost AS itemcost,
 				stockmaster.categoryid
 		FROM stockmaster
 		INNER JOIN stockcategory

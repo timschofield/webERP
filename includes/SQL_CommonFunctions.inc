@@ -266,7 +266,7 @@ function WoRealRequirements($db, $WO, $LocCode, $StockID, $Qty=1, $ParentID='') 
 				'" . $ParentID . "',
 				bom.component,
 				bom.quantity*" . $Qty . ",
-				materialcost+labourcost+overheadcost,
+				actualcost,
 				bom.autoissue
 			FROM bom INNER JOIN stockmaster
 			ON bom.component=stockmaster.stockid
@@ -294,7 +294,7 @@ function WoRealRequirements($db, $WO, $LocCode, $StockID, $Qty=1, $ParentID='') 
 							CAST('NODE-1' AS CHAR) as parentstockid,
 							bom.component AS stockid,
 							bom.quantity*1 AS qtypu,
-							materialcost+labourcost+overheadcost AS stdcost,
+							actualcost AS stdcost,
 							bom.autoissue
 						FROM bom INNER JOIN stockmaster
 						ON bom.component=stockmaster.stockid

@@ -35,7 +35,7 @@ function submit(&$db, $ListCategories, $DaysTopSales) {
 					WHERE stockmaster.stockid = locstock.stockid) AS qoh,
 				prices.startdate AS DOB_price,
 				prices.price AS retailprice,
-				(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS standardcost
+				(stockmaster.actualcost) AS standardcost
 			FROM stockmaster, prices			
 			WHERE stockmaster.stockid = prices.stockid	
 				AND stockmaster.categoryid IN ('". implode("','",$_POST['Categories'])."')

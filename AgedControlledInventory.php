@@ -18,7 +18,7 @@ $sql = "SELECT stockserialitems.stockid,
 				stockserialitems.serialno,
 				stockserialitems.quantity,
 				stockmoves.trandate,
-				stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost AS cost,
+				stockmaster.actualcost AS cost,
 				decimalplaces
 			FROM stockserialitems
 			LEFT JOIN stockserialmoves ON stockserialitems.serialno=stockserialmoves.serialno

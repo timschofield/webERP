@@ -876,7 +876,7 @@ function ComponentsToObsolete($ShowOnlyTotal, $ShowLimit, $RootPath, $db){
 	$SQL = "SELECT s.stockid,
 					s.units,
 					s.description,
-					(s.materialcost + s.labourcost + s.overheadcost) AS stdcost,
+					(s.actualcost) AS stdcost,
 					(SELECT SUM(quantity)
 						FROM locstock
 						WHERE s.stockid = locstock.stockid) AS qoh
@@ -1554,7 +1554,7 @@ function GoodsToBeProduced($CategoryComponent, $ParentCategory, $RootPath, $db){
 	$SQL = "SELECT s.stockid,
 				s.units,
 				s.description, 
-				(s.materialcost + s.labourcost + s.overheadcost) AS stdcost,(SELECT SUM(quantity) 
+				(s.actualcost) AS stdcost,(SELECT SUM(quantity) 
 					FROM locstock 
 					WHERE locstock.stockid = s.stockid
 					AND locstock.loccode NOT IN ('SERSU')) AS availablestock
@@ -1828,7 +1828,7 @@ function ItemsWithoutRetailPrice($stockcat, $factorRetail, $RootPath, $db){
 	$today = date('Y-m-d');
 	$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description,
-				(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS stdcost
+				(stockmaster.actualcost) AS stdcost
 			FROM stockmaster, stockcategory					
 			WHERE stockmaster.categoryid = stockcategory.categoryid					
 				AND stockmaster.discontinued = 0					
@@ -3554,7 +3554,7 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $Mode, $
 				purchdata.suppliersuom,
 				purchdata.effectivefrom,
 				stockmaster.lastcostupdate,
-				(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS stdcost,
+				(stockmaster.actualcost) AS stdcost,
 				(SELECT SUM(locstock.quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid) AS qoh,
@@ -3570,9 +3570,9 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $Mode, $
 	}
 	$SQL = $SQL . " AND suppliers.currcode =  currencies.currabrev
 				AND (	(((purchdata.price / purchdata.conversionfactor) * " . $StdFactor . " * (1 / currencies.rate) * " . $ToleranceHigh . " ) 
-						< (stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost))
+						< (stockmaster.actualcost))
 					OR	(((purchdata.price / purchdata.conversionfactor) * " . $StdFactor . " * (1 / currencies.rate) * " . $ToleranceLow . " ) 
-						> (stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost))
+						> (stockmaster.actualcost))
 					)
 				AND purchdata.supplierno = suppliers.supplierid
 				AND purchdata.effectivefrom = (SELECT MAX(p2.effectivefrom)

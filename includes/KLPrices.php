@@ -285,7 +285,7 @@ function UpdateDiscountCategory($StockId, $NewCategory, $DiscountCode, $db){
 	}
 
 	// Search for the GL account for the Old Category
-	$sql = "SELECT materialcost+labourcost+overheadcost AS itemcost,
+	$sql = "SELECT actualcost AS itemcost,
 					stockcategory.stockact,
 					stockcategory.wipact,
 					stockmaster.categoryid

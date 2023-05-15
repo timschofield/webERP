@@ -44,7 +44,7 @@ if ( isset($_POST['pricelist']) ) {
 				stockmaster.description,
 				prices.currabrev,
 				prices.price,
-				stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost
+				stockmaster.actualcost
 					as standardcost,
 				stockmaster.categoryid,
 				stockcategory.categorydescription,

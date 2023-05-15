@@ -244,7 +244,7 @@ if (isset($_POST['UpdatePrices'])){
 			$SQLEndDate = '0000-00-00';
 		}
 		$sql = "SELECT stockid,
-						materialcost+labourcost+overheadcost AS cost
+						actualcost AS cost
 				FROM stockmaster
 				WHERE categoryid>='" . $_POST['StkCatFrom'] . "'
 				AND categoryid <='" . $_POST['StkCatTo'] . "'";

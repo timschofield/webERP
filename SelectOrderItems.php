@@ -228,7 +228,7 @@ if (isset($_GET['ModifyOrderNumber'])
 									stockmaster.mbflag,
 									stockmaster.discountcategory,
 									stockmaster.decimalplaces,
-									stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost AS standardcost,
+									stockmaster.actualcost AS standardcost,
 									salesorderdetails.completed
 								FROM salesorderdetails INNER JOIN stockmaster
 								ON salesorderdetails.stkcode = stockmaster.stockid

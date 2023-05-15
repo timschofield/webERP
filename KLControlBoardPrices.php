@@ -208,7 +208,7 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $D
 					WHERE stockmaster.stockid = locstock.stockid) AS qoh,
 				prices.startdate,
 				prices.price AS retailprice,
-				(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS standardcost
+				(stockmaster.actualcost) AS standardcost
 			FROM stockmaster, prices				
 			WHERE stockmaster.stockid = prices.stockid	
 				AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
@@ -225,7 +225,7 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $D
 				AND ((SELECT SUM(quantity)
 					FROM locstock
 					WHERE stockmaster.stockid = locstock.stockid) >= " . $MinQoh . ")
-				AND (prices.price < ((stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) * ". $FactorMax . "))";
+				AND (prices.price < ((stockmaster.actualcost) * ". $FactorMax . "))";
 
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
@@ -331,7 +331,7 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales
 					WHERE stockmaster.stockid = locstock.stockid) AS qoh,
 				prices.startdate,
 				prices.price AS retailprice,
-				(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS standardcost
+				(stockmaster.actualcost) AS standardcost
 			FROM stockmaster, prices				
 			WHERE stockmaster.stockid = prices.stockid	
 				AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
@@ -350,7 +350,7 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales
 					FROM locstock
 					WHERE stockmaster.stockid = locstock.stockid) >= " . $MinQoh . ")
 				AND (prices.price > " . SMALL_PRICE_CALCULATED_STEP04 . ") 
-				AND (prices.price > ((stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) * " . $FactorMax . "))";
+				AND (prices.price > ((stockmaster.actualcost) * " . $FactorMax . "))";
 
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
@@ -451,7 +451,7 @@ function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath, $db){
 					WHERE stockmaster.stockid = locstock.stockid) AS qoh,
 				prices.startdate,
 				prices.price AS retailprice,
-				(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS standardcost
+				(stockmaster.actualcost) AS standardcost
 			FROM stockmaster, prices				
 			WHERE stockmaster.stockid = prices.stockid	
 				AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
@@ -467,14 +467,14 @@ function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath, $db){
 				AND ((SELECT SUM(quantity)
 					FROM locstock
 					WHERE stockmaster.stockid = locstock.stockid) >= " . $MinQoh . ")
-				AND (prices.price < ((stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) * ". $Factor ."))
+				AND (prices.price < ((stockmaster.actualcost) * ". $Factor ."))
 				AND NOT EXISTS (SELECT * 					
 					FROM prices	
 					WHERE stockmaster.stockid = prices.stockid	
 						AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
 						AND prices.currabrev = '". CURRENCY_CODE ."'
 						AND prices.startdate > '". $today. "')
-			ORDER BY (prices.price / (stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost))";
+			ORDER BY (prices.price / (stockmaster.actualcost))";
 
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
@@ -576,7 +576,7 @@ function PriceWrongRounding($RootPath, $db){
 						AND prices.startdate <= '". $today. "' 
 						AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')
 					LIMIT 1) AS retailprice,
-				(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS standardcost
+				(stockmaster.actualcost) AS standardcost
 			FROM stockmaster				
 			WHERE stockmaster.discontinued = 0
 				AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_TEST . "
@@ -667,7 +667,7 @@ function PricesTooOld($Years, $IncreaseA, $IncreaseB, $RootPath, $db){
 					WHERE stockmaster.stockid = locstock.stockid) AS qoh,
 				prices.startdate,
 				prices.price AS retailprice,
-				(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS standardcost
+				(stockmaster.actualcost) AS standardcost
 			FROM stockmaster, prices				
 			WHERE stockmaster.stockid = prices.stockid
 				AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'

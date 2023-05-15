@@ -14,7 +14,7 @@ $SQL = "SELECT grns.supplierid,
 				grns.quantityinv,
 				purchorderdetails.unitprice,
 				suppliers.currcode,
-				(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS standardcost,
+				(stockmaster.actualcost) AS standardcost,
 				currencies.rate,
 				currencies.decimalplaces
 		FROM grns INNER JOIN purchorderdetails

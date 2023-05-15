@@ -706,7 +706,7 @@ $SOH_DateFields = array ('orddate',
 								discountpercent,
 								taxcatid,
 								mbflag,
-								materialcost+labourcost+overheadcost AS standardcost
+								actualcost AS standardcost
 						FROM salesorderdetails INNER JOIN stockmaster
 						ON salesorderdetails.stkcode = stockmaster.stockid
 						WHERE orderno ='" . $OrderNo . "'
@@ -866,7 +866,7 @@ $SOH_DateFields = array ('orddate',
 				$StandardCost =0; /*To start with - accumulate the cost of the comoponents for use in journals later on */
 				$SQL = "SELECT bom.component,
 								bom.quantity,
-								stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost AS standard
+								stockmaster.actualcost AS standard
 							FROM bom INNER JOIN stockmaster
 							ON bom.component=stockmaster.stockid
 							WHERE bom.parent='" . $OrderLineRow['stkcode'] . "'

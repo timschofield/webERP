@@ -105,7 +105,7 @@ function AdjustPackagingMovement($StockId, $QtyDelivered, $InvoiceNo, $PeriodNo,
 
 	if ($QtyDelivered != 0){
 		/* Need to get the current standard cost */
-		$SQL=	"SELECT (materialcost + labourcost + overheadcost)
+		$SQL=	"SELECT (actualcost)
 				FROM stockmaster
 				WHERE stockmaster.stockid='" . $StockId . "'";
 		$ErrMsg = _('ERROR: Contact the office!!!  -> AdjustPackagingMovement-0010');

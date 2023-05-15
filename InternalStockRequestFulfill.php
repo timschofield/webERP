@@ -30,10 +30,10 @@ if (isset($_POST['UpdateAll'])) {
 				$Completed=False;
 			}
 
-			$sql="SELECT materialcost, labourcost, overheadcost, decimalplaces FROM stockmaster WHERE stockid='".$StockID."'";
+			$sql="SELECT actualcost, decimalplaces FROM stockmaster WHERE stockid='".$StockID."'";
 			$result=DB_query($sql);
 			$myrow=DB_fetch_array($result);
-			$StandardCost=$myrow['materialcost']+$myrow['labourcost']+$myrow['overheadcost'];
+			$StandardCost=$myrow['actualcost'];
 			$DecimalPlaces = $myrow['decimalplaces'];
 
 			$Narrative = _('Issue') . ' ' . $Quantity . ' ' . _('of') . ' '. $StockID . ' ' . _('to department') . ' ' . $Department . ' ' . _('from') . ' ' . $Location ;

@@ -1963,7 +1963,7 @@ function GoodsReceivedNotInvoicedControl($AcceptedDifference, $period, $db){
 	
 	$ValueAtBalance = -$myrow['saldo'];
 	
-	$SQL = "SELECT SUM((grns.qtyrecd - grns.quantityinv) * (stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost))
+	$SQL = "SELECT SUM((grns.qtyrecd - grns.quantityinv) * (stockmaster.actualcost))
 			FROM grns, stockmaster
 			WHERE stockmaster.stockid = grns.itemcode
 				AND (grns.qtyrecd - grns.quantityinv) > 0";
@@ -3148,7 +3148,7 @@ function ItemsWithoutStandardCost($RootPath, $db){
 			FROM stockmaster,stockcategory
 			WHERE stockmaster.categoryid = stockcategory.categoryid
 				AND stockcategory.stocktype != 'D'
-				AND (materialcost + labourcost + overheadcost) = 0
+				AND (actualcost) = 0
 				AND discontinued = 0";
 // EXPLAIN SQL 2014-05-31
 //	prnMsg($SQL);
@@ -5098,7 +5098,7 @@ function ValueStockLocation($location, $minpcs, $maxpcs, $minvalue, $maxvalue, $
 	$SQL = "SELECT 
 				locations.locationname,
 				SUM(locstock.quantity) AS qtyonhand,
-				SUM(locstock.quantity *(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost)) AS valuetotal
+				SUM(locstock.quantity *(stockmaster.actualcost)) AS valuetotal
 			FROM stockmaster,
 				stockcategory,
 				locations,

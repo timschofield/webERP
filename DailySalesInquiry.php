@@ -113,7 +113,7 @@ $StartDateSQL =  date('Y-m-d', mktime(0,0,0, (int)$Date_Array[1],1,(int)$Date_Ar
 /* KL RICARD Change the SQL to use salesorders table to filter by SPG correctly*/
 $sql = "SELECT 	orddate AS trandate,
 				SUM(unitprice*(1-discountpercent)* (qtyinvoiced) / currencies.rate) as salesvalue,
-				SUM(CASE WHEN mbflag='A' THEN 0 ELSE ((materialcost+labourcost+overheadcost) * qtyinvoiced) END) as cost
+				SUM(CASE WHEN mbflag='A' THEN 0 ELSE ((actualcost) * qtyinvoiced) END) as cost
 			FROM salesorders
 			INNER JOIN salesorderdetails ON salesorders.orderno=salesorderdetails.orderno
 			INNER JOIN stockmaster ON stockmaster.stockid=salesorderdetails.stkcode

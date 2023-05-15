@@ -39,7 +39,7 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 							stockmaster.description,
 							stockmaster.categoryid,
 							stockmaster.lastcategoryupdate,
-							(stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost) AS standardcost,
+							(stockmaster.actualcost) AS standardcost,
 							stockmaster.discountcategory,
 							(SELECT supplierno
 								FROM purchdata
@@ -56,7 +56,7 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 							stockmaster.description,
 							stockmaster.categoryid,
 							stockmaster.lastcategoryupdate,
-							(stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost) AS standardcost,
+							(stockmaster.actualcost) AS standardcost,
 							stockmaster.discountcategory,
 							(SELECT supplierno
 								FROM purchdata
@@ -72,7 +72,7 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 		}else{
 			$SQL = "SELECT SUBSTRING(stockmaster.stockid,1,6) AS stockid,
 							COUNT(stockmaster.stockid) AS flavours,
-							AVG (stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost) AS standardcost
+							AVG (stockmaster.actualcost) AS standardcost
 					FROM stockmaster
 					WHERE stockmaster.discontinued = 0
 						AND stockmaster.categoryid IN ('". implode("','",$_POST['Categories'])."')

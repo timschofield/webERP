@@ -77,7 +77,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 		$InputError=true;
 	}
 	//Need to get the current standard cost for the item being issued
-	$SQL = "SELECT materialcost+labourcost+overheadcost AS cost,
+	$SQL = "SELECT actualcost AS cost,
 					controlled,
 					serialised,
 					decimalplaces,
@@ -452,7 +452,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 			}
 			$QuantityIssued = filter_number_format($value);;
 			//Need to get the current standard cost for the item being issued
-			$SQL = "SELECT materialcost+labourcost+overheadcost AS cost,
+			$SQL = "SELECT actualcost AS cost,
 									controlled,
 									serialised,
 									mbflag

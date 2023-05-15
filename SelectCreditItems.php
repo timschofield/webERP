@@ -456,7 +456,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 								stockmaster.units,
 								stockmaster.volume,
 								stockmaster.grossweight,
-								(materialcost+labourcost+overheadcost) AS standardcost,
+								(actualcost) AS standardcost,
 								stockmaster.mbflag,
 								stockmaster.decimalplaces,
 								stockmaster.controlled,
@@ -629,7 +629,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 								stockmaster.controlled,
 								stockmaster.decimalplaces,
 								stockmaster.serialised,
-								(materialcost+labourcost+overheadcost) AS standardcost,
+								(actualcost) AS standardcost,
 								stockmaster.taxcatid
 							FROM stockmaster
 							WHERE stockmaster.stockid = '". $_POST['NewItem'] . "'";
@@ -1443,7 +1443,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 
 					$SQL = "SELECT bom.component,
 									bom.quantity,
-									stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost AS standard
+									stockmaster.actualcost AS standard
 							FROM bom INNER JOIN stockmaster
 							ON bom.component=stockmaster.stockid
 							WHERE bom.parent='" . $CreditLine->StockID . "'

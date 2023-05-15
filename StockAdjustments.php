@@ -52,7 +52,7 @@ if ($NewAdjustment==true){
 							serialised,
 							decimalplaces,
 							perishable,
-							materialcost+labourcost+overheadcost AS totalcost,
+							actualcost AS totalcost,
 							units
 						FROM stockmaster
 						WHERE stockid='" . $_SESSION['Adjustment' . $identifier]->StockID . "'");
@@ -406,9 +406,7 @@ if (!isset($_SESSION['Adjustment' . $identifier])) {
 	$StockID = $_SESSION['Adjustment' . $identifier]->StockID;
 	$Controlled = $_SESSION['Adjustment' . $identifier]->Controlled;
 	$Quantity = $_SESSION['Adjustment' . $identifier]->Quantity;
-	$sql="SELECT materialcost,
-				labourcost,
-				overheadcost,
+	$sql="SELECT actualcost,
 				units,
 				decimalplaces
 			FROM stockmaster
@@ -417,7 +415,7 @@ if (!isset($_SESSION['Adjustment' . $identifier])) {
 	$result=DB_query($sql);
 	$myrow=DB_fetch_array($result);
 	$_SESSION['Adjustment' . $identifier]->PartUnit=$myrow['units'];
-	$_SESSION['Adjustment' . $identifier]->StandardCost=$myrow['materialcost']+$myrow['labourcost']+$myrow['overheadcost'];
+	$_SESSION['Adjustment' . $identifier]->StandardCost=$myrow['actualcost'];
 	$DecimalPlaces = $myrow['decimalplaces'];
 }
 echo '<br />

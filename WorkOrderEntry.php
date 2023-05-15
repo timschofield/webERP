@@ -339,7 +339,7 @@ if(isset($NewItem) AND isset($_POST['WO'])) {
 
 
 		if($InputError==false) {
-			$CostResult = DB_query("SELECT SUM((materialcost+labourcost+overheadcost)*bom.quantity) AS cost,
+			$CostResult = DB_query("SELECT SUM((actualcost)*bom.quantity) AS cost,
 									bom.loccode
 									FROM stockmaster
 									INNER JOIN bom
@@ -429,7 +429,7 @@ if(isset($NewItem) AND isset($_POST['WO'])) {
 
 
 	if($InputError==false) {
-			$CostResult = DB_query("SELECT SUM((materialcost+labourcost+overheadcost)*bom.quantity) AS cost,
+			$CostResult = DB_query("SELECT SUM((actualcost)*bom.quantity) AS cost,
 									bom.loccode
 									FROM stockmaster
 									INNER JOIN bom
@@ -544,7 +544,7 @@ if(isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button has
 			}
 			if($_POST['RecdQty'.$i]==0 AND (!isset($_POST['HasWOSerialNos'.$i]) OR $_POST['HasWOSerialNos'.$i]==false)) {
 				/* can only change location cost if QtyRecd=0 */
-				$CostResult = DB_query("SELECT SUM((materialcost+labourcost+overheadcost)*bom.quantity) AS cost,bom.loccode
+				$CostResult = DB_query("SELECT SUM((actualcost)*bom.quantity) AS cost,bom.loccode
 												FROM stockmaster
 												INNER JOIN bom ON stockmaster.stockid=bom.component
 												WHERE bom.parent='" . $_POST['OutputItem'.$i] . "'

@@ -196,7 +196,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 							   salesorderdetails.quantity,
 							   salesorderdetails.qtyinvoiced,
 							   (salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent) / currencies.rate) as extprice,
-							   (salesorderdetails.quantity * (stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost)) as extcost,
+							   (salesorderdetails.quantity * (stockmaster.actualcost)) as extcost,
 							   IF(salesorderdetails.quantity = salesorderdetails.qtyinvoiced ||
 								  salesorderdetails.completed = 1,'Completed','Open') as linestatus,
 							   debtorsmaster.name,
@@ -286,7 +286,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
 								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent) / currencies.rate) as extprice,
-								   SUM(salesorderdetails.quantity * (stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost)) as extcost,
+								   SUM(salesorderdetails.quantity * (stockmaster.actualcost)) as extcost,
 								   stockmaster.description,
 								   stockmaster.decimalplaces
 								   FROM salesorderdetails
@@ -321,7 +321,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
 								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent) / currencies.rate) as extprice,
-								   SUM(salesorderdetails.quantity * (stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost)) as extcost
+								   SUM(salesorderdetails.quantity * (stockmaster.actualcost)) as extcost
 								   FROM salesorderdetails
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
 							LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
@@ -355,7 +355,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
 								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent) / currencies.rate) as extprice,
-								   SUM(salesorderdetails.quantity * (stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost)) as extcost
+								   SUM(salesorderdetails.quantity * (stockmaster.actualcost)) as extcost
 								   FROM salesorderdetails
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
 							LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
@@ -385,7 +385,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
 								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent) / currencies.rate) as extprice,
-								   SUM(salesorderdetails.quantity * (stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost)) as extcost
+								   SUM(salesorderdetails.quantity * (stockmaster.actualcost)) as extcost
 								   FROM salesorderdetails
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
 							LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
@@ -415,7 +415,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
 								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent) / currencies.rate) as extprice,
-								   SUM(salesorderdetails.quantity * (stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost)) as extcost
+								   SUM(salesorderdetails.quantity * (stockmaster.actualcost)) as extcost
 								   FROM salesorderdetails
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
 							LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
@@ -445,7 +445,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
 								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent)/ currencies.rate) as extprice,
-								   SUM(salesorderdetails.quantity * (stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost)) as extcost
+								   SUM(salesorderdetails.quantity * (stockmaster.actualcost)) as extcost
 								   FROM salesorderdetails
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
 							LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
@@ -475,7 +475,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
 								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent) / currencies.rate) as extprice,
-								   SUM(salesorderdetails.quantity * (stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost)) as extcost
+								   SUM(salesorderdetails.quantity * (stockmaster.actualcost)) as extcost
 								   FROM salesorderdetails
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
 							LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno

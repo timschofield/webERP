@@ -1213,7 +1213,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 											$DbgMsg,
 											true);
 					//Need to get the latest BOM to roll up cost
-					$CostResult = DB_query("SELECT SUM((materialcost+labourcost+overheadcost)*bom.quantity) AS cost
+					$CostResult = DB_query("SELECT SUM((actualcost)*bom.quantity) AS cost
 																	FROM stockmaster INNER JOIN bom
 																	ON stockmaster.stockid=bom.component
 																	WHERE bom.parent='" . $StockItem->StockID . "'
@@ -1413,7 +1413,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 				$StandardCost =0; /*To start with - accumulate the cost of the comoponents for use in journals later on */
 				$SQL = "SELECT bom.component,
 						bom.quantity,
-						stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost AS standard
+						stockmaster.actualcost AS standard
 						FROM bom,
 							stockmaster
 						WHERE bom.component=stockmaster.stockid
