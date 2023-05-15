@@ -217,7 +217,7 @@ function SPGPerformanceByShop($Shop, $NumDaysA, $NumDaysB, $NumDaysC, $db){
 						AND salesorders.orddate >= '". $StartDateA . "'
 						AND salesorders.orddate <= '". $YesterdayA . "'
 						AND salesorders.salesperson = salesman.salesmancode) AS daysA,
-				(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+				(SELECT SUM(linenetprice)
 					FROM salesorderdetails, salesorders
 					WHERE salesorderdetails.orderno = salesorders.orderno
 						AND salesorderdetails.completed = 1
@@ -233,7 +233,7 @@ function SPGPerformanceByShop($Shop, $NumDaysA, $NumDaysB, $NumDaysC, $db){
 						AND salesorders.orddate >= '". $StartDateB . "'
 						AND salesorders.orddate <= '". $YesterdayB . "'
 						AND salesorders.salesperson = salesman.salesmancode) AS daysB,
-				(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+				(SELECT SUM(linenetprice)
 					FROM salesorderdetails, salesorders
 					WHERE salesorderdetails.orderno = salesorders.orderno
 						AND salesorderdetails.completed = 1
@@ -249,7 +249,7 @@ function SPGPerformanceByShop($Shop, $NumDaysA, $NumDaysB, $NumDaysC, $db){
 						AND salesorders.orddate >= '". $StartDateC . "'
 						AND salesorders.orddate <= '". $YesterdayC . "'
 						AND salesorders.salesperson = salesman.salesmancode) AS daysC,
-				(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+				(SELECT SUM(linenetprice)
 					FROM salesorderdetails, salesorders
 					WHERE salesorderdetails.orderno = salesorders.orderno
 						AND salesorderdetails.completed = 1
@@ -261,7 +261,7 @@ function SPGPerformanceByShop($Shop, $NumDaysA, $NumDaysB, $NumDaysC, $db){
 			WHERE www_users.salesman = salesman.salesmancode
 				AND www_users.fullaccess = securityroles.secroleid
 				AND www_users.customerid = '" . $Shop . "'
-				AND ((SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+				AND ((SELECT SUM(linenetprice)
 					FROM salesorderdetails, salesorders
 					WHERE salesorderdetails.orderno = salesorders.orderno
 						AND salesorderdetails.completed = 1
@@ -359,7 +359,7 @@ function SPGPerformanceMonthy($db){
 							AND salesorders.orddate >= '". $Last30A . "'
 							AND salesorders.orddate <= '". $YesterdayA . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS days30A,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					(SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
@@ -375,7 +375,7 @@ function SPGPerformanceMonthy($db){
 							AND salesorders.orddate >= '". $Last60A . "'
 							AND salesorders.orddate <= '". $YesterdayA . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS days60A,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					(SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
@@ -383,7 +383,7 @@ function SPGPerformanceMonthy($db){
 							AND salesorders.orddate >= '" . $Last60A . "'
 							AND salesorders.orddate <= '" . $YesterdayA . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS last60A,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					(SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
@@ -399,7 +399,7 @@ function SPGPerformanceMonthy($db){
 							AND salesorders.orddate >= '". $Last30B . "'
 							AND salesorders.orddate <= '". $YesterdayB . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS days30B,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					(SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
@@ -415,7 +415,7 @@ function SPGPerformanceMonthy($db){
 							AND salesorders.orddate >= '". $Last60B . "'
 							AND salesorders.orddate <= '". $YesterdayB . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS days60B,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					(SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
@@ -423,7 +423,7 @@ function SPGPerformanceMonthy($db){
 							AND salesorders.orddate >= '" . $Last60B . "'
 							AND salesorders.orddate <= '" . $YesterdayB . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS last60B,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					(SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
@@ -439,7 +439,7 @@ function SPGPerformanceMonthy($db){
 							AND salesorders.orddate >= '". $Last30C . "'
 							AND salesorders.orddate <= '". $YesterdayC . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS days30C,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					(SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
@@ -455,7 +455,7 @@ function SPGPerformanceMonthy($db){
 							AND salesorders.orddate >= '". $Last60C . "'
 							AND salesorders.orddate <= '". $YesterdayC . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS days60C,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					(SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
@@ -463,7 +463,7 @@ function SPGPerformanceMonthy($db){
 							AND salesorders.orddate >= '" . $Last60C . "'
 							AND salesorders.orddate <= '" . $YesterdayC . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS last60C,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					(SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
@@ -479,7 +479,7 @@ function SPGPerformanceMonthy($db){
 							AND salesorders.orddate >= '". $Last30D . "'
 							AND salesorders.orddate <= '". $YesterdayD . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS days30D,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					(SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
@@ -495,7 +495,7 @@ function SPGPerformanceMonthy($db){
 							AND salesorders.orddate >= '". $Last60D . "'
 							AND salesorders.orddate <= '". $YesterdayD . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS days60D,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					(SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
@@ -503,7 +503,7 @@ function SPGPerformanceMonthy($db){
 							AND salesorders.orddate >= '" . $Last60D . "'
 							AND salesorders.orddate <= '" . $YesterdayD . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS last60D,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					(SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
@@ -514,7 +514,7 @@ function SPGPerformanceMonthy($db){
 			FROM locations, www_users, salesman
 			WHERE locations.loccode = www_users.defaultlocation 
 				AND www_users.salesman = salesman.salesmancode
-				AND ((SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+				AND ((SELECT SUM(linenetprice)
 								FROM salesorderdetails, salesorders
 								WHERE salesorderdetails.orderno = salesorders.orderno
 									AND salesorderdetails.completed = 1
@@ -640,7 +640,7 @@ function SPGPerformanceWeekly($db){
 							AND salesorders.orddate >= '". $Last7A . "'
 							AND salesorders.orddate <= '". $YesterdayA . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS days7A,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					(SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
@@ -656,7 +656,7 @@ function SPGPerformanceWeekly($db){
 							AND salesorders.orddate >= '". $Last30A . "'
 							AND salesorders.orddate <= '". $YesterdayA . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS days30A,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					(SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
@@ -664,7 +664,7 @@ function SPGPerformanceWeekly($db){
 							AND salesorders.orddate >= '" . $Last30A . "'
 							AND salesorders.orddate <= '" . $YesterdayA . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS last30A,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					(SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
@@ -680,7 +680,7 @@ function SPGPerformanceWeekly($db){
 							AND salesorders.orddate >= '". $Last7B . "'
 							AND salesorders.orddate <= '". $YesterdayB . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS days7B,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					(SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
@@ -696,7 +696,7 @@ function SPGPerformanceWeekly($db){
 							AND salesorders.orddate >= '". $Last30B . "'
 							AND salesorders.orddate <= '". $YesterdayB . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS days30B,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					(SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
@@ -704,7 +704,7 @@ function SPGPerformanceWeekly($db){
 							AND salesorders.orddate >= '" . $Last30B . "'
 							AND salesorders.orddate <= '" . $YesterdayB . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS last30B,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					(SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
@@ -720,7 +720,7 @@ function SPGPerformanceWeekly($db){
 							AND salesorders.orddate >= '". $Last7C . "'
 							AND salesorders.orddate <= '". $YesterdayC . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS days7C,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					(SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
@@ -736,7 +736,7 @@ function SPGPerformanceWeekly($db){
 							AND salesorders.orddate >= '". $Last30C . "'
 							AND salesorders.orddate <= '". $YesterdayC . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS days30C,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					(SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
@@ -744,7 +744,7 @@ function SPGPerformanceWeekly($db){
 							AND salesorders.orddate >= '" . $Last30C . "'
 							AND salesorders.orddate <= '" . $YesterdayC . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS last30C,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					(SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
@@ -760,7 +760,7 @@ function SPGPerformanceWeekly($db){
 							AND salesorders.orddate >= '". $Last7D . "'
 							AND salesorders.orddate <= '". $YesterdayD . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS days7D,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					(SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
@@ -776,7 +776,7 @@ function SPGPerformanceWeekly($db){
 							AND salesorders.orddate >= '". $Last30D . "'
 							AND salesorders.orddate <= '". $YesterdayD . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS days30D,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					(SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
@@ -784,7 +784,7 @@ function SPGPerformanceWeekly($db){
 							AND salesorders.orddate >= '" . $Last30D . "'
 							AND salesorders.orddate <= '" . $YesterdayD . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS last30D,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					(SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
@@ -795,7 +795,7 @@ function SPGPerformanceWeekly($db){
 			FROM locations, www_users, salesman
 			WHERE locations.loccode = www_users.defaultlocation 
 				AND www_users.salesman = salesman.salesmancode
-				AND ((SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+				AND ((SELECT SUM(linenetprice)
 								FROM salesorderdetails, salesorders
 								WHERE salesorderdetails.orderno = salesorders.orderno
 									AND salesorderdetails.completed = 1

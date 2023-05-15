@@ -1387,7 +1387,7 @@ function SPGBelowMinimumSales($Shop, $NumDaysA, $MinimumSales,$db){
 
 	$SQL = "SELECT salesmancode,
 				salesmanname,
-				(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+				(SELECT SUM(linenetprice)
 					FROM salesorderdetails, salesorders
 					WHERE salesorderdetails.orderno = salesorders.orderno
 						AND salesorderdetails.completed = 1
@@ -1397,7 +1397,7 @@ function SPGBelowMinimumSales($Shop, $NumDaysA, $MinimumSales,$db){
 						AND salesorders.salesperson = salesman.salesmancode) AS salesA
 			FROM salesman
 			WHERE salesman.current = 1
-			AND (SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+			AND (SELECT SUM(linenetprice)
 					FROM salesorderdetails, salesorders
 					WHERE salesorderdetails.orderno = salesorders.orderno
 						AND salesorderdetails.completed = 1
@@ -1405,7 +1405,7 @@ function SPGBelowMinimumSales($Shop, $NumDaysA, $MinimumSales,$db){
 						AND salesorders.orddate <= '". $Yesterday . "'
 						AND salesorders.fromstkloc = '". $Shop . "'
 						AND salesorders.salesperson = salesman.salesmancode) <= ". $MinimumSales ."
-			ORDER BY (SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+			ORDER BY (SELECT SUM(linenetprice)
 					FROM salesorderdetails, salesorders
 					WHERE salesorderdetails.orderno = salesorders.orderno
 						AND salesorderdetails.completed = 1
@@ -1695,7 +1695,7 @@ function WrongGiftItem($stockid, $customertype, $ErrorType, $OrderValue, $numDay
 				salesorders.customerref,
 				salesorders.orddate,
 				salesman.salesmanname,
-				SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)/currencies.rate) AS ordervalue
+				SUM(salesorderdetails.linenetprice)/currencies.rate) AS ordervalue
 			FROM salesorders 
 				INNER JOIN salesorderdetails 	
 					ON salesorders.orderno = salesorderdetails.orderno
@@ -1712,7 +1712,7 @@ function WrongGiftItem($stockid, $customertype, $ErrorType, $OrderValue, $numDay
 				salesorders.customerref,
 				salesorders.orddate " .
 			" HAVING salesorders.orddate >= '" . $StartDate . "'" . 
-				" AND SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)/currencies.rate)" . $Sign . $OrderValue .
+				" AND SUM(salesorderdetails.linenetprice)/currencies.rate)" . $Sign . $OrderValue .
 				" AND " . $Not . " EXISTS (SELECT * 
 								FROM salesorderdetails AS so2 
 								WHERE salesorders.orderno = so2.orderno 

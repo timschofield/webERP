@@ -344,49 +344,49 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 	if ($typereport == "Shop"){
 		$SQL = "SELECT debtorsmaster.debtorno,
 					debtorsmaster.name,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					(SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
 							AND salesorders.orddate >= '". $StartDateA . "'
 							AND salesorders.orddate <= '". $Yesterday . "'
 							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesA,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					(SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
 							AND salesorders.orddate >= '". $StartDateB . "'
 							AND salesorders.orddate <= '". $Yesterday . "'
 							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesB,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					(SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
 							AND salesorders.orddate >= '". $StartDateC . "'
 							AND salesorders.orddate <= '". $Yesterday . "'
 							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesC,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					(SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
 							AND salesorders.orddate >= '". $StartDateD . "'
 							AND salesorders.orddate <= '". $Yesterday . "'
 							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesD,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					(SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
 							AND salesorders.orddate >= '". $StartDateE . "'
 							AND salesorders.orddate <= '". $Yesterday . "'
 							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesE,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					(SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
 							AND salesorders.orddate >= '". $StartDateF . "'
 							AND salesorders.orddate <= '". $Yesterday . "'
 							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesF,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					(SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
@@ -395,7 +395,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesMTD
 				FROM debtorsmaster
 				WHERE debtorsmaster.typeid = 2
-				ORDER BY (SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+				ORDER BY (SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
@@ -405,49 +405,49 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 	}elseif ($typereport == "Online"){
 		$SQL = "SELECT debtorsmaster.debtorno,
 					debtorsmaster.name,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))/currencies.rate
+					(SELECT SUM(linenetprice)/currencies.rate
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
 							AND salesorders.orddate >= '". $StartDateA . "'
 							AND salesorders.orddate <= '". $Yesterday . "'
 							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesA,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))/currencies.rate
+					(SELECT SUM(linenetprice)/currencies.rate
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
 							AND salesorders.orddate >= '". $StartDateB . "'
 							AND salesorders.orddate <= '". $Yesterday . "'
 							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesB,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))/currencies.rate
+					(SELECT SUM(linenetprice)/currencies.rate
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
 							AND salesorders.orddate >= '". $StartDateC . "'
 							AND salesorders.orddate <= '". $Yesterday . "'
 							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesC,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))/currencies.rate
+					(SELECT SUM(linenetprice)/currencies.rate
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
 							AND salesorders.orddate >= '". $StartDateD . "'
 							AND salesorders.orddate <= '". $Yesterday . "'
 							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesD,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))/currencies.rate
+					(SELECT SUM(linenetprice)/currencies.rate
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
 							AND salesorders.orddate >= '". $StartDateE . "'
 							AND salesorders.orddate <= '". $Yesterday . "'
 							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesE,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))/currencies.rate
+					(SELECT SUM(linenetprice)/currencies.rate
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
 							AND salesorders.orddate >= '". $StartDateF . "'
 							AND salesorders.orddate <= '". $Yesterday . "'
 							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesF,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))/currencies.rate
+					(SELECT SUM(linenetprice)/currencies.rate
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
@@ -463,7 +463,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 	}else{
 		$SQL = "SELECT salesmancode,
 					salesmanname,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					(SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1 ".
@@ -471,7 +471,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 							AND salesorders.orddate >= '". $StartDateA . "'
 							AND salesorders.orddate <= '". $Yesterday . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS salesA,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					(SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1 ".
@@ -479,7 +479,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 							AND salesorders.orddate >= '". $StartDateB . "'
 							AND salesorders.orddate <= '". $Yesterday . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS salesB,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					(SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1 ".
@@ -487,7 +487,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 							AND salesorders.orddate >= '". $StartDateC . "'
 							AND salesorders.orddate <= '". $Yesterday . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS salesC,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					(SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1 ".
@@ -495,7 +495,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 							AND salesorders.orddate >= '". $StartDateD . "'
 							AND salesorders.orddate <= '". $Yesterday . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS salesD,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					(SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1 ".
@@ -503,7 +503,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 							AND salesorders.orddate >= '". $StartDateE . "'
 							AND salesorders.orddate <= '". $Yesterday . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS salesE,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					(SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1 ".
@@ -511,7 +511,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 							AND salesorders.orddate >= '". $StartDateF . "'
 							AND salesorders.orddate <= '". $Yesterday . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS salesF,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					(SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1 ".
@@ -521,7 +521,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 							AND salesorders.salesperson = salesman.salesmancode) AS salesMTD
 				FROM salesman
 				WHERE salesman.current = 1
-				ORDER BY (SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+				ORDER BY (SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
