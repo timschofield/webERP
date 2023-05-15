@@ -9,6 +9,9 @@ INSERT INTO test_erp.accountsection SELECT * FROM kurakura_kl_erp.accountsection
 TRUNCATE test_erp.`areas`;
 INSERT INTO test_erp.areas SELECT * FROM kurakura_kl_erp.areas;
 
+TRUNCATE test_erp.`auditscripts`;
+/* INSERT INTO test_erp.auditscripts SELECT * FROM kurakura_kl_erp.auditscripts; */
+
 TRUNCATE test_erp.`audittrail`;
 /* INSERT INTO test_erp.audittrail SELECT * FROM kurakura_kl_erp.audittrail; */
 
@@ -426,11 +429,11 @@ TRUNCATE test_erp.`salesman`;
 INSERT INTO test_erp.salesman SELECT * FROM kurakura_kl_erp.salesman;
 
 TRUNCATE test_erp.`salesorderdetails`;
-/*INSERT INTO test_erp.salesorderdetails SELECT * FROM kurakura_kl_erp.salesorderdetails WHERE orderno >= 448300; 
-*/
+INSERT INTO test_erp.salesorderdetails SELECT * FROM kurakura_kl_erp.salesorderdetails WHERE orderno >= 448300; 
+
 TRUNCATE test_erp.`salesorders`;
-/*INSERT INTO test_erp.salesorders SELECT * FROM kurakura_kl_erp.salesorders WHERE orderno >= 448300; 
-*/
+INSERT INTO test_erp.salesorders SELECT * FROM kurakura_kl_erp.salesorders WHERE orderno >= 448300; 
+
 TRUNCATE test_erp.`salestypes`;
 INSERT INTO test_erp.salestypes SELECT * FROM kurakura_kl_erp.salestypes;
 
