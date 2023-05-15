@@ -12,7 +12,8 @@ include('includes/KLGeneralFunctions.php');
 include('includes/KLEmails.php');
 include('KLDailyChecks.php');
 
-KL_DailyMaintenanceDatabase(TRUE, $db);
+KL_DailyCleanDB(TRUE, $db);
+
 
 include ('includes/footer.php');
 ?>

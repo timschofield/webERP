@@ -82,6 +82,7 @@ function KL_HourlyChecks($RootPath, $db, $EmailText=''){
 
 
 function KL_DailyCleanDB($ShowMessages, $db, $EmailText){
+	$EmailText = YesterdayServerUsage($ShowMessages, $EmailText, $db);
 	$EmailText = SetRLZeroForObsolete($ShowMessages, $EmailText, $db);
 	$EmailText = SetRLZeroForLocations($ShowMessages, $EmailText, $db);
 	$EmailText = SetEndDatePriceToObsolete($ShowMessages, $EmailText, $db);
@@ -104,6 +105,64 @@ function KL_DailyCleanDB($ShowMessages, $db, $EmailText){
 	$EmailText = PurgePackagingUsedTable(2*365, $ShowMessages, $EmailText, $db); //we keep 2 years of packaging used for analysis. Older usage is not relevant
 	return $EmailText;
 }
+
+function YesterdayServerUsage($ShowMessages, $EmailText, $db){
+	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -1));
+	$ToDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', 0));
+	
+	$sql = "SELECT SUM(`secondsrunning`) AS SecsCPU,
+				COUNT(`secondsrunning`) AS ScriptsRun
+			FROM `auditscripts` 
+			WHERE executiondate >= '" . $FromDate . "'
+				AND executiondate < '" . $ToDate . "'";
+	$ErrMsg ='Could not check auditscripts table because';
+	$result = DB_query($sql,$ErrMsg);
+	$myrow = DB_fetch_array($result);
+	$Text = "CPU Usage (Seconds) = ". $myrow['SecsCPU'];
+	InsertKPI("ServerUsage", "CPU Usage Yesterday (Seconds)", $myrow['SecsCPU']);
+	InsertKPI("ServerUsage", "Scripts Run Yesterday (Scripts)", $myrow['ScriptsRun']);
+	InsertKPI("ServerUsage", "CPU Usage Yesterday (Seconds/Script)", round(($myrow['SecsCPU']/$myrow['ScriptsRun']),2));
+
+	$sql = "SELECT COUNT(`querystring`) AS QueryString
+			FROM `audittrail` 
+			WHERE transactiondate >= '" . $FromDate . "'
+				AND transactiondate < '" . $ToDate . "'
+				AND querystring LIKE 'INSERT%'";
+	$ErrMsg ='Could not check audittrail table because';
+	$result = DB_query($sql,$ErrMsg);
+	$myrow = DB_fetch_array($result);
+	$NumInsert = $myrow['QueryString'];
+	InsertKPI("ServerUsage", "DB Usage Tx INSERT (Tx)", $NumInsert);
+
+	$sql = "SELECT COUNT(`querystring`) AS QueryString
+			FROM `audittrail` 
+			WHERE transactiondate >= '" . $FromDate . "'
+				AND transactiondate < '" . $ToDate . "'
+				AND querystring LIKE 'UPDATE%'";
+	$ErrMsg ='Could not check audittrail table because';
+	$result = DB_query($sql,$ErrMsg);
+	$myrow = DB_fetch_array($result);
+	$NumUpdate = $myrow['QueryString'];
+	InsertKPI("ServerUsage", "DB Usage Tx UPDATE (Tx)", $NumUpdate);
+
+	$sql = "SELECT COUNT(`querystring`) AS QueryString
+			FROM `audittrail` 
+			WHERE transactiondate >= '" . $FromDate . "'
+				AND transactiondate < '" . $ToDate . "'
+				AND querystring LIKE 'DELETE%'";
+	$ErrMsg ='Could not check audittrail table because';
+	$result = DB_query($sql,$ErrMsg);
+	$myrow = DB_fetch_array($result);
+	$NumDelete = $myrow['QueryString'];
+	InsertKPI("ServerUsage", "DB Usage Tx DELETE (Tx)", $NumDelete);
+
+	InsertKPI("ServerUsage", "DB Usage Tx (Tx)",$NumInsert + $NumUpdate + $NumDelete);
+	
+	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
+	return $EmailText;
+}
+
+
 
 function KL_DailySetObsoleteNoStock($ShowMessages, $db, $EmailText = ''){
 	$EmailText = SetObsoleteForCategoryWithoutStock("NOPOKA", $ShowMessages, $EmailText, $db);
