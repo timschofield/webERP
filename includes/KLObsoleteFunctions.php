@@ -1695,7 +1695,7 @@ function WrongGiftItem($stockid, $customertype, $ErrorType, $OrderValue, $numDay
 				salesorders.customerref,
 				salesorders.orddate,
 				salesman.salesmanname,
-				SUM(salesorderdetails.linenetprice)/currencies.rate) AS ordervalue
+				SUM((salesorderdetails.linenetprice)/currencies.rate) AS ordervalue
 			FROM salesorders 
 				INNER JOIN salesorderdetails 	
 					ON salesorders.orderno = salesorderdetails.orderno
@@ -1712,7 +1712,7 @@ function WrongGiftItem($stockid, $customertype, $ErrorType, $OrderValue, $numDay
 				salesorders.customerref,
 				salesorders.orddate " .
 			" HAVING salesorders.orddate >= '" . $StartDate . "'" . 
-				" AND SUM(salesorderdetails.linenetprice)/currencies.rate)" . $Sign . $OrderValue .
+				" AND SUM((salesorderdetails.linenetprice)/currencies.rate)" . $Sign . $OrderValue .
 				" AND " . $Not . " EXISTS (SELECT * 
 								FROM salesorderdetails AS so2 
 								WHERE salesorders.orderno = so2.orderno 

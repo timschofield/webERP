@@ -625,7 +625,7 @@ if(in_array($OrderSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($O
 						salesorders.deliverydate,
 						salesorders.printedpackingslip,
 						salesorders.poplaced,
-						SUM(salesorderdetails.linenetprice)/currencies.rate) AS ordervalue
+						SUM((salesorderdetails.linenetprice)/currencies.rate) AS ordervalue
 					FROM salesorders INNER JOIN salesorderdetails
 						ON salesorders.orderno = salesorderdetails.orderno
 						INNER JOIN debtorsmaster
