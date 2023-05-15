@@ -248,7 +248,7 @@ if (isset($_POST['SearchParts']) AND $_POST['SearchParts']!=''){
 						salesorders.orddate,
 						salesorders.deliverydate,
 						salesorders.deliverto,
-						currencies.decimalplaces AS currdecimalplaces, SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)) AS ordervalue
+						currencies.decimalplaces AS currdecimalplaces, SUM(salesorderdetails.linenetprice)) AS ordervalue
 					FROM salesorders INNER JOIN salesorderdetails
 						ON salesorders.orderno = salesorderdetails.orderno
 						INNER JOIN debtorsmaster
@@ -270,7 +270,7 @@ if (isset($_POST['SearchParts']) AND $_POST['SearchParts']!=''){
 							salesorders.customerref,
 							salesorders.orddate,
 							salesorders.deliverydate,
-							salesorders.deliverto, SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)) AS ordervalue
+							salesorders.deliverto, SUM(salesorderdetails.linenetprice)) AS ordervalue
 						FROM salesorders INNER JOIN salesorderdetails
 							ON salesorders.orderno = salesorderdetails.orderno
 							INNER JOIN debtorsmaster
@@ -292,7 +292,7 @@ if (isset($_POST['SearchParts']) AND $_POST['SearchParts']!=''){
 							salesorders.customerref,
 							salesorders.orddate,
 							salesorders.deliverydate,
-							salesorders.deliverto, SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)) AS ordervalue
+							salesorders.deliverto, SUM(salesorderdetails.linenetprice)) AS ordervalue
 						FROM salesorders INNER JOIN salesorderdetails
 							ON salesorders.orderno = salesorderdetails.orderno
 							INNER JOIN debtorsmaster
@@ -320,7 +320,7 @@ if (isset($_POST['SearchParts']) AND $_POST['SearchParts']!=''){
 								salesorders.customerref,
 								salesorders.orddate,
 								salesorders.deliverydate,
-								salesorders.deliverto, SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)) AS ordervalue
+								salesorders.deliverto, SUM(salesorderdetails.linenetprice)) AS ordervalue
 							FROM salesorders INNER JOIN salesorderdetails
 								ON salesorders.orderno = salesorderdetails.orderno
 								INNER JOIN debtorsmaster
@@ -343,7 +343,7 @@ if (isset($_POST['SearchParts']) AND $_POST['SearchParts']!=''){
 								salesorders.customerref,
 								salesorders.orddate,
 								salesorders.deliverto,
-								salesorders.deliverydate, SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)) AS ordervalue
+								salesorders.deliverydate, SUM(salesorderdetails.linenetprice)) AS ordervalue
 							FROM salesorders INNER JOIN salesorderdetails
 								ON salesorders.orderno = salesorderdetails.orderno
 								INNER JOIN debtorsmaster
@@ -367,7 +367,7 @@ if (isset($_POST['SearchParts']) AND $_POST['SearchParts']!=''){
 								salesorders.customerref,
 								salesorders.orddate,
 								salesorders.deliverto,
-								salesorders.deliverydate, SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)) AS ordervalue
+								salesorders.deliverydate, SUM(salesorderdetails.linenetprice)) AS ordervalue
 							FROM salesorders INNER JOIN salesorderdetails
 								ON salesorders.orderno = salesorderdetails.orderno
 								INNER JOIN debtorsmaster
@@ -389,7 +389,7 @@ if (isset($_POST['SearchParts']) AND $_POST['SearchParts']!=''){
 								salesorders.customerref,
 								salesorders.orddate,
 								salesorders.deliverto,
-								salesorders.deliverydate, SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)) AS ordervalue
+								salesorders.deliverydate, SUM(salesorderdetails.linenetprice)) AS ordervalue
 							FROM salesorders INNER JOIN salesorderdetails
 								ON salesorders.orderno = salesorderdetails.orderno
 								INNER JOIN debtorsmaster

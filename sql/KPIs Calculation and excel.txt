@@ -1,5 +1,5 @@
 SELECT salesorders.orddate,
-	ROUND(SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))) AS sales
+	ROUND(SUM(linenetprice)) AS sales
 FROM salesorderdetails, salesorders
 WHERE salesorderdetails.orderno = salesorders.orderno
 	AND salesorderdetails.completed = 1

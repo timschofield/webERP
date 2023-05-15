@@ -3056,7 +3056,7 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA, $db){
 		}else{
 			$SQL = $SQL . "0 AS yearlyrent, ";
 		}
-		$SQL = $SQL . "(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))/currencies.rate
+		$SQL = $SQL . "(SELECT SUM(linenetprice)/currencies.rate
 						FROM salesorderdetails, salesorders, currencies
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND debtorsmaster.currcode = currencies.currabrev
@@ -3064,7 +3064,7 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA, $db){
 							AND salesorders.orddate >= '". $StartDateA . "'
 							AND salesorders.orddate <= '". $YesterdayA . "'
 							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesA,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))/currencies.rate
+					(SELECT SUM(linenetprice)/currencies.rate
 						FROM salesorderdetails, salesorders, currencies
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND debtorsmaster.currcode = currencies.currabrev
@@ -3076,7 +3076,7 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA, $db){
 		if ($typereport == "Shop"){
 			// retail shops or old retail shops
 			$SQL = $SQL .  "WHERE (debtorsmaster.typeid = 2 OR debtorsmaster.typeid = 11)  
-							ORDER BY (SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+							ORDER BY (SELECT SUM(linenetprice)
 										FROM salesorderdetails, salesorders
 										WHERE salesorderdetails.orderno = salesorders.orderno
 											AND salesorderdetails.completed = 1
@@ -3095,14 +3095,14 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA, $db){
 	}else{
 		$SQL = "SELECT salesmancode,
 					salesmanname,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					(SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
 							AND salesorders.orddate >= '". $StartDateA . "'
 							AND salesorders.orddate <= '". $YesterdayA . "'
 							AND salesorders.salesperson = salesman.salesmancode) AS salesA,
-					(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+					(SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1
@@ -3111,7 +3111,7 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA, $db){
 							AND salesorders.salesperson = salesman.salesmancode) AS salesB
 				FROM salesman
 				WHERE salesman.current = 1
-				ORDER BY (SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+				ORDER BY (SELECT SUM(linenetprice)
 						FROM salesorderdetails, salesorders
 						WHERE salesorderdetails.orderno = salesorders.orderno
 							AND salesorderdetails.completed = 1

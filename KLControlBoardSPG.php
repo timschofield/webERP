@@ -42,35 +42,35 @@ function AverageSPGSales($SPG, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $db){
 
 	$SQL = "SELECT salesmancode,
 				salesmanname,
-				(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+				(SELECT SUM(linenetprice)
 					FROM salesorderdetails, salesorders
 					WHERE salesorderdetails.orderno = salesorders.orderno
 						AND salesorderdetails.completed = 1
 						AND salesorders.orddate >= '". $StartDateA . "'
 						AND salesorders.orddate <= '". $Yesterday . "'
 						AND salesorders.salesperson = salesman.salesmancode) AS salesA,
-				(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+				(SELECT SUM(linenetprice)
 					FROM salesorderdetails, salesorders
 					WHERE salesorderdetails.orderno = salesorders.orderno
 						AND salesorderdetails.completed = 1
 						AND salesorders.orddate >= '". $StartDateB . "'
 						AND salesorders.orddate <= '". $Yesterday . "'
 						AND salesorders.salesperson = salesman.salesmancode) AS salesB,
-				(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+				(SELECT SUM(linenetprice)
 					FROM salesorderdetails, salesorders
 					WHERE salesorderdetails.orderno = salesorders.orderno
 						AND salesorderdetails.completed = 1
 						AND salesorders.orddate >= '". $StartDateC . "'
 						AND salesorders.orddate <= '". $Yesterday . "'
 						AND salesorders.salesperson = salesman.salesmancode) AS salesC,
-				(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+				(SELECT SUM(linenetprice)
 					FROM salesorderdetails, salesorders
 					WHERE salesorderdetails.orderno = salesorders.orderno
 						AND salesorderdetails.completed = 1
 						AND salesorders.orddate >= '". $StartDateD . "'
 						AND salesorders.orddate <= '". $Yesterday . "'
 						AND salesorders.salesperson = salesman.salesmancode) AS salesD,
-				(SELECT SUM(qtyinvoiced * (unitprice * (1 - discountpercent)))
+				(SELECT SUM(linenetprice)
 					FROM salesorderdetails, salesorders
 					WHERE salesorderdetails.orderno = salesorders.orderno
 						AND salesorderdetails.completed = 1
