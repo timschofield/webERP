@@ -26,6 +26,15 @@ function time_finish($begintime){
 	prnMsg('Script execution time: ' . locale_number_format($totaltime,3) . ' seconds.','success');
 }
 
+function function_finish($begintime){
+	$time = microtime();
+	$time = explode(" ", $time);
+	$time = $time[1] + $time[0];
+	$endtime = $time;
+	$totaltime = ($endtime - $begintime);
+	prnMsg('Function execution time: ' . locale_number_format($totaltime,3) . ' seconds.','info');
+}
+
 function CodeModel($stockid){
 	return (substr($stockid, 0,6));
 }

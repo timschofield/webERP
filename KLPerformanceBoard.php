@@ -77,22 +77,35 @@ if ($ProcessSection01){
 		OR $KL_SalesTeamOnline
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_ShopManager){
+		$functionstarttime = time_start();
 		AverageSales("Shop", 365, 180, 90, 30, 15, 1, 30, "CurrentYear", "All", $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 		PeriodDifferenceSales("IMMEDIATE", "Shop",  15, $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 		PeriodDifferenceSales("IMMEDIATE", "Shop",  30, $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 	}
 
 	if ($KL_SystemAdmin
 		OR $KL_BusinessDevelopmentManager){
 		PeriodDifferenceSales("IMMEDIATE", "Shop",  90, $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 		PeriodDifferenceSales("IMMEDIATE", "Shop", 180, $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 		PeriodDifferenceSales("IMMEDIATE", "Shop", 365, $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 	}
 
 	if ($KL_SystemAdmin
@@ -102,10 +115,14 @@ if ($ProcessSection01){
 		OR $KL_ShopManager){
 		PeriodDifferenceSales("YEAR", "Shop",  30, $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 //		PeriodDifferenceSales("2019", "Shop",  30, $db);
 //		$NumberOfTestExecuted++;
 		PeriodDifferenceSales("2019", "Shop",  "YTD", $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 	}
 
 	if ($KL_SystemAdmin
@@ -114,12 +131,20 @@ if ($ProcessSection01){
 
 		AverageSales("Online", 365, 180, 90, 30, 15, 1, 30, "CurrentYear", "All", $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 		PeriodDifferenceSales("IMMEDIATE", "Online",   7, $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 		PeriodDifferenceSales("IMMEDIATE", "Online",  15, $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 		PeriodDifferenceSales("IMMEDIATE", "Online",  30, $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 	}
 
 	if ($KL_SystemAdmin 
@@ -128,6 +153,8 @@ if ($ProcessSection01){
 		OR $KL_BusinessDevelopmentManager){
 		AverageCustomerBehaviourByValueInvoice("Shop", 60, $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 	}
 
 	if ($KL_SystemAdmin 
@@ -136,6 +163,8 @@ if ($ProcessSection01){
 		OR $KL_BusinessDevelopmentManager){
 		GeneralCustomerBehaviour(60, $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 //		GeneralCustomerBehaviour(90, $db);
 //		$NumberOfTestExecuted++;
 	}
@@ -143,6 +172,8 @@ if ($ProcessSection01){
 		OR $KL_BusinessDevelopmentManager){
 		DailySalesRecords(10, 365 * 2, $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 	}
 }
 
@@ -156,8 +187,11 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin){
+		$functionstarttime = time_start();
 		LocationInformationReview($RootPath, $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 	}
 
 	if ($KL_SystemAdmin 
@@ -165,8 +199,12 @@ if ($ProcessSection02){
 		OR $KL_ShopManager){
 		ActiveTransfersByLocation($RootPath, $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 		ActiveTransferStatus($RootPath, $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 	}
 
 	if ($KL_SystemAdmin 
@@ -174,8 +212,12 @@ if ($ProcessSection02){
 		OR $KL_OperationalManager){
 		RecentlyClosedTransferStatus(1, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 		ErrorsInTransfers(15, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 	}
 
 	if ($KL_SystemAdmin 
@@ -183,28 +225,46 @@ if ($ProcessSection02){
 		OR $KL_BusinessDevelopmentManager){
 		FinishedStockDistribution("FORSALE", "LOCATION", $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 		FinishedStockDistributionByShopAndCategory($db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 		FinishedStockDistribution("FORSALE", "STOCKCATEGORY", $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 	}
 
 	if ($KL_SystemAdmin){
 		GoodsToBeProduced("COMPOA", "ONLYDISCOUNT", $RootPath, $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 		GoodsToBeProduced("COMPOA", "DISCOUNT", $RootPath, $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 		GoodsToBeProduced("COMPOA", "ALL", $RootPath, $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 		ComponentsToObsolete(false, 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 	}
 
 	if ($KL_SystemAdmin){
 		PurchaseOrdersProcessTime(90, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 		PurchaseOrdersWrongPlannedDates($RootPath, $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 	}
 
 	if ($KL_SystemAdmin){
@@ -240,20 +300,32 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 */		POStatusControl("","SHIPPED IN TRANSIT", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 		POStatusControl("","CUSTOMS CLEARANCE", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 		POStatusControl("","RECEIVED IN KANTOR", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 	}
 	
 	if ($KL_SystemAdmin OR
 		$KL_OperationalManager){
 		POStatusControl("PACKAGING","ARRIVING IN NEXT DAYS", 75, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 		POStatusControl("FORSALE","ARRIVING IN NEXT DAYS", 75, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 		POStatusControl("OTHERS","ARRIVING IN NEXT DAYS", 75, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 	}
 }
 
@@ -267,30 +339,47 @@ if ($ProcessSection03){
 	}
 
 	if ($KL_SystemAdmin ){
+		$functionstarttime = time_start();
 		InsuficientStockForShopPackaging('SHPACK', 15, 100, 30, true, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 	}
 
 	if ($KL_SystemAdmin){
 		PackagingStatusForKapalLaut($RootPath, $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 		PackagingUsageForKapalLaut(30, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 
 		PackagingStatusForBlink($RootPath, $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 		PackagingUsageForBlink(30, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 
 		PackagingStatusForOutlet($RootPath, $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 		PackagingUsageForOutlet(30, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 	}
 
 	if ($KL_SystemAdmin){
 		FinishedStockDistribution("PACKAGING", "LOCATION", $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 	}
 	
 	if ($KL_SystemAdmin  
@@ -298,16 +387,24 @@ if ($ProcessSection03){
 		OR $KL_BusinessDevelopmentManager){
 		FinishedStockDistribution("DISPLAYS", "LOCATION", $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 	}
 
 	if ($KL_SystemAdmin
 		OR $KL_BusinessDevelopmentManager){
 		MaintenanceTasksDistribution("OPEN", 0);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 		MaintenanceTasksDistribution("CLOSED", 30);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 		MaintenanceTasksDistribution("TOTAL", 30);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 	}
 
 	if ($KL_OperationalManager
@@ -328,14 +425,24 @@ if ($ProcessSection03){
 	if ($KL_SystemAdmin){
 		PettyCashStatus("IDR", $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 		PettyCashStatus("USD", $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 		PettyCashStatus("THB", $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 		PettyCashStatus("EUR", $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 		PettyCashStatus("HKD", $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 	}
 
 	if ($KL_SystemAdmin
@@ -345,14 +452,22 @@ if ($ProcessSection03){
 					45760000, 400000000, 100000000, 
 					100000000, $periodnow, $KL_SystemAdmin, TRUE, $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 	}
 	if ($KL_SystemAdmin){
 		ShowKPIHistory(90);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 		AverageKPIHistory(180, 90, 30, 15, 7, 0, $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 		UnbalancedGLTransTX(15, $RootPath, $db);
 		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 	} 
 	
 }
