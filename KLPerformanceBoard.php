@@ -468,8 +468,11 @@ if ($ProcessSection03){
 		$NumberOfTestExecuted++;
 		function_finish($functionstarttime);
 		$functionstarttime = time_start();
+		EmptyAccountsGLTransTX(15, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		function_finish($functionstarttime);
+		$functionstarttime = time_start();
 	} 
-	
 }
 
 prnMsg("Performed ". $NumberOfTestExecuted . " performance tests",'success');
@@ -3348,6 +3351,70 @@ function UnbalancedGLTransTX($NumDays, $RootPath, $db){
 			</div>';
 	}
 }
+
+function EmptyAccountsGLTransTX($NumDays, $RootPath, $db){
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
+	$SQL = "SELECT gltrans.counterindex,
+				gltrans.trandate, 
+				gltrans.type, 
+				gltrans.typeno, 
+				gltrans.amount
+			FROM gltrans
+			WHERE gltrans.trandate >= '" . $StartDate . "'
+				AND account = ''
+			ORDER BY gltrans.counterindex";
+	$result = DB_query($SQL);
+	
+	if (DB_num_rows($result) != 0){
+		$k = 0; //row colour counter
+		echo '<p class="page_title_text" align="center"><strong>' . 'Empty account code GLTrans Transactions during the last ' . $NumDays . ' days' . '</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('Date') . '</th>
+							<th class="ascending">' . _('Type') . '</th>
+							<th class="ascending">' . _('TypeNo') . '</th>
+							<th class="ascending">' . _('Amount') . '</th>
+						</tr>';
+		echo $TableHeader;
+
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+
+			$CodeLink = '<a href="' . $RootPath . '/GLTransInquiry.php?TypeID=' . $myrow['type'] . '&TransNo=' . $myrow['typeno'] . '">' . $myrow['typeno'] . '</a>';
+					
+			printf('<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					locale_number_format($myrow['counterindex'],0),
+					ConvertSQLDateTime($myrow['trandate']), 
+					$myrow['type'], 
+					$CodeLink, 
+					locale_number_format($myrow['amount'],0)
+					);
+			$TotalAmount += $myrow['amount'];
+		}
+		printf('<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				"TOTAL",
+				"", 
+				"", 
+				"", 
+				locale_number_format($TotalAmount,0)
+				);
+		echo '</table>
+			</div>';
+	}
+}
+
 
 function ShowKPIHistory($NumDays){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
