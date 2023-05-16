@@ -3509,7 +3509,7 @@ function OldOnlineQuotations($NumDaysBank, $RootPath, $db){
 				debtorsmaster.debtorno,
 				salesorders.deliverto AS name,
 				salesorders.orddate,
-				SUM(salesorderdetails.linenetprice) AS ordervalue,
+				SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)) AS ordervalue,
 				salesorders.freightcost,
 				salesorders.klocpaymentcode,
 				debtorsmaster.currcode,
@@ -3856,7 +3856,7 @@ function OnlineOrdersFollowUp($Source, $numDays, $RootPath, $db){
 	$Titletext = "Follow up Outstanding " . $Source. " Online Orders";
 	$ThankYouDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$numDays));
 // 2015-01-14 Prices already NET for online orders
-//				(SELECT SUM(salesorderdetails.linenetprice)
+//                (SELECT SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent))
 	if ($Source == "LAZADA"){	
 		$SQL = "SELECT salesorders.orderno,	
 					salesorders.customerref,
@@ -4033,7 +4033,7 @@ function OnlineQuotationsFollowUp($RootPath, $db, $db_oc, $oc_tableprefix){
 				debtorsmaster.debtorno,
 				salesorders.deliverto AS name,
 				salesorders.orddate,
-				SUM(salesorderdetails.linenetprice) AS ordervalue,
+                SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)) AS ordervalue,
 				salesorders.freightcost,
 				salesorders.klocpaymentcode,
 				salesorders.klocorderstatus,
@@ -4132,7 +4132,7 @@ function OnlineMarketPlacePaymentPending($RootPath, $db){
 				debtorsmaster.debtorno,
 				salesorders.deliverto AS name,
 				salesorders.orddate,
-				SUM(salesorderdetails.linenetprice) AS ordervalue,
+                SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)) AS ordervalue,
 				salesorders.freightcost,
 				salesorders.klpaidcash,
 				debtorsmaster.currcode,
@@ -4359,7 +4359,7 @@ function OutstandingOrders($customertype, $ordertype, $RootPath, $db){
 				debtorsmaster.debtorno, "
 			   . $namefield . ",
 				salesorders.orddate,
-				SUM((salesorderdetails.linenetprice)/currencies.rate) AS ordervalue
+                SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)/currencies.rate) AS ordervalue
 			FROM salesorders INNER JOIN salesorderdetails 	
 				ON salesorders.orderno = salesorderdetails.orderno
 				INNER JOIN debtorsmaster 
