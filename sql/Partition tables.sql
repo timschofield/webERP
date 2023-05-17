@@ -23,3 +23,69 @@ ALTER TABLE salesorders PARTITION BY RANGE COLUMNS (orddate) (
     PARTITION salesorders_2026 VALUES  LESS THAN ('2027-01-01'),
     PARTITION salesorders_2099 VALUES LESS THAN (MAXVALUE)
 );
+
+ALTER TABLE `gltrans` DROP INDEX `ChequeNo`;
+ALTER TABLE `gltrans` DROP INDEX `JobRef`;
+ALTER TABLE `gltrans` DROP INDEX `TypeNo`;
+
+ALTER TABLE `gltrans` DROP INDEX `tag`;
+UPDATE locations SET klpostag = 0;
+UPDATE pcexpenses SET tag = 0;
+UPDATE gltrans SET tag = 0;
+TRUNCATE tags;
+
+ALTER TABLE `gltrans` DROP PRIMARY KEY, ADD PRIMARY KEY (`counterindex`, trandate) USING BTREE;
+ALTER TABLE `gltrans` DROP INDEX `Posted`, ADD INDEX `Posted` (`posted`, `periodno`, `account`) USING BTREE;
+ALTER TABLE `gltrans` DROP INDEX `Type_and_Number`, ADD INDEX `Type_and_Number` (`type`, `typeno`, `account`) USING BTREE;
+ALTER TABLE `gltrans` DROP INDEX `Account`, ADD INDEX `Account` (`account`, `trandate`) USING BTREE;
+ALTER TABLE `gltrans` DROP INDEX `TranDate`, ADD INDEX `TranDate` (`trandate`, `account`) USING BTREE;
+ALTER TABLE `gltrans` DROP INDEX `PeriodNo`, ADD INDEX `PeriodNo` (`periodno`, `account`) USING BTREE;
+
+
+ALTER TABLE gltrans PARTITION BY RANGE COLUMNS (trandate) (
+    PARTITION gltrans_2010 VALUES  LESS THAN ('2011-01-01'),
+    PARTITION gltrans_2011 VALUES  LESS THAN ('2012-01-01'),
+    PARTITION gltrans_2012 VALUES  LESS THAN ('2013-01-01'),
+    PARTITION gltrans_2013 VALUES  LESS THAN ('2014-01-01'),
+    PARTITION gltrans_2014 VALUES  LESS THAN ('2015-01-01'),
+    PARTITION gltrans_2015 VALUES  LESS THAN ('2016-01-01'),
+    PARTITION gltrans_2016 VALUES  LESS THAN ('2017-01-01'),
+    PARTITION gltrans_2017 VALUES  LESS THAN ('2018-01-01'),
+    PARTITION gltrans_2018 VALUES  LESS THAN ('2019-01-01'),
+    PARTITION gltrans_2019 VALUES  LESS THAN ('2020-01-01'),
+    PARTITION gltrans_2020 VALUES  LESS THAN ('2021-01-01'),
+    PARTITION gltrans_2021 VALUES  LESS THAN ('2022-01-01'),
+    PARTITION gltrans_2022 VALUES  LESS THAN ('2023-01-01'),
+    PARTITION gltrans_2023 VALUES  LESS THAN ('2024-01-01'),
+    PARTITION gltrans_2024 VALUES  LESS THAN ('2025-01-01'),
+    PARTITION gltrans_2025 VALUES  LESS THAN ('2026-01-01'),
+    PARTITION gltrans_2026 VALUES  LESS THAN ('2027-01-01'),
+    PARTITION gltrans_2099 VALUES LESS THAN (MAXVALUE)
+);
+
+ALTER TABLE `stockmoves` DROP PRIMARY KEY, ADD PRIMARY KEY (`stkmoveno`, `trandate`) USING BTREE;
+ALTER TABLE `stockmoves` DROP INDEX `Show_On_Inv_Crds`, ADD INDEX `Show_On_Inv_Crds` (`show_on_inv_crds`, `type`, `transno`) USING BTREE;
+ALTER TABLE `stockmoves` DROP INDEX `Hide`;
+ALTER TABLE `stockmoves` DROP INDEX `LocCode`, ADD INDEX `LocCode` (`loccode`, `trandate`, `stockid`) USING BTREE;
+
+
+ALTER TABLE stockmoves PARTITION BY RANGE COLUMNS (trandate) (
+    PARTITION stockmoves_2010 VALUES  LESS THAN ('2011-01-01'),
+    PARTITION stockmoves_2011 VALUES  LESS THAN ('2012-01-01'),
+    PARTITION stockmoves_2012 VALUES  LESS THAN ('2013-01-01'),
+    PARTITION stockmoves_2013 VALUES  LESS THAN ('2014-01-01'),
+    PARTITION stockmoves_2014 VALUES  LESS THAN ('2015-01-01'),
+    PARTITION stockmoves_2015 VALUES  LESS THAN ('2016-01-01'),
+    PARTITION stockmoves_2016 VALUES  LESS THAN ('2017-01-01'),
+    PARTITION stockmoves_2017 VALUES  LESS THAN ('2018-01-01'),
+    PARTITION stockmoves_2018 VALUES  LESS THAN ('2019-01-01'),
+    PARTITION stockmoves_2019 VALUES  LESS THAN ('2020-01-01'),
+    PARTITION stockmoves_2020 VALUES  LESS THAN ('2021-01-01'),
+    PARTITION stockmoves_2021 VALUES  LESS THAN ('2022-01-01'),
+    PARTITION stockmoves_2022 VALUES  LESS THAN ('2023-01-01'),
+    PARTITION stockmoves_2023 VALUES  LESS THAN ('2024-01-01'),
+    PARTITION stockmoves_2024 VALUES  LESS THAN ('2025-01-01'),
+    PARTITION stockmoves_2025 VALUES  LESS THAN ('2026-01-01'),
+    PARTITION stockmoves_2026 VALUES  LESS THAN ('2027-01-01'),
+    PARTITION stockmoves_2099 VALUES LESS THAN (MAXVALUE)
+);
