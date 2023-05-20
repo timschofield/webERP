@@ -260,7 +260,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		GoodsReceivedNotInvoicedControl(1000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		CustomersDebtControl(1000000, $periodnow, $db);
+		CustomersDebtControl(10000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		PettyCashBalanceControlControl("IDR", "('111111209',
 												'111111309')", 1, $periodnow, $db);
@@ -1539,7 +1539,7 @@ function ConsumablesGoodsNotEnoughStock($DaysUsage, $DaysMinStock, $DaysStockPur
 
 function CustomerDebtByCurrency($Currency){
 	$SQL = "SELECT SUM(
-					debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc
+					debtortrans.balance
 				)/currencies.rate AS balance
 			FROM debtorsmaster,
 				currencies,
@@ -1561,11 +1561,15 @@ function CustomersDebtControl($AcceptedDifference, $period, $db){
 	$myrow = DB_fetch_array($result);
 	
 	$ValueAtBalance = $myrow['saldo'];
-	
+prnMsg($ValueAtBalance);	
 	$DebtValueIDR = CustomerDebtByCurrency("IDR");
 	$DebtValueUSD = CustomerDebtByCurrency("USD");
 	$DebtValueAUD = CustomerDebtByCurrency("AUD");
 	$DebtValueEUR = CustomerDebtByCurrency("EUR");
+prnMsg($DebtValueIDR);	
+prnMsg($DebtValueUSD);	
+prnMsg($DebtValueAUD);	
+prnMsg($DebtValueEUR);	
 	
 	$DebtValue = $DebtValueIDR + $DebtValueUSD + $DebtValueAUD + $DebtValueEUR;
 	

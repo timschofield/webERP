@@ -95,27 +95,27 @@ if(in_array($DebtorSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($
 				holdreasons.dissallowinvoices,
 				holdreasons.reasondescription,
 				SUM(
-					debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc
+					debtortrans.balance
 				) AS balance,
 				SUM(
 					CASE WHEN (paymentterms.daysbeforedue > 0)
 					THEN
 						CASE WHEN (TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate)) >= paymentterms.daysbeforedue
-						THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc
+						THEN debtortrans.balance
 						ELSE 0 END
 					ELSE
 						CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(debtortrans.trandate), paymentterms.dayinfollowingmonth)) >= 0
-						THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END
+						THEN debtortrans.balance ELSE 0 END
 					END
 				) AS due,
 				SUM(
 					CASE WHEN (paymentterms.daysbeforedue > 0)
 					THEN
 						CASE WHEN (TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate)) > paymentterms.daysbeforedue AND TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays1'] . ")
-						THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END
+						THEN debtortrans.balance ELSE 0 END
 					ELSE
 						CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(debtortrans.trandate), paymentterms.dayinfollowingmonth)) >= " . $_SESSION['PastDueDays1'] . "
-						THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc
+						THEN debtortrans.balance
 						ELSE 0 END
 					END
 				) AS overdue1,
@@ -123,10 +123,10 @@ if(in_array($DebtorSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($
 					CASE WHEN (paymentterms.daysbeforedue > 0)
 					THEN
 						CASE WHEN (TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate)) > paymentterms.daysbeforedue AND TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays2'] . ")
-						THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END
+						THEN debtortrans.balance ELSE 0 END
 					ELSE
 						CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(debtortrans.trandate), paymentterms.dayinfollowingmonth)) >= " . $_SESSION['PastDueDays2'] . "
-						THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc
+						THEN debtortrans.balance
 						ELSE 0 END
 					END
 				) AS overdue2
@@ -150,7 +150,7 @@ if(in_array($DebtorSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($
 					holdreasons.dissallowinvoices,
 					holdreasons.reasondescription
 				HAVING
-					ROUND(ABS(SUM(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc)),currencies.decimalplaces) > 0";
+					ROUND(ABS(SUM(debtortrans.balance)),currencies.decimalplaces) > 0";
 	$CustomerResult = DB_query($Sql, '', '', False, False); /*dont trap errors handled below*/
 
 	if(DB_error_no() != 0) {
@@ -196,33 +196,33 @@ if(in_array($DebtorSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($
 						debtortrans.trandate,
 						daysbeforedue,
 						dayinfollowingmonth,
-						(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc) as balance,
+						(debtortrans.balance) as balance,
 						(CASE WHEN (paymentterms.daysbeforedue > 0)
 							THEN
 								(CASE WHEN (TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate)) >= paymentterms.daysbeforedue
-								THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc
+								THEN debtortrans.balance
 								ELSE 0 END)
 							ELSE
 								(CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(ADDDATE(last_day(debtortrans.trandate), 1), paymentterms.dayinfollowingmonth)) >= 0
-								THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc
+								THEN debtortrans.balance
 								ELSE 0 END)
 						END) AS due,
 						(CASE WHEN (paymentterms.daysbeforedue > 0)
 							THEN
-								(CASE WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue AND TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays1'] . ") THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END)
+								(CASE WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue AND TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays1'] . ") THEN debtortrans.balance ELSE 0 END)
 							ELSE
 								(CASE WHEN (TO_DAYS(Now()) - TO_DAYS(ADDDATE(ADDDATE(last_day(debtortrans.trandate), 1), paymentterms.dayinfollowingmonth)) >= " . $_SESSION['PastDueDays1'] . ")
-								THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc
+								THEN debtortrans.balance
 								ELSE 0 END)
 						END) AS overdue1,
 						(CASE WHEN (paymentterms.daysbeforedue > 0)
 							THEN
 								(CASE WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue AND TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays2'] . ")
-								THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc
+								THEN debtortrans.balance
 								ELSE 0 END)
 							ELSE
 								(CASE WHEN (TO_DAYS(Now()) - TO_DAYS(ADDDATE(ADDDATE(last_day(debtortrans.trandate), 1), paymentterms.dayinfollowingmonth)) >= " . $_SESSION['PastDueDays2'] . ")
-								THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc
+								THEN debtortrans.balance
 								ELSE 0 END)
 						END) AS overdue2
 				   FROM debtorsmaster,
@@ -233,7 +233,7 @@ if(in_array($DebtorSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($
 						AND debtorsmaster.paymentterms = paymentterms.termsindicator
 						AND debtorsmaster.debtorno = debtortrans.debtorno
 						AND debtortrans.debtorno = '" . $AgedAnalysis['debtorno'] . "'
-						AND ABS(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc)>0.004";
+						AND ABS(debtortrans.balance)>0.004";
 
 			if($_SESSION['SalesmanLogin'] != '') {
 				$Sql .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
