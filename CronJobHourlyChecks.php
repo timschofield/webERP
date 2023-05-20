@@ -10,6 +10,8 @@ $time = microtime();
 $time = explode(' ', $time);
 $begintime = $time[1] + $time[0];
 
+$ScriptTile  = "Cron Job Hourly Tasks"; 
+
 $EmailText  = "KL webERP Cron Job: Hourly Tasks" . "\n"; 
 $EmailText = $EmailText . 'Cron Job started at '.date('d/M/Y H:i:s'). "\n";
 
@@ -17,6 +19,6 @@ $EmailText = KL_HourlyChecks($RootPath, $db, $EmailText);
 
 $EmailAddress = "webmaster@kapal-laut.com";
 $EmailSubject  = "KL webERP Cron Job: Hourly Tasks"; 
-SendEmailFromCron($EmailAddress, $EmailSubject, $EmailText, '', $begintime);
+SendEmailFromCron($EmailAddress, $EmailSubject, $EmailText, '', $begintime, $ScriptTile);
 
 ?>

@@ -26,15 +26,19 @@ $DaysSalesForOrder = 2;
 $Group = $_GET['p'];
 
 if ($Group == "1050-SmartDispatchKL"){
+	$ScriptTile  = "Cron Job Smart dispatch KL"; 
 	$ShopType = "SHOPKL";
 	$EmailText = $EmailText . 'Smart dispatch for Kapal-Laut Shops' . "\n";
 }elseif ($Group == "1060-SmartDispatchBL"){
+	$ScriptTile  = "Cron Job Smart dispatch BL"; 
 	$ShopType = "SHOPBL";
 	$EmailText = $EmailText . 'Smart dispatch for Blink Shops' . "\n";
 }elseif ($Group == "1070-SmartDispatchOU"){
+	$ScriptTile  = "Cron Job Smart dispatch OU"; 
 	$ShopType = "SHOPOU";
 	$EmailText = $EmailText . 'Smart dispatch for Outlet Shops' . "\n";
 }else{
+	$ScriptTile  = "Cron Job Smart dispatch UNDEFINED"; 
 	$EmailText = $EmailText . 'Type Of Shop not defined' . "\n";
 }
 
@@ -71,7 +75,7 @@ if (DB_num_rows($result) != 0){
 
 $EmailAddress = "webmaster@kapal-laut.com";
 $EmailSubject  = "KL webERP Cron Job: Smart Dispatch ". $Group;
-SendEmailFromCron($EmailAddress, $EmailSubject, $EmailText, '', $begintime);
+SendEmailFromCron($EmailAddress, $EmailSubject, $EmailText, '', $begintime, $ScriptTile);
 
 /****************************************************************************************/
 function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $DispatchPercent, $MaxModelsPerDispatch, $MinModelsPerDispatch, $RootPath, $db, $EmailText){
