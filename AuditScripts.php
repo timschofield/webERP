@@ -153,7 +153,7 @@ if (isset($_POST['View'])) {
 		'TOTALS', 
 		locale_number_format($TotalScripts,0),
 		locale_number_format($TotalSeconds,5),
-		''
+		locale_number_format($TotalSeconds/$TotalScripts,5)
 		);
 	echo '</table></div>';
 	
