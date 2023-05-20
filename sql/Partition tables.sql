@@ -92,7 +92,6 @@ ALTER TABLE stockmoves PARTITION BY RANGE COLUMNS (trandate) (
 
 ALTER TABLE `debtortrans` DROP PRIMARY KEY, ADD PRIMARY KEY (`id`, `trandate`) USING BTREE;
 
-
 ALTER TABLE debtortrans PARTITION BY RANGE COLUMNS (trandate) (
     PARTITION debtortrans_2010 VALUES  LESS THAN ('2011-01-01'),
     PARTITION debtortrans_2011 VALUES  LESS THAN ('2012-01-01'),
@@ -112,4 +111,98 @@ ALTER TABLE debtortrans PARTITION BY RANGE COLUMNS (trandate) (
     PARTITION debtortrans_2025 VALUES  LESS THAN ('2026-01-01'),
     PARTITION debtortrans_2026 VALUES  LESS THAN ('2027-01-01'),
     PARTITION debtortrans_2099 VALUES LESS THAN (MAXVALUE)
+);
+
+ALTER TABLE `debtortrans` ADD `balance` DOUBLE AS (ovamount + ovgst + ovfreight + ovdiscount - alloc) PERSISTENT AFTER `salesperson`;
+
+ALTER TABLE `salesanalysis` DROP PRIMARY KEY, ADD PRIMARY KEY (`id`, `periodno`) USING BTREE;
+
+ALTER TABLE salesanalysis PARTITION BY RANGE COLUMNS (periodno) (
+    PARTITION salesanalysis_2010 VALUES  LESS THAN (22),
+    PARTITION salesanalysis_2011 VALUES  LESS THAN (34),
+    PARTITION salesanalysis_2012 VALUES  LESS THAN (46),
+    PARTITION salesanalysis_2013 VALUES  LESS THAN (58),
+    PARTITION salesanalysis_2014 VALUES  LESS THAN (70),
+    PARTITION salesanalysis_2015 VALUES  LESS THAN (82),
+    PARTITION salesanalysis_2016 VALUES  LESS THAN (94),
+    PARTITION salesanalysis_2017 VALUES  LESS THAN (106),
+    PARTITION salesanalysis_2018 VALUES  LESS THAN (118),
+    PARTITION salesanalysis_2019 VALUES  LESS THAN (130),
+    PARTITION salesanalysis_2020 VALUES  LESS THAN (142),
+    PARTITION salesanalysis_2021 VALUES  LESS THAN (154),
+    PARTITION salesanalysis_2022 VALUES  LESS THAN (166),
+    PARTITION salesanalysis_2023 VALUES  LESS THAN (178),
+    PARTITION salesanalysis_2024 VALUES  LESS THAN (190),
+    PARTITION salesanalysis_2025 VALUES  LESS THAN (202),
+    PARTITION salesanalysis_2026 VALUES  LESS THAN (214),
+    PARTITION salesanalysis_2099 VALUES LESS THAN (MAXVALUE)
+);
+
+ALTER TABLE `salesorderdetails` DROP PRIMARY KEY, ADD PRIMARY KEY (`orderlineno`, `orderno`, `actualdispatchdate`) USING BTREE;
+ALTER TABLE `salesorderdetails` DROP INDEX `OrderNo`, ADD UNIQUE `OrderNo` (`orderno`, `orderlineno`, `actualdispatchdate`) USING BTREE;
+
+ALTER TABLE salesorderdetails PARTITION BY RANGE COLUMNS (actualdispatchdate) (
+    PARTITION salesorderdetails_2010 VALUES  LESS THAN ('2011-01-01'),
+    PARTITION salesorderdetails_2011 VALUES  LESS THAN ('2012-01-01'),
+    PARTITION salesorderdetails_2012 VALUES  LESS THAN ('2013-01-01'),
+    PARTITION salesorderdetails_2013 VALUES  LESS THAN ('2014-01-01'),
+    PARTITION salesorderdetails_2014 VALUES  LESS THAN ('2015-01-01'),
+    PARTITION salesorderdetails_2015 VALUES  LESS THAN ('2016-01-01'),
+    PARTITION salesorderdetails_2016 VALUES  LESS THAN ('2017-01-01'),
+    PARTITION salesorderdetails_2017 VALUES  LESS THAN ('2018-01-01'),
+    PARTITION salesorderdetails_2018 VALUES  LESS THAN ('2019-01-01'),
+    PARTITION salesorderdetails_2019 VALUES  LESS THAN ('2020-01-01'),
+    PARTITION salesorderdetails_2020 VALUES  LESS THAN ('2021-01-01'),
+    PARTITION salesorderdetails_2021 VALUES  LESS THAN ('2022-01-01'),
+    PARTITION salesorderdetails_2022 VALUES  LESS THAN ('2023-01-01'),
+    PARTITION salesorderdetails_2023 VALUES  LESS THAN ('2024-01-01'),
+    PARTITION salesorderdetails_2024 VALUES  LESS THAN ('2025-01-01'),
+    PARTITION salesorderdetails_2025 VALUES  LESS THAN ('2026-01-01'),
+    PARTITION salesorderdetails_2026 VALUES  LESS THAN ('2027-01-01'),
+    PARTITION salesorderdetails_2099 VALUES LESS THAN (MAXVALUE)
+);
+
+ALTER TABLE `loctransfers` DROP PRIMARY KEY, ADD PRIMARY KEY (`loctransferid`, `shipdate`) USING BTREE;
+
+ALTER TABLE loctransfers PARTITION BY RANGE COLUMNS (shipdate) (
+    PARTITION loctransfers_2010 VALUES  LESS THAN ('2011-01-01'),
+    PARTITION loctransfers_2011 VALUES  LESS THAN ('2012-01-01'),
+    PARTITION loctransfers_2012 VALUES  LESS THAN ('2013-01-01'),
+    PARTITION loctransfers_2013 VALUES  LESS THAN ('2014-01-01'),
+    PARTITION loctransfers_2014 VALUES  LESS THAN ('2015-01-01'),
+    PARTITION loctransfers_2015 VALUES  LESS THAN ('2016-01-01'),
+    PARTITION loctransfers_2016 VALUES  LESS THAN ('2017-01-01'),
+    PARTITION loctransfers_2017 VALUES  LESS THAN ('2018-01-01'),
+    PARTITION loctransfers_2018 VALUES  LESS THAN ('2019-01-01'),
+    PARTITION loctransfers_2019 VALUES  LESS THAN ('2020-01-01'),
+    PARTITION loctransfers_2020 VALUES  LESS THAN ('2021-01-01'),
+    PARTITION loctransfers_2021 VALUES  LESS THAN ('2022-01-01'),
+    PARTITION loctransfers_2022 VALUES  LESS THAN ('2023-01-01'),
+    PARTITION loctransfers_2023 VALUES  LESS THAN ('2024-01-01'),
+    PARTITION loctransfers_2024 VALUES  LESS THAN ('2025-01-01'),
+    PARTITION loctransfers_2025 VALUES  LESS THAN ('2026-01-01'),
+    PARTITION loctransfers_2026 VALUES  LESS THAN ('2027-01-01'),
+    PARTITION loctransfers_2099 VALUES LESS THAN (MAXVALUE)
+);
+
+ALTER TABLE `banktrans` DROP PRIMARY KEY, ADD PRIMARY KEY (`banktransid`, `transdate`) USING BTREE;
+ALTER TABLE banktrans PARTITION BY RANGE COLUMNS (transdate) (
+    PARTITION banktrans_2010 VALUES  LESS THAN ('2011-01-01'),
+    PARTITION banktrans_2011 VALUES  LESS THAN ('2012-01-01'),
+    PARTITION banktrans_2012 VALUES  LESS THAN ('2013-01-01'),
+    PARTITION banktrans_2013 VALUES  LESS THAN ('2014-01-01'),
+    PARTITION banktrans_2014 VALUES  LESS THAN ('2015-01-01'),
+    PARTITION banktrans_2015 VALUES  LESS THAN ('2016-01-01'),
+    PARTITION banktrans_2016 VALUES  LESS THAN ('2017-01-01'),
+    PARTITION banktrans_2017 VALUES  LESS THAN ('2018-01-01'),
+    PARTITION banktrans_2018 VALUES  LESS THAN ('2019-01-01'),
+    PARTITION banktrans_2019 VALUES  LESS THAN ('2020-01-01'),
+    PARTITION banktrans_2020 VALUES  LESS THAN ('2021-01-01'),
+    PARTITION banktrans_2021 VALUES  LESS THAN ('2022-01-01'),
+    PARTITION banktrans_2022 VALUES  LESS THAN ('2023-01-01'),
+    PARTITION banktrans_2023 VALUES  LESS THAN ('2024-01-01'),
+    PARTITION banktrans_2024 VALUES  LESS THAN ('2025-01-01'),
+    PARTITION banktrans_2025 VALUES  LESS THAN ('2026-01-01'),
+    PARTITION banktrans_2026 VALUES  LESS THAN ('2027-01-01'),
+    PARTITION banktrans_2099 VALUES LESS THAN (MAXVALUE)
 );
