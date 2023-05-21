@@ -177,12 +177,13 @@ if (isset($_POST['Process'])){ //user hit submit a new entry to the receipt batc
 	} else {
 		$AllowThisPosting = true;
  		if ($_SESSION['ProhibitJournalsToControlAccounts'] == 1) {
- 			if ($_SESSION['CompanyRecord']['gllink_debtors'] == '1' AND $_POST['GLCode'] == $_SESSION['CompanyRecord']['debtorsact']) {
+// 			if ($_SESSION['CompanyRecord']['gllink_debtors'] == '1' AND $_POST['GLCode'] == $_SESSION['CompanyRecord']['debtorsact']) {
+ 			if ($_POST['GLCode'] == $_SESSION['CompanyRecord']['debtorsact']) {
  				prnMsg(_('Payments involving the debtors control account cannot be entered. The general ledger debtors ledger (AR) integration is enabled so control accounts are automatically maintained. This setting can be disabled in System Configuration'), 'warn');
  				$AllowThisPosting = false;
  			}
- 			if ($_SESSION['CompanyRecord']['gllink_creditors'] == '1' AND
-				($_POST['GLCode'] == $_SESSION['CompanyRecord']['creditorsact'] OR $_POST['GLCode'] == $_SESSION['CompanyRecord']['grnact'])) {
+// 			if ($_SESSION['CompanyRecord']['gllink_creditors'] == '1' AND
+			if (($_POST['GLCode'] == $_SESSION['CompanyRecord']['creditorsact'] OR $_POST['GLCode'] == $_SESSION['CompanyRecord']['grnact'])) {
  				prnMsg(_('Payments involving the creditors control account or the GRN suspense account cannot be entered. The general ledger creditors ledger (AP) integration is enabled so control accounts are automatically maintained. This setting can be disabled in System Configuration'), 'warn');
  				$AllowThisPosting = false;
  			}
@@ -304,7 +305,8 @@ if (isset($_POST['CommitBatch'])){
 		}
 
 		if ($ReceiptItem->GLCode !=''){ //so its a GL receipt
-			if ($_SESSION['CompanyRecord']['gllink_debtors']==1){ /* then enter a GLTrans record */
+//			if ($_SESSION['CompanyRecord']['gllink_debtors']==1){ /* then enter a GLTrans record */
+			if (TRUE){ /* then enter a GLTrans record */
 				 $SQL = "INSERT INTO gltrans (type,
 								 			typeno,
 											trandate,
@@ -497,7 +499,8 @@ if (isset($_POST['CommitBatch'])){
 	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 
-	if ($_SESSION['CompanyRecord']['gllink_debtors']==1){ /* then enter GLTrans records for discount, bank and debtors */
+//	if ($_SESSION['CompanyRecord']['gllink_debtors']==1){ /* then enter GLTrans records for discount, bank and debtors */
+	if (TRUE){ /* then enter GLTrans records for discount, bank and debtors */
 
 		if ($BatchReceiptsTotal!=0){
 			/* Bank account entry first */

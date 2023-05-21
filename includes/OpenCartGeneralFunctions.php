@@ -868,7 +868,8 @@ function InsertCustomerReceipt ($CustomerCode, $AmountPaid, $FreightCost, $Custo
 
 	// Insert GL entries too if integration enabled
 
-	if ($_SESSION['CompanyRecord']['gllink_debtors']==1){ /* then enter GLTrans records for discount, bank and debtors */
+//	if ($_SESSION['CompanyRecord']['gllink_debtors']==1){ /* then enter GLTrans records for discount, bank and debtors */
+	if (TRUE){ /* then enter GLTrans records for discount, bank and debtors */
 		/* Bank account entry first */
 		$Narrative = $CustomerCode . ' ' . _('payment for order') . ' ' . $OrderNo . ' ' . _('Transaction ID') . ': ' . $TransactionID;
 		$SQL="INSERT INTO gltrans (	type,
@@ -979,7 +980,8 @@ function TransactionCommissionGL ($CustomerCode, $BankAccount, $CommissionAccoun
 
 	// Insert GL entries too if integration enabled
 
-	if ($_SESSION['CompanyRecord']['gllink_debtors']==1){ /* then enter GLTrans records for discount, bank and debtors */
+//	if ($_SESSION['CompanyRecord']['gllink_debtors']==1){ /* then enter GLTrans records for discount, bank and debtors */
+	if (TRUE){ /* then enter GLTrans records for discount, bank and debtors */
 		/* Bank account entry first */
 		$Narrative = $CustomerCode . ' ' . $PaymentSystem . ' ' . _('Fees for Transaction ID') . ': ' . $TransactionID;
 		$SQL="INSERT INTO gltrans (	type,
