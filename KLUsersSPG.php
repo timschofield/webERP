@@ -28,6 +28,8 @@ include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/KLEmails.php');
+/* ASSIGN users to groups */
+include ('includes/KLRoles.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>
 	<br />';
@@ -238,30 +240,8 @@ if (isset($_POST['submit'])) {
 	}
 
 } elseif (isset($_GET['delete'])) {
-//the link to delete a selected record was clicked instead of the submit button
-
-
-	if ($AllowDemoMode AND $SelectedUser == 'admin') {
-		prnMsg(_('The demonstration user called demo cannot be deleted'),'error');
-	} else {
-		$sql="SELECT userid FROM audittrail where userid='" . $SelectedUser ."'";
-		$result=DB_query($sql);
-		if (DB_num_rows($result)!=0) {
-			prnMsg(_('Cannot delete user as entries already exist in the audit trail'), 'warn');
-		} else {
-			$sql="DELETE FROM locationusers WHERE userid='" . $SelectedUser . "'";
-			$ErrMsg = _('The Location - User could not be deleted because');;
-			$result = DB_query($sql,$ErrMsg);
-
-			$sql="DELETE FROM www_users WHERE userid='" . $SelectedUser . "'";
-			$ErrMsg = _('The User could not be deleted because');;
-			$result = DB_query($sql,$ErrMsg);
-			prnMsg(_('User Deleted'),'info');
-			KLSendEmail("SpgUsernameDeleted", "Silent", $SelectedUser, $_SESSION['UserID']);
-		}
-		unset($SelectedUser);
-	}
-
+	//the link to delete a selected record was clicked instead of the submit button
+	DeleteWeberpUser($SelectedUser,$KL_SystemAdmin);
 }
 
 if (!isset($SelectedUser)) {

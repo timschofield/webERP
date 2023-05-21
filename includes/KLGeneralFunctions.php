@@ -1093,4 +1093,46 @@ function NumberOfShops($ShopType, $Categories, $db){
 	}
 }
 
+function DeleteWeberpUser($SelectedUser, $AdminRole){
+	if($AllowDemoMode AND $SelectedUser == 'admin') {
+		prnMsg(_('The demonstration user called demo cannot be deleted'),'error');
+	}elseif ($SelectedUser == "Ricard"){
+		prnMsg('User '. $SelectedUser . ' cannot be deleted as is a super user','error');
+	}elseif ((($SelectedUser == "Laia")
+				OR ($SelectedUser == "Ike1")	
+				OR ($SelectedUser == "Fathus")	
+				OR ($SelectedUser == "RiaResti")	
+				OR ($SelectedUser == "Cicik")	
+				OR ($SelectedUser == "Revi"))
+			AND (!$AdminRole )){
+		prnMsg('You do not have enough rights to delete user '. $SelectedUser ,'error');
+	}else{
+		$sql="SELECT userid FROM audittrail where userid='" . $SelectedUser ."'";
+		$result=DB_query($sql);
+		if(DB_num_rows($result)!=0) {
+			prnMsg(_('Cannot delete user as entries still exist in the audit trail'), 'error');
+		} else {
+			$sql="DELETE FROM locationusers WHERE userid='" . $SelectedUser . "'";
+			$ErrMsg = _('The Location - User could not be deleted because');;
+			$result = DB_query($sql,$ErrMsg);
+
+			$sql="DELETE FROM glaccountusers WHERE userid='" . $SelectedUser . "'";
+			$ErrMsg = _('The GL Account - User could not be deleted because');;
+			$result = DB_query($sql,$ErrMsg);
+
+			$sql="DELETE FROM bankaccountusers WHERE userid='" . $SelectedUser . "'";
+			$ErrMsg = _('The Bank Accounts - User could not be deleted because');;
+			$result = DB_query($sql,$ErrMsg);
+
+			$sql="DELETE FROM www_users WHERE userid='" . $SelectedUser . "'";
+			$ErrMsg = _('The User could not be deleted because');;
+			$result = DB_query($sql,$ErrMsg);
+
+			KLSendEmail("UserDeleted", "Silent",$_SESSION['UserID'], $SelectedUser);
+			prnMsg('User ' . $SelectedUser . ' deleted', 'success');
+		}
+		unset($SelectedUser);
+	}
+}
+
 ?>

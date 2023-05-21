@@ -891,9 +891,9 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin){
-		UsersNotLoggingIn(($_SESSION['MonthsAuditTrail'] *30)+1, "ALL_EXCEPT_SPGSUPPORT", $db);
+		UsersNotLoggingIn(($_SESSION['MonthsAuditTrail'] *30)+1, "ALL_EXCEPT_SPGSUPPORT", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		UsersNotLoggingIn(($_SESSION['MonthsAuditTrail'] *30)+1, "SPGSUPPORT", $db);
+		UsersNotLoggingIn(($_SESSION['MonthsAuditTrail'] *30)+1, "SPGSUPPORT", $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 	
@@ -1561,15 +1561,11 @@ function CustomersDebtControl($AcceptedDifference, $period, $db){
 	$myrow = DB_fetch_array($result);
 	
 	$ValueAtBalance = $myrow['saldo'];
-prnMsg($ValueAtBalance);	
+	
 	$DebtValueIDR = CustomerDebtByCurrency("IDR");
 	$DebtValueUSD = CustomerDebtByCurrency("USD");
 	$DebtValueAUD = CustomerDebtByCurrency("AUD");
 	$DebtValueEUR = CustomerDebtByCurrency("EUR");
-prnMsg($DebtValueIDR);	
-prnMsg($DebtValueUSD);	
-prnMsg($DebtValueAUD);	
-prnMsg($DebtValueEUR);	
 	
 	$DebtValue = $DebtValueIDR + $DebtValueUSD + $DebtValueAUD + $DebtValueEUR;
 	
@@ -5039,7 +5035,7 @@ function TransferWithWrongInformation($maxdays, $RootPath, $db){
 	}
 }
 
-function UsersNotLoggingIn($maxdays, $type, $db){
+function UsersNotLoggingIn($maxdays, $type, $RootPath, $db){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays-1)) ;
 	
 	if ($type=='SPGSUPPORT'){
@@ -5070,20 +5066,23 @@ function UsersNotLoggingIn($maxdays, $type, $db){
 							<th class="ascending">' .  _('User ID') . '</th>
 							<th class="ascending">' . _('Name') . '</th>
 							<th class="ascending">' . _('Last Login') . '</th>
+							<th>' . _('Action') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
 			$k = StartEvenOrOddRow($k);
-			
+			$CodeLink = '<a href="' . $RootPath . '/WWW_User_Delete.php?UserID=' . $myrow['userid'] . '">' . 'Delete' . '</a>';
 			printf('<td>%s</td>
+					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					</tr>', 
 					$myrow['userid'],
 					$myrow['realname'],
-					ConvertSQLDate($myrow['lastvisitdate'])
+					ConvertSQLDate($myrow['lastvisitdate']),
+					$CodeLink
 					);
 			$i++;
 		}
