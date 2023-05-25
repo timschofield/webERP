@@ -75,29 +75,6 @@ while($myrow=DB_fetch_array($Account,$db)) {
 echo '</select></td>
 	</tr>';
 
-//Select the tag
-echo '<tr>
-		<td>' . _('Select Tag') . ':</td>
-		<td><select name="tag">';
-
-$SQL = "SELECT tagref,
-			tagdescription
-		FROM tags
-		ORDER BY tagref";
-
-$result=DB_query($SQL);
-echo '<option value="0">0 - '._('All tags') . '</option>';
-
-while($myrow=DB_fetch_array($result)) {
-	if(isset($_POST['tag']) and $_POST['tag']==$myrow['tagref']) {
-		echo '<option selected="selected" value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
-	} else {
-		echo '<option value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
-	}
-}
-echo '</select></td>
-	</tr>';
-// End select tag
 echo '<tr>
 		<td>' . _('For Period range').':</td>
 		<td><select name="Period[]" size="12" multiple="multiple">';
@@ -152,23 +129,15 @@ if(isset($_POST['Show'])) {
 				trandate,
 				narrative,
 				amount,
-				periodno,
-				gltrans.tag,
-				tagdescription
+				periodno
 			FROM gltrans INNER JOIN systypes
 			ON systypes.typeid=gltrans.type
-			LEFT JOIN tags
-			ON gltrans.tag = tags.tagref
 			WHERE gltrans.account = '" . $SelectedAccount . "'
-			AND posted=1
-			AND periodno>='" . $FirstPeriodSelected . "'
-			AND periodno<='" . $LastPeriodSelected . "'";
+				AND posted=1
+				AND periodno>='" . $FirstPeriodSelected . "'
+				AND periodno<='" . $LastPeriodSelected . "'
+			ORDER BY periodno, gltrans.trandate, counterindex";
 
-	if($_POST['tag']!=0) {
- 		$sql = $sql . " AND tag='" . $_POST['tag'] . "'";
-	}
-
-	$sql = $sql . " ORDER BY periodno, gltrans.trandate, counterindex";
 	$namesql = "SELECT accountname FROM chartmaster WHERE accountcode='" . $SelectedAccount . "'";
 	$nameresult = DB_query($namesql);
 	$namerow=DB_fetch_array($nameresult);
@@ -193,8 +162,7 @@ if(isset($_POST['Show'])) {
 				<th>', _('Narrative'), '</th>
 				<th>', _('Debit'), '</th>
 				<th>', _('Credit'), '</th>
-				<th>', _('Balance'), '</th>
-				<th>', _('Tag'), '</th>',
+				<th>', _('Balance'), '</th>',
 				$BankAccountInfo, '
 			</tr>
 		</thead><tbody>';
@@ -339,8 +307,7 @@ if(isset($_POST['Show'])) {
 				<td class="text">', $myrow['narrative'], '</td>
 				<td class="number">', $DebitAmount, '</td>
 				<td class="number">', $CreditAmount, '</td>
-				<td class="number">', locale_number_format($RunningTotal, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
-				<td class="text">', $myrow['tagdescription'], '</td>';
+				<td class="number">', locale_number_format($RunningTotal, $_SESSION['CompanyRecord']['decimalplaces']), '</td>';
 		if(isset($BankAccount)) {
 			echo '<td class="text">', $Currency, '</td>
 				<td class="number"><b>', locale_number_format($OrgAmt, $_SESSION['CompanyRecord']['decimalplaces']), '</b></td>
@@ -369,7 +336,7 @@ if(isset($_POST['Show'])) {
 		</tbody></table>';
 } /* end of if Show button hit */
 
-if(isset($ShowIntegrityReport) AND $ShowIntegrityReport==True AND $_POST['tag']=='0') {
+if(isset($ShowIntegrityReport) AND $ShowIntegrityReport==True) {
 	if(!isset($IntegrityReport)) {
 		$IntegrityReport='';
 	}

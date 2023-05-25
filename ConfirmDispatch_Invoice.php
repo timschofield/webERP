@@ -1356,7 +1356,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 					$AccountConsignmentCOGSPartner = $myrow['accountconsignmentcogspartner'];
 					$RetailPrice = round($OrderLine->Price * (1 - $OrderLine->DiscountPercent) / $_SESSION['CurrencyRate'],0);
 					$ConsignmentPrice = round($PercentConsignmentPTADU / 100 * $RetailPrice,0);
-					$Tag = "1"; // kantor
+					$Tag = "0";
 
 					// record the consignment for later invoice to partner
 					$SQL = "INSERT INTO klconsignment 
