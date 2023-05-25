@@ -171,6 +171,7 @@ INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodn
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 145 AND periodno <= 150;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 150 AND periodno <= 155;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 155 AND periodno <= 160;
+INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 160;
 
 
 TRUNCATE test_erp.`grns`;

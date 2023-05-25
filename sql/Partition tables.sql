@@ -163,7 +163,6 @@ ALTER TABLE salesorderdetails PARTITION BY RANGE COLUMNS (actualdispatchdate) (
 );
 
 ALTER TABLE `loctransfers` DROP PRIMARY KEY, ADD PRIMARY KEY (`loctransferid`, `shipdate`) USING BTREE;
-
 ALTER TABLE loctransfers PARTITION BY RANGE COLUMNS (shipdate) (
     PARTITION loctransfers_2010 VALUES  LESS THAN ('2011-01-01'),
     PARTITION loctransfers_2011 VALUES  LESS THAN ('2012-01-01'),
