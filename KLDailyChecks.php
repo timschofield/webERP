@@ -40,7 +40,7 @@ function KL_DailyChecks($Group, $RootPath, $db, $EmailText= ''){
 	}elseif ($Group == "1000-RLAdjustPackaging"){
 		$EmailText = KL_DailyRLAdjustmentsForPackaging(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
 	}elseif ($Group == "1100-OptimizeDB"){
-		$EmailText = KL_DailyOptimizationDatabase(FALSE, $db, $EmailText);
+		$EmailText = KL_DailyOptimizationDatabase(5, FALSE, $db, $EmailText);
 	}elseif ($Group == "1200-SyncWebERPOpenCart"){
 		$EmailText = KL_DailyCleanOpenCartDB(FALSE, $db, $db_oc, $oc_tableprefix, $EmailText);
 		$EmailText = WeberpToOpenCartDailySync(FALSE, $db, $db_oc, $oc_tableprefix, $EmailText);
@@ -184,102 +184,45 @@ function KL_DailyEmailsToStaff($db, $EmailText){
 	return $EmailText;
 }
 
-function KL_DailyOptimizationDatabase($ShowMessages, $db, $EmailText = ''){
-	$NumberDay = substr(Date('Y-m-d'),-2); // Get the date, 
-	
+function KL_DailyOptimizationDatabase($tablesPerDay, $ShowMessages, $db, $EmailText = ''){
+//	$NumberDay = substr(Date('Y-m-d'),-2); // Get the date number
 	$ErrMsg ='Could not OPTIMIZE tables because';
-	$result = DB_query($sql,$ErrMsg);
-	if (($NumberDay == 1) OR ($NumberDay == 21)){
-		$sql = "OPTIMIZE TABLE  `gltrans`";
-	}elseif (($NumberDay == 2) OR ($NumberDay == 22)){
-		$sql = "OPTIMIZE TABLE  `audittrail`";
-	}elseif (($NumberDay == 3) OR ($NumberDay == 23)){
-		$sql = "OPTIMIZE TABLE  `stockmoves`";
-	}elseif (($NumberDay == 4) OR ($NumberDay == 24)){
-		$sql = "OPTIMIZE TABLE  `stockmoves`";
-	}elseif (($NumberDay == 5) OR ($NumberDay == 25)){
-		$sql = "OPTIMIZE TABLE  `salesorderdetails`";
-	}elseif (($NumberDay == 6) OR ($NumberDay == 26)){
-		$sql = "OPTIMIZE TABLE  `debtortrans`";
-	}elseif (($NumberDay == 7) OR ($NumberDay == 27)){
-		$sql = "OPTIMIZE TABLE  `packagingused`";
-	}elseif (($NumberDay == 8) OR ($NumberDay == 28)){
-		$sql = "OPTIMIZE TABLE  `loctransfers` ,
-					`salesanalysis`";
-	}elseif (($NumberDay == 9) OR ($NumberDay == 29)){
-		$sql = "OPTIMIZE TABLE  `banktrans` ,
-					`locstock`";
-	}elseif (($NumberDay == 10) OR ($NumberDay == 30)){
-		$sql = "OPTIMIZE TABLE  `debtortranstaxes` ,
-					`salesorders`";
-	}elseif (($NumberDay == 11) OR ($NumberDay == 31)){
-		$sql = "OPTIMIZE TABLE  `custallocns` ,
-					`stockmovestaxes`";
-	}elseif ($NumberDay == 12){
-		$sql = "OPTIMIZE TABLE  `klretailcustomers` ,
-					`pcashdetails`";
-	}elseif ($NumberDay == 13){
-		$sql = "OPTIMIZE TABLE  `chartdetails` ,
-					`stockrequestitems` ,
-					`fixedassettrans`";
-	}elseif ($NumberDay == 14){
-		$sql = "OPTIMIZE TABLE  `grns` ,
-					`purchorderdetails` ,
-					`purchdata`";
-	}elseif ($NumberDay == 15){
-		$sql = "OPTIMIZE TABLE  `relateditems` ,
-					`klconsignment` ,
-					`worequirements` ,
-					`prices` ,
-					`kladjustrl` ,
-					`stockrequest` ,
-					`suppinvstogrn`";
-	}elseif ($NumberDay == 16){
-		$sql = "OPTIMIZE TABLE  `stockmaster` ,
-					`levels` ,
-					`supptrans` ,
-					`stockdescriptiontranslations` ,
-					`woitems` ,
-					`loctransfercancellations` ,
-					`workorders`";
-	}elseif ($NumberDay == 17){
-		$sql = "OPTIMIZE TABLE  `bom` ,
-					`mrpsupplies` ,
-					`purchorders` ,
-					`supptranstaxes` ,
-					`glaccountusers` ,
-					`salariescalculated` ,
-					`klsalesperformance`";
-	}elseif ($NumberDay == 18){
-		$sql = "OPTIMIZE TABLE  `salescatprod` ,
-					`freightcosts` ,
-					`fixedassets` ,
-					`returneditems` ,
-					`mrprequirements` ,
-					`locationusers` ,
-					`mrpcalendar`";
-	}elseif ($NumberDay == 19){
-		$sql = "OPTIMIZE TABLE  `mrpdemands` ,
-					`scripts` ,
-					`klfreeexchanges` ,
-					`securitygroups` ,
-					`pctabexpenses` ,
-					`chartmaster` ,
-					`pcexpenses`";
-	}elseif ($NumberDay == 20){
-		$sql = "OPTIMIZE TABLE  `custbranch` ,
-					`debtorsmaster` ,
-					`suppliers` ,
-					`salesman` ,
-					`bankaccountusers` ,
-					`klrevisedemaildomains` ,
-					`config` ,
-					`periods` ,
-					`www_users`";
+
+	$sql = "SHOW TABLES";
+ 	$result = DB_query($sql,$ErrMsg);
+	$totalTables = DB_num_rows($result);
+ 	if ($totalTables != 0){
+		$Text = 'DB optimization' . "\n";
+		$Text .= '# Tables to optimize: ' . $tablesPerDay . "\n";
+		$currentDay = date('z'); // Day of the year (0-365)
+		$startIndex = ($currentDay * $tablesPerDay) % $totalTables;
+
+		// Move the result pointer to the starting index
+		$skip = 0;
+		$count = 0;
+		while ($myrow = DB_fetch_array($result)) {
+			if ($skip < $startIndex){
+				$skip++;
+			}else{
+				$tableName = $myrow[0];
+				$optimizeSql = "OPTIMIZE TABLE " . $tableName . "";
+				$optimizeResult = DB_query($optimizeSql,$ErrMsg);
+				if (!$optimizeResult) {
+					$Text .= 'ERROR Optimizing ' . $tableName . "\n";
+				} else {
+					$Text .= 'Optimized ' . $tableName . "\n";
+				}
+
+				$count++;
+				if ($count >= $tablesPerDay) {
+					break; // Stop after optimizing the desired number of tables
+				}
+			}
+		}
+	}else{
+		$Text = 'DB optimization. DB has no tables' . "\n" . $sql;
 	}
-	
-	$result = DB_query($sql,$ErrMsg);
-	$Text = 'The system has just run the daily Kapal-Laut optimization. Day = ' . $NumberDay . "\n" . $sql;
+
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
 	return $EmailText;
 }
