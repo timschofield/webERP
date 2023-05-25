@@ -177,13 +177,11 @@ if (isset($_POST['Process'])){ //user hit submit a new entry to the receipt batc
 	} else {
 		$AllowThisPosting = true;
  		if ($_SESSION['ProhibitJournalsToControlAccounts'] == 1) {
-// 			if ($_SESSION['CompanyRecord']['gllink_debtors'] == '1' AND $_POST['GLCode'] == $_SESSION['CompanyRecord']['debtorsact']) {
  			if ($_POST['GLCode'] == $_SESSION['CompanyRecord']['debtorsact']) {
  				prnMsg(_('Payments involving the debtors control account cannot be entered. The general ledger debtors ledger (AR) integration is enabled so control accounts are automatically maintained. This setting can be disabled in System Configuration'), 'warn');
  				$AllowThisPosting = false;
  			}
-// 			if ($_SESSION['CompanyRecord']['gllink_creditors'] == '1' AND
-			if (($_POST['GLCode'] == $_SESSION['CompanyRecord']['creditorsact'] OR $_POST['GLCode'] == $_SESSION['CompanyRecord']['grnact'])) {
+			if ($_POST['GLCode'] == $_SESSION['CompanyRecord']['creditorsact'] OR $_POST['GLCode'] == $_SESSION['CompanyRecord']['grnact']) {
  				prnMsg(_('Payments involving the creditors control account or the GRN suspense account cannot be entered. The general ledger creditors ledger (AP) integration is enabled so control accounts are automatically maintained. This setting can be disabled in System Configuration'), 'warn');
  				$AllowThisPosting = false;
  			}
@@ -305,30 +303,27 @@ if (isset($_POST['CommitBatch'])){
 		}
 
 		if ($ReceiptItem->GLCode !=''){ //so its a GL receipt
-//			if ($_SESSION['CompanyRecord']['gllink_debtors']==1){ /* then enter a GLTrans record */
-			if (TRUE){ /* then enter a GLTrans record */
-				 $SQL = "INSERT INTO gltrans (type,
-								 			typeno,
-											trandate,
-											periodno,
-											account,
-											narrative,
-											amount,
-											tag)
-					VALUES (
-						12,
-						'" . $_SESSION['ReceiptBatch']->BatchNo . "',
-						'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
-						'" . $PeriodNo . "',
-						'" . $ReceiptItem->GLCode . "',
-						'" . $ReceiptItem->Narrative . "',
-						'" . -($ReceiptItem->Amount/$_SESSION['ReceiptBatch']->ExRate/$_SESSION['ReceiptBatch']->FunctionalExRate) . "',
-						'" . $ReceiptItem->tag . "'" . "
-					)";
-				$ErrMsg = _('Cannot insert a GL entry for the receipt because');
-				$DbgMsg = _('The SQL that failed to insert the receipt GL entry was');
-				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-			}
+			 $SQL = "INSERT INTO gltrans (type,
+										typeno,
+										trandate,
+										periodno,
+										account,
+										narrative,
+										amount,
+										tag)
+				VALUES (
+					12,
+					'" . $_SESSION['ReceiptBatch']->BatchNo . "',
+					'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
+					'" . $PeriodNo . "',
+					'" . $ReceiptItem->GLCode . "',
+					'" . $ReceiptItem->Narrative . "',
+					'" . -($ReceiptItem->Amount/$_SESSION['ReceiptBatch']->ExRate/$_SESSION['ReceiptBatch']->FunctionalExRate) . "',
+					'" . $ReceiptItem->tag . "'" . "
+				)";
+			$ErrMsg = _('Cannot insert a GL entry for the receipt because');
+			$DbgMsg = _('The SQL that failed to insert the receipt GL entry was');
+			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 			/*check to see if this is a GL posting to another bank account (or the same one)
 			if it is then a matching payment needs to be created for this account too */
@@ -498,82 +493,77 @@ if (isset($_POST['CommitBatch'])){
 	$ErrMsg = _('Cannot insert a bank transaction');
 	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-
-//	if ($_SESSION['CompanyRecord']['gllink_debtors']==1){ /* then enter GLTrans records for discount, bank and debtors */
-	if (TRUE){ /* then enter GLTrans records for discount, bank and debtors */
-
-		if ($BatchReceiptsTotal!=0){
-			/* Bank account entry first */
-			$SQL="INSERT INTO gltrans (type,
-										typeno,
-										trandate,
-										periodno,
-										account,
-										narrative,
-										amount)
-				VALUES (
-					12,
-					'" . $_SESSION['ReceiptBatch']->BatchNo . "',
-					'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
-					'" . $PeriodNo . "',
-					'" . $_SESSION['ReceiptBatch']->Account . "',
-					'" . $_SESSION['ReceiptBatch']->Narrative . "',
-					'" . $BatchReceiptsTotal . "'
-				)";
-			$DbgMsg = _('The SQL that failed to insert the GL transaction fro the bank account debit was');
-			$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
-			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	if ($BatchReceiptsTotal!=0){
+		/* Bank account entry first */
+		$SQL="INSERT INTO gltrans (type,
+									typeno,
+									trandate,
+									periodno,
+									account,
+									narrative,
+									amount)
+			VALUES (
+				12,
+				'" . $_SESSION['ReceiptBatch']->BatchNo . "',
+				'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
+				'" . $PeriodNo . "',
+				'" . $_SESSION['ReceiptBatch']->Account . "',
+				'" . $_SESSION['ReceiptBatch']->Narrative . "',
+				'" . $BatchReceiptsTotal . "'
+			)";
+		$DbgMsg = _('The SQL that failed to insert the GL transaction fro the bank account debit was');
+		$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
+		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 
-		}
-		if ($BatchDebtorTotal!=0){
-			/* Now Credit Debtors account with receipts + discounts */
-			$SQL="INSERT INTO gltrans ( type,
-										typeno,
-										trandate,
-										periodno,
-										account,
-										narrative,
-										amount)
-						VALUES (
+	}
+	if ($BatchDebtorTotal!=0){
+		/* Now Credit Debtors account with receipts + discounts */
+		$SQL="INSERT INTO gltrans ( type,
+									typeno,
+									trandate,
+									periodno,
+									account,
+									narrative,
+									amount)
+					VALUES (
+						12,
+						'" . $_SESSION['ReceiptBatch']->BatchNo . "',
+						'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
+						'" . $PeriodNo . "',
+						'". $_SESSION['CompanyRecord']['debtorsact'] . "',
+						'" . $_SESSION['ReceiptBatch']->Narrative . "',
+						'" . -$BatchDebtorTotal . "'
+						)";
+		$DbgMsg = _('The SQL that failed to insert the GL transaction for the debtors account credit was');
+		$ErrMsg = _('Cannot insert a GL transaction for the debtors account credit');
+		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+
+	} //end if there are some customer deposits in this batch
+
+	if ($BatchDiscount!=0){
+		/* Now Debit Discount account with discounts allowed*/
+		$SQL="INSERT INTO gltrans ( type,
+									typeno,
+									trandate,
+									periodno,
+									account,
+									narrative,
+									amount)
+					VALUES (
 							12,
 							'" . $_SESSION['ReceiptBatch']->BatchNo . "',
 							'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
 							'" . $PeriodNo . "',
-							'". $_SESSION['CompanyRecord']['debtorsact'] . "',
+							'" . $_SESSION['CompanyRecord']['pytdiscountact'] . "',
 							'" . $_SESSION['ReceiptBatch']->Narrative . "',
-							'" . -$BatchDebtorTotal . "'
-							)";
-			$DbgMsg = _('The SQL that failed to insert the GL transaction for the debtors account credit was');
-			$ErrMsg = _('Cannot insert a GL transaction for the debtors account credit');
-			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-
-		} //end if there are some customer deposits in this batch
-
-		if ($BatchDiscount!=0){
-			/* Now Debit Discount account with discounts allowed*/
-			$SQL="INSERT INTO gltrans ( type,
-										typeno,
-										trandate,
-										periodno,
-										account,
-										narrative,
-										amount)
-						VALUES (
-								12,
-								'" . $_SESSION['ReceiptBatch']->BatchNo . "',
-								'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
-								'" . $PeriodNo . "',
-								'" . $_SESSION['CompanyRecord']['pytdiscountact'] . "',
-								'" . $_SESSION['ReceiptBatch']->Narrative . "',
-								'" . $BatchDiscount . "'
-							)";
-			$DbgMsg = _('The SQL that failed to insert the GL transaction for the payment discount debit was');
-			$ErrMsg = _('Cannot insert a GL transaction for the payment discount debit');
-			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-		} //end if there is some discount
-		EnsureGLEntriesBalance(12,$_SESSION['ReceiptBatch']->BatchNo,$db);
-	} //end if there is GL work to be done - ie config is to link to GL
+							'" . $BatchDiscount . "'
+						)";
+		$DbgMsg = _('The SQL that failed to insert the GL transaction for the payment discount debit was');
+		$ErrMsg = _('Cannot insert a GL transaction for the payment discount debit');
+		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	} //end if there is some discount
+	EnsureGLEntriesBalance(12,$_SESSION['ReceiptBatch']->BatchNo,$db);
 
 
 	$ErrMsg = _('Cannot commit the changes');

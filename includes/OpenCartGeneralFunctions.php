@@ -866,51 +866,47 @@ function InsertCustomerReceipt ($CustomerCode, $AmountPaid, $FreightCost, $Custo
 	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 
-	// Insert GL entries too if integration enabled
+	/* then enter GLTrans records for discount, bank and debtors */
+	/* Bank account entry first */
+	$Narrative = $CustomerCode . ' ' . _('payment for order') . ' ' . $OrderNo . ' ' . _('Transaction ID') . ': ' . $TransactionID;
+	$SQL="INSERT INTO gltrans (	type,
+								typeno,
+								trandate,
+								periodno,
+								account,
+								narrative,
+								amount)
+			VALUES (12,
+					'" . $CustomerReceiptNo . "',
+					'" . Date('Y-m-d') . "',
+					'" . $PeriodNo . "',
+					'" . $BankAccount . "',
+					'" . $Narrative . "',
+					'" . ($AmountPaid) /$Rate . "'
+				)";
+	$DbgMsg = _('The SQL that failed to insert the GL transaction for the bank account debit was');
+	$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
+	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-//	if ($_SESSION['CompanyRecord']['gllink_debtors']==1){ /* then enter GLTrans records for discount, bank and debtors */
-	if (TRUE){ /* then enter GLTrans records for discount, bank and debtors */
-		/* Bank account entry first */
-		$Narrative = $CustomerCode . ' ' . _('payment for order') . ' ' . $OrderNo . ' ' . _('Transaction ID') . ': ' . $TransactionID;
-		$SQL="INSERT INTO gltrans (	type,
-									typeno,
-									trandate,
-									periodno,
-									account,
-									narrative,
-									amount)
+/* Now Credit Debtors account with receipts + discounts */
+	$SQL="INSERT INTO gltrans ( type,
+								typeno,
+								trandate,
+								periodno,
+								account,
+								narrative,
+								amount)
 				VALUES (12,
 						'" . $CustomerReceiptNo . "',
 						'" . Date('Y-m-d') . "',
 						'" . $PeriodNo . "',
-						'" . $BankAccount . "',
+						'". $_SESSION['CompanyRecord']['debtorsact'] . "',
 						'" . $Narrative . "',
-						'" . ($AmountPaid) /$Rate . "'
-					)";
-		$DbgMsg = _('The SQL that failed to insert the GL transaction for the bank account debit was');
-		$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
-		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-
-	/* Now Credit Debtors account with receipts + discounts */
-		$SQL="INSERT INTO gltrans ( type,
-									typeno,
-									trandate,
-									periodno,
-									account,
-									narrative,
-									amount)
-					VALUES (12,
-							'" . $CustomerReceiptNo . "',
-							'" . Date('Y-m-d') . "',
-							'" . $PeriodNo . "',
-							'". $_SESSION['CompanyRecord']['debtorsact'] . "',
-							'" . $Narrative . "',
-							'" . -(($AmountPaid) /$Rate). "' )";
-		$DbgMsg = _('The SQL that failed to insert the GL transaction for the debtors account credit was');
-		$ErrMsg = _('Cannot insert a GL transaction for the debtors account credit');
-		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-		EnsureGLEntriesBalanceOpenCart(12,$CustomerReceiptNo);
-	} //end if there is GL work to be done - ie config is to link to GL
+						'" . -(($AmountPaid) /$Rate). "' )";
+	$DbgMsg = _('The SQL that failed to insert the GL transaction for the debtors account credit was');
+	$ErrMsg = _('Cannot insert a GL transaction for the debtors account credit');
+	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	EnsureGLEntriesBalanceOpenCart(12,$CustomerReceiptNo);
 }
 
 function EnsureGLEntriesBalanceOpenCart ($TransType, $TransTypeNo) {
@@ -977,52 +973,46 @@ function TransactionCommissionGL ($CustomerCode, $BankAccount, $CommissionAccoun
 	$ErrMsg = _('Cannot insert a bank transaction');
 	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
+	/* Bank account entry first */
+	$Narrative = $CustomerCode . ' ' . $PaymentSystem . ' ' . _('Fees for Transaction ID') . ': ' . $TransactionID;
+	$SQL="INSERT INTO gltrans (	type,
+								typeno,
+								trandate,
+								periodno,
+								account,
+								narrative,
+								amount)
+			VALUES (1,
+					'" . $PaymentNo . "',
+					'" . Date('Y-m-d') . "',
+					'" . $PeriodNo . "',
+					'" . $BankAccount . "',
+					'" . $Narrative . "',
+					'" . -($Commission /$Rate) . "'
+				)";
+	$DbgMsg = _('The SQL that failed to insert the Paypal transaction fee from the bank account debit was');
+	$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
+	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-	// Insert GL entries too if integration enabled
-
-//	if ($_SESSION['CompanyRecord']['gllink_debtors']==1){ /* then enter GLTrans records for discount, bank and debtors */
-	if (TRUE){ /* then enter GLTrans records for discount, bank and debtors */
-		/* Bank account entry first */
-		$Narrative = $CustomerCode . ' ' . $PaymentSystem . ' ' . _('Fees for Transaction ID') . ': ' . $TransactionID;
-		$SQL="INSERT INTO gltrans (	type,
-									typeno,
-									trandate,
-									periodno,
-									account,
-									narrative,
-									amount)
+/* Now Credit Debtors account with receipts + discounts */
+	$SQL="INSERT INTO gltrans ( type,
+								typeno,
+								trandate,
+								periodno,
+								account,
+								narrative,
+								amount)
 				VALUES (1,
 						'" . $PaymentNo . "',
 						'" . Date('Y-m-d') . "',
 						'" . $PeriodNo . "',
-						'" . $BankAccount . "',
+						'". $CommissionAccount . "',
 						'" . $Narrative . "',
-						'" . -($Commission /$Rate) . "'
-					)";
-		$DbgMsg = _('The SQL that failed to insert the Paypal transaction fee from the bank account debit was');
-		$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
-		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-
-	/* Now Credit Debtors account with receipts + discounts */
-		$SQL="INSERT INTO gltrans ( type,
-									typeno,
-									trandate,
-									periodno,
-									account,
-									narrative,
-									amount)
-					VALUES (1,
-							'" . $PaymentNo . "',
-							'" . Date('Y-m-d') . "',
-							'" . $PeriodNo . "',
-							'". $CommissionAccount . "',
-							'" . $Narrative . "',
-							'" . ($Commission /$Rate). "' )";
-		$DbgMsg = _('The SQL that failed to insert the Paypal transaction fee for the commission account credit was');
-		$ErrMsg = _('Cannot insert a GL transaction for the debtors account credit');
-		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-		EnsureGLEntriesBalanceOpenCart(1,$PaymentNo);
-	} //end if there is GL work to be done - ie config is to link to GL
+						'" . ($Commission /$Rate). "' )";
+	$DbgMsg = _('The SQL that failed to insert the Paypal transaction fee for the commission account credit was');
+	$ErrMsg = _('Cannot insert a GL transaction for the debtors account credit');
+	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	EnsureGLEntriesBalanceOpenCart(1,$PaymentNo);
 }
 
 function ChangeOrderQuotationFlag($OrderNo, $Flag, $db){
