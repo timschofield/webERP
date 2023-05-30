@@ -1099,7 +1099,7 @@ if (isset($_POST['GLEntry']) AND isset($_SESSION['ReceiptBatch' . $identifier]))
 				<th colspan="2">' . _('General Ledger Receipt Entry') . '</th>
 			</tr>';
 
-	//Select the tag
+/*	//Select the tag
 	echo '<tr>
 			<td>' . _('Select Tag') . ':</td>
 			<td><select name="tag">';
@@ -1121,7 +1121,7 @@ if (isset($_POST['GLEntry']) AND isset($_SESSION['ReceiptBatch' . $identifier]))
 	echo '</select></td>
 		</tr>';
 // End select tag
-
+*/
 	/*now set up a GLCode field to select from avaialble GL accounts */
 	echo '<tr>
 			<td>' . _('GL Account') . ':</td>

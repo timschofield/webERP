@@ -269,7 +269,7 @@ if ($ProcessSection03){
 
 	if ($KL_SystemAdmin ){
 		$functionstarttime = time_start();
-		InsuficientStockForShopPackaging('SHPACK', 15, 100, 30, true, $RootPath, $db);
+		InsuficientStockForShopPackaging('SHPACK', 15, 90, 30, true, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
