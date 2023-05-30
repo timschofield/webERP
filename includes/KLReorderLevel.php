@@ -260,7 +260,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 							$NewRL = ceil($QtyToDistribute / ($LocationsToDistribute - $LocationsDistributed));
 							$NewRL = MaxRLCorrectionSomeModels($myrow['stockid'], $mydistribution['loccode'], $NewRL);
 							SetReorderLevel("Rebalancing", $myrow['stockid'], $mydistribution['loccode'], $mydistribution['oldrl'], $NewRL, $updateDB, $db);
-							$strategy = "Distribute all available stock between shops with RL>0";
+							$strategy = "Distribute all available stock between shops with RL > 0";
 							$QtyToDistribute = $QtyToDistribute - $NewRL;
 							$LocationsDistributed++;
 							if ($ShowMessages){
@@ -286,9 +286,8 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 								$PrintLine = FALSE;
 							}
 							if ($EmailText!=''){
-								$EmailText = $EmailText . $myrow['stockid'] . " needed @ " . 
-														$myrow['locationneeded'] . 
-														". OldRL @ " . 
+								$EmailText = $EmailText . $myrow['stockid'] .
+														" OldRL @ " . 
 														$mydistribution['loccode'] . 
 														" = " . 
 														locale_number_format($mydistribution['oldrl'],0) .
