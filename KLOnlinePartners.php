@@ -54,6 +54,13 @@ if(isset($_POST['submit'])) {
 					comissionxenditflattransfer = '" . $_POST['ComissionXenditFlatTransfer'] . "',
 					comissionxenditflatcc = '" . $_POST['ComissionXenditFlatCC'] . "',
 					comissionxenditpercentcc = '" . $_POST['ComissionXenditPercentCC'] . "',
+					accountmidtransidr ='" . $_POST['AccountMidtransIDR'] . "',
+					accounttokopediaidr ='" . $_POST['AccountTokopediaIDR'] . "',
+					accounttokopediacomissionidr = '" . $_POST['AccountTokopediaComissionIDR'] . "',
+					accountshopeeidr ='" . $_POST['AccountShopeeIDR'] . "',
+					accountshopeecomissionidr = '" . $_POST['AccountShopeeComissionIDR'] . "',
+					accountlazadaidr ='" . $_POST['AccountLazadaIDR'] . "',
+					accountlazadacomissionidr = '" . $_POST['AccountLazadaComissionIDR'] . "',
 					accountcomissionppn ='" . $_POST['AccountComissionPPN'] . "',
 					accountpaypalaud ='" . $_POST['AccountPayPalAUD'] . "',
 					accountpaypalcomissionaud = '" . $_POST['AccountPayPalComissionAUD'] . "',
@@ -98,6 +105,13 @@ if(isset($_POST['submit'])) {
 		unset($_POST['ComissionXenditFlatTransfer']);
 		unset($_POST['ComissionXenditFlatCC']);
 		unset($_POST['ComissionXenditPercentCC']);
+		unset($_POST['AccountMidtransIDR']);
+		unset($_POST['AccountTokopediaIDR']);
+		unset($_POST['AccountTokopediaComissionIDR']);
+		unset($_POST['AccountShopeeIDR']);
+		unset($_POST['AccountShopeeComissionIDR']);
+		unset($_POST['AccountLazadaIDR']);
+		unset($_POST['AccountLazadaComissionIDR']);
 		unset($_POST['AccountComissionPPN']);
 
 	} elseif($InputError !=1) {
@@ -124,6 +138,13 @@ if(isset($_POST['submit'])) {
 								comissionxenditflattransfer,
 								comissionxenditflatcc,
 								comissionxenditpercentcc,
+								accountmidtransidr,
+								accounttokopediaidr,
+								accounttokopediacomissionidr,
+								accountshopeeidr,
+								accountshopeecomissionidr,
+								accountlazadaidr,
+								accountlazadacomissionidr,
 								accountcomissionppn,
 								accountpaypalaud,
 								accountpaypalcomissionaud,
@@ -151,6 +172,13 @@ if(isset($_POST['submit'])) {
 								'" . $_POST['ComissionXenditFlatTransfer'] . "',
 								'" . $_POST['ComissionXenditFlatCC'] . "',
 								'" . $_POST['ComissionXenditPercentCC'] . "',
+								'" . $_POST['AccountMidtransIDR'] . "',
+								'" . $_POST['AccountTokopediaIDR'] . "',
+								'" . $_POST['AccountTokopediaComissionIDR'] . "',
+								'" . $_POST['AccountShopeeIDR'] . "',
+								'" . $_POST['AccountShopeeComissionIDR'] . "',
+								'" . $_POST['AccountLazadaIDR'] . "',
+								'" . $_POST['AccountLazadaComissionIDR'] . "',
 								'" . $_POST['AccountComissionPPN'] . "',
 								'" . $_POST['AccountPayPalAUD'] . "',
 								'" . $_POST['AccountPayPalComissionAUD'] . "',
@@ -193,6 +221,13 @@ if(isset($_POST['submit'])) {
 		unset($_POST['ComissionXenditFlatTransfer']);
 		unset($_POST['ComissionXenditFlatCC']);
 		unset($_POST['ComissionXenditPercentCC']);
+		unset($_POST['AccountMidtransIDR']);
+		unset($_POST['AccountTokopediaIDR']);
+		unset($_POST['AccountTokopediaComissionIDR']);
+		unset($_POST['AccountShopeeIDR']);
+		unset($_POST['AccountShopeeComissionIDR']);
+		unset($_POST['AccountLazadaIDR']);
+		unset($_POST['AccountLazadaComissionIDR']);
 		unset($_POST['AccountComissionPPN']);
 	}
 
@@ -318,6 +353,13 @@ if(!isset($_GET['delete'])) {
 					comissionxenditflattransfer,
 					comissionxenditflatcc,
 					comissionxenditpercentcc,
+					accountmidtransidr,
+					accounttokopediaidr,
+					accounttokopediacomissionidr,
+					accountshopeeidr,
+					accountshopeecomissionidr,
+					accountlazadaidr,
+					accountlazadacomissionidr,
 					accountcomissionppn,
 					accountpaypalaud,
 					accountpaypalcomissionaud,
@@ -358,6 +400,13 @@ if(!isset($_GET['delete'])) {
 		$_POST['ComissionXenditFlatTransfer'] = $myrow['comissionxenditflattransfer'];
 		$_POST['ComissionXenditFlatCC'] = $myrow['comissionxenditflatcc'];
 		$_POST['ComissionXenditPercentCC'] = $myrow['comissionxenditpercentcc'];
+		$_POST['AccountMidtransIDR'] = $myrow['accountmidtransidr'];
+		$_POST['AccountTokopediaIDR'] = $myrow['accounttokopediaidr'];
+		$_POST['AccountTokopediaComissionIDR'] = $myrow['accounttokopediacomissionidr'];
+		$_POST['AccountShopeeIDR'] = $myrow['accountshopeeidr'];
+		$_POST['AccountShopeeComissionIDR'] = $myrow['accountshopeecomissionidr'];
+		$_POST['AccountLazadaIDR'] = $myrow['accountlazadaidr'];
+		$_POST['AccountLazadaComissionIDR'] = $myrow['accountlazadacomissionidr'];
 		$_POST['AccountComissionPPN'] = $myrow['accountcomissionppn'];
 
 		echo '<input type="hidden" name="SelectedPartner" value="' . $SelectedPartner . '" />';
@@ -451,6 +500,33 @@ if(!isset($_GET['delete'])) {
 	}
 	if(!isset($_POST['ComissionXenditPercentCC'])) {
 		$_POST['ComissionXenditPercentCC'] = 0;
+	}
+	if(!isset($_POST['AccountXenditIDR'])) {
+		$_POST['AccountXenditIDR'] = '';
+	}
+	if(!isset($_POST['AccountXenditComissionIDR'])) {
+		$_POST['AccountXenditComissionIDR'] = '';
+	}
+	if(!isset($_POST['AccountMidtransIDR'])) {
+		$_POST['AccountMidtransIDR'] = '';
+	}
+	if(!isset($_POST['AccountTokopediaIDR'])) {
+		$_POST['AccountTokopediaIDR'] = '';
+	}
+	if(!isset($_POST['AccountTokopediaComissionIDR'])) {
+		$_POST['AccountTokopediaComissionIDR'] = '';
+	}
+	if(!isset($_POST['AccountShopeeIDR'])) {
+		$_POST['AccountShopeeIDR'] = '';
+	}
+	if(!isset($_POST['AccountShopeeComissionIDR'])) {
+		$_POST['AccountShopeeComissionIDR'] = '';
+	}
+	if(!isset($_POST['AccountLazadaIDR'])) {
+		$_POST['AccountLazadaIDR'] = '';
+	}
+	if(!isset($_POST['AccountLazadaComissionIDR'])) {
+		$_POST['AccountLazadaComissionIDR'] = '';
 	}
 	if(!isset($_POST['AccountComissionPPN'])) {
 		$_POST['AccountComissionPPN'] = 0;
@@ -625,6 +701,110 @@ if(!isset($_GET['delete'])) {
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($myrow=DB_fetch_array($GLAccount)) {
 		if($_POST['AccountPayPalComissionEUR']==$myrow['accountcode']) {
+			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		} else {
+			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		}
+	}
+	echo '</select></td></tr>';
+
+	echo '<tr>
+			<th colspan="2">' . 'MIDTRANS Details' . '</th>
+		</tr>';
+
+	echo '<tr>
+		<td>' . _('Midtrans IDR GL Account') . ':' . '</td>
+		<td><select name="AccountMidtransIDR">';
+	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
+	while ($myrow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountMidtransIDR']==$myrow['accountcode']) {
+			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		} else {
+			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		}
+	}
+	echo '</select></td></tr>';
+
+	echo '<tr>
+			<th colspan="2">' . 'TOKOPEDIA Details' . '</th>
+		</tr>';
+
+	echo '<tr>
+		<td>' . _('Tokopedia IDR GL Account') . ':' . '</td>
+		<td><select name="AccountTokopediaIDR">';
+	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
+	while ($myrow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountTokopediaIDR']==$myrow['accountcode']) {
+			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		} else {
+			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		}
+	}
+	echo '</select></td></tr>';
+	echo '<tr>
+		<td>' . _('Comission Tokopedia IDR GL Account') . ':' . '</td>
+		<td><select name="AccountTokopediaComissionIDR">';
+	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
+	while ($myrow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountTokopediaComissionIDR']==$myrow['accountcode']) {
+			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		} else {
+			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		}
+	}
+	echo '</select></td></tr>';
+	
+	echo '<tr>
+			<th colspan="2">' . 'SHOPEE Details' . '</th>
+		</tr>';
+
+	echo '<tr>
+		<td>' . _('Shopee IDR GL Account') . ':' . '</td>
+		<td><select name="AccountShopeeIDR">';
+	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
+	while ($myrow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountShopeeIDR']==$myrow['accountcode']) {
+			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		} else {
+			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		}
+	}
+	echo '</select></td></tr>';
+	echo '<tr>
+		<td>' . _('Comission Shopee IDR GL Account') . ':' . '</td>
+		<td><select name="AccountShopeeComissionIDR">';
+	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
+	while ($myrow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountShopeeComissionIDR']==$myrow['accountcode']) {
+			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		} else {
+			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		}
+	}
+	echo '</select></td></tr>';	
+
+	echo '<tr>
+			<th colspan="2">' . 'LAZADA Details' . '</th>
+		</tr>';
+
+	echo '<tr>
+		<td>' . _('Lazada IDR GL Account') . ':' . '</td>
+		<td><select name="AccountLazadaIDR">';
+	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
+	while ($myrow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountLazadaIDR']==$myrow['accountcode']) {
+			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		} else {
+			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		}
+	}
+	echo '</select></td></tr>';
+	echo '<tr>
+		<td>' . _('Comission Lazada IDR GL Account') . ':' . '</td>
+		<td><select name="AccountLazadaComissionIDR">';
+	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
+	while ($myrow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountLazadaComissionIDR']==$myrow['accountcode']) {
 			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
 			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
