@@ -19,7 +19,7 @@ function KapalLautRetailAreaSelection($PaymentMethod, $identifier){
 			// all cash sales go to Others
 			$Area = $_SESSION['AreaSalesCashOthers'];
 		}elseif ($_SESSION['CashSalesReported'] >= 100){
-			// all cash sales go to cash PT
+			// all cash sales go to cash PTADU, PTBB or POXX
 			$Area = $_SESSION['AreaSalesCash'];
 		}else{
 			// Needs to be splitted into Cash official and Cash others
@@ -30,64 +30,6 @@ function KapalLautRetailAreaSelection($PaymentMethod, $identifier){
 			}else{
 				$Area = $_SESSION['AreaSalesCashOthers'];
 			}
-			//
-			// TEMPORARY CODE UNTIL END OF PTBB STOCK
-			//
-			if (($_SESSION['PartnerCode'] == "PTBB") AND ($_SESSION['PercentConsignmentPTADU'] > 0) AND ($_SESSION['PercentConsignmentPTADU'] < 100)){
-				// if it is a PTBB sale in consignment
-				// Until we have mixed stock PTBB and PTADU we do have to count on it.
-				$AllItemsArePTBB = true;
-				foreach ($_SESSION['Items'.$identifier]->LineItems as $StockItem) {
-					$SQL="SELECT stockmaster.categoryid
-								FROM stockmaster
-								WHERE stockmaster.stockid='" . $StockItem->StockID . "'";
-					$ErrMsg = _('WARNING') . ': ' . _('Could not retrieve stock ID category');
-					$Result = DB_query($SQL, $ErrMsg);
-					$myStockCat = DB_fetch_array($Result);
-					$StockCategory = $myStockCat['categoryid'];
-					if (($StockCategory == "SETKLA") OR
-						($StockCategory == "SETBLA") OR
-						($StockCategory == "SETGEA") OR
-						($StockCategory == "TESTKA") OR
-						($StockCategory == "TESTBA") OR
-						($StockCategory == "TESTGA") OR
-						($StockCategory == "STABKA") OR
-						($StockCategory == "STABBA") OR
-						($StockCategory == "STABGA") OR
-						($StockCategory == "NOPOKA") OR
-						($StockCategory == "NOPOBA") OR
-						($StockCategory == "NOPOGA") OR
-						($StockCategory == "DISC2A") OR
-						($StockCategory == "DISC5A") OR
-						($StockCategory == "DISC8A") OR
-						($StockCategory == "COMPOA")){
-							// IT IS A PTADU ITEM
-							$AllItemsArePTBB = false;
-					}
-				} /* end check if all items in order are PTBB or not */
-				if ($AllItemsArePTBB){
-					// consignment sale and all items belong to PTBB and paid cash ==> Others
-					// $Area = $_SESSION['AreaSalesCashOthers'];
-					// Almost everything goes to others, 5% to cash official
-					$CashDraw = mt_rand(1,10000)/100;
-					if ($CashDraw <= (5)){
-						$Area = $_SESSION['AreaSalesCash'];
-					}else{
-						$Area = $_SESSION['AreaSalesCashOthers'];
-					}
-				}else{
-					// some items do not belong to PTBB (so some belong to PTADU) and paid cash ==> Roll the dice
-					$CashDraw = mt_rand(1,10000)/100;
-					if ($CashDraw <= $_SESSION['CashSalesReported']){
-						$Area = $_SESSION['AreaSalesCash'];
-					}else{
-						$Area = $_SESSION['AreaSalesCashOthers'];
-					}
-				}
-			}
-			//
-			// END OF TEMPORARY CODE UNTIL END OF PTBB STOCK
-			//
 		}
 	}elseif($PaymentMethod == PAYMENT_BY_CREDITCARD){
 		// Credit Card

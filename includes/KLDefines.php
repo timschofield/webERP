@@ -148,8 +148,9 @@ define("TRANSFER_LIST_DAYS_FOR_SPG", 7);
 define("PAYMENT_BY_CASH", 2); 
 define("PAYMENT_BY_CREDITCARD", 3); 
 
+define("LIST_SALES_AREAS_PTADU", "('ORA','OWA','OWW','RAC','RAR','RAZ')");
+
 define("ACCOUNT_PPN_ADU", "611012030AD"); // GL account for PPN PT.ADU
-define("ACCOUNT_PPN_BB",  "611012030PT"); // GL account for PPN PT.BB
 
 define("ACCOUNT_SHIPPING_ADU", "612011920AD"); // GL account for Shipping costs directly managed by PT.ADU
 
@@ -411,12 +412,6 @@ define("ACI_MINIMUM_QOH_TO_SHOW_ITEM_IN_MARKETPLACES", 3); // if we have less th
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // TOKOPEDIA
 ///////////////////////////////////////////////////////////////////////////////////////////////
-define("TOKOPEDIA_BANK_GL_ACCOUNT", '111121121PT');
-define("TOKOPEDIA_COMMISSION_GL_ACCOUNT", '700211321PT');
-define("TOKOPEDIA_COMMISSION_PERCENT", 1.00);
-define("TOKOPEDIA_COMMISSION_FREE_SHIPPING_PER_ITEM_PERCENT", 2.50);
-define("TOKOPEDIA_COMMISSION_FREE_SHIPPING_PER_ITEM_MAXIMUM", 10000);
-
 define("TOKOPEDIA_PREFIX_URL", "https://www.tokopedia.com/");
 define("TOKOPEDIA_BLINK_STOREID", "blinkfashionjewellery");
 define("TOKOPEDIA_KAPAL_LAUT_STOREID", "kapallautjewellery");
@@ -425,9 +420,6 @@ define("TOKOPEDIA_KAPAL_LAUT_STOREID", "kapallautjewellery");
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // SHOPEE
 ///////////////////////////////////////////////////////////////////////////////////////////////
-define("SHOPEE_BANK_GL_ACCOUNT", '111121122PT');
-define("SHOPEE_COMMISSION_GL_ACCOUNT", '700211322PT');
-define("SHOPEE_COMMISSION_PERCENT", 1.50);
 
 define("SHOPEE_CATEGORY_RING",           'Cincin Kasual');
 define("SHOPEE_CATEGORY_TOE_RING",       'Cincin Kasual');
@@ -457,14 +449,6 @@ define("SHOPEE_KAPAL_LAUT_STOREID", "359256976");
 // LAZADA
 ///////////////////////////////////////////////////////////////////////////////////////////////
 define("LAZADA_PREFIX_URL", "https://www.lazada.co.id/products/-i");
-define("LAZADA_BANK_GL_ACCOUNT", '111121130PT');
-define("LAZADA_COMMISSION_GL_ACCOUNT", '700211322PT');
-define("LAZADA_COMMISSION_PERCENT", 1.80);
-
-///////////////////////////////////////////////////////////////////////////////////////////////
-// MIDTRANS
-///////////////////////////////////////////////////////////////////////////////////////////////
-define("MIDTRANS_BANK_GL_ACCOUNT", '111121125PT');
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // DANAMON

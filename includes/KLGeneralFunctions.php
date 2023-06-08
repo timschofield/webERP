@@ -497,6 +497,18 @@ function CleanStringForWebERP($s){
 	return $s;
 }
 
+function GetAreaFromCustomer($CustomerCode){
+	$ErrMsg = 'Error in function GetAreaFromCustomer()';
+	$SQL = "SELECT area
+			FROM custbranch
+			WHERE custbranch.debtorno ='". $CustomerCode . "'
+			AND custbranch.branchcode = '" . $CustomerCode . "'";
+	$result = DB_query($SQL,$ErrMsg);
+	$Row = DB_fetch_row($result);
+	return $Row['0'];
+}
+
+
 function GetCategoryNameFromCode($CategoryId){
 	$ErrMsg = 'Error in function GetCategoryNameFromCode()';
 	$SQL="SELECT categorydescription FROM stockcategory WHERE categoryid='" . $CategoryId . "'";
@@ -705,8 +717,10 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 		return "ERROR";
 	}
 
-	if (($CustomerCode == "WEB-WH-IDR") ){
-		// it is a wholesale online order customer, so processed by PTADU
+	/* Now Get the area where the sale is to from the branches table */
+	$Area = GetAreaFromCustomer($CustomerCode);
+	if (ItemInList($Area, LIST_SALES_AREAS_PTADU)){
+		// it is a PTADU sales area, so processed by PTADU
 		$OnlinePartner = "ONLINEPTAD";
 	}else{
 		// it is retail in iDR, so it goes to PTBB
@@ -716,15 +730,45 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 	if ($PaymentCode != "MANUAL_MARKETPLACE") {
 		// apply the proper payment
 		// let's find the accounts, commission, etc to charge to the different payment codes
-		$SQLAccounts = "SELECT accounttransfermandiri,
+		$SQLAccounts = "SELECT onlinepartnercode,
+					onlinepartnername,
+					paypalaccount,
+					paypaltest,
+					paypalusername,
+					paypalpassword,
+					paypalsignature,
+					accounttransfermandiri,
 					accounttransferbca,
 					accounttransferdanamon,
+					accountdokuidr,
+					accountdokucomissionidr,
+					comissionflatdoku,
+					comissionccdoku,
 					accountxenditidr,
 					accountxenditcomissionidr,
-					accountcomissionppn,
 					comissionxenditflattransfer,
 					comissionxenditflatcc,
-					comissionxenditpercentcc
+					comissionxenditpercentcc,
+					accountmidtransidr,
+					accounttokopediaidr,
+					accounttokopediacomissionidr,
+					accountshopeeidr,
+					accountshopeecomissionidr,
+					accountlazadaidr,
+					accountlazadacomissionidr,
+					accountcomissionppn,
+					accountpaypalaud,
+					accountpaypalcomissionaud,
+					accountpaypalusd,
+					accountpaypalcomissionusd,
+					accountpaypaleur,
+					accountpaypalcomissioneur,
+					comissiontokopediapercent,
+					comissiontokopediafreeshippingperitempercent,
+					comissiontokopediafreeshippingperitemmaximum,
+					comissionshopeepercent,
+					comissionlazadapercent,
+					foreigncurrencysurchargefactor
 				FROM klonlinepartners
 				WHERE klonlinepartners.onlinepartnercode = '" . $OnlinePartner . "'";
 		$ErrMsg ='Could not get the GL Trasnfers and Commissions for online shop payments because';
@@ -744,14 +788,14 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 				$GLAccountCommissionPPN = "";
 				$Commission = 0;
 			}elseif ($PaymentCode == "bank_danamon"){
-				// bank Danamon direct transfer has no commissions THIS IS FOR WHOLESALE ONLY, GOES TO PTADU
+				// bank Danamon direct transfer has no commissions
 				$GLAccountTransfer = $myrowAccounts['accounttransferdanamon'];
 				$GLAccountCommission = "";
 				$GLAccountCommissionPPN = "";
 				$Commission = 0;
 			}elseif  ($PaymentCode == "snap"){
 				// MidTrans has commissions but we can't integrate them. We account full order, later manually we process commissions
-				$GLAccountTransfer = MIDTRANS_BANK_GL_ACCOUNT;
+				$GLAccountTransfer = $myrowAccounts['accountmidtransidr'];
 				$GLAccountCommission = "";
 				$GLAccountCommissionPPN = "";
 				$Commission = 0;
@@ -769,22 +813,38 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 				$Commission = round(($myrowAccounts['comissionxenditflatcc'] + ($TotalAmount * ($myrowAccounts['comissionxenditpercentcc']/100))) ,0);
 			}elseif  ($PaymentCode == "tokopedia"){
 				// Tokopedia payments  has commissions
-				$GLAccountTransfer = TOKOPEDIA_BANK_GL_ACCOUNT;
-				$GLAccountCommission = TOKOPEDIA_COMMISSION_GL_ACCOUNT;
-				$GLAccountCommissionPPN = ACCOUNT_PPN_BB;
-				$Commission = CalculateCommissionTokopedia($CustomerCode, $OrderNo, $TotalAmount);
+				$GLAccountTransfer = $myrowAccounts['accounttokopediaidr'];
+				$GLAccountCommission = $myrowAccounts['accounttokopediacomissionidr'];
+				$GLAccountCommissionPPN = $myrowAccounts['accountcomissionppn'];
+				$CommissionTokopediaPercent = $myrowAccounts['comissiontokopediapercent'];
+				$CommissionTokopediaFreeShippingPerItem = $myrowAccounts['comissiontokopediafreeshippingperitempercent'];
+				$CommissionTokopediaFreeShippingMaximum = $myrowAccounts['comissiontokopediafreeshippingperitemmaximum'];
+				$Commission = CalculateCommissionTokopedia($CustomerCode, 
+															$OrderNo, 
+															$TotalAmount,
+															$CommissionTokopediaPercent,
+															$CommissionTokopediaFreeShippingPerItem,
+															$CommissionTokopediaFreeShippingMaximum);
 			}elseif  ($PaymentCode == "shopee"){
 				// Shopee payments  has commissions
-				$GLAccountTransfer = SHOPEE_BANK_GL_ACCOUNT;
-				$GLAccountCommission = SHOPEE_COMMISSION_GL_ACCOUNT;
-				$GLAccountCommissionPPN = ACCOUNT_PPN_BB;
-				$Commission = CalculateCommissionShopee($CustomerCode, $OrderNo, $TotalAmount);
+				$GLAccountTransfer = $myrowAccounts['accountshopeeidr'];
+				$GLAccountCommission = $myrowAccounts['accountshopeecomissionidr'];
+				$GLAccountCommissionPPN = $myrowAccounts['accountcomissionppn'];
+				$CommissionShopeePercent = $myrowAccounts['comissionshopeepercent'];
+				$Commission = CalculateCommissionShopee($CustomerCode, 
+														$OrderNo, 
+														$TotalAmount,
+														$CommissionShopeePercent);
 			}elseif  ($PaymentCode == "lazada"){
 				// Lazada payments  has commissions
-				$GLAccountTransfer = LAZADA_BANK_GL_ACCOUNT;
-				$GLAccountCommission = LAZADA_COMMISSION_GL_ACCOUNT;
-				$GLAccountCommissionPPN = ACCOUNT_PPN_BB;
-				$Commission = CalculateCommissionLazada($CustomerCode, $OrderNo, $TotalAmount);
+				$GLAccountTransfer = $myrowAccounts['accountlazadaidr'];
+				$GLAccountCommission = $myrowAccounts['accountlazadacomissionidr'];
+				$GLAccountCommissionPPN = $myrowAccounts['accountcomissionppn'];
+				$CommissionLazadaPercent = $myrowAccounts['comissionlazadapercent'];
+				$Commission = CalculateCommissionLazada($CustomerCode, 
+														$OrderNo, 
+														$TotalAmount,
+														$CommissionLazadaPercent);
 			}
 			$CommissionPPN = round($Commission * PPN_PERCENT / 100, 0);
 			$NetAmount = $TotalAmount - $Commission - $CommissionPPN;

@@ -1319,12 +1319,14 @@ invoices can have a zero amount but there must be a quantity to invoice */
 /*first the cost of sales entry - GL accounts are retrieved using the function GetCOGSGLAccount from includes/GetSalesTransGLCodes.inc */
 
 // Begin of Consignment sales for PTADU MODIFICATIONS. Ricard KL
-// CONSIGNMENT FOR ONLINE
+// CONSIGNMENT sale for any area NOT managed by PTADU directly
 
 				$ItemBelongsTo = ItemBelongsToPT($OrderLine->StockID);
-				// if it is a PTADU item and NOT sold directly by PTADU to a Wholesale Online (OWW) customer
-				// Becasue when it is directly sold by PTADU we do not need clustering
-				if (($ItemBelongsTo == "PTADU") AND ($Area != OPENCART_DEFAULT_AREA_WHOLESALE)){  
+				// if it is a PTADU item and NOT sold directly by PTADU 
+				// PTADU can sell directly to several areas
+				// Because when it is directly sold by PTADU we do not need clustering
+				if (($ItemBelongsTo == "PTADU") AND (!ItemInList($Area, LIST_SALES_AREAS_PTADU))){  
+					// it is an PTADU item and PTADU does NOT sell it directly, but via a partner
 					$AccountCOGSbyADU = "510010000AD"; // when retail partner sells PTADU items COGS should go to PTADU
 					$AccountCOGS = $AccountCOGSbyADU;
 					
@@ -1644,8 +1646,8 @@ invoices can have a zero amount but there must be a quantity to invoice */
 								 _('Cannot retrieve the categoryid'));
 
 			$myrow = DB_fetch_row($Result);
-			$CtegoryID = $myrow[0];
-			if (ItemInList($CtegoryID, LIST_STOCK_CATEGORIES_SHOP_PACKAGING)){
+			$CategoryID = $myrow[0];
+			if (ItemInList($CategoryID, LIST_STOCK_CATEGORIES_SHOP_PACKAGING)){
 				/* Insert movement at packaging used . Strictly not needed as it can be calculated from Stockmoves type 17 but there can be small differences */
 				$SQL = "INSERT INTO packagingused (
 							orderno,

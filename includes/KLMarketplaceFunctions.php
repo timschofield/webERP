@@ -4,14 +4,19 @@
 			GENERAL MARKETPLACE (SHOPEE, TOKOPEDIA) FUNCTIONS
 **************************************************************************************************/
 
-function CalculateCommissionTokopedia($CustomerCode, $OrderNo, $TotalAmount){
+function CalculateCommissionTokopedia($CustomerCode, 
+									$OrderNo, 
+									$TotalAmount,
+									$CommissionTokopediaPercent,
+									$CommissionTokopediaFreeShippingPerItem,
+									$CommissionTokopediaFreeShippingMaximum){
 	if ($CustomerCode != "TOKOPEDIA"){
 		prnMsg("ERROR: Customer code = " . $CustomerCode . " and Payment Code = tokopedia", "error");
 		include('includes/footer.php');
 		exit;
 	}
 	// 1% from all order for Tokopedia
-	$CommissionTPGlobal = round($TotalAmount * TOKOPEDIA_COMMISSION_PERCENT /100 ,0); // this commission still includes PPN
+	$CommissionTPGlobal = round($TotalAmount * $CommissionTokopediaPercent /100 ,0); // this commission still includes PPN
 
 	// we need to pay comething to Tokopedia if shipper si SI-CEPAT, as it means free shipping for the customer, so we pay something
 	$SQL = "SELECT salesorders.shipvia
@@ -33,7 +38,7 @@ function CalculateCommissionTokopedia($CustomerCode, $OrderNo, $TotalAmount){
 			$result = DB_query($SQL);
 			while ($myrow = DB_fetch_array($result)) {
 				$ItemPrice = $myrow['unitprice']*(1-$myrow['discountpercent']);
-				$CommissionItem = min(round($ItemPrice * TOKOPEDIA_COMMISSION_FREE_SHIPPING_PER_ITEM_PERCENT /100 ,0), TOKOPEDIA_COMMISSION_FREE_SHIPPING_PER_ITEM_MAXIMUM); 
+				$CommissionItem = min(round($ItemPrice * $CommissionTokopediaFreeShippingPerItem /100 ,0), $CommissionTokopediaFreeShippingMaximum); 
 				$CommissionTPFreeShipping += $CommissionItem * $myrow['qtyinvoiced']; // this commission still has PPN
 			}
 		}
@@ -48,26 +53,26 @@ function CalculateCommissionTokopedia($CustomerCode, $OrderNo, $TotalAmount){
 	return $Commission;
 }
 
-function CalculateCommissionShopee($CustomerCode, $OrderNo, $TotalAmount){
+function CalculateCommissionShopee($CustomerCode, $OrderNo, $TotalAmount, $CommissionShopeePercent){
 	if ($CustomerCode != "SHOPEE"){
 		prnMsg("ERROR: Customer code = " . $CustomerCode . " and Payment Code = shopee", "error");
 		include('includes/footer.php');
 		exit;
 	}
 	// 1,5% from all order for Shopee
-	$Commission = round($TotalAmount * SHOPEE_COMMISSION_PERCENT /100 ,0); // this commission still includes PPN
+	$Commission = round($TotalAmount * $CommissionShopeePercent /100 ,0); // this commission still includes PPN
 	$Commission = round($Commission /((100 + PPN_PERCENT)/100) ,0); // this commision already net
 	return $Commission;
 }
 
-function CalculateCommissionLazada($CustomerCode, $OrderNo, $TotalAmount){
+function CalculateCommissionLazada($CustomerCode, $OrderNo, $TotalAmount, $CommissionLazadaPercent){
 	if ($CustomerCode != "LAZADA"){
 		prnMsg("ERROR: Customer code = " . $CustomerCode . " and Payment Code = lazada", "error");
 		include('includes/footer.php');
 		exit;
 	}
 	// 1,80 from all order for lazada
-	$Commission = round($TotalAmount * LAZADA_COMMISSION_PERCENT /100 ,0); // this commission still includes PPN
+	$Commission = round($TotalAmount * $CommissionLazadaPercent /100 ,0); // this commission still includes PPN
 	$Commission = round($Commission /((100 + PPN_PERCENT)/100) ,0); // this commision already net
 	return $Commission;
 }

@@ -1,6 +1,7 @@
 <?php
 
 /************************************************************************
+v 4.30 Added PTADU retail sales
 v 4.20 Added QRIS payments
 v 4.10 Added WeChat / AliPay payments
 v 4.00 PTADU/PTBB/POXX clustering ready
@@ -31,14 +32,9 @@ v 1.00 2011-08-10: Shops start using it.
 v 1.00 2011-07-25: Kantor starts using it.
 *********************************************************************/
 
-// POXX HARDCODED SETTINGS UNTIL END OF PTBB STOCK 
-$AccountCOGSforPOXX = "510010000";
-$AccountSalesFromConsignerToPOXX = '410010010';
-$AccountCOGSbyADU = "510010000AD"; // when retail partner sells PTADU items COGS should go to PTADU
-$CompanyConsignmentPOXX = "CASH";
-// END OF POXX HARDCODED SETTINGS UNTIL END OF PTBB STOCK 
+$AccountCOGSbyADU = "510010000AD"; // when a retail partner sells PTADU items COGS should go to PTADU
 
-define("VERSIONFILE", "4.20"); // 
+define("VERSIONFILE", "4.30"); // 
 
 include('includes/DefineCartClass.php');
 include('includes/session.php');
@@ -565,7 +561,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 			$PaymentMethod = PAYMENT_BY_CASH;
 		}
 		$Area = KapalLautRetailAreaSelection($PaymentMethod, $identifier);
-		$Tag = $_SESSION['klpostag'];
+		$Tag = 0;
 			
 		/*company record read in on login with info on GL Links and debtors GL account*/
 
@@ -878,39 +874,33 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 											$OrderLine->DiscountPercent
 											);
 			
-			// HARDCODED UNTIL END OF PTBB STOCK
-			$ItemBelongsTo = ItemBelongsToPT($OrderLine->StockID);
-			
 			if ($OrderLine->StandardCost !=0){
 				/*first the cost of sales entry*/
-
-//				GET THE $$AccountCOGS depending on item category, retail partner, etc
 //				$AccountCOGS = GetCOGSGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType, $db);
-				if ($ItemBelongsTo == "PTBB"){
-					// IT IS A PTBB ITEM
-					if ($_SESSION['PartnerCode'] == "PTBB"){
-						// PTBB sells its own items
-						$AccountCOGS = GetCOGSGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType, $db);
-					}else{
-						// IT IS A CONSIGNMENT RETAIL SALE TO POXX (OTHER RETAIL PARTNER), so COGS should go to HPP-(COGS) PTBB OR CASH HPP
-						$AccountCOGS = $AccountCOGSforPOXX;
-					}
+//				GET THE $$AccountCOGS as all the items belong to PTADU
+				if ($_SESSION['PartnerCode'] == "PTADU"){
+					// sale in a shop managed by PTADU, so COGS goes directly to PTADU
+					$AccountCOGS = $AccountCOGSbyADU;
+				}else{
+					// sale in a shop managed by another retail partner, so consignment acounting is needed
+					$AccountCOGS = $AccountCOGSbyADU;
 				}
-				if (($_SESSION['PercentConsignmentPTADU'] > 0) AND ($_SESSION['PercentConsignmentPTADU'] < 100) AND 
-					($ItemBelongsTo == "PTADU")){
-						// IT IS A PTADU ITEM
-						$AccountCOGS = $AccountCOGSbyADU;
-				}
-// END OF $AccountCOGS CALCULATION FOR RETAIL AND CONSIGNMENT
 				
 				if ($Area == $_SESSION['AreaSalesCashOthers']){
-					// No PT sales do not have COGS corrections
+					// Not reported sales do not have COGS corrections
 					$StandardCost = round($OrderLine->StandardCost,0);
 					$Compensation = 0;
 				}else{
-					// PT Sales have some COGS corrections and adjustments
-					$StandardCost = round($OrderLine->StandardCost * ($_SESSION['HPPCompensation'] / 100),0);
-					$Compensation = round($StandardCost - $OrderLine->StandardCost,0);
+					// reported Sales can have some COGS corrections and adjustments
+					if ($_SESSION['HPPCompensation'] == 100){
+						// if HPPCompensation = 100, then do not have COGS corrections
+						$StandardCost = round($OrderLine->StandardCost,0);
+						$Compensation = 0;
+					}else{
+						// if HPPCompensation != 100, then have COGS corrections
+						$StandardCost = round($OrderLine->StandardCost * ($_SESSION['HPPCompensation'] / 100),0);
+						$Compensation = round($StandardCost - $OrderLine->StandardCost,0);
+					}
 				}
 				$StandardCostLine = round($StandardCost * $OrderLine->Quantity);
 				
@@ -925,7 +915,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								'ERROR-POS-00001'
 								);
 				
-				// Compensation COGS for PT sales
+				// Compensation of COGS
 				if(abs($Compensation) > 1){
 					InsertIntoGLTrans("10", 
 									$InvoiceNo, 
@@ -983,13 +973,17 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 			} /*end of if price != 0 */
 	
 			// CLUSTERING PTADU
-			if (($_SESSION['PercentConsignmentPTADU'] > 0) AND 
-				($_SESSION['PercentConsignmentPTADU'] < 100) AND 
-				($ItemBelongsTo == "PTADU")){
-				// It is a sales on consignment by PT ADU So we need to report the consignment sale
+			if ($_SESSION['PartnerCode'] != "PTADU"){
+				// It is a sales on consignment by PT ADU to another retail partner we need to report the consignment sale
 				
 				$RetailPrice = round($OrderLine->Price * (1 - $OrderLine->DiscountPercent) / $ExRate,0);
-				$ConsignmentPrice = round($_SESSION['PercentConsignmentPTADU'] / 100 * $RetailPrice,0);
+				if ($_SESSION['PercentConsignmentPTADU'] <= 0){
+					$ConsignmentPrice = 0;
+				}else if ($_SESSION['PercentConsignmentPTADU'] >= 100){
+					$ConsignmentPrice = $RetailPrice;
+				}else{
+					$ConsignmentPrice = round($_SESSION['PercentConsignmentPTADU'] / 100 * $RetailPrice,0);
+				}
 				// record the consignment for later invoice to partner
 				$SQL = "INSERT INTO klconsignment 
 							(saledate,
