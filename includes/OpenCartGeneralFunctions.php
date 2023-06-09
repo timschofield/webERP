@@ -266,63 +266,19 @@ function GetWeberpForeignCurrencySurchargeFactor($Location, $db){
 	return $Factor;
 }
 
-function GetWeberpSalesArea($CustomerCode, $Location, $CustomerGroupId, $db){
-	if (($CustomerGroupId == "4") OR ($CustomerGroupId == "6")){
-		// it is wholesale so it goes to PTADU
-		$Area = OPENCART_DEFAULT_AREA_WHOLESALE;
-	}else{
-		// it is retail, so it goes to PTBB
-		$Area = OPENCART_DEFAULT_AREA_RETAIL;
-	}
-	return $Area;
+function GetWeberpGLAccountPayPalFromCustomer($CustomerCode, $db){
 
-/*	// by default: retail in Indonesia
-	$Area = OPENCART_DEFAULT_AREA_RETAIL;
-	if ($CustomerCode == 'WEB-KL-IDR'){
-		if ($CustomerGroupId != 1){
-			// It is a Wholesale customer in IDR
-			$Area = OPENCART_DEFAULT_AREA_WHOLESALE;
-		}
-	}else{
-		// it is in foreign currency. Check if it goes to PayPal PTBB or others
-		$SQL = "SELECT locations.onlinepartnercode
-				FROM locations
-				WHERE locations.loccode = '" . $Location . "'";
-		$ErrMsg ='Could not get the online partner in webERP because';
-		$result = DB_query($SQL,$ErrMsg);
-		if(DB_num_rows($result) != 0){
-			$myrow = DB_fetch_array($result);
-			if ($myrow['onlinepartnercode'] == 'ONLINEPTBB'){
-				// Online store managed by PTBB, so goes by default.
-				if ($CustomerGroupId != 1){
-					// Wholesale customer in foreign currency
-					$Area = OPENCART_DEFAULT_AREA_WHOLESALE;
-				}
-			}else{
-				// Online store not managed by PTBB, so cash sales
-				$Area = OPENCART_DEFAULT_AREA_CASH;
-			}
-		}
-	}
-	return $Area;
-*/
-}
+	$Area = GetAreaFromCustomer($CustomerCode);
+	$Currency = GetCurrencyFromCustomer($CustomerCode);
+	$OnlinePartner = GetOnlinePartnerFromArea($Area);
 
-function GetWeberpGLAccountFromCustomerGroupAndCurrency($CustomerGroupId, $Currency, $db){
-	if (($CustomerGroupId == "4") OR ($CustomerGroupId == "6")){
-		// wholesale, so it is online partner = "PTADU"
-		$OnlinePartner = "ONLINEPTAD";
-	}else{
-		// it is retail, so online partner = "PTBB"
-		$OnlinePartner = "ONLINEPTBB";
-	}
 	$SQL = "SELECT accountdokuidr,
 					accountpaypalaud,
 					accountpaypalusd,
 					accountpaypaleur
 			FROM klonlinepartners
 			WHERE klonlinepartners.onlinepartnercode = '" . $OnlinePartner . "'";
-	$ErrMsg ='Could not get the Online account GL Account for ' . $Currency . ' in webERP because';
+	$ErrMsg ='Could not get the Online account GL Account for ' . $OnlinePartner . ' in webERP because';
 	$result = DB_query($SQL,$ErrMsg);
 	if(DB_num_rows($result) != 0){
 		$myrow = DB_fetch_array($result);
@@ -342,14 +298,11 @@ function GetWeberpGLAccountFromCustomerGroupAndCurrency($CustomerGroupId, $Curre
 	return $GLAccount;
 }
 
-function GetWeberpGLCommissionAccountFromCustomerGroupAndCurrency($CustomerGroupId, $Currency, $db){
-	if (($CustomerGroupId == "4") OR ($CustomerGroupId == "6")){
-		// wholesale, so it is online partner = "PTADU"
-		$OnlinePartner = "ONLINEPTAD";
-	}else{
-		// it is retail, so online partner = "PTBB"
-		$OnlinePartner = "ONLINEPTBB";
-	}
+function GetWeberpGLCommissionAccountPayPalFromCustomer($CustomerCode, $db){
+	$Area = GetAreaFromCustomer($CustomerCode);
+	$Currency = GetCurrencyFromCustomer($CustomerCode);
+	$OnlinePartner = GetOnlinePartnerFromArea($Area);
+
 	$SQL = "SELECT accountdokucomissionidr,
 					accountpaypalcomissionaud,
 					accountpaypalcomissionusd,

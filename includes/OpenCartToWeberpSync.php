@@ -147,7 +147,7 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db,
 			$Location = OPENCART_DEFAULT_LOCATION;
 			$Comments =  CleanStringForWebERP($myrow['comment']);
 			$WebERPDateOrder = date('Y-m-d H:i:s', strtotime( $myrow['date_modified'] . -$TimeDifference . ' hours'));
-			$Area = GetWeberpSalesArea($CustomerCode, $Location, $myrow['customer_group_id'], $db);
+			$Area = GetAreaFromCustomer($CustomerCode);
 			$PaymentCode = $myrow['payment_code'];
 			
 			if($DefaultShipVia == 10){
@@ -608,8 +608,8 @@ function SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeR
 			$Rate = GetWeberpCurrencyRate($CurrencyOrder, $db);
 			$AmountPaid = $myrow['paypaltotal'];
 			$TransactionID = $myrow['transaction_id'];
-			$GLAccount = GetWeberpGLAccountFromCustomerGroupAndCurrency($myrow['customer_group_id'], $CurrencyPayment, $db);
-			$GLCommissionAccount = GetWeberpGLCommissionAccountFromCustomerGroupAndCurrency($myrow['customer_group_id'], $CurrencyPayment, $db);
+			$GLAccount = GetWeberpGLAccountPayPalFromCustomer($CustomerCode, $db);
+			$GLCommissionAccount = GetWeberpGLCommissionAccountPayPalFromCustomer($CustomerCode, $db);
 			$PayPalResponseArray = GetPaypalReturnDataInArray($myrow['debug_data']);
 			$Commission = urldecode($PayPalResponseArray['PAYMENTINFO_0_FEEAMT']);
 			$WebERPDateOrder = date('Y-m-d H:i:s', strtotime( $myrow['created'] . -$TimeDifference . ' hours'));

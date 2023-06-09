@@ -18,7 +18,7 @@ function CalculateCommissionTokopedia($CustomerCode,
 	// 1% from all order for Tokopedia
 	$CommissionTPGlobal = round($TotalAmount * $CommissionTokopediaPercent /100 ,0); // this commission still includes PPN
 
-	// we need to pay comething to Tokopedia if shipper si SI-CEPAT, as it means free shipping for the customer, so we pay something
+	// we need to pay comething to Tokopedia if shipper is SI-CEPAT, as it means free shipping for the customer, so we pay something
 	$SQL = "SELECT salesorders.shipvia
 		FROM salesorders 
 		WHERE salesorders.orderno = '" . $OrderNo . "' ";			

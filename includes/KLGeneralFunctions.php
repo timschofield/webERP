@@ -508,6 +508,26 @@ function GetAreaFromCustomer($CustomerCode){
 	return $Row['0'];
 }
 
+function GetCurrencyFromCustomer($CustomerCode){
+	$ErrMsg = 'Error in function GetCurrencyFromCustomer()';
+	$SQL = "SELECT currcode
+			FROM debtorsmaster
+			WHERE debtorsmaster.debtorno ='". $CustomerCode . "'";
+	$result = DB_query($SQL,$ErrMsg);
+	$Row = DB_fetch_row($result);
+	return $Row['0'];
+}
+
+function GetOnlinePartnerFromArea($Area){
+	if (ItemInList($Area, LIST_SALES_AREAS_PTADU)){
+		// it is a PTADU sales area, so processed by PTADU
+		$OnlinePartner = "ONLINEPTAD";
+	}else{
+		// it is retail in iDR, so it goes to PTBB
+		$OnlinePartner = "ONLINEPTBB";
+	}
+	return $OnlinePartner;
+}
 
 function GetCategoryNameFromCode($CategoryId){
 	$ErrMsg = 'Error in function GetCategoryNameFromCode()';
@@ -704,12 +724,8 @@ function FindWebsiteBrand($StockID, $Category, $Description){
 
 function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $TotalAmount){
 
-	// check it is a customer online of the proper currency (IDR)
-	if (($CustomerCode == "WEB-KL-IDR") 
-		OR ($CustomerCode == "WEB-WH-IDR") 
-		OR ($CustomerCode == "TOKOPEDIA") 
-		OR ($CustomerCode == "LAZADA") 
-		OR ($CustomerCode == "SHOPEE")){
+	// so far... only in IDR
+	if (GetCurrencyFromCustomer($CustomerCode) == "IDR"){
 		$FunctionalExRate = 1;
 		$ExRate = 1;
 		$Currency = "IDR";
@@ -717,26 +733,13 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 		return "ERROR";
 	}
 
-	/* Now Get the area where the sale is to from the branches table */
 	$Area = GetAreaFromCustomer($CustomerCode);
-	if (ItemInList($Area, LIST_SALES_AREAS_PTADU)){
-		// it is a PTADU sales area, so processed by PTADU
-		$OnlinePartner = "ONLINEPTAD";
-	}else{
-		// it is retail in iDR, so it goes to PTBB
-		$OnlinePartner = "ONLINEPTBB";
-	}
+	$OnlinePartner = GetOnlinePartnerFromArea($Area);
 
 	if ($PaymentCode != "MANUAL_MARKETPLACE") {
 		// apply the proper payment
 		// let's find the accounts, commission, etc to charge to the different payment codes
 		$SQLAccounts = "SELECT onlinepartnercode,
-					onlinepartnername,
-					paypalaccount,
-					paypaltest,
-					paypalusername,
-					paypalpassword,
-					paypalsignature,
 					accounttransfermandiri,
 					accounttransferbca,
 					accounttransferdanamon,
@@ -757,21 +760,14 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 					accountlazadaidr,
 					accountlazadacomissionidr,
 					accountcomissionppn,
-					accountpaypalaud,
-					accountpaypalcomissionaud,
-					accountpaypalusd,
-					accountpaypalcomissionusd,
-					accountpaypaleur,
-					accountpaypalcomissioneur,
 					comissiontokopediapercent,
 					comissiontokopediafreeshippingperitempercent,
 					comissiontokopediafreeshippingperitemmaximum,
 					comissionshopeepercent,
-					comissionlazadapercent,
-					foreigncurrencysurchargefactor
+					comissionlazadapercent
 				FROM klonlinepartners
 				WHERE klonlinepartners.onlinepartnercode = '" . $OnlinePartner . "'";
-		$ErrMsg ='Could not get the GL Trasnfers and Commissions for online shop payments because';
+		$ErrMsg ='Could not get the GL Transfers and Commissions for online shop payments because';
 		$resultAccounts = DB_query($SQLAccounts,$ErrMsg);
 		if(DB_num_rows($resultAccounts) != 0){
 			$myrowAccounts = DB_fetch_array($resultAccounts);

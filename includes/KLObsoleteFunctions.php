@@ -1850,8 +1850,8 @@ function SyncDOKUPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun
 			$Rate = GetWeberpCurrencyRate($CurrencyOrder, $db);
 			$AmountPaid = $myrow['amount'];
 			$TransactionID = $myrow['trx_id'];
-			$GLAccount = GetWeberpGLAccountFromCustomerGroupAndCurrency($myrow['customer_group_id'], $CurrencyPayment, $db);
-			$GLCommissionAccount = GetWeberpGLCommissionAccountFromCustomerGroupAndCurrency($myrow['customer_group_id'], $CurrencyPayment, $db);
+			$GLAccount = GetWeberpGLAccountPayPalFromCustomerGroupAndCurrency($myrow['customer_group_id'], $CurrencyPayment, $db);
+			$GLCommissionAccount = GetWeberpGLCommissionAccountPayPalFromCustomerGroupAndCurrency($myrow['customer_group_id'], $CurrencyPayment, $db);
 			
 			$Commission = $ComissionFlatDOKU; // For each tx there is a flat comission
 			if (($myrow['payment_channel'] == "15") OR ($myrow['payment_channel'] == "16")){
