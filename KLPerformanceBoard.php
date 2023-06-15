@@ -622,6 +622,19 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$myrow = DB_fetch_array($Result);
 	$SalesCashADU = -$myrow[0];
 
+	// Cash sales still floating (still not received in kantor)
+	$SQL = "SELECT SUM(gltrans.amount)
+			FROM gltrans
+			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
+				AND gltrans.trandate <= '" . $Today . "'
+				AND gltrans.account IN (SELECT klposcashaccount
+										FROM locations
+										WHERE partnercode = 'PTADU'
+											AND typeloc LIKE 'SHOP%')";
+	$Result = DB_query($SQL);
+	$myrow = DB_fetch_array($Result);
+	$FloatingCashADU = $myrow[0];
+	
 	// Cash Danamon IDR PTADU to Cash Kantor
 	$Account = "111121105AD";
 	$SQL = "SELECT SUM(gltrans.amount)
@@ -684,6 +697,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$CurrentBalanceADU = $CashEndOfPreviousYearADU
 						+$SalesCashADU
 						+$BankToCashADU
+						-$FloatingCashADU
 						-$ExpensesADUPaidCash
 						-$CashToSmallSuppliersADU
 						-$CashToRentADU;
@@ -840,7 +854,19 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 		printf('<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
-				'Total Withdrawal from Danamon IDR ADU to Cash Kantor '.$Year, 
+				'Floating Cash still in shops PT ADU', 
+				locale_number_format(-$FloatingCashADU,0)
+				);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'Cash received from shops PT ADU in Brankas Kantor during '. $Year, 
+				locale_number_format($SalesCashADU-$FloatingCashADU,0)
+				);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'Total deposit/withdrawal Brankas Kantor <-> Danamon IDR PTADU', 
 				locale_number_format($BankToCashADU,0)
 				);
 		printf('<td>%s</td>
@@ -924,7 +950,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 		printf('<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
-				'Floating Cash still in shops', 
+				'Floating Cash still in shops PTBB', 
 				locale_number_format(-$FloatingCashBB,0)
 				);
 		printf('<td>%s</td>
@@ -936,7 +962,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 		printf('<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
-				'Total deposits from Brankas Kantor to Danamon IDR PTBB', 
+				'Total deposit/withdrawal from Brankas Kantor <-> Danamon IDR PTBB', 
 				locale_number_format($BankToCashBB,0)
 				);
 		printf('<td>%s</td>
