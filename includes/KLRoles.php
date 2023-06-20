@@ -12,6 +12,7 @@ $KL_ShopSupportTeam = FALSE;
 $KL_ShopSupportLeader = FALSE;
 $KL_OnlineSales = FALSE;
 $KL_ShopManager = FALSE;
+$KL_SalesDirector = FALSE;
 $KL_SPGSeniorOrSupport = FALSE;
 $KL_SPGJunior = FALSE;
 $KL_PettyCash = FALSE;
@@ -30,8 +31,7 @@ if ($_SESSION['AccessLevel'] == 8){ // webERP System Administration (R)
 }else if ($_SESSION['AccessLevel'] == 15){ // PettyCash Only User (courier, etc...)
 	$KL_PettyCash = TRUE;
 }else if ($_SESSION['AccessLevel'] == 34){ // Sales DIrector (a.k.a Fathus)
-	$KL_ShopManager = TRUE;
-	$KL_SalesTeamOnline = TRUE;
+	$KL_SalesDirector = TRUE;
 }else if ($_SESSION['AccessLevel'] == 17){ // Sales Team SPG
 	$KL_SPGSeniorOrSupport = TRUE;
 }else if ($_SESSION['AccessLevel'] == 22){ // Sales Team SPG Support

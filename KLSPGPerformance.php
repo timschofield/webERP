@@ -20,6 +20,7 @@ if ($KL_SystemAdmin){
 if ($KL_SystemAdmin 
 	OR $KL_OperationalManager 
 	OR $KL_BusinessDevelopmentManager 
+	OR $KL_SalesDirector
 	OR $KL_ShopManager){
 
 	SPGPerformanceMonthy($db);
@@ -48,7 +49,8 @@ if ($KL_SystemAdmin
 if ($KL_SystemAdmin 
 	OR $KL_OperationalManager
 	OR $KL_ShopManager
-	OR $KL_BusinessDevelopmentManager){	
+	OR $KL_BusinessDevelopmentManager
+	OR $KL_SalesDirector){	
 
 	RetailTypePayments("SPG",90, $db);
 	$NumberOfTestExecuted++;

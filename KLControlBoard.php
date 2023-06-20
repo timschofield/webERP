@@ -64,6 +64,7 @@ if ($_SESSION['UserID'] == "Ricard"){
 //	$KL_OperationalLeader = TRUE;
 //	$KL_AdministrationTeam = TRUE;
 //	$KL_BusinessDevelopmentManager = TRUE;
+// 	$KL_SalesDirector = TRUE;
 //	$KL_PurchasingTeam = TRUE;
 //	$KL_ShopSupportTeam = TRUE;
 //	$KL_ShopSupportLeader = TRUE;
@@ -98,6 +99,7 @@ if ($KL_SystemAdmin
 	OR $KL_OperationalManager 
 	OR $KL_AdministrationTeam 
 	OR $KL_BusinessDevelopmentManager 
+	OR $KL_SalesDirector
 	OR $KL_PurchasingTeam 
 	OR $KL_ShopSupportTeam 
 	OR $KL_ShopSupportLeader 
@@ -124,6 +126,7 @@ if ($ProcessSection01){
 	***************************************************************************************/
 
 	if ($KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector
 		OR $KL_ShopManager){
 // COVID REDUCTION OF PANEL
 //		SPGNotReportingSalesInDays(2, $db);
@@ -175,12 +178,14 @@ if ($ProcessSection01){
 	***************************************************************************************/
 
 	if ($KL_SystemAdmin
-		OR $KL_BusinessDevelopmentManager){
+		OR $KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector){
 		$NumberOfTestExecuted = MinimumOutletStockAvailable(20, 80, 20, $NumberOfTestExecuted);
 	}
 
 	if ($KL_SystemAdmin
 		OR $KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector
 		OR $KL_ShopSupportTeam){
 		
 		over_or_below_limit("Items changing price or moving category", "OVER", MAX_ITEMS_CHANGING_PRICE_OR_MOVING_DISC, $RootPath, $db);
@@ -208,7 +213,8 @@ if ($ProcessSection01){
 	}
 
 	if ($KL_OperationalManager
-		OR $KL_BusinessDevelopmentManager){
+		OR $KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector){
 
 		ItemsChangingPriceDelayed(5, $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -221,6 +227,7 @@ if ($ProcessSection01){
 	}
 
 	if ($KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam 
 		OR $KL_ShopSupportLeader){
 		
@@ -234,6 +241,7 @@ if ($ProcessSection01){
 	}
 
 	if ($KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam 
 		OR $KL_ShopSupportLeader){	
 
@@ -420,6 +428,7 @@ if ($ProcessSection01){
 	***************************************************************************************/
 
 	if ($KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam){
 		ItemsInSetup("ReadyToTest", "SETKLA", $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -438,6 +447,7 @@ if ($ProcessSection01){
 		}
 
 	if ($KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam){
 		ItemsInSetup("WithReorderLevel", "SETKLA", $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -450,13 +460,15 @@ if ($ProcessSection01){
 	}
 
 	if ($KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam){
 
 		ItemsInmediateShortage("COMPOA", $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_BusinessDevelopmentManager){
+	if ($KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector){
 
 		GoodsJustArrived("PO", "KANTO", 3, $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -478,7 +490,8 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_BusinessDevelopmentManager){
+	if ($KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector){
 
 		ItemsWithStockKantorButReorderLevelTokoZero("SHOPKL", $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -524,6 +537,7 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam){
 
 		ValueStockLocation("SERVI",    0,  150, 0, 0, $db);
@@ -554,6 +568,7 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam){
 		ComponentsToObsolete(false, 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -562,6 +577,7 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam
 		OR $KL_ShopSupportLeader){
 		ItemsInKLProcessAndRLNotZero($RootPath, $db);
@@ -569,6 +585,7 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam
 		OR $KL_ShopSupportLeader){
 		ItemsOnSpecialRequest($RootPath, $db);
@@ -581,8 +598,8 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_SystemAdmin OR
-		$KL_OperationalManager){
+	if ($KL_SystemAdmin 
+		OR $KL_OperationalManager){
 		CheckPackagingToBeRefilled(FALSE, FALSE, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
@@ -595,6 +612,7 @@ if ($ProcessSection02){
 	if ($KL_SystemAdmin
 		OR $KL_OperationalManager
 		OR $KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam 
 		OR $KL_ShopSupportTeam){
 		
@@ -606,8 +624,9 @@ if ($ProcessSection02){
 	/***************************************************************************************
 	* PACKAGING CONTROL         
 	***************************************************************************************/
-	if ($KL_BusinessDevelopmentManager OR 
-		$KL_PurchasingTeam){
+	if ($KL_BusinessDevelopmentManager 
+		OR $KL_SalesDirector
+		OR $KL_PurchasingTeam){
 		prnMsg("Packaging Information",'info');
 		InsuficientStockForShopPackaging('SHPACK', 15, 90, 30, true, $RootPath, $db); // Works for both regular and outlet shop packaging
 		$NumberOfTestExecuted++;
@@ -622,7 +641,8 @@ if ($ProcessSection02){
 	/***************************************************************************************
 	* SALES CONTROL         
 	***************************************************************************************/
-	if ($KL_BusinessDevelopmentManager){
+	if ($KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector){
 
 		ItemsInCategoryForMoreThanDays( 120, "SETKLA", $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -685,6 +705,7 @@ if ($ProcessSection02){
 	***************************************************************************************/
 
 	if ($KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam){
 		OldPurchasingOrdersStillActive(90, $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -694,8 +715,9 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 	
-	if ($KL_BusinessDevelopmentManager OR 
-		$KL_PurchasingTeam){
+	if ($KL_BusinessDevelopmentManager 
+		OR $KL_SalesDirector
+		OR $KL_PurchasingTeam){
 		PurchaseOrdersWrongPlannedDates($RootPath, $db);
 		$NumberOfTestExecuted++;
 		POStatusControl("","IN NEGOTIATION WITH SUPPLIER", 0, $periodnow, $RootPath, $db);
@@ -708,15 +730,17 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 	
-	if ($KL_BusinessDevelopmentManager){
+	if ($KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector){
 		POStatusControl("FORSALE","STILL NOT FULLY PAID", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		POStatusControl("OTHERS","STILL NOT FULLY PAID", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 	
-	if ($KL_BusinessDevelopmentManager OR 
-		$KL_PurchasingTeam){
+	if ($KL_BusinessDevelopmentManager 
+		OR $KL_SalesDirector
+		OR $KL_PurchasingTeam){
 		POStatusControl("","BALI PAID BUT NOT RECEIVED IN KANTOR", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		POStatusControl("","BALI RECEIVED IN KANTOR BUT NOT PAID", 0,$periodnow,  $RootPath, $db);
@@ -741,7 +765,8 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_BusinessDevelopmentManager){
+	if ($KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector){
 		POStatusControl("","ARRIVING IN NEXT DAYS", 75, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
@@ -759,6 +784,7 @@ if ($ProcessSection02){
 
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector
 		OR $KL_AdministrationTeam
 		OR $KL_SalesTeamOnline
 		OR $KL_OperationalManager
@@ -770,6 +796,7 @@ if ($ProcessSection02){
 
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector
 		OR $KL_SalesTeamOnline
 		OR $KL_OperationalManager){
 		OutstandingOrders("Wholesale", "Quotation", $RootPath, $db);
@@ -786,6 +813,7 @@ if ($ProcessSection02){
 	*/
 
 	if ($KL_SystemAdmin 
+		OR $KL_SalesDirector
 		OR $KL_AdministrationTeam
 		OR $KL_SalesTeamOnline
 		OR $KL_OperationalManager){ 
@@ -795,6 +823,7 @@ if ($ProcessSection02){
 
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector
 		OR $KL_AdministrationTeam
 		OR $KL_SalesTeamOnline
 		OR $KL_ShopSupportTeam){ 
@@ -803,18 +832,21 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin
+		OR $KL_SalesDirector
 		OR $KL_SalesTeamOnline){
 		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_PENDING, $RootPath, $db, $db_oc, $oc_tableprefix);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin
+		OR $KL_SalesDirector
 		OR $KL_SalesTeamOnline){
 		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_SHIPPED, $RootPath, $db, $db_oc, $oc_tableprefix);
 		$NumberOfTestExecuted++;
 	}
  
 	if ($KL_SystemAdmin 
+		OR $KL_SalesDirector
 		OR $KL_SalesTeamOnline){
 		OnlineQuotationsFollowUp($RootPath, $db, $db_oc, $oc_tableprefix);
 		$NumberOfTestExecuted++;
@@ -825,6 +857,7 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin
+		OR $KL_SalesDirector
 		OR $KL_SalesTeamOnline){ 
 		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_PROCESSING, $RootPath, $db, $db_oc, $oc_tableprefix);
 		$NumberOfTestExecuted++;
@@ -832,6 +865,7 @@ if ($ProcessSection02){
 
 	if ($KL_SystemAdmin
 		OR $KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector
 		OR $KL_SalesTeamOnline){
 		OnlineOrdersFollowUp("KL-WEBSITE", 10, $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -839,6 +873,7 @@ if ($ProcessSection02){
 
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector
 		OR $KL_AdministrationTeam
 		OR $KL_SalesTeamOnline
 		OR $KL_ShopSupportTeam){ 
@@ -848,6 +883,7 @@ if ($ProcessSection02){
 
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector
 		OR $KL_SalesTeamOnline
 		OR $KL_ShopSupportTeam){ 
 		OnlineItemsOnProcess($RootPath, $db);
@@ -856,6 +892,7 @@ if ($ProcessSection02){
 	
 	if ($KL_SystemAdmin
 		OR $KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector
 		OR $KL_ShopSupportLeader){ 
 		ItemsNotNeededInOnlineOrderButRequested($RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -866,12 +903,14 @@ if ($ProcessSection02){
 	***************************************************************************************/
 	if ($KL_ITSupport
 		OR $KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam){
 		ActiveItemsWithoutPicture($RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin
+		OR $KL_SalesDirector
 		OR $KL_SalesTeamOnline
 		OR $KL_ITSupport){
 		ImagesWithoutProduct($RootPath, $db);
@@ -882,6 +921,7 @@ if ($ProcessSection02){
 
 	if ($KL_SystemAdmin
 		OR $KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam
 		OR $KL_SalesTeamOnline){
 		ItemsWithoutWeightOrVolume($RootPath, $db);
@@ -900,6 +940,7 @@ if ($ProcessSection02){
 	if ($KL_SystemAdmin 
 		OR $KL_OperationalManager 
 		OR $KL_BusinessDevelopmentManager 
+		OR $KL_SalesDirector
 		OR $KL_ShopSupportLeader 
 		OR $KL_ShopManager){
 		RegularTransfersToShopNotReceived('08:00:00','15:00:00', $RootPath, $db);
@@ -921,6 +962,7 @@ if ($ProcessSection02){
 
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager 
+		OR $KL_SalesDirector
 		OR $KL_OperationalManager){
 		TransfersDelayed(4, $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -937,7 +979,8 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin 
-		OR $KL_BusinessDevelopmentManager){
+		OR $KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector){
 		PettyCashBalance('Authorizer', $db);
 		$NumberOfTestExecuted++;
 		PettyCashToBeAuthorized($db);

@@ -51,6 +51,7 @@ if ($_SESSION['UserID'] == "Ricard"){
 //	$KL_OperationalLeader = TRUE;
 //	$KL_AdministrationTeam = TRUE;
 //	$KL_BusinessDevelopmentManager = TRUE;
+// 	$KL_SalesDirector = TRUE;
 //	$KL_PurchasingTeam = TRUE;
 //	$KL_ShopSupportTeam = TRUE;
 //	$KL_ShopSupportLeader = TRUE;
@@ -74,6 +75,7 @@ if ($ProcessSection01){
 
 	if ($KL_SystemAdmin
 		OR $KL_OperationalManager
+		OR $KL_SalesDirector
 		OR $KL_SalesTeamOnline
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_ShopManager){
@@ -86,7 +88,8 @@ if ($ProcessSection01){
 	}
 
 	if ($KL_SystemAdmin
-		OR $KL_BusinessDevelopmentManager){
+		OR $KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector){
 		PeriodDifferenceSales("IMMEDIATE", "Shop",  90, $db);
 		$NumberOfTestExecuted++;
 		PeriodDifferenceSales("IMMEDIATE", "Shop", 180, $db);
@@ -97,9 +100,8 @@ if ($ProcessSection01){
 
 	if ($KL_SystemAdmin
 		OR $KL_OperationalManager
-		OR $KL_SalesTeamOnline
-		OR $KL_BusinessDevelopmentManager
-		OR $KL_ShopManager){
+		OR $KL_SalesDirector
+		OR $KL_BusinessDevelopmentManager){
 		PeriodDifferenceSales("YEAR", "Shop",  30, $db);
 		$NumberOfTestExecuted++;
 //		PeriodDifferenceSales("2019", "Shop",  30, $db);
@@ -109,7 +111,7 @@ if ($ProcessSection01){
 	}
 
 	if ($KL_SystemAdmin
-		OR $KL_SalesTeamOnline
+		OR $KL_SalesDirector
 		OR $KL_BusinessDevelopmentManager){
 
 		AverageSales("Online", 365, 180, 90, 30, 15, 1, 30, "CurrentYear", "All", $db);
@@ -125,7 +127,8 @@ if ($ProcessSection01){
 	if ($KL_SystemAdmin 
 		OR $KL_OperationalManager
 		OR $KL_ShopManager
-		OR $KL_BusinessDevelopmentManager){
+		OR $KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector){
 		AverageCustomerBehaviourByValueInvoice("Shop", 60, $db);
 		$NumberOfTestExecuted++;
 	}
@@ -133,7 +136,8 @@ if ($ProcessSection01){
 	if ($KL_SystemAdmin 
 		OR $KL_ShopManager
 		OR $KL_OperationalManager
-		OR $KL_BusinessDevelopmentManager){
+		OR $KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector){
 		GeneralCustomerBehaviour(60, $db);
 		$NumberOfTestExecuted++;
 //		GeneralCustomerBehaviour(90, $db);
@@ -156,14 +160,14 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin){
-		$functionstarttime = time_start();
 		LocationInformationReview($RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin 
 		OR $KL_OperationalManager
-		OR $KL_ShopManager){
+		OR $KL_ShopManager
+		OR $KL_SalesDirector){
 		ActiveTransfersByLocation($RootPath, $db);
 		$NumberOfTestExecuted++;
 		ActiveTransferStatus($RootPath, $db);
@@ -172,6 +176,7 @@ if ($ProcessSection02){
 
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector
 		OR $KL_OperationalManager){
 		RecentlyClosedTransferStatus(1, $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -180,8 +185,8 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin 
-		OR $KL_ShopManager
-		OR $KL_BusinessDevelopmentManager){
+		OR $KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector){
 		FinishedStockDistribution("FORSALE", "LOCATION", $db);
 		$NumberOfTestExecuted++;
 		FinishedStockDistributionByShopAndCategory($db);
@@ -268,7 +273,6 @@ if ($ProcessSection03){
 	}
 
 	if ($KL_SystemAdmin ){
-		$functionstarttime = time_start();
 		InsuficientStockForShopPackaging('SHPACK', 15, 90, 30, true, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
@@ -297,13 +301,15 @@ if ($ProcessSection03){
 	
 	if ($KL_SystemAdmin  
 		OR $KL_ShopManager
-		OR $KL_BusinessDevelopmentManager){
+		OR $KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector){
 		FinishedStockDistribution("DISPLAYS", "LOCATION", $db);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin
-		OR $KL_BusinessDevelopmentManager){
+		OR $KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector){
 		MaintenanceTasksDistribution("OPEN", 0);
 		$NumberOfTestExecuted++;
 		MaintenanceTasksDistribution("CLOSED", 30);
@@ -313,7 +319,8 @@ if ($ProcessSection03){
 	}
 
 	if ($KL_OperationalManager
-		OR $KL_OpereationalTeam
+		OR $KL_OperationalTeam
+		OR $KL_SalesDirector
 		OR $KL_ShopManager){
 		MaintenanceTasksDistribution("OPEN", 0);
 		$NumberOfTestExecuted++;

@@ -75,7 +75,8 @@ if ($ProcessSection01){
 	ShowTotalItemsMoving();
 	
 	if ($KL_SystemAdmin 
-		OR $KL_BusinessDevelopmentManager){
+		OR $KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector){
 		
 		ItemsWithoutRetailPrice("SETKLA", MINIMUM_PRICE_FACTOR_KL, $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -106,7 +107,8 @@ if ($ProcessSection01){
 	}
 
 	if ($KL_SystemAdmin 
-		OR $KL_BusinessDevelopmentManager){
+		OR $KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector){
 		$IssuesFound += PriceBelowStandard("SETKLA", MINIMUM_PRICE_FACTOR_KL, 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		$IssuesFound += PriceBelowStandard("TESTKA", MINIMUM_PRICE_FACTOR_KL, 0, $RootPath, $db);
@@ -146,7 +148,8 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin 
-		OR $KL_BusinessDevelopmentManager){
+		OR $KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector){
 		$IssuesFound += ItemsTooCheap("TESTKA", MINIMUM_PRICE_FACTOR_KL, MINIMUM_PRICE_FACTOR_TOPSALES_KL, 0, 50, 60, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		$IssuesFound += ItemsTooCheap("STABKA", MINIMUM_PRICE_FACTOR_KL, MINIMUM_PRICE_FACTOR_TOPSALES_KL, 0, 50, 60, $RootPath, $db);
@@ -177,7 +180,8 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin 
-		OR $KL_BusinessDevelopmentManager){
+		OR $KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector){
 		$IssuesFound += PricesTooOld(3, 10, 20, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		$IssuesFound += PriceWrongRounding($RootPath, $db);

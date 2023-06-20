@@ -24,6 +24,7 @@ if ($KL_SystemAdmin){
 if ($KL_SystemAdmin 
 	OR $KL_OperationalManager 
 	OR $KL_BusinessDevelopmentManager 
+	OR $KL_SalesDirector
 	OR $KL_ShopManager){
 	RetailCustomerDataQualitySPG("ALL", 30, $db);
 	$NumberOfTestExecuted++;
@@ -32,6 +33,7 @@ if ($KL_SystemAdmin
 if ($KL_SystemAdmin 
 	OR $KL_OperationalManager 
 	OR $KL_BusinessDevelopmentManager 
+	OR $KL_SalesDirector
 	OR $KL_ShopManager){
 	RetailCustomerAnalysisBySex(365, "ALL", $db);
 	$NumberOfTestExecuted++;
@@ -45,6 +47,7 @@ if ($KL_SystemAdmin){
 if ($KL_SystemAdmin 
 	OR $KL_OperationalManager 
 	OR $KL_BusinessDevelopmentManager 
+	OR $KL_SalesDirector
 	OR $KL_ShopManager){
 
 	RetailCustomerAnalysisByCountry(90, "ALL", "ALL", 30, $CountriesForRetail, $db);
@@ -73,6 +76,7 @@ if ($KL_SystemAdmin
 if ($KL_SystemAdmin 
 	OR $KL_OperationalManager 
 	OR $KL_BusinessDevelopmentManager 
+	OR $KL_SalesDirector
 	OR $KL_ShopManager){
 
 	RetailCustomerAnalysisByAge(90, "ALL", $db);
