@@ -870,10 +870,15 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 				'Cash received from shops PT ADU in Brankas Kantor during '. $Year, 
 				locale_number_format($SalesCashADU-$FloatingCashADU,0)
 				);
+		if ($BankToCashADU >= 0){
+			$Text = 'Total withdrawal from Danamon IDR PTADU to Brankas Kantor';
+		}else{
+			$Text = 'Total deposit from Brankas Kantor to Danamon IDR PTADU ';
+		}
 		printf('<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
-				'Total deposit/withdrawal Brankas Kantor <-> Danamon IDR PTADU', 
+				$Text, 
 				locale_number_format($BankToCashADU,0)
 				);
 		printf('<td>%s</td>
@@ -918,14 +923,18 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 				locale_number_format(abs($ToBeMovedADU),0)
 				);
 				
-		if ($ToBeTransferredADU > 0){
-			$Text = 'ACTION NEEDED -> Withdrawal from Danamon IDR ADU to Brankas Kantor';
+		if ($ToBeTransferredADU != 0){
+			if ($ToBeTransferredADU > 0){
+				$Text = 'ACTION NEEDED -> Deposit from Brankas Kantor to Danamon IDR ADU';
+			}elseif ($ToBeTransferredADU < 0){
+				$Text = 'ACTION NEEDED -> Withdrawal from Danamon IDR ADU to Brankas Kantor';
+			}
 			$k = StartEvenOrOddRow($k);
 			printf('<td>%s</td>
 					<td class="number">%s</td>
 					</tr>', 
 					$Text, 
-					locale_number_format($ToBeTransferredADU,0)
+					locale_number_format(abs($ToBeTransferredADU),0)
 					);
 		}
 		echo '</table>
@@ -966,10 +975,15 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 				'Cash received from shops PTBB in Brankas Kantor during '. $Year, 
 				locale_number_format($SalesCashBB-$FloatingCashBB,0)
 				);
+		if ($BankToCashBB >= 0){
+			$Text = 'Total withdrawal from Danamon IDR PTBB to Brankas Kantor';
+		}else{
+			$Text = 'Total deposit from Brankas Kantor to Danamon IDR PTBB ';
+		}
 		printf('<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
-				'Total deposit/withdrawal from Brankas Kantor <-> Danamon IDR PTBB', 
+				$Text, 
 				locale_number_format($BankToCashBB,0)
 				);
 		printf('<td>%s</td>
