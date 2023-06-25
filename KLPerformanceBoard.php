@@ -709,7 +709,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 						-$CashToSmallSuppliersADU
 						-$CashToRentADU;
 	$ToBeMovedADU = $CurrentBalanceADU-$YearlyGoalADU ;
-	$ToBeTransferredADU = round_basic_price(-$ToBeMovedADU, $MinTransferADU);
+	$ToBeTransferredADU = round_basic_price($ToBeMovedADU, $MinTransferADU);
 
 	//
 	// CASH STATUS BB

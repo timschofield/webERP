@@ -107,7 +107,7 @@ define("CODE_KANTOR",      "'KANTO'");
 define("CODE_ONLINE_SHOP", "'TOKWS'");
 
 define("LIST_ZONES_OF_KANTOR",   "('OFFICE')"); 
-define("LIST_LOCATIONS_KANTOR",  "('KANTO')");
+define("LIST_KANTOR",  "('KANTO')");
 
 define("LIST_BALI_SHOPS_BY_TYPE", "('SHOPKL','SHOPBL','SHOPOU')");
 define("LIST_ALL_SHOPS_BY_TYPE",  "('SHOPKL','SHOPBL','SHOPOU','ONLINE')");
@@ -120,6 +120,7 @@ define("MIN_REORDER_LEVEL_PACKAGING_ITEM_PER_SHOP", 3);
 
 define("LIST_KANTOR_LOCATIONS",      "('KANTO','SAMPR','SASPG','SERSU','SERVI','SERDE')");
 define("LIST_SERVICE_LOCATIONS",     "('SERSU','SERSW','SERVI')");
+define("LIST_SPECIAL_LOCATIONS",     "('KASPE')");
 define("LIST_SAMPLE_LOCATIONS",      "('SAMPR')");
 define("LIST_CONSIGNMENT_LOCATIONS", "('CSLAZ','CSZAL')");
 define("LIST_PACAKING_LOCATIONS",    "('PACKA','PACKU')");
@@ -244,6 +245,10 @@ define('GENERAL_ACCESSORIES',88);
 define('GE_JEWELLERY_ROLLS',89);
 define('GE_FACEMASKS',90);
 
+define('BLINK_OUTLET',128);
+define('KL_OUTLET',129);
+
+
 //********************************************************************************
 //********************************************************************************
 // WebERP - Opencart Bridge settings
@@ -259,9 +264,6 @@ define("OPENCART_STORE_OUTLET", 5);
 define("OPENCART_STORE_WHOLESALE", 8);
 
 define("WEBERP_DISCOUNTS_IN_OPENCART_TABLE", 'product_special');
-
-define("ONLINESHOP_KAPAL_LAUT_SALES_CATEGORIES", '5,31,32,33,34,48,57,58,67,71,82');
-define("ONLINESHOP_BLINK_SALES_CATEGORIES", '14,29,35,36,37,38,49,72,77,84');
 
 define("MARKETPLACE_KAPAL_LAUT_SALES_CATEGORIES", '94');
 define("MARKETPLACE_BLINK_SALES_CATEGORIES", '95');

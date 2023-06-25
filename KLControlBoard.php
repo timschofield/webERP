@@ -1271,13 +1271,13 @@ function CategoryItemsMissingInShops($Category, $ShopType, $NumberOfTestExecuted
 
 function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $WhereisQOH, $RootPath, $db){
 	
-	$Exclusions = " (excluding items in Active Tranfers, Pending of Transfer, Change of Price, Move to Discount, Service, Shop Online and Return to Supplier)";
+	$Exclusions = " (excluding items in Active Tranfers, Pending of Transfer, Change of Price, Move to Discount, Special Kantor Request, Service, Shop Online and Return to Supplier)";
 	if ($WhereisQOH == "KANTOR"){
 		$Message = GetCategoryNameFromCode($Category) . _(' items NOT in ') . $Shop . ' but with QOH >= ' . $MinQOH .' in KANTOR' . $Exclusions;
 		$SQLQty = "(SELECT SUM(l.quantity)
 						FROM locstock l
 						WHERE l.stockid = stockmaster.stockid
-							AND l.loccode IN " . LIST_LOCATIONS_KANTOR . ")";
+							AND l.loccode IN " . LIST_KANTOR . ")";
 		$TitleQOH = "QOH Kantor";
 	}else{
 		$Message = GetCategoryNameFromCode($Category) . _(' items NOT in ') . $Shop . ' with QOH >= ' . $MinQOH .' in TOTAL' . $Exclusions;
@@ -1286,8 +1286,9 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $WhereisQOH, $RootPat
 						WHERE l.stockid = stockmaster.stockid
 							AND l.loccode NOT IN " . LIST_SERVICE_LOCATIONS . "
 							AND l.loccode NOT IN " . LIST_CONSIGNMENT_LOCATIONS . "
+							AND l.loccode NOT IN " . LIST_SPECIAL_LOCATIONS . "
 							AND l.loccode NOT IN " . LIST_SAMPLE_LOCATIONS . ")";
-		$TitleQOH = "QOH Total";
+		$TitleQOH = "QOH Available";
 	}
 
 	// count to how many shops do we need to set the RL
