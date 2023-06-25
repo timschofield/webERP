@@ -500,6 +500,7 @@ function MaintainOpenCartDiscountForItem($ProductId, $Price, $DiscountCategory, 
 			while ($myrow = DB_fetch_array($result)){
 				$DiscountedPrice = round($Price * (1 - $myrow['discountrate']),0);
 				UpdateDiscountInOpenCart($ProductId, $CustomerGroupId, $myrow['quantitybreak'], $Priority, $DiscountedPrice, $db_oc, $oc_tableprefix);
+				// Now we update the category discount, to prevent 
 			}
 		}
 	}
@@ -1359,5 +1360,45 @@ function MaintainPackagingImage($ProductId, $KLPackaging, $db_oc, $oc_tableprefi
 		}
 	}
 }
+
+function InsertWebsiteSalesCategory($Stockid, $WebsiteCategory, $Manufacturers_id, $MultipleCategories, $Featured, $UpdateDB, $db){
+	if($UpdateDB){
+		
+		if (!$MultipleCategories){
+			// if don't allow an item in multiple sales categories, then delete the existing ones
+			$sql =	"DELETE FROM salescatprod 
+						WHERE salescatid = '" . $WebsiteCategory . "' 
+							AND stockid ='" .  $Stockid . "'";
+			$ErrMsg =_('Could not delete the previous website category for the item because');
+			$result = DB_query($sql,$ErrMsg);
+		}
+
+		$SQLCheck = "SELECT *
+				FROM salescatprod
+				WHERE salescatprod.stockid = '" . $Stockid . "'
+					AND salescatprod.salescatid = '" . $WebsiteCategory . "'";	
+		$result = DB_query($SQLCheck);
+
+		if(DB_num_rows($result) == 0){
+			$sql = "INSERT INTO salescatprod (
+						salescatid ,
+						stockid,
+						manufacturers_id,
+						featured,
+						date_created,
+						date_updated)
+					VALUES (
+						'" . $WebsiteCategory . "',
+						'" . $Stockid . "',
+						'" . $Manufacturers_id . "',
+						'" . $Featured . "',
+						NOW(),
+						NOW())";
+			$ErrMsg =_('Could not insert the website category for the item because');
+			$result = DB_query($sql,$ErrMsg);
+		}			
+	}
+}
+
 
 ?>
