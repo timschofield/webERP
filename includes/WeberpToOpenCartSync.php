@@ -2057,25 +2057,7 @@ function SyncCurrencies($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefi
 			if ($EmailText !=''){
 				$EmailText = $EmailText . $Currency . " = " . $Rate. " --> " . $Action . "\n";
 			}
-/*			if ($Currency == $DefaultPayPalCommercePlatformCurrency){
-				// update the exchage rate for Paypal Commerce Platform
-				UpdateSettingValueOpenCartByCodeAndKey(0, "payment_paypal", "payment_paypal_currency_value", $Rate, $db_oc, $oc_tableprefix);
-				if ($ShowMessages){
-					$k = StartEvenOrOddRow($k);
-					printf('<td>%s</td>
-							<td>%s</td>
-							<td>%s</td>
-							</tr>',
-							$Currency . ' Paypal Commerce Platform',
-							$Rate,
-							'Update'
-							);
-				}
-				if ($EmailText !=''){
-					$EmailText = $EmailText . $Currency . " PayPal Commerce Platform = " . $Rate. " --> " . $Action . "\n";
-				}
-			}
-*/			$i++;
+			$i++;
 		}
 		if ($ShowMessages){
 			echo '</table>
@@ -2100,7 +2082,7 @@ function KL_DailyCleanOpenCartDB($ShowMessages, $db, $db_oc, $oc_tableprefix, $E
 	// clean old coupons
 	$EmailText = CleanOldOpenCartCoupons($ShowMessages, 15, $db, $db_oc, $oc_tableprefix, $EmailText);
 	// clean old pending orders
-	$EmailText = ChangeOldPendingOpenCartOrders($ShowMessages, 3, $db, $db_oc, $oc_tableprefix, $EmailText);
+	$EmailText = ChangeOldPendingOpenCartOrders($ShowMessages, 2, $db, $db_oc, $oc_tableprefix, $EmailText);
 	// Change from shipped to complete
 	$EmailText = ChangeOldShippedOpenCartOrders($ShowMessages, 1, $db, $db_oc, $oc_tableprefix, $EmailText);
 
