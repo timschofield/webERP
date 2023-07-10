@@ -587,7 +587,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 			if ($percent < -MINIMUM_AVERAGE_SALES_TREND){
 				$trend = "Degrading ". locale_number_format($percent,0) . "%";
 			}
-			$forecast = round(($myrow['salesD']/$NumDaysD + $myrow['salesE']/$NumDaysE)/2 * $NumDaysD, -5);
+			$forecast = round(($myrow['salesD']/$NumDaysD + $myrow['salesE']/$NumDaysE)/2 * 30, -5);
 			
 			$MTD = locale_number_format($myrow['salesMTD'], 0);
 			
