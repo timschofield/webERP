@@ -58,6 +58,7 @@ define("TRANSFER_ROUNDING_LIMIT02",            100);
 define("TRANSFER_ROUNDING_STEP03",              50);
 define("TRANSFER_ROUNDING_LIMIT03",           1000);
 define("TRANSFER_ROUNDING_STEP04",             100);
+define("TRANSFER_ROUNDING_PAPER_INSIDE_BOX",   100);
 
 /* Defines about customer behaviour*/
 define("AVERAGE_INVOICE_VALUE_01",  125000);

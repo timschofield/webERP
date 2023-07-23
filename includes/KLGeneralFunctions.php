@@ -95,6 +95,10 @@ function isEarcuff($stockid){
 	return (substr($stockid, 2,2) == "CF");
 }
 
+function isPackagingPaperInsideBox($stockid){
+	return (substr($stockid, 0,4) == "PKKS");
+}
+
 function isPlasticBag($stockid){
 	return ((substr($stockid, 0,4) == "BAPL") OR (substr($stockid, 0,4) == "BAGC"));
 }

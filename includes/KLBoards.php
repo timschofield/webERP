@@ -1702,9 +1702,10 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 			$ForecastProductionOnly = ceil($DailyUse * $DaysProduction);
 			$Forecast = ceil($DailyUse * ($DaysMinimumStock));
 			$ForecastIncludingProduction = $Forecast + $ForecastProductionOnly;
-			$QtyNeeded = max(0, $ForecastIncludingProduction - $myrow['qoh'] - $myrow['qoo']);
-			$DaysQOH = floor($myrow['qoh'] / $DailyUse);
-			$DaysQOO = floor(($myrow['qoh'] + $myrow['qoo']) / $DailyUse);
+			$QOH = MAX($myrow['qoh'],0);
+			$QtyNeeded = max(0, $ForecastIncludingProduction - $QOH - $myrow['qoo']);
+			$DaysQOH = floor($QOH / $DailyUse);
+			$DaysQOO = floor(($QOH + $myrow['qoo']) / $DailyUse);
 			if ($QtyNeeded > 0){
 				if ($myrow['pansize'] > 0){
 					$PanSize = $myrow['pansize'];
@@ -1751,7 +1752,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 
 				$UsageXDays += $ForecastProductionOnly;
 				$ForecastXDays += $Forecast;
-				$QOHTotal += $myrow['qoh'];
+				$QOHTotal += $QOH;
 				$PendingQOO += $myrow['qoo'];
 				$OptimumOrder += $QtyToOrder;
 				
@@ -1773,7 +1774,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 						$myrow['description'], 
 						locale_number_format($ForecastProductionOnly,0),
 						locale_number_format($Forecast,0),
-						locale_number_format($myrow['qoh'],0),
+						locale_number_format($QOH,0),
 						locale_number_format($DaysQOH,0),
 						locale_number_format_zero_blank($myrow['qoo'],0),
 						locale_number_format($DaysQOO,0),
@@ -2098,7 +2099,7 @@ function PackagingToBeRefilledFromGudang($GudangCode, $ShowAll, $ShowLinkEmail, 
 			$TableResult[$numitems]['intransit'] = $myrow['intransit'];
 			$TableResult[$numitems]['optimum'] = round(($myrow['rl'] * $RLFactor),0);
 			$TableResult[$numitems]['needed']= max(0,$TableResult[$numitems]['optimum'] - $myrow['qoh']);
-			$TableResult[$numitems]['toship'] = RoundPackagingTransfer(min(max(0,$TableResult[$numitems]['needed'] - $myrow['intransit']),$myrow['qohparent']));
+			$TableResult[$numitems]['toship'] = RoundPackagingTransfer($myrow['stockid'], min(max(0,$TableResult[$numitems]['needed'] - $myrow['intransit']),$myrow['qohparent']));
 
 			if ($ShowAll OR (($myrow['qoh'] < $myrow['rl']) AND ($TableResult[$numitems]['toship'] > 0))){
 				// at least 1 item needs to be refilled at the location and we can ship it, so we have to show the report
@@ -2202,15 +2203,19 @@ function PackagingToBeRefilledFromGudang($GudangCode, $ShowAll, $ShowLinkEmail, 
 	}
 }
 
-function RoundPackagingTransfer($n){
-	if ($n < TRANSFER_ROUNDING_LIMIT01){
-		$n = ceil($n/TRANSFER_ROUNDING_STEP01)*TRANSFER_ROUNDING_STEP01;
-	}elseif ($n < TRANSFER_ROUNDING_LIMIT02){
-		$n = ceil($n/TRANSFER_ROUNDING_STEP02)*TRANSFER_ROUNDING_STEP02;
-	}elseif ($n < TRANSFER_ROUNDING_LIMIT03){
-		$n = ceil($n/TRANSFER_ROUNDING_STEP03)*TRANSFER_ROUNDING_STEP03;
+function RoundPackagingTransfer($StockId, $n){
+	if(isPackagingPaperInsideBox($StockId)){
+		$n = ceil($n/TRANSFER_ROUNDING_PAPER_INSIDE_BOX)*TRANSFER_ROUNDING_PAPER_INSIDE_BOX;
 	}else{
-		$n = ceil($n/TRANSFER_ROUNDING_STEP04)*TRANSFER_ROUNDING_STEP04;
+		if ($n < TRANSFER_ROUNDING_LIMIT01){
+			$n = ceil($n/TRANSFER_ROUNDING_STEP01)*TRANSFER_ROUNDING_STEP01;
+		}elseif ($n < TRANSFER_ROUNDING_LIMIT02){
+			$n = ceil($n/TRANSFER_ROUNDING_STEP02)*TRANSFER_ROUNDING_STEP02;
+		}elseif ($n < TRANSFER_ROUNDING_LIMIT03){
+			$n = ceil($n/TRANSFER_ROUNDING_STEP03)*TRANSFER_ROUNDING_STEP03;
+		}else{
+			$n = ceil($n/TRANSFER_ROUNDING_STEP04)*TRANSFER_ROUNDING_STEP04;
+		}
 	}
 	return $n;
 }
