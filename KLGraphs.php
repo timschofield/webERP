@@ -101,8 +101,6 @@ if (!isset($_POST['FromDate'])
 
 } else {
 
-	$GraphTitle = $_POST['Concept'] . ' ' . _('From') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate'] . "\n\r";
-
 	$SQL = "SELECT date,
 				value
 			FROM klkpi 
@@ -111,9 +109,40 @@ if (!isset($_POST['FromDate'])
 				AND date <= '" . FormatDateForSQL($_POST['ToDate']) . "'
 			ORDER BY date ASC";
 
+	$KPIResult = DB_query($SQL);
+	if (DB_error_no() !=0) {
+
+		prnMsg(_('The KPI graph data for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg(),'error');
+		prnMsg($SQL);
+		include('includes/footer.php');
+		exit;
+	}
+	if (DB_num_rows($KPIResult)==0){
+		prnMsg(_('There is not KPI data for the criteria entered to graph'),'info');
+		prnMsg($SQL);
+		include('includes/footer.php');
+		exit;
+	}
+
+	$GraphArray = array();
+	$i = 0;
+	$InitialDate = "";
+	$FinalDate = "";
+	while ($myrow = DB_fetch_array($KPIResult)){
+		if ($InitialDate == ""){
+			// first row, we can get the frist date, in case we don't have the full range requested
+			$InitialDate = $myrow['date'];
+		}
+		$FinalDate = $myrow['date'];
+		$GraphArray[$i] = array($myrow['date'],$myrow['value']);
+		$i++;
+	}
+
+	$GraphTitle = $_POST['Concept'] . ' ' . _('From') . ' ' . ConvertSQLDate($InitialDate) . ' ' . _('to') . ' ' . ConvertSQLDate($FinalDate) . "\n\r";
+
 	$graph = new PHPlot(1200,600);
-	$graph->SetTitle($GraphTitle);
 	$graph->SetTitleColor('blue');
+	$graph->SetTitle($GraphTitle);
 	$graph->SetOutputFile('companies/' .$_SESSION['DatabaseName'] .  '/reports/kpigraph.png');
 	$graph->SetXTitle(_('Date'));
 	$graph->SetYTitle(_('KPI Value'));
@@ -135,30 +164,6 @@ if (!isset($_POST['FromDate'])
 		array('blue'),  //Data Colors
 		array('black')	//Border Colors
 	);
-//	$graph->SetLegend(array(_('Actual'),_('Budget')));
-
-	$KPIResult = DB_query($SQL);
-	if (DB_error_no() !=0) {
-
-		prnMsg(_('The KPI graph data for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg(),'error');
-		prnMsg($SQL);
-		include('includes/footer.php');
-		exit;
-	}
-	if (DB_num_rows($KPIResult)==0){
-		prnMsg(_('There is not KPI data for the criteria entered to graph'),'info');
-		prnMsg($SQL);
-		include('includes/footer.php');
-		exit;
-	}
-
-	$GraphArray = array();
-	$i = 0;
-	while ($myrow = DB_fetch_array($KPIResult)){
-		$GraphArray[$i] = array($myrow['date'],$myrow['value']);
-		$i++;
-	}
-
 	$graph->SetDataValues($GraphArray);
 
 	//Draw it
