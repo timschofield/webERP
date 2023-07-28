@@ -88,8 +88,13 @@ function isEarring($stockid){
 }
 
 function isPiercing($stockid){
-	return (substr($stockid, 2,2) == "PC");
+	return ((substr($stockid, 2,2) == "PC") AND (substr($stockid, 0,4) != "WKPC"));
 }
+
+function isPolishingCloth($stockid){
+	return (substr($stockid, 0,4) == "WKPC");
+}
+
 
 function isEarcuff($stockid){
 	return (substr($stockid, 2,2) == "CF");
