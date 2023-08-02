@@ -95,9 +95,12 @@ function isPolishingCloth($stockid){
 	return (substr($stockid, 0,4) == "WKPC");
 }
 
-
 function isEarcuff($stockid){
 	return (substr($stockid, 2,2) == "CF");
+}
+
+function isPackagingBox($stockid){
+	return (substr($stockid, 0,4) == "PKBX");
 }
 
 function isPackagingPaperInsideBox($stockid){

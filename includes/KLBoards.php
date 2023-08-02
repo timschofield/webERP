@@ -2039,7 +2039,7 @@ function CheckPackagingToBeRefilled($ShowAll, $ShowLinkEmail, $RootPath, $db){
 	}
 }
 
-function PackagingToBeRefilledFromGudang($GudangCode, $ShowAll, $ShowLinkEmail, $RootPath, $db){
+function PackagingToBeRefilledFromGudang($LocCode, $ShowAll, $ShowLinkEmail, $RootPath, $db){
 
 	$TableResult = array();
 	
@@ -2048,16 +2048,18 @@ function PackagingToBeRefilledFromGudang($GudangCode, $ShowAll, $ShowLinkEmail, 
 					locations.rlfactorforpackaging AS rlfactor,
 					locations.packagingfrom AS parentgudang,
 					locations.klemaillastpackacgingtransfer,
+					locations.typeloc,
 					(SELECT l2.locationname
 						FROM locations l2
 						WHERE l2.loccode = locations.packagingfrom) AS parentgudangname
 			FROM locations
-			WHERE locations.loccode = '" . $GudangCode . "'";
+			WHERE locations.loccode = '" . $LocCode . "'";
 	$result = DB_query($SQL);
 	$myrow = DB_fetch_array($result);
 	
 	$RLFactor = $myrow['rlfactor'];
 	$LocationName = $myrow['locationname'];
+	$LocationType = $myrow['typeloc'];
 	$ParentGudang = $myrow['parentgudang'];
 	$ParentGudangName = $myrow['parentgudangname'];
 	$LastPackagingTransferDate = ConvertSQLDate($myrow['klemaillastpackacgingtransfer']);
@@ -2079,7 +2081,7 @@ function PackagingToBeRefilledFromGudang($GudangCode, $ShowAll, $ShowLinkEmail, 
 			FROM locstock, stockmaster
 			WHERE stockmaster.stockid = locstock.stockid
 				AND locstock.reorderlevel != 0
-				AND locstock.loccode = '" . $GudangCode . "'
+				AND locstock.loccode = '" . $LocCode . "'
 				AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_SHOP_PACKAGING . "
 				AND stockmaster.discontinued = 0
 			ORDER BY stockmaster.stockid";
@@ -2100,6 +2102,16 @@ function PackagingToBeRefilledFromGudang($GudangCode, $ShowAll, $ShowLinkEmail, 
 			$TableResult[$numitems]['optimum'] = round(($myrow['rl'] * $RLFactor),0);
 			$TableResult[$numitems]['needed']= max(0,$TableResult[$numitems]['optimum'] - $myrow['qoh']);
 			$TableResult[$numitems]['toship'] = RoundPackagingTransfer($myrow['stockid'], min(max(0,$TableResult[$numitems]['needed'] - $myrow['intransit']),$myrow['qohparent']));
+
+			// cap the maximum number of boxes to be sent to a shop, 
+			// to prevent shipments too bulky for courier to safely bring in one motorbike trip
+			if (isPackagingBox($TableResult[$numitems]['stockid']) 
+				AND ($LocationType = "SHOPKL" OR
+					$LocationType = "SHOPBL" OR
+					$LocationType = "SHOPOU") 
+				AND ($TableResult[$numitems]['toship'] > MAXIMUM_BOXES_PACKAGING_TRANSFER_TO_SHOP)){
+				$TableResult[$numitems]['toship'] = MAXIMUM_BOXES_PACKAGING_TRANSFER_TO_SHOP;
+			}
 
 			if ($ShowAll OR (($myrow['qoh'] < $myrow['rl']) AND ($TableResult[$numitems]['toship'] > 0))){
 				// at least 1 item needs to be refilled at the location and we can ship it, so we have to show the report
@@ -2130,8 +2142,8 @@ function PackagingToBeRefilledFromGudang($GudangCode, $ShowAll, $ShowLinkEmail, 
 									<th class="ascending">' . _('Code') . '</th>
 									<th class="ascending">' . _('Description') . '</th>
 									<th class="ascending">' . _('QOH @ ') . $ParentGudang . '</th>
-									<th class="ascending">' . _('QOH @ ') . $GudangCode . '</th>
-									<th class="ascending">' . _('RL @ ') . $GudangCode . '</th>
+									<th class="ascending">' . _('QOH @ ') . $LocCode . '</th>
+									<th class="ascending">' . _('RL @ ') . $LocCode . '</th>
 									<th class="ascending">' . _('Optimum') . '</th>
 									<th class="ascending">' . _('Needing') . '</th>
 									<th class="ascending">' . _('%') . '</th>
@@ -2142,7 +2154,7 @@ function PackagingToBeRefilledFromGudang($GudangCode, $ShowAll, $ShowLinkEmail, 
 				echo $TableHeader;
 				$showHeader = FALSE;
 				$EmailLink = '<a href="' . $RootPath . '/KLPreparePackagingTransferFromGudang.php?From=' . $ParentGudang 
-																								. '&To=' . $GudangCode;
+																								. '&To=' . $LocCode;
 			}
 			
 			if ($TableResult[$i]['toship'] > 0){
