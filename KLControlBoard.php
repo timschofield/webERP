@@ -302,7 +302,17 @@ if ($ProcessSection01){
 	}
 	
 	if ($KL_AdministrationTeam){
-		// Other banks have enough funds to be transferred to Danamon
+		// Other banks accounts have enough funds to be transferred to the default accounts for each company 
+		BalanceAccountControl("111121121AD",        0,   20000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
+		BalanceAccountControl("111121122AD",        0,   20000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
+		BalanceAccountControl("111121125AD",        0,   40000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
+		BalanceAccountControl("111121101AD", 10000000,  300000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
+		BalanceAccountControl("111121110AD", 10000000,  300000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
 		BalanceAccountControl("111121121PT",        0,   20000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111121122PT",        0,   20000000, $periodnow, $db);
@@ -316,7 +326,8 @@ if ($ProcessSection01){
 	}
 	
 	if ($KL_SystemAdmin){
-		BalanceListAccountControl("('111121105AD',
+		BalanceListAccountControl("('111121101AD',
+									'111121105AD',
 									'111121107AD',
 									'111121110AD',
 									'111203010AD',
@@ -357,7 +368,7 @@ if ($ProcessSection01){
 	if ($KL_SystemAdmin 
 		OR $KL_OperationalManager
 		OR $KL_AdministrationTeam){
-		BalanceAccountControl("111121100IK",  5000000, 200000000, $periodnow, $db);
+		BalanceAccountControl("111121100IK",  5000000, 150000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111121110IK",  5000000,  50000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
