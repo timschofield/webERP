@@ -254,7 +254,7 @@ if(isset($_POST['submit'])) {
 		$Result = DB_query($LocationSql, $ErrMsg, $DbgMsg);
 		prnMsg( _('User has been authorized to use and update only his / her default location'), 'success' );
 
-		KLSendEmail("UserCreated", "Silent",$_SESSION['UserID'], $SelectedUser, $_POST['RealName'], $_POST['Access']);
+		KLSendEmail("UserCreated", "Silent",$_SESSION['UserID'], $_POST['UserID'], $_POST['RealName'], $_POST['Access']);
 		
 //	KL RICARD commented out. new users have NO rights to see/update GL accounts unless explicitely specified later on.
 
