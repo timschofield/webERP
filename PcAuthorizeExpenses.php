@@ -47,7 +47,7 @@ if(isset($_POST['Go'])) {
 
 if(isset($SelectedTabs)) {
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Petty Cash') .
-		'" alt="" />', _('Authorisation of Petty Cash Expenses'), ' ', $SelectedTabs, '</p>';
+		'" alt="" />', _('Authorisation of Petty Cash Expenses for'), ' ', $SelectedTabs, '</p>';
 } else {
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Petty Cash') .
 		'" alt="" />', _('Authorisation of Petty Cash Expenses'), '</p>';
@@ -68,7 +68,7 @@ if(isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) OR
 				<th colspan="7">', _('Detail Of Movement For Last '), ':<input class="integer" maxlength="3" name="Days" size="4" type="text" value="', $Days, '" />', _('Days');
 	echo '<input type="submit" name="Go" value="' . _('Go') . '" /></th>
 		</tr>';
-
+	
 	$sql = "SELECT pcashdetails.counterindex,
 				pcashdetails.tabcode,
 				pcashdetails.date,
@@ -88,8 +88,11 @@ if(isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) OR
 			WHERE pcashdetails.tabcode = pctabs.tabcode
 				AND pctabs.currency = currencies.currabrev
 				AND pcashdetails.tabcode = '" . $SelectedTabs . "'
-				AND pcashdetails.date >= DATE_SUB(CURDATE(), INTERVAL '".$Days."' DAY)
-			ORDER BY pcashdetails.date, pcashdetails.counterindex ASC";
+				AND pcashdetails.date >= DATE_SUB(CURDATE(), INTERVAL '".$Days."' DAY)";
+	if (isset($_POST['ShowOnlyUnauthorized'])){
+		$sql .= "AND pcashdetails.authorized = '0000-00-00' ";
+	}
+	$sql .=		" ORDER BY pcashdetails.date, pcashdetails.counterindex ASC";
 
 	$result = DB_query($sql);
 
@@ -124,7 +127,7 @@ if(isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) OR
 				$type = 2;
 				$AccountFrom = $myrow['glaccountassignment'];
 				$AccountTo = $myrow['glaccountpcash'];
-                		$TagTo = 0;
+                $TagTo = 0;
 				$HutangPPH23 = 0;
 			}else{
 				$type = 1;
@@ -345,9 +348,8 @@ if(isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) OR
 
 } else { /*The option to submit was not hit so display form */
 
-
-echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">
-	<div>
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">
+		<div>
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<br />
 		<table class="selection">'; //Main table
@@ -359,7 +361,7 @@ echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_
 
 	$result = DB_query($SQL);
 
-echo '<tr>
+	echo '<tr>
 		<td>' . _('Authorise expenses to Petty Cash Tab') . ':</td>
 		<td><select name="SelectedTabs" required="required" autofocus="autofocus" >';
 
@@ -376,8 +378,14 @@ echo '<tr>
 	} //end while loop get type of tab
 
 	echo '</select></td>
-		</tr>
-		</table>'; // close main table
+		</tr>';
+
+	echo'	<tr>
+			 <td>' . _('Show only unauthorized expenses') . '</td>
+			 <td><input type="checkbox" title="' . _('Check this box to display only the expenses pending of authorization') . '" name="ShowOnlyUnauthorized" /></td>
+		</tr>';
+	
+	echo '</table>'; // close main table
     DB_free_result($result);
 
 	echo '<br />
