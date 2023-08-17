@@ -1852,10 +1852,10 @@ function MarkWebErpOrderInOpenCartAs($OrderNo, $Status, $AWB, $db){
 		if ($myrow['typeid'] == CUSTOMER_TYPE_WEBSITE){
 			if ($Status == OPENCART_ORDER_STATUS_SHIPPED){
 				$ReasonChangeStatusId = "webERP --> Order shipped via " . $myrow['shippername'] . " AWB# = " . $AWB;  
-				UpdateOpenCartOrderStatus($myrow['customerref'], $Status, 0, $myrow['shipvia'], $AWB, $ReasonChangeStatusId, $db, $db_oc, $oc_tableprefix);
+				UpdateOpenCartOrderStatus($myrow['customerref'], $Status, 0, $myrow['shipvia'], $AWB, $ReasonChangeStatusId, $db, $db_oc);
 			}else{
 				$ReasonChangeStatusId = "webERP --> Change of status";  
-				UpdateOpenCartOrderStatus($myrow['customerref'], $Status, 0, "", "", $ReasonChangeStatusId, $db, $db_oc, $oc_tableprefix);
+				UpdateOpenCartOrderStatus($myrow['customerref'], $Status, 0, "", "", $ReasonChangeStatusId, $db, $db_oc);
 			}
 		}
 	}

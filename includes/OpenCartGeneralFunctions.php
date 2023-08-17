@@ -131,39 +131,9 @@ function DataExistsInOpenCart($db_oc, $table, $f1, $v1, $f2 = '', $v2 = ''){
 	return $Exists;
 }
 
-function GetLenghtClassId($webERPDimensions, $language_id, $db_oc, $oc_tableprefix){
-	$SQL = "SELECT length_class_id
-			FROM " . $oc_tableprefix . "length_class_description
-			WHERE unit = '" . $webERPDimensions . "'
-				AND language_id = '" . $language_id . "'";
-	$ErrMsg =_('Could not get the LenghtClassId in OpenCart because');
-	$result = DB_query_oc($SQL,$ErrMsg);
-	if(DB_num_rows($result) != 0){
-		$myrow = DB_fetch_array($result);
-		return $myrow[0];
-	}else{
-		return '';
-	}
-}
-
-function GetLenghtUnits($LenghtClassId, $language_id, $db_oc, $oc_tableprefix){
-	$SQL = "SELECT unit
-			FROM " . $oc_tableprefix . "length_class_description
-			WHERE length_class_id = '" . $LenghtClassId . "'
-				AND language_id = '" . $language_id . "'";
-	$ErrMsg =_('Could not get the Lenght Units in OpenCart because');
-	$result = DB_query_oc($SQL,$ErrMsg);
-	if(DB_num_rows($result) != 0){
-		$myrow = DB_fetch_array($result);
-		return $myrow[0];
-	}else{
-		return '';
-	}
-}
-
-function GetOpenCartProductId($model, $db_oc, $oc_tableprefix){
+function GetOpenCartProductId($model, $db_oc){
 	$SQL = "SELECT product_id
-			FROM " . $oc_tableprefix . "product
+			FROM oc_product
 			WHERE model = '" . $model . "'";
 	$ErrMsg =_('Could not get the ProductId in OpenCart because');
 	$result = DB_query_oc($SQL,$ErrMsg);
@@ -175,9 +145,9 @@ function GetOpenCartProductId($model, $db_oc, $oc_tableprefix){
 	}
 }
 
-function GetOpenCartLanguageId($language, $db_oc, $oc_tableprefix){
+function GetOpenCartLanguageId($language, $db_oc){
 	$SQL = "SELECT language_id
-			FROM " . $oc_tableprefix . "language
+			FROM oc_language
 			WHERE locale LIKE '%" . $language . "%'";
 	$ErrMsg =_('Could not get the LanguageId in OpenCart because');
 	$result = DB_query_oc($SQL,$ErrMsg);
@@ -387,9 +357,9 @@ function GetWeberpCurrencyRate($CurrencyCode, $db){
 	}
 }
 
-function GetTotalTitleFromOrder($Concept, $OrderId, $db_oc, $oc_tableprefix){
+function GetTotalTitleFromOrder($Concept, $OrderId, $db_oc){
 	$SQL = "SELECT title
-			FROM " . $oc_tableprefix . "order_total
+			FROM oc_order_total
 			WHERE order_id = '" . $OrderId . "'
 				AND code = '" . $Concept . "'";
 	$ErrMsg =_('Could not get the '. $Concept . ' title from OpenCart because');
@@ -402,9 +372,9 @@ function GetTotalTitleFromOrder($Concept, $OrderId, $db_oc, $oc_tableprefix){
 	}
 }
 
-function GetTotalFromOrder($Concept, $OrderId, $db_oc, $oc_tableprefix){
+function GetTotalFromOrder($Concept, $OrderId, $db_oc){
 	$SQL = "SELECT SUM(value)
-			FROM " . $oc_tableprefix . "order_total
+			FROM oc_order_total
 			WHERE order_id = '" . $OrderId . "'
 				AND code = '" . $Concept . "'";
 	$ErrMsg =_('Could not get the '. $Concept . ' total from OpenCart because');
@@ -446,18 +416,6 @@ function GetOnlinePriceList($db){
 	}
 }
 
-/* function GetDiscountFromCouponOpenCart($CouponCode, $db_oc, $oc_tableprefix){
-	$SQL = "SELECT discount,
-					type
-			FROM " . $oc_tableprefix . "coupon
-			WHERE coupon_id = '" . $CouponCode . "'";
-
-	$ErrMsg =_('Could not get the coupon discount in OpenCart because');
-	$result = DB_query_oc($SQL,$ErrMsg);
-	$myrow = DB_fetch_array($result);
-	return array($myrow['discount'], $myrow['type']);
-}*/
-
 function GetDiscount($DiscountCategory, $Quantity, $PriceList, $db){
 	/* Select the disount rate from the discount Matrix */
 	$result = DB_query("SELECT MAX(discountrate) AS discount
@@ -474,14 +432,14 @@ function GetDiscount($DiscountCategory, $Quantity, $PriceList, $db){
 	return $DiscountMatrixRate;
 }
 
-function MaintainOpenCartDiscountForItem($ProductId, $Price, $DiscountCategory, $PriceList, $db, $db_oc, $oc_tableprefix){
+function MaintainOpenCartDiscountForItem($ProductId, $Price, $DiscountCategory, $PriceList, $db, $db_oc){
 	$CustomerGroupId = 1;
 	$Priority = 1;
 
 	if ($DiscountCategory == ''){
 		// ProductId has no discount in webERP
 		// so we delete it in OpenCart
-		$SQL = "DELETE FROM " . $oc_tableprefix . WEBERP_DISCOUNTS_IN_OPENCART_TABLE . "
+		$SQL = "DELETE FROM oc_" . WEBERP_DISCOUNTS_IN_OPENCART_TABLE . "
 				WHERE product_id = '" . $ProductId . "'";
 		$DeleteErrMsg = _('The SQL to delete the product discount in Opencart table ') . ' ' . WEBERP_DISCOUNTS_IN_OPENCART_TABLE . ' ' . ('failed');
 		$resultDelete = DB_query_oc($SQL,$DeleteErrMsg,$DbgMsg,true);
@@ -499,18 +457,18 @@ function MaintainOpenCartDiscountForItem($ProductId, $Price, $DiscountCategory, 
 		if(DB_num_rows($result) != 0){
 			while ($myrow = DB_fetch_array($result)){
 				$DiscountedPrice = round($Price * (1 - $myrow['discountrate']),0);
-				UpdateDiscountInOpenCart($ProductId, $CustomerGroupId, $myrow['quantitybreak'], $Priority, $DiscountedPrice, $db_oc, $oc_tableprefix);
+				UpdateDiscountInOpenCart($ProductId, $CustomerGroupId, $myrow['quantitybreak'], $Priority, $DiscountedPrice, $db_oc);
 				// Now we update the category discount, to prevent 
 			}
 		}
 	}
 }
 
-function UpdateDiscountInOpenCart($ProductId, $CustomerGroupId, $Quantity, $Priority, $DiscountedPrice, $db_oc, $oc_tableprefix){
+function UpdateDiscountInOpenCart($ProductId, $CustomerGroupId, $Quantity, $Priority, $DiscountedPrice, $db_oc){
 	if (WEBERP_DISCOUNTS_IN_OPENCART_TABLE == 'product_discount'){
 		/* use the table product_discount */
 		$SQL = "SELECT product_discount_id
-				FROM " . $oc_tableprefix . "product_discount
+				FROM oc_product_discount
 				WHERE product_id = '" . $ProductId . "'
 					AND quantity = '" . $Quantity . "'
 					AND customer_group_id = '" . $CustomerGroupId ."'";
@@ -519,7 +477,7 @@ function UpdateDiscountInOpenCart($ProductId, $CustomerGroupId, $Quantity, $Prio
 		$result = DB_query_oc($SQL,$ErrMsg);
 		if(DB_num_rows($result) != 0){
 			// There is already a discount, so we need to update it
-			$SQL = "UPDATE " . $oc_tableprefix . "product_discount
+			$SQL = "UPDATE oc_product_discount
 					SET quantity = '" . $Quantity . "'
 						priority = '" . $Priority . "'
 						price = '" . $DiscountedPrice . "'
@@ -530,7 +488,7 @@ function UpdateDiscountInOpenCart($ProductId, $CustomerGroupId, $Quantity, $Prio
 			$resultUpdate = DB_query_oc($SQL,$UpdateErrMsg,$DbgMsg,true);
 		}else{
 			// there is no discount in OpenCart yet, so we need to create one
-			$SQL = "INSERT INTO " . $oc_tableprefix . "product_discount
+			$SQL = "INSERT INTO oc_product_discount
 						(product_id,
 						customer_group_id,
 						quantity,
@@ -549,7 +507,7 @@ function UpdateDiscountInOpenCart($ProductId, $CustomerGroupId, $Quantity, $Prio
 	}else{
 		/* use the table product_special */
 		$SQL = "SELECT product_special_id
-				FROM " . $oc_tableprefix . "product_special
+				FROM oc_product_special
 				WHERE product_id = '" . $ProductId . "'
 					AND customer_group_id = '" . $CustomerGroupId ."'";
 
@@ -557,7 +515,7 @@ function UpdateDiscountInOpenCart($ProductId, $CustomerGroupId, $Quantity, $Prio
 		$result = DB_query_oc($SQL,$ErrMsg);
 		if(DB_num_rows($result) != 0){
 			// There is already a special, so we need to update it
-			$SQL = "UPDATE " . $oc_tableprefix . "product_special
+			$SQL = "UPDATE oc_product_special
 					SET priority = '" . $Priority . "'
 						price = '" . $DiscountedPrice . "'
 					WHERE product_id = '" . $ProductId . "'
@@ -566,7 +524,7 @@ function UpdateDiscountInOpenCart($ProductId, $CustomerGroupId, $Quantity, $Prio
 			$resultUpdate = DB_query_oc($SQL,$UpdateErrMsg,$DbgMsg,true);
 		}else{
 			// there is no special in OpenCart yet, so we need to create one
-			$SQL = "INSERT INTO " . $oc_tableprefix . "product_special
+			$SQL = "INSERT INTO oc_product_special
 						(product_id,
 						customer_group_id,
 						priority,
@@ -583,9 +541,9 @@ function UpdateDiscountInOpenCart($ProductId, $CustomerGroupId, $Quantity, $Prio
 	}
 }
 
-function GetOpenCartSettingId($Store, $Code, $Key, $db_oc, $oc_tableprefix){
+function GetOpenCartSettingId($Store, $Code, $Key, $db_oc){
 	$SQL = "SELECT setting_id
-			FROM " . $oc_tableprefix . "setting
+			FROM oc_setting
 			WHERE store_id = '" . $Store . "'
 				AND `code` = '" . $Code . "'
 				AND `key` = '" . $Key . "'";
@@ -599,40 +557,13 @@ function GetOpenCartSettingId($Store, $Code, $Key, $db_oc, $oc_tableprefix){
 	}
 }
 
-function GetOpenCartSettingValue($Store, $Code, $Key, $db_oc, $oc_tableprefix){
-	$SQL = "SELECT value
-			FROM " . $oc_tableprefix . "setting
-			WHERE store_id = '" . $Store . "'
-				AND `code` = '" . $Code . "'
-				AND `key` = '" . $Key . "'";
-	$ErrMsg =_('Could not get the SettingId in OpenCart because');
-	$result = DB_query_oc($SQL,$ErrMsg);
-	if(DB_num_rows($result) != 0){
-		$myrow = DB_fetch_array($result);
-		return $myrow[0];
-	}else{
-		return 0;
-	}
-}
 
-function UpdateSettingValueOpenCart($SettingId, $Value, $db_oc, $oc_tableprefix){
+function UpdateSettingValueOpenCart($SettingId, $Value, $db_oc){
 	$DbgMsg = _('The SQL statement that failed was');
 	$UpdateErrMsg = _('The SQL to update setting value in Opencart failed');
-	$sqlUpdate = "UPDATE " . $oc_tableprefix . "setting
+	$sqlUpdate = "UPDATE oc_setting
 					SET	value = '" . $Value . "'
 				WHERE setting_id = '" . $SettingId . "'";
-	$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
-}
-
-function UpdateSettingValueOpenCartByCodeAndKey($Store, $Code, $Key, $Value, $db_oc, $oc_tableprefix){
-	$DbgMsg = _('The SQL statement that failed was');
-	$UpdateErrMsg = _('The SQL to update setting value in Opencart failed');
-	$sqlUpdate = "UPDATE " . $oc_tableprefix . "setting
-					SET	value = '" . $Value . "'
-				WHERE `code` = '" . $Code . "'
-					AND `key` = '" . $Key . "'
-					AND `store_id` = '" . $Store . "'";
-
 	$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
 }
 
@@ -990,13 +921,13 @@ function GetPaypalReturnDataInArray($RawData){
 	return $ResponseArray;
 }
 
-function MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, $StoreId, $LanguageId, $db_oc, $oc_tableprefix){
+function MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, $StoreId, $LanguageId, $db_oc){
 	// only work on SEO URL if we are on "Insert" action, as "Update" will lead to 404 errors from Google Bots and
 	// links created before the update moficiation (as the new link will be different and old ones will not be found.
 	if ($Action == "Insert"){
 		// search if we already have it
 		$SQL = "SELECT seo_url_id
-				FROM " . $oc_tableprefix . "seo_url
+				FROM oc_seo_url
 				WHERE query = '" . $SEOQuery . "'
 					AND store_id = '" . $StoreId . "'
 					AND language_id = '" .  $LanguageId . "'";
@@ -1009,7 +940,7 @@ function MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, $StoreId, $LanguageId, 
 			
 			$DbgMsg = _('The SQL that failed was');
 			$ErrMsg = _('The MaintainSeoUrl function failed');
-			$sqlUpdate = "UPDATE " . $oc_tableprefix . "seo_url SET
+			$sqlUpdate = "UPDATE oc_seo_url SET
 							keyword ='" . $SEOKeyword . "'
 						WHERE seo_url_id = '" . $SeoUrlId . "'";
 			$resultUpdate = DB_query_oc($sqlUpdate,$ErrMsg,$DbgMsg,true);
@@ -1017,7 +948,7 @@ function MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, $StoreId, $LanguageId, 
 			// otherwise we insert it
 			$DbgMsg = _('The SQL that failed was');
 			$ErrMsg = _('The MaintainSeoUrl function failed');
-			$sqlInsert = "INSERT INTO " . $oc_tableprefix . "seo_url
+			$sqlInsert = "INSERT INTO oc_seo_url
 							(store_id,
 							language_id,
 							query,
@@ -1033,7 +964,7 @@ function MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, $StoreId, $LanguageId, 
 	}
 }
 
-function UpdateOpenCartOrderStatus($OrderId, $StatusId, $Notify, $Carrier, $AWB, $Comment, $db, $db_oc, $oc_tableprefix){
+function UpdateOpenCartOrderStatus($OrderId, $StatusId, $Notify, $Carrier, $AWB, $Comment, $db, $db_oc){
 
 	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference($db));
 
@@ -1112,7 +1043,7 @@ function UpdateOpenCartOrderStatus($OrderId, $StatusId, $Notify, $Carrier, $AWB,
 	}
 }
 
-function UpdateOpenCartOrderPayment($OrderId, $db, $db_oc, $oc_tableprefix){
+function UpdateOpenCartOrderPayment($OrderId, $db, $db_oc){
 
 	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference($db));
 
@@ -1283,9 +1214,9 @@ function UpdateOpenCartOrderStatusInWeberp($OrderNo, $OpencartOrderStatus){
 	$result = DB_query($sql,$ErrMsg);
 }
 
-function GetOpenCartStatusTextFromCode($StatusId, $db_oc, $oc_tableprefix){
+function GetOpenCartStatusTextFromCode($StatusId, $db_oc){
 	$SQL = "SELECT name
-			FROM " . $oc_tableprefix . "order_status
+			FROM oc_order_status
 			WHERE language_id = '1'
 				AND order_status_id = '" . $StatusId . "'";
 	$ErrMsg =_('Could not get the Status name in OpenCart because');
@@ -1318,7 +1249,7 @@ function GetPaymentMethodTextFromCode($PaymentCode){
 }
 
 
-function MaintainPackagingImage($ProductId, $KLPackaging, $db_oc, $oc_tableprefix){
+function MaintainPackagingImage($ProductId, $KLPackaging, $db_oc){
 
 	if (($KLPackaging != "") AND ($KLPackaging != "NO-PACKAGING")){
 		// if the item has assigned a real packaging set...

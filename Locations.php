@@ -1201,12 +1201,6 @@ function UpdateOnlinePartnerPaypalSettingsInOpenCart($NewLocationType, $NewOnlin
 			$result = DB_query($sql);
 			$myrow = DB_fetch_array($result);
 
-// On OpenCart 3, the settings are different, just show a reminder to update these fields		
-//			UpdateSettingValueOpenCartByCodeAndKey(0,'pp_express', 'pp_express_username', $myrow['paypalusername'], $db_oc, $oc_tableprefix);
-//			UpdateSettingValueOpenCartByCodeAndKey(0,'pp_express', 'pp_express_password', $myrow['paypalpassword'], $db_oc, $oc_tableprefix);
-//			UpdateSettingValueOpenCartByCodeAndKey(0,'pp_express', 'pp_express_signature', $myrow['paypalsignature'], $db_oc, $oc_tableprefix);
-//			UpdateSettingValueOpenCartByCodeAndKey(0,'pp_express', 'pp_express_test', $myrow['paypaltest'], $db_oc, $oc_tableprefix);
-//			prnMsg('Updated KL Online Partner ' . $NewOnlinePartnerCode . ' in OpenCart', 'success');
 			prnMsg('Remind to update PayPal setting for Online Partner ' . $NewOnlinePartnerCode . ' in OpenCart', 'warning');
 		}else{
 			prnMsg('The ONLINE location should have a valid KL Online Partner', 'error');

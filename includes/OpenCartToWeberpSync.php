@@ -1,6 +1,6 @@
 <?php
 
-function OpenCartToWeberpSync($ShowMessages, $db, $db_oc, $oc_tableprefix, $EmailText=''){
+function OpenCartToWeberpSync($ShowMessages, $db, $db_oc, $EmailText=''){
 	$begintime = time_start();
 
 	// connect to opencart DB
@@ -20,16 +20,16 @@ function OpenCartToWeberpSync($ShowMessages, $db, $db_oc, $oc_tableprefix, $Emai
 					PrintTimeInformation($db);
 	}
 	// update order information
-	$EmailText = SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
+	$EmailText = SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText);
 
 	// update payment information by PayPal
-	$EmailText = SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
+	$EmailText = SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText);
 
 	// update payment information by snap Midtrans 
-	$EmailText = SyncSnapPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
+	$EmailText = SyncSnapPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText);
 
 	// update order status from OpenCart to webERP
-	$EmailText = SyncOrderStatus($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
+	$EmailText = SyncOrderStatus($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText);
 
 	// send emails to team of new orders arrived
 	$EmailText = EmailOrdersReadyToPrepare($ShowMessages, $db, $EmailText);
@@ -43,7 +43,7 @@ function OpenCartToWeberpSync($ShowMessages, $db, $db_oc, $oc_tableprefix, $Emai
 	return $EmailText;
 }
 
-function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText=''){
+function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText=''){
 
 	if ($EmailText !=''){
 		$EmailText = $EmailText . "Sync OpenCart Order Information" . "\n" . PrintTimeInformation($db);
@@ -139,9 +139,9 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db,
 			$SalesType = OPENCART_DEFAULT_CUSTOMER_SALES_TYPE;
 			$DefaultShipVia = GetWeberpShippingMethod($myrow['shipping_code']);
 			$Quotation = 1; // is NOT a firm order until we check the payments
-			$FreightCost = RoundPriceFromCart(GetTotalFromOrder("shipping", $myrow['order_id'], $db_oc, $oc_tableprefix) * $myrow['currency_value'],$myrow['currency_code']);
-			$CouponDiscount = RoundPriceFromCart(GetTotalFromOrder("coupon", $myrow['order_id'], $db_oc, $oc_tableprefix) * $myrow['currency_value'],$myrow['currency_code']);
-			$OrderDiscount = RoundPriceFromCart(GetTotalFromOrder("discountrule", $myrow['order_id'], $db_oc, $oc_tableprefix) * $myrow['currency_value'],$myrow['currency_code']);
+			$FreightCost = RoundPriceFromCart(GetTotalFromOrder("shipping", $myrow['order_id'], $db_oc) * $myrow['currency_value'],$myrow['currency_code']);
+			$CouponDiscount = RoundPriceFromCart(GetTotalFromOrder("coupon", $myrow['order_id'], $db_oc) * $myrow['currency_value'],$myrow['currency_code']);
+			$OrderDiscount = RoundPriceFromCart(GetTotalFromOrder("discountrule", $myrow['order_id'], $db_oc) * $myrow['currency_value'],$myrow['currency_code']);
 			$OpenCartOrderNumber = $myrow['order_id'];
 			$Salesman = OPENCART_DEFAULT_SALESMAN;
 			$Location = OPENCART_DEFAULT_LOCATION;
@@ -347,8 +347,7 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db,
 				if ($CouponDiscount != 0){
 					$ItemsOrder++;
 					// we need to register the coupon use
-					$CouponCode = GetTotalTitleFromOrder("coupon", $myrow['order_id'], $db_oc, $oc_tableprefix);
-//					($CouponDiscount, $CouponType) = GetDiscountFromCouponOpenCart($CouponCode, $db_oc, $oc_tableprefix);
+					$CouponCode = GetTotalTitleFromOrder("coupon", $myrow['order_id'], $db_oc);
 					
 					if (strpos(strtoupper($CouponCode),"VBP-") !== false){ 
 						// the 100% VIP Cards
@@ -427,7 +426,7 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db,
 				if ($OrderDiscount != 0){
 					$ItemsOrder++;
 					// we need to register the dco discount use (GENERAL ORDER DISCOUNT)
-					$DiscountCode = GetTotalTitleFromOrder("discountrule", $myrow['order_id'], $db_oc, $oc_tableprefix);
+					$DiscountCode = GetTotalTitleFromOrder("discountrule", $myrow['order_id'], $db_oc);
 					if (strpos(strtoupper($DiscountCode),"10") !== false){
 						$DiscountStockId = OPENCART_ONLINE_ORDER_DISCOUNT10;
 					}else if (strpos(strtoupper($DiscountCode),"20") !== false){
@@ -519,7 +518,7 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db,
 	return $EmailText;
 }
 
-function SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText=''){
+function SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText=''){
 
 	if ($EmailText !=''){
 		$EmailText = $EmailText . "Sync OpenCart Order PayPal Payment Information" . "\n" . PrintTimeInformation($db);
@@ -613,7 +612,7 @@ function SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeR
 			$PayPalResponseArray = GetPaypalReturnDataInArray($myrow['debug_data']);
 			$Commission = urldecode($PayPalResponseArray['PAYMENTINFO_0_FEEAMT']);
 			$WebERPDateOrder = date('Y-m-d H:i:s', strtotime( $myrow['created'] . -$TimeDifference . ' hours'));
-			$FreightCost = RoundPriceFromCart(GetTotalFromOrder("shipping", $myrow['order_id'], $db_oc, $oc_tableprefix) * $myrow['currency_value'],$myrow['ordercurrency']);
+			$FreightCost = RoundPriceFromCart(GetTotalFromOrder("shipping", $myrow['order_id'], $db_oc) * $myrow['currency_value'],$myrow['ordercurrency']);
 
 
 			if (($myrow['paypalcurrency'] == $myrow['ordercurrency']) AND ($myrow['pending_reason'] == 'None')) {
@@ -631,7 +630,7 @@ function SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeR
 				TransactionCommissionGL($CustomerCode, $GLAccount, $GLCommissionAccount, $Commission, $CurrencyPayment, $Rate, $PaymentSystem, $TransactionID, $PeriodNo, $db);
 				ChangeOrderQuotationFlag($OrderNo, 0, $db); // it has been paid, so we consider it a firm order
 				$OnlineOrderNo = GetOnlineOrderNoFromWeberp($OrderNo, $db);
-				UpdateOpenCartOrderPayment($OnlineOrderNo, $db, $db_oc, $oc_tableprefix);
+				UpdateOpenCartOrderPayment($OnlineOrderNo, $db, $db_oc);
 			}
 
 			if ($ShowMessages){
@@ -699,7 +698,7 @@ function SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeR
 	return $EmailText;
 }
 
-function SyncOrderStatus($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText=''){
+function SyncOrderStatus($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText=''){
 
 	if ($EmailText !=''){
 		$EmailText = $EmailText . "Sync OpenCart Order Status " . "\n" . PrintTimeInformation($db);
@@ -753,7 +752,7 @@ function SyncOrderStatus($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_
 			$CustomerCode = GetWeberpCustomerIdFromCustomerGroupAndCurrency($myrow['customer_group_id'], $myrow['currency_code'], $db);
 			$OrderNo = GetWeberpOrderNo($CustomerCode, $myrow['order_id'], $db);
 			$webERPStatusText = "";
-			$OCStatusText = GetOpenCartStatusTextFromCode($myrow['order_status_id'], $db_oc, $oc_tableprefix);
+			$OCStatusText = GetOpenCartStatusTextFromCode($myrow['order_status_id'], $db_oc);
 
 			UpdateOpenCartOrderStatusInWeberp($OrderNo, $myrow['order_status_id']);
 
@@ -796,7 +795,7 @@ function SyncOrderStatus($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_
 	return $EmailText;
 }
 
-function SyncSnapPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText=''){
+function SyncSnapPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText=''){
 
 	if ($EmailText !=''){
 		$EmailText = $EmailText . "Sync Snap (MIDTRANS) OpenCart Order Payments " . "\n" . PrintTimeInformation($db);

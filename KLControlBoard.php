@@ -845,21 +845,21 @@ if ($ProcessSection02){
 	if ($KL_SystemAdmin
 		OR $KL_SalesDirector
 		OR $KL_SalesTeamOnline){
-		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_PENDING, $RootPath, $db, $db_oc, $oc_tableprefix);
+		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_PENDING, $RootPath, $db, $db_oc);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin
 		OR $KL_SalesDirector
 		OR $KL_SalesTeamOnline){
-		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_SHIPPED, $RootPath, $db, $db_oc, $oc_tableprefix);
+		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_SHIPPED, $RootPath, $db, $db_oc);
 		$NumberOfTestExecuted++;
 	}
  
 	if ($KL_SystemAdmin 
 		OR $KL_SalesDirector
 		OR $KL_SalesTeamOnline){
-		OnlineQuotationsFollowUp($RootPath, $db, $db_oc, $oc_tableprefix);
+		OnlineQuotationsFollowUp($RootPath, $db, $db_oc);
 		$NumberOfTestExecuted++;
 		OldOnlineQuotations(1, $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -870,7 +870,7 @@ if ($ProcessSection02){
 	if ($KL_SystemAdmin
 		OR $KL_SalesDirector
 		OR $KL_SalesTeamOnline){ 
-		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_PROCESSING, $RootPath, $db, $db_oc, $oc_tableprefix);
+		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_PROCESSING, $RootPath, $db, $db_oc);
 		$NumberOfTestExecuted++;
 	}
 
@@ -926,7 +926,7 @@ if ($ProcessSection02){
 		OR $KL_ITSupport){
 		ImagesWithoutProduct($RootPath, $db);
 		$NumberOfTestExecuted++;
-		OpenCartItemsWithoutPicture($RootPath, $db, $db_oc, $oc_tableprefix);
+		OpenCartItemsWithoutPicture($RootPath, $db, $db_oc);
 		$NumberOfTestExecuted++;
 	}
 
@@ -4078,7 +4078,7 @@ function OnlineOrdersFollowUp($Source, $numDays, $RootPath, $db){
 	}
 }
 
-function OnlineQuotationsFollowUp($RootPath, $db, $db_oc, $oc_tableprefix){
+function OnlineQuotationsFollowUp($RootPath, $db, $db_oc){
 
 	$Titletext = "Follow up Outstanding Online Quotations";
 		
@@ -4141,7 +4141,7 @@ function OnlineQuotationsFollowUp($RootPath, $db, $db_oc, $oc_tableprefix){
 			$PaymentLink = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&PaymentCode=' . $myrow['klocpaymentcode'] . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentLinkText .'</a>';
 			$PaymentMethodText = GetPaymentMethodTextFromCode($myrow['klocpaymentcode']);
 
-			$OCStatusText = GetOpenCartStatusTextFromCode($myrow['klocorderstatus'], $db_oc, $oc_tableprefix);
+			$OCStatusText = GetOpenCartStatusTextFromCode($myrow['klocorderstatus'], $db_oc);
 
 			if ($OCStatusText != "Processing"){
 				$PaymentLink = ''; // do not allow Apply payment in case of an status that is not processing
@@ -4321,12 +4321,12 @@ function OnlineMarketPlacePaymentPending($RootPath, $db){
 }
 
 
-function OpenCartItemsWithoutPicture($RootPath, $db, $db_oc, $oc_tableprefix){
+function OpenCartItemsWithoutPicture($RootPath, $db, $db_oc){
 
-	$SQL = "SELECT 	" . $oc_tableprefix . "product.model AS stockid
-			FROM " . $oc_tableprefix . "product
-			WHERE " . $oc_tableprefix . "product.status = 1
-			ORDER BY " . $oc_tableprefix . "product.model";
+	$SQL = "SELECT 	oc_product.model AS stockid
+			FROM oc_product
+			WHERE oc_product.status = 1
+			ORDER BY oc_product.model";
 	$result = DB_query_oc($SQL);
 	$showHeader = TRUE;
 
@@ -5304,7 +5304,7 @@ function WrongItemsOnWorkOrders($RootPath, $db){
 	}
 }
 
-function OpenCartOrdersByStatus($Status, $RootPath, $db, $db_oc, $oc_tableprefix){
+function OpenCartOrdersByStatus($Status, $RootPath, $db, $db_oc){
 	$SQL = "SELECT 	oc_order.order_id,
 				oc_order.store_name,
 				oc_order.firstname,

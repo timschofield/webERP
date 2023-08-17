@@ -17,7 +17,7 @@ include ('includes/OpenCartGeneralFunctions.php');
 include ('includes/OpenCartToWeberpSync.php');
 include ('includes/OpenCartConnectDB.php');
 
-OpenCartToWeberpSync(TRUE, $db, $db_oc, $oc_tableprefix, '');
+OpenCartToWeberpSync(TRUE, $db, $db_oc, '');
 
 include ('includes/footer.php');
 

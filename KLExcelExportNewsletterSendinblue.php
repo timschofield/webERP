@@ -10,13 +10,13 @@ include('includes/OpenCartGeneralFunctions.php');
 include('includes/OpenCartConnectDB.php');
 
 if (isset($_POST['submit'])) {
-    submit($db_oc, $oc_tableprefix, $_POST['MarkExported']);
+    submit($db_oc, $_POST['MarkExported']);
 } else {
     display($db_oc);
 }
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit(&$db_oc, $oc_tableprefix, $MarkExported) {
+function submit(&$db_oc, $MarkExported) {
 
 	//initialise no input errors
 	$InputError = 0;
@@ -25,12 +25,12 @@ function submit(&$db_oc, $oc_tableprefix, $MarkExported) {
 
 	if ($InputError == 0){
 		
-		$sql = "SELECT 	" . $oc_tableprefix . "ne_marketing.firstname,
-						" . $oc_tableprefix . "ne_marketing.lastname,
-						" . $oc_tableprefix . "ne_marketing.email
-				FROM " . $oc_tableprefix . "ne_marketing
-				WHERE " . $oc_tableprefix . "ne_marketing.subscribed = 1
-					AND " . $oc_tableprefix . "ne_marketing.exported = 'N'";
+		$sql = "SELECT 	oc_ne_marketing.firstname,
+						oc_ne_marketing.lastname,
+						oc_ne_marketing.email
+				FROM oc_ne_marketing
+				WHERE oc_ne_marketing.subscribed = 1
+					AND oc_ne_marketing.exported = 'N'";
 		
 		$ErrMsg = _('The SQL to find the OpenCart Newsletter Subscribers Data to export to Sendinblue');
 		$result = DB_query_oc($sql,$ErrMsg);
@@ -98,7 +98,7 @@ function submit(&$db_oc, $oc_tableprefix, $MarkExported) {
 			$objWriter->save('php://output');
 
 			if ($MarkExported == "Y"){
-				$sql = "UPDATE 	" . $oc_tableprefix . "ne_marketing 
+				$sql = "UPDATE 	oc_ne_marketing 
 						SET exported = 'Y' 
 						WHERE exported = 'N'";
 				$resultUpdate = DB_query_oc($sql,'','',true);

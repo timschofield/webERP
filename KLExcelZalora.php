@@ -16,13 +16,13 @@ if (!isset($_POST['ToPrice'])){
 }
 
 if (isset($_POST['submit'])) {
-    submit($db, $db_oc, $oc_tableprefix, $_POST['FromPrice'], $_POST['ToPrice']);
+    submit($db, $db_oc, $_POST['FromPrice'], $_POST['ToPrice']);
 } else {
     display($db);
 }
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit(&$db, &$db_oc, $oc_tableprefix, $FromPrice, $ToPrice) {
+function submit(&$db, &$db_oc, $FromPrice, $ToPrice) {
 
 	//initialise no input errors
 	$InputError = 0;
@@ -46,19 +46,19 @@ function submit(&$db, &$db_oc, $oc_tableprefix, $FromPrice, $ToPrice) {
 		$FromPrice = $_POST['FromPrice'];
 		$ToPrice = $_POST['ToPrice'];
 		
-		$sql = "SELECT 	" . $oc_tableprefix . "product.product_id,
-						" . $oc_tableprefix . "product_description.name,
-						" . $oc_tableprefix . "product.model,
-						" . $oc_tableprefix . "product.sku,
-						" . $oc_tableprefix . "product.price,
-						" . $oc_tableprefix . "product.quantity
-				FROM " . $oc_tableprefix . "product,
-						" . $oc_tableprefix . "product_description
-				WHERE   " . $oc_tableprefix . "product.product_id = " . $oc_tableprefix . "product_description.product_id
-					AND " . $oc_tableprefix . "product.status = 1
-					AND " . $oc_tableprefix . "product.price >= '" . $FromPrice . "'
-					AND " . $oc_tableprefix . "product.price <= '" . $ToPrice . "'
-				ORDER BY " . $oc_tableprefix . "product.model";
+		$sql = "SELECT 	oc_product.product_id,
+						oc_product_description.name,
+						oc_product.model,
+						oc_product.sku,
+						oc_product.price,
+						oc_product.quantity
+				FROM oc_product,
+						oc_product_description
+				WHERE   oc_product.product_id = oc_product_description.product_id
+					AND oc_product.status = 1
+					AND oc_product.price >= '" . $FromPrice . "'
+					AND oc_product.price <= '" . $ToPrice . "'
+				ORDER BY oc_product.model";
 		
 		$ErrMsg = _('The SQL to find the OpenCart Products to export to Zalora');
 		$result = DB_query_oc($sql,$ErrMsg);

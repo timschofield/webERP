@@ -20,7 +20,7 @@ $result = DB_Txn_Begin();
 // online sale from our website, we must update the status of the order in OpenCart
 $OnlineOrderNo = GetOnlineOrderNoFromWeberp($_GET['OrderNo'], $db);
 $ReasonChangeStatusId = "webERP --> Expired as no payment received";  
-UpdateOpenCartOrderStatus($OnlineOrderNo, OPENCART_ORDER_STATUS_EXPIRED, 0, "", "", $ReasonChangeStatusId, $db, $db_oc, $oc_tableprefix);
+UpdateOpenCartOrderStatus($OnlineOrderNo, OPENCART_ORDER_STATUS_EXPIRED, 0, "", "", $ReasonChangeStatusId, $db, $db_oc);
 
 $SQL = "DELETE FROM salesorderdetails WHERE salesorderdetails.orderno='" . $_GET['OrderNo'] . "'";
 $DbgMsg = _('The SQL that failed to delete the sales order details was');

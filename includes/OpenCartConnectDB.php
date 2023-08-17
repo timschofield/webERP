@@ -14,9 +14,7 @@ if (!isset($mysqlport)){
 }
 
 global $db_oc;	// Make sure it IS global, regardless of our context
-global $oc_tableprefix; 	// Make sure it IS global, regardless of our context
 
-$oc_tableprefix = $opencart_db_tableprefix;
 $db_oc = mysqli_connect($opencart_db_host , $opencart_db_user, $opencart_db_pwd, $opencart_db_name, $mysqlport);
 mysqli_set_charset($db_oc, 'utf8');
 

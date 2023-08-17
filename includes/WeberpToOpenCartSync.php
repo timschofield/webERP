@@ -1,6 +1,6 @@
 <?php
 
-function WeberpToOpenCartDailySync($ShowMessages, $db, $db_oc, $oc_tableprefix, $EmailText=''){
+function WeberpToOpenCartDailySync($ShowMessages, $db, $db_oc, $EmailText=''){
 	$begintime = time_start();
 
 	DB_Txn_Begin();
@@ -18,33 +18,33 @@ function WeberpToOpenCartDailySync($ShowMessages, $db, $db_oc, $oc_tableprefix, 
 	}
 
 	// update currencies
-	$EmailText = SyncCurrencies($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
+	$EmailText = SyncCurrencies($ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText);
 
 	// maintain outlet category in webERP
 	// Not needed because now in weberp one item only belongs to 1 sales category, so no chance to have more than one to clean up
-//	$EmailText = MaintainWeberpOutletSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
+//	$EmailText = MaintainWeberpOutletSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText);
 
 	// do all hourly maintenance as well...
-	$EmailText = WeberpToOpenCartHourlySync($ShowMessages, $db, $db_oc, $oc_tableprefix, FALSE, $EmailText);
+	$EmailText = WeberpToOpenCartHourlySync($ShowMessages, $db, $db_oc, FALSE, $EmailText);
 
 	// recreate the list of featured in OpenCart
 // NOT READY FOR OC v3.0, OC_SETTING IS DIFFERENT
-//	$EmailText = SyncFeaturedList($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
+//	$EmailText = SyncFeaturedList($ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText);
 
 	// update sales categories
-//	$EmailText = SyncSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
+//	$EmailText = SyncSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText);
 
 	// activate / inactivate categories depending on items No items = inactive. Items = Active
-//	$EmailText = ActivateCategoryDependingOnQOH($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
+//	$EmailText = ActivateCategoryDependingOnQOH($ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText);
 
 	// maintain the outlet category in a special way (both webERP and OC)
-//	$EmailText = MaintainOpenCartOutletSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
+//	$EmailText = MaintainOpenCartOutletSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText);
 
 	// assign multiple images to products
-	$EmailText = SyncMultipleImages($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
+	$EmailText = SyncMultipleImages($ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText);
 
 	// assign related items
-//	$EmailText = SyncRelatedItems($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
+//	$EmailText = SyncRelatedItems($ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText);
 
 	// We are done!
 	SetLastTimeRun('WeberpToOpenCartDaily', $db);
@@ -56,7 +56,7 @@ function WeberpToOpenCartDailySync($ShowMessages, $db, $db_oc, $oc_tableprefix, 
 	return $EmailText;
 }
 
-function WeberpToOpenCartHourlySync($ShowMessages, $db, $db_oc, $oc_tableprefix, $ControlTx = TRUE, $EmailText=''){
+function WeberpToOpenCartHourlySync($ShowMessages, $db, $db_oc, $ControlTx = TRUE, $EmailText=''){
 	$begintime = time_start();
 	if ($ControlTx){
 		DB_Txn_Begin();
@@ -73,28 +73,28 @@ function WeberpToOpenCartHourlySync($ShowMessages, $db, $db_oc, $oc_tableprefix,
 					PrintTimeInformation($db);
 	}
 	// update product basic information
-	$EmailText = SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
+	$EmailText = SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText);
 
 	// update product prices
-	$EmailText = SyncProductPrices($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
+	$EmailText = SyncProductPrices($ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText);
 
 	// update stock in hand
-	$EmailText = SyncProductQOH($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
+	$EmailText = SyncProductQOH($ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText);
 	
 	// update links for marketplaces
-	$EmailText = SyncProductMarketplacesLinks($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
+	$EmailText = SyncProductMarketplacesLinks($ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText);
 
 	// update product - sales categories relationship
-	$EmailText = SyncProductSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
+	$EmailText = SyncProductSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText);
 
 	// Purge Any Product left with Discount over 50%. This happens somethimes when products move from 50% to 80% discount.
-	$EmailText = PurgeDiscountOver50($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
+	$EmailText = PurgeDiscountOver50($ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText);
 
 	// update description translations
-	$EmailText = SyncProductDescriptionTranslations($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
+	$EmailText = SyncProductDescriptionTranslations($ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText);
 
 	// clean duplicated URL alias
-//	$EmailText = CleanDuplicatedUrlAlias($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText);
+//	$EmailText = CleanDuplicatedUrlAlias($ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText);
 
 	// We are done!
 	SetLastTimeRun('WeberpToOpenCartHourly', $db);
@@ -108,7 +108,7 @@ function WeberpToOpenCartHourlySync($ShowMessages, $db, $db_oc, $oc_tableprefix,
 	return $EmailText;
 }
 
-function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText= ''){
+function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText= ''){
 	$i = 0;
 	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference($db));
 	$Today = date('Y-m-d');
@@ -274,12 +274,12 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 			$GoogleIdentifier = GOOGLE_IDENTIFIER;
 			
 			/* Now, insert it or update it */
-			if (DataExistsInOpenCart($db_oc, $oc_tableprefix . 'product', 'model', $myrow['stockid'])){
+			if (DataExistsInOpenCart($db_oc, 'oc_product', 'model', $myrow['stockid'])){
 				$Action = "Update";
 				// Let's get the OpenCart primary key for product
-				$ProductId = GetOpenCartProductId($Model, $db_oc, $oc_tableprefix);
+				$ProductId = GetOpenCartProductId($Model, $db_oc);
 
-				$sqlUpdate = "UPDATE " . $oc_tableprefix . "product SET
+				$sqlUpdate = "UPDATE oc_product SET
 								sku = '" . $SKU . "',
 								mpn = '" . $MPN . "',
 								image = '" . $Image . "',
@@ -294,7 +294,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 							WHERE product_id = '" . $ProductId . "'";
 				$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
 
-				$sqlUpdate = "UPDATE " . $oc_tableprefix . "product_description SET
+				$sqlUpdate = "UPDATE oc_product_description SET
 								name = '" . $Name . "',
 								description = '" . $LongDescription . "',
 								meta_description = '" . $MetaDescription . "',
@@ -305,7 +305,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 								AND language_id = '" . $LanguageId . "'";
 				$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
 
-				$sqlUpdate = "UPDATE " . $oc_tableprefix . "product_to_store SET
+				$sqlUpdate = "UPDATE oc_product_to_store SET
 								store_id = '" . $StoreId . "'
 							WHERE product_id = '" . $ProductId . "'";
 				$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
@@ -313,7 +313,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 			}else{
 				$Action = "Insert";
 
-				$sqlInsert = "INSERT INTO " . $oc_tableprefix . "product
+				$sqlInsert = "INSERT INTO oc_product
 								(model,
 								sku,
 								upc,
@@ -379,9 +379,9 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 				$resultInsert = DB_query_oc($sqlInsert,$InsertErrMsg,$DbgMsg,true);
 
 				// Let's get the OpenCart primary key for product
-				$ProductId = GetOpenCartProductId($Model, $db_oc, $oc_tableprefix);
+				$ProductId = GetOpenCartProductId($Model, $db_oc);
 
-				$sqlInsert = "INSERT INTO " . $oc_tableprefix . "product_description
+				$sqlInsert = "INSERT INTO oc_product_description
 								(product_id,
 								language_id,
 								name,
@@ -402,7 +402,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 								)";
 				$resultInsert = DB_query_oc($sqlInsert,$InsertErrMsg,$DbgMsg,true);
 
-				$sqlInsert = "INSERT INTO " . $oc_tableprefix . "product_to_store
+				$sqlInsert = "INSERT INTO oc_product_to_store
 								(product_id,
 								store_id)
 							VALUES
@@ -415,20 +415,20 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 			}
 
 			// create discounts if needed
-			MaintainOpenCartDiscountForItem($ProductId, $Price, $DiscountCategory, $PriceList, $db, $db_oc, $oc_tableprefix);
+			MaintainOpenCartDiscountForItem($ProductId, $Price, $DiscountCategory, $PriceList, $db, $db_oc);
 
 			// create SEO Keywords if needed
 			$SEOQuery = 'product_id='.$ProductId;
 			$SEOKeyword = CreateSEOKeyword($Model . "-" . $Name);
-			MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, $StoreId, $LanguageId, $db_oc, $oc_tableprefix);
+			MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, $StoreId, $LanguageId, $db_oc);
 			
 			// maintain the packaging image
-			MaintainPackagingImage($ProductId, $myrow['klpackaging'], $db_oc, $oc_tableprefix);
+			MaintainPackagingImage($ProductId, $myrow['klpackaging'], $db_oc);
 			
 			// if it's a general item, we have to add it too to Blink store.
 			if  (ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_GENERAL) AND
-			   (!DataExistsInOpenCart($db_oc, $oc_tableprefix . 'product_to_store', 'product_id', $ProductId, 'store_id', OPENCART_STORE_BLINK))){
-				$sqlInsert = "INSERT INTO " . $oc_tableprefix . "product_to_store
+			   (!DataExistsInOpenCart($db_oc, 'oc_product_to_store', 'product_id', $ProductId, 'store_id', OPENCART_STORE_BLINK))){
+				$sqlInsert = "INSERT INTO oc_product_to_store
 								(product_id,
 								store_id)
 							VALUES
@@ -437,12 +437,12 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 								)";
 				$resultInsert = DB_query_oc($sqlInsert,$InsertErrMsg,$DbgMsg,true);
 				$StoreText = $StoreText . " + BL";
-				MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, OPENCART_STORE_BLINK, $LanguageId, $db_oc, $oc_tableprefix);
+				MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, OPENCART_STORE_BLINK, $LanguageId, $db_oc);
 			}
 
 			// if it's not on the wholesale store, we add it.
-			if (!DataExistsInOpenCart($db_oc, $oc_tableprefix . 'product_to_store', 'product_id', $ProductId, 'store_id', OPENCART_STORE_WHOLESALE)){
-				$sqlInsert = "INSERT INTO " . $oc_tableprefix . "product_to_store
+			if (!DataExistsInOpenCart($db_oc, 'oc_product_to_store', 'product_id', $ProductId, 'store_id', OPENCART_STORE_WHOLESALE)){
+				$sqlInsert = "INSERT INTO oc_product_to_store
 								(product_id,
 								store_id)
 							VALUES
@@ -451,7 +451,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 								)";
 				$resultInsert = DB_query_oc($sqlInsert,$InsertErrMsg,$DbgMsg,true);
 				$StoreText = $StoreText . " + WH";
-				MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, OPENCART_STORE_WHOLESALE, $LanguageId, $db_oc, $oc_tableprefix);
+				MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, OPENCART_STORE_WHOLESALE, $LanguageId, $db_oc);
 			}
 			
 			if ($ShowMessages){
@@ -493,7 +493,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 	return $EmailText;
 }
 
-function SyncProductSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText= ''){
+function SyncProductSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText= ''){
 	$i = 0;
 
 	if ($EmailText !=''){
@@ -544,18 +544,18 @@ function SyncProductSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $o
 			}
 
 			// Let's get the OpenCart primary key for product
-			$ProductId = GetOpenCartProductId($Model, $db_oc, $oc_tableprefix);
+			$ProductId = GetOpenCartProductId($Model, $db_oc);
 			
 /*			// Delete the current product_to_category, as we now only accept 1 product_to_category in website
 ADAPT FOR v3.0
 			$Action = "Delete";
-			$sqlDelete = "DELETE FROM " . $oc_tableprefix . "product_to_category 
+			$sqlDelete = "DELETE FROM oc_product_to_category 
 						WHERE product_id = '" . $ProductId . "'";
 			$resultDelete = DB_query_oc($sqlDelete,$UpdateErrMsg,$DbgMsg,true);
 */
 			// Insert the new record
 			$Action = "Insert";
-			$sqlInsert = "INSERT INTO " . $oc_tableprefix . "product_to_category
+			$sqlInsert = "INSERT INTO oc_product_to_category
 							(product_id,
 							category_id)
 						VALUES
@@ -599,7 +599,7 @@ ADAPT FOR v3.0
 	return $EmailText;
 }
 
-function SyncProductPrices($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText = ''){
+function SyncProductPrices($ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText = ''){
 	$i = 0;
 
 	if ($EmailText !=''){
@@ -652,16 +652,16 @@ function SyncProductPrices($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tablepr
 			$DiscountCategory = $myrow['discountcategory'];
 
 			// Let's get the OpenCart primary key for product
-			$ProductId = GetOpenCartProductId($Model, $db_oc, $oc_tableprefix);
+			$ProductId = GetOpenCartProductId($Model, $db_oc);
 
 			$Action = "Update";
-			$sqlUpdate = "UPDATE " . $oc_tableprefix . "product SET
+			$sqlUpdate = "UPDATE oc_product SET
 							price = '" . $Price . "'
 						WHERE product_id = '" . $ProductId . "'";
 			$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
 
 			// update discounts if needed
-			MaintainOpenCartDiscountForItem($ProductId, $Price, $DiscountCategory, $PriceList, $db, $db_oc, $oc_tableprefix);
+			MaintainOpenCartDiscountForItem($ProductId, $Price, $DiscountCategory, $PriceList, $db, $db_oc);
 			if ($ShowMessages){
 				printf('<td>%s</td>
 						<td class="number">%s</td>
@@ -694,7 +694,7 @@ function SyncProductPrices($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tablepr
 	return $EmailText;
 }
 
-function SyncProductQOH($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText=''){
+function SyncProductQOH($ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText=''){
 	$i = 0;
 
 	if ($EmailText !=''){
@@ -742,10 +742,10 @@ function SyncProductQOH($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefi
 			}
 
 			// Let's get the OpenCart primary key for product
-			$ProductId = GetOpenCartProductId($Model, $db_oc, $oc_tableprefix);
+			$ProductId = GetOpenCartProductId($Model, $db_oc);
 
 			$Action = "Update";
-			$sqlUpdate = "UPDATE " . $oc_tableprefix . "product SET
+			$sqlUpdate = "UPDATE oc_product SET
 							quantity = '" . $Quantity . "',
 							status = '" . $Status . "'
 						WHERE product_id = '" . $ProductId . "'";
@@ -775,7 +775,7 @@ function SyncProductQOH($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefi
 		}
 	}
 	// Set the status flag to 0 for all items in OC with QOH = 0. 
-	$sqlUpdate = "UPDATE " . $oc_tableprefix . "product SET
+	$sqlUpdate = "UPDATE oc_product SET
 					status = 0
 				WHERE quantity = 0";
 	$resultUpdate = DB_query_oc($sqlUpdate,"","",true);
@@ -793,7 +793,7 @@ function SyncProductQOH($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefi
 	return $EmailText;
 }
 
-function SyncProductMarketplacesLinks($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText=''){
+function SyncProductMarketplacesLinks($ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText=''){
 	$i = 0;
 	if ($EmailText !=''){
 		$EmailText = $EmailText . "Enable/Disable Product in Marketplaces based on QOH" . "\n" . PrintTimeInformation($db);
@@ -969,20 +969,20 @@ function SyncProductMarketplacesLinks($ShowMessages, $LastTimeRun, $db, $db_oc, 
 			$Link .= '}'; // closing the full link info
 
 			// Let's get the OpenCart primary key for product
-			$ProductId = GetOpenCartProductId($Model, $db_oc, $oc_tableprefix);
+			$ProductId = GetOpenCartProductId($Model, $db_oc);
 
 			/* Now, insert it or update it */
-			if (DataExistsInOpenCart($db_oc, $oc_tableprefix . 'product_link', 'product_id', $ProductId)){
+			if (DataExistsInOpenCart($db_oc, 'oc_product_link', 'product_id', $ProductId)){
 				$Action = "Update";
 
-				$sqlUpdate = "UPDATE " . $oc_tableprefix . "product_link SET
+				$sqlUpdate = "UPDATE oc_product_link SET
 								product_link = '" . $Link . "'
 							WHERE product_id = '" . $ProductId . "'";
 				$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
 			}else{
 				$Action = "Insert";
 
-				$sqlInsert = "INSERT INTO " . $oc_tableprefix . "product_link
+				$sqlInsert = "INSERT INTO oc_product_link
 								(product_id,
 								product_link)
 							VALUES
@@ -1030,7 +1030,7 @@ function SyncProductMarketplacesLinks($ShowMessages, $LastTimeRun, $db, $db_oc, 
 	return $EmailText;
 }
 
-function PurgeDiscountOver50($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText=''){
+function PurgeDiscountOver50($ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText=''){
 
 	if ($EmailText !=''){
 		$EmailText = $EmailText . "Purge Products with Discount Over 50%" . "\n" . PrintTimeInformation($db);
@@ -1055,7 +1055,7 @@ function PurgeDiscountOver50($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_table
 	return $EmailText;
 }
 
-function SyncProductDescriptionTranslations($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText=''){
+function SyncProductDescriptionTranslations($ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText=''){
 // UPDATE `kurakura_kl_erp`.`stockdescriptiontranslations` SET `date_updated` = NOW();
 	$TagSeparator = ", ";
 
@@ -1122,13 +1122,13 @@ function SyncProductDescriptionTranslations($ShowMessages, $LastTimeRun, $db, $d
 			}
 
 			// Let's get the OpenCart primary key for product
-			$ProductId = GetOpenCartProductId($Model, $db_oc, $oc_tableprefix);
+			$ProductId = GetOpenCartProductId($Model, $db_oc);
 
 			// If the product exists in OpenCart (as in webERP we can have translations for items NOT in Opencart)
 			if ($ProductId != ""){
 
 				// Look for the Language of the Translation
-				$LanguageId = GetOpenCartLanguageId(mb_substr($myrow['language_id'],0,5), $db_oc, $oc_tableprefix);
+				$LanguageId = GetOpenCartLanguageId(mb_substr($myrow['language_id'],0,5), $db_oc);
 				
 				// If the language exists in OpenCart, when we insert / update the description translation
 				if ($LanguageId != ""){
@@ -1140,9 +1140,9 @@ function SyncProductDescriptionTranslations($ShowMessages, $LastTimeRun, $db, $d
 					$MetaDescription = CreateMetaDescriptionItem($myrow['stockid'], $myrow['longdescriptiontranslation']);
 					$MetaTitle = CreateMetaTitleItem($myrow['stockid'], $myrow['descriptiontranslation'], " ");
 
-					if (DataExistsInOpenCart($db_oc, $oc_tableprefix . 'product_description', 'product_id', $ProductId, 'language_id', $LanguageId )){
+					if (DataExistsInOpenCart($db_oc, 'oc_product_description', 'product_id', $ProductId, 'language_id', $LanguageId )){
 						$Action = "Update";
-						$sqlUpdate = "UPDATE " . $oc_tableprefix . "product_description SET
+						$sqlUpdate = "UPDATE oc_product_description SET
 										name = '" . $Name . "',
 										description = '" . $LongDescription . "',
 										meta_title = '" . $MetaTitle . "',
@@ -1155,7 +1155,7 @@ function SyncProductDescriptionTranslations($ShowMessages, $LastTimeRun, $db, $d
 
 					}else{
 						$Action = "Insert";
-						$sqlInsert = "INSERT INTO " . $oc_tableprefix . "product_description
+						$sqlInsert = "INSERT INTO oc_product_description
 										(product_id,
 										language_id,
 										name,
@@ -1180,15 +1180,15 @@ function SyncProductDescriptionTranslations($ShowMessages, $LastTimeRun, $db, $d
 					// create SEO Keywords if needed
 					$SEOQuery = 'product_id='.$ProductId;
 					$SEOKeyword = CreateSEOKeyword($Model . "-" . $Name);
-					MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, $StoreId, $LanguageId, $db_oc, $oc_tableprefix);
+					MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, $StoreId, $LanguageId, $db_oc);
 
 					// if it's a general item, we have to add it too to Blink store.
 					if ($ItemBrand == "GE"){
-						MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, OPENCART_STORE_BLINK, $LanguageId, $db_oc, $oc_tableprefix);
+						MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, OPENCART_STORE_BLINK, $LanguageId, $db_oc);
 					}
 
 					// if it's not on the wholesale store, we add it.
-					MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, OPENCART_STORE_WHOLESALE, $LanguageId, $db_oc, $oc_tableprefix);
+					MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, OPENCART_STORE_WHOLESALE, $LanguageId, $db_oc);
 
 	
 					if ($ShowMessages){
@@ -1229,576 +1229,7 @@ function SyncProductDescriptionTranslations($ShowMessages, $LastTimeRun, $db, $d
 	return $EmailText;
 }
 
-function CleanDuplicatedUrlAlias($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText = ''){
-
-	if ($EmailText !=''){
-		$EmailText = $EmailText . "Clean Duplicated URL Alias" . "\n" . PrintTimeInformation($db);
-	}
-
-	$SQL = "SELECT 	" . $oc_tableprefix . "seo_url.seo_url_id,
-				" . $oc_tableprefix . "seo_url.query,
-				" . $oc_tableprefix . "seo_url.keyword
-		FROM " . $oc_tableprefix . "seo_url
-		ORDER BY " . $oc_tableprefix . "seo_url.query,
-				" . $oc_tableprefix . "seo_url.seo_url_id DESC";
-	$result = DB_query_oc($SQL);
-	if (DB_num_rows($result) != 0){
-		$k = 0; //row colour counter
-		$i = 0;
-		$PreviousQuery = "";
-		$PreviousKeyword = "";
-		$ShowHeader = TRUE;
-		while ($myrow = DB_fetch_array($result)) {
-			if ($PreviousQuery == $myrow['query']){
-				// we have a duplicated
-				$DuplicatedQuery = $myrow['query'];
-				$DuplicatedKeyword = $myrow['keyword'];
-
-				if ($ShowHeader){
-					if ($ShowMessages){
-						echo '<p class="page_title_text" align="center"><strong>' . _('Duplicated URL Alias clean up') .'</strong></p>';
-						echo '<div>';
-						echo '<table class="selection">';
-						$TableHeader = '<tr>
-											<th>' . _('URL Alias ID') . '</th>
-											<th>' . _('Query') . '</th>
-											<th>' . _('Keyword') . '</th>
-										</tr>';
-						echo $TableHeader;
-					}
-					$ShowHeader = FALSE;
-				}
-				// we delete the duplicated
-				$sqlDelete = "DELETE FROM " . $oc_tableprefix . "seo_url
-							WHERE seo_url_id = '" .  $myrow['seo_url_id'] . "'";
-				$resultDelete = DB_query_oc($sqlDelete,$UpdateErrMsg,$DbgMsg,true);
-
-				// we set it up as a redirect just in case someome uses this old URL keyword
-				if ($PreviousKeyword != $myrow['keyword']){
-					$Active = 1;
-					$FromURL = PATH_OPENCART_BASE . '/'. $myrow['keyword'];
-					$ToURL = PATH_OPENCART_BASE . '/' . ROUTE_TO_PRODUCT . $myrow['query'];
-					$ResponseCode = REDIRECT_RESPONSE_CODE;
-					$FromDate = date('Y-m-d');
-					$TimesUsed = 0;
-					$sqlInsert = "INSERT INTO " . $oc_tableprefix . "redirect
-								(active,
-								from_url,
-								to_url,
-								response_code,
-								date_start,
-								times_used)
-							VALUES
-								('" . $Active . "',
-								'" . $FromURL . "',
-								'" . $ToURL . "',
-								'" . $ResponseCode . "',
-								'" . $FromDate . "',
-								'" . $TimesUsed . "'
-								)";
-					$resultInsert = DB_query_oc($sqlInsert,$UpdateErrMsg,$DbgMsg,true);
-				}
-
-				if ($ShowMessages){
-					$k = StartEvenOrOddRow($k);
-					printf('<td class="number">%s</td>
-							<td>%s</td>
-							<td>%s</td>
-							</tr>',
-							locale_number_format($myrow['seo_url_id'],0),
-							$myrow['query'],
-							$myrow['keyword']
-							);
-				}
-				if ($EmailText !=''){
-					$EmailText = $EmailText . locale_number_format($myrow['seo_url_id'],0) . " --> " . $myrow['query'] . " --> ". $myrow['keyword'] . "\n";
-				}
-				$i++;
-			}
-			$PreviousQuery = $myrow['query'];
-			$PreviousKeyword = $myrow['keyword'];
-		}
-		if (!$ShowHeader){
-			if ($ShowMessages){
-			echo '</table>
-					</div>
-					</form>';
-			}
-		}
-	}
-	if ($ShowMessages){
-		prnMsg(locale_number_format($i,0) . ' ' . _('Duplicated URL Alias synchronized in OpenCart'),'success');
-	}
-	if ($EmailText !=''){
-		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . _('Duplicated URL Alias synchronized in OpenCart') . "\n\n";
-	}
-	return $EmailText;
-}
-
-function SyncSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText= ''){
-	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference($db));
-	if ($EmailText !=''){
-		$EmailText = $EmailText . "Sync Sales Categories" . "\n" . PrintTimeInformation($db);
-	}
-
-	$SQL = "SELECT salescatid,
-				parentcatid,
-				salescatname,
-				active
-			FROM salescat
-			WHERE date_created >= '" . $LastTimeRun . "'
-				OR date_updated >= '" . $LastTimeRun . "'
-			ORDER BY salescatid";
-
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		if ($ShowMessages){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Sales categories') .'</strong></p>';
-			echo '<div>';
-			echo '<table class="selection">';
-			$TableHeader = '<tr>
-								<th>' . _('SalesCatID') . '</th>
-								<th>' . _('SalesCatName') . '</th>
-								<th>' . _('Action') . '</th>
-							</tr>';
-			echo $TableHeader;
-		}
-		$DbgMsg = _('The SQL statement that failed was');
-		$UpdateErrMsg = _('The SQL to update sales categories in Opencart failed');
-		$InsertErrMsg = _('The SQL to insert sales categories in Opencart failed');
-
-		$k = 0; //row colour counter
-		$i = 0;
-		while ($myrow = DB_fetch_array($result)) {
-
-			/* FIELD MATCHING */
-			if ($myrow['parentcatid'] == 0){
-				$Top = 1;
-			}else{
-				$Top = 0;
-			}
-
-			$Column = 1;
-			$Language_Id = 1; // for now NO multi language
-			$SortOrder = 1;
-			$Name = trim($myrow['salescatname']);
-			$Description = trim($myrow['salescatname']);
-			$MetaTitle = trim($myrow['salescatname']);
-			$MetaDescription = CreateMetaDescriptionSalesCategory('Sales category', trim($myrow['salescatname']));
-			$CategoryId = $myrow['salescatid'];
-			if (DataExistsInOpenCart($db_oc, $oc_tableprefix . 'category', 'category_id', $myrow['salescatid'])){
-				$Action = "Update";
-				$sqlUpdate = "UPDATE " . $oc_tableprefix . "category
-								SET parent_id 		= '" . $myrow['parentcatid'] . "',
-									status 			= '" . $myrow['active'] . "',
-									top 			= '" . $Top . "',
-									date_modified 	= '" . $ServerNow . "'
-								WHERE category_id 	= '" . $CategoryId . "'";
-				$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
-
-				$sqlUpdate = "UPDATE " . $oc_tableprefix . "category_description
-								SET language_id 		= '" . $Language_Id . "',
-									name	 			= '" . $Name . "',
-									description			= '" . $Description . "',
-									meta_title 			= '" . $MetaTitle . "',
-									meta_description	= '" . $MetaDescription . "',
-									meta_keyword		= '" . $MetaKeyword . "'
-								WHERE category_id 	= '" . $CategoryId . "'";
-				$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
-
-			}else{
-				$Action = "Insert";
-				$sqlInsert = "INSERT INTO " . $oc_tableprefix . "category
-								(category_id,
-								image,
-								parent_id,
-								top,
-								`column`,
-								sort_order,
-								status,
-								date_added,
-								date_modified)
-							VALUES
-								('" . $CategoryId . "',
-								'',
-								'" . $myrow['parentcatid'] . "',
-								'" . $Top . "',
-								'" . $Column . "',
-								'" . $SortOrder . "',
-								'" . $myrow['active'] . "',
-								'" . $ServerNow . "',
-								'" . $ServerNow . "'
-								)";
-				$resultInsert = DB_query_oc($sqlInsert,$InsertErrMsg,$DbgMsg,true);
-				$sqlInsert = "INSERT INTO " . $oc_tableprefix . "category_description
-								(category_id,
-								language_id,
-								name,
-								description,
-								meta_title,
-								meta_description,
-								meta_keyword)
-							VALUES
-								('" . $CategoryId . "',
-								'" . $Language_Id . "',
-								'" . $Name . "',
-								'" . $Description . "',
-								'" . $MetaTitle . "',
-								'" . $MetaDescription . "',
-								'" . $MetaKeyword . "'
-								)";
-				$resultInsert = DB_query_oc($sqlInsert,$InsertErrMsg,$DbgMsg,true);
-				$sqlInsert = "INSERT INTO " . $oc_tableprefix . "category_to_store
-								(category_id,
-								store_id)
-							VALUES
-								('" . $CategoryId . "',
-								'" . $StoreId . "'
-								)";
-				$resultInsert = DB_query_oc($sqlInsert,$InsertErrMsg,$DbgMsg,true);
-				$SortOrder++;
-
-			}
-
-			// SEO URL Keywords if needed
-			$SEOQuery = 'category_id='.$CategoryId;
-			$SEOKeyword = CreateSEOKeyword($Name);
-			// This bit should be smarter... we don't know if a sales category is from KL or Blink, so we assign to both
-			// outlet and wholesale, yes, they are.
-			MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, OPENCART_STORE_KAPAL_LAUT, $LanguageId, $db_oc, $oc_tableprefix);
-			MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, OPENCART_STORE_BLINK, $LanguageId, $db_oc, $oc_tableprefix);
-			MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, OPENCART_STORE_OUTLET, $LanguageId, $db_oc, $oc_tableprefix);
-			MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, OPENCART_STORE_WHOLESALE, $LanguageId, $db_oc, $oc_tableprefix);
-
-			if ($ShowMessages){
-				$k = StartEvenOrOddRow($k);
-				printf('<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						</tr>',
-						$myrow['salescatid'],
-						$Name,
-						$Action
-						);
-			}
-			if ($EmailText !=''){
-				$EmailText = $EmailText . $myrow['salescatid'] . " = " . $Name. " --> " . $Action . "\n";
-			}
-			$i++;
-		}
-		if ($ShowMessages){
-			echo '</table>
-					</div>
-					</form>';
-		}
-	}
-	if ($ShowMessages){
-		if ($i > 0){
-			prnMsg('Remind to run Repair Categories on OpenCart!','warn');
-		}
-		prnMsg(locale_number_format($i,0) . ' ' . _('Sales Categories synchronized from webERP to OpenCart'),'success');
-	}
-	if ($EmailText !=''){
-		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . _('Sales Categories synchronized from webERP to OpenCart') . "\n\n";
-	}
-	return $EmailText;
-}
-
-function SyncFeaturedList($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText= ''){
-
-	if ($EmailText !=''){
-		$EmailText = $EmailText . "Clean Duplicated URL Alias" . "\n" . PrintTimeInformation($db);
-	}
-	/* Let's get the ID for the list of featured products for featured module
-	   we will need it later on to save the results in the appropiate setting */
-	$SettingId = GetOpenCartSettingId(0,"featured", "featured_product", $db_oc, $oc_tableprefix);
-	$ListFeaturedOpenCart = "";
-
-	/* Look for the featured items in webERP
-	we'll recreate the full list everytime as it will be short and
-	it's a list that will change quite often */
-	$SQL = "SELECT DISTINCT(salescatprod.stockid)
-			FROM salescatprod
-			WHERE salescatprod.featured ='1'
-			ORDER BY salescatprod.stockid";
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		if ($ShowMessages){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Create featured list in OpenCart') .'</strong></p>';
-			echo '<div>';
-			echo '<table class="selection">';
-			$TableHeader = '<tr>
-								<th>' . _('StockID') . '</th>
-								<th>' . _('OpenCartID') . '</th>
-								<th>' . _('Action') . '</th>
-							</tr>';
-			echo $TableHeader;
-		}
-		$Action = "Added";
-		$k = 0; //row colour counter
-		$i = 0;
-		while ($myrow = DB_fetch_array($result)) {
-			/* Field Matching */
-			$Model = $myrow['stockid'];
-
-			// Let's get the OpenCart primary key for product
-			$ProductId = GetOpenCartProductId($Model, $db_oc, $oc_tableprefix);
-
-			// Let's build the list
-			if ($i == 0){
-				$ListFeaturedOpenCart = strval($ProductId);
-			}else{
-				$ListFeaturedOpenCart = $ListFeaturedOpenCart . "," . strval($ProductId);
-			}
-			if ($ShowMessages){
-				$k = StartEvenOrOddRow($k);
-				printf('<td>%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						</tr>',
-						$Model,
-						$ProductId,
-						$Action
-						);
-			}
-			if ($EmailText !=''){
-				$EmailText = $EmailText . str_pad($Model, 20, " ") . " = " . $ProductId. " --> " . $Action . "\n";
-			}
-			$i++;
-		}
-		UpdateSettingValueOpenCart($SettingId, $ListFeaturedOpenCart, $db_oc, $oc_tableprefix);
-		if ($ShowMessages){
-			echo '</table>
-					</div>
-					</form>';
-		}
-	}
-	if ($ShowMessages){
-		prnMsg(locale_number_format($i,0) . ' ' . _('Products included in the featured list in OpenCart'),'success');
-	}
-	if ($EmailText !=''){
-		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . _('Products included in the featured list in OpenCart') . "\n\n";
-	}
-	return $EmailText;
-}
-
-function ActivateCategoryDependingOnQOH($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText= ''){
-
-	if ($EmailText !=''){
-		$EmailText = $EmailText . "Activate category Depending on QOH" . "\n" . PrintTimeInformation($db);
-	}
-	$SQL = "SELECT salescatid,
-				parentcatid,
-				salescatname,
-				active,
-				(SELECT SUM(locstock.quantity)
-					FROM salescatprod,locstock,locations
-					WHERE salescat.salescatid = salescatprod.salescatid
-						AND salescatprod.stockid = locstock.stockid
-						AND locstock.loccode = locations.loccode
-						AND locations.stockavailableforonline = '1'
-				) as qoh
-			FROM salescat
-			WHERE active = 1
-				AND parentcatid != 0
-			ORDER BY salescatname";
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		if ($ShowMessages){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Activate/Inactivate Sales Categories depending on QOH') .'</strong></p>';
-			echo '<div>';
-			echo '<table class="selection">';
-			$TableHeader = '<tr>
-								<th>' . _('Sales Category') . '</th>
-								<th>' . _('QOH') . '</th>
-								<th>' . _('Action') . '</th>
-							</tr>';
-			echo $TableHeader;
-		}
-		$DbgMsg = _('The SQL statement that failed was');
-		$UpdateErrMsg = _('The SQL to Activate Categories depending QOH in Opencart failed');
-
-		$k = 0; //row colour counter
-		$i = 0;
-		while ($myrow = DB_fetch_array($result)) {
-
-			/* Field Matching */
-			$CategoryId = $myrow['salescatid'];
-			$CategoryName = $myrow['salescatname'];
-			$CategoryQOH = $myrow['qoh'];
-			if (isset($myrow['qoh'])){
-				if ($CategoryQOH > 0){
-					$CategoryQOH = $myrow['qoh'];
-					$Status = 1;
-					$Action = "Active";
-				}else{
-					$CategoryQOH = 0;
-					$Status = 0;
-					$Action = "Inactive QOH = 0";
-				}
-			}else{
-				$CategoryQOH = 0;
-				$Status = 0;
-				$Action = "Inactive QOH = 0";
-			}
-
-			$sqlUpdate = "UPDATE " . $oc_tableprefix . "category SET
-								status = '" . $Status . "'
-							WHERE category_id = '" . $CategoryId . "'";
-			$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
-			if ($ShowMessages){
-				$k = StartEvenOrOddRow($k);
-				printf('<td>%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						</tr>',
-						$CategoryName,
-						locale_number_format($CategoryQOH,0),
-						$Action
-						);
-			}
-			if ($EmailText !=''){
-				$EmailText = $EmailText . $CategoryName . " --> " . locale_number_format($CategoryQOH,0) . " --> " . $Action . "\n";
-			}
-			$i++;
-		}
-		if ($ShowMessages){
-			echo '</table>
-					</div>
-					</form>';
-		}
-	}
-	if ($ShowMessages){
-		prnMsg(locale_number_format($i,0) . ' ' . _('OpenCart Categories Activated / Inactivated depending on QOH'),'success');
-	}
-	if ($EmailText !=''){
-		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . _('OpenCart Categories Activated / Inactivated depending on QOH') . "\n\n";
-	}
-	return $EmailText;
-}
-
-function MaintainOpenCartOutletSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText = ''){
-
-	/* Look for all products in OC marked as OUTLET and "something else"*/
-	$SQL = "SELECT " . $oc_tableprefix . "product.product_id,
-				   " . $oc_tableprefix . "product.model
-			FROM " . $oc_tableprefix . "product_to_category ,
-				 " . $oc_tableprefix . "product
-			WHERE " . $oc_tableprefix . "product.product_id = " . $oc_tableprefix . "product_to_category.product_id
-				AND category_id IN (" . ONLINESHOP_OUTLET_SALES_CATEGORIES . ")";
-		$result = DB_query_oc($SQL);
-	if (DB_num_rows($result) != 0){
-		if ($ShowMessages){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Maintain Outlet Sales Categories') .'</strong></p>';
-			echo '<div>';
-			echo '<table class="selection">';
-			$TableHeader = '<tr>
-								<th>' . _('StockID') . '</th>
-								<th>' . _('Action') . '</th>
-							</tr>';
-			echo $TableHeader;
-		}
-		$DbgMsg = _('The SQL statement that failed was');
-		$UpdateErrMsg = _('The SQL to update Product QOH in Opencart failed');
-
-		$k = 0; //row colour counter
-		$i = 0;
-		while ($myrow = DB_fetch_array($result)) {
-
-			$ProductId = $myrow['product_id'];
-			$Model = $myrow['model'];
-
-			$Action = "Delete sales categories not OUTLET";
-			$sqlDelete = "DELETE FROM " . $oc_tableprefix . "product_to_category
-							WHERE product_id = '" . $ProductId . "'
-								AND category_id NOT IN (" . ONLINESHOP_OUTLET_SALES_CATEGORIES . ")";
-			$resultDelete = DB_query_oc($sqlDelete,$UpdateErrMsg,$DbgMsg,true);
-			if ($ShowMessages){
-				$k = StartEvenOrOddRow($k);
-				printf('<td>%s</td>
-						<td>%s</td>
-						</tr>',
-						$Model,
-						$Action
-						);
-			}
-/*			if ($EmailText !=''){
-				$EmailText = $EmailText . str_pad($Model, 20, " ") . " --> " . $Action . "\n";
-			}
-*/			$i++;
-		}
-		if ($ShowMessages){
-			echo '</table>
-					</div>
-					</form>';
-		}
-	}
-	if ($EmailText !=''){
-		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . _('OpenCart Outlet Sales Categories maintained') . "\n\n";
-	}
-	return $EmailText;
-}
-
-function MaintainWeberpOutletSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText=''){
-
-	/* Look for all products in weberp marked as OUTLET and "something else"*/
-
-	$SQL = "SELECT salescatprod.stockid
-			FROM salescatprod
-			WHERE salescatprod.salescatid IN (" . ONLINESHOP_OUTLET_SALES_CATEGORIES . ")";
-		$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		if ($ShowMessages){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Maintain webERP Outlet Sales Categories') .'</strong></p>';
-			echo '<div>';
-			echo '<table class="selection">';
-			$TableHeader = '<tr>
-								<th>' . _('StockID') . '</th>
-								<th>' . _('Action') . '</th>
-							</tr>';
-			echo $TableHeader;
-		}
-		$DbgMsg = _('The SQL statement that failed was');
-		$UpdateErrMsg = _('The SQL to update outlet sales category in webERP failed');
-
-		$k = 0; //row colour counter
-		$i = 0;
-		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
-
-			$ProductId = $myrow['stockid'];
-
-			$Action = "Delete sales categories not OUTLET";
-			$sqlDelete = "DELETE FROM salescatprod
-							WHERE stockid = '" . $ProductId . "'
-								AND salescatid NOT IN (" . ONLINESHOP_OUTLET_SALES_CATEGORIES . ")";
-			$resultDelete = DB_query($sqlDelete,$db,$UpdateErrMsg,$DbgMsg,true);
-			if ($ShowMessages){
-				printf('<td>%s</td>
-						<td>%s</td>
-						</tr>',
-						$ProductId,
-						$Action
-						);
-			}
-/*			if ($EmailText !=''){
-				$EmailText = $EmailText . str_pad($ProductId, 20, " ") . " --> " . $Action . "\n";
-			}
-*/			$i++;
-		}
-		if ($ShowMessages){
-			echo '</table>
-					</div>
-					</form>';
-		}
-	}
-	if ($EmailText !=''){
-		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . _('webERP Outlet Sales Categories Maintained') . "\n\n";
-	}
-	return $EmailText;
-}
-
-function SyncMultipleImages($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText = ''){
+function SyncMultipleImages($ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText = ''){
 
 	if ($EmailText !=''){
 		$EmailText = $EmailText . "Sync Multiple Images" . "\n" . PrintTimeInformation($db);
@@ -1814,7 +1245,7 @@ function SyncMultipleImages($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tablep
 						</tr>';
 		echo $TableHeader;
 	}
-//	$SQLTruncate = "TRUNCATE " . $oc_tableprefix . "product_image";
+//	$SQLTruncate = "TRUNCATE oc_product_image";
 //	$resultSQLTruncate = DB_query_oc($SQLTruncate);
 	$k = 0; //row colour counter
 	$i= 0;
@@ -1829,12 +1260,12 @@ function SyncMultipleImages($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tablep
 				// GET stockid from filename
 				$StockId = substr($file, 0, strpos($file, $suffix));
 				// get Opencart productid
-				$ProductId = GetOpenCartProductId($StockId, $db_oc, $oc_tableprefix);
+				$ProductId = GetOpenCartProductId($StockId, $db_oc);
 				if ($ProductId > 0){
 					// insert info about multiple images
 					$Image = PATH_OPENCART_IMAGES . $file;
 					if (DataExistsInOpenCart($db_oc, "oc_product_image", "product_id", $ProductId, "image", $Image)== FALSE){
-						$sqlInsert = "INSERT INTO " . $oc_tableprefix . "product_image
+						$sqlInsert = "INSERT INTO oc_product_image
 										(product_id,
 										image,
 										sort_order)
@@ -1871,101 +1302,7 @@ function SyncMultipleImages($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tablep
 	return $EmailText;
 }
 
-function SyncRelatedItems($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText = ''){
-
-	if ($EmailText !=''){
-		$EmailText = $EmailText . "Sync Related Items" . "\n" . PrintTimeInformation($db);
-	}
-
-	$SQL = "SELECT relateditems.stockid,
-				relateditems.related
-			FROM relateditems, stockmaster
-			WHERE relateditems.stockid = stockmaster.stockid
-				AND stockmaster.discontinued = '0'
-				AND stockmaster.klsynctoopencart = '1'
-				AND (relateditems.date_created >= '" . $LastTimeRun . "'
-					OR relateditems.date_updated >= '" . $LastTimeRun . "')
-			ORDER BY relateditems.stockid, 
-				relateditems.related";
-
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		if ($ShowMessages){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Related Items') .'</strong></p>';
-			echo '<div>';
-			echo '<table class="selection">';
-			$TableHeader = '<tr>
-								<th>' . _('Item webERP') . '</th>
-								<th>' . _('Related webERP') . '</th>
-								<th>' . _('Item OC') . '</th>
-								<th>' . _('Related OC') . '</th>
-								<th>' . _('Action') . '</th>
-							</tr>';
-			echo $TableHeader;
-		}
-		$DbgMsg = _('The SQL statement that failed was');
-		$UpdateErrMsg = _('The SQL to update related items in Opencart failed');
-		$InsertErrMsg = _('The SQL to insert related items in Opencart failed');
-
-		$k = 0; //row colour counter
-		$i = 0;
-		while ($myrow = DB_fetch_array($result)) {
-
-			/* FIELD MATCHING */
-			$ProductId = GetOpenCartProductId($myrow['stockid'], $db_oc, $oc_tableprefix);
-			$RelatedId = GetOpenCartProductId($myrow['related'], $db_oc, $oc_tableprefix);
-			if (($ProductId != '') AND ($RelatedId != '')){
-				// if both products still exist in OpenCart
-				if (((isRing($ProductId)) AND (isRing($RelatedId))) == FALSE){
-					// if both are rings most probably is a sizing "related", so we don't sync them
-					$k = StartEvenOrOddRow($k);
-					if (DataExistsInOpenCart($db_oc, $oc_tableprefix . 'product_related', 'product_id', $ProductId, 'related_id', $RelatedId )){
-						$Action = "Update";
-					}else{
-						$Action = "Insert";
-						$sqlInsert = "INSERT INTO " . $oc_tableprefix . "product_related
-										(product_id,
-										related_id)
-									VALUES
-										('" . $ProductId . "',
-										'" . $RelatedId . "'
-										)";
-						$resultInsert = DB_query_oc($sqlInsert,$InsertErrMsg,$DbgMsg,true);
-					}
-					if ($ShowMessages){
-						printf('<td>%s</td>
-								<td>%s</td>
-								<td>%s</td>
-								<td>%s</td>
-								<td>%s</td>
-								</tr>',
-								$myrow['stockid'],
-								$myrow['related'],
-								$ProductId,
-								$RelatedId,
-								$Action
-								);
-					}
-					$i++;
-				}
-			}
-		}
-		if ($ShowMessages){
-			echo '</table>
-					</div>
-					</form>';
-		}
-	}
-	if ($ShowMessages){
-		prnMsg(locale_number_format($i,0) . ' ' . _('Pairs of related items synchronized from webERP to OpenCart'),'success');
-	}
-	if ($EmailText !=''){
-		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . _('Pairs of related items synchronized from webERP to OpenCart') . "\n\n";
-	}
-	return $EmailText;
-}
-
-function SyncCurrencies($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefix, $EmailText= ''){
+function SyncCurrencies($ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText= ''){
 	$i = 0;
 	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference($db));
 	if ($EmailText !=''){
@@ -1999,9 +1336,6 @@ function SyncCurrencies($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefi
 		$UpdateErrMsg = _('The SQL to update Currency Exchange Rates in Opencart failed');
 		$InsertErrMsg = _('The SQL to insert Currency Exchange Rates in Opencart failed');
 
-		// Get the default currency used for PayPal Commerce Platform
-//		$DefaultPayPalCommercePlatformCurrency = GetOpenCartSettingValue(0, "payment_paypal", "payment_paypal_currency_code", $db_oc, $oc_tableprefix);
-
 		$k = 0; //row colour counter
 		$i = 0;
 		while ($myrow = DB_fetch_array($result)) {
@@ -2017,16 +1351,16 @@ function SyncCurrencies($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefi
 				// functional currency
 				$Rate = 1;
 			}
-			if (DataExistsInOpenCart($db_oc, $oc_tableprefix . 'currency', 'code', $Currency)){
+			if (DataExistsInOpenCart($db_oc, 'oc_currency', 'code', $Currency)){
 				$Action = "Update";
-				$sqlUpdate = "UPDATE " . $oc_tableprefix . "currency
+				$sqlUpdate = "UPDATE oc_currency
 								SET value 		= '" . $Rate . "',
 									date_modified 	= '" . $ServerNow . "'
 								WHERE code 	= '" . $Currency . "'";
 				$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
 			}else{
 				$Action = "Insert";
-				$sqlInsert = "INSERT INTO " . $oc_tableprefix . "currency
+				$sqlInsert = "INSERT INTO oc_currency
 								(title,
 								code,
 								decimal_place,
@@ -2074,17 +1408,17 @@ function SyncCurrencies($ShowMessages, $LastTimeRun, $db, $db_oc, $oc_tableprefi
 	return $EmailText;
 }
 
-function KL_DailyCleanOpenCartDB($ShowMessages, $db, $db_oc, $oc_tableprefix, $EmailText=''){
+function KL_DailyCleanOpenCartDB($ShowMessages, $db, $db_oc, $EmailText=''){
 	$begintime = time_start();
 
 	DB_Txn_Begin();
 
 	// clean old coupons
-	$EmailText = CleanOldOpenCartCoupons($ShowMessages, 15, $db, $db_oc, $oc_tableprefix, $EmailText);
+	$EmailText = CleanOldOpenCartCoupons($ShowMessages, 15, $db, $db_oc, $EmailText);
 	// clean old pending orders
-	$EmailText = ChangeOldPendingOpenCartOrders($ShowMessages, 2, $db, $db_oc, $oc_tableprefix, $EmailText);
+	$EmailText = ChangeOldPendingOpenCartOrders($ShowMessages, 2, $db, $db_oc, $EmailText);
 	// Change from shipped to complete
-	$EmailText = ChangeOldShippedOpenCartOrders($ShowMessages, 1, $db, $db_oc, $oc_tableprefix, $EmailText);
+	$EmailText = ChangeOldShippedOpenCartOrders($ShowMessages, 1, $db, $db_oc, $EmailText);
 
 	DB_Txn_Commit();
 	if ($ShowMessages){
@@ -2094,7 +1428,7 @@ function KL_DailyCleanOpenCartDB($ShowMessages, $db, $db_oc, $oc_tableprefix, $E
 	return $EmailText;
 }
 
-function CleanOldOpenCartCoupons($ShowMessages, $MaxDays, $db, $db_oc, $oc_tableprefix, $EmailText= ''){
+function CleanOldOpenCartCoupons($ShowMessages, $MaxDays, $db, $db_oc, $EmailText= ''){
 	$Title = 'Clean old OpenCart Couons expired ' . $MaxDays . ' ago';
 	$i = 0;
 	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference($db));
@@ -2171,7 +1505,7 @@ function CleanOldOpenCartCoupons($ShowMessages, $MaxDays, $db, $db_oc, $oc_table
 	return $EmailText;
 }
 
-function ChangeOldPendingOpenCartOrders($ShowMessages, $MaxDays, $db, $db_oc, $oc_tableprefix, $EmailText= ''){
+function ChangeOldPendingOpenCartOrders($ShowMessages, $MaxDays, $db, $db_oc, $EmailText= ''){
 	$Title = 'Change old PENDING OC Orders to EXPIRED';
 	$i = 0;
 	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference($db));
@@ -2213,7 +1547,7 @@ function ChangeOldPendingOpenCartOrders($ShowMessages, $MaxDays, $db, $db_oc, $o
 			$OrderId = $myrow['order_id'];
 			$Name = $myrow['firstname'] . " " . $myrow['lastname'];
 			$Comment = "webERP -> EXPIRED: Payment not received in due time.";
-			UpdateOpenCartOrderStatus($OrderId, OPENCART_ORDER_STATUS_EXPIRED, 0, "", "", $Comment, $db, $db_oc, $oc_tableprefix);
+			UpdateOpenCartOrderStatus($OrderId, OPENCART_ORDER_STATUS_EXPIRED, 0, "", "", $Comment, $db, $db_oc);
 
 			if ($ShowMessages){
 				$k = StartEvenOrOddRow($k);
@@ -2246,7 +1580,7 @@ function ChangeOldPendingOpenCartOrders($ShowMessages, $MaxDays, $db, $db_oc, $o
 	return $EmailText;
 }
 
-function ChangeOldShippedOpenCartOrders($ShowMessages, $MaxDays, $db, $db_oc, $oc_tableprefix, $EmailText= ''){
+function ChangeOldShippedOpenCartOrders($ShowMessages, $MaxDays, $db, $db_oc, $EmailText= ''){
 	$Title = 'Change old SHIPPED OC Orders to COMPLETE';
 	$i = 0;
 	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference($db));
@@ -2288,7 +1622,7 @@ function ChangeOldShippedOpenCartOrders($ShowMessages, $MaxDays, $db, $db_oc, $o
 			$OrderId = $myrow['order_id'];
 			$Name = $myrow['firstname'] . " " . $myrow['lastname'];
 			$Comment = "webERP -> COMPLETE: Order already shipped and accounted for.";
-			UpdateOpenCartOrderStatus($OrderId, OPENCART_ORDER_STATUS_COMPLETE, 0, "", "", $Comment, $db, $db_oc, $oc_tableprefix);
+			UpdateOpenCartOrderStatus($OrderId, OPENCART_ORDER_STATUS_COMPLETE, 0, "", "", $Comment, $db, $db_oc);
 
 			if ($ShowMessages){
 				$k = StartEvenOrOddRow($k);

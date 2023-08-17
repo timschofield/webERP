@@ -1046,8 +1046,8 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 			// online sale from our website, we must update the status of the order in OpenCart
 			$OnlineOrderNo = GetOnlineOrderNoFromWeberp($OrderNo, $db);
 			$ReasonChangeStatusId = "webERP --> Payment received by " . $PaymentCode . " Amount = " . $TotalAmount;  
-			UpdateOpenCartOrderStatus($OnlineOrderNo, OPENCART_ORDER_STATUS_PROCESSING, 0, "", "", $ReasonChangeStatusId, $db, $db_oc, $oc_tableprefix);
-			UpdateOpenCartOrderPayment($OnlineOrderNo, $db, $db_oc, $oc_tableprefix);
+			UpdateOpenCartOrderStatus($OnlineOrderNo, OPENCART_ORDER_STATUS_PROCESSING, 0, "", "", $ReasonChangeStatusId, $db, $db_oc);
+			UpdateOpenCartOrderPayment($OnlineOrderNo, $db, $db_oc);
 		}
 
 		$result = DB_Txn_Commit();

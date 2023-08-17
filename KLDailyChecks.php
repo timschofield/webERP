@@ -42,9 +42,9 @@ function KL_DailyChecks($Group, $RootPath, $db, $EmailText= ''){
 	}elseif ($Group == "1100-OptimizeDB"){
 		$EmailText = KL_DailyOptimizationDatabase(5, FALSE, $db, $EmailText);
 	}elseif ($Group == "1200-SyncWebERPOpenCart"){
-		$EmailText = KL_DailyCleanOpenCartDB(FALSE, $db, $db_oc, $oc_tableprefix, $EmailText);
-		$EmailText = WeberpToOpenCartDailySync(FALSE, $db, $db_oc, $oc_tableprefix, $EmailText);
-		$EmailText = OpenCartToWeberpSync(FALSE, $db, $db_oc, $oc_tableprefix, $EmailText);
+		$EmailText = KL_DailyCleanOpenCartDB(FALSE, $db, $db_oc, $EmailText);
+		$EmailText = WeberpToOpenCartDailySync(FALSE, $db, $db_oc, $EmailText);
+		$EmailText = OpenCartToWeberpSync(FALSE, $db, $db_oc, $EmailText);
 	}else{
 		$EmailText = $EmailText . "Group " . $Group . " not found." . "\n";
 	}
@@ -74,8 +74,8 @@ function KL_HourlyChecks($RootPath, $db, $EmailText=''){
 	include ('includes/OpenCartToWeberpSync.php');
 	include ('includes/OpenCartConnectDB.php');
 	
-	$EmailText = WeberpToOpenCartHourlySync(FALSE, $db, $db_oc, $oc_tableprefix,TRUE, $EmailText);
-	$EmailText = OpenCartToWeberpSync(FALSE, $db, $db_oc, $oc_tableprefix, $EmailText);
+	$EmailText = WeberpToOpenCartHourlySync(FALSE, $db, $db_oc, TRUE, $EmailText);
+	$EmailText = OpenCartToWeberpSync(FALSE, $db, $db_oc, $EmailText);
 	
 	return $EmailText;
 }
