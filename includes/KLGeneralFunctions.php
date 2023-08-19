@@ -1203,4 +1203,22 @@ function DeleteWeberpUser($SelectedUser, $AdminRole){
 	}
 }
 
+function GetDayNameFromWeekDay($WeekDay){
+	if ($WeekDay == 1){
+		return "Sunday";
+	}elseif ($WeekDay == 2){
+		return "Monday";
+	}elseif ($WeekDay == 3){
+		return "Tuesday";
+	}elseif ($WeekDay == 4){
+		return "Wednesday";
+	}elseif ($WeekDay == 5){
+		return "Thursday";
+	}elseif ($WeekDay == 6){
+		return "Friday";
+	}elseif ($WeekDay == 7){
+		return "Saturday";
+	}
+}
+
 ?>

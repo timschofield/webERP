@@ -41,14 +41,14 @@ if ($KL_SystemAdmin
 	$NumberOfTestExecuted++;
 	HourlySales(30,$RootPath, $db);
 	$NumberOfTestExecuted++;
-	//	PeriodDifferenceSales("YEAR", "SPG", 30, $db);
-	//  $NumberOfTestExecuted++;
+	
+	DaysOfWeekSales(180,$RootPath, $db);
+	$NumberOfTestExecuted++;
 
 }
 
 if ($KL_SystemAdmin 
 	OR $KL_OperationalManager
-	OR $KL_ShopManager
 	OR $KL_BusinessDevelopmentManager
 	OR $KL_SalesDirector){	
 
@@ -1416,5 +1416,56 @@ function HourlySales($numDays, $RootPath, $db){
 	}
 }
 
+function DaysOfWeekSales($numDays, $RootPath, $db){
+	$Today = date('Y-m-d');
+	$Yesterday = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
+	$InitialDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$numDays));
+
+	// get the total sales of the period from POS sales
+	$SQL = "SELECT SUM(klpaidcash + klpaidcreditcard + klreturnedgoods + klvouchers) AS TotalSales
+			FROM salesorders
+			WHERE orddate >= '" . $InitialDate . "'
+				AND orddate <='" . $Yesterday . "'";
+	$result = DB_query($SQL);
+	if ($myrow = DB_fetch_array($result)){
+		$TotalSales = $myrow['TotalSales'];
+	}else{
+		return;
+	}
+
+	$SQL = "SELECT DAYOFWEEK(orddate) AS WeekDay,
+				SUM(klpaidcash + klpaidcreditcard + klreturnedgoods + klvouchers) AS WeekDaySales
+			FROM salesorders
+			WHERE orddate >= '" . $InitialDate . "'
+				AND orddate <='" . $Yesterday . "' 
+			GROUP BY DAYOFWEEK(orddate)
+			ORDER BY WeekDaySales DESC";
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . _('Distribution of retail sales by week days for the last ') . $numDays . _(' days') .'</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('Day') . '</th>
+							<th class="ascending">' . _('% Sales') . '</th>
+							<th class="ascending">' . _('Avg Distance') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			printf('<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					GetDayNameFromWeekDay($myrow['WeekDay']),
+					locale_number_format(($myrow['WeekDaySales']/$TotalSales)*100,1) . '%', 
+					locale_number_format((($myrow['WeekDaySales']/$TotalSales/(1/7))-1)*100,1) . '%' 
+					);
+		}
+	}
+	echo '</table>
+			</div>';
+}
 
 ?>
