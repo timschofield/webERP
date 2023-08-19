@@ -526,8 +526,6 @@ function SyncProductSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $E
 			echo $TableHeader;
 		}
 		$DbgMsg = _('The SQL statement that failed was');
-		$UpdateErrMsg = _('The SQL to update Product - Sales Categories in Opencart failed');
-		$InsertErrMsg = _('The SQL to insert Product - Sales Categories in Opencart failed');
 
 		$k = 0; //row colour counter
 		while ($myrow = DB_fetch_array($result)) {
@@ -542,27 +540,11 @@ function SyncProductSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $E
 			}else{
 				$PrintFeatured = "No";
 			}
-
+			
 			// Let's get the OpenCart primary key for product
 			$ProductId = GetOpenCartProductId($Model, $db_oc);
 			
-/*			// Delete the current product_to_category, as we now only accept 1 product_to_category in website
-ADAPT FOR v3.0
-			$Action = "Delete";
-			$sqlDelete = "DELETE FROM oc_product_to_category 
-						WHERE product_id = '" . $ProductId . "'";
-			$resultDelete = DB_query_oc($sqlDelete,$UpdateErrMsg,$DbgMsg,true);
-*/
-			// Insert the new record
-			$Action = "Insert";
-			$sqlInsert = "INSERT INTO oc_product_to_category
-							(product_id,
-							category_id)
-						VALUES
-							('" . $ProductId . "',
-							'" . $SalesCatId . "'
-							)";
-			$resultInsert = DB_query_oc($sqlInsert,$InsertErrMsg,$DbgMsg,true);
+			AssignSalesCategoryToProductInOpenCart($ProductId, $SalesCatId, FALSE, $db_oc);
 
 			if ($ShowMessages){
 				$k = StartEvenOrOddRow($k);
@@ -648,7 +630,6 @@ function SyncProductPrices($ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText 
 			$Model = $myrow['stockid'];
 			$CustomerCode = WEBERP_ONLINE_RETAIL_CUSTOMER_CODE_PREFIX . OPENCART_DEFAULT_CURRENCY;
 			$Price = GetPrice ($myrow['stockid'], $CustomerCode, $CustomerCode); // Get the price without any discount from webERP
-			$ManufacturerId = $myrow['manufacturers_id'];
 			$DiscountCategory = $myrow['discountcategory'];
 
 			// Let's get the OpenCart primary key for product

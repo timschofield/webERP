@@ -145,6 +145,21 @@ function GetOpenCartProductId($model, $db_oc){
 	}
 }
 
+function GetManufacturerFromProductId($ProductId, $db_oc){
+	$SQL = "SELECT manufacturer_id
+			FROM oc_product
+			WHERE product_id = '" . $ProductId . "'";
+	$ErrMsg =_('Could not get the ManufacturerId in OpenCart because');
+	$result = DB_query_oc($SQL,$ErrMsg);
+	if(DB_num_rows($result) != 0){
+		$myrow = DB_fetch_array($result);
+		return $myrow[0];
+	}else{
+		return '';
+	}
+}
+
+
 function GetOpenCartLanguageId($language, $db_oc){
 	$SQL = "SELECT language_id
 			FROM oc_language
@@ -435,7 +450,8 @@ function GetDiscount($DiscountCategory, $Quantity, $PriceList, $db){
 function MaintainOpenCartDiscountForItem($ProductId, $Price, $DiscountCategory, $PriceList, $db, $db_oc){
 	$CustomerGroupId = 1;
 	$Priority = 1;
-
+	$ManufacturerId = GetManufacturerFromProductId($ProductId, $db_oc);
+	
 	if ($DiscountCategory == ''){
 		// ProductId has no discount in webERP
 		// so we delete it in OpenCart
@@ -458,7 +474,12 @@ function MaintainOpenCartDiscountForItem($ProductId, $Price, $DiscountCategory, 
 			while ($myrow = DB_fetch_array($result)){
 				$DiscountedPrice = round($Price * (1 - $myrow['discountrate']),0);
 				UpdateDiscountInOpenCart($ProductId, $CustomerGroupId, $myrow['quantitybreak'], $Priority, $DiscountedPrice, $db_oc);
-				// Now we update the category discount, to prevent 
+				// Now we add the item to the category discount 
+				if ($ManufacturerId == 1){
+					AssignSalesCategoryToProductInOpenCart($ProductId, KL_OUTLET, FALSE, $db_oc);
+				}else{
+					AssignSalesCategoryToProductInOpenCart($ProductId, BLINK_OUTLET, FALSE, $db_oc);
+				}
 			}
 		}
 	}
@@ -645,15 +666,13 @@ function GetWeberpItemBrand($webERPCategoryId, $ManufacturerId){
 Function GetNextSequenceNo ($SequenceType){
 
 	global $db;
-/* SQL to get the next transaction number these are maintained in the table SysTypes - Transaction Types
-Also updates the transaction number
+	/* SQL to get the next transaction number these are maintained in the table SysTypes - Transaction Types
+	Also updates the transaction number
 
-10 sales invoice
-11 sales credit note
-12 sales receipt
-etc
-*
-*/
+	10 sales invoice
+	11 sales credit note
+	12 sales receipt
+	etc	*/
 
 	DB_query("LOCK TABLES systypes WRITE");
 
@@ -1329,6 +1348,33 @@ function InsertWebsiteSalesCategory($Stockid, $WebsiteCategory, $Manufacturers_i
 			$result = DB_query($sql,$ErrMsg);
 		}			
 	}
+}
+
+function AssignSalesCategoryToProductInOpenCart($ProductId, $SalesCatId, $OnlyOneSalesCategory, $db_oc){
+
+	if ($OnlyOneSalesCategory){
+		// Delete the current product_to_category, as we only accept 1 product_to_category in website
+		$Action = "Delete";
+		$DeleteErrMsg = _('The SQL to delete Product - Sales Categories in Opencart failed');
+		$sqlDelete = "DELETE FROM oc_product_to_category 
+					WHERE product_id = '" . $ProductId . "'";
+		$resultDelete = DB_query_oc($sqlDelete,$DeleteErrMsg,$DbgMsg,true);
+	}
+
+	if (!DataExistsInOpenCart($db_oc, 'oc_product_to_category', 'product_id', $ProductId, 'category_id', $SalesCatId)){
+		// If it is not already there... insert it.
+		$Action = "Insert";
+		$InsertErrMsg = _('The SQL to insert Product - Sales Categories in Opencart failed');
+		$sqlInsert = "INSERT INTO oc_product_to_category
+						(product_id,
+						category_id)
+					VALUES
+						('" . $ProductId . "',
+						'" . $SalesCatId . "'
+						)";
+		$resultInsert = DB_query_oc($sqlInsert,$InsertErrMsg,$DbgMsg,true);
+	}
+
 }
 
 
