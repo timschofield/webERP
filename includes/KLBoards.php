@@ -1659,8 +1659,17 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					stockmaster.eoq,
 					stockmaster.pansize,
 					(SELECT SUM(quantity)
+						FROM locstock, locations
+						WHERE locstock.stockid = stockmaster.stockid
+							AND locstock.loccode = locations.loccode
+							AND locations.typeloc IN " . LIST_ALL_SHOPS_BY_TYPE . ") AS qohshops,
+					(SELECT SUM(quantity)
 						FROM locstock
-						WHERE locstock.stockid = stockmaster.stockid) AS qoh,";
+						WHERE locstock.stockid = stockmaster.stockid
+							AND locstock.loccode IN " . LIST_PACAKING_LOCATIONS . ") AS qohgudang,
+					(SELECT SUM(reorderlevel)
+						FROM locstock
+						WHERE locstock.stockid = stockmaster.stockid) AS sumrl,";
 	if ($Category == 'SHPACK'){
 			$SQL = $SQL . "	(SELECT SUM(qty)
 								FROM packagingused
@@ -1696,14 +1705,29 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 		$ForecastXDays = 0;
 		$QOHTotal = 0;
 		$PendingQOO = 0;
+		$NumberOfOpenShopsKL = NumberOfShops("SHOPKL", "ALL", $db);
+		$NumberOfOpenShopsBL = NumberOfShops("SHOPBL", "ALL", $db);
+		$NumberOfOpenShopsOU = NumberOfShops("SHOPOU", "ALL", $db);
 		$OptimumOrder = 0;
+
 		while ($myrow = DB_fetch_array($result)) {
 			$DailyUse = $myrow['qused'] / $DaysUsage;
 			$ForecastProductionOnly = ceil($DailyUse * $DaysProduction);
 			$Forecast = ceil($DailyUse * ($DaysMinimumStock));
 			$ForecastIncludingProduction = $Forecast + $ForecastProductionOnly;
-			$QOH = MAX($myrow['qoh'],0);
-			$QtyNeeded = max(0, $ForecastIncludingProduction - $QOH - $myrow['qoo']);
+			if (isPackagingPaperInsideBox($myrow['stockid'])){
+				if (ItemInList($myrow['stockid'], LIST_ITEMS_KAPAL_LAUT_PACKAGING)){
+					$MinQOHGudang = $NumberOfOpenShopsKL * $myrow['eoq'];
+				}elseif (ItemInList($myrow['stockid'], LIST_ITEMS_BLINK_PACKAGING)){
+					$MinQOHGudang = $NumberOfOpenShopsBL * $myrow['eoq'];
+				}else{
+					$MinQOHGudang = $NumberOfOpenShopsOU * $myrow['eoq'];
+				}
+			}else{
+				$MinQOHGudang = $myrow['sumrl'];
+			}
+			$QOH = max($myrow['qohgudang']+$myrow['qohshops'],0);
+			$QtyNeeded = max(0, ($ForecastIncludingProduction - $QOH - $myrow['qoo']),($MinQOHGudang-$myrow['qohgudang']));
 			$DaysQOH = floor($QOH / $DailyUse);
 			$DaysQOO = floor(($QOH + $myrow['qoo']) / $DailyUse);
 			if ($QtyNeeded > 0){
@@ -1740,6 +1764,9 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 										<th class="ascending">' . _('Description') . '</th>
 										<th class="ascending">' . _('Usage ') . $DaysProduction . ' days</th>
 										<th class="ascending">' . _('Forecast ') . $DaysMinimumStock . ' days</th>
+										<th class="ascending">' . _('Min QOH Gudang') . '</th>
+										<th class="ascending">' . _('QOH Gudang') . '</th>
+										<th class="ascending">' . _('QOH Shops') . '</th>
 										<th class="ascending">' . _('QOH Total') . '</th>
 										<th class="ascending">' . _('Days QOH') . '</th>
 										<th class="ascending">' . _('Pending QOO') . '</th>
@@ -1768,12 +1795,18 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
 						</tr>', 
 						$i, 
 						$CodeLink, 
 						$myrow['description'], 
 						locale_number_format($ForecastProductionOnly,0),
 						locale_number_format($Forecast,0),
+						locale_number_format($MinQOHGudang,0),
+						locale_number_format($myrow['qohgudang'],0),
+						locale_number_format($myrow['qohshops'],0),
 						locale_number_format($QOH,0),
 						locale_number_format($DaysQOH,0),
 						locale_number_format_zero_blank($myrow['qoo'],0),
@@ -1798,12 +1831,18 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
 					</tr>', 
 					"", 
 					"TOTAL", 
 					"", 
 					locale_number_format($UsageXDays,0),
 					locale_number_format($ForecastXDays,0),
+					'',
+					'',
+					'',
 					locale_number_format($QOHTotal,0),
 					locale_number_format($TotalDaysQOH,0),
 					locale_number_format_zero_blank($PendingQOO,0),
