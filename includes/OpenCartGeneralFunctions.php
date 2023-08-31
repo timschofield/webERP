@@ -499,8 +499,8 @@ function UpdateDiscountInOpenCart($ProductId, $CustomerGroupId, $Quantity, $Prio
 		if(DB_num_rows($result) != 0){
 			// There is already a discount, so we need to update it
 			$SQL = "UPDATE oc_product_discount
-					SET quantity = '" . $Quantity . "'
-						priority = '" . $Priority . "'
+					SET quantity = '" . $Quantity . "',
+						priority = '" . $Priority . "',
 						price = '" . $DiscountedPrice . "'
 					WHERE product_id = '" . $ProductId . "'
 						AND quantity = '" . $Quantity . "'
@@ -537,7 +537,7 @@ function UpdateDiscountInOpenCart($ProductId, $CustomerGroupId, $Quantity, $Prio
 		if(DB_num_rows($result) != 0){
 			// There is already a special, so we need to update it
 			$SQL = "UPDATE oc_product_special
-					SET priority = '" . $Priority . "'
+					SET priority = '" . $Priority . "',
 						price = '" . $DiscountedPrice . "'
 					WHERE product_id = '" . $ProductId . "'
 						AND customer_group_id = '" . $CustomerGroupId ."'";
