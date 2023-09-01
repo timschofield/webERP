@@ -1667,9 +1667,10 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 						FROM locstock
 						WHERE locstock.stockid = stockmaster.stockid
 							AND locstock.loccode IN " . LIST_PACAKING_LOCATIONS . ") AS qohgudang,
-					(SELECT SUM(reorderlevel)
+					(SELECT SUM(GREATEST(reorderlevel," . TRANSFER_ROUNDING_STEP01 . "))
 						FROM locstock
-						WHERE locstock.stockid = stockmaster.stockid) AS sumrl,";
+						WHERE locstock.stockid = stockmaster.stockid
+							AND reorderlevel > 0) AS sumrl,";
 	if ($Category == 'SHPACK'){
 			$SQL = $SQL . "	(SELECT SUM(qty)
 								FROM packagingused
