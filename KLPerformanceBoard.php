@@ -701,13 +701,26 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$myrow = DB_fetch_array($Result);
 	$CashToRentADU = $myrow[0];
 
+	// Cash in Kantor to Pay dividends PTADU
+	$Account = "614012400AD";
+	$SQL = "SELECT SUM(gltrans.amount)
+			FROM gltrans
+			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
+				AND gltrans.trandate <= '" . $Today . "'
+				AND gltrans.account = '" . $Account . "'
+				AND gltrans.narrative LIKE '%CASH%'";
+	$Result = DB_query($SQL);
+	$myrow = DB_fetch_array($Result);
+	$CashToDividendsADU = $myrow[0];
+
 	$CurrentBalanceADU = $CashEndOfPreviousYearADU
 						+$SalesCashADU
 						+$BankToCashADU
 						-$FloatingCashADU
 						-$ExpensesADUPaidCash
 						-$CashToSmallSuppliersADU
-						-$CashToRentADU;
+						-$CashToRentADU
+						-$CashToDividendsADU;
 	$ToBeMovedADU = $CurrentBalanceADU-$YearlyGoalADU ;
 	$ToBeTransferredADU = round_basic_price($ToBeMovedADU, $MinTransferADU);
 
@@ -797,13 +810,26 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$myrow = DB_fetch_array($Result);
 	$CashToRentBB = $myrow[0];
 	
+	// Cash in Kantor to Pay dividends PTBB
+	$Account = "614012400PT";
+	$SQL = "SELECT SUM(gltrans.amount)
+			FROM gltrans
+			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
+				AND gltrans.trandate <= '" . $Today . "'
+				AND gltrans.account = '" . $Account . "'
+				AND gltrans.narrative LIKE '%CASH%'";
+	$Result = DB_query($SQL);
+	$myrow = DB_fetch_array($Result);
+	$CashToDividendsBB = $myrow[0];
+
 	$CurrentBalanceBB = $CashEndOfPreviousYearBB
 						+$SalesCashBB
 						+$BankToCashBB
 						-$FloatingCashBB
 						-$ExpensesBBPaidCash
 						-$CashToSmallSuppliersBB
-						-$CashToRentBB;
+						-$CashToRentBB
+						-$CashToDividendsBB;
 	$ToBeMovedBB = $CurrentBalanceBB-$YearlyGoalBB ;
 	$ToBeTransferredBB = round_basic_price($ToBeMovedBB, $MinTransferBB);	
 
@@ -898,6 +924,12 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 				</tr>', 
 				'Expenses PT ADU Rent Paid from Cash Kantor', 
 				locale_number_format(-$CashToRentADU,0)
+				);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'Dividends PT ADU Paid from Cash Kantor', 
+				locale_number_format(-$CashToDividendsADU,0)
 				);
 		printf('<td>%s</td>
 				<td class="number">%s</td>
@@ -1003,6 +1035,12 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 				</tr>', 
 				'Expenses PTBB Rent Paid from Cash Kantor', 
 				locale_number_format(-$CashToRentBB,0)
+				);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'Dividends PTBB Paid from Cash Kantor', 
+				locale_number_format(-$CashToDividendsBB,0)
 				);
 		printf('<td>%s</td>
 				<td class="number">%s</td>
