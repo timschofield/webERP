@@ -934,7 +934,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 		printf('<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
-				'Current Cash ADU in Brankas Kantor', 
+				'Current Cash PT ADU in Brankas Kantor', 
 				locale_number_format($CurrentBalanceADU,0)
 				);
 		printf('<td>%s</td>
@@ -1121,7 +1121,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 			printf('<td>%s</td>
 					<td class="number">%s</td>
 					</tr>', 
-					'Extra Cash in Brankas Kantor', 
+					'Free Cash in Brankas Kantor', 
 					locale_number_format(($FreeSaldoBrankasKantor),0)
 					);
 			printf('<td>%s</td>
@@ -1133,7 +1133,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 			printf('<td>%s</td>
 					<td class="number">%s</td>
 					</tr>', 
-					'Extra Cash in Brankas Shareholders', 
+					'Free Cash in Brankas Shareholders', 
 					locale_number_format($FreeSaldoBrankasShareholders,0)
 					);
 			if ($ToBeMovedFree !=0){
@@ -1167,6 +1167,11 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 			echo '</table>
 				</div>';	
 		}
+
+		InsertKPI("Cash", "Cash PT ADU in Brankas Kantor", $CurrentBalanceADU);
+		InsertKPI("Cash", "Cash PT BB in Brankas Kantor", $CurrentBalanceBB);
+		InsertKPI("Cash", "Free Cash in Brankas Shareholders", $FreeSaldoBrankasShareholders);
+
 	}
 }
 
