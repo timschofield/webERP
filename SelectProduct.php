@@ -355,7 +355,9 @@ if (($myrow['mbflag'] == 'B' OR ($myrow['mbflag'] == 'M'))
 				<th style="width:5%">' . _('Curr') . '</th>
 				<th style="width:10%">' . _('Lead Time') . '</th>
 				<th style="width:10%">' . _('Min Order Qty') . '</th>
-				<th style="width:5%">' . _('Prefer') . '</th></tr>';
+				<th style="width:5%">' . _('Prefer') . '</th>
+				<th style="width:15%">' . _('From') .
+				'</th></tr>';
 	$SuppResult = DB_query("SELECT suppliers.suppname,
 									suppliers.currcode,
 									suppliers.supplierid,
@@ -365,6 +367,7 @@ if (($myrow['mbflag'] == 'B' OR ($myrow['mbflag'] == 'M'))
 									purchdata.conversionfactor,
 									purchdata.minorderqty,
 									purchdata.preferred,
+									purchdata.effectivefrom,
 									currencies.decimalplaces,
 									MAX(purchdata.effectivefrom)
 								FROM purchdata INNER JOIN suppliers
@@ -382,7 +385,9 @@ if (($myrow['mbflag'] == 'B' OR ($myrow['mbflag'] == 'M'))
 									purchdata.minorderqty,
 									purchdata.preferred,
 									currencies.decimalplaces
-							ORDER BY purchdata.preferred DESC");
+							ORDER BY purchdata.preferred DESC,
+									purchdata.effectivefrom DESC
+							LIMIT 10");
 
 	while ($SuppRow = DB_fetch_array($SuppResult)) {
 		echo '<tr>
@@ -398,6 +403,7 @@ if (($myrow['mbflag'] == 'B' OR ($myrow['mbflag'] == 'M'))
 		} else {
 			echo '<td class="select">' . _('No') . '</td>';
 		}
+		echo '<td class="select">' .ConvertSQLDate($SuppRow['effectivefrom']) . '</td>';
 		echo '<td class="select"><a href="' . $RootPath . '/PO_Header.php?NewOrder=Yes&amp;SelectedSupplier=' .
 			$SuppRow['supplierid'] . '&amp;StockID=' . urlencode($StockID) . '&amp;Quantity='.$SuppRow['minorderqty'].'&amp;LeadTime='.$SuppRow['leadtime'] . '">' . _('Order') . ' </a></td>';
 		echo '</tr>';
