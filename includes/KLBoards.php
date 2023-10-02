@@ -1178,13 +1178,6 @@ function FinishedStockDistribution($kind, $byreport, $db){
 						</tr>';
 		echo $TableHeader;
 
-		$TotalItemsKL = 0;
-		$TotalModelsKL = 0;
-		$TotalItemsBL = 0;
-		$TotalModelsBL = 0;
-		$TotalItemsOU = 0;
-		$TotalModelsOU = 0;
-
 		$k = 0; //row colour counter
 		$i = 1;
 		$totalpcs = 0;
@@ -1260,19 +1253,6 @@ function FinishedStockDistribution($kind, $byreport, $db){
 			}
 			$i++;
 			$totalpcs = $totalpcs + $myrow['realstock'];
-
-			if (($byreport == "STOCKCATEGORY") AND ($kind == "FORSALE")){
-				if (ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_KAPAL_LAUT)){
-					$TotalItemsKL += $myrow['realstock'];
-					$TotalModelsKL += $myrow['realmodels'];
-				}else if (ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_BLINK)){
-					$TotalItemsBL += $myrow['realstock'];
-					$TotalModelsBL += $myrow['realmodels'];
-				}else if (ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_OUTLET)){
-					$TotalItemsOU += $myrow['realstock'];
-					$TotalModelsOU += $myrow['realmodels'];
-				}
-			}			
 		}
 		if ($byreport == "STOCKCATEGORY"){			
 			$SQL =	"SELECT COUNT(DISTINCT(l2.stockid)) AS realmodels
@@ -1326,69 +1306,6 @@ function FinishedStockDistribution($kind, $byreport, $db){
 	if ($kind == "DISPLAYS"){			
 		InsertKPI("Stock", "Stock of Displays (PCS)", $totalpcs);
 	}
-
-	if (($byreport == "STOCKCATEGORY") AND ($kind == "FORSALE")){
-		echo '<p class="page_title_text" align="center"><strong>' . 'Models per Brand' . '</strong></p>';
-		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th>' . 'Concept' . '</th>
-							<th>' . 'Value' . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
-		printf('<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				'Stock of Kapal-Laut (PCS)', 
-				locale_number_format($TotalItemsKL,0)
-				);
-		$k = StartEvenOrOddRow($k);
-		printf('<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				'Stock of Kapal-Laut (MODELS)', 
-				locale_number_format($TotalModelsKL,0)
-				);
-		$k = StartEvenOrOddRow($k);
-		printf('<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				'Stock of Blink (PCS)', 
-				locale_number_format($TotalItemsBL,0)
-				);
-		$k = StartEvenOrOddRow($k);
-		printf('<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				'Stock of Blink (MODELS)', 
-				locale_number_format($TotalModelsBL,0)
-				);
-		$k = StartEvenOrOddRow($k);
-		printf('<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				'Stock of Outlet (PCS)', 
-				locale_number_format($TotalItemsOU,0)
-				);
-		$k = StartEvenOrOddRow($k);
-		printf('<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				'Stock of Outlet (MODELS)', 
-				locale_number_format($TotalModelsOU,0)
-				);
-		echo '</table>
-				</div>
-				</form>';
-
-		InsertKPI("Stock", "Stock of Kapal-Laut (PCS)", $TotalItemsKL);
-		InsertKPI("Stock", "Stock of Kapal-Laut (MODELS)", $TotalModelsKL);
-		InsertKPI("Stock", "Stock of Blink (PCS)", $TotalItemsBL);
-		InsertKPI("Stock", "Stock of Blink (MODELS)", $TotalModelsBL);
-		InsertKPI("Stock", "Stock of Outlet (PCS)", $TotalItemsOU);
-		InsertKPI("Stock", "Stock of Outlet (MODELS)", $TotalModelsOU);
-	}			
 }
 
 function FinishedStockDistributionByShopAndCategory($db){

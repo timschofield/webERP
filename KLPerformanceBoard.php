@@ -193,6 +193,12 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 		FinishedStockDistribution("FORSALE", "STOCKCATEGORY", $db);
 		$NumberOfTestExecuted++;
+		StockByBrand("SHOPKL", 60, $db);
+		$NumberOfTestExecuted++;
+		StockByBrand("SHOPBL", 60, $db);
+		$NumberOfTestExecuted++;
+		StockByBrand("SHOPOU", 60, $db);
+		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin){
@@ -3740,6 +3746,113 @@ function MaintenanceTasksDistribution($Status, $NumDays){
 			InsertKPI("Maintenance", "All Maintenance Tasks during " . $NumDays . " days", $TotalIssues);
 		}
 	}
+}
+
+function StockByBrand($Brand, $NumDays){
+	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
+	
+	if ($Brand == "SHOPKL"){
+		$BrandText = "Kapal-Laut";
+		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT ."";
+	}else if ($Brand == "SHOPBL"){
+		$BrandText = "Blink";
+		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK ."";
+	}else{
+		$BrandText = "Outlet";
+		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET ."";
+	} 
+
+	$Shops = NumberOfShops($Brand, "ALL", $db);
+
+	$SQL =	"SELECT SUM(locstock.quantity) AS totalitems
+			FROM locstock, stockmaster
+			WHERE stockmaster.stockid = locstock.stockid " . 
+				$operator1 ."";
+	$result = DB_query($SQL);
+	$myrow = DB_fetch_array($result);
+	$TotalItems = $myrow['totalitems'];
+
+	$SQL =	"SELECT COUNT(locstock.quantity) AS displayitems
+			FROM locstock, stockmaster
+			WHERE stockmaster.stockid = locstock.stockid 
+				AND locstock.quantity >= 1" . 
+				$operator1 ."";
+	$result = DB_query($SQL);
+	$myrow = DB_fetch_array($result);
+	$DisplayItems = $myrow['displayitems'];
+	
+	$AvailableForSaleItems = $TotalItems - $DisplayItems;
+
+	$SQL =	"SELECT SUM(salesorderdetails.qtyinvoiced) AS solditems
+			FROM salesorderdetails, stockmaster
+			WHERE stockmaster.stockid = salesorderdetails.stkcode 
+				AND salesorderdetails.itemdue >= '" . $FromDate . "'" . 
+				$operator1 ."";
+	$result = DB_query($SQL);
+	$myrow = DB_fetch_array($result);
+	$DailySoldItems = $myrow['solditems'] / $NumDays;
+	
+	$DaysStockForSale = $AvailableForSaleItems / $DailySoldItems;
+
+
+
+	echo '<p class="page_title_text" align="center"><strong>' . 'Stock for Brand ' . $BrandText. '</strong></p>';
+	echo '<div>';
+	echo '<table class="selection">';
+	$TableHeader = '<tr>
+						<th>' . 'Concept' . '</th>
+						<th>' . 'Value' . '</th>
+					</tr>';
+	echo $TableHeader;
+	$k = 0; //row colour counter
+	printf('<td>%s</td>
+			<td class="number">%s</td>
+			</tr>', 
+			'# Shops Open', 
+			locale_number_format($Shops,0)
+			);
+	$k = StartEvenOrOddRow($k);
+	printf('<td>%s</td>
+			<td class="number">%s</td>
+			</tr>', 
+			"Total Stock (PCS)", 
+			locale_number_format($TotalItems,0)
+			);
+	$k = StartEvenOrOddRow($k);
+	printf('<td>%s</td>
+			<td class="number">%s</td>
+			</tr>', 
+			"Stock needed for display (PCS)", 
+			locale_number_format($DisplayItems,0)
+			);
+	$k = StartEvenOrOddRow($k);
+	printf('<td>%s</td>
+			<td class="number">%s</td>
+			</tr>', 
+			"Stock available for sale (PCS)", 
+			locale_number_format($AvailableForSaleItems,0)
+			);
+	$k = StartEvenOrOddRow($k);
+	printf('<td>%s</td>
+			<td class="number">%s</td>
+			</tr>', 
+			"Daily Stock sold (average " . $NumDays . " days) (PCS)", 
+			locale_number_format($DailySoldItems,0)
+			);
+	$k = StartEvenOrOddRow($k);
+	printf('<td>%s</td>
+			<td class="number">%s</td>
+			</tr>', 
+			"Days left of stock (PCS)", 
+			locale_number_format($DaysStockForSale,0)
+			);
+	echo '</table>
+			</div>
+			</form>';
+
+/*	InsertKPI("Stock", "Stock of " . $BrandText . " (PCS)", $TotalItems);
+	InsertKPI("Stock", "Stock of " . $BrandText . " (MODELS)", $TotalModels);
+*/
 }
 
 ?>
