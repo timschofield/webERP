@@ -3764,6 +3764,14 @@ function StockByBrand($Brand, $NumDays){
 
 	$Shops = NumberOfShops($Brand, "ALL", $db);
 
+	$SQL =	"SELECT COUNT(stockmaster.stockid) AS totalmodels
+			FROM stockmaster
+			WHERE discontinued = 0 " . 
+				$operator1 ."";
+	$result = DB_query($SQL);
+	$myrow = DB_fetch_array($result);
+	$TotalModels = $myrow['totalmodels'];
+
 	$SQL =	"SELECT SUM(locstock.quantity) AS totalitems
 			FROM locstock, stockmaster
 			WHERE stockmaster.stockid = locstock.stockid " . 
@@ -3794,8 +3802,6 @@ function StockByBrand($Brand, $NumDays){
 	
 	$DaysStockForSale = $AvailableForSaleItems / $DailySoldItems;
 
-
-
 	echo '<p class="page_title_text" align="center"><strong>' . 'Stock for Brand ' . $BrandText. '</strong></p>';
 	echo '<div>';
 	echo '<table class="selection">';
@@ -3810,6 +3816,13 @@ function StockByBrand($Brand, $NumDays){
 			</tr>', 
 			'# Shops Open', 
 			locale_number_format($Shops,0)
+			);
+	$k = StartEvenOrOddRow($k);
+	printf('<td>%s</td>
+			<td class="number">%s</td>
+			</tr>', 
+			"Total Models (MODELS)", 
+			locale_number_format($TotalModels,0)
 			);
 	$k = StartEvenOrOddRow($k);
 	printf('<td>%s</td>
@@ -3836,7 +3849,7 @@ function StockByBrand($Brand, $NumDays){
 	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
-			"Daily Stock sold (average " . $NumDays . " days) (PCS)", 
+			"Daily Stock sold average " . $NumDays . " days (PCS)", 
 			locale_number_format($DailySoldItems,0)
 			);
 	$k = StartEvenOrOddRow($k);
@@ -3850,9 +3863,14 @@ function StockByBrand($Brand, $NumDays){
 			</div>
 			</form>';
 
-/*	InsertKPI("Stock", "Stock of " . $BrandText . " (PCS)", $TotalItems);
-	InsertKPI("Stock", "Stock of " . $BrandText . " (MODELS)", $TotalModels);
-*/
+	InsertKPI("Stock", $BrandText . " Shops Open", $Shops);
+	InsertKPI("Stock", $BrandText . " Total Models (MODELS)", $TotalModels);
+	InsertKPI("Stock", $BrandText . " Total Stock (PCS)", $TotalItems);
+	InsertKPI("Stock", $BrandText . " Stock needed for display (PCS))", $DisplayItems);
+	InsertKPI("Stock", $BrandText . " Stock available for sale (PCS)", $AvailableForSaleItems);
+	InsertKPI("Stock", $BrandText . " Daily Stock sold average " . $NumDays . " days (PCS)", $DailySoldItems);
+	InsertKPI("Stock", $BrandText . " Days left of stock (PCS)", $DaysStockForSale);
+
 }
 
 ?>
