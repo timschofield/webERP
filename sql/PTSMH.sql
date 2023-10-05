@@ -1,7 +1,6 @@
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
-SET time_zone = "+00:00";
 
 CREATE TABLE `chartmasterSM` (
   `accountcode` varchar(20) NOT NULL DEFAULT '0',
@@ -18,9 +17,9 @@ INSERT INTO `accountgroups` (`groupname`, `sectioninaccounts`, `pandl`, `sequenc
 ('Banks PT SMH', 100, 0, 225, 'Kas');
 
 INSERT INTO `bankaccounts` (`accountcode`, `currcode`, `invoice`, `bankaccountcode`, `bankaccountname`, `bankaccountnumber`, `bankaddress`, `importformat`) VALUES
-('111121100SM', 'IDR', 0, 'PT Sungai Mutiara Hijau', 'PT SMH - Bank Mandiri - IDR', '', 'Bank Mandiri', ''),
-('111121105SM', 'IDR', 2, 'PT Sungai Mutiara Hijau', 'PT SMH - Bank Danamon - IDR', '', 'Bank Danamon', ''),
-('111121110SM', 'IDR', 1, 'PT Sungai Mutiara Hijau', 'PT SMH - Bank BCA - IDR', '', 'Bank BCA', '');
+('111121100SM', 'IDR', 0, 'PT Sungai Mutiara Hitam', 'PT SMH - Bank Mandiri - IDR', '', 'Bank Mandiri', ''),
+('111121105SM', 'IDR', 2, 'PT Sungai Mutiara Hitam', 'PT SMH - Bank Danamon - IDR', '', 'Bank Danamon', ''),
+('111121110SM', 'IDR', 1, 'PT Sungai Mutiara Hitam', 'PT SMH - Bank BCA - IDR', '', 'Bank BCA', '');
 
 INSERT INTO `bankaccountusers` (`accountcode`, `userid`) VALUES
 ('111121100SM', 'Revi'),
@@ -78,7 +77,7 @@ INSERT INTO `chartmaster` (`accountcode`, `accountname`, `group_`, `cashflowsact
 ('612011100SM', 'Biaya Iklan and Promosi - PT SMH', 'Biaya Marketing', 1, 1),
 ('612011120SM', 'Biaya Partners Online BB', 'Biaya Marketing', 1, 1),
 ('612011200SM', 'Biaya Komisi - Bonus Karyawan - PT SMH', 'Biaya Karyawan', 1, 1),
-('612011705SM', 'Biaya Packaging - PT SMH', 'Biaya General'),
+('612011705SM', 'Biaya Packaging - PT SMH', 'Biaya General', 1, 1),
 ('612011210SM', 'Bonus Direction Team - PT SMH', 'Dividends', 3, 1),
 ('612011220SM', 'Other Payments Direction Team PT SMH', 'Dividends', 3, 1),
 ('612011800SM', 'Biaya Sample - PT SMH', 'Biaya General', 1, 1),
@@ -121,7 +120,6 @@ INSERT INTO `chartmaster` (`accountcode`, `accountname`, `group_`, `cashflowsact
 ('700211310SM', 'Biaya Komisi WeChat- PT SMH', 'Biaya/Pendapatan Lain2', 1, 1),
 ('700211330SM', 'Biaya Komisi QRIS - PT SMH', 'Biaya/Pendapatan Lain2', 1, 1),
 ('700211700SM', 'Biaya Administrasi/Fees Bank  - PT SMH', 'Biaya/Pendapatan Lain2', 1, 1);
-
 
 INSERT INTO `chartmasterSM` (`accountcode`, `accountname`, `group_`) VALUES
 ('111121100SM', 'Bank Mandiri IDR - PT SMH', 'Banks PT SMH'),
@@ -206,8 +204,7 @@ INSERT INTO `chartmasterSM` (`accountcode`, `accountname`, `group_`) VALUES
 ('700211300SM', 'Biaya Komisi Credit card Bank - PT SMH', 'Biaya/Pendapatan Lain2'),
 ('700211310SM', 'Biaya Komisi WeChat- PT SMH', 'Biaya/Pendapatan Lain2'),
 ('700211330SM', 'Biaya Komisi QRIS - PT SMH', 'Biaya/Pendapatan Lain2'),
-('700211700SM', 'Biaya Administrasi/Fees Bank  - PT SMH', 'Biaya/Pendapatan Lain2'));
-
+('700211700SM', 'Biaya Administrasi/Fees Bank  - PT SMH', 'Biaya/Pendapatan Lain2');
 
 INSERT INTO `glaccountusers` (`accountcode`, `userid`, `canview`, `canupd`) VALUES
 ('111121100SM', 'Revi', 1, 1),
@@ -439,8 +436,197 @@ INSERT INTO `fixedassetcategories` (`categoryid`, `categorydescription`, `costac
 ('VEHICS', 'Vehicles - SM', '123111400SM', '614012650SM', '614012650SM', '123111400SM', 0.2, 1);
 
 INSERT INTO `fixedassetlocations` (`locationid`, `locationdescription`, `parentlocationid`) VALUES
-('PTSMH', 'PT. Sungai Mutiara Hijau', '');
+('PTSMH', 'PT. Sungai Mutiara Hitam', '');
 
+INSERT INTO `klretailpartners` (`partnercode`, `partnername`, `partnernameinvoice`, `partneraddress`, `partneraddressjalan`, `partneraddressblok`, `partneraddressnomor`, `partneraddressrt`, `partneraddressrw`, `partneraddresskecamatan`, `partneraddresskelurahan`, `partneraddresskabupaten`, `partneraddresspropinsi`, `partneraddresskodepos`, `partnertelepon`, `partnernpwp`, `partnernpwpinvoice`, `ppn`, `accountppn`, `daysinvoicedue`, `areasalescreditcard`, `areasalescash`, `areasalescashothers`, `cashsalesreported`, `hppcompensation`, `accounthppcompensation`, `accountbankdanamon`, `accountbankmandiri`, `accountbankbca`, `accountcomissioncreditcard`, `comissionccdanamon`, `comissionamexdanamon`, `comissionccmandiri`, `comissionccbca`, `comissionamexbca`, `percentconsignmentptadu`, `accountconsignmentsalesptadu`, `accountconsignmentcogspartner`, `counterinvoicea`, `counterinvoiceb`, `counterinvoicec`, `accountwechat`, `comissionwechat`, `accountcomissionwechat`, `accountqris`, `comissionqris`, `accountcomissionqris`) VALUES
+('PTSMH', 'PT. Sungai Mutiara Hitam', 'PT. Sungai Mutiara Hitam', 'Jl. Kesambi No 1 Kerobokan, Bali', 'Jl. Kesambi', '', 'No. 1', '', '', 'Kerobokan', '', '', 'Bali', '80361', '', 'XXXXXX', 'XXXXXX', 11.00, '611012030SH', 7, 'RSR', 'RSC', 'RSZ', 90.00, 100.00, '510010050', '111121105SM', '111121101SM', '111121110SM', '700211300SM', 1.70, 3.00, 1.70, 1.70, 2.80, 50.00, '410010000AD', '510010005SM', 9040, 9041, 9042, '111121105SM', 1.80, '700211310SM', '111121101SM', 0.70, '700211330SM');
+
+
+INSERT INTO `pcexpenses` (`codeexpense`, `description`, `glaccount`, `tag`, `klretentionpph23`) VALUES
+('ADVERT-SM-ONLINE', 'Advertisment Promotion Online for PT SMH', '612011110SM', 0, 0.00),
+('ASSETS-SM', 'Payments Assets PT SMH (Hardware-Computers, etc)', '123111300SM', 0, 0.00),
+('BANJAR-TOKO-SM', 'Banjar Toko-Toko PT SMH', '614013800SM', 0, 0.00),
+('BANK-FEES-SM', 'Bank fees for rekening, transfers, etc PT SMH', '700211700SM', 0, 0.00),
+('BENSIN-KANTOR-SM', 'Bensin motorbike / car PT SMH', '614012840SM', 0, 0.00),
+('HEALTH-SM', 'COVID-19 Health related payments - PT SMH', '611011700SM', 0, 0.00),
+('JASA-SERVICE-2%-SM', 'Payments for services at toko and kantor 2% PPH23', '614012000SM', 0, 2.00),
+('JASA-SERVICE-4%-SM', 'Payments for services at toko and kantor 4% PPH23', '614012000SM', 0, 4.00),
+('KOMPUTER-HW-SM', 'Small Hardware, IT accessories', '614012050SM', 0, 0.00),
+('KOMPUTER-SERVIS-SM', 'Service computer, software, printer, etc', '613011200SM', 0, 4.00),
+('KOMPUTER-WEB-SM', 'Web services payments', '614011200SM', 0, 0.00),
+('KONSUL-PAJAK-SM', 'Payment for consultant Pajak PT SMH', '614011800SM', 0, 0.00),
+('LISTRIK-KANTOR-SM', 'Electricity for Kantor PT SMH', '614011400SM', 0, 0.00),
+('LISTRIK-TOKO-SM', 'Electricity for Toko PT SMH', '614011400SM', 0, 0.00),
+('MAINT-KANTOR-SM', 'Maintenance Kantor PT SMH', '614012000SM', 0, 0.00),
+('MAINT-MOBIL-SE-SM', 'Maintenance Sepeda Motor PT SMH', '614012850SM', 0, 0.00),
+('MAINT-TOKO-SM', 'Maintenance Toko PT SMH', '614012000SM', 0, 0.00),
+('OFFICE-MAT-SM', 'Office material for PT SMH', '614012050SM', 0, 0.00),
+('PACKAGING-TOKO-SM', 'Packaging material for toko PT SMH', '612011705SM', 0, 0.00),
+('PARKIR-KANTOR-SM', 'Payment parkir Kantor', '614012900SM', 0, 0.00),
+('PARKIR-TOKO-SM', 'Parkir Toko PT SMH', '614012900SM', 0, 0.00),
+('PEMBERSIH-SM', 'Pembersih Kantor', '614011550SM', 0, 0.00),
+('PERIZINAN-SM', 'Payment Perizinan PT Bumi Biru', '614012200SM', 0, 0.00),
+('PERSO-GATHERING-SM', 'Payments for team gatherings', '611012110SM', 0, 0.00),
+('PERSO-IKLAN-SM', 'Iklan for staff reruiting', '611012100SM', 0, 2.00),
+('PERSO-TRAINING-SM', 'Payments related to Training of staff', '611012100SM', 0, 0.00),
+('PPH23-SM', 'Payment PPH23', '611012005SM', 0, 0.00),
+('PPN-SM', 'Payment Tunjangan PPN PT SMH', '611012030SM', 0, 0.00),
+('RENOVASI-TOKO-SM', 'Renovasi - Decorasi Toko PT SMH', '614012550SM', 0, 0.00),
+('RENT-VEHICLE-SM', 'Rental of PickUp - Tax - Car - Motorbike PT SMH', '614012850SM', 0, 0.00),
+('SAL-BENSIN-SM', 'Salaries-Uang Bensin PT SMH', '611011300SM', 0, 0.00),
+('SAL-COMMISSION-SM', 'Salaries-Commission-Bonus PT SMH', '612011200SM', 0, 0.00),
+('SAL-FIXMONTH-SM', 'Salaries-Fixed salary payable PT SMH', '611011100SM', 0, 0.00),
+('SAL-JAMSOSTEK-SM', 'Salaries-Jamsostek deduction PT SMH', '611011700SM', 0, 0.00),
+('SAL-LAINLAIN-SM', 'Salaries-Lain-lain (payment-deductions) PT SMH', '611011100SM', 0, 0.00),
+('SAL-MAKAN-SM', 'Salaries-Uang makan PT SMH', '611011400SM', 0, 0.00),
+('SAL-PPH21-SM ', 'Salaries-PPh21 deduction PT SMH', '611012000SM', 0, 0.00),
+('SAL-SHIFTS-SM', 'Salaries-Extra Shifts PT SMH', '611011600SM', 0, 0.00),
+('SAL-THR-SM', 'Salaries-THR PT SMH', '611011800SM', 0, 0.00),
+('SAMPLES-NO-ERP-SM', 'Samples not in stock webERP', '612011800SM', 0, 0.00),
+('SERVIS-STOCK-SM', 'Service (Maintenance) stock goods PT SMH', '613019000SM', 0, 0.00),
+('SHIP-OTHERS-SM', 'Shipping Cost for PT SMH', '612011910SM', 0, 2.00),
+('SMALL-SUPPLIERS-SM', 'cash small suppliers BB', '510010070SM', 0, 0.00),
+('TELPON-TOKO-SM', 'Phone payments for Toko PT SMH', '614011100SM', 0, 0.00),
+('TRIP-INDO-SM', 'Airplane, hotel, etc inside Indonesia', '614013500SM', 0, 0.00),
+('TRIP-OUT-INDO-SM', 'Airplane, hotel, etc outside Indonesia', '614013600SM', 0, 0.00),
+('WATER-PDAM-SM', 'Water (PDAM) for PT SMH', '614011510SM', 0, 0.00);
+
+INSERT INTO `pcsalaries` (`salariescompany`, `salariespaymentmethod`, `salariesexpense`, `pctabcode`, `pcexpensecode`) VALUES
+('PTSMH', 'BANK', 'BENSIN', 'SALARIES-SM', 'SAL-BENSIN-SM'),
+('PTSMH', 'BANK', 'COMMISSIONS', 'SALARIES-SM', 'SAL-COMMISSION-SM'),
+('PTSMH', 'BANK', 'FIXED', 'SALARIES-SM', 'SAL-FIXMONTH-SM'),
+('PTSMH', 'BANK', 'JAMSOSTEK', 'SALARIES-SM', 'SAL-JAMSOSTEK-SM'),
+('PTSMH', 'BANK', 'MAKAN', 'SALARIES-SM', 'SAL-MAKAN-SM'),
+('PTSMH', 'BANK', 'OTHERS', 'SALARIES-SM', 'SAL-LAINLAIN-SM'),
+('PTSMH', 'BANK', 'PPH21', 'SALARIES-SM', 'SAL-PPH21-SM'),
+('PTSMH', 'BANK', 'ROUND', 'SALARIES-SM', 'SAL-ROUNDING'),
+('PTSMH', 'BANK', 'SHIFTS', 'SALARIES-SM', 'SAL-SHIFTS-SM'),
+('PTSMH', 'BANK', 'THR', 'SALARIES-SM', 'SAL-THR-SM'),
+('PTSMH', 'CASH', 'BENSIN', 'SALARIES-CASH', 'SAL-BENSIN-CASH'),
+('PTSMH', 'CASH', 'COMMISSIONS', 'SALARIES-CASH', 'SAL-COMMISSION-CASH'),
+('PTSMH', 'CASH', 'FIXED', 'SALARIES-CASH', 'SAL-FIXMONTH-CASH'),
+('PTSMH', 'CASH', 'JAMSOSTEK', 'SALARIES-CASH', 'SAL-LAINLAIN-CASH'),
+('PTSMH', 'CASH', 'MAKAN', 'SALARIES-CASH', 'SAL-MAKAN-CASH'),
+('PTSMH', 'CASH', 'OTHERS', 'SALARIES-CASH', 'SAL-LAINLAIN-CASH'),
+('PTSMH', 'CASH', 'PPH21', 'SALARIES-CASH', 'SAL-LAINLAIN-CASH'),
+('PTSMH', 'CASH', 'ROUND', 'SALARIES-CASH', 'SAL-ROUNDING'),
+('PTSMH', 'CASH', 'SHIFTS', 'SALARIES-CASH', 'SAL-SHIFTS-CASH'),
+('PTSMH', 'CASH', 'THR', 'SALARIES-CASH', 'SAL-THR-CASH');
+
+INSERT INTO `pctabexpenses` (`typetabcode`, `codeexpense`) VALUES
+('SHOP-MANAGER', 'PARKIR-KANTOR-SM'),
+('PURCHASING', 'PPN-SM'),
+('ADMINISTRATION', 'PPN-SM'),
+('ADMINISTRATION', 'PERSO-IKLAN-SM'),
+('ADMINISTRATION', 'JASA-SERVICE-2%-SM'),
+('ADMINISTRATION', 'JASA-SERVICE-4%-SM'),
+('OFFICE-MANAGER', 'OFFICE-MAT-SM'),
+('OFFICE-MANAGER', 'MAINT-KANTOR-SM'),
+('OFFICE-MANAGER', 'KONSUL-PAJAK-SM'),
+('OFFICE-MANAGER', 'PEMBERSIH-SM'),
+('OFFICE-MANAGER', 'PARKIR-KANTOR-SM'),
+('OFFICE-MANAGER', 'PPN-SM'),
+('OFFICE-MANAGER', 'PACKAGING-TOKO-SM'),
+('OFFICE-MANAGER', 'MAINT-MOBIL-SE-SM'),
+('OFFICE-MANAGER', 'RENT-VEHICLE-SM'),
+('OFFICE-MANAGER', 'PERIZINAN-SM'),
+('OFFICE-MANAGER', 'PERSO-IKLAN-SM'),
+('OFFICE-MANAGER', 'JASA-SERVICE-2%-SM'),
+('OFFICE-MANAGER', 'JASA-SERVICE-4%-SM'),
+('BUSDEV', 'SERVIS-STOCK-SM'),
+('SHOP-SUPPORT-LEADER', 'PACKAGING-TOKO-SM'),
+('COURIER', 'MAINT-MOBIL-SE-SM'),
+('COURIER', 'PPN-SM'),
+('OFFICE-MANAGER', 'ASSETS-SM'),
+('OFFICE-MANAGER', 'BENSIN-KANTOR-SM'),
+('SHOP-MANAGER', 'BENSIN-KANTOR-SM'),
+('SALARIES', 'SAL-FIXMONTH-SM'),
+('SALARIES', 'SAL-BENSIN-SM'),
+('SALARIES', 'SAL-COMMISSION-SM'),
+('SALARIES', 'SAL-JAMSOSTEK-SM'),
+('SALARIES', 'SAL-PPH21-SM'),
+('SALARIES', 'SAL-LAINLAIN-SM'),
+('SALARIES', 'SAL-SHIFTS-SM'),
+('SALARIES', 'SAL-THR-SM'),
+('SALARIES', 'SAL-MAKAN-SM'),
+('SHOP-SUPPORT-LEADER', 'PPN-SM'),
+('OFFICE-MANAGER', 'PERSO-GATHERING-SM'),
+('ADMINISTRATION', 'PERSO-TRAINING-SM'),
+('ADMINISTRATION', 'SAL-LAINLAIN-SM'),
+('SHOP-SUPPORT-LEADER', 'LISTRIK-KANTOR-SM'),
+('ADMINISTRATION', 'RENT-VEHICLE-SM'),
+('PURCHASING', 'SHIP-OTHERS-SM'),
+('OFFICE-MANAGER', 'HEALTH-SM'),
+('ADMINISTRATION', 'KOMPUTER-HW-SM'),
+('SHOP-SUPPORT-LEADER', 'SERVIS-STOCK-SM'),
+('ADMINISTRATION', 'OFFICE-MAT-SM'),
+('SHOP-SUPPORT-LEADER', 'OFFICE-MAT-SM'),
+('ADMINISTRATION', 'BANJAR-TOKO-SM'),
+('ADMINISTRATION', 'RENOVASI-TOKO-SM'),
+('OFFICE-MANAGER', 'RENOVASI-TOKO-SM'),
+('ADMINISTRATION', 'MAINT-TOKO-SM'),
+('COURIER', 'MAINT-TOKO-SM'),
+('OFFICE-MANAGER', 'MAINT-TOKO-SM'),
+('ADMINISTRATION', 'TELPON-TOKO-SM'),
+('ADMINISTRATION', 'WATER-PDAM-SM'),
+('COURIER', 'PARKIR-TOKO-SM'),
+('ADMINISTRATION', 'LISTRIK-TOKO-SM'),
+('ADMINISTRATION', 'MAINT-KANTOR-SM'),
+('ADMINISTRATION', 'MAINT-MOBIL-SE-SM'),
+('SHOP-SUPPORT-LEADER', 'LISTRIK-TOKO-SM'),
+('SHOP-SUPPORT-TEAM', 'LISTRIK-KANTOR-SM'),
+('SHOP-SUPPORT-TEAM', 'LISTRIK-TOKO-SM'),
+('SHOP-SUPPORT-TEAM', 'OFFICE-MAT-SM'),
+('SHOP-SUPPORT-TEAM', 'PPN-SM'),
+('OFFICE-MANAGER', 'LISTRIK-TOKO-SM'),
+('SHOP-SUPPORT-LEADER', 'PEMBERSIH-SM'),
+('OFFICE-MANAGER', 'SERVIS-STOCK-SM'),
+('SHOP-SUPPORT-LEADER', 'RENT-VEHICLE-SM'),
+('PARTNER-ADU', 'SMALL-SUPPLIERS-SM'),
+('COURIER', 'OFFICE-MAT-SM'),
+('COURIER', 'PEMBERSIH-SM'),
+('COURIER', 'WATER-PDAM-SM'),
+('COURIER', 'BANJAR-TOKO-SM'),
+('COURIER', 'RENOVASI-TOKO-SM'),
+('OFFICE-MANAGER', 'SAMPLES-NO-ERP-SM'),
+('PARTNER-ADU', 'ASSETS-SM'),
+('PARTNER-ADU', 'RENT-VEHICLE-SM'),
+('ADMINISTRATION', 'PARKIR-TOKO-SM'),
+('BUSDEV', 'RENOVASI-TOKO-SM'),
+('ADMINISTRATION', 'BENSIN-KANTOR-SM'),
+('COURIER', 'JASA-SERVICE-4%-SM'),
+('ADMINISTRATION', 'KOMPUTER-SERVIS-SM'),
+('COURIER', 'LISTRIK-KANTOR-SM'),
+('ADMINISTRATION', 'PERSO-GATHERING-SM'),
+('COURIER', 'BENSIN-KANTOR-SM'),
+('SHOP-MANAGER', 'LISTRIK-TOKO-SM'),
+('PURCHASING', 'RENT-VEHICLE-SM'),
+('PURCHASING', 'OFFICE-MAT-SM'),
+('SHOP-MANAGER', 'SAMPLES-NO-ERP-SM'),
+('ADMINISTRATION', 'PPH23-SM'),
+('ADMINISTRATION', 'LISTRIK-KANTOR-SM'),
+('COURIER', 'MAINT-KANTOR-SM'),
+('PURCHASING', 'SERVIS-STOCK-SM'),
+('COURIER', 'PARKIR-KANTOR-SM');
+
+INSERT INTO `pctabs` (`tabcode`, `usercode`, `typetabcode`, `currency`, `tablimit`, `assigner`, `authorizer`, `glaccountassignment`, `glaccountpcash`) VALUES
+('IKE-IDR CEK SM', 'Ike1', 'OFFICE-MANAGER', 'IDR', 0, 'Ike1', 'Ricard', '111121105SM', '111111209'),
+('REVI-IDR CEK SM', 'Revi', 'ADMINISTRATION', 'IDR', 10000000, 'Revi', 'Ricard', '111121105SM', '111111209'),
+('SALARIES-SM', 'Revi', 'SALARIES', 'IDR', 999999999, 'IinSukma,Revi', 'Ricard', '111121105SM', '111111309');
+
+INSERT INTO `salesglpostings` (`id`, `area`, `stkcat`, `discountglcode`, `salesglcode`, `salestype`) VALUES
+(60, 'RSC', 'ANY', '410000000SM', '410000000SM', 'AN'),
+(61, 'RSR', 'ANY', '410000010SM', '410000010SM', 'AN');
+
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES
+('KLGLAccountsSMH.php', 40450, 'Defines the general ledger accounts for PT. Sungai Mutiara Hitam'),
+('KLGLBalanceSheetSMH.php', 999999, 'Shows the balance sheet for PT. Sungai Mutiara Hitam as at a specified date'),
+('KLGLProfit_LossSMH.php', 40410, 'Shows the profit and loss of PT. Sungai Mutiara Hitam for the range of periods entered');
+
+INSERT INTO `systypes` (`typeid`, `typename`, `typeno`) VALUES
+(9041, 'PTSMH Customer Invoice CASH-B', 0),
+(9042, 'PTSMH Customer Invoice CASH-C', 0),
+(9040, 'PTSMH Customer Invoice CC-A', 0);
 
 
 COMMIT;
