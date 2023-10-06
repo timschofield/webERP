@@ -96,6 +96,8 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType, &$db) {
 			
 			if ($Company == "PTADU"){
 				$DebitAccount = DANAMON_ACCOUNT_GAJI_PTADU;
+			}elseif ($Company == "PTSMH"){
+				$DebitAccount = DANAMON_ACCOUNT_GAJI_PTSMH;
 			}else{
 				$DebitAccount = DANAMON_ACCOUNT_GAJI_PTBB;
 			}

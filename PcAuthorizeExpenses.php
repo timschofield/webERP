@@ -216,6 +216,8 @@ if(isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) OR
 				$CompanyExpenses = GLAccountBelongsTo($AccountTo);
 				if ($CompanyExpenses == "PTADU"){
 					$AccountPPH23 = ACCOUNT_HUTANG_PPH23_PTADU;
+				}elseif ($CompanyExpenses == "PTSMH"){
+					$AccountPPH23 = ACCOUNT_HUTANG_PPH23_PTSMH;
 				}else{
 					$AccountPPH23 = ACCOUNT_HUTANG_PPH23_PTBB;
 				}

@@ -10,9 +10,15 @@
 	if($_POST['Company']=="PTBB") {
 		echo '<option selected="selected" value="PTBB">' . 'PT Bumi Biru' . '</option>';
 		echo '<option value="PTADU">' . 'PT Angin Dingin Utara' . '</option>';
+		echo '<option value="PTSMH">' . 'PT Sungai Mutiara Hitam' . '</option>';
+	} else if($_POST['Company']=="PTSMH") {
+		echo '<option selected="selected" value="PTSMH">' . 'PT Sungai Mutiara Hitam' . '</option>';
+		echo '<option value="PTADU">' . 'PT Angin Dingin Utara' . '</option>';
+		echo '<option value="PTBB">' . 'PT Bumi Biru' . '</option>';
 	} else {
 		echo '<option selected="selected" value="PTADU">' . 'PT Angin Dingin Utara' . '</option>';
 		echo '<option value="PTBB">' . 'PT Bumi Biru' . '</option>';
+		echo '<option value="PTSMH">' . 'PT Sungai Mutiara Hitam' . '</option>';
 	}
 	echo '</select></td></tr>';	
 

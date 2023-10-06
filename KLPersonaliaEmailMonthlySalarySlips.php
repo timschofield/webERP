@@ -96,6 +96,9 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType, &$db) {
 				if ($Company == 'PTBB'){
 					$mail->setFrom('accounting@bumibiru.com', $AdminTeam);
 					$SendTo = 'accounting@bumibiru.com'; // default SendTo address in case employee has no email
+				}elseif ($Company == 'PTSMH'){
+					$mail->setFrom('accounting@ptsmh.com', $AdminTeam);
+					$SendTo = 'accounting@ptsmh.com'; // default SendTo address in case employee has no email
 				}else{
 					$mail->setFrom('accounting@ptadu.com', $AdminTeam);
 					$SendTo = 'accounting@ptadu.com'; // default SendTo address in case employee has no email
@@ -132,6 +135,9 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType, &$db) {
 			if ($Company == 'PTBB'){
 				$mail->setFrom('accounting@bumibiru.com', $AdminTeam);
 				$SendTo = 'accounting@bumibiru.com';
+			}elseif ($Company == 'PTSMH'){
+				$mail->setFrom('accounting@ptsmh.com', $AdminTeam);
+				$SendTo = 'accounting@ptsmh.com';
 			}else{
 				$mail->setFrom('accounting@ptadu.com', $AdminTeam);
 				$SendTo = 'accounting@ptadu.com';
@@ -206,6 +212,8 @@ function EmailTextForEmployee($Name, $Company, $SalaryType){
 	$Text = $Text . "Terima kasih,\n"; 
 	if ($Company == 'PTBB'){
 		$Text = $Text . "PT. Bumi Biru Admin Team"; 
+	}elseif ($Company == 'PTSMH'){
+		$Text = $Text . "PT. Sungai Mutiara Hitam Admin Team"; 
 	}else{
 		$Text = $Text . "PT. Angin Dingin Utara Admin Team"; 
 	}

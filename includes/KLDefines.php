@@ -104,7 +104,6 @@ define("LIST_STOCK_CATEGORIES_BLINK",      "('TESTBA','STABBA','NOPOBA')");
 define("LIST_STOCK_CATEGORIES_OUTLET",     "('DISC2A','DISC5A','DISC8A')");
 define("LIST_STOCK_CATEGORIES_GENERAL",    "('TESTGA','STABGA','NOPOGA')");
 
-
 /* Defines about LOCATIONS*/
 define("CODE_KANTOR",      "'KANTO'");
 define("CODE_ONLINE_SHOP", "'TOKWS'");
@@ -160,6 +159,7 @@ define("ACCOUNT_SHIPPING_ADU", "612011920AD"); // GL account for Shipping costs 
 
 define("ACCOUNT_HUTANG_PPH23_PTBB",  "611012005PT"); // GL account for retention of PPH23 PTBB in Petty cash
 define("ACCOUNT_HUTANG_PPH23_PTADU", "611012005AD"); // GL account for retention of PPH23 PTADU in Petty cash
+define("ACCOUNT_HUTANG_PPH23_PTSMH", "611012005SM"); // GL account for retention of PPH23 PTSMH in Petty cash
 
 /* Defines about financial Analysis*/
 define("JUTA", 1000000);
@@ -169,8 +169,8 @@ define("GL_INCOME_CASH",     "('410000000')");
 define("GL_INCOME_OTHERS_PT","('410000500PT','410010000PT','410010010PT')");
 define("GL_INCOME_OTHERS",   "('410000500','410010000')");
 
-define("GL_COGS_GOODS", "('510010000','510010000AD','510010000PT','510010050')");
-define("GL_COGS_OTHERS","('510010100PT','510500010PT')");
+define("GL_COGS_GOODS", "('510010000','510010000AD','510010000PT','510010000SM','510010050')");
+define("GL_COGS_OTHERS","('510010100PT','510500010PT','510500010SM')");
 
 /* Defines about WebStore */
 
@@ -400,7 +400,6 @@ define("PATH_TO_CATALOG_PACKAGING_IMAGES", 'https://kapal-laut.com/image/catalog
 define("OPENCART_PACKAGING_SET_IMAGE_SORT_ORDER", 9999);
 define("OPENCART_PACKAGING_SET_IMAGE_PATH", 'catalog/KL/packaging_sets/');
 
-
 // META DATA
 define("META_STORE_NAME_KL", "Kapal-Laut Jewellery");
 define("META_STORE_NAME_BL", "Blink by Kapal-Laut");
@@ -420,7 +419,6 @@ define("ACI_MINIMUM_QOH_TO_SHOW_ITEM_IN_MARKETPLACES", 3); // if we have less th
 define("TOKOPEDIA_PREFIX_URL", "https://www.tokopedia.com/");
 define("TOKOPEDIA_BLINK_STOREID", "blinkfashionjewellery");
 define("TOKOPEDIA_KAPAL_LAUT_STOREID", "kapallautjewellery");
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // SHOPEE
@@ -459,6 +457,7 @@ define("LAZADA_PREFIX_URL", "https://www.lazada.co.id/products/-i");
 // DANAMON
 ///////////////////////////////////////////////////////////////////////////////////////////////
 define("DANAMON_ACCOUNT_GAJI_PTADU", '3607556887');
+define("DANAMON_ACCOUNT_GAJI_PTSMH", 'XXXXXXXXXX');
 define("DANAMON_ACCOUNT_GAJI_PTBB",  '3568005502');
 
 

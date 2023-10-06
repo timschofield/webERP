@@ -31,7 +31,7 @@ TRUNCATE test_erp.`buckets`;
 INSERT INTO test_erp.buckets SELECT * FROM kurakura_kl_erp.buckets;
 
 TRUNCATE test_erp.`chartdetails`;
-INSERT INTO test_erp.chartdetails SELECT * FROM kurakura_kl_erp.chartdetails;
+/* INSERT INTO test_erp.chartdetails SELECT * FROM kurakura_kl_erp.chartdetails; */
 
 TRUNCATE test_erp.`chartmaster`;
 INSERT INTO test_erp.chartmaster SELECT * FROM kurakura_kl_erp.chartmaster;
@@ -47,6 +47,9 @@ INSERT INTO test_erp.chartmasterPMA SELECT * FROM kurakura_kl_erp.chartmasterPMA
 
 TRUNCATE test_erp.`chartmasterPT`;
 INSERT INTO test_erp.chartmasterPT SELECT * FROM kurakura_kl_erp.chartmasterPT;
+
+TRUNCATE test_erp.`chartmasterSMH`;
+INSERT INTO test_erp.chartmasterSMH SELECT * FROM kurakura_kl_erp.chartmasterSMH;
 
 TRUNCATE test_erp.`cogsglpostings`;
 INSERT INTO test_erp.cogsglpostings SELECT * FROM kurakura_kl_erp.cogsglpostings;
@@ -154,7 +157,7 @@ TRUNCATE test_erp.`glaccountusers`;
 INSERT INTO test_erp.glaccountusers SELECT * FROM kurakura_kl_erp.glaccountusers;
 
 TRUNCATE test_erp.`gltrans`;
-INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno <= 30;
+/*INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno <= 30;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 30 AND periodno <= 60;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 60 AND periodno <= 80;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 80 AND periodno <= 90;
@@ -172,7 +175,7 @@ INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodn
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 150 AND periodno <= 155;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 155 AND periodno <= 160;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 160;
-
+*/
 
 TRUNCATE test_erp.`grns`;
 /* INSERT INTO test_erp.grns SELECT * FROM kurakura_kl_erp.grns; */
@@ -322,7 +325,7 @@ TRUNCATE test_erp.`paymentterms`;
 INSERT INTO test_erp.paymentterms SELECT * FROM kurakura_kl_erp.paymentterms;
 
 TRUNCATE test_erp.`pcashdetails`;
-INSERT INTO test_erp.pcashdetails SELECT * FROM kurakura_kl_erp.pcashdetails WHERE `date` >= "2020-12-10"; 
+INSERT INTO test_erp.pcashdetails SELECT * FROM kurakura_kl_erp.pcashdetails WHERE `date` >= "2023-01-01"; 
 
 TRUNCATE test_erp.`pcexpenses`;
 INSERT INTO test_erp.pcexpenses SELECT * FROM kurakura_kl_erp.pcexpenses;

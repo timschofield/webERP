@@ -654,6 +654,8 @@ function InsertIntoGLTrans($Type, $Typeno, $Trandate, $Period, $Account, $Narrat
 function GLAccountBelongsTo($Account){
 	if (ItemInList("AD", $Account)){
 		$Company = "PTADU";
+	}else if (ItemInList("SM", $Account)){
+		$Company = "PTSMH";
 	}else if (ItemInList("PT", $Account)){
 		$Company = "PTBB";
 	}else if (ItemInList("IK", $Account)){

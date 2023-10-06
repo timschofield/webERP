@@ -433,6 +433,51 @@ function UpdateMultiCompanyAccounts(){
 	$Result = DB_query($Sql);
 	prnMsg('      Adjusting groups into ChartmasterPMA table', 'info');
 
+	prnMsg('Updating PT. SMH ChartmasterSM table', 'info');
+
+	$Sql="CREATE TABLE IF NOT EXISTS `chartmasterSMH` (
+			`accountcode` varchar(20) NOT NULL DEFAULT '0',
+			`accountname` char(50) NOT NULL DEFAULT '',
+			`group_` char(30) NOT NULL DEFAULT '',
+			PRIMARY KEY (`accountcode`),
+			KEY `AccountName` (`accountname`),
+			KEY `Group_` (`group_`)
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8";
+	$Result = DB_query($Sql);
+	prnMsg('      Recreated ChartmasterSM table', 'info');
+
+	$Sql="TRUNCATE `chartmasterSMH`";
+	$Result = DB_query($Sql);
+	prnMsg('      Truncated ChartmasterSM table', 'info');
+
+	$Sql="INSERT INTO `chartmasterSMH` (`accountcode`, `accountname`, `group_`) 
+			SELECT `accountcode`, `accountname`, `group_`
+			FROM chartmaster
+			WHERE (accountcode LIKE '%SM' OR accountcode = '350510100')";
+	$Result = DB_query($Sql);
+	prnMsg('      Inserted accounts into ChartmasterSM table', 'info');
+
+	$Sql="UPDATE chartmasterSMH SET `group_` =  'HPP (COGS)' WHERE `accountcode` = '510010005SM'";
+	$Result = DB_query($Sql);
+	prnMsg('      Adjusting groups into ChartmasterSM table', 'info');
+
+	$Sql="UPDATE chartmasterSMH SET `group_` =  'Biaya General' WHERE `accountcode` = '510010070SM'";
+	$Result = DB_query($Sql);
+	prnMsg('      Adjusting groups into ChartmasterSM table', 'info');
+
+	$Sql="UPDATE chartmasterSMH SET `group_` =  'Pajak Penghasilan' WHERE `accountcode` = '611012025SM'";
+	$Result = DB_query($Sql);
+	prnMsg('      Adjusting groups into ChartmasterSM table', 'info');
+
+	$Sql="UPDATE chartmasterSMH SET `group_` =  'Biaya Karyawan' WHERE `accountcode` = '612011210SM'";
+	$Result = DB_query($Sql);
+	prnMsg('      Adjusting groups into ChartmasterSM table', 'info');
+
+	$Sql="UPDATE chartmasterSMH SET `group_` =  'Biaya Karyawan' WHERE `accountcode` = '612011220SM'";
+	$Result = DB_query($Sql);
+	prnMsg('      Adjusting groups into ChartmasterSM table', 'info');
+
+
 	prnMsg('Updating PT BB ChartmasterPT table', 'info');
 
 	$Sql="CREATE TABLE IF NOT EXISTS `chartmasterPT` (
@@ -472,7 +517,6 @@ function UpdateMultiCompanyAccounts(){
 	$Sql="UPDATE chartmasterPT SET `group_` =  'Pajak Penghasilan' WHERE `accountcode` = '611012025PT'";
 	$Result = DB_query($Sql);
 	prnMsg('      Adjusting groups into ChartmasterPT table', 'info');
-
 
 	prnMsg('Updating PO IK chartmasterIK table', 'info');
 

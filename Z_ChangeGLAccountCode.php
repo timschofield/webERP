@@ -131,8 +131,10 @@ if(isset($_POST['ProcessGLAccountCode'])) {
 		DB_ReinstateForeignKeys();
 		// KL RICARD tables
 		ChangeFieldInTable("chartmasterPMA", "accountcode", $_POST['OldAccountCode'], $_POST['NewAccountCode'], $db);
+		ChangeFieldInTable("chartmasterSMH", "accountcode", $_POST['OldAccountCode'], $_POST['NewAccountCode'], $db);
 		ChangeFieldInTable("chartmasterPT", "accountcode", $_POST['OldAccountCode'], $_POST['NewAccountCode'], $db);
-		ChangeFieldInTable("chartmasterM", "accountcode", $_POST['OldAccountCode'], $_POST['NewAccountCode'], $db);
+		ChangeFieldInTable("chartmasterIK", "accountcode", $_POST['OldAccountCode'], $_POST['NewAccountCode'], $db);
+		ChangeFieldInTable("chartmasterPI", "accountcode", $_POST['OldAccountCode'], $_POST['NewAccountCode'], $db);
 		
 		DB_ReinstateForeignKeys($db);
 
@@ -146,7 +148,6 @@ if(isset($_POST['ProcessGLAccountCode'])) {
 
 		echo '<p>' . _('GL account Code') . ': ' . $_POST['OldAccountCode'] . ' ' . _('was successfully changed to') . ' : ' . $_POST['NewAccountCode'];
 	}//only do the stuff above if  $InputError==0
-
 }
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">';

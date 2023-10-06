@@ -2,17 +2,6 @@
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 
-CREATE TABLE `chartmasterSM` (
-  `accountcode` varchar(20) NOT NULL DEFAULT '0',
-  `accountname` char(50) NOT NULL DEFAULT '',
-  `group_` char(30) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-ALTER TABLE `chartmasterSM`
-  ADD PRIMARY KEY (`accountcode`),
-  ADD KEY `AccountName` (`accountname`),
-  ADD KEY `Group_` (`group_`);
-
 INSERT INTO `accountgroups` (`groupname`, `sectioninaccounts`, `pandl`, `sequenceintb`, `parentgroupname`) VALUES
 ('Banks PT SMH', 100, 0, 225, 'Kas');
 
@@ -121,7 +110,7 @@ INSERT INTO `chartmaster` (`accountcode`, `accountname`, `group_`, `cashflowsact
 ('700211330SM', 'Biaya Komisi QRIS - PT SMH', 'Biaya/Pendapatan Lain2', 1, 1),
 ('700211700SM', 'Biaya Administrasi/Fees Bank  - PT SMH', 'Biaya/Pendapatan Lain2', 1, 1);
 
-INSERT INTO `chartmasterSM` (`accountcode`, `accountname`, `group_`) VALUES
+INSERT INTO `chartmasterSMH` (`accountcode`, `accountname`, `group_`) VALUES
 ('111121100SM', 'Bank Mandiri IDR - PT SMH', 'Banks PT SMH'),
 ('111121105SM', 'Bank Danamon IDR - PT SMH', 'Banks PT SMH'),
 ('111121110SM', 'Bank BCA IDR - PT SMH', 'Banks PT SMH'),
@@ -419,10 +408,34 @@ INSERT INTO `glaccountusers` (`accountcode`, `userid`, `canview`, `canupd`) VALU
 ('800011010SM', 'RICARD', 1, 0),
 ('800012000SM', 'Ricard', 1, 0);
 
+DELETE FROM glaccountusers WHERE UPPER(userid) = 'CANDRA';
+INSERT INTO glaccountusers (userid, accountcode, canview, canupd)
+	SELECT 'CANDRA', accountcode, canview, canupd
+	FROM glaccountusers
+	WHERE UPPER(userid) = 'REVI';
+	
+DELETE FROM glaccountusers WHERE UPPER(userid) = 'IINSUKMA';
+INSERT INTO glaccountusers (userid, accountcode, canview, canupd)
+	SELECT 'IINSUKMA', accountcode, canview, canupd
+	FROM glaccountusers
+	WHERE UPPER(userid) = 'REVI';
+
+DELETE FROM glaccountusers WHERE UPPER(userid) = 'IKE1';
+INSERT INTO glaccountusers (userid, accountcode, canview, canupd)
+	SELECT 'IKE1', accountcode, canview, canupd
+	FROM glaccountusers
+	WHERE UPPER(userid) = 'REVI';
+
+DELETE FROM glaccountusers WHERE UPPER(userid) = 'LAIA';
+INSERT INTO glaccountusers (userid, accountcode, canview, canupd)
+	SELECT 'LAIA', accountcode, canview, canupd
+	FROM glaccountusers
+	WHERE UPPER(userid) = 'RICARD';
+
 INSERT INTO `areas` (`areacode`, `areadescription`) VALUES
-('RSC', 'Retail - Cash PT SMH'),
-('RSR', 'Retail - Credit Card PT SMH'),
-('RSZ', 'Retail - Others PT SMH');
+('RSC', 'Retail - Cash PTSMH'),
+('RSR', 'Retail - CreditCard PTSMH'),
+('RSZ', 'Retail - Others PTSMH');
 
 INSERT INTO `cogsglpostings` (`id`, `area`, `stkcat`, `glcode`, `salestype`) VALUES
 (90, 'RSC', 'ANY', '510010000SM', 'AN'),
@@ -439,8 +452,7 @@ INSERT INTO `fixedassetlocations` (`locationid`, `locationdescription`, `parentl
 ('PTSMH', 'PT. Sungai Mutiara Hitam', '');
 
 INSERT INTO `klretailpartners` (`partnercode`, `partnername`, `partnernameinvoice`, `partneraddress`, `partneraddressjalan`, `partneraddressblok`, `partneraddressnomor`, `partneraddressrt`, `partneraddressrw`, `partneraddresskecamatan`, `partneraddresskelurahan`, `partneraddresskabupaten`, `partneraddresspropinsi`, `partneraddresskodepos`, `partnertelepon`, `partnernpwp`, `partnernpwpinvoice`, `ppn`, `accountppn`, `daysinvoicedue`, `areasalescreditcard`, `areasalescash`, `areasalescashothers`, `cashsalesreported`, `hppcompensation`, `accounthppcompensation`, `accountbankdanamon`, `accountbankmandiri`, `accountbankbca`, `accountcomissioncreditcard`, `comissionccdanamon`, `comissionamexdanamon`, `comissionccmandiri`, `comissionccbca`, `comissionamexbca`, `percentconsignmentptadu`, `accountconsignmentsalesptadu`, `accountconsignmentcogspartner`, `counterinvoicea`, `counterinvoiceb`, `counterinvoicec`, `accountwechat`, `comissionwechat`, `accountcomissionwechat`, `accountqris`, `comissionqris`, `accountcomissionqris`) VALUES
-('PTSMH', 'PT. Sungai Mutiara Hitam', 'PT. Sungai Mutiara Hitam', 'Jl. Kesambi No 1 Kerobokan, Bali', 'Jl. Kesambi', '', 'No. 1', '', '', 'Kerobokan', '', '', 'Bali', '80361', '', 'XXXXXX', 'XXXXXX', 11.00, '611012030SH', 7, 'RSR', 'RSC', 'RSZ', 90.00, 100.00, '510010050', '111121105SM', '111121101SM', '111121110SM', '700211300SM', 1.70, 3.00, 1.70, 1.70, 2.80, 50.00, '410010000AD', '510010005SM', 9040, 9041, 9042, '111121105SM', 1.80, '700211310SM', '111121101SM', 0.70, '700211330SM');
-
+('PTSMH', 'PT. Sungai Mutiara Hitam', 'PT. Sungai Mutiara Hitam', 'Jl. Kesambi No 1 Kerobokan, Bali', 'Jl. Kesambi', '', 'No. 1', '', '', 'Kerobokan', '', '', 'Bali', '80361', '', 'XXXXXX', 'XXXXXX', 11.00, '611012030SM', 7, 'RSR', 'RSC', 'RSZ', 100.00, 100.00, '510010050', '111121105SM', '111121100SM', '111121110SM', '700211300SM', 1.70, 3.00, 1.70, 1.70, 2.80, 50.00, '410010000AD', '510010005SM', 9040, 9041, 9042, '111121105SM', 1.80, '700211310SM', '111121100SM', 0.70, '700211330SM');
 
 INSERT INTO `pcexpenses` (`codeexpense`, `description`, `glaccount`, `tag`, `klretentionpph23`) VALUES
 ('ADVERT-SM-ONLINE', 'Advertisment Promotion Online for PT SMH', '612011110SM', 0, 0.00),
@@ -621,6 +633,7 @@ INSERT INTO `salesglpostings` (`id`, `area`, `stkcat`, `discountglcode`, `salesg
 INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES
 ('KLGLAccountsSMH.php', 40450, 'Defines the general ledger accounts for PT. Sungai Mutiara Hitam'),
 ('KLGLBalanceSheetSMH.php', 999999, 'Shows the balance sheet for PT. Sungai Mutiara Hitam as at a specified date'),
+('KLExcelGLTransactionsPajakSMH.php', 40410, 'Exports Excel file with GL Transactions for PT. SMH'),
 ('KLGLProfit_LossSMH.php', 40410, 'Shows the profit and loss of PT. Sungai Mutiara Hitam for the range of periods entered');
 
 INSERT INTO `systypes` (`typeid`, `typename`, `typeno`) VALUES
@@ -630,3 +643,9 @@ INSERT INTO `systypes` (`typeid`, `typename`, `typeno`) VALUES
 
 
 COMMIT;
+
+SELECT * 
+FROM areas
+WHERE NOT EXISTS (SELECT *
+				FROM custbranch
+				WHERE areas.areacode = custbranch.area)
