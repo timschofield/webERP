@@ -121,17 +121,6 @@ if ($ProcessSection01){
 	if($ShowSectionInfo){
 		prnMsg("Performing Control Panel Section 01",'info');
 	}
-	/***************************************************************************************
-	* SPG PERFORMANCE         
-	***************************************************************************************/
-
-	if ($KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector
-		OR $KL_ShopManager){
-// COVID REDUCTION OF PANEL
-//		SPGNotReportingSalesInDays(2, $db);
-//		$NumberOfTestExecuted++;
-	}
 
 	/***************************************************************************************
 	* STANDARD COST         

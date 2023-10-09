@@ -357,7 +357,8 @@ if ($ProcessSection03){
 		OR $KL_AdministrationTeam){
 		CashStatus(2023, 
 					159227000, 200000000, 100000000, 
-					45760000, 400000000, 100000000, 
+					        0,         0, 100000000, 
+					 45760000, 400000000, 100000000, 
 					100000000, $periodnow, $KL_SystemAdmin, TRUE, $db);
 		$NumberOfTestExecuted++;
 	}
@@ -612,6 +613,7 @@ function AverageCustomerBehaviourByValueInvoice($typereport, $NumDaysA, $db){
 }
 
 function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTransferADU, 
+							$CashEndOfPreviousYearSMH, $YearlyGoalSMH, $MinTransferSMH, 
 							$CashEndOfPreviousYearBB, $YearlyGoalBB, $MinTransferBB, 
 							$MinMoveFree, 
 							$Period, 
@@ -624,7 +626,6 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	// CASH STATUS ADU
 	//
 	// Sales Cash PT ADU during the year
-	// Sales PTBB in Cash during the Year
 	$Account = "410000000AD";
 	$SQL = "SELECT SUM(gltrans.amount)
 			FROM gltrans
@@ -729,6 +730,115 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 						-$CashToDividendsADU;
 	$ToBeMovedADU = $CurrentBalanceADU-$YearlyGoalADU ;
 	$ToBeTransferredADU = round_basic_price($ToBeMovedADU, $MinTransferADU);
+
+	//
+	// CASH STATUS SMH
+	//
+	// Sales Cash PT SMH during the year
+	$Account = "410000000SM";
+	$SQL = "SELECT SUM(gltrans.amount)
+			FROM gltrans
+			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
+				AND gltrans.trandate <= '" . $Today . "'
+				AND gltrans.account = '" . $Account . "'";
+	$Result = DB_query($SQL);
+	$myrow = DB_fetch_array($Result);
+	$SalesCashSMH = -$myrow[0];
+
+	// Cash sales still floating (still not received in kantor)
+	$SQL = "SELECT SUM(gltrans.amount)
+			FROM gltrans
+			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
+				AND gltrans.trandate <= '" . $Today . "'
+				AND gltrans.account IN (SELECT klposcashaccount
+										FROM locations
+										WHERE partnercode = 'PTSMH'
+											AND typeloc LIKE 'SHOP%')";
+	$Result = DB_query($SQL);
+	$myrow = DB_fetch_array($Result);
+	$FloatingCashSMH = $myrow[0];
+	
+	// Cash Danamon IDR PTSMH to Cash Kantor
+	$Account = "111121105SM";
+	$SQL = "SELECT SUM(gltrans.amount)
+			FROM gltrans
+			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
+				AND gltrans.trandate <= '" . $Today . "'
+				AND gltrans.account = '" . $Account . "'
+				AND (gltrans.narrative LIKE '%CASH TO CASH%'
+					OR gltrans.narrative LIKE '%CASH TO SUPP%'
+					OR gltrans.narrative LIKE '%BANK TO CASH%'
+					OR gltrans.narrative LIKE '%UANG KECIL%')";
+	$Result = DB_query($SQL);
+	$myrow = DB_fetch_array($Result);
+	$BankToCashSMH = -$myrow[0];
+
+	// Expenses SMH Paid by Petty Cash (excluding salaries, Corporate CC)
+	$AccountSuffix = "SM";
+	$SQL = "SELECT SUM(pcashdetails.amount) 
+			FROM pcashdetails, pctabs, pcexpenses
+			WHERE pcashdetails.date >= '" . $StartDateYTD . "'
+				AND pcashdetails.date <= '" . $Today . "'
+				AND pcashdetails.tabcode = pctabs.tabcode
+				AND pcashdetails.codeexpense = pcexpenses.codeexpense
+				AND pctabs.currency = 'IDR'
+				AND pcashdetails.codeexpense != 'ASSIGNCASH'
+				AND pctabs.tabcode NOT LIKE 'SALARIES%'
+				AND pctabs.tabcode NOT LIKE '%CEK SMH'
+				AND pctabs.tabcode NOT LIKE '%DANAMON'
+				AND pctabs.tabcode NOT LIKE 'CC-BCA%'
+				AND pcexpenses.glaccount LIKE '%".$AccountSuffix."'";
+	$Result = DB_query($SQL);
+	$myrow = DB_fetch_array($Result);
+	$ExpensesSMHPaidCash = -$myrow[0];
+	
+	// Cash in Kantor to Small Suppliers PTSMH
+	$Account = "510010070SM";
+	$SQL = "SELECT SUM(gltrans.amount)
+			FROM gltrans
+			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
+				AND gltrans.trandate <= '" . $Today . "'
+				AND gltrans.account = '" . $Account . "'
+				AND (gltrans.narrative LIKE '%CASH%'
+					OR gltrans.narrative LIKE '%KANTOR%')";
+	$Result = DB_query($SQL);
+	$myrow = DB_fetch_array($Result);
+	$CashToSmallSuppliersSMH = $myrow[0];
+
+	// Cash in Kantor to Pay rents PTSMH
+	$Account = "211030200SM";
+	$SQL = "SELECT SUM(gltrans.amount)
+			FROM gltrans
+			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
+				AND gltrans.trandate <= '" . $Today . "'
+				AND gltrans.account = '" . $Account . "'
+				AND gltrans.narrative LIKE '%CASH%'";
+	$Result = DB_query($SQL);
+	$myrow = DB_fetch_array($Result);
+	$CashToRentSMH = $myrow[0];
+
+	// Cash in Kantor to Pay dividends PTSMH
+	$Account = "614012400SM";
+	$SQL = "SELECT SUM(gltrans.amount)
+			FROM gltrans
+			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
+				AND gltrans.trandate <= '" . $Today . "'
+				AND gltrans.account = '" . $Account . "'
+				AND gltrans.narrative LIKE '%CASH%'";
+	$Result = DB_query($SQL);
+	$myrow = DB_fetch_array($Result);
+	$CashToDividendsSMH = $myrow[0];
+
+	$CurrentBalanceSMH = $CashEndOfPreviousYearSMH
+						+$SalesCashSMH
+						+$BankToCashSMH
+						-$FloatingCashSMH
+						-$ExpensesSMHPaidCash
+						-$CashToSmallSuppliersSMH
+						-$CashToRentSMH
+						-$CashToDividendsSMH;
+	$ToBeMovedSMH = $CurrentBalanceSMH-$YearlyGoalSMH ;
+	$ToBeTransferredSMH = round_basic_price($ToBeMovedSMH, $MinTransferSMH);
 
 	//
 	// CASH STATUS BB
@@ -978,6 +1088,117 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 		echo '</table>
 			</div>';
 
+		echo '<p class="page_title_text" align="center"><strong>' . 'Status Cash PT. Sungai Mutiara Hitam ' . $Year . '</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+
+		$TableHeader = '<tr>
+							<th>' . 'Concept' . '</th>
+							<th>' . 'Value' . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'Cash SMH in Brankas Kantor end of ' . ($Year-1), 
+				locale_number_format($CashEndOfPreviousYearSMH,0)
+				);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'Sales Retail PT SMH Cash during '. $Year, 
+				locale_number_format($SalesCashSMH,0)
+				);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'Floating Cash still in shops PT SMH', 
+				locale_number_format(-$FloatingCashSMH,0)
+				);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'Cash received from shops PT SMH in Brankas Kantor during '. $Year, 
+				locale_number_format($SalesCashSMH-$FloatingCashSMH,0)
+				);
+		if ($BankToCashSMH >= 0){
+			$Text = 'Total withdrawal from Danamon IDR PTSMH to Brankas Kantor';
+		}else{
+			$Text = 'Total deposit from Brankas Kantor to Danamon IDR PTSMH ';
+		}
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				$Text, 
+				locale_number_format($BankToCashSMH,0)
+				);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'Expenses PT SMH Paid by Petty Cash (excluding checks, salaries, Corporate CC)', 
+				locale_number_format(-$ExpensesSMHPaidCash,0)
+				);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'Expenses PT SMH Small Suppliers Paid from Cash Kantor', 
+				locale_number_format(-$CashToSmallSuppliersSMH,0)
+				);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'Expenses PT SMH Rent Paid from Cash Kantor', 
+				locale_number_format(-$CashToRentSMH,0)
+				);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'Dividends PT SMH Paid from Cash Kantor', 
+				locale_number_format(-$CashToDividendsSMH,0)
+				);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'Current Cash PT SMH in Brankas Kantor', 
+				locale_number_format($CurrentBalanceSMH,0)
+				);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'Cash SMH in Brankas Kantor Goal for end of '. $Year, 
+				locale_number_format($YearlyGoalSMH,0)
+				);
+		if ($ToBeMovedSMH >= 0){
+			$Text = 'Cash SMH OVER goal in Brankas Kantor';
+		}else{
+			$Text = 'Cash SMH BELOW goal in Brankas Kantor';
+		}
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				$Text, 
+				locale_number_format(abs($ToBeMovedSMH),0)
+				);
+				
+		if ($ToBeTransferredSMH != 0){
+			if ($ToBeTransferredSMH > 0){
+				$Text = 'ACTION NEEDED -> Deposit from Brankas Kantor to Danamon IDR SMH';
+			}elseif ($ToBeTransferredSMH < 0){
+				$Text = 'ACTION NEEDED -> Withdrawal from Danamon IDR SMH to Brankas Kantor';
+			}
+			$k = StartEvenOrOddRow($k);
+			printf('<td>%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$Text, 
+					locale_number_format(abs($ToBeTransferredSMH),0)
+					);
+		}
+		echo '</table>
+			</div>';
+
 		echo '<p class="page_title_text" align="center"><strong>' . 'Status Cash PT. Bumi Biru ' . $Year . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
@@ -1094,7 +1315,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 			echo '<div>';
 			echo '<table class="selection">';
 			
-			$FreeSaldoBrankasKantor = $SaldoBrankasKantor - $CurrentBalanceADU - $CurrentBalanceBB;
+			$FreeSaldoBrankasKantor = $SaldoBrankasKantor - $CurrentBalanceADU - $CurrentBalanceSMH - $CurrentBalanceBB;
 			$ToBeMovedFree = round_basic_price($FreeSaldoBrankasKantor, $MinMoveFree);	
 			$FreeSaldoBrankasShareholders = $SaldoBrankasShareholders + $FreeSaldoBrankasKantor;
 			$ToBeDistributedToShareholders = round_basic_price($FreeSaldoBrankasShareholders, $MinMoveFree);	
@@ -1121,6 +1342,12 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 			printf('<td>%s</td>
 					<td class="number">%s</td>
 					</tr>', 
+					'Cash belonging to PTSMH', 
+					locale_number_format($CurrentBalanceSMH,0)
+					);
+			printf('<td>%s</td>
+					<td class="number">%s</td>
+					</tr>', 
 					'Cash belonging to PTBB', 
 					locale_number_format($CurrentBalanceBB,0)
 					);
@@ -1128,7 +1355,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 					<td class="number">%s</td>
 					</tr>', 
 					'Free Cash in Brankas Kantor', 
-					locale_number_format(($FreeSaldoBrankasKantor),0)
+					locale_number_format($FreeSaldoBrankasKantor,0)
 					);
 			printf('<td>%s</td>
 					<td class="number">%s</td>
@@ -1175,6 +1402,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 		}
 
 		InsertKPI("Cash", "Cash PT ADU in Brankas Kantor", $CurrentBalanceADU);
+		InsertKPI("Cash", "Cash PT SMH in Brankas Kantor", $CurrentBalanceSMH);
 		InsertKPI("Cash", "Cash PT BB in Brankas Kantor", $CurrentBalanceBB);
 		InsertKPI("Cash", "Free Cash in Brankas Shareholders", $FreeSaldoBrankasShareholders);
 
