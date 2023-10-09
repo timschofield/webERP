@@ -42,11 +42,11 @@ INSERT INTO test_erp.chartmasterIK SELECT * FROM kurakura_kl_erp.chartmasterIK;
 TRUNCATE test_erp.`chartmasterPI`;
 INSERT INTO test_erp.chartmasterPI SELECT * FROM kurakura_kl_erp.chartmasterPI;
 
-TRUNCATE test_erp.`chartmasterPMA`;
-INSERT INTO test_erp.chartmasterPMA SELECT * FROM kurakura_kl_erp.chartmasterPMA;
+TRUNCATE test_erp.`chartmasterADU`;
+INSERT INTO test_erp.chartmasterADU SELECT * FROM kurakura_kl_erp.chartmasterADU;
 
-TRUNCATE test_erp.`chartmasterPT`;
-INSERT INTO test_erp.chartmasterPT SELECT * FROM kurakura_kl_erp.chartmasterPT;
+TRUNCATE test_erp.`chartmasterBB`;
+INSERT INTO test_erp.chartmasterBB SELECT * FROM kurakura_kl_erp.chartmasterBB;
 
 TRUNCATE test_erp.`chartmasterSMH`;
 INSERT INTO test_erp.chartmasterSMH SELECT * FROM kurakura_kl_erp.chartmasterSMH;

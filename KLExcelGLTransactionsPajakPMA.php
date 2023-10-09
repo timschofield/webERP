@@ -66,15 +66,15 @@ function submit(&$db, $FromDate, $ToDate) {
 		
 		$sql = "SELECT accountgroups.groupname AS 'Group',
 					gltrans.account AS 'AccountCode', 
-					chartmasterPMA.accountname AS 'AccountName', 
+					chartmasterADU.accountname AS 'AccountName', 
 					gltrans.trandate AS 'Date', 
 					ROUND(gltrans.amount,0) AS 'Amount', 
 					gltrans.narrative AS 'Description'
 				FROM gltrans, 
-					chartmasterPMA, 
+					chartmasterADU, 
 					accountgroups
-				WHERE gltrans.account = chartmasterPMA.accountcode
-					AND chartmasterPMA.group_ = accountgroups.groupname
+				WHERE gltrans.account = chartmasterADU.accountcode
+					AND chartmasterADU.group_ = accountgroups.groupname
 					AND accountgroups.groupname NOT IN ('Penjualan', 'HPP (COGS)') 
 					AND (accountgroups.pandl = 1)".
 					$WhereFrom .

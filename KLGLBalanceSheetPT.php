@@ -90,9 +90,9 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 
 	$SQL = "SELECT Sum(CASE WHEN chartdetails.period='" . $_POST['BalancePeriodEnd'] . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS accumprofitbfwd,
 			Sum(CASE WHEN chartdetails.period='" . ($_POST['BalancePeriodEnd'] - 12) . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lyaccumprofitbfwd
-		FROM chartmasterPT INNER JOIN accountgroups
-		ON chartmasterPT.group_ = accountgroups.groupname INNER JOIN chartdetails
-		ON chartmasterPT.accountcode= chartdetails.accountcode
+		FROM chartmasterBB INNER JOIN accountgroups
+		ON chartmasterBB.group_ = accountgroups.groupname INNER JOIN chartdetails
+		ON chartmasterBB.accountcode= chartdetails.accountcode
 		WHERE accountgroups.pandl=1";
 
 	$AccumProfitResult = DB_query($SQL);
@@ -115,16 +115,16 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 			accountgroups.groupname,
 			accountgroups.parentgroupname,
 			chartdetails.accountcode ,
-			chartmasterPT.accountname,
+			chartmasterBB.accountname,
 			Sum(CASE WHEN chartdetails.period='" . $_POST['BalancePeriodEnd'] . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS balancecfwd,
 			Sum(CASE WHEN chartdetails.period='" . ($_POST['BalancePeriodEnd'] - 12) . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lybalancecfwd
-		FROM chartmasterPT INNER JOIN accountgroups
-		ON chartmasterPT.group_ = accountgroups.groupname INNER JOIN chartdetails
-		ON chartmasterPT.accountcode= chartdetails.accountcode
+		FROM chartmasterBB INNER JOIN accountgroups
+		ON chartmasterBB.group_ = accountgroups.groupname INNER JOIN chartdetails
+		ON chartmasterBB.accountcode= chartdetails.accountcode
 		WHERE accountgroups.pandl=0
 		GROUP BY accountgroups.groupname,
 			chartdetails.accountcode,
-			chartmasterPT.accountname,
+			chartmasterBB.accountname,
 			accountgroups.parentgroupname,
 			accountgroups.sequenceintb,
 			accountgroups.sectioninaccounts
@@ -172,35 +172,35 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 
 		if ($myrow['accountcode'] == $RetainedEarningsAct){
 			$SQL = "SELECT SUM(chartdetails.bfwd + chartdetails.actual)
-					FROM chartdetails, chartmasterPT, accountgroups
-					WHERE chartdetails.accountcode = chartmasterPT.accountcode
-						AND chartmasterPT.group_ = accountgroups.groupname
+					FROM chartdetails, chartmasterBB, accountgroups
+					WHERE chartdetails.accountcode = chartmasterBB.accountcode
+						AND chartmasterBB.group_ = accountgroups.groupname
 						AND accountgroups.sectioninaccounts = 100
 						AND chartdetails.period = '" . $_POST['BalancePeriodEnd'] . "'";
 			$Earnings = DB_query($SQL);
 			$AktivaNow=DB_fetch_array($Earnings);
 			$SQL = "SELECT SUM(chartdetails.bfwd + chartdetails.actual)
-					FROM chartdetails, chartmasterPT, accountgroups
-					WHERE chartdetails.accountcode = chartmasterPT.accountcode
-						AND chartmasterPT.group_ = accountgroups.groupname
+					FROM chartdetails, chartmasterBB, accountgroups
+					WHERE chartdetails.accountcode = chartmasterBB.accountcode
+						AND chartmasterBB.group_ = accountgroups.groupname
 						AND accountgroups.sectioninaccounts = 100
 						AND chartdetails.period = '" . ($_POST['BalancePeriodEnd']-12) . "'";
 			$Earnings = DB_query($SQL);
 			$AktivaLast=DB_fetch_array($Earnings);
 			$SQL = "SELECT SUM(chartdetails.bfwd + chartdetails.actual)
-					FROM chartdetails, chartmasterPT, accountgroups
-					WHERE chartdetails.accountcode = chartmasterPT.accountcode
+					FROM chartdetails, chartmasterBB, accountgroups
+					WHERE chartdetails.accountcode = chartmasterBB.accountcode
 						AND chartdetails.accountcode != '".$RetainedEarningsAct."'
-						AND chartmasterPT.group_ = accountgroups.groupname
+						AND chartmasterBB.group_ = accountgroups.groupname
 						AND accountgroups.sectioninaccounts = 200
 						AND chartdetails.period = '" . $_POST['BalancePeriodEnd'] . "'";
 			$Earnings = DB_query($SQL);
 			$HutangNow=DB_fetch_array($Earnings);
 			$SQL = "SELECT SUM(chartdetails.bfwd + chartdetails.actual)
-					FROM chartdetails, chartmasterPT, accountgroups
-					WHERE chartdetails.accountcode = chartmasterPT.accountcode
+					FROM chartdetails, chartmasterBB, accountgroups
+					WHERE chartdetails.accountcode = chartmasterBB.accountcode
 						AND chartdetails.accountcode != '".$RetainedEarningsAct."'
-						AND chartmasterPT.group_ = accountgroups.groupname
+						AND chartmasterBB.group_ = accountgroups.groupname
 						AND accountgroups.sectioninaccounts = 200
 						AND chartdetails.period = '" . ($_POST['BalancePeriodEnd']-12) . "'";
 			$Earnings = DB_query($SQL);
@@ -362,9 +362,9 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 
 	$SQL = "SELECT Sum(CASE WHEN chartdetails.period='" . $_POST['BalancePeriodEnd'] . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS accumprofitbfwd,
 			Sum(CASE WHEN chartdetails.period='" . ($_POST['BalancePeriodEnd'] - 12) . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lyaccumprofitbfwd
-		FROM chartmasterPT INNER JOIN accountgroups
-		ON chartmasterPT.group_ = accountgroups.groupname INNER JOIN chartdetails
-		ON chartmasterPT.accountcode= chartdetails.accountcode
+		FROM chartmasterBB INNER JOIN accountgroups
+		ON chartmasterBB.group_ = accountgroups.groupname INNER JOIN chartdetails
+		ON chartmasterBB.accountcode= chartdetails.accountcode
 		WHERE accountgroups.pandl=1";
 
 	$AccumProfitResult = DB_query($SQL,_('The accumulated profits brought forward could not be calculated by the SQL because'));
@@ -375,16 +375,16 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 			accountgroups.groupname,
 			accountgroups.parentgroupname,
 			chartdetails.accountcode,
-			chartmasterPT.accountname,
+			chartmasterBB.accountname,
 			Sum(CASE WHEN chartdetails.period='" . $_POST['BalancePeriodEnd'] . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS balancecfwd,
 			Sum(CASE WHEN chartdetails.period='" . ($_POST['BalancePeriodEnd'] - 12) . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lybalancecfwd
-		FROM chartmasterPT INNER JOIN accountgroups
-		ON chartmasterPT.group_ = accountgroups.groupname INNER JOIN chartdetails
-		ON chartmasterPT.accountcode= chartdetails.accountcode
+		FROM chartmasterBB INNER JOIN accountgroups
+		ON chartmasterBB.group_ = accountgroups.groupname INNER JOIN chartdetails
+		ON chartmasterBB.accountcode= chartdetails.accountcode
 		WHERE accountgroups.pandl=0
 		GROUP BY accountgroups.groupname,
 			chartdetails.accountcode,
-			chartmasterPT.accountname,
+			chartmasterBB.accountname,
 			accountgroups.parentgroupname,
 			accountgroups.sequenceintb,
 			accountgroups.sectioninaccounts
@@ -446,35 +446,35 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 
 		if ($myrow['accountcode'] == $RetainedEarningsAct){
 			$SQL = "SELECT SUM(chartdetails.bfwd + chartdetails.actual)
-					FROM chartdetails, chartmasterPT, accountgroups
-					WHERE chartdetails.accountcode = chartmasterPT.accountcode
-						AND chartmasterPT.group_ = accountgroups.groupname
+					FROM chartdetails, chartmasterBB, accountgroups
+					WHERE chartdetails.accountcode = chartmasterBB.accountcode
+						AND chartmasterBB.group_ = accountgroups.groupname
 						AND accountgroups.sectioninaccounts = 100
 						AND chartdetails.period = '" . $_POST['BalancePeriodEnd'] . "'";
 			$Earnings = DB_query($SQL);
 			$AktivaNow=DB_fetch_array($Earnings);
 			$SQL = "SELECT SUM(chartdetails.bfwd + chartdetails.actual)
-					FROM chartdetails, chartmasterPT, accountgroups
-					WHERE chartdetails.accountcode = chartmasterPT.accountcode
-						AND chartmasterPT.group_ = accountgroups.groupname
+					FROM chartdetails, chartmasterBB, accountgroups
+					WHERE chartdetails.accountcode = chartmasterBB.accountcode
+						AND chartmasterBB.group_ = accountgroups.groupname
 						AND accountgroups.sectioninaccounts = 100
 						AND chartdetails.period = '" . ($_POST['BalancePeriodEnd']-12) . "'";
 			$Earnings = DB_query($SQL);
 			$AktivaLast=DB_fetch_array($Earnings);
 			$SQL = "SELECT SUM(chartdetails.bfwd + chartdetails.actual)
-					FROM chartdetails, chartmasterPT, accountgroups
-					WHERE chartdetails.accountcode = chartmasterPT.accountcode
+					FROM chartdetails, chartmasterBB, accountgroups
+					WHERE chartdetails.accountcode = chartmasterBB.accountcode
 						AND chartdetails.accountcode != '".$RetainedEarningsAct."'
-						AND chartmasterPT.group_ = accountgroups.groupname
+						AND chartmasterBB.group_ = accountgroups.groupname
 						AND accountgroups.sectioninaccounts = 200
 						AND chartdetails.period = '" . $_POST['BalancePeriodEnd'] . "'";
 			$Earnings = DB_query($SQL);
 			$HutangNow=DB_fetch_array($Earnings);
 			$SQL = "SELECT SUM(chartdetails.bfwd + chartdetails.actual)
-					FROM chartdetails, chartmasterPT, accountgroups
-					WHERE chartdetails.accountcode = chartmasterPT.accountcode
+					FROM chartdetails, chartmasterBB, accountgroups
+					WHERE chartdetails.accountcode = chartmasterBB.accountcode
 						AND chartdetails.accountcode != '".$RetainedEarningsAct."'
-						AND chartmasterPT.group_ = accountgroups.groupname
+						AND chartmasterBB.group_ = accountgroups.groupname
 						AND accountgroups.sectioninaccounts = 200
 						AND chartdetails.period = '" . ($_POST['BalancePeriodEnd']-12) . "'";
 			$Earnings = DB_query($SQL);

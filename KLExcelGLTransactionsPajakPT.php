@@ -80,15 +80,15 @@ function submit(&$db, $FromDate, $ToDate) {
 		// Regular GL accounts (NOT HPP (COGS) OR PENJUALAN))
 		$sql = "SELECT accountgroups.groupname AS 'Group',
 					gltrans.account AS 'AccountCode', 
-					chartmasterPT.accountname AS 'AccountName', 
+					chartmasterBB.accountname AS 'AccountName', 
 					gltrans.trandate AS 'Date', 
 					ROUND(gltrans.amount,0) AS 'Amount', 
 					gltrans.narrative AS 'Description'
 				FROM gltrans, 
-					chartmasterPT, 
+					chartmasterBB, 
 					accountgroups
-				WHERE gltrans.account = chartmasterPT.accountcode
-					AND chartmasterPT.group_ = accountgroups.groupname
+				WHERE gltrans.account = chartmasterBB.accountcode
+					AND chartmasterBB.group_ = accountgroups.groupname
 					AND (accountgroups.pandl = 1)
 					AND accountgroups.groupname NOT IN ('Penjualan', 'HPP (COGS)') 
 					AND gltrans.account != '" . $myrowSettings['accountcomissioncreditcard'] . "' ".
@@ -116,15 +116,15 @@ function submit(&$db, $FromDate, $ToDate) {
 		// Exception GL accounts grouped (HPP (COGS) OR PENJUALAN))
 		$sql = "SELECT accountgroups.groupname AS 'Group',
 					gltrans.account AS 'AccountCode', 
-					chartmasterPT.accountname AS 'AccountName', 
+					chartmasterBB.accountname AS 'AccountName', 
 					gltrans.trandate AS 'Date', 
 					SUM(ROUND(gltrans.amount,0)) AS 'Amount', 
 					gltrans.narrative AS 'Description'
 				FROM gltrans, 
-					chartmasterPT, 
+					chartmasterBB, 
 					accountgroups
-				WHERE gltrans.account = chartmasterPT.accountcode
-					AND chartmasterPT.group_ = accountgroups.groupname
+				WHERE gltrans.account = chartmasterBB.accountcode
+					AND chartmasterBB.group_ = accountgroups.groupname
 					AND (accountgroups.pandl = 1)
 					AND ( accountgroups.groupname IN ('Penjualan', 'HPP (COGS)') 
 						OR gltrans.account = '" . $myrowSettings['accountcomissioncreditcard'] . "') ".

@@ -159,23 +159,23 @@ if ((!isset($_POST['FromPeriod'])
 					accountgroups.groupname,
 					accountgroups.parentgroupname,
 					chartdetails.accountcode ,
-					chartmasterPT.accountname,
+					chartmasterBB.accountname,
 					Sum(CASE WHEN chartdetails.period='" . $_POST['FromPeriod'] . "' THEN chartdetails.bfwd ELSE 0 END) AS firstprdbfwd,
 					Sum(CASE WHEN chartdetails.period='" . $_POST['FromPeriod'] . "' THEN chartdetails.bfwdbudget ELSE 0 END) AS firstprdbudgetbfwd,
 					Sum(CASE WHEN chartdetails.period='" . $_POST['ToPeriod'] . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lastprdcfwd,
 					Sum(CASE WHEN chartdetails.period='" . ($_POST['FromPeriod'] - 12) . "' THEN chartdetails.bfwd ELSE 0 END) AS lyfirstprdbfwd,
 					Sum(CASE WHEN chartdetails.period='" . ($_POST['ToPeriod']-12) . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lylastprdcfwd,
 					Sum(CASE WHEN chartdetails.period='" . $_POST['ToPeriod'] . "' THEN chartdetails.bfwdbudget + chartdetails.budget ELSE 0 END) AS lastprdbudgetcfwd
-				FROM chartmasterPT
-					INNER JOIN accountgroups ON chartmasterPT.group_ = accountgroups.groupname
-					INNER JOIN chartdetails ON chartmasterPT.accountcode= chartdetails.accountcode
-					INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmasterPT.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canview=1
+				FROM chartmasterBB
+					INNER JOIN accountgroups ON chartmasterBB.group_ = accountgroups.groupname
+					INNER JOIN chartdetails ON chartmasterBB.accountcode= chartdetails.accountcode
+					INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmasterBB.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canview=1
 				WHERE accountgroups.pandl=1
 				GROUP BY accountgroups.sectioninaccounts,
 					accountgroups.groupname,
 					accountgroups.parentgroupname,
 					chartdetails.accountcode,
-					chartmasterPT.accountname,
+					chartmasterBB.accountname,
 					accountgroups.sequenceintb
 				ORDER BY accountgroups.sectioninaccounts,
 					accountgroups.sequenceintb,
@@ -588,23 +588,23 @@ if ((!isset($_POST['FromPeriod'])
 					accountgroups.parentgroupname,
 					accountgroups.groupname,
 					chartdetails.accountcode,
-					chartmasterPT.accountname,
+					chartmasterBB.accountname,
 					SUM(CASE WHEN chartdetails.period='" . $_POST['FromPeriod'] . "' THEN chartdetails.bfwd ELSE 0 END) AS firstprdbfwd,
 					SUM(CASE WHEN chartdetails.period='" . $_POST['FromPeriod'] . "' THEN chartdetails.bfwdbudget ELSE 0 END) AS firstprdbudgetbfwd,
 					SUM(CASE WHEN chartdetails.period='" . $_POST['ToPeriod'] . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lastprdcfwd,
 					SUM(CASE WHEN chartdetails.period='" . ($_POST['FromPeriod'] - 12) . "' THEN chartdetails.bfwd ELSE 0 END) AS lyfirstprdbfwd,
 					SUM(CASE WHEN chartdetails.period='" . ($_POST['ToPeriod']-12) . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lylastprdcfwd,
 					SUM(CASE WHEN chartdetails.period='" . $_POST['ToPeriod'] . "' THEN chartdetails.bfwdbudget + chartdetails.budget ELSE 0 END) AS lastprdbudgetcfwd
-			FROM chartmasterPT
-				INNER JOIN accountgroups ON chartmasterPT.group_ = accountgroups.groupname
-				INNER JOIN chartdetails	ON chartmasterPT.accountcode= chartdetails.accountcode
-				INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmasterPT.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canview=1
+			FROM chartmasterBB
+				INNER JOIN accountgroups ON chartmasterBB.group_ = accountgroups.groupname
+				INNER JOIN chartdetails	ON chartmasterBB.accountcode= chartdetails.accountcode
+				INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmasterBB.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canview=1
 			WHERE accountgroups.pandl=1
 			GROUP BY accountgroups.sectioninaccounts,
 					accountgroups.parentgroupname,
 					accountgroups.groupname,
 					chartdetails.accountcode,
-					chartmasterPT.accountname
+					chartmasterBB.accountname
 			ORDER BY accountgroups.sectioninaccounts,
 					accountgroups.sequenceintb,
 					accountgroups.groupname,

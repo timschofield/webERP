@@ -2,7 +2,7 @@
 /*                               PMA                                                        */
 /* ******************************************************************************************/
 
-CREATE TABLE IF NOT EXISTS `chartmasterPMA` (
+CREATE TABLE IF NOT EXISTS `chartmasterADU` (
   `accountcode` varchar(20) NOT NULL DEFAULT '0',
   `accountname` char(50) NOT NULL DEFAULT '',
   `group_` char(30) NOT NULL DEFAULT '',
@@ -11,23 +11,23 @@ CREATE TABLE IF NOT EXISTS `chartmasterPMA` (
   KEY `Group_` (`group_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-TRUNCATE `chartmasterPMA`;
+TRUNCATE `chartmasterADU`;
 
-INSERT INTO `chartmasterPMA` (`accountcode`, `accountname`, `group_`) 
+INSERT INTO `chartmasterADU` (`accountcode`, `accountname`, `group_`) 
 SELECT `accountcode`, `accountname`, `group_`
 FROM chartmaster
 WHERE (accountcode LIKE "%AD" OR accountcode = "350510100");
 
-UPDATE chartmasterPMA SET `group_` =  'Penjualan' WHERE `accountcode` = '410010000AD';
-UPDATE chartmasterPMA SET `group_` =  'Biaya Karyawan' WHERE `accountcode` = '612011210AD';
-UPDATE chartmasterPMA SET `group_` =  'Biaya Karyawan' WHERE `accountcode` = '612011220AD';
-UPDATE chartmasterPMA SET `group_` =  'Biaya General' WHERE `accountcode` = '510010070AD';
-UPDATE chartmasterPMA SET `group_` =  'Pajak Penghasilan' WHERE `accountcode` = '611012025AD';
+UPDATE chartmasterADU SET `group_` =  'Penjualan' WHERE `accountcode` = '410010000AD';
+UPDATE chartmasterADU SET `group_` =  'Biaya Karyawan' WHERE `accountcode` = '612011210AD';
+UPDATE chartmasterADU SET `group_` =  'Biaya Karyawan' WHERE `accountcode` = '612011220AD';
+UPDATE chartmasterADU SET `group_` =  'Biaya General' WHERE `accountcode` = '510010070AD';
+UPDATE chartmasterADU SET `group_` =  'Pajak Penghasilan' WHERE `accountcode` = '611012025AD';
 
 /* ******************************************************************************************/
 /*                               PT BB                                                      */
 /* ******************************************************************************************/
-CREATE TABLE IF NOT EXISTS `chartmasterPT` (
+CREATE TABLE IF NOT EXISTS `chartmasterBB` (
   `accountcode` varchar(20) NOT NULL DEFAULT '0',
   `accountname` char(50) NOT NULL DEFAULT '',
   `group_` char(30) NOT NULL DEFAULT '',
@@ -36,17 +36,17 @@ CREATE TABLE IF NOT EXISTS `chartmasterPT` (
   KEY `Group_` (`group_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-TRUNCATE `chartmasterPT`;
+TRUNCATE `chartmasterBB`;
 
-INSERT INTO `chartmasterPT` (`accountcode`, `accountname`, `group_`) 
+INSERT INTO `chartmasterBB` (`accountcode`, `accountname`, `group_`) 
 SELECT `accountcode`, `accountname`, `group_`
 FROM chartmaster
 WHERE (accountcode LIKE "%PT" OR accountcode = "350510100");
 
-UPDATE chartmasterPT SET `group_` =  'HPP (COGS)' WHERE `accountcode` = '510010005PT';
-UPDATE chartmasterPT SET `group_` =  'Penjualan' WHERE `accountcode` = '410010010PT';
-UPDATE chartmasterPT SET `group_` =  'Biaya General' WHERE `accountcode` = '510010070PT';
-UPDATE chartmasterPT SET `group_` =  'Pajak Penghasilan' WHERE `accountcode` = '611012025PT';
+UPDATE chartmasterBB SET `group_` =  'HPP (COGS)' WHERE `accountcode` = '510010005PT';
+UPDATE chartmasterBB SET `group_` =  'Penjualan' WHERE `accountcode` = '410010010PT';
+UPDATE chartmasterBB SET `group_` =  'Biaya General' WHERE `accountcode` = '510010070PT';
+UPDATE chartmasterBB SET `group_` =  'Pajak Penghasilan' WHERE `accountcode` = '611012025PT';
 
 /* ******************************************************************************************/
 /*                              PERORANGAN IKE DIAN (POIK)                                  */

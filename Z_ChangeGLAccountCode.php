@@ -130,9 +130,9 @@ if(isset($_POST['ProcessGLAccountCode'])) {
 
 		DB_ReinstateForeignKeys();
 		// KL RICARD tables
-		ChangeFieldInTable("chartmasterPMA", "accountcode", $_POST['OldAccountCode'], $_POST['NewAccountCode'], $db);
+		ChangeFieldInTable("chartmasterADU", "accountcode", $_POST['OldAccountCode'], $_POST['NewAccountCode'], $db);
 		ChangeFieldInTable("chartmasterSMH", "accountcode", $_POST['OldAccountCode'], $_POST['NewAccountCode'], $db);
-		ChangeFieldInTable("chartmasterPT", "accountcode", $_POST['OldAccountCode'], $_POST['NewAccountCode'], $db);
+		ChangeFieldInTable("chartmasterBB", "accountcode", $_POST['OldAccountCode'], $_POST['NewAccountCode'], $db);
 		ChangeFieldInTable("chartmasterIK", "accountcode", $_POST['OldAccountCode'], $_POST['NewAccountCode'], $db);
 		ChangeFieldInTable("chartmasterPI", "accountcode", $_POST['OldAccountCode'], $_POST['NewAccountCode'], $db);
 		

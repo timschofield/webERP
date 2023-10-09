@@ -5,15 +5,15 @@ UPDATE gltrans SET account "510010000PT" WHERE account = "510010050" AND trandat
 
 SELECT accountgroups.groupname AS 'Group',
 	gltrans.account AS 'Account code', 
-	chartmasterPT.accountname AS 'Account name', 
+	chartmasterBB.accountname AS 'Account name', 
 	gltrans.trandate AS 'Date', 
 	ROUND(gltrans.amount,0) AS 'Amount', 
 	gltrans.narrative AS 'Description'
 FROM gltrans, 
-	chartmasterPT, 
+	chartmasterBB, 
 	accountgroups
-WHERE gltrans.account = chartmasterPT.accountcode
-	AND chartmasterPT.group_ = accountgroups.groupname
+WHERE gltrans.account = chartmasterBB.accountcode
+	AND chartmasterBB.group_ = accountgroups.groupname
 	AND (accountgroups.pandl = 1)
 	AND trandate >= "2014-01-01"
 	AND trandate <= "2014-08-31"

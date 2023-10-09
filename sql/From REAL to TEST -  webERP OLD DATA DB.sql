@@ -39,11 +39,11 @@ INSERT INTO kurakura_kl_test_erpolddata.chartmasterIK SELECT * FROM kurakura_kl_
 TRUNCATE kurakura_kl_test_erpolddata.`chartmasterPI`;
 INSERT INTO kurakura_kl_test_erpolddata.chartmasterPI SELECT * FROM kurakura_kl_erpolddata.chartmasterPI;
 
-TRUNCATE kurakura_kl_test_erpolddata.`chartmasterPMA`;
-INSERT INTO kurakura_kl_test_erpolddata.chartmasterPMA SELECT * FROM kurakura_kl_erpolddata.chartmasterPMA;
+TRUNCATE kurakura_kl_test_erpolddata.`chartmasterADU`;
+INSERT INTO kurakura_kl_test_erpolddata.chartmasterADU SELECT * FROM kurakura_kl_erpolddata.chartmasterADU;
 
-TRUNCATE kurakura_kl_test_erpolddata.`chartmasterPT`;
-INSERT INTO kurakura_kl_test_erpolddata.chartmasterPT SELECT * FROM kurakura_kl_erpolddata.chartmasterPT;
+TRUNCATE kurakura_kl_test_erpolddata.`chartmasterBB`;
+INSERT INTO kurakura_kl_test_erpolddata.chartmasterBB SELECT * FROM kurakura_kl_erpolddata.chartmasterBB;
 
 TRUNCATE kurakura_kl_test_erpolddata.`chartmasterSMH`;
 INSERT INTO kurakura_kl_test_erpolddata.chartmasterSMH SELECT * FROM kurakura_kl_erpolddata.chartmasterSMH;

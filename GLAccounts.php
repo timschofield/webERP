@@ -391,7 +391,7 @@ function UpdateMultiCompanyAccounts(){
 
 	prnMsg('Updating PT ADU ChartmasterPMA table', 'info');
 
-	$Sql="CREATE TABLE IF NOT EXISTS `chartmasterPMA` (
+	$Sql="CREATE TABLE IF NOT EXISTS `chartmasterADU` (
 		  `accountcode` varchar(20) NOT NULL DEFAULT '0',
 		  `accountname` char(50) NOT NULL DEFAULT '',
 		  `group_` char(30) NOT NULL DEFAULT '',
@@ -402,34 +402,34 @@ function UpdateMultiCompanyAccounts(){
 	$Result = DB_query($Sql);
 	prnMsg('      Recreated ChartmasterPMA table', 'info');
 
-	$Sql="TRUNCATE `chartmasterPMA`";
+	$Sql="TRUNCATE `chartmasterADU`";
 	$Result = DB_query($Sql);
 	prnMsg('      Truncated ChartmasterPMA table', 'info');
 
-	$Sql="INSERT INTO `chartmasterPMA` (`accountcode`, `accountname`, `group_`) 
+	$Sql="INSERT INTO `chartmasterADU` (`accountcode`, `accountname`, `group_`) 
 			SELECT `accountcode`, `accountname`, `group_`
 			FROM chartmaster
 			WHERE (accountcode LIKE '%AD' OR accountcode = '350510100')";
 	$Result = DB_query($Sql);
 	prnMsg('      Inserted accounts into ChartmasterPMA table', 'info');
 
-	$Sql="UPDATE chartmasterPMA SET `group_` =  'Penjualan' WHERE `accountcode` = '410010000AD'";
+	$Sql="UPDATE chartmasterADU SET `group_` =  'Penjualan' WHERE `accountcode` = '410010000AD'";
 	$Result = DB_query($Sql);
 	prnMsg('      Adjusting groups into ChartmasterPMA table', 'info');
 
-	$Sql="UPDATE chartmasterPMA SET `group_` =  'Biaya Karyawan' WHERE `accountcode` = '612011210AD'";
+	$Sql="UPDATE chartmasterADU SET `group_` =  'Biaya Karyawan' WHERE `accountcode` = '612011210AD'";
 	$Result = DB_query($Sql);
 	prnMsg('      Adjusting groups into ChartmasterPMA table', 'info');
 
-	$Sql="UPDATE chartmasterPMA SET `group_` =  'Biaya Karyawan' WHERE `accountcode` = '612011220AD'";
+	$Sql="UPDATE chartmasterADU SET `group_` =  'Biaya Karyawan' WHERE `accountcode` = '612011220AD'";
 	$Result = DB_query($Sql);
 	prnMsg('      Adjusting groups into ChartmasterPMA table', 'info');
 
-	$Sql="UPDATE chartmasterPMA SET `group_` =  'Biaya General' WHERE `accountcode` = '510010070AD'";
+	$Sql="UPDATE chartmasterADU SET `group_` =  'Biaya General' WHERE `accountcode` = '510010070AD'";
 	$Result = DB_query($Sql);
 	prnMsg('      Adjusting groups into ChartmasterPMA table', 'info');
 
-	$Sql="UPDATE chartmasterPMA SET `group_` =  'Pajak Penghasilan' WHERE `accountcode` = '611012025AD'";
+	$Sql="UPDATE chartmasterADU SET `group_` =  'Pajak Penghasilan' WHERE `accountcode` = '611012025AD'";
 	$Result = DB_query($Sql);
 	prnMsg('      Adjusting groups into ChartmasterPMA table', 'info');
 
@@ -480,7 +480,7 @@ function UpdateMultiCompanyAccounts(){
 
 	prnMsg('Updating PT BB ChartmasterPT table', 'info');
 
-	$Sql="CREATE TABLE IF NOT EXISTS `chartmasterPT` (
+	$Sql="CREATE TABLE IF NOT EXISTS `chartmasterBB` (
 			`accountcode` varchar(20) NOT NULL DEFAULT '0',
 			`accountname` char(50) NOT NULL DEFAULT '',
 			`group_` char(30) NOT NULL DEFAULT '',
@@ -491,30 +491,30 @@ function UpdateMultiCompanyAccounts(){
 	$Result = DB_query($Sql);
 	prnMsg('      Recreated ChartmasterPT table', 'info');
 
-	$Sql="TRUNCATE `chartmasterPT`";
+	$Sql="TRUNCATE `chartmasterBB`";
 	$Result = DB_query($Sql);
 	prnMsg('      Truncated ChartmasterPT table', 'info');
 
-	$Sql="INSERT INTO `chartmasterPT` (`accountcode`, `accountname`, `group_`) 
+	$Sql="INSERT INTO `chartmasterBB` (`accountcode`, `accountname`, `group_`) 
 			SELECT `accountcode`, `accountname`, `group_`
 			FROM chartmaster
 			WHERE (accountcode LIKE '%PT' OR accountcode = '350510100')";
 	$Result = DB_query($Sql);
 	prnMsg('      Inserted accounts into ChartmasterPT table', 'info');
 
-	$Sql="UPDATE chartmasterPT SET `group_` =  'HPP (COGS)' WHERE `accountcode` = '510010005PT'";
+	$Sql="UPDATE chartmasterBB SET `group_` =  'HPP (COGS)' WHERE `accountcode` = '510010005PT'";
 	$Result = DB_query($Sql);
 	prnMsg('      Adjusting groups into ChartmasterPT table', 'info');
 
-	$Sql="UPDATE chartmasterPT SET `group_` =  'Penjualan' WHERE `accountcode` = '410010010PT'";
+	$Sql="UPDATE chartmasterBB SET `group_` =  'Penjualan' WHERE `accountcode` = '410010010PT'";
 	$Result = DB_query($Sql);
 	prnMsg('      Adjusting groups into ChartmasterPT table', 'info');
 
-	$Sql="UPDATE chartmasterPT SET `group_` =  'Biaya General' WHERE `accountcode` = '510010070PT'";
+	$Sql="UPDATE chartmasterBB SET `group_` =  'Biaya General' WHERE `accountcode` = '510010070PT'";
 	$Result = DB_query($Sql);
 	prnMsg('      Adjusting groups into ChartmasterPT table', 'info');
 
-	$Sql="UPDATE chartmasterPT SET `group_` =  'Pajak Penghasilan' WHERE `accountcode` = '611012025PT'";
+	$Sql="UPDATE chartmasterBB SET `group_` =  'Pajak Penghasilan' WHERE `accountcode` = '611012025PT'";
 	$Result = DB_query($Sql);
 	prnMsg('      Adjusting groups into ChartmasterPT table', 'info');
 
