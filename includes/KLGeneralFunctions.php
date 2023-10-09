@@ -531,14 +531,7 @@ function GetCurrencyFromCustomer($CustomerCode){
 }
 
 function GetOnlinePartnerFromArea($Area){
-	if (ItemInList($Area, LIST_SALES_AREAS_PTADU)){
-		// it is a PTADU sales area, so processed by PTADU
-		$OnlinePartner = "ONLINEPTAD";
-	}else{
-		// it is retail in iDR, so it goes to PTBB
-		$OnlinePartner = "ONLINEPTBB";
-	}
-	return $OnlinePartner;
+	return "ONLINEPTAD";
 }
 
 function GetCategoryNameFromCode($CategoryId){

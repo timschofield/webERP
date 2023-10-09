@@ -1696,12 +1696,6 @@ invoices can have a zero amount but there must be a quantity to invoice */
 		/*Could do with setting up a more flexible freight posting schema that looks at the sales type and area of the customer branch to determine where to post the freight recovery */
 
 		if($_SESSION['Items'.$identifier]->FreightCost !=0) {
-			// check if it is a sale managed directly by PTADU (Area OWW)
-			if ($Area == "OWW"){
-				$ShippingGLAccount = ACCOUNT_SHIPPING_ADU;
-			}else{
-				$ShippingGLAccount = $_SESSION['CompanyRecord']['freightact'];
-			}
 			$SQL = "INSERT INTO gltrans (
 						type,
 						typeno,
@@ -1715,7 +1709,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 					'" . $InvoiceNo . "',
 					'" . $DefaultDispatchDate . "',
 					'" . $PeriodNo . "',
-					'" . $ShippingGLAccount . "',
+					'" . $_SESSION['CompanyRecord']['freightact'] . "',
 					'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
 					'" . (-$_SESSION['Items'.$identifier]->FreightCost/$_SESSION['CurrencyRate']) . "')";
 
