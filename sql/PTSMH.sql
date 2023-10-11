@@ -633,6 +633,7 @@ INSERT INTO `salesglpostings` (`id`, `area`, `stkcat`, `discountglcode`, `salesg
 (61, 'RSR', 'ANY', '410000010SM', '410000010SM', 'AN');
 
 INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES
+('Z_ChangeAllGLAccountSuffix.php', 999998, 'Changes ALL GL account suffixes'),
 ('KLGLAccountsSMH.php', 40450, 'Defines the general ledger accounts for PT. Sungai Mutiara Hitam'),
 ('KLGLBalanceSheetSMH.php', 999999, 'Shows the balance sheet for PT. Sungai Mutiara Hitam as at a specified date'),
 ('KLExcelGLTransactionsPajakSMH.php', 40410, 'Exports Excel file with GL Transactions for PT. SMH'),

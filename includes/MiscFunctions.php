@@ -637,4 +637,130 @@ function checkLanguageChoice($language) {
 	return preg_match('/^([a-z]{2}\_[A-Z]{2})(\.utf8)$/', $language);
 }
 
+function ChangeGLAcoountCode ($NewGL, $OldGL){
+	/*First check the code exists */
+	$result=DB_query("SELECT accountcode FROM chartmaster WHERE accountcode='" . $OldGL . "'");
+	if(DB_num_rows($result)==0) {
+		prnMsg(_('The GL account code') . ': ' . $OldGL . ' ' . _('does not currently exist as a GL account code in the system'),'error');
+		$InputError =1;
+	}
+
+	if(ContainsIllegalCharacters($NewGL)) {
+		prnMsg(_('The new GL account code to change the old code to contains illegal characters - no changes will be made'),'error');
+		$InputError =1;
+	}
+
+	if($NewGL=='') {
+		prnMsg(_('The new GL account code to change the old code to must be entered as well'),'error');
+		$InputError =1;
+	}
+
+	/*Now check that the new code doesn't already exist */
+	$result=DB_query("SELECT accountcode FROM chartmaster WHERE accountcode='" . $NewGL . "'");
+	if(DB_num_rows($result)!=0) {
+		echo '<br /><br />';
+		prnMsg(_('The replacement GL account code') . ': ' . $NewGL . ' ' . _('already exists as a GL account code in the system') . ' - ' . _('a unique GL account code must be entered for the new code'),'error');
+		$InputError =1;
+	}
+
+
+	if($InputError ==0) {// no input errors
+		$result = DB_Txn_Begin();
+		echo '<br />' . _('Adding the new chartmaster record');
+		$sql = "INSERT INTO chartmaster (accountcode,
+										accountname,
+										group_)
+				SELECT '" . $NewGL . "',
+					accountname,
+					group_
+				FROM chartmaster
+				WHERE accountcode='" . $OldGL . "'";
+
+		$DbgMsg = _('The SQL statement that failed was');
+		$ErrMsg =_('The SQL to insert the new chartmaster record failed');
+		$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
+		echo ' ... ' . _('completed');
+
+		DB_IgnoreForeignKeys();
+
+		ChangeFieldInTable("bankaccounts", "accountcode", $OldGL, $NewGL, $db);
+
+		ChangeFieldInTable("bankaccountusers", "accountcode", $OldGL, $NewGL, $db);
+
+		ChangeFieldInTable("banktrans", "bankact", $OldGL, $NewGL, $db);
+
+		ChangeFieldInTable("chartdetails", "accountcode", $OldGL, $NewGL, $db);
+
+		ChangeFieldInTable("cogsglpostings", "glcode", $OldGL, $NewGL, $db);
+
+		ChangeFieldInTable("companies", "debtorsact", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("companies", "pytdiscountact", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("companies", "creditorsact", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("companies", "payrollact", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("companies", "grnact", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("companies", "exchangediffact", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("companies", "purchasesexchangediffact", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("companies", "retainedearnings", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("companies", "freightact", $OldGL, $NewGL, $db);
+
+		ChangeFieldInTable("fixedassetcategories", "costact", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("fixedassetcategories", "depnact", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("fixedassetcategories", "disposalact", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("fixedassetcategories", "accumdepnact", $OldGL, $NewGL, $db);
+
+		ChangeFieldInTable("glaccountusers", "accountcode", $OldGL, $NewGL, $db);
+
+		ChangeFieldInTable("gltrans", "account", $OldGL, $NewGL, $db);
+
+		ChangeFieldInTable("lastcostrollup", "stockact", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("lastcostrollup", "adjglact", $OldGL, $NewGL, $db);
+
+		ChangeFieldInTable("locations", "glaccountcode", $OldGL, $NewGL, $db);// Location's ledger account.
+
+		ChangeFieldInTable("pcexpenses", "glaccount", $OldGL, $NewGL, $db);
+
+		ChangeFieldInTable("pctabs", "glaccountassignment", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("pctabs", "glaccountpcash", $OldGL, $NewGL, $db);
+
+		ChangeFieldInTable("purchorderdetails", "glcode", $OldGL, $NewGL, $db);
+
+		ChangeFieldInTable("salesglpostings", "discountglcode", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("salesglpostings", "salesglcode", $OldGL, $NewGL, $db);
+
+		ChangeFieldInTable("stockcategory", "stockact", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("stockcategory", "adjglact", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("stockcategory", "issueglact", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("stockcategory", "purchpricevaract", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("stockcategory", "materialuseagevarac", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("stockcategory", "wipact", $OldGL, $NewGL, $db);
+
+		ChangeFieldInTable("taxauthorities", "taxglcode", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("taxauthorities", "purchtaxglaccount", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("taxauthorities", "bankacctype", $OldGL, $NewGL, $db);
+
+		ChangeFieldInTable("workcentres", "overheadrecoveryact", $OldGL, $NewGL, $db);
+
+		DB_ReinstateForeignKeys();
+		// KL RICARD tables
+		ChangeFieldInTable("chartmasterADU", "accountcode", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("chartmasterSMH", "accountcode", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("chartmasterBB", "accountcode", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("chartmasterIK", "accountcode", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("chartmasterPI", "accountcode", $OldGL, $NewGL, $db);
+		
+		DB_ReinstateForeignKeys($db);
+
+		$result = DB_Txn_Commit();
+
+		echo '<br />' . _('Deleting the old chartmaster record');
+		$sql = "DELETE FROM chartmaster WHERE accountcode='" . $OldGL . "'";
+		$ErrMsg = _('The SQL to delete the old chartmaster record failed');
+		$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
+		echo ' ... ' . _('completed');
+
+		echo '<p>' . _('GL account Code') . ': ' . $OldGL . ' ' . _('was successfully changed to') . ' : ' . $NewGL;
+	}//only do the stuff above if  $InputError==0
+	
+}
+
 ?>

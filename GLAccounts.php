@@ -478,7 +478,7 @@ function UpdateMultiCompanyAccounts(){
 	prnMsg('      Adjusting groups into ChartmasterSM table', 'info');
 
 
-	prnMsg('Updating PT BB ChartmasterPT table', 'info');
+	prnMsg('Updating PT BB ChartmasterBB table', 'info');
 
 	$Sql="CREATE TABLE IF NOT EXISTS `chartmasterBB` (
 			`accountcode` varchar(20) NOT NULL DEFAULT '0',
@@ -489,34 +489,34 @@ function UpdateMultiCompanyAccounts(){
 			KEY `Group_` (`group_`)
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8";
 	$Result = DB_query($Sql);
-	prnMsg('      Recreated ChartmasterPT table', 'info');
+	prnMsg('      Recreated ChartmasterBB table', 'info');
 
 	$Sql="TRUNCATE `chartmasterBB`";
 	$Result = DB_query($Sql);
-	prnMsg('      Truncated ChartmasterPT table', 'info');
+	prnMsg('      Truncated ChartmasterBB table', 'info');
 
 	$Sql="INSERT INTO `chartmasterBB` (`accountcode`, `accountname`, `group_`) 
 			SELECT `accountcode`, `accountname`, `group_`
 			FROM chartmaster
-			WHERE (accountcode LIKE '%PT' OR accountcode = '350510100')";
+			WHERE (accountcode LIKE '%BB' OR accountcode = '350510100')";
 	$Result = DB_query($Sql);
-	prnMsg('      Inserted accounts into ChartmasterPT table', 'info');
+	prnMsg('      Inserted accounts into ChartmasterBB table', 'info');
 
-	$Sql="UPDATE chartmasterBB SET `group_` =  'HPP (COGS)' WHERE `accountcode` = '510010005PT'";
+	$Sql="UPDATE chartmasterBB SET `group_` =  'HPP (COGS)' WHERE `accountcode` = '510010005BB'";
 	$Result = DB_query($Sql);
-	prnMsg('      Adjusting groups into ChartmasterPT table', 'info');
+	prnMsg('      Adjusting groups into ChartmasterBB table', 'info');
 
-	$Sql="UPDATE chartmasterBB SET `group_` =  'Penjualan' WHERE `accountcode` = '410010010PT'";
+	$Sql="UPDATE chartmasterBB SET `group_` =  'Penjualan' WHERE `accountcode` = '410010010BB'";
 	$Result = DB_query($Sql);
-	prnMsg('      Adjusting groups into ChartmasterPT table', 'info');
+	prnMsg('      Adjusting groups into ChartmasterBB table', 'info');
 
-	$Sql="UPDATE chartmasterBB SET `group_` =  'Biaya General' WHERE `accountcode` = '510010070PT'";
+	$Sql="UPDATE chartmasterBB SET `group_` =  'Biaya General' WHERE `accountcode` = '510010070BB'";
 	$Result = DB_query($Sql);
-	prnMsg('      Adjusting groups into ChartmasterPT table', 'info');
+	prnMsg('      Adjusting groups into ChartmasterBB table', 'info');
 
-	$Sql="UPDATE chartmasterBB SET `group_` =  'Pajak Penghasilan' WHERE `accountcode` = '611012025PT'";
+	$Sql="UPDATE chartmasterBB SET `group_` =  'Pajak Penghasilan' WHERE `accountcode` = '611012025BB'";
 	$Result = DB_query($Sql);
-	prnMsg('      Adjusting groups into ChartmasterPT table', 'info');
+	prnMsg('      Adjusting groups into ChartmasterBB table', 'info');
 
 	prnMsg('Updating PO IK chartmasterIK table', 'info');
 
