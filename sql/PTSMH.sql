@@ -431,6 +431,8 @@ INSERT INTO glaccountusers (userid, accountcode, canview, canupd)
 	SELECT 'LAIA', accountcode, canview, canupd
 	FROM glaccountusers
 	WHERE UPPER(userid) = 'RICARD';
+	
+UPDATE glaccountusers SET canupd = 0 WHERE UPPER(userid) = 'LAIA' OR UPPER(userid) = 'IKE1';
 
 INSERT INTO `areas` (`areacode`, `areadescription`) VALUES
 ('RSC', 'Retail - Cash PTSMH'),
