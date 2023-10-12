@@ -4094,10 +4094,10 @@ function StockByBrand($Brand, $NumDays){
 	InsertKPI("Stock", $BrandText . " Shops Open", $Shops);
 	InsertKPI("Stock", $BrandText . " Total Models (MODELS)", $TotalModels);
 	InsertKPI("Stock", $BrandText . " Total Stock (PCS)", $TotalItems);
-	InsertKPI("Stock", $BrandText . " Stock needed for display (PCS))", $DisplayItems);
+	InsertKPI("Stock", $BrandText . " Stock needed for display (PCS)", $DisplayItems);
 	InsertKPI("Stock", $BrandText . " Stock available for sale (PCS)", $AvailableForSaleItems);
 	InsertKPI("Stock", $BrandText . " Daily Stock sold average " . $NumDays . " days (PCS)", $DailySoldItems);
-	InsertKPI("Stock", $BrandText . " Days left of stock (PCS)", $DaysStockForSale);
+	InsertKPI("Stock", $BrandText . " Days left of stock (DAYS)", $DaysStockForSale);
 
 }
 
