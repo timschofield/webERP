@@ -155,20 +155,20 @@ define("LIST_SALES_AREAS_PTADU", "('ORA','OWA','OWW','RAC','RAR','RAZ')");
 
 define("ACCOUNT_PPN_ADU", "611012030AD"); // GL account for PPN PT.ADU
 
-define("ACCOUNT_HUTANG_PPH23_PTBB",  "611012005PT"); // GL account for retention of PPH23 PTBB in Petty cash
+define("ACCOUNT_HUTANG_PPH23_PTBB",  "611012005BB"); // GL account for retention of PPH23 PTBB in Petty cash
 define("ACCOUNT_HUTANG_PPH23_PTADU", "611012005AD"); // GL account for retention of PPH23 PTADU in Petty cash
 define("ACCOUNT_HUTANG_PPH23_PTSMH", "611012005SM"); // GL account for retention of PPH23 PTSMH in Petty cash
 
 /* Defines about financial Analysis*/
 define("JUTA", 1000000);
-define("GL_INCOME_CC_PT",    "('410000010PT')");
-define("GL_INCOME_CASH_PT",  "('410000000PT')");
+define("GL_INCOME_CC_BB",    "('410000010BB')");
+define("GL_INCOME_CASH_BB",  "('410000000BB')");
 define("GL_INCOME_CASH",     "('410000000')");
-define("GL_INCOME_OTHERS_PT","('410000500PT','410010000PT','410010010PT')");
+define("GL_INCOME_OTHERS_BB","('410000500BB','410010000BB','410010010BB')");
 define("GL_INCOME_OTHERS",   "('410000500','410010000')");
 
-define("GL_COGS_GOODS", "('510010000','510010000AD','510010000PT','510010000SM','510010050')");
-define("GL_COGS_OTHERS","('510010100PT','510500010PT','510500010SM')");
+define("GL_COGS_GOODS", "('510010000','510010000AD','510010000BB','510010000SM','510010050')");
+define("GL_COGS_OTHERS","('510010100BB','510500010BB','510500010SM')");
 
 /* Defines about WebStore */
 

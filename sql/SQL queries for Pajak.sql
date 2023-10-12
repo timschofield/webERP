@@ -1,5 +1,5 @@
 /* MOVE Account compensation to HPP */
-UPDATE gltrans SET account "510010000PT" WHERE account = "510010050" AND trandate >= "2015-01-01";
+UPDATE gltrans SET account "510010000BB" WHERE account = "510010050" AND trandate >= "2015-01-01";
 
 /* List of GL transactions in a period of time */
 
@@ -106,7 +106,7 @@ WHERE pcashdetails.date >= "2017-01-01"
 	AND pctabs.tabcode NOT LIKE "SALARIES%"
 	AND pctabs.tabcode NOT LIKE "%DANAMON"
 	AND pctabs.tabcode NOT LIKE "CC-BCA%"
-	AND pcexpenses.glaccount LIKE "%PT"
+	AND pcexpenses.glaccount LIKE "%BB"
 	
 /* Amount moved from Danamon to cash kantor
 */
@@ -115,7 +115,7 @@ SELECT SUM(gltrans.amount)
 FROM gltrans
 WHERE gltrans.trandate >= "2017-01-01"
 	AND gltrans.trandate <= "2017-12-31"
-	AND gltrans.account = "111121105PT"
+	AND gltrans.account = "111121105BB"
 	AND (gltrans.narrative LIKE "%CASH TO CASH%"
 		OR gltrans.narrative LIKE "%BANK TO CASH%"
 		OR gltrans.narrative LIKE "%UANG KECIL%")
@@ -124,7 +124,7 @@ SELECT SUM(gltrans.amount)
 FROM gltrans
 WHERE gltrans.trandate >= "2017-01-01"
 	AND gltrans.trandate <= "2017-12-31"
-	AND gltrans.account = '111121105PT'
+	AND gltrans.account = '111121105BB'
 	AND (gltrans.narrative LIKE '%CASH TO CASH%'
 		OR gltrans.narrative LIKE '%BANK TO CASH%'
 		OR gltrans.narrative LIKE '%UANG KECIL%')	

@@ -302,15 +302,15 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111121110AD", 10000000,  300000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111121121PT",        0,   20000000, $periodnow, $db);
+		BalanceAccountControl("111121121BB",        0,   20000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111121122PT",        0,   20000000, $periodnow, $db);
+		BalanceAccountControl("111121122BB",        0,   20000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111121125PT",        0,   40000000, $periodnow, $db);
+		BalanceAccountControl("111121125BB",        0,   40000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111121101PT", 10000000,  300000000, $periodnow, $db);
+		BalanceAccountControl("111121101BB", 10000000,  300000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111121110PT", 10000000,  300000000, $periodnow, $db);
+		BalanceAccountControl("111121110BB", 10000000,  300000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 	}
 	
@@ -329,28 +329,28 @@ if ($ProcessSection01){
 									'111259020AD', 
 									'111259050AD')", "Total PayPal PT.ADU", -1, 50000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceListAccountControl("('111121100PT', 
-									'111121101PT', 
-									'111121105PT', 
-									'111121110PT', 
-									'111121111PT', 
-									'111121112PT', 
-									'111121120PT',
-									'111121121PT',
-									'111121122PT',
-									'111121125PT',
-									'111121130PT', 
-									'111203010PT',
-									'111203015PT',
-									'111203020PT',
-									'111259010PT', 
-									'111259020PT', 
-									'111259050PT')", "Total Banks PT.BB", 2000000000, 3500000000, $periodnow, $db);
+		BalanceListAccountControl("('111121100BB', 
+									'111121101BB', 
+									'111121105BB', 
+									'111121110BB', 
+									'111121111BB', 
+									'111121112BB', 
+									'111121120BB',
+									'111121121BB',
+									'111121122BB',
+									'111121125BB',
+									'111121130BB', 
+									'111203010BB',
+									'111203015BB',
+									'111203020BB',
+									'111259010BB', 
+									'111259020BB', 
+									'111259050BB')", "Total Banks PT.BB", 2000000000, 3500000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 
-		BalanceListAccountControl("('111259010PT', 
-									'111259020PT', 
-									'111259050PT')", "Total PayPal PT.BB", -1, 30000000, $periodnow, $db);
+		BalanceListAccountControl("('111259010BB', 
+									'111259020BB', 
+									'111259050BB')", "Total PayPal PT.BB", -1, 30000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 	}
 	

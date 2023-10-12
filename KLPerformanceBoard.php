@@ -844,7 +844,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	// CASH STATUS BB
 	//
 	// Sales PTBB in Cash during the Year
-	$Account = "410000000PT";
+	$Account = "410000000BB";
 	$SQL = "SELECT SUM(gltrans.amount)
 			FROM gltrans
 			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
@@ -868,7 +868,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$FloatingCashBB = $myrow[0];
 
 	// Cash Danamon IDR PTBB to Cash Kantor
-	$Account = "111121105PT";
+	$Account = "111121105BB";
 	$SQL = "SELECT SUM(gltrans.amount)
 			FROM gltrans
 			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
@@ -883,7 +883,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$BankToCashBB = -$myrow[0];
 
 	// Expenses PT Paid by Petty Cash (excluding salaries, Corporate CC)
-	$AccountSuffix = "PT";
+	$AccountSuffix = "BB";
 	$SQL = "SELECT SUM(pcashdetails.amount) 
 			FROM pcashdetails, pctabs, pcexpenses
 			WHERE pcashdetails.date >= '" . $StartDateYTD . "'
@@ -902,7 +902,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$ExpensesBBPaidCash = -$myrow[0];
 	
 	// Cash in Kantor to Small Suppliers PTBB
-	$Account = "510010070PT";
+	$Account = "510010070BB";
 	$SQL = "SELECT SUM(gltrans.amount)
 			FROM gltrans
 			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
@@ -915,7 +915,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$CashToSmallSuppliersBB = $myrow[0];
 
 	// Cash in Kantor to Pay rents PTBB
-	$Account = "211030200PT";
+	$Account = "211030200BB";
 	$SQL = "SELECT SUM(gltrans.amount)
 			FROM gltrans
 			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
@@ -927,7 +927,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$CashToRentBB = $myrow[0];
 	
 	// Cash in Kantor to Pay dividends PTBB
-	$Account = "614012400PT";
+	$Account = "614012400BB";
 	$SQL = "SELECT SUM(gltrans.amount)
 			FROM gltrans
 			WHERE gltrans.trandate >= '" . $StartDateYTD . "'

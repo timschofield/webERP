@@ -649,7 +649,7 @@ function GLAccountBelongsTo($Account){
 		$Company = "PTADU";
 	}else if (ItemInList("SM", $Account)){
 		$Company = "PTSMH";
-	}else if (ItemInList("PT", $Account)){
+	}else if (ItemInList("BB", $Account)){
 		$Company = "PTBB";
 	}else if (ItemInList("IK", $Account)){
 		$Company = "POIK";

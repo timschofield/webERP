@@ -41,12 +41,12 @@ TRUNCATE `chartmasterBB`;
 INSERT INTO `chartmasterBB` (`accountcode`, `accountname`, `group_`) 
 SELECT `accountcode`, `accountname`, `group_`
 FROM chartmaster
-WHERE (accountcode LIKE "%PT" OR accountcode = "350510100");
+WHERE (accountcode LIKE "%BB" OR accountcode = "350510100");
 
-UPDATE chartmasterBB SET `group_` =  'HPP (COGS)' WHERE `accountcode` = '510010005PT';
-UPDATE chartmasterBB SET `group_` =  'Penjualan' WHERE `accountcode` = '410010010PT';
-UPDATE chartmasterBB SET `group_` =  'Biaya General' WHERE `accountcode` = '510010070PT';
-UPDATE chartmasterBB SET `group_` =  'Pajak Penghasilan' WHERE `accountcode` = '611012025PT';
+UPDATE chartmasterBB SET `group_` =  'HPP (COGS)' WHERE `accountcode` = '510010005BB';
+UPDATE chartmasterBB SET `group_` =  'Penjualan' WHERE `accountcode` = '410010010BB';
+UPDATE chartmasterBB SET `group_` =  'Biaya General' WHERE `accountcode` = '510010070BB';
+UPDATE chartmasterBB SET `group_` =  'Pajak Penghasilan' WHERE `accountcode` = '611012025BB';
 
 /* ******************************************************************************************/
 /*                              PERORANGAN IKE DIAN (POIK)                                  */
