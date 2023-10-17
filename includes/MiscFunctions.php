@@ -748,6 +748,44 @@ function ChangeGLAcoountCode ($NewGL, $OldGL){
 		ChangeFieldInTable("chartmasterIK", "accountcode", $OldGL, $NewGL, $db);
 		ChangeFieldInTable("chartmasterPI", "accountcode", $OldGL, $NewGL, $db);
 		
+		ChangeFieldInTable("klretailpartners", "accountppn", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("klretailpartners", "accounthppcompensation", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("klretailpartners", "accountbankdanamon", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("klretailpartners", "accountbankmandiri", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("klretailpartners", "accountbankbca", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("klretailpartners", "accountcomissioncreditcard", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("klretailpartners", "accountconsignmentsalesptadu", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("klretailpartners", "accountconsignmentcogspartner", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("klretailpartners", "accountwechat", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("klretailpartners", "accountcomissionwechat", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("klretailpartners", "accountqris", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("klretailpartners", "accountcomissionqris", $OldGL, $NewGL, $db);
+
+		ChangeFieldInTable("klonlinepartners", "accountdokuidr", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("klonlinepartners", "accountdokucomissionidr", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("klonlinepartners", "accountpaypalaud", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("klonlinepartners", "accountpaypalcomissionaud", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("klonlinepartners", "accountpaypalusd", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("klonlinepartners", "accountpaypalcomissionusd", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("klonlinepartners", "accountpaypaleur", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("klonlinepartners", "accountpaypalcomissioneur", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("klonlinepartners", "accountxenditidr", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("klonlinepartners", "accountxenditcomissionidr", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("klonlinepartners", "accountcomissionppn", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("klonlinepartners", "accounttransfermandiri", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("klonlinepartners", "accounttransferbca", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("klonlinepartners", "accounttransferdanamon", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("klonlinepartners", "accountmidtransidr", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("klonlinepartners", "accounttokopediaidr", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("klonlinepartners", "accounttokopediacomissionidr", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("klonlinepartners", "accountshopeeidr", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("klonlinepartners", "accountshopeecomissionidr", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("klonlinepartners", "accountlazadaidr", $OldGL, $NewGL, $db);
+		ChangeFieldInTable("klonlinepartners", "accountlazadacomissionidr", $OldGL, $NewGL, $db);
+
+
+
+
 		DB_ReinstateForeignKeys($db);
 
 		$result = DB_Txn_Commit();
