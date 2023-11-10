@@ -1721,15 +1721,25 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 				$MinQOHGudang = $myrow['sumrl'];
 			}
 			$QOH = max($myrow['qohgudang']+$myrow['qohshops'],0);
-			$QtyNeeded = max(0, ($ForecastIncludingProduction - $QOH - $myrow['qoo']),($MinQOHGudang-$myrow['qohgudang']));
 			$DaysQOH = floor($QOH / $DailyUse);
 			$DaysQOO = floor(($QOH + $myrow['qoo']) / $DailyUse);
-			if ($QtyNeeded > 0){
-				if ($myrow['pansize'] > 0){
-					$PanSize = $myrow['pansize'];
+			if ($myrow['pansize'] > 0){
+				$PanSize = $myrow['pansize'];
+			}else{
+				$PanSize = 1;
+			}
+			if ($MinQOHGudang < $myrow['qohgudang']){
+				// we have enough in gudang, don't need to get some to keep in gudang
+				$QtyNeeded = max(0, ($ForecastIncludingProduction - $QOH - $myrow['qoo']));
+			}else{
+				// we don't have enough in gudang, we need to get some to keep in gudang
+				if ($DaysQOH > $DaysMinimumStock){
+					$QtyNeeded = max(0, ($ForecastIncludingProduction - $QOH - $myrow['qoo']));
 				}else{
-					$PanSize = 1;
+					$QtyNeeded = max(0, ($ForecastIncludingProduction - $QOH - $myrow['qoo']),($MinQOHGudang-$myrow['qohgudang']));
 				}
+			}
+			if ($QtyNeeded > 0){
 				$QtyToOrder = max($myrow['eoq'], ceil($QtyNeeded/$PanSize)*$PanSize);
 			}else{
 				$QtyToOrder = 0;
