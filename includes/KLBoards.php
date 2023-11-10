@@ -3659,7 +3659,8 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $Mode, $
 								<th class="ascending">' . _('Supplier UOM') . '</th>
 								<th class="ascending">' . _('UOM Factor') . '</th>
 								<th class="ascending">' . _('Date Std Cost') . '</th>
-								<th class="ascending">' . _('Std Cost IDR') . '</th>
+								<th class="ascending">' . _('Wrong Std Cost') . '</th>
+								<th class="ascending">' . _('Real Std Cost') . '</th>
 							</tr>';
 		}else{
 			$TableHeader = '<tr>
@@ -3674,7 +3675,7 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $Mode, $
 								<th class="ascending">' . _('Supplier UOM') . '</th>
 								<th class="ascending">' . _('UOM Factor') . '</th>
 								<th class="ascending">' . _('Date Std Cost') . '</th>
-								<th class="ascending">' . _('Std Cost IDR') . '</th>
+								<th class="ascending">' . _('Wrong Std Cost') . '</th>
 								<th class="ascending">' . _('QOH') . '</th>
 								<th class="ascending">' . _('KL UOM') . '</th>
 								<th class="ascending">' . _('Real Std Cost') . '</th>
@@ -3692,6 +3693,7 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $Mode, $
 			$Price = locale_number_format($myrow['price'],$myrow['decimalplaces']);
 			$PurchasingLink = '<a href="' . $RootPath . '/PurchData.php?StockID=' . $myrow['stockid'] . '&SupplierID='. $myrow['supplierno'] . '&Edit=1&EffectiveFrom='. $myrow['effectivefrom']  .' ">' . $Price . '</a>';
 			if ($Mode == "SHOWONLY"){
+				$StdCost = locale_number_format($NewStdCost,0);
 				printf('<td class="number">%s</td>
 						<td>%s</td>
 						<td>%s</td>
@@ -3703,6 +3705,7 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $Mode, $
 						<td>%s</td>
 						<td class="number">%s</td>
 						<td>%s</td>
+						<td class="number">%s</td>
 						<td class="number">%s</td>
 						</tr>', 
 						$i, 
@@ -3716,7 +3719,8 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $Mode, $
 						$myrow['suppliersuom'], 
 						locale_number_format($myrow['conversionfactor'],0),
 						ConvertSQLDate($myrow['lastcostupdate']),
-						locale_number_format($myrow['stdcost'],0)
+						locale_number_format($myrow['stdcost'],0),
+						$StdCost
 						);
 			}else{
 				if($Mode == "UPDATEALL"){
