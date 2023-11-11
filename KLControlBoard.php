@@ -302,6 +302,10 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111121110AD", 10000000,  300000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
+		BalanceAccountControl("111121100SM", 10000000,  300000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
+		BalanceAccountControl("111121110SM", 10000000,  300000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
 		BalanceAccountControl("111121121BB",        0,   20000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111121122BB",        0,   20000000, $periodnow, $db);
@@ -322,13 +326,19 @@ if ($ProcessSection01){
 									'111203010AD',
 									'111259010AD', 
 									'111259020AD', 
-									'111259050AD')", "Total Banks PT.ADU", 2000000000, 4000000000, $periodnow, $db);
+									'111259050AD')", "Total Banks PT ADU", 2000000000, 4000000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('111259010AD', 
 									'111259020AD', 
-									'111259050AD')", "Total PayPal PT.ADU", -1, 50000000, $periodnow, $db);
+									'111259050AD')", "Total PayPal PT ADU", -1, 50000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
+
+		BalanceListAccountControl("('111121100SM',
+									'111121105SM',
+									'111121110SM')", "Total Banks PT SMH", 1000000000, 3500000000, $periodnow, $db);
+		$NumberOfTestExecuted++;
+
 		BalanceListAccountControl("('111121100BB', 
 									'111121101BB', 
 									'111121105BB', 
@@ -345,27 +355,22 @@ if ($ProcessSection01){
 									'111203020BB',
 									'111259010BB', 
 									'111259020BB', 
-									'111259050BB')", "Total Banks PT.BB", 2000000000, 3500000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-
-		BalanceListAccountControl("('111259010BB', 
-									'111259020BB', 
-									'111259050BB')", "Total PayPal PT.BB", -1, 30000000, $periodnow, $db);
+									'111259050BB')", "Total Banks PT BB", 1000000000, 3500000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 	}
 	
 	if ($KL_SystemAdmin 
 		OR $KL_OperationalManager
 		OR $KL_AdministrationTeam){
-		BalanceAccountControl("111121100IK",  5000000, 150000000, $periodnow, $db);
+		BalanceAccountControl("111121100IK",  5000000, 100000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111121110IK",  5000000,  50000000, $periodnow, $db);
+		BalanceAccountControl("111121110IK",  5000000,  30000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 	}
 	
 	if ($KL_SystemAdmin 
 		OR $KL_AdministrationTeam){
-		BalanceAccountControl("111121100PI",  5000000, 120000000, $periodnow, $db);
+		BalanceAccountControl("111121100PI",  5000000, 100000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111121110PI",  5000000,  30000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
