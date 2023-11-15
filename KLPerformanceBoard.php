@@ -357,7 +357,7 @@ if ($ProcessSection03){
 		OR $KL_AdministrationTeam){
 		CashStatus(2023, 
 					159227000, 200000000, 100000000, 
-					        0,         0, 100000000, 
+					        0, 100000000, 100000000, 
 					 45760000, 400000000, 100000000, 
 					100000000, $periodnow, $KL_SystemAdmin, TRUE, $db);
 		$NumberOfTestExecuted++;
@@ -773,6 +773,22 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$myrow = DB_fetch_array($Result);
 	$BankToCashSMH = -$myrow[0];
 
+	
+	// Cash Mandiri IDR PTSMH to Cash Kantor
+	$Account = "111121100SM";
+	$SQL = "SELECT SUM(gltrans.amount)
+			FROM gltrans
+			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
+				AND gltrans.trandate <= '" . $Today . "'
+				AND gltrans.account = '" . $Account . "'
+				AND (gltrans.narrative LIKE '%CASH TO CASH%'
+					OR gltrans.narrative LIKE '%CASH TO SUPP%'
+					OR gltrans.narrative LIKE '%BANK TO CASH%'
+					OR gltrans.narrative LIKE '%UANG KECIL%')";
+	$Result = DB_query($SQL);
+	$myrow = DB_fetch_array($Result);
+	$BankToCashSMH =- $myrow[0];
+
 	// Expenses SMH Paid by Petty Cash (excluding salaries, Corporate CC)
 	$AccountSuffix = "SM";
 	$SQL = "SELECT SUM(pcashdetails.amount) 
@@ -1124,9 +1140,9 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 				locale_number_format($SalesCashSMH-$FloatingCashSMH,0)
 				);
 		if ($BankToCashSMH >= 0){
-			$Text = 'Total withdrawal from Danamon IDR PTSMH to Brankas Kantor';
+			$Text = 'Total withdrawal from Danamon/Mandiri IDR PTSMH to Brankas Kantor';
 		}else{
-			$Text = 'Total deposit from Brankas Kantor to Danamon IDR PTSMH ';
+			$Text = 'Total deposit from Brankas Kantor to Danamon/Mandiri IDR PTSMH ';
 		}
 		printf('<td>%s</td>
 				<td class="number">%s</td>
