@@ -279,7 +279,7 @@ if ($ProcessSection03){
 	}
 
 	if ($KL_SystemAdmin ){
-		InsuficientStockForShopPackaging('SHPACK', 15, 90, 30, true, $RootPath, $db);
+		InsuficientStockForShopPackaging('SHPACK', 15, 85, 30, true, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -1415,13 +1415,13 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 			}
 			echo '</table>
 				</div>';	
+
+			InsertKPI("Cash", "Free Cash in Brankas Shareholders", $FreeSaldoBrankasShareholders);
 		}
 
 		InsertKPI("Cash", "Cash PT ADU in Brankas Kantor", $CurrentBalanceADU);
 		InsertKPI("Cash", "Cash PT SMH in Brankas Kantor", $CurrentBalanceSMH);
 		InsertKPI("Cash", "Cash PT BB in Brankas Kantor", $CurrentBalanceBB);
-		InsertKPI("Cash", "Free Cash in Brankas Shareholders", $FreeSaldoBrankasShareholders);
-
 	}
 }
 

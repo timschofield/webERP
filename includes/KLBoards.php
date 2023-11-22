@@ -1744,6 +1744,10 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 			}else{
 				$QtyToOrder = 0;
 			}
+			// phasing out these codes, don't want to buy anymore
+			if ($myrow['stockid'] == "PKSB02-L"){
+				$QtyToOrder = 0;
+			}
 			if (($QtyNeeded > 0) OR ($ShowAll)){
 				if ($showHeader){
 					if ($Category == 'SHPACK'){
