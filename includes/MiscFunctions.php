@@ -669,10 +669,14 @@ function ChangeGLAcoountCode ($NewGL, $OldGL){
 		echo '<br />' . _('Adding the new chartmaster record');
 		$sql = "INSERT INTO chartmaster (accountcode,
 										accountname,
-										group_)
+										group_,
+										cashflowsactivity,
+										controlled)
 				SELECT '" . $NewGL . "',
 					accountname,
-					group_
+					group_,
+					cashflowsactivity,
+					controlled
 				FROM chartmaster
 				WHERE accountcode='" . $OldGL . "'";
 
