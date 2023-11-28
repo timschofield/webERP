@@ -1858,7 +1858,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					locale_number_format_zero_blank($OptimumOrder,0)
 					);
 			InsertKPI("Packaging", "Packaging used last " . $DaysProduction .  " days (PCS)", $UsageXDays);
-			InsertKPI("Packaging", "Packaging forecast next " . $DaysMinimumStock .  " days (PCS)", $ForecastXDays);
+			InsertKPI("Packaging", "Packaging forecast next X days (PCS)", $ForecastXDays);
 			InsertKPI("Packaging", "Packaging QOH total (PCS)", $QOHTotal);
 			InsertKPI("Packaging", "Packaging QOH total (DAYS)", $TotalDaysQOH);
 			InsertKPI("Packaging", "Packaging QOO not received (PCS)", $PendingQOO);
