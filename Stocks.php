@@ -445,6 +445,7 @@ if (isset($_POST['submit'])) {
 							description='" . $_POST['Description'] . "',
 							discontinued='" . $_POST['Discontinued'] . "',
 							klsynctoopencart='" . $_POST['KLSyncToOpenCart'] . "',
+							klservicebyreplacement='" . $_POST['KLServiceByReplacement'] . "',
 							controlled='" . $_POST['Controlled'] . "',
 							serialised='" . $_POST['Serialised']."',
 							perishable='" . $_POST['Perishable']."',
@@ -668,6 +669,7 @@ if (isset($_POST['submit'])) {
 												eoq,
 												discontinued,
 												klsynctoopencart,
+												klservicebyreplacement,
 												controlled,
 												serialised,
 												perishable,
@@ -695,6 +697,7 @@ if (isset($_POST['submit'])) {
 								'" . filter_number_format($_POST['EOQ']) . "',
 								'" . $_POST['Discontinued'] . "',
 								'" . $_POST['KLSyncToOpenCart'] . "',
+								'" . $_POST['KLServiceByReplacement'] . "',
 								'" . $_POST['Controlled'] . "',
 								'" . $_POST['Serialised']. "',
 								'" . $_POST['Perishable']. "',
@@ -789,6 +792,7 @@ if (isset($_POST['submit'])) {
 						unset($_POST['MBFlag']);
 						unset($_POST['Discontinued']);
 						unset($_POST['KLSyncToOpenCart']);
+						unset($_POST['KLServiceByReplacement']);
 						unset($_POST['Controlled']);
 						unset($_POST['Serialised']);
 						unset($_POST['Perishable']);
@@ -944,6 +948,7 @@ if (isset($_POST['submit'])) {
 		unset($_POST['MBFlag']);
 		unset($_POST['Discontinued']);
 		unset($_POST['KLSyncToOpenCart']);
+		unset($_POST['KLServiceByReplacement']);
 		unset($_POST['Controlled']);
 		unset($_POST['Serialised']);
 		unset($_POST['Perishable']);
@@ -1015,6 +1020,7 @@ if (!isset($StockID) OR $StockID=='' or isset($_POST['UpdateCategories'])) {
 					mbflag,
 					discontinued,
 					klsynctoopencart,
+					klservicebyreplacement,
 					controlled,
 					serialised,
 					perishable,
@@ -1048,6 +1054,7 @@ if (!isset($StockID) OR $StockID=='' or isset($_POST['UpdateCategories'])) {
 	$_POST['MBFlag']  = $myrow['mbflag'];
 	$_POST['Discontinued']  = $myrow['discontinued'];
 	$_POST['KLSyncToOpenCart']  = $myrow['klsynctoopencart'];
+	$_POST['KLServiceByReplacement']  = $myrow['klservicebyreplacement'];
 	$_POST['Controlled']  = $myrow['controlled'];
 	$_POST['Serialised']  = $myrow['serialised'];
 	$_POST['Perishable']  = $myrow['perishable'];
@@ -1248,6 +1255,9 @@ if (!isset($_POST['Discontinued']) OR  $_POST['Discontinued']==''){
 if (!isset($_POST['KLSyncToOpenCart']) OR  $_POST['KLSyncToOpenCart']==''){
 	$_POST['KLSyncToOpenCart']=1;
 }
+if (!isset($_POST['KLServiceByReplacement']) OR  $_POST['KLServiceByReplacement']==''){
+	$_POST['KLServiceByReplacement']=0;
+}
 if (!isset($_POST['Pansize'])) {
 	$_POST['Pansize']=0;
 }
@@ -1421,6 +1431,24 @@ if ($_POST['KLSyncToOpenCart']==1){
 echo '</select></td>
 		</tr>';
 		
+echo '<tr>
+		<td>' . _('Item can be serviced ONLY by replacement?') . ':</td>
+		<td><select name="KLServiceByReplacement">';
+
+if ($_POST['KLServiceByReplacement']==0){
+	echo '<option selected="selected" value="0">' . _('No, can be normally serviced') . '</option>';
+} else {
+	echo '<option value="0">' . _('No, can be normally serviced') . '</option>';
+}
+
+if ($_POST['KLServiceByReplacement']==1){
+	echo '<option selected="selected" value="1">' . _('Yes, only serviceable by replacement with a new one') . '</option>';
+} else {
+	echo '<option value="1">' . _('Yes, only serviceable by replacement with a new one') . '</option>';
+}
+echo '</select></td>
+		</tr>';
+
 echo '<tr>
 		<td>' . _('Batch, Serial or Lot Control') . ':</td>
 		<td><select name="Controlled">';

@@ -243,6 +243,9 @@ INSERT INTO test_erp.klrevisedemaildomains SELECT * FROM kurakura_kl_erp.klrevis
 TRUNCATE test_erp.`klsalesperformance`;
 INSERT INTO test_erp.klsalesperformance SELECT * FROM kurakura_kl_erp.klsalesperformance;
 
+TRUNCATE test_erp.`klservicetypes`;
+INSERT INTO test_erp.klservicetypes SELECT * FROM kurakura_kl_erp.klservicetypes;
+
 TRUNCATE test_erp.`klstockmarketplaces`;
 INSERT INTO test_erp.klstockmarketplaces SELECT * FROM kurakura_kl_erp.klstockmarketplaces;
 
