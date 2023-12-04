@@ -787,7 +787,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 					OR gltrans.narrative LIKE '%UANG KECIL%')";
 	$Result = DB_query($SQL);
 	$myrow = DB_fetch_array($Result);
-	$BankToCashSMH =- $myrow[0];
+	$BankToCashSMH -= $myrow[0];
 
 	// Expenses SMH Paid by Petty Cash (excluding salaries, Corporate CC)
 	$AccountSuffix = "SM";
