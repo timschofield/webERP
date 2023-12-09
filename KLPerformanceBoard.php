@@ -4107,13 +4107,13 @@ function StockByBrand($Brand, $NumDays){
 			</div>
 			</form>';
 
-	InsertKPI("Stock", $BrandText . " Shops Open", $Shops);
-	InsertKPI("Stock", $BrandText . " Total Models (MODELS)", $TotalModels);
-	InsertKPI("Stock", $BrandText . " Total Stock (PCS)", $TotalItems);
-	InsertKPI("Stock", $BrandText . " Stock needed for display (PCS)", $DisplayItems);
-	InsertKPI("Stock", $BrandText . " Stock available for sale (PCS)", $AvailableForSaleItems);
-	InsertKPI("Stock", $BrandText . " Daily Stock sold average " . $NumDays . " days (PCS)", $DailySoldItems);
-	InsertKPI("Stock", $BrandText . " Days left of stock (DAYS)", $DaysStockForSale);
+	InsertKPI("Shops", "Shops Open " . $BrandText, $Shops);
+	InsertKPI("Stock", "Total Models (MODELS) " . $BrandText, $TotalModels);
+	InsertKPI("Stock", "Total Stock (PCS) " . $BrandText, $TotalItems);
+	InsertKPI("Stock", "Stock needed for display (PCS) " . $BrandText, $DisplayItems);
+	InsertKPI("Stock", "Stock available for sale (PCS) " . $BrandText, $AvailableForSaleItems);
+	InsertKPI("Stock", "Daily Stock sold average " . $NumDays . " days (PCS) " . $BrandText, $DailySoldItems);
+	InsertKPI("Stock", "Days left of stock (DAYS) " .$BrandText, $DaysStockForSale);
 
 }
 
