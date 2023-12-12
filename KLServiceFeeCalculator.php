@@ -98,24 +98,32 @@ if (($StockID != '') AND ($ServiceCode != '')){
 				if ($ServiceCode == "_LAINLAIN"){
 					$Message = "Service fee can't be calculated now. Send to office to be evaluated.";
 				}else{
-					if ($myrow['price'] <= RETAIL_PRICE_FOR_SERVICE_TIER_01){
-						$FeeService = $myrow['pricetier01'];
-					}elseif ($myrow['price'] <= RETAIL_PRICE_FOR_SERVICE_TIER_02){
-						$FeeService = $myrow['pricetier02'];
+					if (($ServiceCode == "BERUBAHWARNA") 
+						AND (ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_BLINK))){
+						$Message = "CAN'T be serviced.";
 					}else{
-						$FeeService = $myrow['pricetier03'];
-					}
-					if ($myrow['klservicebyreplacement'] == 1){
-						$FeeReplacement = $myrow['actualcost'] * FACTOR_SC_SERVICE_BY_REPLACEMENT;
-					}else{
-						$FeeReplacement = 0;
-					}
-					$Fee = round_basic_price(max($FeeService, $FeeReplacement),10000);
-					$Message = "CAN be serviced at a fee of " . locale_number_format($Fee,0) . " IDR.";
+						if ($myrow['price'] <= RETAIL_PRICE_FOR_SERVICE_TIER_01){
+							$FeeService = $myrow['pricetier01'];
+						}elseif ($myrow['price'] <= RETAIL_PRICE_FOR_SERVICE_TIER_02){
+							$FeeService = $myrow['pricetier02'];
+						}else{
+							$FeeService = $myrow['pricetier03'];
+						}
+						if ($myrow['klservicebyreplacement'] == 1){
+							$FeeReplacement = $myrow['actualcost'] * FACTOR_SC_SERVICE_BY_REPLACEMENT;
+						}else{
+							$FeeReplacement = 0;
+						}
+						$Fee = round_basic_price(max($FeeService, $FeeReplacement),10000);
+						$Message = "CAN be serviced at a fee of " . locale_number_format($Fee,0) . " IDR.";
 
-					if (($ServiceCode == "CRYSTALLEPAS") 
-						OR ($ServiceCode == "KOMPONENLEPAS")){
-						$Message .= " Cost of components needed NOT included in this fee.";
+						if (($ServiceCode == "CRYSTALLEPAS") 
+							OR ($ServiceCode == "KOMPONENLEPAS")
+							OR ($ServiceCode == "KOMPONENRUSAK")
+							OR ($ServiceCode == "KOMPONENPECAH")
+							OR ($ServiceCode == "MAGNETLEPAS")){
+							$Message .= " Cost of components needed NOT included in this fee.";
+						}
 					}
 				}
 			}
