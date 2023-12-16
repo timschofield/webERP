@@ -1729,14 +1729,15 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 				$PanSize = 1;
 			}
 			if ($MinQOHGudang < $myrow['qohgudang']){
-				// we have enough in gudang, don't need to get some to keep in gudang
+				// we have enough in gudang, don't need to add some to keep in gudang
 				$QtyNeeded = max(0, ($ForecastIncludingProduction - $QOH - $myrow['qoo']));
 			}else{
 				// we don't have enough in gudang, we need to get some to keep in gudang
-				if ($DaysQOH > $DaysMinimumStock){
-					$QtyNeeded = max(0, ($ForecastIncludingProduction - $QOH - $myrow['qoo']));
-				}else{
+				if($myrow['qoo'] < ($MinQOHGudang - $myrow['qohgudang'])){
+					// if we don't have enugh QOO to cover the deficit in gudang
 					$QtyNeeded = max(0, ($ForecastIncludingProduction - $QOH - $myrow['qoo']),($MinQOHGudang-$myrow['qohgudang']));
+				}else{
+					$QtyNeeded = max(0, ($ForecastIncludingProduction - $QOH - $myrow['qoo']));
 				}
 			}
 			if ($QtyNeeded > 0){
