@@ -659,6 +659,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 				AND (gltrans.narrative LIKE '%CASH TO CASH%'
 					OR gltrans.narrative LIKE '%CASH TO SUPP%'
 					OR gltrans.narrative LIKE '%BANK TO CASH%'
+					OR gltrans.narrative LIKE '%CASH TO BANK%'
 					OR gltrans.narrative LIKE '%UANG KECIL%')";
 	$Result = DB_query($SQL);
 	$myrow = DB_fetch_array($Result);
@@ -768,11 +769,11 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 				AND (gltrans.narrative LIKE '%CASH TO CASH%'
 					OR gltrans.narrative LIKE '%CASH TO SUPP%'
 					OR gltrans.narrative LIKE '%BANK TO CASH%'
+					OR gltrans.narrative LIKE '%CASH TO BANK%'
 					OR gltrans.narrative LIKE '%UANG KECIL%')";
 	$Result = DB_query($SQL);
 	$myrow = DB_fetch_array($Result);
 	$BankToCashSMH = -$myrow[0];
-
 	
 	// Cash Mandiri IDR PTSMH to Cash Kantor
 	$Account = "111121100SM";
@@ -784,6 +785,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 				AND (gltrans.narrative LIKE '%CASH TO CASH%'
 					OR gltrans.narrative LIKE '%CASH TO SUPP%'
 					OR gltrans.narrative LIKE '%BANK TO CASH%'
+					OR gltrans.narrative LIKE '%CASH TO BANK%'
 					OR gltrans.narrative LIKE '%UANG KECIL%')";
 	$Result = DB_query($SQL);
 	$myrow = DB_fetch_array($Result);
@@ -891,6 +893,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 				AND gltrans.trandate <= '" . $Today . "'
 				AND gltrans.account = '" . $Account . "'
 				AND (gltrans.narrative LIKE '%CASH TO CASH%'
+					OR gltrans.narrative LIKE '%CASH TO SUPP%'
 					OR gltrans.narrative LIKE '%BANK TO CASH%'
 					OR gltrans.narrative LIKE '%CASH TO BANK%'
 					OR gltrans.narrative LIKE '%UANG KECIL%')";
@@ -1332,7 +1335,6 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 			echo '<table class="selection">';
 			
 			$FreeSaldoBrankasKantor = $SaldoBrankasKantor - $CurrentBalanceADU - $CurrentBalanceSMH - $CurrentBalanceBB;
-			$ToBeMovedFree = round_basic_price($FreeSaldoBrankasKantor, $MinMoveFree);	
 			$FreeSaldoBrankasShareholders = $SaldoBrankasShareholders + $FreeSaldoBrankasKantor;
 			$ToBeDistributedToShareholders = round_basic_price($FreeSaldoBrankasShareholders, $MinMoveFree);	
 
@@ -1343,12 +1345,6 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 			echo $TableHeader;
 			$k = 0; //row colour counter
 			$i = 1;
-			printf('<td>%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					'Saldo Cash Brankas Kantor ', 
-					locale_number_format($SaldoBrankasKantor,0)
-					);
 			printf('<td>%s</td>
 					<td class="number">%s</td>
 					</tr>', 
@@ -1367,11 +1363,19 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 					'Cash belonging to PTBB', 
 					locale_number_format($CurrentBalanceBB,0)
 					);
+			$k = StartEvenOrOddRow($k);
 			printf('<td>%s</td>
 					<td class="number">%s</td>
 					</tr>', 
-					'Free Cash in Brankas Kantor', 
-					locale_number_format($FreeSaldoBrankasKantor,0)
+					'Total Cash PTADU+PTSMH+PTBB', 
+					locale_number_format($CurrentBalanceADU+$CurrentBalanceSMH+$CurrentBalanceBB,0)
+					);
+			$k = StartEvenOrOddRow($k);
+			printf('<td>%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					'Saldo Cash in Brankas Kantor ', 
+					locale_number_format($SaldoBrankasKantor,0)
 					);
 			printf('<td>%s</td>
 					<td class="number">%s</td>
@@ -1379,26 +1383,20 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 					'Saldo Cash in Brankas Shareholders', 
 					locale_number_format($SaldoBrankasShareholders,0)
 					);
+			$k = StartEvenOrOddRow($k);
 			printf('<td>%s</td>
 					<td class="number">%s</td>
 					</tr>', 
-					'Free Cash in Brankas Shareholders', 
-					locale_number_format($FreeSaldoBrankasShareholders,0)
+					'Total Saldo Cash', 
+					locale_number_format($SaldoBrankasKantor + $SaldoBrankasShareholders,0)
 					);
-			if ($ToBeMovedFree !=0){
-				if ($FreeSaldoBrankasKantor >= 0){
-					$Text = 'ACTION NEEDED -> Move Cash from Brankas Kantor to Brankas Shareholders';
-				}else{
-					$Text = 'ACTION NEEDED -> Move Cash from Brankas Shareholders to Brankas Kantor';
-				}
-				StartEvenOrOddRow($k);
-				printf('<td>%s</td>
+			$k = StartEvenOrOddRow($k);
+			printf('<td>%s</td>
 					<td class="number">%s</td>
 					</tr>', 
-					$Text, 
-					locale_number_format(abs($ToBeMovedFree),0)
+					'Free Cash', 
+					locale_number_format($FreeSaldoBrankasShareholders,0)
 					);
-			}
 			if ($ToBeDistributedToShareholders !=0){
 				if ($FreeSaldoBrankasShareholders >= 0){
 					$Text = 'ACTION NEEDED -> Distribute Cash from Brankas Shareholders to Shareholders';
