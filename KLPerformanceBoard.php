@@ -1414,12 +1414,12 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 			echo '</table>
 				</div>';	
 
-			InsertKPI("Cash", "Free Cash in Brankas Shareholders", $FreeSaldoBrankasShareholders);
+			InsertKPI("Cash", "Free Cash", $FreeSaldoBrankasShareholders);
 		}
 
-		InsertKPI("Cash", "Cash PT ADU in Brankas Kantor", $CurrentBalanceADU);
-		InsertKPI("Cash", "Cash PT SMH in Brankas Kantor", $CurrentBalanceSMH);
-		InsertKPI("Cash", "Cash PT BB in Brankas Kantor", $CurrentBalanceBB);
+		InsertKPI("Cash", "Cash PT ADU", $CurrentBalanceADU);
+		InsertKPI("Cash", "Cash PT SMH", $CurrentBalanceSMH);
+		InsertKPI("Cash", "Cash PT BB", $CurrentBalanceBB);
 	}
 }
 
