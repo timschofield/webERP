@@ -22,10 +22,6 @@ if ($KL_SystemAdmin
 	OR $KL_ShopManager){
 	HourlyPerformance(15,$RootPath, $db);
 	$NumberOfTestExecuted++;
-	HourlyPerformance(30,$RootPath, $db);
-	$NumberOfTestExecuted++;
-	HourlyPerformance(90,$RootPath, $db);
-	$NumberOfTestExecuted++;
 }
 
 prnMsg("Performed ". $NumberOfTestExecuted . " Sales Hourly Report",'success');

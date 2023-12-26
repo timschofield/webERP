@@ -996,7 +996,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$SaldoBrankasShareholders = $myrow['saldo'];
 		
 	if ($ShowTables){
-		echo '<p class="page_title_text" align="center"><strong>' . 'Status Cash PT. Angin Dingin Utara ' . $Year . '</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . 'Status Cash IDR PT. Angin Dingin Utara ' . $Year . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 
@@ -1107,7 +1107,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 		echo '</table>
 			</div>';
 
-		echo '<p class="page_title_text" align="center"><strong>' . 'Status Cash PT. Sungai Mutiara Hitam ' . $Year . '</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . 'Status Cash IDR PT. Sungai Mutiara Hitam ' . $Year . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 
@@ -1218,7 +1218,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 		echo '</table>
 			</div>';
 
-		echo '<p class="page_title_text" align="center"><strong>' . 'Status Cash PT. Bumi Biru ' . $Year . '</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . 'Status Cash IDR PT. Bumi Biru ' . $Year . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 
@@ -1330,7 +1330,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 			</div>';	
 			
 		if ($AdminRole){
-			echo '<p class="page_title_text" align="center"><strong>' . 'Status Brankas Kantor and Shareholders ' . $Year . '</strong></p>';
+			echo '<p class="page_title_text" align="center"><strong>' . 'Status Cash IDR Brankas Kantor and Shareholders ' . $Year . '</strong></p>';
 			echo '<div>';
 			echo '<table class="selection">';
 			
