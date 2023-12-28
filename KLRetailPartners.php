@@ -326,7 +326,12 @@ or deletion of the records*/
 				partnername,
 				ppn,
 				cashsalesreported,
-				hppcompensation,
+				comissionccdanamon,
+				comissionamexdanamon,
+				comissionccmandiri,
+				comissionqris,
+				comissionccbca,
+				comissionamexbca,
 				percentconsignmentptadu
 			FROM klretailpartners
 			ORDER BY partnername";
@@ -342,7 +347,12 @@ or deletion of the records*/
 			<th class="ascending">', _('Name'), '</th>
 			<th class="ascending">', _('PPN'), '</th>
 			<th class="ascending">', _('Cash Reported'), '</th>
-			<th class="ascending">', _('HPP Compensation'), '</th>
+			<th class="ascending">', _('EDC Danamon'), '</th>
+			<th class="ascending">', _('AMEX Danamon'), '</th>
+			<th class="ascending">', _('EDC Mandiri'), '</th>
+			<th class="ascending">', _('QRIS Mandiri'), '</th>
+			<th class="ascending">', _('EDC BCA'), '</th>
+			<th class="ascending">', _('AMEX BCA'), '</th>
 			<th class="ascending">', _('Consign PTADU'), '</th>
 			<th class="noprint" colspan="2">&nbsp;</th>
 		</tr>';
@@ -363,6 +373,11 @@ while ($myrow = DB_fetch_array($result)) {
 			<td class="number">%s</td>
 			<td class="number">%s</td>
 			<td class="number">%s</td>
+			<td class="number">%s</td>
+			<td class="number">%s</td>
+			<td class="number">%s</td>
+			<td class="number">%s</td>
+			<td class="number">%s</td>
 			<td class="noprint"><a href="%sSelectedPartner=%s">' . _('Edit') . '</a></td>
 			<td class="noprint"><a href="%sSelectedPartner=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this retail partner?') . '\');">' . _('Delete') . '</a></td>
 			</tr>',
@@ -370,7 +385,12 @@ while ($myrow = DB_fetch_array($result)) {
 			$myrow['partnername'],
 			locale_number_format($myrow['ppn'],0) . "%",
 			locale_number_format($myrow['cashsalesreported'],0) . "%",
-			locale_number_format($myrow['hppcompensation'],0) . "%",
+			locale_number_format($myrow['comissionccdanamon'],2) . "%",
+			locale_number_format($myrow['comissionamexdanamon'],2) . "%",
+			locale_number_format($myrow['comissionccmandiri'],2) . "%",
+			locale_number_format($myrow['comissionqris'],2) . "%",
+			locale_number_format($myrow['comissionccbca'],2) . "%",
+			locale_number_format($myrow['comissionamexbca'],2) . "%",
 			locale_number_format($myrow['percentconsignmentptadu'],0) . "%",
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $myrow['partnercode'],
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $myrow['partnercode']);
