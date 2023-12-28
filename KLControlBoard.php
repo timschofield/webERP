@@ -633,7 +633,7 @@ if ($ProcessSection02){
 		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam){
 		prnMsg("Packaging Information",'info');
-		InsuficientStockForShopPackaging('SHPACK', 15, 80, 30, true, $RootPath, $db); // Works for both regular and outlet shop packaging
+		InsuficientStockForShopPackaging('SHPACK', 15, 75, 30, true, $RootPath, $db); // Works for both regular and outlet shop packaging
 		$NumberOfTestExecuted++;
 		POStatusControl("PACKAGING","ON PRODUCTION", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;

@@ -279,7 +279,7 @@ if ($ProcessSection03){
 	}
 
 	if ($KL_SystemAdmin ){
-		InsuficientStockForShopPackaging('SHPACK', 15, 80, 30, true, $RootPath, $db);
+		InsuficientStockForShopPackaging('SHPACK', 15, 75, 30, true, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -365,8 +365,8 @@ if ($ProcessSection03){
 	if ($KL_SystemAdmin){
 		ShowKPIHistory(90);
 		$NumberOfTestExecuted++;
-		AverageKPIHistory(180, 90, 30, 15, 7, 0, $db);
-		$NumberOfTestExecuted++;
+//		AverageKPIHistory(180, 90, 30, 15, 7, 0, $db);
+//		$NumberOfTestExecuted++;
 		UnbalancedGLTransTX(15, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		EmptyAccountsGLTransTX(15, $RootPath, $db);
