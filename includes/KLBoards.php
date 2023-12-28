@@ -587,7 +587,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 			if ($percent < -MINIMUM_AVERAGE_SALES_TREND){
 				$trend = "Degrading ". locale_number_format($percent,0) . "%";
 			}
-			$forecast = round(($myrow['salesD']/$NumDaysD + $myrow['salesE']/$NumDaysE)/2 * 30, -5);
+			$forecast = round((($myrow['salesD']/$NumDaysD)+($myrow['salesE']/$NumDaysE))/2*30, -5);
 			
 			$MTD = locale_number_format($myrow['salesMTD'], 0);
 			
@@ -632,7 +632,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 			$TotalDateF = $TotalDateF +($myrow['salesF']/$NumDaysF);
 			$TotalDateMTD = $TotalDateMTD +$myrow['salesMTD'];
 			$percent = ($TotalDateD-$TotalDateC)/$TotalDateC * 100;
-			$TotalForecast = $TotalForecast + round($forecast, -5);
+			$TotalForecast = $TotalForecast + $forecast;
 			$i++;
 		}
 		if (($typereport == "Shop") OR ($typereport == "Online")){
@@ -699,7 +699,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 					locale_number_format($TotalDateF/$i,0),
 					"",
 					"",
-					locale_number_format($TotalForecast/$i,0),
+					locale_number_format($TotalForecast/30,0),
 					""
 					);
 		}
