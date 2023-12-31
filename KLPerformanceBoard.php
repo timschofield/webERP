@@ -361,6 +361,12 @@ if ($ProcessSection03){
 					 45760000, 400000000, 100000000, 
 					100000000, $periodnow, $KL_SystemAdmin, TRUE, $db);
 		$NumberOfTestExecuted++;
+		CashStatus(2024, 
+					197577000, 200000000, 100000000, 
+					119704000, 200000000, 100000000, 
+					366477000, 300000000, 100000000, 
+					100000000, $periodnow, $KL_SystemAdmin, TRUE, $db);
+		$NumberOfTestExecuted++;
 	}
 	if ($KL_SystemAdmin){
 		ShowKPIHistory(90);
