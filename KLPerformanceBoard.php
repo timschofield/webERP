@@ -279,7 +279,7 @@ if ($ProcessSection03){
 	}
 
 	if ($KL_SystemAdmin ){
-		InsuficientStockForShopPackaging('SHPACK', 15, 70, 30, 0.1, true, $RootPath, $db);
+		InsuficientStockForShopPackaging('SHPACK', 30, 100, true, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
 
