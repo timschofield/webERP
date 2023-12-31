@@ -620,8 +620,9 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 							$AdminRole, $ShowTables, $db){
 
     // Consider all year, not until today as some tx are reported into the future
-	$Today=FormatDateForSQL(Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,12,31,Date('Y'))));
-	$StartDateYTD=FormatDateForSQL(Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,1,1,Date('Y'))));
+	$Today = $Year . "-12-31";
+	$StartDateYTD = $Year . "-01-01";
+
 	//
 	// CASH STATUS ADU
 	//
@@ -3275,8 +3276,8 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA, $db){
 		// As suggested by OpenAI ChatGPT ;-)
 		// Get the current timestamp
 		$current_timestamp = time();
-		// Extract the year from the timestamp
-		$current_year = date('Y', $current_timestamp);
+		// Extract the year of yesterday
+		$current_year = date('Y', strtotime("-1 days"));
 		// Create a timestamp for the first day of the year
 		$first_day_timestamp = mktime(0, 0, 0, 1, 1, $current_year);
 		// Calculate the number of seconds between the two timestamps
@@ -3285,7 +3286,7 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA, $db){
 		$NumDaysA = floor($seconds_diff / 86400);		
 
 		$YesterdayA  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
-		$StartDateA = date('Y', $current_timestamp) . '-01-01';
+		$StartDateA = $current_year . '-01-01';
 		$YesterdayB = $typeperiod . substr($YesterdayA, 4, 6);
 		$StartDateB = $typeperiod . '-01-01';
 		$Title = _('Difference sales for ') . $typereport . " YTD (Year To Date) and same period in " . $typeperiod;
