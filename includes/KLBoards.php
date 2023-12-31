@@ -1657,7 +1657,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 			LIMIT 1";
 	$result = DB_query($SQL);		
 	$myrow = DB_fetch_array($result);
-	$TrendThisYear = $myrow['value'] / 100;
+	$TrendThisYear = round($myrow['value'] / 100,3);
 	
 	$SQL = "SELECT stockmaster.stockid,
 					stockmaster.description,
@@ -1715,6 +1715,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 		$ForecastXDays = 0;
 		$ForecastXDaysLastYear = 0;
 		$QOHTotal = 0;
+		$MissingTotal = 0;
 		$QtyNeededTotal = 0;
 		$PendingQOO = 0;
 		$NumberOfOpenShopsKL = NumberOfShops("SHOPKL", "ALL", $db);
@@ -1742,6 +1743,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 			}
 			$OptimumQOH = max($ForecastUsageNextDays, $MinQOHGudang);
 			$QOH = max($myrow['qohgudang']+$myrow['qohshops'],0);
+			$MissingQOH = max($OptimumQOH - $QOH, 0);
 			$DaysQOH = floor($QOH / $DailyUse);
 			$DaysQOO = floor(($QOH + $myrow['qoo']) / $DailyUse);
 			if ($myrow['pansize'] > 0){
@@ -1801,9 +1803,8 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 										<th class="ascending">' . _('QOH Gudang') . '</th>
 										<th class="ascending">' . _('QOH Shops') . '</th>
 										<th class="ascending">' . _('QOH Total') . '</th>
-										<th class="ascending">' . _('Days QOH') . '</th>
+										<th class="ascending">' . _('QOH Missing') . '</th>
 										<th class="ascending">' . _('Pending QOO') . '</th>
-										<th class="ascending">' . _('Days QOH+QOO') . '</th>
 										<th class="ascending">' . _('Optimum Order') . '</th>
 									</tr>';
 					echo $TableHeader;
@@ -1814,6 +1815,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 				$ForecastXDays += $ForecastUsedThisYear;
 				$ForecastXDaysLastYear += $ForecastUsedLastYear;
 				$QOHTotal += $QOH;
+				$MissingTotal += $MissingQOH;
 				$QtyNeededTotal += $QtyNeeded;
 				$PendingQOO += $myrow['qoo'];
 				$OptimumOrder += $QtyToOrder;
@@ -1823,7 +1825,6 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 				printf('<td class="number">%s</td>
 						<td>%s</td>
 						<td>%s</td>
-						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
@@ -1847,9 +1848,8 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 						locale_number_format($myrow['qohgudang'],0),
 						locale_number_format($myrow['qohshops'],0),
 						locale_number_format($QOH,0),
-						locale_number_format($DaysQOH,0),
+						locale_number_format($MissingQOH,0),
 						locale_number_format_zero_blank($myrow['qoo'],0),
-						locale_number_format($DaysQOO,0),
 						locale_number_format_zero_blank($QtyToOrder,0)
 						);
 			}
@@ -1874,7 +1874,6 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
-					<td class="number">%s</td>
 					</tr>', 
 					"", 
 					"TOTAL", 
@@ -1887,9 +1886,8 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					'',
 					'',
 					locale_number_format($QOHTotal,0),
-					locale_number_format($TotalDaysQOH,0),
+					locale_number_format($MissingTotal,0),
 					locale_number_format_zero_blank($PendingQOO,0),
-					locale_number_format($TotalDaysQOO,0),
 					locale_number_format_zero_blank($OptimumOrder,0)
 					);
 			InsertKPI("Packaging", "Packaging used last " . $DaysUsage .  " days (PCS)", $UsageXDays);
