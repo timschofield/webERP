@@ -3579,6 +3579,9 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA, $db){
 		}
 		echo '</table>
 				</div>';
+		if (($typereport == "Shop") AND ($typeperiod == "YEAR")){
+			InsertKPI("Sales", "Trend retail ".$NumDaysA." days against same period last year (PERCENT)", $percent);
+		}
 	}
 }
 
