@@ -1799,13 +1799,13 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 										<th class="ascending">' . _('Forecast ') . $DaysMinimumStock . ' days this year</th>
 										<th class="ascending">' . _('Forecast ') . $DaysMinimumStock . ' days last year</th>
 										<th class="ascending">' . _('Min QOH Gudang') . '</th>
-										<th class="ascending">' . _('Optimum QOH') . '</th>
+										<th class="ascending">' . _('QOH Optimum') . '</th>
 										<th class="ascending">' . _('QOH Gudang') . '</th>
 										<th class="ascending">' . _('QOH Shops') . '</th>
 										<th class="ascending">' . _('QOH Total') . '</th>
-										<th class="ascending">' . _('QOH Missing') . '</th>
-										<th class="ascending">' . _('Pending QOO') . '</th>
-										<th class="ascending">' . _('Optimum Order') . '</th>
+										<th class="ascending">' . _('Missing x Optimum') . '</th>
+										<th class="ascending">' . _('QOO Running') . '</th>
+										<th class="ascending">' . _('Next Order') . '</th>
 									</tr>';
 					echo $TableHeader;
 					$showHeader = FALSE;
