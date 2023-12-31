@@ -1634,7 +1634,7 @@ function GoodsToBeProduced($CategoryComponent, $ParentCategory, $RootPath, $db){
 	}
 }
 
-function InsuficientStockForShopPackaging($Category, $DaysUsage, $DaysMinimumStock, $DaysProduction, $ShowAll, $RootPath, $db){
+function InsuficientStockForShopPackaging($Category, $DaysUsage, $DaysMinimumStock, $DaysProduction, $GrowthThisYear, $ShowAll, $RootPath, $db){
 /* EXPLAIN SQL	2014-05-20	
 id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 1	PRIMARY				stockmaster			ref		CategoryID					CategoryID			20	const	10	Using where
@@ -1646,6 +1646,9 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 */
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$DaysUsage-1));
 	$ToDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -1));
+
+	$FromForecastDateLastYear = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -366));
+	$ToForecastDateLastYear = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -366+$DaysMinimumStock));
 	
 	$SQL = "SELECT stockmaster.stockid,
 					stockmaster.description,
@@ -1669,7 +1672,12 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 								FROM packagingused
 								WHERE packagingused.stockid = stockmaster.stockid
 									AND packagingused.date >= '". $FromDate ."'
-									AND packagingused.date <= '". $ToDate ."') AS qused,";
+									AND packagingused.date <= '". $ToDate ."') AS qused,
+							(SELECT SUM(qty)
+								FROM packagingused
+								WHERE packagingused.stockid = stockmaster.stockid
+									AND packagingused.date >= '". $FromForecastDateLastYear ."'
+									AND packagingused.date <= '". $ToForecastDateLastYear ."') AS qusedlastyear,";
 	}else{
 			$SQL = $SQL . "	(SELECT SUM(qtyinvoiced) 
 								FROM salesorderdetails, salesorders
@@ -1689,7 +1697,6 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 			WHERE categoryid = '". $Category ."'
 				AND discontinued = 0
 			ORDER BY stockid";
-	
 	$result = DB_query($SQL);		
 	$showHeader = TRUE;
 	if (DB_num_rows($result) != 0){
@@ -1697,6 +1704,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 		$i = 1;
 		$UsageXDays = 0;
 		$ForecastXDays = 0;
+		$ForecastXDaysLastYear = 0;
 		$QOHTotal = 0;
 		$PendingQOO = 0;
 		$NumberOfOpenShopsKL = NumberOfShops("SHOPKL", "ALL", $db);
@@ -1706,9 +1714,11 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 
 		while ($myrow = DB_fetch_array($result)) {
 			$DailyUse = $myrow['qused'] / $DaysUsage;
-			$ForecastProductionOnly = ceil($DailyUse * $DaysProduction);
-			$Forecast = ceil($DailyUse * ($DaysMinimumStock));
-			$ForecastIncludingProduction = $Forecast + $ForecastProductionOnly;
+			$UsedLastXDays = ceil($DailyUse * $DaysProduction);
+			$ForecastUsedThisYear = ceil($DailyUse * ($DaysMinimumStock));
+			$ForecastUsedLastYear = ceil($myrow['qusedlastyear'] * (1 + $GrowthThisYear));
+			$ForecastIncludingProduction = max( $ForecastUsedThisYear, $ForecastUsedLastYear) + $UsedLastXDays;
+			
 			if (isPackagingPaperInsideBox($myrow['stockid'])){
 				if (ItemInList($myrow['stockid'], LIST_ITEMS_KAPAL_LAUT_PACKAGING)){
 					$MinQOHGudang = $NumberOfOpenShopsKL * $myrow['eoq'];
@@ -1720,6 +1730,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 			}else{
 				$MinQOHGudang = $myrow['sumrl'];
 			}
+			$OptimumQOH = max($ForecastIncludingProduction, $MinQOHGudang);
 			$QOH = max($myrow['qohgudang']+$myrow['qohshops'],0);
 			$DaysQOH = floor($QOH / $DailyUse);
 			$DaysQOO = floor(($QOH + $myrow['qoo']) / $DailyUse);
@@ -1754,6 +1765,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					if ($Category == 'SHPACK'){
 						if ($ShowAll){
 							echo '<p class="page_title_text" align="center"><strong>Shop packaging order status</strong></p>';
+							echo '<p class="page_title_text" align="center"><strong>Usage = '.$DaysUsage.' days. Production = '.$DaysProduction.' days.  Growth = '. ($GrowthThisYear*100).'% </strong></p>';
 						}else{
 							echo '<p class="page_title_text" align="center"><strong>Shop packaging with insufficient stock for the next ' . ($DaysMinimumStock + $DaysProduction) . ' days.</strong></p>';
 						}
@@ -1771,9 +1783,11 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 										<th class="ascending">' . _('#') . '</th>
 										<th class="ascending">' . _('Code') . '</th>
 										<th class="ascending">' . _('Description') . '</th>
-										<th class="ascending">' . _('Usage ') . $DaysProduction . ' days</th>
-										<th class="ascending">' . _('Forecast ') . $DaysMinimumStock . ' days</th>
+										<th class="ascending">' . _('Last ') . $DaysProduction . ' days</th>
+										<th class="ascending">' . _('Forecast ') . $DaysMinimumStock . ' days this year</th>
+										<th class="ascending">' . _('Forecast ') . $DaysMinimumStock . ' days last year</th>
 										<th class="ascending">' . _('Min QOH Gudang') . '</th>
+										<th class="ascending">' . _('Optimum QOH') . '</th>
 										<th class="ascending">' . _('QOH Gudang') . '</th>
 										<th class="ascending">' . _('QOH Shops') . '</th>
 										<th class="ascending">' . _('QOH Total') . '</th>
@@ -1786,8 +1800,9 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					$showHeader = FALSE;
 				}
 
-				$UsageXDays += $ForecastProductionOnly;
-				$ForecastXDays += $Forecast;
+				$UsageXDays += $UsedLastXDays;
+				$ForecastXDays += $ForecastUsedThisYear;
+				$ForecastXDaysLastYear += $ForecastUsedLastYear;
 				$QOHTotal += $QOH;
 				$PendingQOO += $myrow['qoo'];
 				$OptimumOrder += $QtyToOrder;
@@ -1807,13 +1822,17 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
 						</tr>', 
 						$i, 
 						$CodeLink, 
 						$myrow['description'], 
-						locale_number_format($ForecastProductionOnly,0),
-						locale_number_format($Forecast,0),
+						locale_number_format($UsedLastXDays,0),
+						locale_number_format($ForecastUsedThisYear,0),
+						locale_number_format($ForecastUsedLastYear,0),
 						locale_number_format($MinQOHGudang,0),
+						locale_number_format($OptimumQOH,0),
 						locale_number_format($myrow['qohgudang'],0),
 						locale_number_format($myrow['qohshops'],0),
 						locale_number_format($QOH,0),
@@ -1843,12 +1862,16 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
 					</tr>', 
 					"", 
 					"TOTAL", 
 					"", 
 					locale_number_format($UsageXDays,0),
 					locale_number_format($ForecastXDays,0),
+					locale_number_format($ForecastXDaysLastYear,0),
+					'',
 					'',
 					'',
 					'',
