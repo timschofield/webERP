@@ -104,9 +104,7 @@ if ($ProcessSection01){
 		OR $KL_BusinessDevelopmentManager){
 		PeriodDifferenceSales("YEAR", "Shop",  30, $db);
 		$NumberOfTestExecuted++;
-//		PeriodDifferenceSales("2019", "Shop",  30, $db);
-//		$NumberOfTestExecuted++;
-		PeriodDifferenceSales("2019", "Shop",  "YTD", $db);
+		PeriodDifferenceSales("2023", "Shop",  "YTD", $db);
 		$NumberOfTestExecuted++;
 	}
 
