@@ -353,16 +353,10 @@ if ($ProcessSection03){
 
 	if ($KL_SystemAdmin
 		OR $KL_AdministrationTeam){
-		CashStatus(2023, 
-					159227000, 200000000, 100000000, 
-					        0, 100000000, 100000000, 
-					 45760000, 400000000, 100000000, 
-					100000000, $periodnow, $KL_SystemAdmin, TRUE, $db);
-		$NumberOfTestExecuted++;
 		CashStatus(2024, 
-					197577000, 200000000, 100000000, 
-					119704000, 200000000, 100000000, 
-					366477000, 300000000, 100000000, 
+					226984805, 200000000, 100000000, 
+					143709500, 200000000, 100000000, 
+					448879353, 300000000, 100000000, 
 					100000000, $periodnow, $KL_SystemAdmin, TRUE, $db);
 		$NumberOfTestExecuted++;
 	}
