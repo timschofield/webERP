@@ -460,7 +460,7 @@ define("LAZADA_PREFIX_URL", "https://www.lazada.co.id/products/-i");
 // DANAMON
 ///////////////////////////////////////////////////////////////////////////////////////////////
 define("DANAMON_ACCOUNT_GAJI_PTADU", '3607556887');
-define("DANAMON_ACCOUNT_GAJI_PTSMH", 'XXXXXXXXXX');
+define("DANAMON_ACCOUNT_GAJI_PTSMH", '3670857030');
 define("DANAMON_ACCOUNT_GAJI_PTBB",  '3568005502');
 
 
