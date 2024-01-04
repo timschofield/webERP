@@ -1649,6 +1649,8 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 
 	$FromForecastDateLastYear = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -365));
 	$ToForecastDateLastYear = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -365+$DaysMinimumStock));
+
+	$Year = date('Y', strtotime("-1 days"));
 	
 	$SQL = "SELECT value
 			FROM klkpi
@@ -1718,10 +1720,14 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 		$MissingTotal = 0;
 		$QtyNeededTotal = 0;
 		$PendingQOO = 0;
+		$OptimumOrder = 0;
+		$TotalMinimumGudang = 0;
+		$TotalQOHOptimum = 0;
+		$TotalQOHGudang = 0;
+		$TotalQOHShops = 0;
 		$NumberOfOpenShopsKL = NumberOfShops("SHOPKL", "ALL", $db);
 		$NumberOfOpenShopsBL = NumberOfShops("SHOPBL", "ALL", $db);
 		$NumberOfOpenShopsOU = NumberOfShops("SHOPOU", "ALL", $db);
-		$OptimumOrder = 0;
 
 		while ($myrow = DB_fetch_array($result)) {
 			$DailyUse = $myrow['qused'] / $DaysUsage;
@@ -1796,14 +1802,14 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 										<th class="ascending">' . _('Code') . '</th>
 										<th class="ascending">' . _('Description') . '</th>
 										<th class="ascending">' . _('Last ') . $DaysUsage . ' days</th>
-										<th class="ascending">' . _('Forecast ') . $DaysMinimumStock . ' days this year</th>
-										<th class="ascending">' . _('Forecast ') . $DaysMinimumStock . ' days last year</th>
-										<th class="ascending">' . _('Min QOH Gudang') . '</th>
-										<th class="ascending">' . _('QOH Optimum') . '</th>
+										<th class="ascending">' . _('Forecast ') . $DaysMinimumStock . ' days ' . $Year . '</th>
+										<th class="ascending">' . _('Forecast ') . $DaysMinimumStock . ' days ' . ($Year - 1) . '</th>
+										<th class="ascending">' . _('Min QTY Gudang') . '</th>
+										<th class="ascending">' . _('QTY Optimum') . '</th>
 										<th class="ascending">' . _('QOH Gudang') . '</th>
 										<th class="ascending">' . _('QOH Shops') . '</th>
 										<th class="ascending">' . _('QOH Total') . '</th>
-										<th class="ascending">' . _('Missing x Optimum') . '</th>
+										<th class="ascending">' . _('QTY Shortage') . '</th>
 										<th class="ascending">' . _('QOO Running') . '</th>
 										<th class="ascending">' . _('Next Order') . '</th>
 									</tr>';
@@ -1819,6 +1825,10 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 				$QtyNeededTotal += $QtyNeeded;
 				$PendingQOO += $myrow['qoo'];
 				$OptimumOrder += $QtyToOrder;
+				$TotalMinimumGudang += $MinQOHGudang;
+				$TotalQOHOptimum += $OptimumQOH;
+				$TotalQOHGudang += $myrow['qohgudang'];
+				$TotalQOHShops += $myrow['qohshops'];
 				
 				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 				$k = StartEvenOrOddRow($k);
@@ -1881,10 +1891,10 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					locale_number_format($UsageXDays,0),
 					locale_number_format($ForecastXDays,0),
 					locale_number_format($ForecastXDaysLastYear,0),
-					'',
-					'',
-					'',
-					'',
+					locale_number_format($TotalMinimumGudang,0),
+					locale_number_format($TotalQOHOptimum,0),
+					locale_number_format($TotalQOHGudang,0),
+					locale_number_format($TotalQOHShops,0),
 					locale_number_format($QOHTotal,0),
 					locale_number_format($MissingTotal,0),
 					locale_number_format_zero_blank($PendingQOO,0),
