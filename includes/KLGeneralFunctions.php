@@ -71,6 +71,10 @@ function isFaceMask($stockid){
 	return (substr($stockid, 2,2) == "FM");
 }
 
+function isJewelleryBox($stockid){
+	return (substr($stockid, 2,2) == "BX");
+}
+
 function isJewelleryRoll($stockid){
 	return (substr($stockid, 2,2) == "JR");
 }

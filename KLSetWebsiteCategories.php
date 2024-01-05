@@ -186,6 +186,8 @@ function UpdateWeight($Stockid, $UpdateDB, $db){
 		$Weight = STANDARD_FOULARD_WEIGHT;
 	}elseif (isFaceMask($Stockid)){
 		$Weight = STANDARD_FACEMASK_WEIGHT;
+	}elseif (isJewelleryBox($Stockid)){
+		$Weight = STANDARD_JEWEL_BOX_WEIGHT;
 	}elseif (isJewelleryRoll($Stockid)){
 		$Weight = STANDARD_JEWEL_ROLL_WEIGHT;
 	}elseif (isBag($Stockid)){
@@ -260,6 +262,10 @@ function UpdateVolume($Stockid, $UpdateDB, $db){
 		$Width  = BOX_M_WIDTH;
 		$Height = BOX_M_HEIGHT;
 	}elseif (isJewelleryRoll($Stockid)){
+		$Length = BOX_L_LENGTH;
+		$Width  = BOX_L_WIDTH;
+		$Height = BOX_L_HEIGHT;
+	}elseif (isJewelleryBox($Stockid)){
 		$Length = BOX_L_LENGTH;
 		$Width  = BOX_L_WIDTH;
 		$Height = BOX_L_HEIGHT;
@@ -369,6 +375,8 @@ function UpdatePackaging($Stockid, $Category, $Brand, $UpdateDB, $db){
 		$Packaging = "-M";
 	}elseif (isFaceMask($Stockid)){
 		$Packaging = "-M";
+	}elseif (isJewelleryBox($Stockid)){
+		$Packaging = "";
 	}elseif (isJewelleryRoll($Stockid)){
 		$Packaging = "-L";
 	}elseif (isBag($Stockid)){
@@ -454,6 +462,9 @@ function WebsiteCategorySilverJewellery($StockId, $Description, $Long, $Category
 	}	
 	if (($WebCat == KL_JEWELLERY) AND isBrooche($StockId)){
 		$WebCat = KL_BROOCHES;	
+	}	
+	if (($WebCat == KL_JEWELLERY) AND isJewelleryBox($StockId)){
+		$WebCat = KL_JEWELLERY_BOXES;	
 	}	
 	if (($WebCat == GENERAL_ACCESSORIES) AND isFaceMask($StockId)){
 		$WebCat = GE_FACEMASKS;	

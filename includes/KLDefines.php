@@ -194,6 +194,7 @@ define('STANDARD_BROOCHE_WEIGHT',    0.080);
 define('STANDARD_KEYHOLDER_WEIGHT',  0.080);
 define('STANDARD_FACEMASK_WEIGHT',   0.080); 
 define('STANDARD_JEWEL_ROLL_WEIGHT', 0.080); 
+define('STANDARD_JEWEL_BOX_WEIGHT',  0.150); 
 
 /* shipping dimensions in mm (webERP set up in mm) */
 
@@ -234,6 +235,7 @@ define('KL_EARCUFFS',71);
 define('KL_BROOCHES',82);
 define('KL_BROOCHES',82);
 define('KL_PIERCINGS',126);
+define('KL_JEWELLERY_BOXES',130);
 
 define('BLINK_JEWELLERY',14);
 define('BLINK_RINGS',35);
