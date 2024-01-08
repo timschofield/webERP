@@ -375,14 +375,8 @@ function UpdatePackaging($Stockid, $Category, $Brand, $UpdateDB, $db){
 		$Packaging = "-M";
 	}elseif (isFaceMask($Stockid)){
 		$Packaging = "-M";
-	}elseif (isJewelleryBox($Stockid)){
-		$Packaging = "";
 	}elseif (isJewelleryRoll($Stockid)){
 		$Packaging = "-L";
-	}elseif (isBag($Stockid)){
-		$Packaging = "";
-	}elseif (isPlasticBag($Stockid)){
-		$Packaging = "";
 	}elseif (isTali($Stockid)){
 		$Packaging = "-S";
 	}elseif (isKeyHolder($Stockid)){
@@ -400,6 +394,13 @@ function UpdatePackaging($Stockid, $Category, $Brand, $UpdateDB, $db){
 			$Packaging = "";
 		}
 	}
+
+	if (isJewelleryBox($Stockid) 
+		OR isBag($Stockid)
+		OR isPlasticBag($Stockid)){
+		$Packaging = "NO-PACKAGING";
+	}
+	
 	if (($Packaging != "") AND ($UpdateDB)){
 		$sql = "UPDATE stockmaster 
 				SET klpackaging = '" . $Packaging . "'
