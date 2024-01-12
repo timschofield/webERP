@@ -87,43 +87,75 @@ if (($StockID != '') AND ($ServiceCode != '')){
 	if (DB_num_rows($result) == 0){
 		$Message = "Stock code can't be found";
 	}else{
-		if ($myrow['discontinued'] == 1){
-			// OBSOLETE: No Service
-			$Message = "CAN'T be serviced as it is an obsolete (out of catalog) item";
-		}else{
-			if (ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_OUTLET)){
-				// DISCOUNT: No Service
-				$Message = "CAN'T be serviced as it is an discounted item";
+		if (($myrow['discontinued'] == 1) 
+			OR (ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_OUTLET))){
+			// for discounted or obsolete //
+			if (($ServiceCode == "BENTUKBENGKOK") 
+				OR ($ServiceCode == "CRYSTALLEPAS") 
+				OR ($ServiceCode == "KOMPONENLEPAS") 
+				OR ($ServiceCode == "LOCKRUSAK") 
+				OR ($ServiceCode == "KURANGSHINNY") 
+				OR ($ServiceCode == "TALILUSUH") 
+				OR ($ServiceCode == "WIREBERKARAT") 
+				OR ($ServiceCode == "_LAINLAIN")){
+				$Message = "Service fee can't be calculated now. Send to office to be evaluated.";
 			}else{
-				if ($ServiceCode == "_LAINLAIN"){
-					$Message = "Service fee can't be calculated now. Send to office to be evaluated.";
+				if (($ServiceCode == "BERUBAHWARNA")
+					OR ($ServiceCode == "KOMPONENPECAH") 
+					OR ($ServiceCode == "KOMPONENRUSAK") 
+					OR ($ServiceCode == "PATRI") 
+					OR ($ServiceCode == "RANTAIPUTUS")){
+					$Message = "CAN'T be serviced.";
 				}else{
-					if (($ServiceCode == "BERUBAHWARNA") 
-						AND (ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_BLINK))){
-						$Message = "CAN'T be serviced.";
+					if ($myrow['price'] <= RETAIL_PRICE_FOR_SERVICE_TIER_01){
+						$FeeService = $myrow['pricetier01'];
+					}elseif ($myrow['price'] <= RETAIL_PRICE_FOR_SERVICE_TIER_02){
+						$FeeService = $myrow['pricetier02'];
 					}else{
-						if ($myrow['price'] <= RETAIL_PRICE_FOR_SERVICE_TIER_01){
-							$FeeService = $myrow['pricetier01'];
-						}elseif ($myrow['price'] <= RETAIL_PRICE_FOR_SERVICE_TIER_02){
-							$FeeService = $myrow['pricetier02'];
-						}else{
-							$FeeService = $myrow['pricetier03'];
-						}
-						if ($myrow['klservicebyreplacement'] == 1){
-							$FeeReplacement = $myrow['actualcost'] * FACTOR_SC_SERVICE_BY_REPLACEMENT;
-						}else{
-							$FeeReplacement = 0;
-						}
-						$Fee = round_basic_price(max($FeeService, $FeeReplacement),10000);
-						$Message = "CAN be serviced at a fee of " . locale_number_format($Fee,0) . " IDR.";
+						$FeeService = $myrow['pricetier03'];
+					}
+					if ($myrow['klservicebyreplacement'] == 1){
+						$FeeReplacement = $myrow['actualcost'] * FACTOR_SC_SERVICE_BY_REPLACEMENT;
+					}else{
+						$FeeReplacement = 0;
+					}
+					$Fee = round_basic_price(max($FeeService, $FeeReplacement),10000);
+					$Message = "CAN be serviced at a fee of " . locale_number_format($Fee,0) . " IDR.";
 
-						if (($ServiceCode == "CRYSTALLEPAS") 
-							OR ($ServiceCode == "KOMPONENLEPAS")
-							OR ($ServiceCode == "KOMPONENRUSAK")
-							OR ($ServiceCode == "KOMPONENPECAH")
-							OR ($ServiceCode == "MAGNETLEPAS")){
-							$Message .= " Cost of components needed NOT included in this fee.";
-						}
+					if ($ServiceCode == "MAGNETLEPAS"){
+						$Message .= " Cost of components needed NOT included in this fee.";
+					}
+				}
+			}
+		}else{
+			if ($ServiceCode == "_LAINLAIN"){
+				$Message = "Service fee can't be calculated now. Send to office to be evaluated.";
+			}else{
+				if (($ServiceCode == "BERUBAHWARNA") 
+					AND (ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_BLINK))){
+					$Message = "CAN'T be serviced.";
+				}else{
+					if ($myrow['price'] <= RETAIL_PRICE_FOR_SERVICE_TIER_01){
+						$FeeService = $myrow['pricetier01'];
+					}elseif ($myrow['price'] <= RETAIL_PRICE_FOR_SERVICE_TIER_02){
+						$FeeService = $myrow['pricetier02'];
+					}else{
+						$FeeService = $myrow['pricetier03'];
+					}
+					if ($myrow['klservicebyreplacement'] == 1){
+						$FeeReplacement = $myrow['actualcost'] * FACTOR_SC_SERVICE_BY_REPLACEMENT;
+					}else{
+						$FeeReplacement = 0;
+					}
+					$Fee = round_basic_price(max($FeeService, $FeeReplacement),10000);
+					$Message = "CAN be serviced at a fee of " . locale_number_format($Fee,0) . " IDR.";
+
+					if (($ServiceCode == "CRYSTALLEPAS") 
+						OR ($ServiceCode == "KOMPONENLEPAS")
+						OR ($ServiceCode == "KOMPONENRUSAK")
+						OR ($ServiceCode == "KOMPONENPECAH")
+						OR ($ServiceCode == "MAGNETLEPAS")){
+						$Message .= " Cost of components needed NOT included in this fee.";
 					}
 				}
 			}
