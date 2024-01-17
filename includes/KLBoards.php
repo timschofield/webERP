@@ -1810,6 +1810,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 										<th class="ascending">' . _('QOH Shops') . '</th>
 										<th class="ascending">' . _('QOH Total') . '</th>
 										<th class="ascending">' . _('QTY Shortage') . '</th>
+										<th class="ascending">' . _('% Shortage') . '</th>
 										<th class="ascending">' . _('QOO Running') . '</th>
 										<th class="ascending">' . _('Next Order') . '</th>
 									</tr>';
@@ -1846,6 +1847,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
+						<td class="number">%s</td>
 						</tr>', 
 						$i, 
 						$CodeLink, 
@@ -1859,6 +1861,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 						locale_number_format($myrow['qohshops'],0),
 						locale_number_format($QOH,0),
 						locale_number_format($MissingQOH,0),
+						locale_number_format($MissingQOH/$OptimumQOH*100,0) .'%',
 						locale_number_format_zero_blank($myrow['qoo'],0),
 						locale_number_format_zero_blank($QtyToOrder,0)
 						);
@@ -1884,6 +1887,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
+					<td class="number">%s</td>
 					</tr>', 
 					"", 
 					"TOTAL", 
@@ -1897,6 +1901,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					locale_number_format($TotalQOHShops,0),
 					locale_number_format($QOHTotal,0),
 					locale_number_format($MissingTotal,0),
+					locale_number_format($MissingTotal/$TotalQOHOptimum*100,0).'%',
 					locale_number_format_zero_blank($PendingQOO,0),
 					locale_number_format_zero_blank($OptimumOrder,0)
 					);
@@ -1907,7 +1912,6 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 			InsertKPI("Packaging", "Packaging QOO not received (PCS)", $PendingQOO);
 			InsertKPI("Packaging", "Packaging QOH + QOO total (DAYS)", $TotalDaysQOO);
 			InsertKPI("Packaging", "Packaging Optimum Order (PCS)", $OptimumOrder);
-
 			echo '</table>
 				</div>';
 		}
