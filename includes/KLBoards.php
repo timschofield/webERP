@@ -1912,6 +1912,9 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 			InsertKPI("Packaging", "Packaging QOO not received (PCS)", $PendingQOO);
 			InsertKPI("Packaging", "Packaging QOH + QOO total (DAYS)", $TotalDaysQOO);
 			InsertKPI("Packaging", "Packaging Optimum Order (PCS)", $OptimumOrder);
+			InsertKPI("Packaging", "Packaging Optimum QOH (PCS)", $TotalQOHOptimum);
+			InsertKPI("Packaging", "Packaging Shortage (PCS)", $MissingTotal);
+			InsertKPI("Packaging", "Packaging Shortage (%)", round($MissingTotal/$TotalQOHOptimum*100,0));
 			echo '</table>
 				</div>';
 		}
