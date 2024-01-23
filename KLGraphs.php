@@ -30,7 +30,7 @@ if (!Is_Date($_POST['ToDate'])) {
 */
 
 if (isset($_POST['FromDate']) AND isset($_POST['ToDate'])){
-	if ($_POST['FromDate'] > $_POST['ToDate']){
+	if (FormatDateForSQL($_POST['FromDate']) > FormatDateForSQL($_POST['ToDate'])){
 		prnMsg(_('The selected date from is actually after the date to!'),'error');
 		$ErrorInDates =TRUE;
 	}
