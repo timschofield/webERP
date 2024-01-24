@@ -538,6 +538,13 @@ textarea.texterror {
 	text-align:center;
 	/* Class selector for page title. */
 }
+.page_title_text_small {
+	color:black;
+	font-weight:normal;
+	padding:5px;
+	text-align:center;
+	/* Class selector for page title. */
+}
 
 /* END Style for all. ********************************************************/
 
