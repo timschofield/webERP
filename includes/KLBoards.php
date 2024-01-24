@@ -1783,7 +1783,8 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					if ($Category == 'SHPACK'){
 						if ($ShowAll){
 							echo '<p class="page_title_text" align="center"><strong>Shop packaging order status</strong></p>';
-							echo '<p class="page_title_text" align="center"><strong>Forecast = '.$DaysMinimumStock.' days. Usage = '.$DaysUsage.' days.  Trend Retail = '. ($TrendThisYear*100).'% </strong></p>';
+							echo '<p class="page_title_text_small" align="center">Forecast '.$DaysMinimumStock.' 	days ' . $Year . ' based on usage from '. ConvertSQLDate($FromDate) . ' to ' . ConvertSQLDate($ToDate). '</p>';
+							echo '<p class="page_title_text_small" align="center">Forecast '.$DaysMinimumStock.' 	days ' . ($Year - 1) . ' based on usage from '. ConvertSQLDate($FromForecastDateLastYear) . ' to ' . ConvertSQLDate($ToForecastDateLastYear). ' with trend retail = '. ($TrendThisYear*100).'%</p>';
 						}else{
 							echo '<p class="page_title_text" align="center"><strong>Shop packaging with insufficient stock for the next ' . ($DaysMinimumStock) . ' days.</strong></p>';
 						}
@@ -1801,7 +1802,6 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 										<th class="ascending">' . _('#') . '</th>
 										<th class="ascending">' . _('Code') . '</th>
 										<th class="ascending">' . _('Description') . '</th>
-										<th class="ascending">' . _('Last ') . $DaysUsage . ' days</th>
 										<th class="ascending">' . _('Forecast ') . $DaysMinimumStock . ' days ' . $Year . '</th>
 										<th class="ascending">' . _('Forecast ') . $DaysMinimumStock . ' days ' . ($Year - 1) . '</th>
 										<th class="ascending">' . _('Min QTY Gudang') . '</th>
@@ -1847,12 +1847,10 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
-						<td class="number">%s</td>
 						</tr>', 
 						$i, 
 						$CodeLink, 
 						$myrow['description'], 
-						locale_number_format($UsedLastXDays,0),
 						locale_number_format($ForecastUsedThisYear,0),
 						locale_number_format($ForecastUsedLastYear,0),
 						locale_number_format($MinQOHGudang,0),
@@ -1887,12 +1885,10 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
-					<td class="number">%s</td>
 					</tr>', 
 					"", 
 					"TOTAL", 
 					"", 
-					locale_number_format($UsageXDays,0),
 					locale_number_format($ForecastXDays,0),
 					locale_number_format($ForecastXDaysLastYear,0),
 					locale_number_format($TotalMinimumGudang,0),
