@@ -138,7 +138,12 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db,
 			$ShippingName = CleanStringForWebERP(CapitalizeName($myrow['shippingfirstname'] . ' ' . $myrow['shippinglastname']));
 			$SalesType = OPENCART_DEFAULT_CUSTOMER_SALES_TYPE;
 			$DefaultShipVia = GetWeberpShippingMethod($myrow['shipping_code']);
-			$Quotation = 1; // is NOT a firm order until we check the payments
+			if ($CustomerCode == "WEB-WH-IDR"){
+				$Quotation = 0; // wholesale customers in IDR, are exceptions: or they pay regularly by bank transfer or they paid / will pay in IDR at the shop at pick up time. 
+								// Either case we are aware of the order.
+			}else{
+				$Quotation = 1; // is NOT a firm order until we check the payments
+			}
 			$FreightCost = RoundPriceFromCart(GetTotalFromOrder("shipping", $myrow['order_id'], $db_oc) * $myrow['currency_value'],$myrow['currency_code']);
 			$CouponDiscount = RoundPriceFromCart(GetTotalFromOrder("coupon", $myrow['order_id'], $db_oc) * $myrow['currency_value'],$myrow['currency_code']);
 			$OrderDiscount = RoundPriceFromCart(GetTotalFromOrder("discountrule", $myrow['order_id'], $db_oc) * $myrow['currency_value'],$myrow['currency_code']);
