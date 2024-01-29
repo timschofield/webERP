@@ -460,6 +460,11 @@ function ItemInList($Item, $List){
 	}
 }
 
+function NumberOfItemsInList($List){
+	// https://www.php.net/manual/en/function.substr-count.php 	
+	return substr_count($List, ',') + 1;  
+}
+
 function CapitalizeName($string){
 // copied from http://www.media-division.com/correct-name-capitalization-in-php/
 	$word_splitters = array(' ', '-', "O'", "L'", "D'", 'St.', 'Mc');

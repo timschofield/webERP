@@ -1747,6 +1747,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 			}else{
 				$MinQOHGudang = $myrow['sumrl'];
 			}
+			$MinQOHGudang = $MinQOHGudang * FACTOR_GUDANG_PACKAGING; // to prevent shortage on slow moving items in ANY gudang, and be still able to serve the item to the shops
 			$OptimumQOH = max($ForecastUsageNextDays, $MinQOHGudang);
 			$QOH = max($myrow['qohgudang']+$myrow['qohshops'],0);
 			$MissingQOH = max($OptimumQOH - $QOH, 0);
@@ -2194,7 +2195,17 @@ function PackagingToBeRefilledFromGudang($LocCode, $ShowAll, $ShowLinkEmail, $Ro
 			$TableResult[$numitems]['intransit'] = $myrow['intransit'];
 			$TableResult[$numitems]['optimum'] = round(($myrow['rl'] * $RLFactor),0);
 			$TableResult[$numitems]['needed']= max(0,$TableResult[$numitems]['optimum'] - $myrow['qoh']);
-			$TableResult[$numitems]['toship'] = RoundPackagingTransfer($myrow['stockid'], min(max(0,$TableResult[$numitems]['needed'] - $myrow['intransit']),$myrow['qohparent']));
+			$QtyToShip = min(max(0,$TableResult[$numitems]['needed'] - $myrow['intransit']),$myrow['qohparent']);
+			if (ItemInList($LocCode, LIST_PACAKING_LOCATIONS)){
+				// if it is a transfer from a guang packaging to another and we don't have much stock, we divide the available gudang QOH between all the packaging gudang
+				$QOHAllGudang = $myrow['qohparent'] + $myrow['qoh'];
+				$FairQOHGudang = $QOHAllGudang / NumberOfItemsInList(LIST_PACAKING_LOCATIONS);
+				if ($QtyToShip > $FairQOHGudang){
+					// if we should ship more than the "fair share", we cap it so all gudang end up with a QOH close to the fair share
+					$QtyToShip = $FairQOHGudang - $myrow['qoh'];
+				}
+			}
+			$TableResult[$numitems]['toship'] = RoundPackagingTransfer($myrow['stockid'], $QtyToShip);
 
 			// cap the maximum number of boxes to be sent to a shop, 
 			// to prevent shipments too bulky for courier to safely bring in one motorbike trip
