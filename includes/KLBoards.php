@@ -2197,7 +2197,8 @@ function PackagingToBeRefilledFromGudang($LocCode, $ShowAll, $ShowLinkEmail, $Ro
 			$TableResult[$numitems]['needed']= max(0,$TableResult[$numitems]['optimum'] - $myrow['qoh']);
 			$QtyToShip = min(max(0,$TableResult[$numitems]['needed'] - $myrow['intransit']),$myrow['qohparent']);
 			if (ItemInList($LocCode, LIST_PACAKING_LOCATIONS)){
-				// if it is a transfer from a guang packaging to another and we don't have much stock, we divide the available gudang QOH between all the packaging gudang
+				// if it is a transfer from a gudang packaging to another and we don't have much stock, 
+				// we divide the available gudang QOH between all the packaging gudang
 				$QOHAllGudang = $myrow['qohparent'] + $myrow['qoh'];
 				$FairQOHGudang = $QOHAllGudang / NumberOfItemsInList(LIST_PACAKING_LOCATIONS);
 				if ($QtyToShip > $FairQOHGudang){
@@ -2205,7 +2206,7 @@ function PackagingToBeRefilledFromGudang($LocCode, $ShowAll, $ShowLinkEmail, $Ro
 					$QtyToShip = $FairQOHGudang - $myrow['qoh'];
 				}
 			}
-			$TableResult[$numitems]['toship'] = RoundPackagingTransfer($myrow['stockid'], $QtyToShip);
+			$TableResult[$numitems]['toship'] = min($myrow['qohparent'],RoundPackagingTransfer($myrow['stockid'], $QtyToShip));
 
 			// cap the maximum number of boxes to be sent to a shop, 
 			// to prevent shipments too bulky for courier to safely bring in one motorbike trip
