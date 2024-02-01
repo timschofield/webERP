@@ -1765,7 +1765,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 				// we don't have enough in gudang, we need to get some to keep in gudang
 				if($myrow['qoo'] < ($MinQOHGudang - $myrow['qohgudang'])){
 					// if we don't have enugh QOO to cover the deficit in gudang
-					$QtyNeeded = max(0, ($ForecastUsageNextDays - $QOH - $myrow['qoo']),($MinQOHGudang-$myrow['qohgudang']));
+					$QtyNeeded = max(0, ($ForecastUsageNextDays - $QOH - $myrow['qoo']),($MinQOHGudang-$myrow['qohgudang']-$myrow['qoo']));
 				}else{
 					$QtyNeeded = max(0, ($ForecastUsageNextDays - $QOH - $myrow['qoo']));
 				}
