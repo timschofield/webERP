@@ -117,23 +117,22 @@ if(isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) OR
 
 			$PeriodNo = GetPeriod(ConvertSQLDate($myrow['date']), $db);
 
-			if($myrow['rate'] == 1) { // functional currency
-				$Amount = $myrow['amount'];
-			}else{ // other currencies
-				$Amount = $myrow['amount']/$myrow['rate'];
-			}
+			// convert to functional currency, If functional currency rate = 1, so no effect.
+			$Amount = $myrow['amount']/$myrow['rate'];
 
 			if($myrow['codeexpense'] == 'ASSIGNCASH') {
 				$type = 2;
 				$AccountFrom = $myrow['glaccountassignment'];
 				$AccountTo = $myrow['glaccountpcash'];
                 $TagTo = 0;
+				$HutangPPH21 = 0;
 				$HutangPPH23 = 0;
 			}else{
 				$type = 1;
 				$Amount = -$Amount;
 				$AccountFrom = $myrow['glaccountpcash'];
 				$SQLAccExp = "SELECT glaccount,
+									klretentionpph21,
 									klretentionpph23,
 									tag
 								FROM pcexpenses
@@ -142,7 +141,14 @@ if(isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) OR
 				$myrowAccExp = DB_fetch_array($ResultAccExp);
 				$AccountTo = $myrowAccExp['glaccount'];
 				$TagTo = $myrowAccExp['tag'];
+				if ($myrowAccExp['klretentionpph21'] != 0){
+					// gross up method
+					$HutangPPH21 = round(($Amount / (1-($myrowAccExp['klretentionpph21']/100)))-$Amount);
+				}else{
+					$HutangPPH21 = 0;
+				}
 				if ($myrowAccExp['klretentionpph23'] != 0){
+					// gross up method
 					$HutangPPH23 = round(($Amount / (1-($myrowAccExp['klretentionpph23']/100)))-$Amount);
 				}else{
 					$HutangPPH23 = 0;
@@ -204,14 +210,53 @@ if(isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) OR
 										'".$PeriodNo."',
 										'".$AccountTo."',
 										'" . $Narrative . "',
-										'". ($Amount + $HutangPPH23)."',
+										'". ($Amount + $HutangPPH21 + $HutangPPH23)."',
 										0,
 										'',
 										'" . $TagTo ."')";
 
 			$ResultTo = DB_query($sqlTo,'', '', true);
 
-			// if there's a retention, we account for it
+			// if there's a PPH21 retention, we account for it
+			if ($HutangPPH21 != 0){
+				$CompanyExpenses = GLAccountBelongsTo($AccountTo);
+				if ($CompanyExpenses == "PTADU"){
+					$AccountPPH21 = ACCOUNT_HUTANG_PPH21_PTADU;
+				}elseif ($CompanyExpenses == "PTSMH"){
+					$AccountPPH21 = ACCOUNT_HUTANG_PPH21_PTSMH;
+				}else{
+					$AccountPPH21 = ACCOUNT_HUTANG_PPH21_PTBB;
+				}
+				$sqlHutangPPH21="INSERT INTO `gltrans` (`counterindex`,
+												`type`,
+												`typeno`,
+												`chequeno`,
+												`trandate`,
+												`periodno`,
+												`account`,
+												`narrative`,
+												`amount`,
+												`posted`,
+												`jobref`,
+												`tag`)
+										VALUES (NULL,
+												'".$type."',
+												'".$typeno."',
+												0,
+												'".$myrow['date']."',
+												'".$PeriodNo."',
+												'". $AccountPPH21 ."',
+												'". $Narrative ."',
+												'".-$HutangPPH21."',
+												0,
+												'',
+												'" . $TagTo ."')";
+
+				$ResultHutangPPH21 = DB_Query($sqlHutangPPH21,'', '', true);
+				
+			}
+			
+			// if there's a PPH23 retention, we account for it
 			if ($HutangPPH23 != 0){
 				$CompanyExpenses = GLAccountBelongsTo($AccountTo);
 				if ($CompanyExpenses == "PTADU"){
@@ -249,7 +294,7 @@ if(isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) OR
 				$ResultHutangPPH23 = DB_Query($sqlHutangPPH23,'', '', true);
 				
 			}
-			
+
 			if ($myrow['codeexpense'] == 'ASSIGNCASH'){
 			// if it's a cash assignation we need to updated banktrans table as well.
 				$ReceiptTransNo = GetNextTransNo( 2, $db);
@@ -277,7 +322,6 @@ if(isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) OR
 				$ErrMsg = _('Cannot insert a bank transaction because');
 				$DbgMsg =  _('Cannot insert a bank transaction with the SQL');
 				$resultBank = DB_query($SQLBank,$ErrMsg,$DbgMsg,true);
-
 			}
 
 			$sql = "UPDATE pcashdetails

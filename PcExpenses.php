@@ -24,6 +24,7 @@ if (isset($_POST['Cancel'])) {
 	unset($_POST['Description']);
 	unset($_POST['GLAccount']);
 	unset($_POST['Tag']);
+	unset($_POST['KLRetentionPPH21']);
 	unset($_POST['KLRetentionPPH23']);
 }
 
@@ -93,6 +94,7 @@ if (isset($_POST['submit'])) {
 		$sql = "UPDATE pcexpenses
 				SET description = '" . $_POST['Description'] . "',
 					glaccount = '" . $_POST['GLAccount'] . "',
+					klretentionpph21 = '" . $_POST['KLRetentionPPH21'] . "',
 					klretentionpph23 = '" . $_POST['KLRetentionPPH23'] . "',
 					tag = '" . $_POST['Tag'] . "'
 				WHERE codeexpense = '" . $SelectedExpense . "'";
@@ -120,11 +122,13 @@ if (isset($_POST['submit'])) {
 						(codeexpense,
 			 			 description,
 			 			 glaccount,
+			 			 klretentionpph21,
 			 			 klretentionpph23,
 			 			 tag)
 				VALUES ('" . $_POST['CodeExpense'] . "',
 						'" . $_POST['Description'] . "',
 						'" . $_POST['GLAccount'] . "',
+						'" . $_POST['KLRetentionPPH21'] . "',
 						'" . $_POST['KLRetentionPPH23'] . "',
 						'" . $_POST['Tag'] . "')";
 
@@ -133,7 +137,6 @@ if (isset($_POST['submit'])) {
 						FROM pcexpenses";
 			$result = DB_query($checkSql);
 			$row = DB_fetch_row($result);
-
 		}
 	}
 
@@ -147,6 +150,7 @@ if (isset($_POST['submit'])) {
 		unset($_POST['Description']);
 		unset($_POST['GLAccount']);
 		unset($_POST['Tag']);
+		unset($_POST['KLRetentionPPH21']);
 		unset($_POST['KLRetentionPPH23']);
 	}
 
@@ -196,7 +200,8 @@ or deletion of the records*/
 		<th class="ascending">' . _('Account Code') . '</th>
 		<th class="ascending">' . _('Account Description') . '</th>
 		<th class="ascending">' . _('Tag') . '</th>
-		<th>' . _('% PPH23') . '</th>
+		<th class="ascending">' . _('% PPH21') . '</th>
+		<th class="ascending">' . _('% PPH23') . '</th>
 		</tr>';
 
 	$k=0; //row colour counter
@@ -230,6 +235,7 @@ or deletion of the records*/
 				<td>%s</td>
 				<td>%s</td>
 				<td class="number">%s</td>
+				<td class="number">%s</td>
 				<td><a href="%sSelectedExpense=%s">' . _('Edit') . '</a></td>
 				<td><a href="%sSelectedExpense=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this expense code and all the details it may have set up?') . '\');">' . _('Delete') . '</a></td>
 				</tr>',
@@ -239,6 +245,7 @@ or deletion of the records*/
 				$Description['accountname'],
 				$DescriptionTag['tagdescription'],
 				$myrow[4],
+				$myrow[5],
 				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $myrow[0],
 				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $myrow[0]);
 	}
@@ -264,6 +271,7 @@ if (! isset($_GET['delete'])) {
 		$sql = "SELECT codeexpense,
 			       description,
 				   glaccount,
+				   klretentionpph21,
 				   klretentionpph23,
 				   tag
 		        FROM pcexpenses
@@ -275,6 +283,7 @@ if (! isset($_GET['delete'])) {
 		$_POST['CodeExpense'] = $myrow['codeexpense'];
 		$_POST['Description']  = $myrow['description'];
 		$_POST['GLAccount']  = $myrow['glaccount'];
+		$_POST['KLRetentionPPH21']  = $myrow['klretentionpph21'];
 		$_POST['KLRetentionPPH23']  = $myrow['klretentionpph23'];
 		$_POST['Tag']  = $myrow['tag'];
 
@@ -351,6 +360,11 @@ if (! isset($_GET['delete'])) {
 	}
 	echo '</select></td></tr>';
 	// End select tag
+
+	echo '<tr>
+			<td>' . _('% Retention PPH21') . ':</td>
+			<td><input type="text" class="number" name="KLRetentionPPH21" size="6" maxlength="5" value="' . locale_number_format($_POST['KLRetentionPPH21'],2) . '" /></td>
+		</tr>';
 
 	echo '<tr>
 			<td>' . _('% Retention PPH23') . ':</td>

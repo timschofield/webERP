@@ -155,6 +155,10 @@ define("LIST_SALES_AREAS_PTADU", "('ORA','OWA','OWW','RAC','RAR','RAZ')");
 
 define("ACCOUNT_PPN_ADU", "611012030AD"); // GL account for PPN PT.ADU
 
+define("ACCOUNT_HUTANG_PPH21_PTBB",  "611012000BB"); // GL account for retention of PPH21 PTBB in Petty cash
+define("ACCOUNT_HUTANG_PPH21_PTADU", "611012000AD"); // GL account for retention of PPH21 PTADU in Petty cash
+define("ACCOUNT_HUTANG_PPH21_PTSMH", "611012000SM"); // GL account for retention of PPH21 PTSMH in Petty cash
+
 define("ACCOUNT_HUTANG_PPH23_PTBB",  "611012005BB"); // GL account for retention of PPH23 PTBB in Petty cash
 define("ACCOUNT_HUTANG_PPH23_PTADU", "611012005AD"); // GL account for retention of PPH23 PTADU in Petty cash
 define("ACCOUNT_HUTANG_PPH23_PTSMH", "611012005SM"); // GL account for retention of PPH23 PTSMH in Petty cash
