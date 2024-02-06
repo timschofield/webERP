@@ -1619,7 +1619,9 @@ function CustomersDebtControl($AcceptedDifference, $period, $db){
 	$DebtValue = $DebtValueIDR + $DebtValueUSD + $DebtValueAUD + $DebtValueEUR;
 	
 	if (abs($ValueAtBalance - $DebtValue) > $AcceptedDifference){
-		$text = "Customer's Debt Balance value = " . locale_number_format($ValueAtBalance,0) . " <-> Customer's Debt = " . locale_number_format($DebtValue,0);
+		$text = "Customer's Debt Balance value = " . locale_number_format($ValueAtBalance,0) . 
+				" <-> Customer's Debt = " . locale_number_format($DebtValue,0) . 
+				" Difference = ". locale_number_format($ValueAtBalance - $DebtValue,0);
 		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
 	}
 }
@@ -2025,7 +2027,9 @@ function GoodsReceivedNotInvoicedControl($AcceptedDifference, $period, $db){
 	$GoodsValue = $myrow[0];
 
 	if (abs($ValueAtBalance - $GoodsValue) > $AcceptedDifference){
-		$text = "Goods Received Balance value = " . locale_number_format($ValueAtBalance,0) . " <-> Real Goods Received Value at Std Cost = " . locale_number_format($GoodsValue,0);
+		$text = "Goods Received Balance value = " . locale_number_format($ValueAtBalance,0) . 
+				" <-> Real Goods Received Value at Std Cost = " . locale_number_format($GoodsValue,0) .
+				" Difference = ". locale_number_format($ValueAtBalance - $GoodsValue,0);;
 		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
 	}
 }
@@ -2051,7 +2055,9 @@ function PettyCashBalanceControlControl($Currency, $PCGLAccounts, $AcceptedDiffe
 	$ValueAtBalance = $myrow['saldo'];
 
 	if (abs($ValueAtBalance - $PettyCashValue) > $AcceptedDifference){
-		$text = "Petty Cash (" . $Currency . ") Balance value = " . locale_number_format($ValueAtBalance,0) . " <-> Real Petty Cash (" . $Currency . ") = " . locale_number_format($PettyCashValue,0);
+		$text = "Petty Cash (" . $Currency . ") Balance value = " . locale_number_format($ValueAtBalance,0) . 
+				" <-> Real Petty Cash (" . $Currency . ") = " . locale_number_format($PettyCashValue,0) . 
+				" Difference = ". locale_number_format($ValueAtBalance - $PettyCashValue,0);
 		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
 	}
 }
