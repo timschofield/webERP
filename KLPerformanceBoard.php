@@ -4100,7 +4100,7 @@ function StockByBrand($Brand, $NumDays){
 	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
-			"Days left of stock (PCS)", 
+			"Days left of stock (DAYS)", 
 			locale_number_format($DaysStockForSale,0)
 			);
 	echo '</table>
