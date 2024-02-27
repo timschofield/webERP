@@ -131,7 +131,7 @@ function submit(&$db, $Company, $LastDateOfPeriod, $SalaryType) {
 				$ActiveSheet->setCellValue('B'.$i, $myrow['fullname']);
 				$ActiveSheet->setCellValue('C'.$i, round($myrow['upahpokok'],0));
 				$ActiveSheet->setCellValue('D'.$i, round($myrow['tunjanganmakan'],0));
-				$ActiveSheet->setCellValue('E'.$i, round($myrow['tunganjantransport'],0));
+				$ActiveSheet->setCellValue('E'.$i, round($myrow['tunjangantransport'],0));
 				$ActiveSheet->setCellValue('F'.$i, round($myrow['tunjanganjabatan'],0));
 				$ActiveSheet->setCellValue('G'.$i, round($myrow['tunjanganmasakerja'],0));
 				$ActiveSheet->setCellValue('H'.$i, round($myrow['tunjangankendaraan'],0));
