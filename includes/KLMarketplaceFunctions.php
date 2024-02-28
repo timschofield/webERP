@@ -15,7 +15,7 @@ function CalculateCommissionTokopedia($CustomerCode,
 		include('includes/footer.php');
 		exit;
 	}
-	// 1% from all order for Tokopedia
+	// X% from all order for Tokopedia
 	$CommissionTPGlobal = round($TotalAmount * $CommissionTokopediaPercent /100 ,0); // this commission still includes PPN
 
 	// we need to pay comething to Tokopedia if shipper is SI-CEPAT, as it means free shipping for the customer, so we pay something
@@ -53,14 +53,51 @@ function CalculateCommissionTokopedia($CustomerCode,
 	return $Commission;
 }
 
-function CalculateCommissionShopee($CustomerCode, $OrderNo, $TotalAmount, $CommissionShopeePercent){
+function CalculateCommissionShopee($CustomerCode, 
+									$OrderNo, 
+									$TotalAmount, 
+									$CommissionShopeePercent,
+									$CommissionTokopediaFreeShippingPerItem,
+									$CommissionTokopediaFreeShippingMaximum){
 	if ($CustomerCode != "SHOPEE"){
 		prnMsg("ERROR: Customer code = " . $CustomerCode . " and Payment Code = shopee", "error");
 		include('includes/footer.php');
 		exit;
 	}
-	// 1,5% from all order for Shopee
-	$Commission = round($TotalAmount * $CommissionShopeePercent /100 ,0); // this commission still includes PPN
+	// X% from all order for Tokopedia
+	$CommissionTPGlobal = round($TotalAmount * $CommissionShopeePercent /100 ,0); // this commission still includes PPN
+
+	// we need to pay comething to Shopee if shipper is SI-CEPAT, as it means free shipping for the customer, so we pay something
+	$SQL = "SELECT salesorders.shipvia
+		FROM salesorders 
+		WHERE salesorders.orderno = '" . $OrderNo . "' ";			
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		$myrow = DB_fetch_array($result);
+		$Shipper = $myrow['shipvia'];
+		$CommissionTPFreeShipping = 0;
+		if ($Shipper == '12'){
+			// if shipper is 12 = GRATIS ONGKIR SHOPEE... then we shipped it via free shipping, we must pay 
+			// 2,5% from every item with a max 0f 10.000 for Shopee as cost of shipment
+			$SQL = "SELECT salesorderdetails.qtyinvoiced,
+					salesorderdetails.unitprice,
+					salesorderdetails.discountpercent
+				FROM salesorderdetails
+				WHERE salesorderdetails.orderno = '" . $OrderNo . "' ";			
+			$result = DB_query($SQL);
+			while ($myrow = DB_fetch_array($result)) {
+				$ItemPrice = $myrow['unitprice']*(1-$myrow['discountpercent']);
+				$CommissionItem = min(round($ItemPrice * $CommissionShopeeFreeShippingPerItem /100 ,0), $CommissionShopeeFreeShippingMaximum); 
+				$CommissionTPFreeShipping += $CommissionItem * $myrow['qtyinvoiced']; // this commission still has PPN
+			}
+		}
+	}else{
+		prnMsg("ERROR: Could not extract shipper information for order = " . $OrderNo, "error");
+		include('includes/footer.php');
+		exit;
+	}
+	
+	$Commission = $CommissionTPGlobal + $CommissionTPFreeShipping; // this commission still has PPN
 	$Commission = round($Commission /((100 + PPN_PERCENT)/100) ,0); // this commision already net
 	return $Commission;
 }

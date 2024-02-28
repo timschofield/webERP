@@ -780,6 +780,8 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 					comissiontokopediafreeshippingperitempercent,
 					comissiontokopediafreeshippingperitemmaximum,
 					comissionshopeepercent,
+					comissionshopeefreeshippingperitempercent,
+					comissionshopeefreeshippingperitemmaximum,
 					comissionlazadapercent
 				FROM klonlinepartners
 				WHERE klonlinepartners.onlinepartnercode = '" . $OnlinePartner . "'";
@@ -843,10 +845,14 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 				$GLAccountCommission = $myrowAccounts['accountshopeecomissionidr'];
 				$GLAccountCommissionPPN = $myrowAccounts['accountcomissionppn'];
 				$CommissionShopeePercent = $myrowAccounts['comissionshopeepercent'];
+				$CommissionShopeeFreeShippingPerItem = $myrowAccounts['comissionshopeefreeshippingperitempercent'];
+				$CommissionShopeeFreeShippingMaximum = $myrowAccounts['comissionshopeefreeshippingperitemmaximum'];
 				$Commission = CalculateCommissionShopee($CustomerCode, 
 														$OrderNo, 
 														$TotalAmount,
-														$CommissionShopeePercent);
+														$CommissionShopeePercent,
+														$CommissionShopeeFreeShippingPerItem,
+														$CommissionShopeeFreeShippingMaximum);
 			}elseif  ($PaymentCode == "lazada"){
 				// Lazada payments  has commissions
 				$GLAccountTransfer = $myrowAccounts['accountlazadaidr'];
