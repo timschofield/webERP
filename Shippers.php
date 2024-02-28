@@ -136,10 +136,10 @@ or deletion of the records*/
 	$result = DB_query($sql);
 
 	echo '<table class="selection">
-		<tr><th>' .  _('Shipper ID'). '</th>
-			<th>' .  _('Shipper Name'). '</th>
-			<th>' .  _('OpenCart Text'). '</th>
-			<th>' .  _('PowerTrack Code'). '</th>
+		<tr><th class="ascending">' .  _('Shipper ID'). '</th>
+			<th class="ascending">' .  _('Shipper Name'). '</th>
+			<th class="ascending">' .  _('OpenCart Text'). '</th>
+			<th class="ascending">' .  _('PowerTrack Code'). '</th>
 		</tr>';
 
 	$k=0; //row colour counter

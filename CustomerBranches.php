@@ -903,7 +903,7 @@ if (!isset($_GET['delete'])) {
 
 
 
-	$SQL = "SELECT shipper_id, shippername FROM shippers";
+	$SQL = "SELECT shipper_id, shippername FROM shippers ORDER BY shippername";
 	$ShipperResults = DB_query($SQL);
 	if (DB_num_rows($ShipperResults)==0){
 		echo '</table>';

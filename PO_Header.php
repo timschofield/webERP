@@ -1197,7 +1197,7 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 			<td>' . _('Delivery By') . ':</td>
 			<td><select name="DeliveryBy">';
 
-	$ShipperResult = DB_query("SELECT shipper_id, shippername FROM shippers");
+	$ShipperResult = DB_query("SELECT shipper_id, shippername FROM shippers ORDER BY shippername");
 
 	while ($ShipperRow = DB_fetch_array($ShipperResult)) {
 		if (isset($_POST['DeliveryBy']) and ($_POST['DeliveryBy'] == $ShipperRow['shipper_id'])) {
