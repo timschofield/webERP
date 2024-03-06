@@ -81,7 +81,7 @@ if (isset($_POST['submit'])) {
 
 	$SPGName = substr($SalesmanName,0,strpos($SalesmanName, '-') -1);
 	$Shopname = substr($LocationName,11,strlen($LocationName)-11);
-	$RealName = 'SPG'. $_POST['Salesman'] . ' - ' . $SPGName . ' in ' . $Shopname;
+	$RealName = 'SPG'. $_POST['Salesman'] . '-' . $SPGName . ' in ' . $_POST['DefaultLocation'];
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
 
