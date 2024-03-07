@@ -36,6 +36,19 @@ function submit(&$db, $FromDate, $ToDate) {
 		prnMsg(_('Invalid To Date'),'error');
 	}
 
+	$sqlSettings =  "SELECT klretailpartners.accountcomissioncreditcard
+					 FROM klretailpartners
+					 WHERE klretailpartners.partnercode = 'PTADU'";
+	$resultSettings = DB_query($sqlSettings);
+	if (DB_num_rows($resultSettings)==0) {
+		$InputError = 1;
+		prnMsg(_('Invalid Retail partner Settings'),'error');
+	} else {
+		$myrowSettings = DB_fetch_array($resultSettings); //get the only row returned
+	}
+
+
+
 	if ($InputError == 0){
 		// Create new PHPExcel object
 		$objPHPExcel = new PHPExcel();
@@ -149,6 +162,55 @@ function submit(&$db, $FromDate, $ToDate) {
 				$i++;
 			}
 		}
+
+		// Exception GL accounts grouped (HPP (COGS) OR PENJUALAN))
+		$sql = "SELECT accountgroups.groupname AS 'Group',
+					gltrans.account AS 'AccountCode', 
+					chartmasterADU.accountname AS 'AccountName', 
+					gltrans.trandate AS 'Date', 
+					SUM(ROUND(gltrans.amount,0)) AS 'Amount', 
+					gltrans.narrative AS 'Description'
+				FROM gltrans, 
+					chartmasterADU, 
+					accountgroups
+				WHERE gltrans.account = chartmasterADU.accountcode
+					AND chartmasterADU.group_ = accountgroups.groupname
+					AND (accountgroups.pandl = 1)
+					AND ( accountgroups.groupname IN ('Penjualan', 'HPP (COGS)') 
+						OR gltrans.account = '" . $myrowSettings['accountcomissioncreditcard'] . "') 
+					AND gltrans.account != '".$AccountCodePenjualan."'
+					AND gltrans.account != '".$AccountCodeCOGS."'".
+					$WhereFrom .
+					$WhereTo . " 
+				GROUP BY accountgroups.groupname,
+					gltrans.account, 
+					gltrans.trandate 
+				ORDER BY accountgroups.groupname ASC, 
+					gltrans.account ASC, 
+					gltrans.trandate ASC ";
+					
+		$result = DB_query($sql,$ErrMsg);
+		if (DB_num_rows($result) != 0){
+			// Add data
+			while ($myrow = DB_fetch_array($result)) {
+				$objPHPExcel->setActiveSheetIndex(0);
+				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $myrow['Group']);
+				$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $myrow['AccountCode']);
+				$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $myrow['AccountName']);
+				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, ConvertSQLDate($myrow['Date']));
+				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, round($myrow['Amount'],0));
+				$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, 'Total harian ' . $myrow['AccountName']);
+				$i++;
+			}
+		}
+
+
+
+
+
+
+
+
 
 		// Freeze panes
 		$objPHPExcel->getActiveSheet()->freezePane('A2');
