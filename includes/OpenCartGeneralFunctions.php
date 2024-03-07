@@ -1110,33 +1110,14 @@ function RoundPriceFromCart($value, $currency){
 }
 
 function GetWeberpShippingMethod($OpenCartShippingMethod){
-	$OpenCartShippingMethod = strtoupper($OpenCartShippingMethod);
-	if (strpos($OpenCartShippingMethod, SHIPMENT01_OPENCART_TEXT) !== false){
-		$WeberpShipping = SHIPMENT01_WEBERP_CODE;
-	}elseif (strpos($OpenCartShippingMethod, SHIPMENT02_OPENCART_TEXT) !== false){
-		$WeberpShipping = SHIPMENT02_WEBERP_CODE;
-	}elseif (strpos($OpenCartShippingMethod, SHIPMENT03_OPENCART_TEXT) !== false){
-		$WeberpShipping = SHIPMENT03_WEBERP_CODE;
-	}elseif (strpos($OpenCartShippingMethod, SHIPMENT04_OPENCART_TEXT) !== false){
-		$WeberpShipping = SHIPMENT04_WEBERP_CODE;
-	}elseif (strpos($OpenCartShippingMethod, SHIPMENT05_OPENCART_TEXT) !== false){
-		$WeberpShipping = SHIPMENT05_WEBERP_CODE;
-	}elseif (strpos($OpenCartShippingMethod, SHIPMENT06_OPENCART_TEXT) !== false){
-		$WeberpShipping = SHIPMENT06_WEBERP_CODE;
-	}elseif (strpos($OpenCartShippingMethod, SHIPMENT07_OPENCART_TEXT) !== false){
-		$WeberpShipping = SHIPMENT07_WEBERP_CODE;
-	}elseif (strpos($OpenCartShippingMethod, SHIPMENT08_OPENCART_TEXT) !== false){
-		$WeberpShipping = SHIPMENT08_WEBERP_CODE;
-	}elseif (strpos($OpenCartShippingMethod, SHIPMENT09_OPENCART_TEXT) !== false){
-		$WeberpShipping = SHIPMENT09_WEBERP_CODE;
-	}elseif (strpos($OpenCartShippingMethod, SHIPMENT10_OPENCART_TEXT) !== false){
-		$WeberpShipping = SHIPMENT10_WEBERP_CODE;
-	}elseif (strpos($OpenCartShippingMethod, SHIPMENT11_OPENCART_TEXT) !== false){
-		$WeberpShipping = SHIPMENT11_WEBERP_CODE;
-	}elseif (strpos($OpenCartShippingMethod, SHIPMENT12_OPENCART_TEXT) !== false){
-		$WeberpShipping = SHIPMENT12_WEBERP_CODE;
-	}elseif (strpos($OpenCartShippingMethod, SHIPMENT13_OPENCART_TEXT) !== false){
-		$WeberpShipping = SHIPMENT13_WEBERP_CODE;
+
+	$SQL = "SELECT shipper_id
+			FROM shippers
+			WHERE UPPER(opencart_text) = '".strtoupper($OpenCartShippingMethod)."'";
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		$myrow = DB_fetch_array($result);
+		$WeberpShipping = $myrow['shipper_id'];
 	}else{
 		$WeberpShipping = OPENCART_DEFAULT_SHIPVIA;
 	}
@@ -1196,6 +1177,7 @@ function CreateTagsForItem($LanguageId, $Description, $LongDescription, $SalesCa
 				FROM stocktags
 				ORDER BY tagnamebahasa";
 	}
+	
 	$result = DB_query($SQL);
 	while ($myrow = DB_fetch_array($result)){
 		
