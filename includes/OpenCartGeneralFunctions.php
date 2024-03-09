@@ -1113,7 +1113,8 @@ function GetWeberpShippingMethod($OpenCartShippingMethod){
 
 	$SQL = "SELECT shipper_id
 			FROM shippers
-			WHERE UPPER(opencart_text) LIKE '%".strtoupper($OpenCartShippingMethod)."%'";
+			WHERE LEFT(UPPER(opencart_text),10) LIKE LEFT ('".strtoupper($OpenCartShippingMethod)."%',10)
+			ORDER BY shippername";
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		$myrow = DB_fetch_array($result);
