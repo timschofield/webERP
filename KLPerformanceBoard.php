@@ -676,7 +676,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 				AND pcashdetails.codeexpense != 'ASSIGNCASH'
 				AND pctabs.tabcode NOT LIKE 'SALARIES%'
 				AND pctabs.tabcode NOT LIKE '%CEK ADU'
-				AND pctabs.tabcode NOT LIKE '%DANAMON'
+				AND pctabs.tabcode NOT LIKE 'CC-DANAMON%'
 				AND pctabs.tabcode NOT LIKE 'CC-BCA%'
 				AND pcexpenses.glaccount LIKE '%".$AccountSuffix."'";
 	$Result = DB_query($SQL);
@@ -802,7 +802,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 				AND pcashdetails.codeexpense != 'ASSIGNCASH'
 				AND pctabs.tabcode NOT LIKE 'SALARIES%'
 				AND pctabs.tabcode NOT LIKE '%CEK SMH'
-				AND pctabs.tabcode NOT LIKE '%DANAMON'
+				AND pctabs.tabcode NOT LIKE 'CC-DANAMON%'
 				AND pctabs.tabcode NOT LIKE 'CC-BCA%'
 				AND pcexpenses.glaccount LIKE '%".$AccountSuffix."'";
 	$Result = DB_query($SQL);
@@ -912,7 +912,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 				AND pcashdetails.codeexpense != 'ASSIGNCASH'
 				AND pctabs.tabcode NOT LIKE 'SALARIES%'
 				AND pctabs.tabcode NOT LIKE '%CEK BB'
-				AND pctabs.tabcode NOT LIKE '%DANAMON'
+				AND pctabs.tabcode NOT LIKE 'CC-DANAMON%'
 				AND pctabs.tabcode NOT LIKE 'CC-BCA%'
 				AND pcexpenses.glaccount LIKE '%".$AccountSuffix."'";
 	$Result = DB_query($SQL);
