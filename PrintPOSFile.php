@@ -20,12 +20,6 @@ if(isset($_GET['identifier'])) {
 	$identifier = '';
 }
 
-// RICARD: To be improved to get just 1 wcpcache folder in all installation
-if($_SESSION['HTTPS_Only'] == 1){
-	$Protocol = "https";
-}else{
-	$Protocol = "http";
-}
 
 $RootPath = dirname(htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'));
 if (isset($DirectoryLevelsDeep)){
@@ -36,7 +30,14 @@ if (isset($DirectoryLevelsDeep)){
 if ($RootPath == "/" OR $RootPath == "\\") {
 	$RootPath = "";
 }
-$filename =  $Protocol . "://$_SERVER[HTTP_HOST]" . $RootPath . '/includes/WebClientPrint/wcpcache/'.$identifier.'.pos';   
+
+if (strpos($_SERVER['PHP_SELF'],"TEST")!== false){
+	$CachePath = '/var/www/vhosts/kapal-laut.com/ptadu.com/TEST/weberp/includes/WebClientPrint/wcpcache/';
+}else{
+	$CachePath = '/var/www/vhosts/kapal-laut.com/ptadu.com/weberp/includes/WebClientPrint/wcpcache/';
+}
+
+$filename =  "file://" . $CachePath . $identifier.'.pos';   
 
 $texttoprint = file_get_contents($filename);
 
