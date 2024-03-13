@@ -20,17 +20,6 @@ if(isset($_GET['identifier'])) {
 	$identifier = '';
 }
 
-
-$RootPath = dirname(htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'));
-if (isset($DirectoryLevelsDeep)){
-	for ($i=0;$i<$DirectoryLevelsDeep;$i++){
-		$RootPath = mb_substr($RootPath,0, strrpos($RootPath,'/'));
-	}
-}
-if ($RootPath == "/" OR $RootPath == "\\") {
-	$RootPath = "";
-}
-
 if (strpos($_SERVER['PHP_SELF'],"TEST")!== false){
 	$CachePath = '/var/www/vhosts/kapal-laut.com/ptadu.com/TEST/weberp/includes/WebClientPrint/wcpcache/';
 }else{
