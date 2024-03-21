@@ -987,32 +987,16 @@ function UpdateOpenCartOrderStatus($OrderId, $StatusId, $Notify, $Carrier, $AWB,
 
 	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference($db));
 
-	if ($Carrier == SHIPMENT01_WEBERP_CODE){
-		$CarrierPowerTrack = SHIPMENT01_POWERTRACK_CODE ;
-	}else if ($Carrier == SHIPMENT02_WEBERP_CODE){
-		$CarrierPowerTrack = SHIPMENT02_POWERTRACK_CODE ;
-	}else if ($Carrier == SHIPMENT03_WEBERP_CODE){
-		$CarrierPowerTrack = SHIPMENT03_POWERTRACK_CODE ;
-	}else if ($Carrier == SHIPMENT04_WEBERP_CODE){
-		$CarrierPowerTrack = SHIPMENT04_POWERTRACK_CODE ;
-	}else if ($Carrier == SHIPMENT05_WEBERP_CODE){
-		$CarrierPowerTrack = SHIPMENT05_POWERTRACK_CODE ;
-	}else if ($Carrier == SHIPMENT06_WEBERP_CODE){
-		$CarrierPowerTrack = SHIPMENT06_POWERTRACK_CODE ;
-	}else if ($Carrier == SHIPMENT07_WEBERP_CODE){
-		$CarrierPowerTrack = SHIPMENT07_POWERTRACK_CODE ;
-	}else if ($Carrier == SHIPMENT08_WEBERP_CODE){
-		$CarrierPowerTrack = SHIPMENT08_POWERTRACK_CODE ;
-	}else if ($Carrier == SHIPMENT09_WEBERP_CODE){
-		$CarrierPowerTrack = SHIPMENT09_POWERTRACK_CODE ;
-	}else if ($Carrier == SHIPMENT10_WEBERP_CODE){
-		$CarrierPowerTrack = SHIPMENT10_POWERTRACK_CODE ;
-	}else if ($Carrier == SHIPMENT11_WEBERP_CODE){
-		$CarrierPowerTrack = SHIPMENT11_POWERTRACK_CODE ;
-	}else if ($Carrier == SHIPMENT12_WEBERP_CODE){
-		$CarrierPowerTrack = SHIPMENT12_POWERTRACK_CODE ;
-	}else if ($Carrier == SHIPMENT13_WEBERP_CODE){
-		$CarrierPowerTrack = SHIPMENT13_POWERTRACK_CODE ;
+	$SQL = "SELECT powertrack_code
+			FROM shippers
+			WHERE shipper_id = '".$Carrier."'
+			ORDER BY shippername";
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		$myrow = DB_fetch_array($result);
+		$CarrierPowerTrack = $myrow['powertrack_code'];
+	}else{
+		$CarrierPowerTrack = "";
 	}
 
 	$DbgMsg = _('The SQL statement that failed was');
