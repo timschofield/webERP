@@ -365,7 +365,6 @@ or deletion of the records*/
 			<th class="ascending">', _('PPN'), '</th>
 			<th class="ascending">', _('Cash Reported'), '</th>
 			<th class="ascending">', _('EDC Danamon'), '</th>
-			<th class="ascending">', _('AMEX Danamon'), '</th>
 			<th class="ascending">', _('EDC BNI'), '</th>
 			<th class="ascending">', _('AMEX BNI'), '</th>
 			<th class="ascending">', _('EDC Mandiri'), '</th>
@@ -398,7 +397,6 @@ while ($myrow = DB_fetch_array($result)) {
 			<td class="number">%s</td>
 			<td class="number">%s</td>
 			<td class="number">%s</td>
-			<td class="number">%s</td>
 			<td class="noprint"><a href="%sSelectedPartner=%s">' . _('Edit') . '</a></td>
 			<td class="noprint"><a href="%sSelectedPartner=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this retail partner?') . '\');">' . _('Delete') . '</a></td>
 			</tr>',
@@ -407,7 +405,6 @@ while ($myrow = DB_fetch_array($result)) {
 			locale_number_format($myrow['ppn'],0) . "%",
 			locale_number_format($myrow['cashsalesreported'],0) . "%",
 			locale_number_format($myrow['comissionccdanamon'],2) . "%",
-			locale_number_format($myrow['comissionamexdanamon'],2) . "%",
 			locale_number_format($myrow['comissionccbni'],2) . "%",
 			locale_number_format($myrow['comissionamexbni'],2) . "%",
 			locale_number_format($myrow['comissionccmandiri'],2) . "%",

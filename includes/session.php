@@ -292,11 +292,14 @@ if ($KL_SPGSeniorOrSupport OR $KL_SPGJunior){
 					klretailpartners.hppcompensation,
 					klretailpartners.accounthppcompensation,
 					klretailpartners.accountbankdanamon,
+					klretailpartners.accountbankbni,
 					klretailpartners.accountbankmandiri,
 					klretailpartners.accountbankbca,
 					klretailpartners.accountcomissioncreditcard,
 					klretailpartners.comissionccdanamon,
 					klretailpartners.comissionamexdanamon,
+					klretailpartners.comissionccbni,
+					klretailpartners.comissionamexbni,
 					klretailpartners.comissionccmandiri,
 					klretailpartners.comissionccbca,
 					klretailpartners.comissionamexbca,
@@ -390,11 +393,14 @@ if ($KL_SPGSeniorOrSupport OR $KL_SPGJunior){
 		$_SESSION['HPPCompensation'] = $myrow['hppcompensation'];
 		$_SESSION['AccountHPPCompensation'] = $myrow['accounthppcompensation'];
 		$_SESSION['AccountBankDanamon'] = $myrow['accountbankdanamon'];
+		$_SESSION['AccountBankBNI'] = $myrow['accountbankbni'];
 		$_SESSION['AccountBankMandiri'] = $myrow['accountbankmandiri'];
 		$_SESSION['AccountBankBCA'] = $myrow['accountbankbca'];
 		$_SESSION['AccountComissionCreditCard'] = $myrow['accountcomissioncreditcard'];
 		$_SESSION['ComissionCCDanamon'] = $myrow['comissionccdanamon'];
 		$_SESSION['ComissionAmexDanamon'] = $myrow['comissionamexdanamon'];
+		$_SESSION['ComissionCCBNI'] = $myrow['comissionccbni'];
+		$_SESSION['ComissionAmexBNI'] = $myrow['comissionamexbni'];
 		$_SESSION['ComissionCCMandiri'] = $myrow['comissionccmandiri'];
 		$_SESSION['ComissionCCBCA'] = $myrow['comissionccbca'];
 		$_SESSION['ComissionAmexBCA'] = $myrow['comissionamexbca'];

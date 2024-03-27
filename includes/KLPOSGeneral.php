@@ -865,11 +865,17 @@ function KLPrintReceiptShopFooter($identifier, $OrderNo){
 	if ($_POST['AmountPaidCCDanamon'] > 0){
 		$TextToPrint .= 'Paid CC EDC Danamon: ' . number_format($_POST['AmountPaidCCDanamon'],0) . $NewLine;
 	}
+	if ($_POST['AmountPaidCCBNI'] > 0){
+		$TextToPrint .= 'Paid CC EDC BNI: ' . number_format($_POST['AmountPaidCCBNI'],0) . $NewLine;
+	}
 	if ($_POST['AmountPaidCCMandiri'] > 0){
 		$TextToPrint .= 'Paid CC EDC Mandiri: ' . number_format($_POST['AmountPaidCCMandiri'],0) . $NewLine;
 	}
 	if ($_POST['AmountPaidCCBCA'] > 0){
 		$TextToPrint .= 'Paid CC EDC BCA: ' . number_format($_POST['AmountPaidCCBCA'],0) . $NewLine;
+	}
+	if ($_POST['AmountPaidAmexBNI'] > 0){
+		$TextToPrint .= 'Paid AMEX EDC BNI: ' . number_format($_POST['AmountPaidAmexBNI'],0) . $NewLine;
 	}
 	if ($_POST['AmountPaidAmexBCA'] > 0){
 		$TextToPrint .= 'Paid AMEX EDC BCA: ' . number_format($_POST['AmountPaidAmexBCA'],0) . $NewLine;

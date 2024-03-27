@@ -1,6 +1,7 @@
 <?php
 
 /************************************************************************
+v 4.40 Added BNI payments
 v 4.30 Added PTADU retail sales
 v 4.20 Added QRIS payments
 v 4.10 Added WeChat / AliPay payments
@@ -34,7 +35,7 @@ v 1.00 2011-07-25: Kantor starts using it.
 
 $AccountCOGSbyADU = "510010000AD"; // when a retail partner sells PTADU items COGS should go to PTADU
 
-define("VERSIONFILE", "4.30"); // 
+define("VERSIONFILE", "4.40"); // 
 
 include('includes/DefineCartClass.php');
 include('includes/session.php');
@@ -445,9 +446,11 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 	
 	$TotalReceivedCash = $_POST['AmountPaidCash'];
 	$TotalReceivedCreditCard = $_POST['AmountPaidCCDanamon'] 
-								+ $_POST['AmountPaidAmexBCA']
+								+ $_POST['AmountPaidCCBNI'] 
 								+ $_POST['AmountPaidCCMandiri'] 
 								+ $_POST['AmountPaidCCBCA']
+								+ $_POST['AmountPaidAmexBNI']
+								+ $_POST['AmountPaidAmexBCA']
 								+ $_POST['AmountPaidWeChat']
 								+ $_POST['AmountPaidQRIS'];
 
@@ -476,6 +479,12 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		$PaymentSystemsUsed++;
 	}
 	if ($_POST['AmountPaidCCDanamon'] <> 0){
+		$PaymentSystemsUsed++;
+	}
+	if ($_POST['AmountPaidCCBNI'] <> 0){
+		$PaymentSystemsUsed++;
+	}
+	if ($_POST['AmountPaidAmexBNI'] <> 0){
 		$PaymentSystemsUsed++;
 	}
 	if ($_POST['AmountPaidAmexBCA'] <> 0){
@@ -646,6 +655,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						'" . $_SESSION['SalesmanLogin'] . "',
 						'" . $_POST['AmountPaidCash'] . "',
 						'" . ($_POST['AmountPaidCCDanamon'] 
+							+ $_POST['AmountPaidCCBNI'] 
+							+ $_POST['AmountPaidAmexBNI']
 							+ $_POST['AmountPaidAmexBCA']
 							+ $_POST['AmountPaidCCMandiri']
 							+ $_POST['AmountPaidCCBCA']
@@ -1237,8 +1248,80 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								$_SESSION['Items'.$identifier]->DebtorNo);
 		}//amount paid Credit Card DANAMON  was not zero
 
+		if ($_POST['AmountPaidCCBNI']!=0){
+			// si han pagat CREDITCARD BNI
+			$CreditCardBankComissions = round($_POST['AmountPaidCCBNI']*($_SESSION['ComissionCCBNI'])/100);
+			$CreditCardNetPayment = $_POST['AmountPaidCCBNI'] - $CreditCardBankComissions;
+			
+			$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CREDITCARD,
+								$PeriodNo,
+								$_SESSION['AccountBankBNI'],
+								$Area,
+								$InvoiceNo,
+								$_SESSION['Items'.$identifier]->CustRef,
+								$_SESSION['Items'.$identifier]->Location,
+								$_POST['AmountPaidCCBNI'],
+								$CreditCardBankComissions,
+								$CreditCardNetPayment,
+								$Tag,
+								$_SESSION['AccountComissionCreditCard'],
+								$ExRate);
+
+			$ReceiptNumber = AccountDebtorPayment($ReceiptNumber,
+								PAYMENT_BY_CREDITCARD,
+								$PeriodNo,
+								$_SESSION['AccountBankBNI'],
+								$Area,
+								$InvoiceNo,
+								$_SESSION['Items'.$identifier]->CustRef,
+								$_SESSION['Items'.$identifier]->Location,
+								$_POST['AmountPaidCCBNI'],
+								$CreditCardNetPayment,
+								$ExRate,
+								$DebtorTransID,
+								$OrderNo,
+								$_SESSION['Items'.$identifier]->DefaultCurrency,
+								$_SESSION['Items'.$identifier]->DebtorNo);
+		}//amount paid Credit Card BNI was not zero
+
+		if ($_POST['AmountPaidAmexBNI']!=0){
+			// si han pagat AMEX BNI, tot o en part
+			$CreditCardBankComissions = round($_POST['AmountPaidAmexBNI']*($_SESSION['ComissionAmexBNI'])/100);
+			$CreditCardNetPayment = $_POST['AmountPaidAmexBNI'] - $CreditCardBankComissions;
+			
+			$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CREDITCARD,
+								$PeriodNo,
+								$_SESSION['AccountBankBNI'],
+								$Area,
+								$InvoiceNo,
+								$_SESSION['Items'.$identifier]->CustRef,
+								$_SESSION['Items'.$identifier]->Location,
+								$_POST['AmountPaidAmexBNI'],
+								$CreditCardBankComissions,
+								$CreditCardNetPayment,
+								$Tag,
+								$_SESSION['AccountComissionCreditCard'],
+								$ExRate);
+
+			$ReceiptNumber = AccountDebtorPayment($ReceiptNumber,
+								PAYMENT_BY_CREDITCARD,
+								$PeriodNo,
+								$_SESSION['AccountBankBNI'],
+								$Area,
+								$InvoiceNo,
+								$_SESSION['Items'.$identifier]->CustRef,
+								$_SESSION['Items'.$identifier]->Location,
+								$_POST['AmountPaidAmexBNI'],
+								$CreditCardNetPayment,
+								$ExRate,
+								$DebtorTransID,
+								$OrderNo,
+								$_SESSION['Items'.$identifier]->DefaultCurrency,
+								$_SESSION['Items'.$identifier]->DebtorNo);
+		}//amount paid American Express BNI was not zero
+
 		if ($_POST['AmountPaidAmexBCA']!=0){
-			// si han pagat AMEX DANAMON, tot o en part
+			// si han pagat AMEX BCA, tot o en part
 			$CreditCardBankComissions = round($_POST['AmountPaidAmexBCA']*($_SESSION['ComissionAmexBCA'])/100);
 			$CreditCardNetPayment = $_POST['AmountPaidAmexBCA'] - $CreditCardBankComissions;
 			
@@ -1271,7 +1354,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								$OrderNo,
 								$_SESSION['Items'.$identifier]->DefaultCurrency,
 								$_SESSION['Items'.$identifier]->DebtorNo);
-		}//amount paid American Express was not zero
+		}//amount paid American Express BCA was not zero
 
 		if ($_POST['AmountPaidCCMandiri']!=0){
 			// si han pagat CREDITCARD MANDIRI
@@ -1491,11 +1574,17 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		if ($_POST['AmountPaidCCDanamon'] > 0){
 			echo '<tr><td>' . _('Payment CC EDC Danamon') . ':</td> <td>' . number_format($_POST['AmountPaidCCDanamon'],0) . '</td></tr>';
 		}
+		if ($_POST['AmountPaidCCBNI'] > 0){
+			echo '<tr><td>' . _('Payment CC EDC BNI') . ':</td> <td>' . number_format($_POST['AmountPaidCCBNI'],0) . '</td></tr>';
+		}
 		if ($_POST['AmountPaidCCMandiri'] > 0){
 			echo '<tr><td>' . _('Payment CC EDC Mandiri') . ':</td> <td>' . number_format($_POST['AmountPaidCCMandiri'],0) . '</td></tr>';
 		}
 		if ($_POST['AmountPaidCCBCA'] > 0){
 			echo '<tr><td>' . _('Payment CC EDC BCA') . ':</td> <td>' . number_format($_POST['AmountPaidCCBCA'],0) . '</td></tr>';
+		}
+		if ($_POST['AmountPaidAmexBNI'] > 0){
+			echo '<tr><td>' . _('Payment AMEX EDC BNI') . ':</td> <td>' . number_format($_POST['AmountPaidAmexBNI'],0) . '</td></tr>';
 		}
 		if ($_POST['AmountPaidAmexBCA'] > 0){
 			echo '<tr><td>' . _('Payment AMEX EDC BCA') . ':</td> <td>' . number_format($_POST['AmountPaidAmexBCA'],0) . '</td></tr>';
@@ -1541,6 +1630,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						number_format($_POST['AmountVouchers'],0),
 						number_format($_POST['AmountPaidWeChat'],0),
 						number_format($_POST['AmountPaidQRIS'],0),
+						number_format($_POST['AmountPaidCCBNI'],0),
+						number_format($_POST['AmountPaidAmexBNI'],0),
 						stripcslashes($_SESSION['Items'.$identifier]->Comments));
 		}
 
@@ -1590,6 +1681,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						$ReturnReasonText,
 						number_format($_POST['AmountPaidWeChat'],0),
 						number_format($_POST['AmountPaidQRIS'],0),
+						number_format($_POST['AmountPaidCCBNI'],0),
+						number_format($_POST['AmountPaidAmexBNI'],0),
 						stripcslashes($_SESSION['Items'.$identifier]->Comments));
 			}
 			if ($_POST['AmountVouchers'] <> 0 ){
@@ -1610,6 +1703,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						stripcslashes($_POST['VoucherCode']),
 						number_format($_POST['AmountPaidWeChat'],0),
 						number_format($_POST['AmountPaidQRIS'],0),
+						number_format($_POST['AmountPaidCCBNI'],0),
+						number_format($_POST['AmountPaidAmexBNI'],0),
 						stripcslashes($_SESSION['Items'.$identifier]->Comments));
 			}
 		}
