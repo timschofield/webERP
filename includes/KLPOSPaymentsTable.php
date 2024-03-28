@@ -83,19 +83,19 @@ if ($_SESSION['ComissionCCBNI'] != 0){
 }
 echo '</tr>';
 
-if ($_SESSION['ComissionCCMandiri'] != 0){
-	echo '<tr>';
-	echo '<td></td>';
-	echo '<td>' . _('Amount Paid CC EDC Mandiri') . ':</td>
-		  <td><input type="text" class="number" name="AmountPaidCCMandiri" maxlength="12" size="12" value="' . $_POST['AmountPaidCCMandiri'] . '" /></td>';
-	echo '</tr>';
-}
-
 if ($_SESSION['ComissionCCBCA'] != 0){
 	echo '<tr>';
 	echo '<td></td>';
 	echo '<td>' . _('Amount Paid CC EDC BCA') . ':</td>
 		  <td><input type="text" class="number" name="AmountPaidCCBCA" maxlength="12" size="12" value="' . $_POST['AmountPaidCCBCA'] . '" /></td>';
+	echo '</tr>';
+}
+
+if ($_SESSION['ComissionCCMandiri'] != 0){
+	echo '<tr>';
+	echo '<td></td>';
+	echo '<td>' . _('Amount Paid CC EDC Mandiri') . ':</td>
+		  <td><input type="text" class="number" name="AmountPaidCCMandiri" maxlength="12" size="12" value="' . $_POST['AmountPaidCCMandiri'] . '" /></td>';
 	echo '</tr>';
 }
 
