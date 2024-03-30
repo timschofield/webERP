@@ -64,11 +64,14 @@ if(isset($_POST['submit'])) {
 					hppcompensation ='" . $_POST['HPPCompensation'] . "',
 					accounthppcompensation='" . $_POST['AccountHPPCompensation'] . "',
 					accountbankdanamon='" . $_POST['AccountBankDanamon'] . "',
+					accountbankbni='" . $_POST['AccountBankBNI'] . "',
 					accountbankmandiri = '" . $_POST['AccountBankMandiri'] . "',
 					accountbankbca ='" . $_POST['AccountBankBCA'] . "',
 					accountcomissioncreditcard ='" . $_POST['AccountComissionCreditCard'] . "',
 					comissionccdanamon = '" . $_POST['ComissionCCDanamon'] . "',
 					comissionamexdanamon = '" . $_POST['ComissionAmexDanamon'] . "',
+					comissionccbni = '" . $_POST['ComissionCCBNI'] . "',
+					comissionamexbni = '" . $_POST['ComissionAmexBNI'] . "',
 					comissionccmandiri = '" . $_POST['ComissionCCMandiri'] . "',
 					comissionccbca = '" . $_POST['ComissionCCBCA'] . "',
 					comissionamexbca = '" . $_POST['ComissionAmexBCA'] . "',
@@ -120,11 +123,14 @@ if(isset($_POST['submit'])) {
 		unset($_POST['HPPCompensation']);
 		unset($_POST['AccountHPPCompensation']);
 		unset($_POST['AccountBankDanamon']);
+		unset($_POST['AccountBankBNI']);
 		unset($_POST['AccountBankMandiri']);
 		unset($_POST['AccountBankBCA']);
 		unset($_POST['AccountComissionCreditCard']);
 		unset($_POST['ComissionCCDanamon']);
 		unset($_POST['ComissionAmexDanamon']);
+		unset($_POST['ComissionCCBNI']);
+		unset($_POST['ComissionAmexBNI']);
 		unset($_POST['ComissionCCMandiri']);
 		unset($_POST['ComissionCCBCA']);
 		unset($_POST['ComissionAmexBCA']);
@@ -172,11 +178,14 @@ if(isset($_POST['submit'])) {
 								hppcompensation,
 								accounthppcompensation,
 								accountbankdanamon,
+								accountbankbni,
 								accountbankmandiri,
 								accountbankbca,
 								accountcomissioncreditcard,
 								comissionccdanamon,
 								comissionamexdanamon,
+								comissionccbni,
+								comissionamexbni,
 								comissionccmandiri,
 								comissionccbca,
 								comissionamexbca,
@@ -218,11 +227,14 @@ if(isset($_POST['submit'])) {
 								'" . $_POST['HPPCompensation'] . "',
 								'" . $_POST['AccountHPPCompensation'] . "',
 								'" . $_POST['AccountBankDanamon'] . "',
+								'" . $_POST['AccountBankBNI'] . "',
 								'" . $_POST['AccountBankMandiri'] . "',
 								'" . $_POST['AccountBankBCA'] . "',
 								'" . $_POST['AccountComissionCreditCard'] . "',
 								'" . $_POST['ComissionCCDanamon'] . "',
 								'" . $_POST['ComissionAmexDanamon'] . "',
+								'" . $_POST['ComissionCCBNI'] . "',
+								'" . $_POST['ComissionAmexBNI'] . "',
 								'" . $_POST['ComissionCCMandiri'] . "',
 								'" . $_POST['ComissionCCBCA'] . "',
 								'" . $_POST['ComissionAmexBCA'] . "',
@@ -274,9 +286,12 @@ if(isset($_POST['submit'])) {
 		unset($_POST['AccountBankMandiri']);
 		unset($_POST['AccountBankBCA']);
 		unset($_POST['AccountComissionCreditCard']);
-		unset($_POST['ComissionCCDanamon']);
 		unset($_POST['AccountBankDanamon']);
+		unset($_POST['AccountBankBNI']);
+		unset($_POST['ComissionCCDanamon']);
 		unset($_POST['ComissionAmexDanamon']);
+		unset($_POST['ComissionCCBNI']);
+		unset($_POST['ComissionAmexBNI']);
 		unset($_POST['Priority']);
 		unset($_POST['ComissionCCBCA']);
 		unset($_POST['ComissionAmexBCA']);
@@ -328,6 +343,8 @@ or deletion of the records*/
 				cashsalesreported,
 				comissionccdanamon,
 				comissionamexdanamon,
+				comissionccbni,
+				comissionamexbni,
 				comissionccmandiri,
 				comissionqris,
 				comissionccbca,
@@ -348,7 +365,8 @@ or deletion of the records*/
 			<th class="ascending">', _('PPN'), '</th>
 			<th class="ascending">', _('Cash Reported'), '</th>
 			<th class="ascending">', _('EDC Danamon'), '</th>
-			<th class="ascending">', _('AMEX Danamon'), '</th>
+			<th class="ascending">', _('EDC BNI'), '</th>
+			<th class="ascending">', _('AMEX BNI'), '</th>
 			<th class="ascending">', _('EDC Mandiri'), '</th>
 			<th class="ascending">', _('QRIS Mandiri'), '</th>
 			<th class="ascending">', _('EDC BCA'), '</th>
@@ -378,6 +396,7 @@ while ($myrow = DB_fetch_array($result)) {
 			<td class="number">%s</td>
 			<td class="number">%s</td>
 			<td class="number">%s</td>
+			<td class="number">%s</td>
 			<td class="noprint"><a href="%sSelectedPartner=%s">' . _('Edit') . '</a></td>
 			<td class="noprint"><a href="%sSelectedPartner=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this retail partner?') . '\');">' . _('Delete') . '</a></td>
 			</tr>',
@@ -386,7 +405,8 @@ while ($myrow = DB_fetch_array($result)) {
 			locale_number_format($myrow['ppn'],0) . "%",
 			locale_number_format($myrow['cashsalesreported'],0) . "%",
 			locale_number_format($myrow['comissionccdanamon'],2) . "%",
-			locale_number_format($myrow['comissionamexdanamon'],2) . "%",
+			locale_number_format($myrow['comissionccbni'],2) . "%",
+			locale_number_format($myrow['comissionamexbni'],2) . "%",
 			locale_number_format($myrow['comissionccmandiri'],2) . "%",
 			locale_number_format($myrow['comissionqris'],2) . "%",
 			locale_number_format($myrow['comissionccbca'],2) . "%",
@@ -439,6 +459,7 @@ if(!isset($_GET['delete'])) {
 					areasalescash,
 					areasalescashothers,
 					accountbankdanamon,
+					accountbankbni,
 					hppcompensation,
 					cashsalesreported,
 					accounthppcompensation,
@@ -447,6 +468,8 @@ if(!isset($_GET['delete'])) {
 					accountcomissioncreditcard,
 					comissionccdanamon,
 					comissionamexdanamon,
+					comissionccbni,
+					comissionamexbni,
 					comissionccmandiri,
 					comissionccbca,
 					comissionamexbca,
@@ -491,6 +514,7 @@ if(!isset($_GET['delete'])) {
 		$_POST['AreaSalesCash'] = $myrow['areasalescash'];
 		$_POST['AreaSalesCashOthers'] = $myrow['areasalescashothers'];
 		$_POST['AccountBankDanamon'] = $myrow['accountbankdanamon'];
+		$_POST['AccountBankBNI'] = $myrow['accountbankbni'];
 		$_POST['CashSalesReported'] = $myrow['cashsalesreported'];
 		$_POST['HPPCompensation'] = $myrow['hppcompensation'];
 		$_POST['AccountHPPCompensation'] = $myrow['accounthppcompensation'];
@@ -499,6 +523,8 @@ if(!isset($_GET['delete'])) {
 		$_POST['AccountComissionCreditCard'] = $myrow['accountcomissioncreditcard'];
 		$_POST['ComissionCCDanamon'] = $myrow['comissionccdanamon'];
 		$_POST['ComissionAmexDanamon'] = $myrow['comissionamexdanamon'];
+		$_POST['ComissionCCBNI'] = $myrow['comissionccbni'];
+		$_POST['ComissionAmexBNI'] = $myrow['comissionamexbni'];
 		$_POST['ComissionCCMandiri'] = $myrow['comissionccmandiri'];
 		$_POST['ComissionCCBCA'] = $myrow['comissionccbca'];
 		$_POST['ComissionAmexBCA'] = $myrow['comissionamexbca'];
@@ -613,6 +639,9 @@ if(!isset($_GET['delete'])) {
 	if(!isset($_POST['AccountBankDanamon'])) {
 		$_POST['AccountBankDanamon'] = '';
 	}
+	if(!isset($_POST['AccountBankBNI'])) {
+		$_POST['AccountBankBNI'] = '';
+	}
 	if(!isset($_POST['AccountBankMandiri'])) {
 		$_POST['AccountBankMandiri'] = '';
 	}
@@ -627,6 +656,12 @@ if(!isset($_GET['delete'])) {
 	}
 	if(!isset($_POST['ComissionAmexDanamon'])) {
 		$_POST['ComissionAmexDanamon'] = 0;
+	}
+	if(!isset($_POST['ComissionCCBNI'])) {
+		$_POST['ComissionCCBNI'] = 0;
+	}
+	if(!isset($_POST['ComissionAmexBNI'])) {
+		$_POST['ComissionAmexBNI'] = 0;
 	}
 	if(!isset($_POST['ComissionCCMandiri'])) {
 		$_POST['ComissionCCMandiri'] = 0;
@@ -880,6 +915,29 @@ if(!isset($_GET['delete'])) {
 	echo '<tr>
 			<td>' . _('% AMEX Comission Bank Danamon') . ':</td>
 			<td><input type="text" name="ComissionAmexDanamon" class="number" value="' . $_POST['ComissionAmexDanamon'] . '" size="5" maxlength="5" /></td>
+		</tr>';
+
+	echo '<tr>
+		<td>' . _('Bank BNI GL Account') . ':' . '</td>
+		<td><select name="AccountBankBNI">';
+	$GLAccount = DB_query("SELECT accountcode, bankaccountname FROM bankaccounts ORDER BY bankaccountname");
+	while ($myrow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountBankBNI']==$myrow['accountcode']) {
+			echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . '</option>';
+		} else {
+			echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . '</option>';
+		}
+	}
+	echo '</select></td></tr>';
+
+	echo '<tr>
+			<td>' . _('% Credit Card Comission Bank BNI') . ':</td>
+			<td><input type="text" name="ComissionCCBNI" class="number" value="' . $_POST['ComissionCCBNI'] . '" size="5" maxlength="5" /></td>
+		</tr>';
+
+	echo '<tr>
+			<td>' . _('% AMEX Comission Bank BNI') . ':</td>
+			<td><input type="text" name="ComissionAmexBNI" class="number" value="' . $_POST['ComissionAmexBNI'] . '" size="5" maxlength="5" /></td>
 		</tr>';
 
 	echo '<tr>
