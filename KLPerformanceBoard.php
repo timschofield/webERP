@@ -199,7 +199,7 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_SystemAdmin){
+/*	if ($KL_SystemAdmin){
 		GoodsToBeProduced("COMPOA", "ONLYDISCOUNT", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		GoodsToBeProduced("COMPOA", "DISCOUNT", $RootPath, $db);
@@ -218,7 +218,7 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin){
-/*		POStatusControl("","IN NEGOTIATION WITH SUPPLIER", 0, $periodnow, $RootPath, $db);
+		POStatusControl("","IN NEGOTIATION WITH SUPPLIER", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		POStatusControl("PACKAGING","ON PRODUCTION", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -248,14 +248,14 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 		POStatusControl("","IN WANGFOONG CARGO BUT NOT SHIPPED", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
-*/		POStatusControl("","SHIPPED IN TRANSIT", 0, $periodnow, $RootPath, $db);
+		POStatusControl("","SHIPPED IN TRANSIT", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		POStatusControl("","CUSTOMS CLEARANCE", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		POStatusControl("","RECEIVED IN KANTOR", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
-	
+*/	
 	if ($KL_SystemAdmin OR
 		$KL_OperationalManager){
 		POStatusControl("PACKAGING","ARRIVING IN NEXT DAYS", 75, $periodnow, $RootPath, $db);
@@ -281,7 +281,7 @@ if ($ProcessSection03){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_SystemAdmin){
+/*	if ($KL_SystemAdmin){
 		PackagingStatusForKapalLaut($RootPath, $db);
 		$NumberOfTestExecuted++;
 		PackagingUsageForKapalLaut(30, $RootPath, $db);
@@ -297,7 +297,7 @@ if ($ProcessSection03){
 		PackagingUsageForOutlet(30, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
-
+*/
 	if ($KL_SystemAdmin){
 		FinishedStockDistribution("PACKAGING", "LOCATION", $db);
 		$NumberOfTestExecuted++;
@@ -354,9 +354,9 @@ if ($ProcessSection03){
 	if ($KL_SystemAdmin
 		OR $KL_AdministrationTeam){
 		CashStatus(2024, 
-					226984805, 200000000, 100000000, 
-					143709500, 200000000, 100000000, 
-					448879353, 300000000, 100000000, 
+					226900000, 200000000, 100000000, 
+					143000000, 200000000, 100000000, 
+					 40525935, 300000000, 100000000, 
 					100000000, $periodnow, $KL_SystemAdmin, TRUE, $db);
 		$NumberOfTestExecuted++;
 	}
