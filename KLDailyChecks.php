@@ -88,6 +88,7 @@ function KL_DailyCleanDB($ShowMessages, $db, $EmailText){
 	$EmailText = SetEndDatePriceToObsolete($ShowMessages, $EmailText, $db);
 	$EmailText = CleanDiscountForObsoleteItems($ShowMessages, $EmailText, $db);
 	$EmailText = CleanObsoleteFromWebsite($ShowMessages, $EmailText, $db);
+	$EmailText = CleanPurchOrderDetails($ShowMessages, $EmailText, $db);
 	$EmailText = CleanInternalRequestsWithoutItems($ShowMessages, $EmailText, $db);
 	$EmailText = SetStatusCompleteToFinishedOldPurchaseOrders(150, $ShowMessages, $EmailText, $db);
 	$EmailText = CleanWrongPrices($ShowMessages, $EmailText, $db);
@@ -251,6 +252,14 @@ function PurgePackagingUsedTable($DaysToKeep, $ShowMessages, $EmailText, $db){
 	return $EmailText;
 }
 
+function CleanPurchOrderDetails($ShowMessages, $EmailText, $db){
+	$sql = "DELETE FROM purchorderdetails WHERE orderno='0'";
+	$ErrMsg ='Could not clean purchorderdetails table because';
+	$result = DB_query($sql,$ErrMsg);
+	$Text = "Table purchorderdetails cleaned.";
+	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
+	return $EmailText;
+}
 
 function CleanDiscountForObsoleteItems($ShowMessages, $EmailText, $db){
 	$sql = "UPDATE stockmaster
