@@ -129,8 +129,12 @@ function SetRLZeroAtPointOfSales($StockId, $db){
 	prnMsg($msg , 'success');
 }
 
-function round_basic_price($n,$x=1) {
+function round_multiple_of($n,$x=1) {
     return round($n/$x)*$x;
+}
+
+function round_down_multiple_of($n,$x=1) {
+    return floor($n/$x)*$x;
 }
 
 function IsPriceRoundedOK($n, $up="UP"){
@@ -147,17 +151,17 @@ function round_price($n, $up="UP"){
 	if($n <= PRICE_ROUNDING_LIMIT01){
 		if(!multiple_of($n, PRICE_ROUNDING_STEP01)){
 			if($up == "UP"){
-				$price = round_basic_price($n + (PRICE_ROUNDING_STEP01/2),PRICE_ROUNDING_STEP01);
+				$price = round_multiple_of($n + (PRICE_ROUNDING_STEP01/2),PRICE_ROUNDING_STEP01);
 			}else{
-				$price = round_basic_price($n - (PRICE_ROUNDING_STEP01/2), PRICE_ROUNDING_STEP01);
+				$price = round_multiple_of($n - (PRICE_ROUNDING_STEP01/2), PRICE_ROUNDING_STEP01);
 			}
 		}
 	}elseif($n <= PRICE_ROUNDING_LIMIT02){
 		if(!multiple_of($n, PRICE_ROUNDING_STEP02)){
 			if($up == "UP"){
-				$price = round_basic_price($n + (PRICE_ROUNDING_STEP02/2),PRICE_ROUNDING_STEP02);
+				$price = round_multiple_of($n + (PRICE_ROUNDING_STEP02/2),PRICE_ROUNDING_STEP02);
 			}else{
-				$price = round_basic_price($n - (PRICE_ROUNDING_STEP02/2), PRICE_ROUNDING_STEP02);
+				$price = round_multiple_of($n - (PRICE_ROUNDING_STEP02/2), PRICE_ROUNDING_STEP02);
 			}
 		}
 		if (($price % PRICE_ROUNDING_COMMERCIAL_MODULE02) == 0){
@@ -166,9 +170,9 @@ function round_price($n, $up="UP"){
 	}else{
 		if(!multiple_of($n, PRICE_ROUNDING_STEP03)){
 			if($up == "UP"){
-				$price = round_basic_price($n + (PRICE_ROUNDING_STEP03/2),PRICE_ROUNDING_STEP03);
+				$price = round_multiple_of($n + (PRICE_ROUNDING_STEP03/2),PRICE_ROUNDING_STEP03);
 			}else{
-				$price = round_basic_price($n  - (PRICE_ROUNDING_STEP03/2), PRICE_ROUNDING_STEP03);
+				$price = round_multiple_of($n  - (PRICE_ROUNDING_STEP03/2), PRICE_ROUNDING_STEP03);
 			}
 		}
 	}
@@ -215,32 +219,32 @@ function UpdateTablePrice($StockId, $RetailPrice, $db){
 	/* 2nd: set prices in IDR */
 	UpdatePriceItem($StockId, 'RT', 'IDR', $RetailPrice, $Today, TRUE, $db);
 
-/*	$Wholesale25 = round_basic_price($RetailPrice * (0.75), 500);
+/*	$Wholesale25 = round_multiple_of($RetailPrice * (0.75), 500);
 	UpdatePriceItem($StockId, 'W2', 'IDR', $Wholesale25, $Today, TRUE , $db);
 	
-	$Wholesale30 = round_basic_price($RetailPrice * (0.70), 500);
+	$Wholesale30 = round_multiple_of($RetailPrice * (0.70), 500);
 	UpdatePriceItem($StockId, 'W3', 'IDR', $Wholesale30, $Today, TRUE , $db);
 
-	$Wholesale40 = round_basic_price($RetailPrice * (0.60), 500);
+	$Wholesale40 = round_multiple_of($RetailPrice * (0.60), 500);
 	UpdatePriceItem($StockId, 'W4', 'IDR', $Wholesale40, $Today, TRUE , $db);
 
-	$Wholesale50 = round_basic_price($RetailPrice * (0.50), 500);
+	$Wholesale50 = round_multiple_of($RetailPrice * (0.50), 500);
 	UpdatePriceItem($StockId, 'W5', 'IDR', $Wholesale50, $Today, TRUE , $db);
 */
 	/* 3rd: set prices in USD */
-/*	$RetailUSD = round_basic_price($RetailPrice / RATE_IDRUSD_FOR_RETAIL_WEBSTORE, 0.05);
+/*	$RetailUSD = round_multiple_of($RetailPrice / RATE_IDRUSD_FOR_RETAIL_WEBSTORE, 0.05);
 	UpdatePriceItem($StockId, 'RT', 'USD', $RetailUSD, $Today, TRUE , $db);
 
-	$Wholesale25USD = round_basic_price($RetailPrice / RATE_IDRUSD_FOR_RETAIL_WEBSTORE * (0.75), 0.05);
+	$Wholesale25USD = round_multiple_of($RetailPrice / RATE_IDRUSD_FOR_RETAIL_WEBSTORE * (0.75), 0.05);
 	UpdatePriceItem($StockId, 'W2', 'USD', $Wholesale25USD, $Today, TRUE , $db);
 
-	$Wholesale30USD = round_basic_price($RetailPrice / RATE_IDRUSD_FOR_RETAIL_WEBSTORE * (0.70), 0.05);
+	$Wholesale30USD = round_multiple_of($RetailPrice / RATE_IDRUSD_FOR_RETAIL_WEBSTORE * (0.70), 0.05);
 	UpdatePriceItem($StockId, 'W3', 'USD', $Wholesale30USD, $Today, TRUE , $db);
 
-	$Wholesale40USD = round_basic_price($RetailPrice / RATE_IDRUSD_FOR_RETAIL_WEBSTORE * (0.60), 0.05);
+	$Wholesale40USD = round_multiple_of($RetailPrice / RATE_IDRUSD_FOR_RETAIL_WEBSTORE * (0.60), 0.05);
 	UpdatePriceItem($StockId, 'W4', 'USD', $Wholesale40USD, $Today, TRUE , $db);
 
-	$Wholesale50USD = round_basic_price($RetailPrice / RATE_IDRUSD_FOR_RETAIL_WEBSTORE * (0.50), 0.05);
+	$Wholesale50USD = round_multiple_of($RetailPrice / RATE_IDRUSD_FOR_RETAIL_WEBSTORE * (0.50), 0.05);
 	UpdatePriceItem($StockId, 'W5', 'USD', $Wholesale50USD, $Today, TRUE , $db);
 */
 }

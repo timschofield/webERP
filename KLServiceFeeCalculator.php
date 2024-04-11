@@ -119,7 +119,7 @@ if (($StockID != '') AND ($ServiceCode != '')){
 					}else{
 						$FeeReplacement = 0;
 					}
-					$Fee = round_basic_price(max($FeeService, $FeeReplacement),10000);
+					$Fee = round_multiple_of(max($FeeService, $FeeReplacement),10000);
 					$Message = "CAN be serviced at a fee of " . locale_number_format($Fee,0) . " IDR.";
 
 					if ($ServiceCode == "MAGNETLEPAS"){
@@ -147,7 +147,7 @@ if (($StockID != '') AND ($ServiceCode != '')){
 					}else{
 						$FeeReplacement = 0;
 					}
-					$Fee = round_basic_price(max($FeeService, $FeeReplacement),10000);
+					$Fee = round_multiple_of(max($FeeService, $FeeReplacement),10000);
 					$Message = "CAN be serviced at a fee of " . locale_number_format($Fee,0) . " IDR.";
 
 					if (($ServiceCode == "CRYSTALLEPAS") 

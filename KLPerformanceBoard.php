@@ -729,7 +729,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 						-$CashToRentADU
 						-$CashToDividendsADU;
 	$ToBeMovedADU = $CurrentBalanceADU-$YearlyGoalADU ;
-	$ToBeTransferredADU = round_basic_price($ToBeMovedADU, $MinTransferADU);
+	$ToBeTransferredADU = round_multiple_of($ToBeMovedADU, $MinTransferADU);
 
 	//
 	// CASH STATUS SMH
@@ -855,7 +855,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 						-$CashToRentSMH
 						-$CashToDividendsSMH;
 	$ToBeMovedSMH = $CurrentBalanceSMH-$YearlyGoalSMH ;
-	$ToBeTransferredSMH = round_basic_price($ToBeMovedSMH, $MinTransferSMH);
+	$ToBeTransferredSMH = round_multiple_of($ToBeMovedSMH, $MinTransferSMH);
 
 	//
 	// CASH STATUS BB
@@ -965,7 +965,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 						-$CashToRentBB
 						-$CashToDividendsBB;
 	$ToBeMovedBB = $CurrentBalanceBB-$YearlyGoalBB ;
-	$ToBeTransferredBB = round_basic_price($ToBeMovedBB, $MinTransferBB);	
+	$ToBeTransferredBB = round_multiple_of($ToBeMovedBB, $MinTransferBB);	
 
 	//
 	// STATUS CASH KANTOR
@@ -1335,7 +1335,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 			
 			$FreeSaldoBrankasKantor = $SaldoBrankasKantor - $CurrentBalanceADU - $CurrentBalanceSMH - $CurrentBalanceBB;
 			$FreeSaldoBrankasShareholders = $SaldoBrankasShareholders + $FreeSaldoBrankasKantor;
-			$ToBeDistributedToShareholders = round_basic_price($FreeSaldoBrankasShareholders, $MinMoveFree);	
+			$ToBeDistributedToShareholders = round_multiple_of($FreeSaldoBrankasShareholders, $MinMoveFree);	
 
 			$TableHeader = '<tr>
 								<th>' . 'Concept' . '</th>

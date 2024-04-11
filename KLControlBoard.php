@@ -277,6 +277,41 @@ if ($ProcessSection01){
 		OR $KL_AdministrationTeam){
 		// cash at retail shops
 		$NumberOfTestExecuted = CashAtShops(0, 10000000, 0, $NumberOfOpenShopsTotal * 4000000, $NumberOfTestExecuted, $periodnow, $db);
+		
+		InternalBankTransfers("PTADU", 
+					"111121105AD", 1000000000, 2000000000,
+					"111121101AD",   50000000,  100000000,
+					"111121110AD",   50000000,  100000000,
+					"111121115AD",   50000000,  100000000, 
+					"111121121AD",     100000,    1000000,
+					"111121122AD",     100000,    1000000,
+					"111121125AD",     100000,    1000000,
+					50000000,
+					 1000000,
+					$periodnow);	
+		$NumberOfTestExecuted++;
+
+		InternalBankTransfers("PTSMH", 
+					"111121105SM", 1000000000, 1500000000,
+					"111121101SM",   50000000,  100000000,
+					"111121110SM",   50000000,  100000000,
+					"111121115SM",   50000000,  100000000, 
+					"", 0, 0, "", 0, 0,	"", 0, 0,
+					50000000,
+					0,
+					$periodnow);	
+		$NumberOfTestExecuted++;
+
+		InternalBankTransfers("PTBB", 
+					"111121105BB", 1000000000, 1500000000,
+					"111121101BB",   50000000,  100000000,
+					"111121110BB",   50000000,  100000000,
+					"111121115BB",   50000000,  100000000, 
+					"", 0, 0, "", 0, 0,	"", 0, 0,
+					50000000,
+					0,
+					$periodnow);	
+		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin 
@@ -290,34 +325,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 	}
 	
-	if ($KL_AdministrationTeam){
-		// Other banks accounts have enough funds to be transferred to the default accounts for each company 
-		BalanceAccountControl("111121121AD",        0,   20000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111121122AD",        0,   20000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111121125AD",        0,   40000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111121101AD", 10000000,  300000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111121110AD", 10000000,  300000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111121100SM", 10000000,  300000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111121110SM", 10000000,  300000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111121121BB",        0,   20000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111121122BB",        0,   20000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111121125BB",        0,   40000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111121101BB", 10000000,  300000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111121110BB", 10000000,  300000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-	}
-	
+
 	if ($KL_SystemAdmin){
 		BalanceListAccountControl("('111121101AD',
 									'111121105AD',
@@ -5373,7 +5381,123 @@ function OpenCartOrdersByStatus($Status, $RootPath, $db, $db_oc){
 				</div>';
 		}
 	}
+}
 
+function GetBalanceAccount($account, $period){
+	$SQL = "SELECT (bfwd + actual) as saldo
+		FROM chartdetails, chartmaster
+		WHERE chartdetails.accountcode = chartmaster.accountcode
+			AND chartdetails.accountcode = '" . $account . "'
+			AND chartdetails.period = ". $period . "";
+				
+	$result = DB_query($SQL);
+	$myrow = DB_fetch_array($result);
+	return $myrow['saldo'];
+}
+
+function InternalBankTransfers($Company, 
+							$DanamonAccount, $DanamonMin, $DanamonMax,
+							$MandiriAccount, $MandiriMin, $MandiriMax,
+							$BCAAccount, $BCAMin, $BCAMax,
+							$BNIAccount, $BNIMin, $BNIMax, 
+							$TokopediaAccount, $TokopediaMin, $TokopediaMax, 
+							$ShopeeAccount, $ShopeeMin, $ShopeeMax, 
+							$MidtransAccount, $MidtransMin, $MidtransMax, 
+							$TransferBlockFromBank,
+							$TransferBlockFromOnline,
+							$period){
+
+	$SaldoDanamon = GetBalanceAccount($DanamonAccount, $period);
+	if ($SaldoDanamon <= $DanamonMin){
+		// Danamon is below minimum balance... transfer from other banks until the Max Danamon
+		$TransferNeededDanamon = $DanamonMax - $SaldoDanamon;
+
+		// let's check if we can transfer from any bank account in order of preference
+		$TransferNeededDanamon = CalculateTransferFromBankToDanamon($Company, 
+															$TransferNeededDanamon,
+															$TokopediaAccount, 
+															"Tokopedia",
+															$TokopediaMin, 
+															$TokopediaMax,
+															$TransferBlockFromOnline,
+															$period
+															);
+		
+		$TransferNeededDanamon = CalculateTransferFromBankToDanamon($Company, 
+															$TransferNeededDanamon,
+															$ShopeeAccount, 
+															"Shopee",
+															$ShopeeMin, 
+															$ShopeeMax,
+															$TransferBlockFromOnline,
+															$period
+															);
+
+		$TransferNeededDanamon = CalculateTransferFromBankToDanamon($Company, 
+															$TransferNeededDanamon,
+															$MidtransAccount, 
+															"Midtrans",
+															$MidtransMin, 
+															$MidtransMax,
+															$TransferBlockFromOnline,
+															$period
+															);
+		
+		$TransferNeededDanamon = CalculateTransferFromBankToDanamon($Company, 
+															$TransferNeededDanamon,
+															$MandiriAccount, 
+															"Mandiri",
+															$MandiriMin, 
+															$MandiriMax,
+															$TransferBlockFromBank,
+															$period
+															);
+
+		$TransferNeededDanamon = CalculateTransferFromBankToDanamon($Company, 
+															$TransferNeededDanamon,
+															$BCAAccount, 
+															"BCA",
+															$BCAMin, 
+															$BCAMax,
+															$TransferBlockFromBank,
+															$period
+															);
+
+		$TransferNeededDanamon = CalculateTransferFromBankToDanamon($Company, 
+															$TransferNeededDanamon,
+															$BNIAccount, 
+															"BNI",
+															$BNIMin, 
+															$BNIMax,
+															$TransferBlockFromBank,
+															$period
+															);
+	}
+}
+
+function CalculateTransferFromBankToDanamon($Company, 
+											$TransferNeededDanamon,
+											$Account, 
+											$AccountName,
+											$SaldoMin, 
+											$SaldoMax,
+											$TransferBlock,
+											$period){
+	if($TransferNeededDanamon > 0){
+		$Saldo = GetBalanceAccount($Account, $period);
+		if ($Saldo >= $SaldoMax){
+			$AvailableForTransfer = $Saldo - $SaldoMin;
+			$Transfer = min($AvailableForTransfer, $TransferNeededDanamon);
+			$Transfer = round_down_multiple_of($Transfer, $TransferBlock);
+			if ($Transfer > 0){
+				$text = "Transfer ".locale_number_format($Transfer,0)." IDR from " . $AccountName.  " " . $Company . 
+						" to Danamon ". $Company;
+				echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+				$TransferNeededDanamon = $TransferNeededDanamon - $Transfer;
+			}
+		} 
+	}
+	return $TransferNeededDanamon;
 }
 
 ?>
