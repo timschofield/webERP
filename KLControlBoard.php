@@ -273,8 +273,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_SystemAdmin 
-		OR $KL_AdministrationTeam){
+	if ($KL_AdministrationTeam){
 		// cash at retail shops
 		$NumberOfTestExecuted = CashAtShops(0, 10000000, 0, $NumberOfOpenShopsTotal * 4000000, $NumberOfTestExecuted, $periodnow, $db);
 		
