@@ -276,7 +276,10 @@ if ($ProcessSection01){
 	if ($KL_AdministrationTeam){
 		// cash at retail shops
 		$NumberOfTestExecuted = CashAtShops(0, 10000000, 0, $NumberOfOpenShopsTotal * 4000000, $NumberOfTestExecuted, $periodnow, $db);
-		
+	}
+	
+	if ($KL_SystemAdmin
+		OR $KL_AdministrationTeam){
 		InternalBankTransfers("PTADU", 
 					"111121105AD", 1000000000, 2000000000,
 					"111121101AD",   50000000,  100000000,
