@@ -81,7 +81,8 @@ if (isset($_POST['submit'])) {
 
 	$SPGName = substr($SalesmanName,0,strpos($SalesmanName, '-') -1);
 	$Shopname = substr($LocationName,11,strlen($LocationName)-11);
-	$RealName = 'SPG'. $_POST['Salesman'] . '-' . $SPGName . ' in ' . $_POST['DefaultLocation'];
+	$RealName = 'SPG'. $_POST['Salesman'] . '-' . $SPGName . ' in ' . substr($_POST['DefaultLocation'],-2);
+	$Email = "spg". strtolower($_POST['Salesman']) . "@kapal-laut.com";
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
 
@@ -176,8 +177,6 @@ if (isset($_POST['submit'])) {
 													0
 												)";
 		$Result = DB_query($LocationSql, $ErrMsg, $DbgMsg);
-
-
 
 		$sql = "INSERT INTO www_users (userid,
 						realname,
