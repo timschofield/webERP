@@ -56,6 +56,7 @@ $NumberOfOpenShopsTotal = $NumberOfOpenShopsKL + $NumberOfOpenShopsBL + $NumberO
 ***************************************************************************************/
 
 if ($_SESSION['UserID'] == "Ricard"){
+		ActiveItemsWithoutPicture($RootPath, $db);
 
 //	$NumberOfTestExecuted = CategoryItemsMissingInShops("TESTKA", "SHOPKL", $NumberOfTestExecuted, $RootPath, $db);
 
@@ -1135,7 +1136,10 @@ function ActiveItemsWithoutPicture($RootPath, $db){
 */
 	$SQL = "SELECT stockmaster.stockid,
 			stockmaster.description,
-			stockcategory.categorydescription
+			stockcategory.categorydescription,
+			(SELECT SUM(locstock.quantity)
+				FROM locstock
+				WHERE locstock.stockid = stockmaster.stockid) AS qoh
 		FROM stockmaster, stockcategory
 		WHERE stockmaster.categoryid = stockcategory.categoryid
 			AND stockmaster.discontinued = 0
@@ -1150,6 +1154,9 @@ function ActiveItemsWithoutPicture($RootPath, $db){
 				OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_SHOP_PACKAGING . "
 				OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_COMPONENTS . "
 				)
+			AND (SELECT SUM(locstock.quantity)
+				FROM locstock
+				WHERE locstock.stockid = stockmaster.stockid) > 0
 		ORDER BY stockcategory.categorydescription, stockmaster.stockid";
 	$result = DB_query($SQL);
 	$showHeader = TRUE;
@@ -1158,7 +1165,7 @@ function ActiveItemsWithoutPicture($RootPath, $db){
 		while ($myrow = DB_fetch_array($result)) {
 			if(!file_exists($_SESSION['part_pics_dir'] . '/' .$myrow['stockid'].'.jpg') ) {
 				if($showHeader){
-					echo '<p class="page_title_text" align="center"><strong>' . _('Current Items without picture in webERP') . '</strong></p>';
+					echo '<p class="page_title_text" align="center"><strong>' . _('Current Items without picture in webERP and QOH > 0') . '</strong></p>';
 					echo '<div>';
 					echo '<table class="selection">';
 					$k = 0; //row colour counter
@@ -1168,6 +1175,7 @@ function ActiveItemsWithoutPicture($RootPath, $db){
 									<th class="ascending">' . _('Category') . '</th>
 									<th class="ascending">' . _('Item Code') . '</th>
 									<th class="ascending">' . _('Description') . '</th>
+									<th class="ascending">' . _('QOH') . '</th>
 									</tr>';
 					echo $TableHeader;
 					$showHeader = FALSE;
@@ -1178,11 +1186,13 @@ function ActiveItemsWithoutPicture($RootPath, $db){
 						<td>%s</td>
 						<td>%s</td>
 						<td>%s</td>
+						<td class="number">%s</td>
 						</tr>', 
 						$i, 
 						$myrow['categorydescription'],
 						$CodeLink, 
-						$myrow['description']
+						$myrow['description'],
+						locale_number_format($myrow['qoh'],0)
 						);
 				$i++;
 			}
