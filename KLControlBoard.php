@@ -56,7 +56,6 @@ $NumberOfOpenShopsTotal = $NumberOfOpenShopsKL + $NumberOfOpenShopsBL + $NumberO
 ***************************************************************************************/
 
 if ($_SESSION['UserID'] == "Ricard"){
-		ActiveItemsWithoutPicture($RootPath, $db);
 
 //	$NumberOfTestExecuted = CategoryItemsMissingInShops("TESTKA", "SHOPKL", $NumberOfTestExecuted, $RootPath, $db);
 
