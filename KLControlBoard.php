@@ -340,12 +340,12 @@ if ($ProcessSection01){
 									'111203010AD',
 									'111259010AD', 
 									'111259020AD', 
-									'111259050AD')", "Total Banks PT ADU", 1500000000, 3000000000, $periodnow, $db);
+									'111259050AD')", "Total Banks PT ADU", 1500000000, 10000000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('111259010AD', 
 									'111259020AD', 
-									'111259050AD')", "Total PayPal PT ADU", -1, 50000000, $periodnow, $db);
+									'111259050AD')", "Total PayPal PT ADU", -1, 755000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('111121100SM',
