@@ -416,6 +416,20 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 
 			// create discounts if needed
 			MaintainOpenCartDiscountForItem($ProductId, $Price, $DiscountCategory, $PriceList, $db, $db_oc);
+			
+			if (($DiscountCategory == 20) OR ($ItemCategory == "DISC2A")
+				OR ($DiscountCategory == 50) OR ($ItemCategory == "DISC5A")){
+				/* It's a Outlet 20% or 50% item, we have to mark it as category outlet */
+				if ($ItemBrand == "KL"){
+					$SalesCatId = 129; // Category Outlet-Discount Kapal-Laut
+				}elseif ($ItemBrand == "BL"){
+					$SalesCatId = 128; // Category Outlet-Discount Blink
+				}elseif ($ItemBrand == "GE"){
+					// it's a general item, so we assign to KL.
+					$SalesCatId = 129; // Category Outlet-Discount Kapal-Laut
+				}
+				AssignSalesCategoryToProductInOpenCart($ProductId, $SalesCatId, FALSE, $db_oc);
+			}
 
 			// create SEO Keywords if needed
 			$SEOQuery = 'product_id='.$ProductId;

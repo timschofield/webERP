@@ -225,7 +225,9 @@ function GetWeberpCustomerIdFromCurrency($Currency, $db){
 }
 
 function GetWeberpCustomerIdFromCustomerGroupAndCurrency($CustomerGroup, $Currency, $db){
-	if (($CustomerGroup == "4") OR ($CustomerGroup == "6")){
+	if (($CustomerGroup == "4") 
+		OR ($CustomerGroup == "6")
+		OR ($CustomerGroup == "7")){
 		// it is wholesale
 		$CustomerId = WEBERP_ONLINE_WHOLESALE_CUSTOMER_CODE_PREFIX . $Currency;
 	}else{
@@ -448,7 +450,7 @@ function GetDiscount($DiscountCategory, $Quantity, $PriceList, $db){
 }
 
 function MaintainOpenCartDiscountForItem($ProductId, $Price, $DiscountCategory, $PriceList, $db, $db_oc){
-	$CustomerGroupId = 1;
+	$CustomerGroupId = 1; // Retail Customers
 	$Priority = 1;
 	$ManufacturerId = GetManufacturerFromProductId($ProductId, $db_oc);
 	
