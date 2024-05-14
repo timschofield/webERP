@@ -1654,7 +1654,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 	
 	$SQL = "SELECT value
 			FROM klkpi
-			WHERE concept LIKE 'Trend%'
+			WHERE concept LIKE 'Trend retail%'
 			ORDER BY date DESC
 			LIMIT 1";
 	$result = DB_query($SQL);		
@@ -1735,21 +1735,25 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 			$ForecastUsedThisYear = ceil($DailyUse * ($DaysMinimumStock));
 			$ForecastUsedLastYear = ceil($myrow['qusedlastyear'] * (1 + $TrendThisYear));
 			$ForecastUsageNextDays = max( $ForecastUsedThisYear, $ForecastUsedLastYear);
+			$ForecastUsageDaily = $ForecastUsageNextDays / $DaysMinimumStock;
 			
+			// to prevent shortage on slow moving items in ANY gudang, and be still able to serve the item to the shops
+			// we need to keep a minimum stock always in gudang			
 			if (isPackagingPaperInsideBox($myrow['stockid'])){
 				if (ItemInList($myrow['stockid'], LIST_ITEMS_KAPAL_LAUT_PACKAGING)){
-					$MinQOHGudang = $NumberOfOpenShopsKL * $myrow['eoq'];
+					$MinQOHGudang = $NumberOfOpenShopsKL * $myrow['eoq'] * FACTOR_GUDANG_PACKAGING_PAPER_INSIDE_BOX;
 				}elseif (ItemInList($myrow['stockid'], LIST_ITEMS_BLINK_PACKAGING)){
-					$MinQOHGudang = $NumberOfOpenShopsBL * $myrow['eoq'];
+					$MinQOHGudang = $NumberOfOpenShopsBL * $myrow['eoq'] * FACTOR_GUDANG_PACKAGING_PAPER_INSIDE_BOX;
 				}else{
-					$MinQOHGudang = $NumberOfOpenShopsOU * $myrow['eoq'];
+					$MinQOHGudang = $NumberOfOpenShopsOU * $myrow['eoq'] * FACTOR_GUDANG_PACKAGING_PAPER_INSIDE_BOX;
 				}
 			}else{
-				$MinQOHGudang = $myrow['sumrl'];
+				$MinQOHGudang = $myrow['sumrl'] * FACTOR_GUDANG_PACKAGING; 
 			}
-			$MinQOHGudang = $MinQOHGudang * FACTOR_GUDANG_PACKAGING; // to prevent shortage on slow moving items in ANY gudang, and be still able to serve the item to the shops
+
 			$OptimumQOH = max($ForecastUsageNextDays, $MinQOHGudang);
 			$QOH = max($myrow['qohgudang']+$myrow['qohshops'],0);
+			$QOHDays = $QOH / $ForecastUsageDaily; // QOH expressed in days at daily forecast rate
 			$MissingQOH = max($OptimumQOH - $QOH, 0);
 			$DaysQOH = floor($QOH / $DailyUse);
 			$DaysQOO = floor(($QOH + $myrow['qoo']) / $DailyUse);
@@ -1764,7 +1768,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 			}else{
 				// we don't have enough in gudang, we need to get some to keep in gudang
 				if($myrow['qoo'] < ($MinQOHGudang - $myrow['qohgudang'])){
-					// if we don't have enugh QOO to cover the deficit in gudang
+					// if we don't have enough QOO to cover the deficit in gudang
 					$QtyNeeded = max(0, ($ForecastUsageNextDays - $QOH - $myrow['qoo']),($MinQOHGudang-$myrow['qohgudang']-$myrow['qoo']));
 				}else{
 					$QtyNeeded = max(0, ($ForecastUsageNextDays - $QOH - $myrow['qoo']));
@@ -1810,6 +1814,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 										<th class="ascending">' . _('QOH Gudang') . '</th>
 										<th class="ascending">' . _('QOH Shops') . '</th>
 										<th class="ascending">' . _('QOH Total') . '</th>
+										<th class="ascending">' . _('QOH Days') . '</th>
 										<th class="ascending">' . _('QTY Shortage') . '</th>
 										<th class="ascending">' . _('% Shortage') . '</th>
 										<th class="ascending">' . _('QOO Running') . '</th>
@@ -1848,6 +1853,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
+						<td class="number">%s</td>
 						</tr>', 
 						$i, 
 						$CodeLink, 
@@ -1859,6 +1865,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 						locale_number_format($myrow['qohgudang'],0),
 						locale_number_format($myrow['qohshops'],0),
 						locale_number_format($QOH,0),
+						locale_number_format($QOHDays,0),
 						locale_number_format($MissingQOH,0),
 						locale_number_format($MissingQOH/$OptimumQOH*100,0) .'%',
 						locale_number_format_zero_blank($myrow['qoo'],0),
@@ -1886,6 +1893,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
+					<td class="number">%s</td>
 					</tr>', 
 					"", 
 					"TOTAL", 
@@ -1897,6 +1905,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					locale_number_format($TotalQOHGudang,0),
 					locale_number_format($TotalQOHShops,0),
 					locale_number_format($QOHTotal,0),
+					'',
 					locale_number_format($MissingTotal,0),
 					locale_number_format($MissingTotal/$TotalQOHOptimum*100,0).'%',
 					locale_number_format_zero_blank($PendingQOO,0),
