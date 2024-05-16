@@ -288,7 +288,7 @@ if ($ProcessSection01){
 					"111121121AD",     100000,    1000000,
 					"111121122AD",     100000,    1000000,
 					"111121125AD",     100000,    1000000,
-					50000000,
+					25000000,
 					 1000000,
 					$periodnow);	
 		$NumberOfTestExecuted++;
@@ -299,7 +299,7 @@ if ($ProcessSection01){
 					"111121110SM",   25000000,   75000000,
 					"111121115SM",   25000000,   75000000, 
 					"", 0, 0, "", 0, 0,	"", 0, 0,
-					50000000,
+					25000000,
 					0,
 					$periodnow);	
 		$NumberOfTestExecuted++;
@@ -310,7 +310,7 @@ if ($ProcessSection01){
 					"111121110BB",   25000000,   75000000,
 					"111121115BB",   25000000,   75000000, 
 					"", 0, 0, "", 0, 0,	"", 0, 0,
-					50000000,
+					25000000,
 					0,
 					$periodnow);	
 		$NumberOfTestExecuted++;
@@ -345,7 +345,7 @@ if ($ProcessSection01){
 
 		BalanceListAccountControl("('111259010AD', 
 									'111259020AD', 
-									'111259050AD')", "Total PayPal PT ADU", -1, 755000000, $periodnow, $db);
+									'111259050AD')", "Total PayPal PT ADU", -1, 75000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('111121100SM',
