@@ -417,9 +417,9 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 			// create discounts if needed
 			MaintainOpenCartDiscountForItem($ProductId, $Price, $DiscountCategory, $PriceList, $db, $db_oc);
 			
+			/* IF It is an Outlet 20% or 50% item, we have to mark it as category outlet in Opencart*/
 			if (($DiscountCategory == 20) OR ($ItemCategory == "DISC2A")
 				OR ($DiscountCategory == 50) OR ($ItemCategory == "DISC5A")){
-				/* It's a Outlet 20% or 50% item, we have to mark it as category outlet */
 				if ($ItemBrand == "KL"){
 					$SalesCatId = 129; // Category Outlet-Discount Kapal-Laut
 				}elseif ($ItemBrand == "BL"){
@@ -429,6 +429,32 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 					$SalesCatId = 129; // Category Outlet-Discount Kapal-Laut
 				}
 				AssignSalesCategoryToProductInOpenCart($ProductId, $SalesCatId, FALSE, $db_oc);
+			}
+			
+			/* Assign access rights to the right customer groups. */
+			if (($DiscountCategory == 20) OR ($ItemCategory == "DISC2A")
+				OR ($DiscountCategory == 50) OR ($ItemCategory == "DISC5A")){
+				/* if it a 20% or 50% discounted item, can be seen by all customer groups*/
+				AssignAcessRightsProductsToCustomerGroupInOpenCart($ProductId, OPENCART_CUSTOMER_GROUP_GUEST);
+				AssignAcessRightsProductsToCustomerGroupInOpenCart($ProductId, OPENCART_CUSTOMER_GROUP_RETAIL);
+				AssignAcessRightsProductsToCustomerGroupInOpenCart($ProductId, OPENCART_CUSTOMER_GROUP_WHOLESALE_NO_MINIMUM);
+				AssignAcessRightsProductsToCustomerGroupInOpenCart($ProductId, OPENCART_CUSTOMER_GROUP_WHOLESALE);
+				AssignAcessRightsProductsToCustomerGroupInOpenCart($ProductId, OPENCART_CUSTOMER_GROUP_WHOLESALE_ONLY_DISCOUNTED);
+			}elseif (($DiscountCategory == 80) OR ($ItemCategory == "DISC8A")){
+				/* it is a 80% discount items, should not be available to anyone. Being strict it is not needed
+				as it is marked as disabled, but to keep data consistent, we revoke rights*/
+				RevokeAcessRightsProductsToCustomerGroupInOpenCart($ProductId, OPENCART_CUSTOMER_GROUP_GUEST);
+				RevokeAcessRightsProductsToCustomerGroupInOpenCart($ProductId, OPENCART_CUSTOMER_GROUP_RETAIL);
+				RevokeAcessRightsProductsToCustomerGroupInOpenCart($ProductId, OPENCART_CUSTOMER_GROUP_WHOLESALE_NO_MINIMUM);
+				RevokeAcessRightsProductsToCustomerGroupInOpenCart($ProductId, OPENCART_CUSTOMER_GROUP_WHOLESALE);
+				RevokeAcessRightsProductsToCustomerGroupInOpenCart($ProductId, OPENCART_CUSTOMER_GROUP_WHOLESALE_ONLY_DISCOUNTED);
+			}else{
+				/* if it is not a discounted item, it should not be available to wholesale only discounted items*/
+				AssignAcessRightsProductsToCustomerGroupInOpenCart($ProductId, OPENCART_CUSTOMER_GROUP_GUEST);
+				AssignAcessRightsProductsToCustomerGroupInOpenCart($ProductId, OPENCART_CUSTOMER_GROUP_RETAIL);
+				AssignAcessRightsProductsToCustomerGroupInOpenCart($ProductId, OPENCART_CUSTOMER_GROUP_WHOLESALE_NO_MINIMUM);
+				AssignAcessRightsProductsToCustomerGroupInOpenCart($ProductId, OPENCART_CUSTOMER_GROUP_WHOLESALE);
+				RevokeAcessRightsProductsToCustomerGroupInOpenCart($ProductId, OPENCART_CUSTOMER_GROUP_WHOLESALE_ONLY_DISCOUNTED);
 			}
 
 			// create SEO Keywords if needed
@@ -1648,6 +1674,34 @@ function ChangeOldShippedOpenCartOrders($ShowMessages, $MaxDays, $db, $db_oc, $E
 		$EmailText = $EmailText . locale_number_format($i,0) . ' ' .$Title  . "\n\n";
 	}
 	return $EmailText;
+}
+
+function AssignAcessRightsProductsToCustomerGroupInOpenCart($ProductId, $CustomerGroupId){
+	/* Now, insert it, if it is not there yet*/
+	if (!DataExistsInOpenCart($db_oc, 'oc_product_to_customer_group', 'product_id', $ProductId, 'customer_group_id', $CustomerGroupId)){
+		$DbgMsg = _('The SQL statement that failed was');
+		$InsertErrMsg = _('The SQL on fucntion AssignAcessRightsProductsToCustomerGroupInOpenCart failed');
+		$sqlInsert = "INSERT INTO oc_product_to_customer_group
+						(product_id,
+						customer_group_id)
+					VALUES
+						('" . $ProductId . "',
+						'" . $CustomerGroupId . "'
+						)";
+		$resultInsert = DB_query_oc($sqlInsert,$InsertErrMsg,$DbgMsg,true);
+	}
+}
+
+function RevokeAcessRightsProductsToCustomerGroupInOpenCart($ProductId, $CustomerGroupId){
+	$DbgMsg = _('The SQL statement that failed was');
+	$DeleteErrMsg = _('The SQL on fucntion RevokeAcessRightsProductsToCustomerGroupInOpenCart failed');
+
+	/* Now, revoke (delete) the access rights*/
+	$SQL = "DELETE FROM oc_product_to_customer_group
+			WHERE product_id = '" . $ProductId . "'
+				AND customer_group_id = '" . $CustomerGroupId . "'";
+				
+	$resultDelete = DB_query_oc($SQL,$DeleteErrMsg,$DbgMsg,true);
 }
 
 ?>

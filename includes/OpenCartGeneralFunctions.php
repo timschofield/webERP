@@ -1343,7 +1343,6 @@ function AssignSalesCategoryToProductInOpenCart($ProductId, $SalesCatId, $OnlyOn
 						)";
 		$resultInsert = DB_query_oc($sqlInsert,$InsertErrMsg,$DbgMsg,true);
 	}
-
 }
 
 
