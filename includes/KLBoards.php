@@ -533,13 +533,13 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		if ($Year == "LastYear"){
-			echo '<p class="page_title_text" align="center"><strong>' . _('LAST YEAR Average Daily sales by ') . $typereport . " during the last " . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . ", ". $NumDaysE . ", ". $NumDaysF . " days. Sorted by " . $NumDaysSort ." days. Trend by " . $NumDaysD . " days.".'</strong></p>';
+			echo '<p class="page_title_text" align="center"><strong>' . _('LAST YEAR Moving Average Daily sales by ') . $typereport . " during the last " . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . ", ". $NumDaysE . ", ". $NumDaysF . " days. Sorted by " . $NumDaysSort ." days. Trend by " . $NumDaysD . " days.".'</strong></p>';
 			$TitleTarget = "";
 		}else{
 			if ($Shop == "All"){
-				echo '<p class="page_title_text" align="center"><strong>' . _('Current Average Daily sales by ') . $typereport . " during the last " . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . ", ". $NumDaysE . ", ". $NumDaysF . " days. Sorted by " . $NumDaysSort ." days. Trend by " . $NumDaysD . " days.".'</strong></p>';
+				echo '<p class="page_title_text" align="center"><strong>' . _('Current Moving Average Daily sales by ') . $typereport . " during the last " . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . ", ". $NumDaysE . ", ". $NumDaysF . " days. Sorted by " . $NumDaysSort ." days. Trend by " . $NumDaysD . " days.".'</strong></p>';
 			}else{
-				echo '<p class="page_title_text" align="center"><strong>' . _('Current Average Daily sales in ') . $Shop . ' by ' . $typereport . " during the last " . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . ", ". $NumDaysE . ", ". $NumDaysF . " days. Sorted by " . $NumDaysSort ." days. Trend by " . $NumDaysD . " days.".'</strong></p>';
+				echo '<p class="page_title_text" align="center"><strong>' . _('Current Moving Average Daily sales in ') . $Shop . ' by ' . $typereport . " during the last " . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . ", ". $NumDaysE . ", ". $NumDaysF . " days. Sorted by " . $NumDaysSort ." days. Trend by " . $NumDaysD . " days.".'</strong></p>';
 			}
 			$TitleTarget = "";
 		}
@@ -714,12 +714,12 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 	$NumDaysE = str_pad($NumDaysE, 3, '0', STR_PAD_LEFT);
 	
 	if (($typereport == "Shop") AND ($Year == "CurrentYear")){
-		InsertKPI("Sales", "Retail Sales Daily Average Last " . $NumDaysD . " days (IDR)", $TotalDateD);
-		InsertKPI("Sales", "Retail Sales Daily Average Last " . $NumDaysE . " days (IDR)", $TotalDateE);
+		InsertKPI("Sales", "Retail Daily Sales Average Last " . $NumDaysD . " days (IDR)", $TotalDateD);
+		InsertKPI("Sales", "Retail Daily Sales Average Last " . $NumDaysE . " days (IDR)", $TotalDateE);
 	}
 	if (($typereport == "Online") AND ($Year == "CurrentYear")){
-		InsertKPI("Sales", "Online Sales Daily Average Last " . $NumDaysD . " days (IDR)", $TotalDateD);
-		InsertKPI("Sales", "Online Sales Daily Average Last " . $NumDaysE . " days (IDR)", $TotalDateE);
+		InsertKPI("Sales", "Online Daily Sales Average Last " . $NumDaysD . " days (IDR)", $TotalDateD);
+		InsertKPI("Sales", "Online Daily Sales Average Last " . $NumDaysE . " days (IDR)", $TotalDateE);
 	}
 
 }
@@ -1807,6 +1807,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 										<th class="ascending">' . _('#') . '</th>
 										<th class="ascending">' . _('Code') . '</th>
 										<th class="ascending">' . _('Description') . '</th>
+										<th class="ascending">' . _('Current Daily Usage') . '</th>
 										<th class="ascending">' . _('Forecast ') . $DaysMinimumStock . ' days ' . $Year . '</th>
 										<th class="ascending">' . _('Forecast ') . $DaysMinimumStock . ' days ' . ($Year - 1) . '</th>
 										<th class="ascending">' . _('Min QTY Gudang') . '</th>
@@ -1854,10 +1855,12 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
+						<td class="number">%s</td>
 						</tr>', 
 						$i, 
 						$CodeLink, 
 						$myrow['description'], 
+						locale_number_format($DailyUse,0),
 						locale_number_format($ForecastUsedThisYear,0),
 						locale_number_format($ForecastUsedLastYear,0),
 						locale_number_format($MinQOHGudang,0),
@@ -1894,10 +1897,12 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
+					<td class="number">%s</td>
 					</tr>', 
 					"", 
 					"TOTAL", 
 					"", 
+					locale_number_format($TotalDailyUse,0),
 					locale_number_format($ForecastXDays,0),
 					locale_number_format($ForecastXDaysLastYear,0),
 					locale_number_format($TotalMinimumGudang,0),
@@ -1911,6 +1916,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					locale_number_format_zero_blank($PendingQOO,0),
 					locale_number_format_zero_blank($OptimumOrder,0)
 					);
+			InsertKPI("Packaging", "Packaging current daily use (PCS)", $TotalDailyUse);
 			InsertKPI("Packaging", "Packaging used last " . $DaysUsage .  " days (PCS)", $UsageXDays);
 			InsertKPI("Packaging", "Packaging forecast next X days (PCS)", $ForecastXDays);
 			InsertKPI("Packaging", "Packaging QOH total (PCS)", $QOHTotal);
