@@ -1231,4 +1231,17 @@ function GetDayNameFromWeekDay($WeekDay){
 	}
 }
 
+function GetLastKPIValue($Class,$Concept){
+	$SQL = "SELECT value
+			FROM klkpi
+			WHERE class = '".$Class."'
+				AND concept LIKE '".$Concept."'
+			ORDER BY date DESC
+			LIMIT 1";
+	$result = DB_query($SQL);		
+	$myrow = DB_fetch_array($result);
+	return $myrow['value'];
+	
+}
+
 ?>

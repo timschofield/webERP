@@ -1652,14 +1652,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 
 	$Year = date('Y', strtotime("-1 days"));
 	
-	$SQL = "SELECT value
-			FROM klkpi
-			WHERE concept LIKE 'Trend retail%'
-			ORDER BY date DESC
-			LIMIT 1";
-	$result = DB_query($SQL);		
-	$myrow = DB_fetch_array($result);
-	$TrendThisYear = round($myrow['value'] / 100,3);
+	$TrendThisYear = round(GetLastKPIValue("Sales","Trend retail%") / 100,3);
 	
 	$SQL = "SELECT stockmaster.stockid,
 					stockmaster.description,
@@ -2795,6 +2788,10 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 					'', 
 					'' 
 					);
+			if (($TypeOfProduct == "FORSALE") 
+				AND ($maxdays > 0)){
+				InsertKPI("Purchase Orders", "Payments pending items for sale in ". $maxdays . " days (IDR)", $TotalValueAllPayments);
+			}			
 		}
 
 		if (($TypeOfCode == "ARRIVING IN NEXT DAYS") 
