@@ -357,7 +357,9 @@ if ($ProcessSection03){
 					226900000, 200000000, 100000000, 
 					143000000, 200000000, 100000000, 
 					 40525935, 300000000, 100000000, 
-					100000000, $periodnow, $KL_SystemAdmin, TRUE, $db);
+					100000000, 
+					75, 21, 5000,
+					$periodnow, $KL_SystemAdmin, TRUE, $db);
 		$NumberOfTestExecuted++;
 	}
 	if ($KL_SystemAdmin){
@@ -614,6 +616,9 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 							$CashEndOfPreviousYearSMH, $YearlyGoalSMH, $MinTransferSMH, 
 							$CashEndOfPreviousYearBB, $YearlyGoalBB, $MinTransferBB, 
 							$MinMoveFree, 
+							$USDPODaysSchedule,
+							$USDDaysStock,
+							$USDMinPurchase,
 							$Period, 
 							$AdminRole, $ShowTables, $db){
 
@@ -730,6 +735,33 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 						-$CashToDividendsADU;
 	$ToBeMovedADU = $CurrentBalanceADU-$YearlyGoalADU ;
 	$ToBeTransferredADU = round_multiple_of($ToBeMovedADU, $MinTransferADU);
+	
+	//
+	// PTADU USD in banks and predictions of use
+	//
+	$SQL = "SELECT rate
+			FROM currencies
+			WHERE currabrev = 'USD'";
+	$result = DB_query($SQL);
+	$myrow = DB_fetch_array($result);
+	$CurrentUSDRate = $myrow['rate'];
+	
+	
+	$Account = "111203010AD"; // Danamon PTADU USD in IDR
+	$SQL = "SELECT (bfwd + actual) as saldo, 
+				accountname
+			FROM chartdetails, chartmaster
+			WHERE chartdetails.accountcode = chartmaster.accountcode
+				AND chartdetails.accountcode = '" . $Account . "'
+				AND chartdetails.period = ". $Period . "";
+	$result = DB_query($SQL);
+	$myrow = DB_fetch_array($result);
+	$SaldoADUDanamonUSD = round($myrow['saldo']*$CurrentUSDRate, 0);
+
+	$PORunningTotalUSD = round(GetLastKPIValue("Purchase Orders","PO Items for sale arriving next%")*$CurrentUSDRate,0);
+
+	$POPaymentsPendingUSD = round(GetLastKPIValue("Purchase Orders","Payments pending%")*$CurrentUSDRate,0);
+
 
 	//
 	// CASH STATUS SMH
@@ -1103,6 +1135,74 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 					locale_number_format(abs($ToBeTransferredADU),0)
 					);
 		}
+		echo '</table>
+			</div>';
+
+		echo '<p class="page_title_text" align="center"><strong>' . 'Status USD PT. Angin Dingin Utara ' . '</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+
+		$TableHeader = '<tr>
+							<th>' . 'Concept' . '</th>
+							<th>' . 'Value' . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'Total Value of Running PO for items for sale in USD (approx)', 
+				locale_number_format($PORunningTotalUSD,0)
+				);
+		$DPPlacedUSD = $PORunningTotalUSD - $POPaymentsPendingUSD;
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'DP places for PO in USD (approx)', 
+				locale_number_format($DPPlacedUSD,0)
+				);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'Payments scheduled in USD during next '.$USDPODaysSchedule.' days (approx)', 
+				locale_number_format($POPaymentsPendingUSD,0)
+				);
+				
+		$POPaymentsPendingUSDin30Days = $POPaymentsPendingUSD / $USDPODaysSchedule * $USDDaysStock;
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'Payments in USD during next '.$USDDaysStock.' days (approx)', 
+				locale_number_format($POPaymentsPendingUSDin30Days,0)
+				);
+
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'Current saldo Danamon USD ADU (approx)', 
+				locale_number_format($SaldoADUDanamonUSD,0)
+				);
+
+		$ShortageUSDin30days = $POPaymentsPendingUSDin30Days - $SaldoADUDanamonUSD;
+		if ($ShortageUSDin30days > 0){
+			printf('<td>%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					'Total USD needed in next '.$USDDaysStock.' days (approx)', 
+					locale_number_format($ShortageUSDin30days,0)
+					);
+			$ToBeExchanged = round_multiple_of($ShortageUSDin30days, 5000);	
+			$k = StartEvenOrOddRow($k);
+			printf('<td>%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					'ACTION NEEDED --> Purchase USD from ADU Danamon IDR to ADU Danamon USD', 
+					locale_number_format($ToBeExchanged)
+					);
+		}
+		
+		
 		echo '</table>
 			</div>';
 
