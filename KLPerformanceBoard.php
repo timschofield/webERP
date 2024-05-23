@@ -758,7 +758,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$myrow = DB_fetch_array($result);
 	$SaldoADUDanamonUSD = round($myrow['saldo']*$CurrentUSDRate, 0);
 
-	$PORunningTotalUSD = round(GetLastKPIValue("Purchase Orders","PO Items for sale arriving next%")*$CurrentUSDRate,0);
+	$PORunningTotalUSD = round(GetLastKPIValue("Purchase Orders","PO Items for sale arriving next % days (IDR)")*$CurrentUSDRate,0);
 
 	$POPaymentsPendingUSD = round(GetLastKPIValue("Purchase Orders","Payments pending%")*$CurrentUSDRate,0);
 
