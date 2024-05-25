@@ -275,7 +275,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, &$d
 				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 				if ($CompanyFrom == 'PTADU'){
-					$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
+					$PeriodNo = GetPeriod(ConvertSQLDate($EndDate), $db);
 					$TransNo = GetNextTransNo( 10, $db);
 
 					// account for the goods sold
