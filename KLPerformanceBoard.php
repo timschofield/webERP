@@ -4259,6 +4259,7 @@ function StockByBrand($Brand, $NumDays){
 	InsertKPI("Stock", "Total Stock (PCS) " . $BrandText, $TotalItems);
 	InsertKPI("Stock", "Stock needed for display (PCS) " . $BrandText, $DisplayItems);
 	InsertKPI("Stock", "Stock available for sale (PCS) " . $BrandText, $AvailableForSaleItems);
+	InsertKPI("Stock", "Average pieces per model (PCS) " . $BrandText, round($AvailableForSaleItems/$TotalModels,2));
 	InsertKPI("Stock", "Daily Stock sold average " . $NumDays . " days (PCS) " . $BrandText, $DailySoldItems);
 	InsertKPI("Stock", "Days left of stock (DAYS) " .$BrandText, $DaysStockForSale);
 
