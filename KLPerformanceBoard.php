@@ -358,8 +358,9 @@ if ($ProcessSection03){
 					143000000, 200000000, 100000000, 
 					 40525935, 300000000, 100000000, 
 					100000000, 
-					75, 21, 5000, 
-					100000, 250000,
+					75, 1.2,
+					5000, 
+					100000, 200000,
 					$periodnow, $KL_SystemAdmin, $db);
 		$NumberOfTestExecuted++;
 	}
@@ -618,7 +619,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 							$CashEndOfPreviousYearBB, $YearlyGoalBB, $MinTransferBB, 
 							$MinMoveFree, 
 							$USDPODaysSchedule,
-							$USDDaysStock,
+							$USDSafetyFactor,
 							$USDMinPurchase,
 							$USDMaxEasyPurchasePerMonth,
 							$SaldoADUDanamonUSDMax,
@@ -627,9 +628,18 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 							$db){
 
     // Consider all year, not until today as some tx are reported into the future
-	$Today = $Year . "-12-31";
+	$EndOfYear = $Year . "-12-31";
 	$StartDateYTD = $Year . "-01-01";
+	$Today = date('Y-m-d');
 	$FirstDateOfMonth = date('Y-m-d', mktime(0, 0, 0, date('m'), 1, date('Y')));
+
+	$SQL = "SELECT lastdate_in_period
+			FROM periods
+			WHERE periodno = '".$Period."'";
+	$result = DB_query($SQL);
+	$myrow = DB_fetch_array($result);
+	$LastDateOfMonth = $myrow['lastdate_in_period'];
+	$DaysUntilEndOfMonth = DaysBetween($Today, $LastDateOfMonth);
 
 	////////////////////////////////////////////////////////
 	// CASH STATUS ADU IDR CALCULATIONS
@@ -640,7 +650,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$SQL = "SELECT SUM(gltrans.amount)
 			FROM gltrans
 			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
-				AND gltrans.trandate <= '" . $Today . "'
+				AND gltrans.trandate <= '" . $EndOfYear . "'
 				AND gltrans.account = '" . $Account . "'";
 	$Result = DB_query($SQL);
 	$myrow = DB_fetch_array($Result);
@@ -650,7 +660,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$SQL = "SELECT SUM(gltrans.amount)
 			FROM gltrans
 			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
-				AND gltrans.trandate <= '" . $Today . "'
+				AND gltrans.trandate <= '" . $EndOfYear . "'
 				AND gltrans.account IN (SELECT klposcashaccount
 										FROM locations
 										WHERE partnercode = 'PTADU'
@@ -664,7 +674,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$SQL = "SELECT SUM(gltrans.amount)
 			FROM gltrans
 			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
-				AND gltrans.trandate <= '" . $Today . "'
+				AND gltrans.trandate <= '" . $EndOfYear . "'
 				AND gltrans.account = '" . $Account . "'
 				AND (gltrans.narrative LIKE '%CASH TO CASH%'
 					OR gltrans.narrative LIKE '%CASH TO SUPP%'
@@ -680,7 +690,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$SQL = "SELECT SUM(pcashdetails.amount) 
 			FROM pcashdetails, pctabs, pcexpenses
 			WHERE pcashdetails.date >= '" . $StartDateYTD . "'
-				AND pcashdetails.date <= '" . $Today . "'
+				AND pcashdetails.date <= '" . $EndOfYear . "'
 				AND pcashdetails.tabcode = pctabs.tabcode
 				AND pcashdetails.codeexpense = pcexpenses.codeexpense
 				AND pctabs.currency = 'IDR'
@@ -699,7 +709,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$SQL = "SELECT SUM(gltrans.amount)
 			FROM gltrans
 			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
-				AND gltrans.trandate <= '" . $Today . "'
+				AND gltrans.trandate <= '" . $EndOfYear . "'
 				AND gltrans.account = '" . $Account . "'
 				AND (gltrans.narrative LIKE '%CASH%'
 					OR gltrans.narrative LIKE '%KANTOR%')";
@@ -712,7 +722,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$SQL = "SELECT SUM(gltrans.amount)
 			FROM gltrans
 			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
-				AND gltrans.trandate <= '" . $Today . "'
+				AND gltrans.trandate <= '" . $EndOfYear . "'
 				AND gltrans.account = '" . $Account . "'
 				AND gltrans.narrative LIKE '%CASH%'";
 	$Result = DB_query($SQL);
@@ -724,7 +734,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$SQL = "SELECT SUM(gltrans.amount)
 			FROM gltrans
 			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
-				AND gltrans.trandate <= '" . $Today . "'
+				AND gltrans.trandate <= '" . $EndOfYear . "'
 				AND gltrans.account = '" . $Account . "'
 				AND gltrans.narrative LIKE '%CASH%'";
 	$Result = DB_query($SQL);
@@ -891,15 +901,15 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$PORunningTotalUSD = round(GetLastKPIValue("Purchase Orders","PO Items for sale arriving next % days (IDR)")*$CurrentUSDRate,0);
 	$POPaymentsPendingUSD = round(GetLastKPIValue("Purchase Orders","Payments pending%")*$CurrentUSDRate,0);
 	$DPPlacedUSD = $PORunningTotalUSD - $POPaymentsPendingUSD;
-	$POPaymentsPendingUSDinStockDays = $POPaymentsPendingUSD / $USDPODaysSchedule * $USDDaysStock;
-	$ShortageUSDinStockDays = $POPaymentsPendingUSDinStockDays - $SaldoADUDanamonUSD;
+	$POPaymentsPendingUSDuntilEndOfMonth = $POPaymentsPendingUSD / $USDPODaysSchedule * $DaysUntilEndOfMonth * $USDSafetyFactor;
+	$ShortageUSDuntilEndOfMonth = $POPaymentsPendingUSDuntilEndOfMonth - $SaldoADUDanamonUSD;
 
 	if (($USDAlreadyExhangedThisMonth < $USDMaxEasyPurchasePerMonth) 
 		AND ($SaldoADUDanamonUSD < $SaldoADUDanamonUSDMax)){
 		$ToBeExchanged = round_multiple_of(min($USDMaxEasyPurchasePerMonth - $USDAlreadyExhangedThisMonth,
 												$SaldoADUDanamonUSDMax - $SaldoADUDanamonUSD), 5000);	
-	}elseif ($ShortageUSDinStockDays > 0){
-		$ToBeExchanged = round_multiple_of($ShortageUSDinStockDays, 5000);	
+	}elseif ($ShortageUSDuntilEndOfMonth > 0){
+		$ToBeExchanged = round_multiple_of($ShortageUSDuntilEndOfMonth, 5000);	
 	}else{
 		$ToBeExchanged = 0;	
 	}
@@ -941,8 +951,8 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
-			'Payments in USD during next '.$USDDaysStock.' days (approx)', 
-			locale_number_format($POPaymentsPendingUSDinStockDays,0)
+			'Payments in USD (approx) until end of month ('.$DaysUntilEndOfMonth.' days)', 
+			locale_number_format($POPaymentsPendingUSDuntilEndOfMonth,0)
 			);
 
 	printf('<td>%s</td>
@@ -962,8 +972,8 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	printf('<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
-				'Total USD needed in next '.$USDDaysStock.' days (approx)', 
-				locale_number_format(max($ShortageUSDinStockDays,0),0)
+				'Total USD needed until end of month ('.$DaysUntilEndOfMonth.' days)', 
+				locale_number_format(max($ShortageUSDuntilEndOfMonth,0),0)
 				);
 
 	if ($ToBeExchanged > 0){
@@ -987,7 +997,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$SQL = "SELECT SUM(gltrans.amount)
 			FROM gltrans
 			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
-				AND gltrans.trandate <= '" . $Today . "'
+				AND gltrans.trandate <= '" . $EndOfYear . "'
 				AND gltrans.account = '" . $Account . "'";
 	$Result = DB_query($SQL);
 	$myrow = DB_fetch_array($Result);
@@ -997,7 +1007,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$SQL = "SELECT SUM(gltrans.amount)
 			FROM gltrans
 			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
-				AND gltrans.trandate <= '" . $Today . "'
+				AND gltrans.trandate <= '" . $EndOfYear . "'
 				AND gltrans.account IN (SELECT klposcashaccount
 										FROM locations
 										WHERE partnercode = 'PTSMH'
@@ -1011,7 +1021,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$SQL = "SELECT SUM(gltrans.amount)
 			FROM gltrans
 			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
-				AND gltrans.trandate <= '" . $Today . "'
+				AND gltrans.trandate <= '" . $EndOfYear . "'
 				AND gltrans.account = '" . $Account . "'
 				AND (gltrans.narrative LIKE '%CASH TO CASH%'
 					OR gltrans.narrative LIKE '%CASH TO SUPP%'
@@ -1027,7 +1037,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$SQL = "SELECT SUM(gltrans.amount)
 			FROM gltrans
 			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
-				AND gltrans.trandate <= '" . $Today . "'
+				AND gltrans.trandate <= '" . $EndOfYear . "'
 				AND gltrans.account = '" . $Account . "'
 				AND (gltrans.narrative LIKE '%CASH TO CASH%'
 					OR gltrans.narrative LIKE '%CASH TO SUPP%'
@@ -1043,7 +1053,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$SQL = "SELECT SUM(pcashdetails.amount) 
 			FROM pcashdetails, pctabs, pcexpenses
 			WHERE pcashdetails.date >= '" . $StartDateYTD . "'
-				AND pcashdetails.date <= '" . $Today . "'
+				AND pcashdetails.date <= '" . $EndOfYear . "'
 				AND pcashdetails.tabcode = pctabs.tabcode
 				AND pcashdetails.codeexpense = pcexpenses.codeexpense
 				AND pctabs.currency = 'IDR'
@@ -1062,7 +1072,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$SQL = "SELECT SUM(gltrans.amount)
 			FROM gltrans
 			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
-				AND gltrans.trandate <= '" . $Today . "'
+				AND gltrans.trandate <= '" . $EndOfYear . "'
 				AND gltrans.account = '" . $Account . "'
 				AND (gltrans.narrative LIKE '%CASH%'
 					OR gltrans.narrative LIKE '%KANTOR%')";
@@ -1075,7 +1085,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$SQL = "SELECT SUM(gltrans.amount)
 			FROM gltrans
 			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
-				AND gltrans.trandate <= '" . $Today . "'
+				AND gltrans.trandate <= '" . $EndOfYear . "'
 				AND gltrans.account = '" . $Account . "'
 				AND gltrans.narrative LIKE '%CASH%'";
 	$Result = DB_query($SQL);
@@ -1087,7 +1097,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$SQL = "SELECT SUM(gltrans.amount)
 			FROM gltrans
 			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
-				AND gltrans.trandate <= '" . $Today . "'
+				AND gltrans.trandate <= '" . $EndOfYear . "'
 				AND gltrans.account = '" . $Account . "'
 				AND gltrans.narrative LIKE '%CASH%'";
 	$Result = DB_query($SQL);
@@ -1229,7 +1239,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$SQL = "SELECT SUM(gltrans.amount)
 			FROM gltrans
 			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
-				AND gltrans.trandate <= '" . $Today . "'
+				AND gltrans.trandate <= '" . $EndOfYear . "'
 				AND gltrans.account = '" . $Account . "'";
 	$Result = DB_query($SQL);
 	$myrow = DB_fetch_array($Result);
@@ -1239,7 +1249,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$SQL = "SELECT SUM(gltrans.amount)
 			FROM gltrans
 			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
-				AND gltrans.trandate <= '" . $Today . "'
+				AND gltrans.trandate <= '" . $EndOfYear . "'
 				AND gltrans.account IN (SELECT klposcashaccount
 										FROM locations
 										WHERE partnercode = 'PTBB'
@@ -1253,7 +1263,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$SQL = "SELECT SUM(gltrans.amount)
 			FROM gltrans
 			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
-				AND gltrans.trandate <= '" . $Today . "'
+				AND gltrans.trandate <= '" . $EndOfYear . "'
 				AND gltrans.account = '" . $Account . "'
 				AND (gltrans.narrative LIKE '%CASH TO CASH%'
 					OR gltrans.narrative LIKE '%CASH TO SUPP%'
@@ -1269,7 +1279,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$SQL = "SELECT SUM(pcashdetails.amount) 
 			FROM pcashdetails, pctabs, pcexpenses
 			WHERE pcashdetails.date >= '" . $StartDateYTD . "'
-				AND pcashdetails.date <= '" . $Today . "'
+				AND pcashdetails.date <= '" . $EndOfYear . "'
 				AND pcashdetails.tabcode = pctabs.tabcode
 				AND pcashdetails.codeexpense = pcexpenses.codeexpense
 				AND pctabs.currency = 'IDR'
@@ -1288,7 +1298,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$SQL = "SELECT SUM(gltrans.amount)
 			FROM gltrans
 			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
-				AND gltrans.trandate <= '" . $Today . "'
+				AND gltrans.trandate <= '" . $EndOfYear . "'
 				AND gltrans.account = '" . $Account . "'
 				AND (gltrans.narrative LIKE '%CASH%'
 					OR gltrans.narrative LIKE '%KANTOR%')";
@@ -1301,7 +1311,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$SQL = "SELECT SUM(gltrans.amount)
 			FROM gltrans
 			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
-				AND gltrans.trandate <= '" . $Today . "'
+				AND gltrans.trandate <= '" . $EndOfYear . "'
 				AND gltrans.account = '" . $Account . "'
 				AND gltrans.narrative LIKE '%CASH%'";
 	$Result = DB_query($SQL);
@@ -1313,7 +1323,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$SQL = "SELECT SUM(gltrans.amount)
 			FROM gltrans
 			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
-				AND gltrans.trandate <= '" . $Today . "'
+				AND gltrans.trandate <= '" . $EndOfYear . "'
 				AND gltrans.account = '" . $Account . "'
 				AND gltrans.narrative LIKE '%CASH%'";
 	$Result = DB_query($SQL);

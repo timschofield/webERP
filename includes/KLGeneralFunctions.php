@@ -1244,4 +1244,12 @@ function GetLastKPIValue($Class,$Concept){
 	
 }
 
+function DaysBetween($date1, $date2) {
+  $start = strtotime($date1);
+  $end = strtotime($date2);
+  $days_between = ceil(abs($end - $start) / 86400);
+  return $days_between;
+}
+
+
 ?>
