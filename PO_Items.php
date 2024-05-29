@@ -238,7 +238,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 											'" . $POLine->ShiptRef . "',
 											'" . $POLine->JobRef . "',
 											'" . $POLine->SuppliersUnit . "',
-											'" . $POLine->Suppliers_PartNo . "',
+											'" . DB_escape_string($POLine->Suppliers_PartNo) . "',
 											'" . $POLine->AssetID . "',
 											'" . $POLine->ConversionFactor . "')";
 					$ErrMsg =_('One of the purchase order detail records could not be inserted into the database because');
