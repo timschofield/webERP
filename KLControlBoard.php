@@ -4254,6 +4254,8 @@ function OnlineMarketPlacePaymentPending($RootPath, $db){
 		echo $TableHeader;
 		$k = 0; //row colour counter
 		$i = 1;
+		$TotalShopeeValue = 0;
+		$TotalTokopediaValue = 0;
 		$TotalPaymentValue = 0;
 		
 		while ($myrow = DB_fetch_array($result)) {
@@ -4269,12 +4271,14 @@ function OnlineMarketPlacePaymentPending($RootPath, $db){
 			if ($myrow['debtorno'] == "TOKOPEDIA"){
 				$PaymentTokopedia = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&PaymentCode=' . 'tokopedia' . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentLinkText .'</a>';
 				$PaymentManual = '';
+				$TotalTokopediaValue += $PaymentValue;
 			}else{
 				$PaymentTokopedia = '';
 			}
 			if ($myrow['debtorno'] == "SHOPEE"){
 				$PaymentShopee = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&PaymentCode=' . 'shopee' . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentLinkText .'</a>';
 				$PaymentManual = '';
+				$TotalShopeeValue += $PaymentValue;
 			}else{
 				$PaymentShopee = '';
 			}
@@ -4315,6 +4319,58 @@ function OnlineMarketPlacePaymentPending($RootPath, $db){
 			$TotalPaymentValue += $PaymentValue;
 		}
 		printf('<td class="number">%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td>%s</td>
+				<td class="number">%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				</tr>', 
+				"", 
+				"", 
+				"", 
+				"", 
+				"",
+				"SHOPEE:", 
+				locale_number_format($TotalShopeeValue,$myrow['decimalplaces']),
+				"IDR", 
+				"",
+				"",
+				"",
+				""
+				);
+			printf('<td class="number">%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td>%s</td>
+				<td class="number">%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				</tr>', 
+				"", 
+				"", 
+				"", 
+				"", 
+				"",
+				"TOKOPEDIA:", 
+				locale_number_format($TotalTokopediaValue,$myrow['decimalplaces']),
+				"IDR", 
+				"",
+				"",
+				"",
+				""
+				);
+			printf('<td class="number">%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td class="number">%s</td>
