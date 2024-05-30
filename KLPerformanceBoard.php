@@ -639,7 +639,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$result = DB_query($SQL);
 	$myrow = DB_fetch_array($result);
 	$LastDateOfMonth = $myrow['lastdate_in_period'];
-	$DaysUntilEndOfMonth = DaysBetween($Today, $LastDateOfMonth);
+	$DaysUntilEndOfMonth = DaysBetween($Today, $LastDateOfMonth)+1;
 
 	////////////////////////////////////////////////////////
 	// CASH STATUS ADU IDR CALCULATIONS
@@ -932,47 +932,47 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
-			'Total Value of Running PO for items for sale in USD (approx)', 
+			'Running PO for items for sale (USD approx)', 
 			locale_number_format($PORunningTotalUSD,0)
 			);
 	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
-			'DP places for PO in USD (approx)', 
-			locale_number_format($DPPlacedUSD,0)
+			'Running PO DP already placed (USD approx)', 
+			locale_number_format(-$DPPlacedUSD,0)
 			);
 	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
-			'Payments scheduled in USD during next '.$USDPODaysSchedule.' days (approx)', 
+			'Running PO pending payments during next '.$USDPODaysSchedule.' days (USD approx)', 
 			locale_number_format($POPaymentsPendingUSD,0)
 			);
 			
 	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
-			'Payments in USD (approx) until end of month ('.$DaysUntilEndOfMonth.' days)', 
+			'Pending payments until end of month ('.$DaysUntilEndOfMonth.' days) (USD approx)', 
 			locale_number_format($POPaymentsPendingUSDuntilEndOfMonth,0)
 			);
 
 	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
-			'Current saldo Danamon USD ADU (approx)', 
+			'Current saldo Danamon USD ADU (USD approx)', 
 			locale_number_format($SaldoADUDanamonUSD,0)
 			);
 
 	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
-			'USD Already exchanged this month for ADU (approx)', 
+			'USD already exchanged from IDR this month for ADU (USD approx)', 
 			locale_number_format($USDAlreadyExhangedThisMonth,0)
 			);
 
 	printf('<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
-				'Total USD needed until end of month ('.$DaysUntilEndOfMonth.' days)', 
+				'USD needed until end of month ('.$DaysUntilEndOfMonth.' days) (USD approx)', 
 				locale_number_format(max($ShortageUSDuntilEndOfMonth,0),0)
 				);
 
