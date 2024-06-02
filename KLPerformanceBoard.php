@@ -358,7 +358,7 @@ if ($ProcessSection03){
 					143000000, 200000000, 100000000, 
 					 40525935, 300000000, 100000000, 
 					100000000, 
-					75, 1.2,
+					75, 1.05,
 					5000, 
 					100000, 200000,
 					$periodnow, $KL_SystemAdmin, $db);
@@ -901,7 +901,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$PORunningTotalUSD = round(GetLastKPIValue("Purchase Orders","PO Items for sale arriving next % days (IDR)")*$CurrentUSDRate,0);
 	$POPaymentsPendingUSD = round(GetLastKPIValue("Purchase Orders","Payments pending%")*$CurrentUSDRate,0);
 	$DPPlacedUSD = $PORunningTotalUSD - $POPaymentsPendingUSD;
-	$POPaymentsPendingUSDuntilEndOfMonth = $POPaymentsPendingUSD / $USDPODaysSchedule * $DaysUntilEndOfMonth * $USDSafetyFactor;
+	$POPaymentsPendingUSDuntilEndOfMonth = $PORunningTotalUSD / $USDPODaysSchedule * $DaysUntilEndOfMonth * $USDSafetyFactor;
 	$ShortageUSDuntilEndOfMonth = $POPaymentsPendingUSDuntilEndOfMonth - $SaldoADUDanamonUSD;
 
 	if (($USDAlreadyExhangedThisMonth < $USDMaxEasyPurchasePerMonth) 
