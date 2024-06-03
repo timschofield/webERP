@@ -199,6 +199,7 @@ or deletion of the records*/
 	echo '<tr>
 			<th>' . _('#') . '</th>
 			<th>' . _('Item Code') . '</th>
+			<th>' . _('QOH Total') . '</th>
 			<th>' . _('New Retail Price') . '</th>
 			<th>' . _('Start Date') . '</th>
 		</tr>';
@@ -209,12 +210,14 @@ or deletion of the records*/
 		printf('<td class="number">%s</td>
 				<td>%s</td>
 				<td class="number">%s</td>
+				<td class="number">%s</td>
 				<td>%s</td>
 				<td><a href="%sSelectedPriceChange=%s">'. _('Edit') . '</a></td>
 				<td><a href="%sSelectedPriceChange=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this price change?') . '\');">' . _('Delete') . '</a></td>
 				</tr>',
 				$i,
 				$myrow['stockid'],
+				locale_number_format(ItemCodeQOH($myrow['stockid'],'CODE_FULL', "ALL"),0),
 				locale_number_format($myrow['newretailprice'],0),
 				ConvertSQLDate($myrow['startprocessdate']),
 				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
