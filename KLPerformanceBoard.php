@@ -908,7 +908,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 		AND ($SaldoADUDanamonUSD < $SaldoADUDanamonUSDMax)){
 		$ToBeExchanged = round_multiple_of(min($USDMaxEasyPurchasePerMonth - $USDAlreadyExhangedThisMonth,
 												$SaldoADUDanamonUSDMax - $SaldoADUDanamonUSD), 5000);	
-	}elseif ($ShortageUSDuntilEndOfMonth > 0){
+	}elseif ($ShortageUSDuntilEndOfMonth > $SaldoADUDanamonUSD){
 		$ToBeExchanged = round_multiple_of($ShortageUSDuntilEndOfMonth, 5000);	
 	}else{
 		$ToBeExchanged = 0;	
@@ -935,7 +935,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 			'Running PO for items for sale (USD approx)', 
 			locale_number_format($PORunningTotalUSD,0)
 			);
-	printf('<td>%s</td>
+/*	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			'Running PO DP already placed (USD approx)', 
@@ -948,7 +948,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 			locale_number_format($POPaymentsPendingUSD,0)
 			);
 			
-	printf('<td>%s</td>
+*/	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			'Pending payments until end of month ('.$DaysUntilEndOfMonth.' days) (USD approx)', 
