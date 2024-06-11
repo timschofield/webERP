@@ -50,7 +50,10 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		$Errors[$i] = 'StockId';
 		$i++;
-	}elseif ((ItemCodeQOH($_POST['Stockid'],'CODE_FULL', "ALL") != 0) AND (GetTotalItemsChangingPrice() >= MAX_ITEMS_CHANGING_PRICE) AND (!$KL_SystemAdmin)) {
+	}elseif ((ItemCodeQOH($_POST['Stockid'],'CODE_FULL', "ALL") != 0) 
+			AND (GetTotalItemsChangingPrice() >= MAX_ITEMS_CHANGING_PRICE) 
+			AND (!ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_SETUP))
+			AND (!$KL_SystemAdmin)) {
 		$InputError = 1;
 		$Errors[$i] = 'MaxItemsChangingPrice';
 		$i++;
