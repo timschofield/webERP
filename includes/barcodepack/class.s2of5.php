@@ -83,7 +83,7 @@ class s2of5 extends linearBarcode {
 		// Input data encode
 		$biteCode['DATA'] = '';
 		for($i=0;$i<strlen($this->text);$i++) {
-			$biteCode['DATA'] .= $this->codeTable[$this->text{$i}];
+			$biteCode['DATA'] .= $this->codeTable[$this->text[$i]];
 		}
 
 		// STOP char

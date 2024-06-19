@@ -109,12 +109,12 @@ class upc extends linearBarcode {
 		$saveTo = 'DATA';
 
 		// Parity determine
-		$parity = $this->parity[$this->text{0}];
+		$parity = $this->parity[$this->text[0]];
 
 		$biteCode['START'] = $this->codeTable['START'];
 
 		for($i=1;$i<strlen($this->text);$i++) {
-			$biteCode[$saveTo] .= $this->codeTable[$this->text{$i}][$parity{$i-1}];
+			$biteCode[$saveTo] .= $this->codeTable[$this->text[$i]][$parity[$i-1]];
 			if($i==6) {
 				$biteCode['SEPARATOR'] = $this->codeTable['SEPARATOR'];
 				$saveTo = 'DATA2';
@@ -147,9 +147,9 @@ class upc extends linearBarcode {
 
 		for($i=1;$i<=strlen($text);$i++) {
 			if($i%2==0) {
-				$evensum += (int) $text{$i-1};
+				$evensum += (int) $text[$i-1];
 			} else {
-				$oddsum += (int) $text{$i-1};
+				$oddsum += (int) $text[$i-1];
 			}
 		}
 
@@ -182,12 +182,12 @@ class upc extends linearBarcode {
 
 			imagecopy($im2, $im, $margin, 0, 0, 0, $this->getBarcodeLen()*$this->moduleSize+(2*$margin), $this->height+$this->fontSize+(2*$margin));
 
-			$charsA = $this->text{0};
+			$charsA = $this->text[0];
 			for($i=1;$i<=strlen($this->text);$i++) {
 				if($i<=6) {
-					$charsB .= $this->text{$i};
+					$charsB .= $this->text[$i];
 				} else {
-					$charsC .= $this->text{$i};
+					$charsC .= $this->text[$i];
 				}
 			}
 
