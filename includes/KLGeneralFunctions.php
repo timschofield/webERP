@@ -1251,5 +1251,55 @@ function DaysBetween($date1, $date2) {
   return $days_between;
 }
 
+function TotalItemsToBeReceivedByPO($Brand){
+	$ErrMsg = 'Error in function TotalItemsToBeReceivedByPO()';
 
+	if ($Brand == "SHOPKL"){
+		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_SETUP ."";
+	}else if ($Brand == "SHOPBL"){
+		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK_INCLUDING_SETUP ."";
+	}else{
+		return 0;	
+	} 
+
+	$SQL="SELECT SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS pending
+		FROM purchorders 
+		INNER JOIN purchorderdetails
+			ON purchorders.orderno = purchorderdetails.orderno
+		INNER JOIN stockmaster
+			ON stockmaster.stockid = purchorderdetails.itemcode
+		WHERE purchorderdetails.completed=0
+			AND purchorders.status IN ('Authorised', 'Printed', 'Pending')" . 
+			$operator1." ";
+	$result = DB_query($SQL,$ErrMsg);
+	$Row = DB_fetch_row($result);
+	return $Row['0'];
+}
+
+function TotalItemsToBeReceivedByWO($Brand){
+	$ErrMsg = 'Error in function TotalItemsToBeReceivedByWO()';
+
+	if ($Brand == "SHOPKL"){
+		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_SETUP ."";
+	}else if ($Brand == "SHOPBL"){
+		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK_INCLUDING_SETUP ."";
+	}else{
+		return 0;	
+	} 
+
+	$SQL="SELECT SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS pending
+		FROM purchorders 
+		INNER JOIN purchorderdetails
+			ON purchorders.orderno = purchorderdetails.orderno
+		INNER JOIN stockmaster
+			ON stockmaster.stockid = purchorderdetails.itemcode
+		WHERE purchorderdetails.completed=0
+			AND purchorders.status IN ('Authorised', 'Printed', 'Pending')" . 
+			$operator1." ";
+	$result = DB_query($SQL,$ErrMsg);
+	$Row = DB_fetch_row($result);
+//	return $Row['0'];
+	return 0;
+}
+ 
 ?>

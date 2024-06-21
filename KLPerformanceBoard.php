@@ -4155,12 +4155,18 @@ function StockByBrand($Brand, $NumDays){
 	if ($Brand == "SHOPKL"){
 		$BrandText = "Kapal-Laut";
 		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT ."";
+		$ItemsPO = TotalItemsToBeReceivedByPO($Brand);
+		$ItemsWO = TotalItemsToBeReceivedByWO($Brand);
 	}else if ($Brand == "SHOPBL"){
 		$BrandText = "Blink";
 		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK ."";
+		$ItemsPO = TotalItemsToBeReceivedByPO($Brand);
+		$ItemsWO = TotalItemsToBeReceivedByWO($Brand);
 	}else{
 		$BrandText = "Outlet";
 		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET ."";
+		$ItemsPO = 0;
+		$ItemsWO = 0;
 	} 
 
 	$Shops = NumberOfShops($Brand, "ALL", $db);
@@ -4202,6 +4208,7 @@ function StockByBrand($Brand, $NumDays){
 	$DailySoldItems = $myrow['solditems'] / $NumDays;
 	
 	$DaysStockForSale = $AvailableForSaleItems / $DailySoldItems;
+	$DaysStockForSaleIncludingPOWO = ($AvailableForSaleItems + $ItemsPO + $ItemsWO) / $DailySoldItems;
 
 	echo '<p class="page_title_text" align="center"><strong>' . 'Stock for Brand ' . $BrandText. '</strong></p>';
 	echo '<div>';
@@ -4259,6 +4266,27 @@ function StockByBrand($Brand, $NumDays){
 			</tr>', 
 			"Days left of stock (DAYS)", 
 			locale_number_format($DaysStockForSale,0)
+			);
+	$k = StartEvenOrOddRow($k);
+	printf('<td>%s</td>
+			<td class="number">%s</td>
+			</tr>', 
+			"Stock to be received by PO (PCS)", 
+			locale_number_format($ItemsPO,0)
+			);
+	$k = StartEvenOrOddRow($k);
+	printf('<td>%s</td>
+			<td class="number">%s</td>
+			</tr>', 
+			"Stock to be received by WO (PCS)", 
+			locale_number_format($ItemsWO,0)
+			);
+	$k = StartEvenOrOddRow($k);
+	printf('<td>%s</td>
+			<td class="number">%s</td>
+			</tr>', 
+			"Days left of stock including PO & WO (DAYS)", 
+			locale_number_format($DaysStockForSaleIncludingPOWO,0)
 			);
 	echo '</table>
 			</div>
