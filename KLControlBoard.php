@@ -404,7 +404,7 @@ if ($ProcessSection01){
 									'111513000AD')", "Total WIP",  -1000000,   1000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 
-		BalanceAccountControl("111111200",   50000000,  300000000, $periodnow, $db);
+		BalanceAccountControl("111111200",   50000000,  400000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111202010",         -1,          1, $periodnow, $db);
 		$NumberOfTestExecuted++;
@@ -436,7 +436,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("211021400", -200000000,          1, $periodnow, $db);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("211021500",  400000000, 1000000000, $periodnow, $db);
+		BalanceAccountControl("211021500",  500000000, 1500000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("612012015",         -1,          1, $periodnow, $db);
 		$NumberOfTestExecuted++;
