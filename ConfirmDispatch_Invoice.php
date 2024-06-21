@@ -1318,17 +1318,14 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 /*first the cost of sales entry - GL accounts are retrieved using the function GetCOGSGLAccount from includes/GetSalesTransGLCodes.inc */
 
-// Begin of Consignment sales for PTADU MODIFICATIONS. Ricard KL
-// CONSIGNMENT sale for any area NOT managed by PTADU directly
-
-				$ItemBelongsTo = ItemBelongsToPT($OrderLine->StockID);
-				// if it is a PTADU item and NOT sold directly by PTADU 
-				// PTADU can sell directly to several areas
+				// Begin of Consignment sales for PTADU MODIFICATIONS. Ricard KL
+				// CONSIGNMENT sale for any area NOT managed by PTADU directly
+				// PTADU can sell directly via several areas
 				// Because when it is directly sold by PTADU we do not need clustering
-				if (($ItemBelongsTo == "PTADU") AND (!ItemInList($Area, LIST_SALES_AREAS_PTADU))){  
+				if (!ItemInList($Area, LIST_SALES_AREAS_PTADU)){  
 					// it is an PTADU item and PTADU does NOT sell it directly, but via a partner
-					$AccountCOGSbyADU = "510010000AD"; // when retail partner sells PTADU items COGS should go to PTADU
-					$AccountCOGS = $AccountCOGSbyADU;
+
+					$AccountCOGS = ACCOUNT_COGS_ADU; // when retail partner sells PTADU items COGS should go to PTADU
 					
 					$sql = "SELECT 	klretailpartners.partnercode,
 									klretailpartners.percentconsignmentptadu,

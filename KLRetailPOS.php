@@ -1,6 +1,7 @@
 <?php
 
 /************************************************************************
+v 4.41 Code cleaning
 v 4.40 Added BNI payments
 v 4.30 Added PTADU retail sales
 v 4.20 Added QRIS payments
@@ -33,9 +34,7 @@ v 1.00 2011-08-10: Shops start using it.
 v 1.00 2011-07-25: Kantor starts using it.
 *********************************************************************/
 
-$AccountCOGSbyADU = "510010000AD"; // when a retail partner sells PTADU items COGS should go to PTADU
-
-define("VERSIONFILE", "4.40"); // 
+define("VERSIONFILE", "4.41"); // 
 
 include('includes/DefineCartClass.php');
 include('includes/session.php');
@@ -888,14 +887,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 			if ($OrderLine->StandardCost !=0){
 				/*first the cost of sales entry*/
 //				$AccountCOGS = GetCOGSGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType, $db);
-//				GET THE $$AccountCOGS as all the items belong to PTADU
-				if ($_SESSION['PartnerCode'] == "PTADU"){
-					// sale in a shop managed by PTADU, so COGS goes directly to PTADU
-					$AccountCOGS = $AccountCOGSbyADU;
-				}else{
-					// sale in a shop managed by another retail partner, so consignment acounting is needed
-					$AccountCOGS = $AccountCOGSbyADU;
-				}
+				// when a retail partner sells PTADU items COGS should go to PTADU
+				$AccountCOGS = ACCOUNT_COGS_ADU;
 				
 				if ($Area == $_SESSION['AreaSalesCashOthers']){
 					// Not reported sales do not have COGS corrections

@@ -670,36 +670,6 @@ function GLAccountBelongsTo($Account){
 	return $Company;
 }
 
-function ItemBelongsToPT($StockID){
-	$SQL="SELECT stockmaster.categoryid
-			FROM stockmaster
-			WHERE stockmaster.stockid='" . $StockID . "'";
-	$ErrMsg = _('WARNING') . ': ' . _('Could not retrieve stock ID category');
-	$Result = DB_query($SQL, $ErrMsg);
-	$myStockCat = DB_fetch_array($Result);
-	$StockCategory = $myStockCat['categoryid'];
-	$PT = "PTBB"; // by default it is PTBB
-	if (($StockCategory == "SETKLA") OR
-		($StockCategory == "SETBLA") OR
-		($StockCategory == "SETGEA") OR
-		($StockCategory == "TESTKA") OR
-		($StockCategory == "TESTBA") OR
-		($StockCategory == "TESTGA") OR
-		($StockCategory == "STABKA") OR
-		($StockCategory == "STABBA") OR
-		($StockCategory == "STABGA") OR
-		($StockCategory == "NOPOKA") OR
-		($StockCategory == "NOPOBA") OR
-		($StockCategory == "NOPOGA") OR
-		($StockCategory == "DISC2A") OR
-		($StockCategory == "DISC5A") OR
-		($StockCategory == "DISC8A") OR
-		($StockCategory == "COMPOA")){
-		$PT = "PTADU";
-	}
-	return $PT;
-}
-
 function CreateConsignmentInvoiceNumber($CompanyFrom, $CompanyTo, $EndDate){
 	return $CompanyFrom . '-' . $CompanyTo . '-' . $EndDate;
 }
