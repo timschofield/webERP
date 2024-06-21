@@ -1257,19 +1257,102 @@ function TotalItemsToBeReceivedByWO($Brand){
 		return 0;	
 	} 
 
-	$SQL="SELECT SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS pending
-		FROM purchorders 
-		INNER JOIN purchorderdetails
-			ON purchorders.orderno = purchorderdetails.orderno
+	$SQL="SELECT SUM(woitems.qtyreqd-woitems.qtyrecd) AS pending
+		FROM woitems 
 		INNER JOIN stockmaster
-			ON stockmaster.stockid = purchorderdetails.itemcode
-		WHERE purchorderdetails.completed=0
-			AND purchorders.status IN ('Authorised', 'Printed', 'Pending')" . 
+			ON stockmaster.stockid = woitems.stockid
+		INNER JOIN workorders
+			ON workorders.wo = woitems.wo
+		WHERE workorders.closed = 0
+			AND woitems.qtyreqd > woitems.qtyrecd ".
 			$operator1." ";
 	$result = DB_query($SQL,$ErrMsg);
 	$Row = DB_fetch_row($result);
-//	return $Row['0'];
-	return 0;
+	return $Row['0'];
+}
+
+function TotalModels($Brand){
+	$ErrMsg = 'Error in TotalModels()';
+
+	if ($Brand == "SHOPKL"){
+		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT ."";
+	}else if ($Brand == "SHOPBL"){
+		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK ."";
+	}else{
+		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET ."";
+	} 
+
+	$SQL =	"SELECT COUNT(stockmaster.stockid) AS totalmodels
+			FROM stockmaster
+			WHERE discontinued = 0 " . 
+				$operator1 ."";
+	$result = DB_query($SQL);
+	$myrow = DB_fetch_array($result);
+	return $myrow['0'];
 }
  
+function TotalItems($Brand){
+	$ErrMsg = 'Error in TotalItems()';
+
+	if ($Brand == "SHOPKL"){
+		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT ."";
+	}else if ($Brand == "SHOPBL"){
+		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK ."";
+	}else{
+		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET ."";
+	} 
+
+	$SQL =	"SELECT SUM(locstock.quantity) AS totalitems
+			FROM locstock, stockmaster
+			WHERE stockmaster.stockid = locstock.stockid " . 
+				$operator1 ."";
+	$result = DB_query($SQL);
+	$myrow = DB_fetch_array($result);
+	return $myrow['0'];
+}
+
+function TotalDisplayItems($Brand){
+	$ErrMsg = 'Error in TotalDisplayItems()';
+
+	if ($Brand == "SHOPKL"){
+		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT ."";
+	}else if ($Brand == "SHOPBL"){
+		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK ."";
+	}else{
+		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET ."";
+	} 
+
+	$SQL =	"SELECT COUNT(locstock.quantity) AS displayitems
+			FROM locstock, stockmaster
+			WHERE stockmaster.stockid = locstock.stockid 
+				AND locstock.quantity >= 1" . 
+				$operator1 ."";
+	$result = DB_query($SQL);
+	$myrow = DB_fetch_array($result);
+	return $myrow['0'];
+}
+
+function DailyAverageSoldItems($Brand, $NumDays){
+	$ErrMsg = 'Error in DailySoldItems()';
+	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
+
+	if ($Brand == "SHOPKL"){
+		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT ."";
+	}else if ($Brand == "SHOPBL"){
+		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK ."";
+	}else{
+		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET ."";
+	} 
+
+	$SQL =	"SELECT SUM(salesorderdetails.qtyinvoiced) AS solditems
+			FROM salesorderdetails, stockmaster
+			WHERE stockmaster.stockid = salesorderdetails.stkcode 
+				AND salesorderdetails.itemdue >= '" . $FromDate . "'" . 
+				$operator1 ."";
+	$result = DB_query($SQL);
+	$myrow = DB_fetch_array($result);
+	return ($myrow['0'] / $NumDays);
+}
+
+
 ?>

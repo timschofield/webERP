@@ -191,11 +191,11 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 		FinishedStockDistribution("FORSALE", "STOCKCATEGORY", $db);
 		$NumberOfTestExecuted++;
-		StockByBrand("SHOPKL", 60, $db);
+		StockByBrand("SHOPKL", 60, 150, $db);
 		$NumberOfTestExecuted++;
-		StockByBrand("SHOPBL", 60, $db);
+		StockByBrand("SHOPBL", 60, 150, $db);
 		$NumberOfTestExecuted++;
-		StockByBrand("SHOPOU", 60, $db);
+		StockByBrand("SHOPOU", 60, 60, $db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -4149,67 +4149,34 @@ function MaintenanceTasksDistribution($Status, $NumDays){
 	}
 }
 
-function StockByBrand($Brand, $NumDays){
-	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
+function StockByBrand($Brand, $NumDays, $OptimalDaysStock){
 	
 	if ($Brand == "SHOPKL"){
 		$BrandText = "Kapal-Laut";
-		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT ."";
-		$ItemsPO = TotalItemsToBeReceivedByPO($Brand);
-		$ItemsWO = TotalItemsToBeReceivedByWO($Brand);
 	}else if ($Brand == "SHOPBL"){
 		$BrandText = "Blink";
-		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK ."";
-		$ItemsPO = TotalItemsToBeReceivedByPO($Brand);
-		$ItemsWO = TotalItemsToBeReceivedByWO($Brand);
 	}else{
 		$BrandText = "Outlet";
-		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET ."";
-		$ItemsPO = 0;
-		$ItemsWO = 0;
 	} 
 
 	$Shops = NumberOfShops($Brand, "ALL", $db);
 
-	$SQL =	"SELECT COUNT(stockmaster.stockid) AS totalmodels
-			FROM stockmaster
-			WHERE discontinued = 0 " . 
-				$operator1 ."";
-	$result = DB_query($SQL);
-	$myrow = DB_fetch_array($result);
-	$TotalModels = $myrow['totalmodels'];
-
-	$SQL =	"SELECT SUM(locstock.quantity) AS totalitems
-			FROM locstock, stockmaster
-			WHERE stockmaster.stockid = locstock.stockid " . 
-				$operator1 ."";
-	$result = DB_query($SQL);
-	$myrow = DB_fetch_array($result);
-	$TotalItems = $myrow['totalitems'];
-
-	$SQL =	"SELECT COUNT(locstock.quantity) AS displayitems
-			FROM locstock, stockmaster
-			WHERE stockmaster.stockid = locstock.stockid 
-				AND locstock.quantity >= 1" . 
-				$operator1 ."";
-	$result = DB_query($SQL);
-	$myrow = DB_fetch_array($result);
-	$DisplayItems = $myrow['displayitems'];
-	
+	$TotalModels  = TotalModels($Brand);
+	$TotalItems   = TotalItems($Brand);
+	$DisplayItems = TotalDisplayItems($Brand);
 	$AvailableForSaleItems = $TotalItems - $DisplayItems;
-
-	$SQL =	"SELECT SUM(salesorderdetails.qtyinvoiced) AS solditems
-			FROM salesorderdetails, stockmaster
-			WHERE stockmaster.stockid = salesorderdetails.stkcode 
-				AND salesorderdetails.itemdue >= '" . $FromDate . "'" . 
-				$operator1 ."";
-	$result = DB_query($SQL);
-	$myrow = DB_fetch_array($result);
-	$DailySoldItems = $myrow['solditems'] / $NumDays;
-	
+	$DailySoldItems = DailyAverageSoldItems($Brand, $NumDays);
 	$DaysStockForSale = $AvailableForSaleItems / $DailySoldItems;
+	$ItemsPO = TotalItemsToBeReceivedByPO($Brand);
+	$ItemsWO = TotalItemsToBeReceivedByWO($Brand);
 	$DaysStockForSaleIncludingPOWO = ($AvailableForSaleItems + $ItemsPO + $ItemsWO) / $DailySoldItems;
-
+	
+	if ($DaysStockForSaleIncludingPOWO < $OptimalDaysStock){
+		$ItemsToGetOptimalDaysStock = ($OptimalDaysStock - $DaysStockForSaleIncludingPOWO) * $DailySoldItems; 
+	}else{
+		$ItemsToGetOptimalDaysStock = 0;
+	}
+	
 	echo '<p class="page_title_text" align="center"><strong>' . 'Stock for Brand ' . $BrandText. '</strong></p>';
 	echo '<div>';
 	echo '<table class="selection">';
@@ -4267,27 +4234,35 @@ function StockByBrand($Brand, $NumDays){
 			"Days left of stock (DAYS)", 
 			locale_number_format($DaysStockForSale,0)
 			);
-	$k = StartEvenOrOddRow($k);
-	printf('<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			"Stock to be received by PO (PCS)", 
-			locale_number_format($ItemsPO,0)
-			);
-	$k = StartEvenOrOddRow($k);
-	printf('<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			"Stock to be received by WO (PCS)", 
-			locale_number_format($ItemsWO,0)
-			);
-	$k = StartEvenOrOddRow($k);
-	printf('<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			"Days left of stock including PO & WO (DAYS)", 
-			locale_number_format($DaysStockForSaleIncludingPOWO,0)
-			);
+	if ($Brand != "SHOPOU"){
+		$k = StartEvenOrOddRow($k);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				"Stock to be received by PO (PCS)", 
+				locale_number_format($ItemsPO,0)
+				);
+		$k = StartEvenOrOddRow($k);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				"Stock to be received by WO (PCS)", 
+				locale_number_format($ItemsWO,0)
+				);
+		$k = StartEvenOrOddRow($k);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				"Days left of stock including PO & WO (DAYS)", 
+				locale_number_format($DaysStockForSaleIncludingPOWO,0)
+				);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				"Stock needed to reach " . $OptimalDaysStock . " days of optimal stock+PO+WO (PCS)", 
+				locale_number_format($ItemsToGetOptimalDaysStock,0)
+				);
+	}
 	echo '</table>
 			</div>
 			</form>';
@@ -4300,6 +4275,10 @@ function StockByBrand($Brand, $NumDays){
 	InsertKPI("Stock", "Average pieces per model (PCS) " . $BrandText, round($AvailableForSaleItems/$TotalModels,2));
 	InsertKPI("Stock", "Daily Stock sold average " . $NumDays . " days (PCS) " . $BrandText, $DailySoldItems);
 	InsertKPI("Stock", "Days left of stock (DAYS) " .$BrandText, $DaysStockForSale);
+	InsertKPI("Stock", "Stock to be received PO (PCS) " . $BrandText, $ItemsPO);
+	InsertKPI("Stock", "Stock to be received WO (PCS) " . $BrandText, $ItemsWO);
+	InsertKPI("Stock", "Days left of stock+PO+WO(DAYS) " .$BrandText, $DaysStockForSaleIncludingPOWO);
+	InsertKPI("Stock", "Stock needed for optimal (PCS) " . $BrandText, $ItemsToGetOptimalDaysStock);
 
 }
 
