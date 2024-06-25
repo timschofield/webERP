@@ -371,7 +371,7 @@ if ($ProcessSection01){
 									'111203020BB',
 									'111259010BB', 
 									'111259020BB', 
-									'111259050BB')", "Total Banks PT BB", 1000000000, 2000000000, $periodnow, $db);
+									'111259050BB')", "Total Banks PT BB", 1000000000, 3000000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 	}
 	
@@ -424,7 +424,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('111512000', 
-									'111512000AD')", "Persediaan Bahan Produksi (Components)",   50000000,    150000000, $periodnow, $db);
+									'111512000AD')", "Persediaan Bahan Produksi (Components)",   50000000,    200000000, $periodnow, $db);
 
 		BalanceAccountControl("111800000",  12000000 * $NumberOfOpenShopsTotal,  17500000 * $NumberOfOpenShopsTotal, $periodnow, $db);
 		$NumberOfTestExecuted++;

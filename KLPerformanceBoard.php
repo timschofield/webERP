@@ -324,7 +324,6 @@ if ($ProcessSection03){
 
 	if ($KL_OperationalManager
 		OR $KL_OperationalTeam
-		OR $KL_SalesDirector
 		OR $KL_ShopManager){
 		MaintenanceTasksDistribution("OPEN", 0);
 		$NumberOfTestExecuted++;
