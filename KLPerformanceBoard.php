@@ -887,6 +887,16 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$myrow = DB_fetch_array($result);
 	$SaldoADUDanamonUSD = round($myrow['saldo']*$CurrentUSDRate, 0);
 
+	$Account = "111204030"; // Cash in Agent Aye Cargo in BKK in IDR
+	$SQL = "SELECT (bfwd + actual) as saldo
+			FROM chartdetails, chartmaster
+			WHERE chartdetails.accountcode = chartmaster.accountcode
+				AND chartdetails.accountcode = '" . $Account . "'
+				AND chartdetails.period = ". $Period . "";
+	$result = DB_query($SQL);
+	$myrow = DB_fetch_array($result);
+	$SaldoAyeCargoUSD = round($myrow['saldo']*$CurrentUSDRate, 0);
+
 	$Account = "111203010AD"; // USD already exchanged current month
 	$SQL = "SELECT SUM(banktrans.amount) AS saldo
 			FROM banktrans
@@ -901,7 +911,8 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$POPaymentsPendingUSD = round(GetLastKPIValue("Purchase Orders","Payments pending%")*$CurrentUSDRate,0);
 	$DPPlacedUSD = $PORunningTotalUSD - $POPaymentsPendingUSD;
 	$POPaymentsPendingUSDuntilEndOfMonth = $PORunningTotalUSD / $USDPODaysSchedule * $DaysUntilEndOfMonth * $USDSafetyFactor;
-	$ShortageUSDuntilEndOfMonth = $POPaymentsPendingUSDuntilEndOfMonth - $SaldoADUDanamonUSD;
+	$SaldoUSD = $SaldoADUDanamonUSD + $SaldoAyeCargoUSD;
+	$ShortageUSDuntilEndOfMonth = $POPaymentsPendingUSDuntilEndOfMonth - $SaldoUSD;
 
 	if (($USDAlreadyExhangedThisMonth < $USDMaxEasyPurchasePerMonth) 
 		AND ($SaldoADUDanamonUSD < $SaldoADUDanamonUSDMax)){
@@ -957,8 +968,22 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
-			'Current saldo Danamon USD ADU (USD approx)', 
+			'Current balance Danamon USD ADU (USD approx)', 
 			locale_number_format($SaldoADUDanamonUSD,0)
+			);
+
+	printf('<td>%s</td>
+			<td class="number">%s</td>
+			</tr>', 
+			'Current balance Aye Cargo (USD approx)', 
+			locale_number_format($SaldoAyeCargoUSD,0)
+			);
+
+	printf('<td>%s</td>
+			<td class="number">%s</td>
+			</tr>', 
+			'Current balance USD (USD approx)', 
+			locale_number_format($SaldoUSD,0)
 			);
 
 	printf('<td>%s</td>
