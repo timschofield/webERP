@@ -311,9 +311,7 @@ if ($ProcessSection03){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_SystemAdmin
-		OR $KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector){
+	if ($KL_SystemAdmin){
 		MaintenanceTasksDistribution("OPEN", 0);
 		$NumberOfTestExecuted++;
 		MaintenanceTasksDistribution("CLOSED", 30);
@@ -975,14 +973,14 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
-			'Current balance Aye Cargo (USD approx)', 
+			'Current balance Aye Cargo ADU (USD approx)', 
 			locale_number_format($SaldoAyeCargoUSD,0)
 			);
 
 	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
-			'Current balance USD (USD approx)', 
+			'Current balance available USD ADU (USD approx)', 
 			locale_number_format($SaldoUSD,0)
 			);
 
