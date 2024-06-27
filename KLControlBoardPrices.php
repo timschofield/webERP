@@ -519,9 +519,9 @@ function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath, $db){
 				$Increase = locale_number_format(($RecommendedPrice-$myrow['retailprice'])/$myrow['retailprice']*100,1).'%';
 				$PositionTopSales = PositionTopSalesItem($myrow['stockid'], 60, $db);
 				$NewPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $RecommendedPrice .  '">' . locale_number_format($RecommendedPrice,0) . '</a>';
-				$IncomeIncrease = $myrow['qoh'] * ($RecommendedPrice-$myrow['retailprice']);
 				$QOO = GetQuantityOnOrderDueToPurchaseOrders($myrow['stockid'], '') 
 					+ GetQuantityOnOrderDueToWorkOrders($myrow['stockid'], '');
+				$IncomeIncrease = ($myrow['qoh'] + $QOO) * ($RecommendedPrice-$myrow['retailprice']);
 
 				printf('<td class="number">%s</td>
 						<td>%s</td>
