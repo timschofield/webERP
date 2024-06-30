@@ -127,7 +127,11 @@ if ($ProcessSection01){
 		OR $KL_ShopManager
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
-		AverageCustomerBehaviourByValueInvoice("Shop", 60, $db);
+		AverageCustomerBehaviourByValueInvoice("Shop", "SHOPKL", 60, $db);
+		$NumberOfTestExecuted++;
+		AverageCustomerBehaviourByValueInvoice("Shop", "SHOPBL", 60, $db);
+		$NumberOfTestExecuted++;
+		AverageCustomerBehaviourByValueInvoice("Shop", "SHOPOU", 60, $db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -136,11 +140,14 @@ if ($ProcessSection01){
 		OR $KL_OperationalManager
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
-		GeneralCustomerBehaviour(60, $db);
+		GeneralCustomerBehaviour("SHOPKL", 60, $db);
 		$NumberOfTestExecuted++;
-//		GeneralCustomerBehaviour(90, $db);
-//		$NumberOfTestExecuted++;
+		GeneralCustomerBehaviour("SHOPBL", 60, $db);
+		$NumberOfTestExecuted++;
+		GeneralCustomerBehaviour("SHOPOU", 60, $db);
+		$NumberOfTestExecuted++;
 	}
+
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager){
 		DailySalesRecords(10, 365 * 2, $db);
@@ -381,14 +388,21 @@ include ('includes/footer.php');
 /******************************************************************************************************/
 /*      FUNCTIONS ASSOCIATED
 /******************************************************************************************************/
-function AverageCustomerBehaviourByValueInvoice($typereport, $NumDaysA, $db){
+function AverageCustomerBehaviourByValueInvoice($typereport, $Brand, $NumDaysA, $db){
 /* EXPLAIN SQL 2014-05-21	*/
 	$YesterdayA  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 	$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-1));
 
 	if ($typereport == "Shop"){
-		$SQL = "SELECT debtorno,
-					name,
+		if ($Brand == "SHOPKL"){
+			$BrandText = "Kapal-Laut";
+		}else if ($Brand == "SHOPBL"){
+			$BrandText = "Blink";
+		}else{
+			$BrandText = "Outlet";
+		} 
+		$SQL = "SELECT debtorsmaster.debtorno,
+					debtorsmaster.name,
 					(SELECT SUM(salesorders.klpaidcash + salesorders.klpaidcreditcard)
 						FROM salesorders
 						WHERE salesorders.orddate >=  '" . $StartDateA . "'
@@ -471,8 +485,11 @@ function AverageCustomerBehaviourByValueInvoice($typereport, $NumDaysA, $db){
 							AND salesorders.debtorno = debtorsmaster.debtorno
 							AND (salesorders.klpaidcash + salesorders.klpaidcreditcard) > " . AVERAGE_INVOICE_VALUE_08 . "
 						GROUP BY salesorders.debtorno) AS invoice09
-				FROM debtorsmaster
-				WHERE debtorsmaster.typeid = 2
+				FROM debtorsmaster, custbranch, locations
+				WHERE debtorsmaster.debtorno = custbranch.debtorno
+					AND custbranch.defaultlocation = locations.loccode
+					AND debtorsmaster.typeid = 2
+					AND locations.typeloc = '".$Brand."'
 				ORDER BY (SELECT COUNT(DISTINCT(salesorders.orderno))
 						FROM salesorders
 						WHERE salesorders.orddate >=  '" . $StartDateA . "'
@@ -497,7 +514,7 @@ function AverageCustomerBehaviourByValueInvoice($typereport, $NumDaysA, $db){
 						
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Average value of invoice by ') . $typereport . " during the last " . $NumDaysA . " days.".'</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . _('Average value of invoice by ') . $BrandText . " " . $typereport . " during the last " . $NumDaysA . " days.".'</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
@@ -1649,14 +1666,22 @@ function DailySalesRecords($Days, $NumDays, $db){
 	}
 }
 
-function GeneralCustomerBehaviour($NumDaysA, $db){
+function GeneralCustomerBehaviour($Brand, $NumDaysA, $db){
 	$YesterdayA  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 	$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-1));
 	$YesterdayB  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1-365));
 	$StartDateB = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-1-365));
 
-	$SQL = "SELECT debtorno,
-				name,
+	if ($Brand == "SHOPKL"){
+		$BrandText = "Kapal-Laut";
+	}else if ($Brand == "SHOPBL"){
+		$BrandText = "Blink";
+	}else{
+		$BrandText = "Outlet";
+	} 
+
+	$SQL = "SELECT debtorsmaster.debtorno,
+				debtorsmaster.name,
 				(SELECT SUM(salesorderdetails.qtyinvoiced)
 					FROM salesorders, salesorderdetails
 					WHERE salesorders.orddate >=  '" . $StartDateA . "'
@@ -1695,8 +1720,11 @@ function GeneralCustomerBehaviour($NumDaysA, $db){
 						AND salesorders.orddate <= '" . $YesterdayB . "'
 						AND salesorders.debtorno = debtorsmaster.debtorno
 					GROUP BY salesorders.debtorno) AS invoicecount_lastyear
-			FROM debtorsmaster
-			WHERE debtorsmaster.typeid = 2
+			FROM debtorsmaster, custbranch, locations
+			WHERE debtorsmaster.debtorno = custbranch.debtorno
+				AND custbranch.defaultlocation = locations.loccode
+				AND debtorsmaster.typeid = 2
+				AND locations.typeloc = '".$Brand."'
 			ORDER BY (SELECT COUNT(DISTINCT(salesorders.orderno))
 					FROM salesorders
 					WHERE salesorders.orddate >=  '" . $StartDateA . "'
@@ -1707,7 +1735,7 @@ function GeneralCustomerBehaviour($NumDaysA, $db){
 						
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . "General Customer Behaviour by shop during the last " . $NumDaysA . " days.".'</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . "General Customer Behaviour by " . $BrandText  . " shop during the last " . $NumDaysA . " days.".'</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
