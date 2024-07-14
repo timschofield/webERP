@@ -14,6 +14,9 @@ if(isset($ForceConfigReload) AND $ForceConfigReload==true OR !isset($_SESSION['C
 			$_SESSION[$myrow['confname']] =  $myrow['confvalue'];
 		}
 	} //end loop through all config variables
+	if (!isset($_SESSION['DBUpdateNumber'])) {
+		$_SESSION['DBUpdateNumber'] = -1;
+	}
 	$_SESSION['CompanyDefaultsLoaded'] = true;
 
 	DB_free_result($ConfigResult); // no longer needed
