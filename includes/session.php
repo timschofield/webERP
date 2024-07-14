@@ -205,9 +205,17 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 }
 
 /*If the Code $Version - held in ConnectDB.inc is > than the Database VersionNumber held in config table then do upgrades */
-if (strcmp($Version, $_SESSION['VersionNumber']) > 0 and (basename($_SERVER['SCRIPT_NAME']) != 'UpgradeDatabase.php')) {
-	header('Location: UpgradeDatabase.php');
+//if (strcmp($Version, $_SESSION['VersionNumber']) > 0 and (basename($_SERVER['SCRIPT_NAME']) != 'UpgradeDatabase.php')) {
+//	header('Location: UpgradeDatabase.php');
+//}
+/*If the highest of the DB update files is greater than the DBUpdateNumber held in config table then do upgrades */
+$_SESSION['DBVersion'] = HighestFileName($PathPrefix);
+if (($_SESSION['DBVersion'] > $_SESSION['DBUpdateNumber']) and (basename($_SERVER['SCRIPT_NAME']) != 'Z_UpgradeDatabase.php')) {
+	header('Location: Z_UpgradeDatabase.php');
 }
+// else {
+//	unset($_SESSION['DBVersion']);
+//}
 
 if (isset($_POST['Theme']) and ($_SESSION['UsersRealName'] == $_POST['RealName'])) {
 	$_SESSION['Theme'] = $_POST['Theme'];
@@ -310,6 +318,12 @@ function VerifyPass($Password, $Hash) {
 	} else {
 		return password_verify($Password, $Hash);
 	}
+}
+
+function HighestFileName($PathPrefix) {
+	$files = glob('sql/updates/*.php');
+	natsort($files);
+	return basename(array_pop($files), ".php");
 }
 
 if (sizeof($_POST) > 0 and !isset($AllowAnyone)) {
