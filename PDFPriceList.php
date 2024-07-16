@@ -364,7 +364,7 @@ If (isset($_POST['PrintPDF'])) {
 			$XPos = $Left_Margin+80;// Takes out this calculation from the loop.
 			$Width = $Page_Width-$Left_Margin-$Right_Margin-$XPos;// Takes out this calculation from the loop.
 			$FontSize2 = $FontSize*0.80;// Font size and line height of Full Description section.
-			PrintDetail($pdf,$PriceList['longdescription'],$Bottom_Margin,'PageHeader',null,$XPos,$YPos,$Width,$FontSize2, 'j', 0, $fill);
+			PrintDetail($pdf,$PriceList['longdescription'],$Bottom_Margin,$XPos,$YPos,$Width,$FontSize2,'PageHeader',null, 'j', 0, $fill);
 
 			// Assigns to $YPos the lowest $YPos value between the image and the description:
 			$YPos = min($YPosImage, $YPos);

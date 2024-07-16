@@ -209,7 +209,7 @@ if (DB_num_rows($result)>0){
 		$Width2 = $Page_Width-$Left_Margin-$Right_Margin-145;// Width to print salesorderdetails.narrative.
 
 		//XPos was 145, same as Description. Move it +10, slight tab in to improve readability
-		PrintDetail($pdf, $myrow2['narrative'], $Bottom_Margin, null, 'includes/PDFQuotationPageHeader.inc', 155, $YPos, $Width2, $FontSize2);
+		PrintDetail($pdf, $myrow2['narrative'], $Bottom_Margin, 155, $YPos, $Width2, $FontSize2, null, 'includes/PDFQuotationPageHeader.inc');
 
 		$QuotationTotal += $LineTotal;
 		$QuotationTotalEx += $SubTot;
