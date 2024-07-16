@@ -235,7 +235,7 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 				$Width2 = $Page_Width-$Left_Margin-$Right_Margin-145;// Width to print salesorderdetails.narrative.
 
 				//XPos was 147, same as Description. Move it +10, slight tab in to improve readability
-				PrintDetail($pdf, $myrow2['narrative'], $Bottom_Margin, null, 'includes/PDFOrderPageHeader_generic.inc', 157, $YPos, $Width2, $FontSize2);
+				PrintDetail($pdf, $myrow2['narrative'], $Bottom_Margin, 157, $YPos, $Width2, $FontSize2, null, 'includes/PDFOrderPageHeader_generic.inc');
 			}
 
 			if ($YPos-$line_height <= 50){

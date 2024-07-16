@@ -395,10 +395,7 @@ if (isset($PrintPDF)
 						}
 					}
 
-					PrintDetail($pdf,$myrow2['narrative'],$Bottom_Margin,function(){
-							PrintLinesToBottom ();
-							include ('includes/PDFTransPageHeader.inc');
-						},null,$Left_Margin+100,$YPos,245,$FontSize);
+					PrintDetail($pdf,$myrow2['narrative'],$Bottom_Margin,$Left_Margin+100,$YPos,245,$FontSize,function(){PrintLinesToBottom ();include ('includes/PDFTransPageHeader.inc');},null);
 
 					$YPos -= ($line_height);
 

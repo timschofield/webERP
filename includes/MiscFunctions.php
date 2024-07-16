@@ -208,7 +208,7 @@ function Convert_CRLF($string, $line_break=PHP_EOL)
 //&$YPos - return the updated value
 //         Coming in, YPos=prior line, so update it before we print anything, and don't update it if we don't print anything
 //Defaults come from addTextWrap                                                             
-function PrintDetail($pdf,$Text,$YLim,$NPFunc=null,$NPInc=null,$XPos,&$YPos,$Width,$FontSize,$Align='J',$border=0,$fill=0)
+function PrintDetail($pdf,$Text,$YLim,$XPos,&$YPos,$Width,$FontSize,$NPFunc=null,$NPInc=null,$Align='J',$border=0,$fill=0)
 {
 	$InitialExtraSpace=2;		//shift down slightly from above text
 
