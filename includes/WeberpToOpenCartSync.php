@@ -1568,7 +1568,7 @@ function ChangeOldPendingOpenCartOrders($ShowMessages, $MaxDays, $db, $db_oc, $E
 			$OrderId = $myrow['order_id'];
 			$Name = $myrow['firstname'] . " " . $myrow['lastname'];
 			$Comment = "webERP -> EXPIRED: Payment not received in due time.";
-			UpdateOpenCartOrderStatus($OrderId, OPENCART_ORDER_STATUS_EXPIRED, 0, "", "", $Comment, $db, $db_oc);
+			UpdateOpenCartOrderStatus($OrderId, OPENCART_ORDER_STATUS_EXPIRED, 1, "", "", $Comment, $db, $db_oc);
 
 			if ($ShowMessages){
 				$k = StartEvenOrOddRow($k);
@@ -1643,7 +1643,7 @@ function ChangeOldShippedOpenCartOrders($ShowMessages, $MaxDays, $db, $db_oc, $E
 			$OrderId = $myrow['order_id'];
 			$Name = $myrow['firstname'] . " " . $myrow['lastname'];
 			$Comment = "webERP -> COMPLETE: Order already shipped and accounted for.";
-			UpdateOpenCartOrderStatus($OrderId, OPENCART_ORDER_STATUS_COMPLETE, 0, "", "", $Comment, $db, $db_oc);
+			UpdateOpenCartOrderStatus($OrderId, OPENCART_ORDER_STATUS_COMPLETE, 1, "", "", $Comment, $db, $db_oc);
 
 			if ($ShowMessages){
 				$k = StartEvenOrOddRow($k);

@@ -1846,7 +1846,7 @@ function MarkWebErpOrderInOpenCartAs($OrderNo, $Status, $AWB, $db){
 				UpdateOpenCartOrderStatus($myrow['customerref'], $Status, 0, $myrow['shipvia'], $AWB, $ReasonChangeStatusId, $db, $db_oc);
 			}else{
 				$ReasonChangeStatusId = "webERP --> Change of status";  
-				UpdateOpenCartOrderStatus($myrow['customerref'], $Status, 0, "", "", $ReasonChangeStatusId, $db, $db_oc);
+				UpdateOpenCartOrderStatus($myrow['customerref'], $Status, 1, "", "", $ReasonChangeStatusId, $db, $db_oc);
 			}
 		}
 	}
