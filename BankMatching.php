@@ -44,7 +44,8 @@ if (isset($_GET['Account'])) {
 
 if (isset($_POST['Update']) AND $_POST['RowCounter']>1){
 	for ($Counter=1;$Counter <= $_POST['RowCounter']; $Counter++){
-		if (isset($_POST['Clear_' . $Counter]) AND $_POST['Clear_' . $Counter]==True){
+//		if (isset($_POST['Clear_' . $Counter]) AND $_POST['Clear_' . $Counter]==True){
+		if (TRUE){
 			/*Get amount to be cleared */
 			$sql = "SELECT amount,
 							exrate
