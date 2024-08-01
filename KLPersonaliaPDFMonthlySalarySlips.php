@@ -82,35 +82,26 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType, &$db) {
 				// set information depending on payment method
 				if (strtoupper($myrow['paymentmethod']) == 'BANK'){
 					if (strtoupper($myrow['bankcode']) == 'DANAMON'){
-						$SalaryCopiesToPrint = 2;
 						$EmployeesByBankTransferPayroll++;
 						$AmountByBankTransferPayroll += $TotalBawaPulang;
 					}else{
-						$SalaryCopiesToPrint = 2;
 						$EmployeesByBankTransferLLG++;
 						$AmountByBankTransferLLG += $TotalBawaPulang;
 					}
 				}elseif (strtoupper($myrow['paymentmethod']) == 'CHECK'){
-					$SalaryCopiesToPrint = 2;
 					$EmployeesByCheck++;
 					$Check[$EmployeesByCheck]['Name'] = $myrow['codename'];
 					$Check[$EmployeesByCheck]['Amount'] = $TotalBawaPulang;
 					$AmountByCheck += $TotalBawaPulang;
 				}elseif (strtoupper($myrow['paymentmethod']) == 'CASH'){
-					$SalaryCopiesToPrint = 1;
 					$EmployeesByCash++;
 					$Cash[$EmployeesByCash]['Name'] = $myrow['codename'];
 					$Cash[$EmployeesByCash]['Amount'] = $TotalBawaPulang;
 					$AmountByCash += $TotalBawaPulang;
 				}
-				$CopiesPrinted = 0;
 				
-				while ($CopiesPrinted < $SalaryCopiesToPrint){
-					// add and print one salary slip
-					include('includes/KLPersonaliaPDFOneSalarySlip.php');
-					// update copy counter
-					$CopiesPrinted++;
-				}
+				// add and print one salary slip
+				include('includes/KLPersonaliaPDFOneSalarySlip.php');
 			}
 			
 			// prepare page with totals
