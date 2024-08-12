@@ -471,6 +471,7 @@ if (isset($_POST['submit'])) {
 					 		bankact='" . $_POST['BankAct'] . "',
 							remittance='" . $_POST['Remittance'] . "',
 							taxgroupid='" . $_POST['TaxGroup'] . "',
+							salespersonid='" . $_POST['SalesPersonID'] . "',
 							factorcompanyid='" . $_POST['FactorID'] . "',
 							lat='" . $latitude . "',
 							lng='" . $longitude . "',
@@ -502,6 +503,7 @@ if (isset($_POST['submit'])) {
 							remittance='" . $_POST['Remittance'] . "',
 							taxgroupid='" . $_POST['TaxGroup'] . "',
 							factorcompanyid='" . $_POST['FactorID'] . "',
+							salespersonid='" . $_POST['SalesPersonID'] . "',
 							lat='" . $latitude . "',
 							lng='" . $longitude . "',
 							taxref='" . $_POST['TaxRef'] . "',
@@ -544,6 +546,7 @@ if (isset($_POST['submit'])) {
 										remittance,
 										taxgroupid,
 										factorcompanyid,
+										salespersonid,
 										lat,
 										lng,
 										taxref,
@@ -571,13 +574,13 @@ if (isset($_POST['submit'])) {
 									'" . $_POST['Remittance'] . "',
 									'" . $_POST['TaxGroup'] . "',
 									'" . $_POST['FactorID'] . "',
+									'" . $_POST['SalesPersonID'] . "',
 									'" . $latitude . "',
 									'" . $longitude . "',
 									'" . $_POST['TaxRef'] . "',
 									'" . $_POST['DefaultShipper'] . "',
 									'" . $_POST['DefaultGL'] . "'
 								)";
-
 			$ErrMsg = _('The supplier') . ' ' . $_POST['SuppName'] . ' ' . _('could not be added because');
 			$DbgMsg = _('The SQL that was used to insert the supplier but failed was');
 
@@ -798,12 +801,29 @@ if (!isset($SupplierID)) {
 			<td>' . _('Tax Reference') . ':</td>
 			<td><input type="text" name="TaxRef" placehoder="' . _('Within 20 characters') . '" size="21" maxlength="20" /></td></tr>';
 
+	$Result = DB_query("SELECT salesmancode, salesmanname FROM salesman");
+
+	echo '<tr>
+			<td>', _('Sales Person'), ':</td>
+			<td><select name="SalesPersonID">';
+	echo '<option value="">', _('None'), '</option>';
+	while ($MyRow = DB_fetch_array($Result)) {
+		if ($_POST['SalesPersonID'] == $MyRow['salesmancode']) {
+			echo '<option selected="selected" value="', $MyRow['salesmancode'], '">', $MyRow['salesmanname'], '</option>';
+		} else {
+			echo '<option value="', $MyRow['salesmancode'], '">', $MyRow['salesmanname'], '</option>';
+		}
+	} //end while loop
+	echo '</select></td>
+	</tr>';
+
 	$Result = DB_query("SELECT currency, currabrev FROM currencies");
 	if (!isset($_POST['CurrCode'])) {
 		$CurrResult = DB_query("SELECT currencydefault FROM companies WHERE coycode=1");
 		$MyRow = DB_fetch_row($CurrResult);
 		$_POST['CurrCode'] = $MyRow[0];
 	}
+
 
 	echo '<tr>
 			<td>' . _('Supplier Currency') . ':</td>
@@ -923,6 +943,7 @@ if (!isset($SupplierID)) {
 				remittance,
 				taxgroupid,
 				factorcompanyid,
+				salespersonid,
 				taxref,
 				defaultshipper,
 				defaultgl
@@ -953,6 +974,7 @@ if (!isset($SupplierID)) {
 		$_POST['BankAct'] = $MyRow['bankact'];
 		$_POST['TaxGroup'] = $MyRow['taxgroupid'];
 		$_POST['FactorID'] = $MyRow['factorcompanyid'];
+		$_POST['SalesPersonID'] = $MyRow['salespersonid'];
 		$_POST['TaxRef'] = $MyRow['taxref'];
 		$_POST['DefaultGL'] = $MyRow['defaultgl'];
 		$_POST['DefaultShipper'] = $MyRow['defaultshipper'];
@@ -1090,6 +1112,22 @@ if (!isset($SupplierID)) {
 			<td>' . _('Tax Reference') . ':</td>
 			<td><input type="text" name="TaxRef" size="21" maxlength="20" value="' . $_POST['TaxRef'] . '" /></td>
 		</tr>';
+
+	$Result = DB_query("SELECT salesmancode, salesmanname FROM salesman");
+
+	echo '<tr>
+			<td>', _('Sales Person'), ':</td>
+			<td><select name="SalesPersonID">';
+	echo '<option value="">', _('None'), '</option>';
+	while ($MyRow = DB_fetch_array($Result)) {
+		if ($_POST['SalesPersonID'] == $MyRow['salesmancode']) {
+			echo '<option selected="selected" value="', $MyRow['salesmancode'], '">', $MyRow['salesmanname'], '</option>';
+		} else {
+			echo '<option value="', $MyRow['salesmancode'], '">', $MyRow['salesmanname'], '</option>';
+		}
+	} //end while loop
+	echo '</select></td>
+	</tr>';
 
 	$Result = DB_query("SELECT currency, currabrev FROM currencies");
 
