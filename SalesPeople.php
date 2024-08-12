@@ -24,6 +24,11 @@ if (isset($Errors)) {
 
 $Errors = array();
 
+$CommissionPeriods[0] = _('No Commission');
+$CommissionPeriods[1] = _('Monthly');
+$CommissionPeriods[2] = _('Quarterly');
+$CommissionPeriods[3] = _('Annually');
+
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (isset($_POST['submit'])) {
@@ -60,29 +65,12 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		prnMsg(_('The salesperson telephone number must be twenty characters or less long'),'error');
 
-	} elseif (!is_numeric(filter_number_format($_POST['CommissionRate1']))
-			OR !is_numeric(filter_number_format($_POST['CommissionRate2']))) {
-		$InputError = 1;
-		prnMsg(_('The commission rates must be a floating point number'),'error');
-	} elseif (!is_numeric(filter_number_format($_POST['Breakpoint']))) {
-		$InputError = 1;
-		prnMsg(_('The breakpoint should be a floating point number'),'error');
 	}
-
 	if (!isset($_POST['SManTel'])){
 	  $_POST['SManTel']='';
 	}
 	if (!isset($_POST['SManFax'])){
 	  $_POST['SManFax']='';
-	}
-	if (!isset($_POST['CommissionRate1'])){
-	  $_POST['CommissionRate1']=0;
-	}
-	if (!isset($_POST['CommissionRate2'])){
-	  $_POST['CommissionRate2']=0;
-	}
-	if (!isset($_POST['Breakpoint'])){
-	  $_POST['Breakpoint']=0;
 	}
 	if (!isset($_POST['Current'])){
 	  $_POST['Current']=0;
@@ -93,13 +81,13 @@ if (isset($_POST['submit'])) {
 		/*SelectedSalesPerson could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 
 		$sql = "UPDATE salesman SET salesmanname='" . $_POST['SalesmanName'] . "',
-						commissionrate1='" . filter_number_format($_POST['CommissionRate1']) . "',
-						smantel='" . $_POST['SManTel'] . "',
-						smanfax='" . $_POST['SManFax'] . "',
-						breakpoint='" . filter_number_format($_POST['Breakpoint']) . "',
-						commissionrate2='" . filter_number_format($_POST['CommissionRate2']) . "',
-						current='" . $_POST['Current'] . "'
-				WHERE salesmancode = '".$SelectedSalesPerson."'";
+									smantel='" . $_POST['SManTel'] . "',
+									smanfax='" . $_POST['SManFax'] . "',
+									current='" . $_POST['Current'] . "',
+									commissionperiod='" . $_POST['CommissionPeriod'] . "',
+									commissiontypeid='" . $_POST['CommissionTypeID'] . "',
+									glaccount='" . $_POST['GLAccount'] . "'
+								WHERE salesmancode = '" . stripslashes($SelectedSalesPerson) . "'";
 
 		$msg = _('Salesperson record for') . ' ' . $_POST['SalesmanName'] . ' ' . _('has been updated');
 	} elseif ($InputError !=1) {
@@ -108,20 +96,20 @@ if (isset($_POST['submit'])) {
 
 		$sql = "INSERT INTO salesman (salesmancode,
 						salesmanname,
-						commissionrate1,
-						commissionrate2,
-						breakpoint,
 						smantel,
 						smanfax,
-						current)
+						current,
+						commissionperiod,
+						commissiontypeid,
+						glaccount)
 				VALUES ('" . $_POST['SalesmanCode'] . "',
-					'" . $_POST['SalesmanName'] . "',
-					'" . filter_number_format($_POST['CommissionRate1']) . "',
-					'" . filter_number_format($_POST['CommissionRate2']) . "',
-					'" . filter_number_format($_POST['Breakpoint']) . "',
-					'" . $_POST['SManTel'] . "',
-					'" . $_POST['SManFax'] . "',
-					'" . $_POST['Current'] . "'
+						'" . $_POST['SalesmanName'] . "',
+						'" . $_POST['SManTel'] . "',
+						'" . $_POST['SManFax'] . "',
+						'" . $_POST['Current'] . "',
+						'" . $_POST['CommissionPeriod'] . "',
+						'" . $_POST['CommissionTypeID'] . "',
+						'" . $_POST['GLAccount'] . "'
 					)";
 
 		$msg = _('A new salesperson record has been added for') . ' ' . $_POST['SalesmanName'];
@@ -137,12 +125,12 @@ if (isset($_POST['submit'])) {
 		unset($SelectedSalesPerson);
 		unset($_POST['SalesmanCode']);
 		unset($_POST['SalesmanName']);
-		unset($_POST['CommissionRate1']);
-		unset($_POST['CommissionRate2']);
-		unset($_POST['Breakpoint']);
 		unset($_POST['SManFax']);
 		unset($_POST['SManTel']);
 		unset($_POST['Current']);
+		unset($_POST['CommissionPeriod']);
+		unset($_POST['CommissionTypeID']);
+		unset($_POST['GLAccount']);
 	}
 
 } elseif (isset($_GET['delete'])) {
@@ -194,10 +182,10 @@ or deletion of the records*/
 				salesmanname,
 				smantel,
 				smanfax,
-				commissionrate1,
-				breakpoint,
-				commissionrate2,
-				current
+				current,
+				commissionperiod,
+				commissiontypeid,
+				glaccount
 			FROM salesman";
 	$result = DB_query($sql);
 
@@ -207,44 +195,48 @@ or deletion of the records*/
 			<th>' . _('Name') . '</th>
 			<th>' . _('Telephone') . '</th>
 			<th>' . _('Facsimile') . '</th>
-			<th>' . _('Comm Rate 1') . '</th>
-			<th>' . _('Break') . '</th>
-			<th>' . _('Comm Rate 2') . '</th>
-			<th>' . _('Current') . '</th>
+			<th class="SortedColumn">', _('Current'), '</th>
+			<th class="SortedColumn">', _('Commission Period'), '</th>
+			<th class="SortedColumn">', _('Commission Calculation Method'), '</th>
+			<th class="SortedColumn">', _('GL Account'), '</th>
+			<th colspan="3"></th>
 		</tr>';
 
 	while ($myrow=DB_fetch_array($result)) {
 
-	if ($myrow[7] == 1) {
-		$ActiveText = _('Yes');
-	} else {
-		$ActiveText = _('No');
-	}
+		if ($myrow[7] == 1) {
+			$ActiveText = _('Yes');
+		} else {
+			$ActiveText = _('No');
+		}
 
-		printf('<tr class="striped_row">
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td class="number">%s</td>
-			<td class="number">%s</td>
-			<td class="number">%s</td>
-			<td>%s</td>
-			<td><a href="%sSelectedSalesPerson=%s">' .  _('Edit') . '</a></td>
-			<td><a href="%sSelectedSalesPerson=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this sales person?') . '\');">' . _('Delete') . '</a></td>
-			</tr>',
-			$myrow['salesmancode'],
-			$myrow['salesmanname'],
-			$myrow['smantel'],
-			$myrow['smanfax'],
-			locale_number_format($myrow['commissionrate1'],2),
-			locale_number_format($myrow['breakpoint'],$_SESSION['CompanyRecord']['decimalplaces']),
-			locale_number_format($myrow['commissionrate2'],2),
-			$ActiveText,
-			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-			$myrow['salesmancode'],
-			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-			$myrow['salesmancode']);
+		if ($myrow['commissiontypeid'] == 0) {
+			$TypeRow['commissiontypename'] = _('No Commission');
+		} else {
+			$SQL = "SELECT commissiontypename FROM salescommissiontypes WHERE commissiontypeid='" . $myrow['commissiontypeid'] . "'";
+			$TypeResult = DB_query($SQL);
+			$TypeRow = DB_fetch_array($TypeResult);
+		}
+
+		$SQL = "SELECT accountname
+					FROM chartmaster
+					WHERE accountcode='" . $myrow['glaccount'] . "'";
+		$GLResult = DB_query($SQL);
+		$GLRow = DB_fetch_array($GLResult);
+
+		echo'<tr class="striped_row">
+				<td>', $myrow['salesmancode'], '</td>
+				<td>', $myrow['salesmanname'], '</td>
+				<td>', $myrow['smantel'], '</td>
+				<td>', $myrow['smanfax'], '</td>
+				<td>', $ActiveText, '</td>
+				<td>', $CommissionPeriods[$myrow['commissionperiod']], '</td>
+				<td>', $myrow['commissiontypeid'], ' - ', $TypeRow['commissiontypename'], '</td>
+				<td>', $myrow['glaccount'], ' - ', $GLRow['accountname'], '</td>
+				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedSalesPerson=', urlencode($myrow['salesmancode']), '">', _('Edit'), '</a></td>
+				<td><a href="', $RootPath, '/SalesCommissionRates.php?SelectedSalesPerson=', urlencode($myrow['salesmancode']), '">', _('Edit Commission Rates'), '</a></td>
+				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedSalesPerson=', urlencode($myrow['salesmancode']), '&amp;delete=1" onclick="return MakeConfirm(\'', _('Are you sure you wish to delete this sales person?'), '\', \'Confirm Delete\', this);">', _('Delete'), '</a></td>
+			</tr>';
 
 	} //END WHILE LIST LOOP
 	echo '</table><br />';
@@ -257,7 +249,6 @@ if (isset($SelectedSalesPerson)) {
 if (! isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedSalesPerson)) {
@@ -267,10 +258,10 @@ if (! isset($_GET['delete'])) {
 					salesmanname,
 					smantel,
 					smanfax,
-					commissionrate1,
-					breakpoint,
-					commissionrate2,
-					current
+					current,
+					commissionperiod,
+					commissiontypeid,
+					glaccount
 				FROM salesman
 				WHERE salesmancode='".$SelectedSalesPerson."'";
 
@@ -281,27 +272,30 @@ if (! isset($_GET['delete'])) {
 		$_POST['SalesmanName'] = $myrow['salesmanname'];
 		$_POST['SManTel'] = $myrow['smantel'];
 		$_POST['SManFax'] = $myrow['smanfax'];
-		$_POST['CommissionRate1']  = locale_number_format($myrow['commissionrate1'],'Variable');
-		$_POST['Breakpoint'] = locale_number_format($myrow['breakpoint'],$_SESSION['CompanyRecord']['decimalplaces']);
-		$_POST['CommissionRate2']  = locale_number_format($myrow['commissionrate2'],'Variable');
-		$_POST['Current']  = $myrow['current'];
+		$_POST['Current'] = $myrow['current'];
+		$_POST['CommissionPeriod'] = $myrow['commissionperiod'];
+		$_POST['CommissionTypeID'] = $myrow['commissiontypeid'];
+		$_POST['GLAccount'] = $myrow['glaccount'];
 
 
 		echo '<input type="hidden" name="SelectedSalesPerson" value="' . $SelectedSalesPerson . '" />';
 		echo '<input type="hidden" name="SalesmanCode" value="' . $_POST['SalesmanCode'] . '" />';
-		echo '<table class="selection">
-				<tr>
-					<td>' . _('Salesperson code') . ':</td>
-					<td>' . $_POST['SalesmanCode'] . '</td>
-				</tr>';
+		echo '<fieldset>
+				<legend>', _('Edit the details for'), ' ', $_POST['SalesmanCode'], ' - ', $_POST['SalesmanName'], '</legend>
+				<field>
+					<label for="SalesmanCode">', _('Salesperson code'), ':</label>
+					<div class="fieldtext">', $_POST['SalesmanCode'], '</div>
+				</field>';
 
 	} else { //end of if $SelectedSalesPerson only do the else when a new record is being entered
 
-		echo '<table class="selection">
-				<tr>
-					<td>' . _('Salesperson code') . ':</td>
-					<td><input type="text" '. (in_array('SalesmanCode',$Errors) ? 'class="inputerror"' : '' ) .' name="SalesmanCode" size="3" maxlength="3" /></td>
-				</tr>';
+		echo '<fieldset>
+				<legend>', _('Create a new sales person record'), '</legend>
+				<field>
+					<label for="SalesmanCode">', _('Salesperson code'), ':</label>
+					<input type="text" name="SalesmanCode" size="3" autofocus="autofocus" required="required" maxlength="3" />
+					<fieldhelp>', _('Enter a three character code for this sales person.'), '</fieldhelp>
+				</field>';
 	}
 	if (!isset($_POST['SalesmanName'])){
 	  $_POST['SalesmanName']='';
@@ -325,56 +319,87 @@ if (! isset($_GET['delete'])) {
 	  $_POST['Current']=1;
 	}
 
-	echo '<tr>
-			<td>' . _('Salesperson Name') . ':</td>
-			<td><input type="text" '. (in_array('SalesmanName',$Errors) ? 'class="inputerror"' : '' ) .' name="SalesmanName"  size="30" maxlength="30" value="' . $_POST['SalesmanName'] . '" /></td>
-		</tr>';
-	echo '<tr>
-			<td>' . _('Telephone No') . ':</td>
-			<td><input type="text" name="SManTel" size="20" maxlength="20" value="' . $_POST['SManTel'] . '" /></td>
-		</tr>';
-	echo '<tr>
-			<td>' . _('Facsimile No') . ':</td>
-			<td><input type="text" name="SManFax" size="20" maxlength="20" value="' . $_POST['SManFax'] . '" /></td>
-		</tr>';
-	echo '<tr>
-			<td>' . _('Commission Rate 1') . ':</td>
-			<td><input type="text" class="number" name="CommissionRate1" size="5" maxlength="5" value="' . $_POST['CommissionRate1'] . '" /></td>
-		</tr>';
-	echo '<tr>
-			<td>' . _('Breakpoint') . ':</td>
-			<td><input type="text" class="number" name="Breakpoint" size="6" maxlength="6" value="' . $_POST['Breakpoint'] . '" /></td>
-		</tr>';
-	echo '<tr>
-			<td>' . _('Commission Rate 2') . ':</td>
-			<td><input type="text" class="number" name="CommissionRate2" size="5" maxlength="5" value="' . $_POST['CommissionRate2']. '" /></td>
-		</tr>';
+	echo '<field>
+			<label for="SalesmanName">' . _('Salesperson Name') . ':</label>
+			<input type="text" '. (in_array('SalesmanName',$Errors) ? 'class="inputerror"' : '' ) .' name="SalesmanName"  size="30" maxlength="30" value="' . $_POST['SalesmanName'] . '" />
+			<fieldhelp>', _('Enter the name by which this sales person will be known.'), '</fieldhelp>
+		</field>';
+	echo '<field>
+			<label for="SManTel">' . _('Telephone No') . ':</label>
+			<input type="text" name="SManTel" size="20" maxlength="20" value="' . $_POST['SManTel'] . '" />
+			<fieldhelp>', _('Contact telephone number for this sales person.'), '</fieldhelp>
+		</field>';
+	echo '<field>
+			<label for="SManFax">' . _('Facsimile No') . ':</label>
+			<input type="text" name="SManFax" size="20" maxlength="20" value="' . $_POST['SManFax'] . '" />
+			<fieldhelp>', _('Contact fax number for this sales person.'), '</fieldhelp>
+		</field>';
 
-	echo '<tr>
-			<td>' . _('Current?') . ':</td>
-			<td><select name="Current">';
-	if (!isset($_POST['Current'])){
-		$_POST['Current']=1;
+	echo '<field>
+			<label for="CommissionPeriod">', _('Commission Period'), ':</label>
+			<select required="required" name="CommissionPeriod">';
+	foreach ($CommissionPeriods as $Index => $PeriodName) {
+		if ($Index == $_POST['CommissionPeriod']) {
+			echo '<option selected="selected" value="', $Index, '">', $PeriodName, '</option>';
+		} else {
+			echo '<option value="', $Index, '" />', $PeriodName, '</option>';
+		}
 	}
-	if ($_POST['Current']==1){
-		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
+	echo '</select>
+		<fieldhelp>', _('Select the period over which this sales person has there commission calculated.'), '</fieldhelp>
+	</field>';
+
+	echo '<field>
+			<label for="CommissionTypeID">', _('Commission Calculation Method'), ':</label>
+			<select name="CommissionTypeID">';
+	$SQL = "SELECT commissiontypeid, commissiontypename FROM salescommissiontypes ORDER BY commissiontypename";
+	$ErrMsg = _('An error occurred in retrieving the sales commission types from the database');
+	$DbgMsg = _('The SQL that was used to retrieve the commission type information and that failed in the process was');
+	$CommissionTypeResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+	if (!isset($_POST['CommissionTypeID']) or $_POST['CommissionTypeID'] == 0) {
+		echo '<option selected="selected" value="0">', _('No Commission'), '</option>';
 	} else {
-		echo '<option value="1">' . _('Yes') . '</option>';
+		echo '<option value="0">', _('No Commission'), '</option>';
 	}
-	if ($_POST['Current']==0){
-		echo '<option selected="selected" value="0">' . _('No') . '</option>';
-	} else {
-		echo '<option value="0">' . _('No') . '</option>';
+	while ($CommissionTypeRow = DB_fetch_array($CommissionTypeResult)) {
+		if ($_POST['CommissionTypeID'] == $CommissionTypeRow['commissiontypeid']) {
+			echo '<option selected="selected" value="', $CommissionTypeRow['commissiontypeid'], '">', $CommissionTypeRow['commissiontypename'], ' (', $CommissionTypeRow['commissiontypeid'], ')</option>';
+		} else {
+			echo '<option value="', $CommissionTypeRow['commissiontypeid'], '">', $CommissionTypeRow['commissiontypename'], ' (', $CommissionTypeRow['commissiontypeid'], ')</option>';
+		}
 	}
-	echo '</select></td>
-		</tr>
-		</table>
-		<br />
-		<div class="centre">
+	echo '</select>
+		<fieldhelp>', _('Select the calculation method used to calculate commission for this sales person. This is only used if a commission period is selected.'), '</fieldhelp>
+	</field>';
+
+	$Result = DB_query("SELECT accountcode,
+							accountname
+						FROM chartmaster
+						INNER JOIN accountgroups
+							ON chartmaster.group_=accountgroups.groupname
+						WHERE accountgroups.pandl=1
+						ORDER BY chartmaster.accountcode");
+	echo '<field>
+			<label for="GLAccount">', _('GL Commission Account'), ':</label>
+			<select name="GLAccount">';
+
+	while ($MyRow = DB_fetch_row($Result)) {
+		if ($_POST['GLAccount'] == $MyRow[0]) {
+			echo '<option selected="selected" value="', $MyRow[0], '">', htmlspecialchars($MyRow[1], ENT_QUOTES, 'UTF-8'), ' (', $MyRow[0], ')</option>';
+		} else {
+			echo '<option value="', $MyRow[0], '">', htmlspecialchars($MyRow[1], ENT_QUOTES, 'UTF-8'), ' (', $MyRow[0], ')</option>';
+		}
+	} //end while loop
+	echo '</select>
+		<fieldhelp>', _('Select the general ledger account to post the sales commission for this sales person to.'), '</fieldhelp>
+	</field>';
+
+	echo '</fieldset>';
+	
+	echo '<div class="centre">
 			<input type="submit" name="submit" value="' . _('Enter Information') . '" />
-		</div>
         </div>
-		</form>';
+	</form>';
 
 } //end if record deleted no point displaying form to add record
 
