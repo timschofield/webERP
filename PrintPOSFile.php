@@ -21,9 +21,9 @@ if(isset($_GET['identifier'])) {
 }
 
 if (strpos($_SERVER['PHP_SELF'],"TEST")!== false){
-	$CachePath = '/var/www/vhosts/kapal-laut.com/ptadu.com/TEST/weberp/includes/WebClientPrint/wcpcache/';
+	$CachePath = '/var/www/vhosts/kapal-laut.com/ptadu-development.com/TEST/weberp/includes/WebClientPrint/wcpcache/';
 }else{
-	$CachePath = '/var/www/vhosts/kapal-laut.com/ptadu.com/weberp/includes/WebClientPrint/wcpcache/';
+	$CachePath = '/var/www/vhosts/kapal-laut.com/ptadu-development.com/weberp/includes/WebClientPrint/wcpcache/';
 }
 
 $filename =  "file://" . $CachePath . $identifier.'.pos';   
