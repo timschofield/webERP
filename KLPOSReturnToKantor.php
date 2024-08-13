@@ -191,8 +191,8 @@ if(isset($_POST['Submit']) AND $InputError==False){
 	$TextToPrint .= $CutPaper;
 
 	//################## PRINTING STUFF ##################### 
-	$identifier=date('U').zerofill(mt_rand(0,999999),6);
-	$filename = 'includes/WebClientPrint/wcpcache/'.$identifier.'.pos';   
+	$identifier=GetPOSIdentifier();
+	$filename = GetFilenameFromPOSIdentifier($identifier);   
 	file_put_contents($filename, $TextToPrint);
 
 	echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . 

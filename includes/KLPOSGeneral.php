@@ -642,6 +642,16 @@ function AccountDebtorDiscount($ReceiptNumber,
 /***                               PRINT POS RECEIPT FUNCTIONS                                        ***/
 /********************************************************************************************************/
 
+function GetPOSIdentifier(){
+	$id = date('U').zerofill(mt_rand(0,999999),6);
+	return $id;
+}
+
+function GetFilenameFromPOSIdentifier($id){
+	$f = 'includes/WebClientPrint/wcpcache/'.$id.'.pos';
+	return $f;
+}
+
 
 function KLPrintReceiptTestWarning($KindOfDoc){
 	include('includes/wcpESCPOSCommands.php');

@@ -54,7 +54,7 @@ include('includes/KLEmails.php');
 include('includes/wcpInitScript.php');   
 
 if (empty($_GET['identifier'])) {
-	$identifier=date('U').zerofill(mt_rand(0,999999),6);
+	$identifier=GetPOSIdentifier();
 } else {
 	$identifier=$_GET['identifier'];
 }
@@ -1743,7 +1743,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 
 		//################## PRINTING STUFF ##################### 
-		$filename = 'includes/WebClientPrint/wcpcache/'.$identifier.'.pos';   
+		$filename = GetFilenameFromPOSIdentifier($identifier);   
 		file_put_contents($filename, $Receipt);
 
 		echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . 
