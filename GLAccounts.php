@@ -425,9 +425,9 @@ function UpdateMultiCompanyAccounts(){
 	$Result = DB_query($Sql);
 	prnMsg('      Adjusting groups into ChartmasterPMA table', 'info');
 
-	$Sql="UPDATE chartmasterADU SET `group_` =  'Biaya General' WHERE `accountcode` = '510010070AD'";
-	$Result = DB_query($Sql);
-	prnMsg('      Adjusting groups into ChartmasterPMA table', 'info');
+//	$Sql="UPDATE chartmasterADU SET `group_` =  'Biaya General' WHERE `accountcode` = '510010070AD'";
+//	$Result = DB_query($Sql);
+//	prnMsg('      Adjusting groups into ChartmasterPMA table', 'info');
 
 	$Sql="UPDATE chartmasterADU SET `group_` =  'Pajak Penghasilan' WHERE `accountcode` = '611012025AD'";
 	$Result = DB_query($Sql);
@@ -461,9 +461,9 @@ function UpdateMultiCompanyAccounts(){
 	$Result = DB_query($Sql);
 	prnMsg('      Adjusting groups into ChartmasterSM table', 'info');
 
-	$Sql="UPDATE chartmasterSMH SET `group_` =  'Biaya General' WHERE `accountcode` = '510010070SM'";
-	$Result = DB_query($Sql);
-	prnMsg('      Adjusting groups into ChartmasterSM table', 'info');
+//	$Sql="UPDATE chartmasterSMH SET `group_` =  'Biaya General' WHERE `accountcode` = '510010070SM'";
+//	$Result = DB_query($Sql);
+//	prnMsg('      Adjusting groups into ChartmasterSM table', 'info');
 
 	$Sql="UPDATE chartmasterSMH SET `group_` =  'Pajak Penghasilan' WHERE `accountcode` = '611012025SM'";
 	$Result = DB_query($Sql);
@@ -510,9 +510,9 @@ function UpdateMultiCompanyAccounts(){
 	$Result = DB_query($Sql);
 	prnMsg('      Adjusting groups into ChartmasterBB table', 'info');
 
-	$Sql="UPDATE chartmasterBB SET `group_` =  'Biaya General' WHERE `accountcode` = '510010070BB'";
-	$Result = DB_query($Sql);
-	prnMsg('      Adjusting groups into ChartmasterBB table', 'info');
+//	$Sql="UPDATE chartmasterBB SET `group_` =  'Biaya General' WHERE `accountcode` = '510010070BB'";
+//	$Result = DB_query($Sql);
+//	prnMsg('      Adjusting groups into ChartmasterBB table', 'info');
 
 	$Sql="UPDATE chartmasterBB SET `group_` =  'Pajak Penghasilan' WHERE `accountcode` = '611012025BB'";
 	$Result = DB_query($Sql);
