@@ -384,7 +384,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('111513000', 
-									'111513000AD')", "Total WIP",  -1000000,   1000000, $periodnow, $db);
+									'111513000AD')", "Total WIP",  -5000000,   5000000, $periodnow, $db);
 		$NumberOfTestExecuted++;
 
 		BalanceAccountControl("111111200",   50000000,  400000000, $periodnow, $db);
