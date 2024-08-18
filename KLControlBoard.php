@@ -375,15 +375,6 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 	}
 	
-
-	if ($KL_SystemAdmin 
-		OR $KL_AdministrationTeam){
-		BalanceAccountControl("111121100PI",  5000000, 100000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-		BalanceAccountControl("111121110PI",  5000000,  30000000, $periodnow, $db);
-		$NumberOfTestExecuted++;
-	}
-
 	if ($KL_SystemAdmin){
 		BalanceListAccountControl("('111131100', 
 									'111208010', 
