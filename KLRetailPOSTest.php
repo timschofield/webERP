@@ -66,7 +66,10 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 	$HeaderText = KLPrintReceiptHeader($identifier, $OrderNo);
 	$CustomerFooter = KLPrintReceiptCustomerFooter($identifier, $OrderNo);
 	$ShopFooter = KLPrintReceiptShopFooter($identifier, $OrderNo);
-	$Receipt = $HeaderText . $CustomerFooter . $HeaderText . $ShopFooter;
+//	$Receipt = $HeaderText . $CustomerFooter . $HeaderText . $ShopFooter;
+	$Receipt = $HeaderText . $ShopFooter;
+	
+//	$Receipt = mb_convert_encoding($Receipt, "ISO-8859-1");
 	$filename = GetFilenameFromPOSIdentifier($identifier);   
 	file_put_contents($filename, $Receipt);
 

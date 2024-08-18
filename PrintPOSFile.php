@@ -43,6 +43,7 @@ $texttoprint = file_get_contents($filename);
 		//Send ClientPrintJob back to the client
 		ob_start();
 		ob_clean();
+		header('Content-type: application/octet-stream');
 		echo $cpj->sendToClient();
 		ob_end_flush();
 		exit();
