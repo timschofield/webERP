@@ -92,8 +92,6 @@ if ($ProcessSection01){
 		OR $KL_SalesDirector){
 		PeriodDifferenceSales("IMMEDIATE", "Shop",  90, $db);
 		$NumberOfTestExecuted++;
-		PeriodDifferenceSales("IMMEDIATE", "Shop", 180, $db);
-		$NumberOfTestExecuted++;
 		PeriodDifferenceSales("IMMEDIATE", "Shop", 365, $db);
 		$NumberOfTestExecuted++;
 	}
@@ -115,8 +113,6 @@ if ($ProcessSection01){
 		AverageSales("Online", 365, 180, 90, 30, 15, 1, 30, "CurrentYear", "All", $db);
 		$NumberOfTestExecuted++;
 		PeriodDifferenceSales("IMMEDIATE", "Online",   7, $db);
-		$NumberOfTestExecuted++;
-		PeriodDifferenceSales("IMMEDIATE", "Online",  15, $db);
 		$NumberOfTestExecuted++;
 		PeriodDifferenceSales("IMMEDIATE", "Online",  30, $db);
 		$NumberOfTestExecuted++;
@@ -150,7 +146,7 @@ if ($ProcessSection01){
 
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager){
-		DailySalesRecords(10, 365 * 2, $db);
+		DailySalesRecords(10, 365 * 1, $db);
 		$NumberOfTestExecuted++;
 	}
 }
@@ -623,8 +619,8 @@ function AverageCustomerBehaviourByValueInvoice($typereport, $Brand, $NumDaysA, 
 				);
 		echo '</table>
 				</div>';
-		InsertKPI("Sales", "Average Value Invoice During Last " . $NumDaysA . " days (IDR)", $SumInvoiceSum/$SumInvoiceCount);
-		InsertKPI("Sales", "Average Invoices During Last " . $NumDaysA . " days (INVOICES)", $SumInvoiceCount/$NumDaysA);
+		InsertKPI("Sales", "Avg Invoice Value Last " . $NumDaysA . " days (IDR) " . $BrandText, $SumInvoiceSum/$SumInvoiceCount);
+		InsertKPI("Sales", "Avg Invoices Last " . $NumDaysA . " days (INVOICES) " . $BrandText, $SumInvoiceCount/$NumDaysA);
 	}
 }
 
@@ -1808,8 +1804,8 @@ function GeneralCustomerBehaviour($Brand, $NumDaysA, $db){
 		}
 		echo '</table>
 				</div>';
-		InsertKPI("Sales", "Average Daily Items Sold Last " . $NumDaysA . " days (ITEMS)", $TotalItemCount/$NumDaysA);
-		InsertKPI("Sales", "Average #Items per Invoice Last " . $NumDaysA . " days (ITEMS)", $TotalItemCount/$TotalInvoiceCount);
+		InsertKPI("Sales", "Avg #Items Daily Last " . $NumDaysA . " days (ITEMS) " . $BrandText, $TotalItemCount/$NumDaysA);
+		InsertKPI("Sales", "Avg #Items x Inv. Last " . $NumDaysA . " days (ITEMS) " . $BrandText, $TotalItemCount/$TotalInvoiceCount);
 	}
 }
 
