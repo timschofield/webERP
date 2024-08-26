@@ -1804,8 +1804,7 @@ function GeneralCustomerBehaviour($Brand, $NumDaysA, $db){
 		}
 		echo '</table>
 				</div>';
-		InsertKPI("Sales", "Avg #Items Daily Last " . $NumDaysA . " days (ITEMS) " . $BrandText, $TotalItemCount/$NumDaysA);
-		InsertKPI("Sales", "Avg #Items x Inv. Last " . $NumDaysA . " days (ITEMS) " . $BrandText, $TotalItemCount/$TotalInvoiceCount);
+		InsertKPI("Sales", "Items x Invoice Last " . $NumDaysA . " days (ITEMS) " . $BrandText, $TotalItemCount/$TotalInvoiceCount);
 	}
 }
 
