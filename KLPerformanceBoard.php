@@ -40,6 +40,8 @@ $begintime = time_start();
 $NumberOfTestExecuted = 0;
 
 $periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
+$yesterday_year = date('Y', strtotime("-1 days"));
+
 
 /***************************************************************************************
 * TEST AND PLAY AREA      
@@ -102,7 +104,7 @@ if ($ProcessSection01){
 		OR $KL_BusinessDevelopmentManager){
 		PeriodDifferenceSales("YEAR", "Shop",  30, $db);
 		$NumberOfTestExecuted++;
-		PeriodDifferenceSales("2023", "Shop",  "YTD", $db);
+		PeriodDifferenceSales($yesterday_year -1, "Shop",  "YTD", $db); // previous year
 		$NumberOfTestExecuted++;
 	}
 
@@ -112,10 +114,10 @@ if ($ProcessSection01){
 
 		AverageSales("Online", 365, 180, 90, 30, 15, 1, 30, "CurrentYear", "All", $db);
 		$NumberOfTestExecuted++;
-		PeriodDifferenceSales("IMMEDIATE", "Online",   7, $db);
-		$NumberOfTestExecuted++;
-		PeriodDifferenceSales("IMMEDIATE", "Online",  30, $db);
-		$NumberOfTestExecuted++;
+//		PeriodDifferenceSales("IMMEDIATE", "Online",   7, $db);
+//		$NumberOfTestExecuted++;
+//		PeriodDifferenceSales("IMMEDIATE", "Online",  30, $db);
+//		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin 
@@ -123,11 +125,11 @@ if ($ProcessSection01){
 		OR $KL_ShopManager
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
-		AverageCustomerBehaviourByValueInvoice("Shop", "SHOPKL", 60, $db);
+		AverageCustomerBehaviourByValueInvoice("Shop", "SHOPKL", 30, $db);
 		$NumberOfTestExecuted++;
-		AverageCustomerBehaviourByValueInvoice("Shop", "SHOPBL", 60, $db);
+		AverageCustomerBehaviourByValueInvoice("Shop", "SHOPBL", 30, $db);
 		$NumberOfTestExecuted++;
-		AverageCustomerBehaviourByValueInvoice("Shop", "SHOPOU", 60, $db);
+		AverageCustomerBehaviourByValueInvoice("Shop", "SHOPOU", 30, $db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -136,11 +138,11 @@ if ($ProcessSection01){
 		OR $KL_OperationalManager
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
-		GeneralCustomerBehaviour("SHOPKL", 60, $db);
+		GeneralCustomerBehaviour("SHOPKL", 30, $db);
 		$NumberOfTestExecuted++;
-		GeneralCustomerBehaviour("SHOPBL", 60, $db);
+		GeneralCustomerBehaviour("SHOPBL", 30, $db);
 		$NumberOfTestExecuted++;
-		GeneralCustomerBehaviour("SHOPOU", 60, $db);
+		GeneralCustomerBehaviour("SHOPOU", 30, $db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -314,7 +316,10 @@ if ($ProcessSection03){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_SystemAdmin){
+	if ($KL_SystemAdmin
+		OR $KL_OperationalManager
+		OR $KL_OperationalTeam
+		OR $KL_ShopManager){
 		MaintenanceTasksDistribution("OPEN", 0);
 		$NumberOfTestExecuted++;
 		MaintenanceTasksDistribution("CLOSED", 30);
@@ -326,12 +331,6 @@ if ($ProcessSection03){
 	if ($KL_OperationalManager
 		OR $KL_OperationalTeam
 		OR $KL_ShopManager){
-		MaintenanceTasksDistribution("OPEN", 0);
-		$NumberOfTestExecuted++;
-		MaintenanceTasksDistribution("CLOSED", 30);
-		$NumberOfTestExecuted++;
-		MaintenanceTasksDistribution("TOTAL", 30);
-		$NumberOfTestExecuted++;
 		MaintenanceTasksList("OPEN");
 		$NumberOfTestExecuted++;
 		MaintenanceTasksList("CLOSED", 30);
@@ -353,7 +352,7 @@ if ($ProcessSection03){
 
 	if ($KL_SystemAdmin
 		OR $KL_AdministrationTeam){
-		CashStatus(2024, 
+		CashStatus($yesterday_year, 
 					226900000, 200000000, 100000000, 
 					143000000, 200000000, 100000000, 
 					 40525935, 300000000, 100000000, 
