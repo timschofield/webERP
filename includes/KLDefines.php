@@ -26,7 +26,7 @@ define("MAXIMUM_PRICE_FACTOR_BOTTOMSALES_KL",    7.00);
 define("MINIMUM_PRICE_FACTOR_BLINK",             6.80);
 define("MINIMUM_PRICE_FACTOR_TOPSALES_BLINK",    7.15);
 define("MAXIMUM_PRICE_FACTOR_BOTTOMSALES_BLINK", 7.50);
-define("MINIMUM_PRICE_FACTOR_GENERAL",           4.40);
+define("MINIMUM_PRICE_FACTOR_GENERAL",           6.80);
 
 /* Defines about prices IDR */
 define("PRICE_ROUNDING_STEP01",               5000);
