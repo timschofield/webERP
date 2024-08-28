@@ -374,58 +374,6 @@ function UpdateDiscountCategory($StockId, $NewCategory, $DiscountCode, $db){
 
 }
 
-function ItemsWith20501231($RootPath, $db){
-	$SQL = "SELECT prices.stockid, 
-				prices.price,
-				prices.currabrev,
-				prices.typeabbrev
-			FROM prices
-			WHERE enddate = '2050-12-31'";
-
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . $Stockcat . _(' Items with prices ending in 2050-12-31 ') . '</strong></p>';
-		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Type') . '</th>
-							<th>' . _('Price') . '</th>
-							<th>' . _('Currency') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
-		$i = 1;
-		while ($myrow = DB_fetch_array($result)) {
-			if ($k == 1) {
-				echo '<tr class="EvenTableRows">';
-				$k = 0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k = 1;
-			}
-			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockId=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
-			
-			printf('<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					</tr>', 
-					$i, 
-					$CodeLink, 
-					$myrow['typeabbrev'], 
-					locale_number_format($myrow['price'],0),
-					$myrow['currabrev']
-					);
-			$i++;
-		}
-		echo '</table>
-				</div>';
-	}
-}
-
 function SendEmailChangePriceReadyForStep02($db, $EmailText){
 	$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description,

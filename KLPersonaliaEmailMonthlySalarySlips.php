@@ -120,7 +120,7 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType, &$db) {
 				}else{
 					$TextAdmin = $TextAdmin . "Email with slip gaji to ". $myrow['codename'] . " FAILED. \n";
 				}
-				sleep(2);
+				sleep(1);
 			}
 			
 			// prepare the email to accounting team

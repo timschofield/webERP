@@ -374,13 +374,6 @@ function CleanWrongPrices($ShowMessages, $EmailText, $db){
 	$Text = "Wrong prices removed from DB";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
 
-	$sql = "UPDATE prices
-			SET enddate = '0000-00-00'
-			WHERE enddate = '2050-12-31'";
-	$ErrMsg =_('Could not delete wrong prices because');
-	$result = DB_query($sql,$ErrMsg);
-	$Text = "Set end date 0000-00-00 to prices with end date 2050-12-31 from DB";
-	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
 	return $EmailText;
 }
 
