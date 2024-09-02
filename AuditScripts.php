@@ -59,7 +59,7 @@ if(!isset($_POST['ContainingText'])){
 }
 echo '<tr>
 		<td>' . _('Containing text') . ':</td>
-		<td><input type="text" tabindex="4" name="ContainingText" size="20" maxlength="20" value="'. $_POST['ContainingText'] . '" /></td>
+		<td><input type="text" tabindex="4" name="ContainingText" size="80" maxlength="80" value="'. $_POST['ContainingText'] . '" /></td>
 	</tr>';
 
 if (!isset($_POST['DetailedReport'])){

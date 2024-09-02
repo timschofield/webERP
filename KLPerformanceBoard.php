@@ -92,8 +92,6 @@ if ($ProcessSection01){
 	if ($KL_SystemAdmin
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
-		PeriodDifferenceSales("IMMEDIATE", "Shop",  90, $db);
-		$NumberOfTestExecuted++;
 		PeriodDifferenceSales("IMMEDIATE", "Shop", 365, $db);
 		$NumberOfTestExecuted++;
 	}
@@ -112,8 +110,8 @@ if ($ProcessSection01){
 		OR $KL_SalesDirector
 		OR $KL_BusinessDevelopmentManager){
 
-		AverageSales("Online", 365, 180, 90, 30, 15, 1, 30, "CurrentYear", "All", $db);
-		$NumberOfTestExecuted++;
+//		AverageSales("Online", 365, 180, 90, 30, 15, 1, 30, "CurrentYear", "All", $db);
+//		$NumberOfTestExecuted++;
 //		PeriodDifferenceSales("IMMEDIATE", "Online",   7, $db);
 //		$NumberOfTestExecuted++;
 //		PeriodDifferenceSales("IMMEDIATE", "Online",  30, $db);
@@ -148,7 +146,7 @@ if ($ProcessSection01){
 
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager){
-		DailySalesRecords(10, 365 * 1, $db);
+		DailySalesRecords(10, 365 * 2, "2024-08-04", $db);
 		$NumberOfTestExecuted++;
 	}
 }
@@ -1613,10 +1611,15 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 
 }
 
-function DailySalesRecords($Days, $NumDays, $db){
+function DailySalesRecords($Days, $NumDays, $Since, $db){
 
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
-
+	
+	if ($Since != ''){
+		if ($Since >= $FromDate){
+			$FromDate = $Since;
+		}
+	}
 	$SQL = "SELECT salesorders.orddate,
 				SUM(salesorderdetails.qtyinvoiced * (salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent))) AS sales
 			FROM salesorders

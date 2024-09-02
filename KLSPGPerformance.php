@@ -1,5 +1,5 @@
 <?php
-define("VERSIONFILE", "1.01");
+define("VERSIONFILE", "1.02");
 
 include ('includes/session.php');
 $Title = _('Kapal-Laut SPG Performance Report '. VERSIONFILE);
@@ -17,26 +17,43 @@ $NumberOfTestExecuted = 0;
 if ($KL_SystemAdmin){
 }
 
+if ($KL_OperationalManager 
+	OR $KL_SalesDirector
+	OR $KL_ShopManager){
+
+	SPGPerformanceMonthy($db);
+	$NumberOfTestExecuted++;
+}
+
+if ($KL_SalesDirector
+	OR $KL_ShopManager){
+
+	SPGPerformanceWeekly($db);
+	$NumberOfTestExecuted++;
+}
+	
 if ($KL_SystemAdmin 
 	OR $KL_OperationalManager 
 	OR $KL_BusinessDevelopmentManager 
 	OR $KL_SalesDirector
 	OR $KL_ShopManager){
 
-	SPGPerformanceMonthy($db);
-	$NumberOfTestExecuted++;
-
-	SPGPerformanceWeekly($db);
-	$NumberOfTestExecuted++;
-
 	AverageSales("SPG", 30, 15, 10, 7, 5, 1, 7, "CurrentYear", "All", $db);
 	$NumberOfTestExecuted++;
+}
+	
+if ($KL_OperationalManager 
+	OR $KL_ShopManager){
 
 	SPGPerformanceAllShops(15, 30, 45, $db);
 	$NumberOfTestExecuted++;
-
-	HourlySales(7,$RootPath, $db);
-	$NumberOfTestExecuted++;
+}
+	
+if ($KL_SystemAdmin 
+	OR $KL_OperationalManager 
+	OR $KL_BusinessDevelopmentManager 
+	OR $KL_SalesDirector){
+		
 	HourlySales(15,$RootPath, $db);
 	$NumberOfTestExecuted++;
 	HourlySales(30,$RootPath, $db);
@@ -47,10 +64,7 @@ if ($KL_SystemAdmin
 
 }
 
-if ($KL_SystemAdmin 
-	OR $KL_OperationalManager
-	OR $KL_BusinessDevelopmentManager
-	OR $KL_SalesDirector){	
+if ($KL_SystemAdmin){	
 
 	RetailTypePayments("SPG",90, $db);
 	$NumberOfTestExecuted++;

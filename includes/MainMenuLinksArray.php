@@ -90,7 +90,10 @@ if (false){
 	$LinkPricingControlBoard02 = '';
 }	
 
-if ($KL_SystemAdmin OR $KL_BusinessDevelopmentManager){
+if ($KL_SystemAdmin 
+	OR $KL_BusinessDevelopmentManager
+	OR $KL_OperationalManager
+	OR $KL_SalesDirector){
 	$TextPerformanceBoard01 = _('KL Performance Board Section 01');
 	$LinkPerformanceBoard01 = "/KLPerformanceBoard.php?Section=01";
 	$TextPerformanceBoard02 = _('KL Performance Board Section 02');
