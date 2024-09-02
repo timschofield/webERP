@@ -2203,7 +2203,7 @@ function PackagingToBeRefilledFromGudang($LocCode, $ShowAll, $ShowLinkEmail, $Ro
 			$TableResult[$numitems]['intransit'] = $myrow['intransit'];
 			$TableResult[$numitems]['optimum'] = round(($myrow['rl'] * $RLFactor),0);
 			$TableResult[$numitems]['needed']= max(0,$TableResult[$numitems]['optimum'] - $myrow['qoh']);
-			$QtyToShip = min(max(0,$TableResult[$numitems]['needed'] - $myrow['intransit']),$myrow['qohparent']);
+			$QtyToShip = min(max(0,$TableResult[$numitems]['needed'] - $myrow['intransit']),($myrow['qohparent'] - $myrow['intransit']));
 			if (ItemInList($LocCode, LIST_PACAKING_LOCATIONS)){
 				// if it is a transfer from a gudang packaging to another and we don't have much stock, 
 				// we divide the available gudang QOH between all the packaging gudang
