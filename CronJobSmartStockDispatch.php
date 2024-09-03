@@ -135,12 +135,8 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 				stockmaster.serialised,
 				stockmaster.controlled,
 				stockmaster.discountcategory,
-				ROUND((locstock.reorderlevel - locstock.quantity) *
-				   (1 + (" . filter_number_format($DispatchPercent) . "/100)))
-				as neededqty,
-			   (fromlocstock.quantity - fromlocstock.reorderlevel)  as available,
-			   fromlocstock.reorderlevel as fromreorderlevel,
-			   fromlocstock.quantity as fromquantity
+				fromlocstock.reorderlevel as fromreorderlevel,
+				fromlocstock.quantity as fromquantity
 			FROM stockmaster
 			LEFT JOIN stockcategory
 				ON stockmaster.categoryid=stockcategory.categoryid,
@@ -194,7 +190,7 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 				}
 			}
 			// The real available stock to ship is the (qty - reorder level - in transit).
-			$AvailableShipQtyAtFrom = $myrow['available'] - $InTransitQuantityAtFrom;
+			$AvailableShipQtyAtFrom = $myrow['fromquantity'] - $myrow['fromreorderlevel'] - $InTransitQuantityAtFrom;
 
 			// Check if TO location is already waiting to receive some stock of this item
 			$InTransitQuantityAtTo=0;
@@ -212,7 +208,8 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 			}
 
 			// The real needed stock is reorder level - qty - in transit).
-			$NeededQtyAtTo = $myrow['neededqty'] - $InTransitQuantityAtTo;
+			$NeededQty = round(($myrow['reorderlevel']-$myrow['quantity']) * (1 + $DispatchPercent /100));
+			$NeededQtyAtTo = $NeededQty - $InTransitQuantityAtTo;
 
 			// Decide how many are sent (depends on the strategy)
 			if ($Strategy == 'OverFrom') {
@@ -259,14 +256,14 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 				if ($NeededQtyAtTo<=0){
 					$EmailText = $EmailText . $myrow['stockid'] . 
 											  " x " . 
-											  $myrow['neededqty'] . 
+											  $NeededQty . 
 											  " Already in transit = " . 
 											  $InTransitQuantityAtTo  . 
 											  "\n";
 				}else{
 					$EmailText = $EmailText . $myrow['stockid'] . 
 											  " x " . 
-											  $myrow['neededqty'] . 
+											  $NeededQty . 
 											  " Already in transit = " . 
 											  $InTransitQuantityAtTo  . 
 											  " Rejected as stock available @" . 
@@ -434,7 +431,9 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 				}else{
 					$EmailText = $EmailText . date('d/M/Y H:i:s') . " Email FAILED " . $FileName . "\n";
 				}
-				sleep(2);
+// we don't need to sleep as this is a heavy process script, so from email to email there is already a few secs
+// and we don't risk to be considered spam by the server and blocked
+//				sleep(2);
 				// End of preparation of PDF, email and transfer records 
 			}else{
 				// NOT Enough models available for transfer
