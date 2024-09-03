@@ -1796,7 +1796,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					}
 					echo '<div>';
 					echo '<table class="selection">';
-					$TableHeader = '<tr>
+/*					$TableHeader = '<tr>
 										<th class="ascending">' . _('#') . '</th>
 										<th class="ascending">' . _('Code') . '</th>
 										<th class="ascending">' . _('Description') . '</th>
@@ -1812,6 +1812,21 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 										<th class="ascending">' . _('QTY Shortage') . '</th>
 										<th class="ascending">' . _('% Shortage') . '</th>
 										<th class="ascending">' . _('QOO Running') . '</th>
+										<th class="ascending">' . _('Next Order') . '</th>
+									</tr>';
+*/
+					$TableHeader = '<tr>
+										<th class="ascending">' . _('#') . '</th>
+										<th class="ascending">' . _('Code') . '</th>
+										<th class="ascending">' . _('Description') . '</th>
+										<th class="ascending">' . _('Optimum QTY') . '</th>
+										<th class="ascending">' . _('QOH Gudang') . '</th>
+										<th class="ascending">' . _('QOH Shops') . '</th>
+										<th class="ascending">' . _('QOH Total') . '</th>
+										<th class="ascending">' . _('QOH Days') . '</th>
+										<th class="ascending">' . _('Shortage QTY') . '</th>
+										<th class="ascending">' . _('% Shortage') . '</th>
+										<th class="ascending">' . _('Running QOO') . '</th>
 										<th class="ascending">' . _('Next Order') . '</th>
 									</tr>';
 					echo $TableHeader;
@@ -1833,7 +1848,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 				
 				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 				$k = StartEvenOrOddRow($k);
-				printf('<td class="number">%s</td>
+/*				printf('<td class="number">%s</td>
 						<td>%s</td>
 						<td>%s</td>
 						<td class="number">%s</td>
@@ -1867,6 +1882,33 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 						locale_number_format_zero_blank($myrow['qoo'],0),
 						locale_number_format_zero_blank($QtyToOrder,0)
 						);
+*/
+				printf('<td class="number">%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						</tr>', 
+						$i, 
+						$CodeLink, 
+						$myrow['description'], 
+						locale_number_format($OptimumQOH,0),
+						locale_number_format($myrow['qohgudang'],0),
+						locale_number_format($myrow['qohshops'],0),
+						locale_number_format($QOH,0),
+						locale_number_format($QOHDays,0),
+						locale_number_format($MissingQOH,0),
+						locale_number_format($MissingQOH/$OptimumQOH*100,0) .'%',
+						locale_number_format_zero_blank($myrow['qoo'],0),
+						locale_number_format_zero_blank($QtyToOrder,0)
+						);
 			}
 			$i++;
 		}
@@ -1875,7 +1917,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 			$TotalDaysQOH = floor($QOHTotal / $TotalDailyUse);
 			$TotalDaysQOO = floor(($QOHTotal + $PendingQOO) / $TotalDailyUse);
 			$k = StartEvenOrOddRow($k);
-			printf('<td class="number">%s</td>
+/*			printf('<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
@@ -1899,6 +1941,33 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					locale_number_format($ForecastXDays,0),
 					locale_number_format($ForecastXDaysLastYear,0),
 					locale_number_format($TotalMinimumGudang,0),
+					locale_number_format($TotalQOHOptimum,0),
+					locale_number_format($TotalQOHGudang,0),
+					locale_number_format($TotalQOHShops,0),
+					locale_number_format($QOHTotal,0),
+					'',
+					locale_number_format($MissingTotal,0),
+					locale_number_format($MissingTotal/$TotalQOHOptimum*100,0).'%',
+					locale_number_format_zero_blank($PendingQOO,0),
+					locale_number_format_zero_blank($OptimumOrder,0)
+					);
+*/
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					"", 
+					"TOTAL", 
+					"", 
 					locale_number_format($TotalQOHOptimum,0),
 					locale_number_format($TotalQOHGudang,0),
 					locale_number_format($TotalQOHShops,0),
