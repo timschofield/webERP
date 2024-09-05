@@ -95,8 +95,8 @@ $ScriptName = basename($_SERVER['SCRIPT_NAME']);
 
 echo '<header class="noPrint">';
 
-echo '<div id="Info" data-title="', _('Company Details'), '">
-		<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/company.png" alt="', _('Company'), '"/>', stripslashes($_SESSION['CompanyRecord']['coyname']), '
+echo '<div id="Info" data-title="', stripslashes($_SESSION['CompanyRecord']['coyname']), '">
+		<img src="', $PathPrefix, $RootPath, '/companies/' . $_SESSION['DatabaseName'], '/logo.png" alt="', stripslashes($_SESSION['CompanyRecord']['coyname']), '"/>
 	</div>';
 
 echo '<div id="Info">

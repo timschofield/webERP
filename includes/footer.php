@@ -62,11 +62,10 @@ if (isset($Messages) and count($Messages) > 0) {
 echo '</section>'; // BodyDiv
 echo '<footer class="noPrint">
 		<a class="FooterLogo" href="https://www.weberp.org" target="_blank">
-			<img width="120" alt="webERP" title="webERP" src="', $RootPath, '/', $_SESSION['LogoFile'], '"/>
+			<div class="logo logo-left">web</div><div class="logo logo-right">ERP</div>
 		</a>
 		<div class="FooterVersion">webERP ', _('version'), ' ', $_SESSION['VersionNumber'], '</div>
 		<div class="FooterTime">', DisplayDateTime(), '</div>
 	  </footer>'; // FooterDiv
 echo '</body>';
 echo '</html>';
-
